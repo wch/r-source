@@ -1,7 +1,7 @@
 #  File src/library/tools/R/Rd2latex.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -21,24 +21,16 @@
 
 ### * .Rd_get_latex
 
-# Return latex form of text, encoded in UTF-8.  Note that
-# textConnection converts to the local encoding, and we convert back,
-# so unrepresentable characters will be lost
-
+# Return latex form of text, encoded in UTF-8.
 .Rd_get_latex <-
-function(x) {
-    # We'd like to use capture.output here, but don't want to depend
-    # on utils, so we duplicate some of it
-    rval <- NULL
-    file <- textConnection("rval", "w", local = TRUE)
-
+function(x)
+{
+    tf <- tempfile()
     save <- options(useFancyQuotes = FALSE)
-    sink(file)
-    tryCatch(Rd2latex(x, fragment=TRUE),
-             finally = {sink(); options(save); close(file)})
-
-    if (is.null(rval)) rval <- character()
-    else enc2utf8(rval)
+    on.exit({options(save); unlink(tf)})
+    tryCatch(Rd2latex(x, tf, fragment = TRUE, outputEncoding = "UTF-8"),
+             error = function(e) return(character()))
+    enc2utf8(readLines(tf, warn = FALSE, encoding = "UTF-8"))
 }
 
 latex_canonical_encoding  <- function(encoding)
@@ -66,7 +58,8 @@ latex_canonical_encoding  <- function(encoding)
 }
 
 ## 'encoding' is passed to parse_Rd, as the input encoding
-Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
+Rd2latex <- function(Rd, out = "", defines = .Platform$OS.type,
+                     stages = "render",
 		     outputEncoding = "ASCII", fragment = FALSE, ...,
                      writeEncoding = TRUE)
 {
@@ -78,10 +71,10 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
                 writeLines(x, con, useBytes = TRUE, ...)
         } else {
             function(x, con, outputEncoding, ...) {
-                x <- iconv(x, "UTF-8", outputEncoding,  mark=FALSE)
+                x <- iconv(x, "UTF-8", outputEncoding,  mark = FALSE)
                 if (anyNA(x)) {
                     x <- iconv(x, "UTF-8", outputEncoding,
-                               sub="byte", mark=FALSE)
+                               sub = "byte", mark = FALSE)
                     encode_warn <<- TRUE
                 }
                 writeLines(x, con, useBytes = TRUE, ...)
@@ -613,7 +606,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
     	out <- summary(con)$description
     }
 
-   if (outputEncoding != "ASCII") {
+   if (outputEncoding != "ASCII" && !fragment) {
         latexEncoding <- latex_canonical_encoding(outputEncoding)
         if(writeEncoding) of0("\\inputencoding{", latexEncoding, "}\n")
     } else latexEncoding <- NA

@@ -703,6 +703,8 @@ function(x)
 # textConnection converts to the local encoding, and we convert back,
 # so unrepresentable characters will be lost
 
+## FIXME: use out = tempfile(), like .Rd_get_latex.
+
 .Rd_get_text <-
 function(x) {
     # Handle easy cases first

@@ -1,6 +1,6 @@
 % File src/library/stats/man/ppoints.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ppoints}
@@ -56,17 +56,17 @@ require(graphics)\dontshow{lNs <- loadedNamespaces()}
 p.ppoints <- function(n, ..., add = FALSE, col = par("col")) {
   pn <- ppoints(n, ...)
   if(add)
-      points(pn, pn, col=col)
+      points(pn, pn, col = col)
   else {
       tit <- match.call(); tit[[1]] <- quote(ppoints)
       plot(pn,pn, main = deparse(tit), col=col,
-           xlim=0:1, ylim=0:1, xaxs="i", yaxs="i")
-      abline(0,1, col = adjustcolor(1, 1/4), lty = 3)
+           xlim = 0:1, ylim = 0:1, xaxs = "i", yaxs = "i")
+      abline(0, 1, col = adjustcolor(1, 1/4), lty = 3)
   }
-  if(requireNamespace("MASS", quietly=TRUE))
+  if(!add && requireNamespace("MASS", quietly = TRUE))
     text(pn, pn, as.character(MASS::fractions(pn)),
          adj = c(0,0)-1/4, cex = 3/4, xpd = NA, col=col)
-  abline(h=pn, v=pn, col = adjustcolor(col, 1/2), lty = 2, lwd = 1/2)
+  abline(h = pn, v = pn, col = adjustcolor(col, 1/2), lty = 2, lwd = 1/2)
 }
 
 p.ppoints(4)

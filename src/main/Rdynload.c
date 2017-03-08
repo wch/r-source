@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995-1996 Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2015 The R Core Team
+ *  Copyright (C) 1997-2017 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -128,13 +128,14 @@ R_CPFun CPFun[MAX_CACHE];
 int nCPFun = 0;
 #endif
 
-#define MAX_NUM_DLLS	100
+static int MaxNumDLLs = 0; /* initialized in initLoadedDLL */
 
 static int CountDLL = 0;
 
 #include <R_ext/Rdynload.h>
 
-static DllInfo LoadedDLL[MAX_NUM_DLLS];
+/* Allocated in initLoadedDLL at R session start. Never free'd */
+static DllInfo* LoadedDLL = NULL;
 
 static int addDLL(char *dpath, char *name, HINSTANCE handle);
 static SEXP Rf_MakeDLLInfo(DllInfo *info);
@@ -149,17 +150,67 @@ attribute_hidden OSDynSymbol Rf_osDynSymbol;
 attribute_hidden OSDynSymbol *R_osDynSymbol = &Rf_osDynSymbol;
 
 void R_init_base(DllInfo *); /* In Registration.c */
-DL_FUNC R_dlsym(DllInfo *dll, char const *name,
-		R_RegisteredNativeSymbol *symbol);
+
+static void initLoadedDLL();
 
 void attribute_hidden
 InitDynload()
 {
-    DllInfo *dll;
+    initLoadedDLL();
     int which = addDLL(strdup("base"), "base", NULL);
-    dll = &LoadedDLL[which];
+    DllInfo *dll = &LoadedDLL[which];
     R_init_base(dll);
     InitFunctionHashing();
+}
+
+/* Allocate LoadedDLL. Errors are reported via R_Suicide, because this is
+   called too early during startup to use error(.) */
+static void initLoadedDLL()
+{
+    if (CountDLL != 0 || LoadedDLL != NULL)
+	R_Suicide("DLL table corruption detected"); /* not translated */
+
+    /* Note that it is likely that dlopen will use up at least one file
+       descriptor for each DLL loaded (it may load further dynamically
+       linked libraries), so we do not want to get close to the fd limit
+       (which may be as low as 256). By default, the maximum number of DLLs
+       that can be loaded is 100. When the fd limit is known, we allow
+       increasing the maximum number of DLLs via environment variable up to
+       60% of the limit on open files, but to no more than 1000.
+    */
+    int maxlimit;
+    int fdlimit = R_GetFDLimit();
+    if (fdlimit > 0) { /* fd limit known */
+	maxlimit = (int) (0.6 * fdlimit);
+	if (maxlimit > 1000) maxlimit = 1000;
+	if (maxlimit < 100)
+	    R_Suicide(_("the limit on the number of open files is too low"));
+    } else
+	maxlimit = 100;
+
+    char *req = getenv("R_MAX_NUM_DLLS");
+    if (req != NULL) {
+	int reqlimit = atoi(req);
+	if (reqlimit < 100)
+	    R_Suicide(_("R_MAX_NUM_DLLS must be at least 100"));
+	if (reqlimit > maxlimit) {
+	    if (maxlimit == 1000)
+		R_Suicide(_("MAX_NUM_DLLS cannot be bigger than 1000"));
+	    
+	    char msg[128];
+	    snprintf(msg, 128,
+	      _("MAX_NUM_DLLS bigger than %d may exhaust open files limit"),
+	      maxlimit);
+	    R_Suicide(msg);
+	}
+	MaxNumDLLs = reqlimit;
+    } else
+	MaxNumDLLs = 100;
+
+    /* memory is set to zero */
+    LoadedDLL = (DllInfo *) calloc(MaxNumDLLs, sizeof(DllInfo));
+    if (LoadedDLL == NULL)
+	R_Suicide(_("could not allocate space for DLL table"));
 }
 
 /* returns DllInfo used by the embedding application.
@@ -212,7 +263,7 @@ R_addExternalRoutine(DllInfo *info,
 /*
  Returns a reference to the DllInfo object associated with the shared object
  with the path name `path'. This ensures uniqueness rather than having the
- undesirable situation of two object with the same name but in different
+ undesirable situation of two objects with the same name but in different
  directories.
  This is available so that it can be called from arbitrary C routines
  that need to call R_registerRoutines(). The initialization routine
@@ -315,19 +366,6 @@ R_setPrimitiveArgTypes(const R_FortranMethodDef * const croutine,
 }
 
 static void
-R_setArgStyles(const R_FortranMethodDef * const croutine,
-	       Rf_DotFortranSymbol *sym)
-{
-    sym->styles = (R_NativeArgStyle *)
-	malloc(sizeof(R_NativeArgStyle) * (size_t) croutine->numArgs);
-    if(!sym->styles)
-	error("allocation failure in R_setArgStyles");
-    if(sym->styles)
-	memcpy(sym->styles, croutine->styles,
-	       sizeof(R_NativeArgStyle) * (size_t) croutine->numArgs);
-}
-
-static void
 R_addFortranRoutine(DllInfo *info,
 		    const R_FortranMethodDef * const croutine,
 		    Rf_DotFortranSymbol *sym)
@@ -337,8 +375,6 @@ R_addFortranRoutine(DllInfo *info,
     sym->numArgs = croutine->numArgs > -1 ? croutine->numArgs : -1;
     if(croutine->types)
 	R_setPrimitiveArgTypes(croutine, sym);
-    if(croutine->styles)
-	R_setArgStyles(croutine, sym);
 }
 
 static void
@@ -351,8 +387,6 @@ R_addExternalRoutine(DllInfo *info,
     sym->numArgs = croutine->numArgs > -1 ? croutine->numArgs : -1;
 }
 
-
-
 static void
 R_addCRoutine(DllInfo *info, const R_CMethodDef * const croutine,
 	      Rf_DotCSymbol *sym)
@@ -362,9 +396,6 @@ R_addCRoutine(DllInfo *info, const R_CMethodDef * const croutine,
     sym->numArgs = croutine->numArgs > -1 ? croutine->numArgs : -1;
     if(croutine->types)
 	R_setPrimitiveArgTypes(croutine, sym);
-    if(croutine->styles)
-	R_setArgStyles(croutine, sym);
-
 }
 
 static void
@@ -529,7 +560,7 @@ static DllInfo* AddDLL(const char *path, int asLocal, int now,
     DllInfo *info = NULL;
 
     DeleteDLL(path);
-    if(CountDLL == MAX_NUM_DLLS) {
+    if(CountDLL == MaxNumDLLs) {
 	strcpy(DLLerror, _("`maximal number of DLLs reached..."));
 	return NULL;
     }
@@ -578,13 +609,6 @@ static DllInfo *R_RegisterDLL(HINSTANCE handle, const char *path)
     char *dpath,  DLLname[PATH_MAX], *p;
     DllInfo *info;
 
-    info = &LoadedDLL[CountDLL];
-    /* default is to use old-style dynamic lookup.  The object's
-       initialization routine can limit access by setting this to FALSE.
-    */
-    info->useDynamicLookup = TRUE;
-    info->forceSymbols = FALSE;
-
     dpath = (char *) malloc(strlen(path)+1);
     if(dpath == NULL) {
 	strcpy(DLLerror, _("could not allocate space for 'path'"));
@@ -609,7 +633,16 @@ static DllInfo *R_RegisterDLL(HINSTANCE handle, const char *path)
     if(p > DLLname && strcmp(p, SHLIB_EXT) == 0) *p = '\0';
 #endif
 
-    addDLL(dpath, DLLname, handle);
+    if (addDLL(dpath, DLLname, handle)) {
+	info = &LoadedDLL[CountDLL-1];
+	/* default is to use old-style dynamic lookup.  The object's
+	   initialization routine can limit access by setting this to FALSE.
+	*/
+	info->useDynamicLookup = TRUE;
+	info->forceSymbols = FALSE;
+	return info;
+    } else
+	return NULL;
 
     return(info);
 }

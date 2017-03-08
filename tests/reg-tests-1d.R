@@ -109,6 +109,7 @@ stopifnot(identical(c0, strtrim(c0, integer(0))))
 
 
 ## Factors with duplicated levels {created via low-level code}:
+set.seed(11)
 f0 <- factor(sample.int(9, 20, replace=TRUE))
 (f <- structure(f0, "levels" = as.character(c(2:7, 2:4))))
 tools::assertWarning(print(f))
@@ -550,6 +551,154 @@ stopifnot(
     identical(c(1L, 3L), seq.int(1L, 3L, length.out=2))
 )
 ## the first was missing(.), the others "double" in R < 3.4.0
+tools::assertError(seq(1,7, by = 1:2))# gave warnings in R < 3.4.0
+## seq() for <complex> / <integer>
+stopifnot(all.equal(seq(1+1i, 9+2i, length.out = 9) -> sCplx,
+                    1:9 + 1i*seq(1,2, by=1/8)),
+          identical(seq(1+1i, 9+2i, along.with = 1:9), sCplx),
+          identical(seq(1L, 3L, by=1L), 1:3)
+)
+## had failed in R-devel for a few days
+D1 <- as.Date("2017-01-06")
+D2 <- as.Date("2017-01-12")
+seqD1 <- seq.Date(D1, D2, by = "1 day")
+stopifnot(identical(seqD1, seq(D1, D2, by = "1 days")),
+## These two work "accidentally" via seq -> seq.default + "Date"-arithmetic
+          identical(seqD1, seq(by = 1, from = D1, length.out = 7)),
+          identical(seqD1, seq(by = 1,   to = D2, length.out = 7))
+## swap order of (by, to) ==> *FAILS* because directly calls seq.Date() - FIXME?
+        , TRUE ||
+          identical(seqD1, seq(to = D2,  by = 1, length.out = 7))
+          )
+## had failed in R-devel for a couple of days
+stopifnot(identical(seq(9L, by = -1L, length.out = 4L), 9:6),
+	  identical(seq(9L, by = -1L, length.out = 4 ), 9:6))
+## for consistency, new in R >= 3.4.0
+
+
+## Underflow happened when parsing small hex constants PR#17199
+stopifnot(
+    as.double("0x1.00000000d0000p-987") > 0,   # should be 7.645296e-298
+    as.double("0x1.0000000000000p-1022") > 0,  # should be 2.225074e-308
+    as.double("0x1.f89fc1a6f6613p-974") > 0    # should be 1.23456e-293
+)
+##
+
+
+## format.POSIX[cl]t() after print.POSIXct()
+dt <- "2012-12-12 12:12:12"
+x <- as.POSIXct(dt, tz = "GMT")
+stopifnot(identical(format(x), dt))
+(Sys.t <- Sys.timezone())
+someCET <- paste("Europe", c("Berlin", "Brussels", "Copenhagen", "Madrid",
+                             "Paris", "Rome", "Vienna", "Zurich"), sep="/")
+if(Sys.t %in% someCET)
+    stopifnot(print(TRUE), identical(format(x, tz = ""), "2012-12-12 13:12:12"))
+## had failed for almost a month in R-devel & R-patched
+
+
+## xtabs() , notably with NA's :
+asArr <- function(x) {
+    attributes(x) <- list(dim=dim(x), dimnames=dimnames(x)); x }
+as_A <- function(x, A) array(x, dim=dim(A), dimnames=dimnames(A))
+eq_A <- function(a,b) ## equality of arrays, notably sparseMatrix vs dense
+    identical(dim(a),dim(b)) && identical(dimnames(a),dimnames(b)) &&
+        identical(as.vector(a), as.vector(b))
+esoph2 <- droplevels(subset(esoph, subset = tobgp > "10-19" & alcgp >= "40-79"))
+(xt <- xtabs(~ agegp + alcgp + tobgp, esoph2))
+stopifnot(identical(dim(xt), c(6L, 3L, 2L)), # of the 6 x 3 x 2 = 36 entries,
+          identical(which(xt == 0), c(7L, 12L, 18L, 23L, 30L, 32L, 36L)),
+          ## the above 8 are zeros and the rest is 1 :
+          all(xt[xt != 0] == 1))
+xtC <- xtabs(ncontrols ~ agegp + alcgp + tobgp, data = esoph2)
+stopifnot(# no NA's in data, hence result should have none, just 0's:
+    identical(asArr(unname(xtC)),
+	      array(c(4, 14, 15, 17, 9, 3,   0, 2, 5, 6, 3, 0,	 1, 4, 3, 3, 1, 0,
+		      7,  8,  7,  6, 0, 1,   2, 1, 4, 4, 1, 0,	 2, 0, 4, 6, 1, 0),
+		    dim = dim(xt))))
+
+DF <- as.data.frame(UCBAdmissions)
+xt <- xtabs(Freq ~ Gender + Admit, DF)
+stopifnot(identical(asArr(xt),
+		    array(c(1198, 557, 1493, 1278), dim = c(2L, 2L),
+			  dimnames = list(Gender = c("Male", "Female"),
+					  Admit = c("Admitted", "Rejected")))))
+options(na.action = "na.omit")
+DN <- DF; DN[cbind(6:9, c(1:2,4,1))] <- NA; DN
+
+tools::assertError(# 'na.fail' should fail :
+	   xtabs(Freq ~ Gender + Admit, DN, na.action = na.fail))
+xt. <- xtabs(Freq ~ Gender + Admit, DN)
+xtp <- xtabs(Freq ~ Gender + Admit, DN, na.action = na.pass)
+xtN <- xtabs(Freq ~ Gender + Admit, DN, addNA = TRUE)
+stopifnot(
+    identical(asArr(xt - xt.), as_A(c(120,17, 207, 8 ), xt)),
+    identical(asArr(xt - xtp), as_A(c(120,17, 207, NA), xt)), # not ok in R <= 3.3.2
+    identical(asArr(-xtN + rbind(cbind(xt, 0), 0)),
+              as_A(c(120, 17, -17, 207, NA, 0, -327, 0, 0), xtN))
+)
+## 'sparse = TRUE requires recommended package Matrix
+if(requireNamespace('Matrix')) {
+    xtS <- xtabs(Freq ~ Gender + Admit, DN, na.action = na.pass, sparse = TRUE)# error in R <= 3.3.2
+    xtNS <- xtabs(Freq ~ Gender + Admit, DN, addNA = TRUE, sparse = TRUE)
+    stopifnot(
+        eq_A(xt., xtabs(Freq ~ Gender + Admit, DN, sparse = TRUE)),
+        eq_A(xtp, xtS),
+        eq_A(xtN, xtNS)
+   )
+}
+## NA treatment partly wrong in R < 3.4.0; new option 'addNA'
+ee <- esoph[esoph[,"ncases"] > 0, c(1:2,4)]
+ee[,"ncases"] <- as.integer(ee[,"ncases"])
+(tt <- xtabs(ncases ~ ., ee))
+stopifnot(identical(as.vector(tt[1:2,]), # *integer* + first value
+		    c(0L, 1L, 0L, 4L, 0L, 0L, 1L, 4L)))
+## keeping integer in sum()mation of integers
+
+
+## tapply() with FUN returning raw  |  with factor -> returning integer
+stopifnot(identical(tapply(1:3, 1:3, as.raw),
+                    array(as.raw(1:3), 3L, dimnames=list(1:3))), ## failed in R < 3.4.0
+          identical(3:1, as.vector(tapply(1:3, 1:3, factor, levels=3:1))))
+
+
+## str(<list of list>, max.level = 1)
+LoL <- function(lenC, FUN = identity)
+    lapply(seq_along(lenC), function(i) lapply(seq_len(lenC[i]), FUN))
+xx <- LoL(c(7,3,17,798,3))
+str(xx, list.len = 7, max.level = 1)
+str2 <- capture.output(
+ str(xx, list.len = 7, max.level = 2))
+stopifnot(
+    grepl("List of ", capture.output(str(xx, list.len = 7, max.level = 1))),
+    length(str2) == 35, sum(grepl("list output truncated", str2)) == 2,
+    vapply(paste("List of", lengths(xx)), function(pat) any(grepl(pat, str2)), NA)
+)
+## wrongly showed '[list output truncated]'  in R < 3.4.0
+
+
+## stopifnot(all.equal(.)) message abbreviation
+msg <- tryCatch(stopifnot(all.equal(rep(list(pi),4), list(3.1, 3.14, 3.141, 3.1415))),
+		error = conditionMessage)
+writeLines(msg)
+stopifnot(length(strsplit(msg,"\n")[[1]]) == 1+3+1)
+## was wrong for months in R-devel only
+
+
+## available.packages() (not) caching in case of errors
+tools::assertWarning(ap1 <- available.packages(repos = "http://foo.bar"))
+tools::assertWarning(ap2 <- available.packages(repos = "http://foo.bar"))
+stopifnot(nrow(ap1) == 0, identical(ap1, ap2))
+## had failed for a while in R-devel (left empty *.rds file)
+
+
+## rep()/rep.int() : when 'times' is a list
+stopifnot(identical(rep    (4,   list(3)), c(4,4,4)),
+          identical(rep.int(4,   list(3)), c(4,4,4)),
+          identical(rep.int(4:5, list(2,1)), c(4L,4:5)),
+          identical(rep    (4:5, list(2,1)), c(4L,4:5)))
+## partly failed in R 3.3.{2,3}
+
 
 
 ## keep at end

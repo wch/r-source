@@ -504,7 +504,7 @@ function(bibtype, textVersion = NULL, header = NULL, footer = NULL, key = NULL,
               header = header, footer = footer, key = key), list(...))
     args <- lapply(args, .listify)
     other <- lapply(other, .listify)
-    max_length <- max(sapply(c(args, other), length))
+    max_length <- max(lengths(c(args, other)))
 
     args_length <- lengths(args)
     if(!all(args_length_ok <- args_length %in% c(1L, max_length)))

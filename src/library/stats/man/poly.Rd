@@ -1,14 +1,14 @@
 % File src/library/stats/man/poly.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{poly}
+\title{Compute Orthogonal Polynomials}
 \alias{poly}
 \alias{polym}
 \alias{predict.poly}
 \alias{makepredictcall.poly}
-\title{Compute Orthogonal Polynomials}
 \usage{
 poly(x, \dots, degree = 1, coefs = NULL, raw = FALSE, simple = FALSE)
 polym  (\dots, degree = 1, coefs = NULL, raw = FALSE)
@@ -26,7 +26,7 @@ polym  (\dots, degree = 1, coefs = NULL, raw = FALSE)
    polynomial. \code{x} can also be a matrix.  Missing values are not
    allowed in \code{x}.}
  \item{degree}{the degree of the polynomial.  Must be less than the
-   number of unique points if \code{raw = TRUE}.}
+   number of unique points when \code{raw} is false, as by default.}
  \item{coefs}{for prediction, coefficients from a previous fit.}
  \item{raw}{if true, use raw and not orthogonal polynomials.}
  \item{simple}{logical indicating if a simple matrix (with no further

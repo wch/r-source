@@ -181,7 +181,7 @@ static SEXP rep2(SEXP s, SEXP ncopy)
     R_xlen_t i, j, nc, n;
     SEXP a, t;
 
-#define R2_SWITCH_LOOP \
+#define R2_SWITCH_LOOP(it) \
     switch (TYPEOF(s)) { \
     case LGLSXP: \
 	for (i = 0; i < nc; i++) { \
@@ -193,28 +193,28 @@ static SEXP rep2(SEXP s, SEXP ncopy)
     case INTSXP: \
 	for (i = 0; i < nc; i++) { \
 /*	    if ((i+1) % ni == 0) R_CheckUserInterrupt();*/ \
-	    for (j = 0; j < (R_xlen_t) it[i]; j++) \
+	    for (j = (R_xlen_t) it[i]; j > 0; j--) \
 		INTEGER(a)[n++] = INTEGER(s)[i]; \
 	} \
 	break; \
     case REALSXP: \
 	for (i = 0; i < nc; i++) { \
 /*	    if ((i+1) % ni == 0) R_CheckUserInterrupt();*/ \
-	    for (j = 0; j < (R_xlen_t) it[i]; j++) \
+	    for (j = (R_xlen_t) it[i]; j > 0; j--) \
 		REAL(a)[n++] = REAL(s)[i]; \
 	} \
 	break; \
     case CPLXSXP: \
 	for (i = 0; i < nc; i++) { \
 /*	    if ((i+1) % ni == 0) R_CheckUserInterrupt();*/ \
-	    for (j = 0; j < (R_xlen_t) it[i]; j++) \
+	    for (j = (R_xlen_t) it[i]; j > 0; j--) \
 		COMPLEX(a)[n++] = COMPLEX(s)[i]; \
 	} \
 	break; \
     case STRSXP: \
 	for (i = 0; i < nc; i++) { \
 /*	    if ((i+1) % ni == 0) R_CheckUserInterrupt();*/ \
-	    for (j = 0; j < (R_xlen_t) it[i]; j++) \
+	    for (j = (R_xlen_t) it[i]; j > 0; j--) \
 		SET_STRING_ELT(a, n++, STRING_ELT(s, i)); \
 	} \
 	break; \
@@ -223,7 +223,7 @@ static SEXP rep2(SEXP s, SEXP ncopy)
 	for (i = 0; i < nc; i++) { \
 /*	    if ((i+1) % ni == 0) R_CheckUserInterrupt();*/ \
 	    SEXP elt = lazy_duplicate(VECTOR_ELT(s, i)); \
-	    for (j = 0; j < (R_xlen_t) it[i]; j++) \
+	    for (j = (R_xlen_t) it[i]; j > 0; j--) \
 		SET_VECTOR_ELT(a, n++, elt); \
 	    if (j > 1) SET_NAMED(elt, 2); \
 	} \
@@ -231,7 +231,7 @@ static SEXP rep2(SEXP s, SEXP ncopy)
     case RAWSXP: \
 	for (i = 0; i < nc; i++) { \
 /*	    if ((i+1) % ni == 0) R_CheckUserInterrupt();*/ \
-	    for (j = 0; j < (R_xlen_t) it[i]; j++) \
+	    for (j = (R_xlen_t) it[i]; j > 0; j--) \
 		RAW(a)[n++] = RAW(s)[i]; \
 	} \
 	break; \
@@ -244,9 +244,9 @@ static SEXP rep2(SEXP s, SEXP ncopy)
 #else
     if (TYPEOF(ncopy) == REALSXP)
 #endif
-    PROTECT(t = coerceVector(ncopy, REALSXP));
+	PROTECT(t = coerceVector(ncopy, REALSXP));
     else
-    PROTECT(t = coerceVector(ncopy, INTSXP));
+	PROTECT(t = coerceVector(ncopy, INTSXP));
 
     nc = xlength(ncopy);
     double sna = 0;
@@ -276,13 +276,10 @@ static SEXP rep2(SEXP s, SEXP ncopy)
 	} */
     PROTECT(a = allocVector(TYPEOF(s), na));
     n = 0;
-    if (TYPEOF(t) == REALSXP) {
-	double *it = REAL(t);
-	R2_SWITCH_LOOP
-    } else {
-	int *it = INTEGER(t);
-	R2_SWITCH_LOOP
-    }
+    if (TYPEOF(t) == REALSXP)
+	R2_SWITCH_LOOP(REAL(t))
+    else
+	R2_SWITCH_LOOP(INTEGER(t))
     UNPROTECT(2);
     return a;
 }
@@ -347,6 +344,7 @@ static SEXP rep3(SEXP s, R_xlen_t ns, R_xlen_t na)
     return a;
 }
 
+// .Internal(rep.int(x, times))
 SEXP attribute_hidden do_rep_int(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
@@ -355,27 +353,27 @@ SEXP attribute_hidden do_rep_int(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP a;
 
     if (!isVector(ncopy))
-	error(_("incorrect type for second argument"));
+	error(_("invalid type (%s) for '%s' (must be a vector)"),
+	      type2char(TYPEOF(ncopy)), "times");
 
     if (!isVector(s) && s != R_NilValue)
 	error(_("attempt to replicate an object of type '%s'"),
 	      type2char(TYPEOF(s)));
 
     nc = xlength(ncopy); // might be 0
-    if (nc != 1 && nc == xlength(s))
+    if (nc == xlength(s))
 	PROTECT(a = rep2(s, ncopy));
     else {
 	if (nc != 1) error(_("invalid '%s' value"), "times");
 
 	R_xlen_t ns = xlength(s);
 	if (TYPEOF(ncopy) != INTSXP) {
-	double snc = asReal(ncopy);
-	if (!R_FINITE(snc) || snc <= -1 ||
-	    (ns > 0 && snc >= R_XLEN_T_MAX+1.0))
-	    error(_("invalid '%s' value"), "times");
-	nc = ns == 0 ? 1 : (R_xlen_t) snc;
-	} else
-	if ((nc = asInteger(ncopy)) == NA_INTEGER || nc < 0)/* nc = 0 ok */
+	    double snc = asReal(ncopy);
+	    if (!R_FINITE(snc) || snc <= -1. ||
+		(ns > 0 && snc >= R_XLEN_T_MAX + 1.))
+		error(_("invalid '%s' value"), "times");
+	    nc = ns == 0 ? 1 : (R_xlen_t) snc;
+	} else if ((nc = asInteger(ncopy)) == NA_INTEGER || nc < 0) // nc = 0 ok
 	    error(_("invalid '%s' value"), "times");
 	if ((double) nc * ns > R_XLEN_T_MAX)
 	    error(_("invalid '%s' value"), "times");
@@ -419,13 +417,13 @@ SEXP attribute_hidden do_rep_len(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(length(len) != 1)
 	error(_("invalid '%s' value"), "length.out");
     if (TYPEOF(len) != INTSXP) {
-    double sna = asReal(len);
-    if (ISNAN(sna) || sna <= -1 || sna >= R_XLEN_T_MAX+1.0)
-	error(_("invalid '%s' value"), "length.out");
-    na = (R_xlen_t) sna;
+	double sna = asReal(len);
+	if (ISNAN(sna) || sna <= -1. || sna >= R_XLEN_T_MAX + 1.)
+	    error(_("invalid '%s' value"), "length.out");
+	na = (R_xlen_t) sna;
     } else
-    if ((na = asInteger(len)) == NA_INTEGER || na < 0) /* na = 0 ok */
-	error(_("invalid '%s' value"), "length.out");
+	if ((na = asInteger(len)) == NA_INTEGER || na < 0) /* na = 0 ok */
+	    error(_("invalid '%s' value"), "length.out");
 
     if (TYPEOF(s) == NILSXP && na > 0)
 	error(_("cannot replicate NULL to a non-zero length"));
@@ -474,140 +472,137 @@ static SEXP rep4(SEXP x, SEXP times, R_xlen_t len, R_xlen_t each, R_xlen_t nt)
 
     PROTECT(a = allocVector(TYPEOF(x), len));
 
-#define R4_SWITCH_LOOP \
-    switch (TYPEOF(x)) { \
-    case LGLSXP: \
-	    for(i = 0, k = 0, k2 = 0; i < lx; i++) { \
-/*		if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();*/ \
-		for(j = 0, sum = 0; j < each; j++) sum += (R_xlen_t) itimes[k++]; \
-		for(k3 = 0; k3 < sum; k3++) { \
-		    LOGICAL(a)[k2++] = LOGICAL(x)[i]; \
-		    if(k2 == len) goto done; \
-		} \
-	    } \
-	break; \
-    case INTSXP: \
-	    for(i = 0, k = 0, k2 = 0; i < lx; i++) { \
-/*		if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();*/ \
-		for(j = 0, sum = 0; j < each; j++) sum += (R_xlen_t) itimes[k++]; \
-		for(k3 = 0; k3 < sum; k3++) { \
-		    INTEGER(a)[k2++] = INTEGER(x)[i]; \
-		    if(k2 == len) goto done; \
-		} \
-	    } \
-	break; \
-    case REALSXP: \
-	    for(i = 0, k = 0, k2 = 0; i < lx; i++) { \
-/*		if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();*/ \
-		for(j = 0, sum = 0; j < each; j++) sum += (R_xlen_t) itimes[k++]; \
-		for(k3 = 0; k3 < sum; k3++) { \
-		    REAL(a)[k2++] = REAL(x)[i]; \
-		    if(k2 == len) goto done; \
-		} \
-	    } \
-	break; \
-    case CPLXSXP: \
-	    for(i = 0, k = 0, k2 = 0; i < lx; i++) { \
-/*		if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();*/ \
-		for(j = 0, sum = 0; j < each; j++) sum += (R_xlen_t) itimes[k++]; \
-		for(k3 = 0; k3 < sum; k3++) { \
-		    COMPLEX(a)[k2++] = COMPLEX(x)[i]; \
-		    if(k2 == len) goto done; \
-		} \
-	    } \
-	break; \
-    case STRSXP: \
-	    for(i = 0, k = 0, k2 = 0; i < lx; i++) { \
-/*		if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();*/ \
-		for(j = 0, sum = 0; j < each; j++) sum += (R_xlen_t) itimes[k++]; \
-		for(k3 = 0; k3 < sum; k3++) { \
-		    SET_STRING_ELT(a, k2++, STRING_ELT(x, i)); \
-		    if(k2 == len) goto done; \
-		} \
-	    } \
-	break; \
-    case VECSXP: \
-    case EXPRSXP: \
-	    for(i = 0, k = 0, k2 = 0; i < lx; i++) { \
-/*		if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();*/ \
-		for(j = 0, sum = 0; j < each; j++) sum += (R_xlen_t) itimes[k++]; \
-		for(k3 = 0; k3 < sum; k3++) { \
-		    SET_VECTOR_ELT(a, k2++, VECTOR_ELT(x, i)); \
-		    if(k2 == len) goto done; \
-		} \
-	    } \
-	break; \
-    case RAWSXP: \
-	    for(i = 0, k = 0, k2 = 0; i < lx; i++) { \
-/*		if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();*/ \
-		for(j = 0, sum = 0; j < each; j++) sum += (R_xlen_t) itimes[k++]; \
-		for(k3 = 0; k3 < sum; k3++) { \
-		    RAW(a)[k2++] = RAW(x)[i]; \
-		    if(k2 == len) goto done; \
-		} \
-	    } \
-	break; \
-    default: \
-	UNIMPLEMENTED_TYPE("rep4", x); \
+#define R4_SWITCH_LOOP(itimes)						\
+    switch (TYPEOF(x)) {						\
+    case LGLSXP:							\
+	for(i = 0, k = 0, k2 = 0; i < lx; i++) {			\
+	    /*		if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();*/ \
+	    for(j = 0, sum = 0; j < each; j++) sum += (R_xlen_t) itimes[k++]; \
+	    for(k3 = 0; k3 < sum; k3++) {				\
+		LOGICAL(a)[k2++] = LOGICAL(x)[i];			\
+		if(k2 == len) goto done;				\
+	    }								\
+	}								\
+	break;								\
+    case INTSXP:							\
+	for(i = 0, k = 0, k2 = 0; i < lx; i++) {			\
+	    /*		if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();*/ \
+	    for(j = 0, sum = 0; j < each; j++) sum += (R_xlen_t) itimes[k++]; \
+	    for(k3 = 0; k3 < sum; k3++) {				\
+		INTEGER(a)[k2++] = INTEGER(x)[i];			\
+		if(k2 == len) goto done;				\
+	    }								\
+	}								\
+	break;								\
+    case REALSXP:							\
+	for(i = 0, k = 0, k2 = 0; i < lx; i++) {			\
+	    /*		if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();*/ \
+	    for(j = 0, sum = 0; j < each; j++) sum += (R_xlen_t) itimes[k++]; \
+	    for(k3 = 0; k3 < sum; k3++) {				\
+		REAL(a)[k2++] = REAL(x)[i];				\
+		if(k2 == len) goto done;				\
+	    }								\
+	}								\
+	break;								\
+    case CPLXSXP:							\
+	for(i = 0, k = 0, k2 = 0; i < lx; i++) {			\
+	    /*		if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();*/ \
+	    for(j = 0, sum = 0; j < each; j++) sum += (R_xlen_t) itimes[k++]; \
+	    for(k3 = 0; k3 < sum; k3++) {				\
+		COMPLEX(a)[k2++] = COMPLEX(x)[i];			\
+		if(k2 == len) goto done;				\
+	    }								\
+	}								\
+	break;								\
+    case STRSXP:							\
+	for(i = 0, k = 0, k2 = 0; i < lx; i++) {			\
+	    /*		if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();*/ \
+	    for(j = 0, sum = 0; j < each; j++) sum += (R_xlen_t) itimes[k++]; \
+	    for(k3 = 0; k3 < sum; k3++) {				\
+		SET_STRING_ELT(a, k2++, STRING_ELT(x, i));		\
+		if(k2 == len) goto done;				\
+	    }								\
+	}								\
+	break;								\
+    case VECSXP:							\
+    case EXPRSXP:							\
+	for(i = 0, k = 0, k2 = 0; i < lx; i++) {			\
+	    /*		if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();*/ \
+	    for(j = 0, sum = 0; j < each; j++) sum += (R_xlen_t) itimes[k++]; \
+	    for(k3 = 0; k3 < sum; k3++) {				\
+		SET_VECTOR_ELT(a, k2++, VECTOR_ELT(x, i));		\
+		if(k2 == len) goto done;				\
+	    }								\
+	}								\
+	break;								\
+    case RAWSXP:							\
+	for(i = 0, k = 0, k2 = 0; i < lx; i++) {			\
+	    /*		if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();*/ \
+	    for(j = 0, sum = 0; j < each; j++) sum += (R_xlen_t) itimes[k++]; \
+	    for(k3 = 0; k3 < sum; k3++) {				\
+		RAW(a)[k2++] = RAW(x)[i];				\
+		if(k2 == len) goto done;				\
+	    }								\
+	}								\
+	break;								\
+    default:								\
+	UNIMPLEMENTED_TYPE("rep4", x);					\
     }
 
     if(nt == 1)
-    switch (TYPEOF(x)) {
-    case LGLSXP:
+	switch (TYPEOF(x)) {
+	case LGLSXP:
 	    for(i = 0; i < len; i++) {
 //		if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 		LOGICAL(a)[i] = LOGICAL(x)[(i/each) % lx];
 	    }
-	break;
-    case INTSXP:
+	    break;
+	case INTSXP:
 	    for(i = 0; i < len; i++) {
 //		if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 		INTEGER(a)[i] = INTEGER(x)[(i/each) % lx];
 	    }
-	break;
-    case REALSXP:
+	    break;
+	case REALSXP:
 	    for(i = 0; i < len; i++) {
 //		if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 		REAL(a)[i] = REAL(x)[(i/each) % lx];
 	    }
-	break;
-    case CPLXSXP:
+	    break;
+	case CPLXSXP:
 	    for(i = 0; i < len; i++) {
 //		if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 		COMPLEX(a)[i] = COMPLEX(x)[(i/each) % lx];
 	    }
-	break;
-    case STRSXP:
+	    break;
+	case STRSXP:
 	    for(i = 0; i < len; i++) {
 //		if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 		SET_STRING_ELT(a, i, STRING_ELT(x, (i/each) % lx));
 	    }
-	break;
-    case VECSXP:
-    case EXPRSXP:
+	    break;
+	case VECSXP:
+	case EXPRSXP:
 	    for(i = 0; i < len; i++) {
 //		if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 		SET_VECTOR_ELT(a, i, VECTOR_ELT(x, (i/each) % lx));
 	    }
-	break;
-    case RAWSXP:
+	    break;
+	case RAWSXP:
 	    for(i = 0; i < len; i++) {
 //		if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 		RAW(a)[i] = RAW(x)[(i/each) % lx];
 	    }
-	break;
-    default:
-	UNIMPLEMENTED_TYPE("rep4", x);
-    }
-    else if(TYPEOF(times) == REALSXP) {
-	double *itimes = REAL(times);
-	R4_SWITCH_LOOP
-    } else {
-	int *itimes = INTEGER(times);
-	R4_SWITCH_LOOP
-    }
-done:
-    UNPROTECT(1);
+	    break;
+	default:
+	    UNIMPLEMENTED_TYPE("rep4", x);
+	}
+    else if(TYPEOF(times) == REALSXP)
+	R4_SWITCH_LOOP(REAL(times))
+	else
+	    R4_SWITCH_LOOP(INTEGER(times))
+		done:
+	    UNPROTECT(1);
     return a;
 }
 #undef R4_SWITCH_LOOP
@@ -648,13 +643,13 @@ SEXP attribute_hidden do_rep(SEXP call, SEXP op, SEXP args, SEXP rho)
     lx = xlength(x);
 
     if (TYPEOF(CADDR(args)) != INTSXP) {
-    double slen = asReal(CADDR(args));
-    if (R_FINITE(slen)) {
-	if (slen <= -1 || slen >= R_XLEN_T_MAX+1.0)
-	    errorcall(call, _("invalid '%s' argument"), "length.out");
-	len = (R_xlen_t) slen;
-    } else
-	len = NA_INTEGER;
+	double slen = asReal(CADDR(args));
+	if (R_FINITE(slen)) {
+	    if (slen <= -1 || slen >= R_XLEN_T_MAX+1.0)
+		errorcall(call, _("invalid '%s' argument"), "length.out");
+	    len = (R_xlen_t) slen;
+	} else
+	    len = NA_INTEGER;
     } else {
 	len = asInteger(CADDR(args));
 	if(len != NA_INTEGER && len < 0)
@@ -667,14 +662,14 @@ SEXP attribute_hidden do_rep(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (TYPEOF(CADDDR(args)) != INTSXP) {
 	double seach = asReal(CADDDR(args));
 	if (R_FINITE(seach)) {
-	    if (seach <= -1 || (lx > 0 && seach >= R_XLEN_T_MAX+1.0))
+	    if (seach <= -1. || (lx > 0 && seach >= R_XLEN_T_MAX + 1.))
 		errorcall(call, _("invalid '%s' argument"), "each");
 	    each = lx == 0 ? NA_INTEGER : (R_xlen_t) seach;
 	} else each = NA_INTEGER;
     } else {
-    each = asInteger(CADDDR(args));
-    if(each != NA_INTEGER && each < 0)
-	errorcall(call, _("invalid '%s' argument"), "each");
+	each = asInteger(CADDDR(args));
+	if(each != NA_INTEGER && each < 0)
+	    errorcall(call, _("invalid '%s' argument"), "each");
     }
     if(length(CADDDR(args)) != 1)
 	warningcall(call, _("first element used of '%s' argument"), "each");
@@ -732,19 +727,19 @@ SEXP attribute_hidden do_rep(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if(nt != (double) lx * each)
 		errorcall(call, _("invalid '%s' argument"), "times");
 	    if (TYPEOF(times) == REALSXP)
-	    for(i = 0; i < nt; i++) {
-		double rt = REAL(times)[i];
-		if (ISNAN(rt) || rt <= -1 || rt >= R_XLEN_T_MAX+1.0)
-		    errorcall(call, _("invalid '%s' argument"), "times");
-		sum += (R_xlen_t) rt;
-	    }
+		for(i = 0; i < nt; i++) {
+		    double rt = REAL(times)[i];
+		    if (ISNAN(rt) || rt <= -1 || rt >= R_XLEN_T_MAX+1.0)
+			errorcall(call, _("invalid '%s' argument"), "times");
+		    sum += (R_xlen_t) rt;
+		}
 	    else
-	    for(i = 0; i < nt; i++) {
-		int it = INTEGER(times)[i];
-		if (it == NA_INTEGER || it < 0)
-		    errorcall(call, _("invalid '%s' argument"), "times");
-		sum += it;
-	    }
+		for(i = 0; i < nt; i++) {
+		    int it = INTEGER(times)[i];
+		    if (it == NA_INTEGER || it < 0)
+			errorcall(call, _("invalid '%s' argument"), "times");
+		    sum += it;
+		}
 	    if (sum > R_XLEN_T_MAX)
 		errorcall(call, _("invalid '%s' argument"), "times");
 	    len = (R_xlen_t) sum;
@@ -844,14 +839,14 @@ SEXP attribute_hidden do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 	double rfrom, rto, rby = asReal(by);
 	if(miss_from) rfrom = 1.0;
 	else {
-	    if(length(from) != 1) error(_("'%s' must be of length 1"), "from");
+	    if(length(from) != 1) errorcall(call, _("'%s' must be of length 1"), "from");
 	    rfrom = asReal(from);
 	    if(!R_FINITE(rfrom))
 		errorcall(call, _("'%s' must be a finite number"), "from");
 	}
 	if(miss_to) rto = 1.0;
 	else {
-	    if(length(to) != 1) error(_("'%s' must be of length 1"), "to");
+	    if(length(to) != 1) errorcall(call, _("'%s' must be of length 1"), "to");
 	    rto = asReal(to);
 	    if(!R_FINITE(rto))
 		errorcall(call, _("'%s' must be a finite number"), "to");
@@ -859,7 +854,7 @@ SEXP attribute_hidden do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if(by == R_MissingArg)
 	    ans = seq_colon(rfrom, rto, call);
 	else {
-	    if(length(by) != 1) error(_("'%s' must be of length 1"), "by");
+	    if(length(by) != 1) errorcall(call, _("'%s' must be of length 1"), "by");
 	    double del = rto - rfrom;
 	    if(del == 0.0 && rto == 0.0) {
 		ans = to; // is *not* missing in this case
@@ -872,7 +867,7 @@ SEXP attribute_hidden do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    ans = miss_from ? ScalarReal(rfrom) : from;
 		    goto done;
 		} else
-		    errorcall(call, _("invalid '(to - from)/by' in 'seq'"));
+		    errorcall(call, _("invalid '(to - from)/by'"));
 	    }
 	    double dd = fabs(del)/fmax2(fabs(rto), fabs(rfrom));
 	    if(dd < 100 * DBL_EPSILON) {
@@ -935,8 +930,8 @@ SEXP attribute_hidden do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 	   rfrom <= INT_MAX && rfrom >= INT_MIN &&
 	   rto   <= INT_MAX && rto   >= INT_MIN) {
 	    ans = allocVector(INTSXP, lout);
-	    if(lout > 0) INTEGER(ans)[0] = rfrom;
-	    if(lout > 1) INTEGER(ans)[lout - 1] = rto;
+	    if(lout > 0) INTEGER(ans)[0] = (int)rfrom;
+	    if(lout > 1) INTEGER(ans)[lout - 1] = (int)rto;
 	    if(lout > 2)
 		for(i = 1; i < lout-1; i++) {
 //		    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();

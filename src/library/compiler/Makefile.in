@@ -31,7 +31,8 @@ NOTANGLE = @NOTANGLE@
 from-noweb: $(srcdir)/R/cmp.R
 $(srcdir)/R/cmp.R: $(srcdir)/noweb/compiler.nw
 	@echo "re-making 'R/cmp.R'"
-	@$(NOTANGLE) -Rcmp.R $(srcdir)/noweb/compiler.nw > $(srcdir)/R/cmp.R
+	@$(NOTANGLE) -Rcmp.R $(srcdir)/noweb/compiler.nw > $(srcdir)/R/cmp.R || \
+	  (mv $(srcdir)/R/cmp.R $(srcdir)/R/cmp.fail && exit 1)
 
 mkR: mkR1
 

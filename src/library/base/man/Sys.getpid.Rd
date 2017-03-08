@@ -1,6 +1,6 @@
 % File src/library/base/man/Sys.getpid.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Sys.getpid}
@@ -23,5 +23,9 @@ Sys.getpid()
 }
 \examples{\donttest{
 Sys.getpid()
+
+## Show files opened from this R process
+if(.Platform$OS.type == "unix") ## on Unix-alikes such Linux, macOS, FreeBSD:
+   system(paste("lsof -p", Sys.getpid()))
 }}
 \keyword{utilities}

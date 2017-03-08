@@ -43,22 +43,14 @@ test-system2.exe: test-system2.c
 test-System: test-system2.exe
 	@$(MK) test-system.Rout
 
-
-internet.Rout2:
-	-@$(R) --internet2 < internet.R > internet.Rout2 2>&1 || \
-	  echo " testing --internet2 failed"
-
 ## <NOTE>
 ## These depend on an internet connection, and the sites being up.
 ## So allow this to fail: it may be slow doing so.
 test-Internet:
-	@$(RM) -f internet.Rout internet.Rout2
+	@$(RM) -f internet.Rout
 	@$(ECHO) "running tests of Internet functions"
-	@$(ECHO) "  expect some differences"
-	-@$(MK) $(test-out-internet) RVAL_IF_DIFF=0 || \
-	  $(ECHO) " testing standard internet connectivity failed"
-	@$(MK) internet.Rout2 RVAL_IF_DIFF=0
-	-@diff internet.Rout internet.Rout2
+	-@$(MK) $(test-out-internet) RVAL_IF_DIFF=0
+## </NOTE>
 
 test-Standalone:
 	@echo "testing building standalone Rmath"
@@ -66,12 +58,13 @@ test-Standalone:
 
 
 clean:
-	@rm -f *.Rout *.Rout.fail internet.Rout2 \
+	@rm -f *.Rout *.Rout.fail \
 	  Rplot* Rprof.out Rprofmem.out \
 	  reg-examples-*.pdf  testCID.* \
 	  reg-plot-latin1.ps reg-plot.ps \
 	  reg-plot-latin1.pdf reg-plot.pdf reg-tests-*.pdf \
-	  R-exts.* R-intro.R no-segfault.R
+	  R-exts.* R-intro.R no-segfault.R R-intro.Rout \
+	  p-qbeta-strict-tst.pdf
 	@rm -f R-exts_res.rc Makedeps
 	@rm -f FALSE* PACKAGES* .R .tex mirrors.html ./-package.Rd ex.gz
 	@rm -f testit.txt testit.html testit.tex testit-Ex.R

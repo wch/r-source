@@ -1,7 +1,7 @@
 #  File src/library/utils/R/object.size.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -19,40 +19,55 @@
 object.size <- function(x)
     structure(.Call(C_objectSize, x), class = "object_size")
 
-format.object_size <- function(x, units = "b", ...)
+format.object_size <- function(x, units = "b", standard = "auto", digits = 1L, ...)
 {
-    units <- match.arg(units, c("b", "auto", "Kb", "Mb", "Gb", "Tb", "Pb",
-				"B", "KB", "MB", "GB", "TB", "PB",
-				"KiB", "MiB", "GiB", "TiB",
-				"PiB", "EiB", "ZiB", "YiB"))
-    if (units == "auto")
-	units <-
-	    if      (x >= 1024^4) "Tb"
-            else if (x >= 1024^3) "Gb"
-	    else if (x >= 1024^2) "Mb"
-	    else if (x >= 1024  ) "Kb" else "b"
-    switch(units,
-	   "b" =, "B" = paste(x, "bytes"),
-	   "Kb" =, "KB" = paste(round(x/1024  , 1L), "Kb"),
-	   "Mb" =, "MB" = paste(round(x/1024^2, 1L), "Mb"),
-	   "Gb" =, "GB" = paste(round(x/1024^3, 1L), "Gb"),
-	   "Tb" =, "TB" = paste(round(x/1024^4, 1L), "Tb"),
-	   "Pb" =, "PB" = paste(round(x/1024^5, 1L), "Pb"),
-	   "KiB" = paste(round(x/1024  , 1L), "KiB"),
-	   "MiB" = paste(round(x/1024^2, 1L), "MiB"),
-	   "GiB" = paste(round(x/1024^3, 1L), "GiB"),
-	   "TiB" = paste(round(x/1024^4, 1L), "TiB"),
-	   "PiB" = paste(round(x/1024^5, 1L), "PiB"),
-	   "EiB" = paste(round(x/1024^6, 1L), "EiB"),
-	   "ZiB" = paste(round(x/1024^7, 1L), "ZiB"),
-	   "YiB" = paste(round(x/1024^8, 1L), "YiB")
-	   )
+    known_bases <- c(legacy = 1024, IEC = 1024, SI = 1000)
+    known_units <- list(
+	SI     = c("B", "kB",  "MB",  "GB", "TB", "PB",  "EB",  "ZB",  "YB"),
+	IEC    = c("B", "KiB", "MiB", "GiB","TiB","PiB", "EiB", "ZiB", "YiB"),
+	legacy = c("b", "Kb",  "Mb",  "Gb", "Tb", "Pb"),
+	LEGACY = c("B", "KB",  "MB",  "GB", "TB", "PB") # <- only for "KB"
+    )
+
+    units <- match.arg(units,
+		       c("auto", unique(unlist(known_units), use.names = FALSE)))
+    standard <- match.arg(standard, c("auto", names(known_bases)))
+
+    if (standard == "auto") { ## infer 'standard' from 'units':
+	standard <- "legacy" # default; may become "SI"
+	if (units != "auto") {
+	    if (grepl("iB$", units))
+		standard <- "IEC"
+	    else if (grepl("b$", units))
+		standard <- "legacy"   ## keep when "SI" is the default
+	    else if (units == "kB")
+		## SPECIAL: Drop when "SI" becomes the default
+		stop("For SI units, specify 'standard = \"SI\"'")
+	}
+    }
+    base      <- known_bases[[standard]]
+    units_map <- known_units[[standard]]
+
+    if (units == "auto") {
+	power <- if (x <= 0) 0L else min(as.integer(log(x, base = base)),
+					 length(units_map) - 1L)
+    } else {
+	power <- match(toupper(units), toupper(units_map)) - 1L
+	if (is.na(power))
+	    stop(gettextf("Unit \"%s\" is not part of standard \"%s\"",
+			  sQuote(units), sQuote(standard)), domain = NA)
+    }
+    unit <- units_map[power + 1L]
+    ## SPECIAL: Use suffix 'bytes' instead of 'b' for 'legacy' (or always) ?
+    if (power == 0 && standard == "legacy") unit <- "bytes"
+
+    paste(round(x / base^power, digits=digits), unit)
 }
 
 print.object_size <-
-    function(x, quote = FALSE, units = "b", ...)
+    function(x, quote = FALSE, units = "b", standard = "auto", digits = 1L, ...)
 {
-    y <- format.object_size(x, units = units)
+    y <- format.object_size(x, units=units, standard=standard, digits=digits)
     if(quote) print.default(y, ...) else cat(y, "\n", sep = "")
     invisible(x)
 }

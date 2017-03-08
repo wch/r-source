@@ -1,7 +1,7 @@
 #  File src/library/tools/R/check.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 ## R developers can use this to debug the function by running it
 ## directly as tools:::.check_packages(args), where the args should
 ## be what commandArgs(TRUE) would return, that is a character vector
-## of (space-delimited) terms that would be passed to R CMD checks.
+## of (space-delimited) terms that would be passed to R CMD check.
 
 ## Used for INSTALL and Rd2pdf
 run_Rcmd <- function(args, out = "", env = "")
@@ -735,6 +735,48 @@ setRlibs <-
                 printLog(Log, "NeedsCompilation field should likely be 'yes'", "\n")
             }
         }
+
+        ## check for BugReports field added at R 3.4.0
+        ## This used to check for empty first line as that
+        ## breaks bug.report() in R <= 3.3.2 -- but read.dcf in those
+        ## versions adds back the newline.
+        if(!is.na(BR <- db["BugReports"])) {
+            if (nzchar(BR)) {
+                msg <- ""
+                ## prior to 3.4.0 this was said to be
+                ## 'a URL to which bug reports about the package
+                ## should be submitted'
+                ## We will take that to mean a http[s]:// URL,
+                isURL <- grepl("^https?://[^ ]*$", BR)
+                ## As from 3.4.0 bug,report() is able to extract
+                ## an email addr.
+                if(!isURL) {
+                    findEmail <- function(x) {
+                        x <- paste(x, collapse = " ")
+                        if (grepl("mailto:", x))
+                            sub(".*mailto:([^ ]+).*", "\\1", x)
+                        else if (grepl("[^<]*<([^>]+)", x))
+                            sub("[^<]*<([^>]+)>.*", "\\1", x)
+                        else NA_character_
+                    }
+                    msg <- if (is.na(findEmail(BR))) {
+                        if (grepl("(^|.* )[^ ]+@[[:alnum:]._]+", BR))
+                            "BugReports field is not a suitable URL but appears to contain an email address\n  not specified by mailto: nor contained in < >"
+                        else
+                            "BugReports field should be the URL of a single webpage"
+                    } else
+                        "BugReports field is not a suitable URL but contains an email address\n  which will be used as from R 3.4.0"
+                }
+            } else {
+                msg <- "BugReports field should not be empty"
+            }
+            if (nzchar(msg)) {
+                if(!any) noteLog(Log)
+                any <- TRUE
+                printLog(Log, msg, "\n")
+           }
+        }
+
 
         out <- format(.check_package_description2(dfile))
         if (length(out)) {
@@ -2411,6 +2453,7 @@ setRlibs <-
             else noteLog(Log)
             printLog0(Log, paste(c(out, ""), collapse = "\n"))
             nAPIs <- length(grep("Found non-API", out))
+            nRS <- length(grep("Found no call", out))
             nBad <- length(grep(", possibly from ", out))
             msg <- if (nBad) {
                 if(haveObjs)
@@ -2428,6 +2471,9 @@ setRlibs <-
             if(nAPIs)
                 msg <- c(msg,
                          "Compiled code should not call non-API entry points in R.\n")
+            if(nRS)
+                msg <- c(msg,
+                         "It is good practice to register native routines and to disable symbol search.\n")
             wrapLog("\n", paste(msg, collapse = " "), "\n",
                     "See 'Writing portable packages'",
                     "in the 'Writing R Extensions' manual.\n")
@@ -3291,6 +3337,7 @@ setRlibs <-
                                 useBytes = TRUE)
                 warns <- grep("^Warning: file .* is not portable",
                               out, value = TRUE, useBytes = TRUE)
+                print_time(t1, t2, Log)
                 if (status) {
                     keep <- as.numeric(Sys.getenv("_R_CHECK_VIGNETTES_NLINES_",
                                                   "25"))
@@ -3313,7 +3360,6 @@ setRlibs <-
                         unlink(vd2, recursive = TRUE)
                     if (!config_val_to_logical(Sys.getenv("_R_CHECK_ALWAYS_LOG_VIGNETTE_OUTPUT_", "false")))
                             unlink(outfile)
-                    print_time(t1, t2, Log)
                     resultLog(Log, "OK")
                 }
             } else {
@@ -4442,7 +4488,7 @@ setRlibs <-
                 R.version[["major"]], ".",  R.version[["minor"]],
                 " (r", R.version[["svn rev"]], ")\n", sep = "")
             cat("",
-                "Copyright (C) 1997-2013 The R Core Team.",
+                "Copyright (C) 1997-2017 The R Core Team.",
                 "This is free software; see the GNU General Public License version 2",
                 "or later for copying conditions.  There is NO warranty.",
                 sep="\n")
@@ -4684,6 +4730,7 @@ setRlibs <-
         Sys.setenv("_R_CHECK_S3_METHODS_NOT_REGISTERED_" = "TRUE")
         Sys.setenv("_R_CHECK_PACKAGE_DATASETS_SUPPRESS_NOTES_" = "TRUE")
         Sys.setenv("_R_CHECK_PACKAGES_USED_IGNORE_UNUSED_IMPORTS_" = "TRUE")
+        Sys.setenv("_R_CHECK_NATIVE_ROUTINE_REGISTRATION_" = "TRUE")
         R_check_vc_dirs <- TRUE
         R_check_executables_exclusions <- FALSE
         R_check_doc_sizes2 <- TRUE

@@ -571,7 +571,7 @@ make mobi
 @noindent
 This requires @command{ebook-convert} from @command{Calibre}
 (@uref{http://calibre-ebook.com/download}), or from most Linux
-distributions).  If necessary the path to @command{ebook-convert} can be
+distributions.  If necessary the path to @command{ebook-convert} can be
 set as make macro @env{EBOOK} to by editing @file{doc/manual/Makefile}
 (which contains a commented value suitable for macOS).
 
@@ -1085,8 +1085,8 @@ cd tests
 
 @noindent
 and other useful targets are @code{test-BasePackages} and
-@code{test-Recommended} to the run tests of the standard and
-recommended packages (if installed) respectively.
+@code{test-Recommended} to run tests of the standard and recommended
+packages (if installed) respectively.
 
 This re-runs all the tests relevant to the installed @R{} (including for
 example code in the package vignettes), but not for example the ones
@@ -1113,10 +1113,9 @@ Alternatively, the installed @R{} can be run, preferably with
 
 @example
 Sys.setenv(LC_COLLATE = "C", LC_TIME = "C", LANGUAGE = "en")
-library("tools")
-testInstalledBasic("both")
-testInstalledPackages(scope = "base")
-testInstalledPackages(scope = "recommended")
+tools::testInstalledBasic("both")
+tools::testInstalledPackages(scope = "base")
+tools::testInstalledPackages(scope = "recommended")
 @end example
 
 @noindent
@@ -1127,7 +1126,7 @@ directory and run fewer tests than the first approach: in particular
 they do not test things which need Internet access---that can be tested
 by
 @example
-testInstalledBasic("internet")
+tools::testInstalledBasic("internet")
 @end example
 
 These tests work best if @command{diff} (in @file{Rtools*.exe} for
@@ -2369,7 +2368,7 @@ For example, to use a different Fortran compiler on macOS
 @example
 F77 = /usr/local/gfortran/bin/gfortran
 FC = /usr/local/gfortran/bin/gfortran
-FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin14/5.2.0 
+FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin16/6.3.0 
   -L/usr/local/gfortran/lib -lgfortran -lquadmath -lm
 @end example
 
@@ -2600,12 +2599,12 @@ can be a concatenation of the @file{DESCRIPTION} files of the packages
 separated by blank lines, but only a few of the fields are needed.  The
 simplest way to set up such a file is to use function
 @code{write_PACKAGES} in the @pkg{tools} package, and its help explains
-which fields are needed.  Optionally there can also be a
-@file{PACKAGES.gz} file, a @command{gzip}-compressed version of
-@file{PACKAGES}---as this will be downloaded in preference to
-@file{PACKAGES} it should be included for large repositories.  (If you
-have a mis-configured server that does not report correctly non-existent
-files you may need @file{PACKAGES.gz}.)
+which fields are needed.  Optionally there can also be
+@file{PACKAGES.rds} and @file{PACKAGES.gz} files, downloaded in
+preference to @file{PACKAGES}.  (These files will be smaller:
+@file{PACKAGES.rds} is used only from @R{} 3.4.0.  If you have a
+mis-configured server that does not report correctly non-existent files
+you may need these files.)
 
 To add your repository to the list offered by @code{setRepositories()},
 see the help file for that function.
@@ -2973,7 +2972,7 @@ build.  You can often build both and install them in the same place:
 distributions.)
 
 Even on 64-bit builds of @R{} there are limits on the size of @R{}
-objects (see @code{help("Memory-limits")}, some of which stem from the
+objects (see @code{help("Memory-limits")}), some of which stem from the
 use of 32-bit integers (especially in FORTRAN code).  For example, the
 dimensions of an array are limited to @math{2^{31} - 1}.
 
@@ -3280,32 +3279,40 @@ possible names in Linux distributions include
 @code{xz-devel}/@code{xz-libs} and @code{liblzma-dev}.} version 5.0.3 or
 later are required.
 
-@c PCRE[1] 8.32 is from Nov 2012, but Ubuntu 14.04LTS does not have it 
+@c PCRE[1] 8.32 is from Nov 2012, but Ubuntu 14.04LTS has 8.31 
 @c and that is supported until Apr 2019.
+@c Debian Wheezy has 8.30, Ubuntu 12.04LTS has 8.12
 PCRE@footnote{sometimes known as PCRE1, and not PCRE2 which started at
 version 10.0.} (version 8.32 or later, although versions 8.10--8.31 will
 be accepted with a deprecation warning) is required (or just its library
-and headers if packaged separately).  PCRE must be built with UTF-8
-support (not the default, and checked by @command{configure}) and
-support for Unicode properties is assumed by some @R{} packages.  JIT
-support is desirable for the best performance: support for this and
-Unicode properties can be checked at run-time by calling
-@code{pcre_config()}.  If building PCRE for use with @R{} a suitable
-@command{configure} command might be
+and headers if packaged separately).  Only the `8-bit' interface is used
+(and only that is built by default when installing from sources).  PCRE
+must be built with UTF-8 support (not the default, and checked by
+@command{configure}) and support for Unicode properties is assumed by
+some @R{} packages.  JIT support (optionally available from 8.20) is
+desirable for the best performance: support for this and Unicode
+properties can be checked at run-time by calling @code{pcre_config()}.
+If building PCRE for use with @R{} a suitable @command{configure}
+command might be
 @example
 ./configure --enable-utf --enable-unicode-properties --enable-jit --disable-cpp
 @end example
 @noindent  
 The @option{--enable-jit} flag is supported for most common CPUs.
 
+@c libcurl 7.22.0 was released in Sep 2011, in Ubuntu 12.04 LTS,
+@c   end-of-life Apr 2017
+@c libcurl 7.26.0 was released in May 2012, still in Debian 7 Wheezy LTS,
+@c   end-of-life May 2018. 
 @c libcurl 7.28.0 was released in Oct 2012
-Library @code{libcurl} (version 7.28.0 or later@footnote{but not a major
+Library @code{libcurl} (version 7.22.0 or later@footnote{but not a major
 version greater than 7 should there ever be one: the major version has
-been 7 since 2000.}) is required.  Information on @code{libcurl} is
-found from the @command{curl-config} script: if that is missing or needs
-to be overridden@footnote{for example to specify static linking with a
-build which has both shared and static libraries.} there are macros to
-do so described in file @file{config.site}.
+been 7 since 2000.}) is required, with at least 7.28.0 being desirable.
+Information on @code{libcurl} is found from the @command{curl-config}
+script: if that is missing or needs to be overridden@footnote{for
+example to specify static linking with a build which has both shared and
+static libraries.} there are macros to do so described in file
+@file{config.site}.
 
 A @command{tar} program is needed to unpack the sources and packages
 (including the recommended packages).  A version@footnote{Such as
@@ -4447,11 +4454,11 @@ to be satisfactory.
 The ultimate sources for package @pkg{compiler} are in its @file{noweb}
 directory.  To re-create the sources from
 @file{src/library/compiler/noweb/compiler.nw}, the command
-@command{notangle} is required.  This is likely to need to be installed
-from the sources at @url{https://www.cs.tufts.edu/~nr/noweb/} (and can
-also be found on CTAN).  The package sources are only re-created even in
-maintainer mode if @file{src/library/compiler/noweb/compiler.nw} has
-been updated.
+@command{notangle} is required.  Some Linux distributions include this
+command in package @pkg{noweb}.  It can also be installed from the sources
+at @url{https://www.cs.tufts.edu/~nr/noweb/} (and can also be found on
+CTAN).  The package sources are only re-created even in maintainer mode if
+@file{src/library/compiler/noweb/compiler.nw} has been updated.
 
 It is likely that in future creating @code{configure} will need the GNU
 `autoconf archive' installed.  This can be found at
@@ -4566,7 +4573,7 @@ only contain a subset of the available glyphs (and are often fixed-width
 designed for use in terminals).  In such locales @emph{fontsets} are
 used, made up of fonts encoded in other encodings.  If the locale you
 are using has an entry in the @samp{XLC_LOCALE} directory (typically
-@file{/usr/share/X11/locale}, it is likely that all you need to do is to
+@file{/usr/share/X11/locale}), it is likely that all you need to do is to
 pick a suitable font specification that has fonts in the encodings
 specified there.  If not, you may have to get hold of a suitable locale
 entry for X11.  This may mean that, for example, Japanese text can be
@@ -4596,7 +4603,9 @@ directory or elsewhere, for example,
 @cindex Linux
 
 Linux is the main development platform for @R{}, so compilation from the
-sources is normally straightforward with the standard compilers.
+sources is normally straightforward with the standard compilers and
+libraries.@footnote{For example, @code{glibc}: other C libraries such as
+@code{musl} have been used but are not routinely tested.}
 
 Remember that some package management systems (such as @acronym{RPM} and
 deb) make a distinction between the user version of a package and the
@@ -4652,7 +4661,7 @@ LDFLAGS="-L/usr/local/lib64 -L/usr/local/lib"
 @noindent
 is appropriate since most (but not all) software installs its 64-bit
 libraries in @file{/usr/local/lib64}.  To build a 32-bit version of @R{}
-on @cputype{x86_64} with Fedora 21 we used
+on @cputype{x86_64} with Fedora 24 we used
 
 @example
 CC="gcc -m32"
@@ -4759,7 +4768,7 @@ as @option{-mp} (shown above) or @option{-fp-model precise -fp-model
 source}, depending on the compiler version.
 
 Others have reported success with versions 10.x and 11.x.  
-% https://stat.ethz.ch/pipermail/r-devel/2015-September/071717.html
+@c https://stat.ethz.ch/pipermail/r-devel/2015-September/071717.html
 Bjørn-Helge Mevik reported success with version 2015.3 of the compilers,
 using (for a SandyBridge CPU on Centos 6.x)
 
@@ -4853,12 +4862,10 @@ binary distribution of @R{} you will probably need to specify the name
 or path in a personal or site @file{Makevars} file (@pxref{Customizing
 package compilation}).
 
-More recent and complete distributions of @command{clang} are usually
-available from @uref{http://llvm.org/releases/}.  In particular, these
-include support for the `Address Sanitizer' (not included by Apple until
-Xcode 7) and for OpenMP@footnote{This also needs the OpenMP runtime,
-which was distributed separately at that site for 3.7.0.} in version
-3.7.0 and later.
+More recent and complete distributions of @command{clang} are often
+available from @uref{http://llvm.org/releases/}: for example at the time
+of writing for 3.9.0 but not 3.9.1.  In particular, these may include
+support for OpenMP.
 
 Pre-compiled versions of many of the @ref{Useful libraries and programs}
 are available from @uref{https://r.research.att.com/libs/}.  You will
@@ -4957,16 +4964,28 @@ changed their installation locations.
 @noindent
 although linked versions under @file{/usr/X11} will be found.
 
-The Fortran compiler for El Capitan from (at the time of writing)
-@uref{http://coudert.name/@/software/@/gfortran-6.1-ElCapitan.dmg} works on
-Sierra: those at @uref{https://r.research.att.com/} have failure
-reports.  One way to use the Coudert build is to have a
-@file{~/.R/Makevars} file similar to
+There are installers@footnote{Some of these are unsigned packages: to
+install them you may need to right-click and select @code{Open with ->
+Installer}.} for Fortran compilers for El Capitan and Sierra at
+@uref{http://coudert.name/@/software/@/gfortran-6.1-ElCapitan.dmg} and
+@uref{http://coudert.name/@/software/@/gfortran-6.3-Sierra.dmg}: those
+at @uref{https://r.research.att.com/} have failure reports on Sierra.
+One way to use the Coudert build with a binary distribution of @R{} is
+to have a @file{~/.R/Makevars} file similar to (El Capitan)
 @smallexample
 F77 = /usr/local/gfortran/bin/gfortran
 FC = /usr/local/gfortran/bin/gfortran
 FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin15/6.1.0 -L/usr/local/gfortran/lib -lgfortran -lquadmath -lm
 @end smallexample
+or (Sierra)
+@smallexample
+F77 = /usr/local/gfortran/bin/gfortran
+FC = /usr/local/gfortran/bin/gfortran
+FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin16/6.3.0 -L/usr/local/gfortran/lib -lgfortran -lquadmath -lm
+@end smallexample
+
+These compilers are also available from a @code{CRAN} mirror: select
+`Other' under `Software' from the left-hand menu.
 
 @node Tcl/Tk headers and libraries, Java (macOS), El Capitan and Sierra, macOS
 @subsection Tcl/Tk headers and libraries

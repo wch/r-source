@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-12   The R Core Team.
+ *  Copyright (C) 2001-2017 The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -35,15 +35,15 @@ void HoltWinters (double *x, int *xl, double *alpha, double *beta,
 		  double *trend, double *season);
 
 void
-F77_SUB(eureka)(int *lr, double *r__, double *g,
-		double *f, double *var, double *a);
+F77_NAME(eureka)(int *lr, double *r__, double *g,
+		 double *f, double *var, double *a);
 
 void
-F77_SUB(stl)(double *y, int *n, int *np, int *ns,
-	     int *nt, int *nl, int *isdeg, int *itdeg, int *ildeg,
-	     int *nsjump, int *ntjump, int *nljump, int *ni,
-	     int *no, double *rw, double *season, double *trend,
-	     double *work);
+F77_NAME(stl)(double *y, int *n, int *np, int *ns,
+	      int *nt, int *nl, int *isdeg, int *itdeg, int *ildeg,
+	      int *nsjump, int *ntjump, int *nljump, int *ni,
+	      int *no, double *rw, double *season, double *trend,
+	      double *work);
 
 typedef struct
 {

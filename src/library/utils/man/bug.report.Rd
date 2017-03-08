@@ -1,6 +1,6 @@
 % File src/library/utils/man/bug.report.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{bug.report}
@@ -36,12 +36,14 @@ bug.report(subject = "",  address,
   bugs tracker at \url{https://bugs.r-project.org/}.
 
   If \code{package} is specified, it is assumed that the bug report is
-  about that package, and parts of its \file{DESCRIPTION} file are
-  added to the standard information.  If the package has a
-  \code{BugReports} field in the \file{DESCRIPTION} file, that URL
-  will be opened using \code{\link{browseURL}}, otherwise an email
-  directed to the package maintainer will be generated using
-  \code{\link{create.post}}.
+  about that package, and parts of its \file{DESCRIPTION} file are added
+  to the standard information.  If the package has a non-empty
+  \code{BugReports} field in the \file{DESCRIPTION} file specifying the
+  URL of a webpage, that URL will be opened using
+  \code{\link{browseURL}}, otherwise an email directed to the package
+  maintainer will be generated using \code{\link{create.post}}.  If
+  there is any other form of \code{BugReports} field or a \code{Contact}
+  field, this is examined as it may provide a preferred email address.
 }
 \value{Nothing useful.}
 \section{When is there a bug?}{

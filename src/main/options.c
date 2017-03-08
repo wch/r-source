@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2015   The R Core Team.
+ *  Copyright (C) 1998-2017   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -72,6 +72,10 @@
  *	"warning.length"
  *	"warning.expression"
  *	"nwarnings"
+
+ *	"matprod"
+ *      "PCRE_study"
+ *      "PCRE_use_JIT"
 
  *
  * S additionally/instead has (and one might think about some)
@@ -244,9 +248,9 @@ void attribute_hidden InitOptions(void)
     char *p;
 
 #ifdef HAVE_RL_COMPLETION_MATCHES
-    PROTECT(v = val = allocList(17));
+    PROTECT(v = val = allocList(21));
 #else
-    PROTECT(v = val = allocList(16));
+    PROTECT(v = val = allocList(20));
 #endif
 
     SET_TAG(v, install("prompt"));
@@ -319,6 +323,34 @@ void attribute_hidden InitOptions(void)
     SETCAR(v, ScalarLogical(R_CBoundsCheck));
     v = CDR(v);
 
+    SET_TAG(v, install("matprod"));
+    switch(R_Matprod) {
+	case MATPROD_DEFAULT: p = "default"; break;
+	case MATPROD_INTERNAL: p = "internal"; break;
+	case MATPROD_BLAS: p = "blas"; break;
+	case MATPROD_DEFAULT_SIMD: p = "default.simd"; break;
+    }
+    SETCAR(v, mkString(p));
+    v = CDR(v);
+
+    SET_TAG(v, install("PCRE_study"));
+    if (R_PCRE_study == -1) 
+	SETCAR(v, ScalarLogical(TRUE));
+    else if (R_PCRE_study == -2) 
+	SETCAR(v, ScalarLogical(FALSE));
+    else
+	SETCAR(v, ScalarInteger(R_PCRE_study));
+    v = CDR(v);
+
+    SET_TAG(v, install("PCRE_use_JIT"));
+    SETCAR(v, ScalarLogical(R_PCRE_use_JIT));
+    v = CDR(v);
+
+    SET_TAG(v, install("PCRE_limit_recursion"));
+    R_PCRE_limit_recursion = NA_LOGICAL;
+    SETCAR(v, ScalarLogical(R_PCRE_limit_recursion));
+    v = CDR(v);
+
 #ifdef HAVE_RL_COMPLETION_MATCHES
     /* value from Rf_initialize_R */
     SET_TAG(v, install("rl_word_breaks"));
@@ -337,7 +369,7 @@ SEXP attribute_hidden do_getOption(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP x = CAR(args);
     if (!isString(x) || LENGTH(x) != 1)
 	error(_("'%s' must be a character string"), "x");
-    return duplicate(GetOption1(install(CHAR(STRING_ELT(x, 0)))));
+    return duplicate(GetOption1(installTrChar(STRING_ELT(x, 0))));
 }
 
 
@@ -648,6 +680,53 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 		R_CBoundsCheck = k;
 		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarLogical(k)));
 	    }
+	    else if (streql(CHAR(namei), "matprod")) {
+		SEXP s = asChar(argi);
+		if (s == NA_STRING || LENGTH(s) == 0)
+		    error(_("invalid value for '%s'"), CHAR(namei));
+		if (streql(CHAR(s), "default"))
+		    R_Matprod = MATPROD_DEFAULT;
+		else if (streql(CHAR(s), "internal"))
+		    R_Matprod = MATPROD_INTERNAL;
+		else if (streql(CHAR(s), "blas"))
+		    R_Matprod = MATPROD_BLAS;
+		else if (streql(CHAR(s), "default.simd")) {
+		    R_Matprod = MATPROD_DEFAULT_SIMD;
+#if !defined(_OPENMP) || !defined(HAVE_OPENMP_SIMDRED)
+		    warning(_("OpenMP SIMD is not supported in this build of R"));
+#endif
+		} else
+		    error(_("invalid value for '%s'"), CHAR(namei));
+		SET_VECTOR_ELT(value, i, SetOption(tag, duplicate(argi)));
+	    }
+	    else if (streql(CHAR(namei), "PCRE_study")) {
+		if (TYPEOF(argi) == LGLSXP) {
+		    int k = asLogical(argi) > 0;
+		    R_PCRE_study = k ? -1 : -2;
+		    SET_VECTOR_ELT(value, i, 
+				   SetOption(tag, ScalarLogical(k)));
+		} else {
+		    R_PCRE_study = asInteger(argi);
+		    if (R_PCRE_study < 0) {
+			R_PCRE_study = -2;
+			SET_VECTOR_ELT(value, i, 
+				       SetOption(tag, ScalarLogical(-2)));
+		    } else
+			SET_VECTOR_ELT(value, i, 
+				       SetOption(tag, ScalarInteger(R_PCRE_study)));
+		}
+	    }
+	    else if (streql(CHAR(namei), "PCRE_use_JIT")) {
+		int use_JIT = asLogical(argi);
+		R_PCRE_use_JIT = (use_JIT > 0); // NA_LOGICAL is < 0
+		SET_VECTOR_ELT(value, i, 
+			       SetOption(tag, ScalarLogical(R_PCRE_use_JIT)));
+	    }
+	    else if (streql(CHAR(namei), "PCRE_limit_recursion")) {
+		R_PCRE_limit_recursion = asLogical(argi);
+		SET_VECTOR_ELT(value, i, 
+			       SetOption(tag, ScalarLogical(R_PCRE_limit_recursion)));
+	    }
 	    else {
 		SET_VECTOR_ELT(value, i, SetOption(tag, duplicate(argi)));
 	    }
@@ -657,7 +736,7 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    const char *tag;
 	    if (!isString(argi) || LENGTH(argi) <= 0)
 		error(_("invalid argument"));
-	    tag = CHAR(STRING_ELT(argi, 0));
+	    tag = translateChar(STRING_ELT(argi, 0));
 	    if (streql(tag, "par.ask.default")) {
 		error(_("\"par.ask.default\" has been replaced by \"device.ask.default\""));
 	    }

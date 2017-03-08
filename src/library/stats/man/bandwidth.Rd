@@ -1,6 +1,6 @@
 % File src/library/stats/man/bandwidth.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{bandwidth}
@@ -65,10 +65,23 @@ bw.SJ(x, nb = 1000, lower = 0.1 * hmax, upper = hmax,
   \code{\link{uniroot}}) and because of that, enlarges the interval
   \code{c(lower, upper)} when the boundaries were not user-specified and
   do not bracket the root.
+
+  The last three methods use all pairwise binned distances: they are of
+  complexity \eqn{O(n^2)} up to \code{n = nb/2} and \eqn{O(n)}
+  thereafter.  Because of the binning, the results differ slightly when
+  \code{x} is translated or sign-flipped.
 }
 \value{
   A bandwidth on a scale suitable for the \code{bw} argument
   of \code{density}.
+}
+\note{
+  Long vectors \code{x} are not supported, but neither are they by
+  \code{\link{density}} and kernel density estimation and for more than
+  a few thousand points a histogram would be preferred.
+}
+\author{
+  B. D. Ripley, taken from early versions of package \pkg{MASS}.
 }
 \seealso{
   \code{\link{density}}.

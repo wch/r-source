@@ -130,6 +130,8 @@
  R_OpenSiteFile
  R_OpenSysInitFile
  R_OutputCon
+ R_PCRE_study
+ R_PCRE_use_JIT
  R_PPStackSize
  R_Parse1Buffer
  R_Parse1File

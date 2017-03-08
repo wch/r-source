@@ -140,6 +140,8 @@ person(given = NULL, family = NULL, middle = NULL,
       intellectual property.}
     \item{\code{"dtc"}}{(Data contributor) Use for persons who
       contributed data sets for the package.}
+    \item{\code{"fnd"}}{(Funder) Use for persons or organizations that
+      furnished financial support for the development of the package.}
     \item{\code{"ths"}}{(Thesis advisor) If the package is part of a
       thesis, use for the thesis advisor.}
     \item{\code{"trl"}}{(Translator) If the R code is a translation from

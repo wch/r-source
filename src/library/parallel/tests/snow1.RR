@@ -21,6 +21,7 @@ parSapply(cl, 1:20, get("+"), 3)
 parSapply(cl, 1, identity)
 
 if(require(boot)) {
+    set.seed(11)
     ## A bootstrapping example, which can be done in many ways:
     clusterEvalQ(cl, {
         ## set up each worker.  Could also use clusterExport()

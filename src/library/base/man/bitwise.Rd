@@ -1,6 +1,6 @@
 % File src/library/base/man/octmode.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2012 R Core Team
+% Copyright 2016-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{bitwise}
@@ -45,20 +45,29 @@ bitwShiftR(a, n)
 \seealso{
   The logical operators, \code{\link{!}},  \code{\link{&}},
   \code{\link{|}}, \code{\link{xor}}.
+  Notably these \emph{do} work bitwise for \code{\link{raw}} arguments.
 
-  The classes \code{"octmode"} and \code{"hexmnode"} whose
+  The classes \code{"\link{octmode}"} and \code{"\link{hexmode}"} whose
   implementation of the standard logical operators is based on these
   functions.
 
-  Package \pkg{bitOps} has similar functions for numeric vectors which
+  Package \CRANpkg{bitops} has similar functions for numeric vectors which
   differ in the way they treat integers \eqn{2^{31}}{2^31} or larger.
 }
 
 \examples{
-bitwAnd(15L, 7L)
-bitwOr(15L, 7L)
-bitwXor(15L, 7L)
-bitwXor(-1L, 1L)
+bitwNot(0:12) # -1 -2  ... -13
+bitwAnd(15L, 7L) #  7
+bitwOr (15L, 7L) # 15
+bitwXor(15L, 7L) #  8
+bitwXor(-1L, 1L) # -2
+
+## The "same" for 'raw' instead of integer :
+rr12 <- as.raw(0:12) ; rbind(rr12, !rr12)
+c(r15 <- as.raw(15), r7 <- as.raw(7)) #  0f 07
+r15 & r7    # 07
+r15 | r7    # 0f
+xor(r15, r7)# 08
 
 bitwShiftR(-1, 1:31) # shifts of 2^32-1 = 4294967295
 }

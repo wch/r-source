@@ -1,6 +1,6 @@
 % File src/library/base/man/with.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{with}
@@ -43,6 +43,18 @@ within(data, expr, \dots)
   frame), and returns it.  \code{within} can be used as an alternative
   to \code{transform}.
 }
+\note{
+  For \emph{interactive} use this is very effective and nice to read.  For
+  \emph{programming} however, i.e., in one's functions, more care is
+  needed, and typically one should refrain from using \code{with()}, as,
+  e.g., variables in \code{data} may accidentally override local
+  variables, see the reference.
+
+  Further, when using modeling or graphics functions with an explicit
+  \code{data} argument (and typically using \code{\link{formula}}s),
+  it is typically preferred to use the \code{data} argument of that
+  function rather than to use \code{with(data, ...)}.
+}
 \value{
   For \code{with}, the value of the evaluated \code{expr}.  For
   \code{within}, the modified object.
@@ -51,18 +63,23 @@ within(data, expr, \dots)
   \code{\link{evalq}}, \code{\link{attach}}, \code{\link{assign}},
   \code{\link{transform}}.
 }
-\examples{
-require(stats); require(graphics)
-#examples from glm:
-\donttest{
-library(MASS)
-with(anorexia, {
-    anorex.1 <- glm(Postwt ~ Prewt + Treat + offset(Prewt),
-                    family = gaussian)
-    summary(anorex.1)
-})
+\references{
+  Thomas Lumley (2003)  \emph{Standard nonstandard evaluation rules}.
+  \url{http://developer.r-project.org/nonstandard-eval.pdf}
 }
+\examples{
+with(mtcars, mpg[cyl == 8  &  disp > 350])
+    # is the same as, but nicer than
+mtcars$mpg[mtcars$cyl == 8  &  mtcars$disp > 350]
 
+require(stats); require(graphics)
+
+# examples from glm:
+with(data.frame(u = c(5,10,15,20,30,40,60,80,100),
+                lot1 = c(118,58,42,35,27,25,21,19,18),
+                lot2 = c(69,35,26,21,18,16,13,12,12)),
+    list(summary(glm(lot1 ~ log(u), family = Gamma)),
+         summary(glm(lot2 ~ log(u), family = Gamma))))
 
 aq <- within(airquality, {     # Notice that multiple vars can be changed
     lOzone <- log(Ozone)
@@ -72,12 +89,6 @@ aq <- within(airquality, {     # Notice that multiple vars can be changed
     rm(Day, Temp)
 })
 head(aq)
-
-with(data.frame(u = c(5,10,15,20,30,40,60,80,100),
-                lot1 = c(118,58,42,35,27,25,21,19,18),
-                lot2 = c(69,35,26,21,18,16,13,12,12)),
-    list(summary(glm(lot1 ~ log(u), family = Gamma)),
-         summary(glm(lot2 ~ log(u), family = Gamma))))
 
 # example from boxplot:
 with(ToothGrowth, {

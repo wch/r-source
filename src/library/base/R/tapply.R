@@ -1,7 +1,7 @@
 #  File src/library/base/R/tapply.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
-tapply <- function (X, INDEX, FUN = NULL, ..., simplify = TRUE)
+tapply <- function (X, INDEX, FUN = NULL, ..., default = NA, simplify = TRUE)
 {
     FUN <- if (!is.null(FUN)) match.fun(FUN)
     if (!is.list(INDEX)) INDEX <- list(INDEX)
@@ -43,13 +43,13 @@ tapply <- function (X, INDEX, FUN = NULL, ..., simplify = TRUE)
     names(ans) <- NULL
     index <- as.logical(lengths(ans))  # equivalently, lengths(ans) > 0L
     ans <- lapply(X = ans[index], FUN = FUN, ...)
-    if (simplify && all(lengths(ans) == 1L)) {
-	ansmat <- array(dim = extent, dimnames = namelist)
-	ans <- unlist(ans, recursive = FALSE)
-    } else {
-	ansmat <- array(vector("list", prod(extent)),
-			dim = extent, dimnames = namelist)
-    }
+    ansmat <- array(
+	if (simplify && all(lengths(ans) == 1L)) {
+	    ans <- unlist(ans, recursive = FALSE, use.names = FALSE)
+	    if(!is.null(ans) && is.na(default) && is.atomic(ans)) vector(typeof(ans))
+	    else default
+	} else vector("list", prod(extent)),
+	dim = extent, dimnames = namelist)
     if(length(ans)) {
 	ansmat[index] <- ans
     }

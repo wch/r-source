@@ -108,7 +108,7 @@ serialize(women, con) # binary, bzip2-compressed
 close(con)
 identical(women, readRDS("women2"))
 
-\testonly{unlink(c("women.rds", "women2", "women3"))}
+\dontshow{unlink(c("women.rds", "women2", "women3"))}
 }
 
 \keyword{file}

@@ -345,7 +345,7 @@ changed by argument @code{na}.  Note that @code{NaN}s are treated as
 By default strings are quoted (including the row and column names).
 Argument @code{quote} controls if character and factor variables are
 quoted: some programs, for example @pkg{Mondrian}
-(@uref{https://en.wikipedia.org/wiki/Mondrian_(software)}, do not accept
+(@uref{https://en.wikipedia.org/wiki/Mondrian_(software)}), do not accept
 quoted strings.
 
 Some care is needed if the strings contain embedded quotes.  Three
@@ -2359,8 +2359,8 @@ Addison-Wesley.
 Also available at @uref{http://momjian.us/main/writings/pgsql/aw_pgsql_book/}.
 
 @noindent
-B.@: D.@: Ripley (2001) Connections. \@emph{R News}, @strong{1/1}, 16--7.
-  \@uref{https://www.r-project.org/doc/Rnews/Rnews_2001-1.pdf}
+B.@: D.@: Ripley (2001) Connections. @emph{R News}, @strong{1/1}, 16--7.
+  @uref{https://www.r-project.org/doc/Rnews/Rnews_2001-1.pdf}
 
 
 @noindent

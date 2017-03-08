@@ -449,8 +449,7 @@ data.frame(ispecs =
            unlist(.standardizable_license_specs),
            ospecs =
            rep.int(names(.standardizable_license_specs),
-                   sapply(.standardizable_license_specs,
-                          length)),
+                   lengths(.standardizable_license_specs)),
            stringsAsFactors = FALSE)
 
 analyze_license <-

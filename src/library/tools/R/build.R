@@ -148,7 +148,7 @@ get_exclude_patterns <- function()
         if(dir.exists(file.path(pkgdir, "src")))
             db["NeedsCompilation"] <- "yes"
         else if(is.na(db["NeedsCompilation"]))
-            db["NeedsCompilation"] <- "no"            
+            db["NeedsCompilation"] <- "no"
         ## this is an optional function, so could fail
         user <- Sys.info()["user"]
         if(user == "unknown") user <- Sys.getenv("LOGNAME")
@@ -826,7 +826,7 @@ get_exclude_patterns <- function()
                 R.version[["major"]], ".",  R.version[["minor"]],
                 " (r", R.version[["svn rev"]], ")\n", sep = "")
             cat("",
-                "Copyright (C) 1997-2013 The R Core Team.",
+                "Copyright (C) 1997-2016 The R Core Team.",
                 "This is free software; see the GNU General Public License version 2",
                 "or later for copying conditions.  There is NO warranty.",
                 sep = "\n")

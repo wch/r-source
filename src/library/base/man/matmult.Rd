@@ -34,6 +34,10 @@ x \%*\% y
   A double or complex matrix product.  Use \code{\link{drop}} to remove
   dimensions which have only one level.
 }
+\note{
+  The propagation of NaN/Inf values, precision, and performance of matrix
+  products can be controlled by \code{\link{options}("matprod")}.
+}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.

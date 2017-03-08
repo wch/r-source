@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2012   The R Core Team.
+ *  Copyright (C) 2012-2017   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@
 
 #include "graphics.h"
 #include <R_ext/Rdynload.h>
+#include <R_ext/Visibility.h>
 
 #define CALLDEF(name, n)  {#name, (DL_FUNC) &name, n}
 
@@ -80,10 +81,7 @@ static const R_ExternalMethodDef ExtEntries[] = {
 };
 
 
-void
-#ifdef HAVE_VISIBILITY_ATTRIBUTE
-__attribute__ ((visibility ("default")))
-#endif
+void attribute_visible
 R_init_graphics(DllInfo *dll)
 {
     R_registerRoutines(dll, NULL, CallEntries, NULL, ExtEntries);

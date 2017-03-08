@@ -5662,6 +5662,11 @@ $as_echo "no" >&6; }
 fi
 
 
+if test "x${use_maintainer_mode}" = xyes; then
+  if test "${NOTANGLE}" = false ; then
+    as_fn_error $? "Building R in maintainer mode requires notangle." "$LINENO" 5
+  fi
+fi
 ## javareconf needs this
 # Extract the first word of "realpath", so it can be a program name with args.
 set dummy realpath; ac_word=$2
@@ -25178,7 +25183,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:25181: \"$ac_link\") >&5
+(eval echo $as_me:25186: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -25253,7 +25258,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:25256: \"$ac_link\") >&5
+(eval echo $as_me:25261: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -32476,6 +32481,64 @@ _ACEOF
 fi
 done
 
+for ac_func in dladdr dlsym
+do :
+  as_ac_var=`$as_echo "ac_cv_func_$ac_func" | $as_tr_sh`
+ac_fn_c_check_func "$LINENO" "$ac_func" "$as_ac_var"
+if eval test \"x\$"$as_ac_var"\" = x"yes"; then :
+  cat >>confdefs.h <<_ACEOF
+#define `$as_echo "HAVE_$ac_func" | $as_tr_cpp` 1
+_ACEOF
+
+fi
+done
+
+ac_fn_c_check_decl "$LINENO" "dladdr" "ac_cv_have_decl_dladdr" "#include<dlfcn.h>
+"
+if test "x$ac_cv_have_decl_dladdr" = xyes; then :
+  ac_have_decl=1
+else
+  ac_have_decl=0
+fi
+
+cat >>confdefs.h <<_ACEOF
+#define HAVE_DECL_DLADDR $ac_have_decl
+_ACEOF
+ac_fn_c_check_decl "$LINENO" "dlsym" "ac_cv_have_decl_dlsym" "#include<dlfcn.h>
+"
+if test "x$ac_cv_have_decl_dlsym" = xyes; then :
+  ac_have_decl=1
+else
+  ac_have_decl=0
+fi
+
+cat >>confdefs.h <<_ACEOF
+#define HAVE_DECL_DLSYM $ac_have_decl
+_ACEOF
+
+ac_fn_c_check_decl "$LINENO" "RTLD_DEFAULT" "ac_cv_have_decl_RTLD_DEFAULT" "#include<dlfcn.h>
+"
+if test "x$ac_cv_have_decl_RTLD_DEFAULT" = xyes; then :
+  ac_have_decl=1
+else
+  ac_have_decl=0
+fi
+
+cat >>confdefs.h <<_ACEOF
+#define HAVE_DECL_RTLD_DEFAULT $ac_have_decl
+_ACEOF
+ac_fn_c_check_decl "$LINENO" "RTLD_NEXT" "ac_cv_have_decl_RTLD_NEXT" "#include<dlfcn.h>
+"
+if test "x$ac_cv_have_decl_RTLD_NEXT" = xyes; then :
+  ac_have_decl=1
+else
+  ac_have_decl=0
+fi
+
+cat >>confdefs.h <<_ACEOF
+#define HAVE_DECL_RTLD_NEXT $ac_have_decl
+_ACEOF
+
 
 ## Lots of uses of getwd(), file.access(), Sys.glob().
 ## We don't need times() except as a fallback for getrusage and
@@ -38227,13 +38290,13 @@ done
 
 
 if test "x${have_libcurl}" = "xyes"; then
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking if libcurl is version 7 and >= 7.28.0" >&5
-$as_echo_n "checking if libcurl is version 7 and >= 7.28.0... " >&6; }
-if ${r_cv_have_curl728+:} false; then :
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking if libcurl is version 7 and >= 7.22.0" >&5
+$as_echo_n "checking if libcurl is version 7 and >= 7.22.0... " >&6; }
+if ${r_cv_have_curl722+:} false; then :
   $as_echo_n "(cached) " >&6
 else
   if test "$cross_compiling" = yes; then :
-  r_cv_have_curl728=no
+  r_cv_have_curl722=no
 else
   cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
@@ -38245,7 +38308,7 @@ int main()
 #ifdef LIBCURL_VERSION_MAJOR
 #if LIBCURL_VERSION_MAJOR > 7
   exit(1);
-#elif LIBCURL_VERSION_MAJOR == 7 && LIBCURL_VERSION_MINOR >= 28
+#elif LIBCURL_VERSION_MAJOR == 7 && LIBCURL_VERSION_MINOR >= 22
   exit(0);
 #else
   exit(1);
@@ -38257,19 +38320,19 @@ int main()
 
 _ACEOF
 if ac_fn_c_try_run "$LINENO"; then :
-  r_cv_have_curl728=yes
+  r_cv_have_curl722=yes
 else
-  r_cv_have_curl728=no
+  r_cv_have_curl722=no
 fi
 rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
   conftest.$ac_objext conftest.beam conftest.$ac_ext
 fi
 
 fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $r_cv_have_curl728" >&5
-$as_echo "$r_cv_have_curl728" >&6; }
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $r_cv_have_curl722" >&5
+$as_echo "$r_cv_have_curl722" >&6; }
 fi
-if test "x${r_cv_have_curl728}" = xno; then
+if test "x${r_cv_have_curl722}" = xno; then
   have_libcurl=no
 fi
 
@@ -38323,7 +38386,7 @@ $as_echo "#define HAVE_LIBCURL 1" >>confdefs.h
 
 
 else
-  as_fn_error $? "libcurl >= 7.28.0 library and headers are required with support for https" "$LINENO" 5
+  as_fn_error $? "libcurl >= 7.22.0 library and headers are required with support for https" "$LINENO" 5
 fi
 
 
@@ -47840,6 +47903,79 @@ fi
 else
   BUILD_LIBINTL_TRUE='#'
   BUILD_LIBINTL_FALSE=
+fi
+
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether OpenMP SIMD reduction is supported" >&5
+$as_echo_n "checking whether OpenMP SIMD reduction is supported... " >&6; }
+if ${r_cv_openmp_simdred+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+
+ac_ext=c
+ac_cpp='$CPP $CPPFLAGS'
+ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ac_compiler_gnu=$ac_cv_c_compiler_gnu
+
+r_save_CFLAGS="${CFLAGS}"
+CFLAGS="${CFLAGS} ${R_OPENMP_CFLAGS}"
+if test "$cross_compiling" = yes; then :
+  r_cv_openmp_simdred=no
+else
+  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+#include <stdlib.h>
+
+double ssum(double *x, int n) {
+/* SIMD reduction is supported since OpenMP 4.0. The value of _OPENMP is
+   unreliable in some compilers, so we do not test its value. */
+#if defined(_OPENMP)
+    double s = 0;
+    #pragma omp simd reduction(+:s)
+    for(int i = 0; i < n; i++)
+        s += x[i];
+    return s;
+#else
+    exit(1);
+    return 0; /* not reachable */
+#endif
+}
+
+int main() {
+    /* use volatiles to reduce the risk of the
+       computation being inlined and constant-folded */
+    volatile double xv[8] = {1, 2, 3, 4, 5, 6, 7, 8};
+    volatile int n = 8;
+    double x[8], s;
+    int i;
+
+    for(i = 0; i < 8; i++) x[i] = xv[i];
+    s = ssum(x, n);
+    if (s == 36) exit(0);
+    exit(2);
+}
+
+_ACEOF
+if ac_fn_c_try_run "$LINENO"; then :
+  r_cv_openmp_simdred=yes
+else
+  r_cv_openmp_simdred=no
+fi
+rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
+  conftest.$ac_objext conftest.beam conftest.$ac_ext
+fi
+
+CFLAGS="${r_save_CFLAGS}"
+
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $r_cv_openmp_simdred" >&5
+$as_echo "$r_cv_openmp_simdred" >&6; }
+if test "x${r_cv_openmp_simdred}" = xyes; then
+
+$as_echo "#define HAVE_OPENMP_SIMDRED 1" >>confdefs.h
+
 fi
 
 

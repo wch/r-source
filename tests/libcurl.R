@@ -1,13 +1,13 @@
 ## These are tests that require libcurl functionality and a working
 ## Internet connection.
 
+## As from R 3.4.0 method = "libcurl" is the default on a Unix-alike
+## so this is in small part duplication -- but not on Windows.
+
 if(!capabilities()["libcurl"]) {
     warning("no libcurl support")
     q()
 }
-
-## fails some of the time
-#if(.Platform$OS.type == "windows") q()
 
 if(.Platform$OS.type == "unix" &&
    is.null(nsl("cran.r-project.org"))) q()
@@ -64,7 +64,7 @@ tf <- tempfile()
 testDownloadFile404 <- tryCatch(suppressWarnings({
     download.file("http://httpbin.org/status/404", tf, method="libcurl")
 }), error=function(e) {
-    conditionMessage(e) == "cannot download all files"
+    conditionMessage(e) == "cannot open URL 'http://httpbin.org/status/404'"
 })
 stopifnot(testDownloadFile404, !file.exists(tf))
 
@@ -100,7 +100,7 @@ head(readLines("https://httpbin.org", warn = FALSE))
 
 test404.2 <- tryCatch({
     open(zz <- url("http://httpbin.org/status/404"))
-}, warning=function(w) {
+}, warning = function(w) {
     grepl("404 Not Found", conditionMessage(w))
 })
 close(zz)

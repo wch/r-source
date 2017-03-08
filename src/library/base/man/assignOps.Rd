@@ -1,6 +1,6 @@
 % File src/library/base/man/assignOps.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{assignOps}
@@ -62,7 +62,7 @@
   \emph{The New S Language}.
   Wadsworth & Brooks/Cole.
 
-  Chamber, J. M. (1998)
+  Chambers, J. M. (1998)
   \emph{Programming with Data.  A Guide to the S Language}.
   Springer (for \code{=}).
 }

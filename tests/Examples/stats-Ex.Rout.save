@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2017-01-04 r71905) -- "Unsuffered Consequences"
+R Under development (unstable) (2017-03-01 r72290) -- "Unsuffered Consequences"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -3797,7 +3797,7 @@ sigma^2 estimated as 0.4566:  log likelihood = -101.2,  aic = 212.4
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x370c8a8>
+<environment: 0x37decc0>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -4782,7 +4782,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x5bcbb58>
+<bytecode: 0x5c31498>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -6190,6 +6190,32 @@ function (b0, b1, th, x)
 > ##D     2) * (2 * x) + sin(x^2) * (2 * x) * 2)
 > ## End(Not run)
 > 
+> ## New (R 3.4.0, 2017):
+> D(quote(log1p(x^2)), "x") ## log1p(x) = log(1 + x)
+2 * x/(1 + x^2)
+> stopifnot(identical(
++        D(quote(log1p(x^2)), "x"),
++        D(quote(log(1+x^2)), "x")))
+> D(quote(expm1(x^2)), "x") ## expm1(x) = exp(x) - 1
+exp(x^2) * (2 * x)
+> stopifnot(identical(
++        D(quote(expm1(x^2)), "x") -> Dex1,
++        D(quote(exp(x^2)-1), "x")),
++        identical(Dex1, quote(exp(x^2) * (2 * x))))
+> 
+> D(quote(sinpi(x^2)), "x") ## sinpi(x) = sin(pi*x)
+cospi(x^2) * (pi * (2 * x))
+> D(quote(cospi(x^2)), "x") ## cospi(x) = cos(pi*x)
+-(sinpi(x^2) * (pi * (2 * x)))
+> D(quote(tanpi(x^2)), "x") ## tanpi(x) = tan(pi*x)
+pi * (2 * x)/cospi(x^2)^2
+> 
+> stopifnot(identical(D(quote(log2 (x^2)), "x"),
++                     quote(2 * x/(x^2 * log(2)))),
++           identical(D(quote(log10(x^2)), "x"),
++                     quote(2 * x/(x^2 * log(10)))))
+> 
+> 
 > 
 > 
 > cleanEx()
@@ -7312,7 +7338,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x596b458>
+<environment: 0x59c38c8>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -11922,14 +11948,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x4caa320>
-<environment: 0x4ca1908>
+<bytecode: 0x4d1be70>
+<environment: 0x4d143c0>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x4ca9508>
-<environment: 0x4ca1908>
+<bytecode: 0x4d1bfc0>
+<environment: 0x4d143c0>
 
 > 
 > 
@@ -16006,8 +16032,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f)
-<bytecode: 0x4d6c368>
-<environment: 0x8395788>
+<bytecode: 0x4f2c340>
+<environment: 0x83a7d90>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -18170,6 +18196,53 @@ Number of factors: 3
 Test for independence of all factors:
 	Chisq = 2000.3, df = 16, p-value = 0
 > 
+> ## with NA's
+> DN <- DF; DN[cbind(6:9, c(1:2,4,1))] <- NA; DN
+      Admit Gender Dept Freq
+1  Admitted   Male    A  512
+2  Rejected   Male    A  313
+3  Admitted Female    A   89
+4  Rejected Female    A   19
+5  Admitted   Male    B  353
+6      <NA>   Male    B  207
+7  Admitted   <NA>    B   17
+8  Rejected Female    B   NA
+9      <NA>   Male    C  120
+10 Rejected   Male    C  205
+11 Admitted Female    C  202
+12 Rejected Female    C  391
+13 Admitted   Male    D  138
+14 Rejected   Male    D  279
+15 Admitted Female    D  131
+16 Rejected Female    D  244
+17 Admitted   Male    E   53
+18 Rejected   Male    E  138
+19 Admitted Female    E   94
+20 Rejected Female    E  299
+21 Admitted   Male    F   22
+22 Rejected   Male    F  351
+23 Admitted Female    F   24
+24 Rejected Female    F  317
+> tools::assertError(# 'na.fail' should fail :
++      xtabs(Freq ~ Gender + Admit, DN, na.action=na.fail))
+> xtabs(Freq ~ Gender + Admit, DN)
+        Admit
+Gender   Admitted Rejected
+  Male       1078     1286
+  Female      540     1270
+> xtabs(Freq ~ Gender + Admit, DN, na.action = na.pass)
+        Admit
+Gender   Admitted Rejected
+  Male       1078     1286
+  Female      540         
+> ## The Female:Rejected combination has NA 'Freq' (and NA prints 'invisibly' as "")
+> xtabs(Freq ~ Gender + Admit, DN, addNA = TRUE) # ==> count NAs
+        Admit
+Gender   Admitted Rejected <NA>
+  Male       1078     1286  327
+  Female      540             0
+  <NA>         17        0    0
+> 
 > ## Create a nice display for the warp break data.
 > warpbreaks$replicate <- rep_len(1:9, 54)
 > ftable(xtabs(breaks ~ wool + tension + replicate, data = warpbreaks))
@@ -18284,7 +18357,7 @@ Number of Fisher Scoring iterations: 6
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  4.424 0.256 4.702 0 0 
+Time elapsed:  4.923 0.101 5.038 0 0 
 > grDevices::dev.off()
 null device 
           1 

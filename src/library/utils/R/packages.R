@@ -50,7 +50,8 @@ function(contriburl = contrib.url(repos, type), method,
                 readRDS(dest)
             else
                 read.dcf(file = tmpf)
-            if(length(res0)) rownames(res0) <- res0[, "Package"]
+            if(length(res0))
+                rownames(res0) <- res0[, "Package"]
         } else {
             dest <- file.path(tempdir(),
                               paste0("repos_", URLencode(repos, TRUE), ".rds"))
@@ -114,9 +115,15 @@ function(contriburl = contrib.url(repos, type), method,
                     next
                 }
 
-                ## Do we want to cache an empty result?
-                if(length(res0)) rownames(res0) <- res0[, "Package"]
-                if(need_dest) saveRDS(res0, dest, compress = TRUE)
+                if(length(res0)) {
+                    rownames(res0) <- res0[, "Package"]
+                    ## Do not cache empty results.
+                    if(need_dest)
+                        saveRDS(res0, dest, compress = TRUE)
+                } else if(!need_dest) {
+                    ## download.file() gave an empty .rds
+                    unlink(dest)
+                }
             } # end of download vs cached
         } # end of localcran vs online
         if (length(res0)) {

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999-2016   The R Core Team.
+ *  Copyright (C) 1999-2017   The R Core Team.
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -1451,7 +1451,7 @@ SEXP R_FixupRHS(SEXP x, SEXP y);
 	void NORET R_SignalCStackOverflow(intptr_t);				\
 	int dummy;							\
 	intptr_t usage = R_CStackDir * (R_CStackStart - (uintptr_t)&dummy); \
-	if(R_CStackLimit != -1 && usage > ((intptr_t) R_CStackLimit))	\
+	if(R_CStackLimit != (uintptr_t)(-1) && usage > ((intptr_t) R_CStackLimit)) \
 	    R_SignalCStackOverflow(usage);				\
     } while (FALSE)
 #endif

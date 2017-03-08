@@ -36,6 +36,9 @@ tcrossprod(x, y = NULL)
   In the same situation, these matrix products (also \code{\link{\%*\%}})
   are more flexible in promotion of vectors to row or column matrices, such
   that more cases are allowed, since \R 3.2.0.
+
+  The propagation of NaN/Inf values, precision, and performance of matrix
+  products can be controlled by \code{\link{options}("matprod")}.
 }
 %% Consider using a new optional argument, say 'make.names = NA'
 %% {as in kronecker} with possible values  FALSE / NA / TRUE  where

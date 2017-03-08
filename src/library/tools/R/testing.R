@@ -1,7 +1,7 @@
 #  File src/library/tools/R/testing.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 # NB: also copyright date in Usage.
 #
@@ -676,11 +676,14 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both", "internet"))
         if (runone("primitives")) return(invisible(1L))
         message("running regexp regression tests", domain = NA)
         if (runone("utf8-regex", inC = FALSE)) return(invisible(1L))
+        if (runone("PCRE")) return(invisible(1L))
+        message("running tests of CRAN tools", domain = NA)
+        if (runone("CRANtools")) return(invisible(1L))
         message("running tests to possibly trigger segfaults", domain = NA)
         if (runone("no-segfault")) return(invisible(1L))
     }
     if (scope %in% "internet") {
-        message("running tests of Internet functions - expect some differences", domain = NA)
+        message("running tests of Internet functions", domain = NA)
         runone("internet")
         message("running more Internet and socket tests", domain = NA)
         runone("internet2")
@@ -772,7 +775,7 @@ detachPackages <- function(pkgs, verbose = TRUE)
                 R.version[["major"]], ".",  R.version[["minor"]],
                 " (r", R.version[["svn rev"]], ")\n", sep = "")
             cat("",
-                "Copyright (C) 2000-2015 The R Core Team.",
+                "Copyright (C) 2000-2017 The R Core Team.",
                 "This is free software; see the GNU General Public License version 2",
                 "or later for copying conditions.  There is NO warranty.",
                 sep = "\n")

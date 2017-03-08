@@ -2,31 +2,31 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download DZSUM1 + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/dzsum1.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/dzsum1.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/dzsum1.f"> 
+*> Download DZSUM1 + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/dzsum1.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/dzsum1.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/dzsum1.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       DOUBLE PRECISION FUNCTION DZSUM1( N, CX, INCX )
-* 
+*
 *       .. Scalar Arguments ..
 *       INTEGER            INCX, N
 *       ..
 *       .. Array Arguments ..
 *       COMPLEX*16         CX( * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -64,12 +64,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date September 2012
+*> \date December 2016
 *
 *> \ingroup complex16OTHERauxiliary
 *
@@ -81,10 +81,10 @@
 *  =====================================================================
       DOUBLE PRECISION FUNCTION DZSUM1( N, CX, INCX )
 *
-*  -- LAPACK auxiliary routine (version 3.4.2) --
+*  -- LAPACK auxiliary routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
+*     December 2016
 *
 *     .. Scalar Arguments ..
       INTEGER            INCX, N
@@ -142,31 +142,31 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ILAZLC + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/ilazlc.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/ilazlc.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/ilazlc.f"> 
+*> Download ILAZLC + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/ilazlc.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/ilazlc.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/ilazlc.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       INTEGER FUNCTION ILAZLC( M, N, A, LDA )
-* 
+*
 *       .. Scalar Arguments ..
 *       INTEGER            M, N, LDA
 *       ..
 *       .. Array Arguments ..
 *       COMPLEX*16         A( LDA, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -206,22 +206,22 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date September 2012
+*> \date December 2016
 *
 *> \ingroup complex16OTHERauxiliary
 *
 *  =====================================================================
       INTEGER FUNCTION ILAZLC( M, N, A, LDA )
 *
-*  -- LAPACK auxiliary routine (version 3.4.2) --
+*  -- LAPACK auxiliary routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
+*     December 2016
 *
 *     .. Scalar Arguments ..
       INTEGER            M, N, LDA
@@ -260,31 +260,31 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ILAZLR + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/ilazlr.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/ilazlr.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/ilazlr.f"> 
+*> Download ILAZLR + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/ilazlr.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/ilazlr.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/ilazlr.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       INTEGER FUNCTION ILAZLR( M, N, A, LDA )
-* 
+*
 *       .. Scalar Arguments ..
 *       INTEGER            M, N, LDA
 *       ..
 *       .. Array Arguments ..
 *       COMPLEX*16         A( LDA, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -324,22 +324,22 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date September 2012
+*> \date December 2016
 *
 *> \ingroup complex16OTHERauxiliary
 *
 *  =====================================================================
       INTEGER FUNCTION ILAZLR( M, N, A, LDA )
 *
-*  -- LAPACK auxiliary routine (version 3.4.2) --
+*  -- LAPACK auxiliary routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
+*     December 2016
 *
 *     .. Scalar Arguments ..
       INTEGER            M, N, LDA
@@ -381,31 +381,31 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download IZMAX1 + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/izmax1.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/izmax1.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/izmax1.f"> 
+*> Download IZMAX1 + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/izmax1.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/izmax1.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/izmax1.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       INTEGER          FUNCTION IZMAX1( N, ZX, INCX )
-* 
+*
 *       .. Scalar Arguments ..
 *       INTEGER            INCX, N
 *       ..
 *       .. Array Arguments ..
 *       COMPLEX*16         ZX( * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -443,10 +443,10 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
 *> \date February 2014
 *
@@ -460,7 +460,7 @@
 *  =====================================================================
       INTEGER FUNCTION IZMAX1( N, ZX, INCX )
 *
-*  -- LAPACK auxiliary routine (version 3.6.0) --
+*  -- LAPACK auxiliary routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
 *     February 2014
@@ -522,25 +522,25 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZBDSQR + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zbdsqr.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zbdsqr.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zbdsqr.f"> 
+*> Download ZBDSQR + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zbdsqr.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zbdsqr.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zbdsqr.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZBDSQR( UPLO, N, NCVT, NRU, NCC, D, E, VT, LDVT, U,
 *                          LDU, C, LDC, RWORK, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          UPLO
 *       INTEGER            INFO, LDC, LDU, LDVT, N, NCC, NCVT, NRU
@@ -549,7 +549,7 @@
 *       DOUBLE PRECISION   D( * ), E( * ), RWORK( * )
 *       COMPLEX*16         C( LDC, * ), U( LDU, * ), VT( LDVT, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -560,9 +560,9 @@
 *> left singular vectors from the singular value decomposition (SVD) of
 *> a real N-by-N (upper or lower) bidiagonal matrix B using the implicit
 *> zero-shift QR algorithm.  The SVD of B has the form
-*> 
+*>
 *>    B = Q * S * P**H
-*> 
+*>
 *> where S is the diagonal matrix of singular values, Q is an orthogonal
 *> matrix of left singular vectors, and P is an orthogonal matrix of
 *> right singular vectors.  If left singular vectors are requested, this
@@ -571,9 +571,9 @@
 *> P**H, for given complex input matrices U and VT.  When U and VT are
 *> the unitary matrices that reduce a general matrix A to bidiagonal
 *> form: A = U*B*VT, as computed by ZGEBRD, then
-*> 
+*>
 *>    A = (U*Q) * S * (P**H*VT)
-*> 
+*>
 *> is the SVD of A.  Optionally, the subroutine may also compute Q**H*C
 *> for a given complex input matrix C.
 *>
@@ -729,12 +729,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date November 2015
+*> \date December 2016
 *
 *> \ingroup complex16OTHERcomputational
 *
@@ -742,10 +742,10 @@
       SUBROUTINE ZBDSQR( UPLO, N, NCVT, NRU, NCC, D, E, VT, LDVT, U,
      $                   LDU, C, LDC, RWORK, INFO )
 *
-*  -- LAPACK computational routine (version 3.6.0) --
+*  -- LAPACK computational routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2015
+*     December 2016
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -841,7 +841,7 @@
          CALL DLASQ1( N, D, E, RWORK, INFO )
 *
 *     If INFO equals 2, dqds didn't finish, try to finish
-*         
+*
          IF( INFO .NE. 2 ) RETURN
          INFO = 0
       END IF
@@ -1364,24 +1364,24 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZDRSCL + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zdrscl.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zdrscl.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zdrscl.f"> 
+*> Download ZDRSCL + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zdrscl.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zdrscl.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zdrscl.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZDRSCL( N, SA, SX, INCX )
-* 
+*
 *       .. Scalar Arguments ..
 *       INTEGER            INCX, N
 *       DOUBLE PRECISION   SA
@@ -1389,7 +1389,7 @@
 *       .. Array Arguments ..
 *       COMPLEX*16         SX( * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -1434,22 +1434,22 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date September 2012
+*> \date December 2016
 *
 *> \ingroup complex16OTHERauxiliary
 *
 *  =====================================================================
       SUBROUTINE ZDRSCL( N, SA, SX, INCX )
 *
-*  -- LAPACK auxiliary routine (version 3.4.2) --
+*  -- LAPACK auxiliary routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
+*     December 2016
 *
 *     .. Scalar Arguments ..
       INTEGER            INCX, N
@@ -1538,25 +1538,25 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZGEBAK + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgebak.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgebak.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgebak.f"> 
+*> Download ZGEBAK + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgebak.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgebak.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgebak.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZGEBAK( JOB, SIDE, N, ILO, IHI, SCALE, M, V, LDV,
 *                          INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          JOB, SIDE
 *       INTEGER            IHI, ILO, INFO, LDV, M, N
@@ -1565,7 +1565,7 @@
 *       DOUBLE PRECISION   SCALE( * )
 *       COMPLEX*16         V( LDV, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -1654,12 +1654,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date November 2011
+*> \date December 2016
 *
 *> \ingroup complex16GEcomputational
 *
@@ -1667,10 +1667,10 @@
       SUBROUTINE ZGEBAK( JOB, SIDE, N, ILO, IHI, SCALE, M, V, LDV,
      $                   INFO )
 *
-*  -- LAPACK computational routine (version 3.4.0) --
+*  -- LAPACK computational routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     December 2016
 *
 *     .. Scalar Arguments ..
       CHARACTER          JOB, SIDE
@@ -1808,24 +1808,24 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZGEBAL + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgebal.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgebal.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgebal.f"> 
+*> Download ZGEBAL + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgebal.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgebal.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgebal.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZGEBAL( JOB, N, A, LDA, ILO, IHI, SCALE, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          JOB
 *       INTEGER            IHI, ILO, INFO, LDA, N
@@ -1834,7 +1834,7 @@
 *       DOUBLE PRECISION   SCALE( * )
 *       COMPLEX*16         A( LDA, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -1922,12 +1922,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date November 2015
+*> \date December 2016
 *
 *> \ingroup complex16GEcomputational
 *
@@ -1966,10 +1966,10 @@
 *  =====================================================================
       SUBROUTINE ZGEBAL( JOB, N, A, LDA, ILO, IHI, SCALE, INFO )
 *
-*  -- LAPACK computational routine (version 3.6.0) --
+*  -- LAPACK computational routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2015
+*     December 2016
 *
 *     .. Scalar Arguments ..
       CHARACTER          JOB
@@ -1995,7 +1995,6 @@
       INTEGER            I, ICA, IEXC, IRA, J, K, L, M
       DOUBLE PRECISION   C, CA, F, G, R, RA, S, SFMAX1, SFMAX2, SFMIN1,
      $                   SFMIN2
-      COMPLEX*16         CDUM
 *     ..
 *     .. External Functions ..
       LOGICAL            DISNAN, LSAME
@@ -2207,24 +2206,24 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZGEBD2 + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgebd2.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgebd2.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgebd2.f"> 
+*> Download ZGEBD2 + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgebd2.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgebd2.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgebd2.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZGEBD2( M, N, A, LDA, D, E, TAUQ, TAUP, WORK, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       INTEGER            INFO, LDA, M, N
 *       ..
@@ -2232,7 +2231,7 @@
 *       DOUBLE PRECISION   D( * ), E( * )
 *       COMPLEX*16         A( LDA, * ), TAUP( * ), TAUQ( * ), WORK( * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -2332,12 +2331,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date September 2012
+*> \date December 2016
 *
 *> \ingroup complex16GEcomputational
 *
@@ -2394,10 +2393,10 @@
 *  =====================================================================
       SUBROUTINE ZGEBD2( M, N, A, LDA, D, E, TAUQ, TAUP, WORK, INFO )
 *
-*  -- LAPACK computational routine (version 3.4.2) --
+*  -- LAPACK computational routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
+*     December 2016
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, LDA, M, N
@@ -2538,25 +2537,25 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZGEBRD + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgebrd.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgebrd.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgebrd.f"> 
+*> Download ZGEBRD + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgebrd.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgebrd.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgebrd.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZGEBRD( M, N, A, LDA, D, E, TAUQ, TAUP, WORK, LWORK,
 *                          INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       INTEGER            INFO, LDA, LWORK, M, N
 *       ..
@@ -2564,7 +2563,7 @@
 *       DOUBLE PRECISION   D( * ), E( * )
 *       COMPLEX*16         A( LDA, * ), TAUP( * ), TAUQ( * ), WORK( * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -2678,12 +2677,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date November 2011
+*> \date December 2016
 *
 *> \ingroup complex16GEcomputational
 *
@@ -2741,10 +2740,10 @@
       SUBROUTINE ZGEBRD( M, N, A, LDA, D, E, TAUQ, TAUP, WORK, LWORK,
      $                   INFO )
 *
-*  -- LAPACK computational routine (version 3.4.0) --
+*  -- LAPACK computational routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     December 2016
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, LDA, LWORK, M, N
@@ -2891,25 +2890,25 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZGECON + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgecon.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgecon.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgecon.f"> 
+*> Download ZGECON + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgecon.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgecon.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgecon.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZGECON( NORM, N, A, LDA, ANORM, RCOND, WORK, RWORK,
 *                          INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          NORM
 *       INTEGER            INFO, LDA, N
@@ -2919,7 +2918,7 @@
 *       DOUBLE PRECISION   RWORK( * )
 *       COMPLEX*16         A( LDA, * ), WORK( * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -3000,12 +2999,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date November 2011
+*> \date December 2016
 *
 *> \ingroup complex16GEcomputational
 *
@@ -3013,10 +3012,10 @@
       SUBROUTINE ZGECON( NORM, N, A, LDA, ANORM, RCOND, WORK, RWORK,
      $                   INFO )
 *
-*  -- LAPACK computational routine (version 3.4.0) --
+*  -- LAPACK computational routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     December 2016
 *
 *     .. Scalar Arguments ..
       CHARACTER          NORM
@@ -3160,25 +3159,25 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZGEEQU + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgeequ.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgeequ.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgeequ.f"> 
+*> Download ZGEEQU + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgeequ.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgeequ.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgeequ.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZGEEQU( M, N, A, LDA, R, C, ROWCND, COLCND, AMAX,
 *                          INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       INTEGER            INFO, LDA, M, N
 *       DOUBLE PRECISION   AMAX, COLCND, ROWCND
@@ -3187,7 +3186,7 @@
 *       DOUBLE PRECISION   C( * ), R( * )
 *       COMPLEX*16         A( LDA, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -3285,12 +3284,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date November 2011
+*> \date December 2016
 *
 *> \ingroup complex16GEcomputational
 *
@@ -3298,10 +3297,10 @@
       SUBROUTINE ZGEEQU( M, N, A, LDA, R, C, ROWCND, COLCND, AMAX,
      $                   INFO )
 *
-*  -- LAPACK computational routine (version 3.4.0) --
+*  -- LAPACK computational routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     December 2016
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, LDA, M, N
@@ -3473,25 +3472,25 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZGEES + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgees.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgees.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgees.f"> 
+*> Download ZGEES + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgees.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgees.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgees.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZGEES( JOBVS, SORT, SELECT, N, A, LDA, SDIM, W, VS,
 *                         LDVS, WORK, LWORK, RWORK, BWORK, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          JOBVS, SORT
 *       INTEGER            INFO, LDA, LDVS, LWORK, N, SDIM
@@ -3505,7 +3504,7 @@
 *       LOGICAL            SELECT
 *       EXTERNAL           SELECT
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -3655,12 +3654,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date November 2011
+*> \date December 2016
 *
 *> \ingroup complex16GEeigen
 *
@@ -3668,10 +3667,10 @@
       SUBROUTINE ZGEES( JOBVS, SORT, SELECT, N, A, LDA, SDIM, W, VS,
      $                  LDVS, WORK, LWORK, RWORK, BWORK, INFO )
 *
-*  -- LAPACK driver routine (version 3.4.0) --
+*  -- LAPACK driver routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     December 2016
 *
 *     .. Scalar Arguments ..
       CHARACTER          JOBVS, SORT
@@ -3897,25 +3896,25 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZGEEV + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgeev.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgeev.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgeev.f"> 
+*> Download ZGEEV + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgeev.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgeev.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgeev.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZGEEV( JOBVL, JOBVR, N, A, LDA, W, VL, LDVL, VR, LDVR,
 *                         WORK, LWORK, RWORK, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          JOBVL, JOBVR
 *       INTEGER            INFO, LDA, LDVL, LDVR, LWORK, N
@@ -3925,7 +3924,7 @@
 *       COMPLEX*16         A( LDA, * ), VL( LDVL, * ), VR( LDVR, * ),
 *      $                   W( * ), WORK( * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -4059,10 +4058,10 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
 *> \date June 2016
 *
@@ -4075,7 +4074,7 @@
      $                  WORK, LWORK, RWORK, INFO )
       implicit none
 *
-*  -- LAPACK driver routine (version 3.6.1) --
+*  -- LAPACK driver routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
 *     June 2016
@@ -4400,31 +4399,31 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZGEHD2 + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgehd2.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgehd2.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgehd2.f"> 
+*> Download ZGEHD2 + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgehd2.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgehd2.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgehd2.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZGEHD2( N, ILO, IHI, A, LDA, TAU, WORK, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       INTEGER            IHI, ILO, INFO, LDA, N
 *       ..
 *       .. Array Arguments ..
 *       COMPLEX*16         A( LDA, * ), TAU( * ), WORK( * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -4499,12 +4498,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date September 2012
+*> \date December 2016
 *
 *> \ingroup complex16GEcomputational
 *
@@ -4547,10 +4546,10 @@
 *  =====================================================================
       SUBROUTINE ZGEHD2( N, ILO, IHI, A, LDA, TAU, WORK, INFO )
 *
-*  -- LAPACK computational routine (version 3.4.2) --
+*  -- LAPACK computational routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
+*     December 2016
 *
 *     .. Scalar Arguments ..
       INTEGER            IHI, ILO, INFO, LDA, N
@@ -4624,31 +4623,31 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZGEHRD + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgehrd.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgehrd.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgehrd.f"> 
+*> Download ZGEHRD + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgehrd.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgehrd.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgehrd.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZGEHRD( N, ILO, IHI, A, LDA, TAU, WORK, LWORK, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       INTEGER            IHI, ILO, INFO, LDA, LWORK, N
 *       ..
 *       .. Array Arguments ..
 *       COMPLEX*16        A( LDA, * ), TAU( * ), WORK( * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -4737,12 +4736,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date November 2015
+*> \date December 2016
 *
 *> \ingroup complex16GEcomputational
 *
@@ -4789,10 +4788,10 @@
 *  =====================================================================
       SUBROUTINE ZGEHRD( N, ILO, IHI, A, LDA, TAU, WORK, LWORK, INFO )
 *
-*  -- LAPACK computational routine (version 3.6.0) --
+*  -- LAPACK computational routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2015
+*     December 2016
 *
 *     .. Scalar Arguments ..
       INTEGER            IHI, ILO, INFO, LDA, LWORK, N
@@ -4808,7 +4807,7 @@
       PARAMETER          ( NBMAX = 64, LDT = NBMAX+1,
      $                     TSIZE = LDT*NBMAX )
       COMPLEX*16        ZERO, ONE
-      PARAMETER          ( ZERO = ( 0.0D+0, 0.0D+0 ), 
+      PARAMETER          ( ZERO = ( 0.0D+0, 0.0D+0 ),
      $                     ONE = ( 1.0D+0, 0.0D+0 ) )
 *     ..
 *     .. Local Scalars ..
@@ -4938,7 +4937,7 @@
 *
             EI = A( I+IB, I+IB-1 )
             A( I+IB, I+IB-1 ) = ONE
-            CALL ZGEMM( 'No transpose', 'Conjugate transpose', 
+            CALL ZGEMM( 'No transpose', 'Conjugate transpose',
      $                  IHI, IHI-I-IB+1,
      $                  IB, -ONE, WORK, LDWORK, A( I+IB, I ), LDA, ONE,
      $                  A( 1, I+IB ), LDA )
@@ -4980,31 +4979,31 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZGELQ2 + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgelq2.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgelq2.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgelq2.f"> 
+*> Download ZGELQ2 + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgelq2.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgelq2.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgelq2.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZGELQ2( M, N, A, LDA, TAU, WORK, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       INTEGER            INFO, LDA, M, N
 *       ..
 *       .. Array Arguments ..
 *       COMPLEX*16         A( LDA, * ), TAU( * ), WORK( * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -5069,12 +5068,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date September 2012
+*> \date December 2016
 *
 *> \ingroup complex16GEcomputational
 *
@@ -5099,10 +5098,10 @@
 *  =====================================================================
       SUBROUTINE ZGELQ2( M, N, A, LDA, TAU, WORK, INFO )
 *
-*  -- LAPACK computational routine (version 3.4.2) --
+*  -- LAPACK computational routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
+*     December 2016
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, LDA, M, N
@@ -5174,31 +5173,31 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZGELQF + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgelqf.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgelqf.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgelqf.f"> 
+*> Download ZGELQF + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgelqf.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgelqf.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgelqf.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZGELQF( M, N, A, LDA, TAU, WORK, LWORK, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       INTEGER            INFO, LDA, LWORK, M, N
 *       ..
 *       .. Array Arguments ..
 *       COMPLEX*16         A( LDA, * ), TAU( * ), WORK( * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -5277,12 +5276,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date November 2011
+*> \date December 2016
 *
 *> \ingroup complex16GEcomputational
 *
@@ -5307,10 +5306,10 @@
 *  =====================================================================
       SUBROUTINE ZGELQF( M, N, A, LDA, TAU, WORK, LWORK, INFO )
 *
-*  -- LAPACK computational routine (version 3.4.0) --
+*  -- LAPACK computational routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     December 2016
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, LDA, LWORK, M, N
@@ -5443,25 +5442,25 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZGELS + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgels.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgels.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgels.f"> 
+*> Download ZGELS + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgels.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgels.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgels.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZGELS( TRANS, M, N, NRHS, A, LDA, B, LDB, WORK, LWORK,
 *                         INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          TRANS
 *       INTEGER            INFO, LDA, LDB, LWORK, M, N, NRHS
@@ -5469,7 +5468,7 @@
 *       .. Array Arguments ..
 *       COMPLEX*16         A( LDA, * ), B( LDB, * ), WORK( * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -5490,7 +5489,7 @@
 *>    an underdetermined system A * X = B.
 *>
 *> 3. If TRANS = 'C' and m >= n:  find the minimum norm solution of
-*>    an undetermined system A**H * X = B.
+*>    an underdetermined system A**H * X = B.
 *>
 *> 4. If TRANS = 'C' and m < n:  find the least squares solution of
 *>    an overdetermined system, i.e., solve the least squares problem
@@ -5610,12 +5609,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date November 2011
+*> \date December 2016
 *
 *> \ingroup complex16GEsolve
 *
@@ -5623,10 +5622,10 @@
       SUBROUTINE ZGELS( TRANS, M, N, NRHS, A, LDA, B, LDB, WORK, LWORK,
      $                  INFO )
 *
-*  -- LAPACK driver routine (version 3.4.0) --
+*  -- LAPACK driver routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     December 2016
 *
 *     .. Scalar Arguments ..
       CHARACTER          TRANS
@@ -5821,7 +5820,7 @@
 *
          ELSE
 *
-*           Overdetermined system of equations A**H * X = B
+*           Underdetermined system of equations A**T * X = B
 *
 *           B(1:N,1:NRHS) := inv(R**H) * B(1:N,1:NRHS)
 *
@@ -5948,25 +5947,25 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZGELSD + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgelsd.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgelsd.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgelsd.f"> 
+*> Download ZGELSD + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgelsd.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgelsd.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgelsd.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZGELSD( M, N, NRHS, A, LDA, B, LDB, S, RCOND, RANK,
 *                          WORK, LWORK, RWORK, IWORK, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       INTEGER            INFO, LDA, LDB, LWORK, M, N, NRHS, RANK
 *       DOUBLE PRECISION   RCOND
@@ -5976,7 +5975,7 @@
 *       DOUBLE PRECISION   RWORK( * ), S( * )
 *       COMPLEX*16         A( LDA, * ), B( LDB, * ), WORK( * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -5996,10 +5995,10 @@
 *>
 *> The problem is solved in three steps:
 *> (1) Reduce the coefficient matrix A to bidiagonal form with
-*>     Householder tranformations, reducing the original problem
+*>     Householder transformations, reducing the original problem
 *>     into a "bidiagonal least squares problem" (BLS)
 *> (2) Solve the BLS using a divide and conquer approach.
-*> (3) Apply back all the Householder tranformations to solve
+*> (3) Apply back all the Householder transformations to solve
 *>     the original least squares problem.
 *>
 *> The effective rank of A is determined by treating as zero those
@@ -6151,12 +6150,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date November 2011
+*> \date December 2016
 *
 *> \ingroup complex16GEsolve
 *
@@ -6171,10 +6170,10 @@
       SUBROUTINE ZGELSD( M, N, NRHS, A, LDA, B, LDB, S, RCOND, RANK,
      $                   WORK, LWORK, RWORK, IWORK, INFO )
 *
-*  -- LAPACK driver routine (version 3.4.0) --
+*  -- LAPACK driver routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     December 2016
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, LDA, LDB, LWORK, M, N, NRHS, RANK
@@ -6613,25 +6612,25 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZGEQP3 + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgeqp3.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgeqp3.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgeqp3.f"> 
+*> Download ZGEQP3 + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgeqp3.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgeqp3.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgeqp3.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZGEQP3( M, N, A, LDA, JPVT, TAU, WORK, LWORK, RWORK,
 *                          INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       INTEGER            INFO, LDA, LWORK, M, N
 *       ..
@@ -6640,7 +6639,7 @@
 *       DOUBLE PRECISION   RWORK( * )
 *       COMPLEX*16         A( LDA, * ), TAU( * ), WORK( * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -6733,12 +6732,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date November 2015
+*> \date December 2016
 *
 *> \ingroup complex16GEcomputational
 *
@@ -6770,10 +6769,10 @@
       SUBROUTINE ZGEQP3( M, N, A, LDA, JPVT, TAU, WORK, LWORK, RWORK,
      $                   INFO )
 *
-*  -- LAPACK computational routine (version 3.6.0) --
+*  -- LAPACK computational routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2015
+*     December 2016
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, LDA, LWORK, M, N
@@ -6985,31 +6984,31 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZGEQR2 + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgeqr2.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgeqr2.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgeqr2.f"> 
+*> Download ZGEQR2 + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgeqr2.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgeqr2.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgeqr2.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZGEQR2( M, N, A, LDA, TAU, WORK, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       INTEGER            INFO, LDA, M, N
 *       ..
 *       .. Array Arguments ..
 *       COMPLEX*16         A( LDA, * ), TAU( * ), WORK( * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -7074,12 +7073,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date September 2012
+*> \date December 2016
 *
 *> \ingroup complex16GEcomputational
 *
@@ -7104,10 +7103,10 @@
 *  =====================================================================
       SUBROUTINE ZGEQR2( M, N, A, LDA, TAU, WORK, INFO )
 *
-*  -- LAPACK computational routine (version 3.4.2) --
+*  -- LAPACK computational routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
+*     December 2016
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, LDA, M, N
@@ -7177,31 +7176,31 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZGEQRF + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgeqrf.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgeqrf.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgeqrf.f"> 
+*> Download ZGEQRF + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgeqrf.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgeqrf.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgeqrf.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZGEQRF( M, N, A, LDA, TAU, WORK, LWORK, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       INTEGER            INFO, LDA, LWORK, M, N
 *       ..
 *       .. Array Arguments ..
 *       COMPLEX*16         A( LDA, * ), TAU( * ), WORK( * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -7281,12 +7280,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date November 2011
+*> \date December 2016
 *
 *> \ingroup complex16GEcomputational
 *
@@ -7311,10 +7310,10 @@
 *  =====================================================================
       SUBROUTINE ZGEQRF( M, N, A, LDA, TAU, WORK, LWORK, INFO )
 *
-*  -- LAPACK computational routine (version 3.4.0) --
+*  -- LAPACK computational routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     December 2016
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, LDA, LWORK, M, N
@@ -7447,25 +7446,25 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZGERFS + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgerfs.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgerfs.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgerfs.f"> 
+*> Download ZGERFS + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgerfs.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgerfs.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgerfs.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZGERFS( TRANS, N, NRHS, A, LDA, AF, LDAF, IPIV, B, LDB,
 *                          X, LDX, FERR, BERR, WORK, RWORK, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          TRANS
 *       INTEGER            INFO, LDA, LDAF, LDB, LDX, N, NRHS
@@ -7476,7 +7475,7 @@
 *       COMPLEX*16         A( LDA, * ), AF( LDAF, * ), B( LDB, * ),
 *      $                   WORK( * ), X( LDX, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -7618,12 +7617,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date November 2011
+*> \date December 2016
 *
 *> \ingroup complex16GEcomputational
 *
@@ -7631,10 +7630,10 @@
       SUBROUTINE ZGERFS( TRANS, N, NRHS, A, LDA, AF, LDAF, IPIV, B, LDB,
      $                   X, LDX, FERR, BERR, WORK, RWORK, INFO )
 *
-*  -- LAPACK computational routine (version 3.4.0) --
+*  -- LAPACK computational routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     December 2016
 *
 *     .. Scalar Arguments ..
       CHARACTER          TRANS
@@ -7895,24 +7894,24 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZGESC2 + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgesc2.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgesc2.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgesc2.f"> 
+*> Download ZGESC2 + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgesc2.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgesc2.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgesc2.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZGESC2( N, A, LDA, RHS, IPIV, JPIV, SCALE )
-* 
+*
 *       .. Scalar Arguments ..
 *       INTEGER            LDA, N
 *       DOUBLE PRECISION   SCALE
@@ -7921,7 +7920,7 @@
 *       INTEGER            IPIV( * ), JPIV( * )
 *       COMPLEX*16         A( LDA, * ), RHS( * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -7990,12 +7989,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date September 2012
+*> \date December 2016
 *
 *> \ingroup complex16GEauxiliary
 *
@@ -8008,10 +8007,10 @@
 *  =====================================================================
       SUBROUTINE ZGESC2( N, A, LDA, RHS, IPIV, JPIV, SCALE )
 *
-*  -- LAPACK auxiliary routine (version 3.4.2) --
+*  -- LAPACK auxiliary routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
+*     December 2016
 *
 *     .. Scalar Arguments ..
       INTEGER            LDA, N
@@ -8097,25 +8096,25 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZGESDD + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgesdd.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgesdd.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgesdd.f"> 
+*> Download ZGESDD + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgesdd.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgesdd.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgesdd.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZGESDD( JOBZ, M, N, A, LDA, S, U, LDU, VT, LDVT,
 *                          WORK, LWORK, RWORK, IWORK, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          JOBZ
 *       INTEGER            INFO, LDA, LDU, LDVT, LWORK, M, N
@@ -8126,7 +8125,7 @@
 *       COMPLEX*16         A( LDA, * ), U( LDU, * ), VT( LDVT, * ),
 *      $                   WORK( * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -8302,10 +8301,10 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
 *> \date June 2016
 *
@@ -8317,13 +8316,12 @@
 *>     Ming Gu and Huan Ren, Computer Science Division, University of
 *>     California at Berkeley, USA
 *>
-*> @precisions fortran z -> c
 *  =====================================================================
       SUBROUTINE ZGESDD( JOBZ, M, N, A, LDA, S, U, LDU, VT, LDVT,
      $                   WORK, LWORK, RWORK, IWORK, INFO )
       implicit none
 *
-*  -- LAPACK driver routine (version 3.6.1) --
+*  -- LAPACK driver routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
 *     June 2016
@@ -8426,8 +8424,10 @@
 *       real workspace. NB refers to the optimal block size for the
 *       immediately following subroutine, as returned by ILAENV.)
 *
-      IF( INFO.EQ.0 .AND. M.GT.0 .AND. N.GT.0 ) THEN
-         IF( M.GE.N ) THEN
+      IF( INFO.EQ.0 ) THEN
+         MINWRK = 1
+         MAXWRK = 1
+         IF( M.GE.N .AND. MINMN.GT.0 ) THEN
 *
 *           There is no complex work space needed for bidiagonal SVD
 *           The real work space needed for bidiagonal SVD (dbdsdc) is
@@ -8568,7 +8568,7 @@
                   MAXWRK = MAX( MAXWRK, 2*N + LWORK_ZUNMBR_PRC_NN )
                END IF
             END IF
-         ELSE
+         ELSE IF( MINMN.GT.0 ) THEN
 *
 *           There is no complex work space needed for bidiagonal SVD
 *           The real work space needed for bidiagonal SVD (dbdsdc) is
@@ -10312,28 +10312,28 @@
 *     End of ZGESDD
 *
       END
-*> \brief <b> ZGESV computes the solution to system of linear equations A * X = B for GE matrices</b> (simple driver)
+*> \brief <b> ZGESV computes the solution to system of linear equations A * X = B for GE matrices</b> (simple driver) </b>
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZGESV + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgesv.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgesv.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgesv.f"> 
+*> Download ZGESV + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgesv.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgesv.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgesv.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZGESV( N, NRHS, A, LDA, IPIV, B, LDB, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       INTEGER            INFO, LDA, LDB, N, NRHS
 *       ..
@@ -10341,7 +10341,7 @@
 *       INTEGER            IPIV( * )
 *       COMPLEX*16         A( LDA, * ), B( LDB, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -10424,22 +10424,22 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date November 2011
+*> \date December 2016
 *
 *> \ingroup complex16GEsolve
 *
 *  =====================================================================
       SUBROUTINE ZGESV( N, NRHS, A, LDA, IPIV, B, LDB, INFO )
 *
-*  -- LAPACK driver routine (version 3.4.0) --
+*  -- LAPACK driver routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     December 2016
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, LDA, LDB, N, NRHS
@@ -10495,25 +10495,25 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZGESVD + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgesvd.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgesvd.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgesvd.f"> 
+*> Download ZGESVD + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgesvd.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgesvd.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgesvd.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZGESVD( JOBU, JOBVT, M, N, A, LDA, S, U, LDU, VT, LDVT,
 *                          WORK, LWORK, RWORK, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          JOBU, JOBVT
 *       INTEGER            INFO, LDA, LDU, LDVT, LWORK, M, N
@@ -10523,7 +10523,7 @@
 *       COMPLEX*16         A( LDA, * ), U( LDU, * ), VT( LDVT, * ),
 *      $                   WORK( * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -10694,20 +10694,20 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
 *> \date April 2012
 *
 *> \ingroup complex16GEsing
 *
 *  =====================================================================
-      SUBROUTINE ZGESVD( JOBU, JOBVT, M, N, A, LDA, S, U, LDU, 
+      SUBROUTINE ZGESVD( JOBU, JOBVT, M, N, A, LDA, S, U, LDU,
      $                   VT, LDVT, WORK, LWORK, RWORK, INFO )
 *
-*  -- LAPACK driver routine (version 3.6.1) --
+*  -- LAPACK driver routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
 *     April 2012
@@ -14200,18 +14200,18 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZGESVX + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgesvx.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgesvx.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgesvx.f"> 
+*> Download ZGESVX + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgesvx.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgesvx.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgesvx.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
@@ -14219,7 +14219,7 @@
 *       SUBROUTINE ZGESVX( FACT, TRANS, N, NRHS, A, LDA, AF, LDAF, IPIV,
 *                          EQUED, R, C, B, LDB, X, LDX, RCOND, FERR, BERR,
 *                          WORK, RWORK, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          EQUED, FACT, TRANS
 *       INTEGER            INFO, LDA, LDAF, LDB, LDX, N, NRHS
@@ -14232,7 +14232,7 @@
 *       COMPLEX*16         A( LDA, * ), AF( LDAF, * ), B( LDB, * ),
 *      $                   WORK( * ), X( LDX, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -14534,10 +14534,10 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
 *> \date April 2012
 *
@@ -14548,7 +14548,7 @@
      $                   EQUED, R, C, B, LDB, X, LDX, RCOND, FERR, BERR,
      $                   WORK, RWORK, INFO )
 *
-*  -- LAPACK driver routine (version 3.4.1) --
+*  -- LAPACK driver routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
 *     April 2012
@@ -14805,24 +14805,24 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZGETC2 + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgetc2.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgetc2.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgetc2.f"> 
+*> Download ZGETC2 + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgetc2.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgetc2.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgetc2.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZGETC2( N, A, LDA, IPIV, JPIV, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       INTEGER            INFO, LDA, N
 *       ..
@@ -14830,7 +14830,7 @@
 *       INTEGER            IPIV( * ), JPIV( * )
 *       COMPLEX*16         A( LDA, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -14896,10 +14896,10 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
 *> \date June 2016
 *
@@ -14914,7 +14914,7 @@
 *  =====================================================================
       SUBROUTINE ZGETC2( N, A, LDA, IPIV, JPIV, INFO )
 *
-*  -- LAPACK auxiliary routine (version 3.6.1) --
+*  -- LAPACK auxiliary routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
 *     June 2016
@@ -15039,24 +15039,24 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZGETF2 + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgetf2.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgetf2.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgetf2.f"> 
+*> Download ZGETF2 + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgetf2.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgetf2.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgetf2.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZGETF2( M, N, A, LDA, IPIV, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       INTEGER            INFO, LDA, M, N
 *       ..
@@ -15064,7 +15064,7 @@
 *       INTEGER            IPIV( * )
 *       COMPLEX*16         A( LDA, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -15133,22 +15133,22 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date September 2012
+*> \date December 2016
 *
 *> \ingroup complex16GEcomputational
 *
 *  =====================================================================
       SUBROUTINE ZGETF2( M, N, A, LDA, IPIV, INFO )
 *
-*  -- LAPACK computational routine (version 3.4.2) --
+*  -- LAPACK computational routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
+*     December 2016
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, LDA, M, N
@@ -15204,7 +15204,7 @@
 *
 *     Compute machine safe minimum
 *
-      SFMIN = DLAMCH('S') 
+      SFMIN = DLAMCH('S')
 *
       DO 10 J = 1, MIN( M, N )
 *
@@ -15253,24 +15253,24 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZGETRF + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgetrf.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgetrf.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgetrf.f"> 
+*> Download ZGETRF + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgetrf.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgetrf.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgetrf.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZGETRF( M, N, A, LDA, IPIV, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       INTEGER            INFO, LDA, M, N
 *       ..
@@ -15278,7 +15278,7 @@
 *       INTEGER            IPIV( * )
 *       COMPLEX*16         A( LDA, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -15347,22 +15347,22 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date November 2015
+*> \date December 2016
 *
 *> \ingroup complex16GEcomputational
 *
 *  =====================================================================
       SUBROUTINE ZGETRF( M, N, A, LDA, IPIV, INFO )
 *
-*  -- LAPACK computational routine (version 3.6.0) --
+*  -- LAPACK computational routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2015
+*     December 2016
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, LDA, M, N
@@ -15478,14 +15478,14 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *  Definition:
 *  ===========
 *
 *       RECURSIVE SUBROUTINE ZGETRF2( M, N, A, LDA, IPIV, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       INTEGER            INFO, LDA, M, N
 *       ..
@@ -15493,7 +15493,7 @@
 *       INTEGER            IPIV( * )
 *       COMPLEX*16         A( LDA, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -15511,11 +15511,11 @@
 *>
 *> This is the recursive version of the algorithm. It divides
 *> the matrix into four submatrices:
-*>            
+*>
 *>        [  A11 | A12  ]  where A11 is n1 by n1 and A22 is n2 by n2
 *>    A = [ -----|----- ]  with n1 = min(m,n)/2
 *>        [  A21 | A22  ]       n2 = n-n1
-*>            
+*>
 *>                                       [ A11 ]
 *> The subroutine calls itself to factor [ --- ],
 *>                                       [ A12 ]
@@ -15577,10 +15577,10 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
 *> \date June 2016
 *
@@ -15589,7 +15589,7 @@
 *  =====================================================================
       RECURSIVE SUBROUTINE ZGETRF2( M, N, A, LDA, IPIV, INFO )
 *
-*  -- LAPACK computational routine (version 3.6.1) --
+*  -- LAPACK computational routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
 *     June 2016
@@ -15717,12 +15717,12 @@
 *
 *        Solve A12
 *
-         CALL ZTRSM( 'L', 'L', 'N', 'U', N1, N2, ONE, A, LDA, 
+         CALL ZTRSM( 'L', 'L', 'N', 'U', N1, N2, ONE, A, LDA,
      $               A( 1, N1+1 ), LDA )
 *
 *        Update A22
 *
-         CALL ZGEMM( 'N', 'N', M-N1, N2, N1, -ONE, A( N1+1, 1 ), LDA, 
+         CALL ZGEMM( 'N', 'N', M-N1, N2, N1, -ONE, A( N1+1, 1 ), LDA,
      $               A( 1, N1+1 ), LDA, ONE, A( N1+1, N1+1 ), LDA )
 *
 *        Factor A22
@@ -15752,24 +15752,24 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZGETRI + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgetri.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgetri.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgetri.f"> 
+*> Download ZGETRI + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgetri.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgetri.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgetri.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZGETRI( N, A, LDA, IPIV, WORK, LWORK, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       INTEGER            INFO, LDA, LWORK, N
 *       ..
@@ -15777,7 +15777,7 @@
 *       INTEGER            IPIV( * )
 *       COMPLEX*16         A( LDA, * ), WORK( * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -15852,22 +15852,22 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date November 2011
+*> \date December 2016
 *
 *> \ingroup complex16GEcomputational
 *
 *  =====================================================================
       SUBROUTINE ZGETRI( N, A, LDA, IPIV, WORK, LWORK, INFO )
 *
-*  -- LAPACK computational routine (version 3.4.0) --
+*  -- LAPACK computational routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     December 2016
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, LDA, LWORK, N
@@ -16014,24 +16014,24 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZGETRS + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgetrs.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgetrs.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgetrs.f"> 
+*> Download ZGETRS + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgetrs.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgetrs.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgetrs.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZGETRS( TRANS, N, NRHS, A, LDA, IPIV, B, LDB, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          TRANS
 *       INTEGER            INFO, LDA, LDB, N, NRHS
@@ -16040,7 +16040,7 @@
 *       INTEGER            IPIV( * )
 *       COMPLEX*16         A( LDA, * ), B( LDB, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -16121,22 +16121,22 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date November 2011
+*> \date December 2016
 *
 *> \ingroup complex16GEcomputational
 *
 *  =====================================================================
       SUBROUTINE ZGETRS( TRANS, N, NRHS, A, LDA, IPIV, B, LDB, INFO )
 *
-*  -- LAPACK computational routine (version 3.4.0) --
+*  -- LAPACK computational routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     December 2016
 *
 *     .. Scalar Arguments ..
       CHARACTER          TRANS
@@ -16239,25 +16239,25 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZGGBAK + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zggbak.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zggbak.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zggbak.f"> 
+*> Download ZGGBAK + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zggbak.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zggbak.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zggbak.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZGGBAK( JOB, SIDE, N, ILO, IHI, LSCALE, RSCALE, M, V,
 *                          LDV, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          JOB, SIDE
 *       INTEGER            IHI, ILO, INFO, LDV, M, N
@@ -16266,7 +16266,7 @@
 *       DOUBLE PRECISION   LSCALE( * ), RSCALE( * )
 *       COMPLEX*16         V( LDV, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -16363,12 +16363,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date November 2015
+*> \date December 2016
 *
 *> \ingroup complex16GBcomputational
 *
@@ -16385,10 +16385,10 @@
       SUBROUTINE ZGGBAK( JOB, SIDE, N, ILO, IHI, LSCALE, RSCALE, M, V,
      $                   LDV, INFO )
 *
-*  -- LAPACK computational routine (version 3.6.0) --
+*  -- LAPACK computational routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2015
+*     December 2016
 *
 *     .. Scalar Arguments ..
       CHARACTER          JOB, SIDE
@@ -16546,25 +16546,25 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZGGBAL + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zggbal.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zggbal.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zggbal.f"> 
+*> Download ZGGBAL + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zggbal.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zggbal.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zggbal.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZGGBAL( JOB, N, A, LDA, B, LDB, ILO, IHI, LSCALE,
 *                          RSCALE, WORK, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          JOB
 *       INTEGER            IHI, ILO, INFO, LDA, LDB, N
@@ -16573,7 +16573,7 @@
 *       DOUBLE PRECISION   LSCALE( * ), RSCALE( * ), WORK( * )
 *       COMPLEX*16         A( LDA, * ), B( LDB, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -16699,10 +16699,10 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
 *> \date June 2016
 *
@@ -16721,7 +16721,7 @@
       SUBROUTINE ZGGBAL( JOB, N, A, LDA, B, LDB, ILO, IHI, LSCALE,
      $                   RSCALE, WORK, INFO )
 *
-*  -- LAPACK computational routine (version 3.6.1) --
+*  -- LAPACK computational routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
 *     June 2016
@@ -17118,18 +17118,18 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZGGES + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgges.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgges.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgges.f"> 
+*> Download ZGGES + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgges.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgges.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgges.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
@@ -17137,7 +17137,7 @@
 *       SUBROUTINE ZGGES( JOBVSL, JOBVSR, SORT, SELCTG, N, A, LDA, B, LDB,
 *                         SDIM, ALPHA, BETA, VSL, LDVSL, VSR, LDVSR, WORK,
 *                         LWORK, RWORK, BWORK, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          JOBVSL, JOBVSR, SORT
 *       INTEGER            INFO, LDA, LDB, LDVSL, LDVSR, LWORK, N, SDIM
@@ -17153,7 +17153,7 @@
 *       LOGICAL            SELCTG
 *       EXTERNAL           SELCTG
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -17372,12 +17372,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date November 2015
+*> \date December 2016
 *
 *> \ingroup complex16GEeigen
 *
@@ -17386,10 +17386,10 @@
      $                  SDIM, ALPHA, BETA, VSL, LDVSL, VSR, LDVSR, WORK,
      $                  LWORK, RWORK, BWORK, INFO )
 *
-*  -- LAPACK driver routine (version 3.6.0) --
+*  -- LAPACK driver routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2015
+*     December 2016
 *
 *     .. Scalar Arguments ..
       CHARACTER          JOBVSL, JOBVSR, SORT
@@ -17717,25 +17717,25 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZGGEV + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zggev.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zggev.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zggev.f"> 
+*> Download ZGGEV + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zggev.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zggev.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zggev.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZGGEV( JOBVL, JOBVR, N, A, LDA, B, LDB, ALPHA, BETA,
 *                         VL, LDVL, VR, LDVR, WORK, LWORK, RWORK, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          JOBVL, JOBVR
 *       INTEGER            INFO, LDA, LDB, LDVL, LDVR, LWORK, N
@@ -17746,7 +17746,7 @@
 *      $                   BETA( * ), VL( LDVL, * ), VR( LDVR, * ),
 *      $                   WORK( * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -17919,10 +17919,10 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
 *> \date April 2012
 *
@@ -17932,7 +17932,7 @@
       SUBROUTINE ZGGEV( JOBVL, JOBVR, N, A, LDA, B, LDB, ALPHA, BETA,
      $                  VL, LDVL, VR, LDVR, WORK, LWORK, RWORK, INFO )
 *
-*  -- LAPACK driver routine (version 3.4.1) --
+*  -- LAPACK driver routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
 *     April 2012
@@ -18275,25 +18275,25 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZGGHRD + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgghrd.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgghrd.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgghrd.f"> 
+*> Download ZGGHRD + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zgghrd.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zgghrd.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zgghrd.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZGGHRD( COMPQ, COMPZ, N, ILO, IHI, A, LDA, B, LDB, Q,
 *                          LDQ, Z, LDZ, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          COMPQ, COMPZ
 *       INTEGER            IHI, ILO, INFO, LDA, LDB, LDQ, LDZ, N
@@ -18302,7 +18302,7 @@
 *       COMPLEX*16         A( LDA, * ), B( LDB, * ), Q( LDQ, * ),
 *      $                   Z( LDZ, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -18454,12 +18454,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date November 2015
+*> \date December 2016
 *
 *> \ingroup complex16OTHERcomputational
 *
@@ -18477,10 +18477,10 @@
       SUBROUTINE ZGGHRD( COMPQ, COMPZ, N, ILO, IHI, A, LDA, B, LDB, Q,
      $                   LDQ, Z, LDZ, INFO )
 *
-*  -- LAPACK computational routine (version 3.6.0) --
+*  -- LAPACK computational routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2015
+*     December 2016
 *
 *     .. Scalar Arguments ..
       CHARACTER          COMPQ, COMPZ
@@ -18636,25 +18636,25 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZHEEV + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zheev.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zheev.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zheev.f"> 
+*> Download ZHEEV + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zheev.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zheev.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zheev.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZHEEV( JOBZ, UPLO, N, A, LDA, W, WORK, LWORK, RWORK,
 *                         INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          JOBZ, UPLO
 *       INTEGER            INFO, LDA, LWORK, N
@@ -18663,7 +18663,7 @@
 *       DOUBLE PRECISION   RWORK( * ), W( * )
 *       COMPLEX*16         A( LDA, * ), WORK( * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -18761,12 +18761,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date November 2011
+*> \date December 2016
 *
 *> \ingroup complex16HEeigen
 *
@@ -18774,10 +18774,10 @@
       SUBROUTINE ZHEEV( JOBZ, UPLO, N, A, LDA, W, WORK, LWORK, RWORK,
      $                  INFO )
 *
-*  -- LAPACK driver routine (version 3.4.0) --
+*  -- LAPACK driver routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     December 2016
 *
 *     .. Scalar Arguments ..
       CHARACTER          JOBZ, UPLO
@@ -18934,25 +18934,25 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZHEEVD + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zheevd.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zheevd.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zheevd.f"> 
+*> Download ZHEEVD + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zheevd.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zheevd.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zheevd.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZHEEVD( JOBZ, UPLO, N, A, LDA, W, WORK, LWORK, RWORK,
 *                          LRWORK, IWORK, LIWORK, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          JOBZ, UPLO
 *       INTEGER            INFO, LDA, LIWORK, LRWORK, LWORK, N
@@ -18962,7 +18962,7 @@
 *       DOUBLE PRECISION   RWORK( * ), W( * )
 *       COMPLEX*16         A( LDA, * ), WORK( * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -19113,12 +19113,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date November 2011
+*> \date December 2016
 *
 *> \ingroup complex16HEeigen
 *
@@ -19137,10 +19137,10 @@
       SUBROUTINE ZHEEVD( JOBZ, UPLO, N, A, LDA, W, WORK, LWORK, RWORK,
      $                   LRWORK, IWORK, LIWORK, INFO )
 *
-*  -- LAPACK driver routine (version 3.4.0) --
+*  -- LAPACK driver routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     December 2016
 *
 *     .. Scalar Arguments ..
       CHARACTER          JOBZ, UPLO
@@ -19332,24 +19332,24 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZHETD2 + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zhetd2.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zhetd2.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zhetd2.f"> 
+*> Download ZHETD2 + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zhetd2.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zhetd2.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zhetd2.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZHETD2( UPLO, N, A, LDA, D, E, TAU, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          UPLO
 *       INTEGER            INFO, LDA, N
@@ -19358,7 +19358,7 @@
 *       DOUBLE PRECISION   D( * ), E( * )
 *       COMPLEX*16         A( LDA, * ), TAU( * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -19447,12 +19447,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date September 2012
+*> \date December 2016
 *
 *> \ingroup complex16HEcomputational
 *
@@ -19505,10 +19505,10 @@
 *  =====================================================================
       SUBROUTINE ZHETD2( UPLO, N, A, LDA, D, E, TAU, INFO )
 *
-*  -- LAPACK computational routine (version 3.4.2) --
+*  -- LAPACK computational routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
+*     December 2016
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -19666,24 +19666,24 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZHETRD + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zhetrd.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zhetrd.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zhetrd.f"> 
+*> Download ZHETRD + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zhetrd.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zhetrd.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zhetrd.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZHETRD( UPLO, N, A, LDA, D, E, TAU, WORK, LWORK, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          UPLO
 *       INTEGER            INFO, LDA, LWORK, N
@@ -19692,7 +19692,7 @@
 *       DOUBLE PRECISION   D( * ), E( * )
 *       COMPLEX*16         A( LDA, * ), TAU( * ), WORK( * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -19798,12 +19798,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date November 2011
+*> \date December 2016
 *
 *> \ingroup complex16HEcomputational
 *
@@ -19856,10 +19856,10 @@
 *  =====================================================================
       SUBROUTINE ZHETRD( UPLO, N, A, LDA, D, E, TAU, WORK, LWORK, INFO )
 *
-*  -- LAPACK computational routine (version 3.4.0) --
+*  -- LAPACK computational routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     December 2016
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -20044,18 +20044,18 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZHGEQZ + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zhgeqz.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zhgeqz.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zhgeqz.f"> 
+*> Download ZHGEQZ + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zhgeqz.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zhgeqz.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zhgeqz.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
@@ -20063,7 +20063,7 @@
 *       SUBROUTINE ZHGEQZ( JOB, COMPQ, COMPZ, N, ILO, IHI, H, LDH, T, LDT,
 *                          ALPHA, BETA, Q, LDQ, Z, LDZ, WORK, LWORK,
 *                          RWORK, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          COMPQ, COMPZ, JOB
 *       INTEGER            IHI, ILO, INFO, LDH, LDQ, LDT, LDZ, LWORK, N
@@ -20074,7 +20074,7 @@
 *      $                   Q( LDQ, * ), T( LDT, * ), WORK( * ),
 *      $                   Z( LDZ, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -20086,18 +20086,18 @@
 *> using the single-shift QZ method.
 *> Matrix pairs of this type are produced by the reduction to
 *> generalized upper Hessenberg form of a complex matrix pair (A,B):
-*> 
+*>
 *>    A = Q1*H*Z1**H,  B = Q1*T*Z1**H,
-*> 
+*>
 *> as computed by ZGGHRD.
-*> 
+*>
 *> If JOB='S', then the Hessenberg-triangular pair (H,T) is
 *> also reduced to generalized Schur form,
-*> 
+*>
 *>    H = Q*S*Z**H,  T = Q*P*Z**H,
-*> 
+*>
 *> where Q and Z are unitary matrices and S and P are upper triangular.
-*> 
+*>
 *> Optionally, the unitary matrix Q from the generalized Schur
 *> factorization may be postmultiplied into an input matrix Q1, and the
 *> unitary matrix Z may be postmultiplied into an input matrix Z1.
@@ -20105,9 +20105,9 @@
 *> the matrix pair (A,B) to generalized Hessenberg form, then the output
 *> matrices Q1*Q and Z1*Z are the unitary factors from the generalized
 *> Schur factorization of (A,B):
-*> 
+*>
 *>    A = (Q1*Q)*S*(Z1*Z)**H,  B = (Q1*Q)*P*(Z1*Z)**H.
-*> 
+*>
 *> To avoid overflow, eigenvalues of the matrix pair (H,T)
 *> (equivalently, of (A,B)) are computed as a pair of complex values
 *> (alpha,beta).  If beta is nonzero, lambda = alpha / beta is an
@@ -20303,10 +20303,10 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
 *> \date April 2012
 *
@@ -20326,7 +20326,7 @@
      $                   ALPHA, BETA, Q, LDQ, Z, LDZ, WORK, LWORK,
      $                   RWORK, INFO )
 *
-*  -- LAPACK computational routine (version 3.6.1) --
+*  -- LAPACK computational routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
 *     April 2012
@@ -20920,25 +20920,25 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZHSEQR + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zhseqr.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zhseqr.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zhseqr.f"> 
+*> Download ZHSEQR + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zhseqr.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zhseqr.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zhseqr.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZHSEQR( JOB, COMPZ, N, ILO, IHI, H, LDH, W, Z, LDZ,
 *                          WORK, LWORK, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       INTEGER            IHI, ILO, INFO, LDH, LDZ, LWORK, N
 *       CHARACTER          COMPZ, JOB
@@ -20946,7 +20946,7 @@
 *       .. Array Arguments ..
 *       COMPLEX*16         H( LDH, * ), W( * ), WORK( * ), Z( LDZ, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -21129,12 +21129,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date November 2013
+*> \date December 2016
 *
 *> \ingroup complex16OTHERcomputational
 *
@@ -21217,10 +21217,10 @@
       SUBROUTINE ZHSEQR( JOB, COMPZ, N, ILO, IHI, H, LDH, W, Z, LDZ,
      $                   WORK, LWORK, INFO )
 *
-*  -- LAPACK computational routine (version 3.5.0) --
+*  -- LAPACK computational routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2013
+*     December 2016
 *
 *     .. Scalar Arguments ..
       INTEGER            IHI, ILO, INFO, LDH, LDZ, LWORK, N
@@ -21418,25 +21418,25 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZLABRD + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlabrd.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlabrd.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlabrd.f"> 
+*> Download ZLABRD + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlabrd.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlabrd.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlabrd.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZLABRD( M, N, NB, A, LDA, D, E, TAUQ, TAUP, X, LDX, Y,
 *                          LDY )
-* 
+*
 *       .. Scalar Arguments ..
 *       INTEGER            LDA, LDX, LDY, M, N, NB
 *       ..
@@ -21445,7 +21445,7 @@
 *       COMPLEX*16         A( LDA, * ), TAUP( * ), TAUQ( * ), X( LDX, * ),
 *      $                   Y( LDY, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -21568,12 +21568,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date September 2012
+*> \date December 2016
 *
 *> \ingroup complex16OTHERauxiliary
 *
@@ -21628,10 +21628,10 @@
       SUBROUTINE ZLABRD( M, N, NB, A, LDA, D, E, TAUQ, TAUP, X, LDX, Y,
      $                   LDY )
 *
-*  -- LAPACK auxiliary routine (version 3.4.2) --
+*  -- LAPACK auxiliary routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
+*     December 2016
 *
 *     .. Scalar Arguments ..
       INTEGER            LDA, LDX, LDY, M, N, NB
@@ -21838,31 +21838,31 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZLACGV + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlacgv.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlacgv.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlacgv.f"> 
+*> Download ZLACGV + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlacgv.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlacgv.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlacgv.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZLACGV( N, X, INCX )
-* 
+*
 *       .. Scalar Arguments ..
 *       INTEGER            INCX, N
 *       ..
 *       .. Array Arguments ..
 *       COMPLEX*16         X( * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -21898,22 +21898,22 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date September 2012
+*> \date December 2016
 *
 *> \ingroup complex16OTHERauxiliary
 *
 *  =====================================================================
       SUBROUTINE ZLACGV( N, X, INCX )
 *
-*  -- LAPACK auxiliary routine (version 3.4.2) --
+*  -- LAPACK auxiliary routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
+*     December 2016
 *
 *     .. Scalar Arguments ..
       INTEGER            INCX, N
@@ -21954,24 +21954,24 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZLACN2 + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlacn2.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlacn2.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlacn2.f"> 
+*> Download ZLACN2 + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlacn2.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlacn2.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlacn2.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZLACN2( N, V, X, EST, KASE, ISAVE )
-* 
+*
 *       .. Scalar Arguments ..
 *       INTEGER            KASE, N
 *       DOUBLE PRECISION   EST
@@ -21980,7 +21980,7 @@
 *       INTEGER            ISAVE( 3 )
 *       COMPLEX*16         V( * ), X( * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -22022,7 +22022,7 @@
 *>          EST is DOUBLE PRECISION
 *>         On entry with KASE = 1 or 2 and ISAVE(1) = 3, EST should be
 *>         unchanged from the previous call to ZLACN2.
-*>         On exit, EST is an estimate (a lower bound) for norm(A). 
+*>         On exit, EST is an estimate (a lower bound) for norm(A).
 *> \endverbatim
 *>
 *> \param[in,out] KASE
@@ -22043,12 +22043,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date September 2012
+*> \date December 2016
 *
 *> \ingroup complex16OTHERauxiliary
 *
@@ -22085,10 +22085,10 @@
 *  =====================================================================
       SUBROUTINE ZLACN2( N, V, X, EST, KASE, ISAVE )
 *
-*  -- LAPACK auxiliary routine (version 3.4.2) --
+*  -- LAPACK auxiliary routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
+*     December 2016
 *
 *     .. Scalar Arguments ..
       INTEGER            KASE, N
@@ -22252,24 +22252,24 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZLACP2 + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlacp2.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlacp2.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlacp2.f"> 
+*> Download ZLACP2 + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlacp2.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlacp2.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlacp2.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZLACP2( UPLO, M, N, A, LDA, B, LDB )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          UPLO
 *       INTEGER            LDA, LDB, M, N
@@ -22278,7 +22278,7 @@
 *       DOUBLE PRECISION   A( LDA, * )
 *       COMPLEX*16         B( LDB, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -22342,22 +22342,22 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date September 2012
+*> \date December 2016
 *
 *> \ingroup complex16OTHERauxiliary
 *
 *  =====================================================================
       SUBROUTINE ZLACP2( UPLO, M, N, A, LDA, B, LDB )
 *
-*  -- LAPACK auxiliary routine (version 3.4.2) --
+*  -- LAPACK auxiliary routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
+*     December 2016
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -22413,24 +22413,24 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZLACPY + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlacpy.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlacpy.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlacpy.f"> 
+*> Download ZLACPY + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlacpy.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlacpy.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlacpy.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZLACPY( UPLO, M, N, A, LDA, B, LDB )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          UPLO
 *       INTEGER            LDA, LDB, M, N
@@ -22438,7 +22438,7 @@
 *       .. Array Arguments ..
 *       COMPLEX*16         A( LDA, * ), B( LDB, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -22502,22 +22502,22 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date September 2012
+*> \date December 2016
 *
 *> \ingroup complex16OTHERauxiliary
 *
 *  =====================================================================
       SUBROUTINE ZLACPY( UPLO, M, N, A, LDA, B, LDB )
 *
-*  -- LAPACK auxiliary routine (version 3.4.2) --
+*  -- LAPACK auxiliary routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
+*     December 2016
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -22572,24 +22572,24 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZLACRM + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlacrm.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlacrm.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlacrm.f"> 
+*> Download ZLACRM + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlacrm.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlacrm.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlacrm.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZLACRM( M, N, A, LDA, B, LDB, C, LDC, RWORK )
-* 
+*
 *       .. Scalar Arguments ..
 *       INTEGER            LDA, LDB, LDC, M, N
 *       ..
@@ -22597,7 +22597,7 @@
 *       DOUBLE PRECISION   B( LDB, * ), RWORK( * )
 *       COMPLEX*16         A( LDA, * ), C( LDC, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -22631,7 +22631,7 @@
 *> \param[in] A
 *> \verbatim
 *>          A is COMPLEX*16 array, dimension (LDA, N)
-*>          A contains the M by N matrix A.
+*>          On entry, A contains the M by N matrix A.
 *> \endverbatim
 *>
 *> \param[in] LDA
@@ -22643,7 +22643,7 @@
 *> \param[in] B
 *> \verbatim
 *>          B is DOUBLE PRECISION array, dimension (LDB, N)
-*>          B contains the N by N matrix B.
+*>          On entry, B contains the N by N matrix B.
 *> \endverbatim
 *>
 *> \param[in] LDB
@@ -22652,10 +22652,10 @@
 *>          The leading dimension of the array B. LDB >=max(1,N).
 *> \endverbatim
 *>
-*> \param[in] C
+*> \param[out] C
 *> \verbatim
 *>          C is COMPLEX*16 array, dimension (LDC, N)
-*>          C contains the M by N matrix C.
+*>          On exit, C contains the M by N matrix C.
 *> \endverbatim
 *>
 *> \param[in] LDC
@@ -22672,22 +22672,22 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date September 2012
+*> \date December 2016
 *
 *> \ingroup complex16OTHERauxiliary
 *
 *  =====================================================================
       SUBROUTINE ZLACRM( M, N, A, LDA, B, LDB, C, LDC, RWORK )
 *
-*  -- LAPACK auxiliary routine (version 3.4.2) --
+*  -- LAPACK auxiliary routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
+*     December 2016
 *
 *     .. Scalar Arguments ..
       INTEGER            LDA, LDB, LDC, M, N
@@ -22757,28 +22757,28 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZLADIV + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zladiv.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zladiv.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zladiv.f"> 
+*> Download ZLADIV + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zladiv.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zladiv.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zladiv.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       COMPLEX*16     FUNCTION ZLADIV( X, Y )
-* 
+*
 *       .. Scalar Arguments ..
 *       COMPLEX*16         X, Y
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -22807,22 +22807,22 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date September 2012
+*> \date December 2016
 *
 *> \ingroup complex16OTHERauxiliary
 *
 *  =====================================================================
       COMPLEX*16     FUNCTION ZLADIV( X, Y )
 *
-*  -- LAPACK auxiliary routine (version 3.4.2) --
+*  -- LAPACK auxiliary routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
+*     December 2016
 *
 *     .. Scalar Arguments ..
       COMPLEX*16         X, Y
@@ -22854,25 +22854,25 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZLAED0 + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlaed0.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlaed0.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlaed0.f"> 
+*> Download ZLAED0 + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlaed0.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlaed0.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlaed0.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZLAED0( QSIZ, N, D, E, Q, LDQ, QSTORE, LDQS, RWORK,
 *                          IWORK, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       INTEGER            INFO, LDQ, LDQS, N, QSIZ
 *       ..
@@ -22881,7 +22881,7 @@
 *       DOUBLE PRECISION   D( * ), E( * ), RWORK( * )
 *       COMPLEX*16         Q( LDQ, * ), QSTORE( LDQS, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -22984,12 +22984,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date September 2012
+*> \date December 2016
 *
 *> \ingroup complex16OTHERcomputational
 *
@@ -22997,10 +22997,10 @@
       SUBROUTINE ZLAED0( QSIZ, N, D, E, Q, LDQ, QSTORE, LDQS, RWORK,
      $                   IWORK, INFO )
 *
-*  -- LAPACK computational routine (version 3.4.2) --
+*  -- LAPACK computational routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
+*     December 2016
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, LDQ, LDQS, N, QSIZ
@@ -23225,18 +23225,18 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZLAED7 + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlaed7.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlaed7.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlaed7.f"> 
+*> Download ZLAED7 + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlaed7.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlaed7.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlaed7.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
@@ -23245,7 +23245,7 @@
 *                          LDQ, RHO, INDXQ, QSTORE, QPTR, PRMPTR, PERM,
 *                          GIVPTR, GIVCOL, GIVNUM, WORK, RWORK, IWORK,
 *                          INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       INTEGER            CURLVL, CURPBM, CUTPNT, INFO, LDQ, N, QSIZ,
 *      $                   TLVLS
@@ -23257,7 +23257,7 @@
 *       DOUBLE PRECISION   D( * ), GIVNUM( 2, * ), QSTORE( * ), RWORK( * )
 *       COMPLEX*16         Q( LDQ, * ), WORK( * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -23457,10 +23457,10 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
 *> \date June 2016
 *
@@ -23472,7 +23472,7 @@
      $                   GIVPTR, GIVCOL, GIVNUM, WORK, RWORK, IWORK,
      $                   INFO )
 *
-*  -- LAPACK computational routine (version 3.6.1) --
+*  -- LAPACK computational routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
 *     June 2016
@@ -23610,18 +23610,18 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZLAED8 + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlaed8.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlaed8.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlaed8.f"> 
+*> Download ZLAED8 + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlaed8.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlaed8.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlaed8.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
@@ -23629,7 +23629,7 @@
 *       SUBROUTINE ZLAED8( K, N, QSIZ, Q, LDQ, D, RHO, CUTPNT, Z, DLAMDA,
 *                          Q2, LDQ2, W, INDXP, INDX, INDXQ, PERM, GIVPTR,
 *                          GIVCOL, GIVNUM, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       INTEGER            CUTPNT, GIVPTR, INFO, K, LDQ, LDQ2, N, QSIZ
 *       DOUBLE PRECISION   RHO
@@ -23641,7 +23641,7 @@
 *      $                   Z( * )
 *       COMPLEX*16         Q( LDQ, * ), Q2( LDQ2, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -23822,12 +23822,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date September 2012
+*> \date December 2016
 *
 *> \ingroup complex16OTHERcomputational
 *
@@ -23836,10 +23836,10 @@
      $                   Q2, LDQ2, W, INDXP, INDX, INDXQ, PERM, GIVPTR,
      $                   GIVCOL, GIVNUM, INFO )
 *
-*  -- LAPACK computational routine (version 3.4.2) --
+*  -- LAPACK computational routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
+*     December 2016
 *
 *     .. Scalar Arguments ..
       INTEGER            CUTPNT, GIVPTR, INFO, K, LDQ, LDQ2, N, QSIZ
@@ -23899,8 +23899,8 @@
       END IF
 *
 *     Need to initialize GIVPTR to O here in case of quick exit
-*     to prevent an unspecified code behavior (usually sigfault) 
-*     when IWORK array on entry to *stedc is not zeroed 
+*     to prevent an unspecified code behavior (usually sigfault)
+*     when IWORK array on entry to *stedc is not zeroed
 *     (or at least some IWORK entries which used in *laed7 for GIVPTR).
 *
       GIVPTR = 0
@@ -24096,25 +24096,25 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZLAHQR + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlahqr.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlahqr.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlahqr.f"> 
+*> Download ZLAHQR + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlahqr.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlahqr.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlahqr.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZLAHQR( WANTT, WANTZ, N, ILO, IHI, H, LDH, W, ILOZ,
 *                          IHIZ, Z, LDZ, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       INTEGER            IHI, IHIZ, ILO, ILOZ, INFO, LDH, LDZ, N
 *       LOGICAL            WANTT, WANTZ
@@ -24122,7 +24122,7 @@
 *       .. Array Arguments ..
 *       COMPLEX*16         H( LDH, * ), W( * ), Z( LDZ, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -24260,12 +24260,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date November 2015
+*> \date December 2016
 *
 *> \ingroup complex16OTHERauxiliary
 *
@@ -24289,10 +24289,10 @@
       SUBROUTINE ZLAHQR( WANTT, WANTZ, N, ILO, IHI, H, LDH, W, ILOZ,
      $                   IHIZ, Z, LDZ, INFO )
 *
-*  -- LAPACK auxiliary routine (version 3.6.0) --
+*  -- LAPACK auxiliary routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2015
+*     December 2016
 *
 *     .. Scalar Arguments ..
       INTEGER            IHI, IHIZ, ILO, ILOZ, INFO, LDH, LDZ, N
@@ -24407,7 +24407,7 @@
 *
 *     ITMAX is the total number of QR iterations allowed.
 *
-      ITMAX = 30 * MAX( 10, NH ) 
+      ITMAX = 30 * MAX( 10, NH )
 *
 *     The main loop begins here. I is the loop index and decreases from
 *     IHI to ILO in steps of 1. Each iteration of the loop works
@@ -24667,24 +24667,24 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZLAHR2 + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlahr2.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlahr2.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlahr2.f"> 
+*> Download ZLAHR2 + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlahr2.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlahr2.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlahr2.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZLAHR2( N, K, NB, A, LDA, TAU, T, LDT, Y, LDY )
-* 
+*
 *       .. Scalar Arguments ..
 *       INTEGER            K, LDA, LDT, LDY, N, NB
 *       ..
@@ -24692,7 +24692,7 @@
 *       COMPLEX*16        A( LDA, * ), T( LDT, NB ), TAU( NB ),
 *      $                   Y( LDY, NB )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -24783,12 +24783,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date September 2012
+*> \date December 2016
 *
 *> \ingroup complex16OTHERauxiliary
 *
@@ -24846,10 +24846,10 @@
 *  =====================================================================
       SUBROUTINE ZLAHR2( N, K, NB, A, LDA, TAU, T, LDT, Y, LDY )
 *
-*  -- LAPACK auxiliary routine (version 3.4.2) --
+*  -- LAPACK auxiliary routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
+*     December 2016
 *
 *     .. Scalar Arguments ..
       INTEGER            K, LDA, LDT, LDY, N, NB
@@ -24863,7 +24863,7 @@
 *
 *     .. Parameters ..
       COMPLEX*16        ZERO, ONE
-      PARAMETER          ( ZERO = ( 0.0D+0, 0.0D+0 ), 
+      PARAMETER          ( ZERO = ( 0.0D+0, 0.0D+0 ),
      $                     ONE = ( 1.0D+0, 0.0D+0 ) )
 *     ..
 *     .. Local Scalars ..
@@ -24891,10 +24891,10 @@
 *
 *           Update I-th column of A - Y * V**H
 *
-            CALL ZLACGV( I-1, A( K+I-1, 1 ), LDA ) 
+            CALL ZLACGV( I-1, A( K+I-1, 1 ), LDA )
             CALL ZGEMV( 'NO TRANSPOSE', N-K, I-1, -ONE, Y(K+1,1), LDY,
      $                  A( K+I-1, 1 ), LDA, ONE, A( K+1, I ), 1 )
-            CALL ZLACGV( I-1, A( K+I-1, 1 ), LDA ) 
+            CALL ZLACGV( I-1, A( K+I-1, 1 ), LDA )
 *
 *           Apply I - V * T**H * V**H to this column (call it b) from the
 *           left, using the last column of T as workspace
@@ -24907,31 +24907,31 @@
 *           w := V1**H * b1
 *
             CALL ZCOPY( I-1, A( K+1, I ), 1, T( 1, NB ), 1 )
-            CALL ZTRMV( 'Lower', 'Conjugate transpose', 'UNIT', 
+            CALL ZTRMV( 'Lower', 'Conjugate transpose', 'UNIT',
      $                  I-1, A( K+1, 1 ),
      $                  LDA, T( 1, NB ), 1 )
 *
 *           w := w + V2**H * b2
 *
-            CALL ZGEMV( 'Conjugate transpose', N-K-I+1, I-1, 
+            CALL ZGEMV( 'Conjugate transpose', N-K-I+1, I-1,
      $                  ONE, A( K+I, 1 ),
      $                  LDA, A( K+I, I ), 1, ONE, T( 1, NB ), 1 )
 *
 *           w := T**H * w
 *
-            CALL ZTRMV( 'Upper', 'Conjugate transpose', 'NON-UNIT', 
+            CALL ZTRMV( 'Upper', 'Conjugate transpose', 'NON-UNIT',
      $                  I-1, T, LDT,
      $                  T( 1, NB ), 1 )
 *
 *           b2 := b2 - V2*w
 *
-            CALL ZGEMV( 'NO TRANSPOSE', N-K-I+1, I-1, -ONE, 
+            CALL ZGEMV( 'NO TRANSPOSE', N-K-I+1, I-1, -ONE,
      $                  A( K+I, 1 ),
      $                  LDA, T( 1, NB ), 1, ONE, A( K+I, I ), 1 )
 *
 *           b1 := b1 - V1*w
 *
-            CALL ZTRMV( 'Lower', 'NO TRANSPOSE', 
+            CALL ZTRMV( 'Lower', 'NO TRANSPOSE',
      $                  'UNIT', I-1,
      $                  A( K+1, 1 ), LDA, T( 1, NB ), 1 )
             CALL ZAXPY( I-1, -ONE, T( 1, NB ), 1, A( K+1, I ), 1 )
@@ -24949,13 +24949,13 @@
 *
 *        Compute  Y(K+1:N,I)
 *
-         CALL ZGEMV( 'NO TRANSPOSE', N-K, N-K-I+1, 
+         CALL ZGEMV( 'NO TRANSPOSE', N-K, N-K-I+1,
      $               ONE, A( K+1, I+1 ),
      $               LDA, A( K+I, I ), 1, ZERO, Y( K+1, I ), 1 )
-         CALL ZGEMV( 'Conjugate transpose', N-K-I+1, I-1, 
+         CALL ZGEMV( 'Conjugate transpose', N-K-I+1, I-1,
      $               ONE, A( K+I, 1 ), LDA,
      $               A( K+I, I ), 1, ZERO, T( 1, I ), 1 )
-         CALL ZGEMV( 'NO TRANSPOSE', N-K, I-1, -ONE, 
+         CALL ZGEMV( 'NO TRANSPOSE', N-K, I-1, -ONE,
      $               Y( K+1, 1 ), LDY,
      $               T( 1, I ), 1, ONE, Y( K+1, I ), 1 )
          CALL ZSCAL( N-K, TAU( I ), Y( K+1, I ), 1 )
@@ -24963,7 +24963,7 @@
 *        Compute T(1:I,I)
 *
          CALL ZSCAL( I-1, -TAU( I ), T( 1, I ), 1 )
-         CALL ZTRMV( 'Upper', 'No Transpose', 'NON-UNIT', 
+         CALL ZTRMV( 'Upper', 'No Transpose', 'NON-UNIT',
      $               I-1, T, LDT,
      $               T( 1, I ), 1 )
          T( I, I ) = TAU( I )
@@ -24974,15 +24974,15 @@
 *     Compute Y(1:K,1:NB)
 *
       CALL ZLACPY( 'ALL', K, NB, A( 1, 2 ), LDA, Y, LDY )
-      CALL ZTRMM( 'RIGHT', 'Lower', 'NO TRANSPOSE', 
+      CALL ZTRMM( 'RIGHT', 'Lower', 'NO TRANSPOSE',
      $            'UNIT', K, NB,
      $            ONE, A( K+1, 1 ), LDA, Y, LDY )
       IF( N.GT.K+NB )
-     $   CALL ZGEMM( 'NO TRANSPOSE', 'NO TRANSPOSE', K, 
+     $   CALL ZGEMM( 'NO TRANSPOSE', 'NO TRANSPOSE', K,
      $               NB, N-K-NB, ONE,
      $               A( 1, 2+NB ), LDA, A( K+1+NB, 1 ), LDA, ONE, Y,
      $               LDY )
-      CALL ZTRMM( 'RIGHT', 'Upper', 'NO TRANSPOSE', 
+      CALL ZTRMM( 'RIGHT', 'Upper', 'NO TRANSPOSE',
      $            'NON-UNIT', K, NB,
      $            ONE, T, LDT, Y, LDY )
 *
@@ -24995,24 +24995,24 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZLAHRD + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlahrd.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlahrd.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlahrd.f"> 
+*> Download ZLAHRD + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlahrd.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlahrd.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlahrd.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZLAHRD( N, K, NB, A, LDA, TAU, T, LDT, Y, LDY )
-* 
+*
 *       .. Scalar Arguments ..
 *       INTEGER            K, LDA, LDT, LDY, N, NB
 *       ..
@@ -25020,7 +25020,7 @@
 *       COMPLEX*16         A( LDA, * ), T( LDT, NB ), TAU( NB ),
 *      $                   Y( LDY, NB )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -25110,12 +25110,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date November 2015
+*> \date December 2016
 *
 *> \ingroup complex16OTHERauxiliary
 *
@@ -25160,10 +25160,10 @@
 *  =====================================================================
       SUBROUTINE ZLAHRD( N, K, NB, A, LDA, TAU, T, LDT, Y, LDY )
 *
-*  -- LAPACK auxiliary routine (version 3.6.0) --
+*  -- LAPACK auxiliary routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2015
+*     December 2016
 *
 *     .. Scalar Arguments ..
       INTEGER            K, LDA, LDT, LDY, N, NB
@@ -25287,18 +25287,18 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZLALS0 + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlals0.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlals0.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlals0.f"> 
+*> Download ZLALS0 + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlals0.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlals0.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlals0.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
@@ -25306,7 +25306,7 @@
 *       SUBROUTINE ZLALS0( ICOMPQ, NL, NR, SQRE, NRHS, B, LDB, BX, LDBX,
 *                          PERM, GIVPTR, GIVCOL, LDGCOL, GIVNUM, LDGNUM,
 *                          POLES, DIFL, DIFR, Z, K, C, S, RWORK, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       INTEGER            GIVPTR, ICOMPQ, INFO, K, LDB, LDBX, LDGCOL,
 *      $                   LDGNUM, NL, NR, NRHS, SQRE
@@ -25319,7 +25319,7 @@
 *      $                   RWORK( * ), Z( * )
 *       COMPLEX*16         B( LDB, * ), BX( LDBX, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -25534,12 +25534,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date November 2015
+*> \date December 2016
 *
 *> \ingroup complex16OTHERcomputational
 *
@@ -25555,10 +25555,10 @@
      $                   PERM, GIVPTR, GIVCOL, LDGCOL, GIVNUM, LDGNUM,
      $                   POLES, DIFL, DIFR, Z, K, C, S, RWORK, INFO )
 *
-*  -- LAPACK computational routine (version 3.6.0) --
+*  -- LAPACK computational routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2015
+*     December 2016
 *
 *     .. Scalar Arguments ..
       INTEGER            GIVPTR, ICOMPQ, INFO, K, LDB, LDBX, LDGCOL,
@@ -25843,18 +25843,18 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZLALSA + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlalsa.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlalsa.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlalsa.f"> 
+*> Download ZLALSA + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlalsa.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlalsa.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlalsa.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
@@ -25863,7 +25863,7 @@
 *                          LDU, VT, K, DIFL, DIFR, Z, POLES, GIVPTR,
 *                          GIVCOL, LDGCOL, PERM, GIVNUM, C, S, RWORK,
 *                          IWORK, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       INTEGER            ICOMPQ, INFO, LDB, LDBX, LDGCOL, LDU, N, NRHS,
 *      $                   SMLSIZ
@@ -25876,7 +25876,7 @@
 *      $                   S( * ), U( LDU, * ), VT( LDU, * ), Z( LDU, * )
 *       COMPLEX*16         B( LDB, * ), BX( LDBX, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -26087,12 +26087,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date September 2012
+*> \date December 2016
 *
 *> \ingroup complex16OTHERcomputational
 *
@@ -26109,10 +26109,10 @@
      $                   GIVCOL, LDGCOL, PERM, GIVNUM, C, S, RWORK,
      $                   IWORK, INFO )
 *
-*  -- LAPACK computational routine (version 3.4.2) --
+*  -- LAPACK computational routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
+*     December 2016
 *
 *     .. Scalar Arguments ..
       INTEGER            ICOMPQ, INFO, LDB, LDBX, LDGCOL, LDU, N, NRHS,
@@ -26479,25 +26479,25 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZLALSD + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlalsd.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlalsd.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlalsd.f"> 
+*> Download ZLALSD + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlalsd.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlalsd.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlalsd.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZLALSD( UPLO, SMLSIZ, N, NRHS, D, E, B, LDB, RCOND,
 *                          RANK, WORK, RWORK, IWORK, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          UPLO
 *       INTEGER            INFO, LDB, N, NRHS, RANK, SMLSIZ
@@ -26508,7 +26508,7 @@
 *       DOUBLE PRECISION   D( * ), E( * ), RWORK( * )
 *       COMPLEX*16         B( LDB, * ), WORK( * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -26645,12 +26645,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date September 2012
+*> \date December 2016
 *
 *> \ingroup complex16OTHERcomputational
 *
@@ -26665,10 +26665,10 @@
       SUBROUTINE ZLALSD( UPLO, SMLSIZ, N, NRHS, D, E, B, LDB, RCOND,
      $                   RANK, WORK, RWORK, IWORK, INFO )
 *
-*  -- LAPACK computational routine (version 3.4.2) --
+*  -- LAPACK computational routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
+*     December 2016
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -27173,24 +27173,24 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZLANGE + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlange.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlange.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlange.f"> 
+*> Download ZLANGE + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlange.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlange.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlange.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       DOUBLE PRECISION FUNCTION ZLANGE( NORM, M, N, A, LDA, WORK )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          NORM
 *       INTEGER            LDA, M, N
@@ -27199,7 +27199,7 @@
 *       DOUBLE PRECISION   WORK( * )
 *       COMPLEX*16         A( LDA, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -27274,22 +27274,22 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date September 2012
+*> \date December 2016
 *
 *> \ingroup complex16GEauxiliary
 *
 *  =====================================================================
       DOUBLE PRECISION FUNCTION ZLANGE( NORM, M, N, A, LDA, WORK )
 *
-*  -- LAPACK auxiliary routine (version 3.4.2) --
+*  -- LAPACK auxiliary routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
+*     December 2016
 *
 *     .. Scalar Arguments ..
       CHARACTER          NORM
@@ -27386,24 +27386,24 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZLANHE + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlanhe.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlanhe.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlanhe.f"> 
+*> Download ZLANHE + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlanhe.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlanhe.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlanhe.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       DOUBLE PRECISION FUNCTION ZLANHE( NORM, UPLO, N, A, LDA, WORK )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          NORM, UPLO
 *       INTEGER            LDA, N
@@ -27412,7 +27412,7 @@
 *       DOUBLE PRECISION   WORK( * )
 *       COMPLEX*16         A( LDA, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -27496,22 +27496,22 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date September 2012
+*> \date December 2016
 *
 *> \ingroup complex16HEauxiliary
 *
 *  =====================================================================
       DOUBLE PRECISION FUNCTION ZLANHE( NORM, UPLO, N, A, LDA, WORK )
 *
-*  -- LAPACK auxiliary routine (version 3.4.2) --
+*  -- LAPACK auxiliary routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
+*     December 2016
 *
 *     .. Scalar Arguments ..
       CHARACTER          NORM, UPLO
@@ -27644,24 +27644,24 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZLANHS + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlanhs.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlanhs.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlanhs.f"> 
+*> Download ZLANHS + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlanhs.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlanhs.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlanhs.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       DOUBLE PRECISION FUNCTION ZLANHS( NORM, N, A, LDA, WORK )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          NORM
 *       INTEGER            LDA, N
@@ -27670,7 +27670,7 @@
 *       DOUBLE PRECISION   WORK( * )
 *       COMPLEX*16         A( LDA, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -27739,22 +27739,22 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date September 2012
+*> \date December 2016
 *
 *> \ingroup complex16OTHERauxiliary
 *
 *  =====================================================================
       DOUBLE PRECISION FUNCTION ZLANHS( NORM, N, A, LDA, WORK )
 *
-*  -- LAPACK auxiliary routine (version 3.4.2) --
+*  -- LAPACK auxiliary routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
+*     December 2016
 *
 *     .. Scalar Arguments ..
       CHARACTER          NORM
@@ -27851,25 +27851,25 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZLANTR + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlantr.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlantr.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlantr.f"> 
+*> Download ZLANTR + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlantr.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlantr.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlantr.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       DOUBLE PRECISION FUNCTION ZLANTR( NORM, UPLO, DIAG, M, N, A, LDA,
 *                        WORK )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          DIAG, NORM, UPLO
 *       INTEGER            LDA, M, N
@@ -27878,7 +27878,7 @@
 *       DOUBLE PRECISION   WORK( * )
 *       COMPLEX*16         A( LDA, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -27978,12 +27978,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date September 2012
+*> \date December 2016
 *
 *> \ingroup complex16OTHERauxiliary
 *
@@ -27991,10 +27991,10 @@
       DOUBLE PRECISION FUNCTION ZLANTR( NORM, UPLO, DIAG, M, N, A, LDA,
      $                 WORK )
 *
-*  -- LAPACK auxiliary routine (version 3.4.2) --
+*  -- LAPACK auxiliary routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
+*     December 2016
 *
 *     .. Scalar Arguments ..
       CHARACTER          DIAG, NORM, UPLO
@@ -28206,25 +28206,25 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZLAQGE + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlaqge.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlaqge.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlaqge.f"> 
+*> Download ZLAQGE + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlaqge.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlaqge.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlaqge.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZLAQGE( M, N, A, LDA, R, C, ROWCND, COLCND, AMAX,
 *                          EQUED )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          EQUED
 *       INTEGER            LDA, M, N
@@ -28234,7 +28234,7 @@
 *       DOUBLE PRECISION   C( * ), R( * )
 *       COMPLEX*16         A( LDA, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -28334,12 +28334,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date September 2012
+*> \date December 2016
 *
 *> \ingroup complex16GEauxiliary
 *
@@ -28347,10 +28347,10 @@
       SUBROUTINE ZLAQGE( M, N, A, LDA, R, C, ROWCND, COLCND, AMAX,
      $                   EQUED )
 *
-*  -- LAPACK auxiliary routine (version 3.4.2) --
+*  -- LAPACK auxiliary routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
+*     December 2016
 *
 *     .. Scalar Arguments ..
       CHARACTER          EQUED
@@ -28444,25 +28444,25 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZLAQP2 + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlaqp2.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlaqp2.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlaqp2.f"> 
+*> Download ZLAQP2 + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlaqp2.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlaqp2.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlaqp2.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZLAQP2( M, N, OFFSET, A, LDA, JPVT, TAU, VN1, VN2,
 *                          WORK )
-* 
+*
 *       .. Scalar Arguments ..
 *       INTEGER            LDA, M, N, OFFSET
 *       ..
@@ -28471,7 +28471,7 @@
 *       DOUBLE PRECISION   VN1( * ), VN2( * )
 *       COMPLEX*16         A( LDA, * ), TAU( * ), WORK( * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -28559,12 +28559,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date September 2012
+*> \date December 2016
 *
 *> \ingroup complex16OTHERauxiliary
 *
@@ -28584,17 +28584,17 @@
 *> LAPACK Working Note 176
 *
 *> \htmlonly
-*> <a href="http://www.netlib.org/lapack/lawnspdf/lawn176.pdf">[PDF]</a> 
-*> \endhtmlonly 
+*> <a href="http://www.netlib.org/lapack/lawnspdf/lawn176.pdf">[PDF]</a>
+*> \endhtmlonly
 *
 *  =====================================================================
       SUBROUTINE ZLAQP2( M, N, OFFSET, A, LDA, JPVT, TAU, VN1, VN2,
      $                   WORK )
 *
-*  -- LAPACK auxiliary routine (version 3.4.2) --
+*  -- LAPACK auxiliary routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
+*     December 2016
 *
 *     .. Scalar Arguments ..
       INTEGER            LDA, M, N, OFFSET
@@ -28710,25 +28710,25 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZLAQPS + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlaqps.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlaqps.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlaqps.f"> 
+*> Download ZLAQPS + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlaqps.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlaqps.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlaqps.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZLAQPS( M, N, OFFSET, NB, KB, A, LDA, JPVT, TAU, VN1,
 *                          VN2, AUXV, F, LDF )
-* 
+*
 *       .. Scalar Arguments ..
 *       INTEGER            KB, LDA, LDF, M, N, NB, OFFSET
 *       ..
@@ -28737,7 +28737,7 @@
 *       DOUBLE PRECISION   VN1( * ), VN2( * )
 *       COMPLEX*16         A( LDA, * ), AUXV( * ), F( LDF, * ), TAU( * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -28853,12 +28853,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date September 2012
+*> \date December 2016
 *
 *> \ingroup complex16OTHERauxiliary
 *
@@ -28878,17 +28878,17 @@
 *> LAPACK Working Note 176
 *
 *> \htmlonly
-*> <a href="http://www.netlib.org/lapack/lawnspdf/lawn176.pdf">[PDF]</a> 
-*> \endhtmlonly 
+*> <a href="http://www.netlib.org/lapack/lawnspdf/lawn176.pdf">[PDF]</a>
+*> \endhtmlonly
 *
 *  =====================================================================
       SUBROUTINE ZLAQPS( M, N, OFFSET, NB, KB, A, LDA, JPVT, TAU, VN1,
      $                   VN2, AUXV, F, LDF )
 *
-*  -- LAPACK auxiliary routine (version 3.4.2) --
+*  -- LAPACK auxiliary routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
+*     December 2016
 *
 *     .. Scalar Arguments ..
       INTEGER            KB, LDA, LDF, M, N, NB, OFFSET
@@ -29062,9 +29062,9 @@
          ITEMP = NINT( VN2( LSTICC ) )
          VN1( LSTICC ) = DZNRM2( M-RK, A( RK+1, LSTICC ), 1 )
 *
-*        NOTE: The computation of VN1( LSTICC ) relies on the fact that 
+*        NOTE: The computation of VN1( LSTICC ) relies on the fact that
 *        SNRM2 does not fail on vectors with norm below the value of
-*        SQRT(DLAMCH('S')) 
+*        SQRT(DLAMCH('S'))
 *
          VN2( LSTICC ) = VN1( LSTICC )
          LSTICC = ITEMP
@@ -29080,25 +29080,25 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZLAQR0 + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlaqr0.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlaqr0.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlaqr0.f"> 
+*> Download ZLAQR0 + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlaqr0.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlaqr0.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlaqr0.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZLAQR0( WANTT, WANTZ, N, ILO, IHI, H, LDH, W, ILOZ,
 *                          IHIZ, Z, LDZ, WORK, LWORK, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       INTEGER            IHI, IHIZ, ILO, ILOZ, INFO, LDH, LDZ, LWORK, N
 *       LOGICAL            WANTT, WANTZ
@@ -29106,7 +29106,7 @@
 *       .. Array Arguments ..
 *       COMPLEX*16         H( LDH, * ), W( * ), WORK( * ), Z( LDZ, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -29288,12 +29288,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date September 2012
+*> \date December 2016
 *
 *> \ingroup complex16OTHERauxiliary
 *
@@ -29319,10 +29319,10 @@
       SUBROUTINE ZLAQR0( WANTT, WANTZ, N, ILO, IHI, H, LDH, W, ILOZ,
      $                   IHIZ, Z, LDZ, WORK, LWORK, INFO )
 *
-*  -- LAPACK auxiliary routine (version 3.4.2) --
+*  -- LAPACK auxiliary routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
+*     December 2016
 *
 *     .. Scalar Arguments ..
       INTEGER            IHI, IHIZ, ILO, ILOZ, INFO, LDH, LDZ, LWORK, N
@@ -29783,24 +29783,24 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZLAQR1 + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlaqr1.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlaqr1.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlaqr1.f"> 
+*> Download ZLAQR1 + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlaqr1.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlaqr1.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlaqr1.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZLAQR1( N, H, LDH, S1, S2, V )
-* 
+*
 *       .. Scalar Arguments ..
 *       COMPLEX*16         S1, S2
 *       INTEGER            LDH, N
@@ -29808,7 +29808,7 @@
 *       .. Array Arguments ..
 *       COMPLEX*16         H( LDH, * ), V( * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -29870,12 +29870,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date September 2012
+*> \date December 2016
 *
 *> \ingroup complex16OTHERauxiliary
 *
@@ -29888,10 +29888,10 @@
 *  =====================================================================
       SUBROUTINE ZLAQR1( N, H, LDH, S1, S2, V )
 *
-*  -- LAPACK auxiliary routine (version 3.4.2) --
+*  -- LAPACK auxiliary routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
+*     December 2016
 *
 *     .. Scalar Arguments ..
       COMPLEX*16         S1, S2
@@ -29955,18 +29955,18 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZLAQR2 + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlaqr2.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlaqr2.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlaqr2.f"> 
+*> Download ZLAQR2 + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlaqr2.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlaqr2.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlaqr2.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
@@ -29974,7 +29974,7 @@
 *       SUBROUTINE ZLAQR2( WANTT, WANTZ, N, KTOP, KBOT, NW, H, LDH, ILOZ,
 *                          IHIZ, Z, LDZ, NS, ND, SH, V, LDV, NH, T, LDT,
 *                          NV, WV, LDWV, WORK, LWORK )
-* 
+*
 *       .. Scalar Arguments ..
 *       INTEGER            IHIZ, ILOZ, KBOT, KTOP, LDH, LDT, LDV, LDWV,
 *      $                   LDZ, LWORK, N, ND, NH, NS, NV, NW
@@ -29984,7 +29984,7 @@
 *       COMPLEX*16         H( LDH, * ), SH( * ), T( LDT, * ), V( LDV, * ),
 *      $                   WORK( * ), WV( LDWV, * ), Z( LDZ, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -30094,7 +30094,7 @@
 *>          Z is COMPLEX*16 array, dimension (LDZ,N)
 *>          IF WANTZ is .TRUE., then on output, the unitary
 *>          similarity transformation mentioned above has been
-*>          accumulated into Z(ILOZ:IHIZ,ILO:IHI) from the right.
+*>          accumulated into Z(ILOZ:IHIZ,ILOZ:IHIZ) from the right.
 *>          If WANTZ is .FALSE., then Z is unreferenced.
 *> \endverbatim
 *>
@@ -30203,12 +30203,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date September 2012
+*> \date December 2016
 *
 *> \ingroup complex16OTHERauxiliary
 *
@@ -30223,10 +30223,10 @@
      $                   IHIZ, Z, LDZ, NS, ND, SH, V, LDV, NH, T, LDT,
      $                   NV, WV, LDWV, WORK, LWORK )
 *
-*  -- LAPACK auxiliary routine (version 3.4.2) --
+*  -- LAPACK auxiliary routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
+*     December 2016
 *
 *     .. Scalar Arguments ..
       INTEGER            IHIZ, ILOZ, KBOT, KTOP, LDH, LDT, LDV, LDWV,
@@ -30522,18 +30522,18 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZLAQR3 + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlaqr3.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlaqr3.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlaqr3.f"> 
+*> Download ZLAQR3 + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlaqr3.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlaqr3.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlaqr3.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
@@ -30541,7 +30541,7 @@
 *       SUBROUTINE ZLAQR3( WANTT, WANTZ, N, KTOP, KBOT, NW, H, LDH, ILOZ,
 *                          IHIZ, Z, LDZ, NS, ND, SH, V, LDV, NH, T, LDT,
 *                          NV, WV, LDWV, WORK, LWORK )
-* 
+*
 *       .. Scalar Arguments ..
 *       INTEGER            IHIZ, ILOZ, KBOT, KTOP, LDH, LDT, LDV, LDWV,
 *      $                   LDZ, LWORK, N, ND, NH, NS, NV, NW
@@ -30551,7 +30551,7 @@
 *       COMPLEX*16         H( LDH, * ), SH( * ), T( LDT, * ), V( LDV, * ),
 *      $                   WORK( * ), WV( LDWV, * ), Z( LDZ, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -30767,10 +30767,10 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
 *> \date June 2016
 *
@@ -30787,7 +30787,7 @@
      $                   IHIZ, Z, LDZ, NS, ND, SH, V, LDV, NH, T, LDT,
      $                   NV, WV, LDWV, WORK, LWORK )
 *
-*  -- LAPACK auxiliary routine (version 3.6.1) --
+*  -- LAPACK auxiliary routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
 *     June 2016
@@ -31100,25 +31100,25 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZLAQR4 + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlaqr4.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlaqr4.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlaqr4.f"> 
+*> Download ZLAQR4 + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlaqr4.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlaqr4.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlaqr4.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZLAQR4( WANTT, WANTZ, N, ILO, IHI, H, LDH, W, ILOZ,
 *                          IHIZ, Z, LDZ, WORK, LWORK, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       INTEGER            IHI, IHIZ, ILO, ILOZ, INFO, LDH, LDZ, LWORK, N
 *       LOGICAL            WANTT, WANTZ
@@ -31126,7 +31126,7 @@
 *       .. Array Arguments ..
 *       COMPLEX*16         H( LDH, * ), W( * ), WORK( * ), Z( LDZ, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -31314,12 +31314,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date September 2012
+*> \date December 2016
 *
 *> \ingroup complex16OTHERauxiliary
 *
@@ -31345,10 +31345,10 @@
       SUBROUTINE ZLAQR4( WANTT, WANTZ, N, ILO, IHI, H, LDH, W, ILOZ,
      $                   IHIZ, Z, LDZ, WORK, LWORK, INFO )
 *
-*  -- LAPACK auxiliary routine (version 3.4.2) --
+*  -- LAPACK auxiliary routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
+*     December 2016
 *
 *     .. Scalar Arguments ..
       INTEGER            IHI, IHIZ, ILO, ILOZ, INFO, LDH, LDZ, LWORK, N
@@ -31803,18 +31803,18 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZLAQR5 + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlaqr5.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlaqr5.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlaqr5.f"> 
+*> Download ZLAQR5 + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlaqr5.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlaqr5.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlaqr5.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
@@ -31822,7 +31822,7 @@
 *       SUBROUTINE ZLAQR5( WANTT, WANTZ, KACC22, N, KTOP, KBOT, NSHFTS, S,
 *                          H, LDH, ILOZ, IHIZ, Z, LDZ, V, LDV, U, LDU, NV,
 *                          WV, LDWV, NH, WH, LDWH )
-* 
+*
 *       .. Scalar Arguments ..
 *       INTEGER            IHIZ, ILOZ, KACC22, KBOT, KTOP, LDH, LDU, LDV,
 *      $                   LDWH, LDWV, LDZ, N, NH, NSHFTS, NV
@@ -31832,7 +31832,7 @@
 *       COMPLEX*16         H( LDH, * ), S( * ), U( LDU, * ), V( LDV, * ),
 *      $                   WH( LDWH, * ), WV( LDWV, * ), Z( LDZ, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -32024,10 +32024,10 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
 *> \date June 2016
 *
@@ -32052,7 +32052,7 @@
      $                   H, LDH, ILOZ, IHIZ, Z, LDZ, V, LDV, U, LDU, NV,
      $                   WV, LDWV, NH, WH, LDWH )
 *
-*  -- LAPACK auxiliary routine (version 3.6.1) --
+*  -- LAPACK auxiliary routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
 *     June 2016
@@ -32713,24 +32713,24 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZLARCM + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlarcm.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlarcm.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlarcm.f"> 
+*> Download ZLARCM + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlarcm.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlarcm.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlarcm.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZLARCM( M, N, A, LDA, B, LDB, C, LDC, RWORK )
-* 
+*
 *       .. Scalar Arguments ..
 *       INTEGER            LDA, LDB, LDC, M, N
 *       ..
@@ -32738,7 +32738,7 @@
 *       DOUBLE PRECISION   A( LDA, * ), RWORK( * )
 *       COMPLEX*16         B( LDB, * ), C( LDC, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -32772,7 +32772,7 @@
 *> \param[in] A
 *> \verbatim
 *>          A is DOUBLE PRECISION array, dimension (LDA, M)
-*>          A contains the M by M matrix A.
+*>          On entry, A contains the M by M matrix A.
 *> \endverbatim
 *>
 *> \param[in] LDA
@@ -32784,7 +32784,7 @@
 *> \param[in] B
 *> \verbatim
 *>          B is COMPLEX*16 array, dimension (LDB, N)
-*>          B contains the M by N matrix B.
+*>          On entry, B contains the M by N matrix B.
 *> \endverbatim
 *>
 *> \param[in] LDB
@@ -32793,10 +32793,10 @@
 *>          The leading dimension of the array B. LDB >=max(1,M).
 *> \endverbatim
 *>
-*> \param[in] C
+*> \param[out] C
 *> \verbatim
 *>          C is COMPLEX*16 array, dimension (LDC, N)
-*>          C contains the M by N matrix C.
+*>          On exit, C contains the M by N matrix C.
 *> \endverbatim
 *>
 *> \param[in] LDC
@@ -32813,10 +32813,10 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
 *> \date June 2016
 *
@@ -32825,7 +32825,7 @@
 *  =====================================================================
       SUBROUTINE ZLARCM( M, N, A, LDA, B, LDB, C, LDC, RWORK )
 *
-*  -- LAPACK auxiliary routine (version 3.6.1) --
+*  -- LAPACK auxiliary routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
 *     June 2016
@@ -32898,24 +32898,24 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZLARF + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlarf.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlarf.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlarf.f"> 
+*> Download ZLARF + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlarf.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlarf.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlarf.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZLARF( SIDE, M, N, V, INCV, TAU, C, LDC, WORK )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          SIDE
 *       INTEGER            INCV, LDC, M, N
@@ -32924,7 +32924,7 @@
 *       .. Array Arguments ..
 *       COMPLEX*16         C( LDC, * ), V( * ), WORK( * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -33012,22 +33012,22 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date September 2012
+*> \date December 2016
 *
 *> \ingroup complex16OTHERauxiliary
 *
 *  =====================================================================
       SUBROUTINE ZLARF( SIDE, M, N, V, INCV, TAU, C, LDC, WORK )
 *
-*  -- LAPACK auxiliary routine (version 3.4.2) --
+*  -- LAPACK auxiliary routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
+*     December 2016
 *
 *     .. Scalar Arguments ..
       CHARACTER          SIDE
@@ -33130,25 +33130,25 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZLARFB + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlarfb.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlarfb.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlarfb.f"> 
+*> Download ZLARFB + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlarfb.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlarfb.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlarfb.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZLARFB( SIDE, TRANS, DIRECT, STOREV, M, N, K, V, LDV,
 *                          T, LDT, C, LDC, WORK, LDWORK )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          DIRECT, SIDE, STOREV, TRANS
 *       INTEGER            K, LDC, LDT, LDV, LDWORK, M, N
@@ -33157,7 +33157,7 @@
 *       COMPLEX*16         C( LDC, * ), T( LDT, * ), V( LDV, * ),
 *      $                   WORK( LDWORK, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -33282,10 +33282,10 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
 *> \date June 2013
 *
@@ -33323,7 +33323,7 @@
       SUBROUTINE ZLARFB( SIDE, TRANS, DIRECT, STOREV, M, N, K, V, LDV,
      $                   T, LDT, C, LDC, WORK, LDWORK )
 *
-*  -- LAPACK auxiliary routine (version 3.5.0) --
+*  -- LAPACK auxiliary routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
 *     June 2013
@@ -33861,24 +33861,24 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZLARFG + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlarfg.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlarfg.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlarfg.f"> 
+*> Download ZLARFG + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlarfg.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlarfg.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlarfg.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZLARFG( N, ALPHA, X, INCX, TAU )
-* 
+*
 *       .. Scalar Arguments ..
 *       INTEGER            INCX, N
 *       COMPLEX*16         ALPHA, TAU
@@ -33886,7 +33886,7 @@
 *       .. Array Arguments ..
 *       COMPLEX*16         X( * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -33953,22 +33953,22 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date September 2012
+*> \date December 2016
 *
 *> \ingroup complex16OTHERauxiliary
 *
 *  =====================================================================
       SUBROUTINE ZLARFG( N, ALPHA, X, INCX, TAU )
 *
-*  -- LAPACK auxiliary routine (version 3.4.2) --
+*  -- LAPACK auxiliary routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
+*     December 2016
 *
 *     .. Scalar Arguments ..
       INTEGER            INCX, N
@@ -34064,24 +34064,24 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZLARFT + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlarft.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlarft.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlarft.f"> 
+*> Download ZLARFT + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlarft.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlarft.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlarft.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZLARFT( DIRECT, STOREV, N, K, V, LDV, TAU, T, LDT )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          DIRECT, STOREV
 *       INTEGER            K, LDT, LDV, N
@@ -34089,7 +34089,7 @@
 *       .. Array Arguments ..
 *       COMPLEX*16         T( LDT, * ), TAU( * ), V( LDV, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -34187,10 +34187,10 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
 *> \date June 2016
 *
@@ -34225,7 +34225,7 @@
 *  =====================================================================
       SUBROUTINE ZLARFT( DIRECT, STOREV, N, K, V, LDV, TAU, T, LDT )
 *
-*  -- LAPACK auxiliary routine (version 3.6.1) --
+*  -- LAPACK auxiliary routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
 *     June 2016
@@ -34249,7 +34249,7 @@
       INTEGER            I, J, PREVLASTV, LASTV
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           ZGEMV, ZLACGV, ZTRMV, ZGEMM
+      EXTERNAL           ZGEMV, ZTRMV, ZGEMM
 *     ..
 *     .. External Functions ..
       LOGICAL            LSAME
@@ -34284,13 +34284,13 @@
                   END DO
                   DO J = 1, I-1
                      T( J, I ) = -TAU( I ) * CONJG( V( I , J ) )
-                  END DO                     
+                  END DO
                   J = MIN( LASTV, PREVLASTV )
 *
 *                 T(1:i-1,i) := - tau(i) * V(i:j,1:i-1)**H * V(i:j,i)
 *
                   CALL ZGEMV( 'Conjugate transpose', J-I, I-1,
-     $                        -TAU( I ), V( I+1, 1 ), LDV, 
+     $                        -TAU( I ), V( I+1, 1 ), LDV,
      $                        V( I+1, I ), 1, ONE, T( 1, I ), 1 )
                ELSE
 *                 Skip any trailing zeros.
@@ -34299,14 +34299,14 @@
                   END DO
                   DO J = 1, I-1
                      T( J, I ) = -TAU( I ) * V( J , I )
-                  END DO                     
+                  END DO
                   J = MIN( LASTV, PREVLASTV )
 *
 *                 T(1:i-1,i) := - tau(i) * V(1:i-1,i:j) * V(i,i:j)**H
 *
                   CALL ZGEMM( 'N', 'C', I-1, 1, J-I, -TAU( I ),
      $                        V( 1, I+1 ), LDV, V( I, I+1 ), LDV,
-     $                        ONE, T( 1, I ), LDT )                  
+     $                        ONE, T( 1, I ), LDT )
                END IF
 *
 *              T(1:i-1,i) := T(1:i-1,1:i-1) * T(1:i-1,i)
@@ -34343,7 +34343,7 @@
                      END DO
                      DO J = I+1, K
                         T( J, I ) = -TAU( I ) * CONJG( V( N-K+I , J ) )
-                     END DO                        
+                     END DO
                      J = MAX( LASTV, PREVLASTV )
 *
 *                    T(i+1:k,i) = -tau(i) * V(j:n-k+i,i+1:k)**H * V(j:n-k+i,i)
@@ -34358,7 +34358,7 @@
                      END DO
                      DO J = I+1, K
                         T( J, I ) = -TAU( I ) * V( J, N-K+I )
-                     END DO                                           
+                     END DO
                      J = MAX( LASTV, PREVLASTV )
 *
 *                    T(i+1:k,i) = -tau(i) * V(i+1:k,j:n-k+i) * V(i,j:n-k+i)**H
@@ -34391,24 +34391,24 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZLARFX + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlarfx.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlarfx.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlarfx.f"> 
+*> Download ZLARFX + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlarfx.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlarfx.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlarfx.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZLARFX( SIDE, M, N, V, TAU, C, LDC, WORK )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          SIDE
 *       INTEGER            LDC, M, N
@@ -34417,7 +34417,7 @@
 *       .. Array Arguments ..
 *       COMPLEX*16         C( LDC, * ), V( * ), WORK( * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -34496,22 +34496,22 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date September 2012
+*> \date December 2016
 *
 *> \ingroup complex16OTHERauxiliary
 *
 *  =====================================================================
       SUBROUTINE ZLARFX( SIDE, M, N, V, TAU, C, LDC, WORK )
 *
-*  -- LAPACK auxiliary routine (version 3.4.2) --
+*  -- LAPACK auxiliary routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
+*     December 2016
 *
 *     .. Scalar Arguments ..
       CHARACTER          SIDE
@@ -35091,29 +35091,29 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZLARTG + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlartg.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlartg.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlartg.f"> 
+*> Download ZLARTG + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlartg.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlartg.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlartg.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZLARTG( F, G, CS, SN, R )
-* 
+*
 *       .. Scalar Arguments ..
 *       DOUBLE PRECISION   CS
 *       COMPLEX*16         F, G, R, SN
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -35169,12 +35169,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date November 2013
+*> \date December 2016
 *
 *> \ingroup complex16OTHERauxiliary
 *
@@ -35192,10 +35192,10 @@
 *  =====================================================================
       SUBROUTINE ZLARTG( F, G, CS, SN, R )
 *
-*  -- LAPACK auxiliary routine (version 3.5.0) --
+*  -- LAPACK auxiliary routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2013
+*     December 2016
 *
 *     .. Scalar Arguments ..
       DOUBLE PRECISION   CS
@@ -35341,24 +35341,24 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZLASCL + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlascl.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlascl.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlascl.f"> 
+*> Download ZLASCL + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlascl.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlascl.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlascl.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZLASCL( TYPE, KL, KU, CFROM, CTO, M, N, A, LDA, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          TYPE
 *       INTEGER            INFO, KL, KU, LDA, M, N
@@ -35367,7 +35367,7 @@
 *       .. Array Arguments ..
 *       COMPLEX*16         A( LDA, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -35470,10 +35470,10 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
 *> \date June 2016
 *
@@ -35482,7 +35482,7 @@
 *  =====================================================================
       SUBROUTINE ZLASCL( TYPE, KL, KU, CFROM, CTO, M, N, A, LDA, INFO )
 *
-*  -- LAPACK auxiliary routine (version 3.6.1) --
+*  -- LAPACK auxiliary routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
 *     June 2016
@@ -35709,24 +35709,24 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZLASET + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlaset.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlaset.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlaset.f"> 
+*> Download ZLASET + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlaset.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlaset.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlaset.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZLASET( UPLO, M, N, ALPHA, BETA, A, LDA )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          UPLO
 *       INTEGER            LDA, M, N
@@ -35735,7 +35735,7 @@
 *       .. Array Arguments ..
 *       COMPLEX*16         A( LDA, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -35801,22 +35801,22 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date November 2015
+*> \date December 2016
 *
 *> \ingroup complex16OTHERauxiliary
 *
 *  =====================================================================
       SUBROUTINE ZLASET( UPLO, M, N, ALPHA, BETA, A, LDA )
 *
-*  -- LAPACK auxiliary routine (version 3.6.0) --
+*  -- LAPACK auxiliary routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2015
+*     December 2016
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -35893,24 +35893,24 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZLASR + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlasr.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlasr.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlasr.f"> 
+*> Download ZLASR + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlasr.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlasr.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlasr.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZLASR( SIDE, PIVOT, DIRECT, M, N, C, S, A, LDA )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          DIRECT, PIVOT, SIDE
 *       INTEGER            LDA, M, N
@@ -35919,7 +35919,7 @@
 *       DOUBLE PRECISION   C( * ), S( * )
 *       COMPLEX*16         A( LDA, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -35940,23 +35940,23 @@
 *> where P is an orthogonal matrix consisting of a sequence of z plane
 *> rotations, with z = M when SIDE = 'L' and z = N when SIDE = 'R',
 *> and P**T is the transpose of P.
-*> 
+*>
 *> When DIRECT = 'F' (Forward sequence), then
-*> 
+*>
 *>    P = P(z-1) * ... * P(2) * P(1)
-*> 
+*>
 *> and when DIRECT = 'B' (Backward sequence), then
-*> 
+*>
 *>    P = P(1) * P(2) * ... * P(z-1)
-*> 
+*>
 *> where P(k) is a plane rotation matrix defined by the 2-by-2 rotation
-*> 
+*>
 *>    R(k) = (  c(k)  s(k) )
 *>         = ( -s(k)  c(k) ).
-*> 
+*>
 *> When PIVOT = 'V' (Variable pivot), the rotation is performed
 *> for the plane (k,k+1), i.e., P(k) has the form
-*> 
+*>
 *>    P(k) = (  1                                            )
 *>           (       ...                                     )
 *>           (              1                                )
@@ -35965,13 +35965,13 @@
 *>           (                                1              )
 *>           (                                     ...       )
 *>           (                                            1  )
-*> 
+*>
 *> where R(k) appears as a rank-2 modification to the identity matrix in
 *> rows and columns k and k+1.
-*> 
+*>
 *> When PIVOT = 'T' (Top pivot), the rotation is performed for the
 *> plane (1,k+1), so P(k) has the form
-*> 
+*>
 *>    P(k) = (  c(k)                    s(k)                 )
 *>           (         1                                     )
 *>           (              ...                              )
@@ -35980,12 +35980,12 @@
 *>           (                                 1             )
 *>           (                                      ...      )
 *>           (                                             1 )
-*> 
+*>
 *> where R(k) appears in rows and columns 1 and k+1.
-*> 
+*>
 *> Similarly, when PIVOT = 'B' (Bottom pivot), the rotation is
 *> performed for the plane (k,z), giving P(k) the form
-*> 
+*>
 *>    P(k) = ( 1                                             )
 *>           (      ...                                      )
 *>           (             1                                 )
@@ -35994,7 +35994,7 @@
 *>           (                              ...              )
 *>           (                                     1         )
 *>           (                 -s(k)                    c(k) )
-*> 
+*>
 *> where R(k) appears in rows and columns k and z.  The rotations are
 *> performed without ever forming P(k) explicitly.
 *> \endverbatim
@@ -36079,22 +36079,22 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date September 2012
+*> \date December 2016
 *
 *> \ingroup complex16OTHERauxiliary
 *
 *  =====================================================================
       SUBROUTINE ZLASR( SIDE, PIVOT, DIRECT, M, N, C, S, A, LDA )
 *
-*  -- LAPACK auxiliary routine (version 3.4.2) --
+*  -- LAPACK auxiliary routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
+*     December 2016
 *
 *     .. Scalar Arguments ..
       CHARACTER          DIRECT, PIVOT, SIDE
@@ -36332,24 +36332,24 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZLASSQ + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlassq.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlassq.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlassq.f"> 
+*> Download ZLASSQ + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlassq.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlassq.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlassq.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZLASSQ( N, X, INCX, SCALE, SUMSQ )
-* 
+*
 *       .. Scalar Arguments ..
 *       INTEGER            INCX, N
 *       DOUBLE PRECISION   SCALE, SUMSQ
@@ -36357,7 +36357,7 @@
 *       .. Array Arguments ..
 *       COMPLEX*16         X( * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -36424,22 +36424,22 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date September 2012
+*> \date December 2016
 *
 *> \ingroup complex16OTHERauxiliary
 *
 *  =====================================================================
       SUBROUTINE ZLASSQ( N, X, INCX, SCALE, SUMSQ )
 *
-*  -- LAPACK auxiliary routine (version 3.4.2) --
+*  -- LAPACK auxiliary routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
+*     December 2016
 *
 *     .. Scalar Arguments ..
       INTEGER            INCX, N
@@ -36500,24 +36500,24 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZLASWP + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlaswp.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlaswp.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlaswp.f"> 
+*> Download ZLASWP + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlaswp.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlaswp.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlaswp.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZLASWP( N, A, LDA, K1, K2, IPIV, INCX )
-* 
+*
 *       .. Scalar Arguments ..
 *       INTEGER            INCX, K1, K2, LDA, N
 *       ..
@@ -36525,7 +36525,7 @@
 *       INTEGER            IPIV( * )
 *       COMPLEX*16         A( LDA, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -36569,15 +36569,15 @@
 *> \param[in] K2
 *> \verbatim
 *>          K2 is INTEGER
-*>          The last element of IPIV for which a row interchange will
-*>          be done.
+*>          (K2-K1+1) is the number of elements of IPIV for which a row
+*>          interchange will be done.
 *> \endverbatim
 *>
 *> \param[in] IPIV
 *> \verbatim
-*>          IPIV is INTEGER array, dimension (K2*abs(INCX))
-*>          The vector of pivot indices.  Only the elements in positions
-*>          K1 through K2 of IPIV are accessed.
+*>          IPIV is INTEGER array, dimension (K1+(K2-K1)*abs(INCX))
+*>          The vector of pivot indices. Only the elements in positions
+*>          K1 through K1+(K2-K1)*INCX of IPIV are accessed.
 *>          IPIV(K) = L implies rows K and L are to be interchanged.
 *> \endverbatim
 *>
@@ -36591,12 +36591,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date September 2012
+*> \date December 2016
 *
 *> \ingroup complex16OTHERauxiliary
 *
@@ -36612,10 +36612,10 @@
 *  =====================================================================
       SUBROUTINE ZLASWP( N, A, LDA, K1, K2, IPIV, INCX )
 *
-*  -- LAPACK auxiliary routine (version 3.4.2) --
+*  -- LAPACK auxiliary routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
+*     December 2016
 *
 *     .. Scalar Arguments ..
       INTEGER            INCX, K1, K2, LDA, N
@@ -36641,7 +36641,7 @@
          I2 = K2
          INC = 1
       ELSE IF( INCX.LT.0 ) THEN
-         IX0 = 1 + ( 1-K2 )*INCX
+         IX0 = K1 + ( K1-K2 )*INCX
          I1 = K2
          I2 = K1
          INC = -1
@@ -37521,25 +37521,25 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZLATDF + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlatdf.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlatdf.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlatdf.f"> 
+*> Download ZLATDF + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlatdf.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlatdf.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlatdf.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZLATDF( IJOB, N, Z, LDZ, RHS, RDSUM, RDSCAL, IPIV,
 *                          JPIV )
-* 
+*
 *       .. Scalar Arguments ..
 *       INTEGER            IJOB, LDZ, N
 *       DOUBLE PRECISION   RDSCAL, RDSUM
@@ -37548,7 +37548,7 @@
 *       INTEGER            IPIV( * ), JPIV( * )
 *       COMPLEX*16         RHS( * ), Z( LDZ, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -37648,10 +37648,10 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
 *> \date June 2016
 *
@@ -37688,7 +37688,7 @@
       SUBROUTINE ZLATDF( IJOB, N, Z, LDZ, RHS, RDSUM, RDSCAL, IPIV,
      $                   JPIV )
 *
-*  -- LAPACK auxiliary routine (version 3.6.1) --
+*  -- LAPACK auxiliary routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
 *     June 2016
@@ -37844,24 +37844,24 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZLATRD + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlatrd.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlatrd.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlatrd.f"> 
+*> Download ZLATRD + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlatrd.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlatrd.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlatrd.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZLATRD( UPLO, N, NB, A, LDA, E, TAU, W, LDW )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          UPLO
 *       INTEGER            LDA, LDW, N, NB
@@ -37870,7 +37870,7 @@
 *       DOUBLE PRECISION   E( * )
 *       COMPLEX*16         A( LDA, * ), TAU( * ), W( LDW, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -37977,12 +37977,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date September 2012
+*> \date December 2016
 *
 *> \ingroup complex16OTHERauxiliary
 *
@@ -38041,10 +38041,10 @@
 *  =====================================================================
       SUBROUTINE ZLATRD( UPLO, N, NB, A, LDA, E, TAU, W, LDW )
 *
-*  -- LAPACK auxiliary routine (version 3.4.2) --
+*  -- LAPACK auxiliary routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
+*     December 2016
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -38202,25 +38202,25 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZLATRS + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlatrs.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlatrs.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlatrs.f"> 
+*> Download ZLATRS + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlatrs.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlatrs.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlatrs.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZLATRS( UPLO, TRANS, DIAG, NORMIN, N, A, LDA, X, SCALE,
 *                          CNORM, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          DIAG, NORMIN, TRANS, UPLO
 *       INTEGER            INFO, LDA, N
@@ -38230,7 +38230,7 @@
 *       DOUBLE PRECISION   CNORM( * )
 *       COMPLEX*16         A( LDA, * ), X( * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -38354,12 +38354,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date September 2012
+*> \date December 2016
 *
 *> \ingroup complex16OTHERauxiliary
 *
@@ -38439,10 +38439,10 @@
       SUBROUTINE ZLATRS( UPLO, TRANS, DIAG, NORMIN, N, A, LDA, X, SCALE,
      $                   CNORM, INFO )
 *
-*  -- LAPACK auxiliary routine (version 3.4.2) --
+*  -- LAPACK auxiliary routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
+*     December 2016
 *
 *     .. Scalar Arguments ..
       CHARACTER          DIAG, NORMIN, TRANS, UPLO
@@ -39168,24 +39168,24 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZLAUU2 + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlauu2.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlauu2.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlauu2.f"> 
+*> Download ZLAUU2 + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlauu2.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlauu2.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlauu2.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZLAUU2( UPLO, N, A, LDA, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          UPLO
 *       INTEGER            INFO, LDA, N
@@ -39193,7 +39193,7 @@
 *       .. Array Arguments ..
 *       COMPLEX*16         A( LDA, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -39256,22 +39256,22 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date September 2012
+*> \date December 2016
 *
 *> \ingroup complex16OTHERauxiliary
 *
 *  =====================================================================
       SUBROUTINE ZLAUU2( UPLO, N, A, LDA, INFO )
 *
-*  -- LAPACK auxiliary routine (version 3.4.2) --
+*  -- LAPACK auxiliary routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
+*     December 2016
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -39374,24 +39374,24 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZLAUUM + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlauum.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlauum.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlauum.f"> 
+*> Download ZLAUUM + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zlauum.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zlauum.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zlauum.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZLAUUM( UPLO, N, A, LDA, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          UPLO
 *       INTEGER            INFO, LDA, N
@@ -39399,7 +39399,7 @@
 *       .. Array Arguments ..
 *       COMPLEX*16         A( LDA, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -39462,22 +39462,22 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date September 2012
+*> \date December 2016
 *
 *> \ingroup complex16OTHERauxiliary
 *
 *  =====================================================================
       SUBROUTINE ZLAUUM( UPLO, N, A, LDA, INFO )
 *
-*  -- LAPACK auxiliary routine (version 3.4.2) --
+*  -- LAPACK auxiliary routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
+*     December 2016
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -39597,24 +39597,24 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZPOTF2 + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zpotf2.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zpotf2.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zpotf2.f"> 
+*> Download ZPOTF2 + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zpotf2.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zpotf2.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zpotf2.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZPOTF2( UPLO, N, A, LDA, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          UPLO
 *       INTEGER            INFO, LDA, N
@@ -39622,7 +39622,7 @@
 *       .. Array Arguments ..
 *       COMPLEX*16         A( LDA, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -39692,22 +39692,22 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date September 2012
+*> \date December 2016
 *
 *> \ingroup complex16POcomputational
 *
 *  =====================================================================
       SUBROUTINE ZPOTF2( UPLO, N, A, LDA, INFO )
 *
-*  -- LAPACK computational routine (version 3.4.2) --
+*  -- LAPACK computational routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
+*     December 2016
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -39834,24 +39834,24 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZPOTRF + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zpotrf.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zpotrf.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zpotrf.f"> 
+*> Download ZPOTRF + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zpotrf.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zpotrf.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zpotrf.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZPOTRF( UPLO, N, A, LDA, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          UPLO
 *       INTEGER            INFO, LDA, N
@@ -39859,7 +39859,7 @@
 *       .. Array Arguments ..
 *       COMPLEX*16         A( LDA, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -39927,22 +39927,22 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date November 2015
+*> \date December 2016
 *
 *> \ingroup complex16POcomputational
 *
 *  =====================================================================
       SUBROUTINE ZPOTRF( UPLO, N, A, LDA, INFO )
 *
-*  -- LAPACK computational routine (version 3.6.0) --
+*  -- LAPACK computational routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2015
+*     December 2016
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -40083,14 +40083,14 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *  Definition:
 *  ===========
 *
 *       RECURSIVE SUBROUTINE ZPOTRF2( UPLO, N, A, LDA, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          UPLO
 *       INTEGER            INFO, LDA, N
@@ -40098,7 +40098,7 @@
 *       .. Array Arguments ..
 *       COMPLEX*16         A( LDA, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -40122,7 +40122,7 @@
 *>
 *> The subroutine calls itself to factor A11. Update and scale A21
 *> or A12, update A22 then call itself to factor A22.
-*> 
+*>
 *> \endverbatim
 *
 *  Arguments:
@@ -40175,22 +40175,22 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date November 2015
+*> \date December 2016
 *
 *> \ingroup complex16POcomputational
 *
 *  =====================================================================
       RECURSIVE SUBROUTINE ZPOTRF2( UPLO, N, A, LDA, INFO )
 *
-*  -- LAPACK computational routine (version 3.6.0) --
+*  -- LAPACK computational routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2015
+*     December 2016
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -40209,7 +40209,7 @@
       PARAMETER          ( CONE = (1.0D+0, 0.0D+0) )
 *     ..
 *     .. Local Scalars ..
-      LOGICAL            UPPER            
+      LOGICAL            UPPER
       INTEGER            N1, N2, IINFO
       DOUBLE PRECISION   AJJ
 *     ..
@@ -40274,7 +40274,7 @@
          IF ( IINFO.NE.0 ) THEN
             INFO = IINFO
             RETURN
-         END IF    
+         END IF
 *
 *        Compute the Cholesky factorization A = U**H*U
 *
@@ -40286,7 +40286,7 @@
      $                  A( 1, 1 ), LDA, A( 1, N1+1 ), LDA )
 *
 *           Update and factor A22
-*          
+*
             CALL ZHERK( UPLO, 'C', N2, N1, -ONE, A( 1, N1+1 ), LDA,
      $                  ONE, A( N1+1, N1+1 ), LDA )
             CALL ZPOTRF2( UPLO, N2, A( N1+1, N1+1 ), LDA, IINFO )
@@ -40324,24 +40324,24 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZPOTRI + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zpotri.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zpotri.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zpotri.f"> 
+*> Download ZPOTRI + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zpotri.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zpotri.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zpotri.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZPOTRI( UPLO, N, A, LDA, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          UPLO
 *       INTEGER            INFO, LDA, N
@@ -40349,7 +40349,7 @@
 *       .. Array Arguments ..
 *       COMPLEX*16         A( LDA, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -40405,22 +40405,22 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date November 2011
+*> \date December 2016
 *
 *> \ingroup complex16POcomputational
 *
 *  =====================================================================
       SUBROUTINE ZPOTRI( UPLO, N, A, LDA, INFO )
 *
-*  -- LAPACK computational routine (version 3.4.0) --
+*  -- LAPACK computational routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     December 2016
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -40483,24 +40483,24 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZROT + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zrot.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zrot.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zrot.f"> 
+*> Download ZROT + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zrot.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zrot.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zrot.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZROT( N, CX, INCX, CY, INCY, C, S )
-* 
+*
 *       .. Scalar Arguments ..
 *       INTEGER            INCX, INCY, N
 *       DOUBLE PRECISION   C
@@ -40509,7 +40509,7 @@
 *       .. Array Arguments ..
 *       COMPLEX*16         CX( * ), CY( * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -40572,22 +40572,22 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date September 2012
+*> \date December 2016
 *
 *> \ingroup complex16OTHERauxiliary
 *
 *  =====================================================================
       SUBROUTINE ZROT( N, CX, INCX, CY, INCY, C, S )
 *
-*  -- LAPACK auxiliary routine (version 3.4.2) --
+*  -- LAPACK auxiliary routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
+*     December 2016
 *
 *     .. Scalar Arguments ..
       INTEGER            INCX, INCY, N
@@ -40645,25 +40645,25 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZSTEDC + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zstedc.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zstedc.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zstedc.f"> 
+*> Download ZSTEDC + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zstedc.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zstedc.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zstedc.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZSTEDC( COMPZ, N, D, E, Z, LDZ, WORK, LWORK, RWORK,
 *                          LRWORK, IWORK, LIWORK, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          COMPZ
 *       INTEGER            INFO, LDZ, LIWORK, LRWORK, LWORK, N
@@ -40673,7 +40673,7 @@
 *       DOUBLE PRECISION   D( * ), E( * ), RWORK( * )
 *       COMPLEX*16         WORK( * ), Z( LDZ, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -40837,12 +40837,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date November 2015
+*> \date December 2016
 *
 *> \ingroup complex16OTHERcomputational
 *
@@ -40856,10 +40856,10 @@
       SUBROUTINE ZSTEDC( COMPZ, N, D, E, Z, LDZ, WORK, LWORK, RWORK,
      $                   LRWORK, IWORK, LIWORK, INFO )
 *
-*  -- LAPACK computational routine (version 3.6.0) --
+*  -- LAPACK computational routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2015
+*     December 2016
 *
 *     .. Scalar Arguments ..
       CHARACTER          COMPZ
@@ -41132,24 +41132,24 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZSTEQR + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zsteqr.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zsteqr.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zsteqr.f"> 
+*> Download ZSTEQR + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zsteqr.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zsteqr.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zsteqr.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZSTEQR( COMPZ, N, D, E, Z, LDZ, WORK, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          COMPZ
 *       INTEGER            INFO, LDZ, N
@@ -41158,7 +41158,7 @@
 *       DOUBLE PRECISION   D( * ), E( * ), WORK( * )
 *       COMPLEX*16         Z( LDZ, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -41250,22 +41250,22 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date November 2011
+*> \date December 2016
 *
 *> \ingroup complex16OTHERcomputational
 *
 *  =====================================================================
       SUBROUTINE ZSTEQR( COMPZ, N, D, E, Z, LDZ, WORK, INFO )
 *
-*  -- LAPACK computational routine (version 3.4.0) --
+*  -- LAPACK computational routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     December 2016
 *
 *     .. Scalar Arguments ..
       CHARACTER          COMPZ
@@ -41708,24 +41708,24 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZSYMV + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zsymv.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zsymv.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zsymv.f"> 
+*> Download ZSYMV + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zsymv.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zsymv.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zsymv.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZSYMV( UPLO, N, ALPHA, A, LDA, X, INCX, BETA, Y, INCY )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          UPLO
 *       INTEGER            INCX, INCY, LDA, N
@@ -41734,7 +41734,7 @@
 *       .. Array Arguments ..
 *       COMPLEX*16         A( LDA, * ), X( * ), Y( * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -41851,22 +41851,22 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date September 2012
+*> \date December 2016
 *
 *> \ingroup complex16SYauxiliary
 *
 *  =====================================================================
       SUBROUTINE ZSYMV( UPLO, N, ALPHA, A, LDA, X, INCX, BETA, Y, INCY )
 *
-*  -- LAPACK auxiliary routine (version 3.4.2) --
+*  -- LAPACK auxiliary routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
+*     December 2016
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -42051,24 +42051,24 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZSYR + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zsyr.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zsyr.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zsyr.f"> 
+*> Download ZSYR + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zsyr.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zsyr.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zsyr.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZSYR( UPLO, N, ALPHA, X, INCX, A, LDA )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          UPLO
 *       INTEGER            INCX, LDA, N
@@ -42077,7 +42077,7 @@
 *       .. Array Arguments ..
 *       COMPLEX*16         A( LDA, * ), X( * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -42172,22 +42172,22 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date September 2012
+*> \date December 2016
 *
 *> \ingroup complex16SYauxiliary
 *
 *  =====================================================================
       SUBROUTINE ZSYR( UPLO, N, ALPHA, X, INCX, A, LDA )
 *
-*  -- LAPACK auxiliary routine (version 3.4.2) --
+*  -- LAPACK auxiliary routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
+*     December 2016
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -42319,24 +42319,24 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZSYTF2 + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zsytf2.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zsytf2.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zsytf2.f"> 
+*> Download ZSYTF2 + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zsytf2.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zsytf2.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zsytf2.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZSYTF2( UPLO, N, A, LDA, IPIV, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          UPLO
 *       INTEGER            INFO, LDA, N
@@ -42345,7 +42345,7 @@
 *       INTEGER            IPIV( * )
 *       COMPLEX*16         A( LDA, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -42439,12 +42439,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date November 2013
+*> \date December 2016
 *
 *> \ingroup complex16SYcomputational
 *
@@ -42508,10 +42508,10 @@
 *  =====================================================================
       SUBROUTINE ZSYTF2( UPLO, N, A, LDA, IPIV, INFO )
 *
-*  -- LAPACK computational routine (version 3.5.0) --
+*  -- LAPACK computational routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2013
+*     December 2016
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -42930,24 +42930,24 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZSYTRF + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zsytrf.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zsytrf.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zsytrf.f"> 
+*> Download ZSYTRF + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zsytrf.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zsytrf.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zsytrf.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZSYTRF( UPLO, N, A, LDA, IPIV, WORK, LWORK, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          UPLO
 *       INTEGER            INFO, LDA, LWORK, N
@@ -42956,7 +42956,7 @@
 *       INTEGER            IPIV( * )
 *       COMPLEX*16         A( LDA, * ), WORK( * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -43058,12 +43058,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date November 2011
+*> \date December 2016
 *
 *> \ingroup complex16SYcomputational
 *
@@ -43110,10 +43110,10 @@
 *  =====================================================================
       SUBROUTINE ZSYTRF( UPLO, N, A, LDA, IPIV, WORK, LWORK, INFO )
 *
-*  -- LAPACK computational routine (version 3.4.0) --
+*  -- LAPACK computational routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     December 2016
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -43292,24 +43292,24 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZSYTRI + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zsytri.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zsytri.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zsytri.f"> 
+*> Download ZSYTRI + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zsytri.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zsytri.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zsytri.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZSYTRI( UPLO, N, A, LDA, IPIV, WORK, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          UPLO
 *       INTEGER            INFO, LDA, N
@@ -43318,7 +43318,7 @@
 *       INTEGER            IPIV( * )
 *       COMPLEX*16         A( LDA, * ), WORK( * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -43392,22 +43392,22 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date November 2011
+*> \date December 2016
 *
 *> \ingroup complex16SYcomputational
 *
 *  =====================================================================
       SUBROUTINE ZSYTRI( UPLO, N, A, LDA, IPIV, WORK, INFO )
 *
-*  -- LAPACK computational routine (version 3.4.0) --
+*  -- LAPACK computational routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     December 2016
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -43675,25 +43675,25 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZTGEVC + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/ztgevc.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/ztgevc.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/ztgevc.f"> 
+*> Download ZTGEVC + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/ztgevc.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/ztgevc.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/ztgevc.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZTGEVC( SIDE, HOWMNY, SELECT, N, S, LDS, P, LDP, VL,
 *                          LDVL, VR, LDVR, MM, M, WORK, RWORK, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          HOWMNY, SIDE
 *       INTEGER            INFO, LDP, LDS, LDVL, LDVR, M, MM, N
@@ -43704,8 +43704,8 @@
 *       COMPLEX*16         P( LDP, * ), S( LDS, * ), VL( LDVL, * ),
 *      $                   VR( LDVR, * ), WORK( * )
 *       ..
-*  
-*  
+*
+*
 *
 *> \par Purpose:
 *  =============
@@ -43716,20 +43716,20 @@
 *> a pair of complex matrices (S,P), where S and P are upper triangular.
 *> Matrix pairs of this type are produced by the generalized Schur
 *> factorization of a complex matrix pair (A,B):
-*> 
+*>
 *>    A = Q*S*Z**H,  B = Q*P*Z**H
-*> 
+*>
 *> as computed by ZGGHRD + ZHGEQZ.
-*> 
+*>
 *> The right eigenvector x and the left eigenvector y of (S,P)
 *> corresponding to an eigenvalue w are defined by:
-*> 
+*>
 *>    S*x = w*P*x,  (y**H)*S = w*(y**H)*P,
-*> 
+*>
 *> where y**H denotes the conjugate tranpose of y.
 *> The eigenvalues are not input to this routine, but are computed
 *> directly from the diagonal elements of S and P.
-*> 
+*>
 *> This routine returns the matrices X and/or Y of right and left
 *> eigenvectors of (S,P), or the products Z*X and/or Q*Y,
 *> where Z and Q are input matrices.
@@ -43879,12 +43879,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date November 2011
+*> \date December 2016
 *
 *> \ingroup complex16GEcomputational
 *
@@ -43892,10 +43892,10 @@
       SUBROUTINE ZTGEVC( SIDE, HOWMNY, SELECT, N, S, LDS, P, LDP, VL,
      $                   LDVL, VR, LDVR, MM, M, WORK, RWORK, INFO )
 *
-*  -- LAPACK computational routine (version 3.4.0) --
+*  -- LAPACK computational routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     December 2016
 *
 *     .. Scalar Arguments ..
       CHARACTER          HOWMNY, SIDE
@@ -44412,25 +44412,25 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZTGEX2 + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/ztgex2.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/ztgex2.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/ztgex2.f"> 
+*> Download ZTGEX2 + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/ztgex2.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/ztgex2.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/ztgex2.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZTGEX2( WANTQ, WANTZ, N, A, LDA, B, LDB, Q, LDQ, Z,
 *                          LDZ, J1, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       LOGICAL            WANTQ, WANTZ
 *       INTEGER            INFO, J1, LDA, LDB, LDQ, LDZ, N
@@ -44439,7 +44439,7 @@
 *       COMPLEX*16         A( LDA, * ), B( LDB, * ), Q( LDQ, * ),
 *      $                   Z( LDZ, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -44552,18 +44552,18 @@
 *>           =0:  Successful exit.
 *>           =1:  The transformed matrix pair (A, B) would be too far
 *>                from generalized Schur form; the problem is ill-
-*>                conditioned. 
+*>                conditioned.
 *> \endverbatim
 *
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date September 2012
+*> \date December 2016
 *
 *> \ingroup complex16GEauxiliary
 *
@@ -44600,10 +44600,10 @@
       SUBROUTINE ZTGEX2( WANTQ, WANTZ, N, A, LDA, B, LDB, Q, LDQ, Z,
      $                   LDZ, J1, INFO )
 *
-*  -- LAPACK auxiliary routine (version 3.4.2) --
+*  -- LAPACK auxiliary routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
+*     December 2016
 *
 *     .. Scalar Arguments ..
       LOGICAL            WANTQ, WANTZ
@@ -44676,7 +44676,7 @@
       CALL ZLASSQ( 2*M*M, WORK, 1, SCALE, SUM )
       SA = SCALE*SQRT( SUM )
 *
-*     THRES has been changed from 
+*     THRES has been changed from
 *        THRESH = MAX( TEN*EPS*SA, SMLNUM )
 *     to
 *        THRESH = MAX( TWENTY*EPS*SA, SMLNUM )
@@ -44779,25 +44779,25 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZTGEXC + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/ztgexc.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/ztgexc.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/ztgexc.f"> 
+*> Download ZTGEXC + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/ztgexc.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/ztgexc.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/ztgexc.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZTGEXC( WANTQ, WANTZ, N, A, LDA, B, LDB, Q, LDQ, Z,
 *                          LDZ, IFST, ILST, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       LOGICAL            WANTQ, WANTZ
 *       INTEGER            IFST, ILST, INFO, LDA, LDB, LDQ, LDZ, N
@@ -44806,7 +44806,7 @@
 *       COMPLEX*16         A( LDA, * ), B( LDB, * ), Q( LDQ, * ),
 *      $                   Z( LDZ, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -44935,12 +44935,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date November 2011
+*> \date December 2016
 *
 *> \ingroup complex16GEcomputational
 *
@@ -44977,10 +44977,10 @@
       SUBROUTINE ZTGEXC( WANTQ, WANTZ, N, A, LDA, B, LDB, Q, LDQ, Z,
      $                   LDZ, IFST, ILST, INFO )
 *
-*  -- LAPACK computational routine (version 3.4.0) --
+*  -- LAPACK computational routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     December 2016
 *
 *     .. Scalar Arguments ..
       LOGICAL            WANTQ, WANTZ
@@ -45079,18 +45079,18 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZTGSEN + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/ztgsen.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/ztgsen.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/ztgsen.f"> 
+*> Download ZTGSEN + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/ztgsen.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/ztgsen.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/ztgsen.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
@@ -45098,7 +45098,7 @@
 *       SUBROUTINE ZTGSEN( IJOB, WANTQ, WANTZ, SELECT, N, A, LDA, B, LDB,
 *                          ALPHA, BETA, Q, LDQ, Z, LDZ, M, PL, PR, DIF,
 *                          WORK, LWORK, IWORK, LIWORK, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       LOGICAL            WANTQ, WANTZ
 *       INTEGER            IJOB, INFO, LDA, LDB, LDQ, LDZ, LIWORK, LWORK,
@@ -45112,7 +45112,7 @@
 *       COMPLEX*16         A( LDA, * ), ALPHA( * ), B( LDB, * ),
 *      $                   BETA( * ), Q( LDQ, * ), WORK( * ), Z( LDZ, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -45362,10 +45362,10 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
 *> \date June 2016
 *
@@ -45510,7 +45510,7 @@
      $                   ALPHA, BETA, Q, LDQ, Z, LDZ, M, PL, PR, DIF,
      $                   WORK, LWORK, IWORK, LIWORK, INFO )
 *
-*  -- LAPACK computational routine (version 3.6.1) --
+*  -- LAPACK computational routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
 *     June 2016
@@ -45866,18 +45866,18 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZTGSY2 + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/ztgsy2.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/ztgsy2.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/ztgsy2.f"> 
+*> Download ZTGSY2 + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/ztgsy2.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/ztgsy2.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/ztgsy2.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
@@ -45885,7 +45885,7 @@
 *       SUBROUTINE ZTGSY2( TRANS, IJOB, M, N, A, LDA, B, LDB, C, LDC, D,
 *                          LDD, E, LDE, F, LDF, SCALE, RDSUM, RDSCAL,
 *                          INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          TRANS
 *       INTEGER            IJOB, INFO, LDA, LDB, LDC, LDD, LDE, LDF, M, N
@@ -45895,7 +45895,7 @@
 *       COMPLEX*16         A( LDA, * ), B( LDB, * ), C( LDC, * ),
 *      $                   D( LDD, * ), E( LDE, * ), F( LDF, * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -46103,12 +46103,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date November 2015
+*> \date December 2016
 *
 *> \ingroup complex16SYauxiliary
 *
@@ -46123,10 +46123,10 @@
      $                   LDD, E, LDE, F, LDF, SCALE, RDSUM, RDSCAL,
      $                   INFO )
 *
-*  -- LAPACK auxiliary routine (version 3.6.0) --
+*  -- LAPACK auxiliary routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2015
+*     December 2016
 *
 *     .. Scalar Arguments ..
       CHARACTER          TRANS
@@ -46338,18 +46338,18 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZTGSYL + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/ztgsyl.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/ztgsyl.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/ztgsyl.f"> 
+*> Download ZTGSYL + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/ztgsyl.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/ztgsyl.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/ztgsyl.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
@@ -46357,7 +46357,7 @@
 *       SUBROUTINE ZTGSYL( TRANS, IJOB, M, N, A, LDA, B, LDB, C, LDC, D,
 *                          LDD, E, LDE, F, LDF, SCALE, DIF, WORK, LWORK,
 *                          IWORK, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          TRANS
 *       INTEGER            IJOB, INFO, LDA, LDB, LDC, LDD, LDE, LDF,
@@ -46370,7 +46370,7 @@
 *      $                   D( LDD, * ), E( LDE, * ), F( LDF, * ),
 *      $                   WORK( * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -46591,12 +46591,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date November 2011
+*> \date December 2016
 *
 *> \ingroup complex16SYcomputational
 *
@@ -46631,10 +46631,10 @@
      $                   LDD, E, LDE, F, LDF, SCALE, DIF, WORK, LWORK,
      $                   IWORK, INFO )
 *
-*  -- LAPACK computational routine (version 3.4.0) --
+*  -- LAPACK computational routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     December 2016
 *
 *     .. Scalar Arguments ..
       CHARACTER          TRANS
@@ -47035,25 +47035,25 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZTRCON + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/ztrcon.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/ztrcon.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/ztrcon.f"> 
+*> Download ZTRCON + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/ztrcon.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/ztrcon.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/ztrcon.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZTRCON( NORM, UPLO, DIAG, N, A, LDA, RCOND, WORK,
 *                          RWORK, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          DIAG, NORM, UPLO
 *       INTEGER            INFO, LDA, N
@@ -47063,7 +47063,7 @@
 *       DOUBLE PRECISION   RWORK( * )
 *       COMPLEX*16         A( LDA, * ), WORK( * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -47157,12 +47157,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date November 2011
+*> \date December 2016
 *
 *> \ingroup complex16OTHERcomputational
 *
@@ -47170,10 +47170,10 @@
       SUBROUTINE ZTRCON( NORM, UPLO, DIAG, N, A, LDA, RCOND, WORK,
      $                   RWORK, INFO )
 *
-*  -- LAPACK computational routine (version 3.4.0) --
+*  -- LAPACK computational routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     December 2016
 *
 *     .. Scalar Arguments ..
       CHARACTER          DIAG, NORM, UPLO
@@ -47318,25 +47318,25 @@
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZTREVC + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/ztrevc.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/ztrevc.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/ztrevc.f"> 
+*> Download ZTREVC + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/ztrevc.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/ztrevc.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/ztrevc.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
 *       SUBROUTINE ZTREVC( SIDE, HOWMNY, SELECT, N, T, LDT, VL, LDVL, VR,
 *                          LDVR, MM, M, WORK, RWORK, INFO )
-* 
+*
 *       .. Scalar Arguments ..
 *       CHARACTER          HOWMNY, SIDE
 *       INTEGER            INFO, LDT, LDVL, LDVR, M, MM, N
@@ -47347,7 +47347,7 @@
 *       COMPLEX*16         T( LDT, * ), VL( LDVL, * ), VR( LDVR, * ),
 *      $                   WORK( * )
 *       ..
-*  
+*
 *
 *> \par Purpose:
 *  =============
@@ -47358,16 +47358,16 @@
 *> a complex upper triangular matrix T.
 *> Matrices of this type are produced by the Schur factorization of
 *> a complex general matrix:  A = Q*T*Q**H, as computed by ZHSEQR.
-*> 
+*>
 *> The right eigenvector x and the left eigenvector y of T corresponding
 *> to an eigenvalue w are defined by:
-*> 
+*>
 *>              T*x = w*x,     (y**H)*T = w*(y**H)
-*> 
+*>
 *> where y**H denotes the conjugate transpose of the vector y.
 *> The eigenvalues are not input to this routine, but are read directly
 *> from the diagonal of T.
-*> 
+*>
 *> This routine returns the matrices X and/or Y of right and left
 *> eigenvectors of T, or the products Q*X and/or Q*Y, where Q is an
 *> input matrix.  If Q is the unitary factor that reduces a matrix A to
@@ -47507,12 +47507,12 @@
 *  Authors:
 *  ========
 *
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
 *
-*> \date November 2011
+*> \date December 2016
 *
 *> \ingroup complex16OTHERcomputational
 *
@@ -47534,10 +47534,10 @@
       SUBROUTINE ZTREVC( SIDE, HOWMNY, SELECT, N, T, LDT, VL, LDVL, VR,
      $                   LDVR, MM, M, WORK, RWORK, INFO )
 *
-*  -- LAPACK computational routine (version 3.4.0) --
+*  -- LAPACK computational routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     December 2016
 *
 *     .. Scalar Arguments ..
       CHARACTER          HOWMNY, SIDE
@@ -47800,7545 +47800,28 @@
 *     End of ZTREVC
 *
       END
-*> \brief \b ZTREXC
-*
-*  =========== DOCUMENTATION ===========
-*
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
-*
-*> \htmlonly
-*> Download ZTREXC + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/ztrexc.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/ztrexc.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/ztrexc.f"> 
-*> [TXT]</a>
-*> \endhtmlonly 
-*
-*  Definition:
-*  ===========
-*
-*       SUBROUTINE ZTREXC( COMPQ, N, T, LDT, Q, LDQ, IFST, ILST, INFO )
-* 
-*       .. Scalar Arguments ..
-*       CHARACTER          COMPQ
-*       INTEGER            IFST, ILST, INFO, LDQ, LDT, N
-*       ..
-*       .. Array Arguments ..
-*       COMPLEX*16         Q( LDQ, * ), T( LDT, * )
-*       ..
-*  
-*
-*> \par Purpose:
-*  =============
-*>
-*> \verbatim
-*>
-*> ZTREXC reorders the Schur factorization of a complex matrix
-*> A = Q*T*Q**H, so that the diagonal element of T with row index IFST
-*> is moved to row ILST.
-*>
-*> The Schur form T is reordered by a unitary similarity transformation
-*> Z**H*T*Z, and optionally the matrix Q of Schur vectors is updated by
-*> postmultplying it with Z.
-*> \endverbatim
-*
-*  Arguments:
-*  ==========
-*
-*> \param[in] COMPQ
-*> \verbatim
-*>          COMPQ is CHARACTER*1
-*>          = 'V':  update the matrix Q of Schur vectors;
-*>          = 'N':  do not update Q.
-*> \endverbatim
-*>
-*> \param[in] N
-*> \verbatim
-*>          N is INTEGER
-*>          The order of the matrix T. N >= 0.
-*> \endverbatim
-*>
-*> \param[in,out] T
-*> \verbatim
-*>          T is COMPLEX*16 array, dimension (LDT,N)
-*>          On entry, the upper triangular matrix T.
-*>          On exit, the reordered upper triangular matrix.
-*> \endverbatim
-*>
-*> \param[in] LDT
-*> \verbatim
-*>          LDT is INTEGER
-*>          The leading dimension of the array T. LDT >= max(1,N).
-*> \endverbatim
-*>
-*> \param[in,out] Q
-*> \verbatim
-*>          Q is COMPLEX*16 array, dimension (LDQ,N)
-*>          On entry, if COMPQ = 'V', the matrix Q of Schur vectors.
-*>          On exit, if COMPQ = 'V', Q has been postmultiplied by the
-*>          unitary transformation matrix Z which reorders T.
-*>          If COMPQ = 'N', Q is not referenced.
-*> \endverbatim
-*>
-*> \param[in] LDQ
-*> \verbatim
-*>          LDQ is INTEGER
-*>          The leading dimension of the array Q.  LDQ >= max(1,N).
-*> \endverbatim
-*>
-*> \param[in] IFST
-*> \verbatim
-*>          IFST is INTEGER
-*> \endverbatim
-*>
-*> \param[in] ILST
-*> \verbatim
-*>          ILST is INTEGER
-*>
-*>          Specify the reordering of the diagonal elements of T:
-*>          The element with row index IFST is moved to row ILST by a
-*>          sequence of transpositions between adjacent elements.
-*>          1 <= IFST <= N; 1 <= ILST <= N.
-*> \endverbatim
-*>
-*> \param[out] INFO
-*> \verbatim
-*>          INFO is INTEGER
-*>          = 0:  successful exit
-*>          < 0:  if INFO = -i, the i-th argument had an illegal value
-*> \endverbatim
-*
-*  Authors:
-*  ========
-*
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
-*
-*> \date November 2011
-*
-*> \ingroup complex16OTHERcomputational
-*
-*  =====================================================================
-      SUBROUTINE ZTREXC( COMPQ, N, T, LDT, Q, LDQ, IFST, ILST, INFO )
-*
-*  -- LAPACK computational routine (version 3.4.0) --
-*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
-*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
-*
-*     .. Scalar Arguments ..
-      CHARACTER          COMPQ
-      INTEGER            IFST, ILST, INFO, LDQ, LDT, N
-*     ..
-*     .. Array Arguments ..
-      COMPLEX*16         Q( LDQ, * ), T( LDT, * )
-*     ..
-*
-*  =====================================================================
-*
-*     .. Local Scalars ..
-      LOGICAL            WANTQ
-      INTEGER            K, M1, M2, M3
-      DOUBLE PRECISION   CS
-      COMPLEX*16         SN, T11, T22, TEMP
-*     ..
-*     .. External Functions ..
-      LOGICAL            LSAME
-      EXTERNAL           LSAME
-*     ..
-*     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZLARTG, ZROT
-*     ..
-*     .. Intrinsic Functions ..
-      INTRINSIC          DCONJG, MAX
-*     ..
-*     .. Executable Statements ..
-*
-*     Decode and test the input parameters.
-*
-      INFO = 0
-      WANTQ = LSAME( COMPQ, 'V' )
-      IF( .NOT.LSAME( COMPQ, 'N' ) .AND. .NOT.WANTQ ) THEN
-         INFO = -1
-      ELSE IF( N.LT.0 ) THEN
-         INFO = -2
-      ELSE IF( LDT.LT.MAX( 1, N ) ) THEN
-         INFO = -4
-      ELSE IF( LDQ.LT.1 .OR. ( WANTQ .AND. LDQ.LT.MAX( 1, N ) ) ) THEN
-         INFO = -6
-      ELSE IF( IFST.LT.1 .OR. IFST.GT.N ) THEN
-         INFO = -7
-      ELSE IF( ILST.LT.1 .OR. ILST.GT.N ) THEN
-         INFO = -8
-      END IF
-      IF( INFO.NE.0 ) THEN
-         CALL XERBLA( 'ZTREXC', -INFO )
-         RETURN
-      END IF
-*
-*     Quick return if possible
-*
-      IF( N.EQ.1 .OR. IFST.EQ.ILST )
-     $   RETURN
-*
-      IF( IFST.LT.ILST ) THEN
-*
-*        Move the IFST-th diagonal element forward down the diagonal.
-*
-         M1 = 0
-         M2 = -1
-         M3 = 1
-      ELSE
-*
-*        Move the IFST-th diagonal element backward up the diagonal.
-*
-         M1 = -1
-         M2 = 0
-         M3 = -1
-      END IF
-*
-      DO 10 K = IFST + M1, ILST + M2, M3
-*
-*        Interchange the k-th and (k+1)-th diagonal elements.
-*
-         T11 = T( K, K )
-         T22 = T( K+1, K+1 )
-*
-*        Determine the transformation to perform the interchange.
-*
-         CALL ZLARTG( T( K, K+1 ), T22-T11, CS, SN, TEMP )
-*
-*        Apply transformation to the matrix T.
-*
-         IF( K+2.LE.N )
-     $      CALL ZROT( N-K-1, T( K, K+2 ), LDT, T( K+1, K+2 ), LDT, CS,
-     $                 SN )
-         CALL ZROT( K-1, T( 1, K ), 1, T( 1, K+1 ), 1, CS,
-     $              DCONJG( SN ) )
-*
-         T( K, K ) = T22
-         T( K+1, K+1 ) = T11
-*
-         IF( WANTQ ) THEN
-*
-*           Accumulate transformation in the matrix Q.
-*
-            CALL ZROT( N, Q( 1, K ), 1, Q( 1, K+1 ), 1, CS,
-     $                 DCONJG( SN ) )
-         END IF
-*
-   10 CONTINUE
-*
-      RETURN
-*
-*     End of ZTREXC
-*
-      END
-*> \brief \b ZTRSEN
-*
-*  =========== DOCUMENTATION ===========
-*
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
-*
-*> \htmlonly
-*> Download ZTRSEN + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/ztrsen.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/ztrsen.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/ztrsen.f"> 
-*> [TXT]</a>
-*> \endhtmlonly 
-*
-*  Definition:
-*  ===========
-*
-*       SUBROUTINE ZTRSEN( JOB, COMPQ, SELECT, N, T, LDT, Q, LDQ, W, M, S,
-*                          SEP, WORK, LWORK, INFO )
-* 
-*       .. Scalar Arguments ..
-*       CHARACTER          COMPQ, JOB
-*       INTEGER            INFO, LDQ, LDT, LWORK, M, N
-*       DOUBLE PRECISION   S, SEP
-*       ..
-*       .. Array Arguments ..
-*       LOGICAL            SELECT( * )
-*       COMPLEX*16         Q( LDQ, * ), T( LDT, * ), W( * ), WORK( * )
-*       ..
-*  
-*
-*> \par Purpose:
-*  =============
-*>
-*> \verbatim
-*>
-*> ZTRSEN reorders the Schur factorization of a complex matrix
-*> A = Q*T*Q**H, so that a selected cluster of eigenvalues appears in
-*> the leading positions on the diagonal of the upper triangular matrix
-*> T, and the leading columns of Q form an orthonormal basis of the
-*> corresponding right invariant subspace.
-*>
-*> Optionally the routine computes the reciprocal condition numbers of
-*> the cluster of eigenvalues and/or the invariant subspace.
-*> \endverbatim
-*
-*  Arguments:
-*  ==========
-*
-*> \param[in] JOB
-*> \verbatim
-*>          JOB is CHARACTER*1
-*>          Specifies whether condition numbers are required for the
-*>          cluster of eigenvalues (S) or the invariant subspace (SEP):
-*>          = 'N': none;
-*>          = 'E': for eigenvalues only (S);
-*>          = 'V': for invariant subspace only (SEP);
-*>          = 'B': for both eigenvalues and invariant subspace (S and
-*>                 SEP).
-*> \endverbatim
-*>
-*> \param[in] COMPQ
-*> \verbatim
-*>          COMPQ is CHARACTER*1
-*>          = 'V': update the matrix Q of Schur vectors;
-*>          = 'N': do not update Q.
-*> \endverbatim
-*>
-*> \param[in] SELECT
-*> \verbatim
-*>          SELECT is LOGICAL array, dimension (N)
-*>          SELECT specifies the eigenvalues in the selected cluster. To
-*>          select the j-th eigenvalue, SELECT(j) must be set to .TRUE..
-*> \endverbatim
-*>
-*> \param[in] N
-*> \verbatim
-*>          N is INTEGER
-*>          The order of the matrix T. N >= 0.
-*> \endverbatim
-*>
-*> \param[in,out] T
-*> \verbatim
-*>          T is COMPLEX*16 array, dimension (LDT,N)
-*>          On entry, the upper triangular matrix T.
-*>          On exit, T is overwritten by the reordered matrix T, with the
-*>          selected eigenvalues as the leading diagonal elements.
-*> \endverbatim
-*>
-*> \param[in] LDT
-*> \verbatim
-*>          LDT is INTEGER
-*>          The leading dimension of the array T. LDT >= max(1,N).
-*> \endverbatim
-*>
-*> \param[in,out] Q
-*> \verbatim
-*>          Q is COMPLEX*16 array, dimension (LDQ,N)
-*>          On entry, if COMPQ = 'V', the matrix Q of Schur vectors.
-*>          On exit, if COMPQ = 'V', Q has been postmultiplied by the
-*>          unitary transformation matrix which reorders T; the leading M
-*>          columns of Q form an orthonormal basis for the specified
-*>          invariant subspace.
-*>          If COMPQ = 'N', Q is not referenced.
-*> \endverbatim
-*>
-*> \param[in] LDQ
-*> \verbatim
-*>          LDQ is INTEGER
-*>          The leading dimension of the array Q.
-*>          LDQ >= 1; and if COMPQ = 'V', LDQ >= N.
-*> \endverbatim
-*>
-*> \param[out] W
-*> \verbatim
-*>          W is COMPLEX*16 array, dimension (N)
-*>          The reordered eigenvalues of T, in the same order as they
-*>          appear on the diagonal of T.
-*> \endverbatim
-*>
-*> \param[out] M
-*> \verbatim
-*>          M is INTEGER
-*>          The dimension of the specified invariant subspace.
-*>          0 <= M <= N.
-*> \endverbatim
-*>
-*> \param[out] S
-*> \verbatim
-*>          S is DOUBLE PRECISION
-*>          If JOB = 'E' or 'B', S is a lower bound on the reciprocal
-*>          condition number for the selected cluster of eigenvalues.
-*>          S cannot underestimate the true reciprocal condition number
-*>          by more than a factor of sqrt(N). If M = 0 or N, S = 1.
-*>          If JOB = 'N' or 'V', S is not referenced.
-*> \endverbatim
-*>
-*> \param[out] SEP
-*> \verbatim
-*>          SEP is DOUBLE PRECISION
-*>          If JOB = 'V' or 'B', SEP is the estimated reciprocal
-*>          condition number of the specified invariant subspace. If
-*>          M = 0 or N, SEP = norm(T).
-*>          If JOB = 'N' or 'E', SEP is not referenced.
-*> \endverbatim
-*>
-*> \param[out] WORK
-*> \verbatim
-*>          WORK is COMPLEX*16 array, dimension (MAX(1,LWORK))
-*>          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
-*> \endverbatim
-*>
-*> \param[in] LWORK
-*> \verbatim
-*>          LWORK is INTEGER
-*>          The dimension of the array WORK.
-*>          If JOB = 'N', LWORK >= 1;
-*>          if JOB = 'E', LWORK = max(1,M*(N-M));
-*>          if JOB = 'V' or 'B', LWORK >= max(1,2*M*(N-M)).
-*>
-*>          If LWORK = -1, then a workspace query is assumed; the routine
-*>          only calculates the optimal size of the WORK array, returns
-*>          this value as the first entry of the WORK array, and no error
-*>          message related to LWORK is issued by XERBLA.
-*> \endverbatim
-*>
-*> \param[out] INFO
-*> \verbatim
-*>          INFO is INTEGER
-*>          = 0:  successful exit
-*>          < 0:  if INFO = -i, the i-th argument had an illegal value
-*> \endverbatim
-*
-*  Authors:
-*  ========
-*
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
-*
-*> \date November 2011
-*
-*> \ingroup complex16OTHERcomputational
-*
-*> \par Further Details:
-*  =====================
-*>
-*> \verbatim
-*>
-*>  ZTRSEN first collects the selected eigenvalues by computing a unitary
-*>  transformation Z to move them to the top left corner of T. In other
-*>  words, the selected eigenvalues are the eigenvalues of T11 in:
-*>
-*>          Z**H * T * Z = ( T11 T12 ) n1
-*>                         (  0  T22 ) n2
-*>                            n1  n2
-*>
-*>  where N = n1+n2. The first
-*>  n1 columns of Z span the specified invariant subspace of T.
-*>
-*>  If T has been obtained from the Schur factorization of a matrix
-*>  A = Q*T*Q**H, then the reordered Schur factorization of A is given by
-*>  A = (Q*Z)*(Z**H*T*Z)*(Q*Z)**H, and the first n1 columns of Q*Z span the
-*>  corresponding invariant subspace of A.
-*>
-*>  The reciprocal condition number of the average of the eigenvalues of
-*>  T11 may be returned in S. S lies between 0 (very badly conditioned)
-*>  and 1 (very well conditioned). It is computed as follows. First we
-*>  compute R so that
-*>
-*>                         P = ( I  R ) n1
-*>                             ( 0  0 ) n2
-*>                               n1 n2
-*>
-*>  is the projector on the invariant subspace associated with T11.
-*>  R is the solution of the Sylvester equation:
-*>
-*>                        T11*R - R*T22 = T12.
-*>
-*>  Let F-norm(M) denote the Frobenius-norm of M and 2-norm(M) denote
-*>  the two-norm of M. Then S is computed as the lower bound
-*>
-*>                      (1 + F-norm(R)**2)**(-1/2)
-*>
-*>  on the reciprocal of 2-norm(P), the true reciprocal condition number.
-*>  S cannot underestimate 1 / 2-norm(P) by more than a factor of
-*>  sqrt(N).
-*>
-*>  An approximate error bound for the computed average of the
-*>  eigenvalues of T11 is
-*>
-*>                         EPS * norm(T) / S
-*>
-*>  where EPS is the machine precision.
-*>
-*>  The reciprocal condition number of the right invariant subspace
-*>  spanned by the first n1 columns of Z (or of Q*Z) is returned in SEP.
-*>  SEP is defined as the separation of T11 and T22:
-*>
-*>                     sep( T11, T22 ) = sigma-min( C )
-*>
-*>  where sigma-min(C) is the smallest singular value of the
-*>  n1*n2-by-n1*n2 matrix
-*>
-*>     C  = kprod( I(n2), T11 ) - kprod( transpose(T22), I(n1) )
-*>
-*>  I(m) is an m by m identity matrix, and kprod denotes the Kronecker
-*>  product. We estimate sigma-min(C) by the reciprocal of an estimate of
-*>  the 1-norm of inverse(C). The true reciprocal 1-norm of inverse(C)
-*>  cannot differ from sigma-min(C) by more than a factor of sqrt(n1*n2).
-*>
-*>  When SEP is small, small changes in T can cause large changes in
-*>  the invariant subspace. An approximate bound on the maximum angular
-*>  error in the computed right invariant subspace is
-*>
-*>                      EPS * norm(T) / SEP
-*> \endverbatim
-*>
-*  =====================================================================
-      SUBROUTINE ZTRSEN( JOB, COMPQ, SELECT, N, T, LDT, Q, LDQ, W, M, S,
-     $                   SEP, WORK, LWORK, INFO )
-*
-*  -- LAPACK computational routine (version 3.4.0) --
-*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
-*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
-*
-*     .. Scalar Arguments ..
-      CHARACTER          COMPQ, JOB
-      INTEGER            INFO, LDQ, LDT, LWORK, M, N
-      DOUBLE PRECISION   S, SEP
-*     ..
-*     .. Array Arguments ..
-      LOGICAL            SELECT( * )
-      COMPLEX*16         Q( LDQ, * ), T( LDT, * ), W( * ), WORK( * )
-*     ..
-*
-*  =====================================================================
-*
-*     .. Parameters ..
-      DOUBLE PRECISION   ZERO, ONE
-      PARAMETER          ( ZERO = 0.0D+0, ONE = 1.0D+0 )
-*     ..
-*     .. Local Scalars ..
-      LOGICAL            LQUERY, WANTBH, WANTQ, WANTS, WANTSP
-      INTEGER            IERR, K, KASE, KS, LWMIN, N1, N2, NN
-      DOUBLE PRECISION   EST, RNORM, SCALE
-*     ..
-*     .. Local Arrays ..
-      INTEGER            ISAVE( 3 )
-      DOUBLE PRECISION   RWORK( 1 )
-*     ..
-*     .. External Functions ..
-      LOGICAL            LSAME
-      DOUBLE PRECISION   ZLANGE
-      EXTERNAL           LSAME, ZLANGE
-*     ..
-*     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZLACN2, ZLACPY, ZTREXC, ZTRSYL
-*     ..
-*     .. Intrinsic Functions ..
-      INTRINSIC          MAX, SQRT
-*     ..
-*     .. Executable Statements ..
-*
-*     Decode and test the input parameters.
-*
-      WANTBH = LSAME( JOB, 'B' )
-      WANTS = LSAME( JOB, 'E' ) .OR. WANTBH
-      WANTSP = LSAME( JOB, 'V' ) .OR. WANTBH
-      WANTQ = LSAME( COMPQ, 'V' )
-*
-*     Set M to the number of selected eigenvalues.
-*
-      M = 0
-      DO 10 K = 1, N
-         IF( SELECT( K ) )
-     $      M = M + 1
-   10 CONTINUE
-*
-      N1 = M
-      N2 = N - M
-      NN = N1*N2
-*
-      INFO = 0
-      LQUERY = ( LWORK.EQ.-1 )
-*
-      IF( WANTSP ) THEN
-         LWMIN = MAX( 1, 2*NN )
-      ELSE IF( LSAME( JOB, 'N' ) ) THEN
-         LWMIN = 1
-      ELSE IF( LSAME( JOB, 'E' ) ) THEN
-         LWMIN = MAX( 1, NN )
-      END IF
-*
-      IF( .NOT.LSAME( JOB, 'N' ) .AND. .NOT.WANTS .AND. .NOT.WANTSP )
-     $     THEN
-         INFO = -1
-      ELSE IF( .NOT.LSAME( COMPQ, 'N' ) .AND. .NOT.WANTQ ) THEN
-         INFO = -2
-      ELSE IF( N.LT.0 ) THEN
-         INFO = -4
-      ELSE IF( LDT.LT.MAX( 1, N ) ) THEN
-         INFO = -6
-      ELSE IF( LDQ.LT.1 .OR. ( WANTQ .AND. LDQ.LT.N ) ) THEN
-         INFO = -8
-      ELSE IF( LWORK.LT.LWMIN .AND. .NOT.LQUERY ) THEN
-         INFO = -14
-      END IF
-*
-      IF( INFO.EQ.0 ) THEN
-         WORK( 1 ) = LWMIN
-      END IF
-*
-      IF( INFO.NE.0 ) THEN
-         CALL XERBLA( 'ZTRSEN', -INFO )
-         RETURN
-      ELSE IF( LQUERY ) THEN
-         RETURN
-      END IF
-*
-*     Quick return if possible
-*
-      IF( M.EQ.N .OR. M.EQ.0 ) THEN
-         IF( WANTS )
-     $      S = ONE
-         IF( WANTSP )
-     $      SEP = ZLANGE( '1', N, N, T, LDT, RWORK )
-         GO TO 40
-      END IF
-*
-*     Collect the selected eigenvalues at the top left corner of T.
-*
-      KS = 0
-      DO 20 K = 1, N
-         IF( SELECT( K ) ) THEN
-            KS = KS + 1
-*
-*           Swap the K-th eigenvalue to position KS.
-*
-            IF( K.NE.KS )
-     $         CALL ZTREXC( COMPQ, N, T, LDT, Q, LDQ, K, KS, IERR )
-         END IF
-   20 CONTINUE
-*
-      IF( WANTS ) THEN
-*
-*        Solve the Sylvester equation for R:
-*
-*           T11*R - R*T22 = scale*T12
-*
-         CALL ZLACPY( 'F', N1, N2, T( 1, N1+1 ), LDT, WORK, N1 )
-         CALL ZTRSYL( 'N', 'N', -1, N1, N2, T, LDT, T( N1+1, N1+1 ),
-     $                LDT, WORK, N1, SCALE, IERR )
-*
-*        Estimate the reciprocal of the condition number of the cluster
-*        of eigenvalues.
-*
-         RNORM = ZLANGE( 'F', N1, N2, WORK, N1, RWORK )
-         IF( RNORM.EQ.ZERO ) THEN
-            S = ONE
-         ELSE
-            S = SCALE / ( SQRT( SCALE*SCALE / RNORM+RNORM )*
-     $          SQRT( RNORM ) )
-         END IF
-      END IF
-*
-      IF( WANTSP ) THEN
-*
-*        Estimate sep(T11,T22).
-*
-         EST = ZERO
-         KASE = 0
-   30    CONTINUE
-         CALL ZLACN2( NN, WORK( NN+1 ), WORK, EST, KASE, ISAVE )
-         IF( KASE.NE.0 ) THEN
-            IF( KASE.EQ.1 ) THEN
-*
-*              Solve T11*R - R*T22 = scale*X.
-*
-               CALL ZTRSYL( 'N', 'N', -1, N1, N2, T, LDT,
-     $                      T( N1+1, N1+1 ), LDT, WORK, N1, SCALE,
-     $                      IERR )
-            ELSE
-*
-*              Solve T11**H*R - R*T22**H = scale*X.
-*
-               CALL ZTRSYL( 'C', 'C', -1, N1, N2, T, LDT,
-     $                      T( N1+1, N1+1 ), LDT, WORK, N1, SCALE,
-     $                      IERR )
-            END IF
-            GO TO 30
-         END IF
-*
-         SEP = SCALE / EST
-      END IF
-*
-   40 CONTINUE
-*
-*     Copy reordered eigenvalues to W.
-*
-      DO 50 K = 1, N
-         W( K ) = T( K, K )
-   50 CONTINUE
-*
-      WORK( 1 ) = LWMIN
-*
-      RETURN
-*
-*     End of ZTRSEN
-*
-      END
-*> \brief \b ZTRSYL
-*
-*  =========== DOCUMENTATION ===========
-*
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
-*
-*> \htmlonly
-*> Download ZTRSYL + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/ztrsyl.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/ztrsyl.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/ztrsyl.f"> 
-*> [TXT]</a>
-*> \endhtmlonly 
-*
-*  Definition:
-*  ===========
-*
-*       SUBROUTINE ZTRSYL( TRANA, TRANB, ISGN, M, N, A, LDA, B, LDB, C,
-*                          LDC, SCALE, INFO )
-* 
-*       .. Scalar Arguments ..
-*       CHARACTER          TRANA, TRANB
-*       INTEGER            INFO, ISGN, LDA, LDB, LDC, M, N
-*       DOUBLE PRECISION   SCALE
-*       ..
-*       .. Array Arguments ..
-*       COMPLEX*16         A( LDA, * ), B( LDB, * ), C( LDC, * )
-*       ..
-*  
-*
-*> \par Purpose:
-*  =============
-*>
-*> \verbatim
-*>
-*> ZTRSYL solves the complex Sylvester matrix equation:
-*>
-*>    op(A)*X + X*op(B) = scale*C or
-*>    op(A)*X - X*op(B) = scale*C,
-*>
-*> where op(A) = A or A**H, and A and B are both upper triangular. A is
-*> M-by-M and B is N-by-N; the right hand side C and the solution X are
-*> M-by-N; and scale is an output scale factor, set <= 1 to avoid
-*> overflow in X.
-*> \endverbatim
-*
-*  Arguments:
-*  ==========
-*
-*> \param[in] TRANA
-*> \verbatim
-*>          TRANA is CHARACTER*1
-*>          Specifies the option op(A):
-*>          = 'N': op(A) = A    (No transpose)
-*>          = 'C': op(A) = A**H (Conjugate transpose)
-*> \endverbatim
-*>
-*> \param[in] TRANB
-*> \verbatim
-*>          TRANB is CHARACTER*1
-*>          Specifies the option op(B):
-*>          = 'N': op(B) = B    (No transpose)
-*>          = 'C': op(B) = B**H (Conjugate transpose)
-*> \endverbatim
-*>
-*> \param[in] ISGN
-*> \verbatim
-*>          ISGN is INTEGER
-*>          Specifies the sign in the equation:
-*>          = +1: solve op(A)*X + X*op(B) = scale*C
-*>          = -1: solve op(A)*X - X*op(B) = scale*C
-*> \endverbatim
-*>
-*> \param[in] M
-*> \verbatim
-*>          M is INTEGER
-*>          The order of the matrix A, and the number of rows in the
-*>          matrices X and C. M >= 0.
-*> \endverbatim
-*>
-*> \param[in] N
-*> \verbatim
-*>          N is INTEGER
-*>          The order of the matrix B, and the number of columns in the
-*>          matrices X and C. N >= 0.
-*> \endverbatim
-*>
-*> \param[in] A
-*> \verbatim
-*>          A is COMPLEX*16 array, dimension (LDA,M)
-*>          The upper triangular matrix A.
-*> \endverbatim
-*>
-*> \param[in] LDA
-*> \verbatim
-*>          LDA is INTEGER
-*>          The leading dimension of the array A. LDA >= max(1,M).
-*> \endverbatim
-*>
-*> \param[in] B
-*> \verbatim
-*>          B is COMPLEX*16 array, dimension (LDB,N)
-*>          The upper triangular matrix B.
-*> \endverbatim
-*>
-*> \param[in] LDB
-*> \verbatim
-*>          LDB is INTEGER
-*>          The leading dimension of the array B. LDB >= max(1,N).
-*> \endverbatim
-*>
-*> \param[in,out] C
-*> \verbatim
-*>          C is COMPLEX*16 array, dimension (LDC,N)
-*>          On entry, the M-by-N right hand side matrix C.
-*>          On exit, C is overwritten by the solution matrix X.
-*> \endverbatim
-*>
-*> \param[in] LDC
-*> \verbatim
-*>          LDC is INTEGER
-*>          The leading dimension of the array C. LDC >= max(1,M)
-*> \endverbatim
-*>
-*> \param[out] SCALE
-*> \verbatim
-*>          SCALE is DOUBLE PRECISION
-*>          The scale factor, scale, set <= 1 to avoid overflow in X.
-*> \endverbatim
-*>
-*> \param[out] INFO
-*> \verbatim
-*>          INFO is INTEGER
-*>          = 0: successful exit
-*>          < 0: if INFO = -i, the i-th argument had an illegal value
-*>          = 1: A and B have common or very close eigenvalues; perturbed
-*>               values were used to solve the equation (but the matrices
-*>               A and B are unchanged).
-*> \endverbatim
-*
-*  Authors:
-*  ========
-*
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
-*
-*> \date November 2011
-*
-*> \ingroup complex16SYcomputational
-*
-*  =====================================================================
-      SUBROUTINE ZTRSYL( TRANA, TRANB, ISGN, M, N, A, LDA, B, LDB, C,
-     $                   LDC, SCALE, INFO )
-*
-*  -- LAPACK computational routine (version 3.4.0) --
-*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
-*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
-*
-*     .. Scalar Arguments ..
-      CHARACTER          TRANA, TRANB
-      INTEGER            INFO, ISGN, LDA, LDB, LDC, M, N
-      DOUBLE PRECISION   SCALE
-*     ..
-*     .. Array Arguments ..
-      COMPLEX*16         A( LDA, * ), B( LDB, * ), C( LDC, * )
-*     ..
-*
-*  =====================================================================
-*
-*     .. Parameters ..
-      DOUBLE PRECISION   ONE
-      PARAMETER          ( ONE = 1.0D+0 )
-*     ..
-*     .. Local Scalars ..
-      LOGICAL            NOTRNA, NOTRNB
-      INTEGER            J, K, L
-      DOUBLE PRECISION   BIGNUM, DA11, DB, EPS, SCALOC, SGN, SMIN,
-     $                   SMLNUM
-      COMPLEX*16         A11, SUML, SUMR, VEC, X11
-*     ..
-*     .. Local Arrays ..
-      DOUBLE PRECISION   DUM( 1 )
-*     ..
-*     .. External Functions ..
-      LOGICAL            LSAME
-      DOUBLE PRECISION   DLAMCH, ZLANGE
-      COMPLEX*16         ZDOTC, ZDOTU, ZLADIV
-      EXTERNAL           LSAME, DLAMCH, ZLANGE, ZDOTC, ZDOTU, ZLADIV
-*     ..
-*     .. External Subroutines ..
-      EXTERNAL           DLABAD, XERBLA, ZDSCAL
-*     ..
-*     .. Intrinsic Functions ..
-      INTRINSIC          ABS, DBLE, DCMPLX, DCONJG, DIMAG, MAX, MIN
-*     ..
-*     .. Executable Statements ..
-*
-*     Decode and Test input parameters
-*
-      NOTRNA = LSAME( TRANA, 'N' )
-      NOTRNB = LSAME( TRANB, 'N' )
-*
-      INFO = 0
-      IF( .NOT.NOTRNA .AND. .NOT.LSAME( TRANA, 'C' ) ) THEN
-         INFO = -1
-      ELSE IF( .NOT.NOTRNB .AND. .NOT.LSAME( TRANB, 'C' ) ) THEN
-         INFO = -2
-      ELSE IF( ISGN.NE.1 .AND. ISGN.NE.-1 ) THEN
-         INFO = -3
-      ELSE IF( M.LT.0 ) THEN
-         INFO = -4
-      ELSE IF( N.LT.0 ) THEN
-         INFO = -5
-      ELSE IF( LDA.LT.MAX( 1, M ) ) THEN
-         INFO = -7
-      ELSE IF( LDB.LT.MAX( 1, N ) ) THEN
-         INFO = -9
-      ELSE IF( LDC.LT.MAX( 1, M ) ) THEN
-         INFO = -11
-      END IF
-      IF( INFO.NE.0 ) THEN
-         CALL XERBLA( 'ZTRSYL', -INFO )
-         RETURN
-      END IF
-*
-*     Quick return if possible
-*
-      SCALE = ONE
-      IF( M.EQ.0 .OR. N.EQ.0 )
-     $   RETURN
-*
-*     Set constants to control overflow
-*
-      EPS = DLAMCH( 'P' )
-      SMLNUM = DLAMCH( 'S' )
-      BIGNUM = ONE / SMLNUM
-      CALL DLABAD( SMLNUM, BIGNUM )
-      SMLNUM = SMLNUM*DBLE( M*N ) / EPS
-      BIGNUM = ONE / SMLNUM
-      SMIN = MAX( SMLNUM, EPS*ZLANGE( 'M', M, M, A, LDA, DUM ),
-     $       EPS*ZLANGE( 'M', N, N, B, LDB, DUM ) )
-      SGN = ISGN
-*
-      IF( NOTRNA .AND. NOTRNB ) THEN
-*
-*        Solve    A*X + ISGN*X*B = scale*C.
-*
-*        The (K,L)th block of X is determined starting from
-*        bottom-left corner column by column by
-*
-*            A(K,K)*X(K,L) + ISGN*X(K,L)*B(L,L) = C(K,L) - R(K,L)
-*
-*        Where
-*                    M                        L-1
-*          R(K,L) = SUM [A(K,I)*X(I,L)] +ISGN*SUM [X(K,J)*B(J,L)].
-*                  I=K+1                      J=1
-*
-         DO 30 L = 1, N
-            DO 20 K = M, 1, -1
-*
-               SUML = ZDOTU( M-K, A( K, MIN( K+1, M ) ), LDA,
-     $                C( MIN( K+1, M ), L ), 1 )
-               SUMR = ZDOTU( L-1, C( K, 1 ), LDC, B( 1, L ), 1 )
-               VEC = C( K, L ) - ( SUML+SGN*SUMR )
-*
-               SCALOC = ONE
-               A11 = A( K, K ) + SGN*B( L, L )
-               DA11 = ABS( DBLE( A11 ) ) + ABS( DIMAG( A11 ) )
-               IF( DA11.LE.SMIN ) THEN
-                  A11 = SMIN
-                  DA11 = SMIN
-                  INFO = 1
-               END IF
-               DB = ABS( DBLE( VEC ) ) + ABS( DIMAG( VEC ) )
-               IF( DA11.LT.ONE .AND. DB.GT.ONE ) THEN
-                  IF( DB.GT.BIGNUM*DA11 )
-     $               SCALOC = ONE / DB
-               END IF
-               X11 = ZLADIV( VEC*DCMPLX( SCALOC ), A11 )
-*
-               IF( SCALOC.NE.ONE ) THEN
-                  DO 10 J = 1, N
-                     CALL ZDSCAL( M, SCALOC, C( 1, J ), 1 )
-   10             CONTINUE
-                  SCALE = SCALE*SCALOC
-               END IF
-               C( K, L ) = X11
-*
-   20       CONTINUE
-   30    CONTINUE
-*
-      ELSE IF( .NOT.NOTRNA .AND. NOTRNB ) THEN
-*
-*        Solve    A**H *X + ISGN*X*B = scale*C.
-*
-*        The (K,L)th block of X is determined starting from
-*        upper-left corner column by column by
-*
-*            A**H(K,K)*X(K,L) + ISGN*X(K,L)*B(L,L) = C(K,L) - R(K,L)
-*
-*        Where
-*                   K-1                           L-1
-*          R(K,L) = SUM [A**H(I,K)*X(I,L)] + ISGN*SUM [X(K,J)*B(J,L)]
-*                   I=1                           J=1
-*
-         DO 60 L = 1, N
-            DO 50 K = 1, M
-*
-               SUML = ZDOTC( K-1, A( 1, K ), 1, C( 1, L ), 1 )
-               SUMR = ZDOTU( L-1, C( K, 1 ), LDC, B( 1, L ), 1 )
-               VEC = C( K, L ) - ( SUML+SGN*SUMR )
-*
-               SCALOC = ONE
-               A11 = DCONJG( A( K, K ) ) + SGN*B( L, L )
-               DA11 = ABS( DBLE( A11 ) ) + ABS( DIMAG( A11 ) )
-               IF( DA11.LE.SMIN ) THEN
-                  A11 = SMIN
-                  DA11 = SMIN
-                  INFO = 1
-               END IF
-               DB = ABS( DBLE( VEC ) ) + ABS( DIMAG( VEC ) )
-               IF( DA11.LT.ONE .AND. DB.GT.ONE ) THEN
-                  IF( DB.GT.BIGNUM*DA11 )
-     $               SCALOC = ONE / DB
-               END IF
-*
-               X11 = ZLADIV( VEC*DCMPLX( SCALOC ), A11 )
-*
-               IF( SCALOC.NE.ONE ) THEN
-                  DO 40 J = 1, N
-                     CALL ZDSCAL( M, SCALOC, C( 1, J ), 1 )
-   40             CONTINUE
-                  SCALE = SCALE*SCALOC
-               END IF
-               C( K, L ) = X11
-*
-   50       CONTINUE
-   60    CONTINUE
-*
-      ELSE IF( .NOT.NOTRNA .AND. .NOT.NOTRNB ) THEN
-*
-*        Solve    A**H*X + ISGN*X*B**H = C.
-*
-*        The (K,L)th block of X is determined starting from
-*        upper-right corner column by column by
-*
-*            A**H(K,K)*X(K,L) + ISGN*X(K,L)*B**H(L,L) = C(K,L) - R(K,L)
-*
-*        Where
-*                    K-1
-*           R(K,L) = SUM [A**H(I,K)*X(I,L)] +
-*                    I=1
-*                           N
-*                     ISGN*SUM [X(K,J)*B**H(L,J)].
-*                          J=L+1
-*
-         DO 90 L = N, 1, -1
-            DO 80 K = 1, M
-*
-               SUML = ZDOTC( K-1, A( 1, K ), 1, C( 1, L ), 1 )
-               SUMR = ZDOTC( N-L, C( K, MIN( L+1, N ) ), LDC,
-     $                B( L, MIN( L+1, N ) ), LDB )
-               VEC = C( K, L ) - ( SUML+SGN*DCONJG( SUMR ) )
-*
-               SCALOC = ONE
-               A11 = DCONJG( A( K, K )+SGN*B( L, L ) )
-               DA11 = ABS( DBLE( A11 ) ) + ABS( DIMAG( A11 ) )
-               IF( DA11.LE.SMIN ) THEN
-                  A11 = SMIN
-                  DA11 = SMIN
-                  INFO = 1
-               END IF
-               DB = ABS( DBLE( VEC ) ) + ABS( DIMAG( VEC ) )
-               IF( DA11.LT.ONE .AND. DB.GT.ONE ) THEN
-                  IF( DB.GT.BIGNUM*DA11 )
-     $               SCALOC = ONE / DB
-               END IF
-*
-               X11 = ZLADIV( VEC*DCMPLX( SCALOC ), A11 )
-*
-               IF( SCALOC.NE.ONE ) THEN
-                  DO 70 J = 1, N
-                     CALL ZDSCAL( M, SCALOC, C( 1, J ), 1 )
-   70             CONTINUE
-                  SCALE = SCALE*SCALOC
-               END IF
-               C( K, L ) = X11
-*
-   80       CONTINUE
-   90    CONTINUE
-*
-      ELSE IF( NOTRNA .AND. .NOT.NOTRNB ) THEN
-*
-*        Solve    A*X + ISGN*X*B**H = C.
-*
-*        The (K,L)th block of X is determined starting from
-*        bottom-left corner column by column by
-*
-*           A(K,K)*X(K,L) + ISGN*X(K,L)*B**H(L,L) = C(K,L) - R(K,L)
-*
-*        Where
-*                    M                          N
-*          R(K,L) = SUM [A(K,I)*X(I,L)] + ISGN*SUM [X(K,J)*B**H(L,J)]
-*                  I=K+1                      J=L+1
-*
-         DO 120 L = N, 1, -1
-            DO 110 K = M, 1, -1
-*
-               SUML = ZDOTU( M-K, A( K, MIN( K+1, M ) ), LDA,
-     $                C( MIN( K+1, M ), L ), 1 )
-               SUMR = ZDOTC( N-L, C( K, MIN( L+1, N ) ), LDC,
-     $                B( L, MIN( L+1, N ) ), LDB )
-               VEC = C( K, L ) - ( SUML+SGN*DCONJG( SUMR ) )
-*
-               SCALOC = ONE
-               A11 = A( K, K ) + SGN*DCONJG( B( L, L ) )
-               DA11 = ABS( DBLE( A11 ) ) + ABS( DIMAG( A11 ) )
-               IF( DA11.LE.SMIN ) THEN
-                  A11 = SMIN
-                  DA11 = SMIN
-                  INFO = 1
-               END IF
-               DB = ABS( DBLE( VEC ) ) + ABS( DIMAG( VEC ) )
-               IF( DA11.LT.ONE .AND. DB.GT.ONE ) THEN
-                  IF( DB.GT.BIGNUM*DA11 )
-     $               SCALOC = ONE / DB
-               END IF
-*
-               X11 = ZLADIV( VEC*DCMPLX( SCALOC ), A11 )
-*
-               IF( SCALOC.NE.ONE ) THEN
-                  DO 100 J = 1, N
-                     CALL ZDSCAL( M, SCALOC, C( 1, J ), 1 )
-  100             CONTINUE
-                  SCALE = SCALE*SCALOC
-               END IF
-               C( K, L ) = X11
-*
-  110       CONTINUE
-  120    CONTINUE
-*
-      END IF
-*
-      RETURN
-*
-*     End of ZTRSYL
-*
-      END
-*> \brief \b ZTRTI2 computes the inverse of a triangular matrix (unblocked algorithm).
-*
-*  =========== DOCUMENTATION ===========
-*
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
-*
-*> \htmlonly
-*> Download ZTRTI2 + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/ztrti2.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/ztrti2.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/ztrti2.f"> 
-*> [TXT]</a>
-*> \endhtmlonly 
-*
-*  Definition:
-*  ===========
-*
-*       SUBROUTINE ZTRTI2( UPLO, DIAG, N, A, LDA, INFO )
-* 
-*       .. Scalar Arguments ..
-*       CHARACTER          DIAG, UPLO
-*       INTEGER            INFO, LDA, N
-*       ..
-*       .. Array Arguments ..
-*       COMPLEX*16         A( LDA, * )
-*       ..
-*  
-*
-*> \par Purpose:
-*  =============
-*>
-*> \verbatim
-*>
-*> ZTRTI2 computes the inverse of a complex upper or lower triangular
-*> matrix.
-*>
-*> This is the Level 2 BLAS version of the algorithm.
-*> \endverbatim
-*
-*  Arguments:
-*  ==========
-*
-*> \param[in] UPLO
-*> \verbatim
-*>          UPLO is CHARACTER*1
-*>          Specifies whether the matrix A is upper or lower triangular.
-*>          = 'U':  Upper triangular
-*>          = 'L':  Lower triangular
-*> \endverbatim
-*>
-*> \param[in] DIAG
-*> \verbatim
-*>          DIAG is CHARACTER*1
-*>          Specifies whether or not the matrix A is unit triangular.
-*>          = 'N':  Non-unit triangular
-*>          = 'U':  Unit triangular
-*> \endverbatim
-*>
-*> \param[in] N
-*> \verbatim
-*>          N is INTEGER
-*>          The order of the matrix A.  N >= 0.
-*> \endverbatim
-*>
-*> \param[in,out] A
-*> \verbatim
-*>          A is COMPLEX*16 array, dimension (LDA,N)
-*>          On entry, the triangular matrix A.  If UPLO = 'U', the
-*>          leading n by n upper triangular part of the array A contains
-*>          the upper triangular matrix, and the strictly lower
-*>          triangular part of A is not referenced.  If UPLO = 'L', the
-*>          leading n by n lower triangular part of the array A contains
-*>          the lower triangular matrix, and the strictly upper
-*>          triangular part of A is not referenced.  If DIAG = 'U', the
-*>          diagonal elements of A are also not referenced and are
-*>          assumed to be 1.
-*>
-*>          On exit, the (triangular) inverse of the original matrix, in
-*>          the same storage format.
-*> \endverbatim
-*>
-*> \param[in] LDA
-*> \verbatim
-*>          LDA is INTEGER
-*>          The leading dimension of the array A.  LDA >= max(1,N).
-*> \endverbatim
-*>
-*> \param[out] INFO
-*> \verbatim
-*>          INFO is INTEGER
-*>          = 0: successful exit
-*>          < 0: if INFO = -k, the k-th argument had an illegal value
-*> \endverbatim
-*
-*  Authors:
-*  ========
-*
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
-*
-*> \date September 2012
-*
-*> \ingroup complex16OTHERcomputational
-*
-*  =====================================================================
-      SUBROUTINE ZTRTI2( UPLO, DIAG, N, A, LDA, INFO )
-*
-*  -- LAPACK computational routine (version 3.4.2) --
-*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
-*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
-*
-*     .. Scalar Arguments ..
-      CHARACTER          DIAG, UPLO
-      INTEGER            INFO, LDA, N
-*     ..
-*     .. Array Arguments ..
-      COMPLEX*16         A( LDA, * )
-*     ..
-*
-*  =====================================================================
-*
-*     .. Parameters ..
-      COMPLEX*16         ONE
-      PARAMETER          ( ONE = ( 1.0D+0, 0.0D+0 ) )
-*     ..
-*     .. Local Scalars ..
-      LOGICAL            NOUNIT, UPPER
-      INTEGER            J
-      COMPLEX*16         AJJ
-*     ..
-*     .. External Functions ..
-      LOGICAL            LSAME
-      EXTERNAL           LSAME
-*     ..
-*     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZSCAL, ZTRMV
-*     ..
-*     .. Intrinsic Functions ..
-      INTRINSIC          MAX
-*     ..
-*     .. Executable Statements ..
-*
-*     Test the input parameters.
-*
-      INFO = 0
-      UPPER = LSAME( UPLO, 'U' )
-      NOUNIT = LSAME( DIAG, 'N' )
-      IF( .NOT.UPPER .AND. .NOT.LSAME( UPLO, 'L' ) ) THEN
-         INFO = -1
-      ELSE IF( .NOT.NOUNIT .AND. .NOT.LSAME( DIAG, 'U' ) ) THEN
-         INFO = -2
-      ELSE IF( N.LT.0 ) THEN
-         INFO = -3
-      ELSE IF( LDA.LT.MAX( 1, N ) ) THEN
-         INFO = -5
-      END IF
-      IF( INFO.NE.0 ) THEN
-         CALL XERBLA( 'ZTRTI2', -INFO )
-         RETURN
-      END IF
-*
-      IF( UPPER ) THEN
-*
-*        Compute inverse of upper triangular matrix.
-*
-         DO 10 J = 1, N
-            IF( NOUNIT ) THEN
-               A( J, J ) = ONE / A( J, J )
-               AJJ = -A( J, J )
-            ELSE
-               AJJ = -ONE
-            END IF
-*
-*           Compute elements 1:j-1 of j-th column.
-*
-            CALL ZTRMV( 'Upper', 'No transpose', DIAG, J-1, A, LDA,
-     $                  A( 1, J ), 1 )
-            CALL ZSCAL( J-1, AJJ, A( 1, J ), 1 )
-   10    CONTINUE
-      ELSE
-*
-*        Compute inverse of lower triangular matrix.
-*
-         DO 20 J = N, 1, -1
-            IF( NOUNIT ) THEN
-               A( J, J ) = ONE / A( J, J )
-               AJJ = -A( J, J )
-            ELSE
-               AJJ = -ONE
-            END IF
-            IF( J.LT.N ) THEN
-*
-*              Compute elements j+1:n of j-th column.
-*
-               CALL ZTRMV( 'Lower', 'No transpose', DIAG, N-J,
-     $                     A( J+1, J+1 ), LDA, A( J+1, J ), 1 )
-               CALL ZSCAL( N-J, AJJ, A( J+1, J ), 1 )
-            END IF
-   20    CONTINUE
-      END IF
-*
-      RETURN
-*
-*     End of ZTRTI2
-*
-      END
-*> \brief \b ZTRTRI
-*
-*  =========== DOCUMENTATION ===========
-*
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
-*
-*> \htmlonly
-*> Download ZTRTRI + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/ztrtri.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/ztrtri.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/ztrtri.f"> 
-*> [TXT]</a>
-*> \endhtmlonly 
-*
-*  Definition:
-*  ===========
-*
-*       SUBROUTINE ZTRTRI( UPLO, DIAG, N, A, LDA, INFO )
-* 
-*       .. Scalar Arguments ..
-*       CHARACTER          DIAG, UPLO
-*       INTEGER            INFO, LDA, N
-*       ..
-*       .. Array Arguments ..
-*       COMPLEX*16         A( LDA, * )
-*       ..
-*  
-*
-*> \par Purpose:
-*  =============
-*>
-*> \verbatim
-*>
-*> ZTRTRI computes the inverse of a complex upper or lower triangular
-*> matrix A.
-*>
-*> This is the Level 3 BLAS version of the algorithm.
-*> \endverbatim
-*
-*  Arguments:
-*  ==========
-*
-*> \param[in] UPLO
-*> \verbatim
-*>          UPLO is CHARACTER*1
-*>          = 'U':  A is upper triangular;
-*>          = 'L':  A is lower triangular.
-*> \endverbatim
-*>
-*> \param[in] DIAG
-*> \verbatim
-*>          DIAG is CHARACTER*1
-*>          = 'N':  A is non-unit triangular;
-*>          = 'U':  A is unit triangular.
-*> \endverbatim
-*>
-*> \param[in] N
-*> \verbatim
-*>          N is INTEGER
-*>          The order of the matrix A.  N >= 0.
-*> \endverbatim
-*>
-*> \param[in,out] A
-*> \verbatim
-*>          A is COMPLEX*16 array, dimension (LDA,N)
-*>          On entry, the triangular matrix A.  If UPLO = 'U', the
-*>          leading N-by-N upper triangular part of the array A contains
-*>          the upper triangular matrix, and the strictly lower
-*>          triangular part of A is not referenced.  If UPLO = 'L', the
-*>          leading N-by-N lower triangular part of the array A contains
-*>          the lower triangular matrix, and the strictly upper
-*>          triangular part of A is not referenced.  If DIAG = 'U', the
-*>          diagonal elements of A are also not referenced and are
-*>          assumed to be 1.
-*>          On exit, the (triangular) inverse of the original matrix, in
-*>          the same storage format.
-*> \endverbatim
-*>
-*> \param[in] LDA
-*> \verbatim
-*>          LDA is INTEGER
-*>          The leading dimension of the array A.  LDA >= max(1,N).
-*> \endverbatim
-*>
-*> \param[out] INFO
-*> \verbatim
-*>          INFO is INTEGER
-*>          = 0: successful exit
-*>          < 0: if INFO = -i, the i-th argument had an illegal value
-*>          > 0: if INFO = i, A(i,i) is exactly zero.  The triangular
-*>               matrix is singular and its inverse can not be computed.
-*> \endverbatim
-*
-*  Authors:
-*  ========
-*
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
-*
-*> \date November 2011
-*
-*> \ingroup complex16OTHERcomputational
-*
-*  =====================================================================
-      SUBROUTINE ZTRTRI( UPLO, DIAG, N, A, LDA, INFO )
-*
-*  -- LAPACK computational routine (version 3.4.0) --
-*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
-*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
-*
-*     .. Scalar Arguments ..
-      CHARACTER          DIAG, UPLO
-      INTEGER            INFO, LDA, N
-*     ..
-*     .. Array Arguments ..
-      COMPLEX*16         A( LDA, * )
-*     ..
-*
-*  =====================================================================
-*
-*     .. Parameters ..
-      COMPLEX*16         ONE, ZERO
-      PARAMETER          ( ONE = ( 1.0D+0, 0.0D+0 ),
-     $                   ZERO = ( 0.0D+0, 0.0D+0 ) )
-*     ..
-*     .. Local Scalars ..
-      LOGICAL            NOUNIT, UPPER
-      INTEGER            J, JB, NB, NN
-*     ..
-*     .. External Functions ..
-      LOGICAL            LSAME
-      INTEGER            ILAENV
-      EXTERNAL           LSAME, ILAENV
-*     ..
-*     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZTRMM, ZTRSM, ZTRTI2
-*     ..
-*     .. Intrinsic Functions ..
-      INTRINSIC          MAX, MIN
-*     ..
-*     .. Executable Statements ..
-*
-*     Test the input parameters.
-*
-      INFO = 0
-      UPPER = LSAME( UPLO, 'U' )
-      NOUNIT = LSAME( DIAG, 'N' )
-      IF( .NOT.UPPER .AND. .NOT.LSAME( UPLO, 'L' ) ) THEN
-         INFO = -1
-      ELSE IF( .NOT.NOUNIT .AND. .NOT.LSAME( DIAG, 'U' ) ) THEN
-         INFO = -2
-      ELSE IF( N.LT.0 ) THEN
-         INFO = -3
-      ELSE IF( LDA.LT.MAX( 1, N ) ) THEN
-         INFO = -5
-      END IF
-      IF( INFO.NE.0 ) THEN
-         CALL XERBLA( 'ZTRTRI', -INFO )
-         RETURN
-      END IF
-*
-*     Quick return if possible
-*
-      IF( N.EQ.0 )
-     $   RETURN
-*
-*     Check for singularity if non-unit.
-*
-      IF( NOUNIT ) THEN
-         DO 10 INFO = 1, N
-            IF( A( INFO, INFO ).EQ.ZERO )
-     $         RETURN
-   10    CONTINUE
-         INFO = 0
-      END IF
-*
-*     Determine the block size for this environment.
-*
-      NB = ILAENV( 1, 'ZTRTRI', UPLO // DIAG, N, -1, -1, -1 )
-      IF( NB.LE.1 .OR. NB.GE.N ) THEN
-*
-*        Use unblocked code
-*
-         CALL ZTRTI2( UPLO, DIAG, N, A, LDA, INFO )
-      ELSE
-*
-*        Use blocked code
-*
-         IF( UPPER ) THEN
-*
-*           Compute inverse of upper triangular matrix
-*
-            DO 20 J = 1, N, NB
-               JB = MIN( NB, N-J+1 )
-*
-*              Compute rows 1:j-1 of current block column
-*
-               CALL ZTRMM( 'Left', 'Upper', 'No transpose', DIAG, J-1,
-     $                     JB, ONE, A, LDA, A( 1, J ), LDA )
-               CALL ZTRSM( 'Right', 'Upper', 'No transpose', DIAG, J-1,
-     $                     JB, -ONE, A( J, J ), LDA, A( 1, J ), LDA )
-*
-*              Compute inverse of current diagonal block
-*
-               CALL ZTRTI2( 'Upper', DIAG, JB, A( J, J ), LDA, INFO )
-   20       CONTINUE
-         ELSE
-*
-*           Compute inverse of lower triangular matrix
-*
-            NN = ( ( N-1 ) / NB )*NB + 1
-            DO 30 J = NN, 1, -NB
-               JB = MIN( NB, N-J+1 )
-               IF( J+JB.LE.N ) THEN
-*
-*                 Compute rows j+jb:n of current block column
-*
-                  CALL ZTRMM( 'Left', 'Lower', 'No transpose', DIAG,
-     $                        N-J-JB+1, JB, ONE, A( J+JB, J+JB ), LDA,
-     $                        A( J+JB, J ), LDA )
-                  CALL ZTRSM( 'Right', 'Lower', 'No transpose', DIAG,
-     $                        N-J-JB+1, JB, -ONE, A( J, J ), LDA,
-     $                        A( J+JB, J ), LDA )
-               END IF
-*
-*              Compute inverse of current diagonal block
-*
-               CALL ZTRTI2( 'Lower', DIAG, JB, A( J, J ), LDA, INFO )
-   30       CONTINUE
-         END IF
-      END IF
-*
-      RETURN
-*
-*     End of ZTRTRI
-*
-      END
-*> \brief \b ZTRTRS
-*
-*  =========== DOCUMENTATION ===========
-*
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
-*
-*> \htmlonly
-*> Download ZTRTRS + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/ztrtrs.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/ztrtrs.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/ztrtrs.f"> 
-*> [TXT]</a>
-*> \endhtmlonly 
-*
-*  Definition:
-*  ===========
-*
-*       SUBROUTINE ZTRTRS( UPLO, TRANS, DIAG, N, NRHS, A, LDA, B, LDB,
-*                          INFO )
-* 
-*       .. Scalar Arguments ..
-*       CHARACTER          DIAG, TRANS, UPLO
-*       INTEGER            INFO, LDA, LDB, N, NRHS
-*       ..
-*       .. Array Arguments ..
-*       COMPLEX*16         A( LDA, * ), B( LDB, * )
-*       ..
-*  
-*
-*> \par Purpose:
-*  =============
-*>
-*> \verbatim
-*>
-*> ZTRTRS solves a triangular system of the form
-*>
-*>    A * X = B,  A**T * X = B,  or  A**H * X = B,
-*>
-*> where A is a triangular matrix of order N, and B is an N-by-NRHS
-*> matrix.  A check is made to verify that A is nonsingular.
-*> \endverbatim
-*
-*  Arguments:
-*  ==========
-*
-*> \param[in] UPLO
-*> \verbatim
-*>          UPLO is CHARACTER*1
-*>          = 'U':  A is upper triangular;
-*>          = 'L':  A is lower triangular.
-*> \endverbatim
-*>
-*> \param[in] TRANS
-*> \verbatim
-*>          TRANS is CHARACTER*1
-*>          Specifies the form of the system of equations:
-*>          = 'N':  A * X = B     (No transpose)
-*>          = 'T':  A**T * X = B  (Transpose)
-*>          = 'C':  A**H * X = B  (Conjugate transpose)
-*> \endverbatim
-*>
-*> \param[in] DIAG
-*> \verbatim
-*>          DIAG is CHARACTER*1
-*>          = 'N':  A is non-unit triangular;
-*>          = 'U':  A is unit triangular.
-*> \endverbatim
-*>
-*> \param[in] N
-*> \verbatim
-*>          N is INTEGER
-*>          The order of the matrix A.  N >= 0.
-*> \endverbatim
-*>
-*> \param[in] NRHS
-*> \verbatim
-*>          NRHS is INTEGER
-*>          The number of right hand sides, i.e., the number of columns
-*>          of the matrix B.  NRHS >= 0.
-*> \endverbatim
-*>
-*> \param[in] A
-*> \verbatim
-*>          A is COMPLEX*16 array, dimension (LDA,N)
-*>          The triangular matrix A.  If UPLO = 'U', the leading N-by-N
-*>          upper triangular part of the array A contains the upper
-*>          triangular matrix, and the strictly lower triangular part of
-*>          A is not referenced.  If UPLO = 'L', the leading N-by-N lower
-*>          triangular part of the array A contains the lower triangular
-*>          matrix, and the strictly upper triangular part of A is not
-*>          referenced.  If DIAG = 'U', the diagonal elements of A are
-*>          also not referenced and are assumed to be 1.
-*> \endverbatim
-*>
-*> \param[in] LDA
-*> \verbatim
-*>          LDA is INTEGER
-*>          The leading dimension of the array A.  LDA >= max(1,N).
-*> \endverbatim
-*>
-*> \param[in,out] B
-*> \verbatim
-*>          B is COMPLEX*16 array, dimension (LDB,NRHS)
-*>          On entry, the right hand side matrix B.
-*>          On exit, if INFO = 0, the solution matrix X.
-*> \endverbatim
-*>
-*> \param[in] LDB
-*> \verbatim
-*>          LDB is INTEGER
-*>          The leading dimension of the array B.  LDB >= max(1,N).
-*> \endverbatim
-*>
-*> \param[out] INFO
-*> \verbatim
-*>          INFO is INTEGER
-*>          = 0:  successful exit
-*>          < 0: if INFO = -i, the i-th argument had an illegal value
-*>          > 0: if INFO = i, the i-th diagonal element of A is zero,
-*>               indicating that the matrix is singular and the solutions
-*>               X have not been computed.
-*> \endverbatim
-*
-*  Authors:
-*  ========
-*
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
-*
-*> \date November 2011
-*
-*> \ingroup complex16OTHERcomputational
-*
-*  =====================================================================
-      SUBROUTINE ZTRTRS( UPLO, TRANS, DIAG, N, NRHS, A, LDA, B, LDB,
-     $                   INFO )
-*
-*  -- LAPACK computational routine (version 3.4.0) --
-*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
-*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
-*
-*     .. Scalar Arguments ..
-      CHARACTER          DIAG, TRANS, UPLO
-      INTEGER            INFO, LDA, LDB, N, NRHS
-*     ..
-*     .. Array Arguments ..
-      COMPLEX*16         A( LDA, * ), B( LDB, * )
-*     ..
-*
-*  =====================================================================
-*
-*     .. Parameters ..
-      COMPLEX*16         ZERO, ONE
-      PARAMETER          ( ZERO = ( 0.0D+0, 0.0D+0 ),
-     $                   ONE = ( 1.0D+0, 0.0D+0 ) )
-*     ..
-*     .. Local Scalars ..
-      LOGICAL            NOUNIT
-*     ..
-*     .. External Functions ..
-      LOGICAL            LSAME
-      EXTERNAL           LSAME
-*     ..
-*     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZTRSM
-*     ..
-*     .. Intrinsic Functions ..
-      INTRINSIC          MAX
-*     ..
-*     .. Executable Statements ..
-*
-*     Test the input parameters.
-*
-      INFO = 0
-      NOUNIT = LSAME( DIAG, 'N' )
-      IF( .NOT.LSAME( UPLO, 'U' ) .AND. .NOT.LSAME( UPLO, 'L' ) ) THEN
-         INFO = -1
-      ELSE IF( .NOT.LSAME( TRANS, 'N' ) .AND. .NOT.
-     $         LSAME( TRANS, 'T' ) .AND. .NOT.LSAME( TRANS, 'C' ) ) THEN
-         INFO = -2
-      ELSE IF( .NOT.NOUNIT .AND. .NOT.LSAME( DIAG, 'U' ) ) THEN
-         INFO = -3
-      ELSE IF( N.LT.0 ) THEN
-         INFO = -4
-      ELSE IF( NRHS.LT.0 ) THEN
-         INFO = -5
-      ELSE IF( LDA.LT.MAX( 1, N ) ) THEN
-         INFO = -7
-      ELSE IF( LDB.LT.MAX( 1, N ) ) THEN
-         INFO = -9
-      END IF
-      IF( INFO.NE.0 ) THEN
-         CALL XERBLA( 'ZTRTRS', -INFO )
-         RETURN
-      END IF
-*
-*     Quick return if possible
-*
-      IF( N.EQ.0 )
-     $   RETURN
-*
-*     Check for singularity.
-*
-      IF( NOUNIT ) THEN
-         DO 10 INFO = 1, N
-            IF( A( INFO, INFO ).EQ.ZERO )
-     $         RETURN
-   10    CONTINUE
-      END IF
-      INFO = 0
-*
-*     Solve A * x = b,  A**T * x = b,  or  A**H * x = b.
-*
-      CALL ZTRSM( 'Left', UPLO, TRANS, DIAG, N, NRHS, ONE, A, LDA, B,
-     $            LDB )
-*
-      RETURN
-*
-*     End of ZTRTRS
-*
-      END
-*> \brief \b ZUNG2L generates all or part of the unitary matrix Q from a QL factorization determined by cgeqlf (unblocked algorithm).
-*
-*  =========== DOCUMENTATION ===========
-*
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
-*
-*> \htmlonly
-*> Download ZUNG2L + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zung2l.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zung2l.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zung2l.f"> 
-*> [TXT]</a>
-*> \endhtmlonly 
-*
-*  Definition:
-*  ===========
-*
-*       SUBROUTINE ZUNG2L( M, N, K, A, LDA, TAU, WORK, INFO )
-* 
-*       .. Scalar Arguments ..
-*       INTEGER            INFO, K, LDA, M, N
-*       ..
-*       .. Array Arguments ..
-*       COMPLEX*16         A( LDA, * ), TAU( * ), WORK( * )
-*       ..
-*  
-*
-*> \par Purpose:
-*  =============
-*>
-*> \verbatim
-*>
-*> ZUNG2L generates an m by n complex matrix Q with orthonormal columns,
-*> which is defined as the last n columns of a product of k elementary
-*> reflectors of order m
-*>
-*>       Q  =  H(k) . . . H(2) H(1)
-*>
-*> as returned by ZGEQLF.
-*> \endverbatim
-*
-*  Arguments:
-*  ==========
-*
-*> \param[in] M
-*> \verbatim
-*>          M is INTEGER
-*>          The number of rows of the matrix Q. M >= 0.
-*> \endverbatim
-*>
-*> \param[in] N
-*> \verbatim
-*>          N is INTEGER
-*>          The number of columns of the matrix Q. M >= N >= 0.
-*> \endverbatim
-*>
-*> \param[in] K
-*> \verbatim
-*>          K is INTEGER
-*>          The number of elementary reflectors whose product defines the
-*>          matrix Q. N >= K >= 0.
-*> \endverbatim
-*>
-*> \param[in,out] A
-*> \verbatim
-*>          A is COMPLEX*16 array, dimension (LDA,N)
-*>          On entry, the (n-k+i)-th column must contain the vector which
-*>          defines the elementary reflector H(i), for i = 1,2,...,k, as
-*>          returned by ZGEQLF in the last k columns of its array
-*>          argument A.
-*>          On exit, the m-by-n matrix Q.
-*> \endverbatim
-*>
-*> \param[in] LDA
-*> \verbatim
-*>          LDA is INTEGER
-*>          The first dimension of the array A. LDA >= max(1,M).
-*> \endverbatim
-*>
-*> \param[in] TAU
-*> \verbatim
-*>          TAU is COMPLEX*16 array, dimension (K)
-*>          TAU(i) must contain the scalar factor of the elementary
-*>          reflector H(i), as returned by ZGEQLF.
-*> \endverbatim
-*>
-*> \param[out] WORK
-*> \verbatim
-*>          WORK is COMPLEX*16 array, dimension (N)
-*> \endverbatim
-*>
-*> \param[out] INFO
-*> \verbatim
-*>          INFO is INTEGER
-*>          = 0: successful exit
-*>          < 0: if INFO = -i, the i-th argument has an illegal value
-*> \endverbatim
-*
-*  Authors:
-*  ========
-*
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
-*
-*> \date September 2012
-*
-*> \ingroup complex16OTHERcomputational
-*
-*  =====================================================================
-      SUBROUTINE ZUNG2L( M, N, K, A, LDA, TAU, WORK, INFO )
-*
-*  -- LAPACK computational routine (version 3.4.2) --
-*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
-*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
-*
-*     .. Scalar Arguments ..
-      INTEGER            INFO, K, LDA, M, N
-*     ..
-*     .. Array Arguments ..
-      COMPLEX*16         A( LDA, * ), TAU( * ), WORK( * )
-*     ..
-*
-*  =====================================================================
-*
-*     .. Parameters ..
-      COMPLEX*16         ONE, ZERO
-      PARAMETER          ( ONE = ( 1.0D+0, 0.0D+0 ),
-     $                   ZERO = ( 0.0D+0, 0.0D+0 ) )
-*     ..
-*     .. Local Scalars ..
-      INTEGER            I, II, J, L
-*     ..
-*     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZLARF, ZSCAL
-*     ..
-*     .. Intrinsic Functions ..
-      INTRINSIC          MAX
-*     ..
-*     .. Executable Statements ..
-*
-*     Test the input arguments
-*
-      INFO = 0
-      IF( M.LT.0 ) THEN
-         INFO = -1
-      ELSE IF( N.LT.0 .OR. N.GT.M ) THEN
-         INFO = -2
-      ELSE IF( K.LT.0 .OR. K.GT.N ) THEN
-         INFO = -3
-      ELSE IF( LDA.LT.MAX( 1, M ) ) THEN
-         INFO = -5
-      END IF
-      IF( INFO.NE.0 ) THEN
-         CALL XERBLA( 'ZUNG2L', -INFO )
-         RETURN
-      END IF
-*
-*     Quick return if possible
-*
-      IF( N.LE.0 )
-     $   RETURN
-*
-*     Initialise columns 1:n-k to columns of the unit matrix
-*
-      DO 20 J = 1, N - K
-         DO 10 L = 1, M
-            A( L, J ) = ZERO
-   10    CONTINUE
-         A( M-N+J, J ) = ONE
-   20 CONTINUE
-*
-      DO 40 I = 1, K
-         II = N - K + I
-*
-*        Apply H(i) to A(1:m-k+i,1:n-k+i) from the left
-*
-         A( M-N+II, II ) = ONE
-         CALL ZLARF( 'Left', M-N+II, II-1, A( 1, II ), 1, TAU( I ), A,
-     $               LDA, WORK )
-         CALL ZSCAL( M-N+II-1, -TAU( I ), A( 1, II ), 1 )
-         A( M-N+II, II ) = ONE - TAU( I )
-*
-*        Set A(m-k+i+1:m,n-k+i) to zero
-*
-         DO 30 L = M - N + II + 1, M
-            A( L, II ) = ZERO
-   30    CONTINUE
-   40 CONTINUE
-      RETURN
-*
-*     End of ZUNG2L
-*
-      END
-*> \brief \b ZUNG2R
-*
-*  =========== DOCUMENTATION ===========
-*
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
-*
-*> \htmlonly
-*> Download ZUNG2R + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zung2r.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zung2r.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zung2r.f"> 
-*> [TXT]</a>
-*> \endhtmlonly 
-*
-*  Definition:
-*  ===========
-*
-*       SUBROUTINE ZUNG2R( M, N, K, A, LDA, TAU, WORK, INFO )
-* 
-*       .. Scalar Arguments ..
-*       INTEGER            INFO, K, LDA, M, N
-*       ..
-*       .. Array Arguments ..
-*       COMPLEX*16         A( LDA, * ), TAU( * ), WORK( * )
-*       ..
-*  
-*
-*> \par Purpose:
-*  =============
-*>
-*> \verbatim
-*>
-*> ZUNG2R generates an m by n complex matrix Q with orthonormal columns,
-*> which is defined as the first n columns of a product of k elementary
-*> reflectors of order m
-*>
-*>       Q  =  H(1) H(2) . . . H(k)
-*>
-*> as returned by ZGEQRF.
-*> \endverbatim
-*
-*  Arguments:
-*  ==========
-*
-*> \param[in] M
-*> \verbatim
-*>          M is INTEGER
-*>          The number of rows of the matrix Q. M >= 0.
-*> \endverbatim
-*>
-*> \param[in] N
-*> \verbatim
-*>          N is INTEGER
-*>          The number of columns of the matrix Q. M >= N >= 0.
-*> \endverbatim
-*>
-*> \param[in] K
-*> \verbatim
-*>          K is INTEGER
-*>          The number of elementary reflectors whose product defines the
-*>          matrix Q. N >= K >= 0.
-*> \endverbatim
-*>
-*> \param[in,out] A
-*> \verbatim
-*>          A is COMPLEX*16 array, dimension (LDA,N)
-*>          On entry, the i-th column must contain the vector which
-*>          defines the elementary reflector H(i), for i = 1,2,...,k, as
-*>          returned by ZGEQRF in the first k columns of its array
-*>          argument A.
-*>          On exit, the m by n matrix Q.
-*> \endverbatim
-*>
-*> \param[in] LDA
-*> \verbatim
-*>          LDA is INTEGER
-*>          The first dimension of the array A. LDA >= max(1,M).
-*> \endverbatim
-*>
-*> \param[in] TAU
-*> \verbatim
-*>          TAU is COMPLEX*16 array, dimension (K)
-*>          TAU(i) must contain the scalar factor of the elementary
-*>          reflector H(i), as returned by ZGEQRF.
-*> \endverbatim
-*>
-*> \param[out] WORK
-*> \verbatim
-*>          WORK is COMPLEX*16 array, dimension (N)
-*> \endverbatim
-*>
-*> \param[out] INFO
-*> \verbatim
-*>          INFO is INTEGER
-*>          = 0: successful exit
-*>          < 0: if INFO = -i, the i-th argument has an illegal value
-*> \endverbatim
-*
-*  Authors:
-*  ========
-*
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
-*
-*> \date November 2011
-*
-*> \ingroup complex16OTHERcomputational
-*
-*  =====================================================================
-      SUBROUTINE ZUNG2R( M, N, K, A, LDA, TAU, WORK, INFO )
-*
-*  -- LAPACK computational routine (version 3.4.0) --
-*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
-*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
-*
-*     .. Scalar Arguments ..
-      INTEGER            INFO, K, LDA, M, N
-*     ..
-*     .. Array Arguments ..
-      COMPLEX*16         A( LDA, * ), TAU( * ), WORK( * )
-*     ..
-*
-*  =====================================================================
-*
-*     .. Parameters ..
-      COMPLEX*16         ONE, ZERO
-      PARAMETER          ( ONE = ( 1.0D+0, 0.0D+0 ),
-     $                   ZERO = ( 0.0D+0, 0.0D+0 ) )
-*     ..
-*     .. Local Scalars ..
-      INTEGER            I, J, L
-*     ..
-*     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZLARF, ZSCAL
-*     ..
-*     .. Intrinsic Functions ..
-      INTRINSIC          MAX
-*     ..
-*     .. Executable Statements ..
-*
-*     Test the input arguments
-*
-      INFO = 0
-      IF( M.LT.0 ) THEN
-         INFO = -1
-      ELSE IF( N.LT.0 .OR. N.GT.M ) THEN
-         INFO = -2
-      ELSE IF( K.LT.0 .OR. K.GT.N ) THEN
-         INFO = -3
-      ELSE IF( LDA.LT.MAX( 1, M ) ) THEN
-         INFO = -5
-      END IF
-      IF( INFO.NE.0 ) THEN
-         CALL XERBLA( 'ZUNG2R', -INFO )
-         RETURN
-      END IF
-*
-*     Quick return if possible
-*
-      IF( N.LE.0 )
-     $   RETURN
-*
-*     Initialise columns k+1:n to columns of the unit matrix
-*
-      DO 20 J = K + 1, N
-         DO 10 L = 1, M
-            A( L, J ) = ZERO
-   10    CONTINUE
-         A( J, J ) = ONE
-   20 CONTINUE
-*
-      DO 40 I = K, 1, -1
-*
-*        Apply H(i) to A(i:m,i:n) from the left
-*
-         IF( I.LT.N ) THEN
-            A( I, I ) = ONE
-            CALL ZLARF( 'Left', M-I+1, N-I, A( I, I ), 1, TAU( I ),
-     $                  A( I, I+1 ), LDA, WORK )
-         END IF
-         IF( I.LT.M )
-     $      CALL ZSCAL( M-I, -TAU( I ), A( I+1, I ), 1 )
-         A( I, I ) = ONE - TAU( I )
-*
-*        Set A(1:i-1,i) to zero
-*
-         DO 30 L = 1, I - 1
-            A( L, I ) = ZERO
-   30    CONTINUE
-   40 CONTINUE
-      RETURN
-*
-*     End of ZUNG2R
-*
-      END
-*> \brief \b ZUNGBR
-*
-*  =========== DOCUMENTATION ===========
-*
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
-*
-*> \htmlonly
-*> Download ZUNGBR + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zungbr.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zungbr.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zungbr.f"> 
-*> [TXT]</a>
-*> \endhtmlonly 
-*
-*  Definition:
-*  ===========
-*
-*       SUBROUTINE ZUNGBR( VECT, M, N, K, A, LDA, TAU, WORK, LWORK, INFO )
-* 
-*       .. Scalar Arguments ..
-*       CHARACTER          VECT
-*       INTEGER            INFO, K, LDA, LWORK, M, N
-*       ..
-*       .. Array Arguments ..
-*       COMPLEX*16         A( LDA, * ), TAU( * ), WORK( * )
-*       ..
-*  
-*
-*> \par Purpose:
-*  =============
-*>
-*> \verbatim
-*>
-*> ZUNGBR generates one of the complex unitary matrices Q or P**H
-*> determined by ZGEBRD when reducing a complex matrix A to bidiagonal
-*> form: A = Q * B * P**H.  Q and P**H are defined as products of
-*> elementary reflectors H(i) or G(i) respectively.
-*>
-*> If VECT = 'Q', A is assumed to have been an M-by-K matrix, and Q
-*> is of order M:
-*> if m >= k, Q = H(1) H(2) . . . H(k) and ZUNGBR returns the first n
-*> columns of Q, where m >= n >= k;
-*> if m < k, Q = H(1) H(2) . . . H(m-1) and ZUNGBR returns Q as an
-*> M-by-M matrix.
-*>
-*> If VECT = 'P', A is assumed to have been a K-by-N matrix, and P**H
-*> is of order N:
-*> if k < n, P**H = G(k) . . . G(2) G(1) and ZUNGBR returns the first m
-*> rows of P**H, where n >= m >= k;
-*> if k >= n, P**H = G(n-1) . . . G(2) G(1) and ZUNGBR returns P**H as
-*> an N-by-N matrix.
-*> \endverbatim
-*
-*  Arguments:
-*  ==========
-*
-*> \param[in] VECT
-*> \verbatim
-*>          VECT is CHARACTER*1
-*>          Specifies whether the matrix Q or the matrix P**H is
-*>          required, as defined in the transformation applied by ZGEBRD:
-*>          = 'Q':  generate Q;
-*>          = 'P':  generate P**H.
-*> \endverbatim
-*>
-*> \param[in] M
-*> \verbatim
-*>          M is INTEGER
-*>          The number of rows of the matrix Q or P**H to be returned.
-*>          M >= 0.
-*> \endverbatim
-*>
-*> \param[in] N
-*> \verbatim
-*>          N is INTEGER
-*>          The number of columns of the matrix Q or P**H to be returned.
-*>          N >= 0.
-*>          If VECT = 'Q', M >= N >= min(M,K);
-*>          if VECT = 'P', N >= M >= min(N,K).
-*> \endverbatim
-*>
-*> \param[in] K
-*> \verbatim
-*>          K is INTEGER
-*>          If VECT = 'Q', the number of columns in the original M-by-K
-*>          matrix reduced by ZGEBRD.
-*>          If VECT = 'P', the number of rows in the original K-by-N
-*>          matrix reduced by ZGEBRD.
-*>          K >= 0.
-*> \endverbatim
-*>
-*> \param[in,out] A
-*> \verbatim
-*>          A is COMPLEX*16 array, dimension (LDA,N)
-*>          On entry, the vectors which define the elementary reflectors,
-*>          as returned by ZGEBRD.
-*>          On exit, the M-by-N matrix Q or P**H.
-*> \endverbatim
-*>
-*> \param[in] LDA
-*> \verbatim
-*>          LDA is INTEGER
-*>          The leading dimension of the array A. LDA >= M.
-*> \endverbatim
-*>
-*> \param[in] TAU
-*> \verbatim
-*>          TAU is COMPLEX*16 array, dimension
-*>                                (min(M,K)) if VECT = 'Q'
-*>                                (min(N,K)) if VECT = 'P'
-*>          TAU(i) must contain the scalar factor of the elementary
-*>          reflector H(i) or G(i), which determines Q or P**H, as
-*>          returned by ZGEBRD in its array argument TAUQ or TAUP.
-*> \endverbatim
-*>
-*> \param[out] WORK
-*> \verbatim
-*>          WORK is COMPLEX*16 array, dimension (MAX(1,LWORK))
-*>          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
-*> \endverbatim
-*>
-*> \param[in] LWORK
-*> \verbatim
-*>          LWORK is INTEGER
-*>          The dimension of the array WORK. LWORK >= max(1,min(M,N)).
-*>          For optimum performance LWORK >= min(M,N)*NB, where NB
-*>          is the optimal blocksize.
-*>
-*>          If LWORK = -1, then a workspace query is assumed; the routine
-*>          only calculates the optimal size of the WORK array, returns
-*>          this value as the first entry of the WORK array, and no error
-*>          message related to LWORK is issued by XERBLA.
-*> \endverbatim
-*>
-*> \param[out] INFO
-*> \verbatim
-*>          INFO is INTEGER
-*>          = 0:  successful exit
-*>          < 0:  if INFO = -i, the i-th argument had an illegal value
-*> \endverbatim
-*
-*  Authors:
-*  ========
-*
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
-*
-*> \date April 2012
-*
-*> \ingroup complex16GBcomputational
-*
-*  =====================================================================
-      SUBROUTINE ZUNGBR( VECT, M, N, K, A, LDA, TAU, WORK, LWORK, INFO )
-*
-*  -- LAPACK computational routine (version 3.4.1) --
-*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
-*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     April 2012
-*
-*     .. Scalar Arguments ..
-      CHARACTER          VECT
-      INTEGER            INFO, K, LDA, LWORK, M, N
-*     ..
-*     .. Array Arguments ..
-      COMPLEX*16         A( LDA, * ), TAU( * ), WORK( * )
-*     ..
-*
-*  =====================================================================
-*
-*     .. Parameters ..
-      COMPLEX*16         ZERO, ONE
-      PARAMETER          ( ZERO = ( 0.0D+0, 0.0D+0 ),
-     $                   ONE = ( 1.0D+0, 0.0D+0 ) )
-*     ..
-*     .. Local Scalars ..
-      LOGICAL            LQUERY, WANTQ
-      INTEGER            I, IINFO, J, LWKOPT, MN
-*     ..
-*     .. External Functions ..
-      LOGICAL            LSAME
-      INTEGER            ILAENV
-      EXTERNAL           LSAME, ILAENV
-*     ..
-*     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZUNGLQ, ZUNGQR
-*     ..
-*     .. Intrinsic Functions ..
-      INTRINSIC          MAX, MIN
-*     ..
-*     .. Executable Statements ..
-*
-*     Test the input arguments
-*
-      INFO = 0
-      WANTQ = LSAME( VECT, 'Q' )
-      MN = MIN( M, N )
-      LQUERY = ( LWORK.EQ.-1 )
-      IF( .NOT.WANTQ .AND. .NOT.LSAME( VECT, 'P' ) ) THEN
-         INFO = -1
-      ELSE IF( M.LT.0 ) THEN
-         INFO = -2
-      ELSE IF( N.LT.0 .OR. ( WANTQ .AND. ( N.GT.M .OR. N.LT.MIN( M,
-     $         K ) ) ) .OR. ( .NOT.WANTQ .AND. ( M.GT.N .OR. M.LT.
-     $         MIN( N, K ) ) ) ) THEN
-         INFO = -3
-      ELSE IF( K.LT.0 ) THEN
-         INFO = -4
-      ELSE IF( LDA.LT.MAX( 1, M ) ) THEN
-         INFO = -6
-      ELSE IF( LWORK.LT.MAX( 1, MN ) .AND. .NOT.LQUERY ) THEN
-         INFO = -9
-      END IF
-*
-      IF( INFO.EQ.0 ) THEN
-         WORK( 1 ) = 1
-         IF( WANTQ ) THEN
-            IF( M.GE.K ) THEN
-               CALL ZUNGQR( M, N, K, A, LDA, TAU, WORK, -1, IINFO )
-            ELSE
-               IF( M.GT.1 ) THEN
-                  CALL ZUNGQR( M-1, M-1, M-1, A( 2, 2 ), LDA, TAU, WORK,
-     $                         -1, IINFO )
-               END IF
-            END IF
-         ELSE
-            IF( K.LT.N ) THEN
-               CALL ZUNGLQ( M, N, K, A, LDA, TAU, WORK, -1, IINFO )
-            ELSE
-               IF( N.GT.1 ) THEN
-                  CALL ZUNGLQ( N-1, N-1, N-1, A( 2, 2 ), LDA, TAU, WORK,
-     $                         -1, IINFO )
-               END IF
-            END IF
-         END IF
-         LWKOPT = WORK( 1 )
-         LWKOPT = MAX (LWKOPT, MN)
-      END IF
-*
-      IF( INFO.NE.0 ) THEN
-         CALL XERBLA( 'ZUNGBR', -INFO )
-         RETURN
-      ELSE IF( LQUERY ) THEN
-         WORK( 1 ) = LWKOPT
-         RETURN
-      END IF
-*
-*     Quick return if possible
-*
-      IF( M.EQ.0 .OR. N.EQ.0 ) THEN
-         WORK( 1 ) = 1
-         RETURN
-      END IF
-*
-      IF( WANTQ ) THEN
-*
-*        Form Q, determined by a call to ZGEBRD to reduce an m-by-k
-*        matrix
-*
-         IF( M.GE.K ) THEN
-*
-*           If m >= k, assume m >= n >= k
-*
-            CALL ZUNGQR( M, N, K, A, LDA, TAU, WORK, LWORK, IINFO )
-*
-         ELSE
-*
-*           If m < k, assume m = n
-*
-*           Shift the vectors which define the elementary reflectors one
-*           column to the right, and set the first row and column of Q
-*           to those of the unit matrix
-*
-            DO 20 J = M, 2, -1
-               A( 1, J ) = ZERO
-               DO 10 I = J + 1, M
-                  A( I, J ) = A( I, J-1 )
-   10          CONTINUE
-   20       CONTINUE
-            A( 1, 1 ) = ONE
-            DO 30 I = 2, M
-               A( I, 1 ) = ZERO
-   30       CONTINUE
-            IF( M.GT.1 ) THEN
-*
-*              Form Q(2:m,2:m)
-*
-               CALL ZUNGQR( M-1, M-1, M-1, A( 2, 2 ), LDA, TAU, WORK,
-     $                      LWORK, IINFO )
-            END IF
-         END IF
-      ELSE
-*
-*        Form P**H, determined by a call to ZGEBRD to reduce a k-by-n
-*        matrix
-*
-         IF( K.LT.N ) THEN
-*
-*           If k < n, assume k <= m <= n
-*
-            CALL ZUNGLQ( M, N, K, A, LDA, TAU, WORK, LWORK, IINFO )
-*
-         ELSE
-*
-*           If k >= n, assume m = n
-*
-*           Shift the vectors which define the elementary reflectors one
-*           row downward, and set the first row and column of P**H to
-*           those of the unit matrix
-*
-            A( 1, 1 ) = ONE
-            DO 40 I = 2, N
-               A( I, 1 ) = ZERO
-   40       CONTINUE
-            DO 60 J = 2, N
-               DO 50 I = J - 1, 2, -1
-                  A( I, J ) = A( I-1, J )
-   50          CONTINUE
-               A( 1, J ) = ZERO
-   60       CONTINUE
-            IF( N.GT.1 ) THEN
-*
-*              Form P**H(2:n,2:n)
-*
-               CALL ZUNGLQ( N-1, N-1, N-1, A( 2, 2 ), LDA, TAU, WORK,
-     $                      LWORK, IINFO )
-            END IF
-         END IF
-      END IF
-      WORK( 1 ) = LWKOPT
-      RETURN
-*
-*     End of ZUNGBR
-*
-      END
-*> \brief \b ZUNGHR
-*
-*  =========== DOCUMENTATION ===========
-*
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
-*
-*> \htmlonly
-*> Download ZUNGHR + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zunghr.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zunghr.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zunghr.f"> 
-*> [TXT]</a>
-*> \endhtmlonly 
-*
-*  Definition:
-*  ===========
-*
-*       SUBROUTINE ZUNGHR( N, ILO, IHI, A, LDA, TAU, WORK, LWORK, INFO )
-* 
-*       .. Scalar Arguments ..
-*       INTEGER            IHI, ILO, INFO, LDA, LWORK, N
-*       ..
-*       .. Array Arguments ..
-*       COMPLEX*16         A( LDA, * ), TAU( * ), WORK( * )
-*       ..
-*  
-*
-*> \par Purpose:
-*  =============
-*>
-*> \verbatim
-*>
-*> ZUNGHR generates a complex unitary matrix Q which is defined as the
-*> product of IHI-ILO elementary reflectors of order N, as returned by
-*> ZGEHRD:
-*>
-*> Q = H(ilo) H(ilo+1) . . . H(ihi-1).
-*> \endverbatim
-*
-*  Arguments:
-*  ==========
-*
-*> \param[in] N
-*> \verbatim
-*>          N is INTEGER
-*>          The order of the matrix Q. N >= 0.
-*> \endverbatim
-*>
-*> \param[in] ILO
-*> \verbatim
-*>          ILO is INTEGER
-*> \endverbatim
-*>
-*> \param[in] IHI
-*> \verbatim
-*>          IHI is INTEGER
-*>
-*>          ILO and IHI must have the same values as in the previous call
-*>          of ZGEHRD. Q is equal to the unit matrix except in the
-*>          submatrix Q(ilo+1:ihi,ilo+1:ihi).
-*>          1 <= ILO <= IHI <= N, if N > 0; ILO=1 and IHI=0, if N=0.
-*> \endverbatim
-*>
-*> \param[in,out] A
-*> \verbatim
-*>          A is COMPLEX*16 array, dimension (LDA,N)
-*>          On entry, the vectors which define the elementary reflectors,
-*>          as returned by ZGEHRD.
-*>          On exit, the N-by-N unitary matrix Q.
-*> \endverbatim
-*>
-*> \param[in] LDA
-*> \verbatim
-*>          LDA is INTEGER
-*>          The leading dimension of the array A. LDA >= max(1,N).
-*> \endverbatim
-*>
-*> \param[in] TAU
-*> \verbatim
-*>          TAU is COMPLEX*16 array, dimension (N-1)
-*>          TAU(i) must contain the scalar factor of the elementary
-*>          reflector H(i), as returned by ZGEHRD.
-*> \endverbatim
-*>
-*> \param[out] WORK
-*> \verbatim
-*>          WORK is COMPLEX*16 array, dimension (MAX(1,LWORK))
-*>          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
-*> \endverbatim
-*>
-*> \param[in] LWORK
-*> \verbatim
-*>          LWORK is INTEGER
-*>          The dimension of the array WORK. LWORK >= IHI-ILO.
-*>          For optimum performance LWORK >= (IHI-ILO)*NB, where NB is
-*>          the optimal blocksize.
-*>
-*>          If LWORK = -1, then a workspace query is assumed; the routine
-*>          only calculates the optimal size of the WORK array, returns
-*>          this value as the first entry of the WORK array, and no error
-*>          message related to LWORK is issued by XERBLA.
-*> \endverbatim
-*>
-*> \param[out] INFO
-*> \verbatim
-*>          INFO is INTEGER
-*>          = 0:  successful exit
-*>          < 0:  if INFO = -i, the i-th argument had an illegal value
-*> \endverbatim
-*
-*  Authors:
-*  ========
-*
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
-*
-*> \date November 2011
-*
-*> \ingroup complex16OTHERcomputational
-*
-*  =====================================================================
-      SUBROUTINE ZUNGHR( N, ILO, IHI, A, LDA, TAU, WORK, LWORK, INFO )
-*
-*  -- LAPACK computational routine (version 3.4.0) --
-*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
-*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
-*
-*     .. Scalar Arguments ..
-      INTEGER            IHI, ILO, INFO, LDA, LWORK, N
-*     ..
-*     .. Array Arguments ..
-      COMPLEX*16         A( LDA, * ), TAU( * ), WORK( * )
-*     ..
-*
-*  =====================================================================
-*
-*     .. Parameters ..
-      COMPLEX*16         ZERO, ONE
-      PARAMETER          ( ZERO = ( 0.0D+0, 0.0D+0 ),
-     $                   ONE = ( 1.0D+0, 0.0D+0 ) )
-*     ..
-*     .. Local Scalars ..
-      LOGICAL            LQUERY
-      INTEGER            I, IINFO, J, LWKOPT, NB, NH
-*     ..
-*     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZUNGQR
-*     ..
-*     .. External Functions ..
-      INTEGER            ILAENV
-      EXTERNAL           ILAENV
-*     ..
-*     .. Intrinsic Functions ..
-      INTRINSIC          MAX, MIN
-*     ..
-*     .. Executable Statements ..
-*
-*     Test the input arguments
-*
-      INFO = 0
-      NH = IHI - ILO
-      LQUERY = ( LWORK.EQ.-1 )
-      IF( N.LT.0 ) THEN
-         INFO = -1
-      ELSE IF( ILO.LT.1 .OR. ILO.GT.MAX( 1, N ) ) THEN
-         INFO = -2
-      ELSE IF( IHI.LT.MIN( ILO, N ) .OR. IHI.GT.N ) THEN
-         INFO = -3
-      ELSE IF( LDA.LT.MAX( 1, N ) ) THEN
-         INFO = -5
-      ELSE IF( LWORK.LT.MAX( 1, NH ) .AND. .NOT.LQUERY ) THEN
-         INFO = -8
-      END IF
-*
-      IF( INFO.EQ.0 ) THEN
-         NB = ILAENV( 1, 'ZUNGQR', ' ', NH, NH, NH, -1 )
-         LWKOPT = MAX( 1, NH )*NB
-         WORK( 1 ) = LWKOPT
-      END IF
-*
-      IF( INFO.NE.0 ) THEN
-         CALL XERBLA( 'ZUNGHR', -INFO )
-         RETURN
-      ELSE IF( LQUERY ) THEN
-         RETURN
-      END IF
-*
-*     Quick return if possible
-*
-      IF( N.EQ.0 ) THEN
-         WORK( 1 ) = 1
-         RETURN
-      END IF
-*
-*     Shift the vectors which define the elementary reflectors one
-*     column to the right, and set the first ilo and the last n-ihi
-*     rows and columns to those of the unit matrix
-*
-      DO 40 J = IHI, ILO + 1, -1
-         DO 10 I = 1, J - 1
-            A( I, J ) = ZERO
-   10    CONTINUE
-         DO 20 I = J + 1, IHI
-            A( I, J ) = A( I, J-1 )
-   20    CONTINUE
-         DO 30 I = IHI + 1, N
-            A( I, J ) = ZERO
-   30    CONTINUE
-   40 CONTINUE
-      DO 60 J = 1, ILO
-         DO 50 I = 1, N
-            A( I, J ) = ZERO
-   50    CONTINUE
-         A( J, J ) = ONE
-   60 CONTINUE
-      DO 80 J = IHI + 1, N
-         DO 70 I = 1, N
-            A( I, J ) = ZERO
-   70    CONTINUE
-         A( J, J ) = ONE
-   80 CONTINUE
-*
-      IF( NH.GT.0 ) THEN
-*
-*        Generate Q(ilo+1:ihi,ilo+1:ihi)
-*
-         CALL ZUNGQR( NH, NH, NH, A( ILO+1, ILO+1 ), LDA, TAU( ILO ),
-     $                WORK, LWORK, IINFO )
-      END IF
-      WORK( 1 ) = LWKOPT
-      RETURN
-*
-*     End of ZUNGHR
-*
-      END
-*> \brief \b ZUNGL2 generates all or part of the unitary matrix Q from an LQ factorization determined by cgelqf (unblocked algorithm).
-*
-*  =========== DOCUMENTATION ===========
-*
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
-*
-*> \htmlonly
-*> Download ZUNGL2 + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zungl2.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zungl2.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zungl2.f"> 
-*> [TXT]</a>
-*> \endhtmlonly 
-*
-*  Definition:
-*  ===========
-*
-*       SUBROUTINE ZUNGL2( M, N, K, A, LDA, TAU, WORK, INFO )
-* 
-*       .. Scalar Arguments ..
-*       INTEGER            INFO, K, LDA, M, N
-*       ..
-*       .. Array Arguments ..
-*       COMPLEX*16         A( LDA, * ), TAU( * ), WORK( * )
-*       ..
-*  
-*
-*> \par Purpose:
-*  =============
-*>
-*> \verbatim
-*>
-*> ZUNGL2 generates an m-by-n complex matrix Q with orthonormal rows,
-*> which is defined as the first m rows of a product of k elementary
-*> reflectors of order n
-*>
-*>       Q  =  H(k)**H . . . H(2)**H H(1)**H
-*>
-*> as returned by ZGELQF.
-*> \endverbatim
-*
-*  Arguments:
-*  ==========
-*
-*> \param[in] M
-*> \verbatim
-*>          M is INTEGER
-*>          The number of rows of the matrix Q. M >= 0.
-*> \endverbatim
-*>
-*> \param[in] N
-*> \verbatim
-*>          N is INTEGER
-*>          The number of columns of the matrix Q. N >= M.
-*> \endverbatim
-*>
-*> \param[in] K
-*> \verbatim
-*>          K is INTEGER
-*>          The number of elementary reflectors whose product defines the
-*>          matrix Q. M >= K >= 0.
-*> \endverbatim
-*>
-*> \param[in,out] A
-*> \verbatim
-*>          A is COMPLEX*16 array, dimension (LDA,N)
-*>          On entry, the i-th row must contain the vector which defines
-*>          the elementary reflector H(i), for i = 1,2,...,k, as returned
-*>          by ZGELQF in the first k rows of its array argument A.
-*>          On exit, the m by n matrix Q.
-*> \endverbatim
-*>
-*> \param[in] LDA
-*> \verbatim
-*>          LDA is INTEGER
-*>          The first dimension of the array A. LDA >= max(1,M).
-*> \endverbatim
-*>
-*> \param[in] TAU
-*> \verbatim
-*>          TAU is COMPLEX*16 array, dimension (K)
-*>          TAU(i) must contain the scalar factor of the elementary
-*>          reflector H(i), as returned by ZGELQF.
-*> \endverbatim
-*>
-*> \param[out] WORK
-*> \verbatim
-*>          WORK is COMPLEX*16 array, dimension (M)
-*> \endverbatim
-*>
-*> \param[out] INFO
-*> \verbatim
-*>          INFO is INTEGER
-*>          = 0: successful exit
-*>          < 0: if INFO = -i, the i-th argument has an illegal value
-*> \endverbatim
-*
-*  Authors:
-*  ========
-*
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
-*
-*> \date September 2012
-*
-*> \ingroup complex16OTHERcomputational
-*
-*  =====================================================================
-      SUBROUTINE ZUNGL2( M, N, K, A, LDA, TAU, WORK, INFO )
-*
-*  -- LAPACK computational routine (version 3.4.2) --
-*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
-*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
-*
-*     .. Scalar Arguments ..
-      INTEGER            INFO, K, LDA, M, N
-*     ..
-*     .. Array Arguments ..
-      COMPLEX*16         A( LDA, * ), TAU( * ), WORK( * )
-*     ..
-*
-*  =====================================================================
-*
-*     .. Parameters ..
-      COMPLEX*16         ONE, ZERO
-      PARAMETER          ( ONE = ( 1.0D+0, 0.0D+0 ),
-     $                   ZERO = ( 0.0D+0, 0.0D+0 ) )
-*     ..
-*     .. Local Scalars ..
-      INTEGER            I, J, L
-*     ..
-*     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZLACGV, ZLARF, ZSCAL
-*     ..
-*     .. Intrinsic Functions ..
-      INTRINSIC          DCONJG, MAX
-*     ..
-*     .. Executable Statements ..
-*
-*     Test the input arguments
-*
-      INFO = 0
-      IF( M.LT.0 ) THEN
-         INFO = -1
-      ELSE IF( N.LT.M ) THEN
-         INFO = -2
-      ELSE IF( K.LT.0 .OR. K.GT.M ) THEN
-         INFO = -3
-      ELSE IF( LDA.LT.MAX( 1, M ) ) THEN
-         INFO = -5
-      END IF
-      IF( INFO.NE.0 ) THEN
-         CALL XERBLA( 'ZUNGL2', -INFO )
-         RETURN
-      END IF
-*
-*     Quick return if possible
-*
-      IF( M.LE.0 )
-     $   RETURN
-*
-      IF( K.LT.M ) THEN
-*
-*        Initialise rows k+1:m to rows of the unit matrix
-*
-         DO 20 J = 1, N
-            DO 10 L = K + 1, M
-               A( L, J ) = ZERO
-   10       CONTINUE
-            IF( J.GT.K .AND. J.LE.M )
-     $         A( J, J ) = ONE
-   20    CONTINUE
-      END IF
-*
-      DO 40 I = K, 1, -1
-*
-*        Apply H(i)**H to A(i:m,i:n) from the right
-*
-         IF( I.LT.N ) THEN
-            CALL ZLACGV( N-I, A( I, I+1 ), LDA )
-            IF( I.LT.M ) THEN
-               A( I, I ) = ONE
-               CALL ZLARF( 'Right', M-I, N-I+1, A( I, I ), LDA,
-     $                     DCONJG( TAU( I ) ), A( I+1, I ), LDA, WORK )
-            END IF
-            CALL ZSCAL( N-I, -TAU( I ), A( I, I+1 ), LDA )
-            CALL ZLACGV( N-I, A( I, I+1 ), LDA )
-         END IF
-         A( I, I ) = ONE - DCONJG( TAU( I ) )
-*
-*        Set A(i,1:i-1) to zero
-*
-         DO 30 L = 1, I - 1
-            A( I, L ) = ZERO
-   30    CONTINUE
-   40 CONTINUE
-      RETURN
-*
-*     End of ZUNGL2
-*
-      END
-*> \brief \b ZUNGLQ
-*
-*  =========== DOCUMENTATION ===========
-*
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
-*
-*> \htmlonly
-*> Download ZUNGLQ + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zunglq.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zunglq.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zunglq.f"> 
-*> [TXT]</a>
-*> \endhtmlonly 
-*
-*  Definition:
-*  ===========
-*
-*       SUBROUTINE ZUNGLQ( M, N, K, A, LDA, TAU, WORK, LWORK, INFO )
-* 
-*       .. Scalar Arguments ..
-*       INTEGER            INFO, K, LDA, LWORK, M, N
-*       ..
-*       .. Array Arguments ..
-*       COMPLEX*16         A( LDA, * ), TAU( * ), WORK( * )
-*       ..
-*  
-*
-*> \par Purpose:
-*  =============
-*>
-*> \verbatim
-*>
-*> ZUNGLQ generates an M-by-N complex matrix Q with orthonormal rows,
-*> which is defined as the first M rows of a product of K elementary
-*> reflectors of order N
-*>
-*>       Q  =  H(k)**H . . . H(2)**H H(1)**H
-*>
-*> as returned by ZGELQF.
-*> \endverbatim
-*
-*  Arguments:
-*  ==========
-*
-*> \param[in] M
-*> \verbatim
-*>          M is INTEGER
-*>          The number of rows of the matrix Q. M >= 0.
-*> \endverbatim
-*>
-*> \param[in] N
-*> \verbatim
-*>          N is INTEGER
-*>          The number of columns of the matrix Q. N >= M.
-*> \endverbatim
-*>
-*> \param[in] K
-*> \verbatim
-*>          K is INTEGER
-*>          The number of elementary reflectors whose product defines the
-*>          matrix Q. M >= K >= 0.
-*> \endverbatim
-*>
-*> \param[in,out] A
-*> \verbatim
-*>          A is COMPLEX*16 array, dimension (LDA,N)
-*>          On entry, the i-th row must contain the vector which defines
-*>          the elementary reflector H(i), for i = 1,2,...,k, as returned
-*>          by ZGELQF in the first k rows of its array argument A.
-*>          On exit, the M-by-N matrix Q.
-*> \endverbatim
-*>
-*> \param[in] LDA
-*> \verbatim
-*>          LDA is INTEGER
-*>          The first dimension of the array A. LDA >= max(1,M).
-*> \endverbatim
-*>
-*> \param[in] TAU
-*> \verbatim
-*>          TAU is COMPLEX*16 array, dimension (K)
-*>          TAU(i) must contain the scalar factor of the elementary
-*>          reflector H(i), as returned by ZGELQF.
-*> \endverbatim
-*>
-*> \param[out] WORK
-*> \verbatim
-*>          WORK is COMPLEX*16 array, dimension (MAX(1,LWORK))
-*>          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
-*> \endverbatim
-*>
-*> \param[in] LWORK
-*> \verbatim
-*>          LWORK is INTEGER
-*>          The dimension of the array WORK. LWORK >= max(1,M).
-*>          For optimum performance LWORK >= M*NB, where NB is
-*>          the optimal blocksize.
-*>
-*>          If LWORK = -1, then a workspace query is assumed; the routine
-*>          only calculates the optimal size of the WORK array, returns
-*>          this value as the first entry of the WORK array, and no error
-*>          message related to LWORK is issued by XERBLA.
-*> \endverbatim
-*>
-*> \param[out] INFO
-*> \verbatim
-*>          INFO is INTEGER
-*>          = 0:  successful exit;
-*>          < 0:  if INFO = -i, the i-th argument has an illegal value
-*> \endverbatim
-*
-*  Authors:
-*  ========
-*
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
-*
-*> \date November 2011
-*
-*> \ingroup complex16OTHERcomputational
-*
-*  =====================================================================
-      SUBROUTINE ZUNGLQ( M, N, K, A, LDA, TAU, WORK, LWORK, INFO )
-*
-*  -- LAPACK computational routine (version 3.4.0) --
-*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
-*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
-*
-*     .. Scalar Arguments ..
-      INTEGER            INFO, K, LDA, LWORK, M, N
-*     ..
-*     .. Array Arguments ..
-      COMPLEX*16         A( LDA, * ), TAU( * ), WORK( * )
-*     ..
-*
-*  =====================================================================
-*
-*     .. Parameters ..
-      COMPLEX*16         ZERO
-      PARAMETER          ( ZERO = ( 0.0D+0, 0.0D+0 ) )
-*     ..
-*     .. Local Scalars ..
-      LOGICAL            LQUERY
-      INTEGER            I, IB, IINFO, IWS, J, KI, KK, L, LDWORK,
-     $                   LWKOPT, NB, NBMIN, NX
-*     ..
-*     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZLARFB, ZLARFT, ZUNGL2
-*     ..
-*     .. Intrinsic Functions ..
-      INTRINSIC          MAX, MIN
-*     ..
-*     .. External Functions ..
-      INTEGER            ILAENV
-      EXTERNAL           ILAENV
-*     ..
-*     .. Executable Statements ..
-*
-*     Test the input arguments
-*
-      INFO = 0
-      NB = ILAENV( 1, 'ZUNGLQ', ' ', M, N, K, -1 )
-      LWKOPT = MAX( 1, M )*NB
-      WORK( 1 ) = LWKOPT
-      LQUERY = ( LWORK.EQ.-1 )
-      IF( M.LT.0 ) THEN
-         INFO = -1
-      ELSE IF( N.LT.M ) THEN
-         INFO = -2
-      ELSE IF( K.LT.0 .OR. K.GT.M ) THEN
-         INFO = -3
-      ELSE IF( LDA.LT.MAX( 1, M ) ) THEN
-         INFO = -5
-      ELSE IF( LWORK.LT.MAX( 1, M ) .AND. .NOT.LQUERY ) THEN
-         INFO = -8
-      END IF
-      IF( INFO.NE.0 ) THEN
-         CALL XERBLA( 'ZUNGLQ', -INFO )
-         RETURN
-      ELSE IF( LQUERY ) THEN
-         RETURN
-      END IF
-*
-*     Quick return if possible
-*
-      IF( M.LE.0 ) THEN
-         WORK( 1 ) = 1
-         RETURN
-      END IF
-*
-      NBMIN = 2
-      NX = 0
-      IWS = M
-      IF( NB.GT.1 .AND. NB.LT.K ) THEN
-*
-*        Determine when to cross over from blocked to unblocked code.
-*
-         NX = MAX( 0, ILAENV( 3, 'ZUNGLQ', ' ', M, N, K, -1 ) )
-         IF( NX.LT.K ) THEN
-*
-*           Determine if workspace is large enough for blocked code.
-*
-            LDWORK = M
-            IWS = LDWORK*NB
-            IF( LWORK.LT.IWS ) THEN
-*
-*              Not enough workspace to use optimal NB:  reduce NB and
-*              determine the minimum value of NB.
-*
-               NB = LWORK / LDWORK
-               NBMIN = MAX( 2, ILAENV( 2, 'ZUNGLQ', ' ', M, N, K, -1 ) )
-            END IF
-         END IF
-      END IF
-*
-      IF( NB.GE.NBMIN .AND. NB.LT.K .AND. NX.LT.K ) THEN
-*
-*        Use blocked code after the last block.
-*        The first kk rows are handled by the block method.
-*
-         KI = ( ( K-NX-1 ) / NB )*NB
-         KK = MIN( K, KI+NB )
-*
-*        Set A(kk+1:m,1:kk) to zero.
-*
-         DO 20 J = 1, KK
-            DO 10 I = KK + 1, M
-               A( I, J ) = ZERO
-   10       CONTINUE
-   20    CONTINUE
-      ELSE
-         KK = 0
-      END IF
-*
-*     Use unblocked code for the last or only block.
-*
-      IF( KK.LT.M )
-     $   CALL ZUNGL2( M-KK, N-KK, K-KK, A( KK+1, KK+1 ), LDA,
-     $                TAU( KK+1 ), WORK, IINFO )
-*
-      IF( KK.GT.0 ) THEN
-*
-*        Use blocked code
-*
-         DO 50 I = KI + 1, 1, -NB
-            IB = MIN( NB, K-I+1 )
-            IF( I+IB.LE.M ) THEN
-*
-*              Form the triangular factor of the block reflector
-*              H = H(i) H(i+1) . . . H(i+ib-1)
-*
-               CALL ZLARFT( 'Forward', 'Rowwise', N-I+1, IB, A( I, I ),
-     $                      LDA, TAU( I ), WORK, LDWORK )
-*
-*              Apply H**H to A(i+ib:m,i:n) from the right
-*
-               CALL ZLARFB( 'Right', 'Conjugate transpose', 'Forward',
-     $                      'Rowwise', M-I-IB+1, N-I+1, IB, A( I, I ),
-     $                      LDA, WORK, LDWORK, A( I+IB, I ), LDA,
-     $                      WORK( IB+1 ), LDWORK )
-            END IF
-*
-*           Apply H**H to columns i:n of current block
-*
-            CALL ZUNGL2( IB, N-I+1, IB, A( I, I ), LDA, TAU( I ), WORK,
-     $                   IINFO )
-*
-*           Set columns 1:i-1 of current block to zero
-*
-            DO 40 J = 1, I - 1
-               DO 30 L = I, I + IB - 1
-                  A( L, J ) = ZERO
-   30          CONTINUE
-   40       CONTINUE
-   50    CONTINUE
-      END IF
-*
-      WORK( 1 ) = IWS
-      RETURN
-*
-*     End of ZUNGLQ
-*
-      END
-*> \brief \b ZUNGQL
-*
-*  =========== DOCUMENTATION ===========
-*
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
-*
-*> \htmlonly
-*> Download ZUNGQL + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zungql.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zungql.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zungql.f"> 
-*> [TXT]</a>
-*> \endhtmlonly 
-*
-*  Definition:
-*  ===========
-*
-*       SUBROUTINE ZUNGQL( M, N, K, A, LDA, TAU, WORK, LWORK, INFO )
-* 
-*       .. Scalar Arguments ..
-*       INTEGER            INFO, K, LDA, LWORK, M, N
-*       ..
-*       .. Array Arguments ..
-*       COMPLEX*16         A( LDA, * ), TAU( * ), WORK( * )
-*       ..
-*  
-*
-*> \par Purpose:
-*  =============
-*>
-*> \verbatim
-*>
-*> ZUNGQL generates an M-by-N complex matrix Q with orthonormal columns,
-*> which is defined as the last N columns of a product of K elementary
-*> reflectors of order M
-*>
-*>       Q  =  H(k) . . . H(2) H(1)
-*>
-*> as returned by ZGEQLF.
-*> \endverbatim
-*
-*  Arguments:
-*  ==========
-*
-*> \param[in] M
-*> \verbatim
-*>          M is INTEGER
-*>          The number of rows of the matrix Q. M >= 0.
-*> \endverbatim
-*>
-*> \param[in] N
-*> \verbatim
-*>          N is INTEGER
-*>          The number of columns of the matrix Q. M >= N >= 0.
-*> \endverbatim
-*>
-*> \param[in] K
-*> \verbatim
-*>          K is INTEGER
-*>          The number of elementary reflectors whose product defines the
-*>          matrix Q. N >= K >= 0.
-*> \endverbatim
-*>
-*> \param[in,out] A
-*> \verbatim
-*>          A is COMPLEX*16 array, dimension (LDA,N)
-*>          On entry, the (n-k+i)-th column must contain the vector which
-*>          defines the elementary reflector H(i), for i = 1,2,...,k, as
-*>          returned by ZGEQLF in the last k columns of its array
-*>          argument A.
-*>          On exit, the M-by-N matrix Q.
-*> \endverbatim
-*>
-*> \param[in] LDA
-*> \verbatim
-*>          LDA is INTEGER
-*>          The first dimension of the array A. LDA >= max(1,M).
-*> \endverbatim
-*>
-*> \param[in] TAU
-*> \verbatim
-*>          TAU is COMPLEX*16 array, dimension (K)
-*>          TAU(i) must contain the scalar factor of the elementary
-*>          reflector H(i), as returned by ZGEQLF.
-*> \endverbatim
-*>
-*> \param[out] WORK
-*> \verbatim
-*>          WORK is COMPLEX*16 array, dimension (MAX(1,LWORK))
-*>          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
-*> \endverbatim
-*>
-*> \param[in] LWORK
-*> \verbatim
-*>          LWORK is INTEGER
-*>          The dimension of the array WORK. LWORK >= max(1,N).
-*>          For optimum performance LWORK >= N*NB, where NB is the
-*>          optimal blocksize.
-*>
-*>          If LWORK = -1, then a workspace query is assumed; the routine
-*>          only calculates the optimal size of the WORK array, returns
-*>          this value as the first entry of the WORK array, and no error
-*>          message related to LWORK is issued by XERBLA.
-*> \endverbatim
-*>
-*> \param[out] INFO
-*> \verbatim
-*>          INFO is INTEGER
-*>          = 0:  successful exit
-*>          < 0:  if INFO = -i, the i-th argument has an illegal value
-*> \endverbatim
-*
-*  Authors:
-*  ========
-*
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
-*
-*> \date November 2011
-*
-*> \ingroup complex16OTHERcomputational
-*
-*  =====================================================================
-      SUBROUTINE ZUNGQL( M, N, K, A, LDA, TAU, WORK, LWORK, INFO )
-*
-*  -- LAPACK computational routine (version 3.4.0) --
-*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
-*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
-*
-*     .. Scalar Arguments ..
-      INTEGER            INFO, K, LDA, LWORK, M, N
-*     ..
-*     .. Array Arguments ..
-      COMPLEX*16         A( LDA, * ), TAU( * ), WORK( * )
-*     ..
-*
-*  =====================================================================
-*
-*     .. Parameters ..
-      COMPLEX*16         ZERO
-      PARAMETER          ( ZERO = ( 0.0D+0, 0.0D+0 ) )
-*     ..
-*     .. Local Scalars ..
-      LOGICAL            LQUERY
-      INTEGER            I, IB, IINFO, IWS, J, KK, L, LDWORK, LWKOPT,
-     $                   NB, NBMIN, NX
-*     ..
-*     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZLARFB, ZLARFT, ZUNG2L
-*     ..
-*     .. Intrinsic Functions ..
-      INTRINSIC          MAX, MIN
-*     ..
-*     .. External Functions ..
-      INTEGER            ILAENV
-      EXTERNAL           ILAENV
-*     ..
-*     .. Executable Statements ..
-*
-*     Test the input arguments
-*
-      INFO = 0
-      LQUERY = ( LWORK.EQ.-1 )
-      IF( M.LT.0 ) THEN
-         INFO = -1
-      ELSE IF( N.LT.0 .OR. N.GT.M ) THEN
-         INFO = -2
-      ELSE IF( K.LT.0 .OR. K.GT.N ) THEN
-         INFO = -3
-      ELSE IF( LDA.LT.MAX( 1, M ) ) THEN
-         INFO = -5
-      END IF
-*
-      IF( INFO.EQ.0 ) THEN
-         IF( N.EQ.0 ) THEN
-            LWKOPT = 1
-         ELSE
-            NB = ILAENV( 1, 'ZUNGQL', ' ', M, N, K, -1 )
-            LWKOPT = N*NB
-         END IF
-         WORK( 1 ) = LWKOPT
-*
-         IF( LWORK.LT.MAX( 1, N ) .AND. .NOT.LQUERY ) THEN
-            INFO = -8
-         END IF
-      END IF
-*
-      IF( INFO.NE.0 ) THEN
-         CALL XERBLA( 'ZUNGQL', -INFO )
-         RETURN
-      ELSE IF( LQUERY ) THEN
-         RETURN
-      END IF
-*
-*     Quick return if possible
-*
-      IF( N.LE.0 ) THEN
-         RETURN
-      END IF
-*
-      NBMIN = 2
-      NX = 0
-      IWS = N
-      IF( NB.GT.1 .AND. NB.LT.K ) THEN
-*
-*        Determine when to cross over from blocked to unblocked code.
-*
-         NX = MAX( 0, ILAENV( 3, 'ZUNGQL', ' ', M, N, K, -1 ) )
-         IF( NX.LT.K ) THEN
-*
-*           Determine if workspace is large enough for blocked code.
-*
-            LDWORK = N
-            IWS = LDWORK*NB
-            IF( LWORK.LT.IWS ) THEN
-*
-*              Not enough workspace to use optimal NB:  reduce NB and
-*              determine the minimum value of NB.
-*
-               NB = LWORK / LDWORK
-               NBMIN = MAX( 2, ILAENV( 2, 'ZUNGQL', ' ', M, N, K, -1 ) )
-            END IF
-         END IF
-      END IF
-*
-      IF( NB.GE.NBMIN .AND. NB.LT.K .AND. NX.LT.K ) THEN
-*
-*        Use blocked code after the first block.
-*        The last kk columns are handled by the block method.
-*
-         KK = MIN( K, ( ( K-NX+NB-1 ) / NB )*NB )
-*
-*        Set A(m-kk+1:m,1:n-kk) to zero.
-*
-         DO 20 J = 1, N - KK
-            DO 10 I = M - KK + 1, M
-               A( I, J ) = ZERO
-   10       CONTINUE
-   20    CONTINUE
-      ELSE
-         KK = 0
-      END IF
-*
-*     Use unblocked code for the first or only block.
-*
-      CALL ZUNG2L( M-KK, N-KK, K-KK, A, LDA, TAU, WORK, IINFO )
-*
-      IF( KK.GT.0 ) THEN
-*
-*        Use blocked code
-*
-         DO 50 I = K - KK + 1, K, NB
-            IB = MIN( NB, K-I+1 )
-            IF( N-K+I.GT.1 ) THEN
-*
-*              Form the triangular factor of the block reflector
-*              H = H(i+ib-1) . . . H(i+1) H(i)
-*
-               CALL ZLARFT( 'Backward', 'Columnwise', M-K+I+IB-1, IB,
-     $                      A( 1, N-K+I ), LDA, TAU( I ), WORK, LDWORK )
-*
-*              Apply H to A(1:m-k+i+ib-1,1:n-k+i-1) from the left
-*
-               CALL ZLARFB( 'Left', 'No transpose', 'Backward',
-     $                      'Columnwise', M-K+I+IB-1, N-K+I-1, IB,
-     $                      A( 1, N-K+I ), LDA, WORK, LDWORK, A, LDA,
-     $                      WORK( IB+1 ), LDWORK )
-            END IF
-*
-*           Apply H to rows 1:m-k+i+ib-1 of current block
-*
-            CALL ZUNG2L( M-K+I+IB-1, IB, IB, A( 1, N-K+I ), LDA,
-     $                   TAU( I ), WORK, IINFO )
-*
-*           Set rows m-k+i+ib:m of current block to zero
-*
-            DO 40 J = N - K + I, N - K + I + IB - 1
-               DO 30 L = M - K + I + IB, M
-                  A( L, J ) = ZERO
-   30          CONTINUE
-   40       CONTINUE
-   50    CONTINUE
-      END IF
-*
-      WORK( 1 ) = IWS
-      RETURN
-*
-*     End of ZUNGQL
-*
-      END
-*> \brief \b ZUNGQR
-*
-*  =========== DOCUMENTATION ===========
-*
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
-*
-*> \htmlonly
-*> Download ZUNGQR + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zungqr.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zungqr.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zungqr.f"> 
-*> [TXT]</a>
-*> \endhtmlonly 
-*
-*  Definition:
-*  ===========
-*
-*       SUBROUTINE ZUNGQR( M, N, K, A, LDA, TAU, WORK, LWORK, INFO )
-* 
-*       .. Scalar Arguments ..
-*       INTEGER            INFO, K, LDA, LWORK, M, N
-*       ..
-*       .. Array Arguments ..
-*       COMPLEX*16         A( LDA, * ), TAU( * ), WORK( * )
-*       ..
-*  
-*
-*> \par Purpose:
-*  =============
-*>
-*> \verbatim
-*>
-*> ZUNGQR generates an M-by-N complex matrix Q with orthonormal columns,
-*> which is defined as the first N columns of a product of K elementary
-*> reflectors of order M
-*>
-*>       Q  =  H(1) H(2) . . . H(k)
-*>
-*> as returned by ZGEQRF.
-*> \endverbatim
-*
-*  Arguments:
-*  ==========
-*
-*> \param[in] M
-*> \verbatim
-*>          M is INTEGER
-*>          The number of rows of the matrix Q. M >= 0.
-*> \endverbatim
-*>
-*> \param[in] N
-*> \verbatim
-*>          N is INTEGER
-*>          The number of columns of the matrix Q. M >= N >= 0.
-*> \endverbatim
-*>
-*> \param[in] K
-*> \verbatim
-*>          K is INTEGER
-*>          The number of elementary reflectors whose product defines the
-*>          matrix Q. N >= K >= 0.
-*> \endverbatim
-*>
-*> \param[in,out] A
-*> \verbatim
-*>          A is COMPLEX*16 array, dimension (LDA,N)
-*>          On entry, the i-th column must contain the vector which
-*>          defines the elementary reflector H(i), for i = 1,2,...,k, as
-*>          returned by ZGEQRF in the first k columns of its array
-*>          argument A.
-*>          On exit, the M-by-N matrix Q.
-*> \endverbatim
-*>
-*> \param[in] LDA
-*> \verbatim
-*>          LDA is INTEGER
-*>          The first dimension of the array A. LDA >= max(1,M).
-*> \endverbatim
-*>
-*> \param[in] TAU
-*> \verbatim
-*>          TAU is COMPLEX*16 array, dimension (K)
-*>          TAU(i) must contain the scalar factor of the elementary
-*>          reflector H(i), as returned by ZGEQRF.
-*> \endverbatim
-*>
-*> \param[out] WORK
-*> \verbatim
-*>          WORK is COMPLEX*16 array, dimension (MAX(1,LWORK))
-*>          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
-*> \endverbatim
-*>
-*> \param[in] LWORK
-*> \verbatim
-*>          LWORK is INTEGER
-*>          The dimension of the array WORK. LWORK >= max(1,N).
-*>          For optimum performance LWORK >= N*NB, where NB is the
-*>          optimal blocksize.
-*>
-*>          If LWORK = -1, then a workspace query is assumed; the routine
-*>          only calculates the optimal size of the WORK array, returns
-*>          this value as the first entry of the WORK array, and no error
-*>          message related to LWORK is issued by XERBLA.
-*> \endverbatim
-*>
-*> \param[out] INFO
-*> \verbatim
-*>          INFO is INTEGER
-*>          = 0:  successful exit
-*>          < 0:  if INFO = -i, the i-th argument has an illegal value
-*> \endverbatim
-*
-*  Authors:
-*  ========
-*
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
-*
-*> \date November 2011
-*
-*> \ingroup complex16OTHERcomputational
-*
-*  =====================================================================
-      SUBROUTINE ZUNGQR( M, N, K, A, LDA, TAU, WORK, LWORK, INFO )
-*
-*  -- LAPACK computational routine (version 3.4.0) --
-*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
-*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
-*
-*     .. Scalar Arguments ..
-      INTEGER            INFO, K, LDA, LWORK, M, N
-*     ..
-*     .. Array Arguments ..
-      COMPLEX*16         A( LDA, * ), TAU( * ), WORK( * )
-*     ..
-*
-*  =====================================================================
-*
-*     .. Parameters ..
-      COMPLEX*16         ZERO
-      PARAMETER          ( ZERO = ( 0.0D+0, 0.0D+0 ) )
-*     ..
-*     .. Local Scalars ..
-      LOGICAL            LQUERY
-      INTEGER            I, IB, IINFO, IWS, J, KI, KK, L, LDWORK,
-     $                   LWKOPT, NB, NBMIN, NX
-*     ..
-*     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZLARFB, ZLARFT, ZUNG2R
-*     ..
-*     .. Intrinsic Functions ..
-      INTRINSIC          MAX, MIN
-*     ..
-*     .. External Functions ..
-      INTEGER            ILAENV
-      EXTERNAL           ILAENV
-*     ..
-*     .. Executable Statements ..
-*
-*     Test the input arguments
-*
-      INFO = 0
-      NB = ILAENV( 1, 'ZUNGQR', ' ', M, N, K, -1 )
-      LWKOPT = MAX( 1, N )*NB
-      WORK( 1 ) = LWKOPT
-      LQUERY = ( LWORK.EQ.-1 )
-      IF( M.LT.0 ) THEN
-         INFO = -1
-      ELSE IF( N.LT.0 .OR. N.GT.M ) THEN
-         INFO = -2
-      ELSE IF( K.LT.0 .OR. K.GT.N ) THEN
-         INFO = -3
-      ELSE IF( LDA.LT.MAX( 1, M ) ) THEN
-         INFO = -5
-      ELSE IF( LWORK.LT.MAX( 1, N ) .AND. .NOT.LQUERY ) THEN
-         INFO = -8
-      END IF
-      IF( INFO.NE.0 ) THEN
-         CALL XERBLA( 'ZUNGQR', -INFO )
-         RETURN
-      ELSE IF( LQUERY ) THEN
-         RETURN
-      END IF
-*
-*     Quick return if possible
-*
-      IF( N.LE.0 ) THEN
-         WORK( 1 ) = 1
-         RETURN
-      END IF
-*
-      NBMIN = 2
-      NX = 0
-      IWS = N
-      IF( NB.GT.1 .AND. NB.LT.K ) THEN
-*
-*        Determine when to cross over from blocked to unblocked code.
-*
-         NX = MAX( 0, ILAENV( 3, 'ZUNGQR', ' ', M, N, K, -1 ) )
-         IF( NX.LT.K ) THEN
-*
-*           Determine if workspace is large enough for blocked code.
-*
-            LDWORK = N
-            IWS = LDWORK*NB
-            IF( LWORK.LT.IWS ) THEN
-*
-*              Not enough workspace to use optimal NB:  reduce NB and
-*              determine the minimum value of NB.
-*
-               NB = LWORK / LDWORK
-               NBMIN = MAX( 2, ILAENV( 2, 'ZUNGQR', ' ', M, N, K, -1 ) )
-            END IF
-         END IF
-      END IF
-*
-      IF( NB.GE.NBMIN .AND. NB.LT.K .AND. NX.LT.K ) THEN
-*
-*        Use blocked code after the last block.
-*        The first kk columns are handled by the block method.
-*
-         KI = ( ( K-NX-1 ) / NB )*NB
-         KK = MIN( K, KI+NB )
-*
-*        Set A(1:kk,kk+1:n) to zero.
-*
-         DO 20 J = KK + 1, N
-            DO 10 I = 1, KK
-               A( I, J ) = ZERO
-   10       CONTINUE
-   20    CONTINUE
-      ELSE
-         KK = 0
-      END IF
-*
-*     Use unblocked code for the last or only block.
-*
-      IF( KK.LT.N )
-     $   CALL ZUNG2R( M-KK, N-KK, K-KK, A( KK+1, KK+1 ), LDA,
-     $                TAU( KK+1 ), WORK, IINFO )
-*
-      IF( KK.GT.0 ) THEN
-*
-*        Use blocked code
-*
-         DO 50 I = KI + 1, 1, -NB
-            IB = MIN( NB, K-I+1 )
-            IF( I+IB.LE.N ) THEN
-*
-*              Form the triangular factor of the block reflector
-*              H = H(i) H(i+1) . . . H(i+ib-1)
-*
-               CALL ZLARFT( 'Forward', 'Columnwise', M-I+1, IB,
-     $                      A( I, I ), LDA, TAU( I ), WORK, LDWORK )
-*
-*              Apply H to A(i:m,i+ib:n) from the left
-*
-               CALL ZLARFB( 'Left', 'No transpose', 'Forward',
-     $                      'Columnwise', M-I+1, N-I-IB+1, IB,
-     $                      A( I, I ), LDA, WORK, LDWORK, A( I, I+IB ),
-     $                      LDA, WORK( IB+1 ), LDWORK )
-            END IF
-*
-*           Apply H to rows i:m of current block
-*
-            CALL ZUNG2R( M-I+1, IB, IB, A( I, I ), LDA, TAU( I ), WORK,
-     $                   IINFO )
-*
-*           Set rows 1:i-1 of current block to zero
-*
-            DO 40 J = I, I + IB - 1
-               DO 30 L = 1, I - 1
-                  A( L, J ) = ZERO
-   30          CONTINUE
-   40       CONTINUE
-   50    CONTINUE
-      END IF
-*
-      WORK( 1 ) = IWS
-      RETURN
-*
-*     End of ZUNGQR
-*
-      END
-*> \brief \b ZUNGR2 generates all or part of the unitary matrix Q from an RQ factorization determined by cgerqf (unblocked algorithm).
-*
-*  =========== DOCUMENTATION ===========
-*
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
-*
-*> \htmlonly
-*> Download ZUNGR2 + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zungr2.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zungr2.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zungr2.f"> 
-*> [TXT]</a>
-*> \endhtmlonly 
-*
-*  Definition:
-*  ===========
-*
-*       SUBROUTINE ZUNGR2( M, N, K, A, LDA, TAU, WORK, INFO )
-* 
-*       .. Scalar Arguments ..
-*       INTEGER            INFO, K, LDA, M, N
-*       ..
-*       .. Array Arguments ..
-*       COMPLEX*16         A( LDA, * ), TAU( * ), WORK( * )
-*       ..
-*  
-*
-*> \par Purpose:
-*  =============
-*>
-*> \verbatim
-*>
-*> ZUNGR2 generates an m by n complex matrix Q with orthonormal rows,
-*> which is defined as the last m rows of a product of k elementary
-*> reflectors of order n
-*>
-*>       Q  =  H(1)**H H(2)**H . . . H(k)**H
-*>
-*> as returned by ZGERQF.
-*> \endverbatim
-*
-*  Arguments:
-*  ==========
-*
-*> \param[in] M
-*> \verbatim
-*>          M is INTEGER
-*>          The number of rows of the matrix Q. M >= 0.
-*> \endverbatim
-*>
-*> \param[in] N
-*> \verbatim
-*>          N is INTEGER
-*>          The number of columns of the matrix Q. N >= M.
-*> \endverbatim
-*>
-*> \param[in] K
-*> \verbatim
-*>          K is INTEGER
-*>          The number of elementary reflectors whose product defines the
-*>          matrix Q. M >= K >= 0.
-*> \endverbatim
-*>
-*> \param[in,out] A
-*> \verbatim
-*>          A is COMPLEX*16 array, dimension (LDA,N)
-*>          On entry, the (m-k+i)-th row must contain the vector which
-*>          defines the elementary reflector H(i), for i = 1,2,...,k, as
-*>          returned by ZGERQF in the last k rows of its array argument
-*>          A.
-*>          On exit, the m-by-n matrix Q.
-*> \endverbatim
-*>
-*> \param[in] LDA
-*> \verbatim
-*>          LDA is INTEGER
-*>          The first dimension of the array A. LDA >= max(1,M).
-*> \endverbatim
-*>
-*> \param[in] TAU
-*> \verbatim
-*>          TAU is COMPLEX*16 array, dimension (K)
-*>          TAU(i) must contain the scalar factor of the elementary
-*>          reflector H(i), as returned by ZGERQF.
-*> \endverbatim
-*>
-*> \param[out] WORK
-*> \verbatim
-*>          WORK is COMPLEX*16 array, dimension (M)
-*> \endverbatim
-*>
-*> \param[out] INFO
-*> \verbatim
-*>          INFO is INTEGER
-*>          = 0: successful exit
-*>          < 0: if INFO = -i, the i-th argument has an illegal value
-*> \endverbatim
-*
-*  Authors:
-*  ========
-*
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
-*
-*> \date September 2012
-*
-*> \ingroup complex16OTHERcomputational
-*
-*  =====================================================================
-      SUBROUTINE ZUNGR2( M, N, K, A, LDA, TAU, WORK, INFO )
-*
-*  -- LAPACK computational routine (version 3.4.2) --
-*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
-*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
-*
-*     .. Scalar Arguments ..
-      INTEGER            INFO, K, LDA, M, N
-*     ..
-*     .. Array Arguments ..
-      COMPLEX*16         A( LDA, * ), TAU( * ), WORK( * )
-*     ..
-*
-*  =====================================================================
-*
-*     .. Parameters ..
-      COMPLEX*16         ONE, ZERO
-      PARAMETER          ( ONE = ( 1.0D+0, 0.0D+0 ),
-     $                   ZERO = ( 0.0D+0, 0.0D+0 ) )
-*     ..
-*     .. Local Scalars ..
-      INTEGER            I, II, J, L
-*     ..
-*     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZLACGV, ZLARF, ZSCAL
-*     ..
-*     .. Intrinsic Functions ..
-      INTRINSIC          DCONJG, MAX
-*     ..
-*     .. Executable Statements ..
-*
-*     Test the input arguments
-*
-      INFO = 0
-      IF( M.LT.0 ) THEN
-         INFO = -1
-      ELSE IF( N.LT.M ) THEN
-         INFO = -2
-      ELSE IF( K.LT.0 .OR. K.GT.M ) THEN
-         INFO = -3
-      ELSE IF( LDA.LT.MAX( 1, M ) ) THEN
-         INFO = -5
-      END IF
-      IF( INFO.NE.0 ) THEN
-         CALL XERBLA( 'ZUNGR2', -INFO )
-         RETURN
-      END IF
-*
-*     Quick return if possible
-*
-      IF( M.LE.0 )
-     $   RETURN
-*
-      IF( K.LT.M ) THEN
-*
-*        Initialise rows 1:m-k to rows of the unit matrix
-*
-         DO 20 J = 1, N
-            DO 10 L = 1, M - K
-               A( L, J ) = ZERO
-   10       CONTINUE
-            IF( J.GT.N-M .AND. J.LE.N-K )
-     $         A( M-N+J, J ) = ONE
-   20    CONTINUE
-      END IF
-*
-      DO 40 I = 1, K
-         II = M - K + I
-*
-*        Apply H(i)**H to A(1:m-k+i,1:n-k+i) from the right
-*
-         CALL ZLACGV( N-M+II-1, A( II, 1 ), LDA )
-         A( II, N-M+II ) = ONE
-         CALL ZLARF( 'Right', II-1, N-M+II, A( II, 1 ), LDA,
-     $               DCONJG( TAU( I ) ), A, LDA, WORK )
-         CALL ZSCAL( N-M+II-1, -TAU( I ), A( II, 1 ), LDA )
-         CALL ZLACGV( N-M+II-1, A( II, 1 ), LDA )
-         A( II, N-M+II ) = ONE - DCONJG( TAU( I ) )
-*
-*        Set A(m-k+i,n-k+i+1:n) to zero
-*
-         DO 30 L = N - M + II + 1, N
-            A( II, L ) = ZERO
-   30    CONTINUE
-   40 CONTINUE
-      RETURN
-*
-*     End of ZUNGR2
-*
-      END
-*> \brief \b ZUNGRQ
-*
-*  =========== DOCUMENTATION ===========
-*
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
-*
-*> \htmlonly
-*> Download ZUNGRQ + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zungrq.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zungrq.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zungrq.f"> 
-*> [TXT]</a>
-*> \endhtmlonly 
-*
-*  Definition:
-*  ===========
-*
-*       SUBROUTINE ZUNGRQ( M, N, K, A, LDA, TAU, WORK, LWORK, INFO )
-* 
-*       .. Scalar Arguments ..
-*       INTEGER            INFO, K, LDA, LWORK, M, N
-*       ..
-*       .. Array Arguments ..
-*       COMPLEX*16         A( LDA, * ), TAU( * ), WORK( * )
-*       ..
-*  
-*
-*> \par Purpose:
-*  =============
-*>
-*> \verbatim
-*>
-*> ZUNGRQ generates an M-by-N complex matrix Q with orthonormal rows,
-*> which is defined as the last M rows of a product of K elementary
-*> reflectors of order N
-*>
-*>       Q  =  H(1)**H H(2)**H . . . H(k)**H
-*>
-*> as returned by ZGERQF.
-*> \endverbatim
-*
-*  Arguments:
-*  ==========
-*
-*> \param[in] M
-*> \verbatim
-*>          M is INTEGER
-*>          The number of rows of the matrix Q. M >= 0.
-*> \endverbatim
-*>
-*> \param[in] N
-*> \verbatim
-*>          N is INTEGER
-*>          The number of columns of the matrix Q. N >= M.
-*> \endverbatim
-*>
-*> \param[in] K
-*> \verbatim
-*>          K is INTEGER
-*>          The number of elementary reflectors whose product defines the
-*>          matrix Q. M >= K >= 0.
-*> \endverbatim
-*>
-*> \param[in,out] A
-*> \verbatim
-*>          A is COMPLEX*16 array, dimension (LDA,N)
-*>          On entry, the (m-k+i)-th row must contain the vector which
-*>          defines the elementary reflector H(i), for i = 1,2,...,k, as
-*>          returned by ZGERQF in the last k rows of its array argument
-*>          A.
-*>          On exit, the M-by-N matrix Q.
-*> \endverbatim
-*>
-*> \param[in] LDA
-*> \verbatim
-*>          LDA is INTEGER
-*>          The first dimension of the array A. LDA >= max(1,M).
-*> \endverbatim
-*>
-*> \param[in] TAU
-*> \verbatim
-*>          TAU is COMPLEX*16 array, dimension (K)
-*>          TAU(i) must contain the scalar factor of the elementary
-*>          reflector H(i), as returned by ZGERQF.
-*> \endverbatim
-*>
-*> \param[out] WORK
-*> \verbatim
-*>          WORK is COMPLEX*16 array, dimension (MAX(1,LWORK))
-*>          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
-*> \endverbatim
-*>
-*> \param[in] LWORK
-*> \verbatim
-*>          LWORK is INTEGER
-*>          The dimension of the array WORK. LWORK >= max(1,M).
-*>          For optimum performance LWORK >= M*NB, where NB is the
-*>          optimal blocksize.
-*>
-*>          If LWORK = -1, then a workspace query is assumed; the routine
-*>          only calculates the optimal size of the WORK array, returns
-*>          this value as the first entry of the WORK array, and no error
-*>          message related to LWORK is issued by XERBLA.
-*> \endverbatim
-*>
-*> \param[out] INFO
-*> \verbatim
-*>          INFO is INTEGER
-*>          = 0:  successful exit
-*>          < 0:  if INFO = -i, the i-th argument has an illegal value
-*> \endverbatim
-*
-*  Authors:
-*  ========
-*
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
-*
-*> \date November 2011
-*
-*> \ingroup complex16OTHERcomputational
-*
-*  =====================================================================
-      SUBROUTINE ZUNGRQ( M, N, K, A, LDA, TAU, WORK, LWORK, INFO )
-*
-*  -- LAPACK computational routine (version 3.4.0) --
-*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
-*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
-*
-*     .. Scalar Arguments ..
-      INTEGER            INFO, K, LDA, LWORK, M, N
-*     ..
-*     .. Array Arguments ..
-      COMPLEX*16         A( LDA, * ), TAU( * ), WORK( * )
-*     ..
-*
-*  =====================================================================
-*
-*     .. Parameters ..
-      COMPLEX*16         ZERO
-      PARAMETER          ( ZERO = ( 0.0D+0, 0.0D+0 ) )
-*     ..
-*     .. Local Scalars ..
-      LOGICAL            LQUERY
-      INTEGER            I, IB, II, IINFO, IWS, J, KK, L, LDWORK,
-     $                   LWKOPT, NB, NBMIN, NX
-*     ..
-*     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZLARFB, ZLARFT, ZUNGR2
-*     ..
-*     .. Intrinsic Functions ..
-      INTRINSIC          MAX, MIN
-*     ..
-*     .. External Functions ..
-      INTEGER            ILAENV
-      EXTERNAL           ILAENV
-*     ..
-*     .. Executable Statements ..
-*
-*     Test the input arguments
-*
-      INFO = 0
-      LQUERY = ( LWORK.EQ.-1 )
-      IF( M.LT.0 ) THEN
-         INFO = -1
-      ELSE IF( N.LT.M ) THEN
-         INFO = -2
-      ELSE IF( K.LT.0 .OR. K.GT.M ) THEN
-         INFO = -3
-      ELSE IF( LDA.LT.MAX( 1, M ) ) THEN
-         INFO = -5
-      END IF
-*
-      IF( INFO.EQ.0 ) THEN
-         IF( M.LE.0 ) THEN
-            LWKOPT = 1
-         ELSE
-            NB = ILAENV( 1, 'ZUNGRQ', ' ', M, N, K, -1 )
-            LWKOPT = M*NB
-         END IF
-         WORK( 1 ) = LWKOPT
-*
-         IF( LWORK.LT.MAX( 1, M ) .AND. .NOT.LQUERY ) THEN
-            INFO = -8
-         END IF
-      END IF
-*
-      IF( INFO.NE.0 ) THEN
-         CALL XERBLA( 'ZUNGRQ', -INFO )
-         RETURN
-      ELSE IF( LQUERY ) THEN
-         RETURN
-      END IF
-*
-*     Quick return if possible
-*
-      IF( M.LE.0 ) THEN
-         RETURN
-      END IF
-*
-      NBMIN = 2
-      NX = 0
-      IWS = M
-      IF( NB.GT.1 .AND. NB.LT.K ) THEN
-*
-*        Determine when to cross over from blocked to unblocked code.
-*
-         NX = MAX( 0, ILAENV( 3, 'ZUNGRQ', ' ', M, N, K, -1 ) )
-         IF( NX.LT.K ) THEN
-*
-*           Determine if workspace is large enough for blocked code.
-*
-            LDWORK = M
-            IWS = LDWORK*NB
-            IF( LWORK.LT.IWS ) THEN
-*
-*              Not enough workspace to use optimal NB:  reduce NB and
-*              determine the minimum value of NB.
-*
-               NB = LWORK / LDWORK
-               NBMIN = MAX( 2, ILAENV( 2, 'ZUNGRQ', ' ', M, N, K, -1 ) )
-            END IF
-         END IF
-      END IF
-*
-      IF( NB.GE.NBMIN .AND. NB.LT.K .AND. NX.LT.K ) THEN
-*
-*        Use blocked code after the first block.
-*        The last kk rows are handled by the block method.
-*
-         KK = MIN( K, ( ( K-NX+NB-1 ) / NB )*NB )
-*
-*        Set A(1:m-kk,n-kk+1:n) to zero.
-*
-         DO 20 J = N - KK + 1, N
-            DO 10 I = 1, M - KK
-               A( I, J ) = ZERO
-   10       CONTINUE
-   20    CONTINUE
-      ELSE
-         KK = 0
-      END IF
-*
-*     Use unblocked code for the first or only block.
-*
-      CALL ZUNGR2( M-KK, N-KK, K-KK, A, LDA, TAU, WORK, IINFO )
-*
-      IF( KK.GT.0 ) THEN
-*
-*        Use blocked code
-*
-         DO 50 I = K - KK + 1, K, NB
-            IB = MIN( NB, K-I+1 )
-            II = M - K + I
-            IF( II.GT.1 ) THEN
-*
-*              Form the triangular factor of the block reflector
-*              H = H(i+ib-1) . . . H(i+1) H(i)
-*
-               CALL ZLARFT( 'Backward', 'Rowwise', N-K+I+IB-1, IB,
-     $                      A( II, 1 ), LDA, TAU( I ), WORK, LDWORK )
-*
-*              Apply H**H to A(1:m-k+i-1,1:n-k+i+ib-1) from the right
-*
-               CALL ZLARFB( 'Right', 'Conjugate transpose', 'Backward',
-     $                      'Rowwise', II-1, N-K+I+IB-1, IB, A( II, 1 ),
-     $                      LDA, WORK, LDWORK, A, LDA, WORK( IB+1 ),
-     $                      LDWORK )
-            END IF
-*
-*           Apply H**H to columns 1:n-k+i+ib-1 of current block
-*
-            CALL ZUNGR2( IB, N-K+I+IB-1, IB, A( II, 1 ), LDA, TAU( I ),
-     $                   WORK, IINFO )
-*
-*           Set columns n-k+i+ib:n of current block to zero
-*
-            DO 40 L = N - K + I + IB, N
-               DO 30 J = II, II + IB - 1
-                  A( J, L ) = ZERO
-   30          CONTINUE
-   40       CONTINUE
-   50    CONTINUE
-      END IF
-*
-      WORK( 1 ) = IWS
-      RETURN
-*
-*     End of ZUNGRQ
-*
-      END
-*> \brief \b ZUNGTR
-*
-*  =========== DOCUMENTATION ===========
-*
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
-*
-*> \htmlonly
-*> Download ZUNGTR + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zungtr.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zungtr.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zungtr.f"> 
-*> [TXT]</a>
-*> \endhtmlonly 
-*
-*  Definition:
-*  ===========
-*
-*       SUBROUTINE ZUNGTR( UPLO, N, A, LDA, TAU, WORK, LWORK, INFO )
-* 
-*       .. Scalar Arguments ..
-*       CHARACTER          UPLO
-*       INTEGER            INFO, LDA, LWORK, N
-*       ..
-*       .. Array Arguments ..
-*       COMPLEX*16         A( LDA, * ), TAU( * ), WORK( * )
-*       ..
-*  
-*
-*> \par Purpose:
-*  =============
-*>
-*> \verbatim
-*>
-*> ZUNGTR generates a complex unitary matrix Q which is defined as the
-*> product of n-1 elementary reflectors of order N, as returned by
-*> ZHETRD:
-*>
-*> if UPLO = 'U', Q = H(n-1) . . . H(2) H(1),
-*>
-*> if UPLO = 'L', Q = H(1) H(2) . . . H(n-1).
-*> \endverbatim
-*
-*  Arguments:
-*  ==========
-*
-*> \param[in] UPLO
-*> \verbatim
-*>          UPLO is CHARACTER*1
-*>          = 'U': Upper triangle of A contains elementary reflectors
-*>                 from ZHETRD;
-*>          = 'L': Lower triangle of A contains elementary reflectors
-*>                 from ZHETRD.
-*> \endverbatim
-*>
-*> \param[in] N
-*> \verbatim
-*>          N is INTEGER
-*>          The order of the matrix Q. N >= 0.
-*> \endverbatim
-*>
-*> \param[in,out] A
-*> \verbatim
-*>          A is COMPLEX*16 array, dimension (LDA,N)
-*>          On entry, the vectors which define the elementary reflectors,
-*>          as returned by ZHETRD.
-*>          On exit, the N-by-N unitary matrix Q.
-*> \endverbatim
-*>
-*> \param[in] LDA
-*> \verbatim
-*>          LDA is INTEGER
-*>          The leading dimension of the array A. LDA >= N.
-*> \endverbatim
-*>
-*> \param[in] TAU
-*> \verbatim
-*>          TAU is COMPLEX*16 array, dimension (N-1)
-*>          TAU(i) must contain the scalar factor of the elementary
-*>          reflector H(i), as returned by ZHETRD.
-*> \endverbatim
-*>
-*> \param[out] WORK
-*> \verbatim
-*>          WORK is COMPLEX*16 array, dimension (MAX(1,LWORK))
-*>          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
-*> \endverbatim
-*>
-*> \param[in] LWORK
-*> \verbatim
-*>          LWORK is INTEGER
-*>          The dimension of the array WORK. LWORK >= N-1.
-*>          For optimum performance LWORK >= (N-1)*NB, where NB is
-*>          the optimal blocksize.
-*>
-*>          If LWORK = -1, then a workspace query is assumed; the routine
-*>          only calculates the optimal size of the WORK array, returns
-*>          this value as the first entry of the WORK array, and no error
-*>          message related to LWORK is issued by XERBLA.
-*> \endverbatim
-*>
-*> \param[out] INFO
-*> \verbatim
-*>          INFO is INTEGER
-*>          = 0:  successful exit
-*>          < 0:  if INFO = -i, the i-th argument had an illegal value
-*> \endverbatim
-*
-*  Authors:
-*  ========
-*
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
-*
-*> \date November 2011
-*
-*> \ingroup complex16OTHERcomputational
-*
-*  =====================================================================
-      SUBROUTINE ZUNGTR( UPLO, N, A, LDA, TAU, WORK, LWORK, INFO )
-*
-*  -- LAPACK computational routine (version 3.4.0) --
-*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
-*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
-*
-*     .. Scalar Arguments ..
-      CHARACTER          UPLO
-      INTEGER            INFO, LDA, LWORK, N
-*     ..
-*     .. Array Arguments ..
-      COMPLEX*16         A( LDA, * ), TAU( * ), WORK( * )
-*     ..
-*
-*  =====================================================================
-*
-*     .. Parameters ..
-      COMPLEX*16         ZERO, ONE
-      PARAMETER          ( ZERO = ( 0.0D+0, 0.0D+0 ),
-     $                   ONE = ( 1.0D+0, 0.0D+0 ) )
-*     ..
-*     .. Local Scalars ..
-      LOGICAL            LQUERY, UPPER
-      INTEGER            I, IINFO, J, LWKOPT, NB
-*     ..
-*     .. External Functions ..
-      LOGICAL            LSAME
-      INTEGER            ILAENV
-      EXTERNAL           LSAME, ILAENV
-*     ..
-*     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZUNGQL, ZUNGQR
-*     ..
-*     .. Intrinsic Functions ..
-      INTRINSIC          MAX
-*     ..
-*     .. Executable Statements ..
-*
-*     Test the input arguments
-*
-      INFO = 0
-      LQUERY = ( LWORK.EQ.-1 )
-      UPPER = LSAME( UPLO, 'U' )
-      IF( .NOT.UPPER .AND. .NOT.LSAME( UPLO, 'L' ) ) THEN
-         INFO = -1
-      ELSE IF( N.LT.0 ) THEN
-         INFO = -2
-      ELSE IF( LDA.LT.MAX( 1, N ) ) THEN
-         INFO = -4
-      ELSE IF( LWORK.LT.MAX( 1, N-1 ) .AND. .NOT.LQUERY ) THEN
-         INFO = -7
-      END IF
-*
-      IF( INFO.EQ.0 ) THEN
-         IF( UPPER ) THEN
-            NB = ILAENV( 1, 'ZUNGQL', ' ', N-1, N-1, N-1, -1 )
-         ELSE
-            NB = ILAENV( 1, 'ZUNGQR', ' ', N-1, N-1, N-1, -1 )
-         END IF
-         LWKOPT = MAX( 1, N-1 )*NB
-         WORK( 1 ) = LWKOPT
-      END IF
-*
-      IF( INFO.NE.0 ) THEN
-         CALL XERBLA( 'ZUNGTR', -INFO )
-         RETURN
-      ELSE IF( LQUERY ) THEN
-         RETURN
-      END IF
-*
-*     Quick return if possible
-*
-      IF( N.EQ.0 ) THEN
-         WORK( 1 ) = 1
-         RETURN
-      END IF
-*
-      IF( UPPER ) THEN
-*
-*        Q was determined by a call to ZHETRD with UPLO = 'U'
-*
-*        Shift the vectors which define the elementary reflectors one
-*        column to the left, and set the last row and column of Q to
-*        those of the unit matrix
-*
-         DO 20 J = 1, N - 1
-            DO 10 I = 1, J - 1
-               A( I, J ) = A( I, J+1 )
-   10       CONTINUE
-            A( N, J ) = ZERO
-   20    CONTINUE
-         DO 30 I = 1, N - 1
-            A( I, N ) = ZERO
-   30    CONTINUE
-         A( N, N ) = ONE
-*
-*        Generate Q(1:n-1,1:n-1)
-*
-         CALL ZUNGQL( N-1, N-1, N-1, A, LDA, TAU, WORK, LWORK, IINFO )
-*
-      ELSE
-*
-*        Q was determined by a call to ZHETRD with UPLO = 'L'.
-*
-*        Shift the vectors which define the elementary reflectors one
-*        column to the right, and set the first row and column of Q to
-*        those of the unit matrix
-*
-         DO 50 J = N, 2, -1
-            A( 1, J ) = ZERO
-            DO 40 I = J + 1, N
-               A( I, J ) = A( I, J-1 )
-   40       CONTINUE
-   50    CONTINUE
-         A( 1, 1 ) = ONE
-         DO 60 I = 2, N
-            A( I, 1 ) = ZERO
-   60    CONTINUE
-         IF( N.GT.1 ) THEN
-*
-*           Generate Q(2:n,2:n)
-*
-            CALL ZUNGQR( N-1, N-1, N-1, A( 2, 2 ), LDA, TAU, WORK,
-     $                   LWORK, IINFO )
-         END IF
-      END IF
-      WORK( 1 ) = LWKOPT
-      RETURN
-*
-*     End of ZUNGTR
-*
-      END
-*> \brief \b ZUNM2L multiplies a general matrix by the unitary matrix from a QL factorization determined by cgeqlf (unblocked algorithm).
-*
-*  =========== DOCUMENTATION ===========
-*
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
-*
-*> \htmlonly
-*> Download ZUNM2L + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zunm2l.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zunm2l.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zunm2l.f"> 
-*> [TXT]</a>
-*> \endhtmlonly 
-*
-*  Definition:
-*  ===========
-*
-*       SUBROUTINE ZUNM2L( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC,
-*                          WORK, INFO )
-* 
-*       .. Scalar Arguments ..
-*       CHARACTER          SIDE, TRANS
-*       INTEGER            INFO, K, LDA, LDC, M, N
-*       ..
-*       .. Array Arguments ..
-*       COMPLEX*16         A( LDA, * ), C( LDC, * ), TAU( * ), WORK( * )
-*       ..
-*  
-*
-*> \par Purpose:
-*  =============
-*>
-*> \verbatim
-*>
-*> ZUNM2L overwrites the general complex m-by-n matrix C with
-*>
-*>       Q * C  if SIDE = 'L' and TRANS = 'N', or
-*>
-*>       Q**H* C  if SIDE = 'L' and TRANS = 'C', or
-*>
-*>       C * Q  if SIDE = 'R' and TRANS = 'N', or
-*>
-*>       C * Q**H if SIDE = 'R' and TRANS = 'C',
-*>
-*> where Q is a complex unitary matrix defined as the product of k
-*> elementary reflectors
-*>
-*>       Q = H(k) . . . H(2) H(1)
-*>
-*> as returned by ZGEQLF. Q is of order m if SIDE = 'L' and of order n
-*> if SIDE = 'R'.
-*> \endverbatim
-*
-*  Arguments:
-*  ==========
-*
-*> \param[in] SIDE
-*> \verbatim
-*>          SIDE is CHARACTER*1
-*>          = 'L': apply Q or Q**H from the Left
-*>          = 'R': apply Q or Q**H from the Right
-*> \endverbatim
-*>
-*> \param[in] TRANS
-*> \verbatim
-*>          TRANS is CHARACTER*1
-*>          = 'N': apply Q  (No transpose)
-*>          = 'C': apply Q**H (Conjugate transpose)
-*> \endverbatim
-*>
-*> \param[in] M
-*> \verbatim
-*>          M is INTEGER
-*>          The number of rows of the matrix C. M >= 0.
-*> \endverbatim
-*>
-*> \param[in] N
-*> \verbatim
-*>          N is INTEGER
-*>          The number of columns of the matrix C. N >= 0.
-*> \endverbatim
-*>
-*> \param[in] K
-*> \verbatim
-*>          K is INTEGER
-*>          The number of elementary reflectors whose product defines
-*>          the matrix Q.
-*>          If SIDE = 'L', M >= K >= 0;
-*>          if SIDE = 'R', N >= K >= 0.
-*> \endverbatim
-*>
-*> \param[in] A
-*> \verbatim
-*>          A is COMPLEX*16 array, dimension (LDA,K)
-*>          The i-th column must contain the vector which defines the
-*>          elementary reflector H(i), for i = 1,2,...,k, as returned by
-*>          ZGEQLF in the last k columns of its array argument A.
-*>          A is modified by the routine but restored on exit.
-*> \endverbatim
-*>
-*> \param[in] LDA
-*> \verbatim
-*>          LDA is INTEGER
-*>          The leading dimension of the array A.
-*>          If SIDE = 'L', LDA >= max(1,M);
-*>          if SIDE = 'R', LDA >= max(1,N).
-*> \endverbatim
-*>
-*> \param[in] TAU
-*> \verbatim
-*>          TAU is COMPLEX*16 array, dimension (K)
-*>          TAU(i) must contain the scalar factor of the elementary
-*>          reflector H(i), as returned by ZGEQLF.
-*> \endverbatim
-*>
-*> \param[in,out] C
-*> \verbatim
-*>          C is COMPLEX*16 array, dimension (LDC,N)
-*>          On entry, the m-by-n matrix C.
-*>          On exit, C is overwritten by Q*C or Q**H*C or C*Q**H or C*Q.
-*> \endverbatim
-*>
-*> \param[in] LDC
-*> \verbatim
-*>          LDC is INTEGER
-*>          The leading dimension of the array C. LDC >= max(1,M).
-*> \endverbatim
-*>
-*> \param[out] WORK
-*> \verbatim
-*>          WORK is COMPLEX*16 array, dimension
-*>                                   (N) if SIDE = 'L',
-*>                                   (M) if SIDE = 'R'
-*> \endverbatim
-*>
-*> \param[out] INFO
-*> \verbatim
-*>          INFO is INTEGER
-*>          = 0: successful exit
-*>          < 0: if INFO = -i, the i-th argument had an illegal value
-*> \endverbatim
-*
-*  Authors:
-*  ========
-*
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
-*
-*> \date September 2012
-*
-*> \ingroup complex16OTHERcomputational
-*
-*  =====================================================================
-      SUBROUTINE ZUNM2L( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC,
-     $                   WORK, INFO )
-*
-*  -- LAPACK computational routine (version 3.4.2) --
-*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
-*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
-*
-*     .. Scalar Arguments ..
-      CHARACTER          SIDE, TRANS
-      INTEGER            INFO, K, LDA, LDC, M, N
-*     ..
-*     .. Array Arguments ..
-      COMPLEX*16         A( LDA, * ), C( LDC, * ), TAU( * ), WORK( * )
-*     ..
-*
-*  =====================================================================
-*
-*     .. Parameters ..
-      COMPLEX*16         ONE
-      PARAMETER          ( ONE = ( 1.0D+0, 0.0D+0 ) )
-*     ..
-*     .. Local Scalars ..
-      LOGICAL            LEFT, NOTRAN
-      INTEGER            I, I1, I2, I3, MI, NI, NQ
-      COMPLEX*16         AII, TAUI
-*     ..
-*     .. External Functions ..
-      LOGICAL            LSAME
-      EXTERNAL           LSAME
-*     ..
-*     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZLARF
-*     ..
-*     .. Intrinsic Functions ..
-      INTRINSIC          DCONJG, MAX
-*     ..
-*     .. Executable Statements ..
-*
-*     Test the input arguments
-*
-      INFO = 0
-      LEFT = LSAME( SIDE, 'L' )
-      NOTRAN = LSAME( TRANS, 'N' )
-*
-*     NQ is the order of Q
-*
-      IF( LEFT ) THEN
-         NQ = M
-      ELSE
-         NQ = N
-      END IF
-      IF( .NOT.LEFT .AND. .NOT.LSAME( SIDE, 'R' ) ) THEN
-         INFO = -1
-      ELSE IF( .NOT.NOTRAN .AND. .NOT.LSAME( TRANS, 'C' ) ) THEN
-         INFO = -2
-      ELSE IF( M.LT.0 ) THEN
-         INFO = -3
-      ELSE IF( N.LT.0 ) THEN
-         INFO = -4
-      ELSE IF( K.LT.0 .OR. K.GT.NQ ) THEN
-         INFO = -5
-      ELSE IF( LDA.LT.MAX( 1, NQ ) ) THEN
-         INFO = -7
-      ELSE IF( LDC.LT.MAX( 1, M ) ) THEN
-         INFO = -10
-      END IF
-      IF( INFO.NE.0 ) THEN
-         CALL XERBLA( 'ZUNM2L', -INFO )
-         RETURN
-      END IF
-*
-*     Quick return if possible
-*
-      IF( M.EQ.0 .OR. N.EQ.0 .OR. K.EQ.0 )
-     $   RETURN
-*
-      IF( ( LEFT .AND. NOTRAN .OR. .NOT.LEFT .AND. .NOT.NOTRAN ) ) THEN
-         I1 = 1
-         I2 = K
-         I3 = 1
-      ELSE
-         I1 = K
-         I2 = 1
-         I3 = -1
-      END IF
-*
-      IF( LEFT ) THEN
-         NI = N
-      ELSE
-         MI = M
-      END IF
-*
-      DO 10 I = I1, I2, I3
-         IF( LEFT ) THEN
-*
-*           H(i) or H(i)**H is applied to C(1:m-k+i,1:n)
-*
-            MI = M - K + I
-         ELSE
-*
-*           H(i) or H(i)**H is applied to C(1:m,1:n-k+i)
-*
-            NI = N - K + I
-         END IF
-*
-*        Apply H(i) or H(i)**H
-*
-         IF( NOTRAN ) THEN
-            TAUI = TAU( I )
-         ELSE
-            TAUI = DCONJG( TAU( I ) )
-         END IF
-         AII = A( NQ-K+I, I )
-         A( NQ-K+I, I ) = ONE
-         CALL ZLARF( SIDE, MI, NI, A( 1, I ), 1, TAUI, C, LDC, WORK )
-         A( NQ-K+I, I ) = AII
-   10 CONTINUE
-      RETURN
-*
-*     End of ZUNM2L
-*
-      END
-*> \brief \b ZUNM2R multiplies a general matrix by the unitary matrix from a QR factorization determined by cgeqrf (unblocked algorithm).
-*
-*  =========== DOCUMENTATION ===========
-*
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
-*
-*> \htmlonly
-*> Download ZUNM2R + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zunm2r.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zunm2r.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zunm2r.f"> 
-*> [TXT]</a>
-*> \endhtmlonly 
-*
-*  Definition:
-*  ===========
-*
-*       SUBROUTINE ZUNM2R( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC,
-*                          WORK, INFO )
-* 
-*       .. Scalar Arguments ..
-*       CHARACTER          SIDE, TRANS
-*       INTEGER            INFO, K, LDA, LDC, M, N
-*       ..
-*       .. Array Arguments ..
-*       COMPLEX*16         A( LDA, * ), C( LDC, * ), TAU( * ), WORK( * )
-*       ..
-*  
-*
-*> \par Purpose:
-*  =============
-*>
-*> \verbatim
-*>
-*> ZUNM2R overwrites the general complex m-by-n matrix C with
-*>
-*>       Q * C  if SIDE = 'L' and TRANS = 'N', or
-*>
-*>       Q**H* C  if SIDE = 'L' and TRANS = 'C', or
-*>
-*>       C * Q  if SIDE = 'R' and TRANS = 'N', or
-*>
-*>       C * Q**H if SIDE = 'R' and TRANS = 'C',
-*>
-*> where Q is a complex unitary matrix defined as the product of k
-*> elementary reflectors
-*>
-*>       Q = H(1) H(2) . . . H(k)
-*>
-*> as returned by ZGEQRF. Q is of order m if SIDE = 'L' and of order n
-*> if SIDE = 'R'.
-*> \endverbatim
-*
-*  Arguments:
-*  ==========
-*
-*> \param[in] SIDE
-*> \verbatim
-*>          SIDE is CHARACTER*1
-*>          = 'L': apply Q or Q**H from the Left
-*>          = 'R': apply Q or Q**H from the Right
-*> \endverbatim
-*>
-*> \param[in] TRANS
-*> \verbatim
-*>          TRANS is CHARACTER*1
-*>          = 'N': apply Q  (No transpose)
-*>          = 'C': apply Q**H (Conjugate transpose)
-*> \endverbatim
-*>
-*> \param[in] M
-*> \verbatim
-*>          M is INTEGER
-*>          The number of rows of the matrix C. M >= 0.
-*> \endverbatim
-*>
-*> \param[in] N
-*> \verbatim
-*>          N is INTEGER
-*>          The number of columns of the matrix C. N >= 0.
-*> \endverbatim
-*>
-*> \param[in] K
-*> \verbatim
-*>          K is INTEGER
-*>          The number of elementary reflectors whose product defines
-*>          the matrix Q.
-*>          If SIDE = 'L', M >= K >= 0;
-*>          if SIDE = 'R', N >= K >= 0.
-*> \endverbatim
-*>
-*> \param[in] A
-*> \verbatim
-*>          A is COMPLEX*16 array, dimension (LDA,K)
-*>          The i-th column must contain the vector which defines the
-*>          elementary reflector H(i), for i = 1,2,...,k, as returned by
-*>          ZGEQRF in the first k columns of its array argument A.
-*>          A is modified by the routine but restored on exit.
-*> \endverbatim
-*>
-*> \param[in] LDA
-*> \verbatim
-*>          LDA is INTEGER
-*>          The leading dimension of the array A.
-*>          If SIDE = 'L', LDA >= max(1,M);
-*>          if SIDE = 'R', LDA >= max(1,N).
-*> \endverbatim
-*>
-*> \param[in] TAU
-*> \verbatim
-*>          TAU is COMPLEX*16 array, dimension (K)
-*>          TAU(i) must contain the scalar factor of the elementary
-*>          reflector H(i), as returned by ZGEQRF.
-*> \endverbatim
-*>
-*> \param[in,out] C
-*> \verbatim
-*>          C is COMPLEX*16 array, dimension (LDC,N)
-*>          On entry, the m-by-n matrix C.
-*>          On exit, C is overwritten by Q*C or Q**H*C or C*Q**H or C*Q.
-*> \endverbatim
-*>
-*> \param[in] LDC
-*> \verbatim
-*>          LDC is INTEGER
-*>          The leading dimension of the array C. LDC >= max(1,M).
-*> \endverbatim
-*>
-*> \param[out] WORK
-*> \verbatim
-*>          WORK is COMPLEX*16 array, dimension
-*>                                   (N) if SIDE = 'L',
-*>                                   (M) if SIDE = 'R'
-*> \endverbatim
-*>
-*> \param[out] INFO
-*> \verbatim
-*>          INFO is INTEGER
-*>          = 0: successful exit
-*>          < 0: if INFO = -i, the i-th argument had an illegal value
-*> \endverbatim
-*
-*  Authors:
-*  ========
-*
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
-*
-*> \date September 2012
-*
-*> \ingroup complex16OTHERcomputational
-*
-*  =====================================================================
-      SUBROUTINE ZUNM2R( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC,
-     $                   WORK, INFO )
-*
-*  -- LAPACK computational routine (version 3.4.2) --
-*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
-*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
-*
-*     .. Scalar Arguments ..
-      CHARACTER          SIDE, TRANS
-      INTEGER            INFO, K, LDA, LDC, M, N
-*     ..
-*     .. Array Arguments ..
-      COMPLEX*16         A( LDA, * ), C( LDC, * ), TAU( * ), WORK( * )
-*     ..
-*
-*  =====================================================================
-*
-*     .. Parameters ..
-      COMPLEX*16         ONE
-      PARAMETER          ( ONE = ( 1.0D+0, 0.0D+0 ) )
-*     ..
-*     .. Local Scalars ..
-      LOGICAL            LEFT, NOTRAN
-      INTEGER            I, I1, I2, I3, IC, JC, MI, NI, NQ
-      COMPLEX*16         AII, TAUI
-*     ..
-*     .. External Functions ..
-      LOGICAL            LSAME
-      EXTERNAL           LSAME
-*     ..
-*     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZLARF
-*     ..
-*     .. Intrinsic Functions ..
-      INTRINSIC          DCONJG, MAX
-*     ..
-*     .. Executable Statements ..
-*
-*     Test the input arguments
-*
-      INFO = 0
-      LEFT = LSAME( SIDE, 'L' )
-      NOTRAN = LSAME( TRANS, 'N' )
-*
-*     NQ is the order of Q
-*
-      IF( LEFT ) THEN
-         NQ = M
-      ELSE
-         NQ = N
-      END IF
-      IF( .NOT.LEFT .AND. .NOT.LSAME( SIDE, 'R' ) ) THEN
-         INFO = -1
-      ELSE IF( .NOT.NOTRAN .AND. .NOT.LSAME( TRANS, 'C' ) ) THEN
-         INFO = -2
-      ELSE IF( M.LT.0 ) THEN
-         INFO = -3
-      ELSE IF( N.LT.0 ) THEN
-         INFO = -4
-      ELSE IF( K.LT.0 .OR. K.GT.NQ ) THEN
-         INFO = -5
-      ELSE IF( LDA.LT.MAX( 1, NQ ) ) THEN
-         INFO = -7
-      ELSE IF( LDC.LT.MAX( 1, M ) ) THEN
-         INFO = -10
-      END IF
-      IF( INFO.NE.0 ) THEN
-         CALL XERBLA( 'ZUNM2R', -INFO )
-         RETURN
-      END IF
-*
-*     Quick return if possible
-*
-      IF( M.EQ.0 .OR. N.EQ.0 .OR. K.EQ.0 )
-     $   RETURN
-*
-      IF( ( LEFT .AND. .NOT.NOTRAN .OR. .NOT.LEFT .AND. NOTRAN ) ) THEN
-         I1 = 1
-         I2 = K
-         I3 = 1
-      ELSE
-         I1 = K
-         I2 = 1
-         I3 = -1
-      END IF
-*
-      IF( LEFT ) THEN
-         NI = N
-         JC = 1
-      ELSE
-         MI = M
-         IC = 1
-      END IF
-*
-      DO 10 I = I1, I2, I3
-         IF( LEFT ) THEN
-*
-*           H(i) or H(i)**H is applied to C(i:m,1:n)
-*
-            MI = M - I + 1
-            IC = I
-         ELSE
-*
-*           H(i) or H(i)**H is applied to C(1:m,i:n)
-*
-            NI = N - I + 1
-            JC = I
-         END IF
-*
-*        Apply H(i) or H(i)**H
-*
-         IF( NOTRAN ) THEN
-            TAUI = TAU( I )
-         ELSE
-            TAUI = DCONJG( TAU( I ) )
-         END IF
-         AII = A( I, I )
-         A( I, I ) = ONE
-         CALL ZLARF( SIDE, MI, NI, A( I, I ), 1, TAUI, C( IC, JC ), LDC,
-     $               WORK )
-         A( I, I ) = AII
-   10 CONTINUE
-      RETURN
-*
-*     End of ZUNM2R
-*
-      END
-*> \brief \b ZUNMBR
-*
-*  =========== DOCUMENTATION ===========
-*
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
-*
-*> \htmlonly
-*> Download ZUNMBR + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zunmbr.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zunmbr.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zunmbr.f"> 
-*> [TXT]</a>
-*> \endhtmlonly 
-*
-*  Definition:
-*  ===========
-*
-*       SUBROUTINE ZUNMBR( VECT, SIDE, TRANS, M, N, K, A, LDA, TAU, C,
-*                          LDC, WORK, LWORK, INFO )
-* 
-*       .. Scalar Arguments ..
-*       CHARACTER          SIDE, TRANS, VECT
-*       INTEGER            INFO, K, LDA, LDC, LWORK, M, N
-*       ..
-*       .. Array Arguments ..
-*       COMPLEX*16         A( LDA, * ), C( LDC, * ), TAU( * ), WORK( * )
-*       ..
-*  
-*
-*> \par Purpose:
-*  =============
-*>
-*> \verbatim
-*>
-*> If VECT = 'Q', ZUNMBR overwrites the general complex M-by-N matrix C
-*> with
-*>                 SIDE = 'L'     SIDE = 'R'
-*> TRANS = 'N':      Q * C          C * Q
-*> TRANS = 'C':      Q**H * C       C * Q**H
-*>
-*> If VECT = 'P', ZUNMBR overwrites the general complex M-by-N matrix C
-*> with
-*>                 SIDE = 'L'     SIDE = 'R'
-*> TRANS = 'N':      P * C          C * P
-*> TRANS = 'C':      P**H * C       C * P**H
-*>
-*> Here Q and P**H are the unitary matrices determined by ZGEBRD when
-*> reducing a complex matrix A to bidiagonal form: A = Q * B * P**H. Q
-*> and P**H are defined as products of elementary reflectors H(i) and
-*> G(i) respectively.
-*>
-*> Let nq = m if SIDE = 'L' and nq = n if SIDE = 'R'. Thus nq is the
-*> order of the unitary matrix Q or P**H that is applied.
-*>
-*> If VECT = 'Q', A is assumed to have been an NQ-by-K matrix:
-*> if nq >= k, Q = H(1) H(2) . . . H(k);
-*> if nq < k, Q = H(1) H(2) . . . H(nq-1).
-*>
-*> If VECT = 'P', A is assumed to have been a K-by-NQ matrix:
-*> if k < nq, P = G(1) G(2) . . . G(k);
-*> if k >= nq, P = G(1) G(2) . . . G(nq-1).
-*> \endverbatim
-*
-*  Arguments:
-*  ==========
-*
-*> \param[in] VECT
-*> \verbatim
-*>          VECT is CHARACTER*1
-*>          = 'Q': apply Q or Q**H;
-*>          = 'P': apply P or P**H.
-*> \endverbatim
-*>
-*> \param[in] SIDE
-*> \verbatim
-*>          SIDE is CHARACTER*1
-*>          = 'L': apply Q, Q**H, P or P**H from the Left;
-*>          = 'R': apply Q, Q**H, P or P**H from the Right.
-*> \endverbatim
-*>
-*> \param[in] TRANS
-*> \verbatim
-*>          TRANS is CHARACTER*1
-*>          = 'N':  No transpose, apply Q or P;
-*>          = 'C':  Conjugate transpose, apply Q**H or P**H.
-*> \endverbatim
-*>
-*> \param[in] M
-*> \verbatim
-*>          M is INTEGER
-*>          The number of rows of the matrix C. M >= 0.
-*> \endverbatim
-*>
-*> \param[in] N
-*> \verbatim
-*>          N is INTEGER
-*>          The number of columns of the matrix C. N >= 0.
-*> \endverbatim
-*>
-*> \param[in] K
-*> \verbatim
-*>          K is INTEGER
-*>          If VECT = 'Q', the number of columns in the original
-*>          matrix reduced by ZGEBRD.
-*>          If VECT = 'P', the number of rows in the original
-*>          matrix reduced by ZGEBRD.
-*>          K >= 0.
-*> \endverbatim
-*>
-*> \param[in] A
-*> \verbatim
-*>          A is COMPLEX*16 array, dimension
-*>                                (LDA,min(nq,K)) if VECT = 'Q'
-*>                                (LDA,nq)        if VECT = 'P'
-*>          The vectors which define the elementary reflectors H(i) and
-*>          G(i), whose products determine the matrices Q and P, as
-*>          returned by ZGEBRD.
-*> \endverbatim
-*>
-*> \param[in] LDA
-*> \verbatim
-*>          LDA is INTEGER
-*>          The leading dimension of the array A.
-*>          If VECT = 'Q', LDA >= max(1,nq);
-*>          if VECT = 'P', LDA >= max(1,min(nq,K)).
-*> \endverbatim
-*>
-*> \param[in] TAU
-*> \verbatim
-*>          TAU is COMPLEX*16 array, dimension (min(nq,K))
-*>          TAU(i) must contain the scalar factor of the elementary
-*>          reflector H(i) or G(i) which determines Q or P, as returned
-*>          by ZGEBRD in the array argument TAUQ or TAUP.
-*> \endverbatim
-*>
-*> \param[in,out] C
-*> \verbatim
-*>          C is COMPLEX*16 array, dimension (LDC,N)
-*>          On entry, the M-by-N matrix C.
-*>          On exit, C is overwritten by Q*C or Q**H*C or C*Q**H or C*Q
-*>          or P*C or P**H*C or C*P or C*P**H.
-*> \endverbatim
-*>
-*> \param[in] LDC
-*> \verbatim
-*>          LDC is INTEGER
-*>          The leading dimension of the array C. LDC >= max(1,M).
-*> \endverbatim
-*>
-*> \param[out] WORK
-*> \verbatim
-*>          WORK is COMPLEX*16 array, dimension (MAX(1,LWORK))
-*>          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
-*> \endverbatim
-*>
-*> \param[in] LWORK
-*> \verbatim
-*>          LWORK is INTEGER
-*>          The dimension of the array WORK.
-*>          If SIDE = 'L', LWORK >= max(1,N);
-*>          if SIDE = 'R', LWORK >= max(1,M);
-*>          if N = 0 or M = 0, LWORK >= 1.
-*>          For optimum performance LWORK >= max(1,N*NB) if SIDE = 'L',
-*>          and LWORK >= max(1,M*NB) if SIDE = 'R', where NB is the
-*>          optimal blocksize. (NB = 0 if M = 0 or N = 0.)
-*>
-*>          If LWORK = -1, then a workspace query is assumed; the routine
-*>          only calculates the optimal size of the WORK array, returns
-*>          this value as the first entry of the WORK array, and no error
-*>          message related to LWORK is issued by XERBLA.
-*> \endverbatim
-*>
-*> \param[out] INFO
-*> \verbatim
-*>          INFO is INTEGER
-*>          = 0:  successful exit
-*>          < 0:  if INFO = -i, the i-th argument had an illegal value
-*> \endverbatim
-*
-*  Authors:
-*  ========
-*
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
-*
-*> \date November 2011
-*
-*> \ingroup complex16OTHERcomputational
-*
-*  =====================================================================
-      SUBROUTINE ZUNMBR( VECT, SIDE, TRANS, M, N, K, A, LDA, TAU, C,
-     $                   LDC, WORK, LWORK, INFO )
-*
-*  -- LAPACK computational routine (version 3.4.0) --
-*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
-*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
-*
-*     .. Scalar Arguments ..
-      CHARACTER          SIDE, TRANS, VECT
-      INTEGER            INFO, K, LDA, LDC, LWORK, M, N
-*     ..
-*     .. Array Arguments ..
-      COMPLEX*16         A( LDA, * ), C( LDC, * ), TAU( * ), WORK( * )
-*     ..
-*
-*  =====================================================================
-*
-*     .. Local Scalars ..
-      LOGICAL            APPLYQ, LEFT, LQUERY, NOTRAN
-      CHARACTER          TRANST
-      INTEGER            I1, I2, IINFO, LWKOPT, MI, NB, NI, NQ, NW
-*     ..
-*     .. External Functions ..
-      LOGICAL            LSAME
-      INTEGER            ILAENV
-      EXTERNAL           LSAME, ILAENV
-*     ..
-*     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZUNMLQ, ZUNMQR
-*     ..
-*     .. Intrinsic Functions ..
-      INTRINSIC          MAX, MIN
-*     ..
-*     .. Executable Statements ..
-*
-*     Test the input arguments
-*
-      INFO = 0
-      APPLYQ = LSAME( VECT, 'Q' )
-      LEFT = LSAME( SIDE, 'L' )
-      NOTRAN = LSAME( TRANS, 'N' )
-      LQUERY = ( LWORK.EQ.-1 )
-*
-*     NQ is the order of Q or P and NW is the minimum dimension of WORK
-*
-      IF( LEFT ) THEN
-         NQ = M
-         NW = N
-      ELSE
-         NQ = N
-         NW = M
-      END IF
-      IF( M.EQ.0 .OR. N.EQ.0 ) THEN
-         NW = 0
-      END IF
-      IF( .NOT.APPLYQ .AND. .NOT.LSAME( VECT, 'P' ) ) THEN
-         INFO = -1
-      ELSE IF( .NOT.LEFT .AND. .NOT.LSAME( SIDE, 'R' ) ) THEN
-         INFO = -2
-      ELSE IF( .NOT.NOTRAN .AND. .NOT.LSAME( TRANS, 'C' ) ) THEN
-         INFO = -3
-      ELSE IF( M.LT.0 ) THEN
-         INFO = -4
-      ELSE IF( N.LT.0 ) THEN
-         INFO = -5
-      ELSE IF( K.LT.0 ) THEN
-         INFO = -6
-      ELSE IF( ( APPLYQ .AND. LDA.LT.MAX( 1, NQ ) ) .OR.
-     $         ( .NOT.APPLYQ .AND. LDA.LT.MAX( 1, MIN( NQ, K ) ) ) )
-     $          THEN
-         INFO = -8
-      ELSE IF( LDC.LT.MAX( 1, M ) ) THEN
-         INFO = -11
-      ELSE IF( LWORK.LT.MAX( 1, NW ) .AND. .NOT.LQUERY ) THEN
-         INFO = -13
-      END IF
-*
-      IF( INFO.EQ.0 ) THEN
-         IF( NW.GT.0 ) THEN
-            IF( APPLYQ ) THEN
-               IF( LEFT ) THEN
-                  NB = ILAENV( 1, 'ZUNMQR', SIDE // TRANS, M-1, N, M-1,
-     $                 -1 )
-               ELSE
-                  NB = ILAENV( 1, 'ZUNMQR', SIDE // TRANS, M, N-1, N-1,
-     $                 -1 )
-               END IF
-            ELSE
-               IF( LEFT ) THEN
-                  NB = ILAENV( 1, 'ZUNMLQ', SIDE // TRANS, M-1, N, M-1,
-     $                 -1 )
-               ELSE
-                  NB = ILAENV( 1, 'ZUNMLQ', SIDE // TRANS, M, N-1, N-1,
-     $                 -1 )
-               END IF
-            END IF
-            LWKOPT = MAX( 1, NW*NB )
-         ELSE
-            LWKOPT = 1
-         END IF
-         WORK( 1 ) = LWKOPT
-      END IF
-*
-      IF( INFO.NE.0 ) THEN
-         CALL XERBLA( 'ZUNMBR', -INFO )
-         RETURN
-      ELSE IF( LQUERY ) THEN
-         RETURN
-      END IF
-*
-*     Quick return if possible
-*
-      IF( M.EQ.0 .OR. N.EQ.0 )
-     $   RETURN
-*
-      IF( APPLYQ ) THEN
-*
-*        Apply Q
-*
-         IF( NQ.GE.K ) THEN
-*
-*           Q was determined by a call to ZGEBRD with nq >= k
-*
-            CALL ZUNMQR( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC,
-     $                   WORK, LWORK, IINFO )
-         ELSE IF( NQ.GT.1 ) THEN
-*
-*           Q was determined by a call to ZGEBRD with nq < k
-*
-            IF( LEFT ) THEN
-               MI = M - 1
-               NI = N
-               I1 = 2
-               I2 = 1
-            ELSE
-               MI = M
-               NI = N - 1
-               I1 = 1
-               I2 = 2
-            END IF
-            CALL ZUNMQR( SIDE, TRANS, MI, NI, NQ-1, A( 2, 1 ), LDA, TAU,
-     $                   C( I1, I2 ), LDC, WORK, LWORK, IINFO )
-         END IF
-      ELSE
-*
-*        Apply P
-*
-         IF( NOTRAN ) THEN
-            TRANST = 'C'
-         ELSE
-            TRANST = 'N'
-         END IF
-         IF( NQ.GT.K ) THEN
-*
-*           P was determined by a call to ZGEBRD with nq > k
-*
-            CALL ZUNMLQ( SIDE, TRANST, M, N, K, A, LDA, TAU, C, LDC,
-     $                   WORK, LWORK, IINFO )
-         ELSE IF( NQ.GT.1 ) THEN
-*
-*           P was determined by a call to ZGEBRD with nq <= k
-*
-            IF( LEFT ) THEN
-               MI = M - 1
-               NI = N
-               I1 = 2
-               I2 = 1
-            ELSE
-               MI = M
-               NI = N - 1
-               I1 = 1
-               I2 = 2
-            END IF
-            CALL ZUNMLQ( SIDE, TRANST, MI, NI, NQ-1, A( 1, 2 ), LDA,
-     $                   TAU, C( I1, I2 ), LDC, WORK, LWORK, IINFO )
-         END IF
-      END IF
-      WORK( 1 ) = LWKOPT
-      RETURN
-*
-*     End of ZUNMBR
-*
-      END
-*> \brief \b ZUNMHR
-*
-*  =========== DOCUMENTATION ===========
-*
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
-*
-*> \htmlonly
-*> Download ZUNMHR + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zunmhr.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zunmhr.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zunmhr.f"> 
-*> [TXT]</a>
-*> \endhtmlonly 
-*
-*  Definition:
-*  ===========
-*
-*       SUBROUTINE ZUNMHR( SIDE, TRANS, M, N, ILO, IHI, A, LDA, TAU, C,
-*                          LDC, WORK, LWORK, INFO )
-* 
-*       .. Scalar Arguments ..
-*       CHARACTER          SIDE, TRANS
-*       INTEGER            IHI, ILO, INFO, LDA, LDC, LWORK, M, N
-*       ..
-*       .. Array Arguments ..
-*       COMPLEX*16         A( LDA, * ), C( LDC, * ), TAU( * ), WORK( * )
-*       ..
-*  
-*
-*> \par Purpose:
-*  =============
-*>
-*> \verbatim
-*>
-*> ZUNMHR overwrites the general complex M-by-N matrix C with
-*>
-*>                 SIDE = 'L'     SIDE = 'R'
-*> TRANS = 'N':      Q * C          C * Q
-*> TRANS = 'C':      Q**H * C       C * Q**H
-*>
-*> where Q is a complex unitary matrix of order nq, with nq = m if
-*> SIDE = 'L' and nq = n if SIDE = 'R'. Q is defined as the product of
-*> IHI-ILO elementary reflectors, as returned by ZGEHRD:
-*>
-*> Q = H(ilo) H(ilo+1) . . . H(ihi-1).
-*> \endverbatim
-*
-*  Arguments:
-*  ==========
-*
-*> \param[in] SIDE
-*> \verbatim
-*>          SIDE is CHARACTER*1
-*>          = 'L': apply Q or Q**H from the Left;
-*>          = 'R': apply Q or Q**H from the Right.
-*> \endverbatim
-*>
-*> \param[in] TRANS
-*> \verbatim
-*>          TRANS is CHARACTER*1
-*>          = 'N': apply Q  (No transpose)
-*>          = 'C': apply Q**H (Conjugate transpose)
-*> \endverbatim
-*>
-*> \param[in] M
-*> \verbatim
-*>          M is INTEGER
-*>          The number of rows of the matrix C. M >= 0.
-*> \endverbatim
-*>
-*> \param[in] N
-*> \verbatim
-*>          N is INTEGER
-*>          The number of columns of the matrix C. N >= 0.
-*> \endverbatim
-*>
-*> \param[in] ILO
-*> \verbatim
-*>          ILO is INTEGER
-*> \endverbatim
-*>
-*> \param[in] IHI
-*> \verbatim
-*>          IHI is INTEGER
-*>
-*>          ILO and IHI must have the same values as in the previous call
-*>          of ZGEHRD. Q is equal to the unit matrix except in the
-*>          submatrix Q(ilo+1:ihi,ilo+1:ihi).
-*>          If SIDE = 'L', then 1 <= ILO <= IHI <= M, if M > 0, and
-*>          ILO = 1 and IHI = 0, if M = 0;
-*>          if SIDE = 'R', then 1 <= ILO <= IHI <= N, if N > 0, and
-*>          ILO = 1 and IHI = 0, if N = 0.
-*> \endverbatim
-*>
-*> \param[in] A
-*> \verbatim
-*>          A is COMPLEX*16 array, dimension
-*>                               (LDA,M) if SIDE = 'L'
-*>                               (LDA,N) if SIDE = 'R'
-*>          The vectors which define the elementary reflectors, as
-*>          returned by ZGEHRD.
-*> \endverbatim
-*>
-*> \param[in] LDA
-*> \verbatim
-*>          LDA is INTEGER
-*>          The leading dimension of the array A.
-*>          LDA >= max(1,M) if SIDE = 'L'; LDA >= max(1,N) if SIDE = 'R'.
-*> \endverbatim
-*>
-*> \param[in] TAU
-*> \verbatim
-*>          TAU is COMPLEX*16 array, dimension
-*>                               (M-1) if SIDE = 'L'
-*>                               (N-1) if SIDE = 'R'
-*>          TAU(i) must contain the scalar factor of the elementary
-*>          reflector H(i), as returned by ZGEHRD.
-*> \endverbatim
-*>
-*> \param[in,out] C
-*> \verbatim
-*>          C is COMPLEX*16 array, dimension (LDC,N)
-*>          On entry, the M-by-N matrix C.
-*>          On exit, C is overwritten by Q*C or Q**H*C or C*Q**H or C*Q.
-*> \endverbatim
-*>
-*> \param[in] LDC
-*> \verbatim
-*>          LDC is INTEGER
-*>          The leading dimension of the array C. LDC >= max(1,M).
-*> \endverbatim
-*>
-*> \param[out] WORK
-*> \verbatim
-*>          WORK is COMPLEX*16 array, dimension (MAX(1,LWORK))
-*>          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
-*> \endverbatim
-*>
-*> \param[in] LWORK
-*> \verbatim
-*>          LWORK is INTEGER
-*>          The dimension of the array WORK.
-*>          If SIDE = 'L', LWORK >= max(1,N);
-*>          if SIDE = 'R', LWORK >= max(1,M).
-*>          For optimum performance LWORK >= N*NB if SIDE = 'L', and
-*>          LWORK >= M*NB if SIDE = 'R', where NB is the optimal
-*>          blocksize.
-*>
-*>          If LWORK = -1, then a workspace query is assumed; the routine
-*>          only calculates the optimal size of the WORK array, returns
-*>          this value as the first entry of the WORK array, and no error
-*>          message related to LWORK is issued by XERBLA.
-*> \endverbatim
-*>
-*> \param[out] INFO
-*> \verbatim
-*>          INFO is INTEGER
-*>          = 0:  successful exit
-*>          < 0:  if INFO = -i, the i-th argument had an illegal value
-*> \endverbatim
-*
-*  Authors:
-*  ========
-*
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
-*
-*> \date November 2011
-*
-*> \ingroup complex16OTHERcomputational
-*
-*  =====================================================================
-      SUBROUTINE ZUNMHR( SIDE, TRANS, M, N, ILO, IHI, A, LDA, TAU, C,
-     $                   LDC, WORK, LWORK, INFO )
-*
-*  -- LAPACK computational routine (version 3.4.0) --
-*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
-*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
-*
-*     .. Scalar Arguments ..
-      CHARACTER          SIDE, TRANS
-      INTEGER            IHI, ILO, INFO, LDA, LDC, LWORK, M, N
-*     ..
-*     .. Array Arguments ..
-      COMPLEX*16         A( LDA, * ), C( LDC, * ), TAU( * ), WORK( * )
-*     ..
-*
-*  =====================================================================
-*
-*     .. Local Scalars ..
-      LOGICAL            LEFT, LQUERY
-      INTEGER            I1, I2, IINFO, LWKOPT, MI, NB, NH, NI, NQ, NW
-*     ..
-*     .. External Functions ..
-      LOGICAL            LSAME
-      INTEGER            ILAENV
-      EXTERNAL           LSAME, ILAENV
-*     ..
-*     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZUNMQR
-*     ..
-*     .. Intrinsic Functions ..
-      INTRINSIC          MAX, MIN
-*     ..
-*     .. Executable Statements ..
-*
-*     Test the input arguments
-*
-      INFO = 0
-      NH = IHI - ILO
-      LEFT = LSAME( SIDE, 'L' )
-      LQUERY = ( LWORK.EQ.-1 )
-*
-*     NQ is the order of Q and NW is the minimum dimension of WORK
-*
-      IF( LEFT ) THEN
-         NQ = M
-         NW = N
-      ELSE
-         NQ = N
-         NW = M
-      END IF
-      IF( .NOT.LEFT .AND. .NOT.LSAME( SIDE, 'R' ) ) THEN
-         INFO = -1
-      ELSE IF( .NOT.LSAME( TRANS, 'N' ) .AND. .NOT.LSAME( TRANS, 'C' ) )
-     $          THEN
-         INFO = -2
-      ELSE IF( M.LT.0 ) THEN
-         INFO = -3
-      ELSE IF( N.LT.0 ) THEN
-         INFO = -4
-      ELSE IF( ILO.LT.1 .OR. ILO.GT.MAX( 1, NQ ) ) THEN
-         INFO = -5
-      ELSE IF( IHI.LT.MIN( ILO, NQ ) .OR. IHI.GT.NQ ) THEN
-         INFO = -6
-      ELSE IF( LDA.LT.MAX( 1, NQ ) ) THEN
-         INFO = -8
-      ELSE IF( LDC.LT.MAX( 1, M ) ) THEN
-         INFO = -11
-      ELSE IF( LWORK.LT.MAX( 1, NW ) .AND. .NOT.LQUERY ) THEN
-         INFO = -13
-      END IF
-*
-      IF( INFO.EQ.0 ) THEN
-         IF( LEFT ) THEN
-            NB = ILAENV( 1, 'ZUNMQR', SIDE // TRANS, NH, N, NH, -1 )
-         ELSE
-            NB = ILAENV( 1, 'ZUNMQR', SIDE // TRANS, M, NH, NH, -1 )
-         END IF
-         LWKOPT = MAX( 1, NW )*NB
-         WORK( 1 ) = LWKOPT
-      END IF
-*
-      IF( INFO.NE.0 ) THEN
-         CALL XERBLA( 'ZUNMHR', -INFO )
-         RETURN
-      ELSE IF( LQUERY ) THEN
-         RETURN
-      END IF
-*
-*     Quick return if possible
-*
-      IF( M.EQ.0 .OR. N.EQ.0 .OR. NH.EQ.0 ) THEN
-         WORK( 1 ) = 1
-         RETURN
-      END IF
-*
-      IF( LEFT ) THEN
-         MI = NH
-         NI = N
-         I1 = ILO + 1
-         I2 = 1
-      ELSE
-         MI = M
-         NI = NH
-         I1 = 1
-         I2 = ILO + 1
-      END IF
-*
-      CALL ZUNMQR( SIDE, TRANS, MI, NI, NH, A( ILO+1, ILO ), LDA,
-     $             TAU( ILO ), C( I1, I2 ), LDC, WORK, LWORK, IINFO )
-*
-      WORK( 1 ) = LWKOPT
-      RETURN
-*
-*     End of ZUNMHR
-*
-      END
-*> \brief \b ZUNML2 multiplies a general matrix by the unitary matrix from a LQ factorization determined by cgelqf (unblocked algorithm).
-*
-*  =========== DOCUMENTATION ===========
-*
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
-*
-*> \htmlonly
-*> Download ZUNML2 + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zunml2.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zunml2.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zunml2.f"> 
-*> [TXT]</a>
-*> \endhtmlonly 
-*
-*  Definition:
-*  ===========
-*
-*       SUBROUTINE ZUNML2( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC,
-*                          WORK, INFO )
-* 
-*       .. Scalar Arguments ..
-*       CHARACTER          SIDE, TRANS
-*       INTEGER            INFO, K, LDA, LDC, M, N
-*       ..
-*       .. Array Arguments ..
-*       COMPLEX*16         A( LDA, * ), C( LDC, * ), TAU( * ), WORK( * )
-*       ..
-*  
-*
-*> \par Purpose:
-*  =============
-*>
-*> \verbatim
-*>
-*> ZUNML2 overwrites the general complex m-by-n matrix C with
-*>
-*>       Q * C  if SIDE = 'L' and TRANS = 'N', or
-*>
-*>       Q**H* C  if SIDE = 'L' and TRANS = 'C', or
-*>
-*>       C * Q  if SIDE = 'R' and TRANS = 'N', or
-*>
-*>       C * Q**H if SIDE = 'R' and TRANS = 'C',
-*>
-*> where Q is a complex unitary matrix defined as the product of k
-*> elementary reflectors
-*>
-*>       Q = H(k)**H . . . H(2)**H H(1)**H
-*>
-*> as returned by ZGELQF. Q is of order m if SIDE = 'L' and of order n
-*> if SIDE = 'R'.
-*> \endverbatim
-*
-*  Arguments:
-*  ==========
-*
-*> \param[in] SIDE
-*> \verbatim
-*>          SIDE is CHARACTER*1
-*>          = 'L': apply Q or Q**H from the Left
-*>          = 'R': apply Q or Q**H from the Right
-*> \endverbatim
-*>
-*> \param[in] TRANS
-*> \verbatim
-*>          TRANS is CHARACTER*1
-*>          = 'N': apply Q  (No transpose)
-*>          = 'C': apply Q**H (Conjugate transpose)
-*> \endverbatim
-*>
-*> \param[in] M
-*> \verbatim
-*>          M is INTEGER
-*>          The number of rows of the matrix C. M >= 0.
-*> \endverbatim
-*>
-*> \param[in] N
-*> \verbatim
-*>          N is INTEGER
-*>          The number of columns of the matrix C. N >= 0.
-*> \endverbatim
-*>
-*> \param[in] K
-*> \verbatim
-*>          K is INTEGER
-*>          The number of elementary reflectors whose product defines
-*>          the matrix Q.
-*>          If SIDE = 'L', M >= K >= 0;
-*>          if SIDE = 'R', N >= K >= 0.
-*> \endverbatim
-*>
-*> \param[in] A
-*> \verbatim
-*>          A is COMPLEX*16 array, dimension
-*>                               (LDA,M) if SIDE = 'L',
-*>                               (LDA,N) if SIDE = 'R'
-*>          The i-th row must contain the vector which defines the
-*>          elementary reflector H(i), for i = 1,2,...,k, as returned by
-*>          ZGELQF in the first k rows of its array argument A.
-*>          A is modified by the routine but restored on exit.
-*> \endverbatim
-*>
-*> \param[in] LDA
-*> \verbatim
-*>          LDA is INTEGER
-*>          The leading dimension of the array A. LDA >= max(1,K).
-*> \endverbatim
-*>
-*> \param[in] TAU
-*> \verbatim
-*>          TAU is COMPLEX*16 array, dimension (K)
-*>          TAU(i) must contain the scalar factor of the elementary
-*>          reflector H(i), as returned by ZGELQF.
-*> \endverbatim
-*>
-*> \param[in,out] C
-*> \verbatim
-*>          C is COMPLEX*16 array, dimension (LDC,N)
-*>          On entry, the m-by-n matrix C.
-*>          On exit, C is overwritten by Q*C or Q**H*C or C*Q**H or C*Q.
-*> \endverbatim
-*>
-*> \param[in] LDC
-*> \verbatim
-*>          LDC is INTEGER
-*>          The leading dimension of the array C. LDC >= max(1,M).
-*> \endverbatim
-*>
-*> \param[out] WORK
-*> \verbatim
-*>          WORK is COMPLEX*16 array, dimension
-*>                                   (N) if SIDE = 'L',
-*>                                   (M) if SIDE = 'R'
-*> \endverbatim
-*>
-*> \param[out] INFO
-*> \verbatim
-*>          INFO is INTEGER
-*>          = 0: successful exit
-*>          < 0: if INFO = -i, the i-th argument had an illegal value
-*> \endverbatim
-*
-*  Authors:
-*  ========
-*
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
-*
-*> \date September 2012
-*
-*> \ingroup complex16OTHERcomputational
-*
-*  =====================================================================
-      SUBROUTINE ZUNML2( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC,
-     $                   WORK, INFO )
-*
-*  -- LAPACK computational routine (version 3.4.2) --
-*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
-*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     September 2012
-*
-*     .. Scalar Arguments ..
-      CHARACTER          SIDE, TRANS
-      INTEGER            INFO, K, LDA, LDC, M, N
-*     ..
-*     .. Array Arguments ..
-      COMPLEX*16         A( LDA, * ), C( LDC, * ), TAU( * ), WORK( * )
-*     ..
-*
-*  =====================================================================
-*
-*     .. Parameters ..
-      COMPLEX*16         ONE
-      PARAMETER          ( ONE = ( 1.0D+0, 0.0D+0 ) )
-*     ..
-*     .. Local Scalars ..
-      LOGICAL            LEFT, NOTRAN
-      INTEGER            I, I1, I2, I3, IC, JC, MI, NI, NQ
-      COMPLEX*16         AII, TAUI
-*     ..
-*     .. External Functions ..
-      LOGICAL            LSAME
-      EXTERNAL           LSAME
-*     ..
-*     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZLACGV, ZLARF
-*     ..
-*     .. Intrinsic Functions ..
-      INTRINSIC          DCONJG, MAX
-*     ..
-*     .. Executable Statements ..
-*
-*     Test the input arguments
-*
-      INFO = 0
-      LEFT = LSAME( SIDE, 'L' )
-      NOTRAN = LSAME( TRANS, 'N' )
-*
-*     NQ is the order of Q
-*
-      IF( LEFT ) THEN
-         NQ = M
-      ELSE
-         NQ = N
-      END IF
-      IF( .NOT.LEFT .AND. .NOT.LSAME( SIDE, 'R' ) ) THEN
-         INFO = -1
-      ELSE IF( .NOT.NOTRAN .AND. .NOT.LSAME( TRANS, 'C' ) ) THEN
-         INFO = -2
-      ELSE IF( M.LT.0 ) THEN
-         INFO = -3
-      ELSE IF( N.LT.0 ) THEN
-         INFO = -4
-      ELSE IF( K.LT.0 .OR. K.GT.NQ ) THEN
-         INFO = -5
-      ELSE IF( LDA.LT.MAX( 1, K ) ) THEN
-         INFO = -7
-      ELSE IF( LDC.LT.MAX( 1, M ) ) THEN
-         INFO = -10
-      END IF
-      IF( INFO.NE.0 ) THEN
-         CALL XERBLA( 'ZUNML2', -INFO )
-         RETURN
-      END IF
-*
-*     Quick return if possible
-*
-      IF( M.EQ.0 .OR. N.EQ.0 .OR. K.EQ.0 )
-     $   RETURN
-*
-      IF( ( LEFT .AND. NOTRAN .OR. .NOT.LEFT .AND. .NOT.NOTRAN ) ) THEN
-         I1 = 1
-         I2 = K
-         I3 = 1
-      ELSE
-         I1 = K
-         I2 = 1
-         I3 = -1
-      END IF
-*
-      IF( LEFT ) THEN
-         NI = N
-         JC = 1
-      ELSE
-         MI = M
-         IC = 1
-      END IF
-*
-      DO 10 I = I1, I2, I3
-         IF( LEFT ) THEN
-*
-*           H(i) or H(i)**H is applied to C(i:m,1:n)
-*
-            MI = M - I + 1
-            IC = I
-         ELSE
-*
-*           H(i) or H(i)**H is applied to C(1:m,i:n)
-*
-            NI = N - I + 1
-            JC = I
-         END IF
-*
-*        Apply H(i) or H(i)**H
-*
-         IF( NOTRAN ) THEN
-            TAUI = DCONJG( TAU( I ) )
-         ELSE
-            TAUI = TAU( I )
-         END IF
-         IF( I.LT.NQ )
-     $      CALL ZLACGV( NQ-I, A( I, I+1 ), LDA )
-         AII = A( I, I )
-         A( I, I ) = ONE
-         CALL ZLARF( SIDE, MI, NI, A( I, I ), LDA, TAUI, C( IC, JC ),
-     $               LDC, WORK )
-         A( I, I ) = AII
-         IF( I.LT.NQ )
-     $      CALL ZLACGV( NQ-I, A( I, I+1 ), LDA )
-   10 CONTINUE
-      RETURN
-*
-*     End of ZUNML2
-*
-      END
-*> \brief \b ZUNMLQ
-*
-*  =========== DOCUMENTATION ===========
-*
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
-*
-*> \htmlonly
-*> Download ZUNMLQ + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zunmlq.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zunmlq.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zunmlq.f"> 
-*> [TXT]</a>
-*> \endhtmlonly 
-*
-*  Definition:
-*  ===========
-*
-*       SUBROUTINE ZUNMLQ( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC,
-*                          WORK, LWORK, INFO )
-* 
-*       .. Scalar Arguments ..
-*       CHARACTER          SIDE, TRANS
-*       INTEGER            INFO, K, LDA, LDC, LWORK, M, N
-*       ..
-*       .. Array Arguments ..
-*       COMPLEX*16         A( LDA, * ), C( LDC, * ), TAU( * ), WORK( * )
-*       ..
-*  
-*
-*> \par Purpose:
-*  =============
-*>
-*> \verbatim
-*>
-*> ZUNMLQ overwrites the general complex M-by-N matrix C with
-*>
-*>                 SIDE = 'L'     SIDE = 'R'
-*> TRANS = 'N':      Q * C          C * Q
-*> TRANS = 'C':      Q**H * C       C * Q**H
-*>
-*> where Q is a complex unitary matrix defined as the product of k
-*> elementary reflectors
-*>
-*>       Q = H(k)**H . . . H(2)**H H(1)**H
-*>
-*> as returned by ZGELQF. Q is of order M if SIDE = 'L' and of order N
-*> if SIDE = 'R'.
-*> \endverbatim
-*
-*  Arguments:
-*  ==========
-*
-*> \param[in] SIDE
-*> \verbatim
-*>          SIDE is CHARACTER*1
-*>          = 'L': apply Q or Q**H from the Left;
-*>          = 'R': apply Q or Q**H from the Right.
-*> \endverbatim
-*>
-*> \param[in] TRANS
-*> \verbatim
-*>          TRANS is CHARACTER*1
-*>          = 'N':  No transpose, apply Q;
-*>          = 'C':  Conjugate transpose, apply Q**H.
-*> \endverbatim
-*>
-*> \param[in] M
-*> \verbatim
-*>          M is INTEGER
-*>          The number of rows of the matrix C. M >= 0.
-*> \endverbatim
-*>
-*> \param[in] N
-*> \verbatim
-*>          N is INTEGER
-*>          The number of columns of the matrix C. N >= 0.
-*> \endverbatim
-*>
-*> \param[in] K
-*> \verbatim
-*>          K is INTEGER
-*>          The number of elementary reflectors whose product defines
-*>          the matrix Q.
-*>          If SIDE = 'L', M >= K >= 0;
-*>          if SIDE = 'R', N >= K >= 0.
-*> \endverbatim
-*>
-*> \param[in] A
-*> \verbatim
-*>          A is COMPLEX*16 array, dimension
-*>                               (LDA,M) if SIDE = 'L',
-*>                               (LDA,N) if SIDE = 'R'
-*>          The i-th row must contain the vector which defines the
-*>          elementary reflector H(i), for i = 1,2,...,k, as returned by
-*>          ZGELQF in the first k rows of its array argument A.
-*> \endverbatim
-*>
-*> \param[in] LDA
-*> \verbatim
-*>          LDA is INTEGER
-*>          The leading dimension of the array A. LDA >= max(1,K).
-*> \endverbatim
-*>
-*> \param[in] TAU
-*> \verbatim
-*>          TAU is COMPLEX*16 array, dimension (K)
-*>          TAU(i) must contain the scalar factor of the elementary
-*>          reflector H(i), as returned by ZGELQF.
-*> \endverbatim
-*>
-*> \param[in,out] C
-*> \verbatim
-*>          C is COMPLEX*16 array, dimension (LDC,N)
-*>          On entry, the M-by-N matrix C.
-*>          On exit, C is overwritten by Q*C or Q**H*C or C*Q**H or C*Q.
-*> \endverbatim
-*>
-*> \param[in] LDC
-*> \verbatim
-*>          LDC is INTEGER
-*>          The leading dimension of the array C. LDC >= max(1,M).
-*> \endverbatim
-*>
-*> \param[out] WORK
-*> \verbatim
-*>          WORK is COMPLEX*16 array, dimension (MAX(1,LWORK))
-*>          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
-*> \endverbatim
-*>
-*> \param[in] LWORK
-*> \verbatim
-*>          LWORK is INTEGER
-*>          The dimension of the array WORK.
-*>          If SIDE = 'L', LWORK >= max(1,N);
-*>          if SIDE = 'R', LWORK >= max(1,M).
-*>          For good performance, LWORK should generally be larger.
-*>
-*>          If LWORK = -1, then a workspace query is assumed; the routine
-*>          only calculates the optimal size of the WORK array, returns
-*>          this value as the first entry of the WORK array, and no error
-*>          message related to LWORK is issued by XERBLA.
-*> \endverbatim
-*>
-*> \param[out] INFO
-*> \verbatim
-*>          INFO is INTEGER
-*>          = 0:  successful exit
-*>          < 0:  if INFO = -i, the i-th argument had an illegal value
-*> \endverbatim
-*
-*  Authors:
-*  ========
-*
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
-*
-*> \date November 2015
-*
-*> \ingroup complex16OTHERcomputational
-*
-*  =====================================================================
-      SUBROUTINE ZUNMLQ( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC,
-     $                   WORK, LWORK, INFO )
-*
-*  -- LAPACK computational routine (version 3.6.0) --
-*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
-*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2015
-*
-*     .. Scalar Arguments ..
-      CHARACTER          SIDE, TRANS
-      INTEGER            INFO, K, LDA, LDC, LWORK, M, N
-*     ..
-*     .. Array Arguments ..
-      COMPLEX*16         A( LDA, * ), C( LDC, * ), TAU( * ), WORK( * )
-*     ..
-*
-*  =====================================================================
-*
-*     .. Parameters ..
-      INTEGER            NBMAX, LDT, TSIZE
-      PARAMETER          ( NBMAX = 64, LDT = NBMAX+1,
-     $                     TSIZE = LDT*NBMAX )
-*     ..
-*     .. Local Scalars ..
-      LOGICAL            LEFT, LQUERY, NOTRAN
-      CHARACTER          TRANST
-      INTEGER            I, I1, I2, I3, IB, IC, IINFO, IWT, JC, LDWORK,
-     $                   LWKOPT, MI, NB, NBMIN, NI, NQ, NW
-*     ..
-*     .. External Functions ..
-      LOGICAL            LSAME
-      INTEGER            ILAENV
-      EXTERNAL           LSAME, ILAENV
-*     ..
-*     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZLARFB, ZLARFT, ZUNML2
-*     ..
-*     .. Intrinsic Functions ..
-      INTRINSIC          MAX, MIN
-*     ..
-*     .. Executable Statements ..
-*
-*     Test the input arguments
-*
-      INFO = 0
-      LEFT = LSAME( SIDE, 'L' )
-      NOTRAN = LSAME( TRANS, 'N' )
-      LQUERY = ( LWORK.EQ.-1 )
-*
-*     NQ is the order of Q and NW is the minimum dimension of WORK
-*
-      IF( LEFT ) THEN
-         NQ = M
-         NW = N
-      ELSE
-         NQ = N
-         NW = M
-      END IF
-      IF( .NOT.LEFT .AND. .NOT.LSAME( SIDE, 'R' ) ) THEN
-         INFO = -1
-      ELSE IF( .NOT.NOTRAN .AND. .NOT.LSAME( TRANS, 'C' ) ) THEN
-         INFO = -2
-      ELSE IF( M.LT.0 ) THEN
-         INFO = -3
-      ELSE IF( N.LT.0 ) THEN
-         INFO = -4
-      ELSE IF( K.LT.0 .OR. K.GT.NQ ) THEN
-         INFO = -5
-      ELSE IF( LDA.LT.MAX( 1, K ) ) THEN
-         INFO = -7
-      ELSE IF( LDC.LT.MAX( 1, M ) ) THEN
-         INFO = -10
-      ELSE IF( LWORK.LT.MAX( 1, NW ) .AND. .NOT.LQUERY ) THEN
-         INFO = -12
-      END IF
-*
-      IF( INFO.EQ.0 ) THEN
-*
-*        Compute the workspace requirements
-*
-         NB = MIN( NBMAX, ILAENV( 1, 'ZUNMLQ', SIDE // TRANS, M, N, K,
-     $        -1 ) )
-         LWKOPT = MAX( 1, NW )*NB + TSIZE
-         WORK( 1 ) = LWKOPT
-      END IF
-*
-      IF( INFO.NE.0 ) THEN
-         CALL XERBLA( 'ZUNMLQ', -INFO )
-         RETURN
-      ELSE IF( LQUERY ) THEN
-         RETURN
-      END IF
-*
-*     Quick return if possible
-*
-      IF( M.EQ.0 .OR. N.EQ.0 .OR. K.EQ.0 ) THEN
-         WORK( 1 ) = 1
-         RETURN
-      END IF
-*
-      NBMIN = 2
-      LDWORK = NW
-      IF( NB.GT.1 .AND. NB.LT.K ) THEN
-         IF( LWORK.LT.NW*NB+TSIZE ) THEN
-            NB = (LWORK-TSIZE) / LDWORK
-            NBMIN = MAX( 2, ILAENV( 2, 'ZUNMLQ', SIDE // TRANS, M, N, K,
-     $              -1 ) )
-         END IF
-      END IF
-*
-      IF( NB.LT.NBMIN .OR. NB.GE.K ) THEN
-*
-*        Use unblocked code
-*
-         CALL ZUNML2( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC, WORK,
-     $                IINFO )
-      ELSE
-*
-*        Use blocked code
-*
-         IWT = 1 + NW*NB
-         IF( ( LEFT .AND. NOTRAN ) .OR.
-     $       ( .NOT.LEFT .AND. .NOT.NOTRAN ) ) THEN
-            I1 = 1
-            I2 = K
-            I3 = NB
-         ELSE
-            I1 = ( ( K-1 ) / NB )*NB + 1
-            I2 = 1
-            I3 = -NB
-         END IF
-*
-         IF( LEFT ) THEN
-            NI = N
-            JC = 1
-         ELSE
-            MI = M
-            IC = 1
-         END IF
-*
-         IF( NOTRAN ) THEN
-            TRANST = 'C'
-         ELSE
-            TRANST = 'N'
-         END IF
-*
-         DO 10 I = I1, I2, I3
-            IB = MIN( NB, K-I+1 )
-*
-*           Form the triangular factor of the block reflector
-*           H = H(i) H(i+1) . . . H(i+ib-1)
-*
-            CALL ZLARFT( 'Forward', 'Rowwise', NQ-I+1, IB, A( I, I ),
-     $                   LDA, TAU( I ), WORK( IWT ), LDT )
-            IF( LEFT ) THEN
-*
-*              H or H**H is applied to C(i:m,1:n)
-*
-               MI = M - I + 1
-               IC = I
-            ELSE
-*
-*              H or H**H is applied to C(1:m,i:n)
-*
-               NI = N - I + 1
-               JC = I
-            END IF
-*
-*           Apply H or H**H
-*
-            CALL ZLARFB( SIDE, TRANST, 'Forward', 'Rowwise', MI, NI, IB,
-     $                   A( I, I ), LDA, WORK( IWT ), LDT,
-     $                   C( IC, JC ), LDC, WORK, LDWORK )
-   10    CONTINUE
-      END IF
-      WORK( 1 ) = LWKOPT
-      RETURN
-*
-*     End of ZUNMLQ
-*
-      END
-*> \brief \b ZUNMQL
-*
-*  =========== DOCUMENTATION ===========
-*
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
-*
-*> \htmlonly
-*> Download ZUNMQL + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zunmql.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zunmql.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zunmql.f"> 
-*> [TXT]</a>
-*> \endhtmlonly 
-*
-*  Definition:
-*  ===========
-*
-*       SUBROUTINE ZUNMQL( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC,
-*                          WORK, LWORK, INFO )
-* 
-*       .. Scalar Arguments ..
-*       CHARACTER          SIDE, TRANS
-*       INTEGER            INFO, K, LDA, LDC, LWORK, M, N
-*       ..
-*       .. Array Arguments ..
-*       COMPLEX*16         A( LDA, * ), C( LDC, * ), TAU( * ), WORK( * )
-*       ..
-*  
-*
-*> \par Purpose:
-*  =============
-*>
-*> \verbatim
-*>
-*> ZUNMQL overwrites the general complex M-by-N matrix C with
-*>
-*>                 SIDE = 'L'     SIDE = 'R'
-*> TRANS = 'N':      Q * C          C * Q
-*> TRANS = 'C':      Q**H * C       C * Q**H
-*>
-*> where Q is a complex unitary matrix defined as the product of k
-*> elementary reflectors
-*>
-*>       Q = H(k) . . . H(2) H(1)
-*>
-*> as returned by ZGEQLF. Q is of order M if SIDE = 'L' and of order N
-*> if SIDE = 'R'.
-*> \endverbatim
-*
-*  Arguments:
-*  ==========
-*
-*> \param[in] SIDE
-*> \verbatim
-*>          SIDE is CHARACTER*1
-*>          = 'L': apply Q or Q**H from the Left;
-*>          = 'R': apply Q or Q**H from the Right.
-*> \endverbatim
-*>
-*> \param[in] TRANS
-*> \verbatim
-*>          TRANS is CHARACTER*1
-*>          = 'N':  No transpose, apply Q;
-*>          = 'C':  Transpose, apply Q**H.
-*> \endverbatim
-*>
-*> \param[in] M
-*> \verbatim
-*>          M is INTEGER
-*>          The number of rows of the matrix C. M >= 0.
-*> \endverbatim
-*>
-*> \param[in] N
-*> \verbatim
-*>          N is INTEGER
-*>          The number of columns of the matrix C. N >= 0.
-*> \endverbatim
-*>
-*> \param[in] K
-*> \verbatim
-*>          K is INTEGER
-*>          The number of elementary reflectors whose product defines
-*>          the matrix Q.
-*>          If SIDE = 'L', M >= K >= 0;
-*>          if SIDE = 'R', N >= K >= 0.
-*> \endverbatim
-*>
-*> \param[in] A
-*> \verbatim
-*>          A is COMPLEX*16 array, dimension (LDA,K)
-*>          The i-th column must contain the vector which defines the
-*>          elementary reflector H(i), for i = 1,2,...,k, as returned by
-*>          ZGEQLF in the last k columns of its array argument A.
-*> \endverbatim
-*>
-*> \param[in] LDA
-*> \verbatim
-*>          LDA is INTEGER
-*>          The leading dimension of the array A.
-*>          If SIDE = 'L', LDA >= max(1,M);
-*>          if SIDE = 'R', LDA >= max(1,N).
-*> \endverbatim
-*>
-*> \param[in] TAU
-*> \verbatim
-*>          TAU is COMPLEX*16 array, dimension (K)
-*>          TAU(i) must contain the scalar factor of the elementary
-*>          reflector H(i), as returned by ZGEQLF.
-*> \endverbatim
-*>
-*> \param[in,out] C
-*> \verbatim
-*>          C is COMPLEX*16 array, dimension (LDC,N)
-*>          On entry, the M-by-N matrix C.
-*>          On exit, C is overwritten by Q*C or Q**H*C or C*Q**H or C*Q.
-*> \endverbatim
-*>
-*> \param[in] LDC
-*> \verbatim
-*>          LDC is INTEGER
-*>          The leading dimension of the array C. LDC >= max(1,M).
-*> \endverbatim
-*>
-*> \param[out] WORK
-*> \verbatim
-*>          WORK is COMPLEX*16 array, dimension (MAX(1,LWORK))
-*>          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
-*> \endverbatim
-*>
-*> \param[in] LWORK
-*> \verbatim
-*>          LWORK is INTEGER
-*>          The dimension of the array WORK.
-*>          If SIDE = 'L', LWORK >= max(1,N);
-*>          if SIDE = 'R', LWORK >= max(1,M).
-*>          For good performance, LWORK should genreally be larger.
-*>
-*>          If LWORK = -1, then a workspace query is assumed; the routine
-*>          only calculates the optimal size of the WORK array, returns
-*>          this value as the first entry of the WORK array, and no error
-*>          message related to LWORK is issued by XERBLA.
-*> \endverbatim
-*>
-*> \param[out] INFO
-*> \verbatim
-*>          INFO is INTEGER
-*>          = 0:  successful exit
-*>          < 0:  if INFO = -i, the i-th argument had an illegal value
-*> \endverbatim
-*
-*  Authors:
-*  ========
-*
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
-*
-*> \date November 2015
-*
-*> \ingroup complex16OTHERcomputational
-*
-*  =====================================================================
-      SUBROUTINE ZUNMQL( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC,
-     $                   WORK, LWORK, INFO )
-*
-*  -- LAPACK computational routine (version 3.6.0) --
-*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
-*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2015
-*
-*     .. Scalar Arguments ..
-      CHARACTER          SIDE, TRANS
-      INTEGER            INFO, K, LDA, LDC, LWORK, M, N
-*     ..
-*     .. Array Arguments ..
-      COMPLEX*16         A( LDA, * ), C( LDC, * ), TAU( * ), WORK( * )
-*     ..
-*
-*  =====================================================================
-*
-*     .. Parameters ..
-      INTEGER            NBMAX, LDT, TSIZE
-      PARAMETER          ( NBMAX = 64, LDT = NBMAX+1,
-     $                     TSIZE = LDT*NBMAX )
-*     ..
-*     .. Local Scalars ..
-      LOGICAL            LEFT, LQUERY, NOTRAN
-      INTEGER            I, I1, I2, I3, IB, IINFO, IWT, LDWORK, LWKOPT,
-     $                   MI, NB, NBMIN, NI, NQ, NW
-*     ..
-*     .. External Functions ..
-      LOGICAL            LSAME
-      INTEGER            ILAENV
-      EXTERNAL           LSAME, ILAENV
-*     ..
-*     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZLARFB, ZLARFT, ZUNM2L
-*     ..
-*     .. Intrinsic Functions ..
-      INTRINSIC          MAX, MIN
-*     ..
-*     .. Executable Statements ..
-*
-*     Test the input arguments
-*
-      INFO = 0
-      LEFT = LSAME( SIDE, 'L' )
-      NOTRAN = LSAME( TRANS, 'N' )
-      LQUERY = ( LWORK.EQ.-1 )
-*
-*     NQ is the order of Q and NW is the minimum dimension of WORK
-*
-      IF( LEFT ) THEN
-         NQ = M
-         NW = MAX( 1, N )
-      ELSE
-         NQ = N
-         NW = MAX( 1, M )
-      END IF
-      IF( .NOT.LEFT .AND. .NOT.LSAME( SIDE, 'R' ) ) THEN
-         INFO = -1
-      ELSE IF( .NOT.NOTRAN .AND. .NOT.LSAME( TRANS, 'C' ) ) THEN
-         INFO = -2
-      ELSE IF( M.LT.0 ) THEN
-         INFO = -3
-      ELSE IF( N.LT.0 ) THEN
-         INFO = -4
-      ELSE IF( K.LT.0 .OR. K.GT.NQ ) THEN
-         INFO = -5
-      ELSE IF( LDA.LT.MAX( 1, NQ ) ) THEN
-         INFO = -7
-      ELSE IF( LDC.LT.MAX( 1, M ) ) THEN
-         INFO = -10
-      ELSE IF( LWORK.LT.NW .AND. .NOT.LQUERY ) THEN
-         INFO = -12
-      END IF
-*
-      IF( INFO.EQ.0 ) THEN
-*
-*        Compute the workspace requirements
-*
-         IF( M.EQ.0 .OR. N.EQ.0 ) THEN
-            LWKOPT = 1
-         ELSE
-            NB = MIN( NBMAX, ILAENV( 1, 'ZUNMQL', SIDE // TRANS, M, N,
-     $                               K, -1 ) )
-            LWKOPT = NW*NB + TSIZE
-         END IF
-         WORK( 1 ) = LWKOPT
-      END IF
-*
-      IF( INFO.NE.0 ) THEN
-         CALL XERBLA( 'ZUNMQL', -INFO )
-         RETURN
-      ELSE IF( LQUERY ) THEN
-         RETURN
-      END IF
-*
-*     Quick return if possible
-*
-      IF( M.EQ.0 .OR. N.EQ.0 ) THEN
-         RETURN
-      END IF
-*
-      NBMIN = 2
-      LDWORK = NW
-      IF( NB.GT.1 .AND. NB.LT.K ) THEN
-         IF( LWORK.LT.NW*NB+TSIZE ) THEN
-            NB = (LWORK-TSIZE) / LDWORK
-            NBMIN = MAX( 2, ILAENV( 2, 'ZUNMQL', SIDE // TRANS, M, N, K,
-     $              -1 ) )
-         END IF
-      END IF
-*
-      IF( NB.LT.NBMIN .OR. NB.GE.K ) THEN
-*
-*        Use unblocked code
-*
-         CALL ZUNM2L( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC, WORK,
-     $                IINFO )
-      ELSE
-*
-*        Use blocked code
-*
-         IWT = 1 + NW*NB
-         IF( ( LEFT .AND. NOTRAN ) .OR.
-     $       ( .NOT.LEFT .AND. .NOT.NOTRAN ) ) THEN
-            I1 = 1
-            I2 = K
-            I3 = NB
-         ELSE
-            I1 = ( ( K-1 ) / NB )*NB + 1
-            I2 = 1
-            I3 = -NB
-         END IF
-*
-         IF( LEFT ) THEN
-            NI = N
-         ELSE
-            MI = M
-         END IF
-*
-         DO 10 I = I1, I2, I3
-            IB = MIN( NB, K-I+1 )
-*
-*           Form the triangular factor of the block reflector
-*           H = H(i+ib-1) . . . H(i+1) H(i)
-*
-            CALL ZLARFT( 'Backward', 'Columnwise', NQ-K+I+IB-1, IB,
-     $                   A( 1, I ), LDA, TAU( I ), WORK( IWT ), LDT )
-            IF( LEFT ) THEN
-*
-*              H or H**H is applied to C(1:m-k+i+ib-1,1:n)
-*
-               MI = M - K + I + IB - 1
-            ELSE
-*
-*              H or H**H is applied to C(1:m,1:n-k+i+ib-1)
-*
-               NI = N - K + I + IB - 1
-            END IF
-*
-*           Apply H or H**H
-*
-            CALL ZLARFB( SIDE, TRANS, 'Backward', 'Columnwise', MI, NI,
-     $                   IB, A( 1, I ), LDA, WORK( IWT ), LDT, C, LDC,
-     $                   WORK, LDWORK )
-   10    CONTINUE
-      END IF
-      WORK( 1 ) = LWKOPT
-      RETURN
-*
-*     End of ZUNMQL
-*
-      END
-*> \brief \b ZUNMQR
-*
-*  =========== DOCUMENTATION ===========
-*
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
-*
-*> \htmlonly
-*> Download ZUNMQR + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zunmqr.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zunmqr.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zunmqr.f"> 
-*> [TXT]</a>
-*> \endhtmlonly 
-*
-*  Definition:
-*  ===========
-*
-*       SUBROUTINE ZUNMQR( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC,
-*                          WORK, LWORK, INFO )
-* 
-*       .. Scalar Arguments ..
-*       CHARACTER          SIDE, TRANS
-*       INTEGER            INFO, K, LDA, LDC, LWORK, M, N
-*       ..
-*       .. Array Arguments ..
-*       COMPLEX*16         A( LDA, * ), C( LDC, * ), TAU( * ), WORK( * )
-*       ..
-*  
-*
-*> \par Purpose:
-*  =============
-*>
-*> \verbatim
-*>
-*> ZUNMQR overwrites the general complex M-by-N matrix C with
-*>
-*>                 SIDE = 'L'     SIDE = 'R'
-*> TRANS = 'N':      Q * C          C * Q
-*> TRANS = 'C':      Q**H * C       C * Q**H
-*>
-*> where Q is a complex unitary matrix defined as the product of k
-*> elementary reflectors
-*>
-*>       Q = H(1) H(2) . . . H(k)
-*>
-*> as returned by ZGEQRF. Q is of order M if SIDE = 'L' and of order N
-*> if SIDE = 'R'.
-*> \endverbatim
-*
-*  Arguments:
-*  ==========
-*
-*> \param[in] SIDE
-*> \verbatim
-*>          SIDE is CHARACTER*1
-*>          = 'L': apply Q or Q**H from the Left;
-*>          = 'R': apply Q or Q**H from the Right.
-*> \endverbatim
-*>
-*> \param[in] TRANS
-*> \verbatim
-*>          TRANS is CHARACTER*1
-*>          = 'N':  No transpose, apply Q;
-*>          = 'C':  Conjugate transpose, apply Q**H.
-*> \endverbatim
-*>
-*> \param[in] M
-*> \verbatim
-*>          M is INTEGER
-*>          The number of rows of the matrix C. M >= 0.
-*> \endverbatim
-*>
-*> \param[in] N
-*> \verbatim
-*>          N is INTEGER
-*>          The number of columns of the matrix C. N >= 0.
-*> \endverbatim
-*>
-*> \param[in] K
-*> \verbatim
-*>          K is INTEGER
-*>          The number of elementary reflectors whose product defines
-*>          the matrix Q.
-*>          If SIDE = 'L', M >= K >= 0;
-*>          if SIDE = 'R', N >= K >= 0.
-*> \endverbatim
-*>
-*> \param[in] A
-*> \verbatim
-*>          A is COMPLEX*16 array, dimension (LDA,K)
-*>          The i-th column must contain the vector which defines the
-*>          elementary reflector H(i), for i = 1,2,...,k, as returned by
-*>          ZGEQRF in the first k columns of its array argument A.
-*> \endverbatim
-*>
-*> \param[in] LDA
-*> \verbatim
-*>          LDA is INTEGER
-*>          The leading dimension of the array A.
-*>          If SIDE = 'L', LDA >= max(1,M);
-*>          if SIDE = 'R', LDA >= max(1,N).
-*> \endverbatim
-*>
-*> \param[in] TAU
-*> \verbatim
-*>          TAU is COMPLEX*16 array, dimension (K)
-*>          TAU(i) must contain the scalar factor of the elementary
-*>          reflector H(i), as returned by ZGEQRF.
-*> \endverbatim
-*>
-*> \param[in,out] C
-*> \verbatim
-*>          C is COMPLEX*16 array, dimension (LDC,N)
-*>          On entry, the M-by-N matrix C.
-*>          On exit, C is overwritten by Q*C or Q**H*C or C*Q**H or C*Q.
-*> \endverbatim
-*>
-*> \param[in] LDC
-*> \verbatim
-*>          LDC is INTEGER
-*>          The leading dimension of the array C. LDC >= max(1,M).
-*> \endverbatim
-*>
-*> \param[out] WORK
-*> \verbatim
-*>          WORK is COMPLEX*16 array, dimension (MAX(1,LWORK))
-*>          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
-*> \endverbatim
-*>
-*> \param[in] LWORK
-*> \verbatim
-*>          LWORK is INTEGER
-*>          The dimension of the array WORK.
-*>          If SIDE = 'L', LWORK >= max(1,N);
-*>          if SIDE = 'R', LWORK >= max(1,M).
-*>          For good performance, LWORK should generally be larger.
-*>
-*>          If LWORK = -1, then a workspace query is assumed; the routine
-*>          only calculates the optimal size of the WORK array, returns
-*>          this value as the first entry of the WORK array, and no error
-*>          message related to LWORK is issued by XERBLA.
-*> \endverbatim
-*>
-*> \param[out] INFO
-*> \verbatim
-*>          INFO is INTEGER
-*>          = 0:  successful exit
-*>          < 0:  if INFO = -i, the i-th argument had an illegal value
-*> \endverbatim
-*
-*  Authors:
-*  ========
-*
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
-*
-*> \date November 2015
-*
-*> \ingroup complex16OTHERcomputational
-*
-*  =====================================================================
-      SUBROUTINE ZUNMQR( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC,
-     $                   WORK, LWORK, INFO )
-*
-*  -- LAPACK computational routine (version 3.6.0) --
-*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
-*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2015
-*
-*     .. Scalar Arguments ..
-      CHARACTER          SIDE, TRANS
-      INTEGER            INFO, K, LDA, LDC, LWORK, M, N
-*     ..
-*     .. Array Arguments ..
-      COMPLEX*16         A( LDA, * ), C( LDC, * ), TAU( * ), WORK( * )
-*     ..
-*
-*  =====================================================================
-*
-*     .. Parameters ..
-      INTEGER            NBMAX, LDT, TSIZE
-      PARAMETER          ( NBMAX = 64, LDT = NBMAX+1,
-     $                     TSIZE = LDT*NBMAX )
-*     ..
-*     .. Local Scalars ..
-      LOGICAL            LEFT, LQUERY, NOTRAN
-      INTEGER            I, I1, I2, I3, IB, IC, IINFO, IWT, JC, LDWORK,
-     $                   LWKOPT, MI, NB, NBMIN, NI, NQ, NW
-*     ..
-*     .. External Functions ..
-      LOGICAL            LSAME
-      INTEGER            ILAENV
-      EXTERNAL           LSAME, ILAENV
-*     ..
-*     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZLARFB, ZLARFT, ZUNM2R
-*     ..
-*     .. Intrinsic Functions ..
-      INTRINSIC          MAX, MIN
-*     ..
-*     .. Executable Statements ..
-*
-*     Test the input arguments
-*
-      INFO = 0
-      LEFT = LSAME( SIDE, 'L' )
-      NOTRAN = LSAME( TRANS, 'N' )
-      LQUERY = ( LWORK.EQ.-1 )
-*
-*     NQ is the order of Q and NW is the minimum dimension of WORK
-*
-      IF( LEFT ) THEN
-         NQ = M
-         NW = N
-      ELSE
-         NQ = N
-         NW = M
-      END IF
-      IF( .NOT.LEFT .AND. .NOT.LSAME( SIDE, 'R' ) ) THEN
-         INFO = -1
-      ELSE IF( .NOT.NOTRAN .AND. .NOT.LSAME( TRANS, 'C' ) ) THEN
-         INFO = -2
-      ELSE IF( M.LT.0 ) THEN
-         INFO = -3
-      ELSE IF( N.LT.0 ) THEN
-         INFO = -4
-      ELSE IF( K.LT.0 .OR. K.GT.NQ ) THEN
-         INFO = -5
-      ELSE IF( LDA.LT.MAX( 1, NQ ) ) THEN
-         INFO = -7
-      ELSE IF( LDC.LT.MAX( 1, M ) ) THEN
-         INFO = -10
-      ELSE IF( LWORK.LT.MAX( 1, NW ) .AND. .NOT.LQUERY ) THEN
-         INFO = -12
-      END IF
-*
-      IF( INFO.EQ.0 ) THEN
-*
-*        Compute the workspace requirements
-*
-         NB = MIN( NBMAX, ILAENV( 1, 'ZUNMQR', SIDE // TRANS, M, N, K,
-     $        -1 ) )
-         LWKOPT = MAX( 1, NW )*NB + TSIZE
-         WORK( 1 ) = LWKOPT
-      END IF
-*
-      IF( INFO.NE.0 ) THEN
-         CALL XERBLA( 'ZUNMQR', -INFO )
-         RETURN
-      ELSE IF( LQUERY ) THEN
-         RETURN
-      END IF
-*
-*     Quick return if possible
-*
-      IF( M.EQ.0 .OR. N.EQ.0 .OR. K.EQ.0 ) THEN
-         WORK( 1 ) = 1
-         RETURN
-      END IF
-*
-      NBMIN = 2
-      LDWORK = NW
-      IF( NB.GT.1 .AND. NB.LT.K ) THEN
-         IF( LWORK.LT.NW*NB+TSIZE ) THEN
-            NB = (LWORK-TSIZE) / LDWORK
-            NBMIN = MAX( 2, ILAENV( 2, 'ZUNMQR', SIDE // TRANS, M, N, K,
-     $              -1 ) )
-         END IF
-      END IF
-*
-      IF( NB.LT.NBMIN .OR. NB.GE.K ) THEN
-*
-*        Use unblocked code
-*
-         CALL ZUNM2R( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC, WORK,
-     $                IINFO )
-      ELSE
-*
-*        Use blocked code
-*
-         IWT = 1 + NW*NB
-         IF( ( LEFT .AND. .NOT.NOTRAN ) .OR.
-     $       ( .NOT.LEFT .AND. NOTRAN ) ) THEN
-            I1 = 1
-            I2 = K
-            I3 = NB
-         ELSE
-            I1 = ( ( K-1 ) / NB )*NB + 1
-            I2 = 1
-            I3 = -NB
-         END IF
-*
-         IF( LEFT ) THEN
-            NI = N
-            JC = 1
-         ELSE
-            MI = M
-            IC = 1
-         END IF
-*
-         DO 10 I = I1, I2, I3
-            IB = MIN( NB, K-I+1 )
-*
-*           Form the triangular factor of the block reflector
-*           H = H(i) H(i+1) . . . H(i+ib-1)
-*
-            CALL ZLARFT( 'Forward', 'Columnwise', NQ-I+1, IB, A( I, I ),
-     $                   LDA, TAU( I ), WORK( IWT ), LDT )
-            IF( LEFT ) THEN
-*
-*              H or H**H is applied to C(i:m,1:n)
-*
-               MI = M - I + 1
-               IC = I
-            ELSE
-*
-*              H or H**H is applied to C(1:m,i:n)
-*
-               NI = N - I + 1
-               JC = I
-            END IF
-*
-*           Apply H or H**H
-*
-            CALL ZLARFB( SIDE, TRANS, 'Forward', 'Columnwise', MI, NI,
-     $                   IB, A( I, I ), LDA, WORK( IWT ), LDT,
-     $                   C( IC, JC ), LDC, WORK, LDWORK )
-   10    CONTINUE
-      END IF
-      WORK( 1 ) = LWKOPT
-      RETURN
-*
-*     End of ZUNMQR
-*
-      END
-*> \brief \b ZUNMTR
-*
-*  =========== DOCUMENTATION ===========
-*
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
-*
-*> \htmlonly
-*> Download ZUNMTR + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zunmtr.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zunmtr.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zunmtr.f"> 
-*> [TXT]</a>
-*> \endhtmlonly 
-*
-*  Definition:
-*  ===========
-*
-*       SUBROUTINE ZUNMTR( SIDE, UPLO, TRANS, M, N, A, LDA, TAU, C, LDC,
-*                          WORK, LWORK, INFO )
-* 
-*       .. Scalar Arguments ..
-*       CHARACTER          SIDE, TRANS, UPLO
-*       INTEGER            INFO, LDA, LDC, LWORK, M, N
-*       ..
-*       .. Array Arguments ..
-*       COMPLEX*16         A( LDA, * ), C( LDC, * ), TAU( * ), WORK( * )
-*       ..
-*  
-*
-*> \par Purpose:
-*  =============
-*>
-*> \verbatim
-*>
-*> ZUNMTR overwrites the general complex M-by-N matrix C with
-*>
-*>                 SIDE = 'L'     SIDE = 'R'
-*> TRANS = 'N':      Q * C          C * Q
-*> TRANS = 'C':      Q**H * C       C * Q**H
-*>
-*> where Q is a complex unitary matrix of order nq, with nq = m if
-*> SIDE = 'L' and nq = n if SIDE = 'R'. Q is defined as the product of
-*> nq-1 elementary reflectors, as returned by ZHETRD:
-*>
-*> if UPLO = 'U', Q = H(nq-1) . . . H(2) H(1);
-*>
-*> if UPLO = 'L', Q = H(1) H(2) . . . H(nq-1).
-*> \endverbatim
-*
-*  Arguments:
-*  ==========
-*
-*> \param[in] SIDE
-*> \verbatim
-*>          SIDE is CHARACTER*1
-*>          = 'L': apply Q or Q**H from the Left;
-*>          = 'R': apply Q or Q**H from the Right.
-*> \endverbatim
-*>
-*> \param[in] UPLO
-*> \verbatim
-*>          UPLO is CHARACTER*1
-*>          = 'U': Upper triangle of A contains elementary reflectors
-*>                 from ZHETRD;
-*>          = 'L': Lower triangle of A contains elementary reflectors
-*>                 from ZHETRD.
-*> \endverbatim
-*>
-*> \param[in] TRANS
-*> \verbatim
-*>          TRANS is CHARACTER*1
-*>          = 'N':  No transpose, apply Q;
-*>          = 'C':  Conjugate transpose, apply Q**H.
-*> \endverbatim
-*>
-*> \param[in] M
-*> \verbatim
-*>          M is INTEGER
-*>          The number of rows of the matrix C. M >= 0.
-*> \endverbatim
-*>
-*> \param[in] N
-*> \verbatim
-*>          N is INTEGER
-*>          The number of columns of the matrix C. N >= 0.
-*> \endverbatim
-*>
-*> \param[in] A
-*> \verbatim
-*>          A is COMPLEX*16 array, dimension
-*>                               (LDA,M) if SIDE = 'L'
-*>                               (LDA,N) if SIDE = 'R'
-*>          The vectors which define the elementary reflectors, as
-*>          returned by ZHETRD.
-*> \endverbatim
-*>
-*> \param[in] LDA
-*> \verbatim
-*>          LDA is INTEGER
-*>          The leading dimension of the array A.
-*>          LDA >= max(1,M) if SIDE = 'L'; LDA >= max(1,N) if SIDE = 'R'.
-*> \endverbatim
-*>
-*> \param[in] TAU
-*> \verbatim
-*>          TAU is COMPLEX*16 array, dimension
-*>                               (M-1) if SIDE = 'L'
-*>                               (N-1) if SIDE = 'R'
-*>          TAU(i) must contain the scalar factor of the elementary
-*>          reflector H(i), as returned by ZHETRD.
-*> \endverbatim
-*>
-*> \param[in,out] C
-*> \verbatim
-*>          C is COMPLEX*16 array, dimension (LDC,N)
-*>          On entry, the M-by-N matrix C.
-*>          On exit, C is overwritten by Q*C or Q**H*C or C*Q**H or C*Q.
-*> \endverbatim
-*>
-*> \param[in] LDC
-*> \verbatim
-*>          LDC is INTEGER
-*>          The leading dimension of the array C. LDC >= max(1,M).
-*> \endverbatim
-*>
-*> \param[out] WORK
-*> \verbatim
-*>          WORK is COMPLEX*16 array, dimension (MAX(1,LWORK))
-*>          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
-*> \endverbatim
-*>
-*> \param[in] LWORK
-*> \verbatim
-*>          LWORK is INTEGER
-*>          The dimension of the array WORK.
-*>          If SIDE = 'L', LWORK >= max(1,N);
-*>          if SIDE = 'R', LWORK >= max(1,M).
-*>          For optimum performance LWORK >= N*NB if SIDE = 'L', and
-*>          LWORK >=M*NB if SIDE = 'R', where NB is the optimal
-*>          blocksize.
-*>
-*>          If LWORK = -1, then a workspace query is assumed; the routine
-*>          only calculates the optimal size of the WORK array, returns
-*>          this value as the first entry of the WORK array, and no error
-*>          message related to LWORK is issued by XERBLA.
-*> \endverbatim
-*>
-*> \param[out] INFO
-*> \verbatim
-*>          INFO is INTEGER
-*>          = 0:  successful exit
-*>          < 0:  if INFO = -i, the i-th argument had an illegal value
-*> \endverbatim
-*
-*  Authors:
-*  ========
-*
-*> \author Univ. of Tennessee 
-*> \author Univ. of California Berkeley 
-*> \author Univ. of Colorado Denver 
-*> \author NAG Ltd. 
-*
-*> \date November 2011
-*
-*> \ingroup complex16OTHERcomputational
-*
-*  =====================================================================
-      SUBROUTINE ZUNMTR( SIDE, UPLO, TRANS, M, N, A, LDA, TAU, C, LDC,
-     $                   WORK, LWORK, INFO )
-*
-*  -- LAPACK computational routine (version 3.4.0) --
-*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
-*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
-*
-*     .. Scalar Arguments ..
-      CHARACTER          SIDE, TRANS, UPLO
-      INTEGER            INFO, LDA, LDC, LWORK, M, N
-*     ..
-*     .. Array Arguments ..
-      COMPLEX*16         A( LDA, * ), C( LDC, * ), TAU( * ), WORK( * )
-*     ..
-*
-*  =====================================================================
-*
-*     .. Local Scalars ..
-      LOGICAL            LEFT, LQUERY, UPPER
-      INTEGER            I1, I2, IINFO, LWKOPT, MI, NB, NI, NQ, NW
-*     ..
-*     .. External Functions ..
-      LOGICAL            LSAME
-      INTEGER            ILAENV
-      EXTERNAL           LSAME, ILAENV
-*     ..
-*     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZUNMQL, ZUNMQR
-*     ..
-*     .. Intrinsic Functions ..
-      INTRINSIC          MAX
-*     ..
-*     .. Executable Statements ..
-*
-*     Test the input arguments
-*
-      INFO = 0
-      LEFT = LSAME( SIDE, 'L' )
-      UPPER = LSAME( UPLO, 'U' )
-      LQUERY = ( LWORK.EQ.-1 )
-*
-*     NQ is the order of Q and NW is the minimum dimension of WORK
-*
-      IF( LEFT ) THEN
-         NQ = M
-         NW = N
-      ELSE
-         NQ = N
-         NW = M
-      END IF
-      IF( .NOT.LEFT .AND. .NOT.LSAME( SIDE, 'R' ) ) THEN
-         INFO = -1
-      ELSE IF( .NOT.UPPER .AND. .NOT.LSAME( UPLO, 'L' ) ) THEN
-         INFO = -2
-      ELSE IF( .NOT.LSAME( TRANS, 'N' ) .AND. .NOT.LSAME( TRANS, 'C' ) )
-     $          THEN
-         INFO = -3
-      ELSE IF( M.LT.0 ) THEN
-         INFO = -4
-      ELSE IF( N.LT.0 ) THEN
-         INFO = -5
-      ELSE IF( LDA.LT.MAX( 1, NQ ) ) THEN
-         INFO = -7
-      ELSE IF( LDC.LT.MAX( 1, M ) ) THEN
-         INFO = -10
-      ELSE IF( LWORK.LT.MAX( 1, NW ) .AND. .NOT.LQUERY ) THEN
-         INFO = -12
-      END IF
-*
-      IF( INFO.EQ.0 ) THEN
-         IF( UPPER ) THEN
-            IF( LEFT ) THEN
-               NB = ILAENV( 1, 'ZUNMQL', SIDE // TRANS, M-1, N, M-1,
-     $              -1 )
-            ELSE
-               NB = ILAENV( 1, 'ZUNMQL', SIDE // TRANS, M, N-1, N-1,
-     $              -1 )
-            END IF
-         ELSE
-            IF( LEFT ) THEN
-               NB = ILAENV( 1, 'ZUNMQR', SIDE // TRANS, M-1, N, M-1,
-     $              -1 )
-            ELSE
-               NB = ILAENV( 1, 'ZUNMQR', SIDE // TRANS, M, N-1, N-1,
-     $              -1 )
-            END IF
-         END IF
-         LWKOPT = MAX( 1, NW )*NB
-         WORK( 1 ) = LWKOPT
-      END IF
-*
-      IF( INFO.NE.0 ) THEN
-         CALL XERBLA( 'ZUNMTR', -INFO )
-         RETURN
-      ELSE IF( LQUERY ) THEN
-         RETURN
-      END IF
-*
-*     Quick return if possible
-*
-      IF( M.EQ.0 .OR. N.EQ.0 .OR. NQ.EQ.1 ) THEN
-         WORK( 1 ) = 1
-         RETURN
-      END IF
-*
-      IF( LEFT ) THEN
-         MI = M - 1
-         NI = N
-      ELSE
-         MI = M
-         NI = N - 1
-      END IF
-*
-      IF( UPPER ) THEN
-*
-*        Q was determined by a call to ZHETRD with UPLO = 'U'
-*
-         CALL ZUNMQL( SIDE, TRANS, MI, NI, NQ-1, A( 1, 2 ), LDA, TAU, C,
-     $                LDC, WORK, LWORK, IINFO )
-      ELSE
-*
-*        Q was determined by a call to ZHETRD with UPLO = 'L'
-*
-         IF( LEFT ) THEN
-            I1 = 2
-            I2 = 1
-         ELSE
-            I1 = 1
-            I2 = 2
-         END IF
-         CALL ZUNMQR( SIDE, TRANS, MI, NI, NQ-1, A( 2, 1 ), LDA, TAU,
-     $                C( I1, I2 ), LDC, WORK, LWORK, IINFO )
-      END IF
-      WORK( 1 ) = LWKOPT
-      RETURN
-*
-*     End of ZUNMTR
-*
-      END
 *> \brief \b ZTREVC3
 *
 *  =========== DOCUMENTATION ===========
 *
-* Online html documentation available at 
-*            http://www.netlib.org/lapack/explore-html/ 
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
 *
 *> \htmlonly
-*> Download ZTREVC3 + dependencies 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/ztrevc3.f"> 
-*> [TGZ]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/ztrevc3.f"> 
-*> [ZIP]</a> 
-*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/ztrevc3.f"> 
+*> Download ZTREVC3 + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/ztrevc3.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/ztrevc3.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/ztrevc3.f">
 *> [TXT]</a>
-*> \endhtmlonly 
+*> \endhtmlonly
 *
 *  Definition:
 *  ===========
 *
-*       SUBROUTINE ZTREVC3( SIDE, HOWMNY, SELECT, N, T, LDT, VL, LDVL,
-*                           VR, LDVR, MM, M, WORK, LWORK, RWORK, INFO )
+*       SUBROUTINE ZTREVC3( SIDE, HOWMNY, SELECT, N, T, LDT, VL, LDVL, VR,
+*      $                    LDVR, MM, M, WORK, LWORK, RWORK, LRWORK, INFO)
 *
 *       .. Scalar Arguments ..
 *       CHARACTER          HOWMNY, SIDE
@@ -55541,7 +48024,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \date November 2011
+*> \date December 2016
 *
 *  @precisions fortran z -> c
 *
@@ -55566,10 +48049,10 @@
      $                    LDVR, MM, M, WORK, LWORK, RWORK, LRWORK, INFO)
       IMPLICIT NONE
 *
-*  -- LAPACK computational routine (version 3.4.0) --
+*  -- LAPACK computational routine (version 3.7.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     November 2011
+*     December 2016
 *
 *     .. Scalar Arguments ..
       CHARACTER          HOWMNY, SIDE
@@ -55607,6 +48090,7 @@
 *     ..
 *     .. External Subroutines ..
       EXTERNAL           XERBLA, ZCOPY, ZDSCAL, ZGEMV, ZLATRS
+     $                   ZGEMM, DLABAD, ZLASET
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS, DBLE, DCMPLX, CONJG, AIMAG, MAX
@@ -55912,7 +48396,7 @@
 *              When the number of vectors stored reaches NB,
 *              or if this was last vector, do the GEMM
                IF( (IV.EQ.NB) .OR. (KI.EQ.N) ) THEN
-                  CALL ZGEMM( 'N', 'N', N, IV, N-KI+IV, ONE,
+                  CALL ZGEMM( 'N', 'N', N, IV, N-KI+IV, CONE,
      $                        VL( 1, KI-IV+1 ), LDVL,
      $                        WORK( KI-IV+1 + (1)*N ), N,
      $                        CZERO,
@@ -55945,5 +48429,7523 @@
       RETURN
 *
 *     End of ZTREVC3
+*
+      END
+*> \brief \b ZTREXC
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZTREXC + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/ztrexc.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/ztrexc.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/ztrexc.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZTREXC( COMPQ, N, T, LDT, Q, LDQ, IFST, ILST, INFO )
+*
+*       .. Scalar Arguments ..
+*       CHARACTER          COMPQ
+*       INTEGER            IFST, ILST, INFO, LDQ, LDT, N
+*       ..
+*       .. Array Arguments ..
+*       COMPLEX*16         Q( LDQ, * ), T( LDT, * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZTREXC reorders the Schur factorization of a complex matrix
+*> A = Q*T*Q**H, so that the diagonal element of T with row index IFST
+*> is moved to row ILST.
+*>
+*> The Schur form T is reordered by a unitary similarity transformation
+*> Z**H*T*Z, and optionally the matrix Q of Schur vectors is updated by
+*> postmultplying it with Z.
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] COMPQ
+*> \verbatim
+*>          COMPQ is CHARACTER*1
+*>          = 'V':  update the matrix Q of Schur vectors;
+*>          = 'N':  do not update Q.
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The order of the matrix T. N >= 0.
+*>          If N == 0 arguments ILST and IFST may be any value.
+*> \endverbatim
+*>
+*> \param[in,out] T
+*> \verbatim
+*>          T is COMPLEX*16 array, dimension (LDT,N)
+*>          On entry, the upper triangular matrix T.
+*>          On exit, the reordered upper triangular matrix.
+*> \endverbatim
+*>
+*> \param[in] LDT
+*> \verbatim
+*>          LDT is INTEGER
+*>          The leading dimension of the array T. LDT >= max(1,N).
+*> \endverbatim
+*>
+*> \param[in,out] Q
+*> \verbatim
+*>          Q is COMPLEX*16 array, dimension (LDQ,N)
+*>          On entry, if COMPQ = 'V', the matrix Q of Schur vectors.
+*>          On exit, if COMPQ = 'V', Q has been postmultiplied by the
+*>          unitary transformation matrix Z which reorders T.
+*>          If COMPQ = 'N', Q is not referenced.
+*> \endverbatim
+*>
+*> \param[in] LDQ
+*> \verbatim
+*>          LDQ is INTEGER
+*>          The leading dimension of the array Q.  LDQ >= 1, and if
+*>          COMPQ = 'V', LDQ >= max(1,N).
+*> \endverbatim
+*>
+*> \param[in] IFST
+*> \verbatim
+*>          IFST is INTEGER
+*> \endverbatim
+*>
+*> \param[in] ILST
+*> \verbatim
+*>          ILST is INTEGER
+*>
+*>          Specify the reordering of the diagonal elements of T:
+*>          The element with row index IFST is moved to row ILST by a
+*>          sequence of transpositions between adjacent elements.
+*>          1 <= IFST <= N; 1 <= ILST <= N.
+*> \endverbatim
+*>
+*> \param[out] INFO
+*> \verbatim
+*>          INFO is INTEGER
+*>          = 0:  successful exit
+*>          < 0:  if INFO = -i, the i-th argument had an illegal value
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \date December 2016
+*
+*> \ingroup complex16OTHERcomputational
+*
+*  =====================================================================
+      SUBROUTINE ZTREXC( COMPQ, N, T, LDT, Q, LDQ, IFST, ILST, INFO )
+*
+*  -- LAPACK computational routine (version 3.7.0) --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*     December 2016
+*
+*     .. Scalar Arguments ..
+      CHARACTER          COMPQ
+      INTEGER            IFST, ILST, INFO, LDQ, LDT, N
+*     ..
+*     .. Array Arguments ..
+      COMPLEX*16         Q( LDQ, * ), T( LDT, * )
+*     ..
+*
+*  =====================================================================
+*
+*     .. Local Scalars ..
+      LOGICAL            WANTQ
+      INTEGER            K, M1, M2, M3
+      DOUBLE PRECISION   CS
+      COMPLEX*16         SN, T11, T22, TEMP
+*     ..
+*     .. External Functions ..
+      LOGICAL            LSAME
+      EXTERNAL           LSAME
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           XERBLA, ZLARTG, ZROT
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          DCONJG, MAX
+*     ..
+*     .. Executable Statements ..
+*
+*     Decode and test the input parameters.
+*
+      INFO = 0
+      WANTQ = LSAME( COMPQ, 'V' )
+      IF( .NOT.LSAME( COMPQ, 'N' ) .AND. .NOT.WANTQ ) THEN
+         INFO = -1
+      ELSE IF( N.LT.0 ) THEN
+         INFO = -2
+      ELSE IF( LDT.LT.MAX( 1, N ) ) THEN
+         INFO = -4
+      ELSE IF( LDQ.LT.1 .OR. ( WANTQ .AND. LDQ.LT.MAX( 1, N ) ) ) THEN
+         INFO = -6
+      ELSE IF(( IFST.LT.1 .OR. IFST.GT.N ).AND.( N.GT.0 )) THEN
+         INFO = -7
+      ELSE IF(( ILST.LT.1 .OR. ILST.GT.N ).AND.( N.GT.0 )) THEN
+         INFO = -8
+      END IF
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZTREXC', -INFO )
+         RETURN
+      END IF
+*
+*     Quick return if possible
+*
+      IF( N.LE.1 .OR. IFST.EQ.ILST )
+     $   RETURN
+*
+      IF( IFST.LT.ILST ) THEN
+*
+*        Move the IFST-th diagonal element forward down the diagonal.
+*
+         M1 = 0
+         M2 = -1
+         M3 = 1
+      ELSE
+*
+*        Move the IFST-th diagonal element backward up the diagonal.
+*
+         M1 = -1
+         M2 = 0
+         M3 = -1
+      END IF
+*
+      DO 10 K = IFST + M1, ILST + M2, M3
+*
+*        Interchange the k-th and (k+1)-th diagonal elements.
+*
+         T11 = T( K, K )
+         T22 = T( K+1, K+1 )
+*
+*        Determine the transformation to perform the interchange.
+*
+         CALL ZLARTG( T( K, K+1 ), T22-T11, CS, SN, TEMP )
+*
+*        Apply transformation to the matrix T.
+*
+         IF( K+2.LE.N )
+     $      CALL ZROT( N-K-1, T( K, K+2 ), LDT, T( K+1, K+2 ), LDT, CS,
+     $                 SN )
+         CALL ZROT( K-1, T( 1, K ), 1, T( 1, K+1 ), 1, CS,
+     $              DCONJG( SN ) )
+*
+         T( K, K ) = T22
+         T( K+1, K+1 ) = T11
+*
+         IF( WANTQ ) THEN
+*
+*           Accumulate transformation in the matrix Q.
+*
+            CALL ZROT( N, Q( 1, K ), 1, Q( 1, K+1 ), 1, CS,
+     $                 DCONJG( SN ) )
+         END IF
+*
+   10 CONTINUE
+*
+      RETURN
+*
+*     End of ZTREXC
+*
+      END
+*> \brief \b ZTRSEN
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZTRSEN + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/ztrsen.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/ztrsen.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/ztrsen.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZTRSEN( JOB, COMPQ, SELECT, N, T, LDT, Q, LDQ, W, M, S,
+*                          SEP, WORK, LWORK, INFO )
+*
+*       .. Scalar Arguments ..
+*       CHARACTER          COMPQ, JOB
+*       INTEGER            INFO, LDQ, LDT, LWORK, M, N
+*       DOUBLE PRECISION   S, SEP
+*       ..
+*       .. Array Arguments ..
+*       LOGICAL            SELECT( * )
+*       COMPLEX*16         Q( LDQ, * ), T( LDT, * ), W( * ), WORK( * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZTRSEN reorders the Schur factorization of a complex matrix
+*> A = Q*T*Q**H, so that a selected cluster of eigenvalues appears in
+*> the leading positions on the diagonal of the upper triangular matrix
+*> T, and the leading columns of Q form an orthonormal basis of the
+*> corresponding right invariant subspace.
+*>
+*> Optionally the routine computes the reciprocal condition numbers of
+*> the cluster of eigenvalues and/or the invariant subspace.
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] JOB
+*> \verbatim
+*>          JOB is CHARACTER*1
+*>          Specifies whether condition numbers are required for the
+*>          cluster of eigenvalues (S) or the invariant subspace (SEP):
+*>          = 'N': none;
+*>          = 'E': for eigenvalues only (S);
+*>          = 'V': for invariant subspace only (SEP);
+*>          = 'B': for both eigenvalues and invariant subspace (S and
+*>                 SEP).
+*> \endverbatim
+*>
+*> \param[in] COMPQ
+*> \verbatim
+*>          COMPQ is CHARACTER*1
+*>          = 'V': update the matrix Q of Schur vectors;
+*>          = 'N': do not update Q.
+*> \endverbatim
+*>
+*> \param[in] SELECT
+*> \verbatim
+*>          SELECT is LOGICAL array, dimension (N)
+*>          SELECT specifies the eigenvalues in the selected cluster. To
+*>          select the j-th eigenvalue, SELECT(j) must be set to .TRUE..
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The order of the matrix T. N >= 0.
+*> \endverbatim
+*>
+*> \param[in,out] T
+*> \verbatim
+*>          T is COMPLEX*16 array, dimension (LDT,N)
+*>          On entry, the upper triangular matrix T.
+*>          On exit, T is overwritten by the reordered matrix T, with the
+*>          selected eigenvalues as the leading diagonal elements.
+*> \endverbatim
+*>
+*> \param[in] LDT
+*> \verbatim
+*>          LDT is INTEGER
+*>          The leading dimension of the array T. LDT >= max(1,N).
+*> \endverbatim
+*>
+*> \param[in,out] Q
+*> \verbatim
+*>          Q is COMPLEX*16 array, dimension (LDQ,N)
+*>          On entry, if COMPQ = 'V', the matrix Q of Schur vectors.
+*>          On exit, if COMPQ = 'V', Q has been postmultiplied by the
+*>          unitary transformation matrix which reorders T; the leading M
+*>          columns of Q form an orthonormal basis for the specified
+*>          invariant subspace.
+*>          If COMPQ = 'N', Q is not referenced.
+*> \endverbatim
+*>
+*> \param[in] LDQ
+*> \verbatim
+*>          LDQ is INTEGER
+*>          The leading dimension of the array Q.
+*>          LDQ >= 1; and if COMPQ = 'V', LDQ >= N.
+*> \endverbatim
+*>
+*> \param[out] W
+*> \verbatim
+*>          W is COMPLEX*16 array, dimension (N)
+*>          The reordered eigenvalues of T, in the same order as they
+*>          appear on the diagonal of T.
+*> \endverbatim
+*>
+*> \param[out] M
+*> \verbatim
+*>          M is INTEGER
+*>          The dimension of the specified invariant subspace.
+*>          0 <= M <= N.
+*> \endverbatim
+*>
+*> \param[out] S
+*> \verbatim
+*>          S is DOUBLE PRECISION
+*>          If JOB = 'E' or 'B', S is a lower bound on the reciprocal
+*>          condition number for the selected cluster of eigenvalues.
+*>          S cannot underestimate the true reciprocal condition number
+*>          by more than a factor of sqrt(N). If M = 0 or N, S = 1.
+*>          If JOB = 'N' or 'V', S is not referenced.
+*> \endverbatim
+*>
+*> \param[out] SEP
+*> \verbatim
+*>          SEP is DOUBLE PRECISION
+*>          If JOB = 'V' or 'B', SEP is the estimated reciprocal
+*>          condition number of the specified invariant subspace. If
+*>          M = 0 or N, SEP = norm(T).
+*>          If JOB = 'N' or 'E', SEP is not referenced.
+*> \endverbatim
+*>
+*> \param[out] WORK
+*> \verbatim
+*>          WORK is COMPLEX*16 array, dimension (MAX(1,LWORK))
+*>          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
+*> \endverbatim
+*>
+*> \param[in] LWORK
+*> \verbatim
+*>          LWORK is INTEGER
+*>          The dimension of the array WORK.
+*>          If JOB = 'N', LWORK >= 1;
+*>          if JOB = 'E', LWORK = max(1,M*(N-M));
+*>          if JOB = 'V' or 'B', LWORK >= max(1,2*M*(N-M)).
+*>
+*>          If LWORK = -1, then a workspace query is assumed; the routine
+*>          only calculates the optimal size of the WORK array, returns
+*>          this value as the first entry of the WORK array, and no error
+*>          message related to LWORK is issued by XERBLA.
+*> \endverbatim
+*>
+*> \param[out] INFO
+*> \verbatim
+*>          INFO is INTEGER
+*>          = 0:  successful exit
+*>          < 0:  if INFO = -i, the i-th argument had an illegal value
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \date December 2016
+*
+*> \ingroup complex16OTHERcomputational
+*
+*> \par Further Details:
+*  =====================
+*>
+*> \verbatim
+*>
+*>  ZTRSEN first collects the selected eigenvalues by computing a unitary
+*>  transformation Z to move them to the top left corner of T. In other
+*>  words, the selected eigenvalues are the eigenvalues of T11 in:
+*>
+*>          Z**H * T * Z = ( T11 T12 ) n1
+*>                         (  0  T22 ) n2
+*>                            n1  n2
+*>
+*>  where N = n1+n2. The first
+*>  n1 columns of Z span the specified invariant subspace of T.
+*>
+*>  If T has been obtained from the Schur factorization of a matrix
+*>  A = Q*T*Q**H, then the reordered Schur factorization of A is given by
+*>  A = (Q*Z)*(Z**H*T*Z)*(Q*Z)**H, and the first n1 columns of Q*Z span the
+*>  corresponding invariant subspace of A.
+*>
+*>  The reciprocal condition number of the average of the eigenvalues of
+*>  T11 may be returned in S. S lies between 0 (very badly conditioned)
+*>  and 1 (very well conditioned). It is computed as follows. First we
+*>  compute R so that
+*>
+*>                         P = ( I  R ) n1
+*>                             ( 0  0 ) n2
+*>                               n1 n2
+*>
+*>  is the projector on the invariant subspace associated with T11.
+*>  R is the solution of the Sylvester equation:
+*>
+*>                        T11*R - R*T22 = T12.
+*>
+*>  Let F-norm(M) denote the Frobenius-norm of M and 2-norm(M) denote
+*>  the two-norm of M. Then S is computed as the lower bound
+*>
+*>                      (1 + F-norm(R)**2)**(-1/2)
+*>
+*>  on the reciprocal of 2-norm(P), the true reciprocal condition number.
+*>  S cannot underestimate 1 / 2-norm(P) by more than a factor of
+*>  sqrt(N).
+*>
+*>  An approximate error bound for the computed average of the
+*>  eigenvalues of T11 is
+*>
+*>                         EPS * norm(T) / S
+*>
+*>  where EPS is the machine precision.
+*>
+*>  The reciprocal condition number of the right invariant subspace
+*>  spanned by the first n1 columns of Z (or of Q*Z) is returned in SEP.
+*>  SEP is defined as the separation of T11 and T22:
+*>
+*>                     sep( T11, T22 ) = sigma-min( C )
+*>
+*>  where sigma-min(C) is the smallest singular value of the
+*>  n1*n2-by-n1*n2 matrix
+*>
+*>     C  = kprod( I(n2), T11 ) - kprod( transpose(T22), I(n1) )
+*>
+*>  I(m) is an m by m identity matrix, and kprod denotes the Kronecker
+*>  product. We estimate sigma-min(C) by the reciprocal of an estimate of
+*>  the 1-norm of inverse(C). The true reciprocal 1-norm of inverse(C)
+*>  cannot differ from sigma-min(C) by more than a factor of sqrt(n1*n2).
+*>
+*>  When SEP is small, small changes in T can cause large changes in
+*>  the invariant subspace. An approximate bound on the maximum angular
+*>  error in the computed right invariant subspace is
+*>
+*>                      EPS * norm(T) / SEP
+*> \endverbatim
+*>
+*  =====================================================================
+      SUBROUTINE ZTRSEN( JOB, COMPQ, SELECT, N, T, LDT, Q, LDQ, W, M, S,
+     $                   SEP, WORK, LWORK, INFO )
+*
+*  -- LAPACK computational routine (version 3.7.0) --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*     December 2016
+*
+*     .. Scalar Arguments ..
+      CHARACTER          COMPQ, JOB
+      INTEGER            INFO, LDQ, LDT, LWORK, M, N
+      DOUBLE PRECISION   S, SEP
+*     ..
+*     .. Array Arguments ..
+      LOGICAL            SELECT( * )
+      COMPLEX*16         Q( LDQ, * ), T( LDT, * ), W( * ), WORK( * )
+*     ..
+*
+*  =====================================================================
+*
+*     .. Parameters ..
+      DOUBLE PRECISION   ZERO, ONE
+      PARAMETER          ( ZERO = 0.0D+0, ONE = 1.0D+0 )
+*     ..
+*     .. Local Scalars ..
+      LOGICAL            LQUERY, WANTBH, WANTQ, WANTS, WANTSP
+      INTEGER            IERR, K, KASE, KS, LWMIN, N1, N2, NN
+      DOUBLE PRECISION   EST, RNORM, SCALE
+*     ..
+*     .. Local Arrays ..
+      INTEGER            ISAVE( 3 )
+      DOUBLE PRECISION   RWORK( 1 )
+*     ..
+*     .. External Functions ..
+      LOGICAL            LSAME
+      DOUBLE PRECISION   ZLANGE
+      EXTERNAL           LSAME, ZLANGE
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           XERBLA, ZLACN2, ZLACPY, ZTREXC, ZTRSYL
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          MAX, SQRT
+*     ..
+*     .. Executable Statements ..
+*
+*     Decode and test the input parameters.
+*
+      WANTBH = LSAME( JOB, 'B' )
+      WANTS = LSAME( JOB, 'E' ) .OR. WANTBH
+      WANTSP = LSAME( JOB, 'V' ) .OR. WANTBH
+      WANTQ = LSAME( COMPQ, 'V' )
+*
+*     Set M to the number of selected eigenvalues.
+*
+      M = 0
+      DO 10 K = 1, N
+         IF( SELECT( K ) )
+     $      M = M + 1
+   10 CONTINUE
+*
+      N1 = M
+      N2 = N - M
+      NN = N1*N2
+*
+      INFO = 0
+      LQUERY = ( LWORK.EQ.-1 )
+*
+      IF( WANTSP ) THEN
+         LWMIN = MAX( 1, 2*NN )
+      ELSE IF( LSAME( JOB, 'N' ) ) THEN
+         LWMIN = 1
+      ELSE IF( LSAME( JOB, 'E' ) ) THEN
+         LWMIN = MAX( 1, NN )
+      END IF
+*
+      IF( .NOT.LSAME( JOB, 'N' ) .AND. .NOT.WANTS .AND. .NOT.WANTSP )
+     $     THEN
+         INFO = -1
+      ELSE IF( .NOT.LSAME( COMPQ, 'N' ) .AND. .NOT.WANTQ ) THEN
+         INFO = -2
+      ELSE IF( N.LT.0 ) THEN
+         INFO = -4
+      ELSE IF( LDT.LT.MAX( 1, N ) ) THEN
+         INFO = -6
+      ELSE IF( LDQ.LT.1 .OR. ( WANTQ .AND. LDQ.LT.N ) ) THEN
+         INFO = -8
+      ELSE IF( LWORK.LT.LWMIN .AND. .NOT.LQUERY ) THEN
+         INFO = -14
+      END IF
+*
+      IF( INFO.EQ.0 ) THEN
+         WORK( 1 ) = LWMIN
+      END IF
+*
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZTRSEN', -INFO )
+         RETURN
+      ELSE IF( LQUERY ) THEN
+         RETURN
+      END IF
+*
+*     Quick return if possible
+*
+      IF( M.EQ.N .OR. M.EQ.0 ) THEN
+         IF( WANTS )
+     $      S = ONE
+         IF( WANTSP )
+     $      SEP = ZLANGE( '1', N, N, T, LDT, RWORK )
+         GO TO 40
+      END IF
+*
+*     Collect the selected eigenvalues at the top left corner of T.
+*
+      KS = 0
+      DO 20 K = 1, N
+         IF( SELECT( K ) ) THEN
+            KS = KS + 1
+*
+*           Swap the K-th eigenvalue to position KS.
+*
+            IF( K.NE.KS )
+     $         CALL ZTREXC( COMPQ, N, T, LDT, Q, LDQ, K, KS, IERR )
+         END IF
+   20 CONTINUE
+*
+      IF( WANTS ) THEN
+*
+*        Solve the Sylvester equation for R:
+*
+*           T11*R - R*T22 = scale*T12
+*
+         CALL ZLACPY( 'F', N1, N2, T( 1, N1+1 ), LDT, WORK, N1 )
+         CALL ZTRSYL( 'N', 'N', -1, N1, N2, T, LDT, T( N1+1, N1+1 ),
+     $                LDT, WORK, N1, SCALE, IERR )
+*
+*        Estimate the reciprocal of the condition number of the cluster
+*        of eigenvalues.
+*
+         RNORM = ZLANGE( 'F', N1, N2, WORK, N1, RWORK )
+         IF( RNORM.EQ.ZERO ) THEN
+            S = ONE
+         ELSE
+            S = SCALE / ( SQRT( SCALE*SCALE / RNORM+RNORM )*
+     $          SQRT( RNORM ) )
+         END IF
+      END IF
+*
+      IF( WANTSP ) THEN
+*
+*        Estimate sep(T11,T22).
+*
+         EST = ZERO
+         KASE = 0
+   30    CONTINUE
+         CALL ZLACN2( NN, WORK( NN+1 ), WORK, EST, KASE, ISAVE )
+         IF( KASE.NE.0 ) THEN
+            IF( KASE.EQ.1 ) THEN
+*
+*              Solve T11*R - R*T22 = scale*X.
+*
+               CALL ZTRSYL( 'N', 'N', -1, N1, N2, T, LDT,
+     $                      T( N1+1, N1+1 ), LDT, WORK, N1, SCALE,
+     $                      IERR )
+            ELSE
+*
+*              Solve T11**H*R - R*T22**H = scale*X.
+*
+               CALL ZTRSYL( 'C', 'C', -1, N1, N2, T, LDT,
+     $                      T( N1+1, N1+1 ), LDT, WORK, N1, SCALE,
+     $                      IERR )
+            END IF
+            GO TO 30
+         END IF
+*
+         SEP = SCALE / EST
+      END IF
+*
+   40 CONTINUE
+*
+*     Copy reordered eigenvalues to W.
+*
+      DO 50 K = 1, N
+         W( K ) = T( K, K )
+   50 CONTINUE
+*
+      WORK( 1 ) = LWMIN
+*
+      RETURN
+*
+*     End of ZTRSEN
+*
+      END
+*> \brief \b ZTRSYL
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZTRSYL + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/ztrsyl.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/ztrsyl.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/ztrsyl.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZTRSYL( TRANA, TRANB, ISGN, M, N, A, LDA, B, LDB, C,
+*                          LDC, SCALE, INFO )
+*
+*       .. Scalar Arguments ..
+*       CHARACTER          TRANA, TRANB
+*       INTEGER            INFO, ISGN, LDA, LDB, LDC, M, N
+*       DOUBLE PRECISION   SCALE
+*       ..
+*       .. Array Arguments ..
+*       COMPLEX*16         A( LDA, * ), B( LDB, * ), C( LDC, * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZTRSYL solves the complex Sylvester matrix equation:
+*>
+*>    op(A)*X + X*op(B) = scale*C or
+*>    op(A)*X - X*op(B) = scale*C,
+*>
+*> where op(A) = A or A**H, and A and B are both upper triangular. A is
+*> M-by-M and B is N-by-N; the right hand side C and the solution X are
+*> M-by-N; and scale is an output scale factor, set <= 1 to avoid
+*> overflow in X.
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] TRANA
+*> \verbatim
+*>          TRANA is CHARACTER*1
+*>          Specifies the option op(A):
+*>          = 'N': op(A) = A    (No transpose)
+*>          = 'C': op(A) = A**H (Conjugate transpose)
+*> \endverbatim
+*>
+*> \param[in] TRANB
+*> \verbatim
+*>          TRANB is CHARACTER*1
+*>          Specifies the option op(B):
+*>          = 'N': op(B) = B    (No transpose)
+*>          = 'C': op(B) = B**H (Conjugate transpose)
+*> \endverbatim
+*>
+*> \param[in] ISGN
+*> \verbatim
+*>          ISGN is INTEGER
+*>          Specifies the sign in the equation:
+*>          = +1: solve op(A)*X + X*op(B) = scale*C
+*>          = -1: solve op(A)*X - X*op(B) = scale*C
+*> \endverbatim
+*>
+*> \param[in] M
+*> \verbatim
+*>          M is INTEGER
+*>          The order of the matrix A, and the number of rows in the
+*>          matrices X and C. M >= 0.
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The order of the matrix B, and the number of columns in the
+*>          matrices X and C. N >= 0.
+*> \endverbatim
+*>
+*> \param[in] A
+*> \verbatim
+*>          A is COMPLEX*16 array, dimension (LDA,M)
+*>          The upper triangular matrix A.
+*> \endverbatim
+*>
+*> \param[in] LDA
+*> \verbatim
+*>          LDA is INTEGER
+*>          The leading dimension of the array A. LDA >= max(1,M).
+*> \endverbatim
+*>
+*> \param[in] B
+*> \verbatim
+*>          B is COMPLEX*16 array, dimension (LDB,N)
+*>          The upper triangular matrix B.
+*> \endverbatim
+*>
+*> \param[in] LDB
+*> \verbatim
+*>          LDB is INTEGER
+*>          The leading dimension of the array B. LDB >= max(1,N).
+*> \endverbatim
+*>
+*> \param[in,out] C
+*> \verbatim
+*>          C is COMPLEX*16 array, dimension (LDC,N)
+*>          On entry, the M-by-N right hand side matrix C.
+*>          On exit, C is overwritten by the solution matrix X.
+*> \endverbatim
+*>
+*> \param[in] LDC
+*> \verbatim
+*>          LDC is INTEGER
+*>          The leading dimension of the array C. LDC >= max(1,M)
+*> \endverbatim
+*>
+*> \param[out] SCALE
+*> \verbatim
+*>          SCALE is DOUBLE PRECISION
+*>          The scale factor, scale, set <= 1 to avoid overflow in X.
+*> \endverbatim
+*>
+*> \param[out] INFO
+*> \verbatim
+*>          INFO is INTEGER
+*>          = 0: successful exit
+*>          < 0: if INFO = -i, the i-th argument had an illegal value
+*>          = 1: A and B have common or very close eigenvalues; perturbed
+*>               values were used to solve the equation (but the matrices
+*>               A and B are unchanged).
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \date December 2016
+*
+*> \ingroup complex16SYcomputational
+*
+*  =====================================================================
+      SUBROUTINE ZTRSYL( TRANA, TRANB, ISGN, M, N, A, LDA, B, LDB, C,
+     $                   LDC, SCALE, INFO )
+*
+*  -- LAPACK computational routine (version 3.7.0) --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*     December 2016
+*
+*     .. Scalar Arguments ..
+      CHARACTER          TRANA, TRANB
+      INTEGER            INFO, ISGN, LDA, LDB, LDC, M, N
+      DOUBLE PRECISION   SCALE
+*     ..
+*     .. Array Arguments ..
+      COMPLEX*16         A( LDA, * ), B( LDB, * ), C( LDC, * )
+*     ..
+*
+*  =====================================================================
+*
+*     .. Parameters ..
+      DOUBLE PRECISION   ONE
+      PARAMETER          ( ONE = 1.0D+0 )
+*     ..
+*     .. Local Scalars ..
+      LOGICAL            NOTRNA, NOTRNB
+      INTEGER            J, K, L
+      DOUBLE PRECISION   BIGNUM, DA11, DB, EPS, SCALOC, SGN, SMIN,
+     $                   SMLNUM
+      COMPLEX*16         A11, SUML, SUMR, VEC, X11
+*     ..
+*     .. Local Arrays ..
+      DOUBLE PRECISION   DUM( 1 )
+*     ..
+*     .. External Functions ..
+      LOGICAL            LSAME
+      DOUBLE PRECISION   DLAMCH, ZLANGE
+      COMPLEX*16         ZDOTC, ZDOTU, ZLADIV
+      EXTERNAL           LSAME, DLAMCH, ZLANGE, ZDOTC, ZDOTU, ZLADIV
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           DLABAD, XERBLA, ZDSCAL
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          ABS, DBLE, DCMPLX, DCONJG, DIMAG, MAX, MIN
+*     ..
+*     .. Executable Statements ..
+*
+*     Decode and Test input parameters
+*
+      NOTRNA = LSAME( TRANA, 'N' )
+      NOTRNB = LSAME( TRANB, 'N' )
+*
+      INFO = 0
+      IF( .NOT.NOTRNA .AND. .NOT.LSAME( TRANA, 'C' ) ) THEN
+         INFO = -1
+      ELSE IF( .NOT.NOTRNB .AND. .NOT.LSAME( TRANB, 'C' ) ) THEN
+         INFO = -2
+      ELSE IF( ISGN.NE.1 .AND. ISGN.NE.-1 ) THEN
+         INFO = -3
+      ELSE IF( M.LT.0 ) THEN
+         INFO = -4
+      ELSE IF( N.LT.0 ) THEN
+         INFO = -5
+      ELSE IF( LDA.LT.MAX( 1, M ) ) THEN
+         INFO = -7
+      ELSE IF( LDB.LT.MAX( 1, N ) ) THEN
+         INFO = -9
+      ELSE IF( LDC.LT.MAX( 1, M ) ) THEN
+         INFO = -11
+      END IF
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZTRSYL', -INFO )
+         RETURN
+      END IF
+*
+*     Quick return if possible
+*
+      SCALE = ONE
+      IF( M.EQ.0 .OR. N.EQ.0 )
+     $   RETURN
+*
+*     Set constants to control overflow
+*
+      EPS = DLAMCH( 'P' )
+      SMLNUM = DLAMCH( 'S' )
+      BIGNUM = ONE / SMLNUM
+      CALL DLABAD( SMLNUM, BIGNUM )
+      SMLNUM = SMLNUM*DBLE( M*N ) / EPS
+      BIGNUM = ONE / SMLNUM
+      SMIN = MAX( SMLNUM, EPS*ZLANGE( 'M', M, M, A, LDA, DUM ),
+     $       EPS*ZLANGE( 'M', N, N, B, LDB, DUM ) )
+      SGN = ISGN
+*
+      IF( NOTRNA .AND. NOTRNB ) THEN
+*
+*        Solve    A*X + ISGN*X*B = scale*C.
+*
+*        The (K,L)th block of X is determined starting from
+*        bottom-left corner column by column by
+*
+*            A(K,K)*X(K,L) + ISGN*X(K,L)*B(L,L) = C(K,L) - R(K,L)
+*
+*        Where
+*                    M                        L-1
+*          R(K,L) = SUM [A(K,I)*X(I,L)] +ISGN*SUM [X(K,J)*B(J,L)].
+*                  I=K+1                      J=1
+*
+         DO 30 L = 1, N
+            DO 20 K = M, 1, -1
+*
+               SUML = ZDOTU( M-K, A( K, MIN( K+1, M ) ), LDA,
+     $                C( MIN( K+1, M ), L ), 1 )
+               SUMR = ZDOTU( L-1, C( K, 1 ), LDC, B( 1, L ), 1 )
+               VEC = C( K, L ) - ( SUML+SGN*SUMR )
+*
+               SCALOC = ONE
+               A11 = A( K, K ) + SGN*B( L, L )
+               DA11 = ABS( DBLE( A11 ) ) + ABS( DIMAG( A11 ) )
+               IF( DA11.LE.SMIN ) THEN
+                  A11 = SMIN
+                  DA11 = SMIN
+                  INFO = 1
+               END IF
+               DB = ABS( DBLE( VEC ) ) + ABS( DIMAG( VEC ) )
+               IF( DA11.LT.ONE .AND. DB.GT.ONE ) THEN
+                  IF( DB.GT.BIGNUM*DA11 )
+     $               SCALOC = ONE / DB
+               END IF
+               X11 = ZLADIV( VEC*DCMPLX( SCALOC ), A11 )
+*
+               IF( SCALOC.NE.ONE ) THEN
+                  DO 10 J = 1, N
+                     CALL ZDSCAL( M, SCALOC, C( 1, J ), 1 )
+   10             CONTINUE
+                  SCALE = SCALE*SCALOC
+               END IF
+               C( K, L ) = X11
+*
+   20       CONTINUE
+   30    CONTINUE
+*
+      ELSE IF( .NOT.NOTRNA .AND. NOTRNB ) THEN
+*
+*        Solve    A**H *X + ISGN*X*B = scale*C.
+*
+*        The (K,L)th block of X is determined starting from
+*        upper-left corner column by column by
+*
+*            A**H(K,K)*X(K,L) + ISGN*X(K,L)*B(L,L) = C(K,L) - R(K,L)
+*
+*        Where
+*                   K-1                           L-1
+*          R(K,L) = SUM [A**H(I,K)*X(I,L)] + ISGN*SUM [X(K,J)*B(J,L)]
+*                   I=1                           J=1
+*
+         DO 60 L = 1, N
+            DO 50 K = 1, M
+*
+               SUML = ZDOTC( K-1, A( 1, K ), 1, C( 1, L ), 1 )
+               SUMR = ZDOTU( L-1, C( K, 1 ), LDC, B( 1, L ), 1 )
+               VEC = C( K, L ) - ( SUML+SGN*SUMR )
+*
+               SCALOC = ONE
+               A11 = DCONJG( A( K, K ) ) + SGN*B( L, L )
+               DA11 = ABS( DBLE( A11 ) ) + ABS( DIMAG( A11 ) )
+               IF( DA11.LE.SMIN ) THEN
+                  A11 = SMIN
+                  DA11 = SMIN
+                  INFO = 1
+               END IF
+               DB = ABS( DBLE( VEC ) ) + ABS( DIMAG( VEC ) )
+               IF( DA11.LT.ONE .AND. DB.GT.ONE ) THEN
+                  IF( DB.GT.BIGNUM*DA11 )
+     $               SCALOC = ONE / DB
+               END IF
+*
+               X11 = ZLADIV( VEC*DCMPLX( SCALOC ), A11 )
+*
+               IF( SCALOC.NE.ONE ) THEN
+                  DO 40 J = 1, N
+                     CALL ZDSCAL( M, SCALOC, C( 1, J ), 1 )
+   40             CONTINUE
+                  SCALE = SCALE*SCALOC
+               END IF
+               C( K, L ) = X11
+*
+   50       CONTINUE
+   60    CONTINUE
+*
+      ELSE IF( .NOT.NOTRNA .AND. .NOT.NOTRNB ) THEN
+*
+*        Solve    A**H*X + ISGN*X*B**H = C.
+*
+*        The (K,L)th block of X is determined starting from
+*        upper-right corner column by column by
+*
+*            A**H(K,K)*X(K,L) + ISGN*X(K,L)*B**H(L,L) = C(K,L) - R(K,L)
+*
+*        Where
+*                    K-1
+*           R(K,L) = SUM [A**H(I,K)*X(I,L)] +
+*                    I=1
+*                           N
+*                     ISGN*SUM [X(K,J)*B**H(L,J)].
+*                          J=L+1
+*
+         DO 90 L = N, 1, -1
+            DO 80 K = 1, M
+*
+               SUML = ZDOTC( K-1, A( 1, K ), 1, C( 1, L ), 1 )
+               SUMR = ZDOTC( N-L, C( K, MIN( L+1, N ) ), LDC,
+     $                B( L, MIN( L+1, N ) ), LDB )
+               VEC = C( K, L ) - ( SUML+SGN*DCONJG( SUMR ) )
+*
+               SCALOC = ONE
+               A11 = DCONJG( A( K, K )+SGN*B( L, L ) )
+               DA11 = ABS( DBLE( A11 ) ) + ABS( DIMAG( A11 ) )
+               IF( DA11.LE.SMIN ) THEN
+                  A11 = SMIN
+                  DA11 = SMIN
+                  INFO = 1
+               END IF
+               DB = ABS( DBLE( VEC ) ) + ABS( DIMAG( VEC ) )
+               IF( DA11.LT.ONE .AND. DB.GT.ONE ) THEN
+                  IF( DB.GT.BIGNUM*DA11 )
+     $               SCALOC = ONE / DB
+               END IF
+*
+               X11 = ZLADIV( VEC*DCMPLX( SCALOC ), A11 )
+*
+               IF( SCALOC.NE.ONE ) THEN
+                  DO 70 J = 1, N
+                     CALL ZDSCAL( M, SCALOC, C( 1, J ), 1 )
+   70             CONTINUE
+                  SCALE = SCALE*SCALOC
+               END IF
+               C( K, L ) = X11
+*
+   80       CONTINUE
+   90    CONTINUE
+*
+      ELSE IF( NOTRNA .AND. .NOT.NOTRNB ) THEN
+*
+*        Solve    A*X + ISGN*X*B**H = C.
+*
+*        The (K,L)th block of X is determined starting from
+*        bottom-left corner column by column by
+*
+*           A(K,K)*X(K,L) + ISGN*X(K,L)*B**H(L,L) = C(K,L) - R(K,L)
+*
+*        Where
+*                    M                          N
+*          R(K,L) = SUM [A(K,I)*X(I,L)] + ISGN*SUM [X(K,J)*B**H(L,J)]
+*                  I=K+1                      J=L+1
+*
+         DO 120 L = N, 1, -1
+            DO 110 K = M, 1, -1
+*
+               SUML = ZDOTU( M-K, A( K, MIN( K+1, M ) ), LDA,
+     $                C( MIN( K+1, M ), L ), 1 )
+               SUMR = ZDOTC( N-L, C( K, MIN( L+1, N ) ), LDC,
+     $                B( L, MIN( L+1, N ) ), LDB )
+               VEC = C( K, L ) - ( SUML+SGN*DCONJG( SUMR ) )
+*
+               SCALOC = ONE
+               A11 = A( K, K ) + SGN*DCONJG( B( L, L ) )
+               DA11 = ABS( DBLE( A11 ) ) + ABS( DIMAG( A11 ) )
+               IF( DA11.LE.SMIN ) THEN
+                  A11 = SMIN
+                  DA11 = SMIN
+                  INFO = 1
+               END IF
+               DB = ABS( DBLE( VEC ) ) + ABS( DIMAG( VEC ) )
+               IF( DA11.LT.ONE .AND. DB.GT.ONE ) THEN
+                  IF( DB.GT.BIGNUM*DA11 )
+     $               SCALOC = ONE / DB
+               END IF
+*
+               X11 = ZLADIV( VEC*DCMPLX( SCALOC ), A11 )
+*
+               IF( SCALOC.NE.ONE ) THEN
+                  DO 100 J = 1, N
+                     CALL ZDSCAL( M, SCALOC, C( 1, J ), 1 )
+  100             CONTINUE
+                  SCALE = SCALE*SCALOC
+               END IF
+               C( K, L ) = X11
+*
+  110       CONTINUE
+  120    CONTINUE
+*
+      END IF
+*
+      RETURN
+*
+*     End of ZTRSYL
+*
+      END
+*> \brief \b ZTRTI2 computes the inverse of a triangular matrix (unblocked algorithm).
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZTRTI2 + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/ztrti2.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/ztrti2.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/ztrti2.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZTRTI2( UPLO, DIAG, N, A, LDA, INFO )
+*
+*       .. Scalar Arguments ..
+*       CHARACTER          DIAG, UPLO
+*       INTEGER            INFO, LDA, N
+*       ..
+*       .. Array Arguments ..
+*       COMPLEX*16         A( LDA, * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZTRTI2 computes the inverse of a complex upper or lower triangular
+*> matrix.
+*>
+*> This is the Level 2 BLAS version of the algorithm.
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] UPLO
+*> \verbatim
+*>          UPLO is CHARACTER*1
+*>          Specifies whether the matrix A is upper or lower triangular.
+*>          = 'U':  Upper triangular
+*>          = 'L':  Lower triangular
+*> \endverbatim
+*>
+*> \param[in] DIAG
+*> \verbatim
+*>          DIAG is CHARACTER*1
+*>          Specifies whether or not the matrix A is unit triangular.
+*>          = 'N':  Non-unit triangular
+*>          = 'U':  Unit triangular
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The order of the matrix A.  N >= 0.
+*> \endverbatim
+*>
+*> \param[in,out] A
+*> \verbatim
+*>          A is COMPLEX*16 array, dimension (LDA,N)
+*>          On entry, the triangular matrix A.  If UPLO = 'U', the
+*>          leading n by n upper triangular part of the array A contains
+*>          the upper triangular matrix, and the strictly lower
+*>          triangular part of A is not referenced.  If UPLO = 'L', the
+*>          leading n by n lower triangular part of the array A contains
+*>          the lower triangular matrix, and the strictly upper
+*>          triangular part of A is not referenced.  If DIAG = 'U', the
+*>          diagonal elements of A are also not referenced and are
+*>          assumed to be 1.
+*>
+*>          On exit, the (triangular) inverse of the original matrix, in
+*>          the same storage format.
+*> \endverbatim
+*>
+*> \param[in] LDA
+*> \verbatim
+*>          LDA is INTEGER
+*>          The leading dimension of the array A.  LDA >= max(1,N).
+*> \endverbatim
+*>
+*> \param[out] INFO
+*> \verbatim
+*>          INFO is INTEGER
+*>          = 0: successful exit
+*>          < 0: if INFO = -k, the k-th argument had an illegal value
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \date December 2016
+*
+*> \ingroup complex16OTHERcomputational
+*
+*  =====================================================================
+      SUBROUTINE ZTRTI2( UPLO, DIAG, N, A, LDA, INFO )
+*
+*  -- LAPACK computational routine (version 3.7.0) --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*     December 2016
+*
+*     .. Scalar Arguments ..
+      CHARACTER          DIAG, UPLO
+      INTEGER            INFO, LDA, N
+*     ..
+*     .. Array Arguments ..
+      COMPLEX*16         A( LDA, * )
+*     ..
+*
+*  =====================================================================
+*
+*     .. Parameters ..
+      COMPLEX*16         ONE
+      PARAMETER          ( ONE = ( 1.0D+0, 0.0D+0 ) )
+*     ..
+*     .. Local Scalars ..
+      LOGICAL            NOUNIT, UPPER
+      INTEGER            J
+      COMPLEX*16         AJJ
+*     ..
+*     .. External Functions ..
+      LOGICAL            LSAME
+      EXTERNAL           LSAME
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           XERBLA, ZSCAL, ZTRMV
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          MAX
+*     ..
+*     .. Executable Statements ..
+*
+*     Test the input parameters.
+*
+      INFO = 0
+      UPPER = LSAME( UPLO, 'U' )
+      NOUNIT = LSAME( DIAG, 'N' )
+      IF( .NOT.UPPER .AND. .NOT.LSAME( UPLO, 'L' ) ) THEN
+         INFO = -1
+      ELSE IF( .NOT.NOUNIT .AND. .NOT.LSAME( DIAG, 'U' ) ) THEN
+         INFO = -2
+      ELSE IF( N.LT.0 ) THEN
+         INFO = -3
+      ELSE IF( LDA.LT.MAX( 1, N ) ) THEN
+         INFO = -5
+      END IF
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZTRTI2', -INFO )
+         RETURN
+      END IF
+*
+      IF( UPPER ) THEN
+*
+*        Compute inverse of upper triangular matrix.
+*
+         DO 10 J = 1, N
+            IF( NOUNIT ) THEN
+               A( J, J ) = ONE / A( J, J )
+               AJJ = -A( J, J )
+            ELSE
+               AJJ = -ONE
+            END IF
+*
+*           Compute elements 1:j-1 of j-th column.
+*
+            CALL ZTRMV( 'Upper', 'No transpose', DIAG, J-1, A, LDA,
+     $                  A( 1, J ), 1 )
+            CALL ZSCAL( J-1, AJJ, A( 1, J ), 1 )
+   10    CONTINUE
+      ELSE
+*
+*        Compute inverse of lower triangular matrix.
+*
+         DO 20 J = N, 1, -1
+            IF( NOUNIT ) THEN
+               A( J, J ) = ONE / A( J, J )
+               AJJ = -A( J, J )
+            ELSE
+               AJJ = -ONE
+            END IF
+            IF( J.LT.N ) THEN
+*
+*              Compute elements j+1:n of j-th column.
+*
+               CALL ZTRMV( 'Lower', 'No transpose', DIAG, N-J,
+     $                     A( J+1, J+1 ), LDA, A( J+1, J ), 1 )
+               CALL ZSCAL( N-J, AJJ, A( J+1, J ), 1 )
+            END IF
+   20    CONTINUE
+      END IF
+*
+      RETURN
+*
+*     End of ZTRTI2
+*
+      END
+*> \brief \b ZTRTRI
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZTRTRI + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/ztrtri.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/ztrtri.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/ztrtri.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZTRTRI( UPLO, DIAG, N, A, LDA, INFO )
+*
+*       .. Scalar Arguments ..
+*       CHARACTER          DIAG, UPLO
+*       INTEGER            INFO, LDA, N
+*       ..
+*       .. Array Arguments ..
+*       COMPLEX*16         A( LDA, * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZTRTRI computes the inverse of a complex upper or lower triangular
+*> matrix A.
+*>
+*> This is the Level 3 BLAS version of the algorithm.
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] UPLO
+*> \verbatim
+*>          UPLO is CHARACTER*1
+*>          = 'U':  A is upper triangular;
+*>          = 'L':  A is lower triangular.
+*> \endverbatim
+*>
+*> \param[in] DIAG
+*> \verbatim
+*>          DIAG is CHARACTER*1
+*>          = 'N':  A is non-unit triangular;
+*>          = 'U':  A is unit triangular.
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The order of the matrix A.  N >= 0.
+*> \endverbatim
+*>
+*> \param[in,out] A
+*> \verbatim
+*>          A is COMPLEX*16 array, dimension (LDA,N)
+*>          On entry, the triangular matrix A.  If UPLO = 'U', the
+*>          leading N-by-N upper triangular part of the array A contains
+*>          the upper triangular matrix, and the strictly lower
+*>          triangular part of A is not referenced.  If UPLO = 'L', the
+*>          leading N-by-N lower triangular part of the array A contains
+*>          the lower triangular matrix, and the strictly upper
+*>          triangular part of A is not referenced.  If DIAG = 'U', the
+*>          diagonal elements of A are also not referenced and are
+*>          assumed to be 1.
+*>          On exit, the (triangular) inverse of the original matrix, in
+*>          the same storage format.
+*> \endverbatim
+*>
+*> \param[in] LDA
+*> \verbatim
+*>          LDA is INTEGER
+*>          The leading dimension of the array A.  LDA >= max(1,N).
+*> \endverbatim
+*>
+*> \param[out] INFO
+*> \verbatim
+*>          INFO is INTEGER
+*>          = 0: successful exit
+*>          < 0: if INFO = -i, the i-th argument had an illegal value
+*>          > 0: if INFO = i, A(i,i) is exactly zero.  The triangular
+*>               matrix is singular and its inverse can not be computed.
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \date December 2016
+*
+*> \ingroup complex16OTHERcomputational
+*
+*  =====================================================================
+      SUBROUTINE ZTRTRI( UPLO, DIAG, N, A, LDA, INFO )
+*
+*  -- LAPACK computational routine (version 3.7.0) --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*     December 2016
+*
+*     .. Scalar Arguments ..
+      CHARACTER          DIAG, UPLO
+      INTEGER            INFO, LDA, N
+*     ..
+*     .. Array Arguments ..
+      COMPLEX*16         A( LDA, * )
+*     ..
+*
+*  =====================================================================
+*
+*     .. Parameters ..
+      COMPLEX*16         ONE, ZERO
+      PARAMETER          ( ONE = ( 1.0D+0, 0.0D+0 ),
+     $                   ZERO = ( 0.0D+0, 0.0D+0 ) )
+*     ..
+*     .. Local Scalars ..
+      LOGICAL            NOUNIT, UPPER
+      INTEGER            J, JB, NB, NN
+*     ..
+*     .. External Functions ..
+      LOGICAL            LSAME
+      INTEGER            ILAENV
+      EXTERNAL           LSAME, ILAENV
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           XERBLA, ZTRMM, ZTRSM, ZTRTI2
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          MAX, MIN
+*     ..
+*     .. Executable Statements ..
+*
+*     Test the input parameters.
+*
+      INFO = 0
+      UPPER = LSAME( UPLO, 'U' )
+      NOUNIT = LSAME( DIAG, 'N' )
+      IF( .NOT.UPPER .AND. .NOT.LSAME( UPLO, 'L' ) ) THEN
+         INFO = -1
+      ELSE IF( .NOT.NOUNIT .AND. .NOT.LSAME( DIAG, 'U' ) ) THEN
+         INFO = -2
+      ELSE IF( N.LT.0 ) THEN
+         INFO = -3
+      ELSE IF( LDA.LT.MAX( 1, N ) ) THEN
+         INFO = -5
+      END IF
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZTRTRI', -INFO )
+         RETURN
+      END IF
+*
+*     Quick return if possible
+*
+      IF( N.EQ.0 )
+     $   RETURN
+*
+*     Check for singularity if non-unit.
+*
+      IF( NOUNIT ) THEN
+         DO 10 INFO = 1, N
+            IF( A( INFO, INFO ).EQ.ZERO )
+     $         RETURN
+   10    CONTINUE
+         INFO = 0
+      END IF
+*
+*     Determine the block size for this environment.
+*
+      NB = ILAENV( 1, 'ZTRTRI', UPLO // DIAG, N, -1, -1, -1 )
+      IF( NB.LE.1 .OR. NB.GE.N ) THEN
+*
+*        Use unblocked code
+*
+         CALL ZTRTI2( UPLO, DIAG, N, A, LDA, INFO )
+      ELSE
+*
+*        Use blocked code
+*
+         IF( UPPER ) THEN
+*
+*           Compute inverse of upper triangular matrix
+*
+            DO 20 J = 1, N, NB
+               JB = MIN( NB, N-J+1 )
+*
+*              Compute rows 1:j-1 of current block column
+*
+               CALL ZTRMM( 'Left', 'Upper', 'No transpose', DIAG, J-1,
+     $                     JB, ONE, A, LDA, A( 1, J ), LDA )
+               CALL ZTRSM( 'Right', 'Upper', 'No transpose', DIAG, J-1,
+     $                     JB, -ONE, A( J, J ), LDA, A( 1, J ), LDA )
+*
+*              Compute inverse of current diagonal block
+*
+               CALL ZTRTI2( 'Upper', DIAG, JB, A( J, J ), LDA, INFO )
+   20       CONTINUE
+         ELSE
+*
+*           Compute inverse of lower triangular matrix
+*
+            NN = ( ( N-1 ) / NB )*NB + 1
+            DO 30 J = NN, 1, -NB
+               JB = MIN( NB, N-J+1 )
+               IF( J+JB.LE.N ) THEN
+*
+*                 Compute rows j+jb:n of current block column
+*
+                  CALL ZTRMM( 'Left', 'Lower', 'No transpose', DIAG,
+     $                        N-J-JB+1, JB, ONE, A( J+JB, J+JB ), LDA,
+     $                        A( J+JB, J ), LDA )
+                  CALL ZTRSM( 'Right', 'Lower', 'No transpose', DIAG,
+     $                        N-J-JB+1, JB, -ONE, A( J, J ), LDA,
+     $                        A( J+JB, J ), LDA )
+               END IF
+*
+*              Compute inverse of current diagonal block
+*
+               CALL ZTRTI2( 'Lower', DIAG, JB, A( J, J ), LDA, INFO )
+   30       CONTINUE
+         END IF
+      END IF
+*
+      RETURN
+*
+*     End of ZTRTRI
+*
+      END
+*> \brief \b ZTRTRS
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZTRTRS + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/ztrtrs.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/ztrtrs.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/ztrtrs.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZTRTRS( UPLO, TRANS, DIAG, N, NRHS, A, LDA, B, LDB,
+*                          INFO )
+*
+*       .. Scalar Arguments ..
+*       CHARACTER          DIAG, TRANS, UPLO
+*       INTEGER            INFO, LDA, LDB, N, NRHS
+*       ..
+*       .. Array Arguments ..
+*       COMPLEX*16         A( LDA, * ), B( LDB, * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZTRTRS solves a triangular system of the form
+*>
+*>    A * X = B,  A**T * X = B,  or  A**H * X = B,
+*>
+*> where A is a triangular matrix of order N, and B is an N-by-NRHS
+*> matrix.  A check is made to verify that A is nonsingular.
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] UPLO
+*> \verbatim
+*>          UPLO is CHARACTER*1
+*>          = 'U':  A is upper triangular;
+*>          = 'L':  A is lower triangular.
+*> \endverbatim
+*>
+*> \param[in] TRANS
+*> \verbatim
+*>          TRANS is CHARACTER*1
+*>          Specifies the form of the system of equations:
+*>          = 'N':  A * X = B     (No transpose)
+*>          = 'T':  A**T * X = B  (Transpose)
+*>          = 'C':  A**H * X = B  (Conjugate transpose)
+*> \endverbatim
+*>
+*> \param[in] DIAG
+*> \verbatim
+*>          DIAG is CHARACTER*1
+*>          = 'N':  A is non-unit triangular;
+*>          = 'U':  A is unit triangular.
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The order of the matrix A.  N >= 0.
+*> \endverbatim
+*>
+*> \param[in] NRHS
+*> \verbatim
+*>          NRHS is INTEGER
+*>          The number of right hand sides, i.e., the number of columns
+*>          of the matrix B.  NRHS >= 0.
+*> \endverbatim
+*>
+*> \param[in] A
+*> \verbatim
+*>          A is COMPLEX*16 array, dimension (LDA,N)
+*>          The triangular matrix A.  If UPLO = 'U', the leading N-by-N
+*>          upper triangular part of the array A contains the upper
+*>          triangular matrix, and the strictly lower triangular part of
+*>          A is not referenced.  If UPLO = 'L', the leading N-by-N lower
+*>          triangular part of the array A contains the lower triangular
+*>          matrix, and the strictly upper triangular part of A is not
+*>          referenced.  If DIAG = 'U', the diagonal elements of A are
+*>          also not referenced and are assumed to be 1.
+*> \endverbatim
+*>
+*> \param[in] LDA
+*> \verbatim
+*>          LDA is INTEGER
+*>          The leading dimension of the array A.  LDA >= max(1,N).
+*> \endverbatim
+*>
+*> \param[in,out] B
+*> \verbatim
+*>          B is COMPLEX*16 array, dimension (LDB,NRHS)
+*>          On entry, the right hand side matrix B.
+*>          On exit, if INFO = 0, the solution matrix X.
+*> \endverbatim
+*>
+*> \param[in] LDB
+*> \verbatim
+*>          LDB is INTEGER
+*>          The leading dimension of the array B.  LDB >= max(1,N).
+*> \endverbatim
+*>
+*> \param[out] INFO
+*> \verbatim
+*>          INFO is INTEGER
+*>          = 0:  successful exit
+*>          < 0: if INFO = -i, the i-th argument had an illegal value
+*>          > 0: if INFO = i, the i-th diagonal element of A is zero,
+*>               indicating that the matrix is singular and the solutions
+*>               X have not been computed.
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \date December 2016
+*
+*> \ingroup complex16OTHERcomputational
+*
+*  =====================================================================
+      SUBROUTINE ZTRTRS( UPLO, TRANS, DIAG, N, NRHS, A, LDA, B, LDB,
+     $                   INFO )
+*
+*  -- LAPACK computational routine (version 3.7.0) --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*     December 2016
+*
+*     .. Scalar Arguments ..
+      CHARACTER          DIAG, TRANS, UPLO
+      INTEGER            INFO, LDA, LDB, N, NRHS
+*     ..
+*     .. Array Arguments ..
+      COMPLEX*16         A( LDA, * ), B( LDB, * )
+*     ..
+*
+*  =====================================================================
+*
+*     .. Parameters ..
+      COMPLEX*16         ZERO, ONE
+      PARAMETER          ( ZERO = ( 0.0D+0, 0.0D+0 ),
+     $                   ONE = ( 1.0D+0, 0.0D+0 ) )
+*     ..
+*     .. Local Scalars ..
+      LOGICAL            NOUNIT
+*     ..
+*     .. External Functions ..
+      LOGICAL            LSAME
+      EXTERNAL           LSAME
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           XERBLA, ZTRSM
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          MAX
+*     ..
+*     .. Executable Statements ..
+*
+*     Test the input parameters.
+*
+      INFO = 0
+      NOUNIT = LSAME( DIAG, 'N' )
+      IF( .NOT.LSAME( UPLO, 'U' ) .AND. .NOT.LSAME( UPLO, 'L' ) ) THEN
+         INFO = -1
+      ELSE IF( .NOT.LSAME( TRANS, 'N' ) .AND. .NOT.
+     $         LSAME( TRANS, 'T' ) .AND. .NOT.LSAME( TRANS, 'C' ) ) THEN
+         INFO = -2
+      ELSE IF( .NOT.NOUNIT .AND. .NOT.LSAME( DIAG, 'U' ) ) THEN
+         INFO = -3
+      ELSE IF( N.LT.0 ) THEN
+         INFO = -4
+      ELSE IF( NRHS.LT.0 ) THEN
+         INFO = -5
+      ELSE IF( LDA.LT.MAX( 1, N ) ) THEN
+         INFO = -7
+      ELSE IF( LDB.LT.MAX( 1, N ) ) THEN
+         INFO = -9
+      END IF
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZTRTRS', -INFO )
+         RETURN
+      END IF
+*
+*     Quick return if possible
+*
+      IF( N.EQ.0 )
+     $   RETURN
+*
+*     Check for singularity.
+*
+      IF( NOUNIT ) THEN
+         DO 10 INFO = 1, N
+            IF( A( INFO, INFO ).EQ.ZERO )
+     $         RETURN
+   10    CONTINUE
+      END IF
+      INFO = 0
+*
+*     Solve A * x = b,  A**T * x = b,  or  A**H * x = b.
+*
+      CALL ZTRSM( 'Left', UPLO, TRANS, DIAG, N, NRHS, ONE, A, LDA, B,
+     $            LDB )
+*
+      RETURN
+*
+*     End of ZTRTRS
+*
+      END
+*> \brief \b ZUNG2L generates all or part of the unitary matrix Q from a QL factorization determined by cgeqlf (unblocked algorithm).
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZUNG2L + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zung2l.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zung2l.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zung2l.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZUNG2L( M, N, K, A, LDA, TAU, WORK, INFO )
+*
+*       .. Scalar Arguments ..
+*       INTEGER            INFO, K, LDA, M, N
+*       ..
+*       .. Array Arguments ..
+*       COMPLEX*16         A( LDA, * ), TAU( * ), WORK( * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZUNG2L generates an m by n complex matrix Q with orthonormal columns,
+*> which is defined as the last n columns of a product of k elementary
+*> reflectors of order m
+*>
+*>       Q  =  H(k) . . . H(2) H(1)
+*>
+*> as returned by ZGEQLF.
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] M
+*> \verbatim
+*>          M is INTEGER
+*>          The number of rows of the matrix Q. M >= 0.
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The number of columns of the matrix Q. M >= N >= 0.
+*> \endverbatim
+*>
+*> \param[in] K
+*> \verbatim
+*>          K is INTEGER
+*>          The number of elementary reflectors whose product defines the
+*>          matrix Q. N >= K >= 0.
+*> \endverbatim
+*>
+*> \param[in,out] A
+*> \verbatim
+*>          A is COMPLEX*16 array, dimension (LDA,N)
+*>          On entry, the (n-k+i)-th column must contain the vector which
+*>          defines the elementary reflector H(i), for i = 1,2,...,k, as
+*>          returned by ZGEQLF in the last k columns of its array
+*>          argument A.
+*>          On exit, the m-by-n matrix Q.
+*> \endverbatim
+*>
+*> \param[in] LDA
+*> \verbatim
+*>          LDA is INTEGER
+*>          The first dimension of the array A. LDA >= max(1,M).
+*> \endverbatim
+*>
+*> \param[in] TAU
+*> \verbatim
+*>          TAU is COMPLEX*16 array, dimension (K)
+*>          TAU(i) must contain the scalar factor of the elementary
+*>          reflector H(i), as returned by ZGEQLF.
+*> \endverbatim
+*>
+*> \param[out] WORK
+*> \verbatim
+*>          WORK is COMPLEX*16 array, dimension (N)
+*> \endverbatim
+*>
+*> \param[out] INFO
+*> \verbatim
+*>          INFO is INTEGER
+*>          = 0: successful exit
+*>          < 0: if INFO = -i, the i-th argument has an illegal value
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \date December 2016
+*
+*> \ingroup complex16OTHERcomputational
+*
+*  =====================================================================
+      SUBROUTINE ZUNG2L( M, N, K, A, LDA, TAU, WORK, INFO )
+*
+*  -- LAPACK computational routine (version 3.7.0) --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*     December 2016
+*
+*     .. Scalar Arguments ..
+      INTEGER            INFO, K, LDA, M, N
+*     ..
+*     .. Array Arguments ..
+      COMPLEX*16         A( LDA, * ), TAU( * ), WORK( * )
+*     ..
+*
+*  =====================================================================
+*
+*     .. Parameters ..
+      COMPLEX*16         ONE, ZERO
+      PARAMETER          ( ONE = ( 1.0D+0, 0.0D+0 ),
+     $                   ZERO = ( 0.0D+0, 0.0D+0 ) )
+*     ..
+*     .. Local Scalars ..
+      INTEGER            I, II, J, L
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           XERBLA, ZLARF, ZSCAL
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          MAX
+*     ..
+*     .. Executable Statements ..
+*
+*     Test the input arguments
+*
+      INFO = 0
+      IF( M.LT.0 ) THEN
+         INFO = -1
+      ELSE IF( N.LT.0 .OR. N.GT.M ) THEN
+         INFO = -2
+      ELSE IF( K.LT.0 .OR. K.GT.N ) THEN
+         INFO = -3
+      ELSE IF( LDA.LT.MAX( 1, M ) ) THEN
+         INFO = -5
+      END IF
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZUNG2L', -INFO )
+         RETURN
+      END IF
+*
+*     Quick return if possible
+*
+      IF( N.LE.0 )
+     $   RETURN
+*
+*     Initialise columns 1:n-k to columns of the unit matrix
+*
+      DO 20 J = 1, N - K
+         DO 10 L = 1, M
+            A( L, J ) = ZERO
+   10    CONTINUE
+         A( M-N+J, J ) = ONE
+   20 CONTINUE
+*
+      DO 40 I = 1, K
+         II = N - K + I
+*
+*        Apply H(i) to A(1:m-k+i,1:n-k+i) from the left
+*
+         A( M-N+II, II ) = ONE
+         CALL ZLARF( 'Left', M-N+II, II-1, A( 1, II ), 1, TAU( I ), A,
+     $               LDA, WORK )
+         CALL ZSCAL( M-N+II-1, -TAU( I ), A( 1, II ), 1 )
+         A( M-N+II, II ) = ONE - TAU( I )
+*
+*        Set A(m-k+i+1:m,n-k+i) to zero
+*
+         DO 30 L = M - N + II + 1, M
+            A( L, II ) = ZERO
+   30    CONTINUE
+   40 CONTINUE
+      RETURN
+*
+*     End of ZUNG2L
+*
+      END
+*> \brief \b ZUNG2R
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZUNG2R + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zung2r.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zung2r.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zung2r.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZUNG2R( M, N, K, A, LDA, TAU, WORK, INFO )
+*
+*       .. Scalar Arguments ..
+*       INTEGER            INFO, K, LDA, M, N
+*       ..
+*       .. Array Arguments ..
+*       COMPLEX*16         A( LDA, * ), TAU( * ), WORK( * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZUNG2R generates an m by n complex matrix Q with orthonormal columns,
+*> which is defined as the first n columns of a product of k elementary
+*> reflectors of order m
+*>
+*>       Q  =  H(1) H(2) . . . H(k)
+*>
+*> as returned by ZGEQRF.
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] M
+*> \verbatim
+*>          M is INTEGER
+*>          The number of rows of the matrix Q. M >= 0.
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The number of columns of the matrix Q. M >= N >= 0.
+*> \endverbatim
+*>
+*> \param[in] K
+*> \verbatim
+*>          K is INTEGER
+*>          The number of elementary reflectors whose product defines the
+*>          matrix Q. N >= K >= 0.
+*> \endverbatim
+*>
+*> \param[in,out] A
+*> \verbatim
+*>          A is COMPLEX*16 array, dimension (LDA,N)
+*>          On entry, the i-th column must contain the vector which
+*>          defines the elementary reflector H(i), for i = 1,2,...,k, as
+*>          returned by ZGEQRF in the first k columns of its array
+*>          argument A.
+*>          On exit, the m by n matrix Q.
+*> \endverbatim
+*>
+*> \param[in] LDA
+*> \verbatim
+*>          LDA is INTEGER
+*>          The first dimension of the array A. LDA >= max(1,M).
+*> \endverbatim
+*>
+*> \param[in] TAU
+*> \verbatim
+*>          TAU is COMPLEX*16 array, dimension (K)
+*>          TAU(i) must contain the scalar factor of the elementary
+*>          reflector H(i), as returned by ZGEQRF.
+*> \endverbatim
+*>
+*> \param[out] WORK
+*> \verbatim
+*>          WORK is COMPLEX*16 array, dimension (N)
+*> \endverbatim
+*>
+*> \param[out] INFO
+*> \verbatim
+*>          INFO is INTEGER
+*>          = 0: successful exit
+*>          < 0: if INFO = -i, the i-th argument has an illegal value
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \date December 2016
+*
+*> \ingroup complex16OTHERcomputational
+*
+*  =====================================================================
+      SUBROUTINE ZUNG2R( M, N, K, A, LDA, TAU, WORK, INFO )
+*
+*  -- LAPACK computational routine (version 3.7.0) --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*     December 2016
+*
+*     .. Scalar Arguments ..
+      INTEGER            INFO, K, LDA, M, N
+*     ..
+*     .. Array Arguments ..
+      COMPLEX*16         A( LDA, * ), TAU( * ), WORK( * )
+*     ..
+*
+*  =====================================================================
+*
+*     .. Parameters ..
+      COMPLEX*16         ONE, ZERO
+      PARAMETER          ( ONE = ( 1.0D+0, 0.0D+0 ),
+     $                   ZERO = ( 0.0D+0, 0.0D+0 ) )
+*     ..
+*     .. Local Scalars ..
+      INTEGER            I, J, L
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           XERBLA, ZLARF, ZSCAL
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          MAX
+*     ..
+*     .. Executable Statements ..
+*
+*     Test the input arguments
+*
+      INFO = 0
+      IF( M.LT.0 ) THEN
+         INFO = -1
+      ELSE IF( N.LT.0 .OR. N.GT.M ) THEN
+         INFO = -2
+      ELSE IF( K.LT.0 .OR. K.GT.N ) THEN
+         INFO = -3
+      ELSE IF( LDA.LT.MAX( 1, M ) ) THEN
+         INFO = -5
+      END IF
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZUNG2R', -INFO )
+         RETURN
+      END IF
+*
+*     Quick return if possible
+*
+      IF( N.LE.0 )
+     $   RETURN
+*
+*     Initialise columns k+1:n to columns of the unit matrix
+*
+      DO 20 J = K + 1, N
+         DO 10 L = 1, M
+            A( L, J ) = ZERO
+   10    CONTINUE
+         A( J, J ) = ONE
+   20 CONTINUE
+*
+      DO 40 I = K, 1, -1
+*
+*        Apply H(i) to A(i:m,i:n) from the left
+*
+         IF( I.LT.N ) THEN
+            A( I, I ) = ONE
+            CALL ZLARF( 'Left', M-I+1, N-I, A( I, I ), 1, TAU( I ),
+     $                  A( I, I+1 ), LDA, WORK )
+         END IF
+         IF( I.LT.M )
+     $      CALL ZSCAL( M-I, -TAU( I ), A( I+1, I ), 1 )
+         A( I, I ) = ONE - TAU( I )
+*
+*        Set A(1:i-1,i) to zero
+*
+         DO 30 L = 1, I - 1
+            A( L, I ) = ZERO
+   30    CONTINUE
+   40 CONTINUE
+      RETURN
+*
+*     End of ZUNG2R
+*
+      END
+*> \brief \b ZUNGBR
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZUNGBR + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zungbr.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zungbr.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zungbr.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZUNGBR( VECT, M, N, K, A, LDA, TAU, WORK, LWORK, INFO )
+*
+*       .. Scalar Arguments ..
+*       CHARACTER          VECT
+*       INTEGER            INFO, K, LDA, LWORK, M, N
+*       ..
+*       .. Array Arguments ..
+*       COMPLEX*16         A( LDA, * ), TAU( * ), WORK( * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZUNGBR generates one of the complex unitary matrices Q or P**H
+*> determined by ZGEBRD when reducing a complex matrix A to bidiagonal
+*> form: A = Q * B * P**H.  Q and P**H are defined as products of
+*> elementary reflectors H(i) or G(i) respectively.
+*>
+*> If VECT = 'Q', A is assumed to have been an M-by-K matrix, and Q
+*> is of order M:
+*> if m >= k, Q = H(1) H(2) . . . H(k) and ZUNGBR returns the first n
+*> columns of Q, where m >= n >= k;
+*> if m < k, Q = H(1) H(2) . . . H(m-1) and ZUNGBR returns Q as an
+*> M-by-M matrix.
+*>
+*> If VECT = 'P', A is assumed to have been a K-by-N matrix, and P**H
+*> is of order N:
+*> if k < n, P**H = G(k) . . . G(2) G(1) and ZUNGBR returns the first m
+*> rows of P**H, where n >= m >= k;
+*> if k >= n, P**H = G(n-1) . . . G(2) G(1) and ZUNGBR returns P**H as
+*> an N-by-N matrix.
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] VECT
+*> \verbatim
+*>          VECT is CHARACTER*1
+*>          Specifies whether the matrix Q or the matrix P**H is
+*>          required, as defined in the transformation applied by ZGEBRD:
+*>          = 'Q':  generate Q;
+*>          = 'P':  generate P**H.
+*> \endverbatim
+*>
+*> \param[in] M
+*> \verbatim
+*>          M is INTEGER
+*>          The number of rows of the matrix Q or P**H to be returned.
+*>          M >= 0.
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The number of columns of the matrix Q or P**H to be returned.
+*>          N >= 0.
+*>          If VECT = 'Q', M >= N >= min(M,K);
+*>          if VECT = 'P', N >= M >= min(N,K).
+*> \endverbatim
+*>
+*> \param[in] K
+*> \verbatim
+*>          K is INTEGER
+*>          If VECT = 'Q', the number of columns in the original M-by-K
+*>          matrix reduced by ZGEBRD.
+*>          If VECT = 'P', the number of rows in the original K-by-N
+*>          matrix reduced by ZGEBRD.
+*>          K >= 0.
+*> \endverbatim
+*>
+*> \param[in,out] A
+*> \verbatim
+*>          A is COMPLEX*16 array, dimension (LDA,N)
+*>          On entry, the vectors which define the elementary reflectors,
+*>          as returned by ZGEBRD.
+*>          On exit, the M-by-N matrix Q or P**H.
+*> \endverbatim
+*>
+*> \param[in] LDA
+*> \verbatim
+*>          LDA is INTEGER
+*>          The leading dimension of the array A. LDA >= M.
+*> \endverbatim
+*>
+*> \param[in] TAU
+*> \verbatim
+*>          TAU is COMPLEX*16 array, dimension
+*>                                (min(M,K)) if VECT = 'Q'
+*>                                (min(N,K)) if VECT = 'P'
+*>          TAU(i) must contain the scalar factor of the elementary
+*>          reflector H(i) or G(i), which determines Q or P**H, as
+*>          returned by ZGEBRD in its array argument TAUQ or TAUP.
+*> \endverbatim
+*>
+*> \param[out] WORK
+*> \verbatim
+*>          WORK is COMPLEX*16 array, dimension (MAX(1,LWORK))
+*>          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
+*> \endverbatim
+*>
+*> \param[in] LWORK
+*> \verbatim
+*>          LWORK is INTEGER
+*>          The dimension of the array WORK. LWORK >= max(1,min(M,N)).
+*>          For optimum performance LWORK >= min(M,N)*NB, where NB
+*>          is the optimal blocksize.
+*>
+*>          If LWORK = -1, then a workspace query is assumed; the routine
+*>          only calculates the optimal size of the WORK array, returns
+*>          this value as the first entry of the WORK array, and no error
+*>          message related to LWORK is issued by XERBLA.
+*> \endverbatim
+*>
+*> \param[out] INFO
+*> \verbatim
+*>          INFO is INTEGER
+*>          = 0:  successful exit
+*>          < 0:  if INFO = -i, the i-th argument had an illegal value
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \date April 2012
+*
+*> \ingroup complex16GBcomputational
+*
+*  =====================================================================
+      SUBROUTINE ZUNGBR( VECT, M, N, K, A, LDA, TAU, WORK, LWORK, INFO )
+*
+*  -- LAPACK computational routine (version 3.7.0) --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*     April 2012
+*
+*     .. Scalar Arguments ..
+      CHARACTER          VECT
+      INTEGER            INFO, K, LDA, LWORK, M, N
+*     ..
+*     .. Array Arguments ..
+      COMPLEX*16         A( LDA, * ), TAU( * ), WORK( * )
+*     ..
+*
+*  =====================================================================
+*
+*     .. Parameters ..
+      COMPLEX*16         ZERO, ONE
+      PARAMETER          ( ZERO = ( 0.0D+0, 0.0D+0 ),
+     $                   ONE = ( 1.0D+0, 0.0D+0 ) )
+*     ..
+*     .. Local Scalars ..
+      LOGICAL            LQUERY, WANTQ
+      INTEGER            I, IINFO, J, LWKOPT, MN
+*     ..
+*     .. External Functions ..
+      LOGICAL            LSAME
+      EXTERNAL           LSAME
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           XERBLA, ZUNGLQ, ZUNGQR
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          MAX, MIN
+*     ..
+*     .. Executable Statements ..
+*
+*     Test the input arguments
+*
+      INFO = 0
+      WANTQ = LSAME( VECT, 'Q' )
+      MN = MIN( M, N )
+      LQUERY = ( LWORK.EQ.-1 )
+      IF( .NOT.WANTQ .AND. .NOT.LSAME( VECT, 'P' ) ) THEN
+         INFO = -1
+      ELSE IF( M.LT.0 ) THEN
+         INFO = -2
+      ELSE IF( N.LT.0 .OR. ( WANTQ .AND. ( N.GT.M .OR. N.LT.MIN( M,
+     $         K ) ) ) .OR. ( .NOT.WANTQ .AND. ( M.GT.N .OR. M.LT.
+     $         MIN( N, K ) ) ) ) THEN
+         INFO = -3
+      ELSE IF( K.LT.0 ) THEN
+         INFO = -4
+      ELSE IF( LDA.LT.MAX( 1, M ) ) THEN
+         INFO = -6
+      ELSE IF( LWORK.LT.MAX( 1, MN ) .AND. .NOT.LQUERY ) THEN
+         INFO = -9
+      END IF
+*
+      IF( INFO.EQ.0 ) THEN
+         WORK( 1 ) = 1
+         IF( WANTQ ) THEN
+            IF( M.GE.K ) THEN
+               CALL ZUNGQR( M, N, K, A, LDA, TAU, WORK, -1, IINFO )
+            ELSE
+               IF( M.GT.1 ) THEN
+                  CALL ZUNGQR( M-1, M-1, M-1, A( 2, 2 ), LDA, TAU, WORK,
+     $                         -1, IINFO )
+               END IF
+            END IF
+         ELSE
+            IF( K.LT.N ) THEN
+               CALL ZUNGLQ( M, N, K, A, LDA, TAU, WORK, -1, IINFO )
+            ELSE
+               IF( N.GT.1 ) THEN
+                  CALL ZUNGLQ( N-1, N-1, N-1, A( 2, 2 ), LDA, TAU, WORK,
+     $                         -1, IINFO )
+               END IF
+            END IF
+         END IF
+         LWKOPT = WORK( 1 )
+         LWKOPT = MAX (LWKOPT, MN)
+      END IF
+*
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZUNGBR', -INFO )
+         RETURN
+      ELSE IF( LQUERY ) THEN
+         WORK( 1 ) = LWKOPT
+         RETURN
+      END IF
+*
+*     Quick return if possible
+*
+      IF( M.EQ.0 .OR. N.EQ.0 ) THEN
+         WORK( 1 ) = 1
+         RETURN
+      END IF
+*
+      IF( WANTQ ) THEN
+*
+*        Form Q, determined by a call to ZGEBRD to reduce an m-by-k
+*        matrix
+*
+         IF( M.GE.K ) THEN
+*
+*           If m >= k, assume m >= n >= k
+*
+            CALL ZUNGQR( M, N, K, A, LDA, TAU, WORK, LWORK, IINFO )
+*
+         ELSE
+*
+*           If m < k, assume m = n
+*
+*           Shift the vectors which define the elementary reflectors one
+*           column to the right, and set the first row and column of Q
+*           to those of the unit matrix
+*
+            DO 20 J = M, 2, -1
+               A( 1, J ) = ZERO
+               DO 10 I = J + 1, M
+                  A( I, J ) = A( I, J-1 )
+   10          CONTINUE
+   20       CONTINUE
+            A( 1, 1 ) = ONE
+            DO 30 I = 2, M
+               A( I, 1 ) = ZERO
+   30       CONTINUE
+            IF( M.GT.1 ) THEN
+*
+*              Form Q(2:m,2:m)
+*
+               CALL ZUNGQR( M-1, M-1, M-1, A( 2, 2 ), LDA, TAU, WORK,
+     $                      LWORK, IINFO )
+            END IF
+         END IF
+      ELSE
+*
+*        Form P**H, determined by a call to ZGEBRD to reduce a k-by-n
+*        matrix
+*
+         IF( K.LT.N ) THEN
+*
+*           If k < n, assume k <= m <= n
+*
+            CALL ZUNGLQ( M, N, K, A, LDA, TAU, WORK, LWORK, IINFO )
+*
+         ELSE
+*
+*           If k >= n, assume m = n
+*
+*           Shift the vectors which define the elementary reflectors one
+*           row downward, and set the first row and column of P**H to
+*           those of the unit matrix
+*
+            A( 1, 1 ) = ONE
+            DO 40 I = 2, N
+               A( I, 1 ) = ZERO
+   40       CONTINUE
+            DO 60 J = 2, N
+               DO 50 I = J - 1, 2, -1
+                  A( I, J ) = A( I-1, J )
+   50          CONTINUE
+               A( 1, J ) = ZERO
+   60       CONTINUE
+            IF( N.GT.1 ) THEN
+*
+*              Form P**H(2:n,2:n)
+*
+               CALL ZUNGLQ( N-1, N-1, N-1, A( 2, 2 ), LDA, TAU, WORK,
+     $                      LWORK, IINFO )
+            END IF
+         END IF
+      END IF
+      WORK( 1 ) = LWKOPT
+      RETURN
+*
+*     End of ZUNGBR
+*
+      END
+*> \brief \b ZUNGHR
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZUNGHR + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zunghr.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zunghr.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zunghr.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZUNGHR( N, ILO, IHI, A, LDA, TAU, WORK, LWORK, INFO )
+*
+*       .. Scalar Arguments ..
+*       INTEGER            IHI, ILO, INFO, LDA, LWORK, N
+*       ..
+*       .. Array Arguments ..
+*       COMPLEX*16         A( LDA, * ), TAU( * ), WORK( * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZUNGHR generates a complex unitary matrix Q which is defined as the
+*> product of IHI-ILO elementary reflectors of order N, as returned by
+*> ZGEHRD:
+*>
+*> Q = H(ilo) H(ilo+1) . . . H(ihi-1).
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The order of the matrix Q. N >= 0.
+*> \endverbatim
+*>
+*> \param[in] ILO
+*> \verbatim
+*>          ILO is INTEGER
+*> \endverbatim
+*>
+*> \param[in] IHI
+*> \verbatim
+*>          IHI is INTEGER
+*>
+*>          ILO and IHI must have the same values as in the previous call
+*>          of ZGEHRD. Q is equal to the unit matrix except in the
+*>          submatrix Q(ilo+1:ihi,ilo+1:ihi).
+*>          1 <= ILO <= IHI <= N, if N > 0; ILO=1 and IHI=0, if N=0.
+*> \endverbatim
+*>
+*> \param[in,out] A
+*> \verbatim
+*>          A is COMPLEX*16 array, dimension (LDA,N)
+*>          On entry, the vectors which define the elementary reflectors,
+*>          as returned by ZGEHRD.
+*>          On exit, the N-by-N unitary matrix Q.
+*> \endverbatim
+*>
+*> \param[in] LDA
+*> \verbatim
+*>          LDA is INTEGER
+*>          The leading dimension of the array A. LDA >= max(1,N).
+*> \endverbatim
+*>
+*> \param[in] TAU
+*> \verbatim
+*>          TAU is COMPLEX*16 array, dimension (N-1)
+*>          TAU(i) must contain the scalar factor of the elementary
+*>          reflector H(i), as returned by ZGEHRD.
+*> \endverbatim
+*>
+*> \param[out] WORK
+*> \verbatim
+*>          WORK is COMPLEX*16 array, dimension (MAX(1,LWORK))
+*>          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
+*> \endverbatim
+*>
+*> \param[in] LWORK
+*> \verbatim
+*>          LWORK is INTEGER
+*>          The dimension of the array WORK. LWORK >= IHI-ILO.
+*>          For optimum performance LWORK >= (IHI-ILO)*NB, where NB is
+*>          the optimal blocksize.
+*>
+*>          If LWORK = -1, then a workspace query is assumed; the routine
+*>          only calculates the optimal size of the WORK array, returns
+*>          this value as the first entry of the WORK array, and no error
+*>          message related to LWORK is issued by XERBLA.
+*> \endverbatim
+*>
+*> \param[out] INFO
+*> \verbatim
+*>          INFO is INTEGER
+*>          = 0:  successful exit
+*>          < 0:  if INFO = -i, the i-th argument had an illegal value
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \date December 2016
+*
+*> \ingroup complex16OTHERcomputational
+*
+*  =====================================================================
+      SUBROUTINE ZUNGHR( N, ILO, IHI, A, LDA, TAU, WORK, LWORK, INFO )
+*
+*  -- LAPACK computational routine (version 3.7.0) --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*     December 2016
+*
+*     .. Scalar Arguments ..
+      INTEGER            IHI, ILO, INFO, LDA, LWORK, N
+*     ..
+*     .. Array Arguments ..
+      COMPLEX*16         A( LDA, * ), TAU( * ), WORK( * )
+*     ..
+*
+*  =====================================================================
+*
+*     .. Parameters ..
+      COMPLEX*16         ZERO, ONE
+      PARAMETER          ( ZERO = ( 0.0D+0, 0.0D+0 ),
+     $                   ONE = ( 1.0D+0, 0.0D+0 ) )
+*     ..
+*     .. Local Scalars ..
+      LOGICAL            LQUERY
+      INTEGER            I, IINFO, J, LWKOPT, NB, NH
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           XERBLA, ZUNGQR
+*     ..
+*     .. External Functions ..
+      INTEGER            ILAENV
+      EXTERNAL           ILAENV
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          MAX, MIN
+*     ..
+*     .. Executable Statements ..
+*
+*     Test the input arguments
+*
+      INFO = 0
+      NH = IHI - ILO
+      LQUERY = ( LWORK.EQ.-1 )
+      IF( N.LT.0 ) THEN
+         INFO = -1
+      ELSE IF( ILO.LT.1 .OR. ILO.GT.MAX( 1, N ) ) THEN
+         INFO = -2
+      ELSE IF( IHI.LT.MIN( ILO, N ) .OR. IHI.GT.N ) THEN
+         INFO = -3
+      ELSE IF( LDA.LT.MAX( 1, N ) ) THEN
+         INFO = -5
+      ELSE IF( LWORK.LT.MAX( 1, NH ) .AND. .NOT.LQUERY ) THEN
+         INFO = -8
+      END IF
+*
+      IF( INFO.EQ.0 ) THEN
+         NB = ILAENV( 1, 'ZUNGQR', ' ', NH, NH, NH, -1 )
+         LWKOPT = MAX( 1, NH )*NB
+         WORK( 1 ) = LWKOPT
+      END IF
+*
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZUNGHR', -INFO )
+         RETURN
+      ELSE IF( LQUERY ) THEN
+         RETURN
+      END IF
+*
+*     Quick return if possible
+*
+      IF( N.EQ.0 ) THEN
+         WORK( 1 ) = 1
+         RETURN
+      END IF
+*
+*     Shift the vectors which define the elementary reflectors one
+*     column to the right, and set the first ilo and the last n-ihi
+*     rows and columns to those of the unit matrix
+*
+      DO 40 J = IHI, ILO + 1, -1
+         DO 10 I = 1, J - 1
+            A( I, J ) = ZERO
+   10    CONTINUE
+         DO 20 I = J + 1, IHI
+            A( I, J ) = A( I, J-1 )
+   20    CONTINUE
+         DO 30 I = IHI + 1, N
+            A( I, J ) = ZERO
+   30    CONTINUE
+   40 CONTINUE
+      DO 60 J = 1, ILO
+         DO 50 I = 1, N
+            A( I, J ) = ZERO
+   50    CONTINUE
+         A( J, J ) = ONE
+   60 CONTINUE
+      DO 80 J = IHI + 1, N
+         DO 70 I = 1, N
+            A( I, J ) = ZERO
+   70    CONTINUE
+         A( J, J ) = ONE
+   80 CONTINUE
+*
+      IF( NH.GT.0 ) THEN
+*
+*        Generate Q(ilo+1:ihi,ilo+1:ihi)
+*
+         CALL ZUNGQR( NH, NH, NH, A( ILO+1, ILO+1 ), LDA, TAU( ILO ),
+     $                WORK, LWORK, IINFO )
+      END IF
+      WORK( 1 ) = LWKOPT
+      RETURN
+*
+*     End of ZUNGHR
+*
+      END
+*> \brief \b ZUNGL2 generates all or part of the unitary matrix Q from an LQ factorization determined by cgelqf (unblocked algorithm).
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZUNGL2 + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zungl2.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zungl2.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zungl2.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZUNGL2( M, N, K, A, LDA, TAU, WORK, INFO )
+*
+*       .. Scalar Arguments ..
+*       INTEGER            INFO, K, LDA, M, N
+*       ..
+*       .. Array Arguments ..
+*       COMPLEX*16         A( LDA, * ), TAU( * ), WORK( * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZUNGL2 generates an m-by-n complex matrix Q with orthonormal rows,
+*> which is defined as the first m rows of a product of k elementary
+*> reflectors of order n
+*>
+*>       Q  =  H(k)**H . . . H(2)**H H(1)**H
+*>
+*> as returned by ZGELQF.
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] M
+*> \verbatim
+*>          M is INTEGER
+*>          The number of rows of the matrix Q. M >= 0.
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The number of columns of the matrix Q. N >= M.
+*> \endverbatim
+*>
+*> \param[in] K
+*> \verbatim
+*>          K is INTEGER
+*>          The number of elementary reflectors whose product defines the
+*>          matrix Q. M >= K >= 0.
+*> \endverbatim
+*>
+*> \param[in,out] A
+*> \verbatim
+*>          A is COMPLEX*16 array, dimension (LDA,N)
+*>          On entry, the i-th row must contain the vector which defines
+*>          the elementary reflector H(i), for i = 1,2,...,k, as returned
+*>          by ZGELQF in the first k rows of its array argument A.
+*>          On exit, the m by n matrix Q.
+*> \endverbatim
+*>
+*> \param[in] LDA
+*> \verbatim
+*>          LDA is INTEGER
+*>          The first dimension of the array A. LDA >= max(1,M).
+*> \endverbatim
+*>
+*> \param[in] TAU
+*> \verbatim
+*>          TAU is COMPLEX*16 array, dimension (K)
+*>          TAU(i) must contain the scalar factor of the elementary
+*>          reflector H(i), as returned by ZGELQF.
+*> \endverbatim
+*>
+*> \param[out] WORK
+*> \verbatim
+*>          WORK is COMPLEX*16 array, dimension (M)
+*> \endverbatim
+*>
+*> \param[out] INFO
+*> \verbatim
+*>          INFO is INTEGER
+*>          = 0: successful exit
+*>          < 0: if INFO = -i, the i-th argument has an illegal value
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \date December 2016
+*
+*> \ingroup complex16OTHERcomputational
+*
+*  =====================================================================
+      SUBROUTINE ZUNGL2( M, N, K, A, LDA, TAU, WORK, INFO )
+*
+*  -- LAPACK computational routine (version 3.7.0) --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*     December 2016
+*
+*     .. Scalar Arguments ..
+      INTEGER            INFO, K, LDA, M, N
+*     ..
+*     .. Array Arguments ..
+      COMPLEX*16         A( LDA, * ), TAU( * ), WORK( * )
+*     ..
+*
+*  =====================================================================
+*
+*     .. Parameters ..
+      COMPLEX*16         ONE, ZERO
+      PARAMETER          ( ONE = ( 1.0D+0, 0.0D+0 ),
+     $                   ZERO = ( 0.0D+0, 0.0D+0 ) )
+*     ..
+*     .. Local Scalars ..
+      INTEGER            I, J, L
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           XERBLA, ZLACGV, ZLARF, ZSCAL
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          DCONJG, MAX
+*     ..
+*     .. Executable Statements ..
+*
+*     Test the input arguments
+*
+      INFO = 0
+      IF( M.LT.0 ) THEN
+         INFO = -1
+      ELSE IF( N.LT.M ) THEN
+         INFO = -2
+      ELSE IF( K.LT.0 .OR. K.GT.M ) THEN
+         INFO = -3
+      ELSE IF( LDA.LT.MAX( 1, M ) ) THEN
+         INFO = -5
+      END IF
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZUNGL2', -INFO )
+         RETURN
+      END IF
+*
+*     Quick return if possible
+*
+      IF( M.LE.0 )
+     $   RETURN
+*
+      IF( K.LT.M ) THEN
+*
+*        Initialise rows k+1:m to rows of the unit matrix
+*
+         DO 20 J = 1, N
+            DO 10 L = K + 1, M
+               A( L, J ) = ZERO
+   10       CONTINUE
+            IF( J.GT.K .AND. J.LE.M )
+     $         A( J, J ) = ONE
+   20    CONTINUE
+      END IF
+*
+      DO 40 I = K, 1, -1
+*
+*        Apply H(i)**H to A(i:m,i:n) from the right
+*
+         IF( I.LT.N ) THEN
+            CALL ZLACGV( N-I, A( I, I+1 ), LDA )
+            IF( I.LT.M ) THEN
+               A( I, I ) = ONE
+               CALL ZLARF( 'Right', M-I, N-I+1, A( I, I ), LDA,
+     $                     DCONJG( TAU( I ) ), A( I+1, I ), LDA, WORK )
+            END IF
+            CALL ZSCAL( N-I, -TAU( I ), A( I, I+1 ), LDA )
+            CALL ZLACGV( N-I, A( I, I+1 ), LDA )
+         END IF
+         A( I, I ) = ONE - DCONJG( TAU( I ) )
+*
+*        Set A(i,1:i-1) to zero
+*
+         DO 30 L = 1, I - 1
+            A( I, L ) = ZERO
+   30    CONTINUE
+   40 CONTINUE
+      RETURN
+*
+*     End of ZUNGL2
+*
+      END
+*> \brief \b ZUNGLQ
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZUNGLQ + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zunglq.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zunglq.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zunglq.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZUNGLQ( M, N, K, A, LDA, TAU, WORK, LWORK, INFO )
+*
+*       .. Scalar Arguments ..
+*       INTEGER            INFO, K, LDA, LWORK, M, N
+*       ..
+*       .. Array Arguments ..
+*       COMPLEX*16         A( LDA, * ), TAU( * ), WORK( * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZUNGLQ generates an M-by-N complex matrix Q with orthonormal rows,
+*> which is defined as the first M rows of a product of K elementary
+*> reflectors of order N
+*>
+*>       Q  =  H(k)**H . . . H(2)**H H(1)**H
+*>
+*> as returned by ZGELQF.
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] M
+*> \verbatim
+*>          M is INTEGER
+*>          The number of rows of the matrix Q. M >= 0.
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The number of columns of the matrix Q. N >= M.
+*> \endverbatim
+*>
+*> \param[in] K
+*> \verbatim
+*>          K is INTEGER
+*>          The number of elementary reflectors whose product defines the
+*>          matrix Q. M >= K >= 0.
+*> \endverbatim
+*>
+*> \param[in,out] A
+*> \verbatim
+*>          A is COMPLEX*16 array, dimension (LDA,N)
+*>          On entry, the i-th row must contain the vector which defines
+*>          the elementary reflector H(i), for i = 1,2,...,k, as returned
+*>          by ZGELQF in the first k rows of its array argument A.
+*>          On exit, the M-by-N matrix Q.
+*> \endverbatim
+*>
+*> \param[in] LDA
+*> \verbatim
+*>          LDA is INTEGER
+*>          The first dimension of the array A. LDA >= max(1,M).
+*> \endverbatim
+*>
+*> \param[in] TAU
+*> \verbatim
+*>          TAU is COMPLEX*16 array, dimension (K)
+*>          TAU(i) must contain the scalar factor of the elementary
+*>          reflector H(i), as returned by ZGELQF.
+*> \endverbatim
+*>
+*> \param[out] WORK
+*> \verbatim
+*>          WORK is COMPLEX*16 array, dimension (MAX(1,LWORK))
+*>          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
+*> \endverbatim
+*>
+*> \param[in] LWORK
+*> \verbatim
+*>          LWORK is INTEGER
+*>          The dimension of the array WORK. LWORK >= max(1,M).
+*>          For optimum performance LWORK >= M*NB, where NB is
+*>          the optimal blocksize.
+*>
+*>          If LWORK = -1, then a workspace query is assumed; the routine
+*>          only calculates the optimal size of the WORK array, returns
+*>          this value as the first entry of the WORK array, and no error
+*>          message related to LWORK is issued by XERBLA.
+*> \endverbatim
+*>
+*> \param[out] INFO
+*> \verbatim
+*>          INFO is INTEGER
+*>          = 0:  successful exit;
+*>          < 0:  if INFO = -i, the i-th argument has an illegal value
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \date December 2016
+*
+*> \ingroup complex16OTHERcomputational
+*
+*  =====================================================================
+      SUBROUTINE ZUNGLQ( M, N, K, A, LDA, TAU, WORK, LWORK, INFO )
+*
+*  -- LAPACK computational routine (version 3.7.0) --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*     December 2016
+*
+*     .. Scalar Arguments ..
+      INTEGER            INFO, K, LDA, LWORK, M, N
+*     ..
+*     .. Array Arguments ..
+      COMPLEX*16         A( LDA, * ), TAU( * ), WORK( * )
+*     ..
+*
+*  =====================================================================
+*
+*     .. Parameters ..
+      COMPLEX*16         ZERO
+      PARAMETER          ( ZERO = ( 0.0D+0, 0.0D+0 ) )
+*     ..
+*     .. Local Scalars ..
+      LOGICAL            LQUERY
+      INTEGER            I, IB, IINFO, IWS, J, KI, KK, L, LDWORK,
+     $                   LWKOPT, NB, NBMIN, NX
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           XERBLA, ZLARFB, ZLARFT, ZUNGL2
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          MAX, MIN
+*     ..
+*     .. External Functions ..
+      INTEGER            ILAENV
+      EXTERNAL           ILAENV
+*     ..
+*     .. Executable Statements ..
+*
+*     Test the input arguments
+*
+      INFO = 0
+      NB = ILAENV( 1, 'ZUNGLQ', ' ', M, N, K, -1 )
+      LWKOPT = MAX( 1, M )*NB
+      WORK( 1 ) = LWKOPT
+      LQUERY = ( LWORK.EQ.-1 )
+      IF( M.LT.0 ) THEN
+         INFO = -1
+      ELSE IF( N.LT.M ) THEN
+         INFO = -2
+      ELSE IF( K.LT.0 .OR. K.GT.M ) THEN
+         INFO = -3
+      ELSE IF( LDA.LT.MAX( 1, M ) ) THEN
+         INFO = -5
+      ELSE IF( LWORK.LT.MAX( 1, M ) .AND. .NOT.LQUERY ) THEN
+         INFO = -8
+      END IF
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZUNGLQ', -INFO )
+         RETURN
+      ELSE IF( LQUERY ) THEN
+         RETURN
+      END IF
+*
+*     Quick return if possible
+*
+      IF( M.LE.0 ) THEN
+         WORK( 1 ) = 1
+         RETURN
+      END IF
+*
+      NBMIN = 2
+      NX = 0
+      IWS = M
+      IF( NB.GT.1 .AND. NB.LT.K ) THEN
+*
+*        Determine when to cross over from blocked to unblocked code.
+*
+         NX = MAX( 0, ILAENV( 3, 'ZUNGLQ', ' ', M, N, K, -1 ) )
+         IF( NX.LT.K ) THEN
+*
+*           Determine if workspace is large enough for blocked code.
+*
+            LDWORK = M
+            IWS = LDWORK*NB
+            IF( LWORK.LT.IWS ) THEN
+*
+*              Not enough workspace to use optimal NB:  reduce NB and
+*              determine the minimum value of NB.
+*
+               NB = LWORK / LDWORK
+               NBMIN = MAX( 2, ILAENV( 2, 'ZUNGLQ', ' ', M, N, K, -1 ) )
+            END IF
+         END IF
+      END IF
+*
+      IF( NB.GE.NBMIN .AND. NB.LT.K .AND. NX.LT.K ) THEN
+*
+*        Use blocked code after the last block.
+*        The first kk rows are handled by the block method.
+*
+         KI = ( ( K-NX-1 ) / NB )*NB
+         KK = MIN( K, KI+NB )
+*
+*        Set A(kk+1:m,1:kk) to zero.
+*
+         DO 20 J = 1, KK
+            DO 10 I = KK + 1, M
+               A( I, J ) = ZERO
+   10       CONTINUE
+   20    CONTINUE
+      ELSE
+         KK = 0
+      END IF
+*
+*     Use unblocked code for the last or only block.
+*
+      IF( KK.LT.M )
+     $   CALL ZUNGL2( M-KK, N-KK, K-KK, A( KK+1, KK+1 ), LDA,
+     $                TAU( KK+1 ), WORK, IINFO )
+*
+      IF( KK.GT.0 ) THEN
+*
+*        Use blocked code
+*
+         DO 50 I = KI + 1, 1, -NB
+            IB = MIN( NB, K-I+1 )
+            IF( I+IB.LE.M ) THEN
+*
+*              Form the triangular factor of the block reflector
+*              H = H(i) H(i+1) . . . H(i+ib-1)
+*
+               CALL ZLARFT( 'Forward', 'Rowwise', N-I+1, IB, A( I, I ),
+     $                      LDA, TAU( I ), WORK, LDWORK )
+*
+*              Apply H**H to A(i+ib:m,i:n) from the right
+*
+               CALL ZLARFB( 'Right', 'Conjugate transpose', 'Forward',
+     $                      'Rowwise', M-I-IB+1, N-I+1, IB, A( I, I ),
+     $                      LDA, WORK, LDWORK, A( I+IB, I ), LDA,
+     $                      WORK( IB+1 ), LDWORK )
+            END IF
+*
+*           Apply H**H to columns i:n of current block
+*
+            CALL ZUNGL2( IB, N-I+1, IB, A( I, I ), LDA, TAU( I ), WORK,
+     $                   IINFO )
+*
+*           Set columns 1:i-1 of current block to zero
+*
+            DO 40 J = 1, I - 1
+               DO 30 L = I, I + IB - 1
+                  A( L, J ) = ZERO
+   30          CONTINUE
+   40       CONTINUE
+   50    CONTINUE
+      END IF
+*
+      WORK( 1 ) = IWS
+      RETURN
+*
+*     End of ZUNGLQ
+*
+      END
+*> \brief \b ZUNGQL
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZUNGQL + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zungql.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zungql.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zungql.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZUNGQL( M, N, K, A, LDA, TAU, WORK, LWORK, INFO )
+*
+*       .. Scalar Arguments ..
+*       INTEGER            INFO, K, LDA, LWORK, M, N
+*       ..
+*       .. Array Arguments ..
+*       COMPLEX*16         A( LDA, * ), TAU( * ), WORK( * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZUNGQL generates an M-by-N complex matrix Q with orthonormal columns,
+*> which is defined as the last N columns of a product of K elementary
+*> reflectors of order M
+*>
+*>       Q  =  H(k) . . . H(2) H(1)
+*>
+*> as returned by ZGEQLF.
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] M
+*> \verbatim
+*>          M is INTEGER
+*>          The number of rows of the matrix Q. M >= 0.
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The number of columns of the matrix Q. M >= N >= 0.
+*> \endverbatim
+*>
+*> \param[in] K
+*> \verbatim
+*>          K is INTEGER
+*>          The number of elementary reflectors whose product defines the
+*>          matrix Q. N >= K >= 0.
+*> \endverbatim
+*>
+*> \param[in,out] A
+*> \verbatim
+*>          A is COMPLEX*16 array, dimension (LDA,N)
+*>          On entry, the (n-k+i)-th column must contain the vector which
+*>          defines the elementary reflector H(i), for i = 1,2,...,k, as
+*>          returned by ZGEQLF in the last k columns of its array
+*>          argument A.
+*>          On exit, the M-by-N matrix Q.
+*> \endverbatim
+*>
+*> \param[in] LDA
+*> \verbatim
+*>          LDA is INTEGER
+*>          The first dimension of the array A. LDA >= max(1,M).
+*> \endverbatim
+*>
+*> \param[in] TAU
+*> \verbatim
+*>          TAU is COMPLEX*16 array, dimension (K)
+*>          TAU(i) must contain the scalar factor of the elementary
+*>          reflector H(i), as returned by ZGEQLF.
+*> \endverbatim
+*>
+*> \param[out] WORK
+*> \verbatim
+*>          WORK is COMPLEX*16 array, dimension (MAX(1,LWORK))
+*>          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
+*> \endverbatim
+*>
+*> \param[in] LWORK
+*> \verbatim
+*>          LWORK is INTEGER
+*>          The dimension of the array WORK. LWORK >= max(1,N).
+*>          For optimum performance LWORK >= N*NB, where NB is the
+*>          optimal blocksize.
+*>
+*>          If LWORK = -1, then a workspace query is assumed; the routine
+*>          only calculates the optimal size of the WORK array, returns
+*>          this value as the first entry of the WORK array, and no error
+*>          message related to LWORK is issued by XERBLA.
+*> \endverbatim
+*>
+*> \param[out] INFO
+*> \verbatim
+*>          INFO is INTEGER
+*>          = 0:  successful exit
+*>          < 0:  if INFO = -i, the i-th argument has an illegal value
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \date December 2016
+*
+*> \ingroup complex16OTHERcomputational
+*
+*  =====================================================================
+      SUBROUTINE ZUNGQL( M, N, K, A, LDA, TAU, WORK, LWORK, INFO )
+*
+*  -- LAPACK computational routine (version 3.7.0) --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*     December 2016
+*
+*     .. Scalar Arguments ..
+      INTEGER            INFO, K, LDA, LWORK, M, N
+*     ..
+*     .. Array Arguments ..
+      COMPLEX*16         A( LDA, * ), TAU( * ), WORK( * )
+*     ..
+*
+*  =====================================================================
+*
+*     .. Parameters ..
+      COMPLEX*16         ZERO
+      PARAMETER          ( ZERO = ( 0.0D+0, 0.0D+0 ) )
+*     ..
+*     .. Local Scalars ..
+      LOGICAL            LQUERY
+      INTEGER            I, IB, IINFO, IWS, J, KK, L, LDWORK, LWKOPT,
+     $                   NB, NBMIN, NX
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           XERBLA, ZLARFB, ZLARFT, ZUNG2L
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          MAX, MIN
+*     ..
+*     .. External Functions ..
+      INTEGER            ILAENV
+      EXTERNAL           ILAENV
+*     ..
+*     .. Executable Statements ..
+*
+*     Test the input arguments
+*
+      INFO = 0
+      LQUERY = ( LWORK.EQ.-1 )
+      IF( M.LT.0 ) THEN
+         INFO = -1
+      ELSE IF( N.LT.0 .OR. N.GT.M ) THEN
+         INFO = -2
+      ELSE IF( K.LT.0 .OR. K.GT.N ) THEN
+         INFO = -3
+      ELSE IF( LDA.LT.MAX( 1, M ) ) THEN
+         INFO = -5
+      END IF
+*
+      IF( INFO.EQ.0 ) THEN
+         IF( N.EQ.0 ) THEN
+            LWKOPT = 1
+         ELSE
+            NB = ILAENV( 1, 'ZUNGQL', ' ', M, N, K, -1 )
+            LWKOPT = N*NB
+         END IF
+         WORK( 1 ) = LWKOPT
+*
+         IF( LWORK.LT.MAX( 1, N ) .AND. .NOT.LQUERY ) THEN
+            INFO = -8
+         END IF
+      END IF
+*
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZUNGQL', -INFO )
+         RETURN
+      ELSE IF( LQUERY ) THEN
+         RETURN
+      END IF
+*
+*     Quick return if possible
+*
+      IF( N.LE.0 ) THEN
+         RETURN
+      END IF
+*
+      NBMIN = 2
+      NX = 0
+      IWS = N
+      IF( NB.GT.1 .AND. NB.LT.K ) THEN
+*
+*        Determine when to cross over from blocked to unblocked code.
+*
+         NX = MAX( 0, ILAENV( 3, 'ZUNGQL', ' ', M, N, K, -1 ) )
+         IF( NX.LT.K ) THEN
+*
+*           Determine if workspace is large enough for blocked code.
+*
+            LDWORK = N
+            IWS = LDWORK*NB
+            IF( LWORK.LT.IWS ) THEN
+*
+*              Not enough workspace to use optimal NB:  reduce NB and
+*              determine the minimum value of NB.
+*
+               NB = LWORK / LDWORK
+               NBMIN = MAX( 2, ILAENV( 2, 'ZUNGQL', ' ', M, N, K, -1 ) )
+            END IF
+         END IF
+      END IF
+*
+      IF( NB.GE.NBMIN .AND. NB.LT.K .AND. NX.LT.K ) THEN
+*
+*        Use blocked code after the first block.
+*        The last kk columns are handled by the block method.
+*
+         KK = MIN( K, ( ( K-NX+NB-1 ) / NB )*NB )
+*
+*        Set A(m-kk+1:m,1:n-kk) to zero.
+*
+         DO 20 J = 1, N - KK
+            DO 10 I = M - KK + 1, M
+               A( I, J ) = ZERO
+   10       CONTINUE
+   20    CONTINUE
+      ELSE
+         KK = 0
+      END IF
+*
+*     Use unblocked code for the first or only block.
+*
+      CALL ZUNG2L( M-KK, N-KK, K-KK, A, LDA, TAU, WORK, IINFO )
+*
+      IF( KK.GT.0 ) THEN
+*
+*        Use blocked code
+*
+         DO 50 I = K - KK + 1, K, NB
+            IB = MIN( NB, K-I+1 )
+            IF( N-K+I.GT.1 ) THEN
+*
+*              Form the triangular factor of the block reflector
+*              H = H(i+ib-1) . . . H(i+1) H(i)
+*
+               CALL ZLARFT( 'Backward', 'Columnwise', M-K+I+IB-1, IB,
+     $                      A( 1, N-K+I ), LDA, TAU( I ), WORK, LDWORK )
+*
+*              Apply H to A(1:m-k+i+ib-1,1:n-k+i-1) from the left
+*
+               CALL ZLARFB( 'Left', 'No transpose', 'Backward',
+     $                      'Columnwise', M-K+I+IB-1, N-K+I-1, IB,
+     $                      A( 1, N-K+I ), LDA, WORK, LDWORK, A, LDA,
+     $                      WORK( IB+1 ), LDWORK )
+            END IF
+*
+*           Apply H to rows 1:m-k+i+ib-1 of current block
+*
+            CALL ZUNG2L( M-K+I+IB-1, IB, IB, A( 1, N-K+I ), LDA,
+     $                   TAU( I ), WORK, IINFO )
+*
+*           Set rows m-k+i+ib:m of current block to zero
+*
+            DO 40 J = N - K + I, N - K + I + IB - 1
+               DO 30 L = M - K + I + IB, M
+                  A( L, J ) = ZERO
+   30          CONTINUE
+   40       CONTINUE
+   50    CONTINUE
+      END IF
+*
+      WORK( 1 ) = IWS
+      RETURN
+*
+*     End of ZUNGQL
+*
+      END
+*> \brief \b ZUNGQR
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZUNGQR + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zungqr.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zungqr.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zungqr.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZUNGQR( M, N, K, A, LDA, TAU, WORK, LWORK, INFO )
+*
+*       .. Scalar Arguments ..
+*       INTEGER            INFO, K, LDA, LWORK, M, N
+*       ..
+*       .. Array Arguments ..
+*       COMPLEX*16         A( LDA, * ), TAU( * ), WORK( * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZUNGQR generates an M-by-N complex matrix Q with orthonormal columns,
+*> which is defined as the first N columns of a product of K elementary
+*> reflectors of order M
+*>
+*>       Q  =  H(1) H(2) . . . H(k)
+*>
+*> as returned by ZGEQRF.
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] M
+*> \verbatim
+*>          M is INTEGER
+*>          The number of rows of the matrix Q. M >= 0.
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The number of columns of the matrix Q. M >= N >= 0.
+*> \endverbatim
+*>
+*> \param[in] K
+*> \verbatim
+*>          K is INTEGER
+*>          The number of elementary reflectors whose product defines the
+*>          matrix Q. N >= K >= 0.
+*> \endverbatim
+*>
+*> \param[in,out] A
+*> \verbatim
+*>          A is COMPLEX*16 array, dimension (LDA,N)
+*>          On entry, the i-th column must contain the vector which
+*>          defines the elementary reflector H(i), for i = 1,2,...,k, as
+*>          returned by ZGEQRF in the first k columns of its array
+*>          argument A.
+*>          On exit, the M-by-N matrix Q.
+*> \endverbatim
+*>
+*> \param[in] LDA
+*> \verbatim
+*>          LDA is INTEGER
+*>          The first dimension of the array A. LDA >= max(1,M).
+*> \endverbatim
+*>
+*> \param[in] TAU
+*> \verbatim
+*>          TAU is COMPLEX*16 array, dimension (K)
+*>          TAU(i) must contain the scalar factor of the elementary
+*>          reflector H(i), as returned by ZGEQRF.
+*> \endverbatim
+*>
+*> \param[out] WORK
+*> \verbatim
+*>          WORK is COMPLEX*16 array, dimension (MAX(1,LWORK))
+*>          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
+*> \endverbatim
+*>
+*> \param[in] LWORK
+*> \verbatim
+*>          LWORK is INTEGER
+*>          The dimension of the array WORK. LWORK >= max(1,N).
+*>          For optimum performance LWORK >= N*NB, where NB is the
+*>          optimal blocksize.
+*>
+*>          If LWORK = -1, then a workspace query is assumed; the routine
+*>          only calculates the optimal size of the WORK array, returns
+*>          this value as the first entry of the WORK array, and no error
+*>          message related to LWORK is issued by XERBLA.
+*> \endverbatim
+*>
+*> \param[out] INFO
+*> \verbatim
+*>          INFO is INTEGER
+*>          = 0:  successful exit
+*>          < 0:  if INFO = -i, the i-th argument has an illegal value
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \date December 2016
+*
+*> \ingroup complex16OTHERcomputational
+*
+*  =====================================================================
+      SUBROUTINE ZUNGQR( M, N, K, A, LDA, TAU, WORK, LWORK, INFO )
+*
+*  -- LAPACK computational routine (version 3.7.0) --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*     December 2016
+*
+*     .. Scalar Arguments ..
+      INTEGER            INFO, K, LDA, LWORK, M, N
+*     ..
+*     .. Array Arguments ..
+      COMPLEX*16         A( LDA, * ), TAU( * ), WORK( * )
+*     ..
+*
+*  =====================================================================
+*
+*     .. Parameters ..
+      COMPLEX*16         ZERO
+      PARAMETER          ( ZERO = ( 0.0D+0, 0.0D+0 ) )
+*     ..
+*     .. Local Scalars ..
+      LOGICAL            LQUERY
+      INTEGER            I, IB, IINFO, IWS, J, KI, KK, L, LDWORK,
+     $                   LWKOPT, NB, NBMIN, NX
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           XERBLA, ZLARFB, ZLARFT, ZUNG2R
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          MAX, MIN
+*     ..
+*     .. External Functions ..
+      INTEGER            ILAENV
+      EXTERNAL           ILAENV
+*     ..
+*     .. Executable Statements ..
+*
+*     Test the input arguments
+*
+      INFO = 0
+      NB = ILAENV( 1, 'ZUNGQR', ' ', M, N, K, -1 )
+      LWKOPT = MAX( 1, N )*NB
+      WORK( 1 ) = LWKOPT
+      LQUERY = ( LWORK.EQ.-1 )
+      IF( M.LT.0 ) THEN
+         INFO = -1
+      ELSE IF( N.LT.0 .OR. N.GT.M ) THEN
+         INFO = -2
+      ELSE IF( K.LT.0 .OR. K.GT.N ) THEN
+         INFO = -3
+      ELSE IF( LDA.LT.MAX( 1, M ) ) THEN
+         INFO = -5
+      ELSE IF( LWORK.LT.MAX( 1, N ) .AND. .NOT.LQUERY ) THEN
+         INFO = -8
+      END IF
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZUNGQR', -INFO )
+         RETURN
+      ELSE IF( LQUERY ) THEN
+         RETURN
+      END IF
+*
+*     Quick return if possible
+*
+      IF( N.LE.0 ) THEN
+         WORK( 1 ) = 1
+         RETURN
+      END IF
+*
+      NBMIN = 2
+      NX = 0
+      IWS = N
+      IF( NB.GT.1 .AND. NB.LT.K ) THEN
+*
+*        Determine when to cross over from blocked to unblocked code.
+*
+         NX = MAX( 0, ILAENV( 3, 'ZUNGQR', ' ', M, N, K, -1 ) )
+         IF( NX.LT.K ) THEN
+*
+*           Determine if workspace is large enough for blocked code.
+*
+            LDWORK = N
+            IWS = LDWORK*NB
+            IF( LWORK.LT.IWS ) THEN
+*
+*              Not enough workspace to use optimal NB:  reduce NB and
+*              determine the minimum value of NB.
+*
+               NB = LWORK / LDWORK
+               NBMIN = MAX( 2, ILAENV( 2, 'ZUNGQR', ' ', M, N, K, -1 ) )
+            END IF
+         END IF
+      END IF
+*
+      IF( NB.GE.NBMIN .AND. NB.LT.K .AND. NX.LT.K ) THEN
+*
+*        Use blocked code after the last block.
+*        The first kk columns are handled by the block method.
+*
+         KI = ( ( K-NX-1 ) / NB )*NB
+         KK = MIN( K, KI+NB )
+*
+*        Set A(1:kk,kk+1:n) to zero.
+*
+         DO 20 J = KK + 1, N
+            DO 10 I = 1, KK
+               A( I, J ) = ZERO
+   10       CONTINUE
+   20    CONTINUE
+      ELSE
+         KK = 0
+      END IF
+*
+*     Use unblocked code for the last or only block.
+*
+      IF( KK.LT.N )
+     $   CALL ZUNG2R( M-KK, N-KK, K-KK, A( KK+1, KK+1 ), LDA,
+     $                TAU( KK+1 ), WORK, IINFO )
+*
+      IF( KK.GT.0 ) THEN
+*
+*        Use blocked code
+*
+         DO 50 I = KI + 1, 1, -NB
+            IB = MIN( NB, K-I+1 )
+            IF( I+IB.LE.N ) THEN
+*
+*              Form the triangular factor of the block reflector
+*              H = H(i) H(i+1) . . . H(i+ib-1)
+*
+               CALL ZLARFT( 'Forward', 'Columnwise', M-I+1, IB,
+     $                      A( I, I ), LDA, TAU( I ), WORK, LDWORK )
+*
+*              Apply H to A(i:m,i+ib:n) from the left
+*
+               CALL ZLARFB( 'Left', 'No transpose', 'Forward',
+     $                      'Columnwise', M-I+1, N-I-IB+1, IB,
+     $                      A( I, I ), LDA, WORK, LDWORK, A( I, I+IB ),
+     $                      LDA, WORK( IB+1 ), LDWORK )
+            END IF
+*
+*           Apply H to rows i:m of current block
+*
+            CALL ZUNG2R( M-I+1, IB, IB, A( I, I ), LDA, TAU( I ), WORK,
+     $                   IINFO )
+*
+*           Set rows 1:i-1 of current block to zero
+*
+            DO 40 J = I, I + IB - 1
+               DO 30 L = 1, I - 1
+                  A( L, J ) = ZERO
+   30          CONTINUE
+   40       CONTINUE
+   50    CONTINUE
+      END IF
+*
+      WORK( 1 ) = IWS
+      RETURN
+*
+*     End of ZUNGQR
+*
+      END
+*> \brief \b ZUNGR2 generates all or part of the unitary matrix Q from an RQ factorization determined by cgerqf (unblocked algorithm).
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZUNGR2 + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zungr2.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zungr2.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zungr2.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZUNGR2( M, N, K, A, LDA, TAU, WORK, INFO )
+*
+*       .. Scalar Arguments ..
+*       INTEGER            INFO, K, LDA, M, N
+*       ..
+*       .. Array Arguments ..
+*       COMPLEX*16         A( LDA, * ), TAU( * ), WORK( * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZUNGR2 generates an m by n complex matrix Q with orthonormal rows,
+*> which is defined as the last m rows of a product of k elementary
+*> reflectors of order n
+*>
+*>       Q  =  H(1)**H H(2)**H . . . H(k)**H
+*>
+*> as returned by ZGERQF.
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] M
+*> \verbatim
+*>          M is INTEGER
+*>          The number of rows of the matrix Q. M >= 0.
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The number of columns of the matrix Q. N >= M.
+*> \endverbatim
+*>
+*> \param[in] K
+*> \verbatim
+*>          K is INTEGER
+*>          The number of elementary reflectors whose product defines the
+*>          matrix Q. M >= K >= 0.
+*> \endverbatim
+*>
+*> \param[in,out] A
+*> \verbatim
+*>          A is COMPLEX*16 array, dimension (LDA,N)
+*>          On entry, the (m-k+i)-th row must contain the vector which
+*>          defines the elementary reflector H(i), for i = 1,2,...,k, as
+*>          returned by ZGERQF in the last k rows of its array argument
+*>          A.
+*>          On exit, the m-by-n matrix Q.
+*> \endverbatim
+*>
+*> \param[in] LDA
+*> \verbatim
+*>          LDA is INTEGER
+*>          The first dimension of the array A. LDA >= max(1,M).
+*> \endverbatim
+*>
+*> \param[in] TAU
+*> \verbatim
+*>          TAU is COMPLEX*16 array, dimension (K)
+*>          TAU(i) must contain the scalar factor of the elementary
+*>          reflector H(i), as returned by ZGERQF.
+*> \endverbatim
+*>
+*> \param[out] WORK
+*> \verbatim
+*>          WORK is COMPLEX*16 array, dimension (M)
+*> \endverbatim
+*>
+*> \param[out] INFO
+*> \verbatim
+*>          INFO is INTEGER
+*>          = 0: successful exit
+*>          < 0: if INFO = -i, the i-th argument has an illegal value
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \date December 2016
+*
+*> \ingroup complex16OTHERcomputational
+*
+*  =====================================================================
+      SUBROUTINE ZUNGR2( M, N, K, A, LDA, TAU, WORK, INFO )
+*
+*  -- LAPACK computational routine (version 3.7.0) --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*     December 2016
+*
+*     .. Scalar Arguments ..
+      INTEGER            INFO, K, LDA, M, N
+*     ..
+*     .. Array Arguments ..
+      COMPLEX*16         A( LDA, * ), TAU( * ), WORK( * )
+*     ..
+*
+*  =====================================================================
+*
+*     .. Parameters ..
+      COMPLEX*16         ONE, ZERO
+      PARAMETER          ( ONE = ( 1.0D+0, 0.0D+0 ),
+     $                   ZERO = ( 0.0D+0, 0.0D+0 ) )
+*     ..
+*     .. Local Scalars ..
+      INTEGER            I, II, J, L
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           XERBLA, ZLACGV, ZLARF, ZSCAL
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          DCONJG, MAX
+*     ..
+*     .. Executable Statements ..
+*
+*     Test the input arguments
+*
+      INFO = 0
+      IF( M.LT.0 ) THEN
+         INFO = -1
+      ELSE IF( N.LT.M ) THEN
+         INFO = -2
+      ELSE IF( K.LT.0 .OR. K.GT.M ) THEN
+         INFO = -3
+      ELSE IF( LDA.LT.MAX( 1, M ) ) THEN
+         INFO = -5
+      END IF
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZUNGR2', -INFO )
+         RETURN
+      END IF
+*
+*     Quick return if possible
+*
+      IF( M.LE.0 )
+     $   RETURN
+*
+      IF( K.LT.M ) THEN
+*
+*        Initialise rows 1:m-k to rows of the unit matrix
+*
+         DO 20 J = 1, N
+            DO 10 L = 1, M - K
+               A( L, J ) = ZERO
+   10       CONTINUE
+            IF( J.GT.N-M .AND. J.LE.N-K )
+     $         A( M-N+J, J ) = ONE
+   20    CONTINUE
+      END IF
+*
+      DO 40 I = 1, K
+         II = M - K + I
+*
+*        Apply H(i)**H to A(1:m-k+i,1:n-k+i) from the right
+*
+         CALL ZLACGV( N-M+II-1, A( II, 1 ), LDA )
+         A( II, N-M+II ) = ONE
+         CALL ZLARF( 'Right', II-1, N-M+II, A( II, 1 ), LDA,
+     $               DCONJG( TAU( I ) ), A, LDA, WORK )
+         CALL ZSCAL( N-M+II-1, -TAU( I ), A( II, 1 ), LDA )
+         CALL ZLACGV( N-M+II-1, A( II, 1 ), LDA )
+         A( II, N-M+II ) = ONE - DCONJG( TAU( I ) )
+*
+*        Set A(m-k+i,n-k+i+1:n) to zero
+*
+         DO 30 L = N - M + II + 1, N
+            A( II, L ) = ZERO
+   30    CONTINUE
+   40 CONTINUE
+      RETURN
+*
+*     End of ZUNGR2
+*
+      END
+*> \brief \b ZUNGRQ
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZUNGRQ + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zungrq.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zungrq.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zungrq.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZUNGRQ( M, N, K, A, LDA, TAU, WORK, LWORK, INFO )
+*
+*       .. Scalar Arguments ..
+*       INTEGER            INFO, K, LDA, LWORK, M, N
+*       ..
+*       .. Array Arguments ..
+*       COMPLEX*16         A( LDA, * ), TAU( * ), WORK( * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZUNGRQ generates an M-by-N complex matrix Q with orthonormal rows,
+*> which is defined as the last M rows of a product of K elementary
+*> reflectors of order N
+*>
+*>       Q  =  H(1)**H H(2)**H . . . H(k)**H
+*>
+*> as returned by ZGERQF.
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] M
+*> \verbatim
+*>          M is INTEGER
+*>          The number of rows of the matrix Q. M >= 0.
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The number of columns of the matrix Q. N >= M.
+*> \endverbatim
+*>
+*> \param[in] K
+*> \verbatim
+*>          K is INTEGER
+*>          The number of elementary reflectors whose product defines the
+*>          matrix Q. M >= K >= 0.
+*> \endverbatim
+*>
+*> \param[in,out] A
+*> \verbatim
+*>          A is COMPLEX*16 array, dimension (LDA,N)
+*>          On entry, the (m-k+i)-th row must contain the vector which
+*>          defines the elementary reflector H(i), for i = 1,2,...,k, as
+*>          returned by ZGERQF in the last k rows of its array argument
+*>          A.
+*>          On exit, the M-by-N matrix Q.
+*> \endverbatim
+*>
+*> \param[in] LDA
+*> \verbatim
+*>          LDA is INTEGER
+*>          The first dimension of the array A. LDA >= max(1,M).
+*> \endverbatim
+*>
+*> \param[in] TAU
+*> \verbatim
+*>          TAU is COMPLEX*16 array, dimension (K)
+*>          TAU(i) must contain the scalar factor of the elementary
+*>          reflector H(i), as returned by ZGERQF.
+*> \endverbatim
+*>
+*> \param[out] WORK
+*> \verbatim
+*>          WORK is COMPLEX*16 array, dimension (MAX(1,LWORK))
+*>          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
+*> \endverbatim
+*>
+*> \param[in] LWORK
+*> \verbatim
+*>          LWORK is INTEGER
+*>          The dimension of the array WORK. LWORK >= max(1,M).
+*>          For optimum performance LWORK >= M*NB, where NB is the
+*>          optimal blocksize.
+*>
+*>          If LWORK = -1, then a workspace query is assumed; the routine
+*>          only calculates the optimal size of the WORK array, returns
+*>          this value as the first entry of the WORK array, and no error
+*>          message related to LWORK is issued by XERBLA.
+*> \endverbatim
+*>
+*> \param[out] INFO
+*> \verbatim
+*>          INFO is INTEGER
+*>          = 0:  successful exit
+*>          < 0:  if INFO = -i, the i-th argument has an illegal value
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \date December 2016
+*
+*> \ingroup complex16OTHERcomputational
+*
+*  =====================================================================
+      SUBROUTINE ZUNGRQ( M, N, K, A, LDA, TAU, WORK, LWORK, INFO )
+*
+*  -- LAPACK computational routine (version 3.7.0) --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*     December 2016
+*
+*     .. Scalar Arguments ..
+      INTEGER            INFO, K, LDA, LWORK, M, N
+*     ..
+*     .. Array Arguments ..
+      COMPLEX*16         A( LDA, * ), TAU( * ), WORK( * )
+*     ..
+*
+*  =====================================================================
+*
+*     .. Parameters ..
+      COMPLEX*16         ZERO
+      PARAMETER          ( ZERO = ( 0.0D+0, 0.0D+0 ) )
+*     ..
+*     .. Local Scalars ..
+      LOGICAL            LQUERY
+      INTEGER            I, IB, II, IINFO, IWS, J, KK, L, LDWORK,
+     $                   LWKOPT, NB, NBMIN, NX
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           XERBLA, ZLARFB, ZLARFT, ZUNGR2
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          MAX, MIN
+*     ..
+*     .. External Functions ..
+      INTEGER            ILAENV
+      EXTERNAL           ILAENV
+*     ..
+*     .. Executable Statements ..
+*
+*     Test the input arguments
+*
+      INFO = 0
+      LQUERY = ( LWORK.EQ.-1 )
+      IF( M.LT.0 ) THEN
+         INFO = -1
+      ELSE IF( N.LT.M ) THEN
+         INFO = -2
+      ELSE IF( K.LT.0 .OR. K.GT.M ) THEN
+         INFO = -3
+      ELSE IF( LDA.LT.MAX( 1, M ) ) THEN
+         INFO = -5
+      END IF
+*
+      IF( INFO.EQ.0 ) THEN
+         IF( M.LE.0 ) THEN
+            LWKOPT = 1
+         ELSE
+            NB = ILAENV( 1, 'ZUNGRQ', ' ', M, N, K, -1 )
+            LWKOPT = M*NB
+         END IF
+         WORK( 1 ) = LWKOPT
+*
+         IF( LWORK.LT.MAX( 1, M ) .AND. .NOT.LQUERY ) THEN
+            INFO = -8
+         END IF
+      END IF
+*
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZUNGRQ', -INFO )
+         RETURN
+      ELSE IF( LQUERY ) THEN
+         RETURN
+      END IF
+*
+*     Quick return if possible
+*
+      IF( M.LE.0 ) THEN
+         RETURN
+      END IF
+*
+      NBMIN = 2
+      NX = 0
+      IWS = M
+      IF( NB.GT.1 .AND. NB.LT.K ) THEN
+*
+*        Determine when to cross over from blocked to unblocked code.
+*
+         NX = MAX( 0, ILAENV( 3, 'ZUNGRQ', ' ', M, N, K, -1 ) )
+         IF( NX.LT.K ) THEN
+*
+*           Determine if workspace is large enough for blocked code.
+*
+            LDWORK = M
+            IWS = LDWORK*NB
+            IF( LWORK.LT.IWS ) THEN
+*
+*              Not enough workspace to use optimal NB:  reduce NB and
+*              determine the minimum value of NB.
+*
+               NB = LWORK / LDWORK
+               NBMIN = MAX( 2, ILAENV( 2, 'ZUNGRQ', ' ', M, N, K, -1 ) )
+            END IF
+         END IF
+      END IF
+*
+      IF( NB.GE.NBMIN .AND. NB.LT.K .AND. NX.LT.K ) THEN
+*
+*        Use blocked code after the first block.
+*        The last kk rows are handled by the block method.
+*
+         KK = MIN( K, ( ( K-NX+NB-1 ) / NB )*NB )
+*
+*        Set A(1:m-kk,n-kk+1:n) to zero.
+*
+         DO 20 J = N - KK + 1, N
+            DO 10 I = 1, M - KK
+               A( I, J ) = ZERO
+   10       CONTINUE
+   20    CONTINUE
+      ELSE
+         KK = 0
+      END IF
+*
+*     Use unblocked code for the first or only block.
+*
+      CALL ZUNGR2( M-KK, N-KK, K-KK, A, LDA, TAU, WORK, IINFO )
+*
+      IF( KK.GT.0 ) THEN
+*
+*        Use blocked code
+*
+         DO 50 I = K - KK + 1, K, NB
+            IB = MIN( NB, K-I+1 )
+            II = M - K + I
+            IF( II.GT.1 ) THEN
+*
+*              Form the triangular factor of the block reflector
+*              H = H(i+ib-1) . . . H(i+1) H(i)
+*
+               CALL ZLARFT( 'Backward', 'Rowwise', N-K+I+IB-1, IB,
+     $                      A( II, 1 ), LDA, TAU( I ), WORK, LDWORK )
+*
+*              Apply H**H to A(1:m-k+i-1,1:n-k+i+ib-1) from the right
+*
+               CALL ZLARFB( 'Right', 'Conjugate transpose', 'Backward',
+     $                      'Rowwise', II-1, N-K+I+IB-1, IB, A( II, 1 ),
+     $                      LDA, WORK, LDWORK, A, LDA, WORK( IB+1 ),
+     $                      LDWORK )
+            END IF
+*
+*           Apply H**H to columns 1:n-k+i+ib-1 of current block
+*
+            CALL ZUNGR2( IB, N-K+I+IB-1, IB, A( II, 1 ), LDA, TAU( I ),
+     $                   WORK, IINFO )
+*
+*           Set columns n-k+i+ib:n of current block to zero
+*
+            DO 40 L = N - K + I + IB, N
+               DO 30 J = II, II + IB - 1
+                  A( J, L ) = ZERO
+   30          CONTINUE
+   40       CONTINUE
+   50    CONTINUE
+      END IF
+*
+      WORK( 1 ) = IWS
+      RETURN
+*
+*     End of ZUNGRQ
+*
+      END
+*> \brief \b ZUNGTR
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZUNGTR + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zungtr.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zungtr.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zungtr.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZUNGTR( UPLO, N, A, LDA, TAU, WORK, LWORK, INFO )
+*
+*       .. Scalar Arguments ..
+*       CHARACTER          UPLO
+*       INTEGER            INFO, LDA, LWORK, N
+*       ..
+*       .. Array Arguments ..
+*       COMPLEX*16         A( LDA, * ), TAU( * ), WORK( * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZUNGTR generates a complex unitary matrix Q which is defined as the
+*> product of n-1 elementary reflectors of order N, as returned by
+*> ZHETRD:
+*>
+*> if UPLO = 'U', Q = H(n-1) . . . H(2) H(1),
+*>
+*> if UPLO = 'L', Q = H(1) H(2) . . . H(n-1).
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] UPLO
+*> \verbatim
+*>          UPLO is CHARACTER*1
+*>          = 'U': Upper triangle of A contains elementary reflectors
+*>                 from ZHETRD;
+*>          = 'L': Lower triangle of A contains elementary reflectors
+*>                 from ZHETRD.
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The order of the matrix Q. N >= 0.
+*> \endverbatim
+*>
+*> \param[in,out] A
+*> \verbatim
+*>          A is COMPLEX*16 array, dimension (LDA,N)
+*>          On entry, the vectors which define the elementary reflectors,
+*>          as returned by ZHETRD.
+*>          On exit, the N-by-N unitary matrix Q.
+*> \endverbatim
+*>
+*> \param[in] LDA
+*> \verbatim
+*>          LDA is INTEGER
+*>          The leading dimension of the array A. LDA >= N.
+*> \endverbatim
+*>
+*> \param[in] TAU
+*> \verbatim
+*>          TAU is COMPLEX*16 array, dimension (N-1)
+*>          TAU(i) must contain the scalar factor of the elementary
+*>          reflector H(i), as returned by ZHETRD.
+*> \endverbatim
+*>
+*> \param[out] WORK
+*> \verbatim
+*>          WORK is COMPLEX*16 array, dimension (MAX(1,LWORK))
+*>          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
+*> \endverbatim
+*>
+*> \param[in] LWORK
+*> \verbatim
+*>          LWORK is INTEGER
+*>          The dimension of the array WORK. LWORK >= N-1.
+*>          For optimum performance LWORK >= (N-1)*NB, where NB is
+*>          the optimal blocksize.
+*>
+*>          If LWORK = -1, then a workspace query is assumed; the routine
+*>          only calculates the optimal size of the WORK array, returns
+*>          this value as the first entry of the WORK array, and no error
+*>          message related to LWORK is issued by XERBLA.
+*> \endverbatim
+*>
+*> \param[out] INFO
+*> \verbatim
+*>          INFO is INTEGER
+*>          = 0:  successful exit
+*>          < 0:  if INFO = -i, the i-th argument had an illegal value
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \date December 2016
+*
+*> \ingroup complex16OTHERcomputational
+*
+*  =====================================================================
+      SUBROUTINE ZUNGTR( UPLO, N, A, LDA, TAU, WORK, LWORK, INFO )
+*
+*  -- LAPACK computational routine (version 3.7.0) --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*     December 2016
+*
+*     .. Scalar Arguments ..
+      CHARACTER          UPLO
+      INTEGER            INFO, LDA, LWORK, N
+*     ..
+*     .. Array Arguments ..
+      COMPLEX*16         A( LDA, * ), TAU( * ), WORK( * )
+*     ..
+*
+*  =====================================================================
+*
+*     .. Parameters ..
+      COMPLEX*16         ZERO, ONE
+      PARAMETER          ( ZERO = ( 0.0D+0, 0.0D+0 ),
+     $                   ONE = ( 1.0D+0, 0.0D+0 ) )
+*     ..
+*     .. Local Scalars ..
+      LOGICAL            LQUERY, UPPER
+      INTEGER            I, IINFO, J, LWKOPT, NB
+*     ..
+*     .. External Functions ..
+      LOGICAL            LSAME
+      INTEGER            ILAENV
+      EXTERNAL           LSAME, ILAENV
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           XERBLA, ZUNGQL, ZUNGQR
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          MAX
+*     ..
+*     .. Executable Statements ..
+*
+*     Test the input arguments
+*
+      INFO = 0
+      LQUERY = ( LWORK.EQ.-1 )
+      UPPER = LSAME( UPLO, 'U' )
+      IF( .NOT.UPPER .AND. .NOT.LSAME( UPLO, 'L' ) ) THEN
+         INFO = -1
+      ELSE IF( N.LT.0 ) THEN
+         INFO = -2
+      ELSE IF( LDA.LT.MAX( 1, N ) ) THEN
+         INFO = -4
+      ELSE IF( LWORK.LT.MAX( 1, N-1 ) .AND. .NOT.LQUERY ) THEN
+         INFO = -7
+      END IF
+*
+      IF( INFO.EQ.0 ) THEN
+         IF( UPPER ) THEN
+            NB = ILAENV( 1, 'ZUNGQL', ' ', N-1, N-1, N-1, -1 )
+         ELSE
+            NB = ILAENV( 1, 'ZUNGQR', ' ', N-1, N-1, N-1, -1 )
+         END IF
+         LWKOPT = MAX( 1, N-1 )*NB
+         WORK( 1 ) = LWKOPT
+      END IF
+*
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZUNGTR', -INFO )
+         RETURN
+      ELSE IF( LQUERY ) THEN
+         RETURN
+      END IF
+*
+*     Quick return if possible
+*
+      IF( N.EQ.0 ) THEN
+         WORK( 1 ) = 1
+         RETURN
+      END IF
+*
+      IF( UPPER ) THEN
+*
+*        Q was determined by a call to ZHETRD with UPLO = 'U'
+*
+*        Shift the vectors which define the elementary reflectors one
+*        column to the left, and set the last row and column of Q to
+*        those of the unit matrix
+*
+         DO 20 J = 1, N - 1
+            DO 10 I = 1, J - 1
+               A( I, J ) = A( I, J+1 )
+   10       CONTINUE
+            A( N, J ) = ZERO
+   20    CONTINUE
+         DO 30 I = 1, N - 1
+            A( I, N ) = ZERO
+   30    CONTINUE
+         A( N, N ) = ONE
+*
+*        Generate Q(1:n-1,1:n-1)
+*
+         CALL ZUNGQL( N-1, N-1, N-1, A, LDA, TAU, WORK, LWORK, IINFO )
+*
+      ELSE
+*
+*        Q was determined by a call to ZHETRD with UPLO = 'L'.
+*
+*        Shift the vectors which define the elementary reflectors one
+*        column to the right, and set the first row and column of Q to
+*        those of the unit matrix
+*
+         DO 50 J = N, 2, -1
+            A( 1, J ) = ZERO
+            DO 40 I = J + 1, N
+               A( I, J ) = A( I, J-1 )
+   40       CONTINUE
+   50    CONTINUE
+         A( 1, 1 ) = ONE
+         DO 60 I = 2, N
+            A( I, 1 ) = ZERO
+   60    CONTINUE
+         IF( N.GT.1 ) THEN
+*
+*           Generate Q(2:n,2:n)
+*
+            CALL ZUNGQR( N-1, N-1, N-1, A( 2, 2 ), LDA, TAU, WORK,
+     $                   LWORK, IINFO )
+         END IF
+      END IF
+      WORK( 1 ) = LWKOPT
+      RETURN
+*
+*     End of ZUNGTR
+*
+      END
+*> \brief \b ZUNM2L multiplies a general matrix by the unitary matrix from a QL factorization determined by cgeqlf (unblocked algorithm).
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZUNM2L + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zunm2l.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zunm2l.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zunm2l.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZUNM2L( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC,
+*                          WORK, INFO )
+*
+*       .. Scalar Arguments ..
+*       CHARACTER          SIDE, TRANS
+*       INTEGER            INFO, K, LDA, LDC, M, N
+*       ..
+*       .. Array Arguments ..
+*       COMPLEX*16         A( LDA, * ), C( LDC, * ), TAU( * ), WORK( * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZUNM2L overwrites the general complex m-by-n matrix C with
+*>
+*>       Q * C  if SIDE = 'L' and TRANS = 'N', or
+*>
+*>       Q**H* C  if SIDE = 'L' and TRANS = 'C', or
+*>
+*>       C * Q  if SIDE = 'R' and TRANS = 'N', or
+*>
+*>       C * Q**H if SIDE = 'R' and TRANS = 'C',
+*>
+*> where Q is a complex unitary matrix defined as the product of k
+*> elementary reflectors
+*>
+*>       Q = H(k) . . . H(2) H(1)
+*>
+*> as returned by ZGEQLF. Q is of order m if SIDE = 'L' and of order n
+*> if SIDE = 'R'.
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] SIDE
+*> \verbatim
+*>          SIDE is CHARACTER*1
+*>          = 'L': apply Q or Q**H from the Left
+*>          = 'R': apply Q or Q**H from the Right
+*> \endverbatim
+*>
+*> \param[in] TRANS
+*> \verbatim
+*>          TRANS is CHARACTER*1
+*>          = 'N': apply Q  (No transpose)
+*>          = 'C': apply Q**H (Conjugate transpose)
+*> \endverbatim
+*>
+*> \param[in] M
+*> \verbatim
+*>          M is INTEGER
+*>          The number of rows of the matrix C. M >= 0.
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The number of columns of the matrix C. N >= 0.
+*> \endverbatim
+*>
+*> \param[in] K
+*> \verbatim
+*>          K is INTEGER
+*>          The number of elementary reflectors whose product defines
+*>          the matrix Q.
+*>          If SIDE = 'L', M >= K >= 0;
+*>          if SIDE = 'R', N >= K >= 0.
+*> \endverbatim
+*>
+*> \param[in] A
+*> \verbatim
+*>          A is COMPLEX*16 array, dimension (LDA,K)
+*>          The i-th column must contain the vector which defines the
+*>          elementary reflector H(i), for i = 1,2,...,k, as returned by
+*>          ZGEQLF in the last k columns of its array argument A.
+*>          A is modified by the routine but restored on exit.
+*> \endverbatim
+*>
+*> \param[in] LDA
+*> \verbatim
+*>          LDA is INTEGER
+*>          The leading dimension of the array A.
+*>          If SIDE = 'L', LDA >= max(1,M);
+*>          if SIDE = 'R', LDA >= max(1,N).
+*> \endverbatim
+*>
+*> \param[in] TAU
+*> \verbatim
+*>          TAU is COMPLEX*16 array, dimension (K)
+*>          TAU(i) must contain the scalar factor of the elementary
+*>          reflector H(i), as returned by ZGEQLF.
+*> \endverbatim
+*>
+*> \param[in,out] C
+*> \verbatim
+*>          C is COMPLEX*16 array, dimension (LDC,N)
+*>          On entry, the m-by-n matrix C.
+*>          On exit, C is overwritten by Q*C or Q**H*C or C*Q**H or C*Q.
+*> \endverbatim
+*>
+*> \param[in] LDC
+*> \verbatim
+*>          LDC is INTEGER
+*>          The leading dimension of the array C. LDC >= max(1,M).
+*> \endverbatim
+*>
+*> \param[out] WORK
+*> \verbatim
+*>          WORK is COMPLEX*16 array, dimension
+*>                                   (N) if SIDE = 'L',
+*>                                   (M) if SIDE = 'R'
+*> \endverbatim
+*>
+*> \param[out] INFO
+*> \verbatim
+*>          INFO is INTEGER
+*>          = 0: successful exit
+*>          < 0: if INFO = -i, the i-th argument had an illegal value
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \date December 2016
+*
+*> \ingroup complex16OTHERcomputational
+*
+*  =====================================================================
+      SUBROUTINE ZUNM2L( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC,
+     $                   WORK, INFO )
+*
+*  -- LAPACK computational routine (version 3.7.0) --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*     December 2016
+*
+*     .. Scalar Arguments ..
+      CHARACTER          SIDE, TRANS
+      INTEGER            INFO, K, LDA, LDC, M, N
+*     ..
+*     .. Array Arguments ..
+      COMPLEX*16         A( LDA, * ), C( LDC, * ), TAU( * ), WORK( * )
+*     ..
+*
+*  =====================================================================
+*
+*     .. Parameters ..
+      COMPLEX*16         ONE
+      PARAMETER          ( ONE = ( 1.0D+0, 0.0D+0 ) )
+*     ..
+*     .. Local Scalars ..
+      LOGICAL            LEFT, NOTRAN
+      INTEGER            I, I1, I2, I3, MI, NI, NQ
+      COMPLEX*16         AII, TAUI
+*     ..
+*     .. External Functions ..
+      LOGICAL            LSAME
+      EXTERNAL           LSAME
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           XERBLA, ZLARF
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          DCONJG, MAX
+*     ..
+*     .. Executable Statements ..
+*
+*     Test the input arguments
+*
+      INFO = 0
+      LEFT = LSAME( SIDE, 'L' )
+      NOTRAN = LSAME( TRANS, 'N' )
+*
+*     NQ is the order of Q
+*
+      IF( LEFT ) THEN
+         NQ = M
+      ELSE
+         NQ = N
+      END IF
+      IF( .NOT.LEFT .AND. .NOT.LSAME( SIDE, 'R' ) ) THEN
+         INFO = -1
+      ELSE IF( .NOT.NOTRAN .AND. .NOT.LSAME( TRANS, 'C' ) ) THEN
+         INFO = -2
+      ELSE IF( M.LT.0 ) THEN
+         INFO = -3
+      ELSE IF( N.LT.0 ) THEN
+         INFO = -4
+      ELSE IF( K.LT.0 .OR. K.GT.NQ ) THEN
+         INFO = -5
+      ELSE IF( LDA.LT.MAX( 1, NQ ) ) THEN
+         INFO = -7
+      ELSE IF( LDC.LT.MAX( 1, M ) ) THEN
+         INFO = -10
+      END IF
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZUNM2L', -INFO )
+         RETURN
+      END IF
+*
+*     Quick return if possible
+*
+      IF( M.EQ.0 .OR. N.EQ.0 .OR. K.EQ.0 )
+     $   RETURN
+*
+      IF( ( LEFT .AND. NOTRAN .OR. .NOT.LEFT .AND. .NOT.NOTRAN ) ) THEN
+         I1 = 1
+         I2 = K
+         I3 = 1
+      ELSE
+         I1 = K
+         I2 = 1
+         I3 = -1
+      END IF
+*
+      IF( LEFT ) THEN
+         NI = N
+      ELSE
+         MI = M
+      END IF
+*
+      DO 10 I = I1, I2, I3
+         IF( LEFT ) THEN
+*
+*           H(i) or H(i)**H is applied to C(1:m-k+i,1:n)
+*
+            MI = M - K + I
+         ELSE
+*
+*           H(i) or H(i)**H is applied to C(1:m,1:n-k+i)
+*
+            NI = N - K + I
+         END IF
+*
+*        Apply H(i) or H(i)**H
+*
+         IF( NOTRAN ) THEN
+            TAUI = TAU( I )
+         ELSE
+            TAUI = DCONJG( TAU( I ) )
+         END IF
+         AII = A( NQ-K+I, I )
+         A( NQ-K+I, I ) = ONE
+         CALL ZLARF( SIDE, MI, NI, A( 1, I ), 1, TAUI, C, LDC, WORK )
+         A( NQ-K+I, I ) = AII
+   10 CONTINUE
+      RETURN
+*
+*     End of ZUNM2L
+*
+      END
+*> \brief \b ZUNM2R multiplies a general matrix by the unitary matrix from a QR factorization determined by cgeqrf (unblocked algorithm).
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZUNM2R + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zunm2r.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zunm2r.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zunm2r.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZUNM2R( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC,
+*                          WORK, INFO )
+*
+*       .. Scalar Arguments ..
+*       CHARACTER          SIDE, TRANS
+*       INTEGER            INFO, K, LDA, LDC, M, N
+*       ..
+*       .. Array Arguments ..
+*       COMPLEX*16         A( LDA, * ), C( LDC, * ), TAU( * ), WORK( * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZUNM2R overwrites the general complex m-by-n matrix C with
+*>
+*>       Q * C  if SIDE = 'L' and TRANS = 'N', or
+*>
+*>       Q**H* C  if SIDE = 'L' and TRANS = 'C', or
+*>
+*>       C * Q  if SIDE = 'R' and TRANS = 'N', or
+*>
+*>       C * Q**H if SIDE = 'R' and TRANS = 'C',
+*>
+*> where Q is a complex unitary matrix defined as the product of k
+*> elementary reflectors
+*>
+*>       Q = H(1) H(2) . . . H(k)
+*>
+*> as returned by ZGEQRF. Q is of order m if SIDE = 'L' and of order n
+*> if SIDE = 'R'.
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] SIDE
+*> \verbatim
+*>          SIDE is CHARACTER*1
+*>          = 'L': apply Q or Q**H from the Left
+*>          = 'R': apply Q or Q**H from the Right
+*> \endverbatim
+*>
+*> \param[in] TRANS
+*> \verbatim
+*>          TRANS is CHARACTER*1
+*>          = 'N': apply Q  (No transpose)
+*>          = 'C': apply Q**H (Conjugate transpose)
+*> \endverbatim
+*>
+*> \param[in] M
+*> \verbatim
+*>          M is INTEGER
+*>          The number of rows of the matrix C. M >= 0.
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The number of columns of the matrix C. N >= 0.
+*> \endverbatim
+*>
+*> \param[in] K
+*> \verbatim
+*>          K is INTEGER
+*>          The number of elementary reflectors whose product defines
+*>          the matrix Q.
+*>          If SIDE = 'L', M >= K >= 0;
+*>          if SIDE = 'R', N >= K >= 0.
+*> \endverbatim
+*>
+*> \param[in] A
+*> \verbatim
+*>          A is COMPLEX*16 array, dimension (LDA,K)
+*>          The i-th column must contain the vector which defines the
+*>          elementary reflector H(i), for i = 1,2,...,k, as returned by
+*>          ZGEQRF in the first k columns of its array argument A.
+*>          A is modified by the routine but restored on exit.
+*> \endverbatim
+*>
+*> \param[in] LDA
+*> \verbatim
+*>          LDA is INTEGER
+*>          The leading dimension of the array A.
+*>          If SIDE = 'L', LDA >= max(1,M);
+*>          if SIDE = 'R', LDA >= max(1,N).
+*> \endverbatim
+*>
+*> \param[in] TAU
+*> \verbatim
+*>          TAU is COMPLEX*16 array, dimension (K)
+*>          TAU(i) must contain the scalar factor of the elementary
+*>          reflector H(i), as returned by ZGEQRF.
+*> \endverbatim
+*>
+*> \param[in,out] C
+*> \verbatim
+*>          C is COMPLEX*16 array, dimension (LDC,N)
+*>          On entry, the m-by-n matrix C.
+*>          On exit, C is overwritten by Q*C or Q**H*C or C*Q**H or C*Q.
+*> \endverbatim
+*>
+*> \param[in] LDC
+*> \verbatim
+*>          LDC is INTEGER
+*>          The leading dimension of the array C. LDC >= max(1,M).
+*> \endverbatim
+*>
+*> \param[out] WORK
+*> \verbatim
+*>          WORK is COMPLEX*16 array, dimension
+*>                                   (N) if SIDE = 'L',
+*>                                   (M) if SIDE = 'R'
+*> \endverbatim
+*>
+*> \param[out] INFO
+*> \verbatim
+*>          INFO is INTEGER
+*>          = 0: successful exit
+*>          < 0: if INFO = -i, the i-th argument had an illegal value
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \date December 2016
+*
+*> \ingroup complex16OTHERcomputational
+*
+*  =====================================================================
+      SUBROUTINE ZUNM2R( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC,
+     $                   WORK, INFO )
+*
+*  -- LAPACK computational routine (version 3.7.0) --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*     December 2016
+*
+*     .. Scalar Arguments ..
+      CHARACTER          SIDE, TRANS
+      INTEGER            INFO, K, LDA, LDC, M, N
+*     ..
+*     .. Array Arguments ..
+      COMPLEX*16         A( LDA, * ), C( LDC, * ), TAU( * ), WORK( * )
+*     ..
+*
+*  =====================================================================
+*
+*     .. Parameters ..
+      COMPLEX*16         ONE
+      PARAMETER          ( ONE = ( 1.0D+0, 0.0D+0 ) )
+*     ..
+*     .. Local Scalars ..
+      LOGICAL            LEFT, NOTRAN
+      INTEGER            I, I1, I2, I3, IC, JC, MI, NI, NQ
+      COMPLEX*16         AII, TAUI
+*     ..
+*     .. External Functions ..
+      LOGICAL            LSAME
+      EXTERNAL           LSAME
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           XERBLA, ZLARF
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          DCONJG, MAX
+*     ..
+*     .. Executable Statements ..
+*
+*     Test the input arguments
+*
+      INFO = 0
+      LEFT = LSAME( SIDE, 'L' )
+      NOTRAN = LSAME( TRANS, 'N' )
+*
+*     NQ is the order of Q
+*
+      IF( LEFT ) THEN
+         NQ = M
+      ELSE
+         NQ = N
+      END IF
+      IF( .NOT.LEFT .AND. .NOT.LSAME( SIDE, 'R' ) ) THEN
+         INFO = -1
+      ELSE IF( .NOT.NOTRAN .AND. .NOT.LSAME( TRANS, 'C' ) ) THEN
+         INFO = -2
+      ELSE IF( M.LT.0 ) THEN
+         INFO = -3
+      ELSE IF( N.LT.0 ) THEN
+         INFO = -4
+      ELSE IF( K.LT.0 .OR. K.GT.NQ ) THEN
+         INFO = -5
+      ELSE IF( LDA.LT.MAX( 1, NQ ) ) THEN
+         INFO = -7
+      ELSE IF( LDC.LT.MAX( 1, M ) ) THEN
+         INFO = -10
+      END IF
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZUNM2R', -INFO )
+         RETURN
+      END IF
+*
+*     Quick return if possible
+*
+      IF( M.EQ.0 .OR. N.EQ.0 .OR. K.EQ.0 )
+     $   RETURN
+*
+      IF( ( LEFT .AND. .NOT.NOTRAN .OR. .NOT.LEFT .AND. NOTRAN ) ) THEN
+         I1 = 1
+         I2 = K
+         I3 = 1
+      ELSE
+         I1 = K
+         I2 = 1
+         I3 = -1
+      END IF
+*
+      IF( LEFT ) THEN
+         NI = N
+         JC = 1
+      ELSE
+         MI = M
+         IC = 1
+      END IF
+*
+      DO 10 I = I1, I2, I3
+         IF( LEFT ) THEN
+*
+*           H(i) or H(i)**H is applied to C(i:m,1:n)
+*
+            MI = M - I + 1
+            IC = I
+         ELSE
+*
+*           H(i) or H(i)**H is applied to C(1:m,i:n)
+*
+            NI = N - I + 1
+            JC = I
+         END IF
+*
+*        Apply H(i) or H(i)**H
+*
+         IF( NOTRAN ) THEN
+            TAUI = TAU( I )
+         ELSE
+            TAUI = DCONJG( TAU( I ) )
+         END IF
+         AII = A( I, I )
+         A( I, I ) = ONE
+         CALL ZLARF( SIDE, MI, NI, A( I, I ), 1, TAUI, C( IC, JC ), LDC,
+     $               WORK )
+         A( I, I ) = AII
+   10 CONTINUE
+      RETURN
+*
+*     End of ZUNM2R
+*
+      END
+*> \brief \b ZUNMBR
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZUNMBR + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zunmbr.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zunmbr.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zunmbr.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZUNMBR( VECT, SIDE, TRANS, M, N, K, A, LDA, TAU, C,
+*                          LDC, WORK, LWORK, INFO )
+*
+*       .. Scalar Arguments ..
+*       CHARACTER          SIDE, TRANS, VECT
+*       INTEGER            INFO, K, LDA, LDC, LWORK, M, N
+*       ..
+*       .. Array Arguments ..
+*       COMPLEX*16         A( LDA, * ), C( LDC, * ), TAU( * ), WORK( * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> If VECT = 'Q', ZUNMBR overwrites the general complex M-by-N matrix C
+*> with
+*>                 SIDE = 'L'     SIDE = 'R'
+*> TRANS = 'N':      Q * C          C * Q
+*> TRANS = 'C':      Q**H * C       C * Q**H
+*>
+*> If VECT = 'P', ZUNMBR overwrites the general complex M-by-N matrix C
+*> with
+*>                 SIDE = 'L'     SIDE = 'R'
+*> TRANS = 'N':      P * C          C * P
+*> TRANS = 'C':      P**H * C       C * P**H
+*>
+*> Here Q and P**H are the unitary matrices determined by ZGEBRD when
+*> reducing a complex matrix A to bidiagonal form: A = Q * B * P**H. Q
+*> and P**H are defined as products of elementary reflectors H(i) and
+*> G(i) respectively.
+*>
+*> Let nq = m if SIDE = 'L' and nq = n if SIDE = 'R'. Thus nq is the
+*> order of the unitary matrix Q or P**H that is applied.
+*>
+*> If VECT = 'Q', A is assumed to have been an NQ-by-K matrix:
+*> if nq >= k, Q = H(1) H(2) . . . H(k);
+*> if nq < k, Q = H(1) H(2) . . . H(nq-1).
+*>
+*> If VECT = 'P', A is assumed to have been a K-by-NQ matrix:
+*> if k < nq, P = G(1) G(2) . . . G(k);
+*> if k >= nq, P = G(1) G(2) . . . G(nq-1).
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] VECT
+*> \verbatim
+*>          VECT is CHARACTER*1
+*>          = 'Q': apply Q or Q**H;
+*>          = 'P': apply P or P**H.
+*> \endverbatim
+*>
+*> \param[in] SIDE
+*> \verbatim
+*>          SIDE is CHARACTER*1
+*>          = 'L': apply Q, Q**H, P or P**H from the Left;
+*>          = 'R': apply Q, Q**H, P or P**H from the Right.
+*> \endverbatim
+*>
+*> \param[in] TRANS
+*> \verbatim
+*>          TRANS is CHARACTER*1
+*>          = 'N':  No transpose, apply Q or P;
+*>          = 'C':  Conjugate transpose, apply Q**H or P**H.
+*> \endverbatim
+*>
+*> \param[in] M
+*> \verbatim
+*>          M is INTEGER
+*>          The number of rows of the matrix C. M >= 0.
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The number of columns of the matrix C. N >= 0.
+*> \endverbatim
+*>
+*> \param[in] K
+*> \verbatim
+*>          K is INTEGER
+*>          If VECT = 'Q', the number of columns in the original
+*>          matrix reduced by ZGEBRD.
+*>          If VECT = 'P', the number of rows in the original
+*>          matrix reduced by ZGEBRD.
+*>          K >= 0.
+*> \endverbatim
+*>
+*> \param[in] A
+*> \verbatim
+*>          A is COMPLEX*16 array, dimension
+*>                                (LDA,min(nq,K)) if VECT = 'Q'
+*>                                (LDA,nq)        if VECT = 'P'
+*>          The vectors which define the elementary reflectors H(i) and
+*>          G(i), whose products determine the matrices Q and P, as
+*>          returned by ZGEBRD.
+*> \endverbatim
+*>
+*> \param[in] LDA
+*> \verbatim
+*>          LDA is INTEGER
+*>          The leading dimension of the array A.
+*>          If VECT = 'Q', LDA >= max(1,nq);
+*>          if VECT = 'P', LDA >= max(1,min(nq,K)).
+*> \endverbatim
+*>
+*> \param[in] TAU
+*> \verbatim
+*>          TAU is COMPLEX*16 array, dimension (min(nq,K))
+*>          TAU(i) must contain the scalar factor of the elementary
+*>          reflector H(i) or G(i) which determines Q or P, as returned
+*>          by ZGEBRD in the array argument TAUQ or TAUP.
+*> \endverbatim
+*>
+*> \param[in,out] C
+*> \verbatim
+*>          C is COMPLEX*16 array, dimension (LDC,N)
+*>          On entry, the M-by-N matrix C.
+*>          On exit, C is overwritten by Q*C or Q**H*C or C*Q**H or C*Q
+*>          or P*C or P**H*C or C*P or C*P**H.
+*> \endverbatim
+*>
+*> \param[in] LDC
+*> \verbatim
+*>          LDC is INTEGER
+*>          The leading dimension of the array C. LDC >= max(1,M).
+*> \endverbatim
+*>
+*> \param[out] WORK
+*> \verbatim
+*>          WORK is COMPLEX*16 array, dimension (MAX(1,LWORK))
+*>          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
+*> \endverbatim
+*>
+*> \param[in] LWORK
+*> \verbatim
+*>          LWORK is INTEGER
+*>          The dimension of the array WORK.
+*>          If SIDE = 'L', LWORK >= max(1,N);
+*>          if SIDE = 'R', LWORK >= max(1,M);
+*>          if N = 0 or M = 0, LWORK >= 1.
+*>          For optimum performance LWORK >= max(1,N*NB) if SIDE = 'L',
+*>          and LWORK >= max(1,M*NB) if SIDE = 'R', where NB is the
+*>          optimal blocksize. (NB = 0 if M = 0 or N = 0.)
+*>
+*>          If LWORK = -1, then a workspace query is assumed; the routine
+*>          only calculates the optimal size of the WORK array, returns
+*>          this value as the first entry of the WORK array, and no error
+*>          message related to LWORK is issued by XERBLA.
+*> \endverbatim
+*>
+*> \param[out] INFO
+*> \verbatim
+*>          INFO is INTEGER
+*>          = 0:  successful exit
+*>          < 0:  if INFO = -i, the i-th argument had an illegal value
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \date December 2016
+*
+*> \ingroup complex16OTHERcomputational
+*
+*  =====================================================================
+      SUBROUTINE ZUNMBR( VECT, SIDE, TRANS, M, N, K, A, LDA, TAU, C,
+     $                   LDC, WORK, LWORK, INFO )
+*
+*  -- LAPACK computational routine (version 3.7.0) --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*     December 2016
+*
+*     .. Scalar Arguments ..
+      CHARACTER          SIDE, TRANS, VECT
+      INTEGER            INFO, K, LDA, LDC, LWORK, M, N
+*     ..
+*     .. Array Arguments ..
+      COMPLEX*16         A( LDA, * ), C( LDC, * ), TAU( * ), WORK( * )
+*     ..
+*
+*  =====================================================================
+*
+*     .. Local Scalars ..
+      LOGICAL            APPLYQ, LEFT, LQUERY, NOTRAN
+      CHARACTER          TRANST
+      INTEGER            I1, I2, IINFO, LWKOPT, MI, NB, NI, NQ, NW
+*     ..
+*     .. External Functions ..
+      LOGICAL            LSAME
+      INTEGER            ILAENV
+      EXTERNAL           LSAME, ILAENV
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           XERBLA, ZUNMLQ, ZUNMQR
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          MAX, MIN
+*     ..
+*     .. Executable Statements ..
+*
+*     Test the input arguments
+*
+      INFO = 0
+      APPLYQ = LSAME( VECT, 'Q' )
+      LEFT = LSAME( SIDE, 'L' )
+      NOTRAN = LSAME( TRANS, 'N' )
+      LQUERY = ( LWORK.EQ.-1 )
+*
+*     NQ is the order of Q or P and NW is the minimum dimension of WORK
+*
+      IF( LEFT ) THEN
+         NQ = M
+         NW = N
+      ELSE
+         NQ = N
+         NW = M
+      END IF
+      IF( M.EQ.0 .OR. N.EQ.0 ) THEN
+         NW = 0
+      END IF
+      IF( .NOT.APPLYQ .AND. .NOT.LSAME( VECT, 'P' ) ) THEN
+         INFO = -1
+      ELSE IF( .NOT.LEFT .AND. .NOT.LSAME( SIDE, 'R' ) ) THEN
+         INFO = -2
+      ELSE IF( .NOT.NOTRAN .AND. .NOT.LSAME( TRANS, 'C' ) ) THEN
+         INFO = -3
+      ELSE IF( M.LT.0 ) THEN
+         INFO = -4
+      ELSE IF( N.LT.0 ) THEN
+         INFO = -5
+      ELSE IF( K.LT.0 ) THEN
+         INFO = -6
+      ELSE IF( ( APPLYQ .AND. LDA.LT.MAX( 1, NQ ) ) .OR.
+     $         ( .NOT.APPLYQ .AND. LDA.LT.MAX( 1, MIN( NQ, K ) ) ) )
+     $          THEN
+         INFO = -8
+      ELSE IF( LDC.LT.MAX( 1, M ) ) THEN
+         INFO = -11
+      ELSE IF( LWORK.LT.MAX( 1, NW ) .AND. .NOT.LQUERY ) THEN
+         INFO = -13
+      END IF
+*
+      IF( INFO.EQ.0 ) THEN
+         IF( NW.GT.0 ) THEN
+            IF( APPLYQ ) THEN
+               IF( LEFT ) THEN
+                  NB = ILAENV( 1, 'ZUNMQR', SIDE // TRANS, M-1, N, M-1,
+     $                 -1 )
+               ELSE
+                  NB = ILAENV( 1, 'ZUNMQR', SIDE // TRANS, M, N-1, N-1,
+     $                 -1 )
+               END IF
+            ELSE
+               IF( LEFT ) THEN
+                  NB = ILAENV( 1, 'ZUNMLQ', SIDE // TRANS, M-1, N, M-1,
+     $                 -1 )
+               ELSE
+                  NB = ILAENV( 1, 'ZUNMLQ', SIDE // TRANS, M, N-1, N-1,
+     $                 -1 )
+               END IF
+            END IF
+            LWKOPT = MAX( 1, NW*NB )
+         ELSE
+            LWKOPT = 1
+         END IF
+         WORK( 1 ) = LWKOPT
+      END IF
+*
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZUNMBR', -INFO )
+         RETURN
+      ELSE IF( LQUERY ) THEN
+         RETURN
+      END IF
+*
+*     Quick return if possible
+*
+      IF( M.EQ.0 .OR. N.EQ.0 )
+     $   RETURN
+*
+      IF( APPLYQ ) THEN
+*
+*        Apply Q
+*
+         IF( NQ.GE.K ) THEN
+*
+*           Q was determined by a call to ZGEBRD with nq >= k
+*
+            CALL ZUNMQR( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC,
+     $                   WORK, LWORK, IINFO )
+         ELSE IF( NQ.GT.1 ) THEN
+*
+*           Q was determined by a call to ZGEBRD with nq < k
+*
+            IF( LEFT ) THEN
+               MI = M - 1
+               NI = N
+               I1 = 2
+               I2 = 1
+            ELSE
+               MI = M
+               NI = N - 1
+               I1 = 1
+               I2 = 2
+            END IF
+            CALL ZUNMQR( SIDE, TRANS, MI, NI, NQ-1, A( 2, 1 ), LDA, TAU,
+     $                   C( I1, I2 ), LDC, WORK, LWORK, IINFO )
+         END IF
+      ELSE
+*
+*        Apply P
+*
+         IF( NOTRAN ) THEN
+            TRANST = 'C'
+         ELSE
+            TRANST = 'N'
+         END IF
+         IF( NQ.GT.K ) THEN
+*
+*           P was determined by a call to ZGEBRD with nq > k
+*
+            CALL ZUNMLQ( SIDE, TRANST, M, N, K, A, LDA, TAU, C, LDC,
+     $                   WORK, LWORK, IINFO )
+         ELSE IF( NQ.GT.1 ) THEN
+*
+*           P was determined by a call to ZGEBRD with nq <= k
+*
+            IF( LEFT ) THEN
+               MI = M - 1
+               NI = N
+               I1 = 2
+               I2 = 1
+            ELSE
+               MI = M
+               NI = N - 1
+               I1 = 1
+               I2 = 2
+            END IF
+            CALL ZUNMLQ( SIDE, TRANST, MI, NI, NQ-1, A( 1, 2 ), LDA,
+     $                   TAU, C( I1, I2 ), LDC, WORK, LWORK, IINFO )
+         END IF
+      END IF
+      WORK( 1 ) = LWKOPT
+      RETURN
+*
+*     End of ZUNMBR
+*
+      END
+*> \brief \b ZUNMHR
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZUNMHR + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zunmhr.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zunmhr.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zunmhr.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZUNMHR( SIDE, TRANS, M, N, ILO, IHI, A, LDA, TAU, C,
+*                          LDC, WORK, LWORK, INFO )
+*
+*       .. Scalar Arguments ..
+*       CHARACTER          SIDE, TRANS
+*       INTEGER            IHI, ILO, INFO, LDA, LDC, LWORK, M, N
+*       ..
+*       .. Array Arguments ..
+*       COMPLEX*16         A( LDA, * ), C( LDC, * ), TAU( * ), WORK( * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZUNMHR overwrites the general complex M-by-N matrix C with
+*>
+*>                 SIDE = 'L'     SIDE = 'R'
+*> TRANS = 'N':      Q * C          C * Q
+*> TRANS = 'C':      Q**H * C       C * Q**H
+*>
+*> where Q is a complex unitary matrix of order nq, with nq = m if
+*> SIDE = 'L' and nq = n if SIDE = 'R'. Q is defined as the product of
+*> IHI-ILO elementary reflectors, as returned by ZGEHRD:
+*>
+*> Q = H(ilo) H(ilo+1) . . . H(ihi-1).
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] SIDE
+*> \verbatim
+*>          SIDE is CHARACTER*1
+*>          = 'L': apply Q or Q**H from the Left;
+*>          = 'R': apply Q or Q**H from the Right.
+*> \endverbatim
+*>
+*> \param[in] TRANS
+*> \verbatim
+*>          TRANS is CHARACTER*1
+*>          = 'N': apply Q  (No transpose)
+*>          = 'C': apply Q**H (Conjugate transpose)
+*> \endverbatim
+*>
+*> \param[in] M
+*> \verbatim
+*>          M is INTEGER
+*>          The number of rows of the matrix C. M >= 0.
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The number of columns of the matrix C. N >= 0.
+*> \endverbatim
+*>
+*> \param[in] ILO
+*> \verbatim
+*>          ILO is INTEGER
+*> \endverbatim
+*>
+*> \param[in] IHI
+*> \verbatim
+*>          IHI is INTEGER
+*>
+*>          ILO and IHI must have the same values as in the previous call
+*>          of ZGEHRD. Q is equal to the unit matrix except in the
+*>          submatrix Q(ilo+1:ihi,ilo+1:ihi).
+*>          If SIDE = 'L', then 1 <= ILO <= IHI <= M, if M > 0, and
+*>          ILO = 1 and IHI = 0, if M = 0;
+*>          if SIDE = 'R', then 1 <= ILO <= IHI <= N, if N > 0, and
+*>          ILO = 1 and IHI = 0, if N = 0.
+*> \endverbatim
+*>
+*> \param[in] A
+*> \verbatim
+*>          A is COMPLEX*16 array, dimension
+*>                               (LDA,M) if SIDE = 'L'
+*>                               (LDA,N) if SIDE = 'R'
+*>          The vectors which define the elementary reflectors, as
+*>          returned by ZGEHRD.
+*> \endverbatim
+*>
+*> \param[in] LDA
+*> \verbatim
+*>          LDA is INTEGER
+*>          The leading dimension of the array A.
+*>          LDA >= max(1,M) if SIDE = 'L'; LDA >= max(1,N) if SIDE = 'R'.
+*> \endverbatim
+*>
+*> \param[in] TAU
+*> \verbatim
+*>          TAU is COMPLEX*16 array, dimension
+*>                               (M-1) if SIDE = 'L'
+*>                               (N-1) if SIDE = 'R'
+*>          TAU(i) must contain the scalar factor of the elementary
+*>          reflector H(i), as returned by ZGEHRD.
+*> \endverbatim
+*>
+*> \param[in,out] C
+*> \verbatim
+*>          C is COMPLEX*16 array, dimension (LDC,N)
+*>          On entry, the M-by-N matrix C.
+*>          On exit, C is overwritten by Q*C or Q**H*C or C*Q**H or C*Q.
+*> \endverbatim
+*>
+*> \param[in] LDC
+*> \verbatim
+*>          LDC is INTEGER
+*>          The leading dimension of the array C. LDC >= max(1,M).
+*> \endverbatim
+*>
+*> \param[out] WORK
+*> \verbatim
+*>          WORK is COMPLEX*16 array, dimension (MAX(1,LWORK))
+*>          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
+*> \endverbatim
+*>
+*> \param[in] LWORK
+*> \verbatim
+*>          LWORK is INTEGER
+*>          The dimension of the array WORK.
+*>          If SIDE = 'L', LWORK >= max(1,N);
+*>          if SIDE = 'R', LWORK >= max(1,M).
+*>          For optimum performance LWORK >= N*NB if SIDE = 'L', and
+*>          LWORK >= M*NB if SIDE = 'R', where NB is the optimal
+*>          blocksize.
+*>
+*>          If LWORK = -1, then a workspace query is assumed; the routine
+*>          only calculates the optimal size of the WORK array, returns
+*>          this value as the first entry of the WORK array, and no error
+*>          message related to LWORK is issued by XERBLA.
+*> \endverbatim
+*>
+*> \param[out] INFO
+*> \verbatim
+*>          INFO is INTEGER
+*>          = 0:  successful exit
+*>          < 0:  if INFO = -i, the i-th argument had an illegal value
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \date December 2016
+*
+*> \ingroup complex16OTHERcomputational
+*
+*  =====================================================================
+      SUBROUTINE ZUNMHR( SIDE, TRANS, M, N, ILO, IHI, A, LDA, TAU, C,
+     $                   LDC, WORK, LWORK, INFO )
+*
+*  -- LAPACK computational routine (version 3.7.0) --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*     December 2016
+*
+*     .. Scalar Arguments ..
+      CHARACTER          SIDE, TRANS
+      INTEGER            IHI, ILO, INFO, LDA, LDC, LWORK, M, N
+*     ..
+*     .. Array Arguments ..
+      COMPLEX*16         A( LDA, * ), C( LDC, * ), TAU( * ), WORK( * )
+*     ..
+*
+*  =====================================================================
+*
+*     .. Local Scalars ..
+      LOGICAL            LEFT, LQUERY
+      INTEGER            I1, I2, IINFO, LWKOPT, MI, NB, NH, NI, NQ, NW
+*     ..
+*     .. External Functions ..
+      LOGICAL            LSAME
+      INTEGER            ILAENV
+      EXTERNAL           LSAME, ILAENV
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           XERBLA, ZUNMQR
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          MAX, MIN
+*     ..
+*     .. Executable Statements ..
+*
+*     Test the input arguments
+*
+      INFO = 0
+      NH = IHI - ILO
+      LEFT = LSAME( SIDE, 'L' )
+      LQUERY = ( LWORK.EQ.-1 )
+*
+*     NQ is the order of Q and NW is the minimum dimension of WORK
+*
+      IF( LEFT ) THEN
+         NQ = M
+         NW = N
+      ELSE
+         NQ = N
+         NW = M
+      END IF
+      IF( .NOT.LEFT .AND. .NOT.LSAME( SIDE, 'R' ) ) THEN
+         INFO = -1
+      ELSE IF( .NOT.LSAME( TRANS, 'N' ) .AND. .NOT.LSAME( TRANS, 'C' ) )
+     $          THEN
+         INFO = -2
+      ELSE IF( M.LT.0 ) THEN
+         INFO = -3
+      ELSE IF( N.LT.0 ) THEN
+         INFO = -4
+      ELSE IF( ILO.LT.1 .OR. ILO.GT.MAX( 1, NQ ) ) THEN
+         INFO = -5
+      ELSE IF( IHI.LT.MIN( ILO, NQ ) .OR. IHI.GT.NQ ) THEN
+         INFO = -6
+      ELSE IF( LDA.LT.MAX( 1, NQ ) ) THEN
+         INFO = -8
+      ELSE IF( LDC.LT.MAX( 1, M ) ) THEN
+         INFO = -11
+      ELSE IF( LWORK.LT.MAX( 1, NW ) .AND. .NOT.LQUERY ) THEN
+         INFO = -13
+      END IF
+*
+      IF( INFO.EQ.0 ) THEN
+         IF( LEFT ) THEN
+            NB = ILAENV( 1, 'ZUNMQR', SIDE // TRANS, NH, N, NH, -1 )
+         ELSE
+            NB = ILAENV( 1, 'ZUNMQR', SIDE // TRANS, M, NH, NH, -1 )
+         END IF
+         LWKOPT = MAX( 1, NW )*NB
+         WORK( 1 ) = LWKOPT
+      END IF
+*
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZUNMHR', -INFO )
+         RETURN
+      ELSE IF( LQUERY ) THEN
+         RETURN
+      END IF
+*
+*     Quick return if possible
+*
+      IF( M.EQ.0 .OR. N.EQ.0 .OR. NH.EQ.0 ) THEN
+         WORK( 1 ) = 1
+         RETURN
+      END IF
+*
+      IF( LEFT ) THEN
+         MI = NH
+         NI = N
+         I1 = ILO + 1
+         I2 = 1
+      ELSE
+         MI = M
+         NI = NH
+         I1 = 1
+         I2 = ILO + 1
+      END IF
+*
+      CALL ZUNMQR( SIDE, TRANS, MI, NI, NH, A( ILO+1, ILO ), LDA,
+     $             TAU( ILO ), C( I1, I2 ), LDC, WORK, LWORK, IINFO )
+*
+      WORK( 1 ) = LWKOPT
+      RETURN
+*
+*     End of ZUNMHR
+*
+      END
+*> \brief \b ZUNML2 multiplies a general matrix by the unitary matrix from a LQ factorization determined by cgelqf (unblocked algorithm).
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZUNML2 + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zunml2.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zunml2.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zunml2.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZUNML2( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC,
+*                          WORK, INFO )
+*
+*       .. Scalar Arguments ..
+*       CHARACTER          SIDE, TRANS
+*       INTEGER            INFO, K, LDA, LDC, M, N
+*       ..
+*       .. Array Arguments ..
+*       COMPLEX*16         A( LDA, * ), C( LDC, * ), TAU( * ), WORK( * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZUNML2 overwrites the general complex m-by-n matrix C with
+*>
+*>       Q * C  if SIDE = 'L' and TRANS = 'N', or
+*>
+*>       Q**H* C  if SIDE = 'L' and TRANS = 'C', or
+*>
+*>       C * Q  if SIDE = 'R' and TRANS = 'N', or
+*>
+*>       C * Q**H if SIDE = 'R' and TRANS = 'C',
+*>
+*> where Q is a complex unitary matrix defined as the product of k
+*> elementary reflectors
+*>
+*>       Q = H(k)**H . . . H(2)**H H(1)**H
+*>
+*> as returned by ZGELQF. Q is of order m if SIDE = 'L' and of order n
+*> if SIDE = 'R'.
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] SIDE
+*> \verbatim
+*>          SIDE is CHARACTER*1
+*>          = 'L': apply Q or Q**H from the Left
+*>          = 'R': apply Q or Q**H from the Right
+*> \endverbatim
+*>
+*> \param[in] TRANS
+*> \verbatim
+*>          TRANS is CHARACTER*1
+*>          = 'N': apply Q  (No transpose)
+*>          = 'C': apply Q**H (Conjugate transpose)
+*> \endverbatim
+*>
+*> \param[in] M
+*> \verbatim
+*>          M is INTEGER
+*>          The number of rows of the matrix C. M >= 0.
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The number of columns of the matrix C. N >= 0.
+*> \endverbatim
+*>
+*> \param[in] K
+*> \verbatim
+*>          K is INTEGER
+*>          The number of elementary reflectors whose product defines
+*>          the matrix Q.
+*>          If SIDE = 'L', M >= K >= 0;
+*>          if SIDE = 'R', N >= K >= 0.
+*> \endverbatim
+*>
+*> \param[in] A
+*> \verbatim
+*>          A is COMPLEX*16 array, dimension
+*>                               (LDA,M) if SIDE = 'L',
+*>                               (LDA,N) if SIDE = 'R'
+*>          The i-th row must contain the vector which defines the
+*>          elementary reflector H(i), for i = 1,2,...,k, as returned by
+*>          ZGELQF in the first k rows of its array argument A.
+*>          A is modified by the routine but restored on exit.
+*> \endverbatim
+*>
+*> \param[in] LDA
+*> \verbatim
+*>          LDA is INTEGER
+*>          The leading dimension of the array A. LDA >= max(1,K).
+*> \endverbatim
+*>
+*> \param[in] TAU
+*> \verbatim
+*>          TAU is COMPLEX*16 array, dimension (K)
+*>          TAU(i) must contain the scalar factor of the elementary
+*>          reflector H(i), as returned by ZGELQF.
+*> \endverbatim
+*>
+*> \param[in,out] C
+*> \verbatim
+*>          C is COMPLEX*16 array, dimension (LDC,N)
+*>          On entry, the m-by-n matrix C.
+*>          On exit, C is overwritten by Q*C or Q**H*C or C*Q**H or C*Q.
+*> \endverbatim
+*>
+*> \param[in] LDC
+*> \verbatim
+*>          LDC is INTEGER
+*>          The leading dimension of the array C. LDC >= max(1,M).
+*> \endverbatim
+*>
+*> \param[out] WORK
+*> \verbatim
+*>          WORK is COMPLEX*16 array, dimension
+*>                                   (N) if SIDE = 'L',
+*>                                   (M) if SIDE = 'R'
+*> \endverbatim
+*>
+*> \param[out] INFO
+*> \verbatim
+*>          INFO is INTEGER
+*>          = 0: successful exit
+*>          < 0: if INFO = -i, the i-th argument had an illegal value
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \date December 2016
+*
+*> \ingroup complex16OTHERcomputational
+*
+*  =====================================================================
+      SUBROUTINE ZUNML2( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC,
+     $                   WORK, INFO )
+*
+*  -- LAPACK computational routine (version 3.7.0) --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*     December 2016
+*
+*     .. Scalar Arguments ..
+      CHARACTER          SIDE, TRANS
+      INTEGER            INFO, K, LDA, LDC, M, N
+*     ..
+*     .. Array Arguments ..
+      COMPLEX*16         A( LDA, * ), C( LDC, * ), TAU( * ), WORK( * )
+*     ..
+*
+*  =====================================================================
+*
+*     .. Parameters ..
+      COMPLEX*16         ONE
+      PARAMETER          ( ONE = ( 1.0D+0, 0.0D+0 ) )
+*     ..
+*     .. Local Scalars ..
+      LOGICAL            LEFT, NOTRAN
+      INTEGER            I, I1, I2, I3, IC, JC, MI, NI, NQ
+      COMPLEX*16         AII, TAUI
+*     ..
+*     .. External Functions ..
+      LOGICAL            LSAME
+      EXTERNAL           LSAME
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           XERBLA, ZLACGV, ZLARF
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          DCONJG, MAX
+*     ..
+*     .. Executable Statements ..
+*
+*     Test the input arguments
+*
+      INFO = 0
+      LEFT = LSAME( SIDE, 'L' )
+      NOTRAN = LSAME( TRANS, 'N' )
+*
+*     NQ is the order of Q
+*
+      IF( LEFT ) THEN
+         NQ = M
+      ELSE
+         NQ = N
+      END IF
+      IF( .NOT.LEFT .AND. .NOT.LSAME( SIDE, 'R' ) ) THEN
+         INFO = -1
+      ELSE IF( .NOT.NOTRAN .AND. .NOT.LSAME( TRANS, 'C' ) ) THEN
+         INFO = -2
+      ELSE IF( M.LT.0 ) THEN
+         INFO = -3
+      ELSE IF( N.LT.0 ) THEN
+         INFO = -4
+      ELSE IF( K.LT.0 .OR. K.GT.NQ ) THEN
+         INFO = -5
+      ELSE IF( LDA.LT.MAX( 1, K ) ) THEN
+         INFO = -7
+      ELSE IF( LDC.LT.MAX( 1, M ) ) THEN
+         INFO = -10
+      END IF
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZUNML2', -INFO )
+         RETURN
+      END IF
+*
+*     Quick return if possible
+*
+      IF( M.EQ.0 .OR. N.EQ.0 .OR. K.EQ.0 )
+     $   RETURN
+*
+      IF( ( LEFT .AND. NOTRAN .OR. .NOT.LEFT .AND. .NOT.NOTRAN ) ) THEN
+         I1 = 1
+         I2 = K
+         I3 = 1
+      ELSE
+         I1 = K
+         I2 = 1
+         I3 = -1
+      END IF
+*
+      IF( LEFT ) THEN
+         NI = N
+         JC = 1
+      ELSE
+         MI = M
+         IC = 1
+      END IF
+*
+      DO 10 I = I1, I2, I3
+         IF( LEFT ) THEN
+*
+*           H(i) or H(i)**H is applied to C(i:m,1:n)
+*
+            MI = M - I + 1
+            IC = I
+         ELSE
+*
+*           H(i) or H(i)**H is applied to C(1:m,i:n)
+*
+            NI = N - I + 1
+            JC = I
+         END IF
+*
+*        Apply H(i) or H(i)**H
+*
+         IF( NOTRAN ) THEN
+            TAUI = DCONJG( TAU( I ) )
+         ELSE
+            TAUI = TAU( I )
+         END IF
+         IF( I.LT.NQ )
+     $      CALL ZLACGV( NQ-I, A( I, I+1 ), LDA )
+         AII = A( I, I )
+         A( I, I ) = ONE
+         CALL ZLARF( SIDE, MI, NI, A( I, I ), LDA, TAUI, C( IC, JC ),
+     $               LDC, WORK )
+         A( I, I ) = AII
+         IF( I.LT.NQ )
+     $      CALL ZLACGV( NQ-I, A( I, I+1 ), LDA )
+   10 CONTINUE
+      RETURN
+*
+*     End of ZUNML2
+*
+      END
+*> \brief \b ZUNMLQ
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZUNMLQ + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zunmlq.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zunmlq.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zunmlq.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZUNMLQ( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC,
+*                          WORK, LWORK, INFO )
+*
+*       .. Scalar Arguments ..
+*       CHARACTER          SIDE, TRANS
+*       INTEGER            INFO, K, LDA, LDC, LWORK, M, N
+*       ..
+*       .. Array Arguments ..
+*       COMPLEX*16         A( LDA, * ), C( LDC, * ), TAU( * ), WORK( * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZUNMLQ overwrites the general complex M-by-N matrix C with
+*>
+*>                 SIDE = 'L'     SIDE = 'R'
+*> TRANS = 'N':      Q * C          C * Q
+*> TRANS = 'C':      Q**H * C       C * Q**H
+*>
+*> where Q is a complex unitary matrix defined as the product of k
+*> elementary reflectors
+*>
+*>       Q = H(k)**H . . . H(2)**H H(1)**H
+*>
+*> as returned by ZGELQF. Q is of order M if SIDE = 'L' and of order N
+*> if SIDE = 'R'.
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] SIDE
+*> \verbatim
+*>          SIDE is CHARACTER*1
+*>          = 'L': apply Q or Q**H from the Left;
+*>          = 'R': apply Q or Q**H from the Right.
+*> \endverbatim
+*>
+*> \param[in] TRANS
+*> \verbatim
+*>          TRANS is CHARACTER*1
+*>          = 'N':  No transpose, apply Q;
+*>          = 'C':  Conjugate transpose, apply Q**H.
+*> \endverbatim
+*>
+*> \param[in] M
+*> \verbatim
+*>          M is INTEGER
+*>          The number of rows of the matrix C. M >= 0.
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The number of columns of the matrix C. N >= 0.
+*> \endverbatim
+*>
+*> \param[in] K
+*> \verbatim
+*>          K is INTEGER
+*>          The number of elementary reflectors whose product defines
+*>          the matrix Q.
+*>          If SIDE = 'L', M >= K >= 0;
+*>          if SIDE = 'R', N >= K >= 0.
+*> \endverbatim
+*>
+*> \param[in] A
+*> \verbatim
+*>          A is COMPLEX*16 array, dimension
+*>                               (LDA,M) if SIDE = 'L',
+*>                               (LDA,N) if SIDE = 'R'
+*>          The i-th row must contain the vector which defines the
+*>          elementary reflector H(i), for i = 1,2,...,k, as returned by
+*>          ZGELQF in the first k rows of its array argument A.
+*> \endverbatim
+*>
+*> \param[in] LDA
+*> \verbatim
+*>          LDA is INTEGER
+*>          The leading dimension of the array A. LDA >= max(1,K).
+*> \endverbatim
+*>
+*> \param[in] TAU
+*> \verbatim
+*>          TAU is COMPLEX*16 array, dimension (K)
+*>          TAU(i) must contain the scalar factor of the elementary
+*>          reflector H(i), as returned by ZGELQF.
+*> \endverbatim
+*>
+*> \param[in,out] C
+*> \verbatim
+*>          C is COMPLEX*16 array, dimension (LDC,N)
+*>          On entry, the M-by-N matrix C.
+*>          On exit, C is overwritten by Q*C or Q**H*C or C*Q**H or C*Q.
+*> \endverbatim
+*>
+*> \param[in] LDC
+*> \verbatim
+*>          LDC is INTEGER
+*>          The leading dimension of the array C. LDC >= max(1,M).
+*> \endverbatim
+*>
+*> \param[out] WORK
+*> \verbatim
+*>          WORK is COMPLEX*16 array, dimension (MAX(1,LWORK))
+*>          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
+*> \endverbatim
+*>
+*> \param[in] LWORK
+*> \verbatim
+*>          LWORK is INTEGER
+*>          The dimension of the array WORK.
+*>          If SIDE = 'L', LWORK >= max(1,N);
+*>          if SIDE = 'R', LWORK >= max(1,M).
+*>          For good performance, LWORK should generally be larger.
+*>
+*>          If LWORK = -1, then a workspace query is assumed; the routine
+*>          only calculates the optimal size of the WORK array, returns
+*>          this value as the first entry of the WORK array, and no error
+*>          message related to LWORK is issued by XERBLA.
+*> \endverbatim
+*>
+*> \param[out] INFO
+*> \verbatim
+*>          INFO is INTEGER
+*>          = 0:  successful exit
+*>          < 0:  if INFO = -i, the i-th argument had an illegal value
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \date December 2016
+*
+*> \ingroup complex16OTHERcomputational
+*
+*  =====================================================================
+      SUBROUTINE ZUNMLQ( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC,
+     $                   WORK, LWORK, INFO )
+*
+*  -- LAPACK computational routine (version 3.7.0) --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*     December 2016
+*
+*     .. Scalar Arguments ..
+      CHARACTER          SIDE, TRANS
+      INTEGER            INFO, K, LDA, LDC, LWORK, M, N
+*     ..
+*     .. Array Arguments ..
+      COMPLEX*16         A( LDA, * ), C( LDC, * ), TAU( * ), WORK( * )
+*     ..
+*
+*  =====================================================================
+*
+*     .. Parameters ..
+      INTEGER            NBMAX, LDT, TSIZE
+      PARAMETER          ( NBMAX = 64, LDT = NBMAX+1,
+     $                     TSIZE = LDT*NBMAX )
+*     ..
+*     .. Local Scalars ..
+      LOGICAL            LEFT, LQUERY, NOTRAN
+      CHARACTER          TRANST
+      INTEGER            I, I1, I2, I3, IB, IC, IINFO, IWT, JC, LDWORK,
+     $                   LWKOPT, MI, NB, NBMIN, NI, NQ, NW
+*     ..
+*     .. External Functions ..
+      LOGICAL            LSAME
+      INTEGER            ILAENV
+      EXTERNAL           LSAME, ILAENV
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           XERBLA, ZLARFB, ZLARFT, ZUNML2
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          MAX, MIN
+*     ..
+*     .. Executable Statements ..
+*
+*     Test the input arguments
+*
+      INFO = 0
+      LEFT = LSAME( SIDE, 'L' )
+      NOTRAN = LSAME( TRANS, 'N' )
+      LQUERY = ( LWORK.EQ.-1 )
+*
+*     NQ is the order of Q and NW is the minimum dimension of WORK
+*
+      IF( LEFT ) THEN
+         NQ = M
+         NW = N
+      ELSE
+         NQ = N
+         NW = M
+      END IF
+      IF( .NOT.LEFT .AND. .NOT.LSAME( SIDE, 'R' ) ) THEN
+         INFO = -1
+      ELSE IF( .NOT.NOTRAN .AND. .NOT.LSAME( TRANS, 'C' ) ) THEN
+         INFO = -2
+      ELSE IF( M.LT.0 ) THEN
+         INFO = -3
+      ELSE IF( N.LT.0 ) THEN
+         INFO = -4
+      ELSE IF( K.LT.0 .OR. K.GT.NQ ) THEN
+         INFO = -5
+      ELSE IF( LDA.LT.MAX( 1, K ) ) THEN
+         INFO = -7
+      ELSE IF( LDC.LT.MAX( 1, M ) ) THEN
+         INFO = -10
+      ELSE IF( LWORK.LT.MAX( 1, NW ) .AND. .NOT.LQUERY ) THEN
+         INFO = -12
+      END IF
+*
+      IF( INFO.EQ.0 ) THEN
+*
+*        Compute the workspace requirements
+*
+         NB = MIN( NBMAX, ILAENV( 1, 'ZUNMLQ', SIDE // TRANS, M, N, K,
+     $        -1 ) )
+         LWKOPT = MAX( 1, NW )*NB + TSIZE
+         WORK( 1 ) = LWKOPT
+      END IF
+*
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZUNMLQ', -INFO )
+         RETURN
+      ELSE IF( LQUERY ) THEN
+         RETURN
+      END IF
+*
+*     Quick return if possible
+*
+      IF( M.EQ.0 .OR. N.EQ.0 .OR. K.EQ.0 ) THEN
+         WORK( 1 ) = 1
+         RETURN
+      END IF
+*
+      NBMIN = 2
+      LDWORK = NW
+      IF( NB.GT.1 .AND. NB.LT.K ) THEN
+         IF( LWORK.LT.NW*NB+TSIZE ) THEN
+            NB = (LWORK-TSIZE) / LDWORK
+            NBMIN = MAX( 2, ILAENV( 2, 'ZUNMLQ', SIDE // TRANS, M, N, K,
+     $              -1 ) )
+         END IF
+      END IF
+*
+      IF( NB.LT.NBMIN .OR. NB.GE.K ) THEN
+*
+*        Use unblocked code
+*
+         CALL ZUNML2( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC, WORK,
+     $                IINFO )
+      ELSE
+*
+*        Use blocked code
+*
+         IWT = 1 + NW*NB
+         IF( ( LEFT .AND. NOTRAN ) .OR.
+     $       ( .NOT.LEFT .AND. .NOT.NOTRAN ) ) THEN
+            I1 = 1
+            I2 = K
+            I3 = NB
+         ELSE
+            I1 = ( ( K-1 ) / NB )*NB + 1
+            I2 = 1
+            I3 = -NB
+         END IF
+*
+         IF( LEFT ) THEN
+            NI = N
+            JC = 1
+         ELSE
+            MI = M
+            IC = 1
+         END IF
+*
+         IF( NOTRAN ) THEN
+            TRANST = 'C'
+         ELSE
+            TRANST = 'N'
+         END IF
+*
+         DO 10 I = I1, I2, I3
+            IB = MIN( NB, K-I+1 )
+*
+*           Form the triangular factor of the block reflector
+*           H = H(i) H(i+1) . . . H(i+ib-1)
+*
+            CALL ZLARFT( 'Forward', 'Rowwise', NQ-I+1, IB, A( I, I ),
+     $                   LDA, TAU( I ), WORK( IWT ), LDT )
+            IF( LEFT ) THEN
+*
+*              H or H**H is applied to C(i:m,1:n)
+*
+               MI = M - I + 1
+               IC = I
+            ELSE
+*
+*              H or H**H is applied to C(1:m,i:n)
+*
+               NI = N - I + 1
+               JC = I
+            END IF
+*
+*           Apply H or H**H
+*
+            CALL ZLARFB( SIDE, TRANST, 'Forward', 'Rowwise', MI, NI, IB,
+     $                   A( I, I ), LDA, WORK( IWT ), LDT,
+     $                   C( IC, JC ), LDC, WORK, LDWORK )
+   10    CONTINUE
+      END IF
+      WORK( 1 ) = LWKOPT
+      RETURN
+*
+*     End of ZUNMLQ
+*
+      END
+*> \brief \b ZUNMQL
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZUNMQL + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zunmql.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zunmql.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zunmql.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZUNMQL( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC,
+*                          WORK, LWORK, INFO )
+*
+*       .. Scalar Arguments ..
+*       CHARACTER          SIDE, TRANS
+*       INTEGER            INFO, K, LDA, LDC, LWORK, M, N
+*       ..
+*       .. Array Arguments ..
+*       COMPLEX*16         A( LDA, * ), C( LDC, * ), TAU( * ), WORK( * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZUNMQL overwrites the general complex M-by-N matrix C with
+*>
+*>                 SIDE = 'L'     SIDE = 'R'
+*> TRANS = 'N':      Q * C          C * Q
+*> TRANS = 'C':      Q**H * C       C * Q**H
+*>
+*> where Q is a complex unitary matrix defined as the product of k
+*> elementary reflectors
+*>
+*>       Q = H(k) . . . H(2) H(1)
+*>
+*> as returned by ZGEQLF. Q is of order M if SIDE = 'L' and of order N
+*> if SIDE = 'R'.
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] SIDE
+*> \verbatim
+*>          SIDE is CHARACTER*1
+*>          = 'L': apply Q or Q**H from the Left;
+*>          = 'R': apply Q or Q**H from the Right.
+*> \endverbatim
+*>
+*> \param[in] TRANS
+*> \verbatim
+*>          TRANS is CHARACTER*1
+*>          = 'N':  No transpose, apply Q;
+*>          = 'C':  Transpose, apply Q**H.
+*> \endverbatim
+*>
+*> \param[in] M
+*> \verbatim
+*>          M is INTEGER
+*>          The number of rows of the matrix C. M >= 0.
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The number of columns of the matrix C. N >= 0.
+*> \endverbatim
+*>
+*> \param[in] K
+*> \verbatim
+*>          K is INTEGER
+*>          The number of elementary reflectors whose product defines
+*>          the matrix Q.
+*>          If SIDE = 'L', M >= K >= 0;
+*>          if SIDE = 'R', N >= K >= 0.
+*> \endverbatim
+*>
+*> \param[in] A
+*> \verbatim
+*>          A is COMPLEX*16 array, dimension (LDA,K)
+*>          The i-th column must contain the vector which defines the
+*>          elementary reflector H(i), for i = 1,2,...,k, as returned by
+*>          ZGEQLF in the last k columns of its array argument A.
+*> \endverbatim
+*>
+*> \param[in] LDA
+*> \verbatim
+*>          LDA is INTEGER
+*>          The leading dimension of the array A.
+*>          If SIDE = 'L', LDA >= max(1,M);
+*>          if SIDE = 'R', LDA >= max(1,N).
+*> \endverbatim
+*>
+*> \param[in] TAU
+*> \verbatim
+*>          TAU is COMPLEX*16 array, dimension (K)
+*>          TAU(i) must contain the scalar factor of the elementary
+*>          reflector H(i), as returned by ZGEQLF.
+*> \endverbatim
+*>
+*> \param[in,out] C
+*> \verbatim
+*>          C is COMPLEX*16 array, dimension (LDC,N)
+*>          On entry, the M-by-N matrix C.
+*>          On exit, C is overwritten by Q*C or Q**H*C or C*Q**H or C*Q.
+*> \endverbatim
+*>
+*> \param[in] LDC
+*> \verbatim
+*>          LDC is INTEGER
+*>          The leading dimension of the array C. LDC >= max(1,M).
+*> \endverbatim
+*>
+*> \param[out] WORK
+*> \verbatim
+*>          WORK is COMPLEX*16 array, dimension (MAX(1,LWORK))
+*>          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
+*> \endverbatim
+*>
+*> \param[in] LWORK
+*> \verbatim
+*>          LWORK is INTEGER
+*>          The dimension of the array WORK.
+*>          If SIDE = 'L', LWORK >= max(1,N);
+*>          if SIDE = 'R', LWORK >= max(1,M).
+*>          For good performance, LWORK should genreally be larger.
+*>
+*>          If LWORK = -1, then a workspace query is assumed; the routine
+*>          only calculates the optimal size of the WORK array, returns
+*>          this value as the first entry of the WORK array, and no error
+*>          message related to LWORK is issued by XERBLA.
+*> \endverbatim
+*>
+*> \param[out] INFO
+*> \verbatim
+*>          INFO is INTEGER
+*>          = 0:  successful exit
+*>          < 0:  if INFO = -i, the i-th argument had an illegal value
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \date December 2016
+*
+*> \ingroup complex16OTHERcomputational
+*
+*  =====================================================================
+      SUBROUTINE ZUNMQL( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC,
+     $                   WORK, LWORK, INFO )
+*
+*  -- LAPACK computational routine (version 3.7.0) --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*     December 2016
+*
+*     .. Scalar Arguments ..
+      CHARACTER          SIDE, TRANS
+      INTEGER            INFO, K, LDA, LDC, LWORK, M, N
+*     ..
+*     .. Array Arguments ..
+      COMPLEX*16         A( LDA, * ), C( LDC, * ), TAU( * ), WORK( * )
+*     ..
+*
+*  =====================================================================
+*
+*     .. Parameters ..
+      INTEGER            NBMAX, LDT, TSIZE
+      PARAMETER          ( NBMAX = 64, LDT = NBMAX+1,
+     $                     TSIZE = LDT*NBMAX )
+*     ..
+*     .. Local Scalars ..
+      LOGICAL            LEFT, LQUERY, NOTRAN
+      INTEGER            I, I1, I2, I3, IB, IINFO, IWT, LDWORK, LWKOPT,
+     $                   MI, NB, NBMIN, NI, NQ, NW
+*     ..
+*     .. External Functions ..
+      LOGICAL            LSAME
+      INTEGER            ILAENV
+      EXTERNAL           LSAME, ILAENV
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           XERBLA, ZLARFB, ZLARFT, ZUNM2L
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          MAX, MIN
+*     ..
+*     .. Executable Statements ..
+*
+*     Test the input arguments
+*
+      INFO = 0
+      LEFT = LSAME( SIDE, 'L' )
+      NOTRAN = LSAME( TRANS, 'N' )
+      LQUERY = ( LWORK.EQ.-1 )
+*
+*     NQ is the order of Q and NW is the minimum dimension of WORK
+*
+      IF( LEFT ) THEN
+         NQ = M
+         NW = MAX( 1, N )
+      ELSE
+         NQ = N
+         NW = MAX( 1, M )
+      END IF
+      IF( .NOT.LEFT .AND. .NOT.LSAME( SIDE, 'R' ) ) THEN
+         INFO = -1
+      ELSE IF( .NOT.NOTRAN .AND. .NOT.LSAME( TRANS, 'C' ) ) THEN
+         INFO = -2
+      ELSE IF( M.LT.0 ) THEN
+         INFO = -3
+      ELSE IF( N.LT.0 ) THEN
+         INFO = -4
+      ELSE IF( K.LT.0 .OR. K.GT.NQ ) THEN
+         INFO = -5
+      ELSE IF( LDA.LT.MAX( 1, NQ ) ) THEN
+         INFO = -7
+      ELSE IF( LDC.LT.MAX( 1, M ) ) THEN
+         INFO = -10
+      ELSE IF( LWORK.LT.NW .AND. .NOT.LQUERY ) THEN
+         INFO = -12
+      END IF
+*
+      IF( INFO.EQ.0 ) THEN
+*
+*        Compute the workspace requirements
+*
+         IF( M.EQ.0 .OR. N.EQ.0 ) THEN
+            LWKOPT = 1
+         ELSE
+            NB = MIN( NBMAX, ILAENV( 1, 'ZUNMQL', SIDE // TRANS, M, N,
+     $                               K, -1 ) )
+            LWKOPT = NW*NB + TSIZE
+         END IF
+         WORK( 1 ) = LWKOPT
+      END IF
+*
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZUNMQL', -INFO )
+         RETURN
+      ELSE IF( LQUERY ) THEN
+         RETURN
+      END IF
+*
+*     Quick return if possible
+*
+      IF( M.EQ.0 .OR. N.EQ.0 ) THEN
+         RETURN
+      END IF
+*
+      NBMIN = 2
+      LDWORK = NW
+      IF( NB.GT.1 .AND. NB.LT.K ) THEN
+         IF( LWORK.LT.NW*NB+TSIZE ) THEN
+            NB = (LWORK-TSIZE) / LDWORK
+            NBMIN = MAX( 2, ILAENV( 2, 'ZUNMQL', SIDE // TRANS, M, N, K,
+     $              -1 ) )
+         END IF
+      END IF
+*
+      IF( NB.LT.NBMIN .OR. NB.GE.K ) THEN
+*
+*        Use unblocked code
+*
+         CALL ZUNM2L( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC, WORK,
+     $                IINFO )
+      ELSE
+*
+*        Use blocked code
+*
+         IWT = 1 + NW*NB
+         IF( ( LEFT .AND. NOTRAN ) .OR.
+     $       ( .NOT.LEFT .AND. .NOT.NOTRAN ) ) THEN
+            I1 = 1
+            I2 = K
+            I3 = NB
+         ELSE
+            I1 = ( ( K-1 ) / NB )*NB + 1
+            I2 = 1
+            I3 = -NB
+         END IF
+*
+         IF( LEFT ) THEN
+            NI = N
+         ELSE
+            MI = M
+         END IF
+*
+         DO 10 I = I1, I2, I3
+            IB = MIN( NB, K-I+1 )
+*
+*           Form the triangular factor of the block reflector
+*           H = H(i+ib-1) . . . H(i+1) H(i)
+*
+            CALL ZLARFT( 'Backward', 'Columnwise', NQ-K+I+IB-1, IB,
+     $                   A( 1, I ), LDA, TAU( I ), WORK( IWT ), LDT )
+            IF( LEFT ) THEN
+*
+*              H or H**H is applied to C(1:m-k+i+ib-1,1:n)
+*
+               MI = M - K + I + IB - 1
+            ELSE
+*
+*              H or H**H is applied to C(1:m,1:n-k+i+ib-1)
+*
+               NI = N - K + I + IB - 1
+            END IF
+*
+*           Apply H or H**H
+*
+            CALL ZLARFB( SIDE, TRANS, 'Backward', 'Columnwise', MI, NI,
+     $                   IB, A( 1, I ), LDA, WORK( IWT ), LDT, C, LDC,
+     $                   WORK, LDWORK )
+   10    CONTINUE
+      END IF
+      WORK( 1 ) = LWKOPT
+      RETURN
+*
+*     End of ZUNMQL
+*
+      END
+*> \brief \b ZUNMQR
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZUNMQR + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zunmqr.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zunmqr.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zunmqr.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZUNMQR( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC,
+*                          WORK, LWORK, INFO )
+*
+*       .. Scalar Arguments ..
+*       CHARACTER          SIDE, TRANS
+*       INTEGER            INFO, K, LDA, LDC, LWORK, M, N
+*       ..
+*       .. Array Arguments ..
+*       COMPLEX*16         A( LDA, * ), C( LDC, * ), TAU( * ), WORK( * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZUNMQR overwrites the general complex M-by-N matrix C with
+*>
+*>                 SIDE = 'L'     SIDE = 'R'
+*> TRANS = 'N':      Q * C          C * Q
+*> TRANS = 'C':      Q**H * C       C * Q**H
+*>
+*> where Q is a complex unitary matrix defined as the product of k
+*> elementary reflectors
+*>
+*>       Q = H(1) H(2) . . . H(k)
+*>
+*> as returned by ZGEQRF. Q is of order M if SIDE = 'L' and of order N
+*> if SIDE = 'R'.
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] SIDE
+*> \verbatim
+*>          SIDE is CHARACTER*1
+*>          = 'L': apply Q or Q**H from the Left;
+*>          = 'R': apply Q or Q**H from the Right.
+*> \endverbatim
+*>
+*> \param[in] TRANS
+*> \verbatim
+*>          TRANS is CHARACTER*1
+*>          = 'N':  No transpose, apply Q;
+*>          = 'C':  Conjugate transpose, apply Q**H.
+*> \endverbatim
+*>
+*> \param[in] M
+*> \verbatim
+*>          M is INTEGER
+*>          The number of rows of the matrix C. M >= 0.
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The number of columns of the matrix C. N >= 0.
+*> \endverbatim
+*>
+*> \param[in] K
+*> \verbatim
+*>          K is INTEGER
+*>          The number of elementary reflectors whose product defines
+*>          the matrix Q.
+*>          If SIDE = 'L', M >= K >= 0;
+*>          if SIDE = 'R', N >= K >= 0.
+*> \endverbatim
+*>
+*> \param[in] A
+*> \verbatim
+*>          A is COMPLEX*16 array, dimension (LDA,K)
+*>          The i-th column must contain the vector which defines the
+*>          elementary reflector H(i), for i = 1,2,...,k, as returned by
+*>          ZGEQRF in the first k columns of its array argument A.
+*> \endverbatim
+*>
+*> \param[in] LDA
+*> \verbatim
+*>          LDA is INTEGER
+*>          The leading dimension of the array A.
+*>          If SIDE = 'L', LDA >= max(1,M);
+*>          if SIDE = 'R', LDA >= max(1,N).
+*> \endverbatim
+*>
+*> \param[in] TAU
+*> \verbatim
+*>          TAU is COMPLEX*16 array, dimension (K)
+*>          TAU(i) must contain the scalar factor of the elementary
+*>          reflector H(i), as returned by ZGEQRF.
+*> \endverbatim
+*>
+*> \param[in,out] C
+*> \verbatim
+*>          C is COMPLEX*16 array, dimension (LDC,N)
+*>          On entry, the M-by-N matrix C.
+*>          On exit, C is overwritten by Q*C or Q**H*C or C*Q**H or C*Q.
+*> \endverbatim
+*>
+*> \param[in] LDC
+*> \verbatim
+*>          LDC is INTEGER
+*>          The leading dimension of the array C. LDC >= max(1,M).
+*> \endverbatim
+*>
+*> \param[out] WORK
+*> \verbatim
+*>          WORK is COMPLEX*16 array, dimension (MAX(1,LWORK))
+*>          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
+*> \endverbatim
+*>
+*> \param[in] LWORK
+*> \verbatim
+*>          LWORK is INTEGER
+*>          The dimension of the array WORK.
+*>          If SIDE = 'L', LWORK >= max(1,N);
+*>          if SIDE = 'R', LWORK >= max(1,M).
+*>          For good performance, LWORK should generally be larger.
+*>
+*>          If LWORK = -1, then a workspace query is assumed; the routine
+*>          only calculates the optimal size of the WORK array, returns
+*>          this value as the first entry of the WORK array, and no error
+*>          message related to LWORK is issued by XERBLA.
+*> \endverbatim
+*>
+*> \param[out] INFO
+*> \verbatim
+*>          INFO is INTEGER
+*>          = 0:  successful exit
+*>          < 0:  if INFO = -i, the i-th argument had an illegal value
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \date December 2016
+*
+*> \ingroup complex16OTHERcomputational
+*
+*  =====================================================================
+      SUBROUTINE ZUNMQR( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC,
+     $                   WORK, LWORK, INFO )
+*
+*  -- LAPACK computational routine (version 3.7.0) --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*     December 2016
+*
+*     .. Scalar Arguments ..
+      CHARACTER          SIDE, TRANS
+      INTEGER            INFO, K, LDA, LDC, LWORK, M, N
+*     ..
+*     .. Array Arguments ..
+      COMPLEX*16         A( LDA, * ), C( LDC, * ), TAU( * ), WORK( * )
+*     ..
+*
+*  =====================================================================
+*
+*     .. Parameters ..
+      INTEGER            NBMAX, LDT, TSIZE
+      PARAMETER          ( NBMAX = 64, LDT = NBMAX+1,
+     $                     TSIZE = LDT*NBMAX )
+*     ..
+*     .. Local Scalars ..
+      LOGICAL            LEFT, LQUERY, NOTRAN
+      INTEGER            I, I1, I2, I3, IB, IC, IINFO, IWT, JC, LDWORK,
+     $                   LWKOPT, MI, NB, NBMIN, NI, NQ, NW
+*     ..
+*     .. External Functions ..
+      LOGICAL            LSAME
+      INTEGER            ILAENV
+      EXTERNAL           LSAME, ILAENV
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           XERBLA, ZLARFB, ZLARFT, ZUNM2R
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          MAX, MIN
+*     ..
+*     .. Executable Statements ..
+*
+*     Test the input arguments
+*
+      INFO = 0
+      LEFT = LSAME( SIDE, 'L' )
+      NOTRAN = LSAME( TRANS, 'N' )
+      LQUERY = ( LWORK.EQ.-1 )
+*
+*     NQ is the order of Q and NW is the minimum dimension of WORK
+*
+      IF( LEFT ) THEN
+         NQ = M
+         NW = N
+      ELSE
+         NQ = N
+         NW = M
+      END IF
+      IF( .NOT.LEFT .AND. .NOT.LSAME( SIDE, 'R' ) ) THEN
+         INFO = -1
+      ELSE IF( .NOT.NOTRAN .AND. .NOT.LSAME( TRANS, 'C' ) ) THEN
+         INFO = -2
+      ELSE IF( M.LT.0 ) THEN
+         INFO = -3
+      ELSE IF( N.LT.0 ) THEN
+         INFO = -4
+      ELSE IF( K.LT.0 .OR. K.GT.NQ ) THEN
+         INFO = -5
+      ELSE IF( LDA.LT.MAX( 1, NQ ) ) THEN
+         INFO = -7
+      ELSE IF( LDC.LT.MAX( 1, M ) ) THEN
+         INFO = -10
+      ELSE IF( LWORK.LT.MAX( 1, NW ) .AND. .NOT.LQUERY ) THEN
+         INFO = -12
+      END IF
+*
+      IF( INFO.EQ.0 ) THEN
+*
+*        Compute the workspace requirements
+*
+         NB = MIN( NBMAX, ILAENV( 1, 'ZUNMQR', SIDE // TRANS, M, N, K,
+     $        -1 ) )
+         LWKOPT = MAX( 1, NW )*NB + TSIZE
+         WORK( 1 ) = LWKOPT
+      END IF
+*
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZUNMQR', -INFO )
+         RETURN
+      ELSE IF( LQUERY ) THEN
+         RETURN
+      END IF
+*
+*     Quick return if possible
+*
+      IF( M.EQ.0 .OR. N.EQ.0 .OR. K.EQ.0 ) THEN
+         WORK( 1 ) = 1
+         RETURN
+      END IF
+*
+      NBMIN = 2
+      LDWORK = NW
+      IF( NB.GT.1 .AND. NB.LT.K ) THEN
+         IF( LWORK.LT.NW*NB+TSIZE ) THEN
+            NB = (LWORK-TSIZE) / LDWORK
+            NBMIN = MAX( 2, ILAENV( 2, 'ZUNMQR', SIDE // TRANS, M, N, K,
+     $              -1 ) )
+         END IF
+      END IF
+*
+      IF( NB.LT.NBMIN .OR. NB.GE.K ) THEN
+*
+*        Use unblocked code
+*
+         CALL ZUNM2R( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC, WORK,
+     $                IINFO )
+      ELSE
+*
+*        Use blocked code
+*
+         IWT = 1 + NW*NB
+         IF( ( LEFT .AND. .NOT.NOTRAN ) .OR.
+     $       ( .NOT.LEFT .AND. NOTRAN ) ) THEN
+            I1 = 1
+            I2 = K
+            I3 = NB
+         ELSE
+            I1 = ( ( K-1 ) / NB )*NB + 1
+            I2 = 1
+            I3 = -NB
+         END IF
+*
+         IF( LEFT ) THEN
+            NI = N
+            JC = 1
+         ELSE
+            MI = M
+            IC = 1
+         END IF
+*
+         DO 10 I = I1, I2, I3
+            IB = MIN( NB, K-I+1 )
+*
+*           Form the triangular factor of the block reflector
+*           H = H(i) H(i+1) . . . H(i+ib-1)
+*
+            CALL ZLARFT( 'Forward', 'Columnwise', NQ-I+1, IB, A( I, I ),
+     $                   LDA, TAU( I ), WORK( IWT ), LDT )
+            IF( LEFT ) THEN
+*
+*              H or H**H is applied to C(i:m,1:n)
+*
+               MI = M - I + 1
+               IC = I
+            ELSE
+*
+*              H or H**H is applied to C(1:m,i:n)
+*
+               NI = N - I + 1
+               JC = I
+            END IF
+*
+*           Apply H or H**H
+*
+            CALL ZLARFB( SIDE, TRANS, 'Forward', 'Columnwise', MI, NI,
+     $                   IB, A( I, I ), LDA, WORK( IWT ), LDT,
+     $                   C( IC, JC ), LDC, WORK, LDWORK )
+   10    CONTINUE
+      END IF
+      WORK( 1 ) = LWKOPT
+      RETURN
+*
+*     End of ZUNMQR
+*
+      END
+*> \brief \b ZUNMTR
+*
+*  =========== DOCUMENTATION ===========
+*
+* Online html documentation available at
+*            http://www.netlib.org/lapack/explore-html/
+*
+*> \htmlonly
+*> Download ZUNMTR + dependencies
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zunmtr.f">
+*> [TGZ]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zunmtr.f">
+*> [ZIP]</a>
+*> <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zunmtr.f">
+*> [TXT]</a>
+*> \endhtmlonly
+*
+*  Definition:
+*  ===========
+*
+*       SUBROUTINE ZUNMTR( SIDE, UPLO, TRANS, M, N, A, LDA, TAU, C, LDC,
+*                          WORK, LWORK, INFO )
+*
+*       .. Scalar Arguments ..
+*       CHARACTER          SIDE, TRANS, UPLO
+*       INTEGER            INFO, LDA, LDC, LWORK, M, N
+*       ..
+*       .. Array Arguments ..
+*       COMPLEX*16         A( LDA, * ), C( LDC, * ), TAU( * ), WORK( * )
+*       ..
+*
+*
+*> \par Purpose:
+*  =============
+*>
+*> \verbatim
+*>
+*> ZUNMTR overwrites the general complex M-by-N matrix C with
+*>
+*>                 SIDE = 'L'     SIDE = 'R'
+*> TRANS = 'N':      Q * C          C * Q
+*> TRANS = 'C':      Q**H * C       C * Q**H
+*>
+*> where Q is a complex unitary matrix of order nq, with nq = m if
+*> SIDE = 'L' and nq = n if SIDE = 'R'. Q is defined as the product of
+*> nq-1 elementary reflectors, as returned by ZHETRD:
+*>
+*> if UPLO = 'U', Q = H(nq-1) . . . H(2) H(1);
+*>
+*> if UPLO = 'L', Q = H(1) H(2) . . . H(nq-1).
+*> \endverbatim
+*
+*  Arguments:
+*  ==========
+*
+*> \param[in] SIDE
+*> \verbatim
+*>          SIDE is CHARACTER*1
+*>          = 'L': apply Q or Q**H from the Left;
+*>          = 'R': apply Q or Q**H from the Right.
+*> \endverbatim
+*>
+*> \param[in] UPLO
+*> \verbatim
+*>          UPLO is CHARACTER*1
+*>          = 'U': Upper triangle of A contains elementary reflectors
+*>                 from ZHETRD;
+*>          = 'L': Lower triangle of A contains elementary reflectors
+*>                 from ZHETRD.
+*> \endverbatim
+*>
+*> \param[in] TRANS
+*> \verbatim
+*>          TRANS is CHARACTER*1
+*>          = 'N':  No transpose, apply Q;
+*>          = 'C':  Conjugate transpose, apply Q**H.
+*> \endverbatim
+*>
+*> \param[in] M
+*> \verbatim
+*>          M is INTEGER
+*>          The number of rows of the matrix C. M >= 0.
+*> \endverbatim
+*>
+*> \param[in] N
+*> \verbatim
+*>          N is INTEGER
+*>          The number of columns of the matrix C. N >= 0.
+*> \endverbatim
+*>
+*> \param[in] A
+*> \verbatim
+*>          A is COMPLEX*16 array, dimension
+*>                               (LDA,M) if SIDE = 'L'
+*>                               (LDA,N) if SIDE = 'R'
+*>          The vectors which define the elementary reflectors, as
+*>          returned by ZHETRD.
+*> \endverbatim
+*>
+*> \param[in] LDA
+*> \verbatim
+*>          LDA is INTEGER
+*>          The leading dimension of the array A.
+*>          LDA >= max(1,M) if SIDE = 'L'; LDA >= max(1,N) if SIDE = 'R'.
+*> \endverbatim
+*>
+*> \param[in] TAU
+*> \verbatim
+*>          TAU is COMPLEX*16 array, dimension
+*>                               (M-1) if SIDE = 'L'
+*>                               (N-1) if SIDE = 'R'
+*>          TAU(i) must contain the scalar factor of the elementary
+*>          reflector H(i), as returned by ZHETRD.
+*> \endverbatim
+*>
+*> \param[in,out] C
+*> \verbatim
+*>          C is COMPLEX*16 array, dimension (LDC,N)
+*>          On entry, the M-by-N matrix C.
+*>          On exit, C is overwritten by Q*C or Q**H*C or C*Q**H or C*Q.
+*> \endverbatim
+*>
+*> \param[in] LDC
+*> \verbatim
+*>          LDC is INTEGER
+*>          The leading dimension of the array C. LDC >= max(1,M).
+*> \endverbatim
+*>
+*> \param[out] WORK
+*> \verbatim
+*>          WORK is COMPLEX*16 array, dimension (MAX(1,LWORK))
+*>          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
+*> \endverbatim
+*>
+*> \param[in] LWORK
+*> \verbatim
+*>          LWORK is INTEGER
+*>          The dimension of the array WORK.
+*>          If SIDE = 'L', LWORK >= max(1,N);
+*>          if SIDE = 'R', LWORK >= max(1,M).
+*>          For optimum performance LWORK >= N*NB if SIDE = 'L', and
+*>          LWORK >=M*NB if SIDE = 'R', where NB is the optimal
+*>          blocksize.
+*>
+*>          If LWORK = -1, then a workspace query is assumed; the routine
+*>          only calculates the optimal size of the WORK array, returns
+*>          this value as the first entry of the WORK array, and no error
+*>          message related to LWORK is issued by XERBLA.
+*> \endverbatim
+*>
+*> \param[out] INFO
+*> \verbatim
+*>          INFO is INTEGER
+*>          = 0:  successful exit
+*>          < 0:  if INFO = -i, the i-th argument had an illegal value
+*> \endverbatim
+*
+*  Authors:
+*  ========
+*
+*> \author Univ. of Tennessee
+*> \author Univ. of California Berkeley
+*> \author Univ. of Colorado Denver
+*> \author NAG Ltd.
+*
+*> \date December 2016
+*
+*> \ingroup complex16OTHERcomputational
+*
+*  =====================================================================
+      SUBROUTINE ZUNMTR( SIDE, UPLO, TRANS, M, N, A, LDA, TAU, C, LDC,
+     $                   WORK, LWORK, INFO )
+*
+*  -- LAPACK computational routine (version 3.7.0) --
+*  -- LAPACK is a software package provided by Univ. of Tennessee,    --
+*  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
+*     December 2016
+*
+*     .. Scalar Arguments ..
+      CHARACTER          SIDE, TRANS, UPLO
+      INTEGER            INFO, LDA, LDC, LWORK, M, N
+*     ..
+*     .. Array Arguments ..
+      COMPLEX*16         A( LDA, * ), C( LDC, * ), TAU( * ), WORK( * )
+*     ..
+*
+*  =====================================================================
+*
+*     .. Local Scalars ..
+      LOGICAL            LEFT, LQUERY, UPPER
+      INTEGER            I1, I2, IINFO, LWKOPT, MI, NB, NI, NQ, NW
+*     ..
+*     .. External Functions ..
+      LOGICAL            LSAME
+      INTEGER            ILAENV
+      EXTERNAL           LSAME, ILAENV
+*     ..
+*     .. External Subroutines ..
+      EXTERNAL           XERBLA, ZUNMQL, ZUNMQR
+*     ..
+*     .. Intrinsic Functions ..
+      INTRINSIC          MAX
+*     ..
+*     .. Executable Statements ..
+*
+*     Test the input arguments
+*
+      INFO = 0
+      LEFT = LSAME( SIDE, 'L' )
+      UPPER = LSAME( UPLO, 'U' )
+      LQUERY = ( LWORK.EQ.-1 )
+*
+*     NQ is the order of Q and NW is the minimum dimension of WORK
+*
+      IF( LEFT ) THEN
+         NQ = M
+         NW = N
+      ELSE
+         NQ = N
+         NW = M
+      END IF
+      IF( .NOT.LEFT .AND. .NOT.LSAME( SIDE, 'R' ) ) THEN
+         INFO = -1
+      ELSE IF( .NOT.UPPER .AND. .NOT.LSAME( UPLO, 'L' ) ) THEN
+         INFO = -2
+      ELSE IF( .NOT.LSAME( TRANS, 'N' ) .AND. .NOT.LSAME( TRANS, 'C' ) )
+     $          THEN
+         INFO = -3
+      ELSE IF( M.LT.0 ) THEN
+         INFO = -4
+      ELSE IF( N.LT.0 ) THEN
+         INFO = -5
+      ELSE IF( LDA.LT.MAX( 1, NQ ) ) THEN
+         INFO = -7
+      ELSE IF( LDC.LT.MAX( 1, M ) ) THEN
+         INFO = -10
+      ELSE IF( LWORK.LT.MAX( 1, NW ) .AND. .NOT.LQUERY ) THEN
+         INFO = -12
+      END IF
+*
+      IF( INFO.EQ.0 ) THEN
+         IF( UPPER ) THEN
+            IF( LEFT ) THEN
+               NB = ILAENV( 1, 'ZUNMQL', SIDE // TRANS, M-1, N, M-1,
+     $              -1 )
+            ELSE
+               NB = ILAENV( 1, 'ZUNMQL', SIDE // TRANS, M, N-1, N-1,
+     $              -1 )
+            END IF
+         ELSE
+            IF( LEFT ) THEN
+               NB = ILAENV( 1, 'ZUNMQR', SIDE // TRANS, M-1, N, M-1,
+     $              -1 )
+            ELSE
+               NB = ILAENV( 1, 'ZUNMQR', SIDE // TRANS, M, N-1, N-1,
+     $              -1 )
+            END IF
+         END IF
+         LWKOPT = MAX( 1, NW )*NB
+         WORK( 1 ) = LWKOPT
+      END IF
+*
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'ZUNMTR', -INFO )
+         RETURN
+      ELSE IF( LQUERY ) THEN
+         RETURN
+      END IF
+*
+*     Quick return if possible
+*
+      IF( M.EQ.0 .OR. N.EQ.0 .OR. NQ.EQ.1 ) THEN
+         WORK( 1 ) = 1
+         RETURN
+      END IF
+*
+      IF( LEFT ) THEN
+         MI = M - 1
+         NI = N
+      ELSE
+         MI = M
+         NI = N - 1
+      END IF
+*
+      IF( UPPER ) THEN
+*
+*        Q was determined by a call to ZHETRD with UPLO = 'U'
+*
+         CALL ZUNMQL( SIDE, TRANS, MI, NI, NQ-1, A( 1, 2 ), LDA, TAU, C,
+     $                LDC, WORK, LWORK, IINFO )
+      ELSE
+*
+*        Q was determined by a call to ZHETRD with UPLO = 'L'
+*
+         IF( LEFT ) THEN
+            I1 = 2
+            I2 = 1
+         ELSE
+            I1 = 1
+            I2 = 2
+         END IF
+         CALL ZUNMQR( SIDE, TRANS, MI, NI, NQ-1, A( 2, 1 ), LDA, TAU,
+     $                C( I1, I2 ), LDC, WORK, LWORK, IINFO )
+      END IF
+      WORK( 1 ) = LWKOPT
+      RETURN
+*
+*     End of ZUNMTR
 *
       END

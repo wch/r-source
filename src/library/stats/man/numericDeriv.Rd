@@ -36,13 +36,13 @@ numericDeriv(expr, theta, rho = parent.frame(), dir = 1.0)
 }
 \author{Saikat DebRoy \email{saikat@stat.wisc.edu}}
 \examples{
-\testonly{od <- options(digits = 4)}
+\dontshow{od <- options(digits = 4)}
 myenv <- new.env()
 assign("mean", 0., envir = myenv)
 assign("sd", 1., envir = myenv)
 assign("x", seq(-3., 3., len = 31), envir = myenv)
 numericDeriv(quote(pnorm(x, mean, sd)), c("mean", "sd"), myenv)
-\testonly{options(od)}
+\dontshow{options(od)}
 }
 \keyword{models}
 

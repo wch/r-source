@@ -1,7 +1,7 @@
 #  File src/library/utils/R/unix/download.file.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -29,10 +29,8 @@ download.file <-
     if(method == "auto") {
         if(length(url) != 1L || typeof(url) != "character")
             stop("'url' must be a length-one character vector");
-	method <-
-	    if(capabilities("libcurl") && grepl("^(ht|f)tps:", url))
-		"libcurl"
-            else "internal"
+        ## As from 3.3.0 all Unix-alikes support libcurl.
+	method <- if(grepl("^file:", url)) "internal" else "libcurl"
     }
 
     switch(method,
@@ -56,6 +54,7 @@ download.file <-
 				      paste(extra, collapse = " "),
 				      shQuote(url),
 				      "-O", shQuote(path.expand(destfile))))
+               if(status) stop("'wget' call had nonzero exit status")
 	   },
 	   "curl" = {
 	       if(length(url) != 1L || typeof(url) != "character")
@@ -68,6 +67,7 @@ download.file <-
 				      paste(extra, collapse = " "),
 				      shQuote(url),
 				      " -o", shQuote(path.expand(destfile))))
+               if(status) stop("'curl' call had nonzero exit status")
 	   },
 	   "lynx" =
 	       stop("method 'lynx' is defunct", domain = NA))

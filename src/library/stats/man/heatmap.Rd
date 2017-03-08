@@ -147,7 +147,7 @@ heatmap(x, Colv = NA, col = cm.colors(256), scale = "column",
         RowSideColors = rc, margins = c(5,10),
         xlab = "specification variables", ylab =  "Car Models",
         main = "heatmap(<Mtcars data>, ..., scale = \"column\")")
-\testonly{
+\dontshow{
 ## no row dendrogram (nor reordering) at all:
 heatmap(x, Rowv = NA, col = cm.colors(256), scale = "column",
         ColSideColors = cc, margins = c(5,10),

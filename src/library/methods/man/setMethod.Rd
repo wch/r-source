@@ -89,6 +89,32 @@ defined for individual operators, for special groups of operators such as
 \code{\link{Arith}} or for group \code{\link{Ops}}.
 
 }
+\section{Exporting Methods}{
+If a package defines methods for generic functions, those methods
+should be exported if any of the classes involved are exported; in
+other words, if someone using the package might expect these methods
+to be called.
+Methods are exported by including an \code{exportMethods()} directive
+in the \code{NAMESPACE} file for the package, with the arguments to
+the directive being the names of the generic functions for which
+methods have been defined.
+
+Exporting methods is always desirable in the sense of declaring what
+you want to happen, in that you do expect users to find such methods.
+It can be essential in the case that the method was defined for a
+function that is not originally a generic function in its own package
+(for example, \code{plot()} in the \code{graphics} package).  In this
+case it may be that the version of the function in the \R session is
+not generic, and your methods will not be called.
+
+Exporting methods for a function also exports the generic version of
+the function.
+Keep in mind that this does \emph{not} conflict with the function as
+it was originally defined in another package; on the contrary, it's
+designed to ensure that the function in the \R session dispatches
+methods correctly for your classes and continues to behave as expected
+when no specific methods apply.  See \link{Methods_Details} for the actual mechanism.
+}
 \section{Details}{
 The call to \code{setMethod} stores the supplied method definition  in
 the metadata table for this generic function in the environment,

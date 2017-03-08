@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 2001-3  Paul Murrell
- *                2003-2016 The R Core Team
+ *                2003-2017 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,77 +20,76 @@
 
 /* Code to register grid functions with R
  */
+#include <R_ext/Visibility.h>
 #include <R_ext/Rdynload.h>
 #include "grid.h"
 
+#define LCALLDEF(name, n)  {#name, (DL_FUNC) &L_##name, n}
+
 static const R_CallMethodDef callMethods[] = {
-    {"initGrid", (DL_FUNC) &L_initGrid, 1},
-    {"killGrid", (DL_FUNC) &L_killGrid, 0},
-    {"gridDirty", (DL_FUNC) &L_gridDirty, 0},
-    {"currentViewport", (DL_FUNC) &L_currentViewport, 0},
-    {"setviewport", (DL_FUNC) &L_setviewport, 2}, 
-    {"downviewport", (DL_FUNC) &L_downviewport, 2}, 
-    {"downvppath", (DL_FUNC) &L_downvppath, 3}, 
-    {"unsetviewport", (DL_FUNC) &L_unsetviewport, 1},  
-    {"upviewport", (DL_FUNC) &L_upviewport, 1},  
-    {"getDisplayList", (DL_FUNC) &L_getDisplayList, 0},
-    {"setDisplayList", (DL_FUNC) &L_setDisplayList, 1},
-    {"getDLelt", (DL_FUNC) &L_getDLelt, 1},
-    {"setDLelt", (DL_FUNC) &L_setDLelt, 1},
-    {"getDLindex", (DL_FUNC) &L_getDLindex, 0}, 
-    {"setDLindex", (DL_FUNC) &L_setDLindex, 1},
-    {"getDLon", (DL_FUNC) &L_getDLon, 0},
-    {"setDLon", (DL_FUNC) &L_setDLon, 1},
-    {"getEngineDLon", (DL_FUNC) &L_getEngineDLon, 0},
-    {"setEngineDLon", (DL_FUNC) &L_setEngineDLon, 1},
-    {"getCurrentGrob", (DL_FUNC) &L_getCurrentGrob, 0},
-    {"setCurrentGrob", (DL_FUNC) &L_setCurrentGrob, 1},
-    {"getEngineRecording", (DL_FUNC) &L_getEngineRecording, 0},
-    {"setEngineRecording", (DL_FUNC) &L_setEngineRecording, 1},
-    {"currentGPar", (DL_FUNC) &L_currentGPar, 0},
-    {"newpagerecording", (DL_FUNC) &L_newpagerecording, 0},
-    {"newpage", (DL_FUNC) &L_newpage, 0},
-    {"initGPar", (DL_FUNC) &L_initGPar, 0},
-    {"initViewportStack", (DL_FUNC) &L_initViewportStack, 0},
-    {"initDisplayList", (DL_FUNC) &L_initDisplayList, 0},
-    {"moveTo", (DL_FUNC) &L_moveTo, 2},
-    {"lineTo", (DL_FUNC) &L_lineTo, 3}, 
-    {"lines", (DL_FUNC) &L_lines, 4}, 
-    {"segments", (DL_FUNC) &L_segments, 5}, 
-    {"arrows", (DL_FUNC) &L_arrows, 12}, 
-    {"path", (DL_FUNC) &L_path, 4},
-    {"polygon", (DL_FUNC) &L_polygon, 3},
-    {"xspline", (DL_FUNC) &L_xspline, 7},
-    {"circle", (DL_FUNC) &L_circle, 3},
-    {"rect", (DL_FUNC) &L_rect, 6},
-    {"raster", (DL_FUNC) &L_raster, 8},
-    {"cap", (DL_FUNC) &L_cap, 0},
-    {"text", (DL_FUNC) &L_text, 7},
-    {"points", (DL_FUNC) &L_points, 4},
-    {"clip", (DL_FUNC) &L_clip, 6},
-    {"pretty", (DL_FUNC) &L_pretty, 1},
-    {"locator", (DL_FUNC) &L_locator, 0},
-    {"convert", (DL_FUNC) &L_convert, 4},
-    {"layoutRegion", (DL_FUNC) &L_layoutRegion, 2},
+    LCALLDEF(initGrid, 1),
+    LCALLDEF(killGrid, 0),
+    LCALLDEF(gridDirty, 0),
+    LCALLDEF(currentViewport, 0),
+    LCALLDEF(setviewport, 2), 
+    LCALLDEF(downviewport, 2), 
+    LCALLDEF(downvppath, 3), 
+    LCALLDEF(unsetviewport, 1), 
+    LCALLDEF(upviewport, 1), 
+    LCALLDEF(getDisplayList, 0),
+    LCALLDEF(setDisplayList, 1),
+    LCALLDEF(getDLelt, 1),
+    LCALLDEF(setDLelt, 1),
+    LCALLDEF(getDLindex, 0), 
+    LCALLDEF(setDLindex, 1),
+    LCALLDEF(getDLon, 0),
+    LCALLDEF(setDLon, 1),
+    LCALLDEF(getEngineDLon, 0),
+    LCALLDEF(setEngineDLon, 1),
+    LCALLDEF(getCurrentGrob, 0),
+    LCALLDEF(setCurrentGrob, 1),
+    LCALLDEF(getEngineRecording, 0),
+    LCALLDEF(setEngineRecording, 1),
+    LCALLDEF(currentGPar, 0),
+    LCALLDEF(newpagerecording, 0),
+    LCALLDEF(newpage, 0),
+    LCALLDEF(initGPar, 0),
+    LCALLDEF(initViewportStack, 0),
+    LCALLDEF(initDisplayList, 0),
+    LCALLDEF(moveTo, 2),
+    LCALLDEF(lineTo, 3), 
+    LCALLDEF(lines, 4), 
+    LCALLDEF(segments, 5), 
+    LCALLDEF(arrows, 12), 
+    LCALLDEF(path, 4),
+    LCALLDEF(polygon, 3),
+    LCALLDEF(xspline, 7),
+    LCALLDEF(circle, 3),
+    LCALLDEF(rect, 6),
+    LCALLDEF(raster, 8),
+    LCALLDEF(cap, 0),
+    LCALLDEF(text, 7),
+    LCALLDEF(points, 4),
+    LCALLDEF(clip, 6),
+    LCALLDEF(pretty, 1),
+    LCALLDEF(locator, 0),
+    LCALLDEF(convert, 4),
+    LCALLDEF(layoutRegion, 2),
+    LCALLDEF(getGPar, 0),
+    LCALLDEF(setGPar, 1),
+    LCALLDEF(circleBounds, 4),
+    LCALLDEF(locnBounds, 3),
+    LCALLDEF(rectBounds, 7),
+    LCALLDEF(textBounds, 7),
+    LCALLDEF(xsplineBounds, 8),
+    LCALLDEF(xsplinePoints, 8),
+    LCALLDEF(stringMetric, 1),
     {"validUnits", (DL_FUNC) &validUnits, 1},
-    {"getGPar", (DL_FUNC) &L_getGPar, 0},
-    {"setGPar", (DL_FUNC) &L_setGPar, 1},
-    {"circleBounds", (DL_FUNC) &L_circleBounds, 4},
-    {"locnBounds", (DL_FUNC) &L_locnBounds, 3},
-    {"rectBounds", (DL_FUNC) &L_rectBounds, 7},
-    {"textBounds", (DL_FUNC) &L_textBounds, 7},
-    {"xsplineBounds", (DL_FUNC) &L_xsplineBounds, 8},
-    {"xsplinePoints", (DL_FUNC) &L_xsplinePoints, 8},
-    {"stringMetric", (DL_FUNC) &L_stringMetric, 1},
     { NULL, NULL, 0 }
 };
 
 
-void
-#ifdef HAVE_VISIBILITY_ATTRIBUTE
-__attribute__ ((visibility ("default")))
-#endif
-R_init_grid(DllInfo *dll) 
+void attribute_visible R_init_grid(DllInfo *dll) 
 {
     /* No .C, .Fortran, or .External routines => NULL
      */

@@ -44,7 +44,7 @@
   </ul>
 </div>
 
-<p>If you want to double-check that the package you have downloaded exactly matches the package distributed by R, you can compare the <a href="https://en.wikipedia.org/wiki/Md5sum">md5sum</a> of the .exe to the <a href="md5sum.txt">true fingerprint</a>.  You will need a version of md5sum for windows: both <a href="http://www.md5summer.org/">graphical</a> and <a href="http://www.etree.org/md5com.html">command line versions</a> are available.</p>
+<p>If you want to double-check that the package you have downloaded matches the package distributed by CRAN, you can compare the <a href="https://en.wikipedia.org/wiki/Md5sum">md5sum</a> of the .exe to the <a href="https://cran.r-project.org/bin/windows/base/md5sum.txt">fingerprint</a> on the master server.  You will need a version of md5sum for windows: both <a href="http://www.md5summer.org/">graphical</a> and <a href="http://www.etree.org/md5com.html">command line versions</a> are available.</p>
 
 <h2>Frequently asked questions</h2>
 

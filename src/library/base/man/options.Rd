@@ -180,8 +180,42 @@ getOption(x, default = NULL)
 
     %% used by tools::makeLazyLoading
     \item{\code{keep.source.pkgs}:}{As for \code{keep.source}, used only
-    when packages are installed.  Defaults to \code{FALSE} unless the
-    environment variable \env{R_KEEP_PKG_SOURCE} is set to \code{yes}.}
+      when packages are installed.  Defaults to \code{FALSE} unless the
+      environment variable \env{R_KEEP_PKG_SOURCE} is set to \code{yes}.}
+
+    \item{\code{matprod}:}{a string selecting the implementation of
+      the matrix products \code{\link{\%*\%}}, \code{\link{crossprod}}, and
+      \code{\link{tcrossprod}} for double and complex vectors:
+      \describe{
+	\item{\code{"internal"}}{uses an unoptimized 3-loop algorithm
+	  which correctly propagates \code{\link{NaN}} and
+	  \code{\link{Inf}} values and is consistent in precision with
+	  other summation algorithms inside \R like \code{\link{sum}} or
+	  \code{\link{colSums}} (which now means that it uses a \code{long
+	    double} accumulator for summation if available and enabled,
+	  see \code{\link{capabilities}}).}
+	\item{\code{"default"}}{uses BLAS to speed up computation, but
+	  to ensure correct propagation of \code{NaN} and \code{Inf}
+	  values it uses an unoptimized 3-loop algorithm for inputs that may
+	  contain \code{NaN} or \code{Inf} values.  When deemed
+	  beneficial for performance, \code{"default"} may call the
+	  3-loop algorithm unconditionally, i.e., without checking the
+	  input for NaN/Inf values.  The 3-loop algorithm uses (only) a
+	  \code{double} accumulator for summation, which is consistent
+	  with the reference BLAS implementation.}
+	\item{\code{"blas"}}{uses BLAS unconditionally without any
+	  checks and should be used with extreme caution.  BLAS
+	  libraries do not propagate \code{\link{NaN}} or
+	  \code{\link{Inf}} values correctly and for inputs with
+	  \code{NaN}/\code{Inf} values the results may be undefined.}
+	\item{\code{"default.simd"}}{is experimental and will likely be
+	  removed in future versions of \R.  It provides the same behavior
+	  as \code{"default"}, but the check whether the input contains
+	  NaN/Inf values is faster on some SIMD hardware.  On older
+	  systems it will run correctly, but may be much slower than
+	  \code{"default"}.}
+      }
+    }
 
     \item{\code{max.print}:}{integer, defaulting to \code{99999}.
       \code{\link{print}} or \code{\link{show}} methods can make use of
@@ -227,7 +261,30 @@ getOption(x, default = NULL)
       \code{"a4"}, or \code{"letter"} in US and Canadian locales.
 #endif
     }
+    
+    \item{\code{PCRE_limit_recursion}:}{Logical: should
+      \code{\link{grep}(perl = TRUE)} and similar limit the maximal
+      recursion allowed when matching?  PCRE can be built not to use a
+      recursion stack (see \code{\link{pcre_config}}, but it is by
+      default with a recursion limit of 10000000 which potentially needs
+      a very large C stack: see the discussion at
+      \url{http://www.pcre.org/original/doc/html/pcrestack.html}.  If
+      true, the limit is reduced using \R's estimate of the C stack size
+      available (if known), otherwise 10000.  If \code{NA}, the limit is
+      imposed only if any input string has 1000 or more bytes.}
+       
+     \item{\code{PCRE_study}:}{Logical or integer: should
+      \code{\link{grep}(perl = TRUE)} and similar \sQuote{study} the
+      patterns?  Either logical or a numerical threshold for the minimum
+      number of strings to be matched for the pattern to be studied (the
+      default is \code{10})).  Missing values and negative numbers are
+      treated as false.}
 
+    \item{\code{PCRE_use_JIT}:}{Logical: should \code{\link{grep}(perl =
+	TRUE)}, \code{\link{strsplit}(perl = TRUE)} and similar make use
+      of PCRE's Just-In-Time compiler for studied patterns, if
+      available?  Missing values are treated as false.}
+      
     \item{\code{pdfviewer}:}{default PDF viewer.
       The default is set from the environment variable \env{R_PDFVIEWER},
 #ifdef unix

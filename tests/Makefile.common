@@ -37,22 +37,24 @@ test-src-dt = datetime2.R
 test-src-demo = demos.R demos2.R
 test-src-internet = internet.R
 test-src-internet2 = internet2.R libcurl.R
+test-src-CRANtools = CRANtools.R
 test-src-isas = isas-tests.R
 test-src-primitive = primitives.R
 test-src-random = p-r-random-tests.R
-test-src-regexp = utf8-regex.R
+test-src-regexp = utf8-regex.R PCRE.R
 test-src-segfault = no-segfault.R
 
 test-src-reg-1 = array-subset.R \
   reg-tests-1a.R reg-tests-1b.R reg-tests-1c.R reg-tests-1d.R reg-tests-2.R \
   reg-examples1.R reg-examples2.R reg-packages.R p-qbeta-strict-tst.R \
   r-strict-tst.R \
-  reg-IO.R reg-IO2.R reg-plot.R reg-S4.R reg-S4-examples.R reg-BLAS.R
+  reg-IO.R reg-IO2.R reg-plot.R reg-S4-examples.R reg-BLAS.R
 ## added to in Makefile.win
 test-src-reg-1e =
 test-src-reg = $(test-src-reg-1) $(test-src-reg-1e)
 ## overridden in Makefile if recommended packages are not installed.
-test-src-reg3 = reg-tests-3.R reg-examples3.R reg-plot-latin1.R
+## reg-S4 has to be a sloppy test, as output differs if Matrix is absent.
+test-src-reg3 = reg-tests-3.R reg-examples3.R reg-plot-latin1.R reg-S4.R 
 
 test-out-strict = $(test-src-strict:.R=.Rout)
 test-out-sloppy = $(test-src-sloppy:.R=.Rout)
@@ -60,6 +62,7 @@ test-out-sloppy = $(test-src-sloppy:.R=.Rout)
 test-out-gct = $(test-src-gct:.R=.Rout-gct)
 test-out-valgct = $(test-src-gct:.R=.Rout-valgct)
 
+test-out-CRANtools = $(test-src-CRANtools:.R=.Rout)
 test-out-dt = $(test-src-dt:.R=.Rout)
 test-out-demo = $(test-src-demo:.R=.Rout)
 test-out-internet = $(test-src-internet:.R=.Rout)
@@ -77,7 +80,8 @@ test-out = $(test-src:.R=.Rout) $(test-out-demo) $(test-out-gct) \
 	$(test-out-internet) \
 	$(test-out-random) $(test-out-reg) $(test-out-reg3) \
 	$(test-out-segfault) $(test-out-isas) $(test-out-internet2) \
-	$(test-out-primitive) $(test-out-dt) utf8-regex.Rout
+	$(test-out-CRANtools) $(test-out-primitive) $(test-out-dt) \
+	utf8-regex.Rout PCRE.Rout
 
 .SUFFIXES:
 .SUFFIXES: .R .Rin .Rout .Rout-gct .Rout-valgct .trin .tsin .log
@@ -155,6 +159,7 @@ R-valgrind = $(R) --debugger="valgrind --tool=memcheck"
 	grep "==[0-9]*==" $@
 
 ## The definitions for Internet are in Makefile.{in,win}.
+## (That's historical: they are currently the same.)
 all-basic-tests = Examples Specific Reg Internet
 test-all-basics:
 	@for name in $(all-basic-tests); do \
@@ -164,7 +169,7 @@ test-all-basics:
 ## if you change this, also edit Makefile.install
 ## The definitions for Standalone are in Makefile.{in,win}.
 all-devel-tests = DateTime Docs IsAs Random Demo Primitive Regexp \
-    Internet2 Segfault Standalone Packages
+    Internet2 CRANtools Segfault Standalone Packages
 test-all-devel:
 	@for name in $(all-devel-tests); do \
 	  $(MK) test-$${name} || exit 1; \
@@ -248,7 +253,12 @@ test-IsAs:
 
 test-Internet2:
 	@$(ECHO) "running more Internet and socket tests"
-	@$(MK) $(test-out-internet2) RVAL_IF_DIFF=1
+	@$(MK) $(test-out-internet2) RVAL_IF_DIFF=0
+
+test-CRANtools:
+	@$(ECHO) "running tests of CRAN tools"
+	@$(ECHO) "  (can be slow unless mirror is local)"
+	@$(MK) $(test-out-CRANtools) RVAL_IF_DIFF=0
 
 test-Primitive:
 	@$(ECHO) "running tests of primitives"
@@ -270,6 +280,7 @@ test-Reg:
 test-Regexp:
 	@$(ECHO) "running regexp regression tests"
 	@$(R2) < $(srcdir)/utf8-regex.R > utf8-regex.Rout 2>&1 || (mv utf8-regex.Rout utf8-regex.Rout.fail && exit 1)
+	@$(R2) < $(srcdir)/PCRE.R > PCRE.Rout 2>&1 || (mv PCRE.Rout PCRE.Rout.fail && exit 1)
 
 test-Segfault:
 	@$(ECHO) "running tests to possibly trigger segfaults"
@@ -455,5 +466,5 @@ INSTFILES = README \
 	  reg-IO.Rout.save reg-IO2.Rout.save \
 	  reg-plot.pdf.save reg-tests-2.Rout.save reg-tests-3.Rout.save \
 	  reg-examples3.Rout.save reg-plot-latin1.pdf.save \
-	  encodings.R utf8-regex.R \
+	  encodings.R utf8-regex.R PCRE.R CRANtools.R \
 	  nanbug.rda WinUnicode.dat arima.rda EmbeddedNuls.csv

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2016 The R Core Team
+ *  Copyright (C) 1998--2017 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -43,6 +43,8 @@
 #include <Rinterface.h>
 #include <Fileio.h>
 #include <ctype.h>			/* toupper */
+#include <limits.h>
+#include <string.h>
 #include <time.h>			/* for ctime */
 
 # include <errno.h>
@@ -569,10 +571,13 @@ SEXP attribute_hidden do_filesymlink(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    LOGICAL(ans)[i] = 0;
 	else {
 #ifdef Win32
-	    wchar_t from[PATH_MAX+1], *to;
+	    wchar_t from[PATH_MAX+1], *to, *p;
 	    struct _stati64 sb;
 	    from[PATH_MAX] = L'\0';
-	    wcsncpy(from, filenameToWchar(STRING_ELT(f1, i%n1), TRUE), PATH_MAX);
+	    p = filenameToWchar(STRING_ELT(f1, i%n1), TRUE);
+	    if (wcslen(p) >= PATH_MAX)
+	    	error(_("'%s' path too long"), "from");
+	    wcsncpy(from, p, PATH_MAX);
 	    /* This Windows system call does not accept slashes */
 	    for (wchar_t *p = from; *p; p++) if (*p == L'/') *p = L'\\';
 	    to = filenameToWchar(STRING_ELT(f2, i%n2), TRUE);
@@ -643,9 +648,11 @@ SEXP attribute_hidden do_filelink(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    LOGICAL(ans)[i] = 0;
 	else {
 #ifdef Win32
-	    wchar_t from[PATH_MAX+1], *to;
-	    from[PATH_MAX] = L'\0';
-	    wcsncpy(from, filenameToWchar(STRING_ELT(f1, i%n1), TRUE), PATH_MAX);
+	    wchar_t from[PATH_MAX+1], *to, *p;
+	    p = filenameToWchar(STRING_ELT(f1, i%n1), TRUE);
+	    if (wcslen(p) >= PATH_MAX)
+	    	error(_("'%s' path too long"), "from");
+	    wcscpy(from, p);
 	    to = filenameToWchar(STRING_ELT(f2, i%n2), TRUE);
 	    LOGICAL(ans)[i] = CreateHardLinkW(to, from, NULL) != 0;
 	    if(!LOGICAL(ans)[i]) {
@@ -2185,7 +2192,10 @@ SEXP attribute_hidden do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
     if (show == NA_LOGICAL) show = 0;
     recursive = asLogical(CADDR(args));
     if (recursive == NA_LOGICAL) recursive = 0;
-    wcscpy(dir, filenameToWchar(STRING_ELT(path, 0), TRUE));
+    p = filenameToWchar(STRING_ELT(path, 0), TRUE);
+    if (wcslen(p) >= MAX_PATH)
+    	error(_("'%s' too long"), "path");
+    wcsncpy(dir, p, MAX_PATH);
     for (p = dir; *p; p++) if (*p == L'/') *p = L'\\';
     /* remove trailing slashes */
     p = dir + wcslen(dir) - 1;
@@ -2380,17 +2390,19 @@ SEXP attribute_hidden do_filecopy(SEXP call, SEXP op, SEXP args, SEXP rho)
 	dates = asLogical(CAR(args));
 	if (dates == NA_LOGICAL)
 	    error(_("invalid '%s' argument"), "copy.dates");
-	wcsncpy(dir,
-		filenameToWchar(STRING_ELT(to, 0), TRUE),
-		PATH_MAX);
+	p = filenameToWchar(STRING_ELT(to, 0), TRUE);
+	if (wcslen(p) >= PATH_MAX)
+	    error(_("'%s' path too long"), "to");
+	wcsncpy(dir, p, PATH_MAX);
 	dir[PATH_MAX - 1] = L'\0';
 	if (*(dir + (wcslen(dir) - 1)) !=  L'\\')
 	    wcsncat(dir, L"\\", PATH_MAX);
 	for (i = 0; i < nfiles; i++) {
 	    if (STRING_ELT(fn, i) != NA_STRING) {
-		wcsncpy(from,
-			filenameToWchar(STRING_ELT(fn, i), TRUE),
-			PATH_MAX);
+	    	p = filenameToWchar(STRING_ELT(fn, i), TRUE);
+	    	if (wcslen(p) >= PATH_MAX)
+	    	    error(_("'%s' path too long"), "from");
+		wcsncpy(from, p, PATH_MAX);
 		from[PATH_MAX - 1] = L'\0';
 		if(wcslen(from)) {
 		    /* If there was a trailing sep, this is a mistake */
@@ -2975,12 +2987,28 @@ void u_getVersion(UVersionInfo versionArray);
 # include <readline/readline.h>
 #endif
 
+#if defined(HAVE_REALPATH) && defined(HAVE_DECL_REALPATH) && !HAVE_DECL_REALPATH
+extern char *realpath(const char *path, char *resolved_path);
+#endif
+
+#ifdef HAVE_DLFCN_H
+#include <dlfcn.h> /* for dladdr, dlsym */
+#endif
+
+#if defined(HAVE_DLADDR) && defined(HAVE_DECL_DLADDR) && !HAVE_DECL_DLADDR
+extern int dladdr(void *addr, Dl_info *info);
+#endif
+
+#if defined(HAVE_DLSYM) && defined(HAVE_DECL_DLSYM) && !HAVE_DECL_DLSYM
+extern void *dlsym(void *handle, const char *symbol);
+#endif
+
 SEXP attribute_hidden
 do_eSoftVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
-    SEXP ans = PROTECT(allocVector(STRSXP, 8));
-    SEXP nms = PROTECT(allocVector(STRSXP, 8));
+    SEXP ans = PROTECT(allocVector(STRSXP, 10));
+    SEXP nms = PROTECT(allocVector(STRSXP, 10));
     setAttrib(ans, R_NamesSymbol, nms);
     unsigned int i = 0;
     char p[256];
@@ -3029,6 +3057,98 @@ do_eSoftVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
     SET_STRING_ELT(ans, i, mkChar(""));
 #endif
     SET_STRING_ELT(nms, i++, mkChar("readline"));
+
+    SET_STRING_ELT(ans, i, mkChar(""));
+    SET_STRING_ELT(ans, i+1, mkChar(""));
+
+#if defined(HAVE_DLADDR) && defined(HAVE_REALPATH) && defined(HAVE_DLSYM) \
+    && defined(HAVE_DECL_RTLD_DEFAULT) && HAVE_DECL_RTLD_DEFAULT \
+    && defined(HAVE_DECL_RTLD_NEXT) && HAVE_DECL_RTLD_NEXT
+
+    /* Look for blas function dgemm and lapack function ilaver and try to
+       figure out in which binary/shared library they are defined. This
+       is based on experimentation and heuristics, and depends on
+       implementation details of dynamic linkers. */
+
+#ifdef HAVE_F77_UNDERSCORE
+    char *dgemm_name = "dgemm_";
+    char *ilaver_name = "ilaver_";
+#else
+    char *dgemm_name = "dgemm";
+    char *ilaver_name = "ilaver";
+#endif
+
+    Rboolean ok = TRUE;
+
+    /* BLAS */
+    void *dgemm_addr = dlsym(RTLD_DEFAULT, dgemm_name);
+
+    Dl_info dl_info1, dl_info2;
+
+    if (!dladdr((void *)do_eSoftVersion, &dl_info1)) ok = FALSE;
+    if (!dladdr((void *)dladdr, &dl_info2)) ok = FALSE;
+
+    if (ok && !strcmp(dl_info1.dli_fname, dl_info2.dli_fname)) {
+
+	/* dladdr is not inside R, hence we probably have the PLT for
+	   dynamically linked symbols; lets use dlsym(RTLD_NEXT) to
+	   get the real address for dgemm.
+
+	   PLT is used on Linux and on Solaris when the main binary
+	   is _not_ position independent. PLT is not used on macOS.
+	*/
+	if (dgemm_addr != NULL) {
+
+	    /* If dgemm_addr is NULL, dgemm is statically linked and
+	       we are on Linux. On Solaris, dgemm_addr is never NULL.
+	    */
+	    void *dgemm_next_addr = dlsym(RTLD_NEXT, dgemm_name);
+	    if (dgemm_next_addr != NULL)
+
+		/* If dgemm_next_addr is NULL, dgemm is statically linked.
+		   Otherwise, it is linked dynamically and dgemm_next_addr
+		   is its true address (dgemm points to PLT).
+
+		   On Linux, dgemm_next_addr is only NULL here when
+		   dgemm is export-dynamic (yet statically linked).
+		*/
+		dgemm_addr = dgemm_next_addr;
+	}
+    }
+
+    char buf[PATH_MAX+1];
+    if (ok && dladdr(dgemm_addr, &dl_info1)) {
+	char *res = realpath(dl_info1.dli_fname, buf);
+	if (res)
+	    SET_STRING_ELT(ans, i, mkChar(res));
+    }
+
+    /* LAPACK */
+
+    /* this call forces the lapack module to be loaded */
+    SEXP laver = do_lapack(R_NilValue, INTERNAL(install("La_version")),
+                           R_NilValue, R_NilValue);
+    PROTECT(laver);
+    if (isString(laver) && length(laver) == 1) {
+	const char *laverstr = CHAR(STRING_ELT(laver, 0));
+	void *ilaver_addr = (void *)R_FindSymbol(ilaver_name, "lapack", 0);
+
+	if (ilaver_addr != NULL && dladdr(ilaver_addr, &dl_info2)) {
+	    char *res = realpath(dl_info2.dli_fname, buf);
+	    if (res) {
+		char bufv[strlen(res) + strlen(laverstr) + 2];
+		sprintf(bufv, "%s %s", laverstr, res);
+		SET_STRING_ELT(ans, i+1, mkChar(bufv));
+	    } else
+		/* only give Lapack API version */
+		SET_STRING_ELT(ans, i+1, mkChar(laverstr));
+	}
+    }
+    UNPROTECT(1); /* laver */
+#endif
+    SET_STRING_ELT(nms, i++, mkChar("BLAS"));
+    SET_STRING_ELT(nms, i++, mkChar("LAPACK"));
+
     UNPROTECT(2);
     return ans;
 }

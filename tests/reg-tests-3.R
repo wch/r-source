@@ -1,5 +1,6 @@
 ### Regression tests for which the printed output is the issue
-### May fail, e.g. by needing Recommended packages
+### May fail.
+### Skipped on a Unix-alike without Recommended packages
 
 pdf("reg-tests-3.pdf", encoding = "ISOLatin1.enc")
 

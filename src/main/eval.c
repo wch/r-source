@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996	Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2016	The R Core Team.
+ *  Copyright (C) 1998--2017	The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -682,7 +682,7 @@ SEXP eval(SEXP e, SEXP rho)
 	    /* This picks the correct/better error expression for 
 	       replacement calls running in the AST interpreter. */
 	    if (R_GlobalContext != NULL &&
-		    (R_GlobalContext->callflag & CTXT_CCODE))
+		    (R_GlobalContext->callflag == CTXT_CCODE))
 		ecall = R_GlobalContext->call;
 	    PROTECT(op = findFun3(CAR(e), rho, ecall));
 	} else
@@ -1041,7 +1041,8 @@ static R_INLINE Rboolean R_CheckJIT(SEXP fun)
 {
     /* to help with testing */
     if (jit_strategy < 0) {
-	int dflt = STRATEGY_TOP_SMALL_MAYBE;
+	int dflt = R_jit_enabled == 1 ?
+	    STRATEGY_NO_SMALL : STRATEGY_TOP_SMALL_MAYBE;
 	int val = dflt;
 	char *valstr = getenv("R_JIT_STRATEGY");
 	if (valstr != NULL)

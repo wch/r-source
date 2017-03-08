@@ -2,7 +2,7 @@
 ###
 ### Process this file with autoconf to produce a configure script.
 ###
-### Copyright (C) 1998-2016 R Core Team
+### Copyright (C) 1998-2017 R Core Team
 ###
 ### This file is part of R.
 ###
@@ -608,6 +608,11 @@ R_PROG_BROWSER
 R_PROG_PDFVIEWER
 ## Noweb - used for maintainer mode only
 AC_PATH_PROG(NOTANGLE, notangle, false)
+if test "x${use_maintainer_mode}" = xyes; then
+  if test "${NOTANGLE}" = false ; then
+    AC_MSG_ERROR([Building R in maintainer mode requires notangle.])
+  fi
+fi
 ## javareconf needs this
 AC_PATH_PROG(REALPATH, realpath, false)
 
@@ -1897,6 +1902,9 @@ AC_CHECK_DECLS([realpath], , , [#include <stdlib.h>
 R_CHECK_FUNCS([glob], [#ifdef HAVE_GLOB_H
 # include <glob.h>
 #endif])
+AC_CHECK_FUNCS([dladdr dlsym])
+AC_CHECK_DECLS([dladdr,dlsym], , , [#include<dlfcn.h>])
+AC_CHECK_DECLS([RTLD_DEFAULT,RTLD_NEXT], , , [#include<dlfcn.h>])
 
 ## Lots of uses of getwd(), file.access(), Sys.glob().
 ## We don't need times() except as a fallback for getrusage and
@@ -2620,6 +2628,8 @@ AC_SUBST(XTRA_INTL_CPPFLAGS)
 
 AM_CONDITIONAL(USE_NLS, [test "x${USE_NLS}" = xyes])
 AM_CONDITIONAL(BUILD_LIBINTL, [test "x${USE_INCLUDED_LIBINTL}" = xyes])
+
+R_OPENMP_SIMDRED
 
 ### shell for use in scripts: we allow R_SHELL to set the script,
 ### since some AIX systems have zsh as sh.
