@@ -159,6 +159,7 @@ R-valgrind = $(R) --debugger="valgrind --tool=memcheck"
 	grep "==[0-9]*==" $@
 
 ## The definitions for Internet are in Makefile.{in,win}.
+## (That's historical: they are currently the same.)
 all-basic-tests = Examples Specific Reg Internet
 test-all-basics:
 	@for name in $(all-basic-tests); do \
@@ -252,7 +253,7 @@ test-IsAs:
 
 test-Internet2:
 	@$(ECHO) "running more Internet and socket tests"
-	@$(MK) $(test-out-internet2) RVAL_IF_DIFF=1
+	@$(MK) $(test-out-internet2) RVAL_IF_DIFF=0
 
 test-CRANtools:
 	@$(ECHO) "running tests of CRAN tools"
