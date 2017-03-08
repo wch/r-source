@@ -2195,6 +2195,11 @@ unambiguously determined without testing for yourself: however, that
 @samp{_REENTRANT} is defined@footnote{some Windows toolchains had the
 typo @samp{_REENTRANCE} instead.} in C/C++ code is a good indication.
 
+Note that not all @code{pthreads} implmentations are equivalent as parts
+are optional (see
+@uref{http://pubs.opengroup.org/@/onlinepubs/@/009695399/@/basedefs/@/pthread.h.html}):
+for example, macOS lacks the `Barriers' option.
+
 See also the comments on thread-safety and performance under OpenMP: on
 all known @R{} platforms OpenMP is implemented @emph{via}
 @code{pthreads} and the known performance issues are in the latter.
@@ -2464,7 +2469,9 @@ C99 features which are not otherwise implemented in C++, and C++
 compilers commonly accept C99 extensions to C++98.  A minor
 update@footnote{The changes are linked from
 @uref{https://isocpp.org/@/std/@/standing-documents/@/sd-6-sg10-feature-test-recommendations}.}
-to C++11 (C++14) was published in December 2014.
+to C++11 (C++14) was published in December 2014.  The next standard has
+been sent to ISO and is likely to be approved in 2017: it is informally
+known as C++17.
 
 What standard a C++ compiler aims to support can be hard to determine:
 the value@footnote{Values @code{199711}, @code{201103L} and
@@ -2631,9 +2638,12 @@ using std::make_unique;
 #endif
 @end example
 
-The webpage @uref{http://en.cppreference.com/@/w/@/cpp/@/compiler_support}
-gives some information on which compilers are known to support recent C++
-features.
+The webpage
+@uref{http://en.cppreference.com/@/w/@/cpp/@/compiler_support} gives
+some information on which compilers are known to support recent C++
+features, including those in the C++17 drafts (for which feature tests
+should be used, as well as a suitable compiler flag such as
+@option{-std=c++1z}).
 
 
 @node Checking and building packages, Writing package vignettes, Configure and cleanup, Creating R packages
