@@ -1085,8 +1085,8 @@ cd tests
 
 @noindent
 and other useful targets are @code{test-BasePackages} and
-@code{test-Recommended} to the run tests of the standard and
-recommended packages (if installed) respectively.
+@code{test-Recommended} to run tests of the standard and recommended
+packages (if installed) respectively.
 
 This re-runs all the tests relevant to the installed @R{} (including for
 example code in the package vignettes), but not for example the ones
@@ -1113,10 +1113,9 @@ Alternatively, the installed @R{} can be run, preferably with
 
 @example
 Sys.setenv(LC_COLLATE = "C", LC_TIME = "C", LANGUAGE = "en")
-library("tools")
-testInstalledBasic("both")
-testInstalledPackages(scope = "base")
-testInstalledPackages(scope = "recommended")
+tools::testInstalledBasic("both")
+tools::testInstalledPackages(scope = "base")
+tools::testInstalledPackages(scope = "recommended")
 @end example
 
 @noindent
@@ -1127,7 +1126,7 @@ directory and run fewer tests than the first approach: in particular
 they do not test things which need Internet access---that can be tested
 by
 @example
-testInstalledBasic("internet")
+tools::testInstalledBasic("internet")
 @end example
 
 These tests work best if @command{diff} (in @file{Rtools*.exe} for
