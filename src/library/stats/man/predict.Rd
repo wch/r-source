@@ -1,6 +1,6 @@
 % File src/library/stats/man/predict.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{predict}
@@ -64,16 +64,19 @@ predict (object, \dots)
   Wadsworth & Brooks/Cole.
 }
 \examples{
-\testonly{old <- Sys.setlocale("LC_COLLATE", "C")}
+\dontshow{old <- Sys.setlocale("LC_COLLATE", "C")}
 require(utils)
 
 ## All the "predict" methods found
 ## NB most of the methods in the standard packages are hidden.
+## Output will depend on what namespaces are (or have been) loaded.
+## IGNORE_RDIFF_BEGIN
 for(fn in methods("predict"))
    try({
        f <- eval(substitute(getAnywhere(fn)$objs[[1]], list(fn = fn)))
        cat(fn, ":\n\t", deparse(args(f)), "\n")
        }, silent = TRUE)
-\testonly{old <- Sys.setlocale("LC_COLLATE", old)}
+## IGNORE_RDIFF_END
+\dontshow{old <- Sys.setlocale("LC_COLLATE", old)}
 }
 \keyword{methods}

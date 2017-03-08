@@ -135,7 +135,7 @@ drop1(object, scope, \dots)
   \code{\link{extractAIC}}, \code{\link{anova}}
 }
 \examples{
-\testonly{od <- options(digits = 5)}
+\dontshow{od <- options(digits = 5)}
 require(graphics); require(utils)
 ## following example(swiss)
 lm1 <- lm(Fertility ~ ., data = swiss)
@@ -147,6 +147,6 @@ drop1(lm1, test = "F")  # So called 'type II' anova
 drop1(glm.D93, test = "Chisq")
 drop1(glm.D93, test = "F")
 add1(glm.D93, scope = ~outcome*treatment, test = "Rao") ## Pearson Chi-square
-\testonly{options(od)}
+\dontshow{options(od)}
 }
 \keyword{models}
