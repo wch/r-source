@@ -1615,7 +1615,9 @@ function(ifile, ofile)
     .system_with_capture("pandoc",
                          paste(shQuote(normalizePath(ifile)), "-s",
                                "--email-obfuscation=references",
-                               "--css=../../CRAN_web.css",
+                               ## "--css=../../CRAN_web.css",
+                               "--css=https://CRAN.R-project.org/web/CRAN_web.css",
+                               "--self-contained",
                                "-o", shQuote(ofile)))
 }
 
