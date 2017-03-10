@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2017-03-01 r72290) -- "Unsuffered Consequences"
+R Under development (unstable) (2017-03-10 r72323) -- "Unsuffered Consequences"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -3797,7 +3797,7 @@ sigma^2 estimated as 0.4566:  log likelihood = -101.2,  aic = 212.4
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x37decc0>
+<environment: 0x3b3eb40>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -4782,7 +4782,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x5c31498>
+<bytecode: 0x5f219f0>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -7338,7 +7338,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x59c38c8>
+<environment: 0x5fc8750>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -11948,14 +11948,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x4d1be70>
-<environment: 0x4d143c0>
+<bytecode: 0x51404a8>
+<environment: 0x5130000>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x4d1bfc0>
-<environment: 0x4d143c0>
+<bytecode: 0x51405f8>
+<environment: 0x5130000>
 
 > 
 > 
@@ -12223,17 +12223,17 @@ Dickey-Fuller = -2.6899, Truncation lag parameter = 7, p-value = 0.2863
 > p.ppoints <- function(n, ..., add = FALSE, col = par("col")) {
 +   pn <- ppoints(n, ...)
 +   if(add)
-+       points(pn, pn, col=col)
++       points(pn, pn, col = col)
 +   else {
 +       tit <- match.call(); tit[[1]] <- quote(ppoints)
 +       plot(pn,pn, main = deparse(tit), col=col,
-+            xlim=0:1, ylim=0:1, xaxs="i", yaxs="i")
-+       abline(0,1, col = adjustcolor(1, 1/4), lty = 3)
++            xlim = 0:1, ylim = 0:1, xaxs = "i", yaxs = "i")
++       abline(0, 1, col = adjustcolor(1, 1/4), lty = 3)
 +   }
-+   if(requireNamespace("MASS", quietly=TRUE))
++   if(!add && requireNamespace("MASS", quietly = TRUE))
 +     text(pn, pn, as.character(MASS::fractions(pn)),
 +          adj = c(0,0)-1/4, cex = 3/4, xpd = NA, col=col)
-+   abline(h=pn, v=pn, col = adjustcolor(col, 1/2), lty = 2, lwd = 1/2)
++   abline(h = pn, v = pn, col = adjustcolor(col, 1/2), lty = 2, lwd = 1/2)
 + }
 > 
 > p.ppoints(4)
@@ -12463,6 +12463,8 @@ Cumulative Proportion  0.4173 0.6498 0.7569
 > 
 > ## All the "predict" methods found
 > ## NB most of the methods in the standard packages are hidden.
+> ## Output will depend on what namespaces are (or have been) loaded.
+> ## IGNORE_RDIFF_BEGIN
 > for(fn in methods("predict"))
 +    try({
 +        f <- eval(substitute(getAnywhere(fn)$objs[[1]], list(fn = fn)))
@@ -12544,6 +12546,7 @@ predict.smooth.spline :
 	 function (object, x, deriv = 0, ...)  NULL 
 predict.smooth.spline.fit :
 	 function (object, x, deriv = 0, ...)  NULL 
+> ## IGNORE_RDIFF_END
 > ## Don't show: 
 > old <- Sys.setlocale("LC_COLLATE", old)
 > ## End(Don't show)
@@ -16032,8 +16035,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f)
-<bytecode: 0x4f2c340>
-<environment: 0x83a7d90>
+<bytecode: 0x52cdf60>
+<environment: 0x65c4f48>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -18357,7 +18360,7 @@ Number of Fisher Scoring iterations: 6
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  4.923 0.101 5.038 0 0 
+Time elapsed:  4.957 0.098 5.07 0 0 
 > grDevices::dev.off()
 null device 
           1 
