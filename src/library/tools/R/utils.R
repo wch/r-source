@@ -1157,6 +1157,7 @@ function()
                "Package",
                "Packaged",
                "Priority",
+               "RdMacros",
                "Suggests",
                "SysDataCompression",
                "SystemRequirements",
