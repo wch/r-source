@@ -2523,6 +2523,18 @@ If a package does have a @file{Makevars[.win]} file then setting the
 make variable @samp{CXX_STD} is preferred, as it allows @command{R CMD
 SHLIB} to work correctly in the package's @file{src} directory.
 
+Conversely, to ensure that the C++98 standard is assumed even when this
+is not the compiler default, use
+
+@example
+SystemRequirements: C++98
+@end example
+@noindent
+or
+@example
+CXX_STD = CXX98
+@end example
+
 The C++11 compiler will be used systematically by R for all C++ code
 if the environment variable @env{USE_CXX1X} is defined (with any
 value). Hence this environment variable should be defined when invoking
@@ -4991,9 +5003,10 @@ However, modes of @command{gcc} with `GNU EXTENSIONS' (which are the
 default, either @option{-std=gnu99} or @option{-std=gnu11}) declare
 enough macros to ensure that missing declarations are rarely seen.
 
-This applies also to constants such as @code{M_PI}, which are part of
-the X/Open standard: to use these define @code{_XOPEN_SOURCE} before
-including any headers.
+This applies also to constants such as @code{M_PI} and @code{M_LN2},
+which are part of the X/Open standard: to use these define
+@code{_XOPEN_SOURCE} before including any headers, or include the @R{}
+header @file{Rmath.h}.
 
 @item
 Similarly, package authors commonly assume things are part of C++ when
@@ -5003,7 +5016,9 @@ they were introduced in C++11 if at all.  Recent examples from
 erf expm1 fmin fmax lgamma lround loglp round snprintf strcasecmp trunc
 @end example
 @noindent
-and the POSIX function @code{strdup}.
+(all of which are in the @code{std} namespace in C++11) and the POSIX
+functions @code{strdup} and @code{strncasecmp} and constants @code{M_PI}
+and @code{M_LN2} (see the previous item).
 
 @end itemize
 
@@ -13084,9 +13099,11 @@ not.)
 @c maybe not all into the index ...
 
 @R{} has a set of commonly used mathematical constants encompassing
-constants usually found @file{math.h} and contains further ones that are
-used in statistical computations.  All these are defined to (at least)
-30 digits accuracy in @file{Rmath.h}.  The following definitions
+constants defined by POSIX and usually@footnote{but see the second
+paragraph of @pxref{Portable C and C++ code}.} found in @file{math.h}
+(but maybe not in the C++ header @file{cmath}) and contains further ones
+that are used in statistical computations.  These are defined to (at
+least) 30 digits accuracy in @file{Rmath.h}.  The following definitions
 use @code{ln(x)} for the natural logarithm (@code{log(x)} in @R{}).
 
 @quotation

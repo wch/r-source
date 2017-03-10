@@ -12534,14 +12534,6 @@ predict.prcomp :
 	 function (object, newdata, ...)  NULL 
 predict.princomp :
 	 function (object, newdata, ...)  NULL 
-Warning: namespace ‘MASS’ is not available and has been replaced
-by .GlobalEnv when processing object ‘’
-predict.qda :
-	 function (object, newdata, prior = object$prior, method = c("plug-in",      "predictive", "debiased", "looCV"), ...)  NULL 
-Warning: namespace ‘MASS’ is not available and has been replaced
-by .GlobalEnv when processing object ‘’
-predict.rlm :
-	 function (object, newdata = NULL, scale = NULL, ...)  NULL 
 predict.smooth.spline :
 	 function (object, x, deriv = 0, ...)  NULL 
 predict.smooth.spline.fit :
