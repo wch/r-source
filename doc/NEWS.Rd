@@ -418,8 +418,12 @@
       derivatives of \code{log1p()}, \code{sinpi()} and similar
       one-argument functions, thanks to a contribution by Jerry Lewis.
 
-      \item \code{median()} gets a formal \code{\dots} argument, so
+      \item \code{median()} gains a formal \code{\dots} argument, so
       methods with extra arguments can be provided.
+
+      \item \code{strwrap()} reduces \code{indent} if it is more than
+      half \code{width} rather than giving an error.  (Suggested by Bill
+      Dunlap.)
     }
   }
 
@@ -575,6 +579,9 @@
 
       \item \command{R CMD config} gains a \option{--all} option for
       printing names and values of all basic configure variables.
+
+      It now knows about all the variables used for the C++98, C++11 and
+      C++14 standards.
 
       \item \command{R CMD check} now checks that output files in
       \file{inst/doc} are newer than the source files in \file{vignettes}.

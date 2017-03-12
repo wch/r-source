@@ -353,10 +353,12 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                     if(!inherits(tmp, "try-error"))
                         txt <- tmp
                     else
-                        warning("'DESCRIPTION' has an 'Encoding' field and re-encoding is not possible", call.=FALSE)
+                        warning("'DESCRIPTION' has an 'Encoding' field and re-encoding is not possible",
+                                call. = FALSE)
                 }
                 nm <- paste0(names(txt), ":")
-                formatDL(nm, txt, indent = max(nchar(nm, "w")) + 3)
+                ## indent might be excessive for long field names.
+                formatDL(nm, txt, indent = max(nchar(nm, "w")) + 3L)
             } else if(basename(f) %in% "vignette.rds") {
                 txt <- readRDS(f)
                 ## New-style vignette indices are data frames with more

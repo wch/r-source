@@ -4810,7 +4810,7 @@ compiler.  Those and other binary components are available from
 @uref{https://r.research.att.com/libs}: you will need @code{pcre} and
 @code{xz} (for @code{libzma}) as recent macOS versions provide libraries
 but not headers for these (and the system @code{pcre} is too old at
-version 8.02) .
+version 8.02).
 
 An X sub-system is required unless configuring using
 @option{--without-x}: see @uref{https://xquartz.macosforge.org/}.
@@ -5177,7 +5177,8 @@ A large selection of Open Source software can be installed from
 The Oracle compilers are unusual in not including
 @file{/usr/local/include} in the default include search path: @R{}'s
 default @code{CPPFLAGS=-I/usr/local/include} remedies this.  If you rely
-on OpenCSW software you may need @code{CPPFLAGS=-I/opt/csw/include}
+on OpenCSW software you may need @code{CPPFLAGS=-I/opt/csw/include} (or
+both).
 
 You will need @acronym{GNU} @code{libiconv} and @code{readline}: the
 Solaris version of @code{iconv} is not sufficiently powerful.
@@ -5235,12 +5236,12 @@ CXXSTD="-library=stlport4"
 CXXFLAGS=-O
 FC=$F77
 FCFLAGS=$FFLAGS
+## for Solaris Studio 12.3
 FCLIBS="-lfai -lfui -lfsu"
+## for Developer Studio 12.5
+FCLIBS=-lfsu
 R_LD_LIBRARY_PATH="/usr/local/lib:/opt/csw/lib"
 @end example
-
-@noindent
-(For version 12.5 of the compiler use @code{FCLIBS=-lfsu}.)
 
 For a 64-bit target add @option{-m64} to the compiler macros
 and use something like @code{LDFLAGS=-L/usr/local/lib/amd64} or
@@ -5381,12 +5382,9 @@ The notes here are for @command{gcc} set up to use the Solaris linker:
 it can also be set up to use GNU @command{ld}, but that has not been
 tested.  The tests were for compilers from the OpenCSW repository:
 Solaris systems often come with much older compilers installed under
-@file{/usr/sfw/bin} and in the past an explicit path such as
-@command{/opt/csw/gcc4/bin/gcc} was need to select the latest version of the
-compilers (which at the time of writing were linked from
-@file{/opt/csw/bin} to @file{/opt/csw/gcc4/bin}).  One of @option{-m32}
-or @option{-m64} will be the default and could be omitted, but it is not
-easy to find out which.
+@file{/usr/sfw/bin}.  One of @option{-m32} or @option{-m64} will be the
+default and could be omitted, but it is not easy to find out which.
+(For OpenCSW it is @option{-m32}.)
 
 Compilation for an @cputype{x86} target with @command{gcc}@tie{}4.9.2 or
 @command{gcc}@tie{}5.2.0 needed

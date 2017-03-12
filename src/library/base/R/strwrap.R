@@ -1,7 +1,7 @@
 #  File src/library/base/R/strwrap.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -187,8 +187,11 @@ function(x, y, style = c("table", "list"),
 
     if(is.null(indent))
         indent <- switch(style, table = width / 3, list = width / 9)
-    if(indent > 0.5 * width)
-        stop("incorrect values of 'indent' and 'width'")
+    ## change 2017-03-12 suggeested by Bill Dunlap
+    ## https://stat.ethz.ch/pipermail/r-devel/2017-March/073873.html
+    ## if(indent > 0.5 * width)
+    ##    warning("'indent' is too large for 'width' and will be reduced")
+    indent <- min(indent, 0.5*width)
 
     indentString <- strrep(" ", indent)
 
