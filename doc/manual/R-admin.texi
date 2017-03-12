@@ -4724,13 +4724,13 @@ which is needed for some versions of @command{gfortran}.
 
 The current default for @command{clang++} is to use the C++ runtime from
 the installed @command{g++}.  Using the runtime from the @code{libc++}
-project (@url{http://libcxx.llvm.org/}) has also been tested: for some
-@R{} packages only the variant using @code{libcxxabi} was successful.
+project (@url{http://libcxx.llvm.org/}, Fedora RPM @code{libcxx-devel})
+has also been tested: for some @R{} packages only the variant using
+@code{libcxxabi} was successful.
 
-Most builds of @command{clang} have no OpenMP support.  Builds of
-versions 3.7.0 or later may.@footnote{This also needs the OpenMP
-runtime which has sometimes been distributed separately, e.g.@: for
-3.7.0 at @uref{http://llvm.org/releases}.}
+Earlier builds of @command{clang} have no OpenMP support, those of
+versions 3.7.0 or later may.@footnote{This also needs the OpenMP runtime
+which has sometimes been distributed separately.}
 
 @node Intel compilers,  , Clang, Linux
 @subsection Intel compilers
@@ -5236,10 +5236,12 @@ CXXSTD="-library=stlport4"
 CXXFLAGS=-O
 FC=$F77
 FCFLAGS=$FFLAGS
-## for Solaris Studio 12.3
-FCLIBS="-lfai -lfui -lfsu"
 ## for Developer Studio 12.5
 FCLIBS=-lfsu
+## for x86 Solaris Studio 12.3
+FCLIBS="-lfai -lfui -lfsu"
+## for Sparc Solaris Studio 12.3
+FCLIBS="-lfai -lfai2 -lfui -lfsu"
 R_LD_LIBRARY_PATH="/usr/local/lib:/opt/csw/lib"
 @end example
 
@@ -5264,26 +5266,19 @@ JAVA_LD_LIBRARY_PATH=$@{JAVA_HOME@}/lib/amd64/server
 JAVA_LIBS="-L$@{JAVA_HOME@}/lib/amd64/server \
   -R$@{JAVA_HOME@}/lib/amd64/server -ljvm"
 @end example
-@noindent
-With version 12.3 on Sparc, @code{FCLIBS} needs to be
-
-@example
-FCLIBS="-lfai -lfui -lfai2 -lfsu"
-@end example
 
 @noindent
-(and possibly other Fortran libraries, but this suffices for the
-packages currently on CRAN).
+(In most cases the @file{64} directory is a link to @file{amd64} or
+@file{sparcv9} as appropriate.)
 
-Builds of @cputype{amd64} and @cputype{sparcv9} stopped working at
-Solaris Studio 12.3: @file{libRblas.so} and @file{lapack.so} are
-generated with code that causes relocation errors (code which is being
-linked in from the Fortran libraries).  This means that building 64-bit
-@R{} as a shared library may be impossible.  For a standard build a
-trick seems to be to manually set @code{FLIBS} to avoid the troublesome
-libraries.  For example, on @cputype{amd64} set in @file{config.site}
-something like (for 12.3: we did not find a workaround for 12.5)
-
+Builds of @cputype{amd64} and @cputype{sparcv9} did not work with
+Solaris Studio 12.3 and 12.4: @file{libRblas.so} and @file{lapack.so}
+were generated with code that causes relocation errors (code which is
+being linked in from the Fortran libraries).  This means that building
+64-bit @R{} as a shared library may be impossible.  For a standard build
+a trick seems to be to manually set @code{FLIBS} to avoid the
+troublesome libraries.  For example, on @cputype{amd64} set in
+@file{config.site} something like (for 12.3):
 @example
 FLIBS_IN_SO="-R/opt/solarisstudio12.3/lib/amd64
   /opt/solarisstudio12.3/lib/amd64/libfui.so
@@ -5444,7 +5439,7 @@ Note that paths such as @file{/opt/csw/lib}, @file{/usr/local/lib/sparcv9} or
 @env{LD_LIBRARY_PATH} during configuration.
 
 The compilation can be tuned to a particular cpu: the @acronym{CRAN}
-check system uses @code{-mtune=niagara2}.
+check system uses @code{-mcpu=niagara2}.
 
 
 @node AIX, FreeBSD, Solaris, Platform notes

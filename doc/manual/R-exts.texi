@@ -8380,25 +8380,21 @@ separately.} of @command{clang} and GCC.  Its (main) runtime library is
 linked into each package's DLL, so it is less often needed to be
 included in @env{MAIN_LDFLAGS}.
 
-Some versions have greatly increased compilation times on a few
-files@footnote{e.g.@: @file{src/main/dotcode.c} and parts of the
-@CRANpkg{Matrix} sources with @command{clang} 3.7.0 amd later.}.
-
 This sanitizer can be combined with the Address Sanitizer by
 @option{-fsanitize=undefined,address} (where both are supported).
 
 Finer control of what is checked can be achieved by other options: for
 @command{clang} see
 @uref{http://clang.llvm.org/@/docs/@/UsersManual.html#controlling-code-generation}.@footnote{or
-the user manual for your version of @command{clang}, e.g.@:
-@uref{http://llvm.org/@/releases/@/3.8.1/@/tools/@/docs/@/UsersManual.html} or
-@uref{http://llvm.org/@/releases/@/3.8.0/@/tools/@/clang/@/docs/@/UsersManual.html}.}
+the user manual for your version of @command{clang}, e.g.@: (the paths
+have differed for some versions)
+@uref{http://llvm.org/@/releases/@/4.0.0/@/tools/@/clang/@/docs/@/UsersManual.html}.}
 The current set for @command{clang} is (on a single line):
 @example
 -fsanitize=alignment,bool,bounds,enum,float-cast-overflow,
 float-divide-by-zero,function,integer-divide-by-zero,nonnull-attribute,
 null,object-size,return,returns-nonnull-attribute,shift,
-signed-integer-overflow,unreachable,vla-bound,vptr
+signed-integer-overflow,unreachable,unsigned-integer-overflow,vla-bound,vptr
 @end example
 
 @noindent
@@ -8410,14 +8406,7 @@ like
 @end example
 
 @noindent
-(@code{function}, @code{return} and @code{vptr} apply only to C++).  In
-addition,
-@example
--fsanitize=unsigned-integer-overflow
-@end example
-@noindent
-is available as a separate option in some versions of @command{clang}
-(not enabled by @option{-fsanitize=undefined}).
+(@code{function}, @code{return} and @code{vptr} apply only to C++).
 
 @command{clang} 3.5 and later may need
 
@@ -8434,16 +8423,12 @@ could try building @R{} with something like
 MAIN_LD="clang++ -fsanitize=undefined"
 @end example
 @noindent
-and perhaps for @command{clang} 3.7.x
-@example
-R_OPENMP_CFLAGS="-fopenmp=libomp"
-@end example
-@noindent
 or add @code{-lclang_rt.asan_cxx-x86_64}@footnote{This includes the C++
 UBSAN handlers, despite its name.} or similar to @code{LD_FLAGS}).
 
-See @uref{https://gcc.gnu.org/@/onlinedocs/@/gcc/@/Debugging-Options.html} (or
-the manual for your version of GCC, installed or @emph{via}
+See
+@uref{https://gcc.gnu.org/@/onlinedocs/@/gcc/@/Instrumentation-Options.html}
+(or the manual for your version of GCC, installed or @emph{via}
 @uref{https://gcc.gnu.org/@/onlinedocs/}) for the options supported by
 GCC: 5.3 supports
 @example
@@ -8468,8 +8453,8 @@ GCC 6 added
 -fsanitize=bounds-strict
 @end example
 @noindent
-an extension of @code{bounds} to `flexible array member-like arrays'.
-
+(an extension of @code{bounds} to `flexible array member-like arrays'),
+@option{-fsanitize=shift-base} and @option{-fsanitize=shift-exponent}.
 
 Other useful flags include
 @example
