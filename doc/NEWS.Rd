@@ -446,6 +446,10 @@
       packages will need to request C++11 or replace non-C++98 calls
       such as \code{lgamma}: see §1.6.4 of \sQuote{Writing R Extensions}.
 
+      Because it is needed by about 70 CRAN packages, headers \file{R.h}
+      and \file{Rmath.h} still declare \preformatted{use namespace std;}
+      when included on Solaris.
+
       \item When included from C++, the \R headers now use forms such as
       \code{std::FILE} directly rather than including the line \preformatted{using std::FILE;}
       C++ code including these headers might be relying on the latter.

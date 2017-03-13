@@ -5301,9 +5301,9 @@ FLIBS="-R/opt/solarisstudio12.3/prod/lib/sparc/64
 @noindent
 However, using PCRE with JIT enabled on 64-bit Sparc led to segfaults.
 
-By default the Oracle compilers do not by default conform to the C99
-standard (appendix F 8.9) on the return values of functions such as
-@code{log}: use @option{-xlibmieee} to ensure this.
+The Oracle compilers do not by default conform to the C99 standard
+(appendix F 8.9) on the return values of functions such as @code{log}:
+use @option{-xlibmieee} to ensure this.
 
 You can target specific Sparc architectures for (slightly) higher
 performance: @option{-xtarget=native} (in @code{CFLAGS} etc) tunes the
