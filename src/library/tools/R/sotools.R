@@ -757,6 +757,8 @@ function(calls, dir = NULL, character_only = TRUE)
                    ## positionally (the other ff interface named
                    ## arguments come after '...').
                    if(length(pos)) e <- e[-pos]
+                   ## drop calls with only ...
+                   if(length(e) < 2L) return(NULL)
                    cname <- as.character(e[[1L]])
                    ## The help says
                    ##

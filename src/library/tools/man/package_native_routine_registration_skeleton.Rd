@@ -81,6 +81,9 @@ package_native_routine_registration_skeleton(dir, con = stdout(),
   native routines not included in the package, which will lead to a
   \sQuote{loading failed} error during package installation when the
   registration C code is added.
+  
+  Calls which do not name a routine such as \code{.Call(\dots)} will be
+  silently ignored.
 }
 
 \value{

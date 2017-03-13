@@ -396,6 +396,9 @@
       the chances of C stack overflow in the PCRE library on very long
       strings (millions of characters, but see next item).
 
+      Warning: segfaults were seen using PCRE with JIT enabled on 64-bit
+      Sparc builds.
+
       \item There is a new option \code{PCRE_limit_recursion} for
       \code{grep(perl = TRUE)} and friends to set a recursion limit
       taking into account \R's estimate of the remaining C stack space
