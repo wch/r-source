@@ -2652,8 +2652,7 @@ The webpage
 @uref{http://en.cppreference.com/@/w/@/cpp/@/compiler_support} gives
 some information on which compilers are known to support recent C++
 features, including those in the C++17 drafts (for which feature tests
-should be used, as well as a suitable compiler flag such as
-@option{-std=c++1z}).
+should be used).
 
 @node Using C++17 code,  , Using C++14 code, Configure and cleanup
 @subsection Using C++17 code
@@ -2661,6 +2660,8 @@ should be used, as well as a suitable compiler flag such as
 Experimental support for a C++17 has been added to @R{} version
 3.4.0. The feature tests used by @command{configure} to determine
 whether a compiler supports the C++17 standard are subject to change.
+At the time of writing (March 2017) @code{clang 4.0.0} had sufficient
+support but pre-releases of @code{gcc 7} did not.
 
 The variables associated with the C++17 compiler use the prefix
 @samp{CXX1Z}.  Hence to use C++17 code in a package, the package's

@@ -5298,6 +5298,8 @@ FLIBS="-R/opt/solarisstudio12.3/prod/lib/sparc/64
  -lfminvai -lfmaxvai -lfui -lsunmath -lmtsk
  /opt/solarisstudio12.3/prod/lib/sparc/64/libfsu.so.1"
 @end example
+@noindent
+However, using PCRE with JIT enabled on 64-bit Sparc led to segfaults.
 
 By default the Oracle compilers do not by default conform to the C99
 standard (appendix F 8.9) on the return values of functions such as
