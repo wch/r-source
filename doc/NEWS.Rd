@@ -533,7 +533,7 @@
       although the latter is close to end-of-life.)
       %% Debian Wheezy LTS is supported until 2018-05-31
 
-      \item \command{configure} tests for a C++17 compliant compiler.
+      \item \command{configure} tests for a C++17-compliant compiler.
       The tests are experimental and subject to change in the future.
     }
   }
@@ -552,9 +552,9 @@
 
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
-      \item There is support for compiling C++14 code in packages on
-      suitable platforms: see \sQuote{Writing R Extensions} for how to
-      request this.
+      \item There is support for compiling C++14 or C++17 code in
+      packages on suitable platforms: see \sQuote{Writing R Extensions}
+      for how to request this.
 
       \item The order of flags when \samp{LinkingTo} other packages has
       been changed so their include directories come earlier, before
