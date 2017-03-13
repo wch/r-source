@@ -304,7 +304,12 @@
             sys_requires <- desc["SystemRequirements"]
             if (!is.na(sys_requires)) {
                 sys_requires <- unlist(strsplit(sys_requires, ","))
-                if(any(grepl("^[[:space:]]*C[+][+]14[[:space:]]*$",
+                if(any(grepl("^[[:space:]]*C[+][+]17[[:space:]]*$",
+                             sys_requires, ignore.case=TRUE))) {
+                    Sys.setenv("R_PKG_CXX_STD"="CXX17")
+                    on.exit(Sys.unsetenv("R_PKG_CXX_STD"))
+                }
+                else if(any(grepl("^[[:space:]]*C[+][+]14[[:space:]]*$",
                              sys_requires, ignore.case=TRUE))) {
                     Sys.setenv("R_PKG_CXX_STD"="CXX14")
                     on.exit(Sys.unsetenv("R_PKG_CXX_STD"))
@@ -1759,6 +1764,7 @@
     use_cxx98 <- FALSE
     use_cxx1x <- FALSE
     use_cxx1y <- FALSE
+    use_cxx1z <- FALSE
     pkg_libs <- character()
     clean <- FALSE
     preclean <- FALSE
@@ -1857,7 +1863,10 @@
                               value = TRUE, useBytes = TRUE))) {
             cxxstd <- gsub("^CXX_STD *=", "", ll)
             cxxstd <- gsub(" *", "", cxxstd)
-            if (cxxstd == "CXX14") {
+            if (cxxstd == "CXX17") {
+                use_cxx1z <- TRUE
+            }
+            else if (cxxstd == "CXX14") {
                 use_cxx1y <- TRUE
             }
             else if (cxxstd == "CXX11") {
@@ -1876,7 +1885,10 @@
                               value = TRUE, useBytes = TRUE))) {
             cxxstd <- gsub("^CXX_STD *=", "", ll)
             cxxstd <- gsub(" *", "", cxxstd)
-            if (cxxstd == "CXX14") {
+            if (cxxstd == "CXX17") {
+                use_cxx1z <- TRUE
+            }
+            else if (cxxstd == "CXX14") {
                 use_cxx1y <- TRUE
             }
             else if (cxxstd == "CXX11") {
@@ -1887,10 +1899,14 @@
             }
         }
     }
-    if (!use_cxx1x && !use_cxx1y && !use_cxx98) {
+    if (!use_cxx1x && !use_cxx1y && !use_cxx1z && !use_cxx98) {
+        valz <- Sys.getenv("USE_CXX1Z", NA_character_)
         valy <- Sys.getenv("USE_CXX1Y", NA_character_)
         valx <- Sys.getenv("USE_CXX1X", NA_character_)
         val98 <- Sys.getenv("USE_CXX98", NA_character_)
+        if (!is.na(valz)) {
+            use_cxx1z <- TRUE
+        }
         if(!is.na(valy)) {
             use_cxx1y <- TRUE
         }
@@ -1902,6 +1918,9 @@
         }
         else {
             val <- Sys.getenv("R_PKG_CXX_STD")
+            if (val == "CXX17") {
+                use_cxx1z <- TRUE
+            }
             if (val == "CXX14") {
                 use_cxx1y <- TRUE
             }
@@ -1919,7 +1938,13 @@
         makeargs <- c("SHLIB_LDFLAGS='$(SHLIB_FCLDFLAGS)'",
                       "SHLIB_LD='$(SHLIB_FCLD)'", makeargs)
     } else if (with_cxx) {
-        makeargs <- if (use_cxx1y)
+        makeargs <- if (use_cxx1z)
+            c("CXX='$(CXX1Z) $(CXX1ZSTD)'",
+              "CXXFLAGS='$(CXX1ZFLAGS)'",
+              "CXXPICFLAGS='$(CXX1ZPICFLAGS)'",
+              "SHLIB_LDFLAGS='$(SHLIB_CXX1ZLDFLAGS)'",
+              "SHLIB_LD='$(SHLIB_CXX1ZLD)'", makeargs)
+        else if (use_cxx1y)
             c("CXX='$(CXX1Y) $(CXX1YSTD)'",
               "CXXFLAGS='$(CXX1YFLAGS)'",
               "CXXPICFLAGS='$(CXX1YPICFLAGS)'",

@@ -532,6 +532,9 @@
       \sQuote{Wheezy} LTS and Ubuntu \sQuote{Precise} 12.04 LTS,
       although the latter is close to end-of-life.)
       %% Debian Wheezy LTS is supported until 2018-05-31
+
+      \item \command{configure} tests for a C++17 compliant compiler.
+      The tests are experimental and subject to change in the future.
     }
   }
 

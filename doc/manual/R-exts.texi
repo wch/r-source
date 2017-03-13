@@ -1748,7 +1748,8 @@ pkg-config --list-all | sort
 * Configure example::           
 * Using F95 code::              
 * Using C++11 code::            
-* Using C++14 code::            
+* Using C++14 code::
+* Using C++17 code::
 @end menu
 
 @node Using Makevars, Configure example, Configure and cleanup, Configure and cleanup
@@ -2061,7 +2062,7 @@ PKG_LIBS = $(SHLIB_OPENMP_CFLAGS)
 @end example
 
 Note that the macro @code{SHLIB_OPENMP_CXXFLAGS} applies to the default
-C++ compiler and not necessarily to the C++11 or C++14 compiler: users of the
+C++ compiler and not necessarily to the C++11/14/17 compiler: users of the
 latter should do their own @command{configure} checks (an example is
 available in CRAN package @CRANpkg{ARTP2}).
 
@@ -2506,10 +2507,7 @@ file (or @file{Makevars.win} on Windows) should include the line
 CXX_STD = CXX11
 @end example
 @noindent
-Compilation and linking will then be done with the C++11 compiler.  If
-any other value is given to the @samp{CXX_STD} macro it will be ignored.
-(Further options may become available in the future as the C++ standard
-evolves.)
+Compilation and linking will then be done with the C++11 compiler.
 
 Packages without a @file{Makevars} file may specify that they require
 C++11 by including @samp{C++11} in the @samp{SystemRequirements} field
@@ -2593,7 +2591,7 @@ sublibs:
             CXX="$(CXX1X) $(CXX1XSTD)" CXXFLAGS="$(CXX1XFLAGS) $(CXX1XPICFLAGS)")
 @end example
 
-@node Using C++14 code,  , Using C++11 code, Configure and cleanup
+@node Using C++14 code, Using C++17 code, Using C++11 code, Configure and cleanup
 @subsection Using C++14 code
 
 Support for a C++14 has been explicitly added to @R{} from version
@@ -2657,6 +2655,29 @@ features, including those in the C++17 drafts (for which feature tests
 should be used, as well as a suitable compiler flag such as
 @option{-std=c++1z}).
 
+@node Using C++17 code,  , Using C++14 code, Configure and cleanup
+@subsection Using C++17 code
+
+Experimental support for a C++17 has been added to @R{} version
+3.4.0. The feature tests used by @command{configure} to determine
+whether a compiler supports the C++17 standard are subject to change.
+
+The variables associated with the C++17 compiler use the prefix
+@samp{CXX1Z}.  Hence to use C++17 code in a package, the package's
+@file{Makevars} file (or @file{Makevars.win} on Windows) should
+include the line
+@example
+CXX_STD = CXX17
+@end example
+
+In the absence of a @file{Makevars} file, C++17 support can also be
+requested by the line:
+@example
+SystemRequirements: C++17
+@end example
+@noindent
+in the @file{DESCRIPTION} file. Finally, the C++17 compiler can be
+used systematically by setting the environment variable @env{USE_CXX1Z}.
 
 @node Checking and building packages, Writing package vignettes, Configure and cleanup, Creating R packages
 @section Checking and building packages

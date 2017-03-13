@@ -997,6 +997,11 @@ CXX1Y
 CXX1YSTD
 CXX1YFLAGS
 CXX1YPICFLAGS
+
+CXX1Z
+CXX1ZSTD
+CXX1ZFLAGS
+CXX1ZPICFLAGS
 @end example
 @noindent
 The macros @code{CXX} etc are those used by default for C++ code.
@@ -1006,10 +1011,11 @@ support. Similarly, configure will if possible choose for
 @code{CXX1YSTD} a flag@footnote{Currently this is a valid option for
 @command{g++} 5 and later and 2016 versions of the Intel and Solaris
 compilers.  For earlier versions of @command{g++} one could try
-@option{-std=c++1y}.} such as @option{-std=c++14} for C++14 support. The
+@option{-std=c++1y}.} such as @option{-std=c++14} for C++14 support and
+@option{-std=c++1z} for support for the forthcoming C++17 standard. The
 inferred values can be overridden in file @file{config.site} or on the
 @command{configure} command line: user-supplied values will be tested
-compiling some C++11/14 code.
+compiling some C++11/14/17 code.
 
 It may be@footnote{This is true for earlier versions of @command{g++} such
 as 4.2.1, and also for commonly-used versions of the Solaris compiler
