@@ -3,11 +3,14 @@
 ### tests of recursion in PCRE matching
 ### Based on PR16757
 
-## This is expected to throw a warning at some point, depending on the
-## system and stack size.
+## This is expected to throw a warning at some point if PCRE uses a stack,
+## depending on the system and stack size.
+## Typical stack 8-10M, some people use 40M.
+
+pcre_config()["stack"]
 
 op <- options(warn = 1)
-for (n in seq(5000L, 10000L, 1000L)) {
+for (n in c(seq(5000L, 10000L, 1000L), 20000L, 50000L, 100000L)) {
     print(n)
     x <- paste0(rep("a", n), collapse="")
     print(grepl("(a|b)+", x, perl = TRUE))
