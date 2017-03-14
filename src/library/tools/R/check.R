@@ -4082,6 +4082,7 @@ setRlibs <-
                 bad <- TRUE
             } else if(length(res$bad_version) ||
                       identical(res$foss_with_BuildVignettes, TRUE) ||
+                      res$Maintainer_invalid_or_multi_person ||
                       res$empty_Maintainer_name ||
                       res$Maintainer_needs_quotes)
                 warningLog(Log)
