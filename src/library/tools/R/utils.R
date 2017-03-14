@@ -1617,7 +1617,7 @@ function(ifile, ofile)
                          paste(shQuote(normalizePath(ifile)), "-s",
                                "--email-obfuscation=references",
                                ## "--css=../../CRAN_web.css",
-                               "--css=https://CRAN.R-project.org/web/CRAN_web.css",
+                               "--css=https://cran.r-project.org/web/CRAN_web.css",
                                "--self-contained",
                                "-o", shQuote(ofile)))
 }
