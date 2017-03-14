@@ -2196,7 +2196,7 @@ unambiguously determined without testing for yourself: however, that
 @samp{_REENTRANT} is defined@footnote{some Windows toolchains had the
 typo @samp{_REENTRANCE} instead.} in C/C++ code is a good indication.
 
-Note that not all @code{pthreads} implmentations are equivalent as parts
+Note that not all @code{pthreads} implementations are equivalent as parts
 are optional (see
 @uref{http://pubs.opengroup.org/@/onlinepubs/@/009695399/@/basedefs/@/pthread.h.html}):
 for example, macOS lacks the `Barriers' option.
