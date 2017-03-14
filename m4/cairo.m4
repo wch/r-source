@@ -75,7 +75,7 @@ else
 #error cairo version >= 1.2 required
 #endif
 int main(void) {
-    cairo_t  *CC;
+    cairo_t  *CC = NULL; // silence picky compilers
     cairo_arc(CC, 0.0, 0.0, 1.0, 0.0, 6.28);
     pango_cairo_create_layout(CC);
     pango_font_description_new();
