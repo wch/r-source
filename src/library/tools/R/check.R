@@ -3696,6 +3696,9 @@ setRlibs <-
 
                 lines0 <- lines
                 warn_re <- c("^WARNING:",
+                             ## This fires on ODS 12.5 warnings like
+                             ##   Warning: original hides icu_55::PtnSkeleton::original.
+                             ## so filter out later.
                              "^Warning:",
                              ## <FIXME>
                              ## New style Rd conversion
@@ -3782,6 +3785,11 @@ setRlibs <-
 
                 ## and GNU extensions in system headers
                 ex_re <- "^ *(/usr/|/opt/).*GNU extension"
+                lines <- grep(ex_re, lines, invert = TRUE, value = TRUE,
+                              useBytes = TRUE)
+
+                ## and ODS 12.5 warnings
+                ex_re <- "^Warning: [[:alnum:]]+ hides"
                 lines <- grep(ex_re, lines, invert = TRUE, value = TRUE,
                               useBytes = TRUE)
 
