@@ -1736,9 +1736,9 @@ Windows' CRLF line endings.
 
 The front page of a @acronym{CRAN} site has a link `Download R for OS
 X'. Click on that, then download the file @file{R-@value{VERSIONno}.pkg}
-and install it. This runs on macOS 10.9 and later (Mavericks, Yosemite,
-El Capitan, Sierra, @dots{}). (It may be possible to install from the
-sources for earlier OS versions: see @ref{macOS}.)
+and install it. This runs on macOS 10.11 and later (El Capitan, Sierra,
+@dots{}). (It is possible to install from the sources for earlier OS
+versions: see @ref{macOS}.)
 
 Installers for R-patched and R-devel are usually available from
 @uref{https://r.research.att.com}.
@@ -1802,21 +1802,20 @@ can be viewed from @Rapp{}'s `Help' menu.
 
 You can run command-line @R{} and @command{Rscript} from a
 Terminal@footnote{The installer as puts links to @command{R} and
-@command{Rscript} in @file{/usr/bin} (Mavericks, Yosemite) or
-@file{/usr/local/bin} (El Capitan and later). If these are missing, you
+@command{Rscript} in @file{/usr/local/bin}. If these are missing, you
 can run directly the versions in
 @file{/Library/Frameworks/R.framework/Resources/}.} so these can be
 typed as commands like any other Unix-alike: see the next chapter of
 this manual.  There are some small differences which may surprise users
 of @R{} on other platforms, notably the default location of the personal
 library directory (under @file{~/Library/R},
-e.g. @file{~/Library/R/3.3/library}), and that warnings, messages and
+e.g. @file{~/Library/R/3.4/library}), and that warnings, messages and
 other output to @file{stderr} are highlighted in bold.
 
 @c https://stat.ethz.ch/pipermail/r-sig-mac/2014-October/011131.html
-It has been reported that running @Rapp{} under Yosemite may fail if no
-preferences are stored, so if it fails when launched for the very first
-time, try it again (the first attempt will store some preferences).
+It has been reported that running @Rapp{} may fail if no preferences are
+stored, so if it fails when launched for the very first time, try it
+again (the first attempt will store some preferences).
 
 Users of @Rapp{} need to be aware of the `App Nap' feature
 (@uref{https://developer.apple.com/@/library/@/mac/@/releasenotes/@/MacOSX/@/WhatsNewInOSX/@/Articles/MacOSX10_9.html})
@@ -1904,8 +1903,8 @@ The installer will remove any previous version of the @R{} framework
 which it finds installed.  This can be avoided by using @command{pkgutil
 --forget} (see the previous section).  However, note that different
 versions are installed under
-@file{/Library/Frameworks/R.framework/Versions} as @file{3.2},
-@file{3.3} and so on, so it is not possible to have different
+@file{/Library/Frameworks/R.framework/Versions} as @file{3.3},
+@file{3.4} and so on, so it is not possible to have different
 @samp{3.x.y} versions installed for the same @samp{x}.
 
 A version of @R{} can be run directly from the command-line as e.g.@:
@@ -2264,12 +2263,12 @@ On macOS (formerly OS X) @code{install.packages} works as it does on
 other Unix-alike systems, but there are additional types starting with
 @code{mac.binary} (available for the @acronym{CRAN} distribution but not
 when compiling from source: @code{mac.binary.mavericks} for a
-`Mavericks' build with @code{"default"} a synonym for the appropriate
-variant) which can be passed to @code{install.packages} in order to
-download and install binary packages from a suitable repository.  These
-macOS binary package files have the extension @samp{.tgz}.  The @Rapp{}
-GUI provides menus for installation of either binary or source packages,
-from @acronym{CRAN} or local files.
+`Mavericks' and later build with @code{"default"} a synonym for the
+appropriate variant) which can be passed to @code{install.packages} in
+order to download and install binary packages from a suitable
+repository.  These binary package files for macOS have the extension
+@samp{.tgz}.  The @Rapp{} GUI provides menus for installation of either
+binary or source packages, from @acronym{CRAN} or local files.
 
 On @R{} builds using binary packages, the default is type @code{both}:
 this looks first at the list of binary packages available for your
@@ -2311,7 +2310,8 @@ as @file{~/.R/Makevars} (see the next section).  Entries which may need
 to be changed include @samp{CC}, @samp{CXX}, @samp{FC}, @samp{F77},
 @samp{FLIBS} and the corresponding flags, and perhaps @samp{CXXCPP},
 @samp{DYLIB_LD}, @samp{MAIN_LD}, @samp{SHLIB_CXXLD}, @samp{SHLIB_FCLD}
-and @samp{SHLIB_LD}.
+and @samp{SHLIB_LD}, as well as @samp{CXX1X}, @samp{CXX1Y} and
+@samp{CXX1Z} variants
 
 So for example you could select @command{clang} for both C and C++ with
 extensive checking by having in @file{~/.R/Makevars}
@@ -2575,10 +2575,9 @@ Utilities such as @code{install.packages} can be pointed at any
 own.  The `base' of a repository is a URL such as
 @uref{http://www.stats.ox.ac.uk/pub/RWin}: this must be an URL scheme
 that @code{download.packages} supports (which also includes
-@samp{ftp://} and @samp{file://} and (from @R{} 3.3.0 and perhaps
-earlier) @samp{https://}).  Under that base URL there should be
-directory trees for one or more of the following types of package
-distributions:
+@samp{https://}, @samp{ftp://} and @samp{file://}).  Under that base URL
+there should be directory trees for one or more of the following types
+of package distributions:
 
 @itemize
 @item 
@@ -2595,7 +2594,7 @@ wise to have a @file{src/contrib} area with a possibly empty
 
 @item 
 @code{"mac.binary.mavericks"}: located at
-@file{bin/macosx/mavericks/contrib/@var{3.y}} for the CRAN build for
+@file{bin/macosx/mavericks/contrib/@var{3.y}} for the CRAN builds for
 `Mavericks' (and later) for @R{} versions @var{3.y.z}, containing
 @file{.tgz} files.
 @end itemize
@@ -2998,7 +2997,7 @@ is the current working directory (in the build directory tree on a
 Unix-alike if that is separate from the sources).
 
 @file{Rmath.h} contains @samp{R_VERSION_STRING}, which is a character
-string containing the current @R{} version, for example @code{"3.3.0"}.
+string containing the current @R{} version, for example @code{"3.4.0"}.
 
 There is full access to @R{}'s handling of @code{NaN}, @code{Inf} and
 @code{-Inf} via special versions of the macros and functions
@@ -3552,7 +3551,7 @@ a sub-architecture-specific version).  A typical setting for
 
 @example
 JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.71-1.b15.fc22.x86_64/jre
-R_JAVA_LD_LIBRARY_PATH=$@{JAVA_HOME@}/lib/amd64/server
+R_JAVA_LD_LIBRARY_PATH=$@{JAVA_HOME@}/lib/that/server
 @end example
 
 Unfortunately this depends on the exact version of the JRE/JDK
@@ -4796,10 +4795,10 @@ FCFLAGS=$F77FLAGS
 
 (`macOS' was known as `OS X' from 2012--2016.)
 
-The instructions here are for @cputype{x86_64} builds on 10.9
-(Mavericks) or later.  In principle@footnote{It will be necessary to
-install later versions of software such as @code{libcurl}.} @R{} can be
-built for 10.6 to 10.8 but these have not been tested recently.
+The instructions here are for @cputype{x86_64} builds on 10.11 (El
+Capitan) or later.  @R{} can be built for 10.9 and 10.10 and in
+principle@footnote{It will be necessary to install later versions of
+software such as @code{libcurl}.} for 10.6 to 10.8.
 
 To build @R{} you need Apple's `Command Line Tools': these can be
 (re-)installed by @command{xcode-select --install}.  (If you have a
@@ -4819,7 +4818,13 @@ but not headers for these (and the system @code{pcre} is too old at
 version 8.02).
 
 An X sub-system is required unless configuring using
-@option{--without-x}: see @uref{https://xquartz.macosforge.org/}.
+@option{--without-x}: see @uref{https://xquartz.macosforge.org/}. @command{configure} can be told to look for @code{X11} in
+@code{XQuartz}'s main location of @file{/opt/X11}, e.g.@: by
+@example
+--x-includes=/opt/X11/include --x-libraries=/opt/X11/lib
+@end example
+@noindent
+although linked versions under @file{/usr/X11} will be found.
 
 To use the @code{quartz()} graphics device you need to configure with
 @option{--with-aqua} (which is the default): @code{quartz()} then
@@ -4858,19 +4863,37 @@ and the Fortran compiler from
 is a tarball which needs to be unpacked in the Terminal by e.g.@:
 @command{sudo tar -zxf gfortran-4.8.2-darwin13.tar.bz2 -C /}. It does
 not run on Core 2 Duo Macs, and linking failures on macOS Sierra have
-been reported.  On other Sierra machines the reported examples work,
-albeit with many warnings.}
+been reported.  On other Sierra machines the reported failing examples
+work, albeit with many warnings.}
 
-Other builds of @command{gfortran} are available: see
-@uref{https://gcc.gnu.org/@/wiki/@/GFortranBinaries} and
-@uref{http://coudert.name/software.html}.  To use one of these with a
-binary distribution of @R{} you will probably need to specify the name
-or path in a personal or site @file{Makevars} file (@pxref{Customizing
-package compilation}).
+There are installers@footnote{Some of these are unsigned packages: to
+install them you may need to right-click and select @code{Open with ->
+Installer}.} for Fortran compilers for El Capitan and Sierra at
+@uref{http://coudert.name/@/software/@/gfortran-6.1-ElCapitan.dmg} and
+@uref{http://coudert.name/@/software/@/gfortran-6.3-Sierra.dmg}.
+(These compilers are also available from a @code{CRAN} mirror: select
+`Other' under `Software' from the left-hand menu.)  One way to use these
+builds with a binary distribution of @R{} is to have a
+@file{~/.R/Makevars} file similar to (El Capitan)
+@example
+F77 = /usr/local/gfortran/bin/gfortran
+FC = /usr/local/gfortran/bin/gfortran
+FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin15/6.1.0
+  -L/usr/local/gfortran/lib -lgfortran -lquadmath -lm
+@end example
+or (Sierra)
+@example
+F77 = /usr/local/gfortran/bin/gfortran
+FC = /usr/local/gfortran/bin/gfortran
+FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin16/6.3.0
+  -L/usr/local/gfortran/lib -lgfortran -lquadmath -lm
+@end example
+@noindent
+(with lines broken here for legibility).
 
 More recent and complete distributions of @command{clang} are often
 available from @uref{http://llvm.org/releases/}: for example at the time
-of writing for 3.9.0 but not 3.9.1.  In particular, these may include
+of writing for 4.0.0 but not 3.9.1.  In particular, these may include
 support for OpenMP.
 
 Pre-compiled versions of many of the @ref{Useful libraries and programs}
@@ -4946,54 +4969,13 @@ some upgrades but not others).
 
 
 @menu
-* El Capitan and Sierra::       
 * Tcl/Tk headers and libraries::  
 * Java (macOS)::                
 * Frameworks::                  
 * Building R.app::              
 @end menu
 
-@node El Capitan and Sierra, Tcl/Tk headers and libraries, macOS, macOS
-@subsection El Capitan and Sierra
-
-There were problems resulting from the new-to-El-Capitan restriction
-that only Apple is allowed to install software under @file{/usr}: this
-affected @emph{inter alia} @code{MacTeX} and @code{XQuartz} which
-changed their installation locations.
-
-@command{configure} can be told to look for @code{X11} in
-@code{XQuartz}'s main location of @file{/opt/X11}, e.g.@: by
-@example
---x-includes=/opt/X11/include --x-libraries=/opt/X11/lib
-@end example
-
-@noindent
-although linked versions under @file{/usr/X11} will be found.
-
-There are installers@footnote{Some of these are unsigned packages: to
-install them you may need to right-click and select @code{Open with ->
-Installer}.} for Fortran compilers for El Capitan and Sierra at
-@uref{http://coudert.name/@/software/@/gfortran-6.1-ElCapitan.dmg} and
-@uref{http://coudert.name/@/software/@/gfortran-6.3-Sierra.dmg}: those
-at @uref{https://r.research.att.com/} have failure reports on Sierra.
-One way to use the Coudert build with a binary distribution of @R{} is
-to have a @file{~/.R/Makevars} file similar to (El Capitan)
-@smallexample
-F77 = /usr/local/gfortran/bin/gfortran
-FC = /usr/local/gfortran/bin/gfortran
-FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin15/6.1.0 -L/usr/local/gfortran/lib -lgfortran -lquadmath -lm
-@end smallexample
-or (Sierra)
-@smallexample
-F77 = /usr/local/gfortran/bin/gfortran
-FC = /usr/local/gfortran/bin/gfortran
-FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin16/6.3.0 -L/usr/local/gfortran/lib -lgfortran -lquadmath -lm
-@end smallexample
-
-These compilers are also available from a @code{CRAN} mirror: select
-`Other' under `Software' from the left-hand menu.
-
-@node Tcl/Tk headers and libraries, Java (macOS), El Capitan and Sierra, macOS
+@node Tcl/Tk headers and libraries, Java (macOS), macOS, macOS
 @subsection Tcl/Tk headers and libraries
 
 If you plan to use the @code{tcltk} package for @R{}, you need to
@@ -5051,10 +5033,10 @@ installed this should prompt you to install it.  You can also install
 directly the latest Java from Oracle (currently from
 @uref{http://www.oracle.com/@/technetwork/@/java/@/javase/@/downloads/@/index.html}).
 
-You may need to install what Apple calls `legacy Java'@footnote{e.g.@:
-@code{Java For OS X 2015-001} from
-@uref{https://support.apple.com/@/kb/@/DL1572}.} to suppress pop-up messages
-even if you have a current version installed.
+@c You may need to install what Apple calls `legacy Java'@footnote{e.g.@:
+@c @code{Java For OS X 2015-001} from
+@c @uref{https://support.apple.com/@/kb/@/DL1572}.} to suppress pop-up messages
+@c even if you have a current version installed.
 
 To see what compatible versions of Java are currently installed, run
 @command{/usr/libexec/java_home -V -a x86_64}.  If needed, set the
@@ -5068,26 +5050,28 @@ compiling JNI programs (used by packages @CRANpkg{rJava} and
 JRE.
 
 The build process tries to fathom out what JRE/JDK to use, but it may
-need some help, e.g.@: by setting @env{JAVA_HOME}.  An Apple JRE can be
-specified explicitly by something like
+need some help, e.g.@: by setting @env{JAVA_HOME}.  The Oracle JDK can
+be specified explicitly by something like
 @example
-JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Home
-JAVA_CPPFLAGS="-I/System/Library/Frameworks/JavaVM.framework/Headers"
-JAVA_LD_LIBRARY_PATH=
-JAVA_LIBS="-framework JavaVM"
-@end example
-@noindent
-The Oracle JDK can be specified explicitly by something like
-@example
-JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_111.jdk/Contents/Home
+JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_121.jdk/Contents/Home
 JAVA_CPPFLAGS="-I/$@{JAVA_HOME@}/include -I/$@{JAVA_HOME@}/include/darwin"
 JAVA_LD_LIBRARY_PATH="$@{JAVA_HOME@}/jre/lib/server"
 JAVA_LIBS="-L/$@{JAVA_HOME@}/jre/lib/server -ljvm" 
 @end example
 in @file{config.site}.
 
-Note that it is necessary to set the environment variable @env{NOAWT}
-to @code{1} to install many of the Java-using packages.
+(An Apple JRE, if available, can be specified explicitly by something
+like
+@example
+JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Home
+JAVA_CPPFLAGS="-I/System/Library/Frameworks/JavaVM.framework/Headers"
+JAVA_LD_LIBRARY_PATH=
+JAVA_LIBS="-framework JavaVM"
+@end example
+.)
+
+Note that it is necessary to set the environment variable @env{NOAWT} to
+@code{1} to install many of the Java-using packages.
 
 
 @node Frameworks, Building R.app, Java (macOS), macOS
