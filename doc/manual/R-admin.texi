@@ -4916,7 +4916,9 @@ Otherwise the binary libraries at
 @uref{https://r.research.att.com/libs/} can be used: @code{cairo},
 @code{fontconfig}, @code{freetype}, @code{pixman} and
 @file{pkgconfig-system-stubs-darwin13.tar.gz} are needed, plus
-@code{libpng} for PNG support.
+@code{libpng} for PNG support.  (If you intend to use XQuartz, ensure
+that you have not got older versions of these still under
+@file{/usr/local}.)
 
 @cindex BLAS library
 @cindex LAPACK library
@@ -5215,7 +5217,7 @@ CXXSTD="-library=stlport4"
 CXXFLAGS=-O
 FC=$F77
 FCFLAGS=$FFLAGS
-# FCLIBS=-lfsu
+FCLIBS=-lfsu
 R_LD_LIBRARY_PATH="/opt/developerstudio12.5/lib:/usr/local/lib:/opt/csw/lib"
 @end example
 

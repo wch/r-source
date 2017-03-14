@@ -47,7 +47,7 @@ ECHO_T = @ECHO_T@
 ## NB, set FC before F77 as on Solaris make, setting FC sets F77
 FC = @FC@
 FCFLAGS = @FCFLAGS@ $(LTO)
-## additional libs needed when linking with $(FC), e.g. on Solaris
+## additional libs needed when linking with $(FC), e.g. on some Oracle compilers
 FCLIBS = @FCLIBS@
 F77 = @F77@
 F77_VISIBILITY = @F77_VISIBILITY@

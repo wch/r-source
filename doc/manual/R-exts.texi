@@ -13061,8 +13061,8 @@ without causing unnecessary overflows or throwing away too much accuracy.
 @deftypefunx double fmin2 (double @var{x}, double @var{y})
 Return the larger (@code{max}) or smaller (@code{min}) of two integer or
 double numbers, respectively.  Note that @code{fmax2} and @code{fmin2}
-differ from C99's @code{fmax} and @code{fmin} when one of the arguments
-is a @code{NaN}: these versions return @code{NaN}.
+differ from C99/C++11's @code{fmax} and @code{fmin} when one of the
+arguments is a @code{NaN}: these versions return @code{NaN}.
 @end deftypefun
 
 @deftypefun double sign (double @var{x})
