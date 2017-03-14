@@ -5137,6 +5137,11 @@ in the @file{/Applications} folder.
 @section Solaris
 @cindex Solaris
 
+@menu
+* 64-bit builds::               
+* Using gcc::                   
+@end menu
+
 @R{} has been built successfully on Solaris 10 (both Sparc and
 @cputype{x86}) using the (zero cost) Oracle Developer
 Studio@footnote{Oracle Solaris Studio prior to 2016, and previously Sun
@@ -5147,7 +5152,8 @@ or Intel Xeons (@cputype{amd64}) rather than @cputype{x86}, but 32-bit
 identify@footnote{using the @option{-V} flag.} themselves is slightly
 confusing: Solaris Studio versions 12.3 and 12.4 report C++ 5.12
 and 5.13, and Developer Studio 12.5 reports C++ 5.14.  We will only consider
-12.3 (Nov 2011) and later.
+12.5 (May 2016): instructions for 12.3 can be found in versions of this
+manual for @R{} 3.3.x.
 
 There have been few reports on Solaris 11, with no known extra issues.
 
@@ -5178,13 +5184,6 @@ packages require @acronym{GNU} @command{make} (some without good reason
 and without declaring it as @samp{SystemRequirements} in the
 @file{DESCRIPTION} file).
 
-Some people have reported that the Solaris @code{libintl} needs to be
-avoided, for example by using @option{--disable-nls} or
-@option{--with-included-gettext} or using @code{libintl} from OpenCSW.
-(On the other hand, there have been many successful installs which
-automatically detected @code{libintl} from OpenCSW or selected the
-included @code{gettext}.)
-
 The support for the C99 @code{long double} type on Sparc hardware uses
 quad-precision arithmetic, and this is usually slow because it is done
 by software emulation.  On such systems the @command{configure} option
@@ -5202,16 +5201,6 @@ When using the Oracle compilers do @emph{not} specify @option{-fast}, as
 this disables @acronym{IEEE} arithmetic and @command{make check} will
 fail.
 
-It has been reported that some Solaris installations need
-
-@example
-INTERNET_LIBS="-lsocket -lnsl"
-@end example
-
-@noindent
-on the @command{configure} command line or in file @file{config.site};
-however, there have been many successful installs without this.
-
 A little juggling of paths was needed to ensure @acronym{GNU}
 @code{libiconv} (in @file{/usr/local}) was used rather than the Solaris
 @code{iconv}:
@@ -5226,64 +5215,9 @@ CXXSTD="-library=stlport4"
 CXXFLAGS=-O
 FC=$F77
 FCFLAGS=$FFLAGS
-## for Developer Studio 12.5
-FCLIBS=-lfsu
-## for x86 Solaris Studio 12.3
-FCLIBS="-lfai -lfui -lfsu"
-## for Sparc Solaris Studio 12.3
-FCLIBS="-lfai -lfai2 -lfui -lfsu"
-R_LD_LIBRARY_PATH="/usr/local/lib:/opt/csw/lib"
+# FCLIBS=-lfsu
+R_LD_LIBRARY_PATH="/opt/developerstudio12.5/lib:/usr/local/lib:/opt/csw/lib"
 @end example
-
-For a 64-bit target add @option{-m64} to the compiler macros
-and use something like @code{LDFLAGS=-L/usr/local/lib/amd64} or
-@code{LDFLAGS=-L/usr/local/lib/sparcv9} as appropriate (and other 64-bit
-library directories if used, e.g.@: @code{-L/opt/csw/lib/arm64}).
-It will also be necessary to point @command{pkg-config} at the 64-bit
-directories, e.g.@: something like one of
-
-@example
-PKG_CONFIG_PATH=/opt/csw/lib/amd64/pkgconfig:/usr/lib/amd64/pkgconfig
-PKG_CONFIG_PATH=/opt/csw/lib/sparcv9/pkgconfig:/usr/lib/sparcv9/pkgconfig
-@end example
-
-@noindent
-and to specify a 64-bit Java VM by e.g.@:
-
-@example
-JAVA_CPPFLAGS="-I$@{JAVA_HOME@}/../include -I$@{JAVA_HOME@}/../include/solaris"
-JAVA_LD_LIBRARY_PATH=$@{JAVA_HOME@}/lib/amd64/server
-JAVA_LIBS="-L$@{JAVA_HOME@}/lib/amd64/server \
-  -R$@{JAVA_HOME@}/lib/amd64/server -ljvm"
-@end example
-
-@noindent
-(In most cases the @file{64} directory is a link to @file{amd64} or
-@file{sparcv9} as appropriate.)
-
-Builds of @cputype{amd64} and @cputype{sparcv9} did not work with
-Solaris Studio 12.3 and 12.4: @file{libRblas.so} and @file{lapack.so}
-were generated with code that causes relocation errors (code which is
-being linked in from the Fortran libraries).  This means that building
-64-bit @R{} as a shared library may be impossible.  For a standard build
-a trick seems to be to manually set @code{FLIBS} to avoid the
-troublesome libraries.  For example, on @cputype{amd64} set in
-@file{config.site} something like (for 12.3):
-@example
-FLIBS_IN_SO="-R/opt/solarisstudio12.3/lib/amd64
-  /opt/solarisstudio12.3/lib/amd64/libfui.so
-  /opt/solarisstudio12.3/lib/amd64/libfsu.so"
-@end example
-@noindent
-For 64-bit Sparc, set in @file{config.site} something like (for 12.3)
-@example
-FLIBS="-R/opt/solarisstudio12.3/prod/lib/sparc/64
- -lifai -lsunimath -lfai -lfai2 -lfsumai -lfprodai -lfminlai -lfmaxlai
- -lfminvai -lfmaxvai -lfui -lsunmath -lmtsk
- /opt/solarisstudio12.3/prod/lib/sparc/64/libfsu.so.1"
-@end example
-@noindent
-However, using PCRE with JIT enabled on 64-bit Sparc led to segfaults.
 
 The Oracle compilers do not by default conform to the C99 standard
 (appendix F 8.9) on the return values of functions such as @code{log}:
@@ -5300,16 +5234,16 @@ Using @code{-xlibmil} in @code{CFLAGS} or @code{-xlibmil} in
 On @cputype{x86} you will get marginally higher performance @emph{via}
 
 @example
-CFLAGS="-xO5 -xc99 -xlibmieee -xlibmil -nofstore -xtarget=native"
-FFLAGS="-O5 -libmil -nofstore -xtarget=native"
+CFLAGS="-xO5 -xlibmieee -xlibmil -nofstore -xtarget=native"
+FFLAGS="-xO5 -libmil -nofstore -xtarget=native"
 CXXFLAGS="-xO5 -xlibmil -nofstore -xtarget=native"
-SAFE_FFLAGS="-libmil -fstore -xtarget=native"
+SAFE_FFLAGS="-O -libmil -fstore -xtarget=native"
 @end example
 
 @noindent
 but the use of @code{-nofstore} can be less numerically stable, and some
-packages (notably @CRANpkg{mgcv} on @cputype{x86}) failed to compile at
-higher optimization levels with version 12.3.
+packages have in the past failed to compile at optimization
+level 5.
 
 The Oracle compilers provide several implementations of the
 C++98 standard which select both the set of headers and a C++ runtime
@@ -5345,12 +5279,81 @@ Parsing very complex @R{} expressions needs a lot of stack space when
 the Oracle compilers are used: several packages require the stack
 increased to at least 20MB.
 
+Some people have reported that the Solaris @code{libintl} needs to be
+avoided, for example by using @option{--disable-nls} or
+@option{--with-included-gettext} or using @code{libintl} from OpenCSW.
+(On the other hand, there have been many successful installs which
+automatically detected @code{libintl} from OpenCSW or selected the
+included @code{gettext}.)
 
-@menu
-* Using gcc::                   
-@end menu
+It has been reported that some Solaris installations need
 
-@node Using gcc,  , Solaris, Solaris
+@example
+INTERNET_LIBS="-lsocket -lnsl"
+@end example
+
+@noindent
+on the @command{configure} command line or in file @file{config.site};
+however, there have been many successful installs without this.
+
+@node 64-bit builds, Using gcc, Solaris, Solaris
+@subsection 64-bit builds
+
+On both @samp{x86} and @samp{Sparc} platforms the compilers default to
+32-bit code.
+
+For a 64-bit target add @option{-m64} to the compiler macros
+and use something like @code{LDFLAGS=-L/usr/local/lib/amd64} or
+@code{LDFLAGS=-L/usr/local/lib/sparcv9} as appropriate (and other 64-bit
+library directories if used, e.g.@: @code{-L/opt/csw/lib/arm64}).
+It will also be necessary to point @command{pkg-config} at the 64-bit
+directories, e.g.@: something like one of
+
+@example
+PKG_CONFIG_PATH=/opt/csw/lib/amd64/pkgconfig:/usr/lib/amd64/pkgconfig
+PKG_CONFIG_PATH=/opt/csw/lib/sparcv9/pkgconfig:/usr/lib/sparcv9/pkgconfig
+@end example
+
+@noindent
+and to specify a 64-bit Java VM by e.g.@:
+
+@example
+JAVA_CPPFLAGS="-I$@{JAVA_HOME@}/../include -I$@{JAVA_HOME@}/../include/solaris"
+JAVA_LD_LIBRARY_PATH=$@{JAVA_HOME@}/lib/amd64/server
+JAVA_LIBS="-L$@{JAVA_HOME@}/lib/amd64/server \
+  -R$@{JAVA_HOME@}/lib/amd64/server -ljvm"
+@end example
+
+@noindent
+(In most cases the @file{64} directory is a link to @file{amd64} or
+@file{sparcv9} as appropriate.)
+
+Using PCRE with JIT enabled on 64-bit Sparc led to segfaults.
+
+
+@c Builds of @cputype{amd64} and @cputype{sparcv9} did not work with
+@c Solaris Studio 12.3 and 12.4: @file{libRblas.so} and @file{lapack.so}
+@c were generated with code that causes relocation errors (code which is
+@c being linked in from the Fortran libraries).  This means that building
+@c 64-bit @R{} as a shared library may be impossible.  For a standard build
+@c a trick seems to be to manually set @code{FLIBS} to avoid the
+@c troublesome libraries.  For example, on @cputype{amd64} set in
+@c @file{config.site} something like (for 12.3):
+@c @example
+@c FLIBS_IN_SO="-R/opt/solarisstudio12.3/lib/amd64
+@c   /opt/solarisstudio12.3/lib/amd64/libfui.so
+@c   /opt/solarisstudio12.3/lib/amd64/libfsu.so"
+@c @end example
+@c @noindent
+@c For 64-bit Sparc, set in @file{config.site} something like (for 12.3)
+@c @example
+@c FLIBS="-R/opt/solarisstudio12.3/prod/lib/sparc/64
+@c  -lifai -lsunimath -lfai -lfai2 -lfsumai -lfprodai -lfminlai -lfmaxlai
+@c  -lfminvai -lfmaxvai -lfui -lsunmath -lmtsk
+@c  /opt/solarisstudio12.3/prod/lib/sparc/64/libfsu.so.1"
+@c @end example
+
+@node Using gcc,  , 64-bit builds, Solaris
 @subsection Using gcc
 
 If using @command{gcc}, ensure that the compiler was compiled for the
@@ -5431,7 +5434,7 @@ Note that paths such as @file{/opt/csw/lib}, @file{/usr/local/lib/sparcv9} or
 @env{LD_LIBRARY_PATH} during configuration.
 
 The compilation can be tuned to a particular cpu: the @acronym{CRAN}
-check system uses @code{-mcpu=niagara2}.
+check Sparc system uses @code{-mcpu=niagara2}.
 
 
 @node AIX, FreeBSD, Solaris, Platform notes
