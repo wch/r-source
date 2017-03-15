@@ -5225,6 +5225,12 @@ The Oracle compilers do not by default conform to the C99 standard
 (appendix F 8.9) on the return values of functions such as @code{log}:
 use @option{-xlibmieee} to ensure this.
 
+A peculiarity of the Fortran compiler is that when asked to link a
+shared object it does not link against the Fortran runtime libraries.
+In @R{} this is only used for packages with F9x code, hence the
+@code{FCLIBS} definition (which sufficed for @acronym{CRAN} packages
+with 12.5).
+
 You can target specific Sparc architectures for (slightly) higher
 performance: @option{-xtarget=native} (in @code{CFLAGS} etc) tunes the
 compilation to the current machine.
