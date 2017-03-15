@@ -1,6 +1,6 @@
 % File src/library/methods/man/representation.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2016 R Core Team
 % Distributed under GPL 2 or later
 
 \name{representation}
@@ -83,6 +83,11 @@ try(setClass("class3", representation("class1", "class2")))
 else
   stopifnot(identical(getClassDef("class3"), prev))}
 }
+
+###  >>> This *is* old syntax -- use 'contains=*, slots=*' instead <<<
+###                ==========         ----------  ------   ======
+
+%% Just kept here for "back compatibility" ...............
 
 setClass("Character",representation("character"))
 setClass("TypedCharacter",representation("Character",type="character"),

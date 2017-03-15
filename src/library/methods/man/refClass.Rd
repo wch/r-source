@@ -719,7 +719,7 @@ functions as described in the section on \dQuote{Reference Objects}.
 } %% end of \describe
 } %% end of \section
 
-\section{Implementation}{
+\section{Implementation; Reference Classes as S4 Classes}{
 Reference classes are implemented as S4 classes with a data part of
 type \code{"environment"}.
 Fields correspond to named objects in the environment.
@@ -741,11 +741,11 @@ of fields as data within the object.
 A field, say \code{data}, can be accessed generally by an expression
 of the form \code{x$data} %$}
 for any object from the relevant class.
-In a method for this class, the field can be accessed by the name
+In an internal method for this class, the field can be accessed by the name
 \code{data}.
 A field that is not locked can be set by an expression of the form
 \code{x$data <- value}.%$
-Inside a method, a field can be assigned by an expression of the form
+Inside an internal method, a field can be assigned by an expression of the form
 \code{x <<- value}.
 Note the \link[=assignOps]{non-local assignment} operator.
 The standard \R interpretation of this operator works to assign it in
@@ -756,6 +756,16 @@ will call that function.
 When a method is invoked on an object, the function defining the method is
 installed in the object's environment, with the same environment as the
 environment of the function.
+
+Reference classes can have validity methods in the same sense as any
+S4 class (see \code{\link{setValidity}}).
+Such methods are often a good idea; they will be called by calling
+\code{\link{validObject}} and a validity method, if one is defined,
+will be called when a reference object is created (from version 3.4 of
+\R on).
+Just remember that these are S4 methods.  The function will be called
+with the \code{object} as its argument.  Fields and methods must be
+accessed using \code{$}.%$
 
 \emph{Note: Slots.} Because of the implementation, new reference classes can inherit from
 non-reference S4 classes as well as reference classes, and can include
