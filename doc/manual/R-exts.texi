@@ -2657,11 +2657,14 @@ should be used).
 @node Using C++17 code,  , Using C++14 code, Configure and cleanup
 @subsection Using C++17 code
 
-Experimental support for a C++17 has been added to @R{} version
-3.4.0. The feature tests used by @command{configure} to determine
-whether a compiler supports the C++17 standard are subject to change.
-At the time of writing (March 2017) @code{clang 4.0.0} had sufficient
-support but pre-releases of @code{gcc 7} did not.
+Experimental support for C++17 has been added to @R{} version
+3.4.0. The @file{configure} script tests a subset of C++17 features.
+At the time of writing (March 2017) both @code{clang 4.0.0} and
+@code{gcc 7.0.1 (20170314)} pass these tests (with flags
+@option{-std=gnu++1z} and @option{-std=gnu++17} respectively chosen by the
+@file{configure} script).  Note that the C++17 feature tests are
+incomplete and are subject to change in future R versions as compiler
+support for the standard improves.
 
 The variables associated with the C++17 compiler use the prefix
 @samp{CXX1Z}.  Hence to use C++17 code in a package, the package's

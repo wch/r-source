@@ -50,7 +50,8 @@ dnl  Modifications for R:
 dnl  The macro has been extended to include a search for a flag to support
 dnl  C++98 code. For C++98 and C++11 we also check that the date on the
 dnl  __cplusplus macro is not too recent so that a C++14 compiler does not
-dnl  pass as a C++11, for example.
+dnl  pass as a C++11, for example. The tests for C++17 have also been
+dnl  modified and are not conditional on the compiler.
 
 AX_REQUIRE_DEFINED([AC_MSG_WARN])
 AC_DEFUN([AX_CXX_COMPILE_STDCXX], [dnl
@@ -598,6 +599,14 @@ dnl  Tests for new features in C++17
 
 m4_define([_AX_CXX_COMPILE_STDCXX_testbody_new_in_17], [[
 
+/* We don't want compiler-specific tests for R so these conditional
+   tests are commented out.
+
+   For C++17 features supported by compiler see
+   https://gcc.gnu.org/projects/cxx-status.html#cxx1z  for gcc
+   http://clang.llvm.org/cxx_status.html               for clang
+   http://en.cppreference.com/w/cpp/compiler_support   for an overview
+
 #if defined(__clang__)
   #define REALLY_CLANG
 #else
@@ -605,6 +614,7 @@ m4_define([_AX_CXX_COMPILE_STDCXX_testbody_new_in_17], [[
     #define REALLY_GCC
   #endif
 #endif
+*/
 
 #include <initializer_list>
 #include <utility>
@@ -613,6 +623,7 @@ m4_define([_AX_CXX_COMPILE_STDCXX_testbody_new_in_17], [[
 namespace cxx17
 {
 
+/* Not listed as supported by clang 4 - MTP
 #if !defined(REALLY_CLANG)
   namespace test_constexpr_lambdas
   {
@@ -623,6 +634,7 @@ namespace cxx17
 
   }
 #endif // !defined(REALLY_CLANG)
+*/
 
   namespace test::nested_namespace::definitions
   {
@@ -857,6 +869,7 @@ namespace cxx17
 
   }
 
+/* P0091R3 not supported by clang 4.0.0 - MTP
 #if !defined(REALLY_CLANG)
   namespace test_template_argument_deduction_for_class_templates
   {
@@ -882,6 +895,7 @@ namespace cxx17
 
   }
 #endif // !defined(REALLY_CLANG)
+*/
 
   namespace test_non_type_auto_template_parameters
   {
@@ -895,6 +909,8 @@ namespace cxx17
 
   }
 
+/* P0217R3 should be supported in clang 4.0.0, but test code dumps core
+   In addition, gcc 7.0.1 fails on the last test - MTP
 #if !defined(REALLY_CLANG)
   namespace test_structured_bindings
   {
@@ -933,8 +949,12 @@ namespace cxx17
 
   }
 #endif // !defined(REALLY_CLANG)
+*/
 
-#if !defined(REALLY_CLANG)
+/*
+  P0012R1 is supported by clang 4.0.0 - MTP
+  #if !defined(REALLY_CLANG)
+*/
   namespace test_exception_spec_type_system
   {
 
@@ -957,7 +977,9 @@ namespace cxx17
     static_assert (std::is_same_v<Good, decltype(f(g1, g2))>);
 
   }
-#endif // !defined(REALLY_CLANG)
+/*
+  #endif // !defined(REALLY_CLANG)
+*/
 
   namespace test_inline_variables
   {
