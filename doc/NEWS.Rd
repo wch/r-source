@@ -810,6 +810,11 @@
       \item The \code{str()} and \code{as.hclust()} methods for
       \code{"dendrogram"} now also work for deeply nested dendrograms
       thanks to non-recursive implementations by Bradley Broom.
+
+      \item \code{sample()} now uses two uniforms for added precision
+      when the uniform generator is \code{Knuth-TAOCP},
+      \code{Knuth-TAOCP-2002}, or a user-defined generator and the
+      population size is \eqn{2^25} or greater.
     }
   }
 }

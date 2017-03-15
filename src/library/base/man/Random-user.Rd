@@ -16,7 +16,7 @@
   dynamically-loaded compiled code.  The user must supply the entry point
   \code{user_unif_rand}, which takes no arguments and returns a
   \emph{pointer to} a double. The example below will show the general
-  pattern.
+  pattern. The generator should have at least 25 bits of precision.
 
   Optionally, the user can supply the entry point \code{user_unif_init},
   which is called with an \code{unsigned int} argument when

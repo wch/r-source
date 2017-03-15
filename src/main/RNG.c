@@ -792,6 +792,14 @@ static R_INLINE double ru()
 double R_unif_index(double dn)
 {
     double cut = INT_MAX;
+
+    switch(RNG_kind) {
+    case KNUTH_TAOCP:
+    case USER_UNIF:
+    case KNUTH_TAOCP2:
+	cut = 33554431.0; /* 2^25 - 1 */
+    }
+
     double u = dn > cut ? ru() : unif_rand();
     return floor(dn * u);
 }
