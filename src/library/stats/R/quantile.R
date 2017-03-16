@@ -26,7 +26,10 @@ quantile.default <-
              type = 7, ...)
 {
     if(is.factor(x)) {
-        if(!is.ordered(x) || ! type %in% c(1L, 3L))
+	if(is.ordered(x)) {
+	   if(!any(type == c(1L, 3L)))
+	       stop("'type' must be 1 or 3 for ordered factors")
+	} else
             stop("factors are not allowed")
         lx <- levels(x)
     } else lx <- NULL
