@@ -427,6 +427,11 @@
       \item \code{strwrap()} reduces \code{indent} if it is more than
       half \code{width} rather than giving an error.  (Suggested by Bill
       Dunlap.)
+
+      \item When the condition \code{code} in \code{if(.)} or
+      \code{while(.)} is not of length one, an error instead of a
+      warning may be triggered by setting an environment variable, see
+      the help page.
     }
   }
 

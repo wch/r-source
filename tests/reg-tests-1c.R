@@ -609,6 +609,8 @@ stopifnot(identical(check2(one, , three), c(FALSE, TRUE, FALSE)))
 
 ## takes too long with JIT enabled:
 .jit.lev <- compiler::enableJIT(0)
+Sys.getenv("_R_CHECK_LENGTH_1_CONDITION_") -> oldV
+Sys.setenv("_R_CHECK_LENGTH_1_CONDITION_" = "false") # only *warn*
 ## while did not protect its argument, which caused an error
 ## under gctorture, PR#15990
 gctorture()
@@ -616,6 +618,7 @@ suppressWarnings(while(c(FALSE, TRUE)) 1)
 gctorture(FALSE)
 ## gave an error because the test got released when the warning was generated.
 compiler::enableJIT(.jit.lev)# revert
+Sys.setenv("_R_CHECK_LENGTH_1_CONDITION_" = oldV)
 
 
 ## hist(x, breaks =) with too large bins, PR#15988
