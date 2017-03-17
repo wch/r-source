@@ -364,7 +364,7 @@ int dummy_vfprintf(Rconnection con, const char *format, va_list ap)
 	    }
 	    errno = 0;
 	    ires = Riconv(con->outconv, &ib, &inb, &ob, &onb);
-	    if(ires == (size_t)(-1) && errno == E2BIG) again = TRUE;
+	    again = (ires == (size_t)(-1) && errno == E2BIG);
 	    if(ires == (size_t)(-1) && errno != E2BIG)
 		/* is this safe? */
 		warning(_("invalid char string in output conversion"));
