@@ -798,7 +798,10 @@ double R_unif_index(double dn)
     case USER_UNIF:
     case KNUTH_TAOCP2:
 	cut = 33554431.0; /* 2^25 - 1 */
-    }
+ 	break;
+    default:
+ 	break;
+   }
 
     double u = dn > cut ? ru() : unif_rand();
     return floor(dn * u);
