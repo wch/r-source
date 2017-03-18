@@ -3303,7 +3303,8 @@ command might be
 ./configure --enable-utf --enable-unicode-properties --enable-jit --disable-cpp
 @end example
 @noindent  
-The @option{--enable-jit} flag is supported for most common CPUs.
+The @option{--enable-jit} flag is supported for most common CPUs.  (See
+also the comments for Solaris.)
 
 @c libcurl 7.22.0 was released in Sep 2011, in Ubuntu 12.04 LTS,
 @c   end-of-life Apr 2017
@@ -5171,6 +5172,11 @@ A large selection of Open Source software can be installed from
 @uref{https://www.opencsw.org}, by default installed under
 @file{/opt/csw}.  Solaris 10 ships with @code{bzlib} version 1.0.6
 (sufficient) but @code{zlib} version 1.2.3 (too old): OpenCSW has 1.2.8.
+
+At least when compiling with Oracle compilers, Solaris uses far more
+stack space than other platforms.  This makes it desirable to build PCRE
+with the option @option{--disable-stack-for-recursion}: the OpenCSW
+distribution was at the time of writing.
 
 The Oracle compilers are unusual in not including
 @file{/usr/local/include} in the default include search path: @R{}'s
