@@ -4841,8 +4841,9 @@ apart from disabling @code{quartz()} and the ability to use the build
 with @Rapp{}, it also changes the default location of the personal
 library (see @code{?.libPaths}).
 
-Various compilers can be used.  The current @acronym{CRAN} distribution
-of @R{} is built using
+Various compilers can be used, and the recommendations for @R{} 3.4.0
+are under discussion.  The @acronym{CRAN} distribution of @R{} 3.3.3 was
+built using
 
 @example
 CC=clang
@@ -4867,15 +4868,21 @@ not run on Core 2 Duo Macs, and linking failures on macOS Sierra have
 been reported.  On other Sierra machines the reported failing examples
 work, albeit with many warnings.}
 
+More recent and complete distributions of @command{clang} are often
+available from @uref{http://llvm.org/releases/}: for example at the time
+of writing for 4.0.0 but not 3.9.1.  In particular, these may include
+support for OpenMP.
+
 There are installers@footnote{Some of these are unsigned packages: to
 install them you may need to right-click and select @code{Open with ->
-Installer}.} for Fortran compilers for El Capitan and Sierra at
+Installer}.} for Fortran compilers@footnote{and also @command{cpp},
+@command{gcc} and @command{g++}.} for El Capitan and Sierra at
 @uref{http://coudert.name/@/software/@/gfortran-6.1-ElCapitan.dmg} and
-@uref{http://coudert.name/@/software/@/gfortran-6.3-Sierra.dmg}.
-(These compilers are also available from a @code{CRAN} mirror: select
-`Other' under `Software' from the left-hand menu.)  One way to use these
-builds with a binary distribution of @R{} is to have a
-@file{~/.R/Makevars} file similar to (El Capitan)
+@uref{http://coudert.name/@/software/@/gfortran-6.3-Sierra.dmg}.  (These
+compilers are also available from a @code{CRAN} mirror: select `Other'
+under `Software' from the left-hand menu.)  One way to use these builds
+with a binary distribution of @R{} is to have a @file{~/.R/Makevars}
+file similar to (El Capitan)
 @example
 F77 = /usr/local/gfortran/bin/gfortran
 FC = /usr/local/gfortran/bin/gfortran
@@ -4891,11 +4898,6 @@ FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin16/6.3.0
 @end example
 @noindent
 (with lines broken here for legibility).
-
-More recent and complete distributions of @command{clang} are often
-available from @uref{http://llvm.org/releases/}: for example at the time
-of writing for 4.0.0 but not 3.9.1.  In particular, these may include
-support for OpenMP.
 
 Pre-compiled versions of many of the @ref{Useful libraries and programs}
 are available from @uref{https://r.research.att.com/libs/}.  You will
