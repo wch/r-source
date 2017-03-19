@@ -1933,6 +1933,36 @@
         }
     }
 
+    if (with_cxx) {
+        checkCXX <- function(cxxstd) {
+            for (i in seq_along(makefiles)) {
+                lines <- readLines(makefiles[i], warn = FALSE)
+                pattern <- paste0("^", cxxstd, " *= *")
+                ll <- grep(pattern, lines, perl = TRUE, value = TRUE,
+                           useBytes = TRUE)
+                if (length(ll) > 0) {
+                    cxx <- gsub(pattern, "", ll)
+                    if (nzchar(cxx)) {
+                        return(TRUE)
+                    }
+                }
+            }
+            return(FALSE)
+        }
+        if (use_cxx1z && !checkCXX("CXX1Z")) {
+            stop("C++17 standard requested but CXX1Z is not defined")
+        }
+        if (use_cxx1y && !checkCXX("CXX1Y")) {
+            stop("C++14 standard requested but CXX1Y is not defined")
+        }
+        if (use_cxx1x && !checkCXX("CXX1X")) {
+            stop("C++11 standard requested but CXX1X is not defined")
+        }
+        if (use_cxx98 && !checkCXX("CXX98")) {
+            stop("C++98 standard requested but CXX98 is not defined")
+        }
+    }
+
     makeargs <- paste0("SHLIB=", shQuote(shlib))
     if (with_f9x) {
         makeargs <- c("SHLIB_LDFLAGS='$(SHLIB_FCLDFLAGS)'",
