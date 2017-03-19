@@ -1039,7 +1039,7 @@ and Solaris compilers (the latter from version 12.4).  Currently
 accepted values are (plus some synonyms)
 @example
 g++:     c++98 gnu++98 c++11 gnu+11 c++14 gnu++14 c++1z gnu++1z
-Intel:   gnu+98 c++11 c++14 (from 16.0)
+Intel:   gnu+98 c++11 c++14 (from 16.0) c++17 (from 17.0)
 Solaris: c++03 c++11 c++14 (from 12.5)
 @end example
 @noindent
@@ -1062,7 +1062,8 @@ support to be picked by @command{configure}.)  Option
 `Standards' for @command{g++} starting with @samp{gnu} enable `GNU
 extensions': what those are is hard to track down.
 
-For the use of C++11 in @R{} packages see the `Writing R Extensions' manual.
+For the use of C++11 and later in @R{} packages see the `Writing R
+Extensions' manual.
 
 @node Testing a Unix-alike Installation,  , Other Options, Installing R under Unix-alikes
 @section Testing an Installation
