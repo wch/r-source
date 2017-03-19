@@ -1,6 +1,6 @@
 % File src/library/utils/man/update.packages.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{update.packages}
@@ -98,7 +98,7 @@ new.packages(lib.loc = NULL, repos = getOption("repos"),
   packages that have newer versions on the repositories or, if
   \code{checkBuilt = TRUE}, that were built under an earlier minor
   version of \R (for example built under 3.1.x when running \R 3.2.0).
-  (For binary package types here is no check that the version on the
+  (For binary package types there is no check that the version on the
   repository was built under the current minor version of \R,
   but it is advertised as being suitable for this version.)
 
