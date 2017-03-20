@@ -70,7 +70,7 @@ new.packages(lib.loc = NULL, repos = getOption("repos"),
     Incompatible with \code{type = "both"}.
   }
   \item{checkBuilt}{If \code{TRUE}, a package built under an earlier
-    major.minor version of \R (e.g., \code{3.1}) is considered to be
+    major.minor version of \R (e.g., \code{3.4}) is considered to be
     \sQuote{old}.}
   \item{oldPkgs}{
     if specified as non-NULL, \code{update.packages()} only considers
@@ -97,7 +97,7 @@ new.packages(lib.loc = NULL, repos = getOption("repos"),
   \code{\link{installed.packages}} by default) and reports installed
   packages that have newer versions on the repositories or, if
   \code{checkBuilt = TRUE}, that were built under an earlier minor
-  version of \R (for example built under 3.1.x when running \R 3.2.0).
+  version of \R (for example built under 3.3.x when running \R 3.4.0).
   (For binary package types there is no check that the version on the
   repository was built under the current minor version of \R,
   but it is advertised as being suitable for this version.)
