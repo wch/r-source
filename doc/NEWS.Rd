@@ -507,11 +507,17 @@
 
       The tests for C++11 compliance are now much more comprehensive.
 
+      \item An alternative compiler for C++11 is now specified with
+      \samp{CXX11}, not \samp{CXX1X}. Likewise C++11 flags are specified
+      with \samp{CXX11FLAGS} and the standard (e.g., \samp{-std=gnu++11}
+      is specified with \samp{CXX11STD}. The variables with prefix
+      \samp{CXX1X} are defunct.
+      
       \item \command{configure} now tests for a C++14-compliant compiler
       by testing some basic features.  This by default tries flags for
-      the compiler specified by \samp{CXX}, but an alternative compiler,
-      options and standard can be specified by variables \samp{CXX1Y},
-      \samp{CXX1YFLAGS} and \samp{CXX1YSTD} (e.g., \option{-std=gnu++14}).
+      the compiler specified by \samp{CXX11}, but an alternative compiler,
+      options and standard can be specified by variables \samp{CXX14},
+      \samp{CXX14FLAGS} and \samp{CXX14STD} (e.g., \option{-std=gnu++14}).
 
       \item There is a new macro \code{CXXSTD} to help specify the
       standard for C++ code, e.g.\sspace{}\option{-std=c++98}.  This

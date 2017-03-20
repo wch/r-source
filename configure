@@ -756,26 +756,26 @@ RMATH_HAVE_EXPM1
 ALLOCA
 R_OPENMP_FFLAGS
 R_OPENMP_CFLAGS
-SHLIB_CXX1ZLDFLAGS
-SHLIB_CXX1ZLD
-CXX1ZPICFLAGS
-CXX1ZFLAGS
-CXX1ZSTD
-CXX1Z
+SHLIB_CXX17LDFLAGS
+SHLIB_CXX17LD
+CXX17PICFLAGS
+CXX17FLAGS
+CXX17STD
+CXX17
 HAVE_CXX17
-SHLIB_CXX1YLDFLAGS
-SHLIB_CXX1YLD
-CXX1YPICFLAGS
-CXX1YFLAGS
-CXX1YSTD
-CXX1Y
+SHLIB_CXX14LDFLAGS
+SHLIB_CXX14LD
+CXX14PICFLAGS
+CXX14FLAGS
+CXX14STD
+CXX14
 HAVE_CXX14
-SHLIB_CXX1XLDFLAGS
-SHLIB_CXX1XLD
-CXX1XPICFLAGS
-CXX1XFLAGS
-CXX1XSTD
-CXX1X
+SHLIB_CXX11LDFLAGS
+SHLIB_CXX11LD
+CXX11PICFLAGS
+CXX11FLAGS
+CXX11STD
+CXX11
 HAVE_CXX11
 SHLIB_CXX98LDFLAGS
 SHLIB_CXX98LD
@@ -1141,24 +1141,24 @@ CXX98FLAGS
 CXX98PICFLAGS
 SHLIB_CXX98LD
 SHLIB_CXX98LDFLAGS
-CXX1X
-CXX1XSTD
-CXX1XFLAGS
-CXX1XPICFLAGS
-SHLIB_CXX1XLD
-SHLIB_CXX1XLDFLAGS
-CXX1Y
-CXX1YSTD
-CXX1YFLAGS
-CXX1YPICFLAGS
-SHLIB_CXX1YLD
-SHLIB_CXX1YLDFLAGS
-CXX1Z
-CXX1ZSTD
-CXX1ZFLAGS
-CXX1ZPICFLAGS
-SHLIB_CXX1ZLD
-SHLIB_CXX1ZLDFLAGS
+CXX11
+CXX11STD
+CXX11FLAGS
+CXX11PICFLAGS
+SHLIB_CXX11LD
+SHLIB_CXX11LDFLAGS
+CXX14
+CXX14STD
+CXX14FLAGS
+CXX14PICFLAGS
+SHLIB_CXX14LD
+SHLIB_CXX14LDFLAGS
+CXX17
+CXX17STD
+CXX17FLAGS
+CXX17PICFLAGS
+SHLIB_CXX17LD
+SHLIB_CXX17LDFLAGS
 XMKMF
 FC
 FCFLAGS'
@@ -1957,42 +1957,42 @@ Some influential environment variables:
               from the C++98 compiler
   SHLIB_CXX98LDFLAGS
               special flags used by SHLIB_CXX98LD
-  CXX1X       C++11 compiler command
-  CXX1XSTD    special flag for compiling and for linking C++11 code, e.g.
+  CXX11       C++11 compiler command
+  CXX11STD    special flag for compiling and for linking C++11 code, e.g.
               -std=c++11
-  CXX1XFLAGS  C++11 compiler flags
-  CXX1XPICFLAGS
+  CXX11FLAGS  C++11 compiler flags
+  CXX11PICFLAGS
               special flags for compiling C++11 code to be turned into a
               shared object
-  SHLIB_CXX1XLD
+  SHLIB_CXX11LD
               command for linking shared objects which contain object files
               from the C++11 compiler
-  SHLIB_CXX1XLDFLAGS
-              special flags used by SHLIB_CXX1XLD
-  CXX1Y       C++14 compiler command
-  CXX1YSTD    special flag for compiling and for linking C++14 code, e.g.
+  SHLIB_CXX11LDFLAGS
+              special flags used by SHLIB_CXX11LD
+  CXX14       C++14 compiler command
+  CXX14STD    special flag for compiling and for linking C++14 code, e.g.
               -std=c++14
-  CXX1YFLAGS  C++14 compiler flags
-  CXX1YPICFLAGS
+  CXX14FLAGS  C++14 compiler flags
+  CXX14PICFLAGS
               special flags for compiling C++14 code to be turned into a
               shared object
-  SHLIB_CXX1YLD
+  SHLIB_CXX14LD
               command for linking shared objects which contain object files
               from the C++14 compiler
-  SHLIB_CXX1YLDFLAGS
-              special flags used by SHLIB_CXX1YLD
-  CXX1Z       C++17 compiler command
-  CXX1ZSTD    special flag for compiling and for linking C++17 code, e.g.
+  SHLIB_CXX14LDFLAGS
+              special flags used by SHLIB_CXX14LD
+  CXX17       C++17 compiler command
+  CXX17STD    special flag for compiling and for linking C++17 code, e.g.
               -std=c++17
-  CXX1ZFLAGS  C++17 compiler flags
-  CXX1ZPICFLAGS
+  CXX17FLAGS  C++17 compiler flags
+  CXX17PICFLAGS
               special flags for compiling C++17 code to be turned into a
               shared object
-  SHLIB_CXX1ZLD
+  SHLIB_CXX17LD
               command for linking shared objects which contain object files
               from the C++17 compiler
-  SHLIB_CXX1ZLDFLAGS
-              special flags used by SHLIB_CXX1ZLD
+  SHLIB_CXX17LDFLAGS
+              special flags used by SHLIB_CXX17LD
   XMKMF       Path to xmkmf, Makefile generator for X Window System
   FC          Fortran compiler command
   FCFLAGS     Fortran compiler flags
@@ -28375,12 +28375,12 @@ fi
 r_save_CXX="${CXX}"
 r_save_CXXFLAGS="${CXXFLAGS}"
 
-: ${CXX1X=${CXX}}
-: ${CXX1XFLAGS=${CXXFLAGS}}
-: ${CXX1XPICFLAGS=${CXXPICFLAGS}}
+: ${CXX11=${CXX}}
+: ${CXX11FLAGS=${CXXFLAGS}}
+: ${CXX11PICFLAGS=${CXXPICFLAGS}}
 
-CXX="${CXX1X} ${CXX1XSTD}"
-CXXFLAGS="${CXX1XFLAGS} ${CXX1XPICFLAGS}"
+CXX="${CXX11} ${CXX11STD}"
+CXXFLAGS="${CXX11FLAGS} ${CXX11PICFLAGS}"
 ac_ext=cpp
 ac_cpp='$CXXCPP $CPPFLAGS'
 ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
@@ -29373,27 +29373,27 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 CXX="${r_save_CXX}"
 CXXFLAGS="${r_save_CXXFLAGS}"
 if test "${HAVE_CXX11}" = "1"; then
-  if test "${CXX1XSTD}"x = "x";  then
-    CXX1XSTD="${switch}"
+  if test "${CXX11STD}"x = "x";  then
+    CXX11STD="${switch}"
   else
-    CXX1XSTD="${CXX1XSTD} ${switch}"
+    CXX11STD="${CXX11STD} ${switch}"
   fi
 else
-  CXX1X=""
-  CXX1XSTD=""
-  CXX1XFLAGS=""
-  CXX1XPICFLAGS=""
+  CXX11=""
+  CXX11STD=""
+  CXX11FLAGS=""
+  CXX11PICFLAGS=""
 fi
 
 
 
 
 
-if test -z "${SHLIB_CXX1XLD}"; then
-  SHLIB_CXX1XLD="\$(CXX1X) \$(CXX1XSTD)"
+if test -z "${SHLIB_CXX11LD}"; then
+  SHLIB_CXX11LD="\$(CXX11) \$(CXX11STD)"
 fi
 
-: ${SHLIB_CXX1XLDFLAGS=${SHLIB_CXXLDFLAGS}}
+: ${SHLIB_CXX11LDFLAGS=${SHLIB_CXXLDFLAGS}}
 
 
 
@@ -29406,12 +29406,12 @@ fi
 r_save_CXX="${CXX}"
 r_save_CXXFLAGS="${CXXFLAGS}"
 
-: ${CXX1Y=${CXX}}
-: ${CXX1YFLAGS=${CXXFLAGS}}
-: ${CXX1YPICFLAGS=${CXXPICFLAGS}}
+: ${CXX14=${CXX11}}
+: ${CXX14FLAGS=${CXX11FLAGS}}
+: ${CXX14PICFLAGS=${CXX11PICFLAGS}}
 
-CXX="${CXX1Y} ${CXX1YSTD}"
-CXXFLAGS="${CXX1YFLAGS} ${CXX1YPICFLAGS}"
+CXX="${CXX14} ${CXX14STD}"
+CXXFLAGS="${CXX14FLAGS} ${CXX14PICFLAGS}"
 ac_ext=cpp
 ac_cpp='$CXXCPP $CPPFLAGS'
 ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
@@ -30713,27 +30713,27 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 CXX="${r_save_CXX}"
 CXXFLAGS="${r_save_CXXFLAGS}"
 if test "${HAVE_CXX14}" = "1"; then
-  if test "${CXX1YSTD}"x = "x";  then
-    CXX1YSTD="${switch}"
+  if test "${CXX14STD}"x = "x";  then
+    CXX14STD="${switch}"
   else
-    CXX1YSTD="${CXX1YSTD} ${switch}"
+    CXX14STD="${CXX14STD} ${switch}"
   fi
 else
-  CXX1Y=""
-  CXX1YSTD=""
-  CXX1YFLAGS=""
-  CXX1YPICFLAGS=""
+  CXX14=""
+  CXX14STD=""
+  CXX14FLAGS=""
+  CXX14PICFLAGS=""
 fi
 
 
 
 
 
-if test -z "${SHLIB_CXX1YLD}"; then
-  SHLIB_CXX1YLD="\$(CXX1Y) \$(CXX1YSTD)"
+if test -z "${SHLIB_CXX14LD}"; then
+  SHLIB_CXX14LD="\$(CXX14) \$(CXX14STD)"
 fi
 
-: ${SHLIB_CXX1YLDFLAGS=${SHLIB_CXXLDFLAGS}}
+: ${SHLIB_CXX14LDFLAGS=${SHLIB_CXX11LDFLAGS}}
 
 
 
@@ -30746,12 +30746,12 @@ fi
 r_save_CXX="${CXX}"
 r_save_CXXFLAGS="${CXXFLAGS}"
 
-: ${CXX1Z=${CXX}}
-: ${CXX1ZFLAGS=${CXXFLAGS}}
-: ${CXX1ZPICFLAGS=${CXXPICFLAGS}}
+: ${CXX17=${CXX14}}
+: ${CXX17FLAGS=${CXX14FLAGS}}
+: ${CXX17PICFLAGS=${CXX14PICFLAGS}}
 
-CXX="${CXX1Z} ${CXX1ZSTD}"
-CXXFLAGS="${CXX1ZFLAGS} ${CXX1ZPICFLAGS}"
+CXX="${CXX17} ${CXX17STD}"
+CXXFLAGS="${CXX17FLAGS} ${CXX17PICFLAGS}"
 ac_ext=cpp
 ac_cpp='$CXXCPP $CPPFLAGS'
 ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
@@ -33277,27 +33277,27 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 CXX="${r_save_CXX}"
 CXXFLAGS="${r_save_CXXFLAGS}"
 if test "${HAVE_CXX17}" = "1"; then
-  if test "${CXX1ZSTD}"x = "x";  then
-    CXX1ZSTD="${switch}"
+  if test "${CXX17STD}"x = "x";  then
+    CXX17STD="${switch}"
   else
-    CXX1ZSTD="${CXX1ZSTD} ${switch}"
+    CXX17STD="${CXX17STD} ${switch}"
   fi
 else
-  CXX1Z=""
-  CXX1ZSTD=""
-  CXX1ZFLAGS=""
-  CXX1ZPICFLAGS=""
+  CXX17=""
+  CXX17STD=""
+  CXX17FLAGS=""
+  CXX17PICFLAGS=""
 fi
 
 
 
 
 
-if test -z "${SHLIB_CXX1ZLD}"; then
-  SHLIB_CXX1ZLD="\$(CXX1Z) \$(CXX1ZSTD)"
+if test -z "${SHLIB_CXX17LD}"; then
+  SHLIB_CXX17LD="\$(CXX17) \$(CXX17STD)"
 fi
 
-: ${SHLIB_CXX1ZLDFLAGS=${SHLIB_CXXLDFLAGS}}
+: ${SHLIB_CXX17LDFLAGS=${SHLIB_CXX14LDFLAGS}}
 
 
 
@@ -53730,9 +53730,9 @@ fi
 r_c_compiler="${CC} ${R_XTRA_CFLAGS} ${CFLAGS}"
 r_cxx_compiler="${CXX} ${CXXSTD} ${R_XTRA_CXXFLAGS} ${CXXFLAGS}"
 r_cxx98_compiler="${CXX98} ${CXX98STD} ${CXX98FLAGS}"
-r_cxx1x_compiler="${CXX1X} ${CXX1XSTD} ${CXX1XFLAGS}"
-r_cxx1y_compiler="${CXX1Y} ${CXX1YSTD} ${CXX1YFLAGS}"
-r_cxx1z_compiler="${CXX1Z} ${CXX1ZSTD} ${CXX1ZFLAGS}"
+r_cxx11_compiler="${CXX11} ${CXX11STD} ${CXX11FLAGS}"
+r_cxx14_compiler="${CXX14} ${CXX14STD} ${CXX14FLAGS}"
+r_cxx17_compiler="${CXX17} ${CXX17STD} ${CXX17FLAGS}"
 r_f77_compiler="${F77} ${R_XTRA_FFLAGS} ${FFLAGS}"
 r_f95_compiler="${FC} ${FCFLAGS}"
 r_objc_compiler="${OBJC} ${OBJCFLAGS}"
@@ -54033,9 +54033,9 @@ R is now configured for ${host}
 
   Default C++ compiler:      ${r_cxx_compiler}
   C++98 compiler:            ${r_cxx98_compiler}
-  C++11 compiler:            ${r_cxx1x_compiler}
-  C++14 compiler:            ${r_cxx1y_compiler}
-  C++17 compiler:            ${r_cxx1z_compiler}
+  C++11 compiler:            ${r_cxx11_compiler}
+  C++14 compiler:            ${r_cxx14_compiler}
+  C++17 compiler:            ${r_cxx17_compiler}
   Fortran 90/95 compiler:    ${r_f95_compiler}
   Obj-C compiler:	     ${r_objc_compiler}
 
@@ -54060,9 +54060,9 @@ R is now configured for ${host}
 
   Default C++ compiler:      ${r_cxx_compiler}
   C++98 compiler:            ${r_cxx98_compiler}
-  C++11 compiler:            ${r_cxx1x_compiler}
-  C++14 compiler:            ${r_cxx1y_compiler}
-  C++17 compiler:            ${r_cxx1z_compiler}
+  C++11 compiler:            ${r_cxx11_compiler}
+  C++14 compiler:            ${r_cxx14_compiler}
+  C++17 compiler:            ${r_cxx17_compiler}
   Fortran 90/95 compiler:    ${r_f95_compiler}
   Obj-C compiler:	     ${r_objc_compiler}
 

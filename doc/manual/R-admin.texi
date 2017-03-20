@@ -988,27 +988,32 @@ CXXFLAGS
 CXXPICFLAGS
 CXXSTD
 
-CXX1X
-CXX1XSTD
-CXX1XFLAGS
-CXX1XPICFLAGS
+CXX98
+CXX98STD
+CXX98FLAGS
+CXX98PICFLAGS
 
-CXX1Y
-CXX1YSTD
-CXX1YFLAGS
-CXX1YPICFLAGS
+CXX11
+CXX11STD
+CXX11FLAGS
+CXX11PICFLAGS
 
-CXX1Z
-CXX1ZSTD
-CXX1ZFLAGS
-CXX1ZPICFLAGS
+CXX14
+CXX14STD
+CXX14FLAGS
+CXX14PICFLAGS
+
+CXX17
+CXX17STD
+CXX17FLAGS
+CXX17PICFLAGS
 @end example
 @noindent
 The macros @code{CXX} etc are those used by default for C++ code.
 @command{configure} will attempt to set the rest suitably, choosing for
-@code{CXX1XSTD} a suitable flag such as @option{-std=c++11} for C++11
+@code{CXX11STD} a suitable flag such as @option{-std=c++11} for C++11
 support. Similarly, configure will if possible choose for
-@code{CXX1YSTD} a flag@footnote{Currently this is a valid option for
+@code{CXX14STD} a flag@footnote{Currently this is a valid option for
 @command{g++} 5 and later and 2016 versions of the Intel and Solaris
 compilers.  For earlier versions of @command{g++} one could try
 @option{-std=c++1y}.} such as @option{-std=c++14} for C++14 support and
@@ -1020,18 +1025,19 @@ compiling some C++11/14/17 code.
 It may be@footnote{This is true for earlier versions of @command{g++} such
 as 4.2.1, and also for commonly-used versions of the Solaris compiler
 @code{CC}.} that there is no suitable flag for C++11 support, in which
-case a different compiler could be selected for @code{CXX1X} and its
+case a different compiler could be selected for @code{CXX11} and its
 corresponding flags.  Likewise, a different compiler can be specified for
-C++14 support with @code{CXX1Y}. Some compilers@footnote{Currently only
+C++14 support with @code{CXX14} and for C++17 support with @code{CXX17}.
+Some compilers@footnote{Currently only
 GCC 6 and later, but this has been mooted for others.} by default assume
 a later standard than C++98 whereas the latter is assumed by some
 packages.  So users of GCC 6 might like to specify
 @example
 CXX='g++ -std=gnu++98'
-CXX1X=g++
-CXX1XSTD='-std=c++11'
-CXX1Y=g++
-CXX1YSTD='-std=c++14'
+CXX11=g++
+CXX11STD='-std=c++11'
+CXX14=g++
+CXX14STD='-std=c++14'
 @end example
 
 The @option{-std} flag is supported by the GCC, @command{clang}, Intel
@@ -2311,8 +2317,8 @@ as @file{~/.R/Makevars} (see the next section).  Entries which may need
 to be changed include @samp{CC}, @samp{CXX}, @samp{FC}, @samp{F77},
 @samp{FLIBS} and the corresponding flags, and perhaps @samp{CXXCPP},
 @samp{DYLIB_LD}, @samp{MAIN_LD}, @samp{SHLIB_CXXLD}, @samp{SHLIB_FCLD}
-and @samp{SHLIB_LD}, as well as @samp{CXX1X}, @samp{CXX1Y} and
-@samp{CXX1Z} variants
+and @samp{SHLIB_LD}, as well as @samp{CXX11}, @samp{CXX14} and
+@samp{CXX17} variants
 
 So for example you could select @command{clang} for both C and C++ with
 extensive checking by having in @file{~/.R/Makevars}
@@ -3594,9 +3600,9 @@ configure variables @code{CXX}, @code{CXXFLAGS} and similar.
 @command{configure} will normally find a suitable compiler.  However, in
 many cases this will be a C++98 compiler, and it is
 possible to specify an alternative compiler for use with C++11 by the
-configure variables @code{CXX1X}, @code{CXX1XSTD}, @code{CXX1XFLAGS} and
+configure variables @code{CXX11}, @code{CXX11STD}, @code{CXX11FLAGS} and
 similar (@pxref{C++ Support}).  Again, @command{configure} will normally
-find a suitable value for @code{CXX1XSTD} if the compiler given by
+find a suitable value for @code{CXX11STD} if the compiler given by
 @code{CXX} is capable of compiling C++11 code, but it is possible that a
 completely different compiler will be needed.
 
