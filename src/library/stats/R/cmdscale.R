@@ -1,7 +1,7 @@
 #  File src/library/stats/R/cmdscale.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -45,7 +45,8 @@ cmdscale <- function (d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE,
     }
     n <- as.integer(n)
     ## we need to handle nxn internally in dblcen
-    if(is.na(n) || n > 46340) stop("invalid value of 'n'")
+    if(is.na(n) || n > 46340)
+	stop(gettextf("invalid value of %s", "'n'"), domain = NA)
     if((k <- as.integer(k)) > n - 1 || k < 1)
         stop("'k' must be in {1, 2, ..  n - 1}")
     ## NB: this alters argument x, which is OK as it is re-assigned.

@@ -1,7 +1,7 @@
 #  File src/library/stats/R/spline.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #                2002 Simon N. Wood
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -32,8 +32,7 @@ spline <-
     y <- x$y
     x <- x$x
     nx <- as.integer(length(x))
-    if(is.na(nx)) stop("invalid value of length(x)")
-
+    if(is.na(nx)) stop(gettextf("invalid value of %s", "length(x)"), domain = NA)
     if(nx == 0) stop("zero non-NA points")
 
     if(method == 1L && y[1L] != y[nx]) { # periodic

@@ -1,7 +1,7 @@
 #  File src/library/tools/R/makeLazyLoad.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -23,8 +23,7 @@ code2LazyLoadDB <-
 {
     pkgpath <- find.package(package, lib.loc, quiet = TRUE)
     if(!length(pkgpath))
-        stop(gettextf("there is no package called '%s'", package),
-             domain = NA)
+        stop(gettextf("there is no package called '%s'", package), domain = NA)
     dbbase <- file.path(pkgpath, "R", package)
     if (packageHasNamespace(package, dirname(pkgpath))) {
         if (! is.null(.getNamespace(as.name(package))))
@@ -260,7 +259,8 @@ makeLazyLoading <-
              keep.source = getOption("keep.source.pkgs"))
 {
     if(!is.logical(compress) && ! compress %in% c(2,3))
-        stop("invalid value for 'compress': should be FALSE, TRUE, 2 or 3")
+	stop(gettextf("invalid value for '%s' : %s", "compress",
+		      "should be FALSE, TRUE, 2 or 3"), domain = NA)
     options(warn = 1L)
     findpack <- function(package, lib.loc) {
         pkgpath <- find.package(package, lib.loc, quiet = TRUE)

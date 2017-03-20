@@ -1,7 +1,7 @@
 #  File src/library/stats/R/density.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -52,7 +52,7 @@ density.default <-
         else stop("'x' contains missing values")
     }
     N <- nx <- as.integer(length(x))
-    if(is.na(N)) stop("invalid value of length(x)")
+    if(is.na(N)) stop(gettextf("invalid value of %s", "length(x)"), domain = NA)
     x.finite <- is.finite(x)
     if(any(!x.finite)) {
         x <- x[x.finite]

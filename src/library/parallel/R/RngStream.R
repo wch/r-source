@@ -1,7 +1,7 @@
 #  File src/library/parallel/R/RngStream.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -19,14 +19,14 @@
 nextRNGStream <- function(seed)
 {
     if(!is.integer(seed) || seed[1L] %% 100L != 7L)
-        stop("invalid value of 'seed'")
+	stop(gettextf("invalid value of %s", "'seed'"), domain = NA)
     .Call(C_nextStream, seed)
 }
 
 nextRNGSubStream <- function(seed)
 {
     if(!is.integer(seed) || seed[1L] %% 100L != 7L)
-        stop("invalid value of 'seed'")
+	stop(gettextf("invalid value of %s", "'seed'"), domain = NA)
     .Call(C_nextSubStream, seed)
 }
 

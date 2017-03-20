@@ -14,8 +14,8 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
+## Cppyright (C) 2003-2017  R Core Team
 ## Copyright     1997-1999  Adrian Trapletti
-## Cppyright (C) 2003-2015  R Core Team
 ## This version distributed under GPL (version 2 or later)
 
 diffinv <- function (x, ...) { UseMethod("diffinv") }
@@ -33,7 +33,7 @@ diffinv.vector <- function (x, lag = 1L, differences = 1L, xi, ...)
         x <- as.double(x)
         xi <- as.double(xi)
         n <- as.integer(length(x))
-        if (is.na(n)) stop ("invalid value of length(x)")
+        if(is.na(n)) stop(gettextf("invalid value of %s", "length(x)"), domain = NA)
 #        y <- c(xi[1L:lag], double(n))
 #        z <- .C(C_R_intgrt_vec, x, y = y, as.integer(lag), n)$y
         .Call(C_intgrt_vec, x, xi, lag)

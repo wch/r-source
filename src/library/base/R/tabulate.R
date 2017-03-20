@@ -1,7 +1,7 @@
 #  File src/library/base/R/tabulate.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -25,6 +25,6 @@ tabulate <- function(bin, nbins = max(1L, bin, na.rm = TRUE))
     if (nbins > .Machine$integer.max)
         stop("attempt to make a table with >= 2^31 elements")
     nbins <- as.integer(nbins)
-    if (is.na(nbins)) stop("invalid value of 'nbins'")
+    if (is.na(nbins)) stop(gettextf("invalid value of %s", "'nbins'"), domain=NA)
     .Internal(tabulate(bin, nbins))
 }
