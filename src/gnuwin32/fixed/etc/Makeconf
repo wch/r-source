@@ -150,6 +150,8 @@ SHLIB_CXXFLAGS =
 SHLIB_CXXLD = $(CXX)
 ## ideally -shared -static-libstdc++, but not for gcc 4.2.1
 SHLIB_CXXLDFLAGS = -shared
+SHLIB_CXX98LD = $(CXX98)
+SHLIB_CXX98LDFLAGS = -shared
 SHLIB_CXX1XLD = $(CXX1X)
 SHLIB_CXX1XLDFLAGS = -shared
 SHLIB_EXT = .dll
