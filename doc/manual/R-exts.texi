@@ -5046,6 +5046,20 @@ erf expm1 fmin fmax lgamma lround loglp round snprintf strcasecmp trunc
 functions @code{strdup} and @code{strncasecmp} and constants @code{M_PI}
 and @code{M_LN2} (see the previous item).
 
+@item
+Using @code{alloca} portably is tricky: it is neither an ISO C nor a
+POSIX function.  An adequately portable preamble is
+@example
+#ifdef __GNUC__
+/* Includes GCC, clang and Intel compilers */
+# undef alloca
+# define alloca(x) __builtin_alloca((x))
+#elif defined(__sun) || defined(_AIX)
+/* this is necessary (and sufficient) for Solaris 10 and AIX 6: */
+# include <alloca.h>
+#endif
+@end example
+
 @end itemize
 
 Some additional information for C++ is available at
