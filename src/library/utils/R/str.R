@@ -155,7 +155,7 @@ str.default <-
     }
 
     oo <- options(digits = digits.d); on.exit(options(oo))
-    le <- length(object)
+    le <- length(object)[1L] # [1]: protect from nonsense
     if(is.na(le)) {
         warning("'str.default': 'le' is NA, so taken as 0", immediate. = TRUE)
         le <- 0
