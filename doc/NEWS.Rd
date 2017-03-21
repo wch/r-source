@@ -511,7 +511,7 @@
       \samp{CXX11}, not \samp{CXX1X}. Likewise C++11 flags are specified
       with \samp{CXX11FLAGS} and the standard (e.g., \samp{-std=gnu++11}
       is specified with \samp{CXX11STD}. The variables with prefix
-      \samp{CXX1X} are defunct.
+      \samp{CXX1X} are deprecated.
       
       \item \command{configure} now tests for a C++14-compliant compiler
       by testing some basic features.  This by default tries flags for
