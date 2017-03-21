@@ -1,7 +1,7 @@
 #  File src/library/base/R/outer.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -36,22 +36,22 @@ outer <- function (X, Y, FUN = "*", ...)
         no.ny <- is.null(names(Y))
         if(!no.ny) ny <- list(names(Y))
     }
-    if (is.character(FUN) && FUN=="*") {
-        if(!missing(...)) stop('using ... with FUN = "*" is an error')
-        # this is for numeric vectors, so dropping attributes is OK
-        robj <- as.vector(X) %*% t(as.vector(Y))
-        dim(robj) <- c(dX, dY)
-    } else {
-        FUN <- match.fun(FUN)
-        ## Y may have a class, so don't use rep.int
-        Y <- rep(Y, rep.int(length(X), length(Y)))
-        ##  length.out is not an argument of the generic rep()
-        ##  X <- rep(X, length.out = length(Y))
-        if(length(X))
-            X <- rep(X, times = ceiling(length(Y)/length(X)))
-        robj <- FUN(X, Y, ...)
-        dim(robj) <- c(dX, dY) # careful not to lose class here
-    }
+    robj <-
+        if (is.character(FUN) && FUN=="*") {
+            if(!missing(...)) stop('using ... with FUN = "*" is an error')
+            ## this is for numeric vectors, so dropping attributes is OK
+            as.vector(X) %*% t(as.vector(Y))
+        } else {
+            FUN <- match.fun(FUN)
+            ## Y may have a class, so don't use rep.int
+            Y <- rep(Y, rep.int(length(X), length(Y)))
+            ##  length.out is not an argument of the generic rep()
+            ##  X <- rep(X, length.out = length(Y))
+            if(length(X))
+                X <- rep(X, times = ceiling(length(Y)/length(X)))
+            FUN(X, Y, ...)
+        }
+    dim(robj) <- c(dX, dY) # careful not to lose class here
     ## no dimnames if both don't have ..
     if(!(no.nx && no.ny)) {
 	if(no.nx) nx <- vector("list", length(dX)) else
