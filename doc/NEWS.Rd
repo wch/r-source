@@ -583,6 +583,10 @@
       directory on most platforms).
       %% This ensures that BH's 'boost' directory gets precedent over
       %% any Boost headers in, say, /opt/csw/include .
+      
+      \item Packages which register native routines for \code{.C} or
+      \code{.Fortran} need to be re-installed for this version (unless
+      installed with R-devel SVN revision r72375 or later).
     }
   }
 
