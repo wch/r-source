@@ -1747,8 +1747,7 @@ Windows' CRLF line endings.
 The front page of a @acronym{CRAN} site has a link `Download R for OS
 X'. Click on that, then download the file @file{R-@value{VERSIONno}.pkg}
 and install it. This runs on macOS 10.11 and later (El Capitan, Sierra,
-@dots{}). (It is possible to install from the sources for earlier OS
-versions: see @ref{macOS}.)
+@dots{}).
 
 Installers for R-patched and R-devel are usually available from
 @uref{https://r.research.att.com}.
@@ -1861,15 +1860,15 @@ framework. The un-installation is as simple as removing those folders
 (e.g.@: by dragging them onto the Trash). The typical installation will
 install the GUI into the @file{/Applications/R.app} folder and the R
 framework into the @file{/Library/Frameworks/R.framework} folder.  The
-links to @file{R} and @file{Rscript} in @file{/usr/bin} or
-@file{/usr/local/bin} should also be removed.
+links to @file{R} and @file{Rscript} in @file{/usr/local/bin} should
+also be removed.
 
 If you want to get rid of @R{} more completely using a Terminal, simply
-run (use @file{/usr/local/bin} for El Capitan and Sierra):
+run:
 
 @example
 sudo rm -rf /Library/Frameworks/R.framework /Applications/R.app \
-   /usr/bin/R /usr/bin/Rscript
+   /usr/local/bin/R /usr/local/bin/Rscript
 @end example
 
 The installation consists of four Apple packages:
@@ -4852,13 +4851,12 @@ with @Rapp{}, it also changes the default location of the personal
 library (see @code{?.libPaths}).
 
 Various compilers can be used, and the recommendations for @R{} 3.4.0
-are under discussion.  The @acronym{CRAN} distribution of @R{} 3.3.3 was
-built using
+are under discussion. One could use
 
 @example
 CC=clang
 CXX=clang++
-F77=gfortran-4.8
+F77=/usr/local/gfortran/bin/gfortran
 FC=$F77
 OBJC=clang
 CFLAGS='-Wall -mtune=core2 -g -O2'
@@ -4870,18 +4868,8 @@ FCFLAGS=$F77FLAGS
 
 @noindent
 with @command{clang} and @command{clang++} from the `Command Line Tools'
-and the Fortran compiler from
-@uref{https://r.research.att.com/@/libs/@/gfortran-4.8.2-darwin13.tar.bz2}.@footnote{This
-is a tarball which needs to be unpacked in the Terminal by e.g.@:
-@command{sudo tar -zxf gfortran-4.8.2-darwin13.tar.bz2 -C /}. It does
-not run on Core 2 Duo Macs, and linking failures on macOS Sierra have
-been reported.  On other Sierra machines the reported failing examples
-work, albeit with many warnings.}
-
-More recent and complete distributions of @command{clang} are often
-available from @uref{http://llvm.org/releases/}: for example at the time
-of writing for 4.0.0 but not 3.9.1.  In particular, these may include
-support for OpenMP.
+and the Fortran compiler from one of the packages described in the next
+paragraph.
 
 There are installers@footnote{Some of these are unsigned packages: to
 install them you may need to right-click and select @code{Open with ->
@@ -4908,6 +4896,11 @@ FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin16/6.3.0
 @end example
 @noindent
 (with lines broken here for legibility).
+
+More recent and complete distributions of @command{clang} are often
+available from @uref{http://llvm.org/releases/}: for example at the time
+of writing for 4.0.0.  In particular, these may include support for
+OpenMP, and are likely to be used for the @acronym{CRAN} distribution.
 
 Pre-compiled versions of many of the @ref{Useful libraries and programs}
 are available from @uref{https://r.research.att.com/libs/}.  You will
