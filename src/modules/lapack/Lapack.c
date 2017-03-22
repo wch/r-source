@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001--2016  The R Core Team.
+ *  Copyright (C) 2001--2017  The R Core Team.
  *  Copyright (C) 2003--2010  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -25,7 +25,25 @@
 #endif
 
 #include <Defn.h>
-#include <ctype.h> /* for toupper */
+#include <ctype.h>  /* for toupper */
+#include <limits.h> /* for PATH_MAX */
+#include <stdlib.h> /* for realpath */
+
+#ifdef HAVE_UNISTD_H
+# include <unistd.h> /* for realpath on some systems */
+#endif
+
+#ifdef HAVE_DLFCN_H
+# include <dlfcn.h>  /* for dladdr */
+#endif
+
+#if defined(HAVE_REALPATH) && defined(HAVE_DECL_REALPATH) && !HAVE_DECL_REALPATH
+extern char *realpath(const char *path, char *resolved_path);
+#endif
+
+#if defined(HAVE_DLADDR) && defined(HAVE_DECL_DLADDR) && !HAVE_DECL_DLADDR
+extern int dladdr(void *addr, Dl_info *info);
+#endif
 
 #include "Lapack.h"
 
@@ -1352,6 +1370,23 @@ static SEXP mod_do_lapack(SEXP call, SEXP op, SEXP args, SEXP env)
 	snprintf(str, 20, "%d.%d.%d", major, minor, patch);
 	ans = mkString(str);
 	break;
+    }
+    case 1001:
+    {
+#if defined(HAVE_DLADDR) && defined(HAVE_REALPATH)
+	Dl_info dl_info;
+	if (dladdr(F77_NAME(ilaver), &dl_info)) {
+	    char buf[PATH_MAX+1];
+	    char *res = realpath(dl_info.dli_fname, buf);
+	    if (res) {
+		ans = mkString(res);
+		break;
+	    }
+	}
+#endif
+	ans = mkString(""); /* LAPACK library not known */
+	break;
+
     }
     }
 
