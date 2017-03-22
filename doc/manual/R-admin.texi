@@ -1778,7 +1778,8 @@ want this time @dots{}).
 Various parts of the build require XQuartz to be installed: : see
 @uref{https://xquartz.macosforge.org/}.  These include the @pkg{tcltk}
 package and the @code{X11} device: attempting to use these without
-XQuartz will remind you.
+XQuartz will remind you.  Also the cairographics-based devices (which
+are not often used on macOS) such as @code{png(type = "cairo")}.
 
 If you update your macOS version, you should re-install @R{} (and perhaps
 XQuartz): the installer tailors the installation to the current version
@@ -4873,8 +4874,7 @@ paragraph.
 
 There are installers@footnote{Some of these are unsigned packages: to
 install them you may need to right-click and select @code{Open with ->
-Installer}.} for Fortran compilers@footnote{and also @command{cpp},
-@command{gcc} and @command{g++}.} for El Capitan and Sierra at
+Installer}.} for Fortran compilers for El Capitan and Sierra at
 @uref{http://coudert.name/@/software/@/gfortran-6.1-ElCapitan.dmg} and
 @uref{http://coudert.name/@/software/@/gfortran-6.3-Sierra.dmg}.  (These
 compilers are also available from a @code{CRAN} mirror: select `Other'
@@ -4900,7 +4900,7 @@ FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin16/6.3.0
 More recent and complete distributions of @command{clang} are often
 available from @uref{http://llvm.org/releases/}: for example at the time
 of writing for 4.0.0.  In particular, these may include support for
-OpenMP, and are likely to be used for the @acronym{CRAN} distribution.
+OpenMP and are likely to be used for the @acronym{CRAN} distribution.
 
 Pre-compiled versions of many of the @ref{Useful libraries and programs}
 are available from @uref{https://r.research.att.com/libs/}.  You will
@@ -4909,22 +4909,15 @@ most likely want at least @code{jpeg} and @code{tiff}.  The
 installation from source of many packages: it will also be used if
 present when configuring the @code{X11()} and bitmap devices.
 
-Support for @code{cairo} (without @code{Pango}) can be enabled in two
-ways: both need @code{pkg-config} available.  XQuartz ships @code{cairo}
-and its version will be selected if its @code{pkg-config} files are
-first on the configuration path: for example by setting
+Support for @code{cairo} (without @code{Pango}) can be enabled if
+@code{pkg-config} and XQuartz are available, Make sure the XQuartz's
+@code{pkg-config} files are first on the configuration path: for example
+by setting
 @example
 export PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
 @end example
 @noindent
 or appending that variable to the @command{configure} command.
-Otherwise the binary libraries at
-@uref{https://r.research.att.com/libs/} can be used: @code{cairo},
-@code{fontconfig}, @code{freetype}, @code{pixman} and
-@file{pkgconfig-system-stubs-darwin13.tar.gz} are needed, plus
-@code{libpng} for PNG support.  (If you intend to use XQuartz, ensure
-that you have not got older versions of these still under
-@file{/usr/local}.)
 
 @cindex BLAS library
 @cindex LAPACK library
@@ -5093,7 +5086,7 @@ selected by the option
 @end example
 
 (This is intended to be used with an Apple toolchain: others may not
-support frameworks correctly.)
+support frameworks correctly but that from @code{llvm.org} does.)
 
 It is only needed if you want to build @R{} for use with the @Rapp{}
 console, and implies @option{--enable-R-shlib} to build @R{} as a
