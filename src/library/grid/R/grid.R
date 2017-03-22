@@ -307,13 +307,13 @@ current.vpTree <- function(all=TRUE) {
   cpvp <- grid.Call(C_currentViewport)
   moving <- all && vpDepth() > 0
   if (moving) {
-    savedname <- cpvp$name
+    savedpath <- current.vpPath()
     upViewport(0, recording=FALSE)
     cpvp <- grid.Call(C_currentViewport)
   }
   tree <- vpTreeFromNode(cpvp)
   if (moving) {
-    downViewport(savedname, recording=FALSE)
+    downViewport(savedpath, recording=FALSE)
   }
   tree
 }

@@ -1,4 +1,14 @@
 
+Changes from grid_3.4.* to grid_3.5.0:
+-------------------------------------
+
+1.  Fix for current.vpTree() so that it puts you back in the right
+    place in the viewport tree if there are nested viewports with
+    the same name (e.g., pushViewport(vp, vp)).
+
+    Reported by Prem Thomas.
+
+
 Changes from grid_3.3.* to grid_3.4.0:
 -------------------------------------
 
