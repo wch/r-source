@@ -854,7 +854,10 @@ getCRANmirrors <- function(all = FALSE, local.only = FALSE)
     if (length(ind))
         res <- as.integer(ind)[1L]
     else {
-    	isHTTPS <- startsWith(m[, "URL"], "https")
+    	isHTTPS <- (startsWith(m[, "URL"], "https") &
+                    grepl("secure_mirror_from_master",
+                          m[, "Comment"],
+                          fixed = TRUE))
     	mHTTPS <- m[isHTTPS,]
     	mHTTP <- m[!isHTTPS,]
     	if (useHTTPS) {
@@ -864,15 +867,16 @@ getCRANmirrors <- function(all = FALSE, local.only = FALSE)
     	    	m <- mHTTP
     	    }
     	}
-    	httpLabel <- paste("HTTP", label, "mirror")
     	if (useHTTPS) {
-    	    httpsLabel <- paste("HTTPS", label, "mirror")
-    	    res <- menu(c(m[, 1L], "(HTTP mirrors)"), graphics, httpsLabel)
+    	    httpsLabel <- paste("Secure", label, "mirrors")
+            httpLabel <- paste("Other", label, "mirrors")
+    	    res <- menu(c(m[, 1L], "(other mirrors)"), graphics, httpsLabel)
     	    if (res > nrow(m)) {
     	    	m <- mHTTP
     	    	res <- menu(m[, 1L], graphics, httpLabel)
     	    }
     	} else {
+            httpLabel <- paste(label, "mirrors")
     	    m <- mHTTP
     	    res <- menu(m[, 1L], graphics, httpLabel)
     	}
