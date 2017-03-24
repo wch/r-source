@@ -170,6 +170,8 @@ dnl  Test body for checking C++11 support
 m4_define([_AX_CXX_COMPILE_STDCXX_testbody_11],
 #ifndef __cplusplus
 # error "This is not a C++ compiler"
+#elif defined(__GNUC__)  && __GNUC__ == 4 && __GNUC_MINOR__ < 8
+  _AX_CXX_COMPILE_STDCXX_testbody_legacy_11
 #elif __cplusplus < 201103L
 # error "This is not a C++11 compiler"
 #elif __cplusplus >= 201402L
@@ -208,11 +210,34 @@ m4_define([_AX_CXX_COMPILE_STDCXX_testbody_17],
 
 dnl  Tests for new features in C++11
 
+m4_define([_AX_CXX_COMPILE_STDCXX_testbody_legacy_11], [[
+
+  //This is the earlier, less stringent test used in R 3.3.0
+  //Keep this for long-term support platforms with older gcc compilers
+
+  template <typename T>
+  struct check
+  {
+    static_assert(sizeof(int) <= sizeof(T), "not big enough");
+  };
+
+  typedef check<check<bool>> right_angle_brackets;
+
+  int a;
+  decltype(a) b;
+
+  typedef check<int> check_type;
+  check_type c;
+  check_type&& cr = static_cast<check_type&&>(c);
+
+  auto d = a;
+
+]])
+
 m4_define([_AX_CXX_COMPILE_STDCXX_testbody_new_in_11], [[
 
 namespace cxx11
 {
-
   namespace test_static_assert
   {
 

@@ -506,6 +506,8 @@
       mode of C++14 with \sQuote{GNU extensions}.)
 
       The tests for C++11 compliance are now much more comprehensive.
+      For gcc < 4.8, the tests from R 3.3.0 are used in order to maintain
+      the same behaviour on Linux distributions with long-term support.
 
       \item An alternative compiler for C++11 is now specified with
       \samp{CXX11}, not \samp{CXX1X}. Likewise C++11 flags are specified
