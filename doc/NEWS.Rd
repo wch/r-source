@@ -832,6 +832,11 @@
       when the uniform generator is \code{Knuth-TAOCP},
       \code{Knuth-TAOCP-2002}, or a user-defined generator and the
       population size is \eqn{2^25} or greater.
+      
+      \item If a vignette in the \file{vignettes} directory is listed in 
+      \file{.Rbuildignore}, \command{R CMD build} would not include it 
+      in the tarball, but would include it in the vignette database, 
+      leading to a check warning.  (\PR{17246})
     }
   }
 }
