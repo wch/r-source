@@ -622,7 +622,7 @@ getOption(x, default = NULL)
       for binary installs on macOS and Windows, but can be used in a
       startup file for source installs \emph{via}
       \command{R CMD \link{INSTALL}}.  For binary installs, can also be
-      the character string \code{"pkgloack"}.}
+      the character string \code{"pkglock"}.}
 
     \item{\code{internet.info}:}{The minimum level of information to be
       printed on URL downloads etc, using the \code{"internal"} and
