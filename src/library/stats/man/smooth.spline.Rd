@@ -49,8 +49,12 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL, lambda = NULL, cv = FALSE,
    as knots.  If \code{FALSE} (default), a subset of \code{x[]} is used,
    specifically \code{x[j]} where the \code{nknots} indices are evenly
    spaced in \code{1:n}, see also the next argument \code{nknots}.
+
    Alternatively, a strictly increasing \code{\link{numeric}} vector
-   specifying \dQuote{all the knots} to be used.}
+   specifying \dQuote{all the knots} to be used; must be rescaled
+   to \eqn{[0, 1]} already such that it corresponds to the
+   \code{ans $ fit$knots} sequence returned, not repeating the boundary
+   knots.}
  \item{nknots}{integer or \code{\link{function}} giving the number of
    knots to use when \code{all.knots = FALSE}.  If a function (as by
    default), the number of knots is \code{nknots(nx)}.  By default for
@@ -220,7 +224,8 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL, lambda = NULL, cv = FALSE,
     components
     \describe{
       \item{knot:}{the knot sequence (including the repeated boundary
-        knots).}
+        knots), scaled into \eqn{[0, 1]} (via \code{min} and
+	\code{range}).}
       \item{nk:}{number of coefficients or number of \sQuote{proper}
         knots plus 2.}
       \item{coef:}{coefficients for the spline basis used.}
