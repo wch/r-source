@@ -1,6 +1,6 @@
 % File src/library/utils/man/utils-defunct.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{utils-defunct}
@@ -11,6 +11,7 @@
 \alias{CRAN.packages}
 #ifdef windows
 \alias{zip.unpack}
+\alias{setInternet2}
 #endif
 
 \title{Defunct Functions in Package \pkg{utils}}
