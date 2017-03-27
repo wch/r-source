@@ -1,7 +1,7 @@
 #  File src/library/utils/R/citation.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -120,11 +120,11 @@ function(given = NULL, family = NULL, middle = NULL,
         if(any(ind <- (lengths(rval) == 0L)))
             rval[ind] <- vector("list", length = sum(ind))
         ## Give nothing if there is nothing.
-        if(all(sapply(rval, is.null)))
-            rval <- NULL
-
-        return(rval)
-    }
+        if(all(vapply(rval, is.null, NA)))
+            NULL
+        else
+            rval
+    } ## end{ person1 }
 
     rval <-
         lapply(seq_along(args$given),
@@ -140,11 +140,9 @@ function(given = NULL, family = NULL, middle = NULL,
     ## non-NULL entry?
     ## </COMMENT>
     ## Yes!
-    rval <- rval[!sapply(rval, is.null)]
 
-    class(rval) <- "person"
-
-    rval
+    structure(rval[!vapply(rval, is.null, NA)],
+              class = "person")
 }
 
 .canonicalize_person_role <-
@@ -364,7 +362,7 @@ function(x)
             family <- paste(gng, family)
             given <- given[-ng]
 	}
-	
+
         z <- person(given = given, family = family,
                     email = email, role = role, comment = comment)
         return(z)
@@ -665,7 +663,7 @@ function(style)
 
 format.bibentry <-
 function(x, style = "text", .bibstyle = NULL,
-         citation.bibtex.max = getOption("citation.bibtex.max", 1),
+         citation.bibtex.max = getOption("citation.bibtex.max", Inf),
          sort = FALSE, ...)
 {
     if(!length(x)) return(character())
@@ -702,6 +700,8 @@ function(x, style = "text", .bibstyle = NULL,
 
     .format_bibentry_as_citation <- function(x) {
         bibtex <- length(x) <= citation.bibtex.max
+	if(!bibtex && missing(citation.bibtex.max))
+	    message("there are additional BiBTeX citations. Use 'citation(*, citation.bibtex.max=Inf)' to see them all.")
 
         c(paste(strwrap(attr(x, "mheader")), collapse = "\n"),
           unlist(lapply(x, function(y) {
@@ -1249,7 +1249,7 @@ function(package = "base", lib.loc = NULL, auto = NULL)
               )
 
     if(identical(meta$Repository, "CRAN"))
-        z$url <- 
+        z$url <-
             sprintf("https://CRAN.R-project.org/package=%s", package)
 
     if(identical(meta$Repository, "R-Forge")) {

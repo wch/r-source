@@ -12,7 +12,7 @@
       \item Placeholder.
     }
   }
-} 
+}
 
 \section{\Rlogo CHANGES IN R 3.4.0}{
 
@@ -442,6 +442,12 @@
       \code{while(.)} is not of length one, an error instead of a
       warning may be triggered by setting an environment variable, see
       the help page.
+
+      \item Formatting and printing of bibliography entries
+      (\code{bibentry}) now by default shows the bibtex code also when
+      there is more than one entry.  This also affects \code{citation()}.
+      Use \code{options(citation.bibtex.max = 1)} to revert to previous
+      behavior.
     }
   }
 
@@ -524,7 +530,7 @@
       with \samp{CXX11FLAGS} and the standard (e.g., \samp{-std=gnu++11}
       is specified with \samp{CXX11STD}. The variables with prefix
       \samp{CXX1X} are deprecated.
-      
+
       \item \command{configure} now tests for a C++14-compliant compiler
       by testing some basic features.  This by default tries flags for
       the compiler specified by \samp{CXX11}, but an alternative compiler,
@@ -595,7 +601,7 @@
       directory on most platforms).
       %% This ensures that BH's 'boost' directory gets precedent over
       %% any Boost headers in, say, /opt/csw/include .
-      
+
       \item Packages which register native routines for \code{.C} or
       \code{.Fortran} need to be re-installed for this version (unless
       installed with R-devel SVN revision r72375 or later).
@@ -842,10 +848,10 @@
       when the uniform generator is \code{Knuth-TAOCP},
       \code{Knuth-TAOCP-2002}, or a user-defined generator and the
       population size is \eqn{2^25} or greater.
-      
-      \item If a vignette in the \file{vignettes} directory is listed in 
-      \file{.Rbuildignore}, \command{R CMD build} would not include it 
-      in the tarball, but would include it in the vignette database, 
+
+      \item If a vignette in the \file{vignettes} directory is listed in
+      \file{.Rbuildignore}, \command{R CMD build} would not include it
+      in the tarball, but would include it in the vignette database,
       leading to a check warning.  (\PR{17246})
     }
   }

@@ -1,12 +1,14 @@
 % File src/library/utils/man/bibentry.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{bibentry}
+\title{Bibliography Entries}
 \alias{bibentry}
 \alias{print.bibentry}
-\title{Bibliography Entries}
+\alias{format.bibentry}
+\alias{sort.bibentry}
 \description{
   Functionality for representing and manipulating bibliographic
   information in enhanced BibTeX style.
@@ -15,7 +17,14 @@
 bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
          key = NULL, ..., other = list(),
          mheader = NULL, mfooter = NULL)
+
 \method{print}{bibentry}(x, style = "text", .bibstyle, ...)
+
+\method{format}{bibentry}(x, style = "text", .bibstyle = NULL,
+       citation.bibtex.max = getOption("citation.bibtex.max", Inf),
+       sort = FALSE, ...)
+
+\method{sort}{bibentry}(x, decreasing = FALSE, .bibstyle = NULL, drop = FALSE, \dots)
 }
 \arguments{
   \item{bibtype}{a character string with a BibTeX entry type.
@@ -45,7 +54,22 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
   \item{style}{an optional character string specifying the print style.
     If present, must be a unique abbreviation (with case ignored) of the available
     styles, see \bold{Details}.}
+  \item{decreasing}{logical, passed to \code{\link{order}} indicating
+    the sort direction.}
   \item{.bibstyle}{a character string naming a bibliography style.}
+  \item{citation.bibtex.max}{a number, say \eqn{m}, indicating that the
+    bibtex code should be given in addition to the formatted tex
+    \emph{when} there are not more than \eqn{m} entries.  The default is
+    taken as \code{\link{getOption}("citation.bibtex.max", Inf)}.  In \R
+    versions before 3.4.0, the default was \code{1} such that bibtex code
+    was shown only for a single entry.  For example, to see no bibtex at
+    all, you can change the default by
+    \code{\link{options}(citation.bibtex.max = 0)}.}
+
+  \item{sort}{logical indicating if bibentries should be sorted, using
+    \code{\link[tools]{bibstyle}(.bibstyle)$sortKeys(x)}.}
+  \item{drop}{logical used as \code{x[ ..., drop=drop]} inside the
+    \code{sort()} method.}
 }
 \details{
   The bibentry objects created by \code{bibentry} can represent an
