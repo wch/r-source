@@ -278,7 +278,7 @@ static Rboolean dispatch_asvector(SEXP *x, SEXP call, SEXP rho) {
     SEXP args;
     Rboolean ans;
     if (op == NULL)
-        op = R_Primitive("as.vector");
+        op = INTERNAL(install("as.vector"));
     PROTECT(args = list2(*x, mkString("any")));
     ans = DispatchOrEval(call, op, "as.vector", args, rho, x, 0, 1);
     UNPROTECT(1);
@@ -1631,10 +1631,10 @@ SEXP attribute_hidden do_subassign_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	break;
     }
 
-    if (oldtype == LANGSXP) {
-	if(length(x)) {
+    if (oldtype == LISTSXP || oldtype == LANGSXP) {
+	if(oldtype == LISTSXP || length(x)) {
 	    x = VectorToPairList(x);
-	    SET_TYPEOF(x, LANGSXP);
+	    SET_TYPEOF(x, oldtype);
 	} else
 	    error(_("result is zero-length and so cannot be a language object"));
     }

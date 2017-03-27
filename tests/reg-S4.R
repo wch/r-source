@@ -879,3 +879,13 @@ stopifnot(!identical(firstclass, secondclass))
 stopifnot(identical(firstclass, class.list[[1]]))
 stopifnot(identical(secondclass, class.list[[2]]))
 stopifnot(identical(alsofirstclass, class.list[[1]]))
+
+## implicit coercion of S4 object to vector via as.vector() in sub-assignment
+setClass("A", representation(stuff="numeric"))
+as.vector.A <- function (x, mode="any") x@stuff
+v <- c(3.5, 0.1)
+a <- new("A", stuff=v)
+x <- y <- numeric(10)
+x[3:4] <- a
+y[3:4] <- v
+stopifnot(identical(x, y))
