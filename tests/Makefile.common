@@ -196,6 +196,7 @@ test-Packages:
 	  $(MK) test-Packages1; \
 	fi
 
+## R_PKGS_BASE is from ../share/make/vars.mk
 test-Packages1:
 	@for p in $(R_PKGS_BASE); do \
 	  $(ECHO) "checking package '$${p}'"; \
