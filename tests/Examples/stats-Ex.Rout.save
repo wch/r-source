@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2017-03-26 r72394) -- "Unsuffered Consequences"
+R Under development (unstable) (2017-03-26 r72404) -- "Unsuffered Consequences"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -10067,6 +10067,12 @@ NA        0    3    0
 > 
 > data.class(model.frame(dist ~ speed, data = cars))
 [1] "data.frame"
+> 
+> ## get_all_vars(): new var.s are recycled (iff length matches: 50 = 2*25)
+> ncars <- get_all_vars(sqrt(dist) ~ I(speed/2), data = cars, newVar = 2:3)
+> stopifnot(is.data.frame(ncars),
++           identical(cars, ncars[,names(cars)]),
++           ncol(ncars) == ncol(cars) + 1)
 > 
 > 
 > 
