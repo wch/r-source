@@ -1,6 +1,6 @@
 % File src/library/graphics/man/legend.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{legend}
@@ -58,7 +58,7 @@ legend(x, y = NULL, legend, fill = NULL, col = par("col"),
     corresponding to its argument \code{bg}.}
   \item{cex}{character expansion factor \bold{relative} to current
     \code{par("cex")}.  Used for text, and provides the default for
-    \code{pt.cex} and \code{title.cex}.}
+    \code{pt.cex}.}
   \item{pt.cex}{expansion factor(s) for the points.}
   \item{pt.lwd}{line width for the points, defaults to the one for
     lines, or if that is not set, to \code{par("lwd")}.}
@@ -72,8 +72,8 @@ legend(x, y = NULL, legend, fill = NULL, col = par("col"),
     text.  Useful for y-adjustment when \code{labels} are
     \link{plotmath} expressions.}
   \item{text.width}{the width of the legend text in x (\code{"user"})
-    coordinates.  (Should be a single positive number even for a reversed 
-    x axis.)  Defaults to the proper value computed by 
+    coordinates.  (Should be a single positive number even for a reversed
+    x axis.)  Defaults to the proper value computed by
     \code{\link{strwidth}(legend)}.}
   \item{text.col}{the color used for the legend text.}
   \item{text.font}{the font used for the legend text, see \code{\link{text}}.}
