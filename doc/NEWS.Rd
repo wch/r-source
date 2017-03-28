@@ -853,6 +853,9 @@
       \file{.Rbuildignore}, \command{R CMD build} would not include it
       in the tarball, but would include it in the vignette database,
       leading to a check warning.  (\PR{17246})
+      
+      \item \code{tools::latexToUtf8} went into an infinite loop 
+      when given certain inputs.  (\PR{17138})
     }
   }
 }

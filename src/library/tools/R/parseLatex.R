@@ -76,8 +76,9 @@ latexToUtf8 <- function(x)
         a <- x[[i]]
         tag <- attr(a, "latex_tag")
         if (tag == "MACRO") {
+            bail <- FALSE
             numargs <- latexArgCount[a]
-            if (!is.na(numargs)) { # Do we know this macro?
+            if (!is.na(numargs) && i + numargs <= length(x)) { # Do we know this macro?
 		args <- vector("list", numargs)
 		j <- i
 		getNext <- TRUE
@@ -107,6 +108,10 @@ latexToUtf8 <- function(x)
 			    k <- k+1L
 			},
 			COMMENT = getNext <- TRUE, # strip comments
+			MACRO = { # Something like \'\i; assume 2nd macro has no args
+			    args[[k]] <- nextobj
+			    k <- k+1L
+			},
 			BLOCK =,
 			ENVIRONMENT =,
 			MATH = {
@@ -116,6 +121,9 @@ latexToUtf8 <- function(x)
 			},
 			NULL = stop("Internal error:  NULL tag", domain = NA))
 		}
+		if (bail)
+		    next
+		    
 		index <- a
 		for (i1 in seq_along(args)) {
 		    if (is.null(latexTable[[index]])) break
