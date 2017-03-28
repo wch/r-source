@@ -1,7 +1,7 @@
 #  File src/library/tools/R/parseLatex.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -76,9 +76,8 @@ latexToUtf8 <- function(x)
         a <- x[[i]]
         tag <- attr(a, "latex_tag")
         if (tag == "MACRO") {
-            bail <- FALSE
             numargs <- latexArgCount[a]
-            if (!is.na(numargs) && i + numargs <= length(x)) { # Do we know this macro?
+            if (!is.na(numargs)) { # Do we know this macro?
 		args <- vector("list", numargs)
 		j <- i
 		getNext <- TRUE
@@ -121,9 +120,6 @@ latexToUtf8 <- function(x)
 			},
 			NULL = stop("Internal error:  NULL tag", domain = NA))
 		}
-		if (bail)
-		    next
-		    
 		index <- a
 		for (i1 in seq_along(args)) {
 		    if (is.null(latexTable[[index]])) break
