@@ -944,7 +944,7 @@ function(nrdb, align = TRUE, include_declarations = FALSE)
       "",
       if(length(symbols)) {
           c("/*",
-            "  The following symbols/expresssions for .NAME have been omitted",
+            "  The following symbols/expressions for .NAME have been omitted",
             "", strwrap(symbols, indent = 4, exdent = 4), "",
             "  Most likely possible values need to be added below.",
             "*/", "")
