@@ -23,7 +23,7 @@ factor <- function(x = character(), levels, labels = levels,
     nx <- names(x)
     if (missing(levels)) {
 	y <- unique(x, nmax = nmax)
-	ind <- sort.list(y) # or possibly order(x) which is more (too ?) tolerant
+	ind <- order(y)
 	levels <- unique(as.character(y)[ind])
     }
     force(ordered) # check if original x is an ordered factor
