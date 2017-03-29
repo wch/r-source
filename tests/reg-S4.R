@@ -889,3 +889,19 @@ x <- y <- numeric(10)
 x[3:4] <- a
 y[3:4] <- v
 stopifnot(identical(x, y))
+
+## callNextMethod() was broken when augmenting args of primitive generics
+foo <- setClass("foo")
+bar <- setClass("bar", contains = "foo")
+
+setMethod("[", "foo",  function(x, i, j, ..., flag = FALSE, drop = FALSE) {
+    flag
+})
+
+setMethod("[", "bar", function(x, i, j, ..., flag = FALSE, drop = FALSE) {
+    callNextMethod()
+})
+
+BAR <- new("bar")
+stopifnot(identical(BAR[1L], FALSE))
+stopifnot(identical(BAR[1L, , flag=TRUE], TRUE))
