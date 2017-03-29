@@ -1631,10 +1631,10 @@ SEXP attribute_hidden do_subassign_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	break;
     }
 
-    if (oldtype == LISTSXP || oldtype == LANGSXP) {
-	if(oldtype == LISTSXP || length(x)) {
+    if (oldtype == LANGSXP) {
+	if(length(x)) {
 	    x = VectorToPairList(x);
-	    SET_TYPEOF(x, oldtype);
+	    SET_TYPEOF(x, LANGSXP);
 	} else
 	    error(_("result is zero-length and so cannot be a language object"));
     }
