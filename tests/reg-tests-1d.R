@@ -708,6 +708,13 @@ stopifnot(grepl("type.*1.*3", e),# typically works in several locales
 	  is.ordered(quantile(OL, type = 3)))
 ## gave  "factors are not allowed" in R <= 3.3.x
 
+## terms() ignored arg names (PR#17235)
+a1 <- attr(terms(y ~ f(x, a = z) + f(x, a = z)), 
+           "term.labels")
+a2 <- attr(terms(y ~ f(x, a = z) + f(x, b = z)), 
+           "term.labels")
+stopifnot(length(a1) == 1, length(a2) == 2)
+## both gave length 1
 
 
 ## keep at end

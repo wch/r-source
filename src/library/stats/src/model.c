@@ -1018,11 +1018,12 @@ static int MatchVar(SEXP var1, SEXP var2)
 	return 1;
     if (isNull(var1) || isNull(var2))
 	return 0;
-    /* Non-atomic objects - compare CARs & CDRs */
+    /* Non-atomic objects - compare CARs & CDRs (and TAGs:  PR#17235) */
     if ((isList(var1) || isLanguage(var1)) &&
 	(isList(var2) || isLanguage(var2)))
 	return MatchVar(CAR(var1), CAR(var2)) &&
-	       MatchVar(CDR(var1), CDR(var2));
+	       MatchVar(CDR(var1), CDR(var2)) &&
+	       MatchVar(TAG(var1), TAG(var2));
     /* Symbols */
     if (isSymbol(var1) && isSymbol(var2))
 	return (var1 == var2);
@@ -1744,6 +1745,7 @@ SEXP termsform(SEXP args)
     a = CDR(a);
 
     nvar = length(varlist) - 1;
+    
     /* in allocating words need to allow for intercept term */
     nwords = (int)(nvar/ WORDSIZE + 1);
 //    printf("nvar = %d, nwords = %d\n", nvar, nwords);
