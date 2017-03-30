@@ -535,8 +535,7 @@
       \item An alternative compiler for C++11 is now specified with
       \samp{CXX11}, not \samp{CXX1X}. Likewise C++11 flags are specified
       with \samp{CXX11FLAGS} and the standard (e.g., \samp{-std=gnu++11}
-      is specified with \samp{CXX11STD}. The variables with prefix
-      \samp{CXX1X} are deprecated.
+      is specified with \samp{CXX11STD}.
 
       \item \command{configure} now tests for a C++14-compliant compiler
       by testing some basic features.  This by default tries flags for
@@ -612,6 +611,12 @@
       \item Packages which register native routines for \code{.C} or
       \code{.Fortran} need to be re-installed for this version (unless
       installed with R-devel SVN revision r72375 or later).
+
+      \item Make variables with names containing \code{CXX1X} are
+      deprecated in favour of those using \code{CXX11}, but for the time
+      being are still made available \emph{via} file
+      \file{etc/Makeconf}.  Packages using them should be converted to
+      the new forms and made dependence on \samp{R (>= 3.4.0)}.
     }
   }
 
