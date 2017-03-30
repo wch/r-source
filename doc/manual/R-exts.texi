@@ -2559,7 +2559,7 @@ e.g.@: @command{g++} on Solaris.  Note however that different C++
 compilers (and even different versions of the same compiler) often
 differ in their ABI so their outputs can rarely be mixed. By setting
 @samp{CXX11STD} it is also possible to choose a different dialect of the
-standard such as @option{-std=gnu++11}.
+standard such as @option{-std=c++11}.
 
 As noted above, support for C++11 varies across platforms: on some
 platforms, it may be possible or necessary to select a different
@@ -2658,13 +2658,13 @@ should be used).
 @node Using C++17 code,  , Using C++14 code, Configure and cleanup
 @subsection Using C++17 code
 
-Experimental support for C++17 has been added to @R{} version
-3.4.0. The @file{configure} script tests a subset of C++17 features.
-At the time of writing (March 2017) both @code{clang 4.0.0} and
-@code{gcc 7.0.1 (20170314)} pass these tests (with flags
-@option{-std=gnu++1z} and @option{-std=gnu++17} respectively chosen by the
-@file{configure} script).  Note that the C++17 feature tests are
-incomplete and are subject to change in future R versions as compiler
+Experimental support for C++17 has been added to @R{} version 3.4.0. The
+@file{configure} script tests a subset of C++17 features.  At the time
+of writing (March 2017) both @code{clang 4.0.0} and the pre-release
+version @code{gcc 7.0.1 (20170314)} pass these tests (with flags
+@option{-std=gnu++1z} and @option{-std=gnu++17} respectively chosen by
+the @file{configure} script).  Note that the C++17 feature tests are
+incomplete and are subject to change in future @R{} versions as compiler
 support for the standard improves.
 
 The variables associated with the C++17 compiler use the prefix
@@ -9443,7 +9443,9 @@ allows @code{.C} etc calls which specify entry points by @R{} objects
 such as @code{C_pansari} (and not by character strings).  Each provides
 some protection against accidentally finding your entry points when
 people supply a character string without a package, and avoids slowing
-down such searches.  (For the visibility attribute @pxref{Controlling
+down such searches.  Routine @code{R_forceSymbols} is available from
+@R{} 3.0.0, so packages using it should have a dependency on at least
+@samp{R (>= 3.0.0)}.  (For the visibility attribute @pxref{Controlling
 visibility}.)
 
 In more detail, if a package @code{mypkg} contains entry points
