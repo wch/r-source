@@ -156,7 +156,7 @@ loadMethod <- function(method, fname, envir) method
         length(fnames) <- i
         cnames <- if (is.null(names(call)))
                       rep("", length(call) - i)
-                  else tail(names(call), -i)
+                  else utils::tail(names(call), -i)
         fnames <- c(fnames, cnames)
     }
     names(call) <- fnames
