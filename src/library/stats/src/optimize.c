@@ -192,11 +192,11 @@ double Brent_fmin(double ax, double bx, double (*f)(double, void *),
     /* end of main loop */
 
     return x;
-}
+} // Brent_fmin()
 
 
 /* One Dimensional Minimization --- just wrapper for
- * Brent's "fmin" --> ../appl/fmin.c */
+ * Brent's "fmin" above */
 
 struct callinfo {
   SEXP R_fcall;
@@ -690,7 +690,7 @@ from above in some direction,\n"\
     Rprintf("\n");
 }
 
-/* NOTE: The actual Dennis-Schnabel algorithm `optif9' is in ../appl/uncmin.c */
+/* NOTE: The actual Dennis-Schnabel algorithm `optif9' is in ../../../appl/uncmin.c */
 
 SEXP nlm(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
