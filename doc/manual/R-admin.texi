@@ -2272,8 +2272,8 @@ source}.
 On macOS (formerly OS X) @code{install.packages} works as it does on
 other Unix-alike systems, but there are additional types starting with
 @code{mac.binary} (available for the @acronym{CRAN} distribution but not
-when compiling from source: @code{mac.binary.mavericks} for a
-`Mavericks' and later build with @code{"default"} a synonym for the
+when compiling from source: @code{mac.binary.el-capitan} for a `El
+Capitan and later build with @code{"default"} a synonym for the
 appropriate variant) which can be passed to @code{install.packages} in
 order to download and install binary packages from a suitable
 repository.  These binary package files for macOS have the extension
@@ -2603,9 +2603,9 @@ wise to have a @file{src/contrib} area with a possibly empty
 @R{} versions @var{x.y.z} and containing @file{.zip} files for Windows.
 
 @item 
-@code{"mac.binary.mavericks"}: located at
-@file{bin/macosx/mavericks/contrib/@var{3.y}} for the CRAN builds for
-`Mavericks' (and later) for @R{} versions @var{3.y.z}, containing
+@code{"mac.binary.el-capitan"}: located at
+@file{bin/macosx/el-capitan/contrib/@var{3.y}} for the CRAN builds for
+`El Capitan (and later) for @R{} versions @var{3.y.z}, containing
 @file{.tgz} files.
 @end itemize
 

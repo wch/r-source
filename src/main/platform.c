@@ -174,8 +174,8 @@ static void Init_R_Platform(SEXP rho)
     SET_VECTOR_ELT(value, 4, mkString("little"));
 #endif
 /* pkgType should be "mac.binary" for CRAN build *only*, not for all
-   AQUA builds. Also we want to be able to use "mac.binary.leopard",
-   "mac.binary.mavericks" and similar. */
+   AQUA builds. Also we want to be able to use "mac.binary.mavericks",
+   "mac.binary.el-capitan" and similar. */
 #ifdef PLATFORM_PKGTYPE
     SET_VECTOR_ELT(value, 5, mkString(PLATFORM_PKGTYPE));
 #else /* unix default */
