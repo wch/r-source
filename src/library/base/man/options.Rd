@@ -665,15 +665,15 @@ getOption(x, default = NULL)
 #ifdef windows
       Possible values are \code{"win.binary"}, \code{"source"} and
       \code{"both"} (the default).  Some macOS builds use
-      \code{"mac.binary"} and \code{"mac.binary.mavericks"}.
+      \code{"mac.binary.el-capitan"}.
 #endif
 #ifdef unix
       Possible values are \code{"source"} (the default except under a
-      CRAN macOS build), \code{"mac.binary."},
-      \code{"mac.binary.mavericks"} and \code{"both"} (the default for
-      CRAN macOS builds).  Windows uses
-      \code{"win.binary"}. (\code{"mac.binary.leopard"} and
-      \code{"mac.binary.universal"} are no longer in use.)
+      CRAN macOS build), \code{"mac.binary.el-capitan"} and
+      \code{"both"} (the default for CRAN macOS builds).  Windows uses
+      \code{"win.binary"}. (\code{"mac.binary.mavericks"},
+      \code{"mac.binary.leopard"}, \code{"mac.binary.universal"} are no
+      longer in use.)
 #endif
       Value \code{"binary"} is a synonym for the native binary type (if
       there is one); \code{"both"} is used by
