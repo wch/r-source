@@ -83,6 +83,7 @@
     \code{x <= y}   \tab x is less than or equal to y \cr
     \code{x > y}   \tab x is greater than y \cr
     \code{x >= y}   \tab x is greater than or equal to y \cr
+    \code{!x} \tab not x \cr
     \code{x \%~~\% y}   \tab x is approximately equal to y \cr
     \code{x \%=~\% y}   \tab x and y are congruent \cr
     \code{x \%==\% y}   \tab x is defined as y \cr
