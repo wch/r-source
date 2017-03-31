@@ -2,7 +2,7 @@
 #  Part of the R package, https://www.R-project.org
 #
 # Copyright     2006 Deepayan Sarkar
-#           (C) 2006-2015  The R Core Team
+#           (C) 2006-2017  The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -899,6 +899,11 @@ fileCompletions <- function(token)
     ## are included.  Get 'correct' partial file name by looking back
     ## to begin quote
     pfilename <- correctFilenameToken()
+    
+    ## This may come from an illegal string like "C:\Prog".  Try to parse it:
+    pfilename <- try(eval(parse(text = paste0('"', token, '"'))), silent = TRUE)
+    if (inherits(pfilename, "try-error"))
+    	return(character())
 
     ## Sys.glob doesn't work without expansion.  Is that intended?
     pfilename.expanded <- path.expand(pfilename)
@@ -925,6 +930,11 @@ fileCompletions <- function(token)
     ## need to delete extra part
     if (pfilename != token)
         comps <- substring(comps, nchar(pfilename) - nchar(token) + 1L, 1000L)
+        
+    ## In Win32, we often have backslashes in names. Also possible on 
+    ## Unix, though unlikely.  Add escapes for those and for quotes.
+    comps <- gsub("([\\\\'\"])", "\\\\\\1", comps)
+    
     comps
 }
 

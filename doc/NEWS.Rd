@@ -12,6 +12,14 @@
       \item Placeholder.
     }
   }
+  
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item Fix problems in command completion:  Crash (\PR{17222})
+      and junk display in Windows, handling special characters in
+      filenames on all systems.
+    }
+  }
 }
 
 \section{\Rlogo CHANGES IN R 3.4.0 patched}{
