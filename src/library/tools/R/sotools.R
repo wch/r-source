@@ -33,7 +33,7 @@ if(.Platform$OS.type == "windows") {
         l1 <- grep("^\tDLL Name:", s0)
         l2 <- grep("^The Export Tables", s0)
         if (!length(l1) || !length(l2)) return()
-        s1 <- s0[(l1[1L] + 3L):(l2 - 4L)]
+        s1 <- s0[(l1[1L] + 2L):(l2 - 4L)]
         s2 <- grep("\t[0-9a-f]+\t +[0-9]+", s1, value = TRUE)
         sub(".* ([_A-Za-z0-9]+)$", "\\1", s2)
     }
