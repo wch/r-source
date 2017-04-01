@@ -4859,10 +4859,10 @@ CXX=clang++
 F77=/usr/local/gfortran/bin/gfortran
 FC=$F77
 OBJC=clang
-CFLAGS='-Wall -mtune=core2 -g -O2'
-CXXFLAGS='-Wall -mtune=core2 -g -O2'
-OBJCFLAGS='-Wall -mtune=core2 -g -O2'
-F77FLAGS='-Wall -g -O2'
+CFLAGS='-Wal -g -O2'
+CXXFLAGS='-Wall -g -O2'
+OBJCFLAGS='-Wall -g -O2'
+F77FLAGS='-Wall -g -O2 -mtune=generic'
 FCFLAGS=$F77FLAGS
 @end example
 
@@ -4900,6 +4900,35 @@ More recent and complete distributions of @command{clang} are often
 available from @uref{http://llvm.org/releases/}: for example at the time
 of writing for 4.0.0.  In particular, these may include support for
 OpenMP and are likely to be used for the @acronym{CRAN} distribution.
+Suppose that distribution is installed under @file{/usr/local/clang}.
+Then @R{} could be configured by something like
+@example
+./configure --x-includes=/opt/X11/include --x-libraries=/opt/X11/lib \
+PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig \
+DYLD_FALLBACK_LIBRARY_PATH=/usr/local/clang/lib:/usr/local/lib
+@end example
+@noindent
+with @file{config.site} containing
+@example
+CC=/usr/local/clang/bin/clang
+OBJC=$CC
+F77=/usr/local/gfortran/bin/gfortran
+FC=$F77
+CXX=/usr/local/clang/bin/clang++
+LDFLAGS="-L/usr/local/clang/lib -L/usr/local/lib"
+R_LD_LIBRARY_PATH=/usr/local/clang/lib:/usr/local/lib
+@end example
+@noindent
+The care to specify library paths is to ensure that the OpenMP runtime
+library, here @file{/usr/local/clang/lib/libomp.dylib}, is found when
+needed. If this works, you should see the line
+@example
+checking whether OpenMP SIMD reduction is supported... yes
+@end example
+@noindent
+in the @command{configure} output.  Also, @samp{R_LD_LIBRARY_PATH} needs
+to be set to find the latest version of the C++ run-time libraries
+rather than the system ones.
 
 Pre-compiled versions of many of the @ref{Useful libraries and programs}
 are available from @uref{https://r.research.att.com/libs/}.  You will
@@ -4910,8 +4939,8 @@ present when configuring the @code{X11()} and bitmap devices.
 
 Support for @code{cairo} (without @code{Pango}) can be enabled if
 @code{pkg-config} and XQuartz are available, Make sure the XQuartz's
-@code{pkg-config} files are first on the configuration path: for example
-by setting
+@code{pkg-config} files are found first on the configuration path: for
+example by setting
 @example
 export PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
 @end example
@@ -4928,8 +4957,9 @@ The @code{Accelerate} library can be used @emph{via} the configuration options
 
 @noindent
 to provide potentially higher-performance versions of the @acronym{BLAS}
-and LAPACK routines.@footnote{It is reported that for some non-Apple
-toolchains @code{CPPFLAGS} needed to contain @code{-D__ACCELERATE__}.}
+and LAPACK routines.@footnote{It was reported that for some non-Apple
+toolchains @code{CPPFLAGS} needed to contain @code{-D__ACCELERATE__}:
+not needed for @command{clang} 4.0.0, though.}
 
 Looking at the top of
 @file{/Library/Frameworks/R.framework/Resources/etc/Makeconf}
