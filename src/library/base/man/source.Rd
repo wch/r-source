@@ -1,6 +1,6 @@
 % File src/library/base/man/source.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{source}
@@ -31,8 +31,8 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
        continue.echo = getOption("continue"),
        skip.echo = 0, keep.source = getOption("keep.source"))
 
-withAutoprint(exprs, local = TRUE, print. = TRUE, echo = TRUE,
-              max.deparse.length = Inf,
+withAutoprint(exprs, evaluated = FALSE, local = parent.frame(),
+              print. = TRUE, echo = TRUE, max.deparse.length = Inf,
               width.cutoff = max(20, getOption("width")),
               deparseCtrl = c("keepInteger", "showAttributes", "keepNA"),
               \dots)
@@ -51,10 +51,17 @@ withAutoprint(exprs, local = TRUE, print. = TRUE, echo = TRUE,
   \item{print.eval, print.}{logical; if \code{TRUE}, the result of
     \code{eval(i)} is printed for each expression \code{i}; defaults
     to the value of \code{echo}.}
-  \item{exprs}{\emph{instead} of specifying \code{file}, an
+  \item{exprs}{for \code{source()} and \code{withAutoprint(*, evaluated=TRUE)}:
+    \emph{instead} of specifying \code{file}, an
     \code{\link{expression}}, \code{\link{call}}, or \code{\link{list}}
-    of \code{\link{call}}'s.  Typically (unevaluated) expressions inside
-    braces, i.e., of the form \code{\{ .... \}}.}
+    of \code{\link{call}}'s, but \emph{not} an unevaluated \dQuote{expression}.
+
+    for \code{withAutoprint()} (with default \code{evaluated=FALSE}):
+    one or more unevaluated \dQuote{expressions}.
+  }
+  \item{evaluated}{logical indicating that \code{exprs} is passed to
+    \code{source(exprs= *)} and hence must be evaluated, i.e., a formal
+    \code{expression}, \code{call} or \code{list} of calls.}
   \item{spaced}{logical indicating if newline (hence empty line) should
     be printed before each expression (when \code{echo = TRUE}).}
   \item{verbose}{if \code{TRUE}, more diagnostics (than just
@@ -169,7 +176,16 @@ withAutoprint(exprs, local = TRUE, print. = TRUE, echo = TRUE,
   directives.
 }
 \examples{
-withAutoprint({ x <- 1:12; x-1; (y <- (x-5)^2); z <- y; z - 10 })
+someCond <- 7 > 6
+## want an if-clause to behave "as top level" wrt auto-printing :
+## (all should look "as if on top level", e.g. non-assignments should print:
+if(someCond) withAutoprint({
+   x <- 1:12
+   x-1
+   (y <- (x-5)^2)
+   z <- y
+   z - 10
+})
 
 ## If you want to source() a bunch of files, something like
 ## the following may be useful:
@@ -181,8 +197,14 @@ withAutoprint({ x <- 1:12; x-1; (y <- (x-5)^2); z <- y; z - 10 })
     }
  }
 
-withAutoprint(expression(formals(sourceDir), body(sourceDir)),
+suppressWarnings( rm(x,y) ) # remove 'x' or 'y' from global env
+withAutoprint({ x <- 1:2; cat("x=",x,"\n"); y <- x^2 })
+## x and y now exist:
+stopifnot(identical(x, 1:2), identical(y, x^2))
+
+withAutoprint({ formals(sourceDir); body(sourceDir) },
               max.dep = 20, verbose = TRUE)
+%% --> tests in  ../../../../tests/eval-etc.R
 }
 \keyword{file}
 \keyword{programming}
