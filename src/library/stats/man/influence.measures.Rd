@@ -192,7 +192,7 @@ which(apply(inflm.SR$is.inf, 1, any))
 summary(inflm.SR) # only these
 \donttest{inflm.SR          # all}
 plot(rstudent(lm.SR) ~ hatvalues(lm.SR)) # recommended by some
-plot(lm.SR, which = 5) # an enhaced version of that via plot(<lm>)
+plot(lm.SR, which = 5) # an enhanced version of that via plot(<lm>)
 
 ## The 'infl' argument is not needed, but avoids recomputation:
 rs <- rstandard(lm.SR)
