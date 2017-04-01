@@ -1851,7 +1851,7 @@ Optional Packages:
   --with-pic[=PKGS]       (libtool) try to use only PIC/non-PIC objects
                           [default=use both]
   --with-aix-soname=aix|svr4|both
-                          (libtool( shared library versioning (aka "SONAME")
+                          (libtool) shared library versioning (aka "SONAME")
                           variant to provide on AIX, [default=aix].
   --with-gnu-ld           assume the C compiler uses GNU ld [default=no]
   --with-sysroot[=DIR]    Search for dependent libraries within DIR (or the
