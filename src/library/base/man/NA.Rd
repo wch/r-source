@@ -1,6 +1,6 @@
 % File src/library/base/man/NA.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{NA}
@@ -62,11 +62,12 @@ is.na(x) <- value
   Function \code{is.na<-} may provide a safer way to set missingness.
   It behaves differently for factors, for example.
 
-  Numerical computations using \code{NA} will normally result in \code{NA}: a
-  possible exception is where \code{\link{NaN}} is also involved, in
-  which case either might result.  Logical computations treat \code{NA}
-  as a missing \code{TRUE/FALSE} value, and so may return \code{TRUE} or 
-  \code{FALSE} if the expression does not depend on the \code{NA} operand.
+  Numerical computations using \code{NA} will normally result in
+  \code{NA}: a possible exception is where \code{\link{NaN}} is also
+  involved, in which case either might result (which may depend on
+  the \R platform).  Logical computations treat \code{NA} as a missing
+  \code{TRUE/FALSE} value, and so may return \code{TRUE} or \code{FALSE}
+  if the expression does not depend on the \code{NA} operand.
   
   The default method for \code{anyNA} handles atomic vectors without a
   class and \code{NULL}.  It calls \code{any(is.na(x)} on objects with
