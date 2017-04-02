@@ -886,6 +886,13 @@
       
       \item \code{terms.formula()} ignored argument names when determining
       whether two terms were identical.  (\PR{17235})
+
+      \item \code{callNextMethod()} was broken when called from a method
+      that augments the formal arguments of a primitive generic.
+
+      \item Coercion of an S4 object to a vector during sub-assignment
+      into a vector failed to dispatch through the \code{as.vector()}
+      generic (often leading to a segfault).
     }
   }
 }
