@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1995, 1996, 2017  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 1997--2016  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -210,14 +210,15 @@ static int cplx_eq(Rcomplex x, Rcomplex y)
 {
     if (!ISNAN(x.r) && !ISNAN(x.i) && !ISNAN(y.r) && !ISNAN(y.i))
 	return x.r == y.r && x.i == y.i;
-    else if ((R_IsNA(x.r) || R_IsNA(x.i)) &&
-	     (R_IsNA(y.r) || R_IsNA(y.i)))
-	return 1;
-    else if ((R_IsNaN(x.r) || R_IsNaN(x.i)) &&
-	     (R_IsNaN(y.r) || R_IsNaN(y.i)))
-	return 1;
-    else
+    else if (R_IsNA(x.r) || R_IsNA(x.i)) // x is NA
+	return (R_IsNA(y.r) || R_IsNA(y.i)) ? 1 : 0;
+    else if (R_IsNA(y.r) || R_IsNA(y.i)) // y is NA but x is not
 	return 0;
+    // else : none is NA but there's at least one NaN;  hence  ISNAN(.) == R_IsNaN(.)
+    return
+	(((ISNAN(x.r) && ISNAN(y.r)) || (!ISNAN(x.r) && !ISNAN(y.r) && x.r == y.r)) && // Re
+	 ((ISNAN(x.i) && ISNAN(y.i)) || (!ISNAN(x.i) && !ISNAN(y.i) && x.i == y.i))    // Im
+	    ) ? 1 : 0;
 }
 
 static int cequal(SEXP x, R_xlen_t i, SEXP y, R_xlen_t j)

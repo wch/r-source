@@ -12,7 +12,7 @@
       \item Placeholder.
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item Fix problems in command completion:  Crash (\PR{17222})
@@ -731,12 +731,10 @@
 
       \item \code{match(x, t)}, \code{duplicated(x)} and
       \code{unique(x)} work as documented for complex numbers with \code{NA}s
-      or \code{NaN}s, namely by treating them as two equivalence
-      \dQuote{classes}, those with \code{NA} and those with
-      non-\code{NA} \code{NaN}s.
-      %% \code{print(x)} remains back compatible, treating all
-      %% \code{NA}s identically, but showing real and imaginary parts
-      %% for the \code{NaN} \dQuote{class}.
+      or \code{NaN}s, where all those containing \code{NA} do match,
+      whereas in the case of \code{NaN}'s both real and imaginary parts
+      must match, compatibly with how \code{print()} and \code{format()}
+      work for complex numbers.
 
       \item \code{deparse(<complex>, options = "digits17")} prints more
       nicely now, mostly thanks to a suggestion by Richie Cotton.
@@ -880,10 +878,10 @@
       \file{.Rbuildignore}, \command{R CMD build} would not include it
       in the tarball, but would include it in the vignette database,
       leading to a check warning.  (\PR{17246})
-      
+
       \item \code{tools::latexToUtf8()} infinite looped on certain
       inputs.  (\PR{17138})
-      
+
       \item \code{terms.formula()} ignored argument names when determining
       whether two terms were identical.  (\PR{17235})
 
