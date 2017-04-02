@@ -24,7 +24,7 @@ callNextMethod <- function(...) {
     ## Because of the .local mechanism used to allow variable argument lists
     ## in methods (see rematchDefinition) these may be different.
     parent <- sys.parent(1)
-    maybeMethod <- sys.function(parent)
+    methodFun <- maybeMethod <- sys.function(parent)
     if(is(maybeMethod, "MethodDefinition")) {
         callEnv <- methodEnv <- parent.frame(1)
         mcall <- sys.call(parent)
@@ -36,6 +36,7 @@ callNextMethod <- function(...) {
         methodEnv <- parent.frame(2)
         mcall <- sys.call(sys.parent(2))
         dotsenv <- parent.frame(3)
+        maybeMethod <- sys.function(sys.parent(2))
         i <- 2L
     }
     ## set up the nextMethod object, load it
@@ -130,7 +131,7 @@ callNextMethod <- function(...) {
            }
         }
         else
-            call <- match.call(maybeMethod, mcall, expand.dots = FALSE,
+            call <- match.call(methodFun, mcall, expand.dots = FALSE,
                                envir = dotsenv)
         .Call(C_R_nextMethodCall, call, callEnv)
     }
@@ -153,7 +154,10 @@ loadMethod <- function(method, fname, envir) method
     else {
         i <- i-1
         length(fnames) <- i
-        fnames <- c(fnames, rep("", length(call) - i))
+        cnames <- if (is.null(names(call)))
+                      rep("", length(call) - i)
+                  else tail(names(call), -i)
+        fnames <- c(fnames, cnames)
     }
     names(call) <- fnames
     if(hasDrop)
