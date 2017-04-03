@@ -5066,7 +5066,7 @@ installed this should prompt you to install it.  You can also install
 directly the latest Java from Oracle (currently from
 @uref{http://www.oracle.com/@/technetwork/@/java/@/javase/@/downloads/@/index.html}).
 
-Binary distribtions of @R{} are built against a specific version (e.g.@:
+Binary distributions of @R{} are built against a specific version (e.g.@:
 1.8.0_121) of Oracle Java so @command{sudo R CMD javareconf} may be
 needed before using Java-using packages.
 
