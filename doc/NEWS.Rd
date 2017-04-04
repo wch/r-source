@@ -467,10 +467,12 @@
       the help page.
 
       \item Formatting and printing of bibliography entries
-      (\code{bibentry}) now by default shows the bibtex code also when
-      there is more than one entry.  This also affects \code{citation()}:
-      use \code{options(citation.bibtex.max = 1)} to revert to previous
-      behavior.
+      (\code{bibentry}) is more flexible and better documented.  Apart
+      from setting \code{options(citation.bibtex.max = 99)} you can also
+      use \code{print(<citation>, bibtex=TRUE)} (or \code{format(..)})
+      to get the BibTeX entries in the case of more than one entry.
+      This also affects \code{citation()}.
+      Contributions to enable \code{style = "html+bibtex"} are welcome.
     }
   }
 

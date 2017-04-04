@@ -9,22 +9,28 @@
 \alias{print.bibentry}
 \alias{format.bibentry}
 \alias{sort.bibentry}
+\alias{print.citation}
+\alias{format.citation}
 \description{
   Functionality for representing and manipulating bibliographic
   information in enhanced BibTeX style.
 }
 \usage{
 bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
-         key = NULL, ..., other = list(),
+         key = NULL, \dots, other = list(),
          mheader = NULL, mfooter = NULL)
 
-\method{print}{bibentry}(x, style = "text", .bibstyle, ...)
+\method{print}{bibentry}(x, style = "text", .bibstyle, \dots)
 
 \method{format}{bibentry}(x, style = "text", .bibstyle = NULL,
        citation.bibtex.max = getOption("citation.bibtex.max", Inf),
-       sort = FALSE, ...)
+       bibtex = length(x) <= citation.bibtex.max,
+       sort = FALSE, \dots)
 
 \method{sort}{bibentry}(x, decreasing = FALSE, .bibstyle = NULL, drop = FALSE, \dots)
+
+\method{print}{citation}(x, style = "citation", \dots)
+\method{format}{citation}(x, style = "citation", \dots)
 }
 \arguments{
   \item{bibtype}{a character string with a BibTeX entry type.
@@ -35,15 +41,19 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
   \item{header}{a character string with optional header text.}
   \item{footer}{a character string with optional footer text.}
   \item{key}{a character string giving the citation key for the entry.}
-  \item{...}{for \code{bibentry}: arguments of the form
+  \item{\dots}{for \code{bibentry}: arguments of the form
     \code{\var{tag}=\var{value}} giving the fields of the entry, with
     \var{tag} and \var{value} the name and value of the field,
     respectively.  Arguments with empty values are dropped.
     See \bold{Entry Fields} for details.
 
     For the \code{print} method, extra parameters to pass to the
-    renderer.}
-  \item{other}{a list of arguments as in \code{...} (useful in
+    renderer.
+
+    For the \code{citation} class methods, parameters passed to the next
+    i.e., the corresponding \code{bibentry} method.
+  }
+  \item{other}{a list of arguments as in \code{\dots} (useful in
     particular for fields named the same as formals of
     \code{bibentry}).}
   \item{mheader}{a character string with optional \dQuote{outer} header
@@ -57,7 +67,8 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
   \item{decreasing}{logical, passed to \code{\link{order}} indicating
     the sort direction.}
   \item{.bibstyle}{a character string naming a bibliography style.}
-  \item{citation.bibtex.max}{a number, say \eqn{m}, indicating that the
+  \item{citation.bibtex.max}{(\emph{deprecated}, use \code{bibtex =
+    T|F} instead!) a number, say \eqn{m}, indicating that the
     bibtex code should be given in addition to the formatted tex
     \emph{when} there are not more than \eqn{m} entries.  The default is
     taken as \code{\link{getOption}("citation.bibtex.max", Inf)}.  In \R
@@ -65,7 +76,8 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
     was shown only for a single entry.  For example, to see no bibtex at
     all, you can change the default by
     \code{\link{options}(citation.bibtex.max = 0)}.}
-
+  \item{bibtex}{logical indicating if bibtex code should be given
+    additionally.  Currently applies only to \code{style = "citation"}.}
   \item{sort}{logical indicating if bibentries should be sorted, using
     \code{\link[tools]{bibstyle}(.bibstyle)$sortKeys(x)}.}
   \item{drop}{logical used as \code{x[ ..., drop=drop]} inside the
@@ -110,7 +122,7 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
   \code{citation.bibtex.max} (with default
   \code{\link{getOption}("citation.bibtex.max")} which defaults to 1)
   determines for up to how many citation bibentries text style is shown
-  together with with bibtex, automatically.
+  together with bibtex, automatically.
 
   It is possible to subscript bibentry objects by their keys (which are
   used for character subscripts if the names are \code{NULL}).
