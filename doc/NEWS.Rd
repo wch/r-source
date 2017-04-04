@@ -866,6 +866,11 @@
       \item Coercion of an S4 object to a vector during sub-assignment
       into a vector failed to dispatch through the \code{as.vector()}
       generic (often leading to a segfault).
+
+      \item Fix problems in command completion:  Crash (\PR{17222})
+      and junk display in Windows, handling special characters in
+      filenames on all systems.
+
     }
   }
 }
