@@ -527,7 +527,7 @@
       \samp{CXX11}, not \samp{CXX1X}. Likewise C++11 flags are specified
       with \samp{CXX11FLAGS} and the standard (e.g., \samp{-std=gnu++11}
       is specified with \samp{CXX11STD}.
-      
+
       \item \command{configure} now tests for a C++14-compliant compiler
       by testing some basic features.  This by default tries flags for
       the compiler specified by \samp{CXX11}, but an alternative compiler,
@@ -598,7 +598,7 @@
       directory on most platforms).
       %% This ensures that BH's 'boost' directory gets precedent over
       %% any Boost headers in, say, /opt/csw/include .
-      
+
       \item Packages which register native routines for \code{.C} or
       \code{.Fortran} need to be re-installed for this version (unless
       installed with R-devel SVN revision r72375 or later).
@@ -704,12 +704,10 @@
 
       \item \code{match(x, t)}, \code{duplicated(x)} and
       \code{unique(x)} work as documented for complex numbers with \code{NA}s
-      or \code{NaN}s, namely by treating them as two equivalence
-      \dQuote{classes}, those with \code{NA} and those with
-      non-\code{NA} \code{NaN}s.
-      %% \code{print(x)} remains back compatible, treating all
-      %% \code{NA}s identically, but showing real and imaginary parts
-      %% for the \code{NaN} \dQuote{class}.
+      or \code{NaN}s, where all those containing \code{NA} do match,
+      whereas in the case of \code{NaN}'s both real and imaginary parts
+      must match, compatibly with how \code{print()} and \code{format()}
+      work for complex numbers.
 
       \item \code{deparse(<complex>, options = "digits17")} prints more
       nicely now, mostly thanks to a suggestion by Richie Cotton.
@@ -848,18 +846,18 @@
       when the uniform generator is \code{Knuth-TAOCP},
       \code{Knuth-TAOCP-2002}, or a user-defined generator and the
       population size is \eqn{2^{25}}{2^25} or greater.
-      
-      \item If a vignette in the \file{vignettes} directory is listed in 
-      \file{.Rbuildignore}, \command{R CMD build} would not include it 
-      in the tarball, but would include it in the vignette database, 
+
+      \item If a vignette in the \file{vignettes} directory is listed in
+      \file{.Rbuildignore}, \command{R CMD build} would not include it
+      in the tarball, but would include it in the vignette database,
       leading to a check warning.  (\PR{17246})
-      
+
       \item \code{tools::latexToUtf8()} infinite looped on certain
       inputs.  (\PR{17138})
-      
+
       \item \code{terms.formula()} ignored argument names when determining
       whether two terms were identical.  (\PR{17235})
-      
+
       \item \code{callNextMethod()} was broken when called from a method
       that augments the formal arguments of a primitive generic.
 
@@ -870,7 +868,6 @@
       \item Fix problems in command completion:  Crash (\PR{17222})
       and junk display in Windows, handling special characters in
       filenames on all systems.
-
     }
   }
 }
