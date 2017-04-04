@@ -1525,7 +1525,7 @@ for pointers to commercialized versions of R.
 
 @strong{Rweb} is developed and maintained by
 @email{jeff@@math.montana.edu, Jeff Banfield}.  The
-@url{http://www.math.montana.edu/Rweb/, Rweb Home Page} provides access
+@url{https://rweb.stat.umn.edu/Rweb/, Rweb Home Page} provides access
 to all three versions of Rweb---a simple text entry form that returns
 output and graphs, a more sophisticated JavaScript version that provides
 a multiple window environment, and a set of point and click modules that
