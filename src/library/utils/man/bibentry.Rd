@@ -23,7 +23,7 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
 \method{print}{bibentry}(x, style = "text", .bibstyle, \dots)
 
 \method{format}{bibentry}(x, style = "text", .bibstyle = NULL,
-       citation.bibtex.max = getOption("citation.bibtex.max", Inf),
+       citation.bibtex.max = getOption("citation.bibtex.max", 1),
        bibtex = length(x) <= citation.bibtex.max,
        sort = FALSE, \dots)
 
