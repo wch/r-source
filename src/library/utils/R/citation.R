@@ -663,7 +663,7 @@ function(style)
 
 format.bibentry <-
 function(x, style = "text", .bibstyle = NULL,
-         citation.bibtex.max = getOption("citation.bibtex.max", Inf),
+         citation.bibtex.max = getOption("citation.bibtex.max", 1),
          bibtex = length(x) <= citation.bibtex.max,
          sort = FALSE, ...)
 {
