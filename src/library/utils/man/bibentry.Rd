@@ -77,7 +77,7 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
   \item{bibtex}{logical indicating if bibtex code should be given
     additionally; currently applies only to \code{style = "citation"}.
     The default depends on on the number of (bib) entries and
-    \code{\link{getOption("citation.bibtex.max")}}.}
+    \code{\link{getOption}("citation.bibtex.max")}.}
   \item{sort}{logical indicating if bibentries should be sorted, using
     \code{\link[tools]{bibstyle}(.bibstyle)$sortKeys(x)}.}
   \item{drop}{logical used as \code{x[ ..., drop=drop]} inside the
