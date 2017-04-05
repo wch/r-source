@@ -47,11 +47,11 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
     respectively.  Arguments with empty values are dropped.
     See \bold{Entry Fields} for details.
 
-    For the \code{print} method, extra parameters to pass to the
-    renderer.
+    For the \code{print()} method, extra arguments to pass to the
+    renderer which typically includes the \code{format()} method.
 
-    For the \code{citation} class methods, parameters passed to the next
-    i.e., the corresponding \code{bibentry} method.
+    For the \code{citation} class methods, arguments passed to the next
+    method, i.e., the corresponding \code{bibentry} one.
   }
   \item{other}{a list of arguments as in \code{\dots} (useful in
     particular for fields named the same as formals of
@@ -68,16 +68,16 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
     the sort direction.}
   \item{.bibstyle}{a character string naming a bibliography style.}
   \item{citation.bibtex.max}{(\emph{deprecated}, use \code{bibtex =
-    T|F} instead!) a number, say \eqn{m}, indicating that the
-    bibtex code should be given in addition to the formatted tex
-    \emph{when} there are not more than \eqn{m} entries.  The default is
-    taken as \code{\link{getOption}("citation.bibtex.max", Inf)}.  In \R
-    versions before 3.4.0, the default was \code{1} such that bibtex code
-    was shown only for a single entry.  For example, to see no bibtex at
-    all, you can change the default by
-    \code{\link{options}(citation.bibtex.max = 0)}.}
+    T|F} instead!) a number, say \eqn{m}, indicating that the bibtex
+    code should be given in addition to the formatted tex \emph{when}
+    there are not more than \eqn{m} entries.  The default is taken as
+    \code{\link{getOption}("citation.bibtex.max", 1)} which is \code{1}
+    typically.  For example, to see no bibtex at all, you can change the
+    default by \code{\link{options}(citation.bibtex.max = 0)}.}
   \item{bibtex}{logical indicating if bibtex code should be given
-    additionally.  Currently applies only to \code{style = "citation"}.}
+    additionally; currently applies only to \code{style = "citation"}.
+    The default depends on on the number of (bib) entries and
+    \code{\link{getOption("citation.bibtex.max")}}.}
   \item{sort}{logical indicating if bibentries should be sorted, using
     \code{\link[tools]{bibstyle}(.bibstyle)$sortKeys(x)}.}
   \item{drop}{logical used as \code{x[ ..., drop=drop]} inside the
