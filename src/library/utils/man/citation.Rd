@@ -1,6 +1,6 @@
 % File src/library/utils/man/citation.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{citation}
@@ -88,7 +88,9 @@ readCitationFile(file, meta = NULL)
   any) of \code{meta} to determine the encoding of the file.
 }
 \value{
-  An object inheriting from class \code{"\link{bibentry}"}.
+  An object of class \code{"citation"}, inheriting from class
+  \code{"\link{bibentry}"}; see there, notably for the
+  \code{\link{print}} and \code{\link{format}} methods.
 }
 \seealso{
   \code{\link{bibentry}}
@@ -105,4 +107,14 @@ if(nchar(system.file(package = "foreign"))) citation("foreign")
 ## extract the bibtex entry from the return value
 x <- citation()
 toBibtex(x)
+
+\donttest{
+## A citation with more than one bibentry:
+cm <- tryCatch(citation("mgcv"),
+               error = function(e) {
+                 warning("Recommended package 'mgcv' is not installed properly")
+                 stop(e$message) })
+cm # short entries (2-3 lines each)
+print(cm, bibtex = TRUE) # each showing its bibtex code
+}%dont
 }

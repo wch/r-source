@@ -1,7 +1,7 @@
 #  File src/library/utils/R/citation.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -120,11 +120,11 @@ function(given = NULL, family = NULL, middle = NULL,
         if(any(ind <- (lengths(rval) == 0L)))
             rval[ind] <- vector("list", length = sum(ind))
         ## Give nothing if there is nothing.
-        if(all(sapply(rval, is.null)))
-            rval <- NULL
-
-        return(rval)
-    }
+        if(all(vapply(rval, is.null, NA)))
+            NULL
+        else
+            rval
+    } ## end{ person1 }
 
     rval <-
         lapply(seq_along(args$given),
@@ -140,11 +140,9 @@ function(given = NULL, family = NULL, middle = NULL,
     ## non-NULL entry?
     ## </COMMENT>
     ## Yes!
-    rval <- rval[!sapply(rval, is.null)]
 
-    class(rval) <- "person"
-
-    rval
+    structure(rval[!vapply(rval, is.null, NA)],
+              class = "person")
 }
 
 .canonicalize_person_role <-
@@ -364,7 +362,7 @@ function(x)
             family <- paste(gng, family)
             given <- given[-ng]
 	}
-	
+
         z <- person(given = given, family = family,
                     email = email, role = role, comment = comment)
         return(z)
@@ -666,6 +664,7 @@ function(style)
 format.bibentry <-
 function(x, style = "text", .bibstyle = NULL,
          citation.bibtex.max = getOption("citation.bibtex.max", 1),
+         bibtex = length(x) <= citation.bibtex.max,
          sort = FALSE, ...)
 {
     if(!length(x)) return(character())
@@ -674,8 +673,11 @@ function(x, style = "text", .bibstyle = NULL,
 
     if(sort) x <- sort(x, .bibstyle = .bibstyle)
     x$.index <- as.list(seq_along(x))
+    if(!missing(citation.bibtex.max))
+	warning(gettextf("Argument '%s' is deprecated; rather set '%s' instead.",
+			 "citation.bibtex.max", "bibtex=*"), domain=NA)
 
-    .format_bibentry_via_Rd <- function(f) {
+    format_via_Rd <- function(f) {
         out <- file()
         saveopt <- tools::Rd2txt_options(width = getOption("width"))
         on.exit({tools::Rd2txt_options(saveopt); close(out)})
@@ -700,10 +702,8 @@ function(x, style = "text", .bibstyle = NULL,
                })
     }
 
-    .format_bibentry_as_citation <- function(x) {
-        bibtex <- length(x) <= citation.bibtex.max
-
-        c(paste(strwrap(attr(x, "mheader")), collapse = "\n"),
+    format_as_citation <- function(x, msg) {
+         c(paste(strwrap(attr(x, "mheader")), collapse = "\n"),
           unlist(lapply(x, function(y) {
               paste(c(if(!is.null(y$header))
                       c(strwrap(y$header), ""),
@@ -720,15 +720,19 @@ function(x, style = "text", .bibstyle = NULL,
                       c("", strwrap(y$footer))),
                     collapse = "\n")
           })),
-          paste(strwrap(attr(x, "mfooter")), collapse = "\n")
+	  paste(strwrap(c(attr(x, "mfooter"),
+			  if(!bibtex && msg)
+  "To see these entries in BibTeX format, use 'print(<citation>, bibtex=TRUE)',
+  'toBibtex(.)', or set 'options(citation.bibtex.max=999)'."
+		)), collapse = "\n")
           )
     }
 
     out <-
         switch(style,
-               "text" = .format_bibentry_via_Rd(tools::Rd2txt),
-               "html" = .format_bibentry_via_Rd(tools::Rd2HTML),
-               "latex" = .format_bibentry_via_Rd(tools::Rd2latex),
+               "text" = format_via_Rd(tools::Rd2txt),
+               "html" = format_via_Rd(tools::Rd2HTML),
+               "latex" = format_via_Rd(tools::Rd2latex),
                "Bibtex" = {
                    unlist(lapply(x,
                                  function(y)
@@ -739,7 +743,9 @@ function(x, style = "text", .bibstyle = NULL,
                    out[!lengths(out)] <- ""
                    unlist(out)
                },
-               "citation" = .format_bibentry_as_citation(x),
+               "citation" = format_as_citation(x,
+                                               msg = missing(bibtex) &&
+                                                   missing(citation.bibtex.max)),
                "R" = .format_bibentry_as_R_code(x, ...)
                )
     as.character(out)
@@ -1249,7 +1255,7 @@ function(package = "base", lib.loc = NULL, auto = NULL)
               )
 
     if(identical(meta$Repository, "CRAN"))
-        z$url <- 
+        z$url <-
             sprintf("https://CRAN.R-project.org/package=%s", package)
 
     if(identical(meta$Repository, "R-Forge")) {
@@ -1300,12 +1306,7 @@ function(package = "base", lib.loc = NULL, auto = NULL)
     .citation(rval)
 }
 
-.citation <-
-function(x)
-{
-    class(x) <- c("citation", "bibentry")
-    x
-}
+.citation <- function(x) structure(x, class = c("citation", "bibentry"))
 
 .read_authors_at_R_field <-
 function(x)
@@ -1338,12 +1339,10 @@ function(x)
     "aut" %in% x$role
 }
 
+format.citation <-
+function(x, style = "citation", ...) format.bibentry(x, style = style, ...)
 print.citation <-
-function(x, style = "citation", ...)
-{
-    NextMethod("print", x, style = style, ...)
-    invisible(x)
-}
+function(x, style = "citation", ...) print.bibentry(x, style = style, ...)
 
 as.bibentry <-
 function(x)
