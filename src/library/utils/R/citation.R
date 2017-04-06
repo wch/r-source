@@ -722,8 +722,8 @@ function(x, style = "text", .bibstyle = NULL,
           })),
 	  paste(strwrap(c(attr(x, "mfooter"),
 			  if(!bibtex && msg)
-	c("To see these entries in BibTeX format, use 'print(<citation>, bibtex=TRUE)', ",
-	  "'toBibtex(.)', or set 'options(citation.bibtex.max=999)'.")
+  "To see these entries in BibTeX format, use 'print(<citation>, bibtex=TRUE)',
+  'toBibtex(.)', or set 'options(citation.bibtex.max=999)'."
 		)), collapse = "\n")
           )
     }
