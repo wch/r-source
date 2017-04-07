@@ -923,31 +923,15 @@ SEXP match5(SEXP itable, SEXP ix, int nmatch, SEXP incomp, SEXP env)
     }
     else { // regular case
 
-    if (incomp) { PROTECT(incomp = coerceVector(incomp, type)); nprot++; }
-    data.nomatch = nmatch;
-    HashTableSetup(table, &data, NA_INTEGER);
-    if(type == STRSXP) {
-	Rboolean useBytes = FALSE;
-	Rboolean useUTF8 = FALSE;
-	Rboolean useCache = TRUE;
-	for(R_xlen_t i = 0; i < length(x); i++) {
-	    SEXP s = STRING_ELT(x, i);
-	    if(IS_BYTES(s)) {
-		useBytes = TRUE;
-		useUTF8 = FALSE;
-		break;
-	    }
-	    if(ENC_KNOWN(s)) {
-		useUTF8 = TRUE;
-	    }
-	    if(!IS_CACHED(s)) {
-		useCache = FALSE;
-		break;
-	    }
-	}
-	if(!useBytes || useCache) {
-	    for(int i = 0; i < length(table); i++) {
-		SEXP s = STRING_ELT(table, i);
+	if (incomp) { PROTECT(incomp = coerceVector(incomp, type)); nprot++; }
+	data.nomatch = nmatch;
+	HashTableSetup(table, &data, NA_INTEGER);
+	if(type == STRSXP) {
+	    Rboolean useBytes = FALSE;
+	    Rboolean useUTF8 = FALSE;
+	    Rboolean useCache = TRUE;
+	    for(R_xlen_t i = 0; i < length(x); i++) {
+		SEXP s = STRING_ELT(x, i);
 		if(IS_BYTES(s)) {
 		    useBytes = TRUE;
 		    useUTF8 = FALSE;
@@ -961,15 +945,31 @@ SEXP match5(SEXP itable, SEXP ix, int nmatch, SEXP incomp, SEXP env)
 		    break;
 		}
 	    }
+	    if(!useBytes || useCache) {
+		for(int i = 0; i < length(table); i++) {
+		    SEXP s = STRING_ELT(table, i);
+		    if(IS_BYTES(s)) {
+			useBytes = TRUE;
+			useUTF8 = FALSE;
+			break;
+		    }
+		    if(ENC_KNOWN(s)) {
+			useUTF8 = TRUE;
+		    }
+		    if(!IS_CACHED(s)) {
+			useCache = FALSE;
+			break;
+		    }
+		}
+	    }
+	    data.useUTF8 = useUTF8;
+	    data.useCache = useCache;
 	}
-	data.useUTF8 = useUTF8;
-	data.useCache = useCache;
+	PROTECT(data.HashTable); nprot++;
+	DoHashing(table, &data);
+	if (incomp) UndoHashing(incomp, table, &data);
+	ans = HashLookup(table, x, &data);
     }
-    PROTECT(data.HashTable); nprot++;
-    DoHashing(table, &data);
-    if (incomp) UndoHashing(incomp, table, &data);
-    ans = HashLookup(table, x, &data);
-  }
     UNPROTECT(nprot);
     return ans;
 }
