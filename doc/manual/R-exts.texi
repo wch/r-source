@@ -9357,7 +9357,7 @@ static R_NativePrimitiveArgType myC_t[] = @{
 @};
 
 static const R_CMethodDef cMethods[] = @{
-   @{"myC", (DL_FUNC) &myC, 4, myC_t@}
+   @{"myC", (DL_FUNC) &myC, 4, myC_t@},
    @{NULL, NULL, 0, NULL@}
 @};
 @end group
@@ -9710,7 +9710,7 @@ Find all the relevant calls in the @R{} code and edit them to use the
 @smallexample
 temp <- .Call("spline_basis", knots, ord, x, derivs, PACKAGE = "splines")
 y[accept] <- .Call("spline_value", knots, coeff, ord, x[accept], deriv, PACKAGE = "splines")
-y = .Call"spline_value", knots, coef(object), ord, x, deriv, PACKAGE = "splines"))
+y = .Call("spline_value", knots, coef(object), ord, x, deriv, PACKAGE = "splines")
 @end smallexample
 @noindent
 to
@@ -9718,7 +9718,7 @@ to
 @smallexample
 temp <- .Call(C_spline_basis, knots, ord, x, derivs)
 y[accept] <- .Call(C_spline_value, knots, coeff, ord, x[accept], deriv)
-y = .Call(C_spline_value, knots, coef(object), ord, x, deriv))
+y = .Call(C_spline_value, knots, coef(object), ord, x, deriv)
 @end smallexample
 
 Check that there is no @code{exportPattern} directive which
