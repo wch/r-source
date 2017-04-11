@@ -1,7 +1,7 @@
 #  File src/library/base/R/serialize.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -48,8 +48,9 @@ readRDS <- function(file, refhook = NULL)
     if(is.character(file)) {
         con <- gzfile(file, "rb")
         on.exit(close(con))
-    } else if(inherits(file, "connection"))
-        con <- file
+    } else if (inherits(file, "connection"))
+        con <- if(inherits(file, "gzfile") || inherits(file, "gzcon")) file
+               else gzcon(file)
     else stop("bad 'file' argument")
     .Internal(unserializeFromConn(con, refhook))
 }

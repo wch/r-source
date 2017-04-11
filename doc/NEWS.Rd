@@ -15,7 +15,7 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item Placeholder.
+      \item \code{readRDS(url(....))} now works too.% <- port to 3.4.0 patched
     }
   }
 }
