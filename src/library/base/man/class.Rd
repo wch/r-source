@@ -36,14 +36,22 @@ oldClass(x) <- value
   Here, we describe the so called \dQuote{S3} classes (and methods). For
   \dQuote{S4} classes (and methods), see \sQuote{Formal classes} below.
 
+  %% Implementation: -> R_data_class(*, FALSE) ../../../main/attrib.c
   Many \R objects have a \code{class} attribute, a character vector
   giving the names of the classes from which the object \emph{inherits}.
+  (Functions \code{oldClass} and \code{oldClass<-} get and set the
+  attribute, which can also be done directly.)
+
+  %% the (n == 0) clause in R_data_class():
   If the object does not have a class attribute, it has an implicit
-  class, \code{"matrix"}, \code{"array"} or the result of
-  \code{\link{mode}(x)} (except that integer vectors have implicit class
-  \code{"integer"}).  (Functions \code{oldClass} and
-  \code{oldClass<-} get and set the attribute, which can also be done
-  directly.)
+  class, notably \code{"matrix"}, \code{"array"}, \code{"function"} or
+  \code{"numeric"} or the result of
+  \code{\link{typeof}(x)} (which is similar to \code{\link{mode}(x)}),
+  but for type \code{"language"} and \code{\link{mode}} \code{"call"},
+  where the following extra classes exist for the corresponding function
+  \code{\link{call}}s:
+  \code{if}, \code{while}, \code{for}, \code{=}, \code{<-}, \code{(},
+  \code{\{}, \code{call}.
 
   Note that \code{\link{NULL}} objects cannot have attributes (hence not
   classes) and attempting to assign a class is an error.
@@ -133,6 +141,14 @@ class(x) <- c("a", "b")
 inherits(x,"a") #TRUE
 inherits(x, "a", TRUE) # 1
 inherits(x, c("a", "b", "c"), TRUE) # 1 2 0
+
+class( quote(pi) )           # "name"
+## regular calls
+class( quote(sin(pi*x)) )    # "class"
+## special calls
+class( quote(x <- 1) )       # "<-"
+class( quote((1 < 2)) )      # "("
+class( quote( if(8<3) pi ) ) # "if"
 }
 \keyword{methods}
 \keyword{classes}
