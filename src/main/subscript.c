@@ -321,8 +321,10 @@ vectorIndex(SEXP x, SEXP thesub, int start, int stop, int pok, SEXP call,
 		SET_NAMED(CAR(x), NAMED(x));
 	    x = CAR(cx);
 	    if (dup && MAYBE_SHARED(x)) {
+		PROTECT(cx);
 		x = shallow_duplicate(x);
 		SETCAR(cx, x);
+		UNPROTECT(1); /* cx */
 	    }
 	} else {
 	    cx = x;
@@ -330,8 +332,10 @@ vectorIndex(SEXP x, SEXP thesub, int start, int stop, int pok, SEXP call,
 	    if (NAMED(cx) > NAMED(x))
 		SET_NAMED(x, NAMED(cx));
 	    if (dup && MAYBE_SHARED(x)) {
+		PROTECT(cx);
 		x = shallow_duplicate(x);
 		SET_VECTOR_ELT(cx, offset, x);
+		UNPROTECT(1); /* cx */
 	    }
 	}
     }
