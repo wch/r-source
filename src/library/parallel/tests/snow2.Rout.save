@@ -1,5 +1,5 @@
 
-R version 3.4.0 alpha (2017-03-31 r72457)
+R version 3.4.0 RC (2017-04-13 r72512) -- "You Stupid Darkness"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -50,4 +50,4 @@ Calculations on Transformed Scale;  Intervals on Original Scale
 > 
 > proc.time()
    user  system elapsed 
-  0.183   0.025   0.637 
+  0.168   0.021   0.629 

@@ -1,5 +1,5 @@
 
-R version 3.4.0 alpha (2017-03-31 r72457)
+R version 3.4.0 RC (2017-04-13 r72512) -- "You Stupid Darkness"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -362,4 +362,4 @@ difference in location  3.741417e-05  3.741417e-05  3.741417e-05
 > 
 > proc.time()
    user  system elapsed 
-  0.313   0.029   0.331 
+  0.324   0.014   0.327 
