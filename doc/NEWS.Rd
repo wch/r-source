@@ -16,6 +16,8 @@
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{readRDS(url(....))} now works too.% <- port to 3.4.0 patched
+
+      \item \code{printCoefmat()} now also works without column names.
     }
   }
 }
