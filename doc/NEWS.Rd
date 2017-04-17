@@ -9,7 +9,7 @@
 
   \subsection{NEW FEATURES}{
     \itemize{
-      \item Placeholder.
+      \item \code{diag()} gets optional \code{names} argument.
     }
   }
 
