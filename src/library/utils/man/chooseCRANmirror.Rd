@@ -12,7 +12,6 @@
 }
 \usage{
 chooseCRANmirror(graphics = getOption("menu.graphics"), ind = NULL,
-                 useHTTPS = getOption("useHTTPS", TRUE),
                  local.only = FALSE)
 
 getCRANmirrors(all = FALSE, local.only = FALSE)
@@ -24,7 +23,6 @@ getCRANmirrors(all = FALSE, local.only = FALSE)
     text \code{\link{menu}}.}
   
   \item{ind}{Optional numeric value giving which entry to select.}
-  \item{useHTTPS}{Whether to prefer secure mirrors.}
   \item{all}{Logical, get all known mirrors or only the ones flagged as OK.}
   \item{local.only}{Logical, try to get most recent list from the CRAN
     master or use file on local disk only.}
@@ -39,13 +37,8 @@ getCRANmirrors(all = FALSE, local.only = FALSE)
   \code{\link{contrib.url}} if it finds the initial dummy value of
   \code{\link{options}("repos")}.
   
-  The \code{useHTTPS} argument defaults to \code{TRUE}.  With
-  \code{useHTTPS = TRUE}, HTTPS mirrors with mirroring over
-  \command{ssh} will be offered in preference to other mirrors (which
-  are listed in a sub-menu).  If it is set to \code{FALSE}, no secure
-  mirrors will be offered.  Choosing a secure mirror provides some
-  guarantees on the identity of the site chosen and so is
-  recommended. (All \R builds support downloading from HTTPS sites.)
+  HTTPS mirrors with mirroring over \command{ssh} will be offered in
+  preference to other mirrors (which are listed in a sub-menu).
 
   \code{ind} chooses a row in the list of current mirrors, by number. It
   is best used with \code{local.only = TRUE} and row numbers in

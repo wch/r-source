@@ -709,9 +709,6 @@ getOption(x, default = NULL)
       used.
 #endif
     }
-
-    \item{\code{useHTTPS}:}{logical.  Used by \code{\link{chooseCRANmirror}}:
-      are secure mirrors preferred?  If not set, \code{TRUE} is assumed.}
   }
 }
 \section{Options set in package parallel}{
