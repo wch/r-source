@@ -2310,7 +2310,7 @@ framework installed from @uref{https://r.research.att.com/libs/}: the
 appropriate version at the time of writing was
 @uref{https://r.research.att.com/@/libs/@/GTK_2.24.17-X11.pkg}
 
-The default compilers specified are
+The default compilers specified are shown in file
 @file{/Library/Frameworks/R.framework/Resources/etc/Makeconf}.  At the
 time of writing these setting assumed that the C, Fortran and C++
 compilers were on the path, and @command{gfortan} 6.1.0 (see
@@ -2319,16 +2319,16 @@ or in a file such as @file{~/.R/Makevars} (see the next section).
 Entries which may need to be changed include @samp{CC}, @samp{CXX},
 @samp{FC}, @samp{F77}, @samp{FLIBS} and the corresponding flags, and
 perhaps @samp{CXXCPP}, @samp{DYLIB_LD}, @samp{MAIN_LD},
-@samp{SHLIB_CXXLD}, @samp{SHLIB_FCLD} and @samp{SHLIB_LD}, as well as the
-@samp{CXX11}, @samp{CXX14} and @samp{CXX17} variants
+@samp{SHLIB_CXXLD}, @samp{SHLIB_FCLD} and @samp{SHLIB_LD}, as well as
+the @samp{CXX11}, @samp{CXX14} and @samp{CXX17} variants
 
 So for example you could select a specific build of @command{clang} for
 both C and C++ with extensive checking by having in @file{~/.R/Makevars}
 @example
 CC = /usr/local/clang4/bin/clang
 CXX = /usr/local/clang4/bin/clang++
-CFLAGS = "-g -O2 -Wall -pedantic -Wconversion -Wno-sign-conversion"
-CXXFLAGS = "-g -O2 -Wall -pedantic -Wconversion -Wno-sign-conversion"
+CFLAGS = -g -O2 -Wall -pedantic -Wconversion -Wno-sign-conversion
+CXXFLAGS = -g -O2 -Wall -pedantic -Wconversion -Wno-sign-conversion
 CXX11 = $CXX
 CXX14 = $CXX
 CXX17 = $CXX
@@ -2345,23 +2345,25 @@ FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin16/6.3.0
 @noindent
 (line split for legibility here).
 
-If using the C/C++ compiler from the Command Line Tools (which does not
-have OpenMP support) one can include
+If using the C/C++ compilers from the Command Line Tools (which does not
+have OpenMP support) one will need to include
 @example
 SHLIB_OPENMP_CFLAGS =
 SHLIB_OPENMP_CXXFLAGS =
 @end example
+@noindent
+to compile OpenMP-using packages.
 
-Apple includes a wealth of Open Source libraries in macOS but
-increasingly without the corresponding headers (not even in Xcode nor
-the Command Line Tools): they are often rather old versions.  If
-installing packages from source using them it is usually easiest to
-install a statically-linked up-to-date copy of the Open Source package
-from its sources or from @uref{https://r.research.att.com/libs}.  But
-sometimes it is desirable/necessary to use Apple's dynamically linked
-library, in which case appropriate headers could be extracted from the
+Apple includes many Open Source libraries in macOS but increasingly
+without the corresponding headers (not even in Xcode nor the Command
+Line Tools): they are often rather old versions.  If installing packages
+from source using them it is usually easiest to install a
+statically-linked up-to-date copy of the Open Source package from its
+sources or from @uref{https://r.research.att.com/libs}.  But sometimes
+it is desirable/necessary to use Apple's dynamically linked library, in
+which case appropriate headers could be extracted from the
 sources@footnote{Note that capitalization and version may differ from
-the Open Source project.} available via
+the Open Source project.} available @emph{via}
 @uref{https://opensource.apple.com}.
 
 @node Customizing package compilation, Multiple sub-architectures, macOS packages, Installing packages
@@ -4942,7 +4944,7 @@ R_LD_LIBRARY_PATH=/usr/local/clang4/lib:/usr/local/lib
 @end example
 @noindent
 The care to specify library paths is to ensure that the OpenMP runtime
-library, here @file{/usr/local/clang/lib/libomp.dylib}, is found when
+library, here @file{/usr/local/clang4/lib/libomp.dylib}, is found when
 needed. If this works, you should see the line
 @example
 checking whether OpenMP SIMD reduction is supported... yes
