@@ -39,6 +39,9 @@
     \itemize{
       \item \code{getParseData()} gave incorrect column information when
       code contained multi-byte characters.  (\PR{17254})
+      
+      \item Asking for help using expressions like \code{?stats::cor()}
+      did not work.  (\PR{17250})
     }
   }
 }
