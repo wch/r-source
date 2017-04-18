@@ -34,6 +34,13 @@
       will be removed in \R 3.4.1.
     }
   }
+  
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{getParseData()} gave incorrect column information when
+      code contained multi-byte characters.  (\PR{17254})
+    }
+  }
 }
 
 \section{\Rlogo CHANGES IN R 3.4.0}{
