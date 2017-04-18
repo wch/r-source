@@ -860,20 +860,14 @@ getCRANmirrors <- function(all = FALSE, local.only = FALSE)
                           fixed = TRUE))
     	mHTTPS <- m[isHTTPS,]
     	mHTTP <- m[!isHTTPS,]
-    	if (useHTTPS) {
-    	    m <- mHTTPS
-    	    if (!nrow(m)) {
-    	    	useHTTPS <- FALSE
-    	    	m <- mHTTP
-    	    }
-    	}
         httpsLabel <- paste("Secure", label, "mirrors")
         httpLabel <- paste("Other", label, "mirrors")
+        m <- mHTTPS
         res <- menu(c(m[, 1L], "(other mirrors)"), graphics, httpsLabel)
         if (res > nrow(m)) {
             m <- mHTTP
             res <- menu(m[, 1L], graphics, httpLabel)
-    	    }
+        }
     }
     if (res > 0L) {
         URL <- m[res, "URL"]
