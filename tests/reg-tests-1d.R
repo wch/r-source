@@ -725,6 +725,13 @@ stopifnot(length(a1) == 1, length(a2) == 2)
 ## both gave length 1
 
 
+## by.data.frame() called not from toplevel w different arg names
+dby <- function(dat, ind, F) by(dat, ind, FUN=F)
+dby(warpbreaks, warpbreaks[,"tension"], summary)
+stopifnot(is.list(r <- .Last.value), inherits(r, "by"))
+## failed after r72531
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())
