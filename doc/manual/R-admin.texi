@@ -1750,7 +1750,9 @@ and install it. This runs on macOS 10.11 and later (El Capitan, Sierra,
 @dots{}).
 
 Installers for R-patched and R-devel are usually available from
-@uref{https://r.research.att.com}.
+@uref{https://r.research.att.com}.  (Some of these packages are
+unsigned: to install those Control/right/two-finger click, select
+@samp{Open with} and @samp{Installer}.)
 
 For some older versions of the OS you can in principle (it is little
 tested) install @R{} from the sources (see @ref{macOS}).
@@ -1781,9 +1783,9 @@ package and the @code{X11} device: attempting to use these without
 XQuartz will remind you.  Also the cairographics-based devices (which
 are not often used on macOS) such as @code{png(type = "cairo")}.
 
-If you update your macOS version, you should re-install @R{} (and perhaps
-XQuartz): the installer tailors the installation to the current version
-of the OS.
+If you update your macOS version, you should re-install @R{} (and
+perhaps XQuartz): the installer may tailor the installation to the
+current version of the OS.
 
 For building @R{} from source, see @ref{macOS}.
 
@@ -1872,15 +1874,18 @@ sudo rm -rf /Library/Frameworks/R.framework /Applications/R.app \
    /usr/local/bin/R /usr/local/bin/Rscript
 @end example
 
-The installation consists of four Apple packages:
-@code{org.r-project.R.x86_64.fw.pkg},
-@code{org.r-project.R.x86_64.GUI.pkg},
+The installation consists of up to four Apple packages:@footnote{The
+framework for @R{} 3.3.x was named
+@code{org.r-project.R.mavericks.fw.pkg}: use @command{pkgutil --pkgs |
+grep org.r-project} to check for earlier versions of @R{}.}
+@code{org.r-project.R.el-capitan.fw.pkg},
+@code{org.r-project.R.el-capitan.GUI.pkg},
 @code{org.r-project.x86_64.tcltk.x11} and
-@code{org.r-project.x86_64.texinfo} (not all of which need be
-installed). You can use @code{pkgutil --forget} if you want the Apple
-Installer to forget about the package without deleting its files (useful
-for the @R{} framework when installing multiple @R{} versions in parallel),
-or after you have deleted the files.
+@code{org.r-project.x86_64.texinfo}. You can use @code{pkgutil --forget}
+if you want the Apple Installer to forget about the package without
+deleting its files (useful for the @R{} framework when installing
+multiple @R{} versions in parallel), or after you have deleted the
+files.
 
 Uninstalling the Tcl/Tk or Texinfo components (which are installed under
 @file{/usr/local}) is not as simple.  You can list the files they installed
@@ -1909,10 +1914,12 @@ These are paths relative to @file{/}, the root of the file system.
 @node Multiple versions,  , Uninstalling under macOS, Installing R under macOS
 @section Multiple versions
 
-The installer will remove any previous version of the @R{} framework
-which it finds installed.  This can be avoided by using @command{pkgutil
---forget} (see the previous section).  However, note that different
-versions are installed under
+The installer will remove any previous version@footnote{More precisely,
+of the package of the same name: this means that installing a package for
+3.3.x does 3.4.x does not remove an installation of the other series.} of
+the @R{} framework which it finds installed.  This can be avoided by
+using @command{pkgutil --forget} (see the previous section).  However,
+note that different versions are installed under
 @file{/Library/Frameworks/R.framework/Versions} as @file{3.3},
 @file{3.4} and so on, so it is not possible to have different
 @samp{3.x.y} versions installed for the same @samp{x}.
