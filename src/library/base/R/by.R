@@ -1,7 +1,7 @@
 #  File src/library/base/R/by.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2013 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -32,8 +32,9 @@ by.default <- function(data, INDICES, FUN, ..., simplify = TRUE)
             names(IND) <- deparse(substitute(INDICES))[1L]
         } else IND <- INDICES
         FUNx <- function(x) FUN(dd[x,], ...)
-	structure(eval(substitute(tapply(seq_len(nrow(dd)), IND, FUNx,
-					 simplify = simplify)), dd),
+        nd <- nrow(dd)
+	structure(eval(substitute(tapply(seq_len(nd), IND, FUNx,
+				      simplify = simplify)), dd),
 		  call = match.call(),
 		  class = "by")
     }
@@ -47,7 +48,8 @@ by.data.frame <- function(data, INDICES, FUN, ..., simplify = TRUE)
         names(IND) <- deparse(substitute(INDICES))[1L]
     } else IND <- INDICES
     FUNx <- function(x) FUN(data[x,, drop=FALSE], ...) # (PR#10506)
-    structure(eval(substitute(tapply(seq_len(nrow(data)), IND, FUNx,
+    nd <- nrow(data)
+    structure(eval(substitute(tapply(seq_len(nd), IND, FUNx,
 				     simplify = simplify)), data),
 	      call = match.call(),
 	      class = "by")
