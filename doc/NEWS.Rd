@@ -28,6 +28,10 @@
 
       \item The S4 methods on \code{Ops()} for the \code{"structure"} class no
       longer cause infinite recursion when the structure is not an S4 object.
+
+      \item \code{nlm(f, ..)} for the case where \code{f()} has a
+      \code{"hessian"} attribute now computes \eqn{LL' = H + µI} correctly,
+      (part 1 of \PR{17249}).
     }
   }
 }
@@ -40,12 +44,12 @@
       will be removed in \R 3.4.1.
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{getParseData()} gave incorrect column information when
       code contained multi-byte characters.  (\PR{17254})
-      
+
       \item Asking for help using expressions like \code{?stats::cor()}
       did not work.  (\PR{17250})
     }
