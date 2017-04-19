@@ -545,6 +545,8 @@ AC_DEFUN([R_PROG_CXX],
 [AC_CACHE_CHECK([whether ${CXX} ${CXXFLAGS} can compile C++ code],
 [r_cv_prog_cxx],
 [AC_LANG_PUSH([C++])dnl
+r_save_CXX="${CXX}"
+CXX="${CXX} ${CXXSTD}"
 AC_COMPILE_IFELSE([AC_LANG_SOURCE(
 [#ifndef __cplusplus
 # error "not a C++ compiler"
@@ -552,11 +554,13 @@ AC_COMPILE_IFELSE([AC_LANG_SOURCE(
 #include <cmath>
 ])],
           [r_cv_prog_cxx=yes], [r_cv_prog_cxx=no])
+CXX="${r_save_CXX}"	  
 AC_LANG_POP([C++])dnl
 ])
 if test "${r_cv_prog_cxx}" = no; then
   CXX=
   CXXFLAGS=
+  CXXSTD=
 fi
 ])# R_PROG_CXX
 

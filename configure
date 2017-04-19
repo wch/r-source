@@ -7539,9 +7539,6 @@ else
 fi
 
 
-## User may have set CXXSTD but not set CXX, so add to flags pro tem
-r_save_CXXFLAGS="${CXXFLAGS}"
-CXXFLAGS="${CXXSTD} ${CXXFLAGS}"
 ac_ext=cpp
 ac_cpp='$CXXCPP $CPPFLAGS'
 ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
@@ -7811,6 +7808,8 @@ ac_cpp='$CXXCPP $CPPFLAGS'
 ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
 ac_link='$CXX -o conftest$ac_exeext $CXXFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
 ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
+r_save_CXX="${CXX}"
+CXX="${CXX} ${CXXSTD}"
 cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 #ifndef __cplusplus
@@ -7825,6 +7824,7 @@ else
   r_cv_prog_cxx=no
 fi
 rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+CXX="${r_save_CXX}"
 ac_ext=c
 ac_cpp='$CPP $CPPFLAGS'
 ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
@@ -7837,9 +7837,9 @@ $as_echo "$r_cv_prog_cxx" >&6; }
 if test "${r_cv_prog_cxx}" = no; then
   CXX=
   CXXFLAGS=
+  CXXSTD=
 fi
 
-CXXFLAGS="${r_save_CXXFLAGS}"
 
 ### R_PROG_CXX98FLAG
 
