@@ -316,7 +316,7 @@
                   else
                     value
               })
-    setMethod("Ops", c("vector", "structure"), #where = where,
+    setMethod("Ops", c("vector", "structure"), where = where,
               function(e1, e2) {
                   value <- callGeneric(if (isS4(e1)) e1@.Data else e1,
                                        if (isS4(e2)) e2@.Data else e2)
