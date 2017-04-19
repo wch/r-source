@@ -10,10 +10,13 @@
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{diag()} gets optional \code{names} argument.
- 
+
       \item \code{chooseCRANmirror} and \code{chooseBioCmirror} no
       longer have a \code{useHTTPS} argument, not needed now all \R
       builds support \samp{https://} downloads.
+
+      \item New \code{summary()} method for \code{warnings()} with a
+      (somewhat experimental) \code{print()} method.
     }
   }
 
