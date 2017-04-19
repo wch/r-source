@@ -905,3 +905,10 @@ setMethod("[", "bar", function(x, i, j, ..., flag = FALSE, drop = FALSE) {
 BAR <- new("bar")
 stopifnot(identical(BAR[1L], FALSE))
 stopifnot(identical(BAR[1L, , flag=TRUE], TRUE))
+
+setClass("MyInteger",
+         representation("integer")
+         )
+i <- new("MyInteger", 1L)
+m <- matrix(rnorm(300), 30,10)
+stopifnot(identical(i*m, m))
