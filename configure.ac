@@ -636,13 +636,9 @@ R_PROG_CPP_CPPFLAGS
 userFFLAGS=${FFLAGS}
 R_PROG_F77
 
-## User may have set CXXSTD but not set CXX, so add to flags pro tem
-r_save_CXXFLAGS="${CXXFLAGS}"
-CXXFLAGS="${CXXSTD} ${CXXFLAGS}"
 AC_PROG_CXX
 ## check this actually compiles
 R_PROG_CXX
-CXXFLAGS="${r_save_CXXFLAGS}"
 
 ### R_PROG_CXX98FLAG
 
