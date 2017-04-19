@@ -32,6 +32,10 @@
       \item \code{nlm(f, ..)} for the case where \code{f()} has a
       \code{"hessian"} attribute now computes \eqn{LL' = H + µI} correctly,
       (part 1 of \PR{17249}).
+
+      \item An S4 method that \dQuote{rematches} to its generic and
+      overrides the default value of a generic formal argument to
+      \code{NULL} no longer drops the argument from its formals.
     }
   }
 }

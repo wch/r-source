@@ -906,9 +906,19 @@ BAR <- new("bar")
 stopifnot(identical(BAR[1L], FALSE))
 stopifnot(identical(BAR[1L, , flag=TRUE], TRUE))
 
+## avoid infinite recursion on Ops,structure methods
 setClass("MyInteger",
          representation("integer")
          )
 i <- new("MyInteger", 1L)
 m <- matrix(rnorm(300), 30,10)
 stopifnot(identical(i*m, m))
+
+## when rematching, do not drop arg with NULL default
+setGeneric("genericExtraArg",
+           function(x, y, extra) standardGeneric("genericExtraArg"),
+           signature="x")
+
+setMethod("genericExtraArg", "ANY", function(x, y=NULL) y)
+
+stopifnot(identical(genericExtraArg("foo", 1L), 1L))
