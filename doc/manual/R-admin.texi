@@ -5287,7 +5287,7 @@ CXXSTD="-library=stlport4"
 CXXFLAGS=-O
 FC=$F77
 FCFLAGS=$FFLAGS
-FCLIBS=-lfsu
+FCLIBS="-lfsu -lfui"
 R_LD_LIBRARY_PATH="/opt/developerstudio12.5/lib:/usr/local/lib:/opt/csw/lib"
 @end example
 
@@ -5300,6 +5300,7 @@ shared object it does not link against the Fortran runtime libraries.
 In @R{} this is only used for packages with F9x code, hence the
 @code{FCLIBS} definition (which sufficed for @acronym{CRAN} packages
 with 12.5).
+@c -lfui is needed for quantre's use of ETIME
 
 You can target specific Sparc architectures for (slightly) higher
 performance: @option{-xtarget=native} (in @code{CFLAGS} etc) tunes the
