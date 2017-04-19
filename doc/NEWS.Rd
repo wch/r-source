@@ -22,6 +22,9 @@
       \item \code{readRDS(url(....))} now works too.% <- port to 3.4.0 patched
 
       \item \code{printCoefmat()} now also works without column names.
+
+      \item The S4 methods on \code{Ops()} for the \code{"structure"} class no
+      longer cause infinite recursion when the structure is not an S4 object.
     }
   }
 }
