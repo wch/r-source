@@ -22,8 +22,8 @@
 {
     op <- options()
     op.stats <-
-        list(contrasts = c(unordered="contr.treatment",
-             ordered="contr.poly"),
+        list(contrasts =
+		 c(unordered = "contr.treatment", ordered = "contr.poly"),
              na.action = "na.omit",
              show.coef.Pvalues = TRUE,
              show.signif.stars = TRUE,

@@ -299,7 +299,8 @@ loadNamespace <- function (package, lib.loc = NULL,
                                   function(sym) {
                                       varName <- paste0(fixes[1L], sym$name, fixes[2L])
                                       if(exists(varName, envir = env, inherits = FALSE))
-                                          warning(gettextf("failed to assign RegisteredNativeSymbol for %s to %s since %s is already defined in the %s namespace",
+                                          warning(gettextf(
+	"failed to assign RegisteredNativeSymbol for %s to %s since %s is already defined in the %s namespace",
                                                            sym$name, varName, varName, sQuote(package)),
                                                   domain = NA, call. = FALSE)
                                       else
@@ -323,11 +324,13 @@ loadNamespace <- function (package, lib.loc = NULL,
                        origVarName <- symNames[i]
                        if(exists(varName, envir = env, inherits = FALSE))
                            if(origVarName != varName)
-                               warning(gettextf("failed to assign NativeSymbolInfo for %s to %s since %s is already defined in the %s namespace",
+                               warning(gettextf(
+		"failed to assign NativeSymbolInfo for %s to %s since %s is already defined in the %s namespace",
                                                 origVarName, varName, varName, sQuote(package)),
                                        domain = NA, call. = FALSE)
                            else
-                               warning(gettextf("failed to assign NativeSymbolInfo for %s since %s is already defined in the %s namespace",
+                               warning(gettextf(
+		"failed to assign NativeSymbolInfo for %s since %s is already defined in the %s namespace",
                                                 origVarName, varName, sQuote(package)),
                                        domain = NA, call. = FALSE)
                        else
@@ -583,7 +586,9 @@ loadNamespace <- function (package, lib.loc = NULL,
             if( length(pClasses) ) {
                 good <- vapply(pClasses, methods::isClass, NA, where = ns)
                 if( !any(good) && length(nsInfo$exportClassPatterns))
-                    warning(gettextf("'exportClassPattern' specified in 'NAMESPACE' but no matching classes in package %s", sQuote(package)),
+                    warning(gettextf(
+				"'exportClassPattern' specified in 'NAMESPACE' but no matching classes in package %s",
+				sQuote(package)),
                             call. = FALSE, domain = NA)
                 expClasses <- c(expClasses, pClasses[good])
             }
@@ -626,8 +631,8 @@ loadNamespace <- function (package, lib.loc = NULL,
                         bad <- sort(unique(addGenerics[!ok]))
                         msg <-
                             ngettext(length(bad),
-                                     "Function found when exporting methods from the namespace %s which is not S4 generic: %s",
-                                     "Functions found when exporting methods from the namespace %s which are not S4 generic: %s")
+			"Function found when exporting methods from the namespace %s which is not S4 generic: %s",
+			"Functions found when exporting methods from the namespace %s which are not S4 generic: %s")
                         stop(sprintf(msg, sQuote(package),
                                      paste(sQuote(bad), collapse = ", ")),
                              domain = NA, call. = FALSE)
@@ -1035,9 +1040,10 @@ namespaceImportMethods <- function(self, ns, vars, from = NULL)
                 fun <- methods::getFunction(g, mustFind = FALSE, where = self)
                 if(is.primitive(fun) || methods::is(fun, "genericFunction")) {}
                 else
-                    warning(gettextf("No generic function %s found corresponding to requested imported methods from package %s when loading %s (malformed exports?)",
-                                 sQuote(g), sQuote(pkg), sQuote(from)),
-                        domain = NA, call. = FALSE)
+                    warning(gettextf(
+	"No generic function %s found corresponding to requested imported methods from package %s when loading %s (malformed exports?)",
+				     sQuote(g), sQuote(pkg), sQuote(from)),
+			    domain = NA, call. = FALSE)
             }
         }
     }

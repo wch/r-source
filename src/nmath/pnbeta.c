@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2000-2013 The R Core Team
+ *  Copyright (C) 2000-2015 The R Core Team
  *
  *  Algorithm AS 226 Appl. Statist. (1987) Vol. 36, No. 2
  *  by Russell V. Lenth
@@ -88,7 +88,6 @@ pnbeta2(double x, double o_x, double a, double b, double ncp,
 	int lower_tail, int log_p)
 {
     LDOUBLE ans = pnbeta_raw(x, o_x, a,b, ncp);
-
 
     /* return R_DT_val(ans), but we want to warn about cancellation here */
     if (lower_tail)
