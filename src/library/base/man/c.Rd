@@ -54,7 +54,7 @@ c(\dots)
 }
 \section{S4 methods}{
   This function is S4 generic, but with argument list
-  \code{(x, ..., recursive = FALSE)}.
+  \code{(x, ...)}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
