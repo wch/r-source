@@ -36,6 +36,10 @@
       \item An S4 method that \dQuote{rematches} to its generic and
       overrides the default value of a generic formal argument to
       \code{NULL} no longer drops the argument from its formals.
+
+      \item \code{Rscript} can now accept more than one argument given on
+      the \samp{#!} line of a script. Previously, one could only pass a
+      single argument on the \samp{#!} line in Linux.
     }
   }
 }
