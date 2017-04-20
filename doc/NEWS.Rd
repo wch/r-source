@@ -30,7 +30,7 @@
       longer cause infinite recursion when the structure is not an S4 object.
 
       \item \code{nlm(f, ..)} for the case where \code{f()} has a
-      \code{"hessian"} attribute now computes \eqn{LL' = H + µI} correctly,
+      \code{"hessian"} attribute now computes \eqn{LL' = H + \mu I}{LL' = H + µI} correctly,
       (part 1 of \PR{17249}).
 
       \item An S4 method that \dQuote{rematches} to its generic and
