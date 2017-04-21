@@ -41,6 +41,10 @@
       \item \code{Rscript} can now accept more than one argument given on
       the \samp{#!} line of a script. Previously, one could only pass a
       single argument on the \samp{#!} line in Linux.
+
+      \item Dispatch on \code{\dots} calls the method using its name,
+      instead of \code{.Method} (for consistency with default dispatch),
+      and only attempts to pass non-missing arguments from the generic.
     }
   }
 }
