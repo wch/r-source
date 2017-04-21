@@ -1,6 +1,6 @@
 % File src/library/utils/man/Question.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2009 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Question}
@@ -83,7 +83,11 @@
 
   Both approaches make use of any inherited methods; the signature of
   the method to be looked up is found by using \code{selectMethod}
-  (see the documentation for \code{\link{getMethod}}).
+  (see the documentation for \code{\link{getMethod}}).  A limitation
+  is that methods in packages (as opposed to regular functions) will only 
+  be found if the package exporting them is on the search list, even 
+  if it is specified explicitly using the \code{?package::generic()} 
+  notation.  
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
