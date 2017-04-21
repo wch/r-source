@@ -18,6 +18,9 @@
 
       \item New \code{summary()} method for \code{warnings()} with a
       (somewhat experimental) \code{print()} method.
+
+      \item \code{.self} is now automatically registered as a global
+      variable when registering a reference class method.
     }
   }
 
