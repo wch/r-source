@@ -922,3 +922,19 @@ setGeneric("genericExtraArg",
 setMethod("genericExtraArg", "ANY", function(x, y=NULL) y)
 
 stopifnot(identical(genericExtraArg("foo", 1L), 1L))
+
+## callNextMethod() was broken for ... dispatch
+f <- function(...) length(list(...))
+setGeneric("f")
+setMethod("f", "character", function(...){ callNextMethod() })
+stopifnot(identical(f(1, 2, 3), 3L))
+stopifnot(identical(f("a", "b", "c"), 3L))
+
+## ... dispatch was evaluating missing arguments in the generic frame
+f <- function(x, ..., a = b) {
+    b <- "a"
+    a
+}
+setGeneric("f", signature = "...")
+stopifnot(identical(f(a=1), 1))
+stopifnot(identical(f(), "a"))

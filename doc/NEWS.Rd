@@ -45,6 +45,8 @@
       \item Dispatch on \code{\dots} calls the method using its name,
       instead of \code{.Method} (for consistency with default dispatch),
       and only attempts to pass non-missing arguments from the generic.
+
+      \item \code{callNextMethod()} works for \code{\dots} methods.
     }
   }
 }
