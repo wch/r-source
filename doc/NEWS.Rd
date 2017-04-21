@@ -9,9 +9,10 @@
 
   \subsection{NEW FEATURES}{
     \itemize{
-      \item \code{diag()} gets optional \code{names} argument.
+      \item \code{diag()} gets optional \code{names} argument: this
+      requires updates to packages defining S4 methods for it.
 
-      \item \code{chooseCRANmirror} and \code{chooseBioCmirror} no
+      \item \code{chooseCRANmirror()} and \code{chooseBioCmirror()} no
       longer have a \code{useHTTPS} argument, not needed now all \R
       builds support \samp{https://} downloads.
 
@@ -30,8 +31,8 @@
       longer cause infinite recursion when the structure is not an S4 object.
 
       \item \code{nlm(f, ..)} for the case where \code{f()} has a
-      \code{"hessian"} attribute now computes \eqn{LL' = H + \mu I}{LL' = H + µI} correctly,
-      (part 1 of \PR{17249}).
+      \code{"hessian"} attribute now computes
+      \eqn{LL' = H + \mu I}{LL' = H + µI} correctly.  (Part 1 of \PR{17249}).
 
       \item An S4 method that \dQuote{rematches} to its generic and
       overrides the default value of a generic formal argument to
