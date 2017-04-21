@@ -90,7 +90,7 @@
   \R.  The initial implementation of the corresponding selection and
   dispatch is in an R function, for flexibility while the new
   mechanism is being studied.  In this implementation, a local version
-  of \code{setGeneric} is inserted in the generic function's
+  of \code{standardGeneric} is inserted in the generic function's
   environment.  The local version selects a method according to the
   criteria above and calls that method, from the environment of the
   generic function.  This is slightly different from the action taken
