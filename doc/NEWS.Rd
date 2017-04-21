@@ -5,6 +5,16 @@
 \title{R News}
 \encoding{UTF-8}
 
+\section{\Rlogo CHANGES IN R 3.4.0 patched}{
+
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{getParseData()} gave incorrect column information when
+      code contained multi-byte characters.  (\PR{17254})
+    }
+  }
+}
+
 \section{\Rlogo CHANGES IN R 3.4.0}{
 
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
