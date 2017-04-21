@@ -7,11 +7,18 @@
 
 \section{\Rlogo CHANGES IN R 3.4.0 patched}{
 
+  \subsection{INSTALLATION on a UNIX-ALIKE}{
+    \itemize{
+      \item The deprecated support for PCRE versions older than 8.20
+      will be removed in \R 3.4.1.
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{getParseData()} gave incorrect column information when
       code contained multi-byte characters.  (\PR{17254})
-      
+
       \item Asking for help using expressions like \code{?stats::cor()}
       did not work.  (\PR{17250})
     }

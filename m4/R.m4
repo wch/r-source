@@ -3150,7 +3150,7 @@ caddr_t hello() {
 ## ------
 ## If selected, try finding system pcre library and headers.
 ## RedHat put the headers in /usr/include/pcre.
-## There are known problems < 8.10, and important bug fixes in 8.32
+## JIT was possible in >= 8.20 , and important bug fixes in 8.32
 AC_DEFUN([R_PCRE],
 [AC_CHECK_LIB(pcre, pcre_fullinfo, [have_pcre=yes], [have_pcre=no])
 if test "${have_pcre}" = yes; then
@@ -3163,7 +3163,7 @@ fi
 if test "x${have_pcre}" = xyes; then
 r_save_LIBS="${LIBS}"
 LIBS="-lpcre ${LIBS}"
-AC_CACHE_CHECK([if PCRE version >= 8.10, < 10.0 and has UTF-8 support], [r_cv_have_pcre810],
+AC_CACHE_CHECK([if PCRE version >= 8.20, < 10.0 and has UTF-8 support], [r_cv_have_pcre820],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #ifdef HAVE_PCRE_PCRE_H
 #include <pcre/pcre.h>
@@ -3176,7 +3176,7 @@ int main() {
 #ifdef PCRE_MAJOR
 #if PCRE_MAJOR > 8
   exit(1);
-#elif PCRE_MAJOR == 8 && PCRE_MINOR >= 10
+#elif PCRE_MAJOR == 8 && PCRE_MINOR >= 20
 {
     int ans;
     int res = pcre_config(PCRE_CONFIG_UTF8, &ans);
@@ -3189,9 +3189,9 @@ int main() {
   exit(1);
 #endif
 }
-]])], [r_cv_have_pcre810=yes], [r_cv_have_pcre810=no], [r_cv_have_pcre810=no])])
+]])], [r_cv_have_pcre820=yes], [r_cv_have_pcre820=no], [r_cv_have_pcre820=no])])
 fi
-if test "x${r_cv_have_pcre810}" != xyes; then
+if test "x${r_cv_have_pcre820}" != xyes; then
   have_pcre=no
   LIBS="${r_save_LIBS}"
 else
@@ -3215,8 +3215,8 @@ int main() {
 fi
 
 AC_MSG_CHECKING([whether PCRE support suffices])
-if test "x${r_cv_have_pcre810}" != xyes; then
-  AC_MSG_ERROR([pcre >= 8.10 library and headers are required])
+if test "x${r_cv_have_pcre820}" != xyes; then
+  AC_MSG_ERROR([pcre >= 8.20 library and headers are required])
 else
   AC_MSG_RESULT([yes])
 fi
