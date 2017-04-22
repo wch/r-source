@@ -21,6 +21,8 @@
 
       \item Asking for help using expressions like \code{?stats::cor()}
       did not work.  (\PR{17250})
+
+      \item \code{readRDS(url(....))} now works too.
     }
   }
 }
