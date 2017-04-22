@@ -12,6 +12,10 @@ if(!capabilities()["libcurl"]) {
 if(.Platform$OS.type == "unix" &&
    is.null(nsl("cran.r-project.org"))) q()
 
+## Some platforms have problems with certificates, so skip tests there
+junk <- tryCatch(curlGetHeaders("http://bugs.r-project.org"),
+                 error = function(e) q())
+
 example(curlGetHeaders, run.donttest = TRUE)
 
 tf <- tempfile()
