@@ -10,7 +10,7 @@
   \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
       \item The deprecated support for PCRE versions older than 8.20
-      will be removed in \R 3.4.1.
+      has been removed.
     }
   }
 
