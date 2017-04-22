@@ -9,7 +9,7 @@
 
   \subsection{NEW FEATURES}{
     \itemize{
-      \item \code{diag()} gets optional \code{names} argument: this
+      \item \code{diag()} gets an optional \code{names} argument: this
       requires updates to packages defining S4 methods for it.
 
       \item \code{chooseCRANmirror()} and \code{chooseBioCmirror()} no
@@ -59,7 +59,7 @@
   \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
       \item The deprecated support for PCRE versions older than 8.20
-      will be removed in \R 3.4.1.
+      has been removed.
     }
   }
 
