@@ -5052,9 +5052,9 @@ erf expm1 fmin fmax lgamma lround loglp round snprintf strcasecmp trunc
 functions @code{strdup} and @code{strncasecmp} and constants @code{M_PI}
 and @code{M_LN2} (see the previous item).  @R{} has long provided
 @code{fmax2}, @code{fmin2}, @code{fround}, @code{ftrunc},
-@code{lgammafn}, @code{log1p} (if needed) and many of the X/Open
-constants, declared in header @file{Rmath.h}.  Uses of @code{erf} can be
-replaced by @code{pnorm} (see the @R{} help page for the latter).
+@code{lgammafn} and many of the X/Open constants, declared in header
+@file{Rmath.h}.  Uses of @code{erf} can be replaced by @code{pnorm} (see
+the @R{} help page for the latter).
 
 @item
 Using @code{alloca} portably is tricky: it is neither an ISO C nor a
