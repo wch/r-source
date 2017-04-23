@@ -622,9 +622,9 @@ installed.packages <-
             ## it is actually 32-bit on some systems)
             enc <- sprintf("%d_%s", nchar(base), .Call(C_crc64, base))
             dest <- file.path(tempdir(), paste0("libloc_", enc, ".rds"))
-            if(file.exists(dest) &&
-               file.mtime(dest) > file.mtime(lib) &&
-               (val <- readRDS(dest))$base == base)
+            test <- file.exists(dest) && file.mtime(dest) > file.mtime(lib) &&
+                (val <- readRDS(dest))$base == base
+            if(isTRUE(as.vector(test))) # strip attributes if any
                 ## use the cache file
                 retval <- rbind(retval, val$value)
             else {
