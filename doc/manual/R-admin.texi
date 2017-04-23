@@ -4727,6 +4727,9 @@ may also be necessary to set the @command{pkg-config} path, e.g.@: by
 @example
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
 @end example
+@noindent
+The 32-bit system @code{libcurl} did not work with the system CA
+certificates: this is worked around in @R{}'s test suite.
 
 64-bit versions of Linux are built with support for files > 2Gb, and
 32-bit versions will be if possible unless @option{--disable-largefile}
