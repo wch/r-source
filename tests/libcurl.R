@@ -73,7 +73,12 @@ showConnections(all = TRUE)
 ## Some platforms have problems with certificates,
 ## so allow them to skip the https tests
 junk <- tryCatch(curlGetHeaders("http://bugs.r-project.org"),
-                 error = function(e) q())
+                 error = function(e) {
+			 message("Check for working https failed:\n\t",
+				 conditionMessage(e), 
+				 "skipping https tests\n")
+			 q()
+		 })
 
 example(curlGetHeaders, run.donttest = TRUE)
 
