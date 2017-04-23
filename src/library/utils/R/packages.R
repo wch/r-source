@@ -624,7 +624,7 @@ installed.packages <-
             dest <- file.path(tempdir(), paste0("libloc_", enc, ".rds"))
             test <- file.exists(dest) && file.mtime(dest) > file.mtime(lib) &&
                 (val <- readRDS(dest))$base == base
-            if(isTRUE(test))
+            if(isTRUE(as.vector(test)))
                 ## use the cache file
                 retval <- rbind(retval, val$value)
             else {

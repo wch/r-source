@@ -70,6 +70,9 @@
       did not work.  (\PR{17250})
 
       \item \code{readRDS(url(....))} now works too.
+
+      \item \code{installed.packages()} on Windows would fail when
+      \code{file.mtime()} (?) returned NA.
     }
   }
 }
