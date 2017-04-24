@@ -1,7 +1,8 @@
 ## partly moved from ../man/smooth.spline.Rd , quite system-specific.
 ##-- artificial example
 y18 <- c(1:3, 5, 4, 7:3, 2*(2:5), rep(10, 4))
-(b.64 <- (Sys.info()[["machine"]] == "x86_64") &&
+## "truly 64 bit platform" {have seen "x86-64" instead of "x86_64")
+(b.64 <- grepl("^x86.64", Sys.info()[["machine"]]) &&
      .Machine$sizeof.pointer > 4)## "truly 64 bit platform"
 (Lb.64 <- b.64 && Sys.info()[["sysname"]] == "Linux" && .Machine$sizeof.pointer == 8)
 ## i386-Linux: Df ~= (even! > ) 18 : interpolating -- much smaller PRESS
@@ -27,7 +28,7 @@ sdf8$df - 8 # -0.0009159978
 ss50 <- try(smooth.spline(y18, spar = 50)) #>> warning only (in R >= 3.4.0) -- ?? FIXME
    e <- try(smooth.spline(y18, spar = -9)) #>> error : .. too small'
 ## if(Lb.64) stopifnot(inherits(e, "try-error"))
-Lb.64 && inherits(e, "try-error")
+if(Lb.64) inherits(e, "try-error") else "not Linux 64-bit"
 ## I see (in 32 bit Windows),
 b.64 || inherits(ss50, "try-error")  # TRUE .. always?
 
