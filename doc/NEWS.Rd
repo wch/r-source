@@ -73,6 +73,9 @@
 
       \item \code{installed.packages()} on Windows would fail when
       \code{file.mtime()} (?) returned NA.
+
+      \item \command{R CMD Sweave} again returns \samp{status = 0} on
+      successful completion.
     }
   }
 }
