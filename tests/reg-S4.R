@@ -938,3 +938,7 @@ f <- function(x, ..., a = b) {
 setGeneric("f", signature = "...")
 stopifnot(identical(f(a=1), 1))
 stopifnot(identical(f(), "a"))
+
+## ensure forwarding works correctly for dots dispatch
+f2 <- function(...) f(...)
+stopifnot(identical(f2(a=1), 1))
