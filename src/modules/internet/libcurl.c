@@ -324,7 +324,10 @@ in_do_curlGetHeaders(SEXP call, SEXP op, SEXP args, SEXP rho)
     CURLcode ret = curl_easy_perform(hnd);
     if (ret != CURLE_OK) {
 	if (errbuf[0]) 
-	    error(_("libcurl error code %d\n\t%s\n"), ret, errbuf);
+	    error(_("libcurl error code %d:\n\t%s\n"), ret, errbuf);
+	else if(ret == 77)
+	    error(_("libcurl error code %d:\n\t%s\n"), ret, 
+		  "unable to access SSL/TLS CA certificates");
 	else // rare case, error but no message
 	    error("libcurl error code %d\n", ret);
     }
