@@ -1,6 +1,6 @@
 % File src/library/base/man/tempfile.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{tempfile}
@@ -11,15 +11,17 @@
   \code{tempfile} returns a vector of character strings which can be used as
   names for temporary files.
 }
-\usage{
+\usage{% ../R/temp.R
 tempfile(pattern = "file", tmpdir = tempdir(), fileext = "")
-tempdir()
+tempdir(check = FALSE)
 }
 \arguments{
   \item{pattern}{a non-empty character vector giving the initial part
     of the name.}
   \item{tmpdir}{a non-empty character vector giving the directory name}
   \item{fileext}{a non-empty character vector giving the file extension}
+  \item{check}{\code{\link{logical}} indicating if \code{tmpdir()}
+    should be checked and recreated if no longer valid.}
 }
 \value{
   For \code{tempfile} a character vector giving the names of possible
@@ -31,7 +33,7 @@ tempdir()
   Both will use backslash as the path separator.
 #endif
 #ifdef unix
-  
+
   The value will be an absolute path (unless \code{tmpdir} is set to a
   relative path), but it need not be canonical (see
   \code{\link{normalizePath}}) and on macOS usually is not.
@@ -85,7 +87,7 @@ tempdir()
   Windows) a version derived from the source code of GNU \code{glibc}.
   % The substitute was once used on Solaris 10: this nowadays has the
   % call but no man page for it. It has used \code{.}
-  
+
   It will be of the form \file{RtmpXXXXXX} where the last 6 characters
   are replaced in a platform-specific way.  POSIX only requires that the
   replacements be ASCII, which allows \code{.} (so the value may appear
@@ -106,5 +108,16 @@ tempfile(c("ab", "a b c"))   # give file name with spaces in!
 tempfile("plot", fileext = c(".ps", ".pdf"))
 
 tempdir() # works on all platforms with a platform-dependent result
-}}
+}
+
+## Show how 'check' is working on some platforms:
+if(exists("I'm brave") && `I'm brave` &&
+   identical(.Platform$OS.type, "unix") && grepl("^/tmp/", tempdir())) {
+  cat("Current tempdir(): ", tempdir(), "\n")
+  cat("Removing it :", file.remove(tempdir()),
+      "; dir.exists(tempdir()):", dir.exists(tempdir()), "\n")
+  cat("and now  tempdir(check = TRUE) :", tempdir(check = TRUE),"\n")
+}
+
+}
 \keyword{file}

@@ -21,6 +21,9 @@
 
       \item \code{.self} is now automatically registered as a global
       variable when registering a reference class method.
+
+      \item \code{tempdir(check=TRUE)} recreates the \code{tmpdir()} if
+      it is no longer valid.
     }
   }
 
