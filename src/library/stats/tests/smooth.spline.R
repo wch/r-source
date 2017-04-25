@@ -1,4 +1,6 @@
 ## partly moved from ../man/smooth.spline.Rd , quite system-specific.
+if(!dev.interactive(TRUE)) pdf("smooth.spline-test.pdf")
+
 ##-- artificial example
 y18 <- c(1:3, 5, 4, 7:3, 2*(2:5), rep(10, 4))
 ## "truly 64 bit platform" {have seen "x86-64" instead of "x86_64")
@@ -25,8 +27,8 @@ sdf8$df - 8 # -0.0009159978
 ## --> and gives *warning* about too large spar only
 ## e <- try(smooth.spline(y18, spar = 50)) #>> error
 ## stopifnot(inherits(e, "try-error"))
-ss50 <- try(smooth.spline(y18, spar = 50)) #>> warning only (in R >= 3.4.0) -- ?? FIXME
-   e <- try(smooth.spline(y18, spar = -9)) #>> error : .. too small'
+ss50 <- try(smooth.spline(y18, spar = 50)) #>> warning only (in R >= 3.4.0) -- FIXME ??
+   e <- try(smooth.spline(y18, spar = -9)) #>> error : .. too small', not on 32-bit
 ## if(Lb.64) stopifnot(inherits(e, "try-error"))
 if(Lb.64) inherits(e, "try-error") else "not Linux 64-bit"
 ## I see (in 32 bit Windows),
@@ -71,9 +73,11 @@ lines(predict(s2.11, xx), lwd = 2, col = adjustcolor("forestgreen", 1/4))
 if(!requireNamespace("Matrix") && !interactive())
     q("no")
 
-if(Lb.64)## extra checks from above
-    stopifnot(inherits(e, "try-error"),
-              inherits(ss50, "try-error"))
+if(Lb.64 && interactive()) ## extra checks (from above), but _not_ part of R checks
+    stopifnot(inherits(e, "try-error"))
+## in any case:
+rbind("s-9_err" = inherits(e, "try-error"),
+      "s+50_err"= inherits(ss50, "try-error"))
 
 
 aux2Mat <- function(auxM) {
