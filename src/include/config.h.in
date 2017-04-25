@@ -805,6 +805,12 @@
    to be built. */
 #undef HAVE_TCLTK
 
+/* Define to 1 if you have the <thread.h> header file. */
+#undef HAVE_THREAD_H
+
+/* Define to 1 if you have the `thr_stksegment' function. */
+#undef HAVE_THR_STKSEGMENT
+
 /* Define this if libtiff is available. */
 #undef HAVE_TIFF
 

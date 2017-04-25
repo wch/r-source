@@ -164,6 +164,12 @@ static char* unescape_arg(char *p, char* avp) {
     return p;
 }
 
+# /* for thr_stksegment */
+#if defined(HAVE_THREAD_H)
+# include <thread.h>
+#endif
+#include <signal.h>
+
 int Rf_initialize_R(int ac, char **av)
 {
     int i, ioff = 1, j;
@@ -226,6 +232,14 @@ int Rf_initialize_R(int ac, char **av)
 	size_t len = sizeof(void *);
 	(void) sysctl(nm, 2, &base, &len, NULL, 0);
 	R_CStackStart = (uintptr_t) base;
+    }
+#elif defined(HAVE_THR_STKSEGMENT)
+    {
+	/* Solaris */
+	stack_t stack;
+	if (thr_stksegment(&stack))
+	    R_Suicide("Cannot obtain stack information (thr_stksegment).");
+	R_CStackStart = (uintptr_t) stack.ss_sp;
     }
 #else
     if(R_running_as_main_program) {
