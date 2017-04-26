@@ -120,10 +120,10 @@ inRbuildignore <- function(files, pkgdir) {
 
     do_exit <-
 	if(no.q)
-	    function(status = 1L) (if(status) stop else message)(
+	    function(status) (if(status) stop else message)(
 		".build_packages() exit status ", status)
 	else
-	    function(status = 1L) q("no", status = status, runLast = FALSE)
+	    function(status) q("no", status = status, runLast = FALSE)
 
     ## Used for BuildVignettes, BuildManual, BuildKeepEmpty,
     ## and (character not logical) BuildResaveData
@@ -238,7 +238,7 @@ inRbuildignore <- function(files, pkgdir) {
 	    printLog(Log, "      -----------------------------------\n")
 	    unlink(libdir, recursive = TRUE)
 	    printLog(Log, "ERROR: package installation failed\n")
-	    do_exit(1)
+	    do_exit(1L)
 	}
 	Sys.setenv("R_BUILD_TEMPLIB" = libdir)
 	TRUE
@@ -988,9 +988,9 @@ inRbuildignore <- function(files, pkgdir) {
                         full.names = TRUE, include.dirs = TRUE)
         allfiles <- substring(allfiles, 3L)  # drop './'
         bases <- basename(allfiles)
-	
+
         exclude <- inRbuildignore(allfiles, pkgdir)
-	
+
         isdir <- dir.exists(allfiles)
         ## old (pre-2.10.0) dirnames
         exclude <- exclude | (isdir & (bases %in%

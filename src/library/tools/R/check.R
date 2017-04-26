@@ -2497,7 +2497,7 @@ setRlibs <-
                           paste(c("Loading log:", out, ""),
                                 collapse = "\n"))
             summaryLog(Log)
-            do_exit()
+            do_exit(1L)
         }
         if (any(startsWith(out, "Error"))) {
             errorLog(Log)
@@ -4349,10 +4349,10 @@ setRlibs <-
 
     do_exit <-
 	if(no.q)
-	    function(status = 1L) (if(status) stop else message)(
+	    function(status) (if(status) stop else message)(
 		".check_packages() exit status ", status)
 	else
-	    function(status = 1L) q("no", status = status, runLast = FALSE)
+	    function(status) q("no", status = status, runLast = FALSE)
 
     maybe_exit <- function(status = 1L) {
 	if (R_check_exit_on_first_error) {
