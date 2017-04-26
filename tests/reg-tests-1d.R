@@ -732,6 +732,17 @@ stopifnot(is.list(r <- .Last.value), inherits(r, "by"))
 ## failed after r72531
 
 
+## status returned by 'R CMD Sweave'
+fil <- "Sweave-test-1.Rnw"
+file.copy(system.file("Sweave", fil, package="utils"), tempdir())
+owd <- setwd(tempdir())
+(o <- capture.output(utils:::.Sweave(fil, no.q = TRUE), type = "message"))
+stopifnot(grepl("exit status 0", o[2]))
+setwd(owd)
+## R CMD Sweave gave status 1 and hence an error in R 3.4.0 (only)
+
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())
