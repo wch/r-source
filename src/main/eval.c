@@ -5532,7 +5532,8 @@ static R_INLINE void SUBASSIGN_N_PTR(R_bcstack_t *sx, int rank,
 
 #define FIXUP_SCALAR_LOGICAL(callidx, arg, op) do { \
 	SEXP val = GETSTACK(-1); \
-	if (TYPEOF(val) != LGLSXP || XLENGTH(val) != 1) { \
+	if (TYPEOF(val) != LGLSXP || XLENGTH(val) != 1 || \
+	    ATTRIB(val) != NULL) {			  \
 	    if (!isNumber(val))	\
 		errorcall(VECTOR_ELT(constants, callidx), \
 			  _("invalid %s type in 'x %s y'"), arg, op);	\
