@@ -29,6 +29,9 @@
 
       \item \command{R CMD Sweave} again returns \samp{status = 0} on
       successful completion.
+      
+      \item Vignettes listed in \file{.Rbuildignore} were not being
+      ignored properly.  \PR{17246}
     }
   }
 }

@@ -1,6 +1,6 @@
 % File src/library/tools/man/buildVignettes.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{buildVignettes}
@@ -51,6 +51,9 @@ pkgVignettes(package, dir, subdirs = NULL, lib.loc = NULL,
 \details{
   \code{buildVignettes} is used by \command{R CMD build} and \command{R CMD
     check} to (re-)build vignette PDFs from their sources. 
+    
+  As of \R 3.4.1, both of these functions ignore files that are listed in
+  the \file{.Rbuildignore} file in \code{dir}.
 }
 \value{
   \code{buildVignettes} is called for its side effect of creating the

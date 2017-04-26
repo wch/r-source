@@ -297,110 +297,98 @@ inRbuildignore <- function(files, pkgdir) {
 
             ## Look for vignette sources
             vigns <- pkgVignettes(dir = '.', check = TRUE)
-	    
             if (!is.null(vigns) && length(vigns$docs)) {
-	        ## Exclude the ones in .Rbuildignore
-	        exclude <- inRbuildignore(sub(paste0(vigns$pkgdir, "/"), "", vigns$doc, fixed = TRUE), '.')
-		if (!all(exclude)) {
-		    # FIXME:  pkgVignettes should be returning a dataframe, so all of these aren't necessary.
-		    vigns$docs <- vigns$docs[!exclude]
-		    vigns$names <- vigns$names[!exclude]
-		    vigns$engines <- vigns$engines[!exclude]
-		    vigns$patterns <- vigns$patterns[!exclude]
-		    vigns$encodings <- vigns$encodings[!exclude]
+                ensure_installed()
+                ## Good to do this in a separate process: it might die
+                creatingLog(Log, "vignettes")
+                R_LIBS <- Sys.getenv("R_LIBS", NA_character_)
+                if (!is.na(R_LIBS)) {
+                    on.exit(Sys.setenv(R_LIBS = R_LIBS), add = TRUE)
+                    Sys.setenv(R_LIBS = path_and_libPath(libdir, R_LIBS))
+                } else { # no .libPaths() here (speed; ok ?)
+                    on.exit(Sys.unsetenv("R_LIBS"), add = TRUE)
+                    Sys.setenv(R_LIBS = libdir)
+                }
 
-		    ensure_installed()
-		    ## Good to do this in a separate process: it might die
-		    creatingLog(Log, "vignettes")
-		    R_LIBS <- Sys.getenv("R_LIBS", NA_character_)
-		    if (!is.na(R_LIBS)) {
-			on.exit(Sys.setenv(R_LIBS = R_LIBS), add = TRUE)
-			Sys.setenv(R_LIBS = path_and_libPath(libdir, R_LIBS))
-		    } else { # no .libPaths() here (speed; ok ?)
-			on.exit(Sys.unsetenv("R_LIBS"), add = TRUE)
-			Sys.setenv(R_LIBS = libdir)
+                ## Tangle all vignettes now.
+
+                cmd <- file.path(R.home("bin"), "Rscript")
+                args <- c("--vanilla",
+                          "--default-packages=", # some vignettes assume methods
+                          "-e", shQuote("tools::buildVignettes(dir = '.', tangle = TRUE)"))
+                ## since so many people use 'R CMD' in Makefiles,
+                oPATH <- Sys.getenv("PATH")
+                Sys.setenv(PATH = paste(R.home("bin"), oPATH,
+                           sep = .Platform$path.sep))
+                res <- system_with_capture(cmd, args)
+                Sys.setenv(PATH = oPATH)
+                if (res$status) {
+                    resultLog(Log, "ERROR")
+                    printLog0(Log, paste(c(res$stdout, ""),  collapse = "\n"))
+                    do_exit(1L)
+                } else {
+                    # Rescan for weave and tangle output files
+                    vigns <- pkgVignettes(dir = '.', output = TRUE, source = TRUE)
+                    stopifnot(!is.null(vigns))
+
+                    resultLog(Log, "OK")
+                }
+
+                ## We may need to install them.
+                if (basename(vigns$dir) == "vignettes") {
+                    ## inst may not yet exist
+                    dir.create(doc_dir, recursive = TRUE, showWarnings = FALSE)
+                    tocopy <- c(vigns$docs, vigns$outputs, unlist(vigns$sources))
+                    copied <- file.copy(tocopy, doc_dir, copy.date = TRUE)
+                    if (!all(copied)) {
+                    	warning(sQuote("inst/doc"),
+                    	        ngettext(sum(!copied), " file\n", " files\n"),
+                    	        strwrap(paste(sQuote(basename(tocopy[!copied])), collapse=", "),
+                    	                indent = 4, exdent = 2),
+			        "\n  ignored as vignettes have been rebuilt.",
+			        "\n  Run R CMD build with --no-build-vignettes to prevent rebuilding.",
+			     call. = FALSE)
+			file.copy(tocopy[!copied], doc_dir, overwrite = TRUE, copy.date = TRUE)
 		    }
+                    unlink(c(vigns$outputs, unlist(vigns$sources)))
+                    extras_file <- file.path("vignettes", ".install_extras")
+                    if (file.exists(extras_file)) {
+                        extras <- readLines(extras_file, warn = FALSE)
+                        if(length(extras)) {
+                            allfiles <- dir("vignettes", all.files = TRUE,
+                                            full.names = TRUE, recursive = TRUE,
+                                            include.dirs = TRUE)
+                            inst <- rep(FALSE, length(allfiles))
+                            for (e in extras)
+                                inst <- inst | grepl(e, allfiles, perl = TRUE,
+                                                     ignore.case = TRUE)
+                            file.copy(allfiles[inst], doc_dir, recursive = TRUE, copy.date = TRUE)
+                        }
+                    }
+                }
 
-		    ## Tangle all vignettes now.
+		vignetteIndex <- .build_vignette_index(vigns)
 
-		    cmd <- file.path(R.home("bin"), "Rscript")
-		    args <- c("--vanilla",
-			      "--default-packages=", # some vignettes assume methods
-			      "-e", shQuote("tools::buildVignettes(dir = '.', tangle = TRUE)"))
-		    ## since so many people use 'R CMD' in Makefiles,
-		    oPATH <- Sys.getenv("PATH")
-		    Sys.setenv(PATH = paste(R.home("bin"), oPATH,
-			       sep = .Platform$path.sep))
-		    res <- system_with_capture(cmd, args)
-		    Sys.setenv(PATH = oPATH)
-		    if (res$status) {
-			resultLog(Log, "ERROR")
-			printLog0(Log, paste(c(res$stdout, ""),  collapse = "\n"))
-			do_exit(1L)
-		    } else {
-			# Rescan for weave and tangle output files
-			vigns <- pkgVignettes(dir = '.', output = TRUE, source = TRUE)
-			stopifnot(!is.null(vigns))
-
-			resultLog(Log, "OK")
-		    }
-
-		    ## We may need to install them.
-		    if (basename(vigns$dir) == "vignettes") {
-			## inst may not yet exist
-			dir.create(doc_dir, recursive = TRUE, showWarnings = FALSE)
-			tocopy <- c(vigns$docs, vigns$outputs, unlist(vigns$sources))
-			copied <- file.copy(tocopy, doc_dir, copy.date = TRUE)
-			if (!all(copied)) {
-			    warning(sQuote("inst/doc"),
-				    ngettext(sum(!copied), " file\n", " files\n"),
-				    strwrap(paste(sQuote(basename(tocopy[!copied])), collapse=", "),
-					    indent = 4, exdent = 2),
-				    "\n  ignored as vignettes have been rebuilt.",
-				    "\n  Run R CMD build with --no-build-vignettes to prevent rebuilding.",
-				 call. = FALSE)
-			    file.copy(tocopy[!copied], doc_dir, overwrite = TRUE, copy.date = TRUE)
-			}
-			unlink(c(vigns$outputs, unlist(vigns$sources)))
-			extras_file <- file.path("vignettes", ".install_extras")
-			if (file.exists(extras_file)) {
-			    extras <- readLines(extras_file, warn = FALSE)
-			    if(length(extras)) {
-				allfiles <- dir("vignettes", all.files = TRUE,
-						full.names = TRUE, recursive = TRUE,
-						include.dirs = TRUE)
-				inst <- rep(FALSE, length(allfiles))
-				for (e in extras)
-				    inst <- inst | grepl(e, allfiles, perl = TRUE,
-							 ignore.case = TRUE)
-				file.copy(allfiles[inst], doc_dir, recursive = TRUE, copy.date = TRUE)
-			    }
-			}
-		    }
-
-		    vignetteIndex <- .build_vignette_index(vigns)
-
-		    if(NROW(vignetteIndex) > 0L) {
-			## remove any files with no R code (they will have header comments).
-			## if not correctly declared they might not be in the current encoding
-			sources <- vignetteIndex$R
-			for(i in seq_along(sources)) {
-			    file <- file.path(doc_dir, sources[i])
-			    if (!file_test("-f", file)) next
-			    bfr <- readLines(file, warn = FALSE)
-			    if(all(grepl("(^###|^[[:space:]]*$)", bfr, useBytes = TRUE))) {
-				unlink(file)
-				vignetteIndex$R[i] <- ""
-			    }
+		if(NROW(vignetteIndex) > 0L) {
+		    ## remove any files with no R code (they will have header comments).
+		    ## if not correctly declared they might not be in the current encoding
+		    sources <- vignetteIndex$R
+		    for(i in seq_along(sources)) {
+			file <- file.path(doc_dir, sources[i])
+			if (!file_test("-f", file)) next
+			bfr <- readLines(file, warn = FALSE)
+			if(all(grepl("(^###|^[[:space:]]*$)", bfr, useBytes = TRUE))) {
+			    unlink(file)
+			    vignetteIndex$R[i] <- ""
 			}
 		    }
-
-		    ## Save the list
-		    dir.create("build", showWarnings = FALSE)
-		    saveRDS(vignetteIndex,
-			    file = vignette_index_path)
 		}
-	    }
+
+		## Save the list
+		dir.create("build", showWarnings = FALSE)
+		saveRDS(vignetteIndex,
+			file = vignette_index_path)
+            }
         } else {
             fv <- file.path("build", "vignette.rds")
             if(file.exists(fv)) {
