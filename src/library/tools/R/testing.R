@@ -740,7 +740,7 @@ detachPackages <- function(pkgs, verbose = TRUE)
 }
 
 ## Usage: Rscript --vanilla --default-packages=NULL args
-.Rdiff <- function()
+.Rdiff <- function(no.q = FALSE)
 {
     options(showErrorCalls=FALSE)
 
@@ -758,8 +758,12 @@ detachPackages <- function(pkgs, verbose = TRUE)
             sep = "\n")
     }
 
-    do_exit <- function(status = 0L)
-        q("no", status = status, runLast = FALSE)
+    do_exit <-
+	if(no.q)
+	    function(status = 0L) (if(status) stop else message)(
+		".Rdiff() exit status ", status)
+	else
+	    function(status = 0L) q("no", status = status, runLast = FALSE)
 
     args <- commandArgs(TRUE)
     if (!length(args)) {
@@ -769,7 +773,7 @@ detachPackages <- function(pkgs, verbose = TRUE)
     args <- paste(args, collapse=" ")
     args <- strsplit(args,'nextArg', fixed = TRUE)[[1L]][-1L]
     if (length(args) == 1L) {
-        if(args[1L] %in% c("-h", "--help")) { Usage(); do_exit() }
+        if(args[1L] %in% c("-h", "--help")) { Usage(); do_exit(0) }
         if(args[1L] %in% c("-v", "--version")) {
             cat("R output diff: ",
                 R.version[["major"]], ".",  R.version[["minor"]],
@@ -779,7 +783,7 @@ detachPackages <- function(pkgs, verbose = TRUE)
                 "This is free software; see the GNU General Public License version 2",
                 "or later for copying conditions.  There is NO warranty.",
                 sep = "\n")
-            do_exit()
+            do_exit(0)
         }
         Usage()
         do_exit(1L)
