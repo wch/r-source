@@ -1,7 +1,7 @@
 #  File src/library/utils/R/zzz.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -40,7 +40,8 @@
             list(unzip = "internal",
                  editor = if(length(grep("Rgui", commandArgs(), TRUE))) "internal" else "notepad",
                  repos = c(CRAN = "@CRAN@",
-                           CRANextra = "http://www.stats.ox.ac.uk/pub/RWin")
+                           CRANextra = "http://www.stats.ox.ac.uk/pub/RWin"),
+                 askYesNo = if (.Platform$GUI == "Rgui") askYesNoWinDialog
                  )
         } else
             list(unzip = Sys.getenv("R_UNZIPCMD"),

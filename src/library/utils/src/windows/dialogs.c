@@ -3,7 +3,7 @@
  *  file dialogs.c
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
  *  Copyright (C) 2004	      The R Foundation
- *  Copyright (C) 2005--2013  The R Core Team
+ *  Copyright (C) 2005--2017  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -165,7 +165,7 @@ SEXP winDialog(SEXP call, SEXP op, SEXP args, SEXP env)
     type = translateChar(STRING_ELT(CAR(args), 0));
     message = CADR(args);
     if(!isString(message) || length(message) != 1 ||
-       strlen(translateChar(STRING_ELT(message, 0))) > 255)
+       strlen(translateChar(STRING_ELT(message, 0))) > 999)
 	error(_("invalid '%s' argument"), "message");
     if (strcmp(type, "ok")  == 0) {
 	askok(translateChar(STRING_ELT(message, 0)));

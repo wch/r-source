@@ -24,6 +24,10 @@
 
       \item \code{tempdir(check=TRUE)} recreates the \code{tmpdir()} if
       it is no longer valid.
+      
+      \item New \code{askYesNo()} function and \code{"askYesNo"} option
+      to ask the user binary response questions in a customizable but 
+      consistent way.  Suggestion of \PR{17242}.
     }
   }
 

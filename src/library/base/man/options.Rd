@@ -73,6 +73,11 @@ getOption(x, default = NULL)
       many (simulated) smooths should be added.  This is currently only
       used by \code{\link{plot.lm}}.}
 
+    \item{\code{askYesNo}:}{a function (typically set by a front-end)
+      to ask the user binary response functions in a consistent way,
+      or a vector of strings used by \code{\link{askYesNo}} to use
+      as default responses for such questions.}      
+    
     \item{\code{browserNLdisabled}:}{logical: whether newline is
       disabled as a synonym for \code{"n"} in the browser.}
 

@@ -1,7 +1,7 @@
 #  File src/library/utils/R/unix/help.request.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -19,8 +19,6 @@
 help.request <- function (subject = "", address = "r-help@R-project.org",
 			  file = "R.help.request", ...)
 {
-    no <- function(answer) answer == "n"
-    yes <- function(answer) answer == "y"
     webpage <- "corresponding web page"
     catPlease <- function()
 	cat("Please do this first - the",
@@ -29,9 +27,8 @@ help.request <- function (subject = "", address = "r-help@R-project.org",
 	catPlease()
 	browseURL(url)
     }
-    readMyLine <- function(..., .A. = "(y/n)")
-	readline(paste(paste(strwrap(paste(...)), collapse="\n"),
-		       .A., "")) # space after question
+    MyWrap <- function(...)
+	paste(paste(strwrap(paste(...)), collapse="\n")) 
 
     checkPkgs <- function(pkgDescs,
 			  pkgtxt = paste("packages",
@@ -55,28 +52,29 @@ help.request <- function (subject = "", address = "r-help@R-project.org",
 	old <- old.packages(instPkgs = iPkgs)
 
 	if (!is.null(old)) {
-	    update <- readMyLine("The following installed packages are out-of-date:\n",
+	    update <- askYesNo(MyWrap("The following installed packages are out-of-date:\n",
 				 paste(strwrap(rownames(old),
 					       width = 0.7 *getOption("width"),
 					       indent = 0.15*getOption("width")),
 				       collapse="\n"),
-				 "would you like to update now?")
-	    if (yes(update)) update.packages(oldPkgs = old, ask = FALSE)
+				 "would you like to update now?"))
+	    if (is.na(update)) stop("Cancelled by user")
+	    if (isTRUE(update)) update.packages(oldPkgs = old, ask = FALSE)
 	}
     }
 
     cat("Checklist:\n")
-    post <- readline("Have you read the posting guide? (y/n) ")
-    if (no(post)) return(go("https://www.r-project.org/posting-guide.html"))
-    FAQ <- readline("Have you checked the FAQ? (y/n) ")
-    if (no(FAQ)) return(go("https://cran.r-project.org/faqs.html"))
-    intro <- readline("Have you checked An Introduction to R? (y/n) ")
-    if (no(intro))
+    post <- askYesNo("Have you read the posting guide?")
+    if (!isTRUE(post)) return(go("https://www.r-project.org/posting-guide.html"))
+    FAQ <- askYesNo("Have you checked the FAQ?")
+    if (!isTRUE(FAQ)) return(go("https://cran.r-project.org/faqs.html"))
+    intro <- askYesNo("Have you checked An Introduction to R?")
+    if (!isTRUE(intro))
 	return(go("https://cran.r-project.org/manuals.html"))
-    NEWS <- readMyLine("Have you checked the NEWS of the latest development release?")
-    if (no(NEWS)) return(go("https://cran.r-project.org/doc/manuals/r-devel/NEWS.html"))
-    rsitesearch <- readline("Have you looked on RSiteSearch? (y/n) ")
-    if (no(rsitesearch)) {
+    NEWS <- askYesNo(MyWrap("Have you checked the NEWS of the latest development release?"))
+    if (!isTRUE(NEWS)) return(go("https://cran.r-project.org/doc/manuals/r-devel/NEWS.html"))
+    rsitesearch <- askYesNo("Have you looked on RSiteSearch?")
+    if (!isTRUE(rsitesearch)) {
 	catPlease()
 	return(RSiteSearch(subject))
     }
@@ -85,45 +83,51 @@ help.request <- function (subject = "", address = "r-help@R-project.org",
 	oPkgs <- names(inf$otherPkgs)
         ## FIXME: inf$otherPkgs is a list of packageDescription()s
 	other <-
-	    readMyLine("You have packages",
+	    askYesNo(MyWrap("You have packages",
                        paste0("(", paste(sQuote(oPkgs), collapse=", "),")"),
                        "other than the base packages loaded. ",
 		       "If your query relates to one of these, have you ",
 		       "checked any corresponding books/manuals and",
-		       "considered contacting the package maintainer?",
-                       .A. = "(y/n/NA)")
-	if(no(other)) return("Please do this first.")
+		       "considered contacting the package maintainer?"))
+	if(!isTRUE(other)) return("Please do this first.")
     }
 
     page <- url("https://cran.r-project.org/bin/windows/base")
-    title <- grep("<title>", readLines(page, 10L), fixed = TRUE, value = TRUE)
-    ver <- sub("^.*R-([^ ]*) for Windows.*$", "\\1", title)
-    if (getRversion() < numeric_version(ver)) {
-	update <- readMyLine("Your R version is out-of-date,",
-			     "would you like to update now?")
-	if(yes(update)) return(go(getOption("repos")))
-    }
+    title <- try(grep("<title>", readLines(page, 10L), fixed = TRUE, value = TRUE),
+    		 silent = TRUE)
+    if (!inherits(title, "try-error")) {
+    	ver <- sub("^.*R-([^ ]*) for Windows.*$", "\\1", title)
+    	if (getRversion() < numeric_version(ver)) {
+	    update <- askYesNo(MyWrap("Your R version is out-of-date,",
+				     "would you like to update now?"))
+	    if (is.na(update)) stop("Cancelled by user")
+	    if(isTRUE(update)) return(go(getOption("repos")))
+    	}
+    } else
+    	warning("Unable to connect to CRAN to check R version.")
+    
     if ("otherPkgs" %in% names(inf)) {
         checkPkgs(inf$otherPkgs)
     }
-    ## To get long prompt!
-    cat("Have you written example code that is\n",
-	"- minimal\n - reproducible\n - self-contained\n - commented",
+    
+    ## A long prompt!
+    code <- askYesNo(paste0("Have you written example code that is\n",
+	" - minimal\n - reproducible\n - self-contained\n - commented",
 	"\nusing data that is either\n",
-	"- constructed by the code\n - loaded by data()\n",
-	"- reproduced using dump(\"mydata\", file = \"\")\n")
-    code <- readMyLine("have you checked this code in a fresh R session",
+	" - constructed by the code\n - loaded by data()\n",
+	" - reproduced using dump(\"mydata\", file = \"\")\n", 
+        MyWrap("and have you checked this code in a fresh R session",
 		       "(invoking R with the --vanilla option if possible)",
-		       "and is this code copied to the clipboard?")
-    if (no(code))
+		       "and is this code copied to the clipboard?")))
+    if (!isTRUE(code))
 	return(cat("\nIf your query is not directly related to code",
 		   "(e.g. a general query \nabout R's capabilities),",
 		   "email R-help@r-project.org directly. ",
 		   "\nOtherwise prepare some example code first.\n"))
-    change <- readline(paste("Would you like to change your subject line:",
-			     subject, "to something more meaningful? (y/n) ",
-			     sep = "\n"))
-    if (yes(change))
+    change <- askYesNo(MyWrap("Would you like to change your subject line: ",
+			     dQuote(subject), " to something more meaningful?"))
+    if (is.na(change)) stop("Cancelled by user")
+    if (isTRUE(change))
 	subject <- readline("Enter subject: \n")
 
     create.post(instructions = paste(
