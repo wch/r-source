@@ -86,6 +86,9 @@
       
       \item Vignettes listed in \file{.Rbuildignore} were not being
       ignored properly.  \PR{17246}
+
+      \item \code{file.mtime()} no longer returns NA on Windows when the
+      file or directory is being used by another process.
     }
   }
 }
