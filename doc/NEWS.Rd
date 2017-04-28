@@ -24,9 +24,9 @@
 
       \item \code{tempdir(check=TRUE)} recreates the \code{tmpdir()} if
       it is no longer valid.
-      
+
       \item New \code{askYesNo()} function and \code{"askYesNo"} option
-      to ask the user binary response questions in a customizable but 
+      to ask the user binary response questions in a customizable but
       consistent way.  Suggestion of \PR{17242}.
     }
   }
@@ -40,7 +40,7 @@
 
       \item \code{nlm(f, ..)} for the case where \code{f()} has a
       \code{"hessian"} attribute now computes
-      \eqn{LL' = H + \mu I}{LL' = H + µI} correctly.  (Part 1 of \PR{17249}).
+      \eqn{LL' = H + \mu I}{LL' = H + µI} correctly.  (\PR{17249}).
 
       \item An S4 method that \dQuote{rematches} to its generic and
       overrides the default value of a generic formal argument to
@@ -83,7 +83,7 @@
 
       \item \command{R CMD Sweave} again returns \samp{status = 0} on
       successful completion.
-      
+
       \item Vignettes listed in \file{.Rbuildignore} were not being
       ignored properly.  \PR{17246}
 
