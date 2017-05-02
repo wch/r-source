@@ -4351,7 +4351,7 @@ static R_INLINE double (*getMath1Fun(int i, SEXP call))(double) {
 	    double rn2 = vy.dval;					\
 	    if (R_FINITE(rn1) && R_FINITE(rn2) &&			\
 		INT_MIN <= rn1 && INT_MAX >= rn1 &&			\
-		INT_MIN <= rn2 && INT_MAX >- rn2 &&			\
+		INT_MIN <= rn2 && INT_MAX >= rn2 &&			\
 		rn1 == (int) rn1 && rn2 == (int) rn2) {			\
 		SKIP_OP(); /* skip 'call' index */			\
 		R_BCNodeStackTop--;					\
