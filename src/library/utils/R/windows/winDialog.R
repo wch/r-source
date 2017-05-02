@@ -1,7 +1,7 @@
 #  File src/library/utils/R/windows/winDialog.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -86,4 +86,15 @@ getWinProgressBar <- function(pb)
                       dQuote("winProgressBar")),
              domain = NA)
     .External2(C_setWinProgressBar, pb$pb, NULL, NULL, NULL)
+}
+
+# Windows Rgui setup will set this as the askYesNo option
+
+askYesNoWinDialog <- function(msg, ...) {
+    flush.console() # so warning is seen
+    ans <- winDialog("yesnocancel", msg)
+    switch(ans,
+            YES = TRUE,
+            NO  = FALSE,
+            NA)
 }

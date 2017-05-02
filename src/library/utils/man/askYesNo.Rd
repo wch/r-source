@@ -11,15 +11,11 @@ Ask a Yes/No Question
 \description{
 \code{askYesNo} provides a standard way to ask the user a yes/no question.  
 It provides a way for front-ends to substitute their own dialogs.
-
-For Windows, \code{askYesNoWinDialog} is a suitable substitution using
-Windows dialogs.
 }
 \usage{
 askYesNo(msg, default = TRUE, 
          prompts = getOption("askYesNo", gettext(c("Yes", "No", "Cancel"))), 
          ...)
-askYesNoWinDialog(msg, ...)
 }
 \arguments{
   \item{msg}{
@@ -47,7 +43,9 @@ raised.
 
 If a function or single character string naming a function
 is given for \code{prompts}, it will be called as
-\code{fn(msg = msg, default = default, prompts = prompts, ...)}.
+\code{fn(msg = msg, default = default, prompts = prompts, ...)}.  On
+Windows, the GUI uses the unexported \code{utils:::askYesNoWinDialog}
+function for this purpose.
 
 If strings (or a string such as \code{"Y/N/C"}) are given as \code{prompts}, 
 the choices will be mapped to lowercase for the non-default choices, and 

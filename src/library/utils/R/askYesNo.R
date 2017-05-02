@@ -16,18 +16,6 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
-
-# Windows Rgui setup will set this as the askYesNo option
-
-askYesNoWinDialog <- function(msg, ...) {
-    flush.console() # so warning is seen
-    ans <- winDialog("yesnocancel", msg)
-    switch(ans,
-            YES = TRUE,
-            NO  = FALSE,
-            NA)
-}
-
 askYesNo <- function(msg, default = TRUE, 
                      prompts = getOption("askYesNo", gettext(c("Yes", "No", "Cancel"))),
 		     ...) {
