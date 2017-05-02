@@ -721,6 +721,7 @@ window.ts <- function (x, ...) as.ts(window.default(x, ...))
     m <- match.call(expand.dots = FALSE)
     m$value <- NULL
     m$extend <- TRUE
+    m$x <- x # do not attempt to re-evaluate *tmp* in replacement call
     ## need stats:: for non-standard evaluation
     m[[1L]] <- quote(stats::window)
     xx <- eval.parent(m)
