@@ -239,7 +239,7 @@ makeHelpTable <- function(help, depth=2) {
 }
 
 toHTML.citation <-
-function(x, ...)
+function(x, header = TRUE, ...)
 {
     len <- length(x)
     if(!len) return(character())
@@ -323,8 +323,29 @@ function(x, ...)
         s
     }
 
-    c(HTMLheader(...),
-      "<body>",
+    if (!(is.character(header) || is.logical(header))) {
+        warning("unknown header specification")
+	header <- TRUE
+    }
+    if (identical(header, "R")) {
+        head <- HTMLheader(...)
+	foot <- c("</body>", "</html>")
+    } else if (identical(header, FALSE)) {
+        head <- character(0)
+	foot <- character(0)
+    } else {
+        if (isTRUE(header)) header <- c("<head>",
+		                        "<title>Citation information</title>", 
+                                        "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />", 
+                                        "</head>")
+        head <- c("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">", 
+                  "<html xmlns=\"http://www.w3.org/1999/xhtml\">",
+                  header,
+		  "<body>")
+	foot <- c("</body>", "</html>")
+    }
+
+    c(head,      
       if(is_non_blank_string(header <- attr(x, "mheader")))
       c("<p>", htmlify(header), "</p>"),
       do.call(c, lapply(x, format_entry_as_text)),
@@ -336,6 +357,5 @@ function(x, ...)
                  "Corresponding BibTeX entries:"),
         "</p>",
         do.call(c, lapply(x, format_entry_as_BibTeX))),
-      "</body>",
-      "</html>")
+      foot)
 }
