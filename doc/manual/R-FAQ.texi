@@ -459,11 +459,12 @@ respectively.
 
 The @file{bin/windows} directory of a @CRAN{} site contains binaries for
 a base distribution and add-on packages from @CRAN{} to run on Windows
-XP and later (including 64-bit versions of Windows) on ix86 and x86_64
+7 and later (including 64-bit versions of Windows) on ix86 and x86_64
 chips. The Windows version of R was created by Robert Gentleman and
-Guido Masarotto, and is now being developed and maintained by
-@email{murdoch@@stats.uwo.ca, Duncan Murdoch} and
-@email{Brian.Ripley@@R-project.org, Brian D. Ripley}.
+Guido Masarotto, Brian D. Ripley made substantial contributions
+and it is now being maintained by
+@email{murdoch@@stats.uwo.ca, Duncan Murdoch} and other members 
+of the R Core team.
 
 The same directory has links to snapshots of the r-patched and r-devel
 versions of R.

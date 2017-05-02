@@ -140,15 +140,15 @@ as changes that are planned to eventually make it into the next
 @node How do I install R for Windows?, How do I check an installation?, Where can I find the latest version?, Installation and Usage
 @section How do I install R for Windows?
 
-Current binary versions of R run on Windows XP or later, including on
+Current binary versions of R are known to run on Windows 7 or later, including on
 64-bit versions: @xref{Can I use R on 64-bit Windows?}. The last version
-known to run on Windows 2000 was 2.12.2.
+known to run on Windows 2000 was 2.12.2.  Windows XP is no longer supported.
 
 @c 2000 went end-of-life 2010-07-13
 @c XP SP3 went end of life 2014-04-08
 
 We only test on versions of Windows currently supported by Microsoft,
-mainly 64-bit Windows 7 and Server 2008.
+mainly 64-bit Windows 7, Windows Server 2008 and Windows 10.
 
 Your file system must allow case-honouring long file names (as is likely
 except perhaps for some network-mounted systems).  An installation takes
