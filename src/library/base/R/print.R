@@ -65,17 +65,20 @@ c.noquote <- function(..., recursive = FALSE)
 }
 
 print.noquote <- function(x, ...) {
+    rgt.in.dots <- any(I <- "right" == names(list(...)))
     if(!is.null(cl <- attr(x, "class"))) {
 	isNQ <- cl == "noquote"
-	right <- if(any(I <- "right" == names(list(...))))
-		     list(...)[[I]]
-		 else any("right" == names(cl[isNQ]))
+	if(!rgt.in.dots)
+	    right <- any("right" == names(cl[isNQ]))
 	cl <- cl[!isNQ]
 	attr(x, "class") <-
 	  (if(length(cl)) cl else NULL)
     } else
 	right <- FALSE
-    print(x, quote = FALSE, right = right, ...)
+    if(rgt.in.dots)
+	print(x, quote = FALSE, ...)
+    else 
+	print(x, quote = FALSE, right = right, ...)
 }
 
 ## for alias.lm, aov

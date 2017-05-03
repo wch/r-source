@@ -741,6 +741,9 @@ stopifnot(grepl("exit status 0", o[2]))
 setwd(owd)
 ## R CMD Sweave gave status 1 and hence an error in R 3.4.0 (only)
 
+## print.noquote(*,  right = *)
+print(noquote(LETTERS[1:9]), right = TRUE)
+## failed a few days end in R-devel ca. May 1, 2017
 
 
 ## keep at end
