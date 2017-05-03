@@ -55,6 +55,9 @@
       and only attempts to pass non-missing arguments from the generic.
 
       \item \code{callNextMethod()} works for \code{\dots} methods.
+      
+      \item Connections are now written correctly with encoding 
+      \code{"UTF-16LE"}.  (\PR{16737}).
     }
   }
 }

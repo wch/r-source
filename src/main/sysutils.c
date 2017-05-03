@@ -106,11 +106,11 @@ Rboolean attribute_hidden R_HiddenFile(const char *name)
 
 static char * fixmode(const char *mode)
 {
-    /* Rconnection can have a mode of 4 chars plus a null; we might
-     * add one char */
-    static char fixedmode[6];
-    fixedmode[4] = '\0';
-    strncpy(fixedmode, mode, 4);
+    /* Rconnection can have a mode of 4 chars plus a ccs= setting plus a null; we might
+     * add one char if neither b nor t is specified. */
+    static char fixedmode[20];
+    fixedmode[19] = '\0';
+    strncpy(fixedmode, mode, 19);
     if (!strpbrk(fixedmode, "bt")) {
 	strcat(fixedmode, "t");
     }
@@ -119,9 +119,9 @@ static char * fixmode(const char *mode)
 
 static wchar_t * wcfixmode(const wchar_t *mode)
 {
-    static wchar_t wcfixedmode[6];
-    wcfixedmode[4] = L'\0';
-    wcsncpy(wcfixedmode, mode, 4);
+    static wchar_t wcfixedmode[20];
+    wcfixedmode[19] = L'\0';
+    wcsncpy(wcfixedmode, mode, 19);
     if (!wcspbrk(wcfixedmode, L"bt")) {
 	wcscat(wcfixedmode, L"t");
     }
