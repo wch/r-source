@@ -2666,12 +2666,11 @@ should be used).
 
 Experimental support for C++17 has been added to @R{} version 3.4.0. The
 @file{configure} script tests a subset of C++17 features.  At the time
-of writing (March 2017) both @code{clang 4.0.0} and the pre-release
-version @code{gcc 7.0.1 (20170314)} pass these tests (with flags
-@option{-std=gnu++1z} and @option{-std=gnu++17} respectively chosen by
-the @file{configure} script).  Note that the C++17 feature tests are
-incomplete and are subject to change in future @R{} versions as compiler
-support for the standard improves.
+of writing (March 2017) both @code{clang 4.0.0} and @code{gcc 7.1} pass
+these tests (with flags @option{-std=gnu++1z} and @option{-std=gnu++17}
+respectively chosen by the @file{configure} script).  Note that the
+C++17 feature tests are incomplete and are subject to change in future
+@R{} versions as compiler support for the standard improves.
 
 The variables associated with the C++17 compiler use the prefix
 @samp{CXX17}.  Hence to use C++17 code in a package, the package's
@@ -4931,13 +4930,20 @@ Some compilers/OSes include other system headers in their headers which
 are not required by the standards, and so code may compile on such
 systems and not on others.  (A prominent example is the C++11 header
 @code{<random>} which is indirectly included by @code{<algorithm>} by
-@command{g++}.  Another frequent issue is the C header @code{<time.h>}
-which is included by other headers on Linux and Windows but not macOS nor
-Solaris.)  Another common issue is that @code{malloc}, @code{calloc},
-@code{realloc} and @code{free} are defined by C99 in the header
-@file{stdlib.h} and (in the @code{std::} namespace) by C++ header
-@file{cstdlib}.  Some earlier implementations used a header
-@file{malloc.h}, but that is not portable and does not exist on macOS.
+@command{g++}.  Another issue is the C header @code{<time.h>} which is
+included by other headers on Linux and Windows but not macOS nor
+Solaris.)
+
+Note that @code{malloc}, @code{calloc}, @code{realloc} and @code{free}
+are defined by C99 in the header @file{stdlib.h} and (in the
+@code{std::} namespace) by C++ header @file{cstdlib}.  Some earlier
+implementations used a header @file{malloc.h}, but that is not portable
+and does not exist on macOS.
+
+This also applies to types such as @code{ssize_t}.  The POSIX standards
+say that is declared in headers @code{unistd.h} and @code{sys/types.h},
+and the latter is often included indirectly by other headers on some
+but not all systems.
 
 @item
 For C++ code, be careful to specify namespaces where needed.  Many
@@ -8365,10 +8371,9 @@ break __asan_report_error
 (See
 @uref{https://code.google.com/@/p/@/address-sanitizer/@/wiki@//AddressSanitizer#gdb}.)
 
-Recent versions@footnote{This is expected to be in @command{gcc} 7 and
-@command{clang} 4.0.0.  Currently for @command{gcc} it is implied by
-@option{-fsanitize=address}.} added the flag
-@option{-fsanitize-address-use-after-scope}: see
+Recent versions@footnote{including @command{gcc} 7.1 and @command{clang}
+4.0.0: for @command{gcc} it is implied by @option{-fsanitize=address}.}
+added the flag @option{-fsanitize-address-use-after-scope}: see
 @uref{https://github.com//google//sanitizers//wiki//AddressSanitizerUseAfterScope}.
 
 @menu
