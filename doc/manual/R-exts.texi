@@ -5986,6 +5986,15 @@ be declared in the @file{DESCRIPTION} file.  It is good practice to
 include a comment in the @code{\donttest} section explaining why it is
 needed.
 
+As from @R{} 3.4.0, output from code between comments
+@example
+## IGNORE_RDIFF_BEGIN
+## IGNORE_RDIFF_END
+@end example
+@noindent
+is ignored when comparing check output to reference output (a
+@file{-Ex.Rout.save} file).
+
 @findex \keyword
 @item \keyword@{@var{key}@}
 There can be zero or more @code{\keyword} sections per file.
