@@ -2014,6 +2014,7 @@ if test "${use_internal_tzcode}" != yes; then
 fi
 
 R_C99_COMPLEX
+R_FUNC_CTANH
 
 ## BSD extensions
 AC_CACHE_CHECK([whether 'struct tm' includes tm_zone],
