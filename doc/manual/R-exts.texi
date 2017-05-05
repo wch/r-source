@@ -4945,6 +4945,10 @@ say that is declared in headers @code{unistd.h} and @code{sys/types.h},
 and the latter is often included indirectly by other headers on some
 but not all systems.
 
+Similarly for constants: for example @code{SIZE_MAX} is defined in
+@code{stdint.h} alongside @code{size_t} (according to the C99 standard:
+it is not part of C++98).
+
 @item
 For C++ code, be careful to specify namespaces where needed.  Many
 functions are defined by the standards to be in the @code{std}
