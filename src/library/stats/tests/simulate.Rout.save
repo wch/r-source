@@ -1,5 +1,5 @@
 
-R version 3.4.0 RC (2017-04-18 r72543) -- "You Stupid Darkness"
+R version 3.4.0 Patched (2017-05-05 r72656) -- "You Stupid Darkness"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -408,4 +408,4 @@ log(u)       0.015569 0.00033659  46.256 5.7704e-10
 > 
 > proc.time()
    user  system elapsed 
-  0.258   0.017   0.270 
+  0.268   0.023   0.281 

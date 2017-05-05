@@ -1,5 +1,5 @@
 
-R version 3.4.0 RC (2017-04-18 r72543) -- "You Stupid Darkness"
+R version 3.4.0 Patched (2017-05-05 r72656) -- "You Stupid Darkness"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -1510,5 +1510,5 @@ sm     3    3    3    3    4    4    4    4    2     2     2
 > par(op)
 > 
 > cat("Time elapsed: ", proc.time() - .ptime, "\n")
-Time elapsed:  1.087 0.017 1.106 0 0 
+Time elapsed:  1.153 0.013 1.169 0 0 
 > 
