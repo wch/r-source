@@ -931,6 +931,9 @@
 /* Define if calloc(0) returns a null pointer. */
 #undef HAVE_WORKING_CALLOC
 
+/* Define if ctanh() exists and is working correctly. */
+#undef HAVE_WORKING_CTANH
+
 /* Define if your ftell works correctly on files opened for append. */
 #undef HAVE_WORKING_FTELL
 
