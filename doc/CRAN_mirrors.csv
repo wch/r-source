@@ -149,4 +149,5 @@ Thailand,Thailand,Hatyai,http://mirrors.psu.ac.th/pub/cran/,"Prince of Songkla U
 "USA (TX 1) [https]",USA,Dallas,https://cran.revolutionanalytics.com/,"Revolution Analytics, Dallas, TX","David Smith <david # revolutionanalytics.com>",1,us,"secure_mirror_from_master"
 "USA (TX 1)",USA,Dallas,http://cran.revolutionanalytics.com/,"Revolution Analytics, Dallas, TX","David Smith <david # revolutionanalytics.com>",1,us,"secure_mirror_from_master"
 "USA (TX 2) [https]",USA,"San Antonio",https://mirror.usertrust.info/cranmirror/,"Dark Particle Labs, San Antonio","Matt Weeks <scriptjunkie # scriptjunkie.us>",1,us,"secure_mirror_from_master"
+"Vietnam [https]",Vietnam,"Ho Chi Minh",https://mirror.vinahost.vn/CRAN/,VinaHost,"tienhn # vinahost.vn",1,vn,"secure_mirror_from_master"
 Venezuela,Venezuela,Valencia,http://camoruco.ing.uc.edu.ve/cran/,"Universidad de Carabobo Venezuela","dir-imyca # uc.edu.ve",1,ve
