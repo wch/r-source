@@ -230,7 +230,7 @@ function(pkgs, dependencies = c("Depends", "Imports", "LinkingTo"),
             c("Depends", "Imports", "LinkingTo", "Suggests")
 
     av <- installed[, dependencies, drop = FALSE]
-    rn <- row.names(installed)
+    rn <- as.character(installed[, "Package"])
     need <- apply(av, 1L, function(x)
                   any(pkgs %in% utils:::.clean_up_dependencies(x)) )
     uses <- rn[need]
