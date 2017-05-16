@@ -65,6 +65,12 @@ rep.arrow <- function(x, ...) {
     newa
 }
 
+str.arrow <- function(object, ...) {
+  o <- oldClass(object)
+  oldClass(object) <- setdiff(o, "arrow")
+  str(object)
+}
+
 ######################################
 # move-to and line-to primitives
 ######################################
