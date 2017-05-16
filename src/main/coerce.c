@@ -347,8 +347,11 @@ SEXP PairToVectorList(SEXP x)
     }
     PROTECT(x);
     PROTECT(xnew = allocVector(VECSXP, len));
-    for (i = 0, xptr = x; i < len; i++, xptr = CDR(xptr))
+    for (i = 0, xptr = x; i < len; i++, xptr = CDR(xptr)) {
+	if (NAMED(x) > NAMED(CAR(xptr)))
+	    SET_NAMED(CAR(xptr), NAMED(x));
 	SET_VECTOR_ELT(xnew, i, CAR(xptr));
+    }
     if (named) {
 	PROTECT(xnames = allocVector(STRSXP, len));
 	xptr = x;
