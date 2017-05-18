@@ -31,6 +31,10 @@
 
       \item New low level utilities \code{...elt(n)} and \code{...length()}
       for working with \code{...} parts inside a function.
+
+      \item \code{isTRUE()} is more tolerant and now true in
+      \code{x <- rlnorm(99); isTRUE(median(x) == quantile(x)["50\%"])}.
+      New function \code{isFALSE()} defined analogously.
     }
   }
 
