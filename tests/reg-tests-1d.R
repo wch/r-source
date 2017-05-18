@@ -10,6 +10,25 @@ x <- NULL; tools::assertWarning(f <-    body(x)); stopifnot(is.null(f))
 x <- NULL; tools::assertWarning(f <- formals(x)); stopifnot(is.null(f))
 ## these all silently coerced NULL to a function in R <= 3.2.x
 
+## A good guess if we have _not_ translated error/warning/.. messages:
+## (should something like this be part of package tools ?)
+englishMsgs <- {
+    ## 1. LANGUAGE takes precedence over locale settings:
+    if(nzchar(lang <- Sys.getenv("LANGUAGE")))
+        lang == "en"
+    else { ## query the  locale
+        if(.Platform$OS.type != "windows") {
+            ## sub() :
+            lc.msgs <- sub("\\..*", "", print(Sys.getlocale("LC_MESSAGES")))
+            lc.msgs == "C" || substr(lc.msgs, 1,2) == "en"
+        } else { ## Windows
+            lc.type <- sub("\\..*", "", sub("_.*", "", print(Sys.getlocale("LC_CTYPE"))))
+            lc.type == "English" || lc.type == "C"
+        }
+    }
+}
+cat(sprintf("English messages: %s\n", englishMsgs))
+
 
 ## match(x, t): fast algorithm for length-1 'x' -- PR#16885
 ## a) string 'x'  when only encoding differs
@@ -741,9 +760,35 @@ stopifnot(grepl("exit status 0", o[2]))
 setwd(owd)
 ## R CMD Sweave gave status 1 and hence an error in R 3.4.0 (only)
 
+
 ## print.noquote(*,  right = *)
 print(noquote(LETTERS[1:9]), right = TRUE)
 ## failed a few days end in R-devel ca. May 1, 2017
+
+
+## accessing  ..1  when ... is empty and using ..0
+t0 <- function(...) ..0
+t1 <- function(...) ..1
+stopifnot(identical(t1(pi, 2), pi), identical(t1(t1), t1))
+et1 <- tryCatch(t1(), error=identity)
+if(englishMsgs)
+    stopifnot(grepl("the ... list does not contain .* element",
+                    conditionMessage(et1)))
+## previously gave   "'nthcdr' needs a list to CDR down"
+et0 <- tryCatch(t0(), error=identity)
+if(englishMsgs)
+    stopifnot(grepl("indexing '...' with .* index 0", conditionMessage(et0)))
+tools::assertError(t0(1))
+tools::assertError(t0(1, 2))
+## the first gave a different error msg, the next gave no error in R < 3.5.0
+
+
+## stopifnot(e1, e2, ...) .. evaluating expressions sequentially
+one <- 1
+try(stopifnot(3 < 4:5, 5:6 >= 5, 6:8 <= 7, one <- 2))
+stopifnot(identical(one, 1))
+## all the expressions were evaluated in R <= 3.4.x
+
 
 
 ## keep at end

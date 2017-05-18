@@ -28,6 +28,9 @@
       \item New \code{askYesNo()} function and \code{"askYesNo"} option
       to ask the user binary response questions in a customizable but
       consistent way.  Suggestion of \PR{17242}.
+
+      \item New low level utilities \code{...elt(n)} and \code{...length()}
+      for working with \code{...} parts inside a function.
     }
   }
 
@@ -55,9 +58,13 @@
       and only attempts to pass non-missing arguments from the generic.
 
       \item \code{callNextMethod()} works for \code{\dots} methods.
-      
-      \item Connections are now written correctly with encoding 
+
+      \item Connections are now written correctly with encoding
       \code{"UTF-16LE"}.  (\PR{16737}).
+
+      \item Evaluation of \code{..0} now signals an error.  When
+      \code{..1} is used and \code{...} is empty, the error message is
+      more appropriate now.
     }
   }
 }

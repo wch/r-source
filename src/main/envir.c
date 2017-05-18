@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 1999--2017  The R Core Team.
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999-2017  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1357,29 +1357,55 @@ static int ddVal(SEXP symbol)
 
 */
 
-attribute_hidden
-SEXP ddfindVar(SEXP symbol, SEXP rho)
-{
-    int i;
-    SEXP vl;
+#define length_DOTS(_v_) (TYPEOF(_v_) == DOTSXP ? length(_v_) : 0)
 
+SEXP ddfind(int i, SEXP rho)
+{
+    if(i <= 0)
+	error(_("indexing '...' with non-positive index %d"), i);
     /* first look for ... symbol  */
-    vl = findVar(R_DotsSymbol, rho);
-    i = ddVal(symbol);
+    SEXP vl = findVar(R_DotsSymbol, rho);
     if (vl != R_UnboundValue) {
-	if (length(vl) >= i) {
+	if (length_DOTS(vl) >= i) {
 	    vl = nthcdr(vl, i - 1);
 	    return(CAR(vl));
 	}
 	else
-	    error(_("the ... list does not contain %d elements"), i);
+	    error(ngettext("the ... list does not contain a single element",
+			   "the ... list does not contain %d elements", i));
     }
     else error(_("..%d used in an incorrect context, no ... to look in"), i);
 
     return R_NilValue;
 }
 
+attribute_hidden
+SEXP ddfindVar(SEXP symbol, SEXP rho)
+{
+    int i = ddVal(symbol);
+    return ddfind(i, rho);
+}
 
+SEXP attribute_hidden do_dotsElt(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    checkArity(op, args);
+    check1arg(args, call, "n");
+
+    int i = asInteger(CAR(args));
+    return eval(ddfind(i, env), env);
+}
+
+SEXP attribute_hidden do_dotsLength(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    checkArity(op, args);
+    SEXP vl = findVar(R_DotsSymbol, env);
+    if (vl == R_UnboundValue)
+	error(_("incorrect context: the current call has no '...' to look in"));
+    // else
+    return ScalarInteger(length_DOTS(vl));
+}
+
+#undef length_DOTS
 
 /*----------------------------------------------------------------------
 
