@@ -35,6 +35,10 @@
       \item \code{isTRUE()} is more tolerant and now true in
       \code{x <- rlnorm(99); isTRUE(median(x) == quantile(x)["50\%"])}.
       New function \code{isFALSE()} defined analogously.
+
+      \item The default symbol table size has been increased from 4119
+      to 49157; this may improve symbol resolution performance when many
+      packages are loaded. Suggested by Jim Hester.
     }
   }
 
