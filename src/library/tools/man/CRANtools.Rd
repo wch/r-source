@@ -8,6 +8,7 @@
 \alias{CRAN_package_db}
 \alias{CRAN_check_results}
 \alias{CRAN_check_details}
+\alias{CRAN_check_issues}
 \alias{CRAN_memtest_notes}
 \alias{summarize_CRAN_check_status}
 \description{
@@ -19,11 +20,11 @@ CRAN_package_db()
 
 CRAN_check_results(flavors = NULL)
 CRAN_check_details(flavors = NULL)
-CRAN_memtest_notes()
+CRAN_check_issues()
 summarize_CRAN_check_status(packages,
                             results = NULL,
                             details = NULL,
-                            mtnotes = NULL)
+                            issues = NULL)
 }
 \arguments{
   \item{packages}{a character vector of package names.}
@@ -33,7 +34,7 @@ summarize_CRAN_check_status(packages,
     (default), or a subset of this.}
   \item{details}{the return value of \code{CRAN_check_details()}
     (default), or a subset of this.}
-  \item{mtnotes}{the return value of \code{CRAN_check_mtnotes()}
+  \item{issues}{the return value of \code{CRAN_check_issues()}
     (default), or a subset of this.}
 }
 \details{
@@ -56,11 +57,17 @@ summarize_CRAN_check_status(packages,
   Packages with all-OK checks are indicated via a \code{*} \code{Check}
   wildcard name and OK \code{Status}.
 
-  \code{CRAN_memtest_notes()} returns pointers to issues identified in
-  the additional memory-access check results made available from
-  \url{https://www.stats.ox.ac.uk/pub/bdr/memtests/}, as a list which
-  for every package with such issues provides a character matrix with
-  columns \code{Test} and \code{Path}.
+  \code{CRAN_check_issues()} returns a character frame with additional
+  check issues (including the memory-access check results made available
+  from \url{https://www.stats.ox.ac.uk/pub/bdr/memtests/} and the
+  without-long-double check results from
+  \url{https://www.stats.ox.ac.uk/pub/bdr/noLD}), as a character frame
+  with variables \code{Package}, \code{Version}, \code{kind} (an
+  identifier for the issue) and \code{href} (a URL with information on
+  the issue).
+
+  \code{CRAN_memtest_notes()} is now deprecated, with its functionality
+  integrated into that of \code{CRAN_check_issues()}.
 }
 
 \value{
@@ -118,14 +125,14 @@ bad <- subset(details,
 ## Show a random sample of up to 6
 head(bad[sample(seq_len(NROW(bad)), NROW(bad)), ])
 
-mtnotes <- CRAN_memtest_notes()
-head(mtnotes)
-## Show counts of issues according to test:
-table(do.call(rbind, mtnotes)[, "Test"])
+issues <- CRAN_check_issues()
+head(issues)
+## Show counts of issues according to kind:
+table(issues[, "kind"])
 
 ## Summarize CRAN check status for 10 randomly-selected packages
 ## (reusing the information already read in):
 pos <- sample(seq_len(NROW(pdb)), 10L)
 summarize_CRAN_check_status(pdb[pos, "Package"],
-                            results, details, mtnotes)
+                            results, details, issues)
 }}
