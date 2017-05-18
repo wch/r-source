@@ -6,7 +6,7 @@ Algeria,Algeria,Algiers,http://cran.usthb.dz/,"University of Science and Technol
 "Argentina (La Plata)",Argentina,"La Plata",http://mirror.fcaglp.unlp.edu.ar/CRAN/,"Universidad Nacional de La Plata","esuarez # Fcaglp.unlp.edu.ar",1,ar
 "Australia (Canberra) [https]",Australia,Canberra,https://cran.csiro.au/,CSIRO,"Bill.Venables # CSIRO.au, ServiceDesk2 # CSIRO.au",1,au,"secure_mirror_from_master"
 "Australia (Canberra)",Australia,Canberra,http://cran.csiro.au/,CSIRO,"Bill.Venables # CSIRO.au, ServiceDesk2 # CSIRO.au",1,au,"secure_mirror_from_master"
-"Australia (Melbourne) [https]",Australia,Melbourne,https://mirror.aarnet.edu.au/pub/CRAN/,AARNET,"Michael DSilva <Michael.DSilva # aarnet.edu.au>",1,au,"secure_mirror_from_master"
+"Australia (Melbourne) [https]",Australia,Melbourne,https://mirror.aarnet.edu.au/pub/CRAN/,AARNET,"<sysadmin # aarnet.edu.au>",1,au,"secure_mirror_from_master"
 "Australia (Perth) [https]",Australia,Perth,https://cran.curtin.edu.au/,"Curtin University of Technology","unix # curtin.edu.au",1,au,"secure_mirror_from_master"
 "Austria [https]",Austria,Wien,https://cran.wu.ac.at/,"Wirtschaftsuniversität Wien","CRAN # R-project.org",1,at,"secure_mirror_from_master"
 Austria,Austria,Wien,http://cran.wu.ac.at/,"Wirtschaftsuniversität Wien","CRAN # R-project.org",1,at,"secure_mirror_from_master"
@@ -148,6 +148,5 @@ Thailand,Thailand,Hatyai,http://mirrors.psu.ac.th/pub/cran/,"Prince of Songkla U
 "USA (TN)",USA,"Oak Ridge",http://mirrors.nics.utk.edu/cran/,"National Institute for Computational Sciences, Oak Ridge, TN","help # nics.utk.edu",1,us,"secure_mirror_from_master"
 "USA (TX 1) [https]",USA,Dallas,https://cran.revolutionanalytics.com/,"Revolution Analytics, Dallas, TX","David Smith <david # revolutionanalytics.com>",1,us,"secure_mirror_from_master"
 "USA (TX 1)",USA,Dallas,http://cran.revolutionanalytics.com/,"Revolution Analytics, Dallas, TX","David Smith <david # revolutionanalytics.com>",1,us,"secure_mirror_from_master"
-"USA (TX 2) [https]",USA,"San Antonio",https://mirror.usertrust.info/cranmirror/,"Dark Particle Labs, San Antonio","Matt Weeks <scriptjunkie # scriptjunkie.us>",1,us,"secure_mirror_from_master"
 "Vietnam [https]",Vietnam,"Ho Chi Minh",https://mirror.vinahost.vn/CRAN/,VinaHost,"tienhn # vinahost.vn",1,vn,"secure_mirror_from_master"
 Venezuela,Venezuela,Valencia,http://camoruco.ing.uc.edu.ve/cran/,"Universidad de Carabobo Venezuela","dir-imyca # uc.edu.ve",1,ve
