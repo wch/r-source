@@ -783,13 +783,6 @@ tools::assertError(t0(1, 2))
 ## the first gave a different error msg, the next gave no error in R < 3.5.0
 
 
-## stopifnot(e1, e2, ...) .. evaluating expressions sequentially
-one <- 1
-try(stopifnot(3 < 4:5, 5:6 >= 5, 6:8 <= 7, one <- 2))
-stopifnot(identical(one, 1))
-## all the expressions were evaluated in R <= 3.4.x
-
-
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
