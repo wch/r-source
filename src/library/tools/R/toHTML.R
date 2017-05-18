@@ -323,6 +323,8 @@ function(x, header = TRUE, ...)
         s
     }
 
+    package <- attr(x, "package")
+
     if (!(is.character(header) || is.logical(header))) {
         warning("unknown header specification")
 	header <- TRUE
@@ -337,7 +339,11 @@ function(x, header = TRUE, ...)
         if(isTRUE(header))
             header <-
                 c("<head>",
-                  "<title>Citation information</title>", 
+                  if(is.null(package))
+                      "<title>Citation information</title>"
+                  else
+                      sprintf("<title>%s citation information</title>",
+                              package), 
                   "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />", 
                   "</head>")
         header <- c("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">", 
