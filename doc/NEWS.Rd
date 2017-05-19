@@ -73,6 +73,10 @@
       \item Evaluation of \code{..0} now signals an error.  When
       \code{..1} is used and \code{...} is empty, the error message is
       more appropriate now.
+
+      \item (Windows mainly) High Unicode code points which require surrogate
+      pairs are now handled.  All systems should properly handle surrogate pairs,
+      even those systems that don't need to make use of them.  (\PR{16098})
     }
   }
 }

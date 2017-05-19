@@ -55,6 +55,8 @@ void NORET F77_SYMBOL(rexitc)(char *msg, int *nchar);
 }
 #endif
 
+#include <rlocale.h>
+
 /* Many small functions are included from ../include/Rinlinedfuns.h */
 
 attribute_hidden
@@ -1197,8 +1199,27 @@ int attribute_hidden utf8clen(char c)
     return 1 + utf8_table4[c & 0x3f];
 }
 
-/* These return the result in wchar_t, but does assume
-   wchar_t is UCS-2/4 and so are for internal use only */
+static Rwchar_t
+utf16toucs(wchar_t high, wchar_t low) 
+{
+    return 0x10000 + ((int) (high & 0x3FF) << 10 ) + (int) (low & 0x3FF);
+}
+
+/* Return the low UTF-16 surrogate from a UTF-8 string; assumes all testing has been done. */
+static wchar_t
+utf8toutf16low(const char *s)
+{
+    return (unsigned int) LOW_SURROGATE_START | ((s[2] & 0x0F) << 6) | (s[3] & 0x3F);
+}
+
+Rwchar_t attribute_hidden
+utf8toucs32(wchar_t high, const char *s)
+{
+    return utf16toucs(high, utf8toutf16low(s));
+}
+
+/* These return the result in wchar_t.  If wchar_t is 16 bit (e.g. UTF-16LE on Windows
+   only the high surrogate is returned; call utf8toutf16low next. */
 size_t attribute_hidden
 utf8toucs(wchar_t *wc, const char *s)
 {
@@ -1231,17 +1252,24 @@ utf8toucs(wchar_t *wc, const char *s)
 	    if(byte == 0xFFFE || byte == 0xFFFF) return (size_t)-1;
 	    return 3;
 	} else return (size_t)-1;
-    }
-    if(sizeof(wchar_t) < 4) return (size_t)-2;
-    /* So now handle 4,5.6 byte sequences with no testing */
-    if (byte < 0xf8) {
+    
+    } else if (byte < 0xf8) {
 	if(strlen(s) < 4) return (size_t)-2;
-	*w = (wchar_t) (((byte & 0x0F) << 18)
+	if (((s[1] & 0xC0) == 0x80) && ((s[2] & 0xC0) == 0x80) && ((s[3] & 0xC0) == 0x80)) {
+	    unsigned int cvalue = (((byte & 0x0F) << 18)
 			| (unsigned int) ((s[1] & 0x3F) << 12)
 			| (unsigned int) ((s[2] & 0x3F) << 6)
 			| (s[3] & 0x3F));
-	return 4;
-    } else if (byte < 0xFC) {
+	    if(sizeof(wchar_t) < 4) /* Assume UTF-16 and return high surrogate.  Users need to call utf8toutf16low next. */
+		*w = (wchar_t) ((cvalue - 0x10000) >> 10) | 0xD800;
+	    else
+		*w = (wchar_t) cvalue;
+	    return 4;
+	} else return (size_t)-1;
+    }
+    if(sizeof(wchar_t) < 4) return (size_t)-2;
+    /* So now handle 5.6 byte sequences with no testing */
+    if (byte < 0xFC) {
 	if(strlen(s) < 5) return (size_t)-2;
 	*w = (wchar_t) (((byte & 0x0F) << 24)
 			| (unsigned int) ((s[1] & 0x3F) << 12)
@@ -1276,6 +1304,11 @@ utf8towcs(wchar_t *wc, const char *s, size_t n)
 	    if (m == 0) break;
 	    res ++;
 	    if (res >= n) break;
+	    if (IS_HIGH_SURROGATE(*p)) {
+	    	*(++p) = utf8toutf16low(t);
+	    	res ++;
+	    	if (res >= n) break;
+	    }
 	}
     else
 	for(t = s; ; res++, t += m) {
@@ -1291,10 +1324,9 @@ static const unsigned int utf8_table1[] =
   { 0x7f, 0x7ff, 0xffff, 0x1fffff, 0x3ffffff, 0x7fffffff};
 static const unsigned int utf8_table2[] = { 0, 0xc0, 0xe0, 0xf0, 0xf8, 0xfc};
 
-static size_t Rwcrtomb(char *s, const wchar_t wc)
+static size_t Rwcrtomb32(char *s, Rwchar_t cvalue)
 {
     register size_t i, j;
-    unsigned int cvalue = (unsigned int) wc;
     char buf[10], *b;
 
     b = s ? s : buf;
@@ -1310,6 +1342,11 @@ static size_t Rwcrtomb(char *s, const wchar_t wc)
     return i + 1;
 }
 
+static size_t Rwcrtomb(char *s, const wchar_t wc)
+{
+    return Rwcrtomb32(s, wc);
+}
+
 attribute_hidden // but used in windlgs
 size_t wcstoutf8(char *s, const wchar_t *wc, size_t n)
 {
@@ -1318,7 +1355,12 @@ size_t wcstoutf8(char *s, const wchar_t *wc, size_t n)
     const wchar_t *p;
     if(s) {
 	for(p = wc, t = s; ; p++) {
-	    m  = (ssize_t) Rwcrtomb(t, *p);
+	    if (IS_SURROGATE_PAIR(*p,  *(p+1))) { 
+	    	Rwchar_t cvalue = ((*p & 0x3FF) << 10) + (*(p+1) & 0x3FF) + 0x010000;
+	    	m = (ssize_t) Rwcrtomb32(t, cvalue);
+	    	p++;
+	    } else 
+	    	m  = (ssize_t) Rwcrtomb(t, *p);
 	    if(m <= 0) break;
 	    res += m;
 	    if(res >= n) break;
@@ -1326,7 +1368,12 @@ size_t wcstoutf8(char *s, const wchar_t *wc, size_t n)
 	}
     } else {
 	for(p = wc; ; p++) {
-	    m  = (ssize_t) Rwcrtomb(NULL, *p);
+	    if (IS_SURROGATE_PAIR(*p, *(p+1))) {
+	    	Rwchar_t cvalue = ((*p & 0x3FF) << 10) + (*(p+1) & 0x3FF) + 0x010000;
+	    	m = (ssize_t) Rwcrtomb32(NULL, cvalue);
+	    	p++;
+	    } else 
+	    	m  = (ssize_t) Rwcrtomb(NULL, *p);
 	    if(m <= 0) break;
 	    res += m;
 	}

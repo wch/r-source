@@ -29,6 +29,7 @@
 #include <R_ext/Riconv.h>
 #include <Rinterface.h>
 #include <errno.h>
+#include <rlocale.h>
 
 /*
   See ../unix/system.txt for a description of some of these functions.
@@ -888,21 +889,22 @@ next_char:
 	    /* This must be the first byte */
 	    size_t clen;
 	    wchar_t wc;
+	    Rwchar_t ucs;
 	    clen = utf8toucs(&wc, inbuf);
 	    if(clen > 0 && inb >= clen) {
+	    	if (IS_HIGH_SURROGATE(wc))
+	    	    ucs = utf8toucs32(wc, inbuf);
+	    	else
+	    	    ucs = (Rwchar_t) wc;
 		inbuf += clen; inb -= clen;
-# ifndef Win32
-		if((unsigned int) wc < 65536) {
-# endif
+		if(ucs < 65536) {
 		// gcc 7 objects to this with unsigned int
-		    snprintf(outbuf, 9, "<U+%04X>", (unsigned short) wc);
+		    snprintf(outbuf, 9, "<U+%04X>", (unsigned short) ucs);
 		    outbuf += 8; outb -= 8;
-# ifndef Win32
 		} else {
-		    snprintf(outbuf, 13, "<U+%08X>", (unsigned int) wc);
+		    snprintf(outbuf, 13, "<U+%08X>", ucs);
 		    outbuf += 12; outb -= 12;
 		}
-# endif
 	    } else {
 		snprintf(outbuf, 5, "<%02x>", (unsigned char)*inbuf);
 		outbuf += 4; outb -= 4;

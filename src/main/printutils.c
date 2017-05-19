@@ -398,15 +398,18 @@ int Rstrwid(const char *str, int slen, cetype_t ienc, int quote)
 	int res;
 	mbstate_t mb_st;
 	wchar_t wc;
-	unsigned int k; /* not wint_t as it might be signed */
+	Rwchar_t k; /* not wint_t as it might be signed */
 
 	if(ienc != CE_UTF8)  mbs_init(&mb_st);
 	for (i = 0; i < slen; i++) {
 	    res = (ienc == CE_UTF8) ? (int) utf8toucs(&wc, p):
 		(int) mbrtowc(&wc, p, MB_CUR_MAX, NULL);
 	    if(res >= 0) {
-		k = wc;
-		if(0x20 <= k && k < 0x7f && iswprint(wc)) {
+		if (ienc == CE_UTF8 && IS_HIGH_SURROGATE(wc))
+		    k = utf8toucs32(wc, p);
+		else
+		    k = wc;
+		if(0x20 <= k && k < 0x7f && iswprint((wint_t)k)) {
 		    switch(wc) {
 		    case L'\\':
 			len += 2;
@@ -438,12 +441,8 @@ int Rstrwid(const char *str, int slen, cetype_t ienc, int quote)
 		    }
 		    p++;
 		} else {
-		    len += iswprint((wint_t)wc) ? Ri18n_wcwidth(wc) :
-#ifdef Win32
-			6;
-#else
-		    (k > 0xffff ? 10 : 6);
-#endif
+		    len += iswprint((wint_t)k) ? Ri18n_wcwidth(wc) :
+		    	(k > 0xffff ? 10 : 6);
 		    i += (res - 1);
 		    p += res;
 		}
@@ -550,15 +549,15 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 		i = Rstrlen(s, quote);
 		cnt = LENGTH(s);
 	    } else {
-		p = translateChar0(s);
+		p = translateCharUTF8(s);
 		if(p == CHAR(s)) {
 		    i = Rstrlen(s, quote);
 		    cnt = LENGTH(s);
 		} else {
 		    cnt = strlen(p);
-		    i = Rstrwid(p, cnt, CE_NATIVE, quote);
+		    i = Rstrwid(p, cnt, CE_UTF8, quote);
 		}
-		ienc = CE_NATIVE;
+		ienc = CE_UTF8;
 	    }
 	} else
 #endif
@@ -636,10 +635,13 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 	    res = (int)((ienc == CE_UTF8) ? utf8toucs(&wc, p):
 			mbrtowc(&wc, p, MB_CUR_MAX, NULL));
 	    if(res >= 0) { /* res = 0 is a terminator */
-		k = wc;
+		if (ienc == CE_UTF8 && IS_HIGH_SURROGATE(wc))
+		    k = utf8toucs32(wc, p);
+		else
+		    k = wc;
 		/* To be portable, treat \0 explicitly */
 		if(res == 0) {k = 0; wc = L'\0';}
-		if(0x20 <= k && k < 0x7f && iswprint(wc)) {
+		if(0x20 <= k && k < 0x7f && iswprint((wint_t) k)) {
 		    switch(wc) {
 		    case L'\\': *q++ = '\\'; *q++ = '\\'; p++; break;
 		    case L'\'':
@@ -682,14 +684,12 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 			   device concerned. */
 			for(j = 0; j < res; j++) *q++ = *p++;
 		    } else {
-#ifndef Win32
-# ifndef __STDC_ISO_10646__
+# if !defined (__STDC_ISO_10646__) && !defined (Win32)
 			Unicode_warning = TRUE;
 # endif
 			if(k > 0xffff)
 			    snprintf(buf, 11, "\\U%08x", k);
 			else
-#endif
 			    snprintf(buf, 11, "\\u%04x", k);
 			j = (int) strlen(buf);
 			memcpy(q, buf, j);
@@ -698,7 +698,6 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 		    }
 		    i += (res - 1);
 		}
-
 	    } else { /* invalid char */
 		snprintf(q, 5, "\\x%02x", *((unsigned char *)p));
 		q += 4; p++;
@@ -746,19 +745,15 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 		    }
 		p++;
 	    } else {  /* 8 bit char */
-#ifdef Win32 /* It seems Windows does not know what is printable! */
-		*q++ = *p++;
-#else
 		if(!isprint((int)*p & 0xff)) {
 		    /* print in octal */
 		    snprintf(buf, 5, "\\%03o", (unsigned char) *p);
 		    for(j = 0; j < 4; j++) *q++ = buf[j];
 		    p++;
 		} else *q++ = *p++;
-#endif
 	    }
 	}
-
+	
 #ifdef Win32
     if(WinUTF8out && ienc == CE_UTF8)  { memcpy(q, UTF8out, 3); q += 3; }
 #endif

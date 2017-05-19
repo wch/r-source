@@ -2435,7 +2435,14 @@ static int StringValue(int c, Rboolean forSymbol)
 		    else CTEXT_PUSH(c);
 		}
 		if (!val)
-		    error(_("nul character not allowed (line %d)"), ParseState.xxlineno);		
+		    error(_("nul character not allowed (line %d)"), ParseState.xxlineno);
+#ifdef Win32
+		if (0x010000 <= val && val <= 0x10FFFF) {   /* Need surrogate pair in Windows */
+		    val = val - 0x010000;
+		    WTEXT_PUSH( 0xD800 | (val >> 10) );
+		    val = 0xDC00 | (val & 0x03FF);
+		}
+#endif
 		WTEXT_PUSH(val);
 		use_wcs = TRUE;
 		continue;
