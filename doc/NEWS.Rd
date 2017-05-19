@@ -103,13 +103,17 @@
       successful completion.
 
       \item Vignettes listed in \file{.Rbuildignore} were not being
-      ignored properly.  \PR{17246}
+      ignored properly.  (\PR{17246})
 
       \item \code{file.mtime()} no longer returns NA on Windows when the
       file or directory is being used by another process.
 
       \item \command{R CMD INSTALL} Windows .zip file obeys \code{--lock}
       and \code{--pkglock} flags.
+      
+      \item (Windows only)  The \code{choose.files()} function could
+      return incorrect results when called with \code{multi = FALSE}.  
+      (\PR{17270})
     }
   }
 }

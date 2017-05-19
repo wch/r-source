@@ -3,7 +3,7 @@
  *  file selectlist.c
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
  *  Copyright (C) 2004	      The R Foundation
- *  Copyright (C) 2005--2013  The R Core Team
+ *  Copyright (C) 2005--2017  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -207,8 +207,11 @@ SEXP chooseFiles(SEXP def, SEXP caption, SEXP smulti, SEXP filters, SEXP sindex)
     res = askfilenamesW(filenameToWchar(STRING_ELT(caption, 0), 0), path,
 			multi, cfilters, filterindex, NULL);
 
-    count = countFilenamesW(res);
-
+    if (multi)
+    	count = countFilenamesW(res);
+    else
+    	count = wcslen(res) ? 1 : 0;
+    	
     SEXP ans;
     if (count < 2) PROTECT(ans = allocVector(STRSXP, count));
     else PROTECT(ans = allocVector(STRSXP, count-1));
