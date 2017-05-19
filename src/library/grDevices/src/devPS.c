@@ -1000,14 +1000,15 @@ static cidfontinfo makeCIDFont()
 static type1fontinfo makeType1Font()
 {
     type1fontinfo font = (Type1FontInfo *) malloc(sizeof(Type1FontInfo));
-    /*
-     * Initialise font->metrics.KernPairs to NULL
-     * so that we know NOT to free it if we fail to
-     * load this font and have to
-     * bail out and free this type1fontinfo
-     */
-    font->metrics.KernPairs = NULL;
-    if (!font)
+    if (font) {
+	/*
+	 * Initialise font->metrics.KernPairs to NULL
+	 * so that we know NOT to free it if we fail to
+	 * load this font and have to
+	 * bail out and free this type1fontinfo
+	 */
+	font->metrics.KernPairs = NULL;    
+    } else
 	warning(_("failed to allocate Type 1 font info"));
     return font;
 }
