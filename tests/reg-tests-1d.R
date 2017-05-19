@@ -766,18 +766,24 @@ print(noquote(LETTERS[1:9]), right = TRUE)
 ## failed a few days end in R-devel ca. May 1, 2017
 
 
-## accessing  ..1  when ... is empty and using ..0
+## accessing  ..1  when ... is empty and using ..0, etc.
 t0 <- function(...) ..0
 t1 <- function(...) ..1
-stopifnot(identical(t1(pi, 2), pi), identical(t1(t1), t1))
+t2 <- function(...) ..2
+stopifnot(identical(t1(pi, 2), pi), identical(t1(t1), t1),
+	  identical(t2(pi, 2), 2))
 et1 <- tryCatch(t1(), error=identity)
 if(englishMsgs)
-    stopifnot(grepl("the ... list does not contain .* element",
-                    conditionMessage(et1)))
+    stopifnot(identical("the ... list does not contain any element",
+			conditionMessage(et1)))
 ## previously gave   "'nthcdr' needs a list to CDR down"
-et0 <- tryCatch(t0(), error=identity)
+et0   <- tryCatch(t0(),  error=identity); (mt0   <- conditionMessage(et0))
+et2.0 <- tryCatch(t2(),  error=identity); (mt2.0 <- conditionMessage(et2.0))
+et2.1 <- tryCatch(t2(1), error=identity); (mt2.1 <- conditionMessage(et2.1))
 if(englishMsgs)
-    stopifnot(grepl("indexing '...' with .* index 0", conditionMessage(et0)))
+    stopifnot(grepl("indexing '...' with .* index 0", mt0),
+	      identical("the ... list does not contain 2 elements", mt2.0),
+	      identical(mt2.0, mt2.1))
 tools::assertError(t0(1))
 tools::assertError(t0(1, 2))
 ## the first gave a different error msg, the next gave no error in R < 3.5.0
