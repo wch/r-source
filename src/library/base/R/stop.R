@@ -65,7 +65,7 @@ stopifnot <- function(...)
 				     "%s are not all TRUE"),
 			    Dparse(cl.i))
 
-	    stop(msg, call. = FALSE, domain = NA)
+	    stop(simpleError(msg, call = sys.call(-1)))
 	}
     }
     invisible()
