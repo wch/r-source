@@ -208,9 +208,9 @@ mbyte.lc <- {
     else if(grepl("[.]UTF-8$", oloc, ignore.case=TRUE)) # typically nowadays
 	oloc
     else
-	"C.UTF-8" # or rather "en_US.UTF-8" (? from  system("locale -a| fgrep .UTF-8") )
+	"en_US.UTF-8" # or rather "C.UTF-8" or from  system("locale -a | fgrep .utf8")
 }
-stopifnot(identical(Sys.setlocale("LC_CTYPE", mbyte.lc), mbyte.lc))
+identical(Sys.setlocale("LC_CTYPE", mbyte.lc), mbyte.lc) # "ok" if not
 cc <- "J\xf6reskog" # valid in "latin-1"; invalid multibyte string in UTF-8
 .tmp <- capture.output(
 str(cc) # failed in some R-devel versions
