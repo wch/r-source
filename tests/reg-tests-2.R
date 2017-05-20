@@ -2423,7 +2423,7 @@ try(complete.cases(list(), list()))
 
 ## error messages from (C-level) evalList
 tst <- function(y) { stopifnot(is.numeric(y)); y+ 1 }
-try(tst())
+try(tst()) # even nicer since R 3.5.0's change to sequential stopifnot()
 try(c(1,,2))
 ## change in 2.8.0 made these less clear
 

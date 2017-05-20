@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2017-05-14 r72675) -- "Unsuffered Consequences"
+R Under development (unstable) (2017-05-16 r72682) -- "Unsuffered Consequences"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -6573,9 +6573,8 @@ Error in complete.cases(list(), list()) :
 > 
 > ## error messages from (C-level) evalList
 > tst <- function(y) { stopifnot(is.numeric(y)); y+ 1 }
-> try(tst())
-Error in stopifnot(is.numeric(y)) : 
-  argument "y" is missing, with no default
+> try(tst()) # even nicer since R 3.5.0's change to sequential stopifnot()
+Error in is.numeric(y) : argument "y" is missing, with no default
 > try(c(1,,2))
 Error in c(1, , 2) : argument 2 is empty
 > ## change in 2.8.0 made these less clear

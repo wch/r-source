@@ -77,6 +77,11 @@
       \item (Windows mainly) High Unicode code points which require surrogate
       pairs are now handled.  All systems should properly handle surrogate pairs,
       even those systems that don't need to make use of them.  (\PR{16098})
+
+      \item \code{stopifnot(e, e2, ...)} now evaluates the
+      expressions sequentially and in case of an error or warning shows
+      the relevant expression instead of the full \code{stopifnot(..)}
+      call.
     }
   }
 }
@@ -114,9 +119,9 @@
 
       \item \command{R CMD INSTALL} Windows .zip file obeys \code{--lock}
       and \code{--pkglock} flags.
-      
+
       \item (Windows only)  The \code{choose.files()} function could
-      return incorrect results when called with \code{multi = FALSE}.  
+      return incorrect results when called with \code{multi = FALSE}.
       (\PR{17270})
     }
   }
