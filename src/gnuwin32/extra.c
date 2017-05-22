@@ -3,7 +3,7 @@
  *  file extra.c
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
  *  Copyright (C) 2004	      The R Foundation
- *  Copyright (C) 2005--2015  The R Core Team
+ *  Copyright (C) 2005--2017  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -242,7 +242,7 @@ SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 		 LOWORD(osvi.dwBuildNumber), osvi.szCSDVersion);
     SET_STRING_ELT(ans, 2, mkChar(ver));
     GetComputerNameW(name, &namelen);
-    wcstoutf8(buf, name, 1000);
+    wcstoutf8(buf, name, sizeof(buf));
     SET_STRING_ELT(ans, 3, mkCharCE(buf, CE_UTF8));
 #ifdef _WIN64
     SET_STRING_ELT(ans, 4, mkChar("x86-64"));
@@ -250,7 +250,7 @@ SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
     SET_STRING_ELT(ans, 4, mkChar("x86"));
 #endif
     GetUserNameW(user, &userlen);
-    wcstoutf8(buf, user, 1000);
+    wcstoutf8(buf, user, sizeof(buf));
     SET_STRING_ELT(ans, 5, mkCharCE(buf, CE_UTF8));
     SET_STRING_ELT(ans, 6, STRING_ELT(ans, 5));
     SET_STRING_ELT(ans, 7, STRING_ELT(ans, 5));
@@ -418,7 +418,7 @@ SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, paths = CAR(args), el, slash;
     int i, n = LENGTH(paths), res;
-    char tmp[MAX_PATH], longpath[MAX_PATH], *tmp2;
+    char tmp[4*MAX_PATH+1], longpath[4*MAX_PATH+1], *tmp2;
     wchar_t wtmp[32768], wlongpath[32768], *wtmp2;
     int mustWork, fslash = 0;
 
@@ -447,7 +447,7 @@ SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 					wtmp, &wtmp2)) && res <= 32768) {
 		if ((res = GetLongPathNameW(wtmp, wlongpath, 32768))
 		    && res <= 32768) {
-	    	    wcstoutf8(longpath, wlongpath, wcslen(wlongpath)+1);
+	    	    wcstoutf8(longpath, wlongpath, sizeof(longpath));
 		    if(fslash) R_UTF8fixslash(longpath);
 	    	    result = mkCharCE(longpath, CE_UTF8);
 		} else if(mustWork == 1) {
@@ -455,7 +455,7 @@ SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 			      translateChar(el), 
 			      formatError(GetLastError()));	
 	    	} else {
-	    	    wcstoutf8(tmp, wtmp, wcslen(wtmp)+1);
+	    	    wcstoutf8(tmp, wtmp, sizeof(tmp));
 		    if(fslash) R_UTF8fixslash(tmp);
 	    	    result = mkCharCE(tmp, CE_UTF8);
 	    	    warn = 1;
@@ -520,7 +520,7 @@ SEXP in_shortpath(SEXP paths)
 {
     SEXP ans, el;
     int i, n = LENGTH(paths);
-    char tmp[MAX_PATH];
+    char tmp[4*MAX_PATH+1];
     wchar_t wtmp[32768];
     DWORD res;
     const void *vmax = vmaxget();
@@ -533,7 +533,7 @@ SEXP in_shortpath(SEXP paths)
 	if(getCharCE(el) == CE_UTF8) {
 	    res = GetShortPathNameW(filenameToWchar(el, FALSE), wtmp, 32768);
 	    if (res && res <= 32768)
-		wcstoutf8(tmp, wtmp, wcslen(wtmp)+1);
+		wcstoutf8(tmp, wtmp, sizeof(tmp));
 	    else
 		strcpy(tmp, translateChar(el));
 	    /* documented to return paths using \, which the API call does
@@ -825,7 +825,7 @@ SEXP attribute_hidden do_filechoose(SEXP call, SEXP op, SEXP args, SEXP rho)
     fn = askfilenameW(G_("Select file"), "");
     if (!fn)
 	error(_("file choice cancelled"));
-    wcstoutf8(str, fn, 4*MAX_PATH+1);
+    wcstoutf8(str, fn, sizeof(str));
     PROTECT(ans = allocVector(STRSXP, 1));
     SET_STRING_ELT(ans, 0, mkCharCE(str, CE_UTF8));
     UNPROTECT(1);

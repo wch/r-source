@@ -769,9 +769,9 @@ donewsc:
 		if (iswspace((int)wc[i])) mywcscpy(wc + i, wc + i + 1);
     }
 
-    int nb = (int) wcstoutf8(NULL, wc, 0);
-    char *cbuf = CallocCharBuf(nb+1);
-    wcstoutf8(cbuf, wc, nb + 1);
+    int nb = (int) wcstoutf8(NULL, wc, INT_MAX);
+    char *cbuf = CallocCharBuf(nb);
+    wcstoutf8(cbuf, wc, nb);
     SEXP ans = mkCharCE(cbuf, CE_UTF8);
     Free(cbuf);
     return ans;
@@ -987,9 +987,9 @@ SEXP attribute_hidden do_tolower(SEXP call, SEXP op, SEXP args, SEXP env)
 		    if (ienc == CE_UTF8) {
 			utf8towcs(wc, xi, nc + 1);
 			for (j = 0; j < nc; j++) wc[j] = towctrans(wc[j], tr);
-			nb = (int) wcstoutf8(NULL, wc, 0);
+			nb = (int) wcstoutf8(NULL, wc, INT_MAX);
 			cbuf = CallocCharBuf(nb);
-			wcstoutf8(cbuf, wc, nb + 1);
+			wcstoutf8(cbuf, wc, nb);
 			SET_STRING_ELT(y, i, mkCharCE(cbuf, CE_UTF8));
 		    } else {
 			mbstowcs(wc, xi, nc + 1);
@@ -1426,9 +1426,9 @@ SEXP attribute_hidden do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
 		    if (tbl) wc[j] = tbl->c_new;
 		}
 		if (ienc == CE_UTF8) {
-		    nb = (int) wcstoutf8(NULL, wc, 0);
+		    nb = (int) wcstoutf8(NULL, wc, INT_MAX);
 		    cbuf = CallocCharBuf(nb);
-		    wcstoutf8(cbuf, wc, nb + 1);
+		    wcstoutf8(cbuf, wc, nb);
 		    SET_STRING_ELT(y, i, mkCharCE(cbuf, CE_UTF8));
 		} else {
 		    nb = (int) wcstombs(NULL, wc, 0);

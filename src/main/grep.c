@@ -138,21 +138,19 @@ static SEXP mkCharWLen(const wchar_t *wc, int nc)
     R_CheckStack2(sizeof(wchar_t)*(nc+1));
     wt = (wchar_t *) alloca((nc+1)*sizeof(wchar_t));
     wcsncpy(wt, wc, nc); wt[nc] = 0;
-    nb = wcstoutf8(NULL, wt, nc);
-    R_CheckStack2(sizeof(char)*(nb+1));
-    xi = (char *) alloca((nb+1)*sizeof(char));
-    wcstoutf8(xi, wt, nb + 1);
-    if (nb > INT_MAX)
-	error("R character strings are limited to 2^31-1 bytes");
+    nb = wcstoutf8(NULL, wt, INT_MAX);
+    R_CheckStack2(sizeof(char)*nb);
+    xi = (char *) alloca(nb*sizeof(char));
+    wcstoutf8(xi, wt, nb);
     return mkCharLenCE(xi, (int)nb, CE_UTF8);
 }
 
 static SEXP mkCharW(const wchar_t *wc)
 {
-    size_t nb = wcstoutf8(NULL, wc, 0);
-    char *xi = (char *) Calloc(nb+1, char);
+    size_t nb = wcstoutf8(NULL, wc, INT_MAX);
+    char *xi = (char *) Calloc(nb, char);
     SEXP ans;
-    wcstoutf8(xi, wc, nb + 1);
+    wcstoutf8(xi, wc, nb);
     ans = mkCharCE(xi, CE_UTF8);
     Free(xi);
     return ans;
@@ -1593,8 +1591,8 @@ char *pcre_string_adj(char *target, const char *orig, const char *repl,
 			wc = (wchar_t *) alloca((nc+1)*sizeof(wchar_t));
 			utf8towcs(wc, xi, nc + 1);
 			for (j = 0; j < nc; j++) wc[j] = towctrans(wc[j], tr);
-			nb = (int) wcstoutf8(NULL, wc, 0);
-			wcstoutf8(xi, wc, nb + 1);
+			nb = (int) wcstoutf8(NULL, wc, INT_MAX);
+			wcstoutf8(xi, wc, nb);
 			for (j = 0; j < nb; j++) *t++ = *xi++;
 		    }
 		} else

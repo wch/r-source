@@ -742,7 +742,7 @@ SEXP static intern_getwd(void)
 	wchar_t wbuf[PATH_MAX+1];
 	int res = GetCurrentDirectoryW(PATH_MAX, wbuf);
 	if(res > 0) {
-	    wcstoutf8(buf, wbuf, PATH_MAX+1);
+	    wcstoutf8(buf, wbuf, sizeof(buf));
 	    R_UTF8fixslash(buf);
 	    PROTECT(rval = allocVector(STRSXP, 1));
 	    SET_STRING_ELT(rval, 0, mkCharCE(buf, CE_UTF8));
@@ -805,7 +805,7 @@ SEXP attribute_hidden do_setwd(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP attribute_hidden do_basename(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, s = R_NilValue;	/* -Wall */
-    char sp[4*PATH_MAX];
+    char sp[4*PATH_MAX+1];
     wchar_t  buf[PATH_MAX], *p;
     const wchar_t *pp;
     int i, n;
@@ -828,8 +828,7 @@ SEXP attribute_hidden do_basename(SEXP call, SEXP op, SEXP args, SEXP rho)
 		while (p >= buf && *p == L'/') *(p--) = L'\0';
 	    }
 	    if ((p = wcsrchr(buf, L'/'))) p++; else p = buf;
-	    memset(sp, 0, 4*PATH_MAX); /* safety */
-	    wcstoutf8(sp, p, 4*wcslen(p) + 1);
+	    wcstoutf8(sp, p, sizeof(sp));
 	    SET_STRING_ELT(ans, i, mkCharCE(sp, CE_UTF8));
 	}
     }
@@ -882,7 +881,7 @@ SEXP attribute_hidden do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP ans, s = R_NilValue;	/* -Wall */
     wchar_t buf[PATH_MAX], *p;
     const wchar_t *pp;
-    char sp[4*PATH_MAX];
+    char sp[4*PATH_MAX+1];
     int i, n;
 
     checkArity(op, args);
@@ -911,7 +910,7 @@ SEXP attribute_hidden do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
 			  && (p > buf+2 || *(p-1) != L':')) --p;
 		    p[1] = L'\0';
 		}
-		wcstoutf8(sp, buf, 4*wcslen(buf)+1);
+		wcstoutf8(sp, buf, sizeof(sp));
 	    }
 	    SET_STRING_ELT(ans, i, mkCharCE(sp, CE_UTF8));
 	}
@@ -1324,63 +1323,53 @@ static const unsigned int utf8_table1[] =
   { 0x7f, 0x7ff, 0xffff, 0x1fffff, 0x3ffffff, 0x7fffffff};
 static const unsigned int utf8_table2[] = { 0, 0xc0, 0xe0, 0xf0, 0xf8, 0xfc};
 
-static size_t Rwcrtomb32(char *s, Rwchar_t cvalue)
+/* s is NULL, or it contains at least n bytes.  Just write a a terminator if it's not big enough. */
+
+static size_t Rwcrtomb32(char *s, Rwchar_t cvalue, size_t n)
 {
     register size_t i, j;
-    char buf[10], *b;
-
-    b = s ? s : buf;
-    if(cvalue == 0) {*b = 0; return 0;}
+    if (!n) return 0;
+    if (s) *s = 0;    /* Simplifies exit later */
+    if(cvalue == 0) return 0;
     for (i = 0; i < sizeof(utf8_table1)/sizeof(int); i++)
 	if (cvalue <= utf8_table1[i]) break;
-    b += i;
-    for (j = i; j > 0; j--) {
-	*b-- = (char) (0x80 | (cvalue & 0x3f));
-	cvalue >>= 6;
+    if (i >= n) return 0;  /* need space for terminal null */
+    if (s) {
+    	s += i;
+    	for (j = i; j > 0; j--) {
+	    *s-- = (char) (0x80 | (cvalue & 0x3f));
+	    cvalue >>= 6;
+        }
+    	*s = (char) (utf8_table2[i] | cvalue);
     }
-    *b = (char) (utf8_table2[i] | cvalue);
     return i + 1;
 }
 
-static size_t Rwcrtomb(char *s, const wchar_t wc)
-{
-    return Rwcrtomb32(s, wc);
-}
-
+/* on input, wc is a string encoded in UTF-16 or UCS-2 or UCS-4.
+   s can be a buffer of size n>=0 chars, or NULL.  If n=0 or s=NULL, nothing is written. 
+   The return value is the number of chars including the terminating null.  If the
+   buffer is not big enough, the result is truncated but still null-terminated */
 attribute_hidden // but used in windlgs
 size_t wcstoutf8(char *s, const wchar_t *wc, size_t n)
 {
-    ssize_t m, res=0;
+    size_t m, res=0;
     char *t;
     const wchar_t *p;
-    if(s) {
-	for(p = wc, t = s; ; p++) {
-	    if (IS_SURROGATE_PAIR(*p,  *(p+1))) { 
-	    	Rwchar_t cvalue = ((*p & 0x3FF) << 10) + (*(p+1) & 0x3FF) + 0x010000;
-	    	m = (ssize_t) Rwcrtomb32(t, cvalue);
-	    	p++;
-	    } else 
-	    	m  = (ssize_t) Rwcrtomb(t, *p);
-	    if(m <= 0) break;
-	    res += m;
-	    if(res >= n) break;
+    if (!n) return 0;
+    for(p = wc, t = s; ; p++) {
+    	if (IS_SURROGATE_PAIR(*p, *(p+1))) {
+    	    Rwchar_t cvalue =  ((*p & 0x3FF) << 10) + (*(p+1) & 0x3FF) + 0x010000;
+	    m = Rwcrtomb32(t, cvalue, n - res);
+	    p++;
+    	} else 
+    	    m = Rwcrtomb32(t, (Rwchar_t)(*p), n - res);
+    	if (!m) break;
+	res += m;
+	if (t)
 	    t += m;
-	}
-    } else {
-	for(p = wc; ; p++) {
-	    if (IS_SURROGATE_PAIR(*p, *(p+1))) {
-	    	Rwchar_t cvalue = ((*p & 0x3FF) << 10) + (*(p+1) & 0x3FF) + 0x010000;
-	    	m = (ssize_t) Rwcrtomb32(NULL, cvalue);
-	    	p++;
-	    } else 
-	    	m  = (ssize_t) Rwcrtomb(NULL, *p);
-	    if(m <= 0) break;
-	    res += m;
-	}
     }
-    return (size_t) res;
+    return res + 1;
 }
-
 
 /* A version that reports failure as an error */
 size_t Mbrtowc(wchar_t *wc, const char *s, size_t n, mbstate_t *ps)
