@@ -104,7 +104,7 @@ do_mapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	SEXP tmp = R_forceAndCall(fcall, m, rho);
 	if (MAYBE_REFERENCED(tmp))
-	    tmp = duplicate(tmp);
+	    tmp = lazy_duplicate(tmp);
 	SET_VECTOR_ELT(ans, i, tmp);
     }
 
