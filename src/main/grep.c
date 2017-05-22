@@ -142,7 +142,7 @@ static SEXP mkCharWLen(const wchar_t *wc, int nc)
     R_CheckStack2(sizeof(char)*nb);
     xi = (char *) alloca(nb*sizeof(char));
     wcstoutf8(xi, wt, nb);
-    return mkCharLenCE(xi, (int)nb, CE_UTF8);
+    return mkCharLenCE(xi, (int)nb-1, CE_UTF8);
 }
 
 static SEXP mkCharW(const wchar_t *wc)
