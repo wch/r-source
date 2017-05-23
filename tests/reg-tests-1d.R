@@ -801,6 +801,10 @@ stopifnot(identical(print(conditionCall(et))[[1]],
 ## call was the full 'stopifnot(..)' in R < 3.5.0
 
 
+## path.expand shouldn't translate to local encoding PR#17120
+filename <- "\U9b3c.R"
+stopifnot(identical( path.expand(paste0("~/", filename)), paste0(path.expand("~/"), filename)))
+## Chinese character was changed to hex code 
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
