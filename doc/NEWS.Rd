@@ -83,8 +83,9 @@
       the relevant expression instead of the full \code{stopifnot(..)}
       call.
 
-      \item \code{path.expand()} can now handle UTF-8 paths on
-      Windows.  (\PR{17120})
+      \item \code{path.expand()} on Windows now accepts paths specified as 
+      UTF-8-encoded character strings even if not representable in the 
+      current locale.  (\PR{17120})
     }
   }
 }
