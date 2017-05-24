@@ -1,7 +1,7 @@
 #  File src/library/stats/R/aggregate.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -51,16 +51,13 @@ function(x, by, FUN, ..., simplify = TRUE, drop = TRUE)
         names(by)[ind] <- paste0("Group.", ind)
     }
 
-    nrx <- NROW(x)
-
-    if(any(lengths(by) != nrx))
+    if(any(lengths(by) != NROW(x)))
         stop("arguments must have same length")
 
     y <- as.data.frame(by, stringsAsFactors = FALSE)
     keep <- complete.cases(by)
     y <- y[keep, , drop = FALSE]
     x <- x[keep, , drop = FALSE]
-
     nrx <- NROW(x)
 
     ## Generate a group identifier vector with integers and dots.
@@ -72,18 +69,26 @@ function(x, by, FUN, ..., simplify = TRUE, drop = TRUE)
         levels(y) <- paste0(strrep("0", n[l] - n), s)
         as.character(y)
     }
+    grp <- lapply(y, ident)
+    multi.y <- !drop && ncol(y)
+    if(multi.y) {
+	lev <- lapply(grp, function(e) sort(unique(e)))
+	y <- as.list(y)
+	for (i in seq_along(y))
+	    y[[i]] <- y[[i]][match(lev[[i]], grp[[i]])]
+        eGrid <- function(L)
+            expand.grid(L, KEEP.OUT.ATTRS = FALSE, stringsAsFactors = FALSE)
+	y <- eGrid(y)
+    }
     grp <- if(ncol(y)) {
-        grp <- lapply(rev(y), ident)
         names(grp) <- NULL
-        do.call(paste, c(grp, list(sep = ".")))
+	do.call(paste, c(rev(grp), list(sep = ".")))
     } else
 	integer(nrx)
-
-    if(!drop && ncol(y)) {
-        y <- expand.grid(lapply(y, function(e) sort(unique(e))))
-        lev <- lapply(rev(y), ident)
+    if(multi.y) {
+        lev <- as.list(eGrid(lev))
         names(lev) <- NULL
-        lev <- do.call(paste, c(lev, list(sep = ".")))
+        lev <- do.call(paste, c(rev(lev), list(sep = ".")))
         grp <- factor(grp, levels = lev)
     } else
         y <- y[match(sort(unique(grp)), grp, 0L), , drop = FALSE]
@@ -101,20 +106,17 @@ function(x, by, FUN, ..., simplify = TRUE, drop = TRUE)
                             cl1 <- cl[[1L]]
                             ans <- unlist(ans, recursive = FALSE)
                             if (!is.null(cl1) &&
-                                all(sapply(cl, function(x) identical(x, cl1))))
+                                all(vapply(cl, identical, NA, y = cl1)))
                                 class(ans) <- cl1
                         } else if(len > 1L)
                             ans <- matrix(unlist(ans, recursive = FALSE),
                                           nrow = nry,
                                           ncol = len,
                                           byrow = TRUE,
-                                          dimnames = {
-                                              if(!is.null(nms <-
-                                                          names(ans[[1L]])))
-                                                  list(NULL, nms)
-                                              else
-                                                  NULL
-                                          })
+					  dimnames =
+					      if(!is.null(nms <- names(ans[[1L]])))
+						  list(NULL, nms) ## else NULL
+					  )
                     }
                     ans
                 })

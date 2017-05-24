@@ -83,8 +83,8 @@
       the relevant expression instead of the full \code{stopifnot(..)}
       call.
 
-      \item \code{path.expand()} on Windows now accepts paths specified as 
-      UTF-8-encoded character strings even if not representable in the 
+      \item \code{path.expand()} on Windows now accepts paths specified as
+      UTF-8-encoded character strings even if not representable in the
       current locale.  (\PR{17120})
     }
   }
@@ -127,6 +127,9 @@
       \item (Windows only)  The \code{choose.files()} function could
       return incorrect results when called with \code{multi = FALSE}.
       (\PR{17270})
+
+      \item \code{aggregate(<data.frame>, drop=FALSE)} now also works in
+      case of near-equal numbers in \code{by}.  (\PR{16918})
     }
   }
 }

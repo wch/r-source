@@ -1,6 +1,6 @@
 % File src/library/stats/man/aggregate.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{aggregate}
@@ -37,7 +37,9 @@ aggregate(x, \dots)
   \item{simplify}{a logical indicating whether results should be
     simplified to a vector or matrix if possible.}
   \item{drop}{a logical indicating whether to drop unused combinations
-    of grouping values.}
+    of grouping values.  The non-default case \code{drop=FALSE} has been
+    available since \R 3.3.0, and may change in some cases where unused
+    combinations are still dropped.}
   \item{formula}{a \link{formula}, such as \code{y ~ x} or
     \code{cbind(y1, y2) ~ x1 + x2}, where the \code{y} variables are
     numeric data to be split into groups according to the grouping

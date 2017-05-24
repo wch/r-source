@@ -803,8 +803,22 @@ stopifnot(identical(print(conditionCall(et))[[1]],
 
 ## path.expand shouldn't translate to local encoding PR#17120
 filename <- "\U9b3c.R"
-stopifnot(identical( path.expand(paste0("~/", filename)), paste0(path.expand("~/"), filename)))
+stopifnot(identical(path.expand(paste0("~/", filename)),
+		    paste0(path.expand("~/"), filename)))
 ## Chinese character was changed to hex code 
+
+
+## aggregate.data.frame(*, drop=FALSE)  {new feature in R 3.3.0}
+## PR#16918 : problem with near-eq. factor() levels "not quite matching"
+group <- c(2 + 2^-51, 2)
+d1 <- data.frame(n = seq(group))
+b1 <- list(group = group)
+stopifnot(
+    identical(aggregate(d1, b1, length, drop = TRUE),
+              aggregate(d1, b1, length, drop = FALSE)))
+## drop=FALSE gave two rows + deprec. warning in R 3.3.x, and an error in 3.4.0
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
