@@ -5094,18 +5094,22 @@ tclvalue(.Tcl("tk windowingsystem"))  # "x11" or "aqua"
 @subsection Java
 
 The situation with Java support on macOS is messy.@footnote{For more
-details see @uref{http://www.macstrategy.com/@/article.php?3}.}
+details see @uref{http://www.macstrategy.com/@/article.php?3}.}  As from
+@R{} 3.4.0 the @acronym{CRAN} distribution of @CRANpkg{rJava} requires
+Java 8 (aka 1.8).
 
 macOS no longer comes with an installed Java runtime (JRE), and a macOS
 upgrade may remove one if already installed: it is intended to be
 installed at first use.  Check if a JRE is installed by running
 @command{java -version} in a @command{Terminal} window: if Java is not
-installed this should prompt you to install it.  You can also install
-directly the latest Java from Oracle (currently from
+installed@footnote{In the unlikely event that the version reported does
+not start with @code{1.8.0} you need to update your Java.} this should
+prompt you to install it.  You can also install directly the latest Java
+from Oracle (currently from
 @uref{http://www.oracle.com/@/technetwork/@/java/@/javase/@/downloads/@/index.html}).
 
 Binary distributions of @R{} are built against a specific version (e.g.@:
-1.8.0_121) of Oracle Java so @command{sudo R CMD javareconf} may be
+1.8.0_131) of Oracle Java so @command{sudo R CMD javareconf} may be
 needed before using Java-using packages.
 
 @c You may need to install what Apple calls `legacy Java'@footnote{e.g.@:
@@ -5128,7 +5132,7 @@ The build process tries to fathom out what JRE/JDK to use, but it may
 need some help, e.g.@: by setting @env{JAVA_HOME}.  The Oracle JDK can
 be specified explicitly by something like
 @example
-JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_121.jdk/Contents/Home
+JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home
 JAVA_CPPFLAGS="-I/$@{JAVA_HOME@}/include -I/$@{JAVA_HOME@}/include/darwin"
 JAVA_LD_LIBRARY_PATH="$@{JAVA_HOME@}/jre/lib/server"
 JAVA_LIBS="-L/$@{JAVA_HOME@}/jre/lib/server -ljvm" 
