@@ -73,6 +73,19 @@
       \item Evaluation of \code{..0} now signals an error.  When
       \code{..1} is used and \code{...} is empty, the error message is
       more appropriate now.
+
+      \item (Windows mainly) High Unicode code points which require surrogate
+      pairs are now handled.  All systems should properly handle surrogate pairs,
+      even those systems that don't need to make use of them.  (\PR{16098})
+
+      \item \code{stopifnot(e, e2, ...)} now evaluates the
+      expressions sequentially and in case of an error or warning shows
+      the relevant expression instead of the full \code{stopifnot(..)}
+      call.
+
+      \item \code{path.expand()} on Windows now accepts paths specified as
+      UTF-8-encoded character strings even if not representable in the
+      current locale.  (\PR{17120})
     }
   }
 }
@@ -103,13 +116,20 @@
       successful completion.
 
       \item Vignettes listed in \file{.Rbuildignore} were not being
-      ignored properly.  \PR{17246}
+      ignored properly.  (\PR{17246})
 
       \item \code{file.mtime()} no longer returns NA on Windows when the
       file or directory is being used by another process.
 
       \item \command{R CMD INSTALL} Windows .zip file obeys \code{--lock}
       and \code{--pkglock} flags.
+
+      \item (Windows only)  The \code{choose.files()} function could
+      return incorrect results when called with \code{multi = FALSE}.
+      (\PR{17270})
+
+      \item \code{aggregate(<data.frame>, drop=FALSE)} now also works in
+      case of near-equal numbers in \code{by}.  (\PR{16918})
     }
   }
 }
