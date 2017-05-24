@@ -4000,8 +4000,12 @@ setRlibs <-
                     sQuote(file.path(pkgname0, "DESCRIPTION")))
         if ("DESCRIPTION" %in% dir(pkgdir)) {
             f <- file.path(pkgdir, "DESCRIPTION")
-            desc <- try(.read_description(f))
-            if (inherits(desc, "try-error") || !length(desc)) {
+            desc <- tryCatch(.read_description(f), error = identity)
+            if(inherits(desc, "error")) {
+                errorLog(Log, conditionMessage(desc))
+                summaryLog(Log)
+                do_exit(1L)
+            } else if(!length(desc)) {
                 errorLog(Log, "File DESCRIPTION exists but is not in correct format")
                 summaryLog(Log)
                 do_exit(1L)
