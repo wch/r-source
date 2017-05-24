@@ -461,7 +461,7 @@ tools::assertError(format(d))
 dlt <- structure(
     list(sec = 52, min = 59L, hour = 18L, mday = 6L, mon = 11L, year = 116L,
          wday = 2L, yday = 340L, isdst = 0L, zone = "CET", gmtoff = 3600L),
-    class = c("POSIXlt", "POSIXt"), tzone = c("", "CET", "CEST"))
+    class = c("POSIXlt", "POSIXt"), tzone = "CET")
 dlt$sec <- 10000 + 1:10 # almost three hours & uses re-cycling ..
 fd <- format(dlt)
 stopifnot(length(fd) == 10, identical(fd, format(dct <- as.POSIXct(dlt))))
