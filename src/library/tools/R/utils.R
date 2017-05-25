@@ -841,9 +841,9 @@ function(primitive = TRUE) # primitive means 'include primitives'
 {
     out <-
         ## Get the names of R internal S3 generics (via DispatchOrEval(),
-        ## cf. zMethods.Rd).
+        ## cf. ?InternalMethods).
         c("[", "[[", "$", "[<-", "[[<-", "$<-",
-          "as.vector", "unlist",
+          "as.vector", "cbind", "rbind", "unlist",
           .get_S3_primitive_generics()
           ## ^^^^^^^ now contains the members of the group generics from
           ## groupGeneric.Rd.
