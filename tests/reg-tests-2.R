@@ -3046,3 +3046,19 @@ summary(1L)
 ## str.default() for "AsIs" arrays
 str(I(m <- matrix(pi*1:4, 2)))
 ## did look ugly (because of toString() for numbers) in R <= 3.3.1
+
+## check automatic coercions from double to integer
+
+# these should work due to coercion
+sprintf("%d", 1)
+sprintf("%d", NA_real_)
+sprintf("%d", c(1,2))
+sprintf("%d", c(1,NA))
+sprintf("%d", c(NA,1))
+
+# these should fail
+sprintf("%d", 1.1)
+sprintf("%d", c(1.1,1))
+sprintf("%d", c(1,1.1))
+sprintf("%d", NaN)
+sprintf("%d", c(1,NaN))
