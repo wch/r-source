@@ -29,7 +29,7 @@ autoloader(name, package, \dots)
   When \R attempts to evaluate \code{name}, \code{autoloader} is run,
   the package is loaded and \code{name} is re-evaluated in the new
   package's environment.  The result is that \R behaves as if
-  \code{file} was loaded but it does not occupy memory.
+  \code{package} was loaded but it does not occupy memory.
 
   \code{.Autoloaded} contains the names of the packages for
   which autoloading has been promised.
