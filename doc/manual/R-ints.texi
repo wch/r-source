@@ -1972,6 +1972,7 @@ function (pattern, x, ignore.case = FALSE, perl = FALSE, value = FALSE,
 
 @end group
 @end example
+@noindent
 and the use of @code{as.character} allows methods to be dispatched (for
 example, for factors).
 
@@ -2107,7 +2108,7 @@ The following basic replacement and extractor functions
 @group
 length      length<-
 class       class<-
-oldClass    oldCLass<-
+oldClass    oldClass<-
 attr        attr<-
 attributes  attributes<-
 names       names<-
@@ -2132,11 +2133,11 @@ The following functions are primitive for efficiency reasons:
 
 @example
 @group
-:          ~          c           list
-call       expression substitute
-UseMethod  standardGeneric
-.C         .Fortran   .Call       .External
-round      signif      rep        seq.int
+:           ~           c           list
+call        expression  substitute
+UseMethod   standardGeneric
+.C          .Fortran   .Call        .External
+round       signif      rep         seq.int
 @end group
 @end example
 
@@ -2145,10 +2146,10 @@ as well as the following internal-use-only functions
 
 @example
 @group
-.Primitive     .Internal
-.Call.graphics .External.graphics
-.subset        .subset2
-.primTrace     .primUntrace
+.Primitive      .Internal
+.Call.graphics  .External.graphics
+.subset         .subset2
+.primTrace      .primUntrace
 lazyLoadDBfetch
 @end group
 @end example
