@@ -30,6 +30,11 @@ function(contriburl = contrib.url(repos, type), method,
 	fields <- unique(c(requiredFields, fields))
     }
 
+    max_age <-
+        as.numeric(Sys.getenv("R_AVAILABLE_PACKAGES_CACHE_CONTROL_MAX_AGE",
+                              "86400"))
+    timestamp <- Sys.time()
+
     res <- matrix(NA_character_, 0L, length(fields) + 1L,
 		  dimnames = list(NULL, c(fields, "Repository")))
 
@@ -53,13 +58,23 @@ function(contriburl = contrib.url(repos, type), method,
             if(length(res0))
                 rownames(res0) <- res0[, "Package"]
         } else {
+            used_dest <- FALSE
             dest <- file.path(tempdir(),
                               paste0("repos_", URLencode(repos, TRUE), ".rds"))
             if(file.exists(dest)) {
-                res0 <- readRDS(dest)
-                ## Be defensive ...
-                if(length(res0)) rownames(res0) <- res0[, "Package"]
-            } else {
+                age <- difftime(timestamp, file.mtime(dest),
+                                units = "secs")
+                if(isTRUE(age < max_age)) {
+                    res0 <- readRDS(dest)
+                    used_dest <- TRUE
+                    ## Be defensive ...
+                    if(length(res0))
+                        rownames(res0) <- res0[, "Package"]
+                }
+                else
+                    unlink(dest)        # Cache too old.
+            }
+            if(!used_dest) {
                 ## Try .rds and readRDS(), and then .gz or plain DCF and
                 ## read.dcf(), catching problems from both missing or
                 ## invalid files.
