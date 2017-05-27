@@ -28,6 +28,7 @@
 
 #include <Defn.h>
 #include <Internal.h>
+#include <private/Rinternals.h>
 #include <float.h>  /* for DBL_EPSILON */
 #include <Rmath.h>
 #include <R_ext/Itermacros.h>

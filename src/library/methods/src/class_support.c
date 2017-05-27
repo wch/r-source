@@ -19,8 +19,7 @@
 
 
 #include <R.h>
-#include <Rinternals.h> // defines R_MakeExternalPtrFn
-
+#include <private/Rinternals.h> // defines R_MakeExternalPtrFn
 
 #include "methods.h"
 

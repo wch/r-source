@@ -24,6 +24,7 @@
 
 #include <Defn.h>
 #include <Internal.h>
+#include <private/Rinternals.h>
 #include <Rmath.h>
 
 static SEXP installAttrib(SEXP, SEXP, SEXP);

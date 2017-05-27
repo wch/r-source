@@ -31,6 +31,7 @@
 #include "RSMethods.h"
 #include "methods.h"
 #include <Rinternals.h>
+#include <private/Rinternals.h>
 #define STRING_VALUE(x)		CHAR(asChar(x))
 
 #if !defined(snprintf) && defined(HAVE_DECL_SNPRINTF) && !HAVE_DECL_SNPRINTF

@@ -26,6 +26,7 @@
 #define R_USE_SIGNALS 1
 #include <Defn.h>
 #include <Internal.h>
+#include <private/Rinternals.h>
 #include <Print.h>
 #include <Fileio.h>
 #include <Rconnections.h>

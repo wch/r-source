@@ -30,6 +30,7 @@
 
 #include <Defn.h>
 #include <Internal.h>
+#include <private/Rinternals.h>
 #include <R_ext/Print.h>
 
 /* FIXME: envir.c keeps this private - it should probably go to Defn.h */

@@ -25,7 +25,7 @@
 #include "Defn.h"
 #include <Internal.h>
 #include "Print.h"
-#include <Rinternals.h>
+#include <private/Rinternals.h>
 
 /* The global var. R_Expressions is in Defn.h */
 #define R_MIN_EXPRESSIONS_OPT	25

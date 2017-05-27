@@ -23,7 +23,6 @@
 #include <config.h>
 #endif
 
-
 /* interval at which to check interrupts, a guess */
 #define NINTERRUPT 10000000
 
@@ -38,6 +37,7 @@
 #endif
 
 #include <Internal.h>
+#include <private/Rinternals.h>
 
 #define R_MSG_NA	_("NaNs produced")
 #define R_MSG_NONNUM_MATH _("non-numeric argument to mathematical function")

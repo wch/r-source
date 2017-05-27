@@ -86,6 +86,7 @@
 
 #include <Defn.h>
 #include <Internal.h>
+#include <private/Rinternals.h>
 
 #include <string.h>
 #include <stdlib.h>

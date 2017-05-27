@@ -29,6 +29,7 @@
 #define R_USE_SIGNALS 1
 #include <Defn.h>
 #include <Internal.h>
+#include <private/Rinternals.h>
 #include <R_ext/RS.h> /* for Calloc, Realloc and for S4 object bit */
 
 static SEXP GetObject(RCNTXT *cptr)

@@ -26,8 +26,9 @@
 #define R_USE_SIGNALS 1
 #include <Defn.h>
 #include <Internal.h>
+#include <private/Rinternals.h>
 #include <R_ext/Riconv.h>
-#include <Rinterface.h>
+#include <private/Rinterface.h>
 #include <errno.h>
 #include <rlocale.h>
 

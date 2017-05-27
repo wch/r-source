@@ -117,7 +117,7 @@ SEXP selectlist(SEXP call, SEXP op, SEXP args, SEXP rho)
 #else
 
 #define R_INTERFACE_PTRS 1
-#include <Rinterface.h>
+#include <private/Rinterface.h>
 
 SEXP loadhistory(SEXP call, SEXP op, SEXP args, SEXP rho)
 {

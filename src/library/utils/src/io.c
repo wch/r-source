@@ -39,6 +39,7 @@
 #include <Rconnections.h>
 #include <errno.h>
 #include <Print.h>
+#include <private/Rinternals.h>
 
 #include <rlocale.h> /* for btowc */
 
