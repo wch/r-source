@@ -16,7 +16,7 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
-sink <- function(file=NULL, append = FALSE, type = c("output", "message"),
+sink <- function(file=NULL, append = FALSE, type = "output",
                  split=FALSE)
 {
     type <- match.arg(type)
