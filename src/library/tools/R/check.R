@@ -4744,6 +4744,7 @@ setRlibs <-
         Sys.setenv("_R_CHECK_PACKAGE_DATASETS_SUPPRESS_NOTES_" = "TRUE")
         Sys.setenv("_R_CHECK_PACKAGES_USED_IGNORE_UNUSED_IMPORTS_" = "TRUE")
         Sys.setenv("_R_CHECK_NATIVE_ROUTINE_REGISTRATION_" = "TRUE")
+        Sys.setenv("_R_CHECK_NO_STOP_ON_TEST_ERROR_" = "TRUE")
         R_check_vc_dirs <- TRUE
         R_check_executables_exclusions <- FALSE
         R_check_doc_sizes2 <- TRUE
@@ -4930,6 +4931,12 @@ setRlibs <-
             messageLog(Log, "using options ", sQuote(paste(opts, collapse=" ")))
         else if (length(opts) == 1L)
             messageLog(Log, "using option ", sQuote(opts))
+
+        if(identical(config_val_to_logical(Sys.getenv("_R_CHECK_NO_STOP_ON_TEST_ERROR_",
+                                                      "FALSE")),
+                     TRUE)) {
+            stop_on_test_error <- FALSE
+        }
 
         if (!nzchar(libdir)) { # otherwise have set R_LIBS above
             libdir <- pkgoutdir
