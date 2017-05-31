@@ -6214,7 +6214,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	    SEXP x = CAR(loc);  /* fast, but assumes binding is a CONS */
 	    if (NOT_SHARED(x) && IS_SIMPLE_SCALAR(x, s->tag)) {
 		/* if the binding value is not shared and is a simple
-		   scaler of the same type as the immediate value,
+		   scalar of the same type as the immediate value,
 		   then we can copy the stack value into the binding
 		   value */
 		switch (s->tag) {
