@@ -808,7 +808,7 @@ if(.Platform$OS.type == "windows") {
     stopifnot(identical(path.expand(paste0("~/", filename)),
 		 	      paste0(path.expand("~/"), filename)))
 }
-## Chinese character was changed to hex code 
+## Chinese character was changed to hex code
 
 
 ## aggregate.data.frame(*, drop=FALSE)  {new feature in R 3.3.0}
@@ -820,6 +820,17 @@ stopifnot(
     identical(aggregate(d1, b1, length, drop = TRUE),
               aggregate(d1, b1, length, drop = FALSE)))
 ## drop=FALSE gave two rows + deprec. warning in R 3.3.x, and an error in 3.4.0
+
+
+## line() [Tukey's resistant line]
+cfs <- t(sapply(2:50, function(k) {x <- 1:k; line(x, 2+x)$coefficients }))
+set.seed(7)
+cf2 <- t(sapply(2:50, function(k) {
+    x <- sample.int(k)
+    line(x, 1-2*x)$coefficients }))
+stopifnot(all.equal(cfs, matrix(c(2,  1), 49, 2, byrow=TRUE), tol = 1e-14), # typically exact
+          all.equal(cf2, matrix(c(1, -2), 49, 2, byrow=TRUE), tol = 1e-14))
+## had incorrect medians of the left/right third of the data (x_L, x_R), in R < 3.5.0
 
 
 

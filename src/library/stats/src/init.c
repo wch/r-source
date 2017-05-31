@@ -110,7 +110,7 @@ static const R_CallMethodDef CallEntries[] = {
     CALLDEF(DoubleCentre, 1),
     CALLDEF(BinDist, 5),
     CALLDEF(Rsm, 3),
-    CALLDEF(tukeyline, 3),
+    CALLDEF(tukeyline, 4),
     CALLDEF(runmed, 5),
     CALLDEF(influence, 4),
     CALLDEF(pSmirnov2x, 3),

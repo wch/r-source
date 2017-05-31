@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2017-05-14 r72675) -- "Unsuffered Consequences"
+R Under development (unstable) (2017-05-31 r72749) -- "Unsuffered Consequences"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -8830,11 +8830,30 @@ Call:
 line(cars)
 
 Coefficients:
-[1]  -26.053    4.421
+[1]  -29.333    4.667
 
 > abline(coef(z))
 > ## Tukey-Anscombe Plot :
 > plot(residuals(z) ~ fitted(z), main = deparse(z$call))
+> 
+> ## Andrew Siegel's pathological 9-point data, y-values multiplied by 3:
+> d.AS <- data.frame(x = c(-4:3, 12), y = 3*c(rep(0,6), -5, 5, 1))
+> cAS <- with(d.AS, t(sapply(1:10,
++                    function(it) line(x,y, iter=it)$coefficients)))
+> dimnames(cAS) <- list(paste("it =", format(1:10)), c("intercept", "slope"))
+> cAS
+        intercept     slope
+it =  1  0.500000  0.500000
+it =  2 -0.250000 -0.250000
+it =  3  0.875000  0.875000
+it =  4 -0.812500 -0.812500
+it =  5  1.718750  1.718750
+it =  6 -2.078125 -2.078125
+it =  7  2.500000  2.500000
+it =  8 -2.083333 -2.083333
+it =  9  2.500000  2.500000
+it = 10 -2.083333 -2.083333
+> ## iterations started to oscillate, repeating iteration 7,8 indefinitely
 > 
 > 
 > 
