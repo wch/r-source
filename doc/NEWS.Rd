@@ -46,6 +46,9 @@
       significantly improving the performance of \code{readLines()}, as
       well as \code{scan()} and \code{read.table()}, at least when
       specfiying \code{colClasses}.
+
+      \item \code{order()} is smarter about picking a default sort
+      \code{method} when its arguments are objects.
     }
   }
 
