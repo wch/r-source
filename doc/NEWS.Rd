@@ -41,6 +41,11 @@
       packages are loaded. Suggested by Jim Hester.
 
       \item \code{line()} gets a new option \code{iter = 1}.
+
+      \item Reading from connections in text mode is buffered,
+      significantly improving the performance of \code{readLines()}, as
+      well as \code{scan()} and \code{read.table()}, at least when
+      specfiying \code{colClasses}.
     }
   }
 
