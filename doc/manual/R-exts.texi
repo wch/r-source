@@ -5004,8 +5004,10 @@ all-upper-case names which have a unique prefix such as the package name.
 
 @item
 @code{typedef}s in OS headers can conflict with those in the package:
-two examples are @code{ulong} on several OSes and @code{index_t} on
-Solaris.
+examples include @code{ulong} on several OSes and @code{index_t} and
+@code{single} on Solaris.  (Note that these may conflict with other uses
+as identifiers, e.g.@: defining a C++ function called @code{single}.)
+@c as done by package Emcdf in June 2017.
 
 @item
 If you use OpenMP, check carefully that you have followed the advice in
@@ -5021,7 +5023,7 @@ Any use of OpenMP functions, e.g.@: @code{omp_set_num_threads} also
 needs to be conditioned.
 
 And do not hardcode @option{-lgomp}: not only is that specific to the
-GCC family of compilers, using the correct linker flag sets up the
+GCC family of compilers, using the correct linker flag often sets up the
 run-time path to the library.
 
 @item
