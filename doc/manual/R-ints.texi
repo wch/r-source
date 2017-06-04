@@ -4110,6 +4110,11 @@ Windows, @command{objdump.exe} to be on the @env{PATH}.  This would be
 normal when using a package with compiled code (which are the only ones
 this checks), but Windows' users should check.)
 Default: false (but true for CRAN submission checks).
+
+@item _R_CHECK_NO_STOP_ON_TEST_ERROR_
+If set to a true value, do not stop running tests after first error (as
+if command line option @option{--no-stop-on-test-error} had been given).
+Default: false (but true for CRAN submission checks).
 @end vtable
 
 CRAN's submission checks use something like
