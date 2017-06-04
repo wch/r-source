@@ -337,7 +337,7 @@ see file @file{tests/README} and @ref{Testing a Unix-alike Installation}
 for the possibilities of doing this in parallel.  Note that these checks
 are only run completely if the recommended packages are installed.
 
-If the command @command{configure} and @command{make} commands execute
+If the @command{configure} and @command{make} commands execute
 successfully, a shell-script front-end called @file{R} will be created
 and copied to @file{@var{R_HOME}/bin}.  You can link or copy this script
 to a place where users can invoke it, for example to
@@ -1778,7 +1778,7 @@ installer is clever enough to try to upgrade the last-installed version
 of the application where you installed it (which may not be where you
 want this time @dots{}).
 
-Various parts of the build require XQuartz to be installed: : see
+Various parts of the build require XQuartz to be installed: see
 @uref{https://xquartz.macosforge.org/}.  These include the @pkg{tcltk}
 package and the @code{X11} device: attempting to use these without
 XQuartz will remind you.  Also the cairographics-based devices (which
@@ -2319,7 +2319,7 @@ appropriate version at the time of writing was
 @uref{https://r.research.att.com/@/libs/@/GTK_2.24.17-X11.pkg}
 
 The default compilers specified are shown in file
-@file{/Library/Frameworks/R.framework/Resources/etc/Makeconf}.  At the
+@file{/Library/Frameworks/@/R.framework/@/Resources/etc/Makeconf}.  At the
 time of writing these setting assumed that the C, Fortran and C++
 compilers were on the path, and @command{gfortan} 6.1.0 (see
 @ref{macOS}).  The settings can be changed, either by editing that file
@@ -2952,7 +2952,7 @@ Almost all current @acronym{CPU}s have both 32- and 64-bit sets of
 instructions.  Most OSes running on such @acronym{CPU}s offer the choice
 of building a 32-bit or a 64-bit version of @R{} (and details are given
 below under specific OSes).  For most a 32-bit version is the default,
-but for some (e.g., @cputype{x86_64} Linux and macOS >= 10.6)
+but for some (e.g., @cputype{x86_64} Linux and macOS @geq{} 10.6)
 64-bit is.
 
 All current versions of @R{} use 32-bit integers and
@@ -3542,7 +3542,7 @@ environment variable @env{R_GSCMD} at that time.
 @node Tcl/Tk, Java support, Useful libraries and programs, Useful libraries and programs
 @subsection Tcl/Tk
 
-The @pkg{tcltk} package needs Tcl/Tk >= 8.4 installed: the sources are
+The @pkg{tcltk} package needs Tcl/Tk @geq{} 8.4 installed: the sources are
 available at @uref{https://@/www.tcl.tk/}.  To specify the locations of the
 Tcl/Tk files you may need the configuration options
 
@@ -4692,7 +4692,7 @@ the best possible performance on the machine on which @R{} is being
 installed: if the compilation is for a site-wide installation, it may
 still be desirable to use something like
 @option{-mtume=core2}.@footnote{or @code{-mtune=corei7} for Intel Core
-i3/15/17 with @command{gcc >= 4.6.0}.} It is also possible to increase the
+i3/15/17 with @command{gcc} @geq{} 4.6.0.} It is also possible to increase the
 optimization levels to @option{-O3}: however for many versions of the
 compilers this has caused problems in at least one @acronym{CRAN}
 package.
