@@ -51,6 +51,10 @@ available.packages(contriburl = contrib.url(repos, type), method,
   for the \R session in a per-repository file in \code{\link{tempdir}()}
   with a name like
 \preformatted{repos_http\%3a\%2f\%2fcran.r-project.org\%2fsrc\%2fcontrib.rds}
+  The caches are removed when too old, with the age limit in seconds
+  controllable via the environment variable
+  \env{R_AVAILABLE_PACKAGES_CACHE_CONTROL_MAX_AGE}.  If unset, a default
+  value of 86400 (i.e., one day) is used.
 
   By default, the return value includes only packages whose version and
   OS requirements are met by the running version of \R, and only gives
