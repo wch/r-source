@@ -4042,20 +4042,21 @@ setRlibs <-
             summaryLog(Log)
             do_exit(1L)
         }
-        if (!is.na(desc["Type"])) { # standard packages do not have this
+        if(!is.na(desc["Type"])) { # standard packages do not have this
             checkingLog(Log, "extension type")
-            resultLog(Log, desc["Type"])
-            if (desc["Type"] != "Package") {
-                printLog(Log,
-                         "Only 'Type = Package' extensions can be checked.\n")
+            if(desc["Type"] != "Package") {
+                errorLog(Log,
+                         sprintf("Extensions with Type %s cannot be checked.",
+                                 sQuote(desc["Type"])))
                 summaryLog(Log)
                 do_exit(0L)
-            }
+            } else resultLog(Log, desc["Type"])
         }
-        if (!is.na(desc["Bundle"])) {
-            messageLog(Log, "looks like ", sQuote(pkgname0),
-                       " is a package bundle -- they are defunct")
-            errorLog(Log, "")
+        if(!is.na(desc["Bundle"])) {
+            checkingLog(Log, "package bundle")
+            errorLog(Log,
+                     sprintf("Looks like %s is a package bundle -- they are defunct",
+                             sQuote(pkgname0)))
             summaryLog(Log)
             do_exit(1L)
         }
@@ -4863,6 +4864,7 @@ setRlibs <-
             dir <- file.path(pkgoutdir, "00_pkg_src")
             dir.create(dir, mode = "0755")
             if (!dir.exists(dir)) {
+                checkingLog(Log, "whether tarball can be unpacked")
                 errorLog(Log, sprintf("cannot create %s", sQuote(dir)))
                 summaryLog(Log)
                 do_exit(1L)
@@ -4871,6 +4873,7 @@ setRlibs <-
             ## so e.g. .tar.xz works everywhere
             if (utils::untar(pkg, exdir = dir,
                              tar = Sys.getenv("R_INSTALL_TAR", "internal"))) {
+                checkingLog(Log, "whether tarball can be unpacked")
                 errorLog(Log, sprintf("cannot unpack %s", sQuote(pkg)))
                 summaryLog(Log)
                 do_exit(1L)
@@ -4881,9 +4884,14 @@ setRlibs <-
             ## to test that.
             pkg <- file.path(dir, pkgname0)
         }
-        if (!dir.exists(pkg))
-            stop(gettextf("package directory %s does not exist",
-                          sQuote(pkg)), domain = NA)
+        if (!dir.exists(pkg)) {
+            checkingLog(Log, "package directory")
+            errorLog(Log,
+                     gettextf("package directory %s does not exist",
+                              sQuote(pkg)))
+            summaryLog(Log)
+            do_exit(1L)
+        }
         setwd(pkg)
         pkgdir <- getwd()
         thispkg_src_subdirs <- thispkg_subdirs
