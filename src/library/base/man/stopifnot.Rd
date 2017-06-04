@@ -33,7 +33,7 @@ stopifnot(\dots)
   indicated by the above conceptual equivalence statement.
   Further, when such an expression signals an error or
   \code{\link{warning}}, its \code{\link{conditionCall}()} no longer
-  contains the full \code{stopifnot} call, but just the erronous
+  contains the full \code{stopifnot} call, but just the erroneous
   expression.
 
   Since \R version 3.4.0, when an expression (from \code{\dots}) is not
