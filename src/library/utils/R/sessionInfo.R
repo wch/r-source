@@ -67,6 +67,7 @@ sessionInfo <- function(package = NULL)
                                       "10" = "Yosemite",
                                       "11" = "El Capitan",
                                       "12" = "Sierra",
+                                      "13" = "High Sierra",
                                       ""), ver)
                    },
                    "SunOS" = {
