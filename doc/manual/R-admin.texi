@@ -5019,10 +5019,10 @@ The @TeX{} implementation used by the developers is MacTeX
 (@uref{https://www.tug.org/mactex/}): the full installation is about
 5GB, but a smaller version (`Basic TeX') is available at
 @uref{https://www.tug.org/mactex/morepackages.html} to which you will
-need to add some packages, e.g.@: for the 2016 version we needed to
+need to add some packages, e.g.@: for the 2017 version we needed to
 add@footnote{E.g.@: @emph{via} @command{tlmgr install cm-super helvetic
 inconsolata texinfo} .}  @pkg{cm-super}, @pkg{helvetic},
-@pkg{inconsolata} and @pkg{texinfo} which brought this to about 410MB.
+@pkg{inconsolata} and @pkg{texinfo} which brought this to about 310MB.
 @samp{TeX Live Utility} (available @emph{via} the MacTeX front page)
 provides a graphical means to manage @TeX{} packages.
 
