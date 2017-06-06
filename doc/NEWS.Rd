@@ -100,6 +100,9 @@
       \item \code{line(x,y)} now correctly computes the medians of the
       left and right group's x-values and reproduces straight lines in
       all cases.
+
+      \item Extending S4 classes with slots corresponding to special
+      attributes like \code{dim} and \code{dimnames} now works.
     }
   }
 }
