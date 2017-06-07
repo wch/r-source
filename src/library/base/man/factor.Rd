@@ -1,6 +1,6 @@
 % File src/library/base/man/factor.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{factor}
@@ -198,6 +198,12 @@ addNA(x, ifany = FALSE)
   the difference is small in most cases.  (Integer values are stored
   in 4 bytes whereas each reference to a character string needs a
   pointer of 4 or 8 bytes.)
+
+  In versions of \R before 3.5.0, undocumentedly, \code{factor()}
+  dropped all \code{\link{attributes}} but \code{"names"}, \code{"levels"} and
+  (\code{"class"}).  It keeps \code{attributes} now, often (re-)setting
+  \code{"levels"} and \code{"class"}.  Consequently, e.g., subsetting a factor
+  matrix no longer looses the dimension accidentally.
 }
 \references{
   Chambers, J. M. and Hastie, T. J. (1992)

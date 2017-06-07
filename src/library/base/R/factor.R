@@ -1,7 +1,7 @@
 #  File src/library/base/R/factor.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -20,7 +20,8 @@ factor <- function(x = character(), levels, labels = levels,
                    exclude = NA, ordered = is.ordered(x), nmax = NA)
 {
     if(is.null(x)) x <- character()
-    nx <- names(x)
+    ax <- attributes(x) # all attributes but "class" and "levels"
+    ax <- ax[is.na(match(names(ax), c("class", "levels")))]
     if (missing(levels)) {
 	y <- unique(x, nmax = nmax)
 	ind <- order(y)
@@ -32,13 +33,13 @@ factor <- function(x = character(), levels, labels = levels,
     ## levels could be a long vector, but match will not handle that.
     levels <- levels[is.na(match(levels, exclude))]
     f <- match(x, levels)
-    if(!is.null(nx))
-	names(f) <- nx
     nl <- length(labels)
     nL <- length(levels)
     if(!any(nl == c(1L, nL)))
 	stop(gettextf("invalid 'labels'; length %d should be 1 or %d", nl, nL),
 	     domain = NA)
+    if(length(ax))
+	attributes(f) <- ax
     levels(f) <- ## nl == nL or 1
 	if (nl == nL) as.character(labels)
 	else paste0(labels, seq_along(levels))

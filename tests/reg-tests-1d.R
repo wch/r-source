@@ -833,6 +833,20 @@ stopifnot(all.equal(cfs, matrix(c(2,  1), 49, 2, byrow=TRUE), tol = 1e-14), # ty
 ## had incorrect medians of the left/right third of the data (x_L, x_R), in R < 3.5.0
 
 
+## factor() and droplevels()  (not) dropping attributes:
+f1 <- factor(c("hello", "something", "hi"))
+comment(f1) <- "this is a test"
+attr(f1, "description") <- "this is another test"
+fm <- f1[rep(1:3, 4)]; dim(fm) <- 3:4
+fm2 <- fm[-3, -1, drop=TRUE]
+stopifnot(identical(sort(names(attributes(f1))),
+		    c("class", "comment", "description", "levels")),
+	  identical(f1, droplevels(f1)),
+	  is.factor(fm2), identical(dim(fm2), 2:3),
+	  identical(levels(fm2), c("hello", "something")))
+## did drop 'comment' and 'description' / 'dim' in R < 3.5.0
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
