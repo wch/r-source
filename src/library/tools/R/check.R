@@ -4859,7 +4859,18 @@ setRlibs <-
             message(sprintf("ERROR: cannot create check dir %s", sQuote(pkgoutdir)))
             do_exit(1L)
         }
+
         Log <- newLog(file.path(pkgoutdir, "00check.log"))
+
+        messageLog(Log, "using log directory ", sQuote(pkgoutdir))
+        messageLog(Log, "using ", R.version.string)
+        messageLog(Log, "using platform: ", R.version$platform,
+                   " (", 8*.Machine$sizeof.pointer, "-bit)")
+        charset <-
+            if (l10n_info()[["UTF-8"]]) "UTF-8" else utils::localeToCharset()
+        messageLog(Log, "using session charset: ", charset)
+        is_ascii <- charset == "ASCII"
+
         if (istar) {
             dir <- file.path(pkgoutdir, "00_pkg_src")
             dir.create(dir, mode = "0755")
@@ -4906,15 +4917,6 @@ setRlibs <-
             }
         }
         setwd(startdir)
-
-        messageLog(Log, "using log directory ", sQuote(pkgoutdir))
-        messageLog(Log, "using ", R.version.string)
-        messageLog(Log, "using platform: ", R.version$platform,
-                   " (", 8*.Machine$sizeof.pointer, "-bit)")
-        charset <-
-            if (l10n_info()[["UTF-8"]]) "UTF-8" else utils::localeToCharset()
-        messageLog(Log, "using session charset: ", charset)
-        is_ascii <- charset == "ASCII"
 
         .unpack.time <- Sys.time()
 
