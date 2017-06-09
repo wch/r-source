@@ -49,9 +49,6 @@
 
       \item \code{order()} is smarter about picking a default sort
       \code{method} when its arguments are objects.
-
-      \item \code{factor()} and hence \code{droplevels()} now keep
-      \code{attributes}.
     }
   }
 

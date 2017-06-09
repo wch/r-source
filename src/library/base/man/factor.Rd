@@ -76,6 +76,8 @@ addNA(x, ifany = FALSE)
   (\code{!\link{anyDuplicated}(.)}) entries.  If argument \code{ordered}
   is true (or \code{ordered()} is used) the result has class
   \code{c("ordered", "factor")}.
+  Undocumentedly, \code{factor(x)} loses all \code{\link{attributes}(x)}
+  but \code{"names"}, and resets \code{"levels"} and \code{"class"}.
 
   Applying \code{factor} to an ordered or unordered factor returns a
   factor (of the same type) with just the levels which occur: see also
@@ -198,12 +200,6 @@ addNA(x, ifany = FALSE)
   the difference is small in most cases.  (Integer values are stored
   in 4 bytes whereas each reference to a character string needs a
   pointer of 4 or 8 bytes.)
-
-  In versions of \R before 3.5.0, undocumentedly, \code{factor()}
-  dropped all \code{\link{attributes}} but \code{"names"}, \code{"levels"} and
-  (\code{"class"}).  It keeps \code{attributes} now, often (re-)setting
-  \code{"levels"} and \code{"class"}.  Consequently, e.g., subsetting a factor
-  matrix no longer looses the dimension accidentally.
 }
 \references{
   Chambers, J. M. and Hastie, T. J. (1992)
