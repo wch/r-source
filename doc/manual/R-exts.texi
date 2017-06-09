@@ -10609,8 +10609,8 @@ For example (from the internal code for @code{optim})
     PROTECT_INDEX ipx;
 
     ....
-    s = PROTECT_WITH_INDEX(eval(OS->R_fcall, OS->R_env), &ipx);
-    s = REPROTECT(coerceVector(s, REALSXP), ipx);
+    PROTECT_WITH_INDEX(s = eval(OS->R_fcall, OS->R_env), &ipx);
+    REPROTECT(s = coerceVector(s, REALSXP), ipx);
 @end example
 
 Note that it is dangerous to mix @code{UNPROTECT_PTR} with
