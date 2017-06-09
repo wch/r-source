@@ -1,6 +1,6 @@
 % File src/library/base/man/factor.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{factor}
@@ -76,6 +76,9 @@ addNA(x, ifany = FALSE)
   (\code{!\link{anyDuplicated}(.)}) entries.  If argument \code{ordered}
   is true (or \code{ordered()} is used) the result has class
   \code{c("ordered", "factor")}.
+  Undocumentedly for a long time, \code{factor(x)} loses all
+  \code{\link{attributes}(x)} but \code{"names"}, and resets
+  \code{"levels"} and \code{"class"}.
 
   Applying \code{factor} to an ordered or unordered factor returns a
   factor (of the same type) with just the levels which occur: see also

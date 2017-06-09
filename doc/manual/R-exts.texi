@@ -863,8 +863,8 @@ suppose an example@footnote{even one wrapped in @code{\donttest}.} from
 package @pkg{foo} uses a dataset from package @pkg{bar}. Then it is not
 necessary to have @pkg{bar} use @pkg{foo} unless one wants to execute
 all the examples/tests/vignettes: it is useful to have @pkg{bar}, but
-not necessary.  Version requirements can be specified, and will be used
-by @command{R CMD check}.
+not necessary.  Version requirements can be specified but should be
+checked by the code which uses the package.
 
 @c DESCRIPTION field Enhances
 Finally, the @samp{Enhances} field lists packages ``enhanced'' by the
@@ -10609,8 +10609,8 @@ For example (from the internal code for @code{optim})
     PROTECT_INDEX ipx;
 
     ....
-    s = PROTECT_WITH_INDEX(eval(OS->R_fcall, OS->R_env), &ipx);
-    s = REPROTECT(coerceVector(s, REALSXP), ipx);
+    PROTECT_WITH_INDEX(s = eval(OS->R_fcall, OS->R_env), &ipx);
+    REPROTECT(s = coerceVector(s, REALSXP), ipx);
 @end example
 
 Note that it is dangerous to mix @code{UNPROTECT_PTR} with
@@ -10807,7 +10807,7 @@ SEXP out(SEXP x, SEXP y)
 @end group
 
 @group
-    UNPROTECT(3);
+    UNPROTECT(2);
     return ans;
 @}
 @end group
@@ -12162,7 +12162,7 @@ is created by
 @noindent
 Note the symbol given to identify the usage of the external pointer, and
 the use of the finalizer.  Since the final argument when registering the
-finalizer is @code{TRUE}, the finalizer will be run at the of the
+finalizer is @code{TRUE}, the finalizer will be run at the end of the
 @R{} session (unless it crashes).  This is used to close and clean up
 the connection to the database.  The finalizer code is simply
 
