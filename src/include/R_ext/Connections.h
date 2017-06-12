@@ -74,14 +74,14 @@ struct Rconn {
     /* The idea here is that no MBCS char will ever not fit */
     char iconvbuff[25], oconvbuff[50], *next, init_out[25];
     short navail, inavail;
-    unsigned char *buff;
-    size_t buff_len, buff_stored_len, buff_pos;
     Rboolean EOF_signalled;
     Rboolean UTF8out;
     void *id;
     void *ex_ptr;
     void *private;
     int status; /* for pipes etc */
+    unsigned char *buff;
+    size_t buff_len, buff_stored_len, buff_pos;
 };
 
 #ifdef  __cplusplus
