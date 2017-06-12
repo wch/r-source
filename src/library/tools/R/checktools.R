@@ -619,7 +619,9 @@ function(dir, all = FALSE, full = FALSE)
 ## For new-style logs from successful check runs (a '* DONE' line
 ## followed by a 'Status: ' line), we could simply get the status from
 ## the 'Status: ' line.
-## Change to fully rely on the new format eventually.
+## Change to preferably rely on the new format eventually.
+## Note that check logs can end up incomplete in which case there is no
+## final status line ...
 ## </FIXME>
 
 check_packages_in_dir_results <-
@@ -766,9 +768,21 @@ function(log, drop_ok = TRUE)
         ## characters in the message lines: could check for this.
         if(any(bad <- !validEnc(lines)))
             lines[bad] <- iconv(lines[bad], to = "ASCII", sub = "byte")
-    } else return()
+    } else {
+        ## In case of a fundamental immediate problem which renders
+        ## further checking pointless, we currently do not provide the
+        ## header information with the session charset.  (Perhaps this
+        ## should be changed.)
+        if(!any(grepl("^\\* checking ", lines,
+                      perl = TRUE, useBytes = TRUE)))
+            return()
+    }
+
+    package <- "???"
+    version <- ""
 
     ## Get header.
+    header <- lines
     re <- sprintf("^\\* this is package (%s)(.*)(%s) version (%s)(.*)(%s)$",
                   lqa, rqa, lqa, rqa)
     pos <- grep(re, lines, perl = TRUE, useBytes = TRUE)
@@ -779,15 +793,36 @@ function(log, drop_ok = TRUE)
         version <- sub(re, "\\5", txt, perl = TRUE, useBytes = TRUE)
         header <- lines[seq_len(pos - 1L)]
         lines <- lines[-seq_len(pos)]
-        ## Get check options from header.
-        re <- sprintf("^\\* using options? (%s)(.*)(%s)$", lqa, rqa)
-        flags <- if(length(pos <- grep(re, header,
-                                       perl = TRUE, useBytes = TRUE))) {
+    } else {
+        ## If there was no 'this is package %s version %s' line, then
+        ## either there was a fundamental immediate problem, or an error
+        ## in check_description().  In the latter case there should be a
+        ## line like
+        ##   * checking for file '%s/DESCRIPTION'
+        ## with %s the package name implied by the invocation, but not
+        ## necessarily the one recorded in DESCRIPTION: let's use that
+        ## package name nevertheless, as it is better than nothing.
+        re <- sprintf("^\\* checking for file (%s)(.*)/DESCRIPTION(%s).*$",
+                      lqa, rqa)
+        pos <- grep(re, lines, perl = TRUE, useBytes = TRUE)
+        if(length(pos)) {
+            pos <- pos[1L]
+            txt <- lines[pos]
+            package <- sub(re, "\\2", txt, perl = TRUE, useBytes = TRUE)
+            header <- lines[seq_len(pos - 1L)]
+        } else if(!any(grepl("^\\* checking ", lines,
+                             perl = TRUE, useBytes = TRUE)))
+            return()
+    }
+    ## Get check options from header.
+    re <- sprintf("^\\* using options? (%s)(.*)(%s)$", lqa, rqa)
+    flags <-
+        if(length(pos <- grep(re, header,
+                              perl = TRUE, useBytes = TRUE))) {
             sub(re, "\\2", header[pos[1L]],
                 perl = TRUE, useBytes = TRUE)
         } else ""
-    } else return()
-
+    
     ## Get footer.
     len <- length(lines)
     pos <- which(lines == "* DONE")
