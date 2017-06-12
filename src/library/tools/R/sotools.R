@@ -359,9 +359,9 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
             "ptr_do_selectlist", "readconsolecfg", "removeInputHandler",
             "run_Rmainloop", "setup_Rmainloop",
 
-## in the non-API header R_ext/Connections.h (or nowhere)
+## in the non-API header R_ext/Connections.h
             "R_new_custom_connection", "R_ReadConnection",
-            "R_WriteConnection", "R_GetConnection", "getConnection")
+            "R_WriteConnection", "R_GetConnection")
 
 ## non-API in Applic.h
 ## future <- c("dqrcf_", "dqrdc2_", "dqrls_", "dqrqty_", "dqrqy_", "optif9")
