@@ -4328,7 +4328,9 @@ static R_INLINE double (*getMath1Fun(int i, SEXP call))(double) {
 	    SEXP cargs[DOTCALL_MAX];					\
 	    for (int i = 0; i < nargs; i++)				\
 		cargs[i] = GETSTACK(i - nargs);				\
+	    void *vmax = vmaxget();					\
 	    SEXP val = R_doDotCall(ofun, nargs, cargs, call);		\
+	    vmaxset(vmax);						\
 	    R_BCNodeStackTop -= nargs;					\
 	    SETSTACK(-1, val);						\
 	    NEXT();							\
