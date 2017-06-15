@@ -42,6 +42,9 @@
       \item (Windows only)  The \code{choose.files()} function could
       return incorrect results when called with \code{multi = FALSE}.
       (\PR{17270})
+
+      \item \code{aggregate(<data.frame>, drop=FALSE)} now also works in
+      case of near-equal numbers in \code{by}.  (\PR{16918})
     }
   }
 }
