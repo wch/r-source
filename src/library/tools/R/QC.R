@@ -5870,9 +5870,7 @@ function(db, files)
     if (is.character(files)) {
         for (f in files) {
             tryCatch({
-                ## This can give a warning because the vignette etc
-                ## need not be in the session encoding.
-                exprs <- suppressWarnings(parse(file = f, n = -1L))
+                exprs <- parse(file = f, n = -1L)
                 for(i in seq_along(exprs)) find_bad_exprs(exprs[[i]])
             },
                      error = function(e)
