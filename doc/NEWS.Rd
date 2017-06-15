@@ -9,6 +9,13 @@
 
   \subsection{NEW FEATURES}{
     \itemize{
+      \item \code{factor()} now uses \code{order()} to sort its levels,
+      not \code{sort.list()}. This makes \code{factor()} support custom
+      vector-like objects if methods for the appropriate generics are
+      defined. This change has the side effect of making \code{factor()}
+      succeed on empty or length-one non-atomic vector(-like) types (e.g.,
+      list), where it failed before.
+
       \item \code{diag()} gets an optional \code{names} argument: this
       may require updates to packages defining S4 methods for it.
 
@@ -224,13 +231,6 @@
       accumulators where available).  \code{"blas"} calls BLAS directly
       for best speed, but usually with undefined behavior for inputs
       with \code{NaN}/\code{Inf}.
-
-      \item \code{factor()} now uses \code{order()} to sort its levels,
-      not \code{sort.list()}. This makes \code{factor()} support custom
-      vector-like objects if methods for the appropriate generics are
-      defined. This change has the side effect of making \code{factor()}
-      succeed on empty or length-one non-atomic vector(-like) types (e.g.,
-      list), where it failed before.
     }
   }
 
