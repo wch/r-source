@@ -29,7 +29,7 @@
 
       \item \command{R CMD Sweave} again returns \samp{status = 0} on
       successful completion.
-      
+
       \item Vignettes listed in \file{.Rbuildignore} were not being
       ignored properly.  (\PR{17246})
 
@@ -38,9 +38,9 @@
 
       \item \command{R CMD INSTALL} Windows .zip file obeys \code{--lock}
       and \code{--pkglock} flags.
-      
+
       \item (Windows only)  The \code{choose.files()} function could
-      return incorrect results when called with \code{multi = FALSE}.  
+      return incorrect results when called with \code{multi = FALSE}.
       (\PR{17270})
     }
   }
@@ -119,13 +119,6 @@
       accumulators where available).  \code{"blas"} calls BLAS directly
       for best speed, but usually with undefined behavior for inputs
       with \code{NaN}/\code{Inf}.
-
-      \item \code{factor()} now uses \code{order()} to sort its levels,
-      not \code{sort.list()}. This makes \code{factor()} support custom
-      vector-like objects if methods for the appropriate generics are
-      defined. This change has the side effect of making \code{factor()}
-      succeed on empty or length-one non-atomic vector(-like) types (e.g.,
-      list), where it failed before.
     }
   }
 
