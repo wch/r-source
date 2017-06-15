@@ -22,7 +22,7 @@
  *  Basic List Handling Features
  *
  *  These remain here to show that R is truly descended from Lisp :-).
- *  There is one real function "allnames" shich should probably be
+ *  There is one real function "allnames" which should probably be
  *  elsewhere.
  */
 
