@@ -16,6 +16,9 @@
 
   \subsection{BUG FIXES}{
     \itemize{
+      \item \code{fourfoldplot()} could encounter integer overflow when
+      calculating odds ratio. (\PR{17286})
+
       \item \code{getParseData()} gave incorrect column information when
       code contained multi-byte characters.  (\PR{17254})
 
