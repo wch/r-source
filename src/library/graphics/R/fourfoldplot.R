@@ -146,6 +146,7 @@ function(x, color = c("#99CCFF", "#6699CC"), conf.level = 0.95,
         se <- double(k)
         for(i in 1 : k) {
             f <- x[ , , i]
+            storage.mode(f) <- "double" # protect against integer overflow
             if(any(f == 0))
                 f <- f + 0.5
             or[i] <- (f[1L, 1L] * f[2L, 2L]) / (f[1L, 2L] * f[2L, 1L])
