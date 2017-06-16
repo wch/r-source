@@ -10,7 +10,7 @@
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{factor()} now uses \code{order()} to sort its levels,
-      not \code{sort.list()}. This makes \code{factor()} support custom
+      not \code{sort.list()}.  This makes \code{factor()} support custom
       vector-like objects if methods for the appropriate generics are
       defined. This change has the side effect of making \code{factor()}
       succeed on empty or length-one non-atomic vector(-like) types (e.g.,
@@ -29,7 +29,7 @@
       \item \code{.self} is now automatically registered as a global
       variable when registering a reference class method.
 
-      \item \code{tempdir(check=TRUE)} recreates the \code{tmpdir()} if
+      \item \code{tempdir(check = TRUE)} recreates the \code{tmpdir()} if
       it is no longer valid.
 
       \item New \code{askYesNo()} function and \code{"askYesNo"} option
@@ -41,11 +41,12 @@
 
       \item \code{isTRUE()} is more tolerant and now true in
       \code{x <- rlnorm(99); isTRUE(median(x) == quantile(x)["50\%"])}.
-      New function \code{isFALSE()} defined analogously.
+      
+      New function \code{isFALSE()} defined analogously to \code{isTRUE()}.
 
       \item The default symbol table size has been increased from 4119
       to 49157; this may improve symbol resolution performance when many
-      packages are loaded. Suggested by Jim Hester.
+      packages are loaded.  (Suggested by Jim Hester.)
 
       \item \code{line()} gets a new option \code{iter = 1}.
 
@@ -91,9 +92,10 @@
       \code{..1} is used and \code{...} is empty, the error message is
       more appropriate now.
 
-      \item (Windows mainly) High Unicode code points which require surrogate
-      pairs are now handled.  All systems should properly handle surrogate pairs,
-      even those systems that don't need to make use of them.  (\PR{16098})
+      \item (Windows mainly.)  High Unicode code points which require
+      surrogate pairs are now handled.  All systems should properly
+      handle surrogate pairs, even those systems that don't need to make
+      use of them.  (\PR{16098})
 
       \item \code{stopifnot(e, e2, ...)} now evaluates the
       expressions sequentially and in case of an error or warning shows
@@ -104,9 +106,9 @@
       UTF-8-encoded character strings even if not representable in the
       current locale.  (\PR{17120})
 
-      \item \code{line(x,y)} now correctly computes the medians of the
-      left and right group's x-values and reproduces straight lines in
-      all cases.
+      \item \code{line(x, y)} now correctly computes the medians of the
+      left and right group's x-values and in all cases reproduces
+      straight lines.
 
       \item Extending S4 classes with slots corresponding to special
       attributes like \code{dim} and \code{dimnames} now works.
@@ -125,19 +127,13 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item \code{fourfoldplot()} could encounter integer overflow when
-      calculating odds ratio. (\PR{17286})
-
       \item \code{getParseData()} gave incorrect column information when
       code contained multi-byte characters.  (\PR{17254})
 
       \item Asking for help using expressions like \code{?stats::cor()}
       did not work.  (\PR{17250})
 
-      \item \code{readRDS(url(....))} now works too.
-
-      \item \code{installed.packages()} on Windows would fail when
-      \code{file.mtime()} (?) returned NA.
+      \item \code{readRDS(url(....))} now works.
 
       \item \command{R CMD Sweave} again returns \samp{status = 0} on
       successful completion.
@@ -146,7 +142,8 @@
       ignored properly.  (\PR{17246})
 
       \item \code{file.mtime()} no longer returns NA on Windows when the
-      file or directory is being used by another process.
+      file or directory is being used by another process.  This affected
+      \code{installed.packages()}, which is now protected against this.
 
       \item \command{R CMD INSTALL} Windows .zip file obeys \code{--lock}
       and \code{--pkglock} flags.
@@ -155,8 +152,17 @@
       return incorrect results when called with \code{multi = FALSE}.
       (\PR{17270})
 
-      \item \code{aggregate(<data.frame>, drop=FALSE)} now also works in
+      \item \code{aggregate(<data.frame>, drop = FALSE)} now also works in
       case of near-equal numbers in \code{by}.  (\PR{16918})
+
+      \item \code{fourfoldplot()} could encounter integer overflow when
+      calculating the odds ratio. (\PR{17286})
+      
+      \item \code{parse()} no longer gives spurious warnings when
+      extracting srcrefs from a file not encoded in the current locale.
+
+      This was seen from \command{R CMD check} with \file{inst/doc/*.R}
+      files, and \code{check} has some additional protection for such files.
     }
   }
 }

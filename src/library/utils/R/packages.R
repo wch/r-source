@@ -111,7 +111,7 @@ function(contriburl = contrib.url(repos, type), method,
                             download.file(url = paste0(repos, "/PACKAGES"),
                                           destfile = tmpf, method = method,
                                           cacheOK = FALSE, quiet = TRUE, mode = "wb")
-                        }, error=identity)
+                        }, error = identity)
                     options(op)
 
                     if (!inherits(z, "error"))
@@ -126,17 +126,17 @@ function(contriburl = contrib.url(repos, type), method,
                     warning(gettextf("unable to access index for repository %s",
                                      repos),
                             ":\n  ", conditionMessage(z),
-                            call.=FALSE, immediate. = TRUE, domain = NA)
+                            call. = FALSE, immediate. = TRUE, domain = NA)
                     next
                 }
 
                 if(length(res0)) {
                     rownames(res0) <- res0[, "Package"]
-                    ## Do not cache empty results.
                     if(need_dest)
                         saveRDS(res0, dest, compress = TRUE)
                 } else if(!need_dest) {
                     ## download.file() gave an empty .rds
+                    ## Do not cache empty results.
                     unlink(dest)
                 }
             } # end of download vs cached
@@ -144,9 +144,9 @@ function(contriburl = contrib.url(repos, type), method,
         if (length(res0)) {
             missingFields <- fields[!(fields %in% colnames(res0))]
             if (length(missingFields)) {
-                toadd <- matrix(NA_character_, nrow=nrow(res0),
-                                ncol=length(missingFields),
-                                dimnames=list(NULL, missingFields))
+                toadd <- matrix(NA_character_, nrow = nrow(res0),
+                                ncol = length(missingFields),
+                                dimnames = list(NULL, missingFields))
                 res0 <- cbind(res0, toadd)
             }
             if ("Path" %in% colnames(res0)) {
