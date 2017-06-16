@@ -16,19 +16,13 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item \code{fourfoldplot()} could encounter integer overflow when
-      calculating odds ratio. (\PR{17286})
-
       \item \code{getParseData()} gave incorrect column information when
       code contained multi-byte characters.  (\PR{17254})
 
       \item Asking for help using expressions like \code{?stats::cor()}
       did not work.  (\PR{17250})
 
-      \item \code{readRDS(url(....))} now works too.
-
-      \item \code{installed.packages()} on Windows would fail when
-      \code{file.mtime()} (?) returned NA.
+      \item \code{readRDS(url(....))} now works.
 
       \item \command{R CMD Sweave} again returns \samp{status = 0} on
       successful completion.
@@ -37,7 +31,8 @@
       ignored properly.  (\PR{17246})
 
       \item \code{file.mtime()} no longer returns NA on Windows when the
-      file or directory is being used by another process.
+      file or directory is being used by another process.  This affected
+      \code{installed.packages()}, which is now protected against this.
 
       \item \command{R CMD INSTALL} Windows .zip file obeys \code{--lock}
       and \code{--pkglock} flags.
@@ -46,8 +41,17 @@
       return incorrect results when called with \code{multi = FALSE}.
       (\PR{17270})
 
-      \item \code{aggregate(<data.frame>, drop=FALSE)} now also works in
+      \item \code{aggregate(<data.frame>, drop = FALSE)} now also works in
       case of near-equal numbers in \code{by}.  (\PR{16918})
+
+      \item \code{fourfoldplot()} could encounter integer overflow when
+      calculating the odds ratio. (\PR{17286})
+      
+      \item \code{parse()} no longer gives spurious warnings when
+      extracting srcrefs from a file not encoded in the current locale.
+
+      This was seen from \command{R CMD check} with \file{inst/doc/*.R}
+      files, and \code{check} has some additional protection for such files.
     }
   }
 }
