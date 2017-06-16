@@ -1,7 +1,7 @@
 #  File src/library/base/R/srcfile.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -114,7 +114,7 @@ srcfilecopy <- function(filename, lines, timestamp = Sys.time(), isFile = FALSE)
     e <- new.env(parent=emptyenv())
 
     # Remove embedded newlines
-    if (any(grepl("\n", lines, fixed=TRUE)))
+    if (any(grepl("\n", lines, fixed = TRUE, useBytes = TRUE)))
 	lines <- unlist(strsplit(sub("$", "\n", as.character(lines)), "\n"))
 
     e$filename <- filename
@@ -184,7 +184,7 @@ getSrcLines <- function(srcfile, first, last) {
 	# Remove embedded newlines if we haven't done this already
 	if (is.null(srcfile$fixedNewlines)) {
 	    lines <- srcfile$lines
-    	    if (any(grepl("\n", lines, fixed=TRUE)))
+    	    if (any(grepl("\n", lines, fixed = TRUE, useBytes = TRUE)))
 		srcfile$lines <- unlist(strsplit(sub("$", "\n", as.character(lines)), "\n"))
 	    srcfile$fixedNewlines <- TRUE
 	}
@@ -221,13 +221,13 @@ as.character.srcref <- function(x, useSource = TRUE, to = x, ...)
         if (!identical(srcfile, attr(to, "srcfile")))
     	    stop("'x' and 'to' must refer to same file")
     	x[c(3L, 4L, 6L, 8L)] <- to[c(3L, 4L, 6L, 8L)]
-    }	
+    }
     if (!is.null(srcfile) && !inherits(srcfile, "srcfile")) {
         cat("forcing class on") ## debug
         print(utils::str(srcfile))
         class(srcfile) <- c("srcfilealias", "srcfile")
     }
-    
+
     if (useSource) {
     	if (inherits(srcfile, "srcfilecopy") || inherits(srcfile, "srcfilealias"))
     	    lines <- try(getSrcLines(srcfile, x[7L], x[8L]), TRUE)

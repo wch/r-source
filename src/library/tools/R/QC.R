@@ -5870,13 +5870,19 @@ function(db, files)
     if (is.character(files)) {
         for (f in files) {
             tryCatch({
-                exprs <- parse(file = f, n = -1L)
-                for(i in seq_along(exprs)) find_bad_exprs(exprs[[i]])
-            },
-                     error = function(e)
-                     warning(gettextf("parse error in file '%s':\n%s", f,
-                                      .massage_file_parse_error_message(conditionMessage(e))),
-                             domain = NA, call. = FALSE))
+                        ## This can give errors because the vignette etc
+                        ## need not be in the session encoding.
+                        exprs <- parse(file = f, n = -1L)
+                        for(i in seq_along(exprs)) find_bad_exprs(exprs[[i]])
+                     },
+                     error = function(e) {
+                         ## so ignore 'invalid multibyte character' errors.
+                         msg <- .massage_file_parse_error_message(conditionMessage(e))
+                         if(!startsWith(msg, "invalid multibyte character"))
+                             warning(gettextf("parse error in file '%s':\n%s",
+                                              f, msg),
+                                     domain = NA, call. = FALSE)
+                     })
         }
     } else {
         ## called for examples with translation
