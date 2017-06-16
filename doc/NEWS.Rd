@@ -12,7 +12,7 @@
       \item \code{factor()} now uses \code{order()} to sort its levels,
       not \code{sort.list()}.  This makes \code{factor()} support custom
       vector-like objects if methods for the appropriate generics are
-      defined. This change has the side effect of making \code{factor()}
+      defined.  This change has the side effect of making \code{factor()}
       succeed on empty or length-one non-atomic vector(-like) types (e.g.,
       list), where it failed before.
 
@@ -34,7 +34,7 @@
 
       \item New \code{askYesNo()} function and \code{"askYesNo"} option
       to ask the user binary response questions in a customizable but
-      consistent way.  Suggestion of \PR{17242}.
+      consistent way.  (Suggestion of \PR{17242}.)
 
       \item New low level utilities \code{...elt(n)} and \code{...length()}
       for working with \code{...} parts inside a function.
