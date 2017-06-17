@@ -1,7 +1,7 @@
 #  File src/library/base/R/print.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -63,12 +63,16 @@ c.noquote <- function(..., recursive = FALSE)
 }
 
 print.noquote <- function(x, ...) {
-    if(!is.null(cl <- attr(x, "class"))) {
-	cl <- cl[cl != "noquote"]
-        attr(x, "class") <-
-          (if(length(cl)) cl else NULL)
-      }
+    if(copy <- !is.null(cl <- attr(x, "class"))) {
+	isNQ <- cl == "noquote"
+	if(copy <- any(isNQ)) {
+	    ox <- x
+	    cl <- cl[!isNQ]
+	    attr(x, "class") <- if(length(cl)) cl # else NULL
+	}
+    }
     print(x, quote = FALSE, ...)
+    invisible(if(copy) ox else x)
 }
 
 ## for alias.lm, aov
