@@ -2955,13 +2955,13 @@ below under specific OSes).  For most a 32-bit version is the default,
 but for some (e.g., @cputype{x86_64} Linux and macOS @geq{} 10.6)
 64-bit is.
 
-All current versions of @R{} use 32-bit integers and
-@acronym{ISO}/@acronym{IEC}@tie{}60559@footnote{also known as
-@acronym{IEEE}@tie{}754} double-precision reals, and so compute to
-the same precision@footnote{at least when storing quantities: the on-FPU
-precision is allowed to vary} and with the same limits on the sizes of
-numerical quantities.  The principal difference is in the size of the
-pointers.
+All current versions of @R{} use 32-bit integers (this is enforced in
+the build) and @acronym{ISO}/@acronym{IEC}@tie{}60559@footnote{also
+known as @acronym{IEEE}@tie{}754} double-precision reals, and so compute
+to the same precision@footnote{at least when storing quantities: the
+on-FPU precision is allowed to vary} and with the same limits on the
+sizes of numerical quantities.  The principal difference is in the size
+of the pointers.
 
 64-bit builds have both advantages and disadvantages:
 @itemize
