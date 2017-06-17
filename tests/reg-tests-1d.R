@@ -764,6 +764,9 @@ setwd(owd)
 ## print.noquote(*,  right = *)
 print(noquote(LETTERS[1:9]), right = TRUE)
 ## failed a few days end in R-devel ca. May 1, 2017
+tt <- table(c(rep(1, 7), 2,2,2))
+stopifnot(identical(tt, print.noquote(tt)))
+## print.noquote(<table>) failed for 6 weeks after r72638
 
 
 ## accessing  ..1  when ... is empty and using ..0, etc.
