@@ -41,7 +41,7 @@
 
       \item \code{isTRUE()} is more tolerant and now true in
       \code{x <- rlnorm(99); isTRUE(median(x) == quantile(x)["50\%"])}.
-      
+
       New function \code{isFALSE()} defined analogously to \code{isTRUE()}.
 
       \item The default symbol table size has been increased from 4119
@@ -157,12 +157,15 @@
 
       \item \code{fourfoldplot()} could encounter integer overflow when
       calculating the odds ratio. (\PR{17286})
-      
+
       \item \code{parse()} no longer gives spurious warnings when
       extracting srcrefs from a file not encoded in the current locale.
 
       This was seen from \command{R CMD check} with \file{inst/doc/*.R}
       files, and \code{check} has some additional protection for such files.
+
+      \item \code{print.noquote(x)} now always returns its argument
+      \code{x} (invisibly).
     }
   }
 }

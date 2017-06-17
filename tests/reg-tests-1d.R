@@ -762,8 +762,8 @@ setwd(owd)
 
 
 ## print.noquote(*,  right = *)
-print(noquote(LETTERS[1:9]), right = TRUE)
-## failed a few days end in R-devel ca. May 1, 2017
+nq <- noquote(LETTERS[1:9]); stopifnot(identical(nq, print(nq, right = TRUE)))
+## print() failed a few days end in R-devel ca. May 1, 2017; non-identical for longer
 tt <- table(c(rep(1, 7), 2,2,2))
 stopifnot(identical(tt, print.noquote(tt)))
 ## print.noquote(<table>) failed for 6 weeks after r72638
