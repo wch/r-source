@@ -112,6 +112,10 @@
 
       \item Extending S4 classes with slots corresponding to special
       attributes like \code{dim} and \code{dimnames} now works.
+
+      \item Fix for \code{legend()} when \code{fill} has multiple
+      values, first of which is \code{NA} (all colours then defaulted to
+      \code{par(fg)}).  (\PR{17288})
     }
   }
 }
