@@ -145,7 +145,7 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R 3.4.0 patched}{
+\section{\Rlogo CHANGES IN R 3.4.1}{
 
   \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
