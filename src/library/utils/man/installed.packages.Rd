@@ -27,7 +27,7 @@ installed.packages(lib.loc = NULL, priority = NULL,
     \code{c("base", "recommended")}.  To select all packages without an
     assigned priority use \code{priority = "NA"}.
   }
-  \item{noCache}{Do not use cached information.}
+  \item{noCache}{Do not use cached information, nor cache it.}
 
   \item{fields}{a character vector giving the fields to extract from
     each package's \code{DESCRIPTION} file in addition to the default
@@ -47,8 +47,7 @@ installed.packages(lib.loc = NULL, priority = NULL,
   specified \code{fields} argument, and updated only if the top-level
   library directory has been altered, for example by installing or
   removing a package.  If the cached information becomes confused, it
-  can be refreshed by running \code{installed.packages(noCache =
-  TRUE)}.
+  can be avoided by running \code{installed.packages(noCache = TRUE)}.
 }
 \value{
   A matrix with one row per package, row names the package names and
