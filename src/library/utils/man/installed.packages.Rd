@@ -1,6 +1,6 @@
 % File src/library/utils/man/installed.packages.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{installed.packages}
@@ -27,7 +27,7 @@ installed.packages(lib.loc = NULL, priority = NULL,
     \code{c("base", "recommended")}.  To select all packages without an
     assigned priority use \code{priority = "NA"}.
   }
-  \item{noCache}{Do not use cached information, nor cache it.}
+  \item{noCache}{Do not use cached information.}
 
   \item{fields}{a character vector giving the fields to extract from
     each package's \code{DESCRIPTION} file in addition to the default
