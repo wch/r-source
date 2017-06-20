@@ -65,8 +65,11 @@
 
       These arguments can be passed from \code{install.packages()},
       \code{update.packages()} and functions calling that: to enable
-      this \code{available.packages()} and \code{download.file()} gain a
-      \code{\dots} argument.
+      this \code{available.packages()}, \code{packageStatus()} and
+      \code{download.file()} gain a \code{\dots} argument.
+
+      \code{packageStatus()}'s \code{upgrade()} method no longer ignores
+      its \code{\dots} argument but passes it to \code{install.packages()}.
     }
   }
 
