@@ -57,6 +57,16 @@
 
       \item \code{order()} is smarter about picking a default sort
       \code{method} when its arguments are objects.
+      
+      \item \code{available.packages()} has two new arguments which
+      control if the values from the per-session repository cache are
+      used (default true, as before) and if so how old cached values can
+      be to be used (default one hour).
+
+      These arguments can be passed from \code{install.packages()},
+      \code{update.packages()} and functions calling that: to enable
+      this \code{available.packages()} and \code{download.file()} gain a
+      \code{\dots} argument.
     }
   }
 

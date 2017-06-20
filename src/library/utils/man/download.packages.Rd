@@ -1,6 +1,6 @@
 % File src/library/utils/man/download.packages.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{download.packages}
@@ -50,8 +50,8 @@ download.packages(pkgs, destdir, available = NULL,
     \code{\link{install.packages}}.
   }
   \item{\dots}{
-    additional arguments to be passed to
-    \code{\link{download.file}}.
+    additional arguments to be passed to \code{\link{download.file}}
+    and \code{\link{available.packages}}.
   }
 }
 \details{
