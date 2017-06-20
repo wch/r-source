@@ -43,7 +43,7 @@ packageStatus <- function(lib.loc = NULL, repositories = NULL, method,
         y
     }
 
-    y <- char2df(installed.packages(lib.loc = lib.loc))
+    y <- char2df(installed.packages(lib.loc = lib.loc, ...))
     y[, "Status"] <- "ok"
 
     z <- available.packages(repositories, method, ...)

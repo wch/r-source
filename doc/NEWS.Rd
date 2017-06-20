@@ -70,6 +70,11 @@
 
       \code{packageStatus()}'s \code{upgrade()} method no longer ignores
       its \code{\dots} argument but passes it to \code{install.packages()}.
+     
+      \code{installed.packages()} gains a \code{\dots} argument to allow
+      arguments (including \code{noCache}) to be passed from
+      \code{new.packages()}, \code{old.packages()},
+      \code{update.packages()} and \code{packageStatus()}.
     }
   }
 
@@ -127,8 +132,15 @@
       attributes like \code{dim} and \code{dimnames} now works.
 
       \item Fix for \code{legend()} when \code{fill} has multiple
-      values, first of which is \code{NA} (all colours then defaulted to
+      values, the first of which is \code{NA} (all colours then defaulted to
       \code{par(fg)}).  (\PR{17288})
+
+      \item \code{installed.packages()} did not remove the cached value
+      for a library tree that had been emptied (but would not use the
+      old value, just waste time checking it).
+
+      \item The documentation for \code{installed.packages(noCache =
+	  TRUE)} incorrectly claimed it would refresh the cache.
     }
   }
 }

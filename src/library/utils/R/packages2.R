@@ -27,7 +27,7 @@ isBasePkg <- function(pkg) {
 
 getDependencies <-
     function(pkgs, dependencies = NA, available = NULL, lib = .libPaths()[1L],
-             binary = FALSE)
+             binary = FALSE, ...)
 {
     if (is.null(dependencies)) return(unique(pkgs))
     oneLib <- length(lib) == 1L
@@ -84,7 +84,8 @@ getDependencies <-
         libpath <- .libPaths()
         if(!lib %in% libpath) libpath <- c(lib, libpath)
         installed <- installed.packages(lib.loc = libpath,
-                                        fields = c("Package", "Version"))
+                                        fields = c("Package", "Version"),
+                                        ...)
         not_avail <- character()
 	repeat {
 	    deps <- apply(available[p1, dependencies, drop = FALSE],
@@ -383,7 +384,7 @@ install.packages <-
         available <-
             available.packages(contriburl = contriburl, method = method,
                                fields = "NeedsCompilation", ...)
-        pkgs <- getDependencies(pkgs, dependencies, available, lib)
+        pkgs <- getDependencies(pkgs, dependencies, available, lib, ...)
         getDeps <- FALSE
         ## Now see what we can get as binary packages.
         av2 <- available.packages(contriburl = contrib.url(repos, type2),
@@ -679,7 +680,7 @@ install.packages <-
         available <- available.packages(contriburl = contriburl,
                                         method = method, ...)
     if(getDeps)
-        pkgs <- getDependencies(pkgs, dependencies, available, lib)
+        pkgs <- getDependencies(pkgs, dependencies, available, lib, ...)
 
     foundpkgs <- download.packages(pkgs, destdir = tmpd, available = available,
                                    contriburl = contriburl, method = method,

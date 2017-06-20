@@ -458,7 +458,7 @@ update.packages <- function(lib.loc = NULL, repos = getOption("repos"),
 
 old.packages <- function(lib.loc = NULL, repos = getOption("repos"),
                          contriburl = contrib.url(repos, type),
-                         instPkgs = installed.packages(lib.loc = lib.loc),
+                         instPkgs = installed.packages(lib.loc = lib.loc, ...),
                          method, available = NULL, checkBuilt = FALSE,
                          ..., type = getOption("pkgType"))
 {
@@ -512,7 +512,7 @@ old.packages <- function(lib.loc = NULL, repos = getOption("repos"),
 
 new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
                          contriburl = contrib.url(repos, type),
-                         instPkgs = installed.packages(lib.loc = lib.loc),
+                         instPkgs = installed.packages(lib.loc = lib.loc, ...),
                          method, available = NULL, ask = FALSE,
                          ..., type = getOption("pkgType"))
 {
@@ -618,7 +618,7 @@ new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
 
 installed.packages <-
     function(lib.loc = NULL, priority = NULL, noCache = FALSE,
-             fields = NULL, subarch = .Platform$r_arch)
+             fields = NULL, subarch = .Platform$r_arch, ...)
 {
     if(is.null(lib.loc))
         lib.loc <- .libPaths()
@@ -643,7 +643,8 @@ installed.packages <-
             ## it is actually 32-bit on some systems)
             enc <- sprintf("%d_%s", nchar(base), .Call(C_crc64, base))
             dest <- file.path(tempdir(), paste0("libloc_", enc, ".rds"))
-            test <- file.exists(dest) && file.mtime(dest) > file.mtime(lib) &&
+            test <- file.exists(dest) &&
+                file.mtime(dest) > file.mtime(lib) &&
                 (val <- readRDS(dest))$base == base
             if(isTRUE(as.vector(test)))
                 ## use the cache file
@@ -654,7 +655,7 @@ installed.packages <-
                     retval <- rbind(retval, ret0)
                     ## save the cache file
                     saveRDS(list(base = base, value = ret0), dest)
-                }
+                } else unlink(dest)
             }
         }
     }

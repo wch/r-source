@@ -43,7 +43,7 @@ packageStatus(lib.loc = NULL, repositories = NULL, method,
   \item{ask}{if \code{TRUE}, the user is prompted which packages should
     be upgraded and which not.}
   \item{\dots}{for \code{packageStatus}: arguments to be passed to
-    \code{\link{available.packages}}.\cr
+    \code{\link{available.packages}} and \code{\link{installed.packages}}.\cr
     for the \code{upgrade} method, arguments to be passed to
     \code{\link{install.packages}}\cr
     for other methods: currently not used.}
