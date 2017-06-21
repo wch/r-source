@@ -13,7 +13,7 @@
 system2(command, args = character(),
         stdout = "", stderr = "", stdin = "", input = NULL,
         env = character(), wait = TRUE,
-        minimized = FALSE, invisible = TRUE)
+        minimized = FALSE, invisible = TRUE, timeout = 0)
 }
 \arguments{
   \item{command}{the system command to be invoked, as a character string.}
@@ -35,6 +35,8 @@ system2(command, args = character(),
     interpreter should wait for the command to finish, or run it
     asynchronously.  This will be ignored (and the interpreter will
     always wait) if \code{stdout = TRUE}.}
+  \item{timeout}{timeout in seconds, ignored if 0. Not implemented on
+    Windows.}
 #ifdef unix
   \item{minimized, invisible}{arguments that are accepted on Windows but
     ignored on this platform, with a warning.}
@@ -64,6 +66,19 @@ system2(command, args = character(),
   Because of the way it is implemented, on a Unix-alike \code{stderr =
     TRUE} implies \code{stdout = TRUE}: a warning is given if this is
   not what was specified.
+
+#ifdef unix
+  When \code{timeout} is non-zero, the command is terminated after the given
+  number of seconds.  The termination works for typical commands, but is not
+  guaranteed: it is possible to write a program that would keep running
+  after the time is out.  Timeouts can only be set with \code{wait = TRUE}
+  and only for non-interactive commands: the command is run with standard
+  input redirected from \code{/dev/null} and it must not modify terminal
+  settings.  As long as tty \code{tostop} option is disabled, which it
+  usually is by default, the executed command may write to standard output
+  and standard error.  The \code{timeout} option is currently experimental
+  and is not implemented on Windows.
+#endif
 }
 %% We use popen, and that pipes stdout only
 
