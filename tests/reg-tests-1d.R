@@ -836,6 +836,19 @@ stopifnot(all.equal(cfs, matrix(c(2,  1), 49, 2, byrow=TRUE), tol = 1e-14), # ty
 ## had incorrect medians of the left/right third of the data (x_L, x_R), in R < 3.5.0
 
 
+## 0-length Date and POSIX[cl]t:  PR#71290
+D <- structure(17337, class = "Date") # Sys.Date() of "now"
+D; D[0]; D[c(1,2,1)] # test printing of NA too
+stopifnot(identical(capture.output(D[0]), "Date of length 0"))
+D <- structure(1497973313.62798, class = c("POSIXct", "POSIXt")) # Sys.time()
+D; D[0]; D[c(1,2,1)] # test printing of NA too
+stopifnot(identical(capture.output(D[0]), "POSIXct of length 0"))
+D <- as.POSIXlt(D)
+D; D[0]; D[c(1,2,1)] # test printing of NA too
+stopifnot(identical(capture.output(D[0]), "POSIXlt of length 0"))
+## They printed as   '[1] "Date of length 0"'  etc in R < 3.5.0
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

@@ -242,8 +242,10 @@ print.POSIXlt <- function(x, tz = "", usetz = TRUE, ...)
 	print(FORM(x[seq_len(max.print)]), ...)
         cat(' [ reached getOption("max.print") -- omitted',
             length(x) - max.print, 'entries ]\n')
-    } else
-	print(if(length(x)) FORM(x) else paste(class(x)[1L], "of length 0"), ...)
+    } else if(length(x))
+	print(FORM(x), max = max.print, ...)
+    else
+	cat(class(x)[1L], "of length 0\n")
     invisible(x)
 }
 
