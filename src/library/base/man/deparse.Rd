@@ -1,6 +1,6 @@
 % File src/library/base/man/deparse.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{deparse}
@@ -22,8 +22,8 @@ deparse(expr, width.cutoff = 60L,
     (in bytes) at which line-breaking is tried.}
   \item{backtick}{logical indicating whether symbolic names should be
     enclosed in backticks if they do not follow the standard syntax.}
-  \item{control}{character vector of deparsing options.  See
-    \code{\link{.deparseOpts}}.}
+  \item{control}{character vector (or \code{NULL}) of deparsing options.
+    See \code{\link{.deparseOpts}}.}
   \item{nlines}{integer: the maximum number of lines to produce.
     Negative values indicate no limit.}
 }

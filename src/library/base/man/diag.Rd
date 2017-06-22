@@ -1,12 +1,12 @@
 % File src/library/base/man/diag.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{diag}
 \title{Matrix Diagonals}
 \usage{
-diag(x = 1, nrow, ncol)
+diag(x = 1, nrow, ncol, names = TRUE)
 diag(x) <- value
 }
 \alias{diag}
@@ -19,6 +19,9 @@ diag(x) <- value
   \item{x}{a matrix, vector or 1D \code{\link{array}}, or missing.}
   \item{nrow, ncol}{optional dimensions for the result when \code{x} is
     not a matrix.}
+  \item{names}{(when \code{x} is a matrix) logical indicating if the
+    resulting vector, the diagonal of \code{x}, should inherit
+    \code{\link{names}} from \code{dimnames(x)} if available.}
   \item{value}{either a single value or a vector of length equal to that
     of the current diagonal.  Should be of a mode which can be coerced
     to that of \code{x}.}
@@ -88,7 +91,11 @@ require(stats)
 ## diag(<var-cov-matrix>) = variances
 diag(var(M <- cbind(X = 1:5, Y = rnorm(5))))
 #-> vector with names "X" and "Y"
-rownames(M) <- c(colnames(M), rep("", 3));
+rownames(M) <- c(colnames(M), rep("", 3))
 M; diag(M) #  named as well
+diag(M, names = FALSE) # w/o names
+\dontshow{stopifnot(identical(names(diag(M)), colnames(M)),
+                    is.null(names(diag(M,      names=FALSE))),
+                    is.null(names(diag(var(M), names=FALSE)))) }
 }
 \keyword{array}

@@ -15,7 +15,9 @@
 tapply(X, INDEX, FUN = NULL, \dots, default = NA, simplify = TRUE)
 }
 \arguments{
-  \item{X}{an atomic object, typically a vector.}
+  \item{X}{an \R object for which a \code{\link{split}} method
+    exists.  Typically vector-like, allowing subsetting with
+    \code{\link{[}}.}
   \item{INDEX}{a \code{\link{list}} of one or more \code{\link{factor}}s,
     each of same length as \code{X}.  The elements are coerced to
     factors by \code{\link{as.factor}}.}

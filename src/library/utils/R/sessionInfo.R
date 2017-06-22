@@ -153,24 +153,28 @@ print.sessionInfo <- function(x, locale = TRUE, ...)
     invisible(x)
 }
 
+##' From a list of packageDescription()s,
+##' construct string  "<p1>~<ver>, <p2>~<ver>, ..., <pn>~<ver>"
+toLatexPDlist <- function(pdList, sep = "~") {
+    if(length(ver <- vapply(pdList, `[[`, "", "Version"))) {
+	ver <- ver[sort(names(ver))]
+	paste(names(ver), ver, sep = sep, collapse = ", ")
+    } else ver
+}
+
 toLatex.sessionInfo <- function(object, locale = TRUE, ...)
 {
-    opkgver <- sapply(object$otherPkgs, function(x) x$Version)
-    nspkgver <- sapply(object$loadedOnly, function(x) x$Version)
     z <- c("\\begin{itemize}\\raggedright",
            paste0("  \\item ", object$R.version$version.string,
                   ", \\verb|", object$R.version$platform, "|"))
-
     if(locale) {
         z <- c(z,
                paste0("  \\item Locale: \\verb|",
                       gsub(";","|, \\\\verb|", object$locale) , "|"))
     }
-
     z <- c(z,
            paste0("  \\item Running under: \\verb|",
                   gsub(";","|, \\\\verb|", object$running) , "|"))
-
     z <- c(z, paste0("  \\item Matrix products: ", object$matprod))
     blas <- object$BLAS
     if (is.null(blas)) blas <- ""
@@ -187,25 +191,19 @@ toLatex.sessionInfo <- function(object, locale = TRUE, ...)
     }
 
     z <- c(z, strwrap(paste("\\item Base packages: ",
-                         paste(sort(object$basePkgs), collapse = ", ")),
+			    paste(sort(object$basePkgs), collapse = ", ")),
                       indent = 2, exdent = 4))
 
-    if(length(opkgver)){
-        opkgver <- opkgver[sort(names(opkgver))]
+    if(length(o.ver <- toLatexPDlist(object$otherPkg)))
         z <- c(z,
                strwrap(paste("  \\item Other packages: ",
-                             paste(names(opkgver), opkgver, sep = "~",
-                                   collapse = ", ")),
+			     o.ver),
                        indent = 2, exdent = 4))
-    }
-    if(length(nspkgver)){
-        nspkgver <- nspkgver[sort(names(nspkgver))]
+    if(length(n.ver <- toLatexPDlist(object$loadedOnly)))
         z <- c(z,
                strwrap(paste("  \\item Loaded via a namespace (and not attached): ",
-                             paste(names(nspkgver), nspkgver, sep = "~",
-                                   collapse = ", ")),
+			     n.ver),
                        indent = 2, exdent = 4))
-    }
     z <- c(z, "\\end{itemize}")
     class(z) <- "Latex"
     z

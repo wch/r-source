@@ -27,7 +27,7 @@
 #include <Internal.h>
 #include <R_ext/Random.h>
 
-/* Normal generator is not actually set here but in nmath/snorm.c */
+/* Normal generator is not actually set here but in ../nmath/snorm.c */
 #define RNG_DEFAULT MERSENNE_TWISTER
 #define N01_DEFAULT INVERSION
 
@@ -51,6 +51,7 @@ static RNGtype RNG_kind = RNG_DEFAULT;
 
 /* .Random.seed == (RNGkind, i_seed[0],i_seed[1],..,i_seed[n_seed-1])
  * or           == (RNGkind) or missing  [--> Randomize]
+ * where  RNGkind :=  RNG_kind  +  100 * N01_kind   currently in  outer(0:7, 100*(0:5), "+")
  */
 
 typedef struct {

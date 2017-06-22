@@ -1,6 +1,6 @@
 % File src/library/grid/man/grid.text.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2007, 2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{grid.text}
@@ -31,8 +31,8 @@ textGrob(label, x = unit(0.5, "npc"), y = unit(0.5, "npc"),
     value specifies horizontal justification and the second value specifies
     vertical justification.  Possible string values are: \code{"left"},
     \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"},
-    and \code{"top"}.  For numeric values, 0 means left alignment
-    and 1 means right alignment.
+    and \code{"top"}.  For numeric values, 0 means left (bottom) alignment
+    and 1 means right (top) alignment.
   }
   \item{hjust}{A numeric vector specifying horizontal justification.
     If specified, overrides the \code{just} setting.}
@@ -62,7 +62,7 @@ textGrob(label, x = unit(0.5, "npc"), y = unit(0.5, "npc"),
 
 }
 \value{
-  A text grob.  \code{grid.text} returns the value invisibly.
+  A text grob.  \code{grid.text()} returns the value invisibly.
 }
 \author{Paul Murrell}
 \seealso{

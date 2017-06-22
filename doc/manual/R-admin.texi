@@ -1750,7 +1750,9 @@ and install it. This runs on macOS 10.11 and later (El Capitan, Sierra,
 @dots{}).
 
 Installers for R-patched and R-devel are usually available from
-@uref{https://r.research.att.com}.
+@uref{https://r.research.att.com}.  (Some of these packages are
+unsigned: to install those Control/right/two-finger click, select
+@samp{Open with} and @samp{Installer}.)
 
 For some older versions of the OS you can in principle (it is little
 tested) install @R{} from the sources (see @ref{macOS}).
@@ -1781,9 +1783,9 @@ package and the @code{X11} device: attempting to use these without
 XQuartz will remind you.  Also the cairographics-based devices (which
 are not often used on macOS) such as @code{png(type = "cairo")}.
 
-If you update your macOS version, you should re-install @R{} (and perhaps
-XQuartz): the installer tailors the installation to the current version
-of the OS.
+If you update your macOS version, you should re-install @R{} (and
+perhaps XQuartz): the installer may tailor the installation to the
+current version of the OS.
 
 For building @R{} from source, see @ref{macOS}.
 
@@ -1813,7 +1815,7 @@ can be viewed from @Rapp{}'s `Help' menu.
 You can run command-line @R{} and @command{Rscript} from a
 Terminal@footnote{The installer as puts links to @command{R} and
 @command{Rscript} in @file{/usr/local/bin}. If these are missing, you
-can run directly the versions in
+can run directly the copies in
 @file{/Library/Frameworks/R.framework/Resources/}.} so these can be
 typed as commands like any other Unix-alike: see the next chapter of
 this manual.  There are some small differences which may surprise users
@@ -1872,15 +1874,18 @@ sudo rm -rf /Library/Frameworks/R.framework /Applications/R.app \
    /usr/local/bin/R /usr/local/bin/Rscript
 @end example
 
-The installation consists of four Apple packages:
-@code{org.r-project.R.x86_64.fw.pkg},
-@code{org.r-project.R.x86_64.GUI.pkg},
+The installation consists of up to four Apple packages:@footnote{The
+framework for @R{} 3.3.x was named
+@code{org.r-project.R.mavericks.fw.pkg}: use @command{pkgutil --pkgs |
+grep org.r-project} to check for earlier versions of @R{}.}
+@code{org.r-project.R.el-capitan.fw.pkg},
+@code{org.r-project.R.el-capitan.GUI.pkg},
 @code{org.r-project.x86_64.tcltk.x11} and
-@code{org.r-project.x86_64.texinfo} (not all of which need be
-installed). You can use @code{pkgutil --forget} if you want the Apple
-Installer to forget about the package without deleting its files (useful
-for the @R{} framework when installing multiple @R{} versions in parallel),
-or after you have deleted the files.
+@code{org.r-project.x86_64.texinfo}. You can use @code{pkgutil --forget}
+if you want the Apple Installer to forget about the package without
+deleting its files (useful for the @R{} framework when installing
+multiple @R{} versions in parallel), or after you have deleted the
+files.
 
 Uninstalling the Tcl/Tk or Texinfo components (which are installed under
 @file{/usr/local}) is not as simple.  You can list the files they installed
@@ -1909,17 +1914,19 @@ These are paths relative to @file{/}, the root of the file system.
 @node Multiple versions,  , Uninstalling under macOS, Installing R under macOS
 @section Multiple versions
 
-The installer will remove any previous version of the @R{} framework
-which it finds installed.  This can be avoided by using @command{pkgutil
---forget} (see the previous section).  However, note that different
-versions are installed under
+The installer will remove any previous version@footnote{More precisely,
+of the package of the same name: this means that installing a package for
+3.3.x does 3.4.x does not remove an installation of the other series.} of
+the @R{} framework which it finds installed.  This can be avoided by
+using @command{pkgutil --forget} (see the previous section).  However,
+note that different versions are installed under
 @file{/Library/Frameworks/R.framework/Versions} as @file{3.3},
 @file{3.4} and so on, so it is not possible to have different
 @samp{3.x.y} versions installed for the same @samp{x}.
 
 A version of @R{} can be run directly from the command-line as e.g.@:
 @example
-/Library/Frameworks/R.framework/Versions/3.3/Resources/bin/R
+/Library/Frameworks/R.framework/Versions/3.4/Resources/bin/R
 @end example
 
 @noindent
@@ -2310,38 +2317,60 @@ framework installed from @uref{https://r.research.att.com/libs/}: the
 appropriate version at the time of writing was
 @uref{https://r.research.att.com/@/libs/@/GTK_2.24.17-X11.pkg}
 
-The default compilers specified in
-@file{/Library/Frameworks/R.framework/Resources/etc/Makeconf} depend on
-the version of macOS under which @R{} was installed, and are appropriate
-for the latest version of the `Command Line Tools' for that version of
-macOS and the recommended version of Fortran (see @ref{macOS}).  The
-settings can be changed, either by editing that file or in a file such
-as @file{~/.R/Makevars} (see the next section).  Entries which may need
-to be changed include @samp{CC}, @samp{CXX}, @samp{FC}, @samp{F77},
-@samp{FLIBS} and the corresponding flags, and perhaps @samp{CXXCPP},
-@samp{DYLIB_LD}, @samp{MAIN_LD}, @samp{SHLIB_CXXLD}, @samp{SHLIB_FCLD}
-and @samp{SHLIB_LD}, as well as @samp{CXX11}, @samp{CXX14} and
-@samp{CXX17} variants
+The default compilers specified are shown in file
+@file{/Library/Frameworks/R.framework/Resources/etc/Makeconf}.  At the
+time of writing these setting assumed that the C, Fortran and C++
+compilers were on the path, and @command{gfortan} 6.1.0 (see
+@ref{macOS}).  The settings can be changed, either by editing that file
+or in a file such as @file{~/.R/Makevars} (see the next section).
+Entries which may need to be changed include @samp{CC}, @samp{CXX},
+@samp{FC}, @samp{F77}, @samp{FLIBS} and the corresponding flags, and
+perhaps @samp{CXXCPP}, @samp{DYLIB_LD}, @samp{MAIN_LD},
+@samp{SHLIB_CXXLD}, @samp{SHLIB_FCLD} and @samp{SHLIB_LD}, as well as
+the @samp{CXX11}, @samp{CXX14} and @samp{CXX17} variants
 
-So for example you could select @command{clang} for both C and C++ with
-extensive checking by having in @file{~/.R/Makevars}
+So for example you could select a specific build of @command{clang} for
+both C and C++ with extensive checking by having in @file{~/.R/Makevars}
 @example
-CC=clang
-CXX=clang++
-CFLAGS=-mtune=native -g -O2 -Wall -pedantic -Wconversion
-CXXFLAGS=-mtune=native -g -O2 -Wall -pedantic -Wconversion
+CC = /usr/local/clang4/bin/clang
+CXX = /usr/local/clang4/bin/clang++
+CFLAGS = -g -O2 -Wall -pedantic -Wconversion -Wno-sign-conversion
+CXXFLAGS = -g -O2 -Wall -pedantic -Wconversion -Wno-sign-conversion
+CXX11 = $CXX
+CXX14 = $CXX
+CXX17 = $CXX
+CXX1X = $CXX
 @end example
+@noindent
+and the Sierra build of @command{gfortran} by
+@example
+F77 = /usr/local/gfortran/bin/gfortran
+FC = $F77
+FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin16/6.3.0 
+  -L/usr/local/gfortran/lib -lgfortran -lquadmath -lm
+@end example
+@noindent
+(line split for legibility here).
 
-Apple includes a wealth of Open Source libraries in macOS but
-increasingly without the corresponding headers (not even in Xcode nor
-the Command Line Tools): they are often rather old versions.  If
-installing packages from source using them it is usually easiest to
-install a statically-linked up-to-date copy of the Open Source package
-from its sources or from @uref{https://r.research.att.com/libs}.  But
-sometimes it is desirable/necessary to use Apple's dynamically linked
-library, in which case appropriate headers could be extracted from the
+If using the C/C++ compilers from the Command Line Tools (which does not
+have OpenMP support) one will need to include
+@example
+SHLIB_OPENMP_CFLAGS =
+SHLIB_OPENMP_CXXFLAGS =
+@end example
+@noindent
+to compile OpenMP-using packages.
+
+Apple includes many Open Source libraries in macOS but increasingly
+without the corresponding headers (not even in Xcode nor the Command
+Line Tools): they are often rather old versions.  If installing packages
+from source using them it is usually easiest to install a
+statically-linked up-to-date copy of the Open Source package from its
+sources or from @uref{https://r.research.att.com/libs}.  But sometimes
+it is desirable/necessary to use Apple's dynamically linked library, in
+which case appropriate headers could be extracted from the
 sources@footnote{Note that capitalization and version may differ from
-the Open Source project.} available via
+the Open Source project.} available @emph{via}
 @uref{https://opensource.apple.com}.
 
 @node Customizing package compilation, Multiple sub-architectures, macOS packages, Installing packages
@@ -2383,7 +2412,7 @@ For example, to use a different Fortran compiler on macOS
 
 @example
 F77 = /usr/local/gfortran/bin/gfortran
-FC = /usr/local/gfortran/bin/gfortran
+FC = $F77
 FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin16/6.3.0 
   -L/usr/local/gfortran/lib -lgfortran -lquadmath -lm
 @end example
@@ -4698,10 +4727,17 @@ may also be necessary to set the @command{pkg-config} path, e.g.@: by
 @example
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
 @end example
+@noindent
+The 32-bit system @code{libcurl} did not work with the system CA
+certificates: this is worked around in @R{}'s test suite.
 
 64-bit versions of Linux are built with support for files > 2Gb, and
 32-bit versions will be if possible unless @option{--disable-largefile}
 is specified.
+
+Note that 32-bit @code{glibc} currently uses a 32-bit @code{time_t}
+type, so to pass all the date-time checks needs @R{} built with flag
+@option{--with-internal-tzcode}.
 
 To build a 64-bit version of @R{} on @cputype{ppc64} (also known as
 @cputype{powerpc64}) with @command{gcc}@tie{}4.1.1, Ei-ji Nakama used
@@ -4851,8 +4887,7 @@ apart from disabling @code{quartz()} and the ability to use the build
 with @Rapp{}, it also changes the default location of the personal
 library (see @code{?.libPaths}).
 
-Various compilers can be used, and the recommendations for @R{} 3.4.0
-are under discussion. One could use
+Various compilers can be used.  One could use
 
 @example
 CC=clang
@@ -4883,14 +4918,14 @@ with a binary distribution of @R{} is to have a @file{~/.R/Makevars}
 file similar to (El Capitan)
 @example
 F77 = /usr/local/gfortran/bin/gfortran
-FC = /usr/local/gfortran/bin/gfortran
+FC = $F77
 FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin15/6.1.0
   -L/usr/local/gfortran/lib -lgfortran -lquadmath -lm
 @end example
 or (Sierra)
 @example
 F77 = /usr/local/gfortran/bin/gfortran
-FC = /usr/local/gfortran/bin/gfortran
+FC = $F77
 FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin16/6.3.0
   -L/usr/local/gfortran/lib -lgfortran -lquadmath -lm
 @end example
@@ -4900,28 +4935,30 @@ FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin16/6.3.0
 More recent and complete distributions of @command{clang} are often
 available from @uref{http://llvm.org/releases/}: for example at the time
 of writing for 4.0.0, built for Sierra.  In particular, these should
-include support for OpenMP.  Suppose that distribution is installed
-under @file{/usr/local/clang}.  Then @R{} could be configured by
-something like
+include support for OpenMP. Another build of clang 4.0.0 is available at
+@uref{https://r.research.att.com/@/libs/@/clang-4.0.0-darwin15.6-Release.tar.gz}.
+Suppose one of these distributions is installed under
+@file{/usr/local/clang4}.  Then @R{} could be configured by something
+like
 @example
 ./configure --x-includes=/opt/X11/include --x-libraries=/opt/X11/lib \
 PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig \
-DYLD_FALLBACK_LIBRARY_PATH=/usr/local/clang/lib:/usr/local/lib
+DYLD_FALLBACK_LIBRARY_PATH=/usr/local/clang4/lib:/usr/local/lib
 @end example
 @noindent
 with @file{config.site} containing
 @example
-CC=/usr/local/clang/bin/clang
+CC=/usr/local/clang4/bin/clang
 OBJC=$CC
 F77=/usr/local/gfortran/bin/gfortran
 FC=$F77
-CXX=/usr/local/clang/bin/clang++
-LDFLAGS="-L/usr/local/clang/lib -L/usr/local/lib"
-R_LD_LIBRARY_PATH=/usr/local/clang/lib:/usr/local/lib
+CXX=/usr/local/clang4/bin/clang++
+LDFLAGS="-L/usr/local/clang4/lib -L/usr/local/lib"
+R_LD_LIBRARY_PATH=/usr/local/clang4/lib:/usr/local/lib
 @end example
 @noindent
 The care to specify library paths is to ensure that the OpenMP runtime
-library, here @file{/usr/local/clang/lib/libomp.dylib}, is found when
+library, here @file{/usr/local/clang4/lib/libomp.dylib}, is found when
 needed. If this works, you should see the line
 @example
 checking whether OpenMP SIMD reduction is supported... yes
@@ -5269,7 +5306,12 @@ A peculiarity of the Fortran compiler is that when asked to link a
 shared object it does not link against the Fortran runtime libraries.
 In @R{} this is only used for packages with F9x code, hence the
 @code{FCLIBS} definition (which sufficed for @acronym{CRAN} packages
-with 12.5).
+with 12.5, but on one system needed to be
+@example
+FCLIBS="-lfsu /opt/developerstudio12.5/lib/libfui.so.2"
+@end example
+@noindent
+.)
 
 You can target specific Sparc architectures for (slightly) higher
 performance: @option{-xtarget=native} (in @code{CFLAGS} etc) tunes the

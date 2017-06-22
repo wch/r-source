@@ -237,3 +237,105 @@ makeHelpTable <- function(help, depth=2) {
 		    '</td></tr>')
     c(out, lines, '</table>')
 }
+
+toHTML.citation <-
+function(x, ...)
+{
+    len <- length(x)
+    if(!len) return(character())
+
+    is_non_blank_string <- function(s) {
+        (length(s) == 1L) && length(grep("[^[:blank:]]", s))
+    }
+
+    format_entry_as_text <- function(x) {
+        c(if(is_non_blank_string(header <- x$header))
+          c("<p>", htmlify(header), "</p>"),
+          "<blockquote>",
+          ## Proceed as in .format_bibentry_as_citation used by
+          ## utils:::print.bibentry: use textVersion if given.
+          ## <FIXME>
+          ## Stop using textVersion eventually ...
+          if(!is.null(tv <- x$textVersion)) {
+              c("<p>", htmlify(tv), "</p>")
+          } else {
+              format(x, "html")
+          },
+          ## </FIXME>
+          "</blockquote>",
+          if(is_non_blank_string(footer <- x$footer))
+          c("<p>", htmlify(footer), "</p>")
+          )
+    }
+
+    format_entry_as_BibTeX <- function(x) {
+        bib <- unclass(utils::toBibtex(x))
+        len <- length(bib)
+        out <- c(paste(" ", bib[1L]),
+                 strwrap(bib[-c(1L, len)], indent = 4L, exdent = 6L),
+                 "  }")
+        c("<pre>",
+          htmlify(out, FALSE),
+          "</pre>")
+    }
+
+    htmlify <- function(s, a = TRUE) {
+        ## See <http://en.wikipedia.org/wiki/Character_encodings_in_HTML>
+        ## which in turn refers to
+        ## <http://www.w3.org/TR/REC-html40/sgml/sgmldecl.html>: HTML
+        ## forbids characters with Unicode code points
+        ##   0 to 31 except 9, 10 and 13 (\t, \n and \r)
+        ## and
+        ##   127 to 159
+        ## (octal \000 to \037 and \177 to \237).
+        ## Replace these by hex bytes.
+        s <- .replace_chars_by_hex_subs(s, invalid_HTML_chars_re)
+        s <- gsub("&", "&amp;", s, fixed = TRUE)
+        s <- gsub("<", "&lt;", s, fixed = TRUE)
+        s <- gsub(">", "&gt;", s, fixed = TRUE)
+        if(a) {
+            ## Some people have <http://something> as recommended for
+            ## in-text URLs.
+            s <- .gsub_with_transformed_matches("&lt;(URL: *)?((https?|ftp)://[^[:space:]]+)[[:space:]]*&gt;",
+                                                "&lt;<a href=\"%s\">\\2</a>&gt;",
+                                                s,
+                                                urlify,
+                                                2L)
+            ## Need to ignore results of the above translation ...
+            ## Regexp based on Perl HTML::TextToHTML, note that the dash
+            ## must be last ...
+            s <- .gsub_with_transformed_matches("([^>\"])((https?|ftp)://[[:alnum:]/.:@+\\_~%#?=&;,-]+[[:alnum:]/])",
+                                                "\\1<a href=\"%s\">\\2</a>",
+                                                s,
+                                                urlify,
+                                                2L)
+            s <- .gsub_with_transformed_matches("&lt;(DOI|doi):[[:space:]]*([^<[:space:]]+[[:alnum:]])&gt;",
+                                                "&lt;<a href=\"http://dx.doi.org/%s\">doi:\\2</a>&gt;",
+                                                s,
+                                                urlify,
+                                                2L)
+            s <- .gsub_with_transformed_matches("[^>\"](DOI|doi):[[:space:]]*([^<[:space:]]+[[:alnum:]])",
+                                                "&lt;<a href=\"http://dx.doi.org/%s\">doi:\\2</a>&gt;",
+                                                s,
+                                                urlify,
+                                                2L)
+        }
+        s
+    }
+
+    c(HTMLheader(...),
+      "<body>",
+      if(is_non_blank_string(header <- attr(x, "mheader")))
+      c("<p>", htmlify(header), "</p>"),
+      do.call(c, lapply(x, format_entry_as_text)),
+      if(is_non_blank_string(footer <- attr(x, "mfooter")))
+      c("<p>", htmlify(footer), "</p>"),
+      c("<p>",
+        ngettext(len,
+                 "Corresponding BibTeX entry:",
+                 "Corresponding BibTeX entries:"),
+        "</p>",
+        do.call(c, lapply(x, format_entry_as_BibTeX))),
+      "</body>",
+      "</html>")
+}

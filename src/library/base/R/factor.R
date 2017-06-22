@@ -29,7 +29,7 @@ factor <- function(x = character(), levels, labels = levels,
     force(ordered) # check if original x is an ordered factor
     if(!is.character(x))
 	x <- as.character(x)
-    ## levels could be a long vectors, but match will not handle that.
+    ## levels could be a long vector, but match will not handle that.
     levels <- levels[is.na(match(levels, exclude))]
     f <- match(x, levels)
     if(!is.null(nx))

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2006-2014  The R Core Team
+ *  Copyright (C) 2006-2017  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -113,17 +113,75 @@ void usage(void)
 }
 
 
-int main(int argc, char *argv[])
+int main(int argc_, char *argv_[])
 {
 #ifdef HAVE_EXECV
     char cmd[PATH_MAX+1], buf[PATH_MAX+8], buf2[1100], *p;
     int i, i0 = 0, ac = 0, res = 0, e_mode = 0, set_dp = 0;
     char **av;
 
-    if(argc <= 1) {
+    if(argc_ <= 1) {
 	usage();
 	exit(1);
     }
+
+    /* When executed via '#!' on most systems, argv_[1] will include multiple
+       arguments. These arguments will be those provided directly on the line
+       starting with '#!'.
+
+       argv_[1] is split here into individual arguments assuming any space or
+       tab is a separator - no quoting is supported
+    */
+
+    /* compute number of arguments included in argv_[1] */
+    char *s = argv_[1];
+    int njoined = 0;
+    size_t j;
+    for(j = 0; s[j] != 0; j++)
+	if (s[j] != ' ' && s[j] != '\t' &&
+		(j == 0 || s[j-1] == ' ' || s[j-1] == '\t'))
+	    /* first character of an argument */
+	    njoined++;
+
+    int argc;
+    char **argv;
+
+    if (njoined > 1) { /* need to split argv_[1] */
+	argc = argc_ - 1 + njoined;
+        argv = (char **) malloc((size_t) (argc+1)*sizeof(char *));
+	if (!argv) {
+	    fprintf(stderr, "malloc failure\n");
+	    exit(1);
+	}
+	argv[0] = argv_[0];
+
+	size_t len = strlen(s);
+	char *buf = (char *)malloc((size_t) (len+1)*sizeof(char *));
+	if (!buf) {
+	    fprintf(stderr, "malloc failure\n");
+	    exit(1);
+	}
+	strcpy(buf, s);
+
+	i = 1;
+	for(j = 0; s[j] != 0; j++)
+	    if (s[j] == ' ' || s[j] == '\t')
+		/* turn space into end-of-string */
+		buf[j] = 0;
+	    else if (j == 0 || s[j-1] == ' ' || s[j-1] == '\t')
+		/* first character of an argument */
+		argv[i++] = buf + j;
+	/* assert i - 1 == njoined */
+
+	for(i = 2; i < argc_; i++)
+	    argv[i-1+njoined] = argv_[i];
+	argv[argc] = 0;
+
+    } else {
+	argc = argc_;
+	argv = argv_;
+    }
+
     av = (char **) malloc((size_t) (argc+4)*sizeof(char *));
     if(!av) {
 	fprintf(stderr, "malloc failure\n");

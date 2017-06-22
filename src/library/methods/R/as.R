@@ -288,6 +288,7 @@ setAs <-
       }, where = where)
   basics <- c(
  "POSIXct",  "POSIXlt", "Date",  "array",  "call",  "character",  "complex",  "data.frame",
+ ## "double",
  "environment",  "expression",  "factor",  "formula",  "function",  "integer",
  "list",  "logical",  "matrix",  "name",  "numeric",  "ordered",
   "single",  "table",   "vector")
@@ -340,6 +341,7 @@ setAs <-
   setMethod("coerce", c("ANY","name"), method, where = where)
   ## Proposed on R-devel, Dec. 7, 2015, by JMC, this is too radical,
   ## coercing to "double" in too many cases where "numeric" data remained "integer":
+  ## JMC, on Dec. 11 added that a setDataPart() special-case hack would be needed additionally
   ## setMethod("coerce", c("integer", "numeric"),
   ##           ## getMethod("coerce", c("ANY", "numeric"), where = envir) -- not yet available
   ##           function (from, to, strict = TRUE) {

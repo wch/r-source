@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2017-03-31 r72456) -- "Unsuffered Consequences"
+R Under development (unstable) (2017-04-20 r72568) -- "Unsuffered Consequences"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -1270,4 +1270,42 @@ Also defined by 'package2'
 > BAR <- new("bar")
 > stopifnot(identical(BAR[1L], FALSE))
 > stopifnot(identical(BAR[1L, , flag=TRUE], TRUE))
+> 
+> ## avoid infinite recursion on Ops,structure methods
+> setClass("MyInteger",
++          representation("integer")
++          )
+> i <- new("MyInteger", 1L)
+> m <- matrix(rnorm(300), 30,10)
+> stopifnot(identical(i*m, m))
+> 
+> ## when rematching, do not drop arg with NULL default
+> setGeneric("genericExtraArg",
++            function(x, y, extra) standardGeneric("genericExtraArg"),
++            signature="x")
+[1] "genericExtraArg"
+> 
+> setMethod("genericExtraArg", "ANY", function(x, y=NULL) y)
+[1] "genericExtraArg"
+> 
+> stopifnot(identical(genericExtraArg("foo", 1L), 1L))
+> 
+> ## callNextMethod() was broken for ... dispatch
+> f <- function(...) length(list(...))
+> setGeneric("f")
+[1] "f"
+> setMethod("f", "character", function(...){ callNextMethod() })
+[1] "f"
+> stopifnot(identical(f(1, 2, 3), 3L))
+> stopifnot(identical(f("a", "b", "c"), 3L))
+> 
+> ## ... dispatch was evaluating missing arguments in the generic frame
+> f <- function(x, ..., a = b) {
++     b <- "a"
++     a
++ }
+> setGeneric("f", signature = "...")
+[1] "f"
+> stopifnot(identical(f(a=1), 1))
+> stopifnot(identical(f(), "a"))
 > 

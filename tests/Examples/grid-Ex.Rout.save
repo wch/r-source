@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2017-03-31 r72456) -- "Unsuffered Consequences"
+R Under development (unstable) (2017-04-20 r72568) -- "Unsuffered Consequences"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -1021,7 +1021,7 @@ grandparent::parent::child
 > 
 > ### ** Examples
 > 
-> if (interactive()) {
+> if (dev.interactive()) {
 +   ## Need to write a more sophisticated unit as.character method
 +   unittrim <- function(unit) {
 +     sub("^([0-9]+|[0-9]+[.][0-9])[0-9]*", "\\1", as.character(unit))
@@ -1039,9 +1039,14 @@ grandparent::parent::child
 +               click.locn$x + unit(2, "mm"), click.locn$y,
 +               just="left")
 +   }
++ 
++   grid.newpage() # (empty slate)
++   ## device
 +   do.click("inches")
++   Sys.sleep(1)
++ 
 +   pushViewport(viewport(width=0.5, height=0.5,
-+                          xscale=c(0, 100), yscale=c(0, 10)))
++                         xscale=c(0, 100), yscale=c(0, 10)))
 +   grid.rect()
 +   grid.xaxis()
 +   grid.yaxis()
@@ -2069,7 +2074,7 @@ vp1::vp2
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.183 0.01 1.198 0 0 
+Time elapsed:  1.181 0.021 1.205 0 0 
 > grDevices::dev.off()
 null device 
           1 

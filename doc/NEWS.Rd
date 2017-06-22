@@ -9,13 +9,45 @@
 
   \subsection{NEW FEATURES}{
     \itemize{
-      \item Placeholder.
+      \item \code{diag()} gets an optional \code{names} argument: this
+      may require updates to packages defining S4 methods for it.
+
+      \item \code{chooseCRANmirror()} and \code{chooseBioCmirror()} no
+      longer have a \code{useHTTPS} argument, not needed now all \R
+      builds support \samp{https://} downloads.
+
+      \item New \code{summary()} method for \code{warnings()} with a
+      (somewhat experimental) \code{print()} method.
+
+      \item \code{.self} is now automatically registered as a global
+      variable when registering a reference class method.
     }
   }
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item Placeholder.
+      \item \code{printCoefmat()} now also works without column names.
+
+      \item The S4 methods on \code{Ops()} for the \code{"structure"} class no
+      longer cause infinite recursion when the structure is not an S4 object.
+
+      \item \code{nlm(f, ..)} for the case where \code{f()} has a
+      \code{"hessian"} attribute now computes
+      \eqn{LL' = H + \mu I}{LL' = H + µI} correctly.  (Part 1 of \PR{17249}).
+
+      \item An S4 method that \dQuote{rematches} to its generic and
+      overrides the default value of a generic formal argument to
+      \code{NULL} no longer drops the argument from its formals.
+
+      \item \code{Rscript} can now accept more than one argument given on
+      the \samp{#!} line of a script. Previously, one could only pass a
+      single argument on the \samp{#!} line in Linux.
+
+      \item Dispatch on \code{\dots} calls the method using its name,
+      instead of \code{.Method} (for consistency with default dispatch),
+      and only attempts to pass non-missing arguments from the generic.
+
+      \item \code{callNextMethod()} works for \code{\dots} methods.
     }
   }
 }
@@ -25,7 +57,19 @@
   \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
       \item The deprecated support for PCRE versions older than 8.20
-      will be removed in \R 3.4.1.
+      has been removed.
+    }
+  }
+
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{getParseData()} gave incorrect column information when
+      code contained multi-byte characters.  (\PR{17254})
+
+      \item Asking for help using expressions like \code{?stats::cor()}
+      did not work.  (\PR{17250})
+
+      \item \code{readRDS(url(....))} now works too.
     }
   }
 }

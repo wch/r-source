@@ -907,7 +907,9 @@ SEXP attribute_hidden do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 			REAL(atime)[i] = (((double) time.QuadPart) / WINDOWS_TICK - SEC_TO_UNIX_EPOCH);
 			success = 1;
 		    }
-		}
+		} else
+		    warning(_("cannot open file '%ls': %s"),
+		            wfn, formatError(GetLastError()));
 		if (!success) {
 		    REAL(mtime)[i] = NA_REAL;
 		    REAL(ctime)[i] = NA_REAL;

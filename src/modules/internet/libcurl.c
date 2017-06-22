@@ -319,9 +319,15 @@ in_do_curlGetHeaders(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     char errbuf[CURL_ERROR_SIZE];
     curl_easy_setopt(hnd, CURLOPT_ERRORBUFFER, errbuf);
+    // libcurl does not initialize this
+    errbuf[0] = '\0';
     CURLcode ret = curl_easy_perform(hnd);
-    if (ret != CURLE_OK)
-	error(_("libcurl error code %d\n\t%s\n"), ret, errbuf);
+    if (ret != CURLE_OK) {
+	if (errbuf[0]) 
+	    error(_("libcurl error code %d\n\t%s\n"), ret, errbuf);
+	else // rare case, error but no message
+	    error("libcurl error code %d\n", ret);
+    }
     long http_code = 0;
     curl_easy_getinfo (hnd, CURLINFO_RESPONSE_CODE, &http_code);
     curl_easy_cleanup(hnd);

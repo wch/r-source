@@ -1,6 +1,6 @@
 % File src/library/base/man/call.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{call}
@@ -9,7 +9,8 @@
 \alias{as.call}
 \title{Function Calls}
 \description{
-  Create or test for objects of mode \code{"call"}.
+  Create or test for objects of \code{\link{mode}} (or type:
+  \code{\link{typeof}}) \code{"call"}.
 }
 \usage{
 call(name, \dots)
@@ -34,14 +35,16 @@ as.call(x)
   partially match \code{name}.
 
   \code{is.call} is used to determine whether \code{x} is a call (i.e.,
-  of mode \code{"call"}).
+  of mode \code{"call"}).  Note that \code{\link{is.language}} is also
+  \code{TRUE} for calls (but also for \code{\link{symbol}}s and
+  \code{\link{expression}}s where \code{is.call()} is false).
 
   Objects of mode \code{"list"} can be coerced to mode \code{"call"}.
   The first element of the list becomes the function part of the call,
   so should be a function or the name of one (as a symbol; a quoted
   string will not do).
 
-  All three are \link{primitive} functions. 
+  All three are \link{primitive} functions.
 }
 \section{Warning}{
   \code{call} should not be used to attempt to evade restrictions on the
@@ -68,8 +71,14 @@ is.call(call) #-> FALSE: Functions are NOT calls
 cl <- call("round", 10.5)
 is.call(cl) # TRUE
 cl
+identical(quote(round(10.5)), # <- less functional, but the same
+          cl) # TRUE
 ## such a call can also be evaluated.
 eval(cl) # [1] 10
+
+class(cl) # "call"
+typeof(cl)# "language"
+is.call(cl) && is.language(cl) # always TRUE for "call"s
 
 A <- 10.5
 call("round", A)        # round(10.5)

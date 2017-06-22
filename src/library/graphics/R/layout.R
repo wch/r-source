@@ -16,6 +16,7 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
+## FIXME: Deprecate! - users *can* use  paste(.., "cm") themselves!
 lcm <- function(x) paste(x, "cm")#-> 3 characters (used in layout!)
 
 layout <-

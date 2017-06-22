@@ -1,6 +1,6 @@
 % File src/library/utils/man/head.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{head}
@@ -45,9 +45,9 @@ tail(x, \dots)
 }
 \arguments{
   \item{x}{an object}
-  \item{n}{a single integer. If positive, size for the resulting
+  \item{n}{a single integer.  If positive or zero, size for the resulting
     object: number of elements for a vector (including lists), rows for
-    a matrix or data frame or lines for a function. If negative, all but
+    a matrix or data frame or lines for a function.  If negative, all but
     the \code{n} last/first number of elements of \code{x}.}
   \item{addrownums}{if there are no row names, create them from the row
     numbers.}
@@ -55,7 +55,7 @@ tail(x, \dots)
 }
 \details{
   For matrices, 2-dim tables and data frames, \code{head()} (\code{tail()}) returns
-  the first (last) \code{n} rows when \code{n > 0} or all but the
+  the first (last) \code{n} rows when \code{n >= 0} or all but the
   last (first) \code{n} rows when \code{n < 0}.  \code{head.matrix()} and
   \code{tail.matrix()} are exported.  For functions, the
   lines of the deparsed function are returned as character strings.

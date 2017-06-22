@@ -905,3 +905,36 @@ setMethod("[", "bar", function(x, i, j, ..., flag = FALSE, drop = FALSE) {
 BAR <- new("bar")
 stopifnot(identical(BAR[1L], FALSE))
 stopifnot(identical(BAR[1L, , flag=TRUE], TRUE))
+
+## avoid infinite recursion on Ops,structure methods
+setClass("MyInteger",
+         representation("integer")
+         )
+i <- new("MyInteger", 1L)
+m <- matrix(rnorm(300), 30,10)
+stopifnot(identical(i*m, m))
+
+## when rematching, do not drop arg with NULL default
+setGeneric("genericExtraArg",
+           function(x, y, extra) standardGeneric("genericExtraArg"),
+           signature="x")
+
+setMethod("genericExtraArg", "ANY", function(x, y=NULL) y)
+
+stopifnot(identical(genericExtraArg("foo", 1L), 1L))
+
+## callNextMethod() was broken for ... dispatch
+f <- function(...) length(list(...))
+setGeneric("f")
+setMethod("f", "character", function(...){ callNextMethod() })
+stopifnot(identical(f(1, 2, 3), 3L))
+stopifnot(identical(f("a", "b", "c"), 3L))
+
+## ... dispatch was evaluating missing arguments in the generic frame
+f <- function(x, ..., a = b) {
+    b <- "a"
+    a
+}
+setGeneric("f", signature = "...")
+stopifnot(identical(f(a=1), 1))
+stopifnot(identical(f(), "a"))

@@ -1,8 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 1999-2017   The R Core Team
+ *  Copyright (C) 2003-2017   The R Foundation
  *  Copyright (C) 1997-1999   Saikat DebRoy
- *  Copyright (C) 1999-2015   The R Core Team
- *  Copyright (C) 2003-2010   The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -239,7 +239,7 @@ static void lltslv(int nr, int n, double *a, double *x, double *b)
 static void
 choldc(int nr, int n, double *a, double diagmx, double tol, double *addmax)
 {
-/* Find the perturbed l(l-transpose) [written ll+] decomposition
+/* Find the perturbed L(L-transpose) [written LL+] decomposition
  * of a+d, where d is a non-negative diagonal matrix added to a if
  * necessary to allow the cholesky decomposition to continue.
 
@@ -249,7 +249,7 @@ choldc(int nr, int n, double *a, double diagmx, double tol, double *addmax)
  *	n	     --> dimension of problem
  *	a(n,n)	    <--> on entry: matrix for which to find perturbed
  *			      cholesky decomposition
- *			 on exit:  contains l of ll+ decomposition
+ *			 on exit:  contains L of LL+ decomposition
  *			 in lower triangular part and diagonal of "a"
  *	diagmx	     --> maximum diagonal element of "a"
  *	tol	     --> tolerance
@@ -257,7 +257,7 @@ choldc(int nr, int n, double *a, double diagmx, double tol, double *addmax)
  *			 in forming the cholesky decomposition of a+d
  *	internal variables
 
- *	aminl	 smallest element allowed on diagonal of l
+ *	aminl	 smallest element allowed on diagonal of L
  *	amnlsq	 =aminl**2
  *	offmax	 maximum off-diagonal element in column of a
 
@@ -265,8 +265,8 @@ choldc(int nr, int n, double *a, double diagmx, double tol, double *addmax)
  *	description
 
  *	the normal cholesky decomposition is performed.	 however, if at any
- *	point the algorithm would attempt to set l(i,i)=sqrt(temp)
- *	with temp < tol*diagmx, then l(i,i) is set to sqrt(tol*diagmx)
+ *	point the algorithm would attempt to set L(i,i)=sqrt(temp)
+ *	with temp < tol*diagmx, then L(i,i) is set to sqrt(tol*diagmx)
  *	instead.  this is equivalent to adding tol*diagmx-temp to a(i,i)
  */
 
@@ -279,19 +279,28 @@ choldc(int nr, int n, double *a, double diagmx, double tol, double *addmax)
     aminl = sqrt(diagmx * tol);
     amnlsq = aminl * aminl;
 
-    /*	form row i of l */
+    /*	form row i of L */
 
     for (i = 0; i < n; ++i) {
-	/*	find diagonal elements of l */
+
+	// A[i,j] := * || find i,j element of lower triangular matrix L
+	for (j = 0; j < i; ++j) {
+	    sum = 0.;
+	    for (k = 0; k < j; ++k)
+		sum += a[i + k * nr] * a[j + k * nr];
+	    a[i + j * nr] = (a[i + j * nr] - sum) / a[j + j * nr];
+	}
+
+	// A[i,i] := * || find diagonal elements of L
 	sum = 0.;
 	for (k = 0; k < i; ++k)
 	    sum += a[i + k * nr] * a[i + k * nr];
 
 	tmp1 = a[i + i * nr] - sum;
-	if (tmp1 >= amnlsq) {
+	if (tmp1 >= amnlsq) { // normal Cholesky
 	    a[i + i * nr] = sqrt(tmp1);
 	}
-	else {
+	else { // augment diagonal of L
 	    /*	find maximum off-diagonal element in row */
 	    offmax = 0.;
 	    for (j = 0; j < i; ++j) {
@@ -304,13 +313,6 @@ choldc(int nr, int n, double *a, double diagmx, double tol, double *addmax)
 	     * allow cholesky decomposition to continue */
 	    a[i + i * nr] = sqrt(offmax);
 	    if(*addmax < (tmp2 = offmax - tmp1)) *addmax = tmp2;
-	}
-	/*	find i,j element of lower triangular matrix */
-	for (j = 0; j < i; ++j) {
-	    sum = 0.;
-	    for (k = 0; k < j; ++k)
-		sum += a[i + k * nr] * a[j + k * nr];
-	    a[i + j * nr] = (a[i + j * nr] - sum) / a[j + j * nr];
 	}
     }
 } /* choldc */
@@ -1356,7 +1358,7 @@ secfac(int nr, int n, double *x, double *g, double *a, double *xpls,
 static void
 chlhsn(int nr, int n, double *a, double epsm, double *sx, double *udiag)
 {
-/*	find the l(l-transpose) [written ll+] decomposition of the perturbed
+/*	find the l(l-transpose) [written LL+] decomposition of the perturbed
  *	model hessian matrix a+mu*i(where mu\0 and i is the identity matrix)
  *	which is safely positive definite.  if a is safely positive definite
  *	upon entry, then mu=0.
@@ -1367,7 +1369,7 @@ chlhsn(int nr, int n, double *a, double epsm, double *sx, double *udiag)
  *	n	     --> dimension of problem
  *	a(n,n)	    <--> on entry; "a" is model hessian (only lower
  *			 triangular part and diagonal stored)
- *			 on exit:  a contains l of ll+ decomposition of
+ *			 on exit:  a contains l of LL+ decomposition of
  *			 perturbed model hessian in lower triangular
  *			 part and diagonal and contains hessian in upper
  *			 triangular part and udiag
@@ -1393,7 +1395,7 @@ chlhsn(int nr, int n, double *a, double epsm, double *sx, double *udiag)
  *	order of sqrt(epsm).
 
  *	2. "a" undergoes a perturbed cholesky decomposition which
- *	results in an ll+ decomposition of a+d, where d is a
+ *	results in an LL+ decomposition of a+d, where d is a
  *	non-negative diagonal matrix which is implicitly added to
  *	"a" during the decomposition if "a" is not positive definite.
  *	"a" is retained and not changed during this process by
@@ -1476,9 +1478,9 @@ chlhsn(int nr, int n, double *a, double epsm, double *sx, double *udiag)
     /*	step3
 
      *	if addmax=0, "a" was positive definite going into step 2,
-     *	the ll+ decomposition has been done, and we return.
+     *	the LL+ decomposition has been done, and we return.
      *	otherwise, addmax>0.  perturb "a" so that it is safely
-     *	diagonally dominant and find ll+ decomposition */
+     *	diagonally dominant and find LL+ decomposition */
 
     if (addmax > 0.0) {
 

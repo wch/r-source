@@ -1,6 +1,6 @@
 % File src/library/stats/man/nlm.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{nlm}
@@ -71,6 +71,9 @@ nlm(f, p, \dots, hessian = FALSE, typsize = rep(1, length(p)),
   or length, it will be ignored if \code{check.analyticals = TRUE} (the
   default) with a warning.  The hessian is not even checked unless the
   gradient is present and passes the sanity checks.
+
+  The C code for the \dQuote{perturbed} cholesky, \code{choldc()} has
+  had a bug in all \R versions before 3.4.1.
 
   From the three methods available in the original source, we always use
   method \dQuote{1} which is line search.

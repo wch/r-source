@@ -1,6 +1,6 @@
 % File src/library/graphics/man/locator.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{locator}
@@ -71,6 +71,8 @@ locator(n = 512, type = "n", \dots)
 }
 \seealso{
   \code{\link{identify}}.
+  \code{\link{grid.locator}} is the corresponding \pkg{grid}
+  package function.
 
   \code{\link{dev.capabilities}} to see if it is supported.
 }

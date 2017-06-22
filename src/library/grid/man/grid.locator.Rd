@@ -1,6 +1,6 @@
 % File src/library/grid/man/grid.locator.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{grid.locator}
@@ -35,13 +35,13 @@ grid.locator(unit = "native")
 }
 \author{ Paul Murrell }
 \seealso{ \code{\link{viewport}}, \code{\link{unit}},
-  \code{locator} in package \pkg{graphics}, and for an application
+  \code{\link{locator}} in package \pkg{graphics}, and for an application
   see \code{\link[lattice:interaction]{trellis.focus}} and
   \code{\link[lattice:interaction]{panel.identify}} in package
   \CRANpkg{lattice}.
 }
 \examples{
-if (interactive()) {
+if (dev.interactive()) {
   ## Need to write a more sophisticated unit as.character method
   unittrim <- function(unit) {
     sub("^([0-9]+|[0-9]+[.][0-9])[0-9]*", "\\\\1", as.character(unit))
@@ -59,9 +59,14 @@ if (interactive()) {
               click.locn$x + unit(2, "mm"), click.locn$y,
               just="left")
   }
+
+  grid.newpage() # (empty slate)
+  ## device
   do.click("inches")
+  Sys.sleep(1)
+
   pushViewport(viewport(width=0.5, height=0.5,
-                         xscale=c(0, 100), yscale=c(0, 10)))
+                        xscale=c(0, 100), yscale=c(0, 10)))
   grid.rect()
   grid.xaxis()
   grid.yaxis()

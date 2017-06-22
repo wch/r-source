@@ -107,7 +107,7 @@ format.Date <- function(x, ...)
     xx
 }
 
-## could handle arrays for max.print; cf print.POSIX?t() in ./datetime.R
+## could handle arrays for max.print \\ keep in sync with print.POSIX?t() in ./datetime.R
 print.Date <- function(x, max = NULL, ...)
 {
     if(is.null(max)) max <- getOption("max.print", 9999L)

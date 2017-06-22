@@ -1349,7 +1349,7 @@ static SEXP ascommon(SEXP call, SEXP u, SEXPTYPE type)
 	if ((type == LISTSXP) &&
 	    !(TYPEOF(u) == LANGSXP || TYPEOF(u) == LISTSXP ||
 	      TYPEOF(u) == EXPRSXP || TYPEOF(u) == VECSXP)) {
-      if (MAYBE_REFERENCED(v)) v = shallow_duplicate(v);
+	    if (MAYBE_REFERENCED(v)) v = shallow_duplicate(v);
 	    CLEAR_ATTRIB(v);
 	}
 	return v;

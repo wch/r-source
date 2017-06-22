@@ -21,7 +21,7 @@
 #include "dpq.h"
 
 /* Compute  log(1 + exp(x))  without overflow (and fast for x > 18)
-   For the two cutoffs, consider
+   For the two cutoffs, consider in R
    curve(log1p(exp(x)) - x,       33.1, 33.5, n=2^10)
    curve(x+exp(-x) - log1p(exp(x)), 15, 25,   n=2^11)
 */

@@ -1,6 +1,6 @@
 % File src/library/grid/man/grid.remove.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{grid.remove}
@@ -12,7 +12,7 @@
   Remove a grob from a gTree or a descendant of a gTree.
 }
 \usage{
-grid.remove(gPath, warn = TRUE, strict  =  FALSE, grep = FALSE,
+grid.remove(gPath, warn = TRUE, strict = FALSE, grep = FALSE,
             global = FALSE, allDevices = FALSE, redraw = TRUE)
 
 grid.gremove(\dots, grep = TRUE, global = TRUE)
@@ -22,30 +22,29 @@ removeGrob(gTree, gPath, strict = FALSE, grep = FALSE,
 }
 \arguments{
   \item{gTree}{A gTree object.}
-  \item{gPath}{ A gPath object. For \code{grid.remove} this
+  \item{gPath}{a gPath object. For \code{grid.remove} this
     specifies a gTree on the display list.  For \code{removeGrob} this
-    specifies a descendant of the specified gTree. }
-  \item{strict}{ A boolean indicating whether the gPath must be
-    matched exactly. }
-  \item{grep}{A boolean indicating whether the \code{gPath} should
+    specifies a descendant of the specified \code{gTree}.}
+  \item{strict}{a \code{\link{logical}} indicating whether the \code{gPath} must be
+    matched exactly.}
+  \item{grep}{a \code{\link{logical}} indicating whether the \code{gPath} should
     be treated as a regular expression.  Values are recycled across
     elements of the \code{gPath} (e.g., \code{c(TRUE, FALSE)} means
     that every odd element of the \code{gPath} will be treated as
     a regular expression).
   }
-  \item{global}{ A boolean indicating whether the function should affect
+  \item{global}{a \code{\link{logical}} indicating whether the function should affect
     just the first match of the \code{gPath}, or whether all matches
     should be affected.
   }
-  \item{allDevices}{ A boolean indicating whether all open devices
-    should
-    be searched for matches, or just the current device.
+  \item{allDevices}{a \code{\link{logical}} indicating whether all open
+    devices should be searched for matches, or just the current device.
     NOT YET IMPLEMENTED.
   }
   \item{warn}{A logical to indicate whether failing to find the
     specified grob should trigger an error.  }
   \item{redraw}{A logical value to indicate whether to redraw the grob. }
-  \item{\dots}{ Arguments that are passed to \code{grid.get}. }
+  \item{\dots}{arguments passed to \code{\link{grid.get}}.}
 }
 \details{
   \code{removeGrob} copies the specified grob and returns a modified
@@ -64,7 +63,6 @@ removeGrob(gTree, gPath, strict = FALSE, grep = FALSE,
 }
 \author{Paul Murrell}
 \seealso{
-  \code{\link{grob}}, \code{\link{getGrob}},
-  \code{\link{removeGrob}}, \code{\link{removeGrob}}.
+  \code{\link{grob}}, \code{\link{getGrob}}.
 }
 \keyword{dplot}

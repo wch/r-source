@@ -185,6 +185,7 @@ S3method("summary", "check_packages_in_dir")
 
 S3method("toHTML", "news_db")
 S3method("toHTML", "packageIQR")
+S3method("toHTML", "citation")
 
 S3method("toRd", "bibentry")
 S3method("toRd", "default")
