@@ -4665,7 +4665,7 @@ see in the @command{configure} summary
 
 @example
   Interfaces supported:      X11, tcltk
-  External libraries:        readline, zlib, bzlib, lzma, PCRE, curl
+  External libraries:        readline, curl
   Additional capabilities:   PNG, JPEG, TIFF, NLS, cairo, ICU
 @end example
 
