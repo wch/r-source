@@ -4562,10 +4562,10 @@ you can test a ratio of times, and even that is fraught with
 difficulties.
 
 @item
-Do not test the exact format of @R{} error messages: They change, and
-they can be translated.
+Do not test the exact format of @R{} messages (from @R{} itself or from
+other packages): They change, and they can be translated.
 
-Worse, packages have tested the exact format of system error messages,
+Packages have even tested the exact format of system error messages,
 which are platform-dependent and perhaps locale-dependent.
 
 @item
