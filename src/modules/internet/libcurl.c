@@ -610,7 +610,7 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
     } while(still_running);
     R_Busy(0);
 #ifdef Win32
-    if (R_Interactive && !quiet) {
+    if (R_Interactive && !quiet && nurls<=1) {
 	endcontext(&(pbar.cntxt));
 	doneprogressbar(&pbar);
     } else if (total > 0.) {
@@ -655,6 +655,7 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 	curl_multi_remove_handle(mhnd, hnd[i]);
 	curl_easy_cleanup(hnd[i]);
     }
+    // This can show an invalid read: can it be improved?
     long status = 0L;
     if(nurls == 1)
 	curl_easy_getinfo(hnd[0], CURLINFO_RESPONSE_CODE, &status);

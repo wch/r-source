@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2014  The R Core Team
+ *  Copyright (C) 1999-2017  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -187,7 +187,7 @@ static void editorsaveas(editor c)
     wname = askfilesaveW(G_("Save script as"), "");
     if (wname) {
 	char name[4*MAX_PATH+1];
-	wcstoutf8(name, wname, MAX_PATH);
+	wcstoutf8(name, wname, sizeof(name));
 	/* now check if it has an extension */
 	char *q = strchr(name, '.');
 	if(!q) strncat(name, ".R", 4*MAX_PATH);
@@ -372,13 +372,13 @@ void menueditornew(control m)
 static void editoropen(const char *default_name)
 {
     wchar_t *wname;
-    char name[4*MAX_PATH], title[4*MAX_PATH];
+    char name[4*MAX_PATH + 1], title[4*MAX_PATH];
 
     int i; textbox t; EditorData p;
     setuserfilterW(L"R files (*.R)\0*.R\0S files (*.q, *.ssc, *.S)\0*.q;*.ssc;*.S\0All files (*.*)\0*.*\0\0");
     wname = askfilenameW(G_("Open script"), default_name); /* returns NULL if open dialog cancelled */
     if (wname) {
-	wcstoutf8(name, wname, MAX_PATH);
+	wcstoutf8(name, wname, sizeof(name));
 	/* check if file is already open in an editor. If so, close and open again */
 	for (i = 0; i < neditors; ++i) {
 	    t = getdata(REditors[i]);

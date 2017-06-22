@@ -1498,7 +1498,7 @@ addCenvVars <- function(cenv, vars) {
     cenv$extra[[1]] <- union(cenv$extra[[1]], vars)
     cenv
 }
-@ %def addCenVars
+@ %def addCenvVars
 
 When compiling a function a new frame is added to the compilation
 environment.  Typically a number of local variables are added

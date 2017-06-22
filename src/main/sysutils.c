@@ -29,6 +29,7 @@
 #include <R_ext/Riconv.h>
 #include <Rinterface.h>
 #include <errno.h>
+#include <rlocale.h>
 
 /*
   See ../unix/system.txt for a description of some of these functions.
@@ -373,11 +374,11 @@ SEXP attribute_hidden do_getenv(SEXP call, SEXP op, SEXP args, SEXP env)
 	wchar_t **w;
 	for (i = 0, w = _wenviron; *w != NULL; i++, w++)
 	    n = max(n, wcslen(*w));
-	N = 3*n+1;
+	N = 4*n+1;
 	char buf[N];
 	PROTECT(ans = allocVector(STRSXP, i));
 	for (i = 0, w = _wenviron; *w != NULL; i++, w++) {
-	    wcstoutf8(buf, *w, N); buf[N-1] = '\0';
+	    wcstoutf8(buf, *w, sizeof(buf));
 	    SET_STRING_ELT(ans, i, mkCharCE(buf, CE_UTF8));
 	}
 #else
@@ -396,10 +397,10 @@ SEXP attribute_hidden do_getenv(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (w == NULL)
 		SET_STRING_ELT(ans, j, STRING_ELT(CADR(args), 0));
 	    else {
-		int n = wcslen(w), N = 3*n+1; /* UCS-2 maps to <=3 UTF-8 */
+		int n = wcslen(w), N = 4*n+1; /* UTF-16 maps to <= 4 UTF-8 */
 		R_CheckStack2(N);
 		char buf[N];
-		wcstoutf8(buf, w, N); buf[N-1] = '\0'; /* safety */
+		wcstoutf8(buf, w, sizeof(buf));
 		SET_STRING_ELT(ans, j, mkCharCE(buf, CE_UTF8));
 	    }
 #else
@@ -888,21 +889,22 @@ next_char:
 	    /* This must be the first byte */
 	    size_t clen;
 	    wchar_t wc;
+	    Rwchar_t ucs;
 	    clen = utf8toucs(&wc, inbuf);
 	    if(clen > 0 && inb >= clen) {
+	    	if (IS_HIGH_SURROGATE(wc))
+	    	    ucs = utf8toucs32(wc, inbuf);
+	    	else
+	    	    ucs = (Rwchar_t) wc;
 		inbuf += clen; inb -= clen;
-# ifndef Win32
-		if((unsigned int) wc < 65536) {
-# endif
+		if(ucs < 65536) {
 		// gcc 7 objects to this with unsigned int
-		    snprintf(outbuf, 9, "<U+%04X>", (unsigned short) wc);
+		    snprintf(outbuf, 9, "<U+%04X>", (unsigned short) ucs);
 		    outbuf += 8; outb -= 8;
-# ifndef Win32
 		} else {
-		    snprintf(outbuf, 13, "<U+%08X>", (unsigned int) wc);
+		    snprintf(outbuf, 13, "<U+%08X>", ucs);
 		    outbuf += 12; outb -= 12;
 		}
-# endif
 	    } else {
 		snprintf(outbuf, 5, "<%02x>", (unsigned char)*inbuf);
 		outbuf += 4; outb -= 4;
@@ -1854,9 +1856,9 @@ SEXP attribute_hidden do_glob(SEXP call, SEXP op, SEXP args, SEXP env)
     {
 	wchar_t *w = globbuf.gl_pathv[i];
 	char *buf;
-	int nb = wcstoutf8(NULL, w, 0);
-	buf = R_AllocStringBuffer(nb+1, &cbuff);
-	wcstoutf8(buf, w, nb+1); buf[nb] = '\0'; /* safety check */
+	int nb = wcstoutf8(NULL, w, INT_MAX);
+	buf = R_AllocStringBuffer(nb, &cbuff);
+	wcstoutf8(buf, w, nb);
 	SET_STRING_ELT(ans, i, mkCharCE(buf, CE_UTF8));
     }
 #else

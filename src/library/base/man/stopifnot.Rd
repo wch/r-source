@@ -28,6 +28,14 @@ stopifnot(\dots)
 \preformatted{ \{ if(any(is.na(A)) || !all(A)) stop(...);
    if(any(is.na(B)) || !all(B)) stop(...) \}}
 
+  Since \R version 3.5.0, expressions \emph{are} evaluated sequentially,
+  and hence evaluation stops as soon as there is a \dQuote{non-TRUE}, as
+  indicated by the above conceptual equivalence statement.
+  Further, when such an expression signals an error or
+  \code{\link{warning}}, its \code{\link{conditionCall}()} no longer
+  contains the full \code{stopifnot} call, but just the erroneous
+  expression.
+
   Since \R version 3.4.0, when an expression (from \code{\dots}) is not
   true \emph{and} is a call to \code{\link{all.equal}}, the error
   message will report the (first part of the) differences reported by

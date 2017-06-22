@@ -762,8 +762,11 @@ setwd(owd)
 
 
 ## print.noquote(*,  right = *)
-print(noquote(LETTERS[1:9]), right = TRUE)
-## failed a few days end in R-devel ca. May 1, 2017
+nq <- noquote(LETTERS[1:9]); stopifnot(identical(nq, print(nq, right = TRUE)))
+## print() failed a few days end in R-devel ca. May 1, 2017; non-identical for longer
+tt <- table(c(rep(1, 7), 2,2,2))
+stopifnot(identical(tt, print.noquote(tt)))
+## print.noquote(<table>) failed for 6 weeks after r72638
 
 
 ## accessing  ..1  when ... is empty and using ..0, etc.
@@ -774,7 +777,7 @@ stopifnot(identical(t1(pi, 2), pi), identical(t1(t1), t1),
 	  identical(t2(pi, 2), 2))
 et1 <- tryCatch(t1(), error=identity)
 if(englishMsgs)
-    stopifnot(identical("the ... list does not contain any element",
+    stopifnot(identical("the ... list does not contain any elements",
 			conditionMessage(et1)))
 ## previously gave   "'nthcdr' needs a list to CDR down"
 et0   <- tryCatch(t0(),  error=identity); (mt0   <- conditionMessage(et0))
@@ -787,6 +790,77 @@ if(englishMsgs)
 tools::assertError(t0(1))
 tools::assertError(t0(1, 2))
 ## the first gave a different error msg, the next gave no error in R < 3.5.0
+
+
+## stopifnot(e1, e2, ...) .. evaluating expressions sequentially
+one <- 1
+try(stopifnot(3 < 4:5, 5:6 >= 5, 6:8 <= 7, one <- 2))
+stopifnot(identical(one, 1))
+## all the expressions were evaluated in R <= 3.4.x
+et <- tryCatch(stopifnot(0 < 1:10, is.numeric(..vaporware..)),
+	       error=identity)
+stopifnot(identical(print(conditionCall(et))[[1]],
+		    quote(is.numeric)))
+## call was the full 'stopifnot(..)' in R < 3.5.0
+
+
+## path.expand shouldn't translate to local encoding PR#17120
+## This has been fixed on Windows, but not yet on Unix non-UTF8 systems
+if(.Platform$OS.type == "windows") {
+    filename <- "\U9b3c.R"
+    stopifnot(identical(path.expand(paste0("~/", filename)),
+		 	      paste0(path.expand("~/"), filename)))
+}
+## Chinese character was changed to hex code
+
+
+## aggregate.data.frame(*, drop=FALSE)  {new feature in R 3.3.0}
+## PR#16918 : problem with near-eq. factor() levels "not quite matching"
+group <- c(2 + 2^-51, 2)
+d1 <- data.frame(n = seq(group))
+b1 <- list(group = group)
+stopifnot(
+    identical(aggregate(d1, b1, length, drop = TRUE),
+              aggregate(d1, b1, length, drop = FALSE)))
+## drop=FALSE gave two rows + deprec. warning in R 3.3.x, and an error in 3.4.0
+
+
+## line() [Tukey's resistant line]
+cfs <- t(sapply(2:50, function(k) {x <- 1:k; line(x, 2+x)$coefficients }))
+set.seed(7)
+cf2 <- t(sapply(2:50, function(k) {
+    x <- sample.int(k)
+    line(x, 1-2*x)$coefficients }))
+stopifnot(all.equal(cfs, matrix(c(2,  1), 49, 2, byrow=TRUE), tol = 1e-14), # typically exact
+          all.equal(cf2, matrix(c(1, -2), 49, 2, byrow=TRUE), tol = 1e-14))
+## had incorrect medians of the left/right third of the data (x_L, x_R), in R < 3.5.0
+
+
+## 0-length Date and POSIX[cl]t:  PR#71290
+D <- structure(17337, class = "Date") # Sys.Date() of "now"
+D; D[0]; D[c(1,2,1)] # test printing of NA too
+stopifnot(identical(capture.output(D[0]), "Date of length 0"))
+D <- structure(1497973313.62798, class = c("POSIXct", "POSIXt")) # Sys.time()
+D; D[0]; D[c(1,2,1)] # test printing of NA too
+stopifnot(identical(capture.output(D[0]), "POSIXct of length 0"))
+D <- as.POSIXlt(D)
+D; D[0]; D[c(1,2,1)] # test printing of NA too
+stopifnot(identical(capture.output(D[0]), "POSIXlt of length 0"))
+## They printed as   '[1] "Date of length 0"'  etc in R < 3.5.0
+
+
+## aggregate.data.frame() producing spurious names  PR#17283
+dP <- state.x77[,"Population", drop=FALSE]
+by <- list(Region = state.region, Cold = state.x77[,"Frost"] > 130)
+a1 <- aggregate(dP, by=by, FUN=mean, simplify=TRUE)
+a2 <- aggregate(dP, by=by, FUN=mean, simplify=FALSE)
+stopifnot(is.null(names(a1$Population)),
+	  is.null(names(a2$Population)),
+	  identical(unlist(a2$Population), a1$Population),
+	  all.equal(unlist(a2$Population),
+		    c(8802.8, 4208.12, 7233.83, 4582.57, 1360.5, 2372.17, 970.167),
+		    tol = 1e-6))
+## in R <= 3.4.1, a2$Population had spurious names
 
 
 

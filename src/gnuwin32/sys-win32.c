@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2014  The R Core Team
+ *  Copyright (C) 1997--2017  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -64,12 +64,12 @@ FILE *R_OpenInitFile(void)
 static int HaveHOME=-1;
 static char UserHOME[PATH_MAX];
 static char newFileName[PATH_MAX];
+
 const char *R_ExpandFileName(const char *s)
 {
     char *p;
 
-    if(s[0] != '~') return s;
-    if(isalpha(s[1])) return s;
+    if(s[0] != '~' || (s[0] && isalpha(s[1]))) return s;
     if(HaveHOME < 0) {
 	HaveHOME = 0;
 	p = getenv("R_USER"); /* should be set so the rest is a safety measure */
@@ -99,6 +99,26 @@ const char *R_ExpandFileName(const char *s)
 	strcat(newFileName, s+1);
 	return newFileName;
     } else return s;
+}
+
+/* from sysutils.c */
+void reEnc2(const char *x, char *y, int ny,
+	    cetype_t ce_in, cetype_t ce_out, int subst);
+
+/* The following is a version of R_ExpandFileName that assumes
+   s is in UTF-8 and returns the final result in that encoding as well. */
+const char *R_ExpandFileNameUTF8(const char *s)
+{
+    if (s[0] !='~' || (s[0] && isalpha(s[1]))) return s;
+    else {
+    	char home[PATH_MAX];
+    	reEnc2(R_ExpandFileName("~"), home, PATH_MAX, CE_NATIVE, CE_UTF8, 3);
+    	if (strlen(home) + strlen(s+1) < PATH_MAX) {
+    	    strcpy(newFileName, home);
+    	    strcat(newFileName, s+1);
+    	    return newFileName;
+    	} else return s;
+    }
 }
 
 /*

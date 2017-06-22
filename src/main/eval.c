@@ -1308,7 +1308,8 @@ SEXP attribute_hidden R_cmpfun1(SEXP fun)
     return val;
 }
 
-SEXP attribute_hidden R_cmpfun(SEXP fun)
+/* fun is modified in-place when compiled */
+static void R_cmpfun(SEXP fun)
 {
     R_exprhash_t hash = 0;
     if (jit_strategy != STRATEGY_NO_CACHE) {
@@ -1331,7 +1332,7 @@ SEXP attribute_hidden R_cmpfun(SEXP fun)
 			PRINT_JIT_INFO;
 			SET_BODY(fun, jit_cache_code(entry));
 			/**** reset the cache here?*/
-			return fun;
+			return;
 		    }
 		}
 		/* The functions probably differ only in source references
@@ -1350,7 +1351,7 @@ SEXP attribute_hidden R_cmpfun(SEXP fun)
 		SET_NOJIT(fun);
 		/**** also mark the cache entry as NOJIT, or as need to see
 		      many times? */
-		return fun;
+		return;
 	    }
 	}
 	PRINT_JIT_INFO;
@@ -1360,10 +1361,11 @@ SEXP attribute_hidden R_cmpfun(SEXP fun)
 
     if (TYPEOF(BODY(val)) != BCODESXP)
 	SET_NOJIT(fun);
-    else if (jit_strategy != STRATEGY_NO_CACHE)
-	set_jit_cache_entry(hash, val); /* val is protected by callee */
-
-    return val;
+    else {
+	if (jit_strategy != STRATEGY_NO_CACHE)
+	    set_jit_cache_entry(hash, val); /* val is protected by callee */
+	SET_BODY(fun, BODY(val));
+    }
 }
 
 static SEXP R_compileExpr(SEXP expr, SEXP rho)
@@ -1564,11 +1566,9 @@ static R_INLINE SEXP R_execClosure(SEXP call, SEXP newrho, SEXP sysparent,
     body = BODY(op);
     if (R_CheckJIT(op)) {
 	int old_enabled = R_jit_enabled;
-	SEXP newop;
 	R_jit_enabled = 0;
-	newop = R_cmpfun(op);
-	body = BODY(newop);
-	SET_BODY(op, body);
+	R_cmpfun(op);
+	body = BODY(op);
 	R_jit_enabled = old_enabled;
     }
 
@@ -4308,7 +4308,9 @@ static R_INLINE double (*getMath1Fun(int i, SEXP call))(double) {
 	    SEXP cargs[DOTCALL_MAX];					\
 	    for (int i = 0; i < nargs; i++)				\
 		cargs[i] = GETSTACK(i - nargs);				\
+	    void *vmax = vmaxget();					\
 	    SEXP val = R_doDotCall(ofun, nargs, cargs, call);		\
+	    vmaxset(vmax);						\
 	    R_BCNodeStackTop -= nargs;					\
 	    SETSTACK(-1, val);						\
 	    NEXT();							\
@@ -6163,7 +6165,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	    SEXP x = CAR(loc);  /* fast, but assumes binding is a CONS */
 	    if (NOT_SHARED(x) && IS_SIMPLE_SCALAR(x, s->tag)) {
 		/* if the binding value is not shared and is a simple
-		   scaler of the same type as the immediate value,
+		   scalar of the same type as the immediate value,
 		   then we can copy the stack value into the binding
 		   value */
 		switch (s->tag) {

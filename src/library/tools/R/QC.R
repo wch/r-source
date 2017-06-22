@@ -2448,7 +2448,10 @@ function(package, dir, lib.loc = NULL)
                         functions_in_code),
                  .get_S3_generics_as_seen_from_package(dir,
                                                        !missing(package),
-                                                       FALSE),
+                                                       TRUE),
+                 ## This had 'FALSE' for a long time, in which case we
+                 ## miss the primitive generics regarded as language
+                 ## elements.
                  S3_group_generics, S3_primitive_generics))
     ## <FIXME>
     ## Not yet:
@@ -2500,6 +2503,8 @@ function(package, dir, lib.loc = NULL)
                       setdiff(delta, objects_in_code))
             }
         }
+
+        if(any(g == langElts)) next
 
         for(m in methods)
             ## Both all() and all.equal() are generic.
@@ -5865,13 +5870,19 @@ function(db, files)
     if (is.character(files)) {
         for (f in files) {
             tryCatch({
-                exprs <- parse(file = f, n = -1L)
-                for(i in seq_along(exprs)) find_bad_exprs(exprs[[i]])
-            },
-                     error = function(e)
-                     warning(gettextf("parse error in file '%s':\n%s", f,
-                                      .massage_file_parse_error_message(conditionMessage(e))),
-                             domain = NA, call. = FALSE))
+                        ## This can give errors because the vignette etc
+                        ## need not be in the session encoding.
+                        exprs <- parse(file = f, n = -1L)
+                        for(i in seq_along(exprs)) find_bad_exprs(exprs[[i]])
+                     },
+                     error = function(e) {
+                         ## so ignore 'invalid multibyte character' errors.
+                         msg <- .massage_file_parse_error_message(conditionMessage(e))
+                         if(!startsWith(msg, "invalid multibyte character"))
+                             warning(gettextf("parse error in file '%s':\n%s",
+                                              f, msg),
+                                     domain = NA, call. = FALSE)
+                     })
         }
     } else {
         ## called for examples with translation
@@ -6882,7 +6893,18 @@ function(dir, localOnly = FALSE)
     if(grepl("^(The|This|A|In this|In the) package", descr))
         out$descr_bad_start <- TRUE
     if(!isTRUE(out$descr_bad_start) && !grepl("^['\"]?[[:upper:]]", descr))
-       out$descr_bad_initial <- TRUE
+        out$descr_bad_initial <- TRUE
+    descr <- strwrap(descr)
+    if(any(ind <- grepl("[^<]https?://", descr))) {
+        ## Could try to filter out the matches for DOIs and arXiv ids
+        ## noted differently below: not entirely straightforward when
+        ## matching wrapped texts for to ease reporting ...
+        out$descr_bad_URLs <- descr[ind]
+    }
+    if(any(ind <- grepl("https?://.*doi.org/", descr)))
+        out$descr_bad_DOIs <- descr[ind]
+    if(any(ind <- grepl("https?://arxiv.org", descr)))
+        out$descr_bad_arXiv_ids <- descr[ind]
 
     skip_dates <-
         config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_SKIP_DATES_",
@@ -7600,7 +7622,26 @@ function(x, ...)
             },
             if(length(x$descr_bad_start)) {
                 "The Description field should not start with the package name,\n  'This package' or similar."
-            })),
+            },
+            if(length(y <- x$descr_bad_URLs)) {
+                paste(c("The Description field contains",
+                        paste0("  ", y),
+                        "Please enclose URLs in angle brackets (<...>)."),
+                      collapse = "\n")
+            },
+            if(length(y <- x$descr_bad_DOIs)) {
+                paste(c("The Description field contains",
+                        paste0("  ", y),
+                        "Please write DOIs as <doi:10.prefix/suffix>."),
+                      collapse = "\n")
+            },
+            if(length(y <- x$descr_bad_arXiv_ids)) {
+                paste(c("The Description field contains",
+                        paste0("  ", y),
+                        "Please write arXiv ids as <arXiv:YYMM.NNNNN>."),
+                      collapse = "\n")
+            }
+            )),
       fmt(c(if(length(x$bad_date)) {
                 "The Date field is not in ISO 8601 yyyy-mm-dd format."
             },

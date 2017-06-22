@@ -15,7 +15,7 @@
 \usage{
 download.file(url, destfile, method, quiet = FALSE, mode = "w",
               cacheOK = TRUE,
-              extra = getOption("download.file.extra"))
+              extra = getOption("download.file.extra"), \dots)
 }
 \arguments{
   \item{url}{A character string naming the URL of a resource to be
@@ -47,6 +47,8 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
 
   \item{extra}{character vector of additional command-line arguments for
     the \code{"wget"} and \code{"curl"} methods.}
+
+  \item{\dots}{allow additional arguments to be passed, unused.}
 }
 \details{
   The function \code{download.file} can be used to download a single

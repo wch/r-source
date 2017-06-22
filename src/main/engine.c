@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-2015  The R Core Team.
+ *  Copyright (C) 2001-2017  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1818,7 +1818,10 @@ void GEText(double x, double y, const char * const str, cetype_t enc,
 					size_t used;
 					wchar_t wc;
 					while ((used = utf8toucs(&wc, ss)) > 0) {
-					    GEMetricInfo(-(int) wc, gc, &h, &d, &w, dd);
+					    if (IS_HIGH_SURROGATE(wc))
+					    	GEMetricInfo(-(int)utf8toucs32(wc, ss), gc, &h, &d, &w, dd);
+					    else
+					    	GEMetricInfo(-(int) wc, gc, &h, &d, &w, dd);
 					    h = fromDeviceHeight(h, GE_INCHES, dd);
 					    d = fromDeviceHeight(d, GE_INCHES, dd);
 #ifdef DEBUG_MI
@@ -2636,7 +2639,10 @@ void GEStrMetric(const char *str, cetype_t enc, const pGEcontext gc,
                     size_t used;
                     wchar_t wc;
                     while ((used = utf8toucs(&wc, s)) > 0) {
-                        GEMetricInfo(-(int) wc, gc, &asc, &dsc, &wid,dd);
+                    	if (IS_HIGH_SURROGATE(wc))
+                    	    GEMetricInfo(-utf8toucs32(wc, s), gc, &asc, &dsc, &wid, dd);
+                    	else
+                            GEMetricInfo(-(int) wc, gc, &asc, &dsc, &wid,dd);
                         if (asc > *ascent)
                             *ascent = asc;
                         s += used;
@@ -2694,7 +2700,10 @@ void GEStrMetric(const char *str, cetype_t enc, const pGEcontext gc,
                     size_t used;
                     wchar_t wc;
                     while ((used = utf8toucs(&wc, s)) > 0) {
-                        GEMetricInfo(-(int) wc, gc, &asc, &dsc, &wid,dd);
+                        if (IS_HIGH_SURROGATE(wc))
+                            GEMetricInfo(-utf8toucs32(wc, s), gc, &asc, &dsc, &wid, dd);
+                        else
+                            GEMetricInfo(-(int) wc, gc, &asc, &dsc, &wid,dd);
                         if (dsc > *descent)
                             *descent = dsc;
                         s += used;
@@ -3163,8 +3172,12 @@ int GEstring_to_pch(SEXP pch)
     } else if (IS_UTF8(pch) || utf8locale) {
 	wchar_t wc = 0;
 	if (ipch > 127) {
-	    if ( (int) utf8toucs(&wc, CHAR(pch)) > 0) ipch = -wc;
-	    else error(_("invalid multibyte char in pch=\"c\""));
+	    if ( (int) utf8toucs(&wc, CHAR(pch)) > 0) {
+	    	if (IS_HIGH_SURROGATE(wc))
+	    	    ipch = -utf8toucs32(wc, CHAR(pch));
+	    	else
+	    	    ipch = -wc;
+	    } else error(_("invalid multibyte char in pch=\"c\""));
 	}
     } else if(mbcslocale) {
 	/* Could we safely assume that 7-bit first byte means ASCII?

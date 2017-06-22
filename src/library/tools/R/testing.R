@@ -161,6 +161,7 @@ Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE,
         if(nl > 3L && startsWith(txt[nl-2L], "> proc.time()"))
             txt <- txt[1:(nl-3L)]
         ## remove text between IGNORE_RDIFF markers.
+        ## maybe this should only be done for forEx = TRUE?
         txt <- txt[(cumsum(txt == "> ## IGNORE_RDIFF_BEGIN") <=
                     cumsum(txt == "> ## IGNORE_RDIFF_END"))]
         ## (Keeps the end markers, but that's ok.)

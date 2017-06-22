@@ -153,6 +153,12 @@ order <- function(..., na.last = TRUE, decreasing = FALSE,
     z <- list(...)
 
     method <- match.arg(method)
+    if(any(vapply(z, is.object, logical(1L)))) {
+        z <- lapply(z, function(x) if(is.object(x)) as.vector(xtfrm(x)) else x)
+        return(do.call("order", c(z, na.last = na.last, decreasing = decreasing,
+                                  method = method)))
+    }
+
     if (method == "auto") {
         useRadix <- all(vapply(z, function(x) {
             (is.numeric(x) || is.factor(x) || is.logical(x)) &&
@@ -161,13 +167,7 @@ order <- function(..., na.last = TRUE, decreasing = FALSE,
         method <- if (useRadix) "radix" else "shell"
     }
 
-    if(any(unlist(lapply(z, is.object)))) {
-        z <- lapply(z, function(x) if(is.object(x)) as.vector(xtfrm(x)) else x)
-        if(method == "radix" || !is.na(na.last))
-            return(do.call("order", c(z, na.last = na.last,
-                                      decreasing = decreasing,
-                                      method = method)))
-    } else if(method != "radix" && !is.na(na.last)) {
+    if(method != "radix" && !is.na(na.last)) {
         return(.Internal(order(na.last, decreasing, ...)))
     }
 

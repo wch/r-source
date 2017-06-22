@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2005-2016   The R Core Team
+ *  Copyright (C) 2005-2017   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -39,6 +39,18 @@
 #include <wctype.h>
 
 /*
+ * The Rwchar_t typedef represents a single Unicode code point.  On most systems it's the same
+ * as wchar_t, but on Windows (and others?) where wchar_t is too small and UTF-16 is used,
+ * it is an unsigned int instead.
+ */
+ 
+#ifdef Win32
+typedef unsigned int Rwchar_t;
+#else
+typedef wchar_t Rwchar_t;
+#endif 
+
+/*
  * Windows CJK
  * In Unicode, there is not a rule about character width. 
  * A letter of breadth is used in a CJK (China, Japan, Korea,
@@ -66,7 +78,8 @@
  * Unicode 'East Asian Ambiguous' class.
  *
  */
-extern int Ri18n_wcwidth(wchar_t);
+ 
+extern int Ri18n_wcwidth(Rwchar_t);
 extern int Ri18n_wcswidth (const wchar_t *, size_t);
 
 /* macOS CJK and WindowXP(Japanese)
@@ -113,5 +126,24 @@ extern int      Ri18n_iswctype(wint_t, wctype_t);
 #define wctype(__x)       Ri18n_wctype(__x)
 #define iswctype(__x,__y) Ri18n_iswctype(__x,__y)
 #endif
+
+/* These definitions are from winnls.h in Mingw_w64.  We don't need the rest of that file. */
+
+#define HIGH_SURROGATE_START 0xd800
+#define HIGH_SURROGATE_END 0xdbff
+#define LOW_SURROGATE_START 0xdc00
+#define LOW_SURROGATE_END 0xdfff
+
+/* The first two of these definitions use the argument twice which is bad, but we include them here in
+ * the original form for consistency with Mingw_w64.  Users should be careful that evaluating
+ * the argument doesn't result in side effects.
+ */
+
+#define IS_HIGH_SURROGATE(wch) (((wch) >= HIGH_SURROGATE_START) && ((wch) <= HIGH_SURROGATE_END))
+#define IS_LOW_SURROGATE(wch) (((wch) >= LOW_SURROGATE_START) && ((wch) <= LOW_SURROGATE_END))
+#define IS_SURROGATE_PAIR(hs, ls) (IS_HIGH_SURROGATE (hs) && IS_LOW_SURROGATE (ls))
+
+# define utf8toucs32		Rf_utf8toucs32
+Rwchar_t utf8toucs32(wchar_t high, const char *s);
 
 #endif /* R_LOCALE_H */

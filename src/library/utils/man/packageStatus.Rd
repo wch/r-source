@@ -1,6 +1,6 @@
 % File src/library/utils/man/packageStatus.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{packageStatus}
@@ -18,7 +18,7 @@
 }
 \usage{
 packageStatus(lib.loc = NULL, repositories = NULL, method,
-              type = getOption("pkgType"))
+              type = getOption("pkgType"), \dots)
 
 \method{summary}{packageStatus}(object, \dots)
 
@@ -32,7 +32,9 @@ packageStatus(lib.loc = NULL, repositories = NULL, method,
     library trees to search through, or \code{NULL}.  The default value
     of \code{NULL} corresponds to all libraries currently known.}
   \item{repositories}{a character vector of URLs describing the location of \R
-    package repositories on the Internet or on the local machine.}
+    package repositories on the Internet or on the local machine.
+    If specified as \code{NULL}, derive appropriate URLs from \link{option}
+    \code{"repos"}.}
   \item{method}{Download method, see \code{\link{download.file}}.}
   \item{type}{type of package distribution:
     see \code{\link{install.packages}}.}
@@ -40,7 +42,11 @@ packageStatus(lib.loc = NULL, repositories = NULL, method,
     \code{packageStatus}.}
   \item{ask}{if \code{TRUE}, the user is prompted which packages should
     be upgraded and which not.}
-  \item{\dots}{currently not used.}
+  \item{\dots}{for \code{packageStatus}: arguments to be passed to
+    \code{\link{available.packages}} and \code{\link{installed.packages}}.\cr
+    for the \code{upgrade} method, arguments to be passed to
+    \code{\link{install.packages}}\cr
+    for other methods: currently not used.}
 }
 \details{
   The URLs in \code{repositories} should be full paths to the

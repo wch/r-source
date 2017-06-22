@@ -22,6 +22,8 @@ arrows <-
 {
     if (missing(x1) && missing(y1))
         stop("one of 'x1' and 'y1' must be given")
+    if (length(length) > 1 || length(angle) > 1 || length(code) > 1)
+        warning("'length', 'angle', or 'code' greater than length 1; values after the first are ignored")
     .External.graphics(C_arrows, x0, y0, x1, y1, length = length,
                        angle = angle, code = code, col = col,
                        lty = lty, lwd = lwd, ...)

@@ -1,10 +1,12 @@
 % File src/library/utils/man/available.packages.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{available.packages}
 \alias{available.packages}
+\alias{R_AVAILABLE_PACKAGES_CACHE_CONTROL_MAX_AGE}
+
 \title{List Available Packages at CRAN-like Repositories}
 \description{
   \code{available.packages} returns a matrix of details corresponding to
@@ -15,7 +17,9 @@
 \usage{
 available.packages(contriburl = contrib.url(repos, type), method,
                    fields = NULL, type = getOption("pkgType"),
-                   filters = NULL, repos = getOption("repos"))
+                   filters = NULL, repos = getOption("repos"),
+                   ignore_repo_cache =  FALSE, max_repo_cache_age,
+                   \dots)
 }
 \arguments{
   \item{contriburl}{
@@ -44,13 +48,29 @@ available.packages(contriburl = contrib.url(repos, type), method,
   \item{repos}{
     character vector, the base URL(s) of the repositories to use.
   }
+  \item{ignore_repo_cache}{logical.  If true, the repository cache is
+    never used (see \sQuote{Details}).
+  }
+  \item{max_repo_cache_age}{any cached values older than this in seconds
+    will be ignored. See \sQuote{Details}.
+  }
+  \item{\dots}{
+    allow additional arguments to be passed from callers (which might be
+    arguments to future versions of this function).
+  }
 }
 \details{
   The list of packages is either copied from a local mirror (specified by a
-  \samp{file://} URI) or downloaded.  If downloaded, the list is cached
+  \samp{file://} URI) or downloaded.  If downloaded and
+  \code{ignore_repo_cache} is false (the default), the list is cached
   for the \R session in a per-repository file in \code{\link{tempdir}()}
   with a name like
 \preformatted{repos_http\%3a\%2f\%2fcran.r-project.org\%2fsrc\%2fcontrib.rds}
+  The cached values are renewed when found to be too old, with the age
+  limit controlled \emph{via} argument \code{max_repo_cache_age}.
+  This defaults to the current value of the environment variable
+  \env{R_AVAILABLE_PACKAGES_CACHE_CONTROL_MAX_AGE}, or if unset, to
+  \code{3600} (one hour).
 
   By default, the return value includes only packages whose version and
   OS requirements are met by the running version of \R, and only gives

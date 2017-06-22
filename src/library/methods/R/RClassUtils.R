@@ -105,7 +105,8 @@ makePrototypeFromClassDef <-
                     else if(is.na(match(slotName, pnames))) {
                         ## possible that the prototype already had this slot specified
                         ## If not, add it now.
-                        attr(prototype, slotName) <- attr(pri, slotName)
+                        slot(prototype, slotName, check=FALSE) <-
+                            attr(pri, slotName)
                         pnames <- c(pnames, slotName)
                     }
                 }

@@ -242,9 +242,12 @@ SEXP attribute_hidden do_args(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP attribute_hidden do_formals(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
-    if (TYPEOF(CAR(args)) == CLOSXP)
-	return duplicate(FORMALS(CAR(args)));
-    else {
+    if (TYPEOF(CAR(args)) == CLOSXP) {
+	SEXP f = FORMALS(CAR(args));
+	if (NAMED(CAR(args)) > NAMED(f))
+	    SET_NAMED(f, NAMED(CAR(args)));
+	return f;
+    } else {
 	if(!(TYPEOF(CAR(args)) == BUILTINSXP ||
 	     TYPEOF(CAR(args)) == SPECIALSXP))
 	    warningcall(call, _("argument is not a function"));
@@ -255,9 +258,12 @@ SEXP attribute_hidden do_formals(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP attribute_hidden do_body(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
-    if (TYPEOF(CAR(args)) == CLOSXP)
-	return duplicate(BODY_EXPR(CAR(args)));
-    else {
+    if (TYPEOF(CAR(args)) == CLOSXP) {
+	SEXP b = BODY_EXPR(CAR(args));
+	if (NAMED(CAR(args)) > NAMED(b))
+	    SET_NAMED(b, NAMED(CAR(args)));
+	return b;
+    } else {
 	if(!(TYPEOF(CAR(args)) == BUILTINSXP ||
 	     TYPEOF(CAR(args)) == SPECIALSXP))
 	    warningcall(call, _("argument is not a function"));
@@ -268,9 +274,12 @@ SEXP attribute_hidden do_body(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP attribute_hidden do_bodyCode(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
-    if (TYPEOF(CAR(args)) == CLOSXP)
-	return duplicate(BODY(CAR(args)));
-    else return R_NilValue;
+    if (TYPEOF(CAR(args)) == CLOSXP) {
+	SEXP bc = BODY(CAR(args));
+	if (NAMED(CAR(args)) > NAMED(bc))
+	    SET_NAMED(bc, NAMED(CAR(args)));
+	return bc;
+    } else return R_NilValue;
 }
 
 /* get environment from a subclass if possible; else return NULL */

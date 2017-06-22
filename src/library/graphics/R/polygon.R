@@ -220,7 +220,11 @@ polygon <-
         ## end of hatch helper functions
 
 
-        if (missing(col) || is.null(col) || is.na(col)) col <- par("fg")
+        if (missing(col) || is.null(col)) {
+            col <- par("fg")
+        } else if (any(is.na(col))) {
+            col[is.na(col)] <- par("fg")
+        }
         if (is.null(border)) border <- col
         if (is.logical(border)) {
             if (!is.na(border) && border) border <- col

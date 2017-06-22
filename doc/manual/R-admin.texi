@@ -337,7 +337,7 @@ see file @file{tests/README} and @ref{Testing a Unix-alike Installation}
 for the possibilities of doing this in parallel.  Note that these checks
 are only run completely if the recommended packages are installed.
 
-If the command @command{configure} and @command{make} commands execute
+If the @command{configure} and @command{make} commands execute
 successfully, a shell-script front-end called @file{R} will be created
 and copied to @file{@var{R_HOME}/bin}.  You can link or copy this script
 to a place where users can invoke it, for example to
@@ -1778,7 +1778,7 @@ installer is clever enough to try to upgrade the last-installed version
 of the application where you installed it (which may not be where you
 want this time @dots{}).
 
-Various parts of the build require XQuartz to be installed: : see
+Various parts of the build require XQuartz to be installed: see
 @uref{https://xquartz.macosforge.org/}.  These include the @pkg{tcltk}
 package and the @code{X11} device: attempting to use these without
 XQuartz will remind you.  Also the cairographics-based devices (which
@@ -2319,7 +2319,7 @@ appropriate version at the time of writing was
 @uref{https://r.research.att.com/@/libs/@/GTK_2.24.17-X11.pkg}
 
 The default compilers specified are shown in file
-@file{/Library/Frameworks/R.framework/Resources/etc/Makeconf}.  At the
+@file{/Library/Frameworks/@/R.framework/@/Resources/etc/Makeconf}.  At the
 time of writing these setting assumed that the C, Fortran and C++
 compilers were on the path, and @command{gfortan} 6.1.0 (see
 @ref{macOS}).  The settings can be changed, either by editing that file
@@ -2952,16 +2952,16 @@ Almost all current @acronym{CPU}s have both 32- and 64-bit sets of
 instructions.  Most OSes running on such @acronym{CPU}s offer the choice
 of building a 32-bit or a 64-bit version of @R{} (and details are given
 below under specific OSes).  For most a 32-bit version is the default,
-but for some (e.g., @cputype{x86_64} Linux and macOS >= 10.6)
+but for some (e.g., @cputype{x86_64} Linux and macOS @geq{} 10.6)
 64-bit is.
 
-All current versions of @R{} use 32-bit integers and
-@acronym{ISO}/@acronym{IEC}@tie{}60559@footnote{also known as
-@acronym{IEEE}@tie{}754} double-precision reals, and so compute to
-the same precision@footnote{at least when storing quantities: the on-FPU
-precision is allowed to vary} and with the same limits on the sizes of
-numerical quantities.  The principal difference is in the size of the
-pointers.
+All current versions of @R{} use 32-bit integers (this is enforced in
+the build) and @acronym{ISO}/@acronym{IEC}@tie{}60559@footnote{also
+known as @acronym{IEEE}@tie{}754} double-precision reals, and so compute
+to the same precision@footnote{at least when storing quantities: the
+on-FPU precision is allowed to vary} and with the same limits on the
+sizes of numerical quantities.  The principal difference is in the size
+of the pointers.
 
 64-bit builds have both advantages and disadvantages:
 @itemize
@@ -3542,7 +3542,7 @@ environment variable @env{R_GSCMD} at that time.
 @node Tcl/Tk, Java support, Useful libraries and programs, Useful libraries and programs
 @subsection Tcl/Tk
 
-The @pkg{tcltk} package needs Tcl/Tk >= 8.4 installed: the sources are
+The @pkg{tcltk} package needs Tcl/Tk @geq{} 8.4 installed: the sources are
 available at @uref{https://@/www.tcl.tk/}.  To specify the locations of the
 Tcl/Tk files you may need the configuration options
 
@@ -4665,7 +4665,7 @@ see in the @command{configure} summary
 
 @example
   Interfaces supported:      X11, tcltk
-  External libraries:        readline, zlib, bzlib, lzma, PCRE, curl
+  External libraries:        readline, curl
   Additional capabilities:   PNG, JPEG, TIFF, NLS, cairo, ICU
 @end example
 
@@ -4692,7 +4692,7 @@ the best possible performance on the machine on which @R{} is being
 installed: if the compilation is for a site-wide installation, it may
 still be desirable to use something like
 @option{-mtume=core2}.@footnote{or @code{-mtune=corei7} for Intel Core
-i3/15/17 with @command{gcc >= 4.6.0}.} It is also possible to increase the
+i3/15/17 with @command{gcc} @geq{} 4.6.0.} It is also possible to increase the
 optimization levels to @option{-O3}: however for many versions of the
 compilers this has caused problems in at least one @acronym{CRAN}
 package.
@@ -5019,10 +5019,10 @@ The @TeX{} implementation used by the developers is MacTeX
 (@uref{https://www.tug.org/mactex/}): the full installation is about
 5GB, but a smaller version (`Basic TeX') is available at
 @uref{https://www.tug.org/mactex/morepackages.html} to which you will
-need to add some packages, e.g.@: for the 2016 version we needed to
+need to add some packages, e.g.@: for the 2017 version we needed to
 add@footnote{E.g.@: @emph{via} @command{tlmgr install cm-super helvetic
 inconsolata texinfo} .}  @pkg{cm-super}, @pkg{helvetic},
-@pkg{inconsolata} and @pkg{texinfo} which brought this to about 410MB.
+@pkg{inconsolata} and @pkg{texinfo} which brought this to about 310MB.
 @samp{TeX Live Utility} (available @emph{via} the MacTeX front page)
 provides a graphical means to manage @TeX{} packages.
 
@@ -5094,18 +5094,22 @@ tclvalue(.Tcl("tk windowingsystem"))  # "x11" or "aqua"
 @subsection Java
 
 The situation with Java support on macOS is messy.@footnote{For more
-details see @uref{http://www.macstrategy.com/@/article.php?3}.}
+details see @uref{http://www.macstrategy.com/@/article.php?3}.}  As from
+@R{} 3.4.0 the @acronym{CRAN} distribution of @CRANpkg{rJava} requires
+Java 8 (aka 1.8).
 
 macOS no longer comes with an installed Java runtime (JRE), and a macOS
 upgrade may remove one if already installed: it is intended to be
 installed at first use.  Check if a JRE is installed by running
 @command{java -version} in a @command{Terminal} window: if Java is not
-installed this should prompt you to install it.  You can also install
-directly the latest Java from Oracle (currently from
+installed@footnote{In the unlikely event that the version reported does
+not start with @code{1.8.0} you need to update your Java.} this should
+prompt you to install it.  You can also install directly the latest Java
+from Oracle (currently from
 @uref{http://www.oracle.com/@/technetwork/@/java/@/javase/@/downloads/@/index.html}).
 
 Binary distributions of @R{} are built against a specific version (e.g.@:
-1.8.0_121) of Oracle Java so @command{sudo R CMD javareconf} may be
+1.8.0_131) of Oracle Java so @command{sudo R CMD javareconf} may be
 needed before using Java-using packages.
 
 @c You may need to install what Apple calls `legacy Java'@footnote{e.g.@:
@@ -5128,7 +5132,7 @@ The build process tries to fathom out what JRE/JDK to use, but it may
 need some help, e.g.@: by setting @env{JAVA_HOME}.  The Oracle JDK can
 be specified explicitly by something like
 @example
-JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_121.jdk/Contents/Home
+JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home
 JAVA_CPPFLAGS="-I/$@{JAVA_HOME@}/include -I/$@{JAVA_HOME@}/include/darwin"
 JAVA_LD_LIBRARY_PATH="$@{JAVA_HOME@}/jre/lib/server"
 JAVA_LIBS="-L/$@{JAVA_HOME@}/jre/lib/server -ljvm" 

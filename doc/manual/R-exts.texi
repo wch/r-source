@@ -4562,10 +4562,10 @@ you can test a ratio of times, and even that is fraught with
 difficulties.
 
 @item
-Do not test the exact format of @R{} error messages: They change, and
-they can be translated.
+Do not test the exact format of @R{} messages (from @R{} itself or from
+other packages): They change, and they can be translated.
 
-Worse, packages have tested the exact format of system error messages,
+Packages have even tested the exact format of system error messages,
 which are platform-dependent and perhaps locale-dependent.
 
 @item
@@ -5004,8 +5004,10 @@ all-upper-case names which have a unique prefix such as the package name.
 
 @item
 @code{typedef}s in OS headers can conflict with those in the package:
-two examples are @code{ulong} on several OSes and @code{index_t} on
-Solaris.
+examples include @code{ulong} on several OSes and @code{index_t} and
+@code{single} on Solaris.  (Note that these may conflict with other uses
+as identifiers, e.g.@: defining a C++ function called @code{single}.)
+@c as done by package Emcdf in June 2017.
 
 @item
 If you use OpenMP, check carefully that you have followed the advice in
@@ -5021,7 +5023,7 @@ Any use of OpenMP functions, e.g.@: @code{omp_set_num_threads} also
 needs to be conditioned.
 
 And do not hardcode @option{-lgomp}: not only is that specific to the
-GCC family of compilers, using the correct linker flag sets up the
+GCC family of compilers, using the correct linker flag often sets up the
 run-time path to the library.
 
 @item
@@ -10607,8 +10609,8 @@ For example (from the internal code for @code{optim})
     PROTECT_INDEX ipx;
 
     ....
-    s = PROTECT_WITH_INDEX(eval(OS->R_fcall, OS->R_env), &ipx);
-    s = REPROTECT(coerceVector(s, REALSXP), ipx);
+    PROTECT_WITH_INDEX(s = eval(OS->R_fcall, OS->R_env), &ipx);
+    REPROTECT(s = coerceVector(s, REALSXP), ipx);
 @end example
 
 Note that it is dangerous to mix @code{UNPROTECT_PTR} with

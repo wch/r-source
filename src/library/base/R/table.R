@@ -1,7 +1,7 @@
 #  File src/library/base/R/table.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -149,6 +149,9 @@ table <- function (..., exclude = if (useNA=="no") c(NA, NaN),
 print.table <-
 function (x, digits = getOption("digits"), quote = FALSE, na.print = "",
 	  zero.print = "0",
+	  ## Numbers get right-justified by format(), irrespective of 'justify';
+	  ## need to keep column headers aligned:
+	  right = is.numeric(x) || is.complex(x),
 	  justify = "none", ...)
 {
     ## tables with empty extents have no contents and are hard to
@@ -169,12 +172,7 @@ function (x, digits = getOption("digits"), quote = FALSE, na.print = "",
 	## MM thinks this should be an option for many more print methods...
 	xx[i0] <- zero.print ## keep it simple;  was sub(..., xx[i0])
 
-    ## Numbers get right-justified by format(), irrespective of 'justify'.
-    ## We need to keep column headers aligned.
-    if (is.numeric(x) || is.complex(x))
-        print(xx, quote = quote, right = TRUE, ...)
-    else
-        print(xx, quote = quote, ...)
+    print(xx, quote = quote, right = right, ...)
     invisible(x)
 }
 

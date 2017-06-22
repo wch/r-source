@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2016  The R Core Team
+ *  Copyright (C) 1997--2017  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -31,6 +31,7 @@
 # include <config.h>
 #endif
 
+#define R_USE_SIGNALS 1
 #include <Defn.h>
 #include <Internal.h>
 #include <Fileio.h>
@@ -45,6 +46,10 @@
 # ifdef HAVE_SYS_TIME_H
 #  include <sys/times.h>
 # endif
+#endif
+
+#ifdef HAVE_FCNTL_H
+# include <fcntl.h>
 #endif
 
 #if defined(HAVE_SYS_RESOURCE_H) && defined(HAVE_GETRUSAGE)
@@ -237,11 +242,345 @@ double R_getClockIncrement(void)
 # include <sys/wait.h>
 #endif
 
+/* The timeout support is inspired by timeout utility from coreutils.
+   However, here the child process creates a new process group rather than
+   the parent (R) process, because changing the group leader for the whole
+   of R might have undesirable consequences.  According to comments in
+   coreutils, this could lead to issues with propagating signals between
+   foreground and background process groups.  Like with coreutils, the
+   timeout is not always enforced: an external application can run longer
+   than the timeout when it creates a new process group or when it spawns a
+   child process and exits without waiting for it to finish (becomes a
+   daemon).  This implementation only works for processes that do not read
+   from the standard input - the new process group is always created, and
+   hence the executed process can no longer access the terminal.  To prevent
+   interference with job control, the new process is thus started with
+   standard input redirected from /dev/null.  Note that while the timeout
+   utility allows to run processes also without creating the new group
+   (option `foreground`), that approach would interfere with job control in
+   "/bin/sh" that is documented to be used by the R system call.  There does
+   not seem to be a simple way to address this issue, and hence interactive
+   applications cannot be executed with timeout (and note the same issues
+   arise when timeout utility is used with /bin/sh).
+
+   Currently we only have a single global structure and hence only one call
+   to R_popen_timeout/R_system_timeout may be active at the same time. A more
+   general implementation could use a linked list and identify entries by
+   file pointer and child pid.
+
+   Background jobs (ending with &) are not supported. */
+
+static struct {
+    pid_t child_pid;
+    int timedout; /* set when the child has been timed out */
+    sigset_t oldset;
+    struct sigaction oldalrm, oldint, oldquit, oldhup, oldterm, oldttin,
+                     oldttou, oldchld;
+    RCNTXT cntxt; /* for popen/pclose */
+    FILE *fp;     /* for popen/pclose, sanity check */
+} tost;
+
+static void timeout_handler(int sig);
+static void timeout_init()
+{
+    tost.child_pid = 0;
+    tost.timedout = 0;
+    sigprocmask(0, NULL, &tost.oldset);
+    sigaction(SIGALRM, NULL, &tost.oldalrm);
+    sigaction(SIGINT, NULL, &tost.oldint);
+    sigaction(SIGQUIT, NULL, &tost.oldquit);
+    sigaction(SIGHUP, NULL, &tost.oldhup);
+    sigaction(SIGTERM, NULL, &tost.oldterm);
+    sigaction(SIGTTIN, NULL, &tost.oldttin);
+    sigaction(SIGTTOU, NULL, &tost.oldttou);
+    sigaction(SIGCHLD, NULL, &tost.oldchld);
+    tost.fp = NULL;
+
+    /* install handler */
+    struct sigaction sa;
+    sigemptyset(&sa.sa_mask);
+    sa.sa_handler = &timeout_handler;
+    sa.sa_flags = SA_RESTART;
+    sigaction(SIGALRM, &sa, NULL);
+    sigaction(SIGINT, &sa, NULL);
+    sigaction(SIGQUIT, &sa, NULL);
+    sigaction(SIGHUP, &sa, NULL);
+    sigaction(SIGTERM, &sa, NULL);
+    sigaction(SIGCHLD, &sa, NULL);
+}
+
+static void timeout_cleanup_set(sigset_t *ss)
+{
+    sigemptyset(ss);
+    sigaddset(ss, SIGALRM);
+    sigaddset(ss, SIGINT);
+    sigaddset(ss, SIGQUIT);
+    sigaddset(ss, SIGHUP);
+    sigaddset(ss, SIGTERM);
+    sigaddset(ss, SIGTTIN);
+    sigaddset(ss, SIGTTOU);
+    sigaddset(ss, SIGCHLD);
+}
+
+static void timeout_cleanup()
+{
+    sigset_t ss;
+    timeout_cleanup_set(&ss);
+    sigprocmask(SIG_BLOCK, &ss, NULL);
+    alarm(0); /* clear alarm */
+
+    sigaction(SIGALRM, &tost.oldalrm, NULL);
+    sigaction(SIGINT, &tost.oldalrm, NULL);
+    sigaction(SIGQUIT, &tost.oldquit, NULL);
+    sigaction(SIGHUP, &tost.oldhup, NULL);
+    sigaction(SIGTERM, &tost.oldterm, NULL);
+    sigaction(SIGTTIN, &tost.oldttin, NULL);
+    sigaction(SIGTTOU, &tost.oldttou, NULL);
+    sigaction(SIGCHLD, &tost.oldchld, NULL);
+
+    sigprocmask(SIG_SETMASK, &tost.oldset, NULL);
+}
+
+static void timeout_handler(int sig)
+{
+    if (sig == SIGCHLD)
+	return; /* needed for sigsuspend() to be interrupted */
+    if (sig == SIGALRM) {
+	tost.timedout = 1;
+	sig = SIGTERM;
+    }
+    if (tost.child_pid > 0) {
+	/* parent, received a signal */
+
+	kill(tost.child_pid, sig);
+	/* NOTE: don't signal the group and  don't send SIGCONT
+	         for interactive jobs */
+	killpg(tost.child_pid, sig);
+	if (sig != SIGKILL && sig != SIGCONT) {
+	    kill(tost.child_pid, SIGCONT);
+	    killpg(tost.child_pid, SIGCONT);
+	}
+    } else if (tost.child_pid == 0) {
+	/* child */
+	_exit(128 + sig); /* arbitrary status, such as in timeout utility */
+    }
+    /* tost.child_pid is -1 when child process no longer exists */
+}
+
+static pid_t timeout_wait(int *wstatus)
+{
+    pid_t wres;
+
+    /* make sure we do not accidentally send signals to a new process
+       with re-used pid from the child */
+    sigset_t ss;
+    timeout_cleanup_set(&ss);
+    sigset_t unblocked_ss;
+    sigprocmask(SIG_BLOCK, &ss, &unblocked_ss);
+
+    int saveerrno = errno;
+    while((wres = waitpid(tost.child_pid, wstatus, WNOHANG)) == 0)
+	sigsuspend(&unblocked_ss);
+
+    if (errno == EINTR)
+	/* EINTR is not really an error but expected situation here, however,
+	   R's "system" call would report any non-zero errno as an error. */
+	errno = saveerrno;
+    if (wres == tost.child_pid)
+	tost.child_pid = -1; /* the process no longer exists */
+    timeout_cleanup();
+    return wres;
+}
+
+static void timeout_cend(void *data)
+{
+    if (tost.child_pid > 0) {
+	timeout_handler(SIGTERM);
+	timeout_wait(NULL);
+    }
+    timeout_cleanup();
+}
+
+/* R_popen_timeout, R_pclose_timeout - a partial implementation of popen/close
+   with support for timeout. The POSIX/Unix popen/pclose cannot be re-used,
+   because the PID of the child process is not accessible via POSIX API.
+
+   This simple implementation only supports a single pipe to be open at a time
+   and R_system_timeout cannot be used at the same time.
+
+   It does not support close-on-exec ("e" flag).
+   A pipe opened with R_popen_timeout cannot be closed by pclose.
+   A pipe opened with popen cannot be closed by R_pclose_timeout.
+   Timeout is in seconds. After timing out, the child process is interrupted.
+*/
+static FILE *R_popen_timeout(const char *cmd, const char *type, int timeout)
+{
+    /* close-on-exec is not supported */
+    if (!type || type[1] ||  (type[0] != 'r' && type[0] != 'w')) {
+	errno = EINVAL;
+	return NULL;
+    }
+    int doread = (type[0] == 'r');
+    int pipefd[2];
+    int parent_end, child_end;
+    if (pipe(pipefd) < 0)
+	return NULL;
+    if (doread) {
+	parent_end = pipefd[0];
+	child_end = pipefd[1];
+    } else {
+	parent_end = pipefd[1];
+	child_end = pipefd[0];
+    }
+
+    /* Earlier version of R would block SIGPROF here on old Apple systems
+       following Luke's recommendation on how to fix PR#1140 (see R_open,
+       R_system). */
+
+    timeout_init();
+
+    /* set up a context to recover from R error between popen and pclose */
+    begincontext(&tost.cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
+                 R_NilValue, R_NilValue);
+    tost.cntxt.cenddata = NULL;
+    tost.cntxt.cend = &timeout_cend;
+
+    signal(SIGTTIN, SIG_IGN);
+    signal(SIGTTOU, SIG_IGN);
+    tost.child_pid = fork();
+
+    if (tost.child_pid == 0) {
+	/* child */
+	setpgid(0, 0); /* NOTE: don't create new group in interactive jobs */
+	signal(SIGTTIN, SIG_DFL);
+	signal(SIGTTOU, SIG_DFL);
+	dup2(child_end, doread ? 1 : 0);
+	close(child_end);
+	close(parent_end);
+	close(doread ? 0 : 1);
+	/* ensure there is no read from terminal to avoid SIGTTIN */
+	if (open("/dev/null", O_RDONLY) < 0) {
+	    perror("Cannot open /dev/null for reading:");
+	    _exit(127);
+	}
+	execl("/bin/sh", "sh", "-c", cmd, (char *)NULL);
+	_exit(127); /* execl failed */
+    } else if (tost.child_pid > 0) {
+	/* parent */
+	close(child_end);
+        tost.fp = fdopen(parent_end, type);
+	if (!tost.fp) {
+	    close(parent_end);
+	    return NULL;
+	}
+
+	sigset_t ss;
+	sigemptyset(&ss);
+	sigaddset(&ss, SIGALRM);
+	sigprocmask(SIG_UNBLOCK, &ss, NULL);
+	alarm(timeout); /* will get SIGALRM on timeout */
+
+	return tost.fp;
+    } else {
+	close(parent_end);
+	return NULL;
+    }
+}
+
+int R_pclose_timeout(FILE *fp)
+{
+    if (fp != tost.fp)
+	/* should not happen */
+	error("Invalid file pointer in pclose");
+
+    /* Do not use fclose, because on Solaris it sets errno to "Invalid seek"
+       when the pipe is already closed (e.g. because of timeout). fclose would
+       not return an error, but it would set errno and the non-zero errno would
+       then be reported by R's "system" function. */
+    int fd = fileno(fp);
+    if (fd >= 0)
+	close(fd);
+
+    pid_t wres;
+    int wstatus;
+
+    wres = timeout_wait(&wstatus);
+    endcontext(&tost.cntxt);
+
+    if (wres < 0)
+	return -1;
+    return wstatus;
+}
+
+/* Similar to system, but supports timeout in seconds.
+   Calls to R_system_timeout cannot be used when a pipe is open using
+   R_popen_timeout.
+*/
+static int R_system_timeout(const char *cmd, int timeout)
+{
+    if (!cmd)
+	return R_system(cmd);
+
+    /* Earlier version of R would block SIGPROF here on old Apple systems
+       following Luke's recommendation on how to fix PR#1140 (see R_open,
+       R_system). */
+
+    timeout_init();
+    signal(SIGTTIN, SIG_IGN);
+    signal(SIGTTOU, SIG_IGN);
+    tost.child_pid = fork();
+
+    if (tost.child_pid == 0) {
+	/* child */
+	close(0);
+	/* ensure there is no read from terminal to avoid SIGTTIN */
+	if (open("/dev/null", O_RDONLY) < 0) {
+	    perror("Cannot open /dev/null for reading:");
+	    _exit(127);
+	}
+	setpgid(0, 0);
+	signal(SIGTTIN, SIG_DFL);
+	signal(SIGTTOU, SIG_DFL);
+
+	execl("/bin/sh", "sh", "-c", cmd, (char *)NULL);
+	_exit(127); /* execl failed */
+    } else if (tost.child_pid > 0) {
+	/* parent */
+	sigset_t ss;
+	sigemptyset(&ss);
+	sigaddset(&ss, SIGALRM);
+	sigprocmask(SIG_UNBLOCK, &ss, NULL);
+	alarm(timeout); /* will get SIGALRM on timeout */
+
+	int wstatus;
+	timeout_wait(&wstatus);
+	if (tost.child_pid != -1)
+	    return -1;
+#ifdef HAVE_SYS_WAIT_H
+	if (WIFEXITED(wstatus)) wstatus = WEXITSTATUS(wstatus);
+#else
+	/* assume that this is shifted if a multiple of 256 */
+	if ((wstatus % 256) == 0) wstatus = wstatus/256;
+#endif
+        if (wstatus == -1) {
+	    /* this means that system() failed badly - it didn't
+	       even get to try to run the shell */
+	    warning(_("system call failed: %s"), strerror(errno));
+	    /* R system() is documented to return 127 on failure, and a lot of
+	       code relies on that - it will misinterpret -1 as success */
+	    wstatus = 127;
+	}
+	return wstatus;
+    } else
+	return -1;
+}
+
 #define INTERN_BUFSIZE 8096
 SEXP attribute_hidden do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP tlist = R_NilValue;
     int intern = 0;
+    int timeout = 0;
 
     checkArity(op, args);
     if (!isValidStringF(CAR(args)))
@@ -249,6 +588,30 @@ SEXP attribute_hidden do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
     intern = asLogical(CADR(args));
     if (intern == NA_INTEGER)
 	error(_("'intern' must be logical and not NA"));
+    timeout = asInteger(CADDR(args));
+    if (timeout == NA_INTEGER || timeout < 0)
+	error(_("invalid '%s' argument"), "type");
+    const char *cmd = translateChar(STRING_ELT(CAR(args), 0));
+    if (timeout > 0) {
+	/* command ending with & is not supported by timeout */
+	const void *vmax = vmaxget();
+	const char *c = translateCharUTF8(STRING_ELT(CAR(args), 0));
+	int last_is_amp = 0;
+	int len = 0;
+	for(;*c; c += len) {
+	    len = utf8clen(*c);
+	    if (len == 1) {
+		if (*c == '&')
+		    last_is_amp = 1;
+		else if (*c != ' ' && *c != '\t' && *c != '\r' && *c != '\n')
+		    last_is_amp = 0;
+	    } else
+		last_is_amp = 0;
+	}
+	if (last_is_amp)
+	    error("Timeout with background running processes is not supported.");
+	vmaxset(vmax);
+    }
     if (intern) { /* intern = TRUE */
 	FILE *fp;
 	char *x = "r",
@@ -258,14 +621,16 @@ SEXP attribute_hidden do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 #else
 	    buf[INTERN_BUFSIZE];
 #endif
-	const char *cmd;
 	int i, j, res;
 	SEXP tchar, rval;
 
 	PROTECT(tlist);
-	cmd = translateChar(STRING_ELT(CAR(args), 0));
 	errno = 0; /* precaution */
-	if(!(fp = R_popen(cmd, x)))
+	if (timeout == 0)
+	    fp = R_popen(cmd, x);
+	else
+	    fp = R_popen_timeout(cmd, x, timeout);
+	if(!fp)
 	    error(_("cannot popen '%s', probable reason '%s'"),
 		  cmd, strerror(errno));
 #ifdef HAVE_GETLINE
@@ -288,7 +653,13 @@ SEXP attribute_hidden do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
         if (buf != NULL)
           free(buf);
 #endif
-	res = pclose(fp);
+	if (timeout == 0)
+	    res = pclose(fp);
+	else {
+	    res = R_pclose_timeout(fp);
+	    if (tost.timedout)
+		warning(_("command '%s' timed out"), cmd);
+	}
 #ifdef HAVE_SYS_WAIT_H
 	if (WIFEXITED(res)) res = WEXITSTATUS(res);
 	else res = 0;
@@ -303,6 +674,13 @@ SEXP attribute_hidden do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 		error(_("error in running command"));
 	} else if (res) {
 	    if (errno)
+		/* FIXME: TK: non-zero errno is a sign of an error only when
+		   a function that modified it also signals an error by its
+		   return value, usually -1 or EOF. We should not be reporting
+		   an error here (CERT ERR30-C).*/
+		/* on Solaris, if the command ends with non-zero status and timeout
+		   is 0, "Illegal seek" error is reported; the timeout version
+		   works this around by using close(fileno) */
 		warningcall(R_NilValue,
 			    _("running command '%s' had status %d and error message '%s'"),
 			    cmd, res,
@@ -335,7 +713,14 @@ SEXP attribute_hidden do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 	tlist = PROTECT(allocVector(INTSXP, 1));
 	fflush(stdout);
-	INTEGER(tlist)[0] = R_system(translateChar(STRING_ELT(CAR(args), 0)));
+	int res;
+	if (timeout == 0)
+	    res = R_system(cmd);
+	else
+	    res = R_system_timeout(cmd, timeout);
+	INTEGER(tlist)[0] = res;
+	if (tost.timedout)
+	    warning(_("command '%s' timed out"), cmd);
 #ifdef HAVE_AQUA
 	R_Busy(0);
 #endif

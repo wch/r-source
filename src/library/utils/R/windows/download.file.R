@@ -18,7 +18,7 @@
 
 download.file <-
     function(url, destfile, method, quiet = FALSE, mode = "w",
-             cacheOK = TRUE, extra = getOption("download.file.extra"))
+             cacheOK = TRUE, extra = getOption("download.file.extra"), ...)
 {
     destfile # check supplied
     method <- if (missing(method))

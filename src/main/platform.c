@@ -1895,7 +1895,13 @@ SEXP attribute_hidden do_pathexpand(SEXP call, SEXP op, SEXP args, SEXP rho)
     for (i = 0; i < n; i++) {
 	SEXP tmp = STRING_ELT(fn, i);
 	if (tmp != NA_STRING) {
+#ifndef Win32
 	    tmp = markKnown(R_ExpandFileName(translateChar(tmp)), tmp);
+#else
+/* Windows can have files and home directories that aren't representable in the native encoding (e.g. latin1), so
+   we need to translate everything to UTF8.  */
+	    tmp = mkCharCE(R_ExpandFileNameUTF8(translateCharUTF8(tmp)), CE_UTF8);
+#endif
 	}
 	SET_STRING_ELT(ans, i, tmp);
     }

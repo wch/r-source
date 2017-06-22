@@ -27,7 +27,7 @@ isBasePkg <- function(pkg) {
 
 getDependencies <-
     function(pkgs, dependencies = NA, available = NULL, lib = .libPaths()[1L],
-             binary = FALSE)
+             binary = FALSE, ...)
 {
     if (is.null(dependencies)) return(unique(pkgs))
     oneLib <- length(lib) == 1L
@@ -84,7 +84,8 @@ getDependencies <-
         libpath <- .libPaths()
         if(!lib %in% libpath) libpath <- c(lib, libpath)
         installed <- installed.packages(lib.loc = libpath,
-                                        fields = c("Package", "Version"))
+                                        fields = c("Package", "Version"),
+                                        ...)
         not_avail <- character()
 	repeat {
 	    deps <- apply(available[p1, dependencies, drop = FALSE],
@@ -227,7 +228,8 @@ install.packages <-
         ## This will only offer the specified type.  If type = "both"
         ## do not want 'available' set for "source".
 	if(is.null(available)) {
-	    av <- available.packages(contriburl = contriburl, method = method)
+	    av <- available.packages(contriburl = contriburl, method = method,
+                                     ...)
 	    if (missing(repos)) ## Evaluating contriburl may have changed repos, which may be used below
 	      repos <- getOption("repos")
             if(type != "both") available <- av
@@ -283,7 +285,7 @@ install.packages <-
 	    lib <- userdir
 	    if(!file.exists(userdir)) {
 		ans <- askYesNo(gettextf("Would you like to create a personal library\n%s\nto install packages into?",
-		                        sQuote(userdir)), default = FALSE) 
+		                        sQuote(userdir)), default = FALSE)
 		if(!isTRUE(ans)) stop("unable to install packages")
 		if(!dir.create(userdir, recursive = TRUE))
                     stop(gettextf("unable to create %s", sQuote(userdir)),
@@ -343,11 +345,13 @@ install.packages <-
                      domain = NA)
         }
         if(nonlocalrepos) {
+            df <- function(p, destfile, method, ...)
+                download.file(p, destfile, method, mode = "wb", ...)
             urls <- pkgs[web]
             for (p in unique(urls)) {
                 this <- pkgs == p
                 destfile <- file.path(tmpd, basename(p))
-                res <- try(download.file(p, destfile, method, mode="wb", ...))
+                res <- try(df(p, destfile, method, ...))
                 if(!inherits(res, "try-error") && res == 0L)
                     pkgs[this] <- destfile
                 else {
@@ -379,12 +383,12 @@ install.packages <-
         if (missing(repos)) repos <- getOption("repos")
         available <-
             available.packages(contriburl = contriburl, method = method,
-                               fields = "NeedsCompilation")
-        pkgs <- getDependencies(pkgs, dependencies, available, lib)
+                               fields = "NeedsCompilation", ...)
+        pkgs <- getDependencies(pkgs, dependencies, available, lib, ...)
         getDeps <- FALSE
         ## Now see what we can get as binary packages.
         av2 <- available.packages(contriburl = contrib.url(repos, type2),
-                                  method = method)
+                                  method = method, ...)
         bins <- row.names(av2)
         bins <- pkgs[pkgs %in% bins]
         srcOnly <- pkgs[! pkgs %in% bins]
@@ -481,17 +485,19 @@ install.packages <-
 	    # The line above may have changed the repos option, so..
             if (missing(repos)) repos <- getOption("repos")
 	    av1 <- tryCatch(suppressWarnings(
-			available.packages(contriburl = contriburl2, method = method)),
+			available.packages(contriburl = contriburl2, method = method, ...)),
 			    error = function(e)e)
 	    if(inherits(av1, "error")) {
                 message("source repository is unavailable to check versions")
                 available <-
-                    available.packages(contriburl = contrib.url(repos, type), method = method)
+                    available.packages(contriburl = contrib.url(repos, type),
+                                       method = method, ...)
             } else {
                 srcpkgs <- pkgs[pkgs %in% row.names(av1)]
                 ## Now see what we can get as binary packages.
                 available <-
-                    available.packages(contriburl = contrib.url(repos, type), method = method)
+                    available.packages(contriburl = contrib.url(repos, type),
+                                       method = method, ...)
                 bins <- pkgs[pkgs %in% row.names(available)]
                 ## so a package might only be available as source,
                 ## or it might be later in source.
@@ -672,9 +678,9 @@ install.packages <-
 
     if(is.null(available))
         available <- available.packages(contriburl = contriburl,
-                                        method = method)
+                                        method = method, ...)
     if(getDeps)
-        pkgs <- getDependencies(pkgs, dependencies, available, lib)
+        pkgs <- getDependencies(pkgs, dependencies, available, lib, ...)
 
     foundpkgs <- download.packages(pkgs, destdir = tmpd, available = available,
                                    contriburl = contriburl, method = method,

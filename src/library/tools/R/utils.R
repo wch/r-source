@@ -841,9 +841,9 @@ function(primitive = TRUE) # primitive means 'include primitives'
 {
     out <-
         ## Get the names of R internal S3 generics (via DispatchOrEval(),
-        ## cf. zMethods.Rd).
+        ## cf. ?InternalMethods).
         c("[", "[[", "$", "[<-", "[[<-", "$<-",
-          "as.vector", "unlist",
+          "as.vector", "cbind", "rbind", "unlist",
           .get_S3_primitive_generics()
           ## ^^^^^^^ now contains the members of the group generics from
           ## groupGeneric.Rd.
@@ -1719,10 +1719,28 @@ function(dfile)
         stop("contains a blank line", call. = FALSE)
     out <- out[1,]
     if(!is.na(encoding <- out["Encoding"])) {
-        ## could convert everything to UTF-8
-        if (encoding %in% c("latin1", "UTF-8"))
-            Encoding(out) <- encoding
-        else out <- iconv(out, encoding, "", sub = "byte")
+        ## could convert everything (valid) to UTF-8
+        if(encoding == "UTF-8") {
+            Encoding(out) <- "UTF-8"
+            ind <- validUTF8(out)
+            if(!all(ind)) {
+                pos <- which(!ind)
+                ## Be as nice as for the other cases ...
+                ## Could also throw an error along the lines of
+                ##   stop(sprintf(ngettext(length(pos),
+                ##                         "field %s is not valid UTF-8",
+                ##                         "fields %s are not valid UTF-8"),
+                ##                paste(sQuote(names(out)[pos]),
+                ##                             collapse = ", ")),
+                ##        call. = FALSE, domain = NA)
+                out[pos] <-
+                    iconv(out[pos], "UTF-8", "UTF-8", sub = "byte")
+            }
+        }
+        else if(encoding == "latin1")
+            Encoding(out) <- "latin1"
+        else
+            out <- iconv(out, encoding, "", sub = "byte")
     }
     out
 }

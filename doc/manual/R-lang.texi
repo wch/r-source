@@ -4386,7 +4386,7 @@ character with given hex code -- sequences of one or two hex digits
 Unicode character with given hex code -- sequences of up to four hex
 digits. The character needs to be valid in the current locale.
 @item \U@var{nnnnnnnn} \U@{@var{nnnnnnnn}@}
-(where multibyte locales are supported and not on Windows, otherwise an
+(where multibyte locales are supported, otherwise an
 error).  Unicode character with given hex code -- sequences of up to
 eight hex digits.
 @end table

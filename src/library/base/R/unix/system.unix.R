@@ -1,7 +1,7 @@
 #  File src/library/base/R/unix/system.unix.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@ system <- function(command, intern = FALSE,
                    ignore.stdout = FALSE, ignore.stderr = FALSE,
                    wait = TRUE, input = NULL,
                    show.output.on.console = TRUE, minimized = FALSE,
-                   invisible = TRUE)
+                   invisible = TRUE, timeout = 0)
 {
     if(!missing(show.output.on.console) || !missing(minimized)
        || !missing(invisible))
@@ -48,13 +48,15 @@ system <- function(command, intern = FALSE,
         command <- paste("<", shQuote(f), command)
     }
     if(!wait && !intern) command <- paste(command, "&")
-    .Internal(system(command, intern))
+    .Internal(system(command, intern, timeout))
 }
 
 system2 <- function(command, args = character(),
                     stdout = "", stderr = "", stdin = "", input = NULL,
                     env = character(),
-                    wait = TRUE, minimized = FALSE, invisible = TRUE)
+                    wait = TRUE, minimized = FALSE, invisible = TRUE,
+                    timeout = 0
+)
 {
     if(!missing(minimized) || !missing(invisible))
         message("arguments 'minimized' and 'invisible' are for Windows only")
@@ -102,7 +104,7 @@ system2 <- function(command, args = character(),
         command <- paste(command, "<", shQuote(f))
     } else if (nzchar(stdin)) command <- paste(command, "<", stdin)
     if(!wait && !intern) command <- paste(command, "&")
-    .Internal(system(command, intern))
+    .Internal(system(command, intern, timeout))
 }
 
 ## Some people try to use this with NA inputs (PR#15147)

@@ -1,18 +1,20 @@
 % File src/library/base/man/print.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{print}
 \title{Print Values}
-\usage{
+\usage{% print.default() -->  ./print.default.Rd
 print(x, \dots)
 
 \method{print}{factor}(x, quote = FALSE, max.levels = NULL,
       width = getOption("width"), \dots)
 
 \method{print}{table}(x, digits = getOption("digits"), quote = FALSE,
-      na.print = "", zero.print = "0", justify = "none", \dots)
+      na.print = "", zero.print = "0",
+      right = is.numeric(x) || is.complex(x),
+      justify = "none", \dots)
 
 \method{print}{function}(x, useSource = TRUE, \dots)
 }
@@ -46,6 +48,8 @@ print(x, \dots)
   \item{zero.print}{character specifying how zeros (\code{0}) should be
     printed; for sparse tables, using \code{"."} can produce more
     readable results, similar to printing sparse matrices in \CRANpkg{Matrix}.}
+  \item{right}{logical, indicating whether or not strings should be
+    right aligned.}
   \item{justify}{character indicating if strings should left- or
     right-justified or left alone, passed to \code{\link{format}}.}
   \item{useSource}{logical indicating if internally stored source

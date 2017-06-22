@@ -40,7 +40,8 @@ readLines(con = stdin(), n = -1L, ok = TRUE, warn = TRUE,
 
   If the connection is open it is read from its current position.  If it
   is not open, it is opened in \code{"rt"} mode for the duration of
-  the call and then closed again.
+  the call and then closed (but not destroyed; one must call
+  \code{\link{close}} to do that).
 
   If the final line is incomplete (no final EOL marker) the behaviour
   depends on whether the connection is blocking or not.  For a

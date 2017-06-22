@@ -27,13 +27,13 @@ update.packages(lib.loc = NULL, repos = getOption("repos"),
 
 old.packages(lib.loc = NULL, repos = getOption("repos"),
              contriburl = contrib.url(repos, type),
-             instPkgs = installed.packages(lib.loc = lib.loc),
-             method, available = NULL, checkBuilt = FALSE,
+             instPkgs = installed.packages(lib.loc = lib.loc, \dots),
+             method, available = NULL, checkBuilt = FALSE, \dots,
              type = getOption("pkgType"))
 
 new.packages(lib.loc = NULL, repos = getOption("repos"),
              contriburl = contrib.url(repos, type),
-             instPkgs = installed.packages(lib.loc = lib.loc),
+             instPkgs = installed.packages(lib.loc = lib.loc, \dots),
              method, available = NULL, ask = FALSE, \dots,
              type = getOption("pkgType"))
 }
@@ -85,7 +85,10 @@ new.packages(lib.loc = NULL, repos = getOption("repos"),
   }
   \item{\dots}{
     Arguments such as \code{destdir} and \code{dependencies} to be
-    passed to \code{\link{install.packages}}.
+    passed to \code{\link{install.packages}} and
+    \code{ignore_repo_cache}, \code{max_repo_cache_age} and
+    \code{noCache} to \code{\link{available.packages}} or
+    \code{\link{installed.packages}}.
   }
   \item{type}{character, indicating the type of package to download and
     install.  See \code{\link{install.packages}}.

@@ -132,10 +132,12 @@ function(packages, results = NULL, details = NULL, issues = NULL)
 
     summarize_issues <- function(i) {
         if(!length(i)) return(character())
-        ## No need for hyperrefs: these can be obtained from the package
-        ## check results page already pointed to by summarize_results().
-        sprintf("Additional issues: %s",
-                paste(unique(i$kind), collapse = " "))
+        ## In principle the hyperrefs can be obtained from the package
+        ## check results page already pointed to by summarize_results(),
+        ## but this is not convenient for plain text processing ...
+        paste(c("Additional issues:",
+                sprintf("  %s <%s>", i$kind, i$href)),
+              collapse = "\n")
     }
 
     summarize <- function(p, r, d, i) {
@@ -251,7 +253,7 @@ function(flavors = NULL)
     db
 }
 
-## Deprecated in 3.5.0
+## Deprecated in 3.4.1
 CRAN_memtest_notes <-
 function()
 {

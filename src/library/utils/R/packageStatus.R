@@ -17,7 +17,7 @@
 #  https://www.R-project.org/Licenses/
 
 packageStatus <- function(lib.loc = NULL, repositories = NULL, method,
-                          type = getOption("pkgType"))
+                          type = getOption("pkgType"), ...)
 {
     newestVersion <- function(x)
     {
@@ -43,15 +43,15 @@ packageStatus <- function(lib.loc = NULL, repositories = NULL, method,
         y
     }
 
-    y <- char2df(installed.packages(lib.loc = lib.loc))
+    y <- char2df(installed.packages(lib.loc = lib.loc, ...))
     y[, "Status"] <- "ok"
 
-    z <- available.packages(repositories, method)
+    z <- available.packages(repositories, method, ...)
     ## only consider the newest version of each package
     ## in the first repository where it appears
     ztab <- table(z[,"Package"])
     for(pkg in names(ztab)[ztab>1]){
-        zrow <- which(z[,"Package"]==pkg)
+        zrow <- which(z[,"Package"] == pkg)
         znewest <- newestVersion(z[zrow,"Version"])
         ## and now exclude everything but the newest
         z <- z[-zrow[-znewest],]
@@ -142,7 +142,7 @@ update.packageStatus <-
 upgrade <- function(object, ...)
     UseMethod("upgrade")
 
-upgrade.packageStatus <- function(object, ask=TRUE, ...)
+upgrade.packageStatus <- function(object, ask = TRUE, ...)
 {
     update <- NULL
     old <- which(object$inst$Status == "upgrade")
@@ -181,13 +181,14 @@ upgrade.packageStatus <- function(object, ask=TRUE, ...)
         pkgs <- object$inst[ ,"Package"]
         update <- cbind(pkgs, as.character(object$inst[ , "LibPath"]),
                         as.character(object$avail[pkgs, "Repository"]))
-        update <- update[old, , drop=FALSE]
+        update <- update[old, , drop = FALSE]
     }
 
     if(length(update)) {
         for(repo in unique(update[,3])) {
             ok <- update[, 3] == repo
-            install.packages(update[ok, 1], update[ok, 2], contriburl = repo)
+            install.packages(update[ok, 1], update[ok, 2], contriburl = repo,
+                             ...)
         }
     }
 }
