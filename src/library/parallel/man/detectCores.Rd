@@ -42,7 +42,7 @@ detectCores(all.tests = FALSE, logical = TRUE)
 
 #ifdef windows
   Only versions of Windows since XP SP3 are supported.  Microsoft
-  documents that \code{logical = FALSE} it will report the number of
+  documents that with \code{logical = FALSE} it will report the number of
   cores on Vista or later, but the number of physical CPU packages on XP
   or Server 2003: however it reported correctly on the XP systems we
   tested.

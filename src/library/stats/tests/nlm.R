@@ -18,6 +18,11 @@
 ## NB: Strict regression tests -- output not "looked at"
 library(stats)
 
+## "truly 64 bit platform"
+##  {have seen "x86-64" (instead of "x86_64") on Windows 2008 server}
+(b.64 <- grepl("^x86.64", Sys.info()[["machine"]]) && .Machine$sizeof.pointer == 8)
+(Lb64 <- b.64 && Sys.info()[["sysname"]] == "Linux")
+
 ## Example 1: Rosenbrock banana valley function (2 D)
 ##
 f.Rosenb <- function(x1, x2) 100*(x2 - x1*x1)^2 + (1-x1)^2
@@ -50,7 +55,7 @@ nlm3 <- function(x0, ...) {
 
 utils::str(l3.0 <- nlm3(x0 = c(-1.2, 1)))
 
-chkNlm <- function(nlL, estimate, tols)
+chkNlm <- function(nlL, estimate, tols, codes.wanted = 1:2)
 {
     stopifnot(is.list(nlL), ## nlL = list(<nlm>, <nlm>, <nlm>,...)
               sapply(nlL, is.list), lengths(nlL) == 5, # nlm(.) like
@@ -68,7 +73,7 @@ chkNlm <- function(nlL, estimate, tols)
         ##----
         abs(vapply(nlL, `[[`, c(0,0), "gradient")) <= rep(tols$grad, each=p),
         ##----
-        vapply(nlL, `[[`, 0L, "code") %in% 1:2)
+        vapply(nlL, `[[`, 0L, "code") %in% codes.wanted)
 }
 
 chkNlm(l3.0, estimate = c(1,1),
@@ -89,7 +94,12 @@ chkNlm(l3.10, estimate = c(1,1), # lower tolerances now, notably for fgh:
        ##                  nl.f   nl.fg  nl.fgh
        tols = list(min = c(1e-14, 1e-20, 1e-28),
                    est = c(5e-7,  1e-10, 1e-14),
-                   grad= c(1e-6,  6e-9 , 1e-12)))
+                   grad= c(1e-6,  6e-9 , 1e-12)),
+       codes.wanted = if(Lb64) 1:2 else 1:3)
 
 ## all 3 fail to converge here
 utils::str(l3.1c <- nlm3(x0 = c(-100, 100), iterlim = 1000))
+## i.e., all convergence codes > 1:
+sapply(l3.1c, `[[`, "code")
+## nl.f  nl.fg nl.fgh  (seen on 32-bit and 64-bit)
+##    2      2      4

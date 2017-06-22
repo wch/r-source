@@ -203,7 +203,7 @@ nchar(x, "w", allowNA = TRUE)
 ## str() on large strings (in multibyte locales; changing locale may not work everywhere
 oloc <- Sys.getlocale("LC_CTYPE")
 mbyte.lc <- if(.Platform$OS.type == "windows")
- "English_United States.28605" else "en_GB.UTF-8"
+ "English_United States.28605" else "C.UTF-8" # C.UTF-8 is said to be in all glibc
 stopifnot(identical(Sys.setlocale("LC_CTYPE", mbyte.lc), mbyte.lc))
 cc <- "J\xf6reskog" # valid in "latin-1"; invalid multibyte string in UTF-8
 .tmp <- capture.output(

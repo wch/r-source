@@ -224,7 +224,7 @@ extern void R_WaitEvent(void);
 /*	R_NSIZE	   The number of cons cells	 */
 /*	R_VSIZE	   The vector heap size in bytes */
 /*  These values are defaults and can be overridden in config.h
-    The maxima and minima are in startup.c */
+    The maxima and minima are in ../main/startup.c */
 
 #ifndef R_PPSSIZE
 #define	R_PPSSIZE	50000L
@@ -303,7 +303,7 @@ extern int putenv(char *string);
 #endif
 #endif
 
-#define HSIZE	   4119	/* The size of the hash table for symbols */
+#define HSIZE	  49157	/* The size of the hash table for symbols */
 #define MAXIDSIZE 10000	/* Largest symbol size,
 			   in bytes excluding terminator.
 			   Was 256 prior to 2.13.0, now just a sanity check.
@@ -1148,6 +1148,7 @@ void InitOptions(void);
 void InitStringHash(void);
 void Init_R_Variables(SEXP);
 void InitTempDir(void);
+void R_reInitTempDir(int);
 void InitTypeTables(void);
 void initStack(void);
 void InitS3DefaultTypes(void);
@@ -1408,7 +1409,7 @@ extern const char *locale2charset(const char *);
 } while(0)
 
 
-/* 
+/*
    alloca is neither C99 nor POSIX.
 
    It might be better to try alloca.h first, see

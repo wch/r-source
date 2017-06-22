@@ -1,14 +1,12 @@
 % File src/library/base/man/Reserved.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Reserved}
+\title{Reserved Words in R}
 \alias{Reserved}
 \alias{reserved}
-\alias{...}
-\alias{..1}
-\title{Reserved Words in R}
 \description{
   The reserved words in \R's parser are
 
@@ -22,10 +20,7 @@
   \code{\link{NA_complex_}} \code{\link{NA_character_}}
 
   \code{\dots} and \code{..1}, \code{..2} etc, which are used to refer to
-  arguments passed down from a calling function.  See the
-  \ifelse{html}{\href{/doc/manual/R-intro.html#The-three-dots-argument}{Introduction to R}}{\sQuote{Introduction to R}}
-  manual for usage of these syntactic elements,
-  and \link[methods]{dotsMethods} for their use in formal methods.
+  arguments passed down from a calling function, see \code{\link{...}}.
 }
 \details{
   Reserved words outside \link[=Quotes]{quotes} are always parsed to be

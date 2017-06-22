@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 1997-2017   The R Core Team
  *  Copyright (C) 1995-1996   Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2014   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -49,6 +49,8 @@
 #ifdef HAVE_SYS_STAT_H
 # include <sys/stat.h>
 #endif
+
+static int isDir(char *path);
 
 #ifdef HAVE_AQUA
 int (*ptr_CocoaSystem)(const char*);
@@ -104,11 +106,11 @@ Rboolean attribute_hidden R_HiddenFile(const char *name)
 
 static char * fixmode(const char *mode)
 {
-    /* Rconnection can have a mode of 4 chars plus a null; we might
-     * add one char */
-    static char fixedmode[6];
-    fixedmode[4] = '\0';
-    strncpy(fixedmode, mode, 4);
+    /* Rconnection can have a mode of 4 chars plus a ccs= setting plus a null; we might
+     * add one char if neither b nor t is specified. */
+    static char fixedmode[20];
+    fixedmode[19] = '\0';
+    strncpy(fixedmode, mode, 19);
     if (!strpbrk(fixedmode, "bt")) {
 	strcat(fixedmode, "t");
     }
@@ -117,9 +119,9 @@ static char * fixmode(const char *mode)
 
 static wchar_t * wcfixmode(const wchar_t *mode)
 {
-    static wchar_t wcfixedmode[6];
-    wcfixedmode[4] = L'\0';
-    wcsncpy(wcfixedmode, mode, 4);
+    static wchar_t wcfixedmode[20];
+    wcfixedmode[19] = L'\0';
+    wcsncpy(wcfixedmode, mode, 19);
     if (!wcspbrk(wcfixedmode, L"bt")) {
 	wcscat(wcfixedmode, L"t");
     }
@@ -229,6 +231,11 @@ SEXP attribute_hidden do_interactive(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP attribute_hidden do_tempdir(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
+    Rboolean check = asLogical(CAR(args));
+    if(check && !isDir(R_TempDir)) {
+	R_TempDir = NULL;
+	R_reInitTempDir(/* die_on_fail = */ FALSE);
+    }
     return mkString(R_TempDir);
 }
 
@@ -1554,13 +1561,19 @@ extern char * mkdtemp (char *template);
 # include <ctype.h>
 #endif
 
-void attribute_hidden InitTempDir()
+void R_reInitTempDir(int die_on_fail)
 {
     char *tmp, *tm, tmp1[PATH_MAX+11], *p;
 #ifdef Win32
     char tmp2[PATH_MAX];
     int hasspace = 0;
 #endif
+
+#define ERROR_MAYBE_DIE(MSG_)			\
+    if(die_on_fail)				\
+	R_Suicide(MSG_);			\
+    else					\
+	errorcall(R_NilValue, MSG_)
 
     if(R_TempDir) return; /* someone else set it */
     tmp = NULL; /* getenv("R_SESSION_TMPDIR");   no longer set in R.sh */
@@ -1591,7 +1604,9 @@ void attribute_hidden InitTempDir()
 	snprintf(tmp1, PATH_MAX+11, "%s/RtmpXXXXXX", tm);
 #endif
 	tmp = mkdtemp(tmp1);
-	if(!tmp) R_Suicide(_("cannot create 'R_TempDir'"));
+	if(!tmp) {
+	    ERROR_MAYBE_DIE(_("cannot create 'R_TempDir'"));
+	}
 #ifndef Win32
 # ifdef HAVE_SETENV
 	if(setenv("R_SESSION_TMPDIR", tmp, 1))
@@ -1615,12 +1630,16 @@ void attribute_hidden InitTempDir()
     size_t len = strlen(tmp) + 1;
     p = (char *) malloc(len);
     if(!p)
-	R_Suicide(_("cannot allocate 'R_TempDir'"));
+	ERROR_MAYBE_DIE(_("cannot allocate 'R_TempDir'"));
     else {
 	R_TempDir = p;
 	strcpy(R_TempDir, tmp);
 	Sys_TempDir = R_TempDir;
     }
+}
+
+void attribute_hidden InitTempDir() {
+    R_reInitTempDir(/* die_on_fail = */ TRUE);
 }
 
 char * R_tmpnam(const char * prefix, const char * tempdir)
@@ -1630,7 +1649,7 @@ char * R_tmpnam(const char * prefix, const char * tempdir)
 
 /* NB for use with multicore: parent and all children share the same
    session directory and run in parallel.
-   So as from 2.14.1, we make sure getpic() is part of the process.
+   So as from 2.14.1, we make sure getpid() is part of the process.
 */
 char * R_tmpnam2(const char *prefix, const char *tempdir, const char *fileext)
 {

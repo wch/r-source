@@ -239,7 +239,7 @@ makeHelpTable <- function(help, depth=2) {
 }
 
 toHTML.citation <-
-function(x, ...)
+function(x, header = TRUE, ...)
 {
     len <- length(x)
     if(!len) return(character())
@@ -323,19 +323,47 @@ function(x, ...)
         s
     }
 
-    c(HTMLheader(...),
-      "<body>",
-      if(is_non_blank_string(header <- attr(x, "mheader")))
-      c("<p>", htmlify(header), "</p>"),
+    package <- attr(x, "package")
+
+    if (!(is.character(header) || is.logical(header))) {
+        warning("unknown header specification")
+	header <- TRUE
+    }
+    if (identical(header, "R")) {
+        header <- HTMLheader(...)
+	footer <- c("</body>", "</html>")
+    } else if (identical(header, FALSE)) {
+        header <- character(0L)
+	footer <- character(0L)
+    } else {
+        if(isTRUE(header))
+            header <-
+                c("<head>",
+                  if(is.null(package))
+                      "<title>Citation information</title>"
+                  else
+                      sprintf("<title>%s citation information</title>",
+                              package), 
+                  "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />", 
+                  "</head>")
+        header <- c("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">", 
+                  "<html xmlns=\"http://www.w3.org/1999/xhtml\">",
+                  header,
+		  "<body>")
+	footer <- c("</body>", "</html>")
+    }
+
+    c(header,      
+      if(is_non_blank_string(mheader <- attr(x, "mheader")))
+      c("<p>", htmlify(mheader), "</p>"),
       do.call(c, lapply(x, format_entry_as_text)),
-      if(is_non_blank_string(footer <- attr(x, "mfooter")))
-      c("<p>", htmlify(footer), "</p>"),
+      if(is_non_blank_string(mfooter <- attr(x, "mfooter")))
+      c("<p>", htmlify(mfooter), "</p>"),
       c("<p>",
         ngettext(len,
                  "Corresponding BibTeX entry:",
                  "Corresponding BibTeX entries:"),
         "</p>",
         do.call(c, lapply(x, format_entry_as_BibTeX))),
-      "</body>",
-      "</html>")
+      footer)
 }

@@ -1,7 +1,7 @@
 #  File src/library/tools/R/install.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 # NB: also copyright dates in Usages.
 #
@@ -50,9 +50,9 @@
 
     do_exit <-
 	if(no.q)
-	    function(status = 1L) stop(".install_packages() exit status ", status)
+	    function(status) stop(".install_packages() exit status ", status)
 	else
-	    function(status = 1L) q("no", status = status, runLast = FALSE)
+	    function(status) q("no", status = status, runLast = FALSE)
 
     do_exit_on_error <- function(status = 1L)
     {
@@ -253,7 +253,9 @@
             pkg_name <- basename(pkg)
             pkg_name <- sub("\\.zip$", "", pkg_name)
             pkg_name <- sub("_[0-9.-]+$", "", pkg_name)
-            utils:::unpackPkgZip(pkg, pkg_name, lib, libs_only)
+            if (pkglock)
+                lock <- "pkglock"
+            utils:::unpackPkgZip(pkg, pkg_name, lib, libs_only, lock)
             return()
         }
 

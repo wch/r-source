@@ -695,7 +695,7 @@ SEXP eval(SEXP e, SEXP rho)
 	if (TYPEOF(op) == SPECIALSXP) {
 	    int save = R_PPStackTop, flag = PRIMPRINT(op);
 	    const void *vmax = vmaxget();
-	    PROTECT(CDR(e));
+	    PROTECT(e);
 	    R_Visible = flag != 1;
 	    tmp = PRIMFUN(op) (e, op, CDR(e), rho);
 #ifdef CHECK_VISIBILITY
@@ -1634,7 +1634,7 @@ SEXP R_forceAndCall(SEXP e, int n, SEXP rho)
 
     if (TYPEOF(fun) == SPECIALSXP) {
 	int flag = PRIMPRINT(fun);
-	PROTECT(CDR(e));
+	PROTECT(e);
 	R_Visible = flag != 1;
 	tmp = PRIMFUN(fun) (e, fun, CDR(e), rho);
 	if (flag < 2) R_Visible = flag != 1;
@@ -2196,6 +2196,7 @@ SEXP attribute_hidden do_begin(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP s = R_NilValue;
     if (args != R_NilValue) {
 	SEXP srcrefs = getBlockSrcrefs(call);
+	PROTECT(srcrefs);
 	int i = 1;
 	while (args != R_NilValue) {
 	    PROTECT(R_Srcref = getSrcref(srcrefs, i++));
@@ -2209,6 +2210,7 @@ SEXP attribute_hidden do_begin(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    args = CDR(args);
 	}
 	R_Srcref = R_NilValue;
+	UNPROTECT(1); /* srcrefs */
     }
     return s;
 }
@@ -2805,7 +2807,10 @@ SEXP attribute_hidden promiseArgs(SEXP el, SEXP rho)
 	    PROTECT(h = findVar(CAR(el), rho));
 	    if (TYPEOF(h) == DOTSXP || h == R_NilValue) {
 		while (h != R_NilValue) {
-		    SETCDR(tail, CONS(mkPROMISE(CAR(h), rho), R_NilValue));
+		    if (TYPEOF(CAR(h)) == PROMSXP || CAR(h) == R_MissingArg)
+		      SETCDR(tail, CONS(CAR(h), R_NilValue));
+                    else
+		      SETCDR(tail, CONS(mkPROMISE(CAR(h), rho), R_NilValue));
 		    tail = CDR(tail);
 		    COPY_TAG(tail, h);
 		    h = CDR(h);
@@ -4331,7 +4336,7 @@ static R_INLINE double (*getMath1Fun(int i, SEXP call))(double) {
 	    double rn2 = vy.dval;					\
 	    if (R_FINITE(rn1) && R_FINITE(rn2) &&			\
 		INT_MIN <= rn1 && INT_MAX >= rn1 &&			\
-		INT_MIN <= rn2 && INT_MAX >- rn2 &&			\
+		INT_MIN <= rn2 && INT_MAX >= rn2 &&			\
 		rn1 == (int) rn1 && rn2 == (int) rn2) {			\
 		SKIP_OP(); /* skip 'call' index */			\
 		R_BCNodeStackTop--;					\
@@ -5500,7 +5505,8 @@ static R_INLINE void SUBASSIGN_N_PTR(R_bcstack_t *sx, int rank,
 
 #define FIXUP_SCALAR_LOGICAL(callidx, arg, op) do { \
 	SEXP val = GETSTACK(-1); \
-	if (TYPEOF(val) != LGLSXP || XLENGTH(val) != 1) { \
+	if (TYPEOF(val) != LGLSXP || XLENGTH(val) != 1 || \
+	    ATTRIB(val) != NULL) {			  \
 	    if (!isNumber(val))	\
 		errorcall(VECTOR_ELT(constants, callidx), \
 			  _("invalid %s type in 'x %s y'"), arg, op);	\

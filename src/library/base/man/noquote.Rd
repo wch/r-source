@@ -1,6 +1,6 @@
 % File src/library/base/man/noquote.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{noquote}
@@ -14,7 +14,7 @@
   Print character strings without quotes.
 }
 \usage{
-noquote(obj)
+noquote(obj, right = FALSE)
 
 \method{print}{noquote}(x, \dots)
 
@@ -23,6 +23,9 @@ noquote(obj)
 \arguments{
   \item{obj}{any \R object, typically a vector of
     \code{\link{character}} strings.}
+  \item{right}{optional \code{\link{logical}} eventually to be passed to
+    \code{print()}, used by \code{\link{print.default}()}, indicating
+    whether or not strings should be right aligned.}
   \item{x}{an object of class \code{"noquote"}.}
   \item{\dots}{further options passed to next methods, such as \code{\link{print}}.}
   \item{recursive}{for compatibility with the generic \code{\link{c}} function.}
@@ -55,6 +58,16 @@ cmp.logical <- function(log.v)
   noquote(if(length(log.v) == 0)"()" else c(".","|")[1 + log.v])
 }
 cmp.logical(stats::runif(20) > 0.8)
+
+chmat <- as.matrix(format(stackloss)) # a "typical" character matrix
+## noquote(*, right=TRUE)  so it prints exactly like a data frame
+chmat <- noquote(chmat, right = TRUE)
+chmat
+%% \dontshow{ ========   FIXME(?) problem in capture.output()
+%% stopifnot(identical(
+%%    capture.output(stackloss),
+%%    capture.output(chmat)))
+%% }%dont
 }
 \keyword{print}
 \keyword{methods}

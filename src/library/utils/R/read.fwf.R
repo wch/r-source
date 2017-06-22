@@ -1,7 +1,7 @@
 #  File src/library/utils/R/read.fwf.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -33,8 +33,11 @@ function(file, widths, header = FALSE, sep = "\t",
     } else recordlength <- 1L
 
     drop <- (widths < 0L)
-    widths <- abs(widths)
-
+    cwidths <- cumsum(abs(widths))
+    st <- c(1L, 1L+cwidths)
+    first <- st[-length(st)][!drop]
+    last <- cwidths[!drop]
+    outsep <- c(rep_len(sep, length(first) - 1L), "\n")
 
     buffersize <- (buffersize %/% recordlength) * recordlength
 
@@ -60,11 +63,8 @@ function(file, widths, header = FALSE, sep = "\t",
 
     repeat({
         if (n == 0L) break
-        if (n == -1L)
-            thisblock <- buffersize
-        else
-            thisblock <- min(buffersize, n*recordlength)
-
+        thisblock <- if (n == -1L) buffersize
+                     else min(buffersize, n*recordlength)
         raw <- readLines(file, n = thisblock)
         nread <- length(raw)
         if (recordlength > 1L &&  nread %% recordlength) {
@@ -79,11 +79,7 @@ function(file, widths, header = FALSE, sep = "\t",
             raw <- apply(raw, 2L, paste, collapse = "")
         }
 
-        st <- c(1L, 1L+cumsum(widths))
-        first <- st[-length(st)][!drop]
-        last <- cumsum(widths)[!drop]
-        cat(file = FILE, sapply(raw, doone),
-            sep = c(rep_len(sep, length(first) - 1L), "\n"))
+        cat(file = FILE, sapply(raw, doone, USE.NAMES=FALSE), sep = outsep)
 
         if (nread < thisblock) break
         if (n > 0L) n <- n - length(raw)

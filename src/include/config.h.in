@@ -805,6 +805,12 @@
    to be built. */
 #undef HAVE_TCLTK
 
+/* Define to 1 if you have the <thread.h> header file. */
+#undef HAVE_THREAD_H
+
+/* Define to 1 if you have the `thr_stksegment' function. */
+#undef HAVE_THR_STKSEGMENT
+
 /* Define this if libtiff is available. */
 #undef HAVE_TIFF
 
@@ -930,6 +936,9 @@
 
 /* Define if calloc(0) returns a null pointer. */
 #undef HAVE_WORKING_CALLOC
+
+/* Define if ctanh() exists and is working correctly. */
+#undef HAVE_WORKING_CTANH
 
 /* Define if your ftell works correctly on files opened for append. */
 #undef HAVE_WORKING_FTELL

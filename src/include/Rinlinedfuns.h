@@ -779,6 +779,8 @@ INLINE_FUN Rboolean isFrame(SEXP s)
     return FALSE;
 }
 
+/* DIFFERENT than R's  is.language(.) in ../main/coerce.c [do_is(), case 301:]
+ *                                    which is   <=>  SYMSXP || LANGSXP || EXPRSXP */
 INLINE_FUN Rboolean isLanguage(SEXP s)
 {
     return (s == R_NilValue || TYPEOF(s) == LANGSXP);

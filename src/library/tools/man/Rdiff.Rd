@@ -1,6 +1,6 @@
 % File src/library/tools/man/Rdiff.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2010-2014 R Core Team
+% Copyright 2010-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Rdiff}
@@ -45,6 +45,10 @@ Rdiff(from, to, useDiff = FALSE, forEx = FALSE,
 
   This can compare uncompressed PDF files, ignoring differences in
   creation and modification dates.
+
+  Mainly for use in examples, text from marker
+  \samp{> ## IGNORE_RDIFF_BEGIN} up to (but not including)
+  \samp{> ## IGNORE_RDIFF_END} is ignored.
 }
 \value{
   If \code{Log} is true, a list with components \code{status} (see

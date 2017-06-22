@@ -889,8 +889,9 @@ SEXP attribute_hidden do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 		FILETIME c_ft, a_ft, m_ft; 
 		HANDLE h;
 		int success = 0;
-		h = CreateFileW(wfn, GENERIC_READ, 0, NULL, OPEN_EXISTING,
-				    FILE_FLAG_BACKUP_SEMANTICS, NULL);
+		h = CreateFileW(wfn, 0,
+		                FILE_SHARE_DELETE | FILE_SHARE_READ | FILE_SHARE_WRITE,
+		                NULL, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, NULL);
 		if (h != INVALID_HANDLE_VALUE) {
 		    int res  = GetFileTime(h, &c_ft, &a_ft, &m_ft);
 		    CloseHandle(h);

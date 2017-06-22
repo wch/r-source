@@ -1,7 +1,7 @@
 #  File src/library/tools/R/Vignettes.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -378,6 +378,9 @@ function(package, dir, subdirs = NULL, lib.loc = NULL, output = FALSE,
 
     docs <- names <- engines <- patterns <- character()
     allFiles <- list.files(docdir, all.files = FALSE, full.names = TRUE)
+    exclude <- inRbuildignore(sub(paste0(dir, "/"), "", allFiles, fixed = TRUE), dir)
+    allFiles <- allFiles[!exclude]
+    
     matchedPattern <- rep.int(FALSE, length(allFiles))
     msg <- character()
     if (length(allFiles) > 0L) {

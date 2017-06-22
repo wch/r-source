@@ -7332,8 +7332,8 @@ this is not always defined on Windows.  If the environment variable
 environment variable @env{HOME} is defined, that gives the home
 directory.  After those two user-controllable settings, @R{} tries to
 find system defined home directories.  It first tries to use the
-Windows "personal" directory (typically @code{C:\Documents and
-Settings\username\My Documents} in Windows XP).  If that fails, and
+Windows "personal" directory (typically @code{My Documents} in 
+recent versions of Windows).  If that fails, and
 environment variables @env{HOMEDRIVE} and @env{HOMEPATH} are defined
 (and they normally are) these define the home directory.  Failing all
 those, the home directory is taken to be the starting directory.

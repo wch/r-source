@@ -392,6 +392,7 @@ S3method("length", "arrow")
 
 # S3 method for generic str (in utils)
 S3method("str", "unit.arithmetic")
+S3method("str", "arrow")
 
 S3method("makeContent", "beziergrob")
 S3method("makeContent", "roundrect")

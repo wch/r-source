@@ -164,6 +164,12 @@ static char* unescape_arg(char *p, char* avp) {
     return p;
 }
 
+/* for thr_stksegment */
+#if defined(HAVE_THREAD_H)
+# include <thread.h>
+#endif
+#include <signal.h> /* thr_stksegment */
+
 int Rf_initialize_R(int ac, char **av)
 {
     int i, ioff = 1, j;
@@ -217,7 +223,45 @@ int Rf_initialize_R(int ac, char **av)
 	if (lim != RLIM_INFINITY) R_CStackLimit = (uintptr_t) lim;
     }
 #if defined(HAVE_LIBC_STACK_END)
-    R_CStackStart = (uintptr_t) __libc_stack_end;
+    {
+	R_CStackStart = (uintptr_t) __libc_stack_end;
+	/* The libc stack end is not exactly at the stack start, so one
+	   cannot access __libc_stack_end - R_CStackLimit/getrlimit + 1. We
+	   have to find the real stack start that matches getrlimit.
+
+	   A modern alternative to __libc_stack_end and to parsing /proc/maps
+	   directly is pthread_getattr_np; it doesn't provide the exact stack
+	   start, either, but provides a matching stack size smaller than 
+	   the one obtained from getrlimit. However, pthread_getattr_np
+	   may have not worked properly on old Linux distributions. */
+	
+	/* based on GDB relocatable.c */
+	FILE *f;
+	f = fopen("/proc/self/maps", "r");
+	if (f) {
+	    for(;;) {
+		int c;
+		unsigned long start, end;
+
+		if (fscanf(f, "%lx-%lx", &start, &end) == 2 &&
+		    R_CStackStart >= (uintptr_t)start &&
+		    R_CStackStart < (uintptr_t)end) {
+		    
+		    /* would this be ok for R_CStackDir == -1? */
+		    R_CStackStart = (uintptr_t) ((R_CStackDir == 1) ? end : start);
+		    break;
+		}
+		for(c = getc(f); c != '\n' && c != EOF; c = getc(f));
+		if (c == EOF) {
+		    /* could also abort here, but R will usually work with
+		       R_CStackStart set just for __libc_stack_end */
+		    fprintf(stderr, "WARNING: Error parsing /proc/self/maps!\n");
+		    break;
+		}
+	    }
+	    fclose(f);
+	}
+    }
 #elif defined(HAVE_KERN_USRSTACK)
     {
 	/* Borrowed from mzscheme/gc/os_dep.c */
@@ -226,6 +270,19 @@ int Rf_initialize_R(int ac, char **av)
 	size_t len = sizeof(void *);
 	(void) sysctl(nm, 2, &base, &len, NULL, 0);
 	R_CStackStart = (uintptr_t) base;
+    }
+#elif defined(HAVE_THR_STKSEGMENT)
+    {
+	/* Solaris */
+	stack_t stack;
+	if (thr_stksegment(&stack))
+	    R_Suicide("Cannot obtain stack information (thr_stksegment).");
+	R_CStackStart = (uintptr_t) stack.ss_sp;
+	/* This _may_ have to be adjusted for a (perhaps theoretical) platform
+	   where the stack would grow upwards.
+
+	   The stack size could be updated based on stack.ss_size, but experiments
+	   suggest getrlimit is safe here. */
     }
 #else
     if(R_running_as_main_program) {
@@ -236,8 +293,7 @@ int Rf_initialize_R(int ac, char **av)
 #endif
     if(R_CStackStart == (uintptr_t)(-1)) R_CStackLimit = (uintptr_t)(-1); /* never set */
 
-    /* printf("stack limit %ld, start %lx dir %d \n", R_CStackLimit,
-	      R_CStackStart, R_CStackDir); */
+    /* setup_Rmainloop includes (disabled) code to test stack detection */
 }
 #endif
 

@@ -4288,6 +4288,41 @@ if test "x${r_cv_openmp_simdred}" = xyes; then
 fi
 ])# R_OPENMP_SIMDRED
 
+## R_FUNC_CTANH
+## ------------
+## Old versions of GLIBC have a bug due to which e.g. ctanh(0+365i) is NaN.
+## The problem exists also in RHEL6.
+AC_DEFUN([R_FUNC_CTANH],
+[AC_CACHE_CHECK([for working ctanh], [r_cv_func_ctanh_works],
+[AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#include <complex.h>
+#include <stdlib.h>
+#include "confdefs.h"
+int main () {
+#ifdef HAVE_CTANH
+  volatile double complex z1 = 0;
+  volatile double complex z2 = 365;
+
+  z1 = ctanh(z1);
+  z2 = ctanh(z2);
+
+  if (creal(z1) != 0 || cimag(z1) != 0 || creal(z2) != 1 || cimag(z2) != 0)
+    exit(1);
+  else
+    exit(0);
+#else
+  exit(1);
+#endif
+}
+]])],
+               [r_cv_func_ctanh_works=yes],
+               [r_cv_func_ctanh_works=no],
+               [r_cv_func_ctanh_works=no])])
+if test "x${r_cv_func_ctanh_works}" = xyes; then
+  AC_DEFINE(HAVE_WORKING_CTANH, 1,
+            [Define if ctanh() exists and is working correctly.])
+fi
+])# R_FUNC_CTANH
 
 ### Local variables: ***
 ### mode: outline-minor ***

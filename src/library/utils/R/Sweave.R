@@ -1,7 +1,7 @@
 #   File src/library/utils/R/Sweave.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -452,10 +452,10 @@ SweaveHooks <- function(options, run = FALSE, envir = .GlobalEnv)
     }
     do_exit <-
 	if(no.q)
-	    function(status = 1L) (if(status) stop else message)(
+	    function(status = 0L) (if(status) stop else message)(
 		".Sweave() exit status ", status)
 	else
-	    function(status = 1L) q("no", status = status, runLast = FALSE)
+	    function(status = 0L) q("no", status = status, runLast = FALSE)
 
     if (!length(args)) {
         Usage()
@@ -577,16 +577,15 @@ SweaveHooks <- function(options, run = FALSE, envir = .GlobalEnv)
     }
     do_exit <-
 	if(no.q)
-	    function(status = 1L) (if(status) stop else message)(
+	    function(status = 0L) (if(status) stop else message)(
 		".Stangle() exit status ", status)
 	else
-	    function(status = 1L) q("no", status = status, runLast = FALSE)
+	    function(status = 0L) q("no", status = status, runLast = FALSE)
 
     if (!length(args)) {
         Usage()
         do_exit(1L)
     }
-
     file <- character()
     encoding <- options <- ""
     engine <- NULL

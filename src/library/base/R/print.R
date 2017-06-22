@@ -1,7 +1,7 @@
 #  File src/library/base/R/print.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -40,9 +40,11 @@ prmatrix <-
     .Internal(prmatrix(x, rowlab, collab, quote, right, na.print))
 }
 
-noquote <- function(obj) {
+noquote <- function(obj, right = FALSE) {
     ## constructor for a useful "minor" class
-    if(!inherits(obj,"noquote")) class(obj) <- c(attr(obj, "class"),"noquote")
+    if(!inherits(obj,"noquote"))
+        class(obj) <- c(attr(obj, "class"),
+                        if(right) c(right = "noquote") else "noquote")
     obj
 }
 
@@ -63,12 +65,20 @@ c.noquote <- function(..., recursive = FALSE)
 }
 
 print.noquote <- function(x, ...) {
+    rgt.in.dots <- any(I <- "right" == names(list(...)))
     if(!is.null(cl <- attr(x, "class"))) {
-	cl <- cl[cl != "noquote"]
-        attr(x, "class") <-
-          (if(length(cl)) cl else NULL)
-      }
-    print(x, quote = FALSE, ...)
+	isNQ <- cl == "noquote"
+	if(!rgt.in.dots)
+	    right <- any("right" == names(cl[isNQ]))
+	cl <- cl[!isNQ]
+	attr(x, "class") <-
+	  (if(length(cl)) cl else NULL)
+    } else
+	right <- FALSE
+    if(rgt.in.dots)
+	print(x, quote = FALSE, ...)
+    else 
+	print(x, quote = FALSE, right = right, ...)
 }
 
 ## for alias.lm, aov

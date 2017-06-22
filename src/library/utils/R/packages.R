@@ -1,7 +1,7 @@
 #  File src/library/utils/R/packages.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -347,12 +347,12 @@ update.packages <- function(lib.loc = NULL, repos = getOption("repos"),
                 "Version", old[k, "ReposVer"], "available at",
                 simplifyRepos(old[k, "Repository"], type))
             cat("\n")
-            answer <- substr(readline("Update (y/N/c)?  "), 1L, 1L)
-            if(answer == "c" | answer == "C") {
+            answer <- askYesNo("Update?")
+            if(is.na(answer)) {
                 cat("cancelled by user\n")
                 return(invisible())
             }
-            if(answer == "y" | answer == "Y")
+            if(isTRUE(answer))
                 update <- rbind(update, old[k,])
         }
         update
@@ -624,7 +624,7 @@ installed.packages <-
             dest <- file.path(tempdir(), paste0("libloc_", enc, ".rds"))
             test <- file.exists(dest) && file.mtime(dest) > file.mtime(lib) &&
                 (val <- readRDS(dest))$base == base
-            if(isTRUE(test))
+            if(isTRUE(as.vector(test)))
                 ## use the cache file
                 retval <- rbind(retval, val$value)
             else {

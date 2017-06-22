@@ -2666,12 +2666,11 @@ should be used).
 
 Experimental support for C++17 has been added to @R{} version 3.4.0. The
 @file{configure} script tests a subset of C++17 features.  At the time
-of writing (March 2017) both @code{clang 4.0.0} and the pre-release
-version @code{gcc 7.0.1 (20170314)} pass these tests (with flags
-@option{-std=gnu++1z} and @option{-std=gnu++17} respectively chosen by
-the @file{configure} script).  Note that the C++17 feature tests are
-incomplete and are subject to change in future @R{} versions as compiler
-support for the standard improves.
+of writing (March 2017) both @code{clang 4.0.0} and @code{gcc 7.1} pass
+these tests (with flags @option{-std=gnu++1z} and @option{-std=gnu++17}
+respectively chosen by the @file{configure} script).  Note that the
+C++17 feature tests are incomplete and are subject to change in future
+@R{} versions as compiler support for the standard improves.
 
 The variables associated with the C++17 compiler use the prefix
 @samp{CXX17}.  Hence to use C++17 code in a package, the package's
@@ -4931,13 +4930,24 @@ Some compilers/OSes include other system headers in their headers which
 are not required by the standards, and so code may compile on such
 systems and not on others.  (A prominent example is the C++11 header
 @code{<random>} which is indirectly included by @code{<algorithm>} by
-@command{g++}.  Another frequent issue is the C header @code{<time.h>}
-which is included by other headers on Linux and Windows but not macOS nor
-Solaris.)  Another common issue is that @code{malloc}, @code{calloc},
-@code{realloc} and @code{free} are defined by C99 in the header
-@file{stdlib.h} and (in the @code{std::} namespace) by C++ header
-@file{cstdlib}.  Some earlier implementations used a header
-@file{malloc.h}, but that is not portable and does not exist on macOS.
+@command{g++}.  Another issue is the C header @code{<time.h>} which is
+included by other headers on Linux and Windows but not macOS nor
+Solaris.)
+
+Note that @code{malloc}, @code{calloc}, @code{realloc} and @code{free}
+are defined by C99 in the header @file{stdlib.h} and (in the
+@code{std::} namespace) by C++ header @file{cstdlib}.  Some earlier
+implementations used a header @file{malloc.h}, but that is not portable
+and does not exist on macOS.
+
+This also applies to types such as @code{ssize_t}.  The POSIX standards
+say that is declared in headers @code{unistd.h} and @code{sys/types.h},
+and the latter is often included indirectly by other headers on some
+but not all systems.
+
+Similarly for constants: for example @code{SIZE_MAX} is defined in
+@code{stdint.h} alongside @code{size_t} (according to the C99 standard:
+it is not part of C++98).
 
 @item
 For C++ code, be careful to specify namespaces where needed.  Many
@@ -5975,6 +5985,15 @@ need someone to interact with.)  Note that code included in
 be declared in the @file{DESCRIPTION} file.  It is good practice to
 include a comment in the @code{\donttest} section explaining why it is
 needed.
+
+As from @R{} 3.4.0, output from code between comments
+@example
+## IGNORE_RDIFF_BEGIN
+## IGNORE_RDIFF_END
+@end example
+@noindent
+is ignored when comparing check output to reference output (a
+@file{-Ex.Rout.save} file).
 
 @findex \keyword
 @item \keyword@{@var{key}@}
@@ -8365,10 +8384,9 @@ break __asan_report_error
 (See
 @uref{https://code.google.com/@/p/@/address-sanitizer/@/wiki@//AddressSanitizer#gdb}.)
 
-Recent versions@footnote{This is expected to be in @command{gcc} 7 and
-@command{clang} 4.0.0.  Currently for @command{gcc} it is implied by
-@option{-fsanitize=address}.} added the flag
-@option{-fsanitize-address-use-after-scope}: see
+Recent versions@footnote{including @command{gcc} 7.1 and @command{clang}
+4.0.0: for @command{gcc} it is implied by @option{-fsanitize=address}.}
+added the flag @option{-fsanitize-address-use-after-scope}: see
 @uref{https://github.com//google//sanitizers//wiki//AddressSanitizerUseAfterScope}.
 
 @menu
@@ -12142,7 +12160,7 @@ is created by
 @noindent
 Note the symbol given to identify the usage of the external pointer, and
 the use of the finalizer.  Since the final argument when registering the
-finalizer is @code{TRUE}, the finalizer will be run at the of the
+finalizer is @code{TRUE}, the finalizer will be run at the end of the
 @R{} session (unless it crashes).  This is used to close and clean up
 the connection to the database.  The finalizer code is simply
 

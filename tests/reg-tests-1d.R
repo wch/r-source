@@ -10,6 +10,25 @@ x <- NULL; tools::assertWarning(f <-    body(x)); stopifnot(is.null(f))
 x <- NULL; tools::assertWarning(f <- formals(x)); stopifnot(is.null(f))
 ## these all silently coerced NULL to a function in R <= 3.2.x
 
+## A good guess if we have _not_ translated error/warning/.. messages:
+## (should something like this be part of package tools ?)
+englishMsgs <- {
+    ## 1. LANGUAGE takes precedence over locale settings:
+    if(nzchar(lang <- Sys.getenv("LANGUAGE")))
+        lang == "en"
+    else { ## query the  locale
+        if(.Platform$OS.type != "windows") {
+            ## sub() :
+            lc.msgs <- sub("\\..*", "", print(Sys.getlocale("LC_MESSAGES")))
+            lc.msgs == "C" || substr(lc.msgs, 1,2) == "en"
+        } else { ## Windows
+            lc.type <- sub("\\..*", "", sub("_.*", "", print(Sys.getlocale("LC_CTYPE"))))
+            lc.type == "English" || lc.type == "C"
+        }
+    }
+}
+cat(sprintf("English messages: %s\n", englishMsgs))
+
 
 ## match(x, t): fast algorithm for length-1 'x' -- PR#16885
 ## a) string 'x'  when only encoding differs
@@ -461,7 +480,7 @@ tools::assertError(format(d))
 dlt <- structure(
     list(sec = 52, min = 59L, hour = 18L, mday = 6L, mon = 11L, year = 116L,
          wday = 2L, yday = 340L, isdst = 0L, zone = "CET", gmtoff = 3600L),
-    class = c("POSIXlt", "POSIXt"), tzone = c("", "CET", "CEST"))
+    class = c("POSIXlt", "POSIXt"), tzone = "CET")
 dlt$sec <- 10000 + 1:10 # almost three hours & uses re-cycling ..
 fd <- format(dlt)
 stopifnot(length(fd) == 10, identical(fd, format(dct <- as.POSIXct(dlt))))
@@ -730,6 +749,45 @@ dby <- function(dat, ind, F) by(dat, ind, FUN=F)
 dby(warpbreaks, warpbreaks[,"tension"], summary)
 stopifnot(is.list(r <- .Last.value), inherits(r, "by"))
 ## failed after r72531
+
+
+## status returned by 'R CMD Sweave'
+fil <- "Sweave-test-1.Rnw"
+file.copy(system.file("Sweave", fil, package="utils"), tempdir())
+owd <- setwd(tempdir())
+(o <- capture.output(utils:::.Sweave(fil, no.q = TRUE), type = "message"))
+stopifnot(grepl("exit status 0", o[2]))
+setwd(owd)
+## R CMD Sweave gave status 1 and hence an error in R 3.4.0 (only)
+
+
+## print.noquote(*,  right = *)
+print(noquote(LETTERS[1:9]), right = TRUE)
+## failed a few days end in R-devel ca. May 1, 2017
+
+
+## accessing  ..1  when ... is empty and using ..0, etc.
+t0 <- function(...) ..0
+t1 <- function(...) ..1
+t2 <- function(...) ..2
+stopifnot(identical(t1(pi, 2), pi), identical(t1(t1), t1),
+	  identical(t2(pi, 2), 2))
+et1 <- tryCatch(t1(), error=identity)
+if(englishMsgs)
+    stopifnot(identical("the ... list does not contain any element",
+			conditionMessage(et1)))
+## previously gave   "'nthcdr' needs a list to CDR down"
+et0   <- tryCatch(t0(),  error=identity); (mt0   <- conditionMessage(et0))
+et2.0 <- tryCatch(t2(),  error=identity); (mt2.0 <- conditionMessage(et2.0))
+et2.1 <- tryCatch(t2(1), error=identity); (mt2.1 <- conditionMessage(et2.1))
+if(englishMsgs)
+    stopifnot(grepl("indexing '...' with .* index 0", mt0),
+	      identical("the ... list does not contain 2 elements", mt2.0),
+	      identical(mt2.0, mt2.1))
+tools::assertError(t0(1))
+tools::assertError(t0(1, 2))
+## the first gave a different error msg, the next gave no error in R < 3.5.0
+
 
 
 ## keep at end

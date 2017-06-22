@@ -30,6 +30,10 @@
    It should have been resolved (after a decade) in 2012.
 */
 
+#if defined(HAVE_CTANH) && !defined(HAVE_WORKING_CTANH)
+#undef HAVE_CTANH
+#endif
+
 #if 0
 /* For testing substitute fns */
 #undef HAVE_CARG

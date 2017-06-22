@@ -1,7 +1,7 @@
 #  File src/library/tools/R/Rprof.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,9 +16,14 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
-.Rprof <- function(args = NULL)
+.Rprof <- function(args = NULL, no.q = FALSE)
 {
-    do_exit <- function(status = 1L) q("no", status = status, runLast = FALSE)
+    do_exit <-
+	if(no.q)
+	    function(status) (if(status) stop else message)(
+		".Rprof() exit status ", status)
+	else
+	    function(status) q("no", status = status, runLast = FALSE)
 
     Usage <- function() {
         cat("Usage: R CMD Rprof [options] [file]",

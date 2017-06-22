@@ -1,7 +1,12 @@
 ## partly moved from ../man/smooth.spline.Rd , quite system-specific.
+if(!dev.interactive(TRUE)) pdf("smooth.spline-test.pdf")
+
 ##-- artificial example
 y18 <- c(1:3, 5, 4, 7:3, 2*(2:5), rep(10, 4))
-(b.64 <- (Sys.info()[["machine"]] == "x86_64"))
+## "truly 64 bit platform" {have seen "x86-64" instead of "x86_64")
+(b.64 <- grepl("^x86.64", Sys.info()[["machine"]]) &&
+     .Machine$sizeof.pointer > 4)## "truly 64 bit platform"
+(Lb.64 <- b.64 && Sys.info()[["sysname"]] == "Linux" && .Machine$sizeof.pointer == 8)
 ## i386-Linux: Df ~= (even! > ) 18 : interpolating -- much smaller PRESS
 ## It is the too low 'low = -3' which "kills" the algo; low= -2.6 still ok
 ## On other platforms, e.g., x64, ends quite differently (and fine)
@@ -22,9 +27,10 @@ sdf8$df - 8 # -0.0009159978
 ## --> and gives *warning* about too large spar only
 ## e <- try(smooth.spline(y18, spar = 50)) #>> error
 ## stopifnot(inherits(e, "try-error"))
-ss50 <- try(smooth.spline(y18, spar = 50)) #>> warning only (in R >= 3.4.0) -- ?? FIXME
-e <- try(smooth.spline(y18, spar = -9)) #>> error : .. too small'
-stopifnot(if(b.64) inherits(e, "try-error") else TRUE)
+ss50 <- try(smooth.spline(y18, spar = 50)) #>> warning only (in R >= 3.4.0) -- FIXME ??
+   e <- try(smooth.spline(y18, spar = -9)) #>> error : .. too small', not on 32-bit
+## if(Lb.64) stopifnot(inherits(e, "try-error"))
+if(Lb.64) inherits(e, "try-error") else "not Linux 64-bit"
 ## I see (in 32 bit Windows),
 b.64 || inherits(ss50, "try-error")  # TRUE .. always?
 
@@ -66,6 +72,13 @@ lines(predict(s2.11, xx), lwd = 2, col = adjustcolor("forestgreen", 1/4))
 
 if(!requireNamespace("Matrix") && !interactive())
     q("no")
+
+if(Lb.64 && interactive()) ## extra checks (from above), but _not_ part of R checks
+    stopifnot(inherits(e, "try-error"))
+## in any case:
+rbind("s-9_err" = inherits(e, "try-error"),
+      "s+50_err"= inherits(ss50, "try-error"))
+
 
 aux2Mat <- function(auxM) {
     stopifnot(is.list(auxM),
@@ -129,11 +142,9 @@ stopifnot( all.equal(s2.7  [ii],
 s2.9f  <- smooth.spline(y18, cv = TRUE, keep.stuff=TRUE,
                         all.knots = seq(0, 1, length.out = 9))
 lines(predict(s2.9f, xx), lwd = 2, lty=3, col = adjustcolor("tomato", 1/2))
-## knots partly outside [0,1]  --- is not quite right, see below !!
+## knots partly outside [0,1]  --- is that correct ? (see below)
 s2.7f  <- smooth.spline(y18, cv = TRUE, keep.stuff=TRUE,
                         all.knots = c(-1,1,3,5,7,9,12)/10)
-plot(y18)
-lines(predict(s2.7f, xx), lwd = 2, lty=3, col = adjustcolor("blue", 1/2))
 
 if(FALSE) { ## not allowed (currently)
     ## knots partly *inside* [0,1] i.e. data outside knots
@@ -143,19 +154,35 @@ if(FALSE) { ## not allowed (currently)
     lines(predict(s2.5f, xx), lwd = 2, lty=3, col = adjustcolor("brown", 1/2))
 }
 ##' back-transform knots to "data-scale":
-dScale <- function(smsp, drop.ends=TRUE) {
+dScaledKnots <- function(smsp, drop.ends=TRUE) {
     stopifnot(inherits(smsp, "smooth.spline"))
     sf <- smsp$fit
-    kk <- sf$knot; if(drop.ends) kk <- kk[4:(length(kk)-3)]
+    nk <- length(kk <- sf$knot)
+    stopifnot((nk <- length(kk <- sf$knot)) >= 7)
+    if(drop.ends) kk <- kk[4:(nk-3)]
     sf$min + sf$range * kk
 }
+pLines <- function(ss) {
+    abline(v = dScaledKnots(ss), lty=3, col=adjustcolor("black", 1/2))
+    abline(h = 0, v = range(ss$x), lty=4, lwd = 1.5, col="skyblue4")
+}
 
+## The following shows the data boundaries are used even when the knots are outside:
 xe <- seq(-5, 25, length=256)
+##
+plot(y18, xlim=range(xe), ylim = c(-4,10)+.5, xlab="x")
+lines(predict(s2.7f, xe), col=2, lwd = 2)
+pLines(s2.7f)
+
 str(m2 <- predict(s2.7f, x=xe, deriv=2)) # \hat{m''}(x)
 plot(m2, type="l", col=2, lwd = 2,
      main = "m''(x) -- for  m(.) := smooth.spl(*, all.knots=c(..))",
      sub = "(knots shown as vertical dotted lines)")
-## The following shows that something is not quite right:
-## The data boundaries are still used even when the knots are a bit outside.:
-abline(v = dScale(s2.7f), lty=3, col=adjustcolor("black", 1/2))
-abline(h = 0, v = c(1,18), lty=4, col="skyblue4")
+pLines(s2.7f)
+
+## same phenomenon (data boundaries, ...):
+m1 <- predict(s2.7f, x=xe, deriv = 1) # \hat{m'}(x)
+plot(m1, type="l", col=2, lwd = 2,
+     main = "m'(x) -- for m(.) := smooth.spl(*, all.knots=c(..))",
+     sub = "(knots shown as vertical dotted lines)")
+pLines(s2.7f)
