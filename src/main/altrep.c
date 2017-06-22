@@ -700,7 +700,7 @@ static int altinteger_Sort_check_default(SEXP x) {
 
 
 
-#define INTVAL_ISNA(val) val == NA_INTEGER
+#define INTVAL_ISNA(val) (val == NA_INTEGER)
 
 #define ALT_ISNA_DEFAULT(x, ALTPREFIX, NACHK) do {			\
 	/* *_IS_SORTED imples na.last */				\
