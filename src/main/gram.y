@@ -2489,6 +2489,8 @@ static int StringValue(int c, Rboolean forSymbol)
 	    ucs_t wc;
 	    clen = mbcs_get_next2(c, &wc);
 	    WTEXT_PUSH(wc);
+	    ParseState.xxbyteno += clen-1;
+	    
 	    for(i = 0; i < clen - 1; i++){
 		STEXT_PUSH(c);
 		c = xxgetc();
