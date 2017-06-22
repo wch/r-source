@@ -55,6 +55,9 @@
 
       \item \code{print.noquote(x)} now always returns its argument
       \code{x} (invisibly).
+
+      \item Non-UTF-8 multibyte character sets were not handled properly
+      in source references.  (\PR{16732})
     }
   }
 }
