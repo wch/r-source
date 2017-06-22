@@ -162,7 +162,7 @@ static void SET_ALTREP_CLASS(SEXP x, SEXP class)
     R_altinteger_Unique_method_t Unique;				\
     R_altinteger_Order_method_t Order;					\
     R_altinteger_As_subscripts_method_t As_subscripts;			\
-    R_altinteger_Compression_ratio_method_t Compression_ratio;
+    R_altinteger_Compression_ratio_method_t Compression_ratio
     
 
 #define ALTREAL_METHODS							\
@@ -183,7 +183,7 @@ static void SET_ALTREP_CLASS(SEXP x, SEXP class)
     R_altreal_Unique_method_t Unique;					\
     R_altreal_Order_method_t Order;					\
     R_altreal_As_subscripts_method_t As_subscripts;			\
-    R_altreal_Compression_ratio_method_t Compression_ratio;
+    R_altreal_Compression_ratio_method_t Compression_ratio
 
     
 #define ALTSTRING_METHODS			\
@@ -191,7 +191,7 @@ static void SET_ALTREP_CLASS(SEXP x, SEXP class)
     R_altstring_Elt_method_t Elt;		\
     R_altstring_Set_elt_method_t Set_elt;	\
     R_altstring_Is_sorted_method_t Is_sorted;	\
-    R_altstring_No_NA_method_t No_NA;
+    R_altstring_No_NA_method_t No_NA
 
 typedef struct { ALTREP_METHODS; } altrep_methods_t;
 typedef struct { ALTVEC_METHODS; } altvec_methods_t;
