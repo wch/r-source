@@ -849,6 +849,20 @@ stopifnot(identical(capture.output(D[0]), "POSIXlt of length 0"))
 ## They printed as   '[1] "Date of length 0"'  etc in R < 3.5.0
 
 
+## aggregate.data.frame() producing spurious names  PR#17283
+dP <- state.x77[,"Population", drop=FALSE]
+by <- list(Region = state.region, Cold = state.x77[,"Frost"] > 130)
+a1 <- aggregate(dP, by=by, FUN=mean, simplify=TRUE)
+a2 <- aggregate(dP, by=by, FUN=mean, simplify=FALSE)
+stopifnot(is.null(names(a1$Population)),
+	  is.null(names(a2$Population)),
+	  identical(unlist(a2$Population), a1$Population),
+	  all.equal(unlist(a2$Population),
+		    c(8802.8, 4208.12, 7233.83, 4582.57, 1360.5, 2372.17, 970.167),
+		    tol = 1e-6))
+## in R <= 3.4.1, a2$Population had spurious names
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

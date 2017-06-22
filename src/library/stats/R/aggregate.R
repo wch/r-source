@@ -97,19 +97,19 @@ function(x, by, FUN, ..., simplify = TRUE, drop = TRUE)
                 function(e) {
                     ## In case of a common length > 1, sapply() gives
                     ## the transpose of what we need ...
-                    ans <- lapply(X = split(e, grp), FUN = FUN, ...)
+		    ans <- lapply(unname(split(e, grp)), FUN = FUN, ...)
                     if(simplify &&
                        length(len <- unique(lengths(ans))) == 1L) {
                         ## this used to lose classes
                         if(len == 1L) {
                             cl <- lapply(ans, oldClass)
                             cl1 <- cl[[1L]]
-                            ans <- unlist(ans, recursive = FALSE)
+			    ans <- unlist(ans, recursive = FALSE, use.names = FALSE)
                             if (!is.null(cl1) &&
                                 all(vapply(cl, identical, NA, y = cl1)))
                                 class(ans) <- cl1
                         } else if(len > 1L)
-                            ans <- matrix(unlist(ans, recursive = FALSE),
+			    ans <- matrix(unlist(ans, recursive = FALSE, use.names = FALSE),
                                           nrow = nry,
                                           ncol = len,
                                           byrow = TRUE,

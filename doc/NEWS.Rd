@@ -57,7 +57,7 @@
 
       \item \code{order()} is smarter about picking a default sort
       \code{method} when its arguments are objects.
-      
+
       \item \code{available.packages()} has two new arguments which
       control if the values from the per-session repository cache are
       used (default true, as before) and if so how old cached values can
@@ -70,7 +70,7 @@
 
       \code{packageStatus()}'s \code{upgrade()} method no longer ignores
       its \code{\dots} argument but passes it to \code{install.packages()}.
-     
+
       \code{installed.packages()} gains a \code{\dots} argument to allow
       arguments (including \code{noCache}) to be passed from
       \code{new.packages()}, \code{old.packages()},
@@ -141,6 +141,9 @@
 
       \item The documentation for \code{installed.packages(noCache =
 	  TRUE)} incorrectly claimed it would refresh the cache.
+
+      \item \code{aggregate(<data.frame>)} no longer uses spurious names
+      in some cases.  (\PR{17283})
     }
   }
 }
