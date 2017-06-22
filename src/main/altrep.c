@@ -1021,7 +1021,7 @@ anyway */
 #define TOINDEX(x) (x == nmatch ? x : x + 1)
 #define BINARY_MATCHING_OUTER(TYPE, ALTPREFIX, fonly, nm, TBELTFUN,	\
 			      QELTFUN, NACHK) do {			\
-	int *retptr;							\
+	int *retptr = NULL;						\
 	if(fonly) {							\
 	    PROTECT(ret = allocVector(INTSXP, XLENGTH(q))); nprot++;	\
 	    retptr = INTEGER(ret);					\
