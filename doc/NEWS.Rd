@@ -12,7 +12,23 @@
       \item Placeholder.
     }
   }
-} 
+
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item Placeholder.
+    }
+  }
+}
+
+\section{\Rlogo CHANGES IN R 3.4.0 patched}{
+
+  \subsection{INSTALLATION on a UNIX-ALIKE}{
+    \itemize{
+      \item The deprecated support for PCRE versions older than 8.20
+      will be removed in \R 3.4.1.
+    }
+  }
+}
 
 \section{\Rlogo CHANGES IN R 3.4.0}{
 
@@ -85,8 +101,15 @@
       implementation is not optimized for speed but consistent in
       precision with other summations in R (using \code{long double}
       accumulators where available).  \code{"blas"} calls BLAS directly
-      for best speed, yet usually with undefined behavior for inputs
+      for best speed, but usually with undefined behavior for inputs
       with \code{NaN}/\code{Inf}.
+
+      \item \code{factor()} now uses \code{order()} to sort its levels,
+      not \code{sort.list()}. This makes \code{factor()} support custom
+      vector-like objects if methods for the appropriate generics are
+      defined. This change has the side effect of making \code{factor()}
+      succeed on empty or length-one non-atomic vector(-like) types (e.g.,
+      list), where it failed before.
     }
   }
 
@@ -442,6 +465,14 @@
       \code{while(.)} is not of length one, an error instead of a
       warning may be triggered by setting an environment variable, see
       the help page.
+
+      \item Formatting and printing of bibliography entries
+      (\code{bibentry}) is more flexible and better documented.  Apart
+      from setting \code{options(citation.bibtex.max = 99)} you can also
+      use \code{print(<citation>, bibtex=TRUE)} (or \code{format(..)})
+      to get the BibTeX entries in the case of more than one entry.
+      This also affects \code{citation()}.
+      Contributions to enable \code{style = "html+bibtex"} are welcome.
     }
   }
 
@@ -522,9 +553,8 @@
       \item An alternative compiler for C++11 is now specified with
       \samp{CXX11}, not \samp{CXX1X}. Likewise C++11 flags are specified
       with \samp{CXX11FLAGS} and the standard (e.g., \samp{-std=gnu++11}
-      is specified with \samp{CXX11STD}. The variables with prefix
-      \samp{CXX1X} are deprecated.
-      
+      is specified with \samp{CXX11STD}.
+
       \item \command{configure} now tests for a C++14-compliant compiler
       by testing some basic features.  This by default tries flags for
       the compiler specified by \samp{CXX11}, but an alternative compiler,
@@ -595,10 +625,16 @@
       directory on most platforms).
       %% This ensures that BH's 'boost' directory gets precedent over
       %% any Boost headers in, say, /opt/csw/include .
-      
+
       \item Packages which register native routines for \code{.C} or
       \code{.Fortran} need to be re-installed for this version (unless
       installed with R-devel SVN revision r72375 or later).
+
+      \item Make variables with names containing \code{CXX1X} are
+      deprecated in favour of those using \code{CXX11}, but for the time
+      being are still made available \emph{via} file
+      \file{etc/Makeconf}.  Packages using them should be converted to
+      the new forms and made dependent on \samp{R (>= 3.4.0)}.
     }
   }
 
@@ -677,12 +713,9 @@
       for a long time).
 
       \item (C-level Native routine registration.)  The deprecated
-      \code{styles} member of \code{R_CMethodDef} and
-      \code{R_FortranMethodDef} structures no longer does anything.  (It
-      should not be initialized in those structures as the member will
-      be removed in the future.)
-      %% Set by packages RandomFieldUtils SOD aster aster2 polyapost potts
-      %% Packages earth fuzzyRankTests rcdd initialize 'styles' to NULL.
+      \code{styles} member of the \code{R_CMethodDef} and
+      \code{R_FortranMethodDef} structures has been removed.
+      Packages using these will need to be re-installed for \R 3.4.0.
 
       \item The deprecated support for PCRE versions older than 8.20
       will be removed in \R 3.4.1. (Versions 8.20--8.31 will still be
@@ -698,12 +731,10 @@
 
       \item \code{match(x, t)}, \code{duplicated(x)} and
       \code{unique(x)} work as documented for complex numbers with \code{NA}s
-      or \code{NaN}s, namely by treating them as two equivalence
-      \dQuote{classes}, those with \code{NA} and those with
-      non-\code{NA} \code{NaN}s.
-      %% \code{print(x)} remains back compatible, treating all
-      %% \code{NA}s identically, but showing real and imaginary parts
-      %% for the \code{NaN} \dQuote{class}.
+      or \code{NaN}s, where all those containing \code{NA} do match,
+      whereas in the case of \code{NaN}'s both real and imaginary parts
+      must match, compatibly with how \code{print()} and \code{format()}
+      work for complex numbers.
 
       \item \code{deparse(<complex>, options = "digits17")} prints more
       nicely now, mostly thanks to a suggestion by Richie Cotton.
@@ -841,12 +872,29 @@
       \item \code{sample()} now uses two uniforms for added precision
       when the uniform generator is \code{Knuth-TAOCP},
       \code{Knuth-TAOCP-2002}, or a user-defined generator and the
-      population size is \eqn{2^25} or greater.
-      
-      \item If a vignette in the \file{vignettes} directory is listed in 
-      \file{.Rbuildignore}, \command{R CMD build} would not include it 
-      in the tarball, but would include it in the vignette database, 
+      population size is \eqn{2^{25}}{2^25} or greater.
+
+      \item If a vignette in the \file{vignettes} directory is listed in
+      \file{.Rbuildignore}, \command{R CMD build} would not include it
+      in the tarball, but would include it in the vignette database,
       leading to a check warning.  (\PR{17246})
+
+      \item \code{tools::latexToUtf8()} infinite looped on certain
+      inputs.  (\PR{17138})
+
+      \item \code{terms.formula()} ignored argument names when determining
+      whether two terms were identical.  (\PR{17235})
+
+      \item \code{callNextMethod()} was broken when called from a method
+      that augments the formal arguments of a primitive generic.
+
+      \item Coercion of an S4 object to a vector during sub-assignment
+      into a vector failed to dispatch through the \code{as.vector()}
+      generic (often leading to a segfault).
+
+      \item Fix problems in command completion:  Crash (\PR{17222})
+      and junk display in Windows, handling special characters in
+      filenames on all systems.
     }
   }
 }

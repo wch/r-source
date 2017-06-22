@@ -129,3 +129,22 @@ table(ok. <- r[2,] == "Levels: a b <NA>") # want all TRUE
 stopifnot(ok.) # in case of failure, see
 r[2,] ## the '<NA>' levels part would be wrong occasionally
 
+
+## withAutoprint() : must *not* evaluate twice *and* do it in calling environment:
+CO <- utils::capture.output
+stopifnot(
+    identical(
+	## ensure it is only evaluated _once_ :
+	CO(withAutoprint({ x <- 1:2; cat("x=",x,"\n") }))[1],
+	paste0(getOption("prompt"), "x <- 1:2"))
+   ,
+    ## need "enough" deparseCtrl for this:
+    grepl("1L, NA_integer_", CO(withAutoprint(x <- c(1L, NA_integer_, NA))))
+   ,
+    identical(CO(r1 <- withAutoprint({ formals(withAutoprint); body(withAutoprint) })),
+	      CO(r2 <- source(expr = list(quote(formals(withAutoprint)),
+					  quote(body(withAutoprint)) ),
+			      echo=TRUE))),
+    identical(r1,r2)
+)
+## partly failed in R 3.4.0 alpha

@@ -171,7 +171,7 @@ function(x, y = NULL, legend, fill = NULL, col = par("col"), border="black",
 	h <- (n.legpercol + !is.null(title)) * ychar + yc
 	w0 <- text.width + (x.intersp + 1) * xchar
 	if(mfill)	w0 <- w0 + dx.fill
-	if(do.lines)		w0 <- w0 + (seg.len + x.off)*xchar
+	if(do.lines)	w0 <- w0 + (seg.len + x.off)*xchar
 	w <- ncol*w0 + .5* xchar
 	if (!is.null(title)
 	    && (abs(tw <- strwidth(title, units="user", cex=cex) + 0.5*xchar)) > abs(w)) {

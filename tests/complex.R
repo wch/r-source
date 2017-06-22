@@ -127,6 +127,9 @@ atan(z)
 ## but they seem to assume signed zeros.
 ## Windows gave incorrect (NaN) values on the cuts.
 
+stopifnot(identical(tanh(356+0i), 1+0i))
+## Used to be NaN+0i on Windows
+
 ## Not a regression test, but rather one of the good cases:
 (cNaN <- as.complex("NaN"))
 stopifnot(identical(cNaN, complex(re = NaN)), is.nan(Re(cNaN)), Im(cNaN) == 0)

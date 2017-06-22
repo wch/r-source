@@ -1,6 +1,6 @@
 % File src/library/stats/man/model.frame.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{model.frame}
@@ -52,11 +52,15 @@ get_all_vars(formula, data, \dots)
   \item{xlev}{a named list of character vectors giving the full set of levels
     to be assumed for each factor.}
 
-  \item{\dots}{further arguments such as \code{data}, \code{na.action},
-    \code{subset}.  Any additional arguments such as \code{offset} and
-    \code{weights} which reach the default method are used to create
-    further columns in the model frame, with parenthesised names such as
-    \code{"(offset)"}.}
+  \item{\dots}{for \code{model.frame} methods, a mix of further
+    arguments such as \code{data}, \code{na.action}, \code{subset} to pass
+    to the default method.  Any additional arguments (such as
+    \code{offset} and \code{weights} or other named arguments) which
+    reach the default method are used to create further columns in the
+    model frame, with parenthesised names such as \code{"(offset)"}.
+
+    For \code{get_all_vars}, further named columns to include
+    in the model frame.}
 }
 \description{
   \code{model.frame} (a generic function) and its methods return a
@@ -112,7 +116,8 @@ get_all_vars(formula, data, \dots)
   excludes lists.
 
   \code{get_all_vars} returns a \code{\link{data.frame}} containing the
-  variables used in \code{formula} plus those specified \code{\dots}.
+  variables used in \code{formula} plus those specified in \code{\dots}
+  which are recycled to the number of data frame rows.
   Unlike \code{model.frame.default}, it returns the input variables and
   not those resulting from function calls in \code{formula}.
 }
@@ -137,5 +142,11 @@ get_all_vars(formula, data, \dots)
 }
 \examples{
 data.class(model.frame(dist ~ speed, data = cars))
+
+## get_all_vars(): new var.s are recycled (iff length matches: 50 = 2*25)
+ncars <- get_all_vars(sqrt(dist) ~ I(speed/2), data = cars, newVar = 2:3)
+stopifnot(is.data.frame(ncars),
+          identical(cars, ncars[,names(cars)]),
+          ncol(ncars) == ncol(cars) + 1)
 }
 \keyword{models}

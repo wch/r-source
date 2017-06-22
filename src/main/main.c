@@ -1658,14 +1658,16 @@ void attribute_hidden dummy12345(void)
     F77_CALL(intpr)("dummy", &i, &i, &i);
 }
 
-/* Used in unix/system.c, avoid inlining by using an extern there.
-
-   This is intended to return a local address.
-   Use -Wno-return-local-addr when compiling.
- */
+/* Used in unix/system.c, avoid inlining by using an extern there. */
 uintptr_t dummy_ii(void)
 {
     int ii;
-    return (uintptr_t) &ii;
+
+    /* This is intended to return a local address. We could just return
+       (uintptr_t) &ii, but doing it indirectly through ii_addr avoids
+       a compiler warning (-Wno-return-local-addr would do as well).
+    */
+    volatile uintptr_t ii_addr = (uintptr_t) &ii;
+    return ii_addr;
 }
 #endif

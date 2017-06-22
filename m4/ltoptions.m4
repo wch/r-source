@@ -334,7 +334,7 @@ power*-*-aix[[5-9]]*,yes)
   AC_MSG_CHECKING([which variant of shared library versioning to provide])
   AC_ARG_WITH([aix-soname],
     [AS_HELP_STRING([--with-aix-soname=aix|svr4|both],
-      [(libtool( shared library versioning (aka "SONAME") variant to provide on AIX, @<:@default=]_LT_WITH_AIX_SONAME_DEFAULT[@:>@.])],
+      [(libtool) shared library versioning (aka "SONAME") variant to provide on AIX, @<:@default=]_LT_WITH_AIX_SONAME_DEFAULT[@:>@.])],
     [case $withval in
     aix|svr4|both)
       ;;

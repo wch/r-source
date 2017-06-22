@@ -2272,8 +2272,8 @@ source}.
 On macOS (formerly OS X) @code{install.packages} works as it does on
 other Unix-alike systems, but there are additional types starting with
 @code{mac.binary} (available for the @acronym{CRAN} distribution but not
-when compiling from source: @code{mac.binary.mavericks} for a
-`Mavericks' and later build with @code{"default"} a synonym for the
+when compiling from source: @code{mac.binary.el-capitan} for a `El
+Capitan and later build with @code{"default"} a synonym for the
 appropriate variant) which can be passed to @code{install.packages} in
 order to download and install binary packages from a suitable
 repository.  These binary package files for macOS have the extension
@@ -2603,9 +2603,9 @@ wise to have a @file{src/contrib} area with a possibly empty
 @R{} versions @var{x.y.z} and containing @file{.zip} files for Windows.
 
 @item 
-@code{"mac.binary.mavericks"}: located at
-@file{bin/macosx/mavericks/contrib/@var{3.y}} for the CRAN builds for
-`Mavericks' (and later) for @R{} versions @var{3.y.z}, containing
+@code{"mac.binary.el-capitan"}: located at
+@file{bin/macosx/el-capitan/contrib/@var{3.y}} for the CRAN builds for
+`El Capitan (and later) for @R{} versions @var{3.y.z}, containing
 @file{.tgz} files.
 @end itemize
 
@@ -3298,17 +3298,16 @@ later are required.
 @c and that is supported until Apr 2019.
 @c Debian Wheezy has 8.30, Ubuntu 12.04LTS has 8.12
 PCRE@footnote{sometimes known as PCRE1, and not PCRE2 which started at
-version 10.0.} (version 8.32 or later, although versions 8.10--8.31 will
+version 10.0.} (version 8.32 or later, although versions 8.20--8.31 will
 be accepted with a deprecation warning) is required (or just its library
 and headers if packaged separately).  Only the `8-bit' interface is used
 (and only that is built by default when installing from sources).  PCRE
 must be built with UTF-8 support (not the default, and checked by
 @command{configure}) and support for Unicode properties is assumed by
-some @R{} packages.  JIT support (optionally available from 8.20) is
-desirable for the best performance: support for this and Unicode
-properties can be checked at run-time by calling @code{pcre_config()}.
-If building PCRE for use with @R{} a suitable @command{configure}
-command might be
+some @R{} packages.  JIT support (optionally available) is desirable for
+the best performance: support for this and Unicode properties can be
+checked at run-time by calling @code{pcre_config()}.  If building PCRE
+for use with @R{} a suitable @command{configure} command might be
 @example
 ./configure --enable-utf --enable-unicode-properties --enable-jit --disable-cpp
 @end example
@@ -4821,15 +4820,16 @@ reinstalled when macOS is upgraded, as upgrading partially removes them.)
 You need GNU @code{readline}@footnote{Apple provides a partial emulation
 of GNU readline 4.2 based on the NetBSD @code{editline} library.  That
 is not recommended but for the time being @R{}'s installation scripts
-will make use of it if GNU readline is not found.} and a Fortran
-compiler.  Those and other binary components are available from
+will make use of it if GNU readline is not found.}  That and other
+binary components are available from
 @uref{https://r.research.att.com/libs}: you will need @code{pcre} and
 @code{xz} (for @code{libzma}) as recent macOS versions provide libraries
 but not headers for these (and the system @code{pcre} is too old at
 version 8.02).
 
 An X sub-system is required unless configuring using
-@option{--without-x}: see @uref{https://xquartz.macosforge.org/}. @command{configure} can be told to look for @code{X11} in
+@option{--without-x}: see @uref{https://xquartz.macosforge.org/}. @R{}'s
+@command{configure} script can be told to look for @code{X11} in
 @code{XQuartz}'s main location of @file{/opt/X11}, e.g.@: by
 @example
 --x-includes=/opt/X11/include --x-libraries=/opt/X11/lib
@@ -4860,10 +4860,10 @@ CXX=clang++
 F77=/usr/local/gfortran/bin/gfortran
 FC=$F77
 OBJC=clang
-CFLAGS='-Wall -mtune=core2 -g -O2'
-CXXFLAGS='-Wall -mtune=core2 -g -O2'
-OBJCFLAGS='-Wall -mtune=core2 -g -O2'
-F77FLAGS='-Wall -g -O2'
+CFLAGS='-Wal -g -O2'
+CXXFLAGS='-Wall -g -O2'
+OBJCFLAGS='-Wall -g -O2'
+F77FLAGS='-Wall -g -O2 -mtune=generic'
 FCFLAGS=$F77FLAGS
 @end example
 
@@ -4899,8 +4899,37 @@ FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin16/6.3.0
 
 More recent and complete distributions of @command{clang} are often
 available from @uref{http://llvm.org/releases/}: for example at the time
-of writing for 4.0.0.  In particular, these may include support for
-OpenMP and are likely to be used for the @acronym{CRAN} distribution.
+of writing for 4.0.0, built for Sierra.  In particular, these should
+include support for OpenMP.  Suppose that distribution is installed
+under @file{/usr/local/clang}.  Then @R{} could be configured by
+something like
+@example
+./configure --x-includes=/opt/X11/include --x-libraries=/opt/X11/lib \
+PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig \
+DYLD_FALLBACK_LIBRARY_PATH=/usr/local/clang/lib:/usr/local/lib
+@end example
+@noindent
+with @file{config.site} containing
+@example
+CC=/usr/local/clang/bin/clang
+OBJC=$CC
+F77=/usr/local/gfortran/bin/gfortran
+FC=$F77
+CXX=/usr/local/clang/bin/clang++
+LDFLAGS="-L/usr/local/clang/lib -L/usr/local/lib"
+R_LD_LIBRARY_PATH=/usr/local/clang/lib:/usr/local/lib
+@end example
+@noindent
+The care to specify library paths is to ensure that the OpenMP runtime
+library, here @file{/usr/local/clang/lib/libomp.dylib}, is found when
+needed. If this works, you should see the line
+@example
+checking whether OpenMP SIMD reduction is supported... yes
+@end example
+@noindent
+in the @command{configure} output.  Also, @samp{R_LD_LIBRARY_PATH} needs
+to be set to find the latest version of the C++ run-time libraries
+rather than the system ones.
 
 Pre-compiled versions of many of the @ref{Useful libraries and programs}
 are available from @uref{https://r.research.att.com/libs/}.  You will
@@ -4911,8 +4940,8 @@ present when configuring the @code{X11()} and bitmap devices.
 
 Support for @code{cairo} (without @code{Pango}) can be enabled if
 @code{pkg-config} and XQuartz are available, Make sure the XQuartz's
-@code{pkg-config} files are first on the configuration path: for example
-by setting
+@code{pkg-config} files are found first on the configuration path: for
+example by setting
 @example
 export PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
 @end example
@@ -4929,8 +4958,9 @@ The @code{Accelerate} library can be used @emph{via} the configuration options
 
 @noindent
 to provide potentially higher-performance versions of the @acronym{BLAS}
-and LAPACK routines.@footnote{It is reported that for some non-Apple
-toolchains @code{CPPFLAGS} needed to contain @code{-D__ACCELERATE__}.}
+and LAPACK routines.@footnote{It was reported that for some non-Apple
+toolchains @code{CPPFLAGS} needed to contain @code{-D__ACCELERATE__}:
+not needed for @command{clang} 4.0.0, though.}
 
 Looking at the top of
 @file{/Library/Frameworks/R.framework/Resources/etc/Makeconf}
@@ -4982,8 +5012,10 @@ some upgrades but not others).
 If you plan to use the @code{tcltk} package for @R{}, you need to
 install a distribution of Tcl/Tk.  There are two alternatives.  If you
 use @Rapp{} you will want to use X11-based Tcl/Tk (as used on other
-Unix-alikes), which is installed as part of the CRAN binary for @R{}.
-This may need
+Unix-alikes), which is installed as part of the CRAN binary for @R{} and
+available as separate @code{tcl} and @code{tk} components from
+@uref{https://r.research.att.com/libs/}.  This may need
+@command{configure} options
 @example
 -with-tcltk=/usr/local/lib
 @end example
@@ -5033,6 +5065,10 @@ installed at first use.  Check if a JRE is installed by running
 installed this should prompt you to install it.  You can also install
 directly the latest Java from Oracle (currently from
 @uref{http://www.oracle.com/@/technetwork/@/java/@/javase/@/downloads/@/index.html}).
+
+Binary distributions of @R{} are built against a specific version (e.g.@:
+1.8.0_121) of Oracle Java so @command{sudo R CMD javareconf} may be
+needed before using Java-using packages.
 
 @c You may need to install what Apple calls `legacy Java'@footnote{e.g.@:
 @c @code{Java For OS X 2015-001} from

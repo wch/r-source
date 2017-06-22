@@ -1,7 +1,7 @@
 #  File src/library/utils/R/question.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -174,7 +174,5 @@ function(topic, package = NULL)
     ## an error.)
     h <- tryCatch(do.call("help", list(topic, package = package)),
                   error = identity)
-    if(inherits(h, "error") || !length(h))
-        h <- NULL
-    h
+    if(inherits(h, "error") || !length(h)) NULL else h
 }

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  file rt_complete.c
- *  Copyright (C) 2007-13 The R Core Team.
+ *  Copyright (C) 2007-2017 The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -90,13 +90,16 @@ static int rt_completion(char *buf, int offset, int *loc)
 	}
     }
 
-    /* FIXME: need to escape quotes properly */
-    char pline[strlen(partial_line) + 1];
-    strcpy(pline, partial_line);
-    /* poor attempt at escaping quotes that sort of works */
-    alen = strlen(pline);
-    for (i = 0; i < alen; i++) if (pline[i] == '"') pline[i] = '\'';
-
+    alen = strlen(partial_line);
+    char orig[alen + 1], pline[2*alen + 1],
+            *pchar = pline, achar;
+    strcpy(orig, partial_line);
+    for (i = 0; i < alen; i++) {
+        achar = orig[i];
+	if (achar == '"' || achar == '\\') *pchar++ = '\\';
+	*pchar++ = achar;
+    }
+    *pchar = 0;
     size_t len = strlen(pline) + 100; 
     char cmd[len];
     snprintf(cmd, len,

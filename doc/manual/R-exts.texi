@@ -2510,15 +2510,16 @@ CXX_STD = CXX11
 @noindent
 Compilation and linking will then be done with the C++11 compiler.
 
-Packages without a @file{Makevars} file may specify that they require
-C++11 by including @samp{C++11} in the @samp{SystemRequirements} field
-of the @file{DESCRIPTION} file, e.g.
+Packages without a @file{src/Makevars} or @file{src/Makefile} file may
+specify that they require C++11 for code in the @file{src} directory by
+including @samp{C++11} in the @samp{SystemRequirements} field of the
+@file{DESCRIPTION} file, e.g.
 
 @example
 SystemRequirements: C++11
 @end example
 
-If a package does have a @file{Makevars[.win]} file then setting the
+If a package does have a @file{src/Makevars[.win]} file then setting the
 make variable @samp{CXX_STD} is preferred, as it allows @command{R CMD
 SHLIB} to work correctly in the package's @file{src} directory.
 
@@ -2559,7 +2560,7 @@ e.g.@: @command{g++} on Solaris.  Note however that different C++
 compilers (and even different versions of the same compiler) often
 differ in their ABI so their outputs can rarely be mixed. By setting
 @samp{CXX11STD} it is also possible to choose a different dialect of the
-standard such as @option{-std=gnu++11}.
+standard such as @option{-std=c++11}.
 
 As noted above, support for C++11 varies across platforms: on some
 platforms, it may be possible or necessary to select a different
@@ -2591,6 +2592,11 @@ sublibs:
          @@(cd libs && $(MAKE) \
             CXX="$(CXX11) $(CXX11STD)" CXXFLAGS="$(CXX11FLAGS) $(CXX11PICFLAGS)")
 @end example
+
+Note that the mechanisms described here specify C++11 for code compiled
+by @command{R CMD SHLIB} as used by default by @command{R CMD INSTALL}.
+They do not necessarily apply if there is a @file{src/Makefile} file,
+nor to compilation done in vignettes or @emph{via} other packages.
 
 @node Using C++14 code, Using C++17 code, Using C++11 code, Configure and cleanup
 @subsection Using C++14 code
@@ -2658,13 +2664,13 @@ should be used).
 @node Using C++17 code,  , Using C++14 code, Configure and cleanup
 @subsection Using C++17 code
 
-Experimental support for C++17 has been added to @R{} version
-3.4.0. The @file{configure} script tests a subset of C++17 features.
-At the time of writing (March 2017) both @code{clang 4.0.0} and
-@code{gcc 7.0.1 (20170314)} pass these tests (with flags
-@option{-std=gnu++1z} and @option{-std=gnu++17} respectively chosen by the
-@file{configure} script).  Note that the C++17 feature tests are
-incomplete and are subject to change in future R versions as compiler
+Experimental support for C++17 has been added to @R{} version 3.4.0. The
+@file{configure} script tests a subset of C++17 features.  At the time
+of writing (March 2017) both @code{clang 4.0.0} and the pre-release
+version @code{gcc 7.0.1 (20170314)} pass these tests (with flags
+@option{-std=gnu++1z} and @option{-std=gnu++17} respectively chosen by
+the @file{configure} script).  Note that the C++17 feature tests are
+incomplete and are subject to change in future @R{} versions as compiler
 support for the standard improves.
 
 The variables associated with the C++17 compiler use the prefix
@@ -9351,7 +9357,7 @@ static R_NativePrimitiveArgType myC_t[] = @{
 @};
 
 static const R_CMethodDef cMethods[] = @{
-   @{"myC", (DL_FUNC) &myC, 4, myC_t@}
+   @{"myC", (DL_FUNC) &myC, 4, myC_t@},
    @{NULL, NULL, 0, NULL@}
 @};
 @end group
@@ -9443,7 +9449,9 @@ allows @code{.C} etc calls which specify entry points by @R{} objects
 such as @code{C_pansari} (and not by character strings).  Each provides
 some protection against accidentally finding your entry points when
 people supply a character string without a package, and avoids slowing
-down such searches.  (For the visibility attribute @pxref{Controlling
+down such searches.  Routine @code{R_forceSymbols} is available from
+@R{} 3.0.0, so packages using it should have a dependency on at least
+@samp{R (>= 3.0.0)}.  (For the visibility attribute @pxref{Controlling
 visibility}.)
 
 In more detail, if a package @code{mypkg} contains entry points
@@ -9702,7 +9710,7 @@ Find all the relevant calls in the @R{} code and edit them to use the
 @smallexample
 temp <- .Call("spline_basis", knots, ord, x, derivs, PACKAGE = "splines")
 y[accept] <- .Call("spline_value", knots, coeff, ord, x[accept], deriv, PACKAGE = "splines")
-y = .Call"spline_value", knots, coef(object), ord, x, deriv, PACKAGE = "splines"))
+y = .Call("spline_value", knots, coef(object), ord, x, deriv, PACKAGE = "splines")
 @end smallexample
 @noindent
 to
@@ -9710,7 +9718,7 @@ to
 @smallexample
 temp <- .Call(C_spline_basis, knots, ord, x, derivs)
 y[accept] <- .Call(C_spline_value, knots, coeff, ord, x[accept], deriv)
-y = .Call(C_spline_value, knots, coef(object), ord, x, deriv))
+y = .Call(C_spline_value, knots, coef(object), ord, x, deriv)
 @end smallexample
 
 Check that there is no @code{exportPattern} directive which
@@ -10775,7 +10783,7 @@ SEXP out(SEXP x, SEXP y)
 @end group
 
 @group
-    UNPROTECT(3);
+    UNPROTECT(2);
     return ans;
 @}
 @end group

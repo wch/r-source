@@ -288,7 +288,7 @@ static Rboolean dispatch_asvector(SEXP *x, SEXP call, SEXP rho) {
     SEXP args;
     Rboolean ans;
     if (op == NULL)
-        op = R_Primitive("as.vector");
+        op = INTERNAL(install("as.vector"));
     PROTECT(args = list2(*x, mkString("any")));
     ans = DispatchOrEval(call, op, "as.vector", args, rho, x, 0, 1);
     UNPROTECT(1);

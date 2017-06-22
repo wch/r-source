@@ -1,6 +1,6 @@
 % File src/library/utils/man/install.packages.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{install.packages}
@@ -218,9 +218,9 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   downloading a file from a repository or from a local file.
 
   Possible values of \code{type} are (currently) \code{"source"},
-  \code{"mac.binary"}, \code{"mac.binary.mavericks"} and
-  \code{"win.binary"}: the appropriate binary type where
-  supported can also be selected as \code{"binary"}.
+  \code{"mac.binary"}, \code{"mac.binary.el-capitan"} and
+  \code{"win.binary"}: the appropriate binary type where supported can
+  also be selected as \code{"binary"}.
 
   For a binary install from a repository, the function checks for the
   availability of a source package on the same repository, and reports

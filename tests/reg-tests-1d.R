@@ -27,6 +27,7 @@ for(ex in list(c(tmp, tmp2), c("foo","foo"))) {
 	    stop("differing: ", i1, ", ", i2)
     }
 }
+##
 outerID <- function(x,y, ...) outer(x,y, Vectorize(identical,c("x","y")), ...)
 ## b) complex 'x' with different kinds of NaN
 x0 <- c(0,1, NA_real_, NaN)
@@ -48,9 +49,16 @@ is.NA <- function(.) is.na(.) & !is.nan(.)
 ## use iNA for consistency check once FIXME happened
 m1z <- sapply(z, match, table = z)
 stopifnot(identical(m1z, mz),
-	  identical(m1z == 1L, iNA),
-	  identical(m1z == 2L, !iNA))
+	  identical(m1z == 1L,             iNA),
+          identical(match(z, NA, 0) == 1L, iNA),
+	  identical(mz[mz != 1L], c(2L, 4L, 9L, 10L, 12L, 2L, 2L, 2L, 9L)))
 ## m1z uses match(x, *) with length(x) == 1 and failed in R 3.3.0
+set.seed(17)
+for(. in 1:20) {
+    zz <- sample(z)
+    stopifnot(identical(match(zz,zz), vapply(zz, match, -1L, table = zz)))
+}
+##
 ## PR#16909 - a consequence of the match() bug; check here too:
 dvn <- paste0("var\xe9", 1:2); Encoding(dvn) <- "latin1"
 dv <- data.frame(1:3, 3); names(dv) <- dvn; dv[,"var\u00e92"] <- 2
@@ -708,6 +716,13 @@ stopifnot(grepl("type.*1.*3", e),# typically works in several locales
 	  is.ordered(quantile(OL, type = 3)))
 ## gave  "factors are not allowed" in R <= 3.3.x
 
+## terms() ignored arg names (PR#17235)
+a1 <- attr(terms(y ~ f(x, a = z) + f(x, a = z)),
+           "term.labels")
+a2 <- attr(terms(y ~ f(x, a = z) + f(x, b = z)),
+           "term.labels")
+stopifnot(length(a1) == 1, length(a2) == 2)
+## both gave length 1
 
 
 ## keep at end

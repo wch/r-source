@@ -1,6 +1,6 @@
 % File src/library/base/man/Platform.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{.Platform}
@@ -51,7 +51,7 @@
   \item{pkgType}{
     character string, the preferred setting for
     \code{\link{options}("pkgType")}.  Values \code{"source"},
-    \code{"mac.binary.mavericks"} and \code{"win.binary"} are currently
+    \code{"mac.binary.el-capitan"} and \code{"win.binary"} are currently
     in use.
 
     This should \strong{not} be used to identify the OS.

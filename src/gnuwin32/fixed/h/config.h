@@ -151,7 +151,9 @@
 #define HAVE_CTAN 1
 
 /* Define to 1 if you have the `ctanh' function. */
-#define HAVE_CTANH 1
+/* The ctanh function does not work properly, at R level "tanh(356+0i)"
+   returns "1+NaNi", but it should return "1+0i". */
+/* #undef HAVE_CTANH */
 
 /* Define to 1 if you have the <curl/curl.h> header file.
    Set on the command line where supported.
