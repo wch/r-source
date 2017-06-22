@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2017-02-04 r72102) -- "Unsuffered Consequences"
+R Under development (unstable) (2017-03-12 r72328) -- "Unsuffered Consequences"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -3797,7 +3797,7 @@ sigma^2 estimated as 0.4566:  log likelihood = -101.2,  aic = 212.4
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x443df10>
+<environment: 0x47d3528>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -4782,7 +4782,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x64feef8>
+<bytecode: 0x5f01638>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -6190,6 +6190,32 @@ function (b0, b1, th, x)
 > ##D     2) * (2 * x) + sin(x^2) * (2 * x) * 2)
 > ## End(Not run)
 > 
+> ## New (R 3.4.0, 2017):
+> D(quote(log1p(x^2)), "x") ## log1p(x) = log(1 + x)
+2 * x/(1 + x^2)
+> stopifnot(identical(
++        D(quote(log1p(x^2)), "x"),
++        D(quote(log(1+x^2)), "x")))
+> D(quote(expm1(x^2)), "x") ## expm1(x) = exp(x) - 1
+exp(x^2) * (2 * x)
+> stopifnot(identical(
++        D(quote(expm1(x^2)), "x") -> Dex1,
++        D(quote(exp(x^2)-1), "x")),
++        identical(Dex1, quote(exp(x^2) * (2 * x))))
+> 
+> D(quote(sinpi(x^2)), "x") ## sinpi(x) = sin(pi*x)
+cospi(x^2) * (pi * (2 * x))
+> D(quote(cospi(x^2)), "x") ## cospi(x) = cos(pi*x)
+-(sinpi(x^2) * (pi * (2 * x)))
+> D(quote(tanpi(x^2)), "x") ## tanpi(x) = tan(pi*x)
+pi * (2 * x)/cospi(x^2)^2
+> 
+> stopifnot(identical(D(quote(log2 (x^2)), "x"),
++                     quote(2 * x/(x^2 * log(2)))),
++           identical(D(quote(log10(x^2)), "x"),
++                     quote(2 * x/(x^2 * log(10)))))
+> 
+> 
 > 
 > 
 > cleanEx()
@@ -7312,7 +7338,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x66e5098>
+<environment: 0x5c991f8>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -11922,14 +11948,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x5a90b58>
-<environment: 0x5a80c40>
+<bytecode: 0x4e657e8>
+<environment: 0x4e5d090>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x5a90ca8>
-<environment: 0x5a80c40>
+<bytecode: 0x4e65938>
+<environment: 0x4e5d090>
 
 > 
 > 
@@ -12197,17 +12223,17 @@ Dickey-Fuller = -2.6899, Truncation lag parameter = 7, p-value = 0.2863
 > p.ppoints <- function(n, ..., add = FALSE, col = par("col")) {
 +   pn <- ppoints(n, ...)
 +   if(add)
-+       points(pn, pn, col=col)
++       points(pn, pn, col = col)
 +   else {
 +       tit <- match.call(); tit[[1]] <- quote(ppoints)
 +       plot(pn,pn, main = deparse(tit), col=col,
-+            xlim=0:1, ylim=0:1, xaxs="i", yaxs="i")
-+       abline(0,1, col = adjustcolor(1, 1/4), lty = 3)
++            xlim = 0:1, ylim = 0:1, xaxs = "i", yaxs = "i")
++       abline(0, 1, col = adjustcolor(1, 1/4), lty = 3)
 +   }
-+   if(requireNamespace("MASS", quietly=TRUE))
++   if(!add && requireNamespace("MASS", quietly = TRUE))
 +     text(pn, pn, as.character(MASS::fractions(pn)),
 +          adj = c(0,0)-1/4, cex = 3/4, xpd = NA, col=col)
-+   abline(h=pn, v=pn, col = adjustcolor(col, 1/2), lty = 2, lwd = 1/2)
++   abline(h = pn, v = pn, col = adjustcolor(col, 1/2), lty = 2, lwd = 1/2)
 + }
 > 
 > p.ppoints(4)
@@ -12437,6 +12463,8 @@ Cumulative Proportion  0.4173 0.6498 0.7569
 > 
 > ## All the "predict" methods found
 > ## NB most of the methods in the standard packages are hidden.
+> ## Output will depend on what namespaces are (or have been) loaded.
+> ## IGNORE_RDIFF_BEGIN
 > for(fn in methods("predict"))
 +    try({
 +        f <- eval(substitute(getAnywhere(fn)$objs[[1]], list(fn = fn)))
@@ -12518,6 +12546,7 @@ predict.smooth.spline :
 	 function (object, x, deriv = 0, ...)  NULL 
 predict.smooth.spline.fit :
 	 function (object, x, deriv = 0, ...)  NULL 
+> ## IGNORE_RDIFF_END
 > ## Don't show: 
 > old <- Sys.setlocale("LC_COLLATE", old)
 > ## End(Don't show)
@@ -16006,8 +16035,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f)
-<bytecode: 0x5bef5a8>
-<environment: 0x947d8d8>
+<bytecode: 0x4f94f38>
+<environment: 0x88def60>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -18331,7 +18360,7 @@ Number of Fisher Scoring iterations: 6
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  4.95 0.097 5.062 0 0 
+Time elapsed:  5.483 0.108 5.608 0 0 
 > grDevices::dev.off()
 null device 
           1 

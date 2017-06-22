@@ -1,6 +1,6 @@
 % File src/library/stats/man/density.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{density}
@@ -19,7 +19,8 @@ density(x, \dots)
         n = 512, from, to, cut = 3, na.rm = FALSE, \dots)
 }
 \arguments{
-  \item{x}{the data from which the estimate is to be computed.}
+  \item{x}{the data from which the estimate is to be computed.  For the
+    default method a numeric vector: long vectors are not supported.}
 
   \item{bw}{the smoothing bandwidth to be used.  The kernels are scaled
     such that this is the standard deviation of the smoothing kernel.

@@ -1,7 +1,7 @@
 #  File src/library/base/R/library.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -280,25 +280,35 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                     oldversion <- as.numeric_version(getNamespaceVersion(package))
                     if (newversion != oldversion) {
                     	## No, so try to unload the previous one
-                    	res <- try(unloadNamespace(package))
-                    	if (inherits(res, "try-error"))
-                    	    stop(gettextf("Package %s version %s cannot be unloaded",
-					  sQuote(package), oldversion), domain=NA)
+                    	res <- tryCatch(unloadNamespace(package),
+					error = function(e) {
+					    P <- if(!is.null(cc <- conditionCall(e)))
+						     paste("Error in", deparse(cc)[1L], ": ")
+						 else "Error : "
+					    stop(gettextf("Package %s version %s cannot be unloaded:\n %s",
+							  sQuote(package), oldversion,
+							  paste0(P, conditionMessage(e),"\n")),
+						 domain=NA)})
                     }
                 }
-                tt <- try({
+		tt <- tryCatch({
                     attr(package, "LibPath") <- which.lib.loc
                     ns <- loadNamespace(package, lib.loc)
                     env <- attachNamespace(ns, pos = pos, deps)
-                })
+		}, error = function(e) {
+		    P <- if(!is.null(cc <- conditionCall(e)))
+			     paste(" in", deparse(cc)[1L]) else ""
+		    msg <- gettextf("package or namespace load failed for %s%s:\n %s",
+				    sQuote(package), P, conditionMessage(e))
+		    if(logical.return)
+			message(paste("Error:", msg), domain = NA) # returns NULL
+		    else stop(msg, call. = FALSE, domain = NA)
+		})
+		if(logical.return && is.null(tt))
+		    return(FALSE)
+
                 attr(package, "LibPath") <- NULL
-                if (inherits(tt, "try-error"))
-                    if (logical.return)
-                        return(FALSE)
-                    else stop(gettextf("package or namespace load failed for %s",
-                                       sQuote(package)),
-                              call. = FALSE, domain = NA)
-                else {
+                {
                     on.exit(detach(pos = pos))
                     ## If there are S4 generics then the package should
                     ## depend on methods
@@ -315,8 +325,8 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                         return(invisible(.packages()))
                 }
             } else
-            stop(gettextf("package %s does not have a namespace and should be re-installed",
-                          sQuote(package)), domain = NA)
+		stop(gettextf("package %s does not have a namespace and should be re-installed",
+			      sQuote(package)), domain = NA)
 	}
 	if (verbose && !newpackage)
             warning(gettextf("package %s already present in search()",
@@ -343,10 +353,12 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                     if(!inherits(tmp, "try-error"))
                         txt <- tmp
                     else
-                        warning("'DESCRIPTION' has an 'Encoding' field and re-encoding is not possible", call.=FALSE)
+                        warning("'DESCRIPTION' has an 'Encoding' field and re-encoding is not possible",
+                                call. = FALSE)
                 }
                 nm <- paste0(names(txt), ":")
-                formatDL(nm, txt, indent = max(nchar(nm, "w")) + 3)
+                ## indent might be excessive for long field names.
+                formatDL(nm, txt, indent = max(nchar(nm, "w")) + 3L)
             } else if(basename(f) %in% "vignette.rds") {
                 txt <- readRDS(f)
                 ## New-style vignette indices are data frames with more

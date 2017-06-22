@@ -96,36 +96,104 @@ static void cbm_Size(double *left, double *right,
 static Rboolean
 BM_Open(pDevDesc dd, pX11Desc xd, int width, int height)
 {
+    char buf[PATH_MAX];
     cairo_status_t res;
     if (xd->type == PNG || xd->type == JPEG ||
-	xd->type == TIFF || xd->type == BMP) {
+	xd->type == TIFF || xd->type == BMP ||
+        xd->type == PNGdirect) {
 	xd->cs = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
 					    xd->windowWidth,
 					    xd->windowHeight);
-    } else if (xd->type == PNGdirect) {
-	xd->cs = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
-					    xd->windowWidth,
-					    xd->windowHeight);
-    } else if(xd->type == SVG || xd->type == PDF || xd->type == PS) {
-	/* leave creation to BM_Newpage */
-	return TRUE;
-    } else
+        res = cairo_surface_status(xd->cs);
+        if (res != CAIRO_STATUS_SUCCESS) {
+            warning("cairo error '%s'", cairo_status_to_string(res));
+            return FALSE;
+        }
+        xd->cc = cairo_create(xd->cs);
+        res = cairo_status(xd->cc);
+        if (res != CAIRO_STATUS_SUCCESS) {
+            warning("cairo error '%s'", cairo_status_to_string(res));
+            return FALSE;
+        }
+        cairo_set_operator(xd->cc, CAIRO_OPERATOR_OVER);
+        cairo_reset_clip(xd->cc);
+        cairo_set_antialias(xd->cc, xd->antialias);
+    }
+#ifdef HAVE_CAIRO_SVG
+    else if(xd->type == SVG) {
+        snprintf(buf, PATH_MAX, xd->filename, xd->npages + 1);
+        xd->cs = cairo_svg_surface_create(R_ExpandFileName(buf),
+                                          (double)xd->windowWidth,
+                                          (double)xd->windowHeight);
+        res = cairo_surface_status(xd->cs);
+        if (res != CAIRO_STATUS_SUCCESS) {
+            xd->cs = NULL;
+            warning("cairo error '%s'", cairo_status_to_string(res));
+            return FALSE;
+        }
+        if(xd->onefile)
+            cairo_svg_surface_restrict_to_version(xd->cs, CAIRO_SVG_VERSION_1_2);
+        xd->cc = cairo_create(xd->cs);
+        res = cairo_status(xd->cc);
+        if (res != CAIRO_STATUS_SUCCESS) {
+            warning("cairo error '%s'", cairo_status_to_string(res));
+            return FALSE;
+        }
+        cairo_set_antialias(xd->cc, xd->antialias);
+    }
+#endif
+#ifdef HAVE_CAIRO_PDF
+    else if(xd->type == PDF) {
+        snprintf(buf, PATH_MAX, xd->filename, xd->npages + 1);
+        xd->cs = cairo_pdf_surface_create(R_ExpandFileName(buf),
+                                          (double)xd->windowWidth,
+                                          (double)xd->windowHeight);
+        res = cairo_surface_status(xd->cs);
+        if (res != CAIRO_STATUS_SUCCESS) {
+            warning("cairo error '%s'", cairo_status_to_string(res));
+            return FALSE;
+        }
+        cairo_surface_set_fallback_resolution(xd->cs, xd->fallback_dpi,
+                                              xd->fallback_dpi);
+        xd->cc = cairo_create(xd->cs);
+        res = cairo_status(xd->cc);
+        if (res != CAIRO_STATUS_SUCCESS) {
+            warning("cairo error '%s'", cairo_status_to_string(res));
+            return FALSE;
+        }
+        cairo_set_antialias(xd->cc, xd->antialias);
+    }
+#endif
+#ifdef HAVE_CAIRO_PS
+    else if(xd->type == PS) {
+        snprintf(buf, PATH_MAX, xd->filename, xd->npages + 1);
+        xd->cs = cairo_ps_surface_create(R_ExpandFileName(buf),
+                                         (double)xd->windowWidth,
+                                         (double)xd->windowHeight);
+        res = cairo_surface_status(xd->cs);
+        if (res != CAIRO_STATUS_SUCCESS) {
+            warning("cairo error '%s'", cairo_status_to_string(res));
+            return FALSE;
+        }
+// We already require >= 1.2
+#if CAIRO_VERSION_MAJOR > 2 || CAIRO_VERSION_MINOR >= 6
+        if(!xd->onefile)
+            cairo_ps_surface_set_eps(xd->cs, TRUE);
+#endif
+        cairo_surface_set_fallback_resolution(xd->cs, xd->fallback_dpi,
+                                              xd->fallback_dpi);
+        xd->cc = cairo_create(xd->cs);
+        res = cairo_status(xd->cc);
+        if (res != CAIRO_STATUS_SUCCESS) {
+            warning("cairo error '%s'", cairo_status_to_string(res));
+            return FALSE;
+        }
+        cairo_set_antialias(xd->cc, xd->antialias);
+    }
+#endif
+    else
 	error(_("unimplemented cairo-based device"));
 
-    res = cairo_surface_status(xd->cs);
-    if (res != CAIRO_STATUS_SUCCESS) {
-	warning("cairo error '%s'", cairo_status_to_string(res));
-	return FALSE;
-    }
-    xd->cc = cairo_create(xd->cs);
-    res = cairo_status(xd->cc);
-    if (res != CAIRO_STATUS_SUCCESS) {
-	warning("cairo error '%s'", cairo_status_to_string(res));
-	return FALSE;
-    }
-    cairo_set_operator(xd->cc, CAIRO_OPERATOR_OVER);
-    cairo_reset_clip(xd->cc);
-    cairo_set_antialias(xd->cc, xd->antialias);
     return TRUE;
 }
 
@@ -204,27 +272,25 @@ static void BM_NewPage(const pGEcontext gc, pDevDesc dd)
 	    if(!xd->onefile) {
 		cairo_surface_destroy(xd->cs);
 		cairo_destroy(xd->cc);
-	    }
-	}
-	if(xd->npages == 1 || !xd->onefile) {
-	    snprintf(buf, PATH_MAX, xd->filename, xd->npages);
-	    xd->cs = cairo_svg_surface_create(R_ExpandFileName(buf),
-					      (double)xd->windowWidth,
-					      (double)xd->windowHeight);
-	    res = cairo_surface_status(xd->cs);
-	    if (res != CAIRO_STATUS_SUCCESS) {
-		xd->cs = NULL;
-		error("cairo error '%s'", cairo_status_to_string(res));
-	    }
-	    if(xd->onefile)
-		cairo_svg_surface_restrict_to_version(xd->cs, CAIRO_SVG_VERSION_1_2);
-	    xd->cc = cairo_create(xd->cs);
-	    res = cairo_status(xd->cc);
-	    if (res != CAIRO_STATUS_SUCCESS) {
-		error("cairo error '%s'", cairo_status_to_string(res));
-	    }
-	    cairo_set_antialias(xd->cc, xd->antialias);
-	}
+                snprintf(buf, PATH_MAX, xd->filename, xd->npages);
+                xd->cs = cairo_svg_surface_create(R_ExpandFileName(buf),
+                                                  (double)xd->windowWidth,
+                                                  (double)xd->windowHeight);
+                res = cairo_surface_status(xd->cs);
+                if (res != CAIRO_STATUS_SUCCESS) {
+                    xd->cs = NULL;
+                    error("cairo error '%s'", cairo_status_to_string(res));
+                }
+                if(xd->onefile)
+                    cairo_svg_surface_restrict_to_version(xd->cs, CAIRO_SVG_VERSION_1_2);
+                xd->cc = cairo_create(xd->cs);
+                res = cairo_status(xd->cc);
+                if (res != CAIRO_STATUS_SUCCESS) {
+                    error("cairo error '%s'", cairo_status_to_string(res));
+                }
+                cairo_set_antialias(xd->cc, xd->antialias);
+            }
+        }
     }
 #endif
 #ifdef HAVE_CAIRO_PDF
@@ -234,58 +300,56 @@ static void BM_NewPage(const pGEcontext gc, pDevDesc dd)
 	    if(!xd->onefile) {
 		cairo_surface_destroy(xd->cs);
 		cairo_destroy(xd->cc);
-	    }
-	}
-	if(xd->npages == 1 || !xd->onefile) {
-	    snprintf(buf, PATH_MAX, xd->filename, xd->npages);
-	    xd->cs = cairo_pdf_surface_create(R_ExpandFileName(buf),
-					      (double)xd->windowWidth,
-					      (double)xd->windowHeight);
-	    res = cairo_surface_status(xd->cs);
-	    if (res != CAIRO_STATUS_SUCCESS) {
-		error("cairo error '%s'", cairo_status_to_string(res));
-	    }
-	    cairo_surface_set_fallback_resolution(xd->cs, xd->fallback_dpi,
-						  xd->fallback_dpi);
-	    xd->cc = cairo_create(xd->cs);
-	    res = cairo_status(xd->cc);
-	    if (res != CAIRO_STATUS_SUCCESS) {
-		error("cairo error '%s'", cairo_status_to_string(res));
-	    }
-	    cairo_set_antialias(xd->cc, xd->antialias);
+                snprintf(buf, PATH_MAX, xd->filename, xd->npages);
+                xd->cs = cairo_pdf_surface_create(R_ExpandFileName(buf),
+                                                  (double)xd->windowWidth,
+                                                  (double)xd->windowHeight);
+                res = cairo_surface_status(xd->cs);
+                if (res != CAIRO_STATUS_SUCCESS) {
+                    error("cairo error '%s'", cairo_status_to_string(res));
+                }
+                cairo_surface_set_fallback_resolution(xd->cs, xd->fallback_dpi,
+                                                      xd->fallback_dpi);
+                xd->cc = cairo_create(xd->cs);
+                res = cairo_status(xd->cc);
+                if (res != CAIRO_STATUS_SUCCESS) {
+                    error("cairo error '%s'", cairo_status_to_string(res));
+                }
+                cairo_set_antialias(xd->cc, xd->antialias);
+            }
 	}
     }
 #endif
 #ifdef HAVE_CAIRO_PS
     else if(xd->type == PS) {
-	if (xd->npages > 1 && !xd->onefile) {
+	if (xd->npages > 1) {
 	    cairo_show_page(xd->cc);
-	    cairo_surface_destroy(xd->cs);
-	    cairo_destroy(xd->cc);
-	}
-	if(xd->npages == 1 || !xd->onefile) {
-	    snprintf(buf, PATH_MAX, xd->filename, xd->npages);
-	    xd->cs = cairo_ps_surface_create(R_ExpandFileName(buf),
-					     (double)xd->windowWidth,
-					     (double)xd->windowHeight);
-	    res = cairo_surface_status(xd->cs);
-	    if (res != CAIRO_STATUS_SUCCESS) {
-		error("cairo error '%s'", cairo_status_to_string(res));
-	    }
+	    if(!xd->onefile) {
+                cairo_surface_destroy(xd->cs);
+                cairo_destroy(xd->cc);
+                snprintf(buf, PATH_MAX, xd->filename, xd->npages);
+                xd->cs = cairo_ps_surface_create(R_ExpandFileName(buf),
+                                                 (double)xd->windowWidth,
+                                                 (double)xd->windowHeight);
+                res = cairo_surface_status(xd->cs);
+                if (res != CAIRO_STATUS_SUCCESS) {
+                    error("cairo error '%s'", cairo_status_to_string(res));
+                }
 // We already require >= 1.2
 #if CAIRO_VERSION_MAJOR > 2 || CAIRO_VERSION_MINOR >= 6
-	    if(!xd->onefile)
-		cairo_ps_surface_set_eps(xd->cs, TRUE);
+                if(!xd->onefile)
+                    cairo_ps_surface_set_eps(xd->cs, TRUE);
 #endif
-	    cairo_surface_set_fallback_resolution(xd->cs, xd->fallback_dpi,
-						  xd->fallback_dpi);
-	    xd->cc = cairo_create(xd->cs);
-	    res = cairo_status(xd->cc);
-	    if (res != CAIRO_STATUS_SUCCESS) {
-		error("cairo error '%s'", cairo_status_to_string(res));
-	    }
-	    cairo_set_antialias(xd->cc, xd->antialias);
-	}
+                cairo_surface_set_fallback_resolution(xd->cs, xd->fallback_dpi,
+                                                      xd->fallback_dpi);
+                xd->cc = cairo_create(xd->cs);
+                res = cairo_status(xd->cc);
+                if (res != CAIRO_STATUS_SUCCESS) {
+                    error("cairo error '%s'", cairo_status_to_string(res));
+                }
+                cairo_set_antialias(xd->cc, xd->antialias);
+            }
+        }
     }
 #endif
     else

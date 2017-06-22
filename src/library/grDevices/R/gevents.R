@@ -37,12 +37,13 @@ getGraphicsEventEnv <- function(which=dev.cur()) {
 
 getGraphicsEvent <- function(prompt = "Waiting for input",
                  onMouseDown = NULL, onMouseMove = NULL, onMouseUp = NULL,
-                 onKeybd = NULL, consolePrompt = prompt) {
+                 onKeybd = NULL, onIdle = NULL, consolePrompt = prompt) {
     if (!interactive()) return(NULL)
     if (!missing(prompt) || !missing(onMouseDown) || !missing(onMouseMove)
-     || !missing(onMouseUp) || !missing(onKeybd)) {
+     || !missing(onMouseUp) || !missing(onKeybd) || !missing(onIdle)) {
         setGraphicsEventHandlers(prompt=prompt, onMouseDown=onMouseDown,
-          onMouseMove=onMouseMove, onMouseUp=onMouseUp, onKeybd=onKeybd)
+          onMouseMove=onMouseMove, onMouseUp=onMouseUp, onKeybd=onKeybd,
+          onIdle=onIdle)
     }
     .External2(C_getGraphicsEvent, consolePrompt)
 }

@@ -73,5 +73,23 @@ for (opt in 2:3) {
     f()
 }
 
+## test that AST and compiler errors/warnings agree
+
+enableJIT(0)
+testexpr <- function(fun) {
+  resast <- tryCatch(fun(), error = function(e) e, warning = function(e) e)
+  cfun <- cmpfun(fun)
+  rescmp <- tryCatch(cfun(), error = function(e) e, warning = function(e) e)
+
+  show(resast)
+  show(rescmp)
+
+  stopifnot(identical(resast, rescmp))
+}
+
+testexpr(function() { dummy()$e })
+testexpr(function() { beta(-1, NULL) })
+testexpr(function() { inherits(1, log) })
+
 enableJIT(oldjit)
 setCompilerOptions(optimize = oldoptimize)

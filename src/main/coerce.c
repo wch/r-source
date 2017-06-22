@@ -424,7 +424,7 @@ static SEXP coerceToSymbol(SEXP v)
     }
     PROTECT(ans);
     if (warn) CoercionWarning(warn);/*2000/10/23*/
-    ans = installChar(ans);
+    ans = installTrChar(ans);
     UNPROTECT(2); /* ans, v */
     return ans;
 }
@@ -1288,7 +1288,7 @@ SEXP CreateTag(SEXP x)
 	&& length(STRING_ELT(x, 0)) >= 1) {
 	x = installTrChar(STRING_ELT(x, 0));
     } else
-	x = installChar(STRING_ELT(deparse1(x, 1, SIMPLEDEPARSE), 0));
+	x = installTrChar(STRING_ELT(deparse1(x, 1, SIMPLEDEPARSE), 0));
     return x;
 }
 
@@ -2785,7 +2785,7 @@ static SEXP R_set_class(SEXP obj, SEXP value, SEXP call)
 	valueType = (whichType == -1) ? (SEXPTYPE) -1 : classTable[whichType].sexp;
 	PROTECT(cur_class = R_data_class(obj, FALSE)); nProtect++;
 	/*  assigning type as a class deletes an explicit class attribute. */
-	if(valueType != -1) {
+	if(valueType != (SEXPTYPE)-1) {
 	    setAttrib(obj, R_ClassSymbol, R_NilValue);
 	    if(IS_S4_OBJECT(obj)) /* NULL class is only valid for S3 objects */
 	      do_unsetS4(obj, value);

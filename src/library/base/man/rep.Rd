@@ -1,6 +1,6 @@
 % File src/library/base/man/rep.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2015, 2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{rep}
@@ -28,28 +28,28 @@ rep.int(x, times)
 rep_len(x, length.out)
 }
 \arguments{
-  \item{x}{a vector (of any mode including a list) or a factor or (for
+  \item{x}{a vector (of any mode including a \code{\link{list}}) or a factor or (for
     \code{rep} only) a \code{POSIXct} or \code{POSIXlt} or \code{Date}
     object; or an S4 object containing such an object.}
   \item{\dots}{further arguments to be passed to or from other methods.
     For the internal default method these can include:
     \describe{
-      \item{\code{times}}{A integer vector giving the (non-negative) number of
-        times to repeat each element if of length \code{length(x)}, or to
-        repeat the whole vector if of length 1.  Negative or \code{NA}
-	values are an error.}
+      \item{\code{times}}{an integer-valued vector giving the
+	(non-negative) number of times to repeat each element if of
+	length \code{length(x)}, or to repeat the whole vector if of
+	length 1.  Negative or \code{NA} values are an error.  A
+	\code{double} vector is accepted, other inputs being coerced to
+	an integer or double vector.}
       \item{\code{length.out}}{non-negative integer.  The desired length of the
-        output vector.  Other inputs will be coerced to an integer
+        output vector.  Other inputs will be coerced to a double
 	vector and the first element taken.  Ignored if \code{NA} or invalid.}
       \item{\code{each}}{non-negative integer.  Each element of \code{x}
 	is repeated \code{each} times.  Other inputs will be coerced to
-	an integer vector and the first element taken.  Treated as
+	an integer or double vector and the first element taken.  Treated as
 	\code{1} if \code{NA} or invalid.}
     }
   }
-  \item{times}{see \code{\dots}.}
-  \item{length.out}{non-negative integer: the desired length of the
-    output vector.}
+  \item{times, length.out}{see \code{\dots} above.}
 }
 
 \details{

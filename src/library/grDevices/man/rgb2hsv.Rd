@@ -52,7 +52,7 @@ rgb2hsv(r, g = NULL, b = NULL, maxColorValue = 255)
 (hc <- rgb2hsv(rc))
 6 * hc["h",] # the hues are equispaced
 
-\testonly{set.seed(151)}
+\dontshow{set.seed(151)}
 (rgb3 <- floor(256 * matrix(stats::runif(3*12), 3, 12)))
 (hsv3 <- rgb2hsv(rgb3))
 ## Consistency :

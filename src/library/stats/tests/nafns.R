@@ -108,6 +108,7 @@ stopifnot(max(abs(p1 - p2[common])) <= 256*.Machine$double.eps)
 stopifnot(all(is.na(p2[-common])))
 
 ## tests of diagnostic measures.
+set.seed(11)
 x <- 1:10
 y <- c(rnorm(9),NA)
 fit <- lm(y ~ x, na.action=na.exclude)

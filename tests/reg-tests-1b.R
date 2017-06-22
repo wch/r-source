@@ -231,6 +231,7 @@ op <- options(warn=2)
 m <- c(-Inf,Inf)
 stopifnot(rnorm(2, mean = m) == m,
           rexp (2, Inf) == 0)
+set.seed(11)
 rt(1, Inf)
 R <- list(try(rnorm(2, numeric())),
           try(rexp (2, numeric())),
@@ -243,6 +244,7 @@ stopifnot(sapply(R, function(ch) sub(".* : ", '', ch) ==
 
 
 ## predict.loess with transformed variables
+set.seed(11)
 y <- 1:100 + rnorm(100)
 od <- data.frame(x=1:100, z=1:100 + rnorm(100, 10))
 nd <- data.frame(x=1:100, z=11:110)

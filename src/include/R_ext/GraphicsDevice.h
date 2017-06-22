@@ -151,7 +151,8 @@ struct _DevDesc {
     Rboolean canGenMouseMove; /* can the device generate mousemove events */
     Rboolean canGenMouseUp;   /* can the device generate mouseup events */
     Rboolean canGenKeybd;     /* can the device generate keyboard events */
-
+    Rboolean canGenIdle;      /* can the device generate idle events */
+ 
     Rboolean gettingEvent;    /* This is set while getGraphicsEvent
 				 is actively looking for events */
     
@@ -824,12 +825,15 @@ typedef enum {meMouseDown = 0,
 
 #define doKeybd			Rf_doKeybd
 #define doMouseEvent		Rf_doMouseEvent
+#define doIdle			Rf_doIdle
+#define doesIdle		Rf_doesIdle
 
 void doMouseEvent(pDevDesc dd, R_MouseEvent event,
                   int buttons, double x, double y);
 void doKeybd(pDevDesc dd, R_KeyName rkey,
 	     const char *keyname);
-
+void doIdle(pDevDesc dd);
+Rboolean doesIdle(pDevDesc dd);
 
 /* For use in third-party devices when setting up a device:
  * duplicates Defn.h which is used internally.

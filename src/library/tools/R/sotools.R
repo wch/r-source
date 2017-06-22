@@ -21,7 +21,10 @@ if(.Platform$OS.type == "windows") {
     {
         ## reasonable to assume this on the path
         DLL_nm <- "objdump.exe"
-        if(!nzchar(Sys.which(DLL_nm))) return()
+        if(!nzchar(Sys.which(DLL_nm))) {
+            warning("this requires 'objdump.exe' to be on the PATH")
+            return()
+        }
         f <- file_path_as_absolute(f)
         s0 <- suppressWarnings(system2(DLL_nm, c("-x", shQuote(f)),
                                        stdout = TRUE, stderr = TRUE))
@@ -39,7 +42,10 @@ if(.Platform$OS.type == "windows") {
 read_symbols_from_object_file <- function(f)
 {
     ## reasonable to assume this on the path
-    if(!nzchar(nm <- Sys.which("nm"))) return()
+    if(!nzchar(nm <- Sys.which("nm"))) {
+        warning("this requires 'nm' to be on the PATH")
+        return()
+    }
     f <- file_path_as_absolute(f)
     if(!(file.size(f))) return()
     s <- strsplit(system(sprintf("%s -Pg %s", shQuote(nm), shQuote(f)),
@@ -464,7 +470,7 @@ if(.Platform$OS.type == "windows") {
 
         r_arch <- .Platform$r_arch
         useST <- config_val_to_logical(Sys.getenv("_R_SHLIB_BUILD_OBJECTS_SYMBOL_TABLES_", "FALSE"))
-        useSR <- config_val_to_logical(Sys.getenv("_R_CHECK_SYMBOL_REGISTRATION_", "FALSE"))
+        useSR <- config_val_to_logical(Sys.getenv("_R_CHECK_NATIVE_ROUTINE_REGISTRATION_", "FALSE"))
 
         compare <- function(x, strip_ = FALSE) {
             ## Compare symbols in the DLL and in objects:
@@ -560,7 +566,7 @@ if(.Platform$OS.type == "windows") {
                                     .file_path_relative_to_dir(attr(x, "file"),
                                                                dir, TRUE),
                                     class = "check_RegSym_calls"))
-            bad <- c(bad, Filter(length, nRS))
+            bad2 <- c(bad2, Filter(length, nRS))
         }
 
         if(!length(bad) && !length(bad2)) return(invisible(NULL))
@@ -577,7 +583,7 @@ if(.Platform$OS.type == "windows") {
 
         r_arch <- .Platform$r_arch
         useST <- config_val_to_logical(Sys.getenv("_R_SHLIB_BUILD_OBJECTS_SYMBOL_TABLES_", "FALSE"))
-        useSR <- config_val_to_logical(Sys.getenv("_R_CHECK_SYMBOL_REGISTRATION_", "FALSE"))
+        useSR <- config_val_to_logical(Sys.getenv("_R_CHECK_NATIVE_ROUTINE_REGISTRATION_", "FALSE"))
 
         compare <- function(x) {
             ## Compare symbols in the so and in objects:
@@ -695,11 +701,14 @@ function(file = "symbols.rds")
 package_ff_call_db <-
 function(dir)
 {
-    ff_call_names <- c(".C", ".Call", ".Fortran", ".External")
+    ## A few packages such as CDM use base::.Call
+    ff_call_names <- c(".C", ".Call", ".Fortran", ".External",
+                       "base::.C", "base::.Call",
+                       "base::.Fortran", "base::.External")
 
     predicate <- function(e) {
         (length(e) > 1L) &&
-            !is.na(match(as.character(e[[1L]]), ff_call_names))
+            !is.na(match(deparse(e[[1L]]), ff_call_names))
     }
 
     calls <- .find_calls_in_package_code(dir,
@@ -714,7 +723,7 @@ function(dir)
 }
 
 native_routine_registration_db_from_ff_call_db <-
-function(calls, dir = NULL)
+function(calls, dir = NULL, character_only = TRUE)
 {
     if(!length(calls)) return(NULL)
 
@@ -733,9 +742,12 @@ function(calls, dir = NULL)
     package <- # drop name
         as.vector(.read_description(file.path(dir, "DESCRIPTION"))["Package"])
 
+    symbols <- character()
     nrdb <-
         lapply(calls,
                function(e) {
+                   if (startsWith(deparse(e[[1L]]), "base::"))
+                       e[[1L]] <- e[[1L]][3L]
                    ## First figure out whether ff calls had '...'.
                    pos <- which(unlist(Map(identical,
                                            lapply(e, as.character),
@@ -745,17 +757,32 @@ function(calls, dir = NULL)
                    ## positionally (the other ff interface named
                    ## arguments come after '...').
                    if(length(pos)) e <- e[-pos]
+                   ## drop calls with only ...
+                   if(length(e) < 2L) return(NULL)
                    cname <- as.character(e[[1L]])
+                   ## The help says
+                   ##
+                   ## '.NAME' is always matched to the first argument
+                   ## supplied (which should not be named).
+                   ##
+                   ## But some people do (Geneland ...).
+                   nm <- names(e); nm[2L] <- ""; names(e) <- nm
                    e <- match.call(ff_call_args[[cname]], e)
-                   ## Only keep ff calls where .NAME is a name or
-                   ## character.
+                   ## Only keep ff calls where .NAME is character
+                   ## or (optionally) a name.
                    s <- e[[".NAME"]]
-                   if(is.name(s))
+                   if(is.name(s)) {
                        s <- deparse(s)[1L]
-                   else if(is.character(s))
+                       if(character_only) {
+                           symbols <<- c(symbols, s)
+                           return(NULL)
+                       }
+                   } else if(is.character(s)) {
                        s <- s[1L]
-                   else
+                   } else { ## expressions
+                       symbols <<- c(symbols, deparse(s))
                        return(NULL)
+                   }
                    ## Drop the ones where PACKAGE gives a different
                    ## package. Ignore those which are not char strings.
                    if(!is.null(p <- e[["PACKAGE"]]) &&
@@ -792,13 +819,13 @@ function(calls, dir = NULL)
     imports <- unlist(lapply(imports, `[[`, 2L))
 
     info <- info$nativeRoutines[[package]]
-    ## First adjust native routine names for explicit remapping or
-    ## namespace .fixes.  However, a package without registration
-    ## has no way to use the fixes, so this does not seem necessary.
+    ## Adjust native routine names for explicit remapping or
+    ## namespace .fixes.
     if(length(symnames <- info$symbolNames)) {
         ind <- match(nrdb[, 2L], names(symnames), nomatch = 0L)
         nrdb[ind > 0L, 2L] <- symnames[ind]
-    } else if(any((fixes <- info$registrationFixes) != "")) {
+    } else if(!character_only &&
+              any((fixes <- info$registrationFixes) != "")) {
         ## There are packages which have not used the fixes, e.g. utf8latex
         ## fixes[1L] is a prefix, fixes[2L] is an undocumented suffix
         nrdb[, 2L] <- sub(paste0("^", fixes[1L]), "", nrdb[, 2L])
@@ -815,6 +842,7 @@ function(calls, dir = NULL)
 
     attr(nrdb, "package") <- package
     attr(nrdb, "duplicates") <- dups
+    attr(nrdb, "symbols") <- unique(symbols)
     nrdb
 }
 
@@ -848,6 +876,7 @@ function(nrdb, align = TRUE, include_declarations = FALSE)
 
     package <- attr(nrdb, "package")
     dups <- attr(nrdb, "duplicates")
+    symbols <- attr(nrdb, "symbols")
 
     nrdb <- split(nrdb[, -1L, drop = FALSE],
                   factor(nrdb[, 1L],
@@ -913,9 +942,16 @@ function(nrdb, align = TRUE, include_declarations = FALSE)
       "#include <stdlib.h> // for NULL",
       "#include <R_ext/Rdynload.h>",
       "",
+      if(length(symbols)) {
+          c("/*",
+            "  The following symbols/expresssions for .NAME have been omitted",
+            "", strwrap(symbols, indent = 4, exdent = 4), "",
+            "  Most likely possible values need to be added below.",
+            "*/", "")
+      },
       if(length(dups)) {
           c("/*",
-            "  The following symnbols appear with different usages",
+            "  The following name(s) appear with different usages",
             "  e.g., with different numbers of arguments:",
             "", strwrap(dups, indent = 4, exdent = 4), "",
             "  This needs to be resolved in the tables and any declarations.",
@@ -938,16 +974,17 @@ function(nrdb, align = TRUE, include_declarations = FALSE)
 }
 
 package_native_routine_registration_db <-
-function(dir)
+function(dir, character_only = TRUE)
 {
     calls <- package_ff_call_db(dir)
-    native_routine_registration_db_from_ff_call_db(calls, dir)
+    native_routine_registration_db_from_ff_call_db(calls, dir, character_only)
 }
 
 package_native_routine_registration_skeleton <-
-function(dir, con = stdout(), align = TRUE, include_declarations = FALSE)
+function(dir, con = stdout(), align = TRUE, character_only = TRUE,
+         include_declarations = TRUE)
 {
-    nrdb <- package_native_routine_registration_db(dir)
+    nrdb <- package_native_routine_registration_db(dir, character_only)
     writeLines(format_native_routine_registration_db_for_skeleton(nrdb,
                 align, include_declarations),
                con)

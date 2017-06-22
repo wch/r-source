@@ -1694,6 +1694,7 @@ AC_SUBST(R_DYLIB_EXT)
 R_STDCXX([98], [CXX98])
 R_STDCXX([11], [CXX1X])
 R_STDCXX([14], [CXX1Y])
+R_STDCXX([17], [CXX1Z])
 
 ### OpenMP.
 
@@ -1902,6 +1903,9 @@ AC_CHECK_DECLS([realpath], , , [#include <stdlib.h>
 R_CHECK_FUNCS([glob], [#ifdef HAVE_GLOB_H
 # include <glob.h>
 #endif])
+AC_CHECK_FUNCS([dladdr dlsym])
+AC_CHECK_DECLS([dladdr,dlsym], , , [#include<dlfcn.h>])
+AC_CHECK_DECLS([RTLD_DEFAULT,RTLD_NEXT], , , [#include<dlfcn.h>])
 
 ## Lots of uses of getwd(), file.access(), Sys.glob().
 ## We don't need times() except as a fallback for getrusage and
@@ -2626,6 +2630,8 @@ AC_SUBST(XTRA_INTL_CPPFLAGS)
 AM_CONDITIONAL(USE_NLS, [test "x${USE_NLS}" = xyes])
 AM_CONDITIONAL(BUILD_LIBINTL, [test "x${USE_INCLUDED_LIBINTL}" = xyes])
 
+R_OPENMP_SIMDRED
+
 ### shell for use in scripts: we allow R_SHELL to set the script,
 ### since some AIX systems have zsh as sh.
 : ${R_SHELL=${SHELL}}
@@ -2767,6 +2773,7 @@ r_cxx_compiler="${CXX} ${CXXSTD} ${R_XTRA_CXXFLAGS} ${CXXFLAGS}"
 r_cxx98_compiler="${CXX98} ${CXX98STD} ${CXX98FLAGS}"
 r_cxx1x_compiler="${CXX1X} ${CXX1XSTD} ${CXX1XFLAGS}"
 r_cxx1y_compiler="${CXX1Y} ${CXX1YSTD} ${CXX1YFLAGS}"
+r_cxx1z_compiler="${CXX1Z} ${CXX1ZSTD} ${CXX1ZFLAGS}"
 r_f77_compiler="${F77} ${R_XTRA_FFLAGS} ${FFLAGS}"
 r_f95_compiler="${FC} ${FCFLAGS}"
 r_objc_compiler="${OBJC} ${OBJCFLAGS}"
@@ -2896,6 +2903,7 @@ R is now configured for ${host}
   C++98 compiler:            ${r_cxx98_compiler}
   C++11 compiler:            ${r_cxx1x_compiler}
   C++14 compiler:            ${r_cxx1y_compiler}
+  C++17 compiler:            ${r_cxx1z_compiler}
   Fortran 90/95 compiler:    ${r_f95_compiler}
   Obj-C compiler:	     ${r_objc_compiler}
 

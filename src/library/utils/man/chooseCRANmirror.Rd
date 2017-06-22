@@ -1,6 +1,6 @@
 % File src/library/utils/man/chooseCRANmirror.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{chooseCRANmirror}
@@ -44,8 +44,7 @@ getCRANmirrors(all = FALSE, local.only = FALSE)
   HTTP mirrors (which are listed in a sub-menu).  If it is set to
   \code{FALSE}, no HTTPS mirrors will be offered.  Choosing an HTTPS
   mirror provides some guarantees on the identity of the site chosen and
-  so is recommended. (However, most but not all \R builds support
-  downloading from HTTPS sites.)
+  so is recommended. (All \R builds support downloading from HTTPS sites.)
 
   \code{ind} chooses a row in the list of current mirrors, by number. It
   is best used with \code{local.only = TRUE} and row numbers in

@@ -109,6 +109,7 @@ stopifnot(identical(c0, strtrim(c0, integer(0))))
 
 
 ## Factors with duplicated levels {created via low-level code}:
+set.seed(11)
 f0 <- factor(sample.int(9, 20, replace=TRUE))
 (f <- structure(f0, "levels" = as.character(c(2:7, 2:4))))
 tools::assertWarning(print(f))
@@ -626,21 +627,26 @@ options(na.action = "na.omit")
 DN <- DF; DN[cbind(6:9, c(1:2,4,1))] <- NA; DN
 
 tools::assertError(# 'na.fail' should fail :
-	   xtabs(Freq ~ Gender + Admit, DN, na.action=na.fail))
+	   xtabs(Freq ~ Gender + Admit, DN, na.action = na.fail))
 xt. <- xtabs(Freq ~ Gender + Admit, DN)
-xtp <- xtabs(Freq ~ Gender + Admit, DN, na.action=na.pass)
-xtS <- xtabs(Freq ~ Gender + Admit, DN, na.action=na.pass, sparse=TRUE)# error in R <= 3.3.2
-xtN <- xtabs(Freq ~ Gender + Admit, DN, addNA=TRUE)
-xtNS<- xtabs(Freq ~ Gender + Admit, DN, addNA=TRUE, sparse=TRUE)
+xtp <- xtabs(Freq ~ Gender + Admit, DN, na.action = na.pass)
+xtN <- xtabs(Freq ~ Gender + Admit, DN, addNA = TRUE)
 stopifnot(
     identical(asArr(xt - xt.), as_A(c(120,17, 207, 8 ), xt)),
     identical(asArr(xt - xtp), as_A(c(120,17, 207, NA), xt)), # not ok in R <= 3.3.2
-    eq_A(xt., xtabs(Freq ~ Gender + Admit, DN, sparse = TRUE)),
-    eq_A(xtp, xtS),
-    eq_A(xtN, xtNS),
     identical(asArr(-xtN + rbind(cbind(xt, 0), 0)),
               as_A(c(120, 17, -17, 207, NA, 0, -327, 0, 0), xtN))
 )
+## 'sparse = TRUE requires recommended package Matrix
+if(requireNamespace('Matrix')) {
+    xtS <- xtabs(Freq ~ Gender + Admit, DN, na.action = na.pass, sparse = TRUE)# error in R <= 3.3.2
+    xtNS <- xtabs(Freq ~ Gender + Admit, DN, addNA = TRUE, sparse = TRUE)
+    stopifnot(
+        eq_A(xt., xtabs(Freq ~ Gender + Admit, DN, sparse = TRUE)),
+        eq_A(xtp, xtS),
+        eq_A(xtN, xtNS)
+   )
+}
 ## NA treatment partly wrong in R < 3.4.0; new option 'addNA'
 ee <- esoph[esoph[,"ncases"] > 0, c(1:2,4)]
 ee[,"ncases"] <- as.integer(ee[,"ncases"])
@@ -677,6 +683,21 @@ msg <- tryCatch(stopifnot(all.equal(rep(list(pi),4), list(3.1, 3.14, 3.141, 3.14
 writeLines(msg)
 stopifnot(length(strsplit(msg,"\n")[[1]]) == 1+3+1)
 ## was wrong for months in R-devel only
+
+
+## available.packages() (not) caching in case of errors
+tools::assertWarning(ap1 <- available.packages(repos = "http://foo.bar"))
+tools::assertWarning(ap2 <- available.packages(repos = "http://foo.bar"))
+stopifnot(nrow(ap1) == 0, identical(ap1, ap2))
+## had failed for a while in R-devel (left empty *.rds file)
+
+
+## rep()/rep.int() : when 'times' is a list
+stopifnot(identical(rep    (4,   list(3)), c(4,4,4)),
+          identical(rep.int(4,   list(3)), c(4,4,4)),
+          identical(rep.int(4:5, list(2,1)), c(4L,4:5)),
+          identical(rep    (4:5, list(2,1)), c(4L,4:5)))
+## partly failed in R 3.3.{2,3}
 
 
 

@@ -156,7 +156,7 @@ nls(formula, data, start, control, algorithm,
   \code{\link{selfStart}}.
 }
 \examples{
-\testonly{od <- options(digits=5)}
+\dontshow{od <- options(digits=5)}
 require(graphics)
 
 DNase1 <- subset(DNase, Run == 1)
@@ -302,7 +302,7 @@ b <- coef(musc.1)
 musc.2 <- nls(Length ~ a[Strip] + b[Strip]*exp(-Conc/th), muscle,
               start = list(a = rep(b[2], 21), b = rep(b[3], 21), th = b[1]))
 summary(musc.2)}
-\testonly{options(od)}
+\dontshow{options(od)}
 }
 \keyword{nonlinear}
 \keyword{regression}

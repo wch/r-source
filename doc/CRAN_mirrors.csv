@@ -57,8 +57,6 @@ Ecuador,Ecuador,Guayaquil,http://cran.espol.edu.ec/,"Escuela Superior Politecnic
 "France (Paris 1)",France,Paris,http://cran.irsn.fr/,"French Nuclear Safety Institute, Paris","yann.richet # irsn.fr",1,fr
 "France (Paris 2) [https]",France,Paris,https://cran.univ-paris1.fr/,"SAMM, Université Paris 1 Panthéon-Sorbonne","pierre.latouche # univ-paris1.fr",1,fr,"secure_mirror_from_master"
 "France (Paris 2)",France,Paris,http://cran.univ-paris1.fr/,"SAMM, Université Paris 1 Panthéon-Sorbonne","pierre.latouche # univ-paris1.fr",1,fr,"secure_mirror_from_master"
-"Germany (Falkenstein) [https]",Germany,Falkenstein,https://mirrors.cicku.me/CRAN/,CICKU,"mirrors # cicku.me",1,de,
-"Germany (Falkenstein)",Germany,Falkenstein,http://mirrors.cicku.me/CRAN/,CICKU,"mirrors # cicku.me",1,de,
 "Germany (Göttingen)",Germany,Göttingen,http://ftp5.gwdg.de/pub/misc/cran/,"GWDG Göttingen","Eberhard Moenkeberg <emoenke # gwdg.de>",1,de
 "Germany (Münster) [https]",Germany,Münster,https://cran.uni-muenster.de/,"University of Münster, Germany","Edzer Pebesma <edzer.pebesma # uni-muenster.de>",1,de,"secure_mirror_from_master"
 "Germany (Münster)",Germany,Münster,http://cran.uni-muenster.de/,"University of Münster, Germany","Edzer Pebesma <edzer.pebesma # uni-muenster.de>",1,de,"secure_mirror_from_master"
@@ -68,6 +66,7 @@ Hungary,Hungary,Budapest,http://cran.rapporter.net/,"Rapporter.net, Budapest","D
 Iceland,Iceland,Reykjavik,http://cran.hafro.is/,"Marine Research Institute","cran # hafro.is",1,is,"secure_mirror_from_master"
 "India [https]",India,Chennai,https://ftp.iitm.ac.in/cran/,"Indian Institute of Technology Madras","sriram # iitm.ac.in",1,in
 India,India,Chennai,http://ftp.iitm.ac.in/cran/,"Indian Institute of Technology Madras","sriram # iitm.ac.in",1,in
+"Indonesia (Jakarta) [https]",Indonesia,Jakarta,https://repo.bppt.go.id/cran/,"Agency for The Application and Assessment of Technology","Imam Cartealy <imam.cartealy # bppt.go.id>",1,id,"secure_mirror_from_master"
 Iran,Iran,Mashhad,http://cran.um.ac.ir/,"Ferdowsi University of Mashhad","Majid Sarmad <sarmad # um.ac.ir>",1,ir
 "Ireland [https]",Ireland,Dublin,https://ftp.heanet.ie/mirrors/cran.r-project.org/,"HEAnet,Dublin","mirrors # heanet.ie",1,ie,"secure_mirror_from_master"
 Ireland,Ireland,Dublin,http://ftp.heanet.ie/mirrors/cran.r-project.org/,"HEAnet,Dublin","mirrors # heanet.ie",1,ie,"secure_mirror_from_master"
@@ -116,6 +115,7 @@ Switzerland,Switzerland,Zürich,http://stat.ethz.ch/CRAN/,"ETH Zürich","Martin.
 Thailand,Thailand,Hatyai,http://mirrors.psu.ac.th/pub/cran/,"Prince of Songkla University, Hatyai","wipat.s # psu.ac.th",1,th
 "Turkey (Denizli) [https]",Turkey,Denizli,https://cran.pau.edu.tr/,"Pamukkale University, Denizli","Ugur Zeybek <uzeybek # pau.edu.tr>",1,tr
 "Turkey (Denizli)",Turkey,Denizli,http://cran.pau.edu.tr/,"Pamukkale University, Denizli","Ugur Zeybek <uzeybek # pau.edu.tr>",1,tr
+"Turkey (Mersin) [https]",Turkey,Mersin,https://cran.ncc.metu.edu.tr/,"Middle East Technical University Northern Cyprus Campus, Mersin","atasiran # metu.edu.tr, ncc-cc # metu.edu.tr",1,tr
 "Turkey (Mersin)",Turkey,Mersin,http://cran.ncc.metu.edu.tr/,"Middle East Technical University Northern Cyprus Campus, Mersin","atasiran # metu.edu.tr, ncc-cc # metu.edu.tr",1,tr
 "UK (Bristol) [https]",UK,Bristol,https://www.stats.bris.ac.uk/R/,"University of Bristol","Guy Nason <G.P.Nason # bristol.ac.uk>, it-zone-d # bristol.ac.uk",1,uk,"secure_mirror_from_master"
 "UK (Bristol)",UK,Bristol,http://www.stats.bris.ac.uk/R/,"University of Bristol","Guy Nason <G.P.Nason # bristol.ac.uk>, it-zone-d # bristol.ac.uk",1,uk,"secure_mirror_from_master"
@@ -146,6 +146,7 @@ Thailand,Thailand,Hatyai,http://mirrors.psu.ac.th/pub/cran/,"Prince of Songkla U
 "USA (PA 2)",USA,Pittsburgh,http://cran.mirrors.hoobly.com/,"Hoobly Classifieds, Pittsburgh, PA","Peter Grigor <pgrigor # hoobly.com>",1,us
 "USA (TN) [https]",USA,"Oak Ridge",https://mirrors.nics.utk.edu/cran/,"National Institute for Computational Sciences, Oak Ridge, TN","help # nics.utk.edu",1,us,"secure_mirror_from_master"
 "USA (TN)",USA,"Oak Ridge",http://mirrors.nics.utk.edu/cran/,"National Institute for Computational Sciences, Oak Ridge, TN","help # nics.utk.edu",1,us,"secure_mirror_from_master"
-"USA (TX) [https]",USA,Dallas,https://cran.revolutionanalytics.com/,"Revolution Analytics, Dallas, TX","David Smith <david # revolutionanalytics.com>",1,us,"secure_mirror_from_master"
-"USA (TX)",USA,Dallas,http://cran.revolutionanalytics.com/,"Revolution Analytics, Dallas, TX","David Smith <david # revolutionanalytics.com>",1,us,"secure_mirror_from_master"
+"USA (TX 1) [https]",USA,Dallas,https://cran.revolutionanalytics.com/,"Revolution Analytics, Dallas, TX","David Smith <david # revolutionanalytics.com>",1,us,"secure_mirror_from_master"
+"USA (TX 1)",USA,Dallas,http://cran.revolutionanalytics.com/,"Revolution Analytics, Dallas, TX","David Smith <david # revolutionanalytics.com>",1,us,"secure_mirror_from_master"
+"USA (TX 2) [https]",USA,"San Antonio",https://mirror.usertrust.info/cranmirror/,"Dark Particle Labs, San Antonio","Matt Weeks <scriptjunkie # scriptjunkie.us>",1,us,"secure_mirror_from_master"
 Venezuela,Venezuela,Valencia,http://camoruco.ing.uc.edu.ve/cran/,"Universidad de Carabobo Venezuela","dir-imyca # uc.edu.ve",1,ve

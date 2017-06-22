@@ -234,7 +234,7 @@ spline_basis(SEXP knots, SEXP order, SEXP xvals, SEXP derivs)
 
 #define CALLDEF(name, n)  {#name, (DL_FUNC) &name, n}
 
-const static R_CallMethodDef R_CallDef[] = {
+static const R_CallMethodDef R_CallDef[] = {
     CALLDEF(spline_basis, 4),
     CALLDEF(spline_value, 5),
     {NULL, NULL, 0}

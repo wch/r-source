@@ -622,6 +622,13 @@ typedef enum {
     GTOP
 } RELOP_TYPE;
 
+typedef enum {
+    MATPROD_DEFAULT = 1,
+    MATPROD_INTERNAL,
+    MATPROD_BLAS,
+    MATPROD_DEFAULT_SIMD  /* experimental */
+} MATPROD_TYPE;
+
 /* File Handling */
 /*
 #define R_EOF	65535
@@ -696,6 +703,7 @@ extern0 int	R_Expressions	INI_as(5000);	/* options(expressions) */
 extern0 int	R_Expressions_keep INI_as(5000);	/* options(expressions) */
 extern0 Rboolean R_KeepSource	INI_as(FALSE);	/* options(keep.source) */
 extern0 Rboolean R_CBoundsCheck	INI_as(FALSE);	/* options(CBoundsCheck) */
+extern0 MATPROD_TYPE R_Matprod	INI_as(MATPROD_DEFAULT);  /* options(matprod) */
 extern0 int	R_WarnLength	INI_as(1000);	/* Error/warning max length */
 extern0 int	R_nwarnings	INI_as(50);
 extern uintptr_t R_CStackLimit	INI_as((uintptr_t)-1);	/* C stack limit */
@@ -849,6 +857,12 @@ extern0 Rboolean known_to_be_utf8 INI_as(FALSE);
 LibExtern SEXP R_TrueValue INI_as(NULL);
 LibExtern SEXP R_FalseValue INI_as(NULL);
 LibExtern SEXP R_LogicalNAValue INI_as(NULL);
+
+/* for PCRE as from R 3.4.0 */
+extern0 Rboolean R_PCRE_use_JIT INI_as(TRUE);
+extern0 int R_PCRE_study INI_as(10);
+extern0 int R_PCRE_limit_recursion;
+
 
 #ifdef __MAIN__
 # undef extern

@@ -1,4 +1,4 @@
-% File src/library/tools/man/CRANtools.Rd
+% File src/library/tools/man/getVignetteInfo.Rd
 % Part of the R package, https://www.R-project.org
 % Copyright 2013 R Core Team
 % Distributed under GPL 2 or later

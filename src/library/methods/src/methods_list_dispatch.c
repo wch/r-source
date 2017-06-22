@@ -386,7 +386,7 @@ static SEXP get_generic(SEXP symbol, SEXP rho, SEXP package)
 {
     SEXP vl, generic = R_UnboundValue, gpackage; const char *pkg; Rboolean ok;
     if(!isSymbol(symbol))
-	symbol = installChar(asChar(symbol));
+	symbol = installTrChar(asChar(symbol));
     pkg = CHAR(STRING_ELT(package, 0)); /* package is guaranteed single string */
 
     while (rho != R_NilValue) {
@@ -594,7 +594,7 @@ static SEXP do_dispatch(SEXP fname, SEXP ev, SEXP mlist, int firstTry,
     else
 	/* shouldn't happen, since argument in class MethodsList has class
 	   "name" */
-	arg_sym = installChar(asChar(arg_slot));
+	arg_sym = installTrChar(asChar(arg_slot));
     if(arg_sym == R_DotsSymbol || DDVAL(arg_sym) > 0)
 	error(_("(in selecting a method for function '%s') '...' and related variables cannot be used for methods dispatch"),
 	      CHAR(asChar(fname)));
@@ -681,7 +681,7 @@ SEXP R_nextMethodCall(SEXP matched_call, SEXP ev)
 	    SEXP generic = findVarInFrame3(ev, R_dot_Generic, TRUE);
 	    if(generic == R_UnboundValue)
 	        error("internal error in 'callNextMethod': '.Generic' was not assigned in the frame of the method call");
-	    op = INTERNAL(install(CHAR(asChar(generic))));
+	    op = INTERNAL(installTrChar(asChar(generic)));
 	    prim_case = TRUE;
 	}
     }
@@ -778,7 +778,7 @@ static SEXP R_selectByPackage(SEXP table, SEXP classes, int nargs) {
 	thisPkg = PACKAGE_SLOT(VECTOR_ELT(classes, i));
 	if(thisPkg == R_NilValue)
 	    thisPkg = s_base;
-	lwidth += strlen(STRING_VALUE(thisPkg)) + 1;
+	lwidth += (int) strlen(STRING_VALUE(thisPkg)) + 1;
     }
     /* make the label */
     const void *vmax = vmaxget();
@@ -876,7 +876,7 @@ SEXP R_getClassFromCache(SEXP class, SEXP table)
     if(TYPEOF(class) == STRSXP) {
 	if (LENGTH(class) == 0) return R_NilValue;
 	SEXP package = PACKAGE_SLOT(class);
-	value = findVarInFrame(table, installChar(STRING_ELT(class, 0)));
+	value = findVarInFrame(table, installTrChar(STRING_ELT(class, 0)));
 	if(value == R_UnboundValue)
 	    return R_NilValue;
 	else if(TYPEOF(package) == STRSXP) {
@@ -1019,7 +1019,7 @@ SEXP R_dispatchGeneric(SEXP fname, SEXP ev, SEXP fdef)
 		      R_curErrorBuf());
 	}
 	SET_VECTOR_ELT(classes, i, thisClass);
-	lwidth += strlen(STRING_VALUE(thisClass)) + 1;
+	lwidth += (int) strlen(STRING_VALUE(thisClass)) + 1;
     }
     /* make the label */
     const void *vmax = vmaxget();

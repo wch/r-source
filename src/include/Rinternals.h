@@ -1530,7 +1530,7 @@ void R_set_altrep_data2(SEXP x, SEXP v);
 	void NORET R_SignalCStackOverflow(intptr_t);				\
 	int dummy;							\
 	intptr_t usage = R_CStackDir * (R_CStackStart - (uintptr_t)&dummy); \
-	if(R_CStackLimit != -1 && usage > ((intptr_t) R_CStackLimit))	\
+	if(R_CStackLimit != (uintptr_t)(-1) && usage > ((intptr_t) R_CStackLimit)) \
 	    R_SignalCStackOverflow(usage);				\
     } while (FALSE)
 #endif

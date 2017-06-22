@@ -128,6 +128,7 @@ static const R_CallMethodDef CallEntries[] = {
     CALLDEF(pRho, 3),
     CALLDEF(SWilk, 1),
     CALLDEF(bw_den, 2),
+    CALLDEF(bw_den_binned, 1),
     CALLDEF(bw_ucv, 4),
     CALLDEF(bw_bcv, 4),
     CALLDEF(bw_phi4, 4),
@@ -253,7 +254,8 @@ static const R_CallMethodDef CallEntries[] = {
 #define FDEF(name)  {#name, (DL_FUNC) &F77_NAME(name), sizeof(name ## _t)/sizeof(name ## _t[0]), name ##_t}
 
 
-static R_NativePrimitiveArgType lowesw_t[] = { REALSXP, INTSXP, REALSXP, INTSXP};
+static R_NativePrimitiveArgType lowesw_t[] = {
+    REALSXP, INTSXP, REALSXP, INTSXP};
 static R_NativePrimitiveArgType lowesp_t[] = {
     INTSXP, REALSXP, REALSXP, REALSXP, REALSXP, INTSXP, REALSXP};
 
@@ -261,18 +263,18 @@ static R_NativePrimitiveArgType lowesp_t[] = {
 static const R_FortranMethodDef FortEntries[] = {
     FDEF(lowesw),
     FDEF(lowesp),
-    {"setppr", (DL_FUNC) &F77_NAME(setppr), 6},
-    {"smart", (DL_FUNC) &F77_NAME(smart), 16},
-    {"pppred", (DL_FUNC) &F77_NAME(pppred), 5},
-    {"setsmu", (DL_FUNC) &F77_NAME(setsmu), 1},
-    {"rbart", (DL_FUNC) &F77_NAME(rbart), 20},
-    {"bvalus", (DL_FUNC) &F77_NAME(bvalus), 7},
+    {"setppr", (DL_FUNC) &F77_NAME(setppr),  6},
+    {"smart",  (DL_FUNC) &F77_NAME(smart),  16},
+    {"pppred", (DL_FUNC) &F77_NAME(pppred),  5},
+    {"setsmu", (DL_FUNC) &F77_NAME(setsmu),  1},
+    {"rbart",  (DL_FUNC) &F77_NAME(rbart),  20},
+    {"bvalus", (DL_FUNC) &F77_NAME(bvalus),  7},
     {"supsmu", (DL_FUNC) &F77_NAME(supsmu), 10},
     {"hclust", (DL_FUNC) &F77_NAME(hclust), 11},
-    {"hcass2", (DL_FUNC) &F77_NAME(hcass2), 6},
-    {"kmns", (DL_FUNC) &F77_NAME(kmns), 17},
-    {"eureka", (DL_FUNC) &F77_NAME(eureka), 6},
-    {"stl", (DL_FUNC) &F77_NAME(stl), 18},
+    {"hcass2", (DL_FUNC) &F77_NAME(hcass2),  6},
+    {"kmns",   (DL_FUNC) &F77_NAME(kmns),   17},
+    {"eureka", (DL_FUNC) &F77_NAME(eureka),  6},
+    {"stl",    (DL_FUNC) &F77_NAME(stl),    18},
     {NULL, NULL, 0}
 };
 

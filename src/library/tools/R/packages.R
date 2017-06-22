@@ -1,7 +1,7 @@
 #  File src/library/tools/R/packages.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@ write_PACKAGES <-
 function(dir = ".", fields = NULL,
          type = c("source", "mac.binary", "win.binary"),
          verbose = FALSE, unpacked = FALSE, subdirs = FALSE,
-         latestOnly = TRUE, addFiles = FALSE)
+         latestOnly = TRUE, addFiles = FALSE, rds_compress = TRUE)
 {
     if(missing(type) && .Platform$OS.type == "windows")
         type <- "win.binary"
@@ -42,7 +42,7 @@ function(dir = ".", fields = NULL,
 
     db <- NULL
     addPaths <- !identical(paths, "")
-    
+
     for(path in paths) {
         this <- if(nzchar(path)) file.path(dir, path) else dir
         desc <- .build_repository_package_db(this, fields, type, verbose,
@@ -82,9 +82,9 @@ function(dir = ".", fields = NULL,
         write.dcf(db, con)
         close(con)
         rownames(db) <- db[, "Package"]
-        saveRDS(db, file.path(dir, "PACKAGES.rds"))
+        saveRDS(db, file.path(dir, "PACKAGES.rds"), compress = rds_compress)
     }
-    
+
     invisible(np)
 }
 

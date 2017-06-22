@@ -49,7 +49,7 @@ DEPENDS = $(SOURCES_C:.c=.d) $(EXTRA_SOURCES_C:.c=.d)
 SOURCES = $(SOURCES_C) $(SOURCES_F)
 OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o) @LIBOBJS@ @ALLOCA@
 HEADERS = \
-	RBufferUtils.h Rstrptime.h \
+	RBufferUtils.h Rcomplex.h Rstrptime.h \
 	arithmetic.h \
 	basedecl.h \
 	contour-common.h \

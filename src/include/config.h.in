@@ -161,6 +161,14 @@
    */
 #undef HAVE_DECL_ALLOCA
 
+/* Define to 1 if you have the declaration of `dladdr', and to 0 if you don't.
+   */
+#undef HAVE_DECL_DLADDR
+
+/* Define to 1 if you have the declaration of `dlsym', and to 0 if you don't.
+   */
+#undef HAVE_DECL_DLSYM
+
 /* Define to 1 if you have the declaration of `feof_unlocked', and to 0 if you
    don't. (For intl) */
 #undef HAVE_DECL_FEOF_UNLOCKED
@@ -192,6 +200,14 @@
 /* Define to 1 if you have the declaration of `realpath', and to 0 if you
    don't. */
 #undef HAVE_DECL_REALPATH
+
+/* Define to 1 if you have the declaration of `RTLD_DEFAULT', and to 0 if you
+   don't. */
+#undef HAVE_DECL_RTLD_DEFAULT
+
+/* Define to 1 if you have the declaration of `RTLD_NEXT', and to 0 if you
+   don't. */
+#undef HAVE_DECL_RTLD_NEXT
 
 /* Define to 1 if you have the declaration of `siglongjmp', and to 0 if you
    don't. */
@@ -229,8 +245,14 @@
    */
 #undef HAVE_DIRENT_H
 
+/* Define to 1 if you have the `dladdr' function. */
+#undef HAVE_DLADDR
+
 /* Define to 1 if you have the <dlfcn.h> header file. */
 #undef HAVE_DLFCN_H
+
+/* Define to 1 if you have the `dlsym' function. */
+#undef HAVE_DLSYM
 
 /* Define to 1 if you have the <dl.h> header file. */
 #undef HAVE_DL_H
@@ -414,7 +436,7 @@
 /* Define if your <locale.h> file defines LC_MESSAGES. */
 #undef HAVE_LC_MESSAGES
 
-/* Define if your system has libcurl >= 7.28.0 with support for https. */
+/* Define if your system has libcurl >= 7.22.0 with support for https. */
 #undef HAVE_LIBCURL
 
 /* Define if __libc_stack_end is visible. */
@@ -547,6 +569,9 @@
 
 /* Define if you have C OpenMP support. */
 #undef HAVE_OPENMP
+
+/* Define if your OpenMP 4 implementation fully supports SIMD reduction */
+#undef HAVE_OPENMP_SIMDRED
 
 /* Define to 1 if you have pangocairo. */
 #undef HAVE_PANGOCAIRO

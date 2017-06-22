@@ -1478,7 +1478,10 @@ R_removeTaskCallback(SEXP which)
     Rboolean val;
 
     if(TYPEOF(which) == STRSXP) {
-	val = Rf_removeTaskCallbackByName(CHAR(STRING_ELT(which, 0)));
+	if (LENGTH(which) == 0)
+	    val = FALSE;
+	else
+	    val = Rf_removeTaskCallbackByName(CHAR(STRING_ELT(which, 0)));
     } else {
 	id = asInteger(which);
 	if (id != NA_INTEGER) val = Rf_removeTaskCallbackByIndex(id - 1);

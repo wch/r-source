@@ -4177,7 +4177,7 @@ LIBS="${CURL_LIBS} ${LIBS}"
 AC_CHECK_HEADERS(curl/curl.h, [have_libcurl=yes], [have_libcurl=no])
 
 if test "x${have_libcurl}" = "xyes"; then
-AC_CACHE_CHECK([if libcurl is version 7 and >= 7.28.0], [r_cv_have_curl728],
+AC_CACHE_CHECK([if libcurl is version 7 and >= 7.22.0], [r_cv_have_curl722],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <stdlib.h>
 #include <curl/curl.h>
@@ -4186,7 +4186,7 @@ int main()
 #ifdef LIBCURL_VERSION_MAJOR
 #if LIBCURL_VERSION_MAJOR > 7
   exit(1);
-#elif LIBCURL_VERSION_MAJOR == 7 && LIBCURL_VERSION_MINOR >= 28
+#elif LIBCURL_VERSION_MAJOR == 7 && LIBCURL_VERSION_MINOR >= 22
   exit(0);
 #else
   exit(1);
@@ -4195,9 +4195,9 @@ int main()
   exit(1);
 #endif
 }
-]])], [r_cv_have_curl728=yes], [r_cv_have_curl728=no], [r_cv_have_curl728=no])])
+]])], [r_cv_have_curl722=yes], [r_cv_have_curl722=no], [r_cv_have_curl722=no])])
 fi
-if test "x${r_cv_have_curl728}" = xno; then
+if test "x${r_cv_have_curl722}" = xno; then
   have_libcurl=no
 fi
 
@@ -4221,16 +4221,68 @@ if test "x${r_cv_have_curl_https}" = xno; then
   have_libcurl=no
 fi
 if test "x${have_libcurl}" = xyes; then
-  AC_DEFINE(HAVE_LIBCURL, 1, [Define if your system has libcurl >= 7.28.0 with support for https.])
+  AC_DEFINE(HAVE_LIBCURL, 1, [Define if your system has libcurl >= 7.22.0 with support for https.])
   CPPFLAGS="${r_save_CPPFLAGS}"
   LIBS="${r_save_LIBS}"
   AC_SUBST(CURL_CPPFLAGS)
   AC_SUBST(CURL_LIBS)
 else
-  AC_MSG_ERROR([libcurl >= 7.28.0 library and headers are required with support for https])
+  AC_MSG_ERROR([libcurl >= 7.22.0 library and headers are required with support for https])
 fi
 ])# R_LIBCURL
 
+## R_OPENMP_SIMDRED
+## ------------
+## Support for SIMD reduction on '+' (part of OpenMP 4.0) in C compiler.
+AC_DEFUN([R_OPENMP_SIMDRED],
+[AC_CACHE_CHECK([whether OpenMP SIMD reduction is supported],
+                [r_cv_openmp_simdred],
+[
+AC_LANG_PUSH(C)
+r_save_CFLAGS="${CFLAGS}"
+CFLAGS="${CFLAGS} ${R_OPENMP_CFLAGS}"
+AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#include <stdlib.h>
+
+double ssum(double *x, int n) {
+/* SIMD reduction is supported since OpenMP 4.0. The value of _OPENMP is
+   unreliable in some compilers, so we do not test its value. */
+#if defined(_OPENMP) 
+    double s = 0;
+    #pragma omp simd reduction(+:s)
+    for(int i = 0; i < n; i++)
+        s += x[i];
+    return s;
+#else
+    exit(1);
+    return 0; /* not reachable */
+#endif
+}
+
+int main() {
+    /* use volatiles to reduce the risk of the
+       computation being inlined and constant-folded */
+    volatile double xv[8] = {1, 2, 3, 4, 5, 6, 7, 8};
+    volatile int n = 8;
+    double x[8], s;
+    int i;
+    
+    for(i = 0; i < 8; i++) x[i] = xv[i];
+    s = ssum(x, n);
+    if (s == 36) exit(0);
+    exit(2);
+}
+]])],
+              [r_cv_openmp_simdred=yes],
+              [r_cv_openmp_simdred=no],
+              [r_cv_openmp_simdred=no])
+CFLAGS="${r_save_CFLAGS}"
+])
+if test "x${r_cv_openmp_simdred}" = xyes; then
+  AC_DEFINE(HAVE_OPENMP_SIMDRED, 1,
+            [Define if your OpenMP 4 implementation fully supports SIMD reduction])
+fi
+])# R_OPENMP_SIMDRED
 
 
 ### Local variables: ***

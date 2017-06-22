@@ -1,8 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 1998-2017   The R Core Team.
+ *  Copyright (C) 2004-2017   The R Foundation
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2014   The R Core Team.
- *  Copyright (C) 2004-5        The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -60,6 +60,22 @@ static SEXP LGammaSymbol;
 static SEXP DiGammaSymbol;
 static SEXP TriGammaSymbol;
 static SEXP PsiSymbol;
+/* new symbols in R 3.4.0: */
+static SEXP PiSymbol;
+static SEXP ExpM1Symbol;
+static SEXP Log1PSymbol;
+static SEXP Log2Symbol;
+static SEXP Log10Symbol;
+static SEXP SinPiSymbol;
+static SEXP CosPiSymbol;
+static SEXP TanPiSymbol;
+static SEXP FactorialSymbol;
+static SEXP LFactorialSymbol;
+/* possible future symbols
+static SEXP Log1PExpSymbol;
+static SEXP Log1MExpSymbol;
+static SEXP Log1PMxSymbol;
+*/
 
 static Rboolean Initialized = FALSE;
 
@@ -93,6 +109,22 @@ static void InitDerivSymbols(void)
     DiGammaSymbol = install("digamma");
     TriGammaSymbol = install("trigamma");
     PsiSymbol = install("psigamma");
+/* new symbols */
+    PiSymbol = install("pi");
+    ExpM1Symbol = install("expm1");
+    Log1PSymbol = install("log1p");
+    Log2Symbol = install("log2");
+    Log10Symbol = install("log10");
+    SinPiSymbol = install("sinpi");
+    CosPiSymbol = install("cospi");
+    TanPiSymbol = install("tanpi");
+    FactorialSymbol = install("factorial");
+    LFactorialSymbol = install("lfactorial");
+/* possible future symbols
+    Log1PExpSymbol = install("log1pexp");    # log(1+exp(x))
+    Log1MExpSymbol = install("log1mexp");    # log(1-exp(-x)), for x > 0
+    Log1PMxSymbol = install("log1pmx");      # log1p(x)-x
+*/
 
     Initialized = TRUE;
 }
@@ -235,16 +267,18 @@ static SEXP simplify(SEXP fun, SEXP arg1, SEXP arg2)
 	    ans = lang3(PowerSymbol, arg1, arg2);
     }
     else if (fun == ExpSymbol) {
-	/* FIXME: simplify exp(lgamma( E )) = gamma( E ) */
-	ans = lang2(ExpSymbol, arg1);
+        /* FIXME: simplify exp(lgamma( E )) = gamma( E ) */
+        /* FIXME: simplify exp(lfactorial( E )) = factorial( E ) */
+        ans = lang2(ExpSymbol, arg1);
     }
     else if (fun == LogSymbol) {
-	/* FIXME: simplify log(gamma( E )) = lgamma( E ) */
-	ans = lang2(LogSymbol, arg1);
+        /* FIXME: simplify log(gamma( E )) = lgamma( E ) */
+        /* FIXME: simplify log(factorial( E )) = lfactorial( E ) */
+        ans = lang2(LogSymbol, arg1);
     }
-    else if (fun == CosSymbol)	ans = lang2(CosSymbol, arg1);
-    else if (fun == SinSymbol)	ans = lang2(SinSymbol, arg1);
-    else if (fun == TanSymbol)	ans = lang2(TanSymbol, arg1);
+    else if (fun == CosSymbol)  ans = lang2(CosSymbol, arg1);
+    else if (fun == SinSymbol)  ans = lang2(SinSymbol, arg1);
+    else if (fun == TanSymbol)  ans = lang2(TanSymbol, arg1);
     else if (fun == CoshSymbol) ans = lang2(CoshSymbol, arg1);
     else if (fun == SinhSymbol) ans = lang2(SinhSymbol, arg1);
     else if (fun == TanhSymbol) ans = lang2(TanhSymbol, arg1);
@@ -262,6 +296,28 @@ static SEXP simplify(SEXP fun, SEXP arg1, SEXP arg2)
        if (arg2 == R_MissingArg) ans = lang2(PsiSymbol, arg1);
        else ans = lang3(PsiSymbol, arg1, arg2);
     }
+/* new symbols */
+    else if (fun == ExpM1Symbol) {
+        /* FIXME: simplify expm1(log1p( E )) = E */
+        ans = lang2(ExpM1Symbol, arg1);
+    }
+    else if (fun == LogSymbol) {
+        /* FIXME: simplify log1p(expm1( E )) = E */
+        ans = lang2(Log1PSymbol, arg1);
+    }
+    else if (fun == Log2Symbol) ans = lang2(Log2Symbol, arg1);
+    else if (fun == Log10Symbol) ans = lang2(Log10Symbol, arg1);
+    else if (fun == CosPiSymbol) ans = lang2(CosPiSymbol, arg1);
+    else if (fun == SinPiSymbol) ans = lang2(SinPiSymbol, arg1);
+    else if (fun == TanPiSymbol) ans = lang2(TanPiSymbol, arg1);
+    else if (fun == FactorialSymbol)ans = lang2(FactorialSymbol, arg1);
+    else if (fun == LFactorialSymbol)ans = lang2(LFactorialSymbol, arg1);
+/* possible future symbols
+    else if (fun == Log1PExpSymbol) ans = lang2(Log1PExpSymbol, arg1);
+    else if (fun == Log1MExpSymbol) ans = lang2(Log1MExpSymbol, arg1);
+    else if (fun == Log1PMxSymbol) ans = lang2(Log1PMxSymbol, arg1);
+*/
+
     else ans = Constant(NA_REAL);
     /* FIXME */
 #ifdef NOTYET
@@ -383,7 +439,8 @@ static SEXP D(SEXP expr, SEXP var)
 	}
 	else if (CAR(expr) == LogSymbol) {
 	    if (length(expr) != 2)
-		error("only single-argument calls are supported");
+		error("only single-argument calls to log() are supported;\n"
+		      "  maybe use log(x,a) = log(x)/log(a)");
 	    ans = simplify(DivideSymbol,
 			   PP(D(CADR(expr), var)),
 			   CADR(expr));
@@ -466,7 +523,7 @@ static SEXP D(SEXP expr, SEXP var)
 			   PP_S(DivideSymbol,
 				PP(D(CADR(expr), var)),
 				PP_S(SqrtSymbol,
-				     PP_S(MinusSymbol,PP(Constant(1.)),
+				     PP_S(MinusSymbol, PP(Constant(1.)),
 					  PP_S(PowerSymbol,
 					       CADR(expr),PP(Constant(2.)))),
 				     R_MissingArg)), R_MissingArg);
@@ -529,6 +586,96 @@ static SEXP D(SEXP expr, SEXP var)
 		UNPROTECT(3);
 	    }
 	}
+/* new in R 3.4.0 */
+        else if (CAR(expr) == ExpM1Symbol) {
+            ans = simplify(TimesSymbol,
+			   PP_S2(ExpSymbol, CADR(expr)),
+                           PP(D(CADR(expr), var)));
+            UNPROTECT(2);
+        }
+        else if (CAR(expr) == Log1PSymbol) {
+            ans = simplify(DivideSymbol,
+                           PP(D(CADR(expr), var)),
+                           PP_S(PlusSymbol, PP(Constant(1.)), CADR(expr)));
+            UNPROTECT(3);
+        }
+        else if (CAR(expr) == Log2Symbol) {
+            ans = simplify(DivideSymbol,
+                           PP(D(CADR(expr), var)),
+                           PP_S(TimesSymbol, CADR(expr),
+				             PP_S2(LogSymbol, PP(Constant(2.)))));
+            UNPROTECT(3);
+        }
+        else if (CAR(expr) == Log10Symbol) {
+            ans = simplify(DivideSymbol,
+                           PP(D(CADR(expr), var)),
+                           PP_S(TimesSymbol, CADR(expr),
+				             PP_S2(LogSymbol, PP(Constant(10.)))));
+            UNPROTECT(3);
+        }
+        else if (CAR(expr) == CosPiSymbol) {
+            ans = simplify(TimesSymbol,
+                           PP_S2(SinPiSymbol, CADR(expr)),
+                           PP_S(TimesSymbol, PP_S2(MinusSymbol, PiSymbol),
+				             PP(D(CADR(expr), var)) ));
+            UNPROTECT(4);
+        }
+        else if (CAR(expr) == SinPiSymbol) {
+            ans = simplify(TimesSymbol,
+                           PP_S2(CosPiSymbol, CADR(expr)),
+                           PP_S(TimesSymbol, PiSymbol,
+                                             PP(D(CADR(expr), var)) ));
+            UNPROTECT(3);
+        }
+        else if (CAR(expr) == TanPiSymbol) {
+            ans = simplify(DivideSymbol,
+                           PP_S(TimesSymbol, PiSymbol, PP(D(CADR(expr), var))),
+			   PP_S(PowerSymbol,
+				PP_S2(CosPiSymbol, CADR(expr)),
+				PP(Constant(2.0))));
+            UNPROTECT(5);
+        }
+        else if (CAR(expr) == LFactorialSymbol) {
+            ans = simplify(TimesSymbol,
+                           PP(D(CADR(expr), var)),
+                           PP_S2(DiGammaSymbol, PP_S(PlusSymbol,
+						     CADR(expr),
+						     PP(ScalarInteger(1)))));
+            UNPROTECT(4);
+        }
+        else if (CAR(expr) == FactorialSymbol) {
+            ans = simplify(TimesSymbol,
+                           PP(D(CADR(expr), var)),
+                           PP_S(TimesSymbol,
+                                expr,
+                                PP_S2(DiGammaSymbol, PP_S(PlusSymbol,
+							  CADR(expr),
+							  PP(ScalarInteger(1))))));
+            UNPROTECT(5);
+        }
+/* possible future symbols
+        else if (CAR(expr) == Log1PExpSymbol) {
+            ans = simplify(DivideSymbol,
+                           PP_S(TimesSymbol, PP(D(CADR(expr), var)),
+                                PP_S2(ExpSymbol, CADR(expr))),
+                           PP_S(PlusSymbol,PP(Constant(1.)),
+                                PP_S2(ExpSymbol, CADR(expr)) ));
+            UNPROTECT(6);
+        }
+        else if (CAR(expr) == Log1MExpSymbol) {
+            ans = simplify(DivideSymbol,
+                           PP_S(TimesSymbol, PP_S2(MinusSymbol, PP(D(CADR(expr), var))),
+                                PP_S2(ExpSymbol, PP_S2(MinusSymbol, CADR(expr))) ),
+                           PP_S2(ExpM1Symbol, PP_S2(MinusSymbol, CADR(expr))) );
+            UNPROTECT(7);
+        }
+        else if (CAR(expr) == Log1PMxSymbol) {
+            ans = simplify(DivideSymbol,
+                           PP_S2(MinusSymbol, PP(D(CADR(expr), var))),
+                           PP_S(PlusSymbol,PP(Constant(1.)), CADR(expr)) );
+            UNPROTECT(4);
+        }
+*/
 
 	else {
 	    SEXP u = deparse1(CAR(expr), 0, SIMPLEDEPARSE);
@@ -543,6 +690,7 @@ static SEXP D(SEXP expr, SEXP var)
     return ans;
 
 #undef PP_S
+#undef PP_S2
 
 } /* D() */
 
@@ -718,7 +866,7 @@ static int Accumulate2(SEXP expr, SEXP exprlist)
 
 static SEXP MakeVariable(int k, SEXP tag)
 {
-    const void *vmax = vmaxget();    
+    const void *vmax = vmaxget();
     char buf[64];
     snprintf(buf, 64, "%s%d", translateChar(STRING_ELT(tag, 0)), k);
     vmaxset(vmax);

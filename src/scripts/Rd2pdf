@@ -8,5 +8,5 @@ while test -n "${1}"; do
 done
 
 echo 'tools:::..Rd2pdf()' \
-| R_DEFAULT_PACKAGES= LC_ALL=C "${R_HOME}/bin/R" \
+| R_DEFAULT_PACKAGES= LC_COLLATE=C "${R_HOME}/bin/R" \
 --vanilla --slave --args ${args}

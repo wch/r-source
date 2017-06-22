@@ -1,6 +1,6 @@
 % File src/library/tools/man/writePACKAGES.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{write_PACKAGES}
@@ -14,7 +14,7 @@
 write_PACKAGES(dir = ".", fields = NULL,
                type = c("source", "mac.binary", "win.binary"),
                verbose = FALSE, unpacked = FALSE, subdirs = FALSE,
-               latestOnly = TRUE, addFiles = FALSE)
+               latestOnly = TRUE, addFiles = FALSE, rds_compress = TRUE)
 }
 \arguments{
   \item{dir}{Character vector describing the location of the repository
@@ -55,6 +55,8 @@ write_PACKAGES(dir = ".", fields = NULL,
     available should only the latest version be included?}
   \item{addFiles}{logical: should the filenames be included as field
     \samp{File} in the \file{PACKAGES} file.}
+  \item{rds_compress}{The type of compression to be used for
+    \file{PACKAGES.rds}: see \code{\link{saveRDS}}.}
 }
 \details{
   \code{write_PACKAGES} scans the named directory for R packages,
@@ -84,6 +86,11 @@ write_PACKAGES(dir = ".", fields = NULL,
   for Windows in the given directory \code{dir}, and builds files
   \file{PACKAGES}, \file{PACKAGES.gz} and \file{PACKAGES.rds} files from
   this information.
+
+  For a remote repository there is a tradeoff between download speed and
+  time spent by \code{\link{available.packages}} processing the
+  downloaded file(s).  For large repositories it is likely to be
+  beneficial to use \code{rds_compress = "xz"}.
 }
 \value{
   Invisibly returns the number of packages described in the resulting

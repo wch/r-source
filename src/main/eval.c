@@ -682,7 +682,7 @@ SEXP eval(SEXP e, SEXP rho)
 	    /* This picks the correct/better error expression for 
 	       replacement calls running in the AST interpreter. */
 	    if (R_GlobalContext != NULL &&
-		    (R_GlobalContext->callflag & CTXT_CCODE))
+		    (R_GlobalContext->callflag == CTXT_CCODE))
 		ecall = R_GlobalContext->call;
 	    PROTECT(op = findFun3(CAR(e), rho, ecall));
 	} else

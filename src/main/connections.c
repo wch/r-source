@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2016   The R Core Team.
+ *  Copyright (C) 2000-2017   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -5066,6 +5066,9 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     const char *cmeth = CHAR(asChar(CAD4R(args)));
     meth = streql(cmeth, "libcurl"); // 1 if "libcurl", else 0
     defmeth = streql(cmeth, "default");
+#ifndef Win32
+    if(defmeth) meth = 1;
+#endif
     if (streql(cmeth, "wininet")) {
 #ifdef Win32
 	winmeth = 1;  // it already was as this is the default
@@ -5204,7 +5207,8 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 	con->canseek = 0;
     /* This is referenced in do_getconnection, so set up before
        any warning */
-    con->ex_ptr = PROTECT(R_MakeExternalPtr(con->id, install("connection"), R_NilValue));
+    con->ex_ptr = PROTECT(R_MakeExternalPtr(con->id, install("connection"),
+					    R_NilValue));
 
     /* open it if desired */
     if(strlen(open)) {

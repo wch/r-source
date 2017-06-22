@@ -644,6 +644,7 @@ static SEXP in_do_download(SEXP args)
 			(double)nbytes, (double)total);
 	}
 	fclose(out);
+	if (status == 1 && strchr(mode, 'w')) unlink(R_ExpandFileName(file));
 	R_Busy(0);
 	if (status == 1) error(_("cannot open URL '%s'"), url);
 
@@ -756,6 +757,7 @@ static SEXP in_do_download(SEXP args)
 	}
 	R_Busy(0);
 	fclose(out);
+	if (status == 1 && strchr(mode, 'w')) unlink(R_ExpandFileName(file));
 	if (status == 1) error(_("cannot open URL '%s'"), url);
     } else
 	error(_("scheme not supported in URL '%s'"), url);
@@ -779,8 +781,9 @@ void *in_R_HTTPOpen(const char *url, const char *headers, const int cacheOK)
     if(ctxt != NULL) {
 	int rc = RxmlNanoHTTPReturnCode(ctxt);
 	if(rc != 200) {
-	    warning(_("cannot open URL '%s': HTTP status was '%d %s'"), 
-		    url, rc, RxmlNanoHTTPStatusMsg(ctxt));
+	    // FIXME: should this be ctxt->location, after redirection?
+	    warning(_("cannot open URL '%s': %s status was '%d %s'"), 
+		    url, "HTTP", rc, RxmlNanoHTTPStatusMsg(ctxt));
 	    RxmlNanoHTTPClose(ctxt);
 	    return NULL;
 	} else {
@@ -944,8 +947,8 @@ static void *in_R_HTTPOpen2(const char *url, const char *headers,
 	InternetCloseHandle(wictxt->session);
 	InternetCloseHandle(wictxt->hand);
 	free(wictxt);
-	warning(_("cannot open URL '%s': HTTP status was '%d %s'"), 
-		url, status, buf);
+	warning(_("cannot open URL '%s': %s status was '%d %s'"), 
+		url, "HTTP", status, buf);
 	return NULL;
     }
 

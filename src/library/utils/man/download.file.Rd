@@ -1,6 +1,6 @@
 % File src/library/utils/man/download.file.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{download.file}
@@ -38,7 +38,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
 
   \item{mode}{character.  The mode with which to write the file.  Useful
     values are \code{"w"}, \code{"wb"} (binary), \code{"a"} (append) and
-    \code{"ab"}.  Only used for the \code{"internal"} method.
+    \code{"ab"}.  Not used for methods \code{"wget"} and \code{"curl"}.
 #ifdef windows
     (See also \sQuote{Details}.)
 #endif
@@ -57,9 +57,8 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
 
 #ifdef unix
   If \code{method = "auto"} is chosen (the default), on a Unix-alike
-  method \code{"libcurl"} is chosen for \samp{https://} and
-  \samp{ftps://} URLs and the \code{"internal"} method is chosen for
-  other schemes.
+  method \code{"libcurl"} is used except \code{"internal"} for
+  \samp{file://} URLs.
 #endif
 #ifdef windows
   If \code{method = "auto"} is chosen (the default), on Windows the
@@ -84,8 +83,9 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   (non-blocking) access to \samp{https://} and (usually) \samp{ftps://}
   URLs.  There is support for simultaneous downloads, so \code{url} and
   \code{destfile} can be character vectors of the same length greater
-  than one.  For a single URL and \code{quiet = FALSE} a progress
-  bar is shown in interactive use.
+  than one (but the method has to be specified explicitly and not
+  \emph{via} \code{"auto"}).  For a single URL and \code{quiet = FALSE}
+  a progress bar is shown in interactive use.
 
   For methods \code{"wget"} and \code{"curl"} a system call is made to
   the tool given by \code{method}, and the respective program must be
@@ -104,7 +104,8 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   redirections only.  (For method \code{"curl"} use argument \code{extra
   = "-L"}.  To disable redirection in \command{wget}, use \code{extra =
   "--max-redirect=0"}.)  The \code{"wininet"} method supports some
-  redirections but not all.
+  redirections but not all.  (For method \code{"libcurl"}, messages will
+  quote the endpoint of redirections.)
   
   Note that \samp{https://} URLs are not supported by the
   \code{"internal"} method but are supported by the \code{"libcurl"}
@@ -161,7 +162,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
 #endif
 }
 \note{
-   Files of more than 2GB are supported on 64-bit builds of \R; they
+  Files of more than 2GB are supported on 64-bit builds of \R; they
   may be truncated on some 32-bit builds.
 
   Methods \code{"wget"} and \code{"curl"} are mainly for historical
@@ -225,7 +226,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
 }
 \section{Secure URLs}{
   Methods which access \samp{https://} and \samp{ftps://} URLs should
-  try to verify their certificates.  This is usually done using the CA
+  try to verify the site certificates.  This is usually done using the CA
   root certificates installed by the OS (although we have seen instances
   in which these got removed rather than updated). For further information
   see \url{http://curl.haxx.se/docs/sslcerts.html}.
@@ -267,7 +268,8 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   
   If you use \code{download.file} in a package or script, you must check
   the return value, since it is possible that the download will fail
-  with a non-zero status but not an \R error.
+  with a non-zero status but not an \R error. (This was more likely
+  prior to \R 3.4.0.)
 
   The supported \code{method}s do change: method \code{libcurl} was
   introduced in \R 3.2.0 and is still optional on Windows -- use
@@ -279,6 +281,12 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   failure.  For the \code{"wget"} and \code{"curl"} methods this is the
   status code returned by the external program.  The \code{"internal"}
   method can return \code{1}, but will in most cases throw an error.
+
+  What happens to the destination file(s) in the case of error depends
+  on the method and \R{} version. Currently the \code{"internal"},
+  \code{"wininet"} and \code{"libcurl"} methods will remove the file if
+  there the URL is unavailable except when \code{mode} specifies
+  appending when the file should be unchanged.
 }
 \seealso{
   \code{\link{options}} to set the \code{HTTPUserAgent}, \code{timeout}

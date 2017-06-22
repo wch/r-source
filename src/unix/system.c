@@ -210,8 +210,10 @@ int Rf_initialize_R(int ac, char **av)
 	   limit is either unlimited or unrepresentable.
 	*/
 	rlim_t lim = rlim.rlim_cur;
+#if defined(RLIM_SAVED_CUR) && defined(RLIM_SAVED_MAX)
 	if (lim == RLIM_SAVED_CUR || lim == RLIM_SAVED_MAX) 
 	    lim = RLIM_INFINITY;
+#endif
 	if (lim != RLIM_INFINITY) R_CStackLimit = (uintptr_t) lim;
     }
 #if defined(HAVE_LIBC_STACK_END)
@@ -232,7 +234,7 @@ int Rf_initialize_R(int ac, char **av)
 	R_CStackStart = (uintptr_t) &i + (6000 * R_CStackDir);
     }
 #endif
-    if(R_CStackStart == -1) R_CStackLimit = -1; /* never set */
+    if(R_CStackStart == (uintptr_t)(-1)) R_CStackLimit = (uintptr_t)(-1); /* never set */
 
     /* printf("stack limit %ld, start %lx dir %d \n", R_CStackLimit,
 	      R_CStackStart, R_CStackDir); */
@@ -506,8 +508,10 @@ int R_GetFDLimit() {
     */
     if (getrlimit(RLIMIT_NOFILE, &rlim) == 0) {
 	rlim_t lim = rlim.rlim_cur;
+#if defined(RLIM_SAVED_CUR) && defined(RLIM_SAVED_MAX)
 	if (lim == RLIM_SAVED_CUR || lim == RLIM_SAVED_MAX) 
 	    lim = RLIM_INFINITY;
+#endif
 	return (int)((lim > INT_MAX) ? INT_MAX : lim);
     }
 #endif
