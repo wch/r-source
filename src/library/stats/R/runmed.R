@@ -1,11 +1,12 @@
 #  File src/library/stats/R/runmed.R
 #  Part of the R package, https://www.R-project.org
 #
+#  Copyright (C) 2003-2017 The R Foundation
+
 #  Copyright (C) 1995 Berwin A. Turlach
 #  Ported to R, added interface to Stuetzle's code and further enhanced
 #  by Martin Maechler,
 #  Copyright (C) 1996-2002 Martin Maechler
-#  Copyright (C) 2003 The R Foundation
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -25,9 +26,9 @@ runmed <- function(x, k, endrule = c("median","keep","constant"),
                    algorithm = NULL, print.level = 0)
 {
     n <- as.integer(length(x))
-    if(is.na(n)) stop("invalid value of length(x)")
+    if(is.na(n)) stop(gettextf("invalid value of %s", "length(x)"), domain = NA)
     k <- as.integer(k)
-    if(is.na(k)) stop("invalid value of 'k'")
+    if(is.na(k)) stop(gettextf("invalid value of %s", "'k'"), domain = NA)
     if(k < 0L) stop("'k' must be positive")
     if(k %% 2L == 0L)
         warning(gettextf("'k' must be odd!  Changing 'k' to %d",

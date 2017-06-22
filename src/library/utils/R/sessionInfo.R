@@ -105,8 +105,8 @@ sessionInfo <- function(package = NULL)
     }
     z$matprod <- as.character(options("matprod"))
     es <- extSoftVersion()
-    z$blas <- as.character(es["BLAS"]) #drop name
-    z$lapack <- as.character(gsub(".* ", "", es["LAPACK"])) #drop API version
+    z$BLAS <- as.character(es["BLAS"]) #drop name
+    z$LAPACK <- La_library()
     class(z) <- "sessionInfo"
     z
 }
@@ -124,15 +124,15 @@ print.sessionInfo <- function(x, locale = TRUE, ...)
     if (!is.null(x$running)) cat("Running under: ",  x$running, "\n", sep = "")
     cat("\n")
     cat("Matrix products: ", x$matprod, "\n", sep = "")
-    blas <- x$blas
+    blas <- x$BLAS
     if (is.null(blas)) blas <- ""
-    lapack <- x$lapack
+    lapack <- x$LAPACK
     if (is.null(lapack)) lapack <- ""
     if (blas == lapack && nzchar(blas))
         cat("BLAS/LAPACK: ", blas, "\n", sep = "")
     else {
         if (nzchar(blas)) cat("BLAS: ", blas, "\n", sep = "")
-        if (nzchar(lapack)) cat("LAPACK: ", x$lapack, "\n", sep = "")
+        if (nzchar(lapack)) cat("LAPACK: ", lapack, "\n", sep = "")
     }
     cat("\n")
     if(locale) {
@@ -172,9 +172,9 @@ toLatex.sessionInfo <- function(object, locale = TRUE, ...)
                   gsub(";","|, \\\\verb|", object$running) , "|"))
 
     z <- c(z, paste0("  \\item Matrix products: ", object$matprod))
-    blas <- object$blas
+    blas <- object$BLAS
     if (is.null(blas)) blas <- ""
-    lapack <- object$lapack
+    lapack <- object$LAPACK
     if (is.null(lapack)) lapack <- ""
 
     if (blas == lapack && nzchar(blas))

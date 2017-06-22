@@ -45,6 +45,7 @@
 #include <ctype.h>			/* toupper */
 #include <limits.h>
 #include <string.h>
+#include <stdlib.h>			/* for realpath */
 #include <time.h>			/* for ctime */
 
 # include <errno.h>
@@ -3003,12 +3004,16 @@ extern int dladdr(void *addr, Dl_info *info);
 extern void *dlsym(void *handle, const char *symbol);
 #endif
 
+/* extSoftVersion only detects versions of libraries that are available
+   without loading any modules; libraries available via modules are
+   treated individually (libcurlVersion(), La_version(), etc)
+*/
 SEXP attribute_hidden
 do_eSoftVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
-    SEXP ans = PROTECT(allocVector(STRSXP, 10));
-    SEXP nms = PROTECT(allocVector(STRSXP, 10));
+    SEXP ans = PROTECT(allocVector(STRSXP, 9));
+    SEXP nms = PROTECT(allocVector(STRSXP, 9));
     setAttrib(ans, R_NamesSymbol, nms);
     unsigned int i = 0;
     char p[256];
@@ -3059,28 +3064,24 @@ do_eSoftVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
     SET_STRING_ELT(nms, i++, mkChar("readline"));
 
     SET_STRING_ELT(ans, i, mkChar(""));
-    SET_STRING_ELT(ans, i+1, mkChar(""));
 
 #if defined(HAVE_DLADDR) && defined(HAVE_REALPATH) && defined(HAVE_DLSYM) \
     && defined(HAVE_DECL_RTLD_DEFAULT) && HAVE_DECL_RTLD_DEFAULT \
     && defined(HAVE_DECL_RTLD_NEXT) && HAVE_DECL_RTLD_NEXT
 
-    /* Look for blas function dgemm and lapack function ilaver and try to
-       figure out in which binary/shared library they are defined. This
-       is based on experimentation and heuristics, and depends on
-       implementation details of dynamic linkers. */
-
+    /* Look for blas function dgemm and try to figure out in which
+       binary/shared library is it defined. This is based on experimentation
+       and heuristics, and depends on implementation details
+       of dynamic linkers.
+    */
 #ifdef HAVE_F77_UNDERSCORE
     char *dgemm_name = "dgemm_";
-    char *ilaver_name = "ilaver_";
 #else
     char *dgemm_name = "dgemm";
-    char *ilaver_name = "ilaver";
 #endif
 
     Rboolean ok = TRUE;
 
-    /* BLAS */
     void *dgemm_addr = dlsym(RTLD_DEFAULT, dgemm_name);
 
     Dl_info dl_info1, dl_info2;
@@ -3122,32 +3123,8 @@ do_eSoftVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (res)
 	    SET_STRING_ELT(ans, i, mkChar(res));
     }
-
-    /* LAPACK */
-
-    /* this call forces the lapack module to be loaded */
-    SEXP laver = do_lapack(R_NilValue, INTERNAL(install("La_version")),
-                           R_NilValue, R_NilValue);
-    PROTECT(laver);
-    if (isString(laver) && length(laver) == 1) {
-	const char *laverstr = CHAR(STRING_ELT(laver, 0));
-	void *ilaver_addr = (void *)R_FindSymbol(ilaver_name, "lapack", 0);
-
-	if (ilaver_addr != NULL && dladdr(ilaver_addr, &dl_info2)) {
-	    char *res = realpath(dl_info2.dli_fname, buf);
-	    if (res) {
-		char bufv[strlen(res) + strlen(laverstr) + 2];
-		sprintf(bufv, "%s %s", laverstr, res);
-		SET_STRING_ELT(ans, i+1, mkChar(bufv));
-	    } else
-		/* only give Lapack API version */
-		SET_STRING_ELT(ans, i+1, mkChar(laverstr));
-	}
-    }
-    UNPROTECT(1); /* laver */
 #endif
     SET_STRING_ELT(nms, i++, mkChar("BLAS"));
-    SET_STRING_ELT(nms, i++, mkChar("LAPACK"));
 
     UNPROTECT(2);
     return ans;

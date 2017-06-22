@@ -1,7 +1,7 @@
 #  File src/library/stats/R/kmeans.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -114,7 +114,7 @@ function(x, centers, iter.max = 10L, nstart = 1L,
             stop("more cluster centers than data points")
     }
     k <- as.integer(k)
-    if(is.na(k)) stop("'invalid value of 'k'")
+    if(is.na(k)) stop(gettextf("invalid value of %s", "'k'"), domain = NA)
     if (k == 1L) nmeth <- 3L # Hartigan-Wong, (Fortran) needs k > 1
     iter.max <- as.integer(iter.max)
     if(is.na(iter.max) || iter.max < 1L) stop("'iter.max' must be positive")

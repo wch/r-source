@@ -4096,15 +4096,15 @@ fi
 
 ## R_STDCXX
 ## --------
-## Support for C++ standards (C++98, C++11, C++14), for use in packages.
+## Support for C++ standards (C++98, C++11, C++14, C++17), for use in packages.
 ## R_STDCXX(VERSION, PREFIX, DEFAULT)
 AC_DEFUN([R_STDCXX],
 [r_save_CXX="${CXX}"
 r_save_CXXFLAGS="${CXXFLAGS}"
 
-: ${$2=${CXX}}
-: ${$2FLAGS=${CXXFLAGS}}
-: ${$2PICFLAGS=${CXXPICFLAGS}}
+: ${$2=${$3}}
+: ${$2FLAGS=${$3FLAGS}}
+: ${$2PICFLAGS=${$3PICFLAGS}}
 
 CXX="${$2} ${$2STD}"
 CXXFLAGS="${$2FLAGS} ${$2PICFLAGS}"
@@ -4135,7 +4135,7 @@ if test -z "${SHLIB_$2LD}"; then
   SHLIB_$2LD="\$($2) \$($2STD)"
 fi
 AC_SUBST(SHLIB_$2LD)
-: ${SHLIB_$2LDFLAGS=${SHLIB_CXXLDFLAGS}}
+: ${SHLIB_$2LDFLAGS=${SHLIB_$3LDFLAGS}}
 AC_SUBST(SHLIB_$2LDFLAGS)
 
 AC_ARG_VAR([$2], [C++$1 compiler command])

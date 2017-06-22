@@ -1,6 +1,6 @@
 % File src/library/stats/man/smooth.spline.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{smooth.spline}
@@ -35,7 +35,7 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL, lambda = NULL, cv = FALSE,
    fit (penalized log likelihood) criterion is a monotone function of
    \code{spar}, see the details below.  Alternatively \code{lambda} may
    be specified instead of the \emph{scale free} \code{spar}=\eqn{s}.}
- \item{lambda}{if desired, the internal design-dependent smoothing
+ \item{lambda}{if desired, the internal (design-dependent) smoothing
    parameter \eqn{\lambda} can be specified instead of \code{spar}.
    This may be desirable for resampling algorithms such as cross
    validation or the bootstrap.}
@@ -49,8 +49,12 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL, lambda = NULL, cv = FALSE,
    as knots.  If \code{FALSE} (default), a subset of \code{x[]} is used,
    specifically \code{x[j]} where the \code{nknots} indices are evenly
    spaced in \code{1:n}, see also the next argument \code{nknots}.
+
    Alternatively, a strictly increasing \code{\link{numeric}} vector
-   specifying \dQuote{all the knots} to be used.}
+   specifying \dQuote{all the knots} to be used; must be rescaled
+   to \eqn{[0, 1]} already such that it corresponds to the
+   \code{ans $ fit$knots} sequence returned, not repeating the boundary
+   knots.}
  \item{nknots}{integer or \code{\link{function}} giving the number of
    knots to use when \code{all.knots = FALSE}.  If a function (as by
    default), the number of knots is \code{nknots(nx)}.  By default for
@@ -104,7 +108,7 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL, lambda = NULL, cv = FALSE,
   regarded as the same are replaced by the first of their values and the
   corresponding \code{y} and \code{w} are pooled accordingly.
 
-  Unless \code{lambda} has been specified instead of \code{lambda},
+  Unless \code{lambda} has been specified instead of \code{spar},
   the computational \eqn{\lambda} used (as a function of
   \eqn{s=spar}{\code{spar}}) is
   \eqn{\lambda = r * 256^{3 s - 1}}{\lambda = r * 256^(3*spar - 1)}
@@ -146,7 +150,7 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL, lambda = NULL, cv = FALSE,
 
   Note however that currently the results may become very unreliable
   for \code{spar} values smaller than about -1 or -2.  The same may
-  happen for values larger than 2 or so. Don't think of setting
+  happen for values larger than 2 or so.  Don't think of setting
   \code{spar} or the controls \code{low} and \code{high} outside such a
   safe range, unless you know what you are doing!
   Similarly, specifying \code{lambda} instead of \code{spar} is
@@ -220,7 +224,8 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL, lambda = NULL, cv = FALSE,
     components
     \describe{
       \item{knot:}{the knot sequence (including the repeated boundary
-        knots).}
+        knots), scaled into \eqn{[0, 1]} (via \code{min} and
+	\code{range}).}
       \item{nk:}{number of coefficients or number of \sQuote{proper}
         knots plus 2.}
       \item{coef:}{coefficients for the spline basis used.}

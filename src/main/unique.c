@@ -1759,13 +1759,6 @@ SEXP Rf_csduplicated(SEXP x)
 
 #include <R_ext/Random.h>
 
-// more fine-grained  unif_rand() for n > INT_MAX
-static R_INLINE double ru()
-{
-    double U = 33554432.0;
-    return (floor(U*unif_rand()) + unif_rand())/U;
-}
-
 // sample.int(.) --> .Internal(sample2(n, size)) :
 SEXP attribute_hidden do_sample2(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -1786,7 +1779,7 @@ SEXP attribute_hidden do_sample2(SEXP call, SEXP op, SEXP args, SEXP env)
 	PROTECT(data.HashTable);
 	for (int i = 0; i < k; i++)
 	    for(int j = 0; j < 100; j++) { // average < 2
-		ry[i] = floor(dn * ru() + 1);
+		ry[i] = R_unif_index(dn) + 1;
 		if(!isDuplicated(ans, i, &data)) break;
 	    }
    } else {
@@ -1796,7 +1789,7 @@ SEXP attribute_hidden do_sample2(SEXP call, SEXP op, SEXP args, SEXP env)
 	PROTECT(data.HashTable);
 	for (int i = 0; i < k; i++)
 	    for(int j = 0; j < 100; j++) { // average < 2
-		iy[i] = (int)(dn * unif_rand() + 1);
+		iy[i] = (int)(R_unif_index(dn) + 1);
 		if(!isDuplicated(ans, i, &data)) break;
 	    }
     }

@@ -1,7 +1,7 @@
 #  File src/library/base/R/LAPACK.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -58,3 +58,5 @@ La.svd <- function(x, nu = min(n, p), nv = min(n, p))
 }
 
 La_version <- function() .Internal(La_version())
+La_library <- function() .Internal(La_library())
+

@@ -448,13 +448,6 @@ static void FixupProb(double *p, int n, int require_k, Rboolean replace)
     for (int i = 0; i < n; i++) p[i] /= sum;
 }
 
-/* Our PRNGs have at most 32 bit of precision, and all have at least 25 */
-static R_INLINE double ru()
-{
-    double U = 33554432.0;
-    return (floor(U*unif_rand()) + unif_rand())/U;
-}
-
 /* do_sample - probability sampling with/without replacement.
    .Internal(sample(n, size, replace, prob))
 */
@@ -513,7 +506,7 @@ SEXP attribute_hidden do_sample(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    PROTECT(y = allocVector(REALSXP, k));
 	    if (replace) {
 		double *ry = REAL(y);
-		for (R_xlen_t i = 0; i < k; i++) ry[i] = floor(dn * ru() + 1);
+		for (R_xlen_t i = 0; i < k; i++) ry[i] = R_unif_index(dn) + 1;
 	    } else {
 #ifdef LONG_VECTOR_SUPPORT
 		R_xlen_t n = (R_xlen_t) dn;
@@ -521,7 +514,7 @@ SEXP attribute_hidden do_sample(SEXP call, SEXP op, SEXP args, SEXP rho)
 		double *ry = REAL(y);
 		for (R_xlen_t i = 0; i < n; i++) x[i] = (double) i;
 		for (R_xlen_t i = 0; i < k; i++) {
-		    R_xlen_t j = (R_xlen_t)floor(n * ru());
+		    R_xlen_t j = (R_xlen_t) R_unif_index(n);
 		    ry[i] = x[j] + 1;
 		    x[j] = x[--n];
 		}
@@ -535,12 +528,12 @@ SEXP attribute_hidden do_sample(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    int *iy = INTEGER(y);
 	    /* avoid allocation for a single sample */
 	    if (replace || k < 2) {
-		for (int i = 0; i < k; i++) iy[i] = (int)(dn * unif_rand() + 1);
+		for (int i = 0; i < k; i++) iy[i] = (int)(R_unif_index(dn) + 1);
 	    } else {
 		int *x = (int *)R_alloc(n, sizeof(int));
 		for (int i = 0; i < n; i++) x[i] = i;
 		for (int i = 0; i < k; i++) {
-		    int j = (int)(n * unif_rand());
+		    int j = (int)(R_unif_index(n));
 		    iy[i] = x[j] + 1;
 		    x[j] = x[--n];
 		}

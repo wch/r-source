@@ -36,10 +36,10 @@ sessionInfo(package = NULL)
     to name a Linux distribution and give the OS name on an Apple Mac.}
   \item{matprod}{a character string, the result of calling
     \code{\link{options}("matprod")}.}
-  \item{blas}{a character string, the result of calling
-    \code{\link{extSoftVersion}()["blas"]}.}
-  \item{lapack}{a character string, the second term (just the file name)
-    of the result of calling \code{\link{extSoftVersion}()["lapack"]}.}
+  \item{BLAS}{a character string, the result of calling
+    \code{\link{extSoftVersion}()["BLAS"]}.}
+  \item{LAPACK}{a character string, the result of calling
+    \code{\link{La_library}()}.}
   \item{locale}{a character string, the result of calling
     \code{\link{Sys.getlocale}()}.}
   \item{basePkgs}{a character vector of base packages which are attached.}

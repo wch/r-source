@@ -6,6 +6,16 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R-devel}{
+
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item Placeholder.
+    }
+  }
+} 
+
+\section{\Rlogo CHANGES IN R 3.4.0}{
+
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
       \item (Unix-alike)
@@ -427,6 +437,11 @@
       \item \code{strwrap()} reduces \code{indent} if it is more than
       half \code{width} rather than giving an error.  (Suggested by Bill
       Dunlap.)
+
+      \item When the condition \code{code} in \code{if(.)} or
+      \code{while(.)} is not of length one, an error instead of a
+      warning may be triggered by setting an environment variable, see
+      the help page.
     }
   }
 
@@ -501,12 +516,20 @@
       mode of C++14 with \sQuote{GNU extensions}.)
 
       The tests for C++11 compliance are now much more comprehensive.
+      For gcc < 4.8, the tests from R 3.3.0 are used in order to maintain
+      the same behaviour on Linux distributions with long-term support.
 
+      \item An alternative compiler for C++11 is now specified with
+      \samp{CXX11}, not \samp{CXX1X}. Likewise C++11 flags are specified
+      with \samp{CXX11FLAGS} and the standard (e.g., \samp{-std=gnu++11}
+      is specified with \samp{CXX11STD}. The variables with prefix
+      \samp{CXX1X} are deprecated.
+      
       \item \command{configure} now tests for a C++14-compliant compiler
       by testing some basic features.  This by default tries flags for
-      the compiler specified by \samp{CXX}, but an alternative compiler,
-      options and standard can be specified by variables \samp{CXX1Y},
-      \samp{CXX1YFLAGS} and \samp{CXX1YSTD} (e.g., \option{-std=gnu++14}).
+      the compiler specified by \samp{CXX11}, but an alternative compiler,
+      options and standard can be specified by variables \samp{CXX14},
+      \samp{CXX14FLAGS} and \samp{CXX14STD} (e.g., \option{-std=gnu++14}).
 
       \item There is a new macro \code{CXXSTD} to help specify the
       standard for C++ code, e.g.\sspace{}\option{-std=c++98}.  This
@@ -572,6 +595,10 @@
       directory on most platforms).
       %% This ensures that BH's 'boost' directory gets precedent over
       %% any Boost headers in, say, /opt/csw/include .
+      
+      \item Packages which register native routines for \code{.C} or
+      \code{.Fortran} need to be re-installed for this version (unless
+      installed with R-devel SVN revision r72375 or later).
     }
   }
 
@@ -810,6 +837,16 @@
       \item The \code{str()} and \code{as.hclust()} methods for
       \code{"dendrogram"} now also work for deeply nested dendrograms
       thanks to non-recursive implementations by Bradley Broom.
+
+      \item \code{sample()} now uses two uniforms for added precision
+      when the uniform generator is \code{Knuth-TAOCP},
+      \code{Knuth-TAOCP-2002}, or a user-defined generator and the
+      population size is \eqn{2^25} or greater.
+      
+      \item If a vignette in the \file{vignettes} directory is listed in 
+      \file{.Rbuildignore}, \command{R CMD build} would not include it 
+      in the tarball, but would include it in the vignette database, 
+      leading to a check warning.  (\PR{17246})
     }
   }
 }

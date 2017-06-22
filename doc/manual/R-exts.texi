@@ -2436,7 +2436,8 @@ extension @file{.f90} or @file{.f95}.  For platforms using
 @command{gfortran}, you may need to include @option{-std=f2003} or
 @option{-std=f2008} in @code{PKG_FCFLAGS}: the default is `GNU Fortran',
 Fortran 95 with non-standard extensions.  The Oracle @command{f95}
-compiler `accepts some Fortran 2003 features'.
+compiler `accepts some Fortran 2003/8 features' (search for `Oracle
+Developer Studio 12.5: Fortran User's Guide' and look for §4.6).
 
 Modern versions of Fortran support modules, whereby compiling one source
 file creates a module file which is then included in others. (Module
@@ -2465,10 +2466,10 @@ considerably from the standard).  Some compilers have a concept of
 `C++03' (`essentially a bug fix') or `C++ Technical Report 1' (TR1), an
 optional addition to the `C++03' revision which was published in 2007.
 A revised standard was published in 2011 and compilers with pretty much
-complete implementations are becoming available.  C++11 added all of the
-C99 features which are not otherwise implemented in C++, and C++
-compilers commonly accept C99 extensions to C++98.  A minor
-update@footnote{The changes are linked from
+complete implementations are available.  C++11 added all of the C99
+features which are not otherwise implemented in C++, and C++ compilers
+commonly accept C99 extensions to C++98.  A minor update@footnote{The
+changes are linked from
 @uref{https://isocpp.org/@/std/@/standing-documents/@/sd-6-sg10-feature-test-recommendations}.}
 to C++11 (C++14) was published in December 2014.  The next standard has
 been sent to ISO and is likely to be approved in 2017: it is informally
@@ -2487,7 +2488,7 @@ native@footnote{Some distributions, notably Debian, have supplied a
 build of @command{clang} with @command{g++}'s headers and library.
 Conversely, Apple's command named @command{g++} is based on
 @command{clang} using @code{libc++}.}  @code{libc++} headers and library
-include many C++11 features, and does not support TR1.
+includes many C++11 features, and does not support TR1.
 
 Since version 3.1.0, @R{} has provided support for C++11 in packages in
 addition to C++98.  This support is not uniform across platforms as it
@@ -2534,13 +2535,13 @@ CXX_STD = CXX98
 @end example
 
 The C++11 compiler will be used systematically by R for all C++ code
-if the environment variable @env{USE_CXX1X} is defined (with any
+if the environment variable @env{USE_CXX11} is defined (with any
 value). Hence this environment variable should be defined when invoking
 @command{R CMD SHLIB} in the absence of a @file{Makevars} file (or
 @file{Makevars.win} on Windows) if a C++11 compiler is required.
 
 Further control over compilation of C++11 code can be obtained by
-specifying the macros @samp{CXX1X} and @samp{CXX1XSTD} when @R{} is
+specifying the macros @samp{CXX11} and @samp{CXX11STD} when @R{} is
 configured@footnote{For
 details of these and related macros, see file @file{config.site} in
 the @R{} sources.}, or in a personal or site @file{Makevars} file.
@@ -2549,15 +2550,15 @@ the @R{} sources.}, or in a personal or site @file{Makevars} file.
 R-admin, R Installation and Administration}.
 @end ifset
 If C++11 support is not available then these macros are both empty; if
-it is available by default, @samp{CXX1X} defaults to @samp{CXX} and
-@samp{CXX1XSTD} is empty . Otherwise, @samp{CXX1X} defaults to the same
-value as the C++ compiler @samp{CXX} and the flag @samp{CXX1XSTD}
+it is available by default, @samp{CXX11} defaults to @samp{CXX} and
+@samp{CXX11STD} is empty . Otherwise, @samp{CXX11} defaults to the same
+value as the C++ compiler @samp{CXX} and the flag @samp{CXX11STD}
 defaults to @option{-std=c++11} or similar.  It is possible to specify
-@samp{CXX1X} to be a distinct compiler just for C++11--using packages,
+@samp{CXX11} to be a distinct compiler just for C++11--using packages,
 e.g.@: @command{g++} on Solaris.  Note however that different C++
 compilers (and even different versions of the same compiler) often
 differ in their ABI so their outputs can rarely be mixed. By setting
-@samp{CXX1XSTD} it is also possible to choose a different dialect of the
+@samp{CXX11STD} it is also possible to choose a different dialect of the
 standard such as @option{-std=gnu++11}.
 
 As noted above, support for C++11 varies across platforms: on some
@@ -2573,10 +2574,10 @@ If a package using C++11 has a @command{configure} script it is
 essential that it selects the correct compiler, @emph{via} something like
 
 @example
-CXX1X=`"$@{R_HOME@}/bin/R" CMD config CXX1X`
-CXX1XSTD=`"$@{R_HOME@}/bin/R" CMD config CXX1XSTD`
-CXX="$@{CXX1X@} $@{CXX1XSTD@}"
-CXXFLAGS=`"$@{R_HOME@}/bin/R" CMD config CXX1XFLAGS`
+CXX11=`"$@{R_HOME@}/bin/R" CMD config CXX11`
+CXX11STD=`"$@{R_HOME@}/bin/R" CMD config CXX11STD`
+CXX="$@{CXX11@} $@{CXX11STD@}"
+CXXFLAGS=`"$@{R_HOME@}/bin/R" CMD config CXX11FLAGS`
 AC_LANG(C++)
 @end example
 
@@ -2588,7 +2589,7 @@ down the macros to specify that compiler, e.g.@: in @file{src/Makevars}
 @example
 sublibs:
          @@(cd libs && $(MAKE) \
-            CXX="$(CXX1X) $(CXX1XSTD)" CXXFLAGS="$(CXX1XFLAGS) $(CXX1XPICFLAGS)")
+            CXX="$(CXX11) $(CXX11STD)" CXXFLAGS="$(CXX11FLAGS) $(CXX11PICFLAGS)")
 @end example
 
 @node Using C++14 code, Using C++17 code, Using C++11 code, Configure and cleanup
@@ -2596,8 +2597,8 @@ sublibs:
 
 Support for a C++14 has been explicitly added to @R{} from version
 3.4.0. Similar considerations to C++11 apply, except that the variables
-associated with the C++14 compiler use the prefix @samp{CXX1Y} instead
-of @samp{CXX1X}. Hence to use C++14 code in a package, the package's
+associated with the C++14 compiler use the prefix @samp{CXX14} instead
+of @samp{CXX11}. Hence to use C++14 code in a package, the package's
 @file{Makevars} file (or @file{Makevars.win} on Windows) should include
 the line
 @example
@@ -2611,7 +2612,7 @@ SystemRequirements: C++14
 @end example
 @noindent
 in the @file{DESCRIPTION} file. Finally, the C++14 compiler can be
-used systematically by setting the environment variable @env{USE_CXX1Y}.
+used systematically by setting the environment variable @env{USE_CXX17}.
 
 Note that code written for C++11 that emulates features of C++14 will
 not necessarily compile under a C++14 compiler@footnote{As from @R{}
@@ -2657,14 +2658,17 @@ should be used).
 @node Using C++17 code,  , Using C++14 code, Configure and cleanup
 @subsection Using C++17 code
 
-Experimental support for a C++17 has been added to @R{} version
-3.4.0. The feature tests used by @command{configure} to determine
-whether a compiler supports the C++17 standard are subject to change.
-At the time of writing (March 2017) @code{clang 4.0.0} had sufficient
-support but pre-releases of @code{gcc 7} did not.
+Experimental support for C++17 has been added to @R{} version
+3.4.0. The @file{configure} script tests a subset of C++17 features.
+At the time of writing (March 2017) both @code{clang 4.0.0} and
+@code{gcc 7.0.1 (20170314)} pass these tests (with flags
+@option{-std=gnu++1z} and @option{-std=gnu++17} respectively chosen by the
+@file{configure} script).  Note that the C++17 feature tests are
+incomplete and are subject to change in future R versions as compiler
+support for the standard improves.
 
 The variables associated with the C++17 compiler use the prefix
-@samp{CXX1Z}.  Hence to use C++17 code in a package, the package's
+@samp{CXX17}.  Hence to use C++17 code in a package, the package's
 @file{Makevars} file (or @file{Makevars.win} on Windows) should
 include the line
 @example
@@ -2678,7 +2682,7 @@ SystemRequirements: C++17
 @end example
 @noindent
 in the @file{DESCRIPTION} file. Finally, the C++17 compiler can be
-used systematically by setting the environment variable @env{USE_CXX1Z}.
+used systematically by setting the environment variable @env{USE_CXX17}.
 
 @node Checking and building packages, Writing package vignettes, Configure and cleanup, Creating R packages
 @section Checking and building packages
@@ -5041,6 +5045,20 @@ erf expm1 fmin fmax lgamma lround loglp round snprintf strcasecmp trunc
 (all of which are in the @code{std} namespace in C++11) and the POSIX
 functions @code{strdup} and @code{strncasecmp} and constants @code{M_PI}
 and @code{M_LN2} (see the previous item).
+
+@item
+Using @code{alloca} portably is tricky: it is neither an ISO C nor a
+POSIX function.  An adequately portable preamble is
+@example
+#ifdef __GNUC__
+/* Includes GCC, clang and Intel compilers */
+# undef alloca
+# define alloca(x) __builtin_alloca((x))
+#elif defined(__sun) || defined(_AIX)
+/* this is necessary (and sufficient) for Solaris 10 and AIX 6: */
+# include <alloca.h>
+#endif
+@end example
 
 @end itemize
 
@@ -8437,7 +8455,7 @@ like
 @end example
 
 @noindent
-for C++ code (in @code{CXX} and @code{CXX1X}) as the run-time library
+for C++ code (in @code{CXX} and @code{CXX11}) as the run-time library
 for @code{vptr} needs to be linked into the main @R{} executable (and
 that would need to be linked by @code{clang++}, not @code{clang}: you
 could try building @R{} with something like
@@ -13061,8 +13079,8 @@ without causing unnecessary overflows or throwing away too much accuracy.
 @deftypefunx double fmin2 (double @var{x}, double @var{y})
 Return the larger (@code{max}) or smaller (@code{min}) of two integer or
 double numbers, respectively.  Note that @code{fmax2} and @code{fmin2}
-differ from C99's @code{fmax} and @code{fmin} when one of the arguments
-is a @code{NaN}: these versions return @code{NaN}.
+differ from C99/C++11's @code{fmax} and @code{fmin} when one of the
+arguments is a @code{NaN}: these versions return @code{NaN}.
 @end deftypefun
 
 @deftypefun double sign (double @var{x})

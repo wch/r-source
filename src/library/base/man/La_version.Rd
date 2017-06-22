@@ -19,6 +19,8 @@ La_version()
 }
 \seealso{
   \code{\link{extSoftVersion}} for versions of other third-party software.
+
+  \code{\link{La_library}} for binary/executable file with LAPACK in use.
 }
 \examples{
 La_version()

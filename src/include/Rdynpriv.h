@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-2016  The R Core Team.
+ *  Copyright (C) 2001-2017  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -59,13 +59,6 @@ typedef struct {
      native routines that can be called by R. They are intended to be 
      instantiated by packages that explicitly register the routines in the
      library.
-
-     More fields will be added to these "real soon now". These may contain
-     information such as 
-        a) whether the routine is thread-safe or not,
-        b) with which other routines it must be sychronized,
-        c) the parameter types,
-        ...
    */
 
 typedef struct {

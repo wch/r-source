@@ -30,6 +30,7 @@ mclapply <- function(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
         return(lapply(X = X, FUN = FUN, ...))
 
     if(mc.set.seed) mc.reset.stream()
+    if(!length(X)) return(list())
 
     jobs <- list()
     cleanup <- function() {

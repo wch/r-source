@@ -25,6 +25,8 @@
   C functions used to register compiled code in packages.
 
   Those needed for that purpose are part of the API.
+
+  Cleaned up for R 3.4.0, some changes require recompilation of packages.
  */
 
 #ifndef  R_EXT_DYNLOAD_H_
@@ -37,24 +39,11 @@ typedef void * (*DL_FUNC)();
 
 typedef unsigned int R_NativePrimitiveArgType;
 
-#define SINGLESXP 302 /* Don't have a single type for this. */
-
-/* In the future, we will want to allow people register their own types
-   and then refer to these in other contexts. Something like the Gtk type
-   system may be appropriate.
-*/
-typedef unsigned int R_NativeObjectArgType;
-
+/* For interfaces to objects created with as.single */
+#define SINGLESXP 302
 
 /*
-   Values for styles: deprecated in R 3.3.3 but still used by some packages.
-*/
-typedef enum {R_ARG_IN, R_ARG_OUT, R_ARG_IN_OUT, R_IRRELEVANT} R_NativeArgStyle;
-
-
-
-/*
- These are very similar to those in  unix/dynload.c
+ These are very similar to those in Rdynpriv.h,
  but we maintain them separately to give us more freedom to do
  some computations on the internal versions that are derived from
  these definitions.
@@ -63,10 +52,7 @@ typedef struct {
     const char *name;
     DL_FUNC     fun;
     int         numArgs;
-
     R_NativePrimitiveArgType *types;
-    R_NativeArgStyle         *styles;  // deprecated in 3.3.3, defunct in 3.4.0
-
 } R_CMethodDef;
 
 typedef R_CMethodDef R_FortranMethodDef;
@@ -100,7 +86,7 @@ Rboolean R_forceSymbols(DllInfo *info, Rboolean value);
 
 DllInfo *R_getDllInfo(const char *name);
 
-/* to be used by applications embedding R to register their symbols
+/* To be used by applications embedding R to register their symbols
    that are not related to any dynamic module */
 DllInfo *R_getEmbeddingDllInfo(void);
 

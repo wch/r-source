@@ -1,7 +1,7 @@
 #  File src/library/stats/R/splinefun.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ splinefun <-
     y <- x$y
     x <- x$x
     nx <- as.integer(length(x))
-    if(is.na(nx)) stop("invalid value of length(x)")
+    if(is.na(nx)) stop(gettextf("invalid value of %s", "length(x)"), domain = NA)
     if(nx == 0) stop("zero non-NA points")
     method <- match.arg(method)
     if(method == "periodic" && y[1L] != y[nx]) {

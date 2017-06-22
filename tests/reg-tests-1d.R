@@ -700,6 +700,15 @@ stopifnot(identical(rep    (4,   list(3)), c(4,4,4)),
 ## partly failed in R 3.3.{2,3}
 
 
+## quantile(ordered(.)) - error message more directly useful
+OL <- ordered(sample(LETTERS, 20, replace=TRUE))
+(e <- tryCatch(quantile(OL), error = conditionMessage))
+stopifnot(grepl("type.*1.*3", e),# typically works in several locales
+	  is.ordered(quantile(OL, type = 1)),
+	  is.ordered(quantile(OL, type = 3)))
+## gave  "factors are not allowed" in R <= 3.3.x
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

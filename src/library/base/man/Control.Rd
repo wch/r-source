@@ -1,6 +1,6 @@
 % File src/library/base/man/Control.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Control}
@@ -31,8 +31,10 @@ next
 }
 \arguments{
   \item{cond}{A length-one logical vector that is not \code{NA}.
-    Conditions of length greater than one are accepted with a warning, but
-    only the first element is used.  Other types are coerced to logical
+    Conditions of length greater than one are currently accepted with a
+    warning, but only the first element is used.  An error is signalled
+    instead when the environment variable \env{_R_CHECK_LENGTH_1_CONDITION_}
+    is set to true.  Other types are coerced to logical
     if possible, ignoring any class.
   }
   \item{var}{A syntactical name for a variable.}

@@ -1,7 +1,7 @@
 #  File src/library/stats/R/filter.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1999-2014 The R Core Team
+#  Copyright (C) 1999-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -24,11 +24,12 @@ filter <- function(x, filter, method = c("convolution", "recursive"),
     storage.mode(x) <- "double"
     xtsp <- tsp(x)
     n <- as.integer(NROW(x))
-    if (is.na(n)) stop("invalid value of nrow(x)", domain = NA)
+    if (is.na(n)) stop(gettextf("invalid value of %s", "NROW(x)"), domain = NA)
     nser <- NCOL(x)
     filter <- as.double(filter)
     nfilt <- as.integer(length(filter))
-    if (is.na(n)) stop("invalid value of length(filter)", domain = NA)
+    if (is.na(nfilt)) stop(gettextf("invalid value of %s", "length(filter)"),
+                           domain = NA)
     if(anyNA(filter)) stop("missing values in 'filter'")
 
     if(method == "convolution") {

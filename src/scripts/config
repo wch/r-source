@@ -5,7 +5,7 @@
 ## Usage:
 ##   R CMD config [options] [VAR]
 
-## Copyright (C) 2002-2016 The R Core Team
+## Copyright (C) 2002-2017 The R Core Team
 ##
 ## This document is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -64,22 +64,22 @@ Variables:
   CXX98FLAGS    compiler flags for CXX98
   CXX98PICFLAGS special flags for compiling C++98 code to be included in a
 		shared library
-  CXX1X         compiler command for C++11 code
-  CXX1XSTD      flag used with CXX1X to enable C++11 support
-  CXX1XFLAGS    further compiler flags for CXX11
-  CXX1XPICFLAGS
+  CXX11         compiler command for C++11 code
+  CXX11STD      flag used with CXX11 to enable C++11 support
+  CXX11FLAGS    further compiler flags for CXX11
+  CXX11PICFLAGS
                 special flags for compiling C++11 code to be included in
                 a shared library
-  CXX1Y         compiler command for C++14 code
-  CXX1YSTD      flag used with CXX1X to enable C++14 support
-  CXX1YFLAGS    further compiler flags for CXX14
-  CXX1YPICFLAGS
+  CXX14         compiler command for C++14 code
+  CXX14STD      flag used with CXX14 to enable C++14 support
+  CXX14FLAGS    further compiler flags for CXX14
+  CXX14PICFLAGS
                 special flags for compiling C++14 code to be included in
                 a shared library
-  CXX1Z         compiler command for C++17 code
-  CXX1ZSTD      flag used with CXX1X to enable C++17 support
-  CXX1ZFLAGS    further compiler flags for CXX17
-  CXX1ZPICFLAGS
+  CXX17         compiler command for C++17 code
+  CXX17STD      flag used with CXX17 to enable C++17 support
+  CXX17FLAGS    further compiler flags for CXX17
+  CXX17PICFLAGS
                 special flags for compiling C++17 code to be included in
                 a shared library
   DYLIB_EXT	file extension (including '.') for dynamic libraries
@@ -113,9 +113,9 @@ Variables:
   SAFE_FFLAGS   Safe (as conformant as possible) Fortran 77 compiler flags
   SHLIB_CFLAGS  additional CFLAGS used when building shared objects
   SHLIB_CXXLD   command for linking shared objects which contain
-		object files from a C++ compiler (and CXX98 CXX1X CXX1Y CXX1Z)
+		object files from a C++ compiler (and CXX98 CXX11 CXX14 CXX17)
   SHLIB_CXXLDFLAGS
-		special flags used by SHLIB_CXXLD (and CXX98 CXX1X CXX1Y CXX1Z)
+		special flags used by SHLIB_CXXLD (and CXX98 CXX11 CXX14 CXX17)
   SHLIB_EXT	file extension (including '.') for shared objects
   SHLIB_FFLAGS  additional FFLAGS used when building shared objects
   SHLIB_LD      command for linking shared objects which contain
@@ -275,13 +275,13 @@ fi
 query="${MAKE} -s ${makefiles} print R_HOME=${R_HOME}"
 
 ok_c_vars="CC CFLAGS CPICFLAGS CPP CPPFLAGS"
-ok_cxx_vars="CXX CXXCPP CXXFLAGS CXXPICFLAGS CXX1X CXX1XSTD CXX1XFLAGS CXX1XPICFLAGS CXX1Y CXX1YSTD CXX1YFLAGS CXX1YPICFLAGS CXX98 CXX98STD CXX98FLAGS CXX98PICFLAGS CXX1Z CXX1ZSTD CXX1ZFLAGS CXX1ZPICFLAGS"
+ok_cxx_vars="CXX CXXCPP CXXFLAGS CXXPICFLAGS CXX11 CXX11STD CXX11FLAGS CXX11PICFLAGS CXX14 CXX14STD CXX14FLAGS CXX14PICFLAGS CXX98 CXX98STD CXX98FLAGS CXX98PICFLAGS CXX17 CXX17STD CXX17FLAGS CXX17PICFLAGS CXX1X CXX1XSTD CXX1XFLAGS CXX1XPICFLAGS"
 ok_dylib_vars="DYLIB_EXT DYLIB_LD DYLIB_LDFLAGS"
 ok_objc_vars="OBJC OBJCFLAGS"
 ok_java_vars="JAVA JAVAC JAVAH JAR JAVA_HOME JAVA_LIBS JAVA_CPPFLAGS"
 ok_f77_vars="F77 FFLAGS FPICFLAGS FLIBS SAFE_FFLAGS FC FCFLAGS FCPICFLAGS"
 ok_ld_vars="LDFLAGS"
-ok_shlib_vars="SHLIB_CFLAGS SHLIB_CXXLD SHLIB_CXXLDFLAGS SHLIB_CXX98LD SHLIB_CXX98LDFLAGS SHLIB_CXX1XLD SHLIB_CXX1XLDFLAGS SHLIB_CXX1YLD SHLIB_CXX1YLDFLAGS SHLIB_CXX1ZLD SHLIB_CXX1ZLDFLAGS SHLIB_EXT SHLIB_FFLAGS SHLIB_LD SHLIB_LDFLAGS SHLIB_FCLD SHLIB_FCLDFLAGS"
+ok_shlib_vars="SHLIB_CFLAGS SHLIB_CXXLD SHLIB_CXXLDFLAGS SHLIB_CXX98LD SHLIB_CXX98LDFLAGS SHLIB_CXX11LD SHLIB_CXX11LDFLAGS SHLIB_CXX14LD SHLIB_CXX14LDFLAGS SHLIB_CXX17LD SHLIB_CXX17LDFLAGS SHLIB_EXT SHLIB_FFLAGS SHLIB_LD SHLIB_LDFLAGS SHLIB_FCLD SHLIB_FCLDFLAGS SHLIB_CXX1XLD SHLIB_CXX1XLDFLAGS"
 ok_tcltk_vars="TCLTK_CPPFLAGS TCLTK_LIBS"
 ok_other_vars="BLAS_LIBS LAPACK_LIBS MAKE LIBnn LOCAL_SOFT COMPILED_BY"
 

@@ -778,3 +778,31 @@ static void RNG_Init_R_KT(Int32 seed)
     UNPROTECT(3);
     KT_pos = 100;
 }
+
+/* Our PRNGs have at most 32 bit of precision. All generators except
+   Knuth-TAOCP, Knuth-TAOCP-2002, and possibly the user-supplied ones
+   have 31 or 32 bits bits of precision; the others are assumed to
+   have at least at least 25. */
+static R_INLINE double ru()
+{
+    double U = 33554432.0;
+    return (floor(U*unif_rand()) + unif_rand())/U;
+}
+
+double R_unif_index(double dn)
+{
+    double cut = INT_MAX;
+
+    switch(RNG_kind) {
+    case KNUTH_TAOCP:
+    case USER_UNIF:
+    case KNUTH_TAOCP2:
+	cut = 33554431.0; /* 2^25 - 1 */
+ 	break;
+    default:
+ 	break;
+   }
+
+    double u = dn > cut ? ru() : unif_rand();
+    return floor(dn * u);
+}

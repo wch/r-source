@@ -58,6 +58,7 @@ void GetRNGstate(void);
 void PutRNGstate(void);
 
 double unif_rand(void);
+double R_unif_index(double);
 /* These are also defined in Rmath.h */
 double norm_rand(void);
 double exp_rand(void);

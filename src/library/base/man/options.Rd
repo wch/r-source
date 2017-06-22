@@ -116,9 +116,9 @@ getOption(x, default = NULL)
       and upon entry to a function whose debugging flag is set.
       Initially unset, and only used if set to a positive integer.}
 
-    \item{\code{digits}:}{controls the number of digits to print when
-      printing numeric values.  It is a suggestion only.  Valid values
-      are 1\dots{}22 with default 7.  See the note in
+    \item{\code{digits}:}{controls the number of significant digits to
+      print when printing numeric values.  It is a suggestion only.
+      Valid values are 1\dots{}22 with default 7.  See the note in
       \code{\link{print.default}} about values greater than 15.}
 
     \item{\code{digits.secs}:}{controls the maximum number of digits to
@@ -622,7 +622,7 @@ getOption(x, default = NULL)
       for binary installs on macOS and Windows, but can be used in a
       startup file for source installs \emph{via}
       \command{R CMD \link{INSTALL}}.  For binary installs, can also be
-      the character string \code{"pkgloack"}.}
+      the character string \code{"pkglock"}.}
 
     \item{\code{internet.info}:}{The minimum level of information to be
       printed on URL downloads etc, using the \code{"internal"} and

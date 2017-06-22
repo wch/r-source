@@ -34,6 +34,7 @@ ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
 FFLAGS = @FFLAGS@ @LTO@
 FLIBS = @FLIBS@
+## needed for some earlier Solaris compilers
 FLIBS_IN_SO = @FLIBS_IN_SO@
 FPICFLAGS = @FPICFLAGS@
 F77 = @F77@

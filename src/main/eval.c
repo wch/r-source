@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995, 1996	Robert Gentleman and Ross Ihaka
  *  Copyright (C) 1998--2017	The R Core Team.
+ *  Copyright (C) 1995, 1996	Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -679,7 +679,7 @@ SEXP eval(SEXP e, SEXP rho)
 	    /* This will throw an error if the function is not found */
 	    SEXP ecall = e;
 
-	    /* This picks the correct/better error expression for 
+	    /* This picks the correct/better error expression for
 	       replacement calls running in the AST interpreter. */
 	    if (R_GlobalContext != NULL &&
 		    (R_GlobalContext->callflag == CTXT_CCODE))
@@ -1865,7 +1865,11 @@ static R_INLINE Rboolean asLogicalNoNA(SEXP s, SEXP call)
     int len = length(s);
     if (len > 1) {
 	PROTECT(s);	 /* needed as per PR#15990.  call gets protected by warningcall() */
-	warningcall(call,
+	char *check = getenv("_R_CHECK_LENGTH_1_CONDITION_");
+	if((check != NULL) ? StringTrue(check) : FALSE) // warn by default
+	    errorcall(call, _("the condition has length > 1"));
+        else
+	    warningcall(call,
 		    _("the condition has length > 1 and only the first element will be used"));
 	UNPROTECT(1);
     }

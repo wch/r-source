@@ -42,7 +42,7 @@ stamp-recommended: $(OBJECTS)
 
 ## need to allow parallel installs
 INSTALL_OPTS = --pkglock --data-compress=xz
-INSTALL_OPTS2 =@BYTE_COMPILE_PACKAGES_TRUE@ --byte-compile
+@BYTE_COMPILE_PACKAGES_FALSE@R_NO_BASE_COMPILE = true
 
 ## On e.g. Solaris/FreeBSD if the top-level make is GNU make it will
 ## pass flags such as -j and -w down: so need to ensure that INSTALL
@@ -58,7 +58,7 @@ INSTALL_OPTS2 =@BYTE_COMPILE_PACKAGES_TRUE@ --byte-compile
 	else \
 	  MAKE="$(MAKE)" R_LIBS_USER= R_LIBS_SITE= \
 	  _R_CHECK_INSTALL_DEPENDS_=no \
-	  $(R) CMD INSTALL $(INSTALL_OPTS) $(INSTALL_OPTS2) -l "$(top_builddir)/library" $< > $@.out 2>&1 || (cat $@.out && exit 1); \
+	  $(R) CMD INSTALL $(INSTALL_OPTS) --byte-compile -l "$(top_builddir)/library" $< > $@.out 2>&1 || (cat $@.out && exit 1); \
 	fi
 	@cat $@.out; rm $@.out
 	@touch $@
