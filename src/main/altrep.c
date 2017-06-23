@@ -681,8 +681,8 @@ altinteger_Get_region_default(SEXP sx, R_xlen_t i, R_xlen_t n, int *buf)
 	return DATAPTR(ALT##TYPEPTR##_EXPANDED(x));			\
     }
 
-DECLARE_ATOMIC_VEC_DATAPTR_DEFAULT(int, altinteger, INTEGER, INTSXP)
-DECLARE_ATOMIC_VEC_DATAPTR_DEFAULT(double, altreal, REAL, REALSXP)
+//DECLARE_ATOMIC_VEC_DATAPTR_DEFAULT(int, altinteger, INTEGER, INTSXP)
+//DECLARE_ATOMIC_VEC_DATAPTR_DEFAULT(double, altreal, REAL, REALSXP)
 //DECLARE_ATOMIC_VEC_DATAPTR_DEFAULT(int, altlogical, LOGICAL, LGLSXP)
 
 
@@ -855,9 +855,11 @@ static int altinteger_Set_elt_default(SEXP x, R_xlen_t i, int v) {
     error("altinteger classes must define a specific Set_elt method");
 }
 
+#ifdef DODO
 static SEXP altinteger_As_subscripts_default(SEXP x) {
     return x;
 }
+#endif
 
 /* right now this returns 1.0, ie we don't know of any compression benefit
    it could also throw an error and force all classes to implement a method */
@@ -866,6 +868,7 @@ static double altinteger_Compression_ratio_default(SEXP x) {
     return 1.0;
 }
 
+#ifdef DODO
 static SEXP altinteger_order_default(SEXP x, Rboolean decr, int nalast) {
     
     R_xlen_t n = XLENGTH(x);
@@ -876,7 +879,7 @@ static SEXP altinteger_order_default(SEXP x, Rboolean decr, int nalast) {
 	return decr ? R_compact_intrange(1, n) : R_compact_intrange(n, 1);
     return NULL;
 }
-
+#endif
 
 static double altreal_Elt_default(SEXP x, R_xlen_t i) { return REAL(x)[i]; }
 
@@ -1164,15 +1167,15 @@ static SEXP altinteger_Unique_default(SEXP x) {
     return ans;
 }
 
-static void altreal_Set_elt_default(SEXP x, R_xlen_t i, double v) {
+static double altreal_Set_elt_default(SEXP x, R_xlen_t i, double v) {
     error("altreal classes must define a specific Set_elt method");
 }
 
-
+#ifdef DODO
 static SEXP altreal_As_subscripts_default(SEXP x) {
     return x;
 }
-
+#endif
 
 static double altreal_Compression_ratio_default(SEXP x) {
     error("altreal classes must define a specific Compression_Ratio method");
@@ -1241,6 +1244,7 @@ static altreal_methods_t altreal_default_methods = {
     .Dataptr_or_null = altvec_Dataptr_or_null_default,
     .Extract_subset = altvec_Extract_subset_default,
     .Elt = altreal_Elt_default,
+    .Set_elt = altreal_Set_elt_default,
     .Get_region = altreal_Get_region_default,
     .Is_sorted = altreal_Is_sorted_default,
     .No_NA = altreal_No_NA_default,
@@ -1746,6 +1750,7 @@ static SEXP compact_intseq_Match(SEXP table, SEXP x, int nm, SEXP incomp,
 }
 
 
+#ifdef DODO
 static double compact_intseq_Compression_ratio(SEXP x) {
     double ret;
     if(ALTREP_EXPANDED(x) != R_NilValue)
@@ -1757,7 +1762,7 @@ static double compact_intseq_Compression_ratio(SEXP x) {
 
     return ret;
 }
-
+#endif
 
 
 
