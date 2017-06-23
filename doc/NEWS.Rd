@@ -79,6 +79,9 @@
       \item \code{factor(x, levels, labels)} now allows duplicated
       \code{labels} (not duplicated \code{levels}!).  Hence you can map
       different values of \code{x} to the same level directly.
+
+      \item No longer emit a warning when attempting to use
+      \code{names<-()} on an S4 derivative of a basic type.
     }
   }
 
