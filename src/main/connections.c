@@ -297,10 +297,6 @@ static size_t buff_fill(Rconnection con) {
 static int buff_fgetc(Rconnection con)
 {
     size_t unread_len;
-
-    if (!con->buff) {
-	buff_init(con);
-    }
     
     unread_len = con->buff_stored_len - con->buff_pos;
     if (unread_len == 0) {
@@ -333,6 +329,12 @@ static double buff_seek(Rconnection con, double where, int origin, int rw)
     con->buff_pos = con->buff_stored_len = 0;
     
     return con->seek(con, where, origin, rw);
+}
+
+void set_buffer(Rconnection con) {    
+    if (con->canread && con->text) {
+	buff_init(con);
+    }
 }
 
 void set_iconv(Rconnection con)
@@ -546,7 +548,7 @@ int dummy_fgetc(Rconnection con)
 	}
 	con->navail--;
 	return *con->next++;
-    } else if (con->text)
+    } else if (con->buff)
 	return buff_fgetc(con);
     else
 	return con->fgetc_internal(con);
@@ -744,6 +746,7 @@ static Rboolean file_open(Rconnection con)
     if(mlen >= 2 && con->mode[mlen-1] == 'b') con->text = FALSE;
     else con->text = TRUE;
     con->save = -1000;
+    set_buffer(con);
     set_iconv(con);
 
 #ifdef HAVE_FCNTL
@@ -1035,6 +1038,7 @@ static Rboolean fifo_open(Rconnection con)
 
     if(mlen >= 2 && con->mode[mlen-1] == 'b') con->text = FALSE;
     else con->text = TRUE;
+    set_buffer(con);
     set_iconv(con);
     con->save = -1000;
     return TRUE;
@@ -1215,6 +1219,7 @@ static Rboolean	fifo_open(Rconnection con)
     if (boo_retvalue && this->hdl_namedpipe) {
 	con->isopen = TRUE;
 	con->text = uin_mode_len >= 2 && con->mode[uin_mode_len - 1] == 'b';
+	set_buffer(con);
 	set_iconv(con);
 	con->save = -1000;
     }
@@ -1452,6 +1457,7 @@ static Rboolean pipe_open(Rconnection con)
     else con->text = TRUE;
     this->last_was_write = !con->canread;
     this->rpos = this->wpos = 0;
+    set_buffer(con);
     set_iconv(con);
     con->save = -1000;
     return TRUE;
@@ -1622,6 +1628,7 @@ static Rboolean gzfile_open(Rconnection con)
     con->canwrite = (con->mode[0] == 'w' || con->mode[0] == 'a');
     con->canread = !con->canwrite;
     con->text = strchr(con->mode, 'b') ? FALSE : TRUE;
+    set_buffer(con);
     set_iconv(con);
     con->save = -1000;
     return TRUE;
@@ -1778,6 +1785,7 @@ static Rboolean bzfile_open(Rconnection con)
     bz->bfp = bfp;
     con->isopen = TRUE;
     con->text = strchr(con->mode, 'b') ? FALSE : TRUE;
+    set_buffer(con);
     set_iconv(con);
     con->save = -1000;
     return TRUE;
@@ -1974,6 +1982,7 @@ static Rboolean xzfile_open(Rconnection con)
     }
     con->isopen = TRUE;
     con->text = strchr(con->mode, 'b') ? FALSE : TRUE;
+    set_buffer(con);
     set_iconv(con);
     con->save = -1000;
     return TRUE;
@@ -2305,6 +2314,7 @@ static Rboolean clp_open(Rconnection con)
 	this->last = 0;
     }
     con->text = TRUE;
+    set_buffer(con);
     set_iconv(con);
     con->save = -1000;
     this->warned = FALSE;
