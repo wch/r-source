@@ -148,6 +148,8 @@
 
       \item \code{aggregate(<data.frame>)} no longer uses spurious names
       in some cases.  (\PR{17283})
+
+      \item \code{object.size()} now also works for long vectors.
     }
   }
 }
