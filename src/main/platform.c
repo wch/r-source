@@ -1745,6 +1745,7 @@ SEXP attribute_hidden do_setlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    resetICUcollator();
 	    setlocale(LC_MONETARY, l);
 	    setlocale(LC_TIME, l);
+	    dt_invalidate_locale();
 	    /* Need to return value of LC_ALL */
 	    p = setlocale(cat, NULL);
 	}
