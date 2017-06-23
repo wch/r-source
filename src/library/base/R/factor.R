@@ -1,7 +1,7 @@
 #  File src/library/base/R/factor.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -34,14 +34,22 @@ factor <- function(x = character(), levels, labels = levels,
     f <- match(x, levels)
     if(!is.null(nx))
 	names(f) <- nx
-    nl <- length(labels)
-    nL <- length(levels)
-    if(!any(nl == c(1L, nL)))
-	stop(gettextf("invalid 'labels'; length %d should be 1 or %d", nl, nL),
-	     domain = NA)
-    levels(f) <- ## nl == nL or 1
-	if (nl == nL) as.character(labels)
-	else paste0(labels, seq_along(levels))
+    if(missing(labels)) { ## default: labels := levels
+	levels(f) <- as.character(levels)
+    } else { ## labels specified explicitly
+	nlab <- length(labels)
+	if(nlab == length(levels)) { ## NB: duplicated labels should work
+	    levels(f) <- as.character(levels)
+	    ## (unusual, possibly slightly inefficient call, but "R-consistent":)
+	    f <- `levels<-.factor`(f, as.character(labels))
+	}
+	else if(nlab == 1L)
+	    levels(f) <- paste0(labels, seq_along(levels))
+	else ## nlab is neither 1 nor length(levels)
+	    stop(gettextf("invalid 'labels'; length %d should be 1 or %d",
+			  nlab, length(levels)),
+		 domain = NA)
+    }
     class(f) <- c(if(ordered) "ordered", "factor")
     f
 }

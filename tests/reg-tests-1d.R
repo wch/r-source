@@ -863,6 +863,19 @@ stopifnot(is.null(names(a1$Population)),
 ## in R <= 3.4.1, a2$Population had spurious names
 
 
+## factor() with duplicated labels allowing to "merge levels"
+x <- c("Male", "Man", "male", "Man", "Female")
+## The pre-3.5.0 way {two function calls, nicely aligned}:
+xf1 <- factor(x, levels = c("Male", "Man",  "male", "Female"))
+           levels(xf1) <- c("Male", "Male", "Male", "Female")
+## the new "direct" way:
+xf <- factor(x, levels = c("Male", "Man",  "male", "Female"),
+                labels = c("Male", "Male", "Male", "Female"))
+stopifnot(identical(xf1, xf),
+          identical(xf, factor(c(rep(1,4),2), labels = c("Male", "Female"))))
+## Before R 3.5.0, the 2nd factor() call gave an error
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

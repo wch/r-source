@@ -68,13 +68,17 @@
       this \code{available.packages()}, \code{packageStatus()} and
       \code{download.file()} gain a \code{\dots} argument.
 
-      \code{packageStatus()}'s \code{upgrade()} method no longer ignores
+      \item \code{packageStatus()}'s \code{upgrade()} method no longer ignores
       its \code{\dots} argument but passes it to \code{install.packages()}.
 
-      \code{installed.packages()} gains a \code{\dots} argument to allow
+      \item \code{installed.packages()} gains a \code{\dots} argument to allow
       arguments (including \code{noCache}) to be passed from
       \code{new.packages()}, \code{old.packages()},
       \code{update.packages()} and \code{packageStatus()}.
+
+      \item \code{factor(x, levels, labels)} now allows duplicated
+      \code{labels} (not duplicated \code{levels}!).  Hence you can map
+      different values of \code{x} to the same level directly.
     }
   }
 
