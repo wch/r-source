@@ -1,6 +1,6 @@
 % File src/library/base/man/locales.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{locales}
@@ -56,7 +56,7 @@ Sys.setlocale(category = "LC_ALL", locale = "")
   support message translation, and is not supported on Windows.  Trying
   to use an unsupported category is an error for \code{Sys.setlocale}.
 
-  Note that setting category \code{"LC_ALL"} sets only
+  Note that setting category \code{"LC_ALL"} sets only categories
   \code{"LC_COLLATE"}, \code{"LC_CTYPE"}, \code{"LC_MONETARY"} and
   \code{"LC_TIME"}.
 
@@ -95,10 +95,11 @@ Sys.setlocale(category = "LC_ALL", locale = "")
 % assume this just affects strtod/atof, scanf/printf and friends,
 % as seems to be the case in glibc.
 \section{Warning}{
-  Setting \code{"LC_NUMERIC"} may cause \R to function
-  anomalously, so gives a warning.  Input conversions
-  in \R itself are unaffected, but the reading and writing of ASCII
-  \code{\link{save}} files will be, as may packages.
+  Setting \code{"LC_NUMERIC"} to any value other than \code{"C"} may
+  cause \R to function anomalously, so gives a warning.  Input
+  conversions in \R itself are unaffected, but the reading and writing
+  of ASCII \code{\link{save}} files will be, as may packages which do
+  their own input/output.
 
   Setting it temporarily on a Unix-alike to produce graphical or text
   output may work well enough, but \code{\link{options}(OutDec)} is
@@ -131,15 +132,15 @@ Sys.getlocale()
 Sys.getlocale("LC_TIME")
 \dontrun{
 Sys.setlocale("LC_TIME", "de")     # Solaris: details are OS-dependent
-Sys.setlocale("LC_TIME", "de_DE.utf8")   # Modern Linux etc.
-Sys.setlocale("LC_TIME", "de_DE.UTF-8")  # ditto
-Sys.setlocale("LC_TIME", "de_DE")  # macOS, in UTF-8
+Sys.setlocale("LC_TIME", "de_DE")  # Many Unix-alikes
+Sys.setlocale("LC_TIME", "de_DE.UTF-8")  # Linux, macOS, other Unix-alikes
+Sys.setlocale("LC_TIME", "de_DE.utf8")   # some Linux versions
 Sys.setlocale("LC_TIME", "German") # Windows
 }
 Sys.getlocale("LC_PAPER")          # may or may not be set
 
 \dontrun{
 Sys.setlocale("LC_COLLATE", "C")   # turn off locale-specific sorting,
-                                   # usually, but not on all platforms}
+                                   # usually (but not on all platforms)}
 }
 \keyword{utilities}
