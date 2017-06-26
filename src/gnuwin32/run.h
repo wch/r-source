@@ -1,7 +1,7 @@
 /*
  *  A simple 'reading' pipe (and a command executor)
  *  Copyright (C) 1999  Guido Masarotto
- *            (C) 2004-10  The R Core Team
+ *            (C) 2004-2017  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -26,7 +26,8 @@ struct structRPIPE {
     PROCESS_INFORMATION pi;
     HANDLE thread;
     HANDLE read, write;
-    int exitcode, active;
+    int exitcode, active, timedout;
+    DWORD timeoutMillis;
 };
 
 typedef struct structRPIPE rpipe;
@@ -36,15 +37,20 @@ typedef struct structRPIPE rpipe;
  * if runcmd return NOLAUNCH, problems in process start
 */
 #define runcmd Rf_runcmd
-int   runcmd(const char *cmd, cetype_t enc, int wait, int visible, 
-	     const char *fin, const char *fout, const char *ferr);
+int runcmd(const char *cmd, cetype_t enc, int wait, int visible, 
+           const char *fin, const char *fout, const char *ferr);
+
+int runcmd_timeout(const char *cmd, cetype_t enc, int wait, int visible, 
+                   const char *fin, const char *fout, const char *ferr,
+                   int timeout, int *timedout);
 
 rpipe *rpipeOpen(const char *cmd, cetype_t enc, int visible, 
 		 const char *finput, int io,
-		 const char *fout, const char *ferr);
+		 const char *fout, const char *ferr,
+		 int timeout);
 char  *rpipeGets(rpipe *r, char *buf, int len);
 int rpipeGetc(rpipe *r);
-int rpipeClose(rpipe *r);
+int rpipeClose(rpipe *r, int *timedout);
 
 char *runerror(void);
 

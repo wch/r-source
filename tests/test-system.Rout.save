@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2017-05-15 r72677) -- "Unsuffered Consequences"
+R Under development (unstable) (2017-06-25 r72854) -- "Unsuffered Consequences"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -506,24 +506,24 @@ Warning: running command ''test-system2' 8' had status 8
 stdout 1
 stderr 1
 Sleeping for 10 seconds...
-Warning in system("./test-system2 sleep 10", timeout = 1) :
-  command './test-system2 sleep 10' timed out
+Warning: command './test-system2 sleep 10' timed out
 > system("./test-system2 infinite_loop", timeout = 1)
 stdout 1
 stderr 1
 Going to infinite loop...
-Warning in system("./test-system2 infinite_loop", timeout = 1) :
-  command './test-system2 infinite_loop' timed out
+Warning: command './test-system2 infinite_loop' timed out
 > system("./test-system2 sleep 10", timeout = 1, intern = T)
 stderr 1
-Warning in system("./test-system2 sleep 10", timeout = 1, intern = T) :
-  command './test-system2 sleep 10' timed out
+Warning: command './test-system2 sleep 10' timed out
 [1] "stdout 1"                   "Sleeping for 10 seconds..."
+attr(,"status")
+[1] 124
 > system("./test-system2 infinite_loop", timeout = 1, intern = T)
 stderr 1
-Warning in system("./test-system2 infinite_loop", timeout = 1, intern = T) :
-  command './test-system2 infinite_loop' timed out
+Warning: command './test-system2 infinite_loop' timed out
 [1] "stdout 1"                  "Going to infinite loop..."
+attr(,"status")
+[1] 124
 > 
 > ## test results with timeout set
 > 
