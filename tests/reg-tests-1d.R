@@ -876,6 +876,12 @@ stopifnot(identical(xf1, xf),
 ## Before R 3.5.0, the 2nd factor() call gave an error
 
 
+## within.list({ .. rm( >=2 entries ) }) :
+L <- list(x = 1, y = 2, z = 3)
+stopifnot(identical(within(L, rm(x,y)), list(z = 3)))
+## has failed since R 2.7.2 patched (Aug. 2008) without any noticeable effect
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

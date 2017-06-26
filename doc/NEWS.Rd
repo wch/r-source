@@ -170,10 +170,10 @@
       has since \R 3.1.0).
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
-      \item Placeholder.
+      \item \code{within(<list>, rm(x1, x2))} works correctly again.
     }
   }
 }
