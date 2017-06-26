@@ -39,9 +39,13 @@ factor <- function(x = character(), levels, labels = levels,
     } else { ## labels specified explicitly
 	nlab <- length(labels)
 	if(nlab == length(levels)) { ## NB: duplicated labels should work
-	    levels(f) <- as.character(levels)
-	    ## (unusual, possibly slightly inefficient call, but "R-consistent":)
-	    f <- `levels<-.factor`(f, as.character(labels))
+	    ## a version of  f <- `levels<-.factor`(f, as.character(labels))
+	    ## ... but not dropping NA :
+	    nlevs <- unique(xlevs <- as.character(labels))
+	    at <- attributes(f)
+	    at$levels <- nlevs
+	    f <- match(xlevs[f], nlevs)
+	    attributes(f) <- at
 	}
 	else if(nlab == 1L)
 	    levels(f) <- paste0(labels, seq_along(levels))

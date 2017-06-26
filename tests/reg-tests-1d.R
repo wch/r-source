@@ -874,6 +874,9 @@ xf <- factor(x, levels = c("Male", "Man",  "male", "Female"),
 stopifnot(identical(xf1, xf),
           identical(xf, factor(c(rep(1,4),2), labels = c("Male", "Female"))))
 ## Before R 3.5.0, the 2nd factor() call gave an error
+aN <- c("a",NA)
+stopifnot(identical(levels(factor(1:2, labels = aN)), aN))
+## the NA-level had been dropped for a few days in R-devel(3.5.0)
 
 
 ## within.list({ .. rm( >=2 entries ) }) :
