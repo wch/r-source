@@ -103,7 +103,7 @@ Vector classes for specific element types, such as `ALTINTEGER`,
 `ALTREAL`, or `ALTSTRING` will implement `Elt` methods. For atomic
 types they will also implement `Get_region` methods for copying a
 contiguous region of elements to a buffer. This is patterned after the
-JNI specification. For non-atomic types they will implement `Set_elt
+JNI specification. For non-atomic types they will implement `Set_elt`
 methods to protect the write barrier. `DATAPTR` should almost never be
 used on non-atomic vectors because of the risks to the write barrier.
 
@@ -707,7 +707,7 @@ a bit high. It does simplify code considerably though.
 
 ## Unintended Allocations
 
-A major goal of this mechanism is to allow R to deal clenaly with
+A major goal of this mechanism is to allow R to deal cleanly with
 subsets of large data objects. But some operations might attempt to
 allocate large vectors and create problems. For example, if the value
 of `x` is a sequence `1 : n` for a very large `n`, or a reference to a
