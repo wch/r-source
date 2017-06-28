@@ -62,9 +62,10 @@ within.data.frame <- function(data, expr, ...)
     e <- evalq(environment(), data, parent)
     eval(substitute(expr), e)
     l <- as.list(e, all.names=TRUE)
-    l <- l[!vapply(l, is.null, NA, USE.NAMES=FALSE)]
-    ## del: variables to *del*ete from data[]
-    del <- setdiff(names(data), (nl <- names(l)))
+    notNull <- function(lst) !vapply(lst, is.null, NA, USE.NAMES=FALSE)
+    l <- l[notNull(l)]
+    ## del: variables to *del*ete from data[]; keep NULLs already in data
+    del <- setdiff(names(data)[notNull(data)], (nl <- names(l)))
     data[ nl] <- l
     data[del] <- NULL
     data

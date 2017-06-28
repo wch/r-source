@@ -883,6 +883,10 @@ stopifnot(identical(levels(factor(1:2, labels = aN)), aN))
 L <- list(x = 1, y = 2, z = 3)
 stopifnot(identical(within(L, rm(x,y)), list(z = 3)))
 ## has failed since R 2.7.2 patched (Aug. 2008) without any noticeable effect
+LN <- list(y = 2, N = NULL, z = 5)
+stopifnot(identical(within(LN, { z2 <- z^2 ; rm(y,z) }),
+		    list(N = NULL, z2 = 5^2)))
+## had failed for a few days in R-devel (and in R <= 2.7.2 p.)
 
 
 
