@@ -6658,7 +6658,8 @@ function(dir, localOnly = FALSE)
                                         "FALSE"))) {
         ignore <-
             list(c("(?<=[ \t[:punct:]])'[^']*'(?=[ \t[:punct:]])",
-                   "(?<=[ \t[:punct:]])([[:alnum:]]+::)?[[:alnum:]_.]*\\(\\)(?=[ \t[:punct:]])"),
+                   "(?<=[ \t[:punct:]])([[:alnum:]]+::)?[[:alnum:]_.]*\\(\\)(?=[ \t[:punct:]])",
+                   "(?<=[<])(https?://|DOI:|doi:|arXiv:)[^>]+(?=[>])"),
                  perl = TRUE)
         a <- utils:::aspell_package_description(dir,
                                                 ignore = ignore,
