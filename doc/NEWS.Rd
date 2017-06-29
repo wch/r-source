@@ -82,6 +82,9 @@
 
       \item No longer emit a warning when attempting to use
       \code{names<-()} on an S4 derivative of a basic type.
+
+      \item The \code{list} method of \code{within()} gets an
+      option \code{keepAttrs = FALSE} for speed up.
     }
   }
 
@@ -174,7 +177,8 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item \code{within(<list>, rm(x1, x2))} works correctly again.
+      \item \code{within(List, rm(x1, x2))} works correctly again, also
+      when \code{List[["x2"]]} is \code{NULL}.
 
       \item \code{regexec(pattern, text, *)} now also applies
       \code{as.character(.)} to its first two arguments, as documented.
