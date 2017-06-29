@@ -156,6 +156,7 @@
 
       \item Reinitialize the connection buffer when reopening a
       connection.
+
     }
   }
 }
@@ -174,6 +175,9 @@
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{within(<list>, rm(x1, x2))} works correctly again.
+
+      \item \code{regexec(pattern, text, *)} now also applies
+      \code{as.character(.)} to its first two arguments, as documented.
     }
   }
 }
