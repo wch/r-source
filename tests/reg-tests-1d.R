@@ -877,6 +877,20 @@ stopifnot(identical(xf1, xf),
 aN <- c("a",NA)
 stopifnot(identical(levels(factor(1:2, labels = aN)), aN))
 ## the NA-level had been dropped for a few days in R-devel(3.5.0)
+##
+## This slightly changed - for the better - in R >= 3.5.0 :
+ff <- factor(c(NA,2,3), levels = c(2, NA), labels = c("my", NA), exclude = NULL)
+stopifnot( ## all these but the last were TRUE "forever" :
+    identical(as.vector(ff), as.character(ff)),
+    identical(as.vector(ff), c(NA, "my", NA)),
+    identical(capture.output(ff), c("[1] <NA> my   <NA>",
+				    "Levels: my <NA>")),
+    identical(factor(ff),
+	      structure(c(NA, 1L, NA), .Label = "my", class = "factor")),
+    identical(factor(ff, exclude=NULL),
+	      structure(c(2L, 1L, 2L), .Label = c("my", NA), class = "factor")),
+    identical(as.integer(ff), # <- new in R 3.5.0 : c(2, 1, 2); before was c(2, 1, NA)
+	      as.integer(factor(ff, exclude=NULL))))
 
 
 ## within.list({ .. rm( >=2 entries ) }) :
