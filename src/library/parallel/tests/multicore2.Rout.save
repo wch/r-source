@@ -1,5 +1,5 @@
 
-R version 3.4.0 Patched (2017-06-15 r72797) -- "You Stupid Darkness"
+R version 3.4.1 Patched (2017-06-30 r72867) -- "Single Candle"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -45,4 +45,4 @@ Calculations on Transformed Scale;  Intervals on Original Scale
 > 
 > proc.time()
    user  system elapsed 
-  0.294   0.047   0.324 
+  0.258   0.040   0.286 
