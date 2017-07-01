@@ -1,7 +1,7 @@
 #  File src/library/base/R/eval.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -70,20 +70,16 @@ within.data.frame <- function(data, expr, ...)
     data
 }
 
-within.list <- function(data, expr, keepAttrs = TRUE, ...)
+within.list <- function(data, expr, ...)
 {
     parent <- parent.frame()
     e <- evalq(environment(), data, parent)
     eval(substitute(expr), e)
-    if(keepAttrs) { # names() kept in original order; also other attributes
-	l <- as.list(e, all.names=TRUE)
-	del <- setdiff(names(data), (nl <- names(l))) # variables to delete
-	data[ nl] <- l
-	data[del] <- NULL
-	data
-    } else { # (order should not matter in *named* list)
-	as.list(e, all.names=TRUE)
-    }
+    l <- as.list(e, all.names=TRUE)
+    del <- setdiff(names(data), (nl <- names(l))) # variables to delete
+    data[ nl] <- l
+    data[del] <- NULL
+    data
 }
 
 
