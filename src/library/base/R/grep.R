@@ -93,8 +93,9 @@ regexec <-
 function(pattern, text, ignore.case = FALSE, perl = FALSE,
          fixed = FALSE, useBytes = FALSE)
 {
+    if (!is.character(text)) text <- as.character(text)
     if(!perl || fixed)
-        return(.Internal(regexec(pattern, text, ignore.case, fixed,
+        return(.Internal(regexec(as.character(pattern), text, ignore.case, fixed,
                                  useBytes)))
 
     ## For perl = TRUE, re-use regexpr(perl = TRUE) which always

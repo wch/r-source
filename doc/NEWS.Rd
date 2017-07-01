@@ -15,10 +15,11 @@
       has since \R 3.1.0).
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
-      \item Placeholder.
+      \item \code{regexec(pattern, text, *)} now also applies
+      \code{as.character(.)} to its first two arguments, as documented.
     }
   }
 }
