@@ -18,6 +18,9 @@
 
   \subsection{BUG FIXES}{
     \itemize{
+      \item \code{within(List, rm(x1, x2))} works correctly again, also
+      when \code{List[["x2"]]} is \code{NULL}.
+
       \item \code{regexec(pattern, text, *)} now also applies
       \code{as.character(.)} to its first two arguments, as documented.
     }

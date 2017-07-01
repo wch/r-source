@@ -63,15 +63,29 @@ within.data.frame <- function(data, expr, ...)
     eval(substitute(expr), e)
     l <- as.list(e, all.names=TRUE)
     l <- l[!vapply(l, is.null, NA, USE.NAMES=FALSE)]
-    ## del: variables to *del*ete from data[]
-    nD <- length(del <- setdiff(names(data), (nl <- names(l))))
-    data[nl] <- l
-    if(nD)
-	data[del] <- if(nD == 1) NULL else vector("list", nD)
+    ## del: variables to *del*ete from data[]; keep non-NULL ones
+    del <- setdiff(names(data), (nl <- names(l)))
+    data[ nl] <- l
+    data[del] <- NULL
     data
 }
 
-within.list <- within.data.frame
+within.list <- function(data, expr, keepAttrs = TRUE, ...)
+{
+    parent <- parent.frame()
+    e <- evalq(environment(), data, parent)
+    eval(substitute(expr), e)
+    if(keepAttrs) { # names() kept in original order; also other attributes
+	l <- as.list(e, all.names=TRUE)
+	del <- setdiff(names(data), (nl <- names(l))) # variables to delete
+	data[ nl] <- l
+	data[del] <- NULL
+	data
+    } else { # (order should not matter in *named* list)
+	as.list(e, all.names=TRUE)
+    }
+}
+
 
 
 
