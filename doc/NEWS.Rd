@@ -5,6 +5,24 @@
 \title{R News}
 \encoding{UTF-8}
 
+\section{\Rlogo CHANGES IN R 3.4.1 patched}{
+
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item Setting the \code{LC_ALL} category in \code{Sys.setlocale()}
+      invalidates any cached locale-specific day/month names and the
+      AM/PM indicator for \code{strptime()} (as setting \code{LC_TIME}
+      has since \R 3.1.0).
+    }
+  }
+  
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item Placeholder.
+    }
+  }
+}
+
 \section{\Rlogo CHANGES IN R 3.4.1}{
 
   \subsection{INSTALLATION on a UNIX-ALIKE}{
