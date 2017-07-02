@@ -86,8 +86,9 @@
       \item The \code{list} method of \code{within()} gets an
       option \code{keepAttrs = FALSE} for speed up.
 
-      \item \command{system} and \command{system2} now allow to specify a
-      timeout (this feature is currently experimental and subject to change).
+      \item \command{system()} and \command{system2()} now allow the
+      specification of a maximum elapsed time.
+      (This feature is currently experimental and subject to change.)
     }
   }
 
