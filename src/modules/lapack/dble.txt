@@ -76,8 +76,7 @@ dtprfs.f	dtptri.f	dtptrs.f	dtpttf.f	dtpttr.f
 dtrcon.f	dtrevc.f	dtrexc.f	dtrrfs.f	dtrsen.f
 dtrsna.f	dtrsyl.f	dtrti2.f	dtrtri.f	dtrtrs.f
 dtrttf.f	dtrttp.f	dtzrzf.f	ieeeck.f	iladlc.f
-iladlr.f	ilaenv.f	ilaprec.f	ilatrans.f	ilaver.f
-iparmq.f
+iladlr.f	ilaenv.f	ilaprec.f	ilatrans.f	iparmq.f
 dtrevc3.f
 DEPRECATED/dgeqpf.f DEPRECATED/dgegv.f DEPRECATED/dggsvd.f DEPRECATED/dggsvp.f
 DEPRECATED/dgegs.f DEPRECATED/dgelsx.f DEPRECATED/dlahrd.f DEPRECATED/dlatzm.f

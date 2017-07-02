@@ -13,6 +13,9 @@
       invalidates any cached locale-specific day/month names and the
       AM/PM indicator for \code{strptime()} (as setting \code{LC_TIME}
       has since \R 3.1.0).
+      
+      \item The version of LAPACK included in the sources has been
+      updated to 3.7.1, a bug-fix release.
     }
   }
 
