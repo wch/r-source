@@ -160,10 +160,6 @@
       in some cases.  (\PR{17283})
 
       \item \code{object.size()} now also works for long vectors.
-
-      \item Reinitialize the connection buffer when reopening a
-      connection.
-
     }
   }
 }
