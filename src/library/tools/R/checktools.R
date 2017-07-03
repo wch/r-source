@@ -706,7 +706,8 @@ function(log, drop = TRUE)
     ## Remove eventually.
     len <- length(lines)
     end <- lines[len]
-    if(grepl(re <- "^(\\*.*\\.\\.\\.)(\\* elapsed time.*)$", end,
+    if(length(end) &&
+       grepl(re <- "^(\\*.*\\.\\.\\.)(\\* elapsed time.*)$", end,
              perl = TRUE, useBytes = TRUE)) {
         lines <- c(lines[seq_len(len - 1L)],
                    sub(re, "\\1", end, perl = TRUE, useBytes = TRUE),
