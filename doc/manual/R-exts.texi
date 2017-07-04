@@ -8526,6 +8526,9 @@ GCC 6 added
 (an extension of @code{bounds} to `flexible array member-like arrays'),
 @option{-fsanitize=shift-base} and @option{-fsanitize=shift-exponent}.
 
+From GCC 8 @code{signed-integer-overflow} will no longer be a default part
+of @option{-fsanitize=undefined}, but can be specified separately.
+
 Other useful flags include
 @example
 -no-fsanitize-recover
