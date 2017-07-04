@@ -129,7 +129,10 @@ check_packages_in_dir_details(dir, logs = NULL, drop_ok = TRUE)
   paths to the directories with the new and old sources, respectively,
   and the corresponding check results, possible changes in the check
   results can conveniently be analyzed as controlled via options
-  \code{outputs} and \code{sources}.
+  \code{outputs} and \code{sources}.  The changes object returned can be
+  subscripted according to change in severity from the old to the new
+  results by using one of \code{"=="}, \code{"!="}, \code{"<"},
+  \code{"<="}, \code{">"} or \code{">="} as row index.
 
   \code{check_packages_in_dir_details} analyzes check log files to
   obtain check details as a data frame which can be used for further
