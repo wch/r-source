@@ -324,6 +324,7 @@ function(dir,
                          sprintf("check_%s_stderr.txt", pname))
         env <- c(check_env_db[[pname]],
                  sprintf("R_LIBS=%s", shQuote(libdir)))
+        lim <- as.numeric(Sys.getenv("_R_CHECK_TIME_LIMIT_", "0"))
         system.time(system2(file.path(R.home("bin"), "R"),
                             c("CMD",
                               "check",
@@ -332,7 +333,8 @@ function(dir,
                               pfile),
                             stdout = out,
                             stderr = err,
-                            env = env))
+                            env = env,
+                            timeout = lim))
     }
 
     if(Ncpus > 1L) {
