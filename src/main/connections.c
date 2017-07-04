@@ -3711,16 +3711,22 @@ int Rconn_getline(Rconnection con, char *buf, int bufsize)
     return(nbuf);
 }
 
-
 int Rconn_printf(Rconnection con, const char *format, ...)
 {
     int res;
+    errno = 0;
     va_list(ap);
-
     va_start(ap, format);
     /* Parentheses added for FC4 with gcc4 and -D_FORTIFY_SOURCE=2 */
     res = (con->vfprintf)(con, format, ap);
     va_end(ap);
+    /* PR#17243:  write.table and friends silently failed if the disk was full (or there was another error) */
+    if (res < 0) {
+	if (errno)
+	    error(_("Error writing to connection:  %s"), strerror(errno));
+	else
+	    error(_("Error writing to connection"));
+    }
     return res;
 }
 

@@ -185,6 +185,11 @@
 
       \item \code{regexec(pattern, text, *)} now also applies
       \code{as.character(.)} to its first two arguments, as documented.
+
+      \item \code{write.table()} and related functions, \code{writeLines()},
+      and perhaps other functions writing text to connections did not signal
+      errors when the writes failed, e.g. due to a disk being full.
+      (\PR{17243}) 
     }
   }
 }
