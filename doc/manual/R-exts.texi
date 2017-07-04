@@ -8289,12 +8289,11 @@ threaded programs.
 
 @command{AddressSanitizer} (`ASan') is a tool with similar aims to the
 memory checker in @command{valgrind}.  It is available with suitable
-builds@footnote{currently only on @cputype{ix86}/@cputype{x86_64} Linux
-and macOS (including the builds in Xcode 7 but not earlier Apple
-releases).  On some platforms the runtime library, @pkg{libasan}, needs
-to be installed separately, and for checking C++ you may also need
-@pkg{libubsan}.} of @command{gcc} and @command{clang} on common Linux
-and macOS platforms.  See
+builds@footnote{currently on Linux and macOS (including the builds from
+Xcode 7 and later), with some support for Solaris.  On some platforms
+the runtime library, @pkg{libasan}, needs to be installed separately,
+and for checking C++ you may also need @pkg{libubsan}.} of @command{gcc}
+and @command{clang} on common Linux and macOS platforms.  See
 @uref{http://clang.llvm.org/@/docs/@/UsersManual.html#controlling-code-generation},
 @uref{http://clang.llvm.org/@/docs/@/AddressSanitizer.html} and
 @uref{https://code.google.com/@/p/@/address-sanitizer/}.
@@ -8410,7 +8409,7 @@ variable
 ASAN_OPTIONS='detect_leaks=1'
 @end example
 @noindent
-However, this was made the default for @command{clang} 3.5 and
+However, this was made the default as from @command{clang} 3.5 and
 @command{gcc} 5.1.0.
 
 When LSan is enabled, leaks give the process a failure error status (by
@@ -8463,68 +8462,53 @@ The current set for @command{clang} is (on a single line):
 @example
 -fsanitize=alignment,bool,bounds,enum,float-cast-overflow,
 float-divide-by-zero,function,integer-divide-by-zero,nonnull-attribute,
-null,object-size,return,returns-nonnull-attribute,shift,
+null,object-size,pointer-overflow,return,returns-nonnull-attribute,shift,
 signed-integer-overflow,unreachable,unsigned-integer-overflow,vla-bound,vptr
 @end example
 
 @noindent
-a subset of which could be combined with @code{address}, or use something
-like
+(plus the more specific versions @code{shift-base} and
+@code{shift-exponent}) a subset of which could be combined with
+@code{address}, or use something like
 
 @example
 -fsanitize=undefined -fno-sanitize=float-divide-by-zero
 @end example
 
 @noindent
-(@code{function}, @code{return} and @code{vptr} apply only to C++).
-
-@command{clang} 3.5 and later may need
-
-@example
--fsanitize=undefined -fno-sanitize=float-divide-by-zero,vptr
-@end example
-
-@noindent
-for C++ code (in @code{CXX} and @code{CXX11}) as the run-time library
-for @code{vptr} needs to be linked into the main @R{} executable (and
-that would need to be linked by @code{clang++}, not @code{clang}: you
-could try building @R{} with something like
+Options @code{function}, @code{return} and @code{vptr} apply only to C++: to
+use @code{vptr} its run-time library needs to be linked into the main
+@R{} executable by building the latter with something like
 @example
 MAIN_LD="clang++ -fsanitize=undefined"
 @end example
 @noindent
-or add @code{-lclang_rt.asan_cxx-x86_64}@footnote{This includes the C++
-UBSAN handlers, despite its name.} or similar to @code{LD_FLAGS}).
+Option @code{float-divide-by-zero} is undesirable for use with @R{}
+which allow such divisions as part of @acronym{IEC}@tie{}60559
+arithmetic.
 
 See
 @uref{https://gcc.gnu.org/@/onlinedocs/@/gcc/@/Instrumentation-Options.html}
 (or the manual for your version of GCC, installed or @emph{via}
-@uref{https://gcc.gnu.org/@/onlinedocs/}) for the options supported by
-GCC: 5.3 supports
+@uref{https://gcc.gnu.org/@/onlinedocs/}: look for `Program
+Instrumentation Options') for the options supported by GCC: 6 and 7 support
 @example
--fsanitize=alignment,bool,bounds,enum,float-cast-overflow,
-integer-divide-by-zero,nonnull-attribute,null,object-size,
-return,returns-nonnull-attribute,shift,signed-integer-overflow,
-unreachable,vla-bound,vptr
+-fsanitize=alignment,bool,bounds,enum,integer-divide-by-zero,
+nonnull-attribute,null,object-size, return,returns-nonnull-attribute,
+shift,signed-integer-overflow, unreachable,vla-bound,vptr
 @end example
 @noindent
-with
+plus the more specific versions @code{shift-base} and
+@code{shift-exponent} and non-default options
 @example
--fsanitize=float-divide-by-zero
+bound-strict,float-cast-overflow,float-divide-by-zero
 @end example
 @noindent
-as a separate option not enabled by @code{-fsanitize=undefined} (and not
-desirable for @R{} uses).  At the time of writing the @code{object-size}
-and @code{vptr} checks produced many warnings on GCC's own C++ headers,
-so should be disabled.
-
-GCC 6 added
-@example
--fsanitize=bounds-strict
-@end example
-@noindent
-(an extension of @code{bounds} to `flexible array member-like arrays'),
-@option{-fsanitize=shift-base} and @option{-fsanitize=shift-exponent}.
+where @code{float-divide-by-zero} is not desirable for @R{} uses and
+@code{bounds-strict} is an extension of @code{bounds}.
+@c At the time of writing the @code{object-size}
+@c and @code{vptr} checks produced many warnings on GCC's own C++ headers,
+@c so should be disabled.
 
 From GCC 8 @code{signed-integer-overflow} will no longer be a default part
 of @option{-fsanitize=undefined}, but can be specified separately.
