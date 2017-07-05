@@ -24,13 +24,15 @@
 ## of (space-delimited) terms that would be passed to R CMD check.
 
 ## Used for INSTALL and Rd2pdf
-run_Rcmd <- function(args, out = "", env = "")
+run_Rcmd <- function(args, out = "", env = "", timeout = 0)
 {
     if(.Platform$OS.type == "windows")
-        system2(file.path(R.home("bin"), "Rcmd.exe"), args, out, out)
+        system2(file.path(R.home("bin"), "Rcmd.exe"), args, out, out,
+                timeout = timeout)
     else
         system2(file.path(R.home("bin"), "R"), c("CMD", args), out, out,
-                env = env)
+                env = env,
+                timeout = timeout)
 }
 
 R_runR <- function(cmd = NULL, Ropts = "", env = "",
@@ -3670,7 +3672,10 @@ setRlibs <-
 ##                    env <- ""
                     ## Normal use of R CMD INSTALL
                     t1 <- proc.time()
-                    install_error <- run_Rcmd(args, outfile)
+                    tlim <-
+                        as.numeric(Sys.getenv("_R_INSTALL_TIME_LIMIT_", "0"))
+                    install_error <-
+                        run_Rcmd(args, outfile, timeout = tlim)
                     t2 <- proc.time()
                     print_time(t1, t2, Log)
                     lines <- readLines(outfile, warn = FALSE)
