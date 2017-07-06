@@ -89,6 +89,9 @@
       \item \command{system()} and \command{system2()} now allow the
       specification of a maximum elapsed time.
       (This feature is currently experimental and subject to change.)
+
+      \item \code{debug()} supports debugging of methods on any
+      \code{"genericFunction"}, including group generics.
     }
   }
 
