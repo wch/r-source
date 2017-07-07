@@ -195,8 +195,9 @@
 
       \item \code{write.table()} and related functions, \code{writeLines()},
       and perhaps other functions writing text to connections did not signal
-      errors when the writes failed, e.g. due to a disk being full.
-      (\PR{17243}) 
+      errors when the writes failed, e.g. due to a disk being full.  Errors
+      will now be signalled if detected during the write, warnings if detected
+      when the connection is closed.  (\PR{17243}) 
     }
   }
 }

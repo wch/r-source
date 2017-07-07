@@ -912,9 +912,18 @@ stopifnot(
 
 
 ## write.csv did not signal an error if the disk was full PR#17243
-if (file.access("/dev/full", mode = 2) == 0)  # Only on Linux...
-    stopifnot(inherits(tryCatch(write.table(data.frame(x=1:1000000), file = "/dev/full"), error = identity),
-                            "error"))
+if (file.access("/dev/full", mode = 2) == 0) { # Not on all systems... 
+    # Large writes should fail mid-write
+    stopifnot(inherits(tryCatch(write.table(data.frame(x=1:1000000), 
+                                            file = "/dev/full"), 
+                                error = identity),
+                       "error"))
+    # Small writes should fail on closing
+    stopifnot(inherits(tryCatch(write.table(data.frame(x=1), 
+                                                file = "/dev/full"), 
+                                    warning = identity),
+                       "warning"))
+}
 ## Silently failed up to 3.4.1
     
 

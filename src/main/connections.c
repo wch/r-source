@@ -3502,10 +3502,25 @@ SEXP attribute_hidden do_isseekable(SEXP call, SEXP op, SEXP args, SEXP env)
     return ScalarLogical(con->canseek != FALSE);
 }
 
+static void checkClose(Rconnection con)
+{
+    if (con->isopen) {
+        errno = 0;
+    	con->close(con);
+    	if (con->status != NA_INTEGER && con->status < 0) {
+    	    int serrno = errno;
+            if (serrno)
+		warning(_("Problem closing connection:  %s"), strerror(serrno));
+	    else
+		warning(_("Problem closing connection"));
+   	 }
+    }
+}
+
 static int con_close1(Rconnection con)
 {
     int status;
-    if(con->isopen) con->close(con);
+    checkClose(con);
     status = con->status;
     if(con->isGzcon) {
 	Rgzconn priv = con->private;
@@ -3733,7 +3748,7 @@ int Rconn_printf(Rconnection con, const char *format, ...)
 static void con_cleanup(void *data)
 {
     Rconnection con = data;
-    if(con->isopen) con->close(con);
+    checkClose(con);
 }
 
 /* readLines(con = stdin(), n = 1, ok = TRUE, warn = TRUE) */
@@ -3930,7 +3945,10 @@ SEXP attribute_hidden do_writelines(SEXP call, SEXP op, SEXP args, SEXP env)
 			 translateChar0(STRING_ELT(text, i)), ssep);
     }
 
-    if(!wasopen) {endcontext(&cntxt); con->close(con);}
+    if(!wasopen) {
+    	endcontext(&cntxt);
+    	checkClose(con);
+    }
     return R_NilValue;
 }
 
@@ -4519,7 +4537,10 @@ SEXP attribute_hidden do_writebin(SEXP call, SEXP op, SEXP args, SEXP env)
 	Free(buf);
     }
 
-    if(!wasopen) {endcontext(&cntxt);con->close(con);}
+    if(!wasopen) {
+        endcontext(&cntxt);
+        checkClose(con);
+    }
     if(isRaw) {
 	R_Visible = TRUE;
 	UNPROTECT(1);
@@ -4842,7 +4863,10 @@ SEXP attribute_hidden do_writechar(SEXP call, SEXP op, SEXP args, SEXP env)
 		buf += lenb;
 	}
     }
-    if(!wasopen) {endcontext(&cntxt); con->close(con);}
+    if(!wasopen) {
+        endcontext(&cntxt); 
+        checkClose(con);
+    }
     if(isRaw) {
 	R_Visible = TRUE;
 	UNPROTECT(1);
@@ -5004,9 +5028,9 @@ switch_or_tee_stdout(int icon, int closeOnExit, int tee)
 	    if((icon = SinkCons[R_SinkNumber + 1]) >= 3) {
 		Rconnection con = getConnection(icon);
 		R_ReleaseObject(con->ex_ptr);
-		if(SinkConsClose[R_SinkNumber + 1] == 1) /* close it */
-		    con->close(con);
-		else if (SinkConsClose[R_SinkNumber + 1] == 2) /* destroy it */
+		if(SinkConsClose[R_SinkNumber + 1] == 1) { /* close it */
+		    checkClose(con);    
+		} else if (SinkConsClose[R_SinkNumber + 1] == 2) /* destroy it */
 		    con_destroy(icon);
 	    }
 	}
