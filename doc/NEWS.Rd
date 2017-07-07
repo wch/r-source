@@ -178,6 +178,10 @@
       
       \item The version of LAPACK included in the sources has been
       updated to 3.7.1, a bug-fix release.
+      
+      \item The default for \code{tools::write_PACKAGES(rds_compress=)}
+      has been changed to \code{"xz"} to match the compression used by
+      \acronym{CRAN}.
     }
   }
 

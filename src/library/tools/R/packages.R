@@ -20,7 +20,7 @@ write_PACKAGES <-
 function(dir = ".", fields = NULL,
          type = c("source", "mac.binary", "win.binary"),
          verbose = FALSE, unpacked = FALSE, subdirs = FALSE,
-         latestOnly = TRUE, addFiles = FALSE, rds_compress = TRUE)
+         latestOnly = TRUE, addFiles = FALSE, rds_compress = "xz")
 {
     if(missing(type) && .Platform$OS.type == "windows")
         type <- "win.binary"
