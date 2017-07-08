@@ -912,20 +912,28 @@ stopifnot(
 
 
 ## write.csv did not signal an error if the disk was full PR#17243
-if (file.access("/dev/full", mode = 2) == 0) { # Not on all systems... 
+if (file.access("/dev/full", mode = 2) == 0) { # Not on all systems...
     # Large writes should fail mid-write
-    stopifnot(inherits(tryCatch(write.table(data.frame(x=1:1000000), 
-                                            file = "/dev/full"), 
+    stopifnot(inherits(tryCatch(write.table(data.frame(x=1:1000000),
+                                            file = "/dev/full"),
                                 error = identity),
                        "error"))
     # Small writes should fail on closing
-    stopifnot(inherits(tryCatch(write.table(data.frame(x=1), 
-                                                file = "/dev/full"), 
+    stopifnot(inherits(tryCatch(write.table(data.frame(x=1),
+                                                file = "/dev/full"),
                                     warning = identity),
                        "warning"))
 }
 ## Silently failed up to 3.4.1
-    
+
+
+## model.matrix() with "empty RHS" -- PR#14992 re-opened
+row.names(trees) <- 42 + seq_len(nrow(trees))
+.RN <- row.names(mf <- model.frame(log(Volume) ~ log(Height) + log(Girth), trees))
+stopifnot(identical(.RN, row.names(model.matrix(~ 1, mf))),
+	  identical(.RN, row.names(model.matrix(~ 0, mf))))
+## had 1:nrow()  up to 3.4.x
+
 
 
 ## keep at end

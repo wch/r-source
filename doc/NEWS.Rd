@@ -167,6 +167,10 @@
       \item \code{packageDescription()} tries harder to solve
       re-encoding issues, notably seen in some Windows locales.  This
       fixes the \code{citation()} issue in \PR{17291}.
+
+      \item \code{model.matrix(~1, mf)} now gets the row names from
+      \code{mf} also when they differ from \code{1:nrow(mf)}, fixing
+      \PR{14992} thanks to the suggestion by Sebastian Meyer.
     }
   }
 }
