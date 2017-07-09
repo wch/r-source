@@ -30,6 +30,8 @@
 
       \item \code{regexec(pattern, text, *)} now also applies
       \code{as.character(.)} to its first two arguments, as documented.
+
+      \item \code{rt()} assumed the \code{ncp} parameter was a scalar.  (\PR{17306})
     }
   }
 }

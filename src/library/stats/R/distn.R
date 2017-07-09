@@ -287,7 +287,6 @@ qt <- function(p, df, ncp, lower.tail = TRUE, log.p = FALSE) {
 }
 rt <- function(n, df, ncp) {
     if(missing(ncp)) .Call(C_rt, n, df)
-    else if(is.na(ncp)) { warning("NAs produced"); rep(NaN, n) }
     else rnorm(n, ncp)/sqrt(rchisq(n, df)/df)
 }
 
