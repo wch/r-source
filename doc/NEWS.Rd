@@ -206,6 +206,8 @@
       errors when the writes failed, e.g. due to a disk being full.  Errors
       will now be signalled if detected during the write, warnings if detected
       when the connection is closed.  (\PR{17243}) 
+
+      \item \code{rt()} assumed the \code{ncp} parameter was a scalar.  (\PR{17306})
     }
   }
 }
