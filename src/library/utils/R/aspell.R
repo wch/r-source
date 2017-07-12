@@ -534,8 +534,13 @@ function(dir, drop = c("\\author", "\\references"),
         ## </FIXME>
     }
 
+    macros <- tools::loadPkgRdMacros(dir,
+                                     macros = file.path(R.home("share"), 
+                                                        "Rd", "macros",
+                                                        "system.Rd"))
+
     aspell(files,
-           filter = list("Rd", drop = drop),
+           filter = list("Rd", drop = drop, macros = macros),
            control = control,
            encoding = encoding,
            program = program,
