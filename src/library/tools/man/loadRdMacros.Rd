@@ -40,7 +40,7 @@ loadPkgRdMacros(pkgdir, macros)
   \code{loadPkgRdMacros} in the same session.  These results should be
   assumed to be valid only within the current session.
 
-  The \code{loadPkgMacros} function first looks for an \code{"RdMacros"}
+  The \code{loadPkgRdMacros} function first looks for an \code{"RdMacros"}
   entry in the package \file{DESCRIPTION} file.  If present, it should
   contain a comma-separated list of other package names; their macros
   will be loaded before those of the current package.  It will then look
