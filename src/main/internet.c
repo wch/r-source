@@ -48,7 +48,7 @@ void *R_FTPOpen(const char *url);
 int   R_FTPRead(void *ctx, char *dest, int len);
 void  R_FTPClose(void *ctx);
 
-nt Rsockselect(int nsock, int *insockfd, int *ready, int *write,
+int Rsockselect(int nsock, int *insockfd, int *ready, int *write,
 		double timeout)
 
 int R_HTTPDCreate(const char *ip, int port);

@@ -437,6 +437,9 @@ testInstalledPackage <-
     if (!is.null(Log)) Log <- file(Log, "wt")
     WINDOWS <- .Platform$OS.type == "windows"
     td0 <- as.numeric(Sys.getenv("_R_CHECK_TIMINGS_"))
+    theta <-
+        as.numeric(Sys.getenv("_R_CHECK_TEST_TIMING_USER_TO_ELAPSED_THRESHOLD_",
+                              NA_character_))
     if (is.na(td0)) td0 <- Inf
     print_time <- function(t1, t2, Log)
     {
@@ -475,6 +478,15 @@ testInstalledPackage <-
         res <- system(cmd)
         t2 <- proc.time()
         print_time(t1, t2, Log)
+        if (!is.na(theta)) {
+            td <- t2 - t1
+            if(td[1L] + td[4L] >= pmax(theta * td[3L], 1)) {
+                msg <- sprintf("Running R code in %s had user time > %g times elapsed time\n",
+                               sQuote(f), theta)
+                cat(msg)
+                if (!is.null(Log)) cat(msg, file = Log)
+            }
+        }
         if (res) {
             file.rename(outfile, paste0(outfile, ".fail"))
             return(1L)
