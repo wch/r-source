@@ -3034,10 +3034,6 @@ setRlibs <-
 
     run_vignettes <- function(desc)
     {
-        theta <-
-            as.numeric(Sys.getenv("_R_CHECK_VIGNETTES_TIMING_USER_TO_ELAPSED_THRESHOLD_",
-                                  NA_character_))
-
         libpaths <- .libPaths()
         .libPaths(c(libdir, libpaths))
         vigns <- pkgVignettes(dir = pkgdir)
@@ -3304,13 +3300,6 @@ setRlibs <-
                         if (!config_val_to_logical(Sys.getenv("_R_CHECK_ALWAYS_LOG_VIGNETTE_OUTPUT_", use_valgrind)))
                             unlink(outfile)
                     }
-                    if(!is.na(theta)) {
-                        td <- t2b - t1b
-                        if(td[1L] + td[4L] >= pmax(theta * td[3L], 1)) {
-                            cat(sprintf("Running R code from vignette %s had user time > %g times elapsed time\n",
-                                        sQuote((basename(file))), theta))
-                        }
-                    }
                 }
                 t2 <- proc.time()
                 if(!ran) {
@@ -3331,14 +3320,6 @@ setRlibs <-
                             maybe_exit(1L)
                         }
                     } else resultLog(Log, "OK")
-                    if(!is.na(theta)) {
-                        td <- t2 - t1
-                        if(td[1L] + td[4L] >= pmax(theta * td[3L], 1)) {
-                            printLog(Log,
-                                     sprintf("Running R code from vignettes had user time > %g times elapsed time\n",
-                                             theta))
-                        }
-                    }
                 }
             }
 
@@ -3404,14 +3385,6 @@ setRlibs <-
                     if (!config_val_to_logical(Sys.getenv("_R_CHECK_ALWAYS_LOG_VIGNETTE_OUTPUT_", "false")))
                             unlink(outfile)
                     resultLog(Log, "OK")
-                }
-                if(!is.na(theta)) {
-                    td <- t2 - t1
-                    if(td[1L] + td[4L] >= pmax(theta * td[3L], 1)) {
-                        printLog(Log,
-                                 sprintf("Re-building vignettes had user time > %g times elapsed time\n",
-                                         theta))
-                    }
                 }
             } else {
                 checkingLog(Log, "re-building of vignette outputs")
