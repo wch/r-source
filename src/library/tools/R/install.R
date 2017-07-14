@@ -829,7 +829,7 @@
                     archs <- Sys.glob("*")
                     setwd(wd2)
                     if (length(allfiles)) {
-                        ## if there is a configure script we install only the main
+                        ## if there is an executable configure script we install only the main
                         ## sub-architecture
                         if (!multiarch || length(archs) <= 1 ||
                             file_test("-x", "../configure")) {
