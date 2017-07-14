@@ -92,6 +92,10 @@
 
       \item \code{debug()} supports debugging of methods on any
       \code{"genericFunction"}, including group generics.
+
+      \item \command{R CMD check} checks for and \command{R CMD build}
+      corrects CRLF line endings in shell scripts \command{configure}
+      and \command{cleanup} (even on Windows).
     }
   }
 
