@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2014   The R Core Team.
+ *  Copyright (C) 1998-2017   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1026,11 +1026,21 @@ typedef struct wt_info {
     int savedigits;
 } wt_info;
 
-/* utility to cleanup e.g. after interrpts */
+/* utility to cleanup e.g. after interrupts */
 static void wt_cleanup(void *data)
 {
     wt_info *ld = data;
-    if(!ld->wasopen) ld->con->close(ld->con);
+    if(!ld->wasopen) {
+    	errno = 0;
+    	ld->con->close(ld->con);
+    	if (ld->con->status != NA_INTEGER && ld->con->status < 0) {
+	    int serrno = errno;
+    	    if (serrno)
+		warning(_("Problem closing connection:  %s"), strerror(serrno));
+	    else
+	        warning(_("Problem closing connection"));
+	}
+    }	
     R_FreeStringBuffer(ld->buf);
     R_print.digits = ld->savedigits;
 }
