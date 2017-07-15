@@ -628,6 +628,7 @@ inRbuildignore <- function(files, pkgdir) {
     fix_nonLF_in_source_files <- function(pkgname, Log) {
         fix_nonLF_in_files(pkgname, dirPattern = "\\.([cfh]|cc|cpp)$", Log)
     }
+
     fix_nonLF_in_make_files <- function(pkgname, Log) {
         fix_nonLF_in_files(pkgname,
                            paste0("^(",
@@ -642,6 +643,16 @@ inRbuildignore <- function(files, pkgdir) {
             writeLinesNL(lines, ff)
         }
     }
+
+    fix_nonLF_in_config_files <- function(pkgname, Log) {
+        files <- dir(pkgname, pattern = "^(configure|cleanup)$",
+                     full.names = TRUE, recursive = TRUE)
+        ## FIXME: This "destroys" all timestamps
+        for (ff in files) {
+            lines <- readLines(ff, warn = FALSE)
+            writeLinesNL(lines, ff)
+        }
+   }
 
     find_empty_dirs <- function(d)
     {
@@ -1031,9 +1042,10 @@ inRbuildignore <- function(files, pkgdir) {
         add_expanded_R_fields_to_description_file(file.path(pkgname,
                                                             "DESCRIPTION"))
         messageLog(Log,
-                   "checking for LF line-endings in source and make files")
+                   "checking for LF line-endings in source and make files and shell scripts")
         fix_nonLF_in_source_files(pkgname, Log)
         fix_nonLF_in_make_files(pkgname, Log)
+        fix_nonLF_in_config_files(pkgname, Log)
         messageLog(Log, "checking for empty or unneeded directories");
         find_empty_dirs(pkgname)
         for(dir in c("Meta", "R-ex", "chtml", "help", "html", "latex")) {
