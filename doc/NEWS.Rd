@@ -175,6 +175,9 @@
       \item \code{model.matrix(~1, mf)} now gets the row names from
       \code{mf} also when they differ from \code{1:nrow(mf)}, fixing
       \PR{14992} thanks to the suggestion by Sebastian Meyer.
+
+      \item \code{poly(<matrix>, 3)} now works, thanks to prompting by
+      Marc Schwartz.
     }
   }
 }
@@ -209,7 +212,7 @@
       and perhaps other functions writing text to connections did not signal
       errors when the writes failed, e.g. due to a disk being full.  Errors
       will now be signalled if detected during the write, warnings if detected
-      when the connection is closed.  (\PR{17243}) 
+      when the connection is closed.  (\PR{17243})
 
       \item \code{rt()} assumed the \code{ncp} parameter was a scalar.  (\PR{17306})
     }

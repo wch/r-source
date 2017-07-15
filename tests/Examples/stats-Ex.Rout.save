@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2017-07-06 r72894) -- "Unsuffered Consequences"
+R Under development (unstable) (2017-07-12 r72910) -- "Unsuffered Consequences"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -11939,6 +11939,12 @@ attr(,"class")
 [1] "poly"   "matrix"
 > ## they are the same :
 > stopifnot(all.equal(zm, z1, tol = 1e-15))
+> 
+> ## poly(<matrix>, df) --- used to fail till July 14 (vive la France!), 2017:
+> m2 <- cbind(1:4, c(1, 4:6))
+> pm2 <- zapsmall(poly(m2, 3)) # "unnamed degree = 3"
+> stopifnot(all.equal(pm2, zm, tol = 1e-15))
+> 
 > options(od)
 > 
 > 

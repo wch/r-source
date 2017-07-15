@@ -101,6 +101,12 @@ zapsmall(poly(seq(4, 6, 0.5), 3, coefs = attr(z, "coefs")))
 (z1 <- zapsmall(poly(cbind(1:4, c(1, 4:6)), degree = 3)))
 ## they are the same :
 stopifnot(all.equal(zm, z1, tol = 1e-15))
+
+## poly(<matrix>, df) --- used to fail till July 14 (vive la France!), 2017:
+m2 <- cbind(1:4, c(1, 4:6))
+pm2 <- zapsmall(poly(m2, 3)) # "unnamed degree = 3"
+stopifnot(all.equal(pm2, zm, tol = 1e-15))
+
 options(od)
 }
 \keyword{math}
