@@ -92,10 +92,6 @@
 
       \item \code{debug()} supports debugging of methods on any
       \code{"genericFunction"}, including group generics.
-
-      \item \command{R CMD check} checks for and \command{R CMD build}
-      corrects CRLF line endings in shell scripts \command{configure}
-      and \command{cleanup} (even on Windows).
     }
   }
 
@@ -197,6 +193,10 @@
       \item The default for \code{tools::write_PACKAGES(rds_compress=)}
       has been changed to \code{"xz"} to match the compression used by
       \acronym{CRAN}.
+
+      \item \command{R CMD check} checks for and \command{R CMD build}
+      corrects CRLF line endings in shell scripts \command{configure}
+      and \command{cleanup} (even on Windows).
     }
   }
 
@@ -208,11 +208,12 @@
       \item \code{regexec(pattern, text, *)} now also applies
       \code{as.character(.)} to its first two arguments, as documented.
 
-      \item \code{write.table()} and related functions, \code{writeLines()},
-      and perhaps other functions writing text to connections did not signal
-      errors when the writes failed, e.g. due to a disk being full.  Errors
-      will now be signalled if detected during the write, warnings if detected
-      when the connection is closed.  (\PR{17243})
+      \item \code{write.table()} and related functions,
+      \code{writeLines()}, and perhaps other functions writing text to
+      connections did not signal errors when the writes failed,
+      e.g.\sspace{} due to a disk being full.  Errors will now be
+      signalled if detected during the write, warnings if detected when
+      the connection is closed.  (\PR{17243})
 
       \item \code{rt()} assumed the \code{ncp} parameter was a scalar.  (\PR{17306})
     }
