@@ -90,8 +90,8 @@
       specification of a maximum elapsed time.
       (This feature is currently experimental and subject to change.)
 
-      \item \code{debug()} supports debugging of methods on any
-      \code{"genericFunction"}, including group generics.
+      \item \code{debug()} supports debugging of methods on any object
+      of S4 class \code{"genericFunction"}, including group generics.
     }
   }
 
@@ -156,8 +156,8 @@
       for a library tree that had been emptied (but would not use the
       old value, just waste time checking it).
 
-      \item The documentation for \code{installed.packages(noCache =
-	  TRUE)} incorrectly claimed it would refresh the cache.
+      \item The documentation for \code{installed.packages(noCache = TRUE)}
+      incorrectly claimed it would refresh the cache.
 
       \item \code{aggregate(<data.frame>)} no longer uses spurious names
       in some cases.  (\PR{17283})
@@ -211,7 +211,7 @@
       \item \code{write.table()} and related functions,
       \code{writeLines()}, and perhaps other functions writing text to
       connections did not signal errors when the writes failed,
-      e.g.\sspace{} due to a disk being full.  Errors will now be
+      e.g.\sspace{}due to a disk being full.  Errors will now be
       signalled if detected during the write, warnings if detected when
       the connection is closed.  (\PR{17243})
 
