@@ -3952,6 +3952,31 @@ indicate that no report is required, a value of @samp{0} that a report
 is always required.
 Default: @code{""}. (@code{10} for CRAN checks.)
 
+@item _R_CHECK_EXAMPLE_TIMING_THRESHOLD_
+If timings are being recorded, set the threshold in seconds for
+reporting long-running examples (either user+system CPU time or elapsed
+time).  Default: @code{"5"}.
+
+@item _R_CHECK_EXAMPLE_TIMING_USER_TO_ELAPSED_THRESHOLD_
+For  checks with timings enabled, report examples where the
+ratio of user CPU time to elapsed time exceeds this threshold (and the
+user CPU time is at least one second).  This can help detect the
+simultaneous use of multiple CPU cores.
+Default: @code{NA}.
+
+@item _R_CHECK_TEST_TIMING_CPU_TO_ELAPSED_THRESHOLD_
+Report for running an individual test if the ratio of CPU time to
+elapsed time exceeds this threshold (and the CPU time is at least one
+second).  Not supported on Windows.
+Default: @code{NA}.
+
+@item _R_CHECK_VIGNETTE_TIMING_CPU_TO_ELAPSED_THRESHOLD_
+Report if when running/re-building vignettes (individually or in
+aggregate) the ratio of CPU time to elapsed time exceeds this threshold
+(and the CPU time is at least one second).  Not supported on
+Windows.
+Default: @code{NA}.
+
 @item _R_CHECK_INSTALL_DEPENDS_
 If set to a true value and a test installation is to be done, this is
 done with @code{.libPaths()} containing just a temporary library
