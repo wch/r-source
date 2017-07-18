@@ -1,6 +1,6 @@
 % File src/library/splines/man/periodicSpline.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{periodicSpline}
@@ -11,7 +11,7 @@
   \code{y} vectors, or from a formula/data.frame combination.
 }
 \usage{
-periodicSpline(obj1, obj2, knots, period = 2*pi, ord = 4)
+periodicSpline(obj1, obj2, knots, period = 2*pi, ord = 4L)
 }
 \arguments{
  \item{obj1}{either a numeric vector of \code{x} values or a formula.}

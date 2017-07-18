@@ -1,6 +1,6 @@
 % File src/library/splines/man/interpSpline.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{interpSpline}
@@ -13,6 +13,7 @@
 }
 \usage{
 interpSpline(obj1, obj2, bSpline = FALSE, period = NULL,
+             ord = 4L,
              na.action = na.fail, sparse = FALSE)
 }
 \arguments{
@@ -25,6 +26,10 @@ interpSpline(obj1, obj2, bSpline = FALSE, period = NULL,
    Defaults to \code{FALSE}.}
  \item{period}{an optional positive numeric value giving a period for a
    periodic interpolation spline.}
+ \item{ord}{an integer specifying the spline \emph{order}, the number of
+   coefficients per interval.  \eqn{ord = d+1} where \eqn{d} is the
+   \emph{degree} polynomial degree.  Currently, only cubic splines
+   (\code{ord = 4}) are implemented.}
  \item{na.action}{a optional function which indicates what should happen
    when the data contain \code{NA}s.  The default action
    (\code{na.omit}) is to omit any incomplete observations.  The

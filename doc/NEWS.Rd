@@ -177,6 +177,10 @@
 
       \item \code{readLines()} no longer segfaults on very large files
       with embedded \code{'\0'} (aka \sQuote{nul}).  (\PR{17311})
+
+      \item \code{ns()} (package \pkg{splines}) now also works for a
+      single observation.  \code{interpSpline()} gives a more friendly
+      error message when the number of points is less than four.
     }
   }
 }

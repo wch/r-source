@@ -98,7 +98,11 @@ ns <- function(x, df = NULL, knots = NULL, intercept = FALSE,
         Boundary.knots <- sort(Boundary.knots)
         (ol <- x < Boundary.knots[1L]) | (or <- x > Boundary.knots[2L])
     }
-    else FALSE # rep(FALSE, length = length(x))
+    else {
+	if(length(x) == 1L) ## && missing(Boundary.knots) : special treatment
+	    Boundary.knots <- x*c(7,9)/8 # symmetrically around x
+	FALSE # rep(FALSE, length = length(x))
+    }
     if(!is.null(df) && is.null(knots)) {
         ## df = number(interior knots) + 1 + intercept
         nIknots <- df - 1L - intercept
