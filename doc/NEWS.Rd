@@ -92,6 +92,10 @@
 
       \item \code{debug()} supports debugging of methods on any object
       of S4 class \code{"genericFunction"}, including group generics.
+
+      \item \code{c()} and \code{unlist()} are now more efficient in
+      constructing the \code{names(.)} of their return value, thanks to
+      a proposal by Suharto Anggono.  (\PR{17284})
     }
   }
 

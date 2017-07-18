@@ -1,8 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 1997--2017  The R Core Team
+ *  Copyright (C) 2002--2017  The R Foundation
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2016  The R Core Team
- *  Copyright (C) 2002--2016  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -70,7 +70,7 @@ static int HasNames(SEXP x)
 }
 
 static void
-AnswerType(SEXP x, int recurse, int usenames, struct BindData *data, SEXP call)
+AnswerType(SEXP x, Rboolean recurse, Rboolean usenames, struct BindData *data, SEXP call)
 {
     switch (TYPEOF(x)) {
     case NILSXP:
@@ -508,10 +508,11 @@ static SEXP NewBase(SEXP base, SEXP tag)
     return ans;
 }
 
-static SEXP NewName(SEXP base, SEXP tag, int seqno)
+static SEXP NewName(SEXP base, SEXP tag, int seqno, int count)
 {
 /* Construct a new Name/Tag, using
  *	base.tag
+ *	base
  *	base<seqno>	or
  *	tag
  *
@@ -529,6 +530,7 @@ static SEXP NewName(SEXP base, SEXP tag, int seqno)
 	ans = mkCharCE(cbuf, CE_UTF8);
 	vmaxset(vmax);
     }
+    else if (*CHAR(base) && count == 1) ans = base;
     else if (*CHAR(base)) {
 	const void *vmax = vmaxget();
 	const char *sb = translateCharUTF8(base);
@@ -568,28 +570,75 @@ SEXP attribute_hidden ItemName(SEXP names, R_xlen_t i)
 struct NameData {
  int count;
  int seqno;
- int firstpos;
 };
 
+
+// count names in (branch) v, recursively if(recurse) :
+static void namesCount(SEXP v, int recurse, struct NameData *nameData)
+{
+    R_xlen_t i, n = xlength(v);
+    SEXP names = PROTECT(getAttrib(v, R_NamesSymbol)), namei;
+
+    /* The  "<= 1"  in every for() loop, i.e., for all "vector" cases,
+       makes this much faster for large vector 'v'
+       _and_ prevents ("almost surely") overflow of nameData->count.
+       -->  PR#17284 and PR#17292, with thanks to Suharto Anggono.
+    */
+    switch(TYPEOF(v)) {
+    case NILSXP:
+	break;
+    case LISTSXP:
+	if (recurse) {
+	    for (i = 0; i < n && nameData->count <= 1; i++) {
+		PROTECT(namei = ItemName(names, i));
+		if (namei == R_NilValue)
+		    namesCount(CAR(v), recurse, nameData);
+		v = CDR(v);
+		UNPROTECT(1); /*namei*/
+	    }
+	    break;
+	} /* else fall through */
+    case VECSXP:
+    case EXPRSXP:
+	if (recurse) {
+	    for (i = 0; i < n && nameData->count <= 1; i++) {
+		namei = ItemName(names, i);
+		if (namei == R_NilValue)
+		    namesCount(VECTOR_ELT(v, i), recurse, nameData);
+	    }
+	    break;
+	} /* else fall through */
+    case LGLSXP:
+    case INTSXP:
+    case REALSXP:
+    case CPLXSXP:
+    case STRSXP:
+    case RAWSXP:
+	for (i = 0; i < n && nameData->count <= 1; i++)
+	    nameData->count++;
+	break;
+    default:
+	nameData->count++;
+    }
+    UNPROTECT(1); /*names*/
+}
 
 static void NewExtractNames(SEXP v, SEXP base, SEXP tag, int recurse,
 			     struct BindData *data, struct NameData *nameData)
 {
     SEXP names, namei;
     R_xlen_t i, n;
-    int savecount=0, saveseqno, savefirstpos=0;
+    int savecount=0, saveseqno;
 
-    /* If we beneath a new tag, we reset the index */
-    /* sequence and create the new basename string. */
-
+    /* If we have a new tag, we reset the index
+     * sequence and create the new basename string : */
     if (tag != R_NilValue) {
 	PROTECT(base = NewBase(base, tag));
-	savefirstpos = nameData->firstpos;
 	saveseqno = nameData->seqno;
 	savecount = nameData->count;
 	nameData->count = 0;
+	namesCount(v, recurse, nameData);
 	nameData->seqno = 0;
-	nameData->firstpos = -1;
     }
     else saveseqno = 0;
 
@@ -606,10 +655,7 @@ static void NewExtractNames(SEXP v, SEXP base, SEXP tag, int recurse,
 		NewExtractNames(CAR(v), base, namei, recurse, data, nameData);
 	    }
 	    else {
-		if (namei == R_NilValue && nameData->count == 0)
-		    nameData->firstpos = data->ans_nnames;
-		nameData->count++;
-		namei = NewName(base, namei, ++(nameData->seqno));
+		namei = NewName(base, namei, ++(nameData->seqno), nameData->count);
 		SET_STRING_ELT(data->ans_names, (data->ans_nnames)++, namei);
 	    }
 	    v = CDR(v);
@@ -624,10 +670,7 @@ static void NewExtractNames(SEXP v, SEXP base, SEXP tag, int recurse,
 		NewExtractNames(VECTOR_ELT(v, i), base, namei, recurse, data, nameData);
 	    }
 	    else {
-		if (namei == R_NilValue && nameData->count == 0)
-		    nameData->firstpos = data->ans_nnames;
-		nameData->count++;
-		namei = NewName(base, namei, ++(nameData->seqno));
+		namei = NewName(base, namei, ++(nameData->seqno), nameData->count);
 		SET_STRING_ELT(data->ans_names, (data->ans_nnames)++, namei);
 	    }
 	}
@@ -640,24 +683,15 @@ static void NewExtractNames(SEXP v, SEXP base, SEXP tag, int recurse,
     case RAWSXP:
 	for (i = 0; i < n; i++) {
 	    namei = ItemName(names, i);
-	    if (namei == R_NilValue && nameData->count == 0)
-		nameData->firstpos = data->ans_nnames;
-	    nameData->count++;
-	    namei = NewName(base, namei, ++(nameData->seqno));
+	    namei = NewName(base, namei, ++(nameData->seqno), nameData->count);
 	    SET_STRING_ELT(data->ans_names, (data->ans_nnames)++, namei);
 	}
 	break;
     default:
-	if (nameData->count == 0)
-	    nameData->firstpos = data->ans_nnames;
-	nameData->count++;
-	namei = NewName(base, R_NilValue, ++(nameData->seqno));
+	namei = NewName(base, R_NilValue, ++(nameData->seqno), nameData->count);
 	SET_STRING_ELT(data->ans_names, (data->ans_nnames)++, namei);
     }
     if (tag != R_NilValue) {
-	if (nameData->firstpos >= 0 && nameData->count == 1)
-	    SET_STRING_ELT(data->ans_names, nameData->firstpos, base);
-	nameData->firstpos = savefirstpos;
 	nameData->count = savecount;
 	UNPROTECT(1);
     }
@@ -759,7 +793,7 @@ SEXP attribute_hidden do_c_dflt(SEXP call, SEXP op, SEXP args, SEXP env)
     data.ans_length = 0;
     data.ans_nnames = 0;
 
-    SEXP t;
+    SEXP t, ans;
     for (t = args; t != R_NilValue; t = CDR(t)) {
 	if (usenames && !data.ans_nnames) {
 	    if (!isNull(TAG(t))) data.ans_nnames = 1;
@@ -785,7 +819,7 @@ SEXP attribute_hidden do_c_dflt(SEXP call, SEXP op, SEXP args, SEXP env)
     /* Allocate the return value and set up to pass through */
     /* the arguments filling in values of the returned object. */
 
-    SEXP ans = PROTECT(allocVector(mode, data.ans_length));
+    PROTECT(ans = allocVector(mode, data.ans_length));
     data.ans_ptr = ans;
     data.ans_length = 0;
     t = args;
@@ -822,7 +856,6 @@ SEXP attribute_hidden do_c_dflt(SEXP call, SEXP op, SEXP args, SEXP env)
 	while (args != R_NilValue) {
 	    struct NameData nameData;
 	    nameData.seqno = 0;
-	    nameData.firstpos = 0;
 	    nameData.count = 0;
 	    NewExtractNames(CAR(args), R_NilValue, TAG(args), recurse, &data, &nameData);
 	    args = CDR(args);
@@ -855,9 +888,9 @@ SEXP attribute_hidden do_unlist(SEXP call, SEXP op, SEXP args, SEXP env)
     /* by an optional "recursive" argument. */
 
     PROTECT(args = CAR(ans));
-    int recurse = asLogical(CADR(ans));
-    int usenames = asLogical(CADDR(ans));
-    int lenient = TRUE; // was (implicitly!) FALSE  up to R 3.0.1
+    Rboolean recurse = asLogical(CADR(ans));
+    Rboolean usenames = asLogical(CADDR(ans));
+    Rboolean lenient = TRUE; // was (implicitly!) FALSE  up to R 3.0.1
 
     /* Determine the type of the returned value. */
     /* The strategy here is appropriate because the */
@@ -893,8 +926,8 @@ SEXP attribute_hidden do_unlist(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     /* If a non-vector argument was encountered (perhaps a list if */
-    /* recursive = F) then we must return a list.  Otherwise, we use */
-    /* the natural coercion for vector types. */
+    /* recursive is FALSE) then we must return a list.  Otherwise, */
+    /* we use the natural coercion for vector types. */
 
     int mode = NILSXP;
     if      (data.ans_flags & 512) mode = EXPRSXP;
@@ -946,7 +979,6 @@ SEXP attribute_hidden do_unlist(SEXP call, SEXP op, SEXP args, SEXP env)
 		SEXP names = getAttrib(args, R_NamesSymbol);
 		data.ans_nnames = 0;
 		nameData.seqno = 0;
-		nameData.firstpos = 0;
 		nameData.count = 0;
 		for (i = 0; i < n; i++) {
 		    NewExtractNames(VECTOR_ELT(args, i), R_NilValue,
@@ -956,7 +988,6 @@ SEXP attribute_hidden do_unlist(SEXP call, SEXP op, SEXP args, SEXP env)
 	    else if (TYPEOF(args) == LISTSXP) {
 		data.ans_nnames = 0;
 		nameData.seqno = 0;
-		nameData.firstpos = 0;
 		nameData.count = 0;
 		while (args != R_NilValue) {
 		    NewExtractNames(CAR(args), R_NilValue,
@@ -968,7 +999,6 @@ SEXP attribute_hidden do_unlist(SEXP call, SEXP op, SEXP args, SEXP env)
 	else {
 	    data.ans_nnames = 0;
 	    nameData.seqno = 0;
-	    nameData.firstpos = 0;
 	    nameData.count = 0;
 	    NewExtractNames(args, R_NilValue, R_NilValue, recurse, &data, &nameData);
 	}
