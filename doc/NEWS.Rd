@@ -174,6 +174,9 @@
 
       \item \code{poly(<matrix>, 3)} now works, thanks to prompting by
       Marc Schwartz.
+
+      \item \code{readLines()} no longer segfaults on very large files
+      with embedded \code{'\0'} (aka \sQuote{nul}).  (\PR{17311})
     }
   }
 }

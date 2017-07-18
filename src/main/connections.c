@@ -3703,12 +3703,13 @@ int Rconn_ungetc(int c, Rconnection con)
 /* read one line (without trailing newline) from con and store it in buf */
 /* return number of characters read, -1 on EOF */
 attribute_hidden
-int Rconn_getline(Rconnection con, char *buf, int bufsize)
+size_t Rconn_getline(Rconnection con, char *buf, size_t bufsize)
 {
-    int c, nbuf = -1;
+    int c;
+    size_t nbuf = -1;
 
     while((c = Rconn_fgetc(con)) != R_EOF) {
-	if(nbuf+1 >= bufsize) error(_("line longer than buffer size"));
+	if(nbuf+1 >= bufsize) error(_("line longer than buffer size %d"), bufsize);
 	if(c != '\n'){
 	    buf[++nbuf] = (char) c;
 	} else {
@@ -3720,7 +3721,7 @@ int Rconn_getline(Rconnection con, char *buf, int bufsize)
      *  file did not end with newline.
      */
     if(nbuf >= 0 && buf[nbuf]) {
-	if(nbuf+1 >= bufsize) error(_("line longer than buffer size"));
+	if(nbuf+1 >= bufsize) error(_("line longer than buffer size %d"), bufsize);
 	buf[++nbuf] = '\0';
     }
     return(nbuf);
@@ -3756,7 +3757,8 @@ static void con_cleanup(void *data)
 SEXP attribute_hidden do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans = R_NilValue, ans2;
-    int ok, warn, skipNul, c, nbuf, buf_size = BUF_SIZE;
+    int ok, warn, skipNul, c;
+    size_t nbuf, buf_size = BUF_SIZE;
     int oenc = CE_NATIVE;
     Rconnection con = NULL;
     Rboolean wasopen;
