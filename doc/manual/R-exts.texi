@@ -4548,7 +4548,21 @@ using @code{Sys.which}), as well as declared in the
 @item
 Be sure to use portable encoding names: none of @code{utf8}, @code{mac}
 and @code{macroman} are.  See the help for @code{file} for more details.
+
+
+@item
+Do not invoke @R{} by plain @command{R}, @command{Rscript} or (on
+Windows) @command{Rterm} in your examples, tests, vignettes, makefiles
+or other scripts.  As pointed out in several places earlier in this
+manual, use something like
+@example
+"$(R_HOME)/bin/Rscript"
+"$(R_HOME)/bin$(R_ARCH_BIN)/Rterm"
+@end example
+with appropriate quotes (as, although not recommended, @env{R_HOME} can
+contain spaces).
 @end itemize
+
 
 Do be careful in what your tests (and examples) actually test.  Bad
 practice seen in distributed packages include:
