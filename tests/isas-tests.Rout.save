@@ -1,5 +1,5 @@
 
-R version 3.4.1 Patched (2017-06-30 r72867) -- "Single Candle"
+R version 3.4.1 Patched (2017-07-19 r72930) -- "Single Candle"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -2568,6 +2568,6 @@ In as.dist.default(x) : non-square matrix
 > f <- try(as.ts( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.166 0.016 0.183 0 0 
+Time elapsed:  0.169 0.009 0.178 0 0 
 > 
 > 

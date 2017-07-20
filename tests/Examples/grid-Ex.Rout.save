@@ -1,5 +1,5 @@
 
-R version 3.4.1 Patched (2017-06-30 r72867) -- "Single Candle"
+R version 3.4.1 Patched (2017-07-19 r72930) -- "Single Candle"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -2069,7 +2069,7 @@ vp1::vp2
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.187 0.014 1.206 0 0 
+Time elapsed:  1.181 0.018 1.203 0 0 
 > grDevices::dev.off()
 null device 
           1 

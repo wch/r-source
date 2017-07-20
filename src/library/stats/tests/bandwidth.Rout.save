@@ -1,5 +1,5 @@
 
-R version 3.4.1 Patched (2017-06-30 r72867) -- "Single Candle"
+R version 3.4.1 Patched (2017-07-19 r72930) -- "Single Candle"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -46,4 +46,4 @@ In bw.bcv(precip) : minimum occurred at one end of the range
 > 
 > proc.time()
    user  system elapsed 
-  0.212   0.013   0.214 
+  0.205   0.012   0.207 
