@@ -43,6 +43,10 @@
       the connection is closed.  (\PR{17243})
 
       \item \code{rt()} assumed the \code{ncp} parameter was a scalar.  (\PR{17306})
+
+      \item \code{menu(choices)} with more than 10 choices which easily
+      fit into one \code{getOption("width")}-line no longer erronously
+      repeats choices.  (\PR{17312})
     }
   }
 }

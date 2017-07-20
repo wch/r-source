@@ -1,7 +1,7 @@
 #  File src/library/utils/R/menu.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -35,13 +35,13 @@ menu <- function(choices, graphics = FALSE, title = NULL)
     if(length(title) && nzchar(title[1L])) cat(title[1L], "\n")
     op <- paste0(format(seq_len(nc)), ": ", choices)
     if(nc > 10L) {
-        fop <- format(op)
-        nw <- nchar(fop[1L], "w") + 2
+        fop <- format(op) # => same nchar() for all
+        nw <- nchar(fop[1L], "w") + 2L
         ncol <- getOption("width") %/% nw  # might be 0
         if(ncol > 1L)
-            op <- paste0(fop, c(rep("  ", ncol - 1), "\n"), collapse="")
-        cat("", op, "", sep="\n")
-    } else cat("", op, "", sep="\n")
+	    op <- paste0(fop, c(rep("  ", min(nc, ncol) - 1L), "\n"), collapse="")
+    }
+    cat("", op, "", sep="\n")
     repeat {
 	ind <- .Call(C_menu, as.character(choices))
 	if(ind <= nc) return(ind)
