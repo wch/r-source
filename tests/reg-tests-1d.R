@@ -943,6 +943,14 @@ stopifnot(identical('-"\\n"', cq <- capture.output(qq)),
 ## backslashes in language objects accidentally duplicated in R 3.4.1
 
 
+## length(<pairlist>) <- N
+pl <- pairlist(a=1, b=2); length(pl) <- 1
+al <- formals(ls);        length(al) <- 2
+stopifnot(identical(pl, pairlist(a = 1)),
+	  identical(al, as.pairlist(alist(name = , pos = -1L))))
+## both `length<-` failed in R <= 3.4.1; the 2nd one for the wrong reason
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

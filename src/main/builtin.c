@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 1999-2017  The R Core Team
  *  Copyright (C) 1995-1998  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999-2016  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -827,8 +827,9 @@ SEXP xlengthgets(SEXP x, R_xlen_t len)
 {
     R_xlen_t lenx, i;
     SEXP rval, names, xnames, t;
-    if (!isVector(x) && !isVectorizable(x))
-	error(_("cannot set length of non-vector"));
+    if (!isVector(x) && !isList(x))
+	error(_("cannot set length of non-(vector or list)"));
+    if (len < 0) error(_("invalid value")); // e.g. -999 from asVecSize()
     lenx = xlength(x);
     if (lenx == len)
 	return (x);
@@ -932,26 +933,17 @@ SEXP attribute_hidden do_lengthgets(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     x = CAR(args);
 
-    if (PRIMVAL(op)) { /* xlength<- */
-	if(isObject(x) && DispatchOrEval(call, op, "length<-", args,
-					 rho, &ans, 0, 1))
-	    return(ans);
-	if (!isVector(x) && !isVectorizable(x))
-	    error(_("invalid argument"));
-	if (length(CADR(args)) != 1)
-	    error(_("invalid value"));
-	R_xlen_t len = asVecSize(CADR(args));
-	return xlengthgets(x, len);
-    }
     if(isObject(x) && DispatchOrEval(call, op, "length<-", args,
 				     rho, &ans, 0, 1))
 	return(ans);
-    if (!isVector(x) && !isVectorizable(x))
-	error(_("invalid argument"));
+    // more 'x' checks in x?lengthgets()
     if (length(CADR(args)) != 1)
-	error(_("invalid value"));
+	error(_("wrong length for '%s' argument"), "value");
     R_xlen_t len = asVecSize(CADR(args));
-    if (len < 0) error(_("invalid value"));
+    if (PRIMVAL(op)) { /* xlength<- */
+	return xlengthgets(x, len);
+    }
+    // else  length<- :
     if (len > R_LEN_T_MAX) {
 #ifdef LONG_VECTOR_SUPPORT
 	return xlengthgets(x, len);
