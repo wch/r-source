@@ -185,6 +185,10 @@
       \item \code{ns()} (package \pkg{splines}) now also works for a
       single observation.  \code{interpSpline()} gives a more friendly
       error message when the number of points is less than four.
+
+      \item \code{dist(x, method="canberra")} now uses the correct
+      definition; the result may only differ when \code{x} contains
+      values of differing signs, i.e., e.g., not for 0-1 data.
     }
   }
 }

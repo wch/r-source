@@ -951,6 +951,15 @@ stopifnot(identical(pl, pairlist(a = 1)),
 ## both `length<-` failed in R <= 3.4.1; the 2nd one for the wrong reason
 
 
+## dist(*, "canberra") :
+x <- cbind(c(-1,-5,10), c(-2,7,8)); (dc <- dist(x, method="canberra"))
+##          1        2
+## 2 1.666667
+## 3 2.000000 1.066667
+stopifnot(all.equal(as.vector(dc), c(25, 30, 16)/15))
+## R's definition wrongly assumed x[] entries all of the same sign
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

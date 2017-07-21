@@ -1,8 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2016   The R Core Team
- *  Copyright (C) 2002, 2004  The R Foundation
+ *  Copyright (C) 1998-2017  The R Core Team
+ *  Copyright (C) 2002-2017  The R Foundation
+ *  Copyright (C) 1995, 1996 Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -117,7 +117,7 @@ static double R_canberra(double *x, int nr, int nc, int i1, int i2)
     dist = 0;
     for(j = 0 ; j < nc ; j++) {
 	if(both_non_NA(x[i1], x[i2])) {
-	    sum = fabs(x[i1] + x[i2]);
+	    sum = fabs(x[i1]) + fabs(x[i2]);
 	    diff = fabs(x[i1] - x[i2]);
 	    if (sum > DBL_MIN || diff > DBL_MIN) {
 		dev = diff/sum;
@@ -223,6 +223,7 @@ void R_distance(double *x, int *nr, int *nc, double *d, int *diag,
     case MINKOWSKI:
 	if(!R_FINITE(*p) || *p <= 0)
 	    error(_("distance(): invalid p"));
+	// plus special case below because of extra argument
 	break;
     default:
 	error(_("distance(): invalid distance"));
