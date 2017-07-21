@@ -1,8 +1,8 @@
 /*
  *  A PicTeX device, (C) 1996 Valerio Aimale, for
  *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 2001--2017  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 2001-2013  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -186,7 +186,6 @@ static void PicTeX_Text(double x, double y, const char *str,
 			double rot, double hadj, 
 			const pGEcontext gc,
 			pDevDesc dd);
-static Rboolean PicTeX_Open(pDevDesc, picTeXDesc*);
 
 	/* Support routines */
 
@@ -236,24 +235,6 @@ static void PicTeX_MetricInfo(int c,
 
 	/* Initialize the device */
 
-static Rboolean PicTeX_Open(pDevDesc dd, picTeXDesc *ptd)
-{
-    ptd->fontsize = 0;
-    ptd->fontface = 0;
-    ptd->debug = FALSE;
-    if (!(ptd->texfp = R_fopen(R_ExpandFileName(ptd->filename), "w")))
-	return FALSE;
-    fprintf(ptd->texfp, "\\hbox{\\beginpicture\n");
-    fprintf(ptd->texfp, "\\setcoordinatesystem units <1pt,1pt>\n");
-    fprintf(ptd->texfp,
-	    "\\setplotarea x from 0 to %.2f, y from 0 to %.2f\n",
-	    in2dots(ptd->width), in2dots(ptd->height));
-    fprintf(ptd->texfp,"\\setlinear\n");
-    fprintf(ptd->texfp, "\\font\\picfont cmss10\\picfont\n");
-    SetFont(1, 10, ptd);
-    ptd->pageno++;
-    return TRUE;
-}
 
 
 	/* Interactive Resize */
@@ -628,6 +609,10 @@ Rboolean PicTeXDeviceDriver(pDevDesc dd, const char *filename,
 
     if (!(ptd = (picTeXDesc *) malloc(sizeof(picTeXDesc))))
 	return FALSE;
+    if (!(ptd->texfp = R_fopen(R_ExpandFileName(filename), "w"))) {
+	free(ptd);
+	return FALSE;
+    }
 
     strcpy(ptd->filename, filename);
 
@@ -665,8 +650,19 @@ Rboolean PicTeXDeviceDriver(pDevDesc dd, const char *filename,
     ptd->width = width;
     ptd->height = height;
 
-    if( ! PicTeX_Open(dd, ptd) ) 
-	return FALSE;
+    // PicTeX_Open():
+    ptd->fontsize = 0;
+    ptd->fontface = 0;
+    ptd->debug = FALSE;
+    fprintf(ptd->texfp, "\\hbox{\\beginpicture\n");
+    fprintf(ptd->texfp, "\\setcoordinatesystem units <1pt,1pt>\n");
+    fprintf(ptd->texfp,
+	    "\\setplotarea x from 0 to %.2f, y from 0 to %.2f\n",
+	    in2dots(ptd->width), in2dots(ptd->height));
+    fprintf(ptd->texfp,"\\setlinear\n");
+    fprintf(ptd->texfp, "\\font\\picfont cmss10\\picfont\n");
+    SetFont(1, 10, ptd);
+    ptd->pageno++;
 
     /* Base Pointsize */
     /* Nominal Character Sizes in Pixels */
