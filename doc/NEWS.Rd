@@ -47,6 +47,9 @@
       \item \code{menu(choices)} with more than 10 choices which easily
       fit into one \code{getOption("width")}-line no longer erronously
       repeats choices.  (\PR{17312})
+
+      \item \code{length()<-} on a pairlist succeeds.
+      (\url{https://stat.ethz.ch/pipermail/r-devel/2017-July/074680.html})
     }
   }
 }

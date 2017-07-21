@@ -879,6 +879,7 @@ SEXP xlengthgets(SEXP x, R_xlen_t len)
 	    SETCAR(t, CAR(x));
 	    SET_TAG(t, TAG(x));
 	}
+	break;
     case VECSXP:
 	for (i = 0; i < len; i++)
 	    if (i < lenx) {
