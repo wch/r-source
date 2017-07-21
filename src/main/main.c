@@ -1318,7 +1318,7 @@ SEXP attribute_hidden do_quit(SEXP call, SEXP op, SEXP args, SEXP rho)
     status = asInteger(CADR(args));
     if (status == NA_INTEGER) {
 	warning(_("invalid 'status', 0 assumed"));
-	runLast = 0;
+	status = 0;
     }
     runLast = asLogical(CADDR(args));
     if (runLast == NA_LOGICAL) {
