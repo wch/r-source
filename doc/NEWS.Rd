@@ -234,6 +234,10 @@
 
       \item \code{length()<-} on a pairlist succeeds.
       (\url{https://stat.ethz.ch/pipermail/r-devel/2017-July/074680.html})
+
+      \item Language objects such as \code{quote(("\n"))} or \R
+      functions are correctly printed again, where \R 3.4.1 accidentally
+      duplicated the backslashes.
     }
   }
 }

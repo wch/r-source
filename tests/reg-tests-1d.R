@@ -935,6 +935,14 @@ stopifnot(identical(.RN, row.names(model.matrix(~ 1, mf))),
 ## had 1:nrow()  up to 3.4.x
 
 
+## "\n" etc in calls and function definitions
+(qq <- quote(-"\n"))
+stopifnot(identical('-"\\n"', cq <- capture.output(qq)),
+          identical(5L, nchar(cq)),
+          identical(6L, nchar(capture.output(quote(("\t"))))))
+## backslashes in language objects accidentally duplicated in R 3.4.1
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
