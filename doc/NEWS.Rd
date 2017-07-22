@@ -242,6 +242,10 @@
       \item Language objects such as \code{quote(("\n"))} or \R
       functions are correctly printed again, where \R 3.4.1 accidentally
       duplicated the backslashes.
+
+      \item Construction of \code{names()} for very large objects in
+      \code{c()} and \code{unlist()} now works, thanks to Suharto
+      Anggono's patch proposals in \PR{17992}.
     }
   }
 }

@@ -50,7 +50,7 @@ struct BindData {
  SEXP ans_ptr;
  R_xlen_t ans_length;
  SEXP ans_names;
- int  ans_nnames;
+ R_xlen_t  ans_nnames;
 /* int  deparse_level; Initialize to 1. */
 };
 
@@ -508,7 +508,7 @@ static SEXP NewBase(SEXP base, SEXP tag)
     return ans;
 }
 
-static SEXP NewName(SEXP base, SEXP tag, int seqno, int count)
+static SEXP NewName(SEXP base, SEXP tag, R_xlen_t seqno, int count)
 {
 /* Construct a new Name/Tag, using
  *	base.tag
@@ -517,33 +517,42 @@ static SEXP NewName(SEXP base, SEXP tag, int seqno, int count)
  *	tag
  *
  */
-
     SEXP ans;
     base = EnsureString(base);
     tag = EnsureString(tag);
-    if (*CHAR(base) && *CHAR(tag)) {
-	const void *vmax = vmaxget();
-	const char *sb = translateCharUTF8(base), *st = translateCharUTF8(tag);
-	char *cbuf;
-	cbuf = R_AllocStringBuffer(strlen(sb) + strlen(st) + 1, &cbuff);
-	sprintf(cbuf, "%s.%s", sb, st);
-	ans = mkCharCE(cbuf, CE_UTF8);
-	vmaxset(vmax);
-    }
-    else if (*CHAR(base) && count == 1) ans = base;
-    else if (*CHAR(base)) {
-	const void *vmax = vmaxget();
-	const char *sb = translateCharUTF8(base);
-	char *cbuf;
-	cbuf = R_AllocStringBuffer(strlen(sb) + (size_t) IndexWidth(seqno),
-				   &cbuff);
-	sprintf(cbuf, "%s%d", sb, seqno);
-	ans = mkCharCE(cbuf, CE_UTF8);
-	vmaxset(vmax);
+    if (*CHAR(base)) {
+	if (*CHAR(tag)) {
+	    const void *vmax = vmaxget();
+	    const char
+		*sb = translateCharUTF8(base),
+		*st = translateCharUTF8(tag);
+	    char *cbuf = R_AllocStringBuffer(strlen(sb) + strlen(st) + 1, &cbuff);
+	    sprintf(cbuf, "%s.%s", sb, st);
+	    ans = mkCharCE(cbuf, CE_UTF8);
+	    vmaxset(vmax);
+	}
+	else if (count == 1)
+	    ans = base;
+	else {
+	    const void *vmax = vmaxget();
+	    const char *sb = translateCharUTF8(base);
+	    char *cbuf;
+	    cbuf = R_AllocStringBuffer(strlen(sb) + (size_t) IndexWidth(seqno),
+				       &cbuff);
+#ifdef LONG_VECTOR_SUPPORT
+	    if (seqno > INT_MAX)
+		sprintf(cbuf, "%s%.0f", sb, (double) seqno);
+	    else
+#endif
+		sprintf(cbuf, "%s%d", sb, (int) seqno);
+	    ans = mkCharCE(cbuf, CE_UTF8);
+	    vmaxset(vmax);
+	}
     }
     else if (*CHAR(tag)) {
 	ans = tag;
-    } else ans = R_BlankString;
+    } else
+	ans = R_BlankString;
     return ans;
 }
 
@@ -569,7 +578,8 @@ SEXP attribute_hidden ItemName(SEXP names, R_xlen_t i)
 
 struct NameData {
  int count;
- int seqno;
+ R_xlen_t seqno;
+ // int firstpos;
 };
 
 
@@ -628,7 +638,8 @@ static void NewExtractNames(SEXP v, SEXP base, SEXP tag, int recurse,
 {
     SEXP names, namei;
     R_xlen_t i, n;
-    int savecount=0, saveseqno;
+    int savecount=0;
+    R_xlen_t saveseqno;
 
     /* If we have a new tag, we reset the index
      * sequence and create the new basename string : */
