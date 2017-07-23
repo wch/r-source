@@ -251,7 +251,8 @@
       \code{c()} and \code{unlist()} now works, thanks to Suharto
       Anggono's patch proposals in \PR{17992}.
       
-      \item Resource leak reported by Steve Grubb fixed.  (\PR{17320})
+      \item Resource leaks reported by Steve Grubb fixed.  (\PR{17317},
+      \PR{17320})
     }
   }
 }

@@ -2547,6 +2547,7 @@ static int do_copy(const char* from, const char* name, const char* to,
 		    continue;
 		if (strlen(name) + strlen(de->d_name) + 1 >= PATH_MAX) {
 		    warning(_("over-long path length"));
+		    closedir(dir);
 		    return 1;
 		}
 		snprintf(p, PATH_MAX+1, "%s/%s", name, de->d_name);
