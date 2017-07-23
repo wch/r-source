@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995-1996   Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2014   The R Core Team
+ *  Copyright (C) 1997-2017   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1441,12 +1441,15 @@ mbtoucs(unsigned int *wc, const char *s, size_t n)
     if (status == (size_t) -1) {
 	switch(errno){
 	case EINVAL:
+	    Riconv_close(cd);
 	    return (size_t) -2;
 	case EILSEQ:
+	    Riconv_close(cd);
 	    return (size_t) -1;
 	case E2BIG:
 	    break;
 	default:
+	    Riconv_close(cd);
 	    errno = EILSEQ;
 	    return (size_t) -1;
 	}

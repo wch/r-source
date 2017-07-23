@@ -54,6 +54,8 @@
       \item Language objects such as \code{quote(("\n"))} or \R
       functions are correctly printed again, where \R 3.4.1 accidentally
       duplicated the backslashes.
+      
+      \item Resource leak reported by Steve Grubb fixed.  (\PR{17320})
     }
   }
 }
