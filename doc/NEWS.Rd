@@ -250,6 +250,8 @@
       \item Construction of \code{names()} for very large objects in
       \code{c()} and \code{unlist()} now works, thanks to Suharto
       Anggono's patch proposals in \PR{17992}.
+      
+      \item Resource leak reported by Steve Grubb fixed.  (\PR{17320})
     }
   }
 }
