@@ -15,7 +15,7 @@
 #  https://www.R-project.org/Licenses/
 
 # Statlib code by John Chambers, Bell Labs, 1994
-# Changes Copyright (C) 1998-2016 The R Core Team
+# Changes Copyright (C) 1998-2017 The R Core Team
 
 
 ## As from R 2.4.0, row.names can be either character or integer.
@@ -1010,7 +1010,7 @@ data.frame <-
         v <- value[[ jvseq[[jjj]] ]]
         ## This is consistent with the have.i case rather than with
         ## [[<- and $<- (which throw an error).  But both are plausible.
-        if (nrows > 0L && !length(v)) length(v) <- nrows
+        if (!is.null(v) && nrows > 0L && !length(v)) length(v) <- nrows
 	x[[jj]] <- v
         if (!is.null(v) && is.atomic(x[[jj]]) && !is.null(names(x[[jj]])))
             names(x[[jj]]) <- NULL

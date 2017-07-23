@@ -96,6 +96,10 @@
       \item \code{c()} and \code{unlist()} are now more efficient in
       constructing the \code{names(.)} of their return value, thanks to
       a proposal by Suharto Anggono.  (\PR{17284})
+
+      \item Attempting to increase the length of a variable containing
+      \code{NULL} using \code{length()<-} still has no effect on the
+      target variable, but now triggers a warning.
     }
   }
 

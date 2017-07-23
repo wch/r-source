@@ -830,6 +830,8 @@ SEXP xlengthgets(SEXP x, R_xlen_t len)
     if (!isVector(x) && !isList(x))
 	error(_("cannot set length of non-(vector or list)"));
     if (len < 0) error(_("invalid value")); // e.g. -999 from asVecSize()
+    if (isNull(x) && len > 0)
+    	warning(_("length of NULL cannot be changed"));
     lenx = xlength(x);
     if (lenx == len)
 	return (x);
