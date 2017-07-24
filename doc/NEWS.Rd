@@ -176,10 +176,6 @@
       re-encoding issues, notably seen in some Windows locales.  This
       fixes the \code{citation()} issue in \PR{17291}.
 
-      \item \code{model.matrix(~1, mf)} now gets the row names from
-      \code{mf} also when they differ from \code{1:nrow(mf)}, fixing
-      \PR{14992} thanks to the suggestion by Sebastian Meyer.
-
       \item \code{poly(<matrix>, 3)} now works, thanks to prompting by
       Marc Schwartz.
 
@@ -250,9 +246,13 @@
       \item Construction of \code{names()} for very large objects in
       \code{c()} and \code{unlist()} now works, thanks to Suharto
       Anggono's patch proposals in \PR{17992}.
-      
+
       \item Resource leaks reported by Steve Grubb fixed.  (\PR{17317},
       \PR{17320})
+
+      \item \code{model.matrix(~1, mf)} now gets the row names from
+      \code{mf} also when they differ from \code{1:nrow(mf)}, fixing
+      \PR{14992} thanks to the suggestion by Sebastian Meyer.
     }
   }
 }
