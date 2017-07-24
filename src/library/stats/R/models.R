@@ -592,7 +592,7 @@ model.matrix.default <- function(object, data = environment(object),
         }
     } else { #  no rhs terms ('~1', or '~0'): internal model.matrix needs some variable
 	isF <- FALSE
-	data[["x"]] <- rep(as.raw(0), nrow(data))
+	data[["x"]] <- raw(nrow(data))
     }
     ans <- .External2(C_modelmatrix, t, data)
     cons <- if(any(isF))
