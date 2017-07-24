@@ -1,7 +1,7 @@
 #  File src/library/stats/R/models.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -553,7 +553,7 @@ model.matrix.default <- function(object, data = environment(object),
         ## need complete deparse, PR#15377
         deparse2 <- function(x)
             paste(deparse(x, width.cutoff = 500L), collapse = " ")
-	reorder <- match(sapply(attr(t, "variables"), deparse2)[-1L],
+	reorder <- match(vapply(attr(t, "variables"), deparse2, "")[-1L],
                          names(data))
 	if (anyNA(reorder))
 	    stop("model frame and formula mismatch in model.matrix()")
@@ -561,7 +561,7 @@ model.matrix.default <- function(object, data = environment(object),
 	    data <- data[,reorder, drop=FALSE]
     }
     int <- attr(t, "response")
-    if(length(data)) {      # otherwise no rhs terms, so skip all this
+    if(length(data)) {
         contr.funs <- as.character(getOption("contrasts"))
         namD <- names(data)
         ## turn any character columns into factors
@@ -590,9 +590,9 @@ model.matrix.default <- function(object, data = environment(object),
                 }
             }
         }
-    } else {               # internal model.matrix needs some variable
+    } else { #  no rhs terms ('~1', or '~0'): internal model.matrix needs some variable
 	isF <- FALSE
-	data <- data.frame(x=rep(0, nrow(data)))
+	data[["x"]] <- raw(nrow(data))
     }
     ans <- .External2(C_modelmatrix, t, data)
     cons <- if(any(isF))

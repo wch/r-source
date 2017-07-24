@@ -54,9 +54,13 @@
       \item Language objects such as \code{quote(("\n"))} or \R
       functions are correctly printed again, where \R 3.4.1 accidentally
       duplicated the backslashes.
-      
+
       \item Resource leaks reported by Steve Grubb fixed.  (\PR{17317},
       \PR{17320})
+
+      \item \code{model.matrix(~1, mf)} now gets the row names from
+      \code{mf} also when they differ from \code{1:nrow(mf)}, fixing
+      \PR{14992} thanks to the suggestion by Sebastian Meyer.
     }
   }
 }
