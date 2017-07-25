@@ -35,7 +35,9 @@ sigma(object, ...)
    sigma.default <- function (object, use.fallback = TRUE, ...)
                       sqrt( deviance(object, ...) / (NN - PP) )
  } where \code{NN <- \link{nobs}(object, use.fallback = use.fallback)}
- and \code{PP <- length(\link{coef}(object))}.
+ and \code{PP <- sum(!is.na(\link{coef}(object)))} -- where in older \R
+ versions this was \code{length(coef(object))} which is too large in
+ case of undetermined coefficients, e.g., for rank deficient model fits.
 }
 \value{
   typically a number, the estimated standard deviation of the

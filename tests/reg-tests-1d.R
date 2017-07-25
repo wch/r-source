@@ -960,6 +960,15 @@ stopifnot(all.equal(as.vector(dc), c(25, 30, 16)/15))
 ## R's definition wrongly assumed x[] entries all of the same sign
 
 
+## sigma( <rank-deficient model> ), PR#17313
+dd <- data.frame(x1 = LETTERS[c(1,2,3, 1,2,3, 1,2,3)],
+                 x2 = letters[c(1,2,1, 2,1,1, 1,2,1)], y = 1:9)
+(sf <- summary(fit <- lm(y ~ x1*x2, data = dd))) ## last coef is NA
+stopifnot(all.equal(sigma(fit)^2,  27/2,  tol = 1e-14),
+	  all.equal(sigma(fit), sf$sigma, tol = 1e-14))
+## was too large because of wrong denom. d.f. in R <= 3.4.1
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
