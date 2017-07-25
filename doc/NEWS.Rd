@@ -61,6 +61,9 @@
       \item \code{model.matrix(~1, mf)} now gets the row names from
       \code{mf} also when they differ from \code{1:nrow(mf)}, fixing
       \PR{14992} thanks to the suggestion by Sebastian Meyer.
+
+      \item \code{sigma(fm)} now takes the correct denominator degrees
+      of freedom for a fitted model with \code{NA} coefficients.  (\PR{17313})
     }
   }
 }
