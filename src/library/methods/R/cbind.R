@@ -1,7 +1,7 @@
 #  File src/library/methods/R/cbind.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -67,10 +67,9 @@ cbind <- function(..., deparse.level = 1)
     ## else :  na >= 2
 
     if(na == 2) {
-	r <- ..2
 	fix.na <- FALSE
     }
-    else { ## na >= 3 arguments: -- RECURSION -- with care
+    else { ## na >= 3 arguments
 	## determine nrow(<result>)  for e.g.,	cbind(diag(2), 1, 2)
 	## only when the last two argument have *no* dim attribute:
 	nrs <- unname(lapply(argl, nrow)) # of length na
@@ -83,46 +82,44 @@ cbind <- function(..., deparse.level = 1)
 				deparse.level = 0)
 	    ## and since it's a 'matrix' now, cbind() below may not name it
 	}
-	## need to pass argl, the evaluated arg list to do.call();
-	## OTOH, these may have lost their original 'symbols'
 	## if(deparse.level) {
 	    if(fix.na)
 		fix.na <- !is.null(Nna <- Nms(na))
-	    if(!is.null(nmi <- names(argl))) iV <- iV & (nmi == "")
-	    ## attach `symbols' to argl[-1L] for 'vectors'[iV]
-	    ii <- if(fix.na) # need to fix later ([na] is 'matrix')
-		2:(na-1) else 2:na
-	    if(any(iV[ii])) {
-		for(i in ii[iV[ii]])
-		    if (!is.null(nmi <- Nms(i))) names(argl)[i] <- nmi
-	    }
 	## }
-	r <- do.call(cbind, c(argl[-1L], list(deparse.level=deparse.level)))
     }
 
+    Ncol <- function(x) {
+	d <- dim(x); if(length(d) == 2L) d[2L] else as.integer(length(x) > 0L) }
+    setN <- function(i, nams)
+	colnames(r)[i] <<- if(is.null(nams)) "" else nams
+
+    r <- argl[[na]]
+    for(i in (na-1L):1L) {
     d2 <- dim(r)
-    r <- cbind2(..1, r)
+    r <- cbind2(argl[[i]], r)
     ## if(deparse.level == 0)
-    ##     return(r)
-    ism1 <- !is.null(d1 <- dim(..1)) && length(d1) == 2L
-    ism2 <- !is.null(d2)	     && length(d2) == 2L && !fix.na
+    ##     next
+    ism1 <- !is.null(d1 <- dim(argl[[i]])) && length(d1) == 2L
+    ism2 <- !is.null(d2)                   && length(d2) == 2L && !fix.na
     if(ism1 && ism2) ## two matrices
-	return(r)
+	next
 
     ## else -- Setting colnames correctly
     ##	       when one was not a matrix [needs some diligence!]
-    Ncol <- function(x) {
-	d <- dim(x); if(length(d) == 2L) d[2L] else as.integer(length(x) > 0L) }
-    nn1 <- !is.null(N1 <- if(    (l1 <- Ncol(..1)) && !ism1) Nms(1)) # else NULL
-    nn2 <- !is.null(N2 <- if(na == 2 && Ncol(..2)  && !ism2) Nms(2))
-    if(nn1 || nn2 || fix.na) {
+    nn1 <- !is.null(N1 <- if(       (l1 <- Ncol(argl[[i]])) && !ism1) Nms(i)) # else NULL
+    nn2 <- !is.null(N2 <- if(i == na-1L && Ncol(argl[[na]]) && !ism2) Nms(na))
+    if(nn1 || nn2) {
 	if(is.null(colnames(r)))
 	    colnames(r) <- rep.int("", ncol(r))
-	setN <- function(i, nams)
-	    colnames(r)[i] <<- if(is.null(nams)) "" else nams
 	if(nn1) setN(1,	 N1)
 	if(nn2) setN(1+l1, N2)
-	if(fix.na) setN(ncol(r), Nna)
+    }
+    }
+
+    if(fix.na) {
+	if(is.null(colnames(r)))
+	    colnames(r) <- rep.int("", ncol(r))
+	setN(ncol(r), Nna)
     }
     r
 }

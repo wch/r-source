@@ -189,6 +189,9 @@
       \item \code{dist(x, method="canberra")} now uses the correct
       definition; the result may only differ when \code{x} contains
       values of differing signs, i.e., e.g., not for 0-1 data.
+
+      \item \code{methods:::cbind()} and \code{methods:::rbind()} avoid
+      deep recursion, thanks to Suharto Anggono via \PR{17300}}.
     }
   }
 }
