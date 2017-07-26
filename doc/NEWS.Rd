@@ -191,7 +191,7 @@
       values of differing signs, i.e., e.g., not for 0-1 data.
 
       \item \code{methods:::cbind()} and \code{methods:::rbind()} avoid
-      deep recursion, thanks to Suharto Anggono via \PR{17300}}.
+      deep recursion, thanks to Suharto Anggono via \PR{17300}.
     }
   }
 }
