@@ -1,8 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
 
+ *  Copyright (C) 1998-2017   The R Core Team
  *  Copyright (C) 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2015   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -396,32 +396,32 @@ int R_SockConnect(int port, char *host, int timeout)
     s = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
     if (s == -1)  return -1;
 
+#define CLOSE_N_RETURN(_ST_) { closesocket(s); return(_ST_); }
+
 #ifdef Win32
     {
 	u_long one = 1;
-
 	status = ioctlsocket(s, FIONBIO, &one) == SOCKET_ERROR ? -1 : 0;
     }
 #else
-#ifdef HAVE_FCNTL
+# ifdef HAVE_FCNTL
     if ((status = fcntl(s, F_GETFL, 0)) != -1) {
-#ifdef O_NONBLOCK
+#  ifdef O_NONBLOCK
 	status |= O_NONBLOCK;
-#else /* O_NONBLOCK */
-#ifdef F_NDELAY
+#  else /* O_NONBLOCK */
+#   ifdef F_NDELAY
 	status |= F_NDELAY;
-#endif /* F_NDELAY */
-#endif /* !O_NONBLOCK */
+#   endif
+#  endif /* !O_NONBLOCK */
 	status = fcntl(s, F_SETFL, status);
     }
-#endif
+# endif // HAVE_FCNTL
     if (status < 0) {
-	closesocket(s);
-	return(-1);
+	CLOSE_N_RETURN(-1);
     }
 #endif
 
-    if (! (hp = gethostbyname(host))) return -1;
+    if (! (hp = gethostbyname(host))) CLOSE_N_RETURN(-1);
 
     memcpy((char *)&server.sin_addr, hp->h_addr_list[0], hp->h_length);
     server.sin_port = htons((short)port);
@@ -434,8 +434,7 @@ int R_SockConnect(int port, char *host, int timeout)
 	case EWOULDBLOCK:
 	    break;
 	default:
-	    closesocket(s);
-	    return(-1);
+	    CLOSE_N_RETURN(-1);
 	}
     }
 
@@ -475,12 +474,10 @@ int R_SockConnect(int port, char *host, int timeout)
 	    /* Time out */
 	    used += tv.tv_sec + 1e-6 * tv.tv_usec;
 	    if(used < timeout) continue;
-	    closesocket(s);
-	    return(-1);
+	    CLOSE_N_RETURN(-1);
 	case -1:
 	    /* Ermm.. ?? */
-	    closesocket(s);
-	    return(-1);
+	    CLOSE_N_RETURN(-1);
 	}
 
 	if ( FD_ISSET(s, &wfd) ) {
@@ -491,9 +488,8 @@ int R_SockConnect(int port, char *host, int timeout)
 		return (-1);
 	    }
 	    if ( status ) {
-		closesocket(s);
 		errno = status;
-		return (-1);
+		CLOSE_N_RETURN(-1);
 	    } else return(s);
 #ifdef Unix
 	} else { /* some other handler needed */
