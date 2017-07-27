@@ -990,6 +990,13 @@ stopifnot(sum(hh$counts) == length(XXL))
 ## gave error from pretty.default + NA coercion warning in R <= 3.4.1
 
 
+## methods:::rbind / cbind no longer deeply recursive also fixes bug:
+if(requireNamespace('Matrix')) {
+    T <- rbind(1:2, c=2, "a+"=10, Matrix::Diagonal(2), deparse.level=0)
+    stopifnot(identical(rownames(T), c("", "c", "a+", "", "")))
+}## rownames(.) wrongly were NULL in R <= 3.4.1
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
