@@ -969,6 +969,27 @@ stopifnot(all.equal(sigma(fit)^2,  27/2,  tol = 1e-14),
 ## was too large because of wrong denom. d.f. in R <= 3.4.1
 
 
+## nclass.FD() and nclass.scott() for "extreme" data, PR#17274
+NC <- function(x) c(Sturges = nclass.Sturges(x),
+                    Scott = nclass.scott(x), FD = nclass.FD(x))
+xE <- function(eps, n = 5) {
+    stopifnot(n >= 2, is.numeric(eps), eps >= 0)
+    c(rep.int(1, n-2), 1+eps, 2)
+}
+ncE <- c(Sturges = 4, Scott = 2, FD = 1)
+stopifnot(sapply(-5:-16, function(E) identical(NC(xE(10^E)), ncE)),
+	  identical(NC(xE(1e-4)), c(Sturges = 4, Scott = 2, FD = 8550)),
+	  identical(NC(xE(1e-3)), c(Sturges = 4, Scott = 2, FD =  855)))
+## for these, nclass.FD() had "exploded" in R <= 3.4.1
+## Extremely large diff(range(.)) :
+XXL <- c(1:9, c(-1,1)*1e300)
+stopifnot(nclass.scott(XXL) == 1)
+## gave 0 in R <= 3.4.1
+tools::assertWarning(hh <- hist(XXL, "FD", plot=FALSE))
+stopifnot(sum(hh$counts) == length(XXL))
+## gave error from pretty.default + NA coercion warning in R <= 3.4.1
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

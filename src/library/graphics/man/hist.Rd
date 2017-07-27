@@ -1,6 +1,6 @@
 % File src/library/graphics/man/hist.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{hist}
@@ -31,10 +31,11 @@ hist(x, \dots)
       number of cells (see \sQuote{Details}),
       \item a function to compute the number of cells.
     }
-    In the last three cases the number is a suggestion only; the
-     breakpoints will be set to \code{\link{pretty}} values.  If
-     \code{breaks} is a function, the \code{x} vector is supplied to it
-     as the only argument.
+    In the last three cases the number is a suggestion only; as the
+    breakpoints will be set to \code{\link{pretty}} values, the number
+    is limited to \code{1e9} (with a warning if it was larger).  If
+    \code{breaks} is a function, the \code{x} vector is supplied to it
+    as the only argument.
   }
   \item{freq}{logical; if \code{TRUE}, the histogram graphic is a
     representation of frequencies, the \code{counts} component of
@@ -182,6 +183,12 @@ str(hist(islands, breaks = c(12,20,36,80,200,1000,17000), plot = FALSE))
 
 hist(islands, breaks = c(12,20,36,80,200,1000,17000), freq = TRUE,
      main = "WRONG histogram") # and warning
+
+## Extreme outliers; the "FD" rule would take very large number of 'breaks':
+XXL <- c(1:9, c(-1,1)*1e300)
+hh <- hist(XXL, "FD") # did not work in R <= 3.4.1; now gives warning
+## and only uses
+hh$counts ## 20 counts -- indeed 1e9 was "a suggestion only"
 
 require(stats)
 set.seed(14)
