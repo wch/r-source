@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/nclass.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{nclass}
@@ -18,9 +18,7 @@ nclass.scott(x)
 nclass.FD(x)
 }
 \arguments{
-  \item{x}{
-    A data vector.
-  }
+  \item{x}{a data vector.}
 }
 \value{
   The suggested number of classes.
@@ -34,9 +32,10 @@ nclass.FD(x)
   returns \code{1}.
 
   \code{nclass.FD} uses the Freedman-Diaconis choice based on the
-  inter-quartile range (\code{\link{IQR}}) unless that's zero where it
-  reverts to \code{\link{mad}(x, constant = 2)} and when that is \eqn{0}
-  as well, returns \code{1}.
+  inter-quartile range (\code{\link{IQR}(signif(x, 5))}) unless that's
+  zero where it uses increasingly more extreme symmetric quantiles up to
+  c(1,511)/512 and if that difference is still zero, reverts to using
+  Scott's choice.
 }
 \references{
   Venables, W. N. and Ripley, B. D. (2002)
