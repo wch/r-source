@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2001  Daniel Veillard.
- *  Copyright (C) 2001-2015  The R Core Team.
+ *  Copyright (C) 2001-2017  The R Core Team.
+ *  Copyright (C) 1998-2012  Daniel Veillard.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,7 +23,8 @@
    can be non-ASCII.
  */
 
-/* based on libxml2-2.4.10:
+/* based on libxml2-2.4.10
+ * (but updated to protect against CVE-2004-0989):
  * nanoftp.c: basic FTP client support
  *
  *  Reference: RFC 959
@@ -55,6 +56,7 @@ extern void R_ProcessEvents(void);
   #include <strings.h>
 #endif
 
+// ../../include/R_ext/R-ftp-http.h :
 #include <R_ext/R-ftp-http.h>
 /* #define DEBUG_FTP */
 
@@ -134,6 +136,8 @@ setSelectMask(InputHandler *handlers, fd_set *readMask)
 #define FTP_SYNTAX_ERROR	500
 #define FTP_GET_PASSWD		331
 #define FTP_BUF_SIZE		1024
+
+#define XML_NANO_MAX_URLBUF	4096
 
 typedef struct RxmlNanoFTPCtxt {
     char *protocol;	/* the protocol name */
@@ -256,7 +260,7 @@ static void
 RxmlNanoFTPScanURL(void *ctx, const char *URL) {
     RxmlNanoFTPCtxtPtr ctxt = (RxmlNanoFTPCtxtPtr) ctx;
     const char *cur = URL;
-    char buf[4096];
+    char buf[XML_NANO_MAX_URLBUF];
     int indx = 0;
     int port = 0;
 
@@ -277,7 +281,7 @@ RxmlNanoFTPScanURL(void *ctx, const char *URL) {
     }
     if (URL == NULL) return;
     buf[indx] = 0;
-    while (*cur != 0) {
+    while (*cur != 0 && (indx < XML_NANO_MAX_URLBUF-1)) {
 	if ((cur[0] == ':') && (cur[1] == '/') && (cur[2] == '/')) {
 	    buf[indx] = 0;
 	    ctxt->protocol = xmlMemStrdup(buf);
@@ -285,8 +289,6 @@ RxmlNanoFTPScanURL(void *ctx, const char *URL) {
 	    cur += 3;
 	    break;
 	}
-	if(indx >= 4095)
-	    RxmlMessage(2, _("RxmlNanoFTPScanURL: overlong (invalid?) URL"));
 	buf[indx++] = *cur++;
     }
     if (*cur == 0) return;
@@ -296,10 +298,8 @@ RxmlNanoFTPScanURL(void *ctx, const char *URL) {
     {
 	const char *p = strchr(cur, '@');
 	if(p) {
-	    while(1) {
+	    while(indx < XML_NANO_MAX_URLBUF-1) {
 		if(cur[0] == ':' || cur[0] == '@') break;
-		if(indx >= 4095)
-		    RxmlMessage(2, _("RxmlNanoFTPScanURL: overlong (invalid?) URL"));
 		buf[indx++] = *cur++;
 	    }
 	    buf[indx] = 0;
@@ -307,10 +307,8 @@ RxmlNanoFTPScanURL(void *ctx, const char *URL) {
 	    indx = 0;
 	    if(cur[0] == ':') {
 		cur++;
-		while(1) {
+		while(indx < XML_NANO_MAX_URLBUF-1) {
 		    if(cur[0] == '@') break;
-		    if(indx >= 4095)
-			RxmlMessage(2, _("RxmlNanoFTPScanURL: overlong (invalid?) URL"));
 		    buf[indx++] = *cur++;
 		}
 		buf[indx] = 0;
@@ -321,7 +319,7 @@ RxmlNanoFTPScanURL(void *ctx, const char *URL) {
 	}
     }
 
-    while (1) {
+    while (indx < XML_NANO_MAX_URLBUF-1) {
 	if (cur[0] == ':') {
 	    buf[indx] = 0;
 	    ctxt->hostname = xmlMemStrdup(buf);
@@ -343,8 +341,6 @@ RxmlNanoFTPScanURL(void *ctx, const char *URL) {
 	    indx = 0;
 	    break;
 	}
-	if(indx >= 4095)
-	    RxmlMessage(2, _("RxmlNanoFTPScanURL: overlong (invalid?) URL"));
 	buf[indx++] = *cur++;
     }
     if (*cur == 0)
@@ -352,11 +348,8 @@ RxmlNanoFTPScanURL(void *ctx, const char *URL) {
     else {
 	indx = 0;
 	buf[indx] = 0;
-	while (*cur != 0) {
-	    if(indx >= 4095)
-		RxmlMessage(2, _("RxmlNanoFTPScanURL: overlong (invalid?) URL"));
+	while (*cur != 0 && (indx < XML_NANO_MAX_URLBUF-1))
 	    buf[indx++] = *cur++;
-	}
 	buf[indx] = 0;
 	ctxt->path = xmlMemStrdup(buf);
     }
@@ -375,7 +368,7 @@ RxmlNanoFTPScanURL(void *ctx, const char *URL) {
 static void
 RxmlNanoFTPScanProxy(const char *URL) {
     const char *cur = URL;
-    char buf[4096];
+    char buf[XML_NANO_MAX_URLBUF];
     int indx = 0;
     int port = 0;
 
@@ -392,21 +385,19 @@ RxmlNanoFTPScanProxy(const char *URL) {
 	RxmlMessage(1, _("using FTP proxy '%s'"), URL);
     if (URL == NULL) return;
     buf[indx] = 0;
-    while (*cur != 0) {
+    while (*cur != 0 && (indx < XML_NANO_MAX_URLBUF - 1)) {
 	if ((cur[0] == ':') && (cur[1] == '/') && (cur[2] == '/')) {
 	    buf[indx] = 0;
 	    indx = 0;
 	    cur += 3;
 	    break;
 	}
-	if(indx >= 4095)
-	    RxmlMessage(2, _("RxmlNanoFTPScanProxy: overlong (invalid?) URL"));
 	buf[indx++] = *cur++;
     }
     if (*cur == 0) return;
 
     buf[indx] = 0;
-    while (1) {
+    while (indx < XML_NANO_MAX_URLBUF-1) {
 	if (cur[0] == ':') {
 	    buf[indx] = 0;
 	    proxy = xmlMemStrdup(buf);
@@ -428,8 +419,6 @@ RxmlNanoFTPScanProxy(const char *URL) {
 	    indx = 0;
 	    break;
 	}
-	if(indx >= 4095)
-	    RxmlMessage(2, _("RxmlNanoFTPScanProxy: overlong (invalid?) URL"));
 	buf[indx++] = *cur++;
     }
 }
@@ -840,6 +829,10 @@ RxmlNanoFTPConnect(void *ctx) {
      */
     memset(&ctxt->ftpAddr, 0, sizeof(ctxt->ftpAddr));
     ctxt->ftpAddr.sin_family = AF_INET;
+    if ((unsigned int)hp->h_length > sizeof(struct in_addr)) {
+	RxmlMessage(1, _("Malformed address resolved"));
+	return(-1);
+    }
     memcpy(&ctxt->ftpAddr.sin_addr, hp->h_addr_list[0], hp->h_length);
     if (proxy) {
 	port = proxyPort;
