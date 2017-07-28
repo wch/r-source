@@ -4820,6 +4820,7 @@ s1 <- "this is a test string 123"
 r0 <- r1 <- charToRaw(s1)
 save(r1, file="r1-ascii.rda", ascii=TRUE)
 save(r1, file="r1.rda", ascii=FALSE)
+rm(r1)# really prove...
 load("r1.rda")
 unlink("r1.rda")
 stopifnot(identical(r1, r0))
