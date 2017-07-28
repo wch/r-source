@@ -1,7 +1,7 @@
 #  File src/library/base/R/qr.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ qr.default <- function(x, tol = 1e-07, LAPACK = FALSE, ...)
     ## otherwise :
     if(LAPACK)
         return(structure(.Internal(La_qr(x)), useLAPACK = TRUE, class = "qr"))
-
+    ## else "Linpack" case:
     p <- as.integer(ncol(x))
     if(is.na(p)) stop("invalid ncol(x)")
     n <- as.integer(nrow(x))
@@ -65,47 +65,44 @@ qr.coef <- function(qr, y)
     if (!im) y <- as.matrix(y)
     ny <- as.integer(ncol(y))
     if(is.na(ny)) stop("invalid ncol(y)")
-    if (p == 0L) return( if (im) matrix(0, p, ny) else numeric() )
-    ix <- if ( p > n ) c(seq_len(n), rep(NA, p - n)) else seq_len(p)
-    if(is.complex(qr$qr)) {
-	coef <- matrix(NA_complex_, nrow = p, ncol = ny)
+    if(nrow(y) != n) stop("'qr' and 'y' must have the same number of rows")
+    isC <- is.complex(qr$qr)
+    coef <- matrix(if(isC) NA_complex_ else NA_real_, p, ny)
+    ix <- if (p > n) c(seq_len(n), rep(NA, p - n)) else seq_len(p)
+    nam <- colnames(qr$qr)
+    if (p == 0L) {
+	pivotted <- FALSE
+    } else if(isC) {
+	if(!is.null(nam)) pivotted <- is.unsorted(qr$pivot)
 	coef[qr$pivot, ] <- .Internal(qr_coef_cmplx(qr, y))[ix, ]
-	return(if(im) coef else c(coef))
-    }
-    ## else {not complex} :
-    if(isTRUE(attr(qr, "useLAPACK"))) {
-	coef <- matrix(NA_real_, nrow = p, ncol = ny)
+    } else if(isTRUE(attr(qr, "useLAPACK"))) {
+	if(!is.null(nam)) pivotted <- is.unsorted(qr$pivot)
 	coef[qr$pivot, ] <- .Internal(qr_coef_real(qr, y))[ix, ]
-	return(if(im) coef else c(coef))
+    } else if (k > 0L) { ## else "Linpack" case, k > 0 :
+	storage.mode(y) <- "double"
+	z <- .Fortran(.F_dqrcf,
+		      as.double(qr$qr),
+		      n, k,
+		      as.double(qr$qraux),
+		      y,
+		      ny,
+		      coef = matrix(0, nrow = k,ncol = ny),
+		      info = integer(1L),
+		      NAOK = TRUE)[c("coef","info")]
+	if(z$info) stop("exact singularity in 'qr.coef'")
+	pivotted <- k < p
+	if(pivotted)
+	    coef[qr$pivot[seq_len(k)], ] <- z$coef
+	else coef                        <- z$coef
     }
-    if (k == 0L) return( if (im) matrix(NA, p, ny) else rep.int(NA, p))
-
-    storage.mode(y) <- "double"
-    if( nrow(y) != n )
-	stop("'qr' and 'y' must have the same number of rows")
-    z <- .Fortran(.F_dqrcf,
-		  as.double(qr$qr),
-		  n, k,
-		  as.double(qr$qraux),
-		  y,
-		  ny,
-		  coef = matrix(0, nrow = k,ncol = ny),
-		  info = integer(1L),
-		  NAOK = TRUE)[c("coef","info")]
-    if(z$info) stop("exact singularity in 'qr.coef'")
-    if(k < p) {
-	coef <- matrix(NA_real_, nrow = p, ncol = ny)
-	coef[qr$pivot[seq_len(k)], ] <- z$coef
-    }
-    else coef <- z$coef
-
-    if(!is.null(nam <- colnames(qr$qr)))
-        if(k < p) rownames(coef)[qr$pivot] <- nam
-        else rownames(coef) <- nam
-
+    ## in all cases, fixup dimnames (and drop to vector when y was):
+    if(!is.null(nam))
+	if(pivotted)
+	    rownames(coef)[qr$pivot] <- nam
+	else # faster
+	    rownames(coef)           <- nam
     if(im && !is.null(nam <- colnames(y)))
-        colnames(coef) <- nam
-
+	colnames(coef) <- nam
     if(im) coef else drop(coef)
 }
 

@@ -266,6 +266,9 @@
       robust bin width \eqn{h} in the latter case, and
       \code{hist.default(*, breaks)} now checks and corrects a too large
       \code{breaks} number.  (\PR{17274})
+
+      \item \code{qr.coef(qd, y)} now has correct names also when
+      \code{qd} is a complex QR or stems from \code{qr(*, LAPACK=TRUE)}.
     }
   }
 }

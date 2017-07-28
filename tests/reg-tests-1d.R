@@ -998,6 +998,24 @@ stopifnot(identical(rownames(T), c("", "c", "a+", "", "")))
 ## rownames(.) wrongly were NULL in R <= 3.4.1
 
 
+## qr.coef(qr(X, LAPACK=TRUE)) when X has column names, etc
+X <- cbind(int = 1,
+           c2 = c(2, 8, 3, 10),
+           c3 = c(2, 5, 2, 2)); rownames(X) <- paste0("r", 1:4)
+y <- c(2,3,5,7); yc <- as.complex(y)
+q.Li <- qr(X);              cfLi <- qr.coef(q.Li, y)
+q.LA <- qr(X, LAPACK=TRUE); cfLA <- qr.coef(q.LA, y)
+q.Cx <- qr(X + 0i);         cfCx <- qr.coef(q.Cx, y)
+e1 <- tryCatch(qr.coef(q.Li, y[-4]), error=identity); e1
+e2 <- tryCatch(qr.coef(q.LA, y[-4]), error=identity)
+stopifnot(
+    all.equal(cfLi,    cfLA , tol = 1e-14)# 6.376e-16 (64b Lx)
+   ,all.equal(cfLi, Re(cfCx), tol = 1e-14)#  (ditto)
+   ,identical(conditionMessage(e1), conditionMessage(e2)))
+## 1) cfLA & cfCx had no names in R <= 3.4.1
+## 2) error messages were not consistent
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
