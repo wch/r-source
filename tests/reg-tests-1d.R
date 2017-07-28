@@ -991,10 +991,11 @@ stopifnot(sum(hh$counts) == length(XXL))
 
 
 ## methods:::rbind / cbind no longer deeply recursive also fixes bug:
-if(requireNamespace('Matrix')) {
-    T <- rbind(1:2, c=2, "a+"=10, Matrix::Diagonal(2), deparse.level=0)
-    stopifnot(identical(rownames(T), c("", "c", "a+", "", "")))
-}## rownames(.) wrongly were NULL in R <= 3.4.1
+library(methods)
+myM <- setClass("myMatrix", contains="matrix")
+T <- rbind(1:2, c=2, "a+"=10, myM(4:1,2), deparse.level=0)
+stopifnot(identical(rownames(T), c("", "c", "a+", "", "")))
+## rownames(.) wrongly were NULL in R <= 3.4.1
 
 
 
