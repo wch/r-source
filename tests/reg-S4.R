@@ -905,3 +905,10 @@ setMethod("[", "bar", function(x, i, j, ..., flag = FALSE, drop = FALSE) {
 BAR <- new("bar")
 stopifnot(identical(BAR[1L], FALSE))
 stopifnot(identical(BAR[1L, , flag=TRUE], TRUE))
+
+## callNextMethod() was broken for ... dispatch
+f <- function(...) length(list(...))
+setGeneric("f")
+setMethod("f", "character", function(...){ callNextMethod() })
+stopifnot(identical(f(1, 2, 3), 3L))
+stopifnot(identical(f("a", "b", "c"), 3L))

@@ -71,6 +71,8 @@
       robust bin width \eqn{h} in the latter case, and
       \code{hist.default(*, breaks)} now checks and corrects a too large
       \code{breaks} number.  (\PR{17274})
+
+      \item \code{callNextMethod()} works for \code{\dots} methods.
     }
   }
 }

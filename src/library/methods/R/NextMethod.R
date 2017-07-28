@@ -52,6 +52,10 @@ callNextMethod <- function(...) {
         nextMethod <- nextMethodEnv$.nextMethod
         f <- nextMethodEnv$.Generic
     }
+    else if (is(maybeMethod, "MethodDefinition")) {
+        f <- maybeMethod@generic
+        method <- maybeMethod
+    }
     else {
         ## may be a method call for a primitive; not available as .Method
         if (is.primitive(mcall[[1L]])) {
