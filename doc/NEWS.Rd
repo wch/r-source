@@ -126,8 +126,6 @@
       instead of \code{.Method} (for consistency with default dispatch),
       and only attempts to pass non-missing arguments from the generic.
 
-      \item \code{callNextMethod()} works for \code{\dots} methods.
-
       \item Connections are now written correctly with encoding
       \code{"UTF-16LE"}.  (\PR{16737}).
 
@@ -266,6 +264,8 @@
       robust bin width \eqn{h} in the latter case, and
       \code{hist.default(*, breaks)} now checks and corrects a too large
       \code{breaks} number.  (\PR{17274})
+
+      \item \code{callNextMethod()} works for \code{\dots} methods.
 
       \item \code{qr.coef(qd, y)} now has correct names also when
       \code{qd} is a complex QR or stems from \code{qr(*, LAPACK=TRUE)}.
