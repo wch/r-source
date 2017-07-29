@@ -236,7 +236,7 @@
       \item \code{rt()} assumed the \code{ncp} parameter was a scalar.  (\PR{17306})
 
       \item \code{menu(choices)} with more than 10 choices which easily
-      fit into one \code{getOption("width")}-line no longer erronously
+      fit into one \code{getOption("width")}-line no longer erroneously
       repeats choices.  (\PR{17312})
 
       \item \code{length()<-} on a pairlist succeeds.
