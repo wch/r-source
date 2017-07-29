@@ -55,6 +55,10 @@
       functions are correctly printed again, where \R 3.4.1 accidentally
       duplicated the backslashes.
 
+      \item Construction of \code{names()} for very large objects in
+      \code{c()} and \code{unlist()} now works, thanks to Suharto
+      Anggono's patch proposals in \PR{17992}.
+
       \item Resource leaks (and similar) reported by Steve Grubb fixed.
       (\PR{17314}, \PR{17316}, \PR{17317}, \PR{17318}, \PR{17319}, \PR{17320})
 
@@ -73,6 +77,9 @@
       \code{breaks} number.  (\PR{17274})
 
       \item \code{callNextMethod()} works for \code{\dots} methods.
+
+      \item \code{qr.coef(qd, y)} now has correct names also when
+      \code{qd} is a complex QR or stems from \code{qr(*, LAPACK=TRUE)}.
     }
   }
 }
