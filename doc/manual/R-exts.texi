@@ -996,8 +996,10 @@ installed on any platform).
 Note that someone wanting to run the examples/tests/vignettes may not
 have a suggested package available (and it may not even be possible to
 install it for that platform).  The recommendation used to be to make
-their use conditional @emph{via} @code{if(require("@var{pkgname}"))}):
-this is fine if that conditioning is done in examples/tests/vignettes.
+their use conditional @emph{via} @code{if(require("@var{pkgname}"))}:
+this is OK if that conditioning is done in examples/tests/vignettes,
+although using @code{if(requireNamespace("@var{pkgname}"))} is
+preferred, if possible.
 
 However, using @code{require} for conditioning @emph{in package code} is
 not good practice as it alters the search path for the rest of the
@@ -1023,6 +1025,11 @@ tests does also apply to packages used to manage test suites: a
 notorious example was @CRANpkg{testthat} which in version 1.0.0 contained
 illegal C++ code and hence could not be installed on standards-compliant
 platforms.
+
+Some people have assumed that a `recommended' package in @samp{Suggests}
+can safely be used unconditionally, but this is not so.  (@R{} can be
+installed without recommended packages, and which packages are
+`recommended' may change.)
 
 As noted above, packages in @samp{Enhances} @emph{must} be used
 conditionally and hence objects within them should always be accessed
