@@ -3957,11 +3957,11 @@ If timings are being recorded, set the threshold in seconds for
 reporting long-running examples (either user+system CPU time or elapsed
 time).  Default: @code{"5"}.
 
-@item _R_CHECK_EXAMPLE_TIMING_USER_TO_ELAPSED_THRESHOLD_
-For  checks with timings enabled, report examples where the
-ratio of user CPU time to elapsed time exceeds this threshold (and the
-user CPU time is at least one second).  This can help detect the
-simultaneous use of multiple CPU cores.
+@item _R_CHECK_EXAMPLE_TIMING_CPU_TO_ELAPSED_THRESHOLD_
+For checks with timings enabled, report examples where the ratio of CPU
+time to elapsed time exceeds this threshold (and the CPU time is at
+least one second).  This can help detect the simultaneous use of
+multiple CPU cores.
 Default: @code{NA}.
 
 @item _R_CHECK_TEST_TIMING_CPU_TO_ELAPSED_THRESHOLD_

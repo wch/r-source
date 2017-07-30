@@ -2781,21 +2781,22 @@ setRlibs <-
                 }
 
                 theta <-
-                    as.numeric(Sys.getenv("_R_CHECK_EXAMPLE_TIMING_USER_TO_ELAPSED_THRESHOLD_",
+                    as.numeric(Sys.getenv("_R_CHECK_EXAMPLE_TIMING_CPU_TO_ELAPSED_THRESHOLD_",
                                           NA_character_))
                 if(!is.na(theta)) {
-                    keep <- (times[[1L]] >= pmax(theta * times[[3L]], 1))
+                    keep <- ((times[[1L]] + times[[2L]]) >=
+                              pmax(theta * times[[3L]], 1))
                     if(any(keep)) {
                         if(!any && check_incoming) {
                             noteLog(Log)
                             any <- TRUE
                         }
                         printLog(Log,
-                                 sprintf("Examples with user time > %g times elapsed time\n",
+                                 sprintf("Examples with CPU time > %g times elapsed time\n",
                                          theta))
                         bad <- times[keep, ]
-                        bad <- cbind(bad,
-                                     ratio = round(bad[[1L]] / bad[[3L]], 3L))
+                        ratio <- (bad[[1L]] + bad[[2L]]) / bad[[3L]]
+                        bad <- cbind(bad, ratio = round(ratio, 3L))
                         bad <- bad[order(bad$ratio, decreasing = TRUE), ]
                         out <- utils::capture.output(format(bad))
                         printLog0(Log, paste(out, collapse = "\n"), "\n")
