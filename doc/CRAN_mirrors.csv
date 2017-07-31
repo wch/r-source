@@ -71,7 +71,7 @@ Iceland,Iceland,Reykjavik,http://cran.hafro.is/,"Marine Research Institute","cra
 "India [https]",India,Chennai,https://ftp.iitm.ac.in/cran/,"Indian Institute of Technology Madras","sriram # iitm.ac.in",1,in
 India,India,Chennai,http://ftp.iitm.ac.in/cran/,"Indian Institute of Technology Madras","sriram # iitm.ac.in",1,in
 "Indonesia (Jakarta) [https]",Indonesia,Jakarta,https://repo.bppt.go.id/cran/,"Agency for The Application and Assessment of Technology","Imam Cartealy <imam.cartealy # bppt.go.id>",1,id,"secure_mirror_from_master"
-Iran,Iran,Mashhad,http://cran.um.ac.ir/,"Ferdowsi University of Mashhad","Majid Sarmad <sarmad # um.ac.ir>",1,ir
+Iran,Iran,Mashhad,http://cran.um.ac.ir/,"Ferdowsi University of Mashhad","Majid Sarmad <sarmad # um.ac.ir>",0,ir
 "Ireland [https]",Ireland,Dublin,https://ftp.heanet.ie/mirrors/cran.r-project.org/,"HEAnet,Dublin","mirrors # heanet.ie",1,ie,"secure_mirror_from_master"
 Ireland,Ireland,Dublin,http://ftp.heanet.ie/mirrors/cran.r-project.org/,"HEAnet,Dublin","mirrors # heanet.ie",1,ie,"secure_mirror_from_master"
 "Italy (Milano)",Italy,Milano,http://cran.mirror.garr.it/mirrors/CRAN/,"Garr Mirror, Milano","mirror-service # garr.it",1,it
