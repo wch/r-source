@@ -45,7 +45,7 @@
       \item \code{rt()} assumed the \code{ncp} parameter was a scalar.  (\PR{17306})
 
       \item \code{menu(choices)} with more than 10 choices which easily
-      fit into one \code{getOption("width")}-line no longer erronously
+      fit into one \code{getOption("width")}-line no longer erroneously
       repeats choices.  (\PR{17312})
 
       \item \code{length()<-} on a pairlist succeeds.
@@ -57,7 +57,7 @@
 
       \item Construction of \code{names()} for very large objects in
       \code{c()} and \code{unlist()} now works, thanks to Suharto
-      Anggono's patch proposals in \PR{17992}.
+      Anggono's patch proposals in \PR{17292}.
 
       \item Resource leaks (and similar) reported by Steve Grubb fixed.
       (\PR{17314}, \PR{17316}, \PR{17317}, \PR{17318}, \PR{17319}, \PR{17320})
