@@ -83,15 +83,14 @@ gc() # back to ~ 18 GB
 
 
 ## Large string's encodeString() -- PR#15885
-if(availableGB > 4) system.time({
-    r <- rep("test me:", 53687091)
-    txt <- paste(r, collapse=""); object.size(txt) # 429'496'824 bytes
-    nc <- nchar(txt); nq <- nc*5+8 # is larger than maximal integer:
+if(availableGB > 4) system.time(withAutoprint({
+    txt <- strrep("test me:", 53687091); object.size(txt) # 429'496'824 bytes
+    nc <- nchar(txt); ## NB this is larger than maximal integer:
     nc*5L+8L # NA + Warning   'NAs produced by integer overflow'
     en <- encodeString(txt)
     ## encodeString() seg.faulted in R <= 3.4.1
     stopifnot(identical(txt,en)) # encoding did not change simple ASCII
-})
+}))
 ## 52 sec elapsed [nb-mm4, 8 GB]
 
 
