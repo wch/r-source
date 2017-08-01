@@ -269,6 +269,9 @@
 
       \item \code{qr.coef(qd, y)} now has correct names also when
       \code{qd} is a complex QR or stems from \code{qr(*, LAPACK=TRUE)}.
+
+      \item Setting \code{options(device = *)} to an invalid function no
+      longer segfaults when plotting is initiated.  (\PR{15883})
     }
   }
 }

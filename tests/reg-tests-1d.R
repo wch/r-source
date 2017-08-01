@@ -1016,6 +1016,16 @@ stopifnot(
 ## 2) error messages were not consistent
 
 
+## invalid user device function  options(device = *) -- PR#15883
+graphics.off() # just in case
+options(device=function(...){}) # non-sense device
+tools::assertError(plot.new(), verbose = TRUE)
+if(no.grid <- !("grid" %in% loadedNamespaces())) requireNamespace("grid")
+tools::assertError(grid::grid.newpage(), verbose = TRUE)
+if(no.grid) unloadNamespace("grid")
+## both errors gave segfaults in R <= 3.4.1
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
