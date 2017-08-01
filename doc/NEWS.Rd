@@ -83,6 +83,9 @@
 
       \item Setting \code{options(device = *)} to an invalid function no
       longer segfaults when plotting is initiated.  (\PR{15883})
+
+      \item \code{encodeString(<very large string>)} no longer
+      segfaults.  (\PR{15885})
     }
   }
 }
