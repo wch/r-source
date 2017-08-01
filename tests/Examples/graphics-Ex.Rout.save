@@ -1015,6 +1015,15 @@ List of 6
 Warning in plot.histogram(r, freq = freq1, col = col, border = border, angle = angle,  :
   the AREAS in the plot are wrong -- rather use 'freq = FALSE'
 > 
+> ## Extreme outliers; the "FD" rule would take very large number of 'breaks':
+> XXL <- c(1:9, c(-1,1)*1e300)
+> hh <- hist(XXL, "FD") # did not work in R <= 3.4.1; now gives warning
+Warning in hist.default(XXL, "FD") :
+  'breaks = 4.44796e+299' is too large and set to 1e9
+> ## and only uses
+> hh$counts ## 20 counts -- indeed 1e9 was "a suggestion only"
+ [1] 1 0 0 0 0 0 0 0 0 9 0 0 0 0 0 0 0 0 0 1
+> 
 > require(stats)
 > set.seed(14)
 > x <- rchisq(100, df = 4)
