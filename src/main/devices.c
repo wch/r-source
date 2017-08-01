@@ -172,6 +172,8 @@ pGEDevDesc GEcurrentDevice(void)
 	    UNPROTECT(1);
 	} else
 	    error(_("no active or default device"));
+	if (NoDevices()) // the startup above may have failed
+	    error(_("no active device and default getOption(\"device\") is invalid"));
     }
     return R_Devices[R_CurrentDevice];
 }
