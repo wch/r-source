@@ -70,7 +70,6 @@ the core team working on @R{} itself.
 * Testing R code::              
 * Use of TeX dialects::         
 * Current and future directions::  
-* Maintainer mode::             
 * Function and variable index::  
 * Concept index::               
 @end menu
@@ -4382,7 +4381,7 @@ at run time.  The latter can be important for binary distributions: one
 does not want to be tied to, for example, TeX Live 2007.
 
 
-@node Current and future directions, Maintainer mode, Use of TeX dialects, Top
+@node Current and future directions, Function and variable index, Use of TeX dialects, Top
 @chapter Current and future directions
 
 This chapter is for notes about possible in-progress and future changes
@@ -4547,39 +4546,9 @@ although none have yet been encountered.  For matrix algebra on large
 matrices one almost certainly wants a machine with a lot of RAM (100s of
 gigabytes), many cores and a multi-threaded @acronym{BLAS}.
 
-@node Maintainer mode, Function and variable index, Current and future directions, Top
-@chapter Maintainer mode
 
-`Maintainer mode' is for developers, mainly for adding new features to
-@R{}.  It is enabled by configuring @R{} with option
-@option{--enable-maintainer-mode}.
 
-In maintainer mode @command{make} in the top-level build directory
-updates files @emph{in the source directory} which are usually
-used unchanged from the distribution.  These include
-@vtable @file
-@item configure, src/config.h.in
-These are recreated if any of the files @file{configure.ac},
-@file{m4/*.m4} or (for @command{configure}) @file{VERSION} is changed.
-This requires the GNU tools @command{autoconf} and
-@command{autoheader}.  In doing so it creates top-level files
-@file{acinclude.m4} and @file{aclocal.m4} in the build directory and a
-top-level directory @file{autom4te.cache} in the top-level source
-directory: these should be removed once maintainer mode is finished with.
-
-@item src/library/compiler/R/cmp.R
-Recreated from @file{src/library/compiler/noweb/compiler.nw} using
-@command{notangle}@footnote{part of @samp{noweb},
-@uref{https://www.cs.tufts.edu/~nr/noweb/}: a few OS distributions
-package it.}: its presence is required
-when configuring with @option{--enable-maintainer-mode}.
-
-@item src/main/gram.c, src/library/tools/src/gramRd.c, src/library/tools/src/gramLatex.c
-These are recreated from the corresponding @code{.y} files using a
-suitable version of @code{bison}, detected by @command{configure}.
-@end vtable
-
-@node Function and variable index, Concept index, Maintainer mode, Top
+@node Function and variable index, Concept index, Current and future directions, Top
 @unnumbered Function and variable index
 
 @printindex vr
