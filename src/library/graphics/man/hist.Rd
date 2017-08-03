@@ -33,9 +33,10 @@ hist(x, \dots)
     }
     In the last three cases the number is a suggestion only; as the
     breakpoints will be set to \code{\link{pretty}} values, the number
-    is limited to \code{1e9} (with a warning if it was larger).  If
+    is limited to \code{1e6} (with a warning if it was larger).  If
     \code{breaks} is a function, the \code{x} vector is supplied to it
-    as the only argument.
+    as the only argument (and the number of breaks is only limited by
+    the amount of available memory).
   }
   \item{freq}{logical; if \code{TRUE}, the histogram graphic is a
     representation of frequencies, the \code{counts} component of
@@ -187,8 +188,8 @@ hist(islands, breaks = c(12,20,36,80,200,1000,17000), freq = TRUE,
 ## Extreme outliers; the "FD" rule would take very large number of 'breaks':
 XXL <- c(1:9, c(-1,1)*1e300)
 hh <- hist(XXL, "FD") # did not work in R <= 3.4.1; now gives warning
-## and only uses
-hh$counts ## 20 counts -- indeed 1e9 was "a suggestion only"
+## pretty() determines how many counts are used (platform dependently!):
+length(hh$breaks) ## typically 1 million -- though 1e6 was "a suggestion only"
 
 require(stats)
 set.seed(14)
