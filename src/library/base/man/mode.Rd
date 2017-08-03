@@ -72,7 +72,7 @@ storage.mode(x) <- value
 }
 \seealso{
   \code{\link{typeof}} for the R-internal \sQuote{mode},
-  \code{\link{attributes}}.
+  \code{\link[utils]{type.convert}}, \code{\link{attributes}}.
 }
 \examples{
 require(stats)

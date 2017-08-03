@@ -3272,7 +3272,7 @@ Error in `[.data.frame`(x, 1, c("a", "c")) : undefined columns selected
 [31] print         prompt        rbind         row.names     row.names<-  
 [36] rowsum        split         split<-       stack         str          
 [41] subset        summary       t             tail          transform    
-[46] unique        unstack       within       
+[46] type.convert  unique        unstack       within       
 > meth2gen("dendrogram")
  [1] [[            as.dendrogram as.hclust     cophenetic    cut          
  [6] labels        merge         nobs          plot          print        

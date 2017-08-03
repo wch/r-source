@@ -100,6 +100,10 @@
       \item Attempting to increase the length of a variable containing
       \code{NULL} using \code{length()<-} still has no effect on the
       target variable, but now triggers a warning.
+
+      \item \code{type.convert()} becomes a generic, with additional
+      methods that operate recursively over list and \code{data.frame}
+      objects. Courtesy of Arni Magnusson (\PR{17269}).
     }
   }
 
