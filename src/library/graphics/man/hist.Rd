@@ -33,9 +33,10 @@ hist(x, \dots)
     }
     In the last three cases the number is a suggestion only; as the
     breakpoints will be set to \code{\link{pretty}} values, the number
-    is limited to \code{1e9} (with a warning if it was larger).  If
+    is limited to \code{1e8} (with a warning if it was larger).  If
     \code{breaks} is a function, the \code{x} vector is supplied to it
-    as the only argument.
+    as the only argument (and the number of breaks is only limited by
+    the amount of available memory).
   }
   \item{freq}{logical; if \code{TRUE}, the histogram graphic is a
     representation of frequencies, the \code{counts} component of

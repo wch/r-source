@@ -73,10 +73,10 @@ hist.default <-
         if (length(breaks) == 1) {
             if(!is.numeric(breaks) || !is.finite(breaks) || breaks < 1L)
                 stop("invalid number of 'breaks'")
-	    if(breaks > 1e9) { # pretty() must have n <= maximal integer
-		warning(gettextf("'breaks = %g' is too large and set to 1e9",
+	    if(breaks > 1e8) { # pretty() must have n <= maximal integer
+		warning(gettextf("'breaks = %g' is too large and set to 1e8",
 				 breaks), domain = NA)
-		breaks <- 1e9L
+		breaks <- 1e8L
 	    }
             breaks <- pretty (range(x), n = breaks, min.n = 1)
             nB <- length(breaks)
