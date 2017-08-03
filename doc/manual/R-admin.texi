@@ -4482,12 +4482,15 @@ build directory.  This requires other tools to be installed, discussed
 in the rest of this section.
 
 File @file{configure} is created from @file{configure.ac} and the files
-under @file{m4} by @command{autoconf} and @command{aclocal}.  There is a
-formal version requirement on @command{autoconf} of 2.62 or later, but
-it is unlikely that anything other than the most recent versions have
-been thoroughly tested.
+under @file{m4} by @command{autoconf} and @command{aclocal} (part of the
+@pkg{automake} package).  There is a formal version requirement on
+@command{autoconf} of 2.62 or later, but it is unlikely that anything
+other than the most recent versions@footnote{at the time of revsion of
+this para in 2017, @pkg{autoconf-2.69} from 2012 and @pkg{automake-1.15}
+from 2015.} have been thoroughly tested.
 
-File @file{src/include/config.h} is created by @command{autoheader}.
+File @file{src/include/config.h} is created by @command{autoheader}
+(part of @pkg{autoconf}).
 
 Grammar files @file{*.y} are converted to C sources by an implementation
 of @command{yacc}, usually @command{bison -y}: these are found in
@@ -4531,8 +4534,9 @@ recent reports.
 
 C macros to select particular platforms can be tricky to track down
 (there is a fair amount of misinformation on the Web).  The Wiki
-(currently) at @uref{http://sourceforge.net/@/p/@/predef/@/wiki/@/Home/} can be
-helpful.  The @R{} sources currently use
+(currently) at @uref{http://sourceforge.net/@/p/@/predef/@/wiki/@/Home/}
+can be helpful.  The @R{} sources have used (often in included software
+under @file{src/extra})
 @example
 AIX: _AIX
 Cygwin: __CYGWIN__
