@@ -807,8 +807,10 @@ function(calls, dir = NULL, character_only = TRUE)
     nrdb <- do.call(rbind, nrdb)
     nrdb <- as.data.frame(unique(nrdb), stringsAsFactors = FALSE)
 
-    if(NROW(nrdb) == 0L || length(nrdb) != 3L)
-        stop("no native symbols were extracted")
+    if(NROW(nrdb) == 0L || length(nrdb) != 3L) {
+        message("no native symbols were extracted")
+        return(NULL)
+    }
     nrdb[, 3L] <- as.numeric(nrdb[, 3L])
     nrdb <- nrdb[order(nrdb[, 1L], nrdb[, 2L], nrdb[, 3L]), ]
     nms <- nrdb[, "s"]
