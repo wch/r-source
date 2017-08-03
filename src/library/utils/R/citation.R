@@ -269,7 +269,7 @@ function(x)
 {
     if(inherits(x, "person")) return(x)
 
-    x <- as.character(x)
+    x <- trimws(as.character(x))
 
     if(!length(x)) return(person())
 

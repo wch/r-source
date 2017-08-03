@@ -162,9 +162,9 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
     \item{address:}{The address of the publisher or other type of
       institution.}
 
-    \item{author:}{The name(s) of the author(s), either
-      as a character string in the format described in the LaTeX book,
-      or a \code{\link{person}} object.}
+    \item{author:}{The name(s) of the author(s), either as a
+      \code{\link{person}} object, or as a character string which
+      \code{\link{as.person}} correctly coerces to such.}
 
     \item{booktitle:}{Title of a book, part of which is being cited.}
     \item{chapter:}{A chapter (or section or whatever) number.}
