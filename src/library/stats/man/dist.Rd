@@ -1,6 +1,6 @@
 % File src/library/stats/man/dist.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{dist}
@@ -32,7 +32,7 @@ as.dist(m, diag = FALSE, upper = FALSE)
 }
 \arguments{
   \item{x}{a numeric matrix, data frame or \code{"dist"} object.}
-  \item{method}{the distance measure to be used. This must be one of
+  \item{method}{the distance measure to be used.  This must be one of
     \code{"euclidean"}, \code{"maximum"}, \code{"manhattan"},
     \code{"canberra"}, \code{"binary"} or \code{"minkowski"}.
     Any unambiguous substring can be given.}
@@ -63,13 +63,15 @@ as.dist(m, diag = FALSE, upper = FALSE)
     \item{\code{manhattan}:}{Absolute distance between the two vectors (1 norm aka \eqn{L_1}).}
 
     \item{\code{canberra}:}{
-      \eqn{\sum_i |x_i - y_i| / |x_i + y_i|}{sum(|x_i - y_i| / |x_i + y_i|)}.
+      %% till 2017-07-15: \eqn{\sum_i |x_i - y_i| / |x_i + y_i|}{sum(|x_i - y_i| / |x_i + y_i|)}.
+      \eqn{\sum_i |x_i - y_i| / (|x_i| + |y_i|)}{sum(|x_i - y_i| / (|x_i| + |y_i|))}.
       Terms with zero numerator and denominator are omitted from the sum
       and treated as if the values were missing.
 
-      This is intended for non-negative values (e.g., counts): taking the
-      absolute value of the denominator is a 1998 \R modification to
-      avoid negative distances.
+      This is intended for non-negative values (e.g., counts), in which
+      case the denominator can be written in various equivalent ways;
+      Originally, \R used \eqn{x_i + y_i}, then from 1998 to 2017,
+      \eqn{|x_i + y_i|}, and then the correct \eqn{|x_i| + |y_i|}.
     }
 
     \item{\code{binary}:}{(aka \emph{asymmetric binary}): The vectors
