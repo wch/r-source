@@ -104,6 +104,11 @@
       \item \code{type.convert()} becomes a generic, with additional
       methods that operate recursively over list and \code{data.frame}
       objects. Courtesy of Arni Magnusson (\PR{17269}).
+
+      \item \code{lower.tri(x)} and \code{upper.tri(x)} only needing
+      \code{dim(x)} now work via new \code{.row()} \code{.col()} and
+      no longer call \code{as.matrix()} by default in order to work
+      efficiently for all kind of matrix-like objects.
     }
   }
 
