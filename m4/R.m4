@@ -57,7 +57,7 @@ else
   $1="${[$1]}${separator}$2"
 fi])# R_SH_VAR_ADD
 
-## R_MISSING_PROG(NAME, PROGRAM)
+## R_MISSING_PROG(NAME, PROGRAM, [ACTION-IF-MISSING])
 ## -----------------------------
 ## Simplified variant of AM_MISSING_PROG.
 ## Set NAME to PROGRAM if this is found and works (in the sense of
@@ -69,8 +69,9 @@ if ($2 --version) < /dev/null > /dev/null 2>&1; then
   $1=$2
   AC_MSG_RESULT([found])
 else
-  $1="\$(SHELL) \$(top_srcdir)/tools/missing $2"
+  $1="\$(SHELL) \$(abs_top_srcdir)/tools/missing $2"
   AC_MSG_RESULT([missing])
+  [$3]  
 fi
 AC_SUBST($1)
 ])# R_MISSING_PROG
@@ -4323,6 +4324,15 @@ if test "x${r_cv_func_ctanh_works}" = xyes; then
             [Define if ctanh() exists and is working correctly.])
 fi
 ])# R_FUNC_CTANH
+
+## R_MNT_WARN(MSG)
+## --------------------------------------------------------
+## Prints a warning if in maintainer mode.
+AC_DEFUN([R_MNT_WARN],
+[if test "x${use_maintainer_mode}" = xyes; then
+  AC_MSG_WARN([$1])
+fi
+])# R_MNT_WARN
 
 ### Local variables: ***
 ### mode: outline-minor ***
