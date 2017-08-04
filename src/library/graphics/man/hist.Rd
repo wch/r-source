@@ -184,13 +184,13 @@ str(hist(islands, breaks = c(12,20,36,80,200,1000,17000), plot = FALSE))
 
 hist(islands, breaks = c(12,20,36,80,200,1000,17000), freq = TRUE,
      main = "WRONG histogram") # and warning
-
+\donttest{% save 2 seconds
 ## Extreme outliers; the "FD" rule would take very large number of 'breaks':
 XXL <- c(1:9, c(-1,1)*1e300)
 hh <- hist(XXL, "FD") # did not work in R <= 3.4.1; now gives warning
 ## pretty() determines how many counts are used (platform dependently!):
 length(hh$breaks) ## typically 1 million -- though 1e6 was "a suggestion only"
-
+}
 require(stats)
 set.seed(14)
 x <- rchisq(100, df = 4)
