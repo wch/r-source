@@ -74,7 +74,6 @@ rbind <- function(..., deparse.level = 1)
 	## if(deparse.level) {
 	    if(fix.na)
 		fix.na <- !is.null(Nna <- Nms(na))
-	    if(!is.null(nmi <- names(argl))) iV <- iV & (nmi == "")
 	## }
     }
 
