@@ -267,7 +267,7 @@ utils::globalVariables(".addBasicGeneric")
 
     ## svd(): signature should only have "x" (no 'nu', 'nv' ..)
     setGeneric("svd", function(x, ...) standardGeneric("svd"),
-	       useAsDefault= function(x, ...) base::svd.R(x, ...),
+	       useAsDefault= function(x, ...) base::svd(x, ...),
 	       signature = "x", where = where)
     setGenericImplicit("svd", where, FALSE)
 
