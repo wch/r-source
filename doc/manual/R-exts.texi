@@ -9634,10 +9634,10 @@ Alternatively, examine the package's @R{} code for all @code{.C},
 @code{.Fortran}, @code{.Call} and @code{.External} calls.
 
 @item
-Construct the registration table.
-First write skeleton registration code, conventionally in file
-@file{src/init.c} (or at the end of the only C source file in the
-package):
+Construct the registration table.  First write skeleton registration
+code, conventionally in file @file{src/init.c} (or at the end of the
+only C source file in the package: if included in a C++ file the
+@samp{R_init} function would need to be declared @code{extern "C"}):
 
 @example
 @group
