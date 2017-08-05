@@ -35,7 +35,8 @@ system2(command, args = character(),
     interpreter should wait for the command to finish, or run it
     asynchronously.  This will be ignored (and the interpreter will
     always wait) if \code{stdout = TRUE}.}
-  \item{timeout}{timeout in seconds, ignored if 0.}
+  \item{timeout}{timeout in seconds, ignored if 0.  This is a limit for the
+    elapsed time running \code{command} in a separate process.}
 #ifdef unix
   \item{minimized, invisible}{arguments that are accepted on Windows but
     ignored on this platform, with a warning.}
