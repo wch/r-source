@@ -20,7 +20,11 @@
       \item The default for \code{tools::write_PACKAGES(rds_compress=)}
       has been changed to \code{"xz"} to match the compression used by
       \acronym{CRAN}.
+    }
+  }
 
+  \subsection{UTILITIES}{
+    \itemize{
       \item \command{R CMD check} checks for and \command{R CMD build}
       corrects CRLF line endings in shell scripts \command{configure}
       and \command{cleanup} (even on Windows).
@@ -86,6 +90,10 @@
 
       \item \code{encodeString(<very large string>)} no longer
       segfaults.  (\PR{15885})
+
+      \item It is again possible to use \command{configure
+      --enable-maintainer-mode} without having installed
+      \command{notangle} (it was required in \R 3.4.[01]).
     }
   }
 }
