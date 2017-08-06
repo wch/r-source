@@ -87,7 +87,7 @@
       option \code{keepAttrs = FALSE} for speed up.
 
       \item \command{system()} and \command{system2()} now allow the
-      specification of a maximum elapsed time.
+      specification of a maximum elapsed time (\sQuote{timeout}).
       (This feature is currently experimental and subject to change.)
 
       \item \code{debug()} supports debugging of methods on any object
@@ -109,6 +109,17 @@
       \code{dim(x)} now work via new \code{.row()} \code{.col()} and
       no longer call \code{as.matrix()} by default in order to work
       efficiently for all kind of matrix-like objects.
+    }
+  }
+
+  \subsection{UTILITIES}{
+    \itemize{
+      \item It is now possible to set \sQuote{timeouts} (elapsed-time
+      limits) for most parts of \command{R CMD check} \emph{via}
+      environment variables documented in the \sQuote{R Internals}
+      manual. [This depends on the experimental \sQuote{timeout} feature
+      of \code{system2()} and hence subject to change, as are the names
+      of the environment variables.]
     }
   }
 
@@ -218,7 +229,11 @@
       \item The default for \code{tools::write_PACKAGES(rds_compress=)}
       has been changed to \code{"xz"} to match the compression used by
       \acronym{CRAN}.
+    }
+  }
 
+  \subsection{UTILITIES}{
+    \itemize{
       \item \command{R CMD check} checks for and \command{R CMD build}
       corrects CRLF line endings in shell scripts \command{configure}
       and \command{cleanup} (even on Windows).
@@ -284,6 +299,10 @@
 
       \item \code{encodeString(<very large string>)} no longer
       segfaults.  (\PR{15885})
+
+      \item It is again possible to use \command{configure
+      --enable-maintainer-mode} without having installed
+      \command{notangle} (it was required in \R 3.4.[01]).
     }
   }
 }

@@ -4177,6 +4177,41 @@ _R_CHECK_FORCE_SUGGESTS_=FALSE
 since some packages do suggest other packages not available on CRAN or
 other commonly-used repositories.
 
+Several environment variables can be used to set `timeouts': limits for
+the elapsed time taken by the sub-processes used for parts of the
+checks.  A value of @code{0} indicates no limit, and is the default.
+Character strings ending in @samp{m} or @samp{h} indicate a number of
+minutes or hours respectively: other values are interpreted as a whole
+number of seconds.
+@vtable @code
+@item _R_CHECK_ELAPSED_TIMEOUT_
+The default timeout for sub-processes not otherwise mentioned, and the
+default value for all except @env{_R_CHECK_1TEST_ELAPSED_TIMEOUT_}.
+
+@item _R_CHECK_INSTALL_ELAPSED_TIMEOUT_
+Limit for when @command{R CMD INSTALL} is run by @command{check}.
+
+@item _R_CHECK_EXAMPLES_ELAPSED_TIMEOUT_
+Limit for running all the examples for one sub-architecture.
+
+@item _R_CHECK_1TEST_ELAPSED_TIMEOUT_
+Limit for running one test for one sub-architecture.  Default
+@env{_R_CHECK_TESTS_ELAPSED_TIMEOUT_}
+
+@item _R_CHECK_TESTS_ELAPSED_TIMEOUT_
+Limit for running all the tests for one sub-architecture (and the
+default limit for running one test).
+
+@item _R_CHECK_1VIGNETTE_ELAPSED_TIMEOUT_
+Limit for running the @R{} code in one vignette.
+
+@item _R_CHECK_BUILD_VIGNETTES_ELAPSED_TIMEOUT_
+Limit for re-building (all) vignettes.
+
+@item _R_CHECK_PKGMAN_ELAPSED_TIMEOUT_
+Limit for each attempt at building the PDF package manual.
+@end vtable
+
 Another variable which enables stricter checks is to set
 @env{R_CHECK_CONSTANTS} to @code{5}.  This checks that
 nothing@footnote{The usual culprits are calls to compiled code

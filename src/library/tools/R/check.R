@@ -23,23 +23,40 @@
 ## be what commandArgs(TRUE) would return, that is a character vector
 ## of (space-delimited) terms that would be passed to R CMD check.
 
+
+get_timeout <- function(tlim)
+{
+    if(is.character(tlim)) {
+        if(grepl("m$", tlim))
+            tlim <- 60*as.numeric(sub("m$", "", tlim))
+        else if(grepl("h$", tlim))
+            tlim <- 3600*as.numeric(sub("h$", "", tlim))
+    }
+    tlim <- as.numeric(tlim)
+    if(is.na(tlim) || tlim < 0) tlim <- 0
+    tlim
+}
+
 ## Used for INSTALL and Rd2pdf
 run_Rcmd <- function(args, out = "", env = "", timeout = 0)
 {
-    if(.Platform$OS.type == "windows")
+    status <- if(.Platform$OS.type == "windows")
         system2(file.path(R.home("bin"), "Rcmd.exe"), args, out, out,
-                timeout = timeout)
+                timeout = get_timeout(timeout))
     else
         system2(file.path(R.home("bin"), "R"), c("CMD", args), out, out,
-                env = env,
-                timeout = timeout)
+                env = env, timeout = get_timeout(timeout))
+    if(identical(status, 124L))
+        warning(gettextf("elapsed-time limit of %g seconds reached for sub-process", timeout), domain = NA, call. = FALSE)
+    status
 }
 
 R_runR <- function(cmd = NULL, Ropts = "", env = "",
                    stdout = TRUE, stderr = TRUE, stdin = NULL,
-                   arch = "")
+                   arch = "", timeout = 0)
 {
-    if (.Platform$OS.type == "windows") {
+    timeout <- get_timeout(timeout)
+    out <- if (.Platform$OS.type == "windows") {
         ## workaround Windows problem with input = cmd
         if (!is.null(cmd)) {
             ## In principle this should escape \
@@ -47,12 +64,17 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
         } else Rin <- stdin
         suppressWarnings(system2(if(nzchar(arch)) file.path(R.home(), "bin", arch, "Rterm.exe")
                                  else file.path(R.home("bin"), "Rterm.exe"),
-                                 c(Ropts, paste("-f", Rin)), stdout, stderr, env = env))
+                                 c(Ropts, paste("-f", Rin)), stdout, stderr,
+                                 env = env, timeout = timeout))
     } else {
         suppressWarnings(system2(file.path(R.home("bin"), "R"),
                                  c(if(nzchar(arch)) paste0("--arch=", arch), Ropts),
-                                 stdout, stderr, stdin, input = cmd, env = env))
+                                 stdout, stderr, stdin, input = cmd, env = env,
+                                 timeout = timeout))
     }
+    if(identical(out, 124L) || identical(attr(out, "status"), 124L))
+        warning(gettextf("elapsed-time limit of %g seconds reached for sub-process", timeout), domain = NA, call. = FALSE)
+    out
 }
 
 setRlibs <-
@@ -186,8 +208,47 @@ setRlibs <-
         printLog(Log, paste(strwrap(text), collapse = "\n"), "\n")
     }
 
+  ## used for R_runR2 and
+  ## .check_package_description
+  ## .check_package_description_encoding
+  ## .check_package_license
+  ## .check_demo_index
+  ## .check_vignette_index
+  ## .check_package_subdirs
+  ## .check_citation
+  ## .check_package_ASCII_code
+  ## .check_package_code_syntax
+  ## .check_packages_used
+  ## .check_package_code_shlib
+  ## .check_package_code_startup_functions
+  ## .check_package_code_unload_functions
+  ## .check_package_code_tampers
+  ## .check_package_code_assign_to_globalenv
+  ## .check_package_code_attach
+  ## .check_package_code_data_into_globalenv
+  ## .check_package_parseRd
+  ## .check_Rd_metadata
+  ## .check_Rd_line_widths
+  ## .check_Rd_xrefs
+  ## .check_Rd_contents
+  ## .check_package_datasets
+  ## .check_package_compact_datasets
+  ## .check_package_compact_sysdata
+  ## .check_make_vars
+  ## check_compiled_code
+  ## Checking loading
+  ## Rdiff on reference output
+  ## Creating -Ex.R
+  ## Running examples (run_one_arch)
+  ## .runPackageTestsR
+  ## .run_one_vignette
+  ## buildVignettes
+
+    def_tlim <- get_timeout(Sys.getenv("_R_CHECK_ELAPSED_TIMEOUT_"))
+    R_runR0 <- function(..., timeout = def_tlim)
+            R_runR(..., timeout = timeout)
+
     ## Used for
-    ## .check_packages_used
     ## .check_packages_used_in_examples
     ## .check_packages_used_in_tests
     ## .check_packages_used_in_vignettes
@@ -203,20 +264,22 @@ setRlibs <-
     ## .get_S3_generics_as_seen_from_package needs utils,graphics,stats
     ##  Used by checkDocStyle (which needs the generic visible) and checkS3methods.
     R_runR2 <-
-        if(WINDOWS) {
+        status <- if(WINDOWS) {
             function(cmd,
-                     env = "R_DEFAULT_PACKAGES=utils,grDevices,graphics,stats")
+                     env = "R_DEFAULT_PACKAGES=utils,grDevices,graphics,stats",
+                     timeout = 0)
                 {
-                    out <- R_runR(cmd, R_opts2, env)
+                    out <- R_runR(cmd, R_opts2, env, timeout = timeout)
                     ## pesky gdata ....
                     grep("^(ftype: not found|File type)", out,
                          invert = TRUE, value = TRUE)
                 }
         } else
             function(cmd,
-                     env = "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'")
+                     env = "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'",
+                     timeout = 0)
             {
-                out <- R_runR(cmd, R_opts2, env)
+                out <- R_runR(cmd, R_opts2, env, timeout = timeout)
                 ## htmltools produced non-UTF-8 output in Dec 2015
                 if (R_check_suppress_RandR_message)
                     grep('^Xlib: *extension "RANDR" missing on display', out,
@@ -612,7 +675,7 @@ setRlibs <-
         ## but that needs conversion to format().
         Rcmd <- sprintf("tools:::.check_package_description(\"%s\", TRUE)",
                         dfile)
-        out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
+        out <- R_runR0(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
         if (length(out)) {
             if(any(!grepl("^Malformed (Title|Description)", out))) {
                 errorLog(Log)
@@ -632,7 +695,7 @@ setRlibs <-
         }
         ## Check the encoding.
         Rcmd <- sprintf("tools:::.check_package_description_encoding(\"%s\")", dfile)
-        out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
+        out <- R_runR0(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
         if (length(out)) {
             warningLog(Log)
             any <- TRUE
@@ -656,7 +719,7 @@ setRlibs <-
             Rcmd <- sprintf("tools:::.check_package_license(\"%s\", \"%s\")",
                             dfile, pkgdir)
             ## FIXME: this does not need to be run in another process
-            out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
+            out <- R_runR0(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
             if (length(out)) {
                 if (check_license == "maybe") {
                     if (!any) warningLog(Log)
@@ -1010,7 +1073,7 @@ setRlibs <-
             } else {
                 Rcmd <- "options(warn=1)\ntools:::.check_demo_index(\"demo\")\n"
                 ## FIXME: this does not need to be run in another process
-                out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
+                out <- R_runR0(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
                 if(length(out)) {
                     if(!any) warningLog(Log)
                     any <- TRUE
@@ -1021,7 +1084,7 @@ setRlibs <-
         if (dir.exists(file.path("inst", "doc"))) {
             Rcmd <- "options(warn=1)\ntools:::.check_vignette_index(\"inst/doc\")\n"
             ## FIXME: this does not need to be run in another process
-            out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
+            out <- R_runR0(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
             if(length(out)) {
                 if(!any) warningLog(Log)
                 any <- TRUE
@@ -1135,7 +1198,7 @@ setRlibs <-
             ## We don't run this in the C locale, as we only require
             ## certain filenames to start with ASCII letters/digits, and not
             ## to be entirely ASCII.
-            out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
+            out <- R_runR0(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
             if(length(out)) {
                 if(!any) warningLog(Log)
                 any <- TRUE
@@ -1301,7 +1364,7 @@ setRlibs <-
                                   pkgname))
             else
                 "tools:::.check_citation(\"inst/CITATION\")\n"
-            out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=utils")
+            out <- R_runR0(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=utils")
             if(length(out)) {
                 if(!any) warningLog(Log)
                 any <- TRUE
@@ -1338,8 +1401,8 @@ setRlibs <-
     check_non_ASCII <- function()
     {
         checkingLog(Log, "R files for non-ASCII characters")
-        out <- R_runR("tools:::.check_package_ASCII_code('.')",
-                      R_opts2, "R_DEFAULT_PACKAGES=NULL")
+        out <- R_runR0("tools:::.check_package_ASCII_code('.')",
+                       R_opts2, "R_DEFAULT_PACKAGES=NULL")
         if (length(out)) {
             warningLog(Log)
             msg <- ngettext(length(out),
@@ -1356,7 +1419,7 @@ setRlibs <-
 
         checkingLog(Log, "R files for syntax errors")
         Rcmd  <- "options(warn=1);tools:::.check_package_code_syntax(\"R\")"
-        out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
+        out <- R_runR0(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
         if (any(startsWith(out, "Error"))) {
             errorLog(Log)
             printLog0(Log, paste(c(out, ""), collapse = "\n"))
@@ -1388,7 +1451,7 @@ setRlibs <-
                 Rcmd <- paste("options(warn=1, showErrorCalls=FALSE)\n",
                               sprintf("tools:::.check_packages_used(dir = \"%s\")\n", pkgdir))
 
-                out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
+                out <- R_runR0(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
                 if (length(out)) {
                     if(any(grepl("not declared from", out))) warningLog(Log)
                     else noteLog(Log)
@@ -1504,11 +1567,12 @@ setRlibs <-
     check_R_files <- function(is_rec_pkg)
     {
         checkingLog(Log, "R code for possible problems")
+        t1 <- proc.time()
         if (!is_base_pkg) {
             Rcmd <- paste("options(warn=1)\n",
                           sprintf("tools:::.check_package_code_shlib(dir = \"%s\")\n",
                                   pkgdir))
-            out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
+            out <- R_runR0(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
             if (length(out)) {
                 errorLog(Log)
                 wrapLog("Incorrect (un)loading of package",
@@ -1524,11 +1588,11 @@ setRlibs <-
         Rcmd <- paste("options(warn=1)\n",
                       sprintf("tools:::.check_package_code_startup_functions(dir = \"%s\")\n",
                               pkgdir))
-        out1 <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=")
+        out1 <- R_runR0(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=")
         Rcmd <- paste("options(warn=1)\n",
                       sprintf("tools:::.check_package_code_unload_functions(dir = \"%s\")\n",
                               pkgdir))
-        out1a <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=")
+        out1a <- R_runR0(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=")
         out1 <- if (length(out1) && length(out1a)) c(out1, "", out1a)
                 else c(out1, out1a)
 
@@ -1538,7 +1602,7 @@ setRlibs <-
             Rcmd <- paste("options(warn=1)\n",
                           sprintf("tools:::.check_package_code_tampers(dir = \"%s\")\n",
                                   pkgdir))
-            out2 <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
+            out2 <- R_runR0(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
         }
 
         if (R_check_use_codetools && do_install) {
@@ -1588,20 +1652,20 @@ setRlibs <-
             Rcmd <- paste("options(warn=1)\n",
                           sprintf("tools:::.check_package_code_assign_to_globalenv(dir = \"%s\")\n",
                                   pkgdir))
-            out5 <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=")
+            out5 <- R_runR0(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=")
         }
 
         if(!is_base_pkg && R_check_code_attach) {
             Rcmd <- paste("options(warn=1)\n",
                           sprintf("tools:::.check_package_code_attach(dir = \"%s\")\n",
                                   pkgdir))
-            out6 <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=")
+            out6 <- R_runR0(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=")
         }
         if(!is_base_pkg && R_check_code_data_into_globalenv) {
             Rcmd <- paste("options(warn=1)\n",
                           sprintf("tools:::.check_package_code_data_into_globalenv(dir = \"%s\")\n",
                                   pkgdir))
-            out7 <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=")
+            out7 <- R_runR0(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=")
         }
 
         ## Use of deprecated, defunct and platform-specific devices?
@@ -1614,6 +1678,8 @@ setRlibs <-
                               sprintf("tools:::.check_depdef(dir = \"%s\", WINDOWS = %s)\n", pkgdir, win))
             out8 <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=")
         }
+        t2 <- proc.time()
+        print_time(t1, t2, Log)
 
         if (length(out1) || length(out2) || length(out3) ||
             length(out4) || length(out5) || length(out6) ||
@@ -1688,7 +1754,7 @@ setRlibs <-
             minlevel <- Sys.getenv("_R_CHECK_RD_CHECKRD_MINLEVEL_", "-1")
             Rcmd <- paste("options(warn=1)\n",
                           sprintf("tools:::.check_package_parseRd('.', minlevel=%s)\n", minlevel))
-            out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
+            out <- R_runR0(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
             if (length(out)) {
                 if(length(grep("^prepare.*Dropping empty section", out,
                                invert = TRUE)))
@@ -1703,7 +1769,7 @@ setRlibs <-
                           sprintf("tools:::.check_Rd_metadata(package = \"%s\")\n", pkgname)
                           else
                           sprintf("tools:::.check_Rd_metadata(dir = \"%s\")\n", pkgdir))
-            out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
+            out <- R_runR0(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
             if (length(out)) {
                 warningLog(Log)
                 printLog0(Log, paste(c(out, ""), collapse = "\n"))
@@ -1721,7 +1787,7 @@ setRlibs <-
                           else
                           sprintf("tools:::.check_Rd_line_widths(\"%s\")\n",
                                   pkgdir))
-            out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
+            out <- R_runR0(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
             if(length(out)) {
                 noteLog(Log)
                 printLog0(Log, paste(c(out, ""), collapse = "\n"))
@@ -1752,7 +1818,7 @@ setRlibs <-
                           sprintf("tools:::.check_Rd_xrefs(package = \"%s\")\n", pkgname)
                           else
                           sprintf("tools:::.check_Rd_xrefs(dir = \"%s\")\n", pkgdir))
-            out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
+            out <- R_runR0(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
             if (length(out)) {
                 if (!all(grepl("Package[s]? unavailable to check", out)))
                     warningLog(Log)
@@ -1910,7 +1976,7 @@ setRlibs <-
                           sprintf("tools:::.check_Rd_contents(package = \"%s\")\n", pkgname)
                           else
                           sprintf("tools:::.check_Rd_contents(dir = \"%s\")\n", pkgdir))
-            out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
+            out <- R_runR0(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
             if (length(out)) {
                 warningLog(Log)
                 printLog0(Log, paste(c(out, ""), collapse = "\n"))
@@ -1957,7 +2023,7 @@ setRlibs <-
         ## Check for non-ASCII characters in 'data'
         if (!is_base_pkg && R_check_ascii_data && dir.exists("data")) {
             checkingLog(Log, "data for non-ASCII characters")
-            out <- R_runR("tools:::.check_package_datasets('.')", R_opts2)
+            out <- R_runR0("tools:::.check_package_datasets('.')", R_opts2)
             out <- grep("Loading required package", out,
                         invert = TRUE, value = TRUE)
             out <- grep("Warning: changing locked binding", out,
@@ -1972,8 +2038,8 @@ setRlibs <-
         ## Check for ASCII and uncompressed/unoptimized saves in 'data'
         if (!is_base_pkg && R_check_compact_data && dir.exists("data")) {
             checkingLog(Log, "data for ASCII and uncompressed saves")
-            out <- R_runR("tools:::.check_package_compact_datasets('.', TRUE)",
-                          R_opts2)
+            out <- R_runR0("tools:::.check_package_compact_datasets('.', TRUE)",
+                           R_opts2)
             out <- grep("Warning: changing locked binding", out,
                         invert = TRUE, value = TRUE, fixed = TRUE)
             if (length(out)) {
@@ -1986,8 +2052,8 @@ setRlibs <-
         ## no base package has this
         if (R_check_compact_data && file.exists(file.path("R", "sysdata.rda"))) {
             checkingLog(Log, "R/sysdata.rda")
-            out <- R_runR("tools:::.check_package_compact_sysdata('.', TRUE)",
-                          R_opts2)
+            out <- R_runR0("tools:::.check_package_compact_sysdata('.', TRUE)",
+                           R_opts2)
             if (length(out)) {
                 bad <- grep("^Warning:", out)
                 if (length(bad)) warningLog(Log) else noteLog(Log)
@@ -2372,7 +2438,7 @@ setRlibs <-
 
             Rcmd <- sprintf("tools:::.check_make_vars(\"src\", %s)\n",
                             deparse(makevars))
-            out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
+            out <- R_runR0(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
             if (length(out)) {
                 if(any(grepl("^(Non-portable flags|Variables overriding)", out)))
                    warningLog(Log) else noteLog(Log)
@@ -2458,7 +2524,7 @@ setRlibs <-
         Rcmd <- paste("options(warn=1)\n",
                       sprintf("tools:::check_compiled_code(\"%s\")",
                               file.path(libdir, pkgname)))
-        out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
+        out <- R_runR0(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
         if(length(out) == 1L && startsWith(out, "Note:")) {
             ## This will be a note about symbols.rds not being available
             if(!is_base_pkg) {
@@ -2511,7 +2577,7 @@ setRlibs <-
         opts <- if(nzchar(arch)) R_opts4 else R_opts2
         env <- "R_DEFAULT_PACKAGES=NULL"
         env1 <- if(nzchar(arch)) env0 else character()
-        out <- R_runR(Rcmd, opts, env1, arch = arch)
+        out <- R_runR0(Rcmd, opts, env1, arch = arch)
         if(length(st <- attr(out, "status"))) {
             errorLog(Log)
             wrapLog("Loading this package had a fatal error",
@@ -2533,7 +2599,7 @@ setRlibs <-
         } else resultLog(Log, "OK")
 
         checkingLog(Log, "whether the package can be loaded with stated dependencies")
-        out <- R_runR(Rcmd, opts, c(env, env1), arch = arch)
+        out <- R_runR0(Rcmd, opts, c(env, env1), arch = arch)
         if (any(startsWith(out, "Error")) || length(attr(out, "status"))) {
             printLog0(Log, paste(c(out, ""), collapse = "\n"))
             wrapLog("\nIt looks like this package",
@@ -2546,7 +2612,7 @@ setRlibs <-
 
         checkingLog(Log, "whether the package can be unloaded cleanly")
         Rcmd <- sprintf("suppressMessages(library(%s)); cat('\n---- unloading\n'); detach(\"package:%s\")", pkgname, pkgname)
-        out <- R_runR(Rcmd, opts, c(env, env1), arch = arch)
+        out <- R_runR0(Rcmd, opts, c(env, env1), arch = arch)
         if (any(grepl("^(Error|\\.Last\\.lib failed)", out)) ||
             length(attr(out, "status"))) {
             warningLog(Log)
@@ -2565,7 +2631,7 @@ setRlibs <-
             Rcmd <-
                 sprintf("options(warn=1)\ntools:::.load_namespace_rather_quietly(\"%s\")",
                         pkgname)
-            out <- R_runR(Rcmd, opts, c(env, env1), arch = arch)
+            out <- R_runR0(Rcmd, opts, c(env, env1), arch = arch)
             any <- FALSE
             if (any(startsWith(out, "Error")) || length(attr(out, "status"))) {
                 warningLog(Log)
@@ -2603,8 +2669,8 @@ setRlibs <-
             Rcmd <- sprintf("invisible(suppressMessages(loadNamespace(\"%s\"))); cat('\n---- unloading\n'); unloadNamespace(\"%s\")",
                             pkgname, pkgname)
             out <- if (is_base_pkg && pkgname != "stats4")
-                R_runR(Rcmd, opts, "R_DEFAULT_PACKAGES=NULL", arch = arch)
-            else R_runR(Rcmd, opts, env1)
+                R_runR0(Rcmd, opts, "R_DEFAULT_PACKAGES=NULL", arch = arch)
+            else R_runR0(Rcmd, opts, env1)
             if (any(grepl("^(Error|\\.onUnload failed)", out)) ||
                 length(attr(out, "status"))) {
                 warningLog(Log)
@@ -2625,7 +2691,7 @@ setRlibs <-
             env <- setRlibs(pkgdir = pkgdir, libdir = libdir,
                             self2 = FALSE, quote = TRUE)
             if(nzchar(arch)) env <- c(env, "R_DEFAULT_PACKAGES=NULL")
-            out <- R_runR(Rcmd, opts, env, arch = arch)
+            out <- R_runR0(Rcmd, opts, env, arch = arch)
             if (any(startsWith(out, "Error"))) {
                 warningLog(Log)
                 printLog0(Log, paste(c(out, ""), collapse = "\n"))
@@ -2646,7 +2712,7 @@ setRlibs <-
                                 pkgname, libdir)
                 opts <- if(nzchar(arch)) R_opts4 else R_opts2
                 env <- paste0("_R_LOAD_CHECK_OVERWRITE_S3_METHODS_=", pkgname)
-                out <- R_runR(Rcmd, opts, env, arch = arch)
+                out <- R_runR0(Rcmd, opts, env, arch = arch)
                 if (any(grepl("^Registered S3 method.*overwritten", out))) {
                     out <- grep("^<environment: namespace:", out,
                                 invert = TRUE, value = TRUE)
@@ -2672,14 +2738,15 @@ setRlibs <-
             Ropts <- if (nzchar(arch)) R_opts3 else R_opts
             if (use_valgrind) Ropts <- paste(Ropts, "-d valgrind")
             t1 <- proc.time()
+            tlim <- get_timeout(Sys.getenv("_R_CHECK_EXAMPLES_ELAPSED_TIMEOUT_",
+                                Sys.getenv("_R_CHECK_ELAPSED_TIMEOUT_")))
             ## might be diff-ing results against tests/Examples later
             ## so force LANGUAGE=en
-            status <- R_runR(NULL, c(Ropts, enc),
-                             c("LANGUAGE=en", "_R_CHECK_INTERNALS2_=1",
-                               if(nzchar(arch)) env0,
-                               jitstr, elibs),
-                             stdout = exout, stderr = exout,
-                             stdin = exfile, arch = arch)
+            status <- R_runR0(NULL, c(Ropts, enc),
+                              c("LANGUAGE=en", "_R_CHECK_INTERNALS2_=1",
+                                if(nzchar(arch)) env0, jitstr, elibs),
+                              stdout = exout, stderr = exout,
+                              stdin = exfile, arch = arch, timeout = tlim)
             t2 <- proc.time()
             if (status) {
                 errorLog(Log, "Running examples in ",
@@ -2817,7 +2884,7 @@ setRlibs <-
                             " to ", sQuote(basename(exsave)))
                 cmd <- paste0("invisible(tools::Rdiff('",
                               exout, "', '", exsave, "',TRUE,TRUE))")
-                out <- R_runR(cmd, R_opts2)
+                out <- R_runR0(cmd, R_opts2)
                 resultLog(Log, "OK")
                 if(length(out))
                     printLog0(Log, paste(c("", out, ""), collapse = "\n"))
@@ -2835,8 +2902,8 @@ setRlibs <-
                            !run_dontrun, !run_donttest)
             Rout <- tempfile("Rout")
             ## any arch will do here
-            status <- R_runR(cmd, R_opts2, "LC_ALL=C",
-                             stdout = Rout, stderr = Rout)
+            status <- R_runR0(cmd, R_opts2, "LC_ALL=C",
+                              stdout = Rout, stderr = Rout)
             exfile <- paste0(pkgname, "-Ex.R")
             if (status) {
                 errorLog(Log,
@@ -2944,13 +3011,15 @@ setRlibs <-
             cmd <- paste0("tools:::.runPackageTestsR(",
                           paste(extra, collapse = ", "), ")")
             t1 <- proc.time()
-            status <- R_runR(cmd,
-                             if(nzchar(arch)) R_opts4 else R_opts2,
-			     env = c("LANGUAGE=en",
-				     "_R_CHECK_INTERNALS2_=1",
-				     if(nzchar(arch)) env0,
-				     jitstr, elibs),
-                             stdout = "", stderr = "", arch = arch)
+            tlim <- get_timeout(Sys.getenv("_R_CHECK_TESTS_ELAPSED_TIMEOUT_",
+                                Sys.getenv("_R_CHECK_ELAPSED_TIMEOUT_")))
+            status <- R_runR0(cmd,
+                              if(nzchar(arch)) R_opts4 else R_opts2,
+                              env = c("LANGUAGE=en",
+                                     "_R_CHECK_INTERNALS2_=1",
+                              if(nzchar(arch)) env0, jitstr, elibs),
+                              stdout = "", stderr = "", arch = arch,
+                              timeout = tlim)
             t2 <- proc.time()
             if (status) {
                 print_time(t1, t2, Log)
@@ -3241,13 +3310,16 @@ setRlibs <-
                                        paste0(", encoding = '", enc, "'"),
                                    ", pkgdir='", vigns$pkgdir, "')")
                     outfile <- paste0(basename(file), ".log")
+                    tlim <- get_timeout(Sys.getenv("_R_CHECK_1VIGNETTE_ELAPSED_TIMEOUT_",
+                                        Sys.getenv("_R_CHECK_ELAPSED_TIMEOUT_")))
                     t1b <- proc.time()
-                    status <- R_runR(Rcmd,
-                                     if (use_valgrind) paste(R_opts2, "-d valgrind") else R_opts2,
-                                     ## add timing as footer, as BATCH does
-                                     env = c(jitstr, "R_BATCH=1234", elibs,
-                                     "_R_CHECK_INTERNALS2_=1"),
-                                     stdout = outfile, stderr = outfile)
+                    status <- R_runR0(Rcmd,
+                                      if (use_valgrind) paste(R_opts2, "-d valgrind") else R_opts2,
+                                      ## add timing as footer, as BATCH does
+                                      env = c(jitstr, "R_BATCH=1234", elibs,
+                                              "_R_CHECK_INTERNALS2_=1"),
+                                      stdout = outfile, stderr = outfile,
+                                      timeout = tlim)
                     t2b <- proc.time()
                     out <- readLines(outfile, warn = FALSE)
                     pos <- which(out == " *** Run successfully completed ***")
@@ -3287,7 +3359,7 @@ setRlibs <-
                     } else if (file.exists(savefile)) {
                         cmd <- paste0("invisible(tools::Rdiff('",
                                       outfile, "', '", savefile, "',TRUE,TRUE))")
-                        out2 <- R_runR(cmd, R_opts2)
+                        out2 <- R_runR0(cmd, R_opts2)
                         if(length(out2)) {
                             print_time(t1b, t2b, NULL)
                             cat("\ndifferences from ", sQuote(basename(savefile)),
@@ -3373,10 +3445,13 @@ setRlibs <-
                 Rcmd <- paste0(Rcmd, "buildVignettes(dir = '",
                                file.path(pkgoutdir, "vign_test", pkgname0),
                                "')")
+                tlim <- get_timeout(Sys.getenv("_R_CHECK_BUILD_VIGNETTES_ELAPSED_TIMEOUT_",
+                                    Sys.getenv("_R_CHECK_ELAPSED_TIMEOUT_")))
                 t1 <- proc.time()
                 outfile <- file.path(pkgoutdir, "build_vignettes.log")
-                status <- R_runR(Rcmd, R_opts2, jitstr,
-                                 stdout = outfile, stderr = outfile)
+                status <- R_runR0(Rcmd, R_opts2, jitstr,
+                                  stdout = outfile, stderr = outfile,
+                                  timeout = tlim)
                 t2 <- proc.time()
                 out <- readLines(outfile, warn = FALSE)
                 if(R_check_suppress_RandR_message)
@@ -3439,6 +3514,8 @@ setRlibs <-
         ## and for a source package, there is a 'man' dir
         if (dir.exists(file.path(pkgdir, "help")) ||
             dir.exists(file.path(pkgdir, "man"))) {
+            tlim <- get_timeout(Sys.getenv("_R_CHECK_PKGMAN_ELAPSED_TIMEOUT_",
+                                Sys.getenv("_R_CHECK_ELAPSED_TIMEOUT_")))
             topdir <- pkgdir
             Rd2pdf_opts <- "--batch --no-preview"
             checkingLog(Log, "PDF version of manual")
@@ -3449,7 +3526,7 @@ setRlibs <-
             args <- c( "Rd2pdf ", Rd2pdf_opts,
                       paste0("--build-dir=", shQuote(build_dir)),
                       "--no-clean", "-o ", man_file , shQuote(topdir))
-            res <- run_Rcmd(args,  "Rdlatex.log")
+            res <- run_Rcmd(args,  "Rdlatex.log", timeout = tlim)
             latex_log <- file.path(build_dir, "Rd2.log")
             if (file.exists(latex_log))
                 file.copy(latex_log, paste0(pkgname, "-manual.log"))
@@ -3485,7 +3562,7 @@ setRlibs <-
                           paste0("--build-dir=", shQuote(build_dir)),
                           "--no-clean", "--no-index",
                           "-o ", man_file, topdir)
-                if (run_Rcmd(args, "Rdlatex.log")) {
+                if (run_Rcmd(args, "Rdlatex.log", timeout = tlim)) {
                     ## FIXME: the info is almost certainly in Rdlatex.log
                     errorLog(Log)
                     latex_log <- file.path(build_dir, "Rd2.log")
@@ -3507,7 +3584,7 @@ setRlibs <-
                                   "--no-clean", "--no-index",
                                   "-o ", paste0(pkgname, "-manual.pdf "),
                                   topdir)
-                        run_Rcmd(args)
+                        run_Rcmd(args, timeout = tlim)
                     }
                     unlink(build_dir, recursive = TRUE)
 		    maybe_exit(1L)
@@ -3667,6 +3744,8 @@ setRlibs <-
         if (install == "skip")
             messageLog(Log, "skipping installation test")
         else {
+            tlim <- get_timeout(Sys.getenv("_R_CHECK_INSTALL_ELAPSED_TIMEOUT_",
+                                Sys.getenv("_R_CHECK_ELAPSED_TIMEOUT_")))
             use_install_log <-
                 (startsWith(install, "check") || R_check_use_install_log
                  || !isatty(stdout()))
@@ -3686,7 +3765,7 @@ setRlibs <-
                 ## to false.
                 message("")
                 ## Rare use of R CMD INSTALL
-                if (run_Rcmd(args)) {
+                if (run_Rcmd(args, timeout = tlim)) {
                     errorLog(Log, "Installation failed.")
                     summaryLog(Log)
                     do_exit(1L)
@@ -3728,8 +3807,6 @@ setRlibs <-
 ##                    env <- ""
                     ## Normal use of R CMD INSTALL
                     t1 <- proc.time()
-                    tlim <-
-                        as.numeric(Sys.getenv("_R_INSTALL_TIME_LIMIT_", "0"))
                     install_error <-
                         run_Rcmd(args, outfile, timeout = tlim)
                     t2 <- proc.time()
@@ -4511,7 +4588,7 @@ setRlibs <-
     if (is.na(td0)) td0 <- Inf
 
     ## A user might have turned on JIT compilation.  That does not
-    ## work well, so mostly disable it
+    ## work well, so mostly disable it.
     jit <- Sys.getenv("R_ENABLE_JIT")
     jitstr <- if(nzchar(jit)) {
         Sys.setenv(R_ENABLE_JIT = "0")
