@@ -1502,6 +1502,7 @@ setRlibs <-
     check_R_files <- function(is_rec_pkg)
     {
         checkingLog(Log, "R code for possible problems")
+        t1 <- proc.time()
         if (!is_base_pkg) {
             Rcmd <- paste("options(warn=1)\n",
                           sprintf("tools:::.check_package_code_shlib(dir = \"%s\")\n",
@@ -1612,6 +1613,8 @@ setRlibs <-
                               sprintf("tools:::.check_depdef(dir = \"%s\", WINDOWS = %s)\n", pkgdir, win))
             out8 <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=")
         }
+        t2 <- proc.time()
+        print_time(t1, t2, Log)
 
         if (length(out1) || length(out2) || length(out3) ||
             length(out4) || length(out5) || length(out6) ||
