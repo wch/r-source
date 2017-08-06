@@ -33,7 +33,8 @@ system(command, intern = FALSE,
     string per line to a temporary file, and the standard input of
     \code{command} is redirected to the file.}
   \item{timeout}{timeout in seconds, ignored if 0.  This is a limit for the
-    elapsed time running \code{command} in a separate process.}
+    elapsed time running \code{command} in a separate process.  Fractions
+    of seconds are ignored.}
 #ifdef unix
   \item{show.output.on.console, minimized, invisible}{arguments
     that are accepted on Windows but ignored on this platform, with a
