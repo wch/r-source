@@ -94,6 +94,10 @@
       \item It is again possible to use \command{configure
       --enable-maintainer-mode} without having installed
       \command{notangle} (it was required in \R 3.4.[01]).
+
+      \item Dispatch on \code{\dots} calls the method using its name,
+      instead of \code{.Method} (for consistency with default dispatch),
+      and only attempts to pass non-missing arguments from the generic.
     }
   }
 }

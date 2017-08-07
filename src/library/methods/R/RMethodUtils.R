@@ -1566,10 +1566,10 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE)
     if(!is(f, "genericFunction") || !identical(f@signature, "..."))
         stop("argument f must be a generic function with signature \"...\"")
     def <- .standardGenericDots
-    fenv <- environment(f)
-    environment(def) <- fenv
-    assign("standardGeneric", def, envir = fenv)
-    assign(".dotsCall", .makeDotsCall(formalArgs(f)), envir = fenv)
+    body(def) <- eval(call("substitute", body(def),
+                           list(.dotsMethod=as.name(f@generic))))
+    environment(def) <- environment(f)
+    assign("standardGeneric", def, envir = environment(f))
     f
 }
 
@@ -1586,25 +1586,14 @@ utils::globalVariables(c(".MTable", ".AllMTable", ".dotsCall"))
     if(is.null(method))
         stop(gettextf("no method or default matching the \"...\" arguments in %s",
                       deparse(sys.call(sys.parent()), nlines = 1)), domain = NA)
-    assign(".Method", method, envir = env)
-    eval(.dotsCall, env)
-}
-
-
-.quoteCall <- quote(.Method(...))
-.makeDotsCall <- function(formals)
-{
-    call <- .quoteCall
-    if(length(formals)  > 1L) {
-        idots <- match("...", formals)
-        for(what in formals[-idots]) {
-            ## the following nonsense is required to get the names in the call
-            ## expression to be empty for ... and there for other args
-            eval(substitute(call$NAME <- as.name(WHAT),
-                            list(NAME = as.name(what), WHAT = what)))
-        }
-    }
-    call
+    mc <- match.call(sys.function(sys.parent()), sys.call(sys.parent()),
+                     expand.dots=FALSE)
+    args <- names(mc)[-1L]
+    mc[args] <- lapply(args, as.name)
+    names(mc)[names(mc) == "..."] <- ""
+    mc[[1L]] <- quote(.dotsMethod)
+    assign(name, method, env)
+    eval(mc, env)
 }
 
 .selectDotsMethod <- function(classes, mtable, allmtable)
