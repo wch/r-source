@@ -4173,7 +4173,7 @@ function(package, dir, lib.loc = NULL)
     pkgs <- setdiff(unique(deps), base)
     try_Rd_aliases <- function(...) tryCatch(Rd_aliases(...), error = identity)
     aliases <- c(aliases, lapply(pkgs, try_Rd_aliases, lib.loc = lib.loc))
-    aliases[sapply(aliases, class) == "error"] <- NULL
+    aliases[sapply(aliases, inherits, "error")] <- NULL
 
     ## Add the aliases from the package itself, and build a db with all
     ## (if any) \link xrefs in the package Rd objects.
@@ -4263,6 +4263,7 @@ function(package, dir, lib.loc = NULL)
                                                        FALSE)))
                 !good & (thisfile[this] %in% aliases1)
             } else FALSE
+            db[this, "bad"] <- !good & !suspect            
         }
         else
             unknown <- c(unknown, pkg)
