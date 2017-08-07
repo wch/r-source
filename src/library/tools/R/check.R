@@ -37,6 +37,23 @@ get_timeout <- function(tlim)
     tlim
 }
 
+report_timeout <- function(tlim)
+{
+    tlim <- trunc(tlim)
+    if (tlim >= 3600)
+        warning(gettextf("elapsed-time limit of %g %s reached for sub-process",
+                         round(tlim/3600, 1L), "hours"),
+                domain = NA, call. = FALSE)
+    else if (tlim >= 60)
+        warning(gettextf("elapsed-time limit of %g %s reached for sub-process",
+                         round(tlim/60, 1L), "minutes"),
+                domain = NA, call. = FALSE)
+    else
+        warning(gettextf("elapsed-time limit of %g %s reached for sub-process",
+                         tlim, "seconds"),
+                domain = NA, call. = FALSE)
+}
+
 ## Used for INSTALL and Rd2pdf
 run_Rcmd <- function(args, out = "", env = "", timeout = 0)
 {
@@ -46,8 +63,7 @@ run_Rcmd <- function(args, out = "", env = "", timeout = 0)
     else
         system2(file.path(R.home("bin"), "R"), c("CMD", args), out, out,
                 env = env, timeout = get_timeout(timeout))
-    if(identical(status, 124L))
-        warning(gettextf("elapsed-time limit of %d seconds reached for sub-process", trunc(timeout)), domain = NA, call. = FALSE)
+    if(identical(status, 124L)) report_timeout(timeout)
     status
 }
 
@@ -73,7 +89,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                                  timeout = timeout))
     }
     if(identical(out, 124L) || identical(attr(out, "status"), 124L))
-        warning(gettextf("elapsed-time limit of %d seconds reached for sub-process", trunc(timeout)), domain = NA, call. = FALSE)
+        report_timeout(timeout)
     out
 }
 

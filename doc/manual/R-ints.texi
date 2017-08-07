@@ -4182,7 +4182,7 @@ the elapsed time taken by the sub-processes used for parts of the
 checks.  A value of @code{0} indicates no limit, and is the default.
 Character strings ending in @samp{m} or @samp{h} indicate a number of
 minutes or hours respectively: other values are interpreted as a whole
-number of seconds.
+number of seconds (with invalid inputs being treated as no limit).
 @vtable @code
 @item _R_CHECK_ELAPSED_TIMEOUT_
 The default timeout for sub-processes not otherwise mentioned, and the
@@ -4196,7 +4196,7 @@ Limit for running all the examples for one sub-architecture.
 
 @item _R_CHECK_ONE_TEST_ELAPSED_TIMEOUT_
 Limit for running one test for one sub-architecture.  Default
-@env{_R_CHECK_TESTS_ELAPSED_TIMEOUT_}
+@env{_R_CHECK_TESTS_ELAPSED_TIMEOUT_}.
 
 @item _R_CHECK_TESTS_ELAPSED_TIMEOUT_
 Limit for running all the tests for one sub-architecture (and the

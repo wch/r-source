@@ -495,10 +495,7 @@ testInstalledPackage <-
             }
         }
         if (res) {
-            if(identical(res, 124L))
-                warning(gettextf("elapsed-time limit of %d seconds reached running %s",
-                                 trunc(tlim), sQuote(f)),
-                        domain = NA, call. = FALSE)
+            if(identical(res, 124L)) report_timeout(tlim)
             file.rename(outfile, paste0(outfile, ".fail"))
             return(1L)
         }
