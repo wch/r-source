@@ -98,9 +98,9 @@ cbind <- function(..., deparse.level = 1)
     d2 <- dim(r)
     r <- cbind2(argl[[i]], r)
     ## if(deparse.level == 0)
-    ##     next
+    ##     if(i == 1L) return(r) else next
     ism1 <- !is.null(d1 <- dim(argl[[i]])) && length(d1) == 2L
-    ism2 <- !is.null(d2)                   && length(d2) == 2L && !fix.na
+    ism2 <- !is.null(d2)                   && length(d2) == 2L
     if(ism1 && ism2) ## two matrices
 	next
 

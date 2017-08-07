@@ -87,16 +87,16 @@ rbind <- function(..., deparse.level = 1)
     d2 <- dim(r)
     r <- rbind2(argl[[i]], r)
     ## if(deparse.level == 0)
-    ##     next
+    ##     if(i == 1L) return(r) else next
     ism1 <- !is.null(d1 <- dim(argl[[i]])) && length(d1) == 2L
-    ism2 <- !is.null(d2)                   && length(d2) == 2L && !fix.na
+    ism2 <- !is.null(d2)                   && length(d2) == 2L
     if(ism1 && ism2) ## two matrices
 	next
 
     ## else -- Setting rownames correctly
     ##	       when one was not a matrix [needs some diligence!]
     nn1 <- !is.null(N1 <- if(       (l1 <- Nrow(argl[[i]])) && !ism1) Nms(i)) # else NULL
-    nn2 <- !is.null(N2 <- if(i == na-1L && Nrow(argl[[na]]) && !ism2) Nms(2))
+    nn2 <- !is.null(N2 <- if(i == na-1L && Nrow(argl[[na]]) && !ism2) Nms(na))
     if(nn1 || nn2) {
 	if(is.null(rownames(r)))
 	    rownames(r) <- rep.int("", nrow(r))
