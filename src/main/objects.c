@@ -1605,7 +1605,10 @@ SEXP R_do_new_object(SEXP class_def)
     }
     PROTECT(e = R_do_slot(class_def, s_className));
     PROTECT(value = duplicate(R_do_slot(class_def, s_prototype)));
-    if(TYPEOF(value) == S4SXP || getAttrib(e, R_PackageSymbol) != R_NilValue)
+    Rboolean xDataType = TYPEOF(value) == ENVSXP || TYPEOF(value) == SYMSXP ||
+	TYPEOF(value) == EXTPTRSXP;
+    if((TYPEOF(value) == S4SXP || getAttrib(e, R_PackageSymbol) != R_NilValue) &&
+       !xDataType)
     { /* Anything but an object from a base "class" (numeric, matrix,..) */
 	setAttrib(value, R_ClassSymbol, e);
 	SET_S4_OBJECT(value);
