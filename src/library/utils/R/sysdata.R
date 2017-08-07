@@ -5,15 +5,15 @@ function()
     ##   <http://www.loc.gov/marc/relators/relaterm.html>
     ## web page, and merge with the information on usage for R.
 
-    ## <http://www.loc.gov/marc/relators/relacode.html>
-    doc <- XML::htmlParse("http://www.loc.gov/marc/relators/relacode.html")
-    codes <- XML::readHTMLTable(doc)[[2]]
+    ## Codes are also listed at
+    ##   <http://www.loc.gov/marc/relators/relacode.html>
+    ## which also contains discontinued codes, identified by a hyphen
+    ## preceding the code.
 
     ## <http://www.loc.gov/marc/relators/relaterm.html>
-    doc <- XML::htmlParse("http://www.loc.gov/marc/relators/relaterm.html")
-    ns <- XML::getNodeSet(doc, "//dl")[[4]]
-    dt <- trimws(XML::xpathApply(ns, "./dt", XML::xmlValue))
-    dd <- trimws(XML::xpathApply(ns, "./dd", XML::xmlValue))
+    doc <- xml2::read_html("http://www.loc.gov/marc/relators/relaterm.html")
+    dt <- trimws(xml2::xml_text(xml2::xml_find_all(doc, "//dl[4]//dt")))
+    dd <- trimws(xml2::xml_text(xml2::xml_find_all(doc, "//dl[4]//dd")))
 
     ## Drop obsolete stuff and pointers to it.
     re <- "(.*) \\[(.*)\\]"

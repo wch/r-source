@@ -6,5 +6,5 @@ Author: R Core Team and contributors worldwide
 Maintainer: R Core Team <R-core@r-project.org>
 Description: R utility functions.
 License: Part of R @VERSION@
-Suggests: methods, XML
+Suggests: methods, xml2
 NeedsCompilation: yes
