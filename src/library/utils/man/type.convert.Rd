@@ -16,7 +16,7 @@
 \usage{
 type.convert(x, \dots)
 \method{type.convert}{default}(x, na.strings = "NA", as.is = FALSE, dec = ".",
-             numerals = c("allow.loss", "warn.loss", "no.loss"))
+             numerals = c("allow.loss", "warn.loss", "no.loss"), \dots)
 \method{type.convert}{data.frame}(x, \dots)
 \method{type.convert}{list}(x, \dots)
 }
