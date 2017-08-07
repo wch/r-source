@@ -696,7 +696,8 @@ SEXP attribute_hidden do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	if (timeout && tost.timedout) {
 	    res = 124;
-	    warningcall(R_NilValue, _("command '%s' timed out"), cmd);
+	    warningcall(R_NilValue, _("command '%s' timed out after %ds"),
+	                cmd, timeout);
 	} else
 	    warn_status(cmd, res);
 
@@ -729,7 +730,8 @@ SEXP attribute_hidden do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    res = R_system_timeout(cmd, timeout);
 	if (timeout && tost.timedout) {
 	    res = 124;
-	    warningcall(R_NilValue, _("command '%s' timed out"), cmd);
+	    warningcall(R_NilValue, _("command '%s' timed out after %ds"),
+	                cmd, timeout);
 	} 
 	INTEGER(tlist)[0] = res;
 #ifdef HAVE_AQUA
