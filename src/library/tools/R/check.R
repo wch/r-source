@@ -47,7 +47,7 @@ run_Rcmd <- function(args, out = "", env = "", timeout = 0)
         system2(file.path(R.home("bin"), "R"), c("CMD", args), out, out,
                 env = env, timeout = get_timeout(timeout))
     if(identical(status, 124L))
-        warning(gettextf("elapsed-time limit of %g seconds reached for sub-process", timeout), domain = NA, call. = FALSE)
+        warning(gettextf("elapsed-time limit of %d seconds reached for sub-process", trunc(timeout)), domain = NA, call. = FALSE)
     status
 }
 
@@ -73,7 +73,7 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
                                  timeout = timeout))
     }
     if(identical(out, 124L) || identical(attr(out, "status"), 124L))
-        warning(gettextf("elapsed-time limit of %g seconds reached for sub-process", timeout), domain = NA, call. = FALSE)
+        warning(gettextf("elapsed-time limit of %d seconds reached for sub-process", trunc(timeout)), domain = NA, call. = FALSE)
     out
 }
 
@@ -3310,7 +3310,7 @@ setRlibs <-
                                        paste0(", encoding = '", enc, "'"),
                                    ", pkgdir='", vigns$pkgdir, "')")
                     outfile <- paste0(basename(file), ".log")
-                    tlim <- get_timeout(Sys.getenv("_R_CHECK_1VIGNETTE_ELAPSED_TIMEOUT_",
+                    tlim <- get_timeout(Sys.getenv("_R_CHECK_ONE_VIGNETTE_ELAPSED_TIMEOUT_",
                                         Sys.getenv("_R_CHECK_ELAPSED_TIMEOUT_")))
                     t1b <- proc.time()
                     status <- R_runR0(Rcmd,

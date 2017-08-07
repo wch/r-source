@@ -4194,7 +4194,7 @@ Limit for when @command{R CMD INSTALL} is run by @command{check}.
 @item _R_CHECK_EXAMPLES_ELAPSED_TIMEOUT_
 Limit for running all the examples for one sub-architecture.
 
-@item _R_CHECK_1TEST_ELAPSED_TIMEOUT_
+@item _R_CHECK_ONE_TEST_ELAPSED_TIMEOUT_
 Limit for running one test for one sub-architecture.  Default
 @env{_R_CHECK_TESTS_ELAPSED_TIMEOUT_}
 
@@ -4202,7 +4202,7 @@ Limit for running one test for one sub-architecture.  Default
 Limit for running all the tests for one sub-architecture (and the
 default limit for running one test).
 
-@item _R_CHECK_1VIGNETTE_ELAPSED_TIMEOUT_
+@item _R_CHECK_ONE_VIGNETTE_ELAPSED_TIMEOUT_
 Limit for running the @R{} code in one vignette.
 
 @item _R_CHECK_BUILD_VIGNETTES_ELAPSED_TIMEOUT_

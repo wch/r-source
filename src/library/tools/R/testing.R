@@ -432,11 +432,12 @@ testInstalledPackage <-
 }
 
 .runPackageTests <-
-    function(use_gct = FALSE, use_valgrind = FALSE, Log = NULL, stop_on_error = TRUE, ...)
+    function(use_gct = FALSE, use_valgrind = FALSE, Log = NULL,
+             stop_on_error = TRUE, ...)
 {
-    tlim <- Sys.getenv("_R_CHECK_1TEST_ELAPSED_TIMEOUT_",
+    tlim <- Sys.getenv("_R_CHECK_ONE_TEST_ELAPSED_TIMEOUT_",
             Sys.getenv("_R_CHECK_TESTS_ELAPSED_TIMEOUT_",
-            Sys.getenv("_R_CHECK_ELAPSED_TIMEOUT_", "0")))
+            Sys.getenv("_R_CHECK_ELAPSED_TIMEOUT_")))
     tlim <- get_timeout(tlim)
     if (!is.null(Log)) Log <- file(Log, "wt")
     WINDOWS <- .Platform$OS.type == "windows"
@@ -495,8 +496,9 @@ testInstalledPackage <-
         }
         if (res) {
             if(identical(res, 124L))
-                warning(gettextf("elapsed-time limit of %g seconds reached running %s",
-                                 tlim, sQuote(f)), domain = NA, call. = FALSE)
+                warning(gettextf("elapsed-time limit of %d seconds reached running %s",
+                                 trunc(tlim), sQuote(f)),
+                        domain = NA, call. = FALSE)
             file.rename(outfile, paste0(outfile, ".fail"))
             return(1L)
         }
