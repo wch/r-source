@@ -1,7 +1,7 @@
 #  File src/library/stats/R/prcomp.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -128,7 +128,7 @@ function(x, digits = max(3L, getOption("digits") - 3L), ...)
 	cat(sprintf("Importance of first k=%d (out of %d) components:\n", k, p))
 	print(x$importance[, 1:k, drop=FALSE], digits = digits, ...)
     } else {
-	cat("Importance of components%s:\n")
+	cat("Importance of components:\n")
 	print(x$importance, digits = digits, ...)
     }
     invisible(x)
