@@ -771,6 +771,8 @@ function(file, encoding = "unknown")
     calls <- getParseText(pd, ids)
 
     table <- pd[pd$token == "STR_CONST", ]
+    ## Could have run into truncation ...
+    table$text <- getParseText(table, table$id)
     pos <- match(gpids(table$id), ids)
     ind <- !is.na(pos)
     table <- split(table[ind, ], factor(pos[ind], seq_along(ids)))
