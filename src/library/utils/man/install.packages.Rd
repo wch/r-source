@@ -319,6 +319,23 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   Bioconductor packages.
 }
 
+\section{Timeouts}{
+  A limit on the elapsed time for each call to \code{INSTALL} (so for
+  sources installs only) can be set \emph{via} environment variable
+  \env{_R_INSTALL_TIME_LIMIT_}: in seconds (or in minutes or hours with
+  optional suffix \samp{m} or \samp{h}) with \code{0} meaning no
+  limit.
+
+  For non-parallel installs this is implemented \emph{via} the
+  \code{timeout} argument of \code{\link{system2}}: for parallel
+  installs \emph{via} a \command{timeout} command.  (The one tested is
+  from GNU \pkg{coreutils}, and commonly available on Linux, only.  If
+  no such command is available the timeout request is ignored, silently.)
+  
+  Timeouts during installation may leave lock diretories behind and not
+  restore previous versions.
+}
+
 #ifdef unix
 \note{
   Some binary distributions of \R have \code{INSTALL} in a separate

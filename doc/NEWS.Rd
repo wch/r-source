@@ -45,8 +45,8 @@
       New function \code{isFALSE()} defined analogously to \code{isTRUE()}.
 
       \item The default symbol table size has been increased from 4119
-      to 49157; this may improve symbol resolution performance when many
-      packages are loaded.  (Suggested by Jim Hester.)
+      to 49157; this may improve the performance of symbol resolution
+      when many packages are loaded.  (Suggested by Jim Hester.)
 
       \item \code{line()} gets a new option \code{iter = 1}.
 
@@ -101,9 +101,10 @@
       \code{NULL} using \code{length()<-} still has no effect on the
       target variable, but now triggers a warning.
 
-      \item \code{type.convert()} becomes a generic, with additional
-      methods that operate recursively over list and \code{data.frame}
-      objects. Courtesy of Arni Magnusson (\PR{17269}).
+      \item \code{type.convert()} becomes a generic function, with
+      additional methods that operate recursively over list and
+      \code{data.frame} objects. Courtesy of Arni Magnusson
+      (\PR{17269}).
 
       \item \code{lower.tri(x)} and \code{upper.tri(x)} only needing
       \code{dim(x)} now work via new \code{.row()} \code{.col()} and
@@ -114,12 +115,20 @@
 
   \subsection{UTILITIES}{
     \itemize{
+      \item \code{install.packages()} for source packages now has the
+      possibility to set a \sQuote{timeout} (elapsed-time limit).  For
+      serial installs this uses the \sQuote{timeout} argument of
+      \code{system2()}: for parallel installs it requires the
+      \command{timeout} utility command from GNU \pkg{coreutils}.  [This
+      is currently experimental.]
+
       \item It is now possible to set \sQuote{timeouts} (elapsed-time
       limits) for most parts of \command{R CMD check} \emph{via}
       environment variables documented in the \sQuote{R Internals}
-      manual. [This depends on the experimental \sQuote{timeout} feature
+      manual. [This depends on the experimental \sQuote{timeout} argument
       of \code{system2()} and hence subject to change, as are the names
-      of the environment variables.]
+      of the environment variables.  Currently \samp{0s} is reported for
+      the CPU time of parts which timeout.]
     }
   }
 
@@ -204,7 +213,7 @@
       single observation.  \code{interpSpline()} gives a more friendly
       error message when the number of points is less than four.
 
-      \item \code{dist(x, method="canberra")} now uses the correct
+      \item \code{dist(x, method = "canberra")} now uses the correct
       definition; the result may only differ when \code{x} contains
       values of differing signs, i.e., e.g., not for 0-1 data.
 
