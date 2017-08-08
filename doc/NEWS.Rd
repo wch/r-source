@@ -110,6 +110,10 @@
       \code{dim(x)} now work via new \code{.row()} \code{.col()} and
       no longer call \code{as.matrix()} by default in order to work
       efficiently for all kind of matrix-like objects.
+
+      \item \code{print()} methods for \code{"xgettext"} and
+      \code{"xngettext"} now use \code{encodeString()} which keeps,
+      e.g., \code{"\n"}, visible.  (Wish of \PR{17298}.)
     }
   }
 
