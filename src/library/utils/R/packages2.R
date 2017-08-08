@@ -714,6 +714,13 @@ install.packages <-
         }
 
         if (Ncpus > 1L && nrow(update) > 1L) {
+            tlim_cmd <- character()
+            if(tlim > 0) {
+                if(nzchar(timeout <- Sys.which("timeout"))) {
+                    tlim_cmd <- c(shQuote(timeout), tlim)
+                } else
+                    warning("timeouts for parallel installs require the 'timeout' command")
+            }
             ## if --no-lock or --lock was specified in INSTALL_opts
             ## that will override this.
             args0 <- c(args0, "--pkglock")
@@ -749,10 +756,7 @@ install.packages <-
                 ##                collapse = " ")
                 ## on Windows?
                 cmd <- paste(c("MAKEFLAGS=",
-                               if(nzchar(timeout <-
-                                             Sys.which("timeout"))
-                                  && (tlim > 0))
-                                   c(shQuote(timeout), tlim),
+                               tlim_cmd,
                                shQuote(cmd0),
                                args),
                              collapse = " ")
