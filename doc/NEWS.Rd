@@ -121,22 +121,22 @@
     \itemize{
       \item Elapsed-time limits can now be set for the lengthier parts
       of \command{R CMD INSTALL} \emph{via} an environment variable: see
-      its help page.   [This is currently experimental and subject to change.]
+      its help page.
+      [This is currently experimental and subject to change.]
 
       \item \code{install.packages()} for source packages now has the
       possibility to set a \sQuote{timeout} (elapsed-time limit).  For
       serial installs this uses the \sQuote{timeout} argument of
       \code{system2()}: for parallel installs it requires the
-      \command{timeout} utility command from GNU \pkg{coreutils}.  [This
-      is currently experimental and subject to change.]
+      \command{timeout} utility command from GNU \pkg{coreutils}.
+      [This is currently experimental and subject to change.]
 
       \item It is now possible to set \sQuote{timeouts} (elapsed-time
       limits) for most parts of \command{R CMD check} \emph{via}
       environment variables documented in the \sQuote{R Internals}
       manual. [This depends on the experimental \sQuote{timeout} argument
       of \code{system2()} and hence subject to change, as are the names
-      of the environment variables.  Currently \samp{0s} is reported for
-      the CPU time of parts which timeout.]
+      of the environment variables.]
     }
   }
 
