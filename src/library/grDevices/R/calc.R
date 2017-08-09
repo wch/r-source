@@ -106,7 +106,7 @@ nclass.FD <- function(x)
 	x. <- sort(x.)
 	al <- 1/4; al.min <- 1/512 # try quantiles 1/8, 1/16, ... 1/512
 	while(h == 0 && (al <- al/2) >= al.min)
-	    h <- diff(stats::quantile(x., c(al, 1-al), names = FALSE)) / al
+	    h <- diff(stats::quantile(x., c(al, 1-al), names = FALSE)) / (1 - 2*al)
     }
     if (h == 0) ## revert to Scott's:
 	h <- 3.5 * sqrt(stats::var(x))

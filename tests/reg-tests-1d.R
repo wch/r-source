@@ -976,7 +976,7 @@ xE <- function(eps, n = 5) {
     stopifnot(n >= 2, is.numeric(eps), eps >= 0)
     c(rep.int(1, n-2), 1+eps, 2)
 }
-ncE <- c(Sturges = 4, Scott = 2, FD = 1)
+ncE <- c(Sturges = 4, Scott = 2, FD = 3)
 stopifnot(sapply(-5:-16, function(E) identical(NC(xE(10^E)), ncE)),
 	  identical(NC(xE(1e-4)), c(Sturges = 4, Scott = 2, FD = 8550)),
 	  identical(NC(xE(1e-3)), c(Sturges = 4, Scott = 2, FD =  855)))
