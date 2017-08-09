@@ -6808,7 +6808,8 @@ function(dir, localOnly = FALSE)
         .libPaths(character())
         on.exit(.libPaths(libpaths))
         out <- list()
-        if(nzchar(system.file(package = meta["Package"]))) {
+        installed <- nzchar(system.file(package = meta["Package"]))
+        if(installed) {
             ## Ignore pre-2.8.0 compatibility calls to
             ## packageDescription() inside
             ##   if(!exists("meta") || is.null(meta))
@@ -6830,14 +6831,40 @@ function(dir, localOnly = FALSE)
                           c("packageDescription", "library", "require"))
             if(length(cnames))
                 out$citation_calls <- cnames
+            cinfo <-
+                .eval_with_capture(tryCatch(utils::readCitationFile(cfile,
+                                                                    meta),
+                                            error = identity))$value
+            if(inherits(cinfo, "error")) {
+                out$citation_error_reading_if_installed <-
+                    conditionMessage(cinfo)
+                return(out)
+            }
         } else {
             cinfo <-
                 .eval_with_capture(tryCatch(utils::readCitationFile(cfile,
                                                                     meta),
                                             error = identity))$value
-            if(inherits(cinfo, "error"))
-                out$citation_error <- conditionMessage(cinfo)
+            if(inherits(cinfo, "error")) {
+                out$citation_error_reading_if_not_installed <-
+                    conditionMessage(cinfo)
+                return(out)
+            }
         }
+        ## If we can successfully read in the citation file, also check
+        ## whether we can at least format the bibentries we obtained. 
+        cfmt <- tryCatch(format(cinfo, style = "text"),
+                         warning = identity, error = identity)
+        ## This only finds unbalanced braces by default, with messages
+        ##   unexpected END_OF_INPUT ... { no }
+        ##   unexpected '}'          ... } no {
+        ## One can also find 'unknown Rd macros' by setting env var
+        ## _R_UTILS_FORMAT_BIBENTRY_VIA_RD_PERMISSIVE_ to something
+        ## true, and perhaps we should do this here. 
+        if(inherits(cfmt, "condition"))
+            out$citation_problem_when_formatting <-
+                conditionMessage(cfmt)
+
         out
     }
     if(file.exists(cfile <- file.path(dir, "inst", "CITATION"))) {
@@ -7561,10 +7588,20 @@ function(x, ...)
                                 indent = 2L, exdent = 4L)),
                       collapse = "\n")
             },
-            if(length(y <- x$citation_error)) {
+            if(length(y <- x$citation_error_reading_if_installed)) {
+                paste(c("Reading CITATION file fails with",
+                        paste0("  ", y)),
+                      collapse = "\n")
+            },
+            if(length(y <- x$citation_error_reading_if_not_installed)) {
                 paste(c("Reading CITATION file fails with",
                         paste0("  ", y),
                         "when package is not installed."),
+                      collapse = "\n")
+            },
+            if(length(y <- x$citation_problem_when_formatting)) {
+                paste(c("Problems when formatting CITATION entries:",
+                        paste0("  ", y)),
                       collapse = "\n")
             })),
       fmt(c(if(length(y <- x$bad_urls)) {
