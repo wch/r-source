@@ -105,7 +105,11 @@ system(command, intern = FALSE,
   standard input redirected from \code{/dev/null} and it must not modify
   terminal settings.  As long as tty \code{tostop} option is disabled, which
   it usually is by default, the executed command may write to standard
-  output and standard error.
+  output and standard error.  One cannot rely on that the execution time of
+  the child processes will be included into \code{user.child} and
+  \code{sys.child} element of \code{proc_time} returned by \code{proc.time}. 
+  For the time to be included, all child processes have to be waited for by
+  their parents, which has to be implemented in the parent applications.
 #endif
 
   The ordering of arguments after the first two has changed from time to
