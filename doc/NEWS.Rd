@@ -313,8 +313,10 @@
       segfaults.  (\PR{15885})
 
       \item It is again possible to use \command{configure
-      --enable-maintainer-mode} without having installed
+	--enable-maintainer-mode} without having installed
       \command{notangle} (it was required in \R 3.4.[01]).
+
+      \item \code{readRDS(textConnection(.))} works again.  (\PR{17325})
     }
   }
 }

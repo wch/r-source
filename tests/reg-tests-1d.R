@@ -1026,6 +1026,17 @@ if(no.grid) unloadNamespace("grid")
 ## both errors gave segfaults in R <= 3.4.1
 
 
+## readRDS(textConnection())
+abc <- c("a", "b", "c"); tmpC <- ""
+zz <- textConnection('tmpC', 'wb')
+saveRDS(abc, zz, ascii = TRUE)
+sObj <- paste(textConnectionValue(zz), collapse='\n')
+close(zz); rm(zz)
+stopifnot(identical(abc, readRDS(textConnection(tmpC))),
+          identical(abc, readRDS(textConnection(sObj))))
+## failed in R 3.4.1 only
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
