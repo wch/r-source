@@ -246,9 +246,6 @@
     pkgerrmsg <- function(msg, pkg)
 	errmsg(msg, " for package ", sQuote(pkg))
 
-    tlim <- Sys.getenv("_R_INSTALL_ELAPSED_TIMEOUT_")
-    tlim <- if(is.na(tlim)) 0L else get_timeout(tlim)
-
     ## 'pkg' is the absolute path to package sources.
     do_install <- function(pkg)
     {
@@ -378,8 +375,7 @@
             unlink(filepath)
             owd <- setwd(lib)
             res <- system(paste(shQuote(ZIP), "-r9Xq", filepath,
-                                paste(curPkg, collapse = " ")),
-                          timeout = tlim)
+                                paste(curPkg, collapse = " ")))
             setwd(owd)
             if (res)
                 message("running 'zip' failed", domain = NA)
@@ -527,7 +523,7 @@
             if (debug) message("about to run ",
                                "R CMD SHLIB ", paste(args, collapse = " "),
                                domain = NA)
-            if (.shlib_internal(args, timeout = tlim) == 0L) {
+            if (.shlib_internal(args) == 0L) {
                 if(WINDOWS && !file.exists("install.libs.R")
                    && !length(Sys.glob("*.dll"))) {
                     message("no DLL was created")
@@ -561,15 +557,13 @@
                 if (file_test("-x", "configure")) {
                     res <- system(paste(paste(configure_vars, collapse = " "),
                                         "./configure",
-                                        paste(configure_args, collapse = " ")),
-                                  timeout = tlim)
+                                        paste(configure_args, collapse = " ")))
                     if (res) pkgerrmsg("configuration failed", pkg_name)
                 } else if (file.exists("configure"))
                     errmsg("'configure' exists but is not executable -- see the 'R Installation and Administration Manual'")
             }
             if (file.exists("Makefile"))
-                if (system(MAKE, timwout = tlim))
-                    pkgerrmsg("make failed", pkg_name)
+                if (system(MAKE)) pkgerrmsg("make failed", pkg_name)
             if (clean) system(paste(MAKE, "clean"))
             return()
         }
@@ -651,7 +645,7 @@
         if (use_configure) {
             if (WINDOWS) {
                 if (file.exists("configure.win")) {
-                    res <- system("sh ./configure.win", timeout = tlim)
+                    res <- system("sh ./configure.win")
                     if (res) pkgerrmsg("configuration failed", pkg_name)
                 } else if (file.exists("configure"))
                     message("\n",
@@ -670,7 +664,7 @@
                     ## in case the configure script calls SHLIB (some do)
                     cmd <- paste("_R_SHLIB_BUILD_OBJECTS_SYMBOL_TABLES_=false",
                                  cmd)
-                    res <- system(cmd, timeout = tlim)
+                    res <- system(cmd)
                     if (res) pkgerrmsg("configuration failed", pkg_name)
                 }  else if (file.exists("configure"))
                     errmsg("'configure' exists but is not executable -- see the 'R Installation and Administration Manual'")
@@ -745,8 +739,7 @@
                     makefiles <- c("Makefile.win", makefiles)
                     message("  running 'src/Makefile.win' ...", domain = NA)
                     res <- system(paste("make --no-print-directory",
-                                        paste("-f", shQuote(makefiles), collapse = " ")),
-                                  timeout = tlim)
+                                        paste("-f", shQuote(makefiles), collapse = " ")))
                     if (res == 0L) shlib_install(instdir, rarch)
                     else has_error <- TRUE
                 } else { ## no src/Makefile.win
@@ -822,8 +815,7 @@
                                    "Makefile",
                                    makevars_user())
                     res <- system(paste(MAKE,
-                                        paste("-f", shQuote(makefiles), collapse = " ")),
-                                  timeout = tlim)
+                                        paste("-f", shQuote(makefiles), collapse = " ")))
                     if (res == 0L) shlib_install(instdir, rarch)
                     else has_error <- TRUE
                     setwd(owd)
@@ -1014,7 +1006,6 @@
                                                 "bzip2" = 2L,
                                                 "xz" = 3L,
                                                 TRUE)  # default to gzip
-                    ## move this to a separate process
 		    res <- try(data2LazyLoadDB(pkg_name, lib,
 					       compress = data_compress))
 		    if (inherits(res, "try-error"))
@@ -1143,7 +1134,6 @@
 		env <- sub("^.*=", "", env[1L])
                 .libPaths(c(lib0, env))
             } else libs0 <- NULL
-            ## move this to a separate process
 	    res <- try({
                 suppressPackageStartupMessages(.getRequiredPackages(quietly = TRUE))
                 makeLazyLoading(pkg_name, lib, keep.source = keep.source)
@@ -1237,8 +1227,7 @@
                 opts <- "--no-save --slave"
                 for (arch in test_archs) {
                     starsmsg("***", "arch - ", arch)
-                    out <- R_runR(cmd, opts, env = env, arch = arch,
-                                  timeout = tlim)
+                    out <- R_runR(cmd, opts, env = env, arch = arch)
                     if(length(attr(out, "status")))
                         msgs <- c(msgs, arch)
                     if(length(out))
@@ -1252,7 +1241,7 @@
             } else {
                 opts <- paste(if(deps_only) "--vanilla" else "--no-save",
                               "--slave")
-                out <- R_runR(cmd, opts, env = env, timeout = tlim)
+                out <- R_runR(cmd, opts, env = env)
                 if(length(out))
                     cat(paste(c(out, ""), collapse = "\n"))
                 if(length(attr(out, "status")))
@@ -1483,7 +1472,7 @@
                     cmd <- paste(cmd, collapse = " ")
                     if (debug) message("about to run ", cmd, domain = NA)
                     message("\n", "install for ", arch, "\n", domain = NA)
-                    res <- system(cmd, timeout = tlim)
+                    res <- system(cmd)
                     if(res) break
                 }
             }
@@ -1508,7 +1497,7 @@
                     cmd <- paste(cmd, collapse = " ")
                     if (debug) message("about to run ", cmd, domain = NA)
                     message("\n", "install for ", arch, "\n", domain = NA)
-                    res <- system(cmd, timeout = tlim)
+                    res <- system(cmd)
                     if(res) break
                 }
             }
@@ -1696,7 +1685,7 @@
 }
 
 ## for .SHLIB and R CMD INSTALL on all platforms
-.shlib_internal <- function(args, timeout = 0)
+.shlib_internal <- function(args)
 {
     Usage <- function()
         cat("Usage: R CMD SHLIB [options] files | linker options",
@@ -2027,8 +2016,7 @@
         res <- 0
     } else {
         if (preclean) system(paste(cmd, "shlib-clean"))
-        res <- system(cmd, timeout = timeout)
-        if(identical(res, 124L)) report_timeout(timeout)
+        res <- system(cmd)
         if((res == 0L) && build_objects_symbol_tables) {
             ## Should only do this if the previous one went ok.
             system(paste(cmd, "symbols.rds"))

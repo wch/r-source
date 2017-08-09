@@ -119,11 +119,6 @@
 
   \subsection{UTILITIES}{
     \itemize{
-      \item Elapsed-time limits can now be set for the lengthier parts
-      of \command{R CMD INSTALL} \emph{via} an environment variable: see
-      its help page.
-      [This is currently experimental and subject to change.]
-
       \item \code{install.packages()} for source packages now has the
       possibility to set a \sQuote{timeout} (elapsed-time limit).  For
       serial installs this uses the \sQuote{timeout} argument of

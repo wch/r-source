@@ -119,12 +119,6 @@
   can be enabled by the option \option{--with-keep.source} or by setting
   environment variable \env{R_KEEP_PKG_SOURCE} to \code{yes}.
   
-  A limit on the elapsed time taken by each of the more time-consuming
-  operations can be set by the environment variable
-  \env{_R_INSTALL_ELAPSED_TIMEOUT_}.  This is \code{0} (indicating no
-  limit) or a positive number with option suffix \code{s} (the default),
-  \code{m} (minutes) or \code{h} (hours).
-  
   Use \command{R CMD INSTALL --help} for concise usage information,
   including all the available options.
 }
