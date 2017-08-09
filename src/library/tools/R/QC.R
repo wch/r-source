@@ -3187,7 +3187,7 @@ function(dfile, strict = FALSE)
         out$missing_encoding <- TRUE
     }
 
-    if(any(is.na(nchar(db, "c", TRUE)))) {
+    if(anyNA(nchar(db, "c", TRUE))) {
         ## Ouch, invalid in the current locale.
         ## (Can only happen in a MBCS locale.)
         ## Try re-encoding from Latin1.
@@ -3299,7 +3299,6 @@ function(dfile, strict = FALSE)
         out$bad_Description <- TRUE
 
     class(out) <- "check_package_description"
-
     out
 }
 
@@ -4457,7 +4456,7 @@ function(pkgDir, thorough = FALSE)
         files <- Sys.glob(c(file.path(pkgDir, "data", "*.rda"),
                             file.path(pkgDir, "data", "*.RData")))
         ## Exclude .RData, which this may or may not match
-        files <- grep("/[.]RData$", files, value = TRUE, invert = TRUE)
+        files <- filtergrep("/[.]RData$", files)
         if (length(files)) {
             cpdir <- tempfile('cp')
             dir.create(cpdir)

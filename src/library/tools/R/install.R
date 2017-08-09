@@ -883,8 +883,7 @@
             if (length(dirs)) {
                 descfile <- file.path(instdir, "DESCRIPTION")
                 olddesc <- readLines(descfile, warn = FALSE)
-                olddesc <- grep("^Archs:", olddesc,
-                                invert = TRUE, value = TRUE, useBytes = TRUE)
+                olddesc <- filtergrep("^Archs:", olddesc, useBytes = TRUE)
                 newdesc <- c(olddesc,
                              paste("Archs:", paste(dirs, collapse = ", "))
                              )
@@ -1054,8 +1053,7 @@
             length(dir("inst", all.files = TRUE)) > 2L) {
 	    starsmsg(stars, "inst")
             i_dirs <- list.dirs("inst")[-1L] # not inst itself
-            i_dirs <- grep(.vc_dir_names_re, i_dirs,
-                           invert = TRUE, value = TRUE)
+            i_dirs <- filtergrep(.vc_dir_names_re, i_dirs)
             ## This ignores any restrictive permissions in the source
             ## tree, since the later .Call(C_dirchmod) call will
             ## fix the permissions.
@@ -1067,27 +1065,22 @@
                 ignore[nzchar(ignore)]
             } else character()
             for(e in ignore)
-                i_dirs <- grep(e, i_dirs, perl = TRUE, invert = TRUE,
-                               value = TRUE, ignore.case = TRUE)
+                i_dirs <- filtergrep(e, i_dirs, perl = TRUE, ignore.case = TRUE)
             lapply(gsub("^inst", instdir, i_dirs),
                    function(p) dir.create(p, FALSE, TRUE)) # be paranoid
             i_files <- list.files("inst", all.files = TRUE,
                                   full.names = TRUE, recursive = TRUE)
-            i_files <- grep(.vc_dir_names_re, i_files,
-                            invert = TRUE, value = TRUE)
+            i_files <- filtergrep(.vc_dir_names_re, i_files)
             for(e in ignore)
-                i_files <- grep(e, i_files, perl = TRUE, invert = TRUE,
-                                value = TRUE, ignore.case = TRUE)
+                i_files <- filtergrep(e, i_files, perl = TRUE, ignore.case = TRUE)
             i_files <- i_files %w/o% c("inst/doc/Rplots.pdf",
                                        "inst/doc/Rplots.ps")
-            i_files <- grep("inst/doc/.*[.](log|aux|bbl|blg|dvi)$",
-                            i_files, perl = TRUE, invert = TRUE,
-                            value = TRUE, ignore.case = TRUE)
+            i_files <- filtergrep("inst/doc/.*[.](log|aux|bbl|blg|dvi)$",
+                                  i_files, perl = TRUE, ignore.case = TRUE)
             ## Temporary kludge
             if (!dir.exists("vignettes") && ! pkgname %in% c("RCurl"))
-                i_files <- grep("inst/doc/.*[.](png|jpg|jpeg|gif|ps|eps)$",
-                                i_files, perl = TRUE, invert = TRUE,
-                                value = TRUE, ignore.case = TRUE)
+                i_files <- filtergrep("inst/doc/.*[.](png|jpg|jpeg|gif|ps|eps)$",
+                                      i_files, perl = TRUE, ignore.case = TRUE)
             i_files <- i_files %w/o% "Makefile"
             i2_files <- gsub("^inst", instdir, i_files)
             file.copy(i_files, i2_files)

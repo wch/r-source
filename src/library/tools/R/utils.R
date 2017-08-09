@@ -535,6 +535,11 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
 
 ### * Internal utility functions.
 
+### ** filtergrep
+
+filtergrep <- function(pattern, x, ...) grep(pattern, x, invert = TRUE, value = TRUE, ...)
+
+
 ### ** %notin%
 
 `%notin%` <-

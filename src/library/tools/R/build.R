@@ -751,9 +751,8 @@ inRbuildignore <- function(files, pkgdir) {
         if(!dir.exists(ddir <- file.path(pkgname, "data")))
             return()
         ddir <- normalizePath(ddir)
-        dataFiles <- grep("\\.(rda|RData)$",
-                          list_files_with_type(ddir, "data"),
-                          invert = TRUE, value = TRUE)
+        dataFiles <- filtergrep("\\.(rda|RData)$",
+                                list_files_with_type(ddir, "data"))
         if (!length(dataFiles)) return()
         resaved <- character()
         on.exit(unlink(resaved))

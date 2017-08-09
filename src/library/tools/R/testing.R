@@ -194,8 +194,7 @@ Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE,
     if (forEx) {
         left <- clean2(left)
         ## remove lines from R CMD check --timings
-        left <- grep("[.](format_|)ptime", left, value = TRUE,
-                     invert = TRUE, useBytes = TRUE)
+        left <- filtergrep("[.](format_|)ptime", left, useBytes = TRUE)
         right <- clean2(right)
     }
     if (!useDiff && (length(left) == length(right))) {

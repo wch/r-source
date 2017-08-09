@@ -289,8 +289,7 @@ setRlibs <-
                 {
                     out <- R_runR(cmd, R_opts2, env, timeout = timeout)
                     ## pesky gdata ....
-                    grep("^(ftype: not found|File type)", out,
-                         invert = TRUE, value = TRUE)
+                    filtergrep("^(ftype: not found|File type)", out)
                 }
         } else
             function(cmd,
@@ -300,8 +299,8 @@ setRlibs <-
                 out <- R_runR(cmd, R_opts2, env, timeout = timeout)
                 ## htmltools produced non-UTF-8 output in Dec 2015
                 if (R_check_suppress_RandR_message)
-                    grep('^Xlib: *extension "RANDR" missing on display', out,
-                         invert = TRUE, value = TRUE, useBytes = TRUE)
+                    filtergrep('^Xlib: *extension "RANDR" missing on display',
+                               out, useBytes = TRUE)
                 else out
             }
 
@@ -516,8 +515,7 @@ setRlibs <-
         allfiles <- c(allfiles, unique(dirname(allfiles)))
         allfiles <- af <- sub("^./", "", allfiles)
         ignore_re <- paste0("(", paste(ignore, collapse = "|"), ")")
-        allfiles <- grep(ignore_re, allfiles, invert = TRUE, value = TRUE)
-
+        allfiles <- filtergrep(ignore_re, allfiles)
         bad_files <- allfiles[grepl("[[:cntrl:]\"*/:<>?\\|]",
                                     basename(allfiles))]
         is_man <- grepl("man$", dirname(allfiles))
@@ -1868,8 +1866,7 @@ setRlibs <-
             } else R_runR2(Rcmd)
             ## Grr, get() in undoc can change the search path
             ## Current example is TeachingDemos
-            out <- grep("^Loading required package:", out,
-                        invert = TRUE, value = TRUE)
+            out <- filtergrep("^Loading required package:", out)
             err <- grep("^Error", out)
             if (length(err)) {
                 errorLog(Log)
@@ -2042,10 +2039,8 @@ setRlibs <-
         if (!is_base_pkg && R_check_ascii_data && dir.exists("data")) {
             checkingLog(Log, "data for non-ASCII characters")
             out <- R_runR0("tools:::.check_package_datasets('.')", R_opts2)
-            out <- grep("Loading required package", out,
-                        invert = TRUE, value = TRUE)
-            out <- grep("Warning: changing locked binding", out,
-                        invert = TRUE, value = TRUE, fixed = TRUE)
+            out <- filtergrep("Loading required package", out)
+            out <- filtergrep("Warning: changing locked binding", out, fixed = TRUE)
            if (length(out)) {
                 bad <- grep("^Warning:", out)
                 if (length(bad)) warningLog(Log) else noteLog(Log)
@@ -2058,8 +2053,7 @@ setRlibs <-
             checkingLog(Log, "data for ASCII and uncompressed saves")
             out <- R_runR0("tools:::.check_package_compact_datasets('.', TRUE)",
                            R_opts2)
-            out <- grep("Warning: changing locked binding", out,
-                        invert = TRUE, value = TRUE, fixed = TRUE)
+            out <- filtergrep("Warning: changing locked binding", out, fixed = TRUE)
             if (length(out)) {
                 warningLog(Log)
                 printLog0(Log, .format_lines_with_indent(out), "\n")
@@ -2404,7 +2398,7 @@ setRlibs <-
             files <- dir("src", pattern = "\\.([cfh]|cc|cpp)$",
                          full.names = TRUE, recursive = TRUE)
             ## exclude dirs starting src/win, e.g for tiff
-            files <- grep("^src/[Ww]in", files, invert = TRUE, value = TRUE)
+            files <- filtergrep("^src/[Ww]in", files)
             bad_files <- character()
             for(f in files) {
                 contents <- readChar(f, file.size(f), useBytes = TRUE)
@@ -2469,10 +2463,9 @@ setRlibs <-
             bad_files <- character()
             for(f in all_files) {
                 contents <- readLines(f, warn = FALSE)
-                contents <- grep("^ *#", contents, value = TRUE, invert = TRUE)
+                contents <- filtergrep("^ *#", contents)
                 ## Things like $(SUBDIRS:=.a)
-                contents <- grep("[$][(].+:=.+[)]", contents,
-                                 value = TRUE, invert = TRUE)
+                contents <- filtergrep("[$][(].+:=.+[)]", contents)
                 if (any(grepl("([+]=|:=|[$][(]wildcard|[$][(]shell|[$][(]eval|[$][(]call|[$][(]patsubst|^ifeq|^ifneq|^ifdef|^ifndef|^endif)", contents)))
                     bad_files <- c(bad_files, f)
             }
@@ -2657,15 +2650,15 @@ setRlibs <-
             } else {
 		## Drop tcltk warning if no DISPLAY variable
 		if(pkgname == "tcltk")
-		    out <- grep("Warning: no DISPLAY variable so Tk is not available",
-				out, fixed = TRUE, invert = TRUE, value = TRUE)
+		    out <- filtergrep("Warning: no DISPLAY variable so Tk is not available",
+                                      out, fixed = TRUE)
                 ## Drop warnings about replacing previous imports unless
                 ## these were disabled for the installation check.
                 check_imports_flag <-
                     Sys.getenv("_R_CHECK_REPLACING_IMPORTS_", "TRUE")
                 if(config_val_to_logical(check_imports_flag))
-                    out <- grep("Warning: replacing previous import", out,
-                                fixed = TRUE, invert = TRUE, value = TRUE)
+                    out <- filtergrep("Warning: replacing previous import", out,
+                                      fixed = TRUE)
                 if(any(startsWith(out, "Warning"))) {
                     noteLog(Log)
                     any <- TRUE
@@ -2732,8 +2725,7 @@ setRlibs <-
                 env <- paste0("_R_LOAD_CHECK_OVERWRITE_S3_METHODS_=", pkgname)
                 out <- R_runR0(Rcmd, opts, env, arch = arch)
                 if (any(grepl("^Registered S3 method.*overwritten", out))) {
-                    out <- grep("^<environment: namespace:", out,
-                                invert = TRUE, value = TRUE)
+                    out <- filtergrep("^<environment: namespace:", out)
                     warningLog(Log)
                     printLog0(Log, paste(c(out, ""), collapse = "\n"))
                 } else resultLog(Log, "OK")
@@ -3078,9 +3070,8 @@ setRlibs <-
                         if (keep > 0L)
                             lines <- lines[max(1L, ll-keep-1L):ll]
                         if (R_check_suppress_RandR_message)
-                            lines <- grep('^Xlib: *extension "RANDR" missing on display',
-                                          lines, invert = TRUE, value = TRUE,
-                                          useBytes = TRUE)
+                            lines <- filtergrep('^Xlib: *extension "RANDR" missing on display',
+                                                lines, useBytes = TRUE)
                         printLog(Log, sprintf("Running the tests in %s failed.\n",
                                               sQuote(f)))
                         printLog(Log, if(keep > 0L && keep < ll)
@@ -3225,7 +3216,7 @@ setRlibs <-
             f <- file.path(vigns$dir, "Makefile")
             lines <- readLines(f, warn = FALSE)
             ## remove comment lines
-            lines <- grep("^[[:space:]]*#", lines, invert = TRUE, value = TRUE)
+            lines <- filtergrep("^[[:space:]]*#", lines)
             if(any(grepl("[^/]R +CMD", lines))) {
                 if(!any) warningLog(Log)
                 any <- TRUE
@@ -3411,8 +3402,8 @@ setRlibs <-
                 } else {
                     print_time(t1, t2, Log)
                     if(R_check_suppress_RandR_message)
-                        res <- grep('^Xlib: *extension "RANDR" missing on display', res,
-                                    invert = TRUE, value = TRUE, useBytes = TRUE)
+                        res <- filtergrep('^Xlib: *extension "RANDR" missing on display',
+                                          res, useBytes = TRUE)
                     if(length(res)) {
                         if(length(grep("there is no package called", res,
                                        useBytes = TRUE))) {
@@ -3473,9 +3464,8 @@ setRlibs <-
                 t2 <- proc.time()
                 out <- readLines(outfile, warn = FALSE)
                 if(R_check_suppress_RandR_message)
-                    out <- grep('^Xlib: *extension "RANDR" missing on display',
-                                out, invert = TRUE, value = TRUE,
-                                useBytes = TRUE)
+                    out <- filtergrep('^Xlib: *extension "RANDR" missing on display',
+                                      out, useBytes = TRUE)
                 warns <- grep("^Warning: file .* is not portable",
                               out, value = TRUE, useBytes = TRUE)
                 print_time(t1, t2, Log)
@@ -3551,8 +3541,7 @@ setRlibs <-
             if (res == 11) { ## return code from Rd2pdf
                 errorLog(Log, "Rd conversion errors:")
                 lines <- readLines("Rdlatex.log", warn = FALSE)
-                lines <- grep("^(Hmm|Execution)", lines,
-                              invert = TRUE, value = TRUE)
+                lines <- filtergrep("^(Hmm|Execution)", lines)
                 printLog0(Log, paste(c(lines, ""), collapse = "\n"))
                 unlink(build_dir, recursive = TRUE)
 		maybe_exit(1L)
@@ -3936,30 +3925,27 @@ setRlibs <-
 
                 ## skip for now some c++11-long-long warnings.
                 ex_re <- "(/BH/include/boost/|/RcppParallel/include/|/usr/include/|/usr/local/include/|/opt/X11/include/|/usr/X11/include/).*\\[-Wc[+][+]11-long-long\\]"
-                lines <- grep(ex_re, lines, invert = TRUE, value = TRUE,
-                              useBytes = TRUE)
+                lines <- filtergrep(ex_re, lines, useBytes = TRUE)
 
                 ## and GNU extensions in system headers
                 ex_re <- "^ *(/usr/|/opt/).*GNU extension"
-                lines <- grep(ex_re, lines, invert = TRUE, value = TRUE,
-                              useBytes = TRUE)
+                lines <- filtergrep(ex_re, lines, useBytes = TRUE)
 
                 ## and ODS 12.5 warnings
                 ex_re <- "^Warning: [[:alnum:]]+ hides"
-                lines <- grep(ex_re, lines, invert = TRUE, value = TRUE,
-                              useBytes = TRUE)
+                lines <- filtergrep(ex_re, lines, useBytes = TRUE)
 
                 ## Ignore install-time readLines() warnings about
                 ## files with incomplete final lines.  Most of these
                 ## come from .install_package_indices(), and should be
                 ## safe to ignore ...
-                lines <- grep("Warning: incomplete final line found by readLines",
-                              lines, invert = TRUE, value = TRUE, useBytes = TRUE)
+                lines <- filtergrep("Warning: incomplete final line found by readLines",
+                                    lines, useBytes = TRUE)
 
                 check_Stangle <- Sys.getenv("_R_CHECK_STANGLE_WARNINGS_", "TRUE")
                 if (!config_val_to_logical(check_Stangle))
-                lines <- grep("Warning: value of .* option should be lowercase",
-                              lines, invert = TRUE, value = TRUE, useBytes = TRUE)
+                lines <- filtergrep("Warning: value of .* option should be lowercase",
+                                    lines, useBytes = TRUE)
 
                 ## Package writers cannot really do anything about
                 ## non ISO C code in *system* headers.  Also,
@@ -3970,13 +3956,13 @@ setRlibs <-
                 ## default, but make it possible to get all ISO C
                 ## warnings via an environment variable.
                 if (!R_check_all_non_ISO_C) {
-                    lines <- grep("^ */.*: warning: .*ISO C",
-                                  lines, invert = TRUE, value = TRUE, useBytes = TRUE)
-                    lines <- grep("warning: *ISO C forbids.*function pointer",
-                                  lines, invert = TRUE, value = TRUE, useBytes = TRUE)
-                    if(WINDOWS)
-                        lines <- grep("warning: *ISO C does not support.*ms_printf length modifier",
-                                      lines, invert = TRUE, value = TRUE, useBytes = TRUE)
+                    lines <- filtergrep("^ */.*: warning: .*ISO C",
+                                        lines, useBytes = TRUE)
+                    lines <- filtergrep("warning: *ISO C forbids.*function pointer",
+                                        lines, useBytes = TRUE)
+                    if(WINDOWS) lines <- filtergrep(
+                                    "warning: *ISO C does not support.*ms_printf length modifier",
+                                    lines, useBytes = TRUE)
                 }
 
                 ## Warnings spotted by gcc with
@@ -3987,11 +3973,10 @@ setRlibs <-
                 check_src_flag <-
                     Sys.getenv("_R_CHECK_SRC_MINUS_W_UNUSED_", "FALSE")
                 if (!config_val_to_logical(check_src_flag)) {
-                    lines <- grep("warning: unused", lines, ignore.case = TRUE,
-                                  invert = TRUE, value = TRUE, useBytes = TRUE)
-                    lines <- grep("warning: .* set but not used", lines,
-                                  ignore.case = TRUE,
-                                  invert = TRUE, value = TRUE, useBytes = TRUE)
+                    lines <- filtergrep("warning: unused", lines,
+                                        ignore.case = TRUE, useBytes = TRUE)
+                    lines <- filtergrep("warning: .* set but not used", lines,
+                                        ignore.case = TRUE, useBytes = TRUE)
                 }
                 ## (gfortran seems to use upper case.)
 
@@ -4004,10 +3989,8 @@ setRlibs <-
                     Sys.getenv("_R_CHECK_SRC_MINUS_W_SOMETIMES_UNINITIALIZED_",
                                "FALSE")
                 if (!config_val_to_logical(check_src_flag)) {
-                    lines <- grep("warning: .* is used uninitialized whenever",
-                                  lines,
-                                  invert = TRUE, value = TRUE, useBytes
-                                  = TRUE)
+                    lines <- filtergrep("warning: .* is used uninitialized whenever",
+                                        lines, useBytes = TRUE)
                 }
 
                 ## Warnings spotted by gfortran >= 4.0 with '-Wall'.
@@ -4045,39 +4028,36 @@ setRlibs <-
                                      "Warning: .*\\[-Wunused-function]",
                                      "Warning: .*\\[-Wunused-dummy-argument]")
                     warn_re <- paste0("(", paste(warn_re, collapse = "|"), ")")
-                    lines <- grep(warn_re, lines, invert = TRUE, value = TRUE)
+                    lines <- filtergrep(warn_re, lines)
                 }
 
                 if (WINDOWS) {
                     ## Warning on Windows with some packages that
                     ## cannot transparently be installed bi-arch.
-                    lines <- grep("Warning: this package has a non-empty 'configure.win' file",
-                                  lines, invert = TRUE, value = TRUE)
+                    lines <- filtergrep("Warning: this package has a non-empty 'configure.win' file",
+                                        lines)
                     ## Warning on x64 Windows gcc 4.5.1 that
                     ## seems to be spurious
-                    lines <- grep("Warning: .drectve .* unrecognized",
-                                  lines, invert = TRUE, value = TRUE)
+                    lines <- filtergrep("Warning: .drectve .* unrecognized", lines)
                 }
 
                 check_imports_flag <-
                     Sys.getenv("_R_CHECK_REPLACING_IMPORTS_", "TRUE")
                 if (!config_val_to_logical(check_imports_flag))
-                    lines <- grep("Warning: replacing previous import", lines,
-                                  fixed = TRUE, invert = TRUE, value = TRUE)
+                    lines <- filtergrep("Warning: replacing previous import", lines,
+                                        fixed = TRUE)
                 else {
-                    this <- unique(grep("Warning: replacing previous import",
-                                        lines, fixed = TRUE, value = TRUE))
-                    this <- grep(paste0(sQuote(pkgname), "$"), this,
-                                 value = TRUE)
-                    lines <- grep("Warning: replacing previous import", lines,
-                                  fixed = TRUE, invert = TRUE, value = TRUE)
+                    this <- unique(filtergrep("Warning: replacing previous import", lines))
+                    this <- grep(paste0(sQuote(pkgname), "$"), this, value = TRUE)
+                    lines <- filtergrep("Warning: replacing previous import", lines,
+                                        fixed = TRUE)
                     lines <- c(lines, this)
                 }
                 check_FirstLib_flag <-
                     Sys.getenv("_R_CHECK_DOT_FIRSTLIB_", "FALSE")
                 if (!config_val_to_logical(check_FirstLib_flag))
-                    lines <- grep("Warning: ignoring .First.lib()", lines,
-                                  fixed = TRUE, invert = TRUE, value = TRUE)
+                    lines <- filtergrep("Warning: ignoring .First.lib()", lines,
+                                        fixed = TRUE)
 
                 lines <- unique(lines)
 
@@ -4453,8 +4433,9 @@ setRlibs <-
                     ## Recognized extensions for sources or headers.
                     srcfiles <- dir(".", all.files = TRUE)
                     srcfiles <- srcfiles[!dir.exists(srcfiles)]
-                    srcfiles <- grep("(\\.([cfmCM]|cc|cpp|f90|f95|mm|h|o|so)$|^Makevars|-win\\.def|^install\\.libs\\.R$)",
-                                     srcfiles, invert = TRUE, value = TRUE)
+                    srcfiles <- filtergrep(
+                        "(\\.([cfmCM]|cc|cpp|f90|f95|mm|h|o|so)$|^Makevars|-win\\.def|^install\\.libs\\.R$)",
+                        srcfiles)
                     if (length(srcfiles)) {
                         if (!any) warningLog(Log)
                         any <- TRUE

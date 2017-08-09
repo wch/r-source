@@ -1,7 +1,7 @@
 #  File src/library/tools/R/admin.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -933,7 +933,7 @@ checkRdaFiles <- function(paths)
         paths <- Sys.glob(c(file.path(paths, "*.rda"),
                             file.path(paths, "*.RData")))
         ## Exclude .RData, which this may or may not match
-        paths <- grep("/[.]RData$", paths, value = TRUE, invert = TRUE)
+        paths <- filtergrep("/[.]RData$", paths)
     }
     res <- data.frame(size = NA_real_, ASCII = NA,
                       compress = NA_character_, version = NA_integer_,
