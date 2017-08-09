@@ -3974,8 +3974,9 @@ setRlibs <-
                                   lines, invert = TRUE, value = TRUE, useBytes = TRUE)
                     lines <- grep("warning: *ISO C forbids.*function pointer",
                                   lines, invert = TRUE, value = TRUE, useBytes = TRUE)
-                    lines <- grep("warning: *ISO C does not support.*ms_printf length modifier",
-                                  lines, invert = TRUE, value = TRUE, useBytes = TRUE)
+                    if(WINDOWS)
+                        lines <- grep("warning: *ISO C does not support.*ms_printf length modifier",
+                                      lines, invert = TRUE, value = TRUE, useBytes = TRUE)
                 }
 
                 ## Warnings spotted by gcc with
