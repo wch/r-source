@@ -320,11 +320,11 @@ install.packages(pkgs, lib, repos = getOption("repos"),
 }
 
 \section{Timeouts}{
-  A limit on the elapsed time for each call to \code{INSTALL} (so for
-  sources installs only) can be set \emph{via} environment variable
-  \env{_R_INSTALL_TIME_LIMIT_}: in seconds (or in minutes or hours with
-  optional suffix \samp{m} or \samp{h}, suffix \samp{s} being allowed
-  for the default seconds) with \code{0} meaning no limit.
+  A limit on the elapsed time for each call to \command{R CMD INSTALL}
+  (so for source installs) can be set \emph{via} environment variable
+  \env{_R_INSTALL_PACKAGES_ELAPSED_TIMEOUT_}: in seconds (or in minutes
+  or hours with optional suffix \samp{m} or \samp{h}, suffix \samp{s}
+  being allowed for the default seconds) with \code{0} meaning no limit.
 
   For non-parallel installs this is implemented \emph{via} the
   \code{timeout} argument of \code{\link{system2}}: for parallel

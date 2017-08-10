@@ -590,7 +590,7 @@ install.packages <-
     output <- if(quiet) FALSE else ""
     env <- character()
 
-    tlim <- Sys.getenv("_R_INSTALL_TIME_LIMIT_")
+    tlim <- Sys.getenv("_R_INSTALL_PACKAGES_ELAPSED_TIMEOUT_")
     tlim <- if(is.na(tlim)) 0 else tools:::get_timeout(tlim)
 
     outdir <- getwd()
