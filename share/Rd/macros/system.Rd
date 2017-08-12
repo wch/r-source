@@ -45,3 +45,7 @@
 
 % To indicate a DOI.
 \newcommand{\doi}{\Sexpr[results=rd,stage=build]{tools:::Rd_expr_doi("#1")}}
+
+% To indicate LaTeX.
+\newcommand{\LaTeX}{\ifelse{latex}{\out{{\LaTeX}}}{LaTeX}}
+
