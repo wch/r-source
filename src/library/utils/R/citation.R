@@ -665,7 +665,9 @@ format.bibentry <-
 function(x, style = "text", .bibstyle = NULL,
          citation.bibtex.max = getOption("citation.bibtex.max", 1),
          bibtex = length(x) <= citation.bibtex.max,
-         sort = FALSE, ...)
+         sort = FALSE,
+         macros = NULL,
+         ...)
 {
     if(!length(x)) return(character())
 
@@ -675,7 +677,8 @@ function(x, style = "text", .bibstyle = NULL,
     x$.index <- as.list(seq_along(x))
     if(!missing(citation.bibtex.max))
 	warning(gettextf("Argument '%s' is deprecated; rather set '%s' instead.",
-			 "citation.bibtex.max", "bibtex=*"), domain=NA)
+			 "citation.bibtex.max", "bibtex=*"),
+                domain = NA)
 
     format_via_Rd <- function(f) {
         out <- file()
@@ -685,6 +688,11 @@ function(x, style = "text", .bibstyle = NULL,
             Sys.getenv("_R_UTILS_FORMAT_BIBENTRY_VIA_RD_PERMISSIVE_",
                        "TRUE")
         permissive <- tools:::config_val_to_logical(permissive)
+        macros <- if(is.null(macros))
+		      tools:::initialRdMacros()
+                  else if(is.character(macros))
+		      tools::loadRdMacros(macros,
+                                          tools:::initialRdMacros())
         sapply(.bibentry_expand_crossrefs(x),
                function(y) {
                    txt <- tools::toRd(y, style = .bibstyle)
@@ -697,7 +705,8 @@ function(x, style = "text", .bibstyle = NULL,
                    on.exit(close(con))
                    rd <- tools::parse_Rd(con,
                                          fragment = TRUE,
-                                         permissive = permissive)
+                                         permissive = permissive,
+                                         macros = macros)
                    rd <- tools:::processRdSexprs(rd,
                                                  "build",
                                                  macros = attr(rd, "macros"))
