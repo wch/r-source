@@ -37,7 +37,13 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
     See \bold{Entry Types} for details.
   }
   \item{textVersion}{a character string with a text representation of
-    the reference to optionally be employed for printing.}
+    the reference to optionally be employed for printing.  It is
+    recommended to leave this unspecified if
+    \code{format(x, style = "text")}
+    works correctly.  Only if special LaTeX macros (e.g., math
+    formatting) or special characters (e.g., with accents) are
+    necessary, a \code{textVersion} should be provided.
+  }
   \item{header}{a character string with optional header text.}
   \item{footer}{a character string with optional footer text.}
   \item{key}{a character string giving the citation key for the entry.}
