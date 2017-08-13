@@ -329,10 +329,11 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   For non-parallel installs this is implemented \emph{via} the
   \code{timeout} argument of \code{\link{system2}}: for parallel
   installs \emph{via} the OS's \command{timeout} command.  (The one
-  tested is from GNU \pkg{coreutils}, and commonly available on Linux,
-  only.  If no such command is available the timeout request is ignored,
-  with a warning.)  For parallel installs a \samp{Error 124} message
-  from \command{make} indicates that timeout occurred.
+  tested is from GNU \pkg{coreutils}, commonly available on Linux but
+  not other Unix-alikes.  If no such command is available the timeout
+  request is ignored, with a warning.)  For parallel installs a
+  \samp{Error 124} message from \command{make} indicates that timeout
+  occurred.
   
   Timeouts during installation might leave lock diretories behind and
   not restore previous versions.

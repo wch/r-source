@@ -1,6 +1,6 @@
 % File src/library/tools/man/check_packages_in_dir.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2013-2014 R Core Team
+% Copyright 2013-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{check_packages_in_dir}
@@ -139,6 +139,12 @@ check_packages_in_dir_details(dir, logs = NULL, drop_ok = TRUE)
   processing, providing check name, status and output for every check
   performed and not dropped according to status tag (via variables
   \code{Check}, \code{Status} and \code{Output}, respectively).
+  
+  Environment variable \env{_R_CHECK_ELAPSED_TIMEOUT_} can be used to
+  set a limit on the elpased time of each \command{check} run.  See the
+  \sQuote{R Internals} manual for how the value is interpreted and for
+  other environment variables which can be used for finer-grained
+  control on timeouts within a \command{check} run.
 }
 \note{
   This functionality is still experimental: interfaces may change in
