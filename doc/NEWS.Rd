@@ -222,6 +222,9 @@
 
       \item \code{methods:::cbind()} and \code{methods:::rbind()} avoid
       deep recursion, thanks to Suharto Anggono via \PR{17300}.
+
+      \item arithmetic with zero-column data frames now works more
+      consistently; issue raised by Bill Dunlap.
     }
   }
 }

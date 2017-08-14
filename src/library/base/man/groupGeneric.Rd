@@ -1,6 +1,6 @@
 % File src/library/base/man/groupGeneric.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{groupGeneric}
@@ -117,6 +117,12 @@
     If different methods are found, there is a warning about
     \sQuote{incompatible methods}: in that case or if no method is found
     for either argument the internal method is used.
+
+    Note that the \code{\link{data.frame}} methods for the comparison
+    (\code{"Compare"}: \code{==}, \code{<}, \dots) and logic
+    (\code{"Logic"}: \code{&} \code{|} and \code{!}) operators return a
+    logical \code{\link{matrix}} instead of a data frame, for
+    convenience and back compatibility.
 
     If the members of this group are called as functions, any argument
     names are removed to ensure that positional matching is always used.

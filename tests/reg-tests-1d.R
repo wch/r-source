@@ -1037,6 +1037,19 @@ stopifnot(identical(abc, readRDS(textConnection(tmpC))),
 ## failed in R 3.4.1 only
 
 
+## Ops (including arithmetic) with 0-column data frames:
+d0 <- USArrests[, FALSE]
+stopifnot(identical(d0, sin(d0))
+        , identical(d0, d0 + 1), identical(d0, 2 / d0) # failed
+        , all.equal(sqrt(USArrests), USArrests ^ (1/2)) # now both data frames
+        , is.matrix(m0 <- 0 < d0)
+        , identical(dim(m0), dim(d0))
+        , identical(dimnames(m0)[1], dimnames(d0)[1])
+        , identical(d0 & d0, m0)
+          )
+## all but the first failed in R < 3.5.0
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
