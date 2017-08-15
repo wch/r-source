@@ -81,7 +81,6 @@ str(res) # is fast!
 gc() # back to ~ 18 GB
 
 
-
 ## Large string's encodeString() -- PR#15885
 if(availableGB > 4) system.time(withAutoprint({
     txt <- strrep("test me:", 53687091); object.size(txt) # 429'496'824 bytes
@@ -94,3 +93,9 @@ if(availableGB > 4) system.time(withAutoprint({
 ## 52 sec elapsed [nb-mm4, 8 GB]
 
 
+## pretty(*, n = <large>)  gave overflow in C code
+if(availableGB > 6) system.time(withAutoprint({
+    r <- pretty(c(-1,1)*1e300, n = 449423288, min.n = 1)
+    head(r) ; length(r) # was only 21 in  R < 3.5.0
+    stopifnot(all.equal(length(r), 400000001, tol = 0.1))
+})) ## 4.8 sec.

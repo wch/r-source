@@ -225,6 +225,11 @@
 
       \item arithmetic with zero-column data frames now works more
       consistently; issue raised by Bill Dunlap.
+
+      \item \code{pretty(x, n=<large>)} now works better (though
+      it was never meant for large \code{n}); internally it uses the
+      same rounding fuzz (1e-10) as \code{seq.default()} - as it did up
+      to 2010-02-03 when both were 1e-7.
     }
   }
 }
