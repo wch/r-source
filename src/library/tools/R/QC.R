@@ -2961,7 +2961,9 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE,
                     bad_depends$required_but_obsolete <- bad
             }
         }
-        if (length(lenhances)) {
+        if (length(lenhances) &&
+            !config_val_to_logical(Sys.getenv("_R_CHECK_PACKAGE_DEPENDS_IGNORE_MISSING_ENHANCES_",
+                                             "FALSE"))) {
             m <- setdiff(sapply(lenhances, `[[`, 1L), installed)
             if(length(m))
                 bad_depends$enhances_but_not_installed <- m
