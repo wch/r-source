@@ -3566,10 +3566,13 @@ static Rboolean PS_Open(pDevDesc dd, PostScriptDesc *pd)
     char buf[512];
 
     if (strlen(pd->filename) == 0) {
-	if(strlen(pd->command) == 0) return FALSE;
-	errno = 0;
-	pd->psfp = R_popen(pd->command, "w");
-	pd->open_type = 1;
+	if(strlen(pd->command) == 0)
+	    pd->psfp = NULL;
+	else {
+	    errno = 0;
+	    pd->psfp = R_popen(pd->command, "w");
+	    pd->open_type = 1;
+	}
 	if (!pd->psfp || errno != 0) {
 	    char errbuf[strlen(pd->command) + 1];
 	    strcpy(errbuf, pd->command);
