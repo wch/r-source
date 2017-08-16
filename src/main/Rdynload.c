@@ -1344,6 +1344,8 @@ do_getSymbolInfo(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP sname = CAR(args), spackage = CADR(args),
 	withRegistrationInfo = CADDR(args);
 
+    if (!isString(sname) || LENGTH(sname) != 1)
+	error(_("invalid '%s' argument"), "name");
     name = translateChar(STRING_ELT(sname, 0));
     if(length(spackage)) {
 	if(TYPEOF(spackage) == STRSXP)
