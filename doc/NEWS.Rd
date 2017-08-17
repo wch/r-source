@@ -232,6 +232,11 @@
       it was never meant for large \code{n}); internally it uses the
       same rounding fuzz (1e-10) as \code{seq.default()} - as it did up
       to 2010-02-03 when both were 1e-7.
+
+      \item Internal C-level \code{R_check_class_and_super()} and hence
+      \code{R_check_class_etc()} now also consider non-direct super
+      classes and hence return a match in more cases.  This e.g., fixes
+      behaviour of derived classes in package \CRANpkg{Matrix}.
     }
   }
 }

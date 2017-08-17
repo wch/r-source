@@ -960,9 +960,11 @@ int R_check_class_and_super(SEXP x, const char **valid, SEXP rho)
 	}
 	SEXP classDef = PROTECT(R_getClassDef(class));
 	PROTECT(classExts = R_do_slot(classDef, s_contains));
-	PROTECT(_call = lang3(s_selectSuperCl, classExts,
-			      /* dropVirtual = */ ScalarLogical(1)));
-	// .selectSuperClasses(getClassDef(class)@contains, dropVirtual = TRUE) :
+	/* .selectSuperClasses(getClassDef(class)@contains, dropVirtual = TRUE,
+	 *                     namesOnly = TRUE, directOnly = FALSE, simpleOnly = TRUE) :
+	 */
+	PROTECT(_call = lang6(s_selectSuperCl, classExts, ScalarLogical(1),
+			      ScalarLogical(1), ScalarLogical(0), ScalarLogical(1)));
 	superCl = eval(_call, rho);
 	UNPROTECT(3); /* _call, classExts, classDef */
 	PROTECT(superCl);
