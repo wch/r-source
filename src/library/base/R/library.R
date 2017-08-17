@@ -114,7 +114,8 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         ## version.  Other mismatches should be caught earlier by the
         ## version checks.
         needsComp <- as.character(pkgInfo$DESCRIPTION["NeedsCompilation"])
-        if (identical(needsComp, "yes")) {
+        if (identical(needsComp, "yes") ||
+            file.exists(file.path(pkgpath, "libs"))) {
             internalsID <- features$internalsID
             if (is.null(internalsID))
                 ## the initial internalsID for packages installed
