@@ -224,7 +224,9 @@
       deep recursion, thanks to Suharto Anggono via \PR{17300}.
 
       \item arithmetic with zero-column data frames now works more
-      consistently; issue raised by Bill Dunlap.
+      consistently; issue raised by Bill Dunlap.  Arithmetic with data
+      frames gives a data frame now also for \code{^} which previously
+      gave a numeric matrix.
 
       \item \code{pretty(x, n=<large>)} now works better (though
       it was never meant for large \code{n}); internally it uses the
