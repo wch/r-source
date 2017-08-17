@@ -6567,7 +6567,7 @@ There are many functions to manipulate files and directories. Here are
 pointers to some of the more commonly used ones.
 
 To create an (empty) file or directory, use @code{file.create} or
-@code{create.dir}.  (These are the analogues of the POSIX utilities
+@code{dir.create}.  (These are the analogues of the POSIX utilities
 @command{touch} and @command{mkdir}.)  For temporary files and
 directories in the @R{} session directory see @code{tempfile}.
 

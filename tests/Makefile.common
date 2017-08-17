@@ -252,9 +252,10 @@ test-IsAs:
 	@$(ECHO) "running tests of consistency of as/is.*"
 	@$(MK) $(test-out-isas) RVAL_IF_DIFF=1
 
+## As for test-Internet, allow to fail, possibly slowly
 test-Internet2:
 	@$(ECHO) "running more Internet and socket tests"
-	@$(MK) $(test-out-internet2) RVAL_IF_DIFF=0
+	-@$(MK) $(test-out-internet2) RVAL_IF_DIFF=0
 
 test-CRANtools:
 	@$(ECHO) "running tests of CRAN tools"

@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2017-06-16 r72797) -- "Unsuffered Consequences"
+R Under development (unstable) (2017-08-06 r73046) -- "Unsuffered Consequences"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -1014,7 +1014,6 @@ List of 6
 +      main = "WRONG histogram") # and warning
 Warning in plot.histogram(r, freq = freq1, col = col, border = border, angle = angle,  :
   the AREAS in the plot are wrong -- rather use 'freq = FALSE'
-> 
 > require(stats)
 > set.seed(14)
 > x <- rchisq(100, df = 4)
@@ -2081,7 +2080,7 @@ N
 > points.default # to see how it calls "plot.xy(xy.coords(x, y), ...)"
 function (x, y = NULL, type = "p", ...) 
 plot.xy(xy.coords(x, y), type = type, ...)
-<bytecode: 0x3f6ffa8>
+<bytecode: 0x3974a40>
 <environment: namespace:graphics>
 > 
 > 
@@ -2951,7 +2950,7 @@ function (xy = 1, warn.log = TRUE)
     u <- par("usr")
     xy * c(u[2L] - u[1L], u[4L] - u[3L])/par("pin")
 }
-<bytecode: 0x42d5210>
+<bytecode: 0x3d30030>
 <environment: namespace:graphics>
 > 
 > ## plot labels offset 0.12 inches to the right
@@ -3031,7 +3030,7 @@ function (xy = 1, warn.log = TRUE)
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.994 0.029 2.029 0 0 
+Time elapsed:  1.974 0.044 2.025 0 0 
 > grDevices::dev.off()
 null device 
           1 

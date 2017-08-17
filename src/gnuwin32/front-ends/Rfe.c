@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2010  R Core Team
+ *  Copyright (C) 2010--2017  R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,7 +17,9 @@
  *  https://www.R-project.org/Licenses/
  */
 
-#include <stdlib.h> /* for exit */
+#define WIN32_LEAN_AND_MEAN 1
+#include <windows.h> /* for SetConsoleCtrlHandler */
+#include <stdlib.h>  /* for exit */
 #include <string.h>
 #include <stdio.h>
 
@@ -37,6 +39,7 @@ static void Usage (char *RCMD, char *arch)
 int main (int argc, char **argv)
 {
     int cmdarg = 1;
+    int interactive = 0;
     char arch[10] = R_ARCH, cmd[CMD_LEN], *p;
 
     if (argc > 1 && strcmp(argv[1], "--help") == 0) {
@@ -64,10 +67,14 @@ int main (int argc, char **argv)
     if (stricmp(argv[0] + strlen(argv[0]) - 11, "Rscript.exe") == 0
 	|| stricmp(argv[0] + strlen(argv[0]) - 7, "Rscript") == 0)
 	snprintf(cmd, CMD_LEN, "%s\\bin\\%s\\Rscript.exe", getRHOME(2), arch);
-    else
+    else {
     	snprintf(cmd, CMD_LEN, "%s\\bin\\%s\\R.exe", getRHOME(2), arch);
+	interactive = 1;
+    }
 
     for(int i = cmdarg; i < argc; i++) {
+	if (interactive && !strcmp(argv[i], "CMD"))
+	    interactive = 0;
 	strcat(cmd, " ");
 	if(strchr(argv[i], ' ')) {
 	    strcat(cmd, "\"");
@@ -76,6 +83,10 @@ int main (int argc, char **argv)
 	    strcat(cmd, "\"");
 	} else strcat(cmd, argv[i]);
     }
+
+    if (interactive)
+	/* Ignore Ctrl-C so that Rterm.exe can handle it */
+	SetConsoleCtrlHandler(NULL, TRUE);   
     
     exit(system(cmd));
  }

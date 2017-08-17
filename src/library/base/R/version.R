@@ -1,7 +1,7 @@
 #  File src/library/base/R/version.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2015, 2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -374,8 +374,10 @@ function(x, ...)
     y <- as.character(x)
     if(!length(y))
         writeLines(gettext("<0 elements>"))
+    else if(any("quote" == names(list(...))))
+	print(ifelse(is.na(y), NA_character_, sQuote(y)), ...)
     else
-        print(noquote(ifelse(is.na(y), NA_character_, sQuote(y))), ...)
+	print(ifelse(is.na(y), NA_character_, sQuote(y)), quote = FALSE, ...)
     invisible(x)
 }
 

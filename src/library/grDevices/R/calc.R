@@ -1,7 +1,7 @@
 #  File src/library/grDevices/R/calc.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -96,14 +96,21 @@ nclass.Sturges <- function(x) ceiling(log2(length(x)) + 1)
 nclass.scott <- function(x)
 {
     h <- 3.5 * sqrt(stats::var(x)) * length(x)^(-1/3)
-    if(h > 0) ceiling(diff(range(x))/h) else 1L
+    if(h > 0) max(1, ceiling(diff(range(x))/h)) else 1L
 }
 
 nclass.FD <- function(x)
 {
-    h <- stats::IQR(x)
-    if(h == 0) h <- stats::mad(x, constant = 2) # c=2: consistent with IQR
-    if (h > 0) ceiling(diff(range(x))/(2 * h * length(x)^(-1/3))) else 1L
+    h <- 2 * stats::IQR(x. <- signif(x, digits = 5))
+    if (h == 0) {
+	x. <- sort(x.)
+	al <- 1/4; al.min <- 1/512 # try quantiles 1/8, 1/16, ... 1/512
+	while(h == 0 && (al <- al/2) >= al.min)
+	    h <- diff(stats::quantile(x., c(al, 1-al), names = FALSE)) / (1 - 2*al)
+    }
+    if (h == 0) ## revert to Scott's:
+	h <- 3.5 * sqrt(stats::var(x))
+    if (h > 0) ceiling(diff(range(x))/h * length(x)^(1/3)) else 1L
 }
 
 

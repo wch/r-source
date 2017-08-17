@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995--2015  The R Core Team
+ *  Copyright (C) 1995--2017  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -2093,10 +2093,10 @@ static void InBytesConn(R_inpstream_t stream, void *buf, int length)
 	if (stream->type == R_pstream_ascii_format) {
 	    char linebuf[4];
 	    unsigned char *p = buf;
-	    int i, ncread;
+	    int i;
 	    unsigned int res;
 	    for (i = 0; i < length; i++) {
-		ncread = Rconn_getline(con, linebuf, 3);
+		size_t ncread = Rconn_getline(con, linebuf, 3);
 		if (ncread != 2)
 		    error(_("error reading from ascii connection"));
 		if (!sscanf(linebuf, "%02x", &res))

@@ -231,5 +231,7 @@ makeLatexTable <- function(utf8table)
 	    index[1L] <- macro <- sub("^", "\\\\", index[1L])
 	}
     }
+    table[["\\textemdash"]] <- "\u2014"
+    latexArgCount[["\\textemdash"]] <<- 0
     table
 }

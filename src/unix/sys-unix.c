@@ -347,7 +347,11 @@ static void timeout_handler(int sig)
 	return; /* needed for sigsuspend() to be interrupted */
     if (sig == SIGALRM) {
 	tost.timedout = 1;
-	sig = SIGTERM;
+	sig = SIGINT;
+	/* one can also use SIGTERM but e.g. when installing a package, SIGINT
+	   seems to be handled better by applications: applications happen to
+	   wait for child processes to terminate, and hence their execution is
+	   included into getrusage/RUSAGE_CHILDREN (proc.time) */
     }
     if (tost.child_pid > 0) {
 	/* parent, received a signal */
@@ -395,7 +399,7 @@ static pid_t timeout_wait(int *wstatus)
 static void timeout_cend(void *data)
 {
     if (tost.child_pid > 0) {
-	timeout_handler(SIGTERM);
+	timeout_handler(SIGINT);
 	timeout_wait(NULL);
     }
     timeout_cleanup();
@@ -575,6 +579,29 @@ static int R_system_timeout(const char *cmd, int timeout)
 	return -1;
 }
 
+static void warn_status(const char *cmd, int res)
+{
+    if (!res)
+	return;
+
+    if (errno)
+	/* FIXME: TK: non-zero errno is a sign of an error only when
+	   a function that modified it also signals an error by its
+	   return value, usually -1 or EOF. We should not be reporting
+	   an error here (CERT ERR30-C).*/
+	/* on Solaris, if the command ends with non-zero status and timeout
+	   is 0, "Illegal seek" error is reported; the timeout version
+	   works this around by using close(fileno) */
+	warningcall(R_NilValue,
+		    _("running command '%s' had status %d and error message '%s'"),
+		    cmd, res,
+		    strerror(errno));
+    else
+	warningcall(R_NilValue,
+		    _("running command '%s' had status %d"),
+		    cmd, res);
+}
+
 #define INTERN_BUFSIZE 8096
 SEXP attribute_hidden do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -590,7 +617,7 @@ SEXP attribute_hidden do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("'intern' must be logical and not NA"));
     timeout = asInteger(CADDR(args));
     if (timeout == NA_INTEGER || timeout < 0)
-	error(_("invalid '%s' argument"), "type");
+	error(_("invalid '%s' argument"), "timeout");
     const char *cmd = translateChar(STRING_ELT(CAR(args), 0));
     if (timeout > 0) {
 	/* command ending with & is not supported by timeout */
@@ -655,11 +682,8 @@ SEXP attribute_hidden do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 	if (timeout == 0)
 	    res = pclose(fp);
-	else {
+	else 
 	    res = R_pclose_timeout(fp);
-	    if (tost.timedout)
-		warning(_("command '%s' timed out"), cmd);
-	}
 #ifdef HAVE_SYS_WAIT_H
 	if (WIFEXITED(res)) res = WEXITSTATUS(res);
 	else res = 0;
@@ -672,24 +696,14 @@ SEXP attribute_hidden do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 		error(_("error in running command: '%s'"), strerror(errno));
 	    else
 		error(_("error in running command"));
-	} else if (res) {
-	    if (errno)
-		/* FIXME: TK: non-zero errno is a sign of an error only when
-		   a function that modified it also signals an error by its
-		   return value, usually -1 or EOF. We should not be reporting
-		   an error here (CERT ERR30-C).*/
-		/* on Solaris, if the command ends with non-zero status and timeout
-		   is 0, "Illegal seek" error is reported; the timeout version
-		   works this around by using close(fileno) */
-		warningcall(R_NilValue,
-			    _("running command '%s' had status %d and error message '%s'"),
-			    cmd, res,
-			    strerror(errno));
-	    else
-		warningcall(R_NilValue,
-			    _("running command '%s' had status %d"),
-			    cmd, res);
 	}
+
+	if (timeout && tost.timedout) {
+	    res = 124;
+	    warningcall(R_NilValue, _("command '%s' timed out after %ds"),
+	                cmd, timeout);
+	} else
+	    warn_status(cmd, res);
 
 	rval = PROTECT(allocVector(STRSXP, i));
 	for (j = (i - 1); j >= 0; j--) {
@@ -716,11 +730,14 @@ SEXP attribute_hidden do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 	int res;
 	if (timeout == 0)
 	    res = R_system(cmd);
-	else
+	else 
 	    res = R_system_timeout(cmd, timeout);
+	if (timeout && tost.timedout) {
+	    res = 124;
+	    warningcall(R_NilValue, _("command '%s' timed out after %ds"),
+	                cmd, timeout);
+	} 
 	INTEGER(tlist)[0] = res;
-	if (tost.timedout)
-	    warning(_("command '%s' timed out"), cmd);
 #ifdef HAVE_AQUA
 	R_Busy(0);
 #endif

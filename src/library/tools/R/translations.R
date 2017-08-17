@@ -1,7 +1,7 @@
 #  File src/library/tools/R/translations.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -76,8 +76,8 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL, copyright, bugs)
     same <- function(a, b)
     {
         tmpa <- readLines(a); tmpb <- readLines(b)
-        tmpa <- grep('^"POT-Creation-Date:', tmpa, invert = TRUE, value = TRUE)
-        tmpb <- grep('^"POT-Creation-Date:', tmpb, invert = TRUE, value = TRUE)
+        tmpa <- filtergrep('^"POT-Creation-Date:', tmpa)
+        tmpb <- filtergrep('^"POT-Creation-Date:', tmpb)
         identical(tmpa, tmpb)
     }
 
@@ -175,8 +175,7 @@ update_pkg_po <- function(pkgdir, pkg = NULL, version = NULL, copyright, bugs)
     } else {
         dom <- "R"
         od <- setwd("../../..")
-        cfiles <- grep("^#", readLines("po/POTFILES"),
-                       value = TRUE, invert = TRUE)
+        cfiles <- filtergrep("^#", readLines("po/POTFILES"))
     }
     cmd <- sprintf("xgettext --keyword=_ --keyword=N_ -o %s", shQuote(ofile))
     cmd <- c(cmd, paste0("--package-name=", name),
@@ -242,8 +241,8 @@ update_RGui_po <- function(srcdir)
     same <- function(a, b)
     {
         tmpa <- readLines(a); tmpb <- readLines(b)
-        tmpa <- grep('^"POT-Creation-Date:', tmpa, invert = TRUE, value = TRUE)
-        tmpb <- grep('^"POT-Creation-Date:', tmpb, invert = TRUE, value = TRUE)
+        tmpa <- filtergrep('^"POT-Creation-Date:', tmpa)
+        tmpb <- filtergrep('^"POT-Creation-Date:', tmpb)
         identical(tmpa, tmpb)
     }
     ## Follow previous version by always collating in C.

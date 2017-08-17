@@ -1,7 +1,7 @@
 #  File src/library/base/R/matrix.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -100,6 +100,9 @@ colnames <- function(x, do.NULL = TRUE, prefix = "col")
     x
 }
 
+.row <- function(dim) .Internal(row(dim))
+.col <- function(dim) .Internal(col(dim))
+
 row <- function(x, as.factor=FALSE)
 {
     if(as.factor) {
@@ -119,6 +122,18 @@ col <- function(x, as.factor=FALSE)
         res
     } else .Internal(col(dim(x)))
 }
+
+lower.tri <- function(x, diag = FALSE) {
+    d <- dim(x)
+    if(length(d) != 2L) d <- dim(as.matrix(x))
+    if(diag) .row(d) >= .col(d) else .row(d) > .col(d)
+}
+upper.tri <- function(x, diag = FALSE) {
+    d <- dim(x)
+    if(length(d) != 2L) d <- dim(as.matrix(x))
+    if(diag) .row(d) <= .col(d) else .row(d) < .col(d)
+}
+
 
 crossprod <- function(x, y=NULL) .Internal(crossprod(x,y))
 tcrossprod <- function(x, y=NULL) .Internal(tcrossprod(x,y))

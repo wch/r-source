@@ -130,11 +130,11 @@ person(given = NULL, family = NULL, middle = NULL,
     \item{\code{"com"}}{(Compiler) Use for persons who collected code
       (potentially in other languages) but did not make further
       substantial contributions to the package.}
+    \item{\code{"cph"}}{(Copyright holder) Use for all copyright holders.}
+    \item{\code{"cre"}}{(Creator) Use for the package maintainer.}
     \item{\code{"ctb"}}{(Contributor) Use for authors who have made
       smaller contributions (such as code patches etc.) but should not
       show up in the package citation.}
-    \item{\code{"cph"}}{(Copyright holder) Use for all copyright holders.}
-    \item{\code{"cre"}}{(Creator) Use for the package maintainer.}
     \item{\code{"ctr"}}{(Contractor) Use for authors who have been
       contracted to write (parts of) the package and hence do not own
       intellectual property.}
@@ -142,6 +142,8 @@ person(given = NULL, family = NULL, middle = NULL,
       contributed data sets for the package.}
     \item{\code{"fnd"}}{(Funder) Use for persons or organizations that
       furnished financial support for the development of the package.}
+    \item{\code{"rev"}}{(Reviewer) Use for persons or organizations
+      responsible for reviewing (parts of) the package.}
     \item{\code{"ths"}}{(Thesis advisor) If the package is part of a
       thesis, use for the thesis advisor.}
     \item{\code{"trl"}}{(Translator) If the R code is a translation from

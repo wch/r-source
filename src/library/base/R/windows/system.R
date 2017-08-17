@@ -22,8 +22,6 @@ system <- function(command, intern = FALSE,
                    show.output.on.console = TRUE, minimized = FALSE,
                    invisible = TRUE, timeout = 0)
 {
-    if(!identical(timeout, 0))
-        stop("'timeout' is not yet implemented on Windows.")
     if(!is.logical(intern) || is.na(intern))
         stop("'intern' must be TRUE or FALSE")
     if(!is.logical(ignore.stdout) || is.na(ignore.stdout))
@@ -67,8 +65,6 @@ system2 <- function(command, args = character(),
                     wait = TRUE, minimized = FALSE, invisible = TRUE,
                     timeout = 0)
 {
-    if(!identical(timeout, 0))
-        stop("'timeout' is not yet implemented on Windows.")
     if(!is.logical(wait) || is.na(wait))
         stop("'wait' must be TRUE or FALSE")
     if(!is.logical(minimized) || is.na(minimized))

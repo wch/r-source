@@ -2348,15 +2348,14 @@ void GEPretty(double *lo, double *up, int *ndiv)
 #ifdef DEBUG_PLOT
     x1 = ns; x2 = nu;
 #endif
+    // -> ../appl/pretty.c 
     unit = R_pretty(&ns, &nu, ndiv, /* min_n = */ 1,
 		    /* shrink_sml = */ 0.25,
 		    high_u_fact,
 		    2, /* do eps_correction in any case */
 		    0 /* return (ns,nu) in  (lo,up) */);
-
-    /* The following is ugly since it kind of happens already in Rpretty0(..):
-     */
-#define rounding_eps 1e-7
+    // The following is ugly since it kind of happens already in R_pretty(..):
+#define rounding_eps 1e-10 /* <- compatible to seq*(); was 1e-7 till 2017-08-14 */
     if(nu >= ns + 1) {
 	if(               ns * unit < *lo - rounding_eps*unit)
 	    ns++;

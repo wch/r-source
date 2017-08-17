@@ -146,7 +146,7 @@ Sys.umask(mode = NA)
 \examples{\dontrun{
 ## Fix up maximal allowed permissions in a file tree
 Sys.chmod(list.dirs("."), "777")
-f <- list.files(".", all.files = TRUE, full.names = TRUE, recursive  TRUE)
+f <- list.files(".", all.files = TRUE, full.names = TRUE, recursive = TRUE)
 Sys.chmod(f, (file.info(f)$mode | "664"))
 }}
 \keyword{file}

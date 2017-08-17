@@ -200,12 +200,12 @@ function()
 
     results <- CRAN_check_results()
     details <- CRAN_check_details()
-    mtnotes <- CRAN_memtest_notes()
+    issues <- CRAN_check_issues()
 
     split(format(summarize_CRAN_check_status(pdb[ind, "Package"],
                                              results,
                                              details,
-                                             mtnotes),
+                                             issues),
                  header = TRUE),
           maintainer[ind])
 }

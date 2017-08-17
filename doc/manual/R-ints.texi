@@ -1262,7 +1262,7 @@ The rationale behind considering only UTF-8 and Latin-1 was that most
 systems are capable of producing UTF-8 strings and this is the nearest
 we have to a universal format.  For those that do not (for example those
 lacking a powerful enough @code{iconv}), it is likely that they work in
-Latin-1, the old @R{} assumption. The the parser can return a
+Latin-1, the old @R{} assumption. Then the parser can return a
 UTF-8-encoded string if it encounters a @samp{\uxxx} escape for a
 Unicode point that cannot be represented in the current charset.  (This
 needs MBCS support, and was only enabled@footnote{See define
@@ -1289,15 +1289,14 @@ were encoded in Latin-1 rather than Adobe Symbol: this is selected by
 
 Windows has no UTF-8 locales, but rather expects to work with
 UCS-2@footnote{or UTF-16 if support for surrogates is enabled in the OS,
-which it is not normally so at least for Western versions of Windows,
-despite some claims to the contrary on the Microsoft website.} strings.
-@R{} (being written in standard C) would not work internally with UCS-2
-without extensive changes.  The @file{Rgui} console@footnote{but not the
-GraphApp toolkit.} uses UCS-2 internally, but communicates with the @R{}
-engine in the native encoding.  To allow UTF-8 strings to be printed in
-UTF-8 in @file{Rgui.exe}, an escape convention is used (see header file
-@file{rgui_UTF8.h}) which is used by @code{cat}, @code{print} and
-autoprinting.
+which it used not to be when encoding support was added to @R{}.}
+strings.  @R{} (being written in standard C) would not work internally
+with UCS-2 without extensive changes.  The @file{Rgui}
+console@footnote{but not the GraphApp toolkit.} uses UCS-2 internally,
+but communicates with the @R{} engine in the native encoding.  To allow
+UTF-8 strings to be printed in UTF-8 in @file{Rgui.exe}, an escape
+convention is used (see header file @file{rgui_UTF8.h}) by
+@code{cat}, @code{print} and autoprinting.
 
 `Unicode' (UCS-2LE) files are common in the Windows world, and
 @code{readLines} and @code{scan} will read them into UTF-8 strings on
@@ -2343,7 +2342,7 @@ internationalized in the same way as other packages.
 * R code::                      
 * Main C code::                 
 * Windows-GUI-specific code::   
-* macOS GUI::                    
+* macOS GUI::                   
 * Updating::                    
 @end menu
 
@@ -3952,6 +3951,31 @@ indicate that no report is required, a value of @samp{0} that a report
 is always required.
 Default: @code{""}. (@code{10} for CRAN checks.)
 
+@item _R_CHECK_EXAMPLE_TIMING_THRESHOLD_
+If timings are being recorded, set the threshold in seconds for
+reporting long-running examples (either user+system CPU time or elapsed
+time).  Default: @code{"5"}.
+
+@item _R_CHECK_EXAMPLE_TIMING_CPU_TO_ELAPSED_THRESHOLD_
+For checks with timings enabled, report examples where the ratio of CPU
+time to elapsed time exceeds this threshold (and the CPU time is at
+least one second).  This can help detect the simultaneous use of
+multiple CPU cores.
+Default: @code{NA}.
+
+@item _R_CHECK_TEST_TIMING_CPU_TO_ELAPSED_THRESHOLD_
+Report for running an individual test if the ratio of CPU time to
+elapsed time exceeds this threshold (and the CPU time is at least one
+second).  Not supported on Windows.
+Default: @code{NA}.
+
+@item _R_CHECK_VIGNETTE_TIMING_CPU_TO_ELAPSED_THRESHOLD_
+Report if when running/re-building vignettes (individually or in
+aggregate) the ratio of CPU time to elapsed time exceeds this threshold
+(and the CPU time is at least one second).  Not supported on
+Windows.
+Default: @code{NA}.
+
 @item _R_CHECK_INSTALL_DEPENDS_
 If set to a true value and a test installation is to be done, this is
 done with @code{.libPaths()} containing just a temporary library
@@ -4152,6 +4176,43 @@ _R_CHECK_FORCE_SUGGESTS_=FALSE
 @noindent
 since some packages do suggest other packages not available on CRAN or
 other commonly-used repositories.
+
+Several environment variables can be used to set `timeouts': limits for
+the elapsed time taken by the sub-processes used for parts of the
+checks.  A value of @code{0} indicates no limit, and is the default.
+Character strings ending in @samp{s}, @samp{m} or @samp{h} indicate a
+number of seconds, minutes or hours respectively: other values are
+interpreted as a whole number of seconds (with invalid inputs being
+treated as no limit).
+@vtable @code
+@item _R_CHECK_ELAPSED_TIMEOUT_
+The default timeout for sub-processes not otherwise mentioned, and the
+default value for all except @env{_R_CHECK_1TEST_ELAPSED_TIMEOUT_}.
+(This is also used by @code{tools::check_packages_in_dir}.)
+
+@item _R_CHECK_INSTALL_ELAPSED_TIMEOUT_
+Limit for when @command{R CMD INSTALL} is run by @command{check}.
+
+@item _R_CHECK_EXAMPLES_ELAPSED_TIMEOUT_
+Limit for running all the examples for one sub-architecture.
+
+@item _R_CHECK_ONE_TEST_ELAPSED_TIMEOUT_
+Limit for running one test for one sub-architecture.  Default
+@env{_R_CHECK_TESTS_ELAPSED_TIMEOUT_}.
+
+@item _R_CHECK_TESTS_ELAPSED_TIMEOUT_
+Limit for running all the tests for one sub-architecture (and the
+default limit for running one test).
+
+@item _R_CHECK_ONE_VIGNETTE_ELAPSED_TIMEOUT_
+Limit for running the @R{} code in one vignette.
+
+@item _R_CHECK_BUILD_VIGNETTES_ELAPSED_TIMEOUT_
+Limit for re-building (all) vignettes.
+
+@item _R_CHECK_PKGMAN_ELAPSED_TIMEOUT_
+Limit for each attempt at building the PDF package manual.
+@end vtable
 
 Another variable which enables stricter checks is to set
 @env{R_CHECK_CONSTANTS} to @code{5}.  This checks that

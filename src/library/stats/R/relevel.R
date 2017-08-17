@@ -1,7 +1,7 @@
 #  File src/library/stats/R/relevel.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -19,10 +19,10 @@
 relevel <- function(x, ref, ...) UseMethod("relevel")
 
 relevel.default <- function(x, ref, ...)
-    stop("'relevel' only for factors")
+    stop("'relevel' only for (unordered) factors")
 
 relevel.ordered <- function(x, ref, ...)
-    stop("'relevel' only for factors")
+    stop("'relevel' only for unordered factors")
 
 relevel.factor <- function(x, ref, ...)
 {

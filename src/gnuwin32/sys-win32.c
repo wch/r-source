@@ -193,6 +193,7 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
     const char *fout = "", *ferr = "";
     int   vis = 0, flag = 2, i = 0, j, ll = 0;
     SEXP  cmd, fin, Stdout, Stderr, tlist = R_NilValue, tchar, rval;
+    int timeout = 0, timedout = 0;
 
     checkArity(op, args);
     cmd = CAR(args);
@@ -211,7 +212,15 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
     Stdout = CAR(args);
     args = CDR(args);
     Stderr = CAR(args);
-    
+    args = CDR(args);
+    timeout = asInteger(CAR(args));
+    if (timeout == NA_INTEGER || timeout < 0 || timeout > 2000000)
+	/* the limit could be increased, but not much as in milliseconds it
+	   has to fit into a 32-bit unsigned integer */
+	errorcall(call, _("invalid '%s' argument"), "timeout");
+    if (timeout && !flag)
+	errorcall(call, "Timeout with background running processes is not supported.");
+
     if (CharacterMode == RGui) {
 	/* This is a rather conservative approach: if
 	   Rgui is launched from a console window it does have
@@ -232,9 +241,10 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if (flag < 2) { /* Neither intern = TRUE nor
 		       show.output.on.console for Rgui */
-	ll = runcmd(CHAR(STRING_ELT(cmd, 0)),
+	ll = runcmd_timeout(CHAR(STRING_ELT(cmd, 0)),
 		    getCharCE(STRING_ELT(cmd, 0)),
-		    flag, vis, CHAR(STRING_ELT(fin, 0)), fout, ferr);
+		    flag, vis, CHAR(STRING_ELT(fin, 0)), fout, ferr,
+		    timeout, &timedout);
     } else {
 	/* read stdout +/- stderr from pipe */
 	int m = 0;
@@ -243,7 +253,7 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    m = asLogical(Stderr) ? 2 : 0;
 	if(m  && TYPEOF(Stdout) == LGLSXP && asLogical(Stdout)) m = 3;
 	fp = rpipeOpen(CHAR(STRING_ELT(cmd, 0)), getCharCE(STRING_ELT(cmd, 0)),
-		       vis, CHAR(STRING_ELT(fin, 0)), m, fout, ferr);
+		       vis, CHAR(STRING_ELT(fin, 0)), m, fout, ferr, timeout);
 	if (!fp) {
 	    /* If intern = TRUE generate an error */
 	    if (flag == 3) error(runerror());
@@ -267,10 +277,14 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 		for (i = 0; rpipeGets(fp, buf, INTERN_BUFSIZE); i++)
 		    R_WriteConsole(buf, strlen(buf));
 	    }
-	    ll = rpipeClose(fp);
+	    ll = rpipeClose(fp, &timedout);
 	}
     }
-    if(ll) {
+    if (timedout) {
+	ll = 124;
+	warningcall(R_NilValue, _("command '%s' timed out after %ds"),
+	            CHAR(STRING_ELT(cmd, 0)), timeout);
+    } else if (flag == 3 && ll) {
 	warningcall(R_NilValue, 
 		    _("running command '%s' had status %d"), 
 		    CHAR(STRING_ELT(cmd, 0)), ll);

@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2017-06-16 r72797) -- "Unsuffered Consequences"
+R Under development (unstable) (2017-08-13 r73090) -- "Unsuffered Consequences"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -2310,7 +2310,7 @@ Warning messages:
 2: In plot.window(...) :
   relative range of values =  36 * EPS, is small (axis 2)
 3: In plot.window(...) :
-  relative range of values =  17 * EPS, is small (axis 2)
+  relative range of values =   0 * EPS, is small (axis 2)
 > par(mfrow = c(1,1))
 > ## The warnings from inside GScale() will differ in their  relrange() ...
 > ## >> do sloppy testing
@@ -3272,7 +3272,7 @@ Error in `[.data.frame`(x, 1, c("a", "c")) : undefined columns selected
 [31] print         prompt        rbind         row.names     row.names<-  
 [36] rowsum        split         split<-       stack         str          
 [41] subset        summary       t             tail          transform    
-[46] unique        unstack       within       
+[46] type.convert  unique        unstack       within       
 > meth2gen("dendrogram")
  [1] [[            as.dendrogram as.hclust     cophenetic    cut          
  [6] labels        merge         nobs          plot          print        
@@ -6371,7 +6371,7 @@ function(given = NULL) {
     if (is.null(given)) callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x5d2a158>
+<bytecode: 0x4c293a0>
 > print(foo, useSource = FALSE)
 function (given = NULL) 
 {
@@ -6382,7 +6382,7 @@ function (given = NULL)
         callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x5d2a158>
+<bytecode: 0x4c293a0>
 > attr(foo, "srcref") <- NULL
 > foo
 function (given = NULL) 
@@ -6394,7 +6394,7 @@ function (given = NULL)
         callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x5d2a158>
+<bytecode: 0x4c293a0>
 > (f <- structure(function(){}, note = "just a note",
 +                 yada = function() "not the same"))
 function(){}
@@ -6416,15 +6416,15 @@ function ()
 > print.function
 function (x, ...)  
  - attr(*, "srcref")=Class 'srcref'  atomic [1:8] 1 19 1 63 19 63 1 1
-  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x5d801e8> 
+  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x4c7f770> 
 > f
 function ()  
  - attr(*, "srcref")=Class 'srcref'  atomic [1:8] 1 17 1 28 17 28 1 1
-  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x5d75168> 
+  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x4c74140> 
  - attr(*, "note")= chr "just a note"
  - attr(*, "yada")=function ()  
   ..- attr(*, "srcref")=Class 'srcref'  atomic [1:8] 2 24 2 48 24 48 2 2
-  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x5d75168> 
+  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x4c74140> 
 > rm(print.function)
 > ## auto-printing and printing differed up to R 2.9.x
 > 

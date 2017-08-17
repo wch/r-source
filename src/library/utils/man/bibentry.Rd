@@ -25,7 +25,7 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
 \method{format}{bibentry}(x, style = "text", .bibstyle = NULL,
        citation.bibtex.max = getOption("citation.bibtex.max", 1),
        bibtex = length(x) <= citation.bibtex.max,
-       sort = FALSE, \dots)
+       sort = FALSE, macros = NULL, \dots)
 
 \method{sort}{bibentry}(x, decreasing = FALSE, .bibstyle = NULL, drop = FALSE, \dots)
 
@@ -37,7 +37,13 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
     See \bold{Entry Types} for details.
   }
   \item{textVersion}{a character string with a text representation of
-    the reference to optionally be employed for printing.}
+    the reference to optionally be employed for printing.  It is
+    recommended to leave this unspecified if
+    \code{format(x, style = "text")}
+    works correctly.  Only if special LaTeX macros (e.g., math
+    formatting) or special characters (e.g., with accents) are
+    necessary, a \code{textVersion} should be provided.
+  }
   \item{header}{a character string with optional header text.}
   \item{footer}{a character string with optional footer text.}
   \item{key}{a character string giving the citation key for the entry.}
@@ -80,6 +86,8 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
     \code{\link{getOption}("citation.bibtex.max")}.}
   \item{sort}{logical indicating if bibentries should be sorted, using
     \code{\link[tools]{bibstyle}(.bibstyle)$sortKeys(x)}.}
+  \item{macros}{a character string or an object with already loaded Rd
+    macros, see \bold{Details}.}
   \item{drop}{logical used as \code{x[ ..., drop=drop]} inside the
     \code{sort()} method.}
 }
@@ -105,7 +113,13 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
   \code{"textVersion"}).
   The \code{"text"}, \code{"html"} and \code{"latex"} styles make use
   of the \code{.bibstyle} argument using the \code{\link{bibstyle}}
-  function.  When printing bibentry objects in citation style, a
+  function.  In addition, one can use the \code{macros} argument to
+  provide additional (otherwise unknown, presumably LaTeX-style) Rd
+  macros, either by giving the path to a file with Rd macros to be
+  loaded via \code{\link[tools]{loadRdMacros}}, or an object with macros
+  already loaded.
+
+  When printing bibentry objects in citation style, a
   \code{header}/\code{footer} for each item can be displayed as well as
   a \code{mheader}/\code{mfooter} for the whole vector of references.
 
@@ -162,9 +176,9 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
     \item{address:}{The address of the publisher or other type of
       institution.}
 
-    \item{author:}{The name(s) of the author(s), either
-      as a character string in the format described in the LaTeX book,
-      or a \code{\link{person}} object.}
+    \item{author:}{The name(s) of the author(s), either as a
+      \code{\link{person}} object, or as a character string which
+      \code{\link{as.person}} correctly coerces to such.}
 
     \item{booktitle:}{Title of a book, part of which is being cited.}
     \item{chapter:}{A chapter (or section or whatever) number.}

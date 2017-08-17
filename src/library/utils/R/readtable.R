@@ -30,13 +30,30 @@ function(file, sep = "", quote = "\"'", skip = 0,
               comment.char)
 }
 
-
 type.convert <-
-function(x, na.strings = "NA", as.is = FALSE, dec = ".",
-	 numerals = c("allow.loss", "warn.loss", "no.loss"))
-    .External2(C_typeconvert, x, na.strings, as.is, dec,
-               match.arg(numerals))
+function(x, ...)
+    UseMethod("type.convert")
 
+type.convert.default <-
+function(x, na.strings = "NA", as.is = FALSE, dec = ".",
+         numerals = c("allow.loss", "warn.loss", "no.loss"), ...)
+{
+    if(is.array(x))
+        storage.mode(x) <- "character"
+    else
+        x <- as.character(x)
+    .External2(C_typeconvert, x, na.strings, as.is, dec, match.arg(numerals))
+}
+
+type.convert.list <-
+function(x, ...)
+{
+    for(i in seq_along(x))
+        x[[i]] <- type.convert(x[[i]], ...)
+    x
+}
+
+type.convert.data.frame <- type.convert.list
 
 read.table <-
 function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",

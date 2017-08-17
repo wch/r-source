@@ -149,8 +149,10 @@ int Sock_open(Sock_port_t port, Sock_error_t perr)
 #endif
 
     if ((bind(sock, (struct sockaddr *)&server, sizeof(server)) < 0) ||
-	(listen(sock, MAXBACKLOG) < 0))
+	(listen(sock, MAXBACKLOG) < 0)) {
+	close(sock);
 	return Sock_error(perr, errno, 0);
+    }
     return sock;
 }
 

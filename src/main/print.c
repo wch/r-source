@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 2000-2017	The R Core Team.
  *  Copyright (C) 1995-1998	Robert Gentleman and Ross Ihaka.
- *  Copyright (C) 2000-2016	The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -34,7 +34,10 @@
  *		-> PrintGenericVector	-> PrintValueRec  (recursion)
  *		-> printList		-> PrintValueRec  (recursion)
  *		-> printAttributes	-> PrintValueRec  (recursion)
+ *		-> PrintSpecial
  *		-> PrintExpression
+ *		-> PrintLanguage        -> PrintLanguageEtc
+ *		-> PrintClosure         -> PrintLanguageEtc
  *		-> printVector		>>>>> ./printvector.c
  *		-> printNamedVector	>>>>> ./printvector.c
  *		-> printMatrix		>>>>> ./printarray.c
@@ -46,7 +49,7 @@
  *
  *
  *  See ./printutils.c	 for general remarks on Printing
- *			 and the Encode.. utils.
+ *			 and the EncodeString() and all Encode*() utils,
  *
  *  Also ./printvector.c,  ./printarray.c
  *
@@ -182,16 +185,24 @@ static void PrintLanguageEtc(SEXP s, Rboolean useSource, Rboolean isClosure)
 {
     int i;
     SEXP t = getAttrib(s, R_SrcrefSymbol);
-    if (!isInteger(t) || !useSource)
-	t = deparse1w(s, 0, useSource | DEFAULTDEPARSE);
-    else {
+    Rboolean useSrc = useSource && isInteger(t);
+    if (useSrc) {
 	PROTECT(t = lang2(R_AsCharacterSymbol, t));
 	t = eval(t, R_BaseEnv);
 	UNPROTECT(1);
+    } else {
+	t = deparse1w(s, 0, useSource | DEFAULTDEPARSE);
     }
     PROTECT(t);
-    for (i = 0; i < LENGTH(t); i++)
-	Rprintf("%s\n", CHAR(STRING_ELT(t, i))); /* translated */
+    for (i = 0; i < LENGTH(t); i++) {
+#ifdef rev72839__not_ok_eg_for_escaped_chars
+	// did solve PR#16732
+	const char *ctmp = EncodeString(STRING_ELT(t, i),  0, 0, Rprt_adj_none);
+	Rprintf("%s\n", ctmp); /* translated */
+#else
+ 	Rprintf("%s\n", CHAR(STRING_ELT(t, i))); /* translated */
+#endif
+    }
     UNPROTECT(1);
     if (isClosure) {
 	if (isByteCode(BODY(s))) Rprintf("<bytecode: %p>\n", BODY(s));

@@ -723,7 +723,7 @@ levs <- c("A","A")
 local({
     assertError(gl(2,3, labels = levs))
     assertError(factor(levs, levels=levs))
-    assertError(factor(1:2,  labels=levs))
+    ## now valid: factor(1:2,  labels=levs)
     })
 ## failed in R < 2.10.0
 L <- c("no", "yes")

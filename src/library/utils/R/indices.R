@@ -1,7 +1,7 @@
 #  File src/library/utils/R/indices.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -80,11 +80,22 @@ packageDescription <-
             ## Determine encoding and re-encode if necessary and possible.
             if (missing(encoding) && Sys.getlocale("LC_CTYPE") == "C")
                 encoding <- "ASCII//TRANSLIT"
-            ## might have an invalid encoding ...
-            newdesc <- try(lapply(desc, iconv, from = enc, to = encoding))
-            if(!inherits(newdesc, "try-error")) desc <- newdesc
-            else
-                warning("'DESCRIPTION' file has an 'Encoding' field and re-encoding is not possible", call. = FALSE)
+	    if(encoding != enc) { # try to translate from 'enc' to 'encoding' --------
+		## might have an invalid encoding ...
+		newdesc <- try(lapply(desc, iconv, from = enc, to = encoding))
+		dOk <- function(nd) !inherits(nd, "error") && !anyNA(nd)
+		ok <- dOk(newdesc)
+		if(!ok) # try again
+		    ok <- dOk(newdesc <- try(lapply(desc, iconv, from = enc,
+						    to = paste0(encoding,"//TRANSLIT"))))
+		if(!ok) # try again
+		    ok <- dOk(newdesc <- try(lapply(desc, iconv, from = enc,
+						    to = "ASCII//TRANSLIT", sub = "?")))
+		if(ok)
+		    desc <- newdesc
+		else
+		    warning("'DESCRIPTION' file has an 'Encoding' field and re-encoding is not possible", call. = FALSE)
+	    }
         }
         if(!is.null(fields)){
             ok <- names(desc) %in% fields

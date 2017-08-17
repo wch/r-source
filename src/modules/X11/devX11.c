@@ -2654,7 +2654,7 @@ static void X11_eventHelper(pDevDesc dd, int code)
 	    if (event.xkey.state & ControlMask) {
 	    	keystart += 5; 
 	    	sprintf(keybuffer, "ctrl-"); /* report control keys using labels like "ctrl-A" */
-	    	event.xkey.state &= !ControlMask;
+	    	event.xkey.state &= ~ControlMask;
 	    	event.xkey.state |= ShiftMask;
 	    }
       	    XLookupString(&event.xkey, keystart, 

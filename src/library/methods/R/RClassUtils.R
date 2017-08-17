@@ -1,7 +1,7 @@
 #  File src/library/methods/R/RClassUtils.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -466,10 +466,10 @@ selectSuperClasses <-
     if(directOnly) C <- addCond(quote(length(exti@by) == 0), C)
     if(simpleOnly) C <- addCond(quote(exti@simple), C)
     if(length(C)) {
-      F <- function(exti){}; body(F) <- C
-      ext <- ext[unlist(lapply(ext, F), use.names=FALSE)]
+	F <- function(exti){}; body(F) <- C
+	(if(namesOnly) names(ext) else ext)[vapply(ext, F, NA, USE.NAMES=FALSE)]
     }
-    if(namesOnly) names(ext) else ext
+    else if(namesOnly) names(ext) else ext
 }
 
 inheritedSlotNames <- function(Class, where = topenv(parent.frame()))

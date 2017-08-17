@@ -6311,8 +6311,12 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	    PROTECT(h);
 	    for (; h != R_NilValue; h = CDR(h)) {
 	      SEXP val;
-	      if (ftype == BUILTINSXP) val = eval(CAR(h), rho);
-	      else val = mkPROMISE(CAR(h), rho);
+	      if (ftype == BUILTINSXP)
+	        val = eval(CAR(h), rho);
+	      else if (TYPEOF(CAR(h)) == PROMSXP || CAR(h) == R_MissingArg)
+	        val = CAR(h);
+	      else
+	        val = mkPROMISE(CAR(h), rho);
 	      PUSHCALLARG(val);
 	      SETCALLARG_TAG(TAG(h));
 	    }

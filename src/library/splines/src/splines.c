@@ -209,6 +209,7 @@ spline_basis(SEXP knots, SEXP order, SEXP xvals, SEXP derivs)
 
     for(int i = 0; i < nx; i++) {
 	set_cursor(sp, xx[i]);
+	// ==> io  \in {0,..,nk} is the knot-interval "number"
 	int io = ioff[i] = sp->curs - sp->order;
 	if (io < 0 || io > nk) {
 	    for (int j = 0; j < sp->order; j++) {

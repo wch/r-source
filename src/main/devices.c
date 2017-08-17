@@ -91,7 +91,7 @@ static SEXP R_INLINE getSymbolValue(SEXP symbol)
 static int R_CurrentDevice = 0;
 static int R_NumDevices = 1;
 /*
-   R_MaxDevices is defined in Rgraphics.h to be 64.  Slots are
+   R_MaxDevices is defined in ../include/Defn.h to be 64.  Slots are
    initiialized to be NULL, and returned to NULL when a device is
    removed.
 
@@ -172,6 +172,8 @@ pGEDevDesc GEcurrentDevice(void)
 	    UNPROTECT(1);
 	} else
 	    error(_("no active or default device"));
+	if (NoDevices()) // the startup above may have failed
+	    error(_("no active device and default getOption(\"device\") is invalid"));
     }
     return R_Devices[R_CurrentDevice];
 }

@@ -32,7 +32,7 @@ static int initialized = 0;
 
 static void La_Init(void)
 {
-    int res = R_moduleCdynload("lapack", 1, 1);
+    int res = R_moduleCdynload("lapack", 1, 1); // -> ../modules/lapack/Lapack.c
     initialized = -1;
     if(!res) return;
     if(!ptr->do_lapack)

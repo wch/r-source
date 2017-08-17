@@ -534,8 +534,13 @@ function(dir, drop = c("\\author", "\\references"),
         ## </FIXME>
     }
 
+    macros <- tools::loadPkgRdMacros(dir,
+                                     macros = file.path(R.home("share"), 
+                                                        "Rd", "macros",
+                                                        "system.Rd"))
+
     aspell(files,
-           filter = list("Rd", drop = drop),
+           filter = list("Rd", drop = drop, macros = macros),
            control = control,
            encoding = encoding,
            program = program,
@@ -766,6 +771,8 @@ function(file, encoding = "unknown")
     calls <- getParseText(pd, ids)
 
     table <- pd[pd$token == "STR_CONST", ]
+    ## Could have run into truncation ...
+    table$text <- getParseText(table, table$id)
     pos <- match(gpids(table$id), ids)
     ind <- !is.na(pos)
     table <- split(table[ind, ], factor(pos[ind], seq_along(ids)))
@@ -1061,6 +1068,28 @@ function(dir, ignore = character(),
     if(is.na(encoding <- meta["Encoding"]))
         encoding <- "unknown"
 
+    ## Allow providing package defaults but make this controllable via
+    ##   _R_ASPELL_USE_DEFAULTS_FOR_PACKAGE_DESCRIPTION_
+    ## to safeguard against possible mis-use for CRAN incoming checks.
+    defaults <-
+        Sys.getenv("_R_ASPELL_USE_DEFAULTS_FOR_PACKAGE_DESCRIPTION_",
+                   "TRUE")
+    defaults <- if(tools:::config_val_to_logical(defaults)) {
+                    .aspell_package_defaults(dir, encoding)$description
+                } else NULL
+    if(!is.null(defaults)) {
+        if(!is.null(d <- defaults$ignore))
+            ignore <- d
+        if(!is.null(d <- defaults$control))
+            control <- d
+        if(!is.null(d <- defaults$program))
+            program <- d
+        if(!is.null(d <- defaults$dictionaries)) {
+            dictionaries <-
+                aspell_find_dictionaries(d, file.path(dir, ".aspell"))
+        }
+    }
+    
     program <- aspell_find_program(program)
 
     aspell(files,

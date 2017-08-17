@@ -1,6 +1,6 @@
 % File src/library/utils/man/INSTALL.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{INSTALL}
@@ -118,7 +118,7 @@
   (see the \code{keep.source} argument to \code{\link{source}}): this
   can be enabled by the option \option{--with-keep.source} or by setting
   environment variable \env{R_KEEP_PKG_SOURCE} to \code{yes}.
-
+  
   Use \command{R CMD INSTALL --help} for concise usage information,
   including all the available options.
 }

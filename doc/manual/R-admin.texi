@@ -4482,12 +4482,15 @@ build directory.  This requires other tools to be installed, discussed
 in the rest of this section.
 
 File @file{configure} is created from @file{configure.ac} and the files
-under @file{m4} by @command{autoconf} and @command{aclocal}.  There is a
-formal version requirement on @command{autoconf} of 2.62 or later, but
-it is unlikely that anything other than the most recent versions have
-been thoroughly tested.
+under @file{m4} by @command{autoconf} and @command{aclocal} (part of the
+@pkg{automake} package).  There is a formal version requirement on
+@command{autoconf} of 2.62 or later, but it is unlikely that anything
+other than the most recent versions@footnote{at the time of revsion of
+this para in 2017, @pkg{autoconf-2.69} from 2012 and @pkg{automake-1.15}
+from 2015.} have been thoroughly tested.
 
-File @file{src/include/config.h} is created by @command{autoheader}.
+File @file{src/include/config.h} is created by @command{autoheader}
+(part of @pkg{autoconf}).
 
 Grammar files @file{*.y} are converted to C sources by an implementation
 of @command{yacc}, usually @command{bison -y}: these are found in
@@ -4500,9 +4503,13 @@ The ultimate sources for package @pkg{compiler} are in its @file{noweb}
 directory.  To re-create the sources from
 @file{src/library/compiler/noweb/compiler.nw}, the command
 @command{notangle} is required.  Some Linux distributions include this
-command in package @pkg{noweb}.  It can also be installed from the sources
-at @url{https://www.cs.tufts.edu/~nr/noweb/} (and can also be found on
-CTAN).  The package sources are only re-created even in maintainer mode if
+command in package @pkg{noweb}.  It can also be installed from the
+sources at @url{https://www.cs.tufts.edu/~nr/noweb/}@footnote{The links
+there have proved difficult to access, in which case either point an FTP
+client at @uref{ftp://www.eecs.harvard.edu/pub/nr/} or grab the copy
+made available at
+@uref{http://developer.r-project.org/noweb-2.11b.tgz}.}.  The package
+sources are only re-created even in maintainer mode if
 @file{src/library/compiler/noweb/compiler.nw} has been updated.
 
 It is likely that in future creating @code{configure} will need the GNU
@@ -4527,8 +4534,9 @@ recent reports.
 
 C macros to select particular platforms can be tricky to track down
 (there is a fair amount of misinformation on the Web).  The Wiki
-(currently) at @uref{http://sourceforge.net/@/p/@/predef/@/wiki/@/Home/} can be
-helpful.  The @R{} sources currently use
+(currently) at @uref{http://sourceforge.net/@/p/@/predef/@/wiki/@/Home/}
+can be helpful.  The @R{} sources have used (often in included software
+under @file{src/extra})
 @example
 AIX: _AIX
 Cygwin: __CYGWIN__
@@ -5221,20 +5229,21 @@ in the @file{/Applications} folder.
 * Using gcc::                   
 @end menu
 
-@R{} has been built successfully on Solaris 10 (both Sparc and
-@cputype{x86}) using the (zero cost) Oracle Developer
-Studio@footnote{Oracle Solaris Studio prior to 2016, and previously Sun
-Studio.} compilers: there has been some success with
+@R{} has been built successfully on Solaris 10 using the (zero cost)
+Oracle Developer Studio@footnote{Oracle Solaris Studio prior to 2016,
+and previously Sun Studio.} compilers: there has been some success with
 @command{gcc}/@command{gfortran}.  (Recent Sun machines are AMD Opterons
 or Intel Xeons (@cputype{amd64}) rather than @cputype{x86}, but 32-bit
 @cputype{x86} executables are the default.)  How these compilers
 identify@footnote{using the @option{-V} flag.} themselves is slightly
-confusing: Solaris Studio versions 12.3 and 12.4 report C++ 5.12
-and 5.13, and Developer Studio 12.5 reports C++ 5.14.  We will only consider
+confusing: Solaris Studio versions 12.3 and 12.4 report C++ 5.12 and
+5.13, and Developer Studio 12.5 reports C++ 5.14.  We will only consider
 12.5 (May 2016): instructions for 12.3 can be found in versions of this
 manual for @R{} 3.3.x.
 
 There have been few reports on Solaris 11, with no known extra issues.
+
+Solaris was last tested on Sparc machines in June 2017.
 
 The Solaris versions of several of the tools needed to build @R{}
 (e.g.@: @command{make}, @command{ar} and @command{ld}) are in
@@ -5299,7 +5308,7 @@ CXXSTD="-library=stlport4"
 CXXFLAGS=-O
 FC=$F77
 FCFLAGS=$FFLAGS
-FCLIBS=-lfsu
+FCLIBS="-lfsu /opt/developerstudio12.5/lib/libfui.so.2"
 R_LD_LIBRARY_PATH="/opt/developerstudio12.5/lib:/usr/local/lib:/opt/csw/lib"
 @end example
 
@@ -5311,20 +5320,10 @@ A peculiarity of the Fortran compiler is that when asked to link a
 shared object it does not link against the Fortran runtime libraries.
 In @R{} this is only used for packages with F9x code, hence the
 @code{FCLIBS} definition (which sufficed for @acronym{CRAN} packages
-with 12.5, but on one system needed to be
-@example
-FCLIBS="-lfsu /opt/developerstudio12.5/lib/libfui.so.2"
-@end example
-@noindent
-.)
-
-You can target specific Sparc architectures for (slightly) higher
-performance: @option{-xtarget=native} (in @code{CFLAGS} etc) tunes the
-compilation to the current machine.
+with 12.5).
 
 Using @code{-xlibmil} in @code{CFLAGS} or @code{-xlibmil} in
 @code{FFLAGS} allows more system mathematical functions to be inlined.
-
 
 On @cputype{x86} you will get marginally higher performance @emph{via}
 
@@ -5402,11 +5401,10 @@ and use something like @code{LDFLAGS=-L/usr/local/lib/amd64} or
 @code{LDFLAGS=-L/usr/local/lib/sparcv9} as appropriate (and other 64-bit
 library directories if used, e.g.@: @code{-L/opt/csw/lib/arm64}).
 It will also be necessary to point @command{pkg-config} at the 64-bit
-directories, e.g.@: something like one of
+directories, e.g.@: by something like
 
 @example
-PKG_CONFIG_PATH=/opt/csw/lib/amd64/pkgconfig:/usr/lib/amd64/pkgconfig
-PKG_CONFIG_PATH=/opt/csw/lib/sparcv9/pkgconfig:/usr/lib/sparcv9/pkgconfig
+PKG_CONFIG_PATH=/opt/csw/lib/64/pkgconfig:/usr/lib/64/pkgconfig
 @end example
 
 @noindent
@@ -5418,35 +5416,6 @@ JAVA_LD_LIBRARY_PATH=$@{JAVA_HOME@}/lib/amd64/server
 JAVA_LIBS="-L$@{JAVA_HOME@}/lib/amd64/server \
   -R$@{JAVA_HOME@}/lib/amd64/server -ljvm"
 @end example
-
-@noindent
-(In most cases the @file{64} directory is a link to @file{amd64} or
-@file{sparcv9} as appropriate.)
-
-Using PCRE with JIT enabled on 64-bit Sparc led to segfaults.
-
-
-@c Builds of @cputype{amd64} and @cputype{sparcv9} did not work with
-@c Solaris Studio 12.3 and 12.4: @file{libRblas.so} and @file{lapack.so}
-@c were generated with code that causes relocation errors (code which is
-@c being linked in from the Fortran libraries).  This means that building
-@c 64-bit @R{} as a shared library may be impossible.  For a standard build
-@c a trick seems to be to manually set @code{FLIBS} to avoid the
-@c troublesome libraries.  For example, on @cputype{amd64} set in
-@c @file{config.site} something like (for 12.3):
-@c @example
-@c FLIBS_IN_SO="-R/opt/solarisstudio12.3/lib/amd64
-@c   /opt/solarisstudio12.3/lib/amd64/libfui.so
-@c   /opt/solarisstudio12.3/lib/amd64/libfsu.so"
-@c @end example
-@c @noindent
-@c For 64-bit Sparc, set in @file{config.site} something like (for 12.3)
-@c @example
-@c FLIBS="-R/opt/solarisstudio12.3/prod/lib/sparc/64
-@c  -lifai -lsunimath -lfai -lfai2 -lfsumai -lfprodai -lfminlai -lfmaxlai
-@c  -lfminvai -lfmaxvai -lfui -lsunmath -lmtsk
-@c  /opt/solarisstudio12.3/prod/lib/sparc/64/libfsu.so.1"
-@c @end example
 
 @node Using gcc,  , 64-bit builds, Solaris
 @subsection Using gcc
@@ -5498,38 +5467,6 @@ Note that paths such as @file{/opt/csw/lib}, @file{/usr/local/lib/amd64}
 and @file{/opt/csw/lib/amd64} may need to be in the
 @enindex LD_LIBRARY_PATH
 @env{LD_LIBRARY_PATH} during configuration.
-
-
-Compilation for a 32-bit Sparc target with @command{gcc}@tie{}4.9.2 or
-@command{gcc}@tie{}5.2.0 needed
-
-@example
-CC="gcc -m32"
-CPPFLAGS="-I/opt/csw/include -I/usr/local/include"
-F77="gfortran -m32"
-CXX="g++ -m32"
-FC=$F77
-LDFLAGS="-L/opt/csw/lib -L/usr/local/lib"
-@end example
-
-@noindent
-and for a 64-bit Sparc target
-@example
-CC="gcc -m64"
-CPPFLAGS="-I/opt/csw/include -I/usr/local/include"
-F77="gfortran -m64"
-CXX="g++ -m64"
-FC=$F77
-LDFLAGS="-L/opt/csw/lib/sparcv9 -L/usr/local/lib/sparcv9"
-@end example
-
-Note that paths such as @file{/opt/csw/lib}, @file{/usr/local/lib/sparcv9} or
-@file{/opt/csw/lib/sparcv9} may need to be in the
-@enindex LD_LIBRARY_PATH
-@env{LD_LIBRARY_PATH} during configuration.
-
-The compilation can be tuned to a particular cpu: the @acronym{CRAN}
-check Sparc system uses @code{-mcpu=niagara2}.
 
 
 @node AIX, FreeBSD, Solaris, Platform notes

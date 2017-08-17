@@ -15,7 +15,7 @@
 #  https://www.R-project.org/Licenses/
 
 # Statlib code by John Chambers, Bell Labs, 1994
-# Changes Copyright (C) 1998-2016 The R Core Team
+# Changes Copyright (C) 1998-2017 The R Core Team
 
 
 ## As from R 2.4.0, row.names can be either character or integer.
@@ -1010,7 +1010,7 @@ data.frame <-
         v <- value[[ jvseq[[jjj]] ]]
         ## This is consistent with the have.i case rather than with
         ## [[<- and $<- (which throw an error).  But both are plausible.
-        if (nrows > 0L && !length(v)) length(v) <- nrows
+        if (!is.null(v) && nrows > 0L && !length(v)) length(v) <- nrows
 	x[[jj]] <- v
         if (!is.null(v) && is.atomic(x[[jj]]) && !is.null(names(x[[jj]])))
             names(x[[jj]]) <- NULL
@@ -1526,7 +1526,8 @@ Math.data.frame <- function (x, ...)
     } else {
 	vnames <- names(x)
 	if (is.null(vnames)) vnames <- seq_along(x)
-	stop("non-numeric variable in data frame: ", vnames[!mode.ok])
+	stop("non-numeric variable(s) in data frame: ",
+	     paste(vnames[!mode.ok], collapse = ", "))
     }
 }
 
@@ -1591,13 +1592,18 @@ Ops.data.frame <- function(e1, e2 = NULL)
 	right <- if(!rscalar) e2[[j]] else e2
 	value[[j]] <- eval(f)
     }
-    if(.Generic %in% c("+","-","*","/","%%","%/%") ) {
-	names(value) <- cn
-	data.frame(value, row.names = rn, check.names = FALSE,
-                   check.rows = FALSE)
+    if(.Generic %in% c("+","-","*","^","%%","%/%","/")) {## == 'Arith'
+	if(length(value)) {
+	    names(value) <- cn
+	    data.frame(value, row.names = rn, check.names = FALSE)
+	} else
+	    data.frame(       row.names = rn, check.names = FALSE)
     }
-    else matrix(unlist(value, recursive = FALSE, use.names = FALSE),
-		nrow = nr, dimnames = list(rn,cn))
+    else { ## 'Logic' ("&","|")  and  'Compare' ("==",">","<","!=","<=",">=") :
+	value <- unlist(value, recursive = FALSE, use.names = FALSE)
+	matrix(if(is.null(value)) logical() else value,
+	       nrow = nr, dimnames = list(rn,cn))
+    }
 }
 
 Summary.data.frame <- function(..., na.rm)

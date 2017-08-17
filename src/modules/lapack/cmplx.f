@@ -1889,10 +1889,12 @@
 *>
 *> \param[out] ILO
 *> \verbatim
+*>          ILO is INTEGER
 *> \endverbatim
 *>
 *> \param[out] IHI
 *> \verbatim
+*>          IHI is INTEGER
 *>          ILO and IHI are set to INTEGER such that on exit
 *>          A(i,j) = 0 if i > j and j = 1,...,ILO-1 or I = IHI+1,...,N.
 *>          If JOB = 'N' or 'S', ILO = 1 and IHI = N.
@@ -1927,7 +1929,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \date December 2016
+*> \date June 2017
 *
 *> \ingroup complex16GEcomputational
 *
@@ -1966,10 +1968,10 @@
 *  =====================================================================
       SUBROUTINE ZGEBAL( JOB, N, A, LDA, ILO, IHI, SCALE, INFO )
 *
-*  -- LAPACK computational routine (version 3.7.0) --
+*  -- LAPACK computational routine (version 3.7.1) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     December 2016
+*     June 2017
 *
 *     .. Scalar Arguments ..
       CHARACTER          JOB
@@ -2304,7 +2306,7 @@
 *>
 *> \param[out] TAUQ
 *> \verbatim
-*>          TAUQ is COMPLEX*16 array dimension (min(M,N))
+*>          TAUQ is COMPLEX*16 array, dimension (min(M,N))
 *>          The scalar factors of the elementary reflectors which
 *>          represent the unitary matrix Q. See Further Details.
 *> \endverbatim
@@ -2336,7 +2338,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \date December 2016
+*> \date June 2017
 *
 *> \ingroup complex16GEcomputational
 *
@@ -2393,10 +2395,10 @@
 *  =====================================================================
       SUBROUTINE ZGEBD2( M, N, A, LDA, D, E, TAUQ, TAUP, WORK, INFO )
 *
-*  -- LAPACK computational routine (version 3.7.0) --
+*  -- LAPACK computational routine (version 3.7.1) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     December 2016
+*     June 2017
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, LDA, M, N
@@ -2636,7 +2638,7 @@
 *>
 *> \param[out] TAUQ
 *> \verbatim
-*>          TAUQ is COMPLEX*16 array dimension (min(M,N))
+*>          TAUQ is COMPLEX*16 array, dimension (min(M,N))
 *>          The scalar factors of the elementary reflectors which
 *>          represent the unitary matrix Q. See Further Details.
 *> \endverbatim
@@ -2682,7 +2684,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \date December 2016
+*> \date June 2017
 *
 *> \ingroup complex16GEcomputational
 *
@@ -2740,10 +2742,10 @@
       SUBROUTINE ZGEBRD( M, N, A, LDA, D, E, TAUQ, TAUP, WORK, LWORK,
      $                   INFO )
 *
-*  -- LAPACK computational routine (version 3.7.0) --
+*  -- LAPACK computational routine (version 3.7.1) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     December 2016
+*     June 2017
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, LDA, LWORK, M, N
@@ -6035,7 +6037,7 @@
 *>          of the matrices B and X. NRHS >= 0.
 *> \endverbatim
 *>
-*> \param[in] A
+*> \param[in,out] A
 *> \verbatim
 *>          A is COMPLEX*16 array, dimension (LDA,N)
 *>          On entry, the M-by-N matrix A.
@@ -6155,7 +6157,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \date December 2016
+*> \date June 2017
 *
 *> \ingroup complex16GEsolve
 *
@@ -6170,10 +6172,10 @@
       SUBROUTINE ZGELSD( M, N, NRHS, A, LDA, B, LDB, S, RCOND, RANK,
      $                   WORK, LWORK, RWORK, IWORK, INFO )
 *
-*  -- LAPACK driver routine (version 3.7.0) --
+*  -- LAPACK driver routine (version 3.7.1) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     December 2016
+*     June 2017
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, LDA, LDB, LWORK, M, N, NRHS, RANK
@@ -10312,7 +10314,7 @@
 *     End of ZGESDD
 *
       END
-*> \brief <b> ZGESV computes the solution to system of linear equations A * X = B for GE matrices</b> (simple driver) </b>
+*> \brief <b> ZGESV computes the solution to system of linear equations A * X = B for GE matrices (simple driver) </b>
 *
 *  =========== DOCUMENTATION ===========
 *
@@ -10429,17 +10431,17 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \date December 2016
+*> \date June 2017
 *
 *> \ingroup complex16GEsolve
 *
 *  =====================================================================
       SUBROUTINE ZGESV( N, NRHS, A, LDA, IPIV, B, LDB, INFO )
 *
-*  -- LAPACK driver routine (version 3.7.0) --
+*  -- LAPACK driver routine (version 3.7.1) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     December 2016
+*     June 2017
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, LDA, LDB, N, NRHS
@@ -21527,7 +21529,7 @@
 *>
 *> \param[out] TAUQ
 *> \verbatim
-*>          TAUQ is COMPLEX*16 array dimension (NB)
+*>          TAUQ is COMPLEX*16 array, dimension (NB)
 *>          The scalar factors of the elementary reflectors which
 *>          represent the unitary matrix Q. See Further Details.
 *> \endverbatim
@@ -21573,7 +21575,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \date December 2016
+*> \date June 2017
 *
 *> \ingroup complex16OTHERauxiliary
 *
@@ -21628,10 +21630,10 @@
       SUBROUTINE ZLABRD( M, N, NB, A, LDA, D, E, TAUQ, TAUP, X, LDX, Y,
      $                   LDY )
 *
-*  -- LAPACK auxiliary routine (version 3.7.0) --
+*  -- LAPACK auxiliary routine (version 3.7.1) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     December 2016
+*     June 2017
 *
 *     .. Scalar Arguments ..
       INTEGER            LDA, LDX, LDY, M, N, NB
@@ -26073,8 +26075,7 @@
 *>
 *> \param[out] IWORK
 *> \verbatim
-*>          IWORK is INTEGER array.
-*>         The dimension must be at least 3 * N
+*>          IWORK is INTEGER array, dimension (3*N)
 *> \endverbatim
 *>
 *> \param[out] INFO
@@ -26092,7 +26093,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \date December 2016
+*> \date June 2017
 *
 *> \ingroup complex16OTHERcomputational
 *
@@ -26109,10 +26110,10 @@
      $                   GIVCOL, LDGCOL, PERM, GIVNUM, C, S, RWORK,
      $                   IWORK, INFO )
 *
-*  -- LAPACK computational routine (version 3.7.0) --
+*  -- LAPACK computational routine (version 3.7.1) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     December 2016
+*     June 2017
 *
 *     .. Scalar Arguments ..
       INTEGER            ICOMPQ, INFO, LDB, LDBX, LDGCOL, LDU, N, NRHS,
@@ -26613,8 +26614,7 @@
 *>
 *> \param[out] WORK
 *> \verbatim
-*>          WORK is COMPLEX*16 array, dimension at least
-*>         (N * NRHS).
+*>          WORK is COMPLEX*16 array, dimension (N * NRHS)
 *> \endverbatim
 *>
 *> \param[out] RWORK
@@ -26650,7 +26650,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \date December 2016
+*> \date June 2017
 *
 *> \ingroup complex16OTHERcomputational
 *
@@ -26665,10 +26665,10 @@
       SUBROUTINE ZLALSD( UPLO, SMLSIZ, N, NRHS, D, E, B, LDB, RCOND,
      $                   RANK, WORK, RWORK, IWORK, INFO )
 *
-*  -- LAPACK computational routine (version 3.7.0) --
+*  -- LAPACK computational routine (version 3.7.1) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     December 2016
+*     June 2017
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -29831,19 +29831,19 @@
 *
 *> \param[in] N
 *> \verbatim
-*>          N is integer
+*>          N is INTEGER
 *>              Order of the matrix H. N must be either 2 or 3.
 *> \endverbatim
 *>
 *> \param[in] H
 *> \verbatim
-*>          H is COMPLEX*16 array of dimension (LDH,N)
+*>          H is COMPLEX*16 array, dimension (LDH,N)
 *>              The 2-by-2 or 3-by-3 matrix H in (*).
 *> \endverbatim
 *>
 *> \param[in] LDH
 *> \verbatim
-*>          LDH is integer
+*>          LDH is INTEGER
 *>              The leading dimension of H as declared in
 *>              the calling procedure.  LDH.GE.N
 *> \endverbatim
@@ -29862,7 +29862,7 @@
 *>
 *> \param[out] V
 *> \verbatim
-*>          V is COMPLEX*16 array of dimension N
+*>          V is COMPLEX*16 array, dimension (N)
 *>              A scalar multiple of the first column of the
 *>              matrix K in (*).
 *> \endverbatim
@@ -29875,7 +29875,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \date December 2016
+*> \date June 2017
 *
 *> \ingroup complex16OTHERauxiliary
 *
@@ -29888,10 +29888,10 @@
 *  =====================================================================
       SUBROUTINE ZLAQR1( N, H, LDH, S1, S2, V )
 *
-*  -- LAPACK auxiliary routine (version 3.7.0) --
+*  -- LAPACK auxiliary routine (version 3.7.1) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     December 2016
+*     June 2017
 *
 *     .. Scalar Arguments ..
       COMPLEX*16         S1, S2
@@ -30072,7 +30072,7 @@
 *>
 *> \param[in] LDH
 *> \verbatim
-*>          LDH is integer
+*>          LDH is INTEGER
 *>          Leading dimension of H just as declared in the calling
 *>          subroutine.  N .LE. LDH
 *> \endverbatim
@@ -30100,14 +30100,14 @@
 *>
 *> \param[in] LDZ
 *> \verbatim
-*>          LDZ is integer
+*>          LDZ is INTEGER
 *>          The leading dimension of Z just as declared in the
 *>          calling subroutine.  1 .LE. LDZ.
 *> \endverbatim
 *>
 *> \param[out] NS
 *> \verbatim
-*>          NS is integer
+*>          NS is INTEGER
 *>          The number of unconverged (ie approximate) eigenvalues
 *>          returned in SR and SI that may be used as shifts by the
 *>          calling subroutine.
@@ -30115,14 +30115,14 @@
 *>
 *> \param[out] ND
 *> \verbatim
-*>          ND is integer
+*>          ND is INTEGER
 *>          The number of converged eigenvalues uncovered by this
 *>          subroutine.
 *> \endverbatim
 *>
 *> \param[out] SH
 *> \verbatim
-*>          SH is COMPLEX*16 array, dimension KBOT
+*>          SH is COMPLEX*16 array, dimension (KBOT)
 *>          On output, approximate eigenvalues that may
 *>          be used for shifts are stored in SH(KBOT-ND-NS+1)
 *>          through SR(KBOT-ND).  Converged eigenvalues are
@@ -30137,14 +30137,14 @@
 *>
 *> \param[in] LDV
 *> \verbatim
-*>          LDV is integer scalar
+*>          LDV is INTEGER
 *>          The leading dimension of V just as declared in the
 *>          calling subroutine.  NW .LE. LDV
 *> \endverbatim
 *>
 *> \param[in] NH
 *> \verbatim
-*>          NH is integer scalar
+*>          NH is INTEGER
 *>          The number of columns of T.  NH.GE.NW.
 *> \endverbatim
 *>
@@ -30155,14 +30155,14 @@
 *>
 *> \param[in] LDT
 *> \verbatim
-*>          LDT is integer
+*>          LDT is INTEGER
 *>          The leading dimension of T just as declared in the
 *>          calling subroutine.  NW .LE. LDT
 *> \endverbatim
 *>
 *> \param[in] NV
 *> \verbatim
-*>          NV is integer
+*>          NV is INTEGER
 *>          The number of rows of work array WV available for
 *>          workspace.  NV.GE.NW.
 *> \endverbatim
@@ -30174,21 +30174,21 @@
 *>
 *> \param[in] LDWV
 *> \verbatim
-*>          LDWV is integer
+*>          LDWV is INTEGER
 *>          The leading dimension of W just as declared in the
 *>          calling subroutine.  NW .LE. LDV
 *> \endverbatim
 *>
 *> \param[out] WORK
 *> \verbatim
-*>          WORK is COMPLEX*16 array, dimension LWORK.
+*>          WORK is COMPLEX*16 array, dimension (LWORK)
 *>          On exit, WORK(1) is set to an estimate of the optimal value
 *>          of LWORK for the given values of N, NW, KTOP and KBOT.
 *> \endverbatim
 *>
 *> \param[in] LWORK
 *> \verbatim
-*>          LWORK is integer
+*>          LWORK is INTEGER
 *>          The dimension of the work array WORK.  LWORK = 2*NW
 *>          suffices, but greater efficiency may result from larger
 *>          values of LWORK.
@@ -30208,7 +30208,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \date December 2016
+*> \date June 2017
 *
 *> \ingroup complex16OTHERauxiliary
 *
@@ -30223,10 +30223,10 @@
      $                   IHIZ, Z, LDZ, NS, ND, SH, V, LDV, NH, T, LDT,
      $                   NV, WV, LDWV, WORK, LWORK )
 *
-*  -- LAPACK auxiliary routine (version 3.7.0) --
+*  -- LAPACK auxiliary routine (version 3.7.1) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     December 2016
+*     June 2017
 *
 *     .. Scalar Arguments ..
       INTEGER            IHIZ, ILOZ, KBOT, KTOP, LDH, LDT, LDV, LDWV,
@@ -30636,7 +30636,7 @@
 *>
 *> \param[in] LDH
 *> \verbatim
-*>          LDH is integer
+*>          LDH is INTEGER
 *>          Leading dimension of H just as declared in the calling
 *>          subroutine.  N .LE. LDH
 *> \endverbatim
@@ -30664,14 +30664,14 @@
 *>
 *> \param[in] LDZ
 *> \verbatim
-*>          LDZ is integer
+*>          LDZ is INTEGER
 *>          The leading dimension of Z just as declared in the
 *>          calling subroutine.  1 .LE. LDZ.
 *> \endverbatim
 *>
 *> \param[out] NS
 *> \verbatim
-*>          NS is integer
+*>          NS is INTEGER
 *>          The number of unconverged (ie approximate) eigenvalues
 *>          returned in SR and SI that may be used as shifts by the
 *>          calling subroutine.
@@ -30679,14 +30679,14 @@
 *>
 *> \param[out] ND
 *> \verbatim
-*>          ND is integer
+*>          ND is INTEGER
 *>          The number of converged eigenvalues uncovered by this
 *>          subroutine.
 *> \endverbatim
 *>
 *> \param[out] SH
 *> \verbatim
-*>          SH is COMPLEX*16 array, dimension KBOT
+*>          SH is COMPLEX*16 array, dimension (KBOT)
 *>          On output, approximate eigenvalues that may
 *>          be used for shifts are stored in SH(KBOT-ND-NS+1)
 *>          through SR(KBOT-ND).  Converged eigenvalues are
@@ -30701,14 +30701,14 @@
 *>
 *> \param[in] LDV
 *> \verbatim
-*>          LDV is integer scalar
+*>          LDV is INTEGER
 *>          The leading dimension of V just as declared in the
 *>          calling subroutine.  NW .LE. LDV
 *> \endverbatim
 *>
 *> \param[in] NH
 *> \verbatim
-*>          NH is integer scalar
+*>          NH is INTEGER
 *>          The number of columns of T.  NH.GE.NW.
 *> \endverbatim
 *>
@@ -30719,14 +30719,14 @@
 *>
 *> \param[in] LDT
 *> \verbatim
-*>          LDT is integer
+*>          LDT is INTEGER
 *>          The leading dimension of T just as declared in the
 *>          calling subroutine.  NW .LE. LDT
 *> \endverbatim
 *>
 *> \param[in] NV
 *> \verbatim
-*>          NV is integer
+*>          NV is INTEGER
 *>          The number of rows of work array WV available for
 *>          workspace.  NV.GE.NW.
 *> \endverbatim
@@ -30738,21 +30738,21 @@
 *>
 *> \param[in] LDWV
 *> \verbatim
-*>          LDWV is integer
+*>          LDWV is INTEGER
 *>          The leading dimension of W just as declared in the
 *>          calling subroutine.  NW .LE. LDV
 *> \endverbatim
 *>
 *> \param[out] WORK
 *> \verbatim
-*>          WORK is COMPLEX*16 array, dimension LWORK.
+*>          WORK is COMPLEX*16 array, dimension (LWORK)
 *>          On exit, WORK(1) is set to an estimate of the optimal value
 *>          of LWORK for the given values of N, NW, KTOP and KBOT.
 *> \endverbatim
 *>
 *> \param[in] LWORK
 *> \verbatim
-*>          LWORK is integer
+*>          LWORK is INTEGER
 *>          The dimension of the work array WORK.  LWORK = 2*NW
 *>          suffices, but greater efficiency may result from larger
 *>          values of LWORK.
@@ -30787,7 +30787,7 @@
      $                   IHIZ, Z, LDZ, NS, ND, SH, V, LDV, NH, T, LDT,
      $                   NV, WV, LDWV, WORK, LWORK )
 *
-*  -- LAPACK auxiliary routine (version 3.7.0) --
+*  -- LAPACK auxiliary routine (version 3.7.1) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
 *     June 2016
@@ -31848,21 +31848,21 @@
 *
 *> \param[in] WANTT
 *> \verbatim
-*>          WANTT is logical scalar
+*>          WANTT is LOGICAL
 *>             WANTT = .true. if the triangular Schur factor
 *>             is being computed.  WANTT is set to .false. otherwise.
 *> \endverbatim
 *>
 *> \param[in] WANTZ
 *> \verbatim
-*>          WANTZ is logical scalar
+*>          WANTZ is LOGICAL
 *>             WANTZ = .true. if the unitary Schur factor is being
 *>             computed.  WANTZ is set to .false. otherwise.
 *> \endverbatim
 *>
 *> \param[in] KACC22
 *> \verbatim
-*>          KACC22 is integer with value 0, 1, or 2.
+*>          KACC22 is INTEGER with value 0, 1, or 2.
 *>             Specifies the computation mode of far-from-diagonal
 *>             orthogonal updates.
 *>        = 0: ZLAQR5 does not accumulate reflections and does not
@@ -31878,19 +31878,19 @@
 *>
 *> \param[in] N
 *> \verbatim
-*>          N is integer scalar
+*>          N is INTEGER
 *>             N is the order of the Hessenberg matrix H upon which this
 *>             subroutine operates.
 *> \endverbatim
 *>
 *> \param[in] KTOP
 *> \verbatim
-*>          KTOP is integer scalar
+*>          KTOP is INTEGER
 *> \endverbatim
 *>
 *> \param[in] KBOT
 *> \verbatim
-*>          KBOT is integer scalar
+*>          KBOT is INTEGER
 *>             These are the first and last rows and columns of an
 *>             isolated diagonal block upon which the QR sweep is to be
 *>             applied. It is assumed without a check that
@@ -31901,21 +31901,21 @@
 *>
 *> \param[in] NSHFTS
 *> \verbatim
-*>          NSHFTS is integer scalar
+*>          NSHFTS is INTEGER
 *>             NSHFTS gives the number of simultaneous shifts.  NSHFTS
 *>             must be positive and even.
 *> \endverbatim
 *>
 *> \param[in,out] S
 *> \verbatim
-*>          S is COMPLEX*16 array of size (NSHFTS)
+*>          S is COMPLEX*16 array, dimension (NSHFTS)
 *>             S contains the shifts of origin that define the multi-
 *>             shift QR sweep.  On output S may be reordered.
 *> \endverbatim
 *>
 *> \param[in,out] H
 *> \verbatim
-*>          H is COMPLEX*16 array of size (LDH,N)
+*>          H is COMPLEX*16 array, dimension (LDH,N)
 *>             On input H contains a Hessenberg matrix.  On output a
 *>             multi-shift QR sweep with shifts SR(J)+i*SI(J) is applied
 *>             to the isolated diagonal block in rows and columns KTOP
@@ -31924,7 +31924,7 @@
 *>
 *> \param[in] LDH
 *> \verbatim
-*>          LDH is integer scalar
+*>          LDH is INTEGER
 *>             LDH is the leading dimension of H just as declared in the
 *>             calling procedure.  LDH.GE.MAX(1,N).
 *> \endverbatim
@@ -31943,7 +31943,7 @@
 *>
 *> \param[in,out] Z
 *> \verbatim
-*>          Z is COMPLEX*16 array of size (LDZ,IHIZ)
+*>          Z is COMPLEX*16 array, dimension (LDZ,IHIZ)
 *>             If WANTZ = .TRUE., then the QR Sweep unitary
 *>             similarity transformation is accumulated into
 *>             Z(ILOZ:IHIZ,ILOZ:IHIZ) from the right.
@@ -31952,71 +31952,69 @@
 *>
 *> \param[in] LDZ
 *> \verbatim
-*>          LDZ is integer scalar
+*>          LDZ is INTEGER
 *>             LDA is the leading dimension of Z just as declared in
 *>             the calling procedure. LDZ.GE.N.
 *> \endverbatim
 *>
 *> \param[out] V
 *> \verbatim
-*>          V is COMPLEX*16 array of size (LDV,NSHFTS/2)
+*>          V is COMPLEX*16 array, dimension (LDV,NSHFTS/2)
 *> \endverbatim
 *>
 *> \param[in] LDV
 *> \verbatim
-*>          LDV is integer scalar
+*>          LDV is INTEGER
 *>             LDV is the leading dimension of V as declared in the
 *>             calling procedure.  LDV.GE.3.
 *> \endverbatim
 *>
 *> \param[out] U
 *> \verbatim
-*>          U is COMPLEX*16 array of size
-*>             (LDU,3*NSHFTS-3)
+*>          U is COMPLEX*16 array, dimension (LDU,3*NSHFTS-3)
 *> \endverbatim
 *>
 *> \param[in] LDU
 *> \verbatim
-*>          LDU is integer scalar
+*>          LDU is INTEGER
 *>             LDU is the leading dimension of U just as declared in the
 *>             in the calling subroutine.  LDU.GE.3*NSHFTS-3.
 *> \endverbatim
 *>
 *> \param[in] NH
 *> \verbatim
-*>          NH is integer scalar
+*>          NH is INTEGER
 *>             NH is the number of columns in array WH available for
 *>             workspace. NH.GE.1.
 *> \endverbatim
 *>
 *> \param[out] WH
 *> \verbatim
-*>          WH is COMPLEX*16 array of size (LDWH,NH)
+*>          WH is COMPLEX*16 array, dimension (LDWH,NH)
 *> \endverbatim
 *>
 *> \param[in] LDWH
 *> \verbatim
-*>          LDWH is integer scalar
+*>          LDWH is INTEGER
 *>             Leading dimension of WH just as declared in the
 *>             calling procedure.  LDWH.GE.3*NSHFTS-3.
 *> \endverbatim
 *>
 *> \param[in] NV
 *> \verbatim
-*>          NV is integer scalar
+*>          NV is INTEGER
 *>             NV is the number of rows in WV agailable for workspace.
 *>             NV.GE.1.
 *> \endverbatim
 *>
 *> \param[out] WV
 *> \verbatim
-*>          WV is COMPLEX*16 array of size
-*>             (LDWV,3*NSHFTS-3)
+*>          WV is COMPLEX*16 array, dimension (LDWV,3*NSHFTS-3)
 *> \endverbatim
 *>
 *> \param[in] LDWV
 *> \verbatim
-*>          LDWV is integer scalar
+*>          LDWV is INTEGER
 *>             LDWV is the leading dimension of WV as declared in the
 *>             in the calling subroutine.  LDWV.GE.NV.
 *> \endverbatim
@@ -32052,7 +32050,7 @@
      $                   H, LDH, ILOZ, IHIZ, Z, LDZ, V, LDV, U, LDU, NV,
      $                   WV, LDWV, NH, WH, LDWH )
 *
-*  -- LAPACK auxiliary routine (version 3.7.0) --
+*  -- LAPACK auxiliary routine (version 3.7.1) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
 *     June 2016
@@ -36577,14 +36575,15 @@
 *> \verbatim
 *>          IPIV is INTEGER array, dimension (K1+(K2-K1)*abs(INCX))
 *>          The vector of pivot indices. Only the elements in positions
-*>          K1 through K1+(K2-K1)*INCX of IPIV are accessed.
-*>          IPIV(K) = L implies rows K and L are to be interchanged.
+*>          K1 through K1+(K2-K1)*abs(INCX) of IPIV are accessed.
+*>          IPIV(K1+(K-K1)*abs(INCX)) = L implies rows K and L are to be
+*>          interchanged.
 *> \endverbatim
 *>
 *> \param[in] INCX
 *> \verbatim
 *>          INCX is INTEGER
-*>          The increment between successive values of IPIV.  If IPIV
+*>          The increment between successive values of IPIV. If INCX
 *>          is negative, the pivots are applied in reverse order.
 *> \endverbatim
 *
@@ -36596,7 +36595,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \date December 2016
+*> \date June 2017
 *
 *> \ingroup complex16OTHERauxiliary
 *
@@ -36612,10 +36611,10 @@
 *  =====================================================================
       SUBROUTINE ZLASWP( N, A, LDA, K1, K2, IPIV, INCX )
 *
-*  -- LAPACK auxiliary routine (version 3.7.0) --
+*  -- LAPACK auxiliary routine (version 3.7.1) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     December 2016
+*     June 2017
 *
 *     .. Scalar Arguments ..
       INTEGER            INCX, K1, K2, LDA, N
@@ -36633,7 +36632,8 @@
 *     ..
 *     .. Executable Statements ..
 *
-*     Interchange row I with row IPIV(I) for each of rows K1 through K2.
+*     Interchange row I with row IPIV(K1+(I-K1)*abs(INCX)) for each of rows
+*     K1 through K2.
 *
       IF( INCX.GT.0 ) THEN
          IX0 = K1
@@ -40771,8 +40771,7 @@
 *>
 *> \param[out] RWORK
 *> \verbatim
-*>          RWORK is DOUBLE PRECISION array,
-*>                                         dimension (LRWORK)
+*>          RWORK is DOUBLE PRECISION array, dimension (MAX(1,LRWORK))
 *>          On exit, if INFO = 0, RWORK(1) returns the optimal LRWORK.
 *> \endverbatim
 *>
@@ -40842,7 +40841,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \date December 2016
+*> \date June 2017
 *
 *> \ingroup complex16OTHERcomputational
 *
@@ -40856,10 +40855,10 @@
       SUBROUTINE ZSTEDC( COMPZ, N, D, E, Z, LDZ, WORK, LWORK, RWORK,
      $                   LRWORK, IWORK, LIWORK, INFO )
 *
-*  -- LAPACK computational routine (version 3.7.0) --
+*  -- LAPACK computational routine (version 3.7.1) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     December 2016
+*     June 2017
 *
 *     .. Scalar Arguments ..
       CHARACTER          COMPZ
@@ -44486,7 +44485,7 @@
 *>
 *> \param[in,out] A
 *> \verbatim
-*>          A is COMPLEX*16 arrays, dimensions (LDA,N)
+*>          A is COMPLEX*16 array, dimensions (LDA,N)
 *>          On entry, the matrix A in the pair (A, B).
 *>          On exit, the updated matrix A.
 *> \endverbatim
@@ -44499,7 +44498,7 @@
 *>
 *> \param[in,out] B
 *> \verbatim
-*>          B is COMPLEX*16 arrays, dimensions (LDB,N)
+*>          B is COMPLEX*16 array, dimensions (LDB,N)
 *>          On entry, the matrix B in the pair (A, B).
 *>          On exit, the updated matrix B.
 *> \endverbatim
@@ -44512,7 +44511,7 @@
 *>
 *> \param[in,out] Q
 *> \verbatim
-*>          Q is COMPLEX*16 array, dimension (LDZ,N)
+*>          Q is COMPLEX*16 array, dimension (LDQ,N)
 *>          If WANTQ = .TRUE, on entry, the unitary matrix Q. On exit,
 *>          the updated matrix Q.
 *>          Not referenced if WANTQ = .FALSE..
@@ -44563,7 +44562,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \date December 2016
+*> \date June 2017
 *
 *> \ingroup complex16GEauxiliary
 *
@@ -44600,10 +44599,10 @@
       SUBROUTINE ZTGEX2( WANTQ, WANTZ, N, A, LDA, B, LDB, Q, LDQ, Z,
      $                   LDZ, J1, INFO )
 *
-*  -- LAPACK auxiliary routine (version 3.7.0) --
+*  -- LAPACK auxiliary routine (version 3.7.1) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     December 2016
+*     June 2017
 *
 *     .. Scalar Arguments ..
       LOGICAL            WANTQ, WANTZ
@@ -44879,7 +44878,7 @@
 *>
 *> \param[in,out] Q
 *> \verbatim
-*>          Q is COMPLEX*16 array, dimension (LDZ,N)
+*>          Q is COMPLEX*16 array, dimension (LDQ,N)
 *>          On entry, if WANTQ = .TRUE., the unitary matrix Q.
 *>          On exit, the updated matrix Q.
 *>          If WANTQ = .FALSE., Q is not referenced.
@@ -44940,7 +44939,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \date December 2016
+*> \date June 2017
 *
 *> \ingroup complex16GEcomputational
 *
@@ -44977,10 +44976,10 @@
       SUBROUTINE ZTGEXC( WANTQ, WANTZ, N, A, LDA, B, LDB, Q, LDQ, Z,
      $                   LDZ, IFST, ILST, INFO )
 *
-*  -- LAPACK computational routine (version 3.7.0) --
+*  -- LAPACK computational routine (version 3.7.1) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     December 2016
+*     June 2017
 *
 *     .. Scalar Arguments ..
       LOGICAL            WANTQ, WANTZ
@@ -45149,7 +45148,7 @@
 *
 *> \param[in] IJOB
 *> \verbatim
-*>          IJOB is integer
+*>          IJOB is INTEGER
 *>          Specifies whether condition numbers are required for the
 *>          cluster of eigenvalues (PL and PR) or the deflating subspaces
 *>          (Difu and Difl):
@@ -45510,7 +45509,7 @@
      $                   ALPHA, BETA, Q, LDQ, Z, LDZ, M, PL, PR, DIF,
      $                   WORK, LWORK, IWORK, LIWORK, INFO )
 *
-*  -- LAPACK computational routine (version 3.7.0) --
+*  -- LAPACK computational routine (version 3.7.1) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
 *     June 2016
@@ -48024,7 +48023,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \date December 2016
+*> \date June 2017
 *
 *  @precisions fortran z -> c
 *
@@ -48049,10 +48048,10 @@
      $                    LDVR, MM, M, WORK, LWORK, RWORK, LRWORK, INFO)
       IMPLICIT NONE
 *
-*  -- LAPACK computational routine (version 3.7.0) --
+*  -- LAPACK computational routine (version 3.7.1) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     December 2016
+*     June 2017
 *
 *     .. Scalar Arguments ..
       CHARACTER          HOWMNY, SIDE
@@ -48089,7 +48088,7 @@
       EXTERNAL           LSAME, ILAENV, IZAMAX, DLAMCH, DZASUM
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZCOPY, ZDSCAL, ZGEMV, ZLATRS
+      EXTERNAL           XERBLA, ZCOPY, ZDSCAL, ZGEMV, ZLATRS,
      $                   ZGEMM, DLABAD, ZLASET
 *     ..
 *     .. Intrinsic Functions ..

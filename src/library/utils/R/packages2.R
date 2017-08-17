@@ -590,6 +590,9 @@ install.packages <-
     output <- if(quiet) FALSE else ""
     env <- character()
 
+    tlim <- Sys.getenv("_R_INSTALL_PACKAGES_ELAPSED_TIMEOUT_")
+    tlim <- if(is.na(tlim)) 0 else tools:::get_timeout(tlim)
+
     outdir <- getwd()
     if(is.logical(keep_outputs)) {
         if(is.na(keep_outputs))
@@ -653,7 +656,9 @@ install.packages <-
                      getConfigureVars(update[i, 1L]),
                      shQuote(update[i, 1L]))
            status <- system2(cmd0, args, env = env,
-                             stdout = output, stderr = output)
+                             stdout = output, stderr = output,
+                             timeout = tlim)
+           ## if this times out it will leave locks behind
            if(status > 0L)
                warning(gettextf("installation of package %s had non-zero exit status",
                                 sQuote(update[i, 1L])),
@@ -709,6 +714,14 @@ install.packages <-
         }
 
         if (Ncpus > 1L && nrow(update) > 1L) {
+            tlim_cmd <- character()
+            if(tlim > 0) {
+                if(nzchar(timeout <- Sys.which("timeout"))) {
+                    ## SIGINT works better and is used for system.
+                    tlim_cmd <- c(shQuote(timeout), "--signal=INT", tlim)
+                } else
+                    warning("timeouts for parallel installs require the 'timeout' command")
+            }
             ## if --no-lock or --lock was specified in INSTALL_opts
             ## that will override this.
             args0 <- c(args0, "--pkglock")
@@ -743,7 +756,11 @@ install.packages <-
                 ##   cmd <- paste(c(shQuote(command), env, args),
                 ##                collapse = " ")
                 ## on Windows?
-                cmd <- paste(c("MAKEFLAGS=", shQuote(cmd0), args), collapse = " ")
+                cmd <- paste(c("MAKEFLAGS=",
+                               tlim_cmd,
+                               shQuote(cmd0),
+                               args),
+                             collapse = " ")
                 ## </NOTE>
                 deps <- aDL[[pkg]]
                 deps <- deps[deps %in% upkgs]
@@ -789,7 +806,9 @@ install.packages <-
                           getConfigureVars(update[i, 3L]),
                           update[i, 3L])
                 status <- system2(cmd0, args, env = env,
-                                  stdout = outfile, stderr = outfile)
+                                  stdout = outfile, stderr = outfile,
+                                  timeout = tlim)
+                ## if this times out it will leave locks behind
                 if(!quiet && keep_outputs)
                     writeLines(readLines(outfile))
                 if(status > 0L)

@@ -4,7 +4,7 @@
     stopifnot(is.null(condition), identical(text, ""))
     if (is.primitive(fun))
         fun <- getGeneric(fun)
-    if(!is(fun, "standardGeneric"))
+    if(!is(fun, "genericFunction"))
         stop("Function must be an S4 generic")
     
     if(isdebugged(fun, signature = signature))

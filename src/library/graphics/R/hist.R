@@ -1,7 +1,7 @@
 #  File src/library/graphics/R/hist.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -73,6 +73,11 @@ hist.default <-
         if (length(breaks) == 1) {
             if(!is.numeric(breaks) || !is.finite(breaks) || breaks < 1L)
                 stop("invalid number of 'breaks'")
+	    if(breaks > 1e6) { # pretty() must have n <= maximal integer
+		warning(gettextf("'breaks = %g' is too large and set to 1e6",
+				 breaks), domain = NA)
+		breaks <- 1e6L
+	    }
             breaks <- pretty (range(x), n = breaks, min.n = 1)
             nB <- length(breaks)
             if(nB <= 1) ##-- Impossible !

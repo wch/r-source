@@ -241,10 +241,10 @@ static void NORET set_iconv_error(Rconnection con, char* from, char* to)
 static size_t buff_set_len(Rconnection con, size_t len) {
     size_t unread_len = 0;
     unsigned char *buff;
-    
+
     if (con->buff_len == len)
 	return len;
-    
+
     if (con->buff) {
 	unread_len = con->buff_stored_len - con->buff_pos;
 	len = MAX(len, unread_len);
@@ -256,7 +256,7 @@ static size_t buff_set_len(Rconnection con, size_t len) {
 	memcpy(buff, con->buff + con->buff_pos, unread_len);
 	free(con->buff);
     }
-    
+
     con->buff = buff;
     con->buff_len = len;
     con->buff_pos = 0;
@@ -283,12 +283,12 @@ static void buff_reset(Rconnection con) {
 
 static size_t buff_fill(Rconnection con) {
     size_t free_len, read_len;
-    
+
     buff_reset(con);
 
     free_len = con->buff_len - con->buff_stored_len;
     read_len = con->read(con->buff, sizeof(unsigned char), free_len, con);
-    
+
     con->buff_stored_len += read_len;
 
     return read_len;
@@ -298,10 +298,6 @@ static int buff_fgetc(Rconnection con)
 {
     size_t unread_len;
 
-    if (!con->buff) {
-	buff_init(con);
-    }
-    
     unread_len = con->buff_stored_len - con->buff_pos;
     if (unread_len == 0) {
 	size_t filled_len = buff_fill(con);
@@ -318,7 +314,7 @@ static double buff_seek(Rconnection con, double where, int origin, int rw)
 
     if (rw == 2) /* write */
 	return con->seek(con, where, origin, rw);
-    
+
     if (ISNA(where)) /* tell */
 	return con->seek(con, where, origin, rw) - unread_len;
 
@@ -331,8 +327,14 @@ static double buff_seek(Rconnection con, double where, int origin, int rw)
 	}
     }
     con->buff_pos = con->buff_stored_len = 0;
-    
+
     return con->seek(con, where, origin, rw);
+}
+
+void set_buffer(Rconnection con) {
+    if (con->canread && con->text) {
+	buff_init(con);
+    }
 }
 
 void set_iconv(Rconnection con)
@@ -546,7 +548,7 @@ int dummy_fgetc(Rconnection con)
 	}
 	con->navail--;
 	return *con->next++;
-    } else if (con->text)
+    } else if (con->buff)
 	return buff_fgetc(con);
     else
 	return con->fgetc_internal(con);
@@ -674,9 +676,9 @@ static Rboolean file_open(Rconnection con)
 	char mode[20]; /* 4 byte mode plus "t,ccs=UTF-16LE" plus one for luck. */
 	strncpy(mode, con->mode, 4);
 	mode[4] = '\0';
-	if (!strpbrk(mode, "bt")) 
+	if (!strpbrk(mode, "bt"))
 	    strcat(mode, "t");
-	if (strchr(mode, 't') 
+	if (strchr(mode, 't')
 	    && (!strcmp(con->encname, "UTF-16LE") || !strcmp(con->encname, "UCS-2LE"))) {
 	    strcat(mode, ",ccs=UTF-16LE");
 	    if (con->canread) {
@@ -744,6 +746,7 @@ static Rboolean file_open(Rconnection con)
     if(mlen >= 2 && con->mode[mlen-1] == 'b') con->text = FALSE;
     else con->text = TRUE;
     con->save = -1000;
+    set_buffer(con);
     set_iconv(con);
 
 #ifdef HAVE_FCNTL
@@ -804,7 +807,7 @@ static int file_fgetc_internal(Rconnection con)
     	    this->have_wcbuffered = TRUE;
     	}
     } else
-#endif  
+#endif
     c =fgetc(fp);
     return feof(fp) ? R_EOF : c;
 }
@@ -1035,6 +1038,7 @@ static Rboolean fifo_open(Rconnection con)
 
     if(mlen >= 2 && con->mode[mlen-1] == 'b') con->text = FALSE;
     else con->text = TRUE;
+    set_buffer(con);
     set_iconv(con);
     con->save = -1000;
     return TRUE;
@@ -1215,6 +1219,7 @@ static Rboolean	fifo_open(Rconnection con)
     if (boo_retvalue && this->hdl_namedpipe) {
 	con->isopen = TRUE;
 	con->text = uin_mode_len >= 2 && con->mode[uin_mode_len - 1] == 'b';
+	set_buffer(con);
 	set_iconv(con);
 	con->save = -1000;
     }
@@ -1452,6 +1457,7 @@ static Rboolean pipe_open(Rconnection con)
     else con->text = TRUE;
     this->last_was_write = !con->canread;
     this->rpos = this->wpos = 0;
+    set_buffer(con);
     set_iconv(con);
     con->save = -1000;
     return TRUE;
@@ -1622,6 +1628,7 @@ static Rboolean gzfile_open(Rconnection con)
     con->canwrite = (con->mode[0] == 'w' || con->mode[0] == 'a');
     con->canread = !con->canwrite;
     con->text = strchr(con->mode, 'b') ? FALSE : TRUE;
+    set_buffer(con);
     set_iconv(con);
     con->save = -1000;
     return TRUE;
@@ -1778,6 +1785,7 @@ static Rboolean bzfile_open(Rconnection con)
     bz->bfp = bfp;
     con->isopen = TRUE;
     con->text = strchr(con->mode, 'b') ? FALSE : TRUE;
+    set_buffer(con);
     set_iconv(con);
     con->save = -1000;
     return TRUE;
@@ -1974,6 +1982,7 @@ static Rboolean xzfile_open(Rconnection con)
     }
     con->isopen = TRUE;
     con->text = strchr(con->mode, 'b') ? FALSE : TRUE;
+    set_buffer(con);
     set_iconv(con);
     con->save = -1000;
     return TRUE;
@@ -2305,6 +2314,7 @@ static Rboolean clp_open(Rconnection con)
 	this->last = 0;
     }
     con->text = TRUE;
+    set_buffer(con);
     set_iconv(con);
     con->save = -1000;
     this->warned = FALSE;
@@ -3492,10 +3502,25 @@ SEXP attribute_hidden do_isseekable(SEXP call, SEXP op, SEXP args, SEXP env)
     return ScalarLogical(con->canseek != FALSE);
 }
 
+static void checkClose(Rconnection con)
+{
+    if (con->isopen) {
+        errno = 0;
+    	con->close(con);
+    	if (con->status != NA_INTEGER && con->status < 0) {
+    	    int serrno = errno;
+            if (serrno)
+		warning(_("Problem closing connection:  %s"), strerror(serrno));
+	    else
+		warning(_("Problem closing connection"));
+   	 }
+    }
+}
+
 static int con_close1(Rconnection con)
 {
     int status;
-    if(con->isopen) con->close(con);
+    checkClose(con);
     status = con->status;
     if(con->isGzcon) {
 	Rgzconn priv = con->private;
@@ -3678,12 +3703,14 @@ int Rconn_ungetc(int c, Rconnection con)
 /* read one line (without trailing newline) from con and store it in buf */
 /* return number of characters read, -1 on EOF */
 attribute_hidden
-int Rconn_getline(Rconnection con, char *buf, int bufsize)
+size_t Rconn_getline(Rconnection con, char *buf, size_t bufsize)
 {
-    int c, nbuf = -1;
+    int c;
+    size_t nbuf = -1;
 
     while((c = Rconn_fgetc(con)) != R_EOF) {
-	if(nbuf+1 >= bufsize) error(_("line longer than buffer size"));
+	if(nbuf+1 >= bufsize)
+	    error(_("line longer than buffer size %lu"), (unsigned long) bufsize);
 	if(c != '\n'){
 	    buf[++nbuf] = (char) c;
 	} else {
@@ -3695,29 +3722,36 @@ int Rconn_getline(Rconnection con, char *buf, int bufsize)
      *  file did not end with newline.
      */
     if(nbuf >= 0 && buf[nbuf]) {
-	if(nbuf+1 >= bufsize) error(_("line longer than buffer size"));
+	if(nbuf+1 >= bufsize)
+	    error(_("line longer than buffer size %lu"), (unsigned long) bufsize);
 	buf[++nbuf] = '\0';
     }
     return(nbuf);
 }
 
-
 int Rconn_printf(Rconnection con, const char *format, ...)
 {
     int res;
+    errno = 0;
     va_list(ap);
-
     va_start(ap, format);
     /* Parentheses added for FC4 with gcc4 and -D_FORTIFY_SOURCE=2 */
     res = (con->vfprintf)(con, format, ap);
     va_end(ap);
+    /* PR#17243:  write.table and friends silently failed if the disk was full (or there was another error) */
+    if (res < 0) {
+	if (errno)
+	    error(_("Error writing to connection:  %s"), strerror(errno));
+	else
+	    error(_("Error writing to connection"));
+    }
     return res;
 }
 
 static void con_cleanup(void *data)
 {
     Rconnection con = data;
-    if(con->isopen) con->close(con);
+    checkClose(con);
 }
 
 /* readLines(con = stdin(), n = 1, ok = TRUE, warn = TRUE) */
@@ -3725,7 +3759,8 @@ static void con_cleanup(void *data)
 SEXP attribute_hidden do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans = R_NilValue, ans2;
-    int ok, warn, skipNul, c, nbuf, buf_size = BUF_SIZE;
+    int ok, warn, skipNul, c;
+    size_t nbuf, buf_size = BUF_SIZE;
     int oenc = CE_NATIVE;
     Rconnection con = NULL;
     Rboolean wasopen;
@@ -3914,7 +3949,10 @@ SEXP attribute_hidden do_writelines(SEXP call, SEXP op, SEXP args, SEXP env)
 			 translateChar0(STRING_ELT(text, i)), ssep);
     }
 
-    if(!wasopen) {endcontext(&cntxt); con->close(con);}
+    if(!wasopen) {
+    	endcontext(&cntxt);
+    	checkClose(con);
+    }
     return R_NilValue;
 }
 
@@ -4503,7 +4541,10 @@ SEXP attribute_hidden do_writebin(SEXP call, SEXP op, SEXP args, SEXP env)
 	Free(buf);
     }
 
-    if(!wasopen) {endcontext(&cntxt);con->close(con);}
+    if(!wasopen) {
+        endcontext(&cntxt);
+        checkClose(con);
+    }
     if(isRaw) {
 	R_Visible = TRUE;
 	UNPROTECT(1);
@@ -4826,7 +4867,10 @@ SEXP attribute_hidden do_writechar(SEXP call, SEXP op, SEXP args, SEXP env)
 		buf += lenb;
 	}
     }
-    if(!wasopen) {endcontext(&cntxt); con->close(con);}
+    if(!wasopen) {
+        endcontext(&cntxt);
+        checkClose(con);
+    }
     if(isRaw) {
 	R_Visible = TRUE;
 	UNPROTECT(1);
@@ -4988,9 +5032,9 @@ switch_or_tee_stdout(int icon, int closeOnExit, int tee)
 	    if((icon = SinkCons[R_SinkNumber + 1]) >= 3) {
 		Rconnection con = getConnection(icon);
 		R_ReleaseObject(con->ex_ptr);
-		if(SinkConsClose[R_SinkNumber + 1] == 1) /* close it */
-		    con->close(con);
-		else if (SinkConsClose[R_SinkNumber + 1] == 2) /* destroy it */
+		if(SinkConsClose[R_SinkNumber + 1] == 1) { /* close it */
+		    checkClose(con);
+		} else if (SinkConsClose[R_SinkNumber + 1] == 2) /* destroy it */
 		    con_destroy(icon);
 	    }
 	}

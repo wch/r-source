@@ -1,6 +1,6 @@
 % File src/library/tools/man/check_packages_in_dir.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2013-2014 R Core Team
+% Copyright 2013-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{check_packages_in_dir}
@@ -129,13 +129,22 @@ check_packages_in_dir_details(dir, logs = NULL, drop_ok = TRUE)
   paths to the directories with the new and old sources, respectively,
   and the corresponding check results, possible changes in the check
   results can conveniently be analyzed as controlled via options
-  \code{outputs} and \code{sources}.
+  \code{outputs} and \code{sources}.  The changes object returned can be
+  subscripted according to change in severity from the old to the new
+  results by using one of \code{"=="}, \code{"!="}, \code{"<"},
+  \code{"<="}, \code{">"} or \code{">="} as row index.
 
   \code{check_packages_in_dir_details} analyzes check log files to
   obtain check details as a data frame which can be used for further
   processing, providing check name, status and output for every check
   performed and not dropped according to status tag (via variables
   \code{Check}, \code{Status} and \code{Output}, respectively).
+  
+  Environment variable \env{_R_CHECK_ELAPSED_TIMEOUT_} can be used to
+  set a limit on the elpased time of each \command{check} run.  See the
+  \sQuote{R Internals} manual for how the value is interpreted and for
+  other environment variables which can be used for finer-grained
+  control on timeouts within a \command{check} run.
 }
 \note{
   This functionality is still experimental: interfaces may change in

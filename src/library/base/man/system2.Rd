@@ -35,8 +35,9 @@ system2(command, args = character(),
     interpreter should wait for the command to finish, or run it
     asynchronously.  This will be ignored (and the interpreter will
     always wait) if \code{stdout = TRUE}.}
-  \item{timeout}{timeout in seconds, ignored if 0. Not implemented on
-    Windows.}
+  \item{timeout}{timeout in seconds, ignored if 0.  This is a limit for the
+    elapsed time running \code{command} in a separate process.   Fractions
+    of seconds are ignored.}
 #ifdef unix
   \item{minimized, invisible}{arguments that are accepted on Windows but
     ignored on this platform, with a warning.}
@@ -67,17 +68,18 @@ system2(command, args = character(),
     TRUE} implies \code{stdout = TRUE}: a warning is given if this is
   not what was specified.
 
-#ifdef unix
   When \code{timeout} is non-zero, the command is terminated after the given
   number of seconds.  The termination works for typical commands, but is not
   guaranteed: it is possible to write a program that would keep running
-  after the time is out.  Timeouts can only be set with \code{wait = TRUE}
-  and only for non-interactive commands: the command is run with standard
-  input redirected from \code{/dev/null} and it must not modify terminal
-  settings.  As long as tty \code{tostop} option is disabled, which it
-  usually is by default, the executed command may write to standard output
-  and standard error.  The \code{timeout} option is currently experimental
-  and is not implemented on Windows.
+  after the time is out.  Timeouts can only be set with \code{wait = TRUE}.
+  The \code{timeout} option is currently experimental.
+
+#ifdef unix
+  Timeouts cannot be used with interactive commands: the command is run with
+  standard input redirected from \code{/dev/null} and it must not modify
+  terminal settings.  As long as tty \code{tostop} option is disabled, which
+  it usually is by default, the executed command may write to standard
+  output and standard error.
 #endif
 }
 %% We use popen, and that pipes stdout only
@@ -97,6 +99,9 @@ system2(command, args = character(),
   value is \code{127}.  Otherwise if \code{wait = TRUE} the value is the
   exit status returned by the command, and if \code{wait = FALSE} it is
   \code{0} (the conventional success value).
+
+  If the command times out, a warning is reported and the exit status is
+  \code{124}.
 #ifdef windows
   Some Windows commands return out-of-range status values
   (e.g., \code{-1}) and so only the bottom 16 bits of the value are used.

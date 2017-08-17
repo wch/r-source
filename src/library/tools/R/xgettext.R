@@ -1,7 +1,7 @@
 #  File src/library/tools/R/xgettext.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -93,20 +93,19 @@ function(dir, verbose = FALSE, asCall = TRUE)
     out[lengths(out) > 0L]
 }
 
-print.xgettext <-
-function(x, ...)
+print.xgettext <- function(x, ...)
 {
-    cat(x, sep = "\n")
+    cat(encodeString(x), sep = "\n")
     invisible(x)
 }
 
-print.xngettext <-
-function(x, ...)
+print.xngettext <- function(x, ...)
 {
-    lapply(x, function(x)
-           cat("\nmsgid        = ", x[1L],
-               "\nmsgid_plural = ", x[2L],
-               "\n", sep = ""))
+    lapply(x, function(x) {
+        e <- encodeString(x)
+        cat("\nmsgid        = ", e[1L],
+            "\nmsgid_plural = ", e[2L], "\n", sep = "")
+    })
     invisible(x)
 }
 
@@ -119,7 +118,7 @@ function(dir, verbose = FALSE)
     R_files <- list_files_with_exts(dir, exts)
     for(d in c("unix", "windows", "aqua")) {
         OSdir <- file.path(dir, d)
-        if(dir.exists(OSdir))
+       if(dir.exists(OSdir))
             R_files <- c(R_files, list_files_with_exts(OSdir, exts))
     }
     out <- vector("list", length = length(R_files))
@@ -332,8 +331,7 @@ print.check_po_files <- function(x, ...)
 	cat("No errors\n")
     else
 	for (i in 1:nrow(x)) {
-	    if (is.na(x[i, 2L])) cols <- c(1L, 3:5)
-	    else cols <- 1:5
+	    cols <- if(is.na(x[i, 2L])) c(1L, 3:5) else 1:5
 	    cat(x[i, cols], sep = "\n")
 	    cat("\n")
 	}

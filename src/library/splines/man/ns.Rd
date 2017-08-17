@@ -1,6 +1,6 @@
 % File src/library/splines/man/ns.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ns}
@@ -15,10 +15,11 @@ ns(x, df = NULL, knots = NULL, intercept = FALSE,
 }
 \arguments{
   \item{x}{the predictor variable.  Missing values are allowed.}
-  \item{df}{degrees of freedom. One can supply \code{df} rather than
+  \item{df}{degrees of freedom.  One can supply \code{df} rather than
     knots; \code{ns()} then chooses \code{df - 1 - intercept} knots at
     suitably chosen quantiles of \code{x} (which will ignore missing
-    values).  The default, \code{df = 1}, corresponds to \emph{no} knots.}
+    values).  The default, \code{df = NULL}, sets the number of
+    inner knots as \code{length(knots)}.}
   \item{knots}{breakpoints that define the spline.  The default is no
     knots; together with the natural boundary conditions this results in
     a basis for linear regression on \code{x}.  Typical values are the
@@ -33,7 +34,7 @@ ns(x, df = NULL, knots = NULL, intercept = FALSE,
     extend beyond \code{Boundary.knots}}
 }
 \details{
-  \code{ns} is based on the function \code{\link{spline.des}}.  It
+  \code{ns} is based on the function \code{\link{splineDesign}}.  It
   generates a basis matrix for representing the family of
   piecewise-cubic splines with the specified sequence of
   interior knots, and the natural boundary conditions.  These enforce

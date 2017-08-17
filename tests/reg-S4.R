@@ -942,3 +942,25 @@ stopifnot(identical(f(), "a"))
 ## ensure forwarding works correctly for dots dispatch
 f2 <- function(...) f(...)
 stopifnot(identical(f2(a=1), 1))
+
+
+## R's internal C  R_check_class_and_super()  was not good enough
+if(require("Matrix")) withAutoprint({
+    setClass("Z", representation(zz = "list"))
+    setClass("C", contains = c("Z", "dgCMatrix"))
+    setClass("C2", contains = "C")
+    setClass("C3", contains = "C2")
+    m <- matrix(c(0,0,2:0), 3,5, dimnames = list(NULL,NULL))
+    (mC <- as(m, "dgCMatrix"))
+    (cc <- as(mC, "C"))
+     c2 <- as(mC, "C2")
+     c3 <- as(mC, "C3")
+    stopifnot(
+        identical(capture.output(c2),
+                  sub("C3","C2", capture.output(c3)))
+      , identical(as(cc, "matrix"), m)
+      , identical(as(c2, "matrix"), m)
+      , identical(as(c3, "matrix"), m)
+    )
+    invisible(lapply(c("Z","C","C2","C3"), removeClass))
+})

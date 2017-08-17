@@ -1,7 +1,7 @@
 #  File src/library/splines/R/splines.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -94,11 +94,15 @@ ns <- function(x, df = NULL, knots = NULL, intercept = FALSE,
     nax <- is.na(x)
     if(nas <- any(nax))
         x <- x[!nax]
-    if(!missing(Boundary.knots)) {
+    outside <- if(!missing(Boundary.knots)) {
         Boundary.knots <- sort(Boundary.knots)
-        outside <- (ol <- x < Boundary.knots[1L]) | (or <- x > Boundary.knots[2L])
+        (ol <- x < Boundary.knots[1L]) | (or <- x > Boundary.knots[2L])
     }
-    else outside <- FALSE # rep(FALSE, length = length(x))
+    else {
+	if(length(x) == 1L) ## && missing(Boundary.knots) : special treatment
+	    Boundary.knots <- x*c(7,9)/8 # symmetrically around x
+	FALSE # rep(FALSE, length = length(x))
+    }
     if(!is.null(df) && is.null(knots)) {
         ## df = number(interior knots) + 1 + intercept
         nIknots <- df - 1L - intercept
@@ -107,11 +111,12 @@ ns <- function(x, df = NULL, knots = NULL, intercept = FALSE,
             warning(gettextf("'df' was too small; have used %d",
                              1L + intercept), domain = NA)
         }
-        knots <- if(nIknots > 0L) {
-            knots <- seq.int(0, 1,
-                             length.out = nIknots + 2L)[-c(1L, nIknots + 2L)]
-            quantile(x[!outside], knots)
-        } ## else  NULL
+        knots <-
+            if(nIknots > 0L) {
+                knots <- seq.int(from = 0, to = 1,
+                                 length.out = nIknots + 2L)[-c(1L, nIknots + 2L)]
+                quantile(x[!outside], knots)
+            }
     } else nIknots <- length(knots)
     Aknots <- sort(c(rep(Boundary.knots, 4L), knots))
     if(any(outside)) {
@@ -131,8 +136,8 @@ ns <- function(x, df = NULL, knots = NULL, intercept = FALSE,
         if(any(inside <- !outside))
             basis[inside,  ] <- splineDesign(Aknots, x[inside], 4)
     }
-    else basis <- splineDesign(Aknots, x, 4)
-    const <- splineDesign(Aknots, Boundary.knots, 4, c(2, 2))
+    else basis <- splineDesign(Aknots, x, ord = 4L)
+    const <- splineDesign(Aknots, Boundary.knots, ord = 4L, derivs = c(2L, 2L))
     if(!intercept) {
         const <- const[, -1 , drop = FALSE]
         basis <- basis[, -1 , drop = FALSE]
@@ -192,6 +197,7 @@ makepredictcall.bs <- function(var, call)
 }
 
 
+## this is *not* used anymore by our own code [but has been exported "forever"]
 spline.des <- function(knots, x, ord = 4, derivs = integer(length(x)),
 		       outer.ok = FALSE, sparse = FALSE)
 {

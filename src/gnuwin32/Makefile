@@ -87,7 +87,7 @@ EXTRALIBS = getline/gl.a ../extra/xdr/libxdr.a \
    ../extra/tre/libtre.a
 
 R-DLLLIBS = $(OPENMP) -L. $(FLIBS) -lRblas -L../../$(IMPDIR) -lRgraphapp \
-  -lRiconv -lcomctl32 -lversion $(LIBEXTRAS)
+  -lRiconv -lcomctl32 -lwinmm -lversion $(LIBEXTRAS)
 
 
 .PHONY:  clean veryclean rlibs fixfiles front-ends rmodules

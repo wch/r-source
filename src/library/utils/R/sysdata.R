@@ -5,15 +5,15 @@ function()
     ##   <http://www.loc.gov/marc/relators/relaterm.html>
     ## web page, and merge with the information on usage for R.
 
-    ## <http://www.loc.gov/marc/relators/relacode.html>
-    doc <- XML::htmlParse("http://www.loc.gov/marc/relators/relacode.html")
-    codes <- XML::readHTMLTable(doc)[[2]]
+    ## Codes are also listed at
+    ##   <http://www.loc.gov/marc/relators/relacode.html>
+    ## which also contains discontinued codes, identified by a hyphen
+    ## preceding the code.
 
     ## <http://www.loc.gov/marc/relators/relaterm.html>
-    doc <- XML::htmlParse("http://www.loc.gov/marc/relators/relaterm.html")
-    ns <- XML::getNodeSet(doc, "//dl")[[4]]
-    dt <- trimws(XML::xpathApply(ns, "./dt", XML::xmlValue))
-    dd <- trimws(XML::xpathApply(ns, "./dd", XML::xmlValue))
+    doc <- xml2::read_html("http://www.loc.gov/marc/relators/relaterm.html")
+    dt <- trimws(xml2::xml_text(xml2::xml_find_all(doc, "//dl[4]//dt")))
+    dd <- trimws(xml2::xml_text(xml2::xml_find_all(doc, "//dl[4]//dd")))
 
     ## Drop obsolete stuff and pointers to it.
     re <- "(.*) \\[(.*)\\]"
@@ -28,12 +28,13 @@ function()
     MARC_R_usage <-
         c("aut" = "Use for full authors who have made substantial contributions to\nthe package and should show up in the package citation.",
           "com" = "Use for package maintainers that collected code (potentially in\nother languages) but did not make further substantial\ncontributions to the package.",
-          "ctb" = "Use for authors who have made smaller contributions (such as\ncode patches etc.) but should not show up in the package\ncitation.", 
           "cph" = "Use for all copyright holders.",
           "cre" = "Use for the package maintainer.",
-          "ctr" = "Use for authors who have been contracted to write (parts of) the\npackage and hence do not own intellectual property.", 
+          "ctb" = "Use for authors who have made smaller contributions (such as\ncode patches etc.) but should not show up in the package\ncitation.",
+          "ctr" = "Use for authors who have been contracted to write (parts of) the\npackage and hence do not own intellectual property.",
           "dtc" = "Use for persons who contributed data sets for the package.",
           "fnd" = "Use for persons or organizations that furnished financial support\nfor the development of the package",
+          "rev" = "Use for persons or organizations responsible for reviewing\n(parts of) the package.",
           "ths" = "If the package is part of a thesis, use for the thesis advisor.", 
           "trl" = "If the R code is merely a translation from another language\n(typically S), use for the translator to R.")
 
@@ -47,7 +48,7 @@ function()
         gsub("\n", " ", MARC_R_usage$usage[pos])
 
     MARC_relator_db_codes_used_with_R <-
-        MARC_relator_db[nchar(MARC_relator_db$usage) > 0L, "code"]
+        sort(MARC_relator_db[nchar(MARC_relator_db$usage) > 0L, "code"])
 
     ## Using dump() to provide a plain text representation results in
     ## non-ASCII string constants without appropriate encoding info.

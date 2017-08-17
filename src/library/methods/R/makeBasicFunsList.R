@@ -1,7 +1,7 @@
 #  File src/library/methods/R/makeBasicFunsList.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -159,11 +159,11 @@ utils::globalVariables(".addBasicGeneric")
 		    knownMembers = members, package = "base")
 
     funs <- .addBasicGeneric(funs, "unlist", internal=TRUE)
-### TODO: bring back if/when .Internal(is.unsorted()) is useful to override 
+### TODO: bring back if/when .Internal(is.unsorted()) is useful to override
     ## funs <- .addBasicGeneric(funs, "is.unsorted", internal=TRUE,
     ##                          internalArgs=c("x", "strictly"))
     funs <- .addBasicGeneric(funs, "as.vector", internal=TRUE)
-    
+
     assign(".BasicFunsList", funs, envir=where)
     rm(.addBasicGeneric, envir=where)
 }
@@ -264,6 +264,13 @@ utils::globalVariables(".addBasicGeneric")
 	       useAsDefault= function(x, ...) stats::toeplitz(x),
 	       signature = "x", where = where)
     setGenericImplicit("toeplitz", where, FALSE)
+
+    ## svd(): signature should only have "x" (no 'nu', 'nv' ..)
+    setGeneric("svd", function(x, ...) standardGeneric("svd"),
+	       useAsDefault= function(x, ...) base::svd(x, ...),
+	       signature = "x", where = where)
+    setGenericImplicit("svd", where, FALSE)
+
 
     ## not implicitGeneric() which is not yet available "here"
     registerImplicitGenerics(where = where)

@@ -1,8 +1,8 @@
 #  File src/library/stats/R/vcov.R
 #  Part of the R package, https://www.R-project.org
 #
+#  Copyright (C) 2002-2017 The R Core Team
 #  Copyright (C) 1994-2002 W. N. Venables and B. D. Ripley
-#  Copyright (C) 2002-11 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -51,7 +51,7 @@ sigma <- function(object, ...) UseMethod("sigma")
 ## works whenever deviance(), nobs() and coef() do fine:
 sigma.default <- function (object, use.fallback=TRUE, ...)
     sqrt(deviance(object, ...) /
-             (nobs(object, use.fallback=use.fallback) - length(coef(object))))
+	 (nobs(object, use.fallback=use.fallback) - sum(!is.na(coef(object)))))
 
 sigma.mlm <- function (object, ...)
     sqrt(colSums(object$residuals^2) / object$df.residual)
