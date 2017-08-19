@@ -228,7 +228,8 @@
       frames gives a data frame now also for \code{^} which previously
       gave a numeric matrix.
 
-      \item \code{pretty(x, n=<large>)} now works better (though
+      \item \code{pretty(x, n)} for large \code{n} or large
+      \code{diff(range(x))} now works better (though
       it was never meant for large \code{n}); internally it uses the
       same rounding fuzz (1e-10) as \code{seq.default()} - as it did up
       to 2010-02-03 when both were 1e-7.
