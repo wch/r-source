@@ -114,6 +114,8 @@
       \item \code{print()} methods for \code{"xgettext"} and
       \code{"xngettext"} now use \code{encodeString()} which keeps,
       e.g., \code{"\n"}, visible.  (Wish of \PR{17298}.)
+
+      \item \code{package.skeleton()} gets optional \code{encoding} argument.
     }
   }
 
