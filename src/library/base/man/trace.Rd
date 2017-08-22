@@ -89,8 +89,9 @@ returnValue(default = NULL)
     place where the trace action occurs.
   }
   \item{default}{If \code{returnValue} finds no return value (e.g.
-    a function exited because of an error, not a normal exit), it
-    will return \code{default} instead.
+    a function exited because of an error, restart or as a result
+    of evaluating a return from a caller function), it will return
+    \code{default} instead.
   }
 }
 \details{
