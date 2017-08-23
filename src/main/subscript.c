@@ -107,7 +107,7 @@ OneIndex(SEXP x, SEXP s, R_xlen_t len, int partial, SEXP *newname,
 		    break;
 		}
 	    }
-	    /* Try for partial match */
+	    // Try for partial match -- not ever used in current R (partial is 0)
 	    if (partial && indx < 0) {
 		size_t l = strlen(translateChar(STRING_ELT(s, pos)));
 		for(i = 0; i < nx; i++) {
@@ -717,7 +717,7 @@ realSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, R_xlen_t *stretch, SEXP call)
 	    for (i = 0; i < ns; i++) {
 		dx = REAL(s)[i];
 		if (R_FINITE(dx) && dx != 0  && -dx <= nx) {
-		    ix = (int)(-dx - 1);
+		    ix = (R_xlen_t)(-dx - 1);
 		    LOGICAL(indx)[ix] = 0;
 		}
 	    }
