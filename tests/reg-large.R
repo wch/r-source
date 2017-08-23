@@ -93,9 +93,20 @@ if(availableGB > 4) system.time(withAutoprint({
 ## 52 sec elapsed [nb-mm4, 8 GB]
 
 
-## pretty(*, n = <large>)  gave overflow in C code
+## pretty(x, n) for n = <large> or  large diff(range(x) gave overflow in C code
 if(availableGB > 6) system.time(withAutoprint({
     r <- pretty(c(-1,1)*1e300, n = 449423288, min.n = 1)
     head(r) ; length(r) # was only 21 in  R < 3.5.0
     stopifnot(all.equal(length(r), 400000001, tol = 0.1))
 })) ## 4.8 sec.
+
+n <- 2.2e9 ; n / .Machine$integer.max # 1.024 ==> need  long vectors!
+system.time(ii <- seq_len(n))           #   user  system elapsed
+                                        #  2.592   6.979   9.593
+system.time(i2 <- ii[-n])               # 16.057  25.361  41.548 (slow!)
+## In R <= 3.4.1 :
+## Program received signal SIGSEGV, Segmentation fault.
+## 0x00000000005a0daf in realSubscript (call=0x3f01408, stretch=<optimized out>,
+##     nx=2200000000, ns=1, s=0x426db18) at ../../../R/src/main/subscript.c:691
+## 691			    LOGICAL(indx)[ix] = 0;
+

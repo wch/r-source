@@ -335,6 +335,9 @@
       \command{notangle} (it was required in \R 3.4.[01]).
 
       \item \code{readRDS(textConnection(.))} works again.  (\PR{17325})
+
+      \item \code{(1:n)[-n]} no longer segfaults for \code{n <- 2.2e9}
+      (on a platform with enough RAM).
     }
   }
 }
