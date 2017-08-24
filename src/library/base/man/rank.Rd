@@ -1,6 +1,6 @@
 % File src/library/base/man/rank.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{rank}
@@ -34,7 +34,7 @@ rank(x, na.last = TRUE,
   (called \sQuote{ties}), the argument \code{ties.method} determines the
   result at the corresponding indices.  The \code{"first"} method results
   in a permutation with increasing values at each index set of ties, and
-  analogously \code{"first"} with decreasing values.  The
+  analogously \code{"last"} with decreasing values.  The
   \code{"random"} method puts these in random order whereas the
   default, \code{"average"}, replaces them by their mean, and
   \code{"max"} and \code{"min"} replaces them by their maximum and
