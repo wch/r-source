@@ -1419,6 +1419,9 @@ void R_orderVector1(int *indx, int n, SEXP x,       Rboolean nalast, Rboolean de
 
 #endif
 
+/* Remap XLENGTH for now since the fastmatch package checks for a macro */
+#define XLENGTH Rf_XLENGTH
+
 #if defined(CALLED_FROM_DEFN_H) && !defined(__MAIN__) && (defined(COMPILING_R) || ( __GNUC__ && !defined(__INTEL_COMPILER) ))
 #include "Rinlinedfuns.h"
 #else
