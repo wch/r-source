@@ -1,5 +1,8 @@
 ####  eval / parse / deparse / substitute  etc
 
+set.seed(2017-08-24) # as we will deparse all objects *and* use *.Rout.save
+.proctime00 <- proc.time() # start timing
+
 ##- From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
 ##- Subject: Re: source() / eval() bug ??? (PR#96)
 ##- Date: 20 Jan 1999 14:56:24 +0100
@@ -148,3 +151,63 @@ stopifnot(
     identical(r1,r2)
 )
 ## partly failed in R 3.4.0 alpha
+rm(r1,r2) # they fail in parse(.. deparse(..)) below
+
+
+### Checking parse(* deparse()) "inversion property" ----------------------------
+## Hopefully typically the identity():
+id_epd <- function(expr, control = c("all","digits17"), ...)
+    eval(parse(text = deparse(expr, control=control, ...)))
+dPut <- function(x, control = c("all","digits17")) dput(x, control=control)
+isMissObj <- function(obj) identical(obj, alist(a=)[[1]])
+check_EPD <- function(obj, show=TRUE) {
+    if(show) dPut(obj)
+    if(is.environment(obj) ||
+       (is.pairlist(obj) && any(vapply(obj, isMissObj, NA))))
+    {
+        cat("__ not parse()able __\n")
+        return(invisible(obj)) # cannot parse it
+    }
+    ob2 <- id_epd(obj)
+    if(!identical(obj, ob2, ignore.environment=TRUE,
+                  ignore.bytecode=TRUE, ignore.srcref=TRUE)) {
+        ae <- all.equal(obj, ob2, tolerance = 0)
+        cat("not identical(*, ignore.env=T),",
+            if(isTRUE(ae)) "but all.equal(*,*, tol = 0)",
+            "\n")
+        if(!isTRUE(ae)) stop("Not equal: all.equal(*,*, tol = 0) giving\n", ae)
+    }
+    invisible(obj)
+}
+
+xn <- setNames(pi^(1:3), paste0("pi^",1:3))
+dPut(xn)
+stopifnot(identical(xn, id_epd(xn)))
+
+library(methods)
+example(new) # creating t1 & t2 at least
+
+if(require("Matrix")) { cat("Trying some Matrix objects, too\n")
+    D5. <- Diagonal(x = 5:1)
+    D5N <- D5.; D5N[5,5] <- NA
+    example(Matrix)
+    example(sparseMatrix)
+}
+
+for(nm in ls(env=.GlobalEnv)) {
+    cat(nm,": ", sep="")
+    if(!any(nm == "r1")) ## 'r1' fails
+        check_EPD(obj = (x <- .GlobalEnv[[nm]]))
+    if(is.function(x)) {
+        cat("checking body(.):\n"   ); check_EPD(   body(x))
+        cat("checking formals(.):\n"); check_EPD(formals(x))
+    }
+    cat("--=--=--=--=--\n")
+}
+summary(warnings())
+## "dput    may be incomplete"
+## "deparse may be incomplete"
+
+
+## at the very end
+cat('Time elapsed: ', proc.time() - .proctime00,'\n')

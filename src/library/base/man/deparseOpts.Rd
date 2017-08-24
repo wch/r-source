@@ -1,6 +1,6 @@
 % File src/library/base/man/deparseOpts.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{deparseOpts}
@@ -59,6 +59,11 @@
       functions where necessary to ensure that they are parsed to the
       same type.  Since e.g.\sspace{}\code{NA_real_} can be output in \R, this is
       mainly used in connection with \code{S_compatible}.
+    }
+    \item{\code{nice_names}}{
+      If true, named % they are anyway: \code{\link{list}}s and named
+      atomic vectors are deparsed as e.g., \code{c(A = 1)} instead of
+      \code{structure(1, .Names = "A")}.
     }
     \item{\code{all}}{
       An abbreviated way to specify all of the options
