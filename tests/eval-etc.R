@@ -159,8 +159,18 @@ rm(r1,r2) # they fail in parse(.. deparse(..)) below
 id_epd <- function(expr, control = c("all","digits17"), ...)
     eval(parse(text = deparse(expr, control=control, ...)))
 dPut <- function(x, control = c("all","digits17")) dput(x, control=control)
+hasReal <- function(x) {
+    if(is.double(x) || is.complex(x))
+	any(x != round(x))
+    else if(is.logical(x) || is.integer(x) ||
+	    is.symbol(x) || is.call(x) || is.environment(x) || is.character(x))
+	FALSE
+    else if(is.recursive(x)) # recurse :
+	any(vapply(x, hasReal, NA))
+    else FALSE
+}
 isMissObj <- function(obj) identical(obj, alist(a=)[[1]])
-check_EPD <- function(obj, show=TRUE) {
+check_EPD <- function(obj, show = !hasReal(obj)) {
     if(show) dPut(obj)
     if(is.environment(obj) ||
        (is.pairlist(obj) && any(vapply(obj, isMissObj, NA))))

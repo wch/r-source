@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2017-08-24 r73119) -- "Unsuffered Consequences"
+R Under development (unstable) (2017-08-24 r73120) -- "Unsuffered Consequences"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -221,8 +221,18 @@ TRUE
 > id_epd <- function(expr, control = c("all","digits17"), ...)
 +     eval(parse(text = deparse(expr, control=control, ...)))
 > dPut <- function(x, control = c("all","digits17")) dput(x, control=control)
+> hasReal <- function(x) {
++     if(is.double(x) || is.complex(x))
++ 	any(x != round(x))
++     else if(is.logical(x) || is.integer(x) ||
++ 	    is.symbol(x) || is.call(x) || is.environment(x) || is.character(x))
++ 	FALSE
++     else if(is.recursive(x)) # recurse :
++ 	any(vapply(x, hasReal, NA))
++     else FALSE
++ }
 > isMissObj <- function(obj) identical(obj, alist(a=)[[1]])
-> check_EPD <- function(obj, show=TRUE) {
+> check_EPD <- function(obj, show = !hasReal(obj)) {
 +     if(show) dPut(obj)
 +     if(is.environment(obj) ||
 +        (is.pairlist(obj) && any(vapply(obj, isMissObj, NA))))
@@ -1203,7 +1213,7 @@ quote({
 checking formals(.):
 pairlist(a = 1, mm = quote(c("Abc", "Bde")))
 --=--=--=--=--
-check_EPD: function (obj, show = TRUE) 
+check_EPD: function (obj, show = !hasReal(obj)) 
 {
     if (show) 
         dPut(obj)
@@ -1246,7 +1256,7 @@ quote({
     invisible(obj)
 })
 checking formals(.):
-pairlist(obj = , show = TRUE)
+pairlist(obj = , show = quote(!hasReal(obj)))
 __ not parse()able __
 --=--=--=--=--
 dPut: function (x, control = c("all", "digits17")) 
@@ -1294,6 +1304,32 @@ checking body(.):
 quote(list(...))
 checking formals(.):
 pairlist(... = )
+__ not parse()able __
+--=--=--=--=--
+hasReal: function (x) 
+{
+    if (is.double(x) || is.complex(x)) 
+        any(x != round(x))
+    else if (is.logical(x) || is.integer(x) || is.symbol(x) || 
+        is.call(x) || is.environment(x) || is.character(x)) 
+        FALSE
+    else if (is.recursive(x)) 
+        any(vapply(x, hasReal, NA))
+    else FALSE
+}
+checking body(.):
+quote({
+    if (is.double(x) || is.complex(x)) 
+        any(x != round(x))
+    else if (is.logical(x) || is.integer(x) || is.symbol(x) || 
+        is.call(x) || is.environment(x) || is.character(x)) 
+        FALSE
+    else if (is.recursive(x)) 
+        any(vapply(x, hasReal, NA))
+    else FALSE
+})
+checking formals(.):
+pairlist(x = )
 __ not parse()able __
 --=--=--=--=--
 i: c(1, 3, 4, 5, 6, 7, 8)
@@ -1416,18 +1452,10 @@ checking formals(.):
 pairlist(x = )
 __ not parse()able __
 --=--=--=--=--
-u: 0.66383476904593408
---=--=--=--=--
-x: 0.66383476904593408
---=--=--=--=--
-xn: c(`pi^1` = 3.1415926535897931, `pi^2` = 9.869604401089358, `pi^3` = 31.006276680299816
-)
---=--=--=--=--
-ydata: c(-0.62772038038472122, -0.21156326241475959, -1.0362303256569039, 
--0.10682027303346014, 0.076496889838235618, -0.19891721602919782, 
--0.58123153331237742, -0.47841045944110672, -0.99743850535092216, 
-1.1430553120817)
---=--=--=--=--
+u: --=--=--=--=--
+x: --=--=--=--=--
+xn: --=--=--=--=--
+ydata: --=--=--=--=--
 ysmooth: 1:10
 --=--=--=--=--
 There were 40 warnings (use warnings() to see them)
@@ -1443,5 +1471,5 @@ Summary of (a total of 40) warning messages:
 > 
 > ## at the very end
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.838 0.106 2.742 0 0 
+Time elapsed:  0.765 0.095 0.863 0 0 
 > 
