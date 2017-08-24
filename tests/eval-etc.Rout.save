@@ -223,12 +223,18 @@ TRUE
 > dPut <- function(x, control = c("all","digits17")) dput(x, control=control)
 > hasReal <- function(x) {
 +     if(is.double(x) || is.complex(x))
-+ 	any(x != round(x))
++         !all((x == round(x, 3)) | is.na(x))
 +     else if(is.logical(x) || is.integer(x) ||
 + 	    is.symbol(x) || is.call(x) || is.environment(x) || is.character(x))
 + 	FALSE
 +     else if(is.recursive(x)) # recurse :
 + 	any(vapply(x, hasReal, NA))
++     else if(isS4(x)) {
++ 	if(length(sn <- slotNames(x)))
++ 	    any(vapply(sn, function(s) hasReal(slot(x, s)), NA))
++ 	else # no slots
++ 	    FALSE # ?
++     }
 +     else FALSE
 + }
 > isMissObj <- function(obj) identical(obj, alist(a=)[[1]])
@@ -318,7 +324,32 @@ new>
 +     D5. <- Diagonal(x = 5:1)
 +     D5N <- D5.; D5N[5,5] <- NA
 +     example(Matrix)
-+     example(sparseMatrix)
++     ## a subset from  example(sparseMatrix) :
++     i <- c(1,3:8); j <- c(2,9,6:10); x <- 7 * (1:7)
++     A <- sparseMatrix(i, j, x = x)
++     sA <- sparseMatrix(i, j, x = x, symmetric = TRUE)
++     tA <- sparseMatrix(i, j, x = x, triangular= TRUE)
++     ## dims can be larger than the maximum row or column indices
++     AA <- sparseMatrix(c(1,3:8), c(2,9,6:10), x = 7 * (1:7), dims = c(10,20))
++     ## i, j and x can be in an arbitrary order, as long as they are consistent
++     set.seed(1); (perm <- sample(1:7))
++     A1 <- sparseMatrix(i[perm], j[perm], x = x[perm])
++     ## the (i,j) pairs can be repeated, in which case the x's are summed
++     args <- data.frame(i = c(i, 1), j = c(j, 2), x = c(x, 2))
++     Aa <- do.call(sparseMatrix, args)
++     A. <- do.call(sparseMatrix, c(args, list(use.last.ij = TRUE)))
++     ## for a pattern matrix, of course there is no "summing":
++     nA <- do.call(sparseMatrix, args[c("i","j")])
++     dn <- list(LETTERS[1:3], letters[1:5])
++     ## pointer vectors can be used, and the (i,x) slots are sorted if necessary:
++     m <- sparseMatrix(i = c(3,1, 3:2, 2:1), p= c(0:2, 4,4,6), x = 1:6, dimnames = dn)
++     ## no 'x' --> patter*n* matrix:
++     n <- sparseMatrix(i=1:6, j=rev(2:7))
++     ## an empty sparse matrix:
++     e <- sparseMatrix(dims = c(4,6), i={}, j={})
++     ## a symmetric one:
++     sy <- sparseMatrix(i= c(2,4,3:5), j= c(4,7:5,5), x = 1:5,
++                        dims = c(7,7), symmetric=TRUE)
 + }
 Loading required package: Matrix
 Trying some Matrix objects, too
@@ -456,491 +487,6 @@ Matrix> (As <- Matrix(A, dimnames = list(NULL,NULL)))# -> symmetric
 Matrix> stopifnot(is(As, "symmetricMatrix"),
 Matrix+           is(Matrix(0, 3,3), "sparseMatrix"),
 Matrix+           is(Matrix(FALSE, 1,1), "sparseMatrix"))
-
-sprsMt> ## simple example
-sprsMt> i <- c(1,3:8); j <- c(2,9,6:10); x <- 7 * (1:7)
-
-sprsMt> (A <- sparseMatrix(i, j, x = x))                    ##  8 x 10 "dgCMatrix"
-8 x 10 sparse Matrix of class "dgCMatrix"
-                             
-[1,] . 7 . . .  .  .  .  .  .
-[2,] . . . . .  .  .  .  .  .
-[3,] . . . . .  .  .  . 14  .
-[4,] . . . . . 21  .  .  .  .
-[5,] . . . . .  . 28  .  .  .
-[6,] . . . . .  .  . 35  .  .
-[7,] . . . . .  .  .  . 42  .
-[8,] . . . . .  .  .  .  . 49
-
-sprsMt> summary(A)
-8 x 10 sparse Matrix of class "dgCMatrix", with 7 entries 
-  i  j  x
-1 1  2  7
-2 4  6 21
-3 5  7 28
-4 6  8 35
-5 3  9 14
-6 7  9 42
-7 8 10 49
-
-sprsMt> str(A) # note that *internally* 0-based row indices are used
-Formal class 'dgCMatrix' [package "Matrix"] with 6 slots
-  ..@ i       : int [1:7] 0 3 4 5 2 6 7
-  ..@ p       : int [1:11] 0 0 1 1 1 1 2 3 4 6 ...
-  ..@ Dim     : int [1:2] 8 10
-  ..@ Dimnames:List of 2
-  .. ..$ : NULL
-  .. ..$ : NULL
-  ..@ x       : num [1:7] 7 21 28 35 14 42 49
-  ..@ factors : list()
-
-sprsMt> (sA <- sparseMatrix(i, j, x = x, symmetric = TRUE)) ## 10 x 10 "dsCMatrix"
-10 x 10 sparse Matrix of class "dsCMatrix"
-                                 
- [1,] . 7  .  .  .  .  .  .  .  .
- [2,] 7 .  .  .  .  .  .  .  .  .
- [3,] . .  .  .  .  .  .  . 14  .
- [4,] . .  .  .  . 21  .  .  .  .
- [5,] . .  .  .  .  . 28  .  .  .
- [6,] . .  . 21  .  .  . 35  .  .
- [7,] . .  .  . 28  .  .  . 42  .
- [8,] . .  .  .  . 35  .  .  . 49
- [9,] . . 14  .  .  . 42  .  .  .
-[10,] . .  .  .  .  .  . 49  .  .
-
-sprsMt> (tA <- sparseMatrix(i, j, x = x, triangular= TRUE)) ## 10 x 10 "dtCMatrix"
-10 x 10 sparse Matrix of class "dtCMatrix"
-                              
- [1,] . 7 . . .  .  .  .  .  .
- [2,] . . . . .  .  .  .  .  .
- [3,] . . . . .  .  .  . 14  .
- [4,] . . . . . 21  .  .  .  .
- [5,] . . . . .  . 28  .  .  .
- [6,] . . . . .  .  . 35  .  .
- [7,] . . . . .  .  .  . 42  .
- [8,] . . . . .  .  .  .  . 49
- [9,] . . . . .  .  .  .  .  .
-[10,] . . . . .  .  .  .  .  .
-
-sprsMt> stopifnot( all(sA == tA + t(tA)) ,
-sprsMt+            identical(sA, as(tA + t(tA), "symmetricMatrix")))
-
-sprsMt> ## dims can be larger than the maximum row or column indices
-sprsMt> (AA <- sparseMatrix(c(1,3:8), c(2,9,6:10), x = 7 * (1:7), dims = c(10,20)))
-10 x 20 sparse Matrix of class "dgCMatrix"
-                                                  
- [1,] . 7 . . .  .  .  .  .  . . . . . . . . . . .
- [2,] . . . . .  .  .  .  .  . . . . . . . . . . .
- [3,] . . . . .  .  .  . 14  . . . . . . . . . . .
- [4,] . . . . . 21  .  .  .  . . . . . . . . . . .
- [5,] . . . . .  . 28  .  .  . . . . . . . . . . .
- [6,] . . . . .  .  . 35  .  . . . . . . . . . . .
- [7,] . . . . .  .  .  . 42  . . . . . . . . . . .
- [8,] . . . . .  .  .  .  . 49 . . . . . . . . . .
- [9,] . . . . .  .  .  .  .  . . . . . . . . . . .
-[10,] . . . . .  .  .  .  .  . . . . . . . . . . .
-
-sprsMt> summary(AA)
-10 x 20 sparse Matrix of class "dgCMatrix", with 7 entries 
-  i  j  x
-1 1  2  7
-2 4  6 21
-3 5  7 28
-4 6  8 35
-5 3  9 14
-6 7  9 42
-7 8 10 49
-
-sprsMt> ## i, j and x can be in an arbitrary order, as long as they are consistent
-sprsMt> set.seed(1); (perm <- sample(1:7))
-[1] 2 3 6 4 1 7 5
-
-sprsMt> (A1 <- sparseMatrix(i[perm], j[perm], x = x[perm]))
-8 x 10 sparse Matrix of class "dgCMatrix"
-                             
-[1,] . 7 . . .  .  .  .  .  .
-[2,] . . . . .  .  .  .  .  .
-[3,] . . . . .  .  .  . 14  .
-[4,] . . . . . 21  .  .  .  .
-[5,] . . . . .  . 28  .  .  .
-[6,] . . . . .  .  . 35  .  .
-[7,] . . . . .  .  .  . 42  .
-[8,] . . . . .  .  .  .  . 49
-
-sprsMt> stopifnot(identical(A, A1))
-
-sprsMt> ## The slots are 0-index based, so
-sprsMt> try( sparseMatrix(i=A@i, p=A@p, x= seq_along(A@x)) )
-Error in validObject(r) : 
-  invalid class "dgTMatrix" object: all row indices (slot 'i') must be between 0 and nrow-1 in a TsparseMatrix
-
-sprsMt> ## fails and you should say so: 1-indexing is FALSE:
-sprsMt>      sparseMatrix(i=A@i, p=A@p, x= seq_along(A@x), index1 = FALSE)
-8 x 10 sparse Matrix of class "dgCMatrix"
-                        
-[1,] . 1 . . . . . . . .
-[2,] . . . . . . . . . .
-[3,] . . . . . . . . 5 .
-[4,] . . . . . 2 . . . .
-[5,] . . . . . . 3 . . .
-[6,] . . . . . . . 4 . .
-[7,] . . . . . . . . 6 .
-[8,] . . . . . . . . . 7
-
-sprsMt> ## the (i,j) pairs can be repeated, in which case the x's are summed
-sprsMt> (args <- data.frame(i = c(i, 1), j = c(j, 2), x = c(x, 2)))
-  i  j  x
-1 1  2  7
-2 3  9 14
-3 4  6 21
-4 5  7 28
-5 6  8 35
-6 7  9 42
-7 8 10 49
-8 1  2  2
-
-sprsMt> (Aa <- do.call(sparseMatrix, args))
-8 x 10 sparse Matrix of class "dgCMatrix"
-                             
-[1,] . 9 . . .  .  .  .  .  .
-[2,] . . . . .  .  .  .  .  .
-[3,] . . . . .  .  .  . 14  .
-[4,] . . . . . 21  .  .  .  .
-[5,] . . . . .  . 28  .  .  .
-[6,] . . . . .  .  . 35  .  .
-[7,] . . . . .  .  .  . 42  .
-[8,] . . . . .  .  .  .  . 49
-
-sprsMt> ## explicitly ask for elimination of such duplicates, so
-sprsMt> ## that the last one is used:
-sprsMt> (A. <- do.call(sparseMatrix, c(args, list(use.last.ij = TRUE))))
-8 x 10 sparse Matrix of class "dgCMatrix"
-                             
-[1,] . 2 . . .  .  .  .  .  .
-[2,] . . . . .  .  .  .  .  .
-[3,] . . . . .  .  .  . 14  .
-[4,] . . . . . 21  .  .  .  .
-[5,] . . . . .  . 28  .  .  .
-[6,] . . . . .  .  . 35  .  .
-[7,] . . . . .  .  .  . 42  .
-[8,] . . . . .  .  .  .  . 49
-
-sprsMt> stopifnot(Aa[1,2] == 9, # 2+7 == 9
-sprsMt+           A.[1,2] == 2) # 2 was *after* 7
-
-sprsMt> ## for a pattern matrix, of course there is no "summing":
-sprsMt> (nA <- do.call(sparseMatrix, args[c("i","j")]))
-8 x 10 sparse Matrix of class "ngCMatrix"
-                        
-[1,] . | . . . . . . . .
-[2,] . . . . . . . . . .
-[3,] . . . . . . . . | .
-[4,] . . . . . | . . . .
-[5,] . . . . . . | . . .
-[6,] . . . . . . . | . .
-[7,] . . . . . . . . | .
-[8,] . . . . . . . . . |
-
-sprsMt> dn <- list(LETTERS[1:3], letters[1:5])
-
-sprsMt> ## pointer vectors can be used, and the (i,x) slots are sorted if necessary:
-sprsMt> m <- sparseMatrix(i = c(3,1, 3:2, 2:1), p= c(0:2, 4,4,6), x = 1:6, dimnames = dn)
-
-sprsMt> m
-3 x 5 sparse Matrix of class "dgCMatrix"
-  a b c d e
-A . 2 . . 6
-B . . 4 . 5
-C 1 . 3 . .
-
-sprsMt> str(m)
-Formal class 'dgCMatrix' [package "Matrix"] with 6 slots
-  ..@ i       : int [1:6] 2 0 1 2 0 1
-  ..@ p       : int [1:6] 0 1 2 4 4 6
-  ..@ Dim     : int [1:2] 3 5
-  ..@ Dimnames:List of 2
-  .. ..$ : chr [1:3] "A" "B" "C"
-  .. ..$ : chr [1:5] "a" "b" "c" "d" ...
-  ..@ x       : num [1:6] 1 2 4 3 6 5
-  ..@ factors : list()
-
-sprsMt> stopifnot(identical(dimnames(m), dn))
-
-sprsMt> sparseMatrix(x = 2.72, i=1:3, j=2:4) # recycling x
-3 x 4 sparse Matrix of class "dgCMatrix"
-                     
-[1,] . 2.72 .    .   
-[2,] . .    2.72 .   
-[3,] . .    .    2.72
-
-sprsMt> sparseMatrix(x = TRUE, i=1:3, j=2:4) # recycling x, |--> "lgCMatrix"
-3 x 4 sparse Matrix of class "lgCMatrix"
-            
-[1,] . | . .
-[2,] . . | .
-[3,] . . . |
-
-sprsMt> ## no 'x' --> patter*n* matrix:
-sprsMt> (n <- sparseMatrix(i=1:6, j=rev(2:7)))# -> ngCMatrix
-6 x 7 sparse Matrix of class "ngCMatrix"
-                  
-[1,] . . . . . . |
-[2,] . . . . . | .
-[3,] . . . . | . .
-[4,] . . . | . . .
-[5,] . . | . . . .
-[6,] . | . . . . .
-
-sprsMt> ## an empty sparse matrix:
-sprsMt> (e <- sparseMatrix(dims = c(4,6), i={}, j={}))
-4 x 6 sparse Matrix of class "ngCMatrix"
-                
-[1,] . . . . . .
-[2,] . . . . . .
-[3,] . . . . . .
-[4,] . . . . . .
-
-sprsMt> ## a symmetric one:
-sprsMt> (sy <- sparseMatrix(i= c(2,4,3:5), j= c(4,7:5,5), x = 1:5,
-sprsMt+                     dims = c(7,7), symmetric=TRUE))
-7 x 7 sparse Matrix of class "dsCMatrix"
-                  
-[1,] . . . . . . .
-[2,] . . . 1 . . .
-[3,] . . . . . 3 .
-[4,] . 1 . . 4 . 2
-[5,] . . . 4 5 . .
-[6,] . . 3 . . . .
-[7,] . . . 2 . . .
-
-sprsMt> stopifnot(isSymmetric(sy),
-sprsMt+           identical(sy, ## switch i <-> j {and transpose }
-sprsMt+     t( sparseMatrix(j= c(2,4,3:5), i= c(4,7:5,5), x = 1:5,
-sprsMt+                     dims = c(7,7), symmetric=TRUE))))
-
-sprsMt> ## rsparsematrix() calls sparseMatrix() :
-sprsMt> M1 <- rsparsematrix(1000, 20, nnz = 200)
-
-sprsMt> summary(M1)
-1000 x 20 sparse Matrix of class "dgCMatrix", with 200 entries 
-      i  j       x
-1   261  1 -1.1000
-2   268  1 -0.8000
-3   466  1 -1.1000
-4   707  1  2.2000
-5   174  2 -0.2000
-6   236  2 -1.3000
-7   267  2  1.5000
-8   411  2 -1.3000
-9   495  2  1.0000
-10  532  2  0.4100
-11  680  2  0.7100
-12  985  2 -0.0970
-13  999  2 -0.2300
-14   53  3  1.5000
-15   85  3 -1.1000
-16  156  3  0.6900
-17  187  3 -0.2100
-18  425  3  0.5300
-19  510  3 -0.1200
-20  575  3  0.5900
-21  855  3  0.1600
-22  949  3  0.0370
-23  449  4  1.4000
-24  479  4  0.0056
-25  531  4 -0.5000
-26  588  4  1.5000
-27  591  4  0.4200
-28  720  4  1.5000
-29  751  4  0.6200
-30  792  4 -0.3000
-31   39  5 -0.5900
-32  119  5  1.6000
-33  126  5  1.6000
-34  222  5 -0.0830
-35  240  5  0.4900
-36  244  5  1.3000
-37  331  5  0.3800
-38  546  5 -1.5000
-39  746  5 -0.1600
-40  773  5 -0.7400
-41  885  5  1.5000
-42  890  5 -0.0900
-43  129  6  0.5000
-44  146  6  2.7000
-45  299  6  0.3900
-46  327  6 -0.1200
-47  340  6  0.2000
-48  380  6 -0.4900
-49  514  6  0.0820
-50  612  6  1.6000
-51  653  6  0.6100
-52  824  6  1.3000
-53  857  6 -0.0130
-54  299  7  0.5500
-55  310  7  2.4000
-56  483  7 -0.0700
-57  528  7  0.0430
-58  630  7  0.3200
-59  654  7  1.9000
-60  657  7  0.7000
-61  698  7 -1.9000
-62  761  7  0.8900
-63  800  7  1.5000
-64  912  7 -1.0000
-65   31  8 -0.3900
-66   98  8 -0.5000
-67  547  8  1.7000
-68  597  8  1.1000
-69  641  8 -1.1000
-70  680  8 -0.4100
-71  707  8  0.0630
-72  716  8 -1.1000
-73  763  8  0.3100
-74  773  8 -0.9500
-75  970  8 -1.4000
-76  116  9 -0.8700
-77  165  9  0.9600
-78  198  9 -1.1000
-79  213  9 -1.2000
-80  584  9  0.9300
-81  662  9 -0.2100
-82  743  9 -1.2000
-83  856  9  0.1100
-84  877  9  1.2000
-85  989  9  1.6000
-86  997  9 -1.6000
-87   25 10  0.2800
-88   65 10 -0.7000
-89  157 10 -0.3700
-90  496 10 -0.9300
-91  515 10  0.7800
-92  526 10 -1.0000
-93  532 10 -0.4500
-94  543 10  1.7000
-95  631 10  0.2600
-96  632 10 -1.6000
-97  856 10  0.8500
-98  859 10 -0.0037
-99  936 10  0.4900
-100 951 10  0.0250
-101 979 10  0.9500
-102  86 11  1.7000
-103 163 11 -0.1900
-104 236 11 -0.0120
-105 269 11  0.6700
-106 347 11  0.8900
-107 453 11 -0.9800
-108 514 11  1.9000
-109 575 11  0.0690
-110 854 11 -0.2100
-111  41 12  0.7400
-112  63 12 -0.1000
-113 144 12  2.0000
-114 146 12  1.5000
-115 427 12 -0.9500
-116 701 12 -1.8000
-117 842 12 -0.1400
-118 886 12 -0.1500
-119 915 12 -0.3700
-120 951 12 -0.7100
-121 977 12 -1.2000
-122   3 13  0.6200
-123  44 13 -1.1000
-124 206 13 -0.9800
-125 506 13 -0.5900
-126 582 13  0.5800
-127 609 13 -0.9000
-128 731 13 -1.5000
-129 775 13 -1.5000
-130 778 13 -1.2000
-131 792 13  1.1000
-132 920 13 -0.8700
-133 981 13 -0.4900
-134  24 14  0.1400
-135  34 14  0.0180
-136 207 14 -0.2500
-137 216 14 -1.1000
-138 351 14  0.8000
-139 565 14 -0.2600
-140 738 14  1.7000
-141 826 14 -1.1000
-142 105 15 -1.3000
-143 167 15  0.9800
-144 198 15 -0.5700
-145 234 15 -0.2400
-146 346 15  0.0270
-147 358 15  2.5000
-148 360 15  0.3700
-149 452 15 -0.9600
-150 487 15 -1.0000
-151 560 15 -0.0610
-152 617 15 -0.7700
-153 696 15 -0.3100
-154 830 15 -2.9000
-155   9 16 -0.5400
-156  27 16  0.5100
-157  84 16 -0.4300
-158 281 16  0.7800
-159 392 16 -0.9700
-160 479 16  0.3500
-161 492 16  0.6000
-162 507 16 -0.7000
-163 511 16  0.1600
-164 540 16 -1.1000
-165 632 16 -0.9100
-166 758 16 -0.3200
-167 862 16 -0.9700
-168 877 16  2.0000
-169 144 17  1.8000
-170 392 17 -0.9600
-171 526 17 -0.4800
-172 651 17  0.0700
-173 675 17 -1.7000
-174 736 17 -0.3500
-175 982 17 -0.4200
-176 169 18  1.5000
-177 187 18  0.4700
-178 228 18 -0.6100
-179 376 18  1.6000
-180 386 18 -1.1000
-181 451 18 -0.0170
-182 453 18 -0.5400
-183 475 18  0.5500
-184 574 18 -1.6000
-185 759 18 -0.4400
-186 765 18 -0.8900
-187 784 18 -0.2900
-188 907 18  0.1800
-189 210 19  0.5800
-190 374 19  0.6400
-191 389 19  1.6000
-192 455 19 -0.0620
-193 682 19  0.3400
-194 704 19  1.7000
-195 144 20 -1.5000
-196 423 20  0.8200
-197 573 20  0.5000
-198 725 20  0.0950
-199 759 20 -1.0000
-200 829 20 -1.7000
-
-sprsMt> ## pointers example in converting from other sparse matrix representations.
-sprsMt> if(require(SparseM) && packageVersion("SparseM") >= 0.87 &&
-sprsMt+    nzchar(dfil <- system.file("extdata", "rua_32_ax.rua", package = "SparseM"))) {
-sprsMt+   X <- model.matrix(read.matrix.hb(dfil))
-sprsMt+   XX <- sparseMatrix(j = X@ja, p = X@ia - 1L, x = X@ra, dims = X@dimension)
-sprsMt+   validObject(XX)
-sprsMt+ 
-sprsMt+   ## Alternatively, and even more user friendly :
-sprsMt+   X. <- as(X, "Matrix")  # or also
-sprsMt+   X2 <- as(X, "sparseMatrix")
-sprsMt+   stopifnot(identical(XX, X.), identical(X., X2))
-sprsMt+ }
-Loading required package: SparseM
-Warning message:
-In library(package, lib.loc = lib.loc, character.only = TRUE, logical.return = TRUE,  :
-  there is no package called 'SparseM'
 > 
 > for(nm in ls(env=.GlobalEnv)) {
 +     cat(nm,": ", sep="")
@@ -1105,77 +651,6 @@ i = c(0L, 0L, 1L), p = c(0L, 0L, 1L, 3L), Dim = c(3L,
 3L), Dimnames = list(NULL, NULL), x = c(TRUE, TRUE, TRUE), uplo = "U", 
     diag = "N")
 --=--=--=--=--
-M1: new("dgCMatrix",
-i = c(260L, 267L, 465L, 706L, 173L, 235L, 266L, 
-410L, 494L, 531L, 679L, 984L, 998L, 52L, 84L, 155L, 186L, 424L, 
-509L, 574L, 854L, 948L, 448L, 478L, 530L, 587L, 590L, 719L, 750L, 
-791L, 38L, 118L, 125L, 221L, 239L, 243L, 330L, 545L, 745L, 772L, 
-884L, 889L, 128L, 145L, 298L, 326L, 339L, 379L, 513L, 611L, 652L, 
-823L, 856L, 298L, 309L, 482L, 527L, 629L, 653L, 656L, 697L, 760L, 
-799L, 911L, 30L, 97L, 546L, 596L, 640L, 679L, 706L, 715L, 762L, 
-772L, 969L, 115L, 164L, 197L, 212L, 583L, 661L, 742L, 855L, 876L, 
-988L, 996L, 24L, 64L, 156L, 495L, 514L, 525L, 531L, 542L, 630L, 
-631L, 855L, 858L, 935L, 950L, 978L, 85L, 162L, 235L, 268L, 346L, 
-452L, 513L, 574L, 853L, 40L, 62L, 143L, 145L, 426L, 700L, 841L, 
-885L, 914L, 950L, 976L, 2L, 43L, 205L, 505L, 581L, 608L, 730L, 
-774L, 777L, 791L, 919L, 980L, 23L, 33L, 206L, 215L, 350L, 564L, 
-737L, 825L, 104L, 166L, 197L, 233L, 345L, 357L, 359L, 451L, 486L, 
-559L, 616L, 695L, 829L, 8L, 26L, 83L, 280L, 391L, 478L, 491L, 
-506L, 510L, 539L, 631L, 757L, 861L, 876L, 143L, 391L, 525L, 650L, 
-674L, 735L, 981L, 168L, 186L, 227L, 375L, 385L, 450L, 452L, 474L, 
-573L, 758L, 764L, 783L, 906L, 209L, 373L, 388L, 454L, 681L, 703L, 
-143L, 422L, 572L, 724L, 758L, 828L), p = c(0L, 4L, 13L, 22L, 
-30L, 42L, 53L, 64L, 75L, 86L, 101L, 110L, 121L, 133L, 141L, 154L, 
-168L, 175L, 188L, 194L, 200L), Dim = c(1000L, 20L), Dimnames = list(
-    NULL, NULL), x = c(-1.1000000000000001, -0.80000000000000004, 
--1.1000000000000001, 2.2000000000000002, -0.20000000000000001, 
--1.3, 1.5, -1.3, 1, 0.40999999999999998, 0.70999999999999996, 
--0.097000000000000003, -0.23000000000000001, 1.5, -1.1000000000000001, 
-0.68999999999999995, -0.20999999999999999, 0.53000000000000003, 
--0.12, 0.58999999999999997, 0.16, 0.036999999999999998, 1.3999999999999999, 
-0.0055999999999999999, -0.5, 1.5, 0.41999999999999998, 1.5, 0.62, 
--0.29999999999999999, -0.58999999999999997, 1.6000000000000001, 
-1.6000000000000001, -0.083000000000000004, 0.48999999999999999, 
-1.3, 0.38, -1.5, -0.16, -0.73999999999999999, 1.5, -0.089999999999999997, 
-0.5, 2.7000000000000002, 0.39000000000000001, -0.12, 0.20000000000000001, 
--0.48999999999999999, 0.082000000000000003, 1.6000000000000001, 
-0.60999999999999999, 1.3, -0.012999999999999999, 0.55000000000000004, 
-2.3999999999999999, -0.070000000000000007, 0.042999999999999997, 
-0.32000000000000001, 1.8999999999999999, 0.69999999999999996, 
--1.8999999999999999, 0.89000000000000001, 1.5, -1, -0.39000000000000001, 
--0.5, 1.7, 1.1000000000000001, -1.1000000000000001, -0.40999999999999998, 
-0.063, -1.1000000000000001, 0.31, -0.94999999999999996, -1.3999999999999999, 
--0.87, 0.95999999999999996, -1.1000000000000001, -1.2, 0.93000000000000005, 
--0.20999999999999999, -1.2, 0.11, 1.2, 1.6000000000000001, -1.6000000000000001, 
-0.28000000000000003, -0.69999999999999996, -0.37, -0.93000000000000005, 
-0.78000000000000003, -1, -0.45000000000000001, 1.7, 0.26000000000000001, 
--1.6000000000000001, 0.84999999999999998, -0.0037000000000000002, 
-0.48999999999999999, 0.025000000000000001, 0.94999999999999996, 
-1.7, -0.19, -0.012, 0.67000000000000004, 0.89000000000000001, 
--0.97999999999999998, 1.8999999999999999, 0.069000000000000006, 
--0.20999999999999999, 0.73999999999999999, -0.10000000000000001, 
-2, 1.5, -0.94999999999999996, -1.8, -0.14000000000000001, -0.14999999999999999, 
--0.37, -0.70999999999999996, -1.2, 0.62, -1.1000000000000001, 
--0.97999999999999998, -0.58999999999999997, 0.57999999999999996, 
--0.90000000000000002, -1.5, -1.5, -1.2, 1.1000000000000001, -0.87, 
--0.48999999999999999, 0.14000000000000001, 0.017999999999999999, 
--0.25, -1.1000000000000001, 0.80000000000000004, -0.26000000000000001, 
-1.7, -1.1000000000000001, -1.3, 0.97999999999999998, -0.56999999999999995, 
--0.23999999999999999, 0.027, 2.5, 0.37, -0.95999999999999996, 
--1, -0.060999999999999999, -0.77000000000000002, -0.31, -2.8999999999999999, 
--0.54000000000000004, 0.51000000000000001, -0.42999999999999999, 
-0.78000000000000003, -0.96999999999999997, 0.34999999999999998, 
-0.59999999999999998, -0.69999999999999996, 0.16, -1.1000000000000001, 
--0.91000000000000003, -0.32000000000000001, -0.96999999999999997, 
-2, 1.8, -0.95999999999999996, -0.47999999999999998, 0.070000000000000007, 
--1.7, -0.34999999999999998, -0.41999999999999998, 1.5, 0.46999999999999997, 
--0.60999999999999999, 1.6000000000000001, -1.1000000000000001, 
--0.017000000000000001, -0.54000000000000004, 0.55000000000000004, 
--1.6000000000000001, -0.44, -0.89000000000000001, -0.28999999999999998, 
-0.17999999999999999, 0.57999999999999996, 0.64000000000000001, 
-1.6000000000000001, -0.062, 0.34000000000000002, 1.7, -1.5, 0.81999999999999995, 
-0.5, 0.095000000000000001, -1, -1.7), factors = list())
---=--=--=--=--
 ST: .Primitive("invisible")
 checking body(.):
 NULL
@@ -1309,23 +784,33 @@ __ not parse()able __
 hasReal: function (x) 
 {
     if (is.double(x) || is.complex(x)) 
-        any(x != round(x))
+        !all((x == round(x, 3)) | is.na(x))
     else if (is.logical(x) || is.integer(x) || is.symbol(x) || 
         is.call(x) || is.environment(x) || is.character(x)) 
         FALSE
     else if (is.recursive(x)) 
         any(vapply(x, hasReal, NA))
+    else if (isS4(x)) {
+        if (length(sn <- slotNames(x))) 
+            any(vapply(sn, function(s) hasReal(slot(x, s)), NA))
+        else FALSE
+    }
     else FALSE
 }
 checking body(.):
 quote({
     if (is.double(x) || is.complex(x)) 
-        any(x != round(x))
+        !all((x == round(x, 3)) | is.na(x))
     else if (is.logical(x) || is.integer(x) || is.symbol(x) || 
         is.call(x) || is.environment(x) || is.character(x)) 
         FALSE
     else if (is.recursive(x)) 
         any(vapply(x, hasReal, NA))
+    else if (isS4(x)) {
+        if (length(sn <- slotNames(x))) 
+            any(vapply(sn, function(s) hasReal(slot(x, s)), NA))
+        else FALSE
+    }
     else FALSE
 })
 checking formals(.):
@@ -1420,18 +905,8 @@ i = c(1L, 3L, 4L, 2L, 3L), p = c(0L, 0L, 0L,
 0L, 1L, 3L, 4L, 5L), Dim = c(7L, 7L), Dimnames = list(NULL, NULL), 
     x = c(1, 4, 5, 3, 2), uplo = "U", factors = list())
 --=--=--=--=--
-t1: new("track",
-x = 1:10, y = c(-0.62772038038472122, -0.21156326241475959, 
--1.0362303256569039, -0.10682027303346014, 0.076496889838235618, 
--0.19891721602919782, -0.58123153331237742, -0.47841045944110672, 
--0.99743850535092216, 1.1430553120817))
---=--=--=--=--
-t2: new("trackCurve",
-smooth = 1:10, x = 1:10, y = c(-0.62772038038472122, 
--0.21156326241475959, -1.0362303256569039, -0.10682027303346014, 
-0.076496889838235618, -0.19891721602919782, -0.58123153331237742, 
--0.47841045944110672, -0.99743850535092216, 1.1430553120817))
---=--=--=--=--
+t1: --=--=--=--=--
+t2: --=--=--=--=--
 tA: new("dtCMatrix",
 i = c(0L, 3L, 4L, 5L, 2L, 6L, 7L), p = c(0L, 
 0L, 1L, 1L, 1L, 1L, 2L, 3L, 4L, 6L, 7L), Dim = c(10L, 10L), Dimnames = list(
@@ -1458,12 +933,12 @@ xn: --=--=--=--=--
 ydata: --=--=--=--=--
 ysmooth: 1:10
 --=--=--=--=--
-There were 40 warnings (use warnings() to see them)
+There were 36 warnings (use warnings() to see them)
 > summary(warnings())
-Summary of (a total of 40) warning messages:
-20x : In dput(x, control = control) :
+Summary of (a total of 36) warning messages:
+19x : In dput(x, control = control) :
   deparse of an S4 object may not always be source()able
-20x : In deparse(expr, control = control, ...) :
+17x : In deparse(expr, control = control, ...) :
   deparse of an S4 object may not always be source()able
 > ## "dput    may be incomplete"
 > ## "deparse may be incomplete"
@@ -1471,5 +946,5 @@ Summary of (a total of 40) warning messages:
 > 
 > ## at the very end
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.765 0.095 0.863 0 0 
+Time elapsed:  0.7 0.097 0.8 0 0 
 > 
