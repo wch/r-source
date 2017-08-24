@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 1997--2017   The R Core Team
  *  Copyright (C) 1995, 1996   Robert Gentleman and Ross Ihaka
- *		  1997-2016   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -25,6 +25,10 @@
 #include <R_ext/Arith.h>
 #include <R_ext/Error.h>
 #include <R_ext/Applic.h>
+#include <Rinternals.h> // for R_xlen_t
+#ifdef DEBUG_approx
+# include <R_ext/Print.h>
+#endif
 
 #ifdef ENABLE_NLS
 #include <libintl.h>
@@ -51,26 +55,41 @@ typedef struct {
     int kind;
 } appr_meth;
 
-static double approx1(double v, double *x, double *y, int n,
+static double approx1(double v, double *x, double *y, R_xlen_t n,
 		      appr_meth *Meth)
 {
     /* Approximate  y(v),  given (x,y)[i], i = 0,..,n-1 */
-    int i, j, ij;
+
+#ifdef DEBUG_approx
+    REprintf("approx1(*, n = %.0f, Meth:=(f1=%g,f2=%g, kind=%d)):\n",
+	     (double)n, Meth->f1, Meth->f2, Meth->kind);
+#endif
 
     if(!n) return R_NaN;
 
-    i = 0;
-    j = n - 1;
-
+    R_xlen_t
+	i = 0,
+	j = n - 1;
     /* handle out-of-domain points */
     if(v < x[i]) return Meth->ylow;
     if(v > x[j]) return Meth->yhigh;
 
+
     /* find the correct interval by bisection */
     while(i < j - 1) { /* x[i] <= v <= x[j] */
-	ij = (i + j)/2; /* i+1 <= ij <= j-1 */
+// ugly..  how to improve ?
+#ifdef LONG_VECTOR_SUPPORT
+	// R_xlen_t is double
+	R_xlen_t ij = (R_xlen_t) trunc((i+j) / 2);
+#else /* R_xlen_t == int ! */
+	R_xlen_t ij = (i+j) / 2;
+#endif
+	/* i+1 <= ij <= j-1 */
 	if(v < x[ij]) j = ij; else i = ij;
 	/* still i < j */
+#ifdef DEBUG_approx
+	REprintf("  (i,j) = (%.0f,%.0f)\n", (double)i, (double)j);
+#endif
     }
     /* provably have i == j-1 */
 
@@ -90,10 +109,8 @@ static double approx1(double v, double *x, double *y, int n,
 
 /* Testing done only once - in a separate function */
 static void
-R_approxtest(double *x, double *y, int nxy, int method, double f)
+R_approxtest(double *x, double *y, R_xlen_t nxy, int method, double f)
 {
-    int i;
-
     switch(method) {
     case 1: /* linear */
       	break;
@@ -106,7 +123,7 @@ R_approxtest(double *x, double *y, int nxy, int method, double f)
 	break;
     }
     /* check interpolation method */
-    for(i = 0; i < nxy; i++)
+    for(R_xlen_t i = 0; i < nxy; i++)
 	if(ISNAN(x[i]) || ISNAN(y[i]))
 	    error(_("approx(): attempted to interpolate NA values"));
 }
@@ -114,10 +131,9 @@ R_approxtest(double *x, double *y, int nxy, int method, double f)
 /* R Frontend for Linear and Constant Interpolation, no testing */
 
 static void
-R_approxfun(double *x, double *y, int nxy, double *xout, double *yout,
-	    int nout, int method, double yleft, double yright, double f)
+R_approxfun(double *x, double *y, R_xlen_t nxy, double *xout, double *yout,
+	    R_xlen_t nout, int method, double yleft, double yright, double f)
 {
-    int i;
     appr_meth M = {0.0, 0.0, 0.0, 0.0, 0}; /* -Wall */
 
     M.f2 = f;
@@ -125,7 +141,11 @@ R_approxfun(double *x, double *y, int nxy, double *xout, double *yout,
     M.kind = method;
     M.ylow = yleft;
     M.yhigh = yright;
-    for(i = 0; i < nout; i++)
+#ifdef DEBUG_approx
+    REprintf("R_approxfun(x,y, nxy = %.0f, .., nout = %.0f, method = %d, ...)",
+	     (double)nxy, (double)nout, Meth->kind);
+#endif
+    for(R_xlen_t i = 0; i < nout; i++)
 	yout[i] = ISNAN(xout[i]) ? xout[i] : approx1(xout[i], x, y, nxy, &M);
 }
 
@@ -133,7 +153,8 @@ R_approxfun(double *x, double *y, int nxy, double *xout, double *yout,
 #include "statsR.h"
 SEXP ApproxTest(SEXP x, SEXP y, SEXP method, SEXP sf)
 {
-    int nx = LENGTH(x), m = asInteger(method);
+    R_xlen_t nx = XLENGTH(x);
+    int m = asInteger(method);
     double f = asReal(sf);
     R_approxtest(REAL(x), REAL(y), nx, m, f);
     return R_NilValue;
@@ -143,11 +164,10 @@ SEXP Approx(SEXP x, SEXP y, SEXP v, SEXP method,
 	    SEXP yleft, SEXP yright, SEXP sf)
 {
     SEXP xout = PROTECT(coerceVector(v, REALSXP));
-    int nx = LENGTH(x), nout = LENGTH(xout), m = asInteger(method);
-    double yl = asReal(yleft), yr = asReal(yright), f = asReal(sf);
+    R_xlen_t nx = XLENGTH(x), nout = XLENGTH(xout);
     SEXP yout = PROTECT(allocVector(REALSXP, nout));
     R_approxfun(REAL(x), REAL(y), nx, REAL(xout), REAL(yout), nout,
-		m, yl, yr, f);
+		asInteger(method), asReal(yleft), asReal(yright), asReal(sf));
     UNPROTECT(2);
     return yout;
 }

@@ -116,6 +116,9 @@
       e.g., \code{"\n"}, visible.  (Wish of \PR{17298}.)
 
       \item \code{package.skeleton()} gets optional \code{encoding} argument.
+
+      \item \code{approx()}, \code{spline()}, \code{splinefun()} and
+      \code{approxfun()} also work for long vectors.
     }
   }
 

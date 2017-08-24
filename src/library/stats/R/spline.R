@@ -31,7 +31,7 @@ spline <-
     x <- regularize.values(x, y, ties) # -> (x,y) numeric of same length
     y <- x$y
     x <- x$x
-    nx <- as.integer(length(x))
+    nx <- length(x) # large vectors ==> non-integer
     if(is.na(nx)) stop(gettextf("invalid value of %s", "length(x)"), domain = NA)
     if(nx == 0) stop("zero non-NA points")
 
