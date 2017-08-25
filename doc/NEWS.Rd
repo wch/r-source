@@ -253,6 +253,10 @@
       \code{R_check_class_etc()} now also consider non-direct super
       classes and hence return a match in more cases.  This e.g., fixes
       behaviour of derived classes in package \CRANpkg{Matrix}.
+
+      \item Reverted unintended change in behavior of \code{return}
+      calls in \code{on.exit} expressions introduced by stack unwinding
+      changes in \R 3.3.0.
     }
   }
 }
@@ -351,10 +355,6 @@
 
       \item \code{(1:n)[-n]} no longer segfaults for \code{n <- 2.2e9}
       (on a platform with enough RAM).
-
-      \item Reverted unintended change in behavior of \code{return}
-      calls in \code{on.exit} expressions introduced by stack unwinding
-      changes in \R 3.3.0.
     }
   }
 }
