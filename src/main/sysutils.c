@@ -861,10 +861,10 @@ static void translateToNative(const char *ans, R_StringBuffer *cbuff,
 	    if(obj == (void *)(-1))
 #ifdef Win32
 		error(_("unsupported conversion from '%s' in codepage %d"),
-		      "latin1", localeCP);
+		      "UTF-8", localeCP);
 #else
 		error(_("unsupported conversion from '%s' to '%s'"),
-		      "latin1", "");
+		      "UTF-8", "");
 #endif
 	    utf8_obj = obj;
 	}
@@ -992,9 +992,10 @@ const char *translateCharUTF8(SEXP x)
     if(obj == (void *)(-1))
 #ifdef Win32
 	error(_("unsupported conversion from '%s' in codepage %d"),
-	      "latin1", localeCP);
+	      IS_LATIN1(x) ? "latin1" : "", localeCP);
 #else
-       error(_("unsupported conversion from '%s' to '%s'"), "latin1", "UTF-8");
+	error(_("unsupported conversion from '%s' to '%s'"),
+	      IS_LATIN1(x) ? "latin1" : "", "UTF-8");
 #endif
     R_AllocStringBuffer(0, &cbuff);
 top_of_loop:
@@ -1078,7 +1079,7 @@ const wchar_t *wtransChar(SEXP x)
 	    obj = Riconv_open(TO_WCHAR, "UTF-8");
 	    if(obj == (void *)(-1))
 		error(_("unsupported conversion from '%s' to '%s'"),
-		      "latin1", TO_WCHAR);
+		      "UTF-8", TO_WCHAR);
 	    utf8_wobj = obj;
 	} else
 	    obj = utf8_wobj;
