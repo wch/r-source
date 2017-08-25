@@ -351,6 +351,10 @@
 
       \item \code{(1:n)[-n]} no longer segfaults for \code{n <- 2.2e9}
       (on a platform with enough RAM).
+
+      \item Reverted unintended change in behavior of \code{return}
+      calls in \code{on.exit} expressions introduced by stack unwinding
+      changes in \R 3.3.0.
     }
   }
 }

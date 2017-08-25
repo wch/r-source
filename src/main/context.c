@@ -286,6 +286,7 @@ void endcontext(RCNTXT * cptr)
 {
     R_HandlerStack = cptr->handlerstack;
     R_RestartStack = cptr->restartstack;
+    RCNTXT *jumptarget = cptr->jumptarget;
     if (cptr->cloenv != R_NilValue && cptr->conexit != R_NilValue ) {
 	SEXP s = cptr->conexit;
 	Rboolean savevis = R_Visible;
@@ -293,6 +294,7 @@ void endcontext(RCNTXT * cptr)
 	SEXP saveretval = R_ReturnedValue;
 	R_ExitContext = cptr;
 	cptr->conexit = R_NilValue; /* prevent recursion */
+	cptr->jumptarget = NULL; /* in case on.exit expr calls return() */
 	PROTECT(saveretval);
 	PROTECT(s);
 	eval(s, cptr->cloenv);
@@ -304,9 +306,9 @@ void endcontext(RCNTXT * cptr)
     if (R_ExitContext == cptr)
 	R_ExitContext = NULL;
     /* continue jumping if this was reached as an intermetiate jump */
-    if (cptr->jumptarget)
+    if (jumptarget)
 	/* cptr->returnValue is undefined */
-	R_jumpctxt(cptr->jumptarget, cptr->jumpmask, R_ReturnedValue);
+	R_jumpctxt(jumptarget, cptr->jumpmask, R_ReturnedValue);
 
     R_GlobalContext = cptr->nextcontext;
 }
