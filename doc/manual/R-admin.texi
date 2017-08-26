@@ -4485,7 +4485,7 @@ File @file{configure} is created from @file{configure.ac} and the files
 under @file{m4} by @command{autoconf} and @command{aclocal} (part of the
 @pkg{automake} package).  There is a formal version requirement on
 @command{autoconf} of 2.62 or later, but it is unlikely that anything
-other than the most recent versions@footnote{at the time of revsion of
+other than the most recent versions@footnote{at the time of revision of
 this para in 2017, @pkg{autoconf-2.69} from 2012 and @pkg{automake-1.15}
 from 2015.} have been thoroughly tested.
 
