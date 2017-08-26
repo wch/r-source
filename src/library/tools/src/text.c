@@ -267,6 +267,12 @@ SEXP splitString(SEXP string, SEXP delims)
 	error("first arg must be a single character string");
     if(!isString(delims) || length(delims) != 1)
 	error("first arg must be a single character string");
+
+    if(STRING_ELT(string, 0) == NA_STRING)
+	return ScalarString(NA_STRING);	
+    if(STRING_ELT(delims, 0) == NA_STRING)
+	return ScalarString(NA_STRING);
+
     const char *in = CHAR(STRING_ELT(string, 0)),
 	*del = CHAR(STRING_ELT(delims, 0));
     cetype_t ienc = getCharCE(STRING_ELT(string, 0));
