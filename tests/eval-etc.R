@@ -156,6 +156,8 @@ rm(r1,r2) # they fail in parse(.. deparse(..)) below
 
 ### Checking parse(* deparse()) "inversion property" ----------------------------
 ## Hopefully typically the identity():
+pd0 <- function(expr, control = c("keepInteger","showAttributes","keepNA"), ...)
+    parse(text = deparse(expr, control=control, ...))
 id_epd <- function(expr, control = c("all","digits17"), ...)
     eval(parse(text = deparse(expr, control=control, ...)))
 dPut <- function(x, control = c("all","digits17")) dput(x, control=control)
@@ -185,6 +187,7 @@ check_EPD <- function(obj, show = !hasReal(obj)) {
         return(invisible(obj)) # cannot parse it
     }
     ob2 <- id_epd(obj)
+    po <- pd0(obj)# the default deparse() *should* parse at least
     if(!identical(obj, ob2, ignore.environment=TRUE,
                   ignore.bytecode=TRUE, ignore.srcref=TRUE)) {
         ae <- all.equal(obj, ob2, tolerance = 0)
@@ -193,16 +196,20 @@ check_EPD <- function(obj, show = !hasReal(obj)) {
             "\n")
         if(!isTRUE(ae)) stop("Not equal: all.equal(*,*, tol = 0) giving\n", ae)
     }
+    if(!is.language(obj)) {
+	ob2. <- eval(pd0) ## almost always *NOT* identical to obj, but eval()ed
+    }
     invisible(obj)
 }
 
+nmdExp <- expression(e1 = sin(pi), e2 = cos(-pi))
 xn <- setNames(pi^(1:3), paste0("pi^",1:3))
 dPut(xn)
 stopifnot(identical(xn, id_epd(xn)))
 
+## Creating a collection of S4 objects, ensuring deparse <-> parse are inverses
 library(methods)
 example(new) # creating t1 & t2 at least
-
 if(require("Matrix")) { cat("Trying some Matrix objects, too\n")
     D5. <- Diagonal(x = 5:1)
     D5N <- D5.; D5N[5,5] <- NA
