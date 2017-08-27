@@ -10,11 +10,11 @@
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{factor()} now uses \code{order()} to sort its levels,
-      not \code{sort.list()}.  This makes \code{factor()} support custom
-      vector-like objects if methods for the appropriate generics are
-      defined.  This change has the side effect of making \code{factor()}
-      succeed on empty or length-one non-atomic vector(-like) types (e.g.,
-      list), where it failed before.
+      rather than \code{sort.list()}.  This makes \code{factor()}
+      support custom vector-like objects if methods for the appropriate
+      generics are defined.  This change has the side effect of making
+      \code{factor()} succeed on empty or length-one non-atomic
+      vector(-like) types (e.g., \code{list}), where it failed before.
 
       \item \code{diag()} gets an optional \code{names} argument: this
       may require updates to packages defining S4 methods for it.
@@ -107,9 +107,9 @@
       (\PR{17269}).
 
       \item \code{lower.tri(x)} and \code{upper.tri(x)} only needing
-      \code{dim(x)} now work via new \code{.row()} \code{.col()} and
-      no longer call \code{as.matrix()} by default in order to work
-      efficiently for all kind of matrix-like objects.
+      \code{dim(x)} now work via new functions \code{.row()} and
+      \code{.col()}, so no longer call \code{as.matrix()} by default in
+      order to work efficiently for all kind of matrix-like objects.
 
       \item \code{print()} methods for \code{"xgettext"} and
       \code{"xngettext"} now use \code{encodeString()} which keeps,
@@ -125,12 +125,10 @@
       of its previous imperfect workaround R code).  More user visibly,
       \code{dput()}, etc now print the \code{names()} information only
       once, using the more readable \code{(tag = value)} syntax.  These
-      functions got a new (partly experimental) control option via
-      \code{.deparseOpts()} \code{"nice_names"} which when set (e.g. as
-      part of \code{"all"}) also use the \code{(tag = value)} syntax for
-      atomic vectors.
-    }
-  }
+      functions gain a new (partly experimental) control option
+      \emph{via} \code{.deparseOpts()}, \code{"nice_names"}, which when
+      set (e.g.\sspace{}as part of \code{"all"}) also use the \code{(tag =
+      value)} syntax for atomic vectors.  } }
 
   \subsection{UTILITIES}{
     \itemize{
