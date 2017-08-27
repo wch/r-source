@@ -1253,7 +1253,8 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	print2buff(">", d);
 #else
 /* Try to do what  dput() has been doing (in R, not C): */
-	SEXP cl_def = STRING_ELT(class, 0);
+	SEXP cl_def = TYPEOF(class) == STRSXP ?
+	    STRING_ELT(class, 0) : R_NilValue;
 	if(TYPEOF(cl_def) == CHARSXP) { // regular S4 objects
 	    print2buff("new(\"", d);
 	    print2buff(translateChar(cl_def), d);
