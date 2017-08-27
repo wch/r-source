@@ -647,8 +647,10 @@ SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 		SHALLOW_DUPLICATE_ATTRIB(ans, x);
 	    }
 	} else {
-	    if(TYPEOF(x) != STRSXP)
+	    if(TYPEOF(x) != STRSXP) {
+		Riconv_close(obj);
 		error(_("'x' must be a character vector"));
+	    }
 	    if(toRaw) {
 		PROTECT(ans = allocVector(VECSXP, LENGTH(x)));
 		SHALLOW_DUPLICATE_ATTRIB(ans, x);
@@ -662,8 +664,10 @@ SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 		if (TYPEOF(si) == NILSXP) {
 		    if (!toRaw) SET_STRING_ELT(ans, i, NA_STRING);
 		    continue;
-		} else if (TYPEOF(si) != RAWSXP)
+		} else if (TYPEOF(si) != RAWSXP) {
+		    Riconv_close(obj);
 		    error(_("'x' must be a character vector or a list of NULL or raw vectors"));
+		}
 	    } else {
 		si = STRING_ELT(x, i);
 		if (si == NA_STRING) {
@@ -857,10 +861,10 @@ static void translateToNative(const char *ans, R_StringBuffer *cbuff,
 	    if(obj == (void *)(-1))
 #ifdef Win32
 		error(_("unsupported conversion from '%s' in codepage %d"),
-		      "latin1", localeCP);
+		      "UTF-8", localeCP);
 #else
 		error(_("unsupported conversion from '%s' to '%s'"),
-		      "latin1", "");
+		      "UTF-8", "");
 #endif
 	    utf8_obj = obj;
 	}
@@ -988,9 +992,10 @@ const char *translateCharUTF8(SEXP x)
     if(obj == (void *)(-1))
 #ifdef Win32
 	error(_("unsupported conversion from '%s' in codepage %d"),
-	      "latin1", localeCP);
+	      IS_LATIN1(x) ? "latin1" : "", localeCP);
 #else
-       error(_("unsupported conversion from '%s' to '%s'"), "latin1", "UTF-8");
+	error(_("unsupported conversion from '%s' to '%s'"),
+	      IS_LATIN1(x) ? "latin1" : "", "UTF-8");
 #endif
     R_AllocStringBuffer(0, &cbuff);
 top_of_loop:
@@ -1074,7 +1079,7 @@ const wchar_t *wtransChar(SEXP x)
 	    obj = Riconv_open(TO_WCHAR, "UTF-8");
 	    if(obj == (void *)(-1))
 		error(_("unsupported conversion from '%s' to '%s'"),
-		      "latin1", TO_WCHAR);
+		      "UTF-8", TO_WCHAR);
 	    utf8_wobj = obj;
 	} else
 	    obj = utf8_wobj;
@@ -1358,12 +1363,27 @@ next_char:
 void attribute_hidden
 invalidate_cached_recodings(void)
 {
-    latin1_obj = NULL;
-    utf8_obj = NULL;
-    ucsmb_obj = NULL;
+    if (latin1_obj) {
+	Riconv_close(latin1_obj);
+	latin1_obj = NULL;
+    }
+    if (utf8_obj) {
+	Riconv_close(utf8_obj);
+	utf8_obj = NULL;
+    }
+    if (ucsmb_obj) {
+	Riconv_close(ucsmb_obj);
+	ucsmb_obj = NULL;
+    }
 #ifdef Win32
-    latin1_wobj = NULL;
-    utf8_wobj=NULL;
+    if (latin1_wobj) {
+	Riconv_close(latin1_wobj);
+	latin1_wobj = NULL;
+    }
+    if (utf8_wobj) {
+	Riconv_close(utf8_wobj);
+	utf8_wobj = NULL;
+    }
 #endif
 }
 

@@ -24,6 +24,8 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 R: FORCE
 	@if test "$(BUILDDIR_IS_SRCDIR)" = "no" ; then \
 	  $(MAKE) rsharedir=$(top_builddir)/share install-sources; \
+	elif test "x@BUILD_TZONE_TRUE@" = "x";  then \
+          $(MAKE) rsharedir=. install-zoneinfo; \
 	fi
 FORCE:
 
@@ -99,6 +101,7 @@ distclean:
 	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
 	  rm -rf $(SUBDIRS_WITH_NO_BUILD); \
 	fi
+	-@rm -rf zoneinfo
 	-@rm -f Makefile
 maintainer-clean: distclean
 

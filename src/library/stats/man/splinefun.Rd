@@ -44,9 +44,10 @@ splinefunH(x, y, m)
        interpolation interval (when \code{xout} is unspecified).}
   \item{xout}{an optional set of values specifying where interpolation
     is to take place.}
-  \item{ties}{Handling of tied \code{x} values.  Either a function
+  \item{ties}{handling of tied \code{x} values.  Either a function
     with a single vector argument returning a single number result or
-    the string \code{"ordered"}.}
+    the string \code{"ordered"}; note that the latter is the fastest for
+    large \code{length(x)}.}
 }
 \details{
   The inputs can contain missing values which are deleted, so at least

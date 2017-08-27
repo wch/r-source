@@ -11,6 +11,8 @@ subdir = src/extra/tzone
 include $(top_builddir)/Makeconf
 
 SOURCES = localtime.c strftime.c
+SOURCES_WIN = registryTZ.c
+HEADERS = tzfile.h
 
 DEPENDS = $(SOURCES:.c=.d)
 OBJECTS = $(SOURCES:.c=.o)
@@ -43,5 +45,17 @@ distclean: clean
 maintainer-clean: distclean
 
 install install-strip uninstall TAGS info dvi check:
+
+distdir: $(DISTFILES)
+	@for f in $(DISTFILES); do \
+	  test -f $(distdir)/$${f} \
+	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
+	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
+	done
+
+distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+DISTFILES = Makefile.in Makefile.win \
+  Make.zi Notes zoneinfo.zip \
+  $(SOURCES) $(SOURCES_WIN) $(HEADERS)
 
 ## Automagically generated dependencies:

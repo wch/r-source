@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2017-08-06 r73046) -- "Unsuffered Consequences"
+R Under development (unstable) (2017-08-25 r73136) -- "Unsuffered Consequences"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -16,6 +16,9 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 Type 'q()' to quit R.
 
 > ####  eval / parse / deparse / substitute  etc
+> 
+> set.seed(2017-08-24) # as we will deparse all objects *and* use *.Rout.save
+> .proctime00 <- proc.time() # start timing
 > 
 > ##- From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
 > ##- Subject: Re: source() / eval() bug ??? (PR#96)
@@ -210,4 +213,765 @@ TRUE
 +     identical(r1,r2)
 + )
 > ## partly failed in R 3.4.0 alpha
+> rm(r1,r2) # they fail in parse(.. deparse(..)) below
+> 
+> 
+> ### Checking parse(* deparse()) "inversion property" ----------------------------
+> ## Hopefully typically the identity():
+> pd0 <- function(expr, control = c("keepInteger","showAttributes","keepNA"), ...)
++     parse(text = deparse(expr, control=control, ...))
+> id_epd <- function(expr, control = c("all","digits17"), ...)
++     eval(parse(text = deparse(expr, control=control, ...)))
+> dPut <- function(x, control = c("all","digits17")) dput(x, control=control)
+> hasReal <- function(x) {
++     if(is.double(x) || is.complex(x))
++         !all((x == round(x, 3)) | is.na(x))
++     else if(is.logical(x) || is.integer(x) ||
++ 	    is.symbol(x) || is.call(x) || is.environment(x) || is.character(x))
++ 	FALSE
++     else if(is.recursive(x)) # recurse :
++ 	any(vapply(x, hasReal, NA))
++     else if(isS4(x)) {
++ 	if(length(sn <- slotNames(x)))
++ 	    any(vapply(sn, function(s) hasReal(slot(x, s)), NA))
++ 	else # no slots
++ 	    FALSE # ?
++     }
++     else FALSE
++ }
+> isMissObj <- function(obj) identical(obj, alist(a=)[[1]])
+> check_EPD <- function(obj, show = !hasReal(obj)) {
++     if(show) dPut(obj)
++     if(is.environment(obj) ||
++        (is.pairlist(obj) && any(vapply(obj, isMissObj, NA))))
++     {
++         cat("__ not parse()able __\n")
++         return(invisible(obj)) # cannot parse it
++     }
++     ob2 <- id_epd(obj)
++     po <- pd0(obj)# the default deparse() *should* parse at least
++     if(!identical(obj, ob2, ignore.environment=TRUE,
++                   ignore.bytecode=TRUE, ignore.srcref=TRUE)) {
++         ae <- all.equal(obj, ob2, tolerance = 0)
++         cat("not identical(*, ignore.env=T),",
++             if(isTRUE(ae)) "but all.equal(*,*, tol = 0)",
++             "\n")
++         if(!isTRUE(ae)) stop("Not equal: all.equal(*,*, tol = 0) giving\n", ae)
++     }
++     if(!is.language(obj)) {
++ 	ob2. <- eval(pd0) ## almost always *NOT* identical to obj, but eval()ed
++     }
++     invisible(obj)
++ }
+> 
+> nmdExp <- expression(e1 = sin(pi), e2 = cos(-pi))
+> xn <- setNames(pi^(1:3), paste0("pi^",1:3))
+> dPut(xn)
+c(`pi^1` = 3.1415926535897931, `pi^2` = 9.869604401089358, `pi^3` = 31.006276680299816
+)
+> stopifnot(identical(xn, id_epd(xn)))
+> 
+> ## Creating a collection of S4 objects, ensuring deparse <-> parse are inverses
+> library(methods)
+> example(new) # creating t1 & t2 at least
+
+new> ## using the definition of class "track" from setClass
+new> 
+new> ## Don't show: 
+new> setClass("track", slots = c(x="numeric", y="numeric"))
+
+new> setClass("trackCurve", contains = "track",
+new+           slots = c(smooth = "numeric"))
+
+new> ydata <- stats::rnorm(10); ysmooth <- 1:10
+
+new> ## End(Don't show)
+new> 
+new> ## a new object with two slots specified
+new> t1 <- new("track", x = seq_along(ydata), y = ydata)
+
+new> # a new object including an object from a superclass, plus a slot
+new> t2 <- new("trackCurve", t1, smooth = ysmooth)
+
+new> ### define a method for initialize, to ensure that new objects have
+new> ### equal-length x and y slots.  In this version, the slots must still be
+new> ### supplied by name.
+new> 
+new> setMethod("initialize", "track", 
+new+     function(.Object, ...) {
+new+       .Object <- callNextMethod()
+new+       if(length(.Object@x) != length(.Object@y))
+new+       stop("specified x and y of different lengths")
+new+       .Object
+new+     })
+
+new> ### An alternative version that allows x and y to be supplied
+new> ### unnamed.  A still more friendly version would make the default x
+new> ### a vector of the same length as y, and vice versa.
+new> 
+new> setMethod("initialize", "track",
+new+           function(.Object, x = numeric(0), y = numeric(0), ...) {
+new+               .Object <- callNextMethod(.Object, ...)
+new+               if(length(x) != length(y))
+new+                   stop("specified x and y of different lengths")
+new+               .Object@x <- x
+new+               .Object@y <- y
+new+               .Object
+new+           })
+
+new> ## Don't show: 
+new> removeMethod("initialize", "track")
+[1] TRUE
+
+new> ## End(Don't show)
+new> 
+new> 
+new> 
+> if(require("Matrix")) { cat("Trying some Matrix objects, too\n")
++     D5. <- Diagonal(x = 5:1)
++     D5N <- D5.; D5N[5,5] <- NA
++     example(Matrix)
++     ## a subset from  example(sparseMatrix) :
++     i <- c(1,3:8); j <- c(2,9,6:10); x <- 7 * (1:7)
++     A <- sparseMatrix(i, j, x = x)
++     sA <- sparseMatrix(i, j, x = x, symmetric = TRUE)
++     tA <- sparseMatrix(i, j, x = x, triangular= TRUE)
++     ## dims can be larger than the maximum row or column indices
++     AA <- sparseMatrix(c(1,3:8), c(2,9,6:10), x = 7 * (1:7), dims = c(10,20))
++     ## i, j and x can be in an arbitrary order, as long as they are consistent
++     set.seed(1); (perm <- sample(1:7))
++     A1 <- sparseMatrix(i[perm], j[perm], x = x[perm])
++     ## the (i,j) pairs can be repeated, in which case the x's are summed
++     args <- data.frame(i = c(i, 1), j = c(j, 2), x = c(x, 2))
++     Aa <- do.call(sparseMatrix, args)
++     A. <- do.call(sparseMatrix, c(args, list(use.last.ij = TRUE)))
++     ## for a pattern matrix, of course there is no "summing":
++     nA <- do.call(sparseMatrix, args[c("i","j")])
++     dn <- list(LETTERS[1:3], letters[1:5])
++     ## pointer vectors can be used, and the (i,x) slots are sorted if necessary:
++     m <- sparseMatrix(i = c(3,1, 3:2, 2:1), p= c(0:2, 4,4,6), x = 1:6, dimnames = dn)
++     ## no 'x' --> patter*n* matrix:
++     n <- sparseMatrix(i=1:6, j=rev(2:7))
++     ## an empty sparse matrix:
++     e <- sparseMatrix(dims = c(4,6), i={}, j={})
++     ## a symmetric one:
++     sy <- sparseMatrix(i= c(2,4,3:5), j= c(4,7:5,5), x = 1:5,
++                        dims = c(7,7), symmetric=TRUE)
++ }
+Loading required package: Matrix
+Trying some Matrix objects, too
+
+Matrix> Matrix(0, 3, 2)             # 3 by 2 matrix of zeros -> sparse
+3 x 2 sparse Matrix of class "dgCMatrix"
+        
+[1,] . .
+[2,] . .
+[3,] . .
+
+Matrix> Matrix(0, 3, 2, sparse=FALSE)# -> 'dense'
+3 x 2 Matrix of class "dgeMatrix"
+     [,1] [,2]
+[1,]    0    0
+[2,]    0    0
+[3,]    0    0
+
+Matrix> Matrix(0, 2, 2, sparse=FALSE)# diagonal !
+2 x 2 diagonal matrix of class "ddiMatrix"
+     [,1] [,2]
+[1,]    0    .
+[2,]    .    0
+
+Matrix> Matrix(0, 2, 2, sparse=FALSE, doDiag=FALSE)# -> dense
+2 x 2 Matrix of class "dsyMatrix"
+     [,1] [,2]
+[1,]    0    0
+[2,]    0    0
+
+Matrix> Matrix(1:6, 3, 2)           # a 3 by 2 matrix (+ integer warning)
+3 x 2 Matrix of class "dgeMatrix"
+     [,1] [,2]
+[1,]    1    4
+[2,]    2    5
+[3,]    3    6
+
+Matrix> Matrix(1:6 + 1, nrow=3)
+3 x 2 Matrix of class "dgeMatrix"
+     [,1] [,2]
+[1,]    2    5
+[2,]    3    6
+[3,]    4    7
+
+Matrix> ## logical ones:
+Matrix> Matrix(diag(4) >  0)# -> "ldiMatrix" with diag = "U"
+4 x 4 diagonal matrix of class "ldiMatrix"
+     [,1] [,2] [,3] [,4]
+[1,] TRUE    .    .    .
+[2,]    . TRUE    .    .
+[3,]    .    . TRUE    .
+[4,]    .    .    . TRUE
+
+Matrix> Matrix(diag(4) >  0, sparse=TRUE)# -> sparse...
+4 x 4 sparse Matrix of class "lsCMatrix"
+            
+[1,] | . . .
+[2,] . | . .
+[3,] . . | .
+[4,] . . . |
+
+Matrix> Matrix(diag(4) >= 0)# -> "lsyMatrix" (of all 'TRUE')
+4 x 4 Matrix of class "lsyMatrix"
+     [,1] [,2] [,3] [,4]
+[1,] TRUE TRUE TRUE TRUE
+[2,] TRUE TRUE TRUE TRUE
+[3,] TRUE TRUE TRUE TRUE
+[4,] TRUE TRUE TRUE TRUE
+
+Matrix> ## triangular
+Matrix> l3 <- upper.tri(matrix(,3,3))
+
+Matrix> (M <- Matrix(l3))  # -> "ltCMatrix"
+3 x 3 sparse Matrix of class "ltCMatrix"
+          
+[1,] . | |
+[2,] . . |
+[3,] . . .
+
+Matrix> Matrix(! l3)# -> "ltrMatrix"
+3 x 3 Matrix of class "ltrMatrix"
+     [,1]  [,2]  [,3] 
+[1,]  TRUE     .     .
+[2,]  TRUE  TRUE     .
+[3,]  TRUE  TRUE  TRUE
+
+Matrix> as(l3, "CsparseMatrix")
+3 x 3 sparse Matrix of class "lgCMatrix"
+          
+[1,] . | |
+[2,] . . |
+[3,] . . .
+
+Matrix> Matrix(1:9, nrow=3,
+Matrix+        dimnames = list(c("a", "b", "c"), c("A", "B", "C")))
+3 x 3 Matrix of class "dgeMatrix"
+  A B C
+a 1 4 7
+b 2 5 8
+c 3 6 9
+
+Matrix> (I3 <- Matrix(diag(3)))# identity, i.e., unit "diagonalMatrix"
+3 x 3 diagonal matrix of class "ddiMatrix"
+     [,1] [,2] [,3]
+[1,]    1    .    .
+[2,]    .    1    .
+[3,]    .    .    1
+
+Matrix> str(I3) # note the empty 'x' slot
+Formal class 'ddiMatrix' [package "Matrix"] with 4 slots
+  ..@ diag    : chr "U"
+  ..@ Dim     : int [1:2] 3 3
+  ..@ Dimnames:List of 2
+  .. ..$ : NULL
+  .. ..$ : NULL
+  ..@ x       : num(0) 
+
+Matrix> (A <- cbind(a=c(2,1), b=1:2))# symmetric *apart* from dimnames
+     a b
+[1,] 2 1
+[2,] 1 2
+
+Matrix> Matrix(A)                    # hence 'dgeMatrix'
+2 x 2 Matrix of class "dgeMatrix"
+     a b
+[1,] 2 1
+[2,] 1 2
+
+Matrix> (As <- Matrix(A, dimnames = list(NULL,NULL)))# -> symmetric
+2 x 2 Matrix of class "dsyMatrix"
+     [,1] [,2]
+[1,]    2    1
+[2,]    1    2
+
+Matrix> stopifnot(is(As, "symmetricMatrix"),
+Matrix+           is(Matrix(0, 3,3), "sparseMatrix"),
+Matrix+           is(Matrix(FALSE, 1,1), "sparseMatrix"))
+> 
+> for(nm in ls(env=.GlobalEnv)) {
++     cat(nm,": ", sep="")
++     if(!any(nm == "r1")) ## 'r1' fails
++         check_EPD(obj = (x <- .GlobalEnv[[nm]]))
++     if(is.function(x)) {
++         cat("checking body(.):\n"   ); check_EPD(   body(x))
++         cat("checking formals(.):\n"); check_EPD(formals(x))
++     }
++     cat("--=--=--=--=--\n")
++ }
+A: new("dgCMatrix",
+i = c(0L, 3L, 4L, 5L, 2L, 6L, 7L), p = c(0L, 
+0L, 1L, 1L, 1L, 1L, 2L, 3L, 4L, 6L, 7L), Dim = c(8L, 10L), Dimnames = list(
+    NULL, NULL), x = c(7, 21, 28, 35, 14, 42, 49), factors = list())
+--=--=--=--=--
+A.: new("dgCMatrix",
+i = c(0L, 3L, 4L, 5L, 2L, 6L, 7L), p = c(0L, 
+0L, 1L, 1L, 1L, 1L, 2L, 3L, 4L, 6L, 7L), Dim = c(8L, 10L), Dimnames = list(
+    NULL, NULL), x = c(2, 21, 28, 35, 14, 42, 49), factors = list())
+--=--=--=--=--
+A1: new("dgCMatrix",
+i = c(0L, 3L, 4L, 5L, 2L, 6L, 7L), p = c(0L, 
+0L, 1L, 1L, 1L, 1L, 2L, 3L, 4L, 6L, 7L), Dim = c(8L, 10L), Dimnames = list(
+    NULL, NULL), x = c(7, 21, 28, 35, 14, 42, 49), factors = list())
+--=--=--=--=--
+AA: new("dgCMatrix",
+i = c(0L, 3L, 4L, 5L, 2L, 6L, 7L), p = c(0L, 
+0L, 1L, 1L, 1L, 1L, 2L, 3L, 4L, 6L, 7L, 7L, 7L, 7L, 7L, 7L, 7L, 
+7L, 7L, 7L, 7L), Dim = c(10L, 20L), Dimnames = list(NULL, NULL), 
+    x = c(7, 21, 28, 35, 14, 42, 49), factors = list())
+--=--=--=--=--
+Aa: new("dgCMatrix",
+i = c(0L, 3L, 4L, 5L, 2L, 6L, 7L), p = c(0L, 
+0L, 1L, 1L, 1L, 1L, 2L, 3L, 4L, 6L, 7L), Dim = c(8L, 10L), Dimnames = list(
+    NULL, NULL), x = c(9, 21, 28, 35, 14, 42, 49), factors = list())
+--=--=--=--=--
+As: new("dsyMatrix",
+x = c(2, 1, 1, 2), Dim = c(2L, 2L), Dimnames = list(
+    NULL, NULL), uplo = "U", factors = list())
+--=--=--=--=--
+CC: function (...) 
+match.call()
+checking body(.):
+quote(match.call())
+checking formals(.):
+pairlist(... = )
+__ not parse()able __
+--=--=--=--=--
+CO: function (..., file = NULL, append = FALSE, type = c("output", 
+    "message"), split = FALSE) 
+{
+    args <- substitute(list(...))[-1L]
+    type <- match.arg(type)
+    rval <- NULL
+    closeit <- TRUE
+    if (is.null(file)) 
+        file <- textConnection("rval", "w", local = TRUE)
+    else if (is.character(file)) 
+        file <- file(file, if (append) 
+            "a"
+        else "w")
+    else if (inherits(file, "connection")) {
+        if (!isOpen(file)) 
+            open(file, if (append) 
+                "a"
+            else "w")
+        else closeit <- FALSE
+    }
+    else stop("'file' must be NULL, a character string or a connection")
+    sink(file, type = type, split = split)
+    on.exit({
+        sink(type = type, split = split)
+        if (closeit) close(file)
+    })
+    pf <- parent.frame()
+    evalVis <- function(expr) withVisible(eval(expr, pf))
+    for (i in seq_along(args)) {
+        expr <- args[[i]]
+        tmp <- switch(mode(expr), expression = lapply(expr, evalVis), 
+            call = , name = list(evalVis(expr)), stop("bad argument"))
+        for (item in tmp) if (item$visible) 
+            print(item$value)
+    }
+    on.exit()
+    sink(type = type, split = split)
+    if (closeit) 
+        close(file)
+    if (is.null(rval)) 
+        invisible(NULL)
+    else rval
+}
+checking body(.):
+quote({
+    args <- substitute(list(...))[-1L]
+    type <- match.arg(type)
+    rval <- NULL
+    closeit <- TRUE
+    if (is.null(file)) 
+        file <- textConnection("rval", "w", local = TRUE)
+    else if (is.character(file)) 
+        file <- file(file, if (append) 
+            "a"
+        else "w")
+    else if (inherits(file, "connection")) {
+        if (!isOpen(file)) 
+            open(file, if (append) 
+                "a"
+            else "w")
+        else closeit <- FALSE
+    }
+    else stop("'file' must be NULL, a character string or a connection")
+    sink(file, type = type, split = split)
+    on.exit({
+        sink(type = type, split = split)
+        if (closeit) close(file)
+    })
+    pf <- parent.frame()
+    evalVis <- function(expr) withVisible(eval(expr, pf))
+    for (i in seq_along(args)) {
+        expr <- args[[i]]
+        tmp <- switch(mode(expr), expression = lapply(expr, evalVis), 
+            call = , name = list(evalVis(expr)), stop("bad argument"))
+        for (item in tmp) if (item$visible) 
+            print(item$value)
+    }
+    on.exit()
+    sink(type = type, split = split)
+    if (closeit) 
+        close(file)
+    if (is.null(rval)) 
+        invisible(NULL)
+    else rval
+})
+checking formals(.):
+pairlist(... = , file = NULL, append = FALSE, type = quote(c("output", 
+    "message")), split = FALSE)
+__ not parse()able __
+--=--=--=--=--
+D5.: new("ddiMatrix",
+diag = "N", Dim = c(5L, 5L), Dimnames = list(
+    NULL, NULL), x = c(5, 4, 3, 2, 1))
+--=--=--=--=--
+D5N: new("ddiMatrix",
+diag = "N", Dim = c(5L, 5L), Dimnames = list(
+    NULL, NULL), x = c(5, 4, 3, 2, NA))
+--=--=--=--=--
+DD: function (...) 
+CC(...)
+checking body(.):
+quote(CC(...))
+checking formals(.):
+pairlist(... = )
+__ not parse()able __
+--=--=--=--=--
+I3: new("ddiMatrix",
+diag = "U", Dim = c(3L, 3L), Dimnames = list(
+    NULL, NULL), x = numeric(0))
+--=--=--=--=--
+M: new("ltCMatrix",
+i = c(0L, 0L, 1L), p = c(0L, 0L, 1L, 3L), Dim = c(3L, 
+3L), Dimnames = list(NULL, NULL), x = c(TRUE, TRUE, TRUE), uplo = "U", 
+    diag = "N")
+--=--=--=--=--
+ST: .Primitive("invisible")
+checking body(.):
+NULL
+checking formals(.):
+NULL
+--=--=--=--=--
+X: list(TRUE)
+--=--=--=--=--
+a: list(b = 3)
+--=--=--=--=--
+a2: quote(B(a = x + y, named = 3))
+--=--=--=--=--
+a3: quote(CC(1, 2, 3))
+--=--=--=--=--
+aa: quote(B(a = x + y, b = 3))
+--=--=--=--=--
+args: structure(list(i = c(1, 3, 4, 5, 6, 7, 8, 1), j = c(2, 9, 6, 
+7, 8, 9, 10, 2), x = c(7, 14, 21, 28, 35, 42, 49, 2)), row.names = c(NA, 
+-8L), class = "data.frame")
+--=--=--=--=--
+callme: function (a = 1, mm = c("Abc", "Bde")) 
+{
+    mm <- match.arg(mm)
+    cat("mm = ")
+    str(mm)
+    invisible()
+}
+checking body(.):
+quote({
+    mm <- match.arg(mm)
+    cat("mm = ")
+    str(mm)
+    invisible()
+})
+checking formals(.):
+pairlist(a = 1, mm = quote(c("Abc", "Bde")))
+--=--=--=--=--
+check_EPD: function (obj, show = !hasReal(obj)) 
+{
+    if (show) 
+        dPut(obj)
+    if (is.environment(obj) || (is.pairlist(obj) && any(vapply(obj, 
+        isMissObj, NA)))) {
+        cat("__ not parse()able __\n")
+        return(invisible(obj))
+    }
+    ob2 <- id_epd(obj)
+    po <- pd0(obj)
+    if (!identical(obj, ob2, ignore.environment = TRUE, ignore.bytecode = TRUE, 
+        ignore.srcref = TRUE)) {
+        ae <- all.equal(obj, ob2, tolerance = 0)
+        cat("not identical(*, ignore.env=T),", if (isTRUE(ae)) 
+            "but all.equal(*,*, tol = 0)", "\n")
+        if (!isTRUE(ae)) 
+            stop("Not equal: all.equal(*,*, tol = 0) giving\n", 
+                ae)
+    }
+    if (!is.language(obj)) {
+        ob2. <- eval(pd0)
+    }
+    invisible(obj)
+}
+checking body(.):
+quote({
+    if (show) 
+        dPut(obj)
+    if (is.environment(obj) || (is.pairlist(obj) && any(vapply(obj, 
+        isMissObj, NA)))) {
+        cat("__ not parse()able __\n")
+        return(invisible(obj))
+    }
+    ob2 <- id_epd(obj)
+    po <- pd0(obj)
+    if (!identical(obj, ob2, ignore.environment = TRUE, ignore.bytecode = TRUE, 
+        ignore.srcref = TRUE)) {
+        ae <- all.equal(obj, ob2, tolerance = 0)
+        cat("not identical(*, ignore.env=T),", if (isTRUE(ae)) 
+            "but all.equal(*,*, tol = 0)", "\n")
+        if (!isTRUE(ae)) 
+            stop("Not equal: all.equal(*,*, tol = 0) giving\n", 
+                ae)
+    }
+    if (!is.language(obj)) {
+        ob2. <- eval(pd0)
+    }
+    invisible(obj)
+})
+checking formals(.):
+pairlist(obj = , show = quote(!hasReal(obj)))
+__ not parse()able __
+--=--=--=--=--
+dPut: function (x, control = c("all", "digits17")) 
+dput(x, control = control)
+checking body(.):
+quote(dput(x, control = control))
+checking formals(.):
+pairlist(x = , control = quote(c("all", "digits17")))
+__ not parse()able __
+--=--=--=--=--
+dn: list(c("A", "B", "C"), c("a", "b", "c", "d", "e"))
+--=--=--=--=--
+e: new("ngCMatrix",
+i = integer(0), p = c(0L, 0L, 0L, 0L, 0L, 0L, 
+0L), Dim = c(4L, 6L), Dimnames = list(NULL, NULL), factors = list())
+--=--=--=--=--
+e1: quote(c(F = (f <- 0.29999999999999999), `Tail area` = 2 * if (f < 
+    1) 30 else 90))
+--=--=--=--=--
+e2: quote(c(`a b c` = 1, b = 2))
+--=--=--=--=--
+e3: quote(c(`Variance ratio` = 1, `tail area` = pf(1, 1, 1)))
+--=--=--=--=--
+f: function (x, ...) 
+substitute(list(x, ...))
+checking body(.):
+quote(substitute(list(x, ...)))
+checking formals(.):
+pairlist(x = , ... = )
+__ not parse()able __
+--=--=--=--=--
+fx: structure(c(1L, 3L, 2L), .Label = c("a", "b", NA), class = "factor")
+--=--=--=--=--
+g: function (...) 
+h(f(...))
+checking body(.):
+quote(h(f(...)))
+checking formals(.):
+pairlist(... = )
+__ not parse()able __
+--=--=--=--=--
+h: function (...) 
+list(...)
+checking body(.):
+quote(list(...))
+checking formals(.):
+pairlist(... = )
+__ not parse()able __
+--=--=--=--=--
+hasReal: function (x) 
+{
+    if (is.double(x) || is.complex(x)) 
+        !all((x == round(x, 3)) | is.na(x))
+    else if (is.logical(x) || is.integer(x) || is.symbol(x) || 
+        is.call(x) || is.environment(x) || is.character(x)) 
+        FALSE
+    else if (is.recursive(x)) 
+        any(vapply(x, hasReal, NA))
+    else if (isS4(x)) {
+        if (length(sn <- slotNames(x))) 
+            any(vapply(sn, function(s) hasReal(slot(x, s)), NA))
+        else FALSE
+    }
+    else FALSE
+}
+checking body(.):
+quote({
+    if (is.double(x) || is.complex(x)) 
+        !all((x == round(x, 3)) | is.na(x))
+    else if (is.logical(x) || is.integer(x) || is.symbol(x) || 
+        is.call(x) || is.environment(x) || is.character(x)) 
+        FALSE
+    else if (is.recursive(x)) 
+        any(vapply(x, hasReal, NA))
+    else if (isS4(x)) {
+        if (length(sn <- slotNames(x))) 
+            any(vapply(sn, function(s) hasReal(slot(x, s)), NA))
+        else FALSE
+    }
+    else FALSE
+})
+checking formals(.):
+pairlist(x = )
+__ not parse()able __
+--=--=--=--=--
+i: c(1, 3, 4, 5, 6, 7, 8)
+--=--=--=--=--
+id_epd: function (expr, control = c("all", "digits17"), ...) 
+eval(parse(text = deparse(expr, control = control, ...)))
+checking body(.):
+quote(eval(parse(text = deparse(expr, control = control, ...))))
+checking formals(.):
+pairlist(expr = , control = quote(c("all", "digits17")), ... = )
+__ not parse()able __
+--=--=--=--=--
+isMissObj: function (obj) 
+identical(obj, alist(a = )[[1]])
+checking body(.):
+quote(identical(obj, alist(a = )[[1]]))
+checking formals(.):
+pairlist(obj = )
+__ not parse()able __
+--=--=--=--=--
+j: c(2, 9, 6, 7, 8, 9, 10)
+--=--=--=--=--
+k: function (...) 
+g(...)
+checking body(.):
+quote(g(...))
+checking formals(.):
+pairlist(... = )
+__ not parse()able __
+--=--=--=--=--
+l3: structure(c(FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, TRUE, TRUE, 
+FALSE), .Dim = c(3L, 3L))
+--=--=--=--=--
+m: new("dgCMatrix",
+i = c(2L, 0L, 1L, 2L, 0L, 1L), p = c(0L, 1L, 
+2L, 4L, 4L, 6L), Dim = c(3L, 5L), Dimnames = list(c("A", "B", 
+"C"), c("a", "b", "c", "d", "e")), x = c(1, 2, 4, 3, 6, 5), factors = list())
+--=--=--=--=--
+mycaller: function (x = 1, callme = pi) 
+{
+    callme(x)
+}
+checking body(.):
+quote({
+    callme(x)
+})
+checking formals(.):
+pairlist(x = 1, callme = quote(pi))
+--=--=--=--=--
+n: new("ngCMatrix",
+i = c(5L, 4L, 3L, 2L, 1L, 0L), p = c(0L, 0L, 
+1L, 2L, 3L, 4L, 5L, 6L), Dim = 6:7, Dimnames = list(NULL, NULL), 
+    factors = list())
+--=--=--=--=--
+nA: new("ngCMatrix",
+i = c(0L, 3L, 4L, 5L, 2L, 6L, 7L), p = c(0L, 
+0L, 1L, 1L, 1L, 1L, 2L, 3L, 4L, 6L, 7L), Dim = c(8L, 10L), Dimnames = list(
+    NULL, NULL), factors = list())
+--=--=--=--=--
+nmdExp: expression(e1 = sin(pi), e2 = cos(-pi))
+--=--=--=--=--
+ok.: c(TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, 
+TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE)
+--=--=--=--=--
+pd0: function (expr, control = c("keepInteger", "showAttributes", 
+    "keepNA"), ...) 
+parse(text = deparse(expr, control = control, ...))
+checking body(.):
+quote(parse(text = deparse(expr, control = control, ...)))
+checking formals(.):
+pairlist(expr = , control = quote(c("keepInteger", "showAttributes", 
+    "keepNA")), ... = )
+__ not parse()able __
+--=--=--=--=--
+perm: c(2L, 3L, 6L, 4L, 1L, 7L, 5L)
+--=--=--=--=--
+r: structure(c("[1] a    <NA> b   ", "Levels: a b <NA>", "[1] a    <NA> b   ", 
+"Levels: a b <NA>", "[1] a    <NA> b   ", "Levels: a b <NA>", 
+"[1] a    <NA> b   ", "Levels: a b <NA>", "[1] a    <NA> b   ", 
+"Levels: a b <NA>", "[1] a    <NA> b   ", "Levels: a b <NA>", 
+"[1] a    <NA> b   ", "Levels: a b <NA>", "[1] a    <NA> b   ", 
+"Levels: a b <NA>", "[1] a    <NA> b   ", "Levels: a b <NA>", 
+"[1] a    <NA> b   ", "Levels: a b <NA>", "[1] a    <NA> b   ", 
+"Levels: a b <NA>", "[1] a    <NA> b   ", "Levels: a b <NA>", 
+"[1] a    <NA> b   ", "Levels: a b <NA>", "[1] a    <NA> b   ", 
+"Levels: a b <NA>", "[1] a    <NA> b   ", "Levels: a b <NA>", 
+"[1] a    <NA> b   ", "Levels: a b <NA>", "[1] a    <NA> b   ", 
+"Levels: a b <NA>", "[1] a    <NA> b   ", "Levels: a b <NA>", 
+"[1] a    <NA> b   ", "Levels: a b <NA>", "[1] a    <NA> b   ", 
+"Levels: a b <NA>"), .Dim = c(2L, 20L))
+--=--=--=--=--
+sA: new("dsCMatrix",
+i = c(0L, 3L, 4L, 5L, 2L, 6L, 7L), p = c(0L, 
+0L, 1L, 1L, 1L, 1L, 2L, 3L, 4L, 6L, 7L), Dim = c(10L, 10L), Dimnames = list(
+    NULL, NULL), x = c(7, 21, 28, 35, 14, 42, 49), uplo = "U", 
+    factors = list())
+--=--=--=--=--
+sy: new("dsCMatrix",
+i = c(1L, 3L, 4L, 2L, 3L), p = c(0L, 0L, 0L, 
+0L, 1L, 3L, 4L, 5L), Dim = c(7L, 7L), Dimnames = list(NULL, NULL), 
+    x = c(1, 4, 5, 3, 2), uplo = "U", factors = list())
+--=--=--=--=--
+t1: --=--=--=--=--
+t2: --=--=--=--=--
+tA: new("dtCMatrix",
+i = c(0L, 3L, 4L, 5L, 2L, 6L, 7L), p = c(0L, 
+0L, 1L, 1L, 1L, 1L, 2L, 3L, 4L, 6L, 7L), Dim = c(10L, 10L), Dimnames = list(
+    NULL, NULL), x = c(7, 21, 28, 35, 14, 42, 49), uplo = "U", 
+    diag = "N")
+--=--=--=--=--
+tt: function (x) 
+{
+    is.vector(x)
+    deparse(substitute(x))
+}
+checking body(.):
+quote({
+    is.vector(x)
+    deparse(substitute(x))
+})
+checking formals(.):
+pairlist(x = )
+__ not parse()able __
+--=--=--=--=--
+u: --=--=--=--=--
+x: --=--=--=--=--
+xn: --=--=--=--=--
+ydata: --=--=--=--=--
+ysmooth: 1:10
+--=--=--=--=--
+There were 36 warnings (use warnings() to see them)
+> summary(warnings())
+Summary of (a total of 36) warning messages:
+19x : In dput(x, control = control) :
+  deparse of an S4 object may not always be source()able
+17x : In deparse(expr, control = control, ...) :
+  deparse of an S4 object may not always be source()able
+> ## "dput    may be incomplete"
+> ## "deparse may be incomplete"
+> 
+> 
+> ## at the very end
+> cat('Time elapsed: ', proc.time() - .proctime00,'\n')
+Time elapsed:  0.709 0.127 0.839 0 0 
 > 

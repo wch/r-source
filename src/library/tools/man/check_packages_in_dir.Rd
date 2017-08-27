@@ -141,7 +141,7 @@ check_packages_in_dir_details(dir, logs = NULL, drop_ok = TRUE)
   \code{Check}, \code{Status} and \code{Output}, respectively).
   
   Environment variable \env{_R_CHECK_ELAPSED_TIMEOUT_} can be used to
-  set a limit on the elpased time of each \command{check} run.  See the
+  set a limit on the elapsed time of each \command{check} run.  See the
   \sQuote{R Internals} manual for how the value is interpreted and for
   other environment variables which can be used for finer-grained
   control on timeouts within a \command{check} run.

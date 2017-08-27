@@ -1,7 +1,7 @@
 #  File src/library/utils/R/package.skeleton.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
 package.skeleton <-
     function(name = "anRpackage", list = character(), environment = .GlobalEnv,
 	     path = ".", force = FALSE,
-             code_files = character())
+             code_files = character(), encoding = "unknown")
 {
     safe.dir.create <- function(path)
     {
@@ -100,6 +100,8 @@ package.skeleton <-
 	"Description: More about what it does (maybe more than one line)\n",
 	"License: What license is it under?\n",
 	if(usingS4) "Depends: methods\n",
+	if(nzchar(encoding) && encoding != "unknown")
+	    paste0("Encoding: ", encoding, "\n"),
 	file = description, sep = "")
     close(description)
 

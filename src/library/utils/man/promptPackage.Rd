@@ -1,6 +1,6 @@
 % File src/library/utils/man/promptPackage.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{promptPackage}
@@ -50,7 +50,8 @@ promptPackage(package, lib.loc = NULL, filename = NULL,
   as-is.  In most cases a manually edited file is preferable (but
   \code{final = TRUE} is certainly less work).
 }
-\seealso{\code{\link{prompt}}}
+\seealso{\code{\link{prompt}}, \code{\link{package.skeleton}}
+}
 \examples{\donttest{
 filename <- tempfile()
 promptPackage("utils", filename = filename)

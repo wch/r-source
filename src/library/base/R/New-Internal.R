@@ -1,7 +1,7 @@
 #  File src/library/base/R/New-Internal.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -105,15 +105,15 @@ rbind <- function(..., deparse.level = 1)
                    c("all",
                      "keepInteger", "quoteExpressions", "showAttributes",
                      "useSource", "warnIncomplete", "delayPromises",
-                     "keepNA", "S_compatible", "hexNumeric", "digits17"))
+                     "keepNA", "S_compatible", "hexNumeric", "digits17", "nice_names"))
     if (anyNA(opts))
         stop(sprintf(ngettext(as.integer(sum(is.na(opts))),
                               "deparse option %s is not recognized",
                               "deparse options %s are not recognized"),
                      paste(sQuote(control[is.na(opts)]), collapse=", ")),
              call. = FALSE, domain = NA)
-    if (any(opts == 1L))
-        opts <- unique(c(opts[opts != 1L], 2L,3L,4L,5L,6L,8L)) # not (7,9:11)
+    if (any(opts == 1L)) # "all"
+        opts <- unique(c(opts[opts != 1L], 2L,3L,4L,5L,6L,8L, 12L)) # not (7,9:11)
     if(10L %in% opts && 11L %in% opts)
         stop('"hexNumeric" and "digits17" are mutually exclusive')
     sum(2^(opts-2))

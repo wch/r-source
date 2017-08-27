@@ -1,7 +1,7 @@
 #  File src/library/stats/R/approx.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -60,7 +60,7 @@ approx <- function(x, y = NULL, xout, method = "linear", n = 50,
     x <- regularize.values(x, y, ties) # -> (x,y) numeric of same length
     y <- x$y
     x <- x$x
-    nx <- as.integer(length(x))
+    nx <- length(x) # large vectors ==> non-integer
     if (is.na(nx)) stop("invalid length(x)")
     if (nx <= 1) {
 	if(method == 1)# linear
@@ -93,7 +93,7 @@ approxfun <- function(x, y = NULL, method = "linear",
     x <- regularize.values(x, y, ties) # -> (x,y) numeric of same length
     y <- x$y
     x <- x$x
-    n <- as.integer(length(x))
+    n <- length(x) # large vectors ==> non-integer
     if (is.na(n)) stop("invalid length(x)")
 
     if (n <= 1) {

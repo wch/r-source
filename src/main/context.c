@@ -137,6 +137,8 @@ void attribute_hidden R_run_onexits(RCNTXT *cptr)
 	    RCNTXT* savecontext = R_ExitContext;
 	    R_ExitContext = c;
 	    c->conexit = R_NilValue; /* prevent recursion */
+	    /* we are in intermediate jump, so returnValue is undefined */
+	    c->returnValue = NULL;
 	    R_HandlerStack = c->handlerstack;
 	    R_RestartStack = c->restartstack;
 	    PROTECT(s);
@@ -219,7 +221,6 @@ void attribute_hidden NORET R_jumpctxt(RCNTXT * targetcptr, int mask, SEXP val)
 
     /* run cend code for all contexts down to but not including
        the first jump target */
-    cptr->returnValue = val;/* in case the on.exit code wants to see it */
     R_run_onexits(cptr);
     R_Visible = savevis;
 
@@ -285,23 +286,29 @@ void endcontext(RCNTXT * cptr)
 {
     R_HandlerStack = cptr->handlerstack;
     R_RestartStack = cptr->restartstack;
+    RCNTXT *jumptarget = cptr->jumptarget;
     if (cptr->cloenv != R_NilValue && cptr->conexit != R_NilValue ) {
 	SEXP s = cptr->conexit;
 	Rboolean savevis = R_Visible;
 	RCNTXT* savecontext = R_ExitContext;
+	SEXP saveretval = R_ReturnedValue;
 	R_ExitContext = cptr;
 	cptr->conexit = R_NilValue; /* prevent recursion */
+	cptr->jumptarget = NULL; /* in case on.exit expr calls return() */
+	PROTECT(saveretval);
 	PROTECT(s);
 	eval(s, cptr->cloenv);
-	UNPROTECT(1);
+	R_ReturnedValue = saveretval;
+	UNPROTECT(2);
 	R_ExitContext = savecontext;
 	R_Visible = savevis;
     }
     if (R_ExitContext == cptr)
 	R_ExitContext = NULL;
     /* continue jumping if this was reached as an intermetiate jump */
-    if (cptr->jumptarget)
-	R_jumpctxt(cptr->jumptarget, cptr->jumpmask, cptr->returnValue);
+    if (jumptarget)
+	/* cptr->returnValue is undefined */
+	R_jumpctxt(jumptarget, cptr->jumpmask, R_ReturnedValue);
 
     R_GlobalContext = cptr->nextcontext;
 }

@@ -335,7 +335,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   \samp{Error 124} message from \command{make} indicates that timeout
   occurred.
   
-  Timeouts during installation might leave lock diretories behind and
+  Timeouts during installation might leave lock directories behind and
   not restore previous versions.
 }
 

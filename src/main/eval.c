@@ -1600,14 +1600,17 @@ static R_INLINE SEXP R_execClosure(SEXP call, SEXP newrho, SEXP sysparent,
 	from the function body.  */
 
     if ((SETJMP(cntxt.cjmpbuf))) {
-	if (! cntxt.jumptarget /* ignores intermediate jumps for on.exits */
-	    && R_ReturnedValue == R_RestartToken) {
-	    cntxt.callflag = CTXT_RETURN;  /* turn restart off */
-	    R_ReturnedValue = R_NilValue;  /* remove restart token */
-	    cntxt.returnValue = eval(body, newrho);
+	if (!cntxt.jumptarget) {
+	    /* ignores intermediate jumps for on.exits */
+	    if (R_ReturnedValue == R_RestartToken) {
+		cntxt.callflag = CTXT_RETURN;  /* turn restart off */
+		R_ReturnedValue = R_NilValue;  /* remove restart token */
+		cntxt.returnValue = eval(body, newrho);
+	    } else
+		cntxt.returnValue = R_ReturnedValue;
 	}
 	else
-	    cntxt.returnValue = R_ReturnedValue;
+	    cntxt.returnValue = NULL; /* undefined */
     }
     else
 	/* make it available to on.exit and implicitly protect */

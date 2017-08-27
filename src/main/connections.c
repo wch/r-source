@@ -2314,7 +2314,7 @@ static Rboolean clp_open(Rconnection con)
 	this->last = 0;
     }
     con->text = TRUE;
-    set_buffer(con);
+    //set_buffer(con);
     set_iconv(con);
     con->save = -1000;
     this->warned = FALSE;

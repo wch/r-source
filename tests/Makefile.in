@@ -24,13 +24,15 @@ include $(srcdir)/Makefile.common
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 
+## reg-large.R is currently not mentioned elsewhere
 DISTFILES = Makefile.in Makefile.win Makefile.install Makefile.common \
 	$(INSTFILES) gct-foot.R reg-win.R \
 	testit.Rd testit.txt.save testit.html.save \
 	testit.tex.save testit-Ex.R.save \
 	ver20.Rd ver20.txt.save ver20.html.save ver20.tex.save ver20-Ex.R.save \
 	R-intro.Rout.save \
-	test-system.R test-system.Rout.save test-system2.c
+	test-system.R test-system.Rout.save test-system2.c \
+	reg-large.R
 
 SUBDIRS = Embedding Examples
 SUBDIRS_WITH_NO_BUILD = Pkgs
@@ -94,13 +96,13 @@ clean:
 	-@rm -f *.tar.gz
 	-@rm -f keepsource.tex test-system2 test-system.Rout
 	-@rm -f *.log *.tsin *.trin
-	-@rm -f df0.Rd l0.Rd m0.Rd 'integer(0)-package.Rd'
+	-@rm -f df0.Rd l0.Rd m0.Rd 'integer(0)-package.Rd' .Rd .RData
 
 distclean: clean
 	-@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@); \
 	done
-	-@rm -f Makefile $(test-out) $(test-src-auto) .RData
+	-@rm -f Makefile $(test-out) $(test-src-auto) *.Rout.fail
 	-@rm -rf *.Rcheck RecPackages
 	-@rm -f *.fail
 
