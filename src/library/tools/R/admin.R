@@ -299,7 +299,7 @@ function(dir, outDir)
     enc <- as.vector(db["Encoding"])
     need_enc <- !is.na(enc) # Encoding was specified
     ## assume that if locale is 'C' we can used 8-bit encodings unchanged.
-    if(need_enc && !(Sys.getlocale("LC_CTYPE") %in% c("C", "POSIX"))) {
+    if(need_enc && (Sys.getlocale("LC_CTYPE") %notin% c("C", "POSIX"))) {
         con <- file(outFile, "a")
         on.exit(close(con))  # Windows does not like files left open
         for(f in codeFiles) {
@@ -875,7 +875,7 @@ function(dir)
         ## of length 3.
         if(length(depends) > 1L) {
             ## .check_package_description will insist on these operators
-            if(!depends$op %in% c("<=", ">=", "<", ">", "==", "!="))
+            if(depends$op %notin% c("<=", ">=", "<", ">", "==", "!="))
                 message("WARNING: malformed 'Depends' field in 'DESCRIPTION'")
             else {
                 status <- if(inherits(depends$version, "numeric_version"))

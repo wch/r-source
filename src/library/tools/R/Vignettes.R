@@ -248,7 +248,7 @@ function(package, dir, lib.loc = NULL,
     }
 
     if(weave && latex) {
-        if(!("Makefile" %in% list.files(vigns$dir))) {
+        if("Makefile" %notin% list.files(vigns$dir)) {
             ## <NOTE>
             ## This used to run texi2pdf on *all* vignettes, including
             ## the ones already known from the above to give trouble.

@@ -66,7 +66,7 @@ function(ifile, encoding = "unknown", keepSpacing = TRUE,
             && tags[i+1L] == "TEXT"
             && length(x[[i]]) == 1L
             && tags[i] %in% c("\\bold", "\\emph", "\\strong", "\\link")
-            && !(tags[i] %in% drop)
+            && (tags[i] %notin% drop)
             && RdTags(x[[i]]) == "TEXT") {
     	    text1 <- x[[i]][[1L]]
     	    if (length(grep("[^[:space:]]$", text1))) { # Ends in non-blank

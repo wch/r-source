@@ -134,9 +134,9 @@ function(demoDir)
                                   info_from_build[ , 2L]),
                              1L],
              missing_from_demos =
-             info_from_index[!info_from_index[ , 1L]
-                             %in% info_from_build[ , 1L],
-                             1L])
+                 info_from_index[info_from_index[ , 1L] %notin%
+                                 info_from_build[ , 1L],
+                                 1L])
     class(bad_entries) <- "check_demo_index"
     bad_entries
 }

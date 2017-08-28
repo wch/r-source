@@ -753,7 +753,7 @@ detachPackages <- function(pkgs, verbose = TRUE)
         ## hopefully force = TRUE is never needed, but it does ensure
         ## that progress gets made
         try(detach(this, character.only = TRUE,
-                   unload = unload && !(this %in% exclusions),
+                   unload = unload && (this %notin% exclusions),
                    force = TRUE))
         deps <- deps[-i]
     }
