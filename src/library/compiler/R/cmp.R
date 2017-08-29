@@ -89,7 +89,6 @@ missingArgs <- function(args) {
 frameTypes <- function(env) {
     top <- topenv(env)
     empty <- emptyenv()
-    base <- baseenv()
     nl <- 0
     while (! identical(env, top)) {
         if (isNamespace(env))
@@ -1340,7 +1339,7 @@ tryInline <- function(e, cb, cntxt) {
         if (! is.null(h)) {
             if (info$guard) {
                 tailcall <- cntxt$tailcall
-                if (tailcall) cntxttailcall <- FALSE
+                if (tailcall) cntxt$tailcall <- FALSE
                 expridx <- cb$putconst(e)
                 endlabel <- cb$makelabel()
                 cb$putcode(BASEGUARD.OP, expridx, endlabel)
@@ -2497,7 +2496,6 @@ is.simpleInternal <- function(def) {
 inlineSimpleInternalCall <- function(e, def) {
     if (! dots.or.missing(e) && is.simpleInternal(def)) {
         forms <- formals(def)
-        fnames <- names(forms)
         b <- body(def)
         if (typeof(b) == "language" && length(b) == 2 && b[[1]] == "{")
             b <- b[[2]]
@@ -3024,7 +3022,7 @@ loadcmp <- function (file, envir = .GlobalEnv, chdir = FALSE) {
         setwd(path)
     }
     for (i in exprs) {
-        yy <- eval(i, envir)
+        eval(i, envir)
     }
     invisible()
 }
