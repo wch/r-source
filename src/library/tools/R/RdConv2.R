@@ -722,9 +722,8 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
     		       stopRd(block, Rdfile, "Condition must be \\Sexpr or plain text")
     		   condition <- condition[tags == "TEXT"]
     		   allow <- trimws(strsplit(paste(condition, collapse=""), ",")[[1L]])
-    		   unknown <- allow[allow %notin%
-                                    c("", "latex", "example", "text",
-                                      "html", "TRUE", "FALSE")]
+    		   unknown <- allow %w/o% c("", "latex", "example", "text",
+                                            "html", "TRUE", "FALSE")
     		   if (length(unknown))
     		       warnRd(block, Rdfile, "Unrecognized format: ", unknown)
                    checkContent(block[[2L]])

@@ -5235,7 +5235,7 @@ setRlibs <-
                     } else this_multiarch <- FALSE  # no compiled code
                 }
                 if (this_multiarch && length(R_check_skip_arch))
-                    inst_archs <- inst_archs[inst_archs %notin% R_check_skip_arch]
+                    inst_archs <- inst_archs %w/o% R_check_skip_arch
             }
         } else check_incoming <- FALSE  ## end of if (!is_base_pkg)
 

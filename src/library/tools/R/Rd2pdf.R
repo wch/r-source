@@ -39,7 +39,7 @@
     } else out <- outfile
     cat("\\begin{description}", "\\raggedright{}", sep="\n", file=out)
     fields <- names(desc)
-    fields <- fields[fields %notin% c("Package", "Packaged", "Built")]
+    fields <- fields %w/o% c("Package", "Packaged", "Built")
     if ("Encoding" %in% fields)
         cat("\\inputencoding{", latex_canonical_encoding(desc["Encoding"]),
             "}\n", sep = "", file = out)
