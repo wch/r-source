@@ -271,7 +271,7 @@ function(x, header = TRUE, ...)
     format_entry_as_BibTeX <- function(x) {
         bib <- unclass(utils::toBibtex(x))
         len <- length(bib)
-        out <- c(paste(" ", bib[1L]),
+        out <- c(paste0("  ", bib[1L]),
                  strwrap(bib[-c(1L, len)], indent = 4L, exdent = 6L),
                  "  }")
         c("<pre>",
