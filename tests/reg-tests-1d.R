@@ -687,6 +687,13 @@ stopifnot(identical(as.vector(tt[1:2,]), # *integer* + first value
 stopifnot(identical(tapply(1:3, 1:3, as.raw),
                     array(as.raw(1:3), 3L, dimnames=list(1:3))), ## failed in R < 3.4.0
           identical(3:1, as.vector(tapply(1:3, 1:3, factor, levels=3:1))))
+x <- 1:2 ; (txx <- tapply(x, list(x, x), function(x) "a"))
+##   1   2
+## 1 "a" NA
+## 2 NA  "a"
+stopifnot(identical(txx,
+  matrix(c("a", NA, NA, "a"), 2, dimnames = rep(list(as.character(x)),2L))))
+## Failed in R 3.4.[01]
 
 
 ## str(<list of list>, max.level = 1)

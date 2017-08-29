@@ -355,6 +355,9 @@
 
       \item \code{(1:n)[-n]} no longer segfaults for \code{n <- 2.2e9}
       (on a platform with enough RAM).
+
+      \item \code{x <- 1:2; tapply(x, list(x, x), function(x) "")[1,2]}
+      now correctly returns \code{NA} again.  (\PR{17333})
     }
   }
 }
