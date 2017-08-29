@@ -1971,7 +1971,7 @@ handled as a non-tail-call; if the call is in tail position, then a
 return instruction is emitted.
 <<inline with a guard instruction>>=
 tailcall <- cntxt$tailcall
-if (tailcall) cntxt$tailcall <- FALSE
+if (tailcall) cntxttailcall <- FALSE
 expridx <- cb$putconst(e)
 endlabel <- cb$makelabel()
 cb$putcode(BASEGUARD.OP, expridx, endlabel)
@@ -3448,6 +3448,7 @@ can be done by a function [[inlineSimpleInternalCall]] defined as
 inlineSimpleInternalCall <- function(e, def) {
     if (! dots.or.missing(e) && is.simpleInternal(def)) {
         forms <- formals(def)
+        fnames <- names(forms)
         b <- body(def)
         if (typeof(b) == "language" && length(b) == 2 && b[[1]] == "{")
             b <- b[[2]]
@@ -5049,7 +5050,7 @@ loadcmp <- function (file, envir = .GlobalEnv, chdir = FALSE) {
         setwd(path)
     }
     for (i in exprs) {
-        eval(i, envir)
+        yy <- eval(i, envir)
     }
     invisible()
 }
@@ -5622,6 +5623,7 @@ result using [[rep]].
 frameTypes <- function(env) {
     top <- topenv(env)
     empty <- emptyenv()
+    base <- baseenv()
     <<find the number [[nl]] of local frames>>
     <<find the number [[nn]] of namespace frames>>
     <<find the number [[ng]] of global frames>>
