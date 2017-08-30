@@ -1076,16 +1076,19 @@ Top level compiler functions start by creating a top level context.
 The constructor for top level contexts takes as arguments the current
 compilation environment, described in Section \ref{sec:environments},
 and a list of option values used to override default option settings.
-Top level expressions are assumed to be in tail position, so the
-[[tailcall]] field is initialized as [[TRUE]]. The [[needRETURNJMP]]
-specifies whether a call to the [[return]] function can use the
-[[RETURN]] instruction or has to use a [[longjmp]] via the
+The [[toplevel]] field will be set to [[FALSE]] for compiling
+expressions, such as function arguments, that do not appear at top
+level.  Top level expressions are assumed to be in tail position, so
+the [[tailcall]] field is initialized as [[TRUE]]. The
+[[needRETURNJMP]] specifies whether a call to the [[return]] function
+can use the [[RETURN]] instruction or has to use a [[longjmp]] via the
 [[RETURNJMP]] instruction.  Initially using a simple [[RETURN]] is
 safe; this is set set to [[TRUE]] when compiling promises ad certain
 loops where [[RETURNJMP]] is needed.
 <<[[make.toplevelContext]] function>>=
 make.toplevelContext <- function(cenv, options = NULL)
-    structure(list(tailcall = TRUE,
+    structure(list(toplevel = TRUE,
+                   tailcall = TRUE,
 		   needRETURNJMP = FALSE,
                    env = cenv,
                    optimize = getCompilerOption("optimize", options),
@@ -1181,6 +1184,7 @@ since a [[return]] call that is triggered by forcing a promise
 requires a [[longjmp]] to return from the appropriate function.
 <<[[make.argContext]] function>>=
 make.argContext <- function(cntxt) {
+    cntxt$toplevel <- FALSE
     cntxt$tailcall <- FALSE
     if (! is.null(cntxt$loop))
         cntxt$loop$gotoOK <- FALSE
@@ -1189,6 +1193,7 @@ make.argContext <- function(cntxt) {
 @ %def make.argContext
 <<[[make.promiseContext]] function>>=
 make.promiseContext <- function(cntxt) {
+    cntxt$toplevel <- FALSE
     cntxt$tailcall <- TRUE
     cntxt$needRETURNJMP <- TRUE
     if (! is.null(cntxt$loop))
@@ -4007,8 +4012,19 @@ Assignment expressions are compiled by [[cmpAssign]].  This function
 checks the form of the assignment expression and, for well formed
 expressions then uses [[cmpSymbolAssign]] for simple assignments and
 [[cmpComplexAssign]] for complex assignments.
+
+For now, a temporary hack is needed to address a discrepancy between
+byte code and AST code that can be caused by assignments in arguments
+to primitives. The root issue is that we are not recording referenced
+to arguments that have been evaluated. Once that is addressed we can
+remove this hack.
+<<temporary hack to deal with assignments in arguments issue>>=
+if (! cntxt$toplevel)
+    return(cmpSpecial(e, cb, cntxt))
+@ 
 <<[[cmpAssign]] function>>=
 cmpAssign <- function(e, cb, cntxt) {
+    <<temporary hack to deal with assignments in arguments issue>>
     if (! checkAssign(e, cntxt))
         return(cmpSpecial(e, cb, cntxt))
     superAssign <- as.character(e[[1]]) == "<<-"

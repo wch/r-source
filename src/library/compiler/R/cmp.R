@@ -960,7 +960,8 @@ genCode <- function(e, cntxt, gen = NULL, loc = NULL) {
 ##
 
 make.toplevelContext <- function(cenv, options = NULL)
-    structure(list(tailcall = TRUE,
+    structure(list(toplevel = TRUE,
+                   tailcall = TRUE,
                    needRETURNJMP = FALSE,
                    env = cenv,
                    optimize = getCompilerOption("optimize", options),
@@ -979,6 +980,7 @@ make.callContext <- function(cntxt, call) {
 }
 
 make.promiseContext <- function(cntxt) {
+    cntxt$toplevel <- FALSE
     cntxt$tailcall <- TRUE
     cntxt$needRETURNJMP <- TRUE
     if (! is.null(cntxt$loop))
@@ -1001,6 +1003,7 @@ make.nonTailCallContext <- function(cntxt) {
 }
 
 make.argContext <- function(cntxt) {
+    cntxt$toplevel <- FALSE
     cntxt$tailcall <- FALSE
     if (! is.null(cntxt$loop))
         cntxt$loop$gotoOK <- FALSE
@@ -1561,6 +1564,8 @@ tryGetterInline <- function(call, cb, cntxt) {
 }
 
 cmpAssign <- function(e, cb, cntxt) {
+    if (! cntxt$toplevel)
+        return(cmpSpecial(e, cb, cntxt))
     if (! checkAssign(e, cntxt))
         return(cmpSpecial(e, cb, cntxt))
     superAssign <- as.character(e[[1]]) == "<<-"
