@@ -1,8 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 1998-2017   The R Core Team
  *  Copyright (C) 2002-2015   The R Foundation
+ *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -2102,11 +2102,13 @@ SEXP attribute_hidden do_array(SEXP call, SEXP op, SEXP args, SEXP rho)
 	else
 	    for (i = 0; i < nans; i++) RAW(ans)[i] = 0;
 	break;
-    /* Rest are already initialized */
     case STRSXP:
 	if (nans && lendat)
 	    xcopyStringWithRecycle(ans, vals, 0, nans, lendat);
+	else
+	    for (i = 0; i < nans; i++) SET_STRING_ELT(ans, i, NA_STRING);
 	break;
+    /* Rest are already initialized */
     case VECSXP:
     case EXPRSXP:
 #ifdef SWITCH_TO_REFCNT

@@ -1067,8 +1067,10 @@ stopifnot(71 <= pL, pL <= 141, 81 <= pL[-7], # not on Win-64: pL[-15] <= 121,
           701 <= pL3, pL3 <= 1401) # <= 1201 usually
 ## in R < 3.5.0, both had values as low as 17
 
-## returnValue corner case: return 'default' on error
 
+### Several returnValue() fixes (r 73111) --------------------------
+##          =============
+## returnValue() corner case 1: return 'default' on error
 hret <- NULL
 fret <- NULL
 h <- function() {
@@ -1081,12 +1083,12 @@ f <- function() {
     1
 }
 res <- tryCatch(f(), error=function(e) 21)
-stopifnot(identical(fret, 27))
-stopifnot(identical(hret, 27))
-stopifnot(identical(res, 21))
-
-## returnValue corner case: return 'default' on non-local return
-
+stopifnot(identical(fret, 27)
+	 , identical(hret, 27)
+	 , identical(res, 21)
+)
+##
+## returnValue corner case 2: return 'default' on non-local return
 fret <- NULL
 gret <- NULL
 f <- function(expr) {
@@ -1100,12 +1102,12 @@ g <- function() {
   3
 }
 res <- g()
-stopifnot(identical(fret, 28))
-stopifnot(identical(gret, 2))
-stopifnot(identical(res, 2))
-
-## returnValue corner case: return 'default' on restart
-
+stopifnot(identical(fret, 28)
+	 , identical(gret, 2)
+	 , identical(res, 2)
+)
+##
+## returnValue corner case 3: return 'default' on restart
 mret <- NULL
 hret <- NULL
 lret <- NULL
@@ -1143,15 +1145,15 @@ l <- function(x) {
   stop(cond)
 }
 res <- h(1)
-stopifnot(identical(res, 3))
-stopifnot(identical(mret, 3))
-stopifnot(identical(hret, 3))
-stopifnot(identical(lret, 29))
-stopifnot(identical(uvarg, 1))
-stopifnot(identical(uvret, 3))
-
+stopifnot(identical(res, 3)
+	, identical(mret, 3)
+	, identical(hret, 3)
+	, identical(lret, 29)
+	, identical(uvarg, 1)
+	, identical(uvret, 3)
+)
+##
 ## returnValue: callCC
-
 fret <- NULL
 f <- function(exitfun) {
   on.exit(fret <<- returnValue(30))
@@ -1159,11 +1161,9 @@ f <- function(exitfun) {
   4
 }
 res <- callCC(f)
-stopifnot(identical(res, 3))
-stopifnot(identical(fret, 30))
-
+stopifnot(identical(res, 3), identical(fret, 30))
+##
 ## returnValue: instrumented callCC
-
 fret <- NULL
 mycallCCret <- NULL
 funret <- NULL
@@ -1183,10 +1183,20 @@ f <- function(exitfun) {
   4
 }
 res <- mycallCC(f)
-stopifnot(identical(res, 3))
-stopifnot(identical(fret, 31))
-stopifnot(identical(mycallCCret, 3))
-stopifnot(identical(funret, 31))
+stopifnot(identical(res, 3)
+	, identical(fret, 31)
+	, identical(mycallCCret, 3)
+	, identical(funret, 31)
+)
+## end{ returnValue() section}
+
+
+## array(<empty>, *)  should create (corresponding) NAs for non-raw atomic:
+a <- array(character(), 1:2)
+stopifnot(identical(a, matrix(character(), 1,2)), is.na(a))
+## had "" instead of NA in R < 3.5.0
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
