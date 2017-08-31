@@ -225,7 +225,7 @@ static SEXP rep2(SEXP s, SEXP ncopy)
 	    SEXP elt = lazy_duplicate(VECTOR_ELT(s, i)); \
 	    for (j = (R_xlen_t) it[i]; j > 0; j--) \
 		SET_VECTOR_ELT(a, n++, elt); \
-	    if (j > 1) SET_NAMED(elt, 2); \
+	    if (j > 1) ENSURE_NAMEDMAX(elt); \
 	} \
 	break; \
     case RAWSXP: \

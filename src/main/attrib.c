@@ -143,8 +143,8 @@ SEXP attribute_hidden getAttrib0(SEXP vec, SEXP name)
 	    if (name == R_DimNamesSymbol && TYPEOF(CAR(s)) == LISTSXP)
 		error("old list is no longer allowed for dimnames attribute");
 	    /**** this could be dropped for REFCNT or be less
-		  stringend for NAMED for attributes where the setter
-		  does not have a consistency check that could cail
+		  stringent for NAMED for attributes where the setter
+		  does not have a consistency check that could fail
 		  after mutation in a complex assignment LT */
 	    MARK_NOT_MUTABLE(CAR(s));
 	    return CAR(s);

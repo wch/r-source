@@ -2781,7 +2781,7 @@ static SEXP R_getVarsFromFrame(SEXP vars, SEXP env, SEXP forcesxp)
 	if (force && TYPEOF(tmp) == PROMSXP) {
 	    PROTECT(tmp);
 	    tmp = eval(tmp, R_GlobalEnv);
-	    SET_NAMED(tmp, 2);
+	    ENSURE_NAMEDMAX(tmp);
 	    UNPROTECT(1);
 	}
 	else if (TYPEOF(tmp) != NILSXP && NAMED(tmp) < 1)
@@ -2860,7 +2860,7 @@ do_lazyLoadDBfetch(SEXP call, SEXP op, SEXP args, SEXP env)
     if (TYPEOF(val) == PROMSXP) {
 	REPROTECT(val, vpi);
 	val = eval(val, R_GlobalEnv);
-	SET_NAMED(val, 2);
+	ENSURE_NAMEDMAX(val);
     }
     UNPROTECT(1);
     return val;

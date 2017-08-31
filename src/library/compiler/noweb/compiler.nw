@@ -374,12 +374,12 @@ It might be useful to handle other constants in a similar way, such as
 %% **** check out if small integers is worth doing.
 %% **** mention peephole optimization as alternative
 
-The implementation marks values in the constant pool as read-only after they
-are loaded, by setting the [[NAMED]] field to 2. In the past, all values
-were duplicated as they were retrieved from the constant pool as a
-precaution against bad package code: several packages in the wild assumed
-that an expression [[TRUE]], for example, appearing in code would result in a
-freshly allocated value that could be freely modified in [[.C]] calls.
+The implementation marks values in the constant pool as read-only
+after they are loaded. In the past, all values were duplicated as they
+were retrieved from the constant pool as a precaution against bad
+package code: several packages in the wild assumed that an expression
+[[TRUE]], for example, appearing in code would result in a freshly
+allocated value that could be freely modified in [[.C]] calls.
 
 
 \subsection{Compiling variable references}

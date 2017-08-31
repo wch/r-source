@@ -1350,8 +1350,8 @@ SEXP R_WeakRefValue(SEXP w)
     if (TYPEOF(w) != WEAKREFSXP)
 	error(_("not a weak reference"));
     v = WEAKREF_VALUE(w);
-    if (v != R_NilValue && NAMED(v) <= 1)
-	SET_NAMED(v, 2);
+    if (v != R_NilValue)
+	ENSURE_NAMEDMAX(v);
     return v;
 }
 
@@ -2413,7 +2413,7 @@ SEXP attribute_hidden mkPROMISE(SEXP expr, SEXP rho)
 
     /* precaution to ensure code does not get modified via
        substitute() and the like */
-    if (NAMED(expr) < 2) SET_NAMED(expr, 2);
+    ENSURE_NAMEDMAX(expr);
 
     s->sxpinfo = UnmarkedNodeTemplate.sxpinfo;
     INIT_REFCNT(s);
