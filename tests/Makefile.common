@@ -38,6 +38,7 @@ test-src-demo = demos.R demos2.R
 test-src-internet = internet.R
 test-src-internet2 = internet2.R libcurl.R
 test-src-CRANtools = CRANtools.R
+test-src-large = reg-large.R
 test-src-isas = isas-tests.R
 test-src-primitive = primitives.R
 test-src-random = p-r-random-tests.R
@@ -54,7 +55,7 @@ test-src-reg-1e =
 test-src-reg = $(test-src-reg-1) $(test-src-reg-1e)
 ## overridden in Makefile if recommended packages are not installed.
 ## reg-S4 has to be a sloppy test, as output differs if Matrix is absent.
-test-src-reg3 = reg-tests-3.R reg-examples3.R reg-plot-latin1.R reg-S4.R 
+test-src-reg3 = reg-tests-3.R reg-examples3.R reg-plot-latin1.R reg-S4.R
 
 test-out-strict = $(test-src-strict:.R=.Rout)
 test-out-sloppy = $(test-src-sloppy:.R=.Rout)
@@ -69,6 +70,7 @@ test-out-internet = $(test-src-internet:.R=.Rout)
 test-out-internet2 = $(test-src-internet2:.R=.Rout)
 test-out-isas = $(test-src-isas:.R=.Rout)
 test-out-primitive = $(test-src-primitive:.R=.Rout)
+test-out-large = $(test-src-large:.R=.Rout)
 test-out-random = $(test-src-random:.R=.Rout)
 test-out-reg = $(test-src-reg:.R=.Rout)
 test-out-regexp = $(test-src-regexp:.R=.Rout)
@@ -80,7 +82,7 @@ test-out = $(test-src:.R=.Rout) $(test-out-demo) $(test-out-gct) \
 	$(test-out-internet) \
 	$(test-out-random) $(test-out-reg) $(test-out-reg3) \
 	$(test-out-segfault) $(test-out-isas) $(test-out-internet2) \
-	$(test-out-CRANtools) $(test-out-primitive) $(test-out-dt) \
+	$(test-out-CRANtools) $(test-out-large) $(test-out-primitive) $(test-out-dt) \
 	utf8-regex.Rout PCRE.Rout
 
 .SUFFIXES:
@@ -261,6 +263,10 @@ test-CRANtools:
 	@$(ECHO) "running tests of CRAN tools"
 	@$(ECHO) "  (can be slow unless mirror is local)"
 	@$(MK) $(test-out-CRANtools) RVAL_IF_DIFF=0
+
+test-Large:
+	@$(ECHO) "running tests needing large amounts of processor memory"
+	@$(MK) $(test-out-large) RVAL_IF_DIFF=0
 
 test-Primitive:
 	@$(ECHO) "running tests of primitives"

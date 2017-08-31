@@ -24,7 +24,6 @@ include $(srcdir)/Makefile.common
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 
-## reg-large.R is currently not mentioned elsewhere
 DISTFILES = Makefile.in Makefile.win Makefile.install Makefile.common \
 	$(INSTFILES) gct-foot.R reg-win.R \
 	testit.Rd testit.txt.save testit.html.save \
