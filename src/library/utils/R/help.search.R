@@ -43,7 +43,14 @@ function(hDB, path, pkg)
 	base[, "LibPath"] <- path
 	id <- as.character(1:nrow(vDB) + NROW(hDB[[1L]]))
 	base[, "ID"] <- id
-	base[, "Name"] <- sub("\\.[^.]*$", "", basename(vDB$File))
+	base[, "Name"] <- tools::file_path_sans_ext(basename(vDB$PDF))
+        ## As spotted by Henrik Bengtsson <henrik.bengtsson@gmail.com>,
+        ## using tools::file_path_sans_ext(basename(vDB$File) does not
+        ## work as intended, as non-Sweave vignettes could have nested
+        ## extensions (e.g., 'foo.tex.rsp' or 'foo.pdf.asis').
+        ## The docs say that the 'name' is the "base of the vignette
+        ## filename", which can be interpreted as above for the case of
+        ## nested extensions (and in fact, tools:::httpd() does so).
 	base[, "Topic"] <- base[, "Name"]
 	base[, "Title"] <- vDB$Title
 	base[, "Type"] <- "vignette"
