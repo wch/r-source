@@ -77,13 +77,7 @@ static double approx1(double v, double *x, double *y, R_xlen_t n,
 
     /* find the correct interval by bisection */
     while(i < j - 1) { /* x[i] <= v <= x[j] */
-// ugly..  how to improve ?
-#ifdef LONG_VECTOR_SUPPORT
-	// R_xlen_t is double
-	R_xlen_t ij = (R_xlen_t) trunc((i+j) / 2);
-#else /* R_xlen_t == int ! */
 	R_xlen_t ij = (i+j) / 2;
-#endif
 	/* i+1 <= ij <= j-1 */
 	if(v < x[ij]) j = ij; else i = ij;
 	/* still i < j */

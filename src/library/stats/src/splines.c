@@ -378,7 +378,8 @@ SEXP SplineCoef(SEXP method, SEXP x, SEXP y)
 
     ans = PROTECT(allocVector(VECSXP, 7));
     SET_VECTOR_ELT(ans, 0, ScalarInteger(m));
-    SET_VECTOR_ELT(ans, 1, ScalarInteger(n));
+    SET_VECTOR_ELT(ans, 1, (n > INT_MAX) ?
+		   ScalarReal((double)n) : ScalarInteger(n));
     SET_VECTOR_ELT(ans, 2, x);
     SET_VECTOR_ELT(ans, 3, y);
     SET_VECTOR_ELT(ans, 4, b);
@@ -424,13 +425,7 @@ spline_eval(int method, R_xlen_t nu, double *u, double *v,
 	    i = 0;
 	    R_xlen_t j = n;
 	    do {
-// ugly..  how to improve ?
-#ifdef LONG_VECTOR_SUPPORT
-		// R_xlen_t is double
-		R_xlen_t k = (R_xlen_t) trunc(k = (i+j) / 2);
-#else /* R_xlen_t == int ! */
 		R_xlen_t k = (i+j) / 2;
-#endif
 		if(ul < x[k]) j = k; else i = k;
 	    } while(j > i+1);
 	}
