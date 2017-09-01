@@ -11178,7 +11178,7 @@ can take values
 The object is not bound to any symbol
 @item 1
 The object has been bound to exactly one symbol
-@item 2 or more
+@item >= 2
 The object has potentially been bound to two or more symbols, and one
 should act as if another variable is currently bound to this value.
 The maximal value is @code{NAMEDMAX}.
@@ -11189,11 +11189,11 @@ Note the past tenses: @R{} does not do full reference counting and there
 may currently be fewer bindings.
 
 It is safe to modify the value of any @code{SEXP} for which
-@code{NAMED(foo)} is zero, and if @code{NAMED(foo)} is two, the value
-should be duplicated (@emph{via} a call to @code{duplicate}) before any
-modification.  Note that it is the responsibility of the author of the
-code making the modification to do the duplication, even if it is
-@code{x} whose value is being modified after @code{y <- x}.
+@code{NAMED(foo)} is zero, and if @code{NAMED(foo)} is two or more, the
+value should be duplicated (@emph{via} a call to @code{duplicate})
+before any modification.  Note that it is the responsibility of the
+author of the code making the modification to do the duplication, even
+if it is @code{x} whose value is being modified after @code{y <- x}.
 
 The case @code{NAMED(foo) == 1} allows some optimization, but it can be
 ignored (and duplication done whenever @code{NAMED(foo) > 0}).  (This
@@ -11221,7 +11221,19 @@ rebound immediately.  (Provided the remaining code in @code{"foo<-"}
 make no reference to @code{x}, and no one is going to attempt a direct
 call such as @code{y <- "foo<-"(x)}.)
 
-This mechanism is likely to be replaced in future versions of @R{}.
+This mechanism is likely to be replaced in future versions of @R{}. To
+support future changes, package code should use the macros
+@code{MAYBE_REFERENCED}, @code{MAYBE_SHARED}, and
+@code{MARK_NOT_MUTABLE}. These currently correspond to
+
+@table@code
+@item MAYBE_REFERENCED(x)
+@code{NAMED(x) > 0}
+@item MAYBE_SHARED(x)
+@code{NAMED(x) > 1}
+@item MARK_NOT_MUTABLE(x)
+@code{SET_NAMED(x, NAMEDMAX)}
+@end table
 
 @c commented out as people misread this as general.
 @c Currently all arguments to a @code{.Call} call will have @code{NAMED}

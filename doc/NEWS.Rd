@@ -150,6 +150,15 @@
     }
   }
 
+  \subsection{DOCUMENTATION}{
+    \itemize{
+      \item \sQuote{Writing R Extensions} now mentiones the macros
+      \code{MAYBE_REFERENCED}, \code{MAYBE_SHARED}, and
+      \code{MARK_NOT_MUTABLE} that should be used by package \code{C}
+      code instead \code{NAMED} or \code{SET_NAMED}.
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{printCoefmat()} now also works without column names.
