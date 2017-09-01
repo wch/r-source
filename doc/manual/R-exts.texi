@@ -11178,9 +11178,10 @@ can take values
 The object is not bound to any symbol
 @item 1
 The object has been bound to exactly one symbol
-@item 2
+@item 2 or more
 The object has potentially been bound to two or more symbols, and one
 should act as if another variable is currently bound to this value.
+The maximal value is @code{NAMEDMAX}.
 @end table
 
 @noindent
@@ -11224,7 +11225,7 @@ This mechanism is likely to be replaced in future versions of @R{}.
 
 @c commented out as people misread this as general.
 @c Currently all arguments to a @code{.Call} call will have @code{NAMED}
-@c set to 2, and so users must assume that they need to be duplicated
+@c set to 2 or higher and so users must assume that they need to be duplicated
 @c before alteration.
 
 @node Interface functions .Call and .External, Evaluating R expressions from C, Handling R objects in C, System and foreign language interfaces
