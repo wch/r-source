@@ -134,6 +134,10 @@
       \R run in a terminal using a recent \code{readline} library will
       set the \code{width} option when the terminal is
       resized. Suggested by Ralf Goertz.}
+
+    \item{If multiple \code{on.exit} epressions are set using
+      \code{add = TRUE} then all expressions will now be run even if one
+      signals an error.}
     }
   }
 
