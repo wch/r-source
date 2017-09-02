@@ -34,7 +34,7 @@ on.exit(expr = NULL, add = FALSE)
   the time of exit: to capture the current value in \code{expr} use
   \code{\link{substitute}} or similar.
 
-  If multiple \code{on.exit} epressions are set using \code{add = TRUE}
+  If multiple \code{on.exit} expressions are set using \code{add = TRUE}
   then all expressions will be run even if one signals an error.
 
   This is a \sQuote{special} \link{primitive} function: it only

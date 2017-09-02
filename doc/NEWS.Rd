@@ -135,7 +135,7 @@
       set the \code{width} option when the terminal is
       resized.  Suggested by Ralf Goertz.
 
-      \item If multiple \code{on.exit} epressions are set using
+      \item If multiple \code{on.exit} expressions are set using
       \code{add = TRUE} then all expressions will now be run even if one
       signals an error.
 
@@ -165,7 +165,7 @@
 
   \subsection{DOCUMENTATION}{
     \itemize{
-      \item \sQuote{Writing R Extensions} now mentiones the macros
+      \item \sQuote{Writing R Extensions} now mentions the macros
       \code{MAYBE_REFERENCED}, \code{MAYBE_SHARED}, and
       \code{MARK_NOT_MUTABLE} that should be used by package \code{C}
       code instead \code{NAMED} or \code{SET_NAMED}.
