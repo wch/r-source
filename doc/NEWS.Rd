@@ -386,6 +386,10 @@
 
       \item \code{x <- 1:2; tapply(x, list(x, x), function(x) "")[1,2]}
       now correctly returns \code{NA} again.  (\PR{17333})
+
+      \item Runing of finalizers after explicit GC request moved from
+      the \R interface \code{do_gc} to the \code{C} interface
+      \code{R_gc}.  This helps with reclaiming inaccessible connections.
     }
   }
 }
