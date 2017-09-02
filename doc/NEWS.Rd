@@ -390,6 +390,11 @@
       \item Runing of finalizers after explicit GC request moved from
       the \R interface \code{do_gc} to the \code{C} interface
       \code{R_gc}.  This helps with reclaiming inaccessible connections.
+
+      \item \code{help.search(topic)} and \code{??topic} matching topics
+      in vignettes with multiple file name extensions (e.g.,
+      \file{*.md.rsp} but not \file{*.Rmd}) failed with an error 
+      when using \code{options(help_type = "html")}.      
     }
   }
 }
