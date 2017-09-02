@@ -2647,8 +2647,8 @@ using std::make_unique;
 
 @noindent
 Code needing C++14 features would do better to test for their presence
-@emph{via} `SD-6 feature tests'@footnote{@uref{See
-https://isocpp.org/@/std/@/standing-documents/@/sd-6-sg10-feature-test-recommendations}
+@emph{via} `SD-6 feature tests'@footnote{See
+@uref{https://isocpp.org/@/std/@/standing-documents/@/sd-6-sg10-feature-test-recommendations}
 or
 @uref{http://en.cppreference.com/@/w/@/cpp/@/experimental/@/feature_test}.
 It seems a reasonable assumption that any compiler promising some C++14
