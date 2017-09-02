@@ -130,14 +130,18 @@
       set (e.g.\sspace{}as part of \code{"all"}) also use the
       \code{(tag = value)} syntax for atomic vectors.
 
-    \item{If the option \code{setWidthOnResize} is set and \code{TRUE},
+      \item If the option \code{setWidthOnResize} is set and \code{TRUE},
       \R run in a terminal using a recent \code{readline} library will
       set the \code{width} option when the terminal is
-      resized. Suggested by Ralf Goertz.}
+      resized.  Suggested by Ralf Goertz.
 
-    \item{If multiple \code{on.exit} epressions are set using
+      \item If multiple \code{on.exit} epressions are set using
       \code{add = TRUE} then all expressions will now be run even if one
-      signals an error.}
+      signals an error.
+
+      \item \code{mclapply()} gets an option \code{affinity.list} which
+      allows more efficient execution with heterogenous processors,
+      thanks to Helena Kotthaus.
     }
   }
 

@@ -1,6 +1,6 @@
 % File src/library/parallel/man/mclapply.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2009-2016 R Core Team
+% Copyright 2009-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{mclapply}
@@ -25,13 +25,13 @@
 mclapply(X, FUN, ...,
          mc.preschedule = TRUE, mc.set.seed = TRUE,
          mc.silent = FALSE, mc.cores = getOption("mc.cores", 2L),
-         mc.cleanup = TRUE, mc.allow.recursive = TRUE)
+         mc.cleanup = TRUE, mc.allow.recursive = TRUE, affinity.list = NULL)
 
 mcmapply(FUN, ...,
          MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE,
          mc.preschedule = TRUE, mc.set.seed = TRUE,
          mc.silent = FALSE, mc.cores = getOption("mc.cores", 2L),
-         mc.cleanup = TRUE)
+         mc.cleanup = TRUE, affinity.list = NULL)
 
 mcMap(f, ...)
 }
@@ -73,6 +73,11 @@ mcMap(f, ...)
     to kill the children instead of \code{SIGTERM}.}
   \item{mc.allow.recursive}{Unless true, calling \code{mclapply} in a
     child process will use the child and not fork again.}
+  \item{affinity.list}{a vector (atomic or list) containing the CPU
+    affinity mask for each element of \code{X}.  The CPU affinity mask
+    describes on which CPU (core or hyperthread unit) a given item is
+    allowed to run, see \code{\link{mcaffinity}}.  To use this parameter
+    prescheduling has to be deactivated (\code{mc.preschedule = FALSE}).}
 }
 
 \details{
@@ -102,13 +107,20 @@ mcMap(f, ...)
   limited by the operating system, so you may have trouble using more
   than 100 cores or so (see \code{ulimit -n} or similar in your OS
   documentation) unless you raise the limit of permissible open file
-  descriptors (fork will fail with error \code{"unable to create a
-    pipe"}).
-  
+  descriptors (fork will fail with error \code{"unable to create a pipe"}).
+
   Prior to \R 3.4.0 and on a 32-bit platform, the \link{serialize}d
-  result from each forked process is limited to \eqn{2^{31} - 1}{2^31 -
-    1} bytes.  (Returning very large results via serialization is
+  result from each forked process is limited to \eqn{2^{31} - 1}{2^31 - 1}
+  bytes.  (Returning very large results via serialization is
   inefficient and should be avoided.)
+
+  \code{affinity.list} can be used to run elements of \code{X} on
+  specific CPUs.  This can be helpful, if elements of \code{X} have a
+  high variance of completion time or if the hardware architecture is
+  heterogeneous.  It also enables the development of scheduling
+  strategies for optimizing the overall runtime of parallel jobs.  If
+  \code{affinity.list} is set, the \code{mc.core} parameter is replaced
+  with the number of CPU ids used in the affinity masks.
 }
 
 \value{
@@ -147,7 +159,8 @@ mcMap(f, ...)
 
 \author{
   Simon Urbanek and R Core.
-
+  The \code{affinity.list} feature by Helena Kotthaus and Andreas Lang,
+  TU Dortmund.
   Derived from the \pkg{multicore} package formerly on \acronym{CRAN}.
 }
 \seealso{
@@ -161,7 +174,7 @@ simplify2array(mclapply(rep(4, 5), rnorm))
 # use the same random numbers for all values
 set.seed(1)
 simplify2array(mclapply(rep(4, 5), rnorm, mc.preschedule = FALSE,
-                mc.set.seed = FALSE))
+                        mc.set.seed = FALSE))
 
 ## Contrast this with the examples for clusterCall
 library(boot)
@@ -176,5 +189,25 @@ res <- mclapply(seq_len(mc), run1)
 cd4.boot <- do.call(c, res)
 boot.ci(cd4.boot,  type = c("norm", "basic", "perc"),
         conf = 0.9, h = atanh, hinv = tanh)
+
+## Usage of the affinity.list parameter
+A <- runif(2500000,0,100)
+B <- runif(2500000,0,100)
+C <- runif(5000000,0,100)
+first <- function(i) head(sort(i), n = 1)
+
+# Restict all elements of X to run on CPU 1 and 2
+affL <- list(c(1,2), c(1,2), c(1,2))
+mclapply(list(A, A, A), first, mc.preschedule = FALSE, affinity.list = affL)
+
+
+# Completion times are assumed to have a high variance
+# To optimize the overall execution time elements of X are scheduled to suitable CPUs
+# Assuming that the runtime for C is as long as the runtime of A plus B
+# mapping: A to 1 , B to 1, C to 2
+X <- list(A, B, C)
+affL <- c(1, 1, 2)
+mclapply(X, first, mc.preschedule = FALSE, affinity.list = affL)
+
 }}
 \keyword{interface}
