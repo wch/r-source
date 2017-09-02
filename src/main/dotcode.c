@@ -2647,7 +2647,7 @@ void call_R(char *func, long nargs, void **arguments, char **modes,
 	}
 	if(names && names[i])
 	    SET_TAG(pcall, install(names[i]));
-	SET_NAMED(CAR(pcall), 2);
+	ENSURE_NAMEDMAX(CAR(pcall));
     }
     PROTECT(s = eval(call, R_GlobalEnv));
     switch(TYPEOF(s)) {

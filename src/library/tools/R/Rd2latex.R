@@ -548,7 +548,7 @@ Rd2latex <- function(Rd, out = "", defines = .Platform$OS.type,
         if (length(section)) {
 	    ## need \n unless one follows, so
 	    nxt <- section[[1L]]
-	    if (!attr(nxt, "Rd_tag") %in% c("TEXT", "RCODE") ||
+	    if (attr(nxt, "Rd_tag") %notin% c("TEXT", "RCODE") ||
 		substr(as.character(nxt), 1L, 1L) != "\n") of1("\n")
 	    writeContent(section, tag)
 	    inCodeBlock <<- FALSE

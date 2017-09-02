@@ -66,7 +66,7 @@ function(dir, verbose = FALSE, asCall = TRUE)
              suppress <- !is.null(domain) && !is.name(domain) && is.na(domain)
              ## remove named args
              if(!is.null(names(e)))
-                 e <- e[!names(e) %in% c("call.", "immediate.", "domain")]
+                 e <- e[names(e) %notin% c("call.", "immediate.", "domain")]
              if(asCall) {
                  if(!suppress) strings <<- c(strings, as.character(e)[-1L])
              } else {

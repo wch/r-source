@@ -758,18 +758,16 @@
                         ## for now, hardcode some exceptions
                         ## These are packages which have arch-independent
                         ## code in configure.win
-                        if(!pkg_name %in% c("AnalyzeFMRI", "CORElearn",
-                                            "PearsonDS", "PKI", "RGtk2",
-                                            "RNetCDF", "RODBC", "RSclient",
-                                            "Rcpp", "Runuran", "SQLiteMap",
-                                            "XML", "arulesSequences",
-                                            "cairoDevice", "diversitree",
-                                            "foreign", "fastICA", "glmnet",
-                                            "gstat", "igraph", "jpeg", "png",
-                                            "proj4", "randtoolbox", "rgdal",
-                                            "rngWELL", "rphast", "rtfbs",
-                                            "sparsenet", "tcltk2", "tiff",
-                                            "udunits2"))
+                        if(pkg_name %notin%
+                           c("AnalyzeFMRI", "CORElearn", "PearsonDS",
+                             "PKI", "RGtk2", "RNetCDF", "RODBC",
+                             "RSclient", "Rcpp", "Runuran", "SQLiteMap",
+                             "XML", "arulesSequences", "cairoDevice",
+                             "diversitree", "foreign", "fastICA",
+                             "glmnet", "gstat", "igraph", "jpeg", "png",
+                             "proj4", "randtoolbox", "rgdal", "rngWELL",
+                             "rphast", "rtfbs", "sparsenet", "tcltk2",
+                             "tiff", "udunits2"))
                             one_only <- sum(nchar(readLines("../configure.win", warn = FALSE), "bytes")) > 0
                         if(one_only && !force_biarch) {
                             if(parse_description_field(desc, "Biarch", FALSE))
@@ -1069,7 +1067,7 @@
             i_files <- filtergrep("inst/doc/.*[.](log|aux|bbl|blg|dvi)$",
                                   i_files, perl = TRUE, ignore.case = TRUE)
             ## Temporary kludge
-            if (!dir.exists("vignettes") && ! pkgname %in% c("RCurl"))
+            if (!dir.exists("vignettes") && pkgname %notin% c("RCurl"))
                 i_files <- filtergrep("inst/doc/.*[.](png|jpg|jpeg|gif|ps|eps)$",
                                       i_files, perl = TRUE, ignore.case = TRUE)
             i_files <- i_files %w/o% "Makefile"

@@ -535,7 +535,7 @@ static R_INLINE SEXP getPrimitive(SEXP symbol)
 	PROTECT(value);
 	value = eval(value, R_GlobalEnv);
 	UNPROTECT(1);
-	SET_NAMED(value, 2);
+	ENSURE_NAMEDMAX(value);
     }
     if (TYPEOF(value) == BUILTINSXP || TYPEOF(value) == SPECIALSXP)
         return value;

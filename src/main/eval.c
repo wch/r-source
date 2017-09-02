@@ -526,7 +526,7 @@ static SEXP forcePromise(SEXP e)
 	R_PendingPromises = prstack.next;
 	SET_PRSEEN(e, 0);
 	SET_PRVALUE(e, val);
-	SET_NAMED (val, 2);
+	ENSURE_NAMEDMAX(val);
 	SET_PRENV(e, R_NilValue);
     }
     return PRVALUE(e);
@@ -574,10 +574,10 @@ SEXP eval(SEXP e, SEXP rho)
     case WEAKREFSXP:
     case EXPRSXP:
 	/* Make sure constants in expressions are NAMED before being
-	   used as values.  Setting NAMED to 2 makes sure weird calls
+	   used as values.  Setting NAMED to NAMEDMAX makes sure weird calls
 	   to replacement functions won't modify constants in
 	   expressions.  */
-	if (NAMED(e) <= 1) SET_NAMED(e, 2);
+	ENSURE_NAMEDMAX(e);
 	return e;
     default: break;
     }
@@ -648,7 +648,7 @@ SEXP eval(SEXP e, SEXP rho)
 		UNPROTECT(1);
 	    }
 	    else tmp = PRVALUE(tmp);
-	    SET_NAMED(tmp, 2);
+	    ENSURE_NAMEDMAX(tmp);
 	}
 	else if (!isNull(tmp) && NAMED(tmp) == 0)
 	    SET_NAMED(tmp, 1);
@@ -672,7 +672,7 @@ SEXP eval(SEXP e, SEXP rho)
 	   before inserting it to avoid creating cycles.  (Closure
 	   replacement functions will get the value via the SYMSXP case
 	   from evaluating their 'value' argument so the value will
-	   end up getting duplicated if NAMED = 2.) LT */
+	   end up getting duplicated if NAMED > 1.) LT */
 	break;
     case LANGSXP:
 	if (TYPEOF(CAR(e)) == SYMSXP) {
@@ -2043,7 +2043,7 @@ SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
 	case EXPRSXP:
 	case VECSXP:
 	    /* make sure loop variable is not modified via other vars */
-	    SET_NAMED(VECTOR_ELT(val, i), 2);
+	    ENSURE_NAMEDMAX(VECTOR_ELT(val, i));
 	    /* defineVar is used here and below rather than setVar in
 	       case the loop code removes the variable. */
 	    defineVar(sym, VECTOR_ELT(val, i), rho);
@@ -2051,7 +2051,7 @@ SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	case LISTSXP:
 	    /* make sure loop variable is not modified via other vars */
-	    SET_NAMED(CAR(val), 2);
+	    ENSURE_NAMEDMAX(CAR(val));
 	    defineVar(sym, CAR(val), rho);
 	    val = CDR(val);
 	    break;
@@ -2242,7 +2242,7 @@ SEXP attribute_hidden do_function(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if (TYPEOF(op) == PROMSXP) {
 	op = forcePromise(op);
-	SET_NAMED(op, 2);
+	ENSURE_NAMEDMAX(op);
     }
     if (length(args) < 2) WrongArgCount("function");
     CheckFormals(CAR(args));
@@ -2378,14 +2378,14 @@ static void tmp_cleanup(void *data)
 	R_SetVarLocValue(loc, __v__); \
     } while(0)
 
-/* This macro makes sure the RHS NAMED value is 0 or 2. This is
+/* This macro makes sure the RHS NAMED value is 0 or NAMEDMAX. This is
    necessary to make sure the RHS value returned by the assignment
    expression is correct when the RHS value is part of the LHS
    object. */
 #define FIXUP_RHS_NAMED(r) do { \
 	SEXP __rhs__ = (r); \
-	if (NAMED(__rhs__) && NAMED(__rhs__) <= 1) \
-	    SET_NAMED(__rhs__, 2); \
+	if (NAMED(__rhs__)) \
+	    ENSURE_NAMEDMAX(__rhs__); \
     } while (0)
 
 #define ASSIGNBUFSIZ 32
@@ -2564,8 +2564,8 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
     unbindVar(R_TmpvalSymbol, rho);
 #ifdef OLD_RHS_NAMED
     /* we do not duplicate the value, so to be conservative mark the
-       value as NAMED = 2 */
-    SET_NAMED(saverhs, 2);
+       value as NAMED = NAMEDMAX */
+    ENSURE_NAMEDMAX(saverhs);
 #else
     INCREMENT_NAMED(saverhs);
 #endif
@@ -2893,7 +2893,7 @@ static SEXP VectorToPairListNamed(SEXP x)
 
 SEXP attribute_hidden do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP encl, x, xptr;
+    SEXP encl, x;
     volatile SEXP expr, env, tmp;
 
     int frame;
@@ -2930,8 +2930,8 @@ SEXP attribute_hidden do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
     case VECSXP:
 	/* PR#14035 */
 	x = VectorToPairListNamed(CADR(args));
-	for (xptr = x ; xptr != R_NilValue ; xptr = CDR(xptr))
-	    SET_NAMED(CAR(xptr) , 2);
+	for (SEXP xptr = x ; xptr != R_NilValue ; xptr = CDR(xptr))
+	    ENSURE_NAMEDMAX(CAR(xptr));
 	env = NewEnvironment(R_NilValue, x, encl);
 	PROTECT(env);
 	break;
@@ -3271,7 +3271,7 @@ static R_INLINE void updateObjFromS4Slot(SEXP objSlot, const char *className) {
     if(IS_S4_OBJECT(obj) && isBasicClass(className)) {
 	/* This and the similar test below implement the strategy
 	 for S3 methods selected for S4 objects.  See ?Methods */
-	if(NAMED(obj)) SET_NAMED(obj, 2);
+	if(NAMED(obj)) ENSURE_NAMEDMAX(obj);
 	obj = R_getS4DataSlot(obj, S4SXP); /* the .S3Class obj. or NULL*/
 	if(obj != R_NilValue) /* use the S3Part as the inherited object */
 	    SETCAR(objSlot, obj);
@@ -3909,6 +3909,7 @@ static R_INLINE int bcStackScalarRealEx(R_bcstack_t *s, scalar_value_t *px,
     SKIP_OP(); \
     SETSTACK_LOGICAL(-2, ((a) op (b)) ? TRUE : FALSE);	\
     R_BCNodeStackTop--; \
+    R_Visible = TRUE; \
     NEXT(); \
 } while (0)
 
@@ -3938,7 +3939,7 @@ static R_INLINE SEXP getPrimitive(SEXP symbol, SEXPTYPE type)
     SEXP value = SYMVALUE(symbol);
     if (TYPEOF(value) == PROMSXP) {
 	value = forcePromise(value);
-	SET_NAMED(value, 2);
+	ENSURE_NAMEDMAX(value);
     }
     if (TYPEOF(value) != type) {
 	/* probably means a package redefined the base function so
@@ -3993,7 +3994,7 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
     SEXP op = getPrimitive(opsym, BUILTINSXP);
     if (TYPEOF(op) == PROMSXP) {
 	op = forcePromise(op);
-	SET_NAMED(op, 2);
+	ENSURE_NAMEDMAX(op);
     }
     if (isObject(x) || isObject(y)) {
 	SEXP args, ans;
@@ -4013,6 +4014,7 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
   SETSTACK(-1, CONS_NR(GETSTACK(-1), R_NilValue));		     \
   SETSTACK(-1, do_fun(call, getPrimitive(which, BUILTINSXP), \
 		      GETSTACK(-1), rho));		     \
+  R_Visible = TRUE;					     \
   NEXT(); \
 } while(0)
 
@@ -4025,6 +4027,7 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
   R_BCNodeStackTop--; \
   SETSTACK(-1, do_fun(call, getPrimitive(which, BUILTINSXP),	\
 		      GETSTACK(-1), rho));			\
+  R_Visible = TRUE;						\
   NEXT(); \
 } while(0)
 
@@ -4034,6 +4037,7 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
   SEXP y = GETSTACK(-1); \
   SETSTACK(-2, do_fun(call, opval, opsym, x, y,rho));	\
   R_BCNodeStackTop--; \
+  R_Visible = TRUE; \
   NEXT(); \
 } while(0)
 
@@ -4041,6 +4045,7 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
   SEXP call = VECTOR_ELT(constants, GETOP()); \
   SEXP x = GETSTACK(-1); \
   SETSTACK(-1, cmp_arith1(call, opsym, x, rho)); \
+  R_Visible = TRUE; \
   NEXT(); \
 } while(0)
 
@@ -4065,11 +4070,13 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
 	    }								\
 	    else SKIP_OP();						\
 	    SETSTACK_REAL_EX(-1, dval, sa);				\
+	    R_Visible = TRUE;						\
 	    NEXT();							\
 	}								\
 	else if (typex == INTSXP && vx.ival != NA_INTEGER) {		\
 	    SKIP_OP();							\
 	    SETSTACK_REAL_EX(-1, fun(vx.ival), NULL);			\
+	    R_Visible = TRUE;						\
 	    NEXT();							\
 	}								\
 	Builtin1(do_math1,sym,rho);					\
@@ -4080,6 +4087,7 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
     SKIP_OP(); \
     SETSTACK_REAL(-2, fun(a, b));		\
     R_BCNodeStackTop--; \
+    R_Visible = TRUE; \
     NEXT(); \
 } while (0)
 
@@ -4089,6 +4097,7 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
 	SKIP_OP(); \
 	SETSTACK_INTEGER(-2, (int) dval); \
 	R_BCNodeStackTop--; \
+	R_Visible = TRUE; \
 	NEXT(); \
     } \
 } while(0)
@@ -4101,6 +4110,7 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
 	double dval = fun(a, b);					\
 	SETSTACK_REAL_EX(-2, dval, ans);				\
 	R_BCNodeStackTop--;						\
+	R_Visible = TRUE;						\
 	NEXT();								\
     } while (0)
 
@@ -4111,6 +4121,7 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
 	    SKIP_OP();							\
 	    SETSTACK_INTEGER_EX(-2, val, ans);				\
 	    R_BCNodeStackTop--;						\
+	    R_Visible = TRUE;						\
 	    NEXT();							\
 	}								\
     } while(0)
@@ -4123,11 +4134,13 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
 	if (typex == REALSXP) {						\
 	    SKIP_OP();							\
 	    SETSTACK_REAL_EX(-1, op vx.dval, sa);			\
+	    R_Visible = TRUE;						\
 	    NEXT();							\
 	}								\
 	else if (typex == INTSXP && vx.ival != NA_INTEGER) {		\
 	    SKIP_OP();							\
 	    SETSTACK_INTEGER_EX(-1, op vx.ival, sa);			\
+	    R_Visible = TRUE;						\
 	    NEXT();							\
 	}								\
 	Arith1(opsym);							\
@@ -4191,6 +4204,7 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
 	    }								\
 	    else SKIP_OP();						\
 	    SETSTACK_REAL_EX(-1, dval, sa);				\
+	    R_Visible = TRUE;						\
 	    NEXT();							\
 	}								\
 	SEXP call = VECTOR_ELT(constants, GETOP());			\
@@ -4198,6 +4212,7 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
 	SETSTACK(-1, args); /* to protect */				\
 	SEXP op = getPrimitive(R_LogSym, SPECIALSXP);			\
 	SETSTACK(-1, do_log_builtin(call, op, args, rho));		\
+	R_Visible = TRUE;						\
 	NEXT();								\
  } while (0)
 
@@ -4218,6 +4233,7 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
 	    else SKIP_OP();						\
 	    R_BCNodeStackTop--;						\
 	    SETSTACK_REAL_EX(-1, dval, sa);				\
+	    R_Visible = TRUE;						\
 	    NEXT();							\
 	}								\
 	SEXP call = VECTOR_ELT(constants, GETOP());			\
@@ -4227,6 +4243,7 @@ static SEXP cmp_arith2(SEXP call, int opval, SEXP opsym, SEXP x, SEXP y,
 	SETSTACK(-1, args); /* to protect */				\
 	SEXP op = getPrimitive(R_LogSym, SPECIALSXP);			\
 	SETSTACK(-1, do_log_builtin(call, op, args, rho));		\
+	R_Visible = TRUE;						\
 	NEXT();								\
     } while (0)
 
@@ -4290,6 +4307,7 @@ static R_INLINE double (*getMath1Fun(int i, SEXP call))(double) {
 		else warningcall(call, R_MSG_NA);			\
 	    }								\
 	    SETSTACK_REAL_EX(-1, dval, sa);				\
+	    R_Visible = TRUE;						\
 	    NEXT();							\
 	}								\
 	SEXP args = CONS_NR(GETSTACK(-1), R_NilValue);			\
@@ -4297,6 +4315,7 @@ static R_INLINE double (*getMath1Fun(int i, SEXP call))(double) {
 	SETSTACK(-1, args); /* to protect */				\
 	SEXP op = getPrimitive(sym, BUILTINSXP);			\
 	SETSTACK(-1, do_math1(call, op, args, rho));			\
+	R_Visible = TRUE;						\
 	NEXT();								\
     } while (0)
 
@@ -4316,6 +4335,7 @@ static R_INLINE double (*getMath1Fun(int i, SEXP call))(double) {
 	    vmaxset(vmax);						\
 	    R_BCNodeStackTop -= nargs;					\
 	    SETSTACK(-1, val);						\
+	    R_Visible = TRUE;						\
 	    NEXT();							\
 	}								\
 	SEXP args = R_NilValue;						\
@@ -4328,6 +4348,7 @@ static R_INLINE double (*getMath1Fun(int i, SEXP call))(double) {
 	SEXP sym = CAR(call);						\
 	SEXP op = getPrimitive(sym, BUILTINSXP);			\
 	SETSTACK(-1, do_dotcall(call, op, args, rho));			\
+	R_Visible = TRUE;						\
 	NEXT();								\
     } while (0)
 
@@ -4346,6 +4367,7 @@ static R_INLINE double (*getMath1Fun(int i, SEXP call))(double) {
 		SKIP_OP(); /* skip 'call' index */			\
 		R_BCNodeStackTop--;					\
 		SETSTACK_INTSEQ(-1, rn1, rn2);				\
+		R_Visible = TRUE;					\
 		NEXT();							\
 	    }								\
 	}								\
@@ -4359,6 +4381,7 @@ static R_INLINE double (*getMath1Fun(int i, SEXP call))(double) {
 	    if (len >= 1 && len <= INT_MAX) {			\
 		SKIP_OP(); /* skip 'call' index */		\
 		SETSTACK_INTSEQ(-1, 1, len);			\
+		R_Visible = TRUE;				\
 		NEXT();						\
 	    }							\
 	}							\
@@ -4374,6 +4397,7 @@ static R_INLINE double (*getMath1Fun(int i, SEXP call))(double) {
 		rlen == (int) rlen) {					\
 		SKIP_OP(); /* skip 'call' index */			\
 		SETSTACK_INTSEQ(-1, 1, rlen);				\
+		R_Visible = TRUE;					\
 		NEXT();							\
 	    }								\
 	}								\
@@ -4691,7 +4715,7 @@ static R_INLINE SEXP FORCE_PROMISE(SEXP value, SEXP symbol, SEXP rho,
 	else value = forcePromise(value);
     }
     else value = PRVALUE(value);
-    SET_NAMED(value, 2);
+    ENSURE_NAMEDMAX(value);
     return value;
 }
 
@@ -4932,6 +4956,7 @@ static int tryAssignDispatch(char *generic, SEXP call, SEXP lhs, SEXP rhs,
   SEXP args = CALL_FRAME_ARGS(); \
   SEXP value = fun(call, symbol, args, rho); \
   POP_CALL_FRAME_PLUS(2, value); \
+  R_Visible = TRUE; \
   NEXT(); \
 } while (0)
 
@@ -5013,10 +5038,12 @@ static int tryAssignDispatch(char *generic, SEXP call, SEXP lhs, SEXP rhs,
 
 #define DO_ISTEST(fun) do { \
   SETSTACK(-1, fun(GETSTACK(-1)) ? R_TrueValue : R_FalseValue);	\
+  R_Visible = TRUE; \
   NEXT(); \
 } while(0)
 #define DO_ISTYPE(type) do { \
   SETSTACK(-1, TYPEOF(GETSTACK(-1)) == type ? R_TrueValue : R_FalseValue); \
+  R_Visible = TRUE; \
   NEXT(); \
 } while (0)
 #define isNumericOnly(x) (isNumeric(x) && ! isLogical(x))
@@ -5162,6 +5189,7 @@ static R_INLINE void VECSUBSET_PTR(R_bcstack_t *sx, R_bcstack_t *si,
 		      R_BCNodeStackTop - 2, rho,			\
 		      constants, callidx, sub2);			\
 	R_BCNodeStackTop--;						\
+	R_Visible = TRUE;						\
     } while(0)
 
 static R_INLINE SEXP getMatrixDim(SEXP mat)
@@ -5256,6 +5284,7 @@ static R_INLINE void MATSUBSET_PTR(R_bcstack_t *sx,
 		      R_BCNodeStackTop - 3, rho,			\
 		      constants, callidx, sub2);			\
 	R_BCNodeStackTop -= 2;						\
+	R_Visible = TRUE;						\
     } while (0)
 
 static R_INLINE SEXP addStackArgsList(int n, R_bcstack_t *start, SEXP val)
@@ -5311,6 +5340,7 @@ static R_INLINE void SUBSET_N_PTR(R_bcstack_t *sx, int rank,
 		     R_BCNodeStackTop - rank - 1, rho,			\
 		     constants, callidx, sub2);				\
 	R_BCNodeStackTop -= rank;					\
+	R_Visible = TRUE;						\
     } while (0)
 
 static R_INLINE Rboolean setElementFromScalar(SEXP vec, R_xlen_t i, int typev,
@@ -5773,12 +5803,12 @@ static SEXP inflateAssignmentCall(SEXP expr) {
     /* copy args except the last - the "value" */
     while(CDR(porig) != R_NilValue) {
 	SETCAR(pnew, CAR(porig));
-	SET_NAMED(CAR(porig), 2);
+	ENSURE_NAMEDMAX(CAR(porig));
 	porig = CDR(porig);
 	pnew = CDR(pnew);
     }
     SEXP rhs = CAR(porig);
-    SET_NAMED(rhs, 2);
+    ENSURE_NAMEDMAX(rhs);
     if (TAG(porig) != R_valueSym)
 	return expr;
     return lang3(R_AssignSym, lhs, rhs);
@@ -5790,7 +5820,7 @@ SEXP attribute_hidden R_getBCInterpreterExpression()
     SEXP exp = R_findBCInterpreterExpression();
     if (TYPEOF(exp) == PROMSXP) {
 	exp = forcePromise(exp);
-	SET_NAMED(exp, 2);
+	ENSURE_NAMEDMAX(exp);
     }
 
     /* This tries to mimick the behavior of the AST interpreter to a
@@ -6103,12 +6133,12 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	  case EXPRSXP:
 	  case VECSXP:
 	    value = VECTOR_ELT(seq, i);
-	    SET_NAMED(value, 2);
+	    ENSURE_NAMEDMAX(value);
 	    break;
 	  case LISTSXP:
 	    value = CAR(seq);
 	    SETSTACK(-4, CDR(seq));
-	    SET_NAMED(value, 2);
+	    ENSURE_NAMEDMAX(value);
 	    break;
 	  default:
 	    error(_("invalid sequence argument in for loop"));
@@ -6226,7 +6256,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	SEXP value = SYMVALUE(symbol);
 	if (TYPEOF(value) == PROMSXP) {
 	    value = forcePromise(value);
-	    SET_NAMED(value, 2);
+	    ENSURE_NAMEDMAX(value);
 	}
 	if(RTRACE(value)) {
 	  Rprintf("trace: ");
@@ -6495,8 +6525,8 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	/* original right-hand side value is now on top of stack again */
 #ifdef OLD_RHS_NAMED
 	/* we do not duplicate the right-hand side value, so to be
-	   conservative mark the value as NAMED = 2 */
-	SET_NAMED(GETSTACK(-1), 2);
+	   conservative mark the value as NAMED = NAMEDMAX */
+	ENSURE_NAMEDMAX(GETSTACK(-1));
 #else
 	if (IS_STACKVAL_BOXED(-1)) {
 	    INCREMENT_NAMED(GETSTACK(-1));
@@ -6536,6 +6566,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	    SETSTACK(-1, value);
 	else
 	    SETSTACK(-1, R_subset3_dflt(x, PRINTNAME(symbol), R_NilValue));
+	R_Visible = TRUE;
 	NEXT();
       }
     OP(DOLLARGETS, 2):
@@ -6573,6 +6604,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	SEXP arg = GETSTACK(-1);
 	Rboolean test = (TYPEOF(arg) == INTSXP) && ! inherits(arg, "factor");
 	SETSTACK(-1, test ? R_TrueValue : R_FalseValue);
+	R_Visible = TRUE;
 	NEXT();
       }
     OP(ISDOUBLE, 0): DO_ISTYPE(REALSXP);
@@ -6592,6 +6624,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	SEXP value = GETSTACK(-1);
 	if (SCALAR_LVAL(R_cast_scalar_logical(value)) == FALSE)
 	    pc = codebase + label;
+	R_Visible = TRUE;
 	NEXT();
     }
     OP(AND2ND, 1): {
@@ -6606,6 +6639,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	if (val == FALSE || val == NA_LOGICAL)
 	    SETSTACK(-2, value);
 	R_BCNodeStackTop -= 1;
+	R_Visible = TRUE;
 	NEXT();
     }
     OP(OR1ST, 2):  {
@@ -6617,6 +6651,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	if (val != NA_LOGICAL &&
 	    val != FALSE) /* is true */
 	    pc = codebase + label;
+	R_Visible = TRUE;
 	NEXT();
     }
     OP(OR2ND, 1):  {
@@ -6630,6 +6665,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	if (SCALAR_LVAL(R_cast_scalar_logical(value)) != FALSE)
 	    SETSTACK(-2, value);
 	R_BCNodeStackTop -= 1;
+	R_Visible = TRUE;
 	NEXT();
     }
     OP(GETVAR_MISSOK, 1): DO_GETVAR(FALSE, TRUE);
@@ -6663,8 +6699,8 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	/* original right-hand side value is now on top of stack again */
 #ifdef OLD_RHS_NAMED
 	/* we do not duplicate the right-hand side value, so to be
-	   conservative mark the value as NAMED = 2 */
-	SET_NAMED(GETSTACK(-1), 2);
+	   conservative mark the value as NAMED = NAMEDMAX */
+	ENSURE_NAMEDMAX(GETSTACK(-1));
 #else
 	INCREMENT_NAMED(GETSTACK(-1));
 #endif

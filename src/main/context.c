@@ -150,7 +150,10 @@ void attribute_hidden R_run_onexits(RCNTXT *cptr)
 	       R_CheckStack. LT */
 	    R_Expressions = R_Expressions_keep + 500;
 	    R_CheckStack();
-	    eval(s, c->cloenv);
+	    for (; s != R_NilValue; s = CDR(s)) {
+		c->conexit = CDR(s);
+		eval(CAR(s), c->cloenv);
+	    }
 	    UNPROTECT(1);
 	    R_ExitContext = savecontext;
 	}
@@ -297,7 +300,10 @@ void endcontext(RCNTXT * cptr)
 	cptr->jumptarget = NULL; /* in case on.exit expr calls return() */
 	PROTECT(saveretval);
 	PROTECT(s);
-	eval(s, cptr->cloenv);
+	for (; s != R_NilValue; s = CDR(s)) {
+	    cptr->conexit = CDR(s);
+	    eval(CAR(s), cptr->cloenv);
+	}
 	R_ReturnedValue = saveretval;
 	UNPROTECT(2);
 	R_ExitContext = savecontext;
@@ -666,8 +672,15 @@ SEXP attribute_hidden do_sys(SEXP call, SEXP op, SEXP args, SEXP rho)
 	UNPROTECT(1);
 	return rval;
     case 7: /* sys.on.exit */
-	if( R_GlobalContext->nextcontext != NULL)
-	    return R_GlobalContext->nextcontext->conexit;
+	if( R_GlobalContext->nextcontext != NULL) {
+	    SEXP conexit = R_GlobalContext->nextcontext->conexit;
+	    if (conexit == R_NilValue)
+		return R_NilValue;
+	    else if (CDR(conexit) == R_NilValue)
+		return CAR(conexit);
+	    else
+		return LCONS(R_BraceSymbol, conexit);
+	}
 	else
 	    return R_NilValue;
     case 8: /* sys.parents */
@@ -726,13 +739,18 @@ Rboolean R_ToplevelExec(void (*fun)(void *), void *data)
 {
     RCNTXT thiscontext;
     RCNTXT * volatile saveToplevelContext;
-    volatile SEXP topExp, oldHStack;
+    volatile SEXP topExp, oldHStack, oldRStack, oldRVal;
+    volatile Rboolean oldvis;
     Rboolean result;
 
 
     PROTECT(topExp = R_CurrentExpr);
     PROTECT(oldHStack = R_HandlerStack);
+    PROTECT(oldRStack = R_RestartStack);
+    PROTECT(oldRVal = R_ReturnedValue);
+    oldvis = R_Visible;
     R_HandlerStack = R_NilValue;
+    R_RestartStack = R_NilValue;
     saveToplevelContext = R_ToplevelContext;
 
     begincontext(&thiscontext, CTXT_TOPLEVEL, R_NilValue, R_GlobalEnv,
@@ -749,7 +767,10 @@ Rboolean R_ToplevelExec(void (*fun)(void *), void *data)
     R_ToplevelContext = saveToplevelContext;
     R_CurrentExpr = topExp;
     R_HandlerStack = oldHStack;
-    UNPROTECT(2);
+    R_RestartStack = oldRStack;
+    R_ReturnedValue = oldRVal;
+    R_Visible = oldvis;
+    UNPROTECT(4);
 
     return result;
 }

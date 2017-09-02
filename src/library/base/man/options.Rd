@@ -331,6 +331,10 @@ getOption(x, default = NULL)
       scientific notation: fixed notation will be preferred unless it is
       more than \code{scipen} digits wider.}
 
+    \item{\code{setWidthOnResize}:}{a logical. If set and \code{TRUE}, \R
+      run in a terminal using a recent \code{readline} library will set
+      the \code{width} option when the terminal is resized.}
+
     \item{\code{showWarnCalls}, \code{showErrorCalls}:}{a logical.
       Should warning and error messages show a summary of the call
       stack?  By default error calls are shown in non-interactive

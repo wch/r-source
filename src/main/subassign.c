@@ -559,12 +559,11 @@ static SEXP DeleteListElements(SEXP x, SEXP which)
 }
 
 static R_INLINE SEXP VECTOR_ELT_FIX_NAMED(SEXP y, R_xlen_t i) {
-    /* if RHS (container or element) has NAMED > 0 set NAMED = 2.
+    /* if RHS (container or element) has NAMED > 0 set NAMED = NAMEDMAX.
        Duplicating might be safer/more consistent (PR15098) */
     SEXP val = VECTOR_ELT(y, i);
     if ((NAMED(y) || NAMED(val)))
-	if (NAMED(val) < 2)
-	    SET_NAMED(val, 2);
+	ENSURE_NAMEDMAX(val);
     return val;
 }
 
@@ -800,10 +799,10 @@ static SEXP VectorAssign(SEXP call, SEXP rho, SEXP x, SEXP s, SEXP y)
 	    if (ii == NA_INTEGER) continue;
 	    ii = ii - 1;
 
-	    /* set NAMED on RHS value to 2 if used more than once
+	    /* set NAMED on RHS value to NAMEDMAX if used more than once
 	       (PR15098) */
-	    if (i >= ny && NAMED(VECTOR_ELT(y, iny)) < 2)
-		SET_NAMED(VECTOR_ELT(y, iny), 2);
+	    if (i >= ny)
+		ENSURE_NAMEDMAX(VECTOR_ELT(y, iny));
 
 	    SET_VECTOR_ELT(x, ii, VECTOR_ELT_FIX_NAMED(y, iny));
 	});
@@ -1118,12 +1117,11 @@ static SEXP MatrixAssign(SEXP call, SEXP rho, SEXP x, SEXP s, SEXP y)
 	break;
     case 1919: /* vector <- vector */
 
-	/* set NAMED or RHS values to 2 if they might be used more
+	/* set NAMED or RHS values to NAMEDMAX if they might be used more
 	   than once (PR15098)*/
 	if (ny < ncs * nrs)
 	    for (R_xlen_t i = 0; i < ny; i++)
-		if (NAMED(VECTOR_ELT(y, i)) < 2)
-		    SET_NAMED(VECTOR_ELT(y, i), 2);
+		ENSURE_NAMEDMAX(VECTOR_ELT(y, i));
 
 	for (j = 0; j < ncs; j++) {
 	    jj = INTEGER_ELT(sc, j);
@@ -1339,10 +1337,10 @@ static SEXP ArrayAssign(SEXP call, SEXP rho, SEXP x, SEXP s, SEXP y)
 
 	case 1919: /* vector <- vector */
 
-	    /* set NAMED on RHS value to 2 if used more than once
+	    /* set NAMED on RHS value to NAMEDMAX if used more than once
 	       (PR15098) */
-	    if (i >= ny && NAMED(VECTOR_ELT(y, iny)) < 2)
-		SET_NAMED(VECTOR_ELT(y, iny), 2);
+	    if (i >= ny)
+		ENSURE_NAMEDMAX(VECTOR_ELT(y, iny));
 
 	    SET_VECTOR_ELT(x, ii, VECTOR_ELT_FIX_NAMED(y, iny));
 	    break;

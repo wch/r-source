@@ -1,8 +1,12 @@
 #### Regression Tests that need "much" memory
 #### (and are slow even with enough GBytes of mem)
 
-### FIXME: Run "occasionally" / "in parallel" for 'make check-all' ?
+## Run (currently _only_)  by
+'
+make test-Large
+'
 
+## From CRAN package 'sfsmisc':
 Sys.memGB <- function (kind = "MemTotal")
 {
     mm <- drop(read.dcf("/proc/meminfo", fields = kind))
@@ -17,11 +21,14 @@ Sys.memGB <- function (kind = "MemTotal")
         as.numeric(sub(" kB$", "", mm))/(1000 * 1024)
 }
 
-if(file.exists("/proc/meminfo")) { # e.g. on Linux
-    availableGB <- Sys.memGB("MemAvailable")
-} else {
-    availableGB <- 0 # unless we add something better here
-}
+availableGB <-
+    if(file.exists("/proc/meminfo")) { # e.g. on Linux
+	Sys.memGB("MemAvailable")
+    } else {
+	0 # unless we add something better here
+    }
+cat("Available (processor aka CPU) memory: ", round(availableGB, 1),
+    "GB (Giga Bytes)\n")
 
 ### Testing  readLines()  *large* file with embedded nul aka `\0'
 ##
@@ -72,26 +79,26 @@ rm(res); gc() # for the next step
 if(availableGB > 37) system.time({
     res <- c(a = list(rep(c(b=raw(1)), 2^31-2), raw(2)), recursive=TRUE)
 })
-## 437 sec elapsed (ada-16, ~ 120 GB available) after fix
+## 437 sec elapsed (ada-16, ~ 120 GB available) after fix; then ada-20: 566 sec
 ## In R <= 3.4.1, took  475 sec  elapsed, and gave Error .. :
 ##    could not allocate memory (2048 Mb) in C function 'R_AllocStringBuffer'
 ## ((and that error msg is incorrect because of int overflow))
 str(res) # is fast!
 ## Named raw [1:2147483648] 00 00 00 00 ...
 ## - attr(*, "names")= chr [1:2147483648] "a.b" "a.b" "a.b" "a.b" ...
-gc() # back to ~ 18 GB
+gc() # back to ~ 18.4 GB
 rm(res); gc()
 
 ## Large string's encodeString() -- PR#15885
 if(availableGB > 4) system.time(local(withAutoprint({
     txt <- strrep("test me:", 53687091); object.size(txt) # 429'496'824 bytes
-    nc <- nchar(txt); ## NB this is larger than maximal integer:
+    nc <- nchar(txt) ## NB this is larger than maximal integer:
     nc*5L+8L # NA + Warning   'NAs produced by integer overflow'
     en <- encodeString(txt)
     ## encodeString() seg.faulted in R <= 3.4.1
     stopifnot(identical(txt,en)) # encoding did not change simple ASCII
 })))
-## 52 sec elapsed [nb-mm4, 8 GB]
+## 52 sec elapsed [nb-mm4, 8 GB]; then 66.7 [ada-20; much more GB]
 
 
 ## pretty(x, n) for n = <large> or  large diff(range(x) gave overflow in C code
@@ -99,7 +106,7 @@ if(availableGB > 6) system.time(withAutoprint({
     r <- pretty(c(-1,1)*1e300, n = 449423288, min.n = 1)
     head(r) ; length(r) # was only 21 in  R < 3.5.0
     stopifnot(all.equal(length(r), 400000001, tol = 0.1))
-})) ## 4.8 sec.
+})) ## 4.8--5.5 sec.
 rm(r); gc()
 
 if(availableGB > 17) withAutoprint({
@@ -115,33 +122,44 @@ if(availableGB > 17) withAutoprint({
 ##     nx=2200000000, ns=1, s=0x426db18) at ../../../R/src/main/subscript.c:691
 ## 691			    LOGICAL(indx)[ix] = 0;
 
-if(availableGB > 60) withAutoprint({
-    system.time( x <- ii/n )            #  7.29 user; 14.36 elapsed
-    system.time( y <- sin(pi*x) )       # 50.5  user; 57.4  elapsed
-                                        # and using  VIRT = 33.1 G   RES = 32.9 G
+if(availableGB > 70) withAutoprint({
+    system.time( x <- ii/n )            #  7.29 user; 11.5--14.36 elapsed
+    system.time( y <- sin(pi*x) )       # 50.5  user; 57.4--76.1  elapsed
     ## default n (= "nout") = 50:
     system.time(ap1 <- approx(x,y, ties = "ordered"))# 15.6 user; 25.8 elapsed
     stopifnot(is.list(ap1), names(ap1) == c("x","y"), length(ap1$x) == 50,
               all.equal(ap1$y, sin(pi*ap1$x), tol= 1e-15))
-    rm(ap1); gc() ## keep x,y,n,i2
+    rm(ap1); gc() ## keep x,y,n,i2 --> max used: 92322 Mb
 })
 
 if(availableGB > 211) withAutoprint({ ## continuing from above
     ## both large (x,y) *and* large output (x,y):
     system.time(xo <- x+1/(2*n))     # 9.0 elapsed
-    system.time(ap  <- approx(x,y, ties = "ordered", xout = xo))
+    system.time(ap <- approx(x,y, ties = "ordered", xout = xo))
                                         # elapsed 561.4; using ~ 67 GB
     gc() # showing max.used ~ 109106 Mb
-    stopifnot(is.list(ap), names(ap) == c("x","y"), length(ap$x) == n,
-	      is.na(ap$y[n])) # because ap$x[n] > 1, i.e., outside of [0,1]
-    stopifnot(all.equal(ap$y[i2], sin(pi*xo[i2]), tol= 1e-15))
-    rm(ap); gc() # showing max.used ~ 210356 Mb
+    stopifnot(is.list(ap), names(ap) == c("x","y"), length(ap$x) == n
+            , is.na(ap$y[n]) # because ap$x[n] > 1, i.e., outside of [0,1]
+            , all.equal(ap$y[i2], sin(pi*xo[i2]), tol= 1e-15)
+              )
+    rm(ap); gc() # showing used 83930 Mb | max.used 210356.6 Mb
     ## only large x,y :
-    system.time(ss <- spline(x,y, ties = "ordered", n = 1e4))
-                                        # elapsed 126 s; using ~ 180 GB
-    system.time(
-    stopifnot(is.list(ss), names(ss) == c("x","y"), length(ss$x) == 1e4,
-              all.equal(ss$y, sin(pi*ss$x), tol= 1e-15))
+    system.time(apf <- approxfun(x,y, ties="ordered", rule = 2))# elapsed: ~26s
+    xi <- seq(0, 1, by = 2^-12) ## linear interpol. is less accurate than spline:
+    stopifnot(all.equal(apf(xi), sin(pi*xi), tol= 1e-11))
+    rm(apf); gc() # (~ unchanged)
+    system.time(ssf <- splinefun(x,y, ties = "ordered"))
+                                        # elapsed 120 s; using ~ 158 GB
+    system.time(ss  <- spline   (x,y, ties = "ordered", xout = xi))
+                                        # elapsed 126--265 s; using ~ 207 GB
+    gc()
+    stopifnot(
+        is.list(ss), names(ss) == c("x","y"), length(ss$y) == length(xi)
+      , all.equal(ss$y   , sin(pi*xi), tol= 1e-15)
+      , all.equal(ssf(xi), ss$y,       tol= 1e-15)
     )
+    rm(x, y, xo, ss, ssf) # remove long vector objects
+    gc()
 })
 
+proc.time() # total

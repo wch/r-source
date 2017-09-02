@@ -262,7 +262,8 @@ time debugging.
 @findex SET_NAMED
 @cindex copying semantics
 The @code{named} field is set and accessed by the @code{SET_NAMED} and
-@code{NAMED} macros, and take values @code{0}, @code{1} and @code{2}.
+@code{NAMED} macros, and take values @code{0}, @code{1} and @code{2}, or
+possibly higher if @code{NAMEDMAX} is set to a higher value.
 @R{} has a `call by value' illusion, so an assignment like
 @example
 b <- a
@@ -275,7 +276,7 @@ is no need to copy.  What really happens is that a new symbol @code{b}
 is bound to the same value as @code{a} and the @code{named} field on the
 value object is set (in this case to @code{2}).  When an object is about
 to be altered, the @code{named} field is consulted.  A value of @code{2}
-means that the object must be duplicated before being changed.  (Note
+or more means that the object must be duplicated before being changed.  (Note
 that this does not say that it is necessary to duplicate, only that it
 should be duplicated whether necessary or not.)  A value of @code{0}
 means that it is known that no other @code{SEXP} shares data with this
@@ -884,7 +885,7 @@ used for the evaluation of the body of the function, and promises will
 be forced (and hence actual or default arguments evaluated) when they
 are encountered.
 @findex NAMED
-(Evaluating a promise sets @code{NAMED = 2} on its value, so if the
+(Evaluating a promise sets @code{NAMED = NAMEDMAX} on its value, so if the
 argument was a symbol its binding is regarded as having multiple
 references during the evaluation of the closure call.)
 
@@ -2123,7 +2124,7 @@ dimnames    dimnames<-
 @noindent
 Note that optimizing @code{NAMED = 1} is only effective within a
 primitive (as the closure wrapper of a @code{.Internal} will set
-@code{NAMED = 2} when the promise to the argument is evaluated) and
+@code{NAMED = NAMEDMAX} when the promise to the argument is evaluated) and
 hence replacement functions should where possible be primitive to avoid
 copying (at least in their default methods).
 

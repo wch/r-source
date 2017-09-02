@@ -392,7 +392,7 @@ httpd <- function(path, query, ...)
         ## if 'topic' is not a help doc, try it as an alias in the package
         contents <- readRDS(sub("/help", "/Meta/Rd.rds", path, fixed = TRUE))
         files <- sub("\\.[Rr]d$", "", contents$File)
-        if(! helpdoc %in% files) {
+        if(helpdoc %notin% files) {
             ## or call help()
             aliases <- contents$Aliases
             lens <- lengths(aliases)

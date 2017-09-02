@@ -1005,6 +1005,18 @@ Rstd_ReadConsole(const char *prompt, unsigned char *buf, int len,
 		// introduced in readline 4.0: only used for >= 6.3
 #ifdef HAVE_RL_RESIZE_TERMINAL
 		rl_resize_terminal();
+		static int oldwidth;
+		int height, width;
+		rl_get_screen_size(&height,&width);
+		if (oldwidth >= 0 && oldwidth != width) {
+		    static SEXP opsym = NULL;
+		    if (! opsym)
+			opsym = install("setWidthOnResize");
+		    Rboolean setOK = asLogical(GetOption1(opsym));
+		    oldwidth = width;
+		    if (setOK != NA_LOGICAL && setOK)
+			R_SetOptionWidth(width);
+		}
 #endif
             }
 #endif

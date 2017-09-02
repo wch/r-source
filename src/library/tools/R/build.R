@@ -889,7 +889,7 @@ inRbuildignore <- function(files, pkgdir) {
         args <- args[-1L]
     }
 
-    if(!compact_vignettes %in% c("no", "qpdf", "gs", "gs+qpdf", "both")) {
+    if(compact_vignettes %notin% c("no", "qpdf", "gs", "gs+qpdf", "both")) {
         warning(gettextf("invalid value for '--compact-vignettes', assuming %s",
                          "\"qpdf\""),
                 domain = NA)

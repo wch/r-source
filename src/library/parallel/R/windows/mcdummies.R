@@ -1,7 +1,7 @@
 #  File src/library/parallel/R/windows/mcdummies.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
 
 mclapply <- function(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
                      mc.silent = FALSE, mc.cores = 1L,
-                     mc.cleanup = TRUE, mc.allow.recursive = TRUE)
+                     mc.cleanup = TRUE, mc.allow.recursive = TRUE, affinity.list = NULL)
 {
     cores <- as.integer(mc.cores)
     if(cores < 1L) stop("'mc.cores' must be >= 1")
@@ -39,7 +39,7 @@ pvec <- function(v, FUN, ..., mc.set.seed = TRUE, mc.silent = FALSE,
 mcmapply <-
     function(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE,
              mc.preschedule = TRUE, mc.set.seed = TRUE,
-             mc.silent = FALSE, mc.cores  = 1L, mc.cleanup = TRUE)
+             mc.silent = FALSE, mc.cores  = 1L, mc.cleanup = TRUE, affinity.list = NULL)
 {
     cores <- as.integer(mc.cores)
     if(cores < 1L) stop("'mc.cores' must be >= 1")

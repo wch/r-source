@@ -1007,7 +1007,7 @@ INLINE_FUN SEXP R_FixupRHS(SEXP x, SEXP y)
 #endif
 	    y = duplicate(y);
 	}
-	else if (NAMED(y) < 2) SET_NAMED(y, 2);
+	else ENSURE_NAMEDMAX(y);
     }
     return y;
 }

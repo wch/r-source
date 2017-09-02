@@ -374,12 +374,12 @@ It might be useful to handle other constants in a similar way, such as
 %% **** check out if small integers is worth doing.
 %% **** mention peephole optimization as alternative
 
-The implementation marks values in the constant pool as read-only after they
-are loaded, by setting the [[NAMED]] field to 2. In the past, all values
-were duplicated as they were retrieved from the constant pool as a
-precaution against bad package code: several packages in the wild assumed
-that an expression [[TRUE]], for example, appearing in code would result in a
-freshly allocated value that could be freely modified in [[.C]] calls.
+The implementation marks values in the constant pool as read-only
+after they are loaded. In the past, all values were duplicated as they
+were retrieved from the constant pool as a precaution against bad
+package code: several packages in the wild assumed that an expression
+[[TRUE]], for example, appearing in code would result in a freshly
+allocated value that could be freely modified in [[.C]] calls.
 
 
 \subsection{Compiling variable references}
@@ -1076,16 +1076,19 @@ Top level compiler functions start by creating a top level context.
 The constructor for top level contexts takes as arguments the current
 compilation environment, described in Section \ref{sec:environments},
 and a list of option values used to override default option settings.
-Top level expressions are assumed to be in tail position, so the
-[[tailcall]] field is initialized as [[TRUE]]. The [[needRETURNJMP]]
-specifies whether a call to the [[return]] function can use the
-[[RETURN]] instruction or has to use a [[longjmp]] via the
+The [[toplevel]] field will be set to [[FALSE]] for compiling
+expressions, such as function arguments, that do not appear at top
+level.  Top level expressions are assumed to be in tail position, so
+the [[tailcall]] field is initialized as [[TRUE]]. The
+[[needRETURNJMP]] specifies whether a call to the [[return]] function
+can use the [[RETURN]] instruction or has to use a [[longjmp]] via the
 [[RETURNJMP]] instruction.  Initially using a simple [[RETURN]] is
 safe; this is set set to [[TRUE]] when compiling promises ad certain
 loops where [[RETURNJMP]] is needed.
 <<[[make.toplevelContext]] function>>=
 make.toplevelContext <- function(cenv, options = NULL)
-    structure(list(tailcall = TRUE,
+    structure(list(toplevel = TRUE,
+                   tailcall = TRUE,
 		   needRETURNJMP = FALSE,
                    env = cenv,
                    optimize = getCompilerOption("optimize", options),
@@ -1181,6 +1184,7 @@ since a [[return]] call that is triggered by forcing a promise
 requires a [[longjmp]] to return from the appropriate function.
 <<[[make.argContext]] function>>=
 make.argContext <- function(cntxt) {
+    cntxt$toplevel <- FALSE
     cntxt$tailcall <- FALSE
     if (! is.null(cntxt$loop))
         cntxt$loop$gotoOK <- FALSE
@@ -1189,6 +1193,7 @@ make.argContext <- function(cntxt) {
 @ %def make.argContext
 <<[[make.promiseContext]] function>>=
 make.promiseContext <- function(cntxt) {
+    cntxt$toplevel <- FALSE
     cntxt$tailcall <- TRUE
     cntxt$needRETURNJMP <- TRUE
     if (! is.null(cntxt$loop))
@@ -1971,7 +1976,7 @@ handled as a non-tail-call; if the call is in tail position, then a
 return instruction is emitted.
 <<inline with a guard instruction>>=
 tailcall <- cntxt$tailcall
-if (tailcall) cntxttailcall <- FALSE
+if (tailcall) cntxt$tailcall <- FALSE
 expridx <- cb$putconst(e)
 endlabel <- cb$makelabel()
 cb$putcode(BASEGUARD.OP, expridx, endlabel)
@@ -3448,7 +3453,6 @@ can be done by a function [[inlineSimpleInternalCall]] defined as
 inlineSimpleInternalCall <- function(e, def) {
     if (! dots.or.missing(e) && is.simpleInternal(def)) {
         forms <- formals(def)
-        fnames <- names(forms)
         b <- body(def)
         if (typeof(b) == "language" && length(b) == 2 && b[[1]] == "{")
             b <- b[[2]]
@@ -4008,8 +4012,19 @@ Assignment expressions are compiled by [[cmpAssign]].  This function
 checks the form of the assignment expression and, for well formed
 expressions then uses [[cmpSymbolAssign]] for simple assignments and
 [[cmpComplexAssign]] for complex assignments.
+
+For now, a temporary hack is needed to address a discrepancy between
+byte code and AST code that can be caused by assignments in arguments
+to primitives. The root issue is that we are not recording referenced
+to arguments that have been evaluated. Once that is addressed we can
+remove this hack.
+<<temporary hack to deal with assignments in arguments issue>>=
+if (! cntxt$toplevel)
+    return(cmpSpecial(e, cb, cntxt))
+@ 
 <<[[cmpAssign]] function>>=
 cmpAssign <- function(e, cb, cntxt) {
+    <<temporary hack to deal with assignments in arguments issue>>
     if (! checkAssign(e, cntxt))
         return(cmpSpecial(e, cb, cntxt))
     superAssign <- as.character(e[[1]]) == "<<-"
@@ -5050,7 +5065,7 @@ loadcmp <- function (file, envir = .GlobalEnv, chdir = FALSE) {
         setwd(path)
     }
     for (i in exprs) {
-        yy <- eval(i, envir)
+        eval(i, envir)
     }
     invisible()
 }
@@ -5623,7 +5638,6 @@ result using [[rep]].
 frameTypes <- function(env) {
     top <- topenv(env)
     empty <- emptyenv()
-    base <- baseenv()
     <<find the number [[nl]] of local frames>>
     <<find the number [[nn]] of namespace frames>>
     <<find the number [[ng]] of global frames>>

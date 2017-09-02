@@ -357,6 +357,12 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 # define SET_NAMED(x, v) do {} while (0)
 #endif
 
+#define ENSURE_NAMEDMAX(v) do {			\
+	SEXP __enm_v__ = (v);			\
+	if (NAMED(__enm_v__) < NAMEDMAX)	\
+	    SET_NAMED( __enm_v__, NAMEDMAX);	\
+    } while (0)
+
 /* S4 object bit, set by R_do_new_object for all new() calls */
 #define S4_OBJECT_MASK ((unsigned short)(1<<4))
 #define IS_S4_OBJECT(x) ((x)->sxpinfo.gp & S4_OBJECT_MASK)
