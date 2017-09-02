@@ -93,7 +93,6 @@ typedef int R_len_t;
    code should be re-installed when this changes */
 #define R_INTERNALS_UUID "2fdf6c18-697a-4ba7-b8ef-11c0d92f1327"
 
-
 /*  These exact numeric values are seldom used, but they are, e.g., in
  *  ../main/subassign.c, and they are serialized.
 */
@@ -219,7 +218,7 @@ typedef struct SEXPREC *SEXP;
 
 
 struct sxpinfo_struct {
-    SEXPTYPE type     :  TYPE_BITS;
+    SEXPTYPE type      :  TYPE_BITS;
                             /* ==> (FUNSXP == 99) %% 2^5 == 3 == CLOSXP
 			     * -> warning: `type' is narrower than values
 			     *              of its type
@@ -334,7 +333,7 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 #define RTRACE(x)	((x)->sxpinfo.trace)
 #define LEVELS(x)	((x)->sxpinfo.gp)
 #define SET_OBJECT(x,v)	(((x)->sxpinfo.obj)=(v))
-#define SET_TYPEOF(x,v)	(((x)->sxpinfo.type) = (v))
+#define SET_TYPEOF(x,v)	(((x)->sxpinfo.type)=(v))
 #define SET_NAMED(x,v)	(((x)->sxpinfo.named)=(v))
 #define SET_RTRACE(x,v)	(((x)->sxpinfo.trace)=(v))
 #define SETLEVELS(x,v)	(((x)->sxpinfo.gp)=((unsigned short)v))
@@ -1543,7 +1542,6 @@ void R_set_altrep_data2(SEXP x, SEXP v);
 	    R_SignalCStackOverflow(usage);				\
     } while (FALSE)
 #endif
-
 
 
 #ifdef __cplusplus
