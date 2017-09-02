@@ -1539,13 +1539,14 @@ explanation of the different versions of Rweb and an overview of how
 Rweb works, was published in the Journal of Statistical Software
 (@url{http://www.jstatsoft.org/v04/i01/}).
 
-@email{ulfi@@cs.tu-berlin.de, Ulf Bartel} has developed
-@strong{R-Online}, a simple on-line programming environment for R which
-intends to make the first steps in statistical programming with R
-(especially with time series) as easy as possible.  There is no need for
-a local installation since the only requirement for the user is a
-JavaScript capable browser.  See @url{http://www.osvisions.com/r_online/}
-for more information.
+@c No longer works ...
+@c @email{ulfi@@cs.tu-berlin.de, Ulf Bartel} has developed
+@c @strong{R-Online}, a simple on-line programming environment for R which
+@c intends to make the first steps in statistical programming with R
+@c (especially with time series) as easy as possible.  There is no need for
+@c a local installation since the only requirement for the user is a
+@c JavaScript capable browser.  See @url{http://www.osvisions.com/r_online/}
+@c for more information.
 
 @strong{Rcgi} is a CGI WWW interface to R by @email{mjr@@dsl.pipex.com,
 MJ Ray}.  It had the ability to use ``embedded code'': you could mix
