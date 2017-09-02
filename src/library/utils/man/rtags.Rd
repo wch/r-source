@@ -71,7 +71,7 @@ rtags(path = ".", pattern = "\\\\.[RrSs]$",
 
 \references{
   \url{https://en.wikipedia.org/wiki/Ctags},
-  \url{https://www.gnu.org/software/emacs/manual/html_node/eintr/etags.html}
+  \url{https://www.gnu.org/software/emacs/manual/html_node/emacs/Tags-Tables.html}
 }
 \author{Deepayan Sarkar}
 \seealso{ \code{\link{list.files}}, \code{\link{cat}} }

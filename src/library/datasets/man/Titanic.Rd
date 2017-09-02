@@ -44,7 +44,7 @@
   years saw a rise in public interest in the Titanic.  Very detailed
   data about the passengers is now available on the Internet, at sites
   such as \emph{Encyclopedia Titanica}
-  (\url{http://www.rmplc.co.uk/eduweb/sites/phind}).
+  (\url{https://www.encyclopedia-titanica.org/}).
 }
 \source{
   Dawson, Robert J. MacG. (1995),
