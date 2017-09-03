@@ -89,7 +89,7 @@
 #include <R_ext/RS.h> /* for test of S4 objects */
 #include <R_ext/Itermacros.h>
 
-/* Length modification macro; formally in Rinternals.h */
+/* Length modification macro; formerly in Rinternals.h */
 /* Would need to change to allow ALTREP vectors to grow in place. */
 #define SET_STDVEC_LENGTH(x,v) (STDVEC_LENGTH(x) = (v))
 

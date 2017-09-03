@@ -101,7 +101,7 @@ extern void *Rm_realloc(void * p, size_t n);
 #define free Rm_free
 #endif
 
-/* Length modification macro; formally in Rinternals.h */
+/* Length modification macro; formerly in Rinternals.h */
 #define SET_STDVEC_LENGTH(x,v) (STDVEC_LENGTH(x) = (v))
 
 /* malloc uses size_t.  We are assuming here that size_t is at least
