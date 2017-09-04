@@ -80,8 +80,9 @@ mclapply <- function(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
                 ## build matrix for job mapping with affinity.list
                 ## entry i,j is true if item i is allowed to run on core j
                 cores <- max(unlist(x = affinity.list, recursive = TRUE))
+                d0 <- logical(cores)
                 cpu.map <- lapply(sx, function (i){
-                    data <- vector(mode = "logical", length = cores)
+                    data <- d0
                     data[as.vector(affinity.list[[i]])] <- TRUE
                     data
                 })
@@ -91,17 +92,17 @@ mclapply <- function(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
                 ## all entries true
                 ava <- matrix(TRUE, nrow = length(X), ncol = cores)
             }
-            jobid <- numeric(cores)
+            jobid <- integer(cores)
             ## choose first job for each core to start
             for (i in 1:cores) {
-                jobid[i] <- which(ava[, i])[1]
+                jobid[i] <- match(TRUE, ava[,i]) # = which(ava[, i])[1]
                 ava[jobid[i],] <- FALSE
             }
             ## remove unused cores from matrix
             if(anyNA(jobid)) {
-                unusedCores <- which(is.na(jobid))
-                jobid <- na.omit(jobid)
-                ava <- ava[, -unusedCores, drop = FALSE]
+                unused <- which(is.na(jobid))
+                jobid <- jobid[-unused]
+                ava   <- ava[, -unused, drop = FALSE]
             }
             jobs <- lapply(jobid,
                            function(i) mcparallel(FUN(X[[i]], ...),
@@ -115,7 +116,7 @@ mclapply <- function(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
                 if (is.null(s)) break   # no children -> no hope
                 if (is.integer(s))
                     for (ch in s) {
-                        ji <- which(jobsp == ch)[1]
+                        ji <- match(TRUE, jobsp == ch)
                         ci <- jobid[ji]
                         r <- readChild(ch)
                         if (is.raw(r)) {

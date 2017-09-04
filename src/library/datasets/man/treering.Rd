@@ -1,6 +1,6 @@
 % File src/library/datasets/man/treering.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{treering}
@@ -29,9 +29,12 @@ treering
   Time Series Data Library:
   \url{http://www-personal.buseco.monash.edu.au/~hyndman/TSDL/},
   series \file{CA535.DAT}
+  %% now pointing to  \url{http://datamarket.com/data/list/?q=provider:tsdl}
+  %% or specifially to
+  %% \url{https://datamarket.com/data/set/22oy/} ==> short \url{http://data.is/2iSo2j1}
 }
 \references{
   For some photos of Methuselah Walk see
-  \url{http://www.ltrr.arizona.edu/~hallman/sitephotos/meth.html}
+  \url{https://web.archive.org/web/20110523225828/http://www.ltrr.arizona.edu/~hallman/sitephotos/meth.html}
 }
 \keyword{datasets}
