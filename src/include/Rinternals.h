@@ -594,7 +594,6 @@ int  (SETLEVELS)(SEXP x, int v);
 R_xlen_t (STDVEC_LENGTH)(SEXP);
 R_xlen_t (STDVEC_TRUELENGTH)(SEXP);
 void (SETALTREP)(SEXP, int);
-void (SETTYPEOF)(SEXP, int);
 #endif
 
 int  *(LOGICAL)(SEXP x);

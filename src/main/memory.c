@@ -3505,7 +3505,6 @@ int  (IS_LONG_VEC)(SEXP x) { return IS_LONG_VEC(CHK2(x)); }
 R_xlen_t (STDVEC_LENGTH)(SEXP x) { return STDVEC_LENGTH(CHK2(x)); }
 R_xlen_t (STDVEC_TRUELENGTH)(SEXP x) { return STDVEC_TRUELENGTH(CHK2(x)); }
 void (SETALTREP)(SEXP x, int v) { SETALTREP(x, v); }
-void (SETTYPEOF)(SEXP x, int v) { SETTYPEOF(x, v); }
 #endif
 
 const char *(R_CHAR)(SEXP x) {
