@@ -91,7 +91,13 @@
 
 /* Length modification macro; formerly in Rinternals.h */
 /* Would need to change to allow ALTREP vectors to grow in place. */
-#define SET_STDVEC_LENGTH(x,v) (STDVEC_LENGTH(x) = (v))
+/* SETLENGTH is used when checking the write barrier. */
+/* Always using SETLENGTH would be OK but maybe a little less efficient. */
+#ifdef STDVEC_LENGTH
+# define SET_STDVEC_LENGTH(x,v) (STDVEC_LENGTH(x) = (v))
+#else
+# define SET_STDVEC_LENGTH(x,v) SETLENGTH(x, v)
+#endif
 
 /* This version of SET_VECTOR_ELT does not increment the REFCNT for
    the new vector->element link. It assumes that the old vector is
@@ -107,10 +113,6 @@ static R_INLINE void SET_VECTOR_ELT_NR(SEXP x, R_xlen_t i, SEXP v)
     SET_VECTOR_ELT(x, i, v);
 #endif
 }
-
-/* Length modification macros; formally in Rinternals.h also appears in memory.c */
-#define SET_STDVEC_LENGTH(x,v) (STDVEC_LENGTH(x) = (v))
-
 
 static R_INLINE SEXP getNames(SEXP x)
 {

@@ -3461,12 +3461,17 @@ void (SETLENGTH)(SEXP x, R_xlen_t newlen)
 	error(_("SETLENGTH() can only be applied to a standard vector, "
 		"not a '%s'"), type2char(TYPEOF(x)));
 
+    
     R_xlen_t len = XLENGTH(x);
     R_xlen_t truelen = XTRUELENGTH(x);
     if (IS_GROWABLE(x)) {
 	if (newlen > truelen)
 	    error("SETLENGTH() can't grow vector length to %ld since "
 		  "true length is %ld", newlen, truelen);
+
+	/* do this first case bounds checking is enabled */
+        SET_STDVEC_LENGTH(CHK2(x), newlen);
+
 	switch(TYPEOF(x)) {
 	case STRSXP:
 	    for (R_xlen_t i = len; i < newlen; i++)
@@ -3487,18 +3492,16 @@ void (SETLENGTH)(SEXP x, R_xlen_t newlen)
 	if (TRUE || newlen < len) {
 	    SET_GROWABLE_BIT(x);
 	    SET_TRUELENGTH(x, len);
+	    SET_STDVEC_LENGTH(CHK2(x), newlen);
 	}
     }
-    else
 #define DATA_DOT_TABLE_WORKAROUND
 #ifdef DATA_DOT_TABLE_WORKAROUND
-        return;
-#else
+    else
 	error("can't increase length of non-growable vector from %ld to %ld",
 	      len, newlen);
 #endif
 
-    SET_STDVEC_LENGTH(CHK2(x), newlen);
 }
 
 void (SET_TRUELENGTH)(SEXP x, R_xlen_t v) { SET_TRUELENGTH(CHK2(x), v); }
