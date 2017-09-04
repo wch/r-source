@@ -69,7 +69,9 @@ function(x)
 .get_urls_from_HTML_file <-
 function(f)
 {
-    nodes <- xml2::xml_find_all(xml2::read_html(f), "//a")
+    doc <- xml2::read_html(f)
+    if(!inherits(doc, "xml_node")) return(character())
+    nodes <- xml2::xml_find_all(doc, "//a")
     hrefs <- xml2::xml_attr(nodes, "href")
     unique(hrefs[!is.na(hrefs) & !startsWith(hrefs, "#")])
 }
@@ -325,7 +327,7 @@ function(db, remote = TRUE, verbose = FALSE)
                         R = rep.int("", length(u))) {
         y <- data.frame(URL = u, From = I(p), Status = s, Message = m,
                         New = new, CRAN = cran, Spaces = spaces, R = R,
-                        stringsAsFactors = FALSE)
+                        row.names = NULL, stringsAsFactors = FALSE)
         y$From <- p
         class(y) <- c("check_url_db", "data.frame")
         y
@@ -530,7 +532,7 @@ function(x, ...)
                   sprintf("\nStatus: %s", s)),
            ifelse((m <- x$Message) == "",
                   "",
-                  sprintf("\nMessage: %s", m)),
+                  sprintf("\nMessage: %s", gsub("\n", "\n  ", m))),
            ifelse((m <- x$Spaces) == "",
                   "",
                   "\nURL contains spaces"),
