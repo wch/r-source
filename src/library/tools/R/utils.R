@@ -1976,7 +1976,7 @@ function(x)
 
 .system_with_capture <-
 function(command, args = character(), env = character(),
-         stdin = "", input = NULL)
+         stdin = "", input = NULL, timeout = 0)
 {
     ## Invoke a system command and capture its status, stdout and stderr
     ## into separate components.
@@ -1986,7 +1986,8 @@ function(command, args = character(), env = character(),
     on.exit(unlink(c(outfile, errfile)))
     status <- system2(command, args, env = env,
                       stdout = outfile, stderr = errfile,
-                      stdin = stdin, input = input)
+                      stdin = stdin, input = input,
+                      timeout = timeout)
     list(status = status,
          stdout = readLines(outfile, warn = FALSE),
          stderr = readLines(errfile, warn = FALSE))
