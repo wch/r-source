@@ -613,7 +613,6 @@ SEXP * NORET (VECTOR_PTR)(SEXP x);
 void *(RAWDATAPTR)(SEXP x);
 int (IS_SCALAR)(SEXP x, int type);
 int (ALTREP)(SEXP x);
-int (ALTREP_NOEXP)(SEXP x);
 SEXP ALTREP_DUPLICATE_EX(SEXP x, Rboolean deep);
 SEXP ALTREP_COERCE(SEXP x, int type);
 Rboolean ALTREP_INSPECT(SEXP, int, int, int, void (*)(SEXP, int, int, int));
