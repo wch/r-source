@@ -225,13 +225,15 @@ solely of a simple type such as an atomic vector or function.
 @node Rest of header, The 'data', SEXPTYPEs, SEXPs
 @subsection Rest of header
 
-The @code{sxpinfo} header is defined as a 32-bit C structure by
+The @code{sxpinfo} header is defined as a 64-bit C structure by
 
 @example
+#define NAMED_BITS 16
 struct sxpinfo_struct @{
     SEXPTYPE type      :  5;  /* @r{discussed above} */
+    unsigned int scalar:  1;  /* @r{is this a numeric vector of length 1?}
     unsigned int obj   :  1;  /* @r{is this an object with a class attribute?} */
-    unsigned int named :  2;  /* @r{used to control copying} */
+    unsigned int alt   :  1;  /* @r{is this an @code{ALTREP} object?} */
     unsigned int gp    : 16;  /* @r{general purpose, see below} */
     unsigned int mark  :  1;  /* @r{mark object as `in use' in GC} */
     unsigned int debug :  1;
@@ -239,7 +241,9 @@ struct sxpinfo_struct @{
     unsigned int spare :  1;  /* @r{debug once and with reference counting} */
     unsigned int gcgen :  1;  /* @r{generation for GC} */
     unsigned int gccls :  3;  /* @r{class of node for GC} */
-@};  /*              Tot: 32 */
+    unsigned int named : NAMED_BITS; /* @r{used to control copying} */
+    unsigned int extra : 32 - NAMED_BITS;
+@}; /*		    Tot: 64 */
 @end example
 
 @findex debug bit
@@ -257,7 +261,7 @@ other objects when tracing duplications (see @code{tracemem}).
 The @code{spare} bit is used for closures to mark them for one
 time debugging.
 
-@findex named bit
+@findex named bits
 @findex NAMED
 @findex SET_NAMED
 @cindex copying semantics
