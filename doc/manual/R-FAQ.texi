@@ -4,8 +4,8 @@
 @setfilename R-FAQ.info
 @settitle R FAQ
 @setchapternewpage on
-@set FAQ_YEAR 2016
-@set FAQ_DATE @value{FAQ_YEAR}-06-06
+@set FAQ_YEAR 2017
+@set FAQ_DATE @value{FAQ_YEAR}-09-05
 @set FAQ_VERSION @value{FAQ_DATE}
 @documentlanguage en
 @documentencoding ISO-8859-1
@@ -1504,11 +1504,9 @@ currently beta testing a commercially supported version of R named R+
 (read R plus).
 
 @url{http://www.revolution-computing.com/, Revolution Analytics} has
-released
-@url{http://www.revolution-computing.com/products/revolution-r.php,
-REvolution R}, an enterprise-class statistical analysis system based on
-R, suitable for deployment in professional, commercial and regulated
-environments.
+released REvolution R, now available as Microsoft R (see
+@url{http://blog.revolutionanalytics.com/2016/01/microsoft-r-open.html}
+for more information).
 
 @c Now archived at <http://archive.today/WrgxY>
 @c @url{http://www.random-technologies-llc.com/, Random Technologies}

@@ -198,8 +198,11 @@ tiff(filename = "Rplot\%03d.tiff",
 \references{
   The PNG specification, \url{http://www.w3.org/TR/PNG/}.
   
-  The TIFF specification, including extensions, at
-  \url{https://partners.adobe.com/public/developer/tiff/}.
+  The TIFF specification,
+  \url{https://www.iso.org/standard/34342.html}.
+  See also \url{https://en.wikipedia.org/wiki/TIFF}.
+  %% no longer works:
+  %% \url{https://partners.adobe.com/public/developer/tiff/}.
 }
 \seealso{
   \code{\link{Devices}}, \code{\link{dev.print}}
