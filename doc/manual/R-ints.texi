@@ -4492,16 +4492,9 @@ matrix indices were all converted to positive integers): it now works
 with either @code{INTSXP} or @code{REALSXP} indices.
 
 @item
-@R{} function @code{length} was documented to currently return an
-integer, possibly @code{NA}.  A lot of code has been written that
-assumes that, and even code which calls @code{as.integer(length(x))}
-before passing to @code{.C}/@code{.Fortran} rarely checks for an
-@code{NA} result.
-
-There is a new function @code{xlength} which works for long vectors and
-returns a double value if the length exceeds 2^31-1. At present
-@code{length} returns @code{NA} for long vectors, but it may be safer to
-make that an error.
+The @R{} function @code{length} returns a double value if the length
+exceeds 2^31-1. Code calling @code{as.integer(length(x))} before passing
+to @code{.C}/@code{.Fortran} should checks for an @code{NA} result.
 
 @end itemize
 
