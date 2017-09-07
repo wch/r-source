@@ -3528,7 +3528,12 @@ Rcomplex *(COMPLEX)(SEXP x) {
     return COMPLEX(x);
 }
 
-SEXP *(STRING_PTR)(SEXP x) { return STRING_PTR(CHK(x)); }
+SEXP *(STRING_PTR)(SEXP x) {
+    if(TYPEOF(x) != STRSXP)
+	error("%s() can only be applied to a '%s', not a '%s'",
+	      "STRING_PTR", "character", type2char(TYPEOF(x)));
+    return STRING_PTR(CHK(x));
+}
 
 SEXP * NORET (VECTOR_PTR)(SEXP x)
 {
