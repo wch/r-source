@@ -5768,6 +5768,9 @@ SEXP attribute_hidden R_getCurrentSrcref()
 
 static Rboolean maybeClosureWrapper(SEXP expr)
 {
+    if (TYPEOF(expr) != LANGSXP)
+	return FALSE;
+
     SEXP sym = CAR(expr);
 
     if (!(sym == R_DotInternalSym || sym == R_DotExternalSym ||
@@ -5782,6 +5785,9 @@ static Rboolean maybeClosureWrapper(SEXP expr)
 
 static Rboolean maybeAssignmentCall(SEXP expr)
 {
+    if (TYPEOF(expr) != LANGSXP)
+	return FALSE;
+
     if (TYPEOF(CAR(expr)) != SYMSXP)
 	return FALSE;
     const char *name = CHAR(PRINTNAME(CAR(expr)));
@@ -5793,6 +5799,9 @@ static Rboolean maybeAssignmentCall(SEXP expr)
    a builtin or special (does not search the environment!). */
 static Rboolean maybePrimitiveCall(SEXP expr)
 {
+    if (TYPEOF(expr) != LANGSXP)
+	return FALSE;
+
     if (TYPEOF(CAR(expr)) == SYMSXP) {
 	SEXP value = SYMVALUE(CAR(expr));
 	if (TYPEOF(value) == PROMSXP)
