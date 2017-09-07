@@ -3445,7 +3445,7 @@ int (IS_GROWABLE)(SEXP x) { return IS_GROWABLE(CHK(x)); }
 void (SET_GROWABLE_BIT)(SEXP x) { SET_GROWABLE_BIT(CHK(x)); }
 
 static int nvec[32] = {
-    0,1,1,1,1,1,1,1,  // does NILSXP really count?
+    1,1,1,1,1,1,1,1,
     1,0,0,1,1,0,0,0,
     0,1,1,0,0,1,1,0,
     0,1,1,1,1,1,1,1
