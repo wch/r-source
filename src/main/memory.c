@@ -101,8 +101,6 @@ extern void *Rm_realloc(void * p, size_t n);
 #define free Rm_free
 #endif
 
-/* Length modification macro; formerly in Rinternals.h */
-#define SET_STDVEC_LENGTH(x,v) (STDVEC_LENGTH(x) = (v))
 
 /* malloc uses size_t.  We are assuming here that size_t is at least
    as large as unsigned long.  Changed from int at 1.6.0 to (i) allow
@@ -2519,7 +2517,6 @@ SEXP allocVector3(SEXPTYPE type, R_xlen_t length, R_allocator_t *allocator)
 	    VALGRIND_MAKE_MEM_UNDEFINED(DATAPTR(s), actual_size);
 #endif
 	    s->sxpinfo = UnmarkedNodeTemplate.sxpinfo;
-	    SETSCALAR(s, 1);
 	    SET_NODE_CLASS(s, node_class);
 	    R_SmallVallocSize += alloc_size;
 	    /* Note that we do not include the header size into VallocSize,

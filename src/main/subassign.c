@@ -89,14 +89,14 @@
 #include <R_ext/RS.h> /* for test of S4 objects */
 #include <R_ext/Itermacros.h>
 
-/* Length modification macro; formerly in Rinternals.h */
-/* Would need to change to allow ALTREP vectors to grow in place. */
-/* SETLENGTH is used when checking the write barrier. */
-/* Always using SETLENGTH would be OK but maybe a little less efficient. */
-#ifdef STDVEC_LENGTH
-# define SET_STDVEC_LENGTH(x,v) (STDVEC_LENGTH(x) = (v))
-#else
-# define SET_STDVEC_LENGTH(x,v) SETLENGTH(x, v)
+/* The SET_STDVEC_LENGTH macro is used to modify the length of
+   growable vectors. This would need to change to allow ALTREP vectors to
+   grow in place.
+
+   SETLENGTH is used when checking the write barrier.
+   Always using SETLENGTH would be OK but maybe a little less efficient. */
+#ifndef SET_STDVEC_LENGTH
+# define SET_STDVEC_LENGTH(x, v) SETLENGTH(x, v)
 #endif
 
 /* This version of SET_VECTOR_ELT does not increment the REFCNT for

@@ -403,6 +403,14 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 #define LENGTH(x) LENGTH_EX(x, __FILE__, __LINE__)
 #define TRUELENGTH(x) XTRUELENGTH(x)
 
+/* THIS ABSOLUTELY MUST NOT BE USED IN PACKAGES !!! */
+#define SET_STDVEC_LENGTH(x,v) do {		\
+	SEXP __x__ = (x);			\
+	R_xlen_t __v__ = (v);			\
+	STDVEC_LENGTH(__x__) = __v__;		\
+	SETSCALAR(__x__, __v__ == 1 ? 1 : 0);	\
+    } while (0)
+
 /* Under the generational allocator the data for vector nodes comes
    immediately after the node structure, so the data address is a
    known offset from the node SEXP. */
