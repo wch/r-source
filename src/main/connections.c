@@ -2314,7 +2314,7 @@ static Rboolean clp_open(Rconnection con)
 	this->last = 0;
     }
     con->text = TRUE;
-    //set_buffer(con);
+    /* Not calling set_buffer(con) as the data is already buffered */
     set_iconv(con);
     con->save = -1000;
     this->warned = FALSE;
@@ -2410,7 +2410,7 @@ static size_t clp_read(void *ptr, size_t size, size_t nitems,
     if ((double) size * (double) nitems > INT_MAX)
 	error(_("too large a block specified"));
     used = (request < available) ? request : available;
-    strncpy(ptr, this->buff, used);
+    strncpy(ptr, this->buff + this->pos, used);
     this->pos += used;
     return (size_t) used/size;
 }

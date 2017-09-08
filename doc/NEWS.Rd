@@ -395,6 +395,8 @@
       in vignettes with multiple file name extensions (e.g.,
       \file{*.md.rsp} but not \file{*.Rmd}) failed with an error 
       when using \code{options(help_type = "html")}.      
+
+      \item The X11 device no longer uses the Xlib backing store (\PR{16497}).
     }
   }
 }
