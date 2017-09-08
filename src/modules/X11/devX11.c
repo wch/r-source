@@ -1479,7 +1479,7 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
     memset(&attributes, 0, sizeof(attributes));
     attributes.background_pixel = whitepixel;
     attributes.border_pixel = blackpixel;
-    attributes.backing_store = Always;
+    attributes.backing_store = NotUseful;
     attributes.event_mask = ButtonPressMask 
       | PointerMotionMask 
       | PointerMotionHintMask
