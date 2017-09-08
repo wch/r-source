@@ -3462,7 +3462,7 @@ void (SETLENGTH)(SEXP x, R_xlen_t newlen)
 		"not a '%s'"), type2char(TYPEOF(x)));
 
     
-    R_xlen_t len = XLENGTH(x);
+    R_xlen_t len = XLENGTH(CHK2(x));
     R_xlen_t truelen = XTRUELENGTH(x);
     if (IS_GROWABLE(x)) {
 	if (newlen > truelen)
@@ -3470,7 +3470,7 @@ void (SETLENGTH)(SEXP x, R_xlen_t newlen)
 		  "true length is %ld", newlen, truelen);
 
 	/* do this first case bounds checking is enabled */
-        SET_STDVEC_LENGTH(CHK2(x), newlen);
+        SET_STDVEC_LENGTH(x, newlen);
 
 	switch(TYPEOF(x)) {
 	case STRSXP:
@@ -3492,7 +3492,7 @@ void (SETLENGTH)(SEXP x, R_xlen_t newlen)
 	if (TRUE || newlen < len) {
 	    SET_GROWABLE_BIT(x);
 	    SET_TRUELENGTH(x, len);
-	    SET_STDVEC_LENGTH(CHK2(x), newlen);
+	    SET_STDVEC_LENGTH(x, newlen);
 	}
     }
 #define DATA_DOT_TABLE_WORKAROUND
