@@ -159,6 +159,7 @@ INLINE_FUN R_xlen_t XTRUELENGTH(SEXP x)
 
 INLINE_FUN int LENGTH_EX(SEXP x, const char *file, int line)
 {
+    if (x == R_NilValue) return 0;
     R_xlen_t len = XLENGTH(x);
 #ifdef LONG_VECTOR_SUPPORT
     if (len > R_SHORT_LEN_MAX)
