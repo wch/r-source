@@ -270,9 +270,27 @@ double R_getClockIncrement(void)
 
    Background jobs (ending with &) are not supported. */
 
+#define KILL_SIGNAL1 SIGINT
+#define KILL_SIGNAL2 SIGTERM
+#define KILL_SIGNAL3 SIGKILL
+#define EMERGENCY_TIMEOUT 20
+
+/* The child processes are sent KILL_SIGNAL1 after the specified timeout.
+   As a backup, KILL_SIGNAL2 would be sent after additional EMERGENCY_TIMEOUT
+   seconds. As a backup of the backup, KILL_SIGNAL3 would be sent after yet
+   additional EMERGENCY_TIMEOUT seconds.
+
+   SIGINT is used first because it seems to be handled better by applications:
+   applications happen to wait for child processes to terminate, and hence
+   their execution is included into getrusage/RUSAGE_CHILDREN (proc.time).
+   As follows from empirical observations, SIGTERM can sometimes terminate
+   applications that cannot be terminated by SIGINT. */
+
+int kill_signals[] = { KILL_SIGNAL1, KILL_SIGNAL2, KILL_SIGNAL3 };
 static struct {
     pid_t child_pid;
     int timedout; /* set when the child has been timed out */
+    int kill_attempts; /* 1 after sending KILL_SIGNAL1, etc */
     sigset_t oldset;
     struct sigaction oldalrm, oldint, oldquit, oldhup, oldterm, oldttin,
                      oldttou, oldchld;
@@ -285,6 +303,7 @@ static void timeout_init()
 {
     tost.child_pid = 0;
     tost.timedout = 0;
+    tost.kill_attempts = 0;
     sigprocmask(0, NULL, &tost.oldset);
     sigaction(SIGALRM, NULL, &tost.oldalrm);
     sigaction(SIGINT, NULL, &tost.oldint);
@@ -347,11 +366,16 @@ static void timeout_handler(int sig)
 	return; /* needed for sigsuspend() to be interrupted */
     if (sig == SIGALRM) {
 	tost.timedout = 1;
-	sig = SIGINT;
-	/* one can also use SIGTERM but e.g. when installing a package, SIGINT
-	   seems to be handled better by applications: applications happen to
-	   wait for child processes to terminate, and hence their execution is
-	   included into getrusage/RUSAGE_CHILDREN (proc.time) */
+	if (tost.kill_attempts < 3) {
+	    sig = kill_signals[tost.kill_attempts];
+	    if (tost.kill_attempts < 2) {
+		int saveerrno = errno;
+		alarm(EMERGENCY_TIMEOUT);
+		errno = saveerrno;
+	    }
+	    tost.kill_attempts++;
+	} else
+	    sig = KILL_SIGNAL1; /* should not happen */
     }
     if (tost.child_pid > 0) {
 	/* parent, received a signal */
@@ -399,7 +423,7 @@ static pid_t timeout_wait(int *wstatus)
 static void timeout_cend(void *data)
 {
     if (tost.child_pid > 0) {
-	timeout_handler(SIGINT);
+	timeout_handler(SIGALRM);
 	timeout_wait(NULL);
     }
     timeout_cleanup();
