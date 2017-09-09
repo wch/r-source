@@ -142,6 +142,10 @@
       \item \code{mclapply()} gets an option \code{affinity.list} which
       allows more efficient execution with heterogenous processors,
       thanks to Helena Kotthaus.
+
+      \item The \code{character} methods for \code{as.Date()} and
+      \code{as.POSIXlt} become more flexible via new arguments
+      \code{tryFormats} and \code{optional}.
     }
   }
 
@@ -393,8 +397,8 @@
 
       \item \code{help.search(topic)} and \code{??topic} matching topics
       in vignettes with multiple file name extensions (e.g.,
-      \file{*.md.rsp} but not \file{*.Rmd}) failed with an error 
-      when using \code{options(help_type = "html")}.      
+      \file{*.md.rsp} but not \file{*.Rmd}) failed with an error
+      when using \code{options(help_type = "html")}.
 
       \item The X11 device no longer uses the Xlib backing store (\PR{16497}).
     }
