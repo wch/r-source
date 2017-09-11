@@ -41,7 +41,9 @@ as.Date.POSIXlt <- function(x, ...) .Internal(POSIXlt2Date(x))
 as.Date.factor <- function(x, ...) as.Date(as.character(x), ...)
 
 
-as.Date.character <- function(x, format, ...)
+as.Date.character <- function(x, format,
+                              tryFormats = c("%Y-%m-%d", "%Y/%m/%d"),
+                              optional = FALSE, ...)
 {
     charToDate <- function(x) {
 	xx <- x[1L]
@@ -50,11 +52,17 @@ as.Date.character <- function(x, format, ...)
             while(is.na(xx) && (j <- j+1L) <= length(x)) xx <- x[j]
             if(is.na(xx)) f <- "%Y-%m-%d" # all NAs
         }
-	if(is.na(xx) ||
-	   !is.na(strptime(xx, f <- "%Y-%m-%d", tz="GMT")) ||
-	   !is.na(strptime(xx, f <- "%Y/%m/%d", tz="GMT"))
-           ) return(strptime(x, f))
-	stop("character string is not in a standard unambiguous format")
+	if(is.na(xx))
+            strptime(x, f)
+        else {
+            for(ff in tryFormats)
+                if(!is.na(strptime(xx, ff, tz="GMT")))
+                    return(strptime(x, ff))
+            ## no success :
+            if(optional)
+                as.Date.character(rep.int(NA_character_, length(x)), "%Y-%m-%d")
+            else stop("character string is not in a standard unambiguous format")
+        }
     }
     res <- if(missing(format)) charToDate(x) else strptime(x, format, tz="GMT")
     as.Date(res)

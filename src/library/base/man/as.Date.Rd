@@ -1,6 +1,6 @@
 % File src/library/base/man/as.Date.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{as.Date}
@@ -23,7 +23,8 @@
 }
 \usage{
 as.Date(x, \dots)
-\method{as.Date}{character}(x, format, \dots)
+\method{as.Date}{character}(x, format, tryFormats = c("\%Y-\%m-\%d", "\%Y/\%m/\%d"),
+        optional = FALSE, \dots)
 \method{as.Date}{numeric}(x, origin, \dots)
 \method{as.Date}{POSIXct}(x, tz = "UTC", \dots)
 
@@ -32,15 +33,19 @@ as.Date(x, \dots)
 \method{as.character}{Date}(x, \dots)
 }
 \arguments{
-  \item{x}{An object to be converted.}
-  \item{format}{A character string.  If not specified, it will try
-    \code{"\%Y-\%m-\%d"} then \code{"\%Y/\%m/\%d"} on the first
-    non-\code{NA} element, and give an error if neither works.
-    Otherwise, the processing is via \code{\link{strptime}}}
-  \item{origin}{a Date object, or something which can be coerced by
+  \item{x}{an object to be converted.}
+  \item{format}{\code{\link{character}} string.  If not specified, it will try
+    \code{tryFormats} one by one on the first non-\code{NA} element, and
+    give an error if none works.  Otherwise, the processing is via
+    \code{\link{strptime}}.}
+  \item{tryFormats}{\code{\link{character}} vector of \code{format}
+    strings to try if \code{format} is not specified.}
+  \item{optional}{\code{\link{logical}} indicating to return \code{NA}
+    (instead of signalling an error) if the format guessing does not succeed.}
+  \item{origin}{a \code{Date} object, or something which can be coerced by
     \code{as.Date(origin, \dots)} to such an object.}
   \item{tz}{a time zone name.}
-  \item{\dots}{Further arguments to be passed from or to other methods,
+  \item{\dots}{further arguments to be passed from or to other methods,
     including \code{format} for \code{as.character} and \code{as.Date}
     methods.}
 }
@@ -160,7 +165,7 @@ as.Date(34519, origin = "1904-01-01") # 1998-07-05
 ## (it takes the non-existent 0000-01-01 as day 1)
 ## so Matlab day 734373 can be imported as
 as.Date(734373, origin = "1970-01-01") - 719529 # 2010-08-23
-## (value from 
+## (value from
 ## http://www.mathworks.de/de/help/matlab/matlab_prog/represent-date-and-times-in-MATLAB.html)
 
 ## Time zone effect

@@ -68,31 +68,37 @@ as.POSIXlt.factor <- function(x, ...)
     y
 }
 
-as.POSIXlt.character <- function(x, tz = "", format, ...)
+as.POSIXlt.character <-
+    function(x, tz = "", format,
+             tryFormats = c("%Y-%m-%d %H:%M:%OS",
+                            "%Y/%m/%d %H:%M:%OS",
+                            "%Y-%m-%d %H:%M",
+                            "%Y/%m/%d %H:%M",
+                            "%Y-%m-%d",
+                            "%Y/%m/%d"), optional = FALSE, ...)
 {
-    x <- unclass(x) # precaution PR7826
+    x <- unclass(x) # precaution PR#7826
     if(!missing(format)) {
         res <- strptime(x, format, tz = tz)
         if(nzchar(tz)) attr(res, "tzone") <- tz
         return(res)
     }
     xx <- x[!is.na(x)]
-    if (!length(xx)) {
+    if (!length(xx)) { # all NA
         res <- strptime(x, "%Y/%m/%d")
         if(nzchar(tz)) attr(res, "tzone") <- tz
         return(res)
-    } else if(all(!is.na(strptime(xx, f <- "%Y-%m-%d %H:%M:%OS", tz = tz))) ||
-            all(!is.na(strptime(xx, f <- "%Y/%m/%d %H:%M:%OS", tz = tz))) ||
-            all(!is.na(strptime(xx, f <- "%Y-%m-%d %H:%M", tz = tz))) ||
-            all(!is.na(strptime(xx, f <- "%Y/%m/%d %H:%M", tz = tz))) ||
-            all(!is.na(strptime(xx, f <- "%Y-%m-%d", tz = tz))) ||
-            all(!is.na(strptime(xx, f <- "%Y/%m/%d", tz = tz)))
-            ) {
-        res <- strptime(x, f, tz = tz)
-        if(nzchar(tz)) attr(res, "tzone") <- tz
-        return(res)
-    }
-    stop("character string is not in a standard unambiguous format")
+    } else
+        for(f in tryFormats)
+            if(all(!is.na(strptime(xx, f, tz = tz)))) {
+                res <- strptime(x, f, tz = tz)
+                if(nzchar(tz)) attr(res, "tzone") <- tz
+                return(res)
+            }
+    ## no success :
+    if(optional)
+        as.POSIXlt.character(rep.int(NA_character_, length(x)), tz=tz)
+    else stop("character string is not in a standard unambiguous format")
 }
 
 as.POSIXlt.numeric <- function(x, tz = "", origin, ...)
@@ -101,16 +107,17 @@ as.POSIXlt.numeric <- function(x, tz = "", origin, ...)
     as.POSIXlt(as.POSIXct(origin, tz = "UTC", ...) + x, tz = tz)
 }
 
-as.POSIXlt.default <- function(x, tz = "", ...)
+as.POSIXlt.default <- function(x, tz = "", optional = FALSE, ...)
 {
-
     if(inherits(x, "POSIXlt")) return(x)
     if(is.logical(x) && all(is.na(x)))
         return(as.POSIXlt(as.POSIXct.default(x), tz = tz))
-    stop(gettextf("do not know how to convert '%s' to class %s",
-                  deparse(substitute(x)),
-                  dQuote("POSIXlt")),
-         domain = NA)
+    if(optional)
+        as.POSIXlt.character(rep.int(NA_character_, length(x)), tz=tz)
+    else stop(gettextf("do not know how to convert '%s' to class %s",
+                       deparse(substitute(x)),
+                       dQuote("POSIXlt")),
+              domain = NA)
 }
 
 as.POSIXct <- function(x, tz = "", ...) UseMethod("as.POSIXct")
