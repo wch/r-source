@@ -78,8 +78,8 @@
 # define STRICT_TYPECHECK
 #endif
 
-INLINE_FUN void *DATAPTR(SEXP x) {
 #ifdef STRICT_TYPECHECK
+INLINE_FUN void CHKVEC(SEXP x) {
     switch (TYPEOF(x)) {
     case CHARSXP:
     case LGLSXP:
@@ -95,7 +95,13 @@ INLINE_FUN void *DATAPTR(SEXP x) {
     default:
 	error("cannot get data pointer of '%s' objects", type2char(TYPEOF(x)));
     }
+}
+#else
+# define CHKVEC(x) do {} while(0)
 #endif
+
+INLINE_FUN void *DATAPTR(SEXP x) {
+    CHKVEC(x);
     if (ALTREP(x))
 	return ALTVEC_DATAPTR(x, TRUE);
     else
@@ -103,23 +109,7 @@ INLINE_FUN void *DATAPTR(SEXP x) {
 }
 
 INLINE_FUN void *DATAPTR_RO(SEXP x) {
-#ifdef STRICT_TYPECHECK
-    switch (TYPEOF(x)) {
-    case CHARSXP:
-    case LGLSXP:
-    case INTSXP:
-    case REALSXP:
-    case CPLXSXP:
-    case STRSXP:
-    case VECSXP:
-    case EXPRSXP:
-    case RAWSXP:
-    case WEAKREFSXP:
-	break;
-    default:
-	error("cannot get data pointer of '%s' objects", type2char(TYPEOF(x)));
-    }
-#endif
+    CHKVEC(x);
     if (ALTREP(x))
 	return ALTVEC_DATAPTR(x, FALSE);
     else
@@ -127,23 +117,7 @@ INLINE_FUN void *DATAPTR_RO(SEXP x) {
 }
 
 INLINE_FUN void *DATAPTR_OR_NULL(SEXP x, Rboolean writeable) {
-#ifdef STRICT_TYPECHECK
-    switch (TYPEOF(x)) {
-    case CHARSXP:
-    case LGLSXP:
-    case INTSXP:
-    case REALSXP:
-    case CPLXSXP:
-    case STRSXP:
-    case VECSXP:
-    case EXPRSXP:
-    case RAWSXP:
-    case WEAKREFSXP:
-	break;
-    default:
-	error("cannot get data pointer of '%s' objects", type2char(TYPEOF(x)));
-    }
-#endif
+    CHKVEC(x);
     if (ALTREP(x))
 	return ALTVEC_DATAPTR_OR_NULL(x, writeable);
     else
