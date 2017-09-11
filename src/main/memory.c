@@ -3632,6 +3632,8 @@ SEXP (SET_VECTOR_ELT)(SEXP x, R_xlen_t i, SEXP v) {
 #ifdef TESTING_WRITE_BARRIER
 static R_INLINE SEXP CHKCONS(SEXP e)
 {
+    if (ALTREP(e))
+	return CHK(e);
     switch (TYPEOF(e)) {
     case LISTSXP:
     case LANGSXP:

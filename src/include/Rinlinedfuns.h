@@ -74,6 +74,9 @@
 #include <R_ext/Altrep.h>
 
 /* define inline-able functions */
+#ifdef TESTING_WRITE_BARRIER
+# define STRICT_TYPECHECK
+#endif
 
 INLINE_FUN void *DATAPTR(SEXP x) {
 #ifdef STRICT_TYPECHECK
@@ -171,7 +174,7 @@ INLINE_FUN int LENGTH_EX(SEXP x, const char *file, int line)
 #ifdef STRICT_TYPECHECK
 # define CHECK_SCALAR_TYPE(x, type)				\
     if (TYPEOF(x) != type || ALTREP(x) || XLENGTH(x) != 1)	\
-	erro("bad scalar")
+	error("bad scalar")
 #else
 # define CHECK_SCALAR_TYPE(x, type) do { } while(FALSE)
 #endif

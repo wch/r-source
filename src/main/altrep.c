@@ -114,8 +114,8 @@ void attribute_hidden R_reinit_altrep_classes(DllInfo *dll)
 
 static void SET_ALTREP_CLASS(SEXP x, SEXP class)
 {
-    SET_TAG(x, class);
     SETALTREP(x, 1);
+    SET_TAG(x, class);
 }
 
 #define CLASS_METHODS_TABLE(class) STDVEC_DATAPTR(class)
