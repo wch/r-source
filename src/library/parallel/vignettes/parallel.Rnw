@@ -479,6 +479,7 @@ p <- 5000  # covariates (orig. 20000 is more realistic; limit time here)
 ## Different sized matrices as filter inputs
 ## Matrix A and B form smaller work loads
 ## while matrix C forms a bigger workload (2*p)
+library(stats)
 A <- matrix(replicate( p,  rnorm(n, sd = runif(1, 0.1, 10))), n, p)
 B <- matrix(replicate( p,  rnorm(n, sd = runif(1, 0.1, 10))), n, p)
 C <- matrix(replicate(2*p, rnorm(n, sd = runif(1, 0.1, 10))), n, 2*p)
