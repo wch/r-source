@@ -118,7 +118,7 @@ static void SET_ALTREP_CLASS(SEXP x, SEXP class)
     SETALTREP(x, 1);
 }
 
-#define CLASS_METHODS_TABLE(class) RAWDATAPTR(class)
+#define CLASS_METHODS_TABLE(class) STDVEC_DATAPTR(class)
 #define GENERIC_METHODS_TABLE(x, class) \
     ((class##_methods_t *) CLASS_METHODS_TABLE(ALTREP_CLASS(x)))
 
@@ -2724,7 +2724,7 @@ static R_INLINE SEXP ExpandDeferredStringElt(SEXP x, R_xlen_t i)
     if (val == R_NilValue) {
 	R_xlen_t n = XLENGTH(x);
 	val = allocVector(STRSXP, n);
-	memset(RAWDATAPTR(val), 0, n * sizeof(SEXP));
+	memset(STDVEC_DATAPTR(val), 0, n * sizeof(SEXP));
 	SET_DEFERRED_STRING_EXPANDED(x, val);
     }
 

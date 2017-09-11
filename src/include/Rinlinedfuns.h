@@ -96,7 +96,7 @@ INLINE_FUN void *DATAPTR(SEXP x) {
     if (ALTREP(x))
 	return ALTVEC_DATAPTR(x, TRUE);
     else
-	return RAWDATAPTR(x);
+	return STDVEC_DATAPTR(x);
 }
 
 INLINE_FUN void *DATAPTR_RO(SEXP x) {
@@ -120,7 +120,7 @@ INLINE_FUN void *DATAPTR_RO(SEXP x) {
     if (ALTREP(x))
 	return ALTVEC_DATAPTR(x, FALSE);
     else
-	return RAWDATAPTR(x);
+	return STDVEC_DATAPTR(x);
 }
 
 INLINE_FUN void *DATAPTR_OR_NULL(SEXP x, Rboolean writeable) {
@@ -144,7 +144,7 @@ INLINE_FUN void *DATAPTR_OR_NULL(SEXP x, Rboolean writeable) {
     if (ALTREP(x))
 	return ALTVEC_DATAPTR_OR_NULL(x, writeable);
     else
-	return RAWDATAPTR(x);
+	return STDVEC_DATAPTR(x);
 }
 
 INLINE_FUN R_xlen_t XLENGTH(SEXP x)
@@ -176,7 +176,7 @@ INLINE_FUN int LENGTH_EX(SEXP x, const char *file, int line)
 # define CHECK_SCALAR_TYPE(x, type) do { } while(FALSE)
 #endif
 
-INLINE_FUN Rboolean *LOGICAL0(SEXP x) { return (Rboolean *) RAWDATAPTR(x); }
+INLINE_FUN Rboolean *LOGICAL0(SEXP x) { return (Rboolean *) STDVEC_DATAPTR(x); }
 INLINE_FUN R_scalar_logical_t R_cast_scalar_logical(SEXP x)
 {
     CHECK_SCALAR_TYPE(x, LGLSXP);
@@ -191,7 +191,7 @@ INLINE_FUN void SET_SCALAR_LVAL(R_scalar_logical_t x, Rboolean v)
     LOGICAL0(R_SEXP(x))[0] = v;
 }
 
-INLINE_FUN int *INTEGER0(SEXP x) { return (int *) RAWDATAPTR(x); }
+INLINE_FUN int *INTEGER0(SEXP x) { return (int *) STDVEC_DATAPTR(x); }
 INLINE_FUN R_scalar_integer_t R_cast_scalar_integer(SEXP x)
 {
     CHECK_SCALAR_TYPE(x, INTSXP);
@@ -207,7 +207,7 @@ INLINE_FUN void SET_SCALAR_IVAL(R_scalar_integer_t x, int v)
     INTEGER0(R_SEXP(x))[0] = v;
 }
 
-INLINE_FUN double *REAL0(SEXP x) { return (double *) RAWDATAPTR(x); }
+INLINE_FUN double *REAL0(SEXP x) { return (double *) STDVEC_DATAPTR(x); }
 INLINE_FUN R_scalar_real_t R_cast_scalar_real(SEXP x)
 {
     CHECK_SCALAR_TYPE(x, REALSXP);
@@ -223,7 +223,7 @@ INLINE_FUN void SET_SCALAR_DVAL(R_scalar_real_t x, double v)
     REAL0(R_SEXP(x))[0] = v;
 }
 
-INLINE_FUN Rcomplex *COMPLEX0(SEXP x) { return (Rcomplex *) RAWDATAPTR(x); }
+INLINE_FUN Rcomplex *COMPLEX0(SEXP x) { return (Rcomplex *) STDVEC_DATAPTR(x); }
 INLINE_FUN R_scalar_complex_t R_cast_scalar_complex(SEXP x)
 {
     CHECK_SCALAR_TYPE(x, CPLXSXP);
@@ -239,7 +239,7 @@ INLINE_FUN void SET_SCALAR_CVAL(R_scalar_complex_t x, Rcomplex v)
     COMPLEX0(R_SEXP(x))[0] = v;
 }
 
-INLINE_FUN Rbyte *RAW0(SEXP x) { return (Rbyte *) RAWDATAPTR(x); }
+INLINE_FUN Rbyte *RAW0(SEXP x) { return (Rbyte *) STDVEC_DATAPTR(x); }
 INLINE_FUN R_scalar_raw_t R_cast_scalar_raw(SEXP x)
 {
     CHECK_SCALAR_TYPE(x, RAWSXP);

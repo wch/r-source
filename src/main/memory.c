@@ -3536,14 +3536,14 @@ SEXP (VECTOR_ELT)(SEXP x, R_xlen_t i) {
     return CHK(VECTOR_ELT(x, i));
 }
 
-void *(RAWDATAPTR)(SEXP x)
+void *(STDVEC_DATAPTR)(SEXP x)
 {
     if (ALTREP(x))
-	error("cannot get RAWDATAPTR from ALTREP object");
+	error("cannot get STDVEC_DATAPTR from ALTREP object");
     if (! isVector(x))
-	error("RAWDATAPTR can only be applied to a vector, not a '%s'",
+	error("STDVEC_DATAPTR can only be applied to a vector, not a '%s'",
 	      type2char(TYPEOF(x)));
-    return RAWDATAPTR(x);
+    return STDVEC_DATAPTR(x);
 }
 
 int *(LOGICAL)(SEXP x) {

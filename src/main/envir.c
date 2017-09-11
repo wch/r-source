@@ -191,7 +191,7 @@ Rboolean R_envHasNoSpecialSymbols (SEXP env)
 #define HASHTABLEGROWTHRATE  1.2
 #define HASHMINSIZE	     29
 #define SET_HASHPRI(x,v)     SET_TRUELENGTH(x,v)
-#define HASHCHAIN(table, i)  ((SEXP *) RAWDATAPTR(table))[i]
+#define HASHCHAIN(table, i)  ((SEXP *) STDVEC_DATAPTR(table))[i]
 
 #define IS_HASHED(x)	     (HASHTAB(x) != R_NilValue)
 

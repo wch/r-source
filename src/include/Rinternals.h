@@ -414,8 +414,8 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 /* Under the generational allocator the data for vector nodes comes
    immediately after the node structure, so the data address is a
    known offset from the node SEXP. */
-#define RAWDATAPTR(x)	((void *) (((SEXPREC_ALIGN *) (x)) + 1))
-#define CHAR(x)		((const char *) RAWDATAPTR(x))
+#define STDVEC_DATAPTR(x) ((void *) (((SEXPREC_ALIGN *) (x)) + 1))
+#define CHAR(x)		((const char *) STDVEC_DATAPTR(x))
 #define LOGICAL(x)	((int *) DATAPTR(x))
 #define INTEGER(x)	((int *) DATAPTR(x))
 #define RAW(x)		((Rbyte *) DATAPTR(x))
@@ -618,7 +618,7 @@ SEXP *(STRING_PTR)(SEXP x);
 SEXP * NORET (VECTOR_PTR)(SEXP x);
 
 /* ALTREP support */
-void *(RAWDATAPTR)(SEXP x);
+void *(STDVEC_DATAPTR)(SEXP x);
 int (IS_SCALAR)(SEXP x, int type);
 int (ALTREP)(SEXP x);
 SEXP ALTREP_DUPLICATE_EX(SEXP x, Rboolean deep);
@@ -1509,7 +1509,7 @@ SEXP R_FixupRHS(SEXP x, SEXP y);
 void *(DATAPTR)(SEXP x);
 void *(DATAPTR_RO)(SEXP x);
 void *(DATAPTR_OR_NULL)(SEXP x, Rboolean writeable);
-void *(RAWDATAPTR)(SEXP x);
+void *(STDVEC_DATAPTR)(SEXP x);
 int (INTEGER_ELT)(SEXP x, R_xlen_t i);
 double (REAL_ELT)(SEXP x, R_xlen_t i);
 SEXP R_altrep_data1(SEXP x);
