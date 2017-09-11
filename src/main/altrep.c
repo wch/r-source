@@ -3503,7 +3503,7 @@ static void *wrapper_Dataptr(SEXP x, Rboolean writeable)
     SEXP data = WRAPPER_WRAPPED(x);
 
     /* If the data might be shared and a writeable pointer is
-       requested, then the data needst o be duplicated now. */
+       requested, then the data needs to be duplicated now. */
     if (writeable && MAYBE_SHARED(data)) {
 	PROTECT(x);
 	WRAPPER_SET_WRAPPED(x, shallow_duplicate(data));
