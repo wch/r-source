@@ -283,12 +283,6 @@
       \item Reverted unintended change in behavior of \code{return}
       calls in \code{on.exit} expressions introduced by stack unwinding
       changes in \R 3.3.0.
-
-      \item \code{array(character(), 1)} now gives (a 1D array with)
-      \code{NA} as has been documented for a long time as in the other
-      cases of zero-length array initialization and also compatibly with
-      \code{matrix(character(), *)}.  As mentioned there, this also
-      fixes \PR{17333}.
     }
   }
 }
@@ -383,6 +377,10 @@
 	--enable-maintainer-mode} without having installed
       \command{notangle} (it was required in \R 3.4.[01]).
 
+      \item Dispatch on \code{\dots} calls the method using its name,
+      instead of \code{.Method} (for consistency with default dispatch),
+      and only attempts to pass non-missing arguments from the generic.
+
       \item \code{readRDS(textConnection(.))} works again.  (\PR{17325})
 
       \item \code{(1:n)[-n]} no longer segfaults for \code{n <- 2.2e9}
@@ -401,6 +399,12 @@
       when using \code{options(help_type = "html")}.
 
       \item The X11 device no longer uses the Xlib backing store (\PR{16497}).
+
+      \item \code{array(character(), 1)} now gives (a 1D array with)
+      \code{NA} as has been documented for a long time as in the other
+      cases of zero-length array initialization and also compatibly with
+      \code{matrix(character(), *)}.  As mentioned there, this also
+      fixes \PR{17333}.
     }
   }
 }
