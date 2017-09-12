@@ -498,12 +498,6 @@ Rboolean (Rf_isObject)(SEXP s);
 
 #define IS_SIMPLE_SCALAR(x, type) \
     (IS_SCALAR(x, type) && ATTRIB(x) == R_NilValue)
-#define IS_SIMPLE_SCALAR_REAL(x, pv) \
-    (IS_SCALAR_REAL(x, pv) && ATTRIB(x) == R_NilValue)
-#define IS_SIMPLE_SCALAR_INTEGER(x, pv) \
-    (IS_SCALAR_INTEGER(x, pv) && ATTRIB(x) == R_NilValue)
-#define IS_SIMPLE_SCALAR_LOGICAL(x, pv) \
-    (IS_SCALAR_LOGICAL(x, pv) && ATTRIB(x) == R_NilValue)
 
 #define NAMEDMAX 2
 #define INCREMENT_NAMED(x) do {				\
