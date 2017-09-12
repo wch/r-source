@@ -101,7 +101,6 @@ extern void *Rm_realloc(void * p, size_t n);
 #define free Rm_free
 #endif
 
-
 /* malloc uses size_t.  We are assuming here that size_t is at least
    as large as unsigned long.  Changed from int at 1.6.0 to (i) allow
    2-4Gb objects on 32-bit system and (ii) objects limited only by
@@ -2522,6 +2521,7 @@ SEXP allocVector3(SEXPTYPE type, R_xlen_t length, R_allocator_t *allocator)
 	    VALGRIND_MAKE_MEM_UNDEFINED(DATAPTR(s), actual_size);
 #endif
 	    s->sxpinfo = UnmarkedNodeTemplate.sxpinfo;
+	    SETSCALAR(s, 1);
 	    SET_NODE_CLASS(s, node_class);
 	    R_SmallVallocSize += alloc_size;
 	    /* Note that we do not include the header size into VallocSize,
@@ -3450,6 +3450,7 @@ static R_INLINE SEXP CHK2(SEXP x)
 
 /* Vector Accessors */
 int (LENGTH)(SEXP x) { return x == R_NilValue ? 0 : LENGTH(CHK2(x)); }
+R_xlen_t (XLENGTH)(SEXP x) { return XLENGTH(CHK2(x)); }
 R_xlen_t (TRUELENGTH)(SEXP x) { return TRUELENGTH(CHK2(x)); }
 
 void (SETLENGTH)(SEXP x, R_xlen_t newlen)

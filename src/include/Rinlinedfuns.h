@@ -124,7 +124,7 @@ INLINE_FUN void *DATAPTR_OR_NULL(SEXP x, Rboolean writeable) {
 	return STDVEC_DATAPTR(x);
 }
 
-INLINE_FUN R_xlen_t XLENGTH(SEXP x)
+INLINE_FUN R_xlen_t XLENGTH_EX(SEXP x)
 {
     return ALTREP(x) ? ALTREP_LENGTH(x) : STDVEC_LENGTH(x);
 }

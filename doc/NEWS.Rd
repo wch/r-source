@@ -147,6 +147,10 @@
       \item The \code{character} methods for \code{as.Date()} and
       \code{as.POSIXlt} become more flexible via new arguments
       \code{tryFormats} and \code{optional}.
+
+      \item The object header layout has been changed to support merging
+      the \code{ALTREP} branch. This requires re-installing packages
+      that use compiled code.
     }
   }
 

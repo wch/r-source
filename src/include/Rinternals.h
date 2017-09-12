@@ -403,6 +403,9 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 #define LENGTH(x) LENGTH_EX(x, __FILE__, __LINE__)
 #define TRUELENGTH(x) XTRUELENGTH(x)
 
+/* defined as a macro since fastmatch packages tests for it */
+#define XLENGTH(x) XLENGTH_EX(x)
+
 /* THIS ABSOLUTELY MUST NOT BE USED IN PACKAGES !!! */
 #define SET_STDVEC_LENGTH(x,v) do {		\
 	SEXP __x__ = (x);			\
@@ -593,6 +596,7 @@ void (SET_GROWABLE_BIT)(SEXP x);
 
 /* Vector Access Functions */
 int  (LENGTH)(SEXP x);
+R_xlen_t (XLENGTH)(SEXP x);
 R_xlen_t  (TRUELENGTH)(SEXP x);
 void (SETLENGTH)(SEXP x, R_xlen_t v);
 void (SET_TRUELENGTH)(SEXP x, R_xlen_t v);
@@ -1431,9 +1435,6 @@ void R_orderVector1(int *indx, int n, SEXP x,       Rboolean nalast, Rboolean de
 
 #endif
 
-/* Remap XLENGTH for now since the fastmatch package checks for a macro */
-#define XLENGTH Rf_XLENGTH
-
 #if defined(CALLED_FROM_DEFN_H) && !defined(__MAIN__) && (defined(COMPILING_R) || ( __GNUC__ && !defined(__INTEL_COMPILER) ))
 #include "Rinlinedfuns.h"
 #else
@@ -1499,6 +1500,7 @@ R_xlen_t  Rf_xlength(SEXP);
 R_xlen_t  (XLENGTH)(SEXP x);
 R_xlen_t  (XTRUELENGTH)(SEXP x);
 int LENGTH_EX(SEXP x, const char *file, int line);
+R_xlen_t XLENGTH_EX(SEXP x);
 # ifdef INLINE_PROTECT
 SEXP Rf_protect(SEXP);
 void Rf_unprotect(int);
