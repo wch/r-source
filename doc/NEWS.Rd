@@ -129,6 +129,7 @@
       \emph{via} \code{.deparseOpts()}, \code{"nice_names"}, which when
       set (e.g.\sspace{}as part of \code{"all"}) also use the
       \code{(tag = value)} syntax for atomic vectors.
+      \cr \code{m:n} now also deparses nicely when \eqn{m > n}.
 
       \item If the option \code{setWidthOnResize} is set and \code{TRUE},
       \R run in a terminal using a recent \code{readline} library will

@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2017-08-25 r73136) -- "Unsuffered Consequences"
+R Under development (unstable) (2017-09-12 r73239) -- "Unsuffered Consequences"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -880,9 +880,8 @@ checking formals(.):
 pairlist(x = 1, callme = quote(pi))
 --=--=--=--=--
 n: new("ngCMatrix",
-i = c(5L, 4L, 3L, 2L, 1L, 0L), p = c(0L, 0L, 
-1L, 2L, 3L, 4L, 5L, 6L), Dim = 6:7, Dimnames = list(NULL, NULL), 
-    factors = list())
+i = 5:0, p = c(0L, 0L, 1L, 2L, 3L, 4L, 5L, 6L
+), Dim = 6:7, Dimnames = list(NULL, NULL), factors = list())
 --=--=--=--=--
 nA: new("ngCMatrix",
 i = c(0L, 3L, 4L, 5L, 2L, 6L, 7L), p = c(0L, 

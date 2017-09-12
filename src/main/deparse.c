@@ -146,6 +146,7 @@ static void vec2buff(SEXP, LocalParseData *);
 static void linebreak(Rboolean *lbreak, LocalParseData *);
 static void deparse2(SEXP, SEXP, LocalParseData *);
 
+// .Internal(deparse(expr, width.cutoff, backtick, .deparseOpts(control), nlines))
 SEXP attribute_hidden do_deparse(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
@@ -322,26 +323,18 @@ static void con_cleanup(void *data)
     if(con->isopen) con->close(con);
 }
 
+// .Internal(dput(x, file, .deparseOpts(control)))
 SEXP attribute_hidden do_dput(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP saveenv, tval;
-    int i, ifile, res;
-    Rboolean wasopen, havewarned = FALSE, opts;
-    Rconnection con = (Rconnection) 1; /* stdout */
-    RCNTXT cntxt;
-
     checkArity(op, args);
 
-    tval = CAR(args);
-    saveenv = R_NilValue;	/* -Wall */
+    SEXP tval = CAR(args),
+	saveenv = R_NilValue; // -Wall
     if (TYPEOF(tval) == CLOSXP) {
 	PROTECT(saveenv = CLOENV(tval));
 	SET_CLOENV(tval, R_GlobalEnv);
     }
-    opts = SHOWATTRIBUTES;
-    if(!isNull(CADDR(args)))
-	opts = asInteger(CADDR(args));
-
+    Rboolean opts = isNull(CADDR(args)) ? SHOWATTRIBUTES : asInteger(CADDR(args));
     tval = deparse1(tval, 0, opts);
     if (TYPEOF(CAR(args)) == CLOSXP) {
 	SET_CLOENV(CAR(args), saveenv);
@@ -350,12 +343,11 @@ SEXP attribute_hidden do_dput(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(tval); /* against Rconn_printf */
     if(!inherits(CADR(args), "connection"))
 	error(_("'file' must be a character string or connection"));
-    ifile = asInteger(CADR(args));
-
-    wasopen = 1;
+    int ifile = asInteger(CADR(args));
     if (ifile != 1) {
-	con = getConnection(ifile);
-	wasopen = con->isopen;
+	Rconnection con = getConnection(ifile);
+	RCNTXT cntxt;
+	Rboolean wasopen = con->isopen;
 	if(!wasopen) {
 	    char mode[5];
 	    strcpy(mode, con->mode);
@@ -369,30 +361,32 @@ SEXP attribute_hidden do_dput(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    cntxt.cenddata = con;
 	}
 	if(!con->canwrite) error(_("cannot write to this connection"));
-    }/* else: "Stdout" */
-    for (i = 0; i < LENGTH(tval); i++)
-	if (ifile == 1)
-	    Rprintf("%s\n", CHAR(STRING_ELT(tval, i)));
-	else {
-	    res = Rconn_printf(con, "%s\n", CHAR(STRING_ELT(tval, i)));
+	Rboolean havewarned = FALSE;
+	for (int i = 0; i < LENGTH(tval); i++) {
+	    int res = Rconn_printf(con, "%s\n", CHAR(STRING_ELT(tval, i)));
 	    if(!havewarned &&
-	       res < strlen(CHAR(STRING_ELT(tval, i))) + 1)
+	       res < strlen(CHAR(STRING_ELT(tval, i))) + 1) {
 		warning(_("wrote too few characters"));
+		havewarned = TRUE;
+	    }
 	}
+	if(!wasopen) {endcontext(&cntxt); con->close(con);}
+    }
+    else { // ifile == 1 : "Stdout"
+	for (int i = 0; i < LENGTH(tval); i++)
+	    Rprintf("%s\n", CHAR(STRING_ELT(tval, i)));
+    }
     UNPROTECT(1); /* tval */
-    if(!wasopen) {endcontext(&cntxt); con->close(con);}
     return (CAR(args));
 }
 
+// .Internal(dump(list, file, envir, opts, evaluate))
 SEXP attribute_hidden do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP file, names, o, objs, tval, source, outnames;
     int i, j, nobjs, nout, res;
-    Rboolean wasopen, havewarned = FALSE, evaluate;
-    Rconnection con;
     int opts;
     const char *obj_name;
-    RCNTXT cntxt;
 
     checkArity(op, args);
 
@@ -412,8 +406,8 @@ SEXP attribute_hidden do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* <NOTE>: change this if extra options are added */
     if(opts == NA_INTEGER || opts < 0 || opts > 2048)
 	error(_("'opts' should be small non-negative integer"));
-    evaluate = asLogical(CAD4R(args));
-    if (!evaluate) opts |= DELAYPROMISES;
+    // evaluate :
+    if (!asLogical(CAD4R(args))) opts |= DELAYPROMISES;
 
     PROTECT(o = objs = allocList(nobjs));
 
@@ -443,8 +437,9 @@ SEXP attribute_hidden do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 	}
 	else {
-	    con = getConnection(INTEGER(file)[0]);
-	    wasopen = con->isopen;
+	    Rconnection con = getConnection(INTEGER(file)[0]);
+	    Rboolean wasopen = con->isopen;
+	    RCNTXT cntxt;
 	    if(!wasopen) {
 		char mode[5];
 		strcpy(mode, con->mode);
@@ -458,6 +453,7 @@ SEXP attribute_hidden do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
 		cntxt.cenddata = con;
 	    }
 	    if(!con->canwrite) error(_("cannot write to this connection"));
+	    Rboolean havewarned = FALSE;
 	    for (i = 0, nout = 0; i < nobjs; i++) {
 		const char *s;
 		unsigned int extra = 6;
@@ -477,8 +473,10 @@ SEXP attribute_hidden do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
 		for (j = 0; j < LENGTH(tval); j++) {
 		    res = Rconn_printf(con, "%s\n", CHAR(STRING_ELT(tval, j)));
 		    if(!havewarned &&
-		       res < strlen(CHAR(STRING_ELT(tval, j))) + 1)
+		       res < strlen(CHAR(STRING_ELT(tval, j))) + 1) {
 			warning(_("wrote too few characters"));
+			havewarned = TRUE;
+		    }
 		}
 		UNPROTECT(1); /* tval */
 		o = CDR(o);
@@ -1384,19 +1382,20 @@ static void deparse2buf_name(SEXP nv, int i, LocalParseData *d) {
     }
 }
 
+// deparse atomic vectors :
 static void vector2buff(SEXP vector, LocalParseData *d)
 {
-    int i;
     const char *strp;
     char *buff = 0, hex[64]; // 64 is more than enough
     Rboolean surround = FALSE, allNA, addL = TRUE;
+    int i,
+	tlen = length(vector),
+	quote = isString(vector) ? '"' : 0;
     SEXP nv = R_NilValue;
     if(d->opts & NICE_NAMES) {
 	nv = getAttrib(vector, R_NamesSymbol);
 	if (length(nv) == 0) nv = R_NilValue;
     }
-    int tlen = length(vector),
-	quote = isString(vector) ? '"' : 0;
 
     if (tlen == 0) {
 	switch(TYPEOF(vector)) {
@@ -1413,14 +1412,14 @@ static void vector2buff(SEXP vector, LocalParseData *d)
 	/* We treat integer separately, as S_compatible is relevant.
 
 	   Also, it is neat to deparse m:n in that form,
-	   so we do so as from 2.5.0.
+	   so we do so as from 2.5.0, and for m > n, from 3.5.0
 	 */
-	Rboolean intSeq = (tlen > 1);
-	int *tmp = INTEGER(vector);
-
-	for(i = 1; i < tlen; i++) {
-	    if((tmp[i] == NA_INTEGER) || (tmp[i-1] == NA_INTEGER)
-	       || (tmp[i] - tmp[i-1] != 1)) {
+	int *vec = INTEGER(vector), d_i;
+	Rboolean intSeq = (vec[0] != NA_INTEGER && tlen > 1 &&
+			   vec[1] != NA_INTEGER &&
+			   abs(d_i = vec[1] - vec[0]) == 1);
+	if(intSeq) for(i = 2; i < tlen; i++) {
+	    if((vec[i] == NA_INTEGER) || (vec[i] - vec[i-1]) != d_i) {
 		intSeq = FALSE;
 		break;
 	    }
@@ -1435,7 +1434,7 @@ static void vector2buff(SEXP vector, LocalParseData *d)
 	    addL = d->opts & KEEPINTEGER & !(d->opts & S_COMPAT);
 	    allNA = (d->opts & KEEPNA) || addL;
 	    for(i = 0; i < tlen; i++)
-		if(tmp[i] != NA_INTEGER) {
+		if(vec[i] != NA_INTEGER) {
 		    allNA = FALSE;
 		    break;
 		}
@@ -1448,12 +1447,12 @@ static void vector2buff(SEXP vector, LocalParseData *d)
 	    for (i = 0; i < tlen; i++) {
 		deparse2buf_name(nv, i, d);
 
-		if(allNA && tmp[i] == NA_INTEGER) {
+		if(allNA && vec[i] == NA_INTEGER) {
 		    print2buff("NA_integer_", d);
 		} else {
 		    strp = EncodeElement(vector, i, quote, '.');
 		    print2buff(strp, d);
-		    if(addL && tmp[i] != NA_INTEGER) print2buff("L", d);
+		    if(addL && vec[i] != NA_INTEGER) print2buff("L", d);
 		}
 		if (i < (tlen - 1)) print2buff(", ", d);
 		if (tlen > 1 && d->len > d->cutoff) writeline(d);
@@ -1475,9 +1474,9 @@ static void vector2buff(SEXP vector, LocalParseData *d)
 		print2buff("as.double(", d);
 	    }
 	} else if((d->opts & KEEPNA) && TYPEOF(vector) == CPLXSXP) {
-	    Rcomplex *tmp = COMPLEX(vector);
+	    Rcomplex *vec = COMPLEX(vector);
 	    for(i = 0; i < tlen; i++) {
-		if( !ISNA(tmp[i].r) && !ISNA(tmp[i].i) ) {
+		if( !ISNA(vec[i].r) && !ISNA(vec[i].i) ) {
 		    allNA = FALSE;
 		    break;
 		}
@@ -1611,7 +1610,6 @@ static Rboolean src2buff(SEXP sv, int k, LocalParseData *d)
    In particular, this deparses objects of mode expression. */
 static void vec2buff(SEXP v, LocalParseData *d)
 {
-    /* int localOpts = d->opts */;
     Rboolean lbreak = FALSE;
     const void *vmax = vmaxget();
     int n = length(v);
