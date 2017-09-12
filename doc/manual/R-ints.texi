@@ -125,12 +125,12 @@ available to @R{} Extensions: rather @code{SEXP} is an opaque pointer,
 and the internals can only be accessed by the functions provided.
 
 @cindex node
-Both types of node structure have as their first three fields a 32-bit
+Both types of node structure have as their first three fields a 64-bit
 @code{sxpinfo} header and then three pointers (to the attributes and the
 previous and next node in a doubly-linked list), and then some further
 fields.  On a 32-bit platform a node@footnote{strictly, a @code{SEXPREC}
 node; @code{VECTOR_SEXPREC} nodes are slightly smaller but followed by
-data in the node.} occupies 28 bytes: on a 64-bit platform typically 56
+data in the node.} occupies 32 bytes: on a 64-bit platform typically 56
 bytes (depending on alignment constraints).
 
 The first five bits of the @code{sxpinfo} header specify one of up to 32
@@ -225,13 +225,15 @@ solely of a simple type such as an atomic vector or function.
 @node Rest of header, The 'data', SEXPTYPEs, SEXPs
 @subsection Rest of header
 
-The @code{sxpinfo} header is defined as a 32-bit C structure by
+The @code{sxpinfo} header is defined as a 64-bit C structure by
 
 @example
+#define NAMED_BITS 16
 struct sxpinfo_struct @{
     SEXPTYPE type      :  5;  /* @r{discussed above} */
+    unsigned int scalar:  1;  /* @r{is this a numeric vector of length 1?}
     unsigned int obj   :  1;  /* @r{is this an object with a class attribute?} */
-    unsigned int named :  2;  /* @r{used to control copying} */
+    unsigned int alt   :  1;  /* @r{is this an @code{ALTREP} object?} */
     unsigned int gp    : 16;  /* @r{general purpose, see below} */
     unsigned int mark  :  1;  /* @r{mark object as `in use' in GC} */
     unsigned int debug :  1;
@@ -239,7 +241,9 @@ struct sxpinfo_struct @{
     unsigned int spare :  1;  /* @r{debug once and with reference counting} */
     unsigned int gcgen :  1;  /* @r{generation for GC} */
     unsigned int gccls :  3;  /* @r{class of node for GC} */
-@};  /*              Tot: 32 */
+    unsigned int named : NAMED_BITS; /* @r{used to control copying} */
+    unsigned int extra : 32 - NAMED_BITS;
+@}; /*		    Tot: 64 */
 @end example
 
 @findex debug bit
@@ -257,7 +261,7 @@ other objects when tracing duplications (see @code{tracemem}).
 The @code{spare} bit is used for closures to mark them for one
 time debugging.
 
-@findex named bit
+@findex named bits
 @findex NAMED
 @findex SET_NAMED
 @cindex copying semantics
