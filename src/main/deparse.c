@@ -252,10 +252,11 @@ static SEXP deparse1WithCutoff(SEXP call, Rboolean abbrev, int cutoff,
     UNPROTECT(1);
     PROTECT(svec); /* protect from warning() allocating, PR#14356 */
     R_print.digits = savedigits;
-    // FIXME: Don't warn anymore, we do deal with most (-> 'S4SXP' below)
+    /*: Don't warn anymore, we do deal with most (-> 'S4SXP' below)
     if ((opts & WARNINCOMPLETE) && localData.isS4)
 	warning(_("deparse of an S4 object may not always be source()able"));
-    else if ((opts & WARNINCOMPLETE) && !localData.sourceable)
+	else */
+    if ((opts & WARNINCOMPLETE) && !localData.sourceable)
 	warning(_("deparse may be incomplete"));
     if ((opts & WARNINCOMPLETE) && localData.longstring)
 	warning(_("deparse may be not be source()able in R < 2.7.0"));

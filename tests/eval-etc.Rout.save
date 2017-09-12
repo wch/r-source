@@ -959,13 +959,9 @@ xn: --=--=--=--=--
 ydata: --=--=--=--=--
 ysmooth: 1:10
 --=--=--=--=--
-There were 36 warnings (use warnings() to see them)
 > summary(warnings())
-Summary of (a total of 36) warning messages:
-19x : In dput(x, control = control) :
-  deparse of an S4 object may not always be source()able
-17x : In deparse(expr, control = control, ...) :
-  deparse of an S4 object may not always be source()able
+Length  Class   Mode 
+     0   NULL   NULL 
 > ## "dput    may be incomplete"
 > ## "deparse may be incomplete"
 > 
