@@ -283,6 +283,9 @@
       \item Reverted unintended change in behavior of \code{return}
       calls in \code{on.exit} expressions introduced by stack unwinding
       changes in \R 3.3.0.
+
+      \item Attributes on symbols are now detected and prevented; attempt
+      to add an attribute to a symbol results in an error.
     }
   }
 }
