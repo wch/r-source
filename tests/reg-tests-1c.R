@@ -1036,7 +1036,7 @@ stopifnot(is.data.frame(d20), dim(d20) == c(2,2),
 stopifnot(identical(names(myD), names(format(head(myD)))),
 	  identical(names(myD), c("Variable.1", "", "stringsAsFactors")),
 	  identical(rbind.data.frame(2:1, 1:2), ## was wrong for some days
-		    data.frame(c.2L..1L. = c(2L, 1L), X1.2 = 1:2)))
+		    data.frame(X2.1 = 2:1, X1.2 = 1:2)))
 ## format.data.frame() did not show "stringsAsFactors" in R <= 3.2.2
 ## Follow up: the new as.data.frame.list() must be careful with 'AsIs' columns:
 desc <- structure( c("a", NA, "z"), .Names = c("A", NA, "Z"))

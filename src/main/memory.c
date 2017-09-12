@@ -1636,8 +1636,13 @@ static void RunGenCollect(R_size_t size_needed)
     FORWARD_NODE(R_print.na_string_noquote);
 
     if (R_SymbolTable != NULL)             /* in case of GC during startup */
-	for (i = 0; i < HSIZE; i++)        /* Symbol table */
+	for (i = 0; i < HSIZE; i++) {      /* Symbol table */
 	    FORWARD_NODE(R_SymbolTable[i]);
+	    SEXP s;
+	    for (s = R_SymbolTable[i]; s != R_NilValue; s = CDR(s))
+		if (ATTRIB(CAR(s)) != R_NilValue)
+		    REprintf("****found a symbol with attributes\n");
+	}
 
     if (R_CurrentExpr != NULL)	           /* Current expression */
 	FORWARD_NODE(R_CurrentExpr);
@@ -3389,7 +3394,7 @@ int (IS_SCALAR)(SEXP x, int type) { return IS_SCALAR(x, type); }
 void (SET_ATTRIB)(SEXP x, SEXP v) {
     if(TYPEOF(v) != LISTSXP && TYPEOF(v) != NILSXP)
 	error("value of 'SET_ATTRIB' must be a pairlist or NULL, not a '%s'",
-	      type2char(TYPEOF(x)));
+	      type2char(TYPEOF(v)));
     FIX_REFCNT(x, ATTRIB(x), v);
     CHECK_OLD_TO_NEW(x, v);
     ATTRIB(x) = v;

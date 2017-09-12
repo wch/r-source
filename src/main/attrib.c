@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2016  The R Core Team
+ *  Copyright (C) 1997--2017  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -332,6 +332,8 @@ static SEXP installAttrib(SEXP vec, SEXP name, SEXP val)
 
     if(TYPEOF(vec) == CHARSXP)
 	error("cannot set attribute on a CHARSXP");
+    if (TYPEOF(vec) == SYMSXP)
+	error(_("cannot set attribute on a symbol"));
     /* this does no allocation */
     for (SEXP s = ATTRIB(vec); s != R_NilValue; s = CDR(s)) {
 	if (TAG(s) == name) {
