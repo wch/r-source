@@ -3484,7 +3484,7 @@ SEXP (VECTOR_ELT)(SEXP x, R_xlen_t i) {
 
 void *(STDVEC_DATAPTR)(SEXP x)
 {
-    if (! isVector(x))
+    if (! isVector(x) && TYPEOF(x) != WEAKREFSXP)
 	error("STDVEC_DATAPTR can only be applied to a vector, not a '%s'",
 	      type2char(TYPEOF(x)));
     return STDVEC_DATAPTR(x);
