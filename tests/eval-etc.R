@@ -159,7 +159,7 @@ rm(r1,r2) # they fail in parse(.. deparse(..)) below
 pd0 <- function(expr, control = c("keepInteger","showAttributes","keepNA"), ...)
     parse(text = deparse(expr, control=control, ...))
 id_epd <- function(expr, control = c("all","digits17"), ...)
-    eval(parse(text = deparse(expr, control=control, ...)))
+    eval(pd0(expr, control=control, ...))
 dPut <- function(x, control = c("all","digits17")) dput(x, control=control)
 hasReal <- function(x) {
     if(is.double(x) || is.complex(x))
@@ -199,13 +199,34 @@ check_EPD <- function(obj, show = !hasReal(obj)) {
     if(!is.language(obj)) {
 	ob2. <- eval(pd0) ## almost always *NOT* identical to obj, but eval()ed
     }
+    if(show || !is.list(obj)) { ## check it works when wrapped (but do not recurse inf.!)
+        cat(" --> checking list(*): ")
+        check_EPD(list(.chk = obj), show = FALSE)
+        cat("Ok\n")
+    }
     invisible(obj)
 }
 
+library(stats)
+## some more "critical" cases
 nmdExp <- expression(e1 = sin(pi), e2 = cos(-pi))
 xn <- setNames(pi^(1:3), paste0("pi^",1:3))
-dPut(xn)
-stopifnot(identical(xn, id_epd(xn)))
+L1 <- list(c(A="Txt"))
+L2 <- list(el = c(A=2.5))
+## "m:n" named integers and _inside list_
+i6 <- setNames(5:6, letters[5:6])
+L4  <- list(ii = 5:2) # not named
+L6  <- list(L = i6)
+L6a <- list(L = structure(rev(i6), myDoc = "info"))
+## empty *named* atomic vectors
+i00 <- setNames(integer(), character()); i0 <- structure(i00, foo = "bar")
+L00 <- setNames(logical(), character()); L0 <- structure(L00, class = "Logi")
+r00 <- setNames(raw(), character())
+sii <- structure(4:7, foo = list(B="bar",G="grizzly", vec=c(a=1L,b=2L), v2=i6, v0=L00))
+
+## _FIXME_ : these fail
+rm(i00,i0, L00,L0, r00, sii)
+## END _FIXME_
 
 ## Creating a collection of S4 objects, ensuring deparse <-> parse are inverses
 library(methods)
@@ -244,7 +265,7 @@ if(require("Matrix")) { cat("Trying some Matrix objects, too\n")
 
 for(nm in ls(env=.GlobalEnv)) {
     cat(nm,": ", sep="")
-    if(!any(nm == "r1")) ## 'r1' fails
+    ## if(!any(nm == "r1")) ## 'r1' fails
         check_EPD(obj = (x <- .GlobalEnv[[nm]]))
     if(is.function(x)) {
         cat("checking body(.):\n"   ); check_EPD(   body(x))
