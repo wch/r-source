@@ -154,80 +154,24 @@ INLINE_FUN int LENGTH_EX(SEXP x, const char *file, int line)
 #endif
 
 INLINE_FUN Rboolean *LOGICAL0(SEXP x) { return (Rboolean *) STDVEC_DATAPTR(x); }
-INLINE_FUN R_scalar_logical_t R_cast_scalar_logical(SEXP x)
-{
-    CHECK_SCALAR_TYPE(x, LGLSXP);
-    R_scalar_logical_t val = R_SUBTYPE_INIT(x);
-    return val;
-}
-INLINE_FUN Rboolean SCALAR_LVAL(R_scalar_logical_t x)
-{
-    return LOGICAL0(R_SEXP(x))[0]; }
-INLINE_FUN void SET_SCALAR_LVAL(R_scalar_logical_t x, Rboolean v)
-{
-    LOGICAL0(R_SEXP(x))[0] = v;
-}
+INLINE_FUN Rboolean SCALAR_LVAL(SEXP x) { return LOGICAL0(x)[0]; }
+INLINE_FUN void SET_SCALAR_LVAL(SEXP x, Rboolean v) { LOGICAL0(x)[0] = v; }
 
 INLINE_FUN int *INTEGER0(SEXP x) { return (int *) STDVEC_DATAPTR(x); }
-INLINE_FUN R_scalar_integer_t R_cast_scalar_integer(SEXP x)
-{
-    CHECK_SCALAR_TYPE(x, INTSXP);
-    R_scalar_integer_t val = R_SUBTYPE_INIT(x);
-    return val;
-}
-INLINE_FUN int SCALAR_IVAL(R_scalar_integer_t x)
-{
-    return INTEGER0(R_SEXP(x))[0];
-}
-INLINE_FUN void SET_SCALAR_IVAL(R_scalar_integer_t x, int v)
-{
-    INTEGER0(R_SEXP(x))[0] = v;
-}
+INLINE_FUN int SCALAR_IVAL(SEXP x) { return INTEGER0(x)[0]; }
+INLINE_FUN void SET_SCALAR_IVAL(SEXP x, int v) { INTEGER0(x)[0] = v; }
 
 INLINE_FUN double *REAL0(SEXP x) { return (double *) STDVEC_DATAPTR(x); }
-INLINE_FUN R_scalar_real_t R_cast_scalar_real(SEXP x)
-{
-    CHECK_SCALAR_TYPE(x, REALSXP);
-    R_scalar_real_t val = R_SUBTYPE_INIT(x);
-    return val;
-}
-INLINE_FUN double SCALAR_DVAL(R_scalar_real_t x)
-{
-    return REAL0(R_SEXP(x))[0];
-}
-INLINE_FUN void SET_SCALAR_DVAL(R_scalar_real_t x, double v)
-{
-    REAL0(R_SEXP(x))[0] = v;
-}
+INLINE_FUN double SCALAR_DVAL(SEXP x) { return REAL0(x)[0]; }
+INLINE_FUN void SET_SCALAR_DVAL(SEXP x, double v) { REAL0(x)[0] = v; }
 
 INLINE_FUN Rcomplex *COMPLEX0(SEXP x) { return (Rcomplex *) STDVEC_DATAPTR(x); }
-INLINE_FUN R_scalar_complex_t R_cast_scalar_complex(SEXP x)
-{
-    CHECK_SCALAR_TYPE(x, CPLXSXP);
-    R_scalar_complex_t val = R_SUBTYPE_INIT(x);
-    return val;
-}
-INLINE_FUN Rcomplex SCALAR_CVAL(R_scalar_complex_t x)
-{
-    return COMPLEX0(R_SEXP(x))[0];
-}
-INLINE_FUN void SET_SCALAR_CVAL(R_scalar_complex_t x, Rcomplex v)
-{
-    COMPLEX0(R_SEXP(x))[0] = v;
-}
+INLINE_FUN Rcomplex SCALAR_CVAL(SEXP x) { return COMPLEX0(x)[0]; }
+INLINE_FUN void SET_SCALAR_CVAL(SEXP x, Rcomplex v) { COMPLEX0(x)[0] = v; }
 
 INLINE_FUN Rbyte *RAW0(SEXP x) { return (Rbyte *) STDVEC_DATAPTR(x); }
-INLINE_FUN R_scalar_raw_t R_cast_scalar_raw(SEXP x)
-{
-    CHECK_SCALAR_TYPE(x, RAWSXP);
-    R_scalar_raw_t val = R_SUBTYPE_INIT(x);
-    return val;
-}
-INLINE_FUN Rbyte SCALAR_BVAL(R_scalar_raw_t x) { return RAW0(R_SEXP(x))[0]; }
-INLINE_FUN void SET_SCALAR_BVAL(R_scalar_raw_t x, Rbyte v)
-{
-    RAW0(R_SEXP(x))[0] = v;
-}
+INLINE_FUN Rbyte SCALAR_BVAL(SEXP x) { return RAW0(x)[0]; }
+INLINE_FUN void SET_SCALAR_BVAL(SEXP x, Rbyte v) { RAW0(x)[0] = v; }
 
 INLINE_FUN R_altrep_class_t R_cast_altrep_class(SEXP x)
 {
@@ -856,23 +800,23 @@ INLINE_FUN SEXP ScalarLogical(int x)
 
 INLINE_FUN SEXP ScalarInteger(int x)
 {
-    R_scalar_integer_t ans = R_cast_scalar_integer(allocVector(INTSXP, 1));
+    SEXP ans = allocVector(INTSXP, 1);
     SET_SCALAR_IVAL(ans, x);
-    return R_SEXP(ans);
+    return ans;
 }
 
 INLINE_FUN SEXP ScalarReal(double x)
 {
-    R_scalar_real_t ans = R_cast_scalar_real(allocVector(REALSXP, 1));
+    SEXP ans = allocVector(REALSXP, 1);
     SET_SCALAR_DVAL(ans, x);
-    return R_SEXP(ans);
+    return ans;
 }
 
 INLINE_FUN SEXP ScalarComplex(Rcomplex x)
 {
-    R_scalar_complex_t ans = R_cast_scalar_complex(allocVector(CPLXSXP, 1));
+    SEXP ans = allocVector(CPLXSXP, 1);
     SET_SCALAR_CVAL(ans, x);
-    return R_SEXP(ans);
+    return ans;
 }
 
 INLINE_FUN SEXP ScalarString(SEXP x)
@@ -887,9 +831,9 @@ INLINE_FUN SEXP ScalarString(SEXP x)
 
 INLINE_FUN SEXP ScalarRaw(Rbyte x)
 {
-    R_scalar_raw_t ans = R_cast_scalar_raw(allocVector(RAWSXP, 1));
+    SEXP ans = allocVector(RAWSXP, 1);
     SET_SCALAR_BVAL(ans, x);
-    return R_SEXP(ans);
+    return ans;
 }
 
 /* Check to see if a list can be made into a vector. */

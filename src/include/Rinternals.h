@@ -187,20 +187,10 @@ typedef struct SEXPREC *SEXP;
 #ifdef STRUCT_SUBTYPES
 # define R_SEXP(x) (x).ptr
 # define R_SUBTYPE_INIT(x) { x }
-  typedef struct { SEXP ptr; } R_scalar_logical_t;
-  typedef struct { SEXP ptr; } R_scalar_integer_t;
-  typedef struct { SEXP ptr; } R_scalar_real_t;
-  typedef struct { SEXP ptr; } R_scalar_complex_t;
-  typedef struct { SEXP ptr; } R_scalar_raw_t;
   typedef struct { SEXP ptr; } R_altrep_class_t;
 #else
 # define R_SEXP(x) ((SEXP) (x))
 # define R_SUBTYPE_INIT(x) (void *) (x)
-  typedef struct R_scallgl *R_scalar_logical_t;
-  typedef struct R_scalint *R_SCALAR_INTEGER_T;
-  typedef struct R_scalreal *R_scalar_real_t;
-  typedef struct R_scalclpx *R_scalar_complex_t;
-  typedef struct R_scalraw *R_scalar_raw_t;
   typedef struct R_altcls *R_altrep_class_t;
 #endif
 

@@ -650,13 +650,13 @@ static R_INLINE R_xlen_t scalarIndex(SEXP s)
 {
     if (ATTRIB(s) == R_NilValue) {
 	if (IS_SCALAR(s, INTSXP)) {
-	    int ival = SCALAR_IVAL(R_cast_scalar_integer(s));
+	    int ival = SCALAR_IVAL(s);
 	    if (ival != NA_INTEGER)
 		return ival;
 	    else return -1;
 	}
 	else if (IS_SCALAR(s, REALSXP)) {
-	    double rval = SCALAR_DVAL(R_cast_scalar_real(s));
+	    double rval = SCALAR_DVAL(s);
 	    // treat infinite indices as NA, like asInteger
 	    if (R_FINITE(rval))
 		return (R_xlen_t) rval;

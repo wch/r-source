@@ -1855,12 +1855,12 @@ static R_INLINE Rboolean asLogicalNoNA(SEXP s, SEXP call)
 
     /* handle most common special case directly */
     if (IS_SCALAR(s, LGLSXP)) {
-	cond = SCALAR_LVAL(R_cast_scalar_logical(s));
+	cond = SCALAR_LVAL(s);
 	if (cond != NA_LOGICAL)
 	    return cond;
     }
     else if (IS_SCALAR(s, INTSXP)) {
-	int val = SCALAR_IVAL(R_cast_scalar_integer(s));
+	int val = SCALAR_IVAL(s);
 	if (val != NA_INTEGER)
 	    return val != 0;
     }
@@ -2061,19 +2061,19 @@ SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    switch (val_type) {
 	    case LGLSXP:
 		ALLOC_LOOP_VAR(v, val_type, vpi);
-		SET_SCALAR_LVAL(R_cast_scalar_logical(v), LOGICAL_ELT(val, i));
+		SET_SCALAR_LVAL(v, LOGICAL_ELT(val, i));
 		break;
 	    case INTSXP:
 		ALLOC_LOOP_VAR(v, val_type, vpi);
-		SET_SCALAR_IVAL(R_cast_scalar_integer(v), INTEGER_ELT(val, i));
+		SET_SCALAR_IVAL(v, INTEGER_ELT(val, i));
 		break;
 	    case REALSXP:
 		ALLOC_LOOP_VAR(v, val_type, vpi);
-		SET_SCALAR_DVAL(R_cast_scalar_real(v), REAL_ELT(val, i));
+		SET_SCALAR_DVAL(v, REAL_ELT(val, i));
 		break;
 	    case CPLXSXP:
 		ALLOC_LOOP_VAR(v, val_type, vpi);
-		SET_SCALAR_CVAL(R_cast_scalar_complex(v), COMPLEX_ELT(val, i));
+		SET_SCALAR_CVAL(v, COMPLEX_ELT(val, i));
 		break;
 	    case STRSXP:
 		ALLOC_LOOP_VAR(v, val_type, vpi);
@@ -2081,7 +2081,7 @@ SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
 		break;
 	    case RAWSXP:
 		ALLOC_LOOP_VAR(v, val_type, vpi);
-		SET_SCALAR_BVAL(R_cast_scalar_raw(v), RAW(val)[i]);
+		SET_SCALAR_BVAL(v, RAW(val)[i]);
 		break;
 	    default:
 		errorcall(call, _("invalid for() loop sequence"));
@@ -3711,7 +3711,7 @@ static R_INLINE SEXP GETSTACK_PTR_TAG(R_bcstack_t *s)
 	if (R_CachedScalarReal != NULL) {
 	    value = R_CachedScalarReal;
 	    R_CachedScalarReal = NULL;
-	    SET_SCALAR_DVAL(R_cast_scalar_real(value), s->u.dval);
+	    SET_SCALAR_DVAL(value, s->u.dval);
 	}
 	else
 #endif
@@ -3722,7 +3722,7 @@ static R_INLINE SEXP GETSTACK_PTR_TAG(R_bcstack_t *s)
 	if (R_CachedScalarInteger != NULL) {
 	    value = R_CachedScalarInteger;
 	    R_CachedScalarInteger = NULL;
-	    SET_SCALAR_IVAL(R_cast_scalar_integer(value), s->u.ival);
+	    SET_SCALAR_IVAL(value, s->u.ival);
 	}
 	else
 #endif
@@ -3827,7 +3827,7 @@ static R_INLINE SEXP GETSTACK_PTR_TAG(R_bcstack_t *s)
 #else
 #define SETSTACK_REAL_EX(idx, dval, ans) do {			\
 	if (ans) {						\
-	    SET_SCALAR_DVAL(R_cast_scalar_real(ans), dval);	\
+	    SET_SCALAR_DVAL(ans, dval);				\
 	    SETSTACK(idx, ans);					\
 	}							\
 	else SETSTACK_REAL(idx, dval);				\
@@ -3869,18 +3869,18 @@ static R_ALWAYS_INLINE int bcStackScalarEx(R_bcstack_t *s, scalar_value_t *v,
 #ifndef NO_SAVE_ALLOC
 	if (pv && NO_REFERENCES(x)) *pv = x;
 #endif
-	v->dval = SCALAR_DVAL(R_cast_scalar_real(x));
+	v->dval = SCALAR_DVAL(x);
 	return REALSXP;
     }
     else if (IS_SIMPLE_SCALAR(x, INTSXP)) {
 #ifndef NO_SAVE_ALLOC
 	if (pv && NO_REFERENCES(x)) *pv = x;
 #endif
-	v->ival = SCALAR_IVAL(R_cast_scalar_integer(x));
+	v->ival = SCALAR_IVAL(x);
 	return INTSXP;
     }
     else if (IS_SIMPLE_SCALAR(x, LGLSXP)) {
-	v->ival = SCALAR_LVAL(R_cast_scalar_logical(x));
+	v->ival = SCALAR_LVAL(x);
 	return LGLSXP;
     }
     else return 0;
@@ -5096,13 +5096,13 @@ static R_INLINE R_xlen_t bcStackIndex(R_bcstack_t *s)
 #endif
     SEXP idx = GETSTACK_SXPVAL_PTR(s);
     if (IS_SCALAR(idx, INTSXP)) {
-	int ival = SCALAR_IVAL(R_cast_scalar_integer(idx));
+	int ival = SCALAR_IVAL(idx);
 	if (ival != NA_INTEGER)
 	    return ival;
 	else return -1;
     }
     else if (IS_SCALAR(idx, REALSXP)) {
-	double val = SCALAR_DVAL(R_cast_scalar_real(idx));
+	double val = SCALAR_DVAL(idx);
 	if (! ISNAN(val) && val <= R_XLEN_T_MAX && val > 0)
 	    return (R_xlen_t) val;
 	else return -1;
@@ -5661,7 +5661,7 @@ static R_INLINE Rboolean GETSTACK_LOGICAL_NO_NA_PTR(R_bcstack_t *s, int callidx,
 #endif
     SEXP value = GETSTACK_PTR(s);
     if (IS_SCALAR(value, LGLSXP)) {
-	Rboolean lval = SCALAR_LVAL(R_cast_scalar_logical(value));
+	Rboolean lval = SCALAR_LVAL(value);
 	if (lval != NA_LOGICAL)
 	    return lval;
     }
@@ -6117,19 +6117,19 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	  switch (TYPEOF(seq)) {
 	  case LGLSXP:
 	    GET_VEC_LOOP_VALUE(value, -1);
-	    SET_SCALAR_LVAL(R_cast_scalar_logical(value), LOGICAL_ELT(seq, i));
+	    SET_SCALAR_LVAL(value, LOGICAL_ELT(seq, i));
 	    break;
 	  case INTSXP:
 	    GET_VEC_LOOP_VALUE(value, -1);
-	    SET_SCALAR_IVAL(R_cast_scalar_integer(value), INTEGER_ELT(seq, i));
+	    SET_SCALAR_IVAL(value, INTEGER_ELT(seq, i));
 	    break;
 	  case REALSXP:
 	    GET_VEC_LOOP_VALUE(value, -1);
-	    SET_SCALAR_DVAL(R_cast_scalar_real(value), REAL_ELT(seq, i));
+	    SET_SCALAR_DVAL(value, REAL_ELT(seq, i));
 	    break;
 	  case CPLXSXP:
 	    GET_VEC_LOOP_VALUE(value, -1);
-	    SET_SCALAR_CVAL(R_cast_scalar_complex(value), COMPLEX_ELT(seq, i));
+	    SET_SCALAR_CVAL(value, COMPLEX_ELT(seq, i));
 	    break;
 	  case STRSXP:
 	    GET_VEC_LOOP_VALUE(value, -1);
@@ -6137,7 +6137,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	    break;
 	  case RAWSXP:
 	    GET_VEC_LOOP_VALUE(value, -1);
-	    SET_SCALAR_BVAL(R_cast_scalar_raw(value), RAW(seq)[i]);
+	    SET_SCALAR_BVAL(value, RAW(seq)[i]);
 	    break;
 	  case EXPRSXP:
 	  case VECSXP:
@@ -6212,13 +6212,13 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 		   value */
 		switch (s->tag) {
 		case REALSXP:
-		    SET_SCALAR_DVAL(R_cast_scalar_real(x), s->u.dval);
+		    SET_SCALAR_DVAL(x, s->u.dval);
 		    NEXT();
 		case INTSXP:
-		    SET_SCALAR_IVAL(R_cast_scalar_integer(x), s->u.ival);
+		    SET_SCALAR_IVAL(x, s->u.ival);
 		    NEXT();
 		case LGLSXP:
-		    SET_SCALAR_LVAL(R_cast_scalar_logical(x), s->u.ival);
+		    SET_SCALAR_LVAL(x, s->u.ival);
 		    NEXT();
 		}
 	    }
@@ -6631,7 +6631,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	int label = GETOP();
 	FIXUP_SCALAR_LOGICAL(callidx, "'x'", "&&");
 	SEXP value = GETSTACK(-1);
-	if (SCALAR_LVAL(R_cast_scalar_logical(value)) == FALSE)
+	if (SCALAR_LVAL(value) == FALSE)
 	    pc = codebase + label;
 	R_Visible = TRUE;
 	NEXT();
@@ -6644,7 +6644,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	   not TRUE then its value is the result. If the second
 	   argument is TRUE, then the first argument's value is the
 	   result. */
-	Rboolean val = SCALAR_LVAL(R_cast_scalar_logical(value));
+	Rboolean val = SCALAR_LVAL(value);
 	if (val == FALSE || val == NA_LOGICAL)
 	    SETSTACK(-2, value);
 	R_BCNodeStackTop -= 1;
@@ -6656,7 +6656,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	int label = GETOP();
 	FIXUP_SCALAR_LOGICAL(callidx, "'x'", "||");
 	SEXP value = GETSTACK(-1);
-	Rboolean val = SCALAR_LVAL(R_cast_scalar_logical(value));
+	Rboolean val = SCALAR_LVAL(value);
 	if (val != NA_LOGICAL &&
 	    val != FALSE) /* is true */
 	    pc = codebase + label;
@@ -6671,7 +6671,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	   not FALSE then its value is the result. If the second
 	   argument is FALSE, then the first argument's value is the
 	   result. */
-	if (SCALAR_LVAL(R_cast_scalar_logical(value)) != FALSE)
+	if (SCALAR_LVAL(value) != FALSE)
 	    SETSTACK(-2, value);
 	R_BCNodeStackTop -= 1;
 	R_Visible = TRUE;

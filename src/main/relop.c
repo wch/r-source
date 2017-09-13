@@ -71,30 +71,30 @@ SEXP attribute_hidden do_relop(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     else if (argc == 2) {
 	if (IS_SCALAR(arg1, INTSXP)) {
-	    int ix = SCALAR_IVAL(R_cast_scalar_integer(arg1));
+	    int ix = SCALAR_IVAL(arg1);
 	    if (IS_SCALAR(arg2, INTSXP)) {
-		int iy = SCALAR_IVAL(R_cast_scalar_integer(arg2));
+		int iy = SCALAR_IVAL(arg2);
 		if (ix == NA_INTEGER || iy == NA_INTEGER)
 		    return ScalarLogical(NA_LOGICAL);
 		DO_SCALAR_RELOP(oper, ix, iy);
 	    }
 	    else if (IS_SCALAR(arg2, REALSXP)) {
-		double dy = SCALAR_DVAL(R_cast_scalar_real(arg2));
+		double dy = SCALAR_DVAL(arg2);
 		if (ix == NA_INTEGER || ISNAN(dy))
 		    return ScalarLogical(NA_LOGICAL);
 		DO_SCALAR_RELOP(oper, ix, dy);
 	    }
 	}
 	else if (IS_SCALAR(arg1, REALSXP)) {
-	    double dx = SCALAR_DVAL(R_cast_scalar_real(arg1));
+	    double dx = SCALAR_DVAL(arg1);
 	    if (IS_SCALAR(arg2, INTSXP)) {
-		int iy = SCALAR_IVAL(R_cast_scalar_integer(arg2));
+		int iy = SCALAR_IVAL(arg2);
 		if (ISNAN(dx) || iy == NA_INTEGER)
 		    return ScalarLogical(NA_LOGICAL);
 		DO_SCALAR_RELOP(oper, dx, iy);
 	    }
 	    else if (IS_SCALAR(arg2, REALSXP)) {
-		double dy = SCALAR_DVAL(R_cast_scalar_real(arg2));
+		double dy = SCALAR_DVAL(arg2);
 		if (ISNAN(dx) || ISNAN(dy))
 		    return ScalarLogical(NA_LOGICAL);
 		DO_SCALAR_RELOP(oper, dx, dy);
