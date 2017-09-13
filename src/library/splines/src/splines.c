@@ -1,8 +1,8 @@
 /*  Routines for manipulating B-splines.  These are intended for use with
  *  S or S-PLUS or R.
  *
- *     Copyright (C) 1998 Douglas M. Bates and William N. Venables.
  *     Copyright (C) 1999-2017 The R Core Team.
+ *     Copyright (C) 1998 Douglas M. Bates and William N. Venables.
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -201,28 +201,36 @@ spline_basis(SEXP knots, SEXP order, SEXP xvals, SEXP derivs)
     sp->rdel = (double *) R_alloc(sp->ordm1, sizeof(double));
     sp->ldel = (double *) R_alloc(sp->ordm1, sizeof(double));
     sp->knots = kk; sp->nknots = nk;
-    sp->a = (double *) R_alloc(sp->order, sizeof(double));
-    SEXP val = PROTECT(allocMatrix(REALSXP, sp->order, nx)),
+    sp->a = (double *) R_alloc(ord, sizeof(double));
+    SEXP val = PROTECT(allocMatrix(REALSXP, ord, nx)),
 	offsets = PROTECT(allocVector(INTSXP, nx));
     double *valM = REAL(val);
     int *ioff = INTEGER(offsets);
 
     for(int i = 0; i < nx; i++) {
 	set_cursor(sp, xx[i]);
-	int io = ioff[i] = sp->curs - sp->order;
+	int io = ioff[i] = sp->curs - ord,
+	    der_i = ders[i % nd];
 	if (io < 0 || io > nk) {
-	    for (int j = 0; j < sp->order; j++) {
-		valM[i * sp->order + j] = R_NaN;
+	    for (int j = 0; j < ord; j++) {
+		valM[i * ord + j] = R_NaN;
 	    }
-	} else if (ders[i % nd] > 0) { /* slow method for derivatives */
-	    for(int ii = 0; ii < sp->order; ii++) {
-		for(int j = 0; j < sp->order; j++) sp->a[j] = 0;
+	} else if (der_i > 0) { /* slow method for derivatives */
+	    if (der_i >= ord)
+		if(nd == 1)
+		    error(_("derivs = %d >= ord = %d, but should be in {0,..,ord-1}"),
+			  der_i, ord);
+		else
+		    error(_("derivs[%d] = %d >= ord = %d, but should be in {0,..,ord-1}"),
+			  i+1, der_i, ord);
+	    for(int ii = 0; ii < ord; ii++) {
+		for(int j = 0; j < ord; j++) sp->a[j] = 0;
 		sp->a[ii] = 1;
-		valM[i * sp->order + ii] =
-		    evaluate(sp, xx[i], ders[i % nd]);
+		valM[i * ord + ii] =
+		    evaluate(sp, xx[i], der_i);
 	    }
 	} else {		/* fast method for value */
-	    basis_funcs(sp, xx[i], valM + i * sp->order);
+	    basis_funcs(sp, xx[i], valM + i * ord);
 	}
     }
     setAttrib(val, install("Offsets"), offsets);

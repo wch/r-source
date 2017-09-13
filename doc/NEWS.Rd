@@ -123,6 +123,8 @@
       cases of zero-length array initialization and also compatibly with
       \code{matrix(character(), *)}.  As mentioned there, this also
       fixes \PR{17333}.
+
+      \item \code{splineDesign(.., derivs = 4)} no longer segfaults.
     }
   }
 }
