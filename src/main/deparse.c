@@ -125,7 +125,9 @@ typedef struct {
     int backtick;
     int opts;
     int sourceable;
+#ifdef longstring_WARN
     int longstring;
+#endif
     int maxlines;
     Rboolean active;
     int isS4;
@@ -210,7 +212,11 @@ static SEXP deparse1WithCutoff(SEXP call, Rboolean abbrev, int cutoff,
 	    {0, 0, 0, 0, /*startline = */TRUE, 0,
 	     NULL,
 	     /*DeparseBuffer=*/{NULL, 0, BUFSIZE},
-	     DEFAULT_Cutoff, FALSE, 0, TRUE, FALSE, INT_MAX, TRUE, 0, FALSE};
+	     DEFAULT_Cutoff, FALSE, 0, TRUE,
+#ifdef longstring_WARN
+	     FALSE,
+#endif
+	     INT_MAX, TRUE, 0, FALSE};
     localData.cutoff = cutoff;
     localData.backtick = backtick;
     localData.opts = opts;
@@ -258,8 +264,10 @@ static SEXP deparse1WithCutoff(SEXP call, Rboolean abbrev, int cutoff,
 	else */
     if ((opts & WARNINCOMPLETE) && !localData.sourceable)
 	warning(_("deparse may be incomplete"));
+#ifdef longstring_WARN
     if ((opts & WARNINCOMPLETE) && localData.longstring)
 	warning(_("deparse may be not be source()able in R < 2.7.0"));
+#endif
     /* somewhere lower down might have allocated ... */
     R_FreeStringBuffer(&(localData.buffer));
     UNPROTECT(1);
@@ -778,8 +786,10 @@ static void deparse2buff(SEXP s, LocalParseData *d)
     {
 	const void *vmax = vmaxget();
 	const char *ts = translateChar(s);
+#ifdef longstring_WARN
 	/* versions of R < 2.7.0 cannot parse strings longer than 8192 chars */
 	if(strlen(ts) >= 8192) d->longstring = TRUE;
+#endif
 	print2buff(ts, d);
 	vmaxset(vmax);
 	break;
@@ -1388,7 +1398,7 @@ static void vector2buff(SEXP vector, LocalParseData *d)
 {
     const char *strp;
     char *buff = 0, hex[64]; // 64 is more than enough
-    Rboolean surround = FALSE, allNA, addL = TRUE;
+    Rboolean surround = FALSE, allNA;
     int i,
 	tlen = length(vector),
 	quote = isString(vector) ? '"' : 0;
@@ -1432,7 +1442,7 @@ static void vector2buff(SEXP vector, LocalParseData *d)
 		strp = EncodeElement(vector, tlen - 1, '"', '.');
 		print2buff(strp, d);
 	} else {
-	    addL = d->opts & KEEPINTEGER & !(d->opts & S_COMPAT);
+	    Rboolean addL = d->opts & KEEPINTEGER & !(d->opts & S_COMPAT);
 	    allNA = (d->opts & KEEPNA) || addL;
 	    for(i = 0; i < tlen; i++)
 		if(vec[i] != NA_INTEGER) {
@@ -1526,9 +1536,11 @@ static void vector2buff(SEXP vector, LocalParseData *d)
 		strp = EncodeReal2(REAL(vector)[i], w, d, e);
 	    } else if (TYPEOF(vector) == STRSXP) {
 		const void *vmax = vmaxget();
+#ifdef longstring_WARN
 		const char *ts = translateChar(STRING_ELT(vector, i));
 		/* versions of R < 2.7.0 cannot parse strings longer than 8192 chars */
 		if(strlen(ts) >= 8192) d->longstring = TRUE;
+#endif
 		strp = EncodeElement(vector, i, quote, '.');
 		vmaxset(vmax);
 	    } else if (TYPEOF(vector) == RAWSXP) {
