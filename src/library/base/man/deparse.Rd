@@ -39,9 +39,13 @@ deparse(expr, width.cutoff = 60L,
   for a plot which are character string versions of the actual arguments
   to the function \code{myplot}.
 
-  The default for the \code{backtick} option is not to quote single
-  symbols but only composite expressions.  This is a compromise to
-  avoid breaking existing code.
+  The default for the \code{backtick} option has been changed (for \R
+  version \code{3.5.0}) to also quote symbols (when needed).  This
+  allows the result of \code{deparse(x, control="all")} to be parsable,
+  e.g., for \code{x <- quote(`{`)}.  Note however that the default still
+  does not catch all cases; with the above example, it would not do for
+  \code{list(x)}, and so \code{backtick = TRUE} may be advisable to
+  complement \code{control = "all"}.
 
   Using \code{control = "all"} comes closest to making \code{deparse()}
   an inverse of \code{parse()}.  However, not all objects are
