@@ -120,6 +120,7 @@ callme(mm="B")
 mycaller <- function(x = 1, callme = pi) { callme(x) }
 mycaller()## wrongly gave `mm = NULL'  now = "Abc"
 
+CO <- utils::capture.output
 
 ## Garbage collection  protection problem:
 if(FALSE) ## only here to be run as part of  'make test-Gct'
@@ -127,14 +128,12 @@ if(FALSE) ## only here to be run as part of  'make test-Gct'
 x <- c("a", NA, "b")
 fx <- factor(x, exclude="")
 ST <- if(interactive()) system.time else invisible
-ST(r <- replicate(20, capture.output(print(fx))))
-table(ok. <- r[2,] == "Levels: a b <NA>") # want all TRUE
-stopifnot(ok.) # in case of failure, see
-r[2,] ## the '<NA>' levels part would be wrong occasionally
+ST(r <- replicate(20, CO(print(fx))))
+table(r[2,]) ## the '<NA>' levels part would be wrong occasionally
+stopifnot(r[2,] == "Levels: a b <NA>") # in case of failure, see r[2,] above
 
 
 ## withAutoprint() : must *not* evaluate twice *and* do it in calling environment:
-CO <- utils::capture.output
 stopifnot(
     identical(
 	## ensure it is only evaluated _once_ :
@@ -151,13 +150,12 @@ stopifnot(
     identical(r1,r2)
 )
 ## partly failed in R 3.4.0 alpha
-rm(r1,r2) # they fail in parse(.. deparse(..)) below
-
 
 ### Checking parse(* deparse()) "inversion property" ----------------------------
 ## Hopefully typically the identity():
-pd0 <- function(expr, control = c("keepInteger","showAttributes","keepNA"), ...)
-    parse(text = deparse(expr, control=control, ...))
+pd0 <- function(expr, backtick = TRUE,
+                control = c("keepInteger","showAttributes","keepNA"), ...)
+    parse(text = deparse(expr, backtick=backtick, control=control, ...))
 id_epd <- function(expr, control = c("all","digits17"), ...)
     eval(pd0(expr, control=control, ...))
 dPut <- function(x, control = c("all","digits17")) dput(x, control=control)
@@ -187,7 +185,12 @@ check_EPD <- function(obj, show = !hasReal(obj)) {
         return(invisible(obj)) # cannot parse it
     }
     ob2 <- id_epd(obj)
-    po <- pd0(obj)# the default deparse() *should* parse at least
+    po <- tryCatch(pd0(obj),# the default deparse() *should* typically parse
+                   error = function(e) {
+                       cat("default deparse() was not parse():\n  ",
+                           conditionMessage(e),
+                           "\n  but deparse(*, control='all') should work.\n")
+                       pd0(obj, control = "all") })
     if(!identical(obj, ob2, ignore.environment=TRUE,
                   ignore.bytecode=TRUE, ignore.srcref=TRUE)) {
         ae <- all.equal(obj, ob2, tolerance = 0)
@@ -222,11 +225,8 @@ L6a <- list(L = structure(rev(i6), myDoc = "info"))
 i00 <- setNames(integer(), character()); i0 <- structure(i00, foo = "bar")
 L00 <- setNames(logical(), character()); L0 <- structure(L00, class = "Logi")
 r00 <- setNames(raw(), character())
-sii <- structure(4:7, foo = list(B="bar",G="grizzly", vec=c(a=1L,b=2L), v2=i6, v0=L00))
-
-## _FIXME_ : these fail
-rm(i00,i0, L00,L0, r00, sii)
-## END _FIXME_
+sii <- structure(4:7, foo = list(B="bar", G="grizzly",
+                                 vec=c(a=1L,b=2L), v2=i6, v0=L00))
 
 ## Creating a collection of S4 objects, ensuring deparse <-> parse are inverses
 library(methods)
