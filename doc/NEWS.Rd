@@ -291,6 +291,10 @@
 
       \item Attributes on symbols are now detected and prevented; attempt
       to add an attribute to a symbol results in an error.
+
+      \item \code{deparse(x)} now also uses \code{backtick = TRUE} by
+      default for the case where \code{x} is a symbol, and hence
+      \code{deparse(quote(`{`), control="all")} is parseable now.
     }
   }
 }

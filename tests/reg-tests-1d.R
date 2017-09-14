@@ -1222,6 +1222,12 @@ tools::assertError(splines::splineDesign(aKnots, x, derivs = 4), verbose = TRUE)
 ## gave seg.fault in R <= 3.4.1
 
 
+## deparse(<symbol>)
+brc <- quote(`{`)
+stopifnot(identical(brc, eval(parse(text = deparse(brc, control="all")))))
+## default was to set  backtick=FALSE  so parse() failed in R <= 3.4.x
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

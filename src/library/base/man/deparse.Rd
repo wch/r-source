@@ -12,7 +12,7 @@
 \usage{
 deparse(expr, width.cutoff = 60L,
         backtick = mode(expr) \%in\%
-            c("call", "expression", "(", "function"),
+            c("call", "name", "expression", "(", "function"),
         control = c("keepInteger", "showAttributes", "keepNA"),
         nlines = -1L)
 }
