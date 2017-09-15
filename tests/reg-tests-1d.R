@@ -1223,8 +1223,9 @@ tools::assertError(splines::splineDesign(aKnots, x, derivs = 4), verbose = TRUE)
 
 
 ## deparse(<symbol>)
-brc <- quote(`{`)
-stopifnot(identical(brc, eval(parse(text = deparse(brc, control="all")))))
+##_reverted_for_now
+##_ brc <- quote(`{`)
+##_ stopifnot(identical(brc, eval(parse(text = deparse(brc, control="all")))))
 ## default was to set  backtick=FALSE  so parse() failed in R <= 3.4.x
 
 
