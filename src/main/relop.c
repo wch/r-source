@@ -52,7 +52,6 @@ SEXP attribute_hidden do_relop(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, arg1, arg2;
     int argc;
-    int oper = PRIMVAL(op);
 
     if (args != R_NilValue &&
 	CDR(args) != R_NilValue &&
@@ -66,42 +65,10 @@ SEXP attribute_hidden do_relop(SEXP call, SEXP op, SEXP args, SEXP env)
     if (ATTRIB(arg1) != R_NilValue || ATTRIB(arg2) != R_NilValue) {
 	if (DispatchGroup("Ops", call, op, args, env, &ans))
 	    return ans;
-	if (argc != 2)
-	    error("operator needs two arguments");
     }
-    else if (argc == 2) {
-	if (IS_SCALAR(arg1, INTSXP)) {
-	    int ix = SCALAR_IVAL(arg1);
-	    if (IS_SCALAR(arg2, INTSXP)) {
-		int iy = SCALAR_IVAL(arg2);
-		if (ix == NA_INTEGER || iy == NA_INTEGER)
-		    return ScalarLogical(NA_LOGICAL);
-		DO_SCALAR_RELOP(oper, ix, iy);
-	    }
-	    else if (IS_SCALAR(arg2, REALSXP)) {
-		double dy = SCALAR_DVAL(arg2);
-		if (ix == NA_INTEGER || ISNAN(dy))
-		    return ScalarLogical(NA_LOGICAL);
-		DO_SCALAR_RELOP(oper, ix, dy);
-	    }
-	}
-	else if (IS_SCALAR(arg1, REALSXP)) {
-	    double dx = SCALAR_DVAL(arg1);
-	    if (IS_SCALAR(arg2, INTSXP)) {
-		int iy = SCALAR_IVAL(arg2);
-		if (ISNAN(dx) || iy == NA_INTEGER)
-		    return ScalarLogical(NA_LOGICAL);
-		DO_SCALAR_RELOP(oper, dx, iy);
-	    }
-	    else if (IS_SCALAR(arg2, REALSXP)) {
-		double dy = SCALAR_DVAL(arg2);
-		if (ISNAN(dx) || ISNAN(dy))
-		    return ScalarLogical(NA_LOGICAL);
-		DO_SCALAR_RELOP(oper, dx, dy);
-	    }
-	}
-    }
-    else error("operator needs two arguments");
+
+    if (argc != 2)
+	error("operator needs two arguments");
 
     return do_relop_dflt(call, op, arg1, arg2);
 }
@@ -109,56 +76,61 @@ SEXP attribute_hidden do_relop(SEXP call, SEXP op, SEXP args, SEXP env)
 // also called from cmp_relop() in eval.c :
 SEXP attribute_hidden do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
 {
+    /* handle the REALSXP/INTSXP simple scalar case quickly */
+    if (IS_SIMPLE_SCALAR(x, INTSXP)) {
+	int ix = SCALAR_IVAL(x);
+	if (IS_SIMPLE_SCALAR(y, INTSXP)) {
+	    int iy = SCALAR_IVAL(y);
+	    if (ix == NA_INTEGER || iy == NA_INTEGER)
+		return ScalarLogical(NA_LOGICAL);
+	    DO_SCALAR_RELOP(PRIMVAL(op), ix, iy);
+	}
+	else if (IS_SIMPLE_SCALAR(y, REALSXP)) {
+	    double dy = SCALAR_DVAL(y);
+	    if (ix == NA_INTEGER || ISNAN(dy))
+		return ScalarLogical(NA_LOGICAL);
+	    DO_SCALAR_RELOP(PRIMVAL(op), ix, dy);
+	}
+    }
+    else if (IS_SIMPLE_SCALAR(x, REALSXP)) {
+	double dx = SCALAR_DVAL(x);
+	if (IS_SCALAR(y, INTSXP)) {
+	    int iy = SCALAR_IVAL(y);
+	    if (ISNAN(dx) || iy == NA_INTEGER)
+		return ScalarLogical(NA_LOGICAL);
+	    DO_SCALAR_RELOP(PRIMVAL(op), dx, iy);
+	}
+	else if (IS_SIMPLE_SCALAR(y, REALSXP)) {
+	    double dy = SCALAR_DVAL(y);
+	    if (ISNAN(dx) || ISNAN(dy))
+		return ScalarLogical(NA_LOGICAL);
+	    DO_SCALAR_RELOP(PRIMVAL(op), dx, dy);
+	}
+    }
+
     R_xlen_t
 	nx = xlength(x),
 	ny = xlength(y);
     SEXPTYPE
 	typex = TYPEOF(x),
 	typey = TYPEOF(y);
-    PROTECT_INDEX xpi, ypi;
 
-    /* pre-test to handle the most common case quickly.
-       Used to skip warning too ....
-     */
+    /* handle the REALSXP/INTSXP simple vector/scalar case quickly. */
     if (ATTRIB(x) == R_NilValue && ATTRIB(y) == R_NilValue &&
 	(typex == REALSXP || typex == INTSXP) &&
 	(typey == REALSXP || typey == INTSXP) &&
-	nx > 0 && ny > 0) {
+	nx > 0 && ny > 0 && (nx == 1 || ny == 1)) {
 
-	/* handle the scalar case */
-	if (nx == 1 && ny == 1) {
-	    if (typex == INTSXP && typey == INTSXP) {
-		int ix = INTEGER(x)[0];
-		int iy = INTEGER(y)[0];
-		if (ix == NA_INTEGER || iy == NA_INTEGER)
-		    return ScalarLogical(NA_LOGICAL);
-		DO_SCALAR_RELOP(PRIMVAL(op), ix, iy);
-	    }
-	    else {
-		double dx = typex == REALSXP ? REAL(x)[0] :
-		    INTEGER(x)[0] != NA_INTEGER ? INTEGER(x)[0] : NA_REAL;
-		double dy = typey == REALSXP ? REAL(y)[0] :
-		    INTEGER(y)[0] != NA_INTEGER ? INTEGER(y)[0] : NA_REAL;
-		if (ISNAN(dx) || ISNAN(dy))
-		    return ScalarLogical(NA_LOGICAL);
-		DO_SCALAR_RELOP(PRIMVAL(op), dx, dy);
-	    }
-	}
-
-	/* non-scalar case */
-
-	if (nx > 0 && ny > 0 &&
-	    ((nx > ny) ? nx % ny : ny % nx) != 0) // mismatch
-	    warningcall(call, _("longer object length is not "
-				"a multiple of shorter object length"));
-	PROTECT_WITH_INDEX(x, &xpi);
-	PROTECT_WITH_INDEX(y, &ypi);
+	PROTECT(x);
+	PROTECT(y);
 	SEXP ans;
 	ans = numeric_relop(PRIMVAL(op), x, y);
 	UNPROTECT(2);
 	return ans;
     }
 
+    /* handle the general case */
+    PROTECT_INDEX xpi, ypi;
     PROTECT_WITH_INDEX(x, &xpi);
     PROTECT_WITH_INDEX(y, &ypi);
 
