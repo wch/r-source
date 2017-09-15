@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2017-09-13 r73257) -- "Unsuffered Consequences"
+R Under development (unstable) (2017-09-15 r73268) -- "Unsuffered Consequences"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -99,7 +99,7 @@ abc: Before dispatching; x has class `expression':  expression((x))
 abc: Before dispatching; x has class `expression':  expression(sin(x))
 'expression' method of abc: abc.expression(e1) 
 > abc(e0[[1]])
-abc: Before dispatching; x has class `(': language (x)
+abc: Before dispatching; x has class `(': language, mode "(": (x)
 '(' method of abc: `abc.(`(e0[[1]]) 
 > abc(e1[[1]])
 abc: Before dispatching; x has class `call': language sin(x)

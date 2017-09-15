@@ -122,7 +122,7 @@ rbind <- function(..., deparse.level = 1)
 
 deparse <-
     function(expr, width.cutoff = 60L,
-	     backtick = mode(expr) %in% c("call", "name", "expression", "(", "function"),
+	     backtick = mode(expr) %in% c("call", "expression", "(", "function"),
 	     control = c("keepInteger", "showAttributes", "keepNA"),
              nlines = -1L)
     .Internal(deparse(expr, width.cutoff, backtick,
