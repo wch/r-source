@@ -2122,6 +2122,8 @@ SEXP attribute_hidden do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
+#include <R_ext/Itermacros.h>
+
 // Check if x has missing values; the anyNA.default() method
 static Rboolean anyNA(SEXP call, SEXP op, SEXP args, SEXP env)
 /* Original code:
@@ -2150,32 +2152,36 @@ static Rboolean anyNA(SEXP call, SEXP op, SEXP args, SEXP env)
     {
 	if(REAL_NO_NA(x))
 	    return FALSE;
-	double *xD = REAL(x);
-	for (i = 0; i < n; i++)
-	    if (ISNAN(xD[i])) return TRUE;
+	ITERATE_BY_REGION(x, xD, i, nbatch, double, REAL, {
+	    for (int k = 0; k < nbatch; k++)
+		if (ISNAN(xD[k]))
+		    return TRUE;
+	});
 	break;
     }
     case INTSXP:
     {
 	if(INTEGER_NO_NA(x))
 	    return FALSE;
-	int *xI = INTEGER(x);
-	for (i = 0; i < n; i++)
-	    if (xI[i] == NA_INTEGER) return TRUE;
+	ITERATE_BY_REGION(x, xI, i, nbatch, int, INTEGER, {
+	    for (int k = 0; k < nbatch; k++)
+		if (xI[k] == NA_INTEGER)
+		    return TRUE;
+	});
 	break;
     }
     case LGLSXP:
     {
-	int *xI = LOGICAL(x);
 	for (i = 0; i < n; i++)
-	    if (xI[i] == NA_LOGICAL) return TRUE;
+	    if (LOGICAL_ELT(x, i) == NA_LOGICAL) return TRUE;
 	break;
     }
     case CPLXSXP:
     {
-	Rcomplex *xC = COMPLEX(x);
-	for (i = 0; i < n; i++)
-	    if (ISNAN(xC[i].r) || ISNAN(xC[i].i)) return TRUE;
+	for (i = 0; i < n; i++) {
+	    Rcomplex v = COMPLEX_ELT(x, i);
+	    if (ISNAN(v.r) || ISNAN(v.i)) return TRUE;
+	}
 	break;
     }
     case STRSXP:
