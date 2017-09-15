@@ -402,8 +402,8 @@ static SEXP complex_relop(RELOP_TYPE code, SEXP s1, SEXP s2, SEXP call)
     case EQOP:
 	MOD_ITERATE2(n, n1, n2, i, i1, i2, {
 //	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	    x1 = COMPLEX(s1)[i1];
-	    x2 = COMPLEX(s2)[i2];
+	    x1 = COMPLEX_ELT(s1, i1);
+	    x2 = COMPLEX_ELT(s2, i2);
 	    if (ISNAN(x1.r) || ISNAN(x1.i) ||
 		ISNAN(x2.r) || ISNAN(x2.i))
 		LOGICAL(ans)[i] = NA_LOGICAL;
@@ -414,8 +414,8 @@ static SEXP complex_relop(RELOP_TYPE code, SEXP s1, SEXP s2, SEXP call)
     case NEOP:
 	MOD_ITERATE2(n, n1, n2, i, i1, i2, {
 //	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	    x1 = COMPLEX(s1)[i1];
-	    x2 = COMPLEX(s2)[i2];
+	    x1 = COMPLEX_ELT(s1, i1);
+	    x2 = COMPLEX_ELT(s2, i2);
 	    if (ISNAN(x1.r) || ISNAN(x1.i) ||
 		ISNAN(x2.r) || ISNAN(x2.i))
 		LOGICAL(ans)[i] = NA_LOGICAL;
