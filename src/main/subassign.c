@@ -183,8 +183,13 @@ static SEXP EnlargeVector(SEXP x, R_xlen_t newlen)
 	}
     }
 
-    if (newlen > len)
-	newtruelen = (R_xlen_t) (newlen * expand);
+    if (newlen > len) {
+	double expanded_nlen = newlen * expand;
+	if (expanded_nlen <= R_XLEN_T_MAX)
+	    newtruelen = (R_xlen_t) expanded_nlen;
+	else
+	    newtruelen = newlen;
+    }
     else
 	/* sometimes this is called when no expansion is needed */
 	newtruelen = newlen;
