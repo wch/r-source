@@ -160,7 +160,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   \item{INSTALL_opts}{
     an optional character vector of additional option(s) to be passed to
     \command{R CMD INSTALL} for a source package install.  E.g.,
-    \code{c("--html", "--no-multiarch")}.
+    \code{c("--html", "--no-multiarch", "--no-test-load")}.
 
     Can also be a named list of character vectors to be used as
     additional options, with names the respective package names.
@@ -334,7 +334,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   request is ignored, with a warning.)  For parallel installs a
   \samp{Error 124} message from \command{make} indicates that timeout
   occurred.
-  
+
   Timeouts during installation might leave lock directories behind and
   not restore previous versions.
 }
@@ -373,7 +373,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   other options to monitor file transfers.
 
   \code{\link{untar}} for manually unpacking source package tarballs.
-  
+
   \code{\link{INSTALL}}, \code{\link{REMOVE}}, \code{\link{remove.packages}},
   \code{\link{library}}, \code{\link{.packages}}, \code{\link{read.dcf}}
 
