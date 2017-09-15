@@ -131,10 +131,6 @@
       \code{(tag = value)} syntax for atomic vectors.
       \cr \code{m:n} now also deparses nicely when \eqn{m > n}.
 
-      \item \code{deparse(x)} now also uses \code{backtick = TRUE} by
-      default for the case where \code{x} is a symbol, and hence
-      \code{deparse(quote(`{`), control="all")} is parseable now.
-
       \item If the option \code{setWidthOnResize} is set and \code{TRUE},
       \R run in a terminal using a recent \code{readline} library will
       set the \code{width} option when the terminal is
