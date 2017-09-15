@@ -1,9 +1,9 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
+ *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 2004-2017   The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
  *  Copyright (C) 2004        The R Foundation
- *  Copyright (C) 2004-2016   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -302,7 +302,7 @@ static Rboolean GA_NewFrameConfirm(pDevDesc);
 	/********************************************************/
 
 //#include "rbitmap.h"
-extern int 
+extern int
 R_SaveAsPng(void  *d, int width, int height,
 	    unsigned int (*gp)(void *, int, int),
 	    int bgr, FILE *fp, unsigned int transparent, int res);
@@ -434,7 +434,7 @@ static void SaveAsPostscript(pDevDesc dd, const char *fn)
 	    if(!strcmp("paper", CHAR(STRING_ELT(names, i)))) {
 		strncpy(paper, CHAR(STRING_ELT(VECTOR_ELT(s, i), 0)), 255);
 		done++;
-		if(strcmp("paper", "default") == 0)
+		if(strcmp(paper, "default") == 0)
 		    strncpy(paper, "special", 255);
 	    }
 	    if(!strcmp("bg", CHAR(STRING_ELT(names, i)))) {
@@ -1747,7 +1747,7 @@ setupScreenDevice(pDevDesc dd, gadesc *xd, double w, double h,
     setresize(xd->gawin, HelpResize);
     setredraw(xd->gawin, HelpExpose);
     setmousedown(xd->gawin, HelpMouseClick);
-    setmousemove(xd->gawin, HelpMouseMove); 
+    setmousemove(xd->gawin, HelpMouseMove);
     setmousedrag(xd->gawin, HelpMouseMove);
     setmouseup(xd->gawin, HelpMouseUp);
     setkeydown(xd->gawin, NHelpKeyIn);
@@ -3160,7 +3160,7 @@ static Rboolean GA_Locator(double *x, double *y, pDevDesc dd)
 	SH;
 	R_WaitEvent();
 	R_ProcessEvents();
-	if (!dd->deviceSpecific) { /* closing the window on other systems calls error().  
+	if (!dd->deviceSpecific) { /* closing the window on other systems calls error().
 	                             But that is not safe on Windows, so we NULL the device
 	                             specific field and call error() here instead. */
 	    error(_("graphics device closed during call to locator or identify"));
@@ -3320,6 +3320,7 @@ Rboolean GADeviceDriver(pDevDesc dd, const char *display, double width,
     switch(xd->kind) {
     case SCREEN:
 	dd->haveTransparentBg = 3;
+	break;
     case PRINTER:
     case METAFILE:
     case PNG:

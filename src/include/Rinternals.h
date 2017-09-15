@@ -386,7 +386,7 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 	SEXP sl__x__ = (x);					\
 	R_xlen_t sl__v__ = (v);					\
 	if (ALTREP(x)) error("can't set ALTREP truelength");	\
-	SET_STDVEC_TRUELENGTH(sl__x__, (R_len_t) sl__v__);	\
+	SET_STDVEC_TRUELENGTH(sl__x__, sl__v__);	\
     } while (0)
 
 #define IS_SCALAR(x, t) (((x)->sxpinfo.type == (t)) && (x)->sxpinfo.scalar)

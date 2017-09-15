@@ -1,5 +1,5 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
+ *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 1999-2016 The R Core Team
  *

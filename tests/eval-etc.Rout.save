@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2017-09-12 r73239) -- "Unsuffered Consequences"
+R Under development (unstable) (2017-09-13 r73257) -- "Unsuffered Consequences"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -174,6 +174,7 @@ mm =  chr "Bde"
 > mycaller()## wrongly gave `mm = NULL'  now = "Abc"
 mm =  chr "Abc"
 > 
+> CO <- utils::capture.output
 > 
 > ## Garbage collection  protection problem:
 > if(FALSE) ## only here to be run as part of  'make test-Gct'
@@ -181,22 +182,15 @@ mm =  chr "Abc"
 > x <- c("a", NA, "b")
 > fx <- factor(x, exclude="")
 > ST <- if(interactive()) system.time else invisible
-> ST(r <- replicate(20, capture.output(print(fx))))
-> table(ok. <- r[2,] == "Levels: a b <NA>") # want all TRUE
+> ST(r <- replicate(20, CO(print(fx))))
+> table(r[2,]) ## the '<NA>' levels part would be wrong occasionally
 
-TRUE 
-  20 
-> stopifnot(ok.) # in case of failure, see
-> r[2,] ## the '<NA>' levels part would be wrong occasionally
- [1] "Levels: a b <NA>" "Levels: a b <NA>" "Levels: a b <NA>" "Levels: a b <NA>"
- [5] "Levels: a b <NA>" "Levels: a b <NA>" "Levels: a b <NA>" "Levels: a b <NA>"
- [9] "Levels: a b <NA>" "Levels: a b <NA>" "Levels: a b <NA>" "Levels: a b <NA>"
-[13] "Levels: a b <NA>" "Levels: a b <NA>" "Levels: a b <NA>" "Levels: a b <NA>"
-[17] "Levels: a b <NA>" "Levels: a b <NA>" "Levels: a b <NA>" "Levels: a b <NA>"
+Levels: a b <NA> 
+              20 
+> stopifnot(r[2,] == "Levels: a b <NA>") # in case of failure, see r[2,] above
 > 
 > 
 > ## withAutoprint() : must *not* evaluate twice *and* do it in calling environment:
-> CO <- utils::capture.output
 > stopifnot(
 +     identical(
 + 	## ensure it is only evaluated _once_ :
@@ -213,15 +207,14 @@ TRUE
 +     identical(r1,r2)
 + )
 > ## partly failed in R 3.4.0 alpha
-> rm(r1,r2) # they fail in parse(.. deparse(..)) below
-> 
 > 
 > ### Checking parse(* deparse()) "inversion property" ----------------------------
 > ## Hopefully typically the identity():
-> pd0 <- function(expr, control = c("keepInteger","showAttributes","keepNA"), ...)
-+     parse(text = deparse(expr, control=control, ...))
+> pd0 <- function(expr, backtick = TRUE,
++                 control = c("keepInteger","showAttributes","keepNA"), ...)
++     parse(text = deparse(expr, backtick=backtick, control=control, ...))
 > id_epd <- function(expr, control = c("all","digits17"), ...)
-+     eval(parse(text = deparse(expr, control=control, ...)))
++     eval(pd0(expr, control=control, ...))
 > dPut <- function(x, control = c("all","digits17")) dput(x, control=control)
 > hasReal <- function(x) {
 +     if(is.double(x) || is.complex(x))
@@ -249,7 +242,12 @@ TRUE
 +         return(invisible(obj)) # cannot parse it
 +     }
 +     ob2 <- id_epd(obj)
-+     po <- pd0(obj)# the default deparse() *should* parse at least
++     po <- tryCatch(pd0(obj),# the default deparse() *should* typically parse
++                    error = function(e) {
++                        cat("default deparse() was not parse():\n  ",
++                            conditionMessage(e),
++                            "\n  but deparse(*, control='all') should work.\n")
++                        pd0(obj, control = "all") })
 +     if(!identical(obj, ob2, ignore.environment=TRUE,
 +                   ignore.bytecode=TRUE, ignore.srcref=TRUE)) {
 +         ae <- all.equal(obj, ob2, tolerance = 0)
@@ -261,15 +259,31 @@ TRUE
 +     if(!is.language(obj)) {
 + 	ob2. <- eval(pd0) ## almost always *NOT* identical to obj, but eval()ed
 +     }
++     if(show || !is.list(obj)) { ## check it works when wrapped (but do not recurse inf.!)
++         cat(" --> checking list(*): ")
++         check_EPD(list(.chk = obj), show = FALSE)
++         cat("Ok\n")
++     }
 +     invisible(obj)
 + }
 > 
+> library(stats)
+> ## some more "critical" cases
 > nmdExp <- expression(e1 = sin(pi), e2 = cos(-pi))
 > xn <- setNames(pi^(1:3), paste0("pi^",1:3))
-> dPut(xn)
-c(`pi^1` = 3.1415926535897931, `pi^2` = 9.869604401089358, `pi^3` = 31.006276680299816
-)
-> stopifnot(identical(xn, id_epd(xn)))
+> L1 <- list(c(A="Txt"))
+> L2 <- list(el = c(A=2.5))
+> ## "m:n" named integers and _inside list_
+> i6 <- setNames(5:6, letters[5:6])
+> L4  <- list(ii = 5:2) # not named
+> L6  <- list(L = i6)
+> L6a <- list(L = structure(rev(i6), myDoc = "info"))
+> ## empty *named* atomic vectors
+> i00 <- setNames(integer(), character()); i0 <- structure(i00, foo = "bar")
+> L00 <- setNames(logical(), character()); L0 <- structure(L00, class = "Logi")
+> r00 <- setNames(raw(), character())
+> sii <- structure(4:7, foo = list(B="bar", G="grizzly",
++                                  vec=c(a=1L,b=2L), v2=i6, v0=L00))
 > 
 > ## Creating a collection of S4 objects, ensuring deparse <-> parse are inverses
 > library(methods)
@@ -497,7 +511,7 @@ Matrix+           is(Matrix(FALSE, 1,1), "sparseMatrix"))
 > 
 > for(nm in ls(env=.GlobalEnv)) {
 +     cat(nm,": ", sep="")
-+     if(!any(nm == "r1")) ## 'r1' fails
++     ## if(!any(nm == "r1")) ## 'r1' fails
 +         check_EPD(obj = (x <- .GlobalEnv[[nm]]))
 +     if(is.function(x)) {
 +         cat("checking body(.):\n"   ); check_EPD(   body(x))
@@ -509,36 +523,44 @@ A: new("dgCMatrix",
 i = c(0L, 3L, 4L, 5L, 2L, 6L, 7L), p = c(0L, 
 0L, 1L, 1L, 1L, 1L, 2L, 3L, 4L, 6L, 7L), Dim = c(8L, 10L), Dimnames = list(
     NULL, NULL), x = c(7, 21, 28, 35, 14, 42, 49), factors = list())
+ --> checking list(*): Ok
 --=--=--=--=--
 A.: new("dgCMatrix",
 i = c(0L, 3L, 4L, 5L, 2L, 6L, 7L), p = c(0L, 
 0L, 1L, 1L, 1L, 1L, 2L, 3L, 4L, 6L, 7L), Dim = c(8L, 10L), Dimnames = list(
     NULL, NULL), x = c(2, 21, 28, 35, 14, 42, 49), factors = list())
+ --> checking list(*): Ok
 --=--=--=--=--
 A1: new("dgCMatrix",
 i = c(0L, 3L, 4L, 5L, 2L, 6L, 7L), p = c(0L, 
 0L, 1L, 1L, 1L, 1L, 2L, 3L, 4L, 6L, 7L), Dim = c(8L, 10L), Dimnames = list(
     NULL, NULL), x = c(7, 21, 28, 35, 14, 42, 49), factors = list())
+ --> checking list(*): Ok
 --=--=--=--=--
 AA: new("dgCMatrix",
 i = c(0L, 3L, 4L, 5L, 2L, 6L, 7L), p = c(0L, 
 0L, 1L, 1L, 1L, 1L, 2L, 3L, 4L, 6L, 7L, 7L, 7L, 7L, 7L, 7L, 7L, 
 7L, 7L, 7L, 7L), Dim = c(10L, 20L), Dimnames = list(NULL, NULL), 
     x = c(7, 21, 28, 35, 14, 42, 49), factors = list())
+ --> checking list(*): Ok
 --=--=--=--=--
 Aa: new("dgCMatrix",
 i = c(0L, 3L, 4L, 5L, 2L, 6L, 7L), p = c(0L, 
 0L, 1L, 1L, 1L, 1L, 2L, 3L, 4L, 6L, 7L), Dim = c(8L, 10L), Dimnames = list(
     NULL, NULL), x = c(9, 21, 28, 35, 14, 42, 49), factors = list())
+ --> checking list(*): Ok
 --=--=--=--=--
 As: new("dsyMatrix",
 x = c(2, 1, 1, 2), Dim = c(2L, 2L), Dimnames = list(
     NULL, NULL), uplo = "U", factors = list())
+ --> checking list(*): Ok
 --=--=--=--=--
 CC: function (...) 
 match.call()
+ --> checking list(*): Ok
 checking body(.):
 quote(match.call())
+ --> checking list(*): Ok
 checking formals(.):
 pairlist(... = )
 __ not parse()able __
@@ -586,6 +608,7 @@ CO: function (..., file = NULL, append = FALSE, type = c("output",
         invisible(NULL)
     else rval
 }
+ --> checking list(*): Ok
 checking body(.):
 quote({
     args <- substitute(list(...))[-1L]
@@ -628,6 +651,7 @@ quote({
         invisible(NULL)
     else rval
 })
+ --> checking list(*): Ok
 checking formals(.):
 pairlist(... = , file = NULL, append = FALSE, type = quote(c("output", 
     "message")), split = FALSE)
@@ -636,15 +660,19 @@ __ not parse()able __
 D5.: new("ddiMatrix",
 diag = "N", Dim = c(5L, 5L), Dimnames = list(
     NULL, NULL), x = c(5, 4, 3, 2, 1))
+ --> checking list(*): Ok
 --=--=--=--=--
 D5N: new("ddiMatrix",
 diag = "N", Dim = c(5L, 5L), Dimnames = list(
     NULL, NULL), x = c(5, 4, 3, 2, NA))
+ --> checking list(*): Ok
 --=--=--=--=--
 DD: function (...) 
 CC(...)
+ --> checking list(*): Ok
 checking body(.):
 quote(CC(...))
+ --> checking list(*): Ok
 checking formals(.):
 pairlist(... = )
 __ not parse()able __
@@ -652,31 +680,63 @@ __ not parse()able __
 I3: new("ddiMatrix",
 diag = "U", Dim = c(3L, 3L), Dimnames = list(
     NULL, NULL), x = numeric(0))
+ --> checking list(*): Ok
+--=--=--=--=--
+L0: structure(logical(0), .Names = character(0), class = "Logi")
+ --> checking list(*): Ok
+--=--=--=--=--
+L00: structure(logical(0), .Names = character(0))
+ --> checking list(*): Ok
+--=--=--=--=--
+L1: list(c(A = "Txt"))
+ --> checking list(*): Ok
+--=--=--=--=--
+L2: list(el = c(A = 2.5))
+ --> checking list(*): Ok
+--=--=--=--=--
+L4: list(ii = 5:2)
+ --> checking list(*): Ok
+--=--=--=--=--
+L6: list(L = structure(5:6, .Names = c("e", "f")))
+ --> checking list(*): Ok
+--=--=--=--=--
+L6a: list(L = structure(6:5, .Names = c("f", "e"), myDoc = "info"))
+ --> checking list(*): Ok
 --=--=--=--=--
 M: new("ltCMatrix",
 i = c(0L, 0L, 1L), p = c(0L, 0L, 1L, 3L), Dim = c(3L, 
 3L), Dimnames = list(NULL, NULL), x = c(TRUE, TRUE, TRUE), uplo = "U", 
     diag = "N")
+ --> checking list(*): Ok
 --=--=--=--=--
 ST: .Primitive("invisible")
+ --> checking list(*): Ok
 checking body(.):
 NULL
+ --> checking list(*): Ok
 checking formals(.):
 NULL
+ --> checking list(*): Ok
 --=--=--=--=--
 X: list(TRUE)
+ --> checking list(*): Ok
 --=--=--=--=--
 a: list(b = 3)
+ --> checking list(*): Ok
 --=--=--=--=--
 a2: quote(B(a = x + y, named = 3))
+ --> checking list(*): Ok
 --=--=--=--=--
 a3: quote(CC(1, 2, 3))
+ --> checking list(*): Ok
 --=--=--=--=--
 aa: quote(B(a = x + y, b = 3))
+ --> checking list(*): Ok
 --=--=--=--=--
 args: structure(list(i = c(1, 3, 4, 5, 6, 7, 8, 1), j = c(2, 9, 6, 
 7, 8, 9, 10, 2), x = c(7, 14, 21, 28, 35, 42, 49, 2)), row.names = c(NA, 
 -8L), class = "data.frame")
+ --> checking list(*): Ok
 --=--=--=--=--
 callme: function (a = 1, mm = c("Abc", "Bde")) 
 {
@@ -685,6 +745,7 @@ callme: function (a = 1, mm = c("Abc", "Bde"))
     str(mm)
     invisible()
 }
+ --> checking list(*): Ok
 checking body(.):
 quote({
     mm <- match.arg(mm)
@@ -692,8 +753,10 @@ quote({
     str(mm)
     invisible()
 })
+ --> checking list(*): Ok
 checking formals(.):
 pairlist(a = 1, mm = quote(c("Abc", "Bde")))
+ --> checking list(*): Ok
 --=--=--=--=--
 check_EPD: function (obj, show = !hasReal(obj)) 
 {
@@ -705,7 +768,11 @@ check_EPD: function (obj, show = !hasReal(obj))
         return(invisible(obj))
     }
     ob2 <- id_epd(obj)
-    po <- pd0(obj)
+    po <- tryCatch(pd0(obj), error = function(e) {
+        cat("default deparse() was not parse():\n  ", conditionMessage(e), 
+            "\n  but deparse(*, control='all') should work.\n")
+        pd0(obj, control = "all")
+    })
     if (!identical(obj, ob2, ignore.environment = TRUE, ignore.bytecode = TRUE, 
         ignore.srcref = TRUE)) {
         ae <- all.equal(obj, ob2, tolerance = 0)
@@ -718,8 +785,14 @@ check_EPD: function (obj, show = !hasReal(obj))
     if (!is.language(obj)) {
         ob2. <- eval(pd0)
     }
+    if (show || !is.list(obj)) {
+        cat(" --> checking list(*): ")
+        check_EPD(list(.chk = obj), show = FALSE)
+        cat("Ok\n")
+    }
     invisible(obj)
 }
+ --> checking list(*): Ok
 checking body(.):
 quote({
     if (show) 
@@ -730,7 +803,11 @@ quote({
         return(invisible(obj))
     }
     ob2 <- id_epd(obj)
-    po <- pd0(obj)
+    po <- tryCatch(pd0(obj), error = function(e) {
+        cat("default deparse() was not parse():\n  ", conditionMessage(e), 
+            "\n  but deparse(*, control='all') should work.\n")
+        pd0(obj, control = "all")
+    })
     if (!identical(obj, ob2, ignore.environment = TRUE, ignore.bytecode = TRUE, 
         ignore.srcref = TRUE)) {
         ae <- all.equal(obj, ob2, tolerance = 0)
@@ -743,55 +820,75 @@ quote({
     if (!is.language(obj)) {
         ob2. <- eval(pd0)
     }
+    if (show || !is.list(obj)) {
+        cat(" --> checking list(*): ")
+        check_EPD(list(.chk = obj), show = FALSE)
+        cat("Ok\n")
+    }
     invisible(obj)
 })
+ --> checking list(*): Ok
 checking formals(.):
 pairlist(obj = , show = quote(!hasReal(obj)))
 __ not parse()able __
 --=--=--=--=--
 dPut: function (x, control = c("all", "digits17")) 
 dput(x, control = control)
+ --> checking list(*): Ok
 checking body(.):
 quote(dput(x, control = control))
+ --> checking list(*): Ok
 checking formals(.):
 pairlist(x = , control = quote(c("all", "digits17")))
 __ not parse()able __
 --=--=--=--=--
 dn: list(c("A", "B", "C"), c("a", "b", "c", "d", "e"))
+ --> checking list(*): Ok
 --=--=--=--=--
 e: new("ngCMatrix",
 i = integer(0), p = c(0L, 0L, 0L, 0L, 0L, 0L, 
 0L), Dim = c(4L, 6L), Dimnames = list(NULL, NULL), factors = list())
+ --> checking list(*): Ok
 --=--=--=--=--
 e1: quote(c(F = (f <- 0.29999999999999999), `Tail area` = 2 * if (f < 
     1) 30 else 90))
+ --> checking list(*): Ok
 --=--=--=--=--
 e2: quote(c(`a b c` = 1, b = 2))
+ --> checking list(*): Ok
 --=--=--=--=--
 e3: quote(c(`Variance ratio` = 1, `tail area` = pf(1, 1, 1)))
+ --> checking list(*): Ok
 --=--=--=--=--
 f: function (x, ...) 
 substitute(list(x, ...))
+ --> checking list(*): Ok
 checking body(.):
 quote(substitute(list(x, ...)))
+ --> checking list(*): Ok
 checking formals(.):
 pairlist(x = , ... = )
 __ not parse()able __
 --=--=--=--=--
 fx: structure(c(1L, 3L, 2L), .Label = c("a", "b", NA), class = "factor")
+ --> checking list(*): Ok
 --=--=--=--=--
 g: function (...) 
 h(f(...))
+ --> checking list(*): Ok
 checking body(.):
 quote(h(f(...)))
+ --> checking list(*): Ok
 checking formals(.):
 pairlist(... = )
 __ not parse()able __
 --=--=--=--=--
 h: function (...) 
 list(...)
+ --> checking list(*): Ok
 checking body(.):
 quote(list(...))
+ --> checking list(*): Ok
 checking formals(.):
 pairlist(... = )
 __ not parse()able __
@@ -812,6 +909,7 @@ hasReal: function (x)
     }
     else FALSE
 }
+ --> checking list(*): Ok
 checking body(.):
 quote({
     if (is.double(x) || is.complex(x)) 
@@ -828,82 +926,110 @@ quote({
     }
     else FALSE
 })
+ --> checking list(*): Ok
 checking formals(.):
 pairlist(x = )
 __ not parse()able __
 --=--=--=--=--
 i: c(1, 3, 4, 5, 6, 7, 8)
+ --> checking list(*): Ok
+--=--=--=--=--
+i0: structure(integer(0), .Names = character(0), foo = "bar")
+ --> checking list(*): Ok
+--=--=--=--=--
+i00: structure(integer(0), .Names = character(0))
+ --> checking list(*): Ok
+--=--=--=--=--
+i6: structure(5:6, .Names = c("e", "f"))
+ --> checking list(*): Ok
 --=--=--=--=--
 id_epd: function (expr, control = c("all", "digits17"), ...) 
-eval(parse(text = deparse(expr, control = control, ...)))
+eval(pd0(expr, control = control, ...))
+ --> checking list(*): Ok
 checking body(.):
-quote(eval(parse(text = deparse(expr, control = control, ...))))
+quote(eval(pd0(expr, control = control, ...)))
+ --> checking list(*): Ok
 checking formals(.):
 pairlist(expr = , control = quote(c("all", "digits17")), ... = )
 __ not parse()able __
 --=--=--=--=--
 isMissObj: function (obj) 
 identical(obj, alist(a = )[[1]])
+ --> checking list(*): Ok
 checking body(.):
 quote(identical(obj, alist(a = )[[1]]))
+ --> checking list(*): Ok
 checking formals(.):
 pairlist(obj = )
 __ not parse()able __
 --=--=--=--=--
 j: c(2, 9, 6, 7, 8, 9, 10)
+ --> checking list(*): Ok
 --=--=--=--=--
 k: function (...) 
 g(...)
+ --> checking list(*): Ok
 checking body(.):
 quote(g(...))
+ --> checking list(*): Ok
 checking formals(.):
 pairlist(... = )
 __ not parse()able __
 --=--=--=--=--
 l3: structure(c(FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, TRUE, TRUE, 
 FALSE), .Dim = c(3L, 3L))
+ --> checking list(*): Ok
 --=--=--=--=--
 m: new("dgCMatrix",
 i = c(2L, 0L, 1L, 2L, 0L, 1L), p = c(0L, 1L, 
 2L, 4L, 4L, 6L), Dim = c(3L, 5L), Dimnames = list(c("A", "B", 
 "C"), c("a", "b", "c", "d", "e")), x = c(1, 2, 4, 3, 6, 5), factors = list())
+ --> checking list(*): Ok
 --=--=--=--=--
 mycaller: function (x = 1, callme = pi) 
 {
     callme(x)
 }
+ --> checking list(*): Ok
 checking body(.):
 quote({
     callme(x)
 })
+ --> checking list(*): Ok
 checking formals(.):
 pairlist(x = 1, callme = quote(pi))
+ --> checking list(*): Ok
 --=--=--=--=--
 n: new("ngCMatrix",
 i = 5:0, p = c(0L, 0L, 1L, 2L, 3L, 4L, 5L, 6L
 ), Dim = 6:7, Dimnames = list(NULL, NULL), factors = list())
+ --> checking list(*): Ok
 --=--=--=--=--
 nA: new("ngCMatrix",
 i = c(0L, 3L, 4L, 5L, 2L, 6L, 7L), p = c(0L, 
 0L, 1L, 1L, 1L, 1L, 2L, 3L, 4L, 6L, 7L), Dim = c(8L, 10L), Dimnames = list(
     NULL, NULL), factors = list())
+ --> checking list(*): Ok
 --=--=--=--=--
 nmdExp: expression(e1 = sin(pi), e2 = cos(-pi))
+ --> checking list(*): Ok
 --=--=--=--=--
-ok.: c(TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, 
-TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE)
---=--=--=--=--
-pd0: function (expr, control = c("keepInteger", "showAttributes", 
+pd0: function (expr, backtick = TRUE, control = c("keepInteger", "showAttributes", 
     "keepNA"), ...) 
-parse(text = deparse(expr, control = control, ...))
+parse(text = deparse(expr, backtick = backtick, control = control, 
+    ...))
+ --> checking list(*): Ok
 checking body(.):
-quote(parse(text = deparse(expr, control = control, ...)))
+quote(parse(text = deparse(expr, backtick = backtick, control = control, 
+    ...)))
+ --> checking list(*): Ok
 checking formals(.):
-pairlist(expr = , control = quote(c("keepInteger", "showAttributes", 
-    "keepNA")), ... = )
+pairlist(expr = , backtick = TRUE, control = quote(c("keepInteger", 
+    "showAttributes", "keepNA")), ... = )
 __ not parse()able __
 --=--=--=--=--
 perm: c(2L, 3L, 6L, 4L, 1L, 7L, 5L)
+ --> checking list(*): Ok
 --=--=--=--=--
 r: structure(c("[1] a    <NA> b   ", "Levels: a b <NA>", "[1] a    <NA> b   ", 
 "Levels: a b <NA>", "[1] a    <NA> b   ", "Levels: a b <NA>", 
@@ -919,45 +1045,95 @@ r: structure(c("[1] a    <NA> b   ", "Levels: a b <NA>", "[1] a    <NA> b   ",
 "Levels: a b <NA>", "[1] a    <NA> b   ", "Levels: a b <NA>", 
 "[1] a    <NA> b   ", "Levels: a b <NA>", "[1] a    <NA> b   ", 
 "Levels: a b <NA>"), .Dim = c(2L, 20L))
+ --> checking list(*): Ok
+--=--=--=--=--
+r00: structure(raw(0), .Names = character(0))
+ --> checking list(*): Ok
+--=--=--=--=--
+r1: list(value = quote({
+    if (!evaluated) {
+        exprs <- substitute(exprs)
+        if (is.call(exprs)) {
+            if (exprs[[1]] == quote(`{`)) 
+                exprs <- as.list(exprs[-1])
+        }
+    }
+    source(exprs = exprs, local = local, print.eval = print., 
+        echo = echo, max.deparse.length = max.deparse.length, 
+        width.cutoff = width.cutoff, deparseCtrl = deparseCtrl, 
+        ...)
+}), visible = TRUE)
+ --> checking list(*): Ok
+--=--=--=--=--
+r2: list(value = quote({
+    if (!evaluated) {
+        exprs <- substitute(exprs)
+        if (is.call(exprs)) {
+            if (exprs[[1]] == quote(`{`)) 
+                exprs <- as.list(exprs[-1])
+        }
+    }
+    source(exprs = exprs, local = local, print.eval = print., 
+        echo = echo, max.deparse.length = max.deparse.length, 
+        width.cutoff = width.cutoff, deparseCtrl = deparseCtrl, 
+        ...)
+}), visible = TRUE)
+ --> checking list(*): Ok
 --=--=--=--=--
 sA: new("dsCMatrix",
 i = c(0L, 3L, 4L, 5L, 2L, 6L, 7L), p = c(0L, 
 0L, 1L, 1L, 1L, 1L, 2L, 3L, 4L, 6L, 7L), Dim = c(10L, 10L), Dimnames = list(
     NULL, NULL), x = c(7, 21, 28, 35, 14, 42, 49), uplo = "U", 
     factors = list())
+ --> checking list(*): Ok
+--=--=--=--=--
+sii: structure(4:7, foo = list(B = "bar", G = "grizzly", vec = structure(1:2, .Names = c("a", 
+"b")), v2 = structure(5:6, .Names = c("e", "f")), v0 = structure(logical(0), .Names = character(0))))
+ --> checking list(*): Ok
 --=--=--=--=--
 sy: new("dsCMatrix",
 i = c(1L, 3L, 4L, 2L, 3L), p = c(0L, 0L, 0L, 
 0L, 1L, 3L, 4L, 5L), Dim = c(7L, 7L), Dimnames = list(NULL, NULL), 
     x = c(1, 4, 5, 3, 2), uplo = "U", factors = list())
+ --> checking list(*): Ok
 --=--=--=--=--
-t1: --=--=--=--=--
-t2: --=--=--=--=--
+t1:  --> checking list(*): Ok
+--=--=--=--=--
+t2:  --> checking list(*): Ok
+--=--=--=--=--
 tA: new("dtCMatrix",
 i = c(0L, 3L, 4L, 5L, 2L, 6L, 7L), p = c(0L, 
 0L, 1L, 1L, 1L, 1L, 2L, 3L, 4L, 6L, 7L), Dim = c(10L, 10L), Dimnames = list(
     NULL, NULL), x = c(7, 21, 28, 35, 14, 42, 49), uplo = "U", 
     diag = "N")
+ --> checking list(*): Ok
 --=--=--=--=--
 tt: function (x) 
 {
     is.vector(x)
     deparse(substitute(x))
 }
+ --> checking list(*): Ok
 checking body(.):
 quote({
     is.vector(x)
     deparse(substitute(x))
 })
+ --> checking list(*): Ok
 checking formals(.):
 pairlist(x = )
 __ not parse()able __
 --=--=--=--=--
-u: --=--=--=--=--
-x: --=--=--=--=--
-xn: --=--=--=--=--
-ydata: --=--=--=--=--
+u:  --> checking list(*): Ok
+--=--=--=--=--
+x:  --> checking list(*): Ok
+--=--=--=--=--
+xn:  --> checking list(*): Ok
+--=--=--=--=--
+ydata:  --> checking list(*): Ok
+--=--=--=--=--
 ysmooth: 1:10
+ --> checking list(*): Ok
 --=--=--=--=--
 > summary(warnings())
 Length  Class   Mode 
@@ -968,5 +1144,5 @@ Length  Class   Mode
 > 
 > ## at the very end
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.709 0.127 0.839 0 0 
+Time elapsed:  0.84 0.096 0.989 0 0 
 > 

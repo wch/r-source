@@ -24,8 +24,6 @@
 #include <config.h>
 #endif
 
-#define USE_RINTERNALS // read-only, promise.
-
 #include <Defn.h>
 #include <Internal.h>
 
@@ -1617,7 +1615,8 @@ SEXP attribute_hidden do_radixsort(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     SEXP ans = PROTECT(allocVector(INTSXP, n));
     o = INTEGER(ans);
-    o[0] = -1;
+    if (n > 0)
+	o[0] = -1;
     xd = DATAPTR(x);
 
     stackgrps = narg > 1 || retGrp;

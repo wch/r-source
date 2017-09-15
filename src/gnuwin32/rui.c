@@ -1,5 +1,5 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
+ *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1998--2005  Guido Masarotto and Brian Ripley
  *  Copyright (C) 2004--2015  The R Foundation
  *
@@ -1244,13 +1244,13 @@ menuItems *wingetmenuitems(const char *mname, char *errmsg) {
     char mitem[1002], *p, *q, *r;
     int i,j = 0;
 
-    q = (char *)malloc(1000 * sizeof(char));
-    r = (char *)malloc(1000 * sizeof(char));
-
     if (strlen(mname) > 1000) {
 	strcpy(errmsg, G_("'mname' is limited to 1000 bytes"));
 	return NULL;
     }
+
+    q = (char *)malloc(1000 * sizeof(char));
+    r = (char *)malloc(1000 * sizeof(char));
 
     items = (menuItems *)malloc(sizeof(menuItems));
     if(nitems > 0)

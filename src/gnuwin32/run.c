@@ -55,11 +55,6 @@ static char *expandcmd(const char *cmd, int whole)
     /* make a copy as we manipulate in place */
     strcpy(buf, cmd);
 
-    // This is the return value.
-    if (!(s = (char *) malloc(MAX_PATH + strlen(cmd)))) {
-	strcpy(RunError, "Insufficient memory (expandcmd)");
-	return NULL;
-    }
     /* skip leading spaces */
     for (p = buf; *p && isspace(*p); p++);
     /* find the command itself, possibly double-quoted */
@@ -74,6 +69,12 @@ static char *expandcmd(const char *cmd, int whole)
 	}
 	c = *q; /* character after the command, normally a space */
 	*q = '\0';
+    }
+
+    // This is the return value.
+    if (!(s = (char *) malloc(MAX_PATH + strlen(cmd)))) {
+	strcpy(RunError, "Insufficient memory (expandcmd)");
+	return NULL;
     }
 
     /*

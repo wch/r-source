@@ -142,7 +142,7 @@ INLINE_FUN int LENGTH_EX(SEXP x, const char *file, int line)
     if (len > R_SHORT_LEN_MAX)
 	R_BadLongVector(x, file, line);
 #endif
-    return len;
+    return (int) len;
 }
 
 #ifdef STRICT_TYPECHECK
