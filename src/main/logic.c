@@ -206,29 +206,30 @@ static SEXP lunary(SEXP call, SEXP op, SEXP arg)
     case LGLSXP:
 	for (i = 0; i < len; i++) {
 //	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	    LOGICAL(x)[i] = (LOGICAL(arg)[i] == NA_LOGICAL) ?
-		NA_LOGICAL : LOGICAL(arg)[i] == 0;
+	    Rboolean v = LOGICAL_ELT(arg, i);
+	    LOGICAL(x)[i] = (v == NA_LOGICAL) ? NA_LOGICAL : v == 0;
 	}
 	break;
     case INTSXP:
 	for (i = 0; i < len; i++) {
 //	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	    LOGICAL(x)[i] = (INTEGER(arg)[i] == NA_INTEGER) ?
-		NA_LOGICAL : INTEGER(arg)[i] == 0;
+	    int v = INTEGER_ELT(arg, i);
+	    LOGICAL(x)[i] = (v == NA_INTEGER) ? NA_LOGICAL : v == 0;
 	}
 	break;
     case REALSXP:
 	for (i = 0; i < len; i++){
 //	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	    LOGICAL(x)[i] = ISNAN(REAL(arg)[i]) ?
-		NA_LOGICAL : REAL(arg)[i] == 0;
+	    double v = REAL_ELT(arg, i);
+	    LOGICAL(x)[i] = ISNAN(v) ? NA_LOGICAL : v == 0;
 	}
 	break;
     case CPLXSXP:
 	for (i = 0; i < len; i++) {
 //	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	    LOGICAL(x)[i] = (ISNAN(COMPLEX(arg)[i].r) || ISNAN(COMPLEX(arg)[i].i))
-		? NA_LOGICAL : (COMPLEX(arg)[i].r == 0. && COMPLEX(arg)[i].i == 0.);
+	    Rcomplex v = COMPLEX_ELT(arg, i);
+	    LOGICAL(x)[i] = (ISNAN(v.r) || ISNAN(v.i))
+		? NA_LOGICAL : (v.r == 0. && v.i == 0.);
 	}
 	break;
     case RAWSXP:
