@@ -94,7 +94,7 @@ SEXP attribute_hidden do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
     }
     else if (IS_SIMPLE_SCALAR(x, REALSXP)) {
 	double dx = SCALAR_DVAL(x);
-	if (IS_SCALAR(y, INTSXP)) {
+	if (IS_SIMPLE_SCALAR(y, INTSXP)) {
 	    int iy = SCALAR_IVAL(y);
 	    if (ISNAN(dx) || iy == NA_INTEGER)
 		return ScalarLogical(NA_LOGICAL);
@@ -291,65 +291,65 @@ SEXP attribute_hidden do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
                                                                         \
     switch (code) {                                                     \
     case EQOP:                                                          \
-	MOD_ITERATE2(n, n1, n2, i, i1, i2, {                            \
-	    x1 = ACCESSOR1(s1, i1);					\
-	    x2 = ACCESSOR2(s2, i2);					\
-	    if (ISNA1(x1) || ISNA2(x2))                                 \
-		LOGICAL(ans)[i] = NA_LOGICAL;                           \
-	    else                                                        \
-		LOGICAL(ans)[i] = (x1 == x2);                           \
-	});                                                             \
-	break;                                                          \
+        MOD_ITERATE2(n, n1, n2, i, i1, i2, {                            \
+            x1 = ACCESSOR1(s1, i1);                                     \
+            x2 = ACCESSOR2(s2, i2);                                     \
+            if (ISNA1(x1) || ISNA2(x2))                                 \
+                LOGICAL(ans)[i] = NA_LOGICAL;                           \
+            else                                                        \
+                LOGICAL(ans)[i] = (x1 == x2);                           \
+        });                                                             \
+        break;                                                          \
     case NEOP:                                                          \
-	MOD_ITERATE2(n, n1, n2, i, i1, i2, {                            \
-	    x1 = ACCESSOR1(s1, i1);					\
-	    x2 = ACCESSOR2(s2, i2);					\
-	    if (ISNA1(x1) || ISNA2(x2))                                 \
-		LOGICAL(ans)[i] = NA_LOGICAL;                           \
-	    else                                                        \
-		LOGICAL(ans)[i] = (x1 != x2);                           \
-	});                                                             \
-	break;                                                          \
+        MOD_ITERATE2(n, n1, n2, i, i1, i2, {                            \
+            x1 = ACCESSOR1(s1, i1);                                     \
+            x2 = ACCESSOR2(s2, i2);                                     \
+            if (ISNA1(x1) || ISNA2(x2))                                 \
+                LOGICAL(ans)[i] = NA_LOGICAL;                           \
+            else                                                        \
+                LOGICAL(ans)[i] = (x1 != x2);                           \
+        });                                                             \
+        break;                                                          \
     case LTOP:                                                          \
-	MOD_ITERATE2(n, n1, n2, i, i1, i2, {                            \
-	    x1 = ACCESSOR1(s1, i1);					\
-	    x2 = ACCESSOR2(s2, i2);					\
-	    if (ISNA1(x1) || ISNA2(x2))                                 \
-		LOGICAL(ans)[i] = NA_LOGICAL;                           \
-	    else                                                        \
-		LOGICAL(ans)[i] = (x1 < x2);                            \
-	});                                                             \
-	break;                                                          \
+        MOD_ITERATE2(n, n1, n2, i, i1, i2, {                            \
+            x1 = ACCESSOR1(s1, i1);                                     \
+            x2 = ACCESSOR2(s2, i2);                                     \
+            if (ISNA1(x1) || ISNA2(x2))                                 \
+                LOGICAL(ans)[i] = NA_LOGICAL;                           \
+            else                                                        \
+                LOGICAL(ans)[i] = (x1 < x2);                            \
+        });                                                             \
+        break;                                                          \
     case GTOP:                                                          \
-	MOD_ITERATE2(n, n1, n2, i, i1, i2, {                            \
-	    x1 = ACCESSOR1(s1, i1);					\
-	    x2 = ACCESSOR2(s2, i2);					\
-	    if (ISNA1(x1) || ISNA2(x2))                                 \
-		LOGICAL(ans)[i] = NA_LOGICAL;                           \
-	    else                                                        \
-		LOGICAL(ans)[i] = (x1 > x2);                            \
-	});                                                             \
-	break;                                                          \
+        MOD_ITERATE2(n, n1, n2, i, i1, i2, {                            \
+            x1 = ACCESSOR1(s1, i1);                                     \
+            x2 = ACCESSOR2(s2, i2);                                     \
+            if (ISNA1(x1) || ISNA2(x2))                                 \
+                LOGICAL(ans)[i] = NA_LOGICAL;                           \
+            else                                                        \
+                LOGICAL(ans)[i] = (x1 > x2);                            \
+        });                                                             \
+        break;                                                          \
     case LEOP:                                                          \
-	MOD_ITERATE2(n, n1, n2, i, i1, i2, {                            \
-	    x1 = ACCESSOR1(s1, i1);					\
-	    x2 = ACCESSOR2(s2, i2);					\
-	    if (ISNA1(x1) || ISNA2(x2))                                 \
-		LOGICAL(ans)[i] = NA_LOGICAL;                           \
-	    else                                                        \
-		LOGICAL(ans)[i] = (x1 <= x2);                           \
-	});                                                             \
-	break;                                                          \
+        MOD_ITERATE2(n, n1, n2, i, i1, i2, {                            \
+            x1 = ACCESSOR1(s1, i1);                                     \
+            x2 = ACCESSOR2(s2, i2);                                     \
+            if (ISNA1(x1) || ISNA2(x2))                                 \
+                LOGICAL(ans)[i] = NA_LOGICAL;                           \
+            else                                                        \
+                LOGICAL(ans)[i] = (x1 <= x2);                           \
+        });                                                             \
+        break;                                                          \
     case GEOP:                                                          \
-	MOD_ITERATE2(n, n1, n2, i, i1, i2, {                            \
-	    x1 = ACCESSOR1(s1, i1);					\
-	    x2 = ACCESSOR2(s2, i2);					\
-	    if (ISNA1(x1) || ISNA2(x2))                                 \
-		LOGICAL(ans)[i] = NA_LOGICAL;                           \
-	    else                                                        \
-		LOGICAL(ans)[i] = (x1 >= x2);                           \
-	});                                                             \
-	break;                                                          \
+        MOD_ITERATE2(n, n1, n2, i, i1, i2, {                            \
+            x1 = ACCESSOR1(s1, i1);                                     \
+            x2 = ACCESSOR2(s2, i2);                                     \
+            if (ISNA1(x1) || ISNA2(x2))                                 \
+                LOGICAL(ans)[i] = NA_LOGICAL;                           \
+            else                                                        \
+                LOGICAL(ans)[i] = (x1 >= x2);                           \
+        });                                                             \
+        break;                                                          \
     }                                                                   \
 } while(0)
 
@@ -370,8 +370,8 @@ static SEXP numeric_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
             NUMERIC_RELOP(int, INTEGER_ELT, ISNA_INT,
 			  int, INTEGER_ELT, ISNA_INT);
         } else {
-            NUMERIC_RELOP(int, INTEGER_ELT,
-			  ISNA_INT, double, REAL_ELT, ISNAN);
+            NUMERIC_RELOP(int, INTEGER_ELT, ISNA_INT,
+			  double, REAL_ELT, ISNAN);
         }
     } else if (isInteger(s2) || isLogical(s2)) {
         NUMERIC_RELOP(double, REAL_ELT, ISNAN,
