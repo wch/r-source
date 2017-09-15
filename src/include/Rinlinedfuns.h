@@ -146,32 +146,124 @@ INLINE_FUN int LENGTH_EX(SEXP x, const char *file, int line)
 }
 
 #ifdef STRICT_TYPECHECK
-# define CHECK_SCALAR_TYPE(x, type)				\
-    if (TYPEOF(x) != type || ALTREP(x) || XLENGTH(x) != 1)	\
-	error("bad scalar")
+# define CHECK_STDVEC_LGL(x) do {				\
+	if (TYPEOF(x) != LGLSXP || ALTREP(x))			\
+	    error("bad standard LGLSXP vector");		\
+    } while (0)
+# define CHECK_SCALAR_LGL(x) do {				\
+	CHECK_STDVEC_LGL(x);					\
+	if (XLENGTH(x) != 1) error("bad LGLSXP scalar");	\
+    } while (0)
+# define CHECK_STDVEC_INT(x) do {			\
+	if (! (TYPEOF(x) == INTSXP || TYPEOF(x) == LGLSXP) ||	\
+	    ALTREP(x))						\
+	    error("bad standard INTSXP vector");		\
+    } while (0)
+# define CHECK_SCALAR_INT(x) do {				\
+	CHECK_STDVEC_INT(x);					\
+	if (XLENGTH(x) != 1) error("bad INTSXP scalar");	\
+    } while (0)
+# define CHECK_STDVEC_REAL(x) do {				\
+	if (TYPEOF(x) != REALSXP || ALTREP(x))			\
+	    error("bad standard REALSXP vector");		\
+    } while (0)
+# define CHECK_SCALAR_REAL(x) do {				\
+	CHECK_STDVEC_REAL(x);					\
+	if (XLENGTH(x) != 1) error("bad REALSXP scalar");	\
+    } while (0)
+# define CHECK_STDVEC_CPLX(x) do {				\
+	if (TYPEOF(x) != CPLXSXP || ALTREP(x))			\
+	    error("bad standard CPLXSXP vector");		\
+    } while (0)
+# define CHECK_SCALAR_CPLX(x) do {				\
+	CHECK_STDVEC_CPLX(x);					\
+	if (XLENGTH(x) != 1) error("bad CPLXSXP scalar");	\
+    } while (0)
+# define CHECK_STDVEC_RAW(x) do {				\
+	if (TYPEOF(x) != RAWSXP || ALTREP(x))			\
+	    error("bad standard RAWSXP vector");		\
+    } while (0)
+# define CHECK_SCALAR_RAW(x) do {				\
+	CHECK_STDVEC_RAW(x);					\
+	if (XLENGTH(x) != 1) error("bad RAWSXP scalar");	\
+    } while (0)
 #else
-# define CHECK_SCALAR_TYPE(x, type) do { } while(FALSE)
+# define CHECK_STDVEC_LGL(x) do { } while(FALSE)
+# define CHECK_SCALAR_LGL(x) do { } while(FALSE)
+# define CHECK_STDVEC_INT(x) do { } while(FALSE)
+# define CHECK_SCALAR_INT(x) do { } while(FALSE)
+# define CHECK_STDVEC_REAL(x) do { } while(FALSE)
+# define CHECK_SCALAR_REAL(x) do { } while(FALSE)
+# define CHECK_STDVEC_CPLX(x) do { } while(FALSE)
+# define CHECK_SCALAR_CPLX(x) do { } while(FALSE)
+# define CHECK_STDVEC_RAW(x) do { } while(FALSE)
+# define CHECK_SCALAR_RAW(x) do { } while(FALSE)
 #endif
 
-INLINE_FUN Rboolean *LOGICAL0(SEXP x) { return (Rboolean *) STDVEC_DATAPTR(x); }
-INLINE_FUN Rboolean SCALAR_LVAL(SEXP x) { return LOGICAL0(x)[0]; }
-INLINE_FUN void SET_SCALAR_LVAL(SEXP x, Rboolean v) { LOGICAL0(x)[0] = v; }
+INLINE_FUN Rboolean *LOGICAL0(SEXP x) {
+    CHECK_STDVEC_LGL(x);
+    return (Rboolean *) STDVEC_DATAPTR(x);
+}
+INLINE_FUN Rboolean SCALAR_LVAL(SEXP x) {
+    CHECK_SCALAR_LGL(x);
+    return LOGICAL0(x)[0];
+}
+INLINE_FUN void SET_SCALAR_LVAL(SEXP x, Rboolean v) {
+    CHECK_SCALAR_LGL(x);
+    LOGICAL0(x)[0] = v;
+}
 
-INLINE_FUN int *INTEGER0(SEXP x) { return (int *) STDVEC_DATAPTR(x); }
-INLINE_FUN int SCALAR_IVAL(SEXP x) { return INTEGER0(x)[0]; }
-INLINE_FUN void SET_SCALAR_IVAL(SEXP x, int v) { INTEGER0(x)[0] = v; }
+INLINE_FUN int *INTEGER0(SEXP x) {
+    CHECK_STDVEC_INT(x);
+    return (int *) STDVEC_DATAPTR(x);
+}
+INLINE_FUN int SCALAR_IVAL(SEXP x) {
+    CHECK_SCALAR_INT(x);
+    return INTEGER0(x)[0];
+}
+INLINE_FUN void SET_SCALAR_IVAL(SEXP x, int v) {
+    CHECK_SCALAR_INT(x);
+    INTEGER0(x)[0] = v;
+}
 
-INLINE_FUN double *REAL0(SEXP x) { return (double *) STDVEC_DATAPTR(x); }
-INLINE_FUN double SCALAR_DVAL(SEXP x) { return REAL0(x)[0]; }
-INLINE_FUN void SET_SCALAR_DVAL(SEXP x, double v) { REAL0(x)[0] = v; }
+INLINE_FUN double *REAL0(SEXP x) {
+    CHECK_STDVEC_REAL(x);
+    return (double *) STDVEC_DATAPTR(x);
+}
+INLINE_FUN double SCALAR_DVAL(SEXP x) {
+    CHECK_SCALAR_REAL(x);
+    return REAL0(x)[0];
+}
+INLINE_FUN void SET_SCALAR_DVAL(SEXP x, double v) {
+    CHECK_SCALAR_REAL(x);
+    REAL0(x)[0] = v;
+}
 
-INLINE_FUN Rcomplex *COMPLEX0(SEXP x) { return (Rcomplex *) STDVEC_DATAPTR(x); }
-INLINE_FUN Rcomplex SCALAR_CVAL(SEXP x) { return COMPLEX0(x)[0]; }
-INLINE_FUN void SET_SCALAR_CVAL(SEXP x, Rcomplex v) { COMPLEX0(x)[0] = v; }
+INLINE_FUN Rcomplex *COMPLEX0(SEXP x) {
+    CHECK_STDVEC_CPLX(x);
+    return (Rcomplex *) STDVEC_DATAPTR(x);
+}
+INLINE_FUN Rcomplex SCALAR_CVAL(SEXP x) {
+    CHECK_SCALAR_CPLX(x);
+    return COMPLEX0(x)[0];
+}
+INLINE_FUN void SET_SCALAR_CVAL(SEXP x, Rcomplex v) {
+    CHECK_SCALAR_CPLX(x);
+    COMPLEX0(x)[0] = v;
+}
 
-INLINE_FUN Rbyte *RAW0(SEXP x) { return (Rbyte *) STDVEC_DATAPTR(x); }
-INLINE_FUN Rbyte SCALAR_BVAL(SEXP x) { return RAW0(x)[0]; }
-INLINE_FUN void SET_SCALAR_BVAL(SEXP x, Rbyte v) { RAW0(x)[0] = v; }
+INLINE_FUN Rbyte *RAW0(SEXP x) {
+    CHECK_STDVEC_RAW(x);
+    return (Rbyte *) STDVEC_DATAPTR(x);
+}
+INLINE_FUN Rbyte SCALAR_BVAL(SEXP x) {
+    CHECK_SCALAR_RAW(x);
+    return RAW0(x)[0];
+}
+INLINE_FUN void SET_SCALAR_BVAL(SEXP x, Rbyte v) {
+    CHECK_SCALAR_RAW(x);
+    RAW0(x)[0] = v;
+}
 
 INLINE_FUN R_altrep_class_t R_cast_altrep_class(SEXP x)
 {
