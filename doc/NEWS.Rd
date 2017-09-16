@@ -297,6 +297,10 @@
       fixing \PR{1662}.  Additionally, fixing \PR{16654}, a typo has
       been corrected which made the \code{hybrid=TRUE} method never be
       different than the default.
+
+      \item The methods package no longer directly copies slots
+      (attributes) into a prototype that is of an \dQuote{abnormal}
+      (reference) type, like a symbol.
     }
   }
 }
