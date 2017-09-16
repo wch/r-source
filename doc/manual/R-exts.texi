@@ -8411,7 +8411,7 @@ break __asan_report_error
 Recent versions@footnote{including @command{gcc} 7.1 and @command{clang}
 4.0.0: for @command{gcc} it is implied by @option{-fsanitize=address}.}
 added the flag @option{-fsanitize-address-use-after-scope}: see
-@uref{https://github.com//google//sanitizers//wiki//AddressSanitizerUseAfterScope}.
+@uref{https://github.com/@/google/@/sanitizers/@/wiki/@/AddressSanitizerUseAfterScope}.
 
 @menu
 * Using Leak Sanitizer::        
@@ -8518,7 +8518,7 @@ Instrumentation Options') for the options supported by GCC: 6 and 7 support
 @example
 -fsanitize=alignment,bool,bounds,enum,integer-divide-by-zero,
 nonnull-attribute,null,object-size, return,returns-nonnull-attribute,
-shift,signed-integer-overflow, unreachable,vla-bound,vptr
+shift,signed-integer-overflow,unreachable,vla-bound,vptr
 @end example
 @noindent
 plus the more specific versions @code{shift-base} and
