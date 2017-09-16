@@ -301,6 +301,13 @@
       \item The methods package no longer directly copies slots
       (attributes) into a prototype that is of an \dQuote{abnormal}
       (reference) type, like a symbol.
+
+      \item The methods package no longer attempts to call
+      \code{length<-()} on \code{NULL} (during the bootstrap process).
+
+      \item The methods package correctly shows methods when there are
+      multiple methods with the same signature for the same generic
+      (still not fully supported, but at least the user can see them).
     }
   }
 }
