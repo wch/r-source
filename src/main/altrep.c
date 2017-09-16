@@ -3685,6 +3685,8 @@ static void InitWrapIntegerClass(DllInfo *dll)
     /* override ALTVEC methods */
     R_set_altvec_Dataptr_method(cls, wrapper_Dataptr);
     R_set_altvec_Dataptr_or_null_method(cls, wrapper_Dataptr_or_null);
+    /**** should think about overriding Extract_subset at least if
+	  there are no attributes */
 
     /* override ALTINTEGER methods */
     R_set_altinteger_Elt_method(cls, wrapper_integer_Elt);
@@ -3710,6 +3712,8 @@ static void InitWrapRealClass(DllInfo *dll)
     /* override ALTVEC methods */
     R_set_altvec_Dataptr_method(cls, wrapper_Dataptr);
     R_set_altvec_Dataptr_or_null_method(cls, wrapper_Dataptr_or_null);
+    /**** should think about overriding Extract_subset at least if
+	  there are no attributes */
 
     /* override ALTREAL methods */
     R_set_altreal_Elt_method(cls, wrapper_real_Elt);
