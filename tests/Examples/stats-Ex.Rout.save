@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2017-08-06 r73046) -- "Unsuffered Consequences"
+R Under development (unstable) (2017-09-15 r73286) -- "Unsuffered Consequences"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -7187,12 +7187,10 @@ odds ratio
 > ## => p = 0.2429, association could not be established
 > 
 > ## Fisher (1962, 1970), Criminal convictions of like-sex twins
-> Convictions <-
-+ matrix(c(2, 10, 15, 3),
-+        nrow = 2,
-+        dimnames =
-+        list(c("Dizygotic", "Monozygotic"),
-+             c("Convicted", "Not convicted")))
+> Convictions <- matrix(c(2, 10, 15, 3), nrow = 2,
++ 	              dimnames =
++ 	       list(c("Dizygotic", "Monozygotic"),
++ 		    c("Convicted", "Not convicted")))
 > Convictions
             Convicted Not convicted
 Dizygotic           2            15
@@ -7232,9 +7230,9 @@ attr(,"conf.level")
 > 
 > ## A r x c table  Agresti (2002, p. 57) Job Satisfaction
 > Job <- matrix(c(1,2,1,0, 3,3,6,1, 10,10,14,9, 6,7,12,11), 4, 4,
-+ dimnames = list(income = c("< 15k", "15-25k", "25-40k", "> 40k"),
-+                 satisfaction = c("VeryD", "LittleD", "ModerateS", "VeryS")))
-> fisher.test(Job)
++            dimnames = list(income = c("< 15k", "15-25k", "25-40k", "> 40k"),
++                      satisfaction = c("VeryD", "LittleD", "ModerateS", "VeryS")))
+> fisher.test(Job) # 0.7827
 
 	Fisher's Exact Test for Count Data
 
@@ -7242,7 +7240,7 @@ data:  Job
 p-value = 0.7827
 alternative hypothesis: two.sided
 
-> fisher.test(Job, simulate.p.value = TRUE, B = 1e5)
+> fisher.test(Job, simulate.p.value = TRUE, B = 1e5) # also close to 0.78
 
 	Fisher's Exact Test for Count Data with simulated p-value (based on
 	1e+05 replicates)
@@ -7251,6 +7249,32 @@ data:  Job
 p-value = 0.7842
 alternative hypothesis: two.sided
 
+> 
+> ## 6th example in Mehta & Patel's JASA paper
+> MP6 <- rbind(
++         c(1,2,2,1,1,0,1),
++         c(2,0,0,2,3,0,0),
++         c(0,1,1,1,2,7,3),
++         c(1,1,2,0,0,0,1),
++         c(0,1,1,1,1,0,0))
+> fisher.test(MP6)
+
+	Fisher's Exact Test for Count Data
+
+data:  MP6
+p-value = 0.03929
+alternative hypothesis: two.sided
+
+> fisher.test(MP6, hybrid=TRUE) # identical to the above, as Cochran's
+
+	Fisher's Exact Test for Count Data hybrid using asym.chisq. iff
+	(exp=5, perc=80, Emin=1)
+
+data:  MP6
+p-value = 0.03929
+alternative hypothesis: two.sided
+
+>                               # conditions are never met
 > 
 > 
 > 

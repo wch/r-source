@@ -291,6 +291,12 @@
 
       \item Attributes on symbols are now detected and prevented; attempt
       to add an attribute to a symbol results in an error.
+
+      \item \code{fisher.test(*, workspace = <n>)} now may also increase
+      the internal stack size which allows larger problem to be solved,
+      fixing \PR{1662}.  Additionally, fixing \PR{16654}, a typo has
+      been corrected which made the \code{hybrid=TRUE} method never be
+      different than the default.
     }
   }
 }
