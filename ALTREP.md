@@ -76,18 +76,19 @@ assuming that the full data of a vector is available in memory and is
 writable.
 
 `Extract_subset` allows efficient implementations of subsetting
-operations.
+operations. These methods can return a `C` `NULL` to defer to the
+standard protocol.
 
 `Dataptr` and `Dataptr_or_null` take a second argument indicating
 whether the pointer returned should allow modification of the data
-pointed to.  For compatibility the `DATAPTR` function will request a
-writable pointer from an `ALTVEC` object. The new `DATAPTR_RO`
-function will request a read-only pointer. The new `DATAPTR_OR_NULL`
-function takes a second argument specifying whether the data should be
-writable.
+pointed to.  For compatibility the `DATAPTR` function and the `REAL`,
+`INTEGER`, etc, macros defined in terms of `DATAPTR` will request a
+writable pointer from an `ALTVEC` object. New functions
+`REAL_OR_NULL`, `INTEGER_OR_NULL`, etc, function take a second
+argument specifying whether the data should be writable.
 
-`DATAPTR` and `DATAPTR_RO` may need to allocate data, which currently
-is done with GC suspended since `DATAPTR` previously would not
+`Dataptr` methods might need to allocate memory; they are currently
+invoked with GC suspended since `DATAPTR` previously would not
 allocate and code will need additional `PROTECT` calls if GC is to be
 allowed. `Dataptr_or_null` methods should not allocate. They should
 return a valid pointer if this can be done cheaply and without
@@ -446,7 +447,7 @@ Again the difference is due primarily to deferring the string coercions.
 Serialization serializes the deferred string data if the object has
 not been fully converted. This is safe since assignments currently
 filly convert the object.  It would be possible to allow assignment to
-operate without full expansion; serialization would then need to me
+operate without full expansion; serialization would then need to be
 modified to also serialize the modified partially expanded data.
 
 The argument to the deferred coercion function is marked as not
@@ -711,7 +712,7 @@ A major goal of this mechanism is to allow R to deal cleanly with
 subsets of large data objects. But some operations might attempt to
 allocate large vectors and create problems. For example, if the value
 of `x` is a sequence `1 : n` for a very large `n`, or a reference to a
-memory-mapped file that allows access to the ``DATAPTR`, then
+memory-mapped file that allows access to the `DATAPTR`, then
 computations like
 ```R
 x + 1
@@ -805,9 +806,6 @@ dangerous.
   maintainable. Allowing alternate implementations will also give more
   options for compiled code.
 
-- Add a `Get_subset` method to make `ExtractSubset` more efficient
-  than using the `Elt` methods.
-
 - Add `SET_REAL_ELT` and similar functions to allow writes without
   requiring `DATAPTR` access.
 
@@ -815,11 +813,12 @@ dangerous.
   conversions could be a special case of such a more general
   mechanism.
 
-- If we got rid of the `ALTVEC` layer (just `DATAPTR` and
-  `DATAPTR_OR_NULL` now) then we could define all concrete methods for
-  `R_altreal_t` and such to get some degree of static type checking.
-  This would be awkward if not impossible if the had to define some
-  things for `R_altvec_t` since `C` has no sub-typing options.
+- If we got rid of the `ALTVEC` layer (just `Dataptr`, and
+  `Dataptr_or_null` and `Extract_subset` for now) then we could define
+  all concrete methods for `R_altreal_t` and such to get some degree
+  of static type checking.  This would be awkward if not impossible if
+  the had to define some things for `R_altvec_t` since `C` has no
+  sub-typing options.
   
 - Attaching meta data at the `ALTVEC` level would make some things
   simpler. Some downsides:

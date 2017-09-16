@@ -124,6 +124,56 @@ INLINE_FUN void *DATAPTR_OR_NULL(SEXP x, Rboolean writeable) {
 	return STDVEC_DATAPTR(x);
 }
 
+#ifdef STRICT_TYPECHECK
+# define CHECK_VECTOR_LGL(x) do {				\
+	if (TYPEOF(x) != LGLSXP) error("bad LGLSXP vector");	\
+    } while (0)
+# define CHECK_VECTOR_INT(x) do {				\
+	if (! (TYPEOF(x) == INTSXP || TYPEOF(x) == LGLSXP))	\
+	    error("bad INTSXP vector");				\
+    } while (0)
+# define CHECK_VECTOR_REAL(x) do {				\
+	if (TYPEOF(x) != REALSXP) error("bad REALSXP vector");	\
+    } while (0)
+# define CHECK_VECTOR_CPLX(x) do {				\
+	if (TYPEOF(x) != CPLXSXP) error("bad CPLXSXP vector");	\
+    } while (0)
+# define CHECK_VECTOR_RAW(x) do {				\
+	if (TYPEOF(x) != RAWSXP) error("bad RAWSXP vector");	\
+    } while (0)
+#else
+# define CHECK_VECTOR_LGL(x) do { } while(0)
+# define CHECK_VECTOR_INT(x) do { } while(0)
+# define CHECK_VECTOR_REAL(x) do { } while(0)
+# define CHECK_VECTOR_CPLX(x) do { } while(0)
+# define CHECK_VECTOR_RAW(x) do { } while(0)
+#endif
+
+INLINE_FUN int *LOGICAL_OR_NULL(SEXP x, Rboolean writeable) {
+    CHECK_VECTOR_LGL(x);
+    return ALTREP(x) ? ALTVEC_DATAPTR_OR_NULL(x, writeable) : STDVEC_DATAPTR(x);
+}
+
+INLINE_FUN int *INTEGER_OR_NULL(SEXP x, Rboolean writeable) {
+    CHECK_VECTOR_INT(x);
+    return ALTREP(x) ? ALTVEC_DATAPTR_OR_NULL(x, writeable) : STDVEC_DATAPTR(x);
+}
+
+INLINE_FUN double *REAL_OR_NULL(SEXP x, Rboolean writeable) {
+    CHECK_VECTOR_REAL(x);
+    return ALTREP(x) ? ALTVEC_DATAPTR_OR_NULL(x, writeable) : STDVEC_DATAPTR(x);
+}
+
+INLINE_FUN double *COMPLEX_OR_NULL(SEXP x, Rboolean writeable) {
+    CHECK_VECTOR_CPLX(x);
+    return ALTREP(x) ? ALTVEC_DATAPTR_OR_NULL(x, writeable) : STDVEC_DATAPTR(x);
+}
+
+INLINE_FUN double *RAW_OR_NULL(SEXP x, Rboolean writeable) {
+    CHECK_VECTOR_RAW(x);
+    return ALTREP(x) ? ALTVEC_DATAPTR_OR_NULL(x, writeable) : STDVEC_DATAPTR(x);
+}
+
 INLINE_FUN R_xlen_t XLENGTH_EX(SEXP x)
 {
     return ALTREP(x) ? ALTREP_LENGTH(x) : STDVEC_LENGTH(x);
@@ -146,23 +196,6 @@ INLINE_FUN int LENGTH_EX(SEXP x, const char *file, int line)
 }
 
 #ifdef STRICT_TYPECHECK
-# define CHECK_VECTOR_LGL(x) do {				\
-	if (TYPEOF(x) != LGLSXP) error("bad LGLSXP vector");	\
-    } while (0)
-# define CHECK_VECTOR_INT(x) do {				\
-	if (! (TYPEOF(x) == INTSXP || TYPEOF(x) == LGLSXP))	\
-	    error("bad INTSXP vector");				\
-    } while (0)
-# define CHECK_VECTOR_REAL(x) do {				\
-	if (TYPEOF(x) != REALSXP) error("bad REALSXP vector");	\
-    } while (0)
-# define CHECK_VECTOR_CPLX(x) do {				\
-	if (TYPEOF(x) != CPLXSXP) error("bad CPLXSXP vector");	\
-    } while (0)
-# define CHECK_VECTOR_RAW(x) do {				\
-	if (TYPEOF(x) != RAWSXP) error("bad RAWSXP vector");	\
-    } while (0)
-
 # define CHECK_STDVEC_LGL(x) do {				\
 	CHECK_VECTOR_LGL(x);					\
 	if (ALTREP(x)) error("bad standard LGLSXP vector");	\
@@ -235,12 +268,6 @@ INLINE_FUN int LENGTH_EX(SEXP x, const char *file, int line)
 	CHECK_BOUNDS_ELT(ce__x__, ce__i__);	\
 } while (0)
 #else
-# define CHECK_VECTOR_LGL(x) do { } while(0)
-# define CHECK_VECTOR_INT(x) do { } while(0)
-# define CHECK_VECTOR_REAL(x) do { } while(0)
-# define CHECK_VECTOR_CPLX(x) do { } while(0)
-# define CHECK_VECTOR_RAW(x) do { } while(0)
-
 # define CHECK_STDVEC_LGL(x) do { } while(0)
 # define CHECK_STDVEC_INT(x) do { } while(0)
 # define CHECK_STDVEC_REAL(x) do { } while(0)
@@ -344,7 +371,7 @@ INLINE_FUN int INTEGER_ELT(SEXP x, R_xlen_t i)
 {
     CHECK_VECTOR_INT_ELT(x, i);
 
-    int *px = DATAPTR_OR_NULL(x, FALSE);
+    int *px = INTEGER_OR_NULL(x, FALSE);
     if (px != NULL)
 	return px[i];
     else {
@@ -377,7 +404,7 @@ INLINE_FUN double REAL_ELT(SEXP x, R_xlen_t i)
 {
     CHECK_VECTOR_REAL_ELT(x, i);
 
-    double *px = DATAPTR_OR_NULL(x, FALSE);
+    double *px = REAL_OR_NULL(x, FALSE);
     if (px != NULL)
 	return px[i];
     else {
@@ -401,7 +428,7 @@ INLINE_FUN double REAL_ELT(SEXP x, R_xlen_t i)
 INLINE_FUN double SET_REAL_ELT(SEXP x, R_xlen_t i, double v)
 {
     CHECK_VECTOR_REAL_ELT(x, i);
-    double *px = DATAPTR_OR_NULL(x, FALSE);
+    double *px = REAL_OR_NULL(x, FALSE);
     if(px != NULL) {
 	px[i] = v;
 	return v;
@@ -415,7 +442,7 @@ INLINE_FUN double SET_REAL_ELT(SEXP x, R_xlen_t i, double v)
 INLINE_FUN int SET_INTEGER_ELT(SEXP x, R_xlen_t i, int v)
 {
     CHECK_VECTOR_INT_ELT(x, i);
-    int *px = DATAPTR_OR_NULL(x, FALSE);
+    int *px = INTEGER_OR_NULL(x, FALSE);
     if(px != NULL) {
 	px[i] = v;
 	return v;

@@ -390,7 +390,7 @@ int attribute_hidden ALTINTEGER_SET_ELT(SEXP x, R_xlen_t i, int v)
 }
 R_xlen_t INTEGER_GET_REGION(SEXP sx, R_xlen_t i, R_xlen_t n, int *buf)
 {
-    int *x = DATAPTR_OR_NULL(sx, FALSE);
+    int *x = INTEGER_OR_NULL(sx, FALSE);
     if (x != NULL) {
 	R_xlen_t size = XLENGTH(sx);
 	R_xlen_t ncopy = size - i > n ? n : size - i;
@@ -454,7 +454,7 @@ double attribute_hidden ALTREAL_SET_ELT(SEXP x, R_xlen_t i, double v)
 
 R_xlen_t REAL_GET_REGION(SEXP sx, R_xlen_t i, R_xlen_t n, double *buf)
 {
-    double *x = DATAPTR_OR_NULL(sx, FALSE);
+    double *x = REAL_OR_NULL(sx, FALSE);
     if (x != NULL) {
 	R_xlen_t size = XLENGTH(sx);
 	R_xlen_t ncopy = size - i > n ? n : size - i;

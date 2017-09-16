@@ -259,9 +259,9 @@ Rscript -e 'rmarkdown::render(input="ALTREP.md", output_file="ALTREP.html")'
 <div id="general-vectors" class="section level3">
 <h3>General Vectors</h3>
 <p>The <code>ALTVEC</code> class specifies methods common to all concrete vector types. These are <code>Dataptr</code>, <code>Dataptr_or_null</code>, and <code>Extract_subset</code>. These method interfaces are designed to allow code using them to avoid assuming that the full data of a vector is available in memory and is writable.</p>
-<p><code>Extract_subset</code> allows efficient implementations of subsetting operations.</p>
-<p><code>Dataptr</code> and <code>Dataptr_or_null</code> take a second argument indicating whether the pointer returned should allow modification of the data pointed to. For compatibility the <code>DATAPTR</code> function will request a writable pointer from an <code>ALTVEC</code> object. The new <code>DATAPTR_RO</code> function will request a read-only pointer. The new <code>DATAPTR_OR_NULL</code> function takes a second argument specifying whether the data should be writable.</p>
-<p><code>DATAPTR</code> and <code>DATAPTR_RO</code> may need to allocate data, which currently is done with GC suspended since <code>DATAPTR</code> previously would not allocate and code will need additional <code>PROTECT</code> calls if GC is to be allowed. <code>Dataptr_or_null</code> methods should not allocate. They should return a valid pointer if this can be done cheaply and without allocation; otherwise the should return a <code>C</code> <code>NULL</code>. This allows code to test whether a pointer is available, use it if it is, and use another approach, such as calling the <code>Elt</code> or <code>Get_region</code> methods if they are not.</p>
+<p><code>Extract_subset</code> allows efficient implementations of subsetting operations. These methods can return a <code>C</code> <code>NULL</code> to defer to the standard protocol.</p>
+<p><code>Dataptr</code> and <code>Dataptr_or_null</code> take a second argument indicating whether the pointer returned should allow modification of the data pointed to. For compatibility the <code>DATAPTR</code> function and the <code>REAL</code>, <code>INTEGER</code>, etc, macros defined in terms of <code>DATAPTR</code> will request a writable pointer from an <code>ALTVEC</code> object. New functions <code>REAL_OR_NULL</code>, <code>INTEGER_OR_NULL</code>, etc, function take a second argument specifying whether the data should be writable.</p>
+<p><code>Dataptr</code> methods might need to allocate memory; they are currently invoked with GC suspended since <code>DATAPTR</code> previously would not allocate and code will need additional <code>PROTECT</code> calls if GC is to be allowed. <code>Dataptr_or_null</code> methods should not allocate. They should return a valid pointer if this can be done cheaply and without allocation; otherwise the should return a <code>C</code> <code>NULL</code>. This allows code to test whether a pointer is available, use it if it is, and use another approach, such as calling the <code>Elt</code> or <code>Get_region</code> methods if they are not.</p>
 </div>
 <div id="specific-vector-classes" class="section level3">
 <h3>Specific Vector Classes</h3>
@@ -417,7 +417,7 @@ Error: cannot allocate vector of size 74.5 Gb</code></pre>
    user  system elapsed 
   0.936   0.004   0.940 </code></pre>
 <p>Again the difference is due primarily to deferring the string coercions.</p>
-<p>Serialization serializes the deferred string data if the object has not been fully converted. This is safe since assignments currently filly convert the object. It would be possible to allow assignment to operate without full expansion; serialization would then need to me modified to also serialize the modified partially expanded data.</p>
+<p>Serialization serializes the deferred string data if the object has not been fully converted. This is safe since assignments currently filly convert the object. It would be possible to allow assignment to operate without full expansion; serialization would then need to be modified to also serialize the modified partially expanded data.</p>
 <p>The argument to the deferred coercion function is marked as not mutable to make sure it isn’t changed after capture. This would not be needed under reference counting.</p>
 <p>The <code>Is_sorted</code> property is deferred to the original argument if the deferred string has not been fully expanded. If it has been fully expanded, then the data might have been modified, so <code>Is_sorted</code> returns zero.</p>
 </div>
@@ -545,7 +545,7 @@ ATTRIB:
 <h1>Open Issues</h1>
 <div id="unintended-allocations" class="section level2">
 <h2>Unintended Allocations</h2>
-<p>A major goal of this mechanism is to allow R to deal cleanly with subsets of large data objects. But some operations might attempt to allocate large vectors and create problems. For example, if the value of <code>x</code> is a sequence <code>1 : n</code> for a very large <code>n</code>, or a reference to a memory-mapped file that allows access to the `<code>DATAPTR</code>, then computations like</p>
+<p>A major goal of this mechanism is to allow R to deal cleanly with subsets of large data objects. But some operations might attempt to allocate large vectors and create problems. For example, if the value of <code>x</code> is a sequence <code>1 : n</code> for a very large <code>n</code>, or a reference to a memory-mapped file that allows access to the <code>DATAPTR</code>, then computations like</p>
 <pre class="r"><code>x + 1
 log(x)</code></pre>
 <p>will attempt to allocate large result vectors, which may cause problems.</p>
@@ -577,10 +577,9 @@ log(x)</code></pre>
 <h2>Other Notes</h2>
 <ul>
 <li><p>Use the <code>ALTREP</code> mechanism to allow alternate implementations of environments. This will require a significant rewriting and refactoring of the code in <code>envir.c</code>, as well as a few other places that the internals of environments have leaked into, but it should be well worth while. Moving the user database code out of the main section should help make both that code and the base code more maintainable. Allowing alternate implementations will also give more options for compiled code.</p></li>
-<li><p>Add a <code>Get_subset</code> method to make <code>ExtractSubset</code> more efficient than using the <code>Elt</code> methods.</p></li>
 <li><p>Add <code>SET_REAL_ELT</code> and similar functions to allow writes without requiring <code>DATAPTR</code> access.</p></li>
 <li><p>A more general deferred computation mechanism. The deferred string conversions could be a special case of such a more general mechanism.</p></li>
-<li><p>If we got rid of the <code>ALTVEC</code> layer (just <code>DATAPTR</code> and <code>DATAPTR_OR_NULL</code> now) then we could define all concrete methods for <code>R_altreal_t</code> and such to get some degree of static type checking. This would be awkward if not impossible if the had to define some things for <code>R_altvec_t</code> since <code>C</code> has no sub-typing options.</p></li>
+<li><p>If we got rid of the <code>ALTVEC</code> layer (just <code>Dataptr</code>, and <code>Dataptr_or_null</code> and <code>Extract_subset</code> for now) then we could define all concrete methods for <code>R_altreal_t</code> and such to get some degree of static type checking. This would be awkward if not impossible if the had to define some things for <code>R_altvec_t</code> since <code>C</code> has no sub-typing options.</p></li>
 <li>Attaching meta data at the <code>ALTVEC</code> level would make some things simpler. Some downsides:
 <ul>
 <li>Things like <code>Is_sorted</code> do not make sense for all vector types.</li>
