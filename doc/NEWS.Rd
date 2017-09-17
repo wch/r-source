@@ -141,7 +141,7 @@
       signals an error.
 
       \item \code{mclapply()} gets an option \code{affinity.list} which
-      allows more efficient execution with heterogenous processors,
+      allows more efficient execution with heterogeneous processors,
       thanks to Helena Kotthaus.
 
       \item The \code{character} methods for \code{as.Date()} and
@@ -414,7 +414,7 @@
       \item \code{x <- 1:2; tapply(x, list(x, x), function(x) "")[1,2]}
       now correctly returns \code{NA} again.  (\PR{17333})
 
-      \item Runing of finalizers after explicit GC request moved from
+      \item Running of finalizers after explicit GC request moved from
       the \R interface \code{do_gc} to the \code{C} interface
       \code{R_gc}.  This helps with reclaiming inaccessible connections.
 
