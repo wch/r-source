@@ -1229,6 +1229,14 @@ tools::assertError(splines::splineDesign(aKnots, x, derivs = 4), verbose = TRUE)
 ## default was to set  backtick=FALSE  so parse() failed in R <= 3.4.x
 
 
+## sys.on.exit() is called in the correct frame
+
+fn <- function() {
+    on.exit("foo")
+    identity(sys.on.exit())
+}
+stopifnot(identical(fn(), "foo"))
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

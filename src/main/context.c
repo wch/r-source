@@ -672,8 +672,8 @@ SEXP attribute_hidden do_sys(SEXP call, SEXP op, SEXP args, SEXP rho)
 	UNPROTECT(1);
 	return rval;
     case 7: /* sys.on.exit */
-	if( R_GlobalContext->nextcontext != NULL) {
-	    SEXP conexit = R_GlobalContext->nextcontext->conexit;
+	{
+	    SEXP conexit = cptr->conexit;
 	    if (conexit == R_NilValue)
 		return R_NilValue;
 	    else if (CDR(conexit) == R_NilValue)
@@ -681,8 +681,6 @@ SEXP attribute_hidden do_sys(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    else
 		return LCONS(R_BraceSymbol, conexit);
 	}
-	else
-	    return R_NilValue;
     case 8: /* sys.parents */
 	nframe = framedepth(cptr);
 	rval = allocVector(INTSXP, nframe);

@@ -308,6 +308,9 @@
       \item The methods package correctly shows methods when there are
       multiple methods with the same signature for the same generic
       (still not fully supported, but at least the user can see them).
+
+      \item \code{sys.on.exit()} is now always evaluated in the right
+      frame. From Lionel Henry.
     }
   }
 }
