@@ -110,14 +110,15 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
   equal to that of the observed table, the p-value being the sum of such
   probabilities.
 
-  For larger than  \eqn{2 \times 2}{2 by 2} tables and \code{hybrid =
-    TRUE}, asymptotic chi-squared probabilities are only used if the
+  For larger than \eqn{2 \times 2}{2 by 2} tables and \code{hybrid = TRUE},
+  asymptotic chi-squared probabilities are only used if the
   \sQuote{Cochran conditions} (or modified version thereof) specified by
-  \code{hybridPars = c(expect = 5, percent = 80, Emin = 1)}
-  are satisfied, that is if no cell has \eqn{E[X_{i,j}] < 1} (\code{= Emin})
-  and more than 80\% (\code{= percent}) of the cells have counts at least
-  5 (\code{= expect}), otherwise the exact calculation is used.  A
-  corresponding \code{if()} decision is made for all sub-tables considered.
+  \code{hybridPars = c(expect = 5, percent = 80, Emin = 1)} are
+  satisfied, that is if no cell has expected counts less than
+  \code{1} (\code{= Emin}) and more than 80\% (\code{= percent}) of the
+  cells have expected counts at least 5 (\code{= expect}), otherwise
+  the exact calculation is used.  A corresponding \code{if()} decision
+  is made for all sub-tables considered.
   %
   Accidentally, \R has used \code{180} instead of \code{80} as
   \code{percent}, i.e., \code{hybridPars[2]} in \R versions between
