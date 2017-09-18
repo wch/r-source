@@ -1,5 +1,4 @@
 language: c
-sudo: false
 
 matrix:
   include:
@@ -7,12 +6,12 @@ matrix:
       sudo: false
       dist: precise
       env:
-        - CURL_VERSION=7.43.0 ZLIB_VERSION=1.2.8 PCRE_VERSION=8.38 PREFIX=$HOME/R-bin
+        - CURL_VERSION=7.43.0 ZLIB_VERSION=1.2.8 PCRE_VERSION=8.38 PREFIX=$HOME/R-bin CRAN_WGET='https://cloud.r-project.org'
     - os: linux
       sudo: false
       dist: trusty
       env:
-        - CURL_VERSION=7.43.0 ZLIB_VERSION=1.2.8 PCRE_VERSION=8.38 PREFIX=$HOME/R-bin
+        - CURL_VERSION=7.43.0 ZLIB_VERSION=1.2.8 PCRE_VERSION=8.38 PREFIX=$HOME/R-bin CRAN_WGET='https://cloud.r-project.org'
 
 addons:
   apt:
@@ -63,7 +62,7 @@ cache:
   - ccache
 
 before_install:
-  - tools/rsync-recommended
+  - tools/wget-recommended
   - mkdir -p extra
   - pushd extra
   - wget --no-check-certificate "https://github.com/madler/zlib/archive/v$ZLIB_VERSION.tar.gz"
@@ -79,7 +78,7 @@ before_install:
   - wget "https://sourceforge.net/projects/pcre/files/pcre/8.38/pcre-$PCRE_VERSION.tar.bz2"
   - tar xjf "pcre-$PCRE_VERSION.tar.bz2"
   - pushd "pcre-$PCRE_VERSION"
-  - ./configure --prefix=$PREFIX --enable-utf --enable-unicode-properties && make && make install
+  - ./configure --enable-R-shlib --enable-memory-profiling --prefix=$PREFIX --enable-utf --enable-unicode-properties && make && make install
   - popd
   - popd
 
