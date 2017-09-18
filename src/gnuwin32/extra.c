@@ -384,15 +384,28 @@ SEXP do_dllversion(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
-
 int Rwin_rename(const char *from, const char *to)
 {
-    return (MoveFileEx(from, to, MOVEFILE_REPLACE_EXISTING | MOVEFILE_COPY_ALLOWED | MOVEFILE_WRITE_THROUGH) == 0);
+    for(int retries = 0; retries < 10; retries++) {
+	if (MoveFileEx(from, to, MOVEFILE_REPLACE_EXISTING | MOVEFILE_COPY_ALLOWED | MOVEFILE_WRITE_THROUGH))
+	    return 0;
+	if (GetLastError() != ERROR_SHARING_VIOLATION)
+	    return 1;
+	Sleep(500);
+    }
+    return 1;
 }
 
 int Rwin_wrename(const wchar_t *from, const wchar_t *to)
 {
-    return (MoveFileExW(from, to, MOVEFILE_REPLACE_EXISTING | MOVEFILE_COPY_ALLOWED | MOVEFILE_WRITE_THROUGH) == 0);
+    for(int retries = 0; retries < 10; retries++) {
+	if (MoveFileExW(from, to, MOVEFILE_REPLACE_EXISTING | MOVEFILE_COPY_ALLOWED | MOVEFILE_WRITE_THROUGH))
+	    return 0;
+	if (GetLastError() != ERROR_SHARING_VIOLATION)
+	    return 1;
+	Sleep(500);
+    }
+    return 1;
 }
 
 
