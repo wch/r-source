@@ -353,7 +353,7 @@ f2xact(int nrow, int ncol, int *table, int ldtabl,
 
     /* Local variables -- changed from "static"
      *  (*does* change results very slightly on i386 linux) */
-    int i, ii, j, k, n,
+    int i, ii = 0, j, k, n, // initialized for gcc >= 7.2
 	iflag,ifreq, ikkey, ikstp, ikstp2, ipn, ipo, itop, itp = 0,
 	jkey, jstp, jstp2, jstp3, jstp4, k1, kb, kd, ks, kval = 0, kmax, last,
 	ncell, ntot, nco, nro, nro2, nrb,
