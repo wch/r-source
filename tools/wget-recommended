@@ -1,0 +1,37 @@
+#! /bin/sh
+#
+# ${R_HOME}/tools/rsync-recommended
+
+: ${CRAN_WGET='https://cran.r-project.org'}
+
+## The intention here is infer TOOLS_DIR from an explicit path.
+## but the user might have called it from tools, so test that case
+## separately.
+TOOLS_DIR=`echo ${0} | sed 's%/[^/][^/]*$%%'`
+if test ${TOOLS_DIR} = ${0} ; then
+  TOOLS_DIR="."
+fi
+(cd "${TOOLS_DIR}"/..
+  version=`cut -f1 -d' ' VERSION`
+  if test "`cut -f2 -d' ' VERSION`" = "Patched"; then
+    version=`echo ${version} | sed 's/\.[0-9]*$//'`
+    version="${version}-patched"
+  fi
+  PKGS=`grep '^R_PKGS_RECOMMENDED *=' share/make/vars.mk | \
+    sed 's/.*=//'`
+  cd src/library/Recommended
+
+  wget -r -l1 --no-parent -A\*.gz -nd -P . \
+    "${CRAN_WGET}/src/contrib/${version}/Recommended"
+
+  ## Link each package to a simplified name so that Make has an easier
+  ## time.  Notice that as far as Make is concerned, the symlinks have
+  ## the same timestamp as the file they point to.  Don't remove the 
+  ## existing links until now in case rsync fails.
+
+  echo "Creating links"
+  rm -f *.tgz
+  for i in ${PKGS} ; do
+    ln -s $i*.tar.gz ${i}.tgz
+  done
+)
