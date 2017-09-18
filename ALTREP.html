@@ -235,7 +235,7 @@ Rscript -e 'rmarkdown::render(input="ALTREP.md", output_file="ALTREP.html")'
 -->
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
-<p>The <a href="https://svn.r-project.org/R/branches/ALTREP"><code>ALTREP</code></a> branch of the R svn repository provides an experimental framework for developing alternate representaitons of basic <code>R</code> objects. Some examples of intended uses would be to</p>
+<p>The <a href="https://svn.r-project.org/R/branches/ALTREP"><code>ALTREP</code></a> branch of the R svn repository provides an experimental framework for developing alternate representations of basic <code>R</code> objects. Some examples of intended uses would be to</p>
 <ul>
 <li>allow vector data to be in a memory-mapped file or distributed;</li>
 <li>allow compact representation of arithmetic sequences;</li>
@@ -246,7 +246,7 @@ Rscript -e 'rmarkdown::render(input="ALTREP.md", output_file="ALTREP.html")'
 </div>
 <div id="basic-design" class="section level1">
 <h1>Basic Design</h1>
-<p>The basic design organizes alternate representation objects in a set of abstract classes corresponding to the functionality of the different basic <code>R</code> types. The most specific abstract classes correspond to specific <code>R</code> data types, such as <code>INTSXP</code>. Concrete classes specialize one of these specific abstract classes. The hierarchy is fixed as corresponding to the <code>R</code> internals; there is no provision for adding new abstrct classes or for a hierarchy of concrete classes. This might be worth exploring in the future.</p>
+<p>The basic design organizes alternate representation objects in a set of abstract classes corresponding to the functionality of the different basic <code>R</code> types. The most specific abstract classes correspond to specific <code>R</code> data types, such as <code>INTSXP</code>. Concrete classes specialize one of these specific abstract classes. The hierarchy is fixed as corresponding to the <code>R</code> internals; there is no provision for adding new abstract classes or for a hierarchy of concrete classes. This might be worth exploring in the future.</p>
 <div id="classes-and-methods" class="section level2">
 <h2>Classes and Methods</h2>
 <div id="general-objects" class="section level3">
@@ -539,7 +539,7 @@ ATTRIB:
 <div id="alternatives-and-variations" class="section level1">
 <h1>Alternatives and Variations</h1>
 <p>Not inlining <code>REAL_ELT</code> for compact sequences incurs a penalty of about 1-10% in a simple loop. An alternative would be to not inline in general but special-case handing of compact sequences in <code>for()</code> and <code>STEPFOR</code>, as previously done in the byte code engine. This could be added even with inlining.</p>
-<p>One option would be to give <em>all</em> objects a dispatch table and use this for hanling basic operations like <code>length</code>. This does work, but the performance hit resulting from the additional function calls seems a bit high. It does simplify code considerably though.</p>
+<p>One option would be to give <em>all</em> objects a dispatch table and use this for handling basic operations like <code>length</code>. This does work, but the performance hit resulting from the additional function calls seems a bit high. It does simplify code considerably though.</p>
 </div>
 <div id="open-issues" class="section level1">
 <h1>Open Issues</h1>
@@ -563,8 +563,8 @@ log(x)</code></pre>
 </div>
 <div id="deferred-evaluation-issues" class="section level2">
 <h2>Deferred Evaluation Issues</h2>
-<p>One issue to keep in mind when deferring computations is that this may also defer signaling of errors and warnings. Ideally it would be best to check inputs before deferral and only defern when no warnings or errors are possible. For deferred strings, the conversions as such will not result in any warnings or errors. However, an out of memory error could occur at the time the deferred computation is performed. This seems something we would have to live with if computations are deferred.</p>
-<p>There might be some useful ideas in the Haskell literature on handing errors in a non-strict language. The Haskell work on profiling may also be relevant as it attemps to attribute costs of deferred computations to the point they were requested.</p>
+<p>One issue to keep in mind when deferring computations is that this may also defer signaling of errors and warnings. Ideally it would be best to check inputs before deferral and only defer when no warnings or errors are possible. For deferred strings, the conversions as such will not result in any warnings or errors. However, an out of memory error could occur at the time the deferred computation is performed. This seems something we would have to live with if computations are deferred.</p>
+<p>There might be some useful ideas in the Haskell literature on handing errors in a non-strict language. The Haskell work on profiling may also be relevant as it attempts to attribute costs of deferred computations to the point they were requested.</p>
 </div>
 <div id="meta-data-issues" class="section level2">
 <h2>Meta Data Issues</h2>

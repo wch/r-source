@@ -20,7 +20,7 @@ Rscript -e 'rmarkdown::render(input="ALTREP.md", output_file="ALTREP.html")'
 
 The [`ALTREP`](https://svn.r-project.org/R/branches/ALTREP) branch of
 the R svn repository provides an experimental framework for developing
-alternate representaitons of basic `R` objects. Some examples of intended
+alternate representations of basic `R` objects. Some examples of intended
 uses would be to
 
 - allow vector data to be in a memory-mapped file or distributed;
@@ -42,7 +42,7 @@ different basic `R` types. The most specific abstract classes
 correspond to specific `R` data types, such as `INTSXP`. Concrete
 classes specialize one of these specific abstract classes.  The
 hierarchy is fixed as corresponding to the `R` internals; there is no
-provision for adding new abstrct classes or for a hierarchy of
+provision for adding new abstract classes or for a hierarchy of
 concrete classes. This might be worth exploring in the future.
 
 ## Classes and Methods
@@ -697,7 +697,7 @@ general but special-case handing of compact sequences in `for()` and
 added even with inlining.
 
 One option would be to give _all_ objects a dispatch table and use
-this for hanling basic operations like `length`. This does work, but
+this for handling basic operations like `length`. This does work, but
 the performance hit resulting from the additional function calls seems
 a bit high. It does simplify code considerably though.
 
@@ -766,7 +766,7 @@ this be supported in a reasonably sane way?
 
 One issue to keep in mind when deferring computations is that this may
 also defer signaling of errors and warnings. Ideally it would be best
-to check inputs before deferral and only defern when no warnings or
+to check inputs before deferral and only defer when no warnings or
 errors are possible. For deferred strings, the conversions as such
 will not result in any warnings or errors. However, an out of memory
 error could occur at the time the deferred computation is performed.
@@ -775,7 +775,7 @@ deferred.
 
 There might be some useful ideas in the Haskell literature on handing
 errors in a non-strict language. The Haskell work on profiling may
-also be relevant as it attemps to attribute costs of deferred
+also be relevant as it attempts to attribute costs of deferred
 computations to the point they were requested.
 
 
