@@ -128,9 +128,10 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
 
   In the \eqn{r \times c}{r x c} case with \eqn{r > 2} or \eqn{c > 2},
   internal tables can get too large for the exact test in which case an
-  error is signalled.  Apart from increasing \code{workspace} which not
-  always helps, using \code{simulate.p.value = TRUE} may then often be
-  sufficient.
+  error is signalled.  Apart from increasing \code{workspace}
+  sufficiently, which then may lead to very long running times, using
+  \code{simulate.p.value = TRUE} may then often be sufficient and hence
+  advisable.
 
   Simulation is done conditional on the row and column marginals, and
   works only if the marginals are strictly positive.  (A C translation
@@ -230,7 +231,7 @@ MP6 <- rbind(
         c(1,1,2,0,0,0,1),
         c(0,1,1,1,1,0,0))
 fisher.test(MP6)
-fisher.test(MP6, hybrid=TRUE) # identical to the above, as Cochran's
-                              # conditions are never met
+# Exactly the same p-value, as Cochran's conditions are never met:
+fisher.test(MP6, hybrid=TRUE)
 }
 \keyword{htest}
