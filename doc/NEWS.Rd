@@ -31,6 +31,15 @@
     }
   }
 
+  \subsection{INSTALLATION on a UNIX-ALIKE}{
+    \itemize{
+      \item The order of selection of OpenMP flags has been changed:
+      Oracle Developer Studio 12.5 accepts \option{-fopenmp} and
+      \option{-xopenmp} but only the latter enables OpenMP so it is now
+      tried first.
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{within(List, rm(x1, x2))} works correctly again, also
