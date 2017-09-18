@@ -8394,9 +8394,9 @@ specified as part of @samp{CC} when @R{} was built.
 
 For options available @emph{via} the environment variable
 @env{ASAN_OPTIONS} see
-@uref{https://code.google.com/@/p/@/address-sanitizer/@/wiki/@/Flags#Run-time_flags}.
+@uref{https://code.google.com/@/p/@/address-sanitizer/@/wiki/@/AddressSanitizerFLags}.
 With @command{gcc} additional control is available @emph{via} the
-@option{--params} flag: see its @command{man} page.
+@option{--param} flag: see its @command{man} page.
 
 For more detailed information on an error, @R{} can be run under a
 debugger with a breakpoint set before the address sanitizer report is
