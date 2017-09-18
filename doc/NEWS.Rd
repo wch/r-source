@@ -151,6 +151,12 @@
       \item The object header layout has been changed to support merging
       the \code{ALTREP} branch. This requires re-installing packages
       that use compiled code.
+
+      \item \code{on.exit()} gains an optional argument \code{after}
+      with default \code{TRUE}. Using \code{after = FALSE} with
+      \code{add = TRUE} adds an exit expression on top of any
+      existing ones. This way the expressions are run in a first in last
+      out fashion. From Lionel Henry.
     }
   }
 

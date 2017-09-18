@@ -1221,6 +1221,23 @@ aKnots <- c(rep(0, 4), c(0.3, 0.5, 0.6), rep(1, 4))
 tools::assertError(splines::splineDesign(aKnots, x, derivs = 4), verbose = TRUE)
 ## gave seg.fault in R <= 3.4.1
 
+## allow on.exit handlers to be added in LIFO order
+
+x <- character(0)
+f <- function() {
+    on.exit(x <<- c(x, "first"))
+    on.exit(x <<- c(x, "last"), add = TRUE, after = FALSE)
+}
+f()
+stopifnot(identical(x, c("last", "first")))
+
+x <- character(0)
+f <- function() {
+    on.exit(x <<- c(x, "last"), add = TRUE, after = FALSE)
+}
+f()
+stopifnot(identical(x, "last"))
+
 
 ## deparse(<symbol>)
 ##_reverted_for_now
