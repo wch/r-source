@@ -116,7 +116,7 @@
       \item \code{x <- 1:2; tapply(x, list(x, x), function(x) "")[1,2]}
       now correctly returns \code{NA} again.  (\PR{17333})
 
-      \item Runing of finalizers after explicit GC request moved from
+      \item Running of finalizers after explicit GC request moved from
       the \R interface \code{do_gc} to the \code{C} interface
       \code{R_gc}.  This helps with reclaiming inaccessible connections.
 
@@ -134,6 +134,9 @@
       fixes \PR{17333}.
 
       \item \code{splineDesign(.., derivs = 4)} no longer segfaults.
+
+      \item \code{fisher.test(*, hybrid=TRUE)} now (again) will use the
+      hybrid method when Cochran's conditions are met, fixing \PR{16654}.
     }
   }
 }

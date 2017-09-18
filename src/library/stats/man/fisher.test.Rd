@@ -1,6 +1,6 @@
 % File src/library/stats/man/fisher.test.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{fisher.test}
@@ -80,7 +80,7 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
   using the (central or non-central) hypergeometric
   distribution. Otherwise, computations are based on a C version of the
   FORTRAN subroutine FEXACT which implements the network developed by
-  Mehta and Patel (1986) and improved by Clarkson, Fan and Joe (1993).
+  Mehta and Patel (1983, 1986) and improved by Clarkson, Fan and Joe (1993).
   The FORTRAN code can be obtained from
   \url{http://www.netlib.org/toms/643}.  Note this fails (with an error
   message) when the entries of the table are too large.  (It transposes
@@ -103,11 +103,21 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
   equal to that of the observed table, the p-value being the sum of such
   probabilities.
 
-  For larger than  \eqn{2 \times 2}{2 by 2} tables and \code{hybrid =
-    TRUE}, asymptotic chi-squared probabilities are only used if the
+  For larger than \eqn{2 \times 2}{2 by 2} tables and \code{hybrid = TRUE},
+  asymptotic chi-squared probabilities are only used if the
   \sQuote{Cochran conditions} are satisfied, that is if no cell has
-  count zero, and more than 80\% of the cells have counts at least 5:
-  otherwise the exact calculation is used.
+  expected counts less than 1, and more than 80\% of the cells have
+  expected counts at least 5; otherwise the exact calculation is used.
+  %
+  Accidentally, \R has used \code{180} instead of \code{80} as
+  \code{percent} in \R versions between 3.0.0 and 3.4.1 (inclusive).
+  Consequently, in these versions of \R, \code{hybrid=TRUE} never made a
+  difference.
+
+  In the \eqn{r \times c}{r x c} case with \eqn{r > 2} or \eqn{c > 2},
+  internal tables can get too large for the exact test in which case an
+  error is signalled.  Using \code{simulate.p.value = TRUE} may then
+  often be sufficient and hence advisable.
 
   Simulation is done conditional on the row and column marginals, and
   works only if the marginals are strictly positive.  (A C translation
@@ -135,6 +145,11 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
 
   Fisher, R. A. (1970)
   \emph{Statistical Methods for Research Workers.}  Oliver & Boyd.
+
+  Mehta, Cyrus R. and Patel, Nitin R. (1983)
+  A network algorithm for performing Fisher's exact test in \eqn{r \times c}{r * c}
+  contingency tables.
+  \emph{Journal of the American Statistical Association} \bold{78}, 427--434.
 
   Mehta, C. R. and Patel, N. R. (1986)
   Algorithm 643. FEXACT: A Fortran subroutine for Fisher's exact test

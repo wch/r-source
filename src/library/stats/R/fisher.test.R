@@ -1,7 +1,7 @@
 #  File src/library/stats/R/fisher.test.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -65,8 +65,8 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE,
 
     nr <- nrow(x)
     nc <- ncol(x)
-
-    if((nr == 2) && (nc == 2)) {
+    have.2x2 <- (nr == 2) && (nc == 2)
+    if(have.2x2) {
         alternative <- char.expand(alternative,
                                    c("two.sided", "less", "greater"))
         if(length(alternative) > 1L || is.na(alternative))
@@ -79,7 +79,7 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE,
     }
 
     PVAL <- NULL
-    if(nr != 2  ||  nc != 2) {
+    if(!have.2x2) {
         if(simulate.p.value) {
             ## we drop all-zero rows and columns
             sr <- rowSums(x)
@@ -103,16 +103,14 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE,
 	    PVAL <- (1 + sum(tmp <= STATISTIC/almost.1)) / (B + 1)
         } else if(hybrid) {
             ## Cochran condition for asym.chisq. decision:
-            PVAL <- .Call(C_Fexact, x, c(5, 180, 1), workspace, mult)
+            PVAL <- .Call(C_Fexact, x, c(5, 80, 1), workspace, mult)
          } else {
             ##  expect < 0 : exact
             PVAL <- .Call(C_Fexact, x, c(-1, 100, 0), workspace, mult)
         }
 
         RVAL <- list(p.value = max(0, min(1, PVAL)))
-    }
-
-    if((nr == 2) && (nc == 2)) {## conf.int and more only in  2 x 2 case
+    } else { ## conf.int and more only in  2 x 2 case
         if(hybrid) warning("'hybrid' is ignored for a 2 x 2 table")
         m <- sum(x[, 1L])
         n <- sum(x[, 2L])
@@ -244,10 +242,9 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE,
                        null.value = NVAL))
     } ## end (2 x 2)
 
-    RVAL <- c(RVAL,
-              alternative = alternative,
-              method = METHOD,
-              data.name = DNAME)
-    attr(RVAL, "class") <- "htest"
-    return(RVAL)
+    structure(c(RVAL,
+                alternative = alternative,
+                method = METHOD,
+                data.name = DNAME),
+              class = "htest")
 }
