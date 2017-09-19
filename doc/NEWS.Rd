@@ -93,10 +93,6 @@
       \item \code{debug()} supports debugging of methods on any object
       of S4 class \code{"genericFunction"}, including group generics.
 
-      \item \code{c()} and \code{unlist()} are now more efficient in
-      constructing the \code{names(.)} of their return value, thanks to
-      a proposal by Suharto Anggono.  (\PR{17284})
-
       \item Attempting to increase the length of a variable containing
       \code{NULL} using \code{length()<-} still has no effect on the
       target variable, but now triggers a warning.
@@ -300,9 +296,7 @@
 
       \item \code{fisher.test(*, workspace = <n>)} now may also increase
       the internal stack size which allows larger problem to be solved,
-      fixing \PR{1662}.  Additionally, fixing \PR{16654}, a typo has
-      been corrected which made the \code{hybrid=TRUE} method never be
-      different than the default.
+      fixing \PR{1662}.
 
       \item The methods package no longer directly copies slots
       (attributes) into a prototype that is of an \dQuote{abnormal}
@@ -321,7 +315,7 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R 3.4.1 patched}{
+\section{\Rlogo CHANGES IN R 3.4.2 beta}{
 
   \subsection{NEW FEATURES}{
     \itemize{
@@ -336,6 +330,10 @@
       \item The default for \code{tools::write_PACKAGES(rds_compress=)}
       has been changed to \code{"xz"} to match the compression used by
       \acronym{CRAN}.
+
+      \item \code{c()} and \code{unlist()} are now more efficient in
+      constructing the \code{names(.)} of their return value, thanks to
+      a proposal by Suharto Anggono.  (\PR{17284})
     }
   }
 
@@ -450,6 +448,9 @@
       fixes \PR{17333}.
 
       \item \code{splineDesign(.., derivs = 4)} no longer segfaults.
+
+      \item \code{fisher.test(*, hybrid=TRUE)} now (again) will use the
+      hybrid method when Cochran's conditions are met, fixing \PR{16654}.
     }
   }
 }
