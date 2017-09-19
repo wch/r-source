@@ -6707,8 +6707,10 @@ function(dir, localOnly = FALSE)
         p2 <- grep("^(BRugs|R2OpenBUGS|R2WinBUGS)( |\\(|$)", p, value = TRUE)
         BUGS <- c(BUGS, p2)
     }
-    if (length(uses)) out$uses <- sort(unique(uses))
-    if (length(BUGS)) out$BUGS <- sort(unique(BUGS))
+    if (length(uses))
+        out$uses <- sort(unique(gsub("[[:space:]]+", " ", uses)))
+    if (length(BUGS))
+        out$BUGS <- sort(unique(gsub("[[:space:]]+", " ", BUGS)))
 
     ## Check for non-Sweave vignettes (as indicated by the presence of a
     ## 'VignetteBuilder' field in DESCRIPTION) without
