@@ -2186,7 +2186,7 @@ R_isMissing(SEXP symbol, SEXP rho)
 	if (TYPEOF(CAR(vl)) == PROMSXP &&
 	    PRVALUE(CAR(vl)) == R_UnboundValue &&
 	    TYPEOF(PREXPR(CAR(vl))) == SYMSXP) {
-	    /* This code uses the PRSEEN bit to detect cycles.  If a
+	    /* This code uses the PRSEEN value to detect cycles.  If a
 	       cycle occurs then a missing argument was encountered,
 	       so the return value is TRUE.  It would be a little
 	       safer to use the promise stack to ensure unsetting of
@@ -2195,15 +2195,18 @@ R_isMissing(SEXP symbol, SEXP rho)
 	       checking for missingness.  Because of the test above
 	       for an active binding a longjmp should only happen if
 	       the stack check fails.  LT */
-	    if (PRSEEN(CAR(vl)))
+	    if (PRSEEN(CAR(vl)) == 1)
 		return 1;
 	    else {
 		int val;
+		int oldseen = PRSEEN(CAR(vl));
 		SET_PRSEEN(CAR(vl), 1);
 		PROTECT(vl);
 		val = R_isMissing(PREXPR(CAR(vl)), PRENV(CAR(vl)));
 		UNPROTECT(1); /* vl */
-		SET_PRSEEN(CAR(vl), 0);
+		/* The oldseen value will usually be 0, but might be 2
+		   from an interrupted evaluation. LT */
+		SET_PRSEEN(CAR(vl), oldseen);
 		return val;
 	    }
 	}
