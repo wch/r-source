@@ -371,8 +371,7 @@ specialOpCompletionsHelper <- function(op, suffix, prefix)
            "::" = {
                if (.CompletionEnv$settings[["ns"]])
                {
-                   nse <- tryCatch(unique(c(names(getNamespaceInfo(prefix,
-                                                                   "exports")),
+                   nse <- tryCatch(unique(c(getNamespaceExports(prefix),
                                             if(prefix != "base")
                                                 names(getNamespaceInfo(prefix,
                                                                        "lazydata"))
