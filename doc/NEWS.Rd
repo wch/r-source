@@ -153,6 +153,9 @@
       \code{add = TRUE} adds an exit expression on top of any
       existing ones. This way the expressions are run in a first in last
       out fashion. From Lionel Henry.
+
+      \item On Windows, \code{file.rename} internally retries the operation
+      in case of error to recover from possible anti-virus interference.
     }
   }
 

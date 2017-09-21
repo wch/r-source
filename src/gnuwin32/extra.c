@@ -383,13 +383,16 @@ SEXP do_dllversion(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
+/* Retry renaming a few times to recover from possible anti-virus interference,
+   which has been reported e.g. during installation of packages. */
 
 int Rwin_rename(const char *from, const char *to)
 {
     for(int retries = 0; retries < 10; retries++) {
 	if (MoveFileEx(from, to, MOVEFILE_REPLACE_EXISTING | MOVEFILE_COPY_ALLOWED | MOVEFILE_WRITE_THROUGH))
 	    return 0;
-	if (GetLastError() != ERROR_SHARING_VIOLATION)
+	DWORD err = GetLastError();
+	if (err != ERROR_SHARING_VIOLATION && err != ERROR_ACCESS_DENIED)
 	    return 1;
 	Sleep(500);
 	R_ProcessEvents();
@@ -399,20 +402,10 @@ int Rwin_rename(const char *from, const char *to)
 
 int Rwin_wrename(const wchar_t *from, const wchar_t *to)
 {
-    static int verbose = -1;
-    if (verbose == -1) {
-	char *envv = getenv("_R_VERBOSE_MOVEFILE_");
-	if (envv && !strcmp(envv, "yes"))
-	    verbose = 1;
-	else
-	    verbose = 0;
-    }
     for(int retries = 0; retries < 10; retries++) {
 	if (MoveFileExW(from, to, MOVEFILE_REPLACE_EXISTING | MOVEFILE_COPY_ALLOWED | MOVEFILE_WRITE_THROUGH))
 	    return 0;
-	unsigned long err = (unsigned long)GetLastError();
-	if (verbose)
-	    REprintf("MoveFileExW exited with error code %lu (attempt %d)\n", err, retries+1);
+	DWORD err = GetLastError();
 	if (err != ERROR_SHARING_VIOLATION && err != ERROR_ACCESS_DENIED)
 	    return 1;
 	Sleep(500);
