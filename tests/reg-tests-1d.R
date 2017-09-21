@@ -1221,6 +1221,23 @@ aKnots <- c(rep(0, 4), c(0.3, 0.5, 0.6), rep(1, 4))
 tools::assertError(splines::splineDesign(aKnots, x, derivs = 4), verbose = TRUE)
 ## gave seg.fault in R <= 3.4.1
 
+## allow on.exit handlers to be added in LIFO order
+
+x <- character(0)
+f <- function() {
+    on.exit(x <<- c(x, "first"))
+    on.exit(x <<- c(x, "last"), add = TRUE, after = FALSE)
+}
+f()
+stopifnot(identical(x, c("last", "first")))
+
+x <- character(0)
+f <- function() {
+    on.exit(x <<- c(x, "last"), add = TRUE, after = FALSE)
+}
+f()
+stopifnot(identical(x, "last"))
+
 
 ## deparse(<symbol>)
 ##_reverted_for_now
@@ -1228,6 +1245,14 @@ tools::assertError(splines::splineDesign(aKnots, x, derivs = 4), verbose = TRUE)
 ##_ stopifnot(identical(brc, eval(parse(text = deparse(brc, control="all")))))
 ## default was to set  backtick=FALSE  so parse() failed in R <= 3.4.x
 
+
+## sys.on.exit() is called in the correct frame
+
+fn <- function() {
+    on.exit("foo")
+    identity(sys.on.exit())
+}
+stopifnot(identical(fn(), "foo"))
 
 
 ## keep at end

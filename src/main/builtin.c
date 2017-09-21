@@ -133,20 +133,29 @@ SEXP attribute_hidden do_onexit(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     RCNTXT *ctxt;
     SEXP code, oldcode, argList;
-    int addit = 0;
+    int addit = FALSE;
+    int after = TRUE;
     static SEXP do_onexit_formals = NULL;
 
     checkArity(op, args);
     if (do_onexit_formals == NULL)
-	do_onexit_formals = allocFormalsList2(install("expr"), install("add"));
+        do_onexit_formals = allocFormalsList3(install("expr"),
+                                              install("add"),
+                                              install("after"));
 
     PROTECT(argList =  matchArgs(do_onexit_formals, args, call));
     if (CAR(argList) == R_MissingArg) code = R_NilValue;
     else code = CAR(argList);
+
     if (CADR(argList) != R_MissingArg) {
 	addit = asLogical(eval(CADR(args), rho));
 	if (addit == NA_INTEGER)
 	    errorcall(call, _("invalid '%s' argument"), "add");
+    }
+    if (CADDR(argList) != R_MissingArg) {
+        after = asLogical(eval(CADDR(args), rho));
+        if (after == NA_INTEGER)
+            errorcall(call, _("invalid '%s' argument"), "lifo");
     }
 
     ctxt = R_GlobalContext;
@@ -162,14 +171,17 @@ SEXP attribute_hidden do_onexit(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (code == R_NilValue && ! addit)
 	    ctxt->conexit = R_NilValue;
 	else {
-	    SEXP codelist = LCONS(code, R_NilValue);
 	    oldcode = ctxt->conexit;
 	    if (oldcode == R_NilValue || ! addit)
-		ctxt->conexit = codelist;
+                ctxt->conexit = CONS(code, R_NilValue);
 	    else {
-		PROTECT(codelist);
-		ctxt->conexit = listAppend(duplicate(oldcode), codelist);
-		UNPROTECT(1);
+                if (after) {
+                    SEXP codelist = PROTECT(CONS(code, R_NilValue));
+                    ctxt->conexit = listAppend(duplicate(oldcode), codelist);
+                    UNPROTECT(1);
+                } else {
+                    ctxt->conexit = CONS(code, oldcode);
+                }
 	    }
 	}
     }

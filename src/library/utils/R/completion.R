@@ -371,7 +371,12 @@ specialOpCompletionsHelper <- function(op, suffix, prefix)
            "::" = {
                if (.CompletionEnv$settings[["ns"]])
                {
-                   nse <- tryCatch(getNamespaceExports(prefix), error = function(e)e)
+                   nse <- tryCatch(unique(c(getNamespaceExports(prefix),
+                                            if(prefix != "base")
+                                                names(getNamespaceInfo(prefix,
+                                                                       "lazydata"))
+                                            )),
+                                   error = identity)
                    if (inherits(nse, "error")) ## nothing else to do
                        suffix
                    else

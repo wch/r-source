@@ -93,10 +93,6 @@
       \item \code{debug()} supports debugging of methods on any object
       of S4 class \code{"genericFunction"}, including group generics.
 
-      \item \code{c()} and \code{unlist()} are now more efficient in
-      constructing the \code{names(.)} of their return value, thanks to
-      a proposal by Suharto Anggono.  (\PR{17284})
-
       \item Attempting to increase the length of a variable containing
       \code{NULL} using \code{length()<-} still has no effect on the
       target variable, but now triggers a warning.
@@ -141,7 +137,7 @@
       signals an error.
 
       \item \code{mclapply()} gets an option \code{affinity.list} which
-      allows more efficient execution with heterogenous processors,
+      allows more efficient execution with heterogeneous processors,
       thanks to Helena Kotthaus.
 
       \item The \code{character} methods for \code{as.Date()} and
@@ -151,6 +147,15 @@
       \item The object header layout has been changed to support merging
       the \code{ALTREP} branch. This requires re-installing packages
       that use compiled code.
+
+      \item \code{on.exit()} gains an optional argument \code{after}
+      with default \code{TRUE}. Using \code{after = FALSE} with
+      \code{add = TRUE} adds an exit expression on top of any
+      existing ones. This way the expressions are run in a first in last
+      out fashion. From Lionel Henry.
+
+      \item On Windows, \code{file.rename} internally retries the operation
+      in case of error to recover from possible anti-virus interference.
     }
   }
 
@@ -291,11 +296,29 @@
 
       \item Attributes on symbols are now detected and prevented; attempt
       to add an attribute to a symbol results in an error.
+
+      \item \code{fisher.test(*, workspace = <n>)} now may also increase
+      the internal stack size which allows larger problem to be solved,
+      fixing \PR{1662}.
+
+      \item The methods package no longer directly copies slots
+      (attributes) into a prototype that is of an \dQuote{abnormal}
+      (reference) type, like a symbol.
+
+      \item The methods package no longer attempts to call
+      \code{length<-()} on \code{NULL} (during the bootstrap process).
+
+      \item The methods package correctly shows methods when there are
+      multiple methods with the same signature for the same generic
+      (still not fully supported, but at least the user can see them).
+
+      \item \code{sys.on.exit()} is now always evaluated in the right
+      frame. From Lionel Henry.
     }
   }
 }
 
-\section{\Rlogo CHANGES IN R 3.4.1 patched}{
+\section{\Rlogo CHANGES IN R 3.4.2}{
 
   \subsection{NEW FEATURES}{
     \itemize{
@@ -310,6 +333,10 @@
       \item The default for \code{tools::write_PACKAGES(rds_compress=)}
       has been changed to \code{"xz"} to match the compression used by
       \acronym{CRAN}.
+
+      \item \code{c()} and \code{unlist()} are now more efficient in
+      constructing the \code{names(.)} of their return value, thanks to
+      a proposal by Suharto Anggono.  (\PR{17284})
     }
   }
 
@@ -318,6 +345,15 @@
       \item \command{R CMD check} checks for and \command{R CMD build}
       corrects CRLF line endings in shell scripts \command{configure}
       and \command{cleanup} (even on Windows).
+    }
+  }
+
+  \subsection{INSTALLATION on a UNIX-ALIKE}{
+    \itemize{
+      \item The order of selection of OpenMP flags has been changed:
+      Oracle Developer Studio 12.5 accepts \option{-fopenmp} and
+      \option{-xopenmp} but only the latter enables OpenMP so it is now
+      tried first.
     }
   }
 
@@ -397,7 +433,7 @@
       \item \code{x <- 1:2; tapply(x, list(x, x), function(x) "")[1,2]}
       now correctly returns \code{NA} again.  (\PR{17333})
 
-      \item Runing of finalizers after explicit GC request moved from
+      \item Running of finalizers after explicit GC request moved from
       the \R interface \code{do_gc} to the \code{C} interface
       \code{R_gc}.  This helps with reclaiming inaccessible connections.
 
@@ -415,6 +451,9 @@
       fixes \PR{17333}.
 
       \item \code{splineDesign(.., derivs = 4)} no longer segfaults.
+
+      \item \code{fisher.test(*, hybrid=TRUE)} now (again) will use the
+      hybrid method when Cochran's conditions are met, fixing \PR{16654}.
     }
   }
 }

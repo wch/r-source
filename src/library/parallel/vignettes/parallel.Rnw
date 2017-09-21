@@ -464,17 +464,19 @@ of selected CPUs. As soon as a child process has finished, the next
 available job for the CPU is forked.
 
 The following code example demonstrates how the execution
-time can be reduced by assigning the elements of \code{X} to specific CPUs.
+time can be reduced by assigning the elements of \code{X} to specific CPUs,
+not on Windows, where \code{mc.cores} must remain at 1.
 
-%%         set eval=FALSE  to save ~ 40 seconds
-<<affinity-ex, eval=TRUE>>=
+%%     setting eval=TRUE  would cost ca. 1.5 minutes every time this is built
+%%     also,   .Platform$OS.type == "Windows"  cannot use mc.cores = 2
+<<affinity-ex, eval=FALSE>>=
 ## Exemplary variance filter executed on three different matrices in parallel.
 ## Can be used in gene expression analysis as a prefilter
 ## for the number of covariates.
 
 library(parallel)
 n <- 300   # observations
-p <- 5000  # covariates (orig. 20000 is more realistic; limit time here)
+p <- 20000 # covariates
 
 ## Different sized matrices as filter inputs
 ## Matrix A and B form smaller work loads
@@ -501,16 +503,24 @@ affinity <- c(1,1,2)
 system.time(
   mclapply(X = list(A,B,C), FUN = varFilter,
            mc.preschedule = FALSE, affinity.list = affinity))
+##   user  system elapsed
+## 34.909   0.873  36.720
+
 
 ## mclapply without affinity.list
 system.time(
   mclapply(X = list(A,B,C), FUN = varFilter, mc.cores = 2,
            mc.preschedule = FALSE) )
+##   user  system elapsed
+## 72.893   1.588  55.982
+
 
 ## mclapply with prescheduling
 system.time(
    mclapply(X = list(A,B,C), FUN = varFilter, mc.cores = 2,
             mc.preschedule = TRUE) )
+##   user  system elapsed
+## 53.455   1.326  53.399
 @
 
 Instead of using \code{affinity.list} for runtime optimization,

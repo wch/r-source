@@ -76,6 +76,28 @@ function(f)
     unique(hrefs[!is.na(hrefs) & !startsWith(hrefs, "#")])
 }
 
+.get_urls_from_PDF_file <-
+function(f)    
+{
+    ## Seems there is no straightforward way to extract hyperrefs from a
+    ## PDF, hence first convert to HTML.
+    ## Note that pdftohtml always outputs in cwd ...
+    owd <- getwd()
+    dir.create(d <- tempfile())
+    on.exit({ unlink(d, recursive = TRUE); setwd(owd) })
+    file.copy(normalizePath(f), d)
+    setwd(d)
+    g <- tempfile(tmpdir = d, fileext = ".xml")
+    system2("pdftohtml",
+            c("-s -q -i -c -xml", basename(f), basename(g)))
+    ## Oh dear: seems that pdftohtml can fail without a non-zero exit
+    ## status.
+    if(file.exists(g))
+        .get_urls_from_HTML_file(g)
+    else
+        character()
+}
+
 url_db <-
 function(urls, parents)
 {
@@ -85,6 +107,60 @@ function(urls, parents)
                      stringsAsFactors = FALSE)
     class(db) <- c("url_db", "data.frame")
     db
+}
+
+url_db_from_HTML_files <-
+function(dir, recursive = FALSE, files = NULL, verbose = FALSE)
+{
+    urls <- parents <- character()
+    if(is.null(files)) 
+        files <- list.files(dir, pattern = "[.]html$",
+                            full.names = TRUE,
+                            recursive = recursive)
+    urls <-
+        lapply(files,
+               function(f) {
+                   if(verbose)
+                       message(sprintf("processing %s",
+                                       .file_path_relative_to_dir(f, dir)))
+                   .get_urls_from_HTML_file(f)
+               })
+    names(urls) <- files
+    urls <- Filter(length, urls)
+    if(length(urls)) {
+        parents <- rep.int(.file_path_relative_to_dir(names(urls), dir),
+                           lengths(urls))
+        urls <- unlist(urls, use.names = FALSE)
+    }
+    url_db(urls, parents)
+}
+
+url_db_from_PDF_files <-
+function(dir, recursive = FALSE, files = NULL, verbose = FALSE)
+{
+    urls <- parents <- character()
+    if(is.null(files))
+        files <- list.files(dir, pattern = "[.]pdf$",
+                            full.names = TRUE,
+                            recursive = recursive)
+    ## FIXME: this is simpler to do with full.names = FALSE and without
+    ## tools:::.file_path_relative_to_dir().
+    urls <-
+        lapply(files,
+               function(f) {
+                   if(verbose)
+                       message(sprintf("processing %s",
+                                       .file_path_relative_to_dir(f, dir)))
+                   .get_urls_from_PDF_file(f)
+               })
+    names(urls) <- files
+    urls <- Filter(length, urls)
+    if(length(urls)) {
+        parents <- rep.int(.file_path_relative_to_dir(names(urls), dir),
+                           lengths(urls))
+        urls <- unlist(urls, use.names = FALSE)
+    }
+    url_db(urls, parents)
 }
 
 url_db_from_package_Rd_db <-
@@ -138,8 +214,8 @@ function(dir, installed = FALSE)
     nfile <- file.path(dir, path)
     if(file.exists(nfile)) {
         macros <- initialRdMacros()
-        urls <- .get_urls_from_Rd(prepare_Rd(tools::parse_Rd(nfile,
-                                                             macros = macros),
+        urls <- .get_urls_from_Rd(prepare_Rd(parse_Rd(nfile,
+                                                      macros = macros),
                                              stages = "install"))
     }
     url_db(urls, rep.int(path, length(urls)))
@@ -148,23 +224,11 @@ function(dir, installed = FALSE)
 url_db_from_package_HTML_files <-
 function(dir, installed = FALSE)
 {
-    urls <- parents <- character()
     path <- if(installed) "doc" else file.path("inst", "doc")
     files <- Sys.glob(file.path(dir, path, "*.html"))
     if(installed && file.exists(rfile <- file.path(dir, "README.html")))
         files <- c(files, rfile)
-    if(length(files)) {
-        urls <- lapply(files, .get_urls_from_HTML_file)
-        names(urls) <- files
-        urls <- Filter(length, urls)
-        if(length(urls)) {
-            parents <- rep.int(.file_path_relative_to_dir(names(urls),
-                                                          dir),
-                               lengths(urls))
-            urls <- unlist(urls, use.names = FALSE)
-        }
-    }
-    url_db(urls, parents)
+    url_db_from_HTML_files(dir, files = files)
 }
 
 url_db_from_package_README_md <-

@@ -383,16 +383,35 @@ SEXP do_dllversion(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
-
+/* Retry renaming a few times to recover from possible anti-virus interference,
+   which has been reported e.g. during installation of packages. */
 
 int Rwin_rename(const char *from, const char *to)
 {
-    return (MoveFileEx(from, to, MOVEFILE_REPLACE_EXISTING | MOVEFILE_COPY_ALLOWED | MOVEFILE_WRITE_THROUGH) == 0);
+    for(int retries = 0; retries < 10; retries++) {
+	if (MoveFileEx(from, to, MOVEFILE_REPLACE_EXISTING | MOVEFILE_COPY_ALLOWED | MOVEFILE_WRITE_THROUGH))
+	    return 0;
+	DWORD err = GetLastError();
+	if (err != ERROR_SHARING_VIOLATION && err != ERROR_ACCESS_DENIED)
+	    return 1;
+	Sleep(500);
+	R_ProcessEvents();
+    }
+    return 1;
 }
 
 int Rwin_wrename(const wchar_t *from, const wchar_t *to)
 {
-    return (MoveFileExW(from, to, MOVEFILE_REPLACE_EXISTING | MOVEFILE_COPY_ALLOWED | MOVEFILE_WRITE_THROUGH) == 0);
+    for(int retries = 0; retries < 10; retries++) {
+	if (MoveFileExW(from, to, MOVEFILE_REPLACE_EXISTING | MOVEFILE_COPY_ALLOWED | MOVEFILE_WRITE_THROUGH))
+	    return 0;
+	DWORD err = GetLastError();
+	if (err != ERROR_SHARING_VIOLATION && err != ERROR_ACCESS_DENIED)
+	    return 1;
+	Sleep(500);
+	R_ProcessEvents();
+    }
+    return 1;
 }
 
 

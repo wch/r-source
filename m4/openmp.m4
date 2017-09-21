@@ -28,7 +28,7 @@
 # Franc,ois Pinard, Karl Berry, Richard Pixley, Ian Lance Taylor,
 # Roland McGrath, Noah Friedman, david d zuhn, and many others.
 
-# [a small part, modified for clang and Intel in 2015,6.]
+# [a small part, modified for clang and Intel in 2015,6, Solaris in 2017.]
 
 
 # R_OPENMP
@@ -58,7 +58,7 @@ AC_DEFUN([R_OPENMP],
 	  dnl   clang 3.7.x	      -fopenmp=libomp
 	  dnl   (-fopenmp is accepted but does not work)
 	  dnl   Oracle C, Fortran     -xopenmp
-          dnl   (also accepts -fopenmp as from 12.4)
+          dnl   (also accepts -fopenmp as from 12.4, but does not work in 12.5)
 	  dnl   Intel C, Fortran      -qopenmp
 	  dnl   Intel                 -openmp (deprecated)
           dnl   (https://software.intel.com/en-us/node/581863,
@@ -74,7 +74,8 @@ AC_DEFUN([R_OPENMP],
 	  dnl will fail (since we know that it failed without the option),
 	  dnl therefore the loop will continue searching for an option, and
 	  dnl no output file called 'penmp' or 'mp' is created.
-	  for ac_option in -fopenmp -xopenmp -qopenmp \
+	  dnl Sept 2017: Solaris needs -xopenmp before -fopenmp
+	  for ac_option in -xopenmp -fopenmp -qopenmp \
                            -openmp -mp -omp -qsmp=omp -homp \
 			   -fopenmp=libomp \
                            -Popenmp --openmp; do

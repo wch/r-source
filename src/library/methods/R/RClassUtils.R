@@ -697,7 +697,12 @@ reconcilePropertiesAndPrototype <-
               if(!is.null(thisDataPart)) {
                     dataPartClass <- thisDataPart
                     if(!is.null(clDef@prototype)) {
-                      newObject <- clDef@prototype
+                        protoClass <- class(clDef@prototype)
+                        newObject <-
+                            if (protoClass %in% .AbnormalTypes) {
+                                indirect <- .indirectAbnormalClasses[protoClass]
+                                getClassDef(indirect)@prototype
+                            } else clDef@prototype
                       dataPartValue <- TRUE
                     }
                   }
