@@ -633,7 +633,7 @@ static SEXP bitwiseNot(SEXP a)
     switch(TYPEOF(a)) {
     case INTSXP:
 	for(i = 0; i < m; i++) {
-	    int aa = INTEGER(a)[i];
+	    int aa = INTEGER_ELT(a, i);
 	    INTEGER(ans)[i] = (aa == NA_INTEGER) ? aa : ~aa;
 	}
 	break;
@@ -657,7 +657,7 @@ static SEXP bitwiseNot(SEXP a)
     switch(TYPEOF(a)) { \
     case INTSXP: \
 	MOD_ITERATE2(mn, m, n, i, ia, ib, { \
-	    int aa = INTEGER(a)[ia]; int bb = INTEGER(b)[ib]; \
+		int aa = INTEGER_ELT(a, ia); int bb = INTEGER_ELT(b, ib); \
 	    INTEGER(ans)[i] = (aa == NA_INTEGER || bb == NA_INTEGER) ? NA_INTEGER : aa op bb; \
 	}); \
 	break; \
@@ -694,7 +694,7 @@ static SEXP bitwiseShiftL(SEXP a, SEXP b)
     switch(TYPEOF(a)) {
     case INTSXP:
 	MOD_ITERATE2(mn, m, n, i, ia, ib, {
-	    int aa = INTEGER(a)[ia]; int bb = INTEGER(b)[ib];
+		int aa = INTEGER_ELT(a, ia); int bb = INTEGER_ELT(b, ib);
 	    INTEGER(ans)[i] =
 		(aa == NA_INTEGER || bb == NA_INTEGER || bb < 0 || bb > 31) ? NA_INTEGER : ((unsigned int)aa << bb);
 	});
@@ -718,7 +718,7 @@ static SEXP bitwiseShiftR(SEXP a, SEXP b)
     switch(TYPEOF(a)) {
     case INTSXP:
 	MOD_ITERATE2(mn, m, n, i, ia, ib, {
-	    int aa = INTEGER(a)[ia]; int bb = INTEGER(b)[ib];
+	    int aa = INTEGER_ELT(a, ia); int bb = INTEGER_ELT(b, ib);
 	    INTEGER(ans)[i] =
 		(aa == NA_INTEGER || bb == NA_INTEGER || bb < 0 || bb > 31) ? NA_INTEGER : ((unsigned int)aa >> bb);
 	});
