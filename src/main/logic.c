@@ -317,8 +317,8 @@ static SEXP binaryLogic(int code, SEXP s1, SEXP s2)
     case 1:		/* & : AND */
 	MOD_ITERATE2(n, n1, n2, i, i1, i2, {
 //	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	    x1 = LOGICAL(s1)[i1];
-	    x2 = LOGICAL(s2)[i2];
+	    x1 = LOGICAL_ELT(s1, i1);
+	    x2 = LOGICAL_ELT(s2, i2);
 	    if (x1 == 0 || x2 == 0)
 		LOGICAL(ans)[i] = 0;
 	    else if (x1 == NA_LOGICAL || x2 == NA_LOGICAL)
@@ -330,8 +330,8 @@ static SEXP binaryLogic(int code, SEXP s1, SEXP s2)
     case 2:		/* | : OR */
 	MOD_ITERATE2(n, n1, n2, i, i1, i2, {
 //	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	    x1 = LOGICAL(s1)[i1];
-	    x2 = LOGICAL(s2)[i2];
+	    x1 = LOGICAL_ELT(s1, i1);
+	    x2 = LOGICAL_ELT(s2, i2);
 	    if ((x1 != NA_LOGICAL && x1) || (x2 != NA_LOGICAL && x2))
 		LOGICAL(ans)[i] = 1;
 	    else if (x1 == 0 && x2 == 0)
@@ -386,16 +386,17 @@ static SEXP binaryLogic2(int code, SEXP s1, SEXP s2)
 #define _OP_ALL 1
 #define _OP_ANY 2
 
-static int checkValues(int op, int na_rm, int *x, R_xlen_t n)
+static int checkValues(int op, int na_rm, SEXP x, R_xlen_t n)
 {
     R_xlen_t i;
     int has_na = 0;
     for (i = 0; i < n; i++) {
 //	if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	if (!na_rm && x[i] == NA_LOGICAL) has_na = 1;
+	int xi = LOGICAL_ELT(x, i);
+	if (!na_rm && xi == NA_LOGICAL) has_na = 1;
 	else {
-	    if (x[i] == TRUE && op == _OP_ANY) return TRUE;
-	    if (x[i] == FALSE && op == _OP_ALL) return FALSE;
+	    if (xi == TRUE && op == _OP_ANY) return TRUE;
+	    if (xi == FALSE && op == _OP_ALL) return FALSE;
 	}
     }
     switch (op) {
@@ -450,7 +451,7 @@ SEXP attribute_hidden do_logic3(SEXP call, SEXP op, SEXP args, SEXP env)
 			    type2char(TYPEOF(t)));
 	    t = coerceVector(t, LGLSXP);
 	}
-	val = checkValues(PRIMVAL(op), narm, LOGICAL(t), XLENGTH(t));
+	val = checkValues(PRIMVAL(op), narm, t, XLENGTH(t));
 	if (val != NA_LOGICAL) {
 	    if ((PRIMVAL(op) == _OP_ANY && val)
 		|| (PRIMVAL(op) == _OP_ALL && !val)) {
