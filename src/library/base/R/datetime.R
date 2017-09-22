@@ -795,7 +795,7 @@ seq.POSIXt <-
             if(!missing(to)) {
                 ## We might have a short day, so need to over-estimate.
                 length.out <- 2L + floor((unclass(as.POSIXct(to)) -
-                                          unclass(as.POSIXct(from)))/86400)
+					  unclass(as.POSIXct(from)))/(by * 86400))
             }
             r1$mday <- seq.int(r1$mday, by = by, length.out = length.out)
         }

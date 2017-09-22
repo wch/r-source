@@ -317,6 +317,9 @@
 
       \item \code{sys.on.exit()} is now always evaluated in the right
       frame. From Lionel Henry.
+
+      \item \code{seq.POSIXt(*, by = "<n> DSTdays")} now should work
+      correctly in all cases and is faster.  (\PR{17342})
     }
   }
 }

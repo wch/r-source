@@ -1221,8 +1221,8 @@ aKnots <- c(rep(0, 4), c(0.3, 0.5, 0.6), rep(1, 4))
 tools::assertError(splines::splineDesign(aKnots, x, derivs = 4), verbose = TRUE)
 ## gave seg.fault in R <= 3.4.1
 
-## allow on.exit handlers to be added in LIFO order
 
+## allow on.exit handlers to be added in LIFO order
 x <- character(0)
 f <- function() {
     on.exit(x <<- c(x, "first"))
@@ -1230,7 +1230,7 @@ f <- function() {
 }
 f()
 stopifnot(identical(x, c("last", "first")))
-
+##
 x <- character(0)
 f <- function() {
     on.exit(x <<- c(x, "last"), add = TRUE, after = FALSE)
@@ -1247,12 +1247,19 @@ stopifnot(identical(x, "last"))
 
 
 ## sys.on.exit() is called in the correct frame
-
 fn <- function() {
     on.exit("foo")
     identity(sys.on.exit())
 }
 stopifnot(identical(fn(), "foo"))
+
+
+## rep.POSIXt(*, by="n  DSTdays") - PR#17342
+x <- seq(as.POSIXct("1982-04-15 05:00", tz="US/Central"),
+         as.POSIXct("1994-10-15",       tz="US/Central"), by="360 DSTdays")
+stopifnot(length(x) == 13, diff((as.numeric(x) - 39600)/86400) == 360)
+## length(x) was 1802 and ended in many NA's in R <= 3.4.2
+
 
 
 ## keep at end
