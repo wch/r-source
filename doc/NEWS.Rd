@@ -156,6 +156,9 @@
 
       \item On Windows, \code{file.rename} internally retries the operation
       in case of error to recover from possible anti-virus interference.
+
+      \item Command line completion on \samp{::} now also includes lazy
+      loaded data.
     }
   }
 
