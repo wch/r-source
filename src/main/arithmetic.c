@@ -362,40 +362,22 @@ static R_INLINE double R_integer_divide(int x, int y)
 	return (double) x / (double) y;
 }
 
-static R_INLINE SEXP ScalarIntegerValue1(SEXP x)
+static R_INLINE SEXP ScalarValue1(SEXP x)
 {
     if (NO_REFERENCES(x))
 	return x;
     else
-	return allocVector(INTSXP, 1);
+	return allocVector(TYPEOF(x), 1);
 }
 
-static R_INLINE SEXP ScalarRealValue1(SEXP x)
-{
-    if (NO_REFERENCES(x))
-	return x;
-    else
-	return allocVector(REALSXP, 1);
-}
-
-static R_INLINE SEXP ScalarIntegerValue2(SEXP x, SEXP y)
+static R_INLINE SEXP ScalarValue2(SEXP x, SEXP y)
 {
     if (NO_REFERENCES(x))
 	return x;
     else if (NO_REFERENCES(y))
 	return y;
     else
-	return allocVector(INTSXP, 1);
-}
-
-static R_INLINE SEXP ScalarRealValue2(SEXP x, SEXP y)
-{
-    if (NO_REFERENCES(x))
-	return x;
-    else if (NO_REFERENCES(y))
-	return y;
-    else
-	return allocVector(REALSXP, 1);
+	return allocVector(TYPEOF(x), 1);
 }
 
 /* Unary and Binary Operators */
@@ -426,7 +408,7 @@ SEXP attribute_hidden do_arith(SEXP call, SEXP op, SEXP args, SEXP env)
 	    double x1 = SCALAR_DVAL(arg1);
 	    if (IS_SCALAR(arg2, REALSXP)) {
 		double x2 = SCALAR_DVAL(arg2);
-		SEXP ans = ScalarRealValue2(arg1, arg2);
+		SEXP ans = ScalarValue2(arg1, arg2);
 		switch (PRIMVAL(op)) {
 		case PLUSOP: SET_SCALAR_DVAL(ans, x1 + x2); return ans;
 		case MINUSOP: SET_SCALAR_DVAL(ans, x1 - x2); return ans;
@@ -437,7 +419,7 @@ SEXP attribute_hidden do_arith(SEXP call, SEXP op, SEXP args, SEXP env)
 	    else if (IS_SCALAR(arg2, INTSXP)) {
 		int i2 = SCALAR_IVAL(arg2);
 		double x2 = i2 != NA_INTEGER ? (double) i2 : NA_REAL;
-		SEXP ans = ScalarRealValue1(arg1);
+		SEXP ans = ScalarValue1(arg1);
 		switch (PRIMVAL(op)) {
 		case PLUSOP:
 		    SET_SCALAR_DVAL(ans, x1 + x2);
@@ -459,7 +441,7 @@ SEXP attribute_hidden do_arith(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (IS_SCALAR(arg2, REALSXP)) {
 		double x1 = i1 != NA_INTEGER ? (double) i1 : NA_REAL;
 		double x2 = SCALAR_DVAL(arg2);
-		SEXP ans = ScalarRealValue1(arg2);
+		SEXP ans = ScalarValue1(arg2);
 		switch (PRIMVAL(op)) {
 		case PLUSOP:
 		    SET_SCALAR_DVAL(ans, x1 + x2);
@@ -481,17 +463,17 @@ SEXP attribute_hidden do_arith(SEXP call, SEXP op, SEXP args, SEXP env)
 		SEXP ans;
 		switch (PRIMVAL(op)) {
 		case PLUSOP:
-		    ans = ScalarIntegerValue2(arg1, arg2);
+		    ans = ScalarValue2(arg1, arg2);
 		    SET_SCALAR_IVAL(ans, R_integer_plus(i1, i2, &naflag));
 		    CHECK_INTEGER_OVERFLOW(call, ans, naflag);
 		    return ans;
 		case MINUSOP:
-		    ans = ScalarIntegerValue2(arg1, arg2);
+		    ans = ScalarValue2(arg1, arg2);
 		    SET_SCALAR_IVAL(ans, R_integer_minus(i1, i2, &naflag));
 		    CHECK_INTEGER_OVERFLOW(call, ans, naflag);
 		    return ans;
 		case TIMESOP:
-		    ans = ScalarIntegerValue2(arg1, arg2);
+		    ans = ScalarValue2(arg1, arg2);
 		    SET_SCALAR_IVAL(ans, R_integer_times(i1, i2, &naflag));
 		    CHECK_INTEGER_OVERFLOW(call, ans, naflag);
 		    return ans;
@@ -507,7 +489,7 @@ SEXP attribute_hidden do_arith(SEXP call, SEXP op, SEXP args, SEXP env)
 	    switch(PRIMVAL(op)) {
 	    case PLUSOP: return(arg1);
 	    case MINUSOP:
-		ans = ScalarRealValue1(arg1);
+		ans = ScalarValue1(arg1);
 		SET_SCALAR_DVAL(ans, -SCALAR_DVAL(arg1));
 		return ans;
 	    }
@@ -519,7 +501,7 @@ SEXP attribute_hidden do_arith(SEXP call, SEXP op, SEXP args, SEXP env)
 	    case PLUSOP: return(arg1);
 	    case MINUSOP:
 		ival = SCALAR_IVAL(arg1);
-		ans = ScalarIntegerValue1(arg1);
+		ans = ScalarValue1(arg1);
 		SET_SCALAR_IVAL(ans, ival == NA_INTEGER ? NA_INTEGER : -ival);
 		return ans;
 	    }
