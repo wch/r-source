@@ -1,7 +1,7 @@
 #  File src/library/stats/R/aov.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #  Copyright (C) 1998 B. D. Ripley
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -48,6 +48,7 @@ aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
     } else {
 	if(pmatch("weights", names(Call), 0L))
             stop("weights are not supported in a multistratum aov() fit")
+        deparseb <- function(expr) deparse(expr, width.cutoff = 500L, backtick = TRUE)
         ##  Helmert contrasts can be helpful: do we want to force them?
         ##  this version does for the Error model.
         opcons <- options("contrasts")
@@ -55,15 +56,12 @@ aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
         on.exit(options(opcons))
         allTerms <- Terms
         errorterm <- attr(Terms, "variables")[[1L + indError]]
-        eTerm <- deparse(errorterm[[2L]], width.cutoff = 500L, backtick = TRUE)
         intercept <- attr(Terms, "intercept")
         ecall <- lmcall
         ecall$formula <-
-            as.formula(paste(deparse(formula[[2L]], width.cutoff = 500L,
-                                     backtick = TRUE), "~", eTerm,
-                             if(!intercept) "- 1"),
+            as.formula(paste(deparseb(formula  [[2L]]), "~",
+                             deparseb(errorterm[[2L]]), if(!intercept) "- 1"),
                        env = environment(formula))
-
         ecall$method <- "qr"
         ecall$qr <- TRUE
         ecall$contrasts <- NULL
@@ -90,9 +88,7 @@ aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
 	} else maxasgn + 1L
         result <- setNames(vector("list", len), nmstrata)
         lmcall$formula <- form <-
-            update(formula,
-                   paste(". ~ .-",
-                         deparse(errorterm, width.cutoff = 500L, backtick = TRUE)))
+            update(formula, paste(". ~ .-", deparseb(errorterm)))
         Terms <- terms(form)
         lmcall$method <- "model.frame"
         mf <- eval(lmcall, parent.frame())
