@@ -823,13 +823,11 @@ static SEXP integer_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2, SEXP lcall)
     case PLUSOP:
 	{
 	    int *pa = INTEGER(ans);
-	    //int *px1 = INTEGER(s1);
-	    //int *px2 = INTEGER(s2);
+	    int *px1 = INTEGER(s1);
+	    int *px2 = INTEGER(s2);
 	    MOD_ITERATE2_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2, {
-		    //x1 = px1[i1];
-		    //x2 = px2[i2];
-		    x1 = INTEGER_ELT(s1, i1);
-		    x2 = INTEGER_ELT(s2, i2);
+		    x1 = px1[i1];
+		    x2 = px2[i2];
 		    pa[i] = R_integer_plus(x1, x2, &naflag);
 		});
 	    if (naflag)
