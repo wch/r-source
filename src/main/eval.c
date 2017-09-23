@@ -6211,15 +6211,9 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 		   then we can copy the stack value into the binding
 		   value */
 		switch (s->tag) {
-		case REALSXP:
-		    SET_SCALAR_DVAL(x, s->u.dval);
-		    NEXT();
-		case INTSXP:
-		    SET_SCALAR_IVAL(x, s->u.ival);
-		    NEXT();
-		case LGLSXP:
-		    SET_SCALAR_LVAL(x, s->u.ival);
-		    NEXT();
+		case REALSXP: SET_SCALAR_DVAL(x, s->u.dval); NEXT();
+		case INTSXP: SET_SCALAR_IVAL(x, s->u.ival); NEXT();
+		case LGLSXP: SET_SCALAR_LVAL(x, s->u.ival); NEXT();
 		}
 	    }
 	}
