@@ -1103,7 +1103,7 @@ function(dir, ignore = character(),
 ## Spell-checking Markdown files.
 
 aspell_filter_db$md <-
-function(ifile, encoding)
+function(ifile, encoding = "UTF-8")
 {
     x <- readLines(ifile, encoding = encoding, warn = FALSE)
     n <- nchar(x)
@@ -1114,7 +1114,7 @@ function(ifile, encoding)
                                    sourcepos = TRUE)
     doc <- xml2::xml_ns_strip(xml2::read_xml(md))
     pos <- strsplit(xml2::xml_attr(xml2::xml_find_all(doc,
-                                                      "//*[@sourcepos][text]"),
+                                                      "//text[@sourcepos]"),
                                    "sourcepos"),
                     "[:-]")
     ## Now use the following idea.
