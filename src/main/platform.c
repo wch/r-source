@@ -2455,7 +2455,7 @@ SEXP attribute_hidden do_filecopy(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 
 #if defined(HAVE_UTIMENSAT)
-# Include <fcntl.h>
+# include <fcntl.h>
 # include <sys/stat.h>
 #elif defined(HAVE_UTIMES)
 # include <sys/time.h>
