@@ -5047,29 +5047,13 @@ some upgrades but not others).
 
 
 @menu
-* Sierra::                      
 * Tcl/Tk headers and libraries::  
 * Java (macOS)::                
 * Frameworks::                  
 * Building R.app::              
 @end menu
 
-@node Sierra, Tcl/Tk headers and libraries, macOS, macOS
-@subsection Sierra
-
-Xcode 9 and the corresponding `Command Line Tools (macOS Sierra version
-10.12) for Xcode 9' have a declaration for @code{utimesat} in header
-@file{sys/stat.h} which is marked with a warning as new in 10.13, but
-@command{configure} still sees as a declaration.  After running
-@command{configure} (and before running @command{make}) check file
-@file{src/include/config.h} and if it includes the line
-@example
-#define HAVE_UTIMENSAT 1
-@end example
-@noindent
-comment it out.
-
-@node Tcl/Tk headers and libraries, Java (macOS), Sierra, macOS
+@node Tcl/Tk headers and libraries, Java (macOS), macOS, macOS
 @subsection Tcl/Tk headers and libraries
 
 If you plan to use the @code{tcltk} package for @R{}, you need to
