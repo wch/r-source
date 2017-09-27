@@ -324,6 +324,20 @@
   }
 }
 
+
+\section{\Rlogo CHANGES IN R 3.4.2 patched}{
+
+  \subsection{INSTALLATION on a UNIX-ALIKE}{
+    \itemize{
+      \item A workaround has been added for the change in location of
+      time-zone files on macOS 10.13 \sQuote{High Sierra}, so the
+      default time zone is deduced correctly from the system setting
+      when \R is configured with \option{--with-internal-tzcode} (the
+      default on macOS).
+    }
+  }
+}
+
 \section{\Rlogo CHANGES IN R 3.4.2}{
 
   \subsection{NEW FEATURES}{
