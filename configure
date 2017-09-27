@@ -1844,7 +1844,7 @@ Optional Packages:
                           (0/1/2) [0]
   --with-system-valgrind-headers
                           use system valgrind headers (if available) [no]
-  --with-internal-tzcode  use internal time-zone code [no]
+  --with-internal-tzcode  use internal time-zone code [no, yes on macOS]
   --with-recommended-packages
                           use/install recommended R packages [yes]
   --with-ICU              use ICU library (if available) [yes]
