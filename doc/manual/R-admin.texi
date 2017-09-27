@@ -1748,7 +1748,7 @@ Windows' CRLF line endings.
 The front page of a @acronym{CRAN} site has a link `Download R for OS
 X'. Click on that, then download the file @file{R-@value{VERSIONno}.pkg}
 and install it. This runs on macOS 10.11 and later (El Capitan, Sierra,
-@dots{}).
+High Sierra, @dots{}).
 
 Installers for R-patched and R-devel are usually available from
 @uref{https://r.research.att.com}.  (Some of these packages are
@@ -1787,6 +1787,10 @@ are not often used on macOS) such as @code{png(type = "cairo")}.
 If you update your macOS version, you should re-install @R{} (and
 perhaps XQuartz): the installer may tailor the installation to the
 current version of the OS.
+
+When running under High Sierra (10.13), @R{} may not be able to deduce
+the system timezone, in which case you will need to set the environment
+variable @env{TZ}: see @code{?Sys.timezone}.
 
 For building @R{} from source, see @ref{macOS}.
 
@@ -4931,7 +4935,7 @@ FC = $F77
 FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin15/6.1.0
   -L/usr/local/gfortran/lib -lgfortran -lquadmath -lm
 @end example
-or (Sierra)
+or (Sierra or High Sierra)
 @example
 F77 = /usr/local/gfortran/bin/gfortran
 FC = $F77
@@ -4943,8 +4947,9 @@ FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin16/6.3.0
 
 More recent and complete distributions of @command{clang} are often
 available from @uref{http://llvm.org/releases/}: for example at the time
-of writing for 4.0.0, built for Sierra.  In particular, these should
-include support for OpenMP. Another build of clang 4.0.0 is available at
+of writing for 4.0.1, built for Sierra or later.  In particular, these
+should include support for OpenMP.  Another build of clang 4.0.0 is
+available at
 @uref{https://r.research.att.com/@/libs/@/clang-4.0.0-darwin15.6-Release.tar.gz}.
 Suppose one of these distributions is installed under
 @file{/usr/local/clang4}.  Then @R{} could be configured by something
@@ -5046,13 +5051,29 @@ some upgrades but not others).
 
 
 @menu
+* High Sierra::                 
 * Tcl/Tk headers and libraries::  
 * Java (macOS)::                
 * Frameworks::                  
 * Building R.app::              
 @end menu
 
-@node Tcl/Tk headers and libraries, Java (macOS), macOS, macOS
+
+@node High Sierra, Tcl/Tk headers and libraries, macOS, macOS
+@subsection High Sierra
+
+Default builds@footnote{This is not the case if the non-default
+@command{configure} option @option{--without-internal-tzcode} was used
+-- but @R{} then does not pass its checks.} of @R{} on High Sierra fail
+to detect the system time zone, as it gets reported something like
+@example
+  unknown timezone 'default/Europe/London'
+@end example
+@noindent
+which is not a standard form.  This can be circumvented by setting the
+environment variable @env{TZ} (in the example, to @samp{Europe/London}.
+
+@node Tcl/Tk headers and libraries, Java (macOS), High Sierra, macOS
 @subsection Tcl/Tk headers and libraries
 
 If you plan to use the @code{tcltk} package for @R{}, you need to
