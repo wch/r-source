@@ -285,71 +285,39 @@ SEXP attribute_hidden do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
 
 #define ISNA_INT(x) x == NA_INTEGER
 
-#define NUMERIC_RELOP(type1, ACCESSOR1, ISNA1, type2, ACCESSOR2, ISNA2) do { \
-    type1 x1, *px1 = ACCESSOR1(s1);					\
-    type2 x2, *px2 = ACCESSOR2(s2);					\
-    int *pa = LOGICAL(ans);						\
-									\
-    switch (code) {                                                     \
-    case EQOP:                                                          \
+#define NR_HELPER(OP, type1, ACCESSOR1, ISNA1, type2, ACCESSOR2, ISNA2) do { \
+	type1 x1, *px1 = ACCESSOR1(s1);					\
+	type2 x2, *px2 = ACCESSOR2(s2);					\
+	int *pa = LOGICAL(ans);						\
         MOD_ITERATE2(n, n1, n2, i, i1, i2, {                            \
 	    x1 = px1[i1];						\
 	    x2 = px2[i2];						\
             if (ISNA1(x1) || ISNA2(x2))                                 \
                 pa[i] = NA_LOGICAL;					\
             else                                                        \
-                pa[i] = (x1 == x2);					\
+                pa[i] = (x1 OP x2);					\
         });                                                             \
+    } while (0)
+	
+#define NUMERIC_RELOP(type1, ACCESSOR1, ISNA1, type2, ACCESSOR2, ISNA2) do { \
+    switch (code) {                                                     \
+    case EQOP:                                                          \
+	NR_HELPER(==, type1, ACCESSOR1, ISNA1, type2, ACCESSOR2, ISNA2); \
         break;                                                          \
     case NEOP:                                                          \
-        MOD_ITERATE2(n, n1, n2, i, i1, i2, {                            \
-	    x1 = px1[i1];						\
-            x2 = px2[i2];						\
-            if (ISNA1(x1) || ISNA2(x2))                                 \
-                pa[i] = NA_LOGICAL;					\
-            else                                                        \
-                pa[i] = (x1 != x2);					\
-        });                                                             \
+	NR_HELPER(!=, type1, ACCESSOR1, ISNA1, type2, ACCESSOR2, ISNA2); \
         break;                                                          \
     case LTOP:                                                          \
-        MOD_ITERATE2(n, n1, n2, i, i1, i2, {                            \
-	    x1 = px1[i1];						\
-            x2 = px2[i2];						\
-            if (ISNA1(x1) || ISNA2(x2))                                 \
-                pa[i] = NA_LOGICAL;					\
-            else                                                        \
-                pa[i] = (x1 < x2);					\
-        });                                                             \
+	NR_HELPER(<, type1, ACCESSOR1, ISNA1, type2, ACCESSOR2, ISNA2); \
         break;                                                          \
     case GTOP:                                                          \
-        MOD_ITERATE2(n, n1, n2, i, i1, i2, {                            \
-	    x1 = px1[i1];						\
-            x2 = px2[i2];						\
-            if (ISNA1(x1) || ISNA2(x2))                                 \
-                pa[i] = NA_LOGICAL;					\
-            else                                                        \
-                pa[i] = (x1 > x2);					\
-        });                                                             \
+	NR_HELPER(>, type1, ACCESSOR1, ISNA1, type2, ACCESSOR2, ISNA2); \
         break;                                                          \
     case LEOP:                                                          \
-        MOD_ITERATE2(n, n1, n2, i, i1, i2, {                            \
-	    x1 = px1[i1];						\
-            x2 = px2[i2];						\
-            if (ISNA1(x1) || ISNA2(x2))                                 \
-                LOGICAL(ans)[i] = NA_LOGICAL;                           \
-            else                                                        \
-                LOGICAL(ans)[i] = (x1 <= x2);                           \
-        });                                                             \
+	NR_HELPER(<=, type1, ACCESSOR1, ISNA1, type2, ACCESSOR2, ISNA2); \
         break;                                                          \
     case GEOP:                                                          \
-        MOD_ITERATE2(n, n1, n2, i, i1, i2, {                            \
-	    x1 = px1[i1];						\
-            x2 = px2[i2];						\
-            if (ISNA1(x1) || ISNA2(x2))                                 \
-                LOGICAL(ans)[i] = NA_LOGICAL;                           \
-            else                                                        \
-                LOGICAL(ans)[i] = (x1 >= x2);                           \
-        });                                                             \
+	NR_HELPER(>=, type1, ACCESSOR1, ISNA1, type2, ACCESSOR2, ISNA2); \
         break;                                                          \
     }                                                                   \
 } while(0)
