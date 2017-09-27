@@ -1,7 +1,7 @@
 #  File src/library/base/R/attach.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@
     sprintf(txt, pkg, paste(objs, collapse="\n"))
 }
 
-attach <- function(what, pos = 2L, name = deparse(substitute(what)),
+attach <- function(what, pos = 2L, name = deparse(substitute(what), backtick=FALSE),
                    warn.conflicts = TRUE)
 {
     ## FIXME: ./library.R 's library() has *very* similar checkConflicts(), keep in sync

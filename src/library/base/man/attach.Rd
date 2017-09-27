@@ -1,6 +1,6 @@
 % File src/library/base/man/attach.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{attach}
@@ -9,7 +9,7 @@
 
 \title{Attach Set of R Objects to Search Path}
 \usage{
-attach(what, pos = 2L, name = deparse(substitute(what)),
+attach(what, pos = 2L, name = deparse(substitute(what), backtick=FALSE),
        warn.conflicts = TRUE)
 }
 \arguments{

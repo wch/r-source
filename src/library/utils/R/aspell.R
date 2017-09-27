@@ -1100,6 +1100,48 @@ function(dir, ignore = character(),
            dictionaries = dictionaries)
 }
 
+## Spell-checking Markdown files.
+
+aspell_filter_db$md <-
+function(ifile, encoding = "UTF-8")
+{
+    x <- readLines(ifile, encoding = encoding, warn = FALSE)
+    n <- nchar(x)
+    y <- strrep(rep.int(" ", length(x)), n)
+    ## Determine positions of 'texts' along the lines of
+    ## spelling::parse_text_md () by Jeroen Ooms.
+    md <- commonmark::markdown_xml(x, extensions = TRUE,
+                                   sourcepos = TRUE)
+    doc <- xml2::xml_ns_strip(xml2::read_xml(md))
+    pos <- strsplit(xml2::xml_attr(xml2::xml_find_all(doc,
+                                                      "//text[@sourcepos]"),
+                                   "sourcepos"),
+                    "[:-]")
+    ## Now use the following idea.
+    ## Each elt of pos now has positions for l1:c1 to l2:c2.
+    ## If l1 < l2
+    ##   Lines in (l1, l2) are taken as a whole
+    ##   Line l1 from c1 to nchar for l1
+    ##   Line l2 from  1 to c1
+    ## otherwise
+    ##   Line l1 from c1 to c2.
+    for(p in pos) {
+        p <- as.integer(p)
+        ## Legibility ...
+        l1 <- p[1L]; c1 <- p[2L]; l2 <- p[3L]; c2 <- p[4L]
+        if(l1 < l2) {
+            w <- seq(l1 + 1L, l2 - 1L)
+            if(length(w))
+                y[w] <- x[w]
+            substring(y[l1], c1, n[l1]) <- substring(x[l1], c1, n[l1])
+            substring(y[l2], 1L, c2) <- substring(x[l2], 1L, c2)
+        } else {
+            substring(y[l1], c1, c2) <- substring(x[l1], c1, c2)
+        }
+    }
+    y
+}
+    
 ## For spell checking packages.
 
 aspell_package <-

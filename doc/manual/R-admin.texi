@@ -1748,7 +1748,7 @@ Windows' CRLF line endings.
 The front page of a @acronym{CRAN} site has a link `Download R for OS
 X'. Click on that, then download the file @file{R-@value{VERSIONno}.pkg}
 and install it. This runs on macOS 10.11 and later (El Capitan, Sierra,
-@dots{}).
+High Sierra, @dots{}).
 
 Installers for R-patched and R-devel are usually available from
 @uref{https://r.research.att.com}.  (Some of these packages are
@@ -4931,7 +4931,7 @@ FC = $F77
 FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin15/6.1.0
   -L/usr/local/gfortran/lib -lgfortran -lquadmath -lm
 @end example
-or (Sierra)
+or (Sierra or High Sierra)
 @example
 F77 = /usr/local/gfortran/bin/gfortran
 FC = $F77
@@ -4943,8 +4943,9 @@ FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin16/6.3.0
 
 More recent and complete distributions of @command{clang} are often
 available from @uref{http://llvm.org/releases/}: for example at the time
-of writing for 4.0.0, built for Sierra.  In particular, these should
-include support for OpenMP. Another build of clang 4.0.0 is available at
+of writing for 4.0.1, built for Sierra or later.  In particular, these
+should include support for OpenMP.  Another build of clang 4.0.0 is
+available at
 @uref{https://r.research.att.com/@/libs/@/clang-4.0.0-darwin15.6-Release.tar.gz}.
 Suppose one of these distributions is installed under
 @file{/usr/local/clang4}.  Then @R{} could be configured by something

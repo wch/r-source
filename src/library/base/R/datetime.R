@@ -23,8 +23,9 @@ Sys.timezone <- function(location = TRUE)
 {
     tz <- Sys.getenv("TZ", names = FALSE)
     if(!location || nzchar(tz)) return(Sys.getenv("TZ", unset = NA_character_))
-    lt <- normalizePath("/etc/localtime") # Linux, macOS, ...
-    if (grepl(pat <- "^/usr/share/zoneinfo/", lt)) sub(pat, "", lt)
+    lt <- normalizePath("/etc/localtime") # most Linux, macOS, ...
+    if (grepl(pat <- "^/usr/share/zoneinfo/", lt) ||
+        grepl(pat <- "^/usr/share/zoneinfo.default/", lt)) sub(pat, "", lt)
     else if (lt == "/etc/localtime" && file.exists("/etc/timezone") &&
 	     dir.exists("/usr/share/zoneinfo") &&
 	     { # Debian etc.
@@ -795,7 +796,7 @@ seq.POSIXt <-
             if(!missing(to)) {
                 ## We might have a short day, so need to over-estimate.
                 length.out <- 2L + floor((unclass(as.POSIXct(to)) -
-                                          unclass(as.POSIXct(from)))/86400)
+					  unclass(as.POSIXct(from)))/(by * 86400))
             }
             r1$mday <- seq.int(r1$mday, by = by, length.out = length.out)
         }

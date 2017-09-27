@@ -1,18 +1,18 @@
 % File src/library/base/man/getLoadedDLLs.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{getLoadedDLLs}
+\title{Get DLLs Loaded in Current Session}
 \alias{getLoadedDLLs}
 \alias{print.DLLInfo}
 \alias{print.DLLInfoList}
+\alias{[.DLLInfoList}
 \alias{$.DLLInfo}
 % and the classes
 \alias{DLLInfo}
 \alias{DLLInfoList}
-
-\title{Get DLLs Loaded in Current Session}
 \description{
   This function provides a way to get a list of all the DLLs (see
   \code{\link{dyn.load}}) that are currently loaded in the \R session.
@@ -24,8 +24,8 @@ getLoadedDLLs()
   This queries the internal table that manages the DLLs.
 }
 \value{
-  An object of class \code{"DLLInfoList"} which is a list with an
-  element corresponding to each DLL that is currently loaded in the
+  An object of class \code{"DLLInfoList"} which is a \code{\link{list}}
+  with an element corresponding to each DLL that is currently loaded in the
   session.  Each element is an object of class \code{"DLLInfo"} which
   has the following entries.
 
@@ -38,7 +38,7 @@ getLoadedDLLs()
     provides access to the contents of the DLL.
     This is an object of class \code{"DLLHandle"}.}
 
-  Note that the class \code{DLLInfo} has an overloaded method for
+  Note that the class \code{DLLInfo} has a method for
   \code{$} which can be used to resolve native symbols within that
   DLL.  Therefore, one must access the R-level elements described
   above using \code{[[}, e.g.\sspace{}\code{x[["name"]]} or \code{x[["handle"]]}.
@@ -54,5 +54,7 @@ getLoadedDLLs()
 }
 \examples{
 getLoadedDLLs()
+
+utils::tail(getLoadedDLLs(), 2) # the last 2 loaded ones, still a DLLInfoList
 }
 \keyword{interface}

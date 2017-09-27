@@ -1029,14 +1029,34 @@ SEXP attribute_hidden do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 #ifdef USE_INTERNAL_MKTIME
 const char *getTZinfo(void)
 {
+    static char def_tz[PATH_MAX+1] = "";
     const char *p = getenv("TZ");
-    if(p) return p;
+    if(p) {
+	if(!def_tz[0]) {
+	    strncpy(def_tz, p, PATH_MAX); 
+	    def_tz[PATH_MAX] = '\0';
+	}
+	return p;
+    }
 #ifdef HAVE_REALPATH
     // This works on Linux, macOS and *BSD: other known OSes set TZ.
-    static char abspath[PATH_MAX+1] = "";
-    if(abspath[0]) return abspath + 20;
-    if(realpath("/etc/localtime", abspath))
-	return abspath + 20; // strip prefix of /usr/share/zoneinfo/
+    if(def_tz[0]) return def_tz;
+# ifdef __APPLE__
+    // macOS 10.13 links /usr/share/zoneinfo/ to /usr/share/zoneinfo.default/
+    const char* lt = realpath("/etc/localtime", def_tz);
+    if(lt) {
+	if(strstr(def_tz, ".default/"))
+	    memmove(def_tz, def_tz, 28);
+	else
+	    memmove(def_tz, def_tz, 20);
+	return def_tz;
+    }
+# else
+    if(realpath("/etc/localtime", def_tz)) {
+	memmove(def_tz, def_tz, 20); // strip prefix of /usr/share/zoneinfo/
+	return def_tz;
+    }
+# endif
 #endif
     warning("system timezone name is unknown: set environment variable TZ");
     return "unknown";

@@ -436,7 +436,7 @@ AC_ARG_WITH([system-valgrind-headers],
 [use_system_valgrind=no])
 
 AC_ARG_WITH([internal-tzcode],
-[AS_HELP_STRING([--with-internal-tzcode],[use internal time-zone code @<:@no@:>@])],
+[AS_HELP_STRING([--with-internal-tzcode],[use internal time-zone code @<:@no, yes on macOS@:>@])],
 [use_internal_tzcode=${withval}],
 [use_internal_tzcode=default])
 
