@@ -221,10 +221,6 @@
       the \samp{#!} line of a script. Previously, one could only pass a
       single argument on the \samp{#!} line in Linux.
 
-      \item S4 method dispatch on \code{\dots} calls the method by name
-      instead of \code{.Method} (for consistency with default dispatch),
-      and only attempts to pass non-missing arguments from the generic.
-
       \item Connections are now written correctly with encoding
       \code{"UTF-16LE"}.  (\PR{16737}).
 
@@ -394,10 +390,10 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item \code{within(List, rm(x1, x2))} works correctly again, also
-      when \code{List[["x2"]]} is \code{NULL}.
+      \item \code{within(List, rm(x1, x2))} works correctly again,
+      including when \code{List[["x2"]]} is \code{NULL}.
 
-      \item \code{regexec(pattern, text, *)} now also applies
+      \item \code{regexec(pattern, text, *)} now applies
       \code{as.character(.)} to its first two arguments, as documented.
 
       \item \code{write.table()} and related functions,
@@ -455,8 +451,8 @@
       \item It is again possible to use \command{configure
 	--enable-maintainer-mode} without having installed
       \command{notangle} (it was required in \R 3.4.[01]).
-
-      \item Dispatch on \code{\dots} calls the method using its name,
+      
+      \item S4 method dispatch on \code{\dots} calls the method by name
       instead of \code{.Method} (for consistency with default dispatch),
       and only attempts to pass non-missing arguments from the generic.
 
@@ -466,7 +462,7 @@
       (on a platform with enough RAM).
 
       \item \code{x <- 1:2; tapply(x, list(x, x), function(x) "")[1,2]}
-      now correctly returns \code{NA} again.  (\PR{17333})
+      now correctly returns \code{NA}.  (\PR{17333})
 
       \item Running of finalizers after explicit GC request moved from
       the \R interface \code{do_gc} to the \code{C} interface
