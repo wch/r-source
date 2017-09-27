@@ -1029,26 +1029,32 @@ SEXP attribute_hidden do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 #ifdef USE_INTERNAL_MKTIME
 const char *getTZinfo(void)
 {
+    static char def_tz[PATH_MAX+1] = "";
     const char *p = getenv("TZ");
-    if(p) return p;
+    if(p) {
+	if(!def_tz[0]) {
+	    strncpy(def_tz, p, PATH_MAX); 
+	    def_tz[PATH_MAX] = '\0';
+	}
+	return p;
+    }
 #ifdef HAVE_REALPATH
     // This works on Linux, macOS and *BSD: other known OSes set TZ.
-    static char abspath[PATH_MAX+1] = "";
-    if(abspath[0]) return abspath;
+    if(def_tz[0]) return def_tz;
 # ifdef __APPLE__
     // macOS 10.13 links /usr/share/zoneinfo/ to /usr/share/zoneinfo.default/
-    const char* lt = realpath("/etc/localtime", abspath);
+    const char* lt = realpath("/etc/localtime", def_tz);
     if(lt) {
-	if(strstr(abspath, ".default/"))
-	    memmove(abspath, abspath, 28);
+	if(strstr(def_tz, ".default/"))
+	    memmove(def_tz, def_tz, 28);
 	else
-	    memmove(abspath, abspath, 20);
-	return abspath;
+	    memmove(def_tz, def_tz, 20);
+	return def_tz;
     }
 # else
-    if(realpath("/etc/localtime", abspath)) {
-	memmove(abspath, abspath, 20); // strip prefix of /usr/share/zoneinfo/
-	return abspath;
+    if(realpath("/etc/localtime", def_tz)) {
+	memmove(def_tz, def_tz, 20); // strip prefix of /usr/share/zoneinfo/
+	return def_tz;
     }
 # endif
 #endif
