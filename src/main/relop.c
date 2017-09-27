@@ -371,29 +371,33 @@ static SEXP complex_relop(RELOP_TYPE code, SEXP s1, SEXP s2, SEXP call)
     PROTECT(s2);
     ans = allocVector(LGLSXP, n);
 
+    Rcomplex *px1 = COMPLEX(s1);
+    Rcomplex *px2 = COMPLEX(s2);
+    int *pa = LOGICAL(ans);
+
     switch (code) {
     case EQOP:
 	MOD_ITERATE2(n, n1, n2, i, i1, i2, {
 //	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	    x1 = COMPLEX_ELT(s1, i1);
-	    x2 = COMPLEX_ELT(s2, i2);
+	    x1 = px1[i1];
+	    x2 = px2[i2];
 	    if (ISNAN(x1.r) || ISNAN(x1.i) ||
 		ISNAN(x2.r) || ISNAN(x2.i))
-		LOGICAL(ans)[i] = NA_LOGICAL;
+		pa[i] = NA_LOGICAL;
 	    else
-		LOGICAL(ans)[i] = (x1.r == x2.r && x1.i == x2.i);
+		pa[i] = (x1.r == x2.r && x1.i == x2.i);
 	});
 	break;
     case NEOP:
 	MOD_ITERATE2(n, n1, n2, i, i1, i2, {
 //	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	    x1 = COMPLEX_ELT(s1, i1);
-	    x2 = COMPLEX_ELT(s2, i2);
+	    x1 = px1[i1];
+	    x2 = px2[i2];
 	    if (ISNAN(x1.r) || ISNAN(x1.i) ||
 		ISNAN(x2.r) || ISNAN(x2.i))
-		LOGICAL(ans)[i] = NA_LOGICAL;
+		pa[i] = NA_LOGICAL;
 	    else
-		LOGICAL(ans)[i] = (x1.r != x2.r || x1.i != x2.i);
+		pa[i] = (x1.r != x2.r || x1.i != x2.i);
 	});
 	break;
     default:
@@ -602,7 +606,7 @@ static SEXP bitwiseNot(SEXP a)
     switch(TYPEOF(a)) {
     case INTSXP:
 	for(i = 0; i < m; i++) {
-	    int aa = INTEGER_ELT(a, i);
+	    int aa = INTEGER(a)[i];
 	    INTEGER(ans)[i] = (aa == NA_INTEGER) ? aa : ~aa;
 	}
 	break;
@@ -626,7 +630,7 @@ static SEXP bitwiseNot(SEXP a)
     switch(TYPEOF(a)) { \
     case INTSXP: \
 	MOD_ITERATE2(mn, m, n, i, ia, ib, { \
-		int aa = INTEGER_ELT(a, ia); int bb = INTEGER_ELT(b, ib); \
+		int aa = INTEGER(a)[ia]; int bb = INTEGER(b)[ib]; \
 	    INTEGER(ans)[i] = (aa == NA_INTEGER || bb == NA_INTEGER) ? NA_INTEGER : aa op bb; \
 	}); \
 	break; \
@@ -663,7 +667,7 @@ static SEXP bitwiseShiftL(SEXP a, SEXP b)
     switch(TYPEOF(a)) {
     case INTSXP:
 	MOD_ITERATE2(mn, m, n, i, ia, ib, {
-		int aa = INTEGER_ELT(a, ia); int bb = INTEGER_ELT(b, ib);
+		int aa = INTEGER(a)[ia]; int bb = INTEGER(b)[ib];
 	    INTEGER(ans)[i] =
 		(aa == NA_INTEGER || bb == NA_INTEGER || bb < 0 || bb > 31) ? NA_INTEGER : ((unsigned int)aa << bb);
 	});
@@ -687,7 +691,7 @@ static SEXP bitwiseShiftR(SEXP a, SEXP b)
     switch(TYPEOF(a)) {
     case INTSXP:
 	MOD_ITERATE2(mn, m, n, i, ia, ib, {
-	    int aa = INTEGER_ELT(a, ia); int bb = INTEGER_ELT(b, ib);
+		int aa = INTEGER(a)[ia]; int bb = INTEGER(b)[ib];
 	    INTEGER(ans)[i] =
 		(aa == NA_INTEGER || bb == NA_INTEGER || bb < 0 || bb > 31) ? NA_INTEGER : ((unsigned int)aa >> bb);
 	});
