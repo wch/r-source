@@ -168,6 +168,8 @@
       functions are first used, it is recorded as the session default
       and so will be used rather than the default deduced from the OS
       if \env{TZ} is subsequently unset.
+
+      \item Provide \code{`[`} method for \code{"DLLInfoList"}
     }
   }
 
