@@ -79,7 +79,7 @@ AC_DEFINE_UNQUOTED(R_OS, "${host_os}",
 ## exclude some unsupported OSes
 case "${host_os}" in
    ## Darwin 1.3.1 was macOS 10.0, 1.4.1 was 10.1, 5 is 10.2 etc
-   ## with 13 being 10.9.  We no longer support < 10.6 (Snow Leopard)
+   ## with 13 being 10.9.  We no longer support < 10.6 (Snow Leopard, Darwin 10)
    ## https://en.wikipedia.org/wiki/Darwin_OS
    darwin1.*)
      AC_MSG_ERROR([The earliest supported macOS is 10.6.]
@@ -1883,6 +1883,13 @@ R_CHECK_FUNCS([sched_setaffinity sched_getaffinity], [#include <sched.h>])
 R_CHECK_FUNCS([utime], [#include <utime.h>])
 ## POSIX.1-2008 preferred form
 R_CHECK_FUNCS([utimensat], [#include <sys/stat.h>])
+## Used to avoid a problem with some Xcode 9 updates on macOS 10.12 (Darwin 16)
+case "${host_os}" in
+   darwin1[[0123456]].*)
+     AC_DEFINE(MACOS_SIERRA, 1, [macOS 10.12 (Sierra) or earlier])
+   ;;
+esac
+AC_SUBST(MACOS_SIERRA)
 ## clock_gettime is POSIX 1993, but not on macOS prior to 10.12 (Sierra)
 ## Some OSes need -lrt: Linux (for glibc versions before 2.17), Solaris,
 ## not FreeBSD. 
