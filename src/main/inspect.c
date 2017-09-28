@@ -152,7 +152,7 @@ static void inspect_tree(int pre, SEXP v, int deep, int pvec) {
 		unsigned int i = 0;
 		while (i < XLENGTH(v) && i < pvec) {
 		    Rprintf("%s%d", (i > 0) ? "," : " ",
-			    (int) LOGICAL(v)[i]);
+			    (int) LOGICAL_ELT(v, i));
 		    i++;
 		}
 		if (i < XLENGTH(v)) Rprintf(",...");
@@ -162,7 +162,7 @@ static void inspect_tree(int pre, SEXP v, int deep, int pvec) {
 	if (XLENGTH(v) > 0) {
 	    unsigned int i = 0;
 	    while (i < XLENGTH(v) && i < pvec) {
-		Rprintf("%s%d", (i > 0) ? "," : " ", INTEGER(v)[i]);
+		Rprintf("%s%d", (i > 0) ? "," : " ", INTEGER_ELT(v, i));
 		i++;
 	    }
 	    if (i < XLENGTH(v)) Rprintf(",...");
@@ -182,7 +182,7 @@ static void inspect_tree(int pre, SEXP v, int deep, int pvec) {
 	if (XLENGTH(v) > 0) {
 	    unsigned int i = 0;
 	    while (i < XLENGTH(v) && i < pvec) {
-		Rprintf("%s%g", (i > 0) ? "," : " ", REAL(v)[i]);
+		Rprintf("%s%g", (i > 0) ? "," : " ", REAL_ELT(v, i));
 		i++;
 	    }
 	    if (i < XLENGTH(v)) Rprintf(",...");
