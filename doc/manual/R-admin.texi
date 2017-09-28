@@ -4943,7 +4943,7 @@ FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin16/6.3.0
 
 More recent and complete distributions of @command{clang} are often
 available from @uref{http://llvm.org/releases/}: for example at the time
-of writing for 4.0.1, built for Sierra or later.  In particular, these
+of writing of 5.0.0 built for Sierra or later.  In particular, these
 should include support for OpenMP.  Another build of clang 4.0.0 is
 available at
 @uref{https://r.research.att.com/@/libs/@/clang-4.0.0-darwin15.6-Release.tar.gz}.
