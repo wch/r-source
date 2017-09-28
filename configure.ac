@@ -87,7 +87,7 @@ case "${host_os}" in
   darwin[[56789]]*)
      AC_MSG_ERROR([The earliest supported macOS is 10.6.]
      ;; 
-  aix[123]*|aix4.[01]*)
+  aix[[123]]*|aix4.[[01]]*)
     ## These need a form of linking we no longer support
     AC_MSG_ERROR([AIX prior to 4.2 is not supported])
     ;;
