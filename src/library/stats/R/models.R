@@ -361,6 +361,7 @@ offset <- function(object) object
     }
 }
 
+##' Model Frame Class
 .MFclass <- function(x)
 {
     ## the idea is to identify the relevant classes that model.matrix
@@ -380,6 +381,13 @@ offset <- function(object) object
     if(is.numeric(x)) return("numeric")
     return("other")
 }
+
+##' A complete deparse for "models", i.e. for formula and variable names (PR#15377)
+##' @param width.cutoff = 500L: Some people have generated longer variable names
+##' https://stat.ethz.ch/pipermail/r-devel/2010-October/058756.html
+deparse2 <- function(x)
+    paste(deparse(x, width.cutoff = 500L, backtick = !is.symbol(x) && is.language(x)),
+          collapse = " ")
 
 model.frame <- function(formula, ...) UseMethod("model.frame")
 model.frame.default <-
@@ -443,10 +451,7 @@ model.frame.default <-
     vars <- attr(formula, "variables")
     predvars <- attr(formula, "predvars")
     if(is.null(predvars)) predvars <- vars
-    ## Some people have generated longer variable names
-    ## https://stat.ethz.ch/pipermail/r-devel/2010-October/058756.html
-    varnames <- sapply(vars, function(x) paste(deparse(x,width.cutoff=500),
-                                               collapse=' '))[-1L]
+    varnames <- vapply(vars, deparse2, " ")[-1L]
     variables <- eval(predvars, data, env)
     resp <- attr(formula, "response")
     if(is.null(rownames) && resp > 0L) {
@@ -550,9 +555,6 @@ model.matrix.default <- function(object, data = environment(object),
     if (is.null(attr(data, "terms")))
 	data <- model.frame(object, data, xlev=xlev)
     else {
-        ## need complete deparse, PR#15377
-        deparse2 <- function(x)
-            paste(deparse(x, width.cutoff = 500L), collapse = " ")
 	reorder <- match(vapply(attr(t, "variables"), deparse2, "")[-1L],
                          names(data))
 	if (anyNA(reorder))
@@ -664,9 +666,7 @@ makepredictcall.default  <- function(var, call)
 
 .getXlevels <- function(Terms, m)
 {
-    deparse2 <- function(x)
-        paste(deparse(x, width.cutoff = 500L), collapse = " ")
-    xvars <- sapply(attr(Terms, "variables"), deparse2)[-1L]
+    xvars <- vapply(attr(Terms, "variables"), deparse2, "")[-1L]
     if((yvar <- attr(Terms, "response")) > 0) xvars <- xvars[-yvar]
     if(length(xvars)) {
         xlev <- lapply(m[xvars],
