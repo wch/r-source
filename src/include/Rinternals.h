@@ -183,17 +183,6 @@ typedef enum {
 
 typedef struct SEXPREC *SEXP;
 
-#define STRUCT_SUBTYPES
-#ifdef STRUCT_SUBTYPES
-# define R_SEXP(x) (x).ptr
-# define R_SUBTYPE_INIT(x) { x }
-  typedef struct { SEXP ptr; } R_altrep_class_t;
-#else
-# define R_SEXP(x) ((SEXP) (x))
-# define R_SUBTYPE_INIT(x) (void *) (x)
-  typedef struct R_altcls *R_altrep_class_t;
-#endif
-
 // ======================= USE_RINTERNALS section
 #ifdef USE_RINTERNALS
 /* This is intended for use only within R itself.

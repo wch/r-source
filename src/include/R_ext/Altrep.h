@@ -20,6 +20,17 @@
 #ifndef R_EXT_ALTREP_H_
 #define R_EXT_ALTREP_H_
 
+#define STRUCT_SUBTYPES
+#ifdef STRUCT_SUBTYPES
+# define R_SEXP(x) (x).ptr
+# define R_SUBTYPE_INIT(x) { x }
+  typedef struct { SEXP ptr; } R_altrep_class_t;
+#else
+# define R_SEXP(x) ((SEXP) (x))
+# define R_SUBTYPE_INIT(x) (void *) (x)
+  typedef struct R_altcls *R_altrep_class_t;
+#endif
+
 SEXP
 R_new_altrep(R_altrep_class_t class, SEXP data1, SEXP data2);
 
