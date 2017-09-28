@@ -1011,7 +1011,7 @@ namespaceImportMethods <- function(self, ns, vars, from = NULL)
                                  "No methods found in package %s for requests: %s when loading %s"),
                         sQuote(pkg),
                         paste(sQuote(vars[!found]), collapse = ", "),
-                        getNamespaceName(self)),
+                        sQuote(getNamespaceName(self))),
                 domain = NA)
         vars <- vars[found]
     }
@@ -1022,7 +1022,7 @@ namespaceImportMethods <- function(self, ns, vars, from = NULL)
                               "requested methods not found in environment/package %s: %s when loading %s"),
                      sQuote(pkg),
                      paste(sQuote(vars[!found]), collapse = ", "),
-                     getNamespaceName(self)),
+                     sQuote(getNamespaceName(self))),
              call. = FALSE, domain = NA)
     for(i in seq_along(allFuns)) {
         ## import methods tables if asked for
