@@ -401,10 +401,10 @@ typedef struct {
 
 /* Hashing Macros */
 #define HASHASH(x)      ((x)->sxpinfo.gp & HASHASH_MASK)
-#define HASHVALUE(x)    TRUELENGTH(x)
+#define HASHVALUE(x)    ((int) TRUELENGTH(x))
 #define SET_HASHASH(x,v) ((v) ? (((x)->sxpinfo.gp) |= HASHASH_MASK) : \
 			  (((x)->sxpinfo.gp) &= (~HASHASH_MASK)))
-#define SET_HASHVALUE(x,v) SET_TRUELENGTH(x, v)
+#define SET_HASHVALUE(x,v) SET_TRUELENGTH(x, ((int) (v)))
 
 /* Vector Heap Structure */
 typedef struct {
