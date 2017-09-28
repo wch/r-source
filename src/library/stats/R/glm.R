@@ -1,7 +1,7 @@
 #  File src/library/stats/R/glm.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ glm <- function(formula, family = gaussian, data, weights,
 		control = list(...),
                 model = TRUE, method = "glm.fit",
                 x = FALSE, y = TRUE,
-                contrasts = NULL, ...)
+		singular.ok = TRUE, contrasts = NULL, ...)
 {
     call <- match.call()
     ## family
@@ -93,7 +93,7 @@ glm <- function(formula, family = gaussian, data, weights,
                      x = X, y = Y, weights = weights, start = start,
                      etastart = etastart, mustart = mustart,
                      offset = offset, family = family, control = control,
-                     intercept = attr(mt, "intercept") > 0L))
+                     intercept = attr(mt, "intercept") > 0L, singular.ok = singular.ok))
 
     ## This calculated the null deviance from the intercept-only model
     ## if there is one, otherwise from the offset-only model.
@@ -146,7 +146,8 @@ glm.control <- function(epsilon = 1e-8, maxit = 25, trace = FALSE)
 glm.fit <-
     function (x, y, weights = rep(1, nobs), start = NULL,
 	      etastart = NULL, mustart = NULL, offset = rep(0, nobs),
-	      family = gaussian(), control = list(), intercept = TRUE)
+	      family = gaussian(), control = list(), intercept = TRUE,
+	      singular.ok = TRUE)
 {
     control <- do.call("glm.control", control)
     x <- as.matrix(x)
@@ -252,6 +253,7 @@ glm.fit <-
                                       "X matrix has rank %d, but only %d observation",
                                       "X matrix has rank %d, but only %d observations"),
                              fit$rank, nobs), domain = NA)
+            if(!singular.ok && fit$rank < nvars) stop("singular fit encountered")
             ## calculate updated values of eta and mu with the new coef:
             start[fit$pivot] <- fit$coefficients
             eta <- drop(x %*% start)

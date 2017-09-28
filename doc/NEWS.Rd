@@ -170,6 +170,9 @@
       if \env{TZ} is subsequently unset.
 
       \item Provide \code{`[`} method for \code{"DLLInfoList"}
+
+      \item \code{glm()} and \code{glm.fit} get the same
+      \code{singular.ok=TRUE} argument that \code{lm()} has had forever.
     }
   }
 

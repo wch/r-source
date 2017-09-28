@@ -1,6 +1,6 @@
 % File src/library/stats/man/glm.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{glm}
@@ -22,12 +22,12 @@
 glm(formula, family = gaussian, data, weights, subset,
     na.action, start = NULL, etastart, mustart, offset,
     control = list(\dots), model = TRUE, method = "glm.fit",
-    x = FALSE, y = TRUE, contrasts = NULL, \dots)
+    x = FALSE, y = TRUE, singular.ok = TRUE, contrasts = NULL, \dots)
 
 glm.fit(x, y, weights = rep(1, nobs),
         start = NULL, etastart = NULL, mustart = NULL,
         offset = rep(0, nobs), family = gaussian(),
-        control = list(), intercept = TRUE)
+        control = list(), intercept = TRUE, singular.ok = TRUE)
 
 \method{weights}{glm}(object, type = c("prior", "working"), \dots)
 }
@@ -104,6 +104,8 @@ glm.fit(x, y, weights = rep(1, nobs),
     \code{n}.
   }
 
+  \item{singular.ok}{logical; if \code{FALSE} a singular fit is an
+    error.}
   \item{contrasts}{an optional list. See the \code{contrasts.arg}
     of \code{model.matrix.default}.}
 
@@ -352,6 +354,10 @@ clotting <- data.frame(
     lot2 = c(69,35,26,21,18,16,13,12,12))
 summary(glm(lot1 ~ log(u), data = clotting, family = Gamma))
 summary(glm(lot2 ~ log(u), data = clotting, family = Gamma))
+## Aliased ("S"ingular) -> 1 NA coefficient
+(fS <- glm(lot2 ~ log(u) + log(u^2), data = clotting, family = Gamma))
+tools::assertError(update(fS, singular.ok=FALSE), verbose=interactive())
+## -> .. "singular fit encountered"
 
 \dontrun{
 ## for an example of the use of a terms object as a formula
