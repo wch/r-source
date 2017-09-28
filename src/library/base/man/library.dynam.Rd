@@ -1,6 +1,6 @@
 % File src/library/base/man/library.dynam.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{library.dynam}
@@ -18,8 +18,8 @@ library.dynam(chname, package, lib.loc,
               file.ext = .Platform$dynlib.ext, \dots)
 
 library.dynam.unload(chname, libpath,
-              verbose = getOption("verbose"),
-              file.ext = .Platform$dynlib.ext)
+                     verbose = getOption("verbose"),
+                     file.ext = .Platform$dynlib.ext)
 
 .dynLibs(new)
 }
@@ -115,5 +115,20 @@ library.dynam.unload(chname, libpath,
 \examples{
 ## Which DLLs were dynamically loaded by packages?
 library.dynam()
+
+## More on library.dynam.unload() :
+\donttest{require(nlme)
+nlme:::.onUnload # shows library.dynam.unload() call
+detach("package:nlme")  # by default, unload=FALSE ,  so,
+tail(library.dynam(), 2)# nlme still there
+
+## How to unload the DLL ?
+## Best is to unload the namespace,  unloadNamespace("nlme")
+## If we need to do it separately which should be exceptional:
+pd.file <- attr(packageDescription("nlme"), "file")
+library.dynam.unload("nlme", libpath = sub("/Meta.*", '', pd.file))
+tail(library.dynam(), 2)# 'nlme' is gone now
+unloadNamespace("nlme") # now gives warning
+}
 }
 \keyword{data}

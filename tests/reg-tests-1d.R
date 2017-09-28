@@ -1261,6 +1261,13 @@ stopifnot(length(x) == 13, diff((as.numeric(x) - 39600)/86400) == 360)
 ## length(x) was 1802 and ended in many NA's in R <= 3.4.2
 
 
+## 0-length logic with raw()
+r0 <- raw(0)
+stopifnot(identical(r0 & r0, r0),
+	  identical(r0 | r0, r0))
+## gave logical(0) in R 3.4.[012]
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

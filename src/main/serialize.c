@@ -597,8 +597,8 @@ static void InFormat(R_inpstream_t stream)
 
 #define PTRHASH(obj) (((R_size_t) (obj)) >> 2)
 
-#define HASH_TABLE_COUNT(ht) TRUELENGTH(CDR(ht))
-#define SET_HASH_TABLE_COUNT(ht, val) SET_TRUELENGTH(CDR(ht), val)
+#define HASH_TABLE_COUNT(ht) ((int) TRUELENGTH(CDR(ht)))
+#define SET_HASH_TABLE_COUNT(ht, val) SET_TRUELENGTH(CDR(ht), ((int) (val)))
 
 #define HASH_TABLE_SIZE(ht) LENGTH(CDR(ht))
 
@@ -1366,9 +1366,9 @@ static SEXP GetReadRef(SEXP table, int index)
 static void AddReadRef(SEXP table, SEXP value)
 {
     SEXP data = CAR(table);
-    int count = TRUELENGTH(data) + 1;
+    R_xlen_t count = TRUELENGTH(data) + 1;
     if (count >= LENGTH(data)) {
-	int i, len;
+	R_xlen_t i, len;
 	SEXP newdata;
 
 	PROTECT(value);

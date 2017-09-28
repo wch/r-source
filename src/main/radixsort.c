@@ -27,6 +27,12 @@
 #include <Defn.h>
 #include <Internal.h>
 
+/* It would be better to find a way to avoid abusing TRUELENGTH, but
+   in the meantime replace TRUELENGTH/SET_TRUELENGTH with
+   TRLEN/SET_TRLEN that cast to int to avoid warnings. */
+#define TRLEN(x) ((int) TRUELENGTH(x))
+#define SET_TRLEN(x, v) SET_TRUELENGTH(x, ((int) (v)))
+
 // gs = groupsizes e.g.23, 12, 87, 2, 1, 34,...
 static int *gs[2] = { NULL };
 //two vectors flip flopped:flip and 1 - flip
@@ -84,7 +90,7 @@ static void savetl_end()
     // to clear up before error. Also, it might be that nothing needed
     // to be saved anyway.
     for (int i = 0; i < nsaved; i++)
-	SET_TRUELENGTH(saveds[i], savedtl[i]);
+	SET_TRLEN(saveds[i], savedtl[i]);
     free(saveds);  // does nothing on NULL input
     free(savedtl);
     nsaved = nalloc = 0;
@@ -112,7 +118,7 @@ static void savetl(SEXP s)
 	savedtl = (R_len_t *) tmp;
     }
     saveds[nsaved] = s;
-    savedtl[nsaved] = TRUELENGTH(s);
+    savedtl[nsaved] = TRLEN(s);
     nsaved++;
 }
 
@@ -1060,19 +1066,19 @@ static void cgroup(SEXP * x, int *o, int n)
 	     ustr_n, ustr_alloc);
     for (int i = 0; i < n; i++) {
 	SEXP s = x[i];
-	if (TRUELENGTH(s) < 0) {        // this case first as it's the most frequent
-	    SET_TRUELENGTH(s, TRUELENGTH(s) - 1);
+	if (TRLEN(s) < 0) {        // this case first as it's the most frequent
+	    SET_TRLEN(s, TRLEN(s) - 1);
 	    // use negative counts so as to detect R's own (positive)
 	    // usage of tl on CHARSXP
 	    continue;
 	}
-	if (TRUELENGTH(s) > 0) {
+	if (TRLEN(s) > 0) {
 	    // Save any of R's own usage of tl (assumed positive, so
 	    // we can both count and save in one scan), to restore
 	    // afterwards. From R 2.14.0, tl is initialized to 0,
 	    // prior to that it was random so this step saved too much.
 	    savetl(s);
-	    SET_TRUELENGTH(s, 0);
+	    SET_TRLEN(s, 0);
 	}
 	if (ustr_alloc <= ustr_n) {
 	    // 10000 = 78k of 8byte pointers. Small initial guess,
@@ -1085,7 +1091,7 @@ static void cgroup(SEXP * x, int *o, int n)
 		Error("Unable to realloc %d * %d bytes in cgroup", ustr_alloc,
 		      sizeof(SEXP));
 	}
-	SET_TRUELENGTH(s, -1);
+	SET_TRLEN(s, -1);
 	ustr[ustr_n++] = s;
     }
     // TO DO: the same string in different encodings will be
@@ -1094,20 +1100,20 @@ static void cgroup(SEXP * x, int *o, int n)
     // there are any marked encodings present)
     int cumsum = 0;
     for (int i = 0; i < ustr_n; i++) {      // 0.000
-	push(-TRUELENGTH(ustr[i]));
-	SET_TRUELENGTH(ustr[i], cumsum += -TRUELENGTH(ustr[i]));
+	push(-TRLEN(ustr[i]));
+	SET_TRLEN(ustr[i], cumsum += -TRLEN(ustr[i]));
     }
     int *target = (o[0] != -1) ? newo : o;
     for (int i = n - 1; i >= 0; i--) {
 	SEXP s = x[i];           // 0.400 (page fetches on string cache)
-	int k = TRUELENGTH(s) - 1;
-	SET_TRUELENGTH(s, k);
+	int k = TRLEN(s) - 1;
+	SET_TRLEN(s, k);
 	target[k] = i + 1;      // 0.800 (random access to o)
     }
     // The cummulate meant counts are left non zero, so reset for next
     // time (0.00s).
     for (int i = 0; i < ustr_n; i++)
-	SET_TRUELENGTH(ustr[i], 0);
+	SET_TRLEN(ustr[i], 0);
     ustr_n = 0;
 }
 
@@ -1137,7 +1143,7 @@ static void csort(SEXP * x, int *o, int n)
        otmp (and xtmp).  alloc_csort_otmp(n) is called from do_radixsort for
        either n=nrow if 1st arg, or n=maxgrpn if onwards args */
     for (int i = 0; i < n; i++)
-	csort_otmp[i] = (x[i] == NA_STRING) ? NA_INTEGER : -TRUELENGTH(x[i]);
+	csort_otmp[i] = (x[i] == NA_STRING) ? NA_INTEGER : -TRLEN(x[i]);
     if (nalast == 0 && n == 2) {
         // special case for nalast == 0. n == 1 is handled inside
         // do_radixsort. at least 1 will be NA here else use o from caller
@@ -1192,15 +1198,15 @@ static void csort_pre(SEXP * x, int n)
 	s = x[i];
 	// this case first as it's the most frequent. Already in ustr,
 	// this negative is its ordering.
-	if (TRUELENGTH(s) < 0)
+	if (TRLEN(s) < 0)
 	    continue;
 	// Save any of R's own usage of tl (assumed positive, so we
 	// can both count and save in one scan), to restore
 	// afterwards. From R 2.14.0, tl is initialized to 0, prior to
 	// that it was random so this step saved too much.
-	if (TRUELENGTH(s) > 0) {
+	if (TRLEN(s) > 0) {
 	    savetl(s);
-	    SET_TRUELENGTH(s, 0);
+	    SET_TRLEN(s, 0);
 	}
 	if (ustr_alloc <= ustr_n) {
 	    // 10000 = 78k of 8byte pointers. Small initial guess,
@@ -1213,7 +1219,7 @@ static void csort_pre(SEXP * x, int n)
 		Error("Failed to realloc ustr. Requested %d * %d bytes",
 		      ustr_alloc, sizeof(SEXP));
 	}
-	SET_TRUELENGTH(s, -1);  // this -1 will become its ordering later below
+	SET_TRLEN(s, -1);  // this -1 will become its ordering later below
 	ustr[ustr_n++] = s;
 	// length on CHARSXP is the nchar of char * (excluding \0),
 	// and treats marked encodings as if ascii.
@@ -1250,7 +1256,7 @@ static void csort_pre(SEXP * x, int n)
     // CHARSXP. negative so as to distinguish with R's own usage.
     cradix_r(ustr, ustr_n, 0);
     for (int i = 0; i < ustr_n; i++)
-	SET_TRUELENGTH(ustr[i], -i - 1);
+	SET_TRLEN(ustr[i], -i - 1);
 }
 
 // functions to test vectors for sortedness: isorted, dsorted and csorted
@@ -1851,7 +1857,7 @@ SEXP attribute_hidden do_radixsort(SEXP call, SEXP op, SEXP args, SEXP rho)
         Error("Internal error: at the end of do_radixsort sortStr == FALSE but ustr_n !=0 [%d]",
               ustr_n);
     for(int i = 0; i < ustr_n; i++)
-        SET_TRUELENGTH(ustr[i], 0);
+        SET_TRLEN(ustr[i], 0);
     maxlen = 1;  // reset global. Minimum needed to count "" and NA
     ustr_n = 0;
     savetl_end();

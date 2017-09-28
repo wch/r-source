@@ -225,16 +225,16 @@ static void setup_sig_handler() {
     sigaction(SIGCHLD, &sa, NULL);
 }
 #else
-/* sigaction is not viable, so use the "dumb" way
-   to clean up anything that comes our way */
-static void setup_sig_handler() {
-    signal(SIGCHLD, parent_sig_handler);
-}
-
 static void parent_sig_handler(int sig) {
     /* clean up when a child terminates */
     if (sig == SIGCHLD)
 	clean_zombies();
+}
+
+/* sigaction is not viable, so use the "dumb" way
+   to clean up anything that comes our way */
+static void setup_sig_handler() {
+    signal(SIGCHLD, parent_sig_handler);
 }
 #endif
 

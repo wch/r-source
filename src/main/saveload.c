@@ -827,8 +827,8 @@ static SEXP NewLoadSpecialHook (SEXPTYPE type)
 #define HASH_TABLE_KEYS_LIST(ht) CAR(ht)
 #define SET_HASH_TABLE_KEYS_LIST(ht, v) SETCAR(ht, v)
 
-#define HASH_TABLE_COUNT(ht) TRUELENGTH(CDR(ht))
-#define SET_HASH_TABLE_COUNT(ht, val) SET_TRUELENGTH(CDR(ht), val)
+#define HASH_TABLE_COUNT(ht) ((int) TRUELENGTH(CDR(ht)))
+#define SET_HASH_TABLE_COUNT(ht, val) SET_TRUELENGTH(CDR(ht), ((int) (val)))
 
 #define HASH_TABLE_SIZE(ht) LENGTH(CDR(ht))
 

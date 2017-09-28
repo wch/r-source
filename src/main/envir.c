@@ -186,8 +186,8 @@ Rboolean R_envHasNoSpecialSymbols (SEXP env)
   internal changes of implementation without affecting client code.
 */
 
-#define HASHSIZE(x)	     STDVEC_LENGTH(x)
-#define HASHPRI(x)	     STDVEC_TRUELENGTH(x)
+#define HASHSIZE(x)	     ((int) STDVEC_LENGTH(x))
+#define HASHPRI(x)	     ((int) STDVEC_TRUELENGTH(x))
 #define HASHTABLEGROWTHRATE  1.2
 #define HASHMINSIZE	     29
 #define SET_HASHPRI(x,v)     SET_TRUELENGTH(x,v)
