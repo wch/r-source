@@ -423,6 +423,7 @@ static SEXP string_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
     PROTECT(s1);
     PROTECT(s2);
     PROTECT(ans = allocVector(LGLSXP, n));
+    int *pa = LOGICAL(ans);
 
     switch (code) {
     case EQOP:
@@ -431,9 +432,9 @@ static SEXP string_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
 	    c1 = STRING_ELT(s1, i1);
 	    c2 = STRING_ELT(s2, i2);
 	    if (c1 == NA_STRING || c2 == NA_STRING)
-		LOGICAL(ans)[i] = NA_LOGICAL;
+		pa[i] = NA_LOGICAL;
 	    else
-		LOGICAL(ans)[i] = Seql(c1, c2) ? 1 : 0;
+		pa[i] = Seql(c1, c2) ? 1 : 0;
 	});
 	break;
     case NEOP:
@@ -442,9 +443,9 @@ static SEXP string_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
 	    c1 = STRING_ELT(s1, i1);
 	    c2 = STRING_ELT(s2, i2);
 	    if (c1 == NA_STRING || c2 == NA_STRING)
-		LOGICAL(ans)[i] = NA_LOGICAL;
+		pa[i] = NA_LOGICAL;
 	    else
-		LOGICAL(ans)[i] = Seql(c1, c2) ? 0 : 1;
+		pa[i] = Seql(c1, c2) ? 0 : 1;
 	});
 	break;
     case LTOP:
@@ -453,16 +454,16 @@ static SEXP string_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
 	    c1 = STRING_ELT(s1, i1);
 	    c2 = STRING_ELT(s2, i2);
 	    if (c1 == NA_STRING || c2 == NA_STRING)
-		LOGICAL(ans)[i] = NA_LOGICAL;
+		pa[i] = NA_LOGICAL;
 	    else if (c1 == c2)
-		LOGICAL(ans)[i] = 0;
+		pa[i] = 0;
 	    else {
 		errno = 0;
 		res = Scollate(c1, c2);
 		if(errno)
-		    LOGICAL(ans)[i] = NA_LOGICAL;
+		    pa[i] = NA_LOGICAL;
 		else
-		    LOGICAL(ans)[i] = (res < 0) ? 1 : 0;
+		    pa[i] = (res < 0) ? 1 : 0;
 	    }
 	});
 	break;
@@ -472,16 +473,16 @@ static SEXP string_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
 	    c1 = STRING_ELT(s1, i1);
 	    c2 = STRING_ELT(s2, i2);
 	    if (c1 == NA_STRING || c2 == NA_STRING)
-		LOGICAL(ans)[i] = NA_LOGICAL;
+		pa[i] = NA_LOGICAL;
 	    else if (c1 == c2)
-		LOGICAL(ans)[i] = 0;
+		pa[i] = 0;
 	    else {
 		errno = 0;
 		res = Scollate(c1, c2);
 		if(errno)
-		    LOGICAL(ans)[i] = NA_LOGICAL;
+		    pa[i] = NA_LOGICAL;
 		else
-		    LOGICAL(ans)[i] = (res > 0) ? 1 : 0;
+		    pa[i] = (res > 0) ? 1 : 0;
 	    }
 	});
 	break;
@@ -491,16 +492,16 @@ static SEXP string_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
 	    c1 = STRING_ELT(s1, i1);
 	    c2 = STRING_ELT(s2, i2);
 	    if (c1 == NA_STRING || c2 == NA_STRING)
-		LOGICAL(ans)[i] = NA_LOGICAL;
+		pa[i] = NA_LOGICAL;
 	    else if (c1 == c2)
-		LOGICAL(ans)[i] = 1;
+		pa[i] = 1;
 	    else {
 		errno = 0;
 		res = Scollate(c1, c2);
 		if(errno)
-		    LOGICAL(ans)[i] = NA_LOGICAL;
+		    pa[i] = NA_LOGICAL;
 		else
-		    LOGICAL(ans)[i] = (res <= 0) ? 1 : 0;
+		    pa[i] = (res <= 0) ? 1 : 0;
 	    }
 	});
 	break;
@@ -510,16 +511,16 @@ static SEXP string_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
 	    c1 = STRING_ELT(s1, i1);
 	    c2 = STRING_ELT(s2, i2);
 	    if (c1 == NA_STRING || c2 == NA_STRING)
-		LOGICAL(ans)[i] = NA_LOGICAL;
+		pa[i] = NA_LOGICAL;
 	    else if (c1 == c2)
-		LOGICAL(ans)[i] = 1;
+		pa[i] = 1;
 	    else {
 		errno = 0;
 		res = Scollate(c1, c2);
 		if(errno)
-		    LOGICAL(ans)[i] = NA_LOGICAL;
+		    pa[i] = NA_LOGICAL;
 		else
-		    LOGICAL(ans)[i] = (res >= 0) ? 1 : 0;
+		    pa[i] = (res >= 0) ? 1 : 0;
 	    }
 	});
 	break;
@@ -542,53 +543,57 @@ static SEXP raw_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
     PROTECT(s2);
     ans = allocVector(LGLSXP, n);
 
+    Rbyte *px1 = RAW(s1);
+    Rbyte *px2 = RAW(s2);
+    int *pa = LOGICAL(ans);
+
     switch (code) {
     case EQOP:
 	MOD_ITERATE2(n, n1, n2, i, i1, i2, {
 //	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	    x1 = RAW(s1)[i1];
-	    x2 = RAW(s2)[i2];
-	    LOGICAL(ans)[i] = (x1 == x2);
+	    x1 = px1[i1];
+	    x2 = px2[i2];
+	    pa[i] = (x1 == x2);
 	});
 	break;
     case NEOP:
 	MOD_ITERATE2(n, n1, n2, i, i1, i2, {
 //	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	    x1 = RAW(s1)[i1];
-	    x2 = RAW(s2)[i2];
-	    LOGICAL(ans)[i] = (x1 != x2);
+	    x1 = px1[i1];
+	    x2 = px2[i2];
+	    pa[i] = (x1 != x2);
 	});
 	break;
     case LTOP:
 	MOD_ITERATE2(n, n1, n2, i, i1, i2, {
 //	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	    x1 = RAW(s1)[i1];
-	    x2 = RAW(s2)[i2];
-	    LOGICAL(ans)[i] = (x1 < x2);
+	    x1 = px1[i1];
+	    x2 = px2[i2];
+	    pa[i] = (x1 < x2);
 	});
 	break;
     case GTOP:
 	MOD_ITERATE2(n, n1, n2, i, i1, i2, {
 //	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	    x1 = RAW(s1)[i1];
-	    x2 = RAW(s2)[i2];
-	    LOGICAL(ans)[i] = (x1 > x2);
+	    x1 = px1[i1];
+	    x2 = px2[i2];
+	    pa[i] = (x1 > x2);
 	});
 	break;
     case LEOP:
 	MOD_ITERATE2(n, n1, n2, i, i1, i2, {
 //	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	    x1 = RAW(s1)[i1];
-	    x2 = RAW(s2)[i2];
-	    LOGICAL(ans)[i] = (x1 <= x2);
+	    x1 = px1[i1];
+	    x2 = px2[i2];
+	    pa[i] = (x1 <= x2);
 	});
 	break;
     case GEOP:
 	MOD_ITERATE2(n, n1, n2, i, i1, i2, {
 //	    if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	    x1 = RAW(s1)[i1];
-	    x2 = RAW(s2)[i2];
-	    LOGICAL(ans)[i] = (x1 >= x2);
+	    x1 = px1[i1];
+	    x2 = px2[i2];
+	    pa[i] = (x1 >= x2);
 	});
 	break;
     }
