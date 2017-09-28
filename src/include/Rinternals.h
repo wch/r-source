@@ -599,12 +599,47 @@ void *(STDVEC_DATAPTR)(SEXP x);
 int (IS_SCALAR)(SEXP x, int type);
 int (ALTREP)(SEXP x);
 SEXP ALTREP_DUPLICATE_EX(SEXP x, Rboolean deep);
+SEXP ALTREP_COERCE(SEXP x, int type);
 Rboolean ALTREP_INSPECT(SEXP, int, int, int, void (*)(SEXP, int, int, int));
 SEXP ALTREP_SERIALIZED_CLASS(SEXP);
 SEXP ALTREP_SERIALIZED_STATE(SEXP);
 SEXP ALTREP_UNSERIALIZE_EX(SEXP, SEXP, SEXP, int, int);
 R_xlen_t ALTREP_LENGTH(SEXP x);
 R_xlen_t ALTREP_TRUELENGTH(SEXP x);
+void *ALTVEC_DATAPTR(SEXP x, Rboolean writable);
+void *ALTVEC_DATAPTR_OR_NULL(SEXP x, Rboolean writable);
+SEXP ALTVEC_EXTRACT_SUBSET(SEXP x, SEXP indx, SEXP call);
+int ALTINTEGER_ELT(SEXP x, R_xlen_t i);
+int ALTINTEGER_SET_ELT(SEXP x, R_xlen_t i, int v);
+int ALTLOGICAL_ELT(SEXP x, R_xlen_t i);
+double ALTREAL_ELT(SEXP x, R_xlen_t i);
+double ALTREAL_SET_ELT(SEXP x, R_xlen_t i, double v);
+SEXP ALTSTRING_ELT(SEXP, R_xlen_t);
+void ALTSTRING_SET_ELT(SEXP, R_xlen_t, SEXP);
+Rcomplex ALTCOMPLEX_ELT(SEXP x, R_xlen_t i);
+R_xlen_t INTEGER_GET_REGION(SEXP sx, R_xlen_t i, R_xlen_t n, int *buf);
+int INTEGER_IS_SORTED(SEXP x);
+int INTEGER_NO_NA(SEXP x);
+int ALTINTEGER_SUM(SEXP x, Rboolean narm);
+double ALTREAL_SUM(SEXP x, Rboolean narm);
+int ALTINTEGER_MAX(SEXP x, Rboolean narm);
+int ALTINTEGER_MAX(SEXP x, Rboolean narm);
+SEXP INTEGER_MATCH(SEXP, SEXP, int, SEXP, SEXP, Rboolean);
+SEXP INTEGER_IS_NA(SEXP x);
+SEXP REAL_MATCH(SEXP, SEXP, int, SEXP, SEXP, Rboolean);
+	
+double ALTREAL_MIN(SEXP x, Rboolean narm);
+int ALTINTEGER_MAX(SEXP x, Rboolean narm);
+double ALTREAL_MAX(SEXP x, Rboolean narm);
+R_xlen_t REAL_GET_REGION(SEXP sx, R_xlen_t i, R_xlen_t n, double *buf);
+int REAL_IS_SORTED(SEXP x);
+int REAL_NO_NA(SEXP x);
+SEXP REAL_IS_NA(SEXP x);
+int STRING_IS_SORTED(SEXP x);
+int STRING_NO_NA(SEXP x);
+SEXP R_compact_intrange(R_xlen_t n1, R_xlen_t n2);
+SEXP R_deferred_coerceToString(SEXP v, SEXP sp);
+SEXP R_virtrep_vec(SEXP, SEXP);
 
 #ifdef LONG_VECTOR_SUPPORT
     R_len_t NORET R_BadLongVector(SEXP, const char *, int);
@@ -850,6 +885,7 @@ SEXP Rf_lazy_duplicate(SEXP);
 SEXP Rf_duplicated(SEXP, Rboolean);
 Rboolean R_envHasNoSpecialSymbols(SEXP);
 SEXP Rf_eval(SEXP, SEXP);
+SEXP Rf_ExtractSubset(SEXP, SEXP, SEXP);
 SEXP Rf_findFun(SEXP, SEXP);
 SEXP Rf_findFun3(SEXP, SEXP, SEXP);
 void Rf_findFunctionForBody(SEXP);
@@ -1005,6 +1041,9 @@ Rboolean R_checkConstants(Rboolean);
 Rboolean R_BCVersionOK(SEXP);
 #define PREXPR(e) R_PromiseExpr(e)
 #define BODY_EXPR(e) R_ClosureExpr(e)
+
+void R_init_altrep();
+void R_reinit_altrep_classes(DllInfo *);
 
 /* Protected evaluation */
 Rboolean R_ToplevelExec(void (*fun)(void *), void *data);
@@ -1235,6 +1274,7 @@ void R_orderVector1(int *indx, int n, SEXP x,       Rboolean nalast, Rboolean de
 #define elt			Rf_elt
 #define errorcall		Rf_errorcall
 #define eval			Rf_eval
+#define ExtractSubset		Rf_ExtractSubset
 #define findFun			Rf_findFun
 #define findFun3		Rf_findFun3
 #define findFunctionForBody	Rf_findFunctionForBody
@@ -1442,6 +1482,21 @@ void R_Reprotect(SEXP, PROTECT_INDEX);
 # endif
 SEXP R_FixupRHS(SEXP x, SEXP y);
 void *(DATAPTR)(SEXP x);
+void *(DATAPTR_RO)(SEXP x);
+void *(DATAPTR_OR_NULL)(SEXP x, Rboolean writeable);
+int *(LOGICAL_OR_NULL)(SEXP x, Rboolean w);
+int *(INTEGER_OR_NULL)(SEXP x, Rboolean w);
+double *(REAL_OR_NULL)(SEXP x, Rboolean w);
+Rcomplex *(COMPLEX_OR_NULL)(SEXP x, Rboolean w);
+Rbyte *(RAW_OR_NULL)(SEXP x, Rboolean w);
+void *(STDVEC_DATAPTR)(SEXP x);
+int (INTEGER_ELT)(SEXP x, R_xlen_t i);
+double (REAL_ELT)(SEXP x, R_xlen_t i);
+Rcomplex (COMPLEX_ELT)(SEXP x, R_xlen_t i);
+SEXP R_altrep_data1(SEXP x);
+SEXP R_altrep_data2(SEXP x);
+void R_set_altrep_data1(SEXP x, SEXP v);
+void R_set_altrep_data2(SEXP x, SEXP v);
 #endif
 
 #ifdef USE_RINTERNALS

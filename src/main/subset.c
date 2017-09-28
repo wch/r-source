@@ -59,7 +59,7 @@ static R_INLINE SEXP VECTOR_ELT_FIX_NAMED(SEXP y, R_xlen_t i) {
    from "x" to "result" according to the integer/real subscripts given
    in "indx". */
 
-static SEXP ExtractSubset(SEXP x, SEXP indx, SEXP call)
+SEXP attribute_hidden ExtractSubset(SEXP x, SEXP indx, SEXP call)
 {
     R_xlen_t i, ii, n, nx;
     int mode, mi;
