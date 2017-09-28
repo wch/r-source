@@ -70,6 +70,12 @@ static const char *typename(SEXP v) {
     return sexptype2char(TYPEOF(v)); // -> memory.c
 }
 
+static void inspect_tree(int, SEXP, int, int);
+static void inspect_subtree(SEXP x, int pre, int deep, int pvec)
+{
+    inspect_tree(pre + 2, x, deep - 1, pvec);
+}
+
 /* pre is the prefix, v is the object to inspect, deep specifies
    the recursion behavior (0 = no recursion, -1 = [sort of] unlimited
    recursion, positive numbers define the maximum recursion depth)
@@ -111,6 +117,16 @@ static void inspect_tree(int pre, SEXP v, int deep, int pvec) {
     if (LEVELS(v)) { if (a) Rprintf(","); Rprintf("gp=0x%x", LEVELS(v)); a = 1; }
     if (ATTRIB(v) && ATTRIB(v) != R_NilValue) { if (a) Rprintf(","); Rprintf("ATT"); a = 1; }
     Rprintf("] ");
+
+    if (ALTREP(v) && ALTREP_INSPECT(v, pre, deep, pvec, inspect_subtree)) {
+	if (ATTRIB(v) && ATTRIB(v) != R_NilValue && TYPEOF(v) != CHARSXP) {
+	    pp(pre);
+	    Rprintf("ATTRIB:\n");
+	    inspect_tree(pre+2, ATTRIB(v), deep, pvec);
+	}
+	return;
+    }
+
     switch (TYPEOF(v)) {
     case VECSXP: case STRSXP: case LGLSXP: case INTSXP: case RAWSXP:
     case REALSXP: case CPLXSXP: case EXPRSXP:
@@ -135,7 +151,8 @@ static void inspect_tree(int pre, SEXP v, int deep, int pvec) {
 	if (XLENGTH(v) > 0) {
 		unsigned int i = 0;
 		while (i < XLENGTH(v) && i < pvec) {
-		    Rprintf("%s%d", (i > 0) ? "," : " ", (int) LOGICAL(v)[i]);
+		    Rprintf("%s%d", (i > 0) ? "," : " ",
+			    (int) LOGICAL(v)[i]);
 		    i++;
 		}
 		if (i < XLENGTH(v)) Rprintf(",...");

@@ -3461,6 +3461,12 @@ SEXP ALTREP_UNSERIALIZE_EX(SEXP info, SEXP state, SEXP attr, int objf, int levs)
 {
     return NULL;
 }
+Rboolean
+ALTREP_INSPECT(SEXP x, int pre, int deep, int pvec,
+	       void (*inspect_subtree)(SEXP, int, int, int))
+{
+    return FALSE;
+}
 
 /* temporary, to ease transition away from remapping */
 R_xlen_t Rf_XLENGTH(SEXP x) { return XLENGTH(x); }
