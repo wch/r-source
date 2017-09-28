@@ -55,23 +55,24 @@ static R_INLINE SEXP VECTOR_ELT_FIX_NAMED(SEXP y, R_xlen_t i) {
     return val;
 }
 
-/* ExtractSubset does the transfer of elements from "x" to "result"
-   according to the integer/real subscripts given in "indx". */
+/* ExtractSubset allocates "result" and does the transfer of elements
+   from "x" to "result" according to the integer/real subscripts given
+   in "indx". */
 
-static SEXP ExtractSubset(SEXP x, SEXP result, SEXP indx, SEXP call)
+static SEXP ExtractSubset(SEXP x, SEXP indx, SEXP call)
 {
     R_xlen_t i, ii, n, nx;
     int mode, mi;
-    SEXP tmp, tmp2;
     mode = TYPEOF(x);
     mi = TYPEOF(indx);
     n = XLENGTH(indx);
     nx = xlength(x);
-    tmp = result;
+    SEXP result;
 
     if (x == R_NilValue)
 	return x;
 
+    PROTECT(result = allocVector(mode, n));
     for (i = 0; i < n; i++) {
 	switch(mi) {
 	case REALSXP:
@@ -123,32 +124,21 @@ static SEXP ExtractSubset(SEXP x, SEXP result, SEXP indx, SEXP call)
 	    else
 		SET_VECTOR_ELT(result, i, R_NilValue);
 	    break;
-	case LISTSXP:
-	    /* cannot happen: pairlists are coerced to lists */
-	case LANGSXP:
-#ifdef LONG_VECTOR_SUPPORT
-	    if (ii > R_SHORT_LEN_MAX)
-		error("invalid subscript for pairlist");
-#endif
-	    if (0 <= ii && ii < nx && ii != NA_INTEGER) {
-		tmp2 = nthcdr(x, (int) ii);
-		SETCAR(tmp, CAR(tmp2));
-		SET_TAG(tmp, TAG(tmp2));
-	    }
-	    else
-		SETCAR(tmp, R_NilValue);
-	    tmp = CDR(tmp);
-	    break;
 	case RAWSXP:
 	    if (0 <= ii && ii < nx && ii != NA_INTEGER)
 		RAW(result)[i] = RAW(x)[ii];
 	    else
 		RAW(result)[i] = (Rbyte) 0;
 	    break;
+	case LISTSXP:
+	    /* cannot happen: pairlists are coerced to lists */
+	case LANGSXP:
+	    /* cannot happen: LANGSXPs are coerced to lists */
 	default:
 	    errorcall(call, R_MSG_ob_nonsub, type2char(mode));
 	}
     }
+    UNPROTECT(1); /* result */
     return result;
 }
 
@@ -157,7 +147,7 @@ static SEXP ExtractSubset(SEXP x, SEXP result, SEXP indx, SEXP call)
    matrix indexing of arrays */
 static SEXP VectorSubset(SEXP x, SEXP s, SEXP call)
 {
-    R_xlen_t n, stretch = 1;
+    R_xlen_t stretch = 1;
     SEXP indx, result, attrib, nattrib;
 
     if (s == R_MissingArg) return duplicate(x);
@@ -185,19 +175,16 @@ static SEXP VectorSubset(SEXP x, SEXP s, SEXP call)
     /* in the range 1:length(x). */
 
     PROTECT(indx = makeSubscript(x, s, &stretch, call));
-    n = XLENGTH(indx);
 
     /* Allocate the result. */
 
     int mode = TYPEOF(x);
-    /* No protection needed as ExtractSubset does not allocate */
-    result = allocVector(mode, n);
+    PROTECT(result = ExtractSubset(x, indx, call));
     if (mode == VECSXP || mode == EXPRSXP)
 	/* we do not duplicate the values when extracting the subset,
 	   so to be conservative mark the result as NAMED = NAMEDMAX */
 	ENSURE_NAMEDMAX(result);
 
-    PROTECT(result = ExtractSubset(x, result, indx, call));
     if (result != R_NilValue) {
 	if (
 	    ((attrib = getAttrib(x, R_NamesSymbol)) != R_NilValue) ||
@@ -208,17 +195,13 @@ static SEXP VectorSubset(SEXP x, SEXP s, SEXP call)
 		)
 	    ) {
 	    PROTECT(attrib);
-	    nattrib = allocVector(TYPEOF(attrib), n);
-	    PROTECT(nattrib); /* seems unneeded */
-	    nattrib = ExtractSubset(attrib, nattrib, indx, call);
+	    PROTECT(nattrib = ExtractSubset(attrib, indx, call));
 	    setAttrib(result, R_NamesSymbol, nattrib);
 	    UNPROTECT(2); /* attrib, nattrib */
 	}
 	if ((attrib = getAttrib(x, R_SrcrefSymbol)) != R_NilValue &&
 	    TYPEOF(attrib) == VECSXP) {
-	    nattrib = allocVector(VECSXP, n);
-	    PROTECT(nattrib); /* seems unneeded */
-	    nattrib = ExtractSubset(attrib, nattrib, indx, call);
+	    PROTECT(nattrib = ExtractSubset(attrib, indx, call));
 	    setAttrib(result, R_SrcrefSymbol, nattrib);
 	    UNPROTECT(1);
 	}
@@ -358,19 +341,15 @@ static SEXP MatrixSubset(SEXP x, SEXP s, SEXP call, int drop)
 	    PROTECT(newdimnames = allocVector(VECSXP, 2));
 	    if (TYPEOF(dimnames) == VECSXP) {
 	      SET_VECTOR_ELT(newdimnames, 0,
-		    ExtractSubset(VECTOR_ELT(dimnames, 0),
-				  allocVector(STRSXP, nrs), sr, call));
+		    ExtractSubset(VECTOR_ELT(dimnames, 0), sr, call));
 	      SET_VECTOR_ELT(newdimnames, 1,
-		    ExtractSubset(VECTOR_ELT(dimnames, 1),
-				  allocVector(STRSXP, ncs), sc, call));
+		    ExtractSubset(VECTOR_ELT(dimnames, 1), sc, call));
 	    }
 	    else {
 	      SET_VECTOR_ELT(newdimnames, 0,
-		    ExtractSubset(CAR(dimnames),
-				  allocVector(STRSXP, nrs), sr, call));
+		    ExtractSubset(CAR(dimnames), sr, call));
 	      SET_VECTOR_ELT(newdimnames, 1,
-		    ExtractSubset(CADR(dimnames),
-				  allocVector(STRSXP, ncs), sc, call));
+		    ExtractSubset(CADR(dimnames), sc, call));
 	    }
 	    setAttrib(newdimnames, R_NamesSymbol, dimnamesnames);
 	    setAttrib(result, R_DimNamesSymbol, newdimnames);
@@ -524,9 +503,7 @@ static SEXP ArraySubset(SEXP x, SEXP s, SEXP call, int drop)
 	    for (int i = 0; i < k ; i++) {
 		if (bound[i] > 0) {
 		  SET_VECTOR_ELT(xdims, j++,
-			ExtractSubset(VECTOR_ELT(dimnames, i),
-				      allocVector(STRSXP, bound[i]),
-				      CAR(r), call));
+			ExtractSubset(VECTOR_ELT(dimnames, i), CAR(r), call));
 		} else { /* 0-length dims have NULL dimnames */
 		    SET_VECTOR_ELT(xdims, j++, R_NilValue);
 		}
@@ -538,8 +515,7 @@ static SEXP ArraySubset(SEXP x, SEXP s, SEXP call, int drop)
 	    q = xdims;
 	    r = s;
 	    for(int i = 0 ; i < k; i++) {
-		SETCAR(q, allocVector(STRSXP, bound[i]));
-		SETCAR(q, ExtractSubset(CAR(p), CAR(q), CAR(r), call));
+		SETCAR(q, ExtractSubset(CAR(p), CAR(r), call));
 		p = CDR(p);
 		q = CDR(q);
 		r = CDR(r);
@@ -1074,6 +1050,8 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	ans = allocVector(TYPEOF(x), 1);
 	switch (TYPEOF(x)) {
 	case LGLSXP:
+	    LOGICAL(ans)[0] = LOGICAL(x)[offset];
+	    break;
 	case INTSXP:
 	    INTEGER(ans)[0] = INTEGER(x)[offset];
 	    break;
