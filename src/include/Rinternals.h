@@ -1503,6 +1503,7 @@ Rbyte *(RAW_OR_NULL)(SEXP x, Rboolean w);
 void *(STDVEC_DATAPTR)(SEXP x);
 int (INTEGER_ELT)(SEXP x, R_xlen_t i);
 double (REAL_ELT)(SEXP x, R_xlen_t i);
+Rcomplex (COMPLEX_ELT)(SEXP x, R_xlen_t i);
 SEXP R_altrep_data1(SEXP x);
 SEXP R_altrep_data2(SEXP x);
 void R_set_altrep_data1(SEXP x, SEXP v);
