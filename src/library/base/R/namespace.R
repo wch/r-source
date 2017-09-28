@@ -1007,20 +1007,22 @@ namespaceImportMethods <- function(self, ns, vars, from = NULL)
     found <- vars %in% allFuns
     if(!all(found)) {
         message(sprintf(ngettext(sum(!found),
-                                 "No methods found in package %s for request: %s",
-                                 "No methods found in package %s for requests: %s"),
+                                 "No methods found in package %s for request: %s when loading %s",
+                                 "No methods found in package %s for requests: %s when loading %s"),
                         sQuote(pkg),
-                        paste(sQuote(vars[!found]), collapse = ", ")),
+                        paste(sQuote(vars[!found]), collapse = ", "),
+                        getNamespaceName(self)),
                 domain = NA)
         vars <- vars[found]
     }
     found <- vars %in% allFuns
     if(!all(found))
         stop(sprintf(ngettext(sum(!found),
-                              "requested method not found in environment/package %s: %s",
-                              "requested methods not found in environment/package %s: %s"),
+                              "requested method not found in environment/package %s: %s when loading %s",
+                              "requested methods not found in environment/package %s: %s when loading %s"),
                      sQuote(pkg),
-                     paste(sQuote(vars[!found]), collapse = ", ")),
+                     paste(sQuote(vars[!found]), collapse = ", "),
+                     getNamespaceName(self)),
              call. = FALSE, domain = NA)
     for(i in seq_along(allFuns)) {
         ## import methods tables if asked for
