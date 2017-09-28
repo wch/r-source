@@ -5,6 +5,25 @@
 \title{R News}
 \encoding{UTF-8}
 
+\section{\Rlogo CHANGES IN R 3.4.2 patched}{
+
+  \subsection{INSTALLATION on a UNIX-ALIKE}{
+    \itemize{
+      \item A workaround has been added for the change in location of
+      time-zone files on macOS 10.13 \sQuote{High Sierra}, so the
+      default time zone is deduced correctly from the system setting
+      when \R is configured with \option{--with-internal-tzcode} (the
+      default on macOS).
+    }
+  }
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{raw(0) & raw(0)} now returns \code{raw} again; ditto
+      for \code{|}.
+    }
+  }
+}
+
 \section{\Rlogo CHANGES IN R 3.4.2}{
 
   \subsection{NEW FEATURES}{
@@ -107,7 +126,7 @@
       \item It is again possible to use \command{configure
 	--enable-maintainer-mode} without having installed
       \command{notangle} (it was required in \R 3.4.[01]).
-      
+
       \item S4 method dispatch on \code{\dots} calls the method by name
       instead of \code{.Method} (for consistency with default dispatch),
       and only attempts to pass non-missing arguments from the generic.

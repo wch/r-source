@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 1999--2017  The R Core Team.
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999--2016  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -131,28 +131,28 @@ static SEXP lbinary(SEXP call, SEXP op, SEXP args)
 	    PROTECT(klass = getAttrib(y, R_ClassSymbol));
 	}
     }
-  if (nx > 0 && ny > 0) {
+    if (nx > 0 && ny > 0) {
 	if(((nx > ny) ? nx % ny : ny % nx) != 0) // mismatch
-	warningcall(call,
-		    _("longer object length is not a multiple of shorter object length"));
+	    warningcall(call,
+			_("longer object length is not a multiple of shorter object length"));
 
-    if (isRaw(x) && isRaw(y)) {
-	x = binaryLogic2(PRIMVAL(op), x, y);
+	if (isRaw(x) && isRaw(y)) {
+	    x = binaryLogic2(PRIMVAL(op), x, y);
+	}
+	else {
+	    if(isNull(x))
+		x = SETCAR(args, allocVector(LGLSXP, 0));
+	    else // isNumeric(x)
+		x = SETCAR(args, coerceVector(x, LGLSXP));
+	    if(isNull(y))
+		y = SETCAR(args, allocVector(LGLSXP, 0));
+	    else // isNumeric(y)
+		y = SETCADR(args, coerceVector(y, LGLSXP));
+	    x = binaryLogic(PRIMVAL(op), x, y);
+	}
+    } else { // nx == 0 || ny == 0
+	x = allocVector((isRaw(x) && isRaw(y)) ? RAWSXP : LGLSXP, 0);
     }
-    else {
-	if(isNull(x))
-	    x = SETCAR(args, allocVector(LGLSXP, 0));
-	else // isNumeric(x)
-	    x = SETCAR(args, coerceVector(x, LGLSXP));
-	if(isNull(y))
-	    y = SETCAR(args, allocVector(LGLSXP, 0));
-	else // isNumeric(y)
-	    y = SETCADR(args, coerceVector(y, LGLSXP));
-	x = binaryLogic(PRIMVAL(op), x, y);
-    }
-  } else { // nx == 0 || ny == 0
-	x = allocVector(LGLSXP, 0);
-  }
 
     PROTECT(x);
     if (dims != R_NilValue) {
@@ -346,6 +346,7 @@ static SEXP binaryLogic(int code, SEXP s1, SEXP s2)
     return ans;
 }
 
+// called only when both  s1 and s2 are  RAWSXP
 static SEXP binaryLogic2(int code, SEXP s1, SEXP s2)
 {
     R_xlen_t i, n, n1, n2, i1, i2;
