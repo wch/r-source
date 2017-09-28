@@ -1297,6 +1297,13 @@ static altstring_methods_t altstring_default_methods = {
 	INIT_CLASS(var, type);					\
     } while (FALSE)
 
+static R_INLINE R_altrep_class_t R_cast_altrep_class(SEXP x)
+{
+    /**** some king of optional check? */
+    R_altrep_class_t val = R_SUBTYPE_INIT(x);
+    return val;
+}
+
 static R_altrep_class_t
 make_altrep_class(int type, const char *cname, const char *pname, DllInfo *dll)
 {

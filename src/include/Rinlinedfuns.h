@@ -351,13 +351,6 @@ INLINE_FUN void SET_SCALAR_BVAL(SEXP x, Rbyte v) {
     RAW0(x)[0] = v;
 }
 
-INLINE_FUN R_altrep_class_t R_cast_altrep_class(SEXP x)
-{
-    /**** some king of optional check? */
-    R_altrep_class_t val = R_SUBTYPE_INIT(x);
-    return val;
-}
-
 INLINE_FUN SEXP ALTREP_CLASS(SEXP x) { return TAG(x); }
 
 INLINE_FUN SEXP R_altrep_data1(SEXP x) { return CAR(x); }
