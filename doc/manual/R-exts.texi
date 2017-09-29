@@ -8779,9 +8779,7 @@ Continue execution of @R{} by typing @kbd{signal 0@key{RET}}.
 @end itemize
 
 Under Windows signals may not be able to be used, and if so the procedure is
-more complicated.  See the rw-FAQ and
-@uref{http://www.stats.uwo.ca/faculty/murdoch/software/debuggingR/gdb.shtml,
-@code{www.stats.uwo.ca/faculty/murdoch/@/software/@/debuggingR/@/gdb.shtml}}.
+more complicated.  See the rw-FAQ.
 
 
 @node Inspecting R objects,  , Finding entry points, Debugging compiled code
@@ -10023,9 +10021,8 @@ Under Windows the same commands work, but @file{Makevars.win} will be
 used in preference to @file{Makevars}, and only @file{src/Makefile.win}
 will be used by @code{R CMD INSTALL} with @file{src/Makefile} being
 ignored.  For past experiences of building DLLs with a variety of
-compilers, see file @samp{README.packages} and
-@uref{http://www.stats.uwo.ca/@/faculty/@/murdoch/@/software/@/compilingDLLs/}
-.  Under Windows you can supply an exports definitions file called
+compilers, see file @samp{README.packages}.  
+Under Windows you can supply an exports definitions file called
 @file{@var{dllname}-win.def}: otherwise all entry points in objects (but
 not libraries) supplied to @code{R CMD SHLIB} will be exported from the
 DLL.  An example is @file{stats-win.def} for the @pkg{stats} package: a
