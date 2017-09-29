@@ -1788,10 +1788,6 @@ If you update your macOS version, you should re-install @R{} (and
 perhaps XQuartz): the installer may tailor the installation to the
 current version of the OS.
 
-When running under High Sierra (10.13), @R{} may not be able to deduce
-the system timezone, in which case you will need to set the environment
-variable @env{TZ}: see @code{?Sys.timezone}.
-
 For building @R{} from source, see @ref{macOS}.
 
 
@@ -4947,7 +4943,7 @@ FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin16/6.3.0
 
 More recent and complete distributions of @command{clang} are often
 available from @uref{http://llvm.org/releases/}: for example at the time
-of writing for 4.0.1, built for Sierra or later.  In particular, these
+of writing of 5.0.0 built for Sierra or later.  In particular, these
 should include support for OpenMP.  Another build of clang 4.0.0 is
 available at
 @uref{https://r.research.att.com/@/libs/@/clang-4.0.0-darwin15.6-Release.tar.gz}.
@@ -5051,29 +5047,13 @@ some upgrades but not others).
 
 
 @menu
-* High Sierra::                 
 * Tcl/Tk headers and libraries::  
 * Java (macOS)::                
 * Frameworks::                  
 * Building R.app::              
 @end menu
 
-
-@node High Sierra, Tcl/Tk headers and libraries, macOS, macOS
-@subsection High Sierra
-
-Default builds@footnote{This is not the case if the non-default
-@command{configure} option @option{--without-internal-tzcode} was used
--- but @R{} then does not pass its checks.} of @R{} on High Sierra fail
-to detect the system time zone, as it gets reported something like
-@example
-  unknown timezone 'default/Europe/London'
-@end example
-@noindent
-which is not a standard form.  This can be circumvented by setting the
-environment variable @env{TZ} (in the example, to @samp{Europe/London}.
-
-@node Tcl/Tk headers and libraries, Java (macOS), High Sierra, macOS
+@node Tcl/Tk headers and libraries, Java (macOS), macOS, macOS
 @subsection Tcl/Tk headers and libraries
 
 If you plan to use the @code{tcltk} package for @R{}, you need to

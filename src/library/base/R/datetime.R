@@ -23,8 +23,9 @@ Sys.timezone <- function(location = TRUE)
 {
     tz <- Sys.getenv("TZ", names = FALSE)
     if(!location || nzchar(tz)) return(Sys.getenv("TZ", unset = NA_character_))
-    lt <- normalizePath("/etc/localtime") # Linux, macOS, ...
-    if (grepl(pat <- "^/usr/share/zoneinfo/", lt)) sub(pat, "", lt)
+    lt <- normalizePath("/etc/localtime") # most Linux, macOS, ...
+    if (grepl(pat <- "^/usr/share/zoneinfo/", lt) ||
+        grepl(pat <- "^/usr/share/zoneinfo.default/", lt)) sub(pat, "", lt)
     else if (lt == "/etc/localtime" && file.exists("/etc/timezone") &&
 	     dir.exists("/usr/share/zoneinfo") &&
 	     { # Debian etc.
