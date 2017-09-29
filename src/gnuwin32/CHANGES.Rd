@@ -589,8 +589,7 @@
 	
       \item The recommended 64-bit toolchain has been changed to one
       that does not add leading underscores.  See
-      \url{http://www.murdoch-sutherland.com/Rtools/} or
-      \url{http://www.stats.ox.ac.uk/pub/Rtools/}.  Any static or import
+      \url{http://cran.r-project.org/bin/windows/Rtools/}.  Any static or import
       libraries for external software used in installing packages will
       need to be re-compiled for this toolchain, but the use of DLLs is
       unaffected.

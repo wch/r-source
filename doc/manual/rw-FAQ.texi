@@ -1100,7 +1100,7 @@ C/C++/Fortran code which needs compilation can simply be installed by
 pkgname} at a Windows command prompt.  For packages with code that needs
 compilation you will need to collect and install several tools: you can
 download them via the portal at
-@uref{http://www.murdoch-sutherland.com/Rtools/}.  Once you have done
+@uref{https://cran.r-project.org/bin/windows/Rtools/}.  Once you have done
 so, just run @command{R CMD INSTALL pkgname} at a Windows command
 prompt.  To check the package (including running all the examples on its
 help pages and in its test suite, if any) use @command{R CMD check
@@ -1777,10 +1777,6 @@ drop control back to the debugger does not work with a MinGW version of
 @command{gdb}.  It does often work with the @code{cygwin} version.
 
 @end itemize
-
-See
-@uref{http://www.stats.uwo.ca/@/faculty/@/murdoch/@/software/@/debuggingR/@/gdb.shtml}
-for some further details.
 
 
 @node  How do I include C++ code?, The output from my C code disappears., How do I debug code that I have compiled and dyn.load-ed?, Building from Source
