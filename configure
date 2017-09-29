@@ -753,6 +753,7 @@ LIBOBJS
 RMATH_HAVE_LOG1P
 RMATH_HAVE_HYPOT
 RMATH_HAVE_EXPM1
+MACOS_SIERRA
 ALLOCA
 R_OPENMP_FFLAGS
 R_OPENMP_CFLAGS
@@ -3728,7 +3729,7 @@ _ACEOF
 ## exclude some unsupported OSes
 case "${host_os}" in
    ## Darwin 1.3.1 was macOS 10.0, 1.4.1 was 10.1, 5 is 10.2 etc
-   ## with 13 being 10.9.  We no longer support < 10.6 (Snow Leopard)
+   ## with 13 being 10.9.  We no longer support < 10.6 (Snow Leopard, Darwin 10)
    ## https://en.wikipedia.org/wiki/Darwin_OS
    darwin1.*)
      as_fn_error $? "The earliest supported macOS is 10.6.
@@ -25211,7 +25212,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:25214: \"$ac_link\") >&5
+(eval echo $as_me:25215: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -25286,7 +25287,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:25289: \"$ac_link\") >&5
+(eval echo $as_me:25290: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -34880,6 +34881,15 @@ _ACEOF
 
 fi
 done
+
+## Used to avoid a problem with some Xcode 9 updates on macOS 10.12 (Darwin 16)
+case "${host_os}" in
+   darwin1[0123456].*)
+
+$as_echo "#define MACOS_SIERRA 1" >>confdefs.h
+
+   ;;
+esac
 
 ## clock_gettime is POSIX 1993, but not on macOS prior to 10.12 (Sierra)
 ## Some OSes need -lrt: Linux (for glibc versions before 2.17), Solaris,
