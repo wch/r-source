@@ -405,66 +405,63 @@ SEXP attribute_hidden do_arith(SEXP call, SEXP op, SEXP args, SEXP env)
     else if (argc == 2) {
 	/* Handle some scaler operations immediately */
 	if (IS_SCALAR(arg1, REALSXP)) {
+	    double x1 = SCALAR_DVAL(arg1);
 	    if (IS_SCALAR(arg2, REALSXP)) {
-		double x1 = REAL(arg1)[0];
-		double x2 = REAL(arg2)[0];
+		double x2 = SCALAR_DVAL(arg2);
 		ans = ScalarValue2(arg1, arg2);
 		switch (PRIMVAL(op)) {
-		case PLUSOP: REAL(ans)[0] = x1 + x2; return ans;
-		case MINUSOP: REAL(ans)[0] = x1 - x2; return ans;
-		case TIMESOP: REAL(ans)[0] = x1 * x2; return ans;
-		case DIVOP: REAL(ans)[0] = x1 / x2; return ans;
+		case PLUSOP: SET_SCALAR_DVAL(ans, x1 + x2); return ans;
+		case MINUSOP: SET_SCALAR_DVAL(ans, x1 - x2); return ans;
+		case TIMESOP: SET_SCALAR_DVAL(ans, x1 * x2); return ans;
+		case DIVOP: SET_SCALAR_DVAL(ans, x1 / x2); return ans;
 		}
 	    }
 	    else if (IS_SCALAR(arg2, INTSXP)) {
-		double x1 = REAL(arg1)[0];
-		double x2 = INTEGER(arg2)[0] != NA_INTEGER ?
-		    (double) INTEGER(arg2)[0] : NA_REAL;
+		int i2 = SCALAR_IVAL(arg2);
+		double x2 = i2 != NA_INTEGER ? (double) i2 : NA_REAL;
 		ans = ScalarValue1(arg1);
 		switch (PRIMVAL(op)) {
-		case PLUSOP: REAL(ans)[0] = x1 + x2; return ans;
-		case MINUSOP: REAL(ans)[0] = x1 - x2; return ans;
-		case TIMESOP: REAL(ans)[0] = x1 * x2; return ans;
-		case DIVOP: REAL(ans)[0] = x1 / x2; return ans;
+		case PLUSOP: SET_SCALAR_DVAL(ans, x1 + x2); return ans;
+		case MINUSOP: SET_SCALAR_DVAL(ans, x1 - x2); return ans;
+		case TIMESOP: SET_SCALAR_DVAL(ans, x1 * x2); return ans;
+		case DIVOP: SET_SCALAR_DVAL(ans, x1 / x2); return ans;
 		}
 	    }
 	}
 	else if (IS_SCALAR(arg1, INTSXP)) {
+	    int i1 = SCALAR_IVAL(arg1);
 	    if (IS_SCALAR(arg2, REALSXP)) {
-		double x1 = INTEGER(arg1)[0] != NA_INTEGER ?
-		    (double) INTEGER(arg1)[0] : NA_REAL;
-		double x2 = REAL(arg2)[0];
+		double x1 = i1 != NA_INTEGER ? (double) i1 : NA_REAL;
+		double x2 = SCALAR_DVAL(arg2);
 		ans = ScalarValue1(arg2);
 		switch (PRIMVAL(op)) {
-		case PLUSOP: REAL(ans)[0] = x1 + x2; return ans;
-		case MINUSOP: REAL(ans)[0] = x1 - x2; return ans;
-		case TIMESOP: REAL(ans)[0] = x1 * x2; return ans;
-		case DIVOP: REAL(ans)[0] = x1 / x2; return ans;
+		case PLUSOP: SET_SCALAR_DVAL(ans, x1 + x2); return ans;
+		case MINUSOP: SET_SCALAR_DVAL(ans, x1 - x2); return ans;
+		case TIMESOP: SET_SCALAR_DVAL(ans, x1 * x2); return ans;
+		case DIVOP: SET_SCALAR_DVAL(ans, x1 / x2); return ans;
 		}
 	    }
 	    else if (IS_SCALAR(arg2, INTSXP)) {
 		Rboolean naflag = FALSE;
-		int x1 = INTEGER(arg1)[0];
-		int x2 = INTEGER(arg2)[0];
+		int i2 = SCALAR_IVAL(arg2);
 		switch (PRIMVAL(op)) {
 		case PLUSOP:
 		    ans = ScalarValue2(arg1, arg2);
-		    INTEGER(ans)[0] = R_integer_plus(x1, x2, &naflag);
+		    SET_SCALAR_IVAL(ans, R_integer_plus(i1, i2, &naflag));
 		    CHECK_INTEGER_OVERFLOW(call, ans, naflag);
 		    return ans;
 		case MINUSOP:
 		    ans = ScalarValue2(arg1, arg2);
-		    INTEGER(ans)[0] = R_integer_minus(x1, x2, &naflag);
+		    SET_SCALAR_IVAL(ans, R_integer_minus(i1, i2, &naflag));
 		    CHECK_INTEGER_OVERFLOW(call, ans, naflag);
 		    return ans;
 		case TIMESOP:
 		    ans = ScalarValue2(arg1, arg2);
-		    INTEGER(ans)[0] = R_integer_times(x1, x2, &naflag);
+		    SET_SCALAR_IVAL(ans, R_integer_times(i1, i2, &naflag));
 		    CHECK_INTEGER_OVERFLOW(call, ans, naflag);
 		    return ans;
 		case DIVOP:
-		    ans = ScalarReal(R_integer_divide(x1, x2));
-		    return ans;
+		    return ScalarReal(R_integer_divide(i1, i2));
 		}
 	    }
 	}
@@ -475,17 +472,18 @@ SEXP attribute_hidden do_arith(SEXP call, SEXP op, SEXP args, SEXP env)
 	    case PLUSOP: return(arg1);
 	    case MINUSOP:
 		ans = ScalarValue1(arg1);
-		REAL(ans)[0] = -REAL(arg1)[0];
+		SET_SCALAR_DVAL(ans, -SCALAR_DVAL(arg1));
 		return ans;
 	    }
 	}
 	else if (IS_SCALAR(arg1, INTSXP)) {
+	    int ival;
 	    switch(PRIMVAL(op)) {
 	    case PLUSOP: return(arg1);
 	    case MINUSOP:
+		ival = SCALAR_IVAL(arg1);
 		ans = ScalarValue1(arg1);
-		INTEGER(ans)[0] = INTEGER(arg1)[0] == NA_INTEGER ?
-		    NA_INTEGER : -INTEGER(arg1)[0];
+		SET_SCALAR_IVAL(ans, ival == NA_INTEGER ? NA_INTEGER : -ival);
 		return ans;
 	    }
 	}
@@ -733,14 +731,17 @@ static SEXP logical_unary(ARITHOP_TYPE code, SEXP s1, SEXP call)
     if(dimnames != R_NilValue) setAttrib(ans, R_DimNamesSymbol, dimnames);
     UNPROTECT(3);
 
+    int *pa = INTEGER(ans);
+    int *px = LOGICAL(s1);
+
     switch (code) {
     case PLUSOP:
-	for (R_xlen_t  i = 0; i < n; i++) INTEGER(ans)[i] = LOGICAL(s1)[i];
+	for (R_xlen_t  i = 0; i < n; i++) pa[i] = px[i];
 	break;
     case MINUSOP:
 	for (R_xlen_t  i = 0; i < n; i++) {
-	    int x = LOGICAL(s1)[i];
-	    INTEGER(ans)[i] = (x == NA_INTEGER) ?
+	    int x = px[i];
+	    pa[i] = (x == NA_INTEGER) ?
 		NA_INTEGER : ((x == 0.0) ? 0 : -x);
 	}
 	break;
@@ -754,7 +755,7 @@ static SEXP logical_unary(ARITHOP_TYPE code, SEXP s1, SEXP call)
 static SEXP integer_unary(ARITHOP_TYPE code, SEXP s1, SEXP call)
 {
     R_xlen_t i, n;
-    int x;
+    int x, *px, *pa;
     SEXP ans;
 
     switch (code) {
@@ -762,10 +763,12 @@ static SEXP integer_unary(ARITHOP_TYPE code, SEXP s1, SEXP call)
 	return s1;
     case MINUSOP:
 	ans = NO_REFERENCES(s1) ? s1 : duplicate(s1);
+	pa = INTEGER(ans);
+	px = INTEGER(s1);
 	n = XLENGTH(s1);
 	for (i = 0; i < n; i++) {
-	    x = INTEGER(s1)[i];
-	    INTEGER(ans)[i] = (x == NA_INTEGER) ?
+	    x = px[i];
+	    pa[i] = (x == NA_INTEGER) ?
 		NA_INTEGER : ((x == 0.0) ? 0 : -x);
 	}
 	return ans;
@@ -779,14 +782,17 @@ static SEXP real_unary(ARITHOP_TYPE code, SEXP s1, SEXP lcall)
 {
     R_xlen_t i, n;
     SEXP ans;
+    double *pa, *px;
 
     switch (code) {
     case PLUSOP: return s1;
     case MINUSOP:
 	ans = NO_REFERENCES(s1) ? s1 : duplicate(s1);
+	pa = REAL(ans);
+	px = REAL(s1);
 	n = XLENGTH(s1);
 	for (i = 0; i < n; i++)
-	    REAL(ans)[i] = -REAL(s1)[i];
+	    pa[i] = -px[i];
 	return ans;
     default:
 	errorcall(lcall, _("invalid unary operator"));
@@ -815,73 +821,108 @@ static SEXP integer_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2, SEXP lcall)
 
     switch (code) {
     case PLUSOP:
-	MOD_ITERATE2_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2, {
-		x1 = INTEGER(s1)[i1];
-		x2 = INTEGER(s2)[i2];
-		INTEGER(ans)[i] = R_integer_plus(x1, x2, &naflag);
-	    });
-	if (naflag)
-	    warningcall(lcall, INTEGER_OVERFLOW_WARNING);
+	{
+	    int *pa = INTEGER(ans);
+	    int *px1 = INTEGER(s1);
+	    int *px2 = INTEGER(s2);
+	    MOD_ITERATE2_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2, {
+		    x1 = px1[i1];
+		    x2 = px2[i2];
+		    pa[i] = R_integer_plus(x1, x2, &naflag);
+		});
+	    if (naflag)
+		warningcall(lcall, INTEGER_OVERFLOW_WARNING);
+	}
 	break;
     case MINUSOP:
-	MOD_ITERATE2_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2, {
-		x1 = INTEGER(s1)[i1];
-		x2 = INTEGER(s2)[i2];
-		INTEGER(ans)[i] = R_integer_minus(x1, x2, &naflag);
-	    });
-	if (naflag)
-	    warningcall(lcall, INTEGER_OVERFLOW_WARNING);
+	{
+	    int *pa = INTEGER(ans);
+	    int *px1 = INTEGER(s1);
+	    int *px2 = INTEGER(s2);
+	    MOD_ITERATE2_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2, {
+		    x1 = px1[i1];
+		    x2 = px2[i2];
+		    pa[i] = R_integer_minus(x1, x2, &naflag);
+		});
+	    if (naflag)
+		warningcall(lcall, INTEGER_OVERFLOW_WARNING);
+	}
 	break;
     case TIMESOP:
-	MOD_ITERATE2_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2, {
-		x1 = INTEGER(s1)[i1];
-		x2 = INTEGER(s2)[i2];
-		INTEGER(ans)[i] = R_integer_times(x1, x2, &naflag);
-	    });
-	if (naflag)
-	    warningcall(lcall, INTEGER_OVERFLOW_WARNING);
+	{
+	    int *pa = INTEGER(ans);
+	    int *px1 = INTEGER(s1);
+	    int *px2 = INTEGER(s2);
+	    MOD_ITERATE2_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2, {
+		    x1 = px1[i1];
+		    x2 = px2[i2];
+		    pa[i] = R_integer_times(x1, x2, &naflag);
+		});
+	    if (naflag)
+		warningcall(lcall, INTEGER_OVERFLOW_WARNING);
+	}
 	break;
     case DIVOP:
-	MOD_ITERATE2_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2, {
-		x1 = INTEGER(s1)[i1];
-		x2 = INTEGER(s2)[i2];
-		REAL(ans)[i] = R_integer_divide(x1, x2);
-	    });
+	{
+	    double *pa = REAL(ans);
+	    int *px1 = INTEGER(s1);
+	    int *px2 = INTEGER(s2);
+	    MOD_ITERATE2_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2, {
+		    x1 = px1[i1];
+		    x2 = px2[i2];
+		    pa[i] = R_integer_divide(x1, x2);
+		});
+	}
 	break;
     case POWOP:
-	MOD_ITERATE2_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2, {
-		if((x1 = INTEGER(s1)[i1]) == 1 || (x2 = INTEGER(s2)[i2]) == 0)
-		    REAL(ans)[i] = 1.;
-		else if (x1 == NA_INTEGER || x2 == NA_INTEGER)
-		    REAL(ans)[i] = NA_REAL;
-		else
-		    REAL(ans)[i] = R_POW((double) x1, (double) x2);
-	    });
+	{
+	    double *pa = REAL(ans);
+	    int *px1 = INTEGER(s1);
+	    int *px2 = INTEGER(s2);
+	    MOD_ITERATE2_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2, {
+		    if((x1 = px1[i1]) == 1 || (x2 = px2[i2]) == 0)
+			pa[i] = 1.;
+		    else if (x1 == NA_INTEGER || x2 == NA_INTEGER)
+			pa[i] = NA_REAL;
+		    else
+			pa[i] = R_POW((double) x1, (double) x2);
+		});
+	}
 	break;
     case MODOP:
-	MOD_ITERATE2_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2, {
-		x1 = INTEGER(s1)[i1];
-		x2 = INTEGER(s2)[i2];
-		if (x1 == NA_INTEGER || x2 == NA_INTEGER || x2 == 0)
-		    INTEGER(ans)[i] = NA_INTEGER;
-		else {
-		    INTEGER(ans)[i] = /* till 0.63.2:	x1 % x2 */
-			(x1 >= 0 && x2 > 0) ? x1 % x2 :
-			(int)myfmod((double)x1,(double)x2);
-		}
-	    });
+	{
+	    int *pa = INTEGER(ans);
+	    int *px1 = INTEGER(s1);
+	    int *px2 = INTEGER(s2);
+	    MOD_ITERATE2_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2, {
+		    x1 = px1[i1];
+		    x2 = px2[i2];
+		    if (x1 == NA_INTEGER || x2 == NA_INTEGER || x2 == 0)
+			pa[i] = NA_INTEGER;
+		    else {
+			pa[i] = /* till 0.63.2:	x1 % x2 */
+			    (x1 >= 0 && x2 > 0) ? x1 % x2 :
+			    (int)myfmod((double)x1,(double)x2);
+		    }
+		});
+	}
 	break;
     case IDIVOP:
-	MOD_ITERATE2_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2, {
-		x1 = INTEGER(s1)[i1];
-		x2 = INTEGER(s2)[i2];
-		/* This had x %/% 0 == 0 prior to 2.14.1, but
-		   it seems conventionally to be undefined */
-		if (x1 == NA_INTEGER || x2 == NA_INTEGER || x2 == 0)
-		    INTEGER(ans)[i] = NA_INTEGER;
-		else
-		    INTEGER(ans)[i] = (int) floor((double)x1 / (double)x2);
-	    });
+	{
+	    int *pa = INTEGER(ans);
+	    int *px1 = INTEGER(s1);
+	    int *px2 = INTEGER(s2);
+	    MOD_ITERATE2_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2, {
+		    x1 = px1[i1];
+		    x2 = px2[i2];
+		    /* This had x %/% 0 == 0 prior to 2.14.1, but
+		       it seems conventionally to be undefined */
+		    if (x1 == NA_INTEGER || x2 == NA_INTEGER || x2 == 0)
+			pa[i] = NA_INTEGER;
+		    else
+			pa[i] = (int) floor((double)x1 / (double)x2);
+		});
+	}
 	break;
     }
     UNPROTECT(1);
@@ -900,7 +941,7 @@ static SEXP integer_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2, SEXP lcall)
     return ans;
 }
 
-#define R_INTEGER(robj, i) (double) (INTEGER(robj)[i] == NA_INTEGER ? NA_REAL : INTEGER(robj)[i])
+#define R_INTEGER(x) (double) ((x) == NA_INTEGER ? NA_REAL : (x))
 
 static SEXP real_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
 {
@@ -937,12 +978,20 @@ static SEXP real_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
 		MOD_ITERATE2_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2,
 				  da[i] = dx[i1] + dy[i2];);
 	}
-	else if(TYPEOF(s1) == INTSXP )
+	else if(TYPEOF(s1) == INTSXP ) {
+	    double *da = REAL(ans);
+	    int *px1 = INTEGER(s1);
+	    double *px2 = REAL(s2);
 	    MOD_ITERATE2_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2,
-			      REAL(ans)[i] = R_INTEGER(s1, i1) + REAL(s2)[i2];);
-	else if(TYPEOF(s2) == INTSXP )
+			       da[i] = R_INTEGER(px1[i1]) + px2[i2];);
+	}
+	else if(TYPEOF(s2) == INTSXP ) {
+	    double *da = REAL(ans);
+	    double *px1 = REAL(s1);
+	    int *px2 = INTEGER(s2);
 	    MOD_ITERATE2_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2,
-			      REAL(ans)[i] = REAL(s1)[i1] + R_INTEGER(s2, i2););
+			       da[i] = px1[i1] + R_INTEGER(px2[i2]););
+	}
 	break;
     case MINUSOP:
 	if(TYPEOF(s1) == REALSXP && TYPEOF(s2) == REALSXP) {
@@ -963,12 +1012,20 @@ static SEXP real_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
 		MOD_ITERATE2_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2,
 				  da[i] = dx[i1] - dy[i2];);
 	}
-	else if(TYPEOF(s1) == INTSXP )
+	else if(TYPEOF(s1) == INTSXP ) {
+	    double *da = REAL(ans);
+	    int *px1 = INTEGER(s1);
+	    double *px2 = REAL(s2);
 	    MOD_ITERATE2_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2,
-			      REAL(ans)[i] = R_INTEGER(s1, i1) - REAL(s2)[i2];);
-	else if(TYPEOF(s2) == INTSXP )
+			       da[i] = R_INTEGER(px1[i1]) - px2[i2];);
+	}
+	else if(TYPEOF(s2) == INTSXP ) {
+	    double *da = REAL(ans);
+	    double *px1 = REAL(s1);
+	    int *px2 = INTEGER(s2);
 	    MOD_ITERATE2_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2,
-			      REAL(ans)[i] = REAL(s1)[i1] - R_INTEGER(s2, i2););
+			       da[i] = px1[i1] - R_INTEGER(px2[i2]););
+	}
 	break;
     case TIMESOP:
 	if(TYPEOF(s1) == REALSXP && TYPEOF(s2) == REALSXP) {
@@ -980,7 +1037,7 @@ static SEXP real_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
 		R_ITERATE_CHECK(NINTERRUPT, n, i, da[i] = dx[i] * tmp;);
 	    }
 	    else if (n1 == 1) {
-		double tmp = REAL(s1)[0];
+		double tmp = dx[0];
 		R_ITERATE_CHECK(NINTERRUPT, n, i, da[i] = tmp * dy[i];);
 	    }
 	    else if (n1 == n2)
@@ -989,12 +1046,20 @@ static SEXP real_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
 		MOD_ITERATE2_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2,
 				  da[i] = dx[i1] * dy[i2];);
 	}
-	else if(TYPEOF(s1) == INTSXP )
+	else if(TYPEOF(s1) == INTSXP ) {
+	    double *da = REAL(ans);
+	    int *px1 = INTEGER(s1);
+	    double *px2 = REAL(s2);
 	    MOD_ITERATE2_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2,
-			      REAL(ans)[i] = R_INTEGER(s1, i1) * REAL(s2)[i2];);
-	else if(TYPEOF(s2) == INTSXP )
+			       da[i] = R_INTEGER(px1[i1]) * px2[i2];);
+	}
+	else if(TYPEOF(s2) == INTSXP ) {
+	    double *da = REAL(ans);
+	    double *px1 = REAL(s1);
+	    int *px2 = INTEGER(s2);
 	    MOD_ITERATE2_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2,
-			      REAL(ans)[i] = REAL(s1)[i1] * R_INTEGER(s2, i2););
+			       da[i] = px1[i1] * R_INTEGER(px2[i2]););
+	}
 	break;
     case DIVOP:
 	if(TYPEOF(s1) == REALSXP && TYPEOF(s2) == REALSXP) {
@@ -1015,12 +1080,20 @@ static SEXP real_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
 		MOD_ITERATE2_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2,
 				  da[i] = dx[i1] / dy[i2];);
 	}
-	else if(TYPEOF(s1) == INTSXP )
+	else if(TYPEOF(s1) == INTSXP ) {
+	    double *da = REAL(ans);
+	    int *px1 = INTEGER(s1);
+	    double *px2 = REAL(s2);
 	    MOD_ITERATE2_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2,
-			      REAL(ans)[i] = R_INTEGER(s1, i1) / REAL(s2)[i2];);
-	else if(TYPEOF(s2) == INTSXP )
+			       da[i] = R_INTEGER(px1[i1]) / px2[i2];);
+	}
+	else if(TYPEOF(s2) == INTSXP ) {
+	    double *da = REAL(ans);
+	    double *px1 = REAL(s1);
+	    int *px2 = INTEGER(s2);
 	    MOD_ITERATE2_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2,
-			      REAL(ans)[i] = REAL(s1)[i1] / R_INTEGER(s2, i2););
+			       da[i] = px1[i1] / R_INTEGER(px2[i2]););
+	}
 	break;
     case POWOP:
 	if(TYPEOF(s1) == REALSXP && TYPEOF(s2) == REALSXP) {
@@ -1041,42 +1114,66 @@ static SEXP real_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
 		MOD_ITERATE2_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2,
 				  da[i] = R_POW(dx[i1], dy[i2]););
 	}
-	else if(TYPEOF(s1) == INTSXP )
+	else if(TYPEOF(s1) == INTSXP ) {
+	    double *da = REAL(ans);
+	    int *px1 = INTEGER(s1);
+	    double *px2 = REAL(s2);
 	    MOD_ITERATE2_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2,
-			      REAL(ans)[i] = R_POW( R_INTEGER(s1, i1),
-						    REAL(s2)[i2]););
-	else if(TYPEOF(s2) == INTSXP )
+			       da[i] = R_POW( R_INTEGER(px1[i1]), px2[i2]););
+	}
+	else if(TYPEOF(s2) == INTSXP ) {
+	    double *da = REAL(ans);
+	    double *px1 = REAL(s1);
+	    int *px2 = INTEGER(s2);
 	    MOD_ITERATE2_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2,
-			      REAL(ans)[i] = R_POW(REAL(s1)[i1],
-						   R_INTEGER(s2, i2)););
+			       da[i] = R_POW(px1[i1], R_INTEGER(px2[i2])););
+	}
 	break;
     case MODOP:
-	if(TYPEOF(s1) == REALSXP && TYPEOF(s2) == REALSXP)
+	if(TYPEOF(s1) == REALSXP && TYPEOF(s2) == REALSXP) {
+	    double *da = REAL(ans);
+	    double *px1 = REAL(s1);
+	    double *px2 = REAL(s2);
 	    MOD_ITERATE2_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2,
-			      REAL(ans)[i] = myfmod(REAL(s1)[i1],
-						    REAL(s2)[i2]););
-	else if(TYPEOF(s1) == INTSXP )
+			       da[i] = myfmod(px1[i1], px2[i2]););
+	}
+	else if(TYPEOF(s1) == INTSXP ) {
+	    double *da = REAL(ans);
+	    int *px1 = INTEGER(s1);
+	    double *px2 = REAL(s2);
 	    MOD_ITERATE2_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2,
-			      REAL(ans)[i] = myfmod( R_INTEGER(s1, i1),
-						     REAL(s2)[i2]););
-	else if(TYPEOF(s2) == INTSXP )
+			       da[i] = myfmod(R_INTEGER(px1[i1]), px2[i2]););
+	}
+	else if(TYPEOF(s2) == INTSXP ) {
+	    double *da = REAL(ans);
+	    double *px1 = REAL(s1);
+	    int *px2 = INTEGER(s2);
 	    MOD_ITERATE2_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2,
-			      REAL(ans)[i] = myfmod(REAL(s1)[i1],
-						    R_INTEGER(s2, i2)););
+			       da[i] = myfmod(px1[i1], R_INTEGER(px2[i2])););
+	}
 	break;
     case IDIVOP:
-	if(TYPEOF(s1) == REALSXP && TYPEOF(s2) == REALSXP)
+	if(TYPEOF(s1) == REALSXP && TYPEOF(s2) == REALSXP) {
+	    double *da = REAL(ans);
+	    double *px1 = REAL(s1);
+	    double *px2 = REAL(s2);
 	    MOD_ITERATE2_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2,
-			      REAL(ans)[i] = myfloor(REAL(s1)[i1],
-						     REAL(s2)[i2]););
-	else if(TYPEOF(s1) == INTSXP )
+			       da[i] = myfloor(px1[i1], px2[i2]););
+	}
+	else if(TYPEOF(s1) == INTSXP ) {
+	    double *da = REAL(ans);
+	    int *px1 = INTEGER(s1);
+	    double *px2 = REAL(s2);
 	    MOD_ITERATE2_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2,
-			      REAL(ans)[i] = myfloor(R_INTEGER(s1, i1),
-						     REAL(s2)[i2]););
-	else if(TYPEOF(s2) == INTSXP )
+			       da[i] = myfloor(R_INTEGER(px1[i1]), px2[i2]););
+	}
+	else if(TYPEOF(s2) == INTSXP ) {
+	    double *da = REAL(ans);
+	    double *px1 = REAL(s1);
+	    int *px2 = INTEGER(s2);
 	    MOD_ITERATE2_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2,
-			      REAL(ans)[i] = myfloor(REAL(s1)[i1],
-						     R_INTEGER(s2,i2)););
+			       da[i] = myfloor(px1[i1], R_INTEGER(px2[i2])););
+	}
 	break;
     }
     UNPROTECT(1);
@@ -1237,15 +1334,19 @@ SEXP attribute_hidden do_abs(SEXP call, SEXP op, SEXP args, SEXP env)
 	    x : allocVector(INTSXP, n);
 	PROTECT(s);
 	/* Note: relying on INTEGER(.) === LOGICAL(.) : */
+	int *pa = INTEGER(s);
+	int *px = INTEGER(x);
 	for(i = 0 ; i < n ; i++) {
-	    int xi = INTEGER(x)[i];
-	    INTEGER(s)[i] = (xi == NA_INTEGER) ? xi : abs(xi);
+	    int xi = px[i];
+	    pa[i] = (xi == NA_INTEGER) ? xi : abs(xi);
 	}
     } else if (TYPEOF(x) == REALSXP) {
 	R_xlen_t i, n = XLENGTH(x);
 	PROTECT(s = NO_REFERENCES(x) ? x : allocVector(REALSXP, n));
+	double *pa = REAL(s);
+	double *px = REAL(x);
 	for(i = 0 ; i < n ; i++)
-	    REAL(s)[i] = fabs(REAL(x)[i]);
+	    pa[i] = fabs(px[i]);
     } else if (isComplex(x)) {
 	SET_TAG(args, R_NilValue); /* cmathfuns want "z"; we might have "x" PR#16047 */
 	return do_cmathfuns(call, op, args, env);
