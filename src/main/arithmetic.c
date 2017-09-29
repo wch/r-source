@@ -1017,14 +1017,14 @@ static SEXP real_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
 	    int *px1 = INTEGER(s1);
 	    double *px2 = REAL(s2);
 	    MOD_ITERATE2_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2,
-			      da[i] = R_INTEGER(px1[i1]) - px2[i2];);
+			       da[i] = R_INTEGER(px1[i1]) - px2[i2];);
 	}
 	else if(TYPEOF(s2) == INTSXP ) {
 	    double *da = REAL(ans);
 	    double *px1 = REAL(s1);
 	    int *px2 = INTEGER(s2);
 	    MOD_ITERATE2_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2,
-			      da[i] = px1[i1] - R_INTEGER(px2[i2]););
+			       da[i] = px1[i1] - R_INTEGER(px2[i2]););
 	}
 	break;
     case TIMESOP:
