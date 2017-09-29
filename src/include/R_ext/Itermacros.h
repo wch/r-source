@@ -178,8 +178,6 @@
 				  i, i1, i2, i3, i4, i5, loop_body);	\
     } while (0)
 
-
-
 #define BUFSIZE 256
 #define GET_REGION_PTR(x, i, n, buf, type)				\
     (ALTREP(x) == 0 ? type##0(x) + (i) : (type##_GET_REGION(x, i, n, buf), buf))
@@ -195,6 +193,7 @@
 	    expr							\
 	 }							        \
     } while (0)
+
 #define ITERATE_BY_REGION(sx, px, idx, nb, etype, vtype, expr) do {	\
 	etype *px = DATAPTR_OR_NULL(sx, FALSE);				\
 	if (px != NULL) {						\
@@ -206,7 +205,5 @@
 	}								\
 	else ITERATE_BY_REGION0(sx, px, idx, nb, etype, vtype, expr);	\
     } while (0)
-
-
 
 #endif /* R_EXT_ITERMACROS_H_ */
