@@ -298,7 +298,7 @@ SEXP attribute_hidden do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
                 pa[i] = (x1 OP x2);					\
         });                                                             \
     } while (0)
-	
+
 #define NUMERIC_RELOP(type1, ACCESSOR1, ISNA1, type2, ACCESSOR2, ISNA2) do { \
     switch (code) {                                                     \
     case EQOP:                                                          \
@@ -336,18 +336,14 @@ static SEXP numeric_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
 
     if (isInteger(s1) || isLogical(s1)) {
         if (isInteger(s2) || isLogical(s2)) {
-            NUMERIC_RELOP(int, INTEGER, ISNA_INT,
-			  int, INTEGER, ISNA_INT);
+            NUMERIC_RELOP(int, INTEGER, ISNA_INT, int, INTEGER, ISNA_INT);
         } else {
-            NUMERIC_RELOP(int, INTEGER, ISNA_INT,
-			  double, REAL, ISNAN);
+            NUMERIC_RELOP(int, INTEGER, ISNA_INT, double, REAL, ISNAN);
         }
     } else if (isInteger(s2) || isLogical(s2)) {
-        NUMERIC_RELOP(double, REAL, ISNAN,
-		      int, INTEGER, ISNA_INT);
+        NUMERIC_RELOP(double, REAL, ISNAN, int, INTEGER, ISNA_INT);
     } else {
-        NUMERIC_RELOP(double, REAL, ISNAN,
-		      double, REAL, ISNAN);
+        NUMERIC_RELOP(double, REAL, ISNAN, double, REAL, ISNAN);
     }
 
     UNPROTECT(2);
@@ -635,7 +631,7 @@ static SEXP bitwiseNot(SEXP a)
     switch(TYPEOF(a)) { \
     case INTSXP: \
 	MOD_ITERATE2(mn, m, n, i, ia, ib, { \
-		int aa = INTEGER(a)[ia]; int bb = INTEGER(b)[ib]; \
+	    int aa = INTEGER(a)[ia]; int bb = INTEGER(b)[ib]; \
 	    INTEGER(ans)[i] = (aa == NA_INTEGER || bb == NA_INTEGER) ? NA_INTEGER : aa op bb; \
 	}); \
 	break; \
@@ -672,7 +668,7 @@ static SEXP bitwiseShiftL(SEXP a, SEXP b)
     switch(TYPEOF(a)) {
     case INTSXP:
 	MOD_ITERATE2(mn, m, n, i, ia, ib, {
-		int aa = INTEGER(a)[ia]; int bb = INTEGER(b)[ib];
+	    int aa = INTEGER(a)[ia]; int bb = INTEGER(b)[ib];
 	    INTEGER(ans)[i] =
 		(aa == NA_INTEGER || bb == NA_INTEGER || bb < 0 || bb > 31) ? NA_INTEGER : ((unsigned int)aa << bb);
 	});
@@ -696,7 +692,7 @@ static SEXP bitwiseShiftR(SEXP a, SEXP b)
     switch(TYPEOF(a)) {
     case INTSXP:
 	MOD_ITERATE2(mn, m, n, i, ia, ib, {
-		int aa = INTEGER(a)[ia]; int bb = INTEGER(b)[ib];
+	    int aa = INTEGER(a)[ia]; int bb = INTEGER(b)[ib];
 	    INTEGER(ans)[i] =
 		(aa == NA_INTEGER || bb == NA_INTEGER || bb < 0 || bb > 31) ? NA_INTEGER : ((unsigned int)aa >> bb);
 	});
