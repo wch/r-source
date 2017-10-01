@@ -75,6 +75,6 @@ a later major release of R) is available in the <a href="rdevel.html">r-devel sn
 
 <hr>
 
-<p>Last build: @DATE@, by Duncan Murdoch</p>
+<p>Last build: @DATE@</p>
 </body>
 </html>
