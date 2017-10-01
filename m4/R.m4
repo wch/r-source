@@ -3196,7 +3196,7 @@ if test "x${r_cv_have_pcre820}" != xyes; then
   have_pcre=no
   LIBS="${r_save_LIBS}"
 else
-AC_CACHE_CHECK([if PCRE version >= 8.32], [r_cv_have_pcre832],
+AC_CACHE_CHECK([if PCRE version >= 8.32], [r_cv_have_pcre_832],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #ifdef HAVE_PCRE_PCRE_H
 #include <pcre/pcre.h>
@@ -3212,7 +3212,7 @@ int main() {
   exit(1);
 #endif
 }
-]])], [r_cv_have_pcre832=yes], [r_cv_have_pcre832=no], [r_cv_have_pcre832=no])])
+]])], [r_cv_have_pcre_832=yes], [r_cv_have_pcre_832=no], [r_cv_have_pcre_832=no])])
 fi
 
 AC_MSG_CHECKING([whether PCRE support suffices])
@@ -3221,7 +3221,7 @@ if test "x${r_cv_have_pcre820}" != xyes; then
 else
   AC_MSG_RESULT([yes])
 fi
-if test "x${r_cv_have_pcre832}" != xyes; then
+if test "x${r_cv_have_pcre_832}" != xyes; then
   warn_pcre_version="pcre < 8.32 is deprecated"
   AC_MSG_WARN([${warn_pcre_version}])
 fi
