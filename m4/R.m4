@@ -3227,6 +3227,42 @@ if test "x${r_cv_have_pcre_832}" != xyes; then
 fi
 ])# R_PCRE
 
+## R_PCRE2
+## -------
+## Try finding pcre2 (8-bit) library and header.
+AC_DEFUN([R_PCRE2],
+[have_pcre2=no
+if "${PKGCONF}" --exists libpcre2-8; then
+  PCRE2_CPPFLAGS=`"${PKGCONF}" --cflags libpcre2-8`
+  PCRE2_LIBS=`"${PKGCONF}" --libs libpcre2-8`
+  have_pcre2=yes
+else
+  AC_PATH_PROG(PCRE2_CONFIG, pcre2-config)
+  if test -n "${PCRE2_CONFIG}"; then
+    PCRE2_CPPFLAGS=`"${PCRE2_CONFIG}" --cflags`
+    PCRE2_LIBS=`"${PCRE2_CONFIG}" --libs8`
+    have_pcre2=yes
+  fi
+fi
+if test "x${have_pcre2}" = "xyes"; then
+  r_save_CPPFLAGS="${CPPFLAGS}"
+  CPPFLAGS="${PCRE2_CPPFLAGS} ${CPPFLAGS}"
+  r_save_LIBS="${LIBS}"
+  LIBS="${PCRE2_LIBS} ${LIBS}"
+  AC_DEFINE([PCRE2_CODE_UNIT_WIDTH], [8], [PCRE2 code unit width wanted.])
+  AC_CHECK_HEADER(pcre2.h, [have_pcre2=yes], [have_pcre2=no])
+  if test "x${have_pcre2}" = "xyes"; then
+    AC_CHECK_LIB(pcre2-8, pcre2_compile_8, [have_pcre2=yes], [have_pcre2=no])
+  fi
+  if test "x${have_pcre2}" = "xyes"; then
+    AC_DEFINE(HAVE_PCRE2, 1, [Define if your system has pcre2.])
+  else
+    CPPFLAGS="${r_save_CPPFLAGS}"
+    LIBS="${r_save_LIBS}"
+  fi
+fi
+])# R_PCRE2
+
 ## R_BZLIB
 ## -------
 ## Try finding bzlib library and headers.
