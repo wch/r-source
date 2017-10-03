@@ -405,7 +405,8 @@ R_xlen_t INTEGER_GET_REGION(SEXP sx, R_xlen_t i, R_xlen_t n, int *buf)
 
 int INTEGER_IS_SORTED(SEXP x)
 {
-    return ALTREP_NONEXP(x) ? ALTINTEGER_DISPATCH(Is_sorted, x) : UNKNOWN_SORTEDNESS;
+    return ALTREP_NONEXP(x) ?
+	ALTINTEGER_DISPATCH(Is_sorted, x) : UNKNOWN_SORTEDNESS;
 }
 
 int INTEGER_NO_NA(SEXP x)
@@ -469,7 +470,8 @@ R_xlen_t REAL_GET_REGION(SEXP sx, R_xlen_t i, R_xlen_t n, double *buf)
 
 int REAL_IS_SORTED(SEXP x)
 {
-    return ALTREP_NONEXP(x) ? ALTREAL_DISPATCH(Is_sorted, x) : UNKNOWN_SORTEDNESS;
+    return ALTREP_NONEXP(x) ?
+	ALTREAL_DISPATCH(Is_sorted, x) : UNKNOWN_SORTEDNESS;
 }
 
 int REAL_NO_NA(SEXP x)
@@ -935,16 +937,17 @@ static R_xlen_t altreal_Which_max_default(SEXP x) {
 
 
 
-/* currently this code doesn't deal with incomp, so it should never be hit when 
-   that is in play. check must happen outside of macro. */
+/* Currently this code doesn't deal with incomp, so it should never be
+   hit when that is in play. check must happen outside of macro. */
 
-/* there's room to uber-optimize things here by shuffling if's around\
-but right now I'm just looking for it to work. Switch from O(n) to
-O(log n) should completely obliterate that kind of optimization
-anyway */
+/* There's room to uber-optimize things here by shuffling if's around
+   but right now I'm just looking for it to work. Switch from O(n) to
+   O(log n) should completely obliterate that kind of optimization
+   anyway */
 
-/* this keeps descending until it finds the *lowest*  (frst==TRUE) or 
- *highest* (frst==FALSE) index, it doesn't stop after the first match. */
+/* This keeps descending until it finds the *lowest* (frst==TRUE) or
+   *highest* (frst==FALSE) index, it doesn't stop after the first
+   *match. */
 
 /* symbol meanings:
    tb = table (for lookup)
@@ -1019,7 +1022,7 @@ anyway */
     } while(0);
 
 
-/* this always makes a numeric to deal with long vec indices 
+/* This always makes a numeric to deal with long vec indices 
    is there a better way? */
 #define TOINDEX(x) (x == nmatch ? x : x + 1)
 #define BINARY_MATCHING_OUTER(TYPE, ALTPREFIX, fonly, nm, TBELTFUN,	\
@@ -1063,9 +1066,9 @@ anyway */
     } while(0);
 
 
-/* need this for default. lives in unique.c probably should migrate
+/* Need this for default. lives in unique.c probably should migrate
    to Rinternals but it doesn't have the Rf_ prefix so I'll do this for
-   now */
+   now. */
 
 SEXP match5(SEXP itable, SEXP ix, int nmatch, SEXP incomp, SEXP env);
 #define ALT_MATCH_DEFAULT(TYPE, SXPTYPE, ALTPREFIX, FIRSTONLY, ELTFUN,	\
