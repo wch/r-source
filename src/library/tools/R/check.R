@@ -2259,7 +2259,7 @@ setRlibs <-
             any <- TRUE
             printLog0(Log, paste(msg, collapse = "\n"), "\n")
         }
-        
+
         already <- c("jss.cls", "jss.bst", "Rd.sty", "Sweave.sty")
         bad <- files[files %in% already]
         if (length(bad)) {
@@ -3908,7 +3908,9 @@ setRlibs <-
                              ": warning: .* \\[-Wformat-contains-nul\\]",
                              ": warning: .* \\[-Wformat-zero-length\\]",
                              ": warning: .* \\[-Wpointer-to-int-cast\\]",
-                             ": warning: .* \\[-Wsequence-point\\]")
+                             ": warning: .* \\[-Wsequence-point\\]",
+                             ": warning: .* \\[-Wformat-overflow=\\]"
+                             )
 
                 ## clang warnings
                 warn_re <- c(warn_re,
