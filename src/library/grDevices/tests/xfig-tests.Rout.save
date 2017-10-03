@@ -1,5 +1,5 @@
 
-R version 3.4.1 Patched (2017-07-19 r72930) -- "Single Candle"
+R version 3.4.2 Patched (2017-10-01 r73429) -- "Short Summer"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -102,4 +102,4 @@ Type 'q()' to quit R.
 > 
 > proc.time()
    user  system elapsed 
-  0.193   0.013   0.195 
+  0.375   0.055   0.505 
