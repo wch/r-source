@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2016   The R Core Team
+ *  Copyright (C) 2016--2017   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -3424,7 +3424,7 @@ static R_altrep_class_t wrap_real_class;
 static R_altrep_class_t wrap_string_class;
 
 /* Wrapper objects are ALTREP objects designed to hold the attributes
-   of a potentially larte object and/or meta data for the object. */
+   of a potentially large object and/or meta data for the object. */
 
 #define WRAPPER_WRAPPED(x) R_altrep_data1(x)
 #define WRAPPER_SET_WRAPPED(x, v) R_set_altrep_data1(x, v)
@@ -3444,8 +3444,6 @@ static SEXP wrapper_Serialized_state(SEXP x)
     return CONS(WRAPPER_WRAPPED(x), WRAPPER_METADATA(x));
 }
 
-
-
 static SEXP wrapper_Unserialize(SEXP class, SEXP state)
 {
     return make_wrapper(CAR(state), CDR(state));
@@ -3455,8 +3453,8 @@ static SEXP wrapper_Duplicate(SEXP x, Rboolean deep)
 {
     SEXP data = WRAPPER_WRAPPED(x);
 
-    /* For a deel copy, duplicate the data. */
-    /* For a shallow copy, mark as immutable in teh NAMED word; with
+    /* For a deep copy, duplicate the data. */
+    /* For a shallow copy, mark as immutable in the NAMED word; with
        reference counting the reference count will be incremented when
        the data is installed in the new wrapper object. */
     if (deep)
