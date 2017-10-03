@@ -1500,10 +1500,19 @@ int SCALAR_IVAL(SEXP x);
 void SET_SCALAR_DVAL(SEXP x, double v);
 void SET_SCALAR_LVAL(SEXP x, int v);
 void SET_SCALAR_IVAL(SEXP x, int v);
+void SET_SCALAR_CVAL(SEXP x, Rcomplex v);
+void SET_SCALAR_BVAL(SEXP x, Rbyte v);
 SEXP R_altrep_data1(SEXP x);
 SEXP R_altrep_data2(SEXP x);
 void R_set_altrep_data1(SEXP x, SEXP v);
 void R_set_altrep_data2(SEXP x, SEXP v);
+SEXP ALTREP_CLASS(SEXP x);
+int *LOGICAL0(SEXP x);
+int *INTEGER0(SEXP x);
+double *REAL0(SEXP x);
+void SET_LOGICAL_ELT(SEXP x, R_xlen_t i, int v);
+void SET_INTEGER_ELT(SEXP x, R_xlen_t i, int v);
+void SET_REAL_ELT(SEXP x, R_xlen_t i, double v);
 #endif
 
 #ifdef USE_RINTERNALS
