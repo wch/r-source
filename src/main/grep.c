@@ -69,8 +69,7 @@ strsplit grep [g]sub [g]regexpr
 /* As from TRE 0.8.0, tre.h replaces regex.h */
 #include <tre/tre.h>
 
-/* Some systems using --with-system-pcre might have pcre headers in
-   a subdirectory -- not seen recently.
+/* Some systems might have pcre headers in a subdirectory -- not seen recently.
 */
 #ifdef HAVE_PCRE_PCRE_H
 # include <pcre/pcre.h>
