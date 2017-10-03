@@ -4096,4 +4096,13 @@ SEXP ALTSTRING_ELT(SEXP x, R_xlen_t i) { return NULL; }
 void ALTSTRING_SET_ELT(SEXP x, R_xlen_t i, SEXP v) {}
 
 void R_reinit_altrep_classes(DllInfo *dll) {}
+
+R_xlen_t INTEGER_GET_REGION(SEXP sx, R_xlen_t i, R_xlen_t n, int *buf)
+{
+    return 0;
+}
+R_xlen_t REAL_GET_REGION(SEXP sx, R_xlen_t i, R_xlen_t n, double *buf)
+{
+    return 0;
+}
 #endif
