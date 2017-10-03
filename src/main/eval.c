@@ -3825,12 +3825,12 @@ static R_INLINE SEXP GETSTACK_PTR_TAG(R_bcstack_t *s)
 	SETSTACK_INTEGER(idx, ival);			\
     } while (0)
 #else
-#define SETSTACK_REAL_EX(idx, dval, ans) do {			\
-	if (ans) {						\
-	    SET_SCALAR_DVAL(ans, dval);				\
-	    SETSTACK(idx, ans);					\
-	}							\
-	else SETSTACK_REAL(idx, dval);				\
+#define SETSTACK_REAL_EX(idx, dval, ans) do { \
+	if (ans) {			      \
+	    SET_SCALAR_DVAL(ans, dval);	      \
+	    SETSTACK(idx, ans);		      \
+	}				      \
+	else SETSTACK_REAL(idx, dval);	      \
     } while (0)
 
 #define SETSTACK_INTEGER_EX(idx, ival, ans) do { \
