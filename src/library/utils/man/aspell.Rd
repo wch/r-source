@@ -48,7 +48,7 @@ aspell(files, filter, control = list(), encoding = "unknown",
   The currently available built-in filters are \code{"Rd"}
   (corresponding to \code{\link{RdTextFilter}}), \code{"Sweave"}
   (corresponding to \code{\link{SweaveTeXFilter}}), \code{"R"},
-  \code{"pot"} and \code{"dcf"}.
+  \code{"pot"}, \code{"dcf"} and \code{"md"}.
 
   Filter \code{"R"} is for R code and extracts the message string
   constants in calls to \code{\link{message}}, \code{\link{warning}},
@@ -57,6 +57,7 @@ aspell(files, filter, control = list(), encoding = "unknown",
   \code{\link{ngettext}} (the unnamed string constants for the first
   five, and \code{fmt} and \code{msg1}/\code{msg2} string constants,
   respectively, for the latter two).
+  
   Filter \code{"pot"} is for message string catalog \file{.pot} files.
   Both have an argument \code{ignore} allowing to give regular
   expressions for parts of message strings to be ignored for spell
@@ -67,6 +68,11 @@ aspell(files, filter, control = list(), encoding = "unknown",
   The fields to keep can be controlled by argument \code{keep} (a
   character vector with the respective field names).  By default,
   \samp{Title} and \samp{Description} fields are kept.
+
+  Filter \code{"md"} is for files in
+  \href{https://en.wikipedia.org/wiki/Markdown}{Markdown} format
+  (\file{.md} and \file{.Rmd} files), and needs packages
+  \CRANpkg{commonmark} and \CRANpkg{xml2} to be available.
 
   The print method for the objects returned by \code{aspell} has an
   \code{indent} argument controlling the indentation of the positions of

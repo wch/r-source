@@ -172,7 +172,13 @@
       \item Provide \code{`[`} method for \code{"DLLInfoList"}
 
       \item \code{glm()} and \code{glm.fit} get the same
-      \code{singular.ok=TRUE} argument that \code{lm()} has had forever.
+      \code{singular.ok=TRUE} argument that \code{lm()} has had
+      forever.  As a consequence, in \code{glm(*, method = <your_own>)},
+      user specified methods need to accept a \code{singular.ok}
+      argument as well.
+
+      \item \code{aspell()} gains a filter for Markdown (\file{.md} and
+      \file{.Rmd}) files.
     }
   }
 

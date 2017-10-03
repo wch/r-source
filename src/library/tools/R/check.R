@@ -2252,6 +2252,14 @@ setRlibs <-
             printLog0(Log,
                       "Package has no Sweave vignette sources and no VignetteBuilder field.\n")
         }
+
+        vigns <- pkgVignettes(dir = pkgdir, check = TRUE)
+        if(length(msg <- vigns[["msg"]])) {
+            if(!any) noteLog(Log)
+            any <- TRUE
+            printLog0(Log, paste(msg, collapse = "\n"), "\n")
+        }
+
         already <- c("jss.cls", "jss.bst", "Rd.sty", "Sweave.sty")
         bad <- files[files %in% already]
         if (length(bad)) {
@@ -3900,7 +3908,10 @@ setRlibs <-
                              ": warning: .* \\[-Wformat-contains-nul\\]",
                              ": warning: .* \\[-Wformat-zero-length\\]",
                              ": warning: .* \\[-Wpointer-to-int-cast\\]",
-                             ": warning: .* \\[-Wsequence-point\\]")
+                             ": warning: .* \\[-Wsequence-point\\]",
+                             ": warning: .* \\[-Wformat-overflow=\\]",
+                             ": warning: .* \\[-Wnonull"
+                             )
 
                 ## clang warnings
                 warn_re <- c(warn_re,
