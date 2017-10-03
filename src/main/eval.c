@@ -1954,9 +1954,7 @@ static R_INLINE SEXP GET_BINDING_CELL(SEXP symbol, SEXP rho)
     }
 }
 
-#define R_ALWAYS_INLINE  __attribute__((always_inline)) R_INLINE
-
-static R_ALWAYS_INLINE Rboolean SET_BINDING_VALUE(SEXP loc, SEXP value) {
+static R_INLINE Rboolean SET_BINDING_VALUE(SEXP loc, SEXP value) {
     /* This depends on the current implementation of bindings */
     if (loc != R_NilValue &&
 	! BINDING_IS_LOCKED(loc) && ! IS_ACTIVE_BINDING(loc)) {
@@ -3887,7 +3885,7 @@ typedef union { double dval; int ival; } scalar_value_t;
    second argument; if not, then zero is returned as the function
    value. The boxed value can be returned through a pointer argument
    if it is suitable for re-use. */
-static R_ALWAYS_INLINE int bcStackScalarEx(R_bcstack_t *s, scalar_value_t *v,
+static R_INLINE int bcStackScalarEx(R_bcstack_t *s, scalar_value_t *v,
 				    SEXP *pv)
 {
 #ifdef TYPED_STACK
