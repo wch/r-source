@@ -4869,8 +4869,8 @@ will make use of it if GNU readline is not found.}  That and other
 binary components are available from
 @uref{https://r.research.att.com/libs}: you will need @code{pcre} and
 @code{xz} (for @code{libzma}) as recent macOS versions provide libraries
-but not headers for these (and the system @code{pcre} is too old at
-version 8.02).
+but not headers for these (and the system @code{pcre} is too old at 8.02
+for versions up to Sierra, although High Sierra has 8.40).
 
 An X sub-system is required unless configuring using
 @option{--without-x}: see @uref{https://xquartz.macosforge.org/}. @R{}'s
