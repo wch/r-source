@@ -48,9 +48,6 @@
 #define DbgP3(s,a,b)
 #endif
 
-/* moved ITERATE_BY_REGION and helpers to R_ext/Itermacros so they can be
-   used in altrep methods as well. */
-
 #ifdef LONG_INT
 /*static*/ Rboolean isum(SEXP sx, int *value, Rboolean narm, SEXP call)
 {
@@ -68,7 +65,7 @@
 		return updated;						\
 	    }								\
 	}								\
-    } while(0)
+    } while (0)
 #else
 # define ISUM_OVERFLOW_CHECK do { } while(0)
 #endif
@@ -518,17 +515,16 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 	case CPLXSXP: return complex_mean(x);
 	default:
 	    error(R_MSG_type, type2char(TYPEOF(x)));
-	    return(R_NilValue); // -Wall on clang 4.2
+	    return R_NilValue; // -Wall on clang 4.2
 	}
     }
 
-    
     /* match to foo(..., na.rm=FALSE) */
     PROTECT(args = fixup_NaRm(args));
     PROTECT(call2 = shallow_duplicate(call));
     SETCDR(call2, args);
 
-    /* XXX duped grabbign of narm here. But I don't want to hit dispatchgroup 
+    /* XXX duped grabbing of narm here. But I don't want to hit dispatchgroup 
        if I'm an ALTREP. Or do I? */
 
     if( ALTREP_NONEXP(CAR(args)) && (CDR(args) == R_NilValue || CDDR(args) == R_NilValue)) {
