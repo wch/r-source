@@ -3699,7 +3699,25 @@ SEXP do_c_dflt(SEXP, SEXP, SEXP, SEXP);
 SEXP do_subset2_dflt(SEXP, SEXP, SEXP, SEXP);
 SEXP do_subassign2_dflt(SEXP, SEXP, SEXP, SEXP);
 
+static SEXP seq_int(int n1, int n2)
+{
+    int n = n1 <= n2 ? n2 - n1 + 1 : n1 - n2 + 1;
+    SEXP ans = allocVector(INTSXP, n);
+    int *data = INTEGER(ans);
+    if (n1 <= n2)
+	for (int i = 0; i < n; i++)
+	    data[i] = n1 + i;
+    else
+	for (int i = 0; i < n; i++)
+	    data[i] = n1 - i;
+    return ans;
+}
+
 #ifdef TYPED_STACK
+# define COMPACT_INTSEQ
+# ifdef COMPACT_INTSEQ
+#  define INTSEQSXP 9999
+# endif
 #define CACHE_SCALARS
 static R_INLINE SEXP GETSTACK_PTR_TAG(R_bcstack_t *s)
 {
@@ -3731,6 +3749,14 @@ static R_INLINE SEXP GETSTACK_PTR_TAG(R_bcstack_t *s)
     case LGLSXP:
 	value = ScalarLogical(s->u.ival);
 	break;
+#ifdef COMPACT_INTSEQ
+    case INTSEQSXP:
+	{
+	    int *seqinfo = INTEGER(s->u.sxpval);
+	    value = seq_int(seqinfo[0], seqinfo[1]);
+	}
+	break;
+#endif
     default: /* not reached */
 	value = NULL;
     }
@@ -3791,8 +3817,18 @@ static R_INLINE SEXP GETSTACK_PTR_TAG(R_bcstack_t *s)
 #define IS_STACKVAL_BOXED(idx)	(TRUE)
 #endif
 
+#if defined(TYPED_STACK) && defined(COMPACT_INTSEQ)
+#define SETSTACK_INTSEQ(idx, rn1, rn2) do {	\
+	SEXP info = allocVector(INTSXP, 2);	\
+	INTEGER(info)[0] = (int) rn1;		\
+	INTEGER(info)[1] = (int) rn2;		\
+	R_BCNodeStackTop[idx].u.sxpval = info;	\
+	R_BCNodeStackTop[idx].tag = INTSEQSXP;	\
+    } while (0)
+#else
 #define SETSTACK_INTSEQ(idx, rn1, rn2) \
     SETSTACK(idx, R_compact_intrange(rn1, rn2))
+#endif
 
 #define GETSTACK_SXPVAL(i) GETSTACK_SXPVAL_PTR(R_BCNodeStackTop + (i))
 
@@ -4403,6 +4439,19 @@ static R_INLINE double (*getMath1Fun(int i, SEXP call))(double) {
 	}								\
 	Builtin1(do_seq_len, install("seq_len"), rho);			\
     } while (0)
+
+static R_INLINE SEXP getForLoopSeq(int offset, Rboolean *iscompact)
+{
+#if defined(TYPED_STACK) && defined(COMPACT_INTSEQ)
+    R_bcstack_t *s = R_BCNodeStackTop + offset;
+    if (s->tag == INTSEQSXP) {
+	*iscompact = TRUE;
+	return s->u.sxpval;
+    }
+#endif
+    *iscompact = FALSE;
+    return GETSTACK(offset);
+}
 
 #define BCNPUSH(v) do { \
   SEXP __value__ = (v); \
@@ -6056,7 +6105,8 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
     OP(DOLOOPBREAK, 0): findcontext(CTXT_BREAK, rho, R_NilValue);
     OP(STARTFOR, 3):
       {
-	SEXP seq = GETSTACK(-1);
+	Rboolean iscompact = FALSE;
+	SEXP seq = getForLoopSeq(-1, &iscompact);
 	int callidx = GETOP();
 	SEXP symbol = VECTOR_ELT(constants, GETOP());
 	int label = GETOP();
@@ -6073,6 +6123,14 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	SEXP value = allocVector(INTSXP, 2);
 	int *info = INTEGER0(value);
 	info[0] = -1;
+#ifdef COMPACT_INTSEQ
+	if (iscompact) {
+	    int n1 = INTEGER(seq)[0];
+	    int n2 = INTEGER(seq)[1];
+	    INTEGER(value)[1] = n1 <= n2 ? n2 - n1 + 1 : n1 - n2 + 1;
+	}
+	else
+#endif
 	if (isVector(seq))
 	  info[1] = LENGTH(seq);
 	else if (isList(seq) || isNull(seq))
@@ -6111,7 +6169,8 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	int i = ++loopinfo[0];
 	int n = loopinfo[1];
 	if (i < n) {
-	  SEXP seq = GETSTACK(-4);
+	  Rboolean iscompact = FALSE;
+	  SEXP seq = getForLoopSeq(-4, &iscompact);
 	  SEXP cell = GETSTACK(-3);
 	  SEXP value = NULL;
 	  switch (TYPEOF(seq)) {
@@ -6121,6 +6180,16 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	    break;
 	  case INTSXP:
 	    GET_VEC_LOOP_VALUE(value, -1);
+#ifdef COMPACT_INTSEQ
+	    if (iscompact) {
+		int *info = INTEGER(seq);
+		int n1 = info[0];
+		int n2 = info[1];
+		int val = n1 <= n2 ? n1 + i : n1 - i;
+		INTEGER(value)[0] = val;
+	    }
+	    else
+#endif
 	    SET_SCALAR_IVAL(value, INTEGER_ELT(seq, i));
 	    break;
 	  case REALSXP:
@@ -6162,7 +6231,8 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
     OP(ENDFOR, 0):
       {
 #ifdef COMPUTE_REFCNT_VALUES
-	SEXP seq = GETSTACK(-4);
+	Rboolean iscompact = FALSE;
+	SEXP seq = getForLoopSeq(-4, &iscompact);
 	DECREMENT_REFCNT(seq);
 #endif
 	R_BCNodeStackTop -= FOR_LOOP_STATE_SIZE - 1;
