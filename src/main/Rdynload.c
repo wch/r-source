@@ -498,6 +498,7 @@ found:
     if(R_osDynSymbol->deleteCachedSymbols)
 	R_osDynSymbol->deleteCachedSymbols(&LoadedDLL[loc]);
 #endif
+    R_reinit_altrep_classes(&LoadedDLL[loc]);
     R_callDLLUnload(&LoadedDLL[loc]);
     R_osDynSymbol->closeLibrary(LoadedDLL[loc].handle);
     Rf_freeDllInfo(LoadedDLL+loc);

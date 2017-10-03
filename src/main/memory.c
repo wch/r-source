@@ -4094,4 +4094,6 @@ Rcomplex ALTCOMPLEX_ELT(SEXP x, R_xlen_t i)
 
 SEXP ALTSTRING_ELT(SEXP x, R_xlen_t i) { return NULL; }
 void ALTSTRING_SET_ELT(SEXP x, R_xlen_t i, SEXP v) {}
+
+void R_reinit_altrep_classes(DllInfo *dll) {}
 #endif
