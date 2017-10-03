@@ -3699,6 +3699,9 @@ SEXP do_subassign2_dflt(SEXP, SEXP, SEXP, SEXP);
 
 static SEXP seq_int(int n1, int n2)
 {
+#ifdef USE_ALTREP_COMPACT_INTRANGE
+    return R_compact_intrange(n1, n2);
+#else
     int n = n1 <= n2 ? n2 - n1 + 1 : n1 - n2 + 1;
     SEXP ans = allocVector(INTSXP, n);
     int *data = INTEGER(ans);
@@ -3709,6 +3712,7 @@ static SEXP seq_int(int n1, int n2)
 	for (int i = 0; i < n; i++)
 	    data[i] = n1 - i;
     return ans;
+#endif
 }
 
 #ifdef TYPED_STACK
@@ -3825,7 +3829,7 @@ static R_INLINE SEXP GETSTACK_PTR_TAG(R_bcstack_t *s)
     } while (0)
 #else
 #define SETSTACK_INTSEQ(idx, rn1, rn2) \
-    SETSTACK(idx, R_compact_intrange(rn1, rn2))
+    SETSTACK(idx, seq_int((int) rn1, (int) rn2))
 #endif
 
 #define GETSTACK_SXPVAL(i) GETSTACK_SXPVAL_PTR(R_BCNodeStackTop + (i))
