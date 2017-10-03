@@ -72,40 +72,47 @@ SEXP attribute_hidden ExtractSubset(SEXP x, SEXP indx, SEXP call)
     if (x == R_NilValue)
 	return x;
 
+    if (ALTREP(x)) {
+	result = ALTVEC_EXTRACT_SUBSET(x, indx, call);
+	if (result != NULL)
+	    return result;
+    }
+
+    /* protect allocation in case _ELT operations need to allocate */
     PROTECT(result = allocVector(mode, n));
     for (i = 0; i < n; i++) {
 	switch(mi) {
 	case REALSXP:
-	    if(!R_FINITE(REAL(indx)[i])) ii = NA_INTEGER;
-	    else ii = (R_xlen_t) (REAL(indx)[i] - 1);
+	    if(!R_FINITE(REAL_ELT(indx, i))) ii = NA_INTEGER;
+	    else ii = (R_xlen_t) (REAL_ELT(indx, i) - 1);
 	    break;
 	default:
-	    ii = INTEGER(indx)[i];
+	    ii = INTEGER_ELT(indx, i);
 	    if (ii != NA_INTEGER) ii--;
 	}
 	switch (mode) {
 	    /* NA_INTEGER < 0, so some of this is redundant */
 	case LGLSXP:
 	    if (0 <= ii && ii < nx && ii != NA_INTEGER)
-		LOGICAL(result)[i] = LOGICAL(x)[ii];
+		LOGICAL(result)[i] = LOGICAL_ELT(x, ii);
 	    else
 		LOGICAL(result)[i] = NA_INTEGER;
 	    break;
 	case INTSXP:
 	    if (0 <= ii && ii < nx && ii != NA_INTEGER)
-		INTEGER(result)[i] = INTEGER(x)[ii];
+		INTEGER(result)[i] = INTEGER_ELT(x, ii);
 	    else
 		INTEGER(result)[i] = NA_INTEGER;
 	    break;
 	case REALSXP:
 	    if (0 <= ii && ii < nx && ii != NA_INTEGER)
-		REAL(result)[i] = REAL(x)[ii];
+		REAL(result)[i] = REAL_ELT(x, ii);
 	    else
 		REAL(result)[i] = NA_REAL;
 	    break;
 	case CPLXSXP:
 	    if (0 <= ii && ii < nx && ii != NA_INTEGER) {
-		COMPLEX(result)[i] = COMPLEX(x)[ii];
+		COMPLEX(result)[i] = COMPLEX_ELT(x, ii);
 	    } else {
 		COMPLEX(result)[i].r = NA_REAL;
 		COMPLEX(result)[i].i = NA_REAL;
@@ -291,16 +298,16 @@ static SEXP MatrixSubset(SEXP x, SEXP s, SEXP call, int drop)
 		iijj = ii + jj * nr;
 		switch (TYPEOF(x)) {
 		case LGLSXP:
-		    LOGICAL(result)[ij] = LOGICAL(x)[iijj];
+		    LOGICAL(result)[ij] = LOGICAL_ELT(x, iijj);
 		    break;
 		case INTSXP:
-		    INTEGER(result)[ij] = INTEGER(x)[iijj];
+		    INTEGER(result)[ij] = INTEGER_ELT(x, iijj);
 		    break;
 		case REALSXP:
-		    REAL(result)[ij] = REAL(x)[iijj];
+		    REAL(result)[ij] = REAL_ELT(x, iijj);
 		    break;
 		case CPLXSXP:
-		    COMPLEX(result)[ij] = COMPLEX(x)[iijj];
+		    COMPLEX(result)[ij] = COMPLEX_ELT(x, iijj);
 		    break;
 		case STRSXP:
 		    SET_STRING_ELT(result, ij, STRING_ELT(x, iijj));
@@ -423,25 +430,25 @@ static SEXP ArraySubset(SEXP x, SEXP s, SEXP call, int drop)
 	switch (mode) {
 	case LGLSXP:
 	    if (ii != NA_INTEGER)
-		LOGICAL(result)[i] = LOGICAL(x)[ii];
+		LOGICAL(result)[i] = LOGICAL_ELT(x, ii);
 	    else
 		LOGICAL(result)[i] = NA_LOGICAL;
 	    break;
 	case INTSXP:
 	    if (ii != NA_INTEGER)
-		INTEGER(result)[i] = INTEGER(x)[ii];
+		INTEGER(result)[i] = INTEGER_ELT(x, ii);
 	    else
 		INTEGER(result)[i] = NA_INTEGER;
 	    break;
 	case REALSXP:
 	    if (ii != NA_INTEGER)
-		REAL(result)[i] = REAL(x)[ii];
+		REAL(result)[i] = REAL_ELT(x, ii);
 	    else
 		REAL(result)[i] = NA_REAL;
 	    break;
 	case CPLXSXP:
 	    if (ii != NA_INTEGER) {
-		COMPLEX(result)[i] = COMPLEX(x)[ii];
+		COMPLEX(result)[i] = COMPLEX_ELT(x, ii);
 	    }
 	    else {
 		COMPLEX(result)[i].r = NA_REAL;
@@ -643,13 +650,13 @@ static R_INLINE R_xlen_t scalarIndex(SEXP s)
 {
     if (ATTRIB(s) == R_NilValue) {
 	if (IS_SCALAR(s, INTSXP)) {
-	    int ival = INTEGER(s)[0];
+	    int ival = SCALAR_IVAL(s);
 	    if (ival != NA_INTEGER)
 		return ival;
 	    else return -1;
 	}
 	else if (IS_SCALAR(s, REALSXP)) {
-	    double rval = REAL(s)[0];
+	    double rval = SCALAR_DVAL(s);
 	    // treat infinite indices as NA, like asInteger
 	    if (R_FINITE(rval))
 		return (R_xlen_t) rval;
@@ -681,20 +688,20 @@ SEXP attribute_hidden do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    switch (TYPEOF(x)) {
 	    case REALSXP:
 		if (i >= 1 && i <= XLENGTH(x))
-		    return ScalarReal( REAL(x)[i-1] );
+		    return ScalarReal( REAL_ELT(x, i-1) );
 		break;
 	    case INTSXP:
 		if (i >= 1 && i <= XLENGTH(x))
-		    return ScalarInteger( INTEGER(x)[i-1] );
+		    return ScalarInteger( INTEGER_ELT(x, i-1) );
 		break;
 	    case LGLSXP:
 		if (i >= 1 && i <= XLENGTH(x))
-		    return ScalarLogical( LOGICAL(x)[i-1] );
+		    return ScalarLogical( LOGICAL_ELT(x, i-1) );
 		break;
 //	    do the more rare cases as well, since we've already prepared everything:
 	    case CPLXSXP:
 		if (i >= 1 && i <= XLENGTH(x))
-		    return ScalarComplex( COMPLEX(x)[i-1] );
+		    return ScalarComplex( COMPLEX_ELT(x, i-1) );
 		break;
 	    case RAWSXP:
 		if (i >= 1 && i <= XLENGTH(x))
@@ -726,19 +733,19 @@ SEXP attribute_hidden do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    switch (TYPEOF(x)) {
 		    case REALSXP:
 			if (k < XLENGTH(x))
-			    return ScalarReal( REAL(x)[k] );
+			    return ScalarReal( REAL_ELT(x, k) );
 			break;
 		    case INTSXP:
 			if (k < XLENGTH(x))
-			    return ScalarInteger( INTEGER(x)[k] );
+			    return ScalarInteger( INTEGER_ELT(x, k) );
 			break;
 		    case LGLSXP:
 			if (k < XLENGTH(x))
-			    return ScalarLogical( LOGICAL(x)[k] );
+			    return ScalarLogical( LOGICAL_ELT(x, k) );
 			break;
 		    case CPLXSXP:
 			if (k < XLENGTH(x))
-			    return ScalarComplex( COMPLEX(x)[k] );
+			    return ScalarComplex( COMPLEX_ELT(x, k) );
 			break;
 		    case RAWSXP:
 			if (k < XLENGTH(x))
@@ -1050,16 +1057,16 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	ans = allocVector(TYPEOF(x), 1);
 	switch (TYPEOF(x)) {
 	case LGLSXP:
-	    LOGICAL(ans)[0] = LOGICAL(x)[offset];
+	    LOGICAL(ans)[0] = LOGICAL_ELT(x, offset);
 	    break;
 	case INTSXP:
-	    INTEGER(ans)[0] = INTEGER(x)[offset];
+	    INTEGER(ans)[0] = INTEGER_ELT(x, offset);
 	    break;
 	case REALSXP:
-	    REAL(ans)[0] = REAL(x)[offset];
+	    REAL(ans)[0] = REAL_ELT(x, offset);
 	    break;
 	case CPLXSXP:
-	    COMPLEX(ans)[0] = COMPLEX(x)[offset];
+	    COMPLEX(ans)[0] = COMPLEX_ELT(x, offset);
 	    break;
 	case STRSXP:
 	    SET_STRING_ELT(ans, 0, STRING_ELT(x, offset));

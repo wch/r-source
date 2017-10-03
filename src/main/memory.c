@@ -4082,6 +4082,7 @@ ALTREP_INSPECT(SEXP x, int pre, int deep, int pvec,
 }
 void *ALTVEC_DATAPTR(SEXP x, Rboolean writeable) { return NULL; }
 void *ALTVEC_DATAPTR_OR_NULL(SEXP x, Rboolean writeable) { return NULL; }
+SEXP ALTVEC_EXTRACT_SUBSET(SEXP x, SEXP indx, SEXP call) {return NULL; }
 int ALTINTEGER_ELT(SEXP x, R_xlen_t i) { return 0; }
 int ALTLOGICAL_ELT(SEXP x, R_xlen_t i) { return 0; }
 double ALTREAL_ELT(SEXP x, R_xlen_t i) { return 0.0; }
