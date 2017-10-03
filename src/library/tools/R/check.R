@@ -3909,7 +3909,8 @@ setRlibs <-
                              ": warning: .* \\[-Wformat-zero-length\\]",
                              ": warning: .* \\[-Wpointer-to-int-cast\\]",
                              ": warning: .* \\[-Wsequence-point\\]",
-                             ": warning: .* \\[-Wformat-overflow=\\]"
+                             ": warning: .* \\[-Wformat-overflow=\\]",
+                             ": warning: .* \\[-Wnonull"
                              )
 
                 ## clang warnings
