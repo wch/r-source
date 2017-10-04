@@ -24,6 +24,10 @@ intToUtf8(x, multiple = FALSE)
 \details{
   These will work in any locale, including on platforms that do not
   otherwise support multi-byte character sets.
+
+  \code{intToUtf8} does not handle surrogate pairs: inputs in the
+  surrogate ranges are mapped to \code{NA} (even if part of a valid
+  pair, since the pair order would depend on the unspecified endianness).
 }
 \value{
   Unicode defines a name and a number of all of the glyphs it

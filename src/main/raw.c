@@ -334,14 +334,19 @@ SEXP attribute_hidden do_intToUtf8(SEXP call, SEXP op, SEXP args, SEXP env)
     multiple = asLogical(CADR(args));
     if (multiple == NA_LOGICAL)
 	error(_("argument 'multiple' must be TRUE or FALSE"));
+    /*  
+	Could handle surrogate pairs here.
+	But endianness would matter (which is first, high or low?)
+    */
     if (multiple) {
 	R_xlen_t i, nc = XLENGTH(x);
 	PROTECT(ans = allocVector(STRSXP, nc));
 	for (i = 0; i < nc; i++) {
-	    if (INTEGER(x)[i] == NA_INTEGER)
+	    int this = INTEGER(x)[i];
+	    if (this == NA_INTEGER || (this >= 0xD800 && this <= 0xDFFF))
 		SET_STRING_ELT(ans, i, NA_STRING);
 	    else {
-		used = inttomb(buf, INTEGER(x)[i]);
+		used = inttomb(buf, this);
 		buf[used] = '\0';
 		SET_STRING_ELT(ans, i, mkCharCE(buf, CE_UTF8));
 	    }
@@ -352,8 +357,12 @@ SEXP attribute_hidden do_intToUtf8(SEXP call, SEXP op, SEXP args, SEXP env)
 	Rboolean haveNA = FALSE;
 	/* Note that this gives zero length for input '0', so it is omitted */
 	for (i = 0, len = 0; i < nc; i++) {
-	    if (INTEGER(x)[i] == NA_INTEGER) { haveNA = TRUE; break; }
-	    len += inttomb(NULL, INTEGER(x)[i]);
+	    int this = INTEGER(x)[i];
+	    if (this == NA_INTEGER || (this >= 0xD800 && this <= 0xDFFF)) {
+		haveNA = TRUE;
+		break;
+	    }
+	    len += inttomb(NULL, this);
 	}
 	if (haveNA) {
 	    PROTECT(ans = allocVector(STRSXP, 1));
