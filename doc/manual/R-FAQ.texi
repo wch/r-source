@@ -5,7 +5,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2017
-@set FAQ_DATE @value{FAQ_YEAR}-09-05
+@set FAQ_DATE @value{FAQ_YEAR}-10-04
 @set FAQ_VERSION @value{FAQ_DATE}
 @documentlanguage en
 @documentencoding ISO-8859-1
@@ -756,12 +756,17 @@ the R mailing lists.
 The R Core Team can be reached at @email{R-core@@lists.R-project.org}
 for comments and reports.
 
-Many of the R project's mailing lists are also available via
-@url{http://gmane.org, Gmane}, from which they can be read with a web
-browser, using an NNTP news reader, or via RSS feeds.  See
-@uref{http://dir.gmane.org/@/index.php?prefix=gmane.comp.lang.r.}@: for
-the available mailing lists, and @uref{http://www.gmane.org/rss.php} for
-details on RSS feeds.
+@c <FIXME>
+@c As of 2017-10, accessing GMANE's gmane.comp.lang.r still says
+@c   Not all of Gmane is back yet ...
+@c Hence comment out for the time being.
+@c Many of the R project's mailing lists are also available via
+@c @url{http://gmane.org, Gmane}, from which they can be read with a web
+@c browser, using an NNTP news reader, or via RSS feeds.  See
+@c @uref{http://dir.gmane.org/@/index.php?prefix=gmane.comp.lang.r.}@: for
+@c the available mailing lists, and @uref{http://www.gmane.org/rss.php} for
+@c details on RSS feeds.
+@c </FIXME>
 
 @node What is CRAN?, Can I use R for commercial purposes?, What mailing lists exist for R?, R Basics
 @section What is @acronym{CRAN}?
