@@ -1587,7 +1587,7 @@ utils::globalVariables(c(".MTable", ".AllMTable", ".dotsCall"))
         stop(gettextf("no method or default matching the \"...\" arguments in %s",
                       deparse(sys.call(sys.parent()), nlines = 1)), domain = NA)
     mc <- match.call(sys.function(sys.parent()), sys.call(sys.parent()),
-                     expand.dots=FALSE)
+                     expand.dots=FALSE, envir=parent.frame(2))
     args <- names(mc)[-1L]
     mc[args] <- lapply(args, as.name)
     names(mc)[names(mc) == "..."] <- ""

@@ -19,10 +19,13 @@
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{raw(0) & raw(0)} again returns \code{raw(0)} (rather
-      than \code{logical(0)}; ditto for \code{|}.
+      than \code{logical(0)}); ditto for \code{|}.
 
       \item \code{intToUtf8()} converts integers corresponding to
       surrogate code points to \code{NA} rather than invalid UTF-8.
+      
+      \item Fix calling of methods on generics that dispatch on
+      \code{\dots} when the call contains \code{\dots} (ported from devel).
     }
   }
 }
