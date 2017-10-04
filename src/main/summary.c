@@ -487,7 +487,7 @@ static R_INLINE SEXP complex_mean(SEXP x)
 	}
 	s += t/n; si += ti/n;
     }
-    Rcomplex val = { s, si };
+    Rcomplex val = { (double)s, (double)si };
     return ScalarComplex(val);
 }
 
