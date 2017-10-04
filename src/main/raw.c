@@ -335,8 +335,8 @@ SEXP attribute_hidden do_intToUtf8(SEXP call, SEXP op, SEXP args, SEXP env)
     if (multiple == NA_LOGICAL)
 	error(_("argument 'multiple' must be TRUE or FALSE"));
     /*  
-	Could handle surrogate pairs here.
-	But endianness would matter (which is first, high or low?)
+	Could handle surrogate pairs here,
+	but they should not occur in UTF-32.
     */
     if (multiple) {
 	R_xlen_t i, nc = XLENGTH(x);
