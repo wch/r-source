@@ -18,14 +18,16 @@
   }
   \subsection{BUG FIXES}{
     \itemize{
-      \item \code{raw(0) & raw(0)} again returns \code{raw(0)} (rather
-      than \code{logical(0)}); ditto for \code{|}.
+      \item \code{raw(0) & raw(0)} and \item \code{raw(0) | raw(0)}
+      again return \code{raw(0)} (rather than \code{logical(0)}).
 
       \item \code{intToUtf8()} converts integers corresponding to
-      surrogate code points to \code{NA} rather than invalid UTF-8.
+      surrogate code points to \code{NA} rather than invalid UTF-8, as
+      well as values larger than the current Unicode maximum of
+      \code{0x10FFFF}.
       
-      \item Fix calling of methods on generics that dispatch on
-      \code{\dots} when the call contains \code{\dots} (ported from devel).
+      \item Fix calling of methods on S4 generics that dispatch on
+      \code{\dots} when the call contains \code{\dots}.
     }
   }
 }

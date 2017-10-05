@@ -343,7 +343,9 @@ SEXP attribute_hidden do_intToUtf8(SEXP call, SEXP op, SEXP args, SEXP env)
 	PROTECT(ans = allocVector(STRSXP, nc));
 	for (i = 0; i < nc; i++) {
 	    int this = INTEGER(x)[i];
-	    if (this == NA_INTEGER || (this >= 0xD800 && this <= 0xDFFF))
+	    if (this == NA_INTEGER 
+		|| (this >= 0xD800 && this <= 0xDFFF)
+		|| this > 0x10FFFF)
 		SET_STRING_ELT(ans, i, NA_STRING);
 	    else {
 		used = inttomb(buf, this);
@@ -358,7 +360,9 @@ SEXP attribute_hidden do_intToUtf8(SEXP call, SEXP op, SEXP args, SEXP env)
 	/* Note that this gives zero length for input '0', so it is omitted */
 	for (i = 0, len = 0; i < nc; i++) {
 	    int this = INTEGER(x)[i];
-	    if (this == NA_INTEGER || (this >= 0xD800 && this <= 0xDFFF)) {
+	    if (this == NA_INTEGER 
+		|| (this >= 0xD800 && this <= 0xDFFF)
+		|| this > 0x10FFFF) {
 		haveNA = TRUE;
 		break;
 	    }

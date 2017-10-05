@@ -40,11 +40,12 @@ intToUtf8(x, multiple = FALSE)
   of the input and returns \code{NA} if it is invalid.
 
   \code{intToUtf8} converts a numeric vector of Unicode code points
-  either to a single character string or a character vector of single
-  characters.  (For a single character string \code{0} is silently
-  omitted: otherwise \code{0} is mapped to \code{""}.  Non-integral
-  numeric values are truncated to integers.)  The \code{\link{Encoding}}
-  is declared as \code{"UTF-8"}.
+  either (default) to a single character string or a character vector of
+  single characters. Non-integral numeric values are truncated to
+  integers: values above the maximum are mapped to \code{NA}.  For a
+  single character string \code{0} is silently omitted: otherwise
+  \code{0} is mapped to \code{""}.  The \code{\link{Encoding}} of a
+  non-\code{NA} return value is declared as \code{"UTF-8"}.
 
   \code{NA} inputs are mapped to \code{NA} output.
 }
