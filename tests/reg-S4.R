@@ -912,3 +912,7 @@ setGeneric("f")
 setMethod("f", "character", function(...){ callNextMethod() })
 stopifnot(identical(f(1, 2, 3), 3L))
 stopifnot(identical(f("a", "b", "c"), 3L))
+
+## ensure forwarding works correctly for dots dispatch
+f2 <- function(...) f(...)
+stopifnot(identical(f2(a=1L), 1L))
