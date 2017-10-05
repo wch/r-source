@@ -267,6 +267,8 @@ SEXP do_memoryprofile(SEXP, SEXP, SEXP, SEXP);
 SEXP do_merge(SEXP, SEXP, SEXP, SEXP);
 SEXP do_mget(SEXP, SEXP, SEXP, SEXP);
 SEXP do_missing(SEXP, SEXP, SEXP, SEXP);
+SEXP do_mmap_file(SEXP, SEXP, SEXP, SEXP);
+SEXP do_munmap_file(SEXP, SEXP, SEXP, SEXP);
 SEXP do_names(SEXP, SEXP, SEXP, SEXP);
 SEXP do_namesgets(SEXP, SEXP, SEXP, SEXP);
 SEXP do_nargs(SEXP, SEXP, SEXP, SEXP);
@@ -435,6 +437,7 @@ SEXP do_warning(SEXP, SEXP, SEXP, SEXP);
 SEXP do_while(SEXP, SEXP, SEXP, SEXP);
 SEXP do_which(SEXP, SEXP, SEXP, SEXP);
 SEXP do_withVisible(SEXP, SEXP, SEXP, SEXP);
+SEXP do_wrap_meta(SEXP, SEXP, SEXP, SEXP);
 SEXP do_xtfrm(SEXP, SEXP, SEXP, SEXP);
 
 SEXP do_getSnapshot(SEXP, SEXP, SEXP, SEXP);
