@@ -41,10 +41,9 @@
       \item New low level utilities \code{...elt(n)} and \code{...length()}
       for working with \code{...} parts inside a function.
 
-      \item \code{isTRUE()} is more tolerant and now true in
-      \preformatted{x <- rlnorm(99)
-	isTRUE(median(x) == quantile(x)["50\%"])
-      }
+      \item \code{isTRUE()} is more tolerant and now true
+      in  \preformatted{   x <- rlnorm(99)
+   isTRUE(median(x) == quantile(x)["50\%"])}
       New function \code{isFALSE()} defined analogously to \code{isTRUE()}.
 
       \item The default symbol table size has been increased from 4119
