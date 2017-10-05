@@ -218,40 +218,55 @@ getAssignedVar <- function(e, cntxt) {
     }
 }
 
-findLocals1 <- function(e, shadowed = character(0), cntxt) {
+addVar <- function(v, vars) assign(v, 1, envir = vars)
+findLocals1 <- function(e, shadowed = character(0), cntxt, vars) {
     if (typeof(e) == "language") {
         if (typeof(e[[1]]) %in% c("symbol", "character")) {
             v <- as.character(e[[1]])
             switch(v,
                    "=" =,
-                   "<-" = unique(c(getAssignedVar(e, cntxt),
-                                   findLocalsList1(e[-1], shadowed, cntxt))),
-                   "for" = unique(c(as.character(e[2]),
-                                    findLocalsList1(e[-2], shadowed, cntxt))),
+                   "<-" = { addVar(getAssignedVar(e, cntxt), vars); e[-1] },
+
+                   "for" = { addVar(as.character(e[2]), vars); e[-2] },
+
                    "delayedAssign" =,
                    "assign" = if (length(e) == 3 &&
                                   is.character(e[[2]]) &&
-                                  length(e[[2]]) == 1)
-                                  c(e[[2]], findLocals1(e[[3]], shadowed, cntxt))
-                              else findLocalsList1(e[1], shadowed, cntxt),
+                                  length(e[[2]]) == 1) {
+
+                                  addVar(e[[2]], vars); list(e[[3]])
+                              }
+                              else e[1],
                    "function" = character(0),
                    "~" = character(0),
                    "local" = if (! v %in% shadowed && length(e) == 2)
-                                 character(0)
-                             else findLocalsList1(e[-1], shadowed, cntxt),
+                                 NULL
+                             else e[-1],
                    "expression" =,
                    "quote" = if (! v %in% shadowed)
-                                 character(0)
-                             else findLocalsList1(e[-1], shadowed, cntxt),
-                   findLocalsList1(e[-1], shadowed, cntxt))
+                                 NULL
+                             else e[-1],
+                   e[-1])
         }
-         else findLocalsList1(e, shadowed, cntxt)
+        else e
     }
-    else character(0)
+    else NULL
 }
 
-findLocalsList1 <- function(elist, shadowed, cntxt)
-    unique(unlist(lapply(elist, findLocals1, shadowed, cntxt)))
+findLocalsList1 <- function(elist, shadowed, cntxt) {
+    todo <- elist
+    vars <- new.env()
+    while(length(todo) > 0) {
+        newtodo <- list()
+        lapply(todo, function(e)
+            lapply(findLocals1(e, shadowed, cntxt, vars),
+                function(x) newtodo <<- append(newtodo, x))
+        )
+       todo <- newtodo
+    }
+    ls(vars, all.names=T)
+}
+
 
 findLocals <- function(e, cntxt)
     findLocalsList(list(e), cntxt)
