@@ -47,7 +47,7 @@ download.packages(pkgs, destdir, available = NULL,
   }
   \item{type}{
     character string, indicate which type of packages: see
-    \code{\link{install.packages}}.
+    \code{\link{install.packages}} and \sQuote{Details}.
   }
   \item{\dots}{
     additional arguments to be passed to
@@ -64,6 +64,9 @@ download.packages(pkgs, destdir, available = NULL,
   \code{"file:///"} are allowed as prefixes to a file path.  Use the
   latter only for URLs: see \code{\link{url}} for their interpretation.
   (Other forms of \samp{file://} URLs are not supported.)
+
+  For \code{download.packages}, \code{type = "both"} looks at source
+  packages only.
 }
 \value{
   A two-column matrix of names and destination file names of those
