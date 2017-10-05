@@ -558,7 +558,7 @@ FUNTAB R_FunTab[] =
 {"rawToBits",	do_rawToBits,	1,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"packBits",	do_packBits,	1,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"utf8ToInt",	do_utf8ToInt,	1,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{"intToUtf8",	do_intToUtf8,	1,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+{"intToUtf8",	do_intToUtf8,	1,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"validUTF8",	do_validUTF8,	1,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"validEnc",	do_validEnc,	1,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"encodeString",do_encodeString,1,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
