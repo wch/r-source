@@ -53,6 +53,9 @@ mclapply <- function(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
         if (length(jobs)) {
             ## just in case there are zombies
             mccollect(children(jobs), FALSE)
+
+            ## just in case there are open file descriptors
+            sapply(children(jobs), function(x) rmChild(x$pid))
         }
     }
     on.exit(cleanup())

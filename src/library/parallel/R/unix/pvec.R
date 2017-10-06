@@ -1,7 +1,7 @@
 #  File src/library/parallel/R/unix/pvec.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -54,6 +54,9 @@ pvec <- function(v, FUN, ..., mc.set.seed = TRUE, mc.silent = FALSE,
         if (length(jobs)) {
             ## just in case there are zombies
             mccollect(children(jobs), FALSE)
+
+            ## just in case there are open file descriptors
+            sapply(children(jobs), function(x) rmChild(x$pid))
         }
     }
     on.exit(cleanup())
