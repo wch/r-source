@@ -59,6 +59,8 @@ S3method("[", "check_details_changes")
 
 S3method("as.character", "Rd")
 
+S3method("as.matrix", "check_url_db")
+
 S3method("format", "check_Rd_contents")
 S3method("format", "check_Rd_line_widths")
 S3method("format", "check_Rd_metadata")
