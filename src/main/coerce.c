@@ -718,7 +718,7 @@ static SEXP coerceToRaw(SEXP v)
     return ans;
 }
 
-SEXP attribute_hidden coerceToString(SEXP v)
+static SEXP coerceToString(SEXP v)
 {
     SEXP ans;
     int savedigits, warn = 0;
