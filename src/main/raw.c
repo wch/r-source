@@ -323,7 +323,7 @@ static size_t inttomb(char *s, const int wc)
 SEXP attribute_hidden do_intToUtf8(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, x;
-    int multiple;
+    int multiple, s_pair;
     size_t used, len;
     char buf[10], *tmp;
 
@@ -334,14 +334,22 @@ SEXP attribute_hidden do_intToUtf8(SEXP call, SEXP op, SEXP args, SEXP env)
     multiple = asLogical(CADR(args));
     if (multiple == NA_LOGICAL)
 	error(_("argument 'multiple' must be TRUE or FALSE"));
+    s_pair = asLogical(CADDR(args));
+    if (s_pair == NA_LOGICAL)
+	error(_("argument 'allow_surrogate_pairs' must be TRUE or FALSE"));
     if (multiple) {
+	if (s_pair)
+	    warning("allow_surrogate_pairs = TRUE is incompatible with multiple = TRUE and will be ignored");
 	R_xlen_t i, nc = XLENGTH(x);
 	PROTECT(ans = allocVector(STRSXP, nc));
 	for (i = 0; i < nc; i++) {
-	    if (INTEGER(x)[i] == NA_INTEGER)
+	    int this = INTEGER(x)[i];
+	    if (this == NA_INTEGER 
+		|| (this >= 0xD800 && this <= 0xDFFF) 
+		|| this > 0x10FFFF)
 		SET_STRING_ELT(ans, i, NA_STRING);
 	    else {
-		used = inttomb(buf, INTEGER(x)[i]);
+		used = inttomb(buf, this);
 		buf[used] = '\0';
 		SET_STRING_ELT(ans, i, mkCharCE(buf, CE_UTF8));
 	    }
@@ -352,8 +360,21 @@ SEXP attribute_hidden do_intToUtf8(SEXP call, SEXP op, SEXP args, SEXP env)
 	Rboolean haveNA = FALSE;
 	/* Note that this gives zero length for input '0', so it is omitted */
 	for (i = 0, len = 0; i < nc; i++) {
-	    if (INTEGER(x)[i] == NA_INTEGER) { haveNA = TRUE; break; }
-	    len += inttomb(NULL, INTEGER(x)[i]);
+	    int this = INTEGER(x)[i];
+	    if (this == NA_INTEGER 
+		|| (this >= 0xDC00 && this <= 0xDFFF)
+		|| this > 0x10FFFF) {
+		haveNA = TRUE;
+		break;
+	    }
+	    else if (this >=  0xD800 && this <= 0xDBFF) {
+		if(!s_pair || i >= nc-1) {haveNA = TRUE; break;}
+		int next = INTEGER(x)[i+1];
+		if(next >= 0xDC00 && next <= 0xDFFF) i++;
+		else {haveNA = TRUE; break;}
+	    } 
+	    else
+		len += inttomb(NULL, this);
 	}
 	if (haveNA) {
 	    PROTECT(ans = allocVector(STRSXP, 1));
@@ -368,7 +389,14 @@ SEXP attribute_hidden do_intToUtf8(SEXP call, SEXP op, SEXP args, SEXP env)
 	    tmp = alloca(len+1); tmp[len] = '\0';
 	}
 	for (i = 0, len = 0; i < nc; i++) {
-	    used = inttomb(buf, INTEGER(x)[i]);
+	    int this = INTEGER(x)[i];
+	    if(s_pair && (this >=  0xD800 && this <= 0xDBFF)) {
+		// all the validity checking has already been done.
+		int next = INTEGER(x)[++i];
+		unsigned int hi = this - 0xD800, lo = next - 0xDC00;
+		this = 0x10000 + (hi << 10) + lo;
+	    }
+	    used = inttomb(buf, this);
 	    strncpy(tmp + len, buf, used);
 	    len += used;
 	}

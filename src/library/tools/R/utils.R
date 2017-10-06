@@ -342,18 +342,16 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         if(file_test("-f", log)) {
             lines <- .get_LaTeX_errors_from_log_file(log)
             if(length(lines))
-                errors <- paste("LaTeX errors:",
-                                paste(lines, collapse = "\n"),
-                                sep = "\n")
+                errors <- paste0("LaTeX errors:\n",
+                                 paste(lines, collapse = "\n"))
         }
         ## BibTeX errors.
         log <- paste0(file_path_sans_ext(file), ".blg")
         if(file_test("-f", log)) {
             lines <- .get_BibTeX_errors_from_blg_file(log)
             if(length(lines))
-                errors <- paste("BibTeX errors:",
-                                paste(lines, collapse = "\n"),
-                                sep = "\n")
+                errors <- paste0("BibTeX errors:\n",
+                                 paste(lines, collapse = "\n"))
         }
 
         msg <- ""
@@ -475,8 +473,8 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
             if(sys2(latex, ltxargs)) {
                 lines <- .get_LaTeX_errors_from_log_file(paste0(base, ".log"))
                 errors <- if(length(lines))
-                    paste("LaTeX errors:",
-                          paste(lines, collapse = "\n"), sep = "\n")
+                    paste0("LaTeX errors:\n",
+                           paste(lines, collapse = "\n"))
                 else character()
                 stop(paste(gettextf("unable to run %s on '%s'", latex, file),
                            errors, sep = "\n"),
@@ -2064,10 +2062,10 @@ function(args, msg)
         paste("argument", sQuote(args), msg)
     else
         paste("arguments",
-              paste(c(rep.int("", len - 1L), "and "),
-                    sQuote(args),
-                    c(rep.int(", ", len - 1L), ""),
-                    sep = "", collapse = ""),
+              paste0(c(rep.int("", len - 1L), "and "),
+                     sQuote(args),
+                     c(rep.int(", ", len - 1L), ""),
+                     collapse = ""),
               msg)
 }
 

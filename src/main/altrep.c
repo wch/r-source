@@ -1607,9 +1607,9 @@ static int compact_intseq_Elt(SEXP x, R_xlen_t i)
     int inc = COMPACT_INTSEQ_INFO_INCR(info);
 
     if (inc == 1)
-	return n1 + i;
+	return (int) (n1 + i);
     else if (inc == -1)
-	return n1 - i;
+	return (int) (n1 - i);
     else
 	error("compact sequences with increment %d not supported yet", inc);
 }
@@ -1628,12 +1628,12 @@ compact_intseq_Get_region(SEXP sx, R_xlen_t i, R_xlen_t n, int *buf)
     R_xlen_t ncopy = size - i > n ? n : size - i;
     if (inc == 1) {
 	for (R_xlen_t k = 0; k < ncopy; k++)
-	    buf[k] = n1 + k + i;
+	    buf[k] = (int) (n1 + k + i);
 	return ncopy;
     }
     else if (inc == -1) {
 	for (R_xlen_t k = 0; k < ncopy; k++)
-	    buf[k] = n1 - k - i;
+	    buf[k] = (int) (n1 - k - i);
 	return ncopy;
     }
     else
@@ -1822,7 +1822,7 @@ static SEXP new_compact_intseq(R_xlen_t n, int n1, int inc)
 	error("compact sequences with increment %d not supported yet", inc);
 
     SEXP info = allocVector(INTSXP, 3);
-    INTEGER(info)[0] = n;
+    INTEGER(info)[0] = (int) n;
     INTEGER(info)[1] = n1;
     INTEGER(info)[2] = inc;
 
@@ -2192,10 +2192,13 @@ static SEXP compact_realseq_Serialized_state(SEXP x)
 static SEXP compact_realseq_Unserialize(SEXP class, SEXP state)
 {
     double inc = COMPACT_REALSEQ_INFO_INCR(state);
+    R_xlen_t len = (R_xlen_t) REAL_ELT(state, 0);
+    double n1 = REAL_ELT(state, 1);
+
     if (inc == 1)
-	return new_compact_realseq(REAL_ELT(state, 0), REAL_ELT(state, 1),  1);
+	return new_compact_realseq(len, n1,  1);
     else if (inc == -1)
-	return new_compact_realseq(REAL_ELT(state, 0), REAL_ELT(state, 1), -1);
+	return new_compact_realseq(len, n1, -1);
     else
 	error("compact sequences with increment %f not supported yet", inc);
 }
@@ -2227,7 +2230,7 @@ Rboolean compact_realseq_Inspect(SEXP x, int pre, int deep, int pvec,
 
 static R_INLINE R_xlen_t compact_realseq_Length(SEXP x)
 {
-    return REAL0(ALTREP_INFO(x))[0];
+    return (R_xlen_t) REAL0(ALTREP_INFO(x))[0];
 }
 
 static void *compact_realseq_Dataptr(SEXP x, Rboolean writeable)
@@ -2239,7 +2242,7 @@ static void *compact_realseq_Dataptr(SEXP x, Rboolean writeable)
 	double n1 = COMPACT_REALSEQ_INFO_FIRST(info);
 	double inc = COMPACT_REALSEQ_INFO_INCR(info);
 	
-	SEXP val = allocVector(REALSXP, n);
+	SEXP val = allocVector(REALSXP, (R_xlen_t) n);
 	double *data = REAL(val);
 
 	if (inc == 1) {
@@ -2291,7 +2294,7 @@ compact_realseq_Get_region(SEXP sx, R_xlen_t i, R_xlen_t n, double *buf)
     CHECK_NOT_EXPANDED(sx);
 
     SEXP info = ALTREP_INFO(sx);
-    R_xlen_t size = COMPACT_REALSEQ_INFO_LENGTH(info);
+    R_xlen_t size = (R_xlen_t) COMPACT_REALSEQ_INFO_LENGTH(info);
     double n1 = COMPACT_REALSEQ_INFO_FIRST(info);
     double inc = COMPACT_REALSEQ_INFO_INCR(info);
 
@@ -2317,7 +2320,7 @@ static int compact_realseq_Is_sorted(SEXP x)
     if (ALTREAL_EXPANDED(x) != R_NilValue)
 	return UNKNOWN_SORTEDNESS;
 #endif
-    int inc = COMPACT_REALSEQ_INFO_INCR(ALTREP_INFO(x));
+    double inc = COMPACT_REALSEQ_INFO_INCR(ALTREP_INFO(x));
     return inc < 0 ? KNOWN_DECR : KNOWN_INCR;
 }
 
@@ -2433,7 +2436,7 @@ SEXP attribute_hidden R_compact_intrange(R_xlen_t n1, R_xlen_t n2)
     if (n1 <= INT_MIN || n1 > INT_MAX || n2 <= INT_MIN || n2 > INT_MAX)
 	return new_compact_realseq(n, n1, n1 <= n2 ? 1 : -1);
     else
-	return new_compact_intseq(n, n1, n1 <= n2 ? 1 : -1);
+	return new_compact_intseq(n, (int) n1, n1 <= n2 ? 1 : -1);
 }
 
 
@@ -3281,7 +3284,16 @@ static void InitMmapRealClass(DllInfo *dll)
  */
 
 #ifdef Win32
-# error "I'm sure this needs adjusting for Windows, so punt for now."
+static void mmap_finalize(SEXP eptr)
+{
+    error("mmop objects not supported on Windows yet");
+}
+
+static SEXP mmap_file(SEXP file, int type, Rboolean ptrOK, Rboolean wrtOK,
+		      Rboolean serOK, Rboolean warn)
+{
+    error("mmop objects not supported on Windows yet");
+}
 #else
 /* derived from the example in
   https://www.safaribooksonline.com/library/view/linux-system-programming/0596009585/ch04s03.html */

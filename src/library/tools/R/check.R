@@ -1365,9 +1365,9 @@ setRlibs <-
                 any <- TRUE
                 printLog(Log, "Problems with news in 'inst/NEWS.Rd':\n")
                 printLog0(Log,
-                          paste("  ",
-                                unlist(strsplit(msg, "\n", fixed = TRUE)),
-                                sep = "", collapse = "\n"),
+                          paste0("  ",
+                                 unlist(strsplit(msg, "\n", fixed = TRUE)),
+                                 collapse = "\n"),
                           "\n")
             }
         }
@@ -4310,8 +4310,8 @@ setRlibs <-
                 msg <- if(length(bad) == 1L)
                     sprintf("  Namespace with empty importFrom: %s", sQuote(bad))
                 else
-                    paste("  Namespaces with empty importFrom:",
-                          .pretty_format(sort(bad)), sep = "\n")
+                    paste0("  Namespaces with empty importFrom:\n",
+                           .pretty_format(sort(bad)))
                 noteLog(Log, msg)
             }
             nS3methods <- nrow(ns$S3methods)

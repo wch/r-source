@@ -54,9 +54,9 @@ print.warnings <- function(x, tags,
                 nl <- if(nchar(tags[i], "w") + nchar(temp[1L], "w") +
                          nchar(sm[1L], "w") <= 75L)
                     " " else "\n  "
-                paste(tags[i], "In ",
-                      temp[1L], if(length(temp) > 1L) " ...",
-                      " :", nl, msgs[i], sep = "")
+                paste0(tags[i], "In ",
+                       temp[1L], if(length(temp) > 1L) " ...",
+                       " :", nl, msgs[i])
             } else paste0(tags[i], msgs[i])
             do.call("cat", c(list(out), attr(x, "dots"), fill=TRUE))
         }

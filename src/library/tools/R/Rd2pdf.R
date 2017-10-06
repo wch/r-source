@@ -120,9 +120,12 @@
                                 attr(res,"latexEncoding"))
             lines <- readLines(out)
             if (attr(res, "hasFigures")) {
-                graphicspath <- paste("\\graphicspath{{",
-                                      normalizePath(file.path(dirname(f), "figures"), "/"),
-                                      "/}}", sep="")
+                graphicspath <-
+                    paste0("\\graphicspath{{",
+                           normalizePath(file.path(dirname(f),
+                                                   "figures"),
+                                         "/"),
+                           "/}}")
             	lines <- c(graphicspath, lines)
             	hasFigures <- TRUE
             }
@@ -191,9 +194,12 @@
                                     attr(res, "latexEncoding"))
                 if (attr(res, "hasFigures")) {
                     lines <- readLines(outfilename)
-                    graphicspath <- paste("\\graphicspath{{",
-                    		    normalizePath(file.path(pkgdir, "help", "figures"), "/"),
-                    		    "/}}", sep="")
+                    graphicspath <-
+                        paste0("\\graphicspath{{",
+                               normalizePath(file.path(pkgdir, "help",
+                                                       "figures"),
+                                             "/"),
+                               "/}}")
                     writeLines(c(graphicspath, lines), outfilename)
                     hasFigures <- TRUE
                 }
@@ -256,12 +262,11 @@
                 if (attr(res, "hasFigures")) {
                     lines <- readLines(outfilename)
                     graphicspath <-
-                        paste("\\graphicspath{{",
-                              normalizePath(file.path(dirname(paths[i]),
-                                                      "figures"),
-                                            "/"),
-                              "/}}",
-                              sep = "")
+                        paste0("\\graphicspath{{",
+                               normalizePath(file.path(dirname(paths[i]),
+                                                       "figures"),
+                                             "/"),
+                               "/}}")
                     writeLines(c(graphicspath, lines), outfilename)
                     hasFigures <- TRUE
                 }
@@ -497,9 +502,9 @@ function(pkgdir, outfile, title, batch = FALSE,
     ## trailer is for detection if we want to edit it later.
     latex_outputEncoding <- latex_canonical_encoding(outputEncoding)
     setEncoding <-
-        paste("\\usepackage[",
-              latex_outputEncoding, "]{",
-              inputenc, "} % @SET ENCODING@", sep="")
+        paste0("\\usepackage[",
+               latex_outputEncoding, "]{",
+               inputenc, "} % @SET ENCODING@")
     useGraphicx <- "% \\usepackage{graphicx} % @USE GRAPHICX@"
     writeLines(c(setEncoding,
                  if (inputenc == "inputenx" &&
@@ -591,15 +596,13 @@ function(pkgdir, outfile, title, batch = FALSE,
 		paste0("\\usepackage[", encs, "]{", inputenc, "}")
 	} else {
 	    setEncoding2 <-
-		paste(
-"\\usepackage[", encs, "]{", inputenc, "}
-\\IfFileExists{t2aenc.def}{\\usepackage[T2A]{fontenc}}{}", sep = "")
+		paste0("\\usepackage[", encs, "]{", inputenc, "}\n",
+                       "\\IfFileExists{t2aenc.def}{\\usepackage[T2A]{fontenc}}{}")
 	}
 	if (moreUnicode) {
 	    setEncoding2 <-
-		paste0(
-setEncoding2, "
-\\IfFileExists{ix-utf8enc.dfu}{\\input{ix-utf8enc.dfu}}{}")
+		paste0(setEncoding2,
+                       "\n\\IfFileExists{ix-utf8enc.dfu}{\\input{ix-utf8enc.dfu}}{}")
         }
         lines[lines == setEncoding] <- setEncoding2
 	if (hasFigures)

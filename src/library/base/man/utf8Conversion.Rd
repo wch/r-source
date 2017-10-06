@@ -10,20 +10,31 @@
 \alias{code point}
 \title{Convert Integer Vectors to or from UTF-8-encoded Character Vectors}
 \description{
-  Conversion of UTF-8 encoded character vectors to and from integer vectors.
+  Conversion of UTF-8 encoded character vectors to and from integer
+  vectors representing a UTF-32 encoding.
 }
 \usage{
 utf8ToInt(x)
-intToUtf8(x, multiple = FALSE)
+intToUtf8(x, multiple = FALSE, allow_surrogate_pairs = FALSE)
 }
 \arguments{
   \item{x}{object to be converted.}
   \item{multiple}{logical: should the conversion be to a single
     character string or multiple individual characters?}
+  \item{allow_surrogate_pairs}{logical: should interpretation of
+    surrogate pairs be attempted?  (See \sQuote{Details}.)
+    Only supported for \code{multiple = FALSE} and in \R 3.5.0 and later.}
 }
 \details{
   These will work in any locale, including on platforms that do not
   otherwise support multi-byte character sets.
+
+  \code{intToUtf8} does not by default handle surrogate pairs (which
+  should not occur in UTF-32): inputs in the surrogate ranges are mapped
+  to \code{NA}.  They might occur if a UTF-16 byte stream has been read
+  as 2-byte integers (in the correct byte order), in which case
+  \code{allow_surrogate_pairs = TRUE} will try to interpret them (with
+  unmatched surrogate values still treated as \code{NA}).
 }
 \value{
   Unicode defines a name and a number of all of the glyphs it
@@ -35,11 +46,12 @@ intToUtf8(x, multiple = FALSE)
   of the input and returns \code{NA} if it is invalid.
 
   \code{intToUtf8} converts a numeric vector of Unicode code points
-  either to a single character string or a character vector of single
-  characters.  (For a single character string \code{0} is silently
-  omitted: otherwise \code{0} is mapped to \code{""}.  Non-integral
-  numeric values are truncated to integers.)  The \code{\link{Encoding}}
-  is declared as \code{"UTF-8"}.
+  either (default) to a single character string or a character vector of
+  single characters. Non-integral numeric values are truncated to
+  integers: values above the maximum are mapped to \code{NA}.  For a
+  single character string \code{0} is silently omitted: otherwise
+  \code{0} is mapped to \code{""}.  The \code{\link{Encoding}} of a
+  non-\code{NA} return value is declared as \code{"UTF-8"}.
 
   \code{NA} inputs are mapped to \code{NA} output.
 }
@@ -49,6 +61,26 @@ intToUtf8(0x03B2L) # Greek beta
 }
 utf8ToInt("bi\u00dfchen")
 utf8ToInt("\xfa\xb4\xbf\xbf\x9f")
+
+## A valid UTF-16 surrogate pair (for U+10437)
+x <- c(0xD801, 0xDC37)
+intToUtf8(x)
+intToUtf8(x, TRUE)
+(xx <- intToUtf8(x, , TRUE)) # will only display in some locales and fonts
+charToRaw(xx)
+
+\dontrun{## An example of how surrogate pairs might occur
+x <- "\U10437"
+charToRaw(x)
+foo <- tempfile()
+writeLines(x, file(foo, encoding = "UTF-16LE"))
+## next two are OS-specific, but are mandated by POSIX
+system(paste("od -x", foo)) # 2-byte units, correct on little-endian platform
+system(paste("od -t x1", foo)) # single bytes as hex
+y <- readBin(foo, "integer", 2, 2, FALSE, endian = "little")
+sprintf("%X", y)
+intToUtf8(y, , TRUE)
+}
 }
 \keyword{character}
 \keyword{utilities}

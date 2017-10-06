@@ -1763,39 +1763,61 @@ syntactically special, but not for [[expression]], [[local]] and
 surrounding function.  To allow for this we can add an optional
 variable [[shadowed]] for providing a character vector of names of
 variables with shadowing local definitions.
+
+The more sophisticated implementaiton is also slightly optimized to avoid
+recursive calls. [[findLocals1]] now, instead of searching through the full
+transitive closure of language objects, only searches from the first, but
+returns what remains to be searched. The variables found are stored into an
+environment, which avoids some extra calls and assures that each variable is
+listed at most once.
 <<[[findLocals1]] function>>=
-findLocals1 <- function(e, shadowed = character(0), cntxt) {
+addVar <- function(v, vars) assign(v, 1, envir = vars)
+findLocals1 <- function(e, shadowed = character(0), cntxt, vars) {
     if (typeof(e) == "language") {
         if (typeof(e[[1]]) %in% c("symbol", "character")) {
             v <- as.character(e[[1]])
             switch(v,
                    <<[[findLocals1]] switch clauses>>
-                   findLocalsList1(e[-1], shadowed, cntxt))
+                   e[-1])
         }
-         else findLocalsList1(e, shadowed, cntxt)
+        else e
     }
-    else character(0)
+    else NULL
 }
 @ %def findLocals1 
 %% **** merge into single chunk??
 <<[[findLocalsList1]] function>>=
-findLocalsList1 <- function(elist, shadowed, cntxt)
-    unique(unlist(lapply(elist, findLocals1, shadowed, cntxt)))
+findLocalsList1 <- function(elist, shadowed, cntxt) {
+    todo <- elist
+    vars <- new.env()
+    while(length(todo) > 0) {
+        newtodo <- list()
+        lapply(todo, function(e)
+            lapply(findLocals1(e, shadowed, cntxt, vars),
+                function(x) newtodo <<- append(newtodo, x))
+        )
+       todo <- newtodo
+    }
+    ls(vars, all.names=T)
+}
+
 @ %def findLocalsList1
 The handling of assignment operators, [[for]] loops, [[function]] and
 [[~]] expressions is analogous to the approach in [[findLocals0]].
 <<[[findLocals1]] switch clauses>>=
 "=" =,
-"<-" = unique(c(getAssignedVar(e, cntxt),
-                findLocalsList1(e[-1], shadowed, cntxt))),
-"for" = unique(c(as.character(e[2]),
-                 findLocalsList1(e[-2], shadowed, cntxt))),
+"<-" = { addVar(getAssignedVar(e, cntxt), vars); e[-1] },
+
+"for" = { addVar(as.character(e[2]), vars); e[-2] },
+
 "delayedAssign" =,
 "assign" = if (length(e) == 3 &&
                is.character(e[[2]]) &&
-               length(e[[2]]) == 1)
-               c(e[[2]], findLocals1(e[[3]], shadowed, cntxt))
-           else findLocalsList1(e[1], shadowed, cntxt),
+               length(e[[2]]) == 1) {
+
+               addVar(e[[2]], vars); list(e[[3]])
+           }
+           else e[1],
 "function" = character(0),
 "~" = character(0),
 @ %def
@@ -1804,12 +1826,12 @@ The rules for ignoring assignments in [[local]], [[expression]], and
 definitions.
 <<[[findLocals1]] switch clauses>>=
 "local" = if (! v %in% shadowed && length(e) == 2)
-              character(0)
-          else findLocalsList1(e[-1], shadowed, cntxt),
+              NULL
+          else e[-1],
 "expression" =,
 "quote" = if (! v %in% shadowed)
-              character(0)
-          else findLocalsList1(e[-1], shadowed, cntxt),
+              NULL
+          else e[-1],
 @ %def
 The assignment functions could also be shadowed, but this is not very
 common, and assuming that they are not errs in the conservative

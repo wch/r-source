@@ -168,6 +168,15 @@
    */
 #define HAVE_DECL_ALLOCA 0
 
+
+/* Define to 1 if you have the declaration of `dladdr', and to 0 if you don't.
+   */
+/* #undef HAVE_DECL_DLADDR */
+
+/* Define to 1 if you have the declaration of `dlsym', and to 0 if you don't.
+   */
+/* #undef HAVE_DECL_DLSYM */
+
 /* Define to 1 if you have the declaration of `feof_unlocked', and to 0 if you
    don't. (For intl) */
 #define HAVE_DECL_FEOF_UNLOCKED 0
@@ -199,6 +208,14 @@
 /* Define to 1 if you have the declaration of `realpath', and to 0 if you
    don't. */
 #define HAVE_DECL_REALPATH 0
+
+/* Define to 1 if you have the declaration of `RTLD_DEFAULT', and to 0 if you
+   don't. */
+/* #undef HAVE_DECL_RTLD_DEFAULT */
+
+/* Define to 1 if you have the declaration of `RTLD_NEXT', and to 0 if you
+   don't. */
+/* #undef HAVE_DECL_RTLD_NEXT */
 
 /* Define to 1 if you have the declaration of `siglongjmp', and to 0 if you
    don't. */
@@ -238,6 +255,9 @@
 
 /* Define to 1 if you have the <dlfcn.h> header file. */
 /* #undef HAVE_DLFCN_H */
+
+/* Define to 1 if you have the `dlsym' function. */
+/* #undef HAVE_DLSYM */
 
 /* Define to 1 if you have the <dl.h> header file. */
 /* #undef HAVE_DL_H */
@@ -283,9 +303,6 @@
    can do arithmetic on the latter. */
 #define HAVE_FORTRAN_DOUBLE_COMPLEX 1
 
-/* Define to 1 if you have the <fpu_control.h> header file. */
-/* #undef HAVE_FPU_CONTROL_H */
-
 /* Define to 1 if fseeko (and presumably ftello) exists and is declared. */
 /* #undef HAVE_FSEEKO */
 
@@ -309,6 +326,9 @@
 
 /* Define to 1 if you have the `getgid' function. */
 /* #undef HAVE_GETGID */
+
+/* Define to 1 if you have the `getline' function. */
+/* #undef HAVE_GETLINE */
 
 /* Define to 1 if you have the `getgrgid' function. */
 /* #undef HAVE_GETGRGID */
@@ -421,7 +441,7 @@
 /* Define if your <locale.h> file defines LC_MESSAGES. */
 /* #undef HAVE_LC_MESSAGES */
 
-/* Define if your system has libcurl >= 7.28.0 with support for https.
+/* Define if your system has libcurl >= 7.22.0 with support for https.
    Set on the command line where supported.
  */
 /* #undef HAVE_LIBCURL */
@@ -565,6 +585,9 @@
 /* Define to 1 if you have pangocairo. */
 /* #undef HAVE_PANGOCAIRO */
 
+/* Define if your system has pcre2. */
+/* #undef HAVE_PCRE2 */
+
 /* Define to 1 if you have the <pcre.h> header file. */
 /* #undef HAVE_PCRE_H */
 
@@ -634,6 +657,12 @@
 /* Define to 1 if you have the `rl_completion_matches' function. */
 /* #undef HAVE_RL_COMPLETION_MATCHES */
 
+/* Define to 1 if you have the `rl_resize_terminal' function. */
+/* #undef HAVE_RL_RESIZE_TERMINAL */
+
+/* Define to 1 if you have the `rl_sort_completion_matches' function. */
+/* #undef HAVE_RL_SORT_COMPLETION_MATCHES */
+
 /* Define to 1 if you have the `sched_getaffinity' function. */
 #undef HAVE_SCHED_GETAFFINITY
 
@@ -642,6 +671,9 @@
 
 /* Define to 1 if you have the `sched_setaffinity' function. */
 #undef HAVE_SCHED_SETAFFINITY
+
+/* Define to 1 if you have the `select' function. */
+/* #undef HAVE_SELECT */
 
 /* Define to 1 if you have the `setenv' function. */
 /* #undef HAVE_SETENV */
@@ -782,6 +814,12 @@
    to be built. */
 #define HAVE_TCLTK 1
 
+/* Define to 1 if you have the <thread.h> header file. */
+/* #undef HAVE_THREAD_H */
+
+/* Define to 1 if you have the `thr_stksegment' function. */
+/* #undef HAVE_THR_STKSEGMENT */
+
 /* Define this if libtiff is available. */
 #define HAVE_TIFF 1
 
@@ -836,6 +874,9 @@
 
 /* Define to 1 if you have the `utime' function. */
 /* #undef HAVE_UTIME */
+
+/* Define to 1 if you have the `utimensat' function. */
+/* #undef HAVE_UTIMENSAT */
 
 /* Define to 1 if you have the `utimes' function. */
 /* #undef HAVE_UTIMES */
@@ -930,8 +971,17 @@
 /* Define if you have the X11/Xmu headers and libraries. */
 /* #undef HAVE_X11_Xmu */
 
+/* Define to 1 if you have the `__cospi' function. */
+/* #undef HAVE___COSPI */
+
 /* Define to 1 if you have the `__fsetlocking' function. */
 /* #undef HAVE___FSETLOCKING */
+
+/* Define to 1 if you have the `__sinpi' function. */
+/* #undef HAVE___SINPI */
+
+/* Define to 1 if you have the `__tanpi' function. */
+/* #undef HAVE___TANPI */
 
 /* Define as const if the declaration of iconv() needs const. */
 #define ICONV_CONST const
@@ -948,14 +998,11 @@
 /* Define to the sub-directory where libtool stores uninstalled libraries. */
 #define LT_OBJDIR ".libs/"
 
+/* macOS 10.12 (Sierra) or earlier */
+/* #undef MACOS_SIERRA */
+
 /* Define if mktime sets errno. */
 #define MKTIME_SETS_ERRNO 1
-
-/* Define if your system needs __setfpucw() to control FPU rounding. This was
-   used to control floating point precision, rounding and floating point
-   exceptions on older Linux systems. As of GLIBC 2.1 this function is not
-   used anymore. */
-/* #undef NEED___SETFPUCW */
 
 /* Define to disable Valgrind instrumentation */
 #define NVALGRIND 1
@@ -986,6 +1033,9 @@
 
 /* Define to the version of this package. */
 #define PACKAGE_VERSION "@VERSION@"
+
+/* PCRE2 code unit width wanted. */
+/* #undef PCRE2_CODE_UNIT_WIDTH */
 
 /* Define if <inttypes.h> exists and defines unusable PRI* macros. (For intl)
    */

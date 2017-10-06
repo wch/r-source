@@ -563,7 +563,11 @@ pushReadline(const char *prompt, rl_vcpfunc_t f)
    rl_callback_handler_install(prompt, f);
 
 #ifdef NEED_INT_HANDLER
-   signal(SIGWINCH, R_readline_sigwinch_handler);
+    struct sigaction sa;
+    sigemptyset(&sa.sa_mask);
+    sa.sa_handler = &R_readline_sigwinch_handler;
+    sa.sa_flags = SA_RESTART;
+    sigaction(SIGWINCH, &sa, NULL);
 #endif
 
    /* flush stdout in case readline wrote the prompt, but didn't flush
