@@ -358,8 +358,6 @@ INLINE_FUN SEXP R_altrep_data2(SEXP x) { return CDR(x); }
 INLINE_FUN void R_set_altrep_data1(SEXP x, SEXP v) { SETCAR(x, v); }
 INLINE_FUN void R_set_altrep_data2(SEXP x, SEXP v) { SETCDR(x, v); }
 
-#define COMPACT_INTSEQ_FIRST(x) INTEGER0(R_altrep_data1(x))[1]
-#define COMPACT_INTSEQ_INCR(x) INTEGER0(R_altrep_data1(x))[2]
 INLINE_FUN int INTEGER_ELT(SEXP x, R_xlen_t i)
 {
     CHECK_VECTOR_INT_ELT(x, i);
@@ -368,6 +366,9 @@ INLINE_FUN int INTEGER_ELT(SEXP x, R_xlen_t i)
     if (px != NULL)
 	return px[i];
     else {
+#ifdef COMPACT_SEQ_ELT_INLINE
+# define COMPACT_INTSEQ_FIRST(x) INTEGER0(R_altrep_data1(x))[1]
+# define COMPACT_INTSEQ_INCR(x) INTEGER0(R_altrep_data1(x))[2]
 	/* inline compact integer sequences */
 	extern R_altrep_class_t R_compact_intseq_class;
 	SEXP class = ALTREP_CLASS(x);
@@ -379,11 +380,12 @@ INLINE_FUN int INTEGER_ELT(SEXP x, R_xlen_t i)
 	    else if (inc == -1)
 		return n1 - i;
 	}
+# undef COMPACT_INTSEQ_FIRST
+# undef COMPACT_INTSEQ_INCR
+#endif
 	return ALTINTEGER_ELT(x, i);
     }
 }
-#undef COMPACT_INTSEQ_FIRST
-#undef COMPACT_INTSEQ_INCR
 
 INLINE_FUN int LOGICAL_ELT(SEXP x, R_xlen_t i)
 {
@@ -391,8 +393,6 @@ INLINE_FUN int LOGICAL_ELT(SEXP x, R_xlen_t i)
     return ALTREP(x) ? ALTLOGICAL_ELT(x, i) : LOGICAL0(x)[i];
 }
 
-#define COMPACT_REALSEQ_FIRST(x) REAL0(R_altrep_data1(x))[1]
-#define COMPACT_REALSEQ_INCR(x) REAL0(R_altrep_data1(x))[2]
 INLINE_FUN double REAL_ELT(SEXP x, R_xlen_t i)
 {
     CHECK_VECTOR_REAL_ELT(x, i);
@@ -401,6 +401,9 @@ INLINE_FUN double REAL_ELT(SEXP x, R_xlen_t i)
     if (px != NULL)
 	return px[i];
     else {
+#ifdef COMPACT_SEQ_ELT_INLINE
+# define COMPACT_REALSEQ_FIRST(x) REAL0(R_altrep_data1(x))[1]
+# define COMPACT_REALSEQ_INCR(x) REAL0(R_altrep_data1(x))[2]
 	/* inline compact real sequences */
 	extern R_altrep_class_t R_compact_realseq_class;
 	SEXP class = ALTREP_CLASS(x);
@@ -412,11 +415,12 @@ INLINE_FUN double REAL_ELT(SEXP x, R_xlen_t i)
 	    else if (inc == -1)
 		return n1 - i;
 	}
+# undef COMPACT_REALSEQ_FIRST
+# undef COMPACT_REALSEQ_INCR
+#endif
 	return ALTREAL_ELT(x, i);
     }
 }
-#undef COMPACT_REALSEQ_FIRST
-#undef COMPACT_REALSEQ_INCR
 
 INLINE_FUN double SET_REAL_ELT(SEXP x, R_xlen_t i, double v)
 {

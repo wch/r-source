@@ -370,9 +370,13 @@ SEXP attribute_hidden ALTVEC_EXTRACT_SUBSET(SEXP x, SEXP indx, SEXP call)
  * Typed ALTVEC support
  */
 
-#define CHECK_NOT_EXPANDED(x)					\
+#ifdef DEBUG_CHECKS
+# define CHECK_NOT_EXPANDED(x)					\
     if (DATAPTR_OR_NULL(x, FALSE) != NULL)			\
 	error("method should only handle unexpanded vectors")
+#else
+# define CHECK_NOT_EXPANDED(x) do {} while (0)
+#endif
 
 #define ALTINTEGER_EXPANDED(x) R_altrep_data2(x)
 #define ALTREAL_EXPANDED(x) R_altrep_data2(x)
