@@ -300,12 +300,12 @@ ls.print <- function(ls.out, digits = 4L, print.it = TRUE)
 	if(print.it) {
 	    if(m.y>1)
 		cat("Response:", Ynames[i], "\n\n")
-	    cat(paste("Residual Standard Error=",
-                      format(round(resse[i], digits)), "\nR-Square=",
-                      format(round(rsquared[i], digits)), "\nF-statistic (df=",
-		      format(degfree), ", ", format(n[i]-p), ")=",
-		      format(round(fstat[i], digits)), "\np-value=",
-		      format(round(pvalue[i], digits)), "\n\n", sep=""))
+	    cat(paste0("Residual Standard Error=",
+                       format(round(resse[i], digits)), "\nR-Square=",
+                       format(round(rsquared[i], digits)), "\nF-statistic (df=",
+                       format(degfree), ", ", format(n[i]-p), ")=",
+                       format(round(fstat[i], digits)), "\np-value=",
+                       format(round(pvalue[i], digits)), "\n\n"))
 	    print(round(coef.table[[i]], digits))
 	    cat("\n\n")
 	}

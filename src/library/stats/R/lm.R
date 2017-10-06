@@ -637,8 +637,8 @@ anova.lmlist <- function (object, ..., scale = 0, test = "F")
                             c("Res.Df", "RSS", "Df", "Sum of Sq"))
 
     title <- "Analysis of Variance Table\n"
-    topnote <- paste("Model ", format(1L:nmodels),": ",
-		     variables, sep = "", collapse = "\n")
+    topnote <- paste0("Model ", format(1L:nmodels), ": ", variables,
+                      collapse = "\n")
 
     ## calculate test statistic if needed
 

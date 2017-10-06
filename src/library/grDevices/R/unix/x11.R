@@ -173,8 +173,8 @@ printFont <- function(font) paste0(font, "\n")
 
 
 printFonts <- function(fonts)
-    cat(paste(names(fonts), ": ", unlist(lapply(fonts, printFont)),
-              sep="", collapse=""))
+    cat(paste0(names(fonts), ": ", unlist(lapply(fonts, printFont)),
+               collapse=""))
 
 # If no arguments spec'ed, return entire font database
 # If no named arguments spec'ed, all args should be font names
@@ -220,7 +220,7 @@ X11Fonts(# Default Serif font is Times
          Mincho = X11Font("-*-mincho-%s-%s-*-*-%d-*-*-*-*-*-*-*")
          )
 
-savePlot <- function(filename = paste("Rplot", type, sep = "."),
+savePlot <- function(filename = paste0("Rplot.", type),
                      type = c("png", "jpeg", "tiff", "bmp"),
                      device = dev.cur())
 {

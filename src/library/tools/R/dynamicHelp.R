@@ -341,23 +341,25 @@ httpd <- function(path, query, ...)
                     "unknown title" else
                     tmp[file_path_sans_ext(tmp$File) == tp[i], "Title"]
             }
-            packages <- paste('<dt><a href="../../', basename(paths), '/html/',
-                              basename(file), '.html">', titles,
-                              '</a></dt><dd> (in package <a href="../../',
-                              basename(paths),
-                              '/html/00Index.html">', basename(paths),
-                              '</a> in library ', dirname(paths), ")</dd>",
-                              sep = "", collapse = "\n")
+            packages <- paste0('<dt><a href="../../',
+                               basename(paths), '/html/',
+                               basename(file), '.html">', titles,
+                               '</a></dt><dd> (in package <a href="../../',
+                               basename(paths),
+                               '/html/00Index.html">', basename(paths),
+                               '</a> in library ', dirname(paths), ")</dd>",
+                               collapse = "\n")
 
             return(list(payload =
-                        paste("<p>",
-                              ## for languages with multiple plurals ....
-                              sprintf(ngettext(length(paths),
-                                               "Help on topic '%s' was found in the following package:",
-                                               "Help on topic '%s' was found in the following packages:"
-                                               ), topic),
-                              "</p><dl>\n",
-                              packages, "</dl>", sep = "", collapse = "\n")
+                        paste0("<p>",
+                               ## for languages with multiple plurals ....
+                               sprintf(ngettext(length(paths),
+                                                "Help on topic '%s' was found in the following package:",
+                                                "Help on topic '%s' was found in the following packages:"
+                                                ), topic),
+                               "</p><dl>\n",
+                               packages, "</dl>",
+                               collapse = "\n")
                         ))
         }
     } else if (grepl(fileRegexp, path)) {

@@ -121,9 +121,9 @@ function(file)
     ## liberal.
     re_valid_package_name <- .standard_regexps()$valid_package_name
     re_v <- sprintf("^([[:space:]]*(%s)|(%s))(%s).*$",
-                    paste("CHANGES? *(IN|FOR).*VERSION *",
-                          "CHANGES? *(IN|FOR|TO) *",
-                          sep = "|"),
+                    paste0("CHANGES? *(IN|FOR).*VERSION *",
+                           "|",
+                           "CHANGES? *(IN|FOR|TO) *"),
                     sprintf(paste(## TeachingDemos pomp ouch
                                   "NEW IN .*",
                                   ## HyperbolicDist nls2 proto

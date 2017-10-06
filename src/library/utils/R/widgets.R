@@ -52,8 +52,8 @@ select.list <-
             nw <- nchar(fop[1L], "w") + 2L
             ncol <- getOption("width") %/% nw
             if(ncol > 1L)
-                op <- paste(fop, c(rep("  ", ncol - 1L), "\n"),
-                            sep = "", collapse="")
+                op <- paste0(fop, c(rep("  ", ncol - 1L), "\n"),
+                             collapse = "")
             cat("", op, sep = "\n")
         } else cat("", op, "", sep = "\n")
         cat(gettext("Enter one or more numbers separated by spaces, or an empty line to cancel\n"))

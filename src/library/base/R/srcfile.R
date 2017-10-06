@@ -235,8 +235,9 @@ as.character.srcref <- function(x, useSource = TRUE, to = x, ...)
  	    lines <- try(getSrcLines(srcfile, x[1L], x[3L]), TRUE)
     }
     if (!useSource || inherits(lines, "try-error"))
-    	lines <- paste("<srcref: file \"", srcfile$filename, "\" chars ",
-                       x[1L],":",x[5L], " to ",x[3L],":",x[6L], ">", sep="")
+    	lines <- paste0("<srcref: file \"", srcfile$filename, "\" chars ",
+                        x[1L], ":", x[5L], " to ",
+                        x[3L], ":", x[6L], ">")
     else if (length(lines)) {
     	enc <- Encoding(lines)
     	Encoding(lines) <- "latin1"  # so byte counting works

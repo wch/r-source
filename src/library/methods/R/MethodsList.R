@@ -628,8 +628,8 @@ function(mlist, includeDefs = TRUE, inherited = TRUE, classes = NULL, useArgName
     if(useArgNames) {
       for(i in 1L:n) {
         sigi <- signatures[[i]]
-        labels[[i]] <- paste(args[[i]], " = \"", sigi, "\"",
-                             sep = "", collapse = ", ")
+        labels[[i]] <- paste0(args[[i]], " = \"", sigi, "\"",
+                              collapse = ", ")
       }
     }
     else {
@@ -651,8 +651,9 @@ function(mlist, includeDefs = TRUE, inherited = TRUE, classes = NULL, useArgName
           defFrom <- method@defined
           cat(file = con, if(includeDefs) "##:" else "\n",
               "    (inherited from ",
-              paste(names(defFrom), " = \"", as.character(defFrom),
-                    "\"", sep = "", collapse = ", "),
+              paste0(names(defFrom), " = \"",
+                     as.character(defFrom), "\"",
+                     collapse = ", "),
                ")", if(includeDefs) "\n", sep="")
       }
       cat(file=con, "\n")

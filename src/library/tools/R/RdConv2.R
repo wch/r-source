@@ -225,12 +225,12 @@ processRdChunk <- function(code, stage, options, env, Rdfile, macros)
 	    }
 	    if(options$echo && length(dce)) {
 		res <- c(res,"\n",
-                         paste(getOption("prompt"), dce[1L:leading],
-                               sep="", collapse="\n"))
+                         paste0(getOption("prompt"), dce[1L:leading],
+                                collapse="\n"))
 		if (length(dce) > leading)
 		    res <- c(res, "\n",
-                             paste(getOption("continue"), dce[-(1L:leading)],
-                                   sep="", collapse="\n"))
+                             paste0(getOption("continue"), dce[-(1L:leading)],
+                                    collapse="\n"))
 		thisline <- thisline + length(dce)
 	    }
 

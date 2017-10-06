@@ -894,8 +894,8 @@ anovalist.nls <- function (object, ..., test = NULL)
 					 "Sum Sq", "F value", "Pr(>F)"))
     ## construct table and title
     title <- "Analysis of Variance Table\n"
-    topnote <- paste("Model ", format(1L:nmodels),": ",
-		     models, sep = "", collapse = "\n")
+    topnote <- paste0("Model ", format(1L:nmodels), ": ", models,
+                      collapse = "\n")
 
     ## calculate test statistic if needed
     structure(table, heading = c(title, topnote),

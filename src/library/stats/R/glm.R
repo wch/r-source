@@ -612,8 +612,8 @@ anova.glmlist <- function(object, ..., dispersion=NULL, test=NULL)
       table <- cbind(table, Rao=score)
 
     title <- "Analysis of Deviance Table\n"
-    topnote <- paste("Model ", format(1L:nmodels),": ",
-		     variables, sep = "", collapse = "\n")
+    topnote <- paste0("Model ", format(1L:nmodels), ": ", variables,
+                      collapse = "\n")
 
     ## calculate test statistic if needed
 

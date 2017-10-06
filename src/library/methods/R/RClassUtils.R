@@ -630,8 +630,8 @@ newBasic <-
                           value <- as(args[[1L]], Class)
                       }
                       else if(is.na(match(Class, .BasicClasses)))
-                          msg <- paste("Calling new() on an undefined and non-basic class (\"",
-                               Class, "\")", sep="")
+                          msg <- paste0("Calling new() on an undefined and non-basic class (\"",
+                                        Class, "\")")
                       else
                           msg <-
                               gettextf("initializing objects from class %s with these arguments is not supported",

@@ -520,8 +520,8 @@ anova.loess <- function(object, ...)
     nmodels <- length(objects)
     if(nmodels <= 1L) stop("no models to compare")
     models <- as.character(lapply(objects, function(x) x$call))
-    descr <- paste("Model ", format(1L:nmodels), ": ", models,
-		   sep = "", collapse = "\n")
+    descr <- paste0("Model ", format(1L:nmodels), ": ", models,
+                    collapse = "\n")
     ## extract statistics
     delta1 <- sapply(objects, function(x) x$one.delta)
     delta2 <- sapply(objects, function(x) x$two.delta)
