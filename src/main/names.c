@@ -80,7 +80,6 @@
  *
  */
 
-
 FUNTAB R_FunTab[] =
 {
 
