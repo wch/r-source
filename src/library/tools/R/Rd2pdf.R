@@ -144,6 +144,9 @@
              extraDirs = NULL, append = FALSE, silent = FALSE,
              pkglist = NULL)
 {
+    ## For Rd \packageFOO macro expansion:
+    Sys.setenv("_R_RD_MACROS_PACKAGE_DIR_" = pkgdir)
+    
     ## sort order for topics, a little tricky
     re <- function(x) x[order(toupper(x), x)]
 
@@ -244,7 +247,9 @@
             if (!silent) message("Converting Rd files to LaTeX ",
                                  appendLF = FALSE, domain = NA)
             cnt <- 0L
-            macros <- loadPkgRdMacros(pkgdir)
+            macros <- loadPkgRdMacros(pkgdir, initialRdMacros())
+            ## (Be nice and give the system macros also when 'pkgdir' is
+            ## not a package root directory.)
             macros <- initialRdMacros(pkglist, macros)
             for(i in seq_along(paths)) {
                 cnt <- cnt + 1L
