@@ -4192,7 +4192,7 @@ treated as no limit).
 @vtable @code
 @item _R_CHECK_ELAPSED_TIMEOUT_
 The default timeout for sub-processes not otherwise mentioned, and the
-default value for all except @env{_R_CHECK_1TEST_ELAPSED_TIMEOUT_}.
+default value for all except @env{_R_CHECK_ONE_TEST_ELAPSED_TIMEOUT_}.
 (This is also used by @code{tools::check_packages_in_dir}.)
 
 @item _R_CHECK_INSTALL_ELAPSED_TIMEOUT_
