@@ -18,7 +18,7 @@
   }
   \subsection{BUG FIXES}{
     \itemize{
-      \item \code{raw(0) & raw(0)} and \item \code{raw(0) | raw(0)}
+      \item \code{raw(0) & raw(0)} and \code{raw(0) | raw(0)}
       again return \code{raw(0)} (rather than \code{logical(0)}).
 
       \item \code{intToUtf8()} converts integers corresponding to
