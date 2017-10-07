@@ -1220,12 +1220,14 @@
             deps_only <-
                 config_val_to_logical(Sys.getenv("_R_CHECK_INSTALL_DEPENDS_", "FALSE"))
             env <- if (deps_only) setRlibs(lib0, self = TRUE, quote = TRUE) else ""
+            tlim <- get_timeout(Sys.getenv("_R_INSTALL_TEST_LOAD_ELAPSED_TIMEOUT_"))
             if (length(test_archs) > 1L) {
                 msgs <- character()
                 opts <- "--no-save --slave"
                 for (arch in test_archs) {
                     starsmsg("***", "arch - ", arch)
-                    out <- R_runR(cmd, opts, env = env, arch = arch)
+                    out <- R_runR(cmd, opts, env = env, arch = arch,
+                                  timeout = tlim)
                     if(length(attr(out, "status")))
                         msgs <- c(msgs, arch)
                     if(length(out))
@@ -1239,7 +1241,7 @@
             } else {
                 opts <- paste(if(deps_only) "--vanilla" else "--no-save",
                               "--slave")
-                out <- R_runR(cmd, opts, env = env)
+                out <- R_runR(cmd, opts, env = env, timeout = tlim)
                 if(length(out))
                     cat(paste(c(out, ""), collapse = "\n"))
                 if(length(attr(out, "status")))
