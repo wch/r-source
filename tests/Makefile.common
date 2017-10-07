@@ -83,7 +83,7 @@ test-out = $(test-src:.R=.Rout) $(test-out-demo) $(test-out-gct) \
 	$(test-out-random) $(test-out-reg) $(test-out-reg3) \
 	$(test-out-segfault) $(test-out-isas) $(test-out-internet2) \
 	$(test-out-CRANtools) $(test-out-large) $(test-out-primitive) $(test-out-dt) \
-	utf8-regex.Rout PCRE.Rout
+	utf8-regex.Rout PCRE.Rout utf8.Rout
 
 .SUFFIXES:
 .SUFFIXES: .R .Rin .Rout .Rout-gct .Rout-valgct .trin .tsin .log
@@ -294,6 +294,11 @@ test-Segfault:
 	@$(ECHO) "running tests to possibly trigger segfaults"
 	@$(MK) $(test-out-segfault) RVAL_IF_DIFF=0
 	-@rm -rf data dumpdata.R F.Rd c0.Rd df0.Rd l0.Rd m0.Rd Rprof.out Rplots* PACKAGES PACKAGES.gz FALSE-package.Rd FALSE.* ./-Ex.R
+
+## Not run by any other target
+test-UTF-8:
+	@$(ECHO) "running regression tests for UTF-8 <--> int conversion (slow)"
+	@$(R2) < $(srcdir)/utf8.R > utf8.Rout 2>&1 || (mv utf8.Rout utf8.Rout.fail && exit 1)
 
 ## Avoid site library, which could be very large
 no-segfault.Rout: no-segfault.R
