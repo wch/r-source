@@ -178,6 +178,7 @@ maintainer-clean: distclean
 	-@(cd $(srcdir) && rm -rf autom4te.cache)
 
 dist: dist-unix
+## GNU gzip 1.8 warns that GZIP is obsolescent.
 dist-unix: distdir
 	-chmod -R a+r $(distdir)
 	-chmod -R go-w $(distdir)
