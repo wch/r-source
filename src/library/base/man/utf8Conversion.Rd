@@ -38,23 +38,27 @@ intToUtf8(x, multiple = FALSE)
 \value{
   \code{utf8ToInt} converts a length-one character string encoded in
   UTF-8 to an integer vector of Unicode code points.  It checks validity
-  of the input and returns \code{NA} if it is invalid.  (Currently it
-  accepts UTF-8 encodings of code points greater than \code{0x10FFFF}:
-  these are no longer regarded as valid by the UTF-8 RFC and will in
-  future be mapped to \code{NA}.) 
+  of the input.  (Currently it accepts UTF-8 encodings of code points
+  greater than \code{0x10FFFF}: these are no longer regarded as valid by
+  the UTF-8 RFC and will in future be mapped to \code{NA}.  Following
+  \sQuote{Corrigendum 9} the UTF-8 encodings of the
+  \sQuote{noncharacters} \code{0xFFFE} and \code{0xFFFF} are regarded as
+  valid as from \R 3.4.3.)
 
   \code{intToUtf8} converts a numeric vector of Unicode code points
   either (default) to a single character string or a character vector of
-  single characters. Non-integral numeric values are truncated to
+  single characters.  Non-integral numeric values are truncated to
   integers: values above the maximum are mapped to \code{NA}.  For a
   single character string \code{0} is silently omitted: otherwise
   \code{0} is mapped to \code{""}.  The \code{\link{Encoding}} of a
   non-\code{NA} return value is declared as \code{"UTF-8"}.
 
-  \code{NA} inputs are mapped to \code{NA} output.
+  Invalid and \code{NA} inputs are mapped to \code{NA} output.
 }
 \references{
   \url{https://tools.ietf.org/html/rfc3629}, the current standard for UTF-8.
+  
+  \url{http://www.unicode.org/versions/corrigendum9.html} for non-characters.
 }
 \examples{\donttest{
 ## will only display in some locales and fonts

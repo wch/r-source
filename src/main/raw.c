@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001--2015 The R Core Team
+ *  Copyright (C) 2001--2017 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Pulic License as published by
@@ -217,7 +217,8 @@ static int mbrtoint(int *w, const char *s)
 			| ((s[1] & 0x3F) << 6) | (s[2] & 0x3F));
 	    byte = *w;
 	    if (byte >= 0xD800 && byte <= 0xDFFF) return -1; /* surrogate */
-	    if (byte == 0xFFFE || byte == 0xFFFF) return -1;
+	    // Following Corrigendum 9, these are valid in UTF-8
+//	    if (byte == 0xFFFE || byte == 0xFFFF) return -1;
 	    return 3;
 	} else return -1;
     } else if (byte < 0xF8) {
@@ -294,7 +295,7 @@ SEXP attribute_hidden do_utf8ToInt(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-/* based on pcre.c */
+/* based on PCRE */
 static const int utf8_table1[] =
     { 0x7f, 0x7ff, 0xffff, 0x1fffff, 0x3ffffff, 0x7fffffff};
 static const int utf8_table2[] = { 0, 0xc0, 0xe0, 0xf0, 0xf8, 0xfc};
