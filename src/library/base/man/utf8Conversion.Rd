@@ -29,6 +29,11 @@ intToUtf8(x, multiple = FALSE, allow_surrogate_pairs = FALSE)
   These will work in any locale, including on platforms that do not
   otherwise support multi-byte character sets.
 
+  Unicode defines a name and a number of all of the glyphs it
+  encompasses: the numbers are called \emph{code points}: since RFC3629
+  they run from \code{0} to \code{0x10FFFF} (with about 12\% being
+  assigned by version 10.0 of the Unicode standard).
+  
   \code{intToUtf8} does not by default handle surrogate pairs (which
   should not occur in UTF-32): inputs in the surrogate ranges are mapped
   to \code{NA}.  They might occur if a UTF-16 byte stream has been read
@@ -37,13 +42,12 @@ intToUtf8(x, multiple = FALSE, allow_surrogate_pairs = FALSE)
   unmatched surrogate values still treated as \code{NA}).
 }
 \value{
-  Unicode defines a name and a number of all of the glyphs it
-  encompasses: the numbers are called \emph{code points}: they run from
-  \code{0} to \code{0x10FFFF}.
-  
   \code{utf8ToInt} converts a length-one character string encoded in
   UTF-8 to an integer vector of Unicode code points.  It checks validity
-  of the input and returns \code{NA} if it is invalid.
+  of the input and returns \code{NA} if it is invalid.  (Currently it
+  accepts UTF-8 encodings of code points greater than \code{0x10FFFF}:
+  these are no longer regarded as valid by the UTF-8 RFC and will in
+  future be mapped to \code{NA}.) 
 
   \code{intToUtf8} converts a numeric vector of Unicode code points
   either (default) to a single character string or a character vector of
@@ -54,6 +58,9 @@ intToUtf8(x, multiple = FALSE, allow_surrogate_pairs = FALSE)
   non-\code{NA} return value is declared as \code{"UTF-8"}.
 
   \code{NA} inputs are mapped to \code{NA} output.
+}
+\references{
+  \url{https://tools.ietf.org/html/rfc3629}, the current standard for UTF-8.
 }
 \examples{\donttest{
 ## will only display in some locales and fonts
@@ -78,7 +85,7 @@ writeLines(x, file(foo, encoding = "UTF-16LE"))
 system(paste("od -x", foo)) # 2-byte units, correct on little-endian platform
 system(paste("od -t x1", foo)) # single bytes as hex
 y <- readBin(foo, "integer", 2, 2, FALSE, endian = "little")
-sprintf("%X", y)
+sprintf("\%X", y)
 intToUtf8(y, , TRUE)
 }
 }
