@@ -193,7 +193,7 @@ check_EPD <- function(obj, show = !hasReal(obj)) {
                        pd0(obj, control = "all") })
     if(!identical(obj, ob2, ignore.environment=TRUE,
                   ignore.bytecode=TRUE, ignore.srcref=TRUE)) {
-        ae <- all.equal(obj, ob2, tolerance = 0)
+        ae <- all.equal(obj, ob2, tolerance = if(.Machine$sizeof.longdouble <= 8) 4e-16 else 0)
         cat("not identical(*, ignore.env=T),",
             if(isTRUE(ae)) "but all.equal(*,*, tol = 0)",
             "\n")
