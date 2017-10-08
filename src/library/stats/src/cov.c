@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995-2015	The R Core Team
+ *  Copyright (C) 1995-2017	The R Core Team
  *  Copyright (C) 2003		The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -268,7 +268,7 @@ cov_complete1(int n, int ncx, double *x, double *xm,
 		sum = 0.;
 		for (k = 0 ; k < n ; k++)
 		    if (ind[k] != 0)
-			sum += (xx[k] - xxm) * (yy[k] - yym);
+			sum += (LDOUBLE)(xx[k] - xxm) * (yy[k] - yym);
 		ANS(j,i) = ANS(i,j) = (double)(sum / n1);
 	    }
 	}
@@ -336,7 +336,7 @@ cov_na_1(int n, int ncx, double *x, double *xm,
 			yym = xm[j];
 			sum = 0.;
 			for (k = 0 ; k < n ; k++)
-			    sum += (xx[k] - xxm) * (yy[k] - yym);
+			    sum += (LDOUBLE)(xx[k] - xxm) * (yy[k] - yym);
 			ANS(j,i) = ANS(i,j) = (double)(sum / n1);
 		    }
 	    }
@@ -397,7 +397,7 @@ cov_complete2(int n, int ncx, int ncy, double *x, double *y,
 		sum = 0.;
 		for (k = 0 ; k < n ; k++)
 		    if (ind[k] != 0)
-			sum += (xx[k] - xxm) * (yy[k] - yym);
+			sum += (LDOUBLE)(xx[k] - xxm) * (yy[k] - yym);
 		ANS(i,j) = (double)(sum / n1);
 	    }
 	}
@@ -426,7 +426,7 @@ cov_complete2(int n, int ncx, int ncy, double *x, double *y,
 		xxm = _X_##m [i];					\
 		for (k = 0 ; k < n ; k++)				\
 		    if (ind[k] != 0)					\
-			sum += (xx[k] - xxm) * (xx[k] - xxm);		\
+			sum += (LDOUBLE)(xx[k] - xxm) * (xx[k] - xxm);	\
 		sum /= n1;						\
 	    }								\
 	    else { /* Kendall's tau */					\
@@ -486,7 +486,7 @@ cov_na_2(int n, int ncx, int ncy, double *x, double *y,
 			yym = ym[j];
 			sum = 0.;
 			for (k = 0 ; k < n ; k++)
-			    sum += (xx[k] - xxm) * (yy[k] - yym);
+			    sum += (LDOUBLE)(xx[k] - xxm) * (yy[k] - yym);
 			ANS(i,j) = (double)(sum / n1);
 		    }
 	    }
@@ -516,7 +516,7 @@ cov_na_2(int n, int ncx, int ncy, double *x, double *y,
 		if(!kendall) {						\
 		    xxm = _X_##m [i];					\
 		    for (k = 0 ; k < n ; k++)				\
-			sum += (xx[k] - xxm) * (xx[k] - xxm);		\
+			sum += (LDOUBLE)(xx[k] - xxm) * (xx[k] - xxm);	\
 		    sum /= n1;						\
 		}							\
 		else { /* Kendall's tau */				\

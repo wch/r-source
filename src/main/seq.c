@@ -924,11 +924,11 @@ SEXP attribute_hidden do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if(!R_FINITE(rfrom)) errorcall(call, _("'%s' must be a finite number"), "from");
 	if(!R_FINITE(rto))   errorcall(call, _("'%s' must be a finite number"), "to");
 	if(lout > 2) rby = (rto - rfrom)/(double)(lout - 1);
-	if(rfrom == (int)rfrom &&
+	if(rfrom <= INT_MAX && rfrom >= INT_MIN &&
+	   rto   <= INT_MAX && rto   >= INT_MIN &&
+	   rfrom == (int)rfrom &&
 	   (lout <= 1 || rto == (int)rto) &&
-	   (lout <= 2 || rby == (int)rby) &&
-	   rfrom <= INT_MAX && rfrom >= INT_MIN &&
-	   rto   <= INT_MAX && rto   >= INT_MIN) {
+	   (lout <= 2 || rby == (int)rby)) {
 	    ans = allocVector(INTSXP, lout);
 	    if(lout > 0) INTEGER(ans)[0] = (int)rfrom;
 	    if(lout > 1) INTEGER(ans)[lout - 1] = (int)rto;
