@@ -343,6 +343,7 @@ SEXP attribute_hidden do_intToUtf8(SEXP call, SEXP op, SEXP args, SEXP env)
 		int next = INTEGER(x)[i+1];
 		if(next >= 0xDC00 && next <= 0xDFFF) i++;
 		else {haveNA = TRUE; break;}
+		len += 4;
 	    } 
 	    else
 		len += inttomb(NULL, this);
