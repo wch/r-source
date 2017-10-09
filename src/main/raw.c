@@ -232,7 +232,7 @@ static int mbrtoint(int *w, const char *s)
 			| ((s[2] & 0x3F) << 6)
 			| (s[3] & 0x3F));
 	    byte = *w;
-	    return (byte <= 0x10FFF) ? 4 : -1;
+	    return (byte <= 0x10FFFF) ? 4 : -1;
 	} else return -1;
     } else return -1;
     /* return -2; not reached */
@@ -343,7 +343,7 @@ SEXP attribute_hidden do_intToUtf8(SEXP call, SEXP op, SEXP args, SEXP env)
 		int next = INTEGER(x)[i+1];
 		if(next >= 0xDC00 && next <= 0xDFFF) i++;
 		else {haveNA = TRUE; break;}
-		len += 4; /* all points not in the basic plane have length 4 */
+		len += 4; // all points not in the basic plane have length 4
 	    } 
 	    else
 		len += inttomb(NULL, this);
