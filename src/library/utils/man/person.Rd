@@ -155,6 +155,14 @@ person(given = NULL, family = NULL, middle = NULL,
   \code{personList()} for collections of these.  The new scheme employs
   a single class for information about an arbitrary positive number of
   persons, eliminating the need for the \code{personList} mechanism.
+
+  The \code{comment} field can be used for \dQuote{arbitrary} additional
+  information about persons.  Elements named \code{"ORCID"} will be
+  taken to give ORCID identifiers (see \url{https://orcid.org/} for more
+  information), and be displayed as the corresponding URIs by the
+  \code{print()} and \code{format()} methods (see \bold{Examples}
+  below).
+  
 }
 \seealso{
   \code{\link{citation}}
@@ -182,7 +190,7 @@ p[1]$email
 ## BR is the second author [aut], who translated the code to R [trl],
 ## and maintains the package [cre].
 b <- c(person("Angelo", "Canty", role = "aut", comment =
-         "S original, http://statwww.epfl.ch/davison/BMA/library.html"),
+         "S original, <http://statwww.epfl.ch/davison/BMA/library.html>"),
        person(c("Brian", "D."), "Ripley", role = c("aut", "trl", "cre"),
               comment = "R port", email = "ripley@stats.ox.ac.uk")
      )
@@ -196,4 +204,8 @@ format(b, include = c("family", "given", "role"),
 ## Conversion to BibTeX author field.
 paste(format(b, include = c("given", "family")), collapse = " and ")
 toBibtex(b)
+
+## ORCID identifiers.
+(p3 <- person("Achim", "Zeileis",
+              comment = c(ORCID = "0000-0003-0918-3766")))
 }
