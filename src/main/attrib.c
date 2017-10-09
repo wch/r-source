@@ -168,7 +168,10 @@ SEXP getAttrib(SEXP vec, SEXP name)
 	SEXP s = getAttrib0(vec, R_RowNamesSymbol);
 	if(isInteger(s) && LENGTH(s) == 2 && INTEGER(s)[0] == NA_INTEGER) {
 	    int n = abs(INTEGER(s)[1]);
-	    s = R_compact_intrange(1, n);
+	    if (n > 0)
+		s = R_compact_intrange(1, n);
+	    else
+		s = allocVector(INTSXP, 0);
 	}
 	return s;
     } else
