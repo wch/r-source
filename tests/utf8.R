@@ -42,9 +42,8 @@ xx <- surrogate_pair(0x10437)
 sprintf("%X", xx)
 stopifnot(xx == c(0xD801, 0xDC37))
 
-## there are 2^20 surrogate pairs, so check a random subset
-set.seed(1)
-x <- 0x10000 + sort(trunc(0x100000 * runif(1e5)))
+## there are 2^20 surrogate pairs, but fast enough to check them all
+x <- 0x10000:0x10FFFF
 x1 <- intToUtf8(x)
 x2 <- utf8ToInt(x1)
 stopifnot(x2 == x)
