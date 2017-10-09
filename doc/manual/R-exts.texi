@@ -8413,6 +8413,15 @@ Recent versions@footnote{including @command{gcc} 7.1 and @command{clang}
 added the flag @option{-fsanitize-address-use-after-scope}: see
 @uref{https://github.com/@/google/@/sanitizers/@/wiki/@/AddressSanitizerUseAfterScope}.
 
+One of the checks done by ASAN is that @code{malloc/free} and in C++
+@code{new/delete} and @code{new[]/delete[]} are used consistently
+(rather than say @code{free} being used to dealloc memory allocated by
+@code{new[]}).  This matters on some systems but not all: unfortunately
+on some of those where it does not matter, system libraries@footnote{for
+example, X11/GL libraries on Linux, seen when checking package
+@CRANpkg{rgl}.} are not consistent.  The check can be suppressed by
+including @samp{alloc_dealloc_mismatch=0} in @env{ASAN_OPTIONS}.
+
 @menu
 * Using Leak Sanitizer::        
 @end menu
@@ -8441,7 +8450,8 @@ and as the parser retains some memory to the end of the process, if @R{}
 itself was built against ASan, all runs will have a failure error status
 (which may include running @R{} as part of building @R{} itself).
 
-To disable both this and some strict checking use
+To disable this, allocation-mismatch checking and some strict C++
+checking use
 
 @example
 setenv ASAN_OPTIONS 'alloc_dealloc_mismatch=0:detect_leaks=0:detect_odr_violation=0'
@@ -8562,6 +8572,11 @@ For more details on the topic see
 @uref{http://blog.regehr.org/archives/213} and
 @uref{http://blog.llvm.org/@/2011/@/05/@/what-every-c-programmer-should-know.html}
 (which has 3 parts).
+
+It may or may not be possible to build @R{} itself with
+@option{-fsanitize=undefined}: when last tried it worked with
+@command{clang} but there were problems with OpenMP-using code with
+@command{gcc}.
 
 
 @node Other analyses with `clang', Using `Dr. Memory', Using Undefined Behaviour Sanitizer, Checking memory access
