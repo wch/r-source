@@ -152,6 +152,7 @@ stopifnot(
 ## partly failed in R 3.4.0 alpha
 
 ### Checking parse(* deparse()) "inversion property" ----------------------------
+## EPD := eval-parse-deparse :  eval(text = parse(deparse(*)))
 ## Hopefully typically the identity():
 pd0 <- function(expr, backtick = TRUE,
                 control = c("keepInteger","showAttributes","keepNA"), ...)
@@ -176,7 +177,9 @@ hasReal <- function(x) {
     else FALSE
 }
 isMissObj <- function(obj) identical(obj, alist(a=)[[1]])
-check_EPD <- function(obj, show = !hasReal(obj)) {
+check_EPD <- function(obj, show = !hasReal(obj),
+                      eq.tol = if(.Machine$sizeof.longdouble <= 8) # no long-double
+                                   2*.Machine$double.eps else 0) {
     if(show) dPut(obj)
     if(is.environment(obj) ||
        (is.pairlist(obj) && any(vapply(obj, isMissObj, NA))))
@@ -193,11 +196,12 @@ check_EPD <- function(obj, show = !hasReal(obj)) {
                        pd0(obj, control = "all") })
     if(!identical(obj, ob2, ignore.environment=TRUE,
                   ignore.bytecode=TRUE, ignore.srcref=TRUE)) {
-        ae <- all.equal(obj, ob2, tolerance = if(.Machine$sizeof.longdouble <= 8) 4e-16 else 0)
+        ae <- all.equal(obj, ob2, tolerance = eq.tol)
+        ae.txt <- sprintf("all.equal(*,*, tol = %.3g)", eq.tol)
         cat("not identical(*, ignore.env=T),",
-            if(isTRUE(ae)) "but all.equal(*,*, tol = 0)",
+            if(isTRUE(ae)) paste("but", ae.txt),
             "\n")
-        if(!isTRUE(ae)) stop("Not equal: all.equal(*,*, tol = 0) giving\n", ae)
+        if(!isTRUE(ae)) stop("Not equal: ", ae.txt, " giving\n", ae)
     }
     if(!is.language(obj)) {
 	ob2. <- eval(pd0) ## almost always *NOT* identical to obj, but eval()ed

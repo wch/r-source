@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2017-10-02 r73429) -- "Unsuffered Consequences"
+R Under development (unstable) (2017-10-09 r73506) -- "Unsuffered Consequences"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -209,6 +209,7 @@ Levels: a b <NA>
 > ## partly failed in R 3.4.0 alpha
 > 
 > ### Checking parse(* deparse()) "inversion property" ----------------------------
+> ## EPD := eval-parse-deparse :  eval(text = parse(deparse(*)))
 > ## Hopefully typically the identity():
 > pd0 <- function(expr, backtick = TRUE,
 +                 control = c("keepInteger","showAttributes","keepNA"), ...)
@@ -233,7 +234,9 @@ Levels: a b <NA>
 +     else FALSE
 + }
 > isMissObj <- function(obj) identical(obj, alist(a=)[[1]])
-> check_EPD <- function(obj, show = !hasReal(obj)) {
+> check_EPD <- function(obj, show = !hasReal(obj),
++                       eq.tol = if(.Machine$sizeof.longdouble <= 8) # no long-double
++                                    2*.Machine$double.eps else 0) {
 +     if(show) dPut(obj)
 +     if(is.environment(obj) ||
 +        (is.pairlist(obj) && any(vapply(obj, isMissObj, NA))))
@@ -250,11 +253,12 @@ Levels: a b <NA>
 +                        pd0(obj, control = "all") })
 +     if(!identical(obj, ob2, ignore.environment=TRUE,
 +                   ignore.bytecode=TRUE, ignore.srcref=TRUE)) {
-+         ae <- all.equal(obj, ob2, tolerance = 0)
++         ae <- all.equal(obj, ob2, tolerance = eq.tol)
++         ae.txt <- sprintf("all.equal(*,*, tol = %.3g)", eq.tol)
 +         cat("not identical(*, ignore.env=T),",
-+             if(isTRUE(ae)) "but all.equal(*,*, tol = 0)",
++             if(isTRUE(ae)) paste("but", ae.txt),
 +             "\n")
-+         if(!isTRUE(ae)) stop("Not equal: all.equal(*,*, tol = 0) giving\n", ae)
++         if(!isTRUE(ae)) stop("Not equal: ", ae.txt, " giving\n", ae)
 +     }
 +     if(!is.language(obj)) {
 + 	ob2. <- eval(pd0) ## almost always *NOT* identical to obj, but eval()ed
@@ -758,7 +762,8 @@ checking formals(.):
 pairlist(a = 1, mm = quote(c("Abc", "Bde")))
  --> checking list(*): Ok
 --=--=--=--=--
-check_EPD: function (obj, show = !hasReal(obj)) 
+check_EPD: function (obj, show = !hasReal(obj), eq.tol = if (.Machine$sizeof.longdouble <= 
+    8) 2 * .Machine$double.eps else 0) 
 {
     if (show) 
         dPut(obj)
@@ -775,12 +780,12 @@ check_EPD: function (obj, show = !hasReal(obj))
     })
     if (!identical(obj, ob2, ignore.environment = TRUE, ignore.bytecode = TRUE, 
         ignore.srcref = TRUE)) {
-        ae <- all.equal(obj, ob2, tolerance = 0)
+        ae <- all.equal(obj, ob2, tolerance = eq.tol)
+        ae.txt <- sprintf("all.equal(*,*, tol = %.3g)", eq.tol)
         cat("not identical(*, ignore.env=T),", if (isTRUE(ae)) 
-            "but all.equal(*,*, tol = 0)", "\n")
+            paste("but", ae.txt), "\n")
         if (!isTRUE(ae)) 
-            stop("Not equal: all.equal(*,*, tol = 0) giving\n", 
-                ae)
+            stop("Not equal: ", ae.txt, " giving\n", ae)
     }
     if (!is.language(obj)) {
         ob2. <- eval(pd0)
@@ -810,12 +815,12 @@ quote({
     })
     if (!identical(obj, ob2, ignore.environment = TRUE, ignore.bytecode = TRUE, 
         ignore.srcref = TRUE)) {
-        ae <- all.equal(obj, ob2, tolerance = 0)
+        ae <- all.equal(obj, ob2, tolerance = eq.tol)
+        ae.txt <- sprintf("all.equal(*,*, tol = %.3g)", eq.tol)
         cat("not identical(*, ignore.env=T),", if (isTRUE(ae)) 
-            "but all.equal(*,*, tol = 0)", "\n")
+            paste("but", ae.txt), "\n")
         if (!isTRUE(ae)) 
-            stop("Not equal: all.equal(*,*, tol = 0) giving\n", 
-                ae)
+            stop("Not equal: ", ae.txt, " giving\n", ae)
     }
     if (!is.language(obj)) {
         ob2. <- eval(pd0)
@@ -829,7 +834,8 @@ quote({
 })
  --> checking list(*): Ok
 checking formals(.):
-pairlist(obj = , show = quote(!hasReal(obj)))
+pairlist(obj = , show = quote(!hasReal(obj)), eq.tol = quote(if (.Machine$sizeof.longdouble <= 
+    8) 2 * .Machine$double.eps else 0))
 __ not parse()able __
 --=--=--=--=--
 dPut: function (x, control = c("all", "digits17")) 
@@ -1144,5 +1150,5 @@ Length  Class   Mode
 > 
 > ## at the very end
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  3.305 0.086 4.002 0 0 
+Time elapsed:  0.78 0.111 0.985 0 0 
 > 
