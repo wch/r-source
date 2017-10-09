@@ -3464,6 +3464,10 @@ void (SETLENGTH)(SEXP x, R_xlen_t newlen)
 	error(_("SETLENGTH() can only be applied to a standard vector, "
 		"not a '%s'"), type2char(TYPEOF(x)));
     
+#define DATA_DOT_TABLE_WORKAROUND
+#ifdef DATA_DOT_TABLE_WORKAROUND
+    SET_STDVEC_LENGTH(x, newlen);
+#else
     R_xlen_t len = XLENGTH(CHK2(x));
     R_xlen_t truelen = XTRUELENGTH(x);
     if (IS_GROWABLE(x)) {
@@ -3498,10 +3502,6 @@ void (SETLENGTH)(SEXP x, R_xlen_t newlen)
 	}
     }
     else
-#define DATA_DOT_TABLE_WORKAROUND
-#ifdef DATA_DOT_TABLE_WORKAROUND
-	SET_STDVEC_LENGTH(x, newlen);
-#else
 	error("can't increase length of non-growable vector from %ld to %ld",
 	      len, newlen);
 #endif
