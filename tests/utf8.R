@@ -23,8 +23,33 @@ stopifnot(xx[!invalid] == x[!invalid])
 
 ## The pre-2003 UTF-8 standard converted larger code-points to 4-6 bytes,
 ## and was followed by intToUtf8 in earlier versions of R.
-## Earlier conversion of 0x101111, 0x200001, 0x10000001)
-x <- c("\xf4\x81\x84\x91", "\xf8\x80\x80\x80\x81", "\xfc\x90\x80\x80\x80\x81")
+## Earlier conversion of 0x111111, 0x200001, 0x10000001)
+x <- c("\xf4\x91\x84\x91", "\xf8\x80\x80\x80\x81", "\xfc\x90\x80\x80\x80\x81")
 xx <- sapply(x, function(x) tryCatch(utf8ToInt(x),
                                      error = function(e) NA_character_))
-stopifnot(is.na(xx)) # first was not in R < 3.5.0
+stopifnot(is.na(xx)) # first was not in R < 3.4.3
+
+### test surrogate pairs
+surrogate_pair <- function(x)
+{
+    if(any(x < 0x10000 | x > 0x10FFFF))
+        stop("Surrogate pairs apply only to supplementary planes")
+    x <- x - 0x10000
+    as.vector(rbind(0xD800 + x %/% 1024, 0xDC00 + x %% 1024))
+}
+## check the example:
+xx <- surrogate_pair(0x10437)
+sprintf("%X", xx)
+stopifnot(xx == c(0xD801, 0xDC37))
+
+## there are 2^20 surrogate pairs, so check a random subset
+set.seed(1)
+x <- 0x10000 + sort(trunc(0x100000 * runif(1e5)))
+x1 <- intToUtf8(x)
+x2 <- utf8ToInt(x1)
+stopifnot(x2 == x)
+
+z <- surrogate_pair(x)
+x1 <- intToUtf8(z, allow_surrogate_pairs = TRUE)
+x2 <- utf8ToInt(x1)
+stopifnot(x2 == x)
