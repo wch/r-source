@@ -538,7 +538,7 @@ isIncomplete(con)
   \code{\link{extSoftVersion}} for the versions of the \code{zlib} (for
   \code{gzfile}), \code{bzip2} and \code{xz} libraries in use.
 
-  To flush output to the Windows and maOS consoles, see
+  To flush output to the Windows and macOS consoles, see
   \code{\link{flush.console}}.
 }
 
