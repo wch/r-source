@@ -151,7 +151,10 @@ latexToUtf8 <- function(x)
 	            }
 		} else
 		    i <- j
-	    }
+	    } else if (i < length(x) 
+	                && attr(x[[i+1]], "latex_tag") != "BLOCK" 
+	                && grepl("^[[:alpha:]]", x[[i+1]])) # unrecognized macro followed by letters needs space
+	        x[[i]] <- latex_tag(paste0(x[[i]], " "), "MACRO")
 	} else if (tag == "BLOCK")
 	    x[[i]] <- latexToUtf8(a)
     }
