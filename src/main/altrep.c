@@ -1520,12 +1520,17 @@ static SEXP compact_intseq_Coerce(SEXP x, int type)
 
 static SEXP compact_intseq_Duplicate(SEXP x, Rboolean deep)
 {
+#ifdef BROKEN_WHEN_EXPANDED
+    /* If this is worth doing, it is worth doing for the real case
+       also.  But it needs to punt if the sequence is expanded and
+       possibly modified. */
     if(!deep) {
 	SEXP info = ALTREP_INFO(x);
 	return new_compact_intseq(COMPACT_INTSEQ_INFO_LENGTH(info),
 				  COMPACT_INTSEQ_INFO_FIRST(info),
 				  COMPACT_INTSEQ_INFO_INCR(info));
     }
+#endif
     R_xlen_t n = XLENGTH(x);
     SEXP val = allocVector(INTSXP, n);
     INTEGER_GET_REGION(x, 0, n, INTEGER0(val));
