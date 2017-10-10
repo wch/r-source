@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001--2015 The R Core Team
+ *  Copyright (C) 2001--2017 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Pulic License as published by
@@ -193,6 +193,7 @@ SEXP attribute_hidden do_packBits(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
+/* Simplified version for RFC3629 definition of UTF-8 */
 static int mbrtoint(int *w, const char *s)
 {
     unsigned int byte;
@@ -217,10 +218,11 @@ static int mbrtoint(int *w, const char *s)
 			| ((s[1] & 0x3F) << 6) | (s[2] & 0x3F));
 	    byte = *w;
 	    if (byte >= 0xD800 && byte <= 0xDFFF) return -1; /* surrogate */
-	    if (byte == 0xFFFE || byte == 0xFFFF) return -1;
+	    // Following Corrigendum 9, these are valid in UTF-8
+//	    if (byte == 0xFFFE || byte == 0xFFFF) return -1;
 	    return 3;
 	} else return -1;
-    } else if (byte < 0xF8) {
+    } else if (byte <= 0xF4) { // for RFC3629
 	if (!s[1] || !s[2] || !s[3]) return -2;
 	if (((s[1] & 0xC0) == 0x80)
 	    && ((s[2] & 0xC0) == 0x80)
@@ -230,39 +232,9 @@ static int mbrtoint(int *w, const char *s)
 			| ((s[2] & 0x3F) << 6)
 			| (s[3] & 0x3F));
 	    byte = *w;
-	    return 4;
+	    return (byte <= 0x10FFFF) ? 4 : -1;
 	} else return -1;
-    } else if (byte < 0xFC) {
-	if (!s[1] || !s[2] || !s[3] || !s[4]) return -2;
-	if (((s[1] & 0xC0) == 0x80)
-	    && ((s[2] & 0xC0) == 0x80)
-	    && ((s[3] & 0xC0) == 0x80)
-	    && ((s[4] & 0xC0) == 0x80)) {
-	    *w = (int) (((byte & 0x03) << 24)
-			| ((s[1] & 0x3F) << 18)
-			| ((s[2] & 0x3F) << 12)
-			| ((s[3] & 0x3F) << 6)
-			| (s[4] & 0x3F));
-	    byte = *w;
-	    return 5;
-	} else return -1;
-    } else {
-	if (!s[1] || !s[2] || !s[3] || !s[4] || !s[5]) return -2;
-	if (((s[1] & 0xC0) == 0x80)
-	    && ((s[2] & 0xC0) == 0x80)
-	    && ((s[3] & 0xC0) == 0x80)
-	    && ((s[4] & 0xC0) == 0x80)
-	    && ((s[5] & 0xC0) == 0x80)) {
-	    *w = (int) (((byte & 0x01) << 30)
-			| ((s[1] & 0x3F) << 24)
-			| ((s[2] & 0x3F) << 18)
-			| ((s[3] & 0x3F) << 12)
-			| ((s[5] & 0x3F) << 6)
-			| (s[5] & 0x3F));
-	    byte = *w;
-	    return 6;
-	} else return -1;
-    }
+    } else return -1;
     /* return -2; not reached */
 }
 
@@ -294,10 +266,9 @@ SEXP attribute_hidden do_utf8ToInt(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-/* based on pcre.c */
-static const int utf8_table1[] =
-    { 0x7f, 0x7ff, 0xffff, 0x1fffff, 0x3ffffff, 0x7fffffff};
-static const int utf8_table2[] = { 0, 0xc0, 0xe0, 0xf0, 0xf8, 0xfc};
+/* Based on PCRE, but current Unicode only needs 4 bytes with maximum 0x10ffff */
+static const int utf8_table1[] = { 0x7f, 0x7ff, 0xffff, 0x1fffff };
+static const int utf8_table2[] = { 0, 0xc0, 0xe0, 0xf0 };
 
 static size_t inttomb(char *s, const int wc)
 {
@@ -372,6 +343,7 @@ SEXP attribute_hidden do_intToUtf8(SEXP call, SEXP op, SEXP args, SEXP env)
 		int next = INTEGER(x)[i+1];
 		if(next >= 0xDC00 && next <= 0xDFFF) i++;
 		else {haveNA = TRUE; break;}
+		len += 4; // all points not in the basic plane have length 4
 	    } 
 	    else
 		len += inttomb(NULL, this);

@@ -178,6 +178,7 @@ maintainer-clean: distclean
 	-@(cd $(srcdir) && rm -rf autom4te.cache)
 
 dist: dist-unix
+## GNU gzip 1.8 warns that env var GZIP is obsolescent for gzip, so use as arg
 dist-unix: distdir
 	-chmod -R a+r $(distdir)
 	-chmod -R go-w $(distdir)
@@ -186,7 +187,7 @@ dist-unix: distdir
           if test $(distdir) != $${dirname} ; then \
             mv $(distdir) $${dirname}; \
           fi ; \
-	  GZIP=$(GZIP) $(TAR) czf $${distname}.tar.gz $${dirname}; \
+	  $(TAR) cf $${distname}.tar $${dirname} && $(R_GZIPCMD) $(GZIP) $${distname}.tar; \
 	  rm -rf $${dirname}
 dist-win:
 distdir: $(DISTFILES) vignettes

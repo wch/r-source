@@ -89,7 +89,7 @@ regexec(pattern, text, ignore.case = FALSE, perl = FALSE,
     \item \code{fixed = TRUE}: use exact matching.
     \item \code{perl = TRUE}: use Perl-style regular expressions.
     \item \code{fixed = FALSE, perl = FALSE}: use POSIX 1003.2
-    extended regular expressions.
+    extended regular expressions (the default).
   }
   See the help pages on \link{regular expression} for details of the
   different types of regular expressions.
@@ -138,7 +138,7 @@ regexec(pattern, text, ignore.case = FALSE, perl = FALSE,
   \code{grepl} returns a logical vector (match or not for each element of
   \code{x}).
 
-  For \code{sub} and \code{gsub} return a character vector of the same
+  \code{sub} and \code{gsub} return a character vector of the same
   length and with the same attributes as \code{x} (after possible
   coercion to character).  Elements of character vectors \code{x} which
   are not substituted will be returned unchanged (including any declared
@@ -152,9 +152,12 @@ regexec(pattern, text, ignore.case = FALSE, perl = FALSE,
   \eqn{-1} if there is none, with attribute \code{"match.length"}, an
   integer vector giving the length of the matched text (or \eqn{-1} for
   no match).  The match positions and lengths are in characters unless
-  \code{useBytes = TRUE} is used, when they are in bytes.  If named
-  capture is used there are further attributes \code{"capture.start"},
-  \code{"capture.length"} and \code{"capture.names"}.
+  \code{useBytes = TRUE} is used, when they are in bytes (as they are
+  for an ASCII-only matching: in either case an attribute
+  \code{useBytes} with value \code{TRUE} is set on the result).  If
+  named capture is used there are further attributes
+  \code{"capture.start"}, \code{"capture.length"} and
+  \code{"capture.names"}.
 
   \code{gregexpr} returns a list of the same length as \code{text} each
   element of which is of the same form as the return value for
@@ -166,14 +169,16 @@ regexec(pattern, text, ignore.case = FALSE, perl = FALSE,
   sequence of integers with the starting positions of the match and all
   substrings corresponding to parenthesized subexpressions of
   \code{pattern}, with attribute \code{"match.length"} a vector
-  giving the lengths of the matches (or \eqn{-1} for no match).
+  giving the lengths of the matches (or \eqn{-1} for no match).  The
+  interpretation of positions and length and the attributes follows
+  \code{regexpr}.
 
   Where matching failed because of resource limits (especially for PCRE)
   this is regarded as a non-match, usually with a warning.
 }
 
 \section{Warning}{
-  POSIX 1003.2 mode of \code{gsub} and \code{gregexpr} does not
+  The POSIX 1003.2 mode of \code{gsub} and \code{gregexpr} does not
   work correctly with repeated word-boundaries (e.g., \code{pattern =
   "\\b"}).  Use \code{perl = TRUE} for such matches (but that may not
   work as expected with non-ASCII inputs, as the meaning of
@@ -209,8 +214,9 @@ regexec(pattern, text, ignore.case = FALSE, perl = FALSE,
   People working with PCRE and very long strings can adjust the maximum
   size of the JIT stack by setting environment variable
   \env{R_PCRE_JIT_STACK_MAXSIZE} before JIT is used to a value between
-  \code{1} and \code{1000} in MB: the default is \code{64}.  (Then would
-  usually be wise to set the \link{option} \code{PCRE_limit_recursion}.)
+  \code{1} and \code{1000} in MB: the default is \code{64}.  (Then it
+  would usually be wise to set the \link{option}
+  \code{PCRE_limit_recursion}.)
 }
 
 \source{
@@ -221,7 +227,8 @@ regexec(pattern, text, ignore.case = FALSE, perl = FALSE,
   handling of invalid regular expressions and the collation of character
   ranges, so the results will have changed slightly over the years.
 
-  For Perl-style matching PCRE (\url{http://www.pcre.org}) is used.
+  For Perl-style matching PCRE (\url{http://www.pcre.org}) is used:
+  again the results may depend (slightly) on the version of PCRE in use. 
 }
 
 \references{
@@ -253,7 +260,12 @@ regexec(pattern, text, ignore.case = FALSE, perl = FALSE,
 
   \code{\link{grepRaw}} for matching raw vectors.
   
-  Options \code{PCRE_study} and \code{PCRE_use_JIT}.
+  Options \code{PCRE_limit_recursion}, \code{PCRE_study} and
+  \code{PCRE_use_JIT}.
+
+  \code{\link{extSoftVersion}} for the versions of regex and PCRE
+  libraries in use, \code{\link{pcre_config}} for more details for
+  PCRE.
 }
 \examples{
 grep("[a-z]", letters)

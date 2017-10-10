@@ -441,6 +441,14 @@ function(x,
     braces <- braces[include]
     collapse <- collapse[include]
 
+    if(any(include == "comment"))
+        x <- lapply(x,
+                    function(e) {
+                        e$comment <-
+                            .expand_ORCID_identifier(e$comment)
+                        e
+                    })
+
     paste_collapse <- function(x, collapse) {
         if(is.na(collapse) || identical(collapse, FALSE)) {
  	    x[1L]
@@ -480,6 +488,22 @@ function(object, ...)
                 braces = list(given = br, family = c("", ",")))
     })
     paste(object[nzchar(object)], collapse = " and ")
+}
+
+.canonicalize_ORCID_identifier <-
+function(x)
+{
+    paste0("https://orcid.org/", sub(".*/", "", x))
+}
+
+.expand_ORCID_identifier <-
+function(x)
+{
+    if(any(ind <- (names(x) == "ORCID")))
+        x[ind] <- paste0("<",
+                         .canonicalize_ORCID_identifier(x[ind]),
+                         ">")
+    x
 }
 
 ######################################################################
