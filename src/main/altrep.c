@@ -2353,9 +2353,9 @@ static double compact_realseq_Sum(SEXP x, Rboolean narm)
     else {
 #endif
 	SEXP info = ALTREP_INFO(x);
-	R_xlen_t size = COMPACT_INTSEQ_INFO_LENGTH(info);
-	R_xlen_t n1 = COMPACT_INTSEQ_INFO_FIRST(info);
-	int inc = COMPACT_INTSEQ_INFO_INCR(info);
+	double size = COMPACT_REALSEQ_INFO_LENGTH(info);
+	double n1 = COMPACT_REALSEQ_INFO_FIRST(info);
+	double inc = COMPACT_REALSEQ_INFO_INCR(info);
 	val = (size / 2.0) *(n1 + n1 + inc * (size - 1));
 #ifdef COMPACT_INTSEQ_MUTABLE
     }
