@@ -144,7 +144,7 @@ OneIndex(SEXP x, SEXP s, R_xlen_t len, int partial, SEXP *newname,
 	}
 	if (indx == -1)
 	    indx = nx;
-	*newname = STRING_ELT(s, pos);
+	*newname = PRINTNAME(s);
 	vmaxset(vmax);
 	break;
     default:
