@@ -1,6 +1,6 @@
 % File src/library/base/man/memCompress.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2009-11 R Core Team
+% Copyright 2009-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{memCompress}
@@ -52,7 +52,7 @@ memDecompress(from,
   streams, that are not currently handled.
 
   All the types of compression can expand the input: for \code{"gzip"}
-  and \code{"bzip"} the maximum expansion is known and so
+  and \code{"bzip2"} the maximum expansion is known and so
   \code{memCompress} can always allocate sufficient space.  For
   \code{"xz"} it is possible (but extremely unlikely) that compression
   will fail if the output would have been too large.
@@ -64,6 +64,9 @@ memDecompress(from,
 
 \seealso{
   \link{connections}.
+
+  \code{\link{extSoftVersion}} for the versions of the \code{zlib},
+  \code{bzip2} and \code{xz} libraries in use.
 
   \url{https://en.wikipedia.org/wiki/Data_compression} for background on
   data compression, \url{http://zlib.net/},
