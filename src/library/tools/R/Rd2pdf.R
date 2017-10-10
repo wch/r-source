@@ -145,7 +145,12 @@
              pkglist = NULL)
 {
     ## For Rd \packageFOO macro expansion:
-    Sys.setenv("_R_RD_MACROS_PACKAGE_DIR_" = pkgdir)
+    path <- normalizePath(pkgdir)
+    if(file.exists(file.path(path, "DESCRIPTION")))
+        Sys.setenv("_R_RD_MACROS_PACKAGE_DIR_" = path)
+    else if((basename(path) == "man") &&
+            file.exists(file.path(dirname(path), "DESCRIPTION")))
+        Sys.setenv("_R_RD_MACROS_PACKAGE_DIR_" = dirname(path))
     
     ## sort order for topics, a little tricky
     re <- function(x) x[order(toupper(x), x)]
