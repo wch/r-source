@@ -236,9 +236,8 @@ isIncomplete(con)
 
   Server-side cached data is always accepted.
 
-  Function \code{\link{download.file}} and contributed package
-  \CRANpkg{RCurl} provide more comprehensive facilities to download
-  from URLs.
+  Function \code{\link{download.file}} and several contributed packages
+  provide more comprehensive facilities to download from URLs.
 }
 
 \value{
@@ -539,10 +538,12 @@ isIncomplete(con)
 
   \code{\link{memCompress}} for more ways to (de)compress and references
   on data compression.
-#ifdef windows
+  
+  \code{\link{extSoftVersion}} for the versions of the \code{zlib} (for
+  \code{gzfile}), \code{bzip2} and \code{xz} libraries in use.
 
-  To flush output to the console, see \code{\link{flush.console}}.
-#endif
+  To flush output to the Windows and maOS consoles, see
+  \code{\link{flush.console}}.
 }
 
 \examples{
