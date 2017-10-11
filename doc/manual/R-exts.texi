@@ -8417,8 +8417,10 @@ One of the checks done by ASAN is that @code{malloc/free} and in C++
 @code{new[]}).  This matters on some systems but not all: unfortunately
 on some of those where it does not matter, system libraries@footnote{for
 example, X11/GL libraries on Linux, seen when checking package
-@CRANpkg{rgl}.} are not consistent.  The check can be suppressed by
-including @samp{alloc_dealloc_mismatch=0} in @env{ASAN_OPTIONS}.
+@CRANpkg{rgl} and some others using it---a workaround is to set
+environment variable @env{RGL_USE_NULL=true}.} are not consistent.  The
+check can be suppressed by including @samp{alloc_dealloc_mismatch=0} in
+@env{ASAN_OPTIONS}.
 
 @menu
 * Using Leak Sanitizer::        
