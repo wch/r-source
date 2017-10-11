@@ -1268,6 +1268,14 @@ stopifnot(identical(r0 & r0, r0),
 ## gave logical(0) in R 3.4.[012]
 
 
+## `[[`  and  `[[<-`  indexing with <symbol>
+x <- c(a=2, b=3)
+x[[quote(b)]] <- pi
+stopifnot(identical(2, x[[quote(a)]]),
+          identical(x, c(a=2, b=pi)))
+## `[[` only worked after fixing PR#17314, i.e., not in R <= 3.4.x
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
