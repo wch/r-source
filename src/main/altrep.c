@@ -1091,7 +1091,7 @@ SEXP match5(SEXP itable, SEXP ix, int nmatch, SEXP incomp, SEXP env);
 				      ELTFUN, fastgetqptr, NACHK);	\
 	    } else {							\
 		QELTFUNTYPE qeltmethod = DISPATCH_METHOD(ALT##ALTPREFIX, \
-							  Elt, q, 1);	\
+							  Elt, q);	\
 		BINARY_MATCHING_OUTER(TYPE, ALTPREFIX, FIRSTONLY, nmatch, \
 				      ELTFUN, qeltmethod, NACHK);	\
 	    }								\
@@ -1114,21 +1114,36 @@ SEXP match5(SEXP itable, SEXP ix, int nmatch, SEXP incomp, SEXP env);
 	return ret;							\
     } while(0); 
 
+/* These are disabled for now as this fails:
+
+   x <- 1:10; xx <- as.numeric(x)
+   y <- 1:5; yy <- as.numeric(y)
+   stopifnot(identical(xx %in% yy, x %in% y))
+
+   [The integer one also fails if compact_intseq_Match is not installed.]
+*/
 static SEXP altreal_Match_default(SEXP table, SEXP q,
 				  int nmatch, SEXP incomp,
 				  SEXP env,
 				  Rboolean firstonly) {
-    
+#ifdef WORKING_DEFAULT_MATCH
     ALT_MATCH_DEFAULT(double, REALSXP, REAL, firstonly, REAL_ELT,
 		      R_altreal_Elt_method_t, ISNA);
+#else
+    return NULL;
+#endif
 }
 
 static SEXP altinteger_Match_default(SEXP table, SEXP q,
 				     int nmatch, SEXP incomp,
 				     SEXP env,
 				     Rboolean firstonly) {
-ALT_MATCH_DEFAULT(int, INTSXP, INTEGER, firstonly, INTEGER_ELT,
-		  R_altinteger_Elt_method_t, INTVAL_ISNA);
+#ifdef WORKING_DEFAULT_MATCH
+    ALT_MATCH_DEFAULT(int, INTSXP, INTEGER, firstonly, INTEGER_ELT,
+		      R_altinteger_Elt_method_t, INTVAL_ISNA);
+#else
+    return NULL;
+#endif
 }
 
 
