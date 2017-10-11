@@ -36,8 +36,10 @@ sort.default <- function(x, decreasing = FALSE, na.last = NA, ...)
     ## The first case includes factors.
     if(is.object(x)) {
         sorted = if(decreasing) KNOWN_DECR else KNOWN_INCR
-        ans = x[order(x, na.last = na.last, decreasing = decreasing)]
-        noNA = (length(ans) == 0 || !is.na(ans[length(ans)]))
+        ord <- order(x, na.last = na.last, decreasing = decreasing)
+        n <- length(ord)
+        ans = x[ord]
+        noNA = (n == 0 || !is.na(ans[n]))
         .Internal(wrap_meta(ans, sorted, noNA))
     } else
         sort.int(x, na.last = na.last, decreasing = decreasing, ...)
