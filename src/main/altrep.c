@@ -257,7 +257,11 @@ ALTREP_INSPECT(SEXP x, int pre, int deep, int pvec,
 SEXP attribute_hidden
 ALTREP_SERIALIZED_STATE(SEXP x)
 {
+#ifdef ALTREP_SERIALIZATION_SUPPORT
     return ALTREP_DISPATCH(Serialized_state, x);
+#else
+    return NULL;
+#endif
 }
 
 SEXP attribute_hidden
