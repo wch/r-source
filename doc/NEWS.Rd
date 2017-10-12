@@ -202,6 +202,14 @@
     }
   }
 
+  \subsection{INSTALLATION on a UNIX-ALIKE}{
+    \itemize{
+      \item Support for a system Java on macOS has been
+      removed --- install a fairly recent Oracle Java (see \sQuote{R
+	Installation and Administration} §C.3.2).
+    }
+  }
+  
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
       \item \sQuote{Writing R Extensions} documents macros

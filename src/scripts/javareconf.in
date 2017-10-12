@@ -13,7 +13,7 @@ revision='$Rev$'
 version=`set - ${revision}; echo ${2}`
 version="R Java configurator: ${R_VERSION} (r${version})
 
-Copyright (C) 2002-2015 The R Core Team.
+Copyright (C) 2002-2017 The R Core Team.
 This is free software; see the GNU General Public License version 2
 or later for copying conditions.  There is NO warranty."
 
@@ -194,22 +194,8 @@ custom_JAVA_CPPFLAGS="${JAVA_CPPFLAGS}"
 custom_JAVA_LD_LIBRARY_PATH="${JAVA_LD_LIBRARY_PATH}"
 
 
-# sys-dependent tweaks to JNI flags
-hostos=`uname 2>/dev/null`
-if test "${hostos}" = "Darwin"; then
-     ## This changed for Java 9.
-     ## pref=`echo "${JAVA_HOME}" | grep "/Home$"`
-     pref=`echo "${JAVA_HOME}" | grep "^/System/Library"`
-     if test "${pref}" = "${JAVA_HOME}"; then 
-       echo "System Java on macOS"
-       JAVA_CPPFLAGS="-I/System/Library/Frameworks/JavaVM.framework/Headers"
-       JAVA_LIBS="-framework JavaVM"
-       JAVA_LD_LIBRARY_PATH=
-	has_libjvm=unknown
-    else
-       echo "Non-system Java on macOS"
-    fi
-fi
+# sys-dependent tweaks to JNI flags -- Darwin ones removed for R 3.5
+
 ## we now look for a path to put in R_LD_LIBRARY_PATH which will
 ## enable libjvm to be found at run time.  This should not be needed,
 ## but it seems that libjvm is often not in the ld.so cache.
