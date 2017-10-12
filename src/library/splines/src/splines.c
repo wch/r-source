@@ -216,13 +216,15 @@ spline_basis(SEXP knots, SEXP order, SEXP xvals, SEXP derivs)
 		valM[i * ord + j] = R_NaN;
 	    }
 	} else if (der_i > 0) { /* slow method for derivatives */
-	    if (der_i >= ord)
-		if(nd == 1)
+	    if (der_i >= ord) {
+		if(nd == 1) {
 		    error(_("derivs = %d >= ord = %d, but should be in {0,..,ord-1}"),
 			  der_i, ord);
-		else
+		} else {
 		    error(_("derivs[%d] = %d >= ord = %d, but should be in {0,..,ord-1}"),
 			  i+1, der_i, ord);
+		}
+	    }
 	    for(int ii = 0; ii < ord; ii++) {
 		for(int j = 0; j < ord; j++) sp->a[j] = 0;
 		sp->a[ii] = 1;
