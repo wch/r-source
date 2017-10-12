@@ -14,8 +14,12 @@
       default time zone is deduced correctly from the system setting
       when \R is configured with \option{--with-internal-tzcode} (the
       default on macOS).
+
+      \item \command{R CMD javareconf} has been updated to recognize the
+      use of a Java 9 SDK on macOS.
     }
   }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{raw(0) & raw(0)} and \code{raw(0) | raw(0)}
