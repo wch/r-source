@@ -3624,6 +3624,11 @@ JAVA_HOME=/usr/lib/jvm/java-1.8.0/jre
 @noindent
 worked.
 
+Parts of the configuration use the program @command{javah}.  It is said
+that will removed in future, to be replaced by @command{javac -h}
+(available from Java 8).  If necessary @env{JAVAH} can be set in the
+environment to something like @samp{"/usr/bin/javac -h"}.
+
 @node Other compiled languages,  , Java support, Useful libraries and programs
 @subsection Other compiled languages
 

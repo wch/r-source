@@ -162,6 +162,7 @@ else
     echo "Java compiler    : ${javac_works}"
 fi
 
+## FIXME: javah is deprecated so in future try javac -h first.
 if test -z "$JAVAH"; then
     save_IFS=$IFS; IFS=:
     for dir in ${JAVA_PATH}; do

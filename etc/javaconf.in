@@ -3,4 +3,6 @@
 : ${JAVA_CPPFLAGS=@custom_JAVA_CPPFLAGS@}
 : ${JAVA_LD_LIBRARY_PATH=@custom_JAVA_LD_LIBRARY_PATH@}
 : ${JAVA_LIBS=@custom_JAVA_LIBS@}
-
+: ${JAVAC=@custom_JAVAC@}
+: ${JAVAH=@custom_JAVAH@}
+: ${JAR=@custom_JAR@}
