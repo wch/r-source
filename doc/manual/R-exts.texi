@@ -4530,9 +4530,13 @@ suitable test for packages using @CRANpkg{rJava} would be
 @example
 .jinit()
 jv <- .jcall("java/lang/System", "S", "getProperty", "java.runtime.version")
-jvn <- as.numeric(paste0(strsplit(jv, "[.]")[[1L]][1:2], collapse = "."))
-if(jvn < 1.8) stop("Java 8 is needed for this package but not available")
+if(strsplit(jv, "")[[1L]] == "1") {
+  jvn <- as.numeric(paste0(strsplit(jv, "[.]")[[1L]][1:2], collapse = "."))
+  if(jvn < 1.8) stop("Java 8 is needed for this package but not available")
+}
 @end example
+@noindent
+(Java 9 changed the format of this string.)
 
 Some packages have stated a requirement on a particular JDK, but a
 package should only be requiring a JRE unless providing its own Java
