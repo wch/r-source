@@ -2838,7 +2838,7 @@ in most of the Chinese-speaking world.
 
 macOS supports locales in its own particular way, but the @R{} GUI tries to
 make this easier for users. See
-@uref{https://developer.apple.com/@/documentation/@/MacOSX/@/Conceptual/@/BPInternational/}
+@uref{https://developer.apple.com/@/library/@/content/@/documentation/@/MacOSX/@/Conceptual/@/BPInternational/}
 for how users can set their locales.  As with Windows, end users will
 generally only see lists of languages/territories.  Users of @R{} in a
 terminal may need to set the locale to something like @samp{en_GB.UTF-8}
@@ -4485,7 +4485,7 @@ File @file{configure} is created from @file{configure.ac} and the files
 under @file{m4} by @command{autoconf} and @command{aclocal} (part of the
 @pkg{automake} package).  There is a formal version requirement on
 @command{autoconf} of 2.62 or later, but it is unlikely that anything
-other than the most recent versions@footnote{at the time of revsion of
+other than the most recent versions@footnote{at the time of revision of
 this para in 2017, @pkg{autoconf-2.69} from 2012 and @pkg{automake-1.15}
 from 2015.} have been thoroughly tested.
 
@@ -5112,13 +5112,13 @@ upgrade may remove one if already installed: it is intended to be
 installed at first use.  Check if a JRE is installed by running
 @command{java -version} in a @command{Terminal} window: if Java is not
 installed@footnote{In the unlikely event that the version reported does
-not start with @code{1.8.0} you need to update your Java.} this should
-prompt you to install it.  You can also install directly the latest Java
-from Oracle (currently from
+not start with @code{1.8.0} or @code{9} you need to update your Java.}
+this should prompt you to install it.  You can also install directly the
+latest Java from Oracle (currently from
 @uref{http://www.oracle.com/@/technetwork/@/java/@/javase/@/downloads/@/index.html}).
 
 Binary distributions of @R{} are built against a specific version (e.g.@:
-1.8.0_131) of Oracle Java so @command{sudo R CMD javareconf} may be
+1.8.0_121) of Oracle Java so @command{sudo R CMD javareconf} may be
 needed before using Java-using packages.
 
 @c You may need to install what Apple calls `legacy Java'@footnote{e.g.@:
@@ -5138,14 +5138,23 @@ compiling JNI programs (used by packages @CRANpkg{rJava} and
 JRE.
 
 The build process tries to fathom out what JRE/JDK to use, but it may
-need some help, e.g.@: by setting @env{JAVA_HOME}.  The Oracle JDK can
+need some help, e.g.@: by setting @env{JAVA_HOME}.  An Oracle JDK can
 be specified explicitly by something like
 @example
-JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home
+JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home
 JAVA_CPPFLAGS="-I/$@{JAVA_HOME@}/include -I/$@{JAVA_HOME@}/include/darwin"
 JAVA_LD_LIBRARY_PATH="$@{JAVA_HOME@}/jre/lib/server"
 JAVA_LIBS="-L/$@{JAVA_HOME@}/jre/lib/server -ljvm" 
 @end example
+@noindent
+or
+@example
+JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-9.jdk/Contents/Home
+JAVA_CPPFLAGS="-I/$@{JAVA_HOME@}/include -I/$@{JAVA_HOME@}/include/darwin"
+JAVA_LD_LIBRARY_PATH="$@{JAVA_HOME@}/lib/server"
+JAVA_LIBS="-L/$@{JAVA_HOME@}/lib/server -ljvm" 
+@end example
+@noindent
 in @file{config.site}.
 
 (An Apple JRE, if available, can be specified explicitly by something
