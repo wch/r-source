@@ -1200,3 +1200,10 @@ int R_GetFDLimit()
     long limit = 16L*1024L*1024L;
     return (limit > INT_MAX) ? INT_MAX : limit;
 }
+
+int R_EnsureFDLimit(int desired)
+{
+    long limit = 16L*1024L*1024L;
+    return (desired <= limit) ? desired : (int)limit;
+}
+

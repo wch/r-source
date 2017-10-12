@@ -181,6 +181,10 @@
 
       \item \code{intToUtf8(multiple = FALSE)} gains an argument to
       allow surrogate pairs to be interpreted.
+
+      \item The maximum number of DLLs that can be loaded into R
+      e.g.\sspace{}\emph{via} \code{dyn.load()} has been increased up to 614
+      when the OS limit on the number of open files allows.
     }
   }
 

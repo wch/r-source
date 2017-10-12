@@ -1049,6 +1049,7 @@ Rboolean R_FileExists(const char *);
 Rboolean R_HiddenFile(const char *);
 double	R_FileMtime(const char *);
 int	R_GetFDLimit();
+int	R_EnsureFDLimit(int);
 
 /* environment cell access */
 typedef struct { SEXP cell; } R_varloc_t; /* use struct to prevent casting */

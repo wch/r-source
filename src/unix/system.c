@@ -573,3 +573,39 @@ int R_GetFDLimit() {
 #endif
     return -1;
 }
+
+/* Tries to ensure that the limit on the number of open files is at least
+   as desired. Returns 'desired' if successful, otherwise a smaller positive
+   number giving the current limit. On error (no limit known), a negative
+   number is returned. */
+int R_EnsureFDLimit(int desired) {
+
+#if defined(HAVE_SYS_RESOURCE_H) && defined(HAVE_SETRLIMIT) && defined(HAVE_GETRLIMIT)
+    struct rlimit rlim;
+    if (getrlimit(RLIMIT_NOFILE, &rlim))
+	return -1;
+    rlim_t lim = rlim.rlim_cur;
+#if defined(RLIM_SAVED_CUR) && defined(RLIM_SAVED_MAX)
+    if (lim == RLIM_SAVED_CUR || lim == RLIM_SAVED_MAX) 
+	lim = RLIM_INFINITY;
+#endif
+    if (lim == RLIM_INFINITY || lim >= desired)
+	return desired;
+
+    /* increase the limit */
+    rlim_t hlim = rlim.rlim_max;
+#if defined(RLIM_SAVED_CUR) && defined(RLIM_SAVED_MAX)
+    if (hlim == RLIM_SAVED_CUR || hlim == RLIM_SAVED_MAX) 
+	hlim = RLIM_INFINITY;
+#endif
+    if (hlim == RLIM_INFINITY || hlim >= desired)
+	rlim.rlim_cur = (rlim_t) desired;
+    else
+	rlim.rlim_cur = hlim;
+    if (setrlimit(RLIMIT_NOFILE, &rlim))
+	return (int) lim; /* also could return error */
+    
+    return (int) rlim.rlim_cur;
+#endif
+}
+

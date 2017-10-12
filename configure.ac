@@ -1864,7 +1864,7 @@ case "${host_os}" in
 esac
 ## Windows has neither setenv nor unsetenv
 R_CHECK_FUNCS([setenv unsetenv], [#include <stdlib.h>])
-R_CHECK_FUNCS([getrlimit getrusage getpriority], [#include <sys/resource.h>])
+R_CHECK_FUNCS([getrlimit setrlimit getrusage getpriority], [#include <sys/resource.h>])
 R_CHECK_FUNCS([chmod mkfifo stat umask], [#include <sys/stat.h>])
 if test "${ac_cv_have_decl_stat}" = "no"; then
    AC_MSG_ERROR([Building R requires the 'stat' system call])
