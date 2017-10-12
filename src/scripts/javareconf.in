@@ -197,7 +197,9 @@ custom_JAVA_LD_LIBRARY_PATH="${JAVA_LD_LIBRARY_PATH}"
 # sys-dependent tweaks to JNI flags
 hostos=`uname 2>/dev/null`
 if test "${hostos}" = "Darwin"; then
-     pref=`echo "${JAVA_HOME}" | grep "/Home$"`
+     ## This changed for Java 9.
+     ## pref=`echo "${JAVA_HOME}" | grep "/Home$"`
+     pref=`echo "${JAVA_HOME}" | grep "^/System/Library"`
      if test "${pref}" = "${JAVA_HOME}"; then 
        echo "System Java on macOS"
        JAVA_CPPFLAGS="-I/System/Library/Frameworks/JavaVM.framework/Headers"
