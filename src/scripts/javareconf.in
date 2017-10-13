@@ -43,6 +43,7 @@ Environment variables that can be used to influence the detection:
   JAVAC          path to a Java compiler
   JAVAH          path to a Java header/stub generator
   JAR            path to a Java archive tool
+Values specified when R was configured will be used unless overridden.
 
 The following variables should be used with extreme caution. They
 must all match, so use only if you have a very special setup that
