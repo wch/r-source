@@ -233,7 +233,7 @@ extern void R_WaitEvent(void);
 #define	R_NSIZE		350000L
 #endif
 #ifndef R_VSIZE
-#define	R_VSIZE		6291456L
+#define	R_VSIZE		67108864L
 #endif
 
 /* some commonly needed headers */
