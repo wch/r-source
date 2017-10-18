@@ -185,6 +185,9 @@
       \item The maximum number of DLLs that can be loaded into R
       e.g.\sspace{}\emph{via} \code{dyn.load()} has been increased up to 614
       when the OS limit on the number of open files allows.
+
+      \item \code{Sys.timezone(location)} is slightly less platform
+      dependent, notably for \code{location = FALSE}.
     }
   }
 
@@ -213,7 +216,7 @@
 	Installation and Administration} §C.3.2).
     }
   }
-  
+
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
       \item \sQuote{Writing R Extensions} documents macros
@@ -385,7 +388,7 @@
       surrogate code points to \code{NA} rather than invalid UTF-8, as
       well as values larger than the current Unicode maximum of
       \code{0x10FFFF}.  (This aligns with the current RFC3629.)
-      
+
       \item Fix calling of methods on S4 generics that dispatch on
       \code{\dots} when the call contains \code{\dots}.
 
@@ -756,7 +759,7 @@
       \code{tol} in the result, and optionally parts of the internal
       matrix computations.
 
-      \item \code{addNA()} is faster now, e.g.{} when applied twice.
+      \item \code{addNA()} is faster now, e.g.\sspace{} when applied twice.
       (Part of \PR{16895}.)
 
       \item New option \code{rstandard(<lm>, type = "predicted")}
