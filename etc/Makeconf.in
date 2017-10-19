@@ -7,13 +7,7 @@
 # configure @R_CONFIG_ARGS@
 
 ## This fails if it contains spaces, or if it is quoted
-#include $(R_SHARE_DIR)/make/vars.mk
-
-## Escape spaces
-sp =
-sp +=
-sq = $(subst $(sp),\ ,$1)
-include $(call sq,$(R_SHARE_DIR)/make/vars.mk)
+include $(R_SHARE_DIR)/make/vars.mk
 
 AR = @AR@
 BLAS_LIBS = @BLAS_LIBS@
