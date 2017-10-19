@@ -1010,6 +1010,7 @@ infodir
 docdir
 oldincludedir
 includedir
+runstatedir
 localstatedir
 sharedstatedir
 sysconfdir
@@ -1206,6 +1207,7 @@ datadir='${datarootdir}'
 sysconfdir='${prefix}/etc'
 sharedstatedir='${prefix}/com'
 localstatedir='${prefix}/var'
+runstatedir='${localstatedir}/run'
 includedir='${prefix}/include'
 oldincludedir='/usr/include'
 docdir='${datarootdir}/doc/${PACKAGE_TARNAME}'
@@ -1458,6 +1460,15 @@ do
   | -silent | --silent | --silen | --sile | --sil)
     silent=yes ;;
 
+  -runstatedir | --runstatedir | --runstatedi | --runstated \
+  | --runstate | --runstat | --runsta | --runst | --runs \
+  | --run | --ru | --r)
+    ac_prev=runstatedir ;;
+  -runstatedir=* | --runstatedir=* | --runstatedi=* | --runstated=* \
+  | --runstate=* | --runstat=* | --runsta=* | --runst=* | --runs=* \
+  | --run=* | --ru=* | --r=*)
+    runstatedir=$ac_optarg ;;
+
   -sbindir | --sbindir | --sbindi | --sbind | --sbin | --sbi | --sb)
     ac_prev=sbindir ;;
   -sbindir=* | --sbindir=* | --sbindi=* | --sbind=* | --sbin=* \
@@ -1595,7 +1606,7 @@ fi
 for ac_var in	exec_prefix prefix bindir sbindir libexecdir datarootdir \
 		datadir sysconfdir sharedstatedir localstatedir includedir \
 		oldincludedir docdir infodir htmldir dvidir pdfdir psdir \
-		libdir localedir mandir
+		libdir localedir mandir runstatedir
 do
   eval ac_val=\$$ac_var
   # Remove trailing slashes.
@@ -1748,6 +1759,7 @@ Fine tuning of the installation directories:
   --sysconfdir=DIR        read-only single-machine data [PREFIX/etc]
   --sharedstatedir=DIR    modifiable architecture-independent data [PREFIX/com]
   --localstatedir=DIR     modifiable single-machine data [PREFIX/var]
+  --runstatedir=DIR       modifiable per-process data [LOCALSTATEDIR/run]
   --libdir=DIR            object code libraries [EPREFIX/lib]
   --includedir=DIR        C header files [PREFIX/include]
   --oldincludedir=DIR     C header files for non-gcc [/usr/include]
@@ -3980,7 +3992,7 @@ fi
 
 ## As from R 3.2.0 split up -L... and -lR
 if test "${want_R_shlib}" = yes; then
-  LIBR0="-L\$(R_HOME)/lib\$(R_ARCH)"
+  LIBR0="-L\"\$(R_HOME)/lib\$(R_ARCH)\""
   LIBR1=-lR
 else
   LIBR0=
@@ -4371,10 +4383,10 @@ fi
 
 if test -z "${r_arch}"; then
   R_ARCH=
-  R_XTRA_CPPFLAGS2="-I\$(R_INCLUDE_DIR)"
+  R_XTRA_CPPFLAGS2="-I\"\$(R_INCLUDE_DIR)\""
 else
   R_ARCH="/${r_arch}"
-  R_XTRA_CPPFLAGS2="-I\$(R_INCLUDE_DIR) -I\$(R_INCLUDE_DIR)/${r_arch}"
+  R_XTRA_CPPFLAGS2="-I\"\$(R_INCLUDE_DIR)\" -I\"\$(R_INCLUDE_DIR)/${r_arch}\""
 fi
 
 cat >>confdefs.h <<_ACEOF
@@ -5565,7 +5577,7 @@ if (aclocal --version) < /dev/null > /dev/null 2>&1; then
   { $as_echo "$as_me:${as_lineno-$LINENO}: result: found" >&5
 $as_echo "found" >&6; }
 else
-  ACLOCAL="\$(SHELL) \$(abs_top_srcdir)/tools/missing aclocal"
+  ACLOCAL="\$(SHELL) \"\$(abs_top_srcdir)/tools/missing\" aclocal"
   { $as_echo "$as_me:${as_lineno-$LINENO}: result: missing" >&5
 $as_echo "missing" >&6; }
   if test "x${use_maintainer_mode}" = xyes; then
@@ -5584,7 +5596,7 @@ if (autoconf --version) < /dev/null > /dev/null 2>&1; then
   { $as_echo "$as_me:${as_lineno-$LINENO}: result: found" >&5
 $as_echo "found" >&6; }
 else
-  AUTOCONF="\$(SHELL) \$(abs_top_srcdir)/tools/missing autoconf"
+  AUTOCONF="\$(SHELL) \"\$(abs_top_srcdir)/tools/missing\" autoconf"
   { $as_echo "$as_me:${as_lineno-$LINENO}: result: missing" >&5
 $as_echo "missing" >&6; }
   if test "x${use_maintainer_mode}" = xyes; then
@@ -5603,7 +5615,7 @@ if (autoheader --version) < /dev/null > /dev/null 2>&1; then
   { $as_echo "$as_me:${as_lineno-$LINENO}: result: found" >&5
 $as_echo "found" >&6; }
 else
-  AUTOHEADER="\$(SHELL) \$(abs_top_srcdir)/tools/missing autoheader"
+  AUTOHEADER="\$(SHELL) \"\$(abs_top_srcdir)/tools/missing\" autoheader"
   { $as_echo "$as_me:${as_lineno-$LINENO}: result: missing" >&5
 $as_echo "missing" >&6; }
   if test "x${use_maintainer_mode}" = xyes; then
@@ -25271,7 +25283,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:25274: \"$ac_link\") >&5
+(eval echo $as_me:25286: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -25346,7 +25358,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:25349: \"$ac_link\") >&5
+(eval echo $as_me:25361: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -37242,7 +37254,7 @@ case "${host_os}" in
     ## resolve dylib dependencies, so libRblas will not be found unless
     ## we tell ld where it lives. I don't know of any more elegant solution :/
     if test "x${use_blas_shlib}" = xyes; then
-      LIBR="${LIBR} -dylib_file libRblas.dylib:\$(R_HOME)/lib\$(R_ARCH)/libRblas.dylib"
+      LIBR="${LIBR} -dylib_file libRblas.dylib:\"\$(R_HOME)/lib\$(R_ARCH)/libRblas.dylib\""
     fi
   ;;
 esac
@@ -37346,7 +37358,7 @@ fi
 
 if test "${use_blas_shlib}" = yes; then
   ## set BLAS_LIBS to point at local version
-  BLAS_LIBS="-L\$(R_HOME)/lib\$(R_ARCH) -lRblas"
+  BLAS_LIBS="-L\"\$(R_HOME)/lib\$(R_ARCH)\" -lRblas"
 fi
 
  if test "x${use_veclib_g95fix}" = xyes; then
@@ -37516,7 +37528,7 @@ LIBS="${acx_lapack_save_LIBS}"
 
 fi
 if test "${acx_lapack_ok}" != "yes"; then
-  LAPACK_LIBS="-L\$(R_HOME)/lib\$(R_ARCH) -lRlapack"
+  LAPACK_LIBS="-L\"\$(R_HOME)/lib\$(R_ARCH)\" -lRlapack"
 fi
 
  if test "${acx_lapack_ok}" = "yes"; then
@@ -42370,7 +42382,7 @@ else
     We can't simply define LARGE_OFF_T to be 9223372036854775807,
     since some C++ compilers masquerading as C compilers
     incorrectly reject 9223372036854775807.  */
-#define LARGE_OFF_T (((off_t) 1 << 62) - 1 + ((off_t) 1 << 62))
+#define LARGE_OFF_T ((((off_t) 1 << 31) << 31) - 1 + (((off_t) 1 << 31) << 31))
   int off_t_is_large[(LARGE_OFF_T % 2147483629 == 721
 		       && LARGE_OFF_T % 2147483647 == 1)
 		      ? 1 : -1];
@@ -42424,7 +42436,7 @@ else
     We can't simply define LARGE_OFF_T to be 9223372036854775807,
     since some C++ compilers masquerading as C compilers
     incorrectly reject 9223372036854775807.  */
-#define LARGE_OFF_T (((off_t) 1 << 62) - 1 + ((off_t) 1 << 62))
+#define LARGE_OFF_T ((((off_t) 1 << 31) << 31) - 1 + (((off_t) 1 << 31) << 31))
   int off_t_is_large[(LARGE_OFF_T % 2147483629 == 721
 		       && LARGE_OFF_T % 2147483647 == 1)
 		      ? 1 : -1];
@@ -42456,7 +42468,7 @@ rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
     We can't simply define LARGE_OFF_T to be 9223372036854775807,
     since some C++ compilers masquerading as C compilers
     incorrectly reject 9223372036854775807.  */
-#define LARGE_OFF_T (((off_t) 1 << 62) - 1 + ((off_t) 1 << 62))
+#define LARGE_OFF_T ((((off_t) 1 << 31) << 31) - 1 + (((off_t) 1 << 31) << 31))
   int off_t_is_large[(LARGE_OFF_T % 2147483629 == 721
 		       && LARGE_OFF_T % 2147483647 == 1)
 		      ? 1 : -1];
@@ -42509,7 +42521,7 @@ else
     We can't simply define LARGE_OFF_T to be 9223372036854775807,
     since some C++ compilers masquerading as C compilers
     incorrectly reject 9223372036854775807.  */
-#define LARGE_OFF_T (((off_t) 1 << 62) - 1 + ((off_t) 1 << 62))
+#define LARGE_OFF_T ((((off_t) 1 << 31) << 31) - 1 + (((off_t) 1 << 31) << 31))
   int off_t_is_large[(LARGE_OFF_T % 2147483629 == 721
 		       && LARGE_OFF_T % 2147483647 == 1)
 		      ? 1 : -1];
@@ -42541,7 +42553,7 @@ rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
     We can't simply define LARGE_OFF_T to be 9223372036854775807,
     since some C++ compilers masquerading as C compilers
     incorrectly reject 9223372036854775807.  */
-#define LARGE_OFF_T (((off_t) 1 << 62) - 1 + ((off_t) 1 << 62))
+#define LARGE_OFF_T ((((off_t) 1 << 31) << 31) - 1 + (((off_t) 1 << 31) << 31))
   int off_t_is_large[(LARGE_OFF_T % 2147483629 == 721
 		       && LARGE_OFF_T % 2147483647 == 1)
 		      ? 1 : -1];

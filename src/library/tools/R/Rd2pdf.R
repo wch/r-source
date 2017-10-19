@@ -121,11 +121,11 @@
             lines <- readLines(out)
             if (attr(res, "hasFigures")) {
                 graphicspath <-
-                    paste0("\\graphicspath{{",
+                    paste0("\\graphicspath{{\"",
                            normalizePath(file.path(dirname(f),
                                                    "figures"),
                                          "/"),
-                           "/}}")
+                           "/\"}}")
             	lines <- c(graphicspath, lines)
             	hasFigures <- TRUE
             }
@@ -203,11 +203,11 @@
                 if (attr(res, "hasFigures")) {
                     lines <- readLines(outfilename)
                     graphicspath <-
-                        paste0("\\graphicspath{{",
+                        paste0("\\graphicspath{{\"",
                                normalizePath(file.path(pkgdir, "help",
                                                        "figures"),
                                              "/"),
-                               "/}}")
+                               "/\"}}")
                     writeLines(c(graphicspath, lines), outfilename)
                     hasFigures <- TRUE
                 }
@@ -272,11 +272,11 @@
                 if (attr(res, "hasFigures")) {
                     lines <- readLines(outfilename)
                     graphicspath <-
-                        paste0("\\graphicspath{{",
+                        paste0("\\graphicspath{{\"",
                                normalizePath(file.path(dirname(paths[i]),
                                                        "figures"),
                                              "/"),
-                               "/}}")
+                               "/\"}}")
                     writeLines(c(graphicspath, lines), outfilename)
                     hasFigures <- TRUE
                 }

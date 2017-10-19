@@ -290,7 +290,7 @@ AC_ARG_ENABLE([BLAS-shlib],
 
 ## As from R 3.2.0 split up -L... and -lR
 if test "${want_R_shlib}" = yes; then
-  LIBR0="-L\$(R_HOME)/lib\$(R_ARCH)"
+  LIBR0="-L\"\$(R_HOME)/lib\$(R_ARCH)\""
   LIBR1=-lR
 else
   LIBR0=
@@ -550,10 +550,10 @@ AC_ARG_VAR([R_SHELL],
 
 if test -z "${r_arch}"; then
   R_ARCH=
-  R_XTRA_CPPFLAGS2="-I\$(R_INCLUDE_DIR)"
+  R_XTRA_CPPFLAGS2="-I\"\$(R_INCLUDE_DIR)\""
 else
   R_ARCH="/${r_arch}"
-  R_XTRA_CPPFLAGS2="-I\$(R_INCLUDE_DIR) -I\$(R_INCLUDE_DIR)/${r_arch}"
+  R_XTRA_CPPFLAGS2="-I\"\$(R_INCLUDE_DIR)\" -I\"\$(R_INCLUDE_DIR)/${r_arch}\""
 fi
 AC_DEFINE_UNQUOTED(R_ARCH, "${r_arch}",
 [Define this to use architecture-dependent subdirectories of this name.])
@@ -2107,7 +2107,7 @@ case "${host_os}" in
     ## resolve dylib dependencies, so libRblas will not be found unless
     ## we tell ld where it lives. I don't know of any more elegant solution :/
     if test "x${use_blas_shlib}" = xyes; then
-      LIBR="${LIBR} -dylib_file libRblas.dylib:\$(R_HOME)/lib\$(R_ARCH)/libRblas.dylib"
+      LIBR="${LIBR} -dylib_file libRblas.dylib:\"\$(R_HOME)/lib\$(R_ARCH)/libRblas.dylib\""
     fi
   ;;
 esac
@@ -2200,7 +2200,7 @@ AC_SUBST(BLAS_LIBS0)
 
 if test "${use_blas_shlib}" = yes; then
   ## set BLAS_LIBS to point at local version
-  BLAS_LIBS="-L\$(R_HOME)/lib\$(R_ARCH) -lRblas"
+  BLAS_LIBS="-L\"\$(R_HOME)/lib\$(R_ARCH)\" -lRblas"
 fi
 
 AM_CONDITIONAL(USE_VECLIB_G95FIX, [test "x${use_veclib_g95fix}" = xyes])
@@ -2213,7 +2213,7 @@ if test "${use_lapack}" = "yes"; then
   R_LAPACK_LIBS
 fi
 if test "${acx_lapack_ok}" != "yes"; then
-  LAPACK_LIBS="-L\$(R_HOME)/lib\$(R_ARCH) -lRlapack"
+  LAPACK_LIBS="-L\"\$(R_HOME)/lib\$(R_ARCH)\" -lRlapack"
 fi
 AC_SUBST(LAPACK_LIBS)
 AM_CONDITIONAL(USE_EXTERNAL_LAPACK, [test "${acx_lapack_ok}" = "yes"])
