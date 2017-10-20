@@ -49,6 +49,8 @@ Sys.timezone <- function(location = TRUE)
                                        file.size(lt))
                      })
                 tz2
+            else
+                NA_character_
         }
     } else { # !location
         st <- as.POSIXlt(Sys.time())
