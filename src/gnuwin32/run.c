@@ -119,6 +119,7 @@ static char *expandcmd(const char *cmd, int whole)
       since SearchPath already returns 'short names'. However,
       this is not documented so I prefer to be explicit.
     */
+    /* NOTE: short names are not always enabled */
     GetShortPathName(fn, s, MAX_PATH);
     if (!whole) {
 	*q = c;

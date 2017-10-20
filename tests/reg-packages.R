@@ -38,7 +38,7 @@ build.pkg <- function(dir) {
     stopifnot(dir.exists(dir))
     patt <- paste(basename(dir), ".*tar\\.gz$", sep="_")
     unlink(dir('.', pattern = patt))
-    Rcmd <- paste(file.path(R.home("bin"), "R"), "CMD")
+    Rcmd <- paste(shQuote(file.path(R.home("bin"), "R")), "CMD")
     r <- tail(system(paste(Rcmd, "build --keep-empty-dirs", shQuote(dir)),
                      intern = TRUE), 3)
     ## return name of tar file built
