@@ -233,7 +233,7 @@ extern void R_WaitEvent(void);
 #define	R_NSIZE		350000L
 #endif
 #ifndef R_VSIZE
-#define	R_VSIZE		6291456L
+#define	R_VSIZE		67108864L
 #endif
 
 /* some commonly needed headers */
@@ -1049,6 +1049,7 @@ Rboolean R_FileExists(const char *);
 Rboolean R_HiddenFile(const char *);
 double	R_FileMtime(const char *);
 int	R_GetFDLimit();
+int	R_EnsureFDLimit(int);
 
 /* environment cell access */
 typedef struct { SEXP cell; } R_varloc_t; /* use struct to prevent casting */

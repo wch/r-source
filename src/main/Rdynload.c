@@ -173,39 +173,66 @@ static void initLoadedDLL()
     /* Note that it is likely that dlopen will use up at least one file
        descriptor for each DLL loaded (it may load further dynamically
        linked libraries), so we do not want to get close to the fd limit
-       (which may be as low as 256). By default, the maximum number of DLLs
-       that can be loaded is 100. When the fd limit is known, we allow
-       increasing the maximum number of DLLs via environment variable up to
-       60% of the limit on open files, but to no more than 1000.
+       (which may be as low as 256).
+    
+       When R_MAX_NUM_DLLS environment variable is set and is in range
+       [100,1000] and the fd limit is sufficient or can be increased,
+       this becomes the maximum number of DLLs. Otherwise, R fails to start.
+
+       When R_MAX_NUM_DLLS is not set, R uses a reasonable default value
+       that matches the fd limit. R attempts to increase the limit if it
+       is too small. The goal for maximum number of DLLs is currently 614.
+
+       The limit receives increased attention with 'workflow' documents
+       which load increasingly more packages, hitting the fd limitof 256
+       on macOS systems.
     */
-    int maxlimit;
-    int fdlimit = R_GetFDLimit();
-    if (fdlimit > 0) { /* fd limit known */
-	maxlimit = (int) (0.6 * fdlimit);
-	if (maxlimit > 1000) maxlimit = 1000;
-	if (maxlimit < 100)
-	    R_Suicide(_("the limit on the number of open files is too low"));
-    } else
-	maxlimit = 100;
 
     char *req = getenv("R_MAX_NUM_DLLS");
     if (req != NULL) {
+	/* set exactly the requested limit, or fail */
 	int reqlimit = atoi(req);
-	if (reqlimit < 100)
-	    R_Suicide(_("R_MAX_NUM_DLLS must be at least 100"));
-	if (reqlimit > maxlimit) {
-	    if (maxlimit == 1000)
-		R_Suicide(_("R_MAX_NUM_DLLS cannot be bigger than 1000"));
-	    
+	if (reqlimit < 100) {
+	    char msg[128];
+	    snprintf(msg, 128,
+	      _("R_MAX_NUM_DLLS must be at least %d"), 100);
+	    R_Suicide(msg);
+	}
+	if (reqlimit > 1000) {
+	    char msg[128];
+	    snprintf(msg, 128,
+	      _("R_MAX_NUM_DLLS cannot be bigger than %d"), 1000);
+	    R_Suicide(msg);
+	}
+	int needed_fds = (int)(1.67 * reqlimit);
+	int fdlimit = R_EnsureFDLimit(needed_fds);
+	if (fdlimit < 0 && reqlimit > 100) {
+	    /* this is very unlikely */
+	    char msg[128];
+	    snprintf(msg, 128,
+	      _("R_MAX_NUM_DLLS cannot be bigger than %d when fd limit is not known"),
+	      100);
+	    R_Suicide(msg);
+	} else if (fdlimit != needed_fds) {
 	    char msg[128];
 	    snprintf(msg, 128,
 	      _("R_MAX_NUM_DLLS bigger than %d may exhaust open files limit"),
-	      maxlimit);
+	      (int) (0.6 * fdlimit));
 	    R_Suicide(msg);
 	}
 	MaxNumDLLs = reqlimit;
-    } else
-	MaxNumDLLs = 100;
+    } else {
+	/* set a reasonable default limit */
+	int needed_fds = 1024;
+	int fdlimit = R_EnsureFDLimit(needed_fds);
+	if (fdlimit < 0)
+	    MaxNumDLLs = 100;
+	else {
+	    MaxNumDLLs = (int) (0.6 * fdlimit);
+	    if (MaxNumDLLs < 100)
+		R_Suicide(_("the limit on the number of open files is too low"));
+	}
+    }
 
     /* memory is set to zero */
     LoadedDLL = (DllInfo *) calloc(MaxNumDLLs, sizeof(DllInfo));

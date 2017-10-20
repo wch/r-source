@@ -66,9 +66,9 @@ int main (int argc, char **argv)
 
     if (stricmp(argv[0] + strlen(argv[0]) - 11, "Rscript.exe") == 0
 	|| stricmp(argv[0] + strlen(argv[0]) - 7, "Rscript") == 0)
-	snprintf(cmd, CMD_LEN, "%s\\bin\\%s\\Rscript.exe", getRHOME(2), arch);
+	snprintf(cmd, CMD_LEN, "\"%s\\bin\\%s\\Rscript.exe\"", getRHOME(2), arch);
     else {
-    	snprintf(cmd, CMD_LEN, "%s\\bin\\%s\\R.exe", getRHOME(2), arch);
+    	snprintf(cmd, CMD_LEN, "\"%s\\bin\\%s\\R.exe\"", getRHOME(2), arch);
 	interactive = 1;
     }
 

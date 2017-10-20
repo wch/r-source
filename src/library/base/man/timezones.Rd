@@ -1,6 +1,6 @@
 % File src/library/base/man/timezones.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{timezones}
@@ -45,9 +45,9 @@ OlsonNames()
   suitable values.  \code{Sys.timezone()} will return the value of
   \env{TZ} if set (and on some OSes it is always set), otherwise it will
   try to retrieve a value which if set for \env{TZ} would give the
-  current time zone.  This is not in general possible, and
-  \code{Sys.timezone(FALSE)} on Windows will retrieve the abbreviation
-  used for the current time.
+  current time zone.  This is not in general possible, and then
+  \code{Sys.timezone(FALSE)} will retrieve the abbreviation used for the
+  current time.
 
   If \env{TZ} is set but empty or invalid, most platforms default to
   \samp{UTC}, the time zone colloquially known as \samp{GMT} (see
@@ -61,7 +61,7 @@ OlsonNames()
   widely in 1916. Over the last 100 years places have changed their
   affiliation between major time zones, have opted out of (or in to) DST
   in various years or adopted DST rule changes late or not at all.
-  
+
   A quite common system implementation of \code{POSIXct} is as signed
   32-bit integers and so only goes back to the end of 1901: on such
   systems \R assumes that dates prior to that are in the same time zone
@@ -79,10 +79,10 @@ OlsonNames()
   \code{NA} or an empty string (which on some OSes means \samp{UTC}).
   For the default \code{location = TRUE} this will be a location such as
   \code{"Europe/London"} if one can be ascertained.  For \code{location
-  = FALSE} this may be an abbreviation such as \code{"EST"} or
-  \code{"CEST"} on Windows.
+  = FALSE} this may be an abbreviation such as \code{"EST"} or \code{"CEST"}.
 
-  \code{OlsonNames} returns a character vector.
+  \code{OlsonNames} returns a character vector, see the examples for
+  typical cases.
 }
 
 \section{Time zone names}{
@@ -121,7 +121,7 @@ OlsonNames()
   all time zones the abbreviations have been stable since 1970.)  The
   POSIX standard allows only one or two abbreviations per time zone, so
   you may see the current abbreviation(s) used for older times.
-  
+
   The function \code{OlsonNames} returns the time-zone names known to
   the Olson/IANA database on the current system. The system-specific
   location in the file system varies, e.g.\sspace{}\file{/usr/share/zoneinfo}
@@ -154,7 +154,7 @@ OlsonNames()
   Contrary to some expectations (but consistent with names such as
   \samp{PST8PDT}), negative offsets are times ahead of (east of) UTC,
   positive offsets are times behind (west of) UTC.
-  
+
   Immediately prior to the advent of legislated time zones, most people
   used time based on their longitude (or that of a nearby town), known
   as \sQuote{Local Mean Time} and abbreviated as \samp{LMT} in the
@@ -212,8 +212,17 @@ OlsonNames()
 
 \examples{
 Sys.timezone()
+Sys.timezone(location=FALSE)#-> typically a short form
 
-str(OlsonNames()) ## a few hundred names
+str(OlsonNames()) ## typically close to 600 hundred names,
+## typically some acronyms such as "UTC", "NZ", "MET", "Eire", ..., but
+## mostly pairs (and triplets) such as "Pacific/Auckland"
+table(sl <- grepl("/", OlsonNames()))
+OlsonNames()[ !sl ] # the simple ones
+head(Osl <- strsplit(OlsonNames()[sl], "/"))
+(tOS1 <- table(vapply(Osl, `[[`, "", 1))) # Continents, countries, ...
+table(lengths(Osl))# most are pairs, some triplets
+str(Osl[lengths(Osl) >= 3])# "America" South and North ...
 }
 \keyword{utilities}
 \keyword{chron}

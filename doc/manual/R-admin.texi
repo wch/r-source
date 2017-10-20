@@ -2837,14 +2837,9 @@ in most of the Chinese-speaking world.
 @subsection Locales under macOS
 
 macOS supports locales in its own particular way, but the @R{} GUI tries to
-make this easier for users.
-@c <FIXME>
-@c URL no longer works ...
-@c See
-@c @uref{https://developer.apple.com/@/documentation/@/MacOSX/@/Conceptual/@/BPInternational/}
-@c for how users can set their locales.
-@c </FIXME>
-As with Windows, end users will
+make this easier for users. See
+@uref{https://developer.apple.com/@/library/@/content/@/documentation/@/MacOSX/@/Conceptual/@/BPInternational/}
+for how users can set their locales.  As with Windows, end users will
 generally only see lists of languages/territories.  Users of @R{} in a
 terminal may need to set the locale to something like @samp{en_GB.UTF-8}
 if it defaults to @samp{C} (as it sometimes does when logging in
@@ -5117,13 +5112,13 @@ upgrade may remove one if already installed: it is intended to be
 installed at first use.  Check if a JRE is installed by running
 @command{java -version} in a @command{Terminal} window: if Java is not
 installed@footnote{In the unlikely event that the version reported does
-not start with @code{1.8.0} you need to update your Java.} this should
-prompt you to install it.  You can also install directly the latest Java
-from Oracle (currently from
+not start with @code{1.8.0} or @code{9} you need to update your Java.}
+this should prompt you to install it.  You can also install directly the
+latest Java from Oracle (currently from
 @uref{http://www.oracle.com/@/technetwork/@/java/@/javase/@/downloads/@/index.html}).
 
 Binary distributions of @R{} are built against a specific version (e.g.@:
-1.8.0_131) of Oracle Java so @command{sudo R CMD javareconf} may be
+1.8.0_121) of Oracle Java so @command{sudo R CMD javareconf} may be
 needed before using Java-using packages.
 
 @c You may need to install what Apple calls `legacy Java'@footnote{e.g.@:
@@ -5143,25 +5138,24 @@ compiling JNI programs (used by packages @CRANpkg{rJava} and
 JRE.
 
 The build process tries to fathom out what JRE/JDK to use, but it may
-need some help, e.g.@: by setting @env{JAVA_HOME}.  The Oracle JDK can
+need some help, e.g.@: by setting @env{JAVA_HOME}.  An Oracle JDK can
 be specified explicitly by something like
 @example
-JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home
+JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home
 JAVA_CPPFLAGS="-I/$@{JAVA_HOME@}/include -I/$@{JAVA_HOME@}/include/darwin"
 JAVA_LD_LIBRARY_PATH="$@{JAVA_HOME@}/jre/lib/server"
 JAVA_LIBS="-L/$@{JAVA_HOME@}/jre/lib/server -ljvm" 
 @end example
-in @file{config.site}.
-
-(An Apple JRE, if available, can be specified explicitly by something
-like
+@noindent
+or
 @example
-JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Home
-JAVA_CPPFLAGS="-I/System/Library/Frameworks/JavaVM.framework/Headers"
-JAVA_LD_LIBRARY_PATH=
-JAVA_LIBS="-framework JavaVM"
+JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-9.jdk/Contents/Home
+JAVA_CPPFLAGS="-I/$@{JAVA_HOME@}/include -I/$@{JAVA_HOME@}/include/darwin"
+JAVA_LD_LIBRARY_PATH="$@{JAVA_HOME@}/lib/server"
+JAVA_LIBS="-L/$@{JAVA_HOME@}/lib/server -ljvm" 
 @end example
-.)
+@noindent
+in @file{config.site}.
 
 Note that it is necessary to set the environment variable @env{NOAWT} to
 @code{1} to install many of the Java-using packages.

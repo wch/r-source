@@ -1,7 +1,7 @@
 #  File src/library/base/R/time.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -23,7 +23,6 @@ system.time <- function(expr, gcFirst = TRUE)
         if(!is.na(y[5L])) y[2L] <- y[2L] + y[5L]
         paste(formatC(y[1L:3L]), collapse = " ")
     }
-    if(!exists("proc.time")) return(rep(NA_real_, 5L))
     if(gcFirst)  gc(FALSE)
     time <- proc.time()
     ## need on.exit after 'time' has been set:

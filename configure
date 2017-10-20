@@ -696,6 +696,10 @@ JAR
 JAVAH
 JAVAC
 JAVA
+custom_JAR
+custom_JAVAH
+custom_JAVAC
+custom_JAVA
 custom_JAVA_LD_LIBRARY_PATH
 custom_JAVA_LIBS
 custom_JAVA_CPPFLAGS
@@ -3976,7 +3980,7 @@ fi
 
 ## As from R 3.2.0 split up -L... and -lR
 if test "${want_R_shlib}" = yes; then
-  LIBR0="-L\$(R_HOME)/lib\$(R_ARCH)"
+  LIBR0="-L\"\$(R_HOME)/lib\$(R_ARCH)\""
   LIBR1=-lR
 else
   LIBR0=
@@ -4367,10 +4371,10 @@ fi
 
 if test -z "${r_arch}"; then
   R_ARCH=
-  R_XTRA_CPPFLAGS2="-I\$(R_INCLUDE_DIR)"
+  R_XTRA_CPPFLAGS2="-I\"\$(R_INCLUDE_DIR)\""
 else
   R_ARCH="/${r_arch}"
-  R_XTRA_CPPFLAGS2="-I\$(R_INCLUDE_DIR) -I\$(R_INCLUDE_DIR)/${r_arch}"
+  R_XTRA_CPPFLAGS2="-I\"\$(R_INCLUDE_DIR)\" -I\"\$(R_INCLUDE_DIR)/${r_arch}\""
 fi
 
 cat >>confdefs.h <<_ACEOF
@@ -5561,7 +5565,7 @@ if (aclocal --version) < /dev/null > /dev/null 2>&1; then
   { $as_echo "$as_me:${as_lineno-$LINENO}: result: found" >&5
 $as_echo "found" >&6; }
 else
-  ACLOCAL="\$(SHELL) \$(abs_top_srcdir)/tools/missing aclocal"
+  ACLOCAL="\$(SHELL) \"\$(abs_top_srcdir)/tools/missing\" aclocal"
   { $as_echo "$as_me:${as_lineno-$LINENO}: result: missing" >&5
 $as_echo "missing" >&6; }
   if test "x${use_maintainer_mode}" = xyes; then
@@ -5580,7 +5584,7 @@ if (autoconf --version) < /dev/null > /dev/null 2>&1; then
   { $as_echo "$as_me:${as_lineno-$LINENO}: result: found" >&5
 $as_echo "found" >&6; }
 else
-  AUTOCONF="\$(SHELL) \$(abs_top_srcdir)/tools/missing autoconf"
+  AUTOCONF="\$(SHELL) \"\$(abs_top_srcdir)/tools/missing\" autoconf"
   { $as_echo "$as_me:${as_lineno-$LINENO}: result: missing" >&5
 $as_echo "missing" >&6; }
   if test "x${use_maintainer_mode}" = xyes; then
@@ -5599,7 +5603,7 @@ if (autoheader --version) < /dev/null > /dev/null 2>&1; then
   { $as_echo "$as_me:${as_lineno-$LINENO}: result: found" >&5
 $as_echo "found" >&6; }
 else
-  AUTOHEADER="\$(SHELL) \$(abs_top_srcdir)/tools/missing autoheader"
+  AUTOHEADER="\$(SHELL) \"\$(abs_top_srcdir)/tools/missing\" autoheader"
   { $as_echo "$as_me:${as_lineno-$LINENO}: result: missing" >&5
 $as_echo "missing" >&6; }
   if test "x${use_maintainer_mode}" = xyes; then
@@ -25267,7 +25271,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:25270: \"$ac_link\") >&5
+(eval echo $as_me:25274: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -25342,7 +25346,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:25345: \"$ac_link\") >&5
+(eval echo $as_me:25349: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -34420,7 +34424,7 @@ _ACEOF
 fi
 done
 
-for ac_func in getrlimit getrusage getpriority
+for ac_func in getrlimit setrlimit getrusage getpriority
 do
 as_ac_Symbol=`$as_echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $ac_func exists and is declared" >&5
@@ -37238,7 +37242,7 @@ case "${host_os}" in
     ## resolve dylib dependencies, so libRblas will not be found unless
     ## we tell ld where it lives. I don't know of any more elegant solution :/
     if test "x${use_blas_shlib}" = xyes; then
-      LIBR="${LIBR} -dylib_file libRblas.dylib:\$(R_HOME)/lib\$(R_ARCH)/libRblas.dylib"
+      LIBR="${LIBR} -dylib_file libRblas.dylib:\"\$(R_HOME)/lib\$(R_ARCH)/libRblas.dylib\""
     fi
   ;;
 esac
@@ -37342,7 +37346,7 @@ fi
 
 if test "${use_blas_shlib}" = yes; then
   ## set BLAS_LIBS to point at local version
-  BLAS_LIBS="-L\$(R_HOME)/lib\$(R_ARCH) -lRblas"
+  BLAS_LIBS="-L\"\$(R_HOME)/lib\$(R_ARCH)\" -lRblas"
 fi
 
  if test "x${use_veclib_g95fix}" = xyes; then
@@ -37512,7 +37516,7 @@ LIBS="${acx_lapack_save_LIBS}"
 
 fi
 if test "${acx_lapack_ok}" != "yes"; then
-  LAPACK_LIBS="-L\$(R_HOME)/lib\$(R_ARCH) -lRlapack"
+  LAPACK_LIBS="-L\"\$(R_HOME)/lib\$(R_ARCH)\" -lRlapack"
 fi
 
  if test "${acx_lapack_ok}" = "yes"; then
@@ -42917,6 +42921,14 @@ custom_JAVA_HOME="${JAVA_HOME}"
 custom_JAVA_LIBS="${JAVA_LIBS}"
 custom_JAVA_CPPFLAGS="${JAVA_CPPFLAGS}"
 custom_JAVA_LD_LIBRARY_PATH="${JAVA_LD_LIBRARY_PATH}"
+custom_JAVA="${JAVA}"
+custom_JAVAC="${JAVAC}"
+custom_JAVAH="${JAVAH}"
+custom_JAR="${JAR}"
+
+
+
+
 
 
 

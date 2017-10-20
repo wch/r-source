@@ -345,6 +345,9 @@
 /* Define to 1 if you have the `getrlimit' function. */
 /* #undef HAVE_GETRLIMIT */
 
+/* Define to 1 if you have the `setrlimit' function. */
+/* #undef HAVE_SETRLIMIT */
+
 /* Define to 1 if you have the `getrusage' function. */
 /* #undef HAVE_GETRUSAGE */
 

@@ -161,17 +161,19 @@ is.loaded(symbol, PACKAGE = "", type = "")
   and \strong{not} (as in S) that remapped by the defunct functions
   \code{symbol.C} or \code{symbol.For}.
 
-  By default, the maximum number of DLLs that can be loaded is 100,
-  which should be sufficient in almost all cases.  As from \R 3.4.0, the
-  maximum can be increased up to 1000 \emph{via} the environment
-  variable \env{R_MAX_NUM_DLLS}, which has to be set before starting an
-  \R{} session.  On Unix, \env{R_MAX_NUM_DLLS} is in addition not
-  allowed to be greater than 60\% of the OS limit on the number of open
-  files (typically 1024, but 256 on macOS), which can sometimes be
-  modified using command \command{ulimit -n} (\command{sh},
+  By default, the maximum number of DLLs that can be loaded is now 614 when
+  the OS limit on the number of open files allows or can be increased, but
+  less otherwise.  A specific maximum can be requested \emph{via} the
+  environment variable \env{R_MAX_NUM_DLLS}, which has to be set before
+  starting an \R{} session.  If the OS limit on the number of open files
+  does not allow using this maximum and cannot be increased, R will fail to
+  start with an error.  The maximum is not allowed to be greater than 60\%
+  of the OS limit on the number of open files (essentially unlimited on
+  Windows, on Unix typically 1024, but 256 on macOS).  The limit can
+  sometimes be modified using command \command{ulimit -n} (\command{sh},
   \command{bash}) or \command{limit descriptors} (\command{csh}) in the
-  shell used to launch \R{} .  Increasing \env{R_MAX_NUM_DLLS} comes
-  with some memory overhead.
+  shell used to launch \R{}.  Increasing \env{R_MAX_NUM_DLLS} comes with
+  some memory overhead.
 
   The creation of DLLs and the runtime linking of them into executing
   programs is very platform dependent.  In recent years there has been
