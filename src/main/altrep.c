@@ -955,10 +955,16 @@ static R_xlen_t altreal_Which_max_default(SEXP x) {
 
 /* This keeps descending until it finds the *lowest* (frst==TRUE) or
    *highest* (frst==FALSE) index, it doesn't stop after the first
-   *match. */
+   match. */
 
-/* symbol meanings:
-   tb = table (for lookup)
+/* When no match is found, pos will be position of the first position
+   to the right of where qval would be inserted, regardless of
+   sortedness, or XLENGTH(table) - 1 if  insertion point is after 
+   the last element. */
+
+/* Symbol meanings:
+   tb = table (for lookup) ALT_MATCH_DEFAULT guarantees it's length >=2 before
+        calling down.
    qval = individual value to lookup in tb
    pos = current position (variable) 
    cval = current value variable
@@ -979,60 +985,55 @@ static R_xlen_t altreal_Which_max_default(SEXP x) {
     do { 								\
 	u = ust;							\
 	l = lst;							\
-	pos  = floor((u + l) / 2.0);					\
+	pos  = (u + l) / 2; /* (long) int division */			\
 	cval = tbeltfun(tb, pos);					\
-	if(tlen <= 2) {							\
-	    if(frst) {							\
-		pos = 0;						\
-		cval = tbeltfun(tb, 0);					\
-		if(cval != qval && tlen == 2) {				\
-		    pos = 1;						\
-		    cval = tbeltfun(tb, 1);				\
-		}							\
-	    }								\
-	}else {								\
-	    while(u > l + 1) {						\
-		cval = tbeltfun(tb, pos);				\
-		if(nachk(cval) || (cval > qval && sd == KNOWN_INCR) ||	\
-		   (cval < qval && sd == KNOWN_DECR) ||			\
-		   (cval == qval && frst)) {				\
-		    /* walk to lower indices, sorted implies na.last */	\
+	while(u > l + 1) {						\
+	    cval = tbeltfun(tb, pos);					\
+	    if(nachk(cval) || (cval > qval && sd == KNOWN_INCR) ||	\
+	       (cval < qval && sd == KNOWN_DECR) ||			\
+	       (cval == qval && frst)) {				\
+		/* walk to lower indices, sorted implies na.last */	\
 		    u = pos;						\
-		    /* pos = floor((u + l) /2.0); */			\
-		    pos =  (u + l) / 2; /* (long) int division */	\
-		} else if((cval < qval && sd == KNOWN_INCR )  ||	\
-			  (cval > qval && sd == KNOWN_DECR ) ||		\
-			  (cval == qval && !frst)) {			\
-		    /*walk to higher indices */				\
-		    l = pos;						\
-		    /*  pos = ceil((u+l) / 2.0);	*/		\
-		    pos = (u + l) / 2 + 1; /*(long) int division */	\
-		}							\
+	    } else if((cval < qval && sd == KNOWN_INCR )  ||		\
+		      (cval > qval && sd == KNOWN_DECR ) ||		\
+		      (cval == qval && !frst)) {			\
+		/*walk to higher indices */				\
+		l = pos;						\
+	    }								\
+	    pos =  (u + l) / 2; /* (long) int division */		\
+	    cval = tbeltfun(tb, pos);					\
+	}								\
+	/*last checks */						\
+	if(cval != qval &&						\
+	   pos == l &&							\
+	   ((tbeltfun(tb, u) < qval) != (tbeltfun(tb, l) < qval))) {	\
+	    /* if we found a spot where t_i < qval < t_(i+1) return	\
+	       t_(i+1) as indicated in comment block */			\
+	    pos = u;							\
 		cval = tbeltfun(tb, pos);				\
-	    }								\
-	    /*last check */						\
-	    if(cval != qval) {						\
-		if(pos == u) {						\
-		    pos = l;						\
-		    cval = tbeltfun(tb, l);				\
-		} else {						\
-		    pos = u;						\
-		    cval = tbeltfun(tb, u);				\
-		}							\
-	    } else if(frst && pos == u && tbeltfun(tb, l) == qval) {	\
-		pos = l;						\
-		cval = qval;						\
-	    } else if (!frst && pos == l && tbeltfun(tb, u) == qval) {	\
-		pos = u;						\
-		cval = qval;						\
-	    }								\
+	} else if(frst && pos == u && tbeltfun(tb, l) == qval) {	\
+	    pos = l;							\
+	    cval = qval;						\
+	} else if (!frst && pos == l && tbeltfun(tb, u) == qval) {	\
+	    pos = u;							\
+	    cval = qval;						\
 	}								\
     } while(0);
 
 
-/* This always makes a numeric to deal with long vec indices 
-   is there a better way? */
-#define TOINDEX(x) (x == nmatch ? x : x + 1)
+/* helper macro which assumes found and nmatch exist and determines
+   the appropriate return value when passed pos/pos2 populated by
+   BINARY_FIND */
+#define TOINDEX(x) (curval == qval ? x + 1 : nmatch)
+
+/* This always makes an integer vector, this path currently won't be hit
+   if table is long vector (ie found indices need to return as doubles).
+   Will fix in future patch */
+
+/* NB: %in% calls match with an nmatch value of 0, so its not safe to
+   set pos to nmatch and assume we will be able to detect that
+   later to see if we found anything. Always check curval against qval */
+
 #define BINARY_MATCHING_OUTER(TYPE, ALTPREFIX, fonly, nm, TBELTFUN,	\
 			      QELTFUN, NACHK) do {			\
 	int *retptr = NULL;						\
@@ -1051,15 +1052,15 @@ static R_xlen_t altreal_Which_max_default(SEXP x) {
 			pos, curval, u, l, tlen - 1,			\
 			0,						\
 			tsorted,					\
-		        TRUE, TBELTFUN, NACHK);				\
+			TRUE, TBELTFUN, NACHK);				\
 	    if(curval != qval)	{					\
 		if(nm == NA_INTEGER)					\
 		    numNA++;						\
-		pos = nm;						\
+		/* TOINDEX takes care of making sure nm is returned */	\
 	    }								\
 	    if(fonly) {							\
 		retptr[i] = TOINDEX((int) pos);				\
-	    } else if (pos != nm) {					\
+	    } else if (curval == qval) {				\
 		BINARY_FIND(table, qval, pos2, curval2, u, l,		\
 			    tlen - 1, pos,				\
 			    tsorted,					\
@@ -1074,20 +1075,20 @@ static R_xlen_t altreal_Which_max_default(SEXP x) {
     } while(0);
 
 
-/* Need this for default. lives in unique.c probably should migrate
-   to Rinternals but it doesn't have the Rf_ prefix so I'll do this for
-   now. */
 
-SEXP match5(SEXP itable, SEXP ix, int nmatch, SEXP incomp, SEXP env);
 #define ALT_MATCH_DEFAULT(TYPE, SXPTYPE, ALTPREFIX, FIRSTONLY, ELTFUN,	\
 			  QELTFUNTYPE, NACHK)				\
     do {								\
+	if(XLENGTH(table) < 2)						\
+	    return NULL;						\
 	SEXP ret;							\
 	int nprot = 0;							\
 	int numNA = 0;							\
 	int tsorted = ALTPREFIX##_IS_SORTED(table), qsorted;		\
 	if(TYPEOF(q) == SXPTYPE &&					\
 	   KNOWN_SORTED(tsorted) &&					\
+	   /* no long vector support for table atm, coming soon */	\
+	   XLENGTH(table) <= INT_MAX &&					\
 	   (incomp == NULL || incomp == R_NilValue)) {			\
 	    if(!ALTREP(q) || ALTREP_EXPANDED(q) != R_NilValue) {	\
 		TYPE *qptr = ALTPREFIX(q);				\
@@ -1095,7 +1096,7 @@ SEXP match5(SEXP itable, SEXP ix, int nmatch, SEXP incomp, SEXP env);
 				      ELTFUN, fastgetqptr, NACHK);	\
 	    } else {							\
 		QELTFUNTYPE qeltmethod = DISPATCH_METHOD(ALT##ALTPREFIX, \
-							  Elt, q);	\
+							 Elt, q);	\
 		BINARY_MATCHING_OUTER(TYPE, ALTPREFIX, FIRSTONLY, nmatch, \
 				      ELTFUN, qeltmethod, NACHK);	\
 	    }								\
@@ -1118,36 +1119,21 @@ SEXP match5(SEXP itable, SEXP ix, int nmatch, SEXP incomp, SEXP env);
 	return ret;							\
     } while(0); 
 
-/* These are disabled for now as this fails:
 
-   x <- 1:10; xx <- as.numeric(x)
-   y <- 1:5; yy <- as.numeric(y)
-   stopifnot(identical(xx %in% yy, x %in% y))
-
-   [The integer one also fails if compact_intseq_Match is not installed.]
-*/
 static SEXP altreal_Match_default(SEXP table, SEXP q,
 				  int nmatch, SEXP incomp,
 				  SEXP env,
 				  Rboolean firstonly) {
-#ifdef WORKING_DEFAULT_MATCH
     ALT_MATCH_DEFAULT(double, REALSXP, REAL, firstonly, REAL_ELT,
 		      R_altreal_Elt_method_t, ISNA);
-#else
-    return NULL;
-#endif
 }
 
 static SEXP altinteger_Match_default(SEXP table, SEXP q,
 				     int nmatch, SEXP incomp,
 				     SEXP env,
 				     Rboolean firstonly) {
-#ifdef WORKING_DEFAULT_MATCH
     ALT_MATCH_DEFAULT(int, INTSXP, INTEGER, firstonly, INTEGER_ELT,
 		      R_altinteger_Elt_method_t, INTVAL_ISNA);
-#else
-    return NULL;
-#endif
 }
 
 
