@@ -258,30 +258,21 @@ function(x, m, invert = FALSE)
     ili <- is.list(m)
 
     ## Handle useBytes/encoding issues.
-    ## For regexpr() and gregexpr(), we get useBytes as TRUE if useBytes
-    ## was given as TRUE or all character string involved were ASCII,
-    ## and we currently cannot distinguish these cases (see below).
-    ## If we take useBytes = TRUE to indicate that match data positions
-    ## should be used as bytes (and not chars), we need to convince both
-    ## substring() and nchar() used below accordingly, which for the
-    ## former needs to set the input encoding to "bytes", and for the
-    ## latter calling with 'type = "bytes"'.
+    ## Match positions from regexpr(), gregexpr() and regexec() are in
+    ## characters unless 'useBytes = TRUE' was given, now recorded via
+    ## the 'index.type' attribute (in addition to the 'useBytes' one
+    ## being TRUE when 'useBytes = TRUE' was given *or* all character
+    ## string involved were ASCII).
+    ## To convince substring() and nchar() used below accordingly that
+    ## match data positions are in bytes, we set the input encoding to
+    ## "bytes" for the former and call the latter with 'type = "bytes"'.
     itype <- "chars"
     useBytes <- if(ili)
-        any(unlist(lapply(m, attr, "useBytes")))
+        any(unlist(lapply(m, attr, "index.type")) == "bytes")
     else
-        any(attr(m, "useBytes"))
-    ## Currently regexec() mostly records whether bytes were asked for.
+        any(attr(m, "index.type") == "bytes")
     if(useBytes) {
-        useChars <- if(ili)
-            any(unlist(lapply(m, attr, "index.type")) == "chars")
-        else
-            any(attr(m, "index.type") == "chars")
-        if(useChars)
-            useBytes <- FALSE
-    }
-    if(useBytes) {
-        Encoding(x) <- itype <- "bytes"
+        itype <- Encoding(x) <- "bytes"
     }
 
     ## For NA matches (from matching a non-NA pattern on an NA string),
