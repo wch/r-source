@@ -30,9 +30,9 @@ function(given = NULL, family = NULL, middle = NULL,
     args <- list(given = given, family = family, middle = middle,
                  email = email, role = role, comment = comment,
 		 first = first, last = last)
-    if(all(sapply(args, is.null))) {
+    if(all(vapply(args, is.null, NA)))
         return(structure(list(), class = "person"))
-    }
+
     args <- lapply(args, .listify)
     args_length <- lengths(args)
     if(!all(args_length_ok <- args_length %in% c(1L, max(args_length))))
@@ -122,7 +122,7 @@ function(given = NULL, family = NULL, middle = NULL,
                          comment)
             if(length(ind)) {
                 if(is.null(names(comment)))
-                    names(comment) <- ifelse(ind, "ORCID", "")
+                    names(comment) <- if(ind) "ORCID"
                 else
                     names(comment)[ind] <- "ORCID"
             }
@@ -139,7 +139,7 @@ function(given = NULL, family = NULL, middle = NULL,
         else
             rval
     } ## end{ person1 }
-
+    force(person1)# {codetools}
     rval <-
         lapply(seq_along(args$given),
                function(i)
