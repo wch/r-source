@@ -28,6 +28,7 @@
  */
 
 #define USE_RINTERNALS
+#define COMPILING_MEMORY_C
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>

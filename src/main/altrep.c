@@ -387,7 +387,7 @@ int REAL_NO_NA(SEXP x)
     return ALTREP(x) ? ALTREAL_DISPATCH(No_NA, x) : 0;
 }
 
-SEXP attribute_hidden ALTSTRING_ELT(SEXP x, R_xlen_t i)
+SEXP /*attribute_hidden*/ ALTSTRING_ELT(SEXP x, R_xlen_t i)
 {
     SEXP val = NULL;
 
