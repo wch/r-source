@@ -1,8 +1,6 @@
 \name{packageName}
 \alias{packageName}
-\title{
-Find package associated with an environment.
-}
+\title{Find Package Associated with an Environment}
 \description{
 Many environments are associated with a package; this function
 attempts to determine that package.

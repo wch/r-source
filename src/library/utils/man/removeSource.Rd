@@ -5,9 +5,7 @@
 
 \name{removeSource}
 \alias{removeSource}
-\title{
-  Remove Stored Source from a Function.
-}
+\title{Remove Stored Source from a Function}
 \description{
   When \code{options("keep.source")} is \code{TRUE}, a copy of the
   original source code to a function is stored with it.  This function

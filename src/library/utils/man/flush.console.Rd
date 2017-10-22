@@ -5,7 +5,7 @@
 
 \name{flush.console}
 \alias{flush.console}
-\title{Flush Output to A Console}
+\title{Flush Output to a Console}
 \description{
   This does nothing except on console-based versions of \R.
   On the macOS and Windows GUIs, it ensures that the display of

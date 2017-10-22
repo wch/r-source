@@ -5,7 +5,7 @@
 
 \name{buildVignette}
 \alias{buildVignette}
-\title{Build one vignette}
+\title{Build One Vignette}
 \description{
   Run \code{\link{Sweave}} (or other custom weave function)
   \code{\link{texi2dvi}}, and/or \code{\link{Stangle}} 

@@ -5,7 +5,7 @@
 
 \name{url.show}
 \alias{url.show}
-\title{Display a text URL}
+\title{Display a Text URL}
 \description{
   Extension of \code{\link{file.show}} to display text files from a remote
   server.

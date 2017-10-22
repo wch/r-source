@@ -7,9 +7,7 @@
 \alias{toHTML}
 \alias{toHTML.packageIQR}
 \alias{toHTML.news_db}
-\title{
-Display an object in HTML.
-}
+\title{Display an Object in HTML}
 \description{
 This generic function generates a complete HTML page from an object.
 }

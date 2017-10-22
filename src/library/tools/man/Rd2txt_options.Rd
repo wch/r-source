@@ -5,9 +5,7 @@
 
 \name{Rd2txt_options}
 \alias{Rd2txt_options}
-\title{
-Set formatting options for text help
-}
+\title{Set Formatting Options for Text Help}
 \description{
 This function sets various options for displaying text help.
 }

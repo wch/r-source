@@ -5,9 +5,7 @@
 
 \name{make_translations_pkg}
 \alias{make_translations_pkg}
-\title{
-  Package the Current Translations in the \R sources
-}
+\title{Package the Current Translations in the \R Sources}
 \description{
   A utility for R Core members to prepare a package of updated translations.
 }

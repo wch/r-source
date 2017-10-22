@@ -6,9 +6,7 @@
 \name{bibstyle}
 \alias{bibstyle}
 \alias{getBibstyle}
-\title{
-Select or define a bibliography style.
-}
+\title{Select or Define a Bibliography Style}
 \description{
   This function defines and registers styles for rendering
   \code{\link{bibentry}} objects into \file{Rd} format, for later

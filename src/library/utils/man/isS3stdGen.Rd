@@ -5,7 +5,7 @@
 
 \name{isS3stdGeneric}
 \alias{isS3stdGeneric}
-\title{Check if a function acts as an S3 generic}
+\title{Check if a Function Acts as an S3 Generic}
 \description{
   Determines whether \code{f} acts as a standard S3-style generic
   function.
