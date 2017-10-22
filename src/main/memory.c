@@ -3477,8 +3477,10 @@ SEXP (STRING_ELT)(SEXP x, R_xlen_t i) {
 	      "STRING_ELT", "character vector", type2char(TYPEOF(x)));
     if (ALTREP(x))
 	return CHK(ALTSTRING_ELT(CHK(x), i));
-    else
-	return CHK(STRING_PTR(CHK(x))[i]);
+    else {
+	SEXP *ps = STDVEC_DATAPTR(CHK(x));
+	return CHK(ps[i]);
+    }
 }
 
 SEXP (VECTOR_ELT)(SEXP x, R_xlen_t i) {
@@ -3573,21 +3575,23 @@ SEXP * NORET (VECTOR_PTR)(SEXP x)
 }
 
 void (SET_STRING_ELT)(SEXP x, R_xlen_t i, SEXP v) {
-    if(TYPEOF(x) != STRSXP)
+    if(TYPEOF(CHK(x)) != STRSXP)
 	error("%s() can only be applied to a '%s', not a '%s'",
 	      "SET_STRING_ELT", "character vector", type2char(TYPEOF(x)));
-    if(TYPEOF(v) != CHARSXP)
+    if(TYPEOF(CHK(v)) != CHARSXP)
        error("Value of SET_STRING_ELT() must be a 'CHARSXP' not a '%s'",
 	     type2char(TYPEOF(v)));
     if (i < 0 || i >= XLENGTH(x))
 	error(_("attempt to set index %lu/%lu in SET_STRING_ELT"),
 	      i, XLENGTH(x));
-    FIX_REFCNT(x, STRING_ELT(x, i), v);
     CHECK_OLD_TO_NEW(x, v);
     if (ALTREP(x))
 	ALTSTRING_SET_ELT(x, i, v);
-    else
-	STRING_PTR(x)[i] = v;
+    else {
+	SEXP *ps = STDVEC_DATAPTR(x);
+	FIX_REFCNT(x, ps[i], v);
+	ps[i] = v;
+    }
 }
 
 SEXP (SET_VECTOR_ELT)(SEXP x, R_xlen_t i, SEXP v) {
