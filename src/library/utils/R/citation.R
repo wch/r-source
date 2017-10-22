@@ -122,7 +122,7 @@ function(given = NULL, family = NULL, middle = NULL,
                          comment)
             if(length(ind)) {
                 if(is.null(names(comment)))
-                    names(comment) <- if(ind) "ORCID"
+                    names(comment) <- ifelse(ind, "ORCID", " ")
                 else
                     names(comment)[ind] <- "ORCID"
             }
