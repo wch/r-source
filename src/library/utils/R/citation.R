@@ -120,7 +120,7 @@ function(given = NULL, family = NULL, middle = NULL,
             ind <- grepl(paste0("^https?://orcid.org/",
                                 "([[:digit:]]{4}[-]){3}[[:digit:]]{3}[[:alnum:]]$"),
                          comment)
-            if(length(ind)) {
+            if(any(ind)) {
                 if(is.null(names(comment)))
                     names(comment) <- ifelse(ind, "ORCID", " ")
                 else
