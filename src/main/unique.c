@@ -812,9 +812,10 @@ static SEXP HashLookup(SEXP table, SEXP x, HashData *d)
 
     n = XLENGTH(x);
     PROTECT(ans = allocVector(INTSXP, n));
+    int *pa = INTEGER(ans);
     for (i = 0; i < n; i++) {
 //	if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	INTEGER(ans)[i] = Lookup(table, x, i, d);
+	pa[i] = Lookup(table, x, i, d);
     }
     UNPROTECT(1);
     return ans;
