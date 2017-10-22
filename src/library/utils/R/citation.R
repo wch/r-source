@@ -114,6 +114,20 @@ function(given = NULL, family = NULL, middle = NULL,
         if(length(role))
             role <- .canonicalize_person_role(role)
 
+        if(length(comment)) {
+            ## Be nice and recognize ORCID identifiers given as URLs
+            ## but perhaps without an ORCID name.
+            ind <- grepl(paste0("^https?://orcid.org/",
+                                "([[:digit:]]{4}[-]){3}[[:digit:]]{3}[[:alnum:]]$"),
+                         comment)
+            if(length(ind)) {
+                if(is.null(names(comment)))
+                    names(comment) <- ifelse(ind, "ORCID", "")
+                else
+                    names(comment)[ind] <- "ORCID"
+            }
+        }
+
         rval <- list(given = given, family = family, role = role,
                      email = email, comment = comment)
         ## Canonicalize 0-length character arguments to NULL.
