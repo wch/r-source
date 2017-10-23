@@ -56,6 +56,9 @@ struct _HashData {
     Rboolean useCache;
 };
 
+#define HTDATA_INTEGER(d) (INTEGER0((d)->HashTable))
+#define HTDATA_REAL(d) (REAL0((d)->HashTable))
+
 
 /*
    Integer keys are hashed via a random number generator
@@ -406,12 +409,12 @@ static void HashTableSetup(SEXP x, HashData *d, R_xlen_t nmax)
     d->isLong = IS_LONG_VEC(x);
     if (d->isLong) {
 	d->HashTable = allocVector(REALSXP, (R_xlen_t) d->M);
-	for (R_xlen_t i = 0; i < d->M; i++) REAL(d->HashTable)[i] = NIL;
+	for (R_xlen_t i = 0; i < d->M; i++) HTDATA_REAL(d)[i] = NIL;
     } else
 #endif
     {
 	d->HashTable = allocVector(INTSXP, (R_xlen_t) d->M);
-	for (R_xlen_t i = 0; i < d->M; i++) INTEGER(d->HashTable)[i] = NIL;
+	for (R_xlen_t i = 0; i < d->M; i++) HTDATA_INTEGER(d)[i] = NIL;
     }
 }
 
@@ -423,7 +426,7 @@ static int isDuplicated(SEXP x, R_xlen_t indx, HashData *d)
 {
 #ifdef LONG_VECTOR_SUPPORT
     if (d->isLong) {
-	double *h = REAL(d->HashTable);
+	double *h = HTDATA_REAL(d);
 	hlen i = d->hash(x, indx, d);
 	while (h[i] != NIL) {
 	    if (d->equal(x, (R_xlen_t) h[i], x, indx))
@@ -435,7 +438,7 @@ static int isDuplicated(SEXP x, R_xlen_t indx, HashData *d)
     } else
 #endif
     {
-	int *h = INTEGER(d->HashTable);
+	int *h = HTDATA_INTEGER(d);
 	hlen i = d->hash(x, indx, d);
 	while (h[i] != NIL) {
 	    if (d->equal(x, h[i], x, indx))
@@ -452,7 +455,7 @@ static void removeEntry(SEXP table, SEXP x, R_xlen_t indx, HashData *d)
 {
 #ifdef LONG_VECTOR_SUPPORT
     if (d->isLong) {
-	double *h = REAL(d->HashTable);
+	double *h = HTDATA_REAL(d);
 	hlen i = d->hash(x, indx, d);
 	while (h[i] >= 0) {
 	    if (d->equal(table, (R_xlen_t) h[i], x, indx)) {
@@ -464,7 +467,7 @@ static void removeEntry(SEXP table, SEXP x, R_xlen_t indx, HashData *d)
     } else
 #endif
     {
-	int *h = INTEGER(d->HashTable);
+	int *h = HTDATA_INTEGER(d);
 	hlen i = d->hash(x, indx, d);
 	while (h[i] >= 0) {
 	    if (d->equal(table, h[i], x, indx)) {
@@ -794,7 +797,7 @@ static void UndoHashing(SEXP x, SEXP table, HashData *d)
 
 static int Lookup(SEXP table, SEXP x, R_xlen_t indx, HashData *d)
 {
-    int *h = INTEGER(d->HashTable);
+    int *h = HTDATA_INTEGER(d);
     hlen i = d->hash(x, indx, d);
     while (h[i] != NIL) {
 	if (d->equal(table, h[i], x, indx))
@@ -1599,7 +1602,7 @@ SEXP attribute_hidden do_rowsum(SEXP call, SEXP op, SEXP args, SEXP env)
 /* returns 1-based duplicate no */
 static int isDuplicated2(SEXP x, int indx, HashData *d)
 {
-    int *h = INTEGER(d->HashTable);
+    int *h = HTDATA_INTEGER(d);
     hlen i = d->hash(x, indx, d);
     while (h[i] != NIL) {
 	if (d->equal(x, h[i], x, indx))
@@ -1620,7 +1623,7 @@ static SEXP duplicated2(SEXP x, HashData *d)
     PROTECT(d->HashTable);
     PROTECT(ans = allocVector(INTSXP, n));
 
-    int *h = INTEGER(d->HashTable);
+    int *h = HTDATA_INTEGER(d);
     int *v = INTEGER(ans);
     for (i = 0; i < d->M; i++) h[i] = NIL;
     for (i = 0; i < n; i++) {
@@ -1713,7 +1716,7 @@ static void HashTableSetup1(SEXP x, HashData *d)
 #endif
     MKsetup(XLENGTH(x), d, NA_INTEGER);
     d->HashTable = allocVector(INTSXP, (R_xlen_t) d->M);
-    for (R_xlen_t i = 0; i < d->M; i++) INTEGER(d->HashTable)[i] = NIL;
+    for (R_xlen_t i = 0; i < d->M; i++) HTDATA_INTEGER(d)[i] = NIL;
 }
 
 /* used in utils */
