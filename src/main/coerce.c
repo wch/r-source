@@ -308,12 +308,32 @@ SEXP attribute_hidden StringFromLogical(int x, int *warn)
     else return mkChar(EncodeLogical(x, w));
 }
 
+/* The conversions for small non-negative integers are saved in a chache. */
+#define SFI_CACHE_SIZE 512
+static SEXP sficache = NULL;
+
 SEXP attribute_hidden StringFromInteger(int x, int *warn)
 {
-    int w;
-    formatInteger(&x, 1, &w);
     if (x == NA_INTEGER) return NA_STRING;
-    else return mkChar(EncodeInteger(x, w));
+    else if (x >= 0 && x < SFI_CACHE_SIZE) {
+	if (sficache == NULL) {
+	    sficache = allocVector(STRSXP, SFI_CACHE_SIZE);
+	    R_PreserveObject(sficache);
+	}
+	SEXP cval = STRING_ELT(sficache, x);
+	if (cval == R_BlankString) {
+	    int w;
+	    formatInteger(&x, 1, &w);
+	    cval = mkChar(EncodeInteger(x, w));
+	    SET_STRING_ELT(sficache, x, cval);
+	}
+	return cval;
+    }
+    else {
+	int w;
+	formatInteger(&x, 1, &w);
+	return mkChar(EncodeInteger(x, w));
+    }
 }
 
 // dropTrailing0 and StringFromReal moved to printutils.c
