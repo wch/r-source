@@ -401,6 +401,9 @@
       \item Following Unicode \sQuote{Corrigendum 9}, the UTF-8
       representations of U+FFFE and U+FFFF are now regarded as valid by
       \code{utf8ToInt()}.
+
+      \item \code{range(c(TRUE,NA), finite=TRUE)} and similar no longer
+      return \code{NA}. (Reported by Lukas Stadler.)
     }
   }
 }
