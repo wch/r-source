@@ -360,12 +360,7 @@ INLINE_FUN void R_set_altrep_data2(SEXP x, SEXP v) { SETCDR(x, v); }
 INLINE_FUN int INTEGER_ELT(SEXP x, R_xlen_t i)
 {
     CHECK_VECTOR_INT_ELT(x, i);
-
-    int *px = INTEGER_OR_NULL(x, FALSE);
-    if (px != NULL)
-	return px[i];
-    else
-	return ALTINTEGER_ELT(x, i);
+    return ALTREP(x) ? ALTINTEGER_ELT(x, i) : INTEGER0(x)[i];
 }
 
 INLINE_FUN int LOGICAL_ELT(SEXP x, R_xlen_t i)
@@ -377,12 +372,7 @@ INLINE_FUN int LOGICAL_ELT(SEXP x, R_xlen_t i)
 INLINE_FUN double REAL_ELT(SEXP x, R_xlen_t i)
 {
     CHECK_VECTOR_REAL_ELT(x, i);
-
-    double *px = REAL_OR_NULL(x, FALSE);
-    if (px != NULL)
-	return px[i];
-    else
-	return ALTREAL_ELT(x, i);
+    return ALTREP(x) ? ALTREAL_ELT(x, i) : REAL0(x)[i];
 }
 
 INLINE_FUN Rcomplex COMPLEX_ELT(SEXP x, R_xlen_t i)
