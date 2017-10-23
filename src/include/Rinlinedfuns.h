@@ -391,7 +391,7 @@ INLINE_FUN Rcomplex COMPLEX_ELT(SEXP x, R_xlen_t i)
     return ALTREP(x) ? ALTCOMPLEX_ELT(x, i) : COMPLEX0(x)[i];
 }
 
-#if !defined(COMPILING_R) && !defined(COMPILING_MEMORY_C) &&\
+#if !defined(COMPILING_R) && !defined(COMPILING_MEMORY_C) &&	\
     !defined(TESTING_WRITE_BARRIER)
 /* if not inlining use version in memory.c with more error checking */
 INLINE_FUN SEXP STRING_ELT(SEXP x, R_xlen_t i) {
@@ -402,6 +402,8 @@ INLINE_FUN SEXP STRING_ELT(SEXP x, R_xlen_t i) {
 	return ps[i];
     }
 }
+#else
+SEXP STRING_ELT(SEXP x, R_xlen_t i);
 #endif
 
 #ifdef INLINE_PROTECT
