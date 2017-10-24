@@ -56,8 +56,8 @@ struct _HashData {
     Rboolean useCache;
 };
 
-#define HTDATA_INTEGER(d) (INTEGER0((d)->HashTable))
-#define HTDATA_REAL(d) (REAL0((d)->HashTable))
+#define HTDATA_INT(d) (INTEGER0((d)->HashTable))
+#define HTDATA_DBL(d) (REAL0((d)->HashTable))
 
 
 /*
@@ -414,12 +414,12 @@ static void HashTableSetup(SEXP x, HashData *d, R_xlen_t nmax)
     d->isLong = IS_LONG_VEC(x);
     if (d->isLong) {
 	d->HashTable = allocVector(REALSXP, (R_xlen_t) d->M);
-	for (R_xlen_t i = 0; i < d->M; i++) HTDATA_REAL(d)[i] = NIL;
+	for (R_xlen_t i = 0; i < d->M; i++) HTDATA_DBL(d)[i] = NIL;
     } else
 #endif
     {
 	d->HashTable = allocVector(INTSXP, (R_xlen_t) d->M);
-	for (R_xlen_t i = 0; i < d->M; i++) HTDATA_INTEGER(d)[i] = NIL;
+	for (R_xlen_t i = 0; i < d->M; i++) HTDATA_INT(d)[i] = NIL;
     }
 }
 
@@ -431,7 +431,7 @@ static int isDuplicated(SEXP x, R_xlen_t indx, HashData *d)
 {
 #ifdef LONG_VECTOR_SUPPORT
     if (d->isLong) {
-	double *h = HTDATA_REAL(d);
+	double *h = HTDATA_DBL(d);
 	hlen i = d->hash(x, indx, d);
 	while (h[i] != NIL) {
 	    if (d->equal(x, (R_xlen_t) h[i], x, indx))
@@ -443,7 +443,7 @@ static int isDuplicated(SEXP x, R_xlen_t indx, HashData *d)
     } else
 #endif
     {
-	int *h = HTDATA_INTEGER(d);
+	int *h = HTDATA_INT(d);
 	hlen i = d->hash(x, indx, d);
 	while (h[i] != NIL) {
 	    if (d->equal(x, h[i], x, indx))
@@ -460,7 +460,7 @@ static void removeEntry(SEXP table, SEXP x, R_xlen_t indx, HashData *d)
 {
 #ifdef LONG_VECTOR_SUPPORT
     if (d->isLong) {
-	double *h = HTDATA_REAL(d);
+	double *h = HTDATA_DBL(d);
 	hlen i = d->hash(x, indx, d);
 	while (h[i] >= 0) {
 	    if (d->equal(table, (R_xlen_t) h[i], x, indx)) {
@@ -472,7 +472,7 @@ static void removeEntry(SEXP table, SEXP x, R_xlen_t indx, HashData *d)
     } else
 #endif
     {
-	int *h = HTDATA_INTEGER(d);
+	int *h = HTDATA_INT(d);
 	hlen i = d->hash(x, indx, d);
 	while (h[i] >= 0) {
 	    if (d->equal(table, h[i], x, indx)) {
@@ -710,7 +710,8 @@ SEXP attribute_hidden do_duplicated(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     if(length(incomp) && /* S has FALSE to mean empty */
-       !(isLogical(incomp) && length(incomp) == 1 && LOGICAL(incomp)[0] == 0)) {
+       !(isLogical(incomp) && length(incomp) == 1 &&
+	 LOGICAL_ELT(incomp, 0) == 0)) {
 	if(PRIMVAL(op) == 2) {
 	    /* return R's 1-based index :*/
 	    R_xlen_t ind  = any_duplicated3(x, incomp, fL);
@@ -803,7 +804,7 @@ static void UndoHashing(SEXP x, SEXP table, HashData *d)
 
 static int Lookup(SEXP table, SEXP x, R_xlen_t indx, HashData *d)
 {
-    int *h = HTDATA_INTEGER(d);
+    int *h = HTDATA_INT(d);
     hlen i = d->hash(x, indx, d);
     while (h[i] != NIL) {
 	if (d->equal(table, h[i], x, indx))
@@ -1016,7 +1017,8 @@ SEXP attribute_hidden do_match(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP incomp = CADDDR(args);
 
     if (isNull(incomp) || /* S has FALSE to mean empty */
-	(length(incomp) == 1 && isLogical(incomp) && LOGICAL(incomp)[0] == 0))
+	(length(incomp) == 1 && isLogical(incomp) &&
+	 LOGICAL_ELT(incomp, 0) == 0))
 	return match5(CADR(args), CAR(args), nomatch, NULL, env);
     else
 	return match5(CADR(args), CAR(args), nomatch, incomp, env);
@@ -1477,17 +1479,20 @@ rowsum(SEXP x, SEXP g, SEXP uniqueg, SEXP snarm, SEXP rn)
     PROTECT(data.HashTable);
     DoHashing(uniqueg, &data);
     PROTECT(matches = HashLookup(uniqueg, g, &data));
+    int *pmatches = INTEGER(matches);
 
     PROTECT(ans = allocMatrix(TYPEOF(x), ng, p));
 
     switch(TYPEOF(x)){
     case REALSXP:
-	Memzero(REAL(ans), ng*p);
+	Memzero(REAL0(ans), ng*p);
 	for(int i = 0; i < p; i++) {
-	    for(int j = 0; j < n; j++)
-		if(!narm || !ISNAN(REAL(x)[j + offset]))
-		    REAL(ans)[INTEGER(matches)[j] - 1 + offsetg]
-			+= REAL(x)[j + offset];
+	    double *pa = REAL0(ans);
+	    for(int j = 0; j < n; j++) {
+		double xjpo = REAL_ELT(x, j + offset);
+		if(!narm || !ISNAN(xjpo))
+		    pa[pmatches[j] - 1 + offsetg] += xjpo;
+	    }
 	    offset += n;
 	    offsetg += ng;
 	}
@@ -1495,20 +1500,20 @@ rowsum(SEXP x, SEXP g, SEXP uniqueg, SEXP snarm, SEXP rn)
     case INTSXP:
 	Memzero(INTEGER(ans), ng*p);
 	for(int i = 0; i < p; i++) {
+	    int *pa = INTEGER0(ans);
 	    for(int j = 0; j < n; j++) {
-		if (INTEGER(x)[j + offset] == NA_INTEGER) {
+		int xjpo = INTEGER_ELT(x, j + offset);
+		if (xjpo == NA_INTEGER) {
 		    if(!narm)
-			INTEGER(ans)[INTEGER(matches)[j] - 1 + offsetg]
-			    = NA_INTEGER;
-		} else if (INTEGER(ans)[INTEGER(matches)[j] - 1 + offsetg]
-			   != NA_INTEGER) {
+			pa[pmatches[j] - 1 + offsetg] = NA_INTEGER;
+		} else if (pa[pmatches[j] - 1 + offsetg] != NA_INTEGER) {
 		    /* check for integer overflows */
-		    int itmp = INTEGER(ans)[INTEGER(matches)[j] - 1 + offsetg];
+		    int itmp = pa[pmatches[j] - 1 + offsetg];
 		    double dtmp = itmp;
-		    dtmp += INTEGER(x)[j + offset];
+		    dtmp += xjpo;
 		    if (dtmp < INT_MIN || dtmp > INT_MAX) itmp = NA_INTEGER;
-		    else itmp += INTEGER(x)[j + offset];
-		    INTEGER(ans)[INTEGER(matches)[j] - 1 + offsetg] = itmp;
+		    else itmp += xjpo;
+		    pa[pmatches[j] - 1 + offsetg] = itmp;
 		}
 	    }
 	    offset += n;
@@ -1548,6 +1553,7 @@ rowsum_df(SEXP x, SEXP g, SEXP uniqueg, SEXP snarm, SEXP rn)
     PROTECT(data.HashTable);
     DoHashing(uniqueg, &data);
     PROTECT(matches = HashLookup(uniqueg, g, &data));
+    int *pmatches = INTEGER(matches);
 
     PROTECT(ans = allocVector(VECSXP, p));
 
@@ -1558,27 +1564,30 @@ rowsum_df(SEXP x, SEXP g, SEXP uniqueg, SEXP snarm, SEXP rn)
 	switch(TYPEOF(xcol)){
 	case REALSXP:
 	    PROTECT(col = allocVector(REALSXP,ng));
-	    Memzero(REAL(col), ng);
-	    for(R_xlen_t j = 0; j < n; j++)
-		if(!narm || !ISNAN(REAL(xcol)[j]))
-		    REAL(col)[INTEGER(matches)[j] - 1] += REAL(xcol)[j];
+	    Memzero(REAL0(col), ng);
+	    for(R_xlen_t j = 0; j < n; j++) {
+		double xj = REAL_ELT(xcol, j);
+		if(!narm || !ISNAN(xj))
+		    REAL0(col)[pmatches[j] - 1] += xj;
+	    }
 	    SET_VECTOR_ELT(ans,i,col);
 	    UNPROTECT(1);
 	    break;
 	case INTSXP:
 	    PROTECT(col = allocVector(INTSXP, ng));
-	    Memzero(INTEGER(col), ng);
+	    Memzero(INTEGER0(col), ng);
 	    for(R_xlen_t j = 0; j < n; j++) {
-		if (INTEGER(xcol)[j] == NA_INTEGER) {
+		int xj = INTEGER_ELT(xcol, j);
+		if (xj == NA_INTEGER) {
 		    if(!narm)
-			INTEGER(col)[INTEGER(matches)[j] - 1] = NA_INTEGER;
-		} else if (INTEGER(col)[INTEGER(matches)[j] - 1] != NA_INTEGER) {
-		    int itmp = INTEGER(col)[INTEGER(matches)[j] - 1];
+			INTEGER0(col)[pmatches[j] - 1] = NA_INTEGER;
+		} else if (INTEGER0(col)[pmatches[j] - 1] != NA_INTEGER) {
+		    int itmp = INTEGER0(col)[pmatches[j] - 1];
 		    double dtmp = itmp;
-		    dtmp += INTEGER(xcol)[j];
+		    dtmp += xj;
 		    if (dtmp < INT_MIN || dtmp > INT_MAX) itmp = NA_INTEGER;
-		    else itmp += INTEGER(xcol)[j];
-		    INTEGER(col)[INTEGER(matches)[j] - 1] = itmp;
+		    else itmp += xj;
+		    INTEGER0(col)[pmatches[j] - 1] = itmp;
 		}
 	    }
 	    SET_VECTOR_ELT(ans, i, col);
@@ -1613,7 +1622,7 @@ SEXP attribute_hidden do_rowsum(SEXP call, SEXP op, SEXP args, SEXP env)
 /* returns 1-based duplicate no */
 static int isDuplicated2(SEXP x, int indx, HashData *d)
 {
-    int *h = HTDATA_INTEGER(d);
+    int *h = HTDATA_INT(d);
     hlen i = d->hash(x, indx, d);
     while (h[i] != NIL) {
 	if (d->equal(x, h[i], x, indx))
@@ -1634,7 +1643,7 @@ static SEXP duplicated2(SEXP x, HashData *d)
     PROTECT(d->HashTable);
     PROTECT(ans = allocVector(INTSXP, n));
 
-    int *h = HTDATA_INTEGER(d);
+    int *h = HTDATA_INT(d);
     int *v = INTEGER(ans);
     for (i = 0; i < d->M; i++) h[i] = NIL;
     for (i = 0; i < n; i++) {
@@ -1690,7 +1699,7 @@ SEXP attribute_hidden do_makeunique(SEXP call, SEXP op, SEXP args, SEXP env)
 	PROTECT(data.HashTable);
 	vmax = vmaxget();
 	for(i = 1; i < n; i++) { /* first cannot be a duplicate */
-	    dp = INTEGER(dup)[i]; /* 1-based number of first occurrence */
+	    dp = INTEGER_ELT(dup, i); /* 1-based number of first occurrence */
 	    if(dp == 0) continue;
 	    ss = translateChar(STRING_ELT(names, i));
 	    /* Try appending 1,2,3, ..., n-1 until it is not already in use */
@@ -1727,7 +1736,7 @@ static void HashTableSetup1(SEXP x, HashData *d)
 #endif
     MKsetup(XLENGTH(x), d, NA_INTEGER);
     d->HashTable = allocVector(INTSXP, (R_xlen_t) d->M);
-    for (R_xlen_t i = 0; i < d->M; i++) HTDATA_INTEGER(d)[i] = NIL;
+    for (R_xlen_t i = 0; i < d->M; i++) HTDATA_INT(d)[i] = NIL;
 }
 
 /* used in utils */
