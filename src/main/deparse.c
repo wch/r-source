@@ -340,7 +340,7 @@ SEXP attribute_hidden do_dput(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT(saveenv = CLOENV(tval));
 	SET_CLOENV(tval, R_GlobalEnv);
     }
-    Rboolean opts = isNull(CADDR(args)) ? SHOWATTRIBUTES : asInteger(CADDR(args));
+    int opts = isNull(CADDR(args)) ? SHOWATTRIBUTES : asInteger(CADDR(args));
     tval = deparse1(tval, 0, opts);
     if (TYPEOF(CAR(args)) == CLOSXP) {
 	SET_CLOENV(CAR(args), saveenv);
@@ -389,54 +389,48 @@ SEXP attribute_hidden do_dput(SEXP call, SEXP op, SEXP args, SEXP rho)
 // .Internal(dump(list, file, envir, opts, evaluate))
 SEXP attribute_hidden do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP file, names, o, objs, tval, source, outnames;
-    int i, j, nobjs, nout, res;
-    int opts;
-    const char *obj_name;
-
     checkArity(op, args);
-
-    names = CAR(args);
-    file = CADR(args);
+    SEXP names = CAR(args),
+	 file = CADR(args);
     if(!inherits(file, "connection"))
 	error(_("'file' must be a character string or connection"));
     if(!isString(names))
 	error( _("character arguments expected"));
-    nobjs = length(names);
+    int nobjs = length(names);
     if(nobjs < 1 || length(file) < 1)
 	error(_("zero-length argument"));
-    source = CADDR(args);
+    SEXP source = CADDR(args);
     if (source != R_NilValue && TYPEOF(source) != ENVSXP)
 	error(_("invalid '%s' argument"), "envir");
-    opts = asInteger(CADDDR(args));
+    int opts = asInteger(CADDDR(args));
     /* <NOTE>: change this if extra options are added */
     if(opts == NA_INTEGER || opts < 0 || opts > 2048)
 	error(_("'opts' should be small non-negative integer"));
     // evaluate :
     if (!asLogical(CAD4R(args))) opts |= DELAYPROMISES;
 
-    PROTECT(o = objs = allocList(nobjs));
-
-    for (j = 0, nout = 0; j < nobjs; j++, o = CDR(o)) {
-	SET_TAG(o, installTrChar(STRING_ELT(names, j)));
+    SEXP objs, o = PROTECT(objs = allocList(nobjs));
+    int nout = 0;
+    for (int i = 0; i < nobjs; i++, o = CDR(o)) {
+	SET_TAG(o, installTrChar(STRING_ELT(names, i)));
 	SETCAR(o, findVar(TAG(o), source));
 	if (CAR(o) == R_UnboundValue)
 	    warning(_("object '%s' not found"), EncodeChar(PRINTNAME(TAG(o))));
 	else nout++;
     }
     o = objs;
-    PROTECT(outnames = allocVector(STRSXP, nout));
+    SEXP outnames = PROTECT(allocVector(STRSXP, nout)); // -> result
     if(nout > 0) {
 	if(INTEGER(file)[0] == 1) {
-	    for (i = 0, nout = 0; i < nobjs; i++) {
+	    for (int i = 0, nout = 0; i < nobjs; i++) {
 		if (CAR(o) == R_UnboundValue) continue;
-		obj_name = translateChar(STRING_ELT(names, i));
+		const char *obj_name = translateChar(STRING_ELT(names, i));
 		SET_STRING_ELT(outnames, nout++, STRING_ELT(names, i));
 		if(isValidName(obj_name)) Rprintf("%s <-\n", obj_name);
 		else if(opts & S_COMPAT) Rprintf("\"%s\" <-\n", obj_name);
 		else Rprintf("`%s` <-\n", obj_name);
-		tval = PROTECT(deparse1(CAR(o), 0, opts));
-		for (j = 0; j < LENGTH(tval); j++)
+		SEXP tval = PROTECT(deparse1(CAR(o), 0, opts));
+		for (int j = 0; j < LENGTH(tval); j++)
 		    Rprintf("%s\n", CHAR(STRING_ELT(tval, j)));/* translated */
 		UNPROTECT(1); /* tval */
 		o = CDR(o);
@@ -460,12 +454,12 @@ SEXP attribute_hidden do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 	    if(!con->canwrite) error(_("cannot write to this connection"));
 	    Rboolean havewarned = FALSE;
-	    for (i = 0, nout = 0; i < nobjs; i++) {
-		const char *s;
-		unsigned int extra = 6;
+	    for (int i = 0, nout = 0; i < nobjs; i++) {
 		if (CAR(o) == R_UnboundValue) continue;
 		SET_STRING_ELT(outnames, nout++, STRING_ELT(names, i));
-		s = translateChar(STRING_ELT(names, i));
+		int res;
+		const char *s = translateChar(STRING_ELT(names, i));
+		unsigned int extra = 6;
 		if(isValidName(s)) {
 		    extra = 4;
 		    res = Rconn_printf(con, "%s <-\n", s);
@@ -475,8 +469,8 @@ SEXP attribute_hidden do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    res = Rconn_printf(con, "`%s` <-\n", s);
 		if(!havewarned && res < strlen(s) + extra)
 		    warning(_("wrote too few characters"));
-		PROTECT(tval = deparse1(CAR(o), 0, opts));
-		for (j = 0; j < LENGTH(tval); j++) {
+		SEXP tval = PROTECT(deparse1(CAR(o), 0, opts));
+		for (int j = 0; j < LENGTH(tval); j++) {
 		    res = Rconn_printf(con, "%s\n", CHAR(STRING_ELT(tval, j)));
 		    if(!havewarned &&
 		       res < strlen(CHAR(STRING_ELT(tval, j))) + 1) {
