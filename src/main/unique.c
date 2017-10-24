@@ -252,13 +252,13 @@ static int sequal(SEXP x, R_xlen_t i, SEXP y, R_xlen_t j)
 
 static hlen rawhash(SEXP x, R_xlen_t indx, HashData *d)
 {
-    return (hlen) RAW(x)[indx];
+    return (hlen) RAW_ELT(x, indx);
 }
 
 static int rawequal(SEXP x, R_xlen_t i, SEXP y, R_xlen_t j)
 {
     if (i < 0 || j < 0) return 0;
-    return (RAW(x)[i] == RAW(y)[j]);
+    return (RAW_ELT(x, i) == RAW_ELT(y, j));
 }
 
 static hlen vhash(SEXP x, R_xlen_t indx, HashData *d)

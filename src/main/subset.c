@@ -145,7 +145,7 @@ SEXP attribute_hidden ExtractSubset(SEXP x, SEXP indx, SEXP call)
 			    SET_VECTOR_ELT(result, i, R_NilValue));
 	break;
     case RAWSXP:
-	EXTRACT_SUBSET_LOOP(RAW0(result)[i] = RAW(x)[ii],
+	EXTRACT_SUBSET_LOOP(RAW0(result)[i] = RAW_ELT(x, ii),
 			    RAW0(result)[i] = (Rbyte) 0);
 	break;
     case LISTSXP:
@@ -327,7 +327,7 @@ static SEXP MatrixSubset(SEXP x, SEXP s, SEXP call, int drop)
 		    SET_VECTOR_ELT(result, ij, VECTOR_ELT_FIX_NAMED(x, iijj));
 		    break;
 		case RAWSXP:
-		    RAW(result)[ij] = RAW(x)[iijj];
+		    RAW(result)[ij] = RAW_ELT(x, iijj);
 		    break;
 		default:
 		    errorcall(call, _("matrix subscripting not handled for this type"));
@@ -480,7 +480,7 @@ static SEXP ArraySubset(SEXP x, SEXP s, SEXP call, int drop)
 	    break;
 	case RAWSXP:
 	    if (ii != NA_INTEGER)
-		RAW(result)[i] = RAW(x)[ii];
+		RAW(result)[i] = RAW_ELT(x, ii);
 	    else
 		RAW(result)[i] = (Rbyte) 0;
 	    break;
@@ -715,7 +715,7 @@ SEXP attribute_hidden do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 		break;
 	    case RAWSXP:
 		if (i >= 1 && i <= XLENGTH(x))
-		    return ScalarRaw( RAW(x)[i-1] );
+		    return ScalarRaw( RAW_ELT(x, i-1) );
 		break;
 	    default: break;
 	    }
@@ -759,7 +759,7 @@ SEXP attribute_hidden do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 			break;
 		    case RAWSXP:
 			if (k < XLENGTH(x))
-			    return ScalarRaw( RAW(x)[k] );
+			    return ScalarRaw( RAW_ELT(x, k) );
 			break;
 		    default: break;
 		    }
@@ -1082,7 +1082,7 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    SET_STRING_ELT(ans, 0, STRING_ELT(x, offset));
 	    break;
 	case RAWSXP:
-	    RAW(ans)[0] = RAW(x)[offset];
+	    RAW(ans)[0] = RAW_ELT(x, offset);
 	    break;
 	default:
 	    UNIMPLEMENTED_TYPE("do_subset2", x);

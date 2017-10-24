@@ -617,6 +617,7 @@ double ALTREAL_SET_ELT(SEXP x, R_xlen_t i, double v);
 SEXP ALTSTRING_ELT(SEXP, R_xlen_t);
 void ALTSTRING_SET_ELT(SEXP, R_xlen_t, SEXP);
 Rcomplex ALTCOMPLEX_ELT(SEXP x, R_xlen_t i);
+Rbyte ALTRAW_ELT(SEXP x, R_xlen_t i);
 R_xlen_t INTEGER_GET_REGION(SEXP sx, R_xlen_t i, R_xlen_t n, int *buf);
 int INTEGER_IS_SORTED(SEXP x);
 int INTEGER_NO_NA(SEXP x);
