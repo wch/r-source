@@ -5,9 +5,7 @@
 
 \name{getVignetteInfo}
 \alias{getVignetteInfo}
-\title{
-Get information on installed vignettes.
-}
+\title{Get Information on Installed Vignettes}
 \description{
 This function gets information on installed vignettes.
 }

@@ -1,8 +1,6 @@
 \name{strcapture}
 \alias{strcapture}
-\title{
-Capture string tokens into a data.frame
-}
+\title{Capture String Tokens into a data.frame}
 \description{
   Given a character vector and a regular expression containing capture
   expressions, \code{strcapture} will extract the captured tokens into a

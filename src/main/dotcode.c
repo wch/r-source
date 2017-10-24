@@ -2395,7 +2395,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 			      Fort ? ".Fortran" : ".C",
 			      symName, type2char(type), na+1);
 	    } else {
-		int *iptr = INTEGER(arg), tmp;
+		int *iptr = (int *)p, tmp;
 		for (R_xlen_t i = 0 ; i < n ; i++) {
 		    tmp =  iptr[i];
 		    iptr[i] = (tmp == NA_INTEGER || tmp == 0) ? tmp : 1;

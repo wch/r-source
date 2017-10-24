@@ -7,7 +7,7 @@
 \alias{findLineNum}
 \alias{setBreakpoint}
 \title{
-  Find the Location of a Line of Source Code, or Set a Breakpoint There.
+  Find the Location of a Line of Source Code, or Set a Breakpoint There
 }
 \description{
   These functions locate objects containing particular lines of source

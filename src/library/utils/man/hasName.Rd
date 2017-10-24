@@ -5,7 +5,7 @@
 
 \name{hasName}
 \alias{hasName}
-\title{Check for name}
+\title{Check for Name}
 \description{
   \code{hasName} is a convenient way to test for one or more names
 in an R object.

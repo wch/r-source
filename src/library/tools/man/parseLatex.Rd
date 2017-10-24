@@ -7,9 +7,7 @@
 \alias{parseLatex}
 \alias{deparseLatex}
 \alias{latexToUtf8}
-\title{
-These experimental functions work with a subset of LaTeX code.
-}
+\title{Experimental Functions to Work with LaTeX Code}
 \description{
   The \code{parseLatex} function parses LaTeX source, producing a
   structured object; \code{deparseLatex} reverses the process.  The

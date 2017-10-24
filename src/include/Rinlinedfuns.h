@@ -361,14 +361,13 @@ INLINE_FUN void R_set_altrep_data2(SEXP x, SEXP v) { SETCDR(x, v); }
 INLINE_FUN int INTEGER_ELT(SEXP x, R_xlen_t i)
 {
     CHECK_VECTOR_INT_ELT(x, i);
-
+#ifdef COMPACT_SEQ_ELT_INLINE
+# define COMPACT_INTSEQ_FIRST(x) INTEGER0(R_altrep_data1(x))[1]
+# define COMPACT_INTSEQ_INCR(x) INTEGER0(R_altrep_data1(x))[2]
     int *px = INTEGER_OR_NULL(x, FALSE);
     if (px != NULL)
 	return px[i];
     else {
-#ifdef COMPACT_SEQ_ELT_INLINE
-# define COMPACT_INTSEQ_FIRST(x) INTEGER0(R_altrep_data1(x))[1]
-# define COMPACT_INTSEQ_INCR(x) INTEGER0(R_altrep_data1(x))[2]
 	/* inline compact integer sequences */
 	extern R_altrep_class_t R_compact_intseq_class;
 	SEXP class = ALTREP_CLASS(x);
@@ -380,11 +379,13 @@ INLINE_FUN int INTEGER_ELT(SEXP x, R_xlen_t i)
 	    else if (inc == -1)
 		return n1 - i;
 	}
-# undef COMPACT_INTSEQ_FIRST
-# undef COMPACT_INTSEQ_INCR
-#endif
 	return ALTINTEGER_ELT(x, i);
     }
+# undef COMPACT_INTSEQ_FIRST
+# undef COMPACT_INTSEQ_INCR
+#else
+    return ALTREP(x) ? ALTINTEGER_ELT(x, i) : INTEGER0(x)[i];
+#endif
 }
 
 INLINE_FUN int LOGICAL_ELT(SEXP x, R_xlen_t i)
@@ -396,14 +397,13 @@ INLINE_FUN int LOGICAL_ELT(SEXP x, R_xlen_t i)
 INLINE_FUN double REAL_ELT(SEXP x, R_xlen_t i)
 {
     CHECK_VECTOR_REAL_ELT(x, i);
-
+#ifdef COMPACT_SEQ_ELT_INLINE
+# define COMPACT_REALSEQ_FIRST(x) REAL0(R_altrep_data1(x))[1]
+# define COMPACT_REALSEQ_INCR(x) REAL0(R_altrep_data1(x))[2]
     double *px = REAL_OR_NULL(x, FALSE);
     if (px != NULL)
 	return px[i];
     else {
-#ifdef COMPACT_SEQ_ELT_INLINE
-# define COMPACT_REALSEQ_FIRST(x) REAL0(R_altrep_data1(x))[1]
-# define COMPACT_REALSEQ_INCR(x) REAL0(R_altrep_data1(x))[2]
 	/* inline compact real sequences */
 	extern R_altrep_class_t R_compact_realseq_class;
 	SEXP class = ALTREP_CLASS(x);
@@ -415,11 +415,13 @@ INLINE_FUN double REAL_ELT(SEXP x, R_xlen_t i)
 	    else if (inc == -1)
 		return n1 - i;
 	}
-# undef COMPACT_REALSEQ_FIRST
-# undef COMPACT_REALSEQ_INCR
-#endif
 	return ALTREAL_ELT(x, i);
     }
+# undef COMPACT_REALSEQ_FIRST
+# undef COMPACT_REALSEQ_INCR
+#else
+    return ALTREP(x) ? ALTREAL_ELT(x, i) : REAL0(x)[i];
+#endif
 }
 
 INLINE_FUN double SET_REAL_ELT(SEXP x, R_xlen_t i, double v)
@@ -456,6 +458,20 @@ INLINE_FUN Rcomplex COMPLEX_ELT(SEXP x, R_xlen_t i)
     return ALTREP(x) ? ALTCOMPLEX_ELT(x, i) : COMPLEX0(x)[i];
 }
 
+#if !defined(COMPILING_R) && !defined(COMPILING_MEMORY_C) &&	\
+    !defined(TESTING_WRITE_BARRIER)
+/* if not inlining use version in memory.c with more error checking */
+INLINE_FUN SEXP STRING_ELT(SEXP x, R_xlen_t i) {
+    if (ALTREP(x))
+	return ALTSTRING_ELT(x, i);
+    else {
+	SEXP *ps = STDVEC_DATAPTR(x);
+	return ps[i];
+    }
+}
+#else
+SEXP STRING_ELT(SEXP x, R_xlen_t i);
+#endif
 
 #ifdef INLINE_PROTECT
 extern int R_PPStackSize;

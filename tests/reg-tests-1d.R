@@ -1276,6 +1276,11 @@ stopifnot(identical(2, x[[quote(a)]]),
 ## `[[` only worked after fixing PR#17314, i.e., not in R <= 3.4.x
 
 
+## range(<non-numeric>, finite = TRUE)
+stopifnot(identical(0:1, range(c(NA,TRUE,FALSE), finite=TRUE)))
+## gave NA's in R <= 3.4.2
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

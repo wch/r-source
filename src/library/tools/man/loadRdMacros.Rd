@@ -3,13 +3,10 @@
 % Copyright 2016 R Core Team
 % Distributed under GPL 2 or later
 
-
 \name{loadRdMacros}
 \alias{loadRdMacros}
 \alias{loadPkgRdMacros}
-\title{
-  Load user-defined Rd help system macros.
-}
+\title{Load User-defined Rd Help System Macros}
 \description{
   Loads macros from an \file{.Rd} file, or from several \file{.Rd}
   files contained in a package.

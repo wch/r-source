@@ -57,6 +57,9 @@ struct _HashData {
     Rboolean useCache;
 };
 
+#define HTDATA_INTEGER(d) (INTEGER0((d)->HashTable))
+#define HTDATA_REAL(d) (REAL0((d)->HashTable))
+
 
 /*
    Integer keys are hashed via a random number generator
@@ -85,14 +88,16 @@ static hlen scatter(unsigned int key, HashData *d)
 
 static hlen lhash(SEXP x, R_xlen_t indx, HashData *d)
 {
-    if (LOGICAL(x)[indx] == NA_LOGICAL) return 2U;
-    return (hlen) LOGICAL(x)[indx];
+    int xi = LOGICAL_ELT(x, indx);
+    if (xi == NA_LOGICAL) return 2U;
+    return (hlen) xi;
 }
 
 static hlen ihash(SEXP x, R_xlen_t indx, HashData *d)
 {
-    if (INTEGER(x)[indx] == NA_INTEGER) return 0;
-    return scatter((unsigned int) (INTEGER(x)[indx]), d);
+    int xi = INTEGER_ELT(x, indx);
+    if (xi == NA_INTEGER) return 0;
+    return scatter((unsigned int) xi, d);
 }
 
 /* We use unions here because Solaris gcc -O2 has trouble with
@@ -107,7 +112,8 @@ union foo {
 static hlen rhash(SEXP x, R_xlen_t indx, HashData *d)
 {
     /* There is a problem with signed 0s under IEC60559 */
-    double tmp = (REAL(x)[indx] == 0.0) ? 0.0 : REAL(x)[indx];
+    double xi = REAL_ELT(x, indx);
+    double tmp = (xi == 0.0) ? 0.0 : xi;
     /* need to use both 32-byte chunks or endianness is an issue */
     /* we want all NaNs except NA equal, and all NAs equal */
     if (R_IsNA(tmp)) tmp = NA_REAL;
@@ -136,7 +142,7 @@ static Rcomplex unify_complex_na(Rcomplex z) {
 
 static hlen chash(SEXP x, R_xlen_t indx, HashData *d)
 {
-    Rcomplex tmp = unify_complex_na(COMPLEX(x)[indx]);
+    Rcomplex tmp = unify_complex_na(COMPLEX_ELT(x, indx));
 
 #if 2*SIZEOF_INT == SIZEOF_DOUBLE
     {
@@ -170,8 +176,8 @@ static hlen shash(SEXP x, R_xlen_t indx, HashData *d)
 {
     unsigned int k;
     const char *p;
-    const void *vmax = vmaxget();
     if(!d->useUTF8 && d->useCache) return cshash(x, indx, d);
+    const void *vmax = vmaxget();
     /* Not having d->useCache really should not happen anymore. */
     p = translateCharUTF8(STRING_ELT(x, indx));
     k = 0;
@@ -184,24 +190,26 @@ static hlen shash(SEXP x, R_xlen_t indx, HashData *d)
 static int lequal(SEXP x, R_xlen_t i, SEXP y, R_xlen_t j)
 {
     if (i < 0 || j < 0) return 0;
-    return (LOGICAL(x)[i] == LOGICAL(y)[j]);
+    return (LOGICAL_ELT(x, i) == LOGICAL_ELT(y, j));
 }
 
 
 static int iequal(SEXP x, R_xlen_t i, SEXP y, R_xlen_t j)
 {
     if (i < 0 || j < 0) return 0;
-    return (INTEGER(x)[i] == INTEGER(y)[j]);
+    return (INTEGER_ELT(x, i) == INTEGER_ELT(y, j));
 }
 
 /* BDR 2002-1-17  We don't want NA and other NaNs to be equal */
 static int requal(SEXP x, R_xlen_t i, SEXP y, R_xlen_t j)
 {
     if (i < 0 || j < 0) return 0;
-    if (!ISNAN(REAL(x)[i]) && !ISNAN(REAL(y)[j]))
-	return (REAL(x)[i] == REAL(y)[j]);
-    else if (R_IsNA(REAL(x)[i]) && R_IsNA(REAL(y)[j])) return 1;
-    else if (R_IsNaN(REAL(x)[i]) && R_IsNaN(REAL(y)[j])) return 1;
+    double xi = REAL_ELT(x, i);
+    double yj = REAL_ELT(y, j);
+    if (!ISNAN(xi) && !ISNAN(yj))
+	return (xi == yj);
+    else if (R_IsNA(xi) && R_IsNA(yj)) return 1;
+    else if (R_IsNaN(xi) && R_IsNaN(yj)) return 1;
     else return 0;
 }
 
@@ -225,20 +233,22 @@ static int cplx_eq(Rcomplex x, Rcomplex y)
 static int cequal(SEXP x, R_xlen_t i, SEXP y, R_xlen_t j)
 {
     if (i < 0 || j < 0) return 0;
-    return cplx_eq(COMPLEX(x)[i], COMPLEX(y)[j]);
+    return cplx_eq(COMPLEX_ELT(x, i), COMPLEX_ELT(y, j));
 }
 
 static int sequal(SEXP x, R_xlen_t i, SEXP y, R_xlen_t j)
 {
     if (i < 0 || j < 0) return 0;
+    SEXP xi = STRING_ELT(x, i);
+    SEXP yj = STRING_ELT(y, j);
     /* Two strings which have the same address must be the same,
        so avoid looking at the contents */
-    if (STRING_ELT(x, i) == STRING_ELT(y, j)) return 1;
+    if (xi == yj) return 1;
     /* Then if either is NA the other cannot be */
     /* Once all CHARSXPs are cached, Seql will handle this */
-    if (STRING_ELT(x, i) == NA_STRING || STRING_ELT(y, j) == NA_STRING)
+    if (xi == NA_STRING || yj == NA_STRING)
 	return 0;
-    return Seql(STRING_ELT(x, i), STRING_ELT(y, j));
+    return Seql(xi, yj);
 }
 
 static hlen rawhash(SEXP x, R_xlen_t indx, HashData *d)
@@ -405,12 +415,12 @@ static void HashTableSetup(SEXP x, HashData *d, R_xlen_t nmax)
     d->isLong = IS_LONG_VEC(x);
     if (d->isLong) {
 	d->HashTable = allocVector(REALSXP, (R_xlen_t) d->M);
-	for (R_xlen_t i = 0; i < d->M; i++) REAL(d->HashTable)[i] = NIL;
+	for (R_xlen_t i = 0; i < d->M; i++) HTDATA_REAL(d)[i] = NIL;
     } else
 #endif
     {
 	d->HashTable = allocVector(INTSXP, (R_xlen_t) d->M);
-	for (R_xlen_t i = 0; i < d->M; i++) INTEGER(d->HashTable)[i] = NIL;
+	for (R_xlen_t i = 0; i < d->M; i++) HTDATA_INTEGER(d)[i] = NIL;
     }
 }
 
@@ -422,7 +432,7 @@ static int isDuplicated(SEXP x, R_xlen_t indx, HashData *d)
 {
 #ifdef LONG_VECTOR_SUPPORT
     if (d->isLong) {
-	double *h = REAL(d->HashTable);
+	double *h = HTDATA_REAL(d);
 	hlen i = d->hash(x, indx, d);
 	while (h[i] != NIL) {
 	    if (d->equal(x, (R_xlen_t) h[i], x, indx))
@@ -434,7 +444,7 @@ static int isDuplicated(SEXP x, R_xlen_t indx, HashData *d)
     } else
 #endif
     {
-	int *h = INTEGER(d->HashTable);
+	int *h = HTDATA_INTEGER(d);
 	hlen i = d->hash(x, indx, d);
 	while (h[i] != NIL) {
 	    if (d->equal(x, h[i], x, indx))
@@ -451,7 +461,7 @@ static void removeEntry(SEXP table, SEXP x, R_xlen_t indx, HashData *d)
 {
 #ifdef LONG_VECTOR_SUPPORT
     if (d->isLong) {
-	double *h = REAL(d->HashTable);
+	double *h = HTDATA_REAL(d);
 	hlen i = d->hash(x, indx, d);
 	while (h[i] >= 0) {
 	    if (d->equal(table, (R_xlen_t) h[i], x, indx)) {
@@ -463,7 +473,7 @@ static void removeEntry(SEXP table, SEXP x, R_xlen_t indx, HashData *d)
     } else
 #endif
     {
-	int *h = INTEGER(d->HashTable);
+	int *h = HTDATA_INTEGER(d);
 	hlen i = d->hash(x, indx, d);
 	while (h[i] >= 0) {
 	    if (d->equal(table, h[i], x, indx)) {
@@ -793,7 +803,7 @@ static void UndoHashing(SEXP x, SEXP table, HashData *d)
 
 static int Lookup(SEXP table, SEXP x, R_xlen_t indx, HashData *d)
 {
-    int *h = INTEGER(d->HashTable);
+    int *h = HTDATA_INTEGER(d);
     hlen i = d->hash(x, indx, d);
     while (h[i] != NIL) {
 	if (d->equal(table, h[i], x, indx))
@@ -811,9 +821,10 @@ static SEXP HashLookup(SEXP table, SEXP x, HashData *d)
 
     n = XLENGTH(x);
     PROTECT(ans = allocVector(INTSXP, n));
+    int *pa = INTEGER(ans);
     for (i = 0; i < n; i++) {
 //	if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	INTEGER(ans)[i] = Lookup(table, x, i, d);
+	pa[i] = Lookup(table, x, i, d);
     }
     UNPROTECT(1);
     return ans;
@@ -1619,7 +1630,7 @@ SEXP attribute_hidden do_rowsum(SEXP call, SEXP op, SEXP args, SEXP env)
 /* returns 1-based duplicate no */
 static int isDuplicated2(SEXP x, int indx, HashData *d)
 {
-    int *h = INTEGER(d->HashTable);
+    int *h = HTDATA_INTEGER(d);
     hlen i = d->hash(x, indx, d);
     while (h[i] != NIL) {
 	if (d->equal(x, h[i], x, indx))
@@ -1640,7 +1651,7 @@ static SEXP duplicated2(SEXP x, HashData *d)
     PROTECT(d->HashTable);
     PROTECT(ans = allocVector(INTSXP, n));
 
-    int *h = INTEGER(d->HashTable);
+    int *h = HTDATA_INTEGER(d);
     int *v = INTEGER(ans);
     for (i = 0; i < d->M; i++) h[i] = NIL;
     for (i = 0; i < n; i++) {
@@ -1733,7 +1744,7 @@ static void HashTableSetup1(SEXP x, HashData *d)
 #endif
     MKsetup(XLENGTH(x), d, NA_INTEGER);
     d->HashTable = allocVector(INTSXP, (R_xlen_t) d->M);
-    for (R_xlen_t i = 0; i < d->M; i++) INTEGER(d->HashTable)[i] = NIL;
+    for (R_xlen_t i = 0; i < d->M; i++) HTDATA_INTEGER(d)[i] = NIL;
 }
 
 /* used in utils */
