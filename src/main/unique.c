@@ -735,7 +735,7 @@ SEXP attribute_hidden do_duplicated(SEXP call, SEXP op, SEXP args, SEXP env)
     /* count unique entries */
     k = 0;
     for (i = 0; i < n; i++)
-	if (LOGICAL(dup)[i] == 0)
+	if (LOGICAL_ELT(dup, i) == 0)
 	    k++;
 
     PROTECT(dup);
@@ -744,38 +744,39 @@ SEXP attribute_hidden do_duplicated(SEXP call, SEXP op, SEXP args, SEXP env)
     k = 0;
     switch (TYPEOF(x)) {
     case LGLSXP:
+	for (i = 0; i < n; i++)
+	    if (LOGICAL_ELT(dup, i) == 0)
+		LOGICAL0(ans)[k++] = LOGICAL_ELT(x, i);
+	break;
     case INTSXP:
 	for (i = 0; i < n; i++)
-	    if (LOGICAL(dup)[i] == 0)
-		INTEGER(ans)[k++] = INTEGER(x)[i];
+	    if (LOGICAL_ELT(dup, i) == 0)
+		INTEGER0(ans)[k++] = INTEGER_ELT(x, i);
 	break;
     case REALSXP:
 	for (i = 0; i < n; i++)
-	    if (LOGICAL(dup)[i] == 0)
-		REAL(ans)[k++] = REAL(x)[i];
+	    if (LOGICAL_ELT(dup, i) == 0)
+		REAL0(ans)[k++] = REAL_ELT(x, i);
 	break;
     case CPLXSXP:
 	for (i = 0; i < n; i++)
-	    if (LOGICAL(dup)[i] == 0) {
-		COMPLEX(ans)[k].r = COMPLEX(x)[i].r;
-		COMPLEX(ans)[k].i = COMPLEX(x)[i].i;
-		k++;
-	    }
+	    if (LOGICAL_ELT(dup, i) == 0)
+		COMPLEX0(ans)[k++] = COMPLEX_ELT(x, i);
 	break;
     case STRSXP:
 	for (i = 0; i < n; i++)
-	    if (LOGICAL(dup)[i] == 0)
+	    if (LOGICAL_ELT(dup, i) == 0)
 		SET_STRING_ELT(ans, k++, STRING_ELT(x, i));
 	break;
     case VECSXP:
 	for (i = 0; i < n; i++)
-	    if (LOGICAL(dup)[i] == 0)
+	    if (LOGICAL_ELT(dup, i) == 0)
 		SET_VECTOR_ELT(ans, k++, VECTOR_ELT(x, i));
 	break;
     case RAWSXP:
 	for (i = 0; i < n; i++)
-	    if (LOGICAL(dup)[i] == 0)
-		RAW(ans)[k++] = RAW(x)[i];
+	    if (LOGICAL_ELT(dup, i) == 0)
+		RAW0(ans)[k++] = RAW_ELT(x, i);
 	break;
     default:
 	UNIMPLEMENTED_TYPE("duplicated", x);
