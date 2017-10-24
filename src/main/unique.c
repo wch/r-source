@@ -859,7 +859,8 @@ SEXP match5(SEXP itable, SEXP ix, int nmatch, SEXP incomp, SEXP env)
     if (n == 0) return allocVector(INTSXP, 0);
     if (length(itable) == 0) {
 	ans = allocVector(INTSXP, n);
-	for (R_xlen_t i = 0; i < n; i++) INTEGER(ans)[i] = nmatch;
+	int *pa = INTEGER(ans);
+	for (R_xlen_t i = 0; i < n; i++) pa[i] = nmatch;
 	return ans;
     }
 
@@ -879,58 +880,62 @@ SEXP match5(SEXP itable, SEXP ix, int nmatch, SEXP incomp, SEXP env)
 
     // special case scalar x -- for speed only :
     if(XLENGTH(x) == 1 && !incomp) {
-      PROTECT(ans = ScalarInteger(nmatch)); nprot++;
+      int val = nmatch;
+      int nitable = LENGTH(itable);
       switch (type) {
       case STRSXP: {
 	  SEXP x_val = STRING_ELT(x,0);
-	  for (int i=0; i < LENGTH(itable); i++) if (Seql(STRING_ELT(table,i), x_val)) {
-		  INTEGER(ans)[0] = i + 1; break;
+	  for (int i=0; i < nitable; i++) if (Seql(STRING_ELT(table,i), x_val)) {
+		  val = i + 1; break;
 	      }
 	  break; }
       case LGLSXP:
       case INTSXP: {
-	  int x_val = INTEGER(x)[0],
+	  int x_val = INTEGER_ELT(x, 0),
 	      *table_p = INTEGER(table);
-	  for (int i=0; i < LENGTH(itable); i++) if (table_p[i] == x_val) {
-		  INTEGER(ans)[0] = i + 1; break;
+	  for (int i=0; i < nitable; i++) if (table_p[i] == x_val) {
+		  val = i + 1; break;
 	      }
 	  break; }
       case REALSXP: {
-	  double x_val = (REAL(x)[0] == 0.) ? 0. : REAL(x)[0],// pblm with signed 0s under IEC60559
-	      *table_p = REAL(table);
+	  double xv = REAL_ELT(x, 0);
+	  // pblm with signed 0s under IEC60559
+	  double x_val = (xv == 0.) ? 0. : xv;
+	  double *table_p = REAL(table);
 	  /* we want all NaNs except NA equal, and all NAs equal */
 	  if (R_IsNA(x_val)) {
-	      for (int i=0; i < LENGTH(itable); i++) if (R_IsNA(table_p[i])) {
-		      INTEGER(ans)[0] = i + 1; break;
+	      for (int i=0; i < nitable; i++) if (R_IsNA(table_p[i])) {
+		      val = i + 1; break;
 		  }
 	  }
 	  else if (R_IsNaN(x_val)) {
-	      for (int i=0; i < LENGTH(itable); i++) if (R_IsNaN(table_p[i])) {
-		      INTEGER(ans)[0] = i + 1; break;
+	      for (int i=0; i < nitable; i++) if (R_IsNaN(table_p[i])) {
+		      val = i + 1; break;
 		  }
 	  }
 	  else {
-	      for (int i=0; i < LENGTH(itable); i++) if (table_p[i] == x_val) {
-		      INTEGER(ans)[0] = i + 1; break;
+	      for (int i=0; i < nitable; i++) if (table_p[i] == x_val) {
+		      val = i + 1; break;
 	      }
 	  }
 	  break; }
       case CPLXSXP: {
-	  Rcomplex x_val = COMPLEX(x)[0],
+	  Rcomplex x_val = COMPLEX_ELT(x, 0),
 	      *table_p = COMPLEX(table);
-	  for (int i=0; i < LENGTH(itable); i++)
+	  for (int i=0; i < nitable; i++)
 	      if (cplx_eq(table_p[i], x_val)) {
-		  INTEGER(ans)[0] = i + 1; break;
+		  val = i + 1; break;
 	      }
 	  break; }
       case RAWSXP: {
-	  Rbyte x_val = RAW(x)[0],
+	  Rbyte x_val = RAW_ELT(x, 0),
 	      *table_p = RAW(table);
-	  for (int i=0; i < LENGTH(itable); i++) if (table_p[i] == x_val) {
-		  INTEGER(ans)[0] = i + 1; break;
+	  for (int i=0; i < nitable; i++) if (table_p[i] == x_val) {
+		  val = i + 1; break;
 	      }
 	  break; }
       }
+      PROTECT(ans = ScalarInteger(val)); nprot++;
     }
     else { // regular case
 
