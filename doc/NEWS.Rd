@@ -193,6 +193,10 @@
       detected to be GNU \command{tar} or libarchive \command{tar} (aka
       \command{bsdtar}), a different command-line is generated to
       circumvent line-length limits in the shell.
+
+      \item \code{system(*, intern=F)}, \code{file.edit()} and
+      \code{file.show()} now issue a warning when the external command
+      cannot be executed.
     }
   }
 
@@ -367,10 +371,6 @@
 
       \item \code{.C()} when returning a logical vector now always maps
       values other than FALSE and NA to TRUE (as documented).
-
-      \item \code{system()}, \code{file.show()}, and \code{file.edit()}
-      now even on Windows report an error when the external command
-      cannot be executed.
     }
   }
 }
