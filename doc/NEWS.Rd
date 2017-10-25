@@ -186,8 +186,13 @@
       e.g.\sspace{}\emph{via} \code{dyn.load()} has been increased up to 614
       when the OS limit on the number of open files allows.
 
-      \item \code{Sys.timezone(location)} is slightly less platform
-      dependent, notably for \code{location = FALSE}.
+      \item \code{Sys.timezone()} is slightly less platform-dependent,
+      notably for \code{location = FALSE}.
+      
+      \item When \code{tar()} is used with an external command which is
+      detected to be GNU \command{tar} or libarchive \command{tar} (aka
+      \command{bsdtar}), a different command-line is generated to
+      circumvent line-length limits in the shell.
     }
   }
 
@@ -403,7 +408,7 @@
       representations of U+FFFE and U+FFFF are now regarded as valid by
       \code{utf8ToInt()}.
 
-      \item \code{range(c(TRUE,NA), finite=TRUE)} and similar no longer
+      \item \code{range(c(TRUE, NA), finite = TRUE)} and similar no longer
       return \code{NA}. (Reported by Lukas Stadler.)
     }
   }

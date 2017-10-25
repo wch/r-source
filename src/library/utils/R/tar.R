@@ -1,7 +1,7 @@
 #  File src/library/utils/R/tar.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -339,7 +339,7 @@ tar <- function(tarfile, files = NULL,
 		       full.names = TRUE, include.dirs = TRUE)
     if(is.character(tarfile)) {
         if(nzchar(tar) && tar != "internal") {
-            ## FIXME: could pipe through gzip etc: might be safer for xz
+            ## Could pipe through gzip etc: might be safer for xz
             ## as -J was lzma in GNU tar 1.20:21
             flags <- switch(match.arg(compression),
                             "none" = "-cf",
@@ -348,21 +348,30 @@ tar <- function(tarfile, files = NULL,
                             "xz" = "-Jcf")
 
             if (grepl("darwin", R.version$os)) {
-                ## precaution for macOS to omit resource forks
-                ## we can't tell the running OS version from R.version$os
-                ## but at least it will not be older
-                tar <- paste("COPYFILE_DISABLE=1", tar) # >= 10.5, Leopard
-                if (grepl("darwin8", R.version$os)) # 10.4, Tiger
-                    tar <- paste("COPY_EXTENDED_ATTRIBUTES_DISABLE=1", tar)
+                ## Precaution for macOS to omit resource forks
+                ## This is supposed to work for  >= 10.5 (Leopard).
+                tar <- paste("COPYFILE_DISABLE=1", tar)
             }
             if (is.null(extra_flags)) extra_flags <- ""
-            ## 'tar' might be a command + flags, so don't quote it
-            cmd <- paste(tar, extra_flags, flags, shQuote(tarfile),
-                         paste(shQuote(files), collapse=" "))
+            ## precaution added in R 3.5.0 for over-long command lines
+            nc <- nchar(ff <- paste(shQuote(files), collapse=" "))
+            ## -T is not supported by Solaris nor Heirloom Toolchest's tar
+            if(nc > 1000 &&
+               any(grepl("(GNU tar|libarchive)",
+                         tryCatch(system(paste(tar, "--version"), intern = TRUE),
+                                  error = function(e) "")))) {
+                tf <- tempfile("Rtar"); on.exit(unlink(tf))
+                writeLines(files, tf)
+                cmd <- paste(tar, extra_flags, flags, shQuote(tarfile),
+                             "-T", shQuote(tf))
+            } else {
+                ## 'tar' might be a command + flags, so don't quote it
+                cmd <- paste(tar, extra_flags, flags, shQuote(tarfile), ff)
+            }
             return(invisible(system(cmd)))
         }
         con <- switch(match.arg(compression),
-                      "none" =    file(tarfile, "wb"),
+                      "none" =  file(tarfile, "wb"),
                       "gzip" =  gzfile(tarfile, "wb", compression = compression_level),
                       "bzip2" = bzfile(tarfile, "wb", compression = compression_level),
                       "xz" =    xzfile(tarfile, "wb", compression = compression_level))
