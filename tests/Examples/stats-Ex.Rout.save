@@ -1473,6 +1473,13 @@ Residual standard error: 0.02684 on 13 degrees of freedom
 > ## Don't show: 
 > require(graphics)
 > 
+> dwlg1 <- data.frame(Prop = c(rep(0,5), 2, 5, rep(9, 9)), end = 1:16)
+> iPar <- getInitial(Prop ~ SSlogis(end, Asym, xmid, scal), data = dwlg1)
+> ## failed in R <= 3.4.2 (because of the '0's in 'Prop')
+> stopifnot(all.equal(tol = 1e-6,
++    iPar, c(Asym = 9.0678, xmid = 6.79331, scal = 0.499934)))
+> 
+> ## Visualize the SSlogis()  model  parametrization :
 >   xx <- seq(-0.5, 5, len = 101)
 >   yy <- 5 / ( 1 + exp((2-xx)))
 >   par(mar = c(0, 0, 3.5, 0))

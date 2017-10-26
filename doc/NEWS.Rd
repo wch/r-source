@@ -29,7 +29,7 @@
       surrogate code points to \code{NA} rather than invalid UTF-8, as
       well as values larger than the current Unicode maximum of
       \code{0x10FFFF}.  (This aligns with the current RFC3629.)
-      
+
       \item Fix calling of methods on S4 generics that dispatch on
       \code{\dots} when the call contains \code{\dots}.
 
@@ -39,6 +39,10 @@
 
       \item \code{range(c(TRUE, NA), finite = TRUE)} and similar no longer
       return \code{NA}. (Reported by Lukas Stadler.)
+
+      \item The self starting function \code{attr(SSlogis, "initial")}
+      now also works when the y values have exact minimum zero and is
+      slightly changed in general, behaving symmetrically in the y range.
     }
   }
 }
