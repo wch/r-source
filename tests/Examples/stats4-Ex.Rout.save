@@ -1,5 +1,5 @@
 
-R version 3.4.2 Patched (2017-10-01 r73429) -- "Short Summer"
+R version 3.4.2 Patched (2017-10-25 r73617) -- "Short Summer"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -184,7 +184,7 @@ Coefficients:
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.707 0.03 1.814 0 0 
+Time elapsed:  0.536 0.015 0.554 0 0 
 > grDevices::dev.off()
 null device 
           1 

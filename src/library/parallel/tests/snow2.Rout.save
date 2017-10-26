@@ -1,5 +1,5 @@
 
-R version 3.4.2 Patched (2017-10-01 r73429) -- "Short Summer"
+R version 3.4.2 Patched (2017-10-25 r73617) -- "Short Summer"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -50,4 +50,4 @@ Calculations on Transformed Scale;  Intervals on Original Scale
 > 
 > proc.time()
    user  system elapsed 
-  0.351   0.049   1.831 
+  0.215   0.058   0.905 
