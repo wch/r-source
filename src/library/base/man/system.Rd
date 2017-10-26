@@ -135,9 +135,10 @@ system(command, intern = FALSE,
   If \code{intern = FALSE}, the return value is an error code (\code{0}
   for success), given the invisible attribute (so needs to be printed
   explicitly).  If the command could not be run for any reason, the
-  value is \code{127} and a warning is issued. Otherwise if \code{wait = TRUE}
-  the value is the exit status returned by the command, and if
-  \code{wait = FALSE} it is \code{0} (the conventional success value).
+  value is \code{127} and a warning is issued (as from \R 3.5.0).
+  Otherwise if \code{wait = TRUE} the value is the exit status returned
+  by the command, and if \code{wait = FALSE} it is \code{0} (the
+  conventional success value).
 
   If the command times out, a warning is reported and the exit status is
   \code{124}.
