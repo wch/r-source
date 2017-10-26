@@ -70,6 +70,11 @@ tar(tarfile, files = NULL,
   line too long for the system shell: as from \R 3.5.0 this is worked
   around if the external command is detected to be GNU \command{tar} or
   libarchive \command{tar} (aka \command{bsdtar}).
+
+  Note that \code{files = '.'} will usually not work with an external
+  \command{tar} as that would expand the list of files after
+  \code{tarfile} is created.  (It does work with the default internal
+  method.)
 }
 
 \value{

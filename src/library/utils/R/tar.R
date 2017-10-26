@@ -329,16 +329,17 @@ tar <- function(tarfile, files = NULL,
                 compression_level = 6, tar = Sys.getenv("tar"),
                 extra_flags = "")
 {
-    files <- ## list the files before 'tarfile' is created!
-	if(is.null(files)) ## is fine
-	    list.files(recursive = TRUE, all.files = TRUE,
-		       full.names = TRUE, include.dirs = TRUE)
-	else ## is *not* ok when 'files' are simple files !
-	    ## list.files(path, ....) : first argument are *directories*
-	    list.files(files, recursive = TRUE, all.files = TRUE,
-		       full.names = TRUE, include.dirs = TRUE)
     if(is.character(tarfile)) {
         if(nzchar(tar) && tar != "internal") {
+            ## Assume external command will expand directories,
+            ## so keep command-line as simple as possible
+            ## But files = '.' will not work as tarfile would be included.
+            if(is.null(files)) {
+                files <- list.files(all.files = TRUE, full.names = TRUE,
+                                    include.dirs = TRUE)
+                files <- setdiff(files, c("./.", "./.."))
+            }
+
             ## Could pipe through gzip etc: might be safer for xz
             ## as -J was lzma in GNU tar 1.20:21
             flags <- switch(match.arg(compression),
@@ -370,6 +371,13 @@ tar <- function(tarfile, files = NULL,
             }
             return(invisible(system(cmd)))
         }
+
+### ----- from here on, using internal code -----
+        ## must do this before tarfile is created
+        if(is.null(files)) files <- "."
+        files <- list.files(files, recursive = TRUE, all.files = TRUE,
+                            full.names = TRUE, include.dirs = TRUE)
+
         con <- switch(match.arg(compression),
                       "none" =  file(tarfile, "wb"),
                       "gzip" =  gzfile(tarfile, "wb", compression = compression_level),
