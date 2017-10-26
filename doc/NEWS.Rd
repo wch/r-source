@@ -189,7 +189,7 @@
 
       \item \code{Sys.timezone()} is slightly less platform-dependent,
       notably for \code{location = FALSE}.
-      
+
       \item When \code{tar()} is used with an external command which is
       detected to be GNU \command{tar} or libarchive \command{tar} (aka
       \command{bsdtar}), a different command-line is generated to
@@ -411,6 +411,10 @@
 
       \item \code{range(c(TRUE, NA), finite = TRUE)} and similar no longer
       return \code{NA}. (Reported by Lukas Stadler.)
+
+      \item The self starting function \code{attr(SSlogis, "initial")}
+      now also works when the y values have exact minimum zero and is
+      slightly changed in general, behaving symmetrically in the y range.
     }
   }
 }

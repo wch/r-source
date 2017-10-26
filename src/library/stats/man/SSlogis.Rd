@@ -1,6 +1,6 @@
 % File src/library/stats/man/SSlogis.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{SSlogis}
@@ -22,7 +22,8 @@ SSlogis(input, Asym, xmid, scal)
   This \code{selfStart} model evaluates the logistic
   function and its gradient.  It has an \code{initial} attribute that
   creates initial estimates of the parameters \code{Asym},
-  \code{xmid}, and \code{scal}.
+  \code{xmid}, and \code{scal}.   In \R 3.4.2 and earlier, that
+  init function failed when \code{min(input)} was exactly zero.
 }
 \value{
   a numeric vector of the same length as \code{input}.  It is the value of
@@ -47,6 +48,13 @@ summary(fm1)
 \dontshow{
 require(graphics)
 
+dwlg1 <- data.frame(Prop = c(rep(0,5), 2, 5, rep(9, 9)), end = 1:16)
+iPar <- getInitial(Prop ~ SSlogis(end, Asym, xmid, scal), data = dwlg1)
+## failed in R <= 3.4.2 (because of the '0's in 'Prop')
+stopifnot(all.equal(tol = 1e-6,
+   iPar, c(Asym = 9.0678, xmid = 6.79331, scal = 0.499934)))
+
+## Visualize the SSlogis()  model  parametrization :
   xx <- seq(-0.5, 5, len = 101)
   yy <- 5 / ( 1 + exp((2-xx)))
   par(mar = c(0, 0, 3.5, 0))

@@ -1,8 +1,8 @@
 #  File src/library/stats/R/zzModels.R
 #  Part of the R package, https://www.R-project.org
 #
+#  Copyright 1999--2017 The R Core Team
 #  Copyright 1997, 1999 (C) Jose C. Pinheiro and Douglas M. Bates
-#  Copyright 1999-2012 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -373,8 +373,9 @@ SSlogis <- # selfStart(~ Asym/(1 + exp((xmid - input)/scal)),
                   stop("too few distinct input values to fit a logistic model")
               }
               z <- xy[["y"]]
-              if (min(z) <= 0) { z <- z - 1.05 * min(z) } # avoid zeroes
-              z <- z/(1.05 * max(z))		# scale to within unit height
+              ## transform to proportion, i.e. in (0,1) :
+              rng <- range(z); dz <- diff(rng)
+              z <- (z - rng[1L] + 0.05 * dz)/(1.1 * dz)
               xy[["z"]] <- log(z/(1 - z))		# logit transformation
               aux <- coef(lm(x ~ z, xy))
               pars <- as.vector(coef(nls(y ~ 1/(1 + exp((xmid - x)/scal)),
