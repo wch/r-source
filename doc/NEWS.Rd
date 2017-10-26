@@ -114,7 +114,8 @@
       \code{"xngettext"} now use \code{encodeString()} which keeps,
       e.g.\sspace{}\code{"\n"}, visible.  (Wish of \PR{17298}.)
 
-      \item \code{package.skeleton()} gets optional \code{encoding} argument.
+      \item \code{package.skeleton()} gains an optional \code{encoding}
+      argument.
 
       \item \code{approx()}, \code{spline()}, \code{splinefun()} and
       \code{approxfun()} also work for long vectors.
@@ -194,9 +195,9 @@
       \command{bsdtar}), a different command-line is generated to
       circumvent line-length limits in the shell.
 
-      \item \code{system(*, intern=F)}, \code{file.edit()} and
-      \code{file.show()} now issue a warning when the external command
-      cannot be executed.
+      \item \code{system(*, intern = FALSE)}, \code{system2()} (when not
+      capturing output), \code{file.edit()} and \code{file.show()} now
+      issue a warning when the external command cannot be executed.
     }
   }
 

@@ -93,15 +93,17 @@ system2(command, args = character(),
   in the attribute \code{"status"} of the result: an attribute
   \code{"errmsg"} may also be available.
 
-  In other cases, the return value is an error code (\code{0}
-  for success), given the \link{invisible} attribute (so needs to be printed
+  In other cases, the return value is an error code (\code{0} for
+  success), given the \link{invisible} attribute (so needs to be printed
   explicitly).  If the command could not be run for any reason, the
-  value is \code{127}.  Otherwise if \code{wait = TRUE} the value is the
-  exit status returned by the command, and if \code{wait = FALSE} it is
-  \code{0} (the conventional success value).
+  value is \code{127} and a warning is issued (as from \R 3.5.0).
+  Otherwise if \code{wait = TRUE} the value is the exit status returned
+  by the command, and if \code{wait = FALSE} it is \code{0} (the
+  conventional success value).
 
-  If the command times out, a warning is reported and the exit status is
+  If the command times out, a warning is issued and the exit status is
   \code{124}.
+
 #ifdef windows
   Some Windows commands return out-of-range status values
   (e.g., \code{-1}) and so only the bottom 16 bits of the value are used.
