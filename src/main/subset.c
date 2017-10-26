@@ -735,8 +735,8 @@ SEXP attribute_hidden do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 		SEXP sj = CAR(cddrArgs);
 		R_xlen_t i = scalarIndex(si);
 		R_xlen_t j = scalarIndex(sj);
-		int nrow = INTEGER(dim)[0];
-		int ncol = INTEGER(dim)[1];
+		int nrow = INTEGER_ELT(dim, 0);
+		int ncol = INTEGER_ELT(dim, 1);
 		if (i > 0 && j > 0 && i <= nrow && j <= ncol) {
 		    /* indices are legal scalars */
 		    R_xlen_t k = i - 1 + nrow * (j - 1);
@@ -826,8 +826,7 @@ SEXP attribute_hidden do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if(!drop || len > 1) {
 		// must grab these before the dim is set.
 		SEXP nm = PROTECT(getAttrib(ans, R_NamesSymbol));
-		SEXP attr = PROTECT(allocVector(INTSXP, 1));
-		INTEGER(attr)[0] = length(ans);
+		SEXP attr = PROTECT(ScalarInteger(length(ans)));
 		if(!isNull(getAttrib(dim, R_NamesSymbol)))
 		    setAttrib(attr, R_NamesSymbol, getAttrib(dim, R_NamesSymbol));
 		setAttrib(ans, R_DimSymbol, attr);
@@ -1031,22 +1030,23 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    0 or nsubs, but just in case... */
 
 	PROTECT(indx = allocVector(INTSXP, nsubs));
+	int *pindx = INTEGER(indx);
+	int *pdims = INTEGER(dims);
 	dimnames = getAttrib(x, R_DimNamesSymbol);
 	ndn = length(dimnames);
 	for (i = 0; i < nsubs; i++) {
-	    INTEGER(indx)[i] = (int)
+	    pindx[i] = (int)
 		get1index(CAR(subs),
 			  (i < ndn) ? VECTOR_ELT(dimnames, i) : R_NilValue,
-			  INTEGER(indx)[i], pok, -1, call);
+			  pindx[i], pok, -1, call);
 	    subs = CDR(subs);
-	    if (INTEGER(indx)[i] < 0 ||
-		INTEGER(indx)[i] >= INTEGER(dims)[i])
+	    if (pindx[i] < 0 || pindx[i] >= pdims[i])
 		errorcall(call, R_MSG_subs_o_b);
 	}
 	offset = 0;
 	for (i = (nsubs - 1); i > 0; i--)
-	    offset = (offset + INTEGER(indx)[i]) * INTEGER(dims)[i - 1];
-	offset += INTEGER(indx)[0];
+	    offset = (offset + pindx[i]) * pdims[i - 1];
+	offset += pindx[0];
 	UNPROTECT(1); /* indx */
     }
 
@@ -1067,22 +1067,22 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	ans = allocVector(TYPEOF(x), 1);
 	switch (TYPEOF(x)) {
 	case LGLSXP:
-	    LOGICAL(ans)[0] = LOGICAL_ELT(x, offset);
+	    LOGICAL0(ans)[0] = LOGICAL_ELT(x, offset);
 	    break;
 	case INTSXP:
-	    INTEGER(ans)[0] = INTEGER_ELT(x, offset);
+	    INTEGER0(ans)[0] = INTEGER_ELT(x, offset);
 	    break;
 	case REALSXP:
-	    REAL(ans)[0] = REAL_ELT(x, offset);
+	    REAL0(ans)[0] = REAL_ELT(x, offset);
 	    break;
 	case CPLXSXP:
-	    COMPLEX(ans)[0] = COMPLEX_ELT(x, offset);
+	    COMPLEX0(ans)[0] = COMPLEX_ELT(x, offset);
 	    break;
 	case STRSXP:
 	    SET_STRING_ELT(ans, 0, STRING_ELT(x, offset));
 	    break;
 	case RAWSXP:
-	    RAW(ans)[0] = RAW_ELT(x, offset);
+	    RAW0(ans)[0] = RAW_ELT(x, offset);
 	    break;
 	default:
 	    UNIMPLEMENTED_TYPE("do_subset2", x);
