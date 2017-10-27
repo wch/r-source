@@ -29,8 +29,8 @@ SSlogis(input, Asym, xmid, scal)
   a numeric vector of the same length as \code{input}.  It is the value of
   the expression \code{Asym/(1+exp((xmid-input)/scal))}.  If all of
   the arguments \code{Asym}, \code{xmid}, and \code{scal} are
-  names of objects the gradient matrix with respect to these names is attached as
-  an attribute named \code{gradient}.
+  names of objects the gradient matrix with respect to these names is
+  attached as an attribute named \code{gradient}.
 }
 \author{\enc{José}{Jose} Pinheiro and Douglas Bates}
 \seealso{\code{\link{nls}}, \code{\link{selfStart}}
@@ -50,8 +50,7 @@ summary(fm1)
 fm2 <- update(fm1, control=nls.control(tol = 1e-9, warnOnly=TRUE), trace = TRUE)
 all.equal(coef(fm1), coef(fm2)) # "Mean relative difference: 9.6e-6"
 str(fm2$convInfo) # 3 iterations
-}%dont
-}
+}%donttest
 
 dwlg1 <- data.frame(Prop = c(rep(0,5), 2, 5, rep(9, 9)), end = 1:16)
 iPar <- getInitial(Prop ~ SSlogis(end, Asym, xmid, scal), data = dwlg1)
