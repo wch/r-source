@@ -283,12 +283,11 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     if (timedout) {
 	ll = 124;
-	warningcall(R_NilValue, _("command '%s' timed out after %ds"),
-	            CHAR(STRING_ELT(cmd, 0)), timeout);
+	warning(_("command '%s' timed out after %ds"),
+	        CHAR(STRING_ELT(cmd, 0)), timeout);
     } else if (flag == 3 && ll) {
-	warningcall(R_NilValue, 
-		    _("running command '%s' had status %d"), 
-		    CHAR(STRING_ELT(cmd, 0)), ll);
+	warning(_("running command '%s' had status %d"), 
+	        CHAR(STRING_ELT(cmd, 0)), ll);
     }
     if (flag == 3) { /* intern = TRUE: convert pairlist to list */
 	PROTECT(rval = allocVector(STRSXP, i));
