@@ -47,9 +47,10 @@ getInitial(weight ~ SSlogis(Time, Asym, xmid, scal), data = Chick.1)
 fm1 <- nls(weight ~ SSlogis(Time, Asym, xmid, scal), data = Chick.1)
 summary(fm1)
 ## but are slightly improved here:
-fm2 <- update(fm1, control=nls.control(tol = 1e-9), trace = TRUE)
+fm2 <- update(fm1, control=nls.control(tol = 1e-9, warnOnly=TRUE), trace = TRUE)
 all.equal(coef(fm1), coef(fm2)) # "Mean relative difference: 9.6e-6"
 str(fm2$convInfo) # 3 iterations
+}%dont
 }
 
 dwlg1 <- data.frame(Prop = c(rep(0,5), 2, 5, rep(9, 9)), end = 1:16)
