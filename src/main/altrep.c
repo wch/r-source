@@ -588,6 +588,11 @@ Rcomplex attribute_hidden ALTCOMPLEX_ELT(SEXP x, R_xlen_t i)
     error("unknown ALTCOMPLEX type"); /* dispatch here */
 }
 
+Rbyte attribute_hidden ALTRAW_ELT(SEXP x, R_xlen_t i)
+{
+    error("unknown ALTRAW type"); /* dispatch here */
+}
+
 
 /**
  ** ALTREP Default Methods

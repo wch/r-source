@@ -1,6 +1,6 @@
 % File src/library/utils/man/tar.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2009-2016 R Core Team
+% Copyright 2009-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{tar}
@@ -64,6 +64,17 @@ tar(tarfile, files = NULL,
   not be used.)
   For libarchive's \command{bsdtar}, \option{--format=ustar} is more
   portable than the default.
+  
+  %% This uses -T, not supported by Solaris nor Heirloom Toolchest.
+  One issue which can cause an external command to fail is a command
+  line too long for the system shell: as from \R 3.5.0 this is worked
+  around if the external command is detected to be GNU \command{tar} or
+  libarchive \command{tar} (aka \command{bsdtar}).
+
+  Note that \code{files = '.'} will usually not work with an external
+  \command{tar} as that would expand the list of files after
+  \code{tarfile} is created.  (It does work with the default internal
+  method.)
 }
 
 \value{

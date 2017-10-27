@@ -617,6 +617,7 @@ double ALTREAL_SET_ELT(SEXP x, R_xlen_t i, double v);
 SEXP ALTSTRING_ELT(SEXP, R_xlen_t);
 void ALTSTRING_SET_ELT(SEXP, R_xlen_t, SEXP);
 Rcomplex ALTCOMPLEX_ELT(SEXP x, R_xlen_t i);
+Rbyte ALTRAW_ELT(SEXP x, R_xlen_t i);
 R_xlen_t INTEGER_GET_REGION(SEXP sx, R_xlen_t i, R_xlen_t n, int *buf);
 int INTEGER_IS_SORTED(SEXP x);
 int INTEGER_NO_NA(SEXP x);
@@ -1408,7 +1409,9 @@ void R_orderVector1(int *indx, int n, SEXP x,       Rboolean nalast, Rboolean de
 
 #endif
 
-#if defined(CALLED_FROM_DEFN_H) && !defined(__MAIN__) && (defined(COMPILING_R) || ( __GNUC__ && !defined(__INTEL_COMPILER) ))
+/* Defining NO_RINLINEDFUNS disables use to simulate platforms where
+   this is not available */
+#if defined(CALLED_FROM_DEFN_H) && !defined(__MAIN__) && (defined(COMPILING_R) || ( __GNUC__ && !defined(__INTEL_COMPILER) )) && (defined(COMPILING_R) || !defined(NO_RINLINEDFUNS))
 #include "Rinlinedfuns.h"
 #else
 /* need remapped names here for use with R_NO_REMAP */
@@ -1494,6 +1497,7 @@ int (INTEGER_ELT)(SEXP x, R_xlen_t i);
 double (REAL_ELT)(SEXP x, R_xlen_t i);
 int (LOGICAL_ELT)(SEXP x, R_xlen_t i);
 Rcomplex (COMPLEX_ELT)(SEXP x, R_xlen_t i);
+Rbyte (RAW_ELT)(SEXP x, R_xlen_t i);
 SEXP (STRING_ELT)(SEXP x, R_xlen_t i);
 double SCALAR_DVAL(SEXP x);
 int SCALAR_LVAL(SEXP x);
@@ -1511,6 +1515,8 @@ SEXP ALTREP_CLASS(SEXP x);
 int *LOGICAL0(SEXP x);
 int *INTEGER0(SEXP x);
 double *REAL0(SEXP x);
+Rcomplex *COMPLEX0(SEXP x);
+Rbyte *RAW0(SEXP x);
 void SET_LOGICAL_ELT(SEXP x, R_xlen_t i, int v);
 void SET_INTEGER_ELT(SEXP x, R_xlen_t i, int v);
 void SET_REAL_ELT(SEXP x, R_xlen_t i, double v);

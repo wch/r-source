@@ -616,14 +616,10 @@ static void warn_status(const char *cmd, int res)
 	/* on Solaris, if the command ends with non-zero status and timeout
 	   is 0, "Illegal seek" error is reported; the timeout version
 	   works this around by using close(fileno) */
-	warningcall(R_NilValue,
-		    _("running command '%s' had status %d and error message '%s'"),
-		    cmd, res,
-		    strerror(errno));
+	warning(_("running command '%s' had status %d and error message '%s'"),
+		cmd, res, strerror(errno));
     else
-	warningcall(R_NilValue,
-		    _("running command '%s' had status %d"),
-		    cmd, res);
+	warning(_("running command '%s' had status %d"), cmd, res);
 }
 
 #define INTERN_BUFSIZE 8096
@@ -724,8 +720,7 @@ SEXP attribute_hidden do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	if (timeout && tost.timedout) {
 	    res = 124;
-	    warningcall(R_NilValue, _("command '%s' timed out after %ds"),
-	                cmd, timeout);
+	    warning(_("command '%s' timed out after %ds"), cmd, timeout);
 	} else
 	    warn_status(cmd, res);
 
@@ -757,11 +752,10 @@ SEXP attribute_hidden do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 	else 
 	    res = R_system_timeout(cmd, timeout);
 	if (res == 127) 
-	    error(_("error in running command"));
+	    warning(_("error in running command"));
 	if (timeout && tost.timedout) {
 	    res = 124;
-	    warningcall(R_NilValue, _("command '%s' timed out after %ds"),
-	                cmd, timeout);
+	    warning(_("command '%s' timed out after %ds"), cmd, timeout);
 	} 
 	INTEGER(tlist)[0] = res;
 #ifdef HAVE_AQUA

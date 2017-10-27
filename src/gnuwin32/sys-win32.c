@@ -245,7 +245,7 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    getCharCE(STRING_ELT(cmd, 0)),
 		    flag, vis, CHAR(STRING_ELT(fin, 0)), fout, ferr,
 		    timeout, &timedout);
-	if (ll == NOLAUNCH) error(runerror());
+	if (ll == NOLAUNCH) warning(runerror());
     } else {
 	/* read stdout +/- stderr from pipe */
 	int m = 0;
@@ -283,12 +283,11 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     if (timedout) {
 	ll = 124;
-	warningcall(R_NilValue, _("command '%s' timed out after %ds"),
-	            CHAR(STRING_ELT(cmd, 0)), timeout);
+	warning(_("command '%s' timed out after %ds"),
+	        CHAR(STRING_ELT(cmd, 0)), timeout);
     } else if (flag == 3 && ll) {
-	warningcall(R_NilValue, 
-		    _("running command '%s' had status %d"), 
-		    CHAR(STRING_ELT(cmd, 0)), ll);
+	warning(_("running command '%s' had status %d"), 
+	        CHAR(STRING_ELT(cmd, 0)), ll);
     }
     if (flag == 3) { /* intern = TRUE: convert pairlist to list */
 	PROTECT(rval = allocVector(STRSXP, i));

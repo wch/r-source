@@ -14,7 +14,7 @@
 getInitial(object, data, \dots)
 }
 \arguments{
-  \item{object}{a formula or a \code{selfStart} model that defines a
+  \item{object}{a formula or a \code{\link{selfStart}} model that defines a
     nonlinear regression model}
   \item{data}{a data frame in which the expressions in the formula or
     arguments to the \code{selfStart} model can be evaluated}
@@ -35,9 +35,9 @@ getInitial(object, data, \dots)
     estimates.
 }
 \author{\enc{José}{Jose} Pinheiro and Douglas Bates}
-\seealso{\code{\link{nls}}, %\code{\link{nlsList}},
-    \code{\link{selfStart}},
-    \code{\link{selfStart.default}}, \code{\link{selfStart.formula}}
+\seealso{\code{\link{nls}}, \code{\link{selfStart}},
+  \code{\link{selfStart.default}}, \code{\link{selfStart.formula}}.
+  Further,  \code{\link[nlme]{nlsList}} from \CRANpkg{nlme}.
 }
 \examples{
 PurTrt <- Puromycin[ Puromycin$state == "treated", ]

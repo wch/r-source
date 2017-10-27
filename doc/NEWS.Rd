@@ -114,7 +114,8 @@
       \code{"xngettext"} now use \code{encodeString()} which keeps,
       e.g.\sspace{}\code{"\n"}, visible.  (Wish of \PR{17298}.)
 
-      \item \code{package.skeleton()} gets optional \code{encoding} argument.
+      \item \code{package.skeleton()} gains an optional \code{encoding}
+      argument.
 
       \item \code{approx()}, \code{spline()}, \code{splinefun()} and
       \code{approxfun()} also work for long vectors.
@@ -186,8 +187,17 @@
       e.g.\sspace{}\emph{via} \code{dyn.load()} has been increased up to 614
       when the OS limit on the number of open files allows.
 
-      \item \code{Sys.timezone(location)} is slightly less platform
-      dependent, notably for \code{location = FALSE}.
+      \item \code{Sys.timezone()} is slightly less platform-dependent,
+      notably for \code{location = FALSE}.
+
+      \item When \code{tar()} is used with an external command which is
+      detected to be GNU \command{tar} or libarchive \command{tar} (aka
+      \command{bsdtar}), a different command-line is generated to
+      circumvent line-length limits in the shell.
+
+      \item \code{system(*, intern = FALSE)}, \code{system2()} (when not
+      capturing output), \code{file.edit()} and \code{file.show()} now
+      issue a warning when the external command cannot be executed.
     }
   }
 
@@ -360,11 +370,8 @@
       \item \code{seq.POSIXt(*, by = "<n> DSTdays")} now should work
       correctly in all cases and is faster.  (\PR{17342})
 
-      \item \code{.C} when returning a logical vector now maps values other
-      than FALSE and NA to TRUE, as documented.
-
-      \item \code{system}, \code{file.show}, and \code{file.edit} now even
-      on Windows report an error when external command cannot be executed.
+      \item \code{.C()} when returning a logical vector now always maps
+      values other than FALSE and NA to TRUE (as documented).
     }
   }
 }
@@ -402,8 +409,12 @@
       representations of U+FFFE and U+FFFF are now regarded as valid by
       \code{utf8ToInt()}.
 
-      \item \code{range(c(TRUE,NA), finite=TRUE)} and similar no longer
+      \item \code{range(c(TRUE, NA), finite = TRUE)} and similar no longer
       return \code{NA}. (Reported by Lukas Stadler.)
+
+      \item The self starting function \code{attr(SSlogis, "initial")}
+      now also works when the y values have exact minimum zero and is
+      slightly changed in general, behaving symmetrically in the y range.
     }
   }
 }

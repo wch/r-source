@@ -2906,13 +2906,13 @@ typedef struct outtextconn {
 /* read a R character vector into a buffer */
 static void text_init(Rconnection con, SEXP text, int type)
 {
-    R_xlen_t i, nlines = xlength(text);  // not very plausible that this is long
+    R_xlen_t nlines = xlength(text);  // not very plausible that this is long
     size_t nchars = 0; /* -Wall */
     double dnc = 0.0;
     Rtextconn this = con->private;
     const void *vmax = vmaxget();
 
-    for(i = 0; i < nlines; i++)
+    for(R_xlen_t i = 0; i < nlines; i++)
 	dnc +=
 	    (double) strlen(type == 1 ? translateChar(STRING_ELT(text, i))
 			    : ((type == 3) ?translateCharUTF8(STRING_ELT(text, i))
@@ -2925,14 +2925,15 @@ static void text_init(Rconnection con, SEXP text, int type)
 	free(this); free(con->description); free(con->class); free(con);
 	error(_("cannot allocate memory for text connection"));
     }
-    *(this->data) = '\0';
-    for(i = 0; i < nlines; i++) {
-	strcat(this->data,
-	       type == 1 ? translateChar(STRING_ELT(text, i))
-	       : ((type == 3) ?translateCharUTF8(STRING_ELT(text, i))
-		  : CHAR(STRING_ELT(text, i))) );
-	strcat(this->data, "\n");
+    char *t = this->data;
+    for(R_xlen_t i = 0; i < nlines; i++) {
+	const char *s = (type == 1) ? translateChar(STRING_ELT(text, i))
+	    : ((type == 3) ? translateCharUTF8(STRING_ELT(text, i))
+	       : CHAR(STRING_ELT(text, i)));
+	while(*s) *t++ = *s++;
+	*t++ = '\n';
     }
+    *t = '\0';
     this->nchars = nchars;
     this->cur = this->save = 0;
     vmaxset(vmax);

@@ -24,7 +24,7 @@ range.default <- function(..., na.rm = FALSE, finite = FALSE)
         else if(na.rm) x <- x[!is.na(x)]
 	c(min(x), max(x))
     } else {
-        if(finite && !na.rm) na.rm <- TRUE
+        if(finite) na.rm <- TRUE
         c(min(x, na.rm=na.rm), max(x, na.rm=na.rm))
     }
 }

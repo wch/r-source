@@ -145,7 +145,7 @@ SEXP attribute_hidden ExtractSubset(SEXP x, SEXP indx, SEXP call)
 			    SET_VECTOR_ELT(result, i, R_NilValue));
 	break;
     case RAWSXP:
-	EXTRACT_SUBSET_LOOP(RAW0(result)[i] = RAW(x)[ii],
+	EXTRACT_SUBSET_LOOP(RAW0(result)[i] = RAW_ELT(x, ii),
 			    RAW0(result)[i] = (Rbyte) 0);
 	break;
     case LISTSXP:
@@ -236,6 +236,35 @@ static SEXP VectorSubset(SEXP x, SEXP s, SEXP call)
 
 SEXP int_arraySubscript(int dim, SEXP s, SEXP dims, SEXP x, SEXP call);
 
+/* The MATRIX_SUBSET_LOOP macro allows the branches based on index
+   type and vector type to happen outside the loop. Running through
+   the indices in column-major order also improves cache locality. */
+
+#define MATRIX_SUBSET_LOOP(STDCODE, NACODE) do {		\
+	for (j = 0; j < ncs; j++) {				\
+	    jj = psc[j];					\
+	    if (jj != NA_INTEGER) {				\
+		if (jj < 1 || jj > nc)				\
+		    errorcall(call, R_MSG_subs_o_b);		\
+		jj--;						\
+	    }							\
+	    for (i = 0; i < nrs; i++) {				\
+		ii = psr[i];					\
+		if (ii != NA_INTEGER) {				\
+		    if (ii < 1 || ii > nr)			\
+			errorcall(call, R_MSG_subs_o_b);	\
+		    ii--;					\
+		}						\
+		ij = i + j * nrs;				\
+		if (ii == NA_INTEGER || jj == NA_INTEGER)	\
+		    NACODE;					\
+		else {						\
+		    iijj = ii + jj * nr;			\
+		    STDCODE;					\
+		}						\
+	    }							\
+	}							\
+    } while (0)
 
 static SEXP MatrixSubset(SEXP x, SEXP s, SEXP call, int drop)
 {
@@ -260,86 +289,52 @@ static SEXP MatrixSubset(SEXP x, SEXP s, SEXP call, int drop)
     PROTECT(sr);
     PROTECT(sc);
     result = allocVector(TYPEOF(x), (R_xlen_t) nrs * (R_xlen_t) ncs);
+    int *psr = INTEGER(sr);
+    int *psc = INTEGER(sc);
     PROTECT(result);
-    for (i = 0; i < nrs; i++) {
-	ii = INTEGER(sr)[i];
-	if (ii != NA_INTEGER) {
-	    if (ii < 1 || ii > nr)
-		errorcall(call, R_MSG_subs_o_b);
-	    ii--;
+    switch(TYPEOF(x)) {
+    case LGLSXP:
+	MATRIX_SUBSET_LOOP(LOGICAL0(result)[ij] = LOGICAL_ELT(x, iijj),
+			   LOGICAL0(result)[ij] = NA_LOGICAL);
+	break;
+    case INTSXP:
+	MATRIX_SUBSET_LOOP(INTEGER0(result)[ij] = INTEGER_ELT(x, iijj),
+			   INTEGER0(result)[ij] = NA_INTEGER);
+	break;
+    case REALSXP:
+	MATRIX_SUBSET_LOOP(REAL0(result)[ij] = REAL_ELT(x, iijj),
+			   REAL0(result)[ij] = NA_REAL);
+	break;
+    case CPLXSXP:
+	{
+	    Rcomplex NA_CPLX = { NA_REAL, NA_REAL };
+	    MATRIX_SUBSET_LOOP(COMPLEX0(result)[ij] = COMPLEX_ELT(x, iijj),
+			       COMPLEX0(result)[ij] = NA_CPLX);
 	}
-	for (j = 0; j < ncs; j++) {
-	    jj = INTEGER(sc)[j];
-	    if (jj != NA_INTEGER) {
-		if (jj < 1 || jj > nc)
-		    errorcall(call, R_MSG_subs_o_b);
-		jj--;
-	    }
-	    ij = i + j * nrs;
-	    if (ii == NA_INTEGER || jj == NA_INTEGER) {
-		switch (TYPEOF(x)) {
-		case LGLSXP:
-		case INTSXP:
-		    INTEGER(result)[ij] = NA_INTEGER;
-		    break;
-		case REALSXP:
-		    REAL(result)[ij] = NA_REAL;
-		    break;
-		case CPLXSXP:
-		    COMPLEX(result)[ij].r = NA_REAL;
-		    COMPLEX(result)[ij].i = NA_REAL;
-		    break;
-		case STRSXP:
-		    SET_STRING_ELT(result, ij, NA_STRING);
-		    break;
-		case VECSXP:
-		case EXPRSXP:
-		    SET_VECTOR_ELT(result, ij, R_NilValue);
-		    break;
-		case RAWSXP:
-		    RAW(result)[ij] = (Rbyte) 0;
-		    break;
-		default:
-		    errorcall(call, _("matrix subscripting not handled for this type"));
-		    break;
-		}
-	    }
-	    else {
-		iijj = ii + jj * nr;
-		switch (TYPEOF(x)) {
-		case LGLSXP:
-		    LOGICAL(result)[ij] = LOGICAL_ELT(x, iijj);
-		    break;
-		case INTSXP:
-		    INTEGER(result)[ij] = INTEGER_ELT(x, iijj);
-		    break;
-		case REALSXP:
-		    REAL(result)[ij] = REAL_ELT(x, iijj);
-		    break;
-		case CPLXSXP:
-		    COMPLEX(result)[ij] = COMPLEX_ELT(x, iijj);
-		    break;
-		case STRSXP:
-		    SET_STRING_ELT(result, ij, STRING_ELT(x, iijj));
-		    break;
-		case VECSXP:
-		case EXPRSXP:
-		    SET_VECTOR_ELT(result, ij, VECTOR_ELT_FIX_NAMED(x, iijj));
-		    break;
-		case RAWSXP:
-		    RAW(result)[ij] = RAW(x)[iijj];
-		    break;
-		default:
-		    errorcall(call, _("matrix subscripting not handled for this type"));
-		    break;
-		}
-	    }
-	}
+	break;
+    case STRSXP:
+	MATRIX_SUBSET_LOOP(SET_STRING_ELT(result, ij, STRING_ELT(x, iijj)),
+			   SET_STRING_ELT(result, ij, NA_STRING));
+	break;
+    case VECSXP:
+    case EXPRSXP:
+	MATRIX_SUBSET_LOOP(SET_VECTOR_ELT(result, ij,
+					  VECTOR_ELT_FIX_NAMED(x, iijj)),
+			   SET_VECTOR_ELT(result, ij, R_NilValue));
+	break;
+    case RAWSXP:
+	MATRIX_SUBSET_LOOP(RAW0(result)[ij] = RAW_ELT(x, iijj),
+			   RAW0(result)[ij] = (Rbyte) 0);
+	break;
+    default:
+	errorcall(call, _("matrix subscripting not handled for this type"));
+	break;
     }
+
     if(nrs >= 0 && ncs >= 0) {
 	PROTECT(attr = allocVector(INTSXP, 2));
-	INTEGER(attr)[0] = nrs;
-	INTEGER(attr)[1] = ncs;
+	INTEGER0(attr)[0] = nrs;
+	INTEGER0(attr)[1] = ncs;
 	if(!isNull(getAttrib(dim, R_NamesSymbol)))
 	    setAttrib(attr, R_NamesSymbol, getAttrib(dim, R_NamesSymbol));
 	setAttrib(result, R_DimSymbol, attr);
@@ -382,6 +377,37 @@ static SEXP MatrixSubset(SEXP x, SEXP s, SEXP call, int drop)
     return result;
 }
 
+static R_INLINE R_xlen_t findASubIndex(R_xlen_t k, int **subs, int *indx,
+				       int *pxdims, R_xlen_t *offset,
+				       SEXP call)
+{
+    R_xlen_t ii = 0;
+    for (int j = 0; j < k; j++) {
+	int jj = subs[j][indx[j]];
+	if (jj == NA_INTEGER)
+	    return NA_INTEGER;
+	ii += (jj - 1) * offset[j];
+    }
+    return ii;
+}
+
+#define ARRAY_SUBSET_LOOP(STDCODE, NACODE) do {			\
+	for (R_xlen_t i = 0; i < n; i++) {			\
+	    R_xlen_t ii = findASubIndex(k, subs, indx,		\
+					pxdims, offset, call);	\
+	    if (ii != NA_INTEGER)				\
+		STDCODE;					\
+	    else						\
+		NACODE;						\
+	    if (n > 1) {					\
+		int j = 0;					\
+		while (++indx[j] >= bound[j]) {			\
+		    indx[j] = 0;				\
+		    j = (j + 1) % k;				\
+		}						\
+	    }							\
+	}							\
+    } while (0)
 
 static SEXP ArraySubset(SEXP x, SEXP s, SEXP call, int drop)
 {
@@ -392,6 +418,7 @@ static SEXP ArraySubset(SEXP x, SEXP s, SEXP call, int drop)
     mode = TYPEOF(x);
     xdims = getAttrib(x, R_DimSymbol);
     k = length(xdims);
+    int *pxdims = INTEGER(xdims);
 
     /* k is now the number of dims */
     int **subs = (int**)R_alloc(k, sizeof(int*));
@@ -419,87 +446,60 @@ static SEXP ArraySubset(SEXP x, SEXP s, SEXP call, int drop)
     }
     offset[0] = 1;
     for (int i = 1; i < k; i++)
-	offset[i] = offset[i - 1] * INTEGER(xdims)[i - 1];
+	offset[i] = offset[i - 1] * pxdims[i - 1];
+
+    /* range check on indices -- the lower bound check may not be needed */
+    for (int i = 0; i < k; i++)
+	for (int j = 0; j < bound[i]; j++) {
+	    int jj = subs[i][j];
+	    if (jj < 1 || jj > pxdims[i])
+		errorcall(call, R_MSG_subs_o_b);
+	}
 
     /* Transfer the subset elements from "x" to "a". */
 
-    for (R_xlen_t i = 0; i < n; i++) {
-	R_xlen_t ii = 0;
-	for (int j = 0; j < k; j++) {
-	    int jj = subs[j][indx[j]];
-	    if (jj == NA_INTEGER) {
-		ii = NA_INTEGER;
-		goto assignLoop;
-	    }
-	    if (jj < 1 || jj > INTEGER(xdims)[j])
-		errorcall(call, R_MSG_subs_o_b);
-	    ii += (jj - 1) * offset[j];
+    switch (mode) {
+    case LGLSXP:
+	ARRAY_SUBSET_LOOP(LOGICAL0(result)[i] = LOGICAL_ELT(x, ii),
+			  LOGICAL0(result)[i] = NA_LOGICAL);
+	break;
+    case INTSXP:
+	ARRAY_SUBSET_LOOP(INTEGER0(result)[i] = INTEGER_ELT(x, ii),
+			  INTEGER0(result)[i] = NA_INTEGER);
+	break;
+    case REALSXP:
+	ARRAY_SUBSET_LOOP(REAL0(result)[i] = REAL_ELT(x, ii),
+			  REAL0(result)[i] = NA_REAL);
+	break;
+    case CPLXSXP:
+	{
+	    Rcomplex NA_CPLX = { NA_REAL, NA_REAL };
+	    ARRAY_SUBSET_LOOP(COMPLEX0(result)[i] = COMPLEX_ELT(x, ii),
+			      COMPLEX0(result)[i] = NA_CPLX);
 	}
-
-      assignLoop:
-	switch (mode) {
-	case LGLSXP:
-	    if (ii != NA_INTEGER)
-		LOGICAL(result)[i] = LOGICAL_ELT(x, ii);
-	    else
-		LOGICAL(result)[i] = NA_LOGICAL;
-	    break;
-	case INTSXP:
-	    if (ii != NA_INTEGER)
-		INTEGER(result)[i] = INTEGER_ELT(x, ii);
-	    else
-		INTEGER(result)[i] = NA_INTEGER;
-	    break;
-	case REALSXP:
-	    if (ii != NA_INTEGER)
-		REAL(result)[i] = REAL_ELT(x, ii);
-	    else
-		REAL(result)[i] = NA_REAL;
-	    break;
-	case CPLXSXP:
-	    if (ii != NA_INTEGER) {
-		COMPLEX(result)[i] = COMPLEX_ELT(x, ii);
-	    }
-	    else {
-		COMPLEX(result)[i].r = NA_REAL;
-		COMPLEX(result)[i].i = NA_REAL;
-	    }
-	    break;
-	case STRSXP:
-	    if (ii != NA_INTEGER)
-		SET_STRING_ELT(result, i, STRING_ELT(x, ii));
-	    else
-		SET_STRING_ELT(result, i, NA_STRING);
-	    break;
-	case VECSXP:
-	case EXPRSXP:
-	    if (ii != NA_INTEGER)
-		SET_VECTOR_ELT(result, i, VECTOR_ELT_FIX_NAMED(x, ii));
-	    else
-		SET_VECTOR_ELT(result, i, R_NilValue);
-	    break;
-	case RAWSXP:
-	    if (ii != NA_INTEGER)
-		RAW(result)[i] = RAW(x)[ii];
-	    else
-		RAW(result)[i] = (Rbyte) 0;
-	    break;
-	default:
-	    errorcall(call, _("array subscripting not handled for this type"));
-	    break;
-	}
-	if (n > 1) {
-	    int j = 0;
-	    while (++indx[j] >= bound[j]) {
-		indx[j] = 0;
-		j = (j + 1) % k;
-	    }
-	}
+	break;
+    case STRSXP:
+	ARRAY_SUBSET_LOOP(SET_STRING_ELT(result, i, STRING_ELT(x, ii)),
+			  SET_STRING_ELT(result, i, NA_STRING));
+	break;
+    case VECSXP:
+    case EXPRSXP:
+	ARRAY_SUBSET_LOOP(SET_VECTOR_ELT(result, i,
+					 VECTOR_ELT_FIX_NAMED(x, ii)),
+			  SET_VECTOR_ELT(result, i, R_NilValue));
+	break;
+    case RAWSXP:
+	ARRAY_SUBSET_LOOP(RAW0(result)[i] = RAW_ELT(x, ii),
+			  RAW0(result)[i] = (Rbyte) 0);
+	break;
+    default:
+	errorcall(call, _("array subscripting not handled for this type"));
+	break;
     }
 
     SEXP new_dim = PROTECT(allocVector(INTSXP, k));
     for(int i = 0 ; i < k ; i++)
-	INTEGER(new_dim)[i] = bound[i];
+	INTEGER0(new_dim)[i] = bound[i];
     if(!isNull(getAttrib(xdims, R_NamesSymbol)))
 	setAttrib(new_dim, R_NamesSymbol, getAttrib(xdims, R_NamesSymbol));
     setAttrib(result, R_DimSymbol, new_dim);
@@ -715,7 +715,7 @@ SEXP attribute_hidden do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 		break;
 	    case RAWSXP:
 		if (i >= 1 && i <= XLENGTH(x))
-		    return ScalarRaw( RAW(x)[i-1] );
+		    return ScalarRaw( RAW_ELT(x, i-1) );
 		break;
 	    default: break;
 	    }
@@ -735,8 +735,8 @@ SEXP attribute_hidden do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 		SEXP sj = CAR(cddrArgs);
 		R_xlen_t i = scalarIndex(si);
 		R_xlen_t j = scalarIndex(sj);
-		int nrow = INTEGER(dim)[0];
-		int ncol = INTEGER(dim)[1];
+		int nrow = INTEGER_ELT(dim, 0);
+		int ncol = INTEGER_ELT(dim, 1);
 		if (i > 0 && j > 0 && i <= nrow && j <= ncol) {
 		    /* indices are legal scalars */
 		    R_xlen_t k = i - 1 + nrow * (j - 1);
@@ -759,7 +759,7 @@ SEXP attribute_hidden do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 			break;
 		    case RAWSXP:
 			if (k < XLENGTH(x))
-			    return ScalarRaw( RAW(x)[k] );
+			    return ScalarRaw( RAW_ELT(x, k) );
 			break;
 		    default: break;
 		    }
@@ -826,8 +826,7 @@ SEXP attribute_hidden do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if(!drop || len > 1) {
 		// must grab these before the dim is set.
 		SEXP nm = PROTECT(getAttrib(ans, R_NamesSymbol));
-		SEXP attr = PROTECT(allocVector(INTSXP, 1));
-		INTEGER(attr)[0] = length(ans);
+		SEXP attr = PROTECT(ScalarInteger(length(ans)));
 		if(!isNull(getAttrib(dim, R_NamesSymbol)))
 		    setAttrib(attr, R_NamesSymbol, getAttrib(dim, R_NamesSymbol));
 		setAttrib(ans, R_DimSymbol, attr);
@@ -1031,22 +1030,23 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    0 or nsubs, but just in case... */
 
 	PROTECT(indx = allocVector(INTSXP, nsubs));
+	int *pindx = INTEGER(indx);
+	int *pdims = INTEGER(dims);
 	dimnames = getAttrib(x, R_DimNamesSymbol);
 	ndn = length(dimnames);
 	for (i = 0; i < nsubs; i++) {
-	    INTEGER(indx)[i] = (int)
+	    pindx[i] = (int)
 		get1index(CAR(subs),
 			  (i < ndn) ? VECTOR_ELT(dimnames, i) : R_NilValue,
-			  INTEGER(indx)[i], pok, -1, call);
+			  pindx[i], pok, -1, call);
 	    subs = CDR(subs);
-	    if (INTEGER(indx)[i] < 0 ||
-		INTEGER(indx)[i] >= INTEGER(dims)[i])
+	    if (pindx[i] < 0 || pindx[i] >= pdims[i])
 		errorcall(call, R_MSG_subs_o_b);
 	}
 	offset = 0;
 	for (i = (nsubs - 1); i > 0; i--)
-	    offset = (offset + INTEGER(indx)[i]) * INTEGER(dims)[i - 1];
-	offset += INTEGER(indx)[0];
+	    offset = (offset + pindx[i]) * pdims[i - 1];
+	offset += pindx[0];
 	UNPROTECT(1); /* indx */
     }
 
@@ -1067,22 +1067,22 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	ans = allocVector(TYPEOF(x), 1);
 	switch (TYPEOF(x)) {
 	case LGLSXP:
-	    LOGICAL(ans)[0] = LOGICAL_ELT(x, offset);
+	    LOGICAL0(ans)[0] = LOGICAL_ELT(x, offset);
 	    break;
 	case INTSXP:
-	    INTEGER(ans)[0] = INTEGER_ELT(x, offset);
+	    INTEGER0(ans)[0] = INTEGER_ELT(x, offset);
 	    break;
 	case REALSXP:
-	    REAL(ans)[0] = REAL_ELT(x, offset);
+	    REAL0(ans)[0] = REAL_ELT(x, offset);
 	    break;
 	case CPLXSXP:
-	    COMPLEX(ans)[0] = COMPLEX_ELT(x, offset);
+	    COMPLEX0(ans)[0] = COMPLEX_ELT(x, offset);
 	    break;
 	case STRSXP:
 	    SET_STRING_ELT(ans, 0, STRING_ELT(x, offset));
 	    break;
 	case RAWSXP:
-	    RAW(ans)[0] = RAW(x)[offset];
+	    RAW0(ans)[0] = RAW_ELT(x, offset);
 	    break;
 	default:
 	    UNIMPLEMENTED_TYPE("do_subset2", x);

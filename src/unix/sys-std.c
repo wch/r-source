@@ -1269,6 +1269,8 @@ Rstd_ShowFiles(int nfile,		/* number of files */
 	}
 	snprintf(buf, 1024, "'%s' < '%s'", pager, filename); //might contain spaces
 	res = R_system(buf);
+	if (res == 127)
+	    warningcall(R_NilValue, _("error in running command"));
 	unlink(filename);
 	free(filename);
 	return (res != 0);

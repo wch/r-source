@@ -4,24 +4,31 @@
 % Distributed under GPL 2 or later
 
 \name{deparseOpts}
-\alias{.deparseOpts}
 \title{Options for Expression Deparsing}
+\alias{.deparseOpts}
+\alias{..deparseOpts}
 \description{
   Process the deparsing options for \code{deparse}, \code{dput} and
   \code{dump}.
 }
 \usage{
 .deparseOpts(control)
+
+..deparseOpts
 }
 \arguments{
   \item{control}{character vector of deparsing options.}
 }
 \details{
-  This is called by \code{\link{deparse}}, \code{\link{dput}} and
+  \code{..deparseOpts} is the \code{\link{character}} vector of possible
+  deparsing options used by \code{.deparseOpts()}.
+
+  \code{.deparseOpts()} is called by \code{\link{deparse}}, \code{\link{dput}} and
   \code{\link{dump}} to process their \code{control} argument.
 
   The \code{control} argument is a vector containing zero or more of the
-  following strings.  Partial string matching is used.
+  following strings (exactly those in \code{..deparseOpts}.  Partial
+  string matching is used.
   \describe{
     \item{\code{keepInteger}}{
       Either surround integer vectors by \code{as.integer()} or use
@@ -61,7 +68,7 @@
       mainly used in connection with \code{S_compatible}.
     }
     \item{\code{nice_names}}{
-      If true, named % they are anyway: \code{\link{list}}s and named
+      If true, named % they are anyway (_FIXME_): \code{\link{list}}s and named
       atomic vectors are deparsed as e.g., \code{c(A = 1)} instead of
       \code{structure(1, .Names = "A")}.
     }
@@ -116,6 +123,26 @@
   Only one of \code{"hexNumeric"} and \code{"digits17"} can be specified.
 }
 \value{
-  A numerical value corresponding to the options selected.
+  An integer value corresponding to the \code{control} options
+  selected.
+}
+\examples{
+(iOpt.all <- .deparseOpts("all")) # a four digit integer
+
+## one integer --> vector binary bits
+int2bits <- function(x, base = 2L,
+                     ndigits = 1 + floor(1e-9 + log(max(x,1), base))) {
+    r <- numeric(ndigits)
+    for (i in ndigits:1) {
+        r[i] <- x\%\%base
+        if (i > 1L)
+            x <- x\%/\%base
+    }
+    rev(r) # smallest bit at left
+}
+int2bits(iOpt.all)
+## what options does  "all" contain ?
+(oa <- ..deparseOpts[-1][int2bits(iOpt.all) == 1])
+stopifnot(identical(iOpt.all, .deparseOpts(oa)))
 }
 \keyword{programming}

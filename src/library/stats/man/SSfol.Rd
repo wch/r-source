@@ -1,6 +1,6 @@
 % File src/library/stats/man/SSfol.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{SSfol}
@@ -42,12 +42,13 @@ SSfol(Dose, input, lKe, lKa, lCl)
 }
 \examples{
 Theoph.1 <- Theoph[ Theoph$Subject == 1, ]
-SSfol(Theoph.1$Dose, Theoph.1$Time, -2.5, 0.5, -3) # response only
-lKe <- -2.5; lKa <- 0.5; lCl <- -3
-SSfol(Theoph.1$Dose, Theoph.1$Time, lKe, lKa, lCl) # response and gradient
+with(Theoph.1, SSfol(Dose, Time, -2.5, 0.5, -3)) # response only
+with(Theoph.1, local({  lKe <- -2.5; lKa <- 0.5; lCl <- -3
+  SSfol(Dose, Time, lKe, lKa, lCl) # response _and_ gradient
+}))
 getInitial(conc ~ SSfol(Dose, Time, lKe, lKa, lCl), data = Theoph.1)
 ## Initial values are in fact the converged values
 fm1 <- nls(conc ~ SSfol(Dose, Time, lKe, lKa, lCl), data = Theoph.1)
 summary(fm1)
-}
+}%% TODO: visualize model parametrization as e.g. in ./SSasymp.Rd
 \keyword{models}

@@ -267,6 +267,12 @@ INLINE_FUN int LENGTH_EX(SEXP x, const char *file, int line)
 	CHECK_VECTOR_CPLX(ce__x__);		\
 	CHECK_BOUNDS_ELT(ce__x__, ce__i__);	\
 } while (0)
+# define CHECK_VECTOR_RAW_ELT(x, i) do {	\
+	SEXP ce__x__ = (x);			\
+	R_xlen_t ce__i__ = (i);			\
+	CHECK_VECTOR_RAW(ce__x__);		\
+	CHECK_BOUNDS_ELT(ce__x__, ce__i__);	\
+} while (0)
 #else
 # define CHECK_STDVEC_LGL(x) do { } while(0)
 # define CHECK_STDVEC_INT(x) do { } while(0)
@@ -284,6 +290,7 @@ INLINE_FUN int LENGTH_EX(SEXP x, const char *file, int line)
 # define CHECK_VECTOR_INT_ELT(x, i) do { } while(0)
 # define CHECK_VECTOR_REAL_ELT(x, i) do { } while(0)
 # define CHECK_VECTOR_CPLX_ELT(x, i) do { } while(0)
+# define CHECK_VECTOR_RAW_ELT(x, i) do { } while(0)
 #endif
 
 INLINE_FUN Rboolean *LOGICAL0(SEXP x) {
@@ -456,6 +463,12 @@ INLINE_FUN Rcomplex COMPLEX_ELT(SEXP x, R_xlen_t i)
 {
     CHECK_VECTOR_CPLX_ELT(x, i);
     return ALTREP(x) ? ALTCOMPLEX_ELT(x, i) : COMPLEX0(x)[i];
+}
+
+INLINE_FUN Rbyte RAW_ELT(SEXP x, R_xlen_t i)
+{
+    CHECK_VECTOR_RAW_ELT(x, i);
+    return ALTREP(x) ? ALTRAW_ELT(x, i) : RAW0(x)[i];
 }
 
 #if !defined(COMPILING_R) && !defined(COMPILING_MEMORY_C) &&	\
