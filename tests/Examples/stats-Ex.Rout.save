@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2017-10-26 r73619) -- "Unsuffered Consequences"
+R Under development (unstable) (2017-10-27 r73628) -- "Unsuffered Consequences"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -986,15 +986,8 @@ attr(,"gradient")
 [5,] 0.5574687 0.4425313 39.14366
 [6,] 0.6390642 0.3609358 39.90776
 > getInitial(height ~ SSasymp( age, Asym, resp0, lrc), data = Lob.329)
-$Asym
-[1] 94.1282
-
-$resp0
-[1] -8.250753
-
-$lrc
-[1] -3.217578
-
+     Asym     resp0       lrc 
+94.128204 -8.250753 -3.217578 
 > ## Initial values are in fact the converged values
 > fm1 <- nls(height ~ SSasymp( age, Asym, resp0, lrc), data = Lob.329)
 > summary(fm1)
@@ -1080,15 +1073,8 @@ attr(,"gradient")
 [6,] 0.9999906 3.479529e-03 -5.505583e-06
 [7,] 1.0000000 1.369435e-05 -1.430967e-08
 > getInitial(uptake ~ SSasympOff(conc, Asym, lrc, c0), data = CO2.Qn1)
-$Asym
-[1] 38.13978
-
-$lrc
-[1] -4.380647
-
-$c0
-[1] 51.22324
-
+     Asym       lrc        c0 
+38.139782 -4.380647 51.223238 
 > ## Initial values are in fact the converged values
 > fm1 <- nls(uptake ~ SSasympOff(conc, Asym, lrc, c0), data = CO2.Qn1)
 > summary(fm1)
@@ -1273,11 +1259,12 @@ Residual standard error: 0.04103 on 7 degrees of freedom
 > ### ** Examples
 > 
 > Theoph.1 <- Theoph[ Theoph$Subject == 1, ]
-> SSfol(Theoph.1$Dose, Theoph.1$Time, -2.5, 0.5, -3) # response only
+> with(Theoph.1, SSfol(Dose, Time, -2.5, 0.5, -3)) # response only
  [1] 0.000000 2.214486 3.930988 5.261945 5.659813 5.084852 4.587699 3.916808
  [9] 3.318395 2.579204 0.943593
-> lKe <- -2.5; lKa <- 0.5; lCl <- -3
-> SSfol(Theoph.1$Dose, Theoph.1$Time, lKe, lKa, lCl) # response and gradient
+> with(Theoph.1, local({  lKe <- -2.5; lKa <- 0.5; lCl <- -3
++   SSfol(Dose, Time, lKe, lKa, lCl) # response _and_ gradient
++ }))
  [1] 0.000000 2.214486 3.930988 5.261945 5.659813 5.084852 4.587699 3.916808
  [9] 3.318395 2.579204 0.943593
 attr(,"gradient")
@@ -1294,15 +1281,8 @@ attr(,"gradient")
 [10,]  0.148370 -0.13513891 -2.579204
 [11,] -0.894541 -0.04944021 -0.943593
 > getInitial(conc ~ SSfol(Dose, Time, lKe, lKa, lCl), data = Theoph.1)
-$lKe
-[1] -2.994845
-
-$lKa
-[1] 0.609169
-
-$lCl
-[1] -3.971003
-
+      lKe       lKa       lCl 
+-2.994845  0.609169 -3.971003 
 > ## Initial values are in fact the converged values
 > fm1 <- nls(conc ~ SSfol(Dose, Time, lKe, lKa, lCl), data = Theoph.1)
 > summary(fm1)
@@ -1428,12 +1408,13 @@ Residual standard error: 2.351 on 8 degrees of freedom
 > ### ** Examples
 > 
 > DNase.1 <- subset(DNase, Run == 1)
-> SSgompertz(log(DNase.1$conc), 4.5, 2.3, 0.7)   # response only
+> SSgompertz(log(DNase.1$conc), 4.5, 2.3, 0.7)  # response only
  [1] 0.00525729 0.00525729 0.07323255 0.07323255 0.18049064 0.18049064
  [7] 0.36508763 0.36508763 0.63288772 0.63288772 0.97257180 0.97257180
 [13] 1.36033340 1.36033340 1.76786902 1.76786902
-> Asym <- 4.5; b2 <- 2.3; b3 <- 0.7
-> SSgompertz(log(DNase.1$conc), Asym, b2, b3) # response and gradient
+> local({  Asym <- 4.5; b2 <- 2.3; b3 <- 0.7
++   SSgompertz(log(DNase.1$conc), Asym, b2, b3) # response _and_ gradient
++ })
  [1] 0.00525729 0.00525729 0.07323255 0.07323255 0.18049064 0.18049064
  [7] 0.36508763 0.36508763 0.63288772 0.63288772 0.97257180 0.97257180
 [13] 1.36033340 1.36033340 1.76786902 1.76786902
@@ -1476,9 +1457,16 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 
 Residual standard error: 0.02684 on 13 degrees of freedom
 
+> plot(density ~ log(conc), DNase.1, # xlim = c(0, 21),
++      main = "SSgompertz() fit to DNase.1")
+> ux <- par("usr")[1:2]; x <- seq(ux[1], ux[2], length.out=250)
+> lines(x, do.call(SSgompertz, c(list(x=x), coef(fm1))), col = "red", lwd=2)
+> As <- coef(fm1)[["Asym"]]; abline(v = 0, h = 0, lty = 3)
+> axis(2, at= exp(-coef(fm1)[["b2"]]), quote(e^{-b[2]}), las=1, pos=0)
 > 
 > 
 > 
+> graphics::par(get("par.postscript", pos = 'CheckExEnv'))
 > cleanEx()
 > nameEx("SSlogis")
 > ### * SSlogis
@@ -1499,9 +1487,11 @@ Residual standard error: 0.02684 on 13 degrees of freedom
 +    iPar, c(Asym = 9.0678, xmid = 6.79331, scal = 0.499934)))
 > 
 > ## Visualize the SSlogis()  model  parametrization :
->   xx <- seq(-0.5, 5, len = 101)
->   yy <- 5 / ( 1 + exp((2-xx)))
->   par(mar = c(0, 0, 3.5, 0))
+>   xx <- seq(-0.75, 5, by=1/32)
+>   yy <- 5 / (1 + exp((2-xx)/0.6)) # == SSlogis(xx, *):
+>   stopifnot( all.equal(yy, SSlogis(xx, Asym = 5, xmid = 2, scal = 0.6)) )
+>   require(graphics)
+>   op <- par(mar = c(0.5, 0, 3.5, 0))
 >   plot(xx, yy, type = "l", axes = FALSE, ylim = c(0,6), xlim = c(-1, 5),
 +        xlab = "", ylab = "", lwd = 2,
 +        main = "Parameters in the SSlogis model")
@@ -1583,7 +1573,7 @@ Residual standard error: 10.93 on 10 degrees of freedom
 > ## Alternative call using the subset argument
 > fm2 <- nls(rate ~ SSmicmen(conc, Vm, K), data = Puromycin,
 +            subset = state == "treated")
-> summary(fm2)
+> summary(fm2) # The same indeed:
 
 Formula: rate ~ SSmicmen(conc, Vm, K)
 
@@ -1596,6 +1586,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 
 Residual standard error: 10.93 on 10 degrees of freedom
 
+> stopifnot(all.equal(coef(summary(fm1)), coef(summary(fm2))))
 > 
 > ## Visualize the SSmicmen()  Michaelis-Menton model parametrization :
 > 
@@ -1604,9 +1595,8 @@ Residual standard error: 10.93 on 10 degrees of freedom
 >   stopifnot(all.equal(yy, SSmicmen(xx, Vm = 5, K = 1)))
 >   require(graphics)
 >   op <- par(mar = c(0, 0, 3.5, 0))
->   plot(xx, yy, type = "l", axes = FALSE, ylim = c(-1/4,6), xlim = c(-1, 5),
-+        xlab = "", ylab = "", lwd = 2,
-+        main = "Parameters in the SSmicmen model")
+>   plot(xx, yy, type = "l", lwd = 2, ylim = c(-1/4,6), xlim = c(-1, 5),
++        ann = FALSE, axes = FALSE, main = "Parameters in the SSmicmen model")
 >   mtext(quote(list(phi[1] == "Vm", phi[2] == "K")))
 >   usr <- par("usr")
 >   arrows(usr[1], 0, usr[2], 0, length = 0.1, angle = 25)
@@ -1641,8 +1631,9 @@ Residual standard error: 10.93 on 10 degrees of freedom
 > SSweibull(Chick.6$Time, 160, 115, -5.5, 2.5)   # response only
  [1]  47.62811  59.09743  79.79756 105.12008 128.41818 145.02585 154.25783
  [8] 158.24919 159.58222 159.92314 159.97023
-> Asym <- 160; Drop <- 115; lrc <- -5.5; pwr <- 2.5
-> SSweibull(Chick.6$Time, Asym, Drop, lrc, pwr)  # response and gradient
+> local({ Asym <- 160; Drop <- 115; lrc <- -5.5; pwr <- 2.5
++   SSweibull(Chick.6$Time, Asym, Drop, lrc, pwr) # response _and_ gradient
++ })
  [1]  47.62811  59.09743  79.79756 105.12008 128.41818 145.02585 154.25783
  [8] 158.24919 159.58222 159.92314 159.97023
 attr(,"gradient")
@@ -1678,9 +1669,15 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 
 Residual standard error: 2.061 on 7 degrees of freedom
 
+> ## Data and Fit:
+> plot(weight ~ Time, Chick.6, xlim = c(0, 21), main = "SSweibull() fit to Chick.6")
+> ux <- par("usr")[1:2]; x <- seq(ux[1], ux[2], length.out=250)
+> lines(x, do.call(SSweibull, c(list(x=x), coef(fm1))), col = "red", lwd=2)
+> As <- coef(fm1)[["Asym"]]; abline(v = 0, h = c(As, As - coef(fm1)[["Drop"]]), lty = 3)
 > 
 > 
 > 
+> graphics::par(get("par.postscript", pos = 'CheckExEnv'))
 > cleanEx()
 > nameEx("SignRank")
 > ### * SignRank
@@ -18486,7 +18483,7 @@ Number of Fisher Scoring iterations: 6
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  6.763 0.229 7.144 0 0 
+Time elapsed:  5.189 0.225 5.529 0 0 
 > grDevices::dev.off()
 null device 
           1 
