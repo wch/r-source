@@ -1,15 +1,15 @@
 % File src/library/stats/man/SSasympOrig.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{SSasympOrig}
-\encoding{UTF-8}
+\alias{SSasympOrig}
 \title{Self-Starting Nls Asymptotic Regression Model through the Origin}
+\encoding{UTF-8}
 \usage{
 SSasympOrig(input, Asym, lrc)
 }
-\alias{SSasympOrig}
 \arguments{
  \item{input}{a numeric vector of values at which to evaluate the model.}
  \item{Asym}{a numeric parameter representing the horizontal asymptote.}
@@ -17,7 +17,7 @@ SSasympOrig(input, Asym, lrc)
    the rate constant.}
 }
 \description{
-  This \code{selfStart} model evaluates the asymptotic regression
+  This \code{\link{selfStart}} model evaluates the asymptotic regression
   function through the origin and its gradient.  It has an
   \code{initial} attribute that will evaluate initial estimates of the
   parameters \code{Asym} and \code{lrc} for a given set of data.
@@ -35,35 +35,40 @@ SSasympOrig(input, Asym, lrc)
 \examples{\donttest{
 Lob.329 <- Loblolly[ Loblolly$Seed == "329", ]
 SSasympOrig(Lob.329$age, 100, -3.2)  # response only
-Asym <- 100; lrc <- -3.2
-SSasympOrig(Lob.329$age, Asym, lrc) # response and gradient
+local({   Asym <- 100; lrc <- -3.2
+  SSasympOrig(Lob.329$age, Asym, lrc) # response and gradient
+})
 getInitial(height ~ SSasympOrig(age, Asym, lrc), data = Lob.329)
 ## Initial values are in fact the converged values
 fm1 <- nls(height ~ SSasympOrig(age, Asym, lrc), data = Lob.329)
 summary(fm1)
 }
-\dontshow{
-require(graphics)
+
+## Visualize the SSasympOrig()  model  parametrization :
 
   xx <- seq(0, 5, len = 101)
-  yy <- 5 * (1- exp(-xx/(2*log(2))))
-  par(mar = c(0, 0, 3.5, 0))
-  plot(xx, yy, type = "l", axes = FALSE, ylim = c(0,6), xlim = c(-1, 5),
+  yy <- 5 * (1- exp(-xx * log(2)))
+  stopifnot( all.equal(yy, SSasympOrig(xx, Asym = 5, lrc = log(log(2)))) )
+
+  require(graphics)
+  op <- par(mar = c(0, 0, 3.5, 0))
+  plot(xx, yy, type = "l", axes = FALSE, ylim = c(0,5), xlim = c(-1/4, 5),
        xlab = "", ylab = "", lwd = 2,
-       main = "Parameters in the SSasympOrig model")
+       main = quote("Parameters in the SSasympOrig model"~~ f[phi](x)))
+  mtext(quote(list(phi[1] == "Asym", phi[2] == "lrc")))
   usr <- par("usr")
   arrows(usr[1], 0, usr[2], 0, length = 0.1, angle = 25)
   arrows(0, usr[3], 0, usr[4], length = 0.1, angle = 25)
   text(usr[2] - 0.2, 0.1, "x", adj = c(1, 0))
-  text(-0.1, usr[4], "y", adj = c(1, 1))
-  abline(h = 5, lty = 2, lwd = 0)
-  arrows(-0.8, 2.1, -0.8, 0, length = 0.1, angle = 25)
-  arrows(-0.8, 2.9, -0.8, 5, length = 0.1, angle = 25)
-  text(-0.8, 2.5, expression(phi[1]), adj = c(0.5, 0.5))
-  segments(1, 2.525, 1, 3.5, lty = 2, lwd = 0.75)
-  arrows(0.2, 3.0, 0, 3.0, length = 0.08, angle = 25)
-  arrows(0.8, 3.0, 1, 3.0, length = 0.08, angle = 25)
-  text(0.5, 3.0, expression(t[0.5]), adj = c(0.5, 0.5))
-}
+  text(   -0.1,   usr[4], "y", adj = c(1, 1))
+  abline(h = 5, lty = 3)
+  axis(2, at = 5*c(1/2,1), labels= expression(frac(phi[1],2), phi[1]), pos=0, las=1)
+  arrows(c(.3,.7), 5/2,
+         c(0, 1 ), 5/2, length = 0.08, angle = 25)
+  text(   0.5,     5/2, quote(t[0.5]))
+  text(   1 +.4,   5/2,
+       quote({f(t[0.5]) == frac(phi[1],2)}~{} \%=>\% {}~~{t[0.5] == frac(log(2), e^{phi[2]})}),
+       adj = c(0, 0.5))
+  par(op)
 }
 \keyword{models}

@@ -1,8 +1,8 @@
 #  File src/library/stats/R/selfStart.R
 #  Part of the R package, https://www.R-project.org
 #
+#  Copyright (C) 2001-2012 The R Core Team
 #  Copyright (C) 1997,1999 Jose C. Pinheiro and Douglas M. Bates
-#  Copyright (C) 2001-12  The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -27,13 +27,11 @@
 selfStart <-
     function(model, initial, parameters, template) UseMethod("selfStart")
 
-selfStart.default <-
-  function(model, initial, parameters, template)
+selfStart.default <- function(model, initial, parameters, template)
 {
-    value <- structure(as.function(model), initial = as.function(initial),
-                       pnames = if(!missing(parameters))parameters)
-    class(value) <- "selfStart"
-    value
+    structure(as.function(model), initial = as.function(initial),
+              pnames = if(!missing(parameters))parameters,
+              class = "selfStart")
 }
 
 selfStart.formula <-
@@ -53,11 +51,10 @@ selfStart.formula <-
 	args <- setNames(rep(alist(a = ), length(argNams)), argNams)
         formals(template) <- args
     }
-    value <- structure(deriv(model, parameters, template),
-                       initial = as.function(initial),
-                       pnames = parameters)
-    class(value) <- "selfStart"
-    value
+    structure(deriv(model, parameters, template),
+              initial = as.function(initial),
+              pnames = parameters,
+              class = "selfStart")
 }
 
 ###*# Methods
@@ -186,10 +183,10 @@ NLSstRtAsymptote.sortedXyData <-
     last.dif <- abs(in.range - xy$y[nrow(xy)])
     ## Estimate the asymptote as the largest (smallest) response
     ## value plus (minus) 1/8 of the range.
-    if(match(min(last.dif), last.dif) == 2L) {
-        return(in.range[2L] + diff(in.range)/8)
-    }
-    in.range[1L] - diff(in.range)/8
+    if(match(min(last.dif), last.dif) == 2L)
+        in.range[2L] + diff(in.range)/8
+    else
+        in.range[1L] - diff(in.range)/8
 }
 
 NLSstLfAsymptote <-
@@ -205,10 +202,10 @@ NLSstLfAsymptote.sortedXyData <-
     first.dif <- abs(in.range - xy$y[1L])
     ## Estimate the asymptote as the largest (smallest) response
     ## value plus (minus) 1/8 of the range.
-    if(match(min(first.dif), first.dif) == 2L) {
-        return(in.range[2L] + diff(in.range)/8)
-    }
-    in.range[1L] - diff(in.range)/8
+    if(match(min(first.dif), first.dif) == 2L)
+        in.range[2L] + diff(in.range)/8
+    else
+        in.range[1L] - diff(in.range)/8
 }
 
 NLSstAsymptotic <-
@@ -223,9 +220,8 @@ NLSstAsymptotic.sortedXyData <-
     ## Initial estimate of log(rate constant) from a linear regression
     setNames(coef(nls(y ~ cbind(1, 1 - exp(-exp(lrc) * x)),
 		      data = xy,
-		      start = list(lrc =
-		      as.vector(log(-coef(lm(log(abs(y - rt)) ~ x,
-					     data = xy))[2L]))),
+		      start = list(lrc = log(-coef(lm(log(abs(y - rt)) ~ x,
+                                                      data = xy))[[2L]])),
 		      algorithm = "plinear"))[c(2, 3, 1)],
 	     c("b0", "b1", "lrc"))
 }

@@ -1,6 +1,6 @@
 % File src/library/stats/man/SSasympOff.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{SSasympOff}
@@ -37,42 +37,47 @@ SSasympOff(input, Asym, lrc, c0)
 \author{\enc{José}{Jose} Pinheiro and Douglas Bates}
 \seealso{\code{\link{nls}}, \code{\link{selfStart}};
   \code{example(SSasympOff)} gives graph showing the \code{SSasympOff}
-  parametrization, where \eqn{\phi_1}{phi_1} is \code{Asymp},
-  \eqn{\phi_3}{phi_3} is \code{c0}.% , and \eqn{t_{0.5}} is FIXME
+  parametrization.
 }
 \examples{
 CO2.Qn1 <- CO2[CO2$Plant == "Qn1", ]
 SSasympOff(CO2.Qn1$conc, 32, -4, 43)  # response only
-Asym <- 32; lrc <- -4; c0 <- 43
-SSasympOff(CO2.Qn1$conc, Asym, lrc, c0) # response and gradient
+local({  Asym <- 32; lrc <- -4; c0 <- 43
+  SSasympOff(CO2.Qn1$conc, Asym, lrc, c0) # response and gradient
+})
 getInitial(uptake ~ SSasympOff(conc, Asym, lrc, c0), data = CO2.Qn1)
 ## Initial values are in fact the converged values
 fm1 <- nls(uptake ~ SSasympOff(conc, Asym, lrc, c0), data = CO2.Qn1)
 summary(fm1)
-\dontshow{
-require(graphics)
 
-  xx <- seq(0.5, 5, len = 101)
-  yy <- 5 * (1 -  exp(-(xx - 0.5)/(2*log(2))))
-  par(mar = c(0, 0, 4.0, 0))
-  plot(xx, yy, type = "l", axes = FALSE, ylim = c(0,6), xlim = c(-1, 5),
+## Visualize the SSasympOff()  model  parametrization :
+
+  xx <- seq(0.25, 8,  by=1/16)
+  yy <- 5 * (1 -  exp(-(xx - 3/4)*0.4))
+  stopifnot( all.equal(yy, SSasympOff(xx, Asym = 5, lrc = log(0.4), c0 = 3/4)) )
+  require(graphics)
+  op <- par(mar = c(0, 0, 4.0, 0))
+  plot(xx, yy, type = "l", axes = FALSE, ylim = c(-.5,6), xlim = c(-1, 8),
        xlab = "", ylab = "", lwd = 2,
        main = "Parameters in the SSasympOff model")
+  mtext(quote(list(phi[1] == "Asym", phi[2] == "lrc", phi[3] == "c0")))
   usr <- par("usr")
   arrows(usr[1], 0, usr[2], 0, length = 0.1, angle = 25)
   arrows(0, usr[3], 0, usr[4], length = 0.1, angle = 25)
   text(usr[2] - 0.2, 0.1, "x", adj = c(1, 0))
-  text(-0.1, usr[4], "y", adj = c(1, 1))
-  abline(h = 5, lty = 2, lwd = 0)
-  arrows(-0.8, 2.1, -0.8, 0, length = 0.1, angle = 25)
-  arrows(-0.8, 2.9, -0.8, 5, length = 0.1, angle = 25)
-  text(-0.8, 2.5, expression(phi[1]), adj = c(0.5, 0.5))
-  segments(0.5, 0, 0.5, 3, lty = 2, lwd = 0.75)
-  text(0.5, 3.1, expression(phi[3]), adj = c(0.5, 0))
-  segments(1.5, 2.525, 1.5, 3, lty = 2, lwd = 0.75)
-  arrows(0.7, 2.65, 0.5, 2.65, length = 0.08, angle = 25)
-  arrows(1.3, 2.65, 1.5, 2.65, length = 0.08, angle = 25)
-  text(1.0, 2.65, expression(t[0.5]), adj = c(0.5, 0.5))
-}
+  text(     -0.1, usr[4], "y", adj = c(1, 1))
+  abline(h = 5, lty = 3)
+  arrows(-0.8, c(2.1, 2.9),
+         -0.8, c(0  , 5  ), length = 0.1, angle = 25)
+  text  (-0.8, 2.5, quote(phi[1]))
+  segments(3/4, -.2, 3/4, 1.6, lty = 2)
+  text    (3/4,    c(-.3, 1.7), quote(phi[3]))
+  arrows(c(1.1, 1.4), -.15,
+         c(3/4, 7/4), -.15, length = 0.07, angle = 25)
+  text    (3/4 + 1/2, -.15, quote(1))
+  segments(c(3/4, 7/4, 7/4), c(0, 0, 2),   # 5 * exp(log(0.4)) = 2
+           c(7/4, 7/4, 3/4), c(0, 2, 0),  lty = 2, lwd = 2)
+  text(      7/4 +.1, 2./2, quote(phi[1]*e^phi[2]), adj = c(0, .5))
+  par(op)
 }
 \keyword{models}

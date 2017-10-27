@@ -970,12 +970,12 @@ cond     deg0NA deg4NA deg8NA deg0NP deg4NP deg8NP
 > options(show.nls.convergence=FALSE)
 > ## End(Don't show)
 > Lob.329 <- Loblolly[ Loblolly$Seed == "329", ]
-> SSasymp( Lob.329$age, 100, -8.5, -3.2 )  # response only
+> SSasymp( Lob.329$age, 100, -8.5, -3.2 )   # response only
 [1]  3.988924 11.505611 27.822517 41.130854 51.985354 60.838463
-> Asym <- 100
-> resp0 <- -8.5
-> lrc <- -3.2
-> SSasymp( Lob.329$age, Asym, resp0, lrc ) # response and gradient
+> local({
++   Asym <- 100 ; resp0 <- -8.5 ; lrc <- -3.2
++   SSasymp( Lob.329$age, Asym, resp0, lrc) # response _and_ gradient
++ })
 [1]  3.988924 11.505611 27.822517 41.130854 51.985354 60.838463
 attr(,"gradient")
           Asym     resp0      lrc
@@ -1011,33 +1011,41 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 
 Residual standard error: 0.7493 on 3 degrees of freedom
 
-> ## Don't show: 
-> require(graphics)
 > 
->   xx <- seq(0, 5, len = 101)
->   yy <- 5 - 4 * exp(-xx/(2*log(2)))
->   par(mar = c(0, 0, 4.1, 0))
->   plot(xx, yy, type = "l", axes = FALSE, ylim = c(0,6), xlim = c(-1, 5),
+> ## Visualize the SSasymp()  model  parametrization :
+> 
+>   xx <- seq(-.3, 5, len = 101)
+>   ##  Asym + (R0-Asym) * exp(-exp(lrc)* x) :
+>   yy <- 5 - 4 * exp(-xx / exp(3/4))
+>   stopifnot( all.equal(yy, SSasymp(xx, Asym = 5, R0 = 1, lrc = -3/4)) )
+>   require(graphics)
+>   op <- par(mar = c(0, .2, 4.1, 0))
+>   plot(xx, yy, type = "l", axes = FALSE, ylim = c(0,5.2), xlim = c(-.3, 5),
 +        xlab = "", ylab = "", lwd = 2,
-+        main = "Parameters in the SSasymp model")
++        main = quote("Parameters in the SSasymp model " ~
++                     {f[phi](x) == phi[1] + (phi[2]-phi[1])*~e^{-e^{phi[3]}*~x}}))
+>   mtext(quote(list(phi[1] == "Asym", phi[2] == "R0", phi[3] == "lrc")))
 >   usr <- par("usr")
 >   arrows(usr[1], 0, usr[2], 0, length = 0.1, angle = 25)
 >   arrows(0, usr[3], 0, usr[4], length = 0.1, angle = 25)
 >   text(usr[2] - 0.2, 0.1, "x", adj = c(1, 0))
->   text(-0.1, usr[4], "y", adj = c(1, 1))
->   abline(h = 5, lty = 2, lwd = 0)
->   arrows(-0.8, 2.1, -0.8, 0, length = 0.1, angle = 25)
->   arrows(-0.8, 2.9, -0.8, 5, length = 0.1, angle = 25)
->   text(-0.8, 2.5, expression(phi[1]), adj = c(0.5, 0.5))
->   segments(-0.4, 1, 0, 1, lty = 2, lwd = 0.75)
->   arrows(-0.3, 0.25, -0.3, 0, length = 0.07, angle = 25)
->   arrows(-0.3, 0.75, -0.3, 1, length = 0.07, angle = 25)
->   text(-0.3, 0.5, expression(phi[2]), adj = c(0.5, 0.5))
->   segments(1, 3.025, 1, 4, lty = 2, lwd = 0.75)
->   arrows(0.2, 3.5, 0, 3.5, length = 0.08, angle = 25)
->   arrows(0.8, 3.5, 1, 3.5, length = 0.08, angle = 25)
->   text(0.5, 3.5, expression(t[0.5]), adj = c(0.5, 0.5))
-> ## End(Don't show)
+>   text(     -0.1, usr[4], "y", adj = c(1, 1))
+>   abline(h = 5, lty = 3)
+>   arrows(c(0.35, 0.65), 1,
++          c(0  ,  1   ), 1, length = 0.08, angle = 25); text(0.5, 1, quote(1))
+>   y0 <- 1 + 4*exp(-3/4) ; t.5 <- log(2) / exp(-3/4) ; AR2 <- 3 # (Asym + R0)/2
+>   segments(c(1, 1), c( 1, y0),
++            c(1, 0), c(y0,  1),  lty = 2, lwd = 0.75)
+>   text(1.1, 1/2+y0/2, quote((phi[1]-phi[2])*e^phi[3]), adj = c(0,.5))
+>   axis(2, at = c(1,AR2,5), labels= expression(phi[2], frac(phi[1]+phi[2],2), phi[1]),
++        pos=0, las=1)
+>   arrows(c(.6,t.5-.6), AR2,
++          c(0, t.5   ), AR2, length = 0.08, angle = 25)
+>   text(   t.5/2,   AR2, quote(t[0.5]))
+>   text(   t.5 +.4, AR2,
++        quote({f(t[0.5]) == frac(phi[1]+phi[2],2)}~{} %=>% {}~~
++                 {t[0.5] == frac(log(2), e^{phi[3]})}), adj = c(0, 0.5))
+>   par(op)
 > 
 > 
 > 
@@ -1058,8 +1066,9 @@ Residual standard error: 0.7493 on 3 degrees of freedom
 > CO2.Qn1 <- CO2[CO2$Plant == "Qn1", ]
 > SSasympOff(CO2.Qn1$conc, 32, -4, 43)  # response only
 [1] 19.65412 29.14785 31.27791 31.88435 31.99259 31.99970 32.00000
-> Asym <- 32; lrc <- -4; c0 <- 43
-> SSasympOff(CO2.Qn1$conc, Asym, lrc, c0) # response and gradient
+> local({  Asym <- 32; lrc <- -4; c0 <- 43
++   SSasympOff(CO2.Qn1$conc, Asym, lrc, c0) # response and gradient
++ })
 [1] 19.65412 29.14785 31.27791 31.88435 31.99259 31.99970 32.00000
 attr(,"gradient")
           Asym          lrc            c0
@@ -1096,31 +1105,36 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 
 Residual standard error: 1.663 on 4 degrees of freedom
 
-> ## Don't show: 
-> require(graphics)
 > 
->   xx <- seq(0.5, 5, len = 101)
->   yy <- 5 * (1 -  exp(-(xx - 0.5)/(2*log(2))))
->   par(mar = c(0, 0, 4.0, 0))
->   plot(xx, yy, type = "l", axes = FALSE, ylim = c(0,6), xlim = c(-1, 5),
+> ## Visualize the SSasympOff()  model  parametrization :
+> 
+>   xx <- seq(0.25, 8,  by=1/16)
+>   yy <- 5 * (1 -  exp(-(xx - 3/4)*0.4))
+>   stopifnot( all.equal(yy, SSasympOff(xx, Asym = 5, lrc = log(0.4), c0 = 3/4)) )
+>   require(graphics)
+>   op <- par(mar = c(0, 0, 4.0, 0))
+>   plot(xx, yy, type = "l", axes = FALSE, ylim = c(-.5,6), xlim = c(-1, 8),
 +        xlab = "", ylab = "", lwd = 2,
 +        main = "Parameters in the SSasympOff model")
+>   mtext(quote(list(phi[1] == "Asym", phi[2] == "lrc", phi[3] == "c0")))
 >   usr <- par("usr")
 >   arrows(usr[1], 0, usr[2], 0, length = 0.1, angle = 25)
 >   arrows(0, usr[3], 0, usr[4], length = 0.1, angle = 25)
 >   text(usr[2] - 0.2, 0.1, "x", adj = c(1, 0))
->   text(-0.1, usr[4], "y", adj = c(1, 1))
->   abline(h = 5, lty = 2, lwd = 0)
->   arrows(-0.8, 2.1, -0.8, 0, length = 0.1, angle = 25)
->   arrows(-0.8, 2.9, -0.8, 5, length = 0.1, angle = 25)
->   text(-0.8, 2.5, expression(phi[1]), adj = c(0.5, 0.5))
->   segments(0.5, 0, 0.5, 3, lty = 2, lwd = 0.75)
->   text(0.5, 3.1, expression(phi[3]), adj = c(0.5, 0))
->   segments(1.5, 2.525, 1.5, 3, lty = 2, lwd = 0.75)
->   arrows(0.7, 2.65, 0.5, 2.65, length = 0.08, angle = 25)
->   arrows(1.3, 2.65, 1.5, 2.65, length = 0.08, angle = 25)
->   text(1.0, 2.65, expression(t[0.5]), adj = c(0.5, 0.5))
-> ## End(Don't show)
+>   text(     -0.1, usr[4], "y", adj = c(1, 1))
+>   abline(h = 5, lty = 3)
+>   arrows(-0.8, c(2.1, 2.9),
++          -0.8, c(0  , 5  ), length = 0.1, angle = 25)
+>   text  (-0.8, 2.5, quote(phi[1]))
+>   segments(3/4, -.2, 3/4, 1.6, lty = 2)
+>   text    (3/4,    c(-.3, 1.7), quote(phi[3]))
+>   arrows(c(1.1, 1.4), -.15,
++          c(3/4, 7/4), -.15, length = 0.07, angle = 25)
+>   text    (3/4 + 1/2, -.15, quote(1))
+>   segments(c(3/4, 7/4, 7/4), c(0, 0, 2),   # 5 * exp(log(0.4)) = 2
++            c(7/4, 7/4, 3/4), c(0, 2, 0),  lty = 2, lwd = 2)
+>   text(      7/4 +.1, 2./2, quote(phi[1]*e^phi[2]), adj = c(0, .5))
+>   par(op)
 > 
 > 
 > 
@@ -1137,29 +1151,33 @@ Residual standard error: 1.663 on 4 degrees of freedom
 > ### Keywords: models
 > 
 > ### ** Examples
-> ## Don't show: 
-> require(graphics)
+> 
+> ## Visualize the SSasympOrig()  model  parametrization :
 > 
 >   xx <- seq(0, 5, len = 101)
->   yy <- 5 * (1- exp(-xx/(2*log(2))))
->   par(mar = c(0, 0, 3.5, 0))
->   plot(xx, yy, type = "l", axes = FALSE, ylim = c(0,6), xlim = c(-1, 5),
+>   yy <- 5 * (1- exp(-xx * log(2)))
+>   stopifnot( all.equal(yy, SSasympOrig(xx, Asym = 5, lrc = log(log(2)))) )
+> 
+>   require(graphics)
+>   op <- par(mar = c(0, 0, 3.5, 0))
+>   plot(xx, yy, type = "l", axes = FALSE, ylim = c(0,5), xlim = c(-1/4, 5),
 +        xlab = "", ylab = "", lwd = 2,
-+        main = "Parameters in the SSasympOrig model")
++        main = quote("Parameters in the SSasympOrig model"~~ f[phi](x)))
+>   mtext(quote(list(phi[1] == "Asym", phi[2] == "lrc")))
 >   usr <- par("usr")
 >   arrows(usr[1], 0, usr[2], 0, length = 0.1, angle = 25)
 >   arrows(0, usr[3], 0, usr[4], length = 0.1, angle = 25)
 >   text(usr[2] - 0.2, 0.1, "x", adj = c(1, 0))
->   text(-0.1, usr[4], "y", adj = c(1, 1))
->   abline(h = 5, lty = 2, lwd = 0)
->   arrows(-0.8, 2.1, -0.8, 0, length = 0.1, angle = 25)
->   arrows(-0.8, 2.9, -0.8, 5, length = 0.1, angle = 25)
->   text(-0.8, 2.5, expression(phi[1]), adj = c(0.5, 0.5))
->   segments(1, 2.525, 1, 3.5, lty = 2, lwd = 0.75)
->   arrows(0.2, 3.0, 0, 3.0, length = 0.08, angle = 25)
->   arrows(0.8, 3.0, 1, 3.0, length = 0.08, angle = 25)
->   text(0.5, 3.0, expression(t[0.5]), adj = c(0.5, 0.5))
-> ## End(Don't show)
+>   text(   -0.1,   usr[4], "y", adj = c(1, 1))
+>   abline(h = 5, lty = 3)
+>   axis(2, at = 5*c(1/2,1), labels= expression(frac(phi[1],2), phi[1]), pos=0, las=1)
+>   arrows(c(.3,.7), 5/2,
++          c(0, 1 ), 5/2, length = 0.08, angle = 25)
+>   text(   0.5,     5/2, quote(t[0.5]))
+>   text(   1 +.4,   5/2,
++        quote({f(t[0.5]) == frac(phi[1],2)}~{} %=>% {}~~{t[0.5] == frac(log(2), e^{phi[2]})}),
++        adj = c(0, 0.5))
+>   par(op)
 > 
 > 
 > 
@@ -1321,8 +1339,10 @@ Residual standard error: 0.732 on 8 degrees of freedom
 > SSfpl(Chick.1$Time, 13, 368, 14, 6)  # response only
  [1]  44.38189  55.31704  69.39853  87.05603 108.47420 133.43149 161.18758
  [8] 190.50000 219.81242 247.56851 272.52580 283.70240
-> A <- 13; B <- 368; xmid <- 14; scal <- 6
-> SSfpl(Chick.1$Time, A, B, xmid, scal) # response and gradient
+> local({
++   A <- 13; B <- 368; xmid <- 14; scal <- 6
++   SSfpl(Chick.1$Time, A, B, xmid, scal) # response _and_ gradient
++ })
  [1]  44.38189  55.31704  69.39853  87.05603 108.47420 133.43149 161.18758
  [8] 190.50000 219.81242 247.56851 272.52580 283.70240
 attr(,"gradient")
@@ -1360,35 +1380,36 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 
 Residual standard error: 2.351 on 8 degrees of freedom
 
-> ## Don't show: 
-> require(graphics)
 > 
+> ## Visualizing the  SSfpl()  parametrization
 >   xx <- seq(-0.5, 5, len = 101)
->   yy <- 1 + 4 / ( 1 + exp((2-xx)))
->   par(mar = c(0, 0, 3.5, 0))
+>   yy <- 1 + 4 / (1 + exp((2-xx))) # == SSfpl(xx, *) :
+>   stopifnot( all.equal(yy, SSfpl(xx, A = 1, B = 5, xmid = 2, scal = 1)) )
+>   require(graphics)
+>   op <- par(mar = c(0, 0, 3.5, 0))
 >   plot(xx, yy, type = "l", axes = FALSE, ylim = c(0,6), xlim = c(-1, 5),
 +        xlab = "", ylab = "", lwd = 2,
 +        main = "Parameters in the SSfpl model")
+>   mtext(quote(list(phi[1] == "A", phi[2] == "B", phi[3] == "xmid", phi[4] == "scal")))
 >   usr <- par("usr")
 >   arrows(usr[1], 0, usr[2], 0, length = 0.1, angle = 25)
 >   arrows(0, usr[3], 0, usr[4], length = 0.1, angle = 25)
 >   text(usr[2] - 0.2, 0.1, "x", adj = c(1, 0))
->   text(-0.1, usr[4], "y", adj = c(1, 1))
->   abline(h = 5, lty = 2, lwd = 0)
->   arrows(-0.8, 2.1, -0.8, 0, length = 0.1, angle = 25)
->   arrows(-0.8, 2.9, -0.8, 5, length = 0.1, angle = 25)
->   text(-0.8, 2.5, expression(phi[1]), adj = c(0.5, 0.5))
->   abline(h = 1, lty = 2, lwd = 0)
->   arrows(-0.3, 0.25, -0.3, 0, length = 0.07, angle = 25)
->   arrows(-0.3, 0.75, -0.3, 1, length = 0.07, angle = 25)
->   text(-0.3, 0.5, expression(phi[2]), adj = c(0.5, 0.5))
->   segments(2, 0, 2, 3.3, lty = 2, lwd = 0.75)
->   text(2, 3.3, expression(phi[3]), adj = c(0.5, 0))
->   segments(3, 1+4/(1+exp(-1)) - 0.025, 3, 2.5, lty = 2, lwd = 0.75)
->   arrows(2.3, 2.7, 2.0, 2.7, length = 0.08, angle = 25)
->   arrows(2.7, 2.7, 3.0, 2.7, length = 0.08, angle = 25)
->   text(2.5, 2.7, expression(phi[4]), adj = c(0.5, 0.5))
-> ## End(Don't show)
+>   text(     -0.1, usr[4], "y", adj = c(1, 1))
+>   abline(h = c(1, 5), lty = 3)
+>   arrows(-0.8, c(2.1, 2.9),
++          -0.8, c(0,   5  ), length = 0.1, angle = 25)
+>   text  (-0.8, 2.5, quote(phi[1]))
+>   arrows(-0.3, c(1/4, 3/4),
++          -0.3, c(0,   1  ), length = 0.07, angle = 25)
+>   text  (-0.3, 0.5, quote(phi[2]))
+>   text(2, -.1, quote(phi[3]))
+>   segments(c(2,3,3), c(0,3,4), # SSfpl(x = xmid = 2) = 3
++            c(2,3,2), c(3,4,3),    lty = 2, lwd = 0.75)
+>   arrows(c(2.3, 2.7), 3,
++          c(2.0, 3  ), 3, length = 0.08, angle = 25)
+>   text(      2.5,     3, quote(phi[4])); text(3.1, 3.5, "1")
+>   par(op)
 > 
 > 
 > 
@@ -1470,8 +1491,6 @@ Residual standard error: 0.02684 on 13 degrees of freedom
 > ### Keywords: models
 > 
 > ### ** Examples
-> ## Don't show: 
-> require(graphics)
 > 
 > dwlg1 <- data.frame(Prop = c(rep(0,5), 2, 5, rep(9, 9)), end = 1:16)
 > iPar <- getInitial(Prop ~ SSlogis(end, Asym, xmid, scal), data = dwlg1)
@@ -1486,22 +1505,24 @@ Residual standard error: 0.02684 on 13 degrees of freedom
 >   plot(xx, yy, type = "l", axes = FALSE, ylim = c(0,6), xlim = c(-1, 5),
 +        xlab = "", ylab = "", lwd = 2,
 +        main = "Parameters in the SSlogis model")
+>   mtext(quote(list(phi[1] == "Asym", phi[2] == "xmid", phi[3] == "scal")))
 >   usr <- par("usr")
 >   arrows(usr[1], 0, usr[2], 0, length = 0.1, angle = 25)
 >   arrows(0, usr[3], 0, usr[4], length = 0.1, angle = 25)
 >   text(usr[2] - 0.2, 0.1, "x", adj = c(1, 0))
->   text(-0.1, usr[4], "y", adj = c(1, 1))
->   abline(h = 5, lty = 2, lwd = 0)
->   arrows(-0.8, 2.1, -0.8, 0, length = 0.1, angle = 25)
->   arrows(-0.8, 2.9, -0.8, 5, length = 0.1, angle = 25)
->   text(-0.8, 2.5, expression(phi[1]), adj = c(0.5, 0.5))
->   segments(2, 0, 2, 4.0, lty = 2, lwd = 0.75)
->   text(2, 4.0, expression(phi[2]), adj = c(0.5, 0))
->   segments(3, 5/(1+exp(-1)) + 0.025, 3, 4.0, lty = 2, lwd = 0.75)
->   arrows(2.3, 3.8, 2.0, 3.8, length = 0.08, angle = 25)
->   arrows(2.7, 3.8, 3.0, 3.8, length = 0.08, angle = 25)
->   text(2.5, 3.8, expression(phi[3]), adj = c(0.5, 0.5))
-> ## End(Don't show)
+>   text(     -0.1, usr[4], "y", adj = c(1, 1))
+>   abline(h = 5, lty = 3)
+>   arrows(-0.8, c(2.1, 2.9),
++          -0.8, c(0,   5  ), length = 0.1, angle = 25)
+>   text  (-0.8, 2.5, quote(phi[1]))
+>   segments(c(2,2.6,2.6), c(0,  2.5,3.5),   # NB.  SSlogis(x = xmid = 2) = 2.5
++            c(2,2.6,2  ), c(2.5,3.5,2.5), lty = 2, lwd = 0.75)
+>   text(2, -.1, quote(phi[2]))
+>   arrows(c(2.2, 2.4), 2.5,
++          c(2.0, 2.6), 2.5, length = 0.08, angle = 25)
+>   text(      2.3,     2.5, quote(phi[3])); text(2.7, 3, "1")
+>   par(op)
+> 
 > 
 > 
 > graphics::par(get("par.postscript", pos = 'CheckExEnv'))
@@ -1522,8 +1543,9 @@ Residual standard error: 0.02684 on 13 degrees of freedom
 > SSmicmen(PurTrt$conc, 200, 0.05)  # response only
  [1]  57.14286  57.14286 109.09091 109.09091 137.50000 137.50000 162.96296
  [8] 162.96296 183.60656 183.60656 191.30435 191.30435
-> Vm <- 200; K <- 0.05
-> SSmicmen(PurTrt$conc, Vm, K)      # response and gradient
+> local({  Vm <- 200; K <- 0.05
++   SSmicmen(PurTrt$conc, Vm, K)    # response _and_ gradient
++ })
  [1]  57.14286  57.14286 109.09091 109.09091 137.50000 137.50000 162.96296
  [8] 162.96296 183.60656 183.60656 191.30435 191.30435
 attr(,"gradient")
@@ -1574,27 +1596,30 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 
 Residual standard error: 10.93 on 10 degrees of freedom
 
-> ## Don't show: 
-> require(graphics)
+> 
+> ## Visualize the SSmicmen()  Michaelis-Menton model parametrization :
 > 
 >   xx <- seq(0, 5, len = 101)
 >   yy <- 5 * xx/(1+xx)
->   par(mar = c(0, 0, 3.5, 0))
->   plot(xx, yy, type = "l", axes = FALSE, ylim = c(0,6), xlim = c(-1, 5),
+>   stopifnot(all.equal(yy, SSmicmen(xx, Vm = 5, K = 1)))
+>   require(graphics)
+>   op <- par(mar = c(0, 0, 3.5, 0))
+>   plot(xx, yy, type = "l", axes = FALSE, ylim = c(-1/4,6), xlim = c(-1, 5),
 +        xlab = "", ylab = "", lwd = 2,
 +        main = "Parameters in the SSmicmen model")
+>   mtext(quote(list(phi[1] == "Vm", phi[2] == "K")))
 >   usr <- par("usr")
 >   arrows(usr[1], 0, usr[2], 0, length = 0.1, angle = 25)
 >   arrows(0, usr[3], 0, usr[4], length = 0.1, angle = 25)
 >   text(usr[2] - 0.2, 0.1, "x", adj = c(1, 0))
->   text(-0.1, usr[4], "y", adj = c(1, 1))
->   abline(h = 5, lty = 2, lwd = 0)
->   arrows(-0.8, 2.1, -0.8, 0, length = 0.1, angle = 25)
->   arrows(-0.8, 2.9, -0.8, 5, length = 0.1, angle = 25)
->   text(-0.8, 2.5, expression(phi[1]), adj = c(0.5, 0.5))
+>   text(     -0.1, usr[4], "y", adj = c(1, 1))
+>   abline(h = 5, lty = 3)
+>   arrows(-0.8, c(2.1, 2.9),
++          -0.8, c(0,   5  ),  length = 0.1, angle = 25)
+>   text(  -0.8,     2.5, quote(phi[1]))
 >   segments(1, 0, 1, 2.7, lty = 2, lwd = 0.75)
->   text(1, 2.7, expression(phi[2]), adj = c(0.5, 0))
-> ## End(Don't show)
+>   text(1, 2.7, quote(phi[2]))
+>   par(op)
 > 
 > 
 > 
@@ -15265,30 +15290,34 @@ eff.vl> options(contrasts = old)
 > 
 > ## self-starting logistic model
 > 
-> SSlogis <- selfStart(~ Asym/(1 + exp((xmid - x)/scal)),
-+   function(mCall, data, LHS)
-+   {
-+     xy <- sortedXyData(mCall[["x"]], LHS, data)
-+     if(nrow(xy) < 4) {
-+       stop("Too few distinct x values to fit a logistic")
-+     }
+> ## The "initializer" (finds initial values for parameters from data):
+> initLogis <- function(mCall, data, LHS) {
++     xy <- data.frame(sortedXyData(mCall[["input"]], LHS, data))
++     if(nrow(xy) < 4)
++         stop("too few distinct input values to fit a logistic model")
 +     z <- xy[["y"]]
-+     if (min(z) <= 0) { z <- z + 0.05 * max(z) } # avoid zeroes
-+     z <- z/(1.05 * max(z))              # scale to within unit height
-+     xy[["z"]] <- log(z/(1 - z))         # logit transformation
++     ## transform to proportion, i.e. in (0,1) :
++     rng <- range(z); dz <- diff(rng)
++     z <- (z - rng[1L] + 0.05 * dz)/(1.1 * dz)
++     xy[["z"]] <- log(z/(1 - z))		# logit transformation
 +     aux <- coef(lm(x ~ z, xy))
-+     parameters(xy) <- list(xmid = aux[1], scal = aux[2])
-+     pars <- as.vector(coef(nls(y ~ 1/(1 + exp((xmid - x)/scal)),
-+                              data = xy, algorithm = "plinear")))
-+     setNames(c(pars[3], pars[1], pars[2]),
-+              mCall[c("Asym", "xmid", "scal")])
-+   }, c("Asym", "xmid", "scal"))
++     pars <- coef(nls(y ~ 1/(1 + exp((xmid - x)/scal)),
++                      data = xy,
++                      start = list(xmid = aux[[1L]], scal = aux[[2L]]),
++                      algorithm = "plinear"))
++     setNames(pars[c(".lin", "xmid", "scal")], nm = mCall[c("Asym", "xmid", "scal")])
++ }
+> 
+> SSlogis <- selfStart(~ Asym/(1 + exp((xmid - x)/scal)),
++                      initial = initLogis,
++                      parameters = c("Asym", "xmid", "scal"))
+> 
 > 
 > # 'first.order.log.model' is a function object defining a first order
 > # compartment model
 > # 'first.order.log.initial' is a function object which calculates initial
 > # values for the parameters in 'first.order.log.model'
-> 
+> #
 > # self-starting first order compartment model
 > ## Not run: 
 > ##D SSfol <- selfStart(first.order.log.model, first.order.log.initial)

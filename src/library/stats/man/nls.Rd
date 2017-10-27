@@ -22,8 +22,9 @@ nls(formula, data, start, control, algorithm,
     \code{formula} and \code{weights}.  Can also be a list or an
     environment, but not a matrix.}
   \item{start}{a named list or named numeric vector of starting
-    estimates.  When \code{start} is missing, a very cheap guess for
-    \code{start} is tried (if \code{algorithm != "plinear"}).
+    estimates.  When \code{start} is missing (and \code{formula} is not
+    a self-starting model, see \code{\link{selfStart}}), a very cheap
+    guess for \code{start} is tried (if \code{algorithm != "plinear"}).
   }
   \item{control}{an optional list of control settings.  See
     \code{\link{nls.control}} for the names of the settable control
@@ -32,8 +33,8 @@ nls(formula, data, start, control, algorithm,
     The default algorithm is a Gauss-Newton algorithm.  Other possible
     values are \code{"plinear"} for the Golub-Pereyra algorithm for
     partially linear least-squares models and \code{"port"} for the
-    \sQuote{nl2sol} algorithm from the Port library -- see the references.
-    Can be abbreviated.}
+    \sQuote{nl2sol} algorithm from the Port library -- see the
+    references.  Can be abbreviated.}
   \item{trace}{logical value indicating if a trace of the iteration
     progress should be printed.  Default is \code{FALSE}.  If
     \code{TRUE} the residual (weighted) sum-of-squares and the

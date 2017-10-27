@@ -27,7 +27,7 @@ SSasymp <- # selfStart(~ Asym + (R0 - Asym) * exp(-exp(lrc) * input),
               .expr5 <- exp((( - .expr2) * input))
               .value <- Asym + (.expr1 * .expr5)
               .actualArgs <- as.list(match.call()[c("Asym", "R0", "lrc")])
-              if(all(unlist(lapply(.actualArgs, is.name))))
+              if(all(vapply(.actualArgs, is.name, NA)))
               {
                   .grad <- array(0, c(length(.value), 3L),
                                  list(NULL, c("Asym", "R0", "lrc")))
@@ -39,7 +39,7 @@ SSasymp <- # selfStart(~ Asym + (R0 - Asym) * exp(-exp(lrc) * input),
               }
               .value
           },
-              function(mCall, data, LHS)
+              initial = function(mCall, data, LHS)
           {
               xy <- sortedXyData(mCall[["input"]], LHS, data)
               if (nrow(xy) < 3) {
@@ -48,8 +48,7 @@ SSasymp <- # selfStart(~ Asym + (R0 - Asym) * exp(-exp(lrc) * input),
               if(nrow(xy) > 3) {
                   xy$ydiff <- abs(xy$y - NLSstRtAsymptote(xy))
                   xy <- data.frame(xy)
-                  lrc <- log( - coef(lm(log(ydiff) ~ x, data = xy))[2L])
-                  names(lrc) <- NULL
+                  lrc <- log( - coef(lm(log(ydiff) ~ x, data = xy))[[2L]])
                   ## This gives an estimate of the log (rate constant).  Use that
                   ## with a partially linear nls algorithm
                   pars <- coef(nls(y ~ cbind(1 - exp( - exp(lrc) * x),
@@ -58,7 +57,7 @@ SSasymp <- # selfStart(~ Asym + (R0 - Asym) * exp(-exp(lrc) * input),
                                    start = list(lrc = lrc),
                                    algorithm = "plinear"))
               }
-              else {
+              else { ## nrow(.) == 3
                   ydiff <- diff(xy$y)
                   if(prod(ydiff) <= 0) {
                       stop("cannot fit an asymptotic regression model to these data")
@@ -80,9 +79,7 @@ SSasymp <- # selfStart(~ Asym + (R0 - Asym) * exp(-exp(lrc) * input),
                       stop("too few observations to fit an asymptotic regression model")
                   }
               }
-              names(pars) <- NULL
-	      setNames(list(pars[2L], pars[3L], pars[1L]),
-		       mCall[c("Asym", "R0", "lrc")])
+	      setNames(pars[c(2L, 3L, 1L)], mCall[c("Asym", "R0", "lrc")])
           },
               parameters = c("Asym", "R0", "lrc"))
 
@@ -99,7 +96,7 @@ SSasympOff <- # selfStart(~ Asym *( 1 - exp(-exp(lrc) * (input - c0) ) ),
               .expr6 <- 1 - .expr5
               .value <- Asym * .expr6
               .actualArgs <- as.list(match.call()[c("Asym", "lrc", "c0")])
-              if(all(unlist(lapply(.actualArgs, is.name))))
+              if(all(vapply(.actualArgs, is.name, NA)))
               {
                   .grad <- array(0, c(length(.value), 3L), list(NULL, c("Asym", "lrc", "c0")))
                   .grad[, "Asym"] <- .expr6
@@ -110,7 +107,7 @@ SSasympOff <- # selfStart(~ Asym *( 1 - exp(-exp(lrc) * (input - c0) ) ),
               }
               .value
           },
-              function(mCall, data, LHS)
+              initial = function(mCall, data, LHS)
           {
               xy <- sortedXyData(mCall[["input"]], LHS, data)
               if (nrow(xy) < 4) {
@@ -118,13 +115,11 @@ SSasympOff <- # selfStart(~ Asym *( 1 - exp(-exp(lrc) * (input - c0) ) ),
               }
               xy$ydiff <- abs(xy$y - NLSstRtAsymptote(xy))
               xy <- data.frame(xy)
-              lrc <- log( - coef(lm(log(ydiff) ~ x, data = xy))[2L]) # log( rate constant)
-              pars <- as.vector(coef(nls(y ~ cbind(1, exp(- exp(lrc) * x)),
-                                         data = xy, algorithm = "plinear",
-                                         start = list(lrc = lrc))))
-
-	      setNames(list(pars[2L], pars[1L],
-			    exp(-pars[1L]) * log(-pars[3L]/pars[2L])),
+              lrc <- log( - coef(lm(log(ydiff) ~ x, data = xy))[[2L]]) # log( rate constant)
+              pars <- coef(nls(y ~ cbind(1, exp(- exp(lrc) * x)),
+                               data = xy, algorithm = "plinear",
+                               start = list(lrc = lrc)))
+	      setNames(c(pars[[2L]], pars[["lrc"]], exp(-pars[[1L]]) * log(-pars[[3L]]/pars[[2L]])),
 		       mCall[c("Asym", "lrc", "c0")])
           }, parameters = c("Asym", "lrc", "c0"))
 
@@ -139,7 +134,7 @@ SSasympOrig <- # selfStart(~ Asym * (1 - exp(-exp(lrc) * input)),
               .expr5 <- 1 - .expr4
               .value <- Asym * .expr5
               .actualArgs <- as.list(match.call()[c("Asym", "lrc")])
-              if(all(unlist(lapply(.actualArgs, is.name))))
+              if(all(vapply(.actualArgs, is.name, NA)))
               {
                   .grad <- array(0, c(length(.value), 2L), list(NULL, c("Asym", "lrc")))
                   .grad[, "Asym"] <- .expr5
@@ -149,7 +144,7 @@ SSasympOrig <- # selfStart(~ Asym * (1 - exp(-exp(lrc) * input)),
               }
               .value
           },
-              function(mCall, data, LHS)
+              initial = function(mCall, data, LHS)
           {
               xy <- sortedXyData(mCall[["input"]], LHS, data)
               if (nrow(xy) < 3) {
@@ -161,11 +156,11 @@ SSasympOrig <- # selfStart(~ Asym * (1 - exp(-exp(lrc) * input)),
               lrc <- log(abs(mean(log(1 - xy$y/A0)/xy$x, na.rm = TRUE)))
               ## use the partially linear form to converge quickly
               xy <- data.frame(xy)
-              pars <- as.vector(coef(nls(y ~ 1 - exp(-exp(lrc)*x),
-                                         data = xy,
-                                         start = list(lrc = lrc),
-                                         algorithm = "plinear")))
-	      setNames(pars[c(2L, 1L)],
+              pars <- coef(nls(y ~ 1 - exp(-exp(lrc)*x),
+                               data = xy,
+                               start = list(lrc = lrc),
+                               algorithm = "plinear"))
+	      setNames(pars [c(".lin", "lrc")],
 		       mCall[c("Asym", "lrc")])
           }, parameters = c("Asym", "lrc"))
 
@@ -181,7 +176,7 @@ SSbiexp <- # selfStart(~ A1 * exp(-exp(lrc1)*input) + A2 * exp(-exp(lrc2) * inpu
               .expr9 <- exp((( - .expr6) * input))
               .value <- (A1 * .expr4) + (A2 * .expr9)
               .actualArgs <- as.list(match.call()[c("A1", "lrc1", "A2", "lrc2")])
-              if(all(unlist(lapply(.actualArgs, is.name))))
+              if(all(vapply(.actualArgs, is.name, NA)))
               {
                   .grad <- array(0, c(length(.value), 4L),
                                  list(NULL, c("A1", "lrc1", "A2", "lrc2")))
@@ -194,7 +189,7 @@ SSbiexp <- # selfStart(~ A1 * exp(-exp(lrc1)*input) + A2 * exp(-exp(lrc2) * inpu
               }
               .value
           },
-              function(mCall, data, LHS)
+              initial = function(mCall, data, LHS)
           {
               xy <- data.frame(sortedXyData(mCall[["input"]], LHS, data))
               if (nrow(xy) < 5) {
@@ -236,7 +231,7 @@ SSfol <- # selfStart(~Dose * (exp(lKe + lKa - lCl) * (exp(-exp(lKe) * input) -
               .expr23 <- .expr15^2
               .value <- .expr16
               .actualArgs <- as.list(match.call()[c("lKe", "lKa", "lCl")])
-              if(all(unlist(lapply(.actualArgs, is.name))))
+              if(all(vapply(.actualArgs, is.name, NA)))
               {
                   .grad <- array(0, c(length(.value), 3L), list(NULL, c("lKe", "lKa", "lCl")))
                   .grad[, "lKe"] <- (.expr14 - .expr4 * (.expr8 * (.expr5 * input)))/
@@ -249,48 +244,35 @@ SSfol <- # selfStart(~Dose * (exp(lKe + lKa - lCl) * (exp(-exp(lKe) * input) -
               }
               .value
           },
-              function(mCall, data, LHS)
+              initial = function(mCall, data, LHS)
           {
               data <- data.frame(data)
               resp <- eval(LHS, data)
               input <- eval(mCall[["input"]], data)
               Dose <- eval(mCall[["Dose"]], data)
               n <- length(resp)
-              if(length(input) != n) {
+              if(length(input) != n)
                   stop("must have length of response = length of second argument to 'SSfol'")
-              }
-              if(n < 4) {
+              if(n < 4)
                   stop("must have at least 4 observations to fit an 'SSfol' model")
-              }
-              rmaxind <- order(resp)[n]
-
-              lresp <- log(resp)
-              if(rmaxind == n) {
-                  lKe <- -2.5
-              } else {
-                  lKe <- log((lresp[rmaxind] - lresp[n])/(input[n] - input[rmaxind]))
-              }
+              rmaxind <- which.max(resp)
+              lKe <- if(rmaxind == n) -2.5
+                  else log((log(resp[rmaxind]) - log(resp[n]))/(input[n] - input[rmaxind]))
               cond.lin <- nls(resp ~ (exp(-input * exp(lKe))-exp(-input * exp(lKa))) * Dose,
                               data = list(resp = resp, input = input, Dose = Dose, lKe = lKe),
                               start = list(lKa = lKe + 1),
                               algorithm = "plinear")
               pars <- coef(cond.lin)
-              names(pars) <- NULL
               cond.lin <- nls(resp ~ (Dose * (exp(-input*exp(lKe))-
                                               exp(-input*exp(lKa))))/(exp(lKa) - exp(lKe)),
-                              data = data.frame(list(resp = resp, input = input,
-                              Dose = Dose)),
-                              start = list(lKa = pars[1L],lKe = lKe),
+                              data = data.frame(list(resp = resp, input = input, Dose = Dose)),
+                              start = list(lKa = pars[["lKa"]], lKe = lKe),
                               algorithm = "plinear")
               pars <- coef(cond.lin)
-              names(pars) <- NULL
-              lKa <- pars[1L]
-              lKe <- pars[2L]
-              Ka <- exp(lKa)
-              Ke <- exp(lKe)
-              value <- list(lKe, lKa, log((Ke * Ka)/(pars[3L])))
-              names(value) <- as.character(mCall)[4:6]
-              value
+              lKa <- pars[["lKa"]]
+              lKe <- pars[["lKe"]]
+              setNames(c( lKe,   lKa, lKe+lKa - log(pars[[3L]])),
+                       c("lKe", "lKa", "lCl"))
           }, parameters = c("lKe", "lKa", "lCl"))
 
 
@@ -306,7 +288,7 @@ SSfpl <- # selfStart(~ A + (B - A)/(1 + exp((xmid - input)/scal)),
               .expr5 <- 1 + .expr4
               .value <- A + .expr1/.expr5
               .actualArgs <- as.list(match.call()[c("A", "B", "xmid", "scal")])
-              if(all(unlist(lapply(.actualArgs, is.name))))
+              if(all(vapply(.actualArgs, is.name, NA)))
               {
 		  .expr8 <- 1/.expr5
 		  .expr13 <- .expr5^2
@@ -321,7 +303,7 @@ SSfpl <- # selfStart(~ A + (B - A)/(1 + exp((xmid - input)/scal)),
               }
               .value
           },
-              function(mCall, data, LHS)
+              initial = function(mCall, data, LHS)
           {
               xy <- sortedXyData(mCall[["input"]], LHS, data)
               if (nrow(xy) < 5) {
@@ -332,29 +314,27 @@ SSfpl <- # selfStart(~ A + (B - A)/(1 + exp((xmid - input)/scal)),
               xy$prop <- (xy$y - rng[1L] + 0.05 * drng)/(1.1 * drng)
               ## inverse regression of the x values on the proportion
               ir <- as.vector(coef(lm(x ~ I(log(prop/(1-prop))), data = xy)))
-              pars <- as.vector(coef(nls(y ~ cbind(1, 1/(1 + exp((xmid - x)/
-                                                                 exp(lscal)))),
+              pars <- as.vector(coef(nls(y ~ cbind(1, 1/(1 + exp((xmid - x)/exp(lscal)))),
                                          data = xy,
                                          start = list(xmid = ir[1L],
                                                       lscal = log(abs(ir[2L]))),
                                          algorithm = "plinear")))
-              value <- c(pars[3L], pars[3L] + pars[4L], pars[1L], exp(pars[2L]))
-              names(value) <- mCall[c("A", "B", "xmid", "scal")]
-              value
+              setNames(c(pars[3L], pars[3L] + pars[4L], pars[1L], exp(pars[2L])),
+                       nm = mCall[c("A", "B", "xmid", "scal")])
           }, parameters = c("A", "B", "xmid", "scal"))
 
 ##*## SSlogis - logistic model for nonlinear regression
 
 SSlogis <- # selfStart(~ Asym/(1 + exp((xmid - input)/scal)),
     selfStart(
-              function(input, Asym, xmid, scal)
-          {
+        function(input, Asym, xmid, scal)
+        {
               .expr1 <- xmid - input
               .expr3 <- exp(.e2 <- .expr1/scal)
               .expr4 <- 1 + .expr3
               .value <- Asym/.expr4
               .actualArgs <- as.list(match.call()[c("Asym", "xmid", "scal")])
-              if(all(unlist(lapply(.actualArgs, is.name))))
+              if(all(vapply(.actualArgs, is.name, NA)))
               {
 		  .expr10 <- .expr4^2
                   .grad <- array(0, c(length(.value), 3L), list(NULL, c("Asym", "xmid", "scal")))
@@ -365,9 +345,8 @@ SSlogis <- # selfStart(~ Asym/(1 + exp((xmid - input)/scal)),
                   attr(.value, "gradient") <- .grad
               }
               .value
-          },
-              function(mCall, data, LHS)
-          {
+        },
+        initial = function(mCall, data, LHS) {
               xy <- data.frame(sortedXyData(mCall[["input"]], LHS, data))
               if(nrow(xy) < 4) {
                   stop("too few distinct input values to fit a logistic model")
@@ -378,14 +357,14 @@ SSlogis <- # selfStart(~ Asym/(1 + exp((xmid - input)/scal)),
               z <- (z - rng[1L] + 0.05 * dz)/(1.1 * dz)
               xy[["z"]] <- log(z/(1 - z))		# logit transformation
               aux <- coef(lm(x ~ z, xy))
-              pars <- as.vector(coef(nls(y ~ 1/(1 + exp((xmid - x)/scal)),
-                                         data = xy,
-                                         start = list(xmid = aux[1L], scal = aux[2L]),
-                                         algorithm = "plinear")))
-              value <- c(pars[3L], pars[1L], pars[2L])
-              names(value) <- mCall[c("Asym", "xmid", "scal")]
-              value
-          }, parameters = c("Asym", "xmid", "scal"))
+              pars <- coef(nls(y ~ 1/(1 + exp((xmid - x)/scal)),
+                               data = xy,
+                               start = list(xmid = aux[[1L]], scal = aux[[2L]]),
+                               algorithm = "plinear"))
+              setNames(pars [c(".lin", "xmid", "scal")],
+                       mCall[c("Asym", "xmid", "scal")])
+        },
+        parameters = c("Asym", "xmid", "scal"))
 
 
 ##*## SSmicmen - Michaelis-Menten model for enzyme kinetics.
@@ -398,7 +377,7 @@ SSmicmen <- # selfStart(~ Vm * input/(K + input),
               .expr2 <- K + input
               .value <- .expr1/.expr2
               .actualArgs <- as.list(match.call()[c("Vm", "K")])
-              if(all(unlist(lapply(.actualArgs, is.name))))
+              if(all(vapply(.actualArgs, is.name, NA)))
               {
                   .grad <- array(0, c(length(.value), 2L), list(NULL, c("Vm", "K")))
                   .grad[, "Vm"] <- input/.expr2
@@ -408,7 +387,7 @@ SSmicmen <- # selfStart(~ Vm * input/(K + input),
               }
               .value
           },
-              function(mCall, data, LHS)
+              initial = function(mCall, data, LHS)
           {
               xy <- data.frame(sortedXyData(mCall[["input"]], LHS, data))
               if (nrow(xy) < 3) {
@@ -417,25 +396,31 @@ SSmicmen <- # selfStart(~ Vm * input/(K + input),
               ## take the inverse transformation
               pars <- as.vector(coef(lm(1/y ~ I(1/x), data = xy)))
               ## use the partially linear form to converge quickly
-              pars <- as.vector(coef(nls(y ~ x/(K + x),
-                                         data = xy,
-                                         start = list(K = abs(pars[2L]/pars[1L])),
-                                         algorithm = "plinear")))
-              value <- c(pars[2L], pars[1L])
-              names(value) <- mCall[c("Vm", "K")]
-              value
+              pars <- coef(nls(y ~ x/(K + x),
+                               data = xy,
+                               start = list(K = abs(pars[2L]/pars[1L])),
+                               algorithm = "plinear"))
+              setNames(pars[ c(".lin", "K")],
+                       mCall[c(  "Vm", "K")])
           }, parameters = c("Vm", "K"))
 
 
-SSgompertz <- #    selfStart( ~ Asym * exp(-b2*b3^x),
-    ## Gompertz model for growth curve data
+
+##*## Gompertz model for growth curve data
+
+## FIXME: Better parametrization (?)
+##
+## SSgompertz2 <-  selfStart( ~ Asym * exp(-b2 * exp(lrc*x)),   [ lrc == log(b3) ]
+
+SSgompertz <- #    selfStart( ~ Asym * exp(-b2 * b3^x),
+
     selfStart(function(x, Asym, b2, b3)
           {
               .expr2 <- b3^x
               .expr4 <- exp(-b2 * .expr2)
               .value <- Asym * .expr4
               .actualArgs <- as.list(match.call()[c("Asym", "b2", "b3")])
-              if(all(unlist(lapply(.actualArgs, is.name))))
+              if(all(vapply(.actualArgs, is.name, NA)))
               {
                   .grad <- array(0, c(length(.value), 3L),
                                  list(NULL, c("Asym", "b2", "b3")))
@@ -447,7 +432,7 @@ SSgompertz <- #    selfStart( ~ Asym * exp(-b2*b3^x),
               }
               .value
           },
-              function(mCall, data, LHS)
+              initial = function(mCall, data, LHS)
           {
               xy <- sortedXyData(mCall[["x"]], LHS, data)
               if (nrow(xy) < 4) {
@@ -460,15 +445,16 @@ SSgompertz <- #    selfStart( ~ Asym * exp(-b2*b3^x),
                                data = xy,
                                algorithm = "plinear",
                                start = c(b2 = pars[["b1"]],
-                               b3 = exp(-exp(pars[["lrc"]])))))
-              val <- pars[c(3,1,2)]
-              names(val) <- mCall[c("Asym", "b2", "b3")]
-              val
+                                         b3 = exp(-exp(pars[["lrc"]])))))
+              setNames(pars[ c(".lin", "b2", "b3")],
+                       mCall[c("Asym", "b2", "b3")])
           },
               c("Asym", "b2", "b3"))
 
+
+##*## Weibull model for growth curve data
+
 SSweibull <- # selfStart( ~ Asym - Drop * exp(-exp(lrc)*x^pwr),
-    ## Weibull model for growth curve data
     selfStart( function(x, Asym, Drop, lrc, pwr)
           {
               .expr1 <- exp(lrc)
@@ -476,7 +462,7 @@ SSweibull <- # selfStart( ~ Asym - Drop * exp(-exp(lrc)*x^pwr),
 	      .expr5 <- exp(- (ee <- .expr1 * .expr3))
 	      .value <- Asym - (De <- Drop * .expr5)
               .actualArgs <- as.list(match.call()[c("Asym", "Drop", "lrc", "pwr")])
-              if(all(unlist(lapply(.actualArgs, is.name))))
+              if(all(vapply(.actualArgs, is.name, NA)))
               {
                   .grad <- array(0, c(length(.value), 4L),
                                  list(NULL, c("Asym", "Drop", "lrc", "pwr")))
@@ -489,7 +475,7 @@ SSweibull <- # selfStart( ~ Asym - Drop * exp(-exp(lrc)*x^pwr),
               }
               .value
           },
-              function(mCall, data, LHS)
+              initial = function(mCall, data, LHS)
           {
               xy <- sortedXyData(mCall[["x"]], LHS, data)
               if (nrow(xy) < 5) {
@@ -501,7 +487,7 @@ SSweibull <- # selfStart( ~ Asym - Drop * exp(-exp(lrc)*x^pwr),
               Rasym <- NLSstRtAsymptote(xy)
               Lasym <- NLSstLfAsymptote(xy)
               pars <- coef(lm(log(-log((Rasym - y)/(Rasym - Lasym))) ~ log(x),
-                             data = xy, subset = x > 0))
+                              data = xy, subset = x > 0))
 	      setNames(coef(nls(y ~ cbind(1, -exp(-exp(lrc)*x^pwr)),
 				data = xy,
 				algorithm = "plinear",

@@ -1,23 +1,27 @@
 % File src/library/stats/man/selfStart.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{selfStart}
+\title{Construct Self-starting Nonlinear Models}
 \encoding{UTF-8}
 \alias{selfStart}
 \alias{selfStart.default}
 \alias{selfStart.formula}
-\title{Construct Self-starting Nonlinear Models}
 \description{
-  Construct self-starting nonlinear models.
+  Construct self-starting nonlinear models to be used in
+  \code{\link{nls}}, etc.  Via function \code{initial} to compute
+  approximate parameter values from data, such models are
+  \dQuote{self-starting}, i.e., do not need a \code{start} argument in,
+  e.g., \code{\link{nls}()}.
 }
 \usage{
 selfStart(model, initial, parameters, template)
 }
 \arguments{
   \item{model}{a function object defining a nonlinear model or
-    a nonlinear formula object of the form \code{~expression}.}
+    a nonlinear \code{\link{formula}} object of the form \code{~ expression}.}
  \item{initial}{a function object, taking three arguments: \code{mCall},
    \code{data}, and \code{LHS}, representing, respectively, a matched
    call to the function \code{model}, a data frame in
@@ -36,13 +40,16 @@ selfStart(model, initial, parameters, template)
     \code{model} coming last in the calling sequence.}
 }
 \details{
+  \code{\link{nls}()} calls \code{\link{getInitial}} and the
+  \code{initial} function for these self-starting models.
+
   This function is generic; methods functions can be written to handle
   specific classes of objects.
 }
 \value{
-  a function object of class \code{"selfStart"}, for the \code{formula}
-  method obtained by applying
-  \code{deriv} to the right hand side of the \code{model} formula.  An
+  a \code{\link{function}} object of class \code{"selfStart"}, for the
+  \code{formula} method obtained by applying \code{\link{deriv}}
+  to the right hand side of the \code{model} formula.  An
   \code{initial} attribute (defined by the \code{initial} argument) is
   added to the function to calculate starting estimates for the
   parameters in the model automatically.
@@ -51,40 +58,46 @@ selfStart(model, initial, parameters, template)
 
 \seealso{
   \code{\link{nls}}, \code{\link{getInitial}}.
-  Each of the following are \code{"selfStart"} models (with examples)
-\code{\link{SSasymp}}, \code{\link{SSasympOff}}, \code{\link{SSasympOrig}},
-\code{\link{SSbiexp}}, \code{\link{SSfol}}, \code{\link{SSfpl}},
-\code{\link{SSgompertz}}, \code{\link{SSlogis}}, \code{\link{SSmicmen}},
-\code{\link{SSweibull}}
 
+  Each of the following are \code{"selfStart"} models (with examples)
+  \code{\link{SSasymp}}, \code{\link{SSasympOff}}, \code{\link{SSasympOrig}},
+  \code{\link{SSbiexp}}, \code{\link{SSfol}}, \code{\link{SSfpl}},
+  \code{\link{SSgompertz}}, \code{\link{SSlogis}}, \code{\link{SSmicmen}},
+  \code{\link{SSweibull}}.
+
+  Further, package \CRANpkg{nlme}'s \code{\link[nlme]{nlsList}}.
 }
 \examples{
 ## self-starting logistic model
 
-SSlogis <- selfStart(~ Asym/(1 + exp((xmid - x)/scal)),
-  function(mCall, data, LHS)
-  {
-    xy <- sortedXyData(mCall[["x"]], LHS, data)
-    if(nrow(xy) < 4) {
-      stop("Too few distinct x values to fit a logistic")
-    }
+## The "initializer" (finds initial values for parameters from data):
+initLogis <- function(mCall, data, LHS) {
+    xy <- data.frame(sortedXyData(mCall[["input"]], LHS, data))
+    if(nrow(xy) < 4)
+        stop("too few distinct input values to fit a logistic model")
     z <- xy[["y"]]
-    if (min(z) <= 0) { z <- z + 0.05 * max(z) } # avoid zeroes
-    z <- z/(1.05 * max(z))              # scale to within unit height
-    xy[["z"]] <- log(z/(1 - z))         # logit transformation
+    ## transform to proportion, i.e. in (0,1) :
+    rng <- range(z); dz <- diff(rng)
+    z <- (z - rng[1L] + 0.05 * dz)/(1.1 * dz)
+    xy[["z"]] <- log(z/(1 - z))		# logit transformation
     aux <- coef(lm(x ~ z, xy))
-    parameters(xy) <- list(xmid = aux[1], scal = aux[2])
-    pars <- as.vector(coef(nls(y ~ 1/(1 + exp((xmid - x)/scal)),
-                             data = xy, algorithm = "plinear")))
-    setNames(c(pars[3], pars[1], pars[2]),
-             mCall[c("Asym", "xmid", "scal")])
-  }, c("Asym", "xmid", "scal"))
+    pars <- coef(nls(y ~ 1/(1 + exp((xmid - x)/scal)),
+                     data = xy,
+                     start = list(xmid = aux[[1L]], scal = aux[[2L]]),
+                     algorithm = "plinear"))
+    setNames(pars[c(".lin", "xmid", "scal")], nm = mCall[c("Asym", "xmid", "scal")])
+}
+
+SSlogis <- selfStart(~ Asym/(1 + exp((xmid - x)/scal)),
+                     initial = initLogis,
+                     parameters = c("Asym", "xmid", "scal"))
+
 
 # 'first.order.log.model' is a function object defining a first order
 # compartment model
 # 'first.order.log.initial' is a function object which calculates initial
 # values for the parameters in 'first.order.log.model'
-
+#
 # self-starting first order compartment model
 \dontrun{
 SSfol <- selfStart(first.order.log.model, first.order.log.initial)
