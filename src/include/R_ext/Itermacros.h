@@ -178,17 +178,17 @@
 				  i, i1, i2, i3, i4, i5, loop_body);	\
     } while (0)
 
-#define BUFSIZE 256
+#define GET_REGION_BUFSIZE 512
 #define GET_REGION_PTR(x, i, n, buf, type)				\
     (ALTREP(x) == 0 ? type##0(x) + (i) : (type##_GET_REGION(x, i, n, buf), buf))
 
 #define ITERATE_BY_REGION0(sx, px, idx, nb, etype, vtype, expr) do {	\
-	etype __ibr_buf__[BUFSIZE];					\
+	etype __ibr_buf__[GET_REGION_BUFSIZE];				\
 	R_xlen_t __ibr_n__ = XLENGTH(sx);				\
 	R_xlen_t nb;							\
 	for (R_xlen_t idx = 0; idx < __ibr_n__; idx += nb) {		\
-	    nb = __ibr_n__  - idx > BUFSIZE ?				\
-		BUFSIZE :  __ibr_n__ - idx;				\
+	    nb = __ibr_n__  - idx > GET_REGION_BUFSIZE ?		\
+		GET_REGION_BUFSIZE :  __ibr_n__ - idx;			\
 	    etype *px = GET_REGION_PTR(sx, idx, nb, __ibr_buf__, vtype); \
 	    expr							\
 	 }							        \
