@@ -371,23 +371,20 @@ INLINE_FUN int INTEGER_ELT(SEXP x, R_xlen_t i)
 #ifdef COMPACT_SEQ_ELT_INLINE
 # define COMPACT_INTSEQ_FIRST(x) INTEGER0(R_altrep_data1(x))[1]
 # define COMPACT_INTSEQ_INCR(x) INTEGER0(R_altrep_data1(x))[2]
-    int *px = INTEGER_OR_NULL(x, FALSE);
-    if (px != NULL)
-	return px[i];
-    else {
+    if (ALTREP(x)) {
 	/* inline compact integer sequences */
 	extern R_altrep_class_t R_compact_intseq_class;
 	SEXP class = ALTREP_CLASS(x);
 	if (class == R_SEXP(R_compact_intseq_class)) {
+	    SEXP ex = R_altrep_data2(x);
+	    if (ex != R_NilValue) return INTEGER0(ex)[i];
 	    int n1 = COMPACT_INTSEQ_FIRST(x);
 	    int inc =  COMPACT_INTSEQ_INCR(x);
-	    if (inc == 1)
-		return n1 + i;
-	    else if (inc == -1)
-		return n1 - i;
+	    return n1 + inc * i;
 	}
 	return ALTINTEGER_ELT(x, i);
     }
+    return INTEGER0(x)[i];
 # undef COMPACT_INTSEQ_FIRST
 # undef COMPACT_INTSEQ_INCR
 #else
@@ -407,23 +404,20 @@ INLINE_FUN double REAL_ELT(SEXP x, R_xlen_t i)
 #ifdef COMPACT_SEQ_ELT_INLINE
 # define COMPACT_REALSEQ_FIRST(x) REAL0(R_altrep_data1(x))[1]
 # define COMPACT_REALSEQ_INCR(x) REAL0(R_altrep_data1(x))[2]
-    double *px = REAL_OR_NULL(x, FALSE);
-    if (px != NULL)
-	return px[i];
-    else {
+    if (ALTREP(x)) {
 	/* inline compact real sequences */
 	extern R_altrep_class_t R_compact_realseq_class;
 	SEXP class = ALTREP_CLASS(x);
 	if (class == R_SEXP(R_compact_realseq_class)) {
+	    SEXP ex = R_altrep_data2(x);
+	    if (ex != R_NilValue) return REAL0(ex)[i];
 	    double n1 = COMPACT_REALSEQ_FIRST(x);
 	    double inc =  COMPACT_REALSEQ_INCR(x);
-	    if (inc == 1)
-		return n1 + i;
-	    else if (inc == -1)
-		return n1 - i;
+	    return n1 + inc * i;
 	}
 	return ALTREAL_ELT(x, i);
     }
+    return REAL0(x)[i];
 # undef COMPACT_REALSEQ_FIRST
 # undef COMPACT_REALSEQ_INCR
 #else

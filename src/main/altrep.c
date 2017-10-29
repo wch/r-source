@@ -374,13 +374,9 @@ SEXP attribute_hidden ALTVEC_EXTRACT_SUBSET(SEXP x, SEXP indx, SEXP call)
  * Typed ALTVEC support
  */
 
-#ifdef DEBUG_CHECKS
-# define CHECK_NOT_EXPANDED(x)					\
+#define CHECK_NOT_EXPANDED(x)					\
     if (DATAPTR_OR_NULL(x, FALSE) != NULL)			\
 	error("method should only handle unexpanded vectors")
-#else
-# define CHECK_NOT_EXPANDED(x) do {} while (0)
-#endif
 
 #define ALTINTEGER_EXPANDED(x) R_altrep_data2(x)
 #define ALTREAL_EXPANDED(x) R_altrep_data2(x)
@@ -1618,19 +1614,15 @@ static void *compact_intseq_Dataptr_or_null(SEXP x, Rboolean writeable)
 
 static int compact_intseq_Elt(SEXP x, R_xlen_t i)
 {
-    /* should not get here if x is already expanded */
-    CHECK_NOT_EXPANDED(x);
-
-    SEXP info = ALTREP_INFO(x);
-    int n1 = COMPACT_INTSEQ_INFO_FIRST(info);
-    int inc = COMPACT_INTSEQ_INFO_INCR(info);
-
-    if (inc == 1)
-	return (int) (n1 + i);
-    else if (inc == -1)
-	return (int) (n1 - i);
-    else
-	error("compact sequences with increment %d not supported yet", inc);
+    SEXP ex = ALTREP_EXPANDED(x);
+    if (ex != R_NilValue)
+	return INTEGER0(ex)[i];
+    else {
+	SEXP info = ALTREP_INFO(x);
+	int n1 = COMPACT_INTSEQ_INFO_FIRST(info);
+	int inc = COMPACT_INTSEQ_INFO_INCR(info);
+	return n1 + inc * i;
+    }
 }
 
 static R_xlen_t
@@ -2291,19 +2283,15 @@ static void *compact_realseq_Dataptr_or_null(SEXP x, Rboolean writeable)
 
 static double compact_realseq_Elt(SEXP x, R_xlen_t i)
 {
-    /* should not get here if x is already expanded */
-    CHECK_NOT_EXPANDED(x);
-
-    SEXP info = ALTREP_INFO(x);
-    double n1 = COMPACT_REALSEQ_INFO_FIRST(info);
-    double inc = COMPACT_REALSEQ_INFO_INCR(info);
-    
-    if (inc == 1)
-	return n1 + i;
-    else if (inc == -1)
-	return n1 - i;
-    else
-	error("compact sequences with increment %f not supported yet", inc);
+    SEXP ex = ALTREP_EXPANDED(x);
+    if (ex != R_NilValue)
+	return REAL0(ex)[i];
+    else {
+	SEXP info = ALTREP_INFO(x);
+	double n1 = COMPACT_REALSEQ_INFO_FIRST(info);
+	double inc = COMPACT_REALSEQ_INFO_INCR(info);
+	return n1 + inc * i;
+    }
 }
 
 static R_xlen_t
