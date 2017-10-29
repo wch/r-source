@@ -452,7 +452,11 @@ static SEXP ArraySubset(SEXP x, SEXP s, SEXP call, int drop)
     for (int i = 0; i < k; i++)
 	for (int j = 0; j < bound[i]; j++) {
 	    int jj = subs[i][j];
-	    if (jj < 1 || jj > pxdims[i])
+	    if (jj > pxdims[i] ||
+		/* this should not be needed as indices reaching this
+		   point should be positive or NA_INTEGER, which is
+		   negative */
+		(jj < 1 && jj != NA_INTEGER))
 		errorcall(call, R_MSG_subs_o_b);
 	}
 
