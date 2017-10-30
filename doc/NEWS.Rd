@@ -216,6 +216,10 @@
       manual. [This depends on the experimental \sQuote{timeout} argument
       of \code{system2()} and hence subject to change, as are the names
       of the environment variables.]
+
+      \item The \sQuote{BioC extra} repository which was dropped from
+      BioC 3.6 has been removed from \code{setRepositories()}.  This
+      changes the mapping for 6--8 used by \code{setRepositories(ind=)}.
     }
   }
 
