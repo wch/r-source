@@ -1,6 +1,6 @@
 % File src/library/utils/man/setRepositories.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{setRepositories}
@@ -36,6 +36,9 @@ setRepositories(graphics = getOption("menu.graphics"),
   \code{\link{options}("BioC_mirror")}, e.g.\sspace{}via
   \code{\link{chooseBioCmirror}} --- the default value is
   \samp{"https://bioconductor.org"}.
+  
+  A repository \sQuote{BioC extra} is offered but only exists up to BioC
+  3.5, not for the current default BioC 3.6.
 
   The items that are preselected are those that are currently in
   \code{options("repos")} plus those marked as default in the
@@ -59,6 +62,9 @@ setRepositories(graphics = getOption("menu.graphics"),
   This does \strong{not} set the list of repositories at startup: to do
   so set \code{\link{options}(repos =)} in a start up file (see help topic
   \link{Startup}).
+  
+  The mapping from numbers (e.g., in \code{ind}) to repositories has
+  changed in the past and will change again at \R 3.5.0.
 }
 \value{
   This function is invoked mainly for its side effect of updating
