@@ -738,8 +738,10 @@ combined @emph{via} @samp{,} (see below for an example).  For versioned
 licenses, one can also specify the name followed by the version, or
 combine an existing abbreviation and the version with a @samp{-}.
 
-Abbreviations @code{GPL} and @code{LGPL} are ambiguous and usually taken
-to mean any version of the license: but it is better not to use them.
+Abbreviations @code{GPL} and @code{LGPL} are ambiguous and
+usually@footnote{@acronym{CRAN} expands them to e.g.@: @code{GPL-2
+| GPL-3}.} taken to mean any version of the license: but it is better
+not to use them.
 @item
 One of the strings @samp{file LICENSE} or @samp{file LICENCE} referring
 to a file named @file{LICENSE} or @file{LICENCE} in the package (source
@@ -8531,7 +8533,7 @@ See
 Instrumentation Options') for the options supported by GCC: 6 and 7 support
 @example
 -fsanitize=alignment,bool,bounds,enum,integer-divide-by-zero,
-nonnull-attribute,null,object-size, return,returns-nonnull-attribute,
+nonnull-attribute,null,object-size,return,returns-nonnull-attribute,
 shift,signed-integer-overflow,unreachable,vla-bound,vptr
 @end example
 @noindent
@@ -8547,8 +8549,10 @@ where @code{float-divide-by-zero} is not desirable for @R{} uses and
 @c and @code{vptr} checks produced many warnings on GCC's own C++ headers,
 @c so should be disabled.
 
-From GCC 8 @code{signed-integer-overflow} will no longer be a default part
-of @option{-fsanitize=undefined}, but can be specified separately.
+From GCC 8 @code{signed-integer-overflow} will no longer be a default
+part of @option{-fsanitize=undefined}, but can be specified separately.
+It adds options @option{-fsanitize=pointer-overflow} an
+@option{-fsanitize=builtin}.
 
 Other useful flags include
 @example
