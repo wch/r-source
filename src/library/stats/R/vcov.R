@@ -19,27 +19,42 @@
 
 vcov <- function(object, ...) UseMethod("vcov")
 
+##' Augment a vcov - matrix by NA rows & cols when needed:
+.vcov.aliased <- function(aliased, vc, complete = TRUE) {
+    ## Checking for "NA coef": "same" code as in print.summary.lm() in ./lm.R :
+    if(complete && NROW(vc) < (P <- length(aliased)) && any(aliased)) {
+	## add NA rows and columns in vcov
+	cn <- names(aliased)
+	VC <- matrix(NA_real_, P, P, dimnames = list(cn,cn))
+	j <- which(!aliased)
+	VC[j,j] <- vc
+	VC
+    } else  # default
+	vc
+}
+
 ## The next three have to call the summary method explicitly, as classes which
 ## inherit from "glm" need not have summary methods which
 ## inherit from "summary.glm", and similarly for "lm" and "mlm"
 
 ## Allow for 'dispersion' to be passed down (see the help for vcov)
-vcov.glm <- function(object, ...) summary.glm(object, ...)$cov.scaled
+vcov.glm <- function(object, complete = TRUE, ...) vcov.summary.glm(summary.glm(object), complete=complete, ...)
 
-vcov.lm <- function(object, ...)
-{
-    so <- summary.lm(object)
-    so$sigma^2 * so$cov.unscaled
-}
+vcov.lm <- function(object, complete = TRUE, ...) vcov.summary.lm(summary.lm(object), complete=complete, ...)
 
-vcov.mlm <- function(object, ...)
+vcov.mlm <- function(object, complete = TRUE, ...)
 {
     so <- summary.mlm(object)[[1L]]
-    kronecker(estVar(object), so$cov.unscaled, make.dimnames = TRUE)
+    kronecker(estVar(object),
+	      .vcov.aliased(so$aliased, so$cov.unscaled, complete=complete),
+	      make.dimnames = TRUE)
 }
 
-vcov.summary.glm <- function(object, ...) object$cov.scaled
-vcov.summary.lm  <- function(object, ...) object$sigma^2 * object$cov.unscaled
+vcov.summary.glm <- function(object, complete = TRUE, ...)
+    .vcov.aliased(object$aliased, object$cov.scaled)
+
+vcov.summary.lm  <- function(object, complete = TRUE, ...)
+    .vcov.aliased(object$aliased, object$sigma^2 * object$cov.unscaled, complete=complete)
 
 ## gls and lme methods moved to nlme in 2.6.0
 

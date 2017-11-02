@@ -198,6 +198,12 @@
       \item \code{system(*, intern = FALSE)}, \code{system2()} (when not
       capturing output), \code{file.edit()} and \code{file.show()} now
       issue a warning when the external command cannot be executed.
+
+      \item The \dQuote{default} (\code{"lm"} etc) methods of \code{vcov()}
+      have gained new optional argument \code{complete = TRUE} which
+      makes the \code{vcov()} methods more consistent with the
+      \code{coef()} methods in the case of singular designs.  The
+      former behavior is now achieved by \code{vcov(*, complete=FALSE)}.
     }
   }
 

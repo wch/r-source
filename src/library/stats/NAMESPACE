@@ -71,7 +71,7 @@ export(.checkMFClasses, .getXlevels, .MFclass, .nknots.smspl,
        stl, StructTS, summary.manova, supsmu, symnum, termplot, terms,
        time, toeplitz, ts, ts.intersect, ts.plot, ts.union, tsdiag,
        tsp, "tsp<-", tsSmooth, TukeyHSD, uniroot, update, var,
-       variable.names, varimax, vcov, weighted.mean,
+       variable.names, varimax, .vcov.aliased, vcov, weighted.mean,
        weighted.residuals, weights, window, "window<-", write.ftable,
        xtabs, pbirthday, qbirthday)
 
