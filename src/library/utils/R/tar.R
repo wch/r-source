@@ -1,7 +1,7 @@
 #  File src/library/utils/R/tar.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -329,17 +329,18 @@ tar <- function(tarfile, files = NULL,
                 compression_level = 6, tar = Sys.getenv("tar"),
                 extra_flags = "")
 {
-    files <- ## list the files before 'tarfile' is created!
-	if(is.null(files)) ## is fine
-	    list.files(recursive = TRUE, all.files = TRUE,
-		       full.names = TRUE, include.dirs = TRUE)
-	else ## is *not* ok when 'files' are simple files !
-	    ## list.files(path, ....) : first argument are *directories*
-	    list.files(files, recursive = TRUE, all.files = TRUE,
-		       full.names = TRUE, include.dirs = TRUE)
     if(is.character(tarfile)) {
         if(nzchar(tar) && tar != "internal") {
-            ## FIXME: could pipe through gzip etc: might be safer for xz
+            ## Assume external command will expand directories,
+            ## so keep command-line as simple as possible
+            ## But files = '.' will not work as tarfile would be included.
+            if(is.null(files)) {
+                files <- list.files(all.files = TRUE, full.names = TRUE,
+                                    include.dirs = TRUE)
+                files <- setdiff(files, c("./.", "./.."))
+            }
+
+            ## Could pipe through gzip etc: might be safer for xz
             ## as -J was lzma in GNU tar 1.20:21
             flags <- switch(match.arg(compression),
                             "none" = "-cf",
@@ -361,8 +362,15 @@ tar <- function(tarfile, files = NULL,
                          paste(shQuote(files), collapse=" "))
             return(invisible(system(cmd)))
         }
+
+### ----- from here on, using internal code -----
+        ## must do this before tarfile is created
+        if(is.null(files)) files <- "."
+        files <- list.files(files, recursive = TRUE, all.files = TRUE,
+                            full.names = TRUE, include.dirs = TRUE)
+
         con <- switch(match.arg(compression),
-                      "none" =    file(tarfile, "wb"),
+                      "none" =  file(tarfile, "wb"),
                       "gzip" =  gzfile(tarfile, "wb", compression = compression_level),
                       "bzip2" = bzfile(tarfile, "wb", compression = compression_level),
                       "xz" =    xzfile(tarfile, "wb", compression = compression_level))
