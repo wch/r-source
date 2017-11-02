@@ -1571,6 +1571,18 @@ SEXP attribute_hidden do_subassign_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     nsubs = SubAssignArgs(args, &x, &subs, &y);
 
+    /* make sure the LHS is duplicated if it matches one of the indices */
+    /* otherwise this gets the wrong answer:
+          permute <- structure(c(3L, 1L, 2L), dim = c(3, 1))
+	  permute[permute, 1] <- 1:3
+	  as.vector(permute)
+    */
+    for (SEXP a = args; a != R_NilValue; a = CDR(a)) {
+	SEXP idx = CAR(args);
+	if (x == idx)
+	    MARK_NOT_MUTABLE(x);
+    }
+
     /* If there are multiple references to an object we must */
     /* duplicate it so that only the local version is mutated. */
     /* This will duplicate more often than necessary, but saves */
