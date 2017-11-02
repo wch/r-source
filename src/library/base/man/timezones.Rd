@@ -181,6 +181,12 @@ OlsonNames()
   (abbreviated) time-zone names which can be as low as 6 (as required by
   POSIX).  Some OSes allow the setting of time zones with names which
   exceed their limit, and that can crash the \R session.
+  
+  \code{OlsonNames} tries to find an Olson database in known locations.
+  It might not succeed (when it returns an empty vector with a warning)
+  and even if it does it might not locate the database used by the
+  date-time code linked into \R.  Fortunately names are added rarely
+  and most databases are pretty complete.
 }
 
 \note{

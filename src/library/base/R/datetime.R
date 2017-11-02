@@ -1065,6 +1065,10 @@ OlsonNames <- function()
     if(.Platform$OS.type == "windows")
         tzdir <- Sys.getenv("TZDIR", file.path(R.home("share"), "zoneinfo"))
     else {
+        ## Try known locations in turn.
+        ## The list is not exhaustive (mac OS 10.13's real location is
+        ## /usr/share/zoneinfo.default) and there is a risk that
+        ## the wrong one is found.
         tzdirs <- c(Sys.getenv("TZDIR"),
                     file.path(R.home("share"), "zoneinfo"),
                     "/usr/share/zoneinfo", # Linux, macOS, FreeBSD
@@ -1076,9 +1080,11 @@ OlsonNames <- function()
         if (!length(tzdirs)) {
             warning("no Olson database found")
             return(character())
-        } else tzdir <- tzdirs[1]
+        } else tzdir <- tzdirs[1L]
     }
     x <- list.files(tzdir, recursive = TRUE)
-    ## all auxiliary files are l/case.
+    ## some databases have VERSION, some +VERSION, some neither
+    x <- setdiff(x, "VERSION")
+    ## all other auxiliary files are l/case.
     grep("^[ABCDEFGHIJKLMNOPQRSTUVWXYZ]", x, value = TRUE)
 }
