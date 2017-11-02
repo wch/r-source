@@ -225,7 +225,9 @@ solely of a simple type such as an atomic vector or function.
 @node Rest of header, The 'data', SEXPTYPEs, SEXPs
 @subsection Rest of header
 
-The @code{sxpinfo} header is defined as a 32-bit C structure by
+Note that the size and structure of the header will change in @R{} 3.5.0.
+
+The @code{sxpinfo} header is currently defined as a 32-bit C structure by
 
 @example
 struct sxpinfo_struct @{
@@ -254,8 +256,8 @@ The @code{trace} bit is used for functions for @code{trace()} and for
 other objects when tracing duplications (see @code{tracemem}).
 
 @findex spare bit
-The @code{spare} bit is used for closures to mark them for one
-time debugging.
+The @code{spare} bit is used for closures to mark them for one-time
+debugging.
 
 @findex named bit
 @findex NAMED
