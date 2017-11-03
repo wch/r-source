@@ -364,7 +364,7 @@ static void timeout_handler(int sig)
 {
     if (sig == SIGCHLD)
 	return; /* needed for sigsuspend() to be interrupted */
-    if (sig == SIGALRM) {
+    if (tost.child_pid > 0 && sig == SIGALRM) {
 	tost.timedout = 1;
 	if (tost.kill_attempts < 3) {
 	    sig = kill_signals[tost.kill_attempts];
@@ -383,10 +383,16 @@ static void timeout_handler(int sig)
 	kill(tost.child_pid, sig);
 	/* NOTE: don't signal the group and  don't send SIGCONT
 	         for interactive jobs */
+	int saveerrno = errno;
+	/* on macOS, killpg fails with EPERM for groups with zombies */
 	killpg(tost.child_pid, sig);
+	errno = saveerrno;
 	if (sig != SIGKILL && sig != SIGCONT) {
 	    kill(tost.child_pid, SIGCONT);
+	    saveerrno = errno;
+	    /* on macOS, killpg fails with EPERM for groups with zombies */
 	    killpg(tost.child_pid, SIGCONT);
+	    errno = saveerrno;
 	}
     } else if (tost.child_pid == 0) {
 	/* child */
@@ -427,6 +433,19 @@ static void timeout_cend(void *data)
 	timeout_wait(NULL);
     }
     timeout_cleanup();
+}
+
+/* Fork with blocked SIGCHLD to make sure that tost.child_pid is set
+   in the parent before the signal is received. Also makes sure
+   SIGCHLD is unblocked in the parent after the call. */
+static void timeout_fork()
+{
+    sigset_t css; 
+    sigemptyset(&css);
+    sigaddset(&css, SIGCHLD);
+    sigprocmask(SIG_BLOCK, &css, NULL);
+    tost.child_pid = fork();
+    sigprocmask(SIG_UNBLOCK, &css, NULL);
 }
 
 /* R_popen_timeout, R_pclose_timeout - a partial implementation of popen/close
@@ -475,7 +494,7 @@ static FILE *R_popen_timeout(const char *cmd, const char *type, int timeout)
 
     signal(SIGTTIN, SIG_IGN);
     signal(SIGTTOU, SIG_IGN);
-    tost.child_pid = fork();
+    timeout_fork();
 
     if (tost.child_pid == 0) {
 	/* child */
@@ -556,7 +575,7 @@ static int R_system_timeout(const char *cmd, int timeout)
     timeout_init();
     signal(SIGTTIN, SIG_IGN);
     signal(SIGTTOU, SIG_IGN);
-    tost.child_pid = fork();
+    timeout_fork();
 
     if (tost.child_pid == 0) {
 	/* child */
