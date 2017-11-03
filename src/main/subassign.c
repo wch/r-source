@@ -1577,8 +1577,8 @@ SEXP attribute_hidden do_subassign_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	  permute[permute, 1] <- 1:3
 	  as.vector(permute)
     */
-    for (SEXP a = args; a != R_NilValue; a = CDR(a)) {
-	SEXP idx = CAR(args);
+    for (SEXP s = subs; s != R_NilValue; s = CDR(s)) {
+	SEXP idx = CAR(s);
 	if (x == idx)
 	    MARK_NOT_MUTABLE(x);
     }
