@@ -32,7 +32,7 @@ writeChar(object, con, nchars = nchar(object, type = "chars"),
   \item{object}{A character vector to be written to the connection, at
     least as long as \code{nchars}.}
 
-  \item{eos}{\sQuote{end of string}: character string .  The terminator
+  \item{eos}{\sQuote{end of string}: character string.  The terminator
     to be written after each string, followed by an ASCII \code{nul};
     use \code{NULL} for no terminator at all.}
 }

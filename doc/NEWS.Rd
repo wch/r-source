@@ -91,7 +91,6 @@
 
       \item \command{system()} and \command{system2()} now allow the
       specification of a maximum elapsed time (\sQuote{timeout}).
-      (This feature is currently experimental and subject to change.)
 
       \item \code{debug()} supports debugging of methods on any object
       of S4 class \code{"genericFunction"}, including group generics.
@@ -198,6 +197,12 @@
       \item \code{system(*, intern = FALSE)}, \code{system2()} (when not
       capturing output), \code{file.edit()} and \code{file.show()} now
       issue a warning when the external command cannot be executed.
+
+      \item The \dQuote{default} (\code{"lm"} etc) methods of \code{vcov()}
+      have gained new optional argument \code{complete = TRUE} which
+      makes the \code{vcov()} methods more consistent with the
+      \code{coef()} methods in the case of singular designs.  The
+      former behavior is now achieved by \code{vcov(*, complete=FALSE)}.
     }
   }
 
@@ -208,14 +213,11 @@
       serial installs this uses the \sQuote{timeout} argument of
       \code{system2()}: for parallel installs it requires the
       \command{timeout} utility command from GNU \pkg{coreutils}.
-      [This is currently experimental and subject to change.]
 
       \item It is now possible to set \sQuote{timeouts} (elapsed-time
       limits) for most parts of \command{R CMD check} \emph{via}
       environment variables documented in the \sQuote{R Internals}
-      manual. [This depends on the experimental \sQuote{timeout} argument
-      of \code{system2()} and hence subject to change, as are the names
-      of the environment variables.]
+      manual.
 
       \item The \sQuote{BioC extra} repository which was dropped from
       BioC 3.6 has been removed from \code{setRepositories()}.  This
