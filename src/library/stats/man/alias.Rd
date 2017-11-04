@@ -41,9 +41,9 @@ alias(object, \dots)
   have their coefficients omitted from the fit. Partial aliasing refers
   to effects that can be estimated less precisely because of
   correlations induced by the design.
-  
+
   Some parts of the \code{"lm"} method require recommended package
-  \CRANpkg{MASS} to be installed. 
+  \CRANpkg{MASS} to be installed.
 }
 \value{
   A list (of \code{\link{class}} \code{"\link{listof}"}) containing components
@@ -70,7 +70,7 @@ alias(object, \dots)
   The design was inspired by the S function of the same name described
   in Chambers \emph{et al} (1992).
 }
-\examples{\donttest{
+\examples{\donttest{% as it loads  MASS
 op <- options(contrasts = c("contr.helmert", "contr.poly"))
 npk.aov <- aov(yield ~ block + N*P*K, npk)
 alias(npk.aov)

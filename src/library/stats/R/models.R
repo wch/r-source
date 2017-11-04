@@ -258,7 +258,7 @@ terms.formula <- function(x, specials = NULL, abb = NULL, data = NULL,
             tmp <- c(tmp, tmp2[ind])
         }
 	rhs <- if(length(tmp)) paste(tmp, collapse = " + ") else "1"
-	if(!attr(terms(object), "intercept")) rhs <- paste(rhs, "- 1")
+	if(!attr(Terms, "intercept")) rhs <- paste(rhs, "- 1")
         if(length(form <- formula(object)) > 2L) {
             res <- formula(paste("lhs ~", rhs))
             res[[2L]] <- form[[2L]]
@@ -282,7 +282,11 @@ terms.formula <- function(x, specials = NULL, abb = NULL, data = NULL,
 }
 
 coef <- function(object, ...) UseMethod("coef")
-coef.default <- function(object, ...) object$coefficients
+## 'complete': be compatible with vcov() --> complete=FALSE is new option
+coef.default <- function(object, complete=TRUE, ...) {
+    cf <- object$coefficients
+    if(complete) cf else cf[!is.na(cf)]
+}
 coefficients <- coef
 
 residuals <- function(object, ...) UseMethod("residuals")
@@ -596,7 +600,7 @@ model.matrix.default <- function(object, data = environment(object),
 	isF <- FALSE
 	data[["x"]] <- raw(nrow(data))
     }
-    ans <- .External2(C_modelmatrix, t, data)
+    ans <- .External2(C_modelmatrix, t, data) # modelmatrix() in ../src/model.c
     cons <- if(any(isF))
 	lapply(data[isF], attr, "contrasts") ## else NULL
     attr(ans, "contrasts") <- cons

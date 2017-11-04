@@ -202,7 +202,11 @@
       have gained new optional argument \code{complete = TRUE} which
       makes the \code{vcov()} methods more consistent with the
       \code{coef()} methods in the case of singular designs.  The
-      former behavior is now achieved by \code{vcov(*, complete=FALSE)}.
+      former (\dQuote{back compatible}) behavior is now achieved by
+      \code{vcov(*, complete=FALSE)}.
+
+      \item \code{coef()} methods also gain a \code{complete = TRUE}
+      optional argument for consistency with \code{vcov()}.
     }
   }
 

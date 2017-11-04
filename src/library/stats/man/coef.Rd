@@ -1,19 +1,26 @@
 % File src/library/stats/man/coef.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{coef}
 \title{Extract Model Coefficients}
+\alias{coef}
+\alias{coefficients}
+\alias{coef.default}% not exported
 \usage{
 coef(object, \dots)
 coefficients(object, \dots)
+\S3method{coef}{default}(object, complete = TRUE, \dots)
 }
-\alias{coef}
-\alias{coefficients}
 \arguments{
   \item{object}{an object for which the extraction of model coefficients is
     meaningful.}
+  \item{complete}{for the default method (used for \code{lm}, etc):
+    logical indicating if the full coefficient vector should be returned
+    also in case of an over-determined system where some coefficients will be set
+    to \code{\link{NA}}, see also \code{\link{alias}}.  This argument
+    also exists for compatibility with \code{\link{vcov}} methods.}
   \item{\dots}{other arguments.}
 }
 \description{
