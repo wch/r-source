@@ -368,10 +368,16 @@ SEXP attribute_hidden do_sort(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	if((decreasing && sorted == KNOWN_DECR) ||
 	   (!decreasing && sorted == KNOWN_INCR)) {
-	    
-	    PROTECT(ans = ALTREP_DUPLICATE_EX(x, FALSE));nprot++;
-	    SET_ATTRIB(ans, R_NilValue);
-	    SET_OBJECT(ans, 0);
+	    if (ATTRIB(x) == R_NilValue)
+		ans = x;
+	    else {
+		/* instead of duplicating we could create a no-atrbute
+		   wrapper */
+		PROTECT(ans = ALTREP_DUPLICATE_EX(x, FALSE)); nprot++;
+		SET_ATTRIB(ans, R_NilValue);
+		if (OBJECT(ans)) SET_OBJECT(ans, 0);
+		if (IS_S4_OBJECT(ans)) UNSET_S4_OBJECT(ans);
+	    }
 	    UNPROTECT(nprot);
 	    return ans;
 	}

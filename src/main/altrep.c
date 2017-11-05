@@ -409,13 +409,21 @@ R_xlen_t INTEGER_GET_REGION(SEXP sx, R_xlen_t i, R_xlen_t n, int *buf)
 
 int INTEGER_IS_SORTED(SEXP x)
 {
+#ifdef CHECK_FOR_NONEXP
     return ALTREP_NONEXP(x) ?
 	ALTINTEGER_DISPATCH(Is_sorted, x) : UNKNOWN_SORTEDNESS;
+#else
+    return ALTREP(x) ? ALTINTEGER_DISPATCH(Is_sorted, x) : UNKNOWN_SORTEDNESS;
+#endif
 }
 
 int INTEGER_NO_NA(SEXP x)
 {
+#ifdef CHECK_FOR_NONEXP
     return ALTREP_NONEXP(x) ? ALTINTEGER_DISPATCH(No_NA, x) : 0;
+#else
+    return ALTREP(x) ? ALTINTEGER_DISPATCH(No_NA, x) : 0;
+#endif    
 }
 
 SEXP INTEGER_IS_NA(SEXP x)
@@ -474,13 +482,21 @@ R_xlen_t REAL_GET_REGION(SEXP sx, R_xlen_t i, R_xlen_t n, double *buf)
 
 int REAL_IS_SORTED(SEXP x)
 {
+#ifdef CHECK_FOR_NONEXP
     return ALTREP_NONEXP(x) ?
 	ALTREAL_DISPATCH(Is_sorted, x) : UNKNOWN_SORTEDNESS;
+#else
+    return ALTREP(x) ? ALTREAL_DISPATCH(Is_sorted, x) : UNKNOWN_SORTEDNESS;
+#endif
 }
 
 int REAL_NO_NA(SEXP x)
 {
+#ifdef CHECK_FOR_NONEXP
     return ALTREP_NONEXP(x) ? ALTREAL_DISPATCH(No_NA, x) : 0;
+#else
+    return ALTREP(x) ? ALTREAL_DISPATCH(No_NA, x) : 0;
+#endif
 }
 
 SEXP /*attribute_hidden*/ ALTSTRING_ELT(SEXP x, R_xlen_t i)
