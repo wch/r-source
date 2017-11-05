@@ -1593,7 +1593,7 @@ static R_INLINE R_xlen_t compact_intseq_Length(SEXP x)
 static void *compact_intseq_Dataptr(SEXP x, Rboolean writeable)
 {
     if (ALTINTEGER_EXPANDED(x) == R_NilValue) {
-	/* no need to re-run if expended data exists */
+	/* no need to re-run if expanded data exists */
 	PROTECT(x);
 	SEXP info = ALTREP_INFO(x);
 	int n = COMPACT_INTSEQ_INFO_LENGTH(info);
@@ -3492,7 +3492,7 @@ static SEXP wrapper_Duplicate(SEXP x, Rboolean deep)
     SEXP data = WRAPPER_WRAPPED(x);
 
     /* For a deep copy, duplicate the data. */
-    /* For a shallow copy, mark as immutable in the NAMED word; with
+    /* For a shallow copy, mark as immutable in the NAMED world; with
        reference counting the reference count will be incremented when
        the data is installed in the new wrapper object. */
     if (deep)
