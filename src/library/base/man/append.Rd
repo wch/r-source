@@ -13,7 +13,7 @@
 append(x, values, after = length(x))
 }
 \arguments{
-  \item{x}{the vector to be modified.}
+  \item{x}{the vector the values are to be appended to.}
   \item{values}{to be included in the modified vector.}
   \item{after}{a subscript, after which the values are to be appended.}
 }
