@@ -2,7 +2,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  file run.c: a simple 'reading' pipe (and a command executor)
  *  Copyright  (C) 1999-2001  Guido Masarotto and Brian Ripley
- *             (C) 2007-2014  The R Core Team
+ *             (C) 2007-2017  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -621,6 +621,12 @@ int rpipeClose(rpipe *r, int *timedout)
 
     if (!r) return NOLAUNCH;
     rpipeTerminate(r);
+    /* threadedwait may have obtained the exit code of the pipe process,
+       but also may have been terminated too early; retrieve the exit
+       code again to avoid race condition */
+    DWORD ret;
+    GetExitCodeProcess(r->pi.hProcess, &ret);
+    r->exitcode = ret;
     CloseHandle(r->read);
     CloseHandle(r->write);
     CloseHandle(r->pi.hProcess);
