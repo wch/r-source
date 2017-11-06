@@ -723,6 +723,12 @@ SEXP attribute_hidden do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    res = pclose(fp);
 	else 
 	    res = R_pclose_timeout(fp);
+
+	/* On Solaris, pclose sometimes returns -1 and sets errno to ESPIPE
+	   (Illegal seek). In that case, do_system reports 0 exit status and
+	   displays a warning via warn_status. ESPIPE is not mentioned by
+	   POSIX as possible outcome of pclose. */
+
 #ifdef HAVE_SYS_WAIT_H
 	if (WIFEXITED(res)) res = WEXITSTATUS(res);
 	else res = 0;
