@@ -291,11 +291,7 @@ typedef struct SEXPREC {
 /* The generational collector uses a reduced version of SEXPREC as a
    header in vector nodes.  The layout MUST be kept consistent with
    the SEXPREC definition.  The standard SEXPREC takes up 7 words on
-   most hardware; this reduced version should take up only 6 words.
-   In addition to slightly reducing memory use, this can lead to more
-   favorable data alignment on 32-bit architectures like the Intel
-   Pentium III where odd word alignment of doubles is allowed but much
-   less efficient than even word alignment. */
+   most hardware; this reduced version should take up only 6 words. */
 typedef struct VECTOR_SEXPREC {
     SEXPREC_HEADER;
     struct vecsxp_struct vecsxp;
