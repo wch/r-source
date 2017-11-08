@@ -207,6 +207,9 @@
 
       \item \code{coef()} methods also gain a \code{complete = TRUE}
       optional argument for consistency with \code{vcov()}.
+
+      \item \code{attach(*, pos = 1)} is now an error instead of a
+      warning.
     }
   }
 

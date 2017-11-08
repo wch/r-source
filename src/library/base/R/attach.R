@@ -84,11 +84,8 @@ attach <- function(what, pos = 2L, name = deparse(substitute(what), backtick=FAL
         }
     }
 
-    if(pos == 1L) {
-        warning("*** 'pos=1' is not possible; setting 'pos=2' for now.\n",
-                "*** Note that 'pos=1' will give an error in the future")
-        pos <- 2L
-    }
+    if(pos == 1L)
+        stop("'pos=1' is not possible and has been warned about for years")
     if (is.character(what) && (length(what) == 1L)){
         if (!file.exists(what))
             stop(gettextf("file '%s' not found", what), domain = NA)
