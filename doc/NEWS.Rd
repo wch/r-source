@@ -127,7 +127,7 @@
       only once, using the more readable \code{(tag = value)} syntax.
 
       These functions gain a new (partly experimental) control option
-      \emph{via} \code{.deparseOpts()}, \code{"nice_names"}, which when
+      \emph{via} \code{.deparseOpts()}, \code{"niceNames"}, which when
       set (e.g.\sspace{}as part of \code{"all"}) also use the \code{(tag
       = value)} syntax for atomic vectors.
 

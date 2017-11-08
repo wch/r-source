@@ -103,7 +103,7 @@ rbind <- function(..., deparse.level = 1)
       "keepInteger", "quoteExpressions", "showAttributes", # 2,3,4
       "useSource", "warnIncomplete", "delayPromises",      # 5,6,7
       "keepNA", "S_compatible", "hexNumeric",              # 8,9,10
-      "digits17", "nice_names")                            # 11,12
+      "digits17", "niceNames")                             # 11,12
 
 .deparseOpts <- function(control) {
     if(!length(control)) return(0) # fast exit
