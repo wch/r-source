@@ -995,24 +995,16 @@ makeSubscript(SEXP x, SEXP s, R_xlen_t *stretch, SEXP call)
 	ans = logicalSubscript(s, ns, nx, stretch, call);
 	break;
     case INTSXP:
-	PROTECT(s = duplicate(s));
-	SET_ATTRIB(s, R_NilValue);
-	SET_OBJECT(s, 0);
 	ans = integerSubscript(s, ns, nx, stretch, call);
-	UNPROTECT(1);
 	break;
     case REALSXP:
 	ans = realSubscript(s, ns, nx, stretch, call);
 	break;
     case STRSXP:
     {
-	PROTECT(s = duplicate(s));
-	SET_ATTRIB(s, R_NilValue);
-	SET_OBJECT(s, 0);
 	SEXP names = getAttrib(x, R_NamesSymbol);
 	/* *stretch = 0; */
 	ans = stringSubscript(s, ns, nx, names, stretch, call);
-	UNPROTECT(1);
 	break;
     }
     case SYMSXP:
