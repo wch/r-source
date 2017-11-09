@@ -282,11 +282,12 @@ terms.formula <- function(x, specials = NULL, abb = NULL, data = NULL,
 }
 
 coef <- function(object, ...) UseMethod("coef")
-## 'complete': be compatible with vcov() --> complete=FALSE is new option
+## 'complete': be compatible with vcov()
 coef.default <- function(object, complete=TRUE, ...) {
     cf <- object$coefficients
     if(complete) cf else cf[!is.na(cf)]
 }
+coef.aov <- coef.default; formals(coef.aov)[["complete"]] <- FALSE
 coefficients <- coef
 
 residuals <- function(object, ...) UseMethod("residuals")

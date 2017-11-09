@@ -205,8 +205,12 @@
       former (\dQuote{back compatible}) behavior is now achieved by
       \code{vcov(*, complete=FALSE)}.
 
-      \item \code{coef()} methods also gain a \code{complete = TRUE}
-      optional argument for consistency with \code{vcov()}.
+      \item \code{coef()} methods (for \code{lm} etc) also gain a
+      \code{complete = TRUE} optional argument for consistency with
+      \code{vcov()}. \cr
+      For \code{"aov"}, both \code{coef()} and \code{vcov()} methods
+      remain back compatibly consistent, using the \emph{other} default,
+      \code{complete = FALSE}.
 
       \item \code{attach(*, pos = 1)} is now an error instead of a
       warning.
