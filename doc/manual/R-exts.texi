@@ -2629,7 +2629,7 @@ SystemRequirements: C++14
 @end example
 @noindent
 in the @file{DESCRIPTION} file. Finally, the C++14 compiler can be
-used systematically by setting the environment variable @env{USE_CXX17}.
+used systematically by setting the environment variable @env{USE_CXX14}.
 
 Note that code written for C++11 that emulates features of C++14 will
 not necessarily compile under a C++14 compiler@footnote{As from @R{}
