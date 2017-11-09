@@ -30,7 +30,7 @@
       registered as a global variable when registering a reference class
       method.
 
-      \item \code{tempdir(check = TRUE)} recreates the \code{tmpdir()} if
+      \item \code{tempdir(check = TRUE)} recreates the \code{tempdir()} if
       it is no longer valid (e.g.\sspace{}because some other process has
       cleaned up the \file{/tmp} directory).
 
