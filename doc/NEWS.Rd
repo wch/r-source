@@ -432,6 +432,9 @@
       \item The self starting function \code{attr(SSlogis, "initial")}
       now also works when the y values have exact minimum zero and is
       slightly changed in general, behaving symmetrically in the y range.
+
+      \item The printing of named raw vectors is now formatted nicely as
+      for other such atomic vectors, thanks to Lukas Stadler.
     }
   }
 }

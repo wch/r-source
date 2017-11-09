@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2017-10-29 r73639) -- "Unsuffered Consequences"
+R Under development (unstable) (2017-11-09 r73697) -- "Unsuffered Consequences"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -7857,9 +7857,10 @@ logical       1
  AsIs [1:2, 1:2] 3.14 6.28 9.42 12.57
 > ## did look ugly (because of toString() for numbers) in R <= 3.3.1
 > 
-> ## check automatic coercions from double to integer
 > 
-> # these should work due to coercion
+> ## check automatic coercions from double to integer
+> ##
+> ## these should work due to coercion
 > sprintf("%d", 1)
 [1] "1"
 > sprintf("%d", NA_real_)
@@ -7870,8 +7871,8 @@ logical       1
 [1] "1"  "NA"
 > sprintf("%d", c(NA,1))
 [1] "NA" "1" 
-> 
-> # these should fail
+> ##
+> ## these should fail
 > sprintf("%d", 1.1)
 Error in sprintf("%d", 1.1) : 
   invalid format '%d'; use format %f, %e, %g or %a for numeric objects
@@ -7887,4 +7888,13 @@ Error in sprintf("%d", NaN) :
 > sprintf("%d", c(1,NaN))
 Error in sprintf("%d", c(1, NaN)) : 
   invalid format '%d'; use format %f, %e, %g or %a for numeric objects
+> 
+> 
+> ## formatting of named raws:
+> setNames(as.raw(1:3), c("a", "bbbb", "c"))
+   a bbbb    c 
+  01   02   03 
+> ## was quite ugly for R <= 3.4.2
+> 
+> 
 > 

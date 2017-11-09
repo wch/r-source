@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2017-10-29 r73639) -- "Unsuffered Consequences"
+R Under development (unstable) (2017-11-09 r73697) -- "Unsuffered Consequences"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -4322,7 +4322,7 @@ X-squared = 4.3, df = 4, p-value = 0.3669
 > 
 > ### Name: coef
 > ### Title: Extract Model Coefficients
-> ### Aliases: coef coefficients
+> ### Aliases: coef coefficients coef.default coef.aov
 > ### Keywords: regression models
 > 
 > ### ** Examples
