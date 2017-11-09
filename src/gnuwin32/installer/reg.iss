@@ -1,7 +1,7 @@
 [Icons]
-Name: "{group}\R @RVER@"; Filename: "{app}\bin\i386\Rgui.exe"; WorkingDir: "{userdocs}"
-Name: "{commondesktop}\R @RVER@"; Filename: "{app}\bin\i386\Rgui.exe"; MinVersion: 0,5.0; Tasks: desktopicon; WorkingDir: "{userdocs}"
-Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\R @RVER@"; Filename: "{app}\bin\i386\Rgui.exe"; Tasks: quicklaunchicon; WorkingDir: "{userdocs}"
+Name: "{group}\R @RVER@"; Filename: "{app}\bin\i386\Rgui.exe"; WorkingDir: "{app}"; Parameters: "--cd-to-userdocs"
+Name: "{commondesktop}\R @RVER@"; Filename: "{app}\bin\i386\Rgui.exe"; MinVersion: 0,5.0; Tasks: desktopicon; WorkingDir: "{app}"; Parameters: "--cd-to-userdocs"
+Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\R @RVER@"; Filename: "{app}\bin\i386\Rgui.exe"; Tasks: quicklaunchicon; WorkingDir: "{app}"; Parameters: "--cd-to-userdocs"
 
 [Registry] 
 Root: HKLM; Subkey: "Software\@Producer@"; Flags: uninsdeletekeyifempty; Tasks: recordversion; Check: IsAdmin

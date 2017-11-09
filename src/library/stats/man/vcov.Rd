@@ -6,6 +6,7 @@
 \name{vcov}
 \title{Calculate Variance-Covariance Matrix for a Fitted Model Object}
 \alias{vcov}
+\alias{vcov.aov}
 \alias{vcov.lm}
 \alias{vcov.glm}
 \alias{vcov.summary.lm}
@@ -23,6 +24,7 @@
 vcov(object, \dots)
 \S3method{vcov}{lm}(object, complete = TRUE, \dots)
 ## and also for '[summary.]glm' and 'mlm'
+\S3method{vcov}{aov}(object, complete = FALSE, \dots)
 
 .vcov.aliased(aliased, vc, complete = TRUE)
 }
@@ -31,7 +33,7 @@ vcov(object, \dots)
     a fitted model object, typically.  Sometimes also a
     \code{\link{summary}()} object of such a fitted model.
   }
-  \item{complete}{for the \code{lm}, \code{glm}, \code{mlm}, and where
+  \item{complete}{for the \code{aov}, \code{lm}, \code{glm}, \code{mlm}, and where
     applicable \code{summary.lm} etc methods: logical indicating if the
     full variance-covariance matrix should be returned also in case of
     an over-determined system where some coefficients are undefined and
@@ -42,10 +44,11 @@ vcov(object, \dots)
     additional arguments for method functions.  For the
     \code{\link{glm}} method this can be used to pass a
     \code{dispersion} parameter.}
+  %% for .vcov.aliased() :
   \item{aliased}{a \code{\link{logical}} vector typically identical to
     \code{is.na(coef(.))} indicating which coefficients are \sQuote{aliased}.}
   \item{vc}{a variance-covariance matrix, typically \dQuote{incomplete},
-    i.e., .}
+    i.e., with no rows and columns for aliased coefficients.}
 }
 \details{
   \code{vcov()} is a generic function and functions with names beginning
@@ -79,9 +82,10 @@ vcov(object, \dots)
   hence \code{NA} because of linearly dependent terms (or an
   \dQuote{over specified} model), also called
   \dQuote{aliased}, see \code{\link{alias}}, then since \R version 3.5.0,
-  \code{vcov()} (iff \code{complete = TRUE}, i.e., by default) contains
-  corresponding rows and columns of \code{NA}s, wherever
-  \code{\link{coef}()} has always contained such \code{NA}s.
+  \code{vcov()} (iff \code{complete = TRUE}, i.e., by default for
+  \code{lm} etc, but not for \code{aov}) contains corresponding rows and
+  columns of \code{NA}s, wherever \code{\link{coef}()} has always
+  contained such \code{NA}s.
 }
 \keyword{models}
 \keyword{nonlinear}

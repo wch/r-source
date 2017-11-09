@@ -30,29 +30,31 @@
   following strings (exactly those in \code{..deparseOpts}.  Partial
   string matching is used.
   \describe{
-    \item{\code{keepInteger}}{
+    \item{\code{"keepInteger"}:}{
       Either surround integer vectors by \code{as.integer()} or use
       suffix \code{L}, so they are not converted to type double when
       parsed.  This includes making sure that integer \code{NA}s are
       preserved (via \code{NA_integer_} if there are no non-\code{NA}
       values in the vector, unless \code{"S_compatible"} is set).
     }
-    \item{\code{quoteExpressions}}{
+    \item{\code{"quoteExpressions"}:}{
       Surround expressions with \code{quote()}, so they are not
       evaluated when re-parsed.
     }
-    \item{\code{showAttributes}}{
-      If the object has attributes (other than a \code{source}
-      attribute), use \code{structure()} to display them as well as the
-      object value.  This is the default for \code{\link{deparse}} and
-      \code{\link{dput}}.
+    \item{\code{"showAttributes"}:}{
+      If the object has \code{\link{attributes}} (other than a \code{source}
+      attribute, see \code{\link{srcref}}), use \code{\link{structure}()}
+      to display them as well as the object value unless the only such
+      attribute is \code{names} and the \code{"niceNames"} option is set.
+      This (\code{"showAttributes"}) is the default for
+      \code{\link{deparse}} and \code{\link{dput}}.
     }
-    \item{\code{useSource}}{
-      If the object has a \code{source} attribute, display that instead
-      of deparsing the object.  Currently only applies to function
-      definitions.
+    \item{\code{"useSource"}:}{
+      If the object has a \code{source} attribute (\code{\link{srcref}}),
+      display that instead of deparsing the object.  Currently only
+      applies to function definitions.
     }
-    \item{\code{warnIncomplete}}{
+    \item{\code{"warnIncomplete"}:}{
       Some exotic objects such as \link{environment}s, external
       pointers, etc. can not be deparsed properly.  This option causes a
       warning to be issued if the deparser recognizes one of these
@@ -61,33 +63,34 @@
       Also, the parser in \R < 2.7.0 would only accept strings of up to
       8192 bytes, and this option gives a warning for longer strings.
     }
-    \item{\code{keepNA}}{
+    \item{\code{"keepNA"}:}{
       Integer, real and character \code{NA}s are surrounded by coercion
       functions where necessary to ensure that they are parsed to the
       same type.  Since e.g.\sspace{}\code{NA_real_} can be output in \R, this is
       mainly used in connection with \code{S_compatible}.
     }
-    \item{\code{nice_names}}{
-      If true, named % they are anyway (_FIXME_): \code{\link{list}}s and named
-      atomic vectors are deparsed as e.g., \code{c(A = 1)} instead of
-      \code{structure(1, .Names = "A")}.
+    \item{\code{"niceNames"}:}{
+      If true, \code{\link{list}}s and atomic vectors with non-\code{\link{NA}}
+      names (see \code{\link{names}}) are deparsed as e.g., \code{c(A = 1)}
+      instead of \code{structure(1, .Names = "A")}, independently of the
+      \code{"showAttributes"} setting.
     }
-    \item{\code{all}}{
+    \item{\code{"all"}:}{
       An abbreviated way to specify all of the options
       listed above.  This is the default for \code{dump}, and the options
       used by \code{\link{edit}} (which are fixed).
     }
-    \item{\code{delayPromises}}{
+    \item{\code{"delayPromises"}:}{
       Deparse promises in the form <promise: expression> rather than
       evaluating them.  The value and the environment of the promise
       will not be shown and the deparsed code cannot be sourced.
     }
-    \item{\code{S_compatible}}{
+    \item{\code{"S_compatible"}:}{
       Make deparsing as far as possible compatible with S and \R < 2.5.0.
       For compatibility with S, integer values of double vectors are
       deparsed with a trailing decimal point.  Backticks are not used.
     }
-    \item{\code{hexNumeric}}{
+    \item{\code{"hexNumeric"}:}{
       Real and finite complex numbers are output in \samp{"\%a"} format as
       binary fractions (coded as hexadecimal: see \code{\link{sprintf}})
       with maximal opportunity to be recorded exactly to full precision.
@@ -97,7 +100,7 @@
       (This relies on that format being correctly supported: known
       problems on Windows are worked around as from \R 3.1.2.)
     }
-    \item{\code{digits17}}{
+    \item{\code{"digits17"}:}{
       Real and finite complex numbers are output using format
       \samp{"\%.17g"} which may give more precision than the default
       (but the output will depend on the platform and there may be loss

@@ -30,7 +30,7 @@
       registered as a global variable when registering a reference class
       method.
 
-      \item \code{tempdir(check = TRUE)} recreates the \code{tmpdir()} if
+      \item \code{tempdir(check = TRUE)} recreates the \code{tempdir()} if
       it is no longer valid (e.g.\sspace{}because some other process has
       cleaned up the \file{/tmp} directory).
 
@@ -127,7 +127,7 @@
       only once, using the more readable \code{(tag = value)} syntax.
 
       These functions gain a new (partly experimental) control option
-      \emph{via} \code{.deparseOpts()}, \code{"nice_names"}, which when
+      \emph{via} \code{.deparseOpts()}, \code{"niceNames"}, which when
       set (e.g.\sspace{}as part of \code{"all"}) also use the \code{(tag
       = value)} syntax for atomic vectors.
 
@@ -202,7 +202,18 @@
       have gained new optional argument \code{complete = TRUE} which
       makes the \code{vcov()} methods more consistent with the
       \code{coef()} methods in the case of singular designs.  The
-      former behavior is now achieved by \code{vcov(*, complete=FALSE)}.
+      former (\dQuote{back compatible}) behavior is now achieved by
+      \code{vcov(*, complete=FALSE)}.
+
+      \item \code{coef()} methods (for \code{lm} etc) also gain a
+      \code{complete = TRUE} optional argument for consistency with
+      \code{vcov()}. \cr
+      For \code{"aov"}, both \code{coef()} and \code{vcov()} methods
+      remain back compatibly consistent, using the \emph{other} default,
+      \code{complete = FALSE}.
+
+      \item \code{attach(*, pos = 1)} is now an error instead of a
+      warning.
     }
   }
 

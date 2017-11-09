@@ -42,6 +42,10 @@ vcov.glm <- function(object, complete = TRUE, ...) vcov.summary.glm(summary.glm(
 
 vcov.lm <- function(object, complete = TRUE, ...) vcov.summary.lm(summary.lm(object), complete=complete, ...)
 
+## To be consistent with coef.aov() which has complete = FALSE :
+vcov.aov <- vcov.lm ; formals(vcov.aov)$complete <- FALSE
+
+
 vcov.mlm <- function(object, complete = TRUE, ...)
 {
     so <- summary.mlm(object)[[1L]]

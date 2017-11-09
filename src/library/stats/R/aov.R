@@ -400,15 +400,11 @@ print.summary.aov <-
     invisible(x)
 }
 
-coef.aov <- function(object, ...)
-{
-    z <- object$coefficients
-    z[!is.na(z)]
-}
+## coef.aov() := coef.default _but_ with different default for 'complete'
+## --> in ./models.R
 
 # For maov objects, the coefficients are a matrix and
 # NAs can't sensibly be removed (PR#16380)
-
 coef.maov <- function(object, ...)
     object$coefficients
 

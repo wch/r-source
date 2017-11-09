@@ -1,19 +1,30 @@
 % File src/library/stats/man/coef.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{coef}
 \title{Extract Model Coefficients}
+\alias{coef}
+\alias{coefficients}
+\alias{coef.default}% not exported
+\alias{coef.aov}
 \usage{
 coef(object, \dots)
 coefficients(object, \dots)
+\S3method{coef}{default}(object, complete = TRUE, \dots)
+\S3method{coef}{aov}(object, complete = FALSE, \dots)
 }
-\alias{coef}
-\alias{coefficients}
 \arguments{
   \item{object}{an object for which the extraction of model coefficients is
     meaningful.}
+  \item{complete}{for the default (used for \code{lm}, etc) and
+    \code{aov} methods:
+    logical indicating if the full coefficient vector should be returned
+    also in case of an over-determined system where some coefficients
+    will be set to \code{\link{NA}}, see also \code{\link{alias}}.  Note
+    that the default \emph{differs} for \code{\link{lm}()} and
+    \code{\link{aov}()} results.}
   \item{\dots}{other arguments.}
 }
 \description{
@@ -26,8 +37,15 @@ coefficients(object, \dots)
   should provide a \code{coef} method or use the default one.
   (Note that the method is for \code{coef} and not \code{coefficients}.)
 
-  Class \code{"aov"} has a \code{coef} method that does not report
-  aliased coefficients (see \code{\link{alias}}).
+  The \code{"aov"} method does not report aliased coefficients (see
+  \code{\link{alias}}) by default where \code{complete = FALSE}.
+
+  The \code{complete} argument also exists for compatibility with
+  \code{\link{vcov}} methods, and \code{coef} and \code{aov} methods for
+  other classes should typically also keep the \code{complete = *}
+  behavior in sync.  By that, with \code{p <- length(coef(obj, complete = TF))},
+  \code{dim(vcov(obj, complete = TF)) == c(p,p)} will be fulfilled for both
+  \code{complete} settings and the default.
 }
 \value{
   Coefficients extracted from the model object \code{object}.

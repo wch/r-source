@@ -50,7 +50,7 @@ seq_len(length.out)
   Note that it dispatches on the class of the \strong{first} argument
   irrespective of argument names.  This can have unintended consequences
   if it is called with just one argument intending this to be taken as
-  \code{along.with}: it is much better to use \code{seg_along} in that
+  \code{along.with}: it is much better to use \code{seq_along} in that
   case.
 
   \code{seq.int} is an \link{internal generic} which dispatches on

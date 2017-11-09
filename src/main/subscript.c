@@ -665,21 +665,23 @@ static SEXP
 integerSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, R_xlen_t *stretch, SEXP call)
 {
     R_xlen_t i;
-    int ii, min, max, canstretch;
+    int ii, neg, max, canstretch;
     Rboolean isna = FALSE;
     canstretch = *stretch > 0;
     *stretch = 0;
-    min = 0;
+    neg = FALSE;
     max = 0;
     int *ps = INTEGER(s);
     for (i = 0; i < ns; i++) {
 	ii = ps[i];
-	if (ii != NA_INTEGER) {
-	    if (ii < min)
-		min = ii;
-	    if (ii > max)
-		max = ii;
-	} else isna = TRUE;
+	if (ii < 0) {
+	    if (ii == NA_INTEGER)
+		isna = TRUE;
+	    else
+		neg = TRUE;
+	}
+	else if (ii > max)
+	    max = ii;
     }
     if (max > nx) {
 	if(canstretch) *stretch = max;
@@ -687,7 +689,7 @@ integerSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, R_xlen_t *stretch, SEXP call)
 	    ECALL(call, _("subscript out of bounds"));
 	}
     }
-    if (min < 0) {
+    if (neg) {
 	if (max == 0 && !isna) return negativeSubscript(s, ns, nx, call);
 	else {
 	    ECALL(call, _("only 0's may be mixed with negative subscripts"));
@@ -995,24 +997,16 @@ makeSubscript(SEXP x, SEXP s, R_xlen_t *stretch, SEXP call)
 	ans = logicalSubscript(s, ns, nx, stretch, call);
 	break;
     case INTSXP:
-	PROTECT(s = duplicate(s));
-	SET_ATTRIB(s, R_NilValue);
-	SET_OBJECT(s, 0);
 	ans = integerSubscript(s, ns, nx, stretch, call);
-	UNPROTECT(1);
 	break;
     case REALSXP:
 	ans = realSubscript(s, ns, nx, stretch, call);
 	break;
     case STRSXP:
     {
-	PROTECT(s = duplicate(s));
-	SET_ATTRIB(s, R_NilValue);
-	SET_OBJECT(s, 0);
 	SEXP names = getAttrib(x, R_NamesSymbol);
 	/* *stretch = 0; */
 	ans = stringSubscript(s, ns, nx, names, stretch, call);
-	UNPROTECT(1);
 	break;
     }
     case SYMSXP:

@@ -1,6 +1,6 @@
 % File src/library/base/man/which.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{which}
@@ -45,7 +45,7 @@ arrayInd(ind, .dim, .dimnames = NULL, useNames = FALSE)
   Examples below.
 }
 \note{
-  Unlike most other base \R functions this does not coerce to \code{x}
+  Unlike most other base \R functions this does not coerce \code{x}
   to logical: only arguments with \code{\link{typeof}} logical are
   accepted and others give an error.
 }

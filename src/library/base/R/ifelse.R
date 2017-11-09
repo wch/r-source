@@ -1,7 +1,7 @@
 #  File src/library/base/R/ifelse.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -44,11 +44,10 @@ ifelse <- function (test, yes, no)
     else ## typically a "class"; storage.mode<-() typically fails
 	test <- if(isS4(test)) methods::as(test, "logical") else as.logical(test)
     ans <- test
-    ok <- !(nas <- is.na(test))
+    ok <- !is.na(test)
     if (any(test[ok]))
 	ans[test & ok] <- rep(yes, length.out = length(ans))[test & ok]
     if (any(!test[ok]))
 	ans[!test & ok] <- rep(no, length.out = length(ans))[!test & ok]
-    ans[nas] <- NA
     ans
 }
