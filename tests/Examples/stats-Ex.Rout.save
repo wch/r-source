@@ -4300,7 +4300,7 @@ X-squared = 4.3, df = 4, p-value = 0.3669
 > 
 > ### Name: coef
 > ### Title: Extract Model Coefficients
-> ### Aliases: coef coefficients
+> ### Aliases: coef coefficients coef.default coef.aov
 > ### Keywords: regression models
 > 
 > ### ** Examples
