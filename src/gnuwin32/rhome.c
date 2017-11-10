@@ -66,6 +66,7 @@ char *getRHOME(int m)
     for (p = rhomebuf; *p; p++)
 	if (isspace(*p)) { hasspace = 1; break; }
     if (hasspace)
+	/* NOTE: this fails when short names are not enabled */
 	GetShortPathName(rhomebuf, rhomebuf, MAX_PATH);
     return (rhomebuf);
 }

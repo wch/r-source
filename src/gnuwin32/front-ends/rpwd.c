@@ -45,6 +45,7 @@ int main (int argc, char **argv)
 	for (p = buf; *p; p++) 
 	    if (isspace(*p)) { hasspace = 1; break; }
 	if (hasspace)
+	    /* NOTE: short names are not always enabled */
 	    GetShortPathName(buf, buf, MAX_PATH);
 	for (p = buf; *p; p++)
 	    if (*p == '\\') *p = '/';
