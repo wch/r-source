@@ -160,6 +160,8 @@ pd0 <- function(expr, backtick = TRUE,
 id_epd <- function(expr, control = c("all","digits17"), ...)
     eval(pd0(expr, control=control, ...))
 dPut <- function(x, control = c("all","digits17")) dput(x, control=control)
+##' Does 'x' contain "real" numbers
+##' with > 3 digits after "." where deparse may be platform dependent?
 hasReal <- function(x) {
     if(is.double(x) || is.complex(x))
         !all((x == round(x, 3)) | is.na(x))
@@ -177,14 +179,23 @@ hasReal <- function(x) {
     else FALSE
 }
 isMissObj <- function(obj) identical(obj, alist(a=)[[1]])
+##' Does 'obj' contain "the missing object" ?
+##' @note defined recursively!
+hasMissObj <- function(obj) {
+    if(is.recursive(obj)) {
+        if(is.function(obj) || is.language(obj))
+            FALSE
+        else # incl pairlist()s
+            any(vapply(obj, hasMissObj, NA))
+    } else isMissObj(obj)
+}
 check_EPD <- function(obj, show = !hasReal(obj),
                       eq.tol = if(.Machine$sizeof.longdouble <= 8) # no long-double
                                    2*.Machine$double.eps else 0) {
     if(show) dPut(obj)
-    if(is.environment(obj) ||
-       (is.pairlist(obj) && any(vapply(obj, isMissObj, NA))))
-    {
-        cat("__ not parse()able __\n")
+    if(is.environment(obj) || hasMissObj(obj)) {
+        cat("__ not parse()able __:",
+           if(is.environment(obj)) "environment" else "hasMissObj(.) is true", "\n")
         return(invisible(obj)) # cannot parse it
     }
     ob2 <- id_epd(obj)
@@ -225,6 +236,10 @@ i6 <- setNames(5:6, letters[5:6])
 L4  <- list(ii = 5:2) # not named
 L6  <- list(L = i6)
 L6a <- list(L = structure(rev(i6), myDoc = "info"))
+## these must use structure() to keep NA_character_ name:
+LNA <- setNames(as.list(c(1,2,99)), c("A", "NA", NA))
+iNA <- unlist(LNA)
+missL <- setNames(rep(list(alist(.=)$.), 3), c("",NA,"c"))
 ## empty *named* atomic vectors
 i00 <- setNames(integer(), character()); i0 <- structure(i00, foo = "bar")
 L00 <- setNames(logical(), character()); L0 <- structure(L00, class = "Logi")
@@ -232,7 +247,8 @@ r00 <- setNames(raw(), character())
 sii <- structure(4:7, foo = list(B="bar", G="grizzly",
                                  vec=c(a=1L,b=2L), v2=i6, v0=L00))
 
-## Creating a collection of S4 objects, ensuring deparse <-> parse are inverses
+if(getRversion() >= "3.5.0") {
+    ## Creating a collection of S4 objects, ensuring deparse <-> parse are inverses
 library(methods)
 example(new) # creating t1 & t2 at least
 if(require("Matrix")) { cat("Trying some Matrix objects, too\n")
@@ -266,7 +282,9 @@ if(require("Matrix")) { cat("Trying some Matrix objects, too\n")
     sy <- sparseMatrix(i= c(2,4,3:5), j= c(4,7:5,5), x = 1:5,
                        dims = c(7,7), symmetric=TRUE)
 }
+}# S4 deparse()ing only since R 3.5.0
 
+## Action!  Check deparse <--> parse  consistency for *all* objects:
 for(nm in ls(env=.GlobalEnv)) {
     cat(nm,": ", sep="")
     ## if(!any(nm == "r1")) ## 'r1' fails

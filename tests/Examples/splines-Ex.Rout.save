@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2017-10-29 r73639) -- "Unsuffered Consequences"
+R Under development (unstable) (2017-11-09 r73692) -- "Unsuffered Consequences"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -149,7 +149,7 @@ F-statistic: 1.298e+04 on 5 and 9 DF,  p-value: < 2.2e-16
 > plot(women, xlab = "Height (in)", ylab = "Weight (lb)")
 > ht <- seq(57, 73, length.out = 200)
 > lines(ht, predict(fm1, data.frame(height = ht)))
-Warning in bs(height, degree = 3L, knots = c(62.6666666666667, 67.3333333333333 :
+Warning in bs(height, degree = 3L, knots = c(`33.33333%` = 62.6666666666667,  :
   some 'x' values beyond boundary knots may cause ill-conditioned bases
 > ## Don't show: 
 > ## Consistency:
@@ -256,8 +256,8 @@ F-statistic:  9609 on 5 and 9 DF,  p-value: < 2.2e-16
 > 
 > ## To see what knots were selected
 > attr(terms(fm1), "predvars")
-list(weight, ns(height, knots = c(60.8, 63.6, 66.4, 69.2), Boundary.knots = c(58, 
-72), intercept = FALSE))
+list(weight, ns(height, knots = c(`20%` = 60.8, `40%` = 63.6, 
+`60%` = 66.4, `80%` = 69.2), Boundary.knots = c(58, 72), intercept = FALSE))
 > 
 > ## example of safe prediction
 > plot(women, xlab = "Height (in)", ylab = "Weight (lb)")
@@ -582,7 +582,7 @@ attr(,"class")
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.213 0.009 0.223 0 0 
+Time elapsed:  0.155 0.012 0.199 0 0 
 > grDevices::dev.off()
 null device 
           1 

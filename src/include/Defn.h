@@ -1075,7 +1075,7 @@ void R_SetVarLocValue(R_varloc_t, SEXP);
 #define NICE_NAMES             	1024
 /* common combinations of the above */
 #define SIMPLEDEPARSE		0
-#define DEFAULTDEPARSE		65 /* KEEPINTEGER | KEEPNA, used for calls */
+#define DEFAULTDEPARSE		1089 /* KEEPINTEGER | KEEPNA | NICE_NAMES, used for calls */
 #define FORSOURCING		95 /* not DELAYPROMISES, used in edit.c */
 
 /* Coercion functions */
