@@ -47,6 +47,7 @@ extern void R_ProcessEvents(void);
 #include "sock.h"
 
 #include <R_ext/Print.h> // for REprintf
+#include <Rmath.h> /* for ceil */
 
 static int sock_inited = 0;
 
@@ -299,12 +300,12 @@ int R_SocketWaitMultiple(int nsock, int *insockfd, int *ready, int *write,
 	    if (mytimeout < 0 || R_wait_usec / 1e-6 < mytimeout - used)
 		delta = R_wait_usec;
 	    else
-		delta = (int)(1e6 * (mytimeout - used));
+		delta = (int)ceil(1e6 * (mytimeout - used));
 	    tv.tv_sec = 0;
 	    tv.tv_usec = delta;
 	} else if (mytimeout >= 0) {
 	    tv.tv_sec = (int)(mytimeout - used);
-	    tv.tv_usec = (int)(1e6 * (mytimeout - used - tv.tv_sec));
+	    tv.tv_usec = (int)ceil(1e6 * (mytimeout - used - tv.tv_sec));
 	} else {  /* always poll occationally--not really necessary */
 	    tv.tv_sec = 60;
 	    tv.tv_usec = 0;
@@ -315,7 +316,7 @@ int R_SocketWaitMultiple(int nsock, int *insockfd, int *ready, int *write,
 #else
 	if (mytimeout >= 0) {
 	    tv.tv_sec = mytimeout - used;
-	    tv.tv_usec = 1e6 * (mytimeout - used - tv.tv_sec);
+	    tv.tv_usec = ceil(1e6 * (mytimeout - used - tv.tv_sec));
 	} else {  /* always poll occasionally--not really necessary */
 	    tv.tv_sec = timeout;
 	    tv.tv_usec = 0;
