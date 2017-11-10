@@ -166,7 +166,10 @@ mclapply <- function(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
         this <- job.res[[i]]
         if (inherits(this, "try-error")) { ## length-1 result
             for (j in sindex[[i]]) res[[j]] <- this
-        } else res[sindex[[i]]] <- this
+        } else 
+            ## we can't just assign it since a NULL
+            ## assignment would remove it from the list
+            if (!is.null(this)) res[sindex[[i]]] <- this
     }
     if (length(has.errors)) {
         if (length(has.errors) == cores)
