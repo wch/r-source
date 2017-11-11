@@ -216,6 +216,10 @@
 
       \item \code{attach(*, pos = 1)} is now an error instead of a
       warning.
+
+      \item New function \code{getDefaultCluster()} in package
+      \pkg{parallel} to get the default cluster set via
+      \code{setDefaultCluster()}.
     }
   }
 
