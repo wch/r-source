@@ -822,7 +822,7 @@ static SEXP HashLookup(SEXP table, SEXP x, HashData *d)
 
     n = XLENGTH(x);
     PROTECT(ans = allocVector(INTSXP, n));
-    int *pa = INTEGER(ans);
+    int *pa = INTEGER0(ans);
     for (i = 0; i < n; i++) {
 //	if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 	pa[i] = Lookup(table, x, i, d);
@@ -861,7 +861,7 @@ SEXP match5(SEXP itable, SEXP ix, int nmatch, SEXP incomp, SEXP env)
     if (n == 0) return allocVector(INTSXP, 0);
     if (length(itable) == 0) {
 	ans = allocVector(INTSXP, n);
-	int *pa = INTEGER(ans);
+	int *pa = INTEGER0(ans);
 	for (R_xlen_t i = 0; i < n; i++) pa[i] = nmatch;
 	return ans;
     }
@@ -1091,7 +1091,7 @@ SEXP attribute_hidden do_pmatch(SEXP call, SEXP op, SEXP args, SEXP env)
     in = (const char **) R_alloc((size_t) n_input, sizeof(char *));
     tar = (const char **) R_alloc((size_t) n_target, sizeof(char *));
     PROTECT(ans = allocVector(INTSXP, n_input));
-    ians = INTEGER(ans);
+    ians = INTEGER0(ans);
     if(useBytes) {
 	for(R_xlen_t i = 0; i < n_input; i++) {
 	    in[i] = CHAR(STRING_ELT(input, i));
@@ -1223,7 +1223,7 @@ SEXP attribute_hidden do_charmatch(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     PROTECT(ans = allocVector(INTSXP, n_input));
-    int *ians = INTEGER(ans);
+    int *ians = INTEGER0(ans);
 
     const void *vmax = vmaxget();  // prudence: .Internal does this too.
     for(R_xlen_t i = 0; i < n_input; i++) {
@@ -1498,7 +1498,7 @@ rowsum(SEXP x, SEXP g, SEXP uniqueg, SEXP snarm, SEXP rn)
 	}
 	break;
     case INTSXP:
-	Memzero(INTEGER(ans), ng*p);
+	Memzero(INTEGER0(ans), ng*p);
 	for(int i = 0; i < p; i++) {
 	    int *pa = INTEGER0(ans);
 	    for(int j = 0; j < n; j++) {
@@ -1644,7 +1644,7 @@ static SEXP duplicated2(SEXP x, HashData *d)
     PROTECT(ans = allocVector(INTSXP, n));
 
     int *h = HTDATA_INT(d);
-    int *v = INTEGER(ans);
+    int *v = INTEGER0(ans);
     for (i = 0; i < d->M; i++) h[i] = NIL;
     for (i = 0; i < n; i++) {
 //	if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
@@ -1774,7 +1774,7 @@ SEXP attribute_hidden do_sample2(SEXP call, SEXP op, SEXP args, SEXP env)
     GetRNGstate();
     if (dn > INT_MAX) {
 	ans = PROTECT(allocVector(REALSXP, k));
-	double *ry = REAL(ans);
+	double *ry = REAL0(ans);
 	HashTableSetup(ans, &data, NA_INTEGER);
 	PROTECT(data.HashTable);
 	for (int i = 0; i < k; i++)
@@ -1784,7 +1784,7 @@ SEXP attribute_hidden do_sample2(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
    } else {
 	ans = PROTECT(allocVector(INTSXP, k));
-	int *iy = INTEGER(ans);
+	int *iy = INTEGER0(ans);
 	HashTableSetup(ans, &data, NA_INTEGER);
 	PROTECT(data.HashTable);
 	for (int i = 0; i < k; i++)
