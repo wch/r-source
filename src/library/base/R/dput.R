@@ -17,8 +17,8 @@
 #  https://www.R-project.org/Licenses/
 
 dput <-
-    function(x, file = "",
-             control = c("keepNA", "keepInteger", "showAttributes"))
+    function(x, file = "", ## keep in sync with deparse()  ./New-Internal.R :
+	     control = c("keepNA", "keepInteger", "niceNames", "showAttributes"))
 {
     if(is.character(file))
         if(nzchar(file)) {

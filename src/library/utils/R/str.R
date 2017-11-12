@@ -212,7 +212,7 @@ str.default <-
     has.class <- S4 || !is.null(cl) # S3 or S4
     mod <- ""; char.like <- FALSE
     if(give.attr) a <- attributes(object)#-- save for later...
-    dCtrl <- eval(formals(deparse)$control)
+    dCtrl <- unique(c(eval(formals(deparse)$control), "niceNames"))
     if(drop.deparse.attr) dCtrl <- dCtrl[dCtrl != "showAttributes"]
     deParse <- function(.) deparse(., width.cutoff = min(500L, max(20L, width-10L)),
 				   control = dCtrl)

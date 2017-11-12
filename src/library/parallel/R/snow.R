@@ -35,6 +35,10 @@ setDefaultCluster <- function(cl = NULL)
     assign("default", cl, envir = .reg)
 }
 
+getDefaultCluster <-
+function()
+    get("default", envir = .reg)
+
 #
 # Checking and subsetting
 #

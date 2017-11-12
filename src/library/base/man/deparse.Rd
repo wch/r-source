@@ -11,9 +11,8 @@
 }
 \usage{
 deparse(expr, width.cutoff = 60L,
-        backtick = mode(expr) \%in\%
-            c("call", "expression", "(", "function"),
-        control = c("keepInteger", "showAttributes", "keepNA"),
+        backtick = mode(expr) \%in\% c("call", "expression", "(", "function"),
+        control = c("keepNA", "keepInteger", "niceNames", "showAttributes"),
         nlines = -1L)
 }
 \arguments{

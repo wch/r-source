@@ -9,6 +9,7 @@
 \alias{makeForkCluster}
 \alias{stopCluster}
 \alias{setDefaultCluster}
+\alias{getDefaultCluster}
 \alias{R_PARALLEL_PORT}
 
 \title{
@@ -26,6 +27,7 @@ makeForkCluster(nnodes = getOption("mc.cores", 2L), ...)
 stopCluster(cl = NULL)
 
 setDefaultCluster(cl = NULL)
+getDefaultCluster()
 }
 \arguments{
   \item{spec}{A specification appropriate to the type of cluster.}
@@ -121,7 +123,11 @@ setDefaultCluster(cl = NULL)
 }
 
 \value{
-  An object of class \code{c("SOCKcluster", "cluster")}.
+  For the cluster creators, an object of class
+  \code{c("SOCKcluster", "cluster")}.
+
+  For the default cluster setter and getter, the registered default
+  cluster or \code{NULL} if there is no such cluster.
 }
 
 \author{

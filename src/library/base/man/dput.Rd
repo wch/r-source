@@ -1,6 +1,6 @@
 % File src/library/base/man/dput.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{dput}
@@ -13,7 +13,7 @@
 }
 \usage{
 dput(x, file = "",
-     control = c("keepNA", "keepInteger", "showAttributes"))
+     control = c("keepNA", "keepInteger", "niceNames", "showAttributes"))
 
 dget(file, keep.source = FALSE)
 }
@@ -60,7 +60,7 @@ dget(file, keep.source = FALSE)
   designed to be used for transporting \R data, and will work with \R
   objects that \code{dput} does not handle correctly as well as being
   much faster.
-  
+
   To avoid the risk of a source attribute out of sync with the actual
   function definition, the source attribute of a function will never
   be written as an attribute.
@@ -98,6 +98,12 @@ dput(xx, "foo", control = "digits17")
 dget("foo") - xx # slight rounding on some platforms
 dput(xx, "foo", control = "hexNumeric"); dget("foo") - xx
 unlink("foo")
+
+xn <- setNames(xx, paste0("pi^",1:3))
+dput(xn) # nicer, now "niceNames" being part of default 'control'
+dput(xn, control = "S_compat") # no names
+## explicitly asking for output as in R < 3.5.0:
+dput(xn, control = c("keepNA", "keepInteger", "showAttributes"))
 }
 \keyword{file}
 \keyword{programming}

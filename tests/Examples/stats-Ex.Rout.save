@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2017-10-29 r73639) -- "Unsuffered Consequences"
+R Under development (unstable) (2017-11-09 r73697) -- "Unsuffered Consequences"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -4322,7 +4322,7 @@ X-squared = 4.3, df = 4, p-value = 0.3669
 > 
 > ### Name: coef
 > ### Title: Extract Model Coefficients
-> ### Aliases: coef coefficients
+> ### Aliases: coef coefficients coef.default coef.aov
 > ### Keywords: regression models
 > 
 > ### ** Examples
@@ -16156,10 +16156,11 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > 
 > ## look at the internal structure:
 > unclass(sfun0)
-function (v) 
-.approxfun(x, y, v, method, yleft, yright, f)
-<bytecode: 0x5266b70>
-<environment: 0x8a59e70>
+structure(function (v) 
+.approxfun(x, y, v, method, yleft, yright, f), call = stepfun(1:3, 
+    y0, f = 0))
+<bytecode: 0x14e2a760>
+<environment: 0x28d89dd0>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -18483,7 +18484,7 @@ Number of Fisher Scoring iterations: 6
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  6.568 0.139 6.872 0 0 
+Time elapsed:  5.321 0.284 5.81 0 0 
 > grDevices::dev.off()
 null device 
           1 
