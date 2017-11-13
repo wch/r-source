@@ -79,13 +79,12 @@ writable.
 operations. These methods can return a `C` `NULL` to defer to the
 standard protocol.
 
-`Dataptr` and `Dataptr_or_null` take a second argument indicating
+`Dataptr` takes a second argument indicating
 whether the pointer returned should allow modification of the data
 pointed to.  For compatibility the `DATAPTR` function and the `REAL`,
 `INTEGER`, etc, macros defined in terms of `DATAPTR` will request a
-writable pointer from an `ALTVEC` object. New functions
-`REAL_OR_NULL`, `INTEGER_OR_NULL`, etc, function take a second
-argument specifying whether the data should be writable.
+writable pointer from an `ALTVEC` object. `Dataptr_or_null` returns a
+`const` pointer.
 
 `Dataptr` methods might need to allocate memory; they are currently
 invoked with GC suspended since `DATAPTR` previously would not
