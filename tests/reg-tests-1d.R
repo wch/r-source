@@ -97,6 +97,11 @@ stopifnot(identical(deparse(z, 200, control = "digits17"),
 	  all.equal(z2, eval(parse(text = dz2)), tolerance = 3e-16)) # seen 2.2e-35 on 32b
 ## deparse() for these was "ugly" in R <= 3.3.x
 
+## deparse of formals of a function
+fun <- function(a=1,b){}
+frmls <- tryCatch(eval(parse(text=deparse(formals(fun)))), error = identity)
+stopifnot(identical(frmls, formals(fun)))
+
 
 ## length(environment(.)) == #{objects}
 stopifnot(identical(length(      baseenv()),
