@@ -115,10 +115,10 @@ INLINE_FUN void *DATAPTR_RO(SEXP x) {
 	return STDVEC_DATAPTR(x);
 }
 
-INLINE_FUN void *DATAPTR_OR_NULL(SEXP x, Rboolean writeable) {
+INLINE_FUN const void *DATAPTR_OR_NULL(SEXP x) {
     CHKVEC(x);
     if (ALTREP(x))
-	return ALTVEC_DATAPTR_OR_NULL(x, writeable);
+	return ALTVEC_DATAPTR_OR_NULL(x);
     else
 	return STDVEC_DATAPTR(x);
 }
@@ -148,29 +148,29 @@ INLINE_FUN void *DATAPTR_OR_NULL(SEXP x, Rboolean writeable) {
 # define CHECK_VECTOR_RAW(x) do { } while(0)
 #endif
 
-INLINE_FUN int *LOGICAL_OR_NULL(SEXP x, Rboolean writeable) {
+INLINE_FUN const int *LOGICAL_OR_NULL(SEXP x) {
     CHECK_VECTOR_LGL(x);
-    return ALTREP(x) ? ALTVEC_DATAPTR_OR_NULL(x, writeable) : STDVEC_DATAPTR(x);
+    return ALTREP(x) ? ALTVEC_DATAPTR_OR_NULL(x) : STDVEC_DATAPTR(x);
 }
 
-INLINE_FUN int *INTEGER_OR_NULL(SEXP x, Rboolean writeable) {
+INLINE_FUN const int *INTEGER_OR_NULL(SEXP x) {
     CHECK_VECTOR_INT(x);
-    return ALTREP(x) ? ALTVEC_DATAPTR_OR_NULL(x, writeable) : STDVEC_DATAPTR(x);
+    return ALTREP(x) ? ALTVEC_DATAPTR_OR_NULL(x) : STDVEC_DATAPTR(x);
 }
 
-INLINE_FUN double *REAL_OR_NULL(SEXP x, Rboolean writeable) {
+INLINE_FUN const double *REAL_OR_NULL(SEXP x) {
     CHECK_VECTOR_REAL(x);
-    return ALTREP(x) ? ALTVEC_DATAPTR_OR_NULL(x, writeable) : STDVEC_DATAPTR(x);
+    return ALTREP(x) ? ALTVEC_DATAPTR_OR_NULL(x) : STDVEC_DATAPTR(x);
 }
 
-INLINE_FUN double *COMPLEX_OR_NULL(SEXP x, Rboolean writeable) {
+INLINE_FUN const double *COMPLEX_OR_NULL(SEXP x) {
     CHECK_VECTOR_CPLX(x);
-    return ALTREP(x) ? ALTVEC_DATAPTR_OR_NULL(x, writeable) : STDVEC_DATAPTR(x);
+    return ALTREP(x) ? ALTVEC_DATAPTR_OR_NULL(x) : STDVEC_DATAPTR(x);
 }
 
-INLINE_FUN double *RAW_OR_NULL(SEXP x, Rboolean writeable) {
+INLINE_FUN const double *RAW_OR_NULL(SEXP x) {
     CHECK_VECTOR_RAW(x);
-    return ALTREP(x) ? ALTVEC_DATAPTR_OR_NULL(x, writeable) : STDVEC_DATAPTR(x);
+    return ALTREP(x) ? ALTVEC_DATAPTR_OR_NULL(x) : STDVEC_DATAPTR(x);
 }
 
 INLINE_FUN R_xlen_t XLENGTH_EX(SEXP x)
@@ -382,31 +382,23 @@ INLINE_FUN double REAL_ELT(SEXP x, R_xlen_t i)
     return ALTREP(x) ? ALTREAL_ELT(x, i) : REAL0(x)[i];
 }
 
-INLINE_FUN double SET_REAL_ELT(SEXP x, R_xlen_t i, double v)
+INLINE_FUN void SET_REAL_ELT(SEXP x, R_xlen_t i, double v)
 {
     CHECK_VECTOR_REAL_ELT(x, i);
-    double *px = REAL_OR_NULL(x, FALSE);
-    if(px != NULL) {
-	px[i] = v;
-	return v;
-    } else {
-	return ALTREAL_SET_ELT(x, i, v);
-    }
-    return 0.0; /* never hit */
+    if (ALTREP(x))
+	ALTREAL_SET_ELT(x, i, v);
+    else
+	REAL0(x)[i] = v;
 }
 
 
-INLINE_FUN int SET_INTEGER_ELT(SEXP x, R_xlen_t i, int v)
+INLINE_FUN void SET_INTEGER_ELT(SEXP x, R_xlen_t i, int v)
 {
     CHECK_VECTOR_INT_ELT(x, i);
-    int *px = INTEGER_OR_NULL(x, FALSE);
-    if(px != NULL) {
-	px[i] = v;
-	return v;
-    } else {
-	return ALTINTEGER_SET_ELT(x, i, v);
-    }
-    return 0; /*never hit*/
+    if (ALTREP(x))
+	ALTINTEGER_SET_ELT(x, i, v);
+    else
+	INTEGER0(x)[i] = v;
 }
 
 
