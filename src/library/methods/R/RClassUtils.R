@@ -1616,18 +1616,19 @@ setDataPart <- function(object, value, check = TRUE) {
         if(is.null(packageSlot(toClass))) # is this possible?
             packageSlot(toClass) <- toDef@package
     }
+    chClass <- as.character(toClass) # dropping package attrib
     if(sameSlots)
 	substitute({class(from) <- CLASS; from}, list(CLASS = toClass))
     else if(length(toSlots) == 0L) {
 	## either a basic class or something with the same representation
-	if(is.na(match(toClass, .BasicClasses)))
+	if(is.na(match(chClass, .BasicClasses)))
 	    substitute({ attributes(from) <- NULL; class(from) <- CLASS; from},
 		       list(CLASS = toClass))
 	else if(isVirtualClass(toDef))
 	    quote(from)
 	else {
 	    ## a basic class; a vector type, matrix, array, or ts
-	    switch(toClass,
+	    switch(chClass,
 		   matrix = , array = {
 		       quote({.dm <- dim(from); .dn <- dimnames(from)
 			      attributes(from) <- NULL; dim(from) <- .dm
@@ -1646,7 +1647,7 @@ setDataPart <- function(object, value, check = TRUE) {
 		     for(what in TOSLOTS)
 			 slot(value, what) <- slot(from, what)
 		     value },
-		   list(CLASS = toClass, TOSLOTS = toSlots))
+		   list(CLASS = chClass, TOSLOTS = toSlots))
     }
 }
 
