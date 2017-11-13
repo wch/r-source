@@ -403,6 +403,11 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 #define VECTOR_ELT(x,i)	((SEXP *) DATAPTR(x))[i]
 #define STRING_PTR(x)	((SEXP *) DATAPTR(x))
 #define VECTOR_PTR(x)	((SEXP *) DATAPTR(x))
+#define LOGICAL_RO(x)	((const int *) DATAPTR_RO(x))
+#define INTEGER_RO(x)	((const int *) DATAPTR_RO(x))
+#define RAW_RO(x)	((const Rbyte *) DATAPTR_RO(x))
+#define COMPLEX_RO(x)	((const Rcomplex *) DATAPTR_RO(x))
+#define REAL_RO(x)	((const double *) DATAPTR_RO(x))
 
 /* List Access Macros */
 /* These also work for ... objects */
@@ -603,7 +608,8 @@ SEXP ALTREP_SERIALIZED_STATE(SEXP);
 SEXP ALTREP_UNSERIALIZE_EX(SEXP, SEXP, SEXP, int, int);
 R_xlen_t ALTREP_LENGTH(SEXP x);
 R_xlen_t ALTREP_TRUELENGTH(SEXP x);
-void *ALTVEC_DATAPTR(SEXP x, Rboolean writable);
+void *ALTVEC_DATAPTR(SEXP x);
+const void *ALTVEC_DATAPTR_RO(SEXP x);
 const void *ALTVEC_DATAPTR_OR_NULL(SEXP x);
 SEXP ALTVEC_EXTRACT_SUBSET(SEXP x, SEXP indx, SEXP call);
 int ALTINTEGER_ELT(SEXP x, R_xlen_t i);
@@ -1482,7 +1488,7 @@ void R_Reprotect(SEXP, PROTECT_INDEX);
 # endif
 SEXP R_FixupRHS(SEXP x, SEXP y);
 void *(DATAPTR)(SEXP x);
-void *(DATAPTR_RO)(SEXP x);
+const void *(DATAPTR_RO)(SEXP x);
 const void *(DATAPTR_OR_NULL)(SEXP x);
 const int *(LOGICAL_OR_NULL)(SEXP x);
 const int *(INTEGER_OR_NULL)(SEXP x);
