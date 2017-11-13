@@ -53,7 +53,7 @@ typedef Rboolean (*R_altrep_Inspect_method_t)(SEXP, int, int, int,
 typedef R_xlen_t (*R_altrep_Length_method_t)(SEXP);
 
 typedef void *(*R_altvec_Dataptr_method_t)(SEXP, Rboolean);
-typedef void *(*R_altvec_Dataptr_or_null_method_t)(SEXP, Rboolean);
+typedef const void *(*R_altvec_Dataptr_or_null_method_t)(SEXP);
 typedef SEXP (*R_altvec_Extract_subset_method_t)(SEXP, SEXP, SEXP);
 
 typedef int (*R_altinteger_Elt_method_t)(SEXP, R_xlen_t);
