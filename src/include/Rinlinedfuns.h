@@ -102,15 +102,15 @@ INLINE_FUN void CHKVEC(SEXP x) {
 INLINE_FUN void *DATAPTR(SEXP x) {
     CHKVEC(x);
     if (ALTREP(x))
-	return ALTVEC_DATAPTR(x, TRUE);
+	return ALTVEC_DATAPTR(x);
     else
 	return STDVEC_DATAPTR(x);
 }
 
-INLINE_FUN void *DATAPTR_RO(SEXP x) {
+INLINE_FUN const void *DATAPTR_RO(SEXP x) {
     CHKVEC(x);
     if (ALTREP(x))
-	return ALTVEC_DATAPTR(x, FALSE);
+	return ALTVEC_DATAPTR_RO(x);
     else
 	return STDVEC_DATAPTR(x);
 }

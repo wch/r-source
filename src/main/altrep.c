@@ -294,7 +294,7 @@ R_xlen_t /*attribute_hidden*/ ALTREP_TRUELENGTH(SEXP x) { return 0; }
  * Generic ALTVEC support
  */
 
-void /*attribute_hidden*/ *ALTVEC_DATAPTR(SEXP x, Rboolean writeable)
+static R_INLINE void *ALTVEC_DATAPTR_EX(SEXP x, Rboolean writeable)
 {
     /**** move GC disabling into methods? */
     if (R_in_gc)
@@ -308,8 +308,17 @@ void /*attribute_hidden*/ *ALTVEC_DATAPTR(SEXP x, Rboolean writeable)
     return val;
 }
 
-const void /*attribute_hidden*/ *
-ALTVEC_DATAPTR_OR_NULL(SEXP x)
+void /*attribute_hidden*/ *ALTVEC_DATAPTR(SEXP x)
+{
+    return ALTVEC_DATAPTR_EX(x, TRUE);
+}
+
+const void /*attribute_hidden*/ *ALTVEC_DATAPTR_RO(SEXP x)
+{
+    return ALTVEC_DATAPTR_EX(x, FALSE);
+}
+
+const void /*attribute_hidden*/ *ALTVEC_DATAPTR_OR_NULL(SEXP x)
 {
     return ALTVEC_DISPATCH(Dataptr_or_null, x);
 }
@@ -325,7 +334,7 @@ SEXP attribute_hidden ALTVEC_EXTRACT_SUBSET(SEXP x, SEXP indx, SEXP call)
  */
 
 #define CHECK_NOT_EXPANDED(x)					\
-    if (DATAPTR_OR_NULL(x) != NULL)			\
+    if (DATAPTR_OR_NULL(x) != NULL)				\
 	error("method should only handle unexpanded vectors")
 
 int attribute_hidden ALTINTEGER_ELT(SEXP x, R_xlen_t i)
@@ -2125,7 +2134,8 @@ static void *wrapper_Dataptr(SEXP x, Rboolean writeable)
 	return DATAPTR(WRAPPER_WRAPPED(x));
     }
     else
-	return DATAPTR_RO(WRAPPER_WRAPPED(x));
+	/**** avoid the cast by having separate methods */
+	return (void *) DATAPTR_RO(WRAPPER_WRAPPED(x));
 }
 
 static const void *wrapper_Dataptr_or_null(SEXP x)
