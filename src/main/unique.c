@@ -92,7 +92,7 @@ static hlen lhash(SEXP x, R_xlen_t indx, HashData *d)
     return (hlen) xi;
 }
 
-static hlen ihash(SEXP x, R_xlen_t indx, HashData *d)
+static R_INLINE hlen ihash(SEXP x, R_xlen_t indx, HashData *d)
 {
     int xi = INTEGER_ELT(x, indx);
     if (xi == NA_INTEGER) return 0;
@@ -108,7 +108,7 @@ union foo {
     unsigned int u[2];
 };
 
-static hlen rhash(SEXP x, R_xlen_t indx, HashData *d)
+static R_INLINE hlen rhash(SEXP x, R_xlen_t indx, HashData *d)
 {
     /* There is a problem with signed 0s under IEC60559 */
     double xi = REAL_ELT(x, indx);
@@ -161,7 +161,7 @@ static hlen chash(SEXP x, R_xlen_t indx, HashData *d)
 
 /* Hash CHARSXP by address.  Hash values are int, For 64bit pointers,
  * we do (upper ^ lower) */
-static hlen cshash(SEXP x, R_xlen_t indx, HashData *d)
+static R_INLINE hlen cshash(SEXP x, R_xlen_t indx, HashData *d)
 {
     intptr_t z = (intptr_t) STRING_ELT(x, indx);
     unsigned int z1 = (unsigned int)(z & 0xffffffff), z2 = 0;
@@ -171,7 +171,7 @@ static hlen cshash(SEXP x, R_xlen_t indx, HashData *d)
     return scatter(z1 ^ z2, d);
 }
 
-static hlen shash(SEXP x, R_xlen_t indx, HashData *d)
+static R_INLINE hlen shash(SEXP x, R_xlen_t indx, HashData *d)
 {
     unsigned int k;
     const char *p;
@@ -193,14 +193,14 @@ static int lequal(SEXP x, R_xlen_t i, SEXP y, R_xlen_t j)
 }
 
 
-static int iequal(SEXP x, R_xlen_t i, SEXP y, R_xlen_t j)
+static R_INLINE int iequal(SEXP x, R_xlen_t i, SEXP y, R_xlen_t j)
 {
     if (i < 0 || j < 0) return 0;
     return (INTEGER_ELT(x, i) == INTEGER_ELT(y, j));
 }
 
 /* BDR 2002-1-17  We don't want NA and other NaNs to be equal */
-static int requal(SEXP x, R_xlen_t i, SEXP y, R_xlen_t j)
+static R_INLINE int requal(SEXP x, R_xlen_t i, SEXP y, R_xlen_t j)
 {
     if (i < 0 || j < 0) return 0;
     double xi = REAL_ELT(x, i);
@@ -235,7 +235,7 @@ static int cequal(SEXP x, R_xlen_t i, SEXP y, R_xlen_t j)
     return cplx_eq(COMPLEX_ELT(x, i), COMPLEX_ELT(y, j));
 }
 
-static int sequal(SEXP x, R_xlen_t i, SEXP y, R_xlen_t j)
+static R_INLINE int sequal(SEXP x, R_xlen_t i, SEXP y, R_xlen_t j)
 {
     if (i < 0 || j < 0) return 0;
     SEXP xi = STRING_ELT(x, i);
@@ -246,6 +246,9 @@ static int sequal(SEXP x, R_xlen_t i, SEXP y, R_xlen_t j)
     /* Then if either is NA the other cannot be */
     /* Once all CHARSXPs are cached, Seql will handle this */
     if (xi == NA_STRING || yj == NA_STRING)
+	return 0;
+    /* another pre-test to avoid the call to Seql */
+    if (IS_CACHED(xi) && IS_CACHED(yj) && ENC_KNOWN(xi) == ENC_KNOWN(yj))
 	return 0;
     return Seql(xi, yj);
 }
@@ -802,17 +805,27 @@ static void UndoHashing(SEXP x, SEXP table, HashData *d)
     for (R_xlen_t i = 0; i < XLENGTH(x); i++) removeEntry(table, x, i, d);
 }
 
-static int Lookup(SEXP table, SEXP x, R_xlen_t indx, HashData *d)
-{
-    int *h = HTDATA_INT(d);
-    hlen i = d->hash(x, indx, d);
-    while (h[i] != NIL) {
-	if (d->equal(table, h[i], x, indx))
-	    return h[i] >= 0 ? h[i] + 1 : d->nomatch;
-	i = (i + 1) % d->M;
+#define DEFLOOKUP(NAME, HASHFUN, EQLFUN)			\
+    static R_INLINE int						\
+    NAME(SEXP table, SEXP x, R_xlen_t indx, HashData *d)	\
+    {								\
+	int *h = HTDATA_INT(d);					\
+	hlen i = HASHFUN(x, indx, d);				\
+	while (h[i] != NIL) {					\
+	    if (EQLFUN(table, h[i], x, indx))			\
+		return h[i] >= 0 ? h[i] + 1 : d->nomatch;	\
+	    i = (i + 1) % d->M;					\
+	}							\
+	return d->nomatch;					\
     }
-    return d->nomatch;
-}
+
+/* definitions to help the C compiler to inline of most important cases */
+DEFLOOKUP(iLookup, ihash, iequal)
+DEFLOOKUP(rLookup, rhash, requal)
+DEFLOOKUP(sLookup, shash, sequal)
+
+/* definition for the general case */
+DEFLOOKUP(Lookup, d->hash, d->equal)
 
 /* Now do the table lookup */
 static SEXP HashLookup(SEXP table, SEXP x, HashData *d)
@@ -823,10 +836,25 @@ static SEXP HashLookup(SEXP table, SEXP x, HashData *d)
     n = XLENGTH(x);
     PROTECT(ans = allocVector(INTSXP, n));
     int *pa = INTEGER0(ans);
-    for (i = 0; i < n; i++) {
-//	if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-	pa[i] = Lookup(table, x, i, d);
+
+    switch (TYPEOF(x)) {
+    case INTSXP:
+	for (i = 0; i < n; i++)
+	    pa[i] = iLookup(table, x, i, d);
+	break;
+    case REALSXP:
+	for (i = 0; i < n; i++)
+	    pa[i] = rLookup(table, x, i, d);
+	break;
+    case STRSXP:
+	for (i = 0; i < n; i++)
+	    pa[i] = sLookup(table, x, i, d);
+	break;
+    default:
+	for (i = 0; i < n; i++)
+	    pa[i] = Lookup(table, x, i, d);
     }
+
     UNPROTECT(1);
     return ans;
 }
