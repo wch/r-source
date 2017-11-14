@@ -3530,6 +3530,14 @@ int *(LOGICAL)(SEXP x) {
     return LOGICAL(x);
 }
 
+const int *(LOGICAL_RO)(SEXP x) {
+    if(TYPEOF(x) != LGLSXP)
+	error("%s() can only be applied to a '%s', not a '%s'",
+	      "LOGICAL",  "logical", type2char(TYPEOF(x)));
+    CHKZLN(x);
+    return LOGICAL_RO(x);
+}
+
 /* Maybe this should exclude logicals, but it is widely used */
 int *(INTEGER)(SEXP x) {
     if(TYPEOF(x) != INTSXP && TYPEOF(x) != LGLSXP)
@@ -3539,7 +3547,23 @@ int *(INTEGER)(SEXP x) {
     return INTEGER(x);
 }
 
+const int *(INTEGER_RO)(SEXP x) {
+    if(TYPEOF(x) != INTSXP && TYPEOF(x) != LGLSXP)
+	error("%s() can only be applied to a '%s', not a '%s'",
+	      "INTEGER", "integer", type2char(TYPEOF(x)));
+    CHKZLN(x);
+    return INTEGER_RO(x);
+}
+
 Rbyte *(RAW)(SEXP x) {
+    if(TYPEOF(x) != RAWSXP)
+	error("%s() can only be applied to a '%s', not a '%s'",
+	      "RAW", "raw", type2char(TYPEOF(x)));
+    CHKZLN(x);
+    return RAW(x);
+}
+
+const Rbyte *(RAW_RO)(SEXP x) {
     if(TYPEOF(x) != RAWSXP)
 	error("%s() can only be applied to a '%s', not a '%s'",
 	      "RAW", "raw", type2char(TYPEOF(x)));
@@ -3554,12 +3578,27 @@ double *(REAL)(SEXP x) {
     return REAL(x);
 }
 
+const double *(REAL_RO)(SEXP x) {
+    if(TYPEOF(x) != REALSXP)
+	error("%s() can only be applied to a '%s', not a '%s'",
+	      "REAL", "numeric", type2char(TYPEOF(x)));
+    return REAL_RO(x);
+}
+
 Rcomplex *(COMPLEX)(SEXP x) {
     if(TYPEOF(x) != CPLXSXP)
 	error("%s() can only be applied to a '%s', not a '%s'",
 	      "COMPLEX", "complex", type2char(TYPEOF(x)));
     CHKZLN(x);
     return COMPLEX(x);
+}
+
+const Rcomplex *(COMPLEX_RO)(SEXP x) {
+    if(TYPEOF(x) != CPLXSXP)
+	error("%s() can only be applied to a '%s', not a '%s'",
+	      "COMPLEX", "complex", type2char(TYPEOF(x)));
+    CHKZLN(x);
+    return COMPLEX_RO(x);
 }
 
 SEXP *(STRING_PTR)(SEXP x) {
