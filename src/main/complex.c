@@ -333,7 +333,7 @@ SEXP attribute_hidden do_cmathfuns(SEXP call, SEXP op, SEXP args, SEXP env)
 
 /* used in format.c and printutils.c */
 #define MAX_DIGITS 22
-void attribute_hidden z_prec_r(Rcomplex *r, Rcomplex *x, double digits)
+void attribute_hidden z_prec_r(Rcomplex *r, const Rcomplex *x, double digits)
 {
     double m = 0.0, m1, m2;
     int dig, mag;
