@@ -4244,6 +4244,7 @@ setRlibs <-
                 errorLog(Log)
                 bad <- TRUE
             } else if(length(res$bad_version) ||
+                      length(res$strong_dependencies_not_in_mainstream_repositories) ||
                       identical(res$foss_with_BuildVignettes, TRUE) ||
                       res$Maintainer_invalid_or_multi_person ||
                       res$empty_Maintainer_name ||
