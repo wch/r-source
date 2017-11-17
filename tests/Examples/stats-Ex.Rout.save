@@ -1,5 +1,5 @@
 
-R version 3.4.2 Patched (2017-10-25 r73617) -- "Short Summer"
+R version 3.4.2 Patched (2017-11-17 r73741) -- "Short Summer"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -3804,7 +3804,7 @@ sigma^2 estimated as 0.4566:  log likelihood = -101.2,  aic = 212.4
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x40ffe68>
+<environment: 0x42cdd48>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -4300,7 +4300,7 @@ X-squared = 4.3, df = 4, p-value = 0.3669
 > 
 > ### Name: coef
 > ### Title: Extract Model Coefficients
-> ### Aliases: coef coefficients coef.default coef.aov
+> ### Aliases: coef coefficients
 > ### Keywords: regression models
 > 
 > ### ** Examples
@@ -4789,7 +4789,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x4608ef0>
+<bytecode: 0x2d97190>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -7345,7 +7345,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x62f3068>
+<environment: 0x4d2eda0>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -11955,14 +11955,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x56ffd50>
-<environment: 0x56f7af8>
+<bytecode: 0x50daff0>
+<environment: 0x50e1b20>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x56fef38>
-<environment: 0x56f7af8>
+<bytecode: 0x50daea0>
+<environment: 0x50e1b20>
 
 > 
 > 
@@ -16042,8 +16042,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f)
-<bytecode: 0x58e9e08>
-<environment: 0x61e03c8>
+<bytecode: 0x408d7c8>
+<environment: 0x46268b0>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -18367,7 +18367,7 @@ Number of Fisher Scoring iterations: 6
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  6.441 0.183 6.658 0 0 
+Time elapsed:  6.89 0.187 7.11 0 0 
 > grDevices::dev.off()
 null device 
           1 

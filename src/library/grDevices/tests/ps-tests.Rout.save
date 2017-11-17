@@ -1,5 +1,5 @@
 
-R version 3.4.2 Patched (2017-10-25 r73617) -- "Short Summer"
+R version 3.4.2 Patched (2017-11-17 r73741) -- "Short Summer"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -95,4 +95,4 @@ null device
 > 
 > proc.time()
    user  system elapsed 
-  0.565   0.025   0.572 
+  0.550   0.040   0.572 
