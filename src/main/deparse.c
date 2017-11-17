@@ -604,25 +604,41 @@ static Rboolean anyNA_chr(SEXP x)
     return FALSE;
 }
 
-typedef enum { SIMPLE = 0,
+typedef enum { UNKNOWN = -1,
+	       SIMPLE = 0,
 	       OK_NAMES,   // no structure(*); names written as  (n1 = v1, ..)
 	       STRUC_ATTR, // use structure(*, <attr> = *, ..) for non-names only
 	       STRUC_NMS_A // use structure(*, <attr> = *, ..)  for names, too
 } attr_type;
 
+/* Exact semantic of NICE_NAMES and SHOWATTRIBUTES i.e. "niceNames" and "showAttributes"
 
-/* Does 's' have attributes other than function source, ok-names,..
-   ==> using c(a= ., b=.) ... or structure(list(a=., ..), <no names>) or ...
-   [ Currently only called in 1 place from attr1()]
+C|  depCtrl   | attr1() result
+-| -----------+-----------------------------------------------------------------------------
+1|  NN &&  SA | STRUCT_ATTR + NN  or  STRUC_NMS_A (if NN are not "allowed")
+2| !NN &&  SA | if(has attr) STRUC_NMS_A  else "SIMPLE"
+3|  NN && !SA | OK_NAMES   ||  SIMPLE  if(!has_names)
+4| !NN && !SA | SIMPLE
+
+
+C|  depCtrl   : what should   deparse(*, control = depCtrl)   do ?
+-| -----------+-----------------------------------------------------------------------------
+1|  NN &&  SA : all attributes(but srcref); names "NICE"ly (<nam> = <val>) if valid [no NA]
+2| !NN &&  SA : all attributes( "    "   ) shown via structure(..) incl. names but no _nice_ names
+3|  NN && !SA : no attributes but names, names nicely even when "wrong" (i.e. NA in names(.))
+4| !NN && !SA : no attributes shown, not even names
+
 */
-static attr_type hasAttributes(SEXP s, Rboolean nice_names)
+
+// is *only* called  if (d->opts & SHOW_ATTR_OR_NMS) = d->opts & (SHOW_A | NICE_N)
+static attr_type attr1(SEXP s, LocalParseData *d)
 {
-    SEXP a = ATTRIB(s), nm;
-/* No longer:    if (length(a) > (nice_names ? 3 : 2)) return(STRUC_ATTR);
-   as we need to distinguish STRUC_ATTR and STRUC_NMS_A
- */
-    nm = getAttrib(s, R_NamesSymbol);
-    Rboolean has_names = !isNull(nm), ok_names;
+    SEXP a = ATTRIB(s), nm = getAttrib(s, R_NamesSymbol);
+    attr_type attr = UNKNOWN;
+    Rboolean
+	nice_names = d->opts & NICE_NAMES,
+	show_attr  = d->opts & SHOWATTRIBUTES,
+	has_names = !isNull(nm), ok_names;
     if(has_names) {
 	// ok  only if there's no  NA_character_ in names(.):
 	ok_names = nice_names && !anyNA_chr(nm);
@@ -630,32 +646,34 @@ static attr_type hasAttributes(SEXP s, Rboolean nice_names)
 	REprintf("has_names=TRUE, ok_names = %s", ok_names ? "TRUE" : "FALSE");
 #endif
 	if(!ok_names)
-	    return(STRUC_NMS_A);
+	    attr = show_attr ? STRUC_NMS_A :
+		/* nice_names */  OK_NAMES; // even when not ok
     }
-    while(!isNull(a)) {
+    while(attr == UNKNOWN && !isNull(a)) {
 	if(has_names && TAG(a) == R_NamesSymbol) {
 	    // also  ok_names = TRUE
-	} else if(TAG(a) != R_SrcrefSymbol)
-	    return(STRUC_ATTR);
+	} else if(show_attr && TAG(a) != R_SrcrefSymbol) {
+	    attr = STRUC_ATTR;
+	    break;
+	}
 	// else
 	a = CDR(a);
     }
-#ifdef DEBUG_DEPARSE
-    REprintf(" before return (%s)\n", has_names ? "OK_NAMES" : "SIMPLE");
-#endif
-    return has_names ? OK_NAMES : SIMPLE;
-}
+    if(attr == UNKNOWN)
+	attr = has_names ? OK_NAMES : SIMPLE;
 
-
-// is *only* called  if (d->opts & SHOW_ATTR_OR_NMS) = d->opts & (SHOW_A | NICE_N)
-static attr_type attr1(SEXP s, LocalParseData *d)
-{
-    attr_type attr = hasAttributes(s, /* nice_names = */ d->opts & NICE_NAMES);
     if(attr >= STRUC_ATTR) {
 #ifdef DEBUG_DEPARSE
-	REprintf(" gave %s\n", (attr == STRUC_ATTR) ? "STRUC_ATTR" : "STRUC_NMS_A");
+	REprintf(" attr1() giving %s\n",
+		 (attr == STRUC_ATTR) ? "STRUC_ATTR" : "STRUC_NMS_A");
 #endif
 	print2buff("structure(", d);
+    } else if(has_names) { // attr <= OK_NAMES
+#ifdef DEBUG_DEPARSE
+	// REprintf(" before return (%s)\n", has_names ? "OK_NAMES" : "SIMPLE");
+	REprintf("before returning attr1() = ",
+		  (attr == OK_NAMES ? "OK_NAMES" : "SIMPLE"));
+#endif
     }
     return attr;
 }

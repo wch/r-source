@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2017-11-17 r73742) -- "Unsuffered Consequences"
+R Under development (unstable) (2017-11-16 r73734) -- "Unsuffered Consequences"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -373,7 +373,7 @@ Hair    Brown Blue Hazel Green
 > # *add* notches (somewhat funny here):
 > boxplot(count ~ spray, data = InsectSprays,
 +         notch = TRUE, add = TRUE, col = "blue")
-Warning in bxp(list(stats = structure(c(7, 11, 14, 18.5, 23, 7, 12, 16.5,  :
+Warning in bxp(list(stats = c(7, 11, 14, 18.5, 23, 7, 12, 16.5, 18, 21,  :
   some notches went outside hinges ('box'): maybe set notch=FALSE
 > 
 > boxplot(decrease ~ treatment, data = OrchardSprays,
