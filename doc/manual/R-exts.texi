@@ -2480,9 +2480,9 @@ features which are not otherwise implemented in C++, and C++ compilers
 commonly accept C99 extensions to C++98.  A minor update@footnote{The
 changes are linked from
 @uref{https://isocpp.org/@/std/@/standing-documents/@/sd-6-sg10-feature-test-recommendations}.}
-to C++11 (C++14) was published in December 2014.  The next standard has
-been sent to ISO and is likely to be approved in 2017: it is informally
-known as C++17.
+to C++11 (C++14) was published in December 2014.  The next standard
+(C++17) was approved in Sept 2017 and will be published by ISO in due
+course.
 
 What standard a C++ compiler aims to support can be hard to determine:
 the value@footnote{Values @code{199711}, @code{201103L} and
@@ -2497,7 +2497,8 @@ native@footnote{Some distributions, notably Debian, have supplied a
 build of @command{clang} with @command{g++}'s headers and library.
 Conversely, Apple's command named @command{g++} is based on
 @command{clang} using @code{libc++}.}  @code{libc++} headers and library
-includes many C++11 features, and does not support TR1.
+includes most C++14 features, and does not support TR1.  As from version
+6.0.0, @command{clang} is expected to default to C++14.
 
 Since version 3.1.0, @R{} has provided support for C++11 in packages in
 addition to C++98.  This support is not uniform across platforms as it
