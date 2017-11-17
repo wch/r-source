@@ -311,6 +311,7 @@ SEXP deparse1line(SEXP call, Rboolean abbrev)
     return(temp);
 }
 
+// called only from ./errors.c  for calls in warnings and errors :
 SEXP attribute_hidden deparse1s(SEXP call)
 {
    SEXP temp;
@@ -645,6 +646,8 @@ static attr_type hasAttributes(SEXP s, Rboolean nice_names)
     return has_names ? OK_NAMES : SIMPLE;
 }
 
+
+// is *only* called  if (d->opts & SHOW_ATTR_OR_NMS) = d->opts & (SHOW_A | NICE_N)
 static attr_type attr1(SEXP s, LocalParseData *d)
 {
     attr_type attr = hasAttributes(s, /* nice_names = */ d->opts & NICE_NAMES);
@@ -659,52 +662,49 @@ static attr_type attr1(SEXP s, LocalParseData *d)
 
 static void attr2(SEXP s, LocalParseData *d, Rboolean not_names)
 {
-    // not needed, as attr2() must be called only if(hasAttributes(.)) :
-    /* if(hasAttributes(s, nice_names)) { */
-	SEXP a = ATTRIB(s);
-	while(!isNull(a)) {
-	    if(TAG(a) != R_SrcrefSymbol &&
- 	       !(TAG(a) == R_NamesSymbol && not_names)) {
-		print2buff(", ", d);
-		if(TAG(a) == R_DimSymbol) {
-		    print2buff(".Dim", d);
-		}
-		else if(TAG(a) == R_DimNamesSymbol) {
-		    print2buff(".Dimnames", d);
-		}
-		else if(TAG(a) == R_NamesSymbol) {
-		    print2buff(".Names", d);
-		}
-		else if(TAG(a) == R_TspSymbol) {
-		    print2buff(".Tsp", d);
-		}
-		else if(TAG(a) == R_LevelsSymbol) {
-		    print2buff(".Label", d);
-		}
-		else {
-		    /* TAG(a) might contain spaces etc */
-		    const char *tag = CHAR(PRINTNAME(TAG(a)));
-		    int d_opts_in = d->opts;
-		    d->opts = SIMPLEDEPARSE; /* turn off quote()ing */
-		    if(isValidName(tag))
-			deparse2buff(TAG(a), d);
-		    else {
-			print2buff("\"", d);
-			deparse2buff(TAG(a), d);
-			print2buff("\"", d);
-		    }
-		    d->opts = d_opts_in;
-		}
-		print2buff(" = ", d);
-		Rboolean fnarg = d->fnarg;
-		d->fnarg = TRUE;
-		deparse2buff(CAR(a), d);
-		d->fnarg = fnarg;
+    SEXP a = ATTRIB(s);
+    while(!isNull(a)) {
+	if(TAG(a) != R_SrcrefSymbol &&
+	   !(TAG(a) == R_NamesSymbol && not_names)) {
+	    print2buff(", ", d);
+	    if(TAG(a) == R_DimSymbol) {
+		print2buff(".Dim", d);
 	    }
-	    a = CDR(a);
+	    else if(TAG(a) == R_DimNamesSymbol) {
+		print2buff(".Dimnames", d);
+	    }
+	    else if(TAG(a) == R_NamesSymbol) {
+		print2buff(".Names", d);
+	    }
+	    else if(TAG(a) == R_TspSymbol) {
+		print2buff(".Tsp", d);
+	    }
+	    else if(TAG(a) == R_LevelsSymbol) {
+		print2buff(".Label", d);
+	    }
+	    else {
+		/* TAG(a) might contain spaces etc */
+		const char *tag = CHAR(PRINTNAME(TAG(a)));
+		int d_opts_in = d->opts;
+		d->opts = SIMPLEDEPARSE; /* turn off quote()ing */
+		if(isValidName(tag))
+		    deparse2buff(TAG(a), d);
+		else {
+		    print2buff("\"", d);
+		    deparse2buff(TAG(a), d);
+		    print2buff("\"", d);
+		}
+		d->opts = d_opts_in;
+	    }
+	    print2buff(" = ", d);
+	    Rboolean fnarg = d->fnarg;
+	    d->fnarg = TRUE;
+	    deparse2buff(CAR(a), d);
+	    d->fnarg = fnarg;
 	}
-	print2buff(")", d);
-    /* } */
+	a = CDR(a);
+    }
+    print2buff(")", d);
 }
 
 
@@ -789,11 +789,9 @@ static Rboolean parenthesizeCaller(SEXP s)
 
 static void deparse2buff(SEXP s, LocalParseData *d)
 {
-    PPinfo fop;
-    Rboolean lookahead = FALSE, lbreak = FALSE, parens, fnarg = d->fnarg,
-	outerparens, doquote, missing;
+    Rboolean lookahead = FALSE, lbreak = FALSE, fnarg = d->fnarg;
     attr_type attr = STRUC_ATTR;
-    SEXP op, t;
+    SEXP t;
     int d_opts_in = d->opts, i, n;
 
     d->fnarg = FALSE;
@@ -806,8 +804,9 @@ static void deparse2buff(SEXP s, LocalParseData *d)
     case NILSXP:
 	print2buff("NULL", d);
 	break;
-    case SYMSXP:
-	doquote = (d_opts_in & QUOTEEXPRESSIONS) && strlen(CHAR(PRINTNAME(s)));
+    case SYMSXP: {
+	Rboolean
+	    doquote = (d_opts_in & QUOTEEXPRESSIONS) && strlen(CHAR(PRINTNAME(s)));
 	if (doquote) {
 	    attr = (d_opts_in & SHOW_ATTR_OR_NMS) ? attr1(s, d) : SIMPLE;
 	    print2buff("quote(", d);
@@ -823,6 +822,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	    if(attr >= STRUC_ATTR) attr2(s, d, (attr == STRUC_ATTR));
 	}
 	break;
+    }
     case CHARSXP:
     {
 	const void *vmax = vmaxget();
@@ -903,11 +903,11 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	if(attr >= STRUC_ATTR) attr2(s, d, (attr == STRUC_ATTR));
 	d->opts = d_opts_in;
 	break;
-    case LISTSXP:
+    case LISTSXP: {
 	attr = (d_opts_in & SHOW_ATTR_OR_NMS) ? attr1(s, d) : SIMPLE;
 	/* pairlist(x=) cannot be evaluated, hence with missings we use
 	   as.pairlist(alist(...)) to allow evaluation of deparsed formals */
-	missing = FALSE;
+	Rboolean missing = FALSE;
 	for(t=s; t != R_NilValue; t=CDR(t))
 	    if (CAR(t) == R_MissingArg) {
 		missing = TRUE;
@@ -942,6 +942,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	d->inlist--;
 	if(attr >= STRUC_ATTR) attr2(s, d, (attr == STRUC_ATTR));
 	break;
+    }
     case LANGSXP:
 	printcomment(s, d);
 	if (!isNull(ATTRIB(s)))
@@ -952,10 +953,12 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	}
 	if (TYPEOF(CAR(s)) == SYMSXP) {
 	    int userbinop = 0;
-	    op = CAR(s);
+	    SEXP op = CAR(s);
 	    if ((TYPEOF(SYMVALUE(op)) == BUILTINSXP) ||
 		(TYPEOF(SYMVALUE(op)) == SPECIALSXP) ||
 		(userbinop = isUserBinop(op))) {
+		PPinfo fop;
+		Rboolean parens;
 		s = CDR(s);
 		if (userbinop) {
 		    if (isNull(getAttrib(s, R_NamesSymbol))) {
@@ -1114,8 +1117,9 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		    }
 		    break;
 		case PP_ASSIGN:
-		case PP_ASSIGN2:
-		    if ((outerparens = (fnarg && !strcmp(CHAR(PRINTNAME(op)), "="))))
+		case PP_ASSIGN2: {
+		    Rboolean outerparens = fnarg && !strcmp(CHAR(PRINTNAME(op)), "=");
+		    if (outerparens)
 		    	print2buff("(", d);
 		    if ((parens = needsparens(fop, CAR(s), 1)))
 			print2buff("(", d);
@@ -1133,6 +1137,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		    if (outerparens)
 		    	print2buff(")", d);
 		    break;
+		}
 		case PP_DOLLAR:
 		    if ((parens = needsparens(fop, CAR(s), 1)))
 			print2buff("(", d);
