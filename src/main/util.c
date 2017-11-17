@@ -1042,12 +1042,13 @@ const char *getTZinfo(void)
     if(def_tz[0]) return def_tz;
 
 #ifdef HAVE_REALPATH
-    // This works on Linux, macOS and *BSD: other known OSes set TZ.
+    // This works on most Linuxen, macOS and *BSD: other known OSes set TZ.
     char abspath[PATH_MAX + 1];
-# ifdef __APPLE__
-    // macOS 10.13 expands to /usr/share/zoneinfo.default/
-    // but 10.13.1 expands to /private/var/db/timezone/tz/2017c.1.0/zoneinfo/Europe/London
     const char* lt = realpath("/etc/localtime", abspath);
+# ifdef __APPLE__
+    // macOS <= 10.12 expands to /usr/share/zoneinfo/<zone name>
+    // macOS 10.13 expands to /usr/share/zoneinfo.default/<zone name>
+    // but 10.13.1 expands to /private/var/db/timezone/tz/2017c.1.0/zoneinfo/<zone name>
     if(lt) {
 	if(strstr(abspath, ".default/"))
 	    strncpy(def_tz, abspath + 28, PATH_MAX);
@@ -1065,7 +1066,7 @@ const char *getTZinfo(void)
 	return def_tz;
     }
 # else
-    if(realpath("/etc/localtime", abspath)) {
+    if(lt) {
 	strncpy(def_tz, abspath + 20, PATH_MAX); // strip "/usr/share/zoneinfo/"
 	return def_tz;
     }
