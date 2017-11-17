@@ -1066,7 +1066,7 @@ const char *getTZinfo(void)
 	return def_tz;
     }
 # else
-    if(lt) {
+    if(lt) { // Debian-based Linuxen do not have this: see datetime.R
 	strncpy(def_tz, abspath + 20, PATH_MAX); // strip "/usr/share/zoneinfo/"
 	return def_tz;
     }

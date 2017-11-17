@@ -18,8 +18,13 @@
 
 Sys.time <- function() .POSIXct(.Internal(Sys.time()))
 
+### There is no portable way to find the system timezone by location.
+### For some ideas (not all accurate) see
+### https://stackoverflow.com/questions/3118582/how-do-i-find-the-current-system-timezone
 Sys.timezone <- function(location = TRUE)
 {
+    ## Many Unix set TZ, e.g. Solaris and AIX.
+    ## For Solaris the system setting is a line in /etc/TIMEZONE
     tz <- Sys.getenv("TZ", names = FALSE)
     if(nzchar(tz))
         tz
@@ -31,6 +36,7 @@ Sys.timezone <- function(location = TRUE)
             if (grepl(pat <- "^/usr/share/zoneinfo/", lt) ||
                 grepl(pat <- "^/usr/share/zoneinfo.default/", lt)) sub(pat, "", lt)
             else if(grepl(pat <- ".*/zoneinfo/(.*)", lt))  sub(pat, "\\1", lt)
+            ## Debian-based Linuxen do not have /etc/localtime
             else if (lt == "/etc/localtime" && file.exists("/etc/timezone") &&
                      dir.exists("/usr/share/zoneinfo") &&
                      { # Debian etc.
