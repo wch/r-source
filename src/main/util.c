@@ -1038,22 +1038,35 @@ const char *getTZinfo(void)
 	}
 	return p;
     }
+
+    if(def_tz[0]) return def_tz;
+
 #ifdef HAVE_REALPATH
     // This works on Linux, macOS and *BSD: other known OSes set TZ.
-    if(def_tz[0]) return def_tz;
+    char abspath[PATH_MAX + 1];
 # ifdef __APPLE__
-    // macOS 10.13 links /usr/share/zoneinfo/ to /usr/share/zoneinfo.default/
-    const char* lt = realpath("/etc/localtime", def_tz);
+    // macOS 10.13 expands to /usr/share/zoneinfo.default/
+    // but 10.13.1 expands to /private/var/db/timezone/tz/2017c.1.0/zoneinfo/Europe/London
+    const char* lt = realpath("/etc/localtime", abspath);
     if(lt) {
-	if(strstr(def_tz, ".default/"))
-	    memmove(def_tz, def_tz, 28);
-	else
-	    memmove(def_tz, def_tz, 20);
+	if(strstr(abspath, ".default/"))
+	    strncpy(def_tz, abspath + 28, PATH_MAX);
+	else {
+	    // So guess is of the form .../zoneinfo/<real tz>
+	    p = strstr(abspath, "/zoneinfo/");
+	    if(p) {
+		strncpy(def_tz, p + 10, PATH_MAX);
+	    } else {
+		warning("system timezone name is unknown: set environment variable TZ");
+		return "unknown";
+	    }
+	}
+	// printf("abspath = %s\n", abspath); printf("def_tz = %s\n", def_tz);
 	return def_tz;
     }
 # else
-    if(realpath("/etc/localtime", def_tz)) {
-	memmove(def_tz, def_tz, 20); // strip prefix of /usr/share/zoneinfo/
+    if(realpath("/etc/localtime", abspath)) {
+	strncpy(def_tz, abspath + 20, PATH_MAX); // strip "/usr/share/zoneinfo/"
 	return def_tz;
     }
 # endif
