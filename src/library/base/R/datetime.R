@@ -26,6 +26,7 @@ Sys.timezone <- function(location = TRUE)
     lt <- normalizePath("/etc/localtime") # most Linux, macOS, ...
     if (grepl(pat <- "^/usr/share/zoneinfo/", lt) ||
         grepl(pat <- "^/usr/share/zoneinfo.default/", lt)) sub(pat, "", lt)
+    else if(grepl(pat <- ".*/zoneinfo/(.*)", lt))  sub(pat, "\\1", lt)
     else if (lt == "/etc/localtime" && file.exists("/etc/timezone") &&
 	     dir.exists("/usr/share/zoneinfo") &&
 	     { # Debian etc.

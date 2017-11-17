@@ -9,11 +9,11 @@
 
   \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
-      \item A workaround has been added for the change in location of
-      time-zone files on macOS 10.13 \sQuote{High Sierra}, so the
-      default time zone is deduced correctly from the system setting
-      when \R is configured with \option{--with-internal-tzcode} (the
-      default on macOS).
+c      \item A workaround has been added for the changes in location of
+      time-zone files in macOS 10.13 \sQuote{High Sierra} and
+      again in 10.13.1, so the default time zone is deduced
+      correctly from the system setting when \R is configured with
+      \option{--with-internal-tzcode} (the default on macOS).
 
       \item \command{R CMD javareconf} has been updated to recognize the
       use of a Java 9 SDK on macOS.
