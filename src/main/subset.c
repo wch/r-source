@@ -437,7 +437,7 @@ static SEXP ArraySubset(SEXP x, SEXP s, SEXP call, int drop)
 	n *= bound[i];
 	r = CDR(r);
     }
-    PROTECT(result = allocVector(mode, n));
+
     r = s;
     for (int i = 0; i < k; i++) {
 	indx[i] = 0;
@@ -461,7 +461,7 @@ static SEXP ArraySubset(SEXP x, SEXP s, SEXP call, int drop)
 	}
 
     /* Transfer the subset elements from "x" to "a". */
-
+    PROTECT(result = allocVector(mode, n));
     switch (mode) {
     case LGLSXP:
 	ARRAY_SUBSET_LOOP(LOGICAL0(result)[i] = LOGICAL_ELT(x, ii),
