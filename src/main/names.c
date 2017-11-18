@@ -682,7 +682,7 @@ FUNTAB R_FunTab[] =
 {"print.default",do_printdefault,0,	111,	9,	{PP_FUNCALL, PREC_FN,	0}},
 {"print.function",do_printfunction,0,	111,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 {"prmatrix",	do_prmatrix,	0,	111,	6,	{PP_FUNCALL, PREC_FN,	0}},
-{"gc",		do_gc,		0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+{"gc",		do_gc,		0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"gcinfo",	do_gcinfo,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"gctorture",	do_gctorture,	0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"gctorture2",	do_gctorture2,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},

@@ -251,6 +251,7 @@ static void R_ReportNewPage();
 
 static void R_gc_internal(R_size_t size_needed);
 static void R_gc_no_finalizers(R_size_t size_needed);
+static void R_gc_lite();
 static void mem_err_heap(R_size_t size);
 static void mem_err_malloc(R_size_t size);
 
@@ -1998,14 +1999,18 @@ void attribute_hidden get_current_mem(size_t *smallvsize,
 SEXP attribute_hidden do_gc(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP value;
-    int ogc, reset_max;
+    int ogc, reset_max, full;
     R_size_t onsize = R_NSize /* can change during collection */;
 
     checkArity(op, args);
     ogc = gc_reporting;
     gc_reporting = asLogical(CAR(args));
     reset_max = asLogical(CADR(args));
-    R_gc();
+    full = asLogical(CADDR(args));
+    if (full)
+	R_gc();
+    else
+	R_gc_lite();
 
     gc_reporting = ogc;
     /*- now return the [used , gc trigger size] for cells and heap */
@@ -2884,6 +2889,14 @@ SEXP allocFormalsList6(SEXP sym1, SEXP sym2, SEXP sym3, SEXP sym4,
 void R_gc(void)
 {
     num_old_gens_to_collect = NUM_OLD_GENERATIONS;
+    R_gc_internal(0);
+#ifndef IMMEDIATE_FINALIZERS
+    R_RunPendingFinalizers();
+#endif
+}
+
+void R_gc_lite(void)
+{
     R_gc_internal(0);
 #ifndef IMMEDIATE_FINALIZERS
     R_RunPendingFinalizers();
