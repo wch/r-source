@@ -1075,7 +1075,25 @@ static void AdjustHeapSize(R_size_t size_needed)
     double vect_occup =	((double) VNeeded) / R_VSize;
 
     if (node_occup > R_NGrowFrac) {
-	R_size_t change = (R_size_t)(R_NGrowIncrMin + R_NGrowIncrFrac * R_NSize);
+	R_size_t change =
+	    (R_size_t)(R_NGrowIncrMin + R_NGrowIncrFrac * R_NSize);
+
+	/* for early andjustments grow more agressively */
+	static R_size_t last_in_use = 0;
+	static int adjust_count = 1;
+	if (adjust_count < 50) {
+	    adjust_count++;
+
+	    /* estimate next in-use count by assuming linear growth */
+	    R_size_t next_in_use = R_NodesInUse + (R_NodesInUse - last_in_use);
+	    last_in_use = R_NodesInUse;
+
+	    /* try to achieve and occupancy rate of R_NGrowFrac */
+	    R_size_t next_nsize = (R_size_t) (next_in_use / R_NGrowFrac);
+	    if (next_nsize > R_NSize + change)
+		change = next_nsize - R_NSize;
+	}
+
 	if (R_MaxNSize >= R_NSize + change)
 	    R_NSize += change;
     }
