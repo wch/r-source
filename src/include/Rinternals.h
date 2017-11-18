@@ -408,6 +408,7 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 #define RAW_RO(x)	((const Rbyte *) DATAPTR_RO(x))
 #define COMPLEX_RO(x)	((const Rcomplex *) DATAPTR_RO(x))
 #define REAL_RO(x)	((const double *) DATAPTR_RO(x))
+#define STRING_PTR_RO(x)((const SEXP *) DATAPTR_RO(x))
 
 /* List Access Macros */
 /* These also work for ... objects */
@@ -599,6 +600,7 @@ SEXP (VECTOR_ELT)(SEXP x, R_xlen_t i);
 void SET_STRING_ELT(SEXP x, R_xlen_t i, SEXP v);
 SEXP SET_VECTOR_ELT(SEXP x, R_xlen_t i, SEXP v);
 SEXP *(STRING_PTR)(SEXP x);
+const SEXP *(STRING_PTR_RO)(SEXP x);
 SEXP * NORET (VECTOR_PTR)(SEXP x);
 
 /* ALTREP support */

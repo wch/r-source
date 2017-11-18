@@ -128,7 +128,7 @@ static void printLogicalMatrix(SEXP sx, int offset, int r_pr, int r, int c,
     int i, j, jmin = 0, jmax = 0, lbloff = 0;		\
 							\
     if (!isNull(rl))					\
-	formatString(STRING_PTR(rl), r, &rlabw, 0);	\
+	formatString(STRING_PTR_RO(rl), r, &rlabw, 0);	\
     else						\
 	rlabw = IndexWidth(r + 1) + 3;			\
 							\
@@ -284,7 +284,7 @@ static void printStringMatrix(SEXP sx, int offset, int r_pr, int r, int c,
 			      const char *rn, const char *cn, Rboolean print_ij)
 {
     _PRINT_INIT_rl_rn;
-    SEXP *x = STRING_PTR(sx)+offset;
+    const SEXP *x = STRING_PTR_RO(sx)+offset;
 
     _COMPUTE_W2_( formatString(&x[j * r], (R_xlen_t) r, &w[j], quote), );
 

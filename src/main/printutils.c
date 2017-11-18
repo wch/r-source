@@ -802,7 +802,7 @@ const char *EncodeElement0(SEXP x, int indx, int quote, const char *dec)
 	res = EncodeReal0(REAL_RO(x)[indx], w, d, e, dec);
 	break;
     case STRSXP:
-	formatString(&STRING_PTR(x)[indx], 1, &w, quote);
+	formatString(&STRING_PTR_RO(x)[indx], 1, &w, quote);
 	res = EncodeString(STRING_ELT(x, indx), w, quote, Rprt_adj_left);
 	break;
     case CPLXSXP:

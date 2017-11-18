@@ -3639,6 +3639,14 @@ SEXP *(STRING_PTR)(SEXP x) {
     return STRING_PTR(x);
 }
 
+const SEXP *(STRING_PTR_RO)(SEXP x) {
+    if(TYPEOF(x) != STRSXP)
+	error("%s() can only be applied to a '%s', not a '%s'",
+	      "STRING_PTR_RO", "character", type2char(TYPEOF(x)));
+    CHKZLN(x);
+    return STRING_PTR_RO(x);
+}
+
 SEXP * NORET (VECTOR_PTR)(SEXP x)
 {
   error(_("not safe to return vector pointer"));
