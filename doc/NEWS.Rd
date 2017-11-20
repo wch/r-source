@@ -154,11 +154,11 @@
 
       \item \code{on.exit()} gains an optional argument \code{after}
       with default \code{TRUE}. Using \code{after = FALSE} with
-      \code{add = TRUE} adds an exit expression on top of any
-      existing ones. This way the expressions are run in a first in last
-      out fashion. From Lionel Henry.
+      \code{add = TRUE} adds an exit expression before any
+      existing ones. This way the expressions are run in a first-in
+      last-out fashion. (From Lionel Henry.)
 
-      \item On Windows, \code{file.rename} internally retries the
+      \item On Windows, \code{file.rename()} internally retries the
       operation in case of error to attempt to recover from possible
       anti-virus interference.
 
@@ -170,10 +170,10 @@
       and so will be used rather than the default deduced from the OS
       if \env{TZ} is subsequently unset.
 
-      \item Provide \code{`[`} method for \code{"DLLInfoList"}
+      \item Provide \code{`[`} method for class \code{"DLLInfoList"}
 
       \item \code{glm()} and \code{glm.fit} get the same
-      \code{singular.ok=TRUE} argument that \code{lm()} has had
+      \code{singular.ok = TRUE} argument that \code{lm()} has had
       forever.  As a consequence, in \code{glm(*, method = <your_own>)},
       user specified methods need to accept a \code{singular.ok}
       argument as well.
@@ -205,13 +205,13 @@
       makes the \code{vcov()} methods more consistent with the
       \code{coef()} methods in the case of singular designs.  The
       former (\dQuote{back compatible}) behavior is now achieved by
-      \code{vcov(*, complete=FALSE)}.
+      \code{vcov(*, complete = FALSE)}.
 
       \item \code{coef()} methods (for \code{lm} etc) also gain a
       \code{complete = TRUE} optional argument for consistency with
       \code{vcov()}. \cr
       For \code{"aov"}, both \code{coef()} and \code{vcov()} methods
-      remain back compatibly consistent, using the \emph{other} default,
+      remain back-compatibly consistent, using the \emph{other} default,
       \code{complete = FALSE}.
 
       \item \code{attach(*, pos = 1)} is now an error instead of a
@@ -343,7 +343,7 @@
 
       \item \code{dist(x, method = "canberra")} now uses the correct
       definition; the result may only differ when \code{x} contains
-      values of differing signs, i.e., e.g., not for 0-1 data.
+      values of differing signs, e.g.\sspace{}not for 0-1 data.
 
       \item \code{methods:::cbind()} and \code{methods:::rbind()} avoid
       deep recursion, thanks to Suharto Anggono via \PR{17300}.
