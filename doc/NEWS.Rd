@@ -5,11 +5,11 @@
 \title{R News}
 \encoding{UTF-8}
 
-\section{\Rlogo CHANGES IN R 3.4.2 patched}{
+\section{\Rlogo CHANGES IN R 3.4.3}{
 
   \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
-c      \item A workaround has been added for the changes in location of
+      \item A workaround has been added for the changes in location of
       time-zone files in macOS 10.13 \sQuote{High Sierra} and
       again in 10.13.1, so the default time zone is deduced
       correctly from the system setting when \R is configured with
@@ -410,7 +410,7 @@ c      \item A workaround has been added for the changes in location of
       \code{tol} in the result, and optionally parts of the internal
       matrix computations.
 
-      \item \code{addNA()} is faster now, e.g.{} when applied twice.
+      \item \code{addNA()} is faster now, e.g.\sspace{}when applied twice.
       (Part of \PR{16895}.)
 
       \item New option \code{rstandard(<lm>, type = "predicted")}
