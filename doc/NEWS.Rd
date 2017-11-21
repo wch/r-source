@@ -395,6 +395,9 @@
 
       \item \code{.C()} when returning a logical vector now always maps
       values other than FALSE and NA to TRUE (as documented).
+
+      \item Subassignment with zero length vectors now coerces as
+      documented.  (\PR{17344})
     }
   }
 }

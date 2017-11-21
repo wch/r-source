@@ -531,8 +531,8 @@ for(ob0 in list(I(character()), I(0[0]), I(0L[0]),
                 structure(character(), class="CH"))) {
     stopifnot(identical(ob0, pmax(ob0, ob0)),
               identical(ob0, pmin(ob0, ob0)),
-              identical(ob0, pmin(ob0, "")),
-              identical(ob0, pmax(ob0, "")))
+              identical(ob0, pmin(ob0, FALSE)),
+              identical(ob0, pmax(ob0, FALSE)))
 }
 ## pmin()/pmax() of matching numeric data frames
 mUSJ <- data.matrix(dUSJ <- USJudgeRatings)
@@ -1284,6 +1284,15 @@ stopifnot(identical(2, x[[quote(a)]]),
 ## range(<non-numeric>, finite = TRUE)
 stopifnot(identical(0:1, range(c(NA,TRUE,FALSE), finite=TRUE)))
 ## gave NA's in R <= 3.4.2
+
+
+## `[<-` : coercion should happen also in 0-length case:
+x1 <- x0 <- x <- n0 <- numeric(); x0[] <- character(); x1[1[0]] <- character()
+x[] <- numeric()
+stopifnot(identical(x0, character()), identical(x1, x0), identical(x, n0))
+## x0, x1 had remained 'numeric()' in  R <= 3.4.x
+x[1] <- numeric(); stopifnot(identical(x, n0))
+## had always worked; just checking
 
 
 
