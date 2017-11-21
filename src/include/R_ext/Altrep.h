@@ -78,7 +78,7 @@ SEXP multmatchsetToSEXP(multmatchset_t matches, Rboolean firstonly);
     error("tried to get match position beyond length of mset");
 
 typedef int (*R_altinteger_Elt_method_t)(SEXP, R_xlen_t);
-typedef int (*R_altinteger_Set_elt_method_t)(SEXP, R_xlen_t, int);
+typedef void (*R_altinteger_Set_elt_method_t)(SEXP, R_xlen_t, int);
 typedef R_xlen_t
 (*R_altinteger_Get_region_method_t)(SEXP, R_xlen_t, R_xlen_t, int *);
 typedef int (*R_altinteger_Is_sorted_method_t)(SEXP);
@@ -101,7 +101,7 @@ typedef SEXP (*R_altinteger_As_subscripts_method_t)(SEXP);
 
 
 typedef double (*R_altreal_Elt_method_t)(SEXP, R_xlen_t);
-typedef double (*R_altreal_Set_elt_method_t)(SEXP, R_xlen_t, double);
+typedef void (*R_altreal_Set_elt_method_t)(SEXP, R_xlen_t, double);
 typedef R_xlen_t
 (*R_altreal_Get_region_method_t)(SEXP, R_xlen_t, R_xlen_t, double *);
 typedef int (*R_altreal_Is_sorted_method_t)(SEXP);

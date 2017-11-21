@@ -398,10 +398,11 @@ int attribute_hidden ALTINTEGER_ELT(SEXP x, R_xlen_t i)
     return ALTINTEGER_DISPATCH(Elt, x, i);
 }
 
-int attribute_hidden ALTINTEGER_SET_ELT(SEXP x, R_xlen_t i, int v)
+void attribute_hidden ALTINTEGER_SET_ELT(SEXP x, R_xlen_t i, int v)
 {
-    return ALTINTEGER_DISPATCH(Set_elt, x, i, v);
+    ALTINTEGER_DISPATCH(Set_elt, x, i, v);
 }
+
 R_xlen_t INTEGER_GET_REGION(SEXP sx, R_xlen_t i, R_xlen_t n, int *buf)
 {
     const int *x = INTEGER_OR_NULL(sx);
@@ -463,17 +464,15 @@ SEXP REAL_IS_NA(SEXP x)
     return ALTREP_NONEXP(x) ? ALTREAL_DISPATCH(Is_NA, x) : NULL;
 }	
 
-
 double attribute_hidden ALTREAL_ELT(SEXP x, R_xlen_t i)
 {
     return ALTREAL_DISPATCH(Elt, x, i);
 }
 
-double attribute_hidden ALTREAL_SET_ELT(SEXP x, R_xlen_t i, double v)
+void attribute_hidden ALTREAL_SET_ELT(SEXP x, R_xlen_t i, double v)
 {
-    return ALTREAL_DISPATCH(Set_elt, x, i, v);
+    ALTREAL_DISPATCH(Set_elt, x, i, v);
 }
-
 
 R_xlen_t REAL_GET_REGION(SEXP sx, R_xlen_t i, R_xlen_t n, double *buf)
 {
@@ -602,17 +601,32 @@ SEXP ALTREAL_MATCH(SEXP table, SEXP x, int nm, SEXP incomp, SEXP env,
 
 int attribute_hidden ALTLOGICAL_ELT(SEXP x, R_xlen_t i)
 {
-    error("unknown ALTLOGICAL type"); /* dispatch here */
+    return LOGICAL(x)[i]; /* dispatch here */
 }
 
 Rcomplex attribute_hidden ALTCOMPLEX_ELT(SEXP x, R_xlen_t i)
 {
-    error("unknown ALTCOMPLEX type"); /* dispatch here */
+    return COMPLEX(x)[i]; /* dispatch here */
 }
 
 Rbyte attribute_hidden ALTRAW_ELT(SEXP x, R_xlen_t i)
 {
-    error("unknown ALTRAW type"); /* dispatch here */
+    return RAW(x)[i]; /* dispatch here */
+}
+
+void ALTLOGICAL_SET_ELT(SEXP x, R_xlen_t i, int v)
+{
+    LOGICAL(x)[i] = v; /* dispatch here */
+}
+
+void ALTCOMPLEX_SET_ELT(SEXP x, R_xlen_t i, Rcomplex v)
+{
+    COMPLEX(x)[i] = v; /* dispatch here */
+}
+
+void ALTRAW_SET_ELT(SEXP x, R_xlen_t i, int v)
+{
+    RAW(x)[i] = v; /* dispatch here */
 }
 
 
@@ -888,7 +902,7 @@ static SEXP altinteger_Order_default(SEXP x) {
     return NULL;
 }
 
-static int altinteger_Set_elt_default(SEXP x, R_xlen_t i, int v) {
+static void altinteger_Set_elt_default(SEXP x, R_xlen_t i, int v) {
     error("altinteger classes must define a specific Set_elt method");
 }
 
@@ -1206,7 +1220,7 @@ static SEXP altinteger_Unique_default(SEXP x) {
     return ans;
 }
 
-static double altreal_Set_elt_default(SEXP x, R_xlen_t i, double v) {
+static void altreal_Set_elt_default(SEXP x, R_xlen_t i, double v) {
     error("altreal classes must define a specific Set_elt method");
 }
 
