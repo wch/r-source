@@ -893,10 +893,42 @@ static SEXP VectorAssign(SEXP call, SEXP rho, SEXP x, SEXP s, SEXP y)
 
 SEXP int_arraySubscript(int dim, SEXP s, SEXP dims, SEXP x, SEXP call);
 
+#define MATRIX_ASSIGN_LOOP(CODE) do {			\
+	R_xlen_t k = 0, NR = nr, ij;			\
+	if (anyIdxNA)					\
+	    for (int j = 0; j < ncs; j++) {		\
+		int jj = psc[j];			\
+		if (jj != NA_INTEGER) {			\
+		    jj = jj - 1;			\
+		    R_xlen_t offset = jj * NR;		\
+		    for (int i = 0; i < nrs; i++) {	\
+			int ii = psr[i];		\
+			if (ii != NA_INTEGER) {		\
+			    ij = ii + offset - 1;	\
+			    do { CODE } while (0);	\
+			    k++;			\
+			    if (k == ny) k = 0;		\
+			}				\
+		    }					\
+		}					\
+	    }						\
+	else						\
+	    for (int j = 0; j < ncs; j++) {		\
+		int jj = psc[j] - 1;			\
+		R_xlen_t offset = jj * NR;		\
+		for (int i = 0; i < nrs; i++) {		\
+		    int ii = psr[i];			\
+		    ij = ii + offset - 1;		\
+		    do { CODE } while (0);		\
+		    k++;				\
+		    if (k == ny) k = 0;			\
+		}					\
+	    }						\
+    } while (0)
+
 static SEXP MatrixAssign(SEXP call, SEXP rho, SEXP x, SEXP s, SEXP y)
 {
-    int i, j, ii, jj, iy, which;
-    double ry;
+    int which;
     int nrs, ncs;
     SEXP sr, sc, dim;
 
@@ -914,14 +946,22 @@ static SEXP MatrixAssign(SEXP call, SEXP rho, SEXP x, SEXP s, SEXP y)
     sc = SETCADR(s, int_arraySubscript(1, CADR(s), dim, x, call));
     nrs = LENGTH(sr);
     ncs = LENGTH(sc);
-    if(ny > 1) {
-	for(i = 0; i < nrs; i++)
-	    if(INTEGER_ELT(sr, i) == NA_INTEGER)
-		error(_("NAs are not allowed in subscripted assignments"));
-	for(i = 0; i < ncs; i++)
-	    if(INTEGER_ELT(sc, i) == NA_INTEGER)
-		error(_("NAs are not allowed in subscripted assignments"));
-    }
+
+    const int *psc = INTEGER_RO(sc);
+    const int *psr = INTEGER_RO(sr);
+    int anyIdxNA = FALSE;
+    for(int i = 0; i < nrs; i++)
+	if (psr[i] == NA_INTEGER) {
+	    anyIdxNA = TRUE;
+	    break;
+	}
+    for(int i = 0; i < ncs; i++)
+	if (psc[i] == NA_INTEGER) {
+	    anyIdxNA = TRUE;
+	    break;
+	}
+    if(ny > 1 && anyIdxNA)
+	error(_("NAs are not allowed in subscripted assignments"));
 
     R_xlen_t n = ((R_xlen_t) nrs) * ncs;
 
@@ -954,7 +994,6 @@ static SEXP MatrixAssign(SEXP call, SEXP rho, SEXP x, SEXP s, SEXP y)
     /* existing objects any changes we make now are permanent. */
     /* Beware! */
 
-    R_xlen_t k = 0, NR = nr, ij;
     switch (which) {
 	/* because we have called SubassignTypeFix the commented
 	   values cannot occur (and would be unsafe) */
@@ -964,18 +1003,13 @@ static SEXP MatrixAssign(SEXP call, SEXP rho, SEXP x, SEXP s, SEXP y)
     /* case 1013: logical   <- integer	  */
     case 1313:	/* integer   <- integer	  */
 
-	for (j = 0; j < ncs; j++) {
-	    jj = INTEGER_ELT(sc, j);
-	    if (jj == NA_INTEGER) continue;
-	    jj = jj - 1;
-	    for (i = 0; i < nrs; i++) {
-		ii = INTEGER_ELT(sr, i);
-		if (ii == NA_INTEGER) continue;
-		ii = ii - 1;
-		ij = ii + jj * NR;
-		INTEGER(x)[ij] = INTEGER_ELT(y, k);
-		k++;
-		if (k == ny) k = 0;
+	{
+	    int *px = INTEGER(x);
+	    if (ALTREP(y))
+		MATRIX_ASSIGN_LOOP(px[ij] = INTEGER_ELT(y, k););
+	    else {
+		int *py = INTEGER0(y);
+		MATRIX_ASSIGN_LOOP(px[ij] = py[k];);
 	    }
 	}
 	break;
@@ -983,23 +1017,15 @@ static SEXP MatrixAssign(SEXP call, SEXP rho, SEXP x, SEXP s, SEXP y)
     case 1410:	/* real	     <- logical	  */
     case 1413:	/* real	     <- integer	  */
 
-	for (j = 0; j < ncs; j++) {
-	    jj = INTEGER_ELT(sc, j);
-	    if (jj == NA_INTEGER) continue;
-	    jj = jj - 1;
-	    for (i = 0; i < nrs; i++) {
-		ii = INTEGER_ELT(sr, i);
-		if (ii == NA_INTEGER) continue;
-		ii = ii - 1;
-		ij = ii + jj * NR;
-		iy = INTEGER_ELT(y, k);
-		if (iy == NA_INTEGER)
-		    REAL(x)[ij] = NA_REAL;
-		else
-		    REAL(x)[ij] = iy;
-		k++;
-		if (k == ny) k = 0;
-	    }
+	{
+	    double *px = REAL(x);
+	    MATRIX_ASSIGN_LOOP({
+		    int iy = INTEGER_ELT(y, k);
+		    if (iy == NA_INTEGER)
+			px[ij] = NA_REAL;
+		    else
+			px[ij] = iy;
+		});
 	}
 	break;
 
@@ -1007,18 +1033,13 @@ static SEXP MatrixAssign(SEXP call, SEXP rho, SEXP x, SEXP s, SEXP y)
     /* case 1314:  integer   <- real	  */
     case 1414:	/* real	     <- real	  */
 
-	for (j = 0; j < ncs; j++) {
-	    jj = INTEGER_ELT(sc, j);
-	    if (jj == NA_INTEGER) continue;
-	    jj = jj - 1;
-	    for (i = 0; i < nrs; i++) {
-		ii = INTEGER_ELT(sr, i);
-		if (ii == NA_INTEGER) continue;
-		ii = ii - 1;
-		ij = ii + jj * NR;
-		REAL(x)[ij] = REAL_ELT(y, k);
-		k++;
-		if (k == ny) k = 0;
+	{
+	    double *px = REAL(x);
+	    if (ALTREP(y))
+		MATRIX_ASSIGN_LOOP(px[ij] = REAL_ELT(y, k););
+	    else {
+		double *py = REAL0(y);
+		MATRIX_ASSIGN_LOOP(px[ij] = py[k];);
 	    }
 	}
 	break;
@@ -1026,53 +1047,37 @@ static SEXP MatrixAssign(SEXP call, SEXP rho, SEXP x, SEXP s, SEXP y)
     case 1510:	/* complex   <- logical	  */
     case 1513:	/* complex   <- integer	  */
 
-	for (j = 0; j < ncs; j++) {
-	    jj = INTEGER_ELT(sc, j);
-	    if (jj == NA_INTEGER) continue;
-	    jj = jj - 1;
-	    for (i = 0; i < nrs; i++) {
-		ii = INTEGER_ELT(sr, i);
-		if (ii == NA_INTEGER) continue;
-		ii = ii - 1;
-		ij = ii + jj * NR;
-		iy = INTEGER_ELT(y, k);
-		if (iy == NA_INTEGER) {
-		    COMPLEX(x)[ij].r = NA_REAL;
-		    COMPLEX(x)[ij].i = NA_REAL;
-		}
-		else {
-		    COMPLEX(x)[ij].r = iy;
-		    COMPLEX(x)[ij].i = 0.0;
-		}
-		k++;
-		if (k == ny) k = 0;
-	    }
+	{
+	    Rcomplex *px = COMPLEX(x);
+	    MATRIX_ASSIGN_LOOP({
+		    int iy = INTEGER_ELT(y, k);
+		    if (iy == NA_INTEGER) {
+			px[ij].r = NA_REAL;
+			px[ij].i = NA_REAL;
+		    }
+		    else {
+			px[ij].r = iy;
+			px[ij].i = 0.0;
+		    }
+		});
 	}
 	break;
 
     case 1514:	/* complex   <- real	  */
 
-	for (j = 0; j < ncs; j++) {
-	    jj = INTEGER_ELT(sc, j);
-	    if (jj == NA_INTEGER) continue;
-	    jj = jj - 1;
-	    for (i = 0; i < nrs; i++) {
-		ii = INTEGER_ELT(sr, i);
-		if (ii == NA_INTEGER) continue;
-		ii = ii - 1;
-		ij = ii + jj * NR;
-		ry = REAL_ELT(y, k);
-		if (ISNA(ry)) {
-		    COMPLEX(x)[ij].r = NA_REAL;
-		    COMPLEX(x)[ij].i = NA_REAL;
-		}
-		else {
-		    COMPLEX(x)[ij].r = ry;
-		    COMPLEX(x)[ij].i = 0.0;
-		}
-		k++;
-		if (k == ny) k = 0;
-	    }
+	{
+	    Rcomplex *px = COMPLEX(x);
+	    MATRIX_ASSIGN_LOOP({
+		    double ry = REAL_ELT(y, k);
+		    if (ISNA(ry)) {
+			px[ij].r = NA_REAL;
+			px[ij].i = NA_REAL;
+		    }
+		    else {
+			px[ij].r = ry;
+			px[ij].i = 0.0;
+		    }
+		});
 	}
 	break;
 
@@ -1081,19 +1086,9 @@ static SEXP MatrixAssign(SEXP call, SEXP rho, SEXP x, SEXP s, SEXP y)
     /* case 1415:  real	     <- complex	  */
     case 1515:	/* complex   <- complex	  */
 
-	for (j = 0; j < ncs; j++) {
-	    jj = INTEGER_ELT(sc, j);
-	    if (jj == NA_INTEGER) continue;
-	    jj = jj - 1;
-	    for (i = 0; i < nrs; i++) {
-		ii = INTEGER_ELT(sr, i);
-		if (ii == NA_INTEGER) continue;
-		ii = ii - 1;
-		ij = ii + jj * NR;
-		COMPLEX(x)[ij] = COMPLEX_ELT(y, k);
-		k++;
-		if (k == ny) k = 0;
-	    }
+	{
+	    Rcomplex *px = COMPLEX(x);
+	    MATRIX_ASSIGN_LOOP(px[ij] = COMPLEX_ELT(y, k););
 	}
 	break;
 
@@ -1107,21 +1102,9 @@ static SEXP MatrixAssign(SEXP call, SEXP rho, SEXP x, SEXP s, SEXP y)
     /* case 1416:  real	     <- character */
     /* case 1516:  complex   <- character */
 
-	for (j = 0; j < ncs; j++) {
-	    jj = INTEGER_ELT(sc, j);
-	    if (jj == NA_INTEGER) continue;
-	    jj = jj - 1;
-	    for (i = 0; i < nrs; i++) {
-		ii = INTEGER_ELT(sr, i);
-		if (ii == NA_INTEGER) continue;
-		ii = ii - 1;
-		ij = ii + jj * NR;
-		SET_STRING_ELT(x, ij, STRING_ELT(y, k));
-		k++;
-		if (k == ny) k = 0;
-	    }
-	}
+	MATRIX_ASSIGN_LOOP(SET_STRING_ELT(x, ij, STRING_ELT(y, k)););
 	break;
+
     case 1919: /* vector <- vector */
 
 	/* set NAMED or RHS values to NAMEDMAX if they might be used more
@@ -1130,37 +1113,14 @@ static SEXP MatrixAssign(SEXP call, SEXP rho, SEXP x, SEXP s, SEXP y)
 	    for (R_xlen_t i = 0; i < ny; i++)
 		ENSURE_NAMEDMAX(VECTOR_ELT(y, i));
 
-	for (j = 0; j < ncs; j++) {
-	    jj = INTEGER_ELT(sc, j);
-	    if (jj == NA_INTEGER) continue;
-	    jj = jj - 1;
-	    for (i = 0; i < nrs; i++) {
-		ii = INTEGER_ELT(sr, i);
-		if (ii == NA_INTEGER) continue;
-		ii = ii - 1;
-		ij = ii + jj * NR;
-		SET_VECTOR_ELT(x, ij, VECTOR_ELT_FIX_NAMED(y, k));
-		k++;
-		if (k == ny) k = 0;
-	    }
-	}
+	MATRIX_ASSIGN_LOOP(SET_VECTOR_ELT(x, ij, VECTOR_ELT_FIX_NAMED(y, k)););
 	break;
 
     case 2424: /* raw   <- raw   */
 
-	for (j = 0; j < ncs; j++) {
-	    jj = INTEGER_ELT(sc, j);
-	    if (jj == NA_INTEGER) continue;
-	    jj = jj - 1;
-	    for (i = 0; i < nrs; i++) {
-		ii = INTEGER_ELT(sr, i);
-		if (ii == NA_INTEGER) continue;
-		ii = ii - 1;
-		ij = ii + jj * NR;
-		RAW(x)[ij] = RAW(y)[k];
-		k++;
-		if (k == ny) k = 0;
-	    }
+	{
+	    Rbyte *px = RAW(x);
+	    MATRIX_ASSIGN_LOOP(px[ij] = RAW_ELT(y, k););
 	}
 	break;
 
@@ -1171,7 +1131,6 @@ static SEXP MatrixAssign(SEXP call, SEXP rho, SEXP x, SEXP s, SEXP y)
     UNPROTECT(2);
     return x;
 }
-
 
 static SEXP ArrayAssign(SEXP call, SEXP rho, SEXP x, SEXP s, SEXP y)
 {
