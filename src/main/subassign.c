@@ -1132,6 +1132,32 @@ static SEXP MatrixAssign(SEXP call, SEXP rho, SEXP x, SEXP s, SEXP y)
     return x;
 }
 
+#define ARRAY_ASSIGN_LOOP(CODE) do {			\
+	R_xlen_t i, iny;				\
+	MOD_ITERATE1(n, ny, i, iny, {			\
+		R_xlen_t ii = 0;			\
+		for (int j = 0; j < k; j++) {		\
+		    int jj = subs[j][indx[j]];		\
+		    if (jj == NA_INTEGER) {		\
+			ii = NA_INTEGER;		\
+			break;				\
+		    }					\
+		    else				\
+			ii += (jj - 1) * offset[j];	\
+		}					\
+		if (ii != NA_INTEGER)			\
+		    do { CODE } while (0);		\
+		if (n > 1) {				\
+		    int j = 0;				\
+		    while (++indx[j] >= bound[j]) {	\
+			indx[j] = 0;			\
+			j++;				\
+			if (j == k) j = 0;		\
+		    }					\
+		}					\
+	    });						\
+    } while (0)
+
 static SEXP ArrayAssign(SEXP call, SEXP rho, SEXP x, SEXP s, SEXP y)
 {
     int k = 0;
@@ -1143,7 +1169,7 @@ static SEXP ArrayAssign(SEXP call, SEXP rho, SEXP x, SEXP s, SEXP y)
 	error(_("incorrect number of subscripts"));
 
     /* k is now the number of dims */
-    int **subs = (int**) R_alloc(k, sizeof(int*));
+    const int **subs = (const int**) R_alloc(k, sizeof(int*));
     int *indx = (int*) R_alloc(k, sizeof(int));
     int *bound = (int*) R_alloc(k, sizeof(int));
     R_xlen_t *offset = (R_xlen_t*) R_alloc(k, sizeof(R_xlen_t));
@@ -1163,7 +1189,7 @@ static SEXP ArrayAssign(SEXP call, SEXP rho, SEXP x, SEXP s, SEXP y)
     tmp = s;
     for (int i = 0; i < k; i++) {
 	indx[i] = 0;
-	subs[i] = INTEGER(CAR(tmp));
+	subs[i] = INTEGER_RO(CAR(tmp));
 	bound[i] = LENGTH(CAR(tmp));
 	n *= bound[i];
 	tmp = CDR(tmp);
@@ -1182,8 +1208,9 @@ static SEXP ArrayAssign(SEXP call, SEXP rho, SEXP x, SEXP s, SEXP y)
     }
 
     offset[0] = 1;
+    const int *pdims = INTEGER_RO(dims);
     for (int i = 1; i < k; i++)
-	offset[i] = offset[i - 1] * INTEGER(dims)[i - 1];
+	offset[i] = offset[i - 1] * pdims[i - 1];
 
 
     /* Here we make sure that the LHS has been coerced into */
@@ -1212,125 +1239,130 @@ static SEXP ArrayAssign(SEXP call, SEXP rho, SEXP x, SEXP s, SEXP y)
     /* existing objects any changes we make now are permanent. */
     /* Beware! */
 
-    R_xlen_t i, iny;
-    MOD_ITERATE1(n, ny, i, iny, {
-	R_xlen_t ii = 0;
-	for (int j = 0; j < k; j++) {
-	    int jj = subs[j][indx[j]];
-	    if (jj == NA_INTEGER) goto next_i;
-	    ii += (jj - 1) * offset[j];
-	}
+    switch (which) {
 
-	switch (which) {
-
-	case 1010:	/* logical   <- logical	  */
-	case 1310:	/* integer   <- logical	  */
-	/* case 1013:	   logical   <- integer	  */
-	case 1313:	/* integer   <- integer	  */
-
-	    INTEGER(x)[ii] = INTEGER_ELT(y, iny);
-	    break;
-
-	case 1410:	/* real	     <- logical	  */
-	case 1413:	/* real	     <- integer	  */
+    case 1010:	/* logical   <- logical	  */
+    case 1310:	/* integer   <- logical	  */
+		/* case 1013:	   logical   <- integer	  */
+    case 1313:	/* integer   <- integer	  */
 
 	{
-	    int iy = INTEGER_ELT(y, iny);
-	    if (iy == NA_INTEGER)
-		REAL(x)[ii] = NA_REAL;
-	    else
-		REAL(x)[ii] = iy;
-	    break;
+	    int *px = INTEGER(x);
+	    ARRAY_ASSIGN_LOOP(px[ii] = INTEGER_ELT(y, iny););
 	}
+	break;
+
+    case 1410:	/* real	     <- logical	  */
+    case 1413:	/* real	     <- integer	  */
+
+	{
+	    double *px = REAL(x);
+	    ARRAY_ASSIGN_LOOP({
+		    int iy = INTEGER_ELT(y, iny);
+		    if (iy == NA_INTEGER)
+			px[ii] = NA_REAL;
+		    else
+			px[ii] = iy;
+		});
+	}
+	break;
 
 	/* case 1014:	   logical   <- real	  */
 	/* case 1314:	   integer   <- real	  */
-	case 1414:	/* real	     <- real	  */
-
-	    REAL(x)[ii] = REAL_ELT(y, iny);
-	    break;
-
-	case 1510:	/* complex   <- logical	  */
-	case 1513:	/* complex   <- integer	  */
-	{
-	    int iy = INTEGER_ELT(y, iny);
-	    if (iy == NA_INTEGER) {
-		COMPLEX(x)[ii].r = NA_REAL;
-		COMPLEX(x)[ii].i = NA_REAL;
-	    }
-	    else {
-		COMPLEX(x)[ii].r = iy;
-		COMPLEX(x)[ii].i = 0.0;
-	    }
-	    break;
-	}
-
-	case 1514:	/* complex   <- real	  */
+    case 1414:	/* real	     <- real	  */
 
 	{
-	    double ry = REAL_ELT(y, iny);
-	    if (ISNA(ry)) {
-		COMPLEX(x)[ii].r = NA_REAL;
-		COMPLEX(x)[ii].i = NA_REAL;
-	    }
-	    else {
-		COMPLEX(x)[ii].r = ry;
-		COMPLEX(x)[ii].i = 0.0;
-	    }
-	    break;
+	    double *px = REAL(x);
+	    ARRAY_ASSIGN_LOOP(px[ii] = REAL_ELT(y, iny););
 	}
+	break;
+
+    case 1510:	/* complex   <- logical	  */
+    case 1513:	/* complex   <- integer	  */
+
+	{
+	    Rcomplex *px = COMPLEX(x);
+	    ARRAY_ASSIGN_LOOP({
+		    int iy = INTEGER_ELT(y, iny);
+		    if (iy == NA_INTEGER) {
+			px[ii].r = NA_REAL;
+			px[ii].i = NA_REAL;
+		    }
+		    else {
+			px[ii].r = iy;
+			px[ii].i = 0.0;
+		    }
+		});
+	}
+	break;
+
+    case 1514:	/* complex   <- real	  */
+
+	{
+	    Rcomplex *px = COMPLEX(x);
+	    ARRAY_ASSIGN_LOOP({
+		    double ry = REAL_ELT(y, iny);
+		    if (ISNA(ry)) {
+			px[ii].r = NA_REAL;
+			px[ii].i = NA_REAL;
+		    }
+		    else {
+			px[ii].r = ry;
+			px[ii].i = 0.0;
+		    }
+		});
+	}
+	break;
 
 	/* case 1015:	   logical   <- complex	  */
 	/* case 1315:	   integer   <- complex	  */
 	/* case 1415:	   real	     <- complex	  */
-	case 1515:	/* complex   <- complex	  */
+    case 1515:	/* complex   <- complex	  */
 
-	    COMPLEX(x)[ii] = COMPLEX_ELT(y, iny);
-	    break;
+	{
+	    Rcomplex *px = COMPLEX(x);
+	    ARRAY_ASSIGN_LOOP(px[ii] = COMPLEX_ELT(y, iny););
+	}
+	break;
 
-	case 1610:	/* character <- logical	  */
-	case 1613:	/* character <- integer	  */
-	case 1614:	/* character <- real	  */
-	case 1615:	/* character <- complex	  */
-	case 1616:	/* character <- character */
-	/* case 1016:	   logical   <- character */
-	/* case 1316:	   integer   <- character */
-	/* case 1416:	   real	     <- character */
-	/* case 1516:	   complex   <- character */
+    case 1610:	/* character <- logical	  */
+    case 1613:	/* character <- integer	  */
+    case 1614:	/* character <- real	  */
+    case 1615:	/* character <- complex	  */
+    case 1616:	/* character <- character */
+		/* case 1016:	   logical   <- character */
+		/* case 1316:	   integer   <- character */
+		/* case 1416:	   real	     <- character */
+		/* case 1516:	   complex   <- character */
 
-	    SET_STRING_ELT(x, ii, STRING_ELT(y, iny));
-	    break;
+	ARRAY_ASSIGN_LOOP(SET_STRING_ELT(x, ii, STRING_ELT(y, iny)););
+	break;
 
-	case 1919: /* vector <- vector */
+    case 1919: /* vector <- vector */
 
-	    /* set NAMED on RHS value to NAMEDMAX if used more than once
-	       (PR15098) */
-	    if (i >= ny)
-		ENSURE_NAMEDMAX(VECTOR_ELT(y, iny));
+	ARRAY_ASSIGN_LOOP({
+		/* set NAMED on RHS value to NAMEDMAX if used more than once
+		   (PR15098) */
+		if (i >= ny)
+		    ENSURE_NAMEDMAX(VECTOR_ELT(y, iny));
 
-	    SET_VECTOR_ELT(x, ii, VECTOR_ELT_FIX_NAMED(y, iny));
-	    break;
+		SET_VECTOR_ELT(x, ii, VECTOR_ELT_FIX_NAMED(y, iny));
+	    });
+	break;
 
-	case 2424: /* raw <- raw */
+    case 2424: /* raw <- raw */
 
-	    RAW(x)[ii] = RAW(y)[iny];
-	    break;
+	{
+	    Rbyte *px = RAW(x);
+	    ARRAY_ASSIGN_LOOP(px[ii] = RAW_ELT(y, iny););
+	}
+	break;
 
-	default:
+    default:
 	error(_("incompatible types (from %s to %s) in array subset assignment"),
-		  type2char(which%100), type2char(which/100));
-	}
-    next_i:
-	;
-	if (n > 1) {
-	    int j = 0;
-	    while (++indx[j] >= bound[j]) {
-		indx[j] = 0;
-		j++;
-		if (j == k) j = 0;
-	    }
-	}
-    });
+	      type2char(which%100), type2char(which/100));
+    }
+
     UNPROTECT(3);
     vmaxset(vmax);
     return x;
