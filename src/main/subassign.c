@@ -211,22 +211,22 @@ static SEXP EnlargeVector(SEXP x, R_xlen_t newlen)
     case LGLSXP:
     case INTSXP:
 	for (R_xlen_t i = 0; i < len; i++)
-	    INTEGER(newx)[i] = INTEGER_ELT(x, i);
+	    INTEGER0(newx)[i] = INTEGER_ELT(x, i);
 	for (R_xlen_t i = len; i < newtruelen; i++)
-	    INTEGER(newx)[i] = NA_INTEGER;
+	    INTEGER0(newx)[i] = NA_INTEGER;
 	break;
     case REALSXP:
 	for (R_xlen_t i = 0; i < len; i++)
-	    REAL(newx)[i] = REAL_ELT(x, i);
+	    REAL0(newx)[i] = REAL_ELT(x, i);
 	for (R_xlen_t i = len; i < newtruelen; i++)
-	    REAL(newx)[i] = NA_REAL;
+	    REAL0(newx)[i] = NA_REAL;
 	break;
     case CPLXSXP:
 	for (R_xlen_t i = 0; i < len; i++)
-	    COMPLEX(newx)[i] = COMPLEX_ELT(x, i);
+	    COMPLEX0(newx)[i] = COMPLEX_ELT(x, i);
 	for (R_xlen_t i = len; i < newtruelen; i++) {
-	    COMPLEX(newx)[i].r = NA_REAL;
-	    COMPLEX(newx)[i].i = NA_REAL;
+	    COMPLEX0(newx)[i].r = NA_REAL;
+	    COMPLEX0(newx)[i].i = NA_REAL;
 	}
 	break;
     case STRSXP:
@@ -244,9 +244,9 @@ static SEXP EnlargeVector(SEXP x, R_xlen_t newlen)
 	break;
     case RAWSXP:
 	for (R_xlen_t i = 0; i < len; i++)
-	    RAW(newx)[i] = RAW(x)[i];
+	    RAW0(newx)[i] = RAW_ELT(x, i);
 	for (R_xlen_t i = len; i < newtruelen; i++)
-	    RAW(newx)[i] = (Rbyte) 0;
+	    RAW0(newx)[i] = (Rbyte) 0;
 	break;
     default:
 	UNIMPLEMENTED_TYPE("EnlargeVector", x);
@@ -525,16 +525,17 @@ static SEXP DeleteListElements(SEXP x, SEXP which)
     lenw = xlength(which);
     /* calculate the length of the result */
     PROTECT(include = allocVector(INTSXP, len));
+    int *pinclude = INTEGER0(include);
     for (i = 0; i < len; i++)
-	INTEGER(include)[i] = 1;
+	pinclude[i] = 1;
     for (i = 0; i < lenw; i++) {
 	ii = gi(which, i);
 	if (0 < ii  && ii <= len)
-	    INTEGER(include)[ii - 1] = 0;
+	    pinclude[ii - 1] = 0;
     }
     ii = 0;
     for (i = 0; i < len; i++)
-	ii += INTEGER_ELT(include, i);
+	ii += pinclude[i];
     if (ii == len) {
 	UNPROTECT(1);
 	return x;
@@ -542,7 +543,7 @@ static SEXP DeleteListElements(SEXP x, SEXP which)
     PROTECT(xnew = allocVector(TYPEOF(x), ii));
     ii = 0;
     for (i = 0; i < len; i++) {
-	if (INTEGER_ELT(include, i) == 1) {
+	if (pinclude[i] == 1) {
 	    SET_VECTOR_ELT(xnew, ii, VECTOR_ELT(x, i));
 	    ii++;
 	}
@@ -552,7 +553,7 @@ static SEXP DeleteListElements(SEXP x, SEXP which)
 	PROTECT(xnewnames = allocVector(STRSXP, ii));
 	ii = 0;
 	for (i = 0; i < len; i++) {
-	    if (INTEGER_ELT(include, i) == 1) {
+	    if (pinclude[i] == 1) {
 		SET_STRING_ELT(xnewnames, ii, STRING_ELT(xnames, i));
 		ii++;
 	    }
@@ -1772,6 +1773,14 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     dims = getAttrib(x, R_DimSymbol);
     ndims = length(dims);
 
+    int *pdims = NULL;
+    if (ndims > 0) {
+	if (TYPEOF(dims) == INTSXP)
+	    pdims = INTEGER(dims);
+	else
+	    error(_("improper dimensions"));
+    }
+
     /* ENVSXP special case first */
     if( TYPEOF(x) == ENVSXP) {
 	if( nsubs!=1 || !isString(CAR(subs)) || length(CAR(subs)) != 1 )
@@ -1833,22 +1842,23 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if (ndims != nsubs)
 		error(_("[[ ]] improper number of subscripts"));
 	    PROTECT(indx = allocVector(INTSXP, ndims));
+	    int *pindx = INTEGER0(indx);
 	    names = getAttrib(x, R_DimNamesSymbol);
 	    for (i = 0; i < ndims; i++) {
-		INTEGER(indx)[i] = (int)
+		pindx[i] = (int)
 		    get1index(CAR(subs), isNull(names) ?
 			      R_NilValue : VECTOR_ELT(names, i),
-			      INTEGER(dims)[i],
+			      pdims[i],
 			      /*partial ok*/FALSE, -1, call);
 		subs = CDR(subs);
-		if (INTEGER(indx)[i] < 0 ||
-		    INTEGER(indx)[i] >= INTEGER(dims)[i])
+		if (pindx[i] < 0 ||
+		    pindx[i] >= pdims[i])
 		    error(_("[[ ]] subscript out of bounds"));
 	    }
 	    offset = 0;
 	    for (i = (ndims - 1); i > 0; i--)
-		offset = (offset + INTEGER(indx)[i]) * INTEGER(dims)[i - 1];
-	    offset += INTEGER(indx)[0];
+		offset = (offset + pindx[i]) * pdims[i - 1];
+	    offset += pindx[0];
 	    UNPROTECT(1); /* indx */
 	}
 
@@ -1865,16 +1875,16 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	/* case 1013:	   logical   <- integer	  */
 	case 1313:	/* integer   <- integer	  */
 
-	    INTEGER(x)[offset] = INTEGER(y)[0];
+	    INTEGER(x)[offset] = INTEGER_ELT(y, 0);
 	    break;
 
 	case 1410:	/* real	     <- logical	  */
 	case 1413:	/* real	     <- integer	  */
 
-	    if (INTEGER(y)[0] == NA_INTEGER)
+	    if (INTEGER_ELT(y, 0) == NA_INTEGER)
 		REAL(x)[offset] = NA_REAL;
 	    else
-		REAL(x)[offset] = INTEGER(y)[0];
+		REAL(x)[offset] = INTEGER_ELT(y, 0);
 	    break;
 	/* case 1014:	   logical   <- real	  */
 	/* case 1314:	   integer   <- real	  */
@@ -1886,24 +1896,24 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	case 1510:	/* complex   <- logical	  */
 	case 1513:	/* complex   <- integer	  */
 
-	    if (INTEGER(y)[0] == NA_INTEGER) {
+	    if (INTEGER_ELT(y, 0) == NA_INTEGER) {
 		COMPLEX(x)[offset].r = NA_REAL;
 		COMPLEX(x)[offset].i = NA_REAL;
 	    }
 	    else {
-		COMPLEX(x)[offset].r = INTEGER(y)[0];
+		COMPLEX(x)[offset].r = INTEGER_ELT(y, 0);
 		COMPLEX(x)[offset].i = 0.0;
 	    }
 	    break;
 
 	case 1514:	/* complex   <- real	  */
 
-	    if (ISNA(REAL(y)[0])) {
+	    if (ISNA(REAL_ELT(y, 0))) {
 		COMPLEX(x)[offset].r = NA_REAL;
 		COMPLEX(x)[offset].i = NA_REAL;
 	    }
 	    else {
-		COMPLEX(x)[offset].r = REAL(y)[0];
+		COMPLEX(x)[offset].r = REAL_ELT(y, 0);
 		COMPLEX(x)[offset].i = 0.0;
 	    }
 	    break;
@@ -1913,7 +1923,7 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	/* case 1415:	   real	     <- complex	  */
 	case 1515:	/* complex   <- complex	  */
 
-	    COMPLEX(x)[offset] = COMPLEX(y)[0];
+	    COMPLEX(x)[offset] = COMPLEX_ELT(y, 0);
 	    break;
 
 	case 1610:	/* character <- logical	  */
@@ -1973,8 +1983,8 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	case 2424:      /* raw <- raw */
 
-	   RAW(x)[offset] = RAW(y)[0];
-	   break;
+	    RAW(x)[offset] = RAW_ELT(y, 0);
+	    break;
 
 	default:
 	    error(_("incompatible types (from %s to %s) in [[ assignment"),
@@ -2014,21 +2024,22 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if (ndims != nsubs)
 		error(_("[[ ]] improper number of subscripts"));
 	    PROTECT(indx = allocVector(INTSXP, ndims));
+	    int *pindx = INTEGER0(indx);
 	    names = getAttrib(x, R_DimNamesSymbol);
 	    for (i = 0; i < ndims; i++) {
-		INTEGER(indx)[i] = (int)
+		pindx[i] = (int)
 		    get1index(CAR(subs), VECTOR_ELT(names, i),
-			      INTEGER(dims)[i],
+			      pdims[i],
 			      /*partial ok*/FALSE, -1, call);
 		subs = CDR(subs);
-		if (INTEGER(indx)[i] < 0 ||
-		    INTEGER(indx)[i] >= INTEGER(dims)[i])
+		if (pindx[i] < 0 ||
+		    pindx[i] >= pdims[i])
 		    error(_("[[ ]] subscript (%d) out of bounds"), i+1);
 	    }
 	    offset = 0;
 	    for (i = (ndims - 1); i > 0; i--)
-		offset = (offset + INTEGER(indx)[i]) * INTEGER(dims)[i - 1];
-	    offset += INTEGER(indx)[0];
+		offset = (offset + pindx[i]) * pdims[i - 1];
+	    offset += pindx[0];
 	    SEXP slot = nthcdr(x, (int) offset);
 	    SETCAR(slot, duplicate(y));
 	    /* FIXME: add name */
