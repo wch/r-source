@@ -4058,8 +4058,10 @@ setRlibs <-
                     lines <- filtergrep("Warning: replacing previous import", lines,
                                         fixed = TRUE)
                 else {
-                    this <- unique(filtergrep("Warning: replacing previous import", lines))
-                    this <- grep(paste0(sQuote(pkgname), "$"), this, value = TRUE)
+                    this <- unique(grep("Warning: replacing previous import",
+                                        lines, fixed = TRUE, value = TRUE))
+                    this <- grep(paste0(sQuote(pkgname), "$"), this,
+                                 value = TRUE)
                     lines <- filtergrep("Warning: replacing previous import", lines,
                                         fixed = TRUE)
                     lines <- c(lines, this)
