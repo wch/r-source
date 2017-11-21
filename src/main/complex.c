@@ -64,7 +64,7 @@
 
 #include "arithmetic.h"		/* complex_*  */
 #include <complex.h>
-#include "Rcomplex.h"		/* I, C99_COMPLEX2, SET_C99_COMPLEX, toC99 */
+#include "Rcomplex.h"		/* I, SET_C99_COMPLEX, toC99 */
 #include <R_ext/Itermacros.h>
 
 
@@ -82,11 +82,13 @@ SEXP attribute_hidden complex_unary(ARITHOP_TYPE code, SEXP s1, SEXP call)
 	return s1;
     case MINUSOP:
 	ans = NO_REFERENCES(s1) ? s1 : duplicate(s1);
+	Rcomplex *pans = COMPLEX(ans);
+	const Rcomplex *ps1 = COMPLEX_RO(s1);
 	n = XLENGTH(s1);
 	for (i = 0; i < n; i++) {
-	    Rcomplex x = COMPLEX(s1)[i];
-	    COMPLEX(ans)[i].r = -x.r;
-	    COMPLEX(ans)[i].i = -x.i;
+	    Rcomplex x = ps1[i];
+	    pans[i].r = -x.r;
+	    pans[i].i = -x.i;
 	}
 	return ans;
     default:
@@ -182,39 +184,43 @@ SEXP attribute_hidden complex_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
     ans = R_allocOrReuseVector(s1, s2, CPLXSXP, n);
     PROTECT(ans);
 
+    Rcomplex *pans = COMPLEX(ans);
+    const Rcomplex *ps1 = COMPLEX_RO(s1);
+    const Rcomplex *ps2 = COMPLEX_RO(s2);
+
     switch (code) {
     case PLUSOP:
 	MOD_ITERATE2_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2, {
-	    Rcomplex x1 = COMPLEX(s1)[i1];
-	    Rcomplex x2 = COMPLEX(s2)[i2];
-	    COMPLEX(ans)[i].r = x1.r + x2.r;
-	    COMPLEX(ans)[i].i = x1.i + x2.i;
+	    Rcomplex x1 = ps1[i1];
+	    Rcomplex x2 = ps2[i2];
+	    pans[i].r = x1.r + x2.r;
+	    pans[i].i = x1.i + x2.i;
 	});
 	break;
     case MINUSOP:
 	MOD_ITERATE2_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2, {
-	    Rcomplex x1 = COMPLEX(s1)[i1];
-	    Rcomplex x2 = COMPLEX(s2)[i2];
-	    COMPLEX(ans)[i].r = x1.r - x2.r;
-	    COMPLEX(ans)[i].i = x1.i - x2.i;
+	    Rcomplex x1 = ps1[i1];
+	    Rcomplex x2 = ps2[i2];
+	    pans[i].r = x1.r - x2.r;
+	    pans[i].i = x1.i - x2.i;
 	});
 	break;
     case TIMESOP:
 	MOD_ITERATE2_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2, {
-	    SET_C99_COMPLEX(COMPLEX(ans), i,
-			    C99_COMPLEX2(s1, i1) * C99_COMPLEX2(s2, i2));
+	    SET_C99_COMPLEX(pans, i,
+			    toC99(&ps1[i1]) * toC99(&ps2[i2]));
 	});
 	break;
     case DIVOP:
 	MOD_ITERATE2_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2, {
-	    SET_C99_COMPLEX(COMPLEX(ans), i,
-			    C99_COMPLEX2(s1, i1) / C99_COMPLEX2(s2, i2));
+	    SET_C99_COMPLEX(pans, i,
+			    toC99(&ps1[i1]) / toC99(&ps2[i2]));
 	});
 	break;
     case POWOP:
 	MOD_ITERATE2_CHECK(NINTERRUPT, n, n1, n2, i, i1, i2, {
-	    SET_C99_COMPLEX(COMPLEX(ans), i,
-			    mycpow(C99_COMPLEX2(s1, i1), C99_COMPLEX2(s2, i2)));
+	    SET_C99_COMPLEX(pans, i,
+			    mycpow(toC99(&ps1[i1]), toC99(&ps2[i2])));
 	});
 	break;
     default:
@@ -248,41 +254,57 @@ SEXP attribute_hidden do_cmathfuns(SEXP call, SEXP op, SEXP args, SEXP env)
     x = CAR(args);
     if (isComplex(x)) {
 	n = XLENGTH(x);
+	const Rcomplex *px = COMPLEX_RO(x);
 	switch(PRIMVAL(op)) {
 	case 1:	/* Re */
-	    y = allocVector(REALSXP, n);
-	    for(i = 0 ; i < n ; i++)
-		REAL(y)[i] = COMPLEX(x)[i].r;
+	    {
+		y = allocVector(REALSXP, n);
+		double *py = REAL(y);
+		for(i = 0 ; i < n ; i++)
+		    py[i] = px[i].r;
+	    }
 	    break;
 	case 2:	/* Im */
-	    y = allocVector(REALSXP, n);
-	    for(i = 0 ; i < n ; i++)
-		REAL(y)[i] = COMPLEX(x)[i].i;
+	    {
+		y = allocVector(REALSXP, n);
+		double *py = REAL(y);
+		for(i = 0 ; i < n ; i++)
+		    py[i] = px[i].i;
+	    }
 	    break;
 	case 3:	/* Mod */
 	case 6:	/* abs */
-	    y = allocVector(REALSXP, n);
-	    for(i = 0 ; i < n ; i++)
+	    {
+		y = allocVector(REALSXP, n);
+		double *py = REAL(y);
+		for(i = 0 ; i < n ; i++)
 #if HAVE_CABS
-		REAL(y)[i] = cabs(C99_COMPLEX2(x, i));
+		    py[i] = cabs(toC99(&px[i]));
 #else
-		REAL(y)[i] = hypot(COMPLEX(x)[i].r, COMPLEX(x)[i].i);
+		    py[i] = hypot(px[i].r, px[i].i);
 #endif
+	    }
 	    break;
 	case 4:	/* Arg */
-	    y = allocVector(REALSXP, n);
-	    for(i = 0 ; i < n ; i++)
+	    {
+		y = allocVector(REALSXP, n);
+		double *py = REAL(y);
+		for(i = 0 ; i < n ; i++)
 #if HAVE_CARG
-		REAL(y)[i] = carg(C99_COMPLEX2(x, i));
+		    py[i] = carg(toC99(&px[i]));
 #else
-		REAL(y)[i] = atan2(COMPLEX(x)[i].i, COMPLEX(x)[i].r);
+		    py[i] = atan2(px[i].i, px[i].r);
 #endif
+	    }
 	    break;
 	case 5:	/* Conj */
-	    y = NO_REFERENCES(x) ? x : allocVector(CPLXSXP, n);
-	    for(i = 0 ; i < n ; i++) {
-		COMPLEX(y)[i].r = COMPLEX(x)[i].r;
-		COMPLEX(y)[i].i = -COMPLEX(x)[i].i;
+	    {
+		y = NO_REFERENCES(x) ? x : allocVector(CPLXSXP, n);
+		Rcomplex *py = COMPLEX(y);
+		for(i = 0 ; i < n ; i++) {
+		    py[i].r = px[i].r;
+		    py[i].i = -px[i].i;
+		}
 	    }
 	    break;
 	}
@@ -292,30 +314,32 @@ SEXP attribute_hidden do_cmathfuns(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(isReal(x)) PROTECT(x);
 	else PROTECT(x = coerceVector(x, REALSXP));
 	y = NO_REFERENCES(x) ? x : allocVector(REALSXP, n);
+	double *py = REAL(y);
+	const double *px = REAL_RO(x);
 
 	switch(PRIMVAL(op)) {
 	case 1:	/* Re */
 	case 5:	/* Conj */
 	    for(i = 0 ; i < n ; i++)
-		REAL(y)[i] = REAL(x)[i];
+		py[i] = px[i];
 	    break;
 	case 2:	/* Im */
 	    for(i = 0 ; i < n ; i++)
-		REAL(y)[i] = 0.0;
+		py[i] = 0.0;
 	    break;
 	case 4:	/* Arg */
 	    for(i = 0 ; i < n ; i++)
-		if(ISNAN(REAL(x)[i]))
-		    REAL(y)[i] = REAL(x)[i];
-		else if (REAL(x)[i] >= 0)
-		    REAL(y)[i] = 0;
+		if(ISNAN(px[i]))
+		    py[i] = px[i];
+		else if (px[i] >= 0)
+		    py[i] = 0;
 		else
-		    REAL(y)[i] = M_PI;
+		    py[i] = M_PI;
 	    break;
 	case 3:	/* Mod */
 	case 6:	/* abs */
 	    for(i = 0 ; i < n ; i++)
-		REAL(y)[i] = fabs(REAL(x)[i]);
+		py[i] = fabs(px[i]);
 	    break;
 	}
 	UNPROTECT(1);
@@ -333,7 +357,7 @@ SEXP attribute_hidden do_cmathfuns(SEXP call, SEXP op, SEXP args, SEXP env)
 
 /* used in format.c and printutils.c */
 #define MAX_DIGITS 22
-void attribute_hidden z_prec_r(Rcomplex *r, Rcomplex *x, double digits)
+void attribute_hidden z_prec_r(Rcomplex *r, const Rcomplex *x, double digits)
 {
     double m = 0.0, m1, m2;
     int dig, mag;
@@ -561,7 +585,7 @@ static double complex z_atanh(double complex z)
 }
 
 static Rboolean cmath1(double complex (*f)(double complex),
-		       Rcomplex *x, Rcomplex *y, R_xlen_t n)
+		       const Rcomplex *x, Rcomplex *y, R_xlen_t n)
 {
     R_xlen_t i;
     Rboolean naflag = FALSE;
@@ -587,22 +611,25 @@ SEXP attribute_hidden complex_math1(SEXP call, SEXP op, SEXP args, SEXP env)
     n = XLENGTH(x);
     PROTECT(y = allocVector(CPLXSXP, n));
 
+    const Rcomplex *px = COMPLEX_RO(x);
+    Rcomplex *py = COMPLEX(y);
+
     switch (PRIMVAL(op)) {
-    case 10003: naflag = cmath1(clog, COMPLEX(x), COMPLEX(y), n); break;
-    case 3: naflag = cmath1(csqrt, COMPLEX(x), COMPLEX(y), n); break;
-    case 10: naflag = cmath1(cexp, COMPLEX(x), COMPLEX(y), n); break;
-    case 20: naflag = cmath1(ccos, COMPLEX(x), COMPLEX(y), n); break;
-    case 21: naflag = cmath1(csin, COMPLEX(x), COMPLEX(y), n); break;
-    case 22: naflag = cmath1(z_tan, COMPLEX(x), COMPLEX(y), n); break;
-    case 23: naflag = cmath1(z_acos, COMPLEX(x), COMPLEX(y), n); break;
-    case 24: naflag = cmath1(z_asin, COMPLEX(x), COMPLEX(y), n); break;
-    case 25: naflag = cmath1(z_atan, COMPLEX(x), COMPLEX(y), n); break;
-    case 30: naflag = cmath1(ccosh, COMPLEX(x), COMPLEX(y), n); break;
-    case 31: naflag = cmath1(csinh, COMPLEX(x), COMPLEX(y), n); break;
-    case 32: naflag = cmath1(ctanh, COMPLEX(x), COMPLEX(y), n); break;
-    case 33: naflag = cmath1(z_acosh, COMPLEX(x), COMPLEX(y), n); break;
-    case 34: naflag = cmath1(z_asinh, COMPLEX(x), COMPLEX(y), n); break;
-    case 35: naflag = cmath1(z_atanh, COMPLEX(x), COMPLEX(y), n); break;
+    case 10003: naflag = cmath1(clog, px, py, n); break;
+    case 3: naflag = cmath1(csqrt, px, py, n); break;
+    case 10: naflag = cmath1(cexp, px, py, n); break;
+    case 20: naflag = cmath1(ccos, px, py, n); break;
+    case 21: naflag = cmath1(csin, px, py, n); break;
+    case 22: naflag = cmath1(z_tan, px, py, n); break;
+    case 23: naflag = cmath1(z_acos, px, py, n); break;
+    case 24: naflag = cmath1(z_asin, px, py, n); break;
+    case 25: naflag = cmath1(z_atan, px, py, n); break;
+    case 30: naflag = cmath1(ccosh, px, py, n); break;
+    case 31: naflag = cmath1(csinh, px, py, n); break;
+    case 32: naflag = cmath1(ctanh, px, py, n); break;
+    case 33: naflag = cmath1(z_acosh, px, py, n); break;
+    case 34: naflag = cmath1(z_asinh, px, py, n); break;
+    case 35: naflag = cmath1(z_atanh, px, py, n); break;
 
     default:
 	/* such as sign, gamma */
@@ -659,7 +686,8 @@ typedef void (*cm2_fun)(Rcomplex *, Rcomplex *, Rcomplex *);
 SEXP attribute_hidden complex_math2(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     R_xlen_t i, n, na, nb, ia, ib;
-    Rcomplex ai, bi, *a, *b, *y;
+    Rcomplex ai, bi, *y;
+    const Rcomplex *a, *b;
     SEXP sa, sb, sy;
     Rboolean naflag = FALSE;
     cm2_fun f;
@@ -688,7 +716,8 @@ SEXP attribute_hidden complex_math2(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     n = (na < nb) ? nb : na;
     PROTECT(sy = allocVector(CPLXSXP, n));
-    a = COMPLEX(sa); b = COMPLEX(sb); y = COMPLEX(sy);
+    a = COMPLEX_RO(sa); b = COMPLEX_RO(sb);
+    y = COMPLEX(sy);
     MOD_ITERATE2(n, na, nb, i, ia, ib, {
 	ai = a[ia]; bi = b[ib];
 	if(ISNA(ai.r) && ISNA(ai.i) &&
@@ -731,18 +760,21 @@ SEXP attribute_hidden do_complex(SEXP call, SEXP op, SEXP args, SEXP rho)
     na = (ni > na) ? ni : na;
     /* }*/
     ans = allocVector(CPLXSXP, na);
+    Rcomplex *pans = COMPLEX(ans);
     for(i=0 ; i<na ; i++) {
-	COMPLEX(ans)[i].r = 0;
-	COMPLEX(ans)[i].i = 0;
+	pans[i].r = 0;
+	pans[i].i = 0;
     }
     UNPROTECT(2);
     if(na > 0 && nr > 0) {
+	const double *p_re = REAL_RO(re);
 	for(i=0 ; i<na ; i++)
-	    COMPLEX(ans)[i].r = REAL(re)[i%nr];
+	    pans[i].r = p_re[i%nr];
     }
     if(na > 0 && ni > 0) {
+	const double *p_im = REAL_RO(im);
 	for(i=0 ; i<na ; i++)
-	    COMPLEX(ans)[i].i = REAL(im)[i%ni];
+	    pans[i].i = p_im[i%ni];
     }
     return ans;
 }
@@ -777,9 +809,10 @@ SEXP attribute_hidden do_polyroot(SEXP call, SEXP op, SEXP args, SEXP rho)
 #else
     n = LENGTH(z);
 #endif
+    const Rcomplex *pz = COMPLEX_RO(z);
     degree = 0;
     for(i = 0; i < n; i++) {
-	if(COMPLEX(z)[i].r!= 0.0 || COMPLEX(z)[i].i != 0.0) degree = i;
+	if(pz[i].r!= 0.0 || pz[i].i != 0.0) degree = i;
     }
     n = degree + 1; /* omit trailing zeroes */
     if(degree >= 1) {
@@ -788,19 +821,25 @@ SEXP attribute_hidden do_polyroot(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT(zr = allocVector(REALSXP, n));
 	PROTECT(zi = allocVector(REALSXP, n));
 
+	double *p_rr = REAL(rr);
+	double *p_ri = REAL(ri);
+	double *p_zr = REAL(zr);
+	double *p_zi = REAL(zi);
+
 	for(i = 0 ; i < n ; i++) {
-	    if(!R_FINITE(COMPLEX(z)[i].r) || !R_FINITE(COMPLEX(z)[i].i))
+	    if(!R_FINITE(pz[i].r) || !R_FINITE(pz[i].i))
 		error(_("invalid polynomial coefficient"));
-	    REAL(zr)[degree-i] = COMPLEX(z)[i].r;
-	    REAL(zi)[degree-i] = COMPLEX(z)[i].i;
+	    p_zr[degree-i] = pz[i].r;
+	    p_zi[degree-i] = pz[i].i;
 	}
-	R_cpolyroot(REAL(zr), REAL(zi), &degree, REAL(rr), REAL(ri), &fail);
+	R_cpolyroot(p_zr, p_zi, &degree, p_rr, p_ri, &fail);
 	if(fail) error(_("root finding code failed"));
 	UNPROTECT(2);
 	r = allocVector(CPLXSXP, degree);
+	Rcomplex *pr = COMPLEX(r);
 	for(i = 0 ; i < degree ; i++) {
-	    COMPLEX(r)[i].r = REAL(rr)[i];
-	    COMPLEX(r)[i].i = REAL(ri)[i];
+	    pr[i].r = p_rr[i];
+	    pr[i].i = p_ri[i];
 	}
 	UNPROTECT(3);
     }

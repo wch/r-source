@@ -964,3 +964,13 @@ if(require("Matrix")) withAutoprint({
     )
     invisible(lapply(c("Z","C","C2","C3"), removeClass))
 })
+
+
+## Automatic coerce method creation: 
+setClass("A", slots = c(foo = "numeric"))
+setClass("Ap", contains = "A", slots = c(p = "character"))
+cd <- getClassDef("Ap")
+body(cd@contains[["A"]]@coerce)[[2]] ## >>   value <- new("A")
+## was ... <-  new(structure("A", package = ".GlobalEnv"))
+## for a few days in R-devel (Nov.2017)
+

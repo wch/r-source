@@ -37,7 +37,7 @@
    Note: this could use the C11 CMPLX() macro.
    As could mycpow, z_tan and some of the substitutes.
  */
-static R_INLINE double complex toC99(Rcomplex *x)
+static R_INLINE double complex toC99(const Rcomplex *x)
 {
 #if __GNUC__
     double complex ans = (double complex) 0; /* -Wall */
@@ -48,7 +48,6 @@ static R_INLINE double complex toC99(Rcomplex *x)
     return x->r + x->i * I;
 #endif
 }
-#define C99_COMPLEX2(x, i) toC99(COMPLEX(x) + (i))
 
 static R_INLINE void
 SET_C99_COMPLEX(Rcomplex *x, R_xlen_t i, double complex value)

@@ -4058,8 +4058,10 @@ setRlibs <-
                     lines <- filtergrep("Warning: replacing previous import", lines,
                                         fixed = TRUE)
                 else {
-                    this <- unique(filtergrep("Warning: replacing previous import", lines))
-                    this <- grep(paste0(sQuote(pkgname), "$"), this, value = TRUE)
+                    this <- unique(grep("Warning: replacing previous import",
+                                        lines, fixed = TRUE, value = TRUE))
+                    this <- grep(paste0(sQuote(pkgname), "$"), this,
+                                 value = TRUE)
                     lines <- filtergrep("Warning: replacing previous import", lines,
                                         fixed = TRUE)
                     lines <- c(lines, this)
@@ -4244,6 +4246,7 @@ setRlibs <-
                 errorLog(Log)
                 bad <- TRUE
             } else if(length(res$bad_version) ||
+                      length(res$strong_dependencies_not_in_mainstream_repositories) ||
                       identical(res$foss_with_BuildVignettes, TRUE) ||
                       res$Maintainer_invalid_or_multi_person ||
                       res$empty_Maintainer_name ||

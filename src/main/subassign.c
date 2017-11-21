@@ -476,7 +476,7 @@ static int SubassignTypeFix(SEXP *x, SEXP *y, R_xlen_t stretch, int level,
         if (dispatch_asvector(y, call, rho)) {
             return SubassignTypeFix(x, y, stretch, level, call, rho);
         }
-        
+
     default:
 	error(_("incompatible types (from %s to %s) in subassignment type fix"),
 	      type2char(which%100), type2char(which/100));
@@ -604,7 +604,7 @@ static SEXP VectorAssign(SEXP call, SEXP rho, SEXP x, SEXP s, SEXP y)
 	    }
 	}
     }
-		
+
     if (isNull(x) && isNull(y)) {
 	return R_NilValue;
     }
@@ -1503,6 +1503,7 @@ static SEXP listRemove(SEXP x, SEXP s, int ind)
 }
 
 
+// For  x[s] <- y  --- extract (x, s, y)  and return the number of indices
 static R_INLINE int SubAssignArgs(SEXP args, SEXP *x, SEXP *s, SEXP *y)
 {
     if (CDR(args) == R_NilValue)
@@ -1615,7 +1616,7 @@ SEXP attribute_hidden do_subassign_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT(x = PairToVectorList(x));
     }
     else if (xlength(x) == 0) {
-	if (xlength(y) == 0) {
+	if (xlength(y) == 0 && TYPEOF(x) == TYPEOF(y)) {
 	    UNPROTECT(1);
 	    return(x);
 	}
@@ -1709,9 +1710,9 @@ static SEXP DeleteOneVectorListItem(SEXP x, R_xlen_t which)
 
 /* The [[<- operator; should be fast.
  *     ====
- * args[1] = object being subscripted
- * args[2] = list of subscripts
- * args[3] = replacement values */
+ * args[1] =: x    = object being subscripted
+ * args[2] =: subs = list of subscripts
+ * args[3] =: y    = replacement values */
 SEXP attribute_hidden do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans;

@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2017-10-29 r73639) -- "Unsuffered Consequences"
+R Under development (unstable) (2017-11-17 r73742) -- "Unsuffered Consequences"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -1288,4 +1288,15 @@ Also defined by 'package2'
 +     identical(as(cc, "matrix"), m), identical(as(c2, "matrix"), m), identical(as(c3, 
 +         "matrix"), m))
 > invisible(lapply(c("Z", "C", "C2", "C3"), removeClass))
+> 
+> 
+> ## Automatic coerce method creation: 
+> setClass("A", slots = c(foo = "numeric"))
+> setClass("Ap", contains = "A", slots = c(p = "character"))
+> cd <- getClassDef("Ap")
+> body(cd@contains[["A"]]@coerce)[[2]] ## >>   value <- new("A")
+value <- new("A")
+> ## was ... <-  new(structure("A", package = ".GlobalEnv"))
+> ## for a few days in R-devel (Nov.2017)
+> 
 > 

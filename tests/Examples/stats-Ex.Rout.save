@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2017-11-09 r73697) -- "Unsuffered Consequences"
+R Under development (unstable) (2017-11-16 r73734) -- "Unsuffered Consequences"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -3826,7 +3826,7 @@ sigma^2 estimated as 0.4566:  log likelihood = -101.2,  aic = 212.4
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x4d4d238>
+<environment: 0x6445140>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -4824,7 +4824,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x4d55120>
+<bytecode: 0x6233080>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -7404,7 +7404,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x6aee808>
+<environment: 0x5614ed0>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -12059,14 +12059,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x61868c8>
-<environment: 0x618f0f0>
+<bytecode: 0x3c047f0>
+<environment: 0x3bfaf98>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x6186778>
-<environment: 0x618f0f0>
+<bytecode: 0x3c04940>
+<environment: 0x3bfaf98>
 
 > 
 > 
@@ -12598,11 +12598,11 @@ predict.bs :
 predict.glm :
 	 function (object, newdata = NULL, type = c("link", "response",      "terms"), se.fit = FALSE, dispersion = NULL, terms = NULL,      na.action = na.pass, ...)  NULL 
 Warning: namespace ‘MASS’ is not available and has been replaced
-by .GlobalEnv when processing object ‘’
+by .GlobalEnv when processing object ‘envir’
 predict.glmmPQL :
 	 function (object, newdata = NULL, type = c("link", "response"),      level = Q, na.action = na.pass, ...)  NULL 
 Warning: namespace ‘MASS’ is not available and has been replaced
-by .GlobalEnv when processing object ‘’
+by .GlobalEnv when processing object ‘envir’
 predict.lda :
 	 function (object, newdata, prior = object$prior, dimen, method = c("plug-in",      "predictive", "debiased"), ...)  NULL 
 predict.lm :
@@ -12610,11 +12610,11 @@ predict.lm :
 predict.loess :
 	 function (object, newdata = NULL, se = FALSE, na.action = na.pass,      ...)  NULL 
 Warning: namespace ‘MASS’ is not available and has been replaced
-by .GlobalEnv when processing object ‘’
+by .GlobalEnv when processing object ‘envir’
 predict.lqs :
 	 function (object, newdata, na.action = na.pass, ...)  NULL 
 Warning: namespace ‘MASS’ is not available and has been replaced
-by .GlobalEnv when processing object ‘’
+by .GlobalEnv when processing object ‘envir’
 predict.mca :
 	 function (object, newdata, type = c("row", "factor"), ...)  NULL 
 predict.mlm :
@@ -12630,7 +12630,7 @@ predict.ns :
 predict.pbSpline :
 	 function (object, x, nseg = 50, deriv = 0, ...)  NULL 
 Warning: namespace ‘MASS’ is not available and has been replaced
-by .GlobalEnv when processing object ‘’
+by .GlobalEnv when processing object ‘envir’
 predict.polr :
 	 function (object, newdata, type = c("class", "probs"), ...)  NULL 
 predict.poly :
@@ -12646,11 +12646,11 @@ predict.prcomp :
 predict.princomp :
 	 function (object, newdata, ...)  NULL 
 Warning: namespace ‘MASS’ is not available and has been replaced
-by .GlobalEnv when processing object ‘’
+by .GlobalEnv when processing object ‘envir’
 predict.qda :
 	 function (object, newdata, prior = object$prior, method = c("plug-in",      "predictive", "debiased", "looCV"), ...)  NULL 
 Warning: namespace ‘MASS’ is not available and has been replaced
-by .GlobalEnv when processing object ‘’
+by .GlobalEnv when processing object ‘envir’
 predict.rlm :
 	 function (object, newdata = NULL, scale = NULL, ...)  NULL 
 predict.smooth.spline :
@@ -16156,11 +16156,10 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > 
 > ## look at the internal structure:
 > unclass(sfun0)
-structure(function (v) 
-.approxfun(x, y, v, method, yleft, yright, f), call = stepfun(1:3, 
-    y0, f = 0))
-<bytecode: 0x14e2a760>
-<environment: 0x28d89dd0>
+function (v) 
+.approxfun(x, y, v, method, yleft, yright, f)
+<bytecode: 0x3cd48e0>
+<environment: 0x5a87430>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -18484,7 +18483,7 @@ Number of Fisher Scoring iterations: 6
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  5.321 0.284 5.81 0 0 
+Time elapsed:  6.816 0.245 7.094 0 0 
 > grDevices::dev.off()
 null device 
           1 

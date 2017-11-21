@@ -790,27 +790,27 @@ const char *EncodeElement0(SEXP x, int indx, int quote, const char *dec)
 
     switch(TYPEOF(x)) {
     case LGLSXP:
-	formatLogical(&LOGICAL(x)[indx], 1, &w);
-	res = EncodeLogical(LOGICAL(x)[indx], w);
+	formatLogical(&LOGICAL_RO(x)[indx], 1, &w);
+	res = EncodeLogical(LOGICAL_RO(x)[indx], w);
 	break;
     case INTSXP:
-	formatInteger(&INTEGER(x)[indx], 1, &w);
-	res = EncodeInteger(INTEGER(x)[indx], w);
+	formatInteger(&INTEGER_RO(x)[indx], 1, &w);
+	res = EncodeInteger(INTEGER_RO(x)[indx], w);
 	break;
     case REALSXP:
-	formatReal(&REAL(x)[indx], 1, &w, &d, &e, 0);
-	res = EncodeReal0(REAL(x)[indx], w, d, e, dec);
+	formatReal(&REAL_RO(x)[indx], 1, &w, &d, &e, 0);
+	res = EncodeReal0(REAL_RO(x)[indx], w, d, e, dec);
 	break;
     case STRSXP:
-	formatString(&STRING_PTR(x)[indx], 1, &w, quote);
+	formatString(&STRING_PTR_RO(x)[indx], 1, &w, quote);
 	res = EncodeString(STRING_ELT(x, indx), w, quote, Rprt_adj_left);
 	break;
     case CPLXSXP:
-	formatComplex(&COMPLEX(x)[indx], 1, &w, &d, &e, &wi, &di, &ei, 0);
-	res = EncodeComplex(COMPLEX(x)[indx], w, d, e, wi, di, ei, dec);
+	formatComplex(&COMPLEX_RO(x)[indx], 1, &w, &d, &e, &wi, &di, &ei, 0);
+	res = EncodeComplex(COMPLEX_RO(x)[indx], w, d, e, wi, di, ei, dec);
 	break;
     case RAWSXP:
-	res = EncodeRaw(RAW(x)[indx], "");
+	res = EncodeRaw(RAW_RO(x)[indx], "");
 	break;
     default:
 	res = NULL; /* -Wall */

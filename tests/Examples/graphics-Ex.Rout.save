@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2017-11-09 r73692) -- "Unsuffered Consequences"
+R Under development (unstable) (2017-11-16 r73734) -- "Unsuffered Consequences"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -373,7 +373,7 @@ Hair    Brown Blue Hazel Green
 > # *add* notches (somewhat funny here):
 > boxplot(count ~ spray, data = InsectSprays,
 +         notch = TRUE, add = TRUE, col = "blue")
-Warning in bxp(list(stats = structure(c(7, 11, 14, 18.5, 23, 7, 12, 16.5,  :
+Warning in bxp(list(stats = c(7, 11, 14, 18.5, 23, 7, 12, 16.5, 18, 21,  :
   some notches went outside hinges ('box'): maybe set notch=FALSE
 > 
 > boxplot(decrease ~ treatment, data = OrchardSprays,
@@ -2080,7 +2080,7 @@ N
 > points.default # to see how it calls "plot.xy(xy.coords(x, y), ...)"
 function (x, y = NULL, type = "p", ...) 
 plot.xy(xy.coords(x, y), type = type, ...)
-<bytecode: 0x1cb08d8>
+<bytecode: 0x2859be0>
 <environment: namespace:graphics>
 > 
 > 
@@ -2950,7 +2950,7 @@ function (xy = 1, warn.log = TRUE)
     u <- par("usr")
     xy * c(u[2L] - u[1L], u[4L] - u[3L])/par("pin")
 }
-<bytecode: 0x2f78df0>
+<bytecode: 0x38589b8>
 <environment: namespace:graphics>
 > 
 > ## plot labels offset 0.12 inches to the right
@@ -3030,7 +3030,7 @@ function (xy = 1, warn.log = TRUE)
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.757 0.044 2.816 0 0 
+Time elapsed:  2.739 0.054 2.806 0 0 
 > grDevices::dev.off()
 null device 
           1 

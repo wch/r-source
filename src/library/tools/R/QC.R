@@ -812,7 +812,8 @@ function(x, ...)
             s <- paste(deparse(s), collapse = "")
             s <- gsub(" = ([,\\)])", "\\1", s)
             s <- gsub("<unescaped bksl>", "\\", s, fixed = TRUE)
-            gsub("^pairlist", "function", s)
+            s <- gsub("^pairlist", "function", s)
+            gsub("^as.pairlist\\(alist\\((.*)\\)\\)$", "function(\\1)", s)
         }
     }
 
@@ -6692,7 +6693,15 @@ function(dir, localOnly = FALSE)
     nms <- names(meta)
     stdNms <- .get_standard_DESCRIPTION_fields()
     nms <- nms[is.na(match(nms, stdNms)) &
-               !grepl("^(X-CRAN|Repository/R-Forge|VCS/|Config/)", nms)]
+               !grepl(paste0("^(",
+                             paste(c("X-CRAN",
+                                     "X-schema.org",
+                                     "Repository/R-Forge",
+                                     "VCS/",
+                                     "Config/"),
+                                   collapse = "|"),
+                             ")"),
+                      nms)]
     if(length(nms) && ## Allow maintainer notes  <stdName>Note :
        length(nms <- nms[is.na(match(nms, paste0(stdNms,"Note")))]))
         out$fields <- nms

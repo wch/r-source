@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2017-10-29 r73639) -- "Unsuffered Consequences"
+R Under development (unstable) (2017-11-21 r73759) -- "Unsuffered Consequences"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -15,7 +15,7 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
-> #### Test 64-bit date-time functions.
+> #### Test R's (64-bit) date-time functions .. output tested *sloppily*
 > 
 > ## R's internal fixes are used on 32-bit platforms.
 > ## macOS gets these wrong: see HAVE_WORKING_64BIT_MKTIME
@@ -72,4 +72,13 @@ Type 'q()' to quit R.
 > ## Incorrect use of %d should work even though abbreviation does match
 > old <- Sys.setlocale("LC_TIME", "C") # to be sure
 > stopifnot(!is.na(strptime("11-August-1903", "%d-%b-%Y")))
+> 
+> 
+> ## PR#17186 - Sys.timezone() on some Debian-derived platforms
+> (S.t <- Sys.timezone())
+[1] "EST5EDT"
+> ## NB: This will fail on non-standard platforms, or even standard new OSes.
+> ## --  We are strict here, in order to *learn* about those and possibly work around:
+> if(is.na(S.t) || !nzchar(S.t)) stop("could not get timezone")
+> ## has been NA_character_  in Ubuntu 14.04.5 LTS
 > 

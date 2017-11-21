@@ -128,7 +128,7 @@ static void printLogicalMatrix(SEXP sx, int offset, int r_pr, int r, int c,
     int i, j, jmin = 0, jmax = 0, lbloff = 0;		\
 							\
     if (!isNull(rl))					\
-	formatString(STRING_PTR(rl), r, &rlabw, 0);	\
+	formatString(STRING_PTR_RO(rl), r, &rlabw, 0);	\
     else						\
 	rlabw = IndexWidth(r + 1) + 3;			\
 							\
@@ -211,7 +211,7 @@ static void printLogicalMatrix(SEXP sx, int offset, int r_pr, int r, int c,
 	    MatrixColumnLabel(cl, j, w[j])
 
     _PRINT_INIT_rl_rn;
-    int *x = LOGICAL(sx) + offset;
+    const int *x = LOGICAL_RO(sx) + offset;
 
     _COMPUTE_W_(formatLogical(&x[j * r], (R_xlen_t) r, &w[j]));
 
@@ -225,7 +225,7 @@ static void printIntegerMatrix(SEXP sx, int offset, int r_pr, int r, int c,
 			       Rboolean print_ij)
 {
     _PRINT_INIT_rl_rn;
-    int *x = INTEGER(sx) + offset;
+    const int *x = INTEGER_RO(sx) + offset;
 
     _COMPUTE_W_( formatInteger(&x[j * r], (R_xlen_t) r, &w[j]) );
 
@@ -238,7 +238,7 @@ static void printRealMatrix(SEXP sx, int offset, int r_pr, int r, int c,
 			    Rboolean print_ij)
 {
     _PRINT_INIT_rl_rn;
-    double *x = REAL(sx) + offset;
+    const double *x = REAL_RO(sx) + offset;
     int *d = (int *) R_alloc(c, sizeof(int)),
 	*e = (int *) R_alloc(c, sizeof(int));
 
@@ -253,7 +253,7 @@ static void printComplexMatrix(SEXP sx, int offset, int r_pr, int r, int c,
 			       Rboolean print_ij)
 {
     _PRINT_INIT_rl_rn;
-    Rcomplex *x = COMPLEX(sx) + offset;
+    const Rcomplex *x = COMPLEX_RO(sx) + offset;
     int *dr = (int *) R_alloc(c, sizeof(int)),
 	*er = (int *) R_alloc(c, sizeof(int)),
 	*wr = (int *) R_alloc(c, sizeof(int)),
@@ -284,7 +284,7 @@ static void printStringMatrix(SEXP sx, int offset, int r_pr, int r, int c,
 			      const char *rn, const char *cn, Rboolean print_ij)
 {
     _PRINT_INIT_rl_rn;
-    SEXP *x = STRING_PTR(sx)+offset;
+    const SEXP *x = STRING_PTR_RO(sx)+offset;
 
     _COMPUTE_W2_( formatString(&x[j * r], (R_xlen_t) r, &w[j], quote), );
 
@@ -308,7 +308,7 @@ static void printRawMatrix(SEXP sx, int offset, int r_pr, int r, int c,
 			   Rboolean print_ij)
 {
     _PRINT_INIT_rl_rn;
-    Rbyte *x = RAW(sx) + offset;
+    const Rbyte *x = RAW_RO(sx) + offset;
 
     _COMPUTE_W_( formatRaw(&x[j * r], (R_xlen_t) r, &w[j]) )
 
@@ -325,8 +325,9 @@ void printMatrix(SEXP x, int offset, SEXP dim, int quote, int right,
  * 'rn' and 'cn' are the  names(dimnames(.))
  */
     const void *vmax = vmaxget();
-    int r = INTEGER(dim)[0];
-    int c = INTEGER(dim)[1], r_pr;
+    const int *pdim = INTEGER_RO(dim);
+    int r = pdim[0];
+    int c = pdim[1], r_pr;
     /* PR#850 */
     if ((rl != R_NilValue) && (r > length(rl)))
 	error(_("too few row labels"));
@@ -394,8 +395,9 @@ void printArray(SEXP x, SEXP dim, int quote, int right, SEXP dimnames)
     }
     else { /* ndim >= 3 */
 	SEXP dn, dnn, dn0, dn1;
+	const int *dims = INTEGER_RO(dim);
 	int i, j, nb, nb_pr, nr_last,
-	    *dims = INTEGER(dim), nr = dims[0], nc = dims[1],
+	    nr = dims[0], nc = dims[1],
 	    b = nr * nc;
 	Rboolean max_reached, has_dimnames = (dimnames != R_NilValue),
 	    has_dnn = has_dimnames;

@@ -292,9 +292,9 @@ INLINE_FUN int LENGTH_EX(SEXP x, const char *file, int line)
 # define CHECK_VECTOR_RAW_ELT(x, i) do { } while(0)
 #endif
 
-INLINE_FUN Rboolean *LOGICAL0(SEXP x) {
+INLINE_FUN int *LOGICAL0(SEXP x) {
     CHECK_STDVEC_LGL(x);
-    return (Rboolean *) STDVEC_DATAPTR(x);
+    return (int *) STDVEC_DATAPTR(x);
 }
 INLINE_FUN Rboolean SCALAR_LVAL(SEXP x) {
     CHECK_SCALAR_LGL(x);

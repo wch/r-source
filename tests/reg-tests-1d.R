@@ -97,6 +97,11 @@ stopifnot(identical(deparse(z, 200, control = "digits17"),
 	  all.equal(z2, eval(parse(text = dz2)), tolerance = 3e-16)) # seen 2.2e-35 on 32b
 ## deparse() for these was "ugly" in R <= 3.3.x
 
+## deparse of formals of a function
+fun <- function(a=1,b){}
+frmls <- tryCatch(eval(parse(text=deparse(formals(fun)))), error = identity)
+stopifnot(identical(frmls, formals(fun)))
+
 
 ## length(environment(.)) == #{objects}
 stopifnot(identical(length(      baseenv()),
@@ -464,12 +469,6 @@ stopifnot(
 ## length 0 and seg.faulted in R <= 3.3.2
 
 
-## PR#17186 - Sys.timezone() on some Debian-derived platforms
-(S.t <- Sys.timezone())
-if(is.na(S.t) || !nzchar(S.t)) stop("could not get timezone")
-## has been NA_character_  in Ubuntu 14.04.5 LTS
-
-
 ## format()ing invalid hand-constructed  POSIXlt  objects
 d <- as.POSIXlt("2016-12-06"); d$zone <- 1
 tools::assertError(format(d))
@@ -526,8 +525,8 @@ for(ob0 in list(I(character()), I(0[0]), I(0L[0]),
                 structure(character(), class="CH"))) {
     stopifnot(identical(ob0, pmax(ob0, ob0)),
               identical(ob0, pmin(ob0, ob0)),
-              identical(ob0, pmin(ob0, "")),
-              identical(ob0, pmax(ob0, "")))
+              identical(ob0, pmin(ob0, FALSE)),
+              identical(ob0, pmax(ob0, FALSE)))
 }
 ## pmin()/pmax() of matching numeric data frames
 mUSJ <- data.matrix(dUSJ <- USJudgeRatings)
@@ -1279,6 +1278,15 @@ stopifnot(identical(2, x[[quote(a)]]),
 ## range(<non-numeric>, finite = TRUE)
 stopifnot(identical(0:1, range(c(NA,TRUE,FALSE), finite=TRUE)))
 ## gave NA's in R <= 3.4.2
+
+
+## `[<-` : coercion should happen also in 0-length case:
+x1 <- x0 <- x <- n0 <- numeric(); x0[] <- character(); x1[1[0]] <- character()
+x[] <- numeric()
+stopifnot(identical(x0, character()), identical(x1, x0), identical(x, n0))
+## x0, x1 had remained 'numeric()' in  R <= 3.4.x
+x[1] <- numeric(); stopifnot(identical(x, n0))
+## had always worked; just checking
 
 
 
