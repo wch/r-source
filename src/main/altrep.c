@@ -443,17 +443,42 @@ int STRING_NO_NA(SEXP x)
 
 int attribute_hidden ALTLOGICAL_ELT(SEXP x, R_xlen_t i)
 {
-    error("unknown ALTLOGICAL type"); /* dispatch here */
+    return LOGICAL(x)[i]; /* dispatch here */
 }
 
 Rcomplex attribute_hidden ALTCOMPLEX_ELT(SEXP x, R_xlen_t i)
 {
-    error("unknown ALTCOMPLEX type"); /* dispatch here */
+    return COMPLEX(x)[i]; /* dispatch here */
 }
 
 Rbyte attribute_hidden ALTRAW_ELT(SEXP x, R_xlen_t i)
 {
-    error("unknown ALTRAW type"); /* dispatch here */
+    return RAW(x)[i]; /* dispatch here */
+}
+
+void ALTINTEGER_SET_ELT(SEXP x, R_xlen_t i, int v)
+{
+    INTEGER(x)[i] = v; /* dispatch here */
+}
+
+void ALTLOGICAL_SET_ELT(SEXP x, R_xlen_t i, int v)
+{
+    LOGICAL(x)[i] = v; /* dispatch here */
+}
+
+void ALTREAL_SET_ELT(SEXP x, R_xlen_t i, double v)
+{
+    REAL(x)[i] = v; /* dispatch here */
+}
+
+void ALTCOMPLEX_SET_ELT(SEXP x, R_xlen_t i, Rcomplex v)
+{
+    COMPLEX(x)[i] = v; /* dispatch here */
+}
+
+void ALTRAW_SET_ELT(SEXP x, R_xlen_t i, int v)
+{
+    RAW(x)[i] = v; /* dispatch here */
 }
 
 

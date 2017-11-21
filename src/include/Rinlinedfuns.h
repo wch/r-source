@@ -370,10 +370,24 @@ INLINE_FUN int INTEGER_ELT(SEXP x, R_xlen_t i)
     return ALTREP(x) ? ALTINTEGER_ELT(x, i) : INTEGER0(x)[i];
 }
 
+INLINE_FUN void SET_INTEGER_ELT(SEXP x, R_xlen_t i, int v)
+{
+    CHECK_VECTOR_INT_ELT(x, i);
+    if (ALTREP(x)) ALTINTEGER_SET_ELT(x, i, v);
+    else INTEGER0(x)[i] = v;
+}
+
 INLINE_FUN int LOGICAL_ELT(SEXP x, R_xlen_t i)
 {
     CHECK_VECTOR_LGL_ELT(x, i);
     return ALTREP(x) ? ALTLOGICAL_ELT(x, i) : LOGICAL0(x)[i];
+}
+
+INLINE_FUN void SET_LOGICAL_ELT(SEXP x, R_xlen_t i, int v)
+{
+    CHECK_VECTOR_LGL_ELT(x, i);
+    if (ALTREP(x)) ALTLOGICAL_SET_ELT(x, i, v);
+    else LOGICAL0(x)[i] = v;
 }
 
 INLINE_FUN double REAL_ELT(SEXP x, R_xlen_t i)
@@ -382,16 +396,37 @@ INLINE_FUN double REAL_ELT(SEXP x, R_xlen_t i)
     return ALTREP(x) ? ALTREAL_ELT(x, i) : REAL0(x)[i];
 }
 
+INLINE_FUN void SET_REAL_ELT(SEXP x, R_xlen_t i, double v)
+{
+    CHECK_VECTOR_REAL_ELT(x, i);
+    if (ALTREP(x)) ALTREAL_SET_ELT(x, i, v);
+    else REAL0(x)[i] = v;
+}
+
 INLINE_FUN Rcomplex COMPLEX_ELT(SEXP x, R_xlen_t i)
 {
     CHECK_VECTOR_CPLX_ELT(x, i);
     return ALTREP(x) ? ALTCOMPLEX_ELT(x, i) : COMPLEX0(x)[i];
 }
 
+INLINE_FUN void SET_COMPLEX_ELT(SEXP x, R_xlen_t i, Rcomplex v)
+{
+    CHECK_VECTOR_CPLX_ELT(x, i);
+    if (ALTREP(x)) ALTCOMPLEX_SET_ELT(x, i, v);
+    else COMPLEX0(x)[i] = v;
+}
+
 INLINE_FUN Rbyte RAW_ELT(SEXP x, R_xlen_t i)
 {
     CHECK_VECTOR_RAW_ELT(x, i);
     return ALTREP(x) ? ALTRAW_ELT(x, i) : RAW0(x)[i];
+}
+
+INLINE_FUN void SET_RAW_ELT(SEXP x, R_xlen_t i, int v)
+{
+    CHECK_VECTOR_LGL_ELT(x, i);
+    if (ALTREP(x)) ALTLOGICAL_SET_ELT(x, i, v);
+    else RAW0(x)[i] = v;
 }
 
 #if !defined(COMPILING_R) && !defined(COMPILING_MEMORY_C) &&	\
