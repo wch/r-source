@@ -46,6 +46,8 @@ static const R_CallMethodDef callMethods[] = {
     CALLDEF(mc_send_child_stdin, 2),
     CALLDEF(mc_affinity, 1),
     CALLDEF(mc_interactive, 1),
+    CALLDEF(mc_cleanup, 3),
+    CALLDEF(mc_prepare_cleanup, 0),
 #else
     CALLDEF(ncpus, 1),
 #endif

@@ -403,6 +403,10 @@
 
       \item Subassignment with zero length vectors now coerces as
       documented.  (\PR{17344})
+
+      \item \code{mclapply}, \code{pvec} and \code{mcparallel} (when
+      \code{mccollect} is used to collect results) no longer leave zombie
+      processes behind.
     }
   }
 }
