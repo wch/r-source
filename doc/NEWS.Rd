@@ -119,21 +119,26 @@
       \item \code{approx()}, \code{spline()}, \code{splinefun()} and
       \code{approxfun()} also work for long vectors.
 
+      %% one item with several paragraphs
       \item \code{deparse()} (and \code{dump()}) are more useful for S4
-      objects; \code{dput()} now using the same internal C code (instead
-      of its previous imperfect workaround R code).
+      objects; \code{dput()} now using the same internal C code instead
+      of its previous imperfect workaround R code.
 
-      \code{dput()}, \emph{etc} now print the \code{names()} information
-      only once, using the more readable \code{(tag = value)} syntax,
-      notably for \code{list()}s, i.e., including data frames.
+      \code{dput()}, \code{deparse()} and \code{dump()} now print the
+      \code{names()} information only once, using the more readable
+      \code{(tag = value)} syntax, notably for \code{list()}s, i.e.,
+      including data frames.
 
       These functions gain a new control option \code{"niceNames"} (see
       \code{.deparseOpts()}), which when set (as by default) also uses
       the \code{(tag = value)} syntax for atomic vectors.  OTOH, without
       deparse options \code{"showAttributes"} and \code{"niceNames"},
       names are no longer shown also for lists.
+      \code{as.character(list(  c (one = 1)))} now shows the name as
+      \code{as.character(list(list(one = 1)))} has always done.
 
       \code{m:n} now also deparses nicely when \eqn{m > n}.
+
 
       \item If the option \code{setWidthOnResize} is set and \code{TRUE},
       \R run in a terminal using a recent \code{readline} library will

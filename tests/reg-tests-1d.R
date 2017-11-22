@@ -1290,7 +1290,23 @@ x[1] <- numeric(); stopifnot(identical(x, n0))
 NUL <- NULL
 NUL[3] <- integer(0); NUL[,2] <- character() ; NUL[3,4,5] <- list()
 stopifnot(is.null(NUL))
-## had failed for a few days in R-devel
+## had failed for one day in R-devel
+
+
+## as.character(<list>) should keep names in some nested cases
+cl <-     'list(list(a = 1, "B", ch = "CH", L = list(f = 7)))'
+E <- expression(list(a = 1, "B", ch = "CH", L = list(f = 7)))
+str(ll <- eval(parse(text = cl)))
+stopifnot(
+    identical(eval(E), ll[[1]])
+  , identical(as.character(E), as.character(ll) -> cll)
+  , grepl(cll, cl, fixed=TRUE) # currently, cl == paste0("list(", cll, ")")
+)
+## the last two have failed in R-devel for a while
+stopifnot(
+    identical(as.character(list(list(one = 1))), "list(one = 1)")
+  , identical(as.character(list(  c (one = 1))),    "c(one = 1)")
+)## the last gave "1" in all previous versions of R
 
 
 
