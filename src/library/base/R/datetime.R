@@ -396,7 +396,6 @@ Summary.POSIXlt <- function (..., na.rm)
 function(x, ..., drop = TRUE)
 {
     cl <- oldClass(x)
-    ## class(x) <- NULL
     val <- NextMethod("[")
     class(val) <- cl
     attr(val, "tzone") <- attr(x, "tzone")
@@ -407,7 +406,6 @@ function(x, ..., drop = TRUE)
 function(x, ..., drop = TRUE)
 {
     cl <- oldClass(x)
-    ## class(x) <- NULL
     val <- NextMethod("[[")
     class(val) <- cl
     attr(val, "tzone") <- attr(x, "tzone")
@@ -420,7 +418,6 @@ function(x, ..., value) {
     value <- unclass(as.POSIXct(value))
     cl <- oldClass(x)
     tz <- attr(x, "tzone")
-    class(x) <- NULL
     x <- NextMethod(.Generic)
     class(x) <- cl
     attr(x, "tzone") <- tz
@@ -579,7 +576,6 @@ print.difftime <- function(x, digits = getOption("digits"), ...)
 `[.difftime` <- function(x, ..., drop = TRUE)
 {
     cl <- oldClass(x)
-    class(x) <- NULL
     val <- NextMethod("[")
     class(val) <- cl
     attr(val, "units") <- attr(x, "units")
