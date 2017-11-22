@@ -1287,6 +1287,10 @@ stopifnot(identical(x0, character()), identical(x1, x0), identical(x, n0))
 ## x0, x1 had remained 'numeric()' in  R <= 3.4.x
 x[1] <- numeric(); stopifnot(identical(x, n0))
 ## had always worked; just checking
+NUL <- NULL
+NUL[3] <- integer(0); NUL[,2] <- character() ; NUL[3,4,5] <- list()
+stopifnot(is.null(NUL))
+## had failed for a few days in R-devel
 
 
 

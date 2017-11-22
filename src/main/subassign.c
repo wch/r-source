@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 1997-2017   The R Core Team
+ *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1608,7 +1608,7 @@ SEXP attribute_hidden do_subassign_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT(x = PairToVectorList(x));
     }
     else if (xlength(x) == 0) {
-	if (xlength(y) == 0 && TYPEOF(x) == TYPEOF(y)) {
+	if (xlength(y) == 0 && (isNull(x) || TYPEOF(x) == TYPEOF(y))) {
 	    UNPROTECT(1);
 	    return(x);
 	}
