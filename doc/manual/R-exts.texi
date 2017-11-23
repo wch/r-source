@@ -4383,7 +4383,8 @@ interfaces to @R{}'s RNGs described in @ref{Random numbers}.  In
 particular, if more than one package initializes the system RNG (e.g.@:
 @emph{via} @code{srand}), they will interfere with each other.
 
-Nor should the C++11 random number library be used.
+Nor should the C++11 random number library be used, nor any other
+third-party random number generators such as those in GSL.
 
 @item
 Errors in memory allocation and reading/writing outside arrays are very
