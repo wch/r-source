@@ -321,7 +321,7 @@ setRlibs <-
         if (!is.null(Log) && Log$con > 0L) cat(td2, file = Log$con)
     }
 
-    parse_description_field <- function(desc, field, default=TRUE)
+    parse_description_field <- function(desc, field, default)
         str_parse_logic(desc[field], default=default)
 
     check_pkg <- function(pkg, pkgname, pkgoutdir, startdir, libdir, desc,

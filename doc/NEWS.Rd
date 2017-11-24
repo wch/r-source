@@ -407,6 +407,9 @@
       \item \code{mclapply}, \code{pvec} and \code{mcparallel} (when
       \code{mccollect} is used to collect results) no longer leave zombie
       processes behind.
+
+      \item \code{R CMD INSTALL <pkg>} now produces the intended error
+      message when, e.g., the \code{LazyData} field is invalid.
     }
   }
 }

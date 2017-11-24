@@ -6686,7 +6686,7 @@ function(dir, localOnly = FALSE)
             out$spelling <- a
     }
 
-    parse_description_field <- function(desc, field, default=TRUE)
+    parse_description_field <- function(desc, field, default)
         str_parse_logic(desc[field], default=default)
 
     ## Check for possibly mis-spelled field names.

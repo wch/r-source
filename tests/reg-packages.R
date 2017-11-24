@@ -42,7 +42,7 @@ build.pkg <- function(dir) {
     r <- tail(system(paste(Rcmd, "build --keep-empty-dirs", shQuote(dir)),
                      intern = TRUE), 3)
     ## return name of tar file built
-    dir('.', pattern = patt)
+    structure(dir('.', pattern = patt), log3 = r)
 }
 build.pkg("myTst")
 ## clean up any previous attempt (which might have left a 00LOCK)
@@ -63,7 +63,7 @@ detach("package:tools", unload=TRUE)
 options(oo)
 ## gave warning (-> Error) about creating package name
 
-## --- keep this at end --- so we do not need a large if(.) { .. }
+
 ## More building & installing packages
 ## NB: tests were added here for 2.11.0.
 ## NB^2: do not do this in the R sources (but in a build != src directory!)
@@ -144,6 +144,28 @@ if(dir.exists(file.path("myLib", "pkgA"))) {
   ## ::: does not apply to data sets:
   tools::assertError(is.null(pkgA:::nilData))
 }
+
+## Check error from invalid logical field in DESCRIPTION:
+(okA <- dir.exists(pkgApath) &&
+     file.exists(DN <- file.path(pkgApath, "DESCRIPTION")))
+if(okA) {
+  Dlns <- readLines(DN); i <- grep("^LazyData:", Dlns)
+  Dlns[i] <- paste0(Dlns[i], ",") ## adding a ","
+  writeLines(Dlns, con = DN)
+  if(interactive()) { ## FIXME!  Why does this fail, e.g., when run via 'make' ?
+    ## install.packages() should give "the correct" error but we cannot catch it
+    ## One level lower is not much better, needing sink() as capture.output() fails
+    ftf <- file(tf <- tempfile("inst_pkg"), open = "wt")
+    sink(ftf); sink(ftf, type = "message")# "message" should be sufficient
+    tools:::.install_packages(c("--clean", "--library=myLib", pkgApath))
+    ##      -----------------                                 ----
+    sink(type="message"); sink()## ; close(ftf); rm(ftf)# end sink()
+    writeLines(paste(" ", msgs <- readLines(tf)))
+    print(err <- grep("^ERROR:", msgs, value=TRUE))
+    stopifnot(length(err) > 0, grepl("invalid .*LazyData .*DESCRIPTION", err))
+  }
+}
+
 
 ## tests here should *NOT* assume recommended packages,
 ## let alone where they are installed
