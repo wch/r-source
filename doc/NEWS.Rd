@@ -225,6 +225,11 @@
       \item New function \code{getDefaultCluster()} in package
       \pkg{parallel} to get the default cluster set via
       \code{setDefaultCluster()}.
+
+      \item \code{str(x)} for atomic objects \code{x} now treats both
+      cases of \code{is.vector(x)} similarly, and hence much less prints
+      \code{"atomic"}.   This is a slight non-back compatible change
+      producing typically both more informative and shorter output.
     }
   }
 

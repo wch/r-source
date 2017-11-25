@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2017-11-16 r73734) -- "Unsuffered Consequences"
+R Under development (unstable) (2017-11-24 r73779) -- "Unsuffered Consequences"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -5803,12 +5803,12 @@ NULL
 > str(d3[2][[1]]) ## or the full
 List of 2
  $ :List of 2
-  ..$ : atomic [1:1] 13
+  ..$ : int 13
   .. ..- attr(*, "label")= chr "Illinois"
   .. ..- attr(*, "members")= int 1
   .. ..- attr(*, "height")= num 0
   .. ..- attr(*, "leaf")= logi TRUE
-  ..$ : atomic [1:1] 32
+  ..$ : int 32
   .. ..- attr(*, "label")= chr "New York"
   .. ..- attr(*, "members")= int 1
   .. ..- attr(*, "height")= num 0
@@ -5817,12 +5817,12 @@ List of 2
   ..- attr(*, "midpoint")= num 0.5
   ..- attr(*, "height")= num 6.24
  $ :List of 2
-  ..$ : atomic [1:1] 22
+  ..$ : int 22
   .. ..- attr(*, "label")= chr "Michigan"
   .. ..- attr(*, "members")= int 1
   .. ..- attr(*, "height")= num 0
   .. ..- attr(*, "leaf")= logi TRUE
-  ..$ : atomic [1:1] 28
+  ..$ : int 28
   .. ..- attr(*, "label")= chr "Nevada"
   .. ..- attr(*, "members")= int 1
   .. ..- attr(*, "height")= num 0
@@ -5836,18 +5836,18 @@ List of 2
 > str(d3[])
 List of 2
  $ :List of 2
-  ..$ : atomic [1:1] 8
+  ..$ : int 8
   .. ..- attr(*, "members")= int 1
   .. ..- attr(*, "height")= num 0
   .. ..- attr(*, "label")= chr "Delaware"
   .. ..- attr(*, "leaf")= logi TRUE
   ..$ :List of 2
-  .. ..$ : atomic [1:1] 1
+  .. ..$ : int 1
   .. .. ..- attr(*, "label")= chr "Alabama"
   .. .. ..- attr(*, "members")= int 1
   .. .. ..- attr(*, "height")= num 0
   .. .. ..- attr(*, "leaf")= logi TRUE
-  .. ..$ : atomic [1:1] 18
+  .. ..$ : int 18
   .. .. ..- attr(*, "label")= chr "Louisiana"
   .. .. ..- attr(*, "members")= int 1
   .. .. ..- attr(*, "height")= num 0
@@ -5860,12 +5860,12 @@ List of 2
   ..- attr(*, "height")= num 16.9
  $ :List of 2
   ..$ :List of 2
-  .. ..$ : atomic [1:1] 13
+  .. ..$ : int 13
   .. .. ..- attr(*, "label")= chr "Illinois"
   .. .. ..- attr(*, "members")= int 1
   .. .. ..- attr(*, "height")= num 0
   .. .. ..- attr(*, "leaf")= logi TRUE
-  .. ..$ : atomic [1:1] 32
+  .. ..$ : int 32
   .. .. ..- attr(*, "label")= chr "New York"
   .. .. ..- attr(*, "members")= int 1
   .. .. ..- attr(*, "height")= num 0
@@ -5874,12 +5874,12 @@ List of 2
   .. ..- attr(*, "midpoint")= num 0.5
   .. ..- attr(*, "height")= num 6.24
   ..$ :List of 2
-  .. ..$ : atomic [1:1] 22
+  .. ..$ : int 22
   .. .. ..- attr(*, "label")= chr "Michigan"
   .. .. ..- attr(*, "members")= int 1
   .. .. ..- attr(*, "height")= num 0
   .. .. ..- attr(*, "leaf")= logi TRUE
-  .. ..$ : atomic [1:1] 28
+  .. ..$ : int 28
   .. .. ..- attr(*, "label")= chr "Nevada"
   .. .. ..- attr(*, "members")= int 1
   .. .. ..- attr(*, "height")= num 0
