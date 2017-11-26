@@ -517,7 +517,7 @@ str.default <-
 	    int.surv <- iSurv || is.integer(object)
 	    if(!int.surv) {
 		ob <- if(le > iv.len) object[seq_len(iv.len)] else object
-		ao <- abs(ob <- ob[!is.na(ob)])
+		ao <- abs(ob <- unclass(ob[!is.na(ob)]))
 	    }
 	    else if(iSurv) {
 		nc <- ncol(object)
