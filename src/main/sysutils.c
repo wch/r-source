@@ -916,7 +916,8 @@ next_char:
 		    snprintf(outbuf, 9, "<U+%04X>", (unsigned short) ucs);
 		    outbuf += 8; outb -= 8;
 		} else {
-		    snprintf(outbuf, 13, "<U+%08X>", ucs);
+		    // Rwchar_t is usually unsigned int, but wchar_t need not be
+		    snprintf(outbuf, 13, "<U+%08X>", (unsigned int) ucs);
 		    outbuf += 12; outb -= 12;
 		}
 	    } else {
