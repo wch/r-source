@@ -380,6 +380,9 @@
 /* Define if you have the `iconvlist' function. */
 #undef HAVE_ICONVLIST
 
+/* Define if `iconv' accepts "CP1252". */
+#undef HAVE_ICONV_CP1252
+
 /* Define to 1 if you have the <iconv.h> header file. */
 #undef HAVE_ICONV_H
 

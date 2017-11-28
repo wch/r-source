@@ -3570,6 +3570,50 @@ int main () {
   if test "$r_cv_iconv_latin1" != yes; then
     AC_MSG_ERROR([a suitable iconv is essential])
   fi
+
+  AC_CACHE_CHECK([whether iconv accepts "CP1252"],
+  [r_cv_iconv_cp1252],
+  [AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#include "confdefs.h"
+#include <stdlib.h>
+#ifdef HAVE_ICONV_H
+#include <iconv.h>
+#endif
+
+int main () {
+  iconv_t cd;
+  cd = iconv_open("CP1252","UTF-8");
+  if(cd == (iconv_t)(-1)) exit(1);
+  iconv_close(cd);
+  cd = iconv_open("UTF-8","CP1252");
+  if(cd == (iconv_t)(-1)) exit(1);
+  iconv_close(cd);
+  cd = iconv_open("CP1252", "");
+  if(cd == (iconv_t)(-1)) exit(1);
+  iconv_close(cd);
+  cd = iconv_open("","CP1252");
+  if(cd == (iconv_t)(-1)) exit(1);
+  iconv_close(cd);
+  cd = iconv_open("CP1252","latin1");
+  if(cd == (iconv_t)(-1)) exit(1);
+  iconv_close(cd);
+  cd = iconv_open("latin1","CP1252");
+  if(cd == (iconv_t)(-1)) exit(1);
+  iconv_close(cd);
+  exit(0);
+}
+  ]])], [r_cv_iconv_cp1252=yes], [r_cv_iconv_cp1252=no],
+    [r_cv_iconv_cp1252=yes])])
+
+  ## on Windows we supply iconv ourselves
+  case "${host_os}" in
+    mingw*)
+      r_cv_iconv_cp1252=yes
+      ;;
+  esac
+  if test "$r_cv_iconv_cp1252" = yes; then
+    AC_DEFINE(HAVE_ICONV_CP1252, 1, [Define if `iconv' accepts "CP1252".])
+  fi
 fi
 ## if the iconv we are using was in libiconv we have already included -liconv
 AC_CACHE_CHECK(for iconvlist, ac_cv_func_iconvlist, [
