@@ -165,7 +165,9 @@ OlsonNames()
 
   %% it is a ksh script so could well pop up elsewhere.
   Some systems (notably Linux) have a \command{tzselect} command which
-  allows the interactive selection of a supported time zone name.
+  allows the interactive selection of a supported time zone name.  On
+  system using \command{systemd}, \command{timedatectl list-timezones}
+  will list all available timezone names.
 }
 
 \section{Warning}{
