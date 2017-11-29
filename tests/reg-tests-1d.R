@@ -1290,7 +1290,18 @@ x[1] <- numeric(); stopifnot(identical(x, n0))
 NUL <- NULL
 NUL[3] <- integer(0); NUL[,2] <- character() ; NUL[3,4,5] <- list()
 stopifnot(is.null(NUL))
-## had failed for one day in R-devel
+## above had failed for one day in R-devel; next one always worked
+NUL <- NULL; NUL[character()] <- "A"
+stopifnot(identical(NUL, character()))
+## 0-0-length subassignment should not change atomic to list:
+ec <- e0 <- matrix(, 0, 4) # a  0 x 4  matrix
+ec[,1:2] <- list()
+x <- 1[0]; x[1:2] <- list()
+a <- a0 <- array("", 0:2); a[,1,] <- expression()
+stopifnot(identical(ec, e0)
+        , identical(x, 1[0])
+        , identical(a, a0)
+)## failed for a couple of days in R-devel
 
 
 ## as.character(<list>) should keep names in some nested cases
