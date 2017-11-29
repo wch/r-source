@@ -243,7 +243,7 @@ test-DateTime:
 ## This should be allowed to fail, visibly.
 test-TimeZone:
 	@$(ECHO) "checking Sys.timezone ..."
-	@$(RM) -f $(test-out-t)
+	@$(RM) -f $(test-out-tz)
 	@$(MK) $(test-out-tz) || $(ECHO) "  Sys.timezone() appears unknown"
 
 test-Docs:
