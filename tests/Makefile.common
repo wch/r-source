@@ -44,6 +44,7 @@ test-src-primitive = primitives.R
 test-src-random = p-r-random-tests.R
 test-src-regexp = utf8-regex.R PCRE.R
 test-src-segfault = no-segfault.R
+test-src-tz = timezone.R
 
 test-src-reg-1 = array-subset.R \
   reg-tests-1a.R reg-tests-1b.R reg-tests-1c.R reg-tests-1d.R reg-tests-2.R \
@@ -76,6 +77,7 @@ test-out-reg = $(test-src-reg:.R=.Rout)
 test-out-regexp = $(test-src-regexp:.R=.Rout)
 test-out-reg3 = $(test-src-reg3:.R=.Rout)
 test-out-segfault = $(test-src-segfault:.R=.Rout)
+test-out-tz = $(test-src-tz:.R=.Rout)
 
 ## This macro is used only for dependencies and for distclean
 test-out = $(test-src:.R=.Rout) $(test-out-demo) $(test-out-gct) \
@@ -189,6 +191,7 @@ test-Specific:
 	@$(MK) test-Specific-strict RVAL_IF_DIFF=1
 	@$(ECHO) "running sloppy specific tests"
 	@$(MK) test-Specific-sloppy RVAL_IF_DIFF=0
+	@$(MK) test-TimeZone
 
 test-Packages:
 	@if test -n "${TEST_MC_CORES}"; then \
@@ -236,6 +239,12 @@ test-DateTime:
 	@$(ECHO) "  expect platform-specific differences"
 	@$(RM) -f $(test-out-dt)
 	@$(MK) $(test-out-dt) RVAL_IF_DIFF=0
+
+## This should be allowed to fail, visibly.
+test-TimeZone:
+	@$(ECHO) "checking Sys.timezone ..."
+	@$(RM) -f $(test-out-t)
+	@$(MK) $(test-out-tz) || $(ECHO) "  Sys.timezone() appears unknown"
 
 test-Docs:
 	@$(ECHO) "running tests of documentation examples"
@@ -480,4 +489,5 @@ INSTFILES = README \
 	  reg-plot.pdf.save reg-tests-2.Rout.save reg-tests-3.Rout.save \
 	  reg-examples3.Rout.save reg-plot-latin1.pdf.save \
 	  encodings.R utf8-regex.R PCRE.R CRANtools.R \
+	  timezone.R \
 	  nanbug.rda WinUnicode.dat arima.rda EmbeddedNuls.csv
