@@ -165,7 +165,6 @@ void R_warn_S3_for_S4(SEXP method) {
 }
 #endif
 
-#ifdef _R_S3_METHOD_LOOKUP_REGISTRY_AFTER_TOPENV_
 SEXP topenv(SEXP, SEXP);	/* should be in a header file */
 
 static SEXP findFunInEnvRange(SEXP symbol, SEXP rho, SEXP target)
@@ -192,7 +191,6 @@ static SEXP findFunInEnvRange(SEXP symbol, SEXP rho, SEXP target)
     return (R_UnboundValue);
 }
 
-#ifdef _R_S3_METHOD_LOOKUP_BASEENV_AFTER_GLOBALENV_
 static SEXP findFunWithBaseEnvAfterGlobalEnv(SEXP symbol, SEXP rho)
 {
     SEXP vl;
@@ -216,9 +214,6 @@ static SEXP findFunWithBaseEnvAfterGlobalEnv(SEXP symbol, SEXP rho)
     }
     return (R_UnboundValue);
 }
-#endif
-
-#endif
 
 /*  usemethod  -  calling functions need to evaluate the object
  *  (== 2nd argument).	They also need to ensure that the
@@ -238,8 +233,11 @@ static SEXP findFunWithBaseEnvAfterGlobalEnv(SEXP symbol, SEXP rho)
 attribute_hidden
 SEXP R_LookupMethod(SEXP method, SEXP rho, SEXP callrho, SEXP defrho)
 {
-    SEXP val;
+    SEXP val, top = R_NilValue;	/* -Wall */
     static SEXP s_S3MethodsTable = NULL;
+    static int lookup_registry_after_topenv = -1;
+    static int lookup_baseenv_after_globalenv = -1;
+    char *lookup;
 
     if (TYPEOF(callrho) != ENVSXP) {
 	if (TYPEOF(callrho) == NILSXP)
@@ -256,59 +254,66 @@ SEXP R_LookupMethod(SEXP method, SEXP rho, SEXP callrho, SEXP defrho)
 	    error(_("bad generic definition environment"));
     }
 
-    /* This evaluates promises */
-#ifdef _R_S3_METHOD_LOOKUP_REGISTRY_AFTER_TOPENV_
-    SEXP top;
-    PROTECT(top = topenv(R_NilValue, callrho));
-    val = findFunInEnvRange(method, callrho, top);
-    if(val != R_UnboundValue) {
-	UNPROTECT(1);
-	return val;
+    if(lookup_registry_after_topenv == -1) {
+	lookup = getenv("_R_S3_METHOD_LOOKUP_REGISTRY_AFTER_TOPENV_");
+	lookup_registry_after_topenv =
+	    ((lookup != NULL) && StringTrue(lookup)) ? 1 : 0;
     }
-#else
-    val = findVar1(method, callrho, FUNSXP, TRUE);
-    if (isFunction(val))
-	return val;
-#endif
-    else {
-	/* We assume here that no one registered a non-function */
-	if (!s_S3MethodsTable)
-	    s_S3MethodsTable = install(".__S3MethodsTable__.");
-	SEXP table = findVarInFrame3(defrho,
-				     s_S3MethodsTable,
-				     TRUE);
-	if (TYPEOF(table) == PROMSXP) {
-	    PROTECT(table);
-	    table = eval(table, R_BaseEnv);
+    if(lookup_baseenv_after_globalenv == -1) {
+	lookup = getenv("_R_S3_METHOD_LOOKUP_BASEENV_AFTER_GLOBALENV_");
+	lookup_baseenv_after_globalenv = 
+	    ((lookup != NULL) && StringTrue(lookup)) ? 1 : 0;
+    }
+
+    /* This evaluates promises */
+    if(lookup_registry_after_topenv) {
+	PROTECT(top = topenv(R_NilValue, callrho));
+	val = findFunInEnvRange(method, callrho, top);
+	if(val != R_UnboundValue) {
+	    UNPROTECT(1);
+	    return val;
+	}
+    } else {
+	val = findVar1(method, callrho, FUNSXP, TRUE);
+	if (isFunction(val))
+	    return val;
+    }
+    /* We assume here that no one registered a non-function */
+    if (!s_S3MethodsTable)
+	s_S3MethodsTable = install(".__S3MethodsTable__.");
+    SEXP table = findVarInFrame3(defrho, s_S3MethodsTable, TRUE);
+    if (TYPEOF(table) == PROMSXP) {
+	PROTECT(table);
+	table = eval(table, R_BaseEnv);
+	UNPROTECT(1);
+    }
+    if (TYPEOF(table) == ENVSXP) {
+	val = findVarInFrame3(table, method, TRUE);
+	if (TYPEOF(val) == PROMSXP) {
+	    PROTECT(val);
+	    val = eval(val, rho);
 	    UNPROTECT(1);
 	}
-	if (TYPEOF(table) == ENVSXP) {
-	    val = findVarInFrame3(table, method, TRUE);
-	    if (TYPEOF(val) == PROMSXP) {
-		PROTECT(val);
-		val = eval(val, rho);
-		UNPROTECT(1);
-	    }
-#ifdef _R_S3_METHOD_LOOKUP_REGISTRY_AFTER_TOPENV_
+	if(lookup_registry_after_topenv) {
 	    if(val != R_UnboundValue) {
 		UNPROTECT(1);
 		return val;
 	    }
-#else
+	} 
+	else
 	    return val;
-#endif
-	}
-#ifdef _R_S3_METHOD_LOOKUP_REGISTRY_AFTER_TOPENV_
-# ifdef _R_S3_METHOD_LOOKUP_BASEENV_AFTER_GLOBALENV_
-	val = findFunWithBaseEnvAfterGlobalEnv(method, ENCLOS(top));
-# else
-	val = findFunInEnvRange(method, ENCLOS(top), R_EmptyEnv);
-# endif
+    }
+
+    if(lookup_registry_after_topenv) {
+	if(lookup_baseenv_after_globalenv)
+	    val = findFunWithBaseEnvAfterGlobalEnv(method, ENCLOS(top));
+	else
+	    val = findFunInEnvRange(method, ENCLOS(top), R_EmptyEnv);
 	UNPROTECT(1);
 	return val;
-#endif
-	return R_UnboundValue;
     }
+
+    return R_UnboundValue;
 }
 
 #ifdef UNUSED
