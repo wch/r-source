@@ -32,6 +32,8 @@ function(dir = ".", fields = NULL,
         paths <- list.dirs(".")
         setwd(owd)
         paths <- c("", paths[paths != "."])
+        ## now strip leading ./
+        paths <- sub("^[.]/", "", paths)
     } else if(is.character(subdirs)) paths <- c("", subdirs)
 
     ## Older versions created only plain text and gzipped DCF files with
