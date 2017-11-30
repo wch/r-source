@@ -79,8 +79,7 @@ OlsonNames()
   \code{NA} or an empty string (which on some OSes means \samp{UTC}).
   For the default \code{location = TRUE} this will be a location such as
   \code{"Europe/London"} if one can be ascertained.  For \code{location
-  = FALSE}, if \env{TZ} is set this will be its value, otherwise it this
-  may be an abbreviation such as \code{"EST"} or \code{"CEST"}.
+  = FALSE}, it will be an abbreviation such as \code{"EST"} or \code{"CEST"}.
 
   \code{OlsonNames} returns a character vector, see the examples for
   typical cases.
