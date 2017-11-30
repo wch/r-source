@@ -35,8 +35,8 @@ OlsonNames()
   Time zones are a system-specific topic, but these days almost all \R
   platforms use similar underlying code, used by Linux, macOS, Solaris,
   AIX, FreeBSD, Sun Java >= 1.4 and Tcl >= 8.5, and installed with \R on
-  Windows.  Unfortunately there are many system-specific errors in the
-  implementations.  It is possible to use \R's own version of the code
+  Windows.  (Unfortunately there are many system-specific errors in the
+  implementations.)  It is possible to use \R's own version of the code
   on Unix-alikes as well as on Windows: this is the default for macOS and
   recommended for Solaris.
 
@@ -79,7 +79,8 @@ OlsonNames()
   \code{NA} or an empty string (which on some OSes means \samp{UTC}).
   For the default \code{location = TRUE} this will be a location such as
   \code{"Europe/London"} if one can be ascertained.  For \code{location
-  = FALSE} this may be an abbreviation such as \code{"EST"} or \code{"CEST"}.
+  = FALSE} and \env{TZ} not set this may be an abbreviation such as
+  \code{"EST"} or \code{"CEST"}.
 
   \code{OlsonNames} returns a character vector, see the examples for
   typical cases.
@@ -166,8 +167,9 @@ OlsonNames()
   %% it is a ksh script so could well pop up elsewhere.
   Some systems (notably Linux) have a \command{tzselect} command which
   allows the interactive selection of a supported time zone name.  On
-  system using \command{systemd}, \command{timedatectl list-timezones}
-  will list all available timezone names.
+  systems using \command{systemd} (notably Linux), the OS command
+  \command{timedatectl list-timezones} will list all available timezone
+  names.
 }
 
 \section{Warning}{
