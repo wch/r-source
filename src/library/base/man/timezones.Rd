@@ -45,7 +45,7 @@ OlsonNames()
   suitable values.  \code{Sys.timezone()} will return the value of
   \env{TZ} if set (and on some OSes it is always set), otherwise it will
   try to retrieve a value which if set for \env{TZ} would give the
-  current time zone.  This is not in general possible, and then
+  current time zone.  This is not in general possible, and
   \code{Sys.timezone(FALSE)} will retrieve the abbreviation used for the
   current time.
 
@@ -79,8 +79,8 @@ OlsonNames()
   \code{NA} or an empty string (which on some OSes means \samp{UTC}).
   For the default \code{location = TRUE} this will be a location such as
   \code{"Europe/London"} if one can be ascertained.  For \code{location
-  = FALSE} and \env{TZ} not set this may be an abbreviation such as
-  \code{"EST"} or \code{"CEST"}.
+  = FALSE}, if \env{TZ} is set this will be its value, otherwise it this
+  may be an abbreviation such as \code{"EST"} or \code{"CEST"}.
 
   \code{OlsonNames} returns a character vector, see the examples for
   typical cases.
