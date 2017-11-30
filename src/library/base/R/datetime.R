@@ -32,31 +32,58 @@ Sys.timezone <- function(location = TRUE)
         if(.Platform$OS.type == "windows")
             .Internal(tzone_name())
         else { ## "unix" including macOS
-            lt <- normalizePath("/etc/localtime") # most Linux, macOS, ...
-            if (grepl(pat <- "^/usr/share/zoneinfo/", lt) ||
-                grepl(pat <- "^/usr/share/zoneinfo.default/", lt)) sub(pat, "", lt)
-            else if(grepl(pat <- ".*/zoneinfo/(.*)", lt))  sub(pat, "\\1", lt)
-            ## Debian-based Linuxen do not have /etc/localtime
-            else if (lt == "/etc/localtime" && file.exists("/etc/timezone") &&
-                     dir.exists("/usr/share/zoneinfo") &&
-                     { # Debian etc.
-                         info <- file.info(normalizePath("/etc/timezone"),
-                                           extra_cols = FALSE)
-                         (!info$isdir && info$size <= 200L)
-                     } && {
-                         tz1 <- tryCatch(readBin("/etc/timezone", "raw", 200L),
-                                         error = function(e) raw(0L))
-                         length(tz1) > 0L &&
-                             all(tz1 %in% as.raw(c(9:10, 13L, 32:126)))
-                     } && {
-                         tz2 <- gsub("^[[:space:]]+|[[:space:]]+$", "", rawToChar(tz1))
-                         tzp <- file.path("/usr/share/zoneinfo", tz2)
-                         file.exists(tzp) && !dir.exists(tzp) &&
-                             identical(file.size(normalizePath(tzp)),
-                                       file.size(lt))
-                     })
-                tz2
-            else
+            tzdir <- Sys.getenv("TZDIR", "/usr/share/zoneinfo")
+
+            ## First try timedatectl: should work on any modern Linux
+            ## as part of systemd (and probably nowhere else)
+            if (nzchar(Sys.which("timedatectl"))) {
+                inf <- system("timedatectl", intern = TRUE)
+                ## typical format:
+                ## "       Time zone: Europe/London (GMT, +0000)"
+                ## "       Time zone: Europe/Vienna (CET, +0100)"
+                lines <- grep("Time zone: ", inf)
+                if (length(lines)) {
+                    tz <- sub(" .*", "",
+                              sub(" *Time zone: ", "", inf[lines[1L]]))
+                    ## quick sanity check
+                    if(file.exists(file.path(tzdir, tz))) return(tz)
+                }
+            }
+
+            ## Debian/Ubuntu Linux do things differently, so try that next.
+            ## Derived loosely from PR#17186
+            if (grepl("linux", R.Version()$platform, ignore.case = TRUE) &&
+                file.exists("/etc/timezone") && dir.exists(tzdir)) {
+                tz0 <- try(readLines("/etc/timezone"))
+                if(!inherits(tz0, "try-error") && length(tz0) == 1L) {
+                    tz <- trimws(tz0)
+                    if(file.exists(file.path(tzdir, tz))) return(tz)
+                }
+            }
+
+            ## non-Debian Linux, macOS ....
+            ## According to the glibc (at least 2.26)
+            ## manual/time.texi, it can be configured to use
+            ## /etc/localtime or /usr/local/etc/localtime
+            ## this should be a symlink,
+            ## but people including Debian have copied files instead.
+            if ((file.exists(lt0 <- "/etc/localtime") ||
+                 file.exists(lt0 <- "/usr/local/etc/localtime")) &&
+                (lt <- normalizePath(lt0)) != lt0) {
+                ## glibc and macOS < 10.13 this is
+                ##   a link into /usr/share/zoneinfo
+                ## Debian Etch and later replaced it with a copy.
+                ## macOS 10.13.0 is a link into /usr/share/zoneinfo.default/
+                ## macOS 10.13.1 is a link to something like
+                ##   /var/db/timezone/zoneinfo/Europe/London and hence
+                ##   /private/var/db/timezone/tz/2017c.1.0/zoneinfo/
+                pat <- paste0("^", tzdir)
+                if (grepl(pat, lt) ||
+                    grepl(pat <- "^/usr/share/zoneinfo.default/", lt)) sub(pat, "", lt)
+                else if(grepl(pat <- ".*/zoneinfo/(.*)", lt))  sub(pat, "\\1", lt)
+                else
+                    NA_character_
+            } else
                 NA_character_
         }
     } else { # !location
