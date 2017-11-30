@@ -1129,6 +1129,7 @@ struct R_outpstream_st {
 };
 
 typedef struct R_inpstream_st *R_inpstream_t;
+#define R_CODESET_MAX 63
 struct R_inpstream_st {
     R_pstream_data_t data;
     R_pstream_format_t type;
@@ -1136,6 +1137,9 @@ struct R_inpstream_st {
     void (*InBytes)(R_inpstream_t, void *, int);
     SEXP (*InPersistHookFunc)(SEXP, SEXP);
     SEXP InPersistHookData;
+    char native_encoding[R_CODESET_MAX + 1];
+    void *nat2nat_obj;
+    void *nat2utf8_obj;
 };
 
 void R_InitInPStream(R_inpstream_t stream, R_pstream_data_t data,
