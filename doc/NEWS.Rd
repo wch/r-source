@@ -193,8 +193,8 @@
       e.g.\sspace{}\emph{via} \code{dyn.load()} has been increased up to 614
       when the OS limit on the number of open files allows.
 
-      \item \code{Sys.timezone()} tries more ways on Unix-alikes and so
-      is more likely to succeed (especially on Linux).
+      \item \code{Sys.timezone()} is slightly less platform-dependent,
+      notably for \code{location = FALSE}.
 
       \item When \code{tar()} is used with an external command which is
       detected to be GNU \command{tar} or libarchive \command{tar} (aka
@@ -419,15 +419,6 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R 3.4.3 Patched}{
-
-  \subsection{DEPRECATED AND DEFUNCT}{
-    \itemize{
-      \code{Sys.timezone(location = FALSE)} (which was a stop-gap
-      measure for Windows long ago) is deprecated.
-    }
-  }
-}
 
 \section{\Rlogo CHANGES IN R 3.4.3}{
 

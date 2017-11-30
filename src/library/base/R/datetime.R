@@ -23,83 +23,76 @@ Sys.time <- function() .POSIXct(.Internal(Sys.time()))
 ### https://stackoverflow.com/questions/3118582/how-do-i-find-the-current-system-timezone
 Sys.timezone <- function(location = TRUE)
 {
-    if(!location) {
-        if(nzchar(tz <- Sys.getenv("TZ", names = FALSE)))
-            return(tz)
-        ## Windows only in R < 3.5.0
+    ## Many Unix set TZ, e.g. Solaris and AIX.
+    ## For Solaris the system setting is a line in /etc/TIMEZONE
+    tz <- Sys.getenv("TZ", names = FALSE)
+    if(nzchar(tz))
+        tz
+    else if(location) {
+        if(.Platform$OS.type == "windows")
+            .Internal(tzone_name())
+        else { ## "unix" including macOS
+            tzdir <- Sys.getenv("TZDIR", "/usr/share/zoneinfo")
+
+            ## First try timedatectl: should work on any modern Linux
+            ## as part of systemd (and probably nowhere else)
+            if (nzchar(Sys.which("timedatectl"))) {
+                inf <- system("timedatectl", intern = TRUE)
+                ## typical format:
+                ## "       Time zone: Europe/London (GMT, +0000)"
+                ## "       Time zone: Europe/Vienna (CET, +0100)"
+                lines <- grep("Time zone: ", inf)
+                if (length(lines)) {
+                    tz <- sub(" .*", "",
+                              sub(" *Time zone: ", "", inf[lines[1L]]))
+                    ## quick sanity check
+                    if(file.exists(file.path(tzdir, tz))) return(tz)
+                }
+            }
+
+            ## Debian/Ubuntu Linux do things differently, so try that next.
+            ## Derived loosely from PR#17186
+            if (grepl("linux", R.Version()$platform, ignore.case = TRUE) &&
+                file.exists("/etc/timezone") && dir.exists(tzdir)) {
+                tz0 <- try(readLines("/etc/timezone"))
+                if(!inherits(tz0, "try-error") && length(tz0) == 1L) {
+                    tz <- trimws(tz0)
+                    if(file.exists(file.path(tzdir, tz))) return(tz)
+                }
+            }
+
+            ## non-Debian Linux, macOS ....
+            ## According to the glibc (at least 2.26)
+            ## manual/time.texi, it can be configured to use
+            ## /etc/localtime or /usr/local/etc/localtime
+            ## this should be a symlink,
+            ## but people including Debian have copied files instead.
+            if ((file.exists(lt0 <- "/etc/localtime") ||
+                 file.exists(lt0 <- "/usr/local/etc/localtime")) &&
+                (lt <- normalizePath(lt0)) != lt0) {
+                ## glibc and macOS < 10.13 this is
+                ##   a link into /usr/share/zoneinfo
+                ## Debian Etch and later replaced it with a copy.
+                ## macOS 10.13.0 is a link into /usr/share/zoneinfo.default/
+                ## macOS 10.13.1 is a link to something like
+                ##   /var/db/timezone/zoneinfo/Europe/London and hence
+                ##   /private/var/db/timezone/tz/2017c.1.0/zoneinfo/
+                pat <- paste0("^", tzdir)
+                if (grepl(pat, lt) ||
+                    grepl(pat <- "^/usr/share/zoneinfo.default/", lt)) sub(pat, "", lt)
+                else if(grepl(pat <- ".*/zoneinfo/(.*)", lt))  sub(pat, "\\1", lt)
+                else
+                    NA_character_
+            } else
+                NA_character_
+        }
+    } else { # !location
         st <- as.POSIXlt(Sys.time())
         z <- attr(st, "tzone")
         if(length(z) == 3L) z[2L + st$isdst]
         else if(length(z)) z[1L] else NA_character_
     }
-
-    ## Many Unix set TZ, e.g. Solaris and AIX.
-    ## For Solaris the system setting is a line in /etc/TIMEZONE
-    tz <- Sys.getenv("TZ", names = FALSE)
-    if(nzchar(tz)) return(tz)
-    if(.Platform$OS.type == "windows") return(.Internal(tzone_name()))
-    tzdir <- Sys.getenv("TZDIR", "/usr/share/zoneinfo")
-
-    ## First try timedatectl: should work on any modern Linux
-    ## as part of systemd (and probably nowhere else)
-    if (nzchar(Sys.which("timedatectl"))) {
-        inf <- system("timedatectl", intern = TRUE)
-        ## typical format:
-        ## "       Time zone: Europe/London (GMT, +0000)"
-        ## "       Time zone: Europe/Vienna (CET, +0100)"
-        lines <- grep("Time zone: ", inf)
-        if (length(lines)) {
-            tz <- sub(" .*", "", sub(" *Time zone: ", "", inf[lines[1L]]))
-            ## quick sanity check
-            if(file.exists(file.path(tzdir, tz))) return(tz)
-        }
-    }
-
-    ## Debian/Ubuntu Linux do things differently, so try that next.
-    ## Derived loosely from PR#17186
-    if (grepl("linux", R.Version()$platform, ignore.case = TRUE) &&
-        file.exists("/etc/timezone") && dir.exists(tzdir)) {
-        tz0 <- try(readLines("/etc/timezone"))
-        if(!inherits(tz0, "try-error") && length(tz0) == 1L) {
-            tz <- trimws(tz0)
-            ## quick sanity check
-            if(file.exists(file.path(tzdir, tz))) return(tz)
-        }
-    }
-
-    ## non-Debian Linux (if not covered above), macOS, *BSD, ...
-    ## According to the glibc (at least 2.26)
-    ##   manual/time.texi, it can be configured to use
-    ##   /etc/localtime or /usr/local/etc/localtime
-    ## This should be a symlink,
-    ##   but people including Debian have copied files instead.
-    ## tzcode mentions /usr/local/etc/zoneinfo/localtime
-    ##  as the 'local time zone file'.
-    if ((file.exists(lt0 <- "/etc/localtime") ||
-         file.exists(lt0 <- "/usr/local/etc/localtime")) &&
-        (lt <- normalizePath(lt0)) != lt0) { # so it is a link
-        ## glibc and macOS < 10.13 this is
-        ##   a link into /usr/share/zoneinfo
-        ## Debian Etch and later replaced it with a copy.
-        ## macOS 10.13.0 is a link into /usr/share/zoneinfo.default/
-        ## macOS 10.13.1 is a link to something like
-        ##   /var/db/timezone/zoneinfo/Europe/London and hence
-        ##   /private/var/db/timezone/tz/2017c.1.0/zoneinfo/
-        pat <- paste0("^", tzdir)
-        if (grepl(pat, lt) ||
-            grepl(pat <- "^/usr/share/zoneinfo.default/", lt)) sub(pat, "", lt)
-        ## all the locations listed for OlsonNames end in zoneinfo
-        else if(grepl(pat <- ".*/zoneinfo/(.*)", lt)) sub(pat, "\\1", lt)
-        else if(nzchar(Sys.which("readlink")) {
-            ## To be more future-proof try following only first link
-            lt <- system2("readlink", lt0, stdout = TRUE, stderr = TRUE)
-            if(grepl(pat <- ".*/zoneinfo/(.*)", lt))
-                return(sub(pat, "\\1", lt))
-        }
-    } else
-        NA_character_
 }
-
 
 as.POSIXlt <- function(x, tz = "", ...) UseMethod("as.POSIXlt")
 
