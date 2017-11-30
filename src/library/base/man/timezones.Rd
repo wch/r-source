@@ -222,10 +222,10 @@ OlsonNames()
 
 \examples{
 Sys.timezone()
-Sys.timezone(location=FALSE)#-> typically a short form
+Sys.timezone(location = FALSE)#-> typically an abbreviation
 
 str(OlsonNames()) ## typically close to 600 hundred names,
-## typically some acronyms such as "UTC", "NZ", "MET", "Eire", ..., but
+## typically some acronyms/aliases such as "UTC", "NZ", "MET", "Eire", ..., but
 ## mostly pairs (and triplets) such as "Pacific/Auckland"
 table(sl <- grepl("/", OlsonNames()))
 OlsonNames()[ !sl ] # the simple ones
