@@ -141,8 +141,8 @@ as.data.frame <- function(x, row.names = NULL, optional = FALSE, ...)
 }
 
 as.data.frame.default <- function(x, ...)
-    stop(gettextf("cannot coerce class \"%s\" to a data.frame",
-                  deparse(class(x))),
+    stop(gettextf("cannot coerce class %s to a data.frame",
+                  sQuote(deparse(class(x))[1L])),
          domain = NA)
 
 ###  Here are methods ensuring that the arguments to "data.frame"
