@@ -407,7 +407,10 @@
       values other than FALSE and NA to TRUE (as documented).
 
       \item Subassignment with zero length vectors now coerces as
-      documented.  (\PR{17344})
+      documented (\PR{17344}).\cr
+      Further, \code{x <- numeric(); x[1] <- character()} now signals
+      an error \sQuote{\verb{replacement has length zero}} (or a
+      translation of that) instead of doing nothing.
 
       \item \code{mclapply}, \code{pvec} and \code{mcparallel} (when
       \code{mccollect} is used to collect results) no longer leave zombie
