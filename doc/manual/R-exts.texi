@@ -4588,6 +4588,31 @@ manual, use something like
 @end example
 with appropriate quotes (as, although not recommended, @env{R_HOME} can
 contain spaces).
+
+@item
+Do not use @env{R_HOME} in makefiles except when passing them to the shell.
+Specifically, do not use @env{R_HOME} in the argument to @code{include},
+as @env{R_HOME} can contain spaces. Quoting the argument to @code{include}
+does not help. GNU @command{make}'s @code{include} accepts spaces when
+escaped using backslashes (GNU @command{make} syntax required):
+
+@example
+## WARNING: requires GNU make (allowed on Windows)
+sp =
+sp +=
+sq = $(subst $(sp),\ ,$1)
+include $(call sq,$@{R_HOME@}/etc$@{R_ARCH@}/Makeconf)
+@end example
+ 
+A portable and the recommended way to avoid the problem of spaces in
+@code{$@{R_HOME@}} is using option @code{-f} of @command{make}.  This is
+easy to do with recursive invocation of @command{make}, which is also the
+only usual situation when @env{R_HOME} is needed in the argument for
+@code{include}.
+
+@example
+$(MAKE) -f"$@{R_HOME@}/etc$@{R_ARCH@}/Makeconf" -fMakefile.inner
+@end example
 @end itemize
 
 
@@ -14318,6 +14343,7 @@ compile the front-end.  Suppose file @file{myfe.c} is to be compiled to
 @file{myfe}. A suitable @file{Makefile} might be
 
 @example
+## WARNING: does not work when $@{R_HOME@} contains spaces
 include $@{R_HOME@}/etc$@{R_ARCH@}/Makeconf
 all: myfe
 
@@ -14338,6 +14364,17 @@ R CMD make
 R CMD myfe
 @end example
 
+Even though not recommended, @code{$@{R_HOME@}} may contain spaces.  In that
+case, it cannot be passed as an argument to @code{include} in the makefile. 
+Instead, one can instruct @command{make} using the @code{-f} option to
+include @file{Makeconf}, for example via recursive invocation of
+@command{make}, see @ref{Writing portable packages}.
+
+@example
+all:
+      $(MAKE) -f"$@{R_HOME@}/etc$@{R_ARCH@}/Makeconf" -fMakefile.inner
+@end example
+  
 Additional flags which @code{$(MAIN_LINK)} includes are, amongst others,
 those to select OpenMP and @option{--export-dynamic} for the GNU linker
 on some platforms.  In principle @code{$(LIBS)} is not needed
