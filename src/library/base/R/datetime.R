@@ -25,7 +25,7 @@ Sys.timezone <- function(location = TRUE)
 {
     if(!location) {
 #        .Deprecated(msg = "Sys.timezone(location = FALSE) is deprecated")
-        ## this would be a location, not what was asked for.
+        ## that would be a location, not what was asked for.
         ## if(nzchar(tz <- Sys.getenv("TZ", names = FALSE))) return(tz)
         ## Windows only in R < 3.5.0
         st <- as.POSIXlt(Sys.time())
@@ -43,6 +43,7 @@ Sys.timezone <- function(location = TRUE)
 
     ## At least tzcode and glibc respect this.
     tzdir <- Sys.getenv("TZDIR", "/usr/share/zoneinfo")
+    ## maybe test and try others?
 
     ## First try timedatectl: should work on any modern Linux
     ## as part of systemd (and probably nowhere else)
@@ -61,6 +62,13 @@ Sys.timezone <- function(location = TRUE)
 
     ## Debian/Ubuntu Linux do things differently, so try that next.
     ## Derived loosely from PR#17186
+    ## As the Java sources say
+    ##
+    ## 'There's no spec of the file format available. This parsing
+    ## assumes that there's one line of an Olson tzid followed by a
+    ## '\n', no leading or trailing spaces, no comments.'
+    ##
+    ## but we do trim whitespace and do a sanity check (Java does not)
     if (grepl("linux", R.Version()$platform, ignore.case = TRUE) &&
         file.exists("/etc/timezone") && dir.exists(tzdir)) {
         tz0 <- try(readLines("/etc/timezone"))
@@ -97,10 +105,12 @@ Sys.timezone <- function(location = TRUE)
         else if(grepl(pat <- ".*/zoneinfo/(.*)", lt)) sub(pat, "\\1", lt)
         else if(nzchar(Sys.which("readlink"))) {
             ## To be more future-proof try following only first link
+            ## readlink exists on at least Linux, macOS and *BSD.
             lt <- system2("readlink", lt0, stdout = TRUE, stderr = TRUE)
             if(grepl(pat <- ".*/zoneinfo/(.*)", lt))
                 return(sub(pat, "\\1", lt))
-        }
+        } ## the ultimate fallback would be to compare a
+        ## non-link lt0 to all the files under tzdir (Java does).
     } else
         NA_character_
 }
