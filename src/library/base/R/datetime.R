@@ -24,7 +24,7 @@ Sys.time <- function() .POSIXct(.Internal(Sys.time()))
 Sys.timezone <- function(location = TRUE)
 {
     if(!location) {
-#        .Deprecated(msg = "Sys.timezone(location = FALSE) is deprecated")
+        .Deprecated(msg = "Sys.timezone(location = FALSE) is deprecated")
         ## that would be a location, not what was asked for.
         ## if(nzchar(tz <- Sys.getenv("TZ", names = FALSE))) return(tz)
         ## Windows only in R < 3.5.0

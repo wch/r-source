@@ -28,7 +28,10 @@ OlsonNames()
 \arguments{
   \item{location}{logical: should an attempt be made to find the
     location name as used in the Olson/IANA database?
-    (See \sQuote{Time zone names} below.)}
+    (See \sQuote{Time zone names} below.)
+    
+    \code{location = FALSE} is deprecated.
+  }
 }
 
 \details{
@@ -221,7 +224,6 @@ OlsonNames()
 
 \examples{
 Sys.timezone()
-Sys.timezone(location = FALSE)#-> typically an abbreviation
 
 str(OlsonNames()) ## typically close to 600 hundred names,
 ## typically some acronyms/aliases such as "UTC", "NZ", "MET", "Eire", ..., but
