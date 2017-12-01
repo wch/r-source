@@ -1,7 +1,7 @@
 #  File src/library/base/R/windows/system.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -74,10 +74,10 @@ system2 <- function(command, args = character(),
 
     if(is.null(stdout)) stdout <- FALSE
     if(is.null(stderr)) stderr <- FALSE
-    
+
     if(length(stdout) != 1L) stop("'stdout' must be of length 1")
     if(length(stderr) != 1L) stop("'stderr' must be of length 1")
-    
+
     if (!is.null(input)) {
         f <- tempfile()
         on.exit(unlink(f))
@@ -125,9 +125,9 @@ shell.exec <- function(file) .Internal(shell.exec(file))
 
 Sys.timezone <- function(location = TRUE)
 {
-    tz <- Sys.getenv("TZ", names = FALSE)
-    if(nzchar(tz)) return(tz)
     if(location) return(.Internal(tzone_name()))
+
+    .Deprecated(msg = "Sys.timezone(location = FALSE) is deprecated")
     z <- as.POSIXlt(Sys.time())
     zz <- attr(z, "tzone")
     if(length(zz) == 3L) zz[2L + z$isdst] else zz[1L]

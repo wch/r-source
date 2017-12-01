@@ -28,7 +28,10 @@ OlsonNames()
 \arguments{
   \item{location}{logical: should an attempt be made to find the
     location name as used in the Olson/IANA database?
-    (See \sQuote{Time zone names} below.)}
+    (See \sQuote{Time zone names} below.)
+    
+    \code{location = FALSE} is deprecated.
+  }
 }
 
 \details{
@@ -79,9 +82,8 @@ OlsonNames()
   \code{NA} or an empty string (which on some OSes means \samp{UTC}).
   For the default \code{location = TRUE} this will be a location such as
   \code{"Europe/London"} if one can be ascertained.  For \code{location
-  = FALSE}, if \env{TZ} is set this will be its value, otherwise it this
-  may be an abbreviation such as \code{"EST"} or \code{"CEST"} on
-  Windows but \code{NA} on other platforms
+  = FALSE} it will be an abbreviation such as \code{"EST"} or
+  \code{"CEST"} on Windows but \code{NA} on other platforms
 
   \code{OlsonNames} returns a character vector.
 }

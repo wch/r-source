@@ -5,6 +5,17 @@
 \title{R News}
 \encoding{UTF-8}
 
+\section{\Rlogo CHANGES IN R 3.4.3 Patched}{
+
+  \subsection{DEPRECATED AND DEFUNCT}{
+    \itemize{
+      \code{Sys.timezone(location = FALSE)} (which was a stop-gap
+      measure for Windows long ago) is deprecated.  It no longer returns
+      the value of environment variable \env{TZ} (typically a location).
+    }
+  }
+}
+
 \section{\Rlogo CHANGES IN R 3.4.3}{
 
   \subsection{INSTALLATION on a UNIX-ALIKE}{

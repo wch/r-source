@@ -21,8 +21,12 @@ Sys.time <- function() .POSIXct(.Internal(Sys.time()))
 ## overridden on Windows
 Sys.timezone <- function(location = TRUE)
 {
+    if(!location) {
+        .Deprecated(msg = "Sys.timezone(location = FALSE) is deprecated")
+        return(NA_character_)
+    }
     tz <- Sys.getenv("TZ", names = FALSE)
-    if(!location || nzchar(tz)) return(Sys.getenv("TZ", unset = NA_character_))
+    if(nzchar(tz)) return(tz)
     lt <- normalizePath("/etc/localtime") # most Linux, macOS, ...
     if (grepl(pat <- "^/usr/share/zoneinfo/", lt) ||
         grepl(pat <- "^/usr/share/zoneinfo.default/", lt)) sub(pat, "", lt)
