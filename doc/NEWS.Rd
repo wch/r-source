@@ -418,6 +418,9 @@
 
       \item \code{R CMD INSTALL <pkg>} now produces the intended error
       message when, e.g., the \code{LazyData} field is invalid.
+
+      \item \code{as.matrix(dd)} now works when the data frame \code{dd}
+      contains a data frame as column.
     }
   }
 }

@@ -1320,6 +1320,21 @@ stopifnot(
 )## the last gave "1" in all previous versions of R
 
 
+## as.matrix( <data.frame in d.fr.> ) -- prompted by Patrick Perry, R-devel 2017-11-30
+dm <- dd <- d1 <- data.frame(n = 1:3)
+dd[[1]] <- d1            # -> 'dd' has "n" twice
+dm[[1]] <- as.matrix(d1) #    (ditto)
+d. <- structure(list(d1), class = "data.frame", row.names = c(NA, -3L))
+stopifnot(identical(capture.output(dd),
+                    capture.output(d.))
+        , identical(as.matrix(dd), cbind(n.n = 1:3))
+        , identical(as.matrix(d.), cbind(n   = 1:3))
+        , identical(as.matrix(dm), cbind(n.n = 1:3))
+        , identical(as.matrix(d1), cbind(n   = 1:3))
+)
+## the first two as.matrix() have failed at least since R-1.9.1, 2004
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
