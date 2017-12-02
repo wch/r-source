@@ -2812,7 +2812,6 @@ setRlibs <-
             }
             bad_lines <- grep("^Warning.*screen devices should not be used in examples",
                               lines, useBytes = TRUE, value = TRUE)
-
             if(length(bad_lines)) {
                 if(!bad) {
                     warningLog(Log,
@@ -2834,6 +2833,26 @@ setRlibs <-
                 printLog0(Log, .format_lines_with_indent(bad_lines), "\n")
                 wrapLog("Note that CRAN packages must never use more than two",
                         "cores simultaneously during their checks.")
+            }
+            bad_lines <- grep("^Warning: working directory was changed to",
+                              lines, useBytes = TRUE, value = TRUE)
+            if(length(bad_lines)) {
+                if(!bad) {
+                    warningLog(Log,
+                               "Found the following significant warnings:")
+                    bad <- TRUE
+                }
+                printLog0(Log, .format_lines_with_indent(bad_lines), "\n")
+            }
+            bad_lines <- grep("^Warning: items .* were removed from the search path",
+                              lines, useBytes = TRUE, value = TRUE)
+            if(length(bad_lines)) {
+                if(!bad) {
+                    warningLog(Log,
+                               "Found the following significant warnings:")
+                    bad <- TRUE
+                }
+                printLog0(Log, .format_lines_with_indent(bad_lines), "\n")
             }
             any <- any || bad
 

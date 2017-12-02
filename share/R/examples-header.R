@@ -50,8 +50,15 @@ assign("cleanEx",
            if(length(newitems)) tools:::detachPackages(newitems)
 	   missitems <- .oldSearch[! .oldSearch %in% sch]
 	   if(length(missitems))
-	       warning("items ", paste(missitems, collapse=", "),
-		       " have been removed from the search path", domain = NA)
+	       warning(sprintf("items %s were removed from the search path",
+                               paste(sQuote(missitems), collapse=", ")),
+                       call. = FALSE, immediate. = TRUE, domain = NA)
+           if((wd <- getwd()) != .old_wd) {
+               warning(sprintf("working directory was changed to %s, resetting",
+                               sQuote(wd)),
+                       call. = FALSE, immediate. = TRUE, domain = NA)
+               setwd(.old_wd)
+           }
        },
        pos = "CheckExEnv")
 assign("ptime", proc.time(), pos = "CheckExEnv")

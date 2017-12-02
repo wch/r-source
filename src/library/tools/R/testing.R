@@ -78,6 +78,8 @@ massageExamples <-
 
     cat("base::assign(\".oldSearch\", base::search(), pos = 'CheckExEnv')\n", file = out)
     ## cat("assign(\".oldNS\", loadedNamespaces(), pos = 'CheckExEnv')\n", file = out)
+    cat("base::assign(\".old_wd\", base::getwd(), pos = 'CheckExEnv')\n",
+        file = out)
     for(file in files) {
         nm <- sub("\\.R$", "", basename(file))
         ## make a syntactic name out of the filename
