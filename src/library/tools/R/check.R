@@ -2730,7 +2730,10 @@ setRlibs <-
                 Rcmd <- sprintf("suppressPackageStartupMessages(loadNamespace('%s', lib.loc = '%s'))",
                                 pkgname, libdir)
                 opts <- if(nzchar(arch)) R_opts4 else R_opts2
-                env <- paste0("_R_LOAD_CHECK_OVERWRITE_S3_METHODS_=", pkgname)
+                env <- Sys.getenv("_R_LOAD_CHECK_OVERWRITE_S3_METHODS_",
+                                  "NA")
+                env <- paste0("_R_LOAD_CHECK_OVERWRITE_S3_METHODS_=",
+                              if(env == "all") env else pkgname)
                 out <- R_runR0(Rcmd, opts, env, arch = arch)
                 if (any(grepl("^Registered S3 method.*overwritten", out))) {
                     out <- filtergrep("^<environment: namespace:", out)
