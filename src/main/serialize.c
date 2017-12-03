@@ -1537,7 +1537,7 @@ static int TryConvertString(void *obj, const char *inp, size_t inplen,
 {
     if (Riconv(obj, NULL, NULL, &buf, bufleft) == -1)
 	return -1;
-    return Riconv(obj, &inp, &inplen, &buf, bufleft);
+    return (int) Riconv(obj, &inp, &inplen, &buf, bufleft);
 }
 
 static SEXP
