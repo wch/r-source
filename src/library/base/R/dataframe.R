@@ -1503,7 +1503,7 @@ as.matrix.data.frame <- function (x, rownames.force = NA, ...)
 	if(length(dj) == 2L && dj[2L] > 0L) { # matrix with > 0 col
 	    if(!length(dnj <- colnames(xj))) dnj <- seq_len(dj[2L])
 	    collabs[[j]] <-
-		if(length(collabs))
+		if(length(collabs) && dj[2L] > 1L)
 		    paste(collabs[[j]], dnj, sep = ".")
 		else dnj
 	}

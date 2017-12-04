@@ -1325,14 +1325,19 @@ dm <- dd <- d1 <- data.frame(n = 1:3)
 dd[[1]] <- d1            # -> 'dd' has "n" twice
 dm[[1]] <- as.matrix(d1) #    (ditto)
 d. <- structure(list(d1), class = "data.frame", row.names = c(NA, -3L))
+d2. <- data.frame(ch = c("A","b"), m = 10:11)
+d2  <- data.frame(V = 1:2); d2$V <- d2.; d2
 stopifnot(identical(capture.output(dd),
                     capture.output(d.))
-        , identical(as.matrix(dd), cbind(n.n = 1:3))
-        , identical(as.matrix(d.), cbind(n   = 1:3))
-        , identical(as.matrix(dm), cbind(n.n = 1:3))
-        , identical(as.matrix(d1), cbind(n   = 1:3))
+        , identical(as.matrix(dd), (cbind(n = 1:3) -> m.))
+        , identical(as.matrix(d.), m.)
+        , identical(as.matrix(d2), array(c("A", "b", "10", "11"), c(2L, 2L),
+                                         dimnames = list(NULL, c("V.ch", "V.m"))))
+        , identical(as.matrix(dm), m.)
+        , identical(as.matrix(d1), m.)
+        , identical(colnames(m2 <- as.matrix(d2)), c("V.ch", "V.m"))
 )
-## the first two as.matrix() have failed at least since R-1.9.1, 2004
+## the first  3  as.matrix() have failed at least since R-1.9.1, 2004
 
 
 
