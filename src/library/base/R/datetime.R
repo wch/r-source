@@ -21,6 +21,9 @@ Sys.time <- function() .POSIXct(.Internal(Sys.time()))
 ### There is no portable way to find the system timezone by location.
 ### For some ideas (not all accurate) see
 ### https://stackoverflow.com/questions/3118582/how-do-i-find-the-current-system-timezone
+
+### will be called from C startup code for internal tzcode as Sys.timezone()
+### and for bootstrapping, it must be simple if TZ is set.
 Sys.timezone <- function(location = TRUE)
 {
     if(!location) {
@@ -43,7 +46,7 @@ Sys.timezone <- function(location = TRUE)
 
     ## Many Unix set TZ, e.g. Solaris and AIX.
     ## For Solaris the system setting is a line in /etc/TIMEZONE
-    tz <- Sys.getenv("TZ", names = FALSE)
+    tz <- Sys.getenv("TZ")
     if(nzchar(tz)) return(tz)
     if(.Platform$OS.type == "windows") return(.Internal(tzone_name()))
 
@@ -71,10 +74,14 @@ Sys.timezone <- function(location = TRUE)
         if (length(lines)) {
             tz <- sub(" .*", "", sub(" *Time zone: ", "", inf[lines[1L]]))
             ## quick sanity check
-            if(!nzchar(tzdir) || file.exists(file.path(tzdir, tz))) {
-                cacheIt(tz)
-                return(tz)
-            }
+            if(!nzchar(tzdir)) {
+                if(file.exists(file.path(tzdir, tz))) {
+                    cacheIt(tz)
+                    return(tz)
+                } else warning(sprintf("%s indicates the non-existent timezone name %s",
+                                       sQuote("timedatectl"), sQuote(tz)),
+                               call. = FALSE, immediate. = TRUE, domain = NA)
+           }
         }
     }
 
@@ -93,9 +100,13 @@ Sys.timezone <- function(location = TRUE)
         if(!inherits(tz0, "try-error") && length(tz0) == 1L) {
             tz <- trimws(tz0)
             ## quick sanity check
-            if(!nzchar(tzdir) || file.exists(file.path(tzdir, tz))) {
-                cacheIt(tz)
-                return(tz)
+            if(!nzchar(tzdir)) {
+                if(file.exists(file.path(tzdir, tz))) {
+                    cacheIt(tz)
+                    return(tz)
+                } else warning(sprintf("%s indicates the non-existent timezone name %s",
+                                       sQuote("/etc/timezone"), sQuote(tz)),
+                               call. = FALSE, immediate. = TRUE, domain = NA)
             }
         }
     }
@@ -137,24 +148,34 @@ Sys.timezone <- function(location = TRUE)
             cacheIt(tz)
             return(tz)
         }
+    }
 
-        ## Last-gasp (slow) fallback: compare a non-link lt0 to all the
-        ## files under tzdir (as Java does).
-        ## Note that this could match more than one: we don't care here.
-        if (nzchar(tzdir) &&
-            (file.exists(lt0 <- "/etc/localtime") ||
-             file.exists(lt0 <- "/usr/local/etc/localtime") ||
-             file.exists(lt0 <- "/usr/local/etc/zoneinfo/localtime") &&
-             nzchar(Sys.which("cmp"))) &&
-            (normalizePath(lt0)) == lt0) {
+    ## Last-gasp (slow, several seconds) fallback: compare a
+    ## non-link lt0 to all the files under tzdir (as Java does).
+    ## This could match more than one location: we don't care which.
+    if (nzchar(tzdir) &&
+        (file.exists(lt0 <- "/etc/localtime") ||
+         file.exists(lt0 <- "/usr/local/etc/localtime") ||
+         file.exists(lt0 <- "/usr/local/etc/zoneinfo/localtime") &&
+         (normalizePath(lt0)) == lt0)) {
+        warning(sprintf("Your system is mis-configured: %s is not a link",
+                        sQuote(lt0)),
+                call. = FALSE, immediate. = TRUE, domain = NA)
+        if(nzchar(Sys.which("cmp"))) {
             known <- dir(tzdir, recursive = TRUE)
             for(tz in known) {
                 status <- system2("cmp", c("-s", lt0, file.path(tzdir, tz)))
                 if (status == 0L) {
                     cacheIt(tz)
+                    warning(sprintf("It is strongly recommended to set envionment variable TZ to %s (or equivalent)",
+                                    sQuote(tz)),
+                            call. = FALSE, immediate. = TRUE, domain = NA)
                     return(tz)
                 }
             }
+            warning(sprintf("%s is not the name as any known timezone file",
+                            sQuote(lt0)),
+                    call. = FALSE, immediate. = TRUE, domain = NA)
         }
     }
 
