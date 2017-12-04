@@ -35,6 +35,12 @@ Sys.timezone <- function(location = TRUE)
                else NA_character_)
     }
 
+    if(!is.na(tz <- get0(".sys.timezone", baseenv(), mode = "character",
+                         inherits = FALSE, ifnotfound = NA_character_)))
+        return(tz)
+
+    cacheIt <- function(tz) assign(".sys.timezone",  tz, baseenv())
+
     ## Many Unix set TZ, e.g. Solaris and AIX.
     ## For Solaris the system setting is a line in /etc/TIMEZONE
     tz <- Sys.getenv("TZ", names = FALSE)
@@ -43,7 +49,16 @@ Sys.timezone <- function(location = TRUE)
 
     ## At least tzcode and glibc respect this.
     tzdir <- Sys.getenv("TZDIR", "/usr/share/zoneinfo")
-    ## maybe test and try others?
+    if(!nzchar(tzdir)) {
+        if(dir.exists(tzdir <- "/usr/share/lib/zoneinfo") ||
+           dir.exists(tzdir <- "/usr/share/lib/zoneinfo") ||
+           dir.exists(tzdir <- "/usrlib/zoneinfo") ||
+           dir.exists(tzdir <- "/usr/local/etc/zoneinfo") ||
+           dir.exists(tzdir <- "/etc/zoneinfo") ||
+           dir.exists(tzdir <- "/usr/etc/zoneinfo")) {
+        } else tzdir <- ""
+    }
+    if(!nzchar(tzdir) && !dir.exists(tzdir)) tzdir <- ""
 
     ## First try timedatectl: should work on any modern Linux
     ## as part of systemd (and probably nowhere else)
@@ -56,7 +71,10 @@ Sys.timezone <- function(location = TRUE)
         if (length(lines)) {
             tz <- sub(" .*", "", sub(" *Time zone: ", "", inf[lines[1L]]))
             ## quick sanity check
-            if(file.exists(file.path(tzdir, tz))) return(tz)
+            if(!nzchar(tzdir) || file.exists(file.path(tzdir, tz))) {
+                cacheIt(tz)
+                return(tz)
+            }
         }
     }
 
@@ -70,12 +88,15 @@ Sys.timezone <- function(location = TRUE)
     ##
     ## but we do trim whitespace and do a sanity check (Java does not)
     if (grepl("linux", R.Version()$platform, ignore.case = TRUE) &&
-        file.exists("/etc/timezone") && dir.exists(tzdir)) {
+        file.exists("/etc/timezone")) {
         tz0 <- try(readLines("/etc/timezone"))
         if(!inherits(tz0, "try-error") && length(tz0) == 1L) {
             tz <- trimws(tz0)
             ## quick sanity check
-            if(file.exists(file.path(tzdir, tz))) return(tz)
+            if(!nzchar(tzdir) || file.exists(file.path(tzdir, tz))) {
+                cacheIt(tz)
+                return(tz)
+            }
         }
     }
 
@@ -91,28 +112,54 @@ Sys.timezone <- function(location = TRUE)
          file.exists(lt0 <- "/usr/local/etc/localtime") ||
          file.exists(lt0 <- "/usr/local/etc/zoneinfo/localtime")) &&
         (lt <- normalizePath(lt0)) != lt0) { # so it is a link
-        ## glibc and macOS < 10.13 this is
-        ##   a link into /usr/share/zoneinfo
-        ## Debian Etch and later replaced it with a copy.
+        tz <- NA_character_
+        ## glibc and macOS < 10.13 this is a link into /usr/share/zoneinfo
+        ## (Debian Etch and later replaced it with a copy.)
         ## macOS 10.13.0 is a link into /usr/share/zoneinfo.default/
         ## macOS 10.13.1 is a link to something like
         ##   /var/db/timezone/zoneinfo/Europe/London and hence
         ##   /private/var/db/timezone/tz/2017c.1.0/zoneinfo/
-        pat <- paste0("^", tzdir)
-        if (grepl(pat, lt) ||
-            grepl(pat <- "^/usr/share/zoneinfo.default/", lt)) sub(pat, "", lt)
+        if ((nzchar(tzdir) && grepl(pat<- paste0("^", tzdir), lt)) ||
+            grepl(pat <- "^/usr/share/zoneinfo.default/", lt))
+            tz <- sub(pat, "", lt)
         ## all the locations listed for OlsonNames end in zoneinfo
-        else if(grepl(pat <- ".*/zoneinfo/(.*)", lt)) sub(pat, "\\1", lt)
+        else if(grepl(pat <- ".*/zoneinfo/(.*)", lt)) {
+            tz <- sub(pat, "\\1", lt)
+        }
         else if(nzchar(Sys.which("readlink"))) {
             ## To be more future-proof try following only first link
             ## readlink exists on at least Linux, macOS and *BSD.
             lt <- system2("readlink", lt0, stdout = TRUE, stderr = TRUE)
             if(grepl(pat <- ".*/zoneinfo/(.*)", lt))
-                return(sub(pat, "\\1", lt))
-        } ## the ultimate fallback would be to compare a
-        ## non-link lt0 to all the files under tzdir (Java does).
-    } else
-        NA_character_
+                tz <- sub(pat, "\\1", lt)
+        }
+        if(!is.na(tz)) {
+            cacheIt(tz)
+            return(tz)
+        }
+
+        ## Last-gasp (slow) fallback: compare a non-link lt0 to all the
+        ## files under tzdir (as Java does).
+        ## Note that this could match more than one: we don't care here.
+        if (nzchar(tzdir) &&
+            (file.exists(lt0 <- "/etc/localtime") ||
+             file.exists(lt0 <- "/usr/local/etc/localtime") ||
+             file.exists(lt0 <- "/usr/local/etc/zoneinfo/localtime") &&
+             nzchar(Sys.which("cmp"))) &&
+            (normalizePath(lt0)) == lt0) {
+            known <- dir(tzdir, recursive = TRUE)
+            for(tz in known) {
+                status <- system2("cmp", c("-s", lt0, file.path(tzdir, tz)))
+                if (status == 0L) {
+                    cacheIt(tz)
+                    return(tz)
+                }
+            }
+        }
+    }
+
+    ## all heuristics have failed, so give up
+    NA_character_
 }
 
 

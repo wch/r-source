@@ -12,6 +12,7 @@
 \alias{time zones}
 \alias{TZ}
 \alias{TZDIR}
+\alias{.sys.timezone}
 
 \title{Time Zones}
 \description{
@@ -75,6 +76,9 @@ OlsonNames()
   (notably macOS) the database information is 32-bit and so only
   available for the range 1901--2038, and incompletely for the end
   years.
+
+  As from \R 3.5.0, when a timezone location is first found its value is
+  cached in object \code{.sys.timezone} in the base environment.
 }
 
 \value{
@@ -82,7 +86,12 @@ OlsonNames()
   \code{NA} or an empty string (which on some OSes means \samp{UTC}).
   For the default \code{location = TRUE} this will be a location such as
   \code{"Europe/London"} if one can be ascertained.  For \code{location
-  = FALSE}, it will be an abbreviation such as \code{"EST"} or \code{"CEST"}.
+    = FALSE}, it will be an abbreviation such as \code{"EST"} or \code{"CEST"}.
+
+  A timezone location may be known by several names: for example
+  \samp{"Europe/London"} is also known as \samp{GB}, \samp{GB-Eire},
+  \samp{Europe/Belfast} , \samp{Europe/Guernsey},
+  \samp{Europe/Isle_of_Man} and \samp{Europe/Jersey}.
 
   \code{OlsonNames} returns a character vector, see the examples for
   typical cases.

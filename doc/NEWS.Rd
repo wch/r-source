@@ -194,7 +194,8 @@
       when the OS limit on the number of open files allows.
 
       \item \code{Sys.timezone()} tries more ways on Unix-alikes and so
-      is more likely to succeed (especially on Linux).
+      is more likely to succeed (especially on Linux).  As some of these
+      ways are slow, the value is cached at first use in a session.
 
       \item When \code{tar()} is used with an external command which is
       detected to be GNU \command{tar} or libarchive \command{tar} (aka
