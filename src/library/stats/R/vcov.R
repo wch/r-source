@@ -55,7 +55,7 @@ vcov.mlm <- function(object, complete = TRUE, ...)
 }
 
 vcov.summary.glm <- function(object, complete = TRUE, ...)
-    .vcov.aliased(object$aliased, object$cov.scaled)
+    .vcov.aliased(object$aliased, object$cov.scaled, complete=complete)
 
 vcov.summary.lm  <- function(object, complete = TRUE, ...)
     .vcov.aliased(object$aliased, object$sigma^2 * object$cov.unscaled, complete=complete)
