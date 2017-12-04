@@ -266,7 +266,7 @@ void attribute_hidden R_check_locale(void)
 	known_to_be_latin1 = latin1locale = (localeCP == 1252);
 	if (localeCP) {
 	    /* CP1252 when latin1locale is true */
-	    sprintf(native_enc, R_CODESET_MAX, "CP%d", localeCP);
+	    snprintf(native_enc, R_CODESET_MAX, "CP%d", localeCP);
 	    native_enc[R_CODESET_MAX] = 0;
 	}
     }
