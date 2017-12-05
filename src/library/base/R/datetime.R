@@ -52,7 +52,7 @@ Sys.timezone <- function(location = TRUE)
         if (length(lines)) {
             tz <- sub(" .*", "", sub(" *Time zone: ", "", inf[lines[1L]]))
             ## quick sanity check
-            if(!nzchar(tzdir)) {
+            if(nzchar(tzdir)) {
                 if(file.exists(file.path(tzdir, tz)))
                     return(tz)
                 else warning(sprintf("%s indicates the non-existent timezone name %s",
@@ -77,7 +77,7 @@ Sys.timezone <- function(location = TRUE)
         if(!inherits(tz0, "try-error") && length(tz0) == 1L) {
             tz <- trimws(tz0)
             ## quick sanity check
-            if(!nzchar(tzdir)) {
+            if(nzchar(tzdir)) {
                 if(file.exists(file.path(tzdir, tz)))
                     return(tz)
                 else warning(sprintf("%s indicates the non-existent timezone name %s",
