@@ -80,10 +80,10 @@ OlsonNames()
   This will be a location such as \code{"Europe/London"} if one can be
   ascertained.
 
-  A timezone location may be known by several names: for example
+  A timezone region may be known by several names: for example
   \samp{"Europe/London"} is also known as \samp{GB}, \samp{GB-Eire},
   \samp{Europe/Belfast} , \samp{Europe/Guernsey},
-  \samp{Europe/Isle_of_Man} and \samp{Europe/Jersey}.  A few locations
+  \samp{Europe/Isle_of_Man} and \samp{Europe/Jersey}.  A few regions
   are also known by a summary of their timezone,
   e.g.\sspace{}\samp{PST8PDT} is an alias for
   \samp{America/Los_Angeles}.
@@ -226,6 +226,9 @@ OlsonNames()
 
   \url{https://en.wikipedia.org/wiki/Time_zone} and
   \url{http://www.twinsun.com/tz/tz-link.htm} for extensive sets of links.
+
+  \url{https://data.iana.org/time-zones/theory.html} for the
+  \sQuote{rules} of the Olson/IANA database.
 }
 
 \examples{
