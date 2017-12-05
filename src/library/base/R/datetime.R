@@ -28,10 +28,12 @@ Sys.timezone <- function(location = TRUE)
     tz <- Sys.getenv("TZ")
     if(nzchar(tz)) return(tz)
 
-    ## At least tzcode and glibc respect this.
-    tzdir <- Sys.getenv("TZDIR", "/usr/share/zoneinfo")
+    ## At least tzcode and glibc respect TZDIR.
+    tzdir <- Sys.getenv("TZDIR")
+    if(nzchar(tzdir) && !dir.exists(tzdir)) tzdir <- ""
     if(!nzchar(tzdir)) {
-        if(dir.exists(tzdir <- "/usr/share/lib/zoneinfo") ||
+        if(dir.exists(tzdir <- "/usr/share/zoneinfo") ||
+           dir.exists(tzdir <- "/usr/share/lib/zoneinfo") ||
            dir.exists(tzdir <- "/usr/share/lib/zoneinfo") ||
            dir.exists(tzdir <- "/usrlib/zoneinfo") ||
            dir.exists(tzdir <- "/usr/local/etc/zoneinfo") ||
@@ -39,7 +41,6 @@ Sys.timezone <- function(location = TRUE)
            dir.exists(tzdir <- "/usr/etc/zoneinfo")) {
         } else tzdir <- ""
     }
-    if(nzchar(tzdir) && !dir.exists(tzdir)) tzdir <- ""
 
     ## First try timedatectl: should work on any modern Linux
     ## as part of systemd (and probably nowhere else)
