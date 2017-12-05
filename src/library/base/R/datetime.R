@@ -29,7 +29,7 @@ Sys.timezone <- function(location = TRUE)
     if(!location) {
         .Deprecated(msg = "Sys.timezone(location = FALSE) is deprecated")
         ## that would be a location, not what was asked for.
-        ## if(nzchar(tz <- Sys.getenv("TZ", names = FALSE))) return(tz)
+        ## if(nzchar(tz <- Sys.getenv("TZ"))) return(tz)
         ## Windows only in R < 3.5.0
         st <- as.POSIXlt(Sys.time())
         z <- attr(st, "tzone")
@@ -152,7 +152,7 @@ Sys.timezone <- function(location = TRUE)
 
     ## Last-gasp (slow, several seconds) fallback: compare a
     ## non-link lt0 to all the files under tzdir (as Java does).
-    ## This could match more than one location: we don't care which.
+    ## This could match more than one tz file: we don't care which.
     if (nzchar(tzdir) &&
         (file.exists(lt0 <- "/etc/localtime") ||
          file.exists(lt0 <- "/usr/local/etc/localtime") ||
@@ -173,7 +173,7 @@ Sys.timezone <- function(location = TRUE)
                     return(tz)
                 }
             }
-            warning(sprintf("%s is not the name as any known timezone file",
+            warning(sprintf("%s is not the same as any known timezone file",
                             sQuote(lt0)),
                     call. = FALSE, immediate. = TRUE, domain = NA)
         }
@@ -182,7 +182,6 @@ Sys.timezone <- function(location = TRUE)
     ## all heuristics have failed, so give up
     NA_character_
 }
-
 
 as.POSIXlt <- function(x, tz = "", ...) UseMethod("as.POSIXlt")
 
