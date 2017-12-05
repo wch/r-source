@@ -5,7 +5,14 @@
 \title{R News}
 \encoding{UTF-8}
 
-\section{\Rlogo CHANGES IN R 3.4.3 Patched}{
+\section{\Rlogo CHANGES IN R 3.4.3 patched}{
+
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item \code{Sys.timezone()} tries more heuristics on Unix-alikes and so
+      is more likely to succeed (especially on Linux).
+    }
+  }
 
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
