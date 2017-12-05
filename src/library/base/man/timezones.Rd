@@ -27,12 +27,7 @@ OlsonNames()
 }
 
 \arguments{
-  \item{location}{logical: should an attempt be made to find the
-    location name as used in the Olson/IANA database?
-    (See \sQuote{Time zone names} below.)
-    
-    \code{location = FALSE} is deprecated.
-  }
+  \item{location}{logical: defunct: ignored, with a warning for false values.}
 }
 
 \details{
@@ -49,9 +44,7 @@ OlsonNames()
   suitable values.  \code{Sys.timezone()} will return the value of
   \env{TZ} if set (and on some OSes it is always set), otherwise it will
   try to retrieve a value which if set for \env{TZ} would give the
-  current time zone.  This is not in general possible, and
-  \code{Sys.timezone(FALSE)} will retrieve the abbreviation used for the
-  current time.
+  current time zone.
 
   If \env{TZ} is set but empty or invalid, most platforms default to
   \samp{UTC}, the time zone colloquially known as \samp{GMT} (see
@@ -84,14 +77,16 @@ OlsonNames()
 \value{
   \code{Sys.timezone} returns an OS-specific character string, possibly
   \code{NA} or an empty string (which on some OSes means \samp{UTC}).
-  For the default \code{location = TRUE} this will be a location such as
-  \code{"Europe/London"} if one can be ascertained.  For \code{location
-    = FALSE}, it will be an abbreviation such as \code{"EST"} or \code{"CEST"}.
+  This will be a location such as \code{"Europe/London"} if one can be
+  ascertained.
 
   A timezone location may be known by several names: for example
   \samp{"Europe/London"} is also known as \samp{GB}, \samp{GB-Eire},
   \samp{Europe/Belfast} , \samp{Europe/Guernsey},
-  \samp{Europe/Isle_of_Man} and \samp{Europe/Jersey}.
+  \samp{Europe/Isle_of_Man} and \samp{Europe/Jersey}.  A few locations
+  are also known by a summary of their timezone,
+  e.g.\sspace{}\samp{PST8PDT} is an alias for
+  \samp{America/Los_Angeles}.
 
   \code{OlsonNames} returns a character vector, see the examples for
   typical cases.
@@ -113,19 +108,20 @@ OlsonNames()
   compiled by Arthur David Olson and now managed by IANA, in which the
   preferred way to refer to a time zone is by a location (typically of a
   city), e.g., \code{Europe/London}, \code{America/Los_Angeles},
-  \code{Pacific/Easter}.  Some traditional designations are also allowed
-  such as \code{EST5EDT} or \code{GB}.  (Beware that some of these
-  designations may not be what you expect: in particular \code{EST} is a
-  time zone used in Canada \emph{without} daylight saving time, and not
-  \code{EST5EDT} nor (Australian) Eastern Standard Time.)  The
-  designation can also be an optional colon prepended to the path to a
-  file giving complied zone information (and the examples above are all
-  files in a system-specific location).  See
-  \url{http://www.twinsun.com/tz/tz-link.htm} for more details and
-  references.  By convention, regions with a unique time-zone history
-  since 1970 have specific names in the database, but those with
-  different earlier histories may not.  Each time zone has one or two
-  (the second for DST) \emph{abbreviations} used when formatting times.
+  \code{Pacific/Easter} within a \sQuote{time zone region}.  Some
+  traditional designations are also allowed such as \code{EST5EDT} or
+  \code{GB}.  (Beware that some of these designations may not be what
+  you expect: in particular \code{EST} is a time zone used in Canada
+  \emph{without} daylight saving time, and not \code{EST5EDT} nor
+  (Australian) Eastern Standard Time.)  The designation can also be an
+  optional colon prepended to the path to a file giving complied zone
+  information (and the examples above are all files in a system-specific
+  location).  See \url{http://www.twinsun.com/tz/tz-link.htm} for more
+  details and references.  By convention, regions with a unique
+  time-zone history since 1970 have specific names in the database, but
+  those with different earlier histories may not.  Each time zone has
+  one or two (the second for DST) \emph{abbreviations} used when
+  formatting times.
 
   The abbreviations used have changed over the years: for example France
   used \samp{PMT} (\sQuote{Paris Mean Time}) from 1891 to 1911 then
@@ -161,11 +157,12 @@ OlsonNames()
   before any date-times are used in the session.
 #endif
 
-  Most platforms support time zones of the form \samp{GMT+n} and
-  \samp{GMT-n}, which assume at a fixed offset from UTC (hence no DST).
-  Contrary to some expectations (but consistent with names such as
-  \samp{PST8PDT}), negative offsets are times ahead of (east of) UTC,
-  positive offsets are times behind (west of) UTC.
+  Most platforms support time zones of the form \samp{Etc/GMT+n} and
+  \samp{Etc/GMT-n}, which assume at a fixed offset from UTC (hence no
+  DST).  (Some platforms allow the prefix to be omitted}.)  Contrary to
+  some expectations (but consistent with names such as \samp{PST8PDT}),
+  negative offsets are times ahead of (east of) UTC, positive offsets
+  are times behind (west of) UTC.
 
   Immediately prior to the advent of legislated time zones, most people
   used time based on their longitude (or that of a nearby town), known

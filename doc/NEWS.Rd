@@ -279,6 +279,13 @@
     }
   }
 
+  \subsection{DEPRECATED AND DEFUNCT}{
+    \itemize{
+      \item \code{Sys.timezone(location = FALSE)} is defunct, and is
+      ignored (with a warning).
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{printCoefmat()} now also works without column names.
@@ -440,13 +447,15 @@
     }
   }
 
+
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
-      \code{Sys.timezone(location = FALSE)} (which was a stop-gap
+      \item \code{Sys.timezone(location = FALSE)} (which was a stop-gap
       measure for Windows long ago) is deprecated.  It no longer returns
-      the value of environment variable \env{TZ} (typically a location).
+      the value of environment variable \env{TZ} (a location).
     }
   }
+  
 }
 
 \section{\Rlogo CHANGES IN R 3.4.3}{

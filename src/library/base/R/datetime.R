@@ -26,17 +26,8 @@ Sys.time <- function() .POSIXct(.Internal(Sys.time()))
 ### and for bootstrapping, it must be simple if TZ is set.
 Sys.timezone <- function(location = TRUE)
 {
-    if(!location) {
-        .Deprecated(msg = "Sys.timezone(location = FALSE) is deprecated")
-        ## that would be a location, not what was asked for.
-        ## if(nzchar(tz <- Sys.getenv("TZ"))) return(tz)
-        ## Windows only in R < 3.5.0
-        st <- as.POSIXlt(Sys.time())
-        z <- attr(st, "tzone")
-        return(if(length(z) == 3L) z[2L + st$isdst]
-               else if(length(z)) z[1L]
-               else NA_character_)
-    }
+    if(!location)
+        .Deprecated(msg = "Sys.timezone(location = FALSE) is defunct and ignored")
 
     if(!is.na(tz <- get0(".sys.timezone", baseenv(), mode = "character",
                          inherits = FALSE, ifnotfound = NA_character_)))
