@@ -23,7 +23,7 @@ Sys.time <- function() .POSIXct(.Internal(Sys.time()))
 ### https://stackoverflow.com/questions/3118582/how-do-i-find-the-current-system-timezone
 
 ### will be called from C startup code for internal tzcode as Sys.timezone()
-### and for bootstrapping, it must be simple if TZ is set.
+### For bootstrapping, it must be simple if TZ is set.
 Sys.timezone <- function(location = TRUE)
 {
     if(!location)
@@ -65,7 +65,7 @@ Sys.timezone <- function(location = TRUE)
         if (length(lines)) {
             tz <- sub(" .*", "", sub(" *Time zone: ", "", inf[lines[1L]]))
             ## quick sanity check
-            if(!nzchar(tzdir)) {
+            if(nzchar(tzdir)) {
                 if(file.exists(file.path(tzdir, tz))) {
                     cacheIt(tz)
                     return(tz)
@@ -91,7 +91,7 @@ Sys.timezone <- function(location = TRUE)
         if(!inherits(tz0, "try-error") && length(tz0) == 1L) {
             tz <- trimws(tz0)
             ## quick sanity check
-            if(!nzchar(tzdir)) {
+            if(nzchar(tzdir)) {
                 if(file.exists(file.path(tzdir, tz))) {
                     cacheIt(tz)
                     return(tz)
