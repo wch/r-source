@@ -158,9 +158,9 @@ OlsonNames()
 #endif
 
   Most platforms support time zones of the form \samp{Etc/GMT+n} and
-  \samp{Etc/GMT-n}, which assume at a fixed offset from UTC (hence no
-  DST).  (Some platforms allow the prefix to be omitted}.)  Contrary to
-  some expectations (but consistent with names such as \samp{PST8PDT}),
+  \samp{Etc/GMT-n} (possibly also without prefix \samp{Etc/}), which
+  assume a fixed offset from UTC (hence no DST).  Contrary to some
+  expectations (but consistent with names such as \samp{PST8PDT}),
   negative offsets are times ahead of (east of) UTC, positive offsets
   are times behind (west of) UTC.
 
