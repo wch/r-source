@@ -118,10 +118,10 @@ Sys.timezone <- function(location = TRUE)
         ## glibc and macOS < 10.13 this is a link into /usr/share/zoneinfo
         ## (Debian Etch and later replaced it with a copy.)
         ## macOS 10.13.0 is a link into /usr/share/zoneinfo.default/
-        ## macOS 10.13.1 is a link to something like
+        ## macOS 10.13.1 is on some machines a link to something like
         ##   /var/db/timezone/zoneinfo/Europe/London and hence
         ##   /private/var/db/timezone/tz/2017c.1.0/zoneinfo/
-        if ((nzchar(tzdir) && grepl(pat<- paste0("^", tzdir), lt)) ||
+        if ((nzchar(tzdir) && grepl(pat<- paste0("^", tzdir, "/"), lt)) ||
             grepl(pat <- "^/usr/share/zoneinfo.default/", lt))
             tz <- sub(pat, "", lt)
         ## all the locations listed for OlsonNames end in zoneinfo
