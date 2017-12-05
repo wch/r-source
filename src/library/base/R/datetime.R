@@ -52,7 +52,7 @@ Sys.timezone <- function(location = TRUE)
            dir.exists(tzdir <- "/usr/etc/zoneinfo")) {
         } else tzdir <- ""
     }
-    if(!nzchar(tzdir) && !dir.exists(tzdir)) tzdir <- ""
+    if(nzchar(tzdir) && !dir.exists(tzdir)) tzdir <- ""
 
     ## First try timedatectl: should work on any modern Linux
     ## as part of systemd (and probably nowhere else)
