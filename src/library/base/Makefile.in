@@ -17,7 +17,8 @@ pkg = base
 
 RSRC = `LC_COLLATE=C ls $(srcdir)/R/*.R $(srcdir)/R/$(R_OSTYPE)/*.R`
 
-R_EXE = $(top_builddir)/bin/R --vanilla --slave
+## avoid bootstrapping issue with internal tzcode.
+R_EXE = TZ=UTC $(top_builddir)/bin/R --vanilla --slave
 
 ## For people who do make -C ../src/library/base
 update:
