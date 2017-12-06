@@ -134,6 +134,11 @@ OlsonNames(tzdir = NULL)
   POSIX standard allows only one or two abbreviations per time zone, so
   you may see the current abbreviation(s) used for older times.
 
+  For some time zones abbeviations are like \samp{-03} and
+  \samp{+0845}: this is done when there is no official abbreviation.
+  (Negative values are behind (West of) UTC, as for the \code{"\%z"}
+  format for \code{\link{strftime}}.)
+
   The function \code{OlsonNames} returns the time-zone names known to
   the currently selected Olson/IANA database.  The system-specific
   location in the file system varies,
@@ -141,7 +146,7 @@ OlsonNames(tzdir = NULL)
   \file{/usr/share/lib/zoneinfo} (Solaris, AIX), \ldots.  It is likely
   that there is a file named something like \file{zone.tab} under that
   directory listing the locations known as time-zone names (but not for
-  example \code{EST5EDT}): this is read by \code{OlsonNames}.  See also
+  example \code{EST5EDT}).  See also
   \url{https://en.wikipedia.org/wiki/Zone.tab}.
 
   Where \R was configured with option \option{--with-internal-tzcode}
@@ -155,7 +160,7 @@ OlsonNames(tzdir = NULL)
   
   Time zones given by name (\emph{via} environemnt variable \env{TZ}, in
   \code{tz} arguments to functions such as \code{\link{as.POSIXlt}} and
-  perhaps the system time zone) are loaded from  the currently selected
+  perhaps the system time zone) are loaded from the currently selected
   \file{zoneinfo} database.
 #ifdef windows
 
