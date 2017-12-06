@@ -18,8 +18,6 @@
 
 ### Derived from multicore version 0.1-6 by Simon Urbanek
 
-mcaffinity <- function(affinity = NULL) .Call(C_mc_affinity, affinity)
-
 mcparallel <- function(expr, name, mc.set.seed = TRUE, silent = FALSE, mc.affinity = NULL, mc.interactive = FALSE, detached = FALSE)
 {
     f <- mcfork(detached)
@@ -30,9 +28,9 @@ mcparallel <- function(expr, name, mc.set.seed = TRUE, silent = FALSE, mc.affini
                                   class = "try-error")))
         if (isTRUE(mc.set.seed)) mc.set.stream()
         mc.interactive <- as.logical(mc.interactive)
-        if (isTRUE(mc.interactive)) .Call(C_mc_interactive, TRUE)
-        if (isTRUE(!mc.interactive)) .Call(C_mc_interactive, FALSE)
-        if (!is.null(mc.affinity)) .Call(C_mc_affinity, mc.affinity)
+        if (isTRUE(mc.interactive)) mcinteractive(TRUE)
+        if (isTRUE(!mc.interactive)) mcinteractive(FALSE)
+        if (!is.null(mc.affinity)) mcaffinity(mc.affinity)
         if (isTRUE(silent)) closeStdout(TRUE)
 	if (detached) {
 	    on.exit(mcexit(1L))
@@ -76,7 +74,7 @@ mccollect <- function(jobs, wait = TRUE, timeout = 0, intermediate = FALSE)
         names(res) <- pnames
         fin <- rep(FALSE, length(jobs))
         while (!all(fin)) {
-            s <- selectChildren(pids, 0.5)
+            s <- selectChildren(pids[!fin], -1)
             if (is.integer(s)) {
                 for (pid in s) {
                     r <- readChild(pid)
@@ -85,8 +83,11 @@ mccollect <- function(jobs, wait = TRUE, timeout = 0, intermediate = FALSE)
                         res[which(pid == pids)] <- list(unserialize(r))
                 }
                 if (is.function(intermediate)) intermediate(res)
-            } else if (all(is.na(match(pids, processID(children()))))) break
+            } else
+                ## should not happen
+                if (all(is.na(match(pids, processID(children()))))) break
         }
     }
+    cleanup(kill = FALSE, detach = FALSE) # compact children
     res
 }

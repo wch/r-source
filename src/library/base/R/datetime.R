@@ -18,53 +18,170 @@
 
 Sys.time <- function() .POSIXct(.Internal(Sys.time()))
 
+### Extensively rewritten for R 3.4.4
 ### There is no portable way to find the system timezone by location.
 ### For some ideas (not all accurate) see
 ### https://stackoverflow.com/questions/3118582/how-do-i-find-the-current-system-timezone
+
+### Will be called from C startup code for internal tzcode as Sys.timezone()
+### For bootstrapping, it must be simple if TZ is set.
 Sys.timezone <- function(location = TRUE)
 {
+    if(!location)
+        .Deprecated(msg = "Sys.timezone(location = FALSE) is defunct and ignored")
+
+    ## caching added in 3.5.0
+    if(!is.na(tz <- get0(".sys.timezone", baseenv(), mode = "character",
+                         inherits = FALSE, ifnotfound = NA_character_)))
+        return(tz)
+
+    cacheIt <- function(tz) assign(".sys.timezone", tz, baseenv())
+
     ## Many Unix set TZ, e.g. Solaris and AIX.
     ## For Solaris the system setting is a line in /etc/TIMEZONE
-    tz <- Sys.getenv("TZ", names = FALSE)
-    if(nzchar(tz))
-        tz
-    else if(location) {
-        if(.Platform$OS.type == "windows")
-            .Internal(tzone_name())
-        else { ## "unix" including macOS
-            lt <- normalizePath("/etc/localtime") # most Linux, macOS, ...
-            if (grepl(pat <- "^/usr/share/zoneinfo/", lt) ||
-                grepl(pat <- "^/usr/share/zoneinfo.default/", lt)) sub(pat, "", lt)
-            else if(grepl(pat <- ".*/zoneinfo/(.*)", lt))  sub(pat, "\\1", lt)
-            ## Debian-based Linuxen do not have /etc/localtime
-            else if (lt == "/etc/localtime" && file.exists("/etc/timezone") &&
-                     dir.exists("/usr/share/zoneinfo") &&
-                     { # Debian etc.
-                         info <- file.info(normalizePath("/etc/timezone"),
-                                           extra_cols = FALSE)
-                         (!info$isdir && info$size <= 200L)
-                     } && {
-                         tz1 <- tryCatch(readBin("/etc/timezone", "raw", 200L),
-                                         error = function(e) raw(0L))
-                         length(tz1) > 0L &&
-                             all(tz1 %in% as.raw(c(9:10, 13L, 32:126)))
-                     } && {
-                         tz2 <- gsub("^[[:space:]]+|[[:space:]]+$", "", rawToChar(tz1))
-                         tzp <- file.path("/usr/share/zoneinfo", tz2)
-                         file.exists(tzp) && !dir.exists(tzp) &&
-                             identical(file.size(normalizePath(tzp)),
-                                       file.size(lt))
-                     })
-                tz2
-            else
-                NA_character_
-        }
-    } else { # !location
-        st <- as.POSIXlt(Sys.time())
-        z <- attr(st, "tzone")
-        if(length(z) == 3L) z[2L + st$isdst]
-        else if(length(z)) z[1L] else NA_character_
+    tz <- Sys.getenv("TZ")
+    if(nzchar(tz)) return(tz)
+    if(.Platform$OS.type == "windows") return(.Internal(tzone_name()))
+
+    ## At least tzcode and glibc respect TZDIR.
+    ## musl does not mention it, just reads /etc/localtime (as from 1.1.13)
+    ## A search of /usr/share/zoneinfo, /share/zoneinfo, /etc/zoneinfo
+    ## is hardcoded.
+    ## Systems using --with-internal-tzcode will use the database at
+    ## file.path(R.home("share"), "zoneinfo"), but it is a reasonable
+    ## assumption that /etc/localtime is based on the system database.
+    tzdir <- Sys.getenv("TZDIR")
+    if(nzchar(tzdir) && !dir.exists(tzdir)) tzdir <- ""
+    if(!nzchar(tzdir)) { ## See comments in OlsonNames
+        if(dir.exists(tzdir <- "/usr/share/zoneinfo") ||
+           dir.exists(tzdir <- "/share/zoneinfo") ||
+           dir.exists(tzdir <- "/usr/share/lib/zoneinfo") ||
+           dir.exists(tzdir <- "/usrlib/zoneinfo") ||
+           dir.exists(tzdir <- "/usr/local/etc/zoneinfo") ||
+           dir.exists(tzdir <- "/etc/zoneinfo") ||
+           dir.exists(tzdir <- "/usr/etc/zoneinfo")) {
+        } else tzdir <- ""
     }
+
+    ## First try timedatectl: should work on any modern Linux
+    ## as part of systemd (and probably nowhere else)
+    if (nzchar(Sys.which("timedatectl"))) {
+        inf <- system("timedatectl", intern = TRUE)
+        ## typical format:
+        ## "       Time zone: Europe/London (GMT, +0000)"
+        ## "       Time zone: Europe/Vienna (CET, +0100)"
+        lines <- grep("Time zone: ", inf)
+        if (length(lines)) {
+            tz <- sub(" .*", "", sub(" *Time zone: ", "", inf[lines[1L]]))
+            ## quick sanity check
+            if(nzchar(tzdir)) {
+                if(file.exists(file.path(tzdir, tz))) {
+                    cacheIt(tz)
+                    return(tz)
+                } else
+                    warning(sprintf("%s indicates the non-existent timezone name %s",
+                                    sQuote("timedatectl"), sQuote(tz)),
+                            call. = FALSE, immediate. = TRUE, domain = NA)
+            } else {
+                cacheIt(tz)
+                return(tz)
+            }
+        }
+    }
+
+    ## Debian/Ubuntu Linux do things differently, so try that next.
+    ## Derived loosely from PR#17186
+    ## As the Java sources say
+    ##
+    ## 'There's no spec of the file format available. This parsing
+    ## assumes that there's one line of an Olson tzid followed by a
+    ## '\n', no leading or trailing spaces, no comments.'
+    ##
+    ## but we do trim whitespace and do a sanity check (Java does not)
+    if (grepl("linux", R.Version()$platform, ignore.case = TRUE) &&
+        file.exists("/etc/timezone")) {
+        tz0 <- try(readLines("/etc/timezone"))
+        if(!inherits(tz0, "try-error") && length(tz0) == 1L) {
+            tz <- trimws(tz0)
+            ## quick sanity check
+            if(nzchar(tzdir)) {
+                if(file.exists(file.path(tzdir, tz))) {
+                    cacheIt(tz)
+                    return(tz)
+                } else
+                    warning(sprintf("%s indicates the non-existent timezone name %s",
+                                    sQuote("/etc/timezone"), sQuote(tz)),
+                            call. = FALSE, immediate. = TRUE, domain = NA)
+            } else {
+                cacheIt(tz)
+                return(tz)
+            }
+        }
+    }
+
+    ## non-Debian Linux (if not covered above), macOS, *BSD, ...
+    ## According to the glibc's (at least 2.26)
+    ##   manual/time.texi, it can be configured to use
+    ##   /etc/localtime or /usr/local/etc/localtime
+    ## This should be a symlink,
+    ##   but people including Debian have copied files instead.
+    ## 'man 5 localtime' says (even on Debian)
+    ##  'Because the timezone identifier is extracted from the symlink
+    ##   target name of /etc/localtime, this file may not be a normal
+    ##   file or hardlink.'
+    ## tzcode mentions /usr/local/etc/zoneinfo/localtime
+    ##  as the 'local time zone file' (not seen in the wild)
+    if ((file.exists(lt0 <- "/etc/localtime") ||
+         file.exists(lt0 <- "/usr/local/etc/localtime") ||
+         file.exists(lt0 <- "/usr/local/etc/zoneinfo/localtime")) &&
+        !is.na(lt <- Sys.readlink(lt0)) && nzchar(lt)) { # so it is a symlink
+        tz <- NA_character_
+        ## glibc and macOS < 10.13 this is a link into /usr/share/zoneinfo
+        ## (Debian Etch and later replaced it with a copy.)
+        ## macOS 10.13.0 is a link into /usr/share/zoneinfo.default
+        ## macOS 10.13.1 is a link into /var/db/timezone/zoneinfo
+        if ((nzchar(tzdir) && grepl(pat <- paste0("^", tzdir, "/"), lt)) ||
+            grepl(pat <- "^/usr/share/zoneinfo.default/", lt))
+            tz <- sub(pat, "", lt)
+        ## all the locations listed for OlsonNames end in zoneinfo
+        else if(grepl(pat <- ".*/zoneinfo/(.*)", lt))
+            tz <- sub(pat, "\\1", lt)
+        if(!is.na(tz)) {
+            cacheIt(tz)
+            return(tz)
+        } else
+            message("unable to deduce timezone name from ", sQuote(lt))
+    }
+
+    ## Added in 3.5.0
+    ## Last-gasp (slow, several seconds) fallback: compare a
+    ## non-link lt0 to all the files under tzdir (as Java does).
+    ## This may match more than one tz file: we don't care which.
+    if (nzchar(tzdir) && # we already found lt0
+         (is.na(lt <- Sys.readlink(lt0)) || !nzchar(lt))) {
+        warning(sprintf("Your system is mis-configured: %s is not a symlink",
+                        sQuote(lt0)),
+                call. = FALSE, immediate. = TRUE, domain = NA)
+        if(nzchar(Sys.which("cmp"))) {
+            known <- dir(tzdir, recursive = TRUE)
+            for(tz in known) {
+                status <- system2("cmp", c("-s", lt0, file.path(tzdir, tz)))
+                if (status == 0L) {
+                    cacheIt(tz)
+                    warning(sprintf("It is strongly recommended to set envionment variable TZ to %s (or equivalent)",
+                                    sQuote(tz)),
+                            call. = FALSE, immediate. = TRUE, domain = NA)
+                    return(tz)
+                }
+            }
+            warning(sprintf("%s is not identical to any known timezone file",
+                            sQuote(lt0)),
+                    call. = FALSE, immediate. = TRUE, domain = NA)
+        }
+    }
+
+    ## all heuristics have failed, so give up
+    NA_character_
 }
 
 as.POSIXlt <- function(x, tz = "", ...) UseMethod("as.POSIXlt")
@@ -396,7 +513,6 @@ Summary.POSIXlt <- function (..., na.rm)
 function(x, ..., drop = TRUE)
 {
     cl <- oldClass(x)
-    ## class(x) <- NULL
     val <- NextMethod("[")
     class(val) <- cl
     attr(val, "tzone") <- attr(x, "tzone")
@@ -407,7 +523,6 @@ function(x, ..., drop = TRUE)
 function(x, ..., drop = TRUE)
 {
     cl <- oldClass(x)
-    ## class(x) <- NULL
     val <- NextMethod("[[")
     class(val) <- cl
     attr(val, "tzone") <- attr(x, "tzone")
@@ -420,7 +535,6 @@ function(x, ..., value) {
     value <- unclass(as.POSIXct(value))
     cl <- oldClass(x)
     tz <- attr(x, "tzone")
-    class(x) <- NULL
     x <- NextMethod(.Generic)
     class(x) <- cl
     attr(x, "tzone") <- tz
@@ -579,7 +693,6 @@ print.difftime <- function(x, digits = getOption("digits"), ...)
 `[.difftime` <- function(x, ..., drop = TRUE)
 {
     cl <- oldClass(x)
-    class(x) <- NULL
     val <- NextMethod("[")
     class(val) <- cl
     attr(val, "units") <- attr(x, "units")
@@ -1088,31 +1201,45 @@ function(x, value)
 
 ## 3.1.0
 
-OlsonNames <- function()
+OlsonNames <- function(tzdir = NULL)
 {
-    if(.Platform$OS.type == "windows")
-        tzdir <- Sys.getenv("TZDIR", file.path(R.home("share"), "zoneinfo"))
-    else {
-        ## Try known locations in turn.
-        ## The list is not exhaustive (mac OS 10.13's real location is
-        ## /usr/share/zoneinfo.default) and there is a risk that
-        ## the wrong one is found.
-        tzdirs <- c(Sys.getenv("TZDIR"),
-                    file.path(R.home("share"), "zoneinfo"),
-                    "/usr/share/zoneinfo", # Linux, macOS, FreeBSD
-                    "/usr/share/lib/zoneinfo", # Solaris, AIX
-                    "/usr/lib/zoneinfo",   # early glibc
-                    "/usr/local/etc/zoneinfo", # tzcode default
-                    "/etc/zoneinfo", "/usr/etc/zoneinfo")
-        tzdirs <- tzdirs[file.exists(tzdirs)]
-        if (!length(tzdirs)) {
-            warning("no Olson database found")
-            return(character())
-        } else tzdir <- tzdirs[1L]
-    }
+    if (is.null(tzdir)) {
+        if(.Platform$OS.type == "windows")
+            tzdir <- Sys.getenv("TZDIR", file.path(R.home("share"), "zoneinfo"))
+        else {
+            ## Try known locations in turn.
+            ## The list is not exhaustive (mac OS 10.13's
+            ## /usr/share/zoneinfo is a symlink) and there is a risk that
+            ## the wrong one is found.
+            ## We assume that if the second exists that the system was
+        ## configured with --with-internal-tzcode
+            tzdirs <- c(Sys.getenv("TZDIR"), # defaults to ""
+                        file.path(R.home("share"), "zoneinfo"),
+                        "/usr/share/zoneinfo", # Linux, macOS, FreeBSD
+                        "/share/zoneinfo", # in musl's search
+                        "/usr/share/lib/zoneinfo", # Solaris, AIX
+                        "/usr/lib/zoneinfo",   # early glibc
+                        "/usr/local/etc/zoneinfo", # tzcode default
+                        "/etc/zoneinfo", "/usr/etc/zoneinfo")
+            tzdirs <- tzdirs[file.exists(tzdirs)]
+            if (!length(tzdirs)) {
+                warning("no Olson database found")
+                return(character())
+            } else tzdir <- tzdirs[1L]
+        }
+    } else if(!dir.exists(tzdir))
+        stop(sprintf("%s is not a directory", sQuote(tzdir)), domain = NA)
+
     x <- list.files(tzdir, recursive = TRUE)
     ## some databases have VERSION, some +VERSION, some neither
+    ver <- if(file.exists(vf <- file.path(tzdir, "VERSION")))
+        readLines(vf, warn = FALSE)
+    else if(file.exists(vf <- file.path(tzdir, "+VERSION")))
+        readLines(vf, warn = FALSE)
+    ## else NULL
     x <- setdiff(x, "VERSION")
     ## all other auxiliary files are l/case.
-    grep("^[ABCDEFGHIJKLMNOPQRSTUVWXYZ]", x, value = TRUE)
+    ans <- grep("^[ABCDEFGHIJKLMNOPQRSTUVWXYZ]", x, value = TRUE)
+    if(!is.null(ver)) attr(ans, "Version") <- ver
+    ans
 }

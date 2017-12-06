@@ -141,8 +141,8 @@ as.data.frame <- function(x, row.names = NULL, optional = FALSE, ...)
 }
 
 as.data.frame.default <- function(x, ...)
-    stop(gettextf("cannot coerce class \"%s\" to a data.frame",
-                  deparse(class(x))),
+    stop(gettextf("cannot coerce class %s to a data.frame",
+                  sQuote(deparse(class(x))[1L])),
          domain = NA)
 
 ###  Here are methods ensuring that the arguments to "data.frame"
@@ -1254,7 +1254,7 @@ rbind.data.frame <- function(..., deparse.level = 1, make.row.names = TRUE,
 	{
 	    if(nzchar(nmi)) {
 		if(autoRnms) autoRnms <<- FALSE
-		if(ni == 0L) character()  # PR8506
+		if(ni == 0L) character()  # PR#8506
 		else if(ni > 1L) paste(nmi, ri, sep = ".")
 		else nmi
 	    }
@@ -1449,24 +1449,22 @@ as.matrix.data.frame <- function (x, rownames.force = NA, ...)
 {
     dm <- dim(x)
     rn <- if(rownames.force %in% FALSE) NULL
-	  else if(rownames.force %in% TRUE) row.names(x)
-	  else if(.row_names_info(x) <= 0L) NULL
-	  else row.names(x)
+	  else if(rownames.force %in% TRUE || .row_names_info(x) > 0L)
+              row.names(x) # else NULL
     dn <- list(rn, names(x))
     if(any(dm == 0L))
 	return(array(NA, dim = dm, dimnames = dn))
     p <- dm[2L]
     pseq <- seq_len(p)
     n <- dm[1L]
-    X <- x # will contain the result;
+    X <- unclass(x) # will contain the result;
     ## the "big question" is if we return a numeric or a character matrix
-    class(X) <- NULL
     non.numeric <- non.atomic <- FALSE
     all.logical <- TRUE
     for (j in pseq) {
-        if(inherits(X[[j]], "data.frame") && ncol(xj) > 1L)
-            X[[j]] <- as.matrix(X[[j]])
-        xj <- X[[j]]
+	xj <- X[[j]]
+	if(inherits(xj, "data.frame"))# && ncol(xj) > 1L)
+	    X[[j]] <- xj <- as.matrix(xj)
         j.logic <- is.logical(xj)
         if(all.logical && !j.logic) all.logical <- FALSE
 	if(length(levels(xj)) > 0L || !(j.logic || is.numeric(xj) || is.complex(xj))
@@ -1498,22 +1496,21 @@ as.matrix.data.frame <- function (x, rownames.force = NA, ...)
     ## These coercions could have changed the number of columns
     ## (e.g. class "Surv" coerced to character),
     ## so only now can we compute collabs.
-    collabs <- as.list(dn[[2L]])
+    if(p) collabs <- as.list(dn[[2L]])
     for (j in pseq) {
         xj <- X[[j]]
         dj <- dim(xj)
-	if(length(dj) == 2L && dj[2L] > 1L) { # matrix with >=2 col
-	    dnj <- colnames(xj)
-	    collabs[[j]] <- paste(collabs[[j]],
-				  if(length(dnj)) dnj else seq_len(dj[2L]),
-				  sep = ".")
+	if(length(dj) == 2L && dj[2L] > 0L) { # matrix with > 0 col
+	    if(!length(dnj <- colnames(xj))) dnj <- seq_len(dj[2L])
+	    collabs[[j]] <-
+		if(length(collabs) && dj[2L] > 1L)
+		    paste(collabs[[j]], dnj, sep = ".")
+		else dnj
 	}
-     }
+    }
     X <- unlist(X, recursive = FALSE, use.names = FALSE)
     dim(X) <- c(n, length(X)/n)
     dimnames(X) <- list(dn[[1L]], unlist(collabs, use.names = FALSE))
-    ##NO! don't copy buggy S-plus!  either all matrices have class or none!!
-    ##NO class(X) <- "matrix"
     X
 }
 

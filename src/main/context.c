@@ -287,6 +287,7 @@ void begincontext(RCNTXT * cptr, int flags,
 
 void endcontext(RCNTXT * cptr)
 {
+    void R_FixupExitingHandlerResult(SEXP); /* defined in error.x */
     R_HandlerStack = cptr->handlerstack;
     R_RestartStack = cptr->restartstack;
     RCNTXT *jumptarget = cptr->jumptarget;
@@ -300,6 +301,7 @@ void endcontext(RCNTXT * cptr)
 	cptr->jumptarget = NULL; /* in case on.exit expr calls return() */
 	PROTECT(saveretval);
 	PROTECT(s);
+	R_FixupExitingHandlerResult(saveretval);
 	for (; s != R_NilValue; s = CDR(s)) {
 	    cptr->conexit = CDR(s);
 	    eval(CAR(s), cptr->cloenv);

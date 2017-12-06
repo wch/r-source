@@ -426,7 +426,7 @@ INLINE_FUN void SET_RAW_ELT(SEXP x, R_xlen_t i, int v)
 {
     CHECK_VECTOR_LGL_ELT(x, i);
     if (ALTREP(x)) ALTLOGICAL_SET_ELT(x, i, v);
-    else RAW0(x)[i] = v;
+    else RAW0(x)[i] = (Rbyte) v;
 }
 
 #if !defined(COMPILING_R) && !defined(COMPILING_MEMORY_C) &&	\

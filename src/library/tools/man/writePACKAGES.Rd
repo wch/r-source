@@ -49,8 +49,8 @@ write_PACKAGES(dir = ".", fields = NULL,
   \item{unpacked}{a logical indicating whether the package contents are
     available in unpacked form or not (default).}
   \item{subdirs}{either logical (to indicate if subdirectories should be
-    included, recursively) or a character vector of name of subdirectories
-    to include.}
+    included, recursively) or a character vector of names of subdirectories
+    to include (which are not recursed).}
   \item{latestOnly}{logical: if multiple versions of a package are
     available should only the latest version be included?}
   \item{addFiles}{logical: should the filenames be included as field

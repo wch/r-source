@@ -321,7 +321,7 @@ setRlibs <-
         if (!is.null(Log) && Log$con > 0L) cat(td2, file = Log$con)
     }
 
-    parse_description_field <- function(desc, field, default=TRUE)
+    parse_description_field <- function(desc, field, default)
         str_parse_logic(desc[field], default=default)
 
     check_pkg <- function(pkg, pkgname, pkgoutdir, startdir, libdir, desc,
@@ -2730,7 +2730,10 @@ setRlibs <-
                 Rcmd <- sprintf("suppressPackageStartupMessages(loadNamespace('%s', lib.loc = '%s'))",
                                 pkgname, libdir)
                 opts <- if(nzchar(arch)) R_opts4 else R_opts2
-                env <- paste0("_R_LOAD_CHECK_OVERWRITE_S3_METHODS_=", pkgname)
+                env <- Sys.getenv("_R_LOAD_CHECK_OVERWRITE_S3_METHODS_",
+                                  "NA")
+                env <- paste0("_R_LOAD_CHECK_OVERWRITE_S3_METHODS_=",
+                              if(env == "all") env else pkgname)
                 out <- R_runR0(Rcmd, opts, env, arch = arch)
                 if (any(grepl("^Registered S3 method.*overwritten", out))) {
                     out <- filtergrep("^<environment: namespace:", out)
@@ -2812,7 +2815,6 @@ setRlibs <-
             }
             bad_lines <- grep("^Warning.*screen devices should not be used in examples",
                               lines, useBytes = TRUE, value = TRUE)
-
             if(length(bad_lines)) {
                 if(!bad) {
                     warningLog(Log,
@@ -2834,6 +2836,26 @@ setRlibs <-
                 printLog0(Log, .format_lines_with_indent(bad_lines), "\n")
                 wrapLog("Note that CRAN packages must never use more than two",
                         "cores simultaneously during their checks.")
+            }
+            bad_lines <- grep("^Warning: working directory was changed to",
+                              lines, useBytes = TRUE, value = TRUE)
+            if(length(bad_lines)) {
+                if(!bad) {
+                    warningLog(Log,
+                               "Found the following significant warnings:")
+                    bad <- TRUE
+                }
+                printLog0(Log, .format_lines_with_indent(bad_lines), "\n")
+            }
+            bad_lines <- grep("^Warning: items .* were removed from the search path",
+                              lines, useBytes = TRUE, value = TRUE)
+            if(length(bad_lines)) {
+                if(!bad) {
+                    warningLog(Log,
+                               "Found the following significant warnings:")
+                    bad <- TRUE
+                }
+                printLog0(Log, .format_lines_with_indent(bad_lines), "\n")
             }
             any <- any || bad
 

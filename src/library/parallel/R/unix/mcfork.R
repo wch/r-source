@@ -1,7 +1,7 @@
 #  File src/library/parallel/R/unix/mcfork.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -24,8 +24,9 @@
 
 ## registered as finalizer in .onLoad() to kill all child processes
 clean_pids <- function(e)
-    if(length(pids <- sapply(children(), function(o) o$pid))) tools::pskill(pids, tools::SIGKILL)
+    cleanup(kill = tools::SIGKILL, detach = TRUE, shutdown = TRUE)
 
+## used in mclapply, mcparallel, newWorkNode
 mcfork <- function(estranged = FALSE) {
     r <- .Call(C_mc_fork, estranged)
 
@@ -56,13 +57,16 @@ selectChildren <- function(children = NULL, timeout = 0)
     if (!length(children)) children <- integer()
     if (inherits(children, "process")) children <- processID(children)
     if (is.list(children))
-        children <- unlist(lapply(children, function(x) if (inherits(x, "process")) x$pid
-        else stop("'children' must be a list of processes or a single process")))
+        children <- unlist(lapply(children, function(x)
+	    if (inherits(x, "process")) processID(x)
+            else stop("'children' must be a list of processes or a single process")
+        ))
     if (!is.numeric(children))
         stop("'children' must be a list of processes or a single process")
     .Call(C_mc_select_children, as.double(timeout), as.integer(children))
 }
 
+## not used
 rmChild <- function(child)
 {
     if (inherits(child, "process")) child <- processID(child)
@@ -70,7 +74,7 @@ rmChild <- function(child)
     .Call(C_mc_rm_child, as.integer(child))
 }
 
-## used in pvec, mclapply
+## not used
 mckill <- function(process, signal = 2L)
 {
     process <- processID(process)
@@ -87,6 +91,7 @@ sendMaster <- function(what)
     .Call(C_mc_send_master, what)
 }
 
+## used widely, not exported
 processID <- function(process) {
     if (inherits(process, "process")) process$pid
     else if (is.list(process)) unlist(lapply(process, processID))
@@ -94,7 +99,7 @@ processID <- function(process) {
               domain = NA)
 }
 
-# unused in the package
+# not used
 sendChildStdin <- function(child, what)
 {
     if (inherits(child, "process") || is.list(child)) child <- processID(child)
@@ -107,7 +112,7 @@ sendChildStdin <- function(child, what)
                             .Call(C_mc_send_child_stdin, p, what))))
 }
 
-## used by mcparallel, mclapply
+## used by mcparallel, mclapply, newForkNode
 mcexit <- function(exit.code = 0L, send = NULL)
 {
     if (!is.null(send)) try(sendMaster(send), silent = TRUE)
@@ -124,17 +129,26 @@ children <- function(select)
            structure(list(pid = x), class = c("childProcess", "process")))
 }
 
+## not used
 childrenDescriptors <- function(index = 0L)
     .Call(C_mc_fds, as.integer(index))
 
+## not used
 masterDescriptor <- function() .Call(C_mc_master_fd)
 
+## used by mclapply
 isChild <- function() .Call(C_mc_is_child)
 
+## used by mccollect, mclapply
 closeStdout <- function(to.null=FALSE) .Call(C_mc_close_stdout, to.null)
+
+## not used
 closeStderr <- function(to.null=FALSE) .Call(C_mc_close_stderr, to.null)
+
+## not used
 closeFD <- function(fds) .Call(C_mc_close_fds, as.integer(fds))
 
+## not used
 closeAll <- function(includeStd = FALSE)
 {
     if (!isChild()) {
@@ -148,3 +162,16 @@ closeAll <- function(includeStd = FALSE)
     ## close all but those that we actually use
     closeFD((1:mf)[-fds])
 }
+
+# used by mcparallel, mclapply, mcmapply
+mcaffinity <- function(affinity = NULL) .Call(C_mc_affinity, affinity)
+
+# used by mcparallel
+mcinteractive <- function(interactive) .Call(C_mc_interactive, interactive)
+
+# used by mclapply, pvec
+prepareCleanup <- function() .Call(C_mc_prepare_cleanup)
+
+# used by mclapply, pvec, mccollect
+cleanup <- function(kill = TRUE, detach = TRUE, shutdown = FALSE)
+    .Call(C_mc_cleanup, kill, detach, shutdown)

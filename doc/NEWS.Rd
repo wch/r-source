@@ -119,21 +119,26 @@
       \item \code{approx()}, \code{spline()}, \code{splinefun()} and
       \code{approxfun()} also work for long vectors.
 
+      %% one item with several paragraphs
       \item \code{deparse()} (and \code{dump()}) are more useful for S4
-      objects; \code{dput()} now using the same internal C code (instead
-      of its previous imperfect workaround R code).
+      objects; \code{dput()} now using the same internal C code instead
+      of its previous imperfect workaround R code.
 
-      \code{dput()}, \emph{etc} now print the \code{names()} information
-      only once, using the more readable \code{(tag = value)} syntax,
-      notably for \code{list()}s, i.e., including data frames.
+      \code{dput()}, \code{deparse()} and \code{dump()} now print the
+      \code{names()} information only once, using the more readable
+      \code{(tag = value)} syntax, notably for \code{list()}s, i.e.,
+      including data frames.
 
       These functions gain a new control option \code{"niceNames"} (see
       \code{.deparseOpts()}), which when set (as by default) also uses
       the \code{(tag = value)} syntax for atomic vectors.  OTOH, without
       deparse options \code{"showAttributes"} and \code{"niceNames"},
       names are no longer shown also for lists.
+      \code{as.character(list(  c (one = 1)))} now shows the name as
+      \code{as.character(list(list(one = 1)))} has always done.
 
       \code{m:n} now also deparses nicely when \eqn{m > n}.
+
 
       \item If the option \code{setWidthOnResize} is set and \code{TRUE},
       \R run in a terminal using a recent \code{readline} library will
@@ -188,8 +193,14 @@
       e.g.\sspace{}\emph{via} \code{dyn.load()} has been increased up to 614
       when the OS limit on the number of open files allows.
 
-      \item \code{Sys.timezone()} is slightly less platform-dependent,
-      notably for \code{location = FALSE}.
+      \item \code{Sys.timezone()} tries even more heuristics on
+      Unix-alikes.  As some of these ways are slow, the value is cached
+      at first use in a session.  For the slowest method, a warning is
+      given recommending that \env{TZ} is set to avoid the search.
+
+      The same ways are now used to find the system timezone to pass the
+      code used when \R is configured with
+      \option{--with-internal-tzcode}.
 
       \item When \code{tar()} is used with an external command which is
       detected to be GNU \command{tar} or libarchive \command{tar} (aka
@@ -220,6 +231,11 @@
       \item New function \code{getDefaultCluster()} in package
       \pkg{parallel} to get the default cluster set via
       \code{setDefaultCluster()}.
+
+      \item \code{str(x)} for atomic objects \code{x} now treats both
+      cases of \code{is.vector(x)} similarly, and hence much less prints
+      \code{"atomic"}.   This is a slight non-back compatible change
+      producing typically both more informative and shorter output.
     }
   }
 
@@ -260,6 +276,13 @@
       \item The object header layout has been changed to support merging
       the \code{ALTREP} branch. This requires re-installing packages
       that use compiled code.
+    }
+  }
+
+  \subsection{DEPRECATED AND DEFUNCT}{
+    \itemize{
+      \item \code{Sys.timezone(location = FALSE)} is defunct, and is
+      ignored (with a warning).
     }
   }
 
@@ -397,11 +420,43 @@
       values other than FALSE and NA to TRUE (as documented).
 
       \item Subassignment with zero length vectors now coerces as
-      documented.  (\PR{17344})
+      documented (\PR{17344}).\cr
+      Further, \code{x <- numeric(); x[1] <- character()} now signals
+      an error \sQuote{\verb{replacement has length zero}} (or a
+      translation of that) instead of doing nothing.
+
+      \item \code{mclapply}, \code{pvec} and \code{mcparallel} (when
+      \code{mccollect} is used to collect results) no longer leave zombie
+      processes behind.
+
+      \item \code{R CMD INSTALL <pkg>} now produces the intended error
+      message when, e.g., the \code{LazyData} field is invalid.
+
+      \item \code{as.matrix(dd)} now works when the data frame \code{dd}
+      contains a data frame as column.
     }
   }
 }
 
+\section{\Rlogo CHANGES IN R 3.4.3 patched}{
+
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item \code{Sys.timezone()} tries more heuristics on Unix-alikes and so
+      is more likely to succeed (especially on Linux).
+    }
+  }
+
+
+  \subsection{DEPRECATED AND DEFUNCT}{
+    \itemize{
+      \item \code{Sys.timezone(location = FALSE)} (which was a stop-gap
+      measure for Windows long ago) is deprecated.  It no longer returns
+      the value of environment variable \env{TZ} (a location).
+    }
+  }
+  
+}
 
 \section{\Rlogo CHANGES IN R 3.4.3}{
 

@@ -3070,3 +3070,6 @@ setNames(as.raw(1:3), c("a", "bbbb", "c"))
 ## was quite ugly for R <= 3.4.2
 
 
+## str(x) when is.vector(x) is false :
+str(structure(c(a = 1, b = 2:7), color = "blue"))
+## did print " atomic [1:7] ..." in R <= 3.4.x

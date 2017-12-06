@@ -271,18 +271,20 @@ static SEXP deparse1WithCutoff(SEXP call, Rboolean abbrev, int cutoff,
     return svec;
 }
 
-/* deparse1line concatenates all lines into one long one */
-/* This is needed in terms.formula, where we must be able */
-/* to deparse a term label into a single line of text so */
-/* that it can be reparsed correctly */
-SEXP deparse1line(SEXP call, Rboolean abbrev)
+/* deparse1line(), e.g. for non-trivial list entries in as.character(<list>).
+ * --------------
+ * Concatenates all lines into one long one.
+ * This is needed in terms.formula, where we must be able
+ * to deparse a term label into a single line of text so
+ * that it can be reparsed correctly */
+SEXP deparse1line_(SEXP call, Rboolean abbrev, int opts)
 {
     SEXP temp;
     Rboolean backtick=TRUE;
     int lines;
 
-    PROTECT(temp = deparse1WithCutoff(call, abbrev, MAX_Cutoff, backtick,
-			     SIMPLEDEPARSE, -1));
+    PROTECT(temp =
+	    deparse1WithCutoff(call, abbrev, MAX_Cutoff, backtick, opts, -1));
     if ((lines = length(temp)) > 1) {
 	char *buf;
 	int i;
@@ -310,6 +312,12 @@ SEXP deparse1line(SEXP call, Rboolean abbrev)
     UNPROTECT(1);
     return(temp);
 }
+
+SEXP deparse1line(SEXP call, Rboolean abbrev)
+{
+    return deparse1line_(call, abbrev, SIMPLEDEPARSE);
+}
+
 
 // called only from ./errors.c  for calls in warnings and errors :
 SEXP attribute_hidden deparse1s(SEXP call)

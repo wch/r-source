@@ -1511,13 +1511,40 @@ static SEXP mkHandlerEntry(SEXP klass, SEXP parentenv, SEXP handler, SEXP rho,
 #define ENTRY_TARGET_ENVIR(e) VECTOR_ELT(e, 3)
 #define ENTRY_RETURN_RESULT(e) VECTOR_ELT(e, 4)
 
-#define RESULT_SIZE 3
+#define RESULT_SIZE 4
+
+static SEXP R_HandlerResultToken = NULL;
+
+void attribute_hidden R_FixupExitingHandlerResult(SEXP result)
+{
+    /* The internal error hadling mechanism stores the error message
+       in 'errbuf'.  If an on.exit() action is processed while jumping
+       to an exiting handler for such an error, then endcontext()
+       calls R_FixupExitingHandlerResult to save the error message in
+       currently in the buffer before processing the on.exit
+       action. This is in case an error occurs in the on.exit action
+       that over-writes the buffer. The allocation should occur in a
+       more favorable stack context than before the jump. The
+       R_HandlerResultToken is used to make sure the result being
+       modified is associated with jumping to an exiting handler. */
+    if (result != NULL &&
+	TYPEOF(result) == VECSXP &&
+	XLENGTH(result) == RESULT_SIZE &&
+	VECTOR_ELT(result, RESULT_SIZE - 1) == R_HandlerResultToken) {
+	SET_VECTOR_ELT(result, 0, mkString(errbuf));
+    }
+}
 
 SEXP attribute_hidden do_addCondHands(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP classes, handlers, parentenv, target, oldstack, newstack, result;
     int calling, i, n;
     PROTECT_INDEX osi;
+
+    if (R_HandlerResultToken == NULL) {
+	R_HandlerResultToken = allocVector(VECSXP, 1);
+	R_PreserveObject(R_HandlerResultToken);
+    }
 
     checkArity(op, args);
 
@@ -1538,6 +1565,7 @@ SEXP attribute_hidden do_addCondHands(SEXP call, SEXP op, SEXP args, SEXP rho)
     oldstack = R_HandlerStack;
 
     PROTECT(result = allocVector(VECSXP, RESULT_SIZE));
+    SET_VECTOR_ELT(result, RESULT_SIZE - 1, R_HandlerResultToken);
     PROTECT_WITH_INDEX(newstack = oldstack, &osi);
 
     for (i = n - 1; i >= 0; i--) {

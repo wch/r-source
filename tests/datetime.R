@@ -35,11 +35,3 @@ as.POSIXlt(ISOdate(2071,1,13,0,1,tz="Etc/GMT-1"))$wday
 ## Incorrect use of %d should work even though abbreviation does match
 old <- Sys.setlocale("LC_TIME", "C") # to be sure
 stopifnot(!is.na(strptime("11-August-1903", "%d-%b-%Y")))
-
-
-## PR#17186 - Sys.timezone() on some Debian-derived platforms
-(S.t <- Sys.timezone())
-## NB: This will fail on non-standard platforms, or even standard new OSes.
-## --  We are strict here, in order to *learn* about those and possibly work around:
-if(is.na(S.t) || !nzchar(S.t)) stop("could not get timezone")
-## has been NA_character_  in Ubuntu 14.04.5 LTS

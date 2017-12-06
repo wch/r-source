@@ -626,7 +626,7 @@ void ALTCOMPLEX_SET_ELT(SEXP x, R_xlen_t i, Rcomplex v)
 
 void ALTRAW_SET_ELT(SEXP x, R_xlen_t i, int v)
 {
-    RAW(x)[i] = v; /* dispatch here */
+    RAW(x)[i] = (Rbyte) v; /* dispatch here */
 }
 
 

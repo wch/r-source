@@ -1030,50 +1030,25 @@ SEXP attribute_hidden do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 const char *getTZinfo(void)
 {
     static char def_tz[PATH_MAX+1] = "";
-    const char *p = getenv("TZ");
-    if(p) {
-	if(!def_tz[0]) {
-	    strncpy(def_tz, p, PATH_MAX); 
-	    def_tz[PATH_MAX] = '\0';
-	}
-	return p;
-    }
+    if (def_tz[0]) return def_tz;
 
-    if(def_tz[0]) return def_tz;
-
-#ifdef HAVE_REALPATH
-    // This works on most Linuxen, macOS and *BSD: other known OSes set TZ.
-    char abspath[PATH_MAX + 1];
-    const char* lt = realpath("/etc/localtime", abspath);
-# ifdef __APPLE__
-    // macOS <= 10.12 expands to /usr/share/zoneinfo/<zone name>
-    // macOS 10.13 expands to /usr/share/zoneinfo.default/<zone name>
-    // but 10.13.1 expands to /private/var/db/timezone/tz/2017c.1.0/zoneinfo/<zone name>
-    if(lt) {
-	if(strstr(abspath, ".default/"))
-	    strncpy(def_tz, abspath + 28, PATH_MAX);
-	else {
-	    // So guess is of the form .../zoneinfo/<real tz>
-	    p = strstr(abspath, "/zoneinfo/");
-	    if(p) {
-		strncpy(def_tz, p + 10, PATH_MAX);
-	    } else {
-		warning("system timezone name is unknown: set environment variable TZ");
-		return "unknown";
-	    }
+    // call Sys.timezone()
+    SEXP expr = PROTECT(install("Sys.timezone"));
+    SEXP call = PROTECT(lang1(expr));
+    SEXP ans = PROTECT(eval(call, R_GlobalEnv));
+    if(TYPEOF(ans) == STRSXP && LENGTH(ans) == 1) {
+	SEXP el = STRING_ELT(ans, 0);
+	if (el != NA_STRING) {
+	    strcpy(def_tz, CHAR(el));
+	    // printf("tz is %s\n", CHAR(el));
+	    UNPROTECT(3);
+	    return def_tz;
 	}
-	// printf("abspath = %s\n", abspath); printf("def_tz = %s\n", def_tz);
-	return def_tz;
     }
-# else
-    if(lt) { // Debian-based Linuxen do not have this: see datetime.R
-	strncpy(def_tz, abspath + 20, PATH_MAX); // strip "/usr/share/zoneinfo/"
-	return def_tz;
-    }
-# endif
-#endif
+    UNPROTECT(3);
     warning("system timezone name is unknown: set environment variable TZ");
-    return "unknown";
+    strcpy(def_tz, "unknown");
+    return def_tz;
 }
 #endif
 

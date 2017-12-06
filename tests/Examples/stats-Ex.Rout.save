@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2017-11-16 r73734) -- "Unsuffered Consequences"
+R Under development (unstable) (2017-12-02 r73817) -- "Unsuffered Consequences"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -23,6 +23,7 @@ Type 'q()' to quit R.
 > library('stats')
 > 
 > base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
 > cleanEx()
 > nameEx("AIC")
 > ### * AIC
@@ -3826,7 +3827,7 @@ sigma^2 estimated as 0.4566:  log likelihood = -101.2,  aic = 212.4
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x6445140>
+<environment: 0x55c23fac03d8>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -4824,7 +4825,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x6233080>
+<bytecode: 0x55c2429039b8>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -5803,12 +5804,12 @@ NULL
 > str(d3[2][[1]]) ## or the full
 List of 2
  $ :List of 2
-  ..$ : atomic [1:1] 13
+  ..$ : int 13
   .. ..- attr(*, "label")= chr "Illinois"
   .. ..- attr(*, "members")= int 1
   .. ..- attr(*, "height")= num 0
   .. ..- attr(*, "leaf")= logi TRUE
-  ..$ : atomic [1:1] 32
+  ..$ : int 32
   .. ..- attr(*, "label")= chr "New York"
   .. ..- attr(*, "members")= int 1
   .. ..- attr(*, "height")= num 0
@@ -5817,12 +5818,12 @@ List of 2
   ..- attr(*, "midpoint")= num 0.5
   ..- attr(*, "height")= num 6.24
  $ :List of 2
-  ..$ : atomic [1:1] 22
+  ..$ : int 22
   .. ..- attr(*, "label")= chr "Michigan"
   .. ..- attr(*, "members")= int 1
   .. ..- attr(*, "height")= num 0
   .. ..- attr(*, "leaf")= logi TRUE
-  ..$ : atomic [1:1] 28
+  ..$ : int 28
   .. ..- attr(*, "label")= chr "Nevada"
   .. ..- attr(*, "members")= int 1
   .. ..- attr(*, "height")= num 0
@@ -5836,18 +5837,18 @@ List of 2
 > str(d3[])
 List of 2
  $ :List of 2
-  ..$ : atomic [1:1] 8
+  ..$ : int 8
   .. ..- attr(*, "members")= int 1
   .. ..- attr(*, "height")= num 0
   .. ..- attr(*, "label")= chr "Delaware"
   .. ..- attr(*, "leaf")= logi TRUE
   ..$ :List of 2
-  .. ..$ : atomic [1:1] 1
+  .. ..$ : int 1
   .. .. ..- attr(*, "label")= chr "Alabama"
   .. .. ..- attr(*, "members")= int 1
   .. .. ..- attr(*, "height")= num 0
   .. .. ..- attr(*, "leaf")= logi TRUE
-  .. ..$ : atomic [1:1] 18
+  .. ..$ : int 18
   .. .. ..- attr(*, "label")= chr "Louisiana"
   .. .. ..- attr(*, "members")= int 1
   .. .. ..- attr(*, "height")= num 0
@@ -5860,12 +5861,12 @@ List of 2
   ..- attr(*, "height")= num 16.9
  $ :List of 2
   ..$ :List of 2
-  .. ..$ : atomic [1:1] 13
+  .. ..$ : int 13
   .. .. ..- attr(*, "label")= chr "Illinois"
   .. .. ..- attr(*, "members")= int 1
   .. .. ..- attr(*, "height")= num 0
   .. .. ..- attr(*, "leaf")= logi TRUE
-  .. ..$ : atomic [1:1] 32
+  .. ..$ : int 32
   .. .. ..- attr(*, "label")= chr "New York"
   .. .. ..- attr(*, "members")= int 1
   .. .. ..- attr(*, "height")= num 0
@@ -5874,12 +5875,12 @@ List of 2
   .. ..- attr(*, "midpoint")= num 0.5
   .. ..- attr(*, "height")= num 6.24
   ..$ :List of 2
-  .. ..$ : atomic [1:1] 22
+  .. ..$ : int 22
   .. .. ..- attr(*, "label")= chr "Michigan"
   .. .. ..- attr(*, "members")= int 1
   .. .. ..- attr(*, "height")= num 0
   .. .. ..- attr(*, "leaf")= logi TRUE
-  .. ..$ : atomic [1:1] 28
+  .. ..$ : int 28
   .. .. ..- attr(*, "label")= chr "Nevada"
   .. .. ..- attr(*, "members")= int 1
   .. .. ..- attr(*, "height")= num 0
@@ -7404,7 +7405,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x5614ed0>
+<environment: 0x55c24240e808>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -12059,14 +12060,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x3c047f0>
-<environment: 0x3bfaf98>
+<bytecode: 0x55c2407c7f48>
+<environment: 0x55c2407b4b30>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x3c04940>
-<environment: 0x3bfaf98>
+<bytecode: 0x55c2407c8098>
+<environment: 0x55c2407b4b30>
 
 > 
 > 
@@ -12598,11 +12599,11 @@ predict.bs :
 predict.glm :
 	 function (object, newdata = NULL, type = c("link", "response",      "terms"), se.fit = FALSE, dispersion = NULL, terms = NULL,      na.action = na.pass, ...)  NULL 
 Warning: namespace ‘MASS’ is not available and has been replaced
-by .GlobalEnv when processing object ‘envir’
+by .GlobalEnv when processing object ‘’
 predict.glmmPQL :
 	 function (object, newdata = NULL, type = c("link", "response"),      level = Q, na.action = na.pass, ...)  NULL 
 Warning: namespace ‘MASS’ is not available and has been replaced
-by .GlobalEnv when processing object ‘envir’
+by .GlobalEnv when processing object ‘’
 predict.lda :
 	 function (object, newdata, prior = object$prior, dimen, method = c("plug-in",      "predictive", "debiased"), ...)  NULL 
 predict.lm :
@@ -12610,11 +12611,11 @@ predict.lm :
 predict.loess :
 	 function (object, newdata = NULL, se = FALSE, na.action = na.pass,      ...)  NULL 
 Warning: namespace ‘MASS’ is not available and has been replaced
-by .GlobalEnv when processing object ‘envir’
+by .GlobalEnv when processing object ‘’
 predict.lqs :
 	 function (object, newdata, na.action = na.pass, ...)  NULL 
 Warning: namespace ‘MASS’ is not available and has been replaced
-by .GlobalEnv when processing object ‘envir’
+by .GlobalEnv when processing object ‘’
 predict.mca :
 	 function (object, newdata, type = c("row", "factor"), ...)  NULL 
 predict.mlm :
@@ -12630,7 +12631,7 @@ predict.ns :
 predict.pbSpline :
 	 function (object, x, nseg = 50, deriv = 0, ...)  NULL 
 Warning: namespace ‘MASS’ is not available and has been replaced
-by .GlobalEnv when processing object ‘envir’
+by .GlobalEnv when processing object ‘’
 predict.polr :
 	 function (object, newdata, type = c("class", "probs"), ...)  NULL 
 predict.poly :
@@ -12646,11 +12647,11 @@ predict.prcomp :
 predict.princomp :
 	 function (object, newdata, ...)  NULL 
 Warning: namespace ‘MASS’ is not available and has been replaced
-by .GlobalEnv when processing object ‘envir’
+by .GlobalEnv when processing object ‘’
 predict.qda :
 	 function (object, newdata, prior = object$prior, method = c("plug-in",      "predictive", "debiased", "looCV"), ...)  NULL 
 Warning: namespace ‘MASS’ is not available and has been replaced
-by .GlobalEnv when processing object ‘envir’
+by .GlobalEnv when processing object ‘’
 predict.rlm :
 	 function (object, newdata = NULL, scale = NULL, ...)  NULL 
 predict.smooth.spline :
@@ -16158,8 +16159,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f)
-<bytecode: 0x3cd48e0>
-<environment: 0x5a87430>
+<bytecode: 0x55c24220a158>
+<environment: 0x55c2406e4c78>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -18481,9 +18482,10 @@ Number of Fisher Scoring iterations: 6
 > base::options(contrasts = c(unordered = "contr.treatment",ordered = "contr.poly"))
 > ### * <FOOTER>
 > ###
+> cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  6.816 0.245 7.094 0 0 
+Time elapsed:  4.273 0.092 4.366 0 0 
 > grDevices::dev.off()
 null device 
           1 

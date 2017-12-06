@@ -1,8 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 1997-2017  The R Core Team
+ *  Copyright (C) 2003-2017  The R Foundation
  *  Copyright (C) 1995,1996  Robert Gentleman, Ross Ihaka
- *  Copyright (C) 1997-2015  The R Core Team
- *  Copyright (C) 2003-2015  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1095,7 +1095,8 @@ static SEXP coerceVectorList(SEXP v, SEXPTYPE type)
 #endif
 	    else
 		SET_STRING_ELT(rval, i,
-			       STRING_ELT(deparse1line(VECTOR_ELT(v, i), 0), 0));
+			       STRING_ELT(deparse1line_(VECTOR_ELT(v, i), 0, NICE_NAMES),
+					  0));
 	}
     }
     else if (type == LISTSXP) {
@@ -1641,6 +1642,9 @@ SEXP attribute_hidden do_ascall(SEXP call, SEXP op, SEXP args, SEXP rho)
     case LISTSXP:
 	ans = duplicate(args);
 	break;
+    case STRSXP:
+	errorcall(call, _("as.call(<character string>)  not yet implemented"));
+	break;
     default:
 	errorcall(call, _("invalid argument list"));
 	ans = R_NilValue;
@@ -1807,8 +1811,7 @@ SEXP attribute_hidden do_is(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     /* These are all builtins, so we do not need to worry about
        evaluating arguments in DispatchOrEval */
-    if(PRIMVAL(op) >= 100 && PRIMVAL(op) < 200 &&
-       isObject(CAR(args))) {
+    if(PRIMVAL(op) >= 100 && PRIMVAL(op) < 200 && isObject(CAR(args))) {
 	/* This used CHAR(PRINTNAME(CAR(call))), but that is not
 	   necessarily correct, e.g. when called from lapply() */
 	const char *nm;

@@ -2164,19 +2164,19 @@ path_and_libPath <- function(...)
 ### ** str_parse_logic
 
 ##' @param otherwise: can be call, such as quote(errmesg(...))
-str_parse_logic <- function(ch, default = TRUE, otherwise = default) {
+str_parse_logic <- function(ch, default = TRUE, otherwise = default, n = 1L) {
     if (is.na(ch)) default
     else switch(ch,
                 "yes"=, "Yes" =, "true" =, "True" =, "TRUE" = TRUE,
                 "no" =, "No" =, "false" =, "False" =, "FALSE" = FALSE,
-                eval(otherwise))
+                eval.parent(otherwise, n=n))
 }
 
 ### ** str_parse
 
-str_parse <- function(ch, default = TRUE, logical = TRUE, otherwise = default) {
+str_parse <- function(ch, default = TRUE, logical = TRUE, otherwise = default, n = 2L) {
     if(logical)
-        str_parse_logic(ch, default=default, otherwise=otherwise)
+        str_parse_logic(ch, default=default, otherwise=otherwise, n = n)
     else if(is.na(ch))
         default
     else
