@@ -44,11 +44,17 @@ Sys.timezone <- function(location = TRUE)
     if(.Platform$OS.type == "windows") return(.Internal(tzone_name()))
 
     ## At least tzcode and glibc respect TZDIR.
+    ## musl does not mention it, just reads /etc/localtime (as from 1.1.13)
+    ## A search of /usr/share/zoneinfo, /share/zoneinfo, /etc/zoneinfo
+    ## is hardcoded.
+    ## Systems using --with-internal-tzcode will use the database at
+    ## file.path(R.home("share"), "zoneinfo"), but it is a reasonable
+    ## assumption that /etc/localtime is based on the system database.
     tzdir <- Sys.getenv("TZDIR")
     if(nzchar(tzdir) && !dir.exists(tzdir)) tzdir <- ""
     if(!nzchar(tzdir)) { ## See comments in OlsonNames
         if(dir.exists(tzdir <- "/usr/share/zoneinfo") ||
-           dir.exists(tzdir <- "/usr/share/lib/zoneinfo") ||
+           dir.exists(tzdir <- "/share/zoneinfo") ||
            dir.exists(tzdir <- "/usr/share/lib/zoneinfo") ||
            dir.exists(tzdir <- "/usrlib/zoneinfo") ||
            dir.exists(tzdir <- "/usr/local/etc/zoneinfo") ||
@@ -1195,31 +1201,45 @@ function(x, value)
 
 ## 3.1.0
 
-OlsonNames <- function()
+OlsonNames <- function(tzdir = NULL)
 {
-    if(.Platform$OS.type == "windows")
-        tzdir <- Sys.getenv("TZDIR", file.path(R.home("share"), "zoneinfo"))
-    else {
-        ## Try known locations in turn.
-        ## The list is not exhaustive (mac OS 10.13's
-        ## /usr/share/zoneinfo is a symlink) and there is a risk that
-        ## the wrong one is found.
-        tzdirs <- c(Sys.getenv("TZDIR"), # defaults to ""
-                    file.path(R.home("share"), "zoneinfo"),
-                    "/usr/share/zoneinfo", # Linux, macOS, FreeBSD
-                    "/usr/share/lib/zoneinfo", # Solaris, AIX
-                    "/usr/lib/zoneinfo",   # early glibc
-                    "/usr/local/etc/zoneinfo", # tzcode default
-                    "/etc/zoneinfo", "/usr/etc/zoneinfo")
-        tzdirs <- tzdirs[file.exists(tzdirs)]
-        if (!length(tzdirs)) {
-            warning("no Olson database found")
-            return(character())
-        } else tzdir <- tzdirs[1L]
-    }
+    if (is.null(tzdir)) {
+        if(.Platform$OS.type == "windows")
+            tzdir <- Sys.getenv("TZDIR", file.path(R.home("share"), "zoneinfo"))
+        else {
+            ## Try known locations in turn.
+            ## The list is not exhaustive (mac OS 10.13's
+            ## /usr/share/zoneinfo is a symlink) and there is a risk that
+            ## the wrong one is found.
+            ## We assume that if the second exists that the system was
+        ## configured with --with-internal-tzcode
+            tzdirs <- c(Sys.getenv("TZDIR"), # defaults to ""
+                        file.path(R.home("share"), "zoneinfo"),
+                        "/usr/share/zoneinfo", # Linux, macOS, FreeBSD
+                        "/share/zoneinfo", # in musl's search
+                        "/usr/share/lib/zoneinfo", # Solaris, AIX
+                        "/usr/lib/zoneinfo",   # early glibc
+                        "/usr/local/etc/zoneinfo", # tzcode default
+                        "/etc/zoneinfo", "/usr/etc/zoneinfo")
+            tzdirs <- tzdirs[file.exists(tzdirs)]
+            if (!length(tzdirs)) {
+                warning("no Olson database found")
+                return(character())
+            } else tzdir <- tzdirs[1L]
+        }
+    } else if(!dir.exists(tzdir))
+        stop(sprintf("%s is not a directory", sQuote(tzdir)), domain = NA)
+
     x <- list.files(tzdir, recursive = TRUE)
     ## some databases have VERSION, some +VERSION, some neither
+    ver <- if(file.exists(vf <- file.path(tzdir, "VERSION")))
+        readLines(vf, warn = FALSE)
+    else if(file.exists(vf <- file.path(tzdir, "+VERSION")))
+        readLines(vf, warn = FALSE)
+    ## else NULL
     x <- setdiff(x, "VERSION")
     ## all other auxiliary files are l/case.
-    grep("^[ABCDEFGHIJKLMNOPQRSTUVWXYZ]", x, value = TRUE)
+    ans <- grep("^[ABCDEFGHIJKLMNOPQRSTUVWXYZ]", x, value = TRUE)
+    if(!is.null(ver)) attr(ans, "Version") <- ver
+    ans
 }
