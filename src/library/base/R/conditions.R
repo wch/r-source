@@ -40,18 +40,17 @@ tryCatch <- function(expr, ..., finally) {
 	    expr
 	}
 	value <- doTryCatch(return(expr), name, parentenv, handler)
-	# The return in the call above will exit withOneRestart unless
+	# The return in the call above will exit tryCatchOne unless
 	# the handler is invoked; we only get to this point if the handler
 	# is invoked.  If we get here then the handler will have been
 	# popped off the internal handler stack.
-	if (is.null(value[[1L]])) {
-	    # a simple error; message is stored internally
-	    # and call is in result; this defers all allocs until
-	    # after the jump
-	    msg <- .Internal(geterrmessage())
+        if (is.character(value[[1L]])) {
+	    # a simple error; only the msg string is allocated before
+	    # the jump
+            msg <- value[1L]
 	    call <- value[[2L]]
 	    cond <- simpleError(msg, call)
-	}
+        }
 	else cond <- value[[1L]]
 	value[[3L]](cond)
     }

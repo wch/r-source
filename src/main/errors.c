@@ -1641,7 +1641,17 @@ static void vsignalError(SEXP call, const char *format, va_list ap)
 		UNPROTECT(4);
 	    }
 	}
-	else gotoExitingHandler(R_NilValue, call, entry);
+	else {
+	    /* Allocating the string here before the jump is not ideal
+	       but allows use of tryCatch expressions in on.exit
+	       calls. The altarnative would be to allocate a buffer
+	       for each tryCatch, but that seems excessive. */
+	    PROTECT(entry);
+	    SEXP msg = mkString(errbuf);
+	    UNPROTECT(1);
+	    gotoExitingHandler(msg, call, entry);
+
+	}
     }
     R_HandlerStack = oldstack;
 }
