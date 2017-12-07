@@ -45,9 +45,9 @@ OlsonNames(tzdir = NULL)
   It should be possible to set the time zone via the environment
   variable \env{TZ}: see the section on \sQuote{Time zone names} for
   suitable values.  \code{Sys.timezone()} will return the value of
-  \env{TZ} if set (and on some OSes it is always set), otherwise it will
-  try to retrieve a value which if set for \env{TZ} would give the
-  current time zone.
+  \env{TZ} if set initially (and on some OSes it is always set),
+  otherwise it will try to retrieve a value which if set for \env{TZ}
+  would give the current time zone.
 
   If \env{TZ} is set but empty or invalid, most platforms default to
   \samp{UTC}, the time zone colloquially known as \samp{GMT} (see
@@ -73,8 +73,9 @@ OlsonNames(tzdir = NULL)
   available for the range 1901--2038, and incompletely for the end
   years.
 
-  As from \R 3.5.0, when a timezone location is first found its value is
-  cached in object \code{.sys.timezone} in the base environment.
+  As from \R 3.5.0, when a timezone location is first found in a
+  session, its value is cached in object \code{.sys.timezone} in the
+  base environment.
 }
 
 \value{
@@ -85,7 +86,7 @@ OlsonNames(tzdir = NULL)
 
   A timezone region may be known by several names: for example
   \samp{"Europe/London"} is also known as \samp{GB}, \samp{GB-Eire},
-  \samp{Europe/Belfast} , \samp{Europe/Guernsey},
+  \samp{Europe/Belfast}, \samp{Europe/Guernsey},
   \samp{Europe/Isle_of_Man} and \samp{Europe/Jersey}.  A few regions
   are also known by a summary of their timezone,
   e.g.\sspace{}\samp{PST8PDT} is an alias for
