@@ -193,11 +193,12 @@
       e.g.\sspace{}\emph{via} \code{dyn.load()} has been increased up to 614
       when the OS limit on the number of open files allows.
 
-      \item \code{Sys.timezone()} caches the value at first use in a
-      session.
+      \item \code{Sys.timezone()} on a Unix-alike caches the value at
+      first use in a session: \emph{inter alia} this means that setting
+      \env{TZ} later in the session has no effect.
 
-      The same ways are now used to find the system timezone to pass to
-      the code used when \R is configured with
+      \code{Sys.timezone()} is now used to find the system timezone to
+      pass to the code used when \R is configured with
       \option{--with-internal-tzcode}.
 
       \item When \code{tar()} is used with an external command which is
