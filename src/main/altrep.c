@@ -257,11 +257,17 @@ ALTREP_INSPECT(SEXP x, int pre, int deep, int pvec,
 SEXP attribute_hidden
 ALTREP_SERIALIZED_STATE(SEXP x)
 {
-#ifdef ALTREP_SERIALIZATION_SUPPORT
-    return ALTREP_DISPATCH(Serialized_state, x);
-#else
-    return NULL;
-#endif
+    static int inited = FALSE;
+    static int altrep_serialization_support = FALSE;
+    if (! inited) {
+	inited = TRUE;
+	if (getenv("R_ALTREP_SERIALIZATION_SUPPORT"))
+	    altrep_serialization_support = TRUE;
+    }
+    if (altrep_serialization_support)
+	return ALTREP_DISPATCH(Serialized_state, x);
+    else
+	return NULL;
 }
 
 SEXP attribute_hidden
