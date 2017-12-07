@@ -1454,7 +1454,7 @@ as.matrix.data.frame <- function (x, rownames.force = NA, ...)
     dn <- list(rn, names(x))
     if(any(dm == 0L))
 	return(array(NA, dim = dm, dimnames = dn))
-    p <- dm[2L]
+    p <- dm[2L] # >= 1
     pseq <- seq_len(p)
     n <- dm[1L]
     X <- unclass(x) # will contain the result;
@@ -1496,21 +1496,26 @@ as.matrix.data.frame <- function (x, rownames.force = NA, ...)
     ## These coercions could have changed the number of columns
     ## (e.g. class "Surv" coerced to character),
     ## so only now can we compute collabs.
-    if(p) collabs <- as.list(dn[[2L]])
+    collabs <- as.list(dn[[2L]])
     for (j in pseq) {
         xj <- X[[j]]
         dj <- dim(xj)
-	if(length(dj) == 2L && dj[2L] > 0L) { # matrix with > 0 col
-	    if(!length(dnj <- colnames(xj))) dnj <- seq_len(dj[2L])
-	    collabs[[j]] <-
-		if(length(collabs) && dj[2L] > 1L)
-		    paste(collabs[[j]], dnj, sep = ".")
-		else dnj
-	}
+        if(length(dj) == 2L && dj[2L] > 0L) { # matrix with > 0 col
+            if(!length(dnj <- colnames(xj))) dnj <- seq_len(dj[2L])
+            collabs[[j]] <-
+                if(length(collabs)) {
+                    if(dj[2L] > 1L)
+                        paste(collabs[[j]], dnj, sep = ".")
+                    else if(is.character(collabs[[j]])) collabs[[j]]
+                    else dnj
+                }
+                else dnj
+        }
     }
+    nc <- vapply(X, NCOL, numeric(1), USE.NAMES=FALSE)
     X <- unlist(X, recursive = FALSE, use.names = FALSE)
     dim(X) <- c(n, length(X)/n)
-    dimnames(X) <- list(dn[[1L]], unlist(collabs, use.names = FALSE))
+    dimnames(X) <- list(dn[[1L]], unlist(collabs[nc > 0], use.names = FALSE))
     X
 }
 

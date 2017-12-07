@@ -193,13 +193,12 @@
       e.g.\sspace{}\emph{via} \code{dyn.load()} has been increased up to 614
       when the OS limit on the number of open files allows.
 
-      \item \code{Sys.timezone()} tries even more heuristics on
-      Unix-alikes.  As some of these ways are slow, the value is cached
-      at first use in a session.  For the slowest method, a warning is
-      given recommending that \env{TZ} is set to avoid the search.
+      \item \code{Sys.timezone()} on a Unix-alike caches the value at
+      first use in a session: \emph{inter alia} this means that setting
+      \env{TZ} later in the session has no effect.
 
-      The same ways are now used to find the system timezone to pass the
-      code used when \R is configured with
+      \code{Sys.timezone()} is now used to find the system timezone to
+      pass to the code used when \R is configured with
       \option{--with-internal-tzcode}.
 
       \item When \code{tar()} is used with an external command which is
@@ -433,7 +432,8 @@
       message when, e.g., the \code{LazyData} field is invalid.
 
       \item \code{as.matrix(dd)} now works when the data frame \code{dd}
-      contains a data frame as column.
+      contains a data frame (or matrix, including 0-column matrix/d.f.)
+      as column.
     }
   }
 }
@@ -443,7 +443,9 @@
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{Sys.timezone()} tries more heuristics on Unix-alikes and so
-      is more likely to succeed (especially on Linux).
+      is more likely to succeed (especially on Linux).  For the slowest
+      method, a warning is given recommending that \env{TZ} is set to
+      avoid the search.
     }
   }
 
@@ -455,7 +457,7 @@
       the value of environment variable \env{TZ} (a location).
     }
   }
-  
+
 }
 
 \section{\Rlogo CHANGES IN R 3.4.3}{
