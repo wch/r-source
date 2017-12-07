@@ -193,13 +193,11 @@
       e.g.\sspace{}\emph{via} \code{dyn.load()} has been increased up to 614
       when the OS limit on the number of open files allows.
 
-      \item \code{Sys.timezone()} tries even more heuristics on
-      Unix-alikes.  As some of these ways are slow, the value is cached
-      at first use in a session.  For the slowest method, a warning is
-      given recommending that \env{TZ} is set to avoid the search.
+      \item \code{Sys.timezone()} caches the value at first use in a
+      session.
 
-      The same ways are now used to find the system timezone to pass the
-      code used when \R is configured with
+      The same ways are now used to find the system timezone to pass to
+      the code used when \R is configured with
       \option{--with-internal-tzcode}.
 
       \item When \code{tar()} is used with an external command which is
@@ -443,7 +441,9 @@
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{Sys.timezone()} tries more heuristics on Unix-alikes and so
-      is more likely to succeed (especially on Linux).
+      is more likely to succeed (especially on Linux).  For the slowest
+      method, a warning is given recommending that \env{TZ} is set to
+      avoid the search.
     }
   }
 

@@ -23,6 +23,12 @@ Sys.time <- function() .POSIXct(.Internal(Sys.time()))
 ### For some ideas (not all accurate) see
 ### https://stackoverflow.com/questions/3118582/how-do-i-find-the-current-system-timezone
 
+### See http://mm.icann.org/pipermail/tz/2017-December/025617.html for
+### why you cannot deduce the timezone name from current abbreviations
+### and offset from UTC -- cf Europe/Dublin and Europe/London which
+### (despite the GB-Eire alias) have a different history including of
+### DST in 1971.
+
 ### Will be called from C startup code for internal tzcode as Sys.timezone()
 ### For bootstrapping, it must be simple if TZ is set.
 Sys.timezone <- function(location = TRUE)
@@ -137,9 +143,11 @@ Sys.timezone <- function(location = TRUE)
         !is.na(lt <- Sys.readlink(lt0)) && nzchar(lt)) { # so it is a symlink
         tz <- NA_character_
         ## glibc and macOS < 10.13 this is a link into /usr/share/zoneinfo
-        ## (Debian Etch and later replaced it with a copy.)
+        ## (Debian Etch and later replaced it with a copy,
+        ## as have RHEL/Centos 6.x.)
         ## macOS 10.13.0 is a link into /usr/share/zoneinfo.default
-        ## macOS 10.13.1 is a link into /var/db/timezone/zoneinfo
+        ## macOS 10.13.[12] is a link into /var/db/timezone/zoneinfo,
+        ##  itself a link (with target different on different machines)
         if ((nzchar(tzdir) && grepl(pat <- paste0("^", tzdir, "/"), lt)) ||
             grepl(pat <- "^/usr/share/zoneinfo.default/", lt))
             tz <- sub(pat, "", lt)
@@ -153,7 +161,6 @@ Sys.timezone <- function(location = TRUE)
             message("unable to deduce timezone name from ", sQuote(lt))
     }
 
-    ## Added in 3.5.0
     ## Last-gasp (slow, several seconds) fallback: compare a
     ## non-link lt0 to all the files under tzdir (as Java does).
     ## This may match more than one tz file: we don't care which.
@@ -1212,7 +1219,7 @@ OlsonNames <- function(tzdir = NULL)
             ## /usr/share/zoneinfo is a symlink) and there is a risk that
             ## the wrong one is found.
             ## We assume that if the second exists that the system was
-        ## configured with --with-internal-tzcode
+            ## configured with --with-internal-tzcode
             tzdirs <- c(Sys.getenv("TZDIR"), # defaults to ""
                         file.path(R.home("share"), "zoneinfo"),
                         "/usr/share/zoneinfo", # Linux, macOS, FreeBSD
