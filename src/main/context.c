@@ -201,7 +201,8 @@ static RCNTXT *first_jump_target(RCNTXT *cptr, int mask)
     RCNTXT *c;
 
     for (c = R_GlobalContext; c && c != cptr; c = c->nextcontext) {
-	if (c->cloenv != R_NilValue && c->conexit != R_NilValue) {
+	if ((c->cloenv != R_NilValue && c->conexit != R_NilValue) ||
+	    c->callflag == CTXT_UNWIND) {
 	    c->jumptarget = cptr;
 	    c->jumpmask = mask;
 	    return c;
@@ -864,5 +865,59 @@ SEXP R_ExecWithCleanup(SEXP (*fun)(void *), void *data,
     cleanfun(cleandata);
 
     endcontext(&cntxt);
+    return result;
+}
+
+
+/* Unwind-protect mechanism to support C++ stack unwinding. */
+
+typedef struct {
+    int jumpmask;
+    RCNTXT *jumptarget;
+} unwind_cont_t;
+
+SEXP R_MakeUnwindCont()
+{
+    return CONS(R_NilValue, allocVector(RAWSXP, sizeof(unwind_cont_t)));
+}
+
+
+void NORET R_ContinueUnwind(SEXP cont)
+{
+    SEXP retval = CAR(cont);
+    unwind_cont_t *u = DATAPTR(CDR(cont));
+    R_jumpctxt(u->jumptarget, u->jumpmask, retval);
+}
+
+SEXP R_UnwindProtect(SEXP (*fun)(void *data), void *data,
+		     void (*cleanfun)(void *data, Rboolean jump),
+		     void *cleandata, SEXP cont)
+{
+    RCNTXT thiscontext;
+    SEXP result;
+    Rboolean jump;
+
+    begincontext(&thiscontext, CTXT_UNWIND, R_NilValue, R_GlobalEnv,
+		 R_BaseEnv, R_NilValue, R_NilValue);
+    if (SETJMP(thiscontext.cjmpbuf)) {
+	jump = TRUE;
+	SETCAR(cont, R_ReturnedValue);
+	unwind_cont_t *u = DATAPTR(CDR(cont));
+	u->jumpmask = thiscontext.jumpmask;
+	u->jumptarget = thiscontext.jumptarget;
+	thiscontext.jumptarget = NULL;
+    }
+    else {
+	result = fun(data);
+	SETCAR(cont, result);
+	jump = FALSE;
+    }
+    endcontext(&thiscontext);
+
+    cleanfun(cleandata, jump);
+
+    if (jump)
+	R_ContinueUnwind(cont);	
+
     return result;
 }
