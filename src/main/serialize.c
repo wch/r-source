@@ -161,7 +161,10 @@
    encoding to the serialization header. This information is used
    on de-serialization: deserialized strings without an encoding flag will be
    converted to the current native encoding, if possible, or to (flagged)
-   UTF-8. */
+   UTF-8.
+
+   Version 3 also adds support for custom ALTREP serialization. Under
+   version 2 ALTREP objects are serialied like non-ALTREP ones. */
 
 /*
  * Forward Declarations
@@ -988,7 +991,7 @@ static void WriteItem (SEXP s, SEXP ref_table, R_outpstream_t stream)
 
  tailcall:
     R_CheckStack();
-    if (ALTREP(s)) {
+    if (ALTREP(s) && stream->version >= 3) {
 	SEXP info = ALTREP_SERIALIZED_CLASS(s);
 	SEXP state = ALTREP_SERIALIZED_STATE(s);
 	if (info != NULL && state != NULL) {
