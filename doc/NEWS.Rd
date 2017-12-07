@@ -432,7 +432,8 @@
       message when, e.g., the \code{LazyData} field is invalid.
 
       \item \code{as.matrix(dd)} now works when the data frame \code{dd}
-      contains a data frame as column.
+      contains a data frame (or matrix, including 0-column matrix/d.f.)
+      as column.
     }
   }
 }
@@ -456,7 +457,7 @@
       the value of environment variable \env{TZ} (a location).
     }
   }
-  
+
 }
 
 \section{\Rlogo CHANGES IN R 3.4.3}{

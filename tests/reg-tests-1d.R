@@ -1327,17 +1327,32 @@ dm[[1]] <- as.matrix(d1) #    (ditto)
 d. <- structure(list(d1), class = "data.frame", row.names = c(NA, -3L))
 d2. <- data.frame(ch = c("A","b"), m = 10:11)
 d2  <- data.frame(V = 1:2); d2$V <- d2.; d2
-stopifnot(identical(capture.output(dd),
-                    capture.output(d.))
-        , identical(as.matrix(dd), (cbind(n = 1:3) -> m.))
-        , identical(as.matrix(d.), m.)
-        , identical(as.matrix(d2), array(c("A", "b", "10", "11"), c(2L, 2L),
-                                         dimnames = list(NULL, c("V.ch", "V.m"))))
-        , identical(as.matrix(dm), m.)
-        , identical(as.matrix(d1), m.)
-        , identical(colnames(m2 <- as.matrix(d2)), c("V.ch", "V.m"))
+d3 <- structure(list(A = 1:2, HH = cbind(c(.5, 1))),
+                class = "data.frame", row.names=c(NA,-2L))
+d3.2 <- d3; d3.2 $HH <- diag(2)
+d3.2.<- d3; d3.2.$HH <- matrix(1:4, 2,2, dimnames=list(NULL,c("x","y")))
+d0 <- as.data.frame(m0 <- matrix(,2,0))
+d3.0 <- d3; d3.0 $HH <- m0
+d3.d0<- d3; d3.d0$HH <- d0
+stopifnot(identical(unname(as.matrix(d0)), m0)
+	, identical(capture.output(dd),
+		    capture.output(d.))
+	, identical(as.matrix(d3.0 ), array(1:2, dim = 2:1, dimnames = list(NULL, "A")) -> m21)
+	, identical(as.matrix(d3.d0), m21)
+	, identical(as.matrix(dd), (cbind(n = 1:3) -> m.))
+	, identical(as.matrix(d.), m.)
+	, identical(as.matrix(d2), array(c("A", "b", "10", "11"), c(2L, 2L),
+					 dimnames = list(NULL, c("V.ch", "V.m"))))
+	, identical(as.matrix(dm), m.)
+	, identical(as.matrix(d1), m.)
+	, identical(colnames(m2 <- as.matrix(d2)), c("V.ch", "V.m"))
+	, identical(colnames(as.matrix(d3   )), colnames(d3   )) # failed a few days
+	, identical(colnames(as.matrix(d3.2 )), colnames(format(d3.2 )))
+	, identical(colnames(as.matrix(d3.2 )), c("A", paste("HH",1:2,sep=".")))
+	, identical(colnames(as.matrix(d3.2.)), colnames(format(d3.2.)))
+	, identical(colnames(as.matrix(d3.2.)), c("A", "HH.x", "HH.y"))
 )
-## the first  3  as.matrix() have failed at least since R-1.9.1, 2004
+## the first  5  as.matrix() have failed at least since R-1.9.1, 2004
 
 
 
