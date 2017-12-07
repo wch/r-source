@@ -134,14 +134,19 @@ OlsonNames()
   POSIX standard allows only one or two abbreviations per time zone, so
   you may see the current abbreviation(s) used for older times.
 
+  For some time zones abbeviations are like \samp{-03} and
+  \samp{+0845}: this is done when there is no official abbreviation.
+  (Negative values are behind (West of) UTC, as for the \code{"\%z"}
+  format for \code{\link{strftime}}.)
+
   The function \code{OlsonNames} returns the time-zone names known to
-  the Olson/IANA database on the current system. The system-specific
-  location in the file system varies, e.g.\sspace{}\file{/usr/share/zoneinfo}
-  (Linux, macOS, FreeBSD), \file{/usr/share/lib/zoneinfo} (Solaris, AIX),
-  \ldots.  It is likely that there is a file named something like
-  \file{zone.tab} under that directory listing the locations known as
-  time-zone names (but not for example \code{EST5EDT}): this is read by
-  \code{OlsonNames}.  See also
+  the currently selected Olson/IANA database.  The system-specific
+  location in the file system varies,
+  e.g.\sspace{}\file{/usr/share/zoneinfo} (Linux, macOS, FreeBSD),
+  \file{/usr/share/lib/zoneinfo} (Solaris, AIX), \ldots.  It is likely
+  that there is a file named something like \file{zone.tab} under that
+  directory listing the locations known as time-zone names (but not for
+  example \code{EST5EDT}).  See also
   \url{https://en.wikipedia.org/wiki/Zone.tab}.
 
   Where \R was configured with option \option{--with-internal-tzcode}
@@ -149,8 +154,14 @@ OlsonNames()
   \code{file.path(R.home("share"), "zoneinfo")} is used by default: file
   \file{VERSION} in that directory states the version.  Environment
   variable \env{TZDIR} can be used to point to a different
-  \file{zoneinfo} directory: this is also supported by the native
-  services on some OSes, e.g.\sspace{}Linux).
+  \file{zoneinfo} database: this is also supported by the native
+  services on some OSes, e.g.\sspace{}Linux using \code{glibc} except in
+  secure modes).
+  
+  Time zones given by name (\emph{via} environemnt variable \env{TZ}, in
+  \code{tz} arguments to functions such as \code{\link{as.POSIXlt}} and
+  perhaps the system time zone) are loaded from the currently selected
+  \file{zoneinfo} database.
 #ifdef windows
 
   An attempt is made (once only per session) to map Windows' idea of the

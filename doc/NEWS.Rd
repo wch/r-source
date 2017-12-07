@@ -10,7 +10,9 @@
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{Sys.timezone()} tries more heuristics on Unix-alikes and so
-      is more likely to succeed (especially on Linux).
+      is more likely to succeed (especially on Linux).  For the slowest
+      method, a warning is given recommending that \env{TZ} is set to
+      avoid the search.
     }
   }
 
