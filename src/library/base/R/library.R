@@ -105,29 +105,6 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                  call. = FALSE, domain = NA)
     }
 
-    testFeatures <- function(features, pkgInfo, pkgname, pkgpath)
-    {
-        ## Check that the internals version used to build this package
-        ## matches the version of current R. Failure in this test
-        ## should only occur if the R version is an unreleased devel
-        ## version or the package was build with an unrelease devel
-        ## version.  Other mismatches should be caught earlier by the
-        ## version checks.
-        needsComp <- as.character(pkgInfo$DESCRIPTION["NeedsCompilation"])
-        if (identical(needsComp, "yes") ||
-            file.exists(file.path(pkgpath, "libs"))) {
-            internalsID <- features$internalsID
-            if (is.null(internalsID))
-                ## the initial internalsID for packages installed
-                ## prior to introducing features.rds in the meta data
-                internalsID <- "0310d4b8-ccb1-4bb8-ba94-d36a55f60262"
-            if (internalsID != .Internal(internalsID()))
-                stop(gettextf("package %s was installed by an R version with different internals; it needs to be reinstalled for use with this R version",
-                              sQuote(pkgname)), call. = FALSE, domain = NA)
-        }
-    }
-
-
     checkNoGenerics <- function(env, pkg)
     {
         nenv <- env
@@ -252,11 +229,8 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                               sQuote(package)), domain = NA)
             pkgInfo <- readRDS(pfile)
             testRversion(pkgInfo, package, pkgpath)
-            ffile <- system.file("Meta", "features.rds", package = package,
-                                 lib.loc = which.lib.loc)
-            features <- if (file.exists(ffile)) readRDS(ffile) else NULL
-            testFeatures(features, pkgInfo, package, pkgpath)
 
+            ## The ABI compatibility check is now in loadNamespace
             ## The licence check is now in loadNamespace
             ## The check for inconsistent naming is now in find.package
 
