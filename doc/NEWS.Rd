@@ -449,6 +449,12 @@
     }
   }
 
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{power.prop.test()} now warns when it cannot solve the
+      problem, typically because of impossible constraints. (\PR{17345})
+    }
+  }
 
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
