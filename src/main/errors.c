@@ -1517,10 +1517,10 @@ static SEXP R_HandlerResultToken = NULL;
 
 void attribute_hidden R_FixupExitingHandlerResult(SEXP result)
 {
-    /* The internal error hadling mechanism stores the error message
+    /* The internal error handling mechanism stores the error message
        in 'errbuf'.  If an on.exit() action is processed while jumping
        to an exiting handler for such an error, then endcontext()
-       calls R_FixupExitingHandlerResult to save the error message in
+       calls R_FixupExitingHandlerResult to save the error message
        currently in the buffer before processing the on.exit
        action. This is in case an error occurs in the on.exit action
        that over-writes the buffer. The allocation should occur in a
@@ -1530,6 +1530,7 @@ void attribute_hidden R_FixupExitingHandlerResult(SEXP result)
     if (result != NULL &&
 	TYPEOF(result) == VECSXP &&
 	XLENGTH(result) == RESULT_SIZE &&
+	VECTOR_ELT(result, 0) == R_NilValue &&
 	VECTOR_ELT(result, RESULT_SIZE - 1) == R_HandlerResultToken) {
 	SET_VECTOR_ELT(result, 0, mkString(errbuf));
     }
