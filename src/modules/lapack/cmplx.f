@@ -2684,7 +2684,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \date June 2017
+*> \date November 2017
 *
 *> \ingroup complex16GEcomputational
 *
@@ -2742,10 +2742,10 @@
       SUBROUTINE ZGEBRD( M, N, A, LDA, D, E, TAUQ, TAUP, WORK, LWORK,
      $                   INFO )
 *
-*  -- LAPACK computational routine (version 3.7.1) --
+*  -- LAPACK computational routine (version 3.8.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     June 2017
+*     November 2017
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, LDA, LWORK, M, N
@@ -2764,8 +2764,7 @@
 *     .. Local Scalars ..
       LOGICAL            LQUERY
       INTEGER            I, IINFO, J, LDWRKX, LDWRKY, LWKOPT, MINMN, NB,
-     $                   NBMIN, NX
-      DOUBLE PRECISION   WS
+     $                   NBMIN, NX, WS
 *     ..
 *     .. External Subroutines ..
       EXTERNAL           XERBLA, ZGEBD2, ZGEMM, ZLABRD
@@ -7996,7 +7995,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \date December 2016
+*> \date November 2017
 *
 *> \ingroup complex16GEauxiliary
 *
@@ -8009,10 +8008,10 @@
 *  =====================================================================
       SUBROUTINE ZGESC2( N, A, LDA, RHS, IPIV, JPIV, SCALE )
 *
-*  -- LAPACK auxiliary routine (version 3.7.0) --
+*  -- LAPACK auxiliary routine (version 3.8.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     December 2016
+*     November 2017
 *
 *     .. Scalar Arguments ..
       INTEGER            LDA, N
@@ -8035,7 +8034,7 @@
       COMPLEX*16         TEMP
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           ZLASWP, ZSCAL
+      EXTERNAL           ZLASWP, ZSCAL, DLABAD
 *     ..
 *     .. External Functions ..
       INTEGER            IZAMAX
@@ -14916,7 +14915,7 @@
 *  =====================================================================
       SUBROUTINE ZGETC2( N, A, LDA, IPIV, JPIV, INFO )
 *
-*  -- LAPACK auxiliary routine (version 3.7.0) --
+*  -- LAPACK auxiliary routine (version 3.8.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
 *     June 2016
@@ -14940,7 +14939,7 @@
       DOUBLE PRECISION   BIGNUM, EPS, SMIN, SMLNUM, XMAX
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           ZGERU, ZSWAP
+      EXTERNAL           ZGERU, ZSWAP, DLABAD
 *     ..
 *     .. External Functions ..
       DOUBLE PRECISION   DLAMCH
@@ -33956,17 +33955,17 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \date December 2016
+*> \date November 2017
 *
 *> \ingroup complex16OTHERauxiliary
 *
 *  =====================================================================
       SUBROUTINE ZLARFG( N, ALPHA, X, INCX, TAU )
 *
-*  -- LAPACK auxiliary routine (version 3.7.0) --
+*  -- LAPACK auxiliary routine (version 3.8.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     December 2016
+*     November 2017
 *
 *     .. Scalar Arguments ..
       INTEGER            INCX, N
@@ -34032,7 +34031,7 @@
             BETA = BETA*RSAFMN
             ALPHI = ALPHI*RSAFMN
             ALPHR = ALPHR*RSAFMN
-            IF( ABS( BETA ).LT.SAFMIN )
+            IF( (ABS( BETA ).LT.SAFMIN) .AND. (KNT .LT. 20) )
      $         GO TO 10
 *
 *           New BETA is at most 1, at least SAFMIN
@@ -38359,7 +38358,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \date December 2016
+*> \date November 2017
 *
 *> \ingroup complex16OTHERauxiliary
 *
@@ -38439,10 +38438,10 @@
       SUBROUTINE ZLATRS( UPLO, TRANS, DIAG, NORMIN, N, A, LDA, X, SCALE,
      $                   CNORM, INFO )
 *
-*  -- LAPACK auxiliary routine (version 3.7.0) --
+*  -- LAPACK auxiliary routine (version 3.8.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     December 2016
+*     November 2017
 *
 *     .. Scalar Arguments ..
       CHARACTER          DIAG, NORMIN, TRANS, UPLO
@@ -38477,7 +38476,7 @@
      $                   ZDOTU, ZLADIV
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DSCAL, XERBLA, ZAXPY, ZDSCAL, ZTRSV
+      EXTERNAL           DSCAL, XERBLA, ZAXPY, ZDSCAL, ZTRSV, DLABAD
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS, DBLE, DCMPLX, DCONJG, DIMAG, MAX, MIN
@@ -47511,7 +47510,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \date December 2016
+*> \date November 2017
 *
 *> \ingroup complex16OTHERcomputational
 *
@@ -47533,10 +47532,10 @@
       SUBROUTINE ZTREVC( SIDE, HOWMNY, SELECT, N, T, LDT, VL, LDVL, VR,
      $                   LDVR, MM, M, WORK, RWORK, INFO )
 *
-*  -- LAPACK computational routine (version 3.7.0) --
+*  -- LAPACK computational routine (version 3.8.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     December 2016
+*     November 2017
 *
 *     .. Scalar Arguments ..
       CHARACTER          HOWMNY, SIDE
@@ -47571,7 +47570,7 @@
       EXTERNAL           LSAME, IZAMAX, DLAMCH, DZASUM
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           XERBLA, ZCOPY, ZDSCAL, ZGEMV, ZLATRS
+      EXTERNAL           XERBLA, ZCOPY, ZDSCAL, ZGEMV, ZLATRS, DLABAD
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS, DBLE, DCMPLX, DCONJG, DIMAG, MAX
@@ -48023,7 +48022,7 @@
 *> \author Univ. of Colorado Denver
 *> \author NAG Ltd.
 *
-*> \date June 2017
+*> \date November 2017
 *
 *  @precisions fortran z -> c
 *
@@ -48048,10 +48047,10 @@
      $                    LDVR, MM, M, WORK, LWORK, RWORK, LRWORK, INFO)
       IMPLICIT NONE
 *
-*  -- LAPACK computational routine (version 3.7.1) --
+*  -- LAPACK computational routine (version 3.8.0) --
 *  -- LAPACK is a software package provided by Univ. of Tennessee,    --
 *  -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..--
-*     June 2017
+*     November 2017
 *
 *     .. Scalar Arguments ..
       CHARACTER          HOWMNY, SIDE
@@ -48089,7 +48088,7 @@
 *     ..
 *     .. External Subroutines ..
       EXTERNAL           XERBLA, ZCOPY, ZDSCAL, ZGEMV, ZLATRS,
-     $                   ZGEMM, DLABAD, ZLASET
+     $                   ZGEMM, DLABAD, ZLASET, ZLACPY
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS, DBLE, DCMPLX, CONJG, AIMAG, MAX

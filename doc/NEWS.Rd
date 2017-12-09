@@ -195,7 +195,8 @@
 
       \item \code{Sys.timezone()} on a Unix-alike caches the value at
       first use in a session: \emph{inter alia} this means that setting
-      \env{TZ} later in the session has no effect.
+      \env{TZ} later in the session affects only the \emph{current} time
+      zone and not the \emph{system} one.
 
       \code{Sys.timezone()} is now used to find the system timezone to
       pass to the code used when \R is configured with
@@ -232,9 +233,10 @@
       \code{setDefaultCluster()}.
 
       \item \code{str(x)} for atomic objects \code{x} now treats both
-      cases of \code{is.vector(x)} similarly, and hence much less prints
-      \code{"atomic"}.   This is a slight non-back compatible change
-      producing typically both more informative and shorter output.
+      cases of \code{is.vector(x)} similarly, and hence much less often
+      prints \code{"atomic"}.  This is a slight non-back-compatible
+      change producing typically both more informative and shorter
+      output.
     }
   }
 
@@ -446,6 +448,10 @@
       is more likely to succeed (especially on Linux).  For the slowest
       method, a warning is given recommending that \env{TZ} is set to
       avoid the search.
+      
+      \item The version of LAPACK included in the sources has been
+      updated to 3.8.0 (for the routines used by \R a very minor bug-fix
+      change).
     }
   }
 
