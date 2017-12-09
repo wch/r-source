@@ -1047,7 +1047,7 @@ const char *getTZinfo(void)
     }
     UNPROTECT(3);
     warning("system timezone name is unknown: set environment variable TZ");
-    strcpy(def_tz, "unknown");
+    strcpy(def_tz, "unknown");  // code will then use TZDEFAULT, which is "UTC"
     return def_tz;
 }
 #endif
