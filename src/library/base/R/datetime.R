@@ -1242,7 +1242,8 @@ OlsonNames <- function(tzdir = NULL)
         stop(sprintf("%s is not a directory", sQuote(tzdir)), domain = NA)
 
     x <- list.files(tzdir, recursive = TRUE)
-    ## some databases have VERSION, some +VERSION, some neither
+    ## Some databases have VERSION (tzdata hence --with-internal-tzcode),
+    ## some +VERSION (Apple), some neither (including glibc)
     ver <- if(file.exists(vf <- file.path(tzdir, "VERSION")))
         readLines(vf, warn = FALSE)
     else if(file.exists(vf <- file.path(tzdir, "+VERSION")))
