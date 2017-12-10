@@ -931,9 +931,12 @@ involving times after 2037 or before 1916.  An alternative time-zone
 directory@footnote{How to prepare such a directory is described in file
 @file{src/extra/tzone/Notes} in the @R{} sources.} can be used, pointed
 to by environment variable @env{TZDIR}: this should contain files such
-as @file{Europe/London}.  On all tested OSes the system timezone was
+as @file{Europe/London}.  On most OSes the system timezone was
 deduced correctly, but if necessary it can be set as the value of
-environment variable @env{TZ}.
+environment variable @env{TZ}.  (OSes which do not follow the
+documentation of @file{/etc/localtime} as a symbolic link will have
+problems: this includes recent Debian-based Linuxen and RHEL/Centos 6
+(but not 7).)
 
 
 @menu
