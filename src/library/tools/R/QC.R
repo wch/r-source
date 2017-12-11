@@ -8623,13 +8623,17 @@ function(x)
 {
     ## Check a source package for disallowed pragmas in src and inst/include
     ## Try (not very hard) to avoid ones which are commented out (RcppParallel)
-
+    ## One could argue for recording all uses of #pragma ... diagnostic
+    ## There are also
+    ##   #pragma warning (disable:4996)
+    ##   #pragma warning(push, 0)
+    ## which seem intended for MSVC++ and hence not relevant here.
     found <- character()
     od <- setwd(dir); on.exit(setwd(od))
     ff <- dir(c('src', 'inst/include'),
               pattern = "[.](c|cc|cpp|h|hh|hpp)$",
               full.names = TRUE, recursive = TRUE)
-    pat <- "^\\s*#pragma GCC diagnostic ignored"
+    pat <- "^\\s*#pragma (GCC|clang) diagnostic ignored"
     for(f in ff) {
         if(any(grepl(pat, readLines(f, warn = FALSE),  perl = TRUE)))
             found <- c(found, f)
