@@ -20,13 +20,6 @@
     }
   }
 
-  \subsection{BUG FIXES}{
-    \itemize{
-      \item \code{power.prop.test()} now warns when it cannot solve the
-      problem, typically because of impossible constraints. (\PR{17345})
-    }
-  }
-
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item \code{Sys.timezone(location = FALSE)} (which was a stop-gap
@@ -35,6 +28,12 @@
     }
   }
 
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{power.prop.test()} now warns when it cannot solve the
+      problem, typically because of impossible constraints. (\PR{17345})
+    }
+  }
 }
 
 \section{\Rlogo CHANGES IN R 3.4.3}{
