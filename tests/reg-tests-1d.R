@@ -1362,6 +1362,19 @@ tools::assertWarning(
 ## silently gave p2 = 1.03 > 1 in R versions v, 3.1.3 <= v <= 3.4.3
 
 
+## removeSource() [for a function w/ body containing NULL]:
+op <- options(keep.source=TRUE)
+bod <- quote( foo(x, NULL) )
+testf  <- function(x) { }; body(testf)[[2]] <- bod
+testf
+testfN <- removeSource(testf)
+stopifnot(identical(body(testf )[[2]], bod)
+        , identical(body(testfN)[[2]], bod)
+)
+options(op)
+## erronously changed  '(x, NULL)'  to  '(x)'  in R version <= 3.4.3
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
