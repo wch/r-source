@@ -1030,18 +1030,21 @@ const char *getTZinfo(void)
 {
     const char *p = getenv("TZ");
     if(p) return p;
-#ifdef HAVE_REALPATH
+#ifdef HAVE_READLINK
     // This works on Linux, macOS and *BSD: other known OSes set TZ.
+    // However, some Linux document /etc/localtime as a symlink
+    // but do not follow their own documentation!
     static char def_tz[PATH_MAX+1] = "";
     if(def_tz[0]) return def_tz;
 
     char abspath[PATH_MAX + 1];
-    const char* lt = realpath("/etc/localtime", abspath);
+    memset(abspath, 0, PATH_MAX + 1); // ensure nul-terminated
+    ssize_t cnt = readlink("/etc/localtime", abspath, PATH_MAX);
 # ifdef __APPLE__
     // macOS <= 10.12 expands to /usr/share/zoneinfo/<zone name>
     // macOS 10.13 expands to /usr/share/zoneinfo.default/<zone name>
-    // but 10.13.1 expands to /private/var/db/timezone/tz/2017c.1.0/zoneinfo/<zone name>
-    if(lt) {
+    // but 10.13.[12] expand to /var/db/timezone/zoneinfo/<zone name>
+    if(cnt > 0) { // -1 is error condition
 	if(strstr(abspath, ".default/"))
 	    strncpy(def_tz, abspath + 28, PATH_MAX);
 	else {
@@ -1058,7 +1061,7 @@ const char *getTZinfo(void)
 	return def_tz;
     }
 # else
-    if(lt) {
+    if(cnt > 0) {
 	strncpy(def_tz, abspath + 20, PATH_MAX); // strip "/usr/share/zoneinfo/"
 	return def_tz;
     }
