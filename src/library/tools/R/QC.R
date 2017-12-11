@@ -4267,7 +4267,7 @@ function(package, dir, lib.loc = NULL)
                                                        FALSE)))
                 !good & (thisfile[this] %in% aliases1)
             } else FALSE
-            db[this, "bad"] <- !good & !suspect            
+            db[this, "bad"] <- !good & !suspect
         }
         else
             unknown <- c(unknown, pkg)
@@ -6867,7 +6867,7 @@ function(dir, localOnly = FALSE)
             }
         }
         ## If we can successfully read in the citation file, also check
-        ## whether we can at least format the bibentries we obtained. 
+        ## whether we can at least format the bibentries we obtained.
         cfmt <- tryCatch(format(cinfo, style = "text"),
                          warning = identity, error = identity)
         ## This only finds unbalanced braces by default, with messages
@@ -6875,7 +6875,7 @@ function(dir, localOnly = FALSE)
         ##   unexpected '}'          ... } no {
         ## One can also find 'unknown Rd macros' by setting env var
         ## _R_UTILS_FORMAT_BIBENTRY_VIA_RD_PERMISSIVE_ to something
-        ## true, and perhaps we should do this here. 
+        ## true, and perhaps we should do this here.
         if(inherits(cfmt, "condition"))
             out$citation_problem_when_formatting <-
                 conditionMessage(cfmt)
@@ -7397,7 +7397,7 @@ function(dir, localOnly = FALSE)
         a0 <- .aspell_package_description_for_CRAN(meta = meta0)
         out$spelling <- a[is.na(match(a$Original, a0$Original)), ]
     }
-       
+
     out
 }
 
@@ -8616,6 +8616,38 @@ function(x)
     out
 }
 
+
+### ** .check_pragmas
+
+.check_pragmas <- function(dir)
+{
+    ## Check a source package for disallowed pragmas in src and inst/include
+    ## Try (not very hard) to avoid ones which are commented out (RcppParallel)
+
+    found <- character()
+    od <- setwd(dir); on.exit(setwd(od))
+    ff <- dir(c('src', 'inst/include'),
+              pattern = "[.](c|cc|cpp|h|hh|hpp)$",
+              full.names = TRUE, recursive = TRUE)
+    pat <- "^\\s*#pragma GCC diagnostic ignored"
+    for(f in ff) {
+        if(any(grepl(pat, readLines(f, warn = FALSE),  perl = TRUE)))
+            found <- c(found, f)
+    }
+    structure(found, class = "check_pragmas")
+}
+
+print.check_pragmas <- function(x, ...)
+{
+    if(length(x)) {
+        if(length(x) == 1L)
+            writeLines("File which contain pragma(s) suppressing diagnostics:")
+        else
+            writeLines("Files which contain pragma(s) suppressing diagnostics:")
+        .pretty_print(x)
+    }
+    x
+}
 
 ### Local variables: ***
 ### mode: outline-minor ***

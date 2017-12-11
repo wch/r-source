@@ -4147,6 +4147,10 @@ Default: false (but true for CRAN submission checks).
 If set to a true value, do not stop running tests after first error (as
 if command line option @option{--no-stop-on-test-error} had been given).
 Default: false (but true for CRAN submission checks).
+
+@item _R_CHECK_PRAGMAS_
+Run additional checks on the pragmas in C/C++ source code and headers.
+Default: false (but true for CRAN submission checks).
 @end vtable
 
 CRAN's submission checks use something like
@@ -4172,6 +4176,7 @@ _R_CHECK_SCREEN_DEVICE_=stop
 _R_CHECK_TOPLEVEL_FILES_=TRUE
 _R_CHECK_S3_METHODS_NOT_REGISTERED_=TRUE
 _R_CHECK_OVERWRITE_REGISTERED_S3_METHODS_=TRUE
+_R_CHECK_PRAGMAS_=TRUE
 @end example
 
 @noindent

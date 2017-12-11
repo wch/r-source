@@ -382,6 +382,7 @@ setRlibs <-
 
         if (!is_base_pkg && !extra_arch) check_src_dir(desc)
 
+        check_src()
         if(do_install &&
            dir.exists("src") &&
            length(so_symbol_names_table)) # suitable OS
@@ -2534,6 +2535,21 @@ setRlibs <-
                 }
             }
             if (!any) resultLog(Log, "OK")
+        }
+    }
+
+    check_src <- function() {
+        Check_pragmas <- Sys.getenv("_R_CHECK_PRAGMAS_", "FALSE")
+        if(config_val_to_logical(Check_pragmas) &&
+           any(file.exists(c("src", "inst/include")))) {
+            checkingLog(Log, "pragmas in C/C++ headers and code")
+            Rcmd <- paste("options(warn=1)\n",
+                          sprintf("tools:::.check_pragmas(\"%s\")", "."))
+            out <- R_runR0(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
+            if(length(out)) {
+                warningLog(Log)
+                printLog0(Log, paste(c(out,""), collapse = "\n"))
+            } else resultLog(Log, "OK")
         }
     }
 
@@ -4922,6 +4938,7 @@ setRlibs <-
         Sys.setenv("_R_CHECK_PACKAGES_USED_IGNORE_UNUSED_IMPORTS_" = "TRUE")
         Sys.setenv("_R_CHECK_NATIVE_ROUTINE_REGISTRATION_" = "TRUE")
         Sys.setenv("_R_CHECK_NO_STOP_ON_TEST_ERROR_" = "TRUE")
+        Sys.setenv("_R_CHECK_PRAGMAS_" = "TRUE")
         R_check_vc_dirs <- TRUE
         R_check_executables_exclusions <- FALSE
         R_check_doc_sizes2 <- TRUE
