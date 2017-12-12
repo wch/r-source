@@ -2768,11 +2768,41 @@ setRlibs <-
                                   "NA")
                 env <- paste0("_R_LOAD_CHECK_OVERWRITE_S3_METHODS_=",
                               if(env == "all") env else pkgname)
+                ## <FIXME>
+                ## Oh dear.  R-ints says that if env var
+                ## '_R_CHECK_OVERWRITE_REGISTERED_S3_METHODS_' is set to
+                ## something true,
+                ##   report already registered S3 methods in
+                ##   base/recommended packages which are overwritten
+                ##   when this package's namespace is loaded.
+                ## As of 2017-12, to make this work as documented we
+                ## really need to load all base and recommended packages
+                ## which register S3 methods first, which takes *quite
+                ## some time*.  There really should be a better way ...
+                ## Running with
+                ##   R_DEFAULT_PACKAGES=MASS,Matrix,boot,class,cluster,grDevices,graphics,grid,lattice,mgcv,nlme,nnet,parallel,rpart,spatial,splines,stats,survival,tcltk,tools,utils
+                ## does not suppress package startup messages: so try to
+                ## load the relevant base and recommended package
+                ## namespaces quietly ...
+                Rcmd <-
+                    c(sprintf("suppressPackageStartupMessages(loadNamespace('%s', lib.loc = '%s'))",
+                              ## Perhaps provide these sorted according
+                              ## to dependency?
+                              c("MASS", "Matrix", "boot", "class",
+                                "cluster", "grDevices",  "graphics",
+                                "grid", "lattice", "mgcv", "nlme",
+                                "nnet", "parallel", "rpart", "spatial",
+                                "splines", "stats", "survival", "tcltk",
+                                "tools", "utils"),
+                              .Library),
+                      Rcmd)
+                env <- c(env, "R_DEFAULT_PACKAGES=NULL")
                 out <- R_runR0(Rcmd, opts, env, arch = arch)
+                ## </FIXME>
                 if (any(grepl("^Registered S3 method.*overwritten", out))) {
                     out <- filtergrep("^<environment: namespace:", out)
                     warningLog(Log)
-                    printLog0(Log, paste(c(out, ""), collapse = "\n"))
+                    printLog0(Log, paste(out, collapse = "\n"), "\n")
                 } else resultLog(Log, "OK")
             }
         }
