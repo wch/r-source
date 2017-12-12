@@ -144,7 +144,7 @@ OlsonNames(tzdir = NULL)
   POSIX standard allows only one or two abbreviations per time zone, so
   you may see the current abbreviation(s) used for older times.
 
-  For some time zones abbeviations are like \samp{-03} and
+  For some time zones abbreviations are like \samp{-03} and
   \samp{+0845}: this is done when there is no official abbreviation.
   (Negative values are behind (West of) UTC, as for the \code{"\%z"}
   format for \code{\link{strftime}}.)
@@ -169,7 +169,7 @@ OlsonNames(tzdir = NULL)
   secure modes).
   %% But not Linux with musl
   
-  Time zones given by name (\emph{via} environemnt variable \env{TZ}, in
+  Time zones given by name (\emph{via} environment variable \env{TZ}, in
   \code{tz} arguments to functions such as \code{\link{as.POSIXlt}} and
   perhaps the system time zone) are loaded from the currently selected
   \file{zoneinfo} database.
