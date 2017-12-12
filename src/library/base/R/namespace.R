@@ -1590,7 +1590,9 @@ registerS3methods <- function(info, package, env)
                            domain = NA)
            message(sprintf(msg, package))
            colnames(overwrite) <- c("method", "from")
-           print(as.data.frame(overwrite), row.names = FALSE, right = FALSE)
+           m <- as.matrix(format(as.data.frame(overwrite)))
+           rownames(m) <- rep.int(" ", nrow(m))
+           print(m, right = FALSE, quote = FALSE)
        }
     }
 
