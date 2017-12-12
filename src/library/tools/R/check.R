@@ -2567,13 +2567,13 @@ setRlibs <-
                     {
                         warningLog(Log)
                         msg <- if(length(ans) == 1L)
-                            "File which contain pragma(s) suppressing important diagnostics:"
+                            "File which contains pragma(s) suppressing important diagnostics:"
                         else
                             "Files which contain pragma(s) suppressing important diagnostics:"
                    } else {
                         noteLog(Log)
                         msg <- if(length(ans) == 1L)
-                            "File which contain pragma(s) suppressing diagnostics:"
+                            "File which contains pragma(s) suppressing diagnostics:"
                         else
                             "Files which contain pragma(s) suppressing diagnostics:"
                     }
