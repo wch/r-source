@@ -13,7 +13,7 @@
       is more likely to succeed (especially on Linux).  For the slowest
       method, a warning is given recommending that \env{TZ} is set to
       avoid the search.
-      
+
       \item The version of LAPACK included in the sources has been
       updated to 3.8.0 (for the routines used by \R a very minor bug-fix
       change).
