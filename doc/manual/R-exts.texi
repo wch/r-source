@@ -835,7 +835,14 @@ specification, nor on the package @pkg{base}: this is an @R{} package
 and package @pkg{base} is always available.
 
 A package or @samp{R} can appear more than once in the @samp{Depends}
-field, for example to give upper and lower bounds on acceptable versions.
+field, for example to give upper and lower bounds on acceptable
+versions.
+
+It is inadvisable to use a dependence on @R{} with patchlevel (the third
+digit) other than zero.  Doing so with packages which others depend on
+will cause the other packages to become unusable under earlier versions
+in the series, and e.g.@: versions 3.x.1 are widely used throughout the
+Northern Hemisphere academic year.
 
 Both @code{library} and the @R{} package checking facilities use this
 field: hence it is an error to use improper syntax or misuse the
