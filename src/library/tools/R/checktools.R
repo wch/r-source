@@ -745,8 +745,8 @@ function(log, drop_ok = TRUE)
     ## </FIXME>
 
     ## Alternatives for left and right quotes.
-    lqa <- "'|\xe2\x80\x98"
-    rqa <- "'|\xe2\x80\x99"
+    lqa <- paste0("'|", intToUtf8(0x2018))
+    rqa <- paste0("'|", intToUtf8(0x2019))
     ## Group when used ...
 
     if(is.character(drop_ok)) {
@@ -964,8 +964,8 @@ function(dir, logs = NULL, drop_ok = TRUE)
     ## Now some cleanups.
 
     ## Alternatives for left and right quotes.
-    lqa <- "'|\xe2\x80\x98"
-    rqa <- "'|\xe2\x80\x99"
+    lqa <- paste0("'|", intToUtf8(0x2018))
+    rqa <- paste0("'|", intToUtf8(0x2019))
     ## Group when used ...
 
     mysub <- function(p, r, x) sub(p, r, x, perl = TRUE, useBytes = TRUE)
