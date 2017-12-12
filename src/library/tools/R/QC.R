@@ -8636,9 +8636,11 @@ function(x)
     pat <- "^\\s*#pragma (GCC|clang) diagnostic ignored"
     pat2 <- "^\\s*#pragma (GCC|clang) diagnostic ignored[^-]*[-]W(uninitialized|float-equal|array-bound|format|missing-field-initializers)"
     for(f in ff) {
-        if(any(grepl(pat, readLines(f, warn = FALSE),  perl = TRUE)))
+        if(any(grepl(pat, readLines(f, warn = FALSE),
+                     perl = TRUE, useBytes = TRE)))
             found <- c(found, f)
-        if(any(grepl(pat2, readLines(f, warn = FALSE),  perl = TRUE)))
+        if(any(grepl(pat2, readLines(f, warn = FALSE),
+                     perl = TRUE, useBytes = TRUE)))
             warn <- c(warn, f)
     }
     structure(found, class = "check_pragmas", warn = warn)
