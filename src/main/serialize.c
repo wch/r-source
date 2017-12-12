@@ -1577,6 +1577,16 @@ ConvertChar(void *obj, char *inp, size_t inplen, cetype_t enc)
     }
 }
 
+static char *native_fromcode(R_inpstream_t stream)
+{
+    char *from = stream->native_encoding;
+#ifdef HAVE_ICONV_CP1252
+    if (!strcmp(from, "ISO-8859-1"))
+	from = "CP1252";
+#endif
+    return from;
+}
+
 /* Read string into pre-allocated buffer, convert encoding if necessary, and
    return a CHARSXP */
 static SEXP
@@ -1595,16 +1605,23 @@ ReadChar(R_inpstream_t stream, char *buf, int length, int levs)
 
     /* native encoding, not ascii */
     if (!stream->native_encoding[0] || /* original native encoding unknown */
-        (stream->nat2nat_obj == (void *)-1 && /* convesion not possible */
+        (stream->nat2nat_obj == (void *)-1 && /* translation impossible or disabled */
          stream->nat2utf8_obj == (void *)-1))
 	return mkCharLenCE(buf, length, CE_NATIVE);
     /* try converting to native encoding */
-    if (!stream->nat2nat_obj) {
-	char *from = stream->native_encoding;
-#ifdef HAVE_ICONV_CP1252
-	if (!strcmp(from, "ISO-8859-1"))
-	    from = "CP1252";
+    if (!stream->nat2nat_obj &&
+        !strcmp(stream->native_encoding, R_nativeEncoding())) {
+	/* No translation needed. Performance optimization but also leaves
+	   invalid strings in their encoding undetected. */
+	stream->nat2nat_obj = (void *)-1;
+	stream->nat2utf8_obj = (void *)-1;
+#ifdef WARN_DESERIALIZE_INVALID_UTF8
+	if (known_to_be_utf8 && !utf8Valid(buf))
+	    warning(_("deserializing invalid UTF-8 string '%s'"), buf);
 #endif
+    }
+    if (!stream->nat2nat_obj) {
+	char *from = native_fromcode(stream);
 	stream->nat2nat_obj = Riconv_open("", from);
 	if (stream->nat2nat_obj == (void *)-1)
 	    warning(_("unsupported conversion from '%s' to '%s'"), from, "");
@@ -1616,16 +1633,20 @@ ReadChar(R_inpstream_t stream, char *buf, int length, int levs)
 	SEXP ans = ConvertChar(stream->nat2nat_obj, buf, length, enc);
 	if (ans != R_NilValue)
 	    return ans;
+	if (known_to_be_utf8) {
+	    /* nat2nat_obj is converting to UTF-8, no need to use nat2utf8_obj */
+	    stream->nat2utf8_obj = (void *)-1;
+	    char *from = native_fromcode(stream);
+	    warning(_("input string '%s' cannot be translated to UTF-8, is it valid in '%s'?"),
+	            buf, from);
+	}
     }
     /* try converting to UTF-8 */
     if (!stream->nat2utf8_obj) {
-	char *from = stream->native_encoding;
-#ifdef HAVE_ICONV_CP1252
-	if (!strcmp(from, "ISO-8859-1"))
-	    from = "CP1252";
-#endif
+	char *from = native_fromcode(stream);
 	stream->nat2utf8_obj = Riconv_open("UTF-8", from);
 	if (stream->nat2utf8_obj == (void *)-1) {
+	    /* very unlikely */
 	    warning(_("unsupported conversion from '%s' to '%s'"),
 	            from, "UTF-8");
 	    warning(_("strings not representable in native encoding will not be translated"));
@@ -1636,7 +1657,9 @@ ReadChar(R_inpstream_t stream, char *buf, int length, int levs)
 	SEXP ans = ConvertChar(stream->nat2utf8_obj, buf, length, CE_UTF8);
 	if (ans != R_NilValue)
 	    return ans;
-	/* ans should never be R_NilValue */
+	char *from = native_fromcode(stream);
+	warning(_("input string '%s' cannot be translated to UTF-8, is it valid in '%s' ?"),
+	        buf, from);
     }
     /* no translation possible */
     return mkCharLenCE(buf, length, CE_NATIVE); 
@@ -2069,8 +2092,12 @@ SEXP R_Unserialize(R_inpstream_t stream)
     case 3:
     {
 	int nelen = InInteger(stream);
-	InString(stream, stream->native_encoding,
-	         nelen < (R_CODESET_MAX + 1) ? nelen : (R_CODESET_MAX + 1));
+	char nbuf[nelen + 1];
+	InString(stream, nbuf, nelen);
+	nbuf[nelen] = '\0';
+	nelen = nelen < (R_CODESET_MAX + 1) ? nelen : (R_CODESET_MAX + 1);
+	strncpy(stream->native_encoding, nbuf, nelen);
+	stream->native_encoding[nelen] = '\0';
 	break;
     }
     default:
