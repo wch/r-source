@@ -32,6 +32,9 @@
     \itemize{
       \item \code{power.prop.test()} now warns when it cannot solve the
       problem, typically because of impossible constraints. (\PR{17345})
+
+      \item \code{removeSource()} no longer erronously removes
+      \code{NULL} in certain cases, thanks to Dénes Tóth.
     }
   }
 }
