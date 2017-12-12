@@ -688,6 +688,15 @@ setRlibs <-
         dfile <- if (is_base_pkg) "DESCRIPTION.in" else "DESCRIPTION"
         any <- FALSE
 
+        ## Check the encoding -- do first as it gives a WARNING
+        Rcmd <- sprintf("tools:::.check_package_description_encoding(\"%s\")", dfile)
+        out <- R_runR0(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
+        if (length(out)) {
+            warningLog(Log)
+            any <- TRUE
+            printLog0(Log, paste(out, collapse = "\n"), "\n")
+        }
+
         ## FIXME: this does not need to be run in another process
         ## but that needs conversion to format().
         Rcmd <- sprintf("tools:::.check_package_description(\"%s\", TRUE)",
@@ -700,23 +709,10 @@ setRlibs <-
                 summaryLog(Log)
                 do_exit(1L)
             } else {
-                ## <FIXME>
-                ## This is not quite right: if we issue a NOTE here, we
-                ## can no longer issue a WARNING in the description
-                ## encoding check below ....
                 noteLog(Log)
                 any <- TRUE
                 printLog0(Log, paste(out, collapse = "\n"), "\n")
-                ## </FIXME>
             }
-        }
-        ## Check the encoding.
-        Rcmd <- sprintf("tools:::.check_package_description_encoding(\"%s\")", dfile)
-        out <- R_runR0(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
-        if (length(out)) {
-            warningLog(Log)
-            any <- TRUE
-            printLog0(Log, paste(out, collapse = "\n"), "\n")
         }
 
         ## Check the license.
@@ -869,14 +865,18 @@ setRlibs <-
 
         ## Dependence on say R >= 3.4.3 when 3.4 is current can
         ## cause problems with revdeps (and did for 3.2.x).
-        ## We only check recent ones.
+        ## We only check recent ones: maybe previous two
+        ## (R-release and R-old-release) while this is R-devel
         if(config_val_to_logical(Sys.getenv("_R_CHECK_R_DEPENDS_", "FALSE"))) {
             Rver <-.split_description(db, verbose = TRUE)$Rdepends2
             if(length(Rver) && Rver[[1L]]$op == ">=") {
                 ver <- unclass(Rver[[1L]]$version)[[1L]]
+                thisver <- unclass(getRversion())[[1L]]
+                ## needs updating if we ever go to 4.0
+                tv <- if(thisver[1L] == 3L) thisver[2L] - 2L else 4L
                 if (length(ver) == 3L && ver[3L] != 0 &&
                     ((ver[1L] > 3L) ||
-                     (ver[1L] == 3L) && (ver[2L] >= 3L) )) {
+                     (ver[1L] == 3L) && (ver[2L] >= tv) )) {
                     if(!any) noteLog(Log)
                     any <- TRUE
                     printLog0(Log,
@@ -2561,12 +2561,24 @@ setRlibs <-
         if(config_val_to_logical(Check_pragmas) &&
            any(file.exists(c("src", "inst/include")))) {
             checkingLog(Log, "pragmas in C/C++ headers and code")
-            Rcmd <- paste("options(warn=1)\n",
-                          sprintf("tools:::.check_pragmas(\"%s\")", "."))
-            out <- R_runR0(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
-            if(length(out)) {
-                warningLog(Log)
-                printLog0(Log, paste(c(out,""), collapse = "\n"))
+            ans <- .check_pragmas('.')
+            if(length(ans)) {
+                if(length(attr(ans, "warn")))
+                    {
+                        warningLog(Log)
+                        msg <- if(length(ans) == 1L)
+                            "File which contain pragma(s) suppressing important diagnostics:"
+                        else
+                            "Files which contain pragma(s) suppressing important diagnostics:"
+                   } else {
+                        noteLog(Log)
+                        msg <- if(length(ans) == 1L)
+                            "File which contain pragma(s) suppressing diagnostics:"
+                        else
+                            "Files which contain pragma(s) suppressing diagnostics:"
+                    }
+                msg <- c(msg, .pretty_format(ans))
+                printLog0(Log, paste(c(msg,""), collapse = "\n"))
             } else resultLog(Log, "OK")
         }
     }

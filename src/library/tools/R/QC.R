@@ -8628,17 +8628,20 @@ function(x)
     ##   #pragma warning (disable:4996)
     ##   #pragma warning(push, 0)
     ## which seem intended for MSVC++ and hence not relevant here.
-    found <- character()
+    found <- warn <- character()
     od <- setwd(dir); on.exit(setwd(od))
     ff <- dir(c('src', 'inst/include'),
               pattern = "[.](c|cc|cpp|h|hh|hpp)$",
               full.names = TRUE, recursive = TRUE)
     pat <- "^\\s*#pragma (GCC|clang) diagnostic ignored"
+    pat2 <- "^\\s*#pragma (GCC|clang) diagnostic ignored[^-]*[-]W(uninitialized|float-equal|array-bound|format|missing-field-initializers)"
     for(f in ff) {
         if(any(grepl(pat, readLines(f, warn = FALSE),  perl = TRUE)))
             found <- c(found, f)
+        if(any(grepl(pat2, readLines(f, warn = FALSE),  perl = TRUE)))
+            warn <- c(warn, f)
     }
-    structure(found, class = "check_pragmas")
+    structure(found, class = "check_pragmas", warn = warn)
 }
 
 print.check_pragmas <- function(x, ...)
