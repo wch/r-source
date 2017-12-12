@@ -17,14 +17,28 @@
 \usage{
 with(data, expr, \dots)
 within(data, expr, \dots)
+\S3method{within}{list}(data, expr, keepAttrs = TRUE, \dots)
 }
 \arguments{
   \item{data}{data to use for constructing an environment. For the
     default \code{with} method this may be an environment, a list, a
     data frame, or an integer as in \code{sys.call}. For \code{within},
     it can be a list or a data frame.}
-  \item{expr}{expression to evaluate.}
-  \item{\dots}{arguments to be passed to future methods.}
+  \item{expr}{expression to evaluate; particularly for \code{within()}
+    often a \dQuote{compound} expression, i.e., of the form \preformatted{   {
+     a <- somefun()
+     b <- otherfun()
+     .....
+     rm(unused1, temp)
+   }
+}}
+  \item{keepAttrs}{for the \code{\link{list}} method of \code{within()},
+    a \code{\link{logical}} specifying if the resulting list should keep
+    the \code{\link{attributes}} from \code{data} and have its
+    \code{\link{names}} in the same order.  Often this is unneeded as
+    the result is a \emph{named} list anyway, and then \code{keepAttrs =
+      FALSE} is more efficient.}
+  \item{\dots}{arguments to be passed to (future) methods.}
 }
 \details{
   \code{with} is a generic function that evaluates \code{expr} in a
@@ -89,6 +103,9 @@ aq <- within(airquality, {     # Notice that multiple vars can be changed
     rm(Day, Temp)
 })
 head(aq)
+
+
+
 
 # example from boxplot:
 with(ToothGrowth, {
