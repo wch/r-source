@@ -2563,21 +2563,30 @@ setRlibs <-
             checkingLog(Log, "pragmas in C/C++ headers and code")
             ans <- .check_pragmas('.')
             if(length(ans)) {
-                if(length(attr(ans, "warn")))
+                if(length(warn <- attr(ans, "warn")))
                     {
                         warningLog(Log)
-                        msg <- if(length(ans) == 1L)
+                        msg <- if(length(warn) == 1L)
                             "File which contains pragma(s) suppressing important diagnostics:"
                         else
                             "Files which contain pragma(s) suppressing important diagnostics:"
+                        msg <- c(msg, .pretty_format(warn))
+                        rest <- setdiff(ans, warn)
+                        if(length(rest)) {
+                            msg <- c(msg, if(length(rest) == 1L)
+                                     "File which contains pragma(s) suppressing diagnostics:"
+                            else
+                                     "Files which contain pragma(s) suppressing diagnostics:")
+                            msg <- c(msg, .pretty_format(rest))
+                        }
                    } else {
                         noteLog(Log)
                         msg <- if(length(ans) == 1L)
                             "File which contains pragma(s) suppressing diagnostics:"
                         else
                             "Files which contain pragma(s) suppressing diagnostics:"
+                        msg <- c(msg, .pretty_format(ans))
                     }
-                msg <- c(msg, .pretty_format(ans))
                 printLog0(Log, paste(c(msg,""), collapse = "\n"))
             } else resultLog(Log, "OK")
         }
