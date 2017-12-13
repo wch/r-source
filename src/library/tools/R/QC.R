@@ -8634,7 +8634,8 @@ function(x)
               pattern = "[.](c|cc|cpp|h|hh|hpp)$",
               full.names = TRUE, recursive = TRUE)
     pat <- "^\\s*#pragma (GCC|clang) diagnostic ignored"
-    pat2 <- "^\\s*#pragma (GCC|clang) diagnostic ignored[^-]*[-]W(uninitialized|float-equal|array-bound|format|missing-field-initializers)"
+    ## -Wmissing-field-initializers looks important but is not part of -Wall
+    pat2 <- "^\\s*#pragma (GCC|clang) diagnostic ignored[^-]*[-]W(uninitialized|float-equal|array-bound|format)"
     for(f in ff) {
         if(any(grepl(pat, readLines(f, warn = FALSE),
                      perl = TRUE, useBytes = TRUE)))
