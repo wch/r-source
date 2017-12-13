@@ -8637,7 +8637,7 @@ function(x)
     pat2 <- "^\\s*#pragma (GCC|clang) diagnostic ignored[^-]*[-]W(uninitialized|float-equal|array-bound|format|missing-field-initializers)"
     for(f in ff) {
         if(any(grepl(pat, readLines(f, warn = FALSE),
-                     perl = TRUE, useBytes = TRE)))
+                     perl = TRUE, useBytes = TRUE)))
             found <- c(found, f)
         if(any(grepl(pat2, readLines(f, warn = FALSE),
                      perl = TRUE, useBytes = TRUE)))
