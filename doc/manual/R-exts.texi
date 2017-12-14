@@ -369,7 +369,7 @@ BugReports: https://pkgname.bugtracker.url
 @noindent
 The format is that of a version of a `Debian Control File' (see the help
 for @samp{read.dcf} and
-@uref{https://www.debian.org/@/doc/@/debian-policy/@/ch-controlfields.html}:
+@uref{https://www.debian.org/@/doc/@/debian-policy/@/index.html#document-ch-controlfields}:
 @R{} does not require encoding in UTF-8 and does not support comments
 starting with @samp{#}).  Fields start with an @acronym{ASCII} name
 immediately followed by a colon: the value starts after the colon and a
@@ -652,7 +652,9 @@ codes.
 @c DESCRIPTION field RdMacros
 An @samp{RdMacros} field can be used to hold a comma-separated list of
 packages from which the current package will import @file{Rd} macro
-definitions.  These will be imported after the system macros, in the
+definitions.  These package should also be listed in @samp{Imports},
+@samp{Suggests} or @samp{Depends}.  The macros in these packages will be 
+imported after the system macros, in the 
 order listed in the @samp{RdMacros} field, before any macro definitions
 in the current package are loaded.  Macro definitions in individual
 @file{.Rd} files in the @file{man} directory are loaded last, and are
@@ -1473,7 +1475,7 @@ strsplit(tclvalue('auto_path'), " ")[[1]]
 
 @noindent
 then download the sources from
-@uref{http://sourceforge.net/@/projects/@/tcllib/@/files/@/BWidget/} and
+@uref{https://sourceforge.net/@/projects/@/tcllib/@/files/@/BWidget/} and
 at the command line run something like
 
 @example
@@ -1510,7 +1512,7 @@ https://cran.r-project.org/package=@var{pkgname}
 
 @noindent
 and not a version starting
-@samp{http://cran.r-project.org/web/packages/@var{pkgname}}.
+@samp{https://cran.r-project.org/web/packages/@var{pkgname}}.
 
 @node Configure and cleanup, Checking and building packages, Package structure, Creating R packages
 @section Configure and cleanup
@@ -2133,7 +2135,7 @@ default@footnote{Windows default, not MinGW-w64 default.} FPU control
 word, so computations done on OpenMP threads will not make use of
 extended-precision arithmetic which is the default for the main process.
 @c mingw64-public, 2015-02-02.
-@c http://stackoverflow.com/questions/2553725/is-the-fpu-control-word-setting-per-thread-or-per-process
+@c https://stackoverflow.com/questions/2553725/is-the-fpu-control-word-setting-per-thread-or-per-process
 
 Calling any of the @R{} API from threaded code is `for experts only':
 they will need to read the source code to determine if it is
@@ -2655,8 +2657,8 @@ using std::make_unique;
 
 @noindent
 Code needing C++14 features would do better to test for their presence
-@emph{via} `SD-6 feature tests'@footnote{@uref{See
-https://isocpp.org/@/std/@/standing-documents/@/sd-6-sg10-feature-test-recommendations}
+@emph{via} `SD-6 feature tests'@footnote{See
+@uref{https://isocpp.org/@/std/@/standing-documents/@/sd-6-sg10-feature-test-recommendations}
 or
 @uref{http://en.cppreference.com/@/w/@/cpp/@/experimental/@/feature_test}.
 It seems a reasonable assumption that any compiler promising some C++14
@@ -4335,6 +4337,18 @@ although @option{-pthread} is pretty close to portable.  (Option
 @option{-U} is portable but little use on the command line as it will
 only cancel built-in defines (not portable) and those defined earlier on
 the command line (@R{} does not use any).)
+
+People have used @command{configure} to customize @file{src/Makevars},
+including for specific compilers.  This is unsafe for several reasons.
+First, unintended compilers might meet the check---for example, several
+compilers other than GCC identify themselves as `GCC' whilst being only
+partially conformant.  Second, future versions of compilers may behave
+differently (including updates to quite old series) so for example
+@option{-Werror} (and specializations) can make a package
+non-installable under a future version.  Third, using flags to suppress
+diagnostic messages can hide important information for debugging on a
+platform not tested by the package maintainer.  (@command{R CMD check}
+can optionally report on unsafe flags which were used.)
 
 @item
 Do be very careful with passing arguments between @R{}, C and
@@ -7691,7 +7705,7 @@ Developers have recommended @command{sample} (or @command{Sampler.app},
 which is a GUI version), @command{Shark} (in version of @code{Xcode}
 up to those for Snow Leopard), and @command{Instruments} (part of
 @code{Xcode}, see
-@uref{https://developer.apple.com/library/mac/#documentation/DeveloperTools/Conceptual/InstrumentsUserGuide/Introduction/Introduction.html}).
+@uref{https://developer.apple.com/library/content/documentation/DeveloperTools/Conceptual/InstrumentsUserGuide/index.html}).
 
 
 @node Debugging, System and foreign language interfaces, Tidying and profiling R code, Top
@@ -8340,8 +8354,8 @@ Xcode 7 and later), with some support for Solaris.  On some platforms
 the runtime library, @pkg{libasan}, needs to be installed separately,
 and for checking C++ you may also need @pkg{libubsan}.} of @command{gcc}
 and @command{clang} on common Linux and macOS platforms.  See
-@uref{http://clang.llvm.org/@/docs/@/UsersManual.html#controlling-code-generation},
-@uref{http://clang.llvm.org/@/docs/@/AddressSanitizer.html} and
+@uref{https://clang.llvm.org/@/docs/@/UsersManual.html#controlling-code-generation},
+@uref{https://clang.llvm.org/@/docs/@/AddressSanitizer.html} and
 @uref{https://code.google.com/@/p/@/address-sanitizer/}.
 
 More thorough checks of C++ code are done if the C++ library has been
@@ -8512,7 +8526,7 @@ This sanitizer can be combined with the Address Sanitizer by
 
 Finer control of what is checked can be achieved by other options: for
 @command{clang} see
-@uref{http://clang.llvm.org/@/docs/@/UsersManual.html#controlling-code-generation}.@footnote{or
+@uref{https://clang.llvm.org/@/docs/@/UsersManual.html#controlling-code-generation}.@footnote{or
 the user manual for your version of @command{clang}, e.g.@: (the paths
 have differed for some versions)
 @uref{http://llvm.org/@/releases/@/4.0.0/@/tools/@/clang/@/docs/@/UsersManual.html}.}
@@ -8612,13 +8626,13 @@ It may or may not be possible to build @R{} itself with
 Recent versions of @command{clang} on @cputype{x86_64} Linux have
 `ThreadSanitizer' (@uref{https://code.google.com/@/p/@/thread-sanitizer/}),
 a `data race detector for C/C++ programs', and `MemorySanitizer'
-(@uref{http://clang.llvm.org/@/docs/@/MemorySanitizer.html},
+(@uref{https://clang.llvm.org/@/docs/@/MemorySanitizer.html},
 @uref{https://code.google.com/@/p/@/memory-sanitizer/@/wiki/@/MemorySanitizer})
 for the detection of uninitialized memory.  Both are based on and
 provide similar functionality to tools in @command{valgrind}.
 
 @command{clang} has a `Static Analyser' which can be run on the source
-files during compilation: see @uref{http://clang-analyzer.llvm.org/}.
+files during compilation: see @uref{https://clang-analyzer.llvm.org/}.
 
 @node Using `Dr. Memory', Fortran array bounds checking, Other analyses with `clang', Checking memory access
 @subsection Using `Dr. Memory'
@@ -9479,7 +9493,7 @@ September 2001, pages 20--23,
 @uref{https://www.r-project.org/@/doc/@/Rnews/Rnews_2001-3.pdf}).
 
 Once routines are registered, they can be referred to as @R{} objects if
-they this is arranged in the @code{useDynLib} call in the package's
+this is arranged in the @code{useDynLib} call in the package's
 @file{NAMESPACE} file (see @ref{useDynLib}).  So for example the
 @pkg{stats} package has
 @example
@@ -9566,7 +9580,7 @@ can make a large difference.  The results can depend quite markedly on
 the OS (and even if it is 32- or 64-bit), on the version of @R{} and
 what else is loaded into @R{} at the time.
 
-To fix ideas, first consider @code{x84_64} OS 10.7 and @R{} 2.15.2.  A
+To fix ideas, first consider @code{x86_64} OS 10.7 and @R{} 2.15.2.  A
 simple @code{.Call} function might be
 @example
 foo <- function(x) .Call("foo", x)
@@ -9746,7 +9760,7 @@ and @code{.Fortran} are all pointers, specifying them as @code{void *}
 suffices. (For most platforms one can omit all the arguments.)
 
 @item
-(Optional but highly recommended.)  Restrict @code{.Call} etc to using the
+(Optional but highly recommended.)  Restrict @code{.Call} etc to use the
 symbols you chose to register by editing @file{src/init.c} to contain
 
 @example
@@ -9799,7 +9813,7 @@ Check that there is no @code{exportPattern} directive which
 unintentionally exports the newly created @R{} objects.
 
 @item
-Restrict @code{.Call} to using the @R{} symbols by editing
+Restrict @code{.Call} to use the @R{} symbols by editing
 @file{src/init.c} to contain
 
 @example
@@ -9831,7 +9845,7 @@ nm -g /path/to/splines.so | grep " T "
 @noindent
 If there were any entry points not intended to be used by the package we
 should try to avoid exporting them, for example by making them
-@code{static}.  Now the two relevant entry points are only accessed
+@code{static}.  Now that the two relevant entry points are only accessed
 @emph{via} the registration table, we can hide them.  There are two ways
 to do so on some Unix-alikes.  We can hide individual entry points
 @emph{via}
@@ -9949,8 +9963,8 @@ routines.
 A package that wishes to make use of header files in other packages
 needs to declare them as a comma-separated list in the field
 @samp{LinkingTo} in the @file{DESCRIPTION} file.  This then arranges
-that the @file{include} directories in the installed linked-to packages
-are added to the include paths for C and C++ code.
+for the @file{include} directories in the installed linked-to packages
+to be added to the include paths for C and C++ code.
 
 It must specify@footnote{whether or not @samp{LinkingTo} is used.}
 @samp{Imports} or @samp{Depends} of those packages, for they have to be
@@ -9961,7 +9975,7 @@ loaded@footnote{so there needs to be a corresponding @code{import} or
 
 @acronym{CRAN} examples of the use of this mechanism include @CRANpkg{coxme}
 linking to @CRANpkg{bdsmatrix} and @CRANpkg{xts} linking to
-@CRANpkg{zoo}
+@CRANpkg{zoo}.
 
 @node Creating shared objects, Interfacing C++ code, Registering native routines, System and foreign language interfaces
 @section Creating shared objects
@@ -12170,8 +12184,7 @@ void R_RunWeakRefFinalizer(SEXP w);
 @end example
 
 A toy example of the use of weak references can be found at
-@uref{http://homepage.stat.uiowa.edu/~luke/R/references/weakfinex.html,
-@code{homepage.@/stat.@/uiowa.@/edu/@/~luke/@/R/references/@/weakfinex.html}},
+@uref{https://homepage.stat.uiowa.edu/~luke/R/references/weakfinex.html},
 but that is used to add finalizers to external pointers which can now be
 done more directly.  At the time of writing no @acronym{CRAN} or
 Bioconductor package uses weak references.
@@ -14311,6 +14324,7 @@ compile the front-end.  Suppose file @file{myfe.c} is to be compiled to
 @file{myfe}. A suitable @file{Makefile} might be
 
 @example
+## WARNING: does not work when $@{R_HOME@} contains spaces
 include $@{R_HOME@}/etc$@{R_ARCH@}/Makeconf
 all: myfe
 
