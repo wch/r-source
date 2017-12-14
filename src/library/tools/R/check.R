@@ -774,6 +774,18 @@ setRlibs <-
                 yorig <- sapply(yorig, clean_up)
                 y <- sapply(y, clean_up)
                 diff <- y != yorig
+                ## <FIXME>
+                if(diff[1L]
+                   && grepl("https://orcid.org/", y[1L], fixed = TRUE)) {
+                    ## Argh.  Might be from using the new ORCID id
+                    ## mechanism but having built with R < 3.5.0.
+                    ## Let's ignore ...
+                    ## Remove eventually.
+                    aar$comment <- lapply(aar$comment, unname)
+                    y1 <- utils:::.format_authors_at_R_field_for_author(aar)
+                    diff[1L] <- clean_up(y1) != yorig[1L]
+                }
+                ## </FIXME>
                 if(any(diff)) {
                     if(!any) noteLog(Log)
                     any <- TRUE
