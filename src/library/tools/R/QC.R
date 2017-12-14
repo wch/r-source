@@ -8640,6 +8640,7 @@ function(x)
         if(any(grepl(pat, readLines(f, warn = FALSE),
                      perl = TRUE, useBytes = TRUE)))
             found <- c(found, f)
+        else next
         if(any(grepl(pat2, readLines(f, warn = FALSE),
                      perl = TRUE, useBytes = TRUE)))
             warn <- c(warn, f)
