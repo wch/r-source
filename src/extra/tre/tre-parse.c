@@ -196,7 +196,10 @@ int tre_iscntrl_func(tre_cint_t c) { return tre_iscntrl(c); }
 int tre_isdigit_func(tre_cint_t c) { return tre_isdigit(c); }
 int tre_isgraph_func(tre_cint_t c) { return tre_isgraph(c); }
 int tre_islower_func(tre_cint_t c) { return tre_islower(c); }
-int tre_isprint_func(tre_cint_t c) { return tre_isprint(c); }
+int tre_isprint_func(tre_cint_t c)
+{
+  return c != '\t' && tre_isprint(c); /* Windows has \t as printable */
+}
 int tre_ispunct_func(tre_cint_t c) { return tre_ispunct(c); }
 int tre_isspace_func(tre_cint_t c) { return tre_isspace(c); }
 int tre_isupper_func(tre_cint_t c) { return tre_isupper(c); }
