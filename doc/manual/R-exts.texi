@@ -4338,6 +4338,18 @@ although @option{-pthread} is pretty close to portable.  (Option
 only cancel built-in defines (not portable) and those defined earlier on
 the command line (@R{} does not use any).)
 
+People have used @command{configure} to customize @file{src/Makevars},
+including for specific compilers.  This is unsafe for several reasons.
+First, unintended compilers might meet the check---for example, several
+compilers other than GCC identify themselves as `GCC' whilst being only
+partially conformant.  Second, future versions of compilers may behave
+differently (including updates to quite old series) so for example
+@option{-Werror} (and specializations) can make a package
+non-installable under a future version.  Third, using flags to suppress
+diagnostic messages can hide important information for debugging on a
+platform not tested by the package maintainer.  (@command{R CMD check}
+can optionally report on unsafe flags which were used.)
+
 @item
 Do be very careful with passing arguments between @R{}, C and
 @acronym{FORTRAN} code.  In particular, @code{long} in C will be 32-bit

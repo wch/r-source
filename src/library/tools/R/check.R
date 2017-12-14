@@ -2559,7 +2559,7 @@ setRlibs <-
     check_src <- function() {
         Check_pragmas <- Sys.getenv("_R_CHECK_PRAGMAS_", "FALSE")
         if(config_val_to_logical(Check_pragmas) &&
-           any(file.exists(c("src", "inst/include")))) {
+           any(dir.exists(c("src", "inst/include")))) {
             checkingLog(Log, "pragmas in C/C++ headers and code")
             ans <- .check_pragmas('.')
             if(length(ans)) {
@@ -2589,6 +2589,45 @@ setRlibs <-
                     }
                 printLog0(Log, paste(c(msg,""), collapse = "\n"))
             } else resultLog(Log, "OK")
+        }
+
+        Check_flags <- Sys.getenv("_R_CHECK_COMPILATION_FLAGS_", "FALSE")
+        if(config_val_to_logical(Check_flags)) {
+            instlog <- if (startsWith(install, "check"))
+                substr(install, 7L, 1000L)
+            else
+                file.path(pkgoutdir, "00install.out")
+            if (file.exists(instlog) && dir.exists('src')) {
+                checkingLog(Log, "compilation flags used")
+                lines <- readLines(instlog, warn = FALSE)
+                poss <- grep(" -W", lines,  useBytes = TRUE, value = TRUE)
+                tokens <- unlist(strsplit(poss, " ", perl = TRUE,
+                                          useBytes = TRUE))
+                warns <- grep("^[-]W", tokens,
+                              value = TRUE, perl = TRUE, useBytes = TRUE)
+                ## Not sure -Wextra and -Weverything are portable, though
+                ## -Werror is not compiler independent
+                ##   (as what is a warning is not)
+                warns <- setdiff(unique(warns),
+                                 c("-Wall", "-Wextra", "-Weverything"))
+                warns <- warns[!startsWith(warns, "-Wl,")] # linker flags
+                diags <- grep(" -fno-diagnostics-show-option", tokens,
+                              useBytes = TRUE, value = TRUE)
+                warns <- c(warns, diags)
+                if(any(grepl("^-Wno-", warns)) || length(diags)) {
+                    warningLog(Log)
+                    msg <- c("Compilation used the following non-portable flag(s):",
+                             .pretty_format(sort(warns)),
+                             "including flag(s) suppressing warnings")
+                    printLog0(Log, paste(c(msg,""), collapse = "\n"))
+                } else if(length(warns)) {
+                    warningLog(Log)  # might consider NOTE instead
+                    msg <- c("Compilation used the following non-portable flag(s):",
+                             .pretty_format(sort(warns)))
+                    printLog0(Log, paste(c(msg,""), collapse = "\n"))
+                } else
+                    resultLog(Log, "OK")
+            }
         }
     }
 
@@ -5008,6 +5047,7 @@ setRlibs <-
         Sys.setenv("_R_CHECK_NATIVE_ROUTINE_REGISTRATION_" = "TRUE")
         Sys.setenv("_R_CHECK_NO_STOP_ON_TEST_ERROR_" = "TRUE")
         Sys.setenv("_R_CHECK_PRAGMAS_" = "TRUE")
+        Sys.setenv("_R_CHECK_COMPILATION_FLAGS_" = "TRUE")
         R_check_vc_dirs <- TRUE
         R_check_executables_exclusions <- FALSE
         R_check_doc_sizes2 <- TRUE

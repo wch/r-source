@@ -4152,6 +4152,15 @@ Default: false (but true for CRAN submission checks).
 Run additional checks on the pragmas in C/C++ source code and headers.
 Default: false (but true for CRAN submission checks).
 
+@item _R_CHECK_COMPILATION_FLAGS_
+If the package is installed and has C/C++/Fortran code, check the
+install log for non-portable flags (for example those added to
+@file{src/Makevars} during configuration).  Currently @flag{-W} flags
+are reported, except @flag{-Wall}, @flag{-Wextra} and
+@flag{-Weverything}, and flags which appear to be attempts to suppress
+warnings are highlighted.
+Default: false (but true for CRAN submission checks).
+
 @item _R_CHECK_R_DEPENDS_
 Check that any dependence on R is not on a recent patch-level version
 such as @code{R (>= 3.3.3)} since blocking installation of a package
