@@ -4159,6 +4159,14 @@ install log for non-portable flags (for example those added to
 are reported, except @option{-Wall}, @option{-Wextra} and
 @option{-Weverything}, and flags which appear to be attempts to suppress
 warnings are highlighted.
+See
+@ifset UseExternalXrefs
+@ref{Writing portable packages, , Writing portable packages, R-exts, Writing R Extensions}
+@end ifset
+@ifclear UseExternalXrefs
+`Writing R Extensions'
+@end ifclear
+for the rationale of this check (and why even @option{-Werror} is unsafe).
 Default: false (but true for CRAN submission checks).
 
 @item _R_CHECK_R_DEPENDS_
