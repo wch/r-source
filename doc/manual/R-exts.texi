@@ -4561,7 +4561,7 @@ if(substr(jv, 1L, 1L) == "1") @{
 @noindent
 (Java 9 changed the format of this string.)
 
-Note too that compiler used to produce a @code{jar} can impose a minimum
+Note too that the compiler used to produce a @code{jar} can impose a minimum
 Java version, often resulting in an arcane message like
 
 @example
@@ -4569,7 +4569,11 @@ java.lang.UnsupportedClassVersionError: ... Unsupported major.minor version 52.0
 @end example
 @noindent
 Compile with something like @command{javac -target 1.6} to ensure this
-is avoided.
+is avoided. (As from Java 8, @command{javac} defaults to compiling for
+Java 8.)  Note this also applies to packages distributing compiled Java
+code (such as @pkg{jgraph}) produced by others, so their requirements
+need to be checked (they are often not documented accurately) and
+accounted for.
 
 Some packages have stated a requirement on a particular JDK, but a
 package should only be requiring a JRE unless providing its own Java
@@ -4607,6 +4611,31 @@ manual, use something like
 @end example
 with appropriate quotes (as, although not recommended, @env{R_HOME} can
 contain spaces).
+
+@item
+Do not use @env{R_HOME} in makefiles except when passing them to the shell.
+Specifically, do not use @env{R_HOME} in the argument to @code{include},
+as @env{R_HOME} can contain spaces. Quoting the argument to @code{include}
+does not help. GNU @command{make}'s @code{include} accepts spaces when
+escaped using backslashes (GNU @command{make} syntax required):
+
+@example
+## WARNING: requires GNU make (allowed on Windows)
+sp =
+sp +=
+sq = $(subst $(sp),\ ,$1)
+include $(call sq,$@{R_HOME@}/etc$@{R_ARCH@}/Makeconf)
+@end example
+ 
+A portable and the recommended way to avoid the problem of spaces in
+@code{$@{R_HOME@}} is using option @code{-f} of @command{make}.  This is
+easy to do with recursive invocation of @command{make}, which is also the
+only usual situation when @env{R_HOME} is needed in the argument for
+@code{include}.
+
+@example
+$(MAKE) -f"$@{R_HOME@}/etc$@{R_ARCH@}/Makeconf" -fMakefile.inner
+@end example
 @end itemize
 
 
@@ -10019,7 +10048,7 @@ It is possible to arrange to include compiled code from other languages
 by setting the macro @samp{OBJECTS} in file @file{Makevars}, together
 with suitable rules to make the objects.
 
-Flags which are already set (for example in file
+Flags that are already set (for example in file
 @file{etc@var{R_ARCH}/Makeconf}) can be overridden by the environment
 variable @env{MAKEFLAGS} (at least for systems using a POSIX-compliant
 @code{make}), as in (Bourne shell syntax)
@@ -14345,6 +14374,17 @@ R CMD make
 R CMD myfe
 @end example
 
+Even though not recommended, @code{$@{R_HOME@}} may contain spaces.  In that
+case, it cannot be passed as an argument to @code{include} in the makefile. 
+Instead, one can instruct @command{make} using the @code{-f} option to
+include @file{Makeconf}, for example via recursive invocation of
+@command{make}, see @ref{Writing portable packages}.
+
+@example
+all:
+      $(MAKE) -f"$@{R_HOME@}/etc$@{R_ARCH@}/Makeconf" -fMakefile.inner
+@end example
+  
 Additional flags which @code{$(MAIN_LINK)} includes are, amongst others,
 those to select OpenMP and @option{--export-dynamic} for the GNU linker
 on some platforms.  In principle @code{$(LIBS)} is not needed
