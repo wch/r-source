@@ -4561,7 +4561,7 @@ if(substr(jv, 1L, 1L) == "1") @{
 @noindent
 (Java 9 changed the format of this string.)
 
-Note too that compiler used to produce a @code{jar} can impose a minimum
+Note too that the compiler used to produce a @code{jar} can impose a minimum
 Java version, often resulting in an arcane message like
 
 @example
@@ -4569,7 +4569,11 @@ java.lang.UnsupportedClassVersionError: ... Unsupported major.minor version 52.0
 @end example
 @noindent
 Compile with something like @command{javac -target 1.6} to ensure this
-is avoided.
+is avoided. (As from Java 8, @command{javac} defaults to compiling for
+Java 8.)  Note this also applies to packages distributing compiled Java
+code (such as @pkg{jgraph}) produced by others, so their requirements
+need to be checked (they are often not documented accurately) and
+accounted for.
 
 Some packages have stated a requirement on a particular JDK, but a
 package should only be requiring a JRE unless providing its own Java
