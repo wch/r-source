@@ -4172,7 +4172,9 @@ Default: false (but true for CRAN submission checks).
 @item _R_CHECK_R_DEPENDS_
 Check that any dependence on R is not on a recent patch-level version
 such as @code{R (>= 3.3.3)} since blocking installation of a package
-will also block its reverse dependencies.
+will also block its reverse dependencies.  Possible values
+@samp{"note"}, @samp{"warn"} and logical values (where currently true
+values are equivalent to @samp{"note"}).
 Default: false (but will be activated in future).
 @end vtable
 
@@ -4200,6 +4202,7 @@ _R_CHECK_TOPLEVEL_FILES_=TRUE
 _R_CHECK_S3_METHODS_NOT_REGISTERED_=TRUE
 _R_CHECK_OVERWRITE_REGISTERED_S3_METHODS_=TRUE
 _R_CHECK_PRAGMAS_=TRUE
+_R_CHECK_COMPILATION_FLAGS_=TRUE
 @end example
 
 @noindent

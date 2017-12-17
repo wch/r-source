@@ -879,7 +879,10 @@ setRlibs <-
         ## cause problems with revdeps (and did for 3.2.x).
         ## We only check recent ones: maybe previous two
         ## (R-release and R-old-release) while this is R-devel
-        if(config_val_to_logical(Sys.getenv("_R_CHECK_R_DEPENDS_", "FALSE"))) {
+        Check_R_deps <- Sys.getenv("_R_CHECK_R_DEPENDS_", "FALSE")
+        act <- if(Check_R_deps %in% c("note", "warn")) TRUE
+               else config_val_to_logical(Check_R_deps)
+        if(act) {
             Rver <-.split_description(db, verbose = TRUE)$Rdepends2
             if(length(Rver) && Rver[[1L]]$op == ">=") {
                 ver <- unclass(Rver[[1L]]$version)[[1L]]
@@ -889,7 +892,9 @@ setRlibs <-
                 if (length(ver) == 3L && ver[3L] != 0 &&
                     ((ver[1L] > 3L) ||
                      (ver[1L] == 3L) && (ver[2L] >= tv) )) {
-                    if(!any) noteLog(Log)
+                    ## This is not quite right: may have NOTE-d above
+                    if(Check_R_deps == "warn") warningLog(Log)
+                    else if(!any) noteLog(Log)
                     any <- TRUE
                     printLog0(Log,
                               sprintf("Dependence on R version %s not with patchlevel 0\n",
