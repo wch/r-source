@@ -4073,7 +4073,10 @@ setRlibs <-
                              ": warning: .* \\[-Wpointer-to-int-cast\\]",
                              ": warning: .* \\[-Wsequence-point\\]",
                              ": warning: .* \\[-Wformat-overflow=\\]",
-                             ": warning: .* \\[-Wnonull"
+                             ": warning: .* \\[-Wformat-truncation=\\]",
+                             ": warning: .* \\[-Wnonull",
+                             ": warning: .* \\[-Walloc-size-larger-than=\\]",
+                             ": warning: .* \\[-Wterminate\\]"
                              )
 
                 ## clang warnings
@@ -4087,6 +4090,10 @@ setRlibs <-
                              ": warning: .* \\[-Wunsequenced\\]",
                              ": warning: .* \\[-Wvla-extension\\]",
                              ": warning: .* \\[-Wmismatched-new-delete\\]",
+                             ": warning: .* \\[-Wabsolute-value\\]",
+                             ": warning: .* \\[-Wreorder\\]", # also gcc
+                             ": warning: .* \\[-Wself-assign",
+                             ": warning: .* \\[-Wtautological",  # also gcc
                              ": warning: format string contains '[\\]0'",
                              ": warning: .* \\[-Wc[+][+]11-long-long\\]",
                              ": warning: empty macro arguments are a C99 feature",
