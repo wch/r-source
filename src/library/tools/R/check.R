@@ -4086,6 +4086,7 @@ setRlibs <-
                              ": warning: .* \\[-Wpointer-arith\\]",
                              ": warning: .* \\[-Wunsequenced\\]",
                              ": warning: .* \\[-Wvla-extension\\]",
+                             ": warning: .* \\[-Wmismatched-new-delete\\]",
                              ": warning: format string contains '[\\]0'",
                              ": warning: .* \\[-Wc[+][+]11-long-long\\]",
                              ": warning: empty macro arguments are a C99 feature",
@@ -5065,6 +5066,8 @@ setRlibs <-
         Sys.setenv("_R_CHECK_NO_STOP_ON_TEST_ERROR_" = "TRUE")
         Sys.setenv("_R_CHECK_PRAGMAS_" = "TRUE")
         Sys.setenv("_R_CHECK_COMPILATION_FLAGS_" = "TRUE")
+        if(!nzchar(Sys.getenv("_R_CHECK_R_DEPENDS_")))
+            Sys.setenv("_R_CHECK_R_DEPENDS_" = "TRUE")
         R_check_vc_dirs <- TRUE
         R_check_executables_exclusions <- FALSE
         R_check_doc_sizes2 <- TRUE
