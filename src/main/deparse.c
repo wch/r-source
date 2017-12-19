@@ -1455,6 +1455,7 @@ static const char *EncodeNonFiniteComplexElement(Rcomplex x, char* buff)
     strcpy(Re, EncodeReal0(x.r, w, d, e, "."));
     strcpy(Im, EncodeReal0(x.i, wi, di, ei, "."));
 
+    // This may intentionally truncate, and gcc 8 warns
     snprintf(buff, NB, "complex(real=%s, imaginary=%s)", Re, Im);
     buff[NB-1] = '\0';
     return buff;
