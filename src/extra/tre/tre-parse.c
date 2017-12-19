@@ -198,7 +198,15 @@ int tre_isgraph_func(tre_cint_t c) { return tre_isgraph(c); }
 int tre_islower_func(tre_cint_t c) { return tre_islower(c); }
 int tre_isprint_func(tre_cint_t c)
 {
-  return c != '\t' && tre_isprint(c); /* Windows has \t as printable */
+#ifdef TRE_WCHAR
+  /* Windows has \t as printable via iswprint in all locales. By POSIX
+     and ?regex, we need \t to be non-printable in the C locale, so we
+     cannot use iswprint. By C99, iswprint(L'\t') should be the same as
+     isprint('\t'). In Windows, in C locale, isprint('\t') is false, 
+     hence this workaround. */
+    if (c == L'\t') return isprint('\t');
+#endif
+  return tre_isprint(c); /* Windows has \t as printable */
 }
 int tre_ispunct_func(tre_cint_t c) { return tre_ispunct(c); }
 int tre_isspace_func(tre_cint_t c) { return tre_isspace(c); }
