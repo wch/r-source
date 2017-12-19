@@ -2571,6 +2571,40 @@ setRlibs <-
             }
             if (!any) resultLog(Log, "OK")
         }
+
+        ## Check include directives for use of R_HOME which may contain
+        ## spaces for which there is no portable way to quote/escape.
+        all_files <- dir(".", pattern = "^Makefile*", recursive = TRUE)
+        all_files <- unique(sort(all_files))
+        if(length(all_files)) {
+            checkingLog(Log, "include directives in Makefiles")
+            bad_lines <-
+                lapply(all_files,
+                       function(f) {
+                           s <- readLines(f, warn = FALSE)
+                           grep("^include .*R_HOME", s, value = TRUE)
+                       })
+            bad_files <- all_files[lengths(bad_lines) > 0L]
+            if(length(bad_files)) {
+                noteLog(Log,
+                        "Found the following Makefile(s) with an include directive with a pathname using R_HOME:")
+                printLog0(Log, .format_lines_with_indent(bad_files),
+                          "\n")
+                msg <-
+                    c("Even though not recommended, variable R_HOME may contain spaces.",
+                      "Makefile directives use space as a separator and there is no portable",
+                      "way to quote/escape the space in Make rules and directives.  However,", 
+                      "one can and should quote pathnames when passed from Makefile to the",
+                      "shell, and this can be done specifically when invoking Make recursively.", 
+                      "It is therefore recommended to use the Make '-f' option to include files",
+                      "in directories specified using R_HOME.  This option can be specified",
+                      "multiple times to include multiple Makefiles.  Note that 'Makeconf' is",
+                      "included automatically into top-level makefile of a package.", 
+                      "More information can be found in 'Writing R Extensions'.")
+                printLog0(Log, paste(msg, collapse = "\n"), "\n")
+            } else resultLog(Log, "OK")
+        }
+
     }
 
     check_src <- function() {
