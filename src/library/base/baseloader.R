@@ -132,3 +132,13 @@ invisible(force(.GenericArgsEnv))
 invisible(force(.signalSimpleWarning))
 invisible(force(.handleSimpleError))
 invisible(force(.tryResumeInterrupt))
+
+local({
+    methods <- paste0(.S3_methods_table[, 1L], ".",
+                      .S3_methods_table[, 2L])
+    env <- .BaseNamespaceEnv
+    table <- env[[".__S3MethodsTable__."]]
+    for(m in methods)
+        delayedAssign(m, get(m, env), assign.env = table)
+})
+          

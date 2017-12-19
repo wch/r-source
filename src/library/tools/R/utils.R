@@ -1590,6 +1590,58 @@ nonS3methods <- function(package)
     if(!length(thisPkg)) character() else thisPkg
 }
 
+### ** .make_S3_methods_table_for_base
+
+.make_S3_methods_table_for_base <-
+function()
+{
+    env <- baseenv()
+    objects <- ls(env, all.names = TRUE)
+    ind <- vapply(objects,
+                  function(o) .is_S3_generic(o, env),
+                  FALSE)
+    generics <- sort(unique(c(objects[ind],
+                              .get_S3_group_generics(),
+                              .get_internal_S3_generics())))
+    ind <- grepl("^[[:alpha:]]", generics)
+    generics <- c(generics[!ind], generics[ind])
+    ## The foo.bar objects in base:
+    objects <- grep("[^.]+[.]", objects, value = TRUE)
+    ## Make our lives easier ...
+    objects <- setdiff(objects, nonS3methods("base"))
+    ## Find the ones matching GENERIC.CLASS from the list of generics.
+    methods <-
+        lapply(generics,
+               function(e) objects[startsWith(objects, paste0(e, "."))])
+    names(methods) <- generics
+    ## Need to separate all from all.equal:
+    methods$all <- methods$all[!startsWith(methods$all, "all.equal")]
+    methods <- Filter(length, methods)
+    classes <- Map(substring, methods, nchar(names(methods)) + 2L)
+
+    cbind(generic = rep.int(names(classes), lengths(classes)),
+          class = unlist(classes, use.names = FALSE))
+}
+
+.deparse_S3_methods_table_for_base <-
+function()
+{
+    mdb <- .make_S3_methods_table_for_base()
+    dg <- deparse(mdb[, 1L])
+    ng <- length(dg) - 1L
+    dc <- deparse(mdb[, 2L])
+    nc <- length(dc) - 1L
+    c("cbind(generic =",
+      paste0(c("      ", rep.int("        ", ng)),
+             dg,
+             c(rep.int("", ng), ",")),
+      "      class =",
+      paste0(c("      ", rep.int("        ", nc)),
+             dc,
+             c(rep.int("", nc), ")")))
+}
+
+
 ### ** .package_apply
 
 .package_apply <-
