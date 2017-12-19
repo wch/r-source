@@ -201,7 +201,6 @@ Ops.factor <- function(e1, e2)
 	warning(gettextf("%s not meaningful for factors", sQuote(.Generic)))
 	return(rep.int(NA, max(length(e1), if(!missing(e2)) length(e2))))
     }
-    nas <- is.na(e1) | is.na(e2)
     ## Need this for NA *levels* as opposed to missing
     noNA.levels <- function(f) {
 	r <- levels(f)
@@ -213,10 +212,32 @@ Ops.factor <- function(e1, e2)
 	r
     }
     if (nzchar(.Method[1L])) { # e1 *is* a factor
+        ## fastpath for factor w/ no NA levels vs scalar character    
+        if(!anyNA(levels(e1)) && is.character(e2) && length(e2) == 1L) {
+            if(.Generic == "==") {
+                ## if e1[i] OR e2 is NA then (leq[e1])[i] is NA
+                ## as desired
+                leq <- (levels(e1) == e2)
+                return(leq[e1])
+            } else { ## != case
+                leq <- (levels(e1) != e2)
+                return(leq[e1])
+            }
+        }
 	l1 <- noNA.levels(e1)
 	e1 <- l1[e1]
     }
     if (nzchar(.Method[2L])) { # e2 *is* a factor
+        ## fastpath for factor w/ no NA levels vs scalar character
+        if(!anyNA(levels(e2)) && is.character(e1) && length(e1) == 1L){
+            if(.Generic == "==") {
+                leq <- (levels(e2) == e1)
+                return(leq[e2])
+            } else {  ## != case
+                leq <- (levels(e2) != e1)
+                return(leq[e2])
+            }
+        }
 	l2 <- noNA.levels(e2)
 	e2 <- l2[e2]
     }
@@ -224,6 +245,7 @@ Ops.factor <- function(e1, e2)
 	(length(l1) != length(l2) || !all(sort.int(l2) == sort.int(l1))))
 	stop("level sets of factors are different")
     value <- NextMethod(.Generic)
+    nas <- is.na(e1) | is.na(e2)
     value[nas] <- NA
     value
 }
