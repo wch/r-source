@@ -238,6 +238,10 @@
       output.
 
       \item \code{write.dcf()} gets optional argument \code{useBytes}.
+
+      \item New function \code{packageDate()} which tries to get a valid
+      \code{"Date"} object from a package \file{DESCRIPTION} file,
+      thanks to suggestions in \PR{17324}.
     }
   }
 
