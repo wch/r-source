@@ -236,6 +236,8 @@
       prints \code{"atomic"}.  This is a slight non-back-compatible
       change producing typically both more informative and shorter
       output.
+
+      \item \code{write.dcf()} gets optional argument \code{useBytes}.
     }
   }
 

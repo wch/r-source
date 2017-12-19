@@ -1,7 +1,7 @@
 #  File src/library/base/R/dcf.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -134,7 +134,7 @@ function(file, fields = NULL, all = FALSE, keep.white = NULL)
 }
 
 write.dcf <-
-function(x, file = "", append = FALSE,
+function(x, file = "", append = FALSE, useBytes = FALSE,
          indent = 0.1 * getOption("width"),
          width = 0.9 * getOption("width"),
          keep.white = NULL)
@@ -205,5 +205,5 @@ function(x, file = "", append = FALSE,
         ## Note that we do not write a trailing blank line.
         eor[ which(diff(c(col(out))[is_not_empty]) >= 1L) ] <- "\n"
     }
-    writeLines(paste0(c(out[is_not_empty]), eor), file)
+    writeLines(paste0(c(out[is_not_empty]), eor), file, useBytes=useBytes)
 }
