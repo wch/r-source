@@ -199,11 +199,10 @@ function(dir,
         if(!identical(defaults$repos, getOption("repos"))) {
             pos <- split(pos[pos > 0L], available[pos, "Repository"])
             ## Only want the reverse dependencies for which Repository
-            ## is pmatched by contrib.url(defaults$repos).
+            ## starts with an entry in defaults$repos.
             nms <- names(pos)
-            pos <- unlist(pos[unique(c(outer(defaults$repos, nms,
-                                             pmatch, nomatch = 0L)))],
-                          use.names = FALSE)
+            ind <- (rowSums(outer(nms, defaults$repos, startsWith)) > 0)
+            pos <- unlist(pos[ind], use.names = FALSE)
         }
         rnames <- available[pos, "Package"]
         rfiles <- sprintf("%s_%s.tar.gz",
