@@ -2593,13 +2593,13 @@ setRlibs <-
                 msg <-
                     c("Even though not recommended, variable R_HOME may contain spaces.",
                       "Makefile directives use space as a separator and there is no portable",
-                      "way to quote/escape the space in Make rules and directives.  However,", 
+                      "way to quote/escape the space in Make rules and directives.  However,",
                       "one can and should quote pathnames when passed from Makefile to the",
-                      "shell, and this can be done specifically when invoking Make recursively.", 
+                      "shell, and this can be done specifically when invoking Make recursively.",
                       "It is therefore recommended to use the Make '-f' option to include files",
                       "in directories specified using R_HOME.  This option can be specified",
                       "multiple times to include multiple Makefiles.  Note that 'Makeconf' is",
-                      "included automatically into top-level makefile of a package.", 
+                      "included automatically into top-level makefile of a package.",
                       "More information can be found in 'Writing R Extensions'.")
                 printLog0(Log, paste(msg, collapse = "\n"), "\n")
             } else resultLog(Log, "OK")
@@ -4110,7 +4110,9 @@ setRlibs <-
                              ": warning: .* \\[-Wformat-truncation=\\]",
                              ": warning: .* \\[-Wnonull",
                              ": warning: .* \\[-Walloc-size-larger-than=\\]",
-                             ": warning: .* \\[-Wterminate\\]"
+                             ": warning: .* \\[-Wterminate\\]",
+                             ": warning: .* \\[-Wstringop", # mainly gcc8
+                             ": warning: .* \\[-Wclass-memaccess\\]" # gcc8
                              )
 
                 ## clang warnings
