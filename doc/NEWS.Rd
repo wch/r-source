@@ -7,6 +7,17 @@
 
 \section{\Rlogo CHANGES IN R-devel}{
 
+  \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
+    \itemize{
+      \item The default version for \code{save()}, \code{saveRDS()},
+      \code{serialize()} and similar has been changed to \samp{3}.
+      Objects saved with version 3 are not readable by eariier versions of
+      \R. 
+
+      This includes saved workspaces.
+    }
+  }
+
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{factor()} now uses \code{order()} to sort its levels,
@@ -432,9 +443,9 @@
       an error \sQuote{\verb{replacement has length zero}} (or a
       translation of that) instead of doing nothing.
 
-      \item \code{mclapply}, \code{pvec} and \code{mcparallel} (when
-      \code{mccollect} is used to collect results) no longer leave zombie
-      processes behind.
+      \item (Package \pkg{parallel}.)  \code{mclapply()}, \code{pvec()}
+      and \code{mcparallel()} (when \code{mccollect()} is used to
+      collect results) no longer leave zombie processes behind.
 
       \item \code{R CMD INSTALL <pkg>} now produces the intended error
       message when, e.g., the \code{LazyData} field is invalid.
