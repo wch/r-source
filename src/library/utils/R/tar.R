@@ -43,7 +43,8 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
             if(all(magic[1:2] == c(0x1f, 0x8b))) cflag <- "z"
             else if(all(magic[1:2] == c(0x1f, 0x9d))) cflag <- "z" # compress
             else if(rawToChar(magic[1:3]) == "BZh") cflag <- "j"
-            else if(rawToChar(magic[1:5]) == "\xFD7zXZ") cflag <- "J"
+            else if(rawToChar(magic[1:5]) == paste0(rawToChar(as.raw(0xfd)),"7zXZ"))
+                 cflag <- "J"
         } else if (compressed) cflag <- "z"
     } else stop("'compressed' must be logical or character")
     if (!restore_times) cflag <- paste0(cflag, "m")

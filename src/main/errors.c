@@ -605,6 +605,8 @@ static SEXP GetSrcLoc(SEXP srcref)
 
 static char errbuf[BUFSIZE];
 
+#define ERRBUFCAT(txt) strncat(errbuf, txt, BUFSIZE - 1 - strlen(errbuf))
+
 const char *R_curErrorBuf() {
     return (const char *)errbuf;
 }
@@ -707,18 +709,18 @@ verrorcall_dflt(SEXP call, const char *format, va_list ap)
 		    *p = '\n';
 		} else msgline1 = wd(tmp);
 		if (14 + wd(dcall) + msgline1 > LONGWARN)
-		    strcat(errbuf, tail);
+		    ERRBUFCAT(tail);
 	    } else {
 		size_t msgline1 = strlen(tmp);
 		char *p = strchr(tmp, '\n');
 		if (p) msgline1 = (int)(p - tmp);
 		if (14 + strlen(dcall) + msgline1 > LONGWARN)
-		    strcat(errbuf, tail);
+		    ERRBUFCAT(tail);
 	    }
-	    strcat(errbuf, tmp);
+	    ERRBUFCAT(tmp);
 	} else {
 	    snprintf(errbuf, BUFSIZE, _("Error: "));
-	    strcat(errbuf, tmp); // FIXME
+	    ERRBUFCAT(tmp); // FIXME
 	}
 	UNPROTECT(protected);
     }
@@ -728,17 +730,26 @@ verrorcall_dflt(SEXP call, const char *format, va_list ap)
 	Rvsnprintf(p, min(BUFSIZE, R_WarnLength) - strlen(errbuf), format, ap);
     }
 
-    p = errbuf + strlen(errbuf) - 1;
-    if(*p != '\n') strcat(errbuf, "\n");
+    size_t nc = strlen(errbuf);
+    if (nc == BUFSIZE - 1) {
+	errbuf[BUFSIZE - 4] = '.';
+	errbuf[BUFSIZE - 3] = '.';
+	errbuf[BUFSIZE - 2] = '.';
+	errbuf[BUFSIZE - 1] = '\n';
+    }
+    else {
+	p = errbuf + nc - 1;
+	if(*p != '\n') ERRBUFCAT("\n");
+    }
 
     if(R_ShowErrorCalls && call != R_NilValue) {  /* assume we want to avoid deparse */
 	tr = R_ConciseTraceback(call, 0);
 	size_t nc = strlen(tr);
 	if (nc && nc + strlen(errbuf) + 8 < BUFSIZE) {
-	    strcat(errbuf, _("Calls:"));
-	    strcat(errbuf, " ");
-	    strcat(errbuf, tr);
-	    strcat(errbuf, "\n");
+	    ERRBUFCAT(_("Calls:"));
+	    ERRBUFCAT(" ");
+	    ERRBUFCAT(tr);
+	    ERRBUFCAT("\n");
 	}
     }
     if (R_ShowErrorMessages) REprintf("%s", errbuf);
@@ -1517,10 +1528,10 @@ static SEXP R_HandlerResultToken = NULL;
 
 void attribute_hidden R_FixupExitingHandlerResult(SEXP result)
 {
-    /* The internal error hadling mechanism stores the error message
+    /* The internal error handling mechanism stores the error message
        in 'errbuf'.  If an on.exit() action is processed while jumping
        to an exiting handler for such an error, then endcontext()
-       calls R_FixupExitingHandlerResult to save the error message in
+       calls R_FixupExitingHandlerResult to save the error message
        currently in the buffer before processing the on.exit
        action. This is in case an error occurs in the on.exit action
        that over-writes the buffer. The allocation should occur in a
@@ -1530,6 +1541,7 @@ void attribute_hidden R_FixupExitingHandlerResult(SEXP result)
     if (result != NULL &&
 	TYPEOF(result) == VECSXP &&
 	XLENGTH(result) == RESULT_SIZE &&
+	VECTOR_ELT(result, 0) == R_NilValue &&
 	VECTOR_ELT(result, RESULT_SIZE - 1) == R_HandlerResultToken) {
 	SET_VECTOR_ELT(result, 0, mkString(errbuf));
     }

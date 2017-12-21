@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2017-12-02 r73817) -- "Unsuffered Consequences"
+R Under development (unstable) (2017-12-08 r73869) -- "Unsuffered Consequences"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -12217,6 +12217,37 @@ NOTE: n is number in *each* group
 NOTE: n is number in *each* group
 
 >                                                  ## => n = 10451937
+> try(
++  power.prop.test(n=30, p1=0.90, p2=NULL, power=0.8)
++ ) # a warning  (which may become an error)
+Warning in power.prop.test(n = 30, p1 = 0.9, p2 = NULL, power = 0.8) :
+  No p2 in in [p1, 1] can be found to achieve the desired power
+
+     Two-sample comparison of proportions power calculation 
+
+              n = 30
+             p1 = 0.9
+             p2 = 1.030182
+      sig.level = 0.05
+          power = 0.8
+    alternative = two.sided
+
+NOTE: n is number in *each* group
+
+> ## Reason:
+> power.prop.test(      p1=0.90, p2= 1.0, power=0.8) ##-> n = 73.37
+
+     Two-sample comparison of proportions power calculation 
+
+              n = 73.37427
+             p1 = 0.9
+             p2 = 1
+      sig.level = 0.05
+          power = 0.8
+    alternative = two.sided
+
+NOTE: n is number in *each* group
+
 > 
 > 
 > 

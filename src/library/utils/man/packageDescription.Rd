@@ -1,21 +1,31 @@
 % File src/library/utils/man/packageDescription.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
-% Copyright 2005-2010 The R Foundation
+% Copyright 1995-2017 R Core Team
+% Copyright 2005-2017 The R Foundation
 % Distributed under GPL 2 or later
 
 \name{packageDescription}
+\title{Package Description}
 \alias{packageDescription}
 \alias{packageVersion}
+\alias{packageDate}
+\alias{asDateBuilt}
 \alias{print.packageDescription}
-\title{Package Description}
 \description{
-  Parses and returns the \file{DESCRIPTION} file of a package.
+  Parses and returns the \file{DESCRIPTION} file of a package as a
+  \code{"packageDescription"}.
+
+  Utility functions return (transformed) parts of that.
 }
 \usage{
 packageDescription(pkg, lib.loc = NULL, fields = NULL,
                    drop = TRUE, encoding = "")
 packageVersion(pkg, lib.loc = NULL)
+packageDate(pkg, lib.loc = NULL,
+            date.fields = c("Date", "Packaged", "Date/Publication", "Built"),
+            tryFormats = c("\%Y-\%m-\%d", "\%Y/\%m/\%d", "\%D", "\%m/\%d/\%y"),
+            desc = packageDescription(pkg, lib.loc=lib.loc, fields=date.fields))
+asDateBuilt(built)
 }
 \arguments{
   \item{pkg}{a character string with the package name.}
@@ -32,6 +42,15 @@ packageVersion(pkg, lib.loc = NULL)
     should re-encoding be attempted?  If \code{NA}, no re-encoding.  The
     other values are as used by \code{\link{iconv}}, so the default
     \code{""} indicates the encoding of the current locale.}
+  \item{date.fields}{character vector field tags to be tried.  The
+    first for which \code{\link{as.Date}(.)} is not \code{\link{NA}}
+    will be returned.}
+  \item{tryFormats}{date formats to try, see \code{\link{as.Date.character}()}.}
+  \item{desc}{optionally, a named \code{\link{list}} with components
+    named from \code{date.fields};  where the default is fine, a
+    complete \code{packageDescription()} maybe specified as well.}
+  \item{built}{for \code{asDateBuilt()}, a \code{\link{character}}
+    string as from \code{packageDescription(*, fields="Built")}.}
 }
 \details{
   A package will not be \sQuote{found} unless it has a \file{DESCRIPTION} file
@@ -44,6 +63,9 @@ packageVersion(pkg, lib.loc = NULL)
 
   \code{packageVersion()} is a convenience shortcut, allowing things
   like \code{if (packageVersion("MASS") < "7.3") { do.things } }.
+
+  For \code{packageDate()}, if \code{desc} is valid, both \code{pkg} and
+  \code{lib.loc} are not made use of.
 }
 \value{
   If a \file{DESCRIPTION} file for the given package is found and can
@@ -58,6 +80,12 @@ packageVersion(pkg, lib.loc = NULL)
 
   \code{packageVersion()} returns a (length-one) object of class
   \code{"\link{package_version}"}.
+
+  \code{packageDate()} will return a \code{"Date"} object from
+  \code{\link{as.Date}()} or \code{NA}.
+
+  \code{asDateBuilt(built)} returns a \code{"Date"} object or signals an
+  error if \code{built} is invalid.
 }
 \seealso{
   \code{\link{read.dcf}}
@@ -71,5 +99,11 @@ packageDescription("stats", fields = "Version", drop = FALSE)
 
 if(packageVersion("MASS") < "7.3.29")
   message("you need to update 'MASS'")
-}}
+}%dont
+pu <- packageDate("utils")
+\donttest{str(pu)}
+stopifnot(identical(pu, packageDate(desc = packageDescription("utils"))),
+          identical(pu, packageDate("stats"))) # as "utils" and "stats" are
+                                   # both 'base R' and "Built" at same time
+}
 \keyword{utilities}

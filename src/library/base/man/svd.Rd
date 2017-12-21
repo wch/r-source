@@ -1,6 +1,6 @@
 % File src/library/base/man/svd.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{svd}
@@ -43,12 +43,13 @@ La.svd(x, nu = min(n, p), nv = min(n, p))
   \bold{X = U D V'},} where \eqn{\bold{U}} and \eqn{\bold{V}} are
   orthogonal, \eqn{\bold{V'}} means \emph{V transposed} (and conjugated
   for complex input), and \eqn{\bold{D}} is a diagonal matrix with the
-  singular values \eqn{D_{ii}}{D[i,i]}.  Equivalently, \eqn{\bold{D = U'
-  X V}}, which is verified in the examples.
+  (non-negative) singular values \eqn{D_{ii}}{D[i,i]} in decreasing
+  order.  Equivalently, \eqn{\bold{D = U' X V}}, which is verified in
+  the examples.
 
   The returned value is a list with components
   \item{d}{a vector containing the singular values of \code{x}, of
-    length \code{min(n, p)}.}
+    length \code{min(n, p)}, sorted decreasingly.}
   \item{u}{a matrix whose columns contain the left singular vectors of
     \code{x}, present if \code{nu > 0}.  Dimension \code{c(n, nu)}.}
   \item{v}{a matrix whose columns contain the right singular vectors of
@@ -74,6 +75,9 @@ La.svd(x, nu = min(n, p), nv = min(n, p))
   \emph{LAPACK Users' Guide}. Third Edition. SIAM.\cr
   Available on-line at
   \url{http://www.netlib.org/lapack/lug/lapack_lug.html}.
+
+  The \href{https://en.wikipedia.org/wiki/Singular-value_decomposition}{%
+    \sQuote{Singular-value decomposition}} Wikipedia article.
 
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.

@@ -1,6 +1,6 @@
 % File src/library/base/man/serialize.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{readRDS}
@@ -24,8 +24,8 @@ readRDS(file, refhook = NULL)
     representation is written; otherwise (default), a binary one is used.
     See the comments in the help for \code{\link{save}}.}
   \item{version}{the workspace format version to use.  \code{NULL}
-    specifies the current default version (2).  Versions prior to 2 are not
-    supported, so this will only be relevant when there are later versions.}
+    specifies the current default version (3).  The only other supported
+    value is 2, the default from \R 1.4.0 to \R 3.4.4.}
   \item{compress}{a logical specifying whether saving to a named file is
     to use \code{"gzip"} compression, or one of \code{"gzip"},
     \code{"bzip2"} or \code{"xz"} to indicate the type of compression to

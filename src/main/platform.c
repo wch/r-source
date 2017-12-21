@@ -2822,26 +2822,23 @@ SEXP attribute_hidden do_sysumask(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP attribute_hidden do_readlink(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP paths, ans;
-    int n;
-#ifdef HAVE_READLINK
-    char buf[PATH_MAX+1];
-    ssize_t res;
-    int i;
-#endif
-
     checkArity(op, args);
-    paths = CAR(args);
+    SEXP paths = CAR(args);
     if(!isString(paths))
 	error(_("invalid '%s' argument"), "paths");
-    n = LENGTH(paths);
-    PROTECT(ans = allocVector(STRSXP, n));
+    int n = LENGTH(paths);
+    SEXP ans = PROTECT(allocVector(STRSXP, n));
 #ifdef HAVE_READLINK
-    for (i = 0; i < n; i++) {
+    char buf[PATH_MAX+1];
+    for (int i = 0; i < n; i++) {
 	memset(buf, 0, PATH_MAX+1);
-	res = readlink(R_ExpandFileName(translateChar(STRING_ELT(paths, i))),
-		       buf, PATH_MAX);
-	if (res >= 0) SET_STRING_ELT(ans, i, mkChar(buf));
+	ssize_t res = 
+	    readlink(R_ExpandFileName(translateChar(STRING_ELT(paths, i))),
+		     buf, PATH_MAX);
+	if (res == PATH_MAX) {
+	    SET_STRING_ELT(ans, i, mkChar(buf));
+	    warning("possible truncation of value for element %d", i + 1);
+	} else if (res >= 0) SET_STRING_ELT(ans, i, mkChar(buf));
 	else if (errno == EINVAL) SET_STRING_ELT(ans, i, mkChar(""));
 	else SET_STRING_ELT(ans, i,  NA_STRING);
     }

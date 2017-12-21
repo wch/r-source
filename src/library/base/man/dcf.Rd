@@ -4,9 +4,9 @@
 % Distributed under GPL 2 or later
 
 \name{dcf}
+\title{Read and Write Data in DCF Format}
 \alias{read.dcf}
 \alias{write.dcf}
-\title{Read and Write Data in DCF Format}
 \description{
   Reads or writes an \R object from/to a file in Debian Control File
   format.
@@ -14,7 +14,7 @@
 \usage{
 read.dcf(file, fields = NULL, all = FALSE, keep.white = NULL)
 
-write.dcf(x, file = "", append = FALSE,
+write.dcf(x, file = "", append = FALSE, useBytes = FALSE,
           indent = 0.1 * getOption("width"),
           width = 0.9 * getOption("width"),
           keep.white = NULL)
@@ -40,6 +40,8 @@ write.dcf(x, file = "", append = FALSE,
     is attempted to coerce \code{x} to a data frame.}
   \item{append}{logical.  If \code{TRUE}, the output is appended to the
     file.  If \code{FALSE}, any existing file of the name is destroyed.}
+  \item{useBytes}{logical to be passed to \code{\link{writeLines}()},
+    see there: \dQuote{for expert use}.}
   \item{indent}{a positive integer specifying the indentation for
     continuation lines in output entries.}
   \item{width}{a positive integer giving the target column for wrapping
@@ -102,7 +104,7 @@ write.dcf(x, file = "", append = FALSE,
 
 \references{
   \url{https://www.debian.org/doc/debian-policy/index.html#document-ch-controlfields}.
-  
+
   Note that \R does not require encoding in UTF-8, which is a recent
   Debian requirement.  Nor does it use the Debian-specific sub-format
   which allows comment lines starting with \samp{#}.

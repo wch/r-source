@@ -1,6 +1,6 @@
 % File src/library/stats/man/power.prop.test.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright (C) 1995-2014 R Core Team
+% Copyright (C) 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{power.prop.test}
@@ -31,14 +31,23 @@ power.prop.test(n = NULL, p1 = NULL, p2 = NULL, sig.level = 0.05,
 \details{
   Exactly one of the parameters \code{n}, \code{p1}, \code{p2},
   \code{power}, and \code{sig.level} must be passed as NULL, and that
-  parameter is determined from the others. Notice that \code{sig.level}
-  has a non-NULL default so NULL must be explicitly passed if you want
-  it  computed.
+  parameter is determined from the others.  Notice that \code{sig.level}
+  has a non-NULL default so \code{NULL} must be explicitly passed if you
+  want it computed.
 
   If \code{strict = TRUE} is used, the power will include the probability of
   rejection in the opposite direction of the true effect, in the two-sided
-  case. Without this the power will be half the significance level if the
+  case.  Without this the power will be half the significance level if the
   true difference is zero.
+
+  Note that not all conditions can be satisfied, e.g., for \preformatted{power.prop.test(n=30, p1=0.90, p2=NULL, power=0.8, strict=TRUE)}
+  there is no proportion \code{p2} between \code{p1 = 0.9} and 1, as
+  you'd need a sample size of at least \eqn{n = 74} to yield the
+  desired power for \eqn{(p1,p2) = (0.9, 1)}.
+
+  For these impossible conditions, currently a warning
+  (\code{\link{warning}}) is signalled which may become an error
+  (\code{\link{stop}}) in the future.
 }
 \value{
   Object of class \code{"power.htest"}, a list of the arguments
@@ -49,11 +58,11 @@ power.prop.test(n = NULL, p1 = NULL, p2 = NULL, sig.level = 0.05,
   \enc{Ekstrøm}{Ekstroem}}
 
 \note{
-  \code{uniroot} is used to solve power equation for unknowns, so
+  \code{\link{uniroot}} is used to solve power equation for unknowns, so
   you may see errors from it, notably about inability to bracket the
-  root when invalid arguments are given.  If one of them is computed
-  \code{p1 < p2} will hold, although this is not enforced when both are
-  specified.
+  root when invalid arguments are given.   If one of \code{p1} and
+  \code{p2} is computed, then \eqn{p1 < p2} is assumed and will hold,
+  but if you specify both, \eqn{p2 \le p1}{p2 <= p1} is allowed.
 }
 
 \seealso{\code{\link{prop.test}}, \code{\link{uniroot}}}
@@ -66,5 +75,10 @@ power.prop.test(n = 50, p1 = .5, p2 = 0.9, power = .90, sig.level=NULL)
                                                  ## => sig.l = 0.00131
 power.prop.test(p1 = .5, p2 = 0.501, sig.level=.001, power=0.90)
                                                  ## => n = 10451937
+try(
+ power.prop.test(n=30, p1=0.90, p2=NULL, power=0.8)
+) # a warning  (which may become an error)
+## Reason:
+power.prop.test(      p1=0.90, p2= 1.0, power=0.8) ##-> n = 73.37
 }
 \keyword{ htest }

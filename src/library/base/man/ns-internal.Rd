@@ -30,6 +30,7 @@
 \alias{.getNamespace}
 \alias{.getNamespaceInfo}
 \alias{..getNamespace}
+\alias{.S3_methods_table}
 \usage{
 asNamespace(ns, base.OK = TRUE)
 getNamespaceInfo (ns, which)

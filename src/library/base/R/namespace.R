@@ -450,6 +450,31 @@ loadNamespace <- function (package, lib.loc = NULL,
            isTRUE(getOption("checkPackageLicense", FALSE)))
             checkLicense(package, pkgInfo, pkgpath)
 
+        ## Check that the internals version used to build this package
+        ## matches the version of current R. Failure in this test
+        ## should only occur if the R version is an unreleased devel
+        ## version or the package was build with an unrelease devel
+        ## version.  Other mismatches should be caught earlier by the
+        ## version checks.
+        ## Meta will not exist when first building tools,
+        ## so pkgInfo was not created above.
+        if(dir.exists(file.path(pkgpath, "Meta"))) {
+            ffile <- file.path(pkgpath, "Meta", "features.rds")
+            features <- if (file.exists(ffile)) readRDS(ffile) else NULL
+            needsComp <- as.character(pkgInfo$DESCRIPTION["NeedsCompilation"])
+            if (identical(needsComp, "yes") ||
+                file.exists(file.path(pkgpath, "libs"))) {
+                internalsID <- features$internalsID
+                if (is.null(internalsID))
+                    ## the initial internalsID for packages installed
+                    ## prior to introducing features.rds in the meta data
+                    internalsID <- "0310d4b8-ccb1-4bb8-ba94-d36a55f60262"
+                if (internalsID != .Internal(internalsID()))
+                    stop(gettextf("package %s was installed by an R version with different internals; it needs to be reinstalled for use with this R version",
+                                  sQuote(package)), call. = FALSE, domain = NA)
+            }
+        }
+
         ns <- makeNamespace(package, version = version, lib = package.lib)
         on.exit(.Internal(unregisterNamespace(package)))
 
@@ -1565,7 +1590,9 @@ registerS3methods <- function(info, package, env)
                            domain = NA)
            message(sprintf(msg, package))
            colnames(overwrite) <- c("method", "from")
-           print(as.data.frame(overwrite), row.names = FALSE, right = FALSE)
+           m <- as.matrix(format(as.data.frame(overwrite)))
+           rownames(m) <- rep.int(" ", nrow(m))
+           print(m, right = FALSE, quote = FALSE)
        }
     }
 

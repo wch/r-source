@@ -1355,6 +1355,26 @@ stopifnot(identical(unname(as.matrix(d0)), m0)
 ## the first  5  as.matrix() have failed at least since R-1.9.1, 2004
 
 
+## Impossible conditions should at least give a warning - PR#17345
+tools::assertWarning(
+           power.prop.test(n=30, p1=0.90, p2=NULL, power=0.8)
+       ) ## may give error in future
+## silently gave p2 = 1.03 > 1 in R versions v, 3.1.3 <= v <= 3.4.3
+
+
+## removeSource() [for a function w/ body containing NULL]:
+op <- options(keep.source=TRUE)
+bod <- quote( foo(x, NULL) )
+testf  <- function(x) { }; body(testf)[[2]] <- bod
+testf
+testfN <- removeSource(testf)
+stopifnot(identical(body(testf )[[2]], bod)
+        , identical(body(testfN)[[2]], bod)
+)
+options(op)
+## erronously changed  '(x, NULL)'  to  '(x)'  in R version <= 3.4.3
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

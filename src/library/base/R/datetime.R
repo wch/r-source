@@ -50,9 +50,10 @@ Sys.timezone <- function(location = TRUE)
     if(.Platform$OS.type == "windows") return(.Internal(tzone_name()))
 
     ## At least tzcode and glibc respect TZDIR.
+    ## glibc uses $(datadir)/zoneinfo
     ## musl does not mention it, just reads /etc/localtime (as from 1.1.13)
-    ## A search of /usr/share/zoneinfo, /share/zoneinfo, /etc/zoneinfo
-    ## is hardcoded.
+    ##   (A search of /usr/share/zoneinfo, /share/zoneinfo, /etc/zoneinfo
+    ##   is hardcoded in musl.)
     ## Systems using --with-internal-tzcode will use the database at
     ## file.path(R.home("share"), "zoneinfo"), but it is a reasonable
     ## assumption that /etc/localtime is based on the system database.
@@ -129,6 +130,7 @@ Sys.timezone <- function(location = TRUE)
     ## According to the glibc's (at least 2.26)
     ##   manual/time.texi, it can be configured to use
     ##   /etc/localtime or /usr/local/etc/localtime
+    ##  (and in fact can be overridden when glibc is installed)
     ## This should be a symlink,
     ##   but people including Debian have copied files instead.
     ## 'man 5 localtime' says (even on Debian)
@@ -137,9 +139,11 @@ Sys.timezone <- function(location = TRUE)
     ##   file or hardlink.'
     ## tzcode mentions /usr/local/etc/zoneinfo/localtime
     ##  as the 'local time zone file' (not seen in the wild)
+    ## man tzset on macOS (from BSD) mentions /var/db/timezone/localtime
     if ((file.exists(lt0 <- "/etc/localtime") ||
          file.exists(lt0 <- "/usr/local/etc/localtime") ||
-         file.exists(lt0 <- "/usr/local/etc/zoneinfo/localtime")) &&
+         file.exists(lt0 <- "/usr/local/etc/zoneinfo/localtime") ||
+         file.exists(lt0 <- "/var/db/timezone/localtime")) &&
         !is.na(lt <- Sys.readlink(lt0)) && nzchar(lt)) { # so it is a symlink
         tz <- NA_character_
         ## glibc and macOS < 10.13 this is a link into /usr/share/zoneinfo
@@ -1238,7 +1242,8 @@ OlsonNames <- function(tzdir = NULL)
         stop(sprintf("%s is not a directory", sQuote(tzdir)), domain = NA)
 
     x <- list.files(tzdir, recursive = TRUE)
-    ## some databases have VERSION, some +VERSION, some neither
+    ## Some databases have VERSION (tzdata hence --with-internal-tzcode),
+    ## some +VERSION (Apple), some neither (including glibc)
     ver <- if(file.exists(vf <- file.path(tzdir, "VERSION")))
         readLines(vf, warn = FALSE)
     else if(file.exists(vf <- file.path(tzdir, "+VERSION")))

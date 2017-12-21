@@ -835,7 +835,14 @@ specification, nor on the package @pkg{base}: this is an @R{} package
 and package @pkg{base} is always available.
 
 A package or @samp{R} can appear more than once in the @samp{Depends}
-field, for example to give upper and lower bounds on acceptable versions.
+field, for example to give upper and lower bounds on acceptable
+versions.
+
+It is inadvisable to use a dependence on @R{} with patchlevel (the third
+digit) other than zero.  Doing so with packages which others depend on
+will cause the other packages to become unusable under earlier versions
+in the series, and e.g.@: versions 3.x.1 are widely used throughout the
+Northern Hemisphere academic year.
 
 Both @code{library} and the @R{} package checking facilities use this
 field: hence it is an error to use improper syntax or misuse the
@@ -4331,6 +4338,18 @@ although @option{-pthread} is pretty close to portable.  (Option
 only cancel built-in defines (not portable) and those defined earlier on
 the command line (@R{} does not use any).)
 
+People have used @command{configure} to customize @file{src/Makevars},
+including for specific compilers.  This is unsafe for several reasons.
+First, unintended compilers might meet the check---for example, several
+compilers other than GCC identify themselves as `GCC' whilst being only
+partially conformant.  Second, future versions of compilers may behave
+differently (including updates to quite old series) so for example
+@option{-Werror} (and specializations) can make a package
+non-installable under a future version.  Third, using flags to suppress
+diagnostic messages can hide important information for debugging on a
+platform not tested by the package maintainer.  (@command{R CMD check}
+can optionally report on unsafe flags which were used.)
+
 @item
 Do be very careful with passing arguments between @R{}, C and
 @acronym{FORTRAN} code.  In particular, @code{long} in C will be 32-bit
@@ -4542,7 +4561,7 @@ if(substr(jv, 1L, 1L) == "1") @{
 @noindent
 (Java 9 changed the format of this string.)
 
-Note too that compiler used to produce a @code{jar} can impose a minimum
+Note too that the compiler used to produce a @code{jar} can impose a minimum
 Java version, often resulting in an arcane message like
 
 @example
@@ -4550,7 +4569,11 @@ java.lang.UnsupportedClassVersionError: ... Unsupported major.minor version 52.0
 @end example
 @noindent
 Compile with something like @command{javac -target 1.6} to ensure this
-is avoided.
+is avoided. (As from Java 8, @command{javac} defaults to compiling for
+Java 8.)  Note this also applies to packages distributing compiled Java
+code (such as @pkg{jgraph}) produced by others, so their requirements
+need to be checked (they are often not documented accurately) and
+accounted for.
 
 Some packages have stated a requirement on a particular JDK, but a
 package should only be requiring a JRE unless providing its own Java

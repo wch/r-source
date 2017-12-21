@@ -1,7 +1,7 @@
 #  File src/library/stats/R/power.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -32,6 +32,7 @@ power.t.test <-
     alternative <- match.arg(alternative)
 
     tsample <- switch(type, one.sample = 1, two.sample = 2, paired = 1)
+    force(tsample)# codetools
     tside <- switch(alternative, one.sided = 1, two.sided = 2)
     if (tside == 2 && !is.null(delta)) delta <- abs(delta)
 
@@ -121,25 +122,30 @@ power.prop.test <-
     else if (is.null(n))
 	n <- uniroot(function(n) eval(p.body) - power,
 		     c(1,1e7), tol=tol, extendInt = "upX")$root
-    else if (is.null(p1))
+    else if (is.null(p1)) {
 	p1 <- uniroot(function(p1) eval(p.body) - power,
 		      c(0,p2), tol=tol, extendInt = "yes")$root
-    else if (is.null(p2))
+        if(p1 < 0) warning("No p1 in in [0, p2] can be found to achieve the desired power")
+    }
+    else if (is.null(p2)) {
 	p2 <- uniroot(function(p2) eval(p.body) - power,
 		      c(p1,1), tol=tol, extendInt = "yes")$root
-    else if (is.null(sig.level))
+        if(p2 > 1) warning("No p2 in in [p1, 1] can be found to achieve the desired power")
+    }
+    else if (is.null(sig.level)) {
 	sig.level <- uniroot(function(sig.level) eval(p.body) - power,
-		      c(1e-10, 1-1e-10), tol=tol, extendInt = "upX")$root
+                             c(1e-10, 1-1e-10), tol=tol, extendInt = "upX")$root
+        if(sig.level < 0 || sig.level > 1)
+            warning("No significance level [0, 1] can be found to achieve the desired power")
+    }
     else # Shouldn't happen
 	stop("internal error", domain = NA)
 
-    NOTE <- "n is number in *each* group"
-
-    METHOD <-  "Two-sample comparison of proportions power calculation"
-
     structure(list(n=n, p1=p1, p2=p2,
 		   sig.level=sig.level, power=power,
-		   alternative=alternative, note=NOTE, method=METHOD),
+		   alternative=alternative,
+                   note = "n is number in *each* group",
+                   method = "Two-sample comparison of proportions power calculation"),
 	      class="power.htest")
 }
 

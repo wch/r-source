@@ -180,6 +180,7 @@ S3method("print", "check_nonAPI_calls", .print.via.format)
 S3method("print", "check_RegSym_calls", .print.via.format)
 S3method("print", "check_url_db")
 S3method("print", "check_vignette_index")
+S3method("print", "check_pragmas")
 
 S3method("print", "CRAN_package_reverse_dependencies_and_views")
 S3method("print", "summarize_CRAN_check_status")

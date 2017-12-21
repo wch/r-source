@@ -36,31 +36,40 @@ OlsonNames(tzdir = NULL)
 \details{
   Time zones are a system-specific topic, but these days almost all \R
   platforms use similar underlying code, used by Linux, macOS, Solaris,
-  AIX, FreeBSD, Sun Java >= 1.4 and Tcl >= 8.5, and installed with \R on
-  Windows.  (Unfortunately there are many system-specific errors in the
-  implementations.)  It is possible to use \R's own version of the code
-  on Unix-alikes as well as on Windows: this is the default for macOS and
-  recommended for Solaris.
+  AIX and FreeBSD, and installed with \R on Windows.  (Unfortunately
+  there are many system-specific errors in the implementations.)  It is
+  possible to use the \R sources' version of the code on Unix-alikes as
+  well as on Windows: this is the default for macOS and recommended for
+  Solaris.
 
-  It should be possible to set the time zone via the environment
+  It should be possible to set the current time zone via the environment
   variable \env{TZ}: see the section on \sQuote{Time zone names} for
   suitable values.  \code{Sys.timezone()} will return the value of
   \env{TZ} if set initially (and on some OSes it is always set),
-  otherwise it will try to retrieve a value which if set for \env{TZ}
-  would give the current time zone.
-
-  If \env{TZ} is set but empty or invalid, most platforms default to
-  \samp{UTC}, the time zone colloquially known as \samp{GMT} (see
-  \url{https://en.wikipedia.org/wiki/Coordinated_Universal_Time}).  (Some
-  but not all platforms will give a warning for invalid time zones.)
+  otherwise it will try to retrieve from the OS a value which if set for
+  \env{TZ} would give the initial time zone. (\sQuote{Initially} means
+  before any time-zone functions are used: if \env{TZ} is being set to
+  override the OS setting or if the \sQuote{try} does not get this
+  right, it should be set before the \R process is started or (probably
+  early enough) in file \code{\link{.Rprofile}}).
+  
+  %% glibc silently uses UTC but uses the invalid name as the
+  %% abbreviations.  tzcode as used by R warns and uses UTC.
+  If \env{TZ} is set but invalid, most platforms default to \samp{UTC},
+  the time zone colloquially known as \samp{GMT} (see
+  \url{https://en.wikipedia.org/wiki/Coordinated_Universal_Time}).
+  (Some but not all platforms will give a warning for invalid values.)
+  If it is unset or empty the \emph{system} time zone is used (the one
+  returned by \code{Sys.timezone}).
 
   Time zones did not come into use until the second half of the
   nineteenth century and were not widely adopted until the twentieth,
   and \emph{daylight saving time} (DST, also known as \emph{summer
   time}) was first introduced in the early twentieth century, most
-  widely in 1916. Over the last 100 years places have changed their
+  widely in 1916.  Over the last 100 years places have changed their
   affiliation between major time zones, have opted out of (or in to) DST
-  in various years or adopted DST rule changes late or not at all.
+  in various years or adopted DST rule changes late or not at all.  (The
+  UK experimented with DST throughout 1971, only.)
 
   A quite common system implementation of \code{POSIXct} is as signed
   32-bit integers and so only goes back to the end of 1901: on such
@@ -73,7 +82,7 @@ OlsonNames(tzdir = NULL)
   available for the range 1901--2038, and incompletely for the end
   years.
 
-  As from \R 3.5.0, when a timezone location is first found in a
+  As from \R 3.5.0, when a time zone location is first found in a
   session, its value is cached in object \code{.sys.timezone} in the
   base environment.
 }
@@ -84,11 +93,11 @@ OlsonNames(tzdir = NULL)
   This will be a location such as \code{"Europe/London"} if one can be
   ascertained.
 
-  A timezone region may be known by several names: for example
+  A time zone region may be known by several names: for example
   \samp{"Europe/London"} is also known as \samp{GB}, \samp{GB-Eire},
   \samp{Europe/Belfast}, \samp{Europe/Guernsey},
   \samp{Europe/Isle_of_Man} and \samp{Europe/Jersey}.  A few regions
-  are also known by a summary of their timezone,
+  are also known by a summary of their time zone,
   e.g.\sspace{}\samp{PST8PDT} is an alias for
   \samp{America/Los_Angeles}.
 
@@ -135,7 +144,7 @@ OlsonNames(tzdir = NULL)
   POSIX standard allows only one or two abbreviations per time zone, so
   you may see the current abbreviation(s) used for older times.
 
-  For some time zones abbeviations are like \samp{-03} and
+  For some time zones abbreviations are like \samp{-03} and
   \samp{+0845}: this is done when there is no official abbreviation.
   (Negative values are behind (West of) UTC, as for the \code{"\%z"}
   format for \code{\link{strftime}}.)
@@ -158,8 +167,9 @@ OlsonNames(tzdir = NULL)
   \file{zoneinfo} database: this is also supported by the native
   services on some OSes, e.g.\sspace{}Linux using \code{glibc} except in
   secure modes).
+  %% But not Linux with musl
   
-  Time zones given by name (\emph{via} environemnt variable \env{TZ}, in
+  Time zones given by name (\emph{via} environment variable \env{TZ}, in
   \code{tz} arguments to functions such as \code{\link{as.POSIXlt}} and
   perhaps the system time zone) are loaded from the currently selected
   \file{zoneinfo} database.
@@ -192,7 +202,7 @@ OlsonNames(tzdir = NULL)
   Some systems (notably Linux) have a \command{tzselect} command which
   allows the interactive selection of a supported time zone name.  On
   systems using \command{systemd} (notably Linux), the OS command
-  \command{timedatectl list-timezones} will list all available timezone
+  \command{timedatectl list-timezones} will list all available time zone
   names.
 }
 
