@@ -1627,20 +1627,15 @@ function()
 function()
 {
     mdb <- .make_S3_methods_table_for_base()
-    dg <- deparse(mdb[, 1L])
-    ng <- length(dg) - 1L
-    dc <- deparse(mdb[, 2L])
-    nc <- length(dc) - 1L
-    c("cbind(generic =",
-      paste0(c("      ", rep.int("        ", ng)),
-             dg,
-             c(rep.int("", ng), ",")),
-      "      class =",
-      paste0(c("      ", rep.int("        ", nc)),
-             dc,
-             c(rep.int("", nc), ")")))
+    n <- nrow(mdb)
+    c(sprintf("%s\"%s\", \"%s\"%s",
+              c("matrix(c(", rep.int("         ", n - 1L)),
+              mdb[, 1L],
+              mdb[, 2L],
+              c(rep.int(",", n - 1L), "),")),
+      "       ncol = 2L, byrow = TRUE,",
+      "       dimnames = list(NULL, c(\"generic\", \"class\")))")
 }
-
 
 ### ** .package_apply
 
