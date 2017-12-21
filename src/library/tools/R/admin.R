@@ -947,15 +947,16 @@ checkRdaFiles <- function(paths)
         res[p, "compress"] <- if(all(magic[1:2] == c(0x1f, 0x8b))) "gzip"
         else if(rawToChar(magic[1:3]) == "BZh") "bzip2"
         else if(magic[1L] == 0xFD && rawToChar(magic[2:5]) == "7zXZ") "xz"
-        else if(grepl("RD[ABX][12]", rawToChar(magic), useBytes = TRUE)) "none"
+        else if(grepl("RD[ABX][1-9]", rawToChar(magic), useBytes = TRUE)) "none"
         else "unknown"
         con <- gzfile(p)
         magic <- readChar(con, 5L, useBytes = TRUE)
         close(con)
-        res[p, "ASCII"]  <- if (grepl("RD[ABX][12]", magic, useBytes = TRUE))
-            substr(magic, 3, 3) == "A" else NA
-        ver <- sub("(RD[ABX])([12]*)", "\\2", magic, useBytes = TRUE)
-        res$version <- as.integer(ver)
+        if (grepl("RD[ABX][1-9]", magic, useBytes = TRUE)) {
+            res[p, "ASCII"]  <- substr(magic, 3, 3) == "A"
+            ver <- sub("(RD[ABX])([1-9])", "\\2", magic, useBytes = TRUE)
+            res$version <- as.integer(ver)
+        }
     }
     res
 }
@@ -964,7 +965,7 @@ checkRdaFiles <- function(paths)
 
 resaveRdaFiles <- function(paths,
                            compress = c("auto", "gzip", "bzip2", "xz"),
-                           compression_level)
+                           compression_level, version = NULL)
 {
     if(length(paths) == 1L && dir.exists(paths))
         paths <- Sys.glob(c(file.path(paths, "*.rda"),
@@ -977,16 +978,17 @@ resaveRdaFiles <- function(paths,
         suppressPackageStartupMessages(load(p, envir = env))
         if(compress == "auto") {
             f1 <- tempfile()
-            save(file = f1, list = ls(env, all.names = TRUE), envir = env)
+            save(file = f1, list = ls(env, all.names = TRUE), envir = env,
+                 version = version)
             f2 <- tempfile()
             save(file = f2, list = ls(env, all.names = TRUE), envir = env,
-                 compress = "bzip2")
+                 compress = "bzip2", version = version)
             ss <- file.size(c(f1, f2)) * c(0.9, 1.0)
             names(ss) <- c(f1, f2)
             if(ss[1L] > 10240) {
                 f3 <- tempfile()
                 save(file = f3, list = ls(env, all.names = TRUE), envir = env,
-                     compress = "xz")
+                     compress = "xz", version = version)
                 ss <- c(ss, file.size(f3))
 		names(ss) <- c(f1, f2, f3)
             }
@@ -996,7 +998,8 @@ resaveRdaFiles <- function(paths,
             unlink(nm)
         } else
             save(file = p, list = ls(env, all.names = TRUE), envir = env,
-                 compress = compress, compression_level = compression_level)
+                 compress = compress, compression_level = compression_level,
+                 version = version)
     }
 }
 

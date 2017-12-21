@@ -253,6 +253,10 @@
       \item New function \code{packageDate()} which tries to get a valid
       \code{"Date"} object from a package \file{DESCRIPTION} file,
       thanks to suggestions in \PR{17324}.
+      
+      \item \code{tools::resaveRdaFiles()} gains a \code{version}
+      argument, for use when packages should remain compatible with
+      earlier versions of \R.
     }
   }
 
