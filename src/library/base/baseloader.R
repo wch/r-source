@@ -139,6 +139,5 @@ local({
     env <- .BaseNamespaceEnv
     table <- env[[".__S3MethodsTable__."]]
     for(m in methods)
-        delayedAssign(m, get(m, env), assign.env = table)
+        assign(m, get(m, env), envir = table)
 })
-          
