@@ -6911,6 +6911,14 @@ function(dir, localOnly = FALSE)
         }
         if(bad)
             out$authors_at_R_calls <- aar
+        else {
+            ## Catch messages about deprecated arguments in person() calls.
+            aar <- meta["Authors@R"]
+            aut <- tryCatch(.eval_with_capture(utils:::.read_authors_at_R_field(aar)),
+                            error = identity)
+            if(!inherits(aut, "error") && length(msg <- aut$message))
+                out$authors_at_R_message <- msg
+        }
     }
 
     ## Check Title field.
@@ -7568,6 +7576,11 @@ function(x, ...)
       },
       if(length(y <- x$authors_at_R_calls)) {
           "Authors@R field should be a call to person(), or combine such calls."
+      },
+      if(length(y <- x$authors_at_R_message)) {
+          paste(c("Authors@R field gives persons with deprecated elements:",
+                  paste0("  ", y)),
+                collapse = "\n")
       },
       if(length(y <- x$vignette_sources_only_in_inst_doc)) {
           if(identical(x$have_vignettes_dir, FALSE))
