@@ -5171,6 +5171,27 @@ POSIX function.  An adequately portable preamble is
 #endif
 @end example
 
+@item
+Compiler writers feel free to implement features from later standards
+than the one specified (if any), so for example they may implement or
+warn on C++11, C++14 or even C++17 features.  Portable code will not use
+such features -- it can be hard to know what they are but the most
+common warnings are
+@example
+'register' storage class specifier is deprecated and incompatible with C++17
+
+ISO C++11 does not allow conversion from string literal to 'char *'
+@end example
+@noindent
+(where conversion should be to @code{const char *}).  Keyword @code{register}
+was deprecated in C++11 and removed in C++17.
+
+@item
+The C99 keyword @code{restrict} is not part of@footnote{it is allowed but
+ignored in system headers.} any C++ standard and rejected by some C++
+compilers.  Be careful about including C99 headers from included sources
+in C++ code.
+
 @end itemize
 
 Some additional information for C++ is available at
