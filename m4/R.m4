@@ -4113,12 +4113,19 @@ fi
 if test "${G77}" = yes; then
   R_SYSTEM_ABI="${R_SYSTEM_ABI},gfortran"
 else
-case "${host_os}" in
-  solaris*)
-  R_SYSTEM_ABI="${R_SYSTEM_ABI},solf95"
-  ;;
+case "${F77}" in
+  *flang)
+    R_SYSTEM_ABI="${R_SYSTEM_ABI},flang"
+    ;;
   *)
-  R_SYSTEM_ABI="${R_SYSTEM_ABI},?"
+    case "${host_os}" in
+      solaris*)
+      R_SYSTEM_ABI="${R_SYSTEM_ABI},solf95"
+      ;;
+      *)
+      R_SYSTEM_ABI="${R_SYSTEM_ABI},?"
+    esac
+    ;;
 esac
 fi
 ## Fortran 90/95: AC_PROG_FC does not seem to set a shell variable
@@ -4127,12 +4134,19 @@ fi
 if test "${ac_cv_fc_compiler_gnu}" = yes; then
   R_SYSTEM_ABI="${R_SYSTEM_ABI},gfortran"
 else
-case "${host_os}" in
-  solaris*)
-  R_SYSTEM_ABI="${R_SYSTEM_ABI},solf95"
-  ;;
+case "${F77}" in
+  *flang)
+    R_SYSTEM_ABI="${R_SYSTEM_ABI},flang"
+    ;;
   *)
-  R_SYSTEM_ABI="${R_SYSTEM_ABI},?"
+    case "${host_os}" in
+      solaris*)
+      R_SYSTEM_ABI="${R_SYSTEM_ABI},solf95"
+      ;;
+      *)
+      R_SYSTEM_ABI="${R_SYSTEM_ABI},?"
+    esac
+    ;;
 esac
 fi
 AC_SUBST(R_SYSTEM_ABI)

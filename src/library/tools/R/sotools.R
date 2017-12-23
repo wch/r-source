@@ -110,6 +110,11 @@ so_symbol_names_table <-
       "linux, Fortran, gfortran, stop, _gfortran_stop_numeric_f08",
       "linux, Fortran, gfortran, stop, _gfortran_stop_string",
       "linux, Fortran, gfortran, rand, _gfortran_rand",
+      "linux, Fortran, flang, write, f90io_print_init",
+      "linux, Fortran, flang, print, f90io_print_init",
+      "linux, Fortran, flang, stop, f90_stop",
+      "linux, Fortran, flang, stop, f90_stop08",
+      "linux, Fortran, flang, rand, rand",
 
       "osx, C, gcc, abort, _abort",
       "osx, C, gcc, assert, ___assert_rtn",
