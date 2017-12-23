@@ -27662,6 +27662,7 @@ if test "${GCC}" = yes; then
   esac
   shlib_ldflags="-shared"
 fi
+## G77 includes gfortran
 if test "${G77}" = yes; then
   case "${host_cpu}" in
     sparc*|ppc64*|powerpc64*|s390*)
@@ -27672,6 +27673,12 @@ if test "${G77}" = yes; then
       ;;
   esac
 fi
+## Assume flang is the same as clang (it is a modified front end)
+case "${F77}" in
+  *flang)
+    fpicflags=${cpicflags}
+    ;;
+esac
 if test "${GXX}" = yes; then
   case "${host_cpu}" in
     sparc*|ppc64*|powerpc64*|s390*)
@@ -27891,6 +27898,7 @@ $as_echo "$as_me: WARNING: Use of flat namespace is requested by user." >&2;}
         if test "${GCC}" = yes; then
           cpicflags="-fPIC"
         fi
+	## G77 includes gfortran
         if test "${G77}" = yes; then
           fpicflags="-fPIC"
         fi
@@ -27928,7 +27936,7 @@ $as_echo "$as_me: WARNING: Use of flat namespace is requested by user." >&2;}
         fi
       fi
     fi
-    ## G77 include gfortran
+    ## G77 includes gfortran
     if test "${G77}" != yes; then
       fpicflags="-PIC"
     else
@@ -46273,6 +46281,9 @@ case "${host_os}" in
       ## Portland Group
       *pgf95|*pgf90)
         fcpicflags="-fpic"
+        ;;
+      *flang)
+        fcpicflags=${cpicflags}
         ;;
     esac
     ;;
