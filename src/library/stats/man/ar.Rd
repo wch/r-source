@@ -1,9 +1,10 @@
 % File src/library/stats/man/ar.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ar}
+\title{Fit Autoregressive Models to Time Series}
 \alias{ar}
 \alias{ar.burg}
 \alias{ar.burg.default}
@@ -15,7 +16,6 @@
 \alias{print.ar}
 \alias{predict.ar}
 \concept{autoregression}
-\title{Fit Autoregressive Models to Time Series}
 \usage{
 ar(x, aic = TRUE, order.max = NULL,
    method = c("yule-walker", "burg", "ols", "mle", "yw"),
@@ -42,25 +42,28 @@ ar.mle(x, aic = TRUE, order.max = NULL, na.action = na.fail,
 \method{predict}{ar}(object, newdata, n.ahead = 1, se.fit = TRUE, \dots)
 }
 \arguments{
-  \item{x}{A univariate or multivariate time series.}
+  \item{x}{a univariate or multivariate time series.}
 
-  \item{aic}{Logical flag.  If \code{TRUE} then the Akaike Information
+  \item{aic}{\code{\link{logical}}.  If \code{TRUE} then the Akaike Information
     Criterion is used to choose the order of the autoregressive
-    model. If \code{FALSE}, the model of order \code{order.max} is
+    model.  If \code{FALSE}, the model of order \code{order.max} is
     fitted.}
 
-  \item{order.max}{Maximum order (or order) of model to fit. Defaults
+  \item{order.max}{maximum order (or order) of model to fit.  Defaults
     to the smaller of \eqn{N-1} and \eqn{10\log_{10}(N)}{10*log10(N)}
-    where \eqn{N} is the number of observations
+    where \eqn{N} is the number of non-missing observations
     except for \code{method = "mle"} where it is the minimum of this
     quantity and 12.}
 
-  \item{method}{Character string giving the method used to fit the
+  \item{method}{character string specifying the method to fit the
     model.  Must be one of the strings in the default argument
     (the first few characters are sufficient).  Defaults to
     \code{"yule-walker"}.}
 
-  \item{na.action}{function to be called to handle missing values.}
+  \item{na.action}{function to be called to handle missing
+    values.  Currently, via \code{na.action = na.pass}, only Yule-Walker
+    method can handle missing values which must be consistent within a
+    time point: either all variables must be missing or none.}
 
   \item{demean}{should a mean be estimated during fitting?}
 
@@ -72,7 +75,7 @@ ar.mle(x, aic = TRUE, order.max = NULL, na.action = na.fail,
 
   \item{\dots}{additional arguments for specific methods.}
 
-  \item{object}{a fit from \code{ar}.}
+  \item{object}{a fit from \code{ar()}.}
 
   \item{newdata}{data to which to apply the prediction.}
 
@@ -98,7 +101,7 @@ ar.mle(x, aic = TRUE, order.max = NULL, na.action = na.fail,
   true maximum likelihood estimation. The AIC is computed as if the variance
   estimate were the MLE, omitting the determinant term from the
   likelihood. Note that this is not the same as the Gaussian likelihood
-  evaluated at the estimated parameter values. In \code{ar.yw} the
+  evaluated at the estimated parameter values.  In \code{ar.yw} the
   variance matrix of the innovations is computed from the fitted
   coefficients and the autocovariance of \code{x}.
 
@@ -130,7 +133,9 @@ ar.mle(x, aic = TRUE, order.max = NULL, na.action = na.fail,
     \code{x - x.mean}.}
   \item{aic}{The differences in AIC between each model and the
     best-fitting model.  Note that the latter can have an AIC of \code{-Inf}.}
-  \item{n.used}{The number of observations in the time series.}
+  \item{n.used}{The number of observations in the time series, including
+    missing.}
+  \item{n.obs}{The number of non-missing observations in the time series.}
   \item{order.max}{The value of the \code{order.max} argument.}
   \item{partialacf}{The estimate of the partial autocorrelation function
     up to lag \code{order.max}.}
@@ -146,7 +151,7 @@ ar.mle(x, aic = TRUE, order.max = NULL, na.action = na.fail,
 
   For \code{predict.ar}, a time series of predictions, or if
   \code{se.fit = TRUE}, a list with components \code{pred}, the
-  predictions, and \code{se}, the estimated standard errors. Both
+  predictions, and \code{se}, the estimated standard errors.  Both
   components are time series.
 }
 \author{
@@ -158,6 +163,9 @@ ar.mle(x, aic = TRUE, order.max = NULL, na.action = na.fail,
   Only the univariate case of \code{ar.mle} is implemented.
 
   Fitting by \code{method="mle"} to long series can be very slow.
+
+  If \code{x} contains missing values, see \code{\link{NA}}, also consider
+  using \code{\link{arima}()}, possibly with \code{method = "ML"}.
 }
 
 \seealso{

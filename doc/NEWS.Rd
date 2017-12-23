@@ -11,8 +11,8 @@
     \itemize{
       \item The default version for \code{save()}, \code{saveRDS()},
       \code{serialize()} and similar has been changed to \samp{3}.
-      Objects saved with version 3 are not readable by eariier versions of
-      \R. 
+      Objects saved with version 3 are not readable by earlier versions
+      of \R.
 
       This includes saved workspaces.
     }
@@ -253,10 +253,16 @@
       \item New function \code{packageDate()} which tries to get a valid
       \code{"Date"} object from a package \file{DESCRIPTION} file,
       thanks to suggestions in \PR{17324}.
-      
+
       \item \code{tools::resaveRdaFiles()} gains a \code{version}
       argument, for use when packages should remain compatible with
       earlier versions of \R.
+
+      \item \code{ar.yw(x)} and hence by default \code{ar(x)} now work
+      when \code{x} has \code{NA}s, mostly thanks to a patch by Pavel
+      Krivitsky in \PR{17366}.   The \code{ar.yw.default()}'s AIC
+      computations have become more efficient by using
+      \code{determinant()}.
     }
   }
 
