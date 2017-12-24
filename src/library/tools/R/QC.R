@@ -7372,14 +7372,15 @@ function(dir, localOnly = FALSE)
     db <- tryCatch(CRAN_package_db(), error = identity)
     if(inherits(db, "error")) return(out)
 
-    meta0 <- unlist(db[db[, "Package"] == package, ])
-
+    meta1 <- db[db[, "Package"] == package, ]
+    ## this can have multiple entries, e.g. for recommended packages.
+    meta0 <- unlist(meta1[1L, ])
     m_m <- as.vector(meta["Maintainer"]) # drop name
     m_d <- meta0["Maintainer"]
     # There may be white space differences here
     m_m_1 <- gsub("[[:space:]]+", " ", m_m)
     m_d_1 <- gsub("[[:space:]]+", " ", m_d)
-    if(!all(m_m_1== m_d_1)) {
+    if(!all(m_m_1 == m_d_1)) {
         ## strwrap is used below, so we need to worry about encodings.
         ## m_d is in UTF-8 already
         if(Encoding(m_m) == "latin1") m_m <- iconv(m_m, "latin1")
