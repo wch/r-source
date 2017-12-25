@@ -5114,7 +5114,7 @@ setRlibs <-
         Sys.setenv("_R_CHECK_PRAGMAS_" = "TRUE")
         Sys.setenv("_R_CHECK_COMPILATION_FLAGS_" = "TRUE")
         if(!nzchar(Sys.getenv("_R_CHECK_R_DEPENDS_")))
-            Sys.setenv("_R_CHECK_R_DEPENDS_" = "TRUE")
+            Sys.setenv("_R_CHECK_R_DEPENDS_" = "warn")
         R_check_vc_dirs <- TRUE
         R_check_executables_exclusions <- FALSE
         R_check_doc_sizes2 <- TRUE
