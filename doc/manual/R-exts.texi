@@ -4854,7 +4854,7 @@ so it is strongly recommended to check in a UTF-8 locale.
 @subsection Portable C and C++ code
 
 Writing portable C and C++ code is mainly a matter of observing the
-standards (C99, C++98 or where declared C++11/14) and testing that
+standards (C99, C++98 or where declared C++11/14/17) and testing that
 extensions (such as POSIX functions) are supported.
 
 Note that the `TR1' C++ extensions are not part of any of these
@@ -5006,12 +5006,6 @@ only one could be included.
 @item
 Variable-length arrays are C99, not supported by C++98 nor by the C++
 compilers in use with @R{} on some platforms.
-
-@item
-The @code{restrict} qualifier is C99/C11 but not part of C++11 and not
-supported by some C++ compilers used with @R{}.
-@c but package treatSens attempted to use it.
-@c http://stackoverflow.com/questions/6434549/does-c11-add-the-c99-restrict-specifier-if-not-why-not
 
 @item
 Be careful to include the headers which define the functions you use.
@@ -5187,10 +5181,23 @@ ISO C++11 does not allow conversion from string literal to 'char *'
 was deprecated in C++11 and removed in C++17.
 
 @item
-The C99 keyword @code{restrict} is not part of@footnote{it is allowed but
-ignored in system headers.} any C++ standard and rejected by some C++
-compilers.  Be careful about including C99 headers from included sources
-in C++ code.
+Be careful about including C headers in C++ code.  Issues include
+@itemize
+@item
+Use of the @code{register} storage class specifier (see the previous
+item).
+@item
+The C99 keyword @code{restrict} is not part of@footnote{it is allowed
+but ignored in system headers.} any C++ standard and is rejected by some
+C++ compilers.
+@c but package treatSens attempted to use it.
+@c http://stackoverflow.com/questions/6434549/does-c11-add-the-c99-restrict-specifier-if-not-why-not
+@item
+Inclusion by such headers of C-style headers such as @file{math.h} (see above).
+@end itemize
+@noindent
+The most portable way to interface to other software with a C API is to
+use C code (which can normally be mixed with C++ code in a package).
 
 @end itemize
 
