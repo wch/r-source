@@ -1812,8 +1812,8 @@ function(x, dfile)
         ## content.
         ## Cf. tools::showNonASCII():
         asc <- iconv(x, "latin1", "ASCII")
-        ind <- is.na(asc) | (asc != x)
-        if(any(ind)) {
+        ## fields might have been NA to start with, so use identical.
+        if(!identical(asc, x)) {
             warning(gettext("Unknown encoding with non-ASCII data: converting to ASCII"),
                     domain = NA)
             x[ind] <- iconv(x[ind], "latin1", "ASCII", sub = "byte")
