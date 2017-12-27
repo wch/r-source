@@ -15,7 +15,7 @@
       avoid the search.
 
       \item The version of LAPACK included in the sources has been
-      updated to 3.8.0 (for the routines used by \R a very minor bug-fix
+      updated to 3.8.0 (for the routines used by \R, a very minor bug-fix
       change).
     }
   }
@@ -24,7 +24,10 @@
     \itemize{
       \item \code{Sys.timezone(location = FALSE)} (which was a stop-gap
       measure for Windows long ago) is deprecated.  It no longer returns
-      the value of environment variable \env{TZ} (a location).
+      the value of environment variable \env{TZ} (usually a location).
+
+      \item Legacy support of \command{make} macros such as \samp{CXX1X}
+      is formally deprecated: use the \samp{CXX11} forms instead.
     }
   }
 
