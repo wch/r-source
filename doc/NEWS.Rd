@@ -291,6 +291,12 @@
       \item Support for a system Java on macOS has been
       removed --- install a fairly recent Oracle Java (see \sQuote{R
 	Installation and Administration} §C.3.2).
+
+      \item \code{configure} will use \command{pkg-config} to find the
+      flags to link to \code{jpeg} if available (as it should be for
+      \code{jpeg-9c} and \code{libjpeg-turbo}).  (This amends the code
+      added in \R 3.3.0 as module name in \code{jpeg-9c} is not what
+      that tested for.)
     }
   }
 
