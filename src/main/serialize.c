@@ -2134,6 +2134,67 @@ SEXP R_Unserialize(R_inpstream_t stream)
     return obj;
 }
 
+SEXP R_SerializeInfo(R_inpstream_t stream)
+{
+    int version;
+    int writer_version, release_version, vv, vp, vs;
+    int anslen = 4;
+    SEXP ans, names;
+    char buf[128];
+
+    InFormat(stream);
+
+    /* Read the version numbers */
+    version = InInteger(stream);
+    if (version == 3)
+	anslen++;
+    writer_version = InInteger(stream);
+    release_version = InInteger(stream);
+
+    PROTECT(ans = allocVector(VECSXP, anslen));
+    PROTECT(names = allocVector(STRSXP, anslen));
+    SET_STRING_ELT(names, 0, mkChar("version"));
+    SET_VECTOR_ELT(ans, 0, ScalarInteger(version));
+    SET_STRING_ELT(names, 1, mkChar("writer_version"));
+    DecodeVersion(writer_version, &vv, &vp, &vs);
+    snprintf(buf, 128, "%d.%d.%d", vv, vp, vs); 
+    SET_VECTOR_ELT(ans, 1, mkString(buf));
+    SET_STRING_ELT(names, 2, mkChar("min_release_version"));
+    if (release_version < 0)
+	/* unreleased version of R */
+	SET_VECTOR_ELT(ans, 2, ScalarString(NA_STRING));
+    else { 
+	DecodeVersion(release_version, &vv, &vp, &vs);
+	snprintf(buf, 128, "%d.%d.%d", vv, vp, vs);
+	SET_VECTOR_ELT(ans, 2, mkString(buf));
+    }
+    SET_STRING_ELT(names, 3, mkChar("format"));
+    switch(stream->type) {
+    case R_pstream_ascii_format:
+	SET_VECTOR_ELT(ans, 3, mkString("ascii"));
+	break;
+    case R_pstream_binary_format:
+	SET_VECTOR_ELT(ans, 3, mkString("binary"));
+	break;
+    case R_pstream_xdr_format:
+	SET_VECTOR_ELT(ans, 3, mkString("xdr"));
+	break;
+    default:
+	error(_("unknown input format"));
+    }
+    if (version == 3) {
+	SET_STRING_ELT(names, 4, mkChar("native_encoding"));
+	int nelen = InInteger(stream);
+	char nbuf[nelen + 1];
+	InString(stream, nbuf, nelen);
+	nbuf[nelen] = '\0';
+	SET_VECTOR_ELT(ans, 4, mkString(nbuf));
+    }
+    setAttrib(ans, R_NamesSymbol, names);
+    UNPROTECT(2); /* ans, names */
+
+    return ans;
+}
 
 /*
  * Generic Persistent Stream Initializers
@@ -2477,6 +2538,47 @@ do_unserializeFromConn(SEXP call, SEXP op, SEXP args, SEXP env)
 
     R_InitConnInPStream(&in, con, R_pstream_any_format, hook, fun);
     PROTECT(ans = R_Unserialize(&in)); /* paranoia about next line */
+    if(!wasopen) {endcontext(&cntxt); con->close(con);}
+    UNPROTECT(1);
+    return ans;
+}
+
+SEXP attribute_hidden
+do_serializeInfoFromConn(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    /* serializeInfoFromConn(conn) */
+
+    struct R_inpstream_st in;
+    Rconnection con;
+    SEXP ans;
+    Rboolean wasopen;
+    RCNTXT cntxt;
+
+    checkArity(op, args);
+
+    con = getConnection(asInteger(CAR(args)));
+
+    /* Now we need to do some sanity checking of the arguments.
+       A filename will already have been opened, so anything
+       not open was specified as a connection directly.
+     */
+    wasopen = con->isopen;
+    if(!wasopen) {
+	char mode[5];
+	strcpy(mode, con->mode);
+	strcpy(con->mode, "rb");
+	if(!con->open(con)) error(_("cannot open the connection"));
+	strcpy(con->mode, mode);
+	/* Set up a context which will close the connection on error */
+	begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
+		     R_NilValue, R_NilValue);
+	cntxt.cend = &con_cleanup;
+	cntxt.cenddata = con;
+    }
+    if(!con->canread) error(_("connection not open for reading"));
+
+    R_InitConnInPStream(&in, con, R_pstream_any_format, NULL, R_NilValue);
+    PROTECT(ans = R_SerializeInfo(&in)); /* paranoia about next line */
     if(!wasopen) {endcontext(&cntxt); con->close(con);}
     UNPROTECT(1);
     return ans;

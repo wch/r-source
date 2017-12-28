@@ -1192,6 +1192,7 @@ void R_InitConnInPStream(R_inpstream_t stream,  Rconnection con,
 
 void R_Serialize(SEXP s, R_outpstream_t ops);
 SEXP R_Unserialize(R_inpstream_t ips);
+SEXP R_SerializeInfo(R_inpstream_t ips);
 
 /* slot management (in attrib.c) */
 SEXP R_do_slot(SEXP obj, SEXP name);

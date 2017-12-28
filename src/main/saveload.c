@@ -2414,3 +2414,57 @@ SEXP attribute_hidden do_loadFromConn2(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("the input does not start with a magic number compatible with loading from a connection"));
     return res;
 }
+
+SEXP attribute_hidden do_loadInfoFromConn2(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    /* loadInfoFromConn2(conn) */
+
+    struct R_inpstream_st in;
+    Rconnection con;
+    SEXP aenv, res = R_NilValue;
+    unsigned char buf[6];
+    size_t count;
+    Rboolean wasopen;
+    RCNTXT cntxt;
+
+    checkArity(op, args);
+
+    con = getConnection(asInteger(CAR(args)));
+
+    wasopen = con->isopen;
+    if(!wasopen) {
+	char mode[5];
+	strcpy(mode, con->mode);
+	strcpy(con->mode, "rb");
+	if(!con->open(con)) error(_("cannot open the connection"));
+	strcpy(con->mode, mode);
+	/* set up a context which will close the connection
+	   if there is an error */
+	begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
+		     R_NilValue, R_NilValue);
+	cntxt.cend = &con_cleanup;
+	cntxt.cenddata = con;
+    }
+    if(!con->canread) error(_("connection not open for reading"));
+    if(con->text) error(_("can only load() from a binary connection"));
+
+    /* check magic */
+    memset(buf, 0, 6);
+    count = con->read(buf, sizeof(char), 5, con);
+    if (count == 0) error(_("no input is available"));
+    if (strncmp((char*)buf, "RDA2\n", 5) == 0 ||
+	strncmp((char*)buf, "RDB2\n", 5) == 0 ||
+	strncmp((char*)buf, "RDX2\n", 5) == 0 ||
+	strncmp((char*)buf, "RDA3\n", 5) == 0 ||
+	strncmp((char*)buf, "RDB3\n", 5) == 0 ||
+	strncmp((char*)buf, "RDX3\n", 5) == 0) {
+	R_InitConnInPStream(&in, con, R_pstream_any_format, NULL, NULL);
+	/* PROTECT is paranoia: some close() method might allocate */
+	PROTECT(res = R_SerializeInfo(&in));
+	if(!wasopen) {endcontext(&cntxt); con->close(con);}
+	UNPROTECT(1);
+    } else
+	error(_("the input does not start with a magic number compatible with loading from a connection"));
+    return res;
+}
+
