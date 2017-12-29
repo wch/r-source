@@ -5163,7 +5163,6 @@ setRlibs <-
         Sys.setenv("_R_CHECK_COMPILATION_FLAGS_" = "TRUE")
         if(!nzchar(Sys.getenv("_R_CHECK_R_DEPENDS_")))
             Sys.setenv("_R_CHECK_R_DEPENDS_" = "warn")
-        Sys.setenv("_R_CHECK_SERIALIZATION_" = "TRUE")
         R_check_vc_dirs <- TRUE
         R_check_executables_exclusions <- FALSE
         R_check_doc_sizes2 <- TRUE
@@ -5177,6 +5176,7 @@ setRlibs <-
         do_timings <- TRUE
         R_check_toplevel_files <- TRUE
         R_check_vignettes_skip_run_maybe <- TRUE
+        R_check_serialization <- TRUE
     } else {
         ## do it this way so that INSTALL produces symbols.rds
         ## when called from check but not in general.
