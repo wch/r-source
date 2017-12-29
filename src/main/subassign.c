@@ -1595,7 +1595,6 @@ SEXP attribute_hidden do_subassign_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* duplicate it so that only the local version is mutated. */
     /* This will duplicate more often than necessary, but saves */
     /* over always duplicating. */
-    /* Shouldn't x be protected?  It is (as args is)! */
 
     if (MAYBE_SHARED(CAR(args)))
 	x = SETCAR(args, shallow_duplicate(CAR(args)));
