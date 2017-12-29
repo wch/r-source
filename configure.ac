@@ -2469,7 +2469,6 @@ AC_SUBST(FCLIBS)
 ## OpenMP package stuff (needs to come *after* configuration of all
 ## compilers).
 ## We allow the users to override this for packages only (for now)
-## FIXME: what if SHLIB_OPENMP_?FLAGS is set but empty? (could use -n "${VAR+set}")
 if test "x${shlib_ld_was_given}" = xno -a \
         "${SHLIB_LD}" = "\$(CC)" -a \
         "x${ac_cv_prog_c_openmp}" != "xunsupported" -a \
