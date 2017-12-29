@@ -1577,6 +1577,9 @@ R_possible_dispatch(SEXP call, SEXP op, SEXP args, SEXP rho,
 		for (a = args, b = s; a != R_NilValue; a = CDR(a), b = CDR(b))
 		    SET_PRVALUE(CAR(b), CAR(a));
 		value =  applyClosure(call, value, s, rho, suppliedvars);
+#ifdef ADJUST_ENVIR_REFCNTS
+		unpromiseArgs(s);
+#endif
 		UNPROTECT(2);
 		return value;
 	    } else {
