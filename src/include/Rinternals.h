@@ -260,8 +260,7 @@ struct promsxp_struct {
    fields used to maintain the collector's linked list structures. */
 
 /* Define SWITH_TO_REFCNT to use reference counting instead of the
-   'NAMED' mechanism. This uses the R-devel binary layout. The two
-   'named' field bits are used for the REFCNT, so REFCNTMAX is 3. */
+   'NAMED' mechanism. */
 //#define SWITCH_TO_REFCNT
 
 #if defined(SWITCH_TO_REFCNT) && ! defined(COMPUTE_REFCNT_VALUES)

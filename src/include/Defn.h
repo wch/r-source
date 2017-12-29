@@ -1013,6 +1013,9 @@ extern0 int R_PCRE_limit_recursion;
 # define usemethod		Rf_usemethod
 # define ucstomb		Rf_ucstomb
 # define ucstoutf8		Rf_ucstoutf8
+#ifdef ADJUST_ENVIR_REFCNTS
+# define unpromiseArgs		Rf_unpromiseArgs
+#endif
 # define utf8toucs		Rf_utf8toucs
 # define utf8towcs		Rf_utf8towcs
 # define vectorIndex		Rf_vectorIndex
@@ -1235,6 +1238,9 @@ SEXP type2symbol(SEXPTYPE);
 void unbindVar(SEXP, SEXP);
 #ifdef ALLOW_OLD_SAVE
 void unmarkPhase(void);
+#endif
+#ifdef ADJUST_ENVIR_REFCNTS
+void unpromiseArgs(SEXP);
 #endif
 SEXP R_LookupMethod(SEXP, SEXP, SEXP, SEXP);
 int usemethod(const char *, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP*);
