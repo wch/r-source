@@ -1477,6 +1477,29 @@ static void PrintCall(SEXP call, SEXP rho)
 }
 
 #ifdef ADJUST_ENVIR_REFCNTS
+/* After executing a closure call the environment created for the call
+   may no longer be reachable. If this is the case, then its bindings
+   can be cleared to reduce the reference counts on the binding
+   values.
+
+   The environment will no longer be reachable if it is not being
+   returned as the value of the closure and has no references. It will
+   also no longer be reachable be the case if all references to it are
+   internal cycles through its bindings. A full check for internal
+   cycles would be too expensive, but the two most important cases can
+   be checked at reasonable cost:
+
+   - a promise with no other references, most likely from an
+     unevaluated argument default expression;
+
+   - a closure with no further references and not returned as the
+     value, most likely a local helper function.
+
+   The promises created for a closure call can also be cleared one the
+   call is complete and the promises are no longer reachable. This
+   drops reference counts on the values and the environments.
+*/
+
 static int countCycleRefs(SEXP rho, SEXP val)
 {
     /* check for simple cycles */
@@ -1485,19 +1508,21 @@ static int countCycleRefs(SEXP rho, SEXP val)
 	 b != R_NilValue && REFCNT(b) == 1;
 	 b = CDR(b)) {
 	SEXP v = CAR(b);
-	switch(TYPEOF(v)) {
-	case PROMSXP:
-	    if (REFCNT(v) == 1 && PRENV(v) == rho)
-		crefs++;
-	    break;
-	case CLOSXP:
-	    if (val != v && REFCNT(v) == 1 && CLOENV(v) == rho)
-		crefs++;
-	    break;
-	case ENVSXP: /* is this worth bothering with? */
-	    if (v == rho)
-		crefs++;
-	    break;
+	if (val != v) {
+	    switch(TYPEOF(v)) {
+	    case PROMSXP:
+		if (REFCNT(v) == 1 && PRENV(v) == rho)
+		    crefs++;
+		break;
+	    case CLOSXP:
+		if (REFCNT(v) == 1 && CLOENV(v) == rho)
+		    crefs++;
+		break;
+	    case ENVSXP: /* is this worth bothering with? */
+		if (v == rho)
+		    crefs++;
+		break;
+	    }
 	}
     }
     return crefs;
