@@ -5133,7 +5133,7 @@ setRlibs <-
         config_val_to_logical(Sys.getenv("_R_CHECK_VIGNETTES_SKIP_RUN_MAYBE_",
                                          "FALSE"))
     R_check_serialization <-
-        config_val_to_logical(Sys.getenv("_R_CHECK_SERIALIZATION_", "TRUE"))
+        config_val_to_logical(Sys.getenv("_R_CHECK_SERIALIZATION_", "FALSE"))
 
     if (!nzchar(check_subdirs)) check_subdirs <- R_check_subdirs_strict
 
