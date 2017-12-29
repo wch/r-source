@@ -1,5 +1,5 @@
 
-R version 3.4.2 Patched (2017-11-17 r73741) -- "Short Summer"
+R version 3.4.3 Patched (2017-12-29 r73974) -- "Kite-Eating Tree"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -46,4 +46,4 @@ In bw.bcv(precip) : minimum occurred at one end of the range
 > 
 > proc.time()
    user  system elapsed 
-  0.226   0.038   0.245 
+  0.181   0.035   0.202 

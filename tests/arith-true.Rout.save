@@ -1,5 +1,5 @@
 
-R version 3.4.2 Patched (2017-11-17 r73741) -- "Short Summer"
+R version 3.4.3 Patched (2017-12-29 r73974) -- "Kite-Eating Tree"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -323,5 +323,5 @@ Warning messages:
 > 
 > ## Last Line:
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.329 0.002 0.332 0 0 
+Time elapsed:  0.279 0.007 0.287 0 0 
 > 

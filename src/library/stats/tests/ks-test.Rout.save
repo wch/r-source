@@ -1,5 +1,5 @@
 
-R version 3.4.2 Patched (2017-11-17 r73741) -- "Short Summer"
+R version 3.4.3 Patched (2017-12-29 r73974) -- "Kite-Eating Tree"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -362,4 +362,4 @@ difference in location  3.741417e-05  3.741417e-05  3.741417e-05
 > 
 > proc.time()
    user  system elapsed 
-  0.397   0.033   0.413 
+  0.377   0.024   0.391 

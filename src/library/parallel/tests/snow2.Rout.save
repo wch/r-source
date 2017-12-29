@@ -1,5 +1,5 @@
 
-R version 3.4.2 Patched (2017-11-17 r73741) -- "Short Summer"
+R version 3.4.3 Patched (2017-12-29 r73974) -- "Kite-Eating Tree"
 Copyright (C) 2017 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -50,4 +50,4 @@ Calculations on Transformed Scale;  Intervals on Original Scale
 > 
 > proc.time()
    user  system elapsed 
-  0.218   0.049   0.872 
+  0.177   0.039   0.748 
