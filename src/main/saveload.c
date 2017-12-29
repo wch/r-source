@@ -2421,7 +2421,7 @@ SEXP attribute_hidden do_loadInfoFromConn2(SEXP call, SEXP op, SEXP args, SEXP e
 
     struct R_inpstream_st in;
     Rconnection con;
-    SEXP aenv, res = R_NilValue;
+    SEXP res = R_NilValue;
     unsigned char buf[6];
     size_t count;
     Rboolean wasopen;
