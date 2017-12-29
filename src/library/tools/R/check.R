@@ -347,7 +347,7 @@ setRlibs <-
 
         if (!extra_arch) {
             if(dir.exists("build")) check_build()
-            check_meta()  # Check DESCRIPTION meta-information.
+            db <- check_meta()  # Check DESCRIPTION meta-information.
             check_top_level()
             check_detritus()
             check_indices()
@@ -678,6 +678,51 @@ setRlibs <-
         } else resultLog(Log, "OK")
     }
 
+    ## Look for serialized objects, and check their version
+
+    ## These are most commonly data/*.{Rdata,rda}, R/sysdata.rda files,
+    ## and build/vignette.rds
+    ## But packages have other .rds files in many places.
+    ##
+    ## We need to so this before installation, which may create
+    ## src/symbols.rds in the sources.
+    check_serialization <- function(allfiles)
+    {
+        getVerLoad <- function(file)
+        {
+            ## This could look at the magic number, but for a short
+            ## while version 3 files were produced with a version-2
+            ## magic number.
+            con <- gzfile(file, "rb"); on.exit(close(con))
+            ## The .Internal gives an errror on version-1 files
+            tryCatch(.Internal(loadInfoFromConn2(con))$version,
+                     error = function(e) 1L)
+        }
+        getVerSer <- function(file)
+        {
+            con <- gzfile(file, "rb"); on.exit(close(con))
+            ## In case this is not a serialized object
+            tryCatch(.Internal(serializeInfoFromConn(con))$version,
+                     error = function(e) 0L)
+        }
+        checkingLog(Log, "serialized R objects in the sources")
+        loadfiles <- grep("[.](rda|RData)$", allfiles, value = TRUE)
+        serfiles <- grep("[.]rds$", allfiles, value = TRUE)
+        vers1 <- sapply(loadfiles, getVerLoad)
+        vers2 <- sapply(serfiles, getVerSer)
+        bad <- c(vers1, vers2)
+        bad <- names(bad[bad >= 3L])
+        if(length(bad)) {
+            msg <- "Found file(s) with version 3 serialization:"
+            warningLog(Log, msg)
+            printLog0(Log, paste0(.pretty_format(sort(bad)), "\n"))
+            wrapLog("Such files are only readable in R >= 3.5.0.\n",
+                    "Recreate them with R < 3.5.0 or",
+                    "save(version = 2) or saveRDS(version = 2)",
+                    "as appropriate")
+        } else resultLog(Log, "OK")
+    }
+
     check_meta <- function()
     {
         ## If we just installed the package (via R CMD INSTALL), we already
@@ -903,6 +948,7 @@ setRlibs <-
             }
         }
         if (!any) resultLog(Log, "OK")
+        return(db)
     }
 
     check_build <- function()
@@ -5086,6 +5132,8 @@ setRlibs <-
     R_check_vignettes_skip_run_maybe <-
         config_val_to_logical(Sys.getenv("_R_CHECK_VIGNETTES_SKIP_RUN_MAYBE_",
                                          "FALSE"))
+    R_check_serialization <-
+        config_val_to_logical(Sys.getenv("_R_CHECK_SERIALIZATION_", "TRUE"))
 
     if (!nzchar(check_subdirs)) check_subdirs <- R_check_subdirs_strict
 
@@ -5115,6 +5163,7 @@ setRlibs <-
         Sys.setenv("_R_CHECK_COMPILATION_FLAGS_" = "TRUE")
         if(!nzchar(Sys.getenv("_R_CHECK_R_DEPENDS_")))
             Sys.setenv("_R_CHECK_R_DEPENDS_" = "warn")
+        Sys.setenv("_R_CHECK_SERIALIZATION_" = "TRUE")
         R_check_vc_dirs <- TRUE
         R_check_executables_exclusions <- FALSE
         R_check_doc_sizes2 <- TRUE
@@ -5422,6 +5471,16 @@ setRlibs <-
 	    setwd(pkgdir)
             allfiles <- check_file_names()
             if (R_check_permissions) check_permissions(allfiles)
+            if (!is_base_pkg && R_check_serialization) {
+                ## We should not not do this if there is a dependence
+                ## on R >= 3.5.0, and we have to check that on the sources.
+                db <- .read_description("DESCRIPTION")
+                Rver <-.split_description(db, verbose = TRUE)$Rdepends2
+                if(length(Rver) && Rver[[1L]]$op == ">="
+                   && Rver[[1L]]$version >= "3.5.0") {
+                       ## skip
+                } else check_serialization(allfiles)
+            }
 	    setwd(startdir)
 
             ## record this before installation.

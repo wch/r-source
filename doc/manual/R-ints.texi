@@ -4176,6 +4176,13 @@ will also block its reverse dependencies.  Possible values
 @samp{"note"}, @samp{"warn"} and logical values (where currently true
 values are equivalent to @samp{"note"}).
 Default: false (but @samp{"warn"} for @option{--as-cran}).
+
+@item _R_CHECK_SERIALIZATION_
+Check that serialized @R{} objects in the package sources were
+serialized with version 2 and there is no dependence on @samp{R >=
+3.5.0}.  (Version 3 is in use as from @R{} 3.5.0 but should only be used
+when necessary.)
+Default: false (but true for CRAN submission checks).
 @end vtable
 
 CRAN's submission checks use something like
