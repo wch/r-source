@@ -4815,6 +4815,18 @@ implement all of them for Fortran compilation: it also accepts most
 PGI-style flags such as @option{-mp} for OpenMP.  It currently produces
 few diagnostics even with @option{-Wall -pedantic}.
 
+@command{flang}'d Fortran runtime is compiled against OpenMP and it
+seems this conflicts with using OpenMP in @R{}.  So it may be necessary
+to disable the latter by
+@example
+R_OPENMP_CFLAGS=
+SHLIB_OPENMP_CFLAGS=
+SHLIB_OPENMP_CXXFLAGS=
+SHLIB_OPENMP_FCFLAGS=
+SHLIB_OPENMP_FFLAGS=
+@end example
+
+
 @node Intel compilers,  , Clang, Linux
 @subsection Intel compilers
 
