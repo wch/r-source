@@ -1477,20 +1477,53 @@ static void PrintCall(SEXP call, SEXP rho)
 }
 
 #ifdef ADJUST_ENVIR_REFCNTS
-static R_INLINE void R_CleanupEnvir(SEXP newrho, SEXP val)
+static int countCycleRefs(SEXP rho, SEXP val)
 {
-    if (val != newrho && REFCNT(newrho) == 0) {
-	for (SEXP b = FRAME(newrho);
-	     b != R_NilValue && REFCNT(b) == 1;
-	     b = CDR(b)) {
-	    SEXP v = CAR(b);
-	    if (TYPEOF(v) == PROMSXP && REFCNT(v) == 1) {
-		SET_PRVALUE(v, R_UnboundValue);
-		SET_PRENV(v, R_NilValue);
-	    }
-	    SETCAR(b, R_NilValue);
+    /* check for simple cycles */
+    int crefs = 0;
+    for (SEXP b = FRAME(rho);
+	 b != R_NilValue && REFCNT(b) == 1;
+	 b = CDR(b)) {
+	SEXP v = CAR(b);
+	switch(TYPEOF(v)) {
+	case PROMSXP:
+	    if (REFCNT(v) == 1 && PRENV(v) == rho)
+		crefs++;
+	    break;
+	case CLOSXP:
+	    if (val != v && REFCNT(v) == 1 && CLOENV(v) == rho)
+		crefs++;
+	    break;
+	case ENVSXP: /* is this worth bothering with? */
+	    if (v == rho)
+		crefs++;
+	    break;
 	}
-	SET_ENCLOS(newrho, R_EmptyEnv);
+    }
+    return crefs;
+}
+
+static R_INLINE void R_CleanupEnvir(SEXP rho, SEXP val)
+{
+    if (val != rho) {
+	/* release the bindings and promises in rho if rho is no
+	   longer accessible from R */
+	int refs = REFCNT(rho);
+	if (refs > 0)
+	    refs -= countCycleRefs(rho, val);
+	if (refs == 0) {
+	    for (SEXP b = FRAME(rho);
+		 b != R_NilValue && REFCNT(b) == 1;
+		 b = CDR(b)) {
+		SEXP v = CAR(b);
+		if (TYPEOF(v) == PROMSXP && REFCNT(v) == 1) {
+		    SET_PRVALUE(v, R_UnboundValue);
+		    SET_PRENV(v, R_NilValue);
+		}
+		SETCAR(b, R_NilValue);
+	    }
+	    SET_ENCLOS(rho, R_EmptyEnv);
+	}
     }
 }
 
