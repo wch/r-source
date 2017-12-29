@@ -266,6 +266,9 @@ struct promsxp_struct {
 #if defined(SWITCH_TO_REFCNT) && ! defined(COMPUTE_REFCNT_VALUES)
 # define COMPUTE_REFCNT_VALUES
 #endif
+#if defined(SWITCH_TO_REFCNT) && ! defined(ADJUST_ENVIR_REFCNTS)
+# define ADJUST_ENVIR_REFCNTS
+#endif
 #define REFCNTMAX ((1 << NAMED_BITS) - 1)
 
 #define SEXPREC_HEADER \
