@@ -972,23 +972,34 @@ resaveRdaFiles <- function(paths,
                             file.path(paths, "*.RData")))
     compress <- match.arg(compress)
     if (missing(compression_level))
-        compression_level <- switch(compress, "gzip" = 6, 9)
+        compression_level <- switch(compress, "gzip" = 6L, 9L)
+
+    getVerLoad <- function(file)
+    {
+        con <- gzfile(file, "rb"); on.exit(close(con))
+        ## The .Internal gives an errror on version-1 files
+        tryCatch(.Internal(loadInfoFromConn2(con))$version,
+                 error = function(e) 1L)
+    }
+    if(is.null(version)) version <- 2L # for maximal back-compatibility
+
     for(p in paths) {
+        ver <- max(version, getVerLoad(p))  # to avoid losing features
         env <- new.env(hash = TRUE) # probably small, need not be
         suppressPackageStartupMessages(load(p, envir = env))
         if(compress == "auto") {
             f1 <- tempfile()
             save(file = f1, list = ls(env, all.names = TRUE), envir = env,
-                 version = version)
+                 version = ver)
             f2 <- tempfile()
             save(file = f2, list = ls(env, all.names = TRUE), envir = env,
-                 compress = "bzip2", version = version)
+                 compress = "bzip2", version = ver)
             ss <- file.size(c(f1, f2)) * c(0.9, 1.0)
             names(ss) <- c(f1, f2)
             if(ss[1L] > 10240) {
                 f3 <- tempfile()
                 save(file = f3, list = ls(env, all.names = TRUE), envir = env,
-                     compress = "xz", version = version)
+                     compress = "xz", version = ver)
                 ss <- c(ss, file.size(f3))
 		names(ss) <- c(f1, f2, f3)
             }
@@ -999,7 +1010,7 @@ resaveRdaFiles <- function(paths,
         } else
             save(file = p, list = ls(env, all.names = TRUE), envir = env,
                  compress = compress, compression_level = compression_level,
-                 version = version)
+                 version = ver)
     }
 }
 

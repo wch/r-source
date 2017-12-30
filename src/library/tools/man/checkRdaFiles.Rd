@@ -41,6 +41,9 @@ resaveRdaFiles(paths, compress = c("auto", "gzip", "bzip2", "xz"),
   and if the \code{"gzip"} compressed size is over 10Kb, \code{"xz"} and
   choose the smallest compressed file (but with a 10\% bias towards
   \code{"gzip"}).  This can be slow.
+
+  For back-compatibility, \code{version = NULL} is interpreted to mean
+  version 2: however version-3 files will only be saved as version 3.
 }
 
 \value{
