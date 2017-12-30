@@ -8486,7 +8486,8 @@ MAIN_LDFLAGS = -fsanitize=address
 
 @noindent
 to link the runtime libraries into the @R{} executable if it was not
-specified as part of @samp{CC} when @R{} was built.
+specified as part of @samp{CC} when @R{} was built.  (For some builds
+without OpenMP, @option{-pthread} is also required.)
 
 For options available @emph{via} the environment variable
 @env{ASAN_OPTIONS} see
