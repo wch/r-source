@@ -302,7 +302,10 @@ int main(int argc_, char *argv_[])
 	putenv(buf2);
     }
 
-    if(!set_dp && !getenv("R_DEFAULT_PACKAGES"))
+    p = getenv("R_SCRIPT_LEGACY");
+    //int legacy = (p && (strcmp(p, "yes") == 0)) ? 1 : 0;
+    int legacy = (p && (strcmp(p, "no") == 0)) ? 0 : 1;
+    if(legacy && !set_dp && !getenv("R_DEFAULT_PACKAGES"))
 	putenv("R_DEFAULT_PACKAGES=datasets,utils,grDevices,graphics,stats");
 
 #ifndef _WIN32
