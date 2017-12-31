@@ -1528,6 +1528,29 @@ static int countCycleRefs(SEXP rho, SEXP val)
     return crefs;
 }
 
+static R_INLINE void cleanupEnvDots(SEXP d)
+{
+    for (; d != R_NilValue && REFCNT(d) == 1; d = CDR(d)) {
+	SEXP v = CAR(d);
+	if (REFCNT(v) == 1 && TYPEOF(v) == PROMSXP) {
+	    SET_PRVALUE(v, R_UnboundValue);
+	    SET_PRENV(v, R_NilValue);
+	}
+	SETCAR(d, R_NilValue);
+    }
+}
+
+static R_INLINE void cleanupEnvVector(SEXP v)
+{
+    /* This is mainly for handling results of list(...) stored as a
+       local variable. It would be cheaper to just use
+       DECREMENT_REFCNT. It might also make sense to max out at len =
+       10 or so. But this may still be too expensive. */
+    R_xlen_t len = LENGTH(v);
+    for (R_xlen_t i = 0; i < len; i++)
+	SET_VECTOR_ELT(v, i, R_NilValue);
+}
+
 static R_INLINE void R_CleanupEnvir(SEXP rho, SEXP val)
 {
     if (val != rho) {
@@ -1541,9 +1564,19 @@ static R_INLINE void R_CleanupEnvir(SEXP rho, SEXP val)
 		 b != R_NilValue && REFCNT(b) == 1;
 		 b = CDR(b)) {
 		SEXP v = CAR(b);
-		if (TYPEOF(v) == PROMSXP && REFCNT(v) == 1) {
-		    SET_PRVALUE(v, R_UnboundValue);
-		    SET_PRENV(v, R_NilValue);
+		if (REFCNT(v) == 1 && v != val) {
+		    switch(TYPEOF(v)) {
+		    case PROMSXP:
+			SET_PRVALUE(v, R_UnboundValue);
+			SET_PRENV(v, R_NilValue);
+			break;
+		    case DOTSXP:
+			cleanupEnvDots(v);
+			break;
+		    case VECSXP: /* mainly for list(...) */
+			cleanupEnvVector(v);
+			break;
+		    }
 		}
 		SETCAR(b, R_NilValue);
 	    }
@@ -2961,7 +2994,9 @@ SEXP attribute_hidden promiseArgs(SEXP el, SEXP rho)
 	el = CDR(el);
     }
     UNPROTECT(1);
-    return CDR(ans);
+    ans = CDR(ans);
+    DECREMENT_REFCNT(ans);
+    return ans;
 }
 
 
