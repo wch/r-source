@@ -3081,8 +3081,7 @@ static SEXP R_getVarsFromFrame(SEXP vars, SEXP env, SEXP forcesxp)
 	    ENSURE_NAMEDMAX(tmp);
 	    UNPROTECT(1);
 	}
-	else if (TYPEOF(tmp) != NILSXP && NAMED(tmp) < 1)
-	    SET_NAMED(tmp, 1);
+	else ENSURE_NAMED(tmp); /* should not really be needed - LT */
 	SET_VECTOR_ELT(val, i, tmp);
     }
     setAttrib(val, R_NamesSymbol, vars);
