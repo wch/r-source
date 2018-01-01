@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2017-12-29 r73980) -- "Unsuffered Consequences"
-Copyright (C) 2017 The R Foundation for Statistical Computing
+R Under development (unstable) (2018-01-01 r74001) -- "Unsuffered Consequences"
+Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -1510,5 +1510,5 @@ sm     3    3    3    3    4    4    4    4    2     2     2
 > par(op)
 > 
 > cat("Time elapsed: ", proc.time() - .ptime, "\n")
-Time elapsed:  1.491 0.039 1.536 0 0 
+Time elapsed:  1.566 0.044 1.617 0 0 
 > 

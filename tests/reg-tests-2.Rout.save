@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2017-12-29 r73980) -- "Unsuffered Consequences"
-Copyright (C) 2017 The R Foundation for Statistical Computing
+R Under development (unstable) (2018-01-01 r74001) -- "Unsuffered Consequences"
+Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -6362,7 +6362,7 @@ function(given = NULL) {
     if (is.null(given)) callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x3db8220>
+<bytecode: 0x337da40>
 > print(foo, useSource = FALSE)
 function (given = NULL) 
 {
@@ -6373,7 +6373,7 @@ function (given = NULL)
         callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x3db8220>
+<bytecode: 0x337da40>
 > attr(foo, "srcref") <- NULL
 > foo
 function (given = NULL) 
@@ -6385,7 +6385,7 @@ function (given = NULL)
         callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x3db8220>
+<bytecode: 0x337da40>
 > (f <- structure(function(){}, note = "just a note",
 +                 yada = function() "not the same"))
 function(){}
@@ -6407,15 +6407,15 @@ function ()
 > print.function
 function (x, ...)  
  - attr(*, "srcref")= 'srcref' int [1:8] 1 19 1 63 19 63 1 1
-  ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x2bf0bd0> 
+  ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x2225188> 
 > f
 function ()  
  - attr(*, "srcref")= 'srcref' int [1:8] 1 17 1 28 17 28 1 1
-  ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x2e33858> 
+  ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x2422108> 
  - attr(*, "note")= chr "just a note"
  - attr(*, "yada")=function ()  
   ..- attr(*, "srcref")= 'srcref' int [1:8] 2 24 2 48 24 48 2 2
-  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x2e33858> 
+  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x2422108> 
 > rm(print.function)
 > ## auto-printing and printing differed up to R 2.9.x
 > 

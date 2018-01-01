@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2017-12-29 r73980) -- "Unsuffered Consequences"
-Copyright (C) 2017 The R Foundation for Statistical Computing
+R Under development (unstable) (2018-01-01 r74001) -- "Unsuffered Consequences"
+Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -46,4 +46,4 @@ In bw.bcv(precip) : minimum occurred at one end of the range
 > 
 > proc.time()
    user  system elapsed 
-  0.166   0.035   0.192 
+  0.182   0.030   0.203 
