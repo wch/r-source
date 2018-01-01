@@ -2724,16 +2724,6 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
     return saverhs;
 }
 
-/* Defunct in 1.5.0
-SEXP attribute_hidden do_alias(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-    checkArity(op,args);
-    Rprintf(".Alias is deprecated; there is no replacement \n");
-    SET_NAMED(CAR(args), 0);
-    return CAR(args);
-}
-*/
-
 /*  Assignment in its various forms  */
 
 SEXP attribute_hidden do_set(SEXP call, SEXP op, SEXP args, SEXP rho)
