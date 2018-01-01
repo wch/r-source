@@ -582,8 +582,10 @@ The @samp{VignetteBuilder} field names (in a comma-separated list)
 packages that provide an engine for building vignettes.  These may
 include the current package, or ones listed in @samp{Depends},
 @samp{Suggests} or @samp{Imports}. The @pkg{utils} package is always
-implicitly appended.  See @ref{Non-Sweave vignettes} for
-details.
+implicitly appended.  See @ref{Non-Sweave vignettes} for details.  Note
+that if, for example, the vignette `engine' is @samp{knitr::rmarkdown}
+this field needs to declare both @CRANpkg{knitr} and
+@CRANpkg{rmarkdown}.
 
 @c DESCRIPTION field Encoding
 If the @file{DESCRIPTION} file is not entirely in @acronym{ASCII} it
