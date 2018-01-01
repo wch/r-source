@@ -2316,7 +2316,7 @@ SEXP attribute_hidden do_saveToConn(SEXP call, SEXP op, SEXP args, SEXP env)
 	type = R_pstream_xdr_format;
     }
     /* if version is too high, R_Serialize will fail with error */
-    magic[3] = '0' + version;
+    magic[3] = (char)('0' + version);
 
     if (con->text)
 	Rconn_printf(con, "%s", magic);
