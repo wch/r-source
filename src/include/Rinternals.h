@@ -340,6 +340,10 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 	    SET_NAMED( __enm_v__, NAMEDMAX);	\
     } while (0)
 #define ENSURE_NAMED(v) do { if (NAMED(v) == 0) SET_NAMED(v, 1); } while (0)
+#define SETTER_CLEAR_NAMED(x) do {				\
+	SEXP __x__ = (x);				\
+	if (NAMED(__x__) == 1) SET_NAMED(__x__, 0);	\
+    } while (0)
 
 /* S4 object bit, set by R_do_new_object for all new() calls */
 #define S4_OBJECT_MASK ((unsigned short)(1<<4))
@@ -558,6 +562,7 @@ void DUPLICATE_ATTRIB(SEXP to, SEXP from);
 void SHALLOW_DUPLICATE_ATTRIB(SEXP to, SEXP from);
 void (ENSURE_NAMEDMAX)(SEXP x);
 void (ENSURE_NAMED)(SEXP x);
+void (SETTER_CLEAR_NAMED)(SEXP x);
 
 /* S4 object testing */
 int (IS_S4_OBJECT)(SEXP x);
