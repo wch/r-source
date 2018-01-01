@@ -1,7 +1,7 @@
 #  File src/library/tools/R/check.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -1284,9 +1284,9 @@ setRlibs <-
                 any <- TRUE
                 printLog(Log, "Problems with news in 'inst/NEWS.Rd':\n")
                 printLog0(Log,
-                          paste("  ",
-                                unlist(strsplit(msg, "\n", fixed = TRUE)),
-                                sep = "", collapse = "\n"),
+                          paste0("  ",
+                                 unlist(strsplit(msg, "\n", fixed = TRUE)),
+                                 collapse = "\n"),
                           "\n")
             }
         }
@@ -2483,12 +2483,12 @@ setRlibs <-
             msg <- if (nBad) {
                 if(haveObjs)
                     c("Compiled code should not call entry points which",
-                      "might terminate R nor write to stdout/stderr instead",
-                      "of to the console, nor the system RNG.\n")
+                      "might terminate R nor write to stdout/stderr instead of",
+                      "to the console, nor use Fortran I/O nor system RNGs.\n")
                 else
                     c("Compiled code should not call entry points which",
-                      "might terminate R nor write to stdout/stderr instead",
-                      "of to the console, nor the system RNG.",
+                      "might terminate R nor write to stdout/stderr instead of",
+                      "to the console, nor use Fortran I/O nor system RNGs.",
                       "The detected symbols are linked",
                       "into the code but might come from libraries",
                       "and not actually be called.\n")
@@ -3843,7 +3843,7 @@ setRlibs <-
                                   lines, invert = TRUE, value = TRUE, useBytes = TRUE)
                     lines <- grep("warning: *ISO C forbids.*function pointer",
                                   lines, invert = TRUE, value = TRUE, useBytes = TRUE)
-                    if (WINDOWS) 
+                    if (WINDOWS)
                         lines <- grep("warning: *ISO C does not support.*ms_printf length modifier",
                                       lines, invert = TRUE, value = TRUE, useBytes = TRUE)
                 }
