@@ -4819,7 +4819,7 @@ implement all of them for Fortran compilation: it also accepts most
 PGI-style flags such as @option{-mp} for OpenMP.  It currently produces
 few diagnostics even with @option{-Wall -pedantic}.
 
-@command{flang}'d Fortran runtime is compiled against OpenMP and it
+@command{flang}'s Fortran runtime is compiled against OpenMP and it
 seems this conflicts with using OpenMP in @R{}.  So it may be necessary
 to disable the latter by configuring using @option{--without-openmp}.
 

@@ -97,7 +97,8 @@ R_runR <- function(cmd = NULL, Ropts = "", env = "",
 
 setRlibs <-
     function(lib0 = "", pkgdir = ".", suggests = FALSE, libdir = NULL,
-             self = FALSE, self2 = TRUE, quote = FALSE, LinkingTo = FALSE)
+             self = FALSE, self2 = TRUE, quote = FALSE, LinkingTo = FALSE,
+             tests = FALSE)
 {
     WINDOWS <- .Platform$OS.type == "windows"
     useJunctions <- WINDOWS && !nzchar(Sys.getenv("R_WIN_NO_JUNCTIONS"))
@@ -153,11 +154,14 @@ setRlibs <-
     else {
         ## we always need to be able to recognise 'vignettes'
         VB <- unname(pi$DESCRIPTION["VignetteBuilder"])
-        if(is.na(VB)) character()
+        sug <- if(is.na(VB)) character()
         else {
             VB <- unlist(strsplit(VB, ","))
             unique(gsub('[[:space:]]', '', VB))
         }
+        if(tests) ## we need the test suite package available
+            c(sug, intersect(names(pi$Suggests), c("RUnit", "testthat")))
+        else sug
     }
     deps <- unique(c(names(pi$Depends), names(pi$Imports),
                      if(LinkingTo) names(pi$LinkingTo),
@@ -2758,12 +2762,12 @@ setRlibs <-
             msg <- if (nBad) {
                 if(haveObjs)
                     c("Compiled code should not call entry points which",
-                      "might terminate R nor write to stdout/stderr instead",
-                      "of to the console, nor the system RNG.\n")
+                      "might terminate R nor write to stdout/stderr instead of",
+                      "to the console, nor use Fortran I/O nor system RNGs.\n")
                 else
                     c("Compiled code should not call entry points which",
-                      "might terminate R nor write to stdout/stderr instead",
-                      "of to the console, nor the system RNG.",
+                      "might terminate R nor write to stdout/stderr instead of",
+                      "to the console, nor use Fortran I/O nor system RNGs.",
                       "The detected symbols are linked",
                       "into the code but might come from libraries",
                       "and not actually be called.\n")
@@ -3278,7 +3282,7 @@ setRlibs <-
                               if(nzchar(arch)) R_opts4 else R_opts2,
                               env = c("LANGUAGE=en",
                                      "_R_CHECK_INTERNALS2_=1",
-                              if(nzchar(arch)) env0, jitstr, elibs),
+                              if(nzchar(arch)) env0, jitstr, elibs_tests),
                               stdout = "", stderr = "", arch = arch,
                               timeout = tlim)
             t2 <- proc.time()
@@ -5530,6 +5534,13 @@ setRlibs <-
         elibs <- if(is_base_pkg) character()
         else if(R_check_depends_only)
             setRlibs(pkgdir = pkgdir, libdir = libdir)
+        else if(R_check_suggests_only)
+            setRlibs(pkgdir = pkgdir, libdir = libdir, suggests = TRUE)
+        else character()
+
+        elibs_tests <- if(is_base_pkg) character()
+        else if(R_check_depends_only)
+            setRlibs(pkgdir = pkgdir, libdir = libdir, tests = TRUE)
         else if(R_check_suggests_only)
             setRlibs(pkgdir = pkgdir, libdir = libdir, suggests = TRUE)
         else character()
