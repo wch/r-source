@@ -973,11 +973,15 @@ SHLIB_OPENMP_FFLAGS
 
 @noindent
 Setting to an empty value will disable OpenMP for that compiler (and
-configuring with @option{--disable-openmp} will disable all detection of
-OpenMP).  The @command{configure} detection test is to compile and link
-a standalone OpenMP program, which is not the same as compiling a shared
-object and loading it into the C program of @R{}'s executable.  Note
-that overridden values are not tested.
+configuring with @option{--disable-openmp} will disable all
+detection@footnote{This does not necessarily disable @emph{use} of
+OpenMP -- the @command{configure} code allows for platforms where OpenMP
+is used without a flag. For the @command{flang} compiler in late 2017,
+the Fortran runtime always used OpenMP.} of OpenMP).  The
+@command{configure} detection test is to compile and link a standalone
+OpenMP program, which is not the same as compiling a shared object and
+loading it into the C program of @R{}'s executable.  Note that
+overridden values are not tested.
 
 @node C++ Support,  , OpenMP Support, Other Options
 @subsection C++ Support
@@ -4817,6 +4821,11 @@ does (the driver is a modified version of @command{clang}, and
 implement all of them for Fortran compilation: it also accepts most
 PGI-style flags such as @option{-mp} for OpenMP.  It currently produces
 few diagnostics even with @option{-Wall -pedantic}.
+
+@command{flang}'s Fortran runtime is compiled against OpenMP and it
+seems this conflicts with using OpenMP in @R{}.  So it may be necessary
+to disable the latter by configuring using @option{--without-openmp}.
+
 
 @node Intel compilers,  , Clang, Linux
 @subsection Intel compilers

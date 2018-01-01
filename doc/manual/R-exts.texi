@@ -4548,8 +4548,10 @@ Make sure that any version requirement for Java code is both declared in
 the @samp{SystemRequirements} field and tested at runtime (not least as
 the Java installation when the package is installed might not be the
 same as when the package is run and will not be for binary packages).
-Java 8 (aka 1.8) is available for fewer platforms than Java 7.  A
-suitable test for packages using @CRANpkg{rJava} would be
+Java 8 (aka 1.8) is available for fewer platforms than Java 7, and Java
+9 for fewer still (at the time of writing, only @cputype{x86_64} Linux,
+macOS, 64-bit Windows and 64-bit Sparc Solaris).  A suitable test for
+packages using @CRANpkg{rJava} would be
 @example
 .jinit()
 jv <- .jcall("java/lang/System", "S", "getProperty", "java.runtime.version")
@@ -8484,7 +8486,8 @@ MAIN_LDFLAGS = -fsanitize=address
 
 @noindent
 to link the runtime libraries into the @R{} executable if it was not
-specified as part of @samp{CC} when @R{} was built.
+specified as part of @samp{CC} when @R{} was built.  (For some builds
+without OpenMP, @option{-pthread} is also required.)
 
 For options available @emph{via} the environment variable
 @env{ASAN_OPTIONS} see
