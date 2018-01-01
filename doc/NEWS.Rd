@@ -283,6 +283,12 @@
       Bioconductor 3.6 and later has been removed from
       \code{setRepositories()}.  This changes the mapping for 6--8 used
       by \code{setRepositories(ind=)}.
+      
+      \item \command{R CMD check} with environment variable
+      \env{_R_CHECK_DEPENDS_ONLY_} set to a true value makes
+      test-suite-management packages available and (for the time being)
+      works around a common omission of \CRANpkg{rmarkdown} from the
+      \samp{VignetteBuilder} field.
     }
   }
 
@@ -295,7 +301,7 @@
       \item \code{configure} will use \command{pkg-config} to find the
       flags to link to \code{jpeg} if available (as it should be for
       \code{jpeg-9c} and \code{libjpeg-turbo}).  (This amends the code
-      added in \R 3.3.0 as module name in \code{jpeg-9c} is not what
+      added in \R 3.3.0 as the module name in \code{jpeg-9c} is not what
       that tested for.)
     }
   }
@@ -467,8 +473,8 @@
       message when, e.g., the \code{LazyData} field is invalid.
 
       \item \code{as.matrix(dd)} now works when the data frame \code{dd}
-      contains a data frame (or matrix, including 0-column matrix/d.f.)
-      as column.
+      contains a column which is a data frame or matrix, including a
+      0-column matrix/d.f. .
     }
   }
 }

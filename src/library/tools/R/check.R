@@ -1,7 +1,7 @@
 #  File src/library/tools/R/check.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -157,9 +157,12 @@ setRlibs <-
         sug <- if(is.na(VB)) character()
         else {
             VB <- unlist(strsplit(VB, ","))
-            unique(gsub('[[:space:]]', '', VB))
+            sug <- unique(gsub('[[:space:]]', '', VB))
+            ## too many people forgot this.
+            if("knitr" %in% VB) sug <- c(sug, "rmarkdown")
+            sug
         }
-        if(tests) ## we need the test suite package available
+        if(tests) ## we need the test-suite package available
             c(sug, intersect(names(pi$Suggests), c("RUnit", "testthat")))
         else sug
     }
@@ -3713,7 +3716,7 @@ setRlibs <-
                                     Sys.getenv("_R_CHECK_ELAPSED_TIMEOUT_")))
                 t1 <- proc.time()
                 outfile <- file.path(pkgoutdir, "build_vignettes.log")
-                status <- R_runR0(Rcmd, R_opts2, jitstr,
+                status <- R_runR0(Rcmd, R_opts2, c(jitstr, elibs),
                                   stdout = outfile, stderr = outfile,
                                   timeout = tlim)
                 t2 <- proc.time()
