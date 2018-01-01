@@ -1,6 +1,6 @@
 
-R version 3.4.3 Patched (2017-12-29 r73974) -- "Kite-Eating Tree"
-Copyright (C) 2017 The R Foundation for Statistical Computing
+R version 3.4.3 Patched (2018-01-01 r74004) -- "Kite-Eating Tree"
+Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -703,4 +703,4 @@ Warning in nls(y ~ b0[fac] + b1 * x, start = list(b0 = c(1, 1), b1 = 101),  :
 > 
 > proc.time()
    user  system elapsed 
-  1.567   0.035   1.591 
+  3.439   0.092   7.299 

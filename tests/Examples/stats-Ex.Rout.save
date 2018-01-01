@@ -1,6 +1,6 @@
 
-R version 3.4.3 Patched (2017-12-29 r73974) -- "Kite-Eating Tree"
-Copyright (C) 2017 The R Foundation for Statistical Computing
+R version 3.4.3 Patched (2018-01-01 r74004) -- "Kite-Eating Tree"
+Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -3804,7 +3804,7 @@ sigma^2 estimated as 0.4566:  log likelihood = -101.2,  aic = 212.4
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x415aae0>
+<environment: 0x4c08a68>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -4789,7 +4789,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x2bce5a0>
+<bytecode: 0x367e318>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -7345,7 +7345,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x4bce5a8>
+<environment: 0x566a3b0>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -11955,14 +11955,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x4ed9448>
-<environment: 0x4ee0e00>
+<bytecode: 0x59e36c0>
+<environment: 0x59ea1f0>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x4eda260>
-<environment: 0x4ee0e00>
+<bytecode: 0x59e3570>
+<environment: 0x59ea1f0>
 
 > 
 > 
@@ -16073,8 +16073,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f)
-<bytecode: 0x3f1c8b0>
-<environment: 0x4d712c8>
+<bytecode: 0x49cb610>
+<environment: 0x57e09a8>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -18398,7 +18398,7 @@ Number of Fisher Scoring iterations: 6
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  6.82 0.174 7.053 0 0 
+Time elapsed:  12.22 0.39 12.952 0 0 
 > grDevices::dev.off()
 null device 
           1 

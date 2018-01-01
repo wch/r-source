@@ -1,6 +1,6 @@
 
-R version 3.4.3 Patched (2017-12-29 r73974) -- "Kite-Eating Tree"
-Copyright (C) 2017 The R Foundation for Statistical Computing
+R version 3.4.3 Patched (2018-01-01 r74004) -- "Kite-Eating Tree"
+Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -323,5 +323,5 @@ Warning messages:
 > 
 > ## Last Line:
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.279 0.007 0.287 0 0 
+Time elapsed:  0.647 0.014 0.699 0 0 
 > 
