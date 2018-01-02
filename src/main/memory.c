@@ -3446,6 +3446,7 @@ void SHALLOW_DUPLICATE_ATTRIB(SEXP to, SEXP from) {
 void (ENSURE_NAMEDMAX)(SEXP x) { ENSURE_NAMEDMAX(CHK(x)); }
 void (ENSURE_NAMED)(SEXP x) { ENSURE_NAMED(CHK(x)); }
 void (SETTER_CLEAR_NAMED)(SEXP x) { SETTER_CLEAR_NAMED(CHK(x)); }
+void (RAISE_NAMED)(SEXP x, int n) { RAISE_NAMED(CHK(x), n); }
 
 /* S4 object testing */
 int (IS_S4_OBJECT)(SEXP x){ return IS_S4_OBJECT(CHK(x)); }

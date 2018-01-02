@@ -368,8 +368,7 @@ SEXP PairToVectorList(SEXP x)
     PROTECT(x);
     PROTECT(xnew = allocVector(VECSXP, len));
     for (i = 0, xptr = x; i < len; i++, xptr = CDR(xptr)) {
-	if (NAMED(x) > NAMED(CAR(xptr)))
-	    SET_NAMED(CAR(xptr), NAMED(x));
+	RAISE_NAMED(CAR(xptr), NAMED(x));
 	SET_VECTOR_ELT(xnew, i, CAR(xptr));
     }
     if (named) {
@@ -401,8 +400,7 @@ SEXP VectorToPairList(SEXP x)
     named = (xnames != R_NilValue);
     xptr = xnew;
     for (i = 0; i < len; i++) {
-	if (NAMED(x) > NAMED(VECTOR_ELT(x, i)))
-	    SET_NAMED(VECTOR_ELT(x, i), NAMED(x));
+	RAISE_NAMED(VECTOR_ELT(x, i), NAMED(x));
 	SETCAR(xptr, VECTOR_ELT(x, i));
 	if (named && CHAR(STRING_ELT(xnames, i))[0] != '\0') /* ASCII */
 	    SET_TAG(xptr, installTrChar(STRING_ELT(xnames, i)));

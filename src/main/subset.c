@@ -869,7 +869,7 @@ SEXP attribute_hidden do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    setAttrib(ans, R_DimSymbol, getAttrib(ax, R_DimSymbol));
 	    setAttrib(ans, R_DimNamesSymbol, getAttrib(ax, R_DimNamesSymbol));
 	    setAttrib(ans, R_NamesSymbol, getAttrib(ax, R_NamesSymbol));
-	    SET_NAMED(ans, NAMED(ax)); /* PR#7924 */
+	    RAISE_NAMED(ans, NAMED(ax)); /* PR#7924 */
 	}
     }
     else {
@@ -1060,13 +1060,11 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    error("invalid subscript for pairlist");
 #endif
 	ans = CAR(nthcdr(x, (int) offset));
-	if (named_x > NAMED(ans))
-	    SET_NAMED(ans, named_x);
+	RAISE_NAMED(ans, named_x);
     } else if(isVectorList(x)) {
 	/* did unconditional duplication before 2.4.0 */
 	ans = VECTOR_ELT(x, offset);
-	if (named_x > NAMED(ans))
-	    SET_NAMED(ans, named_x);
+	RAISE_NAMED(ans, named_x);
     } else {
 	ans = allocVector(TYPEOF(x), 1);
 	switch (TYPEOF(x)) {
@@ -1245,7 +1243,7 @@ SEXP attribute_hidden R_subset3_dflt(SEXP x, SEXP input, SEXP call)
 	    switch(pstrmatch(TAG(y), input, slen)) {
 	    case EXACT_MATCH:
 		y = CAR(y);
-		if (NAMED(x) > NAMED(y)) SET_NAMED(y, NAMED(x));
+		RAISE_NAMED(y, NAMED(x));
 		UNPROTECT(2); /* input, x */
 		return y;
 	    case PARTIAL_MATCH:
@@ -1272,7 +1270,7 @@ SEXP attribute_hidden R_subset3_dflt(SEXP x, SEXP input, SEXP call)
 			    translateChar(input), st);
 	    }
 	    y = CAR(xmatch);
-	    if (NAMED(x) > NAMED(y)) SET_NAMED(y, NAMED(x));
+	    RAISE_NAMED(y, NAMED(x));
 	    UNPROTECT(2); /* input, x */
 	    return y;
 	}
@@ -1290,8 +1288,7 @@ SEXP attribute_hidden R_subset3_dflt(SEXP x, SEXP input, SEXP call)
 	    switch(pstrmatch(STRING_ELT(nlist, i), input, slen)) {
 	    case EXACT_MATCH:
 		y = VECTOR_ELT(x, i);
-		if (NAMED(x) > NAMED(y))
-		    SET_NAMED(y, NAMED(x));
+		RAISE_NAMED(y, NAMED(x));
 		UNPROTECT(2); /* input, x */
 		return y;
 	    case PARTIAL_MATCH:
@@ -1326,7 +1323,7 @@ SEXP attribute_hidden R_subset3_dflt(SEXP x, SEXP input, SEXP call)
 			    translateChar(input), st);
 	    }
 	    y = VECTOR_ELT(x, imatch);
-	    if (NAMED(x) > NAMED(y)) SET_NAMED(y, NAMED(x));
+	    RAISE_NAMED(y, NAMED(x));
 	    UNPROTECT(2); /* input, x */
 	    return y;
 	}
@@ -1344,8 +1341,7 @@ SEXP attribute_hidden R_subset3_dflt(SEXP x, SEXP input, SEXP call)
 	if( y != R_UnboundValue ) {
 	    if (NAMED(y))
 		ENSURE_NAMEDMAX(y);
-	    else if (NAMED(x) > NAMED(y))
-		SET_NAMED(y, NAMED(x));
+	    else RAISE_NAMED(y, NAMED(x));
 	    return(y);
 	}
 	return R_NilValue;

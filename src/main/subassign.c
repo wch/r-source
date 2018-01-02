@@ -1487,7 +1487,7 @@ static SEXP listRemove(SEXP x, SEXP s, int ind)
 	SET_ATTRIB(val, ATTRIB(x));
 	IS_S4_OBJECT(x) ?  SET_S4_OBJECT(val) : UNSET_S4_OBJECT(val);
 	SET_OBJECT(val, OBJECT(x));
-	SET_NAMED(val, NAMED(x));
+	RAISE_NAMED(val, NAMED(x));
     }
     UNPROTECT(2);
     vmaxset(vmax);
@@ -2126,7 +2126,7 @@ SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val)
 		SET_ATTRIB(CDR(x), ATTRIB(x));
 		IS_S4_OBJECT(x) ?  SET_S4_OBJECT(CDR(x)) : UNSET_S4_OBJECT(CDR(x));
 		SET_OBJECT(CDR(x), OBJECT(x));
-		SET_NAMED(CDR(x), NAMED(x));
+		RAISE_NAMED(CDR(x), NAMED(x));
 		x = CDR(x);
 	    }
 	    else
