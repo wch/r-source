@@ -5499,7 +5499,7 @@ static R_INLINE SEXP addStackArgsList(int n, R_bcstack_t *start, SEXP val)
     R_bcstack_t *p = start + n - 1;
     BCNPUSH(val); /* to protect */
     for (int i = 0; i < n; i++, p--) {
-	val = CONS(GETSTACK_PTR(p), val);
+	val = CONS_NR(GETSTACK_PTR(p), val);
 	SETSTACK(-1, val); /* to protect */
     }
     BCNPOP_IGNORE_VALUE();
@@ -5529,7 +5529,7 @@ static R_INLINE void SUBSET_N_PTR(R_bcstack_t *sx, int rank,
     }
 
     /* fall through to the standard default handler */
-    PROTECT(args = CONS(x, getStackArgsList(rank, si)));
+    PROTECT(args = CONS_NR(x, getStackArgsList(rank, si)));
     SEXP call = callidx < 0 ? consts : VECTOR_ELT(consts, callidx);
     if (subset2)
 	value = do_subset2_dflt(call, R_Subset2Sym, args, rho);
@@ -5721,7 +5721,7 @@ static R_INLINE void SUBASSIGN_N_PTR(R_bcstack_t *sx, int rank,
     value = GETSTACK_PTR(srhs);
     args = CONS_NR(value, R_NilValue);
     SET_TAG(args, R_valueSym);
-    PROTECT(args = CONS(x, addStackArgsList(rank, si, args)));
+    PROTECT(args = CONS_NR(x, addStackArgsList(rank, si, args)));
     SEXP call = callidx < 0 ? consts : VECTOR_ELT(consts, callidx);
     if (subassign2)
 	x = do_subassign2_dflt(call, R_Subassign2Sym, args, rho);
