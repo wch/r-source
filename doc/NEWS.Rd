@@ -283,7 +283,11 @@
       Bioconductor 3.6 and later has been removed from
       \code{setRepositories()}.  This changes the mapping for 6--8 used
       by \code{setRepositories(ind=)}.
-      
+
+      \item \command{R CMD check} now also applies the settings of
+      environment variables \env{_R_CHECK_SUGGESTS_ONLY_} and
+      \env{_R_CHECK_DEPENDS_ONLY_} to the re-building of vignettes.
+
       \item \command{R CMD check} with environment variable
       \env{_R_CHECK_DEPENDS_ONLY_} set to a true value makes
       test-suite-management packages available and (for the time being)
