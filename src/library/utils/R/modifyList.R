@@ -1,7 +1,7 @@
 #  File src/library/utils/R/modifyList.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -40,6 +40,37 @@ modifyList <- function(x, val, keep.null = FALSE)
                     modifyList(x[[v]], val[[v]], keep.null = keep.null)
                 else val[[v]]
         }
+    }
+    x
+}
+
+
+## Originally from package 'nlme' -- used in its lmList() and nlsList():
+
+## Collect errors from a list 'x',
+## produce a "summary warning" and keep that as "warningMsg" attribute
+warnErrList <- function(x, warn = TRUE, errValue = NULL) {
+    errs <- vapply(x, inherits, NA, what = "error")
+    if(any(errs)) {
+        v.err <- x[errs]
+        e.call <- paste(deparse(conditionCall(v.err[[1]])), collapse = "\n")
+        tt <- table(vapply(v.err, conditionMessage, ""))
+        msg <-
+            if(length(tt) == 1L)
+                sprintf(ngettext(tt[[1L]],
+                                 "%d error caught in %s: %s",
+                                 "%d times caught the same error in %s: %s"),
+                        tt[[1L]], e.call, names(tt)[[1L]])
+            else ## at least two different errors caught
+                paste(gettextf(
+                    "%d errors caught in %s.  The error messages and their frequencies are",
+                    sum(tt), e.call),
+                    paste(capture.output(sort(tt)), collapse="\n"), sep="\n")
+
+        if(warn)
+            warning(msg, call. = FALSE, domain = NA)
+        x[errs] <- list(errValue)
+        attr(x, "warningMsg") <- msg
     }
     x
 }

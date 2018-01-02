@@ -263,6 +263,8 @@
       Krivitsky in \PR{17366}.   The \code{ar.yw.default()}'s AIC
       computations have become more efficient by using
       \code{determinant()}.
+
+      \item New \code{warnErrList()} utility (from package \pkg{nlme}, improved).
     }
   }
 
