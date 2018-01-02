@@ -158,8 +158,8 @@ setRlibs <-
         else {
             VB <- unlist(strsplit(VB, ","))
             sug <- unique(gsub('[[:space:]]', '', VB))
-            ## too many people forgot this.
-            if("knitr" %in% VB) sug <- c(sug, "rmarkdown")
+            ## too many people forgot this, but it will never get fixed if made an exception.
+            ## if("knitr" %in% VB) sug <- c(sug, "rmarkdown")
             sug
         }
         if(tests) ## we need the test-suite package available
