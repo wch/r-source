@@ -976,6 +976,7 @@ SEXP Rf_stringSuffix(SEXP, int);
 SEXPTYPE Rf_str2type(const char *);
 Rboolean Rf_StringBlank(SEXP);
 SEXP Rf_substitute(SEXP,SEXP);
+SEXP Rf_topenv(SEXP, SEXP);
 const char * Rf_translateChar(SEXP);
 const char * Rf_translateChar0(SEXP);
 const char * Rf_translateCharUTF8(SEXP);

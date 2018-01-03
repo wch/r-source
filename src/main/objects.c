@@ -165,8 +165,6 @@ void R_warn_S3_for_S4(SEXP method) {
 }
 #endif
 
-SEXP topenv(SEXP, SEXP);	/* should be in a header file */
-
 static SEXP findFunInEnvRange(SEXP symbol, SEXP rho, SEXP target)
 {
     SEXP vl;
