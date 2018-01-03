@@ -2662,7 +2662,10 @@ add_dummies <- function(dir, Log)
 
         ## Check include directives for use of R_HOME which may contain
         ## spaces for which there is no portable way to quote/escape.
-        all_files <- dir(".", pattern = "^Makefile*", recursive = TRUE)
+        all_files <-
+            dir(".",
+                pattern = "^(Makefile|Makefile.in|Makefile.win|makefile|GNUmakefile)$",
+                recursive = TRUE)
         all_files <- unique(sort(all_files))
         if(length(all_files)) {
             checkingLog(Log, "include directives in Makefiles")
