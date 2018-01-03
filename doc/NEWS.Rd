@@ -38,6 +38,9 @@
 
       \item \code{removeSource()} no longer erronously removes
       \code{NULL} in certain cases, thanks to Dénes Tóth.
+
+      \item \code{nls(`NO [mol/l]` ~ f(t))} and \code{nls(y ~ a)} now
+      work.  (partly from \PR{17367})
     }
   }
 }

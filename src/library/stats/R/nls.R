@@ -1,8 +1,8 @@
 #  File src/library/stats/R/nls.R
 #  Part of the R package, https://www.R-project.org
 #
+#  Copyright (C) 2000-2017 The R Core Team
 #  Copyright (C) 1999-1999 Saikat DebRoy, Douglas M. Bates, Jose C. Pinheiro
-#  Copyright (C) 2000-2016 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -55,9 +55,9 @@ nlsModel.plinear <- function(form, data, start, wts)
     rhs <- eval(form[[3L]], envir = env)
     storage.mode(rhs) <- "double"
     .swts <- if(!missing(wts) && length(wts))
-        sqrt(wts) else rep_len(1, NROW(rhs))
+        sqrt(wts) else 1 # more efficient than  rep_len(1, NROW(rhs))
     assign(".swts", .swts, envir = env)
-    p1 <- if(is.matrix(rhs)) ncol(rhs) else 1
+    p1 <- NCOL(rhs)
     p <- p1 + p2
     n <- length(lhs)
     fac <- (n -  p)/p
@@ -287,7 +287,9 @@ nlsModel <- function(form, data, start, wts, upper=NULL)
         attr(ans, "gradient") <- eval(gradCall)
         ans
     }
-    QR <- qr(.swts * attr(rhs, "gradient"))
+    if(length(gr <- attr(rhs, "gradient")) == 1L)
+		    attr(rhs, "gradient") <- gr <- as.vector(gr)
+    QR <- qr(.swts * gr)
     qrDim <- min(dim(QR$qr))
     if(QR$rank < qrDim)
         stop("singular gradient matrix at initial parameter estimates")
@@ -355,9 +357,9 @@ nlsModel <- function(form, data, start, wts, upper=NULL)
 			(lhs - assign("rhs", getRHS(), envir = thisEnv)),
 			envir = thisEnv)
 		 assign("dev", sum(resid^2), envir = thisEnv)
-		 assign("QR", qr(.swts * attr(rhs, "gradient")),
-			envir = thisEnv )
-		 return(QR$rank < min(dim(QR$qr))) # to catch the singular gradient matrix
+		 if(length(gr <- attr(rhs, "gradient")) == 1L) gr <- c(gr)
+		 assign("QR", qr(.swts * gr), envir = thisEnv )
+		 (QR$rank < min(dim(QR$qr))) # to catch the singular gradient matrix
 	     },
 	     getPars = function() getPars(),
 	     getAllPars = function() getPars(),
@@ -370,7 +372,6 @@ nlsModel <- function(form, data, start, wts, upper=NULL)
 	     predict = function(newdata = list(), qr = FALSE)
 	     eval(form[[3L]], as.list(newdata), env)
 	     )
-
     class(m) <- "nlsModel"
     m
 }
@@ -467,6 +468,10 @@ nls <-
 		names(attr(data, "parameters"))
 	    } else { ## try selfStart - like object
 		cll <- formula[[length(formula)]]
+		if(is.symbol(cll)) { ## replace  y ~ S   by   y ~ S + 0 :
+		    ## formula[[length(formula)]] <-
+		    cll <- substitute(S + 0, list(S = cll))
+		}
 		fn <- as.character(cll[[1L]])
 		if(is.null(func <- tryCatch(get(fn), error=function(e)NULL)))
 		    func <- get(fn, envir=parent.frame()) ## trying "above"
@@ -490,7 +495,6 @@ nls <-
     ## exists(var, data) does not work (with lists or dataframes):
     lenVar <- function(var) tryCatch(length(eval(as.name(var), data, env)),
 				     error = function(e) -1L)
-
     if(length(varNames)) {
         n <- vapply(varNames, lenVar, 0)
         if(any(not.there <- n == -1L)) {
@@ -537,6 +541,7 @@ nls <-
 	varIndex <- n %% respLength == 0
 	if(is.list(data) && diff(range(n[names(n) %in% names(data)])) > 0) {
 	    ## 'data' is a list that can not be coerced to a data.frame
+            ## (not using varNames, varIndex at all - inconsistency FIXME?)
 	    mf <- data
             if(!missing(subset))
                 warning("argument 'subset' will be ignored")
@@ -550,12 +555,14 @@ nls <-
 	    rhs <- eval(formula[[3L]], data, startEnv)
 	    n <- NROW(rhs)
             ## mimic what model.frame.default does
-            wts <- if (mWeights) rep_len(1, n) else
-            eval(substitute(weights), data, environment(formula))
+	    wts <- if (mWeights) rep_len(1, n)
+		   else eval(substitute(weights), data, environment(formula))
 	}
         else {
+	    vNms <- varNames[varIndex]
+	    if(any(nEQ <- vNms != make.names(vNms))) vNms[nEQ] <- paste0("`", vNms[nEQ], "`")
             mf$formula <-  # replace by one-sided linear model formula
-                as.formula(paste("~", paste(varNames[varIndex], collapse = "+")),
+		as.formula(paste("~", paste(vNms, collapse = "+")),
                            env = environment(formula))
             mf$start <- mf$control <- mf$algorithm <- mf$trace <- mf$model <- NULL
             mf$lower <- mf$upper <- NULL
