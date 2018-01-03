@@ -2753,7 +2753,7 @@ setRlibs <-
             ## will not be picking up symbols just in system libraries.
             haveObjs <- any(grepl("^ *Object", out))
             pat <- paste("possibly from",
-                         sQuote("(abort|assert|exit|_exit|_Exit)"))
+                         sQuote("(abort|assert|exit|_exit|_Exit|stop)"))
             if(haveObjs && any(grepl(pat, out)) && pkgname %notin% "parallel")
                 ## need _exit in forked child
                 warningLog(Log)
