@@ -2705,19 +2705,22 @@ setRlibs <-
                 checkingLog(Log, "compilation flags used")
                 lines <- readLines(instlog, warn = FALSE)
                 poss <- grep(" -W", lines,  useBytes = TRUE, value = TRUE)
-                tokens <- unlist(strsplit(poss, " ", perl = TRUE,
-                                          useBytes = TRUE))
+                tokens <- unique(unlist(strsplit(poss, " ", perl = TRUE,
+                                                 useBytes = TRUE)))
                 warns <- grep("^[-]W", tokens,
                               value = TRUE, perl = TRUE, useBytes = TRUE)
                 ## Not sure -Wextra and -Weverything are portable, though
                 ## -Werror is not compiler independent
                 ##   (as what is a warning is not)
-                warns <- setdiff(unique(warns),
+                warns <- setdiff(warns,
                                  c("-Wall", "-Wextra", "-Weverything"))
                 warns <- warns[!startsWith(warns, "-Wl,")] # linker flags
                 diags <- grep(" -fno-diagnostics-show-option", tokens,
                               useBytes = TRUE, value = TRUE)
-                warns <- c(warns, diags)
+                ## next set are about unsafe optimizations
+                opts <- grep("-f(fast-math|unsafe-math-optimizations|associative-math|reciprocal-math)",
+                             tokens, useBytes = TRUE, value = TRUE)
+                warns <- c(warns, diags, opts)
                 if(any(grepl("^-Wno-", warns)) || length(diags)) {
                     warningLog(Log)
                     msg <- c("Compilation used the following non-portable flag(s):",
