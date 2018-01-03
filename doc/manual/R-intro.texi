@@ -532,7 +532,7 @@ strings, functions, or more general structures built from such
 components.
 
 During an @R{} session, objects are created and stored by name (we
-discuss this process in the next session).  The @R{} command
+discuss this process in the next section).  The @R{} command
 
 @example
 > objects()
