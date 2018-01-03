@@ -219,6 +219,41 @@ setRlibs <-
       " R_LIBS_SITE='no_such_dir'")
 }
 
+add_dummies <- function(dir, Log)
+{
+    dir1 <- file.path(dir, "R_check_bin")
+    if (dir.exists(file.path(dir1))) {
+        messageLog(Log, "directory ", sQuote(dir1), " already exists")
+        return()
+    }
+    dir.create(dir1)
+    if (!dir.exists(dir1)) {
+        messageLog(Log, "creation of directory ", sQuote(dir1), " failed")
+        return()
+    }
+    Sys.setenv(PATH = file.path(dir1, Sys.getenv("PATH"),
+                                sep = .Platform$path.sep))
+    if(.Platform$OS.type != "windows") {
+        writeLines(c('echo "\'R\' should not be used without a path -- see §1.6 of the manual"',
+                     'exit 1'),
+                   p1 <- file.path(dir1, "R"))
+        writeLines(c('echo "\'Rscript\' should not be used without a path -- see §1.6 of the manual"',
+                     'exit 1'),
+                   p2 <- file.path(dir1, "Rscript"))
+        Sys.chmod(c(p1, p2), "0755")
+    } else {
+        ## currently untested
+        writeLines(c('@ECHO OFF',
+                     'echo "\'R\' should not be used without a path -- see §1.6 of the manual"',
+                     'exit /b 1'),
+                   p1 <- file.path(dir1, "R.bat"))
+        writeLines(c('@ECHO OFF',
+                     'echo "\'Rscript\' should not be used without a path -- see §1.6 of the manual"',
+                     'exit /b 1'),
+                   p2 <- file.path(dir1, "Rscript.bat"))
+   }
+}
+
 ###- The main function for "R CMD check"
 .check_packages <- function(args = NULL, no.q = interactive())
 {
@@ -5185,6 +5220,8 @@ setRlibs <-
         Sys.setenv("_R_CHECK_COMPILATION_FLAGS_" = "TRUE")
         if(!nzchar(Sys.getenv("_R_CHECK_R_DEPENDS_")))
             Sys.setenv("_R_CHECK_R_DEPENDS_" = "warn")
+        ## until this is tested on Windows
+        Sys.setenv("_R_CHECK_R_ON_PATH_" = ifelse(WINDOWS, "FALSE", "TRUE"))
         R_check_vc_dirs <- TRUE
         R_check_executables_exclusions <- FALSE
         R_check_doc_sizes2 <- TRUE
@@ -5310,6 +5347,9 @@ setRlibs <-
             if (l10n_info()[["UTF-8"]]) "UTF-8" else utils::localeToCharset()
         messageLog(Log, "using session charset: ", charset)
         is_ascii <- charset == "ASCII"
+
+        if(config_val_to_logical(Sys.getenv("_R_CHECK_R_ON_PATH_", "FALSE")))
+            add_dummies(file_path_as_absolute(pkgoutdir), Log)
 
         if (istar) {
             dir <- file.path(pkgoutdir, "00_pkg_src")

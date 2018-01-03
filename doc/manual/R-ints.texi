@@ -4184,6 +4184,14 @@ serialized with version 2 and there is no dependence on @samp{R >=
 3.5.0}.  (Version 3 is in use as from @R{} 3.5.0 but should only be used
 when necessary.)
 Default: false (but true for CRAN submission checks).
+
+@item _R_CHECK_R_ON_PATH_
+This checks if the package attempts to use @command{R} or
+@command{Rscript} from the path rather than that under test.
+It does so by putting scripts at the head of the path which print a
+message and fail.
+Default: false (but true for CRAN submission checks).
+
 @end vtable
 
 CRAN's submission checks use something like
@@ -4211,6 +4219,9 @@ _R_CHECK_S3_METHODS_NOT_REGISTERED_=TRUE
 _R_CHECK_OVERWRITE_REGISTERED_S3_METHODS_=TRUE
 _R_CHECK_PRAGMAS_=TRUE
 _R_CHECK_COMPILATION_FLAGS_=TRUE
+_R_CHECK_R_DEPENDS_=warn
+_R_CHECK_SERIALIZATION_=TRUE
+_R_CHECK_R_ON_PATH_=TRUE
 @end example
 
 @noindent
