@@ -1629,8 +1629,7 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedvars)
 	to the formal paramters.  Build a new environment which
 	contains the matched pairs.  matchArgs_RC is used since the
 	result becomes part of the environment frame and so needs
-	reference couting enabled.
-  */
+	reference couting enabled. */
 
     actuals = matchArgs_RC(formals, arglist, call);
     PROTECT(newrho = NewEnvironment(formals, actuals, savedrho));
