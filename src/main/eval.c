@@ -1599,19 +1599,6 @@ void attribute_hidden unpromiseArgs(SEXP pargs)
 }
 #endif
 
-static R_INLINE void FIX_CLOSURE_CALL_ARG_REFCNTS(SEXP args)
-{
-    /* it would be better not to build this arglist with CONS_NR in
-       the first place */
-    for (SEXP a = args; a  != R_NilValue; a = CDR(a)) {
-	if (! TRACKREFS(a)) {
-	    ENABLE_REFCNT(a);
-	    INCREMENT_REFCNT(CAR(a));
-	    INCREMENT_REFCNT(CDR(a));
-	}
-    }
-}
-
 /* Note: GCC will not inline execClosure because it calls setjmp */
 static R_INLINE SEXP R_execClosure(SEXP call, SEXP newrho, SEXP sysparent,
                                    SEXP rho, SEXP arglist, SEXP op);
@@ -1640,18 +1627,13 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedvars)
 
     /*  Build a list which matches the actual (unevaluated) arguments
 	to the formal paramters.  Build a new environment which
-	contains the matched pairs.  Ideally this environment sould be
-	hashed.  */
+	contains the matched pairs.  matchArgs_RC is used since the
+	result becomes part of the environment frame and so needs
+	reference couting enabled.
+  */
 
-    actuals = matchArgs(formals, arglist, call);
+    actuals = matchArgs_RC(formals, arglist, call);
     PROTECT(newrho = NewEnvironment(formals, actuals, savedrho));
-
-    /* Turn on reference counting for the binding cells so local
-       assignments to arguments increment REFCNT values. Also make sure
-       reference to current value is counted. Instead of backpatching
-       here it would have been better not to have used CONS_NR in the
-       first place for creating this 'actuals' list. */
-    FIX_CLOSURE_CALL_ARG_REFCNTS(actuals);
 
     /*  Use the default code for unbound formals.  FIXME: It looks like
 	this code should preceed the building of the environment so that
@@ -6090,6 +6072,19 @@ Rboolean attribute_hidden R_BCVersionOK(SEXP s)
     /* must be kept in sync with bcEval version check */
     return version < 2 ||
 	(version >= R_bcMinVersion && version <= R_bcVersion);
+}
+
+static R_INLINE void FIX_CLOSURE_CALL_ARG_REFCNTS(SEXP args)
+{
+    /* it would be better not to build this arglist with CONS_NR in
+       the first place */
+    for (SEXP a = args; a  != R_NilValue; a = CDR(a)) {
+	if (! TRACKREFS(a)) {
+	    ENABLE_REFCNT(a);
+	    INCREMENT_REFCNT(CAR(a));
+	    INCREMENT_REFCNT(CDR(a));
+	}
+    }
 }
 
 static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)

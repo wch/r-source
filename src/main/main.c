@@ -1204,7 +1204,7 @@ SEXP attribute_hidden do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
     SET_TAG(CDR(ap), install("condition"));
     SET_TAG(CDDR(ap), install("expr"));
     SET_TAG(CDDDR(ap), install("skipCalls"));
-    argList = matchArgs(ap, args, call);
+    argList = matchArgs_RC(ap, args, call);
     UNPROTECT(1);
     PROTECT(argList);
     /* substitute defaults */
