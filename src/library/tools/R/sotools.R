@@ -215,6 +215,9 @@ so_symbol_names_table <-
       ## only in .o, positions hard-coded in check_so_symbols
       "windows, C++, g++, std::cout, _ZSt4cout",
       "windows, C++, g++, std::cerr, _ZSt4cerr",
+      "windows, Fortran, gfortran, open, _gfortran_st_open",
+      "windows, Fortran, gfortran, close, _gfortran_st_close",
+      "windows, Fortran, gfortran, rewind, _gfortran_st_rewind",
       "windows, Fortran, gfortran, write, _gfortran_st_write",
       "windows, Fortran, gfortran, print, _gfortran_st_write",
       ## in DLL
