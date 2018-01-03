@@ -5564,6 +5564,16 @@ function(package, dir, lib.loc = NULL)
     }
 
     names(imp3f) <- imp3
+    ## Eliminate some methods ::: self-calls which we know are in fact
+    ## necessary.
+    if(pkg_name == "methods") {
+        imp3f <- imp3f[(imp3 != "methods") |
+                       (imp3f %notin% c(".class1",
+                                        ".missingMethod",
+                                        ".selectDotsMethod",
+                                        ".setDummyField"))]
+        imp3 <- names(imp3f)
+    }
     imp3 <- unique(imp3)
     imp3self <- pkg_name %in% imp3
     imp3selfcalls <- as.vector(imp3f[names(imp3f) == pkg_name])
