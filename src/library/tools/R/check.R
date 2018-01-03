@@ -2754,10 +2754,22 @@ setRlibs <-
             haveObjs <- any(grepl("^ *Object", out))
             pat <- paste("possibly from",
                          sQuote("(abort|assert|exit|_exit|_Exit)"))
-            if(haveObjs && any(grepl(pat, out)) &&
-               pkgname %notin% c("parallel", "fork")) # need _exit in forked child
+            if(haveObjs && any(grepl(pat, out)) && pkgname %notin% "parallel")
+                ## need _exit in forked child
                 warningLog(Log)
-            else noteLog(Log)
+            else {
+                ## look for Fortran detritus
+                pat1 <- paste("possibly from", sQuote("(open|close|rewind)"))
+                pat2 <- paste("possibly from", sQuote("(read|write)"))
+                pat3 <- paste("possibly from", sQuote("close"))
+                pat4 <- paste("possibly from", sQuote("open"))
+                if(haveObjs &&
+                   (any(grepl(pat1, out)) && !any(grepl(pat2, out))) ||
+                   (any(grepl(pat3, out)) && !any(grepl(pat4, out))) ||
+                   (any(grepl(pat4, out)) && !any(grepl(pat3, out))))
+                    warningLog(Log)
+                else noteLog(Log)
+            }
             printLog0(Log, paste(c(out, ""), collapse = "\n"))
             nAPIs <- length(grep("Found non-API", out))
             nRS <- length(grep("Found no call", out))
