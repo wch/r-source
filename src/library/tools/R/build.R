@@ -1,7 +1,7 @@
 #  File src/library/tools/R/build.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -238,7 +238,7 @@ inRbuildignore <- function(files, pkgdir) {
 	    printLog(Log, "      -----------------------------------\n")
 	    unlink(libdir, recursive = TRUE)
 	    printLog(Log, "ERROR: package installation failed\n")
-	    do_exit(1)
+	    do_exit(1L)
 	}
 	Sys.setenv("R_BUILD_TEMPLIB" = libdir)
 	TRUE
@@ -970,9 +970,13 @@ inRbuildignore <- function(files, pkgdir) {
             ## This should preserve dates and permissions (subject to
             ## umask, if that is consulted which it seems it usually is not).
             ## Permissions are increased later.
-	    cp_sw <- if(Sys.info()[["sysname"]] == "Linux") ## << need GNU cp
-		## unfortunately, '-pr' does not dereference sym.links
-		"-Lr --preserve=timestamps" else "-pr"
+            ## -L is to follow (de-reference) symlinks
+            ## --preserve is GNU only: at least macOS, FreeBSD and Solaris
+            ##   have non-GNU cp's.
+            ver <- suppressWarnings(system2("cp", "--version", stdout = TRUE,
+                                            stderr = FALSE))
+            GNU_cp <- any(grepl("GNU coreutils", ver))
+	    cp_sw <- if(GNU_cp) "-LR --preserve=timestamps" else "-pR"
             if (system(paste("cp", cp_sw, shQuote(pkgname), shQuote(Tdir)))) {
                 errorLog(Log, "copying to build directory failed")
                 do_exit(1L)
@@ -999,9 +1003,9 @@ inRbuildignore <- function(files, pkgdir) {
                         full.names = TRUE, include.dirs = TRUE)
         allfiles <- substring(allfiles, 3L)  # drop './'
         bases <- basename(allfiles)
-	
+
         exclude <- inRbuildignore(allfiles, pkgdir)
-	
+
         isdir <- dir.exists(allfiles)
         ## old (pre-2.10.0) dirnames
         exclude <- exclude | (isdir & (bases %in%
