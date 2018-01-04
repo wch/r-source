@@ -526,7 +526,11 @@
       \code{NULL} in certain cases, thanks to Dénes Tóth.
 
       \item \code{nls(`NO [mol/l]` ~ f(t))} and \code{nls(y ~ a)} now
-      work.  (partly from \PR{17367})
+      work.  (Partly from \PR{17367})
+
+      \item \command{R CMD build} checks for GNU \command{cp} rather
+      than assuming Linux has it.  (\PR{17370} says \sQuote{Alpine
+	Linux} does not.)
     }
   }
 }
