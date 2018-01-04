@@ -231,8 +231,7 @@ add_dummies <- function(dir, Log)
         messageLog(Log, "creation of directory ", sQuote(dir1), " failed")
         return()
     }
-    Sys.setenv(PATH = file.path(dir1, Sys.getenv("PATH"),
-                                sep = .Platform$path.sep))
+    Sys.setenv(PATH = env_path(dir1, Sys.getenv("PATH")))
     if(.Platform$OS.type != "windows") {
         writeLines(c('echo "\'R\' should not be used without a path -- see §1.6 of the manual"',
                      'exit 1'),
