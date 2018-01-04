@@ -339,7 +339,7 @@
   \url{http://laurikari.net/tre/documentation/regex-syntax/}.
 
   The POSIX 1003.2 standard at
-  \url{http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap09.html}
+  \url{http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap09.html}.
 
   The \code{pcrepattern} \command{man} page (found as part of
   \url{http://www.pcre.org/original/pcre.txt}), and details of Perl's own
