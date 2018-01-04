@@ -4216,6 +4216,8 @@ add_dummies <- function(dir, Log)
                              ": warning: .* \\[-Wnonull",
                              ": warning: .* \\[-Walloc-size-larger-than=\\]",
                              ": warning: .* \\[-Wterminate\\]",
+                             ## Solaris warns on this next one. Also clang
+                             ": warning: .* \\[-Wint-conversion\\]",
                              ": warning: .* \\[-Wstringop", # mainly gcc8
                              ": warning: .* \\[-Wclass-memaccess\\]" # gcc8
                              )
@@ -4235,6 +4237,7 @@ add_dummies <- function(dir, Log)
                              ": warning: .* \\[-Wreorder\\]", # also gcc
                              ": warning: .* \\[-Wself-assign",
                              ": warning: .* \\[-Wtautological",  # also gcc
+                             ": warning: .* \\[-Wincompatible-pointer-types\\]",
                              ": warning: format string contains '[\\]0'",
                              ": warning: .* \\[-Wc[+][+]11-long-long\\]",
                              ": warning: empty macro arguments are a C99 feature",
