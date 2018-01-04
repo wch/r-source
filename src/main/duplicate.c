@@ -279,7 +279,9 @@ static SEXP duplicate1(SEXP s, Rboolean deep)
     R_xlen_t i, n;
 
     if (ALTREP(s)) {
+	PROTECT(s); /* the methods should protect, but ... */
 	SEXP ans = ALTREP_DUPLICATE_EX(s, deep);
+	UNPROTECT(1);
 	if (ans != NULL)
 	    return ans;
     }
