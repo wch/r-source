@@ -1,4 +1,4 @@
-R
+#
 # ${R_HOME}/src/include/Makefile
 
 VPATH = @srcdir@
