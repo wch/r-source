@@ -153,7 +153,7 @@ install-strip:
 uninstall:
 	@$(ECHO) "uninstalling packages ..."
 	@(cd "$(DESTDIR)$(rhome)/library"; \
-	  for p in $(R_PKGS) translations; do rm -rf $${p}; done)
+	  for p in $(R_PKGS) translations; do rm -Rf $${p}; done)
 	@rmdir "$(DESTDIR)$(rhome)/library" 2>/dev/null \
           || $(ECHO) "  subdir $(DESTDIR)$(rhome)/library not removed"
 
@@ -172,7 +172,7 @@ install-tests:
 uninstall-tests:
 	@$(ECHO) "uninstalling package tests"
 	@for pkg in $(R_PKGS_BASE); do \
-	 rm -rf "$(DESTDIR)$(rhome)/library/$${pkg}/tests" ; \
+	 rm -Rf "$(DESTDIR)$(rhome)/library/$${pkg}/tests" ; \
 	done
 @USE_RECOMMENDED_PACKAGES_TRUE@	@(cd Recommended && $(MAKE) $@)
 
@@ -180,7 +180,7 @@ mostlyclean: clean
 clean:
 	@(for d in $(SUBDIRS); do rsd="$${d} $${rsd}"; done; \
 	  for d in $${rsd}; do (cd $${d} && $(MAKE) $@); done)
-	-@rm -rf .vignettes
+	-@rm -Rf .vignettes
 	-@rm -f stamp-* *.inn
 distclean:
 	@(for d in $(SUBDIRS); do rsd="$${d} $${rsd}"; done; \

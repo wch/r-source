@@ -57,7 +57,7 @@ installdirs:
 install-strip:
 	$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
 uninstall:
-	@rm -rf "$(DESTDIR)$(rincludedir)/R_ext"
+	@rm -Rf "$(DESTDIR)$(rincludedir)/R_ext"
 
 mostlyclean: clean
 clean:

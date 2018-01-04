@@ -62,7 +62,7 @@ uninstall:
 
 mostlyclean: clean
 clean:
-	@-rm -rf .libs _libs
+	@-rm -Rf .libs _libs
 	@-rm -f Makedeps *.d *.o *.a *.lo *.la *$(SHLIB_EXT)
 distclean: clean
 	@-rm -f Makefile

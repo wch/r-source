@@ -103,7 +103,7 @@ vignettes:
 		  R_LIBS_USER= R_LIBS_SITE= \
 	          $(R_EXE) > /dev/null; \
 	done
-	@rm -rf .vignettes
+	@rm -Rf .vignettes
 
 metadata:
 	@$(ECHO) "building/updating package metadata ..."

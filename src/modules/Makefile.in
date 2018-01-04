@@ -40,7 +40,7 @@ install install-strip:
 installdirs:
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(Rexecmodulesdir)"
 uninstall:
-	@rm -rf "$(DESTDIR)$(rhome)/modules"
+	@rm -Rf "$(DESTDIR)$(rhome)/modules"
 
 mostlyclean: clean
 clean:

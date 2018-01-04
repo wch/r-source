@@ -9,16 +9,16 @@ TARFILE = tzdata$(VERSION).tar.gz
 ZIC = zic
 
 all:
-	rm -rf $(TZTMP)
+	rm -Rf $(TZTMP)
 	mkdir $(TZTMP)
 	tar -C $(TZTMP) -zxf $(TARFILE)
-	rm -rf $(TZDIR)
+	rm -Rf $(TZDIR)
 	mkdir $(TZDIR)
 	(cd $(TZTMP); make -f ../Make.zi install)
 	echo $(VERSION) > $(TZDIR)/VERSION
 	rm -f zoneinfo.zip
 	zip -qr9X zoneinfo.zip $(TZDIR)
-	rm -rf $(TZTMP) $(TZDIR)
+	rm -Rf $(TZTMP) $(TZDIR)
 
 ## omit Factory: meaningless.
 YDATA =	africa antarctica asia australasia europe northamerica southamerica \

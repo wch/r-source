@@ -58,7 +58,7 @@ cmplxblas.o: $(top_srcdir)/src/extra/blas/cmplxblas.f
 
 mostlyclean: clean
 clean:
-	@-rm -rf .libs _libs
+	@-rm -Rf .libs _libs
 	@-rm -f Makedeps *.d *.o *.a *.lo *.la stamp-lo $(Rblas_la)
 
 distclean: clean

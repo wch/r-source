@@ -47,7 +47,7 @@ LTO = @LTO@
 
 mostlyclean: clean
 clean:
-	@-rm -rf .libs _libs
+	@-rm -Rf .libs _libs
 	@-rm -f Makedeps *.d *.o *$(SHLIB_EXT)
 distclean: clean
 	@-rm -f Makefile

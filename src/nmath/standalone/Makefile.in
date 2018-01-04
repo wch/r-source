@@ -121,7 +121,7 @@ Makedeps: Makefile Copy ../../include/Rconfig.h
 	@touch $@
 
 libRmath.a: $(libRmath_a_OBJECTS)
-	@rm -rf $@
+	@rm -Rf $@
 	$(AR) -cr $@ $(libRmath_a_OBJECTS)
 	$(RANLIB) $@
 
@@ -185,7 +185,7 @@ uninstall:
 mostlyclean: clean
 clean:
 	@-test -z "$(CLEANFILES)" || rm -f $(CLEANFILES)
-	@-rm -rf .libs _libs
+	@-rm -Rf .libs _libs
 distclean: clean
 	@-test -z "$(DISTCLEANFILES)" || rm -f $(DISTCLEANFILES)
 maintainer-clean: distclean

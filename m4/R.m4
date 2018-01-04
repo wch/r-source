@@ -369,7 +369,7 @@ if AC_TRY_EVAL(ac_try) \
 else
   r_cv_prog_cc_c_o_lo=no
 fi
-rm -rf conftest* TMP])
+rm -Rf conftest* TMP])
 ])# R_PROG_CC_C_O_LO
 
 ## R_PROG_CC_MAKEFRAG
@@ -995,7 +995,7 @@ if ${CC} ${CFLAGS} -c conftest.c 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD; then
   fi
 fi
 ])
-rm -rf conftest conftest.* conftestf.* core
+rm -Rf conftest conftest.* conftestf.* core
 if test -n "${r_cv_prog_f77_can_run}"; then
   AC_MSG_RESULT([yes])
 else
@@ -1084,7 +1084,7 @@ if ${CC} ${CFLAGS} -c conftest.c 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD; then
   fi
 fi
 ])
-rm -rf conftest conftest.* conftestf.* core
+rm -Rf conftest conftest.* conftestf.* core
 if test -n "${r_cv_prog_f77_cc_compat}"; then
   AC_MSG_RESULT([yes])
 else
@@ -1171,7 +1171,7 @@ if ${CC} ${CFLAGS} -c conftest.c 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD; then
   fi
 fi
 ])
-rm -rf conftest conftest.* conftestf.* core
+rm -Rf conftest conftest.* conftestf.* core
 if test -n "${r_cv_prog_f77_cc_compat_complex}"; then
   AC_MSG_RESULT([yes])
   AC_DEFINE(HAVE_FORTRAN_DOUBLE_COMPLEX, 1,
@@ -1418,7 +1418,7 @@ EOF
 echo "running: $1 -c conftest.mm ${CPPFLAGS} ${OBJCXXFLAGS}" >&AS_MESSAGE_LOG_FD
 if $1 -c conftest.mm ${CPPFLAGS} ${OBJCXXFLAGS} >&AS_MESSAGE_LOG_FD 2>&1; then
    AC_MSG_RESULT([yes])
-   rm -rf conftest conftest.* core
+   rm -Rf conftest conftest.* core
    m4_default([$2], OBJCXX=$1)
 else
    AC_MSG_RESULT([no])
@@ -2800,7 +2800,7 @@ if ${CC} ${CFLAGS} -c conftest.c 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD; then
   fi
 fi
 ])
-  rm -rf conftest conftest.* conftestf.* core
+  rm -Rf conftest conftest.* conftestf.* core
   if test -n "${r_cv_zdotu_is_usable}"; then
     AC_MSG_RESULT([yes])
   else
@@ -3968,7 +3968,7 @@ if test "${cross_compiling}" = yes; then
       fi
     done
   fi
-  rm -rf conftest conftest.* core
+  rm -Rf conftest conftest.* core
   if test "${build_cc_works}" = no; then
     AC_MSG_RESULT(none)
     AC_MSG_ERROR([Build C compiler doesn't work. Set BUILD_CC to a compiler capable of creating a binary native to the build machine.])

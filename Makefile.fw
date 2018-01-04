@@ -27,7 +27,7 @@ install-R-framework:
 	@(cd "$(DESTDIR)$(R_FRAMEWORK_DIR)/Versions" && \
 	  ln -f -s -n $(FW_VERSION) Current)
 	@(if [ -e "$(DESTDIR)$(R_FRAMEWORK_DIR)/Resources" -a ! -L "$(DESTDIR)$(R_FRAMEWORK_DIR)/Resources" ]; then \
-	  rm -rf "$(DESTDIR)$(R_FRAMEWORK_DIR)/Resources.old"; mv "$(DESTDIR)$(R_FRAMEWORK_DIR)/Resources" "$(DESTDIR)$(R_FRAMEWORK_DIR)/Resources.old"; \
+	  rm -Rf "$(DESTDIR)$(R_FRAMEWORK_DIR)/Resources.old"; mv "$(DESTDIR)$(R_FRAMEWORK_DIR)/Resources" "$(DESTDIR)$(R_FRAMEWORK_DIR)/Resources.old"; \
 	  fi)
 	@(cd "$(DESTDIR)$(R_FRAMEWORK_DIR)"  && \
 	  ln -f -s -n Versions/Current/PrivateHeaders PrivateHeaders&& \
@@ -64,12 +64,12 @@ install-R-framework:
 	@(cp -R $(top_srcdir)/src/include/* "$(DESTDIR)$(R_FRAMEWORK_DIR)/Versions/Current/PrivateHeaders/" && \
 	  cp src/include/config.h "$(DESTDIR)$(R_FRAMEWORK_DIR)/Versions/Current/PrivateHeaders/" && \
 	  chmod a+r "$(DESTDIR)$(R_FRAMEWORK_DIR)/Versions/Current/PrivateHeaders/config.h"; \
-	  find "$(DESTDIR)$(R_FRAMEWORK_DIR)/Versions/Current/PrivateHeaders" -name .svn | xargs rm -rf)
+	  find "$(DESTDIR)$(R_FRAMEWORK_DIR)/Versions/Current/PrivateHeaders" -name .svn | xargs rm -Rf)
 	@(install_name_tool -change libR.dylib \
 	    "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/libR.dylib" \
 	    "$(DESTDIR)$(Rexecbindir2)/R")
 	@(if [ -n "${R_ARCH}" ]; then \
-	  rm -rf "$(DESTDIR)$(R_FRAMEWORK_DIR)/Versions/Current/PrivateHeaders${R_ARCH}" && \
+	  rm -Rf "$(DESTDIR)$(R_FRAMEWORK_DIR)/Versions/Current/PrivateHeaders${R_ARCH}" && \
 	  mkdir "$(DESTDIR)$(R_FRAMEWORK_DIR)/Versions/Current/PrivateHeaders${R_ARCH}" && \
 	  cp src/include/config.h "$(DESTDIR)$(R_FRAMEWORK_DIR)/Versions/Current/PrivateHeaders${R_ARCH}/config.h"; \
 	  chmod a+r "$(DESTDIR)$(R_FRAMEWORK_DIR)/Versions/Current/PrivateHeaders${R_ARCH}/config.h"; \

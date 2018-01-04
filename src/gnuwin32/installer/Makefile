@@ -110,7 +110,7 @@ imagedir:
 	$(MAKE) --no-print-directory -C ../../../tests -f Makefile.win \
 	  INST_TO=../src/gnuwin32/installer/$(RPREFIX)/tests install-tests
 #
-	$(FIND) $(RPREFIX) -name .svn -prune -exec rm -rf \{\} \;
+	$(FIND) $(RPREFIX) -name .svn -prune -exec rm -Rf \{\} \;
 	$(FIND) $(RPREFIX) -name \*~ -delete
 
 md5sums:
@@ -198,8 +198,8 @@ $(RPREFIX)-$(SUFF).msi: R.wxs License.rtf
 
 ## too often this fails to empty directories.
 clean:
-	rm -rf R.iss *.log R.wxs files.wxs R.wixobj uuidgen.o uuidgen.exe uuids
-	-rm -rf $(RPREFIX)
+	rm -Rf R.iss *.log R.wxs files.wxs R.wixobj uuidgen.o uuidgen.exe uuids
+	-rm -Rf $(RPREFIX)
 
 distclean: clean
 	rm -f R*-win*.exe R*-win*.msi

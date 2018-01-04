@@ -69,7 +69,7 @@ clean:
 	@rm -f FALSE* PACKAGES* .R .tex mirrors.html ./-package.Rd ex.gz
 	@rm -f testit.txt testit.html testit.tex testit-Ex.R
 	@rm -f ver20.txt ver20.html ver20.tex ver20-Ex.R
-	@rm -rf anRpackage myTst* myLib
+	@rm -Rf anRpackage myTst* myLib
 	@rm -f *.tar.gz
 	@rm -f keepsource.tex test-system2.exe test-system.Rout
 	@$(MK) -C Examples $@
@@ -79,7 +79,7 @@ clean:
 
 distclean: clean
 	@$(MK) -C Examples $@
-	@rm -rf *.Rcheck RecPackages
+	@rm -Rf *.Rcheck RecPackages
 	-@rm -f *.fail
 
 install-tests:

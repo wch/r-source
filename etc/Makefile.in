@@ -89,7 +89,7 @@ clean:
 distclean: clean
 	-@test -z "$(DISTCLEANFILES)" || rm -f $(DISTCLEANFILES)
 	@if test -n "$(R_ARCH)"; then \
-	  rm -rf .$(R_ARCH) ; \
+	  rm -Rf .$(R_ARCH) ; \
 	fi
 
 maintainer-clean: distclean

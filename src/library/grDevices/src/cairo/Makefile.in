@@ -51,7 +51,7 @@ $(cairo_la): $(OBJECTS)
 
 mostlyclean: clean
 clean:
-	@-rm -rf .libs _libs Makedeps *.d *.o $(cairo_la)
+	@-rm -Rf .libs _libs Makedeps *.d *.o $(cairo_la)
 distclean: clean
 	@-rm -f Makefile
 maintainer-clean: distclean
