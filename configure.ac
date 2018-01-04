@@ -2,7 +2,7 @@
 ###
 ### Process this file with autoconf to produce a configure script.
 ###
-### Copyright (C) 1998-2017 R Core Team
+### Copyright (C) 1998-2018 R Core Team
 ###
 ### This file is part of R.
 ###
@@ -1113,11 +1113,20 @@ case "${host_os}" in
     ;;
 esac
 
+## change to  -msse2 -mfpmmath=sse
 if test "${SAFE_FFLAGS+set}" != set; then
-  if test "x${ac_cv_f77_compiler_gnu}" = xyes; then
-    SAFE_FFLAGS="${FFLAGS} -ffloat-store"
+  if test "x${ac_cv_f77_compiler_gnu}" = xyes \
+    -a "x${ac_cv_sizeof_size_t}" = x4; then
+    case "${host_cpu}" in
+      i*86|x86_64)
+      SAFE_FFLAGS="${FFLAGS} -ffloat-store"
+      ;;
+    *)
+      SAFE_FFLAGS="${FFLAGS}"
+      ::
+    esac
   else
-    SAFE_FFLAGS=${FFLAGS}
+    SAFE_FFLAGS="${FFLAGS}"
   fi
 fi
 
