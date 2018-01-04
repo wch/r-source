@@ -1875,7 +1875,7 @@ If you want to get rid of @R{} more completely using a Terminal, simply
 run:
 
 @example
-sudo rm -rf /Library/Frameworks/R.framework /Applications/R.app \
+sudo rm -Rf /Library/Frameworks/R.framework /Applications/R.app \
    /usr/local/bin/R /usr/local/bin/Rscript
 @end example
 
@@ -4718,7 +4718,7 @@ LDFLAGS="-L/usr/local/lib64 -L/usr/local/lib"
 @noindent
 is appropriate since most (but not all) software installs its 64-bit
 libraries in @file{/usr/local/lib64}.  To build a 32-bit version of @R{}
-on @cputype{x86_64} with Fedora 24 we used
+on @cputype{x86_64} with Fedora 26 we used
 
 @example
 CC="gcc -m32"
@@ -4744,6 +4744,17 @@ export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
 The 32-bit system @code{libcurl} did not work with the system CA
 certificates: this is worked around in @R{}'s test suite.
 
+Better performance can often be obtained on 32-bit @cputype{ix86}
+platforms (and perhaps on 32-bit builds on @cputype{x86_64}) by
+selecting the use of `modern' CPU extensions, for example by adding
+flags like
+@example
+-march=core2
+-mfpmmath=sse -msse2
+@end example
+@noindent
+to @code{CFLAGS} and similar.
+
 64-bit versions of Linux are built with support for files > 2Gb, and
 32-bit versions will be if possible unless @option{--disable-largefile}
 is specified.
@@ -4767,6 +4778,21 @@ FFLAGS="-mminimal-toc -fno-optimize-sibling-calls -g -O2"
 @noindent
 the additional flags being needed to resolve problems linking against
 @file{libnmath.a} and when linking @R{} as a shared library.
+
+The setting of the macro @samp{SAFE_FFLAGS} may need some help.  It
+should not need additional flags on platforms other than @cputype{68000}
+(not likely to be encountered) and @cputype{ix86} (and not
+@cputype{x86_64}).  When the FORTRAN compiler is GNU (@command{gfortran}
+or possibly @command{g77}) the flags 
+@example
+@end example
+-mfpmmath=sse -msse2
+@noindent
+are added: earlier versions of @R{} added @option{-ffloat-store} and
+this might still be needed if a @cputype{ix86} CPU is encountered
+without SSE2 support.  Note that it is a @emph{replacement} for
+@samp{FFLAGS}, so should include all the flags in that macro (except
+perhaps the optimization level).
 
 @menu
 * Clang::                       
@@ -4823,6 +4849,9 @@ few diagnostics even with @option{-Wall -pedantic}.
 seems this conflicts with using OpenMP in @R{}.  So it may be necessary
 to disable the latter by configuring using @option{--without-openmp}.
 
+It is not clear what architectures @command{flang} intends to support:
+experiments were done on @cputype{x86_64}.
+
 
 @node Intel compilers,  , Clang, Linux
 @subsection Intel compilers
@@ -4875,6 +4904,13 @@ CXXFLAGS="$fast"
 FC=$F77
 FCFLAGS=$F77FLAGS
 @end example
+
+It is possible that 32-builds need to force the use of SSE2 instructions
+in @code{SAFE_FFLAGS}, e.g.@: by
+@example
+SAFE_FFLAGS=-axsse2
+@end example
+
 
 @node macOS, Solaris, Linux, Platform notes
 @section macOS

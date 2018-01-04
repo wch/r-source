@@ -304,11 +304,17 @@
       removed --- install a fairly recent Oracle Java (see \sQuote{R
 	Installation and Administration} §C.3.2).
 
-      \item \code{configure} will use \command{pkg-config} to find the
+      \item \command{configure} will use \command{pkg-config} to find the
       flags to link to \code{jpeg} if available (as it should be for
       \code{jpeg-9c} and \code{libjpeg-turbo}).  (This amends the code
       added in \R 3.3.0 as the module name in \code{jpeg-9c} is not what
       that tested for.)
+
+      \item \command{configure} works harder to set additional flags in
+      \samp{SAFE_FFLAGS} only where necessary.
+
+      In rare circumanstances it may be necessary to override the
+      setting of \samp{SAFE_FFLAGS}.
     }
   }
 
