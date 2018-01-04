@@ -4703,8 +4703,7 @@ significant performance improvements on recent CPUs (especially for
 the best possible performance on the machine on which @R{} is being
 installed: if the compilation is for a site-wide installation, it may
 still be desirable to use something like
-@option{-mtume=core2}.@footnote{or @code{-mtune=corei7} for Intel Core
-i3/15/17 with @command{gcc} @geq{} 4.6.0.} It is also possible to increase the
+@option{-mtume=core2}.  It is also possible to increase the
 optimization levels to @option{-O3}: however for many versions of the
 compilers this has caused problems in at least one @acronym{CRAN}
 package.
@@ -4749,8 +4748,8 @@ platforms (and perhaps on 32-bit builds on @cputype{x86_64}) by
 selecting the use of `modern' CPU extensions, for example by adding
 flags like
 @example
--march=core2
--mfpmmath=sse -msse2
+-march=sandybridge
+-msse2 -mfpmmath=sse
 @end example
 @noindent
 to @code{CFLAGS} and similar.

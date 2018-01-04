@@ -969,14 +969,14 @@ inRbuildignore <- function(files, pkgdir) {
             ## This should preserve dates and permissions (subject to
             ## umask, if that is consulted which it seems it usually is not).
             ## Permissions are increased later.
-            ## -L is to follow (deference) symlinks
+            ## -L is to follow (de-reference) symlinks
             ## --preserve is GNU only: at least macOS, FreeBSD and Solaris
-            ##   have non-GNU cp's.
+            ##   have non-GNU cp's as it seems do some Linuxen.
             ver <- suppressWarnings(system2("cp", "--version", stdout = TRUE,
                                             stderr = FALSE))
             GNU_cp <- any(grepl("GNU coreutils", ver))
-	    cp_sw <- if(GNU_cp) "-LR --preserve=timestamps" else "-pR"
-            if (system(paste("cp", cp_sw, shQuote(pkgname), shQuote(Tdir)))) {
+	    cp_sw <- if(GNU_cp) "-LR --preserve=timestamps" else "-pLR"
+            if (system2("cp", c(cp_sw, shQuote(pkgname), shQuote(Tdir)))) {
                 errorLog(Log, "copying to build directory failed")
                 do_exit(1L)
             }
