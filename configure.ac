@@ -1114,6 +1114,7 @@ case "${host_os}" in
 esac
 
 ## change to  -msse2 -mfpmmath=sse
+## Note that you can have 32-bit builds on x86_64, using -m32
 if test "${SAFE_FFLAGS+set}" != set; then
   if test "x${ac_cv_f77_compiler_gnu}" = xyes \
     -a "x${ac_cv_sizeof_size_t}" = x4; then
