@@ -264,7 +264,11 @@
       computations have become more efficient by using
       \code{determinant()}.
 
-      \item New \code{warnErrList()} utility (from package \pkg{nlme}, improved).
+      \item New \code{warnErrList()} utility (from package \pkg{nlme},
+      improved).
+
+      \item By default the (arbitrary) signs of the loadings from
+      \code{princomp()} are chosen so the first element is non-negative.
     }
   }
 

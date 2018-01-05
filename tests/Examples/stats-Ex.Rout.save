@@ -13436,16 +13436,16 @@ Cumulative Proportion  0.6200604 0.8675017 0.9566425 1.00000000
 
 Loadings:
          Comp.1 Comp.2 Comp.3 Comp.4
-Murder   -0.536  0.418 -0.341  0.649
-Assault  -0.583  0.188 -0.268 -0.743
-UrbanPop -0.278 -0.873 -0.378  0.134
-Rape     -0.543 -0.167  0.818       
+Murder    0.536  0.418  0.341  0.649
+Assault   0.583  0.188  0.268 -0.743
+UrbanPop  0.278 -0.873  0.378  0.134
+Rape      0.543 -0.167 -0.818       
 
                Comp.1 Comp.2 Comp.3 Comp.4
 SS loadings      1.00   1.00   1.00   1.00
 Proportion Var   0.25   0.25   0.25   0.25
 Cumulative Var   0.25   0.50   0.75   1.00
-> ## The signs of the columns are arbitrary
+> ## The signs of the columns of the loadings are arbitrary
 > plot(pc.cr) # shows a screeplot.
 > biplot(pc.cr)
 > 
@@ -16512,10 +16512,10 @@ Cumulative Proportion  0.6200604 0.8675017 0.9566425 1.00000000
 
 Loadings:
          Comp.1 Comp.2 Comp.3 Comp.4
-Murder   -0.54   0.42  -0.34   0.65 
-Assault  -0.58         -0.27  -0.74 
-UrbanPop -0.28  -0.87  -0.38        
-Rape     -0.54          0.82        
+Murder    0.54   0.42   0.34   0.65 
+Assault   0.58          0.27  -0.74 
+UrbanPop  0.28  -0.87   0.38        
+Rape      0.54         -0.82        
 > 
 > 
 > 

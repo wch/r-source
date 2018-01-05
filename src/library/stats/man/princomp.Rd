@@ -1,6 +1,6 @@
 % File src/library/stats/man/princomp.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{princomp}
@@ -18,7 +18,7 @@ princomp(x, \dots)
 \method{princomp}{formula}(formula, data = NULL, subset, na.action, \dots)
 
 \method{princomp}{default}(x, cor = FALSE, scores = TRUE, covmat = NULL,
-         subset = rep_len(TRUE, nrow(as.matrix(x))), \dots)
+         subset = rep_len(TRUE, nrow(as.matrix(x))), fix_sign = TRUE, \dots)
 
 \method{predict}{princomp}(object, newdata, \dots)
 }
@@ -48,9 +48,11 @@ princomp(x, \dots)
     \code{\link[MASS:cov.rob]{cov.mcd}} from package \CRANpkg{MASS}).
     If supplied, this is used rather than the covariance matrix of
     \code{x}.}
+  \item{fix_sign}{Should the signs of the loadings and scores be chosen
+    so that the first element of each loading is non-negative?}
   \item{\dots}{arguments passed to or from other methods. If \code{x} is
     a formula one might specify \code{cor} or \code{scores}.}
-  \item{object}{Object of class inheriting from \code{"princomp"}}
+  \item{object}{Object of class inheriting from \code{"princomp"}.}
   \item{newdata}{An optional data frame or matrix in which to look for
     variables with which to predict.  If omitted, the scores are used.
     If the original fit used a formula or a data frame or a matrix with
@@ -113,7 +115,7 @@ princomp(x, \dots)
 \note{
   The signs of the columns of the loadings and scores are arbitrary, and
   so may differ between different programs for PCA, and even between
-  different builds of \R.
+  different builds of \R: \code{fix_sign = TRUE} alleviates that.
 }
 \references{
   Mardia, K. V., J. T. Kent and J. M. Bibby (1979).
@@ -140,7 +142,7 @@ princomp(USArrests, cor = TRUE) # =^= prcomp(USArrests, scale=TRUE)
 
 summary(pc.cr <- princomp(USArrests, cor = TRUE))
 loadings(pc.cr)  # note that blank entries are small but not zero
-## The signs of the columns are arbitrary
+## The signs of the columns of the loadings are arbitrary
 plot(pc.cr) # shows a screeplot.
 biplot(pc.cr)
 
