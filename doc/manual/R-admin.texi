@@ -4764,6 +4764,7 @@ FFLAGS="-mminimal-toc -fno-optimize-sibling-calls -g -O2"
 the additional flags being needed to resolve problems linking against
 @file{libnmath.a} and when linking @R{} as a shared library.
 
+@c suggestion of https://gcc.gnu.org/wiki/FloatingPointMath
 The setting of the macro @samp{SAFE_FFLAGS} may need some help.  It
 should not need additional flags on platforms other than @cputype{68000}
 (not likely to be encountered) and @cputype{ix86} (and not
