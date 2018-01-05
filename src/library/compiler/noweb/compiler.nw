@@ -4041,8 +4041,8 @@ to primitives. The root issue is that we are not recording referenced
 to arguments that have been evaluated. Once that is addressed we can
 remove this hack.
 <<temporary hack to deal with assignments in arguments issue>>=
-if (! cntxt$toplevel)
-    return(cmpSpecial(e, cb, cntxt))
+## if (! cntxt$toplevel)
+##    return(cmpSpecial(e, cb, cntxt))
 @ 
 <<[[cmpAssign]] function>>=
 cmpAssign <- function(e, cb, cntxt) {

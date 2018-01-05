@@ -1579,8 +1579,8 @@ tryGetterInline <- function(call, cb, cntxt) {
 }
 
 cmpAssign <- function(e, cb, cntxt) {
-    if (! cntxt$toplevel)
-        return(cmpSpecial(e, cb, cntxt))
+    ## if (! cntxt$toplevel)
+    ##    return(cmpSpecial(e, cb, cntxt))
     if (! checkAssign(e, cntxt))
         return(cmpSpecial(e, cb, cntxt))
     superAssign <- as.character(e[[1]]) == "<<-"
