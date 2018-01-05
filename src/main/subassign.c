@@ -1530,8 +1530,10 @@ int R_DispatchOrEvalSP(SEXP call, SEXP op, const char *generic, SEXP args,
     if (args != R_NilValue && CAR(args) != R_DotsSymbol) {
 	SEXP x = eval(CAR(args), rho);
 	PROTECT(x);
+	INCREMENT_NAMED(x);
 	if (! OBJECT(x)) {
 	    *ans = CONS_NR(x, evalListKeepMissing(CDR(args), rho));
+	    DECREMENT_NAMED(x);
 	    UNPROTECT(1);
 	    return FALSE;
 	}
@@ -1542,7 +1544,10 @@ int R_DispatchOrEvalSP(SEXP call, SEXP op, const char *generic, SEXP args,
     }
     PROTECT(args);
     int disp = DispatchOrEval(call, op, generic, args, rho, ans, 0, 0);
-    if (prom) DECREMENT_REFCNT(PRVALUE(prom));
+    if (prom) {
+	DECREMENT_REFCNT(PRVALUE(prom));
+	DECREMENT_NAMED(PRVALUE(prom));
+    }
     UNPROTECT(1);
     return disp;
 }

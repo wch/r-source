@@ -350,6 +350,12 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 	if (NAMED(__x__) < __n__)		\
 	    SET_NAMED(__x__, __n__);		\
     } while (0)
+#define DECREMENT_NAMED(x) do {				    \
+	SEXP __x__ = (x);				    \
+	int __n__ = NAMED(__x__);			    \
+	if (__n__ > 0 && __n__ < NAMEDMAX)		    \
+	    SET_NAMED(__x__, __n__ - 1);		    \
+    } while (0)
 
 /* S4 object bit, set by R_do_new_object for all new() calls */
 #define S4_OBJECT_MASK ((unsigned short)(1<<4))
