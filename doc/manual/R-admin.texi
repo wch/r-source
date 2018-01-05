@@ -4771,7 +4771,7 @@ should not need additional flags on platforms other than @cputype{68000}
 @cputype{x86_64}).  When the FORTRAN compiler is GNU (@command{gfortran}
 or possibly @command{g77}) the flags 
 @example
--msse2 -mfpmmath=sse
+-msse2 -mfpmath=sse
 @end example
 @noindent
 are added: earlier versions of @R{} added @option{-ffloat-store} and
