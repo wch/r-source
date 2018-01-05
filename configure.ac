@@ -1122,7 +1122,7 @@ if test "${SAFE_FFLAGS+set}" != set; then
        -a "x${ac_cv_sizeof_size_t}" = x4; then
     case "${host_cpu}" in
       i*86|x86_64)
-      SAFE_FFLAGS="${FFLAGS} -msse2 -mfpmmath=sse"
+      SAFE_FFLAGS="${FFLAGS} -msse2 -mfpmath=sse"
       ;;
     *)
       SAFE_FFLAGS="${FFLAGS}"
