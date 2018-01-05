@@ -12,7 +12,8 @@
 \alias{!.hexmode}
 \alias{|.hexmode}
 \alias{&.hexmode}
-\alias{xor.hexmode}
+%% FIXME: xor() is not generic (yet?).
+%% \alias{xor.hexmode}
 \alias{hexmode}
 \title{Display Numbers in Hexadecimal}
 \description{
@@ -50,10 +51,12 @@ as.hexmode(x)
   \code{0-9}, \code{a-f}, \code{A-F} (or are \code{NA}) to class
   \code{"hexmode"}.
 
-  There is a \code{\link{!}} method and \code{\link{|}}, \code{\link{&}} and
-  \code{\link{xor}} methods: these recycle their arguments to the
-  length of the longer and then apply the operators bitwise to each
-  element.
+  There is a \code{\link{!}} method and methods for \code{\link{|}} and
+  \code{\link{&}}:
+  %% FIXME: xor() is not generic (yet?).
+  %% and \code{\link{xor}}:
+  these recycle their arguments to the length of the longer and then
+  apply the operators bitwise to each element.
 }
 \seealso{
   \code{\link{octmode}}, \code{\link{sprintf}} for other options in

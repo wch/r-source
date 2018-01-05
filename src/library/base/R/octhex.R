@@ -118,10 +118,12 @@ as.hexmode <- function(x)
 
 `&.octmode` <- function(a, b) as.octmode(bitwAnd(as.octmode(a), as.octmode(b)))
 `|.octmode` <- function(a, b) as.octmode(bitwOr(as.octmode(a), as.octmode(b)))
-xor.octmode <- function(a, b) as.octmode(bitwXor(as.octmode(a), as.octmode(b)))
+## FIXME: xor() is not generic (yet?).
+## xor.octmode <- function(a, b) as.octmode(bitwXor(as.octmode(a), as.octmode(b)))
 
 `!.hexmode` <- function(a) as.hexmode(bitwNot(as.hexmode(a)))
 
 `&.hexmode` <- function(a, b) as.hexmode(bitwAnd(as.hexmode(a), as.hexmode(b)))
 `|.hexmode` <- function(a, b) as.hexmode(bitwOr(as.hexmode(a), as.hexmode(b)))
-xor.hexmode <- function(a, b) as.hexmode(bitwXor(as.hexmode(a), as.hexmode(b)))
+## FIXME: xor() is not generic (yet?).
+## xor.hexmode <- function(a, b) as.hexmode(bitwXor(as.hexmode(a), as.hexmode(b)))
