@@ -314,7 +314,7 @@
       \samp{SAFE_FFLAGS} only where necessary, and to use flags which
       have little or no effect on performance.
 
-      In rare circumanstances it may be necessary to override the
+      In rare circumstances it may be necessary to override the
       setting of \samp{SAFE_FFLAGS}.
     }
   }
