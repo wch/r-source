@@ -1,7 +1,8 @@
 ## partly moved from ../man/smooth.spline.Rd , quite system-specific.
 ##-- artificial example
 y18 <- c(1:3, 5, 4, 7:3, 2*(2:5), rep(10, 4))
-(b.64 <- (Sys.info()[["machine"]] == "x86_64"))
+(b.64 <- grepl("^x86.64", Sys.info()[["machine"]]) &&
+      .Machine$sizeof.pointer  == 8)
 ## i386-Linux: Df ~= (even! > ) 18 : interpolating -- much smaller PRESS
 ## It is the too low 'low = -3' which "kills" the algo; low= -2.6 still ok
 ## On other platforms, e.g., x64, ends quite differently (and fine)
