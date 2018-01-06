@@ -2735,7 +2735,7 @@ add_dummies <- function(dir, Log)
         Check_flags <- Sys.getenv("_R_CHECK_COMPILATION_FLAGS_", "FALSE")
         if(config_val_to_logical(Check_flags)) {
             instlog <- if (startsWith(install, "check"))
-                substr(install, 7L, 1000L)
+                install_log_path
             else
                 file.path(pkgoutdir, "00install.out")
             if (file.exists(instlog) && dir.exists('src')) {
@@ -4098,16 +4098,14 @@ add_dummies <- function(dir, Log)
                 if (startsWith(install, "check")) {
                     if (!nzchar(arg_libdir))
                         printLog(Log, "\nWarning: --install=check... specified without --library\n")
-                    thislog <- substr(install, 7L, 1000L)
-                                        #owd <- setwd(startdir)
-                    if (!file.exists(thislog)) {
+                    thislog <- install_log_path
+                    if(!nzchar(thislog)) {
                         errorLog(Log,
                                  sprintf("install log %s does not exist", sQuote(thislog)))
                         summaryLog(Log)
                         do_exit(2L)
                     }
                     file.copy(thislog, outfile)
-                                        #setwd(owd)
                     install <- "check"
                     lines <- readLines(outfile, warn = FALSE)
                     ## <NOTE>
@@ -5071,6 +5069,14 @@ add_dummies <- function(dir, Log)
         do_examples <- do_tests <- do_vignettes <- do_build_vignettes <- 0
         spec_install <- TRUE
         multiarch <- FALSE
+    }
+
+    install_log_path <- ""
+    if(startsWith(install, "check")) {
+        ## Expand relative to absolute if possible.
+        install_log_path <-
+            tryCatch(file_path_as_absolute(substr(install, 7L, 1000L)),
+                     error = function(e) "")
     }
 
     if (!identical(multiarch, FALSE)) {
