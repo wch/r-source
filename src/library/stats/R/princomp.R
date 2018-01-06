@@ -102,7 +102,8 @@ princomp.default <-
     sc <- setNames(if (cor) sds else rep.int(1, ncol(cv)),
 		   colnames(cv))
     fix <- if(fix_sign) function(A) {
-        A[] <- apply(A, 2L, function(x) x*sign(x[1L]))
+        mysign <- function(x) ifelse(x < 0, -1, 1)
+        A[] <- apply(A, 2L, function(x) x*mysign(x[1L]))
         A
     } else identity
     ev <- fix(edc$vectors)

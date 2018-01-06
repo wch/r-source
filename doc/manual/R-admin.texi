@@ -3857,14 +3857,14 @@ recommended.  Or see
 @uref{https://software.intel.com/@/en-us/@/articles/@/intel-mkl-link-line-advisor}.
 
 There are also versions of MKL for macOS and Windows, but at the time
-these were tried they did not work with the standard compilers used for
+these were tried they did not work with the default compilers used for
 @R{} on those platforms.
 
 The MKL interface has changed several times and may change again: the
-following examples have been used with versions 10.3 to 11.3, for GCC
+following examples have been used with versions 10.3 to 2018.1, for GCC
 compilers on @cputype{x86_64}.
 
-To a sequential version of MKL we used
+To use a sequential version of MKL we used
 
 @example
 MKL_LIB_PATH=/path/to/intel_mkl/lib/intel64
@@ -3890,7 +3890,8 @@ MKL="-L$@{MKL_LIB_PATH@} -lmkl_gf_lp64 -lmkl_core \
 The default number of threads will be chosen by the OpenMP software, but
 can be controlled by setting @code{OMP_NUM_THREADS} or
 @code{MKL_NUM_THREADS}, and in recent versions seems to default to a
-sensible value for sole use of the machine.
+sensible value for sole use of the machine.  (Parallel MKL has not
+always passed @command{make check-all}, but did with MKL 2018.1.)
 
 @c https://stat.ethz.ch/pipermail/r-devel/2015-September/071717.html
 It has been reported that
