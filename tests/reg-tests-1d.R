@@ -1406,9 +1406,9 @@ stopifnot(all.equal(est$ar[1,,], diag(0.8, 2), tol = 0.08)# seen 0.0038
 	, all.equal(estd[c(1:3,5:6)],
 		    es.d[c(1:3,5:6)], tol = 1e-3)## seen {1,3,8}e-4
 	, all.equal(lapply(estd[1:6],unname),
-		    lapply(est [1:6],unname), tol = 4e-15)# almost identical
+		    lapply(est [1:6],unname), tol = 1e-12)# almost identical
 	, all.equal(lapply(es.d[1:6],unname),
-		    lapply(es. [1:6],unname), tol = 4e-15)
+		    lapply(es. [1:6],unname), tol = 1e-12)
 )
 ## NA's in x gave an error, in R versions <= 3.4.3
 
