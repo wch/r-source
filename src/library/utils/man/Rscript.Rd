@@ -47,14 +47,17 @@
     \item{\option{--default-packages=list}}{where \code{list} is a
       comma-separated list of package names or \code{NULL}.  Sets the
       environment variable \env{R_DEFAULT_PACKAGES} which determines the
-      packages loaded on startup.  The default for \command{Rscript}
-      omits \pkg{methods} as it takes about 60\% of the startup time.
+      packages loaded on startup.
     }
   }
 
   Spaces are allowed in \code{expression} and \code{file} (but will need
   to be protected from the shell in use, if any, for example by
   enclosing the argument in quotes).
+
+  If \option{--default-packages} is not used, then \command{Rscript}
+  checks the environment variable \env{R_SCRIPT_DEFAULT_PACKAGES}. If
+  this is set, then it takes precedence over \env{R_DEFAULT_PACKAGES}.
 
 #ifdef unix
   Normally the version of \R is determined at installation, but this can

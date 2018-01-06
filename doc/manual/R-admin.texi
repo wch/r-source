@@ -2038,9 +2038,11 @@ ensures that only package @pkg{base} is loaded.
 
 Changing the set of default packages is normally used to reduce the set
 for speed when scripting: in particular not using @pkg{methods} will
-reduce the start-up time by a factor of up to two (and this is done by
-@command{Rscript}).  But it can also be used to customize @R{}, e.g.@:
-for class use.
+reduce the start-up time by a factor of up to two.  But it can also be
+used to customize @R{}, e.g.@: for class use. @command{Rscript}
+also checks the environment variable @env{R_SCRIPT_DEFAULT_PACKAGES};
+@enindex R_SCRIPT_DEFAULT_PACKAGES
+if set, this takes precedence over @env{R_DEFAULT_PACKAGES}.
 
 
 @node Managing libraries, Installing packages, Default packages, Add-on packages

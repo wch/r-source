@@ -269,6 +269,16 @@
 
       \item By default the (arbitrary) signs of the loadings from
       \code{princomp()} are chosen so the first element is non-negative.
+
+      \item If \option{--default-packages} is not used, then
+      \command{Rscript} now checks the environment variable
+      \env{R_SCRIPT_DEFAULT_PACKAGES}. If this is set, then it takes
+      precedence over \env{R_DEFAULT_PACKAGES}. If default packages are
+      not specified on the command line or by one of these environment
+      variables, then \command{Rscript} now uses the same default
+      packages as \command{R}. For now, the previous behavior of
+      dropping \pkg{methods} can be restored by setting the environment
+      variable \env{R_SCRIPT_LEGACY} to \samp{yes}.
     }
   }
 
