@@ -492,6 +492,11 @@
       \item \code{as.matrix(dd)} now works when the data frame \code{dd}
       contains a column which is a data frame or matrix, including a
       0-column matrix/d.f. .
+
+      \item \code{NAMEDMAX} has been raised to 3 to allow protection of
+      intermediate results from (usually ill-advised) assignments in
+      arguments to \code{BUILTIN} functions. Package \code{C} code using
+      \code{SET_NAMED} may need to be revised.
     }
   }
 }

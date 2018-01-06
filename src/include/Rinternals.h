@@ -494,7 +494,7 @@ Rboolean (Rf_isObject)(SEXP s);
 #define IS_SIMPLE_SCALAR(x, type) \
     (IS_SCALAR(x, type) && ATTRIB(x) == R_NilValue)
 
-#define NAMEDMAX 2
+#define NAMEDMAX 3
 #define INCREMENT_NAMED(x) do {				\
 	SEXP __x__ = (x);				\
 	if (NAMED(__x__) != NAMEDMAX)			\
