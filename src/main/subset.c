@@ -618,24 +618,20 @@ int R_DispatchOrEvalSP(SEXP call, SEXP op, const char *generic, SEXP args,
     if (args != R_NilValue && CAR(args) != R_DotsSymbol) {
 	SEXP x = eval(CAR(args), rho);
 	PROTECT(x);
-	INCREMENT_NAMED(x);
+	INCREMENT_LINKS(x);
 	if (! OBJECT(x)) {
 	    *ans = CONS_NR(x, evalListKeepMissing(CDR(args), rho));
-	    DECREMENT_NAMED(x);
+	    DECREMENT_LINKS(x);
 	    UNPROTECT(1);
 	    return FALSE;
 	}
-	prom = mkPROMISE(CAR(args), R_GlobalEnv);
-	SET_PRVALUE(prom, x);
+	prom = R_mkEVPROMISE_NR(CAR(args), x);
 	args = CONS(prom, CDR(args));
 	UNPROTECT(1);
     }
     PROTECT(args);
     int disp = DispatchOrEval(call, op, generic, args, rho, ans, 0, 0);
-    if (prom) {
-	DECREMENT_REFCNT(PRVALUE(prom));
-	DECREMENT_NAMED(PRVALUE(prom));
-    }
+    if (prom) DECREMENT_LINKS(PRVALUE(prom));
     UNPROTECT(1);
     return disp;
 }

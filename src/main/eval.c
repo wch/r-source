@@ -2154,9 +2154,8 @@ SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(cell = GET_BINDING_CELL(sym, rho));
     bgn = BodyHasBraces(body);
 
-    /* bump up NAMED count of sequence to avoid modification by loop code */
-    INCREMENT_NAMED(val);
-    INCREMENT_REFCNT(val);
+    /* bump up links count of sequence to avoid modification by loop code */
+    INCREMENT_LINKS(val);
 
     PROTECT_WITH_INDEX(v = R_NilValue, &vpi);
 
@@ -2232,7 +2231,7 @@ SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
  for_break:
     endcontext(&cntxt);
-    DECREMENT_REFCNT(val);
+    DECREMENT_LINKS(val);
     UNPROTECT(5);
     SET_RDEBUG(rho, dbg);
     return R_NilValue;
@@ -2783,7 +2782,7 @@ SEXP attribute_hidden evalList(SEXP el, SEXP rho, SEXP call, int n)
 		while (h != R_NilValue) {
 		    val = eval(CAR(h), rho);
 		    if (CDR(el) != R_NilValue)
-			INCREMENT_NAMED(val);
+			INCREMENT_LINKS(val);
 		    ev = CONS_NR(val, R_NilValue);
 		    if (head == R_NilValue) {
 			UNPROTECT(1); /* h */
@@ -2823,7 +2822,7 @@ SEXP attribute_hidden evalList(SEXP el, SEXP rho, SEXP call, int n)
 	} else {
 	    val = eval(CAR(el), rho);
 	    if (CDR(el) != R_NilValue)
-		INCREMENT_NAMED(val);
+		INCREMENT_LINKS(val);
 	    ev = CONS_NR(val, R_NilValue);
 	    if (head == R_NilValue)
 		PROTECT(head = ev);
@@ -2837,7 +2836,7 @@ SEXP attribute_hidden evalList(SEXP el, SEXP rho, SEXP call, int n)
 
     for(el = head; el != R_NilValue; el = CDR(el))
 	if (CDR(el) != R_NilValue)
-	    DECREMENT_NAMED(CAR(el));
+	    DECREMENT_LINKS(CAR(el));
 
     if (head != R_NilValue)
 	UNPROTECT(1);
@@ -2876,7 +2875,7 @@ SEXP attribute_hidden evalListKeepMissing(SEXP el, SEXP rho)
 		    else
 			val = eval(CAR(h), rho);
 		    if (CDR(el) != R_NilValue)
-			INCREMENT_NAMED(val);
+			INCREMENT_LINKS(val);
 		    ev = CONS_NR(val, R_NilValue);
 		    if (head == R_NilValue) {
 			UNPROTECT(1); /* h */
@@ -2900,7 +2899,7 @@ SEXP attribute_hidden evalListKeepMissing(SEXP el, SEXP rho)
 	    else
 		val = eval(CAR(el), rho);
 	    if (CDR(el) != R_NilValue)
-		INCREMENT_NAMED(val);
+		INCREMENT_LINKS(val);
 	    ev = CONS_NR(val, R_NilValue);
 	    if (head==R_NilValue)
 		PROTECT(head = ev);
@@ -2914,7 +2913,7 @@ SEXP attribute_hidden evalListKeepMissing(SEXP el, SEXP rho)
 
     for(el = head; el != R_NilValue; el = CDR(el))
 	if (CDR(el) != R_NilValue)
-	    DECREMENT_NAMED(CAR(el));
+	    DECREMENT_LINKS(CAR(el));
 
     if (head!=R_NilValue)
 	UNPROTECT(1);
@@ -6324,9 +6323,8 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 		       _("invalid for() loop sequence"));
 	BCNPUSH(value);
 
-	/* bump up NAMED count of seq to avoid modification by loop code */
-	INCREMENT_NAMED(seq);
-	INCREMENT_REFCNT(seq);
+	/* bump up links count of seq to avoid modification by loop code */
+	INCREMENT_LINKS(seq);
 
 	/* place initial loop variable value object on stack */
 	switch(TYPEOF(seq)) {
@@ -6415,11 +6413,9 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
       }
     OP(ENDFOR, 0):
       {
-#ifdef COMPUTE_REFCNT_VALUES
 	Rboolean iscompact = FALSE;
 	SEXP seq = getForLoopSeq(-4, &iscompact);
-	DECREMENT_REFCNT(seq);
-#endif
+	DECREMENT_LINKS(seq);
 	R_BCNodeStackTop -= FOR_LOOP_STATE_SIZE - 1;
 	SETSTACK(-1, R_NilValue);
 	NEXT();
