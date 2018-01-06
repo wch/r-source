@@ -199,8 +199,9 @@ as.POSIXlt <- function(x, tz = "", ...) UseMethod("as.POSIXlt")
 
 as.POSIXlt.Date <- function(x, ...) .Internal(Date2POSIXlt(x))
 
-as.POSIXlt.date <- as.POSIXlt.dates <- function(x, ...)
-    as.POSIXlt(as.POSIXct(x), ...)
+## ## Moved to packages date and chron.
+## as.POSIXlt.date <- as.POSIXlt.dates <- function(x, ...)
+##     as.POSIXlt(as.POSIXct(x), ...)
 
 as.POSIXlt.POSIXct <- function(x, tz = "", ...)
 {
@@ -273,28 +274,28 @@ as.POSIXct <- function(x, tz = "", ...) UseMethod("as.POSIXct")
 as.POSIXct.Date <- function(x, ...) .POSIXct(unclass(x)*86400)
 
 
-## convert from package date
-as.POSIXct.date <- function(x, ...)
-{
-    if(inherits(x, "date")) {
-        x <- (x - 3653) * 86400 # origin 1960-01-01
-        return(.POSIXct(x))
-    } else stop(gettextf("'%s' is not a \"date\" object",
-                         deparse(substitute(x)) ))
-}
+## ## Moved to package date
+## as.POSIXct.date <- function(x, ...)
+## {
+##     if(inherits(x, "date")) {
+##         x <- (x - 3653) * 86400 # origin 1960-01-01
+##         return(.POSIXct(x))
+##     } else stop(gettextf("'%s' is not a \"date\" object",
+##                          deparse(substitute(x)) ))
+## }
 
-## convert from package chron
-as.POSIXct.dates <- function(x, ...)
-{
-    if(inherits(x, "dates")) {
-        z <- attr(x, "origin")
-        x <- as.numeric(x) * 86400
-        if(length(z) == 3L && is.numeric(z))
-            x  <- x + as.numeric(ISOdate(z[3L], z[1L], z[2L], 0))
-        return(.POSIXct(x))
-    } else stop(gettextf("'%s' is not a \"dates\" object",
-                         deparse(substitute(x)) ))
-}
+## ## Moved to package chron
+## as.POSIXct.dates <- function(x, ...)
+## {
+##     if(inherits(x, "dates")) {
+##         z <- attr(x, "origin")
+##         x <- as.numeric(x) * 86400
+##         if(length(z) == 3L && is.numeric(z))
+##             x  <- x + as.numeric(ISOdate(z[3L], z[1L], z[2L], 0))
+##         return(.POSIXct(x))
+##     } else stop(gettextf("'%s' is not a \"dates\" object",
+##                          deparse(substitute(x)) ))
+## }
 
 as.POSIXct.POSIXlt <- function(x, tz = "", ...)
 {
