@@ -76,13 +76,15 @@ as.Date.numeric <- function(x, origin, ...)
 
 as.Date.default <- function(x, ...)
 {
-    if(inherits(x, "Date")) return(x)
-    if(is.logical(x) && all(is.na(x)))
-        return(structure(as.numeric(x), class = "Date"))
-    stop(gettextf("do not know how to convert '%s' to class %s",
-                  deparse(substitute(x)),
-                  dQuote("Date")),
-         domain = NA)
+    if(inherits(x, "Date"))
+	x
+    else if(is.logical(x) && all(is.na(x)))
+	structure(as.numeric(x), class = "Date")
+    else
+	stop(gettextf("do not know how to convert '%s' to class %s",
+		      deparse(substitute(x)),
+		      dQuote("Date")),
+	     domain = NA)
 }
 
 ## ## Moved to package date
@@ -237,7 +239,7 @@ as.character.Date <- function(x, ...) format(x, ...)
 as.data.frame.Date <- as.data.frame.vector
 
 as.list.Date <- function(x, ...)
-    lapply(seq_along(x), function(i) x[i])
+    lapply(seq_along(x), `[`)
 
 c.Date <- function(..., recursive = FALSE)
     structure(c(unlist(lapply(list(...), unclass))), class = "Date")
