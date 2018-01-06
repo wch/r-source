@@ -1,6 +1,6 @@
 % File src/library/base/man/find.package.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{find.package}
@@ -27,7 +27,7 @@ path.package(package, quiet = FALSE)
   \item{quiet}{logical.  Should this not give warnings or an error
     if the package is not found?}
   \item{verbose}{a logical.  If \code{TRUE}, additional diagnostics are
-    printed.}
+    printed, notably when a package is found more than once.}
 }
 \details{
   \code{find.package} returns path to the locations where the
@@ -60,5 +60,18 @@ path.package(package, quiet = FALSE)
 }
 \value{
   A character vector of paths of package directories.
+}
+\examples{
+try(find.package("knitr"))
+## will not give an error, maybe a warning about *all* locations it is found:
+find.package("kitty", quiet=TRUE, verbose=TRUE)
+
+## Find all .libPaths() entries a package is found:
+findPkgAll <- function(pkg)
+  unlist(lapply(.libPaths(), function(lib)
+           find.package(pkg, lib, quiet=TRUE, verbose=FALSE)))
+
+findPkgAll("MASS")
+findPkgAll("knitr")
 }
 \keyword{files}

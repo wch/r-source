@@ -279,6 +279,9 @@
       packages as \command{R}. For now, the previous behavior of
       dropping \pkg{methods} can be restored by setting the environment
       variable \env{R_SCRIPT_LEGACY} to \samp{yes}.
+
+      \item When a package is found more than once, the warning from
+      \code{find.package(*, verbose=TRUE)} lists all library locations.
     }
   }
 
@@ -523,6 +526,9 @@
       \item The version of LAPACK included in the sources has been
       updated to 3.8.0 (for the routines used by \R, a very minor bug-fix
       change).
+
+      \item Non-UTF-8 multibyte character handling fixed more
+      permanently (\PR{16732}).
     }
   }
 
