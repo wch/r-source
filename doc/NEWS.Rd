@@ -17,6 +17,9 @@
       \item The version of LAPACK included in the sources has been
       updated to 3.8.0 (for the routines used by \R, a very minor bug-fix
       change).
+
+      \item Non-UTF-8 multibyte character handling fixed more
+      permanently (\PR{16732}).
     }
   }
 
@@ -36,7 +39,7 @@
       \item \code{power.prop.test()} now warns when it cannot solve the
       problem, typically because of impossible constraints. (\PR{17345})
 
-      \item \code{removeSource()} no longer erronously removes
+      \item \code{removeSource()} no longer erroneously removes
       \code{NULL} in certain cases, thanks to Dénes Tóth.
 
       \item \code{nls(`NO [mol/l]` ~ f(t))} and \code{nls(y ~ a)} now

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2017	The R Core Team.
+ *  Copyright (C) 2000-2018	The R Core Team.
  *  Copyright (C) 1995-1998	Robert Gentleman and Ross Ihaka.
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -195,13 +195,7 @@ static void PrintLanguageEtc(SEXP s, Rboolean useSource, Rboolean isClosure)
     }
     PROTECT(t);
     for (i = 0; i < LENGTH(t); i++) {
-#ifdef rev72839__not_ok_eg_for_escaped_chars
-	// did solve PR#16732
-	const char *ctmp = EncodeString(STRING_ELT(t, i),  0, 0, Rprt_adj_none);
-	Rprintf("%s\n", ctmp); /* translated */
-#else
- 	Rprintf("%s\n", CHAR(STRING_ELT(t, i))); /* translated */
-#endif
+ 	Rprintf("%s\n", translateChar(STRING_ELT(t, i))); // translate: for srcref part (PR#16732)
     }
     UNPROTECT(1);
     if (isClosure) {
