@@ -5737,15 +5737,16 @@ static R_INLINE void SUBASSIGN_N_PTR(R_bcstack_t *sx, int rank,
 	R_BCNodeStackTop -= rank + 1;					\
     } while (0)
 
-#define FIXUP_SCALAR_LOGICAL(callidx, arg, op) do { \
-	SEXP val = GETSTACK(-1); \
-	if (TYPEOF(val) != LGLSXP || XLENGTH(val) != 1 || \
-	    ATTRIB(val) != NULL) {			  \
-	    if (!isNumber(val))	\
-		errorcall(VECTOR_ELT(constants, callidx), \
+#define FIXUP_SCALAR_LOGICAL(callidx, arg, op) do {			\
+	SEXP val = GETSTACK(-1);					\
+	if (IS_SIMPLE_SCALAR(val, LGLSXP))				\
+	    SETSTACK(-1, ScalarLogical(SCALAR_LVAL(val)));		\
+	else {								\
+	    if (!isNumber(val))						\
+		errorcall(VECTOR_ELT(constants, callidx),		\
 			  _("invalid %s type in 'x %s y'"), arg, op);	\
-	    SETSTACK(-1, ScalarLogical(asLogical(val))); \
-	} \
+	    SETSTACK(-1, ScalarLogical(asLogical(val)));		\
+	}								\
     } while(0)
 
 static void signalMissingArgError(SEXP args, SEXP call)
