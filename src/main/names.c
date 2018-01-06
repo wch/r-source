@@ -746,6 +746,7 @@ FUNTAB R_FunTab[] =
 {"untracemem",  do_untracemem,  0,      101,	1,      {PP_FUNCALL, PREC_FN,	0}},
 {"inspect",	do_inspect,	0,	111,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 {"address",     do_address,     0,       11,     1,     {PP_FUNCALL, PREC_FN, 0}},
+{"named",       do_named,       0,       11,     1,     {PP_FUNCALL, PREC_FN, 0}},
 {"refcnt",      do_refcnt,      0,       11,     1,     {PP_FUNCALL, PREC_FN, 0}},
 {"merge",	do_merge,	0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"capabilities",do_capabilities,0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
