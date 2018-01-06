@@ -10332,10 +10332,30 @@ system and so the two interworked successfully.  This was true of
 @command{g77}, but it is less true of @command{gfortran} as used in
 @command{gcc} 4 and later.  In particular, any package that makes use of
 Fortran I/O will when compiled on Windows interfere with C I/O: when the
-Fortran I/O is initialized (typically when the package is loaded) the C
-@code{stdout} and @code{stderr} are switched to LF line endings.
-(Function @code{init} in file @file{src/modules/lapack/init_win.c} shows
-how to mitigate this.)
+Fortran I/O support code is initialized (typically when the package is
+loaded) the C @code{stdout} and @code{stderr} are switched to LF line
+endings.  (Function @code{init} in file
+@file{src/modules/lapack/init_win.c} shows how to mitigate this.  In a
+package this would look something like
+@example
+#ifdef _WIN32
+# include <fcntl.h>
+#endif
+
+void R_init_mypkgname(DllInfo *dll)
+@{
+    // Native symbol registration calls
+
+#ifdef _WIN32
+    // gfortran I/O initialization sets these to _O_BINARY
+    setmode(1, _O_TEXT); /* stdout */
+    setmode(2, _O_TEXT); /* stderr */
+#endif
+@}
+@end example
+@noindent
+in the file used for native symbol registration.)
+
 
 @node Linking to other packages, Handling R objects in C, Fortran I/O, System and foreign language interfaces
 @section Linking to other packages

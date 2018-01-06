@@ -1878,7 +1878,7 @@ If you want to get rid of @R{} more completely using a Terminal, simply
 run:
 
 @example
-sudo rm -rf /Library/Frameworks/R.framework /Applications/R.app \
+sudo rm -Rf /Library/Frameworks/R.framework /Applications/R.app \
    /usr/local/bin/R /usr/local/bin/Rscript
 @end example
 
@@ -3860,14 +3860,14 @@ recommended.  Or see
 @uref{https://software.intel.com/@/en-us/@/articles/@/intel-mkl-link-line-advisor}.
 
 There are also versions of MKL for macOS and Windows, but at the time
-these were tried they did not work with the standard compilers used for
+these were tried they did not work with the default compilers used for
 @R{} on those platforms.
 
 The MKL interface has changed several times and may change again: the
-following examples have been used with versions 10.3 to 11.3, for GCC
+following examples have been used with versions 10.3 to 2018.1, for GCC
 compilers on @cputype{x86_64}.
 
-To a sequential version of MKL we used
+To use a sequential version of MKL we used
 
 @example
 MKL_LIB_PATH=/path/to/intel_mkl/lib/intel64
@@ -3893,7 +3893,8 @@ MKL="-L$@{MKL_LIB_PATH@} -lmkl_gf_lp64 -lmkl_core \
 The default number of threads will be chosen by the OpenMP software, but
 can be controlled by setting @code{OMP_NUM_THREADS} or
 @code{MKL_NUM_THREADS}, and in recent versions seems to default to a
-sensible value for sole use of the machine.
+sensible value for sole use of the machine.  (Parallel MKL has not
+always passed @command{make check-all}, but did with MKL 2018.1.)
 
 @c https://stat.ethz.ch/pipermail/r-devel/2015-September/071717.html
 It has been reported that
@@ -4721,7 +4722,7 @@ LDFLAGS="-L/usr/local/lib64 -L/usr/local/lib"
 @noindent
 is appropriate since most (but not all) software installs its 64-bit
 libraries in @file{/usr/local/lib64}.  To build a 32-bit version of @R{}
-on @cputype{x86_64} with Fedora 24 we used
+on @cputype{x86_64} with Fedora 26 we used
 
 @example
 CC="gcc -m32"
@@ -4747,7 +4748,7 @@ export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
 The 32-bit system @code{libcurl} did not work with the system CA
 certificates: this is worked around in @R{}'s test suite.
 
-64-bit versions of Linux are built with support for files > 2Gb, and
+64-bit versions on Linux are built with support for files > 2Gb, and
 32-bit versions will be if possible unless @option{--disable-largefile}
 is specified.
 
@@ -4770,6 +4771,22 @@ FFLAGS="-mminimal-toc -fno-optimize-sibling-calls -g -O2"
 @noindent
 the additional flags being needed to resolve problems linking against
 @file{libnmath.a} and when linking @R{} as a shared library.
+
+@c suggestion of https://gcc.gnu.org/wiki/FloatingPointMath
+The setting of the macro @samp{SAFE_FFLAGS} may need some help.  It
+should not need additional flags on platforms other than @cputype{68000}
+(not likely to be encountered) and @cputype{ix86} (and not
+@cputype{x86_64}).  When the FORTRAN compiler is GNU (@command{gfortran}
+or possibly @command{g77}) the flags 
+@example
+-msse2 -mfpmath=sse
+@end example
+@noindent
+are added: earlier versions of @R{} added @option{-ffloat-store} and
+this might still be needed if a @cputype{ix86} CPU is encountered
+without SSE2 support.  Note that it is a @emph{replacement} for
+@samp{FFLAGS}, so should include all the flags in that macro (except
+perhaps the optimization level).
 
 @menu
 * Clang::                       
@@ -4826,6 +4843,9 @@ few diagnostics even with @option{-Wall -pedantic}.
 seems this conflicts with using OpenMP in @R{}.  So it may be necessary
 to disable the latter by configuring using @option{--without-openmp}.
 
+It is not clear what architectures @command{flang} intends to support:
+experiments were done on @cputype{x86_64}.
+
 
 @node Intel compilers,  , Clang, Linux
 @subsection Intel compilers
@@ -4878,6 +4898,13 @@ CXXFLAGS="$fast"
 FC=$F77
 FCFLAGS=$F77FLAGS
 @end example
+
+It is possible that 32-builds need to force the use of SSE2 instructions
+in @code{SAFE_FFLAGS}, e.g.@: by
+@example
+SAFE_FFLAGS=-axsse2
+@end example
+
 
 @node macOS, Solaris, Linux, Platform notes
 @section macOS
