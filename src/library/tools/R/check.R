@@ -2977,7 +2977,7 @@ add_dummies <- function(dir, Log)
             }
             if(check_S3reg) {
                 checkingLog(Log, "use of S3 registration")
-                Rcmd <- sprintf("suppressPackageStartupMessages(loadNamespace('%s', lib.loc = '%s'))",
+                Rcmd <- sprintf("suppressWarnings(suppressPackageStartupMessages(loadNamespace('%s', lib.loc = '%s')))",
                                 pkgname, libdir)
                 opts <- if(nzchar(arch)) R_opts4 else R_opts2
                 env <- Sys.getenv("_R_LOAD_CHECK_OVERWRITE_S3_METHODS_",
