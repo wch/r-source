@@ -239,7 +239,7 @@ as.character.Date <- function(x, ...) format(x, ...)
 as.data.frame.Date <- as.data.frame.vector
 
 as.list.Date <- function(x, ...)
-    lapply(seq_along(x), `[`)
+    lapply(seq_along(x), function(i) x[i])
 
 c.Date <- function(..., recursive = FALSE)
     structure(c(unlist(lapply(list(...), unclass))), class = "Date")
