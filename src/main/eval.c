@@ -1463,6 +1463,20 @@ static R_INLINE SEXP getSrcref(SEXP srcrefs, int ind)
 	return R_NilValue;
 }
 
+#ifdef ADJUST_ENVIR_REFCNTS
+static R_INLINE Rboolean R_isReplaceSymbol(SEXP fun)
+{
+    /* fun is a replacement function name if it contains '<-'
+       anywhere. For internally dispatched replacement functions this
+       may occur in the middle; in other cases it will be at the
+       end. */
+    if (TYPEOF(fun) == SYMSXP &&
+	strstr(CHAR(PRINTNAME(fun)), "<-"))
+	return TRUE;
+    else return FALSE;
+}	
+#endif
+
 /* There's another copy of this in main.c */
 static void PrintCall(SEXP call, SEXP rho)
 {
@@ -1664,6 +1678,11 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedvars)
     if (R_envHasNoSpecialSymbols(newrho))
 	SET_NO_SPECIAL_SYMBOLS(newrho);
 
+#ifdef ADJUST_ENVIR_REFCNTS
+    Rboolean is_getter_call =
+	(CADR(call) == R_TmpvalSymbol && ! R_isReplaceSymbol(CAR(call)));
+#endif
+
     UNPROTECT(1); /* newrho - below protected via context */
 
     /*  If we have a generic function we need to use the sysparent of
@@ -1676,6 +1695,8 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedvars)
 			     rho, arglist, op);
 #ifdef ADJUST_ENVIR_REFCNTS
     R_CleanupEnvir(newrho, val);
+    if (MAYBE_REFERENCED(val) && is_getter_call)
+    	val = shallow_duplicate(val);
 #endif
     return val;
 }
