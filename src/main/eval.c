@@ -5030,7 +5030,10 @@ static R_INLINE SEXP getvar(SEXP symbol, SEXP rho,
 
 static R_INLINE SEXP BUILTIN_CALL_FRAME_ARGS()
 {
-    return CALL_FRAME_ARGS();
+    SEXP args = CALL_FRAME_ARGS();
+    for (SEXP a = args; a  != R_NilValue; a = CDR(a))
+	DECREMENT_LINKS(CAR(a));
+    return args;
 }
 
 static R_INLINE SEXP CLOSURE_CALL_FRAME_ARGS()
@@ -5039,6 +5042,7 @@ static R_INLINE SEXP CLOSURE_CALL_FRAME_ARGS()
     /* it would be better not to build this arglist with CONS_NR in
        the first place */
     for (SEXP a = args; a  != R_NilValue; a = CDR(a)) {
+	DECREMENT_LINKS(CAR(a));
 	if (! TRACKREFS(a)) {
 	    ENABLE_REFCNT(a);
 	    INCREMENT_REFCNT(CAR(a));
@@ -5075,11 +5079,12 @@ static R_INLINE SEXP CLOSURE_CALL_FRAME_ARGS()
 
 /* push an argument to existing call frame */
 /* a call frame always uses boxed stack values, so GETSTACK will not allocate */
-#define PUSHCALLARG(v) do { \
-  SEXP __cell__ = CONS_NR(v, R_NilValue); \
-  if (GETSTACK(-2) == R_NilValue) SETSTACK(-2, __cell__); \
-  else SETCDR(GETSTACK(-1), __cell__); \
-  SETSTACK(-1, __cell__);	       \
+#define PUSHCALLARG(v) do {					\
+	SEXP __cell__ = CONS_NR(v, R_NilValue);			\
+	if (GETSTACK(-2) == R_NilValue) SETSTACK(-2, __cell__); \
+	else SETCDR(GETSTACK(-1), __cell__);			\
+	SETSTACK(-1, __cell__);					\
+	INCREMENT_LINKS(CAR(__cell__));				\
 } while (0)
 
 /* place a tag on the most recently pushed call argument */
