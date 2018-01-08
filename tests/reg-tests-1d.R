@@ -1413,6 +1413,11 @@ stopifnot(all.equal(est$ar[1,,], diag(0.8, 2), tol = 0.08)# seen 0.0038
 ## NA's in x gave an error, in R versions <= 3.4.3
 
 
+## as.list(<Date>) method:
+toD <- Sys.Date(); stopifnot(identical(as.list(toD)[[1]], toD))
+## was wrong for 20 hours
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
