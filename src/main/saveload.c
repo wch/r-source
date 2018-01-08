@@ -1849,7 +1849,7 @@ static int R_ReadMagic(FILE *fp)
     return d1 + 10 * d2 + 100 * d3 + 1000 * d4;
 }
 
-static int R_DefaultSaveFormatVersion = 2;
+static int R_DefaultSaveFormatVersion = 3;
 
 /* ----- E x t e r n a l -- I n t e r f a c e s ----- */
 

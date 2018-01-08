@@ -183,7 +183,7 @@ static SEXP ReadBC(SEXP ref_table, R_inpstream_t stream);
 /* The default version used when a stream Init function is called with
    version = 0 */
 
-static const int R_DefaultSerializeVersion = 2;
+static const int R_DefaultSerializeVersion = 3;
 
 /*
  * Utility Functions
