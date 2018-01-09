@@ -2749,8 +2749,10 @@ add_dummies <- function(dir, Log)
                 ## Not sure -Wextra and -Weverything are portable, though
                 ## -Werror is not compiler independent
                 ##   (as what is a warning is not)
+                except <- Sys.getenv("_R_CHECK_COMPILATION_FLAGS_KNOWN_", "")
+                except <- unlist(strsplit(except, "\\s", perl = TRUE))
                 warns <- setdiff(warns,
-                                 c("-Wall", "-Wextra", "-Weverything"))
+                                 c(except, "-Wall", "-Wextra", "-Weverything"))
                 warns <- warns[!startsWith(warns, "-Wl,")] # linker flags
                 diags <- grep(" -fno-diagnostics-show-option", tokens,
                               useBytes = TRUE, value = TRUE)
