@@ -911,17 +911,19 @@ All packages that are needed@footnote{This includes all packages
 directly called by @code{library} and @code{require} calls, as well as
 data obtained @emph{via} @code{data(theirdata, package = "somepkg")}
 calls: @command{R CMD check} will warn about all of these.  But there
-are subtler uses which it will not detect: e.g.@: if package A uses
+are subtler uses which it may not detect: e.g.@: if package A uses
 package B and makes use of functionality in package B which uses package
 C which package B suggests or enhances, then package C needs to be in
 the @samp{Suggests} list for package A.  Nor will undeclared uses in
 included files be reported, nor unconditional uses of packages listed
-under @samp{Enhances}.} to successfully run @code{R CMD check} on the
-package must be listed in one of @samp{Depends} or @samp{Suggests} or
-@samp{Imports}.  Packages used to run examples or tests conditionally
-(e.g.@: @emph{via} @code{if(require(@var{pkgname}))}) should be listed
-in @samp{Suggests} or @samp{Enhances}.  (This allows checkers to ensure
-that all the packages needed for a complete check are installed.)
+under @samp{Enhances}.  @command{R CMD check --as-cran} will detect more
+of the subtler uses, especially for re-building of vignettes as from
+@R{} 3.5.0.}  to successfully run @code{R CMD check} on the package must
+be listed in one of @samp{Depends} or @samp{Suggests} or @samp{Imports}.
+Packages used to run examples or tests conditionally (e.g.@: @emph{via}
+@code{if(require(@var{pkgname}))}) should be listed in @samp{Suggests}
+or @samp{Enhances}.  (This allows checkers to ensure that all the
+packages needed for a complete check are installed.)
 @end itemize
 
 @noindent
@@ -1529,16 +1531,20 @@ should only assume a POSIX-compliant @command{/bin/sh} -- see
 In particular @command{bash} extensions must not be used, and not all
 @R{} platforms have a @command{bash} command, let alone one at
 @file{/bin/bash}.  All known shells used with @R{} support the use of
-backticks, but not all support @samp{$(@var{cmd})}.}) shell script
-@file{configure} in your package which (if present) is executed by
-@code{R CMD INSTALL} before any other action is performed.  This can be
-a script created by the Autoconf mechanism, but may also be a script
-written by yourself.  Use this to detect if any nonstandard libraries
-are present such that corresponding code in the package can be disabled
-at install time rather than giving error messages when the package is
-compiled or used.  To summarize, the full power of Autoconf is available
-for your extension package (including variable substitution, searching
-for libraries, etc.).
+backticks, but not all support @samp{$(@var{cmd})}.  However, real-world
+shells are not fully POSIX-compliant and omissions and idiosyncrasies
+need to be worked around---which Autoconf will do for you.  Arithmetic
+expansion is a known issue: see
+@uref{https://www.gnu.org/@/software/@/autoconf/@/manual/autoconf.html#Portable-Shell}
+for this and others.}) shell script @file{configure} in your package
+which (if present) is executed by @code{R CMD INSTALL} before any other
+action is performed.  This can be a script created by the Autoconf
+mechanism, but may also be a script written by yourself.  Use this to
+detect if any nonstandard libraries are present such that corresponding
+code in the package can be disabled at install time rather than giving
+error messages when the package is compiled or used.  To summarize, the
+full power of Autoconf is available for your extension package
+(including variable substitution, searching for libraries, etc.).
 
 Under a Unix-alike only, an executable (Bourne shell) script
 @file{cleanup} is executed as the last thing by @code{R CMD INSTALL} if
@@ -3077,8 +3083,11 @@ installed on all platforms with suitable tools and is the usual form for
 Unix-like systems; the binary form is platform-specific, and is the more
 common distribution form for the Windows and macOS platforms.
 
-Using @command{R CMD build}, the @R{} package builder, one can build @R{}
-package tarballs from their sources (for example, for subsequent release).
+Using @command{R CMD build}, the @R{} package builder, one can build
+@R{} package tarballs from their sources (for example, for subsequent
+release).  It is recommended that packages are built for release by the
+current release version of @R{} or @samp{r-patched}, to avoid
+inadvertently picking up new features of a development version of @R{}.
 
 Prior to actually building the package in the standard gzipped tar file
 format, a few diagnostic checks and cleanups are performed.  In
@@ -4207,14 +4216,16 @@ line of the file) and not make use of GNU extensions.  (The POSIX
 specification is available at
 @uref{http://pubs.opengroup.org/@/onlinepubs/@/9699919799/@/utilities/@/make.html};
 anything not documented there should be regarded as an extension to be
-avoided.)  Commonly misused GNU extensions are conditional inclusions
-(@code{ifeq} and the like), @code{$@{shell ...@}}, @code{$@{wildcard
-...@}} and similar, and the use of @code{+=}@footnote{This was
-apparently introduced in SunOS 4, and is available elsewhere
-@emph{provided} it is surrounded by spaces.} and @code{:=}.  Also, the
-use of @code{$<} other than in implicit rules is a GNU extension, as is
-the @code{$^} macro.  Unfortunately makefiles which use GNU extensions
-often run on other platforms but do not have the intended results.
+avoided.  Further advice can be found at
+@uref{https://www.gnu.org/@/software/@/autoconf/@/manual/@/autoconf.html#Portable-Make}.                                )
+Commonly misused GNU extensions are conditional inclusions (@code{ifeq}
+and the like), @code{$@{shell ...@}}, @code{$@{wildcard ...@}} and
+similar, and the use of @code{+=}@footnote{This was apparently
+introduced in SunOS 4, and is available elsewhere @emph{provided} it is
+surrounded by spaces.} and @code{:=}.  Also, the use of @code{$<} other
+than in implicit rules is a GNU extension, as is the @code{$^} macro.
+Unfortunately makefiles which use GNU extensions often run on other
+platforms but do not have the intended results.
 
 The use of @code{$@{shell ...@}} can be avoided by using backticks, e.g.@:
 
