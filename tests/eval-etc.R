@@ -251,6 +251,20 @@ if(getRversion() >= "3.5.0") {
     ## Creating a collection of S4 objects, ensuring deparse <-> parse are inverses
 library(methods)
 example(new) # creating t1 & t2 at least
+## an S4 object of type "list" of "mp1" objects [see pkg 'Rmpfr']:
+setClass("mp1", slots = c(prec = "integer", d = "integer"))
+setClass("mp", contains = "list", ## of "mp" entries:
+         validity = function(object) {
+	     if(all(vapply(object@.Data, class, "") == "mp1"))
+		 return(TRUE)
+	     ## else
+		 "Not all components are of class 'mp'"
+	 })
+validObject(m0 <- new("mp"))
+validObject(m1 <- new("mp", list(new("mp1"), new("mp1", prec=1L, d = 3:5))))
+typeof(m1)# "list", not "S4"
+dput(m1) # now *is* correct -- will be check_EPD()ed below
+##
 if(require("Matrix")) { cat("Trying some Matrix objects, too\n")
     D5. <- Diagonal(x = 5:1)
     D5N <- D5.; D5N[5,5] <- NA

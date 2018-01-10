@@ -131,9 +131,11 @@
       \code{approxfun()} also work for long vectors.
 
       %% one item with several paragraphs
-      \item \code{deparse()} (and \code{dump()}) are more useful for S4
-      objects; \code{dput()} now using the same internal C code instead
-      of its previous imperfect workaround R code.
+      \item \code{deparse()} and \code{dump()} are more useful for S4
+      objects, \code{dput()} now using the same internal C code instead
+      of its previous imperfect workaround R code.  S4 objects now
+      typically deparse perfectly, i.e., can be recreated identically
+      from deparsed code.
 
       \code{dput()}, \code{deparse()} and \code{dump()} now print the
       \code{names()} information only once, using the more readable
@@ -145,7 +147,7 @@
       the \code{(tag = value)} syntax for atomic vectors.  On the other
       hand, without deparse options \code{"showAttributes"} and
       \code{"niceNames"}, names are no longer shown also for lists.
-      \code{as.character(list( c (one = 1)))} now includes the name, as
+      \code{as.character(list(  c (one = 1)))} now includes the name, as
       \code{as.character(list(list(one = 1)))} has always done.
 
       \code{m:n} now also deparses nicely when \eqn{m > n}.

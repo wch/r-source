@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2018-01-07 r74095) -- "Unsuffered Consequences"
+R Under development (unstable) (2018-01-07 r74096) -- "Unsuffered Consequences"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -308,6 +308,20 @@ Levels: a b <NA>
 +     ## Creating a collection of S4 objects, ensuring deparse <-> parse are inverses
 + library(methods)
 + example(new) # creating t1 & t2 at least
++ ## an S4 object of type "list" of "mp1" objects [see pkg 'Rmpfr']:
++ setClass("mp1", slots = c(prec = "integer", d = "integer"))
++ setClass("mp", contains = "list", ## of "mp" entries:
++          validity = function(object) {
++ 	     if(all(vapply(object@.Data, class, "") == "mp1"))
++ 		 return(TRUE)
++ 	     ## else
++ 		 "Not all components are of class 'mp'"
++ 	 })
++ validObject(m0 <- new("mp"))
++ validObject(m1 <- new("mp", list(new("mp1"), new("mp1", prec=1L, d = 3:5))))
++ typeof(m1)# "list", not "S4"
++ dput(m1) # now *is* correct -- will be check_EPD()ed below
++ ##
 + if(require("Matrix")) { cat("Trying some Matrix objects, too\n")
 +     D5. <- Diagonal(x = 5:1)
 +     D5N <- D5.; D5N[5,5] <- NA
@@ -393,6 +407,11 @@ new> ## End(Don't show)
 new> 
 new> 
 new> 
+new("mp",
+.Data = list(new("mp1",
+prec = integer(0), d = integer(0)), 
+    new("mp1",
+prec = 1L, d = 3:5)))
 Loading required package: Matrix
 Trying some Matrix objects, too
 
@@ -1040,6 +1059,17 @@ m: new("dgCMatrix",
 i = c(2L, 0L, 1L, 2L, 0L, 1L), p = c(0L, 1L, 
 2L, 4L, 4L, 6L), Dim = c(3L, 5L), Dimnames = list(c("A", "B", 
 "C"), c("a", "b", "c", "d", "e")), x = c(1, 2, 4, 3, 6, 5), factors = list())
+ --> checking list(*): Ok
+--=--=--=--=--
+m0: new("mp",
+.Data = list())
+ --> checking list(*): Ok
+--=--=--=--=--
+m1: new("mp",
+.Data = list(new("mp1",
+prec = integer(0), d = integer(0)), 
+    new("mp1",
+prec = 1L, d = 3:5)))
  --> checking list(*): Ok
 --=--=--=--=--
 missL: structure(list(, , ), .Names = c("", NA, "c"))
