@@ -724,6 +724,7 @@ add_dummies <- function(dir, Log)
     ## These are most commonly data/*.{Rdata,rda}, R/sysdata.rda files,
     ## and build/vignette.rds
     ## But packages have other .rds files in many places.
+    ## Despite its name, build/partial.rdb is created by saveRDS.
     ##
     ## We need to so this before installation, which may create
     ## src/symbols.rds in the sources.
@@ -748,7 +749,8 @@ add_dummies <- function(dir, Log)
         }
         checkingLog(Log, "serialized R objects in the sources")
         loadfiles <- grep("[.](rda|RData)$", allfiles, value = TRUE)
-        serfiles <- grep("[.]rds$", allfiles, value = TRUE)
+        serfiles <- c(grep("[.]rds$", allfiles, value = TRUE),
+                      grep("build/partial[.]rdb$", allfiles, value = TRUE))
         vers1 <- sapply(loadfiles, getVerLoad)
         vers2 <- sapply(serfiles, getVerSer)
         bad <- c(vers1, vers2)
