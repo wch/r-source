@@ -1418,6 +1418,22 @@ toD <- Sys.Date(); stopifnot(identical(as.list(toD)[[1]], toD))
 ## was wrong for 20 hours
 
 
+## PR#17372: sum(<ints whose sum overflows>, <higher type>)
+iL <- rep(1073741824L, 2) # 2^30 + 2^30 = 2^31 integer overflows to NA
+r1 <- tryCatch(sum("foo", iL), error=function(e) conditionMessage(e))
+r2 <- tryCatch(sum(iL, "foo"), error=function(e) conditionMessage(e))
+stopifnot(
+    identical(r1, r2),
+    grepl("invalid 'type' (character) ", r1, fixed=TRUE),
+    ## each gives an overflow warning
+    identical(sum(3.14, iL), NA_real_),
+    identical(sum(iL, 3.14), NA_real_),
+    identical(sum(1+2i, iL), NA_complex_),
+    identical(sum(iL, 1+2i), NA_complex_)
+)
+## r2 was no error and sum(iL, 1+2i) gave NA_real_ in R <= 3.4.x
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
