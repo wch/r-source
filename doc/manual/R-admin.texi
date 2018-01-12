@@ -3726,7 +3726,8 @@ a non-default @acronym{BLAS} and @option{--enable-BLAS-shlib} is
 @strong{not} used (it is the default on all platforms except AIX), then
 all @acronym{BLAS}-using packages must also be.  So if @R{} is re-built
 to use an enhanced @acronym{BLAS} then packages such as
-@CRANpkg{quantreg} will need to be re-installed.
+@CRANpkg{quantreg} will need to be re-installed; they may be under other
+circumstances.
 
 @R{} relies on @acronym{ISO}/@acronym{IEC}@tie{}60559 compliance of an
 external @acronym{BLAS}.  This can be broken if for example the code
@@ -3795,7 +3796,7 @@ extensions, and separate @samp{atlas-sse2} and @samp{atlas-sse3}
 versions of ATLAS, and are for non-Intel architectures.  The only way to
 see exactly which CPUs the distributed libraries have been tuned for is
 to read the @file{atlas.spec} file: at the time of writing
-@samp{HAMMER64SSE3} and @samp{Corei264AVX} for @cputype{x86_64}.}
+@samp{HAMMER64SSE3} and @samp{Corei264AVX} for @cputype{x86_64} Fedora.}
 
 Note that building @R{} on Linux against distributed shared libraries
 may need @samp{-devel} or @samp{-dev} packages installed.
@@ -3807,9 +3808,6 @@ Linking against multiple static libraries requires one of
 --with-blas="-L/path/to/ATLAS/libs -lf77blas -latlas"
 --with-blas="-L/path/to/ATLAS/libs -lptf77blas -lpthread -latlas"
 @end example
-@noindent
-optionally including LAPACK @emph{via} something like @option{-llapack},
-@option{-lptlapack} @option{-llapack-atlas}.
 
 Consult its installation
 guide@footnote{@uref{http://math-atlas.sourceforge.net/atlas_install/}}
@@ -3897,7 +3895,7 @@ compilers on @cputype{x86_64}.
 To use a sequential version of MKL we used
 
 @example
-MKL_LIB_PATH=/path/to/intel_mkl/lib/intel64
+MKL_LIB_PATH=/path/to/intel_mkl/mkl/lib/intel64
 export LD_LIBRARY_PATH=$MKL_LIB_PATH
 MKL="-L$@{MKL_LIB_PATH@} -lmkl_gf_lp64 -lmkl_core -lmkl_sequential"
 ./configure --with-blas="$MKL" --with-lapack
@@ -4015,6 +4013,10 @@ ln -s /usr/lib64/atlas/libtatlas.so.3 @var{R_HOME}/lib/libRblas.so
 can be used with its distributed ATLAS libraries.  (If you have the
 @samp{-devel} RPMS installed you can omit the @code{.0}/@code{.3}.)
 
+Note that rebuilding or symlinking @file{libRblas.so} will not suffice
+if the intention is to use a modified LAPACK contained in an external
+BLAS: the latter could even cause conflicts.
+
 
 @node LAPACK, Caveats, BLAS, Linear algebra
 @subsection LAPACK
@@ -4022,7 +4024,7 @@ can be used with its distributed ATLAS libraries.  (If you have the
 @cindex LAPACK library
 Provision is made for using an external LAPACK library, principally to
 cope with @acronym{BLAS} libraries which contain a copy of LAPACK (such
-as @code{sunperf} on Solaris, @code{Accelerate} on macOS and ACML and MKL
+as @code{sunperf} on Solaris, @code{Accelerate} on macOS and ATLAS and MKL
 on @cputype{ix86}/@cputype{x86_64} Linux).  At least LAPACK version 3.2
 is required.  This can only be done if @option{--with-blas} has been used.
 
@@ -4034,15 +4036,19 @@ the configuration option @option{--with-lapack}.  The default for
 @option{--with-lapack} is to check the @acronym{BLAS} library and then
 look for an external library @samp{-llapack}.  Sites searching for the
 fastest possible linear algebra may want to build a LAPACK library using
-the ATLAS-optimized subset of LAPACK.  To do so specify something like
+the ATLAS-optimized subset of LAPACK.  To do so using static libraries
+specify something like
 
 @example
 --with-lapack="-L/path/to/ATLAS/libs -llapack -lcblas"
 @end example
 
 @noindent
-since the ATLAS subset of LAPACK depends on @code{libcblas}.  A value
-for @option{--with-lapack} can be set @emph{via} the environment
+since the ATLAS subset of LAPACK depends on @code{libcblas}.
+Distribution-dependent alternatives include @option{-lptlapack}
+(threaded) or @option{-llapack-atlas} (to avoid a name clash).
+
+A value for @option{--with-lapack} can be set @emph{via} the environment
 variable
 @enindex LAPACK_LIBS
 @env{LAPACK_LIBS}, but this will only be used if @option{--with-lapack}
@@ -5112,16 +5118,17 @@ library@footnote{@uref{https://developer.apple.com/@/documentation/@/accelerate}
 can be used @emph{via} the configuration options
 
 @example
---with-blas="-framework Accelerate" --with-lapack
+--with-blas="-framework Accelerate"
 @end example
 
 @noindent
 to provide potentially higher-performance versions of the @acronym{BLAS}
 and LAPACK routines.@footnote{It was reported that for some non-Apple
 toolchains @code{CPPFLAGS} needed to contain @code{-D__ACCELERATE__}:
-not needed for @command{clang} 4.0.0, though.}  However, the version of
-LAPACK it contains is currently seriously old (@samp{3.2.1} in macOS
-10.13.2), so it would be preferably to omit @option{--with-lapack}.
+not needed for @command{clang} 4.0.0, though.}  This also includes a
+full LAPACK which can be used @emph{via} @option{--with-lapack}:
+however, the version of LAPACK it contains is currently seriously old
+(@samp{3.2.1} in macOS 10.13.2).
 
 @c https://developer.apple.com/documentation/accelerate/veclib
 In recent versions of macOS, threading in Accelerate is controlled by
@@ -5205,10 +5212,6 @@ with
 --with-tcl-config=/Library/Frameworks/Tcl.framework/tclConfig.sh 
 --with-tk-config=/Library/Frameworks/Tk.framework/tkConfig.sh
 @end example
-
-@noindent
-(for the versions bundled with macOS, use paths starting with
-@file{/System/Library}).
 
 If you need to find out which distribution of Tk is in use at run time,
 use
