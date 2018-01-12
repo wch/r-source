@@ -512,6 +512,10 @@
       intermediate results from (usually ill-advised) assignments in
       arguments to \code{BUILTIN} functions. Package \code{C} code using
       \code{SET_NAMED} may need to be revised.
+
+      \item \code{mclapply(X, mc.cores)} now follows its documentation
+      and calls \code{lapply()} in case \code{mc.cores = 1} also in the
+      case \code{mc.preschedule} is false.  (\PR{17373})
     }
   }
 }
