@@ -3719,14 +3719,16 @@ multi-threaded @acronym{BLAS}.  Note that using a multi-threaded
 more elapsed time (occasionally dramatically so) than using a similar
 single-threaded @acronym{BLAS}.  On a machine running other tasks, there
 can be contention for CPU caches that reduces the effectiveness of the
-optimization of cache use by a @acronym{BLAS} implementation.
+optimization of cache use by a @acronym{BLAS} implementation: some
+people warn that this is especially problematic for hyperthreaded CPUs
 
 Note that under Unix (but not under Windows) if @R{} is compiled against
 a non-default @acronym{BLAS} and @option{--enable-BLAS-shlib} is
 @strong{not} used (it is the default on all platforms except AIX), then
 all @acronym{BLAS}-using packages must also be.  So if @R{} is re-built
 to use an enhanced @acronym{BLAS} then packages such as
-@CRANpkg{quantreg} will need to be re-installed.
+@CRANpkg{quantreg} will need to be re-installed; they may be under other
+circumstances.
 
 @R{} relies on @acronym{ISO}/@acronym{IEC}@tie{}60559 compliance of an
 external @acronym{BLAS}.  This can be broken if for example the code
@@ -3737,9 +3739,15 @@ the test suite.
 External @acronym{BLAS} implementations often make less use of
 extended-precision floating-point registers (where available) and will
 almost certainly re-order computations.  This can result in less
-accuracy than using the internal @acronym{BLAS}, and may result in
+accuracy than using a reference @acronym{BLAS}, and may result in
 different solutions, e.g.@: different signs in SVD and
 eigendecompositions.
+
+Debian/Ubuntu systems provide a system-specific way to switch the BLAS
+in use.  Build @R{} with @option{-with-blas} to select the OS version
+of the reference BLAS, and then use @command{update-alternatives} to
+switch between the available BLAS libraries.  See
+@uref{https://wiki.debian.org/DebianScience/LinearAlgebraLibraries}.
 
 The URIs for several of these BLAS have been subject to frequent
 gratuitous changes, so you will need to search for their current
@@ -3759,38 +3767,18 @@ locations.
 ATLAS (@uref{http://math-atlas.sourceforge.net/}) is a ``tuned''
 @acronym{BLAS} that runs on a wide range of Unix-alike platforms.
 Unfortunately it is built by default as a static library that on some
-platforms cannot be used with shared objects such as are used in @R{}
-packages.  Be careful when using pre-built versions of ATLAS static
-libraries (they seem to work on @cputype{ix86} platforms, but not always
-on @cputype{x86_64} ones).
+platforms may not be able to be used with shared objects such as are
+used in @R{} packages.  Be careful when using pre-built versions of
+ATLAS static libraries (they seem to work on @cputype{ix86} platforms,
+but not always on @cputype{x86_64} ones).
 
-The usual way to specify ATLAS used to be @emph{via}
+ATLAS contains replacments for a small number of LAPACK routines, but
+can be built to merge these with LAPACK sources to include a full LAPACK
+library.
 
-@example
---with-blas="-lf77blas -latlas"
-@end example
-
-@noindent
-if the libraries are in the library path, otherwise by
-
-@example
---with-blas="-L/path/to/ATLAS/libs -lf77blas -latlas"
-@end example
-
-For systems with multiple CPU cores it is possible to use a
-multi-threaded version of ATLAS, by specifying
-
-@example
---with-blas="-lptf77blas -lpthread -latlas"
-@end example
-@noindent
-ATLAS threaded libraries were tuned to the number of cores to use, so
-they were not often distributed.
-
-However, more recent versions build a single library, either
+Recent versions of ATLAS can be built as a single shared library, either
 @code{libsatlas} or @code{libtatlas} (serial or threaded respectively):
-these may even contain LAPACK.  Such builds with shared libraries can be
-used by one of
+these may even contain a full LAPACK.  Such builds can be used by one of
 @example
 --with-blas=satlas
 --with-blas=tatlas
@@ -3801,10 +3789,41 @@ or, as on @cputype{x86_64} Fedora where a path needs to be specified,
 --with-blas="-L/usr/lib64/atlas -lsatlas"
 --with-blas="-L/usr/lib64/atlas -ltatlas"
 @end example
+@noindent
+Distributed ATLAS libraries cannot be tuned to your machine and so are a
+compromise: for example Fedora tunes @cputype{x86_64} for CPUs with SSE3
+extensions, and separate @samp{atlas-sse2} and @samp{atlas-sse3}
+@cputype{i686} RPMs are available.@footnote{There were others for earlier
+versions of ATLAS, and are for non-Intel architectures.  The only way to
+see exactly which CPUs the distributed libraries have been tuned for is
+to read the @file{atlas.spec} file: at the time of writing
+@samp{HAMMER64SSE3} and @samp{Corei264AVX} for @cputype{x86_64} Fedora.}
 
-Consult its installation guide for how to build ATLAS as a shared
-library or as a static library with position-independent code (on
-platforms where that matters).
+Note that building @R{} on Linux against distributed shared libraries
+may need @samp{-devel} or @samp{-dev} packages installed.
+
+Linking against multiple static libraries requires one of
+@example
+--with-blas="-lf77blas -latlas"
+--with-blas="-lptf77blas -lpthread -latlas"
+--with-blas="-L/path/to/ATLAS/libs -lf77blas -latlas"
+--with-blas="-L/path/to/ATLAS/libs -lptf77blas -lpthread -latlas"
+@end example
+
+Consult its installation
+guide@footnote{@uref{http://math-atlas.sourceforge.net/atlas_install/}}
+for how to build ATLAS as a shared library or as a static library with
+position-independent code (on platforms where that matters).
+
+According to the ATLAS
+FAQ@footnote{@uref{http://math-atlas.sourceforge.net/faq.html#tnum}} the
+maximum number of threads used by multi-threaded ATLAS is set at compile
+time.  Also, the author advises against using multi-threaded ATLAS on
+hyperthreaded CPUs without restricting affinities at compile-time to one
+virtual core per physical CPU.  (For the Fedora libraries the
+compile-time flag specifies 4 threads.)
+@c http://math-atlas.sourceforge.net/atlas_install/node21.html
+
 
 @node Goto and OpenBLAS, MKL, ATLAS, BLAS
 @subsubsection Goto and OpenBLAS
@@ -3827,14 +3846,15 @@ See @pxref{Shared BLAS} for an alternative (and in many ways preferable)
 way to use them.
 
 Some platforms provide multiple builds of OpenBLAS: for example Fedora 26
-has RPMs
+has RPMs@footnote{(and more, e.g.@: for 64-bit ints and static versions).}
 @example
 openblas
 openblas-threads
 openblas-openmp
 @end example
 @noindent
-(and more, e.g.@: for 64-bit ints) providing shared libraries
+providing shared
+libraries
 @example
 libopenblas.so
 libopenblasp.so
@@ -3844,8 +3864,16 @@ libopenblaso.so
 respectively, each of which can be used as a shared BLAS.  For the
 second and third the number of threads is controlled by
 @env{OPENBLAS_NUM_THREADS} and @env{OMP_NUM_THREADS} (as usual for
-OpenMP) respectively.  It is not clear which CPU target they were
-compiled for (perhaps Core2).
+OpenMP) respectively. There is also a Fedora RPM @samp{openblas-Rblas}
+to replace @file{libRblas.so} in their distribution of @R{}.
+
+Note that building @R{} on Linux against distributed libraries may need
+@samp{-devel} or @samp{-dev} packages installed.
+
+@c https://wiki.debian.org/DebianScience/LinearAlgebraLibraries
+For @cputype{ix86} and @cputype{x86_64} most distributed libraries
+contain several alternatives for different CPU microarchitectures with
+the choice being made at run time.
 
 @node MKL, ACML, Goto and OpenBLAS, BLAS
 @subsubsection Intel MKL
@@ -3868,7 +3896,7 @@ compilers on @cputype{x86_64}.
 To use a sequential version of MKL we used
 
 @example
-MKL_LIB_PATH=/path/to/intel_mkl/lib/intel64
+MKL_LIB_PATH=/path/to/intel_mkl/mkl/lib/intel64
 export LD_LIBRARY_PATH=$MKL_LIB_PATH
 MKL="-L$@{MKL_LIB_PATH@} -lmkl_gf_lp64 -lmkl_core -lmkl_sequential"
 ./configure --with-blas="$MKL" --with-lapack
@@ -3894,10 +3922,10 @@ can be controlled by setting @code{OMP_NUM_THREADS} or
 sensible value for sole use of the machine.  (Parallel MKL has not
 always passed @command{make check-all}, but did with MKL 2018.1.)
 
-Note though that as with all non-reference LAPACK/BLAS, using MKL trades
-numerical accuracy for speed.  When tested in January 2018, 23 CRAN
-packages failed their checks with serial MKL and 43 with multi-threaded
-MKL.
+@c Note though that as with all non-reference LAPACK/BLAS, using MKL trades
+@c numerical accuracy for speed.  When tested in January 2018, 23 CRAN
+@c packages failed their checks with serial MKL and 43 with multi-threaded
+@c MKL.
 
 @c https://stat.ethz.ch/pipermail/r-devel/2015-September/071717.html
 It has been reported that
@@ -3961,26 +3989,34 @@ changed in @file{@var{R_HOME}/etc/ldpaths}.
 @end itemize
 
 Another option to change the @acronym{BLAS} in use is to symlink a
-dynamic @acronym{BLAS} library to @file{@var{R_HOME}/lib/libRblas.so}.
-For example, just
+single dynamic @acronym{BLAS} library to
+@file{@var{R_HOME}/lib/libRblas.so}.  For example, just
 
 @example
 mv @var{R_HOME}/lib/libRblas.so @var{R_HOME}/lib/libRblas.so.keep
-ln -s /usr/lib64/libopenblasp.so @var{R_HOME}/lib/libRblas.so
+ln -s /usr/lib64/libopenblasp.so.0 @var{R_HOME}/lib/libRblas.so
 @end example
+
+@noindent
 on @cputype{x86_64} Fedora will change the @acronym{BLAS} used to
 multithreaded OpenBLAS.  A similar link works for most versions of the
 Goto @acronym{BLAS}, OpenBLAS and ACML (provided the appropriate
 @file{lib} directory is in the run-time library path or @command{ld.so}
-cache).  So as further examples from @cputype{x86_64} Fedora
+cache).  It can also be used for a single-library ATLAS, so on
+@cputype{x86_64} Fedora
+
 @example
-ln -s /usr/lib64/atlas/libsatlas.so @var{R_HOME}/lib/libRblas.so
-ln -s /usr/lib64/atlas/libtatlas.so @var{R_HOME}/lib/libRblas.so
+ln -s /usr/lib64/atlas/libsatlas.so.3 @var{R_HOME}/lib/libRblas.so
+ln -s /usr/lib64/atlas/libtatlas.so.3 @var{R_HOME}/lib/libRblas.so
 @end example
+
 @noindent
-can be used with its distributed ATLAS libraries.
+can be used with its distributed ATLAS libraries.  (If you have the
+@samp{-devel} RPMS installed you can omit the @code{.0}/@code{.3}.)
 
-
+Note that rebuilding or symlinking @file{libRblas.so} will not suffice
+if the intention is to use a modified LAPACK contained in an external
+BLAS: the latter could even cause conflicts.
 
 
 @node LAPACK, Caveats, BLAS, Linear algebra
@@ -3989,7 +4025,7 @@ can be used with its distributed ATLAS libraries.
 @cindex LAPACK library
 Provision is made for using an external LAPACK library, principally to
 cope with @acronym{BLAS} libraries which contain a copy of LAPACK (such
-as @code{sunperf} on Solaris, @code{Accelerate} on macOS and ACML and MKL
+as @code{sunperf} on Solaris, @code{Accelerate} on macOS and ATLAS and MKL
 on @cputype{ix86}/@cputype{x86_64} Linux).  At least LAPACK version 3.2
 is required.  This can only be done if @option{--with-blas} has been used.
 
@@ -4001,15 +4037,19 @@ the configuration option @option{--with-lapack}.  The default for
 @option{--with-lapack} is to check the @acronym{BLAS} library and then
 look for an external library @samp{-llapack}.  Sites searching for the
 fastest possible linear algebra may want to build a LAPACK library using
-the ATLAS-optimized subset of LAPACK.  To do so specify something like
+the ATLAS-optimized subset of LAPACK.  To do so using static libraries
+specify something like
 
 @example
 --with-lapack="-L/path/to/ATLAS/libs -llapack -lcblas"
 @end example
 
 @noindent
-since the ATLAS subset of LAPACK depends on @code{libcblas}.  A value
-for @option{--with-lapack} can be set @emph{via} the environment
+since the ATLAS subset of LAPACK depends on @code{libcblas}.
+Distribution-dependent alternatives include @option{-lptlapack}
+(threaded) or @option{-llapack-atlas} (to avoid a name clash).
+
+A value for @option{--with-lapack} can be set @emph{via} the environment
 variable
 @enindex LAPACK_LIBS
 @env{LAPACK_LIBS}, but this will only be used if @option{--with-lapack}
@@ -5078,17 +5118,26 @@ or appending that variable to the @command{configure} command.
 
 @cindex BLAS library
 @cindex LAPACK library
-The @code{Accelerate} library can be used @emph{via} the configuration options
+The @code{Accelerate}
+library@footnote{@uref{https://developer.apple.com/@/documentation/@/accelerate}.}
+can be used @emph{via} the configuration options
 
 @example
---with-blas="-framework Accelerate" --with-lapack
+--with-blas="-framework Accelerate"
 @end example
 
 @noindent
 to provide potentially higher-performance versions of the @acronym{BLAS}
 and LAPACK routines.@footnote{It was reported that for some non-Apple
 toolchains @code{CPPFLAGS} needed to contain @code{-D__ACCELERATE__}:
-not needed for @command{clang} 4.0.0, though.}
+not needed for @command{clang} 4.0.0, though.}  This also includes a
+full LAPACK which can be used @emph{via} @option{--with-lapack}:
+however, the version of LAPACK it contains is currently seriously old
+(@samp{3.2.1} in macOS 10.13.2).
+
+@c https://developer.apple.com/documentation/accelerate/veclib
+In recent versions of macOS, threading in Accelerate is controlled by
+`Grand Central Dispatch' and is said not to need user control.
 
 Looking at the top of
 @file{/Library/Frameworks/R.framework/Resources/etc/Makeconf}
@@ -5168,10 +5217,6 @@ with
 --with-tcl-config=/Library/Frameworks/Tcl.framework/tclConfig.sh 
 --with-tk-config=/Library/Frameworks/Tk.framework/tkConfig.sh
 @end example
-
-@noindent
-(for the versions bundled with macOS, use paths starting with
-@file{/System/Library}).
 
 If you need to find out which distribution of Tk is in use at run time,
 use
