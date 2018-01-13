@@ -60,7 +60,7 @@ clean:
 	-@rm -f testit.txt testit.html testit.tex testit-Ex.R
 	-@rm -f ver10.txt ver10.html ver10.tex ver10-Ex.R
 	-@rm -f ver11.txt ver11.html ver11.tex ver11-Ex.R
-	-@rm -rf anRpackage myTst* myLib
+	-@rm -Rf anRpackage myTst* myLib
 
 clean2: clean
 	-@rm -f $(test-out) $(test-src-auto) .RData
@@ -70,5 +70,5 @@ distclean: clean
 	  (cd $${d} && $(MAKE) $@); \
 	done
 	-@rm -f $(test-out) $(test-src-auto) .RData
-	-@rm -rf *.Rcheck Packages
+	-@rm -Rf *.Rcheck Packages
 maintainer-clean: distclean

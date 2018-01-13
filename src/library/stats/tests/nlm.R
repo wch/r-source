@@ -90,11 +90,12 @@ chkNlm(l3.0, estimate = c(1,1),
 ## all converge here, too,  fgh now being best
 utils::str(l3.10 <- nlm3(x0 = c(-10, 10), ndigit = 14, gradtol = 1e-8))
 
+## These tolerances were plucked from thin air: reduced for 32-bit Linux
 chkNlm(l3.10, estimate = c(1,1), # lower tolerances now, notably for fgh:
        ##                  nl.f   nl.fg  nl.fgh
-       tols = list(min = c(1e-14, 1e-20, 1e-28),
-                   est = c(5e-7,  1e-10, 1e-14),
-                   grad= c(1e-6,  6e-9 , 1e-12)),
+       tols = list(min = c(1e-9, 1e-20, 1e-16),
+                   est = c(2e-5,  1e-10, 1e-14),
+                   grad= c(1e-3,  6e-9 , 1e-12)),
        codes.wanted = if(Lb64) 1:2 else 1:3)
 
 ## all 3 fail to converge here

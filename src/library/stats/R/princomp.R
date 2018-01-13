@@ -51,7 +51,7 @@ princomp.formula <- function(formula, data = NULL, subset, na.action, ...)
 
 princomp.default <-
     function(x, cor = FALSE, scores = TRUE, covmat = NULL,
-             subset = rep_len(TRUE, nrow(as.matrix(x))), ...)
+             subset = rep_len(TRUE, nrow(as.matrix(x))), fix_sign = TRUE, ...)
 {
     chkDots(...)
     cl <- match.call()
@@ -101,17 +101,23 @@ princomp.default <-
     sdev <- sqrt(ev)
     sc <- setNames(if (cor) sds else rep.int(1, ncol(cv)),
 		   colnames(cv))
+    fix <- if(fix_sign) function(A) {
+        mysign <- function(x) ifelse(x < 0, -1, 1)
+        A[] <- apply(A, 2L, function(x) x*mysign(x[1L]))
+        A
+    } else identity
+    ev <- fix(edc$vectors)
     scr <- if (scores && !missing(x) && !is.null(cen))
-        scale(z, center = cen, scale = sc) %*% edc$vectors
+        scale(z, center = cen, scale = sc) %*% ev
     if (is.null(cen)) cen <- rep(NA_real_, nrow(cv))
     edc <- list(sdev = sdev,
-                loadings = structure(edc$vectors, class="loadings"),
+                loadings = structure(ev, class = "loadings"),
                 center = cen, scale = sc, n.obs = n.obs,
                 scores = scr, call = cl)
     ## The Splus function also return list elements factor.sdev,
     ## correlations and coef, but these are not documented in the help.
     ## coef seems to equal load.  The Splus function also returns list
-    ## element terms which is not supported here.
+    ## element 'terms' which is not supported here.
     class(edc) <- "princomp"
     edc
 }

@@ -1036,5 +1036,15 @@ stopifnot(all.equal(qbet[[1]], 0.047206901483498, tol=1e-12),
 ## had discontinuity (from wrong jump out of Newton) in R <= 3.3.2
 
 
+## rt() [PR#17306];  rf() and rbeta() [PR#17375] with non-scalar 'ncp'
+nc <- c(NA, 1); iN <- is.na(rep_len(nc, 3))
+## each gives warning  "NAs produced":
+assertWarning(T <- rt   (3, 4,   ncp = nc))
+assertWarning(F <- rf   (3, 4,5, ncp = nc))
+assertWarning(B <- rbeta(3, 4,5, ncp = nc))
+stopifnot(identical(iN, is.na(T)), identical(iN, is.na(F)), identical(iN, is.na(B)))
+## was not handled correctly, notably with NA's in ncp, in R <= 3.4.(2|3)
+
+
 
 cat("Time elapsed: ", proc.time() - .ptime,"\n")

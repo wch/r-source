@@ -20,7 +20,7 @@
   strings.  Two types of regular expressions are used in \R,
   \emph{extended} regular expressions (the default) and
   \emph{Perl-like} regular expressions used by \code{perl = TRUE}.
-  There is a also \code{fixed = TRUE} which can be considered to use a
+  There is also \code{fixed = TRUE} which can be considered to use a
   \emph{literal} regular expression.
 
   Other functions which use regular expressions (often via the use of
@@ -37,7 +37,7 @@
 }
 \section{Extended Regular Expressions}{
   This section covers the regular expressions allowed in the default
-  mode of \code{grep}, \code{grep}, \code{regexpr}, \code{gregexpr},
+  mode of \code{grep}, \code{grepl}, \code{regexpr}, \code{gregexpr},
   \code{sub}, \code{gsub}, \code{regexec} and \code{strsplit}.  They use
   an implementation of the POSIX 1003.2 standard: that allows some scope
   for interpretation and the interpretations here are those currently
@@ -336,10 +336,10 @@
   \code{\link{ls}} and \code{\link{strsplit}}.
 
   The TRE documentation at
-  \url{http://laurikari.net/tre/documentation/regex-syntax/}).
+  \url{http://laurikari.net/tre/documentation/regex-syntax/}.
 
   The POSIX 1003.2 standard at
-  \url{http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap09.html}
+  \url{http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap09.html}.
 
   The \code{pcrepattern} \command{man} page (found as part of
   \url{http://www.pcre.org/original/pcre.txt}), and details of Perl's own

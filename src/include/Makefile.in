@@ -103,7 +103,7 @@ uninstall:
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
-	@rm -rf "$(DESTDIR)$(rincludedir)"
+	@rm -Rf "$(DESTDIR)$(rincludedir)"
 
 mostlyclean: clean
 clean:

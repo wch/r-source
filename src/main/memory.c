@@ -1062,7 +1062,6 @@ static void ReleaseLargeFreeVectors()
     }
 }
 
-
 /* Heap Size Adjustment. */
 
 static void AdjustHeapSize(R_size_t size_needed)
@@ -2408,8 +2407,8 @@ SEXP NewEnvironment(SEXP namelist, SEXP valuelist, SEXP rho)
     newrho->sxpinfo = UnmarkedNodeTemplate.sxpinfo;
     INIT_REFCNT(newrho);
     SET_TYPEOF(newrho, ENVSXP);
-    FRAME(newrho) = valuelist;
-    ENCLOS(newrho) = CHK(rho);
+    FRAME(newrho) = valuelist; INCREMENT_REFCNT(valuelist);
+    ENCLOS(newrho) = CHK(rho); if (rho != NULL) INCREMENT_REFCNT(rho);
     HASHTAB(newrho) = R_NilValue;
     ATTRIB(newrho) = R_NilValue;
 
@@ -2453,8 +2452,8 @@ SEXP attribute_hidden mkPROMISE(SEXP expr, SEXP rho)
     s->sxpinfo = UnmarkedNodeTemplate.sxpinfo;
     INIT_REFCNT(s);
     SET_TYPEOF(s, PROMSXP);
-    PRCODE(s) = CHK(expr);
-    PRENV(s) = CHK(rho);
+    PRCODE(s) = CHK(expr); INCREMENT_REFCNT(expr);
+    PRENV(s) = CHK(rho); INCREMENT_REFCNT(rho);
     PRVALUE(s) = R_UnboundValue;
     PRSEEN(s) = 0;
     ATTRIB(s) = R_NilValue;
@@ -2751,9 +2750,6 @@ SEXP allocVector3(SEXPTYPE type, R_xlen_t length, R_allocator_t *allocator)
 	    if (!allocator) R_LargeVallocSize += size;
 	    R_GenHeap[node_class].AllocCount++;
 	    R_NodesInUse++;
-	    /* FIXME: for long vectors, the R_long_vec_hdr_t size will not be
-	       included into memory usage. It is neither in VallocSize nor in
-	       NodesInUse. */
 	    SNAP_NODE(s, R_GenHeap[node_class].New);
 	}
 	ATTRIB(s) = R_NilValue;
@@ -3419,6 +3415,7 @@ int (NAMED)(SEXP x) { return NAMED(CHK(x)); }
 int (RTRACE)(SEXP x) { return RTRACE(CHK(x)); }
 int (LEVELS)(SEXP x) { return LEVELS(CHK(x)); }
 int (REFCNT)(SEXP x) { return REFCNT(CHK(x)); }
+int (TRACKREFS)(SEXP x) { return TRACKREFS(CHK(x)); }
 int (ALTREP)(SEXP x) { return ALTREP(CHK(x)); }
 int (IS_SCALAR)(SEXP x, int type) { return IS_SCALAR(CHK(x), type); }
 
@@ -3447,6 +3444,9 @@ void SHALLOW_DUPLICATE_ATTRIB(SEXP to, SEXP from) {
 }
 
 void (ENSURE_NAMEDMAX)(SEXP x) { ENSURE_NAMEDMAX(CHK(x)); }
+void (ENSURE_NAMED)(SEXP x) { ENSURE_NAMED(CHK(x)); }
+void (SETTER_CLEAR_NAMED)(SEXP x) { SETTER_CLEAR_NAMED(CHK(x)); }
+void (RAISE_NAMED)(SEXP x, int n) { RAISE_NAMED(CHK(x), n); }
 
 /* S4 object testing */
 int (IS_S4_OBJECT)(SEXP x){ return IS_S4_OBJECT(CHK(x)); }
@@ -3657,6 +3657,7 @@ double *(REAL)(SEXP x) {
     if(TYPEOF(x) != REALSXP)
 	error("%s() can only be applied to a '%s', not a '%s'",
 	      "REAL", "numeric", type2char(TYPEOF(x)));
+    CHKZLN(x);
     return REAL(x);
 }
 
@@ -3664,6 +3665,7 @@ const double *(REAL_RO)(SEXP x) {
     if(TYPEOF(x) != REALSXP)
 	error("%s() can only be applied to a '%s', not a '%s'",
 	      "REAL", "numeric", type2char(TYPEOF(x)));
+    CHKZLN(x);
     return REAL_RO(x);
 }
 

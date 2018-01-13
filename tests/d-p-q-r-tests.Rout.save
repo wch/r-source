@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2017-11-17 r73742) -- "Unsuffered Consequences"
-Copyright (C) 2017 The R Foundation for Statistical Computing
+R Under development (unstable) (2018-01-11 r74106) -- "Unsuffered Consequences"
+Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -1465,7 +1465,17 @@ rweibull (4, ..): 1 2  [Ok]
 > ## had discontinuity (from wrong jump out of Newton) in R <= 3.3.2
 > 
 > 
+> ## rt() [PR#17306];  rf() and rbeta() [PR#17375] with non-scalar 'ncp'
+> nc <- c(NA, 1); iN <- is.na(rep_len(nc, 3))
+> ## each gives warning  "NAs produced":
+> assertWarning(T <- rt   (3, 4,   ncp = nc))
+> assertWarning(F <- rf   (3, 4,5, ncp = nc))
+> assertWarning(B <- rbeta(3, 4,5, ncp = nc))
+> stopifnot(identical(iN, is.na(T)), identical(iN, is.na(F)), identical(iN, is.na(B)))
+> ## was not handled correctly, notably with NA's in ncp, in R <= 3.4.(2|3)
+> 
+> 
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  1.798 0.013 1.818 0 0 
+Time elapsed:  1.877 0.013 1.897 0 0 
 > 

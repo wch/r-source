@@ -151,7 +151,7 @@
     else if((basename(path) == "man") &&
             file.exists(file.path(dirname(path), "DESCRIPTION")))
         Sys.setenv("_R_RD_MACROS_PACKAGE_DIR_" = dirname(path))
-    
+
     ## sort order for topics, a little tricky
     re <- function(x) x[order(toupper(x), x)]
 
@@ -673,7 +673,7 @@ function(pkgdir, outfile, title, batch = FALSE,
             setwd(startdir)
             unlink(build_dir, recursive = TRUE)
         } else {
-            cat("You may want to clean up by 'rm -rf ", build_dir, "'\n", sep="")
+            cat("You may want to clean up by 'rm -Rf ", build_dir, "'\n", sep="")
         }
     }
 

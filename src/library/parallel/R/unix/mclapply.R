@@ -1,7 +1,7 @@
 #  File src/library/parallel/R/unix/mclapply.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -31,6 +31,11 @@ mclapply <- function(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
     if (isChild() && !isTRUE(mc.allow.recursive))
         return(lapply(X = X, FUN = FUN, ...))
 
+    ## Follow lapply
+    if(!is.vector(X) || is.object(X)) X <- as.list(X)
+    if(!is.null(affinity.list) && length(affinity.list) < length(X))
+        stop("affinity.list and X must have the same length")
+
     if(mc.set.seed) mc.reset.stream()
     if(length(X) < 2) {
         old.aff <- mcaffinity()
@@ -40,14 +45,14 @@ mclapply <- function(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
         return(res)
     }
 
+    if (length(X) < cores) cores <- length(X)
+    if (cores < 2L && is.null(affinity.list))
+	return(lapply(X = X, FUN = FUN, ...))
+
     jobs <- list()
     ## all processes created from now on will be terminated by cleanup
     prepareCleanup()
     on.exit(cleanup(mc.cleanup))
-    ## Follow lapply
-    if(!is.vector(X) || is.object(X)) X <- as.list(X)
-    if(!is.null(affinity.list) && length(affinity.list) < length(X))
-        stop("affinity.list and X must have the same length")
     if (!mc.preschedule) {              # sequential (non-scheduled)
         FUN <- match.fun(FUN)
         if (length(X) <= cores && is.null(affinity.list)) { # we can use one-shot parallel
@@ -146,8 +151,6 @@ mclapply <- function(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
     ## mc.preschedule = TRUE from here on.
     if(!is.null(affinity.list))
         warning("'mc.preschedule' must be false if 'affinity.list' is used")
-    if (length(X) < cores) cores <- length(X)
-    if (cores < 2L) return(lapply(X = X, FUN = FUN, ...))
     sindex <- lapply(seq_len(cores),
                      function(i) seq(i, length(X), by = cores))
     schedule <- lapply(seq_len(cores),
@@ -202,7 +205,7 @@ mclapply <- function(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
         this <- job.res[[i]]
         if (inherits(this, "try-error")) { ## length-1 result
             for (j in sindex[[i]]) res[[j]] <- this
-        } else 
+        } else
             ## we can't just assign it since a NULL
             ## assignment would remove it from the list
             if (!is.null(this)) res[sindex[[i]]] <- this

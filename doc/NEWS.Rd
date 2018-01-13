@@ -11,8 +11,8 @@
     \itemize{
       \item The default version for \code{save()}, \code{saveRDS()},
       \code{serialize()} and similar has been changed to \samp{3}.
-      Objects saved with version 3 are not readable by eariier versions of
-      \R. 
+      Objects saved with version 3 are not readable by earlier versions
+      of \R.
 
       This includes saved workspaces.
     }
@@ -131,9 +131,11 @@
       \code{approxfun()} also work for long vectors.
 
       %% one item with several paragraphs
-      \item \code{deparse()} (and \code{dump()}) are more useful for S4
-      objects; \code{dput()} now using the same internal C code instead
-      of its previous imperfect workaround R code.
+      \item \code{deparse()} and \code{dump()} are more useful for S4
+      objects, \code{dput()} now using the same internal C code instead
+      of its previous imperfect workaround R code.  S4 objects now
+      typically deparse perfectly, i.e., can be recreated identically
+      from deparsed code.
 
       \code{dput()}, \code{deparse()} and \code{dump()} now print the
       \code{names()} information only once, using the more readable
@@ -145,7 +147,7 @@
       the \code{(tag = value)} syntax for atomic vectors.  On the other
       hand, without deparse options \code{"showAttributes"} and
       \code{"niceNames"}, names are no longer shown also for lists.
-      \code{as.character(list( c (one = 1)))} now includes the name, as
+      \code{as.character(list(  c (one = 1)))} now includes the name, as
       \code{as.character(list(list(one = 1)))} has always done.
 
       \code{m:n} now also deparses nicely when \eqn{m > n}.
@@ -253,10 +255,35 @@
       \item New function \code{packageDate()} which tries to get a valid
       \code{"Date"} object from a package \file{DESCRIPTION} file,
       thanks to suggestions in \PR{17324}.
-      
+
       \item \code{tools::resaveRdaFiles()} gains a \code{version}
       argument, for use when packages should remain compatible with
       earlier versions of \R.
+
+      \item \code{ar.yw(x)} and hence by default \code{ar(x)} now work
+      when \code{x} has \code{NA}s, mostly thanks to a patch by Pavel
+      Krivitsky in \PR{17366}.   The \code{ar.yw.default()}'s AIC
+      computations have become more efficient by using
+      \code{determinant()}.
+
+      \item New \code{warnErrList()} utility (from package \pkg{nlme},
+      improved).
+
+      \item By default the (arbitrary) signs of the loadings from
+      \code{princomp()} are chosen so the first element is non-negative.
+
+      \item If \option{--default-packages} is not used, then
+      \command{Rscript} now checks the environment variable
+      \env{R_SCRIPT_DEFAULT_PACKAGES}. If this is set, then it takes
+      precedence over \env{R_DEFAULT_PACKAGES}. If default packages are
+      not specified on the command line or by one of these environment
+      variables, then \command{Rscript} now uses the same default
+      packages as \command{R}. For now, the previous behavior of
+      dropping \pkg{methods} can be restored by setting the environment
+      variable \env{R_SCRIPT_LEGACY} to \samp{yes}.
+
+      \item When a package is found more than once, the warning from
+      \code{find.package(*, verbose=TRUE)} lists all library locations.
     }
   }
 
@@ -277,6 +304,16 @@
       Bioconductor 3.6 and later has been removed from
       \code{setRepositories()}.  This changes the mapping for 6--8 used
       by \code{setRepositories(ind=)}.
+
+      \item \command{R CMD check} now also applies the settings of
+      environment variables \env{_R_CHECK_SUGGESTS_ONLY_} and
+      \env{_R_CHECK_DEPENDS_ONLY_} to the re-building of vignettes.
+
+      \item \command{R CMD check} with environment variable
+      \env{_R_CHECK_DEPENDS_ONLY_} set to a true value makes
+      test-suite-management packages available and (for the time being)
+      works around a common omission of \CRANpkg{rmarkdown} from the
+      \samp{VignetteBuilder} field.
     }
   }
 
@@ -285,6 +322,19 @@
       \item Support for a system Java on macOS has been
       removed --- install a fairly recent Oracle Java (see \sQuote{R
 	Installation and Administration} §C.3.2).
+
+      \item \command{configure} will use \command{pkg-config} to find the
+      flags to link to \code{jpeg} if available (as it should be for
+      \code{jpeg-9c} and \code{libjpeg-turbo}).  (This amends the code
+      added in \R 3.3.0 as the module name in \code{jpeg-9c} is not what
+      that tested for.)
+
+      \item \command{configure} works harder to set additional flags in
+      \samp{SAFE_FFLAGS} only where necessary, and to use flags which
+      have little or no effect on performance.
+
+      In rare circumstances it may be necessary to override the
+      setting of \samp{SAFE_FFLAGS}.
     }
   }
 
@@ -455,8 +505,17 @@
       message when, e.g., the \code{LazyData} field is invalid.
 
       \item \code{as.matrix(dd)} now works when the data frame \code{dd}
-      contains a data frame (or matrix, including 0-column matrix/d.f.)
-      as column.
+      contains a column which is a data frame or matrix, including a
+      0-column matrix/d.f. .
+
+      \item \code{NAMEDMAX} has been raised to 3 to allow protection of
+      intermediate results from (usually ill-advised) assignments in
+      arguments to \code{BUILTIN} functions. Package \code{C} code using
+      \code{SET_NAMED} may need to be revised.
+
+      \item \code{mclapply(X, mc.cores)} now follows its documentation
+      and calls \code{lapply()} in case \code{mc.cores = 1} also in the
+      case \code{mc.preschedule} is false.  (\PR{17373})
     }
   }
 }
@@ -471,7 +530,7 @@
       avoid the search.
 
       \item The version of LAPACK included in the sources has been
-      updated to 3.8.0 (for the routines used by \R a very minor bug-fix
+      updated to 3.8.0 (for the routines used by \R, a very minor bug-fix
       change).
     }
   }
@@ -480,7 +539,10 @@
     \itemize{
       \item \code{Sys.timezone(location = FALSE)} (which was a stop-gap
       measure for Windows long ago) is deprecated.  It no longer returns
-      the value of environment variable \env{TZ} (a location).
+      the value of environment variable \env{TZ} (usually a location).
+
+      \item Legacy support of \command{make} macros such as \samp{CXX1X}
+      is formally deprecated: use the \samp{CXX11} forms instead.
     }
   }
 
@@ -491,6 +553,22 @@
 
       \item \code{removeSource()} no longer erroneously removes
       \code{NULL} in certain cases, thanks to Dénes Tóth.
+
+      \item \code{nls(`NO [mol/l]` ~ f(t))} and \code{nls(y ~ a)} now
+      work.  (Partly from \PR{17367})
+
+      \item \command{R CMD build} checks for GNU \command{cp} rather
+      than assuming Linux has it.  (\PR{17370} says \sQuote{Alpine
+	Linux} does not.)
+
+      \item Non-UTF-8 multibyte character handling fixed more
+      permanently (\PR{16732}).
+
+      \item \code{sum(<large ints>, <stuff>)} is more consistent.
+      (\PR{17372})
+
+      \item \code{rf()} and \code{rbeta()} now also work correctly when \code{ncp}
+      is not scalar, notably when (partly) \code{NA}.  (\PR{17375})
     }
   }
 }

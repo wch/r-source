@@ -4005,9 +4005,10 @@ with @code{.libPaths()} containing just a temporary library directory
 and @code{.Library}.  The temporary library is populated by symbolic
 links@footnote{see the previous footnote.} to the installed copies of
 all the Depends/Imports and (for the second only) Suggests packages
-which are not in @code{.Library}.  (As an exception, packages in a
-@samp{VignetteBuilder} field are always made available.)
-Default: false (but @env{_R_CHECK_SUGGESTS_ONLY_} is true for CRAN checks).
+which are not in @code{.Library}.  (As exceptions, packages in a
+@samp{VignetteBuilder} field and test-suite managers in @samp{Suggests}
+are always made available.)  Default: false (but
+@env{_R_CHECK_SUGGESTS_ONLY_} is true for CRAN checks).
 
 @item _R_CHECK_NO_RECOMMENDED_
 If set to a true value, augment the previous checks to make recommended
@@ -4166,7 +4167,11 @@ See
 @ifclear UseExternalXrefs
 `Writing R Extensions'
 @end ifclear
-for the rationale of this check (and why even @option{-Werror} is unsafe).
+for the rationale of this check (and why even @option{-Werror} is
+unsafe).  Environment variable @env{_R_CHECK_COMPILATION_FLAGS_KNOWN_}
+can be set to a space-separated set of flags which come from the @R{}
+build used for testing (flags such as @option{-Wall} and
+@option{-Wextra} are already known).
 Default: false (but true for CRAN submission checks).
 
 @item _R_CHECK_R_DEPENDS_
@@ -4175,7 +4180,22 @@ such as @code{R (>= 3.3.3)} since blocking installation of a package
 will also block its reverse dependencies.  Possible values
 @samp{"note"}, @samp{"warn"} and logical values (where currently true
 values are equivalent to @samp{"note"}).
-Default: false (but will be activated in future).
+Default: false (but @samp{"warn"} for @option{--as-cran}).
+
+@item _R_CHECK_SERIALIZATION_
+Check that serialized @R{} objects in the package sources were
+serialized with version 2 and there is no dependence on @samp{R >=
+3.5.0}.  (Version 3 is in use as from @R{} 3.5.0 but should only be used
+when necessary.)
+Default: false (but true for CRAN submission checks).
+
+@item _R_CHECK_R_ON_PATH_
+This checks if the package attempts to use @command{R} or
+@command{Rscript} from the path rather than that under test.
+It does so by putting scripts at the head of the path which print a
+message and fail.
+Default: false (but true for CRAN submission checks).
+
 @end vtable
 
 CRAN's submission checks use something like
@@ -4203,6 +4223,9 @@ _R_CHECK_S3_METHODS_NOT_REGISTERED_=TRUE
 _R_CHECK_OVERWRITE_REGISTERED_S3_METHODS_=TRUE
 _R_CHECK_PRAGMAS_=TRUE
 _R_CHECK_COMPILATION_FLAGS_=TRUE
+_R_CHECK_R_DEPENDS_=warn
+_R_CHECK_SERIALIZATION_=TRUE
+_R_CHECK_R_ON_PATH_=TRUE
 @end example
 
 @noindent

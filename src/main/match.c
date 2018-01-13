@@ -398,6 +398,22 @@ SEXP attribute_hidden matchArgs(SEXP formals, SEXP supplied, SEXP call)
     return(actuals);
 }
 
+/* Use matchArgs_RC if the result might escape into R. */
+SEXP attribute_hidden matchArgs_RC(SEXP formals, SEXP supplied, SEXP call)
+{
+    SEXP args = matchArgs(formals, supplied, call);
+    /* it would be better not to build this arglist with CONS_NR in
+       the first place */
+    for (SEXP a = args; a  != R_NilValue; a = CDR(a)) {
+	if (! TRACKREFS(a)) {
+	    ENABLE_REFCNT(a);
+	    INCREMENT_REFCNT(CAR(a));
+	    INCREMENT_REFCNT(CDR(a));
+	}
+    }
+    return args;
+}
+
 
 /* patchArgsByActuals - patch promargs (given as 'supplied') to be promises
    for the respective actuals in the given environment 'cloenv'.  This is

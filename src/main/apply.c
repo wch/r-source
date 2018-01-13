@@ -52,7 +52,7 @@ SEXP attribute_hidden do_lapply(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP ind = PROTECT(allocVector(realIndx ? REALSXP : INTSXP, 1));
     SEXP isym = install("i");
     defineVar(isym, ind, rho);
-    SET_NAMED(ind, 1);
+    INCREMENT_NAMED(ind);
 
     /* Notice that it is OK to have one arg to LCONS do memory
        allocation and not PROTECT the result (LCONS does memory
@@ -138,7 +138,7 @@ SEXP attribute_hidden do_vapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 	SEXP isym = install("i");
 	PROTECT(ind = allocVector(realIndx ? REALSXP : INTSXP, 1));
 	defineVar(isym, ind, rho);
-	SET_NAMED(ind, 1);
+	INCREMENT_NAMED(ind);
 
 	/* Notice that it is OK to have one arg to LCONS do memory
 	   allocation and not PROTECT the result (LCONS does memory

@@ -199,8 +199,9 @@ as.POSIXlt <- function(x, tz = "", ...) UseMethod("as.POSIXlt")
 
 as.POSIXlt.Date <- function(x, ...) .Internal(Date2POSIXlt(x))
 
-as.POSIXlt.date <- as.POSIXlt.dates <- function(x, ...)
-    as.POSIXlt(as.POSIXct(x), ...)
+## ## Moved to packages date and chron.
+## as.POSIXlt.date <- as.POSIXlt.dates <- function(x, ...)
+##     as.POSIXlt(as.POSIXct(x), ...)
 
 as.POSIXlt.POSIXct <- function(x, tz = "", ...)
 {
@@ -273,28 +274,28 @@ as.POSIXct <- function(x, tz = "", ...) UseMethod("as.POSIXct")
 as.POSIXct.Date <- function(x, ...) .POSIXct(unclass(x)*86400)
 
 
-## convert from package date
-as.POSIXct.date <- function(x, ...)
-{
-    if(inherits(x, "date")) {
-        x <- (x - 3653) * 86400 # origin 1960-01-01
-        return(.POSIXct(x))
-    } else stop(gettextf("'%s' is not a \"date\" object",
-                         deparse(substitute(x)) ))
-}
+## ## Moved to package date
+## as.POSIXct.date <- function(x, ...)
+## {
+##     if(inherits(x, "date")) {
+##         x <- (x - 3653) * 86400 # origin 1960-01-01
+##         return(.POSIXct(x))
+##     } else stop(gettextf("'%s' is not a \"date\" object",
+##                          deparse(substitute(x)) ))
+## }
 
-## convert from package chron
-as.POSIXct.dates <- function(x, ...)
-{
-    if(inherits(x, "dates")) {
-        z <- attr(x, "origin")
-        x <- as.numeric(x) * 86400
-        if(length(z) == 3L && is.numeric(z))
-            x  <- x + as.numeric(ISOdate(z[3L], z[1L], z[2L], 0))
-        return(.POSIXct(x))
-    } else stop(gettextf("'%s' is not a \"dates\" object",
-                         deparse(substitute(x)) ))
-}
+## ## Moved to package chron
+## as.POSIXct.dates <- function(x, ...)
+## {
+##     if(inherits(x, "dates")) {
+##         z <- attr(x, "origin")
+##         x <- as.numeric(x) * 86400
+##         if(length(z) == 3L && is.numeric(z))
+##             x  <- x + as.numeric(ISOdate(z[3L], z[1L], z[2L], 0))
+##         return(.POSIXct(x))
+##     } else stop(gettextf("'%s' is not a \"dates\" object",
+##                          deparse(substitute(x)) ))
+## }
 
 as.POSIXct.POSIXlt <- function(x, tz = "", ...)
 {
@@ -1069,7 +1070,8 @@ quarters.POSIXt <- function(x, ...)
     paste0("Q", x+1)
 }
 
-trunc.POSIXt <- function(x, units = c("secs", "mins", "hours", "days"), ...)
+trunc.POSIXt <-
+function(x, units = c("secs", "mins", "hours", "days", "months", "years"), ...)
 {
     units <- match.arg(units)
     x <- as.POSIXlt(x)
@@ -1079,19 +1081,76 @@ trunc.POSIXt <- function(x, units = c("secs", "mins", "hours", "days"), ...)
 	       "mins" = {x$sec[] <- 0},
 	       "hours" = {x$sec[] <- 0; x$min[] <- 0L},
                ## start of day need not be on the same DST.
-	       "days" = {x$sec[] <- 0; x$min[] <- 0L; x$hour[] <- 0L; x$isdst[] <- -1L}
+	       "days" = {
+                   x$sec[] <- 0; x$min[] <- 0L; x$hour[] <- 0L;
+                   x$isdst[] <- -1L
+               },
+               "months" = {
+                   x$sec[] <- 0; x$min[] <- 0L; x$hour[] <- 0L;
+                   x$mday[] <- 1L
+                   x$isdst[] <- -1L
+                   ## To get wday and yday correctly:
+                   x <- as.POSIXlt(as.POSIXct(x))
+               },
+               "years" = {
+                   x$sec[] <- 0; x$min[] <- 0L; x$hour[] <- 0L;
+                   x$mday[] <- 1L; x$mon[] <- 0L
+                   x$isdst[] <- -1L
+                   ## To get wday and yday correctly:
+                   x <- as.POSIXlt(as.POSIXct(x))
+               }
 	       )
     x
 }
 
-round.POSIXt <- function(x, units = c("secs", "mins", "hours", "days"))
+round.POSIXt <-
+function(x, units = c("secs", "mins", "hours", "days", "months", "years"))
 {
+    .round_x_to_l_or_u <- function(lx, ll, lu) {
+        ## lx ll lu all POSIXlt, lu not necessarily valid yet.
+        cu <- as.POSIXct(lu)
+        lu <- as.POSIXlt(cu)
+        tu <- unclass(cu)
+        tx <- unclass(as.POSIXct(lx))
+        tl <- unclass(as.POSIXct(ll))
+        up <- ((tu - tx) <= (tx - tl))
+        up <- !is.na(up) & up
+        y <- ll
+        y[up] <- lu[up]
+        y
+    }
+    
     ## this gets the default from the generic's 2nd arg 'digits = 0' :
     units <- if(is.numeric(units) && units == 0.) "secs" else match.arg(units)
-    trunc.POSIXt(as.POSIXct(x) +
-		 switch(units,
-			"secs" = 0.5, "mins" = 30, "hours" = 1800, "days" = 43200),
-		 units = units)
+
+    if(units == "months") {
+        x <- as.POSIXlt(x)
+        ## Start of this month:
+        ll <- trunc.POSIXt(x, "months")
+        ## Start of next month:
+        lu <- ll
+        lu$mon <- lu$mon + 1L
+        ## Now make lu valid and round ...
+        .round_x_to_l_or_u(x, ll, lu)
+    }
+    else if(units == "years") {
+        x <- as.POSIXlt(x)
+        ## Start of this year:
+        ll <- trunc.POSIXt(x, "years")
+        ## Start of next year:
+        lu <- ll
+        lu$year <- lu$year + 1L
+        ## Now make lu valid and round ...
+        .round_x_to_l_or_u(x, ll, lu)
+    }
+    else
+        trunc.POSIXt(as.POSIXct(x) +
+                     switch(units,
+                            "secs" = 0.5,
+                            "mins" = 30,
+                            "hours" = 1800,
+                            "days" = 43200),
+                     units = units)
 }
 
 ## ---- additions in 1.5.0 -----

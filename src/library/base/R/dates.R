@@ -76,37 +76,39 @@ as.Date.numeric <- function(x, origin, ...)
 
 as.Date.default <- function(x, ...)
 {
-    if(inherits(x, "Date")) return(x)
-    if(is.logical(x) && all(is.na(x)))
-        return(structure(as.numeric(x), class = "Date"))
-    stop(gettextf("do not know how to convert '%s' to class %s",
-                  deparse(substitute(x)),
-                  dQuote("Date")),
-         domain = NA)
+    if(inherits(x, "Date"))
+	x
+    else if(is.logical(x) && all(is.na(x)))
+	structure(as.numeric(x), class = "Date")
+    else
+	stop(gettextf("do not know how to convert '%s' to class %s",
+		      deparse(substitute(x)),
+		      dQuote("Date")),
+	     domain = NA)
 }
 
-## convert from package date
-as.Date.date <- function(x, ...)
-{
-    if(inherits(x, "date")) {
-        x <- (x - 3653) # origin 1960-01-01
-        return(structure(x, class = "Date"))
-    } else stop(gettextf("'%s' is not a \"date\" object",
-                         deparse(substitute(x)) ))
-}
+## ## Moved to package date
+## as.Date.date <- function(x, ...)
+## {
+##     if(inherits(x, "date")) {
+##         x <- (x - 3653) # origin 1960-01-01
+##         return(structure(x, class = "Date"))
+##     } else stop(gettextf("'%s' is not a \"date\" object",
+##                          deparse(substitute(x)) ))
+## }
 
-## convert from package chron
-as.Date.dates <- function(x, ...)
-{
-    if(inherits(x, "dates")) {
-        z <- attr(x, "origin")
-        x <- trunc(as.numeric(x))
-        if(length(z) == 3L && is.numeric(z))
-            x  <- x + as.numeric(as.Date(paste(z[3L], z[1L], z[2L], sep="/")))
-        return(structure(x, class = "Date"))
-    } else stop(gettextf("'%s' is not a \"dates\" object",
-                         deparse(substitute(x)) ))
-}
+## ## Moved to package chron
+## as.Date.dates <- function(x, ...)
+## {
+##     if(inherits(x, "dates")) {
+##         z <- attr(x, "origin")
+##         x <- trunc(as.numeric(x))
+##         if(length(z) == 3L && is.numeric(z))
+##             x  <- x + as.numeric(as.Date(paste(z[3L], z[1L], z[2L], sep="/")))
+##         return(structure(x, class = "Date"))
+##     } else stop(gettextf("'%s' is not a \"dates\" object",
+##                          deparse(substitute(x)) ))
+## }
 
 format.Date <- function(x, ...)
 {

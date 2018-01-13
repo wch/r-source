@@ -959,6 +959,7 @@ extern0 int R_PCRE_limit_recursion;
 # define matchArg		Rf_matchArg
 # define matchArgExact		Rf_matchArgExact
 # define matchArgs		Rf_matchArgs
+# define matchArgs_RC		Rf_matchArgs_RC
 # define matchPar		Rf_matchPar
 # define Mbrtowc		Rf_mbrtowc
 # define mbtoucs		Rf_mbtoucs
@@ -1013,6 +1014,9 @@ extern0 int R_PCRE_limit_recursion;
 # define usemethod		Rf_usemethod
 # define ucstomb		Rf_ucstomb
 # define ucstoutf8		Rf_ucstoutf8
+#ifdef ADJUST_ENVIR_REFCNTS
+# define unpromiseArgs		Rf_unpromiseArgs
+#endif
 # define utf8toucs		Rf_utf8toucs
 # define utf8towcs		Rf_utf8towcs
 # define vectorIndex		Rf_vectorIndex
@@ -1168,6 +1172,7 @@ SEXP mat2indsub(SEXP, SEXP, SEXP);
 SEXP matchArg(SEXP, SEXP*);
 SEXP matchArgExact(SEXP, SEXP*);
 SEXP matchArgs(SEXP, SEXP, SEXP);
+SEXP matchArgs_RC(SEXP, SEXP, SEXP);
 SEXP matchPar(const char *, SEXP*);
 void memtrace_report(void *, void *);
 SEXP mkCLOSXP(SEXP, SEXP, SEXP);
@@ -1235,6 +1240,9 @@ SEXP type2symbol(SEXPTYPE);
 void unbindVar(SEXP, SEXP);
 #ifdef ALLOW_OLD_SAVE
 void unmarkPhase(void);
+#endif
+#ifdef ADJUST_ENVIR_REFCNTS
+void unpromiseArgs(SEXP);
 #endif
 SEXP R_LookupMethod(SEXP, SEXP, SEXP, SEXP);
 int usemethod(const char *, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP*);

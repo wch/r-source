@@ -1375,6 +1375,65 @@ options(op)
 ## erronously changed  '(x, NULL)'  to  '(x)'  in R version <= 3.4.3
 
 
+## ar.yw(x) with missing values in x, PR#17366
+which(is.na(presidents)) # in 6 places
+arp <- ar(presidents, na.action = na.pass)
+## check "some" consistency with cheap imputation:
+prF <- presidents
+prF[is.na(presidents)] <- c(90, 37, 40, 32, 63, 66) # phantasy
+arF <- ar(prF)
+stopifnot(all.equal(arp[c("order", "ar", "var.pred", "x.mean")],
+                    list(order = 3, ar = c(0.6665119, 0.2800927, -0.1716641),
+                         var.pred = 96.69082, x.mean = 56.30702), tol = 7e-7)
+        , all.equal(arp$ar, arF$ar,                     tol = 0.14)
+        , all.equal(arp$var.pred, arF$var.pred,         tol = 0.005)
+        , all.equal(arp$asy.var.coef, arF$asy.var.coef, tol = 0.09)
+)
+## Multivariate
+set.seed(42)
+n <- 1e5; i <- sample(n, 12)
+u <- matrix(rnorm(2*n), n, 2)
+y <- filter(u, filter=0.8, "recursive")
+y. <- y; y.[i,] <- NA
+est <- ar(y , aic = FALSE, order.max = 2) ## Estimate VAR(2)
+es. <- ar(y., aic = FALSE, order.max = 2, na.action=na.pass)
+## checking ar.yw.default() multivariate case
+estd <- ar(unclass(y) , aic = FALSE, order.max = 2) ## Estimate VAR(2)
+es.d <- ar(unclass(y.), aic = FALSE, order.max = 2, na.action=na.pass)
+stopifnot(all.equal(est$ar[1,,], diag(0.8, 2), tol = 0.08)# seen 0.0038
+	, all.equal(est[1:6], es.[1:6], tol = 5e-3)
+	, all.equal(estd$x.mean, es.d$x.mean, tol = 0.01) # seen 0.0023
+	, all.equal(estd[c(1:3,5:6)],
+		    es.d[c(1:3,5:6)], tol = 1e-3)## seen {1,3,8}e-4
+	, all.equal(lapply(estd[1:6],unname),
+		    lapply(est [1:6],unname), tol = 1e-12)# almost identical
+	, all.equal(lapply(es.d[1:6],unname),
+		    lapply(es. [1:6],unname), tol = 1e-12)
+)
+## NA's in x gave an error, in R versions <= 3.4.3
+
+
+## as.list(<Date>) method:
+toD <- Sys.Date(); stopifnot(identical(as.list(toD)[[1]], toD))
+## was wrong for 20 hours
+
+
+## PR#17372: sum(<ints whose sum overflows>, <higher type>)
+iL <- rep(1073741824L, 2) # 2^30 + 2^30 = 2^31 integer overflows to NA
+r1 <- tryCatch(sum("foo", iL), error=function(e) conditionMessage(e))
+r2 <- tryCatch(sum(iL, "foo"), error=function(e) conditionMessage(e))
+stopifnot(
+    identical(r1, r2),
+    grepl("invalid 'type' (character) ", r1, fixed=TRUE),
+    ## each gives an overflow warning
+    identical(sum(3.14, iL), NA_real_),
+    identical(sum(iL, 3.14), NA_real_),
+    identical(sum(1+2i, iL), NA_complex_),
+    identical(sum(iL, 1+2i), NA_complex_)
+)
+## r2 was no error and sum(iL, 1+2i) gave NA_real_ in R <= 3.4.x
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

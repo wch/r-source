@@ -88,7 +88,7 @@ install-tests:
 
 uninstall-tests:
 	@for pkg in $(R_PKGS_RECOMMENDED); do \
-	 rm -rf "$(DESTDIR)$(rhome)/library/$${pkg}/tests" ; \
+	 rm -Rf "$(DESTDIR)$(rhome)/library/$${pkg}/tests" ; \
 	done
 
 

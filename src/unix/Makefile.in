@@ -53,13 +53,13 @@ R: Makedeps
 	(cd ../include; $(MAKE) $(@F))
 
 libunix.a: $(OBJECTS)
-	@rm -rf $@
+	@rm -Rf $@
 	$(AR) -cr $@ $(OBJECTS)
 	$(RANLIB) $@
 
 mostlyclean: clean
 clean:
-	@-rm -rf .libs _libs Rscript.dSYM
+	@-rm -Rf .libs _libs Rscript.dSYM
 	@-rm -f Makedeps *.d *.o *.a *.lo *.la stamp-lo
 distclean: clean
 	@-rm -f Makefile Rscript

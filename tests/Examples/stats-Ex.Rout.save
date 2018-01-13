@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2017-12-08 r73869) -- "Unsuffered Consequences"
-Copyright (C) 2017 The R Foundation for Statistical Computing
+R Under development (unstable) (2018-01-07 r74095) -- "Unsuffered Consequences"
+Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -3827,7 +3827,7 @@ sigma^2 estimated as 0.4566:  log likelihood = -101.2,  aic = 212.4
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x55c23fac03d8>
+<environment: 0x3070d50>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -4825,7 +4825,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x55c2429039b8>
+<bytecode: 0x645c6b0>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -7405,7 +7405,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x55c24240e808>
+<environment: 0x51df220>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -12060,14 +12060,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x55c2407c7f48>
-<environment: 0x55c2407b4b30>
+<bytecode: 0x5498030>
+<environment: 0x549d000>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x55c2407c8098>
-<environment: 0x55c2407b4b30>
+<bytecode: 0x5497d90>
+<environment: 0x549d000>
 
 > 
 > 
@@ -13436,16 +13436,16 @@ Cumulative Proportion  0.6200604 0.8675017 0.9566425 1.00000000
 
 Loadings:
          Comp.1 Comp.2 Comp.3 Comp.4
-Murder   -0.536  0.418 -0.341  0.649
-Assault  -0.583  0.188 -0.268 -0.743
-UrbanPop -0.278 -0.873 -0.378  0.134
-Rape     -0.543 -0.167  0.818       
+Murder    0.536  0.418  0.341  0.649
+Assault   0.583  0.188  0.268 -0.743
+UrbanPop  0.278 -0.873  0.378  0.134
+Rape      0.543 -0.167 -0.818       
 
                Comp.1 Comp.2 Comp.3 Comp.4
 SS loadings      1.00   1.00   1.00   1.00
 Proportion Var   0.25   0.25   0.25   0.25
 Cumulative Var   0.25   0.50   0.75   1.00
-> ## The signs of the columns are arbitrary
+> ## The signs of the columns of the loadings are arbitrary
 > plot(pc.cr) # shows a screeplot.
 > biplot(pc.cr)
 > 
@@ -16190,8 +16190,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f)
-<bytecode: 0x55c24220a158>
-<environment: 0x55c2406e4c78>
+<bytecode: 0x5d86fd8>
+<environment: 0x6109228>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -16512,10 +16512,10 @@ Cumulative Proportion  0.6200604 0.8675017 0.9566425 1.00000000
 
 Loadings:
          Comp.1 Comp.2 Comp.3 Comp.4
-Murder   -0.54   0.42  -0.34   0.65 
-Assault  -0.58         -0.27  -0.74 
-UrbanPop -0.28  -0.87  -0.38        
-Rape     -0.54          0.82        
+Murder    0.54   0.42   0.34   0.65 
+Assault   0.58          0.27  -0.74 
+UrbanPop  0.28  -0.87   0.38        
+Rape      0.54         -0.82        
 > 
 > 
 > 
@@ -18516,7 +18516,7 @@ Number of Fisher Scoring iterations: 6
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  4.273 0.092 4.366 0 0 
+Time elapsed:  6.478 0.17 6.714 0 0 
 > grDevices::dev.off()
 null device 
           1 

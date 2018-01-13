@@ -97,7 +97,7 @@ clean:
 	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
 	  rm -f $(SOURCES_R); \
 	fi
-	@-rm -rf .libs _libs
+	@-rm -Rf .libs _libs
 	@-rm -f *.o $(PROGRAMS) Rplots.pdf Rplots.ps
 distclean: clean
 	@-rm -f Makefile

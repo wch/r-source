@@ -91,7 +91,7 @@ clean:
 	-@rm -f FALSE* PACKAGES* .R .tex mirrors.html ./-package.Rd ex.gz
 	-@rm -f testit.txt testit.html testit.tex testit-Ex.R
 	-@rm -f ver20.txt ver20.html ver20.tex ver20-Ex.R
-	-@rm -rf anRpackage myTst* myLib
+	-@rm -Rf anRpackage myTst* myLib
 	-@rm -f *.tar.gz
 	-@rm -f keepsource.tex test-system2 test-system.Rout
 	-@rm -f *.log *.tsin *.trin
@@ -102,7 +102,7 @@ distclean: clean
 	  (cd $${d} && $(MAKE) $@); \
 	done
 	-@rm -f Makefile $(test-out) $(test-src-auto) *.Rout.fail
-	-@rm -rf *.Rcheck RecPackages
+	-@rm -Rf *.Rcheck RecPackages
 	-@rm -f *.fail
 
 maintainer-clean: distclean
@@ -122,7 +122,7 @@ install-tests:
 
 uninstall-tests:
 	@$(ECHO) "uninstalling specific tests and removing results"
-	@rm -rf "$(DESTDIR)$(rhome)/tests"
+	@rm -Rf "$(DESTDIR)$(rhome)/tests"
 
 distdir: $(DISTFILES)
 	@for f in $(DISTFILES); do \

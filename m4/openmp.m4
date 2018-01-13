@@ -54,7 +54,7 @@ AC_DEFUN([R_OPENMP],
 	 [ac_cv_prog_[]_AC_LANG_ABBREV[]_openmp='none needed'],
 	 [ac_cv_prog_[]_AC_LANG_ABBREV[]_openmp='unsupported'
 	  dnl Try these flags:
-	  dnl   GCC >= 4.2, clang 3.8 -fopenmp
+	  dnl   GCC >= 4.2, clang >= 3.8 -fopenmp
 	  dnl   clang 3.7.x	      -fopenmp=libomp
 	  dnl   (-fopenmp is accepted but does not work)
 	  dnl   Oracle C, Fortran     -xopenmp
@@ -69,6 +69,7 @@ AC_DEFUN([R_OPENMP],
           dnl   Cray CCE              -homp
           dnl   NEC SX                -Popenmp
           dnl   Lahey Fortran (Linux) --openmp
+	  dnl   flang                 -mp, also -fopenmp
 	  dnl If in this loop a compiler is passed an option that it doesn't
 	  dnl understand or that it misinterprets, the AC_LINK_IFELSE test
 	  dnl will fail (since we know that it failed without the option),

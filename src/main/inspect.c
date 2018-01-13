@@ -277,6 +277,12 @@ SEXP attribute_hidden do_address(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_MakeExternalPtr((void *) CAR(args), R_NilValue, R_NilValue);
 }
 
+SEXP attribute_hidden do_named(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    checkArity(op, args);
+    return ScalarInteger(NAMED(CAR(args)));
+}
+
 SEXP attribute_hidden do_refcnt(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);

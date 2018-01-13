@@ -673,8 +673,10 @@ FUNTAB R_FunTab[] =
 {"saveToConn",	do_saveToConn,	0,	111,	6,	{PP_FUNCALL, PREC_FN,	0}},
 {"load",	do_load,	0,	111,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"loadFromConn2",do_loadFromConn2,0,	111,	3,	{PP_FUNCALL, PREC_FN,	0}},
+{"loadInfoFromConn2",do_loadInfoFromConn2,0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"serializeToConn",	do_serializeToConn,	0,	111,	5,	{PP_FUNCALL, PREC_FN,	0}},
 {"unserializeFromConn",	do_unserializeFromConn,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+{"serializeInfoFromConn", do_serializeInfoFromConn,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"deparse",	do_deparse,	0,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
 {"dput",	do_dput,	0,	111,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"dump",	do_dump,	0,	111,	5,	{PP_FUNCALL, PREC_FN,	0}},
@@ -745,6 +747,7 @@ FUNTAB R_FunTab[] =
 {"untracemem",  do_untracemem,  0,      101,	1,      {PP_FUNCALL, PREC_FN,	0}},
 {"inspect",	do_inspect,	0,	111,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 {"address",     do_address,     0,       11,     1,     {PP_FUNCALL, PREC_FN, 0}},
+{"named",       do_named,       0,       11,     1,     {PP_FUNCALL, PREC_FN, 0}},
 {"refcnt",      do_refcnt,      0,       11,     1,     {PP_FUNCALL, PREC_FN, 0}},
 {"merge",	do_merge,	0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"capabilities",do_capabilities,0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
@@ -1150,10 +1153,12 @@ SEXP attribute_hidden installDDVAL(int n) {
 
 static SEXP mkSymMarker(SEXP pname)
 {
+    PROTECT(pname);
     SEXP ans = allocSExp(SYMSXP);
     SET_SYMVALUE(ans, ans);
     SET_ATTRIB(ans, R_NilValue);
     SET_PRINTNAME(ans, pname);
+    UNPROTECT(1);
     return ans;
 }
 

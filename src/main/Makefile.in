@@ -147,10 +147,10 @@ $(R_binary): $(R_bin_OBJECTS) $(R_bin_DEPENDENCIES)
 libR.a: $(OBJECTS) $(STATIC_LIBS)
 	-@mkdir libs
 	@(cd libs; for l in $(STATIC_LIBS); do $(AR) -x ../$$l; done)
-	@rm -rf $@
+	@rm -Rf $@
 	$(AR) -cr $@ $(OBJECTS) libs/*o
 	$(RANLIB) $@
-	@rm -rf libs
+	@rm -Rf libs
 
 install-bin-local: $(R_binary)
 	@$(MAKE) rhome="$(abs_top_builddir)" install-bin
@@ -223,7 +223,7 @@ uninstall:
 mostlyclean: clean
 clean:
 	@-rm -f $(top_builddir)/etc/R.exp
-	@-rm -rf .libs _libs
+	@-rm -Rf .libs _libs
 	@-rm -f *core Makedeps *.d *.o *.lo *.la *$(R_DYLIB_EXT) \
 	  $(R_binary) libR.a
 distclean: clean

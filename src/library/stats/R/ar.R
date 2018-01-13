@@ -1,7 +1,7 @@
 #  File src/library/stats/R/ar.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1999-2012 The R Core Team
+#  Copyright (C) 1999-2017 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -46,24 +46,25 @@ ar.yw.default <-
     if(is.null(series)) series <- deparse(substitute(x))
     ists <- is.ts(x)
     x <- na.action(as.ts(x))
-    if(ists)  xtsp <- tsp(x)
+    if(ists) xtsp <- tsp(x)
     xfreq <- frequency(x)
     x <- as.matrix(x)
     if(!is.numeric(x))
         stop("'x' must be numeric")
-    if(anyNA(x)) stop("NAs in 'x'")
+    if(any(is.na(x) != is.na(x[,1]))) stop("NAs in 'x' must be the same row-wise")
     nser <- ncol(x)
     if (demean) {
-        xm <- colMeans(x)
+        xm <- colMeans(x, na.rm=TRUE)
         x <- sweep(x, 2L, xm, check.margin=FALSE)
     } else xm <- rep.int(0, nser)
     n.used <- nrow(x)
+    n.obs <- sum(!is.na(x[,1])) # number of non-missing rows
     order.max <- if (is.null(order.max))
-	min(n.used - 1L, floor(10 * log10(n.used))) else round(order.max)
+	min(n.obs - 1L, floor(10 * log10(n.obs))) else floor(order.max)
     if (order.max < 1L) stop("'order.max' must be >= 1")
-    else if (order.max >= n.used) stop("'order.max' must be < 'n.used'")
+    else if (order.max >= n.obs) stop("'order.max' must be < 'n.obs'")
     xacf <- acf(x, type = "covariance", lag.max = order.max, plot = FALSE,
-                demean = demean)$acf
+		demean=demean, na.action = na.pass)$acf
     if(nser > 1L) {
         ## multivariate case
         snames <- colnames(x)
@@ -91,26 +92,29 @@ ar.yw.default <-
                 B[i + 1L, , ] <<- Bold[i + 1L, , ] + KB %*% Aold[m + 2L - i, , ]
             }
         }
-        cal.aic <- function() { # omits mean params, that is constant adj
-            det <- abs(prod(diag(qr(EA)$qr)))
-            return(n.used * log(det) + 2 * m * nser * nser)
+        cal.aic <- function(m) { # (EA)  omits mean params, that is constant adj
+            logdet <- determinant.matrix(EA)$modulus
+                                        # == log(abs(prod(diag(qr(EA)$qr))))
+            n.obs * logdet + 2 * m * nser * nser
         }
         cal.resid <- function() {
             resid <- array(0, dim = c(n.used - order, nser))
             for (i in 0L:order)
-                resid <- resid + x[(order - i + 1L):(n.used - i), , drop = FALSE] %*% t(ar[i + 1L, , ])
-            return(rbind(matrix(NA, order, nser), resid))
+                resid <- resid +
+                    tcrossprod(x[(order - i + 1L):(n.used - i), , drop = FALSE],
+                               ar[i + 1L, , ])
+            rbind(matrix(NA, order, nser), resid)
         }
         order <- 0L
         for (m in 0L:order.max) {
-            xaic[m + 1L] <- cal.aic()
+            xaic[m + 1L] <- cal.aic(m) # (EA)
             if (!aic || xaic[m + 1L] == min(xaic[seq_len(m + 1L)])) {
                 ar <- A
                 order <- m
-                var.pred <- EA * n.used/(n.used - nser * (m + 1L))
+                var.pred <- EA * n.obs/(n.obs - nser * (m + 1L))
             }
             if (m < order.max) {
-                solve.yw(m)
+                solve.yw(m) #-> update (EA, EB, A, B)
                 partialacf[m + 1L, , ] <- -A[m + 2L, , ]
             }
         }
@@ -124,9 +128,8 @@ ar.yw.default <-
         dimnames(var.pred) <- list(snames, snames)
         dimnames(partialacf) <- list(seq_len(order.max), snames, snames)
         colnames(resid) <- colnames(x)
-    } else {
+    } else { ## univariate case
         if (xacf[1L] == 0) stop("zero-variance series")
-        ## univariate case
         r <- as.double(drop(xacf))
         z <- .Fortran(C_eureka, as.integer(order.max), r, r,
                       coefs = double(order.max^2),
@@ -135,7 +138,7 @@ ar.yw.default <-
         coefs <- matrix(z$coefs, order.max, order.max)
         partialacf <- array(diag(coefs), dim = c(order.max, 1L, 1L))
         var.pred <- c(r[1L], z$vars)
-        xaic <- n.used * log(var.pred) + 2 * (0L:order.max) + 2 * demean
+        xaic <- n.obs * log(var.pred) + 2 * (0L:order.max) + 2 * demean
         maic <- min(aic)
 	xaic <- setNames(if(is.finite(maic)) xaic - min(xaic) else
 			 ifelse(xaic == maic, 0, Inf),
@@ -144,7 +147,7 @@ ar.yw.default <-
         ar <- if (order) coefs[order, seq_len(order)] else numeric()
         var.pred <- var.pred[order + 1L]
         ## Splus compatibility fix
-        var.pred <- var.pred * n.used/(n.used - (order + 1L))
+        var.pred <- var.pred * n.obs/(n.obs - (order + 1L))
         resid <- if(order) c(rep.int(NA, order), embed(x, order + 1L) %*% c(1, -ar))
         else as.vector(x) # we had as.matrix() above
         if(ists) {
@@ -153,12 +156,12 @@ ar.yw.default <-
         }
     }
     res <- list(order = order, ar = ar, var.pred = var.pred, x.mean  =  drop(xm),
-                aic  =  xaic, n.used = n.used, order.max = order.max,
+                aic  =  xaic, n.used = n.used, n.obs = n.obs, order.max = order.max,
                 partialacf = partialacf, resid = resid, method = "Yule-Walker",
                 series = series, frequency = xfreq, call = match.call())
     if(nser == 1L && order)
-        res$asy.var.coef <-
-            solve(toeplitz(drop(xacf)[seq_len(order)]))*var.pred/n.used
+        res$asy.var.coef <- var.pred/n.obs *
+            solve(toeplitz(drop(xacf)[seq_len(order)]))
     class(res) <- "ar"
     res
 }
@@ -316,13 +319,13 @@ ar.mle <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     }
     res <- list(order = order, ar = ar, var.pred = var.pred,
                 x.mean = x.mean, aic = xaic,
-                n.used = n.used, order.max = order.max,
+                n.used = n.used, n.obs = n.used, order.max = order.max,
                 partialacf = NULL, resid = resid, method = "MLE",
                 series = series, frequency = xfreq, call = match.call())
     if(order) {
         xacf <- acf(x, type = "covariance", lag.max = order, plot=FALSE)$acf
-        res$asy.var.coef <- solve(toeplitz(drop(xacf)[seq_len(order)])) *
-            var.pred/n.used
+        res$asy.var.coef <- var.pred/n.used *
+            solve(toeplitz(drop(xacf)[seq_len(order)]))
     }
     class(res) <- "ar"
     res
@@ -367,18 +370,18 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
         xm <- colMeans(x)
         x <- sweep(x, 2L, xm, check.margin=FALSE)
     } else xm <- rep.int(0, nser)
-    ## Fit models of increasing order
 
+    ## Fit models of increasing order
     for (m in order.min:order.max)
     {
         y <- embed(x, m+1L)
-        if(intercept) {
-            if (m) X <- cbind(rep.int(1,nrow(y)), y[, (nser+1L):ncol(y)])
-            else X <- as.matrix(rep.int(1, nrow(y)))
-        } else {
-            if (m) X <- y[, (nser+1L):ncol(y)]
-            else X <- matrix(0, nrow(y), 0)
-        }
+        X <-
+	    if(intercept) {
+		if(m) cbind(rep.int(1,nrow(y)), y[, (nser+1L):ncol(y)])
+		else as.matrix(rep.int(1, nrow(y)))
+	    } else {
+		if(m) y[, (nser+1L):ncol(y)] else matrix(0, nrow(y), 0)
+	    }
         Y <- t(y[, iser])
         N <- ncol(Y)
         XX <- t(X)%*%X
@@ -397,8 +400,8 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
         E <- (Y - YH)
         varE[[m - order.min + 1L]] <- tcrossprod(E)/N
         varA <- P %x% (varE[[m - order.min + 1L]])
-        seA[[m - order.min+1L]] <- if(ncol(varA) > 0) sqrt(diag(varA))
-        else numeric()
+        seA[[m - order.min+1L]] <-
+            if(ncol(varA) > 0) sqrt(diag(varA)) else numeric()
         xaic[m - order.min+1L] <-
             n.used*log(det(varE[[m-order.min+1L]])) + 2*nser*(nser*m+intercept)
     }
@@ -460,7 +463,7 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     }
     res <- list(order = m, ar = ar, var.pred = var.pred,
                 x.mean = xm, x.intercept = xint, aic = xaic,
-                n.used = n.used, order.max = order.max,
+                n.used = n.used, n.obs = n.used, order.max = order.max,
                 partialacf = NULL, resid = E, method = "Unconstrained LS",
                 series = series, frequency = xfreq, call = match.call(),
                 asy.se.coef = list(x.mean = sem, ar=drop(ses)))
@@ -475,24 +478,26 @@ function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     if (is.null(series)) series <- deparse(substitute(x))
     if (ists <- is.ts(x)) xtsp <- tsp(x)
     x <- na.action(as.ts(x))
-    if (anyNA(x)) stop("NAs in 'x'")
+    if(any(is.na(x) != is.na(x[,1]))) stop("NAs in 'x' must be the same row-wise")
     if (ists) xtsp <- tsp(x)
     xfreq <- frequency(x)
     x <- as.matrix(x)
     nser <- ncol(x)
     n.used <- nrow(x)
+    n.obs <- sum(!is.na(x[,1])) # number of non-missing rows
     if (demean) {
-        x.mean <- colMeans(x)
+        x.mean <- colMeans(x, na.rm=TRUE)
         x <- sweep(x, 2L, x.mean, check.margin=FALSE)
     }
     else x.mean <- rep(0, nser)
-    order.max <- if (is.null(order.max)) floor(10 * log10(n.used)) else floor(order.max)
+    order.max <- floor(if(is.null(order.max)) 10 * log10(n.obs) else order.max)
     if (order.max < 1L)
         stop("'order.max' must be >= 1")
-    xacf <- acf(x, type = "cov", plot = FALSE, lag.max = order.max)$acf
+    xacf <- acf(x, type = "cov", plot = FALSE,
+                lag.max = order.max, na.action = na.pass)$acf
     z <- .C(C_multi_yw,
             aperm(xacf, 3:1),
-            as.integer(n.used),
+            as.integer(n.obs),
             as.integer(order.max),
             as.integer(nser),
             coefs = double((1L + order.max) * nser * nser),
@@ -513,7 +518,7 @@ function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
         resid[1L:order, ] <- NA
     }
     else ar <- array(dim = c(0, nser, nser))
-    var.pred <- var.pred[order + 1L, , , drop = TRUE] * n.used/(n.used - nser * (demean + order))
+    var.pred <- var.pred[order + 1L, , , drop = TRUE] * n.obs/(n.obs - nser * (demean + order))
     if (ists) {
         attr(resid, "tsp") <- xtsp
         attr(resid, "class") <- c("mts", "ts")
@@ -524,11 +529,11 @@ function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     dimnames(var.pred) <- list(snames, snames)
     dimnames(partialacf) <- list(1L:order.max, snames, snames)
     res <- list(order = order, ar = ar, var.pred = var.pred,
-        x.mean = x.mean, aic = xaic, n.used = n.used, order.max = order.max,
+        x.mean = x.mean, aic = xaic, n.used = n.used, n.obs = n.obs, order.max = order.max,
         partialacf = partialacf, resid = resid, method = "Yule-Walker",
         series = series, frequency = xfreq, call = match.call())
     class(res) <- "ar"
-    return(res)
+    res
 }
 
 ## ar.burg by B.D. Ripley based on R version by Martyn Plummer
@@ -574,7 +579,7 @@ ar.burg.default <-
         attr(resid, "class") <- "ts"
     }
     res <- list(order = order, ar = ar, var.pred = var.pred, x.mean = x.mean,
-                aic = xaic, n.used = n.used, order.max = order.max,
+                aic = xaic, n.used = n.used, n.obs = n.used, order.max = order.max,
                 partialacf = partialacf, resid = resid,
                 method = ifelse(var.method==1L,"Burg","Burg2"),
                 series = series, frequency = xfreq, call = match.call())
@@ -608,8 +613,7 @@ function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
         x <- sweep(x, 2L, x.mean, check.margin = FALSE)
     }
     else x.mean <- rep(0, nser)
-    order.max <- if (is.null(order.max)) floor(10 * log10(n.used))
-    else floor(order.max)
+    order.max <- floor(if(is.null(order.max)) 10 * log10(n.used) else order.max)
     z <- .C(C_multi_burg,
             as.integer(n.used),
             resid = as.double(x),
@@ -643,11 +647,11 @@ function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     dimnames(var.pred) <- list(snames, snames)
     dimnames(partialacf) <- list(seq_len(order.max), snames, snames)
     res <- list(order = order, ar = ar, var.pred = var.pred, x.mean = x.mean,
-                aic = xaic, n.used = n.used, order.max = order.max,
+                aic = xaic, n.used = n.used, n.obs = n.used, order.max = order.max,
                 partialacf = partialacf, resid = resid,
                 method = ifelse(var.method == 1L, "Burg", "Burg2"),
                 series = series, frequency = xfreq,
                 call = match.call())
     class(res) <- "ar"
-    return(res)
+    res
 }

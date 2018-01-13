@@ -142,7 +142,7 @@ uninstall:
 	@for f in $(INSTFILES) $(NON_SVN_INSTFILES); do \
 	  rm -f "$(DESTDIR)$(rhome)/$${f}"; \
 	done
-	@rm -rf "$(DESTDIR)$(Rexecbindir)" "$(DESTDIR)$(rhome)/lib"
+	@rm -Rf "$(DESTDIR)$(Rexecbindir)" "$(DESTDIR)$(rhome)/lib"
 	@rmdir "$(DESTDIR)$(rhome)" 2>/dev/null \
           || $(ECHO) "  dir $(DESTDIR)$(rhome) not removed"
 	@rm -f "$(DESTDIR)${libdir}/libR$(R_DYLIB_EXT)"
@@ -158,15 +158,15 @@ distclean: clean
 	@(for d in $(SUBDIRS); do rsd="$${d} $${rsd}"; done; \
 	  for d in $${rsd}; do (cd $${d} && $(MAKE) $@); done)
 	@rm -f po/Makefile
-	-@rm -rf bin include lib library modules gnome
+	-@rm -Rf bin include lib library modules gnome
 	@if test -f non-tarball ; then \
 	  rm -f $(NON_SVN_INSTFILES) non-tarball doc/FAQ doc/RESOURCES doc/html/resources.html doc/html/NEWS.html; \
 	fi
 	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
 	  rm -f $(NON_SVN_INSTFILES); \
-	  rm -rf $(SUBDIRS) $(SUBDIRS_WITH_NO_BUILD); \
+	  rm -Rf $(SUBDIRS) $(SUBDIRS_WITH_NO_BUILD); \
 	fi
-	-@rm -rf libconftest.dSYM
+	-@rm -Rf libconftest.dSYM
 	-@rm -f Makeconf Makefile Makefile.bak Makefrag.* \
 	  config.cache config.log config.status libtool stamp-java \
 	  $(ACLOCAL_M4) acinclude.m4 $(distdir).tar.gz
@@ -175,7 +175,7 @@ maintainer-clean: distclean
 	@$(ECHO) "deletes files that may need special rules to rebuild"
 	@(for d in $(SUBDIRS); do rsd="$${d} $${rsd}"; done; \
 	  for d in $${rsd}; do (cd $${d} && $(MAKE) $@); done)
-	-@(cd $(srcdir) && rm -rf autom4te.cache)
+	-@(cd $(srcdir) && rm -Rf autom4te.cache)
 
 dist: dist-unix
 ## GNU gzip 1.8 warns that env var GZIP is obsolescent for gzip, so use as arg
@@ -188,10 +188,10 @@ dist-unix: distdir
             mv $(distdir) $${dirname}; \
           fi ; \
 	  $(TAR) cf $${distname}.tar $${dirname} && $(R_GZIPCMD) $(GZIP) $${distname}.tar; \
-	  rm -rf $${dirname}
+	  rm -Rf $${dirname}
 dist-win:
 distdir: $(DISTFILES) vignettes
-	@rm -rf $(distdir)
+	@rm -Rf $(distdir)
 	@mkdir $(distdir)
 	@-chmod 755 $(distdir)
 	@for f in $(DISTFILES); do \

@@ -946,9 +946,9 @@ environment variable @env{TZ}.
 
 By default @command{configure} searches for suitable
 options@footnote{for example, @option{-fopenmp}, @option{-xopenmp} or
-@option{-qopenmp}.  This includes for @command{clang} 3.7.x and the
-Intel C compiler.} for OpenMP support for the C, C++98, FORTRAN 77 and
-Fortran compilers.
+@option{-qopenmp}.  This includes for @command{clang} and the Intel C
+compiler.} for OpenMP support for the C, C++98, FORTRAN 77 and Fortran
+compilers.
 
 Only the C result is currently used for @R{} itself, and only if
 @code{MAIN_LD}/@code{DYLIB_LD} were not specified.  This can be
@@ -970,11 +970,15 @@ SHLIB_OPENMP_FFLAGS
 
 @noindent
 Setting to an empty value will disable OpenMP for that compiler (and
-configuring with @option{--disable-openmp} will disable all detection of
-OpenMP).  The @command{configure} detection test is to compile and link
-a standalone OpenMP program, which is not the same as compiling a shared
-object and loading it into the C program of @R{}'s executable.  Note
-that overridden values are not tested.
+configuring with @option{--disable-openmp} will disable all
+detection@footnote{This does not necessarily disable @emph{use} of
+OpenMP -- the @command{configure} code allows for platforms where OpenMP
+is used without a flag. For the @command{flang} compiler in late 2017,
+the Fortran runtime always used OpenMP.} of OpenMP).  The
+@command{configure} detection test is to compile and link a standalone
+OpenMP program, which is not the same as compiling a shared object and
+loading it into the C program of @R{}'s executable.  Note that
+overridden values are not tested.
 
 @node C++ Support,  , OpenMP Support, Other Options
 @subsection C++ Support
@@ -1871,7 +1875,7 @@ If you want to get rid of @R{} more completely using a Terminal, simply
 run:
 
 @example
-sudo rm -rf /Library/Frameworks/R.framework /Applications/R.app \
+sudo rm -Rf /Library/Frameworks/R.framework /Applications/R.app \
    /usr/local/bin/R /usr/local/bin/Rscript
 @end example
 
@@ -2034,9 +2038,11 @@ ensures that only package @pkg{base} is loaded.
 
 Changing the set of default packages is normally used to reduce the set
 for speed when scripting: in particular not using @pkg{methods} will
-reduce the start-up time by a factor of up to two (and this is done by
-@command{Rscript}).  But it can also be used to customize @R{}, e.g.@:
-for class use.
+reduce the start-up time by a factor of up to two.  But it can also be
+used to customize @R{}, e.g.@: for class use. @command{Rscript}
+also checks the environment variable @env{R_SCRIPT_DEFAULT_PACKAGES};
+@enindex R_SCRIPT_DEFAULT_PACKAGES
+if set, this takes precedence over @env{R_DEFAULT_PACKAGES}.
 
 
 @node Managing libraries, Installing packages, Default packages, Add-on packages
@@ -3712,13 +3718,16 @@ multi-threaded @acronym{BLAS}.  Note that using a multi-threaded
 more elapsed time (occasionally dramatically so) than using a similar
 single-threaded @acronym{BLAS}.  On a machine running other tasks, there
 can be contention for CPU caches that reduces the effectiveness of the
-optimization of cache use by a @acronym{BLAS} implementation.
+optimization of cache use by a @acronym{BLAS} implementation: some
+people warn that this is especially problematic for hyperthreaded CPUs
 
 Note that under Unix (but not under Windows) if @R{} is compiled against
 a non-default @acronym{BLAS} and @option{--enable-BLAS-shlib} is
-@strong{not} used, then all @acronym{BLAS}-using packages must also be.
-So if @R{} is re-built to use an enhanced @acronym{BLAS} then packages
-such as @CRANpkg{quantreg} will need to be re-installed.
+@strong{not} used (it is the default on all platforms except AIX), then
+all @acronym{BLAS}-using packages must also be.  So if @R{} is re-built
+to use an enhanced @acronym{BLAS} then packages such as
+@CRANpkg{quantreg} will need to be re-installed; they may be under other
+circumstances.
 
 @R{} relies on @acronym{ISO}/@acronym{IEC}@tie{}60559 compliance of an
 external @acronym{BLAS}.  This can be broken if for example the code
@@ -3727,122 +3736,145 @@ be computed---whereas @code{x*0} can be @code{NaN}.  This is checked in
 the test suite.
 
 External @acronym{BLAS} implementations often make less use of
-extended-precision floating-point registers and will almost certainly
-re-order computations.  This can result in less accuracy than using the
-internal @acronym{BLAS}, and may result in different solutions, e.g.@:
-different signs in SVD and eigendecompositions.
+extended-precision floating-point registers (where available) and will
+almost certainly re-order computations.  This can result in less
+accuracy than using a reference @acronym{BLAS}, and may result in
+different solutions, e.g.@: different signs in SVD and
+eigendecompositions.
 
-The URIs for several of these BLAS are subject to frequent gratuitous
-changes, so you will need to search for their current locations.
+Debian/Ubuntu systems provide a system-specific way to switch the BLAS
+in use.  Build @R{} with @option{-with-blas} to select the OS version
+of the reference BLAS, and then use @command{update-alternatives} to
+switch between the available BLAS libraries.  See
+@uref{https://wiki.debian.org/DebianScience/LinearAlgebraLibraries}.
+
+The URIs for several of these BLAS have been subject to frequent
+gratuitous changes, so you will need to search for their current
+locations.
 
 @menu
 * ATLAS::                       
-* ACML::                        
 * Goto and OpenBLAS::           
 * MKL::                         
+* ACML::                        
 * Shared BLAS::                 
 @end menu
 
-@node ATLAS, ACML, BLAS, BLAS
+@node ATLAS, Goto and OpenBLAS, BLAS, BLAS
 @subsubsection ATLAS
 
 ATLAS (@uref{http://math-atlas.sourceforge.net/}) is a ``tuned''
 @acronym{BLAS} that runs on a wide range of Unix-alike platforms.
 Unfortunately it is built by default as a static library that on some
-platforms cannot be used with shared objects such as are used in @R{}
-packages.  Be careful when using pre-built versions of ATLAS (they seem
-to work on @cputype{ix86} platforms, but not always on @cputype{x86_64}
-ones).
+platforms may not be able to be used with shared objects such as are
+used in @R{} packages.  Be careful when using pre-built versions of
+ATLAS static libraries (they seem to work on @cputype{ix86} platforms,
+but not always on @cputype{x86_64} ones).
 
-The usual way to specify ATLAS will be via
+ATLAS contains replacements for a small number of LAPACK routines, but
+can be built to merge these with LAPACK sources to include a full LAPACK
+library.
 
+Recent versions of ATLAS can be built as a single shared library, either
+@code{libsatlas} or @code{libtatlas} (serial or threaded respectively):
+these may even contain a full LAPACK.  Such builds can be used by one of
+@example
+--with-blas=satlas
+--with-blas=tatlas
+@end example
+@noindent
+or, as on @cputype{x86_64} Fedora where a path needs to be specified,
+@example
+--with-blas="-L/usr/lib64/atlas -lsatlas"
+--with-blas="-L/usr/lib64/atlas -ltatlas"
+@end example
+@noindent
+Distributed ATLAS libraries cannot be tuned to your machine and so are a
+compromise: for example Fedora tunes @cputype{x86_64} for CPUs with SSE3
+extensions, and separate @samp{atlas-sse2} and @samp{atlas-sse3}
+@cputype{i686} RPMs are available.@footnote{There were others for earlier
+versions of ATLAS, and are for non-Intel architectures.  The only way to
+see exactly which CPUs the distributed libraries have been tuned for is
+to read the @file{atlas.spec} file: at the time of writing
+@samp{HAMMER64SSE3} and @samp{Corei264AVX} for @cputype{x86_64} Fedora.}
+
+Note that building @R{} on Linux against distributed shared libraries
+may need @samp{-devel} or @samp{-dev} packages installed.
+
+Linking against multiple static libraries requires one of
 @example
 --with-blas="-lf77blas -latlas"
-@end example
-
-@noindent
-if the libraries are in the library path, otherwise by
-
-@example
---with-blas="-L/path/to/ATLAS/libs -lf77blas -latlas"
-@end example
-
-@noindent
-For example, @cputype{x86_64} Fedora needs
-@example
---with-blas="-L/usr/lib64/atlas -lf77blas -latlas"
-@end example
-
-For systems with multiple CPU cores it is possible to use a
-multi-threaded version of ATLAS, by specifying
-
-@example
 --with-blas="-lptf77blas -lpthread -latlas"
+--with-blas="-L/path/to/ATLAS/libs -lf77blas -latlas"
+--with-blas="-L/path/to/ATLAS/libs -lptf77blas -lpthread -latlas"
 @end example
 
-Consult its installation guide for how to build ATLAS with
-position-independent code, and as a shared library.
+Consult its installation
+guide@footnote{@uref{http://math-atlas.sourceforge.net/atlas_install/}}
+for how to build ATLAS as a shared library or as a static library with
+position-independent code (on platforms where that matters).
 
-@node ACML, Goto and OpenBLAS, ATLAS, BLAS
-@subsubsection ACML
+According to the ATLAS
+FAQ@footnote{@uref{http://math-atlas.sourceforge.net/faq.html#tnum}} the
+maximum number of threads used by multi-threaded ATLAS is set at compile
+time.  Also, the author advises against using multi-threaded ATLAS on
+hyperthreaded CPUs without restricting affinities at compile-time to one
+virtual core per physical CPU.  (For the Fedora libraries the
+compile-time flag specifies 4 threads.)
+@c http://math-atlas.sourceforge.net/atlas_install/node21.html
 
-For @cputype{x86_64} processors@footnote{and @cputype{i686} for earlier
-versions.}  under Linux there is the AMD Core Math Library (ACML).
-For the @command{gcc} version we could use
 
-@example
---with-blas="-lacml"
-@end example
-
-@noindent
-if the appropriate library directory (such as
-@enindex LD_LIBRARY_PATH
-@file{/opt/acml5.1.0/gfortran64/lib}) is in the @env{LD_LIBRARY_PATH}.
-For other compilers, see the ACML documentation.  There is a
-multithreaded Linux version of ACML available for recent versions of
-@command{gfortran}.  To make use of this you will need something like
-
-@example
---with-blas="-L/opt/acml5.1.0/gfortran64_mp/lib -lacml_mp"
-@end example
-
-@noindent
-(and you may need to arrange for the directory to be in @command{ld.so}
-cache).
-
-See @pxref{Shared BLAS} for an alternative (and in many ways preferable)
-way to use ACML.
-
-The version last tested (5.1.0) failed the @file{reg-BLAS.R} test in its
-handling of @code{NA}s.
-
-@node Goto and OpenBLAS, MKL, ACML, BLAS
+@node Goto and OpenBLAS, MKL, ATLAS, BLAS
 @subsubsection Goto and OpenBLAS
 
-Dr Kazushige Goto wrote a tuned @acronym{BLAS} for several processors and
-OSes,  which was  frozen in  mid-2010.  The  final version  is  known as
+Dr Kazushige Goto wrote a tuned @acronym{BLAS} for several processors
+and OSes, which was frozen in mid-2010.  The final version is known as
 GotoBLAS2, and was re-released under a much less restrictive licence.
-Once it is built and installed, it can be used by configuring @R{} with
+OpenBLAS (@uref{http://www.openblas.net/}) is a descendant project with
+support for some later CPUs (e.g.@: Intel Sandy Bridge and Haswell).
+
+These can be used by configuring @R{} with something like
 
 @example
 --with-blas="-lgoto2"
-@end example
-
-See @pxref{Shared BLAS} for an alternative (and in many ways preferable)
-way to use it.
-
-OpenBLAS (@uref{http://www.openblas.net/}) is a descendant
-project with support for some later CPUs (e.g.@: Intel Sandy Bridge).
-Once installed it can be used by something like
-
-@example
 --with-blas="-lopenblas"
 @end example
 
 @noindent
-or as a shared BLAS.
+See @pxref{Shared BLAS} for an alternative (and in many ways preferable)
+way to use them.
 
-@node MKL, Shared BLAS, Goto and OpenBLAS, BLAS
+Some platforms provide multiple builds of OpenBLAS: for example Fedora 26
+has RPMs@footnote{(and more, e.g.@: for 64-bit ints and static versions).}
+@example
+openblas
+openblas-threads
+openblas-openmp
+@end example
+@noindent
+providing shared
+libraries
+@example
+libopenblas.so
+libopenblasp.so
+libopenblaso.so
+@end example
+@noindent
+respectively, each of which can be used as a shared BLAS.  For the
+second and third the number of threads is controlled by
+@env{OPENBLAS_NUM_THREADS} and @env{OMP_NUM_THREADS} (as usual for
+OpenMP) respectively. There is also a Fedora RPM @samp{openblas-Rblas}
+to replace @file{libRblas.so} in their distribution of @R{}.
+
+Note that building @R{} on Linux against distributed libraries may need
+@samp{-devel} or @samp{-dev} packages installed.
+
+@c https://wiki.debian.org/DebianScience/LinearAlgebraLibraries
+For @cputype{ix86} and @cputype{x86_64} most distributed libraries
+contain several alternatives for different CPU microarchitectures with
+the choice being made at run time.
+
+@node MKL, ACML, Goto and OpenBLAS, BLAS
 @subsubsection Intel MKL
 For Intel processors (and perhaps others) and some distributions of
 Linux, there is Intel's Math Kernel Library.  You are strongly
@@ -3853,17 +3885,17 @@ recommended.  Or see
 @uref{https://software.intel.com/@/en-us/@/articles/@/intel-mkl-link-line-advisor}.
 
 There are also versions of MKL for macOS and Windows, but at the time
-these were tried they did not work with the standard compilers used for
+these were tried they did not work with the default compilers used for
 @R{} on those platforms.
 
 The MKL interface has changed several times and may change again: the
-following examples have been used with versions 10.3 to 11.3, for GCC
+following examples have been used with versions 10.3 to 2018.1, for GCC
 compilers on @cputype{x86_64}.
 
-To a sequential version of MKL we used
+To use a sequential version of MKL we used
 
 @example
-MKL_LIB_PATH=/path/to/intel_mkl/lib/intel64
+MKL_LIB_PATH=/path/to/intel_mkl/mkl/lib/intel64
 export LD_LIBRARY_PATH=$MKL_LIB_PATH
 MKL="-L$@{MKL_LIB_PATH@} -lmkl_gf_lp64 -lmkl_core -lmkl_sequential"
 ./configure --with-blas="$MKL" --with-lapack
@@ -3886,7 +3918,13 @@ MKL="-L$@{MKL_LIB_PATH@} -lmkl_gf_lp64 -lmkl_core \
 The default number of threads will be chosen by the OpenMP software, but
 can be controlled by setting @code{OMP_NUM_THREADS} or
 @code{MKL_NUM_THREADS}, and in recent versions seems to default to a
-sensible value for sole use of the machine.
+sensible value for sole use of the machine.  (Parallel MKL has not
+always passed @command{make check-all}, but did with MKL 2018.1.)
+
+@c Note though that as with all non-reference LAPACK/BLAS, using MKL trades
+@c numerical accuracy for speed.  When tested in January 2018, 23 CRAN
+@c packages failed their checks with serial MKL and 43 with multi-threaded
+@c MKL.
 
 @c https://stat.ethz.ch/pipermail/r-devel/2015-September/071717.html
 It has been reported that
@@ -3898,7 +3936,14 @@ It has been reported that
 @noindent
 worked with the Intel 2015.3 compilers on Centos 6.
 
-@node Shared BLAS,  , MKL, BLAS
+@node ACML, Shared BLAS, MKL, BLAS
+@subsubsection ACML
+
+The AMD Core Math Library (ACML) is now end-of-life, although downloads
+remained available when checked in January 2018.
+@c https://developer.amd.com/tools-and-sdks/archive/acml-downloads-resources/
+
+@node Shared BLAS,  , ACML, BLAS
 @subsubsection Shared BLAS
 
 The @acronym{BLAS} library will be used for many of the add-on packages
@@ -3922,7 +3967,7 @@ This has both advantages and disadvantages.
 @item
 It saves space by having only a single copy of the @acronym{BLAS}
 routines, which is helpful if there is an external static @acronym{BLAS}
-such as used to be standard for ATLAS.
+(as used to be standard for ATLAS).
 
 @item
 There may be performance disadvantages in using a shared @acronym{BLAS}.
@@ -3943,17 +3988,34 @@ changed in @file{@var{R_HOME}/etc/ldpaths}.
 @end itemize
 
 Another option to change the @acronym{BLAS} in use is to symlink a
-dynamic @acronym{BLAS} library (such as ACML or Goto's) to
+single dynamic @acronym{BLAS} library to
 @file{@var{R_HOME}/lib/libRblas.so}.  For example, just
 
 @example
 mv @var{R_HOME}/lib/libRblas.so @var{R_HOME}/lib/libRblas.so.keep
-ln -s /opt/acml5.1.0/gfortran64_mp/lib/libacml_mp.so @var{R_HOME}/lib/libRblas.so
+ln -s /usr/lib64/libopenblasp.so.0 @var{R_HOME}/lib/libRblas.so
 @end example
-will change the @acronym{BLAS} in use to multithreaded ACML.  A similar
-link works for some versions of Goto @acronym{BLAS}, OpenBLAS and MKL
-(provided the appropriate @file{lib} directory is in the run-time
-library path or @command{ld.so} cache).
+
+@noindent
+on @cputype{x86_64} Fedora will change the @acronym{BLAS} used to
+multithreaded OpenBLAS.  A similar link works for most versions of the
+Goto @acronym{BLAS}, OpenBLAS and ACML (provided the appropriate
+@file{lib} directory is in the run-time library path or @command{ld.so}
+cache).  It can also be used for a single-library ATLAS, so on
+@cputype{x86_64} Fedora
+
+@example
+ln -s /usr/lib64/atlas/libsatlas.so.3 @var{R_HOME}/lib/libRblas.so
+ln -s /usr/lib64/atlas/libtatlas.so.3 @var{R_HOME}/lib/libRblas.so
+@end example
+
+@noindent
+can be used with its distributed ATLAS libraries.  (If you have the
+@samp{-devel} RPMS installed you can omit the @code{.0}/@code{.3}.)
+
+Note that rebuilding or symlinking @file{libRblas.so} will not suffice
+if the intention is to use a modified LAPACK contained in an external
+BLAS: the latter could even cause conflicts.
 
 
 @node LAPACK, Caveats, BLAS, Linear algebra
@@ -3962,7 +4024,7 @@ library path or @command{ld.so} cache).
 @cindex LAPACK library
 Provision is made for using an external LAPACK library, principally to
 cope with @acronym{BLAS} libraries which contain a copy of LAPACK (such
-as @code{sunperf} on Solaris, @code{Accelerate} on macOS and ACML and MKL
+as @code{sunperf} on Solaris, @code{Accelerate} on macOS and ATLAS and MKL
 on @cputype{ix86}/@cputype{x86_64} Linux).  At least LAPACK version 3.2
 is required.  This can only be done if @option{--with-blas} has been used.
 
@@ -3974,15 +4036,19 @@ the configuration option @option{--with-lapack}.  The default for
 @option{--with-lapack} is to check the @acronym{BLAS} library and then
 look for an external library @samp{-llapack}.  Sites searching for the
 fastest possible linear algebra may want to build a LAPACK library using
-the ATLAS-optimized subset of LAPACK.  To do so specify something like
+the ATLAS-optimized subset of LAPACK.  To do so using static libraries
+specify something like
 
 @example
 --with-lapack="-L/path/to/ATLAS/libs -llapack -lcblas"
 @end example
 
 @noindent
-since the ATLAS subset of LAPACK depends on @code{libcblas}.  A value
-for @option{--with-lapack} can be set @emph{via} the environment
+since the ATLAS subset of LAPACK depends on @code{libcblas}.
+Distribution-dependent alternatives include @option{-lptlapack}
+(threaded) or @option{-llapack-atlas} (to avoid a name clash).
+
+A value for @option{--with-lapack} can be set @emph{via} the environment
 variable
 @enindex LAPACK_LIBS
 @env{LAPACK_LIBS}, but this will only be used if @option{--with-lapack}
@@ -4014,7 +4080,7 @@ where it is used unnecessarily will simply irritate the @R{} helpers.
 Note too the comments about @acronym{ISO}/@acronym{IEC}@tie{}60559
 compliance in the section of external @acronym{BLAS}: these apply
 equally to an external LAPACK, and for example the Intel MKL
-documentation says
+documentation has said
 @quotation
 LAPACK routines assume that input matrices do not contain IEEE 754
 special values such as INF or NaN values. Using these special values may
@@ -4022,8 +4088,8 @@ cause LAPACK to return unexpected results or become unstable.
 @end quotation
 
 We rely on limited support in LAPACK for matrices with @math{2^{31}} or
-more elements: it is quite possible that an external LAPACK will not
-have that support.
+more elements: it is possible that an external LAPACK will not have that
+support.
 
 If you have a pure FORTRAN 77 compiler which cannot compile LAPACK it
 may be possible to use CLAPACK from
@@ -4694,16 +4760,12 @@ exception of the ATLAS @acronym{BLAS} libraries.
 
 The default optimization settings chosen for @code{CFLAGS} etc are
 conservative.  It is likely that using @option{-mtune} will result in
-significant performance improvements on recent CPUs (especially for
-@cputype{ix86}): one possibility is to add @option{-mtune=native} for
-the best possible performance on the machine on which @R{} is being
-installed: if the compilation is for a site-wide installation, it may
-still be desirable to use something like
-@option{-mtume=core2}.@footnote{or @code{-mtune=corei7} for Intel Core
-i3/15/17 with @command{gcc} @geq{} 4.6.0.} It is also possible to increase the
-optimization levels to @option{-O3}: however for many versions of the
-compilers this has caused problems in at least one @acronym{CRAN}
-package.
+significant performance improvements on recent CPUs: one possibility is
+to add @option{-mtune=native} for the best possible performance on the
+machine on which @R{} is being installed.  It is also possible to
+increase the optimization levels to @option{-O3}: however for many
+versions of the compilers this has caused problems in at least one
+@acronym{CRAN} package.
 
 For platforms with both 64- and 32-bit support, it is likely that
 
@@ -4714,7 +4776,7 @@ LDFLAGS="-L/usr/local/lib64 -L/usr/local/lib"
 @noindent
 is appropriate since most (but not all) software installs its 64-bit
 libraries in @file{/usr/local/lib64}.  To build a 32-bit version of @R{}
-on @cputype{x86_64} with Fedora 24 we used
+on @cputype{x86_64} with Fedora 26 we used
 
 @example
 CC="gcc -m32"
@@ -4740,7 +4802,7 @@ export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
 The 32-bit system @code{libcurl} did not work with the system CA
 certificates: this is worked around in @R{}'s test suite.
 
-64-bit versions of Linux are built with support for files > 2Gb, and
+64-bit versions on Linux are built with support for files > 2Gb, and
 32-bit versions will be if possible unless @option{--disable-largefile}
 is specified.
 
@@ -4763,6 +4825,22 @@ FFLAGS="-mminimal-toc -fno-optimize-sibling-calls -g -O2"
 @noindent
 the additional flags being needed to resolve problems linking against
 @file{libnmath.a} and when linking @R{} as a shared library.
+
+@c suggestion of https://gcc.gnu.org/wiki/FloatingPointMath
+The setting of the macro @samp{SAFE_FFLAGS} may need some help.  It
+should not need additional flags on platforms other than @cputype{68000}
+(not likely to be encountered) and @cputype{ix86} (and not
+@cputype{x86_64}).  When the FORTRAN compiler is GNU (@command{gfortran}
+or possibly @command{g77}) the flags 
+@example
+-msse2 -mfpmath=sse
+@end example
+@noindent
+are added: earlier versions of @R{} added @option{-ffloat-store} and
+this might still be needed if a @cputype{ix86} CPU is encountered
+without SSE2 support.  Note that it is a @emph{replacement} for
+@samp{FFLAGS}, so should include all the flags in that macro (except
+perhaps the optimization level).
 
 @menu
 * Clang::                       
@@ -4788,9 +4866,40 @@ project (@url{http://libcxx.llvm.org/}, Fedora RPM @code{libcxx-devel})
 has also been tested: for some @R{} packages only the variant using
 @code{libcxxabi} was successful.
 
-Earlier builds of @command{clang} have no OpenMP support, those of
-versions 3.7.0 or later may.@footnote{This also needs the OpenMP runtime
-which has sometimes been distributed separately.}
+Recent versions have (optional when built) OpenMP support.@footnote{This
+also needs the OpenMP runtime which has sometimes been distributed
+separately.}
+
+There is a project called @command{flang}
+(@uref{https://github.com/@/flang-compiler/@/flang})) to develop a
+Fortran compiler similar to clang but based on the Portland Group's front
+end.  This needs something like
+@example
+FC=/usr/local/flang/bin/flang
+F77=/usr/local/flang/bin/flang
+LDFLAGS="-L/usr/local/flang/lib -L/usr/local/lib64"
+@end example
+@noindent
+and in earlier versions of @R{} it may be necessary to set
+@example
+FCPICFLAGS=-fpic
+FPICFLAGS=-fpic
+@end example
+
+Note that @command{flang} accepts all the flags which @command{clang}
+does (the driver is a modified version of @command{clang}, and
+@command{flang} is a symbolic link to @command{clang}), but does not
+implement all of them for Fortran compilation: it also accepts most
+PGI-style flags such as @option{-mp} for OpenMP.  It currently produces
+few diagnostics even with @option{-Wall -pedantic}.
+
+@command{flang}'s Fortran runtime is compiled against OpenMP and it
+seems this conflicts with using OpenMP in @R{}.  So it may be necessary
+to disable the latter by configuring using @option{--without-openmp}.
+
+It is not clear what architectures @command{flang} intends to support:
+experiments were done on @cputype{x86_64}.
+
 
 @node Intel compilers,  , Clang, Linux
 @subsection Intel compilers
@@ -4843,6 +4952,13 @@ CXXFLAGS="$fast"
 FC=$F77
 FCFLAGS=$F77FLAGS
 @end example
+
+It is possible that 32-builds need to force the use of SSE2 instructions
+in @code{SAFE_FFLAGS}, e.g.@: by
+@example
+SAFE_FFLAGS=-axsse2
+@end example
+
 
 @node macOS, Solaris, Linux, Platform notes
 @section macOS
@@ -4997,17 +5113,26 @@ or appending that variable to the @command{configure} command.
 
 @cindex BLAS library
 @cindex LAPACK library
-The @code{Accelerate} library can be used @emph{via} the configuration options
+The @code{Accelerate}
+library@footnote{@uref{https://developer.apple.com/@/documentation/@/accelerate}.}
+can be used @emph{via} the configuration options
 
 @example
---with-blas="-framework Accelerate" --with-lapack
+--with-blas="-framework Accelerate"
 @end example
 
 @noindent
 to provide potentially higher-performance versions of the @acronym{BLAS}
 and LAPACK routines.@footnote{It was reported that for some non-Apple
 toolchains @code{CPPFLAGS} needed to contain @code{-D__ACCELERATE__}:
-not needed for @command{clang} 4.0.0, though.}
+not needed for @command{clang} 4.0.0, though.}  This also includes a
+full LAPACK which can be used @emph{via} @option{--with-lapack}:
+however, the version of LAPACK it contains is currently seriously old
+(@samp{3.2.1} in macOS 10.13.2).
+
+@c https://developer.apple.com/documentation/accelerate/veclib
+In recent versions of macOS, threading in Accelerate is controlled by
+`Grand Central Dispatch' and is said not to need user control.
 
 Looking at the top of
 @file{/Library/Frameworks/R.framework/Resources/etc/Makeconf}
@@ -5087,10 +5212,6 @@ with
 --with-tcl-config=/Library/Frameworks/Tcl.framework/tclConfig.sh 
 --with-tk-config=/Library/Frameworks/Tk.framework/tkConfig.sh
 @end example
-
-@noindent
-(for the versions bundled with macOS, use paths starting with
-@file{/System/Library}).
 
 If you need to find out which distribution of Tk is in use at run time,
 use
@@ -5691,12 +5812,9 @@ build will use these options.
 It seems that @command{gcc}@tie{}3.4.x and later on @cputype{ix86} Linux
 defeat attempts by the LAPACK code to avoid computations entirely in
 extended-precision registers, so file @file{src/modules/lapack/dlamc.f}
-may need to be compiled without optimization.  Set the configure
-variable @env{SAFE_FFLAGS} to the flags to be used for this file.  If
-configure detects @acronym{GNU} FORTRAN it adds flag
-@option{-ffloat-store} to @env{FFLAGS}.  (Other settings are needed when
-using @command{icc} on @cputype{ix86} Linux, for example.  Using
-@option{-mpc64} is preferable on more recent GCC compilers.)
+may need to be compiled without optimization or with additional flags.
+Set the configure variable @env{SAFE_FFLAGS} to the flags to be used for
+this file.
 
 If you do manage to get @R{} running on a new platform please let us
 know about it so we can modify the configuration procedures to include

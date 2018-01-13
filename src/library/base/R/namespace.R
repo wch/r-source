@@ -1528,10 +1528,14 @@ registerS3methods <- function(info, package, env)
         if(!is.null(e <- table[[nm]])) {
             current <- environmentName(environment(e))
             overwrite <<- rbind(overwrite, c(as.vector(nm), current))
+        ## <FIXME>
+        ## This should no longer be necessary when S3 methods from base
+        ## get registered.
         } else if(identical(defenv, .BaseNamespaceEnv) &&
                   exists(nm, .BaseNamespaceEnv,
                          mode = "function", inherits = FALSE)) {
             overwrite <<- rbind(overwrite, c(as.vector(nm), "base"))
+        ## </FIXME>
         }
 	assignWrapped(nm, method, home = envir, envir = table)
     }

@@ -1627,20 +1627,15 @@ function()
 function()
 {
     mdb <- .make_S3_methods_table_for_base()
-    dg <- deparse(mdb[, 1L])
-    ng <- length(dg) - 1L
-    dc <- deparse(mdb[, 2L])
-    nc <- length(dc) - 1L
-    c("cbind(generic =",
-      paste0(c("      ", rep.int("        ", ng)),
-             dg,
-             c(rep.int("", ng), ",")),
-      "      class =",
-      paste0(c("      ", rep.int("        ", nc)),
-             dc,
-             c(rep.int("", nc), ")")))
+    n <- nrow(mdb)
+    c(sprintf("%s\"%s\", \"%s\"%s",
+              c("matrix(c(", rep.int("         ", n - 1L)),
+              mdb[, 1L],
+              mdb[, 2L],
+              c(rep.int(",", n - 1L), "),")),
+      "       ncol = 2L, byrow = TRUE,",
+      "       dimnames = list(NULL, c(\"generic\", \"class\")))")
 }
-
 
 ### ** .package_apply
 
@@ -1817,8 +1812,8 @@ function(x, dfile)
         ## content.
         ## Cf. tools::showNonASCII():
         asc <- iconv(x, "latin1", "ASCII")
-        ind <- is.na(asc) | (asc != x)
-        if(any(ind)) {
+        ## fields might have been NA to start with, so use identical.
+        if(!identical(asc, x)) {
             warning(gettext("Unknown encoding with non-ASCII data: converting to ASCII"),
                     domain = NA)
             x[ind] <- iconv(x[ind], "latin1", "ASCII", sub = "byte")

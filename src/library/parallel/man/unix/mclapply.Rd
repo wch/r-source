@@ -1,6 +1,6 @@
 % File src/library/parallel/man/mclapply.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2009-2017 R Core Team
+% Copyright 2009-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{mclapply}
@@ -82,8 +82,8 @@ mcMap(f, ...)
 
 \details{
   \code{mclapply} is a parallelized version of \code{\link{lapply}},
-  provided \code{mc.cores > 1}: for \code{mc.cores == 1} it simply calls
-  \code{lapply}.
+  provided \code{mc.cores > 1}: for \code{mc.cores == 1} (and the
+  \code{affinity.list} is \code{NULL}) it simply calls \code{lapply}.
 
   By default (\code{mc.preschedule = TRUE}) the input \code{X} is split
   into as many parts as there are cores (currently the values are spread

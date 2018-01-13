@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-2010 The R Core Team
+ *  Copyright (C) 2001-2018 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,6 +15,11 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, a copy is available at
  *  https://www.R-project.org/Licenses/
+ */
+
+/* This appears not to currently be needed: in 2018-01 no Fortran I/O
+ * is done.  But left as future-proofing and as an example (mentioned
+ * in 'Writing R Extensions').
  */
 
 #ifdef HAVE_CONFIG_H

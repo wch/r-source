@@ -121,7 +121,7 @@ docs: html
 	@$(SED) -f $(srcdir)/quot.sed $@.tmp > tmp/$*.html
 	@rm -f $@.tmp
 	$(EBOOK) tmp/$*.html $@ $(EBOOK_OPTS) --authors "R Core Team"
-	@rm -r tmp
+	@rm -R tmp
 
 .texi.mobi:
 	@mkdir -p tmp
@@ -129,17 +129,17 @@ docs: html
 	@$(SED) -f $(srcdir)/quot.sed $@.tmp > tmp/$*.html
 	@rm -f $@.tmp
 	$(EBOOK) tmp/$*.html $@ $(EBOOK_OPTS) --authors "R Core Team"
-	@rm -r tmp
+	@rm -R tmp
 
 R-intro.epub: R-intro.texi
 	@mkdir -p tmp
-	@cp -r images tmp
+	@cp -R images tmp
 	@$(TEXI2HTML) --no-headers -I$(srcdir) $< -o $@.tmp
 	@$(SED) -f $(srcdir)/quot.sed $@.tmp > tmp/$*.html
 	@rm -f $@.tmp
 	$(EBOOK) tmp/$*.html $@ $(EBOOK_OPTS) --authors \
   "W.N. Venables, D.M. Smith, R Core Team"
-	@rm -r tmp
+	@rm -R tmp
 
 R-intro.mobi: R-intro.texi
 	@mkdir -p tmp
@@ -149,7 +149,7 @@ R-intro.mobi: R-intro.texi
 	@rm -f $@.tmp
 	$(EBOOK) tmp/$*.html $@ $(EBOOK_OPTS) --authors \
   "W.N. Venables, D.M. Smith, R Core Team"
-	@rm -r tmp
+	@rm -R tmp
 
 R-admin.html: $(srcdir)/R-admin.texi
 	@if test -z "$(MAKEINFO)"; then \
@@ -368,7 +368,7 @@ uninstall:
 	  $(MAKE) uninstall-info; \
 	fi
 	@$(ECHO) "uninstalling $(subdir) ..."
-	@rm -rf "$(DESTDIR)$(rdocdir)/manual"
+	@rm -Rf "$(DESTDIR)$(rdocdir)/manual"
 uninstall-info:
 	@$(ECHO) "uninstalling R info pages ..."
 	@for f in $(OBJECTS_INFO); do \
@@ -385,7 +385,7 @@ uninstall-pdf:
 mostlyclean: clean
 clean:
 	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
-	  rm -rf $(INSTFILES) images; \
+	  rm -Rf $(INSTFILES) images; \
 	fi
 	-@rm -f *.aux *.cp *.cps *.dvi *.en *.ens *.fn *.fns *.html *.info* \
 	  *.ky *.kys *.log *.out *.pdf *.pg *.pgs *.ps *.ps-2 *.tmp \

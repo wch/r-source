@@ -1487,7 +1487,7 @@ static SEXP listRemove(SEXP x, SEXP s, int ind)
 	SET_ATTRIB(val, ATTRIB(x));
 	IS_S4_OBJECT(x) ?  SET_S4_OBJECT(val) : UNSET_S4_OBJECT(val);
 	SET_OBJECT(val, OBJECT(x));
-	SET_NAMED(val, NAMED(x));
+	RAISE_NAMED(val, NAMED(x));
     }
     UNPROTECT(2);
     vmaxset(vmax);
@@ -1530,19 +1530,20 @@ int R_DispatchOrEvalSP(SEXP call, SEXP op, const char *generic, SEXP args,
     if (args != R_NilValue && CAR(args) != R_DotsSymbol) {
 	SEXP x = eval(CAR(args), rho);
 	PROTECT(x);
+	INCREMENT_LINKS(x);
 	if (! OBJECT(x)) {
 	    *ans = CONS_NR(x, evalListKeepMissing(CDR(args), rho));
+	    DECREMENT_LINKS(x);
 	    UNPROTECT(1);
 	    return FALSE;
 	}
-	prom = mkPROMISE(CAR(args), R_GlobalEnv);
-	SET_PRVALUE(prom, x);
+	prom = R_mkEVPROMISE_NR(CAR(args), x);
 	args = CONS(prom, CDR(args));
 	UNPROTECT(1);
     }
     PROTECT(args);
     int disp = DispatchOrEval(call, op, generic, args, rho, ans, 0, 0);
-    if (prom) DECREMENT_REFCNT(PRVALUE(prom));
+    if (prom) DECREMENT_LINKS(PRVALUE(prom));
     UNPROTECT(1);
     return disp;
 }
@@ -1595,7 +1596,6 @@ SEXP attribute_hidden do_subassign_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* duplicate it so that only the local version is mutated. */
     /* This will duplicate more often than necessary, but saves */
     /* over always duplicating. */
-    /* Shouldn't x be protected?  It is (as args is)! */
 
     if (MAYBE_SHARED(CAR(args)))
 	x = SETCAR(args, shallow_duplicate(CAR(args)));
@@ -1669,7 +1669,7 @@ SEXP attribute_hidden do_subassign_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* in a naked fashion. */
 
     UNPROTECT(2);
-    SET_NAMED(x, 0);
+    SETTER_CLEAR_NAMED(x);
     if(S4) SET_S4_OBJECT(x);
     return x;
 }
@@ -2056,7 +2056,7 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     else xtop = x;
 
     UNPROTECT(3); /* xup, x, args */
-    SET_NAMED(xtop, 0);
+    SETTER_CLEAR_NAMED(xtop);
     if(S4) SET_S4_OBJECT(xtop);
     return xtop;
 }
@@ -2127,7 +2127,7 @@ SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val)
 		SET_ATTRIB(CDR(x), ATTRIB(x));
 		IS_S4_OBJECT(x) ?  SET_S4_OBJECT(CDR(x)) : UNSET_S4_OBJECT(CDR(x));
 		SET_OBJECT(CDR(x), OBJECT(x));
-		SET_NAMED(CDR(x), NAMED(x));
+		RAISE_NAMED(CDR(x), NAMED(x));
 		x = CDR(x);
 	    }
 	    else
@@ -2256,7 +2256,7 @@ SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val)
     UNPROTECT(2);
     if(xS4 != R_NilValue)
 	x = xS4; /* x was an env't, the data slot of xS4 */
-    SET_NAMED(x, 0);
+    SETTER_CLEAR_NAMED(x);
     if(S4) SET_S4_OBJECT(x);
     return x;
 }
