@@ -3771,7 +3771,7 @@ used in @R{} packages.  Be careful when using pre-built versions of
 ATLAS static libraries (they seem to work on @cputype{ix86} platforms,
 but not always on @cputype{x86_64} ones).
 
-ATLAS contains replacments for a small number of LAPACK routines, but
+ATLAS contains replacements for a small number of LAPACK routines, but
 can be built to merge these with LAPACK sources to include a full LAPACK
 library.
 
@@ -3940,7 +3940,7 @@ worked with the Intel 2015.3 compilers on Centos 6.
 @subsubsection ACML
 
 The AMD Core Math Library (ACML) is now end-of-life, although downloads
-remained availble when checked in January 2018.
+remained available when checked in January 2018.
 @c https://developer.amd.com/tools-and-sdks/archive/acml-downloads-resources/
 
 @node Shared BLAS,  , ACML, BLAS
