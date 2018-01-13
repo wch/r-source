@@ -38,7 +38,8 @@ export("?", .DollarNames, .S3methods, .romans, CRAN.packages, Rprof,
        setRepositories, stack, str, strcapture, strOptions, summaryRprof,
        suppressForeignCheck, tail, tail.matrix, tar, timestamp,
        toBibtex, toLatex, type.convert, undebugcall, unstack, untar, unzip,
-       update.packageStatus, update.packages, upgrade, url.show, vi,
+       ## update.packageStatus,
+       update.packages, upgrade, url.show, vi,
        vignette, warnErrList, write.csv, write.csv2, write.socket, write.table,
        xedit, xemacs, zip)
 
@@ -124,8 +125,9 @@ S3method(unlist, relistable)
 S3method(unstack, data.frame)
 S3method(unstack, default)
 S3method(upgrade, packageStatus)
-## can't register update.packageStatus as update is in stats
-## and would create a cycle, i.e., can NOT use anything from stats
+## Cannot register update.packageStatus as update is in stats and would
+## create a cycle, i.e., can NOT use anything from stats.
+## Hence (at least for now) register in stats.
 
 export("bibentry")
 S3method("$", "bibentry")
