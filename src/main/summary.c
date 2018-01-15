@@ -397,6 +397,7 @@ SEXP fixup_NaRm(SEXP args)
 SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
+    SEXP ans;
     if(PRIMVAL(op) == 1) { /* mean */
 	LDOUBLE s = 0., si = 0., t = 0., ti = 0.;
 	R_xlen_t i, n = XLENGTH(CAR(args));
@@ -450,7 +451,7 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 	return ans;
     }
 
-    SEXP ans, call2;
+    SEXP call2;
     /* match to foo(..., na.rm=FALSE) */
     PROTECT(args = fixup_NaRm(args));
     PROTECT(call2 = shallow_duplicate(call));
