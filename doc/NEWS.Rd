@@ -17,9 +17,6 @@
       \item The version of LAPACK included in the sources has been
       updated to 3.8.0 (for the routines used by \R, a very minor bug-fix
       change).
-
-      \item Non-UTF-8 multibyte character handling fixed more
-      permanently (\PR{16732}).
     }
   }
 
@@ -48,6 +45,13 @@
       \item \command{R CMD build} checks for GNU \command{cp} rather
       than assuming Linux has it.  (\PR{17370} says \sQuote{Alpine
 	Linux} does not.)
+
+      \item Non-UTF-8 multibyte character handling fixed more
+      permanently (\PR{16732}).
+
+      \item \code{rf()} and \code{rbeta()} now also work correctly when
+      \code{ncp} is not scalar, notably when (partly) \code{NA}.
+      (\PR{17375})
     }
   }
 }
