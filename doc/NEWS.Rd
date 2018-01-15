@@ -49,6 +49,9 @@
       \item Non-UTF-8 multibyte character handling fixed more
       permanently (\PR{16732}).
 
+      \item \code{sum(<large ints>, <stuff>)} is more consistent.
+      (\PR{17372})
+
       \item \code{rf()} and \code{rbeta()} now also work correctly when
       \code{ncp} is not scalar, notably when (partly) \code{NA}.
       (\PR{17375})
