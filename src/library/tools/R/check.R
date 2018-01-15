@@ -4221,8 +4221,10 @@ add_dummies <- function(dir, Log)
                              ## Solaris warns on this next one. Also clang
                              ": warning: .* \\[-Wint-conversion\\]",
                              ": warning: .* \\[-Wstringop", # mainly gcc8
-                             ": warning: .* \\[-Wclass-memaccess\\]" # gcc8
-                             )
+                             ": warning: .* \\[-Wclass-memaccess\\]", # gcc8
+                             ## Fatal on clang and Solaris ODS
+                             ": warning: .* with a value, in function returning void"
+                            )
 
                 ## clang warnings
                 warn_re <- c(warn_re,
