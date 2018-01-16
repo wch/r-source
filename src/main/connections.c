@@ -576,7 +576,13 @@ static Rboolean file_open(Rconnection con)
     fp = R_fopen(name, con->mode);
     } else {  /* use file("stdin") to refer to the file and not the console */
 #ifdef HAVE_FDOPEN
-        fp = fdopen(dup(0), con->mode);
+	int dstdin = dup(0);
+# ifdef Win32
+	if (strchr(con->mode, 'b'))
+	    /* fdopen won't set dstdin to binary mode */
+	    setmode(dstdin, _O_BINARY);
+# endif
+        fp = fdopen(dstdin, con->mode);
 #else
 	warning(_("cannot open file '%s': %s"), name,
 		"fdopen is not supported on this platform");
