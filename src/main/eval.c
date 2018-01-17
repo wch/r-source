@@ -627,9 +627,9 @@ SEXP eval(SEXP e, SEXP rho)
 	if (e == R_DotsSymbol)
 	    error(_("'...' used in an incorrect context"));
 	if( DDVAL(e) )
-		tmp = ddfindVar(e,rho);
+	    tmp = ddfindVar(e,rho);
 	else
-		tmp = findVar(e, rho);
+	    tmp = findVar(e, rho);
 	if (tmp == R_UnboundValue)
 	    error(_("object '%s' not found"), EncodeChar(PRINTNAME(e)));
 	/* if ..d is missing then ddfindVar will signal */

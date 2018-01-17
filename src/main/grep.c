@@ -2846,6 +2846,7 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
+// .Internal(regexec(pattern, text, ignore.case, fixed, useBytes)) :
 SEXP attribute_hidden do_regexec(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP pat, text, ans, matchpos, matchlen, itype;

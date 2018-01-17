@@ -817,12 +817,11 @@ void NORET errorcall_cpy(SEXP call, const char *format, ...)
     errorcall(call, "%s", buf);
 }
 
+// geterrmessage(): Return (the global) 'errbuf' as R string
 SEXP attribute_hidden do_geterrmessage(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP res;
-
     checkArity(op, args);
-    PROTECT(res = allocVector(STRSXP, 1));
+    SEXP res = PROTECT(allocVector(STRSXP, 1));
     SET_STRING_ELT(res, 0, mkChar(errbuf));
     UNPROTECT(1);
     return res;

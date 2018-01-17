@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995-1996 Robert Gentleman and Ross Ihaka
  *  Copyright (C) 1997-2017 The R Core Team
+ *  Copyright (C) 1995-1996 Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -174,7 +174,7 @@ static void initLoadedDLL()
        descriptor for each DLL loaded (it may load further dynamically
        linked libraries), so we do not want to get close to the fd limit
        (which may be as low as 256).
-    
+
        When R_MAX_NUM_DLLS environment variable is set and is in range
        [100,1000] and the fd limit is sufficient or can be increased,
        this becomes the maximum number of DLLs. Otherwise, R fails to start.
@@ -184,7 +184,7 @@ static void initLoadedDLL()
        is too small. The goal for maximum number of DLLs is currently 614.
 
        The limit receives increased attention with 'workflow' documents
-       which load increasingly more packages, hitting the fd limitof 256
+       which load increasingly more packages, hitting the fd limit of 256
        on macOS systems.
     */
 

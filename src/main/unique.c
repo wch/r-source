@@ -1018,7 +1018,7 @@ SEXP match5(SEXP itable, SEXP ix, int nmatch, SEXP incomp, SEXP env)
     }
     UNPROTECT(nprot);
     return ans;
-}
+} // end{ match5 }
 
 SEXP matchE(SEXP itable, SEXP ix, int nmatch, SEXP env)
 {
