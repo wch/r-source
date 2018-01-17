@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2018-01-07 r74096) -- "Unsuffered Consequences"
+R Under development (unstable) (2018-01-17 r74127) -- "Unsuffered Consequences"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -407,11 +407,8 @@ new> ## End(Don't show)
 new> 
 new> 
 new> 
-new("mp",
-.Data = list(new("mp1",
-prec = integer(0), d = integer(0)), 
-    new("mp1",
-prec = 1L, d = 3:5)))
+new("mp", .Data = list(new("mp1", prec = integer(0), d = integer(0)), 
+    new("mp1", prec = 1L, d = 3:5)))
 Loading required package: Matrix
 Trying some Matrix objects, too
 
@@ -560,39 +557,33 @@ Matrix+           is(Matrix(FALSE, 1,1), "sparseMatrix"))
 +     }
 +     cat("--=--=--=--=--\n")
 + }
-A: new("dgCMatrix",
-i = c(0L, 3L, 4L, 5L, 2L, 6L, 7L), p = c(0L, 
+A: new("dgCMatrix", i = c(0L, 3L, 4L, 5L, 2L, 6L, 7L), p = c(0L, 
 0L, 1L, 1L, 1L, 1L, 2L, 3L, 4L, 6L, 7L), Dim = c(8L, 10L), Dimnames = list(
     NULL, NULL), x = c(7, 21, 28, 35, 14, 42, 49), factors = list())
  --> checking list(*): Ok
 --=--=--=--=--
-A.: new("dgCMatrix",
-i = c(0L, 3L, 4L, 5L, 2L, 6L, 7L), p = c(0L, 
+A.: new("dgCMatrix", i = c(0L, 3L, 4L, 5L, 2L, 6L, 7L), p = c(0L, 
 0L, 1L, 1L, 1L, 1L, 2L, 3L, 4L, 6L, 7L), Dim = c(8L, 10L), Dimnames = list(
     NULL, NULL), x = c(2, 21, 28, 35, 14, 42, 49), factors = list())
  --> checking list(*): Ok
 --=--=--=--=--
-A1: new("dgCMatrix",
-i = c(0L, 3L, 4L, 5L, 2L, 6L, 7L), p = c(0L, 
+A1: new("dgCMatrix", i = c(0L, 3L, 4L, 5L, 2L, 6L, 7L), p = c(0L, 
 0L, 1L, 1L, 1L, 1L, 2L, 3L, 4L, 6L, 7L), Dim = c(8L, 10L), Dimnames = list(
     NULL, NULL), x = c(7, 21, 28, 35, 14, 42, 49), factors = list())
  --> checking list(*): Ok
 --=--=--=--=--
-AA: new("dgCMatrix",
-i = c(0L, 3L, 4L, 5L, 2L, 6L, 7L), p = c(0L, 
+AA: new("dgCMatrix", i = c(0L, 3L, 4L, 5L, 2L, 6L, 7L), p = c(0L, 
 0L, 1L, 1L, 1L, 1L, 2L, 3L, 4L, 6L, 7L, 7L, 7L, 7L, 7L, 7L, 7L, 
 7L, 7L, 7L, 7L), Dim = c(10L, 20L), Dimnames = list(NULL, NULL), 
     x = c(7, 21, 28, 35, 14, 42, 49), factors = list())
  --> checking list(*): Ok
 --=--=--=--=--
-Aa: new("dgCMatrix",
-i = c(0L, 3L, 4L, 5L, 2L, 6L, 7L), p = c(0L, 
+Aa: new("dgCMatrix", i = c(0L, 3L, 4L, 5L, 2L, 6L, 7L), p = c(0L, 
 0L, 1L, 1L, 1L, 1L, 2L, 3L, 4L, 6L, 7L), Dim = c(8L, 10L), Dimnames = list(
     NULL, NULL), x = c(9, 21, 28, 35, 14, 42, 49), factors = list())
  --> checking list(*): Ok
 --=--=--=--=--
-As: new("dsyMatrix",
-x = c(2, 1, 1, 2), Dim = c(2L, 2L), Dimnames = list(
+As: new("dsyMatrix", x = c(2, 1, 1, 2), Dim = c(2L, 2L), Dimnames = list(
     NULL, NULL), uplo = "U", factors = list())
  --> checking list(*): Ok
 --=--=--=--=--
@@ -698,13 +689,11 @@ as.pairlist(alist(... = , file = NULL, append = FALSE, type = quote(c("output",
     "message")), split = FALSE))
 __ not parse()able __: hasMissObj(.) is true 
 --=--=--=--=--
-D5.: new("ddiMatrix",
-diag = "N", Dim = c(5L, 5L), Dimnames = list(
+D5.: new("ddiMatrix", diag = "N", Dim = c(5L, 5L), Dimnames = list(
     NULL, NULL), x = c(5, 4, 3, 2, 1))
  --> checking list(*): Ok
 --=--=--=--=--
-D5N: new("ddiMatrix",
-diag = "N", Dim = c(5L, 5L), Dimnames = list(
+D5N: new("ddiMatrix", diag = "N", Dim = c(5L, 5L), Dimnames = list(
     NULL, NULL), x = c(5, 4, 3, 2, NA))
  --> checking list(*): Ok
 --=--=--=--=--
@@ -718,8 +707,7 @@ checking formals(.):
 as.pairlist(alist(... = ))
 __ not parse()able __: hasMissObj(.) is true 
 --=--=--=--=--
-I3: new("ddiMatrix",
-diag = "U", Dim = c(3L, 3L), Dimnames = list(
+I3: new("ddiMatrix", diag = "U", Dim = c(3L, 3L), Dimnames = list(
     NULL, NULL), x = numeric(0))
  --> checking list(*): Ok
 --=--=--=--=--
@@ -747,8 +735,7 @@ L6a: list(L = structure(6:5, .Names = c("f", "e"), myDoc = "info"))
 LNA: structure(list(1, 2, 99), .Names = c("A", "NA", NA))
  --> checking list(*): Ok
 --=--=--=--=--
-M: new("ltCMatrix",
-i = c(0L, 0L, 1L), p = c(0L, 0L, 1L, 3L), Dim = c(3L, 
+M: new("ltCMatrix", i = c(0L, 0L, 1L), p = c(0L, 0L, 1L, 3L), Dim = c(3L, 
 3L), Dimnames = list(NULL, NULL), x = c(TRUE, TRUE, TRUE), uplo = "U", 
     diag = "N")
  --> checking list(*): Ok
@@ -893,8 +880,7 @@ __ not parse()able __: hasMissObj(.) is true
 dn: list(c("A", "B", "C"), c("a", "b", "c", "d", "e"))
  --> checking list(*): Ok
 --=--=--=--=--
-e: new("ngCMatrix",
-i = integer(0), p = c(0L, 0L, 0L, 0L, 0L, 0L, 
+e: new("ngCMatrix", i = integer(0), p = c(0L, 0L, 0L, 0L, 0L, 0L, 
 0L), Dim = c(4L, 6L), Dimnames = list(NULL, NULL), factors = list())
  --> checking list(*): Ok
 --=--=--=--=--
@@ -1055,21 +1041,16 @@ l3: structure(c(FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, TRUE, TRUE,
 FALSE), .Dim = c(3L, 3L))
  --> checking list(*): Ok
 --=--=--=--=--
-m: new("dgCMatrix",
-i = c(2L, 0L, 1L, 2L, 0L, 1L), p = c(0L, 1L, 
+m: new("dgCMatrix", i = c(2L, 0L, 1L, 2L, 0L, 1L), p = c(0L, 1L, 
 2L, 4L, 4L, 6L), Dim = c(3L, 5L), Dimnames = list(c("A", "B", 
 "C"), c("a", "b", "c", "d", "e")), x = c(1, 2, 4, 3, 6, 5), factors = list())
  --> checking list(*): Ok
 --=--=--=--=--
-m0: new("mp",
-.Data = list())
+m0: new("mp", .Data = list())
  --> checking list(*): Ok
 --=--=--=--=--
-m1: new("mp",
-.Data = list(new("mp1",
-prec = integer(0), d = integer(0)), 
-    new("mp1",
-prec = 1L, d = 3:5)))
+m1: new("mp", .Data = list(new("mp1", prec = integer(0), d = integer(0)), 
+    new("mp1", prec = 1L, d = 3:5)))
  --> checking list(*): Ok
 --=--=--=--=--
 missL: structure(list(, , ), .Names = c("", NA, "c"))
@@ -1089,13 +1070,11 @@ checking formals(.):
 pairlist(x = 1, callme = quote(pi))
  --> checking list(*): Ok
 --=--=--=--=--
-n: new("ngCMatrix",
-i = 5:0, p = c(0L, 0L, 1L, 2L, 3L, 4L, 5L, 6L
+n: new("ngCMatrix", i = 5:0, p = c(0L, 0L, 1L, 2L, 3L, 4L, 5L, 6L
 ), Dim = 6:7, Dimnames = list(NULL, NULL), factors = list())
  --> checking list(*): Ok
 --=--=--=--=--
-nA: new("ngCMatrix",
-i = c(0L, 3L, 4L, 5L, 2L, 6L, 7L), p = c(0L, 
+nA: new("ngCMatrix", i = c(0L, 3L, 4L, 5L, 2L, 6L, 7L), p = c(0L, 
 0L, 1L, 1L, 1L, 1L, 2L, 3L, 4L, 6L, 7L), Dim = c(8L, 10L), Dimnames = list(
     NULL, NULL), factors = list())
  --> checking list(*): Ok
@@ -1169,8 +1148,7 @@ r2: list(value = quote({
 }), visible = TRUE)
  --> checking list(*): Ok
 --=--=--=--=--
-sA: new("dsCMatrix",
-i = c(0L, 3L, 4L, 5L, 2L, 6L, 7L), p = c(0L, 
+sA: new("dsCMatrix", i = c(0L, 3L, 4L, 5L, 2L, 6L, 7L), p = c(0L, 
 0L, 1L, 1L, 1L, 1L, 2L, 3L, 4L, 6L, 7L), Dim = c(10L, 10L), Dimnames = list(
     NULL, NULL), x = c(7, 21, 28, 35, 14, 42, 49), uplo = "U", 
     factors = list())
@@ -1180,8 +1158,7 @@ sii: structure(4:7, foo = list(B = "bar", G = "grizzly", vec = structure(1:2, .N
 "b")), v2 = structure(5:6, .Names = c("e", "f")), v0 = structure(logical(0), .Names = character(0))))
  --> checking list(*): Ok
 --=--=--=--=--
-sy: new("dsCMatrix",
-i = c(1L, 3L, 4L, 2L, 3L), p = c(0L, 0L, 0L, 
+sy: new("dsCMatrix", i = c(1L, 3L, 4L, 2L, 3L), p = c(0L, 0L, 0L, 
 0L, 1L, 3L, 4L, 5L), Dim = c(7L, 7L), Dimnames = list(NULL, NULL), 
     x = c(1, 4, 5, 3, 2), uplo = "U", factors = list())
  --> checking list(*): Ok
@@ -1190,8 +1167,7 @@ t1:  --> checking list(*): Ok
 --=--=--=--=--
 t2:  --> checking list(*): Ok
 --=--=--=--=--
-tA: new("dtCMatrix",
-i = c(0L, 3L, 4L, 5L, 2L, 6L, 7L), p = c(0L, 
+tA: new("dtCMatrix", i = c(0L, 3L, 4L, 5L, 2L, 6L, 7L), p = c(0L, 
 0L, 1L, 1L, 1L, 1L, 2L, 3L, 4L, 6L, 7L), Dim = c(10L, 10L), Dimnames = list(
     NULL, NULL), x = c(7, 21, 28, 35, 14, 42, 49), uplo = "U", 
     diag = "N")

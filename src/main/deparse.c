@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2017  The R Core Team
+ *  Copyright (C) 1997--2018  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -845,7 +845,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	if(TYPEOF(cl_def) == CHARSXP) { // regular S4 objects
 	    print2buff("new(\"", d);
 	    print2buff(translateChar(cl_def), d);
-	    print2buff("\",\n", d);
+	    print2buff("\", ", d);
 	    SEXP slotNms; // ---- slotNms := methods::.slotNames(s)  ---------
 	    // computed alternatively, slotNms := names(getClassDef(class)@slots) :
 	    static SEXP R_getClassDef = NULL, R_slots = NULL;
