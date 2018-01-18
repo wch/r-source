@@ -2003,7 +2003,8 @@ static SEXP assignCall(SEXP op, SEXP symbol, SEXP fun,
 }
 
 
-static R_INLINE Rboolean asLogicalNoNA(SEXP s, SEXP call)
+/* rho only needed for _R_CHECK_LENGTH_1_CONDITION_=package:name */
+static R_INLINE Rboolean asLogicalNoNA(SEXP s, SEXP call, SEXP rho)
 {
     Rboolean cond = NA_LOGICAL;
 
@@ -2023,11 +2024,33 @@ static R_INLINE Rboolean asLogicalNoNA(SEXP s, SEXP call)
     if (len > 1) {
 	PROTECT(s);	 /* needed as per PR#15990.  call gets protected by warningcall() */
 	char *check = getenv("_R_CHECK_LENGTH_1_CONDITION_");
-	if((check != NULL) ? StringTrue(check) : FALSE) // warn by default
+	const void *vmax = vmaxget();
+	Rboolean err = check && StringTrue(check); /* warn by default */
+	if (!err && check) {
+	    /* err when the condition is evaluated in given package */
+	    const char *pprefix  = "package:";
+	    size_t lprefix = strlen(pprefix);
+	    if (!strncmp(pprefix, check, lprefix)) {
+		/* check starts with "package:" */
+		SEXP spkg = R_NilValue;
+		for(; spkg == R_NilValue && rho != R_EmptyEnv; rho = ENCLOS(rho))
+		    if (R_IsPackageEnv(rho))
+			spkg = R_PackageEnvName(rho);
+		    else if (R_IsNamespaceEnv(rho))
+			spkg = R_NamespaceEnvSpec(rho);
+		if (spkg != R_NilValue) {
+		    const char *pkgname = translateChar(STRING_ELT(spkg, 0));
+		    if (!strcmp(check + lprefix, pkgname))
+			err = TRUE;
+		}
+	    }
+	}
+	if (err)
 	    errorcall(call, _("the condition has length > 1"));
         else
 	    warningcall(call,
 		    _("the condition has length > 1 and only the first element will be used"));
+	vmaxset(vmax);
 	UNPROTECT(1);
     }
     if (len > 0) {
@@ -2077,7 +2100,7 @@ SEXP attribute_hidden do_if(SEXP call, SEXP op, SEXP args, SEXP rho)
     int vis=0;
 
     PROTECT(Cond = eval(CAR(args), rho));
-    if (asLogicalNoNA(Cond, call))
+    if (asLogicalNoNA(Cond, call, rho))
 	Stmt = CAR(CDR(args));
     else {
 	if (length(args) > 2)
@@ -2281,7 +2304,7 @@ SEXP attribute_hidden do_while(SEXP call, SEXP op, SEXP args, SEXP rho)
     begincontext(&cntxt, CTXT_LOOP, R_NilValue, rho, R_BaseEnv, R_NilValue,
 		 R_NilValue);
     if (SETJMP(cntxt.cjmpbuf) != CTXT_BREAK) {
-	while (asLogicalNoNA(eval(CAR(args), rho), call)) {
+	while (asLogicalNoNA(eval(CAR(args), rho), call, rho)) {
 	    if (RDEBUG(rho) && !bgn && !R_GlobalContext->browserfinish) {
 		SrcrefPrompt("debug", R_Srcref);
 		PrintValue(body);
@@ -5898,8 +5921,9 @@ static R_INLINE SEXP SymbolValue(SEXP sym)
    true BUILTIN from a .Internal. LT */
 #define IS_TRUE_BUILTIN(x) ((R_FunTab[PRIMOFFSET(x)].eval % 100 )/10 == 0)
 
+/* rho only needed for _R_CHECK_LENGTH_1_CONDITION_=package:name */
 static R_INLINE Rboolean GETSTACK_LOGICAL_NO_NA_PTR(R_bcstack_t *s, int callidx,
-						    SEXP constants)
+						    SEXP constants, SEXP rho)
 {
 #ifdef TYPED_STACK
     if (s->tag == LGLSXP && s->u.ival != NA_LOGICAL)
@@ -5912,7 +5936,7 @@ static R_INLINE Rboolean GETSTACK_LOGICAL_NO_NA_PTR(R_bcstack_t *s, int callidx,
 	    return lval;
     }
     SEXP call = VECTOR_ELT(constants, callidx);
-    return asLogicalNoNA(value, call);
+    return asLogicalNoNA(value, call, rho);
 }
 
 /* Find locations table in the constant pool */
@@ -6256,7 +6280,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	int callidx = GETOP();
 	int label = GETOP();
 	Rboolean cond = GETSTACK_LOGICAL_NO_NA_PTR(R_BCNodeStackTop - 1,
-						   callidx, constants);
+						   callidx, constants, rho);
 	BCNPOP_IGNORE_VALUE();
 	if (! cond) {
 	    BC_CHECK_SIGINT(); /**** only on back branch?*/
