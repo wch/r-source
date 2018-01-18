@@ -837,7 +837,8 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 
     if (!d->active) return;
 
-    if (IS_S4_OBJECT(s) || TYPEOF(s) == S4SXP) {
+    Rboolean hasS4_t = TYPEOF(s) == S4SXP;
+    if (IS_S4_OBJECT(s) || hasS4_t) {
 	d->isS4 = TRUE;
 	/* const void *vmax = vmaxget(); */
 	SEXP class = getAttrib(s, R_ClassSymbol),
@@ -848,28 +849,41 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	    print2buff("\", ", d);
 	    SEXP slotNms; // ---- slotNms := methods::.slotNames(s)  ---------
 	    // computed alternatively, slotNms := names(getClassDef(class)@slots) :
-	    static SEXP R_getClassDef = NULL, R_slots = NULL;
+	    static SEXP R_getClassDef = NULL, R_slots = NULL, R_asS3 = NULL;
 	    if(R_getClassDef == NULL)
 		R_getClassDef = findFun(install("getClassDef"), R_MethodsNamespace);
 	    if(R_slots == NULL) R_slots = install("slots");
+	    if(R_asS3  == NULL) R_asS3  = install("asS3");
 	    SEXP e = PROTECT(lang2(R_getClassDef, class));
 	    cl_def = PROTECT(eval(e, R_BaseEnv)); // correct env?
 	    slotNms = // names( cl_def@slots ) :
 		getAttrib(R_do_slot(cl_def, R_slots), R_NamesSymbol);
 	    UNPROTECT(2); // (e, cl_def)
 	    int n;
+	    Rboolean has_Data = FALSE;// does it have ".Data" slot?
 	    if(TYPEOF(slotNms) == STRSXP && (n = LENGTH(slotNms))) {
 		PROTECT(slotNms);
 		SEXP slotlist = PROTECT(allocVector(VECSXP, n));
 		// := structure(lapply(slotNms, slot, object=s), names=slotNms)
 		for(int i=0; i < n; i++) {
-		    SET_VECTOR_ELT(slotlist, i,
-				   R_do_slot(s, installTrChar(STRING_ELT(slotNms, i))));
+		    SEXP slot_i = STRING_ELT(slotNms, i);
+		    SET_VECTOR_ELT(slotlist, i, R_do_slot(s, installTrChar(slot_i)));
+		    if(!hasS4_t && !has_Data)
+			has_Data = (strcmp(CHAR(slot_i), ".Data") == 0);
 		}
 		setAttrib(slotlist, R_NamesSymbol, slotNms);
 		vec2buff(slotlist, d, TRUE);
 		/*-----------------*/
 		UNPROTECT(2); // (slotNms, slotlist)
+	    }
+	    if(!hasS4_t && !has_Data) {
+		// may have *non*-slot contents, (i.e., not in .Data)
+		// ==> additionally deparse asS3(s) :
+		e = PROTECT(lang2(R_asS3, s)); // = asS3(s)
+		SEXP S3_s = PROTECT(eval(e, R_BaseEnv)); // correct env?
+		print2buff(", ", d);
+		deparse2buff(S3_s, d);
+		UNPROTECT(2); // (e, S3_s)
 	    }
 	    print2buff(")", d);
 	}

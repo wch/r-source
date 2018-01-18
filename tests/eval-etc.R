@@ -265,6 +265,18 @@ validObject(m1 <- new("mp", list(new("mp1"), new("mp1", prec=1L, d = 3:5))))
 typeof(m1)# "list", not "S4"
 dput(m1) # now *is* correct -- will be check_EPD()ed below
 ##
+mList <- setClass("mList", contains = "list")
+mForm <- setClass("mForm", contains = "formula")
+mExpr <- setClass("mExpr", contains = "expression")
+## more to come
+attrS4 <- function(x)
+    c(S4 = isS4(x), obj= is.object(x), type.S4 = typeof(x) == "S4")
+attrS4(ml <- mList(list(1, letters[1:3])))# use *unnamed* list
+attrS4(mf <- mForm( ~ f(x)))
+attrS4(E2 <- mExpr(expression(x^2)))
+## Now works, but fails for  deparse(*, control="all"):  __FIXME__
+stopifnot(identical(mf, eval(parse(text=deparse(mf)))))
+##
 if(require("Matrix")) { cat("Trying some Matrix objects, too\n")
     D5. <- Diagonal(x = 5:1)
     D5N <- D5.; D5N[5,5] <- NA
@@ -301,9 +313,10 @@ if(require("Matrix")) { cat("Trying some Matrix objects, too\n")
 ## Action!  Check deparse <--> parse  consistency for *all* objects:
 for(nm in ls(env=.GlobalEnv)) {
     cat(nm,": ", sep="")
-    ## if(!any(nm == "r1")) ## 'r1' fails
+    if(!any(nm == "mf")) ## 'mf' fails: bug in deparse(mf, control="all") !!
         check_EPD(obj = (x <- .GlobalEnv[[nm]]))
-    if(is.function(x)) {
+    if(is.function(x) && !inherits(x, "classGeneratorFunction")) {
+        ## FIXME? classGeneratorFunction, e.g., mForm don't "work" yet
         cat("checking body(.):\n"   ); check_EPD(   body(x))
         cat("checking formals(.):\n"); check_EPD(formals(x))
     }
