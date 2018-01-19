@@ -2640,21 +2640,27 @@ add_dummies <- function(dir, Log)
                     lines <- unlist(lapply(split(lines, ind), paste,
                                            collapse = " "))
                 }
+                ## Truncate at first comment char
+                lines <- sub("#.*", "", lines)
                 c1 <- grepl("^[[:space:]]*PKG_LIBS", lines, useBytes = TRUE)
                 c2l <- grepl("\\$[{(]{0,1}LAPACK_LIBS", lines, useBytes = TRUE)
                 c2b <- grepl("\\$[{(]{0,1}BLAS_LIBS", lines, useBytes = TRUE)
-                c3 <- grepl("\\$[{(]{0,1}FLIBS", lines, useBytes = TRUE)
-                if (any(c1 & c2l & !c2b)) {
+                c2lb <- grepl("\\$[{(]{0,1}LAPACK_LIBS.*\\$[{(]{0,1}BLAS_LIBS",
+                              lines, useBytes = TRUE)
+                c2bf <- grepl("\\$[{(]{0,1}BLAS_LIBS.*\\$[{(]{0,1}FLIBS",
+                              lines, useBytes = TRUE)
+                if (any(c1 & c2l & !c2lb)) {
                     if (!any) warningLog(Log)
                     any <- TRUE
                     printLog(Log,
-                             "  apparently using $(LAPACK_LIBS) without $(BLAS_LIBS) in ",
+                             "  apparently using $(LAPACK_LIBS) without following $(BLAS_LIBS) in ",
                              sQuote(f), "\n")
                 }
-                if (any(c1 & (c2b | c2l) & !c3)) {
+                if (any(c1 & c2b & !c2bf)) {
                     if (!any) warningLog(Log)
                     any <- TRUE
-                    printLog(Log, "  apparently PKG_LIBS is missing $(FLIBS) in ",
+                    printLog(Log,
+                             "  apparently using $(BLAS_LIBS) without following $(FLIBS) in ",
                              sQuote(f), "\n")
                 }
             }
