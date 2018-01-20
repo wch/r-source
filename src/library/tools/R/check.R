@@ -3780,7 +3780,9 @@ setRlibs <-
                              ": warning: .* \\[-Wformat-contains-nul\\]",
                              ": warning: .* \\[-Wformat-zero-length\\]",
                              ": warning: .* \\[-Wpointer-to-int-cast\\]",
-                             ": warning: .* \\[-Wsequence-point\\]")
+                             ": warning: .* \\[-Wsequence-point\\]",
+                             ## Fatal on clang and Solaris ODS
+                             ": warning: .* with a value, in function returning void")
 
                 ## clang warnings
                 warn_re <- c(warn_re,
