@@ -4037,17 +4037,9 @@ the configuration option @option{--with-lapack}.  The default for
 @option{--with-lapack} is to check the @acronym{BLAS} library and then
 look for an external library @samp{-llapack}.  Sites searching for the
 fastest possible linear algebra may want to build a LAPACK library using
-the ATLAS-optimized subset of LAPACK.  To do so using static libraries
-specify something like
-
-@example
---with-lapack="-L/path/to/ATLAS/libs -llapack -lcblas"
-@end example
-
-@noindent
-since the ATLAS subset of LAPACK depends on @code{libcblas}.
-Distribution-dependent alternatives include @option{-lptlapack}
-(threaded) or @option{-llapack-atlas} (to avoid a name clash).
+the ATLAS-optimized subset of LAPACK: this is simplest with a dynamic
+ATLAS library which contains a full LAPACK, when @option{--with-lapack}
+suffices.
 
 A value for @option{--with-lapack} can be set @emph{via} the environment
 variable
