@@ -1782,10 +1782,10 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     /* new case in 1.7.0, one vector index for a list,
        more general as of 2.10.0 */
-    SEXP thesub = R_NilValue, newname, indx, names;
+    SEXP thesub = R_NilValue, newname, names;
     Rboolean recursed = FALSE;
     int len = 0 /* -Wall */;
-    R_xlen_t off = -1; /* -Wall */
+    R_xlen_t offset = -1, off = -1; // -Wall (2 x)
     if (nsubs == 1) {
 	thesub = CAR(subs);
 	len = length(thesub); /* depth of recursion, small */
@@ -1801,10 +1801,31 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    recursed = TRUE;
 	}
     }
-    PROTECT(xup);
+    else { // nsubs >= 2
+	if (ndims != nsubs)
+	    error(_("[[ ]] improper number of subscripts"));
+	int *indx = (int*) R_alloc(ndims, sizeof(int));
+	names = getAttrib(x, R_DimNamesSymbol);
+	for (int i = 0; i < ndims; i++) {
+	    indx[i] = (int)
+		get1index(CAR(subs),
+			  isNull(names) ? R_NilValue : VECTOR_ELT(names, i),
+			  pdims[i],
+			  /*partial ok*/FALSE, -1, call);
+	    subs = CDR(subs);
+	    if (indx[i] < 0 ||
+		indx[i] >= pdims[i])
+		error(_("[[ ]] subscript out of bounds"));
+	}
+	offset = 0;
+	for (int i = (ndims - 1); i > 0; i--)
+	    offset = (offset + indx[i]) * pdims[i - 1];
+	offset += indx[0];
+    }
 
+    PROTECT(xup);
     SEXP xtop = xup; /* xtop will be the element which is assigned to */
-    R_xlen_t offset, stretch = 0;
+    R_xlen_t stretch = 0;
     if (isVector(x)) {
 	if (!isVectorList(x) && LENGTH(y) == 0)
 	    error(_("replacement has length zero"));
@@ -1831,28 +1852,7 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if (offset >= XLENGTH(x))
 		stretch = offset + 1;
 	}
-	else { // nsubs >= 2
-	    if (ndims != nsubs)
-		error(_("[[ ]] improper number of subscripts"));
-	    PROTECT(indx = allocVector(INTSXP, ndims));
-	    int *pindx = INTEGER0(indx);
-	    names = getAttrib(x, R_DimNamesSymbol);
-	    for (int i = 0; i < ndims; i++) {
-		pindx[i] = (int)
-		    get1index(CAR(subs), isNull(names) ?
-			      R_NilValue : VECTOR_ELT(names, i),
-			      pdims[i],
-			      /*partial ok*/FALSE, -1, call);
-		subs = CDR(subs);
-		if (pindx[i] < 0 ||
-		    pindx[i] >= pdims[i])
-		    error(_("[[ ]] subscript out of bounds"));
-	    }
-	    offset = 0;
-	    for (int i = (ndims - 1); i > 0; i--)
-		offset = (offset + pindx[i]) * pdims[i - 1];
-	    offset += pindx[0];
-	    UNPROTECT(1); /* indx */
+	else { // nsubs >= 2, already dealt with above
 	}
 
 	int which = SubassignTypeFix(&x, &y, stretch, 2, call, rho);
@@ -1998,9 +1998,7 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    else
 		SET_STRING_ELT(names, offset, newname);
 	}
-	UNPROTECT(4); /* y, x, xup, x */
-	PROTECT(x);
-	PROTECT(xup);
+	UNPROTECT(2); // y, x
     }
     else if (isPairList(x)) { // incl LANGSXP
 	y = R_FixupRHS(x, y);
@@ -2013,38 +2011,19 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 		x = SimpleListAssign(call, x, subs, y, len-1);
 	    }
 	}
-	else {
-	    if (ndims != nsubs)
-		error(_("[[ ]] improper number of subscripts"));
-	    PROTECT(indx = allocVector(INTSXP, ndims));
-	    int *pindx = INTEGER0(indx);
-	    names = getAttrib(x, R_DimNamesSymbol);
-	    for (int i = 0; i < ndims; i++) {
-		pindx[i] = (int)
-		    get1index(CAR(subs), VECTOR_ELT(names, i),
-			      pdims[i],
-			      /*partial ok*/FALSE, -1, call);
-		subs = CDR(subs);
-		if (pindx[i] < 0 ||
-		    pindx[i] >= pdims[i])
-		    error(_("[[ ]] subscript (%d) out of bounds"), i+1);
-	    }
-	    offset = 0;
-	    for (int i = (ndims - 1); i > 0; i--)
-		offset = (offset + pindx[i]) * pdims[i - 1];
-	    offset += pindx[0];
+	else { // nsubs >= 2, mostly dealt with above
 	    SEXP slot = nthcdr(x, (int) offset);
 	    SETCAR(slot, duplicate(y));
-	    // FIXME PR#17225: add name. See '(stretch && newname != R_NilValue)' above!
-	    UNPROTECT(1); /* indx */
 	}
-	UNPROTECT(3); /* y, xup, x */
-	PROTECT(x);
-	PROTECT(xup);
+	// FIXME PR#17225: add name for both cases. See '(stretch && newname != R_NilValue)' above!
+	UNPROTECT(1); // y
     }
     else error(R_MSG_ob_nonsub, type2char(TYPEOF(x)));
 
     if(recursed) {
+	UNPROTECT(2); /* xup, x */
+	PROTECT(x);
+	PROTECT(xup);
 	if (isVectorList(xup)) {
 	    SET_VECTOR_ELT(xup, off, x);
 	} else {
@@ -2052,10 +2031,11 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	if (len == 2)
 	    xtop = xup;
+	UNPROTECT(2); /* xup, x */
     }
     else xtop = x;
 
-    UNPROTECT(3); /* xup, x, args */
+    UNPROTECT(1); // args
     SETTER_CLEAR_NAMED(xtop);
     if(S4) SET_S4_OBJECT(xtop);
     return xtop;
