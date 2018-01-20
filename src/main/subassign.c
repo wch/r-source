@@ -1998,7 +1998,9 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    else
 		SET_STRING_ELT(names, offset, newname);
 	}
-	UNPROTECT(2); // y, x
+	UNPROTECT(4); /* y, x, xup, x */
+	PROTECT(x);
+	PROTECT(xup);
     }
     else if (isPairList(x)) { // incl LANGSXP
 	y = R_FixupRHS(x, y);
@@ -2016,14 +2018,13 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    SETCAR(slot, duplicate(y));
 	}
 	// FIXME PR#17225: add name for both cases. See '(stretch && newname != R_NilValue)' above!
-	UNPROTECT(1); // y
+	UNPROTECT(3); /* y, xup, x */
+	PROTECT(x);
+	PROTECT(xup);
     }
     else error(R_MSG_ob_nonsub, type2char(TYPEOF(x)));
 
     if(recursed) {
-	UNPROTECT(2); /* xup, x */
-	PROTECT(x);
-	PROTECT(xup);
 	if (isVectorList(xup)) {
 	    SET_VECTOR_ELT(xup, off, x);
 	} else {
@@ -2031,11 +2032,10 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	if (len == 2)
 	    xtop = xup;
-	UNPROTECT(2); /* xup, x */
     }
     else xtop = x;
 
-    UNPROTECT(1); // args
+    UNPROTECT(3); /* xup, x, args */
     SETTER_CLEAR_NAMED(xtop);
     if(S4) SET_S4_OBJECT(xtop);
     return xtop;
