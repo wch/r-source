@@ -866,7 +866,7 @@ stopifnot(is.null(names(a1$Population)),
 	  all.equal(unlist(a2$Population),
 		    c(8802.8, 4208.12, 7233.83, 4582.57, 1360.5, 2372.17, 970.167),
 		    tol = 1e-6))
-## in R <= 3.4.1, a2$Population had spurious names
+## in R <= 3.4.x, a2$Population had spurious names
 
 
 ## factor() with duplicated labels allowing to "merge levels"
@@ -1432,6 +1432,24 @@ stopifnot(
     identical(sum(iL, 1+2i), NA_complex_)
 )
 ## r2 was no error and sum(iL, 1+2i) gave NA_real_ in R <= 3.4.x
+
+
+## aggregate.data.frame(*, drop=FALSE)  wishlist PR#17280
+## [continued from above]
+aF <- aggregate(dP, by=by, FUN=mean,   drop=FALSE)
+lF <- aggregate(dP, by=by, FUN=length, drop=FALSE)
+stopifnot(identical(dim(aF), c(8L, 3L)),
+	  identical(aF[6,3], NA_real_),
+	  identical(lF[6,3], NA_integer_))
+DF <- data.frame(a=rep(1:3,4), b=factor(rep(1:2,6), levels=1:3))
+aT <- aggregate(DF["a"], DF["b"], length)# drop=TRUE
+aF <- aggregate(DF["a"], DF["b"], length,  drop=FALSE)
+stopifnot(identical(dim(aT), c(2L,2L)),
+	  identical(dim(aF), c(3L,2L)),
+	  identical(aT, aF[1:2,]),
+	  identical(aF[3,"a"], NA_integer_))
+## In R <= 3.4.x, the function (FUN) was called on empty sets, above,
+## giving NaN (and 0) or <nothing>;  now the result is NA.
 
 
 

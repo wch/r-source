@@ -516,6 +516,11 @@
       \item \code{mclapply(X, mc.cores)} now follows its documentation
       and calls \code{lapply()} in case \code{mc.cores = 1} also in the
       case \code{mc.preschedule} is false.  (\PR{17373})
+
+      \item \code{aggregate(<data.frame>, drop=FALSE)} no longer calls
+      the function on <empty> parts, and rather sets corresponding
+      results to \code{NA}, thanks to Suharto Anggono's patches in
+      \PR{17280}.
     }
   }
 }
