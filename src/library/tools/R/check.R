@@ -368,6 +368,9 @@ add_dummies <- function(dir, Log)
     check_pkg <- function(pkg, pkgname, pkgoutdir, startdir, libdir, desc,
                           is_base_pkg, is_rec_pkg, subdirs, extra_arch)
     {
+        Sys.setenv("_R_CHECK_PACKAGE_NAME_" = pkgname)
+        on.exit(Sys.unsetenv("_R_CHECK_PACKAGE_NAME_"))
+
         ## pkg is the argument we received from the main loop.
         ## pkgdir is the corresponding absolute path,
 

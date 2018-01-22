@@ -2042,6 +2042,12 @@ static R_INLINE Rboolean asLogicalNoNA(SEXP s, SEXP call, SEXP rho)
 		    const char *pkgname = translateChar(STRING_ELT(spkg, 0));
 		    if (!strcmp(check + lprefix, pkgname))
 			err = TRUE;
+		    if (!strcmp(check + lprefix, "_R_CHECK_PACKAGE_NAME_")) {
+			/* package name specified in _R_CHECK_PACKAGE_NAME */
+			const char *envpname = getenv("_R_CHECK_PACKAGE_NAME_");
+			if (envpname && !strcmp(envpname, pkgname))
+			    err = TRUE;
+		    }
 		}
 	    }
 	}
