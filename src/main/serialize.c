@@ -693,11 +693,11 @@ static int HashGet(SEXP item, SEXP ht)
 /* The following are needed to preserve attribute information on
    expressions in the constant pool of byte code objects. This is
    mainly for preserving source references attributes.  The original
-   implementation of the sharing-preserving writing and reading of yte
+   implementation of the sharing-preserving writing and reading of byte
    code objects did not account for the need to preserve attributes,
    so there is now a work-around using these SXP types to flag when
    the ATTRIB field has been written out. Object bits and S4 bits are
-   still not preserved.  It the long run in might be better to change
+   still not preserved.  In the long run it might be better to change
    to a scheme in which all sharing is preserved and byte code objects
    don't need to be handled as a special case.  LT */
 #define ATTRLANGSXP       240
