@@ -1,6 +1,6 @@
 % File src/library/parallel/man/detectCores.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2011-2016 R Core Team
+% Copyright 2011-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{detectCores}
@@ -36,6 +36,9 @@ detectCores(all.tests = FALSE, logical = TRUE)
   default it counts logical (e.g., hyperthreaded) CPUs and not physical
   cores or packages.
 
+  On Linux, \code{logical = FALSE} may return the number of cores in one
+  package (not the total).
+
   Under macOS there is a further distinction between \sQuote{available in
     the current power management mode} and \sQuote{could be available
     this boot}, and this function returns the first.
@@ -51,16 +54,16 @@ detectCores(all.tests = FALSE, logical = TRUE)
 
   On Sparc Solaris \code{logical = FALSE} returns the number of physical
   cores and \code{logical = TRUE} returns the number of available
-  hardware threads. (Some Sparc CPUs which do have multiple cores per
-  CPU, others have multiple threads per core and some have both.)  For
-  example, the UltraSparc T2 CPU in the CRAN check server is a single
+  hardware threads. (Some Sparc CPUs have multiple cores per CPU, others
+  have multiple threads per core and some have both.)  For example, the
+  UltraSparc T2 CPU in the former CRAN check server was a single
   physical CPU with 8 cores, and each core supports 8 hardware threads.
   So \code{detectCores(logical = FALSE)} returns 8, and
   \code{detectCores(logical = TRUE)} returns 64.
 
   Where virtual machines are in use, one would hope that the result
-  represents the number of CPUs available (or potentially available) to
-  that particular VM.
+  (for \code{logical = TRUE}) represents the number of CPUs available (or
+  potentially available) to that particular VM.
 }
 \author{
   Simon Urbanek and Brian Ripley
