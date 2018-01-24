@@ -62,7 +62,7 @@ detectCores(all.tests = FALSE, logical = TRUE)
   \code{detectCores(logical = TRUE)} returns 64.
 
   Where virtual machines are in use, one would hope that the result
-  (for \code{logical = TRUE}) represents the number of CPUs available (or
+  for \code{logical = TRUE} represents the number of CPUs available (or
   potentially available) to that particular VM.
 }
 \author{
