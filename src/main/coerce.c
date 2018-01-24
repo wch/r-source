@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997-2017  The R Core Team
- *  Copyright (C) 2003-2017  The R Foundation
+ *  Copyright (C) 1997-2018  The R Core Team
+ *  Copyright (C) 2003-2018  The R Foundation
  *  Copyright (C) 1995,1996  Robert Gentleman, Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -2099,6 +2099,7 @@ SEXP attribute_hidden do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
 	for (i = 0; i < n; i++)
 	    pa[i] = 0;
 	break;
+    case NILSXP: break;
     default:
 	warningcall(call, _("%s() applied to non-(list or vector) of type '%s'"),
 		    "is.na", type2char(TYPEOF(x)));

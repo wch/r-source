@@ -1452,6 +1452,12 @@ stopifnot(identical(dim(aT), c(2L,2L)),
 ## giving NaN (and 0) or <nothing>;  now the result is NA.
 
 
+## PR#16107  is.na(NULL) throws warning (contrary to all other such calls)
+op <- options(warn = 2)# no warnings allowed
+stopifnot(identical(is.na(NULL), logical(0)))
+## gave a warning in R <= 3.4.x
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

@@ -1,6 +1,6 @@
 % File src/library/base/man/NA.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{NA}
@@ -42,8 +42,8 @@ is.na(x) <- value
 }
 \arguments{
   \item{x}{an \R object to be tested: the default method for
-    \code{is.na} handles atomic vectors, lists and pairlists: that for
-    \code{anyNA} also handles \code{NULL}.}
+    \code{is.na} and \code{anyNA} handle atomic vectors, lists,
+    pairlists, and \code{NULL}.}
   \item{recursive}{logical: should \code{anyNA} be applied recursively
     to lists and pairlists?}
   \item{value}{a suitable index vector for use with \code{x}.}
@@ -58,7 +58,7 @@ is.na(x) <- value
   \code{is.na} and \code{anyNA} are generic: you can write
   methods to handle specific classes of objects, see
   \link{InternalMethods}.
-  
+
   Function \code{is.na<-} may provide a safer way to set missingness.
   It behaves differently for factors, for example.
 
@@ -68,7 +68,7 @@ is.na(x) <- value
   the \R platform).  Logical computations treat \code{NA} as a missing
   \code{TRUE/FALSE} value, and so may return \code{TRUE} or \code{FALSE}
   if the expression does not depend on the \code{NA} operand.
-  
+
   The default method for \code{anyNA} handles atomic vectors without a
   class and \code{NULL}.  It calls \code{any(is.na(x)} on objects with
   classes and for \code{recursive = FALSE}, on lists and pairlists.
@@ -95,9 +95,9 @@ is.na(x) <- value
   The data frame method for \code{is.na} returns a logical matrix
   with the same dimensions as the data frame, and with dimnames taken
   from the row and column names of the data frame.
-  
-  \code{anyNA(NULL)} is false: \code{is.na(NULL)} is \code{logical(0)}
-  with a warning.
+
+  \code{anyNA(NULL)} is false; \code{is.na(NULL)} is \code{logical(0)}
+  (no longer warning since \R version 3.5.0).
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

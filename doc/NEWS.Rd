@@ -577,6 +577,8 @@
 
       \item \code{rf()} and \code{rbeta()} now also work correctly when \code{ncp}
       is not scalar, notably when (partly) \code{NA}.  (\PR{17375})
+
+      \item \code{is.na(NULL)} no longer warns.  (\PR{16107})
     }
   }
 }
