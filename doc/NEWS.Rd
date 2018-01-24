@@ -537,6 +537,9 @@
       \item The version of LAPACK included in the sources has been
       updated to 3.8.0 (for the routines used by \R, a very minor bug-fix
       change).
+      
+      \item \code{parallel::detectCores(logical = FALSE)} should be more
+      reliable on multi-CPU Linux systems, especially with virtualized OSes. 
     }
   }
 
