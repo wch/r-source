@@ -1239,7 +1239,8 @@ SEXP install(const char *name)
 /* This function is equivalent to install(CHAR(charSXP)), but faster.
    Like the equivalent code pattern, it discards the encoding information,
    hence in almost all cases installTrChar should be used, instead. */
-SEXP installChar(SEXP charSXP)
+attribute_hidden
+SEXP installNoTrChar(SEXP charSXP)
 {
     SEXP sym;
     int i, hashcode;

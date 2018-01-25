@@ -952,6 +952,7 @@ SEXP Rf_GetRowNames(SEXP);
 void Rf_gsetVar(SEXP, SEXP, SEXP);
 SEXP Rf_install(const char *);
 SEXP Rf_installChar(SEXP);
+SEXP Rf_installNoTrChar(SEXP);
 SEXP Rf_installDDVAL(int i);
 SEXP Rf_installS3Signature(const char *, const char *);
 Rboolean Rf_isFree(SEXP);
@@ -1354,6 +1355,7 @@ void R_orderVector1(int *indx, int n, SEXP x,       Rboolean nalast, Rboolean de
 #define inherits		Rf_inherits
 #define install			Rf_install
 #define installChar		Rf_installChar
+#define installNoTrChar		Rf_installNoTrChar
 #define installDDVAL		Rf_installDDVAL
 #define installS3Signature	Rf_installS3Signature
 #define isArray			Rf_isArray
