@@ -152,6 +152,10 @@
 
       \code{m:n} now also deparses nicely when \eqn{m > n}.
 
+      The \code{"quoteExpressions"} option, also part of \code{"all"},
+      no longer \code{quote()}s formulas as that may not re-parse
+      identically.  (\PR{17378})
+
       \item If the option \code{setWidthOnResize} is set and \code{TRUE},
       \R run in a terminal using a recent \code{readline} library will
       set the \code{width} option when the terminal is
@@ -537,7 +541,7 @@
       \item The version of LAPACK included in the sources has been
       updated to 3.8.0 (for the routines used by \R, a very minor bug-fix
       change).
-      
+
       \item \code{parallel::detectCores(logical = FALSE)} is ignored on
       Linux systems, since the information is not available with
       virtualized OSes. 

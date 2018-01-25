@@ -1,6 +1,6 @@
 % File src/library/base/man/deparseOpts.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{deparseOpts}
@@ -38,8 +38,8 @@
       values in the vector, unless \code{"S_compatible"} is set).
     }
     \item{\code{"quoteExpressions"}:}{
-      Surround expressions with \code{quote()}, so they are not
-      evaluated when re-parsed.
+      Surround unevaluated expressions, but not \code{\link{formula}}s,
+      with \code{quote()}, so they are not evaluated when re-parsed.
     }
     \item{\code{"showAttributes"}:}{
       If the object has \code{\link{attributes}} (other than a \code{source}
@@ -117,11 +117,11 @@
   uses \code{c("keepInteger", "keepNA")}.)
 
   Using \code{control = c("all", "hexNumeric")} comes closest to making
-  \code{deparse()} an inverse of \code{parse()}.  However, not all
+  \code{deparse()} an inverse of \code{parse()}, as representing double
+  and complex numbers as decimals may well not be exact.  However, not all
   objects are deparse-able even with this option.  A warning will be
   issued if the function recognizes that it is being asked to do the
-  impossible.  Also, representing double and complex numbers as decimals
-  may well not be exact.
+  impossible.
 
   Only one of \code{"hexNumeric"} and \code{"digits17"} can be specified.
 }

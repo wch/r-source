@@ -1049,13 +1049,22 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	printcomment(s, d);
 	if (!isNull(ATTRIB(s)))
 	    d->sourceable = FALSE;
-	if (d_opts_in & QUOTEEXPRESSIONS) {
-	    print2buff("quote(", d);
-	    d->opts &= SIMPLE_OPTS;
+	SEXP op = CAR(s);
+        Rboolean doquote, maybe_quote = d_opts_in & QUOTEEXPRESSIONS;
+	if (maybe_quote) {
+	    // do *not* quote() formulas:
+	    doquote = // := op is not `~` (tilde) :
+		!((TYPEOF(op) == SYMSXP) &&
+		  !strcmp(CHAR(PRINTNAME(op)), "~"));
+	    if (doquote) {
+		print2buff("quote(", d);
+		d->opts &= SIMPLE_OPTS;
+	    } else { // `~`
+		d->opts &= ~QUOTEEXPRESSIONS;
+	    }
 	}
-	if (TYPEOF(CAR(s)) == SYMSXP) {
+	if (TYPEOF(op) == SYMSXP) {
 	    int userbinop = 0;
-	    SEXP op = CAR(s);
 	    if ((TYPEOF(SYMVALUE(op)) == BUILTINSXP) ||
 		(TYPEOF(SYMVALUE(op)) == SPECIALSXP) ||
 		(userbinop = isUserBinop(op))) {
@@ -1359,33 +1368,34 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		    print2buff(")", d);
 		}
 	    }
-	} // end{CAR(s) : SYMSXP }
-	else if (TYPEOF(CAR(s)) == CLOSXP || TYPEOF(CAR(s)) == SPECIALSXP
-		 || TYPEOF(CAR(s)) == BUILTINSXP) {
-	    if (parenthesizeCaller(CAR(s))) {
+	} // end{op : SYMSXP }
+	else if (TYPEOF(op) == CLOSXP || TYPEOF(op) == SPECIALSXP
+		 || TYPEOF(op) == BUILTINSXP) {
+	    if (parenthesizeCaller(op)) {
 		print2buff("(", d);
-		deparse2buff(CAR(s), d);
+		deparse2buff(op, d);
 		print2buff(")", d);
 	    } else
-		deparse2buff(CAR(s), d);
+		deparse2buff(op, d);
 	    print2buff("(", d);
 	    args2buff(CDR(s), 0, 0, d);
 	    print2buff(")", d);
 	}
 	else { /* we have a lambda expression */
-	    if (parenthesizeCaller(CAR(s))) {
+	    if (parenthesizeCaller(op)) {
 		print2buff("(", d);
-		deparse2buff(CAR(s), d);
+		deparse2buff(op, d);
 		print2buff(")", d);
 	    } else
-		deparse2buff(CAR(s), d);
+		deparse2buff(op, d);
 	    print2buff("(", d);
 	    args2buff(CDR(s), 0, 0, d);
 	    print2buff(")", d);
 	}
-	if (d_opts_in & QUOTEEXPRESSIONS) {
+	if (maybe_quote) {
 	    d->opts = d_opts_in;
-	    print2buff(")", d);
+	    if(doquote)
+		print2buff(")", d);
 	}
 	break; // case LANGSXP --------------------------------------------------
     case STRSXP:

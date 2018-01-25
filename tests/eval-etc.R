@@ -246,7 +246,10 @@ L00 <- setNames(logical(), character()); L0 <- structure(L00, class = "Logi")
 r00 <- setNames(raw(), character())
 sii <- structure(4:7, foo = list(B="bar", G="grizzly",
                                  vec=c(a=1L,b=2L), v2=i6, v0=L00))
-
+fm <- y ~ f(x)
+lf <- list(ff = fm, osf = ~ sin(x))
+stopifnot(identical(deparse(lf, control="all"), # no longer quote()s
+		    deparse(lf)))
 if(getRversion() >= "3.5.0") {
     ## Creating a collection of S4 objects, ensuring deparse <-> parse are inverses
 library(methods)
@@ -313,7 +316,7 @@ if(require("Matrix")) { cat("Trying some Matrix objects, too\n")
 ## Action!  Check deparse <--> parse  consistency for *all* objects:
 for(nm in ls(env=.GlobalEnv)) {
     cat(nm,": ", sep="")
-    if(!any(nm == "mf")) ## 'mf' fails: bug in deparse(mf, control="all") !!
+    ## if(!any(nm == "mf")) ## 'mf' [bug in deparse(mf, control="all") now fixed]
         check_EPD(obj = (x <- .GlobalEnv[[nm]]))
     if(is.function(x) && !inherits(x, "classGeneratorFunction")) {
         ## FIXME? classGeneratorFunction, e.g., mForm don't "work" yet

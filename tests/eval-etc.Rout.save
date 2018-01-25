@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2018-01-17 r74127) -- "Unsuffered Consequences"
+R Under development (unstable) (2018-01-18 r74132) -- "Unsuffered Consequences"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -303,7 +303,12 @@ Levels: a b <NA>
 > r00 <- setNames(raw(), character())
 > sii <- structure(4:7, foo = list(B="bar", G="grizzly",
 +                                  vec=c(a=1L,b=2L), v2=i6, v0=L00))
-> 
+> fm <- y ~ f(x)
+> lf <- list(ff = fm, osf = ~ sin(x))
+> stopifnot(identical(deparse(lf, control="all"), # no longer quote()s
++ 		    deparse(lf)))
+Warning message:
+In deparse(lf, control = "all") : deparse may be incomplete
 > if(getRversion() >= "3.5.0") {
 +     ## Creating a collection of S4 objects, ensuring deparse <-> parse are inverses
 + library(methods)
@@ -561,7 +566,7 @@ Matrix+           is(Matrix(FALSE, 1,1), "sparseMatrix"))
 > ## Action!  Check deparse <--> parse  consistency for *all* objects:
 > for(nm in ls(env=.GlobalEnv)) {
 +     cat(nm,": ", sep="")
-+     if(!any(nm == "mf")) ## 'mf' fails: bug in deparse(mf, control="all") !!
++     ## if(!any(nm == "mf")) ## 'mf' [bug in deparse(mf, control="all") now fixed]
 +         check_EPD(obj = (x <- .GlobalEnv[[nm]]))
 +     if(is.function(x) && !inherits(x, "classGeneratorFunction")) {
 +         ## FIXME? classGeneratorFunction, e.g., mForm don't "work" yet
@@ -931,6 +936,11 @@ checking formals(.):
 as.pairlist(alist(x = , ... = ))
 __ not parse()able __: hasMissObj(.) is true 
 --=--=--=--=--
+fm: y ~ f(x)
+not identical(*, ignore.env=T), but all.equal(*,*, tol = 0) 
+ --> checking list(*): not identical(*, ignore.env=T), but all.equal(*,*, tol = 0) 
+Ok
+--=--=--=--=--
 fx: structure(c(1L, 3L, 2L), .Label = c("a", "b", NA), class = "factor")
  --> checking list(*): Ok
 --=--=--=--=--
@@ -1068,6 +1078,11 @@ l3: structure(c(FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, TRUE, TRUE,
 FALSE), .Dim = c(3L, 3L))
  --> checking list(*): Ok
 --=--=--=--=--
+lf: list(ff = y ~ f(x), osf = ~sin(x))
+not identical(*, ignore.env=T), but all.equal(*,*, tol = 0) 
+ --> checking list(*): not identical(*, ignore.env=T), but all.equal(*,*, tol = 0) 
+Ok
+--=--=--=--=--
 m: new("dgCMatrix", i = c(2L, 0L, 1L, 2L, 0L, 1L), p = c(0L, 1L, 
 2L, 4L, 4L, 6L), Dim = c(3L, 5L), Dimnames = list(c("A", "B", 
 "C"), c("a", "b", "c", "d", "e")), x = c(1, 2, 4, 3, 6, 5), factors = list())
@@ -1101,7 +1116,11 @@ not identical(*, ignore.env=T), but all.equal(*,*, tol = 0)
  --> checking list(*): not identical(*, ignore.env=T), but all.equal(*,*, tol = 0) 
 Ok
 --=--=--=--=--
-mf: --=--=--=--=--
+mf: new("mForm", .S3Class = "formula", ~f(x))
+not identical(*, ignore.env=T), but all.equal(*,*, tol = 0) 
+ --> checking list(*): not identical(*, ignore.env=T), but all.equal(*,*, tol = 0) 
+Ok
+--=--=--=--=--
 missL: structure(list(, , ), .Names = c("", NA, "c"))
 __ not parse()able __: hasMissObj(.) is true 
 --=--=--=--=--
@@ -1252,14 +1271,32 @@ ydata:  --> checking list(*): Ok
 ysmooth: 1:10
  --> checking list(*): Ok
 --=--=--=--=--
+Warning messages:
+1: In dput(x, control = control) : deparse may be incomplete
+2: In deparse(expr, backtick = backtick, control = control, ...) :
+  deparse may be incomplete
+3: In deparse(expr, backtick = backtick, control = control, ...) :
+  deparse may be incomplete
+4: In dput(x, control = control) : deparse may be incomplete
+5: In deparse(expr, backtick = backtick, control = control, ...) :
+  deparse may be incomplete
+6: In deparse(expr, backtick = backtick, control = control, ...) :
+  deparse may be incomplete
+7: In dput(x, control = control) : deparse may be incomplete
+8: In deparse(expr, backtick = backtick, control = control, ...) :
+  deparse may be incomplete
+9: In deparse(expr, backtick = backtick, control = control, ...) :
+  deparse may be incomplete
 > summary(warnings())
-Length  Class   Mode 
-     0   NULL   NULL 
+Summary of (a total of 9) warning messages:
+6x : In dput(x, control = control) : deparse may be incomplete
+3x : In deparse(expr, backtick = backtick, control = control,  ... :
+  deparse may be incomplete
 > ## "dput    may be incomplete"
 > ## "deparse may be incomplete"
 > 
 > 
 > ## at the very end
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  1.317 0.07 1.418 0 0 
+Time elapsed:  1.128 0.049 1.185 0 0 
 > 
