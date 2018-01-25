@@ -1458,6 +1458,50 @@ stopifnot(identical(is.na(NULL), logical(0)))
 ## gave a warning in R <= 3.4.x
 
 
+## subtle [[<- , e.g.,  <nestedList>[[ c(i,j,k) ]]  <-  val :
+xx0 <-
+xx <- list(id = 1L,
+           split = list(varid = 1L, breaks = NULL,
+                        index = 1:3, right = TRUE, info = "s"),
+           kids = list(id = 2L,
+                       split = list(varid = 3L, breaks = 75,
+                                    right = TRUE, info = "KS"),
+                       kids = list(list(id = 3L, info = "yes"),
+                                   list(id = 4L, info = "no")),
+                       info = NULL),
+           list(id = 5L,
+                split = list(varid = 3L, breaks = 20,
+                             right = TRUE, info = "4s"),
+                kids = list(list(id = 6L, info = "no"),
+                            list(id = 7L, info = "yes")),
+                info = NULL),
+           info = NULL)
+
+## no-ops:
+xx[[1]] <- xx0[[1]]
+xx[["kids"]] <- xx0[["kids"]]
+xx[[2:1]] <- xx0[[2:1]] ; stopifnot(identical(xx, xx0))
+xx[[3:1]] <- xx0[[3:1]] ; stopifnot(identical(xx, xx0)) # (err)
+## replacements
+              xx[[c(2,3)]]   <- 5:3
+              xx[[c(4,2,4)]] <- c(4,2,c=4) # (err: wrong xx)
+              xx[[c(4,2,3)]] <- c(ch="423")# (err)
+              xx[[c(3,2,2)]] <- 47         # (err)
+stopifnot(
+    identical(xx[[c(2,3)]],     5:3),
+    identical(xx[[c(4,2,4)]],   c(4,2,c=4)),
+    identical(xx[[c(4,2,3)]],   c(ch="423")),
+    identical(xx[[c(3,2,2)]],   47),
+    identical(lengths(xx), lengths(xx0)),
+    identical(  names(xx),   names(xx0)),
+    identical(lapply(xx, lengths),
+              lapply(xx0,lengths)),
+    identical(lapply(xx, names),
+              lapply(xx0,names))
+)
+## several of these failed for a bit more than a day in R-devel
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
