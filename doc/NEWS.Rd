@@ -538,8 +538,9 @@
       updated to 3.8.0 (for the routines used by \R, a very minor bug-fix
       change).
       
-      \item \code{parallel::detectCores(logical = FALSE)} should be more
-      reliable on multi-CPU Linux systems, especially with virtualized OSes. 
+      \item \code{parallel::detectCores(logical = FALSE)} is ignored on
+      Linux systems, since the information is not available with
+      virtualized OSes. 
     }
   }
 
