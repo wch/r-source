@@ -16,7 +16,7 @@ detectCores(all.tests = FALSE, logical = TRUE)
   \item{all.tests}{Logical: if true apply all known tests.}
   \item{logical}{Logical: if possible, use the number of physical CPUs/cores
     (if \code{FALSE}) or logical CPUs (if \code{TRUE}).  Currently this
-    is honoured only on Linux, macOS, Sparc Solaris and Windows.}
+    is honoured only on macOS, Solaris and Windows.}
 }
 \details{
   This attempts to detect the number of available CPU cores.
@@ -35,9 +35,6 @@ detectCores(all.tests = FALSE, logical = TRUE)
   Exactly what this represents is OS-dependent: where possible by
   default it counts logical (e.g., hyperthreaded) CPUs and not physical
   cores or packages.
-
-  On Linux, \code{logical = FALSE} may return the number of cores in one
-  package (not the total).
 
   Under macOS there is a further distinction between \sQuote{available in
     the current power management mode} and \sQuote{could be available

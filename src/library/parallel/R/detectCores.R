@@ -30,7 +30,7 @@ detectCores <-
             ## Commoner OSes first
             ## for Linux systems, physical id is 1 for second hyperthread
             systems <-
-                list(linux = if (logical) "grep ^processor /proc/cpuinfo 2>/dev/null | wc -l" else "grep 'physical id.*: 0'  /proc/cpuinfo 2>/dev/null | wc -l",
+                list(linux = "grep ^processor /proc/cpuinfo 2>/dev/null | wc -l",
                      ## hw.physicalcpu is not documented for 10.9, but works
                      darwin = if(logical) "/usr/sbin/sysctl -n hw.logicalcpu 2>/dev/null" else "/usr/sbin/sysctl -n hw.physicalcpu 2>/dev/null",
                      solaris = if(logical) "/usr/sbin/psrinfo -v | grep 'Status of.*processor' | wc -l" else "/bin/kstat -p -m cpu_info | grep :core_id | cut -f2 | uniq | wc -l",
