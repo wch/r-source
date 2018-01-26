@@ -104,6 +104,7 @@ Philippines,Philippines,"Quezon City",http://cran.stat.upd.edu.ph/,"University o
 "Serbia [https]",Serbia,Belgrade,https://fourdots.com/mirror/CRAN/,"Four Dots","Goran Tepsic <goran.tepsic # fourdots.com>",1,rs,"secure_mirror_from_master"
 "Singapore (Singapore 1) [https]",Singapore,Singapore,https://cran.kst.asia/,"Viewqwest broadband, cloudflare CDN, Singapore","tanlikang11 # gmail.com",1,asia
 "Singapore (Singapore 2)",Singapore,Singapore,http://cran.stat.nus.edu.sg/,"National University of Singapore, Singapore","ccezr # nus.edu.sg",1,sg
+"Singapore (Singapore 2) [https]",Singapore,Singapore,https://cran.stat.nus.edu.sg/,"National University of Singapore, Singapore","ccezr # nus.edu.sg",1,sg
 "South Africa (Cape Town)","South Africa","Cape Town",http://r.adu.org.za/,"University of Cape Town","michael.brooks # uct.ac.za",1,za
 "South Africa (Johannesburg)","South Africa",Johannesburg,http://cran.mirror.ac.za/,"TENET, Johannesburg","Patrick Holahan <patrickh # tenet.ac.za>",1,za
 "Spain (A Coruña) [https]","Spain","A Coruña",https://ftp.cixug.es/CRAN/,"Oficina de software libre (CIXUG)","<osl # cixug.es>",1,es,"secure_mirror_from_master"
