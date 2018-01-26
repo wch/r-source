@@ -550,14 +550,11 @@ exceptionally for a package designed to always be used with
 @code{keep.source = TRUE}.
 
 @c DESCRIPTION field ByteCompile
-The @samp{ByteCompile} logical field controls if the package code is to
-be byte-compiled on installation: the default is currently not to, so
-this may be useful for a package known to benefit particularly from
-byte-compilation (which can take quite a long time and increases the
-installed size of the package).  It is used for the recommended
-packages, as they are byte-compiled when @R{} is installed and for
-consistency should be byte-compiled when updated. This can be overridden
-by installing with flag @option{--no-byte-compile}.
+The @samp{ByteCompile} logical field controls if the package code is to be
+byte-compiled on installation: since @R{} 3.5.0, the default is to
+byte-compile.  Prior to @R{} 3.5.0, the default was not to, but
+recommended packages were already byte-compiled.  This can be overridden by
+installing with flag @option{--no-byte-compile}.
 
 @c DESCRIPTION field ZipData
 The @samp{ZipData} logical field was used to control whether the automatic

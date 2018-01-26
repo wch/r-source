@@ -288,6 +288,8 @@
 
       \item When a package is found more than once, the warning from
       \code{find.package(*, verbose=TRUE)} lists all library locations.
+
+      \item By default, packages are now byte-compiled on installation.
     }
   }
 

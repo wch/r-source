@@ -1118,7 +1118,7 @@ if(FALSE) {
 	if (install_R && dir.exists("R") && length(dir("R"))) {
             BC <- if (!is.na(byte_compile)) byte_compile
                   else
-                      parse_description_field(desc, "ByteCompile", default = FALSE)
+                      parse_description_field(desc, "ByteCompile", default = TRUE)
             rcps <- Sys.getenv("R_COMPILE_PKGS")
             rcp <- switch(rcps,
                           "TRUE"=, "true"=, "True"=, "yes"=, "Yes"= 1,
