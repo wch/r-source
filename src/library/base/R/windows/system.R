@@ -1,7 +1,7 @@
 #  File src/library/base/R/windows/system.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -15,6 +15,27 @@
 #
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
+
+
+.fixupGFortranStdout <- function()
+{
+    old <- Sys.getenv("GFORTRAN_STDOUT_UNIT")
+    if (nzchar(old) && old == "-1") {
+	Sys.unsetenv("GFORTRAN_STDOUT_UNIT")
+	TRUE
+    } else
+	FALSE
+}
+
+.fixupGFortranStderr <- function()
+{
+    old <- Sys.getenv("GFORTRAN_STDERR_UNIT")
+    if (nzchar(old) && old == "-1") {
+	Sys.unsetenv("GFORTRAN_STDERR_UNIT")
+	TRUE
+    } else
+	FALSE
+}
 
 system <- function(command, intern = FALSE,
                    ignore.stdout = FALSE, ignore.stderr = FALSE,
@@ -56,6 +77,10 @@ system <- function(command, intern = FALSE,
     }
     if (invisible) flag <- 20L + flag
     else if (minimized) flag <- 10L + flag
+    if (.fixupGFortranStdout())
+	on.exit(Sys.setenv(GFORTRAN_STDOUT_UNIT = "-1"), add = TRUE)
+    if (.fixupGFortranStderr())
+	on.exit(Sys.setenv(GFORTRAN_STDERR_UNIT = "-1"), add = TRUE)
     .Internal(system(command, as.integer(flag), f, stdout, stderr, timeout))
 }
 
@@ -90,6 +115,10 @@ system2 <- function(command, args = character(),
     else 0L
     if (invisible) flag <- 20L + flag
     else if (minimized) flag <- 10L + flag
+    if (.fixupGFortranStdout())
+	on.exit(Sys.setenv(GFORTRAN_STDOUT_UNIT = "-1"), add = TRUE)
+    if (.fixupGFortranStderr())
+	on.exit(Sys.setenv(GFORTRAN_STDERR_UNIT = "-1"), add = TRUE) 
     .Internal(system(command, flag, f, stdout, stderr, timeout))
 }
 
