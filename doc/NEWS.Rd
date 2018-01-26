@@ -291,6 +291,10 @@
 
       \item POSIXt objects can now also be rounded or truncated to month
       or year.
+
+      \item \code{stopIfnot()} is a new alternative to
+      \code{stopifnot()}, nicer to use when testing several expressions
+      in one call.
     }
   }
 

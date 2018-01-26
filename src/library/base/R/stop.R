@@ -1,7 +1,7 @@
 #  File src/library/base/R/stop.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -64,6 +64,49 @@ stopifnot <- function(...)
 				     "%s is not TRUE",
 				     "%s are not all TRUE"),
 			    Dparse(cl.i))
+
+	    stop(simpleError(msg, call = sys.call(-1)))
+	}
+    }
+    invisible()
+}
+
+## stopifnot() " without ',' " :
+stopIfnot <- function(exprs, local = TRUE)
+{
+    if(!is.expression(exprs))
+        exprs <- as.expression(exprs)
+    envir <- if (isTRUE(local)) parent.frame()
+	     else if(isFALSE(local)) .GlobalEnv
+	     else if (is.environment(local)) local
+	     else stop("'local' must be TRUE, FALSE or an environment")
+    Dparse <- function(call, cutoff = 60L) {
+	ch <- deparse(call, width.cutoff = cutoff)
+	if(length(ch) > 1L) paste(ch[1L], "....") else ch
+    }
+    head <- function(x, n = 6L) ## basically utils:::head.default()
+	x[seq_len(if(n < 0L) max(length(x) + n, 0L) else min(n, length(x)))]
+    abbrev <- function(ae, n = 3L)
+	paste(c(head(ae, n), if(length(ae) > n) "...."), collapse="\n  ")
+    for (cl in exprs) {
+	r <- withCallingHandlers(
+		tryCatch(eval(cl, envir=envir),
+			 error = function(e) { e$call <- cl; stop(e) }),
+		warning = function(w) { w$call <- cl; w })
+	if (!(is.logical(r) && !anyNA(r) && all(r))) {
+	    msg <- ## special case for decently written 'all.equal(*)':
+		if(is.call(cl) && identical(cl[[1]], quote(all.equal)) &&
+		   (is.null(ni <- names(cl)) || length(cl) == 3L ||
+		    length(cl <- cl[!nzchar(ni)]) == 3L))
+
+		    sprintf(gettext("%s and %s are not equal:\n  %s"),
+			    Dparse(cl[[2]]),
+			    Dparse(cl[[3]]), abbrev(r))
+		else
+		    sprintf(ngettext(length(r),
+				     "%s is not TRUE",
+				     "%s are not all TRUE"),
+			    Dparse(cl))
 
 	    stop(simpleError(msg, call = sys.call(-1)))
 	}
