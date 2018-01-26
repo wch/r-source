@@ -7,16 +7,16 @@
 
 \section{\Rlogo CHANGES IN R-devel}{
 
-  \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
-    \itemize{
-      \item The default version for \code{save()}, \code{saveRDS()},
-      \code{serialize()} and similar has been changed to \samp{3}.
-      Objects saved with version 3 are not readable by earlier versions
-      of \R.
+%%   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
+%%     \itemize{
+%%       \item The default version for \code{save()}, \code{saveRDS()},
+%%       \code{serialize()} and similar has been changed to \samp{3}.
+%%       Objects saved with version 3 are not readable by earlier versions
+%%       of \R.
 
-      This includes saved workspaces.
-    }
-  }
+%%       This includes saved workspaces.
+%%     }
+%%   }
 
   \subsection{NEW FEATURES}{
     \itemize{
@@ -288,8 +288,6 @@
 
       \item When a package is found more than once, the warning from
       \code{find.package(*, verbose=TRUE)} lists all library locations.
-
-      \item By default, packages are now byte-compiled on installation.
     }
   }
 
@@ -320,6 +318,12 @@
       test-suite-management packages available and (for the time being)
       works around a common omission of \CRANpkg{rmarkdown} from the
       \samp{VignetteBuilder} field.
+    }
+  }
+
+  \subsection{PACKAGE INSTALLATION}{
+    \itemize{
+      \item By default, packages are now byte-compiled on installation.
     }
   }
 
