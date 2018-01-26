@@ -288,6 +288,9 @@
 
       \item When a package is found more than once, the warning from
       \code{find.package(*, verbose=TRUE)} lists all library locations.
+
+      \item POSIXt objects can now also be rounded or truncated to month
+      or year.
     }
   }
 
