@@ -17,10 +17,20 @@
       \item The version of LAPACK included in the sources has been
       updated to 3.8.0 (for the routines used by \R, a very minor bug-fix
       change).
-      
+
       \item \code{parallel::detectCores(logical = FALSE)} is ignored on
       Linux systems, since the information is not available with
       virtualized OSes. 
+    }
+  }
+
+  \subsection{INSTALLATION on a UNIX-ALIKE}{
+    \itemize{
+      \item \command{configure} will use \command{pkg-config} to find the
+      flags to link to \code{jpeg} if available (as it should be for the
+      recently-released \code{jpeg-9c} and \code{libjpeg-turbo}).  (This
+      amends the code added in \R 3.3.0 as the module name in
+      \code{jpeg-9c} is not what that tested for.) 
     }
   }
 
