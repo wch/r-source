@@ -161,7 +161,7 @@
       set the \code{width} option when the terminal is
       resized.  Suggested by Ralf Goertz.
 
-      \item If multiple \code{on.exit} expressions are set using
+      \item If multiple \code{on.exit()} expressions are set using
       \code{add = TRUE} then all expressions will now be run even if one
       signals an error.
 
@@ -339,12 +339,6 @@
       \item Support for a system Java on macOS has been
       removed --- install a fairly recent Oracle Java (see \sQuote{R
 	Installation and Administration} §C.3.2).
-
-      \item \command{configure} will use \command{pkg-config} to find the
-      flags to link to \code{jpeg} if available (as it should be for
-      \code{jpeg-9c} and \code{libjpeg-turbo}).  (This amends the code
-      added in \R 3.3.0 as the module name in \code{jpeg-9c} is not what
-      that tested for.)
 
       \item \command{configure} works harder to set additional flags in
       \samp{SAFE_FFLAGS} only where necessary, and to use flags which
@@ -561,6 +555,16 @@
     }
   }
 
+  \subsection{INSTALLATION on a UNIX-ALIKE}{
+    \itemize{
+      \item \command{configure} will use \command{pkg-config} to find the
+      flags to link to \code{jpeg} if available (as it should be for the
+      recently-released \code{jpeg-9c} and \code{libjpeg-turbo}).  (This
+      amends the code added in \R 3.3.0 as the module name in
+      \code{jpeg-9c} is not what that tested for.) 
+    }
+  }
+
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item \code{Sys.timezone(location = FALSE)} (which was a stop-gap
@@ -593,8 +597,9 @@
       \item \code{sum(<large ints>, <stuff>)} is more consistent.
       (\PR{17372})
 
-      \item \code{rf()} and \code{rbeta()} now also work correctly when \code{ncp}
-      is not scalar, notably when (partly) \code{NA}.  (\PR{17375})
+      \item \code{rf()} and \code{rbeta()} now also work correctly when
+      \code{ncp} is not scalar, notably when (partly) \code{NA}.
+      (\PR{17375})
 
       \item \code{is.na(NULL)} no longer warns.  (\PR{16107})
     }
