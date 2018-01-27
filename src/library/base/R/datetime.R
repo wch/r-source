@@ -332,7 +332,7 @@ as.double.POSIXlt <- function(x, ...) as.double(as.POSIXct(x))
 
 ## POSIXlt is not primarily a list, but primarily an abstract vector of
 ## time stamps:
-length.POSIXlt <- function(x) length(x[[1L]])
+length.POSIXlt <- function(x) length(unclass(x)[[1L]])
 
 format.POSIXlt <- function(x, format = "", usetz = FALSE, ...)
 {
@@ -1157,7 +1157,7 @@ function(x, units = c("secs", "mins", "hours", "days", "months", "years"))
 
 `[.POSIXlt` <- function(x, ..., drop = TRUE)
 {
-    val <- lapply(X = x, FUN = "[", ..., drop = drop)
+    val <- lapply(X = unclass(x), FUN = "[", ..., drop = drop)
     attributes(val) <- attributes(x) # need to preserve timezones
     val
 }
@@ -1191,7 +1191,7 @@ rep.POSIXct <- function(x, ...)
 
 rep.POSIXlt <- function(x, ...)
 {
-    y <- lapply(X = x, FUN = rep, ...)
+    y <- lapply(X = unclass(x), FUN = rep, ...)
     attributes(y) <- attributes(x)
     y
 }
@@ -1313,4 +1313,11 @@ OlsonNames <- function(tzdir = NULL)
     ans <- grep("^[ABCDEFGHIJKLMNOPQRSTUVWXYZ]", x, value = TRUE)
     if(!is.null(ver)) attr(ans, "Version") <- ver
     ans
+}
+
+`[[.POSIXlt` <- function(x, ..., drop = TRUE)
+{
+    val <- lapply(X = unclass(x), FUN = "[[", ..., drop = drop)
+    attributes(val) <- attributes(x) # need to preserve timezones
+    val
 }
