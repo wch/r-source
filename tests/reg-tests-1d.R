@@ -1555,6 +1555,29 @@ assert({
 ## several of these failed for a bit more than a day in R-devel
 
 
+## PR#17369 and PR#17381 -- duplicated() & unique() data frame methods:
+d22 <- data.frame(x = c(.3 + .6, .9), y = 1)
+d21 <- d22[,"x", drop=FALSE]
+dRT <- data.frame(x = c("\r", "\r\r"), y = c("\r\r", "\r"))
+assert({
+    identical(unique(d22), d22) # err
+    is.data.frame(d21)
+    identical(dim(d21), 2:1)
+    identical(unique(d21), d21)
+    identical(unique(dRT), dRT) # err
+    })
+## with a POSIXct column (with tz during Daylight Saving change):
+Sys.setenv("TZ" = "Australia/Melbourne") # <== crucial (for most)!
+x <- as.POSIXct(paste0("2013-04-06 ", 13:17, ":00:00"), tz = "UTC")
+attr(x, "tzone") <- ""
+(xMelb <- as.POSIXct(x, tz = "Australia/Melbourne"))# shows both AEDT & AEST
+dMb <- data.frame(x = xMelb, y = 1)
+assert({
+    identical(unique(dMb), dMb)
+    identical(anyDuplicated(dMb), 0L)
+}) # both differing in R <= 3.4.x
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
