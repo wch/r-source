@@ -292,9 +292,9 @@
       \item POSIXt objects can now also be rounded or truncated to month
       or year.
 
-      \item EXPERIMENTAL -- will change: \code{stopIfnot()} is a new
-      alternative to \code{stopifnot()}, nicer to use when testing
-      several expressions in one call.
+      \item \code{stopifnot()} can be used alternatively via new argument
+      \code{exprs} which is nicer and useful when testing several
+      expressions in one call.
     }
   }
 
@@ -551,7 +551,7 @@
 
       \item \code{parallel::detectCores(logical = FALSE)} is ignored on
       Linux systems, since the information is not available with
-      virtualized OSes. 
+      virtualized OSes.
     }
   }
 
@@ -561,7 +561,7 @@
       flags to link to \code{jpeg} if available (as it should be for the
       recently-released \code{jpeg-9c} and \code{libjpeg-turbo}).  (This
       amends the code added in \R 3.3.0 as the module name in
-      \code{jpeg-9c} is not what that tested for.) 
+      \code{jpeg-9c} is not what that tested for.)
     }
   }
 

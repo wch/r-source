@@ -6,7 +6,6 @@
 \name{stopifnot}
 \title{Ensure the Truth of R Expressions}
 \alias{stopifnot}
-\alias{stopIfnot}
 \concept{assertion}
 \description{
   If any of the expressions (in \code{\dots} or \code{exprs}) are not
@@ -14,22 +13,29 @@
   an error message indicating the \emph{first} expression which was not true.
 }
 \usage{
-stopifnot(\dots)
-stopIfnot(exprs, local = TRUE)
+stopifnot(\dots, exprs, local = TRUE)
 }
 \arguments{
-  \item{\dots, exprs}{any number of (\code{\link{logical}}) \R expressions,
-    which should evaluate to \code{\link{TRUE}}.}
-  \item{local}{indicates the \code{\link{environment}} in which the
-    expressions should be evaluated; by default the one where
-    \code{stopIfnot()} has been called from.}
+  \item{\dots, exprs}{any number of (typically but not necessarily
+    \code{\link{logical}}) \R expressions, which should evaluate to
+    \code{\link{TRUE}}.  Use \emph{either} \code{\dots} \emph{or}
+    \code{exprs}, the latter typically an unevaluated expression of the
+    form \preformatted{\{
+   expr1
+   expr2
+   ....
+\}}
+  }
+  \item{local}{(only when \code{exprs} is used:) indicates the
+    \code{\link{environment}} in which the expressions should be
+    evaluated; by default the one where \code{stopifnot()} has been called from.}
 }
 \details{
   This function is intended for use in regression tests or also argument
   checking of functions, in particular to make them easier to read.
 
-  \code{stopifnot(A, B)} or equivalently \code{stopIfnot({A ; B})} are conceptually equivalent to
-\preformatted{ \{ if(any(is.na(A)) || !all(A)) stop(...);
+  \code{stopifnot(A, B)} or equivalently \code{stopifnot(exprs= {A ;
+      B})} are conceptually equivalent to \preformatted{ \{ if(any(is.na(A)) || !all(A)) stop(...);
    if(any(is.na(B)) || !all(B)) stop(...) \}}
 
   Since \R version 3.5.0, expressions \emph{are} evaluated sequentially,
@@ -40,10 +46,11 @@ stopIfnot(exprs, local = TRUE)
   contains the full \code{stopifnot} call, but just the erroneous
   expression.
 
-  Also, since \R version 3.5.0, \code{stopIfnot()} can be used
+  Also, since \R version 3.5.0, \code{stopifnot(exprs = { ... })} can be used
   alternatively and may be preferable in the case of several
   expressions, as they are more conveniently evaluated interactively
-  (\dQuote{no extraneous \code{,} }).
+  (\dQuote{no extraneous \code{,} }).  At the beginning of a testing \R
+  script, it may further be useful to set the \dQuote{alias}, \preformatted{ assert <- function(exprs) stopifnot(exprs = exprs) }
 
   Since \R version 3.4.0, when an expression (from \code{\dots}) is not
   true \emph{and} is a call to \code{\link{all.equal}}, the error
@@ -68,7 +75,7 @@ op <- options(error = expression(NULL))
 
 stopifnot(all.equal(pi, 3.141593),  2 < 2, all(1:10 < 12), "a" < "b")
 ## More convenient for interactive "line by line" evaluation:
-stopIfnot({
+stopifnot(exprs = {
   all.equal(pi, 3.1415927)
   2 < 2
   all(1:10 < 12)

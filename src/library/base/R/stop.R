@@ -31,9 +31,26 @@ stop <- function(..., call. = TRUE, domain = NULL)
         .Internal(stop(call., .makeMessage(..., domain = domain)))
 }
 
-stopifnot <- function(...)
+stopifnot <- function(..., exprs, local = TRUE)
 {
-    cl <- match.call()[-1L]
+    missE <- missing(exprs)
+    if(missE) {  ## use '...' instead of exprs
+        cl <- match.call()[-1L]
+        ## ?? not back-compatible; get rid of need for explicit 'exprs=':
+        ## if(...length() == 1L && identical(cl[[c(1L,1L)]], quote(`{`)))
+        ##     exprs <- as.expression(as.list(cl[[1L]][-1L]))
+        ## missE <- FALSE
+    }
+    else {
+        if(...length())
+            stop("Must use 'exprs' or unnamed expressions, but not both")
+        if(!is.expression(exprs))
+            exprs <- as.expression(exprs)
+        envir <- if (isTRUE(local)) parent.frame()
+                 else if(isFALSE(local)) .GlobalEnv
+                 else if (is.environment(local)) local
+                 else stop("'local' must be TRUE, FALSE or an environment")
+    }
     Dparse <- function(call, cutoff = 60L) {
 	ch <- deparse(call, width.cutoff = cutoff)
 	if(length(ch) > 1L) paste(ch[1L], "....") else ch
@@ -43,11 +60,11 @@ stopifnot <- function(...)
     abbrev <- function(ae, n = 3L)
 	paste(c(head(ae, n), if(length(ae) > n) "...."), collapse="\n  ")
     ## benv <- baseenv()
-    for (i in seq_along(cl)) {
-	cl.i <- cl[[i]]
+    for (i in if(missE) seq_along(cl) else length(exprs)) {
+	cl.i <- (if(missE) cl else exprs)[[i]]
 	## r <- eval(cl.i, ..)   # with correct warn/err messages:
 	r <- withCallingHandlers(
-		tryCatch(...elt(i),
+		tryCatch(if(missE) ...elt(i) else eval(cl.i, envir=envir),
 			 error = function(e) { e$call <- cl.i; stop(e) }),
 		warning = function(w) { w$call <- cl.i; w })
 	if (!(is.logical(r) && !anyNA(r) && all(r))) {
@@ -64,49 +81,6 @@ stopifnot <- function(...)
 				     "%s is not TRUE",
 				     "%s are not all TRUE"),
 			    Dparse(cl.i))
-
-	    stop(simpleError(msg, call = sys.call(-1)))
-	}
-    }
-    invisible()
-}
-
-## stopifnot() " without ',' " :
-stopIfnot <- function(exprs, local = TRUE)
-{
-    if(!is.expression(exprs))
-        exprs <- as.expression(exprs)
-    envir <- if (isTRUE(local)) parent.frame()
-	     else if(isFALSE(local)) .GlobalEnv
-	     else if (is.environment(local)) local
-	     else stop("'local' must be TRUE, FALSE or an environment")
-    Dparse <- function(call, cutoff = 60L) {
-	ch <- deparse(call, width.cutoff = cutoff)
-	if(length(ch) > 1L) paste(ch[1L], "....") else ch
-    }
-    head <- function(x, n = 6L) ## basically utils:::head.default()
-	x[seq_len(if(n < 0L) max(length(x) + n, 0L) else min(n, length(x)))]
-    abbrev <- function(ae, n = 3L)
-	paste(c(head(ae, n), if(length(ae) > n) "...."), collapse="\n  ")
-    for (cl in exprs) {
-	r <- withCallingHandlers(
-		tryCatch(eval(cl, envir=envir),
-			 error = function(e) { e$call <- cl; stop(e) }),
-		warning = function(w) { w$call <- cl; w })
-	if (!(is.logical(r) && !anyNA(r) && all(r))) {
-	    msg <- ## special case for decently written 'all.equal(*)':
-		if(is.call(cl) && identical(cl[[1]], quote(all.equal)) &&
-		   (is.null(ni <- names(cl)) || length(cl) == 3L ||
-		    length(cl <- cl[!nzchar(ni)]) == 3L))
-
-		    sprintf(gettext("%s and %s are not equal:\n  %s"),
-			    Dparse(cl[[2]]),
-			    Dparse(cl[[3]]), abbrev(r))
-		else
-		    sprintf(ngettext(length(r),
-				     "%s is not TRUE",
-				     "%s are not all TRUE"),
-			    Dparse(cl))
 
 	    stop(simpleError(msg, call = sys.call(-1)))
 	}
