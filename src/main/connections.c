@@ -3854,7 +3854,8 @@ SEXP attribute_hidden do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
 	buf[nbuf] = '\0';
 	/* Remove UTF-8 BOM */
 	const char *qbuf = buf;
-	if (nread == 0 && utf8locale &&
+	// avoid valgrind warning if < 3 bytes
+	if (nread == 0 && utf8locale && strlen(buf) >= 3 &&
 	    !memcmp(buf, "\xef\xbb\xbf", 3)) qbuf = buf + 3;
 	SET_STRING_ELT(ans, nread, mkCharCE(qbuf, oenc));
 	if (warn && strlen(buf) < nbuf)
