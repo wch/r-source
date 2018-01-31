@@ -985,6 +985,9 @@ SEXP namesgets(SEXP vec, SEXP val)
     return vec;
 }
 
+#define isS4Environment(x) (TYPEOF(x) == S4SXP &&	\
+			    isEnvironment(R_getS4DataSlot(x, ENVSXP)))
+
 SEXP attribute_hidden do_names(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans;
@@ -994,11 +997,11 @@ SEXP attribute_hidden do_names(SEXP call, SEXP op, SEXP args, SEXP env)
 	return(ans);
     PROTECT(args = ans);
     ans = CAR(args);
-    if (isVector(ans) || isList(ans) || isLanguage(ans) ||
-	IS_S4_OBJECT(ans))
-	ans = getAttrib(ans, R_NamesSymbol);
-    else if (isEnvironment(ans))
+    if (isEnvironment(ans) || isS4Environment(ans))
 	ans = R_lsInternal3(ans, TRUE, FALSE);
+    else if (isVector(ans) || isList(ans) || isLanguage(ans) ||
+	     IS_S4_OBJECT(ans))
+	ans = getAttrib(ans, R_NamesSymbol);
     else ans = R_NilValue;
     UNPROTECT(1);
     return ans;
