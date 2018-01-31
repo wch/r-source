@@ -284,21 +284,30 @@ trace("f", quote(if(any(y < 0)) yOrig <- y),
 ## Enter the browser just before stop() is called.  First, find
 ## the step numbers
 
+untrace(f) # (as it has changed f's body !)
 as.list(body(f))
-as.list(body(f)[[3]])
+as.list(body(f)[[3]]) # -> stop(..) is [[4]]
 
 ## Now call the browser there
 
 trace("f", quote(browser(skipCalls = 4)), at = list(c(3,4)))
+\dontrun{
+f(-1,2) # --> enters browser just before stop(..)
+}
 
 ## trace a utility function, with recover so we
 ## can browse in the calling functions as well.
 
 trace("as.matrix", recover)
 
-## turn off the tracing
+## turn off the tracing (that happened above)
 
 untrace(c("f", "as.matrix"))
+
+\dontrun{
+## Useful to find how system2() is called in a higher-up function:
+trace(base::system2, quote(print(ls.str())))
+}
 
 ##-------- Tracing hidden functions : need 'where = *'
 ##
