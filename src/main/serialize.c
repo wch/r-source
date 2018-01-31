@@ -688,7 +688,6 @@ static int HashGet(SEXP item, SEXP ht)
 #define BCREPREF          243
 #define EMPTYENV_SXP	  242
 #define BASEENV_SXP	  241
-#define ALTREP_SXP	  240
 
 /* The following are needed to preserve attribute information on
    expressions in the constant pool of byte code objects. This is
@@ -702,6 +701,8 @@ static int HashGet(SEXP item, SEXP ht)
    don't need to be handled as a special case.  LT */
 #define ATTRLANGSXP       240
 #define ATTRLISTSXP       239
+
+#define ALTREP_SXP	  238
 
 /*
  * Type/Flag Packing and Unpacking
