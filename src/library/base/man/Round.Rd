@@ -1,6 +1,6 @@
 % File src/library/base/man/Round.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Round}
@@ -52,8 +52,8 @@ signif(x, digits = 6)
   individually or via the \code{\link[=S3groupGeneric]{Math}} group
   generic.
 
-  Note that for rounding off a 5, the IEC 60559 standard is expected to
-  be used, \sQuote{\emph{go to the even digit}}.
+  Note that for rounding off a 5, the IEC 60559 standard (formerly
+  \sQuote{IEEE}) is expected to be used, \sQuote{\emph{go to the even digit}}.
   Therefore \code{round(0.5)} is \code{0} and \code{round(-1.5)} is
   \code{-2}.  However, this is dependent on OS services and on
   representation error (since e.g.\sspace{}\code{0.15} is not represented
@@ -98,9 +98,11 @@ signif(x, digits = 6)
   \code{\link{as.integer}}.
 }
 \examples{
-round(.5 + -2:4) # IEEE rounding: -2  0  0  2  2  4  4
+round(.5 + -2:4) # IEEE / IEC rounding: -2  0  0  2  2  4  4
+## (this is *good* behaviour -- do *NOT* report it as bug !)
+
 ( x1 <- seq(-2, 4, by = .5) )
-round(x1) #-- IEEE rounding !
+round(x1) #-- IEEE / IEC rounding !
 x1[trunc(x1) != floor(x1)]
 x1[round(x1) != floor(x1 + .5)]
 (non.int <- ceiling(x1) != floor(x1))
