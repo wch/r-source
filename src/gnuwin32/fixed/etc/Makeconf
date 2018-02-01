@@ -141,7 +141,7 @@ OBJC_LIBS = -lobjc
 OBJCXX =
 R_ARCH =
 RANLIB = $(BINPREF)ranlib
-SAFE_FFLAGS = -O3 -ffloat-store
+SAFE_FFLAGS = -O2 -msse2 -mfpmath=sse
 SED = sed
 ## it seems some makes (but not ours) get upset if SHELL is set.
 # SHELL = /bin/sh

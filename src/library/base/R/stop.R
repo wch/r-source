@@ -1,7 +1,7 @@
 #  File src/library/base/R/stop.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -31,9 +31,26 @@ stop <- function(..., call. = TRUE, domain = NULL)
         .Internal(stop(call., .makeMessage(..., domain = domain)))
 }
 
-stopifnot <- function(...)
+stopifnot <- function(..., exprs, local = TRUE)
 {
-    cl <- match.call()[-1L]
+    missE <- missing(exprs)
+    if(missE) {  ## use '...' instead of exprs
+        cl <- match.call()[-1L]
+        ## ?? not back-compatible; get rid of need for explicit 'exprs=':
+        ## if(...length() == 1L && identical(cl[[c(1L,1L)]], quote(`{`)))
+        ##     exprs <- as.expression(as.list(cl[[1L]][-1L]))
+        ## missE <- FALSE
+    }
+    else {
+        if(...length())
+            stop("Must use 'exprs' or unnamed expressions, but not both")
+        if(!is.expression(exprs))
+            exprs <- as.expression(exprs)
+        envir <- if (isTRUE(local)) parent.frame()
+                 else if(isFALSE(local)) .GlobalEnv
+                 else if (is.environment(local)) local
+                 else stop("'local' must be TRUE, FALSE or an environment")
+    }
     Dparse <- function(call, cutoff = 60L) {
 	ch <- deparse(call, width.cutoff = cutoff)
 	if(length(ch) > 1L) paste(ch[1L], "....") else ch
@@ -43,11 +60,11 @@ stopifnot <- function(...)
     abbrev <- function(ae, n = 3L)
 	paste(c(head(ae, n), if(length(ae) > n) "...."), collapse="\n  ")
     ## benv <- baseenv()
-    for (i in seq_along(cl)) {
-	cl.i <- cl[[i]]
+    for (i in if(missE) seq_along(cl) else length(exprs)) {
+	cl.i <- (if(missE) cl else exprs)[[i]]
 	## r <- eval(cl.i, ..)   # with correct warn/err messages:
 	r <- withCallingHandlers(
-		tryCatch(...elt(i),
+		tryCatch(if(missE) ...elt(i) else eval(cl.i, envir=envir),
 			 error = function(e) { e$call <- cl.i; stop(e) }),
 		warning = function(w) { w$call <- cl.i; w })
 	if (!(is.logical(r) && !anyNA(r) && all(r))) {

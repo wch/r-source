@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2017  The R Core Team
+ *  Copyright (C) 1997--2018  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -67,11 +67,11 @@ static R_INLINE int integerOneIndex(int i, R_xlen_t len, SEXP call)
 
 /* Utility used (only in) do_subassign2_dflt(), i.e. "[[<-" in ./subassign.c : */
 R_xlen_t attribute_hidden
-OneIndex(SEXP x, SEXP s, R_xlen_t len, int partial, SEXP *newname,
+OneIndex(SEXP x, SEXP s, R_xlen_t nx, int partial, SEXP *newname,
 	 int pos, SEXP call)
 {
     SEXP names;
-    R_xlen_t i, indx, nx;
+    R_xlen_t i, indx;
     const void *vmax;
 
     if (pos < 0 && length(s) > 1) {
@@ -88,16 +88,16 @@ OneIndex(SEXP x, SEXP s, R_xlen_t len, int partial, SEXP *newname,
     switch(TYPEOF(s)) {
     case LGLSXP:
     case INTSXP:
-	indx = integerOneIndex(INTEGER_ELT(s, pos), len, call);
+	indx = integerOneIndex(INTEGER_ELT(s, pos), nx, call);
 	break;
     case REALSXP:
-	indx = integerOneIndex((int)REAL_ELT(s, pos), len, call);
+	indx = integerOneIndex((int)REAL_ELT(s, pos), nx, call);
 	break;
     case STRSXP:
 	vmax = vmaxget();
-	nx = xlength(x);
-	names = PROTECT(getAttrib(x, R_NamesSymbol));
+	names = getAttrib(x, R_NamesSymbol);
 	if (names != R_NilValue) {
+	    PROTECT(names);
 	    /* Try for exact match */
 	    for (i = 0; i < nx; i++) {
 		const char *tmp = translateChar(STRING_ELT(names, i));
@@ -121,8 +121,8 @@ OneIndex(SEXP x, SEXP s, R_xlen_t len, int partial, SEXP *newname,
 		    }
 		}
 	    }
+	    UNPROTECT(1); /* names */
 	}
-	UNPROTECT(1); /* names */
 	if (indx == -1)
 	    indx = nx;
 	*newname = STRING_ELT(s, pos);
@@ -130,7 +130,6 @@ OneIndex(SEXP x, SEXP s, R_xlen_t len, int partial, SEXP *newname,
 	break;
     case SYMSXP:
 	vmax = vmaxget();
-	nx = xlength(x);
 	names = getAttrib(x, R_NamesSymbol);
 	if (names != R_NilValue) {
 	    PROTECT(names);

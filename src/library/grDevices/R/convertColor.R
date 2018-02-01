@@ -1,7 +1,7 @@
 #  File src/library/grDevices/R/convertColor.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -301,8 +301,11 @@ adjustcolor <- function(col, alpha.f = 1, red.f = 1, green.f = 1,
                         blue.f = 1, offset = c(0,0,0,0),
                         transform = diag(c(red.f, green.f, blue.f, alpha.f)))
 {
-    stopifnot(length(offset) %% 4L == 0L,
-              !is.null(d <- dim(transform)), d == c(4L, 4L))
+    stopifnot(exprs = {
+        length(offset) %% 4L == 0L
+        !is.null(d <- dim(transform))
+        d == c(4L, 4L)
+    })
     x <- col2rgb(col, alpha = TRUE)/255
     x[] <- pmax(0, pmin(1,
                         transform %*% x +

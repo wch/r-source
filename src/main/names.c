@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2017  The R Core Team
- *  Copyright (C) 2003--2017  The R Foundation
+ *  Copyright (C) 1997--2018  The R Core Team
+ *  Copyright (C) 2003--2018  The R Foundation
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1240,7 +1240,8 @@ SEXP install(const char *name)
 /* This function is equivalent to install(CHAR(charSXP)), but faster.
    Like the equivalent code pattern, it discards the encoding information,
    hence in almost all cases installTrChar should be used, instead. */
-SEXP installChar(SEXP charSXP)
+attribute_hidden
+SEXP installNoTrChar(SEXP charSXP)
 {
     SEXP sym;
     int i, hashcode;
@@ -1353,9 +1354,6 @@ SEXP attribute_hidden do_internal(SEXP call, SEXP op, SEXP args, SEXP env)
 	    errorcall(call,
 		      ".Internal(%s()) not called from a base namespace\n", fn);
 	if (strlen(ns)
-#if CHECK_INTERNALS < 2
-	    && strcmp(ns, "Matrix")
-#endif
 	    && strcmp(ns, "base") && strcmp(ns, "tools")
 	    && strcmp(ns, "utils") && strcmp(ns, "compiler"))
 	    errorcall(call,

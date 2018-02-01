@@ -195,13 +195,7 @@ static void PrintLanguageEtc(SEXP s, Rboolean useSource, Rboolean isClosure)
     }
     PROTECT(t);
     for (i = 0; i < LENGTH(t); i++) {
-#ifdef rev72839__not_ok_eg_for_escaped_chars
-	// did solve PR#16732
-	const char *ctmp = EncodeString(STRING_ELT(t, i),  0, 0, Rprt_adj_none);
-	Rprintf("%s\n", ctmp); /* translated */
-#else
  	Rprintf("%s\n", translateChar(STRING_ELT(t, i))); // translate: for srcref part (PR#16732)
-#endif
     }
     UNPROTECT(1);
     if (isClosure) {

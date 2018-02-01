@@ -1,5 +1,7 @@
 ## Regression tests for R >= 3.4.0
 
+assert <- function(exprs) stopifnot(exprs = exprs)
+
 pdf("reg-tests-1d.pdf", encoding = "ISOLatin1.enc")
 .pt <- proc.time()
 
@@ -67,10 +69,12 @@ is.NA <- function(.) is.na(.) & !is.nan(.)
 (iNA <-  apply(zRI, 2, function(.) any(is.NA (.)))) # has non-NaN NA's
 ## use iNA for consistency check once FIXME happened
 m1z <- sapply(z, match, table = z)
-stopifnot(identical(m1z, mz),
-	  identical(m1z == 1L,             iNA),
-          identical(match(z, NA, 0) == 1L, iNA),
-	  identical(mz[mz != 1L], c(2L, 4L, 9L, 10L, 12L, 2L, 2L, 2L, 9L)))
+assert({
+    identical(m1z, mz)
+    identical(m1z == 1L,             iNA)
+    identical(match(z, NA, 0) == 1L, iNA)
+    identical(mz[mz != 1L], c(2L, 4L, 9L, 10L, 12L, 2L, 2L, 2L, 9L))
+})
 ## m1z uses match(x, *) with length(x) == 1 and failed in R 3.3.0
 set.seed(17)
 for(. in 1:20) {
@@ -90,11 +94,13 @@ fz <- format(z <- c(outer(-1:2, 1i*(-1:1), `+`)))
 (fz0 <- sub("^ +","",z))
 r <- c(-1:1,100, 1e20); z2 <- c(outer(pi*r, 1i*r, `+`)); z2
 dz2 <- deparse(z2, control="digits17")
-stopifnot(identical(deparse(z, 200, control = "digits17"),
-                    paste0("c(", paste(fz0, collapse=", "), ")")),
-          print((sum(nchar(dz2)) - 2) / length(z2)) < 22, # much larger in <= 3.3.0
-          ## deparse <-> parse equivalence, 17 digits should be perfect:
-	  all.equal(z2, eval(parse(text = dz2)), tolerance = 3e-16)) # seen 2.2e-35 on 32b
+assert({
+    identical(deparse(z, 200, control = "digits17"),
+              paste0("c(", paste(fz0, collapse=", "), ")"))
+    print((sum(nchar(dz2)) - 2) / length(z2)) < 22 # much larger in <= 3.3.0
+    ## deparse <-> parse equivalence, 17 digits should be perfect:
+    all.equal(z2, eval(parse(text = dz2)), tolerance = 3e-16) # seen 2.2e-35 on 32b
+})
 ## deparse() for these was "ugly" in R <= 3.3.x
 
 ## deparse of formals of a function
@@ -112,9 +118,11 @@ stopifnot(identical(length(      baseenv()),
 ## "srcref"s of closures
 op <- options(keep.source = TRUE)# as in interactive use
 getOption("keep.source")
-stopifnot(identical(function(){}, function(){}),
-          identical(function(x){x+1},
-                    function(x){x+1})); options(op)
+assert({
+    identical(function(){}, function(){})
+    identical(function(x){x+1},
+              function(x){x+1})
+}); options(op)
 ## where all FALSE in 2.14.0 <= R <= 3.3.x because of "srcref"s etc
 
 
@@ -127,10 +135,12 @@ stopifnot(identical(sort(data, decreasing = TRUE, method = "radix"),
 
 ## as.factor(<named integer>)
 ni <- 1:2; Nni <- names(ni) <- c("A","B")
-stopifnot(identical(Nni, names(as.factor(ni))),
-	  identical(Nni, names(   factor(ni))),
-	  identical(Nni, names(   factor(ni+0))), # +0 : "double"
-	  identical(Nni, names(as.factor(ni+0))))
+assert({
+    identical(Nni, names(as.factor(ni)))
+    identical(Nni, names(   factor(ni)))
+    identical(Nni, names(   factor(ni+0))) # +0 : "double"
+    identical(Nni, names(as.factor(ni+0)))
+})
 ## The first one lost names in  3.1.0 <= R <= 3.3.0
 
 
@@ -160,11 +170,13 @@ ddd <- diff(dd)
 d3d <- diff(ddd)
 d7d <- diff(d, differences = 7)
 (ldd <- list(dd=dd, ddd=ddd, d3d=d3d, d7d=d7d))
-stopifnot(identical(ddd, diff(d, differences = 2)),
-	  identical(d3d, diff(d, differences = 3)))
-stopifnot(vapply(ldd, units, "") == "secs",
-	  vapply(ldd, class, "") == "difftime",
-	  lengths(c(list(d), ldd)) == c(11:8, 11-7))
+assert({
+    identical(ddd, diff(d, differences = 2))
+    identical(d3d, diff(d, differences = 3))
+    vapply(ldd, units, "") == "secs"
+    vapply(ldd, class, "") == "difftime"
+    lengths(c(list(d), ldd)) == c(11:8, 11-7)
+})
 ## was losing time units in R <= 3.3.0
 
 
@@ -197,10 +209,11 @@ op <- options(warn = 2)# no warnings allowed
 (fN <- factor(c(rep(c("A","B"), 2), NA), exclude = NULL))
 (tN  <- table(fN, exclude = "B"))       ## had extraneous "B"
 (tN. <- table(fN, exclude = c("B",NA))) ## had extraneous "B" and NA
-stopifnot(identical(c(tN1), c(`NA`=1L, `NaN`=1L, NbN=1L))
-        , identical(c(tN),  structure(2:1, .Names = c("A", NA)))
-        , identical(c(tN.), structure(2L,  .Names = "A"))
-)
+assert({
+    identical(c(tN1), c(`NA`=1L, `NaN`=1L, NbN=1L))
+    identical(c(tN),  structure(2:1, .Names = c("A", NA)))
+    identical(c(tN.), structure(2L,  .Names = "A"))
+})
 ## both failed in R <= 3.3.1
 stopifnot(identical(names(dimnames(table(data.frame(Titanic[2,2,,])))),
 		    c("Age", "Survived", "Freq"))) # was wrong for ~ 32 hours
@@ -231,55 +244,58 @@ lxy <-  lapply(xcl, function(X)
       lapply(u.opt, function(use) table(x, y, exclude=X, useNA=use))))
 op <- options(warn = 2)# no warnings allowed
 
-stopifnot(
-    vapply(lt, function(i) all(vapply(i, class, "") == "table"), NA),
-    vapply(ly, function(i) all(vapply(i, class, "") == "table"), NA),
+assert({
+    vapply(lt, function(i) all(vapply(i, class, "") == "table"), NA)
+    vapply(ly, function(i) all(vapply(i, class, "") == "table"), NA)
     vapply(lxy,function(i) all(vapply(i, class, "") == "table"), NA)
-    , identical((ltNA  <- lt [["NA"  ]]), lt [["NANaN"]])
-    , identical((ltNl  <- lt [["NULL"]]), lt [["none" ]])
-    , identical((lyNA  <- ly [["NA"  ]]), ly [["NANaN"]])
-    , identical((lyNl  <- ly [["NULL"]]), ly [["none" ]])
-    , identical((lxyNA <- lxy[["NA"  ]]), lxy[["NANaN"]])
-    , identical((lxyNl <- lxy[["NULL"]]), lxy[["none" ]])
-)
+    identical((ltNA  <- lt [["NA"  ]]), lt [["NANaN"]])
+    identical((ltNl  <- lt [["NULL"]]), lt [["none" ]])
+    identical((lyNA  <- ly [["NA"  ]]), ly [["NANaN"]])
+    identical((lyNl  <- ly [["NULL"]]), ly [["none" ]])
+    identical((lxyNA <- lxy[["NA"  ]]), lxy[["NANaN"]])
+    identical((lxyNl <- lxy[["NULL"]]), lxy[["none" ]])
+})
 ## 'NULL' behaved special (2.8.0 <= R <= 3.3.1)  and
 ##  *all* tables in l0 and lt were == (1 0 2) !
 ltN1 <- ltNA[[1]]; lyN1 <- lyNA[[1]]; lxyN1 <- lxyNA[[1]]
 lNl1 <- ltNl[[1]]; lyl1 <- lyNl[[1]]; lxyl1 <- lxyNl[[1]]
 
-stopifnot(
-    vapply(names(ltNA) [-1], function(n) identical(ltNA [[n]], ltN1 ), NA),
-    vapply(names(lyNA) [-1], function(n) identical(lyNA [[n]], lyN1 ), NA),
-    vapply(names(lxyNA)[-1], function(n) identical(lxyNA[[n]], lxyN1), NA),
-    identical(lyN1, lyl1),
-    identical(2L, dim(ltN1)), identical(3L, dim(lyN1)),
-    identical(3L, dim(lNl1)),
-    identical(dimnames(ltN1), list(x = c("1","2"))),
-    identical(dimnames(lNl1), list(x = c("1","2", NA))),
-    identical(dimnames(lyN1), list(y = paste(4:6))),
-    identical(  1:0    , as.vector(ltN1)),
-    identical(c(1:0,3L), as.vector(lNl1)),
+assert({
+    vapply(names(ltNA) [-1], function(n) identical(ltNA [[n]], ltN1 ), NA)
+    vapply(names(lyNA) [-1], function(n) identical(lyNA [[n]], lyN1 ), NA)
+    vapply(names(lxyNA)[-1], function(n) identical(lxyNA[[n]], lxyN1), NA)
+    identical(lyN1, lyl1)
+    identical(2L, dim(ltN1)); identical(3L, dim(lyN1))
+    identical(3L, dim(lNl1))
+    identical(dimnames(ltN1), list(x = c("1","2")))
+    identical(dimnames(lNl1), list(x = c("1","2", NA)))
+    identical(dimnames(lyN1), list(y = paste(4:6)))
+    identical(  1:0    , as.vector(ltN1))
+    identical(c(1:0,3L), as.vector(lNl1))
     identical(c(1:2,1L), as.vector(lyN1))
-    , identical(c(1L, rep(0L, 5)), as.vector(lxyN1))
-    , identical(dimnames(lxyN1), c(dimnames(ltN1), dimnames(lyN1)))
-    , identical(c(1L,1:0), as.vector(table(3:1, exclude=1, useNA = "always")))
-    , identical(c(1L,1L ), as.vector(table(3:1, exclude=1)))
-)
+    identical(c(1L, rep(0L, 5)), as.vector(lxyN1))
+    identical(dimnames(lxyN1), c(dimnames(ltN1), dimnames(lyN1)))
+    identical(c(1L,1:0), as.vector(table(3:1, exclude=1, useNA = "always")))
+    identical(c(1L,1L ), as.vector(table(3:1, exclude=1)))
+})
 
 x3N <- c(1:3,NA)
 (tt <- table(x3N, exclude=NaN))
-stopifnot(tt == 1, length(nt <- names(tt)) == 4, is.na(nt[4])
-	, identical(tt, table(x3N, useNA = "ifany"))
-	, identical(tt, table(x3N, exclude = integer(0)))
-	, identical(t3N <- table(x3N), table(x3N, useNA="no"))
-	, identical(c(t3N), setNames(rep(1L, 3), as.character(1:3)))
-	##
-	, identical(c("2" = 1L), c(table(1:2, exclude=1) -> t12.1))
-	, identical(t12.1, table(1:2, exclude=1, useNA= "no"))
-	, identical(t12.1, table(1:2, exclude=1, useNA= "ifany"))
-	, identical(structure(1:0, .Names = c("2", NA)),
-		    c(     table(1:2, exclude=1, useNA= "always")))
-)
+assert({
+    tt == 1
+    length(nt <- names(tt)) == 4
+    is.na(nt[4])
+    identical(tt, table(x3N, useNA = "ifany"))
+    identical(tt, table(x3N, exclude = integer(0)))
+    identical(t3N <- table(x3N), table(x3N, useNA="no"))
+    identical(c(t3N), setNames(rep(1L, 3), as.character(1:3)))
+    ##
+    identical(c("2" = 1L), c(table(1:2, exclude=1) -> t12.1))
+    identical(t12.1, table(1:2, exclude=1, useNA= "no"))
+    identical(t12.1, table(1:2, exclude=1, useNA= "ifany"))
+    identical(structure(1:0, .Names = c("2", NA)),
+              c(     table(1:2, exclude=1, useNA= "always")))
+})
 options(op) # (revert to default)
 
 
@@ -309,14 +325,15 @@ stopifnot(0 == unlist(lapply(TF, function(L1)
 L3 <- c("A","B","C")
 f <- d <- factor(rep(L3, 2), levels = c(L3, "XX")); is.na(d) <- 3:4
 (dn <- addNA(d)) ## levels: A B C XX <NA>
-stopifnot(identical(levels(print(droplevels(dn))), c(L3, NA))
-	  ## only XX must be dropped; R <= 3.3.1 also dropped <NA>
-	  , identical(levels(droplevels(f)), L3)
-	  , identical(levels(droplevels(d)), L3) # do *not* add <NA> here
-	  , identical(droplevels(d ), d [, drop=TRUE])
-	  , identical(droplevels(f ), f [, drop=TRUE])
-	  , identical(droplevels(dn), dn[, drop=TRUE])
-	  )
+assert({
+    identical(levels(print(droplevels(dn))), c(L3, NA))
+    ## only XX must be dropped; R <= 3.3.1 also dropped <NA>
+    identical(levels(droplevels(f)), L3)
+    identical(levels(droplevels(d)), L3) # do *not* add <NA> here
+    identical(droplevels(d ), d [, drop=TRUE])
+    identical(droplevels(f ), f [, drop=TRUE])
+    identical(droplevels(dn), dn[, drop=TRUE])
+})
 
 
 ## summary.default() no longer rounds (just its print() method does):
@@ -329,9 +346,11 @@ replicate(256, { x <- rnorm(2+rpois(1,pi))
 
 ## NULL in integer arithmetic
 i0 <- integer(0)
-stopifnot(identical(1L + NULL, 1L + integer()),
-	  identical(2L * NULL, i0),
-	  identical(3L - NULL, i0))
+assert({
+    identical(1L + NULL, 1L + integer())
+    identical(2L * NULL, i0)
+    identical(3L - NULL, i0)
+})
 ## gave double() in R <= 3.3.x
 
 
@@ -361,16 +380,18 @@ stopifnot(identical(levels(f2), cc[1:2]))
 (m <- cbind(a=1[0], b=2[0]))
 Lm <- m; storage.mode(Lm) <- "logical"
 Im <- m; storage.mode(Im) <- "integer"
-stopifnot(
-    identical( m, m + 1 ), identical( m,  m + 1 [0]), identical( m,  m + NULL),
-    identical(Im, Im+ 1L), identical(Im, Im + 1L[0]), identical(Im, Im + NULL),
-    identical(m, m + 2:3), identical(Im, Im + 2:3),
-    identical(Lm, m & 1),  identical(Lm,  m | 2:3),
-    identical(Lm, m & TRUE[0]), identical(Lm, Lm | FALSE[0]),
-    identical(Lm, m & NULL), # gave Error (*only* place where NULL was not allowed)
-    identical(Lm, m > 1), identical(Lm, m > .1[0]), identical(Lm, m > NULL),
+assert({
+    identical( m, m + 1 ); identical( m,  m + 1 [0]); identical( m,  m + NULL)
+    identical(Im, Im+ 1L); identical(Im, Im + 1L[0]); identical(Im, Im + NULL)
+    identical(m, m + 2:3); identical(Im, Im + 2:3)
+    identical(Lm, m & 1);  identical(Lm,  m | 2:3)
+    identical(Lm,  m & TRUE [0])
+    identical(Lm, Lm | FALSE[0])
+    identical(Lm, m & NULL) # gave Error (*only* place where NULL was not allowed)
+    identical(Lm, m > 1)
+    identical(Lm, m > .1[0]); identical(Lm, m > NULL)
     identical(Lm, m <= 2:3)
-)
+})
 mm <- m[,c(1:2,2:1,2)]
 tools::assertError(m + mm) # ... non-conformable arrays
 tools::assertError(m | mm) # ... non-conformable arrays
@@ -389,20 +410,21 @@ tools::assertError(m1 <= 1:2) # ERR:                  (ditto)
 ## non-0-length arrays combined with {NULL or double() or ...} *fail*
 n0 <- numeric(0)
 l0 <- logical(0)
-stopifnot(identical(m1 + NULL, n0), # as "always"
-	  identical(m1 +  n0 , n0), # as "always"
-	  identical(m1 & NULL, l0), # ERROR in R <= 3.3.x
-	  identical(m1 &  l0,  l0), # ERROR in R <= 3.3.x
-	  identical(m1 > NULL, l0), # as "always"
-	  identical(m1 >  n0 , l0)) # as "always"
-## m2 was slightly different:
-stopifnot(identical(m2 + NULL, n0), # ERROR in R <= 3.3.x
-	  identical(m2 +  n0 , n0), # ERROR in R <= 3.3.x
-	  identical(m2 & NULL, l0), # ERROR in R <= 3.3.x
-	  identical(m2 &  l0 , l0), # ERROR in R <= 3.3.x
-	  identical(m2 == NULL, l0), # as "always"
-	  identical(m2 ==  n0 , l0)) # as "always"
-
+assert({
+    identical(m1 + NULL, n0) # as "always"
+    identical(m1 +  n0 , n0) # as "always"
+    identical(m1 & NULL, l0) # ERROR in R <= 3.3.x
+    identical(m1 &  l0,  l0) # ERROR in R <= 3.3.x
+    identical(m1 > NULL, l0) # as "always"
+    identical(m1 >  n0 , l0) # as "always"
+    ## m2 was slightly different:
+    identical(m2 + NULL, n0) # ERROR in R <= 3.3.x
+    identical(m2 +  n0 , n0) # ERROR in R <= 3.3.x
+    identical(m2 & NULL, l0) # ERROR in R <= 3.3.x
+    identical(m2 &  l0 , l0) # ERROR in R <= 3.3.x
+    identical(m2 == NULL, l0) # as "always"
+    identical(m2 ==  n0 , l0) # as "always"
+})
 
 ## strcapture()
 stopifnot(identical(strcapture("(.+) (.+)",
@@ -414,13 +436,14 @@ stopifnot(identical(strcapture("(.+) (.+)",
 
 ## PR#17160: min() / max()  arg.list starting with empty character
 TFT <- 1:3 %% 2 == 1
-stopifnot(
-    identical(min(character(), TFT), "0"),
-    identical(max(character(), TFT), "1"),
-    identical(max(character(), 3:2, 5:7, 3:0), "7"),
-    identical(min(character(), 3:2, 5:7), "2"),
-    identical(min(character(), 3.3, -1:2), "-1"),
-    identical(max(character(), 3.3, 4:0), "4"))
+assert({
+    identical(min(character(), TFT), "0")
+    identical(max(character(), TFT), "1")
+    identical(max(character(), 3:2, 5:7, 3:0), "7")
+    identical(min(character(), 3:2, 5:7), "2")
+    identical(min(character(), 3.3, -1:2), "-1")
+    identical(max(character(), 3.3, 4:0), "4")
+})
 ## all gave NA in R <= 3.3.0
 
 
@@ -431,11 +454,12 @@ xt2 <- xtabs(~ exc)
 xt3 <- xtabs(rep(1, length(exclude)) ~ exclude)
 noCall  <- function(x) structure(x, call = NULL)
 stripXT <- function(x) structure(x, call = NULL, dimnames = unname(dimnames(x)))
-stopifnot(
-    identical(dimnames(xt1), list(exclude = c("FALSE", "TRUE"))),
-    identical(names(dimnames(xt2)), "exc"),
-    all.equal(stripXT(xt1), stripXT(xt2)),
-    all.equal(noCall (xt1), noCall (xt3)))
+assert({
+    identical(dimnames(xt1), list(exclude = c("FALSE", "TRUE")))
+    identical(names(dimnames(xt2)), "exc")
+    all.equal(stripXT(xt1), stripXT(xt2))
+    all.equal(noCall (xt1), noCall (xt3))
+})
 ## [fix was to call table() directly instead of via do.call(.)]
 
 
@@ -502,58 +526,54 @@ stopifnot(is.null(attributes(body(g)[[3L]][[4L]])))
 ## pmin/pmax of ordered factors -- broken in R 3.3.2  [PR #17195]
 of <- ordered(c(1,5,6))
 set.seed(7); rof <- sample(of, 12, replace=TRUE)
-stopifnot(identical(pmax(rof, of), ordered(pmax(c(rof), c(of)), labels=levels(rof)) -> pmar),
-	  identical(pmax(of, rof), pmar),
-	  identical(pmin(rof, of), ordered(pmin(c(rof), c(of)), labels=levels(rof)) -> pmir),
-	  identical(pmin(of, rof), pmir),
-	  identical(pmin(rof, 5), ordered(pmin(c(rof), 2), levels=1:3, labels=levels(rof))),
-	  identical(pmax(rof, 6), ordered(pmax(c(rof), 3), levels=1:3, labels=levels(rof))),
-	  identical(pmax(rof, 1), rof),
-	  identical(pmin(rof, 6), rof),
-	  identical(pmax(of, 5, rof), ordered(pmax(c(of),2L,c(rof)), levels=1:3,
-                                              labels=levels(of)))
-	  )
+assert({
+    identical(pmax(rof, of), ordered(pmax(c(rof), c(of)), labels=levels(rof)) -> pmar)
+    identical(pmax(of, rof), pmar)
+    identical(pmin(rof, of), ordered(pmin(c(rof), c(of)), labels=levels(rof)) -> pmir)
+    identical(pmin(of, rof), pmir)
+    identical(pmin(rof, 5), ordered(pmin(c(rof), 2), levels=1:3, labels=levels(rof)))
+    identical(pmax(rof, 6), ordered(pmax(c(rof), 3), levels=1:3, labels=levels(rof)))
+    identical(pmax(rof, 1), rof)
+    identical(pmin(rof, 6), rof)
+    identical(pmax(of, 5, rof), ordered(pmax(c(of),2L,c(rof)), levels=1:3,
+                                        labels=levels(of)))
+})
 ## these were "always" true .. but may change (FIXME ?)
-stopifnot(
+assert({
     identical(of,   pmin(of, 3)) # what? error? at least warning?
-    ,
     identical(pmar, pmax(of, 3, rof))
-)
+})
 ## pmin/pmax() of 0-length S3 classed  [PR #17200]
 for(ob0 in list(I(character()), I(0[0]), I(0L[0]),
                 structure(logical(), class="L"),
                 structure(character(), class="CH"))) {
-    stopifnot(identical(ob0, pmax(ob0, ob0)),
-              identical(ob0, pmin(ob0, ob0)),
-              identical(ob0, pmin(ob0, FALSE)),
-              identical(ob0, pmax(ob0, FALSE)))
+    assert({
+        identical(ob0, pmax(ob0, ob0))
+        identical(ob0, pmin(ob0, ob0))
+        identical(ob0, pmin(ob0, FALSE))
+        identical(ob0, pmax(ob0, FALSE))
+    })
 }
 ## pmin()/pmax() of matching numeric data frames
 mUSJ <- data.matrix(dUSJ <- USJudgeRatings)
-stopifnot(
+assert({
     identical(              pmin(dUSJ, 10 - dUSJ),
-              as.data.frame(pmin(mUSJ, 10 - mUSJ))),
+              as.data.frame(pmin(mUSJ, 10 - mUSJ)))
     identical(              pmax(dUSJ, 10 - dUSJ),
-              as.data.frame(pmax(mUSJ, 10 - mUSJ))))
+              as.data.frame(pmax(mUSJ, 10 - mUSJ)))
+})
 ## had failed for a while.   Note however :
 d1 <- data.frame(y0 = 0:3 +1/2) ; (d1.2 <- d1[1:2, , drop=FALSE])
-stopifnot(## FIXME: The 'NA's really are wrong
+assert({  ## FIXME: The 'NA's really are wrong
     identical(pmax(d1,2),     data.frame(y0 = c(2, NA, 2.5, 3.5)))
-   ,
     identical(pmax(d1, 3-d1), data.frame(y0 = .5+c(2, 1:3)))
-   ,
     identical(pmax(d1.2, 2),  data.frame(y0 = c(2, NA)))
-   ,
     identical(pmax(d1.2, 2-d1.2),data.frame(y0=c(1.5,1.5)))
-   ,
     identical(pmin(d1, 2),    data.frame(y0 = c(.5+0:1, NA,NA)))
-   ,
     identical(pmin(d1, 3-d1), data.frame(y0 = .5+c(0, 1:-1)))
-   ,
     identical(pmin(d1.2, 2),  data.frame(y0 = c(.5, 1.5)))
-   ,
     identical(pmin(d1.2, 2-d1.2),data.frame(y0 = c(.5,.5)))
-)
+})
 ## some CRAN pkgs have been relying that these at least "worked somehow"
 
 
@@ -571,43 +591,45 @@ stopifnot(sQ.xN, sortedQ(x2, (0:5)/5))
 
 
 ## seq.int() anomalies in border cases, partly from Mick Jordan (on R-devel):
-stopifnot(
-    identical(1,         seq.int(to=1,  by=1 )),
-    identical(1:2,       seq.int(to=2L, by=1L)),
+assert({
+    identical(1,         seq.int(to=1,  by=1 ))
+    identical(1:2,       seq.int(to=2L, by=1L))
     identical(c(1L, 3L), seq.int(1L, 3L, length.out=2))
-)
+})
 ## the first was missing(.), the others "double" in R < 3.4.0
 tools::assertError(seq(1,7, by = 1:2))# gave warnings in R < 3.4.0
 ## seq() for <complex> / <integer>
-stopifnot(all.equal(seq(1+1i, 9+2i, length.out = 9) -> sCplx,
-                    1:9 + 1i*seq(1,2, by=1/8)),
-          identical(seq(1+1i, 9+2i, along.with = 1:9), sCplx),
-          identical(seq(1L, 3L, by=1L), 1:3)
-)
+assert({
+    all.equal(seq(1+1i, 9+2i, length.out = 9) -> sCplx,
+              1:9 + 1i*seq(1,2, by=1/8))
+    identical(seq(1+1i, 9+2i, along.with = 1:9), sCplx)
+    identical(seq(1L, 3L, by=1L), 1:3)
+})
 ## had failed in R-devel for a few days
 D1 <- as.Date("2017-01-06")
 D2 <- as.Date("2017-01-12")
 seqD1 <- seq.Date(D1, D2, by = "1 day")
-stopifnot(identical(seqD1, seq(D1, D2, by = "1 days")),
-## These two work "accidentally" via seq -> seq.default + "Date"-arithmetic
-          identical(seqD1, seq(by = 1, from = D1, length.out = 7)),
-          identical(seqD1, seq(by = 1,   to = D2, length.out = 7))
-## swap order of (by, to) ==> *FAILS* because directly calls seq.Date() - FIXME?
-        , TRUE ||
-          identical(seqD1, seq(to = D2,  by = 1, length.out = 7))
-          )
-## had failed in R-devel for a couple of days
-stopifnot(identical(seq(9L, by = -1L, length.out = 4L), 9:6),
-	  identical(seq(9L, by = -1L, length.out = 4 ), 9:6))
+assert({
+    identical(seqD1, seq(D1, D2, by = "1 days"))
+    ## These two work "accidentally" via seq -> seq.default + "Date"-arithmetic
+    identical(seqD1, seq(by = 1, from = D1, length.out = 7))
+    identical(seqD1, seq(by = 1,   to = D2, length.out = 7))
+    ## swap order of (by, to) ==> *FAILS* because directly calls seq.Date() - FIXME?
+    TRUE ||
+    identical(seqD1, seq(to = D2,  by = 1, length.out = 7))
+    ## above had failed in R-devel for a couple of days
+    identical(seq(9L, by = -1L, length.out = 4L), 9:6)
+    identical(seq(9L, by = -1L, length.out = 4 ), 9:6)
+})
 ## for consistency, new in R >= 3.4.0
 
 
 ## Underflow happened when parsing small hex constants PR#17199
-stopifnot(
-    as.double("0x1.00000000d0000p-987") > 0,   # should be 7.645296e-298
-    as.double("0x1.0000000000000p-1022") > 0,  # should be 2.225074e-308
-    as.double("0x1.f89fc1a6f6613p-974") > 0    # should be 1.23456e-293
-)
+assert({
+    as.double("0x1.00000000d0000p-987") > 0   # should be 7.645296e-298
+    as.double("0x1.0000000000000p-1022") > 0  # should be 2.225074e-308
+    as.double("0x1.f89fc1a6f6613p-974") > 0   # should be 1.23456e-293
+})
 ##
 
 
@@ -657,12 +679,12 @@ tools::assertError(# 'na.fail' should fail :
 xt. <- xtabs(Freq ~ Gender + Admit, DN)
 xtp <- xtabs(Freq ~ Gender + Admit, DN, na.action = na.pass)
 xtN <- xtabs(Freq ~ Gender + Admit, DN, addNA = TRUE)
-stopifnot(
-    identical(asArr(xt - xt.), as_A(c(120,17, 207, 8 ), xt)),
-    identical(asArr(xt - xtp), as_A(c(120,17, 207, NA), xt)), # not ok in R <= 3.3.2
+assert({
+    identical(asArr(xt - xt.), as_A(c(120,17, 207, 8 ), xt))
+    identical(asArr(xt - xtp), as_A(c(120,17, 207, NA), xt)) # not ok in R <= 3.3.2
     identical(asArr(-xtN + rbind(cbind(xt, 0), 0)),
               as_A(c(120, 17, -17, 207, NA, 0, -327, 0, 0), xtN))
-)
+})
 ## 'sparse = TRUE requires recommended package Matrix
 if(requireNamespace('Matrix')) {
     xtS <- xtabs(Freq ~ Gender + Admit, DN, na.action = na.pass, sparse = TRUE)# error in R <= 3.3.2
@@ -702,11 +724,12 @@ xx <- LoL(c(7,3,17,798,3))
 str(xx, list.len = 7, max.level = 1)
 str2 <- capture.output(
  str(xx, list.len = 7, max.level = 2))
-stopifnot(
-    grepl("List of ", capture.output(str(xx, list.len = 7, max.level = 1))),
-    length(str2) == 35, sum(grepl("list output truncated", str2)) == 2,
+assert({
+    grepl("List of ", capture.output(str(xx, list.len = 7, max.level = 1)))
+    length(str2) == 35
+    sum(grepl("list output truncated", str2)) == 2
     vapply(paste("List of", lengths(xx)), function(pat) any(grepl(pat, str2)), NA)
-)
+})
 ## wrongly showed '[list output truncated]'  in R < 3.4.0
 
 
@@ -726,19 +749,23 @@ stopifnot(nrow(ap1) == 0, identical(ap1, ap2))
 
 
 ## rep()/rep.int() : when 'times' is a list
-stopifnot(identical(rep    (4,   list(3)), c(4,4,4)),
-          identical(rep.int(4,   list(3)), c(4,4,4)),
-          identical(rep.int(4:5, list(2,1)), c(4L,4:5)),
-          identical(rep    (4:5, list(2,1)), c(4L,4:5)))
+assert({
+    identical(rep    (4,   list(3)), c(4,4,4))
+    identical(rep.int(4,   list(3)), c(4,4,4))
+    identical(rep.int(4:5, list(2,1)), c(4L,4:5))
+    identical(rep    (4:5, list(2,1)), c(4L,4:5))
+})
 ## partly failed in R 3.3.{2,3}
 
 
 ## quantile(ordered(.)) - error message more directly useful
 OL <- ordered(sample(LETTERS, 20, replace=TRUE))
 (e <- tryCatch(quantile(OL), error = conditionMessage))
-stopifnot(grepl("type.*1.*3", e),# typically works in several locales
-	  is.ordered(quantile(OL, type = 1)),
-	  is.ordered(quantile(OL, type = 3)))
+assert({
+    grepl("type.*1.*3", e) # typically works in several locales
+    is.ordered(quantile(OL, type = 1))
+    is.ordered(quantile(OL, type = 3))
+})
 ## gave  "factors are not allowed" in R <= 3.3.x
 
 ## terms() ignored arg names (PR#17235)
@@ -860,13 +887,15 @@ dP <- state.x77[,"Population", drop=FALSE]
 by <- list(Region = state.region, Cold = state.x77[,"Frost"] > 130)
 a1 <- aggregate(dP, by=by, FUN=mean, simplify=TRUE)
 a2 <- aggregate(dP, by=by, FUN=mean, simplify=FALSE)
-stopifnot(is.null(names(a1$Population)),
-	  is.null(names(a2$Population)),
-	  identical(unlist(a2$Population), a1$Population),
-	  all.equal(unlist(a2$Population),
-		    c(8802.8, 4208.12, 7233.83, 4582.57, 1360.5, 2372.17, 970.167),
-		    tol = 1e-6))
-## in R <= 3.4.1, a2$Population had spurious names
+assert({
+    is.null(names(a1$Population))
+    is.null(names(a2$Population))
+    identical(unlist(a2$Population), a1$Population)
+    all.equal(unlist(a2$Population),
+              c(8802.8, 4208.12, 7233.83, 4582.57, 1360.5, 2372.17, 970.167),
+              tol = 1e-6)
+})
+## in R <= 3.4.x, a2$Population had spurious names
 
 
 ## factor() with duplicated labels allowing to "merge levels"
@@ -886,17 +915,18 @@ stopifnot(identical(levels(factor(1:2, labels = aN)), aN))
 ##
 ## This slightly changed - for the better - in R >= 3.5.0 :
 ff <- factor(c(NA,2,3), levels = c(2, NA), labels = c("my", NA), exclude = NULL)
-stopifnot( ## all these but the last were TRUE "forever" :
-    identical(as.vector(ff), as.character(ff)),
-    identical(as.vector(ff), c(NA, "my", NA)),
+assert({ ## all these but the last were TRUE "forever" :
+    identical(as.vector(ff), as.character(ff))
+    identical(as.vector(ff), c(NA, "my", NA))
     identical(capture.output(ff), c("[1] <NA> my   <NA>",
-				    "Levels: my <NA>")),
+				    "Levels: my <NA>"))
     identical(factor(ff),
-	      structure(c(NA, 1L, NA), .Label = "my", class = "factor")),
+	      structure(c(NA, 1L, NA), .Label = "my", class = "factor"))
     identical(factor(ff, exclude=NULL),
-	      structure(c(2L, 1L, 2L), .Label = c("my", NA), class = "factor")),
+	      structure(c(2L, 1L, 2L), .Label = c("my", NA), class = "factor"))
     identical(as.integer(ff), # <- new in R 3.5.0 : c(2, 1, 2); before was c(2, 1, NA)
-	      as.integer(factor(ff, exclude=NULL))))
+	      as.integer(factor(ff, exclude=NULL)))
+})
 
 
 ## within.list({ .. rm( >=2 entries ) }) :
@@ -905,16 +935,15 @@ stopifnot(identical(within(L, rm(x,y)), list(z = 3)))
 ## has failed since R 2.7.2 patched (Aug. 2008) without any noticeable effect
 sortN <- function(x) x[sort(names(x))]
 LN <- list(y = 2, N = NULL, z = 5)
-stopifnot(
+assert({
     identical(within(LN, { z2 <- z^2 ; rm(y,z,N) }),
               list(z2 = 5^2)) ## failed since Aug. 2008
-   ,
     identical(within(LN, { z2 <- z^2 ; rm(y,z) }),
               list(N = NULL, z2 = 5^2)) ## failed for a few days in R-devel
-   , # within.list() fast version
+    ## within.list() fast version
     identical(sortN(within(LN, { z2 <- z^2 ; rm(y,z) }, keepAttrs=FALSE)),
               sortN(list(N = NULL, z2 = 5^2)))
-)
+})
 
 
 ## write.csv did not signal an error if the disk was full PR#17243
@@ -943,9 +972,11 @@ stopifnot(identical(.RN, row.names(model.matrix(~ 1, mf))),
 
 ## "\n" etc in calls and function definitions
 (qq <- quote(-"\n"))
-stopifnot(identical('-"\\n"', cq <- capture.output(qq)),
-          identical(5L, nchar(cq)),
-          identical(6L, nchar(capture.output(quote(("\t"))))))
+assert({
+    identical('-"\\n"', cq <- capture.output(qq))
+    identical(5L, nchar(cq))
+    identical(6L, nchar(capture.output(quote(("\t")))))
+})
 ## backslashes in language objects accidentally duplicated in R 3.4.1
 
 
@@ -983,9 +1014,11 @@ xE <- function(eps, n = 5) {
     c(rep.int(1, n-2), 1+eps, 2)
 }
 ncE <- c(Sturges = 4, Scott = 2, FD = 3)
-stopifnot(sapply(-5:-16, function(E) identical(NC(xE(10^E)), ncE)),
-	  identical(NC(xE(1e-4)), c(Sturges = 4, Scott = 2, FD = 8550)),
-	  identical(NC(xE(1e-3)), c(Sturges = 4, Scott = 2, FD =  855)))
+assert({
+    sapply(-5:-16, function(E) identical(NC(xE(10^E)), ncE))
+    identical(NC(xE(1e-4)), c(Sturges = 4, Scott = 2, FD = 8550))
+    identical(NC(xE(1e-3)), c(Sturges = 4, Scott = 2, FD =  855))
+})
 ## for these, nclass.FD() had "exploded" in R <= 3.4.1
 ## Extremely large diff(range(.)) :
 XXL <- c(1:9, c(-1,1)*1e300)
@@ -1014,10 +1047,11 @@ q.LA <- qr(X, LAPACK=TRUE); cfLA <- qr.coef(q.LA, y)
 q.Cx <- qr(X + 0i);         cfCx <- qr.coef(q.Cx, y)
 e1 <- tryCatch(qr.coef(q.Li, y[-4]), error=identity); e1
 e2 <- tryCatch(qr.coef(q.LA, y[-4]), error=identity)
-stopifnot(
+assert({
     all.equal(cfLi,    cfLA , tol = 1e-14)# 6.376e-16 (64b Lx)
-   ,all.equal(cfLi, Re(cfCx), tol = 1e-14)#  (ditto)
-   ,identical(conditionMessage(e1), conditionMessage(e2)))
+    all.equal(cfLi, Re(cfCx), tol = 1e-14)#  (ditto)
+    identical(conditionMessage(e1), conditionMessage(e2))
+})
 ## 1) cfLA & cfCx had no names in R <= 3.4.1
 ## 2) error messages were not consistent
 
@@ -1038,21 +1072,24 @@ zz <- textConnection('tmpC', 'wb')
 saveRDS(abc, zz, ascii = TRUE)
 sObj <- paste(textConnectionValue(zz), collapse='\n')
 close(zz); rm(zz)
-stopifnot(identical(abc, readRDS(textConnection(tmpC))),
-          identical(abc, readRDS(textConnection(sObj))))
+assert({
+    identical(abc, readRDS(textConnection(tmpC)))
+    identical(abc, readRDS(textConnection(sObj)))
+})
 ## failed in R 3.4.1 only
 
 
 ## Ops (including arithmetic) with 0-column data frames:
 d0 <- USArrests[, FALSE]
-stopifnot(identical(d0, sin(d0))
-        , identical(d0, d0 + 1), identical(d0, 2 / d0) # failed
-        , all.equal(sqrt(USArrests), USArrests ^ (1/2)) # now both data frames
-        , is.matrix(m0 <- 0 < d0)
-        , identical(dim(m0), dim(d0))
-        , identical(dimnames(m0)[1], dimnames(d0)[1])
-        , identical(d0 & d0, m0)
-          )
+assert({
+    identical(d0, sin(d0))
+    identical(d0, d0 + 1); identical(d0, 2 / d0) # failed
+    all.equal(sqrt(USArrests), USArrests ^ (1/2)) # now both data frames
+    is.matrix(m0 <- 0 < d0)
+    identical(dim(m0), dim(d0))
+    identical(dimnames(m0)[1], dimnames(d0)[1])
+    identical(d0 & d0, m0)
+})
 ## all but the first failed in R < 3.5.0
 
 
@@ -1082,10 +1119,11 @@ f <- function() {
     1
 }
 res <- tryCatch(f(), error=function(e) 21)
-stopifnot(identical(fret, 27)
-	 , identical(hret, 27)
-	 , identical(res, 21)
-)
+assert({
+    identical(fret, 27)
+    identical(hret, 27)
+    identical(res, 21)
+})
 ##
 ## returnValue corner case 2: return 'default' on non-local return
 fret <- NULL
@@ -1101,10 +1139,11 @@ g <- function() {
   3
 }
 res <- g()
-stopifnot(identical(fret, 28)
-	 , identical(gret, 2)
-	 , identical(res, 2)
-)
+assert({
+    identical(fret, 28)
+    identical(gret, 2)
+    identical(res, 2)
+})
 ##
 ## returnValue corner case 3: return 'default' on restart
 mret <- NULL
@@ -1144,13 +1183,14 @@ l <- function(x) {
   stop(cond)
 }
 res <- h(1)
-stopifnot(identical(res, 3)
-	, identical(mret, 3)
-	, identical(hret, 3)
-	, identical(lret, 29)
-	, identical(uvarg, 1)
-	, identical(uvret, 3)
-)
+assert({
+    identical(res, 3)
+    identical(mret, 3)
+    identical(hret, 3)
+    identical(lret, 29)
+    identical(uvarg, 1)
+    identical(uvret, 3)
+})
 ##
 ## returnValue: callCC
 fret <- NULL
@@ -1182,11 +1222,12 @@ f <- function(exitfun) {
   4
 }
 res <- mycallCC(f)
-stopifnot(identical(res, 3)
-	, identical(fret, 31)
-	, identical(mycallCCret, 3)
-	, identical(funret, 31)
-)
+assert({
+    identical(res, 3)
+    identical(fret, 31)
+    identical(mycallCCret, 3)
+    identical(funret, 31)
+})
 ## end{ returnValue() section}
 
 
@@ -1207,10 +1248,12 @@ f <- function() {
   3
 }
 res <- f()
-stopifnot(identical(res, 5))
-stopifnot(identical(x, 2))
-stopifnot(identical(fret1, 4))
-stopifnot(identical(fret2, 5))
+assert({
+    identical(res, 5)
+    identical(x, 2)
+    identical(fret1, 4)
+    identical(fret2, 5)
+})
 
 
 ## splineDesign(*, derivs = <too large>):
@@ -1262,16 +1305,20 @@ stopifnot(length(x) == 13, diff((as.numeric(x) - 39600)/86400) == 360)
 
 ## 0-length logic with raw()
 r0 <- raw(0)
-stopifnot(identical(r0 & r0, r0),
-	  identical(r0 | r0, r0))
+assert({
+    identical(r0 & r0, r0)
+    identical(r0 | r0, r0)
+})
 ## gave logical(0) in R 3.4.[012]
 
 
 ## `[[`  and  `[[<-`  indexing with <symbol>
 x <- c(a=2, b=3)
 x[[quote(b)]] <- pi
-stopifnot(identical(2, x[[quote(a)]]),
-          identical(x, c(a=2, b=pi)))
+assert({
+    identical(2, x[[quote(a)]])
+    identical(x, c(a=2, b=pi))
+})
 ## `[[` only worked after fixing PR#17314, i.e., not in R <= 3.4.x
 
 
@@ -1298,26 +1345,25 @@ ec <- e0 <- matrix(, 0, 4) # a  0 x 4  matrix
 ec[,1:2] <- list()
 x <- 1[0]; x[1:2] <- list()
 a <- a0 <- array("", 0:2); a[,1,] <- expression()
-stopifnot(identical(ec, e0)
-        , identical(x, 1[0])
-        , identical(a, a0)
-)## failed for a couple of days in R-devel
+assert({
+    identical(ec, e0)
+    identical(x, 1[0])
+    identical(a, a0)
+})## failed for a couple of days in R-devel
 
 
 ## as.character(<list>) should keep names in some nested cases
 cl <-     'list(list(a = 1, "B", ch = "CH", L = list(f = 7)))'
 E <- expression(list(a = 1, "B", ch = "CH", L = list(f = 7)))
 str(ll <- eval(parse(text = cl)))
-stopifnot(
+assert({
     identical(eval(E), ll[[1]])
-  , identical(as.character(E), as.character(ll) -> cll)
-  , grepl(cll, cl, fixed=TRUE) # currently, cl == paste0("list(", cll, ")")
-)
-## the last two have failed in R-devel for a while
-stopifnot(
+    identical(as.character(E), as.character(ll) -> cll)
+    grepl(cll, cl, fixed=TRUE) # currently, cl == paste0("list(", cll, ")")
+    ## the last two have failed in R-devel for a while
     identical(as.character(list(list(one = 1))), "list(one = 1)")
-  , identical(as.character(list(  c (one = 1))),    "c(one = 1)")
-)## the last gave "1" in all previous versions of R
+    identical(as.character(list(  c (one = 1))),    "c(one = 1)")
+})## the last gave "1" in all previous versions of R
 
 
 ## as.matrix( <data.frame in d.fr.> ) -- prompted by Patrick Perry, R-devel 2017-11-30
@@ -1334,24 +1380,25 @@ d3.2.<- d3; d3.2.$HH <- matrix(1:4, 2,2, dimnames=list(NULL,c("x","y")))
 d0 <- as.data.frame(m0 <- matrix(,2,0))
 d3.0 <- d3; d3.0 $HH <- m0
 d3.d0<- d3; d3.d0$HH <- d0
-stopifnot(identical(unname(as.matrix(d0)), m0)
-	, identical(capture.output(dd),
-		    capture.output(d.))
-	, identical(as.matrix(d3.0 ), array(1:2, dim = 2:1, dimnames = list(NULL, "A")) -> m21)
-	, identical(as.matrix(d3.d0), m21)
-	, identical(as.matrix(dd), (cbind(n = 1:3) -> m.))
-	, identical(as.matrix(d.), m.)
-	, identical(as.matrix(d2), array(c("A", "b", "10", "11"), c(2L, 2L),
-					 dimnames = list(NULL, c("V.ch", "V.m"))))
-	, identical(as.matrix(dm), m.)
-	, identical(as.matrix(d1), m.)
-	, identical(colnames(m2 <- as.matrix(d2)), c("V.ch", "V.m"))
-	, identical(colnames(as.matrix(d3   )), colnames(d3   )) # failed a few days
-	, identical(colnames(as.matrix(d3.2 )), colnames(format(d3.2 )))
-	, identical(colnames(as.matrix(d3.2 )), c("A", paste("HH",1:2,sep=".")))
-	, identical(colnames(as.matrix(d3.2.)), colnames(format(d3.2.)))
-	, identical(colnames(as.matrix(d3.2.)), c("A", "HH.x", "HH.y"))
-)
+assert({
+    identical(unname(as.matrix(d0)), m0)
+    identical(capture.output(dd),
+              capture.output(d.))
+    identical(as.matrix(d3.0 ), array(1:2, dim = 2:1, dimnames = list(NULL, "A")) -> m21)
+    identical(as.matrix(d3.d0), m21)
+    identical(as.matrix(dd), (cbind(n = 1:3) -> m.))
+    identical(as.matrix(d.), m.)
+    identical(as.matrix(d2), array(c("A", "b", "10", "11"), c(2L, 2L),
+                                   dimnames = list(NULL, c("V.ch", "V.m"))))
+    identical(as.matrix(dm), m.)
+    identical(as.matrix(d1), m.)
+    identical(colnames(m2 <- as.matrix(d2)), c("V.ch", "V.m"))
+    identical(colnames(as.matrix(d3   )), colnames(d3   )) # failed a few days
+    identical(colnames(as.matrix(d3.2 )), colnames(format(d3.2 )))
+    identical(colnames(as.matrix(d3.2 )), c("A", paste("HH",1:2,sep=".")))
+    identical(colnames(as.matrix(d3.2.)), colnames(format(d3.2.)))
+    identical(colnames(as.matrix(d3.2.)), c("A", "HH.x", "HH.y"))
+})
 ## the first  5  as.matrix() have failed at least since R-1.9.1, 2004
 
 
@@ -1382,13 +1429,14 @@ arp <- ar(presidents, na.action = na.pass)
 prF <- presidents
 prF[is.na(presidents)] <- c(90, 37, 40, 32, 63, 66) # phantasy
 arF <- ar(prF)
-stopifnot(all.equal(arp[c("order", "ar", "var.pred", "x.mean")],
-                    list(order = 3, ar = c(0.6665119, 0.2800927, -0.1716641),
-                         var.pred = 96.69082, x.mean = 56.30702), tol = 7e-7)
-        , all.equal(arp$ar, arF$ar,                     tol = 0.14)
-        , all.equal(arp$var.pred, arF$var.pred,         tol = 0.005)
-        , all.equal(arp$asy.var.coef, arF$asy.var.coef, tol = 0.09)
-)
+assert({
+    all.equal(arp[c("order", "ar", "var.pred", "x.mean")],
+              list(order = 3, ar = c(0.6665119, 0.2800927, -0.1716641),
+                   var.pred = 96.69082, x.mean = 56.30702), tol = 7e-7)
+    all.equal(arp$ar, arF$ar,                     tol = 0.14)
+    all.equal(arp$var.pred, arF$var.pred,         tol = 0.005)
+    all.equal(arp$asy.var.coef, arF$asy.var.coef, tol = 0.09)
+})
 ## Multivariate
 set.seed(42)
 n <- 1e5; i <- sample(n, 12)
@@ -1400,16 +1448,17 @@ es. <- ar(y., aic = FALSE, order.max = 2, na.action=na.pass)
 ## checking ar.yw.default() multivariate case
 estd <- ar(unclass(y) , aic = FALSE, order.max = 2) ## Estimate VAR(2)
 es.d <- ar(unclass(y.), aic = FALSE, order.max = 2, na.action=na.pass)
-stopifnot(all.equal(est$ar[1,,], diag(0.8, 2), tol = 0.08)# seen 0.0038
-	, all.equal(est[1:6], es.[1:6], tol = 5e-3)
-	, all.equal(estd$x.mean, es.d$x.mean, tol = 0.01) # seen 0.0023
-	, all.equal(estd[c(1:3,5:6)],
-		    es.d[c(1:3,5:6)], tol = 1e-3)## seen {1,3,8}e-4
-	, all.equal(lapply(estd[1:6],unname),
-		    lapply(est [1:6],unname), tol = 1e-12)# almost identical
-	, all.equal(lapply(es.d[1:6],unname),
-		    lapply(es. [1:6],unname), tol = 1e-12)
-)
+assert({
+    all.equal(est$ar[1,,], diag(0.8, 2), tol = 0.08)# seen 0.0038
+    all.equal(est[1:6], es.[1:6], tol = 5e-3)
+    all.equal(estd$x.mean, es.d$x.mean, tol = 0.01) # seen 0.0023
+    all.equal(estd[c(1:3,5:6)],
+              es.d[c(1:3,5:6)], tol = 1e-3)## seen {1,3,8}e-4
+    all.equal(lapply(estd[1:6],unname),
+              lapply(est [1:6],unname), tol = 1e-12)# almost identical
+    all.equal(lapply(es.d[1:6],unname),
+              lapply(es. [1:6],unname), tol = 1e-12)
+})
 ## NA's in x gave an error, in R versions <= 3.4.3
 
 
@@ -1422,16 +1471,111 @@ toD <- Sys.Date(); stopifnot(identical(as.list(toD)[[1]], toD))
 iL <- rep(1073741824L, 2) # 2^30 + 2^30 = 2^31 integer overflows to NA
 r1 <- tryCatch(sum("foo", iL), error=function(e) conditionMessage(e))
 r2 <- tryCatch(sum(iL, "foo"), error=function(e) conditionMessage(e))
-stopifnot(
-    identical(r1, r2),
-    grepl("invalid 'type' (character) ", r1, fixed=TRUE),
+assert({
+    identical(r1, r2)
+    grepl("invalid 'type' (character) ", r1, fixed=TRUE)
     ## each gives an overflow warning
-    identical(sum(3.14, iL), NA_real_),
-    identical(sum(iL, 3.14), NA_real_),
-    identical(sum(1+2i, iL), NA_complex_),
+    identical(sum(3.14, iL), NA_real_)
+    identical(sum(iL, 3.14), NA_real_)
+    identical(sum(1+2i, iL), NA_complex_)
     identical(sum(iL, 1+2i), NA_complex_)
-)
+})
 ## r2 was no error and sum(iL, 1+2i) gave NA_real_ in R <= 3.4.x
+
+
+## aggregate.data.frame(*, drop=FALSE)  wishlist PR#17280
+## [continued from above]
+aF <- aggregate(dP, by=by, FUN=mean,   drop=FALSE)
+lF <- aggregate(dP, by=by, FUN=length, drop=FALSE)
+assert({
+    identical(dim(aF), c(8L, 3L))
+    identical(aF[6,3], NA_real_)
+    identical(lF[6,3], NA_integer_)
+})
+DF <- data.frame(a=rep(1:3,4), b=factor(rep(1:2,6), levels=1:3))
+aT <- aggregate(DF["a"], DF["b"], length)# drop=TRUE
+aF <- aggregate(DF["a"], DF["b"], length,  drop=FALSE)
+assert({
+    identical(dim(aT), c(2L,2L))
+    identical(dim(aF), c(3L,2L))
+    identical(aT, aF[1:2,])
+    identical(aF[3,"a"], NA_integer_)
+    })
+## In R <= 3.4.x, the function (FUN) was called on empty sets, above,
+## giving NaN (and 0) or <nothing>;  now the result is NA.
+
+
+## PR#16107  is.na(NULL) throws warning (contrary to all other such calls)
+op <- options(warn = 2)# no warnings allowed
+stopifnot(identical(is.na(NULL), logical(0)))
+## gave a warning in R <= 3.4.x
+
+
+## subtle [[<- , e.g.,  <nestedList>[[ c(i,j,k) ]]  <-  val :
+xx0 <-
+xx <- list(id = 1L,
+           split = list(varid = 1L, breaks = NULL,
+                        index = 1:3, right = TRUE, info = "s"),
+           kids = list(id = 2L,
+                       split = list(varid = 3L, breaks = 75,
+                                    right = TRUE, info = "KS"),
+                       kids = list(list(id = 3L, info = "yes"),
+                                   list(id = 4L, info = "no")),
+                       info = NULL),
+           list(id = 5L,
+                split = list(varid = 3L, breaks = 20,
+                             right = TRUE, info = "4s"),
+                kids = list(list(id = 6L, info = "no"),
+                            list(id = 7L, info = "yes")),
+                info = NULL),
+           info = NULL)
+
+## no-ops:
+xx[[1]] <- xx0[[1]]
+xx[["kids"]] <- xx0[["kids"]]
+xx[[2:1]] <- xx0[[2:1]] ; stopifnot(identical(xx, xx0))
+xx[[3:1]] <- xx0[[3:1]] ; stopifnot(identical(xx, xx0)) # (err)
+## replacements
+              xx[[c(2,3)]]   <- 5:3
+              xx[[c(4,2,4)]] <- c(4,2,c=4) # (err: wrong xx)
+              xx[[c(4,2,3)]] <- c(ch="423")# (err)
+              xx[[c(3,2,2)]] <- 47         # (err)
+assert({
+    identical(xx[[c(2,3)]],     5:3)
+    identical(xx[[c(4,2,4)]],   c(4,2,c=4))
+    identical(xx[[c(4,2,3)]],   c(ch="423"))
+    identical(xx[[c(3,2,2)]],   47)
+    identical(lengths(xx), lengths(xx0))
+    identical(  names(xx),   names(xx0))
+    identical(lapply(xx, lengths),
+              lapply(xx0,lengths))
+    identical(lapply(xx, names),
+              lapply(xx0,names))
+})
+## several of these failed for a bit more than a day in R-devel
+
+
+## PR#17369 and PR#17381 -- duplicated() & unique() data frame methods:
+d22 <- data.frame(x = c(.3 + .6, .9), y = 1)
+d21 <- d22[,"x", drop=FALSE]
+dRT <- data.frame(x = c("\r", "\r\r"), y = c("\r\r", "\r"))
+assert({
+    identical(unique(d22), d22) # err
+    is.data.frame(d21)
+    identical(dim(d21), 2:1)
+    identical(unique(d21), d21)
+    identical(unique(dRT), dRT) # err
+    })
+## with a POSIXct column (with tz during Daylight Saving change):
+Sys.setenv("TZ" = "Australia/Melbourne") # <== crucial (for most)!
+x <- as.POSIXct(paste0("2013-04-06 ", 13:17, ":00:00"), tz = "UTC")
+attr(x, "tzone") <- ""
+(xMelb <- as.POSIXct(x, tz = "Australia/Melbourne"))# shows both AEDT & AEST
+dMb <- data.frame(x = xMelb, y = 1)
+assert({
+    identical(unique(dMb), dMb)
+    identical(anyDuplicated(dMb), 0L)
+}) # both differing in R <= 3.4.x
 
 
 

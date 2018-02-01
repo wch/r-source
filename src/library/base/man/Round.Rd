@@ -1,6 +1,6 @@
 % File src/library/base/man/Round.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Round}
@@ -32,7 +32,8 @@ signif(x, digits = 6)
   \code{x} toward \code{0}.
 
   \code{round} rounds the values in its first argument to the specified
-  number of decimal places (default 0).
+  number of decimal places (default 0).  See \sQuote{Details} about
+  \dQuote{round to even} when rounding off a 5.
 
   \code{signif} rounds the values in its first argument to the specified
   number of significant digits.
@@ -52,8 +53,8 @@ signif(x, digits = 6)
   individually or via the \code{\link[=S3groupGeneric]{Math}} group
   generic.
 
-  Note that for rounding off a 5, the IEC 60559 standard is expected to
-  be used, \sQuote{\emph{go to the even digit}}.
+  Note that for rounding off a 5, the IEC 60559 standard (see also
+  \sQuote{IEEE 754}) is expected to be used, \sQuote{\emph{go to the even digit}}.
   Therefore \code{round(0.5)} is \code{0} and \code{round(-1.5)} is
   \code{-2}.  However, this is dependent on OS services and on
   representation error (since e.g.\sspace{}\code{0.15} is not represented
@@ -93,14 +94,22 @@ signif(x, digits = 6)
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.  Wadsworth & Brooks/Cole.
+
+  The ISO/IEC/IEEE 60559:2011 standard is available for money from
+  \url{https://www.iso.org}.
+
+  The IEEE 745:2008 standard is more openly documented, e.g, at
+  \url{https://en.wikipedia.org/wiki/IEEE_754}.
 }
 \seealso{
   \code{\link{as.integer}}.
 }
 \examples{
-round(.5 + -2:4) # IEEE rounding: -2  0  0  2  2  4  4
+round(.5 + -2:4) # IEEE / IEC rounding: -2  0  0  2  2  4  4
+## (this is *good* behaviour -- do *NOT* report it as bug !)
+
 ( x1 <- seq(-2, 4, by = .5) )
-round(x1) #-- IEEE rounding !
+round(x1) #-- IEEE / IEC rounding !
 x1[trunc(x1) != floor(x1)]
 x1[round(x1) != floor(x1 + .5)]
 (non.int <- ceiling(x1) != floor(x1))

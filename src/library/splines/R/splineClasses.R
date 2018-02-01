@@ -1,6 +1,6 @@
 #  File src/library/splines/R/splineClasses.R
 #  Part of the R package, https://www.R-project.org
-#  Copyright (C) 2000-2017 The R Core Team
+#  Copyright (C) 2000-2018 The R Core Team
 #  Copyright (C) 1998 Douglas M. Bates and William N. Venables.
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -132,8 +132,11 @@ interpSpline.default <-
              ord = 4L, na.action = na.fail, sparse = FALSE)
 {
     ## spline order 'ord' == 'degree' + 1
-    stopifnot((degree <- ord - 1L) >= 0, length(degree) == 1L,
-              degree == as.integer(degree))
+    stopifnot(exprs = {
+        (degree <- ord - 1L) >= 0
+        length(degree) == 1L
+        degree == as.integer(degree)
+    })
     frm <- na.action(data.frame(x = as.numeric(obj1), y = as.numeric(obj2)))
     frm <- frm[order(frm$x), ]
     ndat <- nrow(frm)

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2017  The R Core Team
+ *  Copyright (C) 1997--2018  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -837,7 +837,8 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 
     if (!d->active) return;
 
-    if (IS_S4_OBJECT(s) || TYPEOF(s) == S4SXP) {
+    Rboolean hasS4_t = TYPEOF(s) == S4SXP;
+    if (IS_S4_OBJECT(s) || hasS4_t) {
 	d->isS4 = TRUE;
 	/* const void *vmax = vmaxget(); */
 	SEXP class = getAttrib(s, R_ClassSymbol),
@@ -845,31 +846,44 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	if(TYPEOF(cl_def) == CHARSXP) { // regular S4 objects
 	    print2buff("new(\"", d);
 	    print2buff(translateChar(cl_def), d);
-	    print2buff("\",\n", d);
+	    print2buff("\", ", d);
 	    SEXP slotNms; // ---- slotNms := methods::.slotNames(s)  ---------
 	    // computed alternatively, slotNms := names(getClassDef(class)@slots) :
-	    static SEXP R_getClassDef = NULL, R_slots = NULL;
+	    static SEXP R_getClassDef = NULL, R_slots = NULL, R_asS3 = NULL;
 	    if(R_getClassDef == NULL)
 		R_getClassDef = findFun(install("getClassDef"), R_MethodsNamespace);
 	    if(R_slots == NULL) R_slots = install("slots");
+	    if(R_asS3  == NULL) R_asS3  = install("asS3");
 	    SEXP e = PROTECT(lang2(R_getClassDef, class));
 	    cl_def = PROTECT(eval(e, R_BaseEnv)); // correct env?
 	    slotNms = // names( cl_def@slots ) :
 		getAttrib(R_do_slot(cl_def, R_slots), R_NamesSymbol);
 	    UNPROTECT(2); // (e, cl_def)
 	    int n;
+	    Rboolean has_Data = FALSE;// does it have ".Data" slot?
 	    if(TYPEOF(slotNms) == STRSXP && (n = LENGTH(slotNms))) {
 		PROTECT(slotNms);
 		SEXP slotlist = PROTECT(allocVector(VECSXP, n));
 		// := structure(lapply(slotNms, slot, object=s), names=slotNms)
 		for(int i=0; i < n; i++) {
-		    SET_VECTOR_ELT(slotlist, i,
-				   R_do_slot(s, installTrChar(STRING_ELT(slotNms, i))));
+		    SEXP slot_i = STRING_ELT(slotNms, i);
+		    SET_VECTOR_ELT(slotlist, i, R_do_slot(s, installTrChar(slot_i)));
+		    if(!hasS4_t && !has_Data)
+			has_Data = (strcmp(CHAR(slot_i), ".Data") == 0);
 		}
 		setAttrib(slotlist, R_NamesSymbol, slotNms);
 		vec2buff(slotlist, d, TRUE);
 		/*-----------------*/
 		UNPROTECT(2); // (slotNms, slotlist)
+	    }
+	    if(!hasS4_t && !has_Data) {
+		// may have *non*-slot contents, (i.e., not in .Data)
+		// ==> additionally deparse asS3(s) :
+		e = PROTECT(lang2(R_asS3, s)); // = asS3(s)
+		SEXP S3_s = PROTECT(eval(e, R_BaseEnv)); // correct env?
+		print2buff(", ", d);
+		deparse2buff(S3_s, d);
+		UNPROTECT(2); // (e, S3_s)
 	    }
 	    print2buff(")", d);
 	}
@@ -1035,13 +1049,22 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	printcomment(s, d);
 	if (!isNull(ATTRIB(s)))
 	    d->sourceable = FALSE;
-	if (d_opts_in & QUOTEEXPRESSIONS) {
-	    print2buff("quote(", d);
-	    d->opts &= SIMPLE_OPTS;
+	SEXP op = CAR(s);
+        Rboolean doquote, maybe_quote = d_opts_in & QUOTEEXPRESSIONS;
+	if (maybe_quote) {
+	    // do *not* quote() formulas:
+	    doquote = // := op is not `~` (tilde) :
+		!((TYPEOF(op) == SYMSXP) &&
+		  !strcmp(CHAR(PRINTNAME(op)), "~"));
+	    if (doquote) {
+		print2buff("quote(", d);
+		d->opts &= SIMPLE_OPTS;
+	    } else { // `~`
+		d->opts &= ~QUOTEEXPRESSIONS;
+	    }
 	}
-	if (TYPEOF(CAR(s)) == SYMSXP) {
+	if (TYPEOF(op) == SYMSXP) {
 	    int userbinop = 0;
-	    SEXP op = CAR(s);
 	    if ((TYPEOF(SYMVALUE(op)) == BUILTINSXP) ||
 		(TYPEOF(SYMVALUE(op)) == SPECIALSXP) ||
 		(userbinop = isUserBinop(op))) {
@@ -1345,33 +1368,34 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		    print2buff(")", d);
 		}
 	    }
-	} // end{CAR(s) : SYMSXP }
-	else if (TYPEOF(CAR(s)) == CLOSXP || TYPEOF(CAR(s)) == SPECIALSXP
-		 || TYPEOF(CAR(s)) == BUILTINSXP) {
-	    if (parenthesizeCaller(CAR(s))) {
+	} // end{op : SYMSXP }
+	else if (TYPEOF(op) == CLOSXP || TYPEOF(op) == SPECIALSXP
+		 || TYPEOF(op) == BUILTINSXP) {
+	    if (parenthesizeCaller(op)) {
 		print2buff("(", d);
-		deparse2buff(CAR(s), d);
+		deparse2buff(op, d);
 		print2buff(")", d);
 	    } else
-		deparse2buff(CAR(s), d);
+		deparse2buff(op, d);
 	    print2buff("(", d);
 	    args2buff(CDR(s), 0, 0, d);
 	    print2buff(")", d);
 	}
 	else { /* we have a lambda expression */
-	    if (parenthesizeCaller(CAR(s))) {
+	    if (parenthesizeCaller(op)) {
 		print2buff("(", d);
-		deparse2buff(CAR(s), d);
+		deparse2buff(op, d);
 		print2buff(")", d);
 	    } else
-		deparse2buff(CAR(s), d);
+		deparse2buff(op, d);
 	    print2buff("(", d);
 	    args2buff(CDR(s), 0, 0, d);
 	    print2buff(")", d);
 	}
-	if (d_opts_in & QUOTEEXPRESSIONS) {
+	if (maybe_quote) {
 	    d->opts = d_opts_in;
-	    print2buff(")", d);
+	    if(doquote)
+		print2buff(")", d);
 	}
 	break; // case LANGSXP --------------------------------------------------
     case STRSXP:

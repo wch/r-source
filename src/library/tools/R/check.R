@@ -368,6 +368,9 @@ add_dummies <- function(dir, Log)
     check_pkg <- function(pkg, pkgname, pkgoutdir, startdir, libdir, desc,
                           is_base_pkg, is_rec_pkg, subdirs, extra_arch)
     {
+        Sys.setenv("_R_CHECK_PACKAGE_NAME_" = pkgname)
+        on.exit(Sys.unsetenv("_R_CHECK_PACKAGE_NAME_"))
+
         ## pkg is the argument we received from the main loop.
         ## pkgdir is the corresponding absolute path,
 
@@ -2640,21 +2643,27 @@ add_dummies <- function(dir, Log)
                     lines <- unlist(lapply(split(lines, ind), paste,
                                            collapse = " "))
                 }
+                ## Truncate at first comment char
+                lines <- sub("#.*", "", lines)
                 c1 <- grepl("^[[:space:]]*PKG_LIBS", lines, useBytes = TRUE)
                 c2l <- grepl("\\$[{(]{0,1}LAPACK_LIBS", lines, useBytes = TRUE)
                 c2b <- grepl("\\$[{(]{0,1}BLAS_LIBS", lines, useBytes = TRUE)
-                c3 <- grepl("\\$[{(]{0,1}FLIBS", lines, useBytes = TRUE)
-                if (any(c1 & c2l & !c2b)) {
+                c2lb <- grepl("\\$[{(]{0,1}LAPACK_LIBS.*\\$[{(]{0,1}BLAS_LIBS",
+                              lines, useBytes = TRUE)
+                c2bf <- grepl("\\$[{(]{0,1}BLAS_LIBS.*\\$[{(]{0,1}FLIBS",
+                              lines, useBytes = TRUE)
+                if (any(c1 & c2l & !c2lb)) {
                     if (!any) warningLog(Log)
                     any <- TRUE
                     printLog(Log,
-                             "  apparently using $(LAPACK_LIBS) without $(BLAS_LIBS) in ",
+                             "  apparently using $(LAPACK_LIBS) without following $(BLAS_LIBS) in ",
                              sQuote(f), "\n")
                 }
-                if (any(c1 & (c2b | c2l) & !c3)) {
+                if (any(c1 & c2b & !c2bf)) {
                     if (!any) warningLog(Log)
                     any <- TRUE
-                    printLog(Log, "  apparently PKG_LIBS is missing $(FLIBS) in ",
+                    printLog(Log,
+                             "  apparently using $(BLAS_LIBS) without following $(FLIBS) in ",
                              sQuote(f), "\n")
                 }
             }
@@ -4221,8 +4230,10 @@ add_dummies <- function(dir, Log)
                              ## Solaris warns on this next one. Also clang
                              ": warning: .* \\[-Wint-conversion\\]",
                              ": warning: .* \\[-Wstringop", # mainly gcc8
-                             ": warning: .* \\[-Wclass-memaccess\\]" # gcc8
-                             )
+                             ": warning: .* \\[-Wclass-memaccess\\]", # gcc8
+                             ## Fatal on clang and Solaris ODS
+                             ": warning: .* with a value, in function returning void"
+                            )
 
                 ## clang warnings
                 warn_re <- c(warn_re,

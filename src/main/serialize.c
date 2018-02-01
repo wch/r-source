@@ -183,7 +183,22 @@ static SEXP ReadBC(SEXP ref_table, R_inpstream_t stream);
 /* The default version used when a stream Init function is called with
    version = 0 */
 
-static const int R_DefaultSerializeVersion = 2;
+static int defaultSerializeVersion()
+{
+    static int dflt = -1;
+
+    if (dflt < 0) {
+	char *valstr = getenv("R_DEFAULT_SERIALIZE_VERSION");
+	int val = -1;
+	if (valstr != NULL)
+	    val = atoi(valstr);
+	if (val == 2 || val == 3)
+	    dflt = val;
+	else
+	    dflt = 2; /* the default */
+    }
+    return dflt;
+}
 
 /*
  * Utility Functions
@@ -673,20 +688,21 @@ static int HashGet(SEXP item, SEXP ht)
 #define BCREPREF          243
 #define EMPTYENV_SXP	  242
 #define BASEENV_SXP	  241
-#define ALTREP_SXP	  240
 
 /* The following are needed to preserve attribute information on
    expressions in the constant pool of byte code objects. This is
    mainly for preserving source references attributes.  The original
-   implementation of the sharing-preserving writing and reading of yte
+   implementation of the sharing-preserving writing and reading of byte
    code objects did not account for the need to preserve attributes,
    so there is now a work-around using these SXP types to flag when
    the ATTRIB field has been written out. Object bits and S4 bits are
-   still not preserved.  It the long run in might be better to change
+   still not preserved.  In the long run it might be better to change
    to a scheme in which all sharing is preserved and byte code objects
    don't need to be handled as a special case.  LT */
 #define ATTRLANGSXP       240
 #define ATTRLISTSXP       239
+
+#define ALTREP_SXP	  238
 
 /*
  * Type/Flag Packing and Unpacking
@@ -2101,7 +2117,7 @@ SEXP R_Unserialize(R_inpstream_t stream)
 	break;
     }
     default:
-	if (version != 2) {
+	{
 	    int vw, pw, sw;
 	    DecodeVersion(writer_version, &vw, &pw, &sw);
 	    if (release_version < 0)
@@ -2227,7 +2243,7 @@ R_InitOutPStream(R_outpstream_t stream, R_pstream_data_t data,
 {
     stream->data = data;
     stream->type = type;
-    stream->version = version != 0 ? version : R_DefaultSerializeVersion;
+    stream->version = version != 0 ? version : defaultSerializeVersion();
     stream->OutChar = outchar;
     stream->OutBytes = outbytes;
     stream->OutPersistHookFunc = phook;
@@ -2455,7 +2471,7 @@ do_serializeToConn(SEXP call, SEXP op, SEXP args, SEXP env)
     else type = R_pstream_xdr_format;
 
     if (CADDDR(args) == R_NilValue)
-	version = R_DefaultSerializeVersion;
+	version = defaultSerializeVersion();
     else
 	version = asInteger(CADDDR(args));
     if (version == NA_INTEGER || version <= 0)
@@ -2650,7 +2666,7 @@ R_serializeb(SEXP object, SEXP icon, SEXP xdr, SEXP Sversion, SEXP fun)
     int version;
 
     if (Sversion == R_NilValue)
-	version = R_DefaultSerializeVersion;
+	version = defaultSerializeVersion();
     else version = asInteger(Sversion);
     if (version == NA_INTEGER || version <= 0)
 	error(_("bad version value"));
@@ -2799,7 +2815,7 @@ R_serialize(SEXP object, SEXP icon, SEXP ascii, SEXP Sversion, SEXP fun)
     int version;
 
     if (Sversion == R_NilValue)
-	version = R_DefaultSerializeVersion;
+	version = defaultSerializeVersion();
     else version = asInteger(Sversion);
     if (version == NA_INTEGER || version <= 0)
 	error(_("bad version value"));

@@ -2054,9 +2054,8 @@ AC_DEFUN([R_BITMAPS2],
 BITMAP_LIBS=
 if test "${use_jpeglib}" = yes; then
    save_CPPFLAGS=${CPPFLAGS}
-  ## IJGj does not currently support pkg-config, although some OSes add i.
-  ## and its version 9c (due Jan 2018) will have support as libjpeg.
-  ## libjpeg-turbo has had this for a while.
+  ## IJG version 9c (Jan 2018) has support as libjpeg.
+  ## libjpeg-turbo has had this for a wh	ile.
   if "${PKGCONF}" --exists libjpeg; then
     JPG_CPPFLAGS=`"${PKGCONF}" --cflags libjpeg`
     JPG_LIBS=`"${PKGCONF}" --libs libjpeg`

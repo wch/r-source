@@ -1,6 +1,6 @@
 % File src/library/base/man/deparse.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{deparse}
@@ -92,7 +92,7 @@ deparse(e)
 deparse(e, backtick = TRUE)
 e <- quote(`foo bar`+1)
 deparse(e)
-deparse(e, control = "all")
+deparse(e, control = "all") # wraps it w/ quote( . )
 }
 \keyword{programming}
 \keyword{manip}

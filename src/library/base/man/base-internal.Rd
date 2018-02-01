@@ -51,6 +51,11 @@
 \alias{.C_R_startbcprof}
 \alias{.C_R_stopbcprof}
 
+#ifdef windows
+\alias{.fixupGFortranStderr}
+\alias{.fixupGFortranStdout}
+#endif
+
 \title{Internal Objects in Package \pkg{base}}
 \description{% 'most': see e.g., .mapply
   Internal objects in the base package most of which are only user-visible
@@ -100,6 +105,11 @@ lazyLoadDBfetch(key, file, compressed, hook)
 .detach(pos)
 
 .maskedMsg(same, pkg, by)
+
+#ifdef windows
+.fixupGFortranStdout()
+.fixupGFortranStderr()
+#endif
 }
 \arguments{
   \item{x}{object from which to extract elements.}
@@ -230,6 +240,13 @@ lazyLoadDBfetch(key, file, compressed, hook)
 
   Objects starting \code{.C_} and \code{.F_} are references to
   registered C and Fortran entry points.
+
+#ifdef windows
+  \code{.fixupGFortranStdout} and \code{.fixupGFortranStderr} are helper functions
+  to enable standard output and standard error units in \code{gfortran} when
+  executing external code via \code{system} and \code{system2}. By default, these
+  units are disabled by the Windows profile when running inside RGui.
+#endif
 }
 \value{
   \code{.getRequiredPackages} and \code{.getRequiredPackages2}

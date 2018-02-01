@@ -29,7 +29,7 @@ duplicated.data.frame <-
     if(!identical(incomparables, FALSE))
 	.NotYetUsed("incomparables != FALSE")
     if(length(x) != 1L)
-        duplicated(do.call("paste", c(x, sep="\r")), fromLast = fromLast)
+        duplicated(do.call(Map, c(list, x)), fromLast = fromLast)
     else duplicated(x[[1L]], fromLast = fromLast, ...)
 }
 
@@ -64,7 +64,7 @@ anyDuplicated.data.frame <-
 {
     if(!identical(incomparables, FALSE))
 	.NotYetUsed("incomparables != FALSE")
-    anyDuplicated(do.call("paste", c(x, sep="\r")), fromLast = fromLast)
+    anyDuplicated(do.call(Map, c(list, x)), fromLast = fromLast)
 }
 
 anyDuplicated.matrix <- anyDuplicated.array <-

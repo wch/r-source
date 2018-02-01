@@ -1,6 +1,6 @@
 % File src/library/base/man/trace.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright (C) 1995-2015 R Core Team
+% Copyright (C) 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{trace}
@@ -29,10 +29,12 @@ tracingState(on = NULL)
 returnValue(default = NULL)
 }
 \arguments{
-  \item{what}{The name (quoted or not) of a function to be traced or
-    untraced.  For \code{untrace} or for \code{trace} with more than one
-    argument, more than one name can be given in the quoted form, and
-    the same action will be applied to each one.}
+  \item{what}{the name, possibly \code{\link{quote}()}d, of a function
+    to be traced or untraced.  For \code{untrace} or for \code{trace}
+    with more than one argument, more than one name can be given in the
+    quoted form, and the same action will be applied to each one.  For
+    \dQuote{hidden} functions such as S3 methods in a namespace,
+    \code{where = *} typically needs to be specified as well.}
   \item{tracer}{either a \link{function} or an unevaluated expression.  The
     function will be called or the expression will be evaluated either
     at the beginning of the call, or before those steps in the call
@@ -63,18 +65,19 @@ returnValue(default = NULL)
     traced; by default, the top-level environment of the call to
     \code{trace}.
 
-    An important use of this argument is to trace a function when it
-  is called from a package with a namespace.  The current namespace mechanism
-  imports the functions to be called (with the exception of functions
-  in the base package).  The functions being called are \emph{not} the
-  same objects seen from the top-level (in general, the imported
-  packages may not even be attached).  Therefore, you must ensure that
-  the correct versions are being traced.  The way to do this is to set
-  argument \code{where} to a function in the namespace.  The tracing
-  computations will then start looking in the environment of that
-  function (which will be the namespace of the corresponding package).
-  (Yes, it's subtle, but the semantics here are central to how
-  namespaces work in R.)
+    An important use of this argument is to trace functions from a
+    package which are \dQuote{hidden} or called from another package.
+    The namespace mechanism imports the functions to be called (with the
+    exception of functions in the base package).  The functions being
+    called are \emph{not} the same objects seen from the top-level (in
+    general, the imported packages may not even be attached).
+    Therefore, you must ensure that the correct versions are being
+    traced.  The way to do this is to set argument \code{where} to a
+    function in the namespace (or that namespace).  The tracing
+    computations will then start looking in the environment of that
+    function (which will be the namespace of the corresponding package).
+    (Yes, it's subtle, but the semantics here are central to how
+    namespaces work in \R.)
   }
   \item{on}{logical; a call to the support function \code{tracingState} returns \code{TRUE}
     if tracing is globally turned on, \code{FALSE} otherwise.  An
@@ -183,7 +186,7 @@ returnValue(default = NULL)
   the global environment, are not saved in the image, so tracing expires
   with the session for such functions.
 
-  Tracing a method is basically just like tracing a function, with the
+  Tracing an S4 method is basically just like tracing a function, with the
   exception that the traced version is stored by a call to
   \code{\link{setMethod}} rather than by direct assignment, and so is
   the untraced version after a call to \code{untrace}.
@@ -281,22 +284,46 @@ trace("f", quote(if(any(y < 0)) yOrig <- y),
 ## Enter the browser just before stop() is called.  First, find
 ## the step numbers
 
+untrace(f) # (as it has changed f's body !)
 as.list(body(f))
-as.list(body(f)[[3]])
+as.list(body(f)[[3]]) # -> stop(..) is [[4]]
 
 ## Now call the browser there
 
 trace("f", quote(browser(skipCalls = 4)), at = list(c(3,4)))
+\dontrun{
+f(-1,2) # --> enters browser just before stop(..)
+}
 
 ## trace a utility function, with recover so we
 ## can browse in the calling functions as well.
 
 trace("as.matrix", recover)
 
-
-## turn off the tracing
+## turn off the tracing (that happened above)
 
 untrace(c("f", "as.matrix"))
+
+\dontrun{
+## Useful to find how system2() is called in a higher-up function:
+trace(base::system2, quote(print(ls.str())))
+}
+
+##-------- Tracing hidden functions : need 'where = *'
+##
+## 'where' can be a function whose environment is meant:
+trace(quote(ar.yw.default), where = ar)
+a <- ar(rnorm(100)) # "Tracing ..."
+untrace(quote(ar.yw.default), where = ar)
+
+## trace() more than one function simultaneously:
+##         expression(E1, E2, ...)  here is equivalent to
+##          c(quote(E1), quote(E2), quote(.*), ..)
+trace(expression(ar.yw, ar.yw.default), where = ar)
+a <- ar(rnorm(100)) # --> 2 x "Tracing ..."
+# and turn it off:
+untrace(expression(ar.yw, ar.yw.default), where = ar)
+
 
 \dontrun{
 ## trace calls to the function lm() that come from

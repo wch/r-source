@@ -1,7 +1,7 @@
 #  File src/library/stats/R/aggregate.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -67,15 +67,19 @@ function(x, by, FUN, ..., simplify = TRUE, drop = TRUE)
         s <- as.character(seq_len(l))
         n <- nchar(s)
         levels(y) <- paste0(strrep("0", n[l] - n), s)
-        as.character(y)
+        y # levels used for drop = FALSE
     }
     grp <- lapply(y, ident)
     multi.y <- !drop && ncol(y)
     if(multi.y) {
-	lev <- lapply(grp, function(e) sort(unique(e)))
+        lev <- lapply(grp, levels)
 	y <- as.list(y)
-	for (i in seq_along(y))
-	    y[[i]] <- y[[i]][match(lev[[i]], grp[[i]])]
+        for (i in seq_along(y)) {
+            z <- y[[i]][match(lev[[i]], grp[[i]])]
+            if(is.factor(z) && any(keep <- is.na(z)))
+                z[keep] <- levels(z)[keep]
+            y[[i]] <- z
+        }
         eGrid <- function(L)
             expand.grid(L, KEEP.OUT.ATTRS = FALSE, stringsAsFactors = FALSE)
 	y <- eGrid(y)
@@ -89,10 +93,8 @@ function(x, by, FUN, ..., simplify = TRUE, drop = TRUE)
         lev <- as.list(eGrid(lev))
         names(lev) <- NULL
         lev <- do.call(paste, c(rev(lev), list(sep = ".")))
-        grp <- factor(grp, levels = lev)
     } else
         y <- y[match(sort(unique(grp)), grp, 0L), , drop = FALSE]
-    nry <- NROW(y)
     z <- lapply(x,
                 function(e) {
                     ## In case of a common length > 1, sapply() gives
@@ -110,7 +112,6 @@ function(x, by, FUN, ..., simplify = TRUE, drop = TRUE)
                                 class(ans) <- cl1
                         } else if(len > 1L)
 			    ans <- matrix(unlist(ans, recursive = FALSE, use.names = FALSE),
-                                          nrow = nry,
                                           ncol = len,
                                           byrow = TRUE,
 					  dimnames =
@@ -121,11 +122,17 @@ function(x, by, FUN, ..., simplify = TRUE, drop = TRUE)
                     ans
                 })
     len <- length(y)
-    for(i in seq_along(z))
-        y[[len + i]] <- z[[i]]
+    if(multi.y) {
+	keep <- match(lev, sort(unique(grp)))
+	for(i in seq_along(z))
+	    y[[len + i]] <- if(is.matrix(z[[i]]))
+				 z[[i]][keep, , drop = FALSE]
+			    else z[[i]][keep]
+    } else
+	for(i in seq_along(z))
+	    y[[len + i]] <- z[[i]]
     names(y) <- c(names(by), names(x))
     row.names(y) <- NULL
-
     y
 }
 

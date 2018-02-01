@@ -51,7 +51,7 @@ axis.POSIXct <- function(side, x, at, format, labels = TRUE, ...)
         if(missing(format)) format <- "%b %d"
     } else if(d < 1.1*60*60*24*365) { # months
         z <- .POSIXct(z,  attr(x, "tzone"))
-        zz <- as.POSIXlt(z)
+        zz <- unclass(as.POSIXlt(z))
         zz$mday <- zz$wday <- zz$yday <- 1
         zz$isdst <- -1; zz$hour <- zz$min <- zz$sec <- 0
         zz$mon <- pretty(zz$mon)
@@ -64,7 +64,7 @@ axis.POSIXct <- function(side, x, at, format, labels = TRUE, ...)
         if(missing(format)) format <- "%b"
     } else { # years
         z <- .POSIXct(z,  attr(x, "tzone"))
-        zz <- as.POSIXlt(z)
+        zz <- unclass(as.POSIXlt(z))
         zz$mday <- zz$wday <- zz$yday <- 1
         zz$isdst <- -1; zz$mon <- zz$hour <- zz$min <- zz$sec <- 0
         zz$year <- pretty(zz$year); M <- length(zz$year)

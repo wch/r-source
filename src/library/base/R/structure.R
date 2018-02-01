@@ -1,7 +1,7 @@
 #  File src/library/base/R/structure.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ structure <- function (.Data, ...)
         specials <- c(".Dim", ".Dimnames", ".Names", ".Tsp", ".Label")
         replace <- c("dim", "dimnames", "names", "tsp", "levels")
 	m <- match(names(attrib), specials)
-	ok <- (!is.na(m) & m)
+	ok <- !is.na(m)
 	names(attrib)[ok] <- replace[m[ok]]
         ## prior to 2.5.0 factors would deparse to double codes
 	if("factor" %in% attrib[["class", exact = TRUE]]

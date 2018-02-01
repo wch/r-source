@@ -1,7 +1,7 @@
 #  File src/library/parallel/R/detectCores.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -28,9 +28,9 @@ detectCores <-
     } else {
         function(all.tests = FALSE, logical = TRUE) {
             ## Commoner OSes first
+            ## for Linux systems, physical id is 1 for second hyperthread
             systems <-
-                list(linux =
-                     if(logical) "grep processor /proc/cpuinfo 2>/dev/null | wc -l" else "cat /proc/cpuinfo | grep 'cpu cores'| uniq | cut -f2 -d:",
+                list(linux = "grep ^processor /proc/cpuinfo 2>/dev/null | wc -l",
                      ## hw.physicalcpu is not documented for 10.9, but works
                      darwin = if(logical) "/usr/sbin/sysctl -n hw.logicalcpu 2>/dev/null" else "/usr/sbin/sysctl -n hw.physicalcpu 2>/dev/null",
                      solaris = if(logical) "/usr/sbin/psrinfo -v | grep 'Status of.*processor' | wc -l" else "/bin/kstat -p -m cpu_info | grep :core_id | cut -f2 | uniq | wc -l",
