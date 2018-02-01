@@ -33,7 +33,7 @@ signif(x, digits = 6)
 
   \code{round} rounds the values in its first argument to the specified
   number of decimal places (default 0).  See \sQuote{Details} about
-  \dQUote{round to even} when rounding off a 5.
+  \dQuote{round to even} when rounding off a 5.
 
   \code{signif} rounds the values in its first argument to the specified
   number of significant digits.
