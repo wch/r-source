@@ -1,7 +1,7 @@
 #  File src/library/base/R/datetime.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -686,8 +686,6 @@ as.data.frame.difftime <- as.data.frame.vector
 
 format.difftime <- function(x,...) paste(format(unclass(x),...), units(x))
 
-
-
 print.difftime <- function(x, digits = getOption("digits"), ...)
 {
     if(is.array(x) || length(x) > 1L) {
@@ -714,7 +712,6 @@ print.difftime <- function(x, digits = getOption("digits"), ...)
 diff.difftime <- function(x, ...)
     ## assume class is preserved (it is in diff.default):
     structure(NextMethod("diff"), units = attr(x, "units"))
-
 
 Ops.difftime <- function(e1, e2)
 {
@@ -1245,8 +1242,8 @@ xtfrm.POSIXlt <- function(x) as.double(x)  # has POSIXlt method
 xtfrm.difftime <- function(x) as.numeric(x)
 is.numeric.difftime <- function(x) FALSE
 
+## Class generators added in 2.11.0, class order changed in 2.12.0.
 
-# class generators added in 2.11.0, class order changed in 2.12.0
 .POSIXct <- function(xx, tz = NULL)
     structure(xx, class = c("POSIXct", "POSIXt"), tzone = tz)
 
@@ -1269,7 +1266,7 @@ function(x, value)
     x
 }
 
-## 3.1.0
+## Added in 3.1.0.
 
 OlsonNames <- function(tzdir = NULL)
 {
@@ -1314,6 +1311,8 @@ OlsonNames <- function(tzdir = NULL)
     if(!is.null(ver)) attr(ans, "Version") <- ver
     ans
 }
+
+## Added in 3.5.0.
 
 `[[.POSIXlt` <- function(x, ..., drop = TRUE)
 {
