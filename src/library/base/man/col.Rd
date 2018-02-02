@@ -34,7 +34,9 @@ col(x, as.factor = FALSE)
   Wadsworth & Brooks/Cole.
 }
 \seealso{
-  \code{\link{row}} to get rows.
+  \code{\link{row}} to get rows;
+  \code{\link{slice.index}} for a general way to get slice indices
+  in an array.
 }
 \examples{
 # extract an off-diagonal of a matrix
