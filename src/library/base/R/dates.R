@@ -485,3 +485,10 @@ split.Date <- function(x, f, drop = FALSE, ...)
 }
 
 xtfrm.Date <- function(x) as.numeric(x)
+
+## Added in 3.5.0.
+
+.Date <- function(xx) {
+    class(xx) <- "Date"
+    xx
+}
