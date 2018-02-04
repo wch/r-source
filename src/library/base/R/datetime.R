@@ -1244,14 +1244,35 @@ is.numeric.difftime <- function(x) FALSE
 
 ## Class generators added in 2.11.0, class order changed in 2.12.0.
 
-.POSIXct <- function(xx, tz = NULL)
-    structure(xx, class = c("POSIXct", "POSIXt"), tzone = tz)
+## FIXME:
+## At least temporarily avoide structure() for performance reasons.
+## .POSIXct <- function(xx, tz = NULL)
+##     structure(xx, class = c("POSIXct", "POSIXt"), tzone = tz)
+.POSIXct <- function(xx, tz = NULL) {
+    class(xx) <- c("POSIXct", "POSIXt")
+    attr(xx, "tzone") <- tz
+    xx
+}
 
-.POSIXlt <- function(xx, tz = NULL)
-    structure(xx, class = c("POSIXlt", "POSIXt"), tzone = tz)
+## FIXME:
+## At least temporarily avoide structure() for performance reasons.
+## .POSIXlt <- function(xx, tz = NULL)
+##     structure(xx, class = c("POSIXlt", "POSIXt"), tzone = tz)
+.POSIXlt <- function(xx, tz = NULL) {
+    class(xx) <-  c("POSIXlt", "POSIXt")
+    attr(xx, "tzone") <- tz
+    xx
+}    
 
-.difftime <- function(xx, units)
-    structure(xx, units = units, class = "difftime")
+## FIXME:
+## At least temporarily avoide structure() for performance reasons.
+## .difftime <- function(xx, units)
+##     structure(xx, units = units, class = "difftime")
+.difftime <- function(xx, units) {
+    class(xx) <- "difftime"
+    attr(xx, "units") <- units
+    xx
+}
 
 ## ---- additions in 2.13.0 -----
 
