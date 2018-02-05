@@ -295,7 +295,7 @@
       \item \code{stopifnot()} can be used alternatively via new argument
       \code{exprs} which is nicer and useful when testing several
       expressions in one call.
-      
+
       \item The environment variable \env{R_MAX_VZISE} can now be used
       to specify the maximal vector heap size. On macOS, unless specified
       by this environment variable, the maximal vector heap size is set to
@@ -373,6 +373,9 @@
     \itemize{
       \item \code{Sys.timezone(location = FALSE)} is defunct, and is
       ignored (with a warning).
+
+      \item \code{methods:::bind_activation()} is defunct now; it
+      typically has been unneeded for years.
     }
   }
 
