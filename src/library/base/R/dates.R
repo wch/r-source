@@ -1,7 +1,7 @@
 #  File src/library/base/R/dates.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ as.Date.POSIXct <- function(x, tz = "UTC", ...)
     if(tz == "UTC") {
         z <- floor(unclass(x)/86400)
         attr(z, "tzone") <- NULL
-        structure(z, class = "Date")
+        .Date(z)
     } else
         as.Date(as.POSIXlt(x, tz = tz))
 }
@@ -79,7 +79,7 @@ as.Date.default <- function(x, ...)
     if(inherits(x, "Date"))
 	x
     else if(is.logical(x) && all(is.na(x)))
-	structure(as.numeric(x), class = "Date")
+	.Date(as.numeric(x))
     else
 	stop(gettextf("do not know how to convert '%s' to class %s",
 		      deparse(substitute(x)),
@@ -158,7 +158,7 @@ summary.Date <- function(object, digits = 12L, ...)
         stop("binary + is not defined for \"Date\" objects")
     if (inherits(e1, "difftime")) e1 <- coerceTimeUnit(e1)
     if (inherits(e2, "difftime")) e2 <- coerceTimeUnit(e2)
-    structure(unclass(e1) + unclass(e2), class = "Date")
+    .Date(unclass(e1) + unclass(e2))
 }
 
 `-.Date` <- function(e1, e2)
@@ -174,7 +174,7 @@ summary.Date <- function(object, digits = 12L, ...)
     if (inherits(e2, "difftime")) e2 <- coerceTimeUnit(e2)
     if(!is.null(attr(e2, "class")))
         stop("can only subtract numbers from \"Date\" objects")
-    structure(unclass(as.Date(e1)) - e2, class = "Date")
+    .Date(unclass(as.Date(e1)) - e2)
 }
 
 Ops.Date <- function(e1, e2)
@@ -242,10 +242,10 @@ as.list.Date <- function(x, ...)
     lapply(seq_along(x), function(i) x[i])
 
 c.Date <- function(..., recursive = FALSE)
-    structure(c(unlist(lapply(list(...), unclass))), class = "Date")
+    .Date(c(unlist(lapply(list(...), unclass))))
 
 mean.Date <- function (x, ...)
-    structure(mean(unclass(x), ...), class = "Date")
+    .Date(mean(unclass(x), ...))
 
 seq.Date <- function(from, to, by, length.out = NULL, along.with = NULL, ...)
 {
@@ -269,7 +269,7 @@ seq.Date <- function(from, to, by, length.out = NULL, along.with = NULL, ...)
         from <- unclass(as.Date(from))
         to <- unclass(as.Date(to))
         res <- seq.int(from, to, length.out = length.out)
-        return(structure(res, class = "Date"))
+        return(.Date(res))
     }
 
     if (length(by) != 1L) stop("'by' must be of length 1")
@@ -301,7 +301,7 @@ seq.Date <- function(from, to, by, length.out = NULL, along.with = NULL, ...)
             ## defeat test in seq.default
             res <- seq.int(0, to0 - from, by) + from
         }
-        res <- structure(res, class = "Date")
+        res <- .Date(res)
     } else {  # months or quarters or years
         r1 <- as.POSIXlt(from)
         if(valid == 5L) { # years
@@ -459,7 +459,7 @@ diff.Date <- function (x, lag = 1L, differences = 1L, ...)
     if (length(lag) != 1L || length(differences) > 1L || lag < 1L || differences < 1L)
         stop("'lag' and 'differences' must be integers >= 1")
     if (lag * differences >= xlen)
-        return(structure(numeric(), class="difftime", units="days"))
+        return(.difftime(numeric(), units="days"))
     r <- x
     i1 <- -seq_len(lag)
     if (ismat)
