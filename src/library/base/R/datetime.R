@@ -503,6 +503,7 @@ Summary.POSIXct <- function (..., na.rm)
     args <- list(...)
     tz <- do.call("check_tzones", args)
     val <- NextMethod(.Generic)
+    ## FIXME: Why not use the .POSIXct() class generator?
     class(val) <- oldClass(args[[1L]])
     attr(val, "tzone") <- tz
     val
@@ -526,6 +527,7 @@ function(x, ..., drop = TRUE)
 {
     cl <- oldClass(x)
     val <- NextMethod("[")
+    ## FIXME: Why not use the .POSIXct() class generator?
     class(val) <- cl
     attr(val, "tzone") <- attr(x, "tzone")
     val
@@ -536,6 +538,7 @@ function(x, ..., drop = TRUE)
 {
     cl <- oldClass(x)
     val <- NextMethod("[[")
+    ## FIXME: Why not use the .POSIXct() class generator?
     class(val) <- cl
     attr(val, "tzone") <- attr(x, "tzone")
     val
@@ -548,6 +551,7 @@ function(x, ..., value) {
     cl <- oldClass(x)
     tz <- attr(x, "tzone")
     x <- NextMethod(.Generic)
+    ## FIXME: Why not use the .POSIXct() class generator?
     class(x) <- cl
     attr(x, "tzone") <- tz
     x
@@ -561,13 +565,15 @@ as.list.POSIXct <- function(x, ...)
 {
     nms <- names(x)
     names(x) <- NULL
-    y <- lapply(seq_along(x), function(i) x[i])
+    y <- lapply(seq_along(x), .POSIXct, attr(x, "tzone"))
     names(y) <- nms
     y
 }
 
-is.na.POSIXlt <- function(x) is.na(as.POSIXct(x))
-anyNA.POSIXlt <- function(x, recursive = FALSE) anyNA(as.POSIXct(x))
+is.na.POSIXlt <- function(x)
+    is.na(as.POSIXct(x))
+anyNA.POSIXlt <- function(x, recursive = FALSE)
+    anyNA(as.POSIXct(x))
 
 ## <FIXME> check the argument validity
 ## This is documented to remove the timezone
@@ -577,7 +583,6 @@ c.POSIXct <- function(..., recursive = FALSE)
 ## we need conversion to POSIXct as POSIXlt objects can be in different tz.
 c.POSIXlt <- function(..., recursive = FALSE)
     as.POSIXlt(do.call("c", lapply(list(...), as.POSIXct)))
-
 
 
 ISOdatetime <- function(year, month, day, hour, min, sec, tz = "")
@@ -654,7 +659,7 @@ as.difftime <- function(tim, format = "%X", units = "auto")
 	if (units == "auto") stop("need explicit units for numeric conversion")
         if (!(units %in% c("secs", "mins", "hours", "days", "weeks")))
 	    stop("invalid units specified")
-        structure(tim, units = units, class = "difftime")
+        .difftime(tim, units = units)
     }
 }
 
@@ -684,7 +689,8 @@ as.double.difftime <- function(x, units = "auto", ...)
 
 as.data.frame.difftime <- as.data.frame.vector
 
-format.difftime <- function(x,...) paste(format(unclass(x),...), units(x))
+format.difftime <- function(x,...)
+    paste(format(unclass(x),...), units(x))
 
 print.difftime <- function(x, digits = getOption("digits"), ...)
 {
@@ -704,6 +710,7 @@ print.difftime <- function(x, digits = getOption("digits"), ...)
 {
     cl <- oldClass(x)
     val <- NextMethod("[")
+    ## FIXME: Why not use the .difftime() class generator?
     class(val) <- cl
     attr(val, "units") <- attr(x, "units")
     val
@@ -711,6 +718,7 @@ print.difftime <- function(x, digits = getOption("digits"), ...)
 
 diff.difftime <- function(x, ...)
     ## assume class is preserved (it is in diff.default):
+    ## FIXME: Why not use the .difftime() class generator?
     structure(NextMethod("diff"), units = attr(x, "units"))
 
 Ops.difftime <- function(e1, e2)
@@ -739,18 +747,18 @@ Ops.difftime <- function(e1, e2)
         NextMethod(.Generic)
     } else if(.Generic == "+" || .Generic == "-") {
         if(inherits(e1, "difftime") && !inherits(e2, "difftime"))
-            return(structure(NextMethod(.Generic),
-                             units = attr(e1, "units"), class = "difftime"))
+            return(.difftime(NextMethod(.Generic),
+                             units = attr(e1, "units")))
         if(!inherits(e1, "difftime") && inherits(e2, "difftime"))
-            return(structure(NextMethod(.Generic),
-                             units = attr(e2, "units"), class = "difftime"))
+            return(.difftime(NextMethod(.Generic),
+                             units = attr(e2, "units")))
         u1 <- attr(e1, "units")
         if(attr(e2, "units") == u1) {
-            structure(NextMethod(.Generic), units=u1, class = "difftime")
+            .difftime(NextMethod(.Generic), units = u1)
         } else {
             e1 <- coerceTimeUnit(e1)
             e2 <- coerceTimeUnit(e2)
-            structure(NextMethod(.Generic), units = "secs", class = "difftime")
+            .difftime(NextMethod(.Generic), units = "secs")
         }
     } else {
         ## '*' is covered by a specific method
@@ -1189,6 +1197,7 @@ rep.POSIXct <- function(x, ...)
 rep.POSIXlt <- function(x, ...)
 {
     y <- lapply(X = unclass(x), FUN = rep, ...)
+    ## FIXME: Why not use the .POSIXlt() class generator?
     attributes(y) <- attributes(x)
     y
 }
@@ -1338,6 +1347,7 @@ OlsonNames <- function(tzdir = NULL)
 `[[.POSIXlt` <- function(x, ..., drop = TRUE)
 {
     val <- lapply(X = unclass(x), FUN = "[[", ..., drop = drop)
+    ## FIXME: Why not use the .POSIXlt() class generator?
     attributes(val) <- attributes(x) # need to preserve timezones
     val
 }
