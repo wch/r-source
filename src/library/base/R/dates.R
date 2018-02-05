@@ -204,6 +204,7 @@ Summary.Date <- function (..., na.rm)
     if (!ok) stop(gettextf("%s not defined for \"Date\" objects", .Generic),
                   domain = NA)
     val <- NextMethod(.Generic)
+    ## FIXME: Why not use the .Date() class generator?
     class(val) <- oldClass(list(...)[[1L]])
     val
 }
@@ -212,6 +213,7 @@ Summary.Date <- function (..., na.rm)
 {
     cl <- oldClass(x)
     val <- NextMethod("[")
+    ## FIXME: Why not use the .Date() class generator?
     class(val) <- cl
     val
 }
@@ -220,6 +222,7 @@ Summary.Date <- function (..., na.rm)
 {
     cl <- oldClass(x)
     val <- NextMethod("[[")
+    ## FIXME: Why not use the .Date() class generator?
     class(val) <- cl
     val
 }
@@ -230,6 +233,7 @@ Summary.Date <- function (..., na.rm)
     value <- unclass(as.Date(value))
     cl <- oldClass(x)
     x <- NextMethod(.Generic)
+    ## FIXME: Why not use the .Date() class generator?
     class(x) <- cl
     x
 }
@@ -239,7 +243,7 @@ as.character.Date <- function(x, ...) format(x, ...)
 as.data.frame.Date <- as.data.frame.vector
 
 as.list.Date <- function(x, ...)
-    lapply(seq_along(x), function(i) x[i])
+    lapply(unclass(x), .Date)
 
 c.Date <- function(..., recursive = FALSE)
     .Date(c(unlist(lapply(list(...), unclass))))
@@ -439,16 +443,19 @@ round.Date <- function(x, ...)
 {
     cl <- oldClass(x)
     val <- NextMethod()
+    ## FIXME: Why not use the .Date() class generator?
     class(val) <- cl
     val
 }
 
 ## must avoid truncating forwards dates prior to 1970-01-01.
-trunc.Date <- function(x, ...) round(x - 0.4999999)
+trunc.Date <- function(x, ...)
+    round(x - 0.4999999)
 
 rep.Date <- function(x, ...)
 {
     y <- NextMethod()
+    ## FIXME: Why not use the .Date() class generator?
     structure(y, class=oldClass(x))
 }
 
@@ -480,6 +487,7 @@ split.Date <- function(x, f, drop = FALSE, ...)
 {
     oclass <- class(x)
     y <- split.default(unclass(x), f, drop = drop, ...)
+    ## FIXME: Why not use the .Date() class generator?
     for(i in seq_along(y)) class(y[[i]]) <- oclass
     y
 }

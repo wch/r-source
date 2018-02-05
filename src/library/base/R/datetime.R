@@ -565,7 +565,7 @@ as.list.POSIXct <- function(x, ...)
 {
     nms <- names(x)
     names(x) <- NULL
-    y <- lapply(seq_along(x), .POSIXct, attr(x, "tzone"))
+    y <- lapply(unclass(x), .POSIXct, attr(x, "tzone"))
     names(y) <- nms
     y
 }
