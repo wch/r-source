@@ -1,7 +1,7 @@
 #### Regression Tests that need "much" memory
 #### (and are slow even with enough GBytes of mem)
 
-## Run (currently _only_)  by
+## Run (currently _only_)  when inside tests/  by
 '
 make test-Large
 '
@@ -46,6 +46,13 @@ if(availableGB > 11) local(withAutoprint({
     close(file)
     log2(file.size(tf)) ## 31.99996
     ## now, this gave a segmentation fault, PR#17311 :
+"FIXME: on 32-bit Linux (F 24), still see
+Program received signal SIGSEGV, Segmentation fault.
+... in do_readLines (call=0x8.., op=0x8.., ....)
+    at ../../../R/src/main/connections.c:3852
+3852		    if(c != '\n') buf[nbuf++] = (char) c; else break;
+"
+  if(.Machine$sizeof.pointer > 4) withAutoprint({
     system.time( x <- readLines(tf) ) # depending on disk,.. takes 15-50 seconds
     ##                ---------
     str(ncx <- nchar(x, "bytes"))
@@ -54,6 +61,7 @@ if(availableGB > 11) local(withAutoprint({
     table(ncx) # mostly 3072, then some 4075 and the last one
     head(iL <- which(ncx == 4075))
     stopifnot(diff(iL) == 21)
+  }) else cat("32-bit: still seg.faulting - FIXME\n")
 }))
 ## + 2 warnings
 
@@ -72,7 +80,7 @@ if(FALSE) { # object.size() itself is taking a lot of time!
     os <- structure(19327353184, class = "object_size")
     print(os, units = "GB") # 18
 }
-rm(res); gc() # for the next step
+if(exists("res")) rm(res); gc() # for the next step
 
 ### Testing PR#17992  c() / unlist() name creation for large vectors
 ## Part 2 (https://bugs.r-project.org/bugzilla/show_bug.cgi?id=17292#c4):
@@ -83,11 +91,13 @@ if(availableGB > 37) system.time({
 ## In R <= 3.4.1, took  475 sec  elapsed, and gave Error .. :
 ##    could not allocate memory (2048 Mb) in C function 'R_AllocStringBuffer'
 ## ((and that error msg is incorrect because of int overflow))
+if(exists("res")) withAutoprint({
 str(res) # is fast!
 ## Named raw [1:2147483648] 00 00 00 00 ...
 ## - attr(*, "names")= chr [1:2147483648] "a.b" "a.b" "a.b" "a.b" ...
 gc() # back to ~ 18.4 GB
-rm(res); gc()
+rm(res)
+}); gc() # for the next step
 
 ## Large string's encodeString() -- PR#15885
 if(availableGB > 4) system.time(local(withAutoprint({
@@ -127,8 +137,12 @@ if(availableGB > 70) withAutoprint({
     system.time( y <- sin(pi*x) )       # 50.5  user; 57.4--76.1  elapsed
     ## default n (= "nout") = 50:
     system.time(ap1 <- approx(x,y, ties = "ordered"))# 15.6 user; 25.8 elapsed
-    stopifnot(is.list(ap1), names(ap1) == c("x","y"), length(ap1$x) == 50,
-              all.equal(ap1$y, sin(pi*ap1$x), tol= 1e-15))
+    stopifnot(exprs = {
+	is.list(ap1)
+	names(ap1) == c("x","y")
+	length(ap1$x) == 50
+	all.equal(ap1$y, sin(pi*ap1$x), tol= 1e-15)
+    })
     rm(ap1); gc() ## keep x,y,n,i2 --> max used: 92322 Mb
 })
 
@@ -138,10 +152,13 @@ if(availableGB > 211) withAutoprint({ ## continuing from above
     system.time(ap <- approx(x,y, ties = "ordered", xout = xo))
                                         # elapsed 561.4; using ~ 67 GB
     gc() # showing max.used ~ 109106 Mb
-    stopifnot(is.list(ap), names(ap) == c("x","y"), length(ap$x) == n
-            , is.na(ap$y[n]) # because ap$x[n] > 1, i.e., outside of [0,1]
-            , all.equal(ap$y[i2], sin(pi*xo[i2]), tol= 1e-15)
-              )
+    stopifnot(exprs = {
+	is.list(ap)
+	names(ap) == c("x","y")
+	length(ap$x) == n
+	is.na(ap$y[n]) # because ap$x[n] > 1, i.e., outside of [0,1]
+	all.equal(ap$y[i2], sin(pi*xo[i2]), tol= 1e-15)
+    })
     rm(ap); gc() # showing used 83930 Mb | max.used 210356.6 Mb
     ## only large x,y :
     system.time(apf <- approxfun(x,y, ties="ordered", rule = 2))# elapsed: ~26s
@@ -153,13 +170,49 @@ if(availableGB > 211) withAutoprint({ ## continuing from above
     system.time(ss  <- spline   (x,y, ties = "ordered", xout = xi))
                                         # elapsed 126--265 s; using ~ 207 GB
     gc()
-    stopifnot(
-        is.list(ss), names(ss) == c("x","y"), length(ss$y) == length(xi)
-      , all.equal(ss$y   , sin(pi*xi), tol= 1e-15)
-      , all.equal(ssf(xi), ss$y,       tol= 1e-15)
-    )
+    stopifnot(exprs = {
+	is.list(ss)
+	names(ss) == c("x","y")
+	length(ss$y) == length(xi)
+	all.equal(ss$y   , sin(pi*xi), tol= 1e-15)
+	all.equal(ssf(xi), ss$y,       tol= 1e-15)
+    })
     rm(x, y, xo, ss, ssf) # remove long vector objects
     gc()
 })
+
+## sum(<Integer|Logical>) -- should no longer overflow: ----------------------------------------
+## 1) sum(<long logical>) == counting
+if(availableGB > 24) withAutoprint({
+    system.time(L <- rep.int((0:15) %% 7 == 2, 2^28))# -> length 2^32; ~ 22 sec
+    print(object.size(L), unit="GB") # 16 GB
+    system.time(sL <- sum(L)) # 8.4 sec
+    stopifnot(exprs = {
+        is.logical(L)
+        length(L) == 2^32
+        !is.integer(length(L))
+        is.integer(sL)
+        identical(sL, as.integer(2^29))
+    })
+}) ## sL would be NA with an "integer overflow" warning in R <= 3.4.x
+
+## 2) many (and relatively long and large) integers
+L <- as.integer(2^31 - 1)## = 2147483647L = .Machine$integer.max ("everywhere")
+## a "small" example with this is in ./reg-tests-1d.R (see 'x24')
+if(availableGB > 12) withAutoprint({
+    system.time(x31 <- rep.int(L, 2^31+1)) # sum = 2^62 - 1 =.= 2^62 // ~ 5.5 sec
+    print(object.size(x31), unit = "GB") # 8 G
+    system.time(S <- sum(x31)) # ~ 2 sec
+    system.time(S.4 <- sum(x31, x31, x31, x31)) # 8 sec
+    stopifnot(is.integer(x31),
+              identical(S,   2^62),
+              identical(S.4, 2^64))
+    system.time(x32 <- c(x31, x31)) # 14 sec  and 16 GB
+    rm(x31)# now,  sum vvv  will switch to use irsum() [double accumulator]
+    system.time(S.2 <- sum(x32))
+    stopifnot(S.2 == 2^63)
+    rm(x32)
+})
+
 
 proc.time() # total

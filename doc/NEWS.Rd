@@ -302,6 +302,11 @@
       the maximum on 16GB and the available physical memory. This is to
       avoid having the \command{R} process killed when macOS over-commits
       memory.
+
+      \item \code{sum(x)} and \code{sum(x1,x2,..,x<N>)} with many or
+      long logical and integer vectors no longer overflows (and returns
+      \code{NA} with a warning), but returns \code{double} numbers now
+      in such cases.
     }
   }
 

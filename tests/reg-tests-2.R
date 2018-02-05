@@ -622,14 +622,6 @@ f
 ## was  [1] C A; Levels:  C A  in 1.4.1
 
 
-## PR#1408 Inconsistencies in sum()
-x <- as.integer(2^30)
-sum(x, x)    # did not warn in 1.4.1
-sum(c(x, x)) # did warn
-(z <- sum(x, x, 0.0)) # was NA in 1.4.1
-typeof(z)
-
-
 ## NA levels in factors
 (x <- factor(c("a", "NA", "b"), exclude=NULL))
 ## 1.4.1 had wrong order for levels
