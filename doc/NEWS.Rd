@@ -376,6 +376,9 @@
 
       \item \code{methods:::bind_activation()} is defunct now; it
       typically has been unneeded for years.
+
+      \item the undocumented "hidden" \code{.__H__.cbind} and
+      \code{.__H__.rbind} are deprecated, correspondingly.
     }
   }
 

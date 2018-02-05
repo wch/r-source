@@ -61,7 +61,7 @@ cbind <- function(..., deparse.level = 1)
 		colnames(r) <- Nms(1)
 	    return(r)
 	}
-	else return(.__H__.cbind(..., deparse.level = deparse.level))
+	else return(base::cbind(..., deparse.level = deparse.level))
     }
 
     ## else :  na >= 2
