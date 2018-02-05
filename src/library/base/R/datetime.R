@@ -1341,3 +1341,13 @@ OlsonNames <- function(tzdir = NULL)
     attributes(val) <- attributes(x) # need to preserve timezones
     val
 }
+
+as.list.POSIXlt <- function(x, ...)
+{
+    nms <- names(x)
+    names(x) <- NULL
+    y <- lapply(X = do.call(Map, c(list(list), unclass(x))),
+                FUN = .POSIXlt, tz = attr(x, "tzone"))
+    names(y) <- nms
+    y
+}
