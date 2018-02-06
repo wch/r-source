@@ -33,7 +33,6 @@
 #define R_MSG_list_vec	_("applies only to lists and vectors")
 #include <Rmath.h>
 #include <Print.h>
-#include <R_ext/Altrep.h> /* for IS_NA and NO_NA stuff */
 
 
 /* This section of code handles type conversion for elements */
@@ -2191,10 +2190,10 @@ static Rboolean anyNA(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(REAL_NO_NA(x))
 	    return FALSE;
 	ITERATE_BY_REGION(x, xD, i, nbatch, double, REAL, {
-	    for (int k = 0; k < nbatch; k++)
-		if (ISNAN(xD[k]))
-		    return TRUE;
-	});
+		for (int k = 0; k < nbatch; k++)
+		    if (ISNAN(xD[k]))
+			return TRUE;
+	    });
 	break;
     }
     case INTSXP:
@@ -2202,10 +2201,10 @@ static Rboolean anyNA(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(INTEGER_NO_NA(x))
 	    return FALSE;
 	ITERATE_BY_REGION(x, xI, i, nbatch, int, INTEGER, {
-	    for (int k = 0; k < nbatch; k++)
-		if (xI[k] == NA_INTEGER)
-		    return TRUE;
-	});
+		for (int k = 0; k < nbatch; k++)
+		    if (xI[k] == NA_INTEGER)
+			return TRUE;
+	    });
 	break;
     }
     case LGLSXP:
