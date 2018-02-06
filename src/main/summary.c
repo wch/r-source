@@ -540,13 +540,21 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(call2 = shallow_duplicate(call));
     SETCDR(call2, args);
 
-    /* XXX duped grabbing of narm here. But I don't want to hit dispatchgroup 
-       if I'm an ALTREP. Or do I? */
+    if (DispatchGroup("Summary", call2, op, args, env, &ans)) {
+	UNPROTECT(2); /* call2, args */
+	return(ans);
+    }
+    UNPROTECT(1); /* call2 */
 
-    if( ALTREP_NONEXP(CAR(args)) && (CDR(args) == R_NilValue || CDDR(args) == R_NilValue)) {
-	ans = matchArgExact(R_NaRmSymbol, &args);
-	Rboolean narm = asLogical(ans);
+#ifdef DEBUG_Summary
+    REprintf("C do_summary(op%s, *): did NOT dispatch\n", PRIMNAME(op));
+#endif
 
+    ans = matchArgExact(R_NaRmSymbol, &args);
+    Rboolean narm = asLogical(ans);
+
+    if (ALTREP_NONEXP(CAR(args)) && CDDR(args) == R_NilValue &&
+	(CDR(args) == R_NilValue || TAG(CDR(args)) == R_NaRmSymbol)) {
 	SEXP toret = NULL;
 	SEXP vec = CAR(args);
 	switch(PRIMVAL(op)) {
@@ -572,24 +580,12 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 	    break;
 	}
 	if(toret != NULL) {
-	    UNPROTECT(2); //args, call2
+	    UNPROTECT(1); /* args */
 	    return toret;
 	}
     }
 
-    if (DispatchGroup("Summary", call2, op, args, env, &ans)) {
-	UNPROTECT(2); /* call2, args */
-	return(ans);
-    }
-    UNPROTECT(1); /* call2 */
-
-#ifdef DEBUG_Summary
-    REprintf("C do_summary(op%s, *): did NOT dispatch\n", PRIMNAME(op));
-#endif
-
-    ans = matchArgExact(R_NaRmSymbol, &args);
     Rboolean int_a, real_a, complex_a,
-	narm = asLogical(ans),
 	empty = TRUE;// <==> only zero-length arguments, or NA with na.rm=T
     int updated = 0; //
 	/* updated = NA_INTEGER if encountered NA,
