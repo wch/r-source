@@ -491,7 +491,7 @@ static int NodeClassSize[NUM_SMALL_NODE_CLASSES] = { 0, 1, 2, 4, 8, 16 };
 #define NODE_GEN_IS_YOUNGER(s,g) \
   (! NODE_IS_MARKED(s) || NODE_GENERATION(s) < (g))
 #define NODE_IS_OLDER(x, y) \
-  (NODE_IS_MARKED(x) && \
+    (NODE_IS_MARKED(x) && (y) && \
    (! NODE_IS_MARKED(y) || NODE_GENERATION(x) > NODE_GENERATION(y)))
 
 static int num_old_gens_to_collect = 0;

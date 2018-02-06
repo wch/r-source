@@ -1,7 +1,7 @@
 #  File src/library/methods/R/rbind.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -50,7 +50,7 @@ rbind <- function(..., deparse.level = 1)
 		rownames(r) <- Nms(1)
 	    return(r)
 	}
-	else return(.__H__.rbind(..., deparse.level = deparse.level))
+	else return(base::rbind(..., deparse.level = deparse.level))
     }
 
     ## else :  na >= 2

@@ -34,7 +34,9 @@ row(x, as.factor = FALSE)
   Wadsworth & Brooks/Cole.
 }
 \seealso{
-  \code{\link{col}} to get columns.
+  \code{\link{col}} to get columns;
+  \code{\link{slice.index}} for a general way to get slice indices
+  in an array.
 }
 \examples{
 x <- matrix(1:12, 3, 4)

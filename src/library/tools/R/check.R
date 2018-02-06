@@ -5147,7 +5147,8 @@ add_dummies <- function(dir, Log)
         config_val_to_logical(Sys.getenv("_R_CHECK_RD_XREFS_", "TRUE"))
     R_check_use_codetools <-
         config_val_to_logical(Sys.getenv("_R_CHECK_USE_CODETOOLS_", "TRUE"))
-    ## Howver, we cannot use this if we did not install the recommended packages
+    ## However, we cannot use this if we did not install the recommended
+    ## packages.
     if(R_check_use_codetools) {
         tmp <- tryCatch(find.package('codetools'), error = identity)
         if(inherits(tmp, "error")) R_check_use_codetools <- FALSE

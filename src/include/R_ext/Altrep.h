@@ -87,7 +87,7 @@ typedef int (*R_altinteger_Sort_check_method_t)(SEXP);
 typedef SEXP (*R_altintger_Sort_method_t)(SEXP, Rboolean);
 typedef SEXP (*R_altinteger_Order_method_t)(SEXP);
 typedef SEXP (*R_altinteger_Is_NA_method_t)(SEXP);
-typedef int (*R_altinteger_Sum_method_t)(SEXP, Rboolean); 
+typedef SEXP (*R_altinteger_Sum_method_t)(SEXP, Rboolean); 
 typedef int (*R_altinteger_Min_method_t)(SEXP, Rboolean);
 typedef int (*R_altinteger_Max_method_t)(SEXP, Rboolean);
 typedef R_xlen_t (*R_altinteger_Which_min_method_t)(SEXP);
@@ -110,7 +110,7 @@ typedef SEXP (*R_altreal_Sort_method_t)(SEXP, Rboolean);
 typedef int (*R_altreal_Sort_check_method_t)(SEXP);
 typedef SEXP (*R_altreal_Order_method_t)(SEXP);
 typedef SEXP (*R_altreal_Is_NA_method_t)(SEXP);
-typedef double (*R_altreal_Sum_method_t)(SEXP, Rboolean); 
+typedef SEXP (*R_altreal_Sum_method_t)(SEXP, Rboolean); 
 typedef double (*R_altreal_Min_method_t)(SEXP, Rboolean);
 typedef double (*R_altreal_Max_method_t)(SEXP, Rboolean);
 typedef R_xlen_t (*R_altreal_Which_min_method_t)(SEXP);
@@ -187,27 +187,12 @@ DECLARE_METHOD_SETTER(altstring, Is_sorted)
 DECLARE_METHOD_SETTER(altstring, No_NA)
 
 
-/* need to be shared between summary.c and altrep.c (for Sum methods) */
-Rboolean isum(SEXP sx, int *value, Rboolean narm, SEXP call);
-Rboolean rsum(SEXP sx, double *value, Rboolean narm);
 /*INT_MIN is NA_INTEGER! */
-enum {KNOWN_DECR = -1, UNKNOWN_SORTEDNESS=INT_MIN, KNOWN_INCR = 1, KNOWN_UNSORTED = 0};
+enum {KNOWN_DECR = -1,
+      UNKNOWN_SORTEDNESS = INT_MIN,
+      KNOWN_INCR = 1,
+      KNOWN_UNSORTED = 0};
 #define KNOWN_SORTED(sorted) (sorted == KNOWN_DECR || sorted == KNOWN_INCR)
-
-SEXP ALTINTEGER_MATCH(SEXP table, SEXP x, int nm, SEXP incomp, SEXP env,
-		      Rboolean first);
-SEXP ALTREAL_MATCH(SEXP table, SEXP x, int nm, SEXP incomp, SEXP env,
-		      Rboolean first);
-int ALTINTEGER_MIN(SEXP x, Rboolean narm);
-int ALTINTEGER_MAX(SEXP x, Rboolean narm);
-int ALTINTEGER_SUM(SEXP x, Rboolean narm);
-double ALTREAL_SUM(SEXP x, Rboolean narm);
-double ALTREAL_MIN(SEXP x, Rboolean narm);
-double ALTREAL_MAX(SEXP x, Rboolean narm);
-int INTEGER_IS_SORTED(SEXP x);
-int REAL_IS_SORTED(SEXP x);
-SEXP ALTINTEGER_IS_NA(SEXP x);
-SEXP ALTREAL_IS_NA(SEXP x);
 
 /* is this TOO general? I don't think so..., possible it should be ALTVEC? */
 

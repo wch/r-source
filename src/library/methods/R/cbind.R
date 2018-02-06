@@ -1,7 +1,7 @@
 #  File src/library/methods/R/cbind.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -61,7 +61,7 @@ cbind <- function(..., deparse.level = 1)
 		colnames(r) <- Nms(1)
 	    return(r)
 	}
-	else return(.__H__.cbind(..., deparse.level = deparse.level))
+	else return(base::cbind(..., deparse.level = deparse.level))
     }
 
     ## else :  na >= 2
@@ -122,44 +122,6 @@ cbind <- function(..., deparse.level = 1)
 	setN(ncol(r), Nna)
     }
     r
-}
-
-## To be active, the above cbind() must "replace" cbind() in "base".
-## This may be called on loading methods, see ./zzz.R
-bind_activation <- function(on = TRUE)
-{
-    if(on)
-        warning("methods:::bind_activation(TRUE) is deprecated;\n you should rather provide methods for cbind2() / rbind2()")
-    inBase <- function(x, value, ns)
-    {
-        unlockBinding(x, ns)
-        assign(x, value, envir = ns, inherits = FALSE)
-        w <- options("warn")
-        on.exit(options(w))
-        options(warn = -1)
-        lockBinding(x, ns)
-        invisible(NULL)
-    }
-
-    ## 'bind' : cbind && rbind
-    ## as from 2.4.0 this saving is done in base, so could simplify code
-    base.ns <- getNamespace("base")
-    saved <- exists(".__H__.cbind", envir = base.ns, inherits = FALSE)
-    if(was.on <- saved)
-        was.on <- !identical(base::cbind, base::.__H__.cbind)
-    if(on) {
-        if(!saved) {
-            inBase(".__H__.cbind", base::cbind, base.ns)
-            inBase(".__H__.rbind", base::rbind, base.ns)
-        }
-	inBase("cbind", cbind, base.ns)
-	inBase("rbind", rbind, base.ns)
-    }
-    else if(!on && was.on) { ## turn it off
-        inBase("cbind", base::.__H__.cbind, ns = base.ns)
-        inBase("rbind", base::.__H__.rbind, ns = base.ns)
-    }
-    was.on
 }
 
 ### cbind2 () :	 Generic and methods need to be "method-bootstrapped"

@@ -1,7 +1,7 @@
 % File src/library/methods/man/cbind2.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
-% Copyright 2001-2011 The R Foundation
+% Copyright 1995-2018 R Core Team
+% Copyright 2001-2018 The R Foundation
 % Distributed under GPL 2 or later
 
 \name{cbind2}
@@ -101,26 +101,6 @@ cbind(a, four=4, 7:9)# calling cbind2() twice
 cbind(m,a, ch=c("D","E"), a*3)
 cbind(1,a, m) # ok with a warning
 untrace("cbind2")
-\dontshow{%% FIXME -- do deprecate  bind_activation() !
-### Note: Use the following activation if you want cbind() to work
-### ----  on S4 objects -- be careful otherwise!
-
-methods:::bind_activation(on = TRUE)
-trace("cbind2")
-cbind(a=1:3)# no call to cbind2()
-cbind(a=1:3, four=4, 7:9)# calling cbind2() twice
-untrace("cbind2")
-
-cbind(m,m+1,m+2)
-cbind(m,a=1, ch=c("D","E"))
-cbind(1,a=1:3, m) # ok with a warning
-cbind(A=1, B=3, m, C=4)
-
-cbind(m, a=1, b=3)
-
-## turn off the `special cbind()' :
-methods:::bind_activation(FALSE)
-}%dont
 }
 \keyword{array}
 \keyword{manip}

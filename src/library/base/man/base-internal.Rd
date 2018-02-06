@@ -24,6 +24,7 @@
 %% moved from trace.Rd in 2.11.0
 \alias{.primTrace}
 \alias{.primUntrace}
+\alias{.Date}
 \alias{.POSIXct}
 \alias{.POSIXlt}
 \alias{.difftime}
@@ -92,6 +93,7 @@ lazyLoadDBfetch(key, file, compressed, hook)
 .primTrace(obj)
 .primUntrace(obj)
 
+.Date(xx)
 .POSIXct(xx, tz = NULL)
 .POSIXlt(xx, tz = NULL)
 .difftime(xx, units)
@@ -222,8 +224,8 @@ lazyLoadDBfetch(key, file, compressed, hook)
   functions underlying \code{\link{trace}} and \code{\link{untrace}}
   respectively.
 
-  \code{.POSIXct}, \code{.POSIXlt} and \code{.difftime} are class
-  generators.
+  \code{.Date}, \code{.POSIXct}, \code{.POSIXlt} and \code{.difftime}
+  are class generators.
 
   \code{.cache_class} caches the inheritance of an S4 class for use in
   S3 method dispatch.  With \code{NULL} second argument it returns the

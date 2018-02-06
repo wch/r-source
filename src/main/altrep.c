@@ -543,7 +543,7 @@ int STRING_NO_NA(SEXP x)
     return ALTREP(x) ? ALTSTRING_DISPATCH(No_NA, x) : 0;
 }
 
-int ALTINTEGER_SUM(SEXP x, Rboolean narm)
+SEXP ALTINTEGER_SUM(SEXP x, Rboolean narm)
 {
     return ALTINTEGER_DISPATCH(Sum, x, narm);
 }
@@ -568,7 +568,7 @@ SEXP ALTINTEGER_MATCH(SEXP table, SEXP x, int nm, SEXP incomp, SEXP env,
     return ALTINTEGER_DISPATCH(Match, table, x, nm, incomp, env, first);
 }
 
-double ALTREAL_SUM(SEXP x, Rboolean narm)
+SEXP ALTREAL_SUM(SEXP x, Rboolean narm)
 {
     return ALTREAL_DISPATCH(Sum, x, narm);
 }
@@ -793,22 +793,7 @@ static SEXP altinteger_Is_NA_default(SEXP x) {
     ALT_ISNA_DEFAULT(x, INTEGER, INTVAL_ISNA);
 }
 
-static int altinteger_Sum_default(SEXP x, Rboolean narm) {
-
-    
-    int val = NA_INTEGER;
-    /* if it's sorted we can check for rms by just looking
-       at the last element, and if there is one and 
-       narm is false, the answer is NA_INTEGER, no need
-       to sum at all! */
-    if(narm ||
-       !KNOWN_SORTED(INTEGER_IS_SORTED(x)) ||
-       !INTVAL_ISNA(INTEGER_ELT(x, XLENGTH(x)-1))) {
-	isum(x, &val, narm, R_NilValue);
-    }
-    return val;
-}
-
+static SEXP altinteger_Sum_default(SEXP x, Rboolean narm) { return NULL; }
 
 #define ALT_MINMAX(x, TYPE, ALTPREFIX, COMP, DOMAX, NARM, WHICH, NACHK) do { \
 	int sorted = ALTPREFIX##_IS_SORTED(x);				\
@@ -955,13 +940,7 @@ static SEXP altreal_Is_NA_default(SEXP x) {
     ALT_ISNA_DEFAULT(x, REAL, ISNAN)
 }
 
-static double altreal_Sum_default(SEXP x, Rboolean narm) {
-
-    double val = NA_REAL;
-    rsum(x, &val, narm);
-    return val;
-}
-
+static SEXP altreal_Sum_default(SEXP x, Rboolean narm) { return NULL; }
     
 static double altreal_Min_default(SEXP x, Rboolean narm) {
     ALT_MINMAX(x, double, REAL, LT, FALSE, narm, FALSE, ISNAN)
@@ -1711,34 +1690,29 @@ static int compact_intseq_No_NA(SEXP x)
 /* XXX this also appears in summary.c. move to header file?*/
 #define R_INT_MIN (1 + INT_MIN)
 
-static int compact_intseq_Sum(SEXP x, Rboolean narm)
+static SEXP compact_intseq_Sum(SEXP x, Rboolean narm)
 {
-    int val;
-    double tmp;
 #ifdef COMPACT_INTSEQ_MUTABLE
     /* If the vector has been expanded it may have been modified. */
     if (ALTINTEGER_EXPANDED(x) != R_NilValue) 
-	isum(ALTINTEGER_EXPANDED(x), &val, narm, R_NilValue);
+	return NULL;
     else {
 #endif
+    double tmp;
 	SEXP info = ALTREP_INFO(x);
 	R_xlen_t size = COMPACT_INTSEQ_INFO_LENGTH(info);
 	R_xlen_t n1 = COMPACT_INTSEQ_INFO_FIRST(info);
 	int inc = COMPACT_INTSEQ_INFO_INCR(info);
 	tmp = (size / 2.0) * (n1 + n1 + inc * (size - 1));
-	if(tmp > INT_MAX || tmp < R_INT_MIN) {
-	    warning("Integer overflow in sum. Use sum(as.numeric(.))");
-	    val = NA_INTEGER;
-	} else {
-	    val = (int) tmp;
-	}
+	if(tmp > INT_MAX || tmp < R_INT_MIN)
+	    /**** check for overfolw of exact integer range? */
+	    return ScalarReal(tmp);
+	else
+	    return ScalarInteger((int) tmp);
 #ifdef COMPACT_INTSEQ_MUTABLE
     }
 #endif
-    return val;
 }
-
-
 
 static SEXP compact_intseq_Match(SEXP table, SEXP x, int nm, SEXP incomp,
 				 SEXP env, Rboolean firstonly)
@@ -2111,13 +2085,13 @@ static int virtrep_intvec_No_NA(SEXP x)
     return INTEGER_NO_NA(parent);
 }
 
-static int virtrep_intvec_Sum(SEXP x, Rboolean narm)
+static SEXP virtrep_intvec_Sum(SEXP x, Rboolean narm)
 {
+    return NULL;
+#ifdef DODO
     int ret;
-    if(ALTINTEGER_EXPANDED(x) != R_NilValue) {
-	isum(x, &ret, narm, R_NilValue);
-	return ret;
-    }
+    if(ALTINTEGER_EXPANDED(x) != R_NilValue)
+	return NULL;
     
     SEXP info = ALTREP_INFO(x);
     SEXP parent = VIRTREP_PARENT(info);
@@ -2152,6 +2126,7 @@ static int virtrep_intvec_Sum(SEXP x, Rboolean narm)
     }
     
     return ret;
+#endif
 }
 
 
@@ -2377,24 +2352,22 @@ static int compact_realseq_No_NA(SEXP x)
     return TRUE;
 }
 
-static double compact_realseq_Sum(SEXP x, Rboolean narm)
+static SEXP compact_realseq_Sum(SEXP x, Rboolean narm)
 {
-    double val;
 #ifdef COMPACT_INTSEQ_MUTABLE
     /* If the vector has been expanded it may have been modified. */
     if (ALTREAL_EXPANDED(x) != R_NilValue) 
-	isum(ALTREAL_EXPANDED(x), &val, narm, R_NilValue);
+	return NULL;
     else {
 #endif
 	SEXP info = ALTREP_INFO(x);
 	double size = COMPACT_REALSEQ_INFO_LENGTH(info);
 	double n1 = COMPACT_REALSEQ_INFO_FIRST(info);
 	double inc = COMPACT_REALSEQ_INFO_INCR(info);
-	val = (size / 2.0) *(n1 + n1 + inc * (size - 1));
+	return ScalarReal((size / 2.0) *(n1 + n1 + inc * (size - 1)));
 #ifdef COMPACT_INTSEQ_MUTABLE
     }
 #endif
-    return val;
 }
 
 
@@ -2483,6 +2456,8 @@ SEXP attribute_hidden R_compact_intrange(R_xlen_t n1, R_xlen_t n2)
 }
 
 
+#ifdef DODO
+/**** needs revsions for integer sum changes */
 /**
  ** In-place subsetted vectors
  **
@@ -2617,22 +2592,19 @@ SEXP attribute_hidden R_compact_intrange(R_xlen_t n1, R_xlen_t n2)
 									\
     }									\
     									\
-    static type funprefix##_Sum(SEXP x, Rboolean narm)			\
+    static SEXP funprefix##_Sum(SEXP x, Rboolean narm)			\
     {									\
-	type val;							\
 	/* If the vector has been expanded it may have been modified. */ \
 	if (ALTREP_EXPANDED(x) != R_NilValue)				\
-	    sumfun(ALTREP_EXPANDED(x), &val, narm, R_NilValue);		\
+	    return NULL;						\
 	else {								\
 	    SEXP info = ALTREP_INFO(x);					\
 	    SEXP parent = SUBSETTED_VEC_PARENT(info);			\
 	    if(ALTREP(parent))						\
-		val = ALT##ALTTYPE##_SUM(parent, narm);			\
+		return NULL;						\
 	    else							\
-		sumfun(parent, &val, narm, R_NilValue);			\
+		return sumfun(parent, narm, R_NilValue);		\
 	}								\
-									\
-	return val;							\
     }									\
 									\
 /*									\
@@ -2697,14 +2669,12 @@ DECLARE_SUBSETTED_ALTCLASS(double, REAL, rsumWrapper, REALSXP,
 			   subsetted_realvec, SubsettedReal,
 			   "subsetted_realvec",
 			   real)
+#endif
+
 
 /**
  ** Run-length encoded (RLE) vectors
  **/
-
-
-
-
 
 
 /**
@@ -3896,8 +3866,10 @@ void attribute_hidden R_init_altrep()
     InitWrapRealClass(NULL);
     InitWrapStringClass(NULL);
     InitVirtRepIntegerClass();
+#ifdef DODO
     InitSubsettedRealClass();
     InitSubsettedIntegerClass();
+#endif
 }
 
 /* which.min, which.max, prod?? */

@@ -183,8 +183,9 @@ various ways for consistency and portability.
 source package which contains C, C++ or Fortran code will involve
 compiling that code.  There is also the possibility of `byte' compiling
 the @R{} code in a package (using the facilities of package
-@pkg{compiler}): already base and recommended packages are normally
-byte-compiled and this can be specified for other packages.  So
+@pkg{compiler}): since @R{} 3.5.0, this is enabled by default for all
+packages. Prior to @R{} 3.5.0, base and recommended packages were normally
+byte-compiled, but this had to be specified explicitly for other packages. So
 @emph{compiling} a package may come to mean byte-compiling its @R{}
 code.
 
@@ -4619,9 +4620,10 @@ URLs, which even the build in some major Linux distributions in 2017 did
 not possess.} that vary by build but are not documented.
 
 An external command can be an optional requirement for an imported
-package but needed for examples or tests in the package itself.  Such
-usage should always be conditional on a test for existence (perhaps
-using @code{Sys.which}), as well as declared in the
+package but needed for examples or tests in the package itself.  
+
+Usage of external commands should always be conditional on a test for
+existence (perhaps using @code{Sys.which}), as well as declared in the
 @samp{SystemRequirements} field.
 
 @item
@@ -4645,7 +4647,7 @@ contain spaces).
 Do not use @env{R_HOME} in makefiles except when passing them to the shell.
 Specifically, do not use @env{R_HOME} in the argument to @code{include},
 as @env{R_HOME} can contain spaces. Quoting the argument to @code{include}
-does not help. GNU @command{make}'s @code{include} accepts spaces when
+does not help.  GNU @command{make}'s @code{include} accepts spaces when
 escaped using backslashes (GNU @command{make} syntax required):
 
 @example
@@ -4677,7 +4679,9 @@ practice seen in distributed packages include:
 It is not reasonable to test the time taken by a command: you cannot
 know how fast or how heavily loaded an @R{} platform might be.  At best
 you can test a ratio of times, and even that is fraught with
-difficulties.
+difficulties and not advisable: the just-in-time compiler (JIT) and the GC
+may trigger at unpredictable times, following heuristics that may change
+without notice.
 
 @item
 Do not test the exact format of @R{} messages (from @R{} itself or from
@@ -4702,7 +4706,7 @@ tests on your platform achieve a particular tolerance says little about
 other platforms.  @R{} is configured by default to make use of long
 doubles where available, but they may not be available or be too slow
 for routine use.  Most @R{} platforms use @cputype{ix86} or
-@cputype{x86_64} CPUs: these use extended precision registers on some
+@cputype{x86_64} CPUs: these may use extended precision registers on some
 but not all of their FPU instructions.  Thus the achieved precision can
 depend on the compiler version and optimization flags---our experience
 is that 32-bit builds tend to be less precise than 64-bit ones.  But not
@@ -5131,7 +5135,7 @@ OpenMP in C/C++ code will need to use
 #endif
 @end example
 @noindent
-Any use of OpenMP functions, e.g.@: @code{omp_set_num_threads} also
+Any use of OpenMP functions, e.g.@: @code{omp_set_num_threads}, also
 needs to be conditioned.
 
 And do not hardcode @option{-lgomp}: not only is that specific to the
@@ -5206,8 +5210,9 @@ common warnings are
 ISO C++11 does not allow conversion from string literal to 'char *'
 @end example
 @noindent
-(where conversion should be to @code{const char *}).  Keyword @code{register}
-was deprecated in C++11 and removed in C++17.
+(where conversion should be to @code{const char *}).  Keyword
+@code{register} was not mentioned in C++98, deprecated in C++11 and
+removed in C++17.
 
 @item
 Be careful about including C headers in C++ code.  Issues include

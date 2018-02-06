@@ -311,7 +311,7 @@ stopifnot(length(uw <- unique(warnings())) == 2)
 ## unique() gave only one warning in  R <= 3.3.1
 
 
-op <- options(warn = 2)# no warnings allowed
+options(warn = 2)# no warnings allowed
 
 ## findInterval(x, vec)  when 'vec' is of length zero
 n0 <- numeric(); TF <- c(TRUE, FALSE)
@@ -637,7 +637,9 @@ assert({
 dt <- "2012-12-12 12:12:12"
 x <- as.POSIXct(dt, tz = "GMT")
 stopifnot(identical(format(x), dt))
-(Sys.t <- Sys.timezone())
+op <- options(warn=1)# allow
+(Sys.t <- Sys.timezone()) # may occasionally warn (and work)
+options(op)
 someCET <- paste("Europe", c("Berlin", "Brussels", "Copenhagen", "Madrid",
                              "Paris", "Rome", "Vienna", "Zurich"), sep="/")
 if(Sys.t %in% someCET)
@@ -671,7 +673,7 @@ stopifnot(identical(asArr(xt),
 		    array(c(1198, 557, 1493, 1278), dim = c(2L, 2L),
 			  dimnames = list(Gender = c("Male", "Female"),
 					  Admit = c("Admitted", "Rejected")))))
-options(na.action = "na.omit")
+op <- options(na.action = "na.omit")
 DN <- DF; DN[cbind(6:9, c(1:2,4,1))] <- NA; DN
 
 tools::assertError(# 'na.fail' should fail :
@@ -698,7 +700,7 @@ if(requireNamespace('Matrix')) {
 ## NA treatment partly wrong in R < 3.4.0; new option 'addNA'
 ee <- esoph[esoph[,"ncases"] > 0, c(1:2,4)]
 ee[,"ncases"] <- as.integer(ee[,"ncases"])
-(tt <- xtabs(ncases ~ ., ee))
+(tt <- xtabs(ncases ~ ., ee)); options(op)
 stopifnot(identical(as.vector(tt[1:2,]), # *integer* + first value
 		    c(0L, 1L, 0L, 4L, 0L, 0L, 1L, 4L)))
 ## keeping integer in sum()mation of integers
@@ -1058,11 +1060,11 @@ assert({
 
 ## invalid user device function  options(device = *) -- PR#15883
 graphics.off() # just in case
-options(device=function(...){}) # non-sense device
+op <- options(device=function(...){}) # non-sense device
 tools::assertError(plot.new(), verbose = TRUE)
 if(no.grid <- !("grid" %in% loadedNamespaces())) requireNamespace("grid")
 tools::assertError(grid::grid.newpage(), verbose = TRUE)
-if(no.grid) unloadNamespace("grid")
+if(no.grid) unloadNamespace("grid") ; options(op)
 ## both errors gave segfaults in R <= 3.4.1
 
 
@@ -1466,6 +1468,7 @@ assert({
 toD <- Sys.Date(); stopifnot(identical(as.list(toD)[[1]], toD))
 ## was wrong for 20 hours
 
+options(warn = 2)# no warnings allowed
 
 ## PR#17372: sum(<ints whose sum overflows>, <higher type>)
 iL <- rep(1073741824L, 2) # 2^30 + 2^30 = 2^31 integer overflows to NA
@@ -1474,13 +1477,28 @@ r2 <- tryCatch(sum(iL, "foo"), error=function(e) conditionMessage(e))
 assert({
     identical(r1, r2)
     grepl("invalid 'type' (character) ", r1, fixed=TRUE)
-    ## each gives an overflow warning
-    identical(sum(3.14, iL), NA_real_)
-    identical(sum(iL, 3.14), NA_real_)
-    identical(sum(1+2i, iL), NA_complex_)
-    identical(sum(iL, 1+2i), NA_complex_)
+    ## each _gave_ an overflow warning + NA
+    identical(sum(3.14, iL), sum(iL, 3.14))
+    identical(sum(1+2i, iL), sum(iL, 1+2i))
+    if(identical(.Machine$sizeof.longlong, 8L))
+        TRUE # no longer overflows early when we have LONG_INT :
+    else { # no LONG_INT [very rare in 2018-02 !]
+        identical(sum(3.14, iL), NA_real_) &&
+        identical(sum(1+2i, iL), NA_complex_)
+    }
 })
 ## r2 was no error and sum(iL, 1+2i) gave NA_real_ in R <= 3.4.x
+## Was PR#1408 Inconsistencies in sum() {in ./reg-tests-2.R}
+x <- as.integer(2^31 - 1)## = 2147483647L = .Machine$integer.max ("everywhere")
+x24 <- rep.int(x, 2^24) # sum = 2^55 - 2^24
+assert({
+    sum(x, x)   == 2^32-2 # did not warn in 1.4.1 -- no longer overflows in 3.5.0
+    sum(c(x,x)) ==(2^32-2 -> sx2) # did warn -- no longer overflows
+    (z <- sum(x, x, 0.0)) == sx2 # was NA in 1.4.1
+    typeof(z) == "double"
+    is.integer(x24)
+    sum(x24) == 2^55 - 2^24 # was NA (+ warning) in R <= 3.4.x
+})
 
 
 ## aggregate.data.frame(*, drop=FALSE)  wishlist PR#17280
@@ -1506,7 +1524,6 @@ assert({
 
 
 ## PR#16107  is.na(NULL) throws warning (contrary to all other such calls)
-op <- options(warn = 2)# no warnings allowed
 stopifnot(identical(is.na(NULL), logical(0)))
 ## gave a warning in R <= 3.4.x
 

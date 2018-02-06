@@ -1,6 +1,6 @@
 % File src/library/base/man/sum.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{sum}
@@ -19,10 +19,12 @@ sum(\dots, na.rm = FALSE)
     removed?}
 }
 \value{
-  The sum. If all of \code{\dots} are of type integer or logical, then
-  the sum is integer, and in that case the result will be \code{NA} (with a
-  warning) if integer overflow occurs.  Otherwise it is a length-one
-  numeric or complex vector.
+  The sum.  If all of the \eqn{M} \code{\dots} arguments are of type
+  integer or logical, then the sum is \code{\link{integer}} when
+  possible and is \code{double} otherwise.  Integer overflow should no
+  longer happen since \R version 3.5.0.
+  For other argument types it is a length-one numeric
+  (\code{\link{double}}) or complex vector.
 
   \strong{NB:} the sum of an empty set is zero, by definition.
 }
@@ -43,8 +45,8 @@ sum(\dots, na.rm = FALSE)
   Loss of accuracy can occur when summing values of different signs:
   this can even occur for sufficiently long integer inputs if the
   partial sums would cause integer overflow.  Where possible
-  extended-precision accumulators are used, but this is
-  platform-dependent.
+  extended-precision accumulators are used, typically well supported
+  with C99 and newer, but possibly platform-dependent.
 }
 \section{S4 methods}{
   This is part of the S4 \code{\link[=S4groupGeneric]{Summary}}

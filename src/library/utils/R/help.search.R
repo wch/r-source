@@ -1,7 +1,7 @@
 #  File src/library/utils/R/help.search.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -518,12 +518,6 @@ function(package = NULL, lib.loc = NULL,
             flush.console()
             ## DEBUG save(dbMat, file="~/R/hsearch_dbMat.rda", compress=TRUE)
         }
-
-	## workaround methods:::rbind() misbehavior:
-	if(.isMethodsDispatchOn()) {
-	    bind_was_on <- methods:::bind_activation(FALSE)
-	    if(bind_was_on) on.exit(methods:::bind_activation(TRUE))
-	}
 
 	## Create the global base, aliases, keywords and concepts tables
 	## via calls to rbind() on the columns of the matrix used for

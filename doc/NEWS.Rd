@@ -295,6 +295,18 @@
       \item \code{stopifnot()} can be used alternatively via new argument
       \code{exprs} which is nicer and useful when testing several
       expressions in one call.
+
+      \item The environment variable \env{R_MAX_VZISE} can now be used
+      to specify the maximal vector heap size. On macOS, unless specified
+      by this environment variable, the maximal vector heap size is set to
+      the maximum on 16GB and the available physical memory. This is to
+      avoid having the \command{R} process killed when macOS over-commits
+      memory.
+
+      \item \code{sum(x)} and \code{sum(x1,x2,..,x<N>)} with many or
+      long logical and integer vectors no longer overflows (and returns
+      \code{NA} with a warning), but returns \code{double} numbers now
+      in such cases.
     }
   }
 
@@ -366,6 +378,12 @@
     \itemize{
       \item \code{Sys.timezone(location = FALSE)} is defunct, and is
       ignored (with a warning).
+
+      \item \code{methods:::bind_activation()} is defunct now; it
+      typically has been unneeded for years.
+
+      \item the undocumented "hidden" \code{.__H__.cbind} and
+      \code{.__H__.rbind} are deprecated, correspondingly.
     }
   }
 

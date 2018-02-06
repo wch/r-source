@@ -64,7 +64,7 @@ static SEXP f_x_i_skeleton, fgets_x_i_skeleton, f_x_skeleton, fgets_x_skeleton;
 SEXP R_quick_method_check(SEXP object, SEXP fsym, SEXP fdef);
 
 static SEXP R_target, R_defined, R_nextMethod, R_dot_nextMethod,
-    R_loadMethod_name;
+    R_loadMethod_name, R_methods_name, R_tripleColon_name;
 
 static SEXP Methods_Namespace = NULL;
 
@@ -80,6 +80,8 @@ static void init_loadMethod()
     R_nextMethod = install("nextMethod");
     R_loadMethod_name = install("loadMethod");
     R_dot_nextMethod = install(".nextMethod");
+    R_methods_name = install("methods");
+    R_tripleColon_name = install(":::");
 }
 
 
@@ -756,7 +758,9 @@ static SEXP R_loadMethod(SEXP def, SEXP fname, SEXP ev)
 	}
 	SEXP e, val;
 	PROTECT(e = allocVector(LANGSXP, 4));
-	SETCAR(e, R_loadMethod_name); val = CDR(e);
+	SETCAR(e,
+	       lang3(R_tripleColon_name, R_methods_name, R_loadMethod_name));
+	val = CDR(e);
 	SETCAR(val, def); val = CDR(val);
 	SETCAR(val, fname); val = CDR(val);
 	SETCAR(val, ev);

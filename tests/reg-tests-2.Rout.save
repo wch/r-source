@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2018-01-07 r74095) -- "Unsuffered Consequences"
+R Under development (unstable) (2018-02-01 r74189) -- "Unsuffered Consequences"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -1662,22 +1662,6 @@ Eye:Sex   3   11.764 190.64
 [1] A B
 Levels: C A B
 > ## was  [1] C A; Levels:  C A  in 1.4.1
-> 
-> 
-> ## PR#1408 Inconsistencies in sum()
-> x <- as.integer(2^30)
-> sum(x, x)    # did not warn in 1.4.1
-[1] NA
-Warning message:
-In sum(x, x) : Integer overflow - use sum(as.numeric(.))
-> sum(c(x, x)) # did warn
-[1] NA
-Warning message:
-In sum(c(x, x)) : integer overflow - use sum(as.numeric(.))
-> (z <- sum(x, x, 0.0)) # was NA in 1.4.1
-[1] 2147483648
-> typeof(z)
-[1] "double"
 > 
 > 
 > ## NA levels in factors
