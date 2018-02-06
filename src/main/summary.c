@@ -30,7 +30,6 @@
 
 #include "duplicate.h"
 
-#include <R_ext/Altrep.h> /* isum, rsum are in there right now */
 #define R_MSG_type	_("invalid 'type' (%s) of argument")
 #define imax2(x, y) ((x < y) ? y : x)
 
@@ -553,7 +552,7 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
     ans = matchArgExact(R_NaRmSymbol, &args);
     Rboolean narm = asLogical(ans);
 
-    if (ALTREP_NONEXP(CAR(args)) && CDDR(args) == R_NilValue &&
+    if (ALTREP(CAR(args)) && CDDR(args) == R_NilValue &&
 	(CDR(args) == R_NilValue || TAG(CDR(args)) == R_NaRmSymbol)) {
 	SEXP toret = NULL;
 	SEXP vec = CAR(args);

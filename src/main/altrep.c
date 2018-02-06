@@ -860,6 +860,7 @@ static SEXP altinteger_Sum_default(SEXP x, Rboolean narm) { return NULL; }
 #define GT(x,y) x > y
 
 static SEXP altinteger_Min_default(SEXP x, Rboolean narm) {
+    if (! ALTREP_NONEXP(x)) return NULL;
     R_xlen_t pos;
     int val;
     ALT_MINMAX(x, int, INTEGER, LT, FALSE, narm, FALSE, INTVAL_ISNA);
@@ -867,6 +868,7 @@ static SEXP altinteger_Min_default(SEXP x, Rboolean narm) {
 }
 
 static SEXP altinteger_Max_default(SEXP x, Rboolean narm) {
+    if (! ALTREP_NONEXP(x)) return NULL;
     R_xlen_t pos;
     int val;
     ALT_MINMAX(x, int, INTEGER, GT, TRUE, narm, FALSE, INTVAL_ISNA);
@@ -952,6 +954,7 @@ static SEXP altreal_Is_NA_default(SEXP x) {
 static SEXP altreal_Sum_default(SEXP x, Rboolean narm) { return NULL; }
     
 static SEXP altreal_Min_default(SEXP x, Rboolean narm) {
+    if (! ALTREP_NONEXP(x)) return NULL;
     R_xlen_t pos;
     double val;
     ALT_MINMAX(x, double, REAL, LT, FALSE, narm, FALSE, ISNAN);
@@ -959,6 +962,7 @@ static SEXP altreal_Min_default(SEXP x, Rboolean narm) {
 }
 
 static SEXP altreal_Max_default(SEXP x, Rboolean narm) {
+    if (! ALTREP_NONEXP(x)) return NULL;
     R_xlen_t pos;
     double val;
     ALT_MINMAX(x, double, REAL, GT, TRUE, narm, FALSE, ISNAN);

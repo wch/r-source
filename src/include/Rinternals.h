@@ -677,6 +677,10 @@ SEXP ALTREAL_MAX(SEXP x, Rboolean narm);
 SEXP INTEGER_MATCH(SEXP, SEXP, int, SEXP, SEXP, Rboolean);
 SEXP INTEGER_IS_NA(SEXP x);
 SEXP REAL_MATCH(SEXP, SEXP, int, SEXP, SEXP, Rboolean);
+SEXP ALTINTEGER_MATCH(SEXP table, SEXP x, int nm, SEXP incomp, SEXP env,
+		      Rboolean first);
+SEXP ALTREAL_MATCH(SEXP table, SEXP x, int nm, SEXP incomp, SEXP env,
+		   Rboolean first);
 	
 R_xlen_t REAL_GET_REGION(SEXP sx, R_xlen_t i, R_xlen_t n, double *buf);
 int REAL_IS_SORTED(SEXP x);

@@ -98,8 +98,6 @@ typedef SEXP (*R_altinteger_Scalar_compare_mehtod_t)(SEXP, int, Rboolean);
 typedef double (*R_altinteger_Compression_ratio_method_t)(SEXP);
 typedef SEXP (*R_altinteger_As_subscripts_method_t)(SEXP);
 
-
-
 typedef double (*R_altreal_Elt_method_t)(SEXP, R_xlen_t);
 typedef void (*R_altreal_Set_elt_method_t)(SEXP, R_xlen_t, double);
 typedef R_xlen_t
@@ -162,7 +160,6 @@ DECLARE_METHOD_SETTER(altinteger, Unique)
 DECLARE_METHOD_SETTER(altinteger, Compression_ratio)
 DECLARE_METHOD_SETTER(altinteger, As_subscripts)
 
-
 DECLARE_METHOD_SETTER(altreal, Elt)
 DECLARE_METHOD_SETTER(altreal, Set_elt)
 DECLARE_METHOD_SETTER(altreal, Get_region)
@@ -186,18 +183,11 @@ DECLARE_METHOD_SETTER(altstring, Set_elt)
 DECLARE_METHOD_SETTER(altstring, Is_sorted)
 DECLARE_METHOD_SETTER(altstring, No_NA)
 
-
 /*INT_MIN is NA_INTEGER! */
 enum {KNOWN_DECR = -1,
       UNKNOWN_SORTEDNESS = INT_MIN,
       KNOWN_INCR = 1,
       KNOWN_UNSORTED = 0};
 #define KNOWN_SORTED(sorted) (sorted == KNOWN_DECR || sorted == KNOWN_INCR)
-
-/* is this TOO general? I don't think so..., possible it should be ALTVEC? */
-
-#define ALTREP_INFO(x) R_altrep_data1(x)
-#define ALTREP_EXPANDED(x) R_altrep_data2(x)
-#define ALTREP_NONEXP(x) (ALTREP(x) && ALTREP_EXPANDED(x) == R_NilValue)
 
 #endif /* R_EXT_ALTREP_H_ */
