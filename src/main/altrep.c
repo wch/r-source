@@ -991,19 +991,15 @@ static const void *compact_intseq_Dataptr_or_null(SEXP x)
 
 static int compact_intseq_Elt(SEXP x, R_xlen_t i)
 {
-    /* should not get here if x is already expanded */
-    CHECK_NOT_EXPANDED(x);
-
-    SEXP info = COMPACT_SEQ_INFO(x);
-    int n1 = COMPACT_INTSEQ_INFO_FIRST(info);
-    int inc = COMPACT_INTSEQ_INFO_INCR(info);
-
-    if (inc == 1)
-	return (int) (n1 + i);
-    else if (inc == -1)
-	return (int) (n1 - i);
-    else
-	error("compact sequences with increment %d not supported yet", inc);
+    SEXP ex = COMPACT_SEQ_EXPANDED(x);
+    if (ex != R_NilValue)
+	return INTEGER0(ex)[i];
+    else {
+	SEXP info = COMPACT_SEQ_INFO(x);
+	int n1 = COMPACT_INTSEQ_INFO_FIRST(info);
+	int inc = COMPACT_INTSEQ_INFO_INCR(info);
+	return n1 + inc * i;
+    }
 }
 
 static R_xlen_t
@@ -1037,10 +1033,10 @@ static int compact_intseq_Is_sorted(SEXP x)
 #ifdef COMPACT_INTSEQ_MUTABLE
     /* If the vector has been expanded it may have been modified. */
     if (COMPACT_SEQ_EXPANDED(x) != R_NilValue)
-	return 0;
+	return UNKNOWN_SORTEDNESS;
 #endif
     int inc = COMPACT_INTSEQ_INFO_INCR(COMPACT_SEQ_INFO(x));
-    return inc < 0 ? -1 : 1;
+    return inc < 0 ? KNOWN_DECR : KNOWN_INCR;
 }
 
 static int compact_intseq_No_NA(SEXP x)
@@ -1235,19 +1231,15 @@ static const void *compact_realseq_Dataptr_or_null(SEXP x)
 
 static double compact_realseq_Elt(SEXP x, R_xlen_t i)
 {
-    /* should not get here if x is already expanded */
-    CHECK_NOT_EXPANDED(x);
-
-    SEXP info = COMPACT_SEQ_INFO(x);
-    double n1 = COMPACT_REALSEQ_INFO_FIRST(info);
-    double inc = COMPACT_REALSEQ_INFO_INCR(info);
-    
-    if (inc == 1)
-	return n1 + i;
-    else if (inc == -1)
-	return n1 - i;
-    else
-	error("compact sequences with increment %f not supported yet", inc);
+    SEXP ex = COMPACT_SEQ_EXPANDED(x);
+    if (ex != R_NilValue)
+	return REAL0(ex)[i];
+    else {
+	SEXP info = COMPACT_SEQ_INFO(x);
+	double n1 = COMPACT_REALSEQ_INFO_FIRST(info);
+	double inc = COMPACT_REALSEQ_INFO_INCR(info);
+	return n1 + inc * i;
+    }
 }
 
 static R_xlen_t
@@ -1281,10 +1273,10 @@ static int compact_realseq_Is_sorted(SEXP x)
 #ifdef COMPACT_REALSEQ_MUTABLE
     /* If the vector has been expanded it may have been modified. */
     if (COMPACT_SEQ_EXPANDED(x) != R_NilValue)
-	return 0;
+	return UNKNOWN_SORTEDNESS;
 #endif
     double inc = COMPACT_REALSEQ_INFO_INCR(COMPACT_SEQ_INFO(x));
-    return inc < 0 ? -1 : 1;
+    return inc < 0 ? KNOWN_DECR : KNOWN_INCR;
 }
 
 static int compact_realseq_No_NA(SEXP x)
@@ -1541,14 +1533,14 @@ static int deferred_string_Is_sorted(SEXP x)
     SEXP state = DEFERRED_STRING_STATE(x);
     if (state == R_NilValue)
 	/* string is fully expanded and may have been modified. */
-	return 0;
+	return UNKNOWN_SORTEDNESS;
     else {
 	/* defer to the argument */
 	SEXP arg = DEFERRED_STRING_STATE_ARG(state);
 	switch(TYPEOF(arg)) {
 	case INTSXP: return INTEGER_IS_SORTED(arg);
 	case REALSXP: return REAL_IS_SORTED(arg);
-	default: return 0;
+	default: return UNKNOWN_SORTEDNESS;
 	}
     }
 }
@@ -1827,7 +1819,7 @@ static void finalize_mmap_objects()
 
 static SEXP mmap_Serialized_state(SEXP x)
 {
-    /* If serOK is false then serialize as a regular typed vector. If
+    /* If serOK is FALSE then serialize as a regular typed vector. If
        serOK is true, then serialize information to allow the mmap to
        be reconstructed. The original file name is serialized; it will
        be expanded again when unserializing, in a context where the
@@ -2157,7 +2149,7 @@ static R_altrep_class_t wrap_real_class;
 static R_altrep_class_t wrap_string_class;
 
 /* Wrapper objects are ALTREP objects designed to hold the attributes
-   of a potentially larte object and/or meta data for the object. */
+   of a potentially large object and/or meta data for the object. */
 
 #define WRAPPER_WRAPPED(x) R_altrep_data1(x)
 #define WRAPPER_SET_WRAPPED(x, v) R_set_altrep_data1(x, v)
@@ -2188,8 +2180,8 @@ static SEXP wrapper_Duplicate(SEXP x, Rboolean deep)
 {
     SEXP data = WRAPPER_WRAPPED(x);
 
-    /* For a deel copy, duplicate the data. */
-    /* For a shallow copy, mark as immutable in teh NAMED word; with
+    /* For a deep copy, duplicate the data. */
+    /* For a shallow copy, mark as immutable in the NAMED world; with
        reference counting the reference count will be incremented when
        the data is installed in the new wrapper object. */
     if (deep)
@@ -2233,7 +2225,8 @@ static R_xlen_t wrapper_Length(SEXP x)
 static void clear_meta_data(SEXP x)
 {
     SEXP meta = WRAPPER_METADATA(x);
-    for (int i = 0; i < NMETA; i++)
+    INTEGER(meta)[0] = UNKNOWN_SORTEDNESS;
+    for (int i = 1; i < NMETA; i++)
 	INTEGER(meta)[i] = 0;
 }
 
@@ -2242,7 +2235,7 @@ static void *wrapper_Dataptr(SEXP x, Rboolean writeable)
     SEXP data = WRAPPER_WRAPPED(x);
 
     /* If the data might be shared and a writeable pointer is
-       requested, then the data needst o be duplicated now. */
+       requested, then the data needs to be duplicated now. */
     if (writeable && MAYBE_SHARED(data)) {
 	PROTECT(x);
 	WRAPPER_SET_WRAPPED(x, shallow_duplicate(data));
@@ -2283,8 +2276,8 @@ R_xlen_t wrapper_integer_Get_region(SEXP x, R_xlen_t i, R_xlen_t n, int *buf)
 
 static int wrapper_integer_Is_sorted(SEXP x)
 {
-    if (WRAPPER_SORTED(x))
-	return TRUE;
+    if (WRAPPER_SORTED(x) != UNKNOWN_SORTEDNESS)
+	return WRAPPER_SORTED(x);
     else
 	/* If the  meta data bit is not set, defer to the wrapped object. */
 	return INTEGER_IS_SORTED(WRAPPER_WRAPPED(x));
@@ -2317,8 +2310,8 @@ R_xlen_t wrapper_real_Get_region(SEXP x, R_xlen_t i, R_xlen_t n, double *buf)
 
 static int wrapper_real_Is_sorted(SEXP x)
 {
-    if (WRAPPER_SORTED(x))
-	return TRUE;
+    if (WRAPPER_SORTED(x) != UNKNOWN_SORTEDNESS)
+	return WRAPPER_SORTED(x);
     else
 	/* If the  meta data bit is not set, defer to the wrapped object. */
 	return REAL_IS_SORTED(WRAPPER_WRAPPED(x));
@@ -2345,8 +2338,8 @@ static SEXP wrapper_string_Elt(SEXP x, R_xlen_t i)
 
 static int wrapper_string_Is_sorted(SEXP x)
 {
-    if (WRAPPER_SORTED(x))
-	return TRUE;
+    if (WRAPPER_SORTED(x) != UNKNOWN_SORTEDNESS)
+	return WRAPPER_SORTED(x);
     else
 	/* If the  meta data bit is not set, defer to the wrapped object. */
 	return STRING_IS_SORTED(WRAPPER_WRAPPED(x));
