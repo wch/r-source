@@ -61,12 +61,18 @@ typedef R_xlen_t
 (*R_altinteger_Get_region_method_t)(SEXP, R_xlen_t, R_xlen_t, int *);
 typedef int (*R_altinteger_Is_sorted_method_t)(SEXP);
 typedef int (*R_altinteger_No_NA_method_t)(SEXP);
+typedef SEXP (*R_altinteger_Sum_method_t)(SEXP, Rboolean); 
+typedef SEXP (*R_altinteger_Min_method_t)(SEXP, Rboolean);
+typedef SEXP (*R_altinteger_Max_method_t)(SEXP, Rboolean);
 
 typedef double (*R_altreal_Elt_method_t)(SEXP, R_xlen_t);
 typedef R_xlen_t
 (*R_altreal_Get_region_method_t)(SEXP, R_xlen_t, R_xlen_t, double *);
 typedef int (*R_altreal_Is_sorted_method_t)(SEXP);
 typedef int (*R_altreal_No_NA_method_t)(SEXP);
+typedef SEXP (*R_altreal_Sum_method_t)(SEXP, Rboolean); 
+typedef SEXP (*R_altreal_Min_method_t)(SEXP, Rboolean);
+typedef SEXP (*R_altreal_Max_method_t)(SEXP, Rboolean);
 
 typedef SEXP (*R_altstring_Elt_method_t)(SEXP, R_xlen_t);
 typedef void (*R_altstring_Set_elt_method_t)(SEXP, R_xlen_t, SEXP);
@@ -95,11 +101,17 @@ DECLARE_METHOD_SETTER(altinteger, Elt)
 DECLARE_METHOD_SETTER(altinteger, Get_region)
 DECLARE_METHOD_SETTER(altinteger, Is_sorted)
 DECLARE_METHOD_SETTER(altinteger, No_NA)
+DECLARE_METHOD_SETTER(altinteger, Sum)
+DECLARE_METHOD_SETTER(altinteger, Min)
+DECLARE_METHOD_SETTER(altinteger, Max)
 
 DECLARE_METHOD_SETTER(altreal, Elt)
 DECLARE_METHOD_SETTER(altreal, Get_region)
 DECLARE_METHOD_SETTER(altreal, Is_sorted)
 DECLARE_METHOD_SETTER(altreal, No_NA)
+DECLARE_METHOD_SETTER(altreal, Sum)
+DECLARE_METHOD_SETTER(altreal, Min)
+DECLARE_METHOD_SETTER(altreal, Max)
 
 DECLARE_METHOD_SETTER(altstring, Elt)
 DECLARE_METHOD_SETTER(altstring, Set_elt)

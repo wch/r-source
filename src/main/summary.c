@@ -550,8 +550,41 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 
     ans = matchArgExact(R_NaRmSymbol, &args);
+    Rboolean narm = asLogical(ans);
+
+    if (ALTREP(CAR(args)) && CDDR(args) == R_NilValue &&
+	(CDR(args) == R_NilValue || TAG(CDR(args)) == R_NaRmSymbol)) {
+	SEXP toret = NULL;
+	SEXP vec = CAR(args);
+	switch(PRIMVAL(op)) {
+	case 0:
+	    if(TYPEOF(vec) == INTSXP) 
+		toret = ALTINTEGER_SUM(vec, narm);
+	    else if (TYPEOF(vec) == REALSXP)
+		toret = ALTREAL_SUM(vec, narm);
+	    break; 
+	case 2:
+	    if(TYPEOF(vec) == INTSXP) 
+		toret = ALTINTEGER_MIN(vec, narm);
+	    else if (TYPEOF(vec) == REALSXP)
+		toret = ALTREAL_MIN(vec, narm);
+	    break;
+	case 3:
+	    if(TYPEOF(vec) == INTSXP) 
+		toret = ALTINTEGER_MAX(vec, narm);
+	    else if (TYPEOF(vec) == REALSXP)
+		toret = ALTREAL_MAX(vec, narm);
+	    break;
+	default:
+	    break;
+	}
+	if(toret != NULL) {
+	    UNPROTECT(1); /* args */
+	    return toret;
+	}
+    }
+
     Rboolean int_a, real_a, complex_a,
-	narm = asLogical(ans),
 	empty = TRUE;// <==> only zero-length arguments, or NA with na.rm=T
     int updated = 0; //
 	/* updated = NA_INTEGER if encountered NA,
