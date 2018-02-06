@@ -797,8 +797,6 @@ static SEXP altinteger_Sum_default(SEXP x, Rboolean narm) { return NULL; }
 
 #define ALT_MINMAX(x, TYPE, ALTPREFIX, COMP, DOMAX, NARM, WHICH, NACHK) do { \
 	int sorted = ALTPREFIX##_IS_SORTED(x);				\
-	R_xlen_t pos;							\
-	TYPE val;							\
 	if(sorted == KNOWN_INCR) {					\
 	    if(DOMAX) {							\
 		pos = XLENGTH(x) - 1;					\
@@ -812,7 +810,6 @@ static SEXP altinteger_Sum_default(SEXP x, Rboolean narm) { return NULL; }
 		pos = 0;						\
 	    }								\
 	    if(NARM && NACHK(val)) { val = R_NegInf; pos = -1;}		\
-	    return WHICH ? pos : val;					\
 	} else if(sorted == KNOWN_DECR) {			 	\
 	    if(!DOMAX) {						\
 		pos = XLENGTH(x) - 1;					\
@@ -826,57 +823,69 @@ static SEXP altinteger_Sum_default(SEXP x, Rboolean narm) { return NULL; }
 		pos = 0;						\
 	    }								\
 	    if(NARM && NACHK(val)) { val = R_NegInf; pos = -1;}		\
-	    return WHICH ? pos : val;					\
-	}								\
-	Rboolean noNA = ALTPREFIX##_NO_NA(x);				\
-	TYPE ret = ALTPREFIX##_ELT(x, 0);				\
-	pos = NACHK(ret) ? -1 : 0;					\
-	TYPE cur = (TYPE)0;						\
-	if(noNA) {							\
-	    for(R_xlen_t i = 1; i < LENGTH(x); i++) {			\
-		cur = ALTPREFIX##_ELT(x, i);				\
-		if(COMP(cur, ret)) {					\
-		    ret = cur;						\
-		    pos = i;						\
-		}							\
-	    }								\
 	} else {							\
-	    R_xlen_t j = 1;						\
-	    while(NACHK(cur) && j < LENGTH(x)) {			\
-		cur = ALTPREFIX##_ELT(x, j);				\
-		j++;							\
-	    }								\
-	    ret = cur;							\
-	    pos = j;							\
-	    for( ; j < LENGTH(x); j++) {				\
-		cur = ALTPREFIX##_ELT(x, j);				\
-		if(!NACHK(cur) && cur < ret) {				\
-		    ret = cur;						\
-		    pos = j;						\
+	    Rboolean noNA = ALTPREFIX##_NO_NA(x);			\
+	    TYPE ret = ALTPREFIX##_ELT(x, 0);				\
+	    pos = NACHK(ret) ? -1 : 0;					\
+	    TYPE cur = (TYPE)0;						\
+	    if(noNA) {							\
+		for(R_xlen_t i = 1; i < LENGTH(x); i++) {		\
+		    cur = ALTPREFIX##_ELT(x, i);			\
+		    if(COMP(cur, ret)) {				\
+			ret = cur;					\
+			pos = i;					\
+		    }							\
+		}							\
+	    } else {							\
+		R_xlen_t j = 1;						\
+		while(NACHK(cur) && j < LENGTH(x)) {			\
+		    cur = ALTPREFIX##_ELT(x, j);			\
+		    j++;						\
+		}							\
+		ret = cur;						\
+		pos = j;						\
+		for( ; j < LENGTH(x); j++) {				\
+		    cur = ALTPREFIX##_ELT(x, j);			\
+		    if(!NACHK(cur) && cur < ret) {			\
+			ret = cur;					\
+			pos = j;					\
+		    }							\
 		}							\
 	    }								\
+	    val = ret;							\
 	}								\
-	return WHICH ? pos : ret;					\
     } while (0);
 
 #define LT(x,y) x < y
 #define GT(x,y) x > y
 
 static int altinteger_Min_default(SEXP x, Rboolean narm) {
-    ALT_MINMAX(x, int, INTEGER, LT, FALSE, narm, FALSE, INTVAL_ISNA)
+    R_xlen_t pos;
+    int val;
+    ALT_MINMAX(x, int, INTEGER, LT, FALSE, narm, FALSE, INTVAL_ISNA);
+    return val;
 }
 
 static int altinteger_Max_default(SEXP x, Rboolean narm) {
-    ALT_MINMAX(x, int, INTEGER, GT, TRUE, narm, FALSE, INTVAL_ISNA)
+    R_xlen_t pos;
+    int val;
+    ALT_MINMAX(x, int, INTEGER, GT, TRUE, narm, FALSE, INTVAL_ISNA);
+    return val;
 }
 
 
 static R_xlen_t altinteger_Which_min_default(SEXP x){
-    ALT_MINMAX(x, int, INTEGER, LT, FALSE, TRUE, TRUE, INTVAL_ISNA)
+    R_xlen_t pos;
+    int val;
+    ALT_MINMAX(x, int, INTEGER, LT, FALSE, TRUE, TRUE, INTVAL_ISNA);
+    return pos;
 }
 
 static R_xlen_t altinteger_Which_max_default(SEXP x) {
-    ALT_MINMAX(x, int, INTEGER, GT, TRUE, TRUE, TRUE, INTVAL_ISNA)
+    R_xlen_t pos;
+    int val;
+    ALT_MINMAX(x, int, INTEGER, GT, TRUE, TRUE, TRUE, INTVAL_ISNA);
+    return pos;
 }
 
 static SEXP altinteger_Order_default(SEXP x) {
@@ -943,20 +952,32 @@ static SEXP altreal_Is_NA_default(SEXP x) {
 static SEXP altreal_Sum_default(SEXP x, Rboolean narm) { return NULL; }
     
 static double altreal_Min_default(SEXP x, Rboolean narm) {
-    ALT_MINMAX(x, double, REAL, LT, FALSE, narm, FALSE, ISNAN)
+    R_xlen_t pos;
+    double val;
+    ALT_MINMAX(x, double, REAL, LT, FALSE, narm, FALSE, ISNAN);
+    return val;
 }
 
 static double altreal_Max_default(SEXP x, Rboolean narm) {
-    ALT_MINMAX(x, double, REAL, GT, TRUE, narm, FALSE, ISNAN)
+    R_xlen_t pos;
+    double val;
+    ALT_MINMAX(x, double, REAL, GT, TRUE, narm, FALSE, ISNAN);
+    return val;
 }
 
 
 static R_xlen_t altreal_Which_min_default(SEXP x) {
-    ALT_MINMAX(x, double, REAL, LT, FALSE, TRUE, TRUE, ISNAN)
+    R_xlen_t pos;
+    double val;
+    ALT_MINMAX(x, double, REAL, LT, FALSE, TRUE, TRUE, ISNAN);
+    return pos;
 }
 
 static R_xlen_t altreal_Which_max_default(SEXP x) {
-    ALT_MINMAX(x, double, REAL, GT, TRUE, TRUE, TRUE, ISNAN)
+    R_xlen_t pos;
+    double val;
+    ALT_MINMAX(x, double, REAL, GT, TRUE, TRUE, TRUE, ISNAN);
+    return pos;
 }
 
 
