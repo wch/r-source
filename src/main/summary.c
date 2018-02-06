@@ -558,15 +558,15 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 	    break; 
 	case 2:
 	    if(TYPEOF(vec) == INTSXP) 
-		toret = ScalarInteger(ALTINTEGER_MIN(vec, narm));
+		toret = ALTINTEGER_MIN(vec, narm);
 	    else if (TYPEOF(vec) == REALSXP)
-		toret = ScalarReal(ALTREAL_MIN(vec, narm));
+		toret = ALTREAL_MIN(vec, narm);
 	    break;
 	case 3:
 	    if(TYPEOF(vec) == INTSXP) 
-		toret = ScalarInteger(ALTINTEGER_MAX(vec, narm));
+		toret = ALTINTEGER_MAX(vec, narm);
 	    else if (TYPEOF(vec) == REALSXP)
-		toret = ScalarReal(ALTREAL_MAX(vec, narm));
+		toret = ALTREAL_MAX(vec, narm);
 	    break;
 	default:
 	    break;

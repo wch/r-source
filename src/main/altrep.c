@@ -548,12 +548,12 @@ SEXP ALTINTEGER_SUM(SEXP x, Rboolean narm)
     return ALTINTEGER_DISPATCH(Sum, x, narm);
 }
 
-int ALTINTEGER_MIN(SEXP x, Rboolean narm)
+SEXP ALTINTEGER_MIN(SEXP x, Rboolean narm)
 {
     return ALTINTEGER_DISPATCH(Min, x, narm);
 }
 
-int ALTINTEGER_MAX(SEXP x, Rboolean narm)
+SEXP ALTINTEGER_MAX(SEXP x, Rboolean narm)
 {
     return ALTINTEGER_DISPATCH(Max, x, narm);
 
@@ -573,12 +573,12 @@ SEXP ALTREAL_SUM(SEXP x, Rboolean narm)
     return ALTREAL_DISPATCH(Sum, x, narm);
 }
 
-double ALTREAL_MIN(SEXP x, Rboolean narm)
+SEXP ALTREAL_MIN(SEXP x, Rboolean narm)
 {
     return ALTREAL_DISPATCH(Min, x, narm);
 }
 
-double ALTREAL_MAX(SEXP x, Rboolean narm)
+SEXP ALTREAL_MAX(SEXP x, Rboolean narm)
 {
     return ALTREAL_DISPATCH(Max, x, narm);
 
@@ -859,18 +859,18 @@ static SEXP altinteger_Sum_default(SEXP x, Rboolean narm) { return NULL; }
 #define LT(x,y) x < y
 #define GT(x,y) x > y
 
-static int altinteger_Min_default(SEXP x, Rboolean narm) {
+static SEXP altinteger_Min_default(SEXP x, Rboolean narm) {
     R_xlen_t pos;
     int val;
     ALT_MINMAX(x, int, INTEGER, LT, FALSE, narm, FALSE, INTVAL_ISNA);
-    return val;
+    return ScalarInteger(val);
 }
 
-static int altinteger_Max_default(SEXP x, Rboolean narm) {
+static SEXP altinteger_Max_default(SEXP x, Rboolean narm) {
     R_xlen_t pos;
     int val;
     ALT_MINMAX(x, int, INTEGER, GT, TRUE, narm, FALSE, INTVAL_ISNA);
-    return val;
+    return ScalarInteger(val);
 }
 
 
@@ -951,18 +951,18 @@ static SEXP altreal_Is_NA_default(SEXP x) {
 
 static SEXP altreal_Sum_default(SEXP x, Rboolean narm) { return NULL; }
     
-static double altreal_Min_default(SEXP x, Rboolean narm) {
+static SEXP altreal_Min_default(SEXP x, Rboolean narm) {
     R_xlen_t pos;
     double val;
     ALT_MINMAX(x, double, REAL, LT, FALSE, narm, FALSE, ISNAN);
-    return val;
+    return ScalarReal(val);
 }
 
-static double altreal_Max_default(SEXP x, Rboolean narm) {
+static SEXP altreal_Max_default(SEXP x, Rboolean narm) {
     R_xlen_t pos;
     double val;
     ALT_MINMAX(x, double, REAL, GT, TRUE, narm, FALSE, ISNAN);
-    return val;
+    return ScalarReal(val);
 }
 
 
