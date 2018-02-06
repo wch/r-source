@@ -183,8 +183,9 @@ various ways for consistency and portability.
 source package which contains C, C++ or Fortran code will involve
 compiling that code.  There is also the possibility of `byte' compiling
 the @R{} code in a package (using the facilities of package
-@pkg{compiler}): already base and recommended packages are normally
-byte-compiled and this can be specified for other packages.  So
+@pkg{compiler}): since @R{} 3.5.0, this is enabled by default for all
+packages. Prior to @R{} 3.5.0, base and recommended packages were normally
+byte-compiled, but this had to be specified explicitly for other packages. So
 @emph{compiling} a package may come to mean byte-compiling its @R{}
 code.
 
