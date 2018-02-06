@@ -1492,9 +1492,9 @@ Rboolean R_altrep_inherits(SEXP x, R_altrep_class_t class)
  * Methods
  */
 
-//#define COMPACT_SEQ_INFO(x) R_altrep_data1(x)
-//#define COMPACT_SEQ_EXPANDED(x) R_altrep_data2(x)
-//#define SET_COMPACT_SEQ_EXPANDED(x, v) R_set_altrep_data2(x, v)
+#define COMPACT_SEQ_INFO(x) R_altrep_data1(x)
+#define COMPACT_SEQ_EXPANDED(x) R_altrep_data2(x)
+#define SET_COMPACT_SEQ_EXPANDED(x, v) R_set_altrep_data2(x, v)
 #define COMPACT_INTSEQ_INFO_LENGTH(info) INTEGER0(info)[0]
 #define COMPACT_INTSEQ_INFO_FIRST(info) INTEGER0(info)[1]
 #define COMPACT_INTSEQ_INFO_INCR(info) INTEGER0(info)[2]
@@ -1513,10 +1513,10 @@ static SEXP compact_intseq_Serialized_state(SEXP x)
 #ifdef COMPACT_INTSEQ_MUTABLE
     /* This drops through to standard serialization for expanded
        compact vectors */
-    if (ALTINTEGER_EXPANDED(x) != R_NilValue)
+    if (COMPACT_SEQ_EXPANDED(x) != R_NilValue)
 	return NULL;
 #endif
-    return ALTREP_INFO(x);
+    return COMPACT_SEQ_INFO(x);
 }
 
 static SEXP new_compact_intseq(R_xlen_t, int, int);
@@ -1541,42 +1541,21 @@ static SEXP compact_intseq_Coerce(SEXP x, int type)
 #ifdef COMPACT_INTSEQ_MUTABLE
     /* This drops through to standard coercion for expanded compact
        vectors */
-    if ((type == INTSXP && ALTINTEGER_EXPANDED(x) != R_NilValue) ||
-	(type == REALSXP && ALTREAL_EXPANDED(x) != R_NilValue))
+    if (COMPACT_SEQ_EXPANDED(x) != R_NilValue)
 	return NULL;
 #endif
-    if (ALTREP_EXPANDED(x) == R_NilValue && type == REALSXP) {
-	SEXP info = ALTREP_INFO(x);
+    if (type == REALSXP) {
+	SEXP info = COMPACT_SEQ_INFO(x);
 	R_xlen_t n = COMPACT_INTSEQ_INFO_LENGTH(info);
 	int n1 = COMPACT_INTSEQ_INFO_FIRST(info);
 	int inc = COMPACT_INTSEQ_INFO_INCR(info);
-	SEXP ans = new_compact_realseq(n, n1, inc);
-	SEXP attr = ATTRIB(x);
-	if (attr != R_NilValue) {
-	    PROTECT(ans);
-	    SET_ATTRIB(ans, shallow_duplicate(attr));
-	    SET_OBJECT(ans, OBJECT(x));
-	    IS_S4_OBJECT(x) ? SET_S4_OBJECT(ans) : UNSET_S4_OBJECT(ans);
-	    UNPROTECT(1);
-	}
-	return ans;
+	return new_compact_realseq(n, n1, inc);
     }
     else return NULL;
 }
 
 static SEXP compact_intseq_Duplicate(SEXP x, Rboolean deep)
 {
-#ifdef BROKEN_WHEN_EXPANDED
-    /* If this is worth doing, it is worth doing for the real case
-       also.  But it needs to punt if the sequence is expanded and
-       possibly modified. */
-    if(!deep) {
-	SEXP info = ALTREP_INFO(x);
-	return new_compact_intseq(COMPACT_INTSEQ_INFO_LENGTH(info),
-				  COMPACT_INTSEQ_INFO_FIRST(info),
-				  COMPACT_INTSEQ_INFO_INCR(info));
-    }
-#endif
     R_xlen_t n = XLENGTH(x);
     SEXP val = allocVector(INTSXP, n);
     INTEGER_GET_REGION(x, 0, n, INTEGER0(val));
@@ -1587,14 +1566,14 @@ static
 Rboolean compact_intseq_Inspect(SEXP x, int pre, int deep, int pvec,
 				void (*inspect_subtree)(SEXP, int, int, int))
 {
-    int inc = COMPACT_INTSEQ_INFO_INCR(ALTREP_INFO(x));
+    int inc = COMPACT_INTSEQ_INFO_INCR(COMPACT_SEQ_INFO(x));
     if (inc != 1 && inc != -1)
 	error("compact sequences with increment %d not supported yet", inc);
 
 #ifdef COMPACT_INTSEQ_MUTABLE
-    if (ALTINTEGER_EXPANDED(x) != R_NilValue) {
+    if (COMPACT_SEQ_EXPANDED(x) != R_NilValue) {
 	Rprintf("  <expanded compact integer sequence>\n");
-	inspect_subtree(ALTREP_EXPANDED(x), pre, deep, pvec);
+	inspect_subtree(COMPACT_SEQ_EXPANDED(x), pre, deep, pvec);
 	return TRUE;
     }
 #endif
@@ -1603,23 +1582,23 @@ Rboolean compact_intseq_Inspect(SEXP x, int pre, int deep, int pvec,
     int n1 = INTEGER_ELT(x, 0);
     int n2 = inc == 1 ? n1 + n - 1 : n1 - n + 1;
     Rprintf(" %d : %d (%s)", n1, n2,
-	    ALTINTEGER_EXPANDED(x) == R_NilValue ? "compact" : "expanded");
+	    COMPACT_SEQ_EXPANDED(x) == R_NilValue ? "compact" : "expanded");
     Rprintf("\n");
     return TRUE;
 }
 
 static R_INLINE R_xlen_t compact_intseq_Length(SEXP x)
 {
-    SEXP info = ALTREP_INFO(x);
+    SEXP info = COMPACT_SEQ_INFO(x);
     return COMPACT_INTSEQ_INFO_LENGTH(info);
 }
 
 static void *compact_intseq_Dataptr(SEXP x, Rboolean writeable)
 {
-    if (ALTINTEGER_EXPANDED(x) == R_NilValue) {
+    if (COMPACT_SEQ_EXPANDED(x) == R_NilValue) {
 	/* no need to re-run if expanded data exists */
 	PROTECT(x);
-	SEXP info = ALTREP_INFO(x);
+	SEXP info = COMPACT_SEQ_INFO(x);
 	int n = COMPACT_INTSEQ_INFO_LENGTH(info);
 	int n1 = COMPACT_INTSEQ_INFO_FIRST(info);
 	int inc = COMPACT_INTSEQ_INFO_INCR(info);
@@ -1639,26 +1618,25 @@ static void *compact_intseq_Dataptr(SEXP x, Rboolean writeable)
 	else
 	    error("compact sequences with increment %d not supported yet", inc);
 
-	
-	SET_ALTINTEGER_EXPANDED(x, val);
+	SET_COMPACT_SEQ_EXPANDED(x, val);
 	UNPROTECT(1);
     }
-    return DATAPTR(ALTINTEGER_EXPANDED(x));
+    return DATAPTR(COMPACT_SEQ_EXPANDED(x));
 }
 
 static const void *compact_intseq_Dataptr_or_null(SEXP x)
 {
-    SEXP val = ALTINTEGER_EXPANDED(x);
+    SEXP val = COMPACT_SEQ_EXPANDED(x);
     return val == R_NilValue ? NULL : DATAPTR(val);
 }
 
 static int compact_intseq_Elt(SEXP x, R_xlen_t i)
 {
-    SEXP ex = ALTREP_EXPANDED(x);
+    SEXP ex = COMPACT_SEQ_EXPANDED(x);
     if (ex != R_NilValue)
 	return INTEGER0(ex)[i];
     else {
-	SEXP info = ALTREP_INFO(x);
+	SEXP info = COMPACT_SEQ_INFO(x);
 	int n1 = COMPACT_INTSEQ_INFO_FIRST(info);
 	int inc = COMPACT_INTSEQ_INFO_INCR(info);
 	return n1 + inc * i;
@@ -1671,7 +1649,7 @@ compact_intseq_Get_region(SEXP sx, R_xlen_t i, R_xlen_t n, int *buf)
     /* should not get here if x is already expanded */
     CHECK_NOT_EXPANDED(sx);
 
-    SEXP info = ALTREP_INFO(sx);
+    SEXP info = COMPACT_SEQ_INFO(sx);
     R_xlen_t size = COMPACT_INTSEQ_INFO_LENGTH(info);
     R_xlen_t n1 = COMPACT_INTSEQ_INFO_FIRST(info);
     int inc = COMPACT_INTSEQ_INFO_INCR(info);
@@ -1695,10 +1673,10 @@ static int compact_intseq_Is_sorted(SEXP x)
 {
 #ifdef COMPACT_INTSEQ_MUTABLE
     /* If the vector has been expanded it may have been modified. */
-    if (ALTINTEGER_EXPANDED(x) != R_NilValue)
+    if (COMPACT_SEQ_EXPANDED(x) != R_NilValue)
 	return UNKNOWN_SORTEDNESS;
 #endif
-    int inc = COMPACT_INTSEQ_INFO_INCR(ALTREP_INFO(x));
+    int inc = COMPACT_INTSEQ_INFO_INCR(COMPACT_SEQ_INFO(x));
     return inc < 0 ? KNOWN_DECR : KNOWN_INCR;
 }
 
@@ -1706,7 +1684,7 @@ static int compact_intseq_No_NA(SEXP x)
 {
 #ifdef COMPACT_INTSEQ_MUTABLE
     /* If the vector has been expanded it may have been modified. */
-    if (ALTINTEGER_EXPANDED(x) != R_NilValue)
+    if (COMPACT_SEQ_EXPANDED(x) != R_NilValue)
 	return FALSE;
 #endif
     return TRUE;
@@ -1719,24 +1697,20 @@ static SEXP compact_intseq_Sum(SEXP x, Rboolean narm)
 {
 #ifdef COMPACT_INTSEQ_MUTABLE
     /* If the vector has been expanded it may have been modified. */
-    if (ALTINTEGER_EXPANDED(x) != R_NilValue) 
+    if (COMPACT_SEQ_EXPANDED(x) != R_NilValue) 
 	return NULL;
-    else {
 #endif
     double tmp;
-	SEXP info = ALTREP_INFO(x);
-	R_xlen_t size = COMPACT_INTSEQ_INFO_LENGTH(info);
-	R_xlen_t n1 = COMPACT_INTSEQ_INFO_FIRST(info);
-	int inc = COMPACT_INTSEQ_INFO_INCR(info);
-	tmp = (size / 2.0) * (n1 + n1 + inc * (size - 1));
-	if(tmp > INT_MAX || tmp < R_INT_MIN)
-	    /**** check for overfolw of exact integer range? */
-	    return ScalarReal(tmp);
-	else
-	    return ScalarInteger((int) tmp);
-#ifdef COMPACT_INTSEQ_MUTABLE
-    }
-#endif
+    SEXP info = COMPACT_SEQ_INFO(x);
+    R_xlen_t size = COMPACT_INTSEQ_INFO_LENGTH(info);
+    R_xlen_t n1 = COMPACT_INTSEQ_INFO_FIRST(info);
+    int inc = COMPACT_INTSEQ_INFO_INCR(info);
+    tmp = (size / 2.0) * (n1 + n1 + inc * (size - 1));
+    if(tmp > INT_MAX || tmp < R_INT_MIN)
+	/**** check for overflow of exact integer range? */
+	return ScalarReal(tmp);
+    else
+	return ScalarInteger((int) tmp);
 }
 
 static SEXP compact_intseq_Match(SEXP table, SEXP x, int nm, SEXP incomp,
@@ -1821,7 +1795,6 @@ static double compact_intseq_Compression_ratio(SEXP x) {
 #endif
 
 
-
 /*
  * Class Objects and Method Tables
  */
@@ -1879,9 +1852,6 @@ static SEXP new_compact_intseq(R_xlen_t n, int n1, int inc)
 
     return ans;
 }
-
-
-
 
 
 /* 
@@ -2155,8 +2125,6 @@ static SEXP virtrep_intvec_Sum(SEXP x, Rboolean narm)
 }
 
 
-
-
 /*
  * Class Objects and Method Tables
  */
@@ -2233,7 +2201,7 @@ static SEXP new_virtrep_intvec(SEXP parent, R_xlen_t len)
 
 static SEXP compact_realseq_Serialized_state(SEXP x)
 {
-    return ALTREP_INFO(x);
+    return COMPACT_SEQ_INFO(x);
 }
 
 static SEXP compact_realseq_Unserialize(SEXP class, SEXP state)
@@ -2262,29 +2230,29 @@ static
 Rboolean compact_realseq_Inspect(SEXP x, int pre, int deep, int pvec,
 				 void (*inspect_subtree)(SEXP, int, int, int))
 {
-    double inc = COMPACT_REALSEQ_INFO_INCR(ALTREP_INFO(x));
+    double inc = COMPACT_REALSEQ_INFO_INCR(COMPACT_SEQ_INFO(x));
     if (inc != 1 && inc != -1)
 	error("compact sequences with increment %f not supported yet", inc);
 
     R_xlen_t n = XLENGTH(x);
-    R_xlen_t n1 = REAL_ELT(x, 0);
+    R_xlen_t n1 = (R_xlen_t) REAL_ELT(x, 0);
     R_xlen_t n2 = inc == 1 ? n1 + n - 1 : n1 - n + 1;
     Rprintf(" %ld : %ld (%s)", n1, n2,
-	    ALTREP_EXPANDED(x) == R_NilValue ? "compact" : "expanded");
+	    COMPACT_SEQ_EXPANDED(x) == R_NilValue ? "compact" : "expanded");
     Rprintf("\n");
     return TRUE;
 }
 
 static R_INLINE R_xlen_t compact_realseq_Length(SEXP x)
 {
-    return (R_xlen_t) REAL0(ALTREP_INFO(x))[0];
+    return (R_xlen_t) REAL0(COMPACT_SEQ_INFO(x))[0];
 }
 
 static void *compact_realseq_Dataptr(SEXP x, Rboolean writeable)
 {
-    if (ALTREAL_EXPANDED(x) == R_NilValue) {
+    if (COMPACT_SEQ_EXPANDED(x) == R_NilValue) {
 	PROTECT(x);
-	SEXP info = ALTREP_INFO(x);
+	SEXP info = COMPACT_SEQ_INFO(x);
 	double n = COMPACT_REALSEQ_INFO_LENGTH(info);
 	double n1 = COMPACT_REALSEQ_INFO_FIRST(info);
 	double inc = COMPACT_REALSEQ_INFO_INCR(info);
@@ -2305,15 +2273,15 @@ static void *compact_realseq_Dataptr(SEXP x, Rboolean writeable)
 	else
 	    error("compact sequences with increment %f not supported yet", inc);
 
-	SET_ALTREAL_EXPANDED(x, val);
+	SET_COMPACT_SEQ_EXPANDED(x, val);
 	UNPROTECT(1);
     }
-    return DATAPTR(ALTREP_EXPANDED(x));
+    return DATAPTR(COMPACT_SEQ_EXPANDED(x));
 }
 
 static const void *compact_realseq_Dataptr_or_null(SEXP x)
 {
-    SEXP val = ALTREAL_EXPANDED(x);
+    SEXP val = COMPACT_SEQ_EXPANDED(x);
     return val == R_NilValue ? NULL : DATAPTR(val);
 }
 
@@ -2336,7 +2304,7 @@ compact_realseq_Get_region(SEXP sx, R_xlen_t i, R_xlen_t n, double *buf)
     /* should not get here if x is already expanded */
     CHECK_NOT_EXPANDED(sx);
 
-    SEXP info = ALTREP_INFO(sx);
+    SEXP info = COMPACT_SEQ_INFO(sx);
     R_xlen_t size = (R_xlen_t) COMPACT_REALSEQ_INFO_LENGTH(info);
     double n1 = COMPACT_REALSEQ_INFO_FIRST(info);
     double inc = COMPACT_REALSEQ_INFO_INCR(info);
@@ -2360,10 +2328,10 @@ static int compact_realseq_Is_sorted(SEXP x)
 {
 #ifdef COMPACT_REALSEQ_MUTABLE
     /* If the vector has been expanded it may have been modified. */
-    if (ALTREAL_EXPANDED(x) != R_NilValue)
+    if (COMPACT_SEQ_EXPANDED(x) != R_NilValue)
 	return UNKNOWN_SORTEDNESS;
 #endif
-    double inc = COMPACT_REALSEQ_INFO_INCR(ALTREP_INFO(x));
+    double inc = COMPACT_REALSEQ_INFO_INCR(COMPACT_SEQ_INFO(x));
     return inc < 0 ? KNOWN_DECR : KNOWN_INCR;
 }
 
@@ -2371,7 +2339,7 @@ static int compact_realseq_No_NA(SEXP x)
 {
 #ifdef COMPACT_REALSEQ_MUTABLE
     /* If the vector has been expanded it may have been modified. */
-    if (ALTREAL_EXPANDED(x) != R_NilValue)
+    if (COMPACT_SEQ_EXPANDED(x) != R_NilValue)
 	return FALSE;
 #endif
     return TRUE;
@@ -2381,18 +2349,14 @@ static SEXP compact_realseq_Sum(SEXP x, Rboolean narm)
 {
 #ifdef COMPACT_INTSEQ_MUTABLE
     /* If the vector has been expanded it may have been modified. */
-    if (ALTREAL_EXPANDED(x) != R_NilValue) 
+    if (COMPACT_SEQ_EXPANDED(x) != R_NilValue) 
 	return NULL;
-    else {
 #endif
-	SEXP info = ALTREP_INFO(x);
-	double size = COMPACT_REALSEQ_INFO_LENGTH(info);
-	double n1 = COMPACT_REALSEQ_INFO_FIRST(info);
-	double inc = COMPACT_REALSEQ_INFO_INCR(info);
-	return ScalarReal((size / 2.0) *(n1 + n1 + inc * (size - 1)));
-#ifdef COMPACT_INTSEQ_MUTABLE
-    }
-#endif
+    SEXP info = COMPACT_SEQ_INFO(x);
+    double size = COMPACT_REALSEQ_INFO_LENGTH(info);
+    double n1 = COMPACT_REALSEQ_INFO_FIRST(info);
+    double inc = COMPACT_REALSEQ_INFO_INCR(info);
+    return ScalarReal((size / 2.0) *(n1 + n1 + inc * (size - 1)));
 }
 
 
@@ -3469,7 +3433,6 @@ SEXP attribute_hidden do_munmap_file(SEXP call, SEXP op, SEXP args, SEXP env)
 /*
  * Wrapper Classes and Objects
  */
-
 
 
 static R_altrep_class_t wrap_integer_class;
