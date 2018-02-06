@@ -280,22 +280,6 @@ static SEXP rep2(SEXP s, SEXP ncopy)
 }
 #undef R2_SWITCH_LOOP
 
-SEXP attribute_hidden do_test_rep(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-    SEXP s, lenout, ans;
-    PROTECT(s = CAR(args));
-    PROTECT(lenout = CADR(args));
-	    
-    if(TYPEOF(s) == INTSXP) {
-	PROTECT(ans =  R_virtrep_vec(s, lenout));
-    } else
-	PROTECT(ans = R_NilValue);
-
-    UNPROTECT(3);
-    return ans;
-    
-}
-	  
 /* rep_len(x, len), also used for rep.int() with scalar 'times' */
 static SEXP rep3(SEXP s, R_xlen_t ns, R_xlen_t na)
 {
