@@ -4678,7 +4678,9 @@ practice seen in distributed packages include:
 It is not reasonable to test the time taken by a command: you cannot
 know how fast or how heavily loaded an @R{} platform might be.  At best
 you can test a ratio of times, and even that is fraught with
-difficulties.
+difficulties and not advisable: the just-in-time compiler (JIT) and the GC
+may trigger at unpredictable times, following heuristics that may change
+without notice.
 
 @item
 Do not test the exact format of @R{} messages (from @R{} itself or from
