@@ -308,6 +308,9 @@
       \code{NA} with a warning), but returns \code{double} numbers now
       in such cases.
 
+      \item Single components of POSIXlt objects can now be extracted
+      and replaced via \code{[} indexing with 2 indices.
+
       \item S3 method lookup now searches the namespace registry after
       the top level environment of the calling environment.
     }
@@ -563,9 +566,6 @@
       \item Calling \code{names()} on an S4 object derived from
       \code{"environment"} behaves (by default) like calling
       \code{names()} on an ordinary environment.
-
-      \item Single components of POSIXlt objects can now be extracted
-      and replaced via \code{[} indexing with 2 indices.
     }
   }
 }
