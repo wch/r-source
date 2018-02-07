@@ -307,6 +307,9 @@
       long logical and integer vectors no longer overflows (and returns
       \code{NA} with a warning), but returns \code{double} numbers now
       in such cases.
+
+      \item S3 method lookup now searches the namespace registry after
+      the top level environment of the calling environment.
     }
   }
 
