@@ -560,6 +560,9 @@
       \item Calling \code{names()} on an S4 object derived from
       \code{"environment"} behaves (by default) like calling
       \code{names()} on an ordinary environment.
+
+      \item Single components of POSIXlt objects can now be extracted
+      and replaced via \code{[} indexing with 2 indices.
     }
   }
 }

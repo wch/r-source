@@ -1160,20 +1160,28 @@ function(x, units = c("secs", "mins", "hours", "days", "months", "years"))
 
 ## ---- additions in 1.5.0 -----
 
-`[.POSIXlt` <- function(x, ..., drop = TRUE)
+`[.POSIXlt` <- function(x, i, j, drop = TRUE)
 {
-    val <- lapply(X = unclass(x), FUN = "[", ..., drop = drop)
-    attributes(val) <- attributes(x) # need to preserve timezones
-    val
+    if(missing(j)) {
+        val <- lapply(X = unclass(x), FUN = "[", i, drop = drop)
+        attributes(val) <- attributes(x) # need to preserve timezones
+        val
+    } else {
+        unclass(x)[[j]][i]
+    }
 }
 
-`[<-.POSIXlt` <- function(x, i, value)
+`[<-.POSIXlt` <- function(x, i, j, value)
 {
     if(!length(value)) return(x)
-    value <- unclass(as.POSIXlt(value))
     cl <- oldClass(x)
     class(x) <- NULL
-    for(n in names(x)) x[[n]][i] <- value[[n]]
+    if(missing(j)) {
+        value <- unclass(as.POSIXlt(value))
+        for(n in names(x)) x[[n]][i] <- value[[n]]
+    } else {
+        x[[j]][i] <- value
+    }
     class(x) <- cl
     x
 }
