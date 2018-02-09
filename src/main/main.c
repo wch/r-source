@@ -1101,7 +1101,12 @@ static void printwhere(void)
     if ((cptr->callflag & (CTXT_FUNCTION | CTXT_BUILTIN)) &&
 	(TYPEOF(cptr->call) == LANGSXP)) {
 	Rprintf("where %d", lct++);
-	SrcrefPrompt("", cptr->srcref);
+	SEXP sref;
+	if (cptr->srcref == R_InBCInterpreter)
+	    sref = R_findBCInterpreterSrcref(cptr);
+	else
+	    sref = cptr->srcref;
+	SrcrefPrompt("", sref);
 	PrintValue(cptr->call);
     }
   }
