@@ -93,7 +93,7 @@ lazyLoadDBfetch(key, file, compressed, hook)
 .primTrace(obj)
 .primUntrace(obj)
 
-.Date(xx)
+.Date(xx, cl = "Date")
 .POSIXct(xx, tz = NULL)
 .POSIXlt(xx, tz = NULL)
 .difftime(xx, units)
@@ -146,6 +146,8 @@ lazyLoadDBfetch(key, file, compressed, hook)
   \item{obj}{an \R object.}
   \item{xx}{a classless object to be placed into the class.}
   \item{tz}{an optional time zone.}
+  \item{cl}{an optional character vector of classes \emph{containing}
+    the default classes.}
   \item{units}{see \code{\link{difftime}}.}
   \item{\dots}{Arguments passed to non-dot name versions.}
     \item{FUN}{function to apply, found via \code{\link{match.fun}}.}

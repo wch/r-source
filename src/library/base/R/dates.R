@@ -243,7 +243,7 @@ as.character.Date <- function(x, ...) format(x, ...)
 as.data.frame.Date <- as.data.frame.vector
 
 as.list.Date <- function(x, ...)
-    lapply(unclass(x), .Date)
+    lapply(unclass(x), .Date, oldClass(x))
 
 c.Date <- function(..., recursive = FALSE)
     .Date(c(unlist(lapply(list(...), unclass))))
@@ -496,7 +496,7 @@ xtfrm.Date <- function(x) as.numeric(x)
 
 ## Added in 3.5.0.
 
-.Date <- function(xx) {
-    class(xx) <- "Date"
+.Date <- function(xx, cl = "Date") {
+    class(xx) <- cl
     xx
 }
