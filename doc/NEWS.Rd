@@ -313,6 +313,12 @@
 
       \item S3 method lookup now searches the namespace registry after
       the top level environment of the calling environment.
+
+      \item Arithmetic sequences created by \code{1:n},
+      \code{seq_along}, and the like now use compact internal
+      representations via the \code{ALTREP} framework.  Coercing Integer
+      and numeric vectors to character also now uses the \code{ALTREP}
+      framweork to defer the actual conversion until first use.
     }
   }
 
