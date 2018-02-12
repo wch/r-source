@@ -56,6 +56,45 @@ report_timeout <- function(tlim)
                 domain = NA, call. = FALSE)
 }
 
+## Find serialized objects (for load() and for readRDS()) in "allfiles" and
+## report serialization versions (0 means not a serialized object,
+## 1 means either version-1 or not a serialized object, 2 and more means
+## serialized object of that version).
+##
+## These are most commonly data/*.{Rdata,rda}, R/sysdata.rda files,
+## and build/vignette.rds
+## But packages have other .rds files in many places.
+## Despite its name, build/partial.rdb is created by saveRDS.
+##
+get_serialization_version <- function(allfiles)
+{
+    getVerLoad <- function(file)
+    {
+        ## This could look at the magic number, but for a short
+        ## while version 3 files were produced with a version-2
+        ## magic number. loadInfoFromConn2 checks if the magic number
+        ## is sensible.
+        con <- gzfile(file, "rb"); on.exit(close(con))
+        ## The .Internal gives an error on version-1 files
+        ## (and on non-serialized files)
+        tryCatch(.Internal(loadInfoFromConn2(con))$version,
+                 error = function(e) 1L)
+    }
+    getVerSer <- function(file)
+    {
+        con <- gzfile(file, "rb"); on.exit(close(con))
+        ## In case this is not a serialized object
+        tryCatch(.Internal(serializeInfoFromConn(con))$version,
+                 error = function(e) 0L)
+    }
+    loadfiles <- grep("[.](rda|RData|rdata|Rda|bam|Rbin)$", allfiles, value = TRUE)
+    serfiles <- c(grep("[.](rds|RDS|Rds|rdx)$", allfiles, value = TRUE),
+                  grep("build/partial[.]rdb$", allfiles, value = TRUE))
+    vers1 <- sapply(loadfiles, getVerLoad)
+    vers2 <- sapply(serfiles, getVerSer)
+    c(vers1, vers2)
+}
+
 ## Used for INSTALL and Rd2pdf
 run_Rcmd <- function(args, out = "", env = "", timeout = 0)
 {
@@ -724,39 +763,11 @@ add_dummies <- function(dir, Log)
 
     ## Look for serialized objects, and check their version
 
-    ## These are most commonly data/*.{Rdata,rda}, R/sysdata.rda files,
-    ## and build/vignette.rds
-    ## But packages have other .rds files in many places.
-    ## Despite its name, build/partial.rdb is created by saveRDS.
-    ##
     ## We need to so this before installation, which may create
     ## src/symbols.rds in the sources.
     check_serialization <- function(allfiles)
     {
-        getVerLoad <- function(file)
-        {
-            ## This could look at the magic number, but for a short
-            ## while version 3 files were produced with a version-2
-            ## magic number.
-            con <- gzfile(file, "rb"); on.exit(close(con))
-            ## The .Internal gives an errror on version-1 files
-            tryCatch(.Internal(loadInfoFromConn2(con))$version,
-                     error = function(e) 1L)
-        }
-        getVerSer <- function(file)
-        {
-            con <- gzfile(file, "rb"); on.exit(close(con))
-            ## In case this is not a serialized object
-            tryCatch(.Internal(serializeInfoFromConn(con))$version,
-                     error = function(e) 0L)
-        }
-        checkingLog(Log, "serialized R objects in the sources")
-        loadfiles <- grep("[.](rda|RData)$", allfiles, value = TRUE)
-        serfiles <- c(grep("[.]rds$", allfiles, value = TRUE),
-                      grep("build/partial[.]rdb$", allfiles, value = TRUE))
-        vers1 <- sapply(loadfiles, getVerLoad)
-        vers2 <- sapply(serfiles, getVerSer)
-        bad <- c(vers1, vers2)
+        bad <- get_serialization_version(allfiles) 
         bad <- names(bad[bad >= 3L])
         if(length(bad)) {
             msg <- "Found file(s) with version 3 serialization:"

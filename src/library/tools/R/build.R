@@ -1084,6 +1084,34 @@ inRbuildignore <- function(files, pkgdir) {
             resave_data_rda(pkgname, resave_data1)
         }
 
+        ## add dependency on R >= 3.5.0 to DESCRIPTION if there are files in
+        ## serialization version 3
+        desc <- .read_description(file.path(pkgname, "DESCRIPTION"))
+        Rdeps <- .split_description(desc)$Rdepends2
+        hasDep350 <- FALSE
+        for(dep in Rdeps) {
+            if(dep$op != '>=') next
+            if(dep$version >= "3.5.0") hasDep350 <- TRUE
+        }
+        if (!hasDep350) {
+            ## re-read files after exclusions have been applied
+            allfiles <- dir(".", all.files = TRUE, recursive = TRUE,
+                            full.names = TRUE, include.dirs = TRUE)
+            allfiles <- substring(allfiles, 3L)  # drop './'
+            vers  <- get_serialization_version(allfiles)
+            toonew <- names(vers[vers >= 3L])
+            if (length(toonew)) {
+                fixup_R_dep(pkgname, "3.5.0")
+                msg <- paste("WARNING: Added dependency on R >= 3.5.0 because",
+                             "serialized objects in serialize/load version 3",
+                             "cannot be read in older versions of R. File(s)",
+                             "containing such objects:",
+                             .pretty_format(sort(toonew)),
+                             "\n")
+                printLog(Log, strwrap(msg, indent = 2L, exdent = 2L), "\n")
+            }
+        }
+
 	## add NAMESPACE if the author didn't write one
 	if(!file.exists(namespace <- file.path(pkgname, "NAMESPACE")) ) {
 	    messageLog(Log, "creating default NAMESPACE file")
