@@ -318,7 +318,7 @@
       \code{seq_along}, and the like now use compact internal
       representations via the \code{ALTREP} framework.  Coercing Integer
       and numeric vectors to character also now uses the \code{ALTREP}
-      framweork to defer the actual conversion until first use.
+      framework to defer the actual conversion until first use.
     }
   }
 
