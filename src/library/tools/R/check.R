@@ -767,7 +767,8 @@ add_dummies <- function(dir, Log)
     ## src/symbols.rds in the sources.
     check_serialization <- function(allfiles)
     {
-        bad <- get_serialization_version(allfiles) 
+        checkingLog(Log, "serialization versions")
+        bad <- get_serialization_version(allfiles)
         bad <- names(bad[bad >= 3L])
         if(length(bad)) {
             msg <- "Found file(s) with version 3 serialization:"
