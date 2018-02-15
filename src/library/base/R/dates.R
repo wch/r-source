@@ -135,13 +135,12 @@ print.Date <- function(x, max = NULL, ...)
 summary.Date <- function(object, digits = 12L, ...)
 {
     x <- summary.default(unclass(object), digits = digits, ...)
-    if(m <- match("NA's", names(x), 0)) {
+    if(m <- match("NA's", names(x), 0L)) {
         NAs <- as.integer(x[m])
         x <- x[-m]
         attr(x, "NAs") <- NAs
     }
-    class(x) <- c("summaryDefault", "table", oldClass(object))
-    x
+    .Date(x, c("summaryDefault", "table", oldClass(object)))
 }
 
 `+.Date` <- function(e1, e2)
@@ -152,7 +151,7 @@ summary.Date <- function(object, digits = 12L, ...)
                                secs = x/86400, mins = x/1440, hours = x/24,
                                days = x, weeks = 7*x)))
 
-    if (nargs() == 1) return(e1)
+    if (nargs() == 1L) return(e1)
     # only valid if one of e1 and e2 is a scalar.
     if(inherits(e1, "Date") && inherits(e2, "Date"))
         stop("binary + is not defined for \"Date\" objects")
@@ -169,7 +168,7 @@ summary.Date <- function(object, digits = 12L, ...)
                                days = x, weeks = 7*x)))
     if(!inherits(e1, "Date"))
         stop("can only subtract from \"Date\" objects")
-    if (nargs() == 1) stop("unary - is not defined for \"Date\" objects")
+    if (nargs() == 1L) stop("unary - is not defined for \"Date\" objects")
     if(inherits(e2, "Date")) return(difftime(e1, e2, units="days"))
     if (inherits(e2, "difftime")) e2 <- coerceTimeUnit(e2)
     if(!is.null(attr(e2, "class")))
@@ -179,7 +178,7 @@ summary.Date <- function(object, digits = 12L, ...)
 
 Ops.Date <- function(e1, e2)
 {
-    if (nargs() == 1)
+    if (nargs() == 1L)
         stop(gettextf("unary %s not defined for \"Date\" objects", .Generic),
              domain = NA)
     boolean <- switch(.Generic, "<" =, ">" =, "==" =,
@@ -203,39 +202,24 @@ Summary.Date <- function (..., na.rm)
     ok <- switch(.Generic, max = , min = , range = TRUE, FALSE)
     if (!ok) stop(gettextf("%s not defined for \"Date\" objects", .Generic),
                   domain = NA)
-    val <- NextMethod(.Generic)
-    ## FIXME: Why not use the .Date() class generator?
-    class(val) <- oldClass(list(...)[[1L]])
-    val
+    .Date(NextMethod(.Generic), oldClass(list(...)[[1L]]))
 }
 
 `[.Date` <- function(x, ..., drop = TRUE)
 {
-    cl <- oldClass(x)
-    val <- NextMethod("[")
-    ## FIXME: Why not use the .Date() class generator?
-    class(val) <- cl
-    val
+    .Date(NextMethod("["), oldClass(x))
 }
 
 `[[.Date` <- function(x, ..., drop = TRUE)
 {
-    cl <- oldClass(x)
-    val <- NextMethod("[[")
-    ## FIXME: Why not use the .Date() class generator?
-    class(val) <- cl
-    val
+    .Date(NextMethod("[["), oldClass(x))
 }
 
 `[<-.Date` <- function(x, ..., value)
 {
     if(!length(value)) return(x)
     value <- unclass(as.Date(value))
-    cl <- oldClass(x)
-    x <- NextMethod(.Generic)
-    ## FIXME: Why not use the .Date() class generator?
-    class(x) <- cl
-    x
+    .Date(NextMethod(.Generic), oldClass(x))
 }
 
 as.character.Date <- function(x, ...) format(x, ...)
@@ -441,11 +425,7 @@ quarters.Date <- function(x, ...)
 ## These only make sense for negative digits, but still ...
 round.Date <- function(x, ...)
 {
-    cl <- oldClass(x)
-    val <- NextMethod()
-    ## FIXME: Why not use the .Date() class generator?
-    class(val) <- cl
-    val
+    .Date(NextMethod(), oldClass(x))
 }
 
 ## must avoid truncating forwards dates prior to 1970-01-01.
@@ -454,9 +434,7 @@ trunc.Date <- function(x, ...)
 
 rep.Date <- function(x, ...)
 {
-    y <- NextMethod()
-    ## FIXME: Why not use the .Date() class generator?
-    structure(y, class=oldClass(x))
+    .Date(NextMethod(), oldClass(x))
 }
 
 diff.Date <- function (x, lag = 1L, differences = 1L, ...)
@@ -485,11 +463,8 @@ is.numeric.Date <- function(x) FALSE
 
 split.Date <- function(x, f, drop = FALSE, ...)
 {
-    oclass <- class(x)
-    y <- split.default(unclass(x), f, drop = drop, ...)
-    ## FIXME: Why not use the .Date() class generator?
-    for(i in seq_along(y)) class(y[[i]]) <- oclass
-    y
+    lapply(split.default(unclass(x), f, drop = drop, ...),
+           .Date, oldClass(x))
 }
 
 xtfrm.Date <- function(x) as.numeric(x)
