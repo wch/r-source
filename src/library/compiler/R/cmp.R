@@ -1139,10 +1139,12 @@ cmpCall <- function(call, cb, cntxt, inlineOK = TRUE) {
     cb$restorecurloc(sloc)
 }
 
+maybeNSESymbols <- c("bquote")
 cmpCallSymFun <- function(fun, args, call, cb, cntxt) {
     ci <- cb$putconst(fun)
     cb$putcode(GETFUN.OP, ci)
-    cmpCallArgs(args, cb, cntxt)
+    nse <- as.character(fun) %in% maybeNSESymbols
+    cmpCallArgs(args, cb, cntxt, nse)
     ci <- cb$putconst(call)
     cb$putcode(CALL.OP, ci)
     if (cntxt$tailcall) cb$putcode(RETURN.OP)
@@ -1152,13 +1154,14 @@ cmpCallExprFun <- function(fun, args, call, cb, cntxt) {
     ncntxt <- make.nonTailCallContext(cntxt)
     cmp(fun, cb, ncntxt)
     cb$putcode(CHECKFUN.OP)
-    cmpCallArgs(args, cb, cntxt)
+    nse <- FALSE
+    cmpCallArgs(args, cb, cntxt, nse)
     ci <- cb$putconst(call)
     cb$putcode(CALL.OP, ci)
     if (cntxt$tailcall) cb$putcode(RETURN.OP)
 }
 
-cmpCallArgs <- function(args, cb, cntxt) {
+cmpCallArgs <- function(args, cb, cntxt, nse = FALSE) {
     names <- names(args)
     pcntxt <- make.promiseContext(cntxt)
     for (i in seq_along(args)) {
@@ -1181,7 +1184,10 @@ cmpCallArgs <- function(args, cb, cntxt) {
                        cntxt)
         else {
             if (is.symbol(a) || typeof(a) == "language") {
-                ci <- cb$putconst(genCode(a, pcntxt, loc = cb$savecurloc()))
+                if (nse)
+                      ci <- cb$putconst(a)
+                else
+                      ci <- cb$putconst(genCode(a, pcntxt, loc = cb$savecurloc()))
                 cb$putcode(MAKEPROM.OP, ci)
             }
             else

@@ -503,9 +503,11 @@ Call expressions in which the function is represented by a symbol are
 compiled by [[cmpCallSymFun]].  This function emits a [[GETFUN]]
 instruction and then compiles the arguments.
 <<[[cmpCallSymFun]] function>>=
+maybeNSESymbols <- c("bquote")
 cmpCallSymFun <- function(fun, args, call, cb, cntxt) {
     ci <- cb$putconst(fun)
     cb$putcode(GETFUN.OP, ci)
+    nse <- as.character(fun) %in% maybeNSESymbols
     <<compile arguments and emit [[CALL]] instruction>>
 }
 @ %def cmpCallSymFun
@@ -516,10 +518,21 @@ for handling function call arguments.
 %% **** need a fun cache and a var cache???
 
 Argument compilation is carried out by the function [[cmpCallArgs]],
-presented in Section \ref{subsec:callargs}, and is followed by
-emitting code to execute the call and, if necessary, return a result.
+presented in Section \ref{subsec:callargs}, and is followed by emitting code
+to execute the call and, if necessary, return a result.  Calls to functions
+listed in [[maybeNSESymbols]] get their arguments uncompiled.  Currently
+this is only the case of [[bquote]], which does not evaluate its argument
+[[expr]] normally, but modifies the expression first (non-standard
+evaluation).  Compiling such argument could result in warnings, because the
+argument may not be a valid R expression (e.g.  when it contains [[.()]]
+subexpressions in complex assignments), and the generated code would be
+irrelevant (yet not used).  Not compiling an argument that will in fact be
+evaluated normally is safe, hence the code is not differentiating between
+individual function arguments nor is it checking whether [[bquote]] is the
+one from the [[base]] package.
+
 <<compile arguments and emit [[CALL]] instruction>>=
-cmpCallArgs(args, cb, cntxt)
+cmpCallArgs(args, cb, cntxt, nse)
 ci <- cb$putconst(call)
 cb$putcode(CALL.OP, ci)
 if (cntxt$tailcall) cb$putcode(RETURN.OP)
@@ -539,6 +552,7 @@ cmpCallExprFun <- function(fun, args, call, cb, cntxt) {
     ncntxt <- make.nonTailCallContext(cntxt)
     cmp(fun, cb, ncntxt)
     cb$putcode(CHECKFUN.OP)
+    nse <- FALSE
     <<compile arguments and emit [[CALL]] instruction>>
 }
 @ %def cmpCallExprFun
@@ -638,12 +652,14 @@ Function calls can contain four kinds of arguments:
 \item [[...]] arguments
 \item general expressions
 \end{itemize}
-In the first and third cases the arguments can also be named. The
-argument compilation function [[cmpCallArgs]] loops over the argument
-lists and handles each of the three cases, in addition to signaling
-errors for arguments that are literal bytecode or promise objects:
+In the first and third cases the arguments can also be named.  The argument
+compilation function [[cmpCallArgs]] loops over the argument lists and
+handles each of the three cases, in addition to signaling errors for
+arguments that are literal bytecode or promise objects.  When [[nse]] is
+[[TRUE]] (non-standard evaluation), promises will only get uncompiled
+expressions.
 <<[[cmpCallArgs]] function>>=
-cmpCallArgs <- function(args, cb, cntxt) {
+cmpCallArgs <- function(args, cb, cntxt, nse = FALSE) {
     names <- names(args)
     pcntxt <- make.promiseContext(cntxt)
     for (i in seq_along(args)) {
@@ -707,7 +723,10 @@ though it is not clean how much this would gain.
 <<compile a general argument>>=
 else {
     if (is.symbol(a) || typeof(a) == "language") {
-        ci <- cb$putconst(genCode(a, pcntxt, loc = cb$savecurloc()))
+        if (nse)
+              ci <- cb$putconst(a)
+        else
+              ci <- cb$putconst(genCode(a, pcntxt, loc = cb$savecurloc()))
         cb$putcode(MAKEPROM.OP, ci)
     }
     else
