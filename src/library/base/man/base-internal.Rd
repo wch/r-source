@@ -94,9 +94,9 @@ lazyLoadDBfetch(key, file, compressed, hook)
 .primUntrace(obj)
 
 .Date(xx, cl = "Date")
-.POSIXct(xx, tz = NULL)
-.POSIXlt(xx, tz = NULL)
-.difftime(xx, units)
+.POSIXct(xx, tz = NULL, cl = c("POSIXct", "POSIXt"))
+.POSIXlt(xx, tz = NULL, cl = c("POSIXlt", "POSIXt"))
+.difftime(xx, units, cl = "difftime")
 
 .cache_class(class, extends)
 
