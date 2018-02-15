@@ -319,6 +319,8 @@
       representations via the \code{ALTREP} framework.  Coercing Integer
       and numeric vectors to character also now uses the \code{ALTREP}
       framework to defer the actual conversion until first use.
+
+      \item Finalizers are now run with interrupts suspended.
     }
   }
 
