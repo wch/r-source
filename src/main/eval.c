@@ -6644,10 +6644,15 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	SEXPTYPE ftype = CALL_FRAME_FTYPE();
 	if (ftype != SPECIALSXP) {
 	  SEXP value;
-	  if (ftype == BUILTINSXP)
+	  if (ftype == BUILTINSXP) {
+	    if (TYPEOF(code) == BCODESXP) 
 	      value = bcEval(code, rho, TRUE);
-	  else
-	      value = mkPROMISE(code, rho);
+	    else
+	      /* uncommon but possible, the compiler may decide not to compile
+	         an argument expression */
+	      value = eval(code, rho);
+	  } else
+	    value = mkPROMISE(code, rho);
 	  PUSHCALLARG(value);
 	}
 	NEXT();
