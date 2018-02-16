@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2017  The R Core Team
+ *  Copyright (C) 1998--2018  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  based on code (C) 1979 and later Royal Statistical Society
  *
@@ -27,8 +27,6 @@
  *	have been incorporated in this version.
  */
 
-
-#include <R_ext/Arith.h>
 #include "nmath.h"
 #include "dpq.h"
 
