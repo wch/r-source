@@ -1,6 +1,6 @@
 % File src/library/stats/man/predict.HoltWinters.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2009 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{predict.HoltWinters}
@@ -34,9 +34,10 @@
   moving averages,
   \emph{ONR Research Memorandum, Carnegie Institute of Technology} \bold{52}.
 
-  P. R. Winters (1960)
-  Forecasting sales by exponentially weighted moving averages,
-  \emph{Management Science} \bold{6}, 324--342.
+  P. R. Winters (1960).
+  Forecasting sales by exponentially weighted moving averages.
+  \emph{Management Science}, \bold{6}, 324--342.
+  \doi{10.1287/mnsc.6.3.324}.
 }
 \author{
   David Meyer \email{David.Meyer@wu.ac.at}

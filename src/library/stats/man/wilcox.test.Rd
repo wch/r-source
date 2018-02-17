@@ -1,6 +1,6 @@
 % File src/library/stats/man/wilcox.test.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{wilcox.test}
@@ -146,13 +146,14 @@ wilcox.test(x, \dots)
   one sample is large (several thousands or more).
 }
 \references{
-  David F. Bauer (1972),
+  David F. Bauer (1972).
   Constructing confidence sets using rank statistics.
   \emph{Journal of the American Statistical Association}
   \bold{67}, 687--690.
+  \doi{10.1080/01621459.1972.10481279}.
 
-  Myles Hollander and Douglas A. Wolfe (1973),
-  \emph{Nonparametric Statistical Methods.}
+  Myles Hollander and Douglas A. Wolfe (1973).
+  \emph{Nonparametric Statistical Methods}.
   New York: John Wiley & Sons.
   Pages 27--33 (one-sample), 68--75 (two-sample).\cr
   Or second edition (1999).

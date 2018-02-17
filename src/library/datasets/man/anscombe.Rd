@@ -1,6 +1,6 @@
 % File src/library/datasets/man/anscombe.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{anscombe}
@@ -21,13 +21,16 @@
     y1, y2, y3, y4 \tab numbers in (3, 12.5) with mean 7.5 and sdev 2.03}
 }
 \source{
-  Tufte, Edward R. (1989)
+  Tufte, Edward R. (1989).
   \emph{The Visual Display of Quantitative Information}, 13--14.
   Graphics Press.
 }
 \references{
-  Anscombe, Francis J. (1973)  Graphs in statistical analysis.
-  \emph{American Statistician}, \bold{27}, 17--21.
+  Anscombe, Francis J. (1973).
+  Graphs in statistical analysis.
+  \emph{The American Statistician}, \bold{27}, 17--21.
+  \doi{10.2307/2682899}.
+  
 }
 \examples{
 require(stats); require(graphics)

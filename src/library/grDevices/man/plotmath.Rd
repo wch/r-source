@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/plotmath.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{plotmath}
@@ -236,10 +236,11 @@
 #endif
 }
 \references{
-  Murrell, P. and Ihaka, R. (2000) An approach to providing
-  mathematical annotation in plots.
+  Murrell, P. and Ihaka, R. (2000).
+  An approach to providing mathematical annotation in plots.
   \emph{Journal of Computational and Graphical Statistics},
   \bold{9}, 582--599.
+  \doi{10.2307/1390947}.
 
   The symbol codes can be found in octal in the Adobe reference manuals,
   e.g.\sspace{}for Postscript

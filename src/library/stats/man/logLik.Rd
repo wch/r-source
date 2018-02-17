@@ -1,6 +1,6 @@
 % File src/library/stats/man/logLik.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{logLik}
@@ -82,6 +82,7 @@ logLik(object, \dots)
   Harville, D.A. (1974).
   Bayesian inference for variance components using only error contrasts.
   \emph{Biometrika}, \bold{61}, 383--385.
+  \doi{10.2307/2334370}.
 }
 \author{
   \enc{José}{Jose} Pinheiro and Douglas Bates

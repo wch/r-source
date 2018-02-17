@@ -1,6 +1,6 @@
 % File src/library/stats/man/ar.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ar}
@@ -176,19 +176,25 @@ ar.mle(x, aic = TRUE, order.max = NULL, na.action = na.fail,
 }
 
 \references{
-  Brockwell, P. J. and Davis, R. A. (1991) \emph{Time
-    Series and Forecasting Methods.}  Second edition. Springer, New
-  York. Section 11.4.
+  Brockwell, P. J. and Davis, R. A. (1991).
+  \emph{Time Series and Forecasting Methods}, second edition.
+  Springer, New York.
+  Section 11.4.
 
-  Brockwell, P. J. and Davis, R. A. (1996) \emph{Introduction to Time
-    Series and Forecasting.} Springer, New York. Sections 5.1 and 7.6.
+  Brockwell, P. J. and Davis, R. A. (1996).
+  \emph{Introduction to Time Series and Forecasting}.
+  Springer, New York.
+  Sections 5.1 and 7.6.
 
-  Percival, D. P. and Walden, A. T. (1998) \emph{Spectral Analysis
-    for Physical Applications.} Cambridge University Press.
+  Percival, D. P. and Walden, A. T. (1998).
+  \emph{Spectral Analysis for Physical Applications}.
+  Cambridge University Press.
 
-  Whittle, P. (1963) On the fitting of multivariate autoregressions
-  and the approximate canonical factorization of a spectral density
-  matrix. \emph{Biometrika} \bold{40}, 129--134.
+  Whittle, P. (1963).
+  On the fitting of multivariate autoregressions and the approximate
+  canonical factorization of a spectral density matrix.
+  \emph{Biometrika}, \bold{40}, 129--134.
+  \doi{10.2307/2333753}.
 }
 
 \examples{

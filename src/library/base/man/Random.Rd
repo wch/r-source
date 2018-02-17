@@ -1,6 +1,6 @@
 % File src/library/base/man/Random.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Random}
@@ -211,49 +211,59 @@ set.seed(seed, kind = NULL, normal.kind = NULL)
   \code{set.seed} returns \code{NULL}, invisibly.
 }
 \references{
-  Ahrens, J. H. and Dieter, U. (1973)
+  Ahrens, J. H. and Dieter, U. (1973).
   Extensions of Forsythe's method for random sampling from the normal
   distribution.
-  \emph{Mathematics of Computation} \bold{27}, 927-937.
+  \emph{Mathematics of Computation}, \bold{27}, 927--937.
 
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988).
   \emph{The New S Language}.
-  Wadsworth & Brooks/Cole.  (\code{set.seed}, storing in \code{.Random.seed}.)
+  Wadsworth & Brooks/Cole.
+  (\code{set.seed}, storing in \code{.Random.seed}.)
 
-  Box, G. E. P. and Muller, M. E. (1958) A note on the generation of normal
-  random deviates.  \emph{Annals of Mathematical Statistics} \bold{29},
-  610--611.
+  Box, G. E. P. and Muller, M. E. (1958).
+  A note on the generation of normal random deviates.
+  \emph{Annals of Mathematical Statistics}, \bold{29}, 610--611.
+  \doi{10.1214/aoms/1177706645}.
 
-  De Matteis, A. and Pagnutti, S. (1993)
-  \emph{Long-range Correlation Analysis of the Wichmann-Hill Random
-      Number Generator}, Statist. Comput., \bold{3}, 67--70.
+  De Matteis, A. and Pagnutti, S. (1993).
+  Long-range Correlation Analysis of the Wichmann-Hill Random Number
+  Generator.
+  \emph{Statistics and Computing}, \bold{3}, 67--70.
+  \doi{10.1007/BF00153065}.
 
-  Kinderman, A. J. and Ramage, J. G. (1976)
+  Kinderman, A. J. and Ramage, J. G. (1976).
   Computer generation of normal random variables.
-  \emph{Journal of the American Statistical Association} \bold{71},
-  893-896.
+  \emph{Journal of the American Statistical Association}, \bold{71},
+  893--896.
+  \doi{10.2307/2286857}.
 
-  Knuth, D. E. (1997)
-  \emph{The Art of Computer Programming.} Volume 2, third edition.\cr
+  Knuth, D. E. (1997).
+  \emph{The Art of Computer Programming}.
+  Volume 2, third edition.\cr
   Source code at \url{http://www-cs-faculty.stanford.edu/~knuth/taocp.html}.
 
-  Knuth, D. E. (2002)
-  \emph{The Art of Computer Programming.} Volume 2, third edition, ninth
-  printing.
+  Knuth, D. E. (2002).
+  \emph{The Art of Computer Programming}.
+  Volume 2, third edition, ninth printing.
 
-  L'Ecuyer, P. (1999) Good parameters and implementations for combined
-  multiple recursive random number generators. \emph{Operations
-  Research} \bold{47}, 159--164.
+  L'Ecuyer, P. (1999).
+  Good parameters and implementations for combined multiple recursive
+  random number generators.
+  \emph{Operations Research}, \bold{47}, 159--164.
+  \doi{10.1287/opre.47.1.159}.
 
-  Marsaglia, G. (1997) \emph{A random number generator for C.} Discussion
-  paper, posting on Usenet newsgroup \code{sci.stat.math} on
+  Marsaglia, G. (1997).
+  \emph{A random number generator for C}.
+  Discussion paper, posting on Usenet newsgroup \code{sci.stat.math} on
   September 29, 1997.
 
-  Marsaglia, G. and Zaman, A. (1994) Some portable very-long-period
-  random number generators. \emph{Computers in Physics}, \bold{8},
-  117--121.
+  Marsaglia, G. and Zaman, A. (1994).
+  Some portable very-long-period random number generators.
+  \emph{Computers in Physics}, \bold{8}, 117--121.
+  \doi{10.1063/1.168514}.
 
-  Matsumoto, M. and Nishimura, T. (1998)
+  Matsumoto, M. and Nishimura, T. (1998).
   Mersenne Twister: A 623-dimensionally equidistributed uniform
   pseudo-random number generator,
   \emph{ACM Transactions on Modeling and Computer Simulation},
@@ -261,14 +271,16 @@ set.seed(seed, kind = NULL, normal.kind = NULL)
   Source code formerly at \code{http://www.math.keio.ac.jp/~matumoto/emt.html}.\cr
   Now see \url{http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/VERSIONS/C-LANG/c-lang.html}.
   
-  Reeds, J., Hubert, S. and Abrahams, M. (1982--4) C implementation of
-  SuperDuper, University of California at Berkeley.  (Personal
-  communication from Jim Reeds to Ross Ihaka.)
+  Reeds, J., Hubert, S. and Abrahams, M. (1982--4).
+  C implementation of SuperDuper, University of California at Berkeley.
+  (Personal communication from Jim Reeds to Ross Ihaka.)
 
-  Wichmann, B. A.  and Hill, I. D. (1982)
-  \emph{Algorithm AS 183: An Efficient and Portable Pseudo-random Number
-    Generator}, Applied Statistics, \bold{31}, 188--190; Remarks:
+  Wichmann, B. A.  and Hill, I. D. (1982).
+  Algorithm AS 183: An Efficient and Portable Pseudo-random Number
+  Generator.
+  \emph{Applied Statistics}, \bold{31}, 188--190; Remarks:
   \bold{34}, 198 and \bold{35}, 89.
+  \doi{10.2307/2347988}.
 }
 \author{of RNGkind: Martin Maechler. Current implementation, B. D. Ripley}
 

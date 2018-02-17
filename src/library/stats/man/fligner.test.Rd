@@ -1,6 +1,6 @@
 % File src/library/stats/man/fligner.test.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{fligner.test}
@@ -72,7 +72,8 @@ fligner.test(x, \dots)
   William J. Conover, Mark E. Johnson and Myrle M. Johnson (1981).
   A comparative study of tests for homogeneity of variances, with
   applications to the outer continental shelf bidding data.
-  \emph{Technometrics} \bold{23}, 351--361.
+  \emph{Technometrics}, \bold{23}, 351--361.
+  \doi{10.2307/1268225}.
 }
 \seealso{
   \code{\link{ansari.test}} and \code{\link{mood.test}} for rank-based

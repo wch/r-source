@@ -1,6 +1,6 @@
 % File src/library/stats/man/splinefun.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{splinefun}
@@ -93,25 +93,30 @@ splinefunH(x, y, m)
   loaded into a different \R session.  This is safer in \R >= 3.0.0.
 }
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988).
   \emph{The New S Language}.
   Wadsworth & Brooks/Cole.
 
   Dougherty, R. L., Edelman, A. and Hyman, J. M. (1989)
   Positivity-, monotonicity-, or convexity-preserving cubic and quintic
   Hermite interpolation.
-  \emph{Mathematics of Computation} \bold{52}, 471--494.
+  \emph{Mathematics of Computation}, \bold{52}, 471--494.
+  \doi{10.1090/S0025-5718-1989-0962209-1}.
 
-  Forsythe, G. E., Malcolm, M. A. and Moler, C. B. (1977)
-  \emph{Computer Methods for Mathematical Computations}.  Wiley.
+  Forsythe, G. E., Malcolm, M. A. and Moler, C. B. (1977).
+  \emph{Computer Methods for Mathematical Computations}.
+  Wiley.
 
-  Fritsch, F. N. and Carlson, R. E. (1980)
-  Monotone piecewise cubic interpolation, \emph{SIAM Journal on
-    Numerical Analysis} \bold{17}, 238--246.
+  Fritsch, F. N. and Carlson, R. E. (1980).
+  Monotone piecewise cubic interpolation.
+  \emph{SIAM Journal on Numerical Analysis}, \bold{17}, 238--246.
+  \doi{10.1137/0717021}.
 
-  Hyman, J. M. (1983)
+  Hyman, J. M. (1983).
   Accurate monotonicity preserving cubic interpolation.
-  \emph{SIAM J. Sci. Stat. Comput.} \bold{4}, 645--654.
+  \emph{SIAM Journal on Scientific and Statistical Computing}, \bold{4},
+  645--654.
+  \doi{10.1137/0904045}.
 }
 \seealso{
   \code{\link{approx}} and \code{\link{approxfun}} for constant and

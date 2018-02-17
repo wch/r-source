@@ -1,6 +1,6 @@
 % File src/library/stats/man/line.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{line}
@@ -49,20 +49,22 @@ line(x, y, iter = 1)
   \emph{Exploratory Data Analysis},
   Reading Massachusetts: Addison-Wesley.
 
-  Velleman, P. F. and Hoaglin, D. C. (1981)
+  Velleman, P. F. and Hoaglin, D. C. (1981).
   \emph{Applications, Basics and Computing of Exploratory Data Analysis},
-  Duxbury Press; chapter 5.
+  Duxbury Press.
+  Chapter 5.
   %% MM has C version of the Fortran code for  rline() there
 
-  Emerson, J. D. and Hoaglin, D. C. (1983)
+  Emerson, J. D. and Hoaglin, D. C. (1983).
   Resistant Lines for \eqn{y} versus \eqn{x}.
   Chapter 5 of \emph{Understanding Robust and Exploratory Data Analysis},
   eds. David C. Hoaglin, Frederick Mosteller and John W. Tukey.  Wiley.
 
-  Iain M. Johnstone and Paul F. Velleman (1985)
+  Iain M. Johnstone and Paul F. Velleman (1985).
   The Resistant Line and Related Regression Methods.
-  \emph{Journal of the American Statistical Association} \bold{80}, 1041--1054.
-  \url{https://dx.doi.org/10.1080/01621459.1985.10478222}
+  \emph{Journal of the American Statistical Association}, \bold{80},
+  1041--1054.
+  \doi{10.2307/2288572}.
 }
 \seealso{
   \code{\link{lm}}.

@@ -1,6 +1,6 @@
 % File src/library/stats/man/cmdscale.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{cmdscale}
@@ -81,34 +81,39 @@ cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE,
   }
 }
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988).
   \emph{The New S Language}.
   Wadsworth & Brooks/Cole.
 
-  Cailliez, F. (1983)
+  Cailliez, F. (1983).
   The analytical solution of the additive constant problem.
-  \emph{Psychometrika} \bold{48}, 343--349.
+  \emph{Psychometrika}, \bold{48}, 343--349.
+  \doi{10.1007/BF02294026}.
 
-  Cox, T. F. and Cox, M. A. A. (2001)
+  Cox, T. F. and Cox, M. A. A. (2001).
   \emph{Multidimensional Scaling}.  Second edition.
   Chapman and Hall.
 
-  Gower, J. C. (1966)
+  Gower, J. C. (1966).
   Some distance properties of latent root and vector
   methods used in multivariate analysis.
-  \emph{Biometrika} \bold{53}, 325--328.
+  \emph{Biometrika}, \bold{53}, 325--328.
+  \doi{10.2307/2333639}.
 
-  Krzanowski, W. J. and Marriott, F. H. C. (1994)
+  Krzanowski, W. J. and Marriott, F. H. C. (1994).
   \emph{Multivariate Analysis. Part I. Distributions, Ordination and
-  Inference.}  London: Edward Arnold. (Especially pp.\sspace{}108--111.)
+    Inference.}
+  London: Edward Arnold.
+  (Especially pp.\sspace{}108--111.)
 
-  Mardia, K.V. (1978)
+  Mardia, K.V. (1978).
   Some properties of classical multidimensional scaling.
   \emph{Communications on Statistics -- Theory and Methods}, \bold{A7},
   1233--41.
+  \doi{10.1080/03610927808827707}
 
-  Mardia, K. V., Kent, J. T. and Bibby, J. M. (1979).  Chapter 14 of
-  \emph{Multivariate Analysis}, London: Academic Press.
+  Mardia, K. V., Kent, J. T. and Bibby, J. M. (1979).
+  Chapter 14 of \emph{Multivariate Analysis}, London: Academic Press.
 
   Seber, G. A. F. (1984).
   \emph{Multivariate Observations}.

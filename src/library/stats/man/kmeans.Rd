@@ -1,6 +1,6 @@
 % File src/library/stats/man/kmeans.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{kmeans}
@@ -94,23 +94,30 @@ kmeans(x, centers, iter.max = 10, nstart = 1,
     -- for experts.}
 }
 \references{
-  Forgy, E. W. (1965) Cluster analysis of multivariate data:
-  efficiency vs interpretability of classifications.
-  \emph{Biometrics} \bold{21}, 768--769.
+  Forgy, E. W. (1965).
+  Cluster analysis of multivariate data: efficiency vs interpretability
+  of classifications. 
+  \emph{Biometrics}, \bold{21}, 768--769.
 
   Hartigan, J. A. and Wong, M. A. (1979).
-  A K-means clustering algorithm.
-  \emph{Applied Statistics} \bold{28}, 100--108.
+  Algorithm AS 136: A K-means clustering algorithm.
+  \emph{Applied Statistics}, \bold{28}, 100--108.
+  \doi{10.2307/2346830}.
 
-  Lloyd, S. P. (1957, 1982)  Least squares quantization in PCM.
-  Technical Note, Bell Laboratories.  Published in 1982 in
-  \emph{IEEE Transactions on Information Theory} \bold{28}, 128--137.
+  Lloyd, S. P. (1957, 1982).
+  Least squares quantization in PCM.
+  Technical Note, Bell Laboratories.
+  Published in 1982 in \emph{IEEE Transactions on Information Theory},
+  \bold{28}, 128--137. 
 
-  MacQueen, J. (1967)  Some methods for classification and analysis of
-  multivariate observations. In \emph{Proceedings of the Fifth Berkeley
-    Symposium on  Mathematical Statistics and  Probability},
+  MacQueen, J. (1967).
+  Some methods for classification and analysis of multivariate
+  observations.
+  In \emph{Proceedings of the Fifth Berkeley Symposium on  Mathematical
+    Statistics and Probability}, 
   eds L. M. Le Cam & J. Neyman,
-  \bold{1}, pp.\sspace{}281--297. Berkeley, CA: University of California Press.
+  \bold{1}, pp.\sspace{}281--297.
+  Berkeley, CA: University of California Press.
 }
 \examples{
 require(graphics)

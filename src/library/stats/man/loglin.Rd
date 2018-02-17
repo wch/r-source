@@ -1,6 +1,6 @@
 % File src/library/stats/man/loglin.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{loglin}
@@ -87,15 +87,16 @@ loglin(table, margin, start = rep(1, length(table)), fit = FALSE,
 }
 
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988).
   \emph{The New S Language}.
   Wadsworth & Brooks/Cole.
 
-  Haberman, S. J. (1972)
-  Log-linear fit for contingency tables---Algorithm AS51.
+  Haberman, S. J. (1972).
+  Algorithm AS 51: Log-linear fit for contingency tables.
   \emph{Applied Statistics}, \bold{21}, 218--225.
+  \doi{10.2307/2346506}.
 
-  Agresti, A. (1990)
+  Agresti, A. (1990).
   \emph{Categorical data analysis}.
   New York: Wiley.
 }

@@ -1,6 +1,6 @@
 % File src/library/stats/man/ks.test.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ks.test}
@@ -99,25 +99,26 @@ ks.test(x, y, \dots,
   Marsaglia, Tsang and Wang (2003).
 }
 \references{
-  Z. W. Birnbaum and Fred H. Tingey (1951),
+  Z. W. Birnbaum and Fred H. Tingey (1951).
   One-sided confidence contours for probability distribution functions.
   \emph{The Annals of Mathematical Statistics}, \bold{22}/4, 592--596.
+  \doi{10.1214/aoms/1177729550}.
 
-  William J. Conover (1971),
+  William J. Conover (1971).
   \emph{Practical Nonparametric Statistics}.
   New York: John Wiley & Sons.
   Pages 295--301 (one-sample Kolmogorov test),
   309--314 (two-sample Smirnov test).
 
-  Durbin, J. (1973),
+  Durbin, J. (1973).
   \emph{Distribution theory for tests based on the sample distribution
-    function}.  SIAM.
+    function}.
+  SIAM.
 
-  George Marsaglia, Wai Wan Tsang and Jingbo Wang (2003),
+  George Marsaglia, Wai Wan Tsang and Jingbo Wang (2003).
   Evaluating Kolmogorov's distribution.
   \emph{Journal of Statistical Software}, \bold{8}/18.
-  \url{http://www.jstatsoft.org/v08/i18/}.
-
+  \doi{10.18637/jss.v008.i18}.
 }
 \seealso{
   \code{\link{shapiro.test}} which performs the Shapiro-Wilk test for

@@ -1,6 +1,6 @@
 % File src/library/stats/man/bandwidth.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{bandwidth}
@@ -95,19 +95,20 @@ bw.SJ(x, nb = 1000, lower = 0.1 * hmax, upper = hmax,
   Scott, D. W. (1992)
   \emph{Multivariate Density Estimation: Theory, Practice, and
     Visualization.}
-  Wiley.
+  New York: Wiley.
 
-  Sheather, S. J. and Jones, M. C. (1991)
+  Sheather, S. J. and Jones, M. C. (1991).
   A reliable data-based bandwidth selection method for kernel density
   estimation.
   \emph{Journal of the Royal Statistical Society series B},
   \bold{53}, 683--690.
+  \url{http://www.jstor.org/stable/2345597}.
 
-  Silverman, B. W. (1986)
+  Silverman, B. W. (1986).
   \emph{Density Estimation}.
   London: Chapman and Hall.
 
-  Venables, W. N. and Ripley, B. D. (2002)
+  Venables, W. N. and Ripley, B. D. (2002).
   \emph{Modern Applied Statistics with S}.
   Springer.
 }

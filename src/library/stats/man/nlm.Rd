@@ -1,6 +1,6 @@
 % File src/library/stats/man/nlm.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{nlm}
@@ -114,13 +114,15 @@ nlm(f, p, \dots, hessian = FALSE, typsize = rep(1, length(p)),
   translation of Fortran code by Richard H. Jones.
 }
 \references{
-  Dennis, J. E. and Schnabel, R. B. (1983) \emph{Numerical Methods for
-    Unconstrained Optimization and Nonlinear Equations.} Prentice-Hall,
-  Englewood Cliffs, NJ.
+  Dennis, J. E. and Schnabel, R. B. (1983).
+  \emph{Numerical Methods for Unconstrained Optimization and Nonlinear
+    Equations}.
+  Prentice-Hall, Englewood Cliffs, NJ.
 
-  Schnabel, R. B., Koontz, J. E. and Weiss, B. E. (1985) A modular
-  system of algorithms for unconstrained minimization.
-  \emph{ACM Trans. Math. Software}, \bold{11}, 419--440.
+  Schnabel, R. B., Koontz, J. E. and Weiss, B. E. (1985).
+  A modular system of algorithms for unconstrained minimization.
+  \emph{ACM Transactions on Mathematical Software}, \bold{11}, 419--440.
+  \doi{10.1145/6187.6192}.
 }
 \seealso{
   \code{\link{optim}} and \code{\link{nlminb}}.

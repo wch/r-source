@@ -1,6 +1,6 @@
 % File src/library/base/man/sort.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{sort}
@@ -157,21 +157,24 @@ sort.int(x, partial = NULL, na.last = NA, decreasing = FALSE,
 }
 
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988).
   \emph{The New S Language}.
   Wadsworth & Brooks/Cole.
 
-  Knuth, D. E. (1998)
+  Knuth, D. E. (1998).
   \emph{The Art of Computer Programming, Volume 3: Sorting and
-    Searching.} 2nd ed. Addison-Wesley.
+    Searching}, 2nd ed.
+  Addison-Wesley.
   
-  Sedgewick, R. (1986)
-  A new upper bound for Shell sort.
-  \emph{J. Algorithms} \bold{7}, 159--173.
+  Sedgewick, R. (1986).
+  A new upper bound for Shellsort.
+  \emph{Journal of Algorithms}, \bold{7}, 159--173.
+  \doi{10.1016/0196-6774(86)90001-5}.
 
-  Singleton, R. C. (1969)  An efficient algorithm for sorting with
-  minimal storage: Algorithm 347.
-  \emph{Communications of the ACM} \bold{12}, 185--187.
+  Singleton, R. C. (1969).
+  Algorithm 347: an efficient algorithm for sorting with minimal storage.
+  \emph{Communications of the ACM}, \bold{12}, 185--186.
+  \doi{10.1145/362875.362901}.
 }
 \seealso{
   \sQuote{\link{Comparison}} for how character strings are collated.

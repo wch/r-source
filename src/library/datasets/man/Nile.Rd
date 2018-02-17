@@ -1,6 +1,6 @@
 % File src/library/datasets/man/Nile.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Nile}
@@ -17,16 +17,22 @@
   A time series of length 100.
 }
 \source{
-  Durbin, J. and Koopman, S. J. (2001) \emph{Time Series Analysis by
-    State Space Methods.}  Oxford University Press.
+  Durbin, J. and Koopman, S. J. (2001).
+  \emph{Time Series Analysis by State Space Methods}.
+  Oxford University Press.
   \url{http://www.ssfpack.com/DKbook.html}
 }
 \references{
-  Balke, N. S. (1993) Detecting level shifts in time series.
-  \emph{Journal of Business and Economic Statistics} \bold{11}, 81--92.
+  Balke, N. S. (1993).
+  Detecting level shifts in time series.
+  \emph{Journal of Business and Economic Statistics}, \bold{11}, 81--92.
+  \doi{10.2307/1391308}.
 
-  Cobb, G. W. (1978) The problem of the Nile: conditional solution to a
-  change-point problem.  \emph{Biometrika} \bold{65}, 243--51.
+  Cobb, G. W. (1978).
+  The problem of the Nile: conditional solution to a change-point
+  problem.
+  \emph{Biometrika} \bold{65}, 243--51.
+  \doi{10.2307/2335202}.
 }
 \examples{
 require(stats); require(graphics)

@@ -1,6 +1,6 @@
 % File src/library/graphics/man/mosaicplot.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{mosaicplot}
@@ -119,32 +119,34 @@ mosaicplot(x, \dots)
   A more flexible and extensible implementation of mosaic plots written
   in the grid graphics system is provided in the function
   \code{\link[vcd]{mosaic}} in the contributed package \CRANpkg{vcd}
-  (Meyer, Zeileis and Hornik, 2005).
+  (Meyer, Zeileis and Hornik, 2006).
 }
 \author{
   S-PLUS original by John Emerson \email{john.emerson@yale.edu}.
   Originally modified and enhanced for \R by Kurt Hornik.
 }
 \references{
-  Hartigan, J.A., and Kleiner, B. (1984)
-  A mosaic of television ratings. \emph{The American Statistician},
-  \bold{38}, 32--35.
+  Hartigan, J.A., and Kleiner, B. (1984).
+  A mosaic of television ratings.
+  \emph{The American Statistician}, \bold{38}, 32--35.
+  \doi{10.2307/2683556}.
 
-  Emerson, J. W. (1998)
+  Emerson, J. W. (1998).
   Mosaic displays in S-PLUS: A general implementation and a case study.
   \emph{Statistical Computing and Graphics Newsletter (ASA)},
   \bold{9}, 1, 17--23.
 
-  Friendly, M. (1994)
+  Friendly, M. (1994).
   Mosaic displays for multi-way contingency tables.
   \emph{Journal of the American Statistical Association}, \bold{89},
   190--200.
+  \doi{10.2307/2291215}.
 
-  Meyer, D., Zeileis, A., and Hornik, K. (2005)
-  The strucplot framework: Visualizing multi-way contingency tables with vcd.
-  \emph{Report 22}, Department of Statistics and Mathematics,
-  \enc{Wirtschaftsuniversität}{Wirtschaftsuniversitaet} Wien, Research Report Series.
-  \url{http://epub.wu.ac.at/dyn/openURL?id=oai:epub.wu-wien.ac.at:epub-wu-01_8a1}
+  Meyer, D., Zeileis, A., and Hornik, K. (2006)  
+  The strucplot Framework: Visualizing Multi-Way Contingency Tables with
+  \pkg{vcd}.
+  \emph{Journal of Statistical Software}, \bold{17(3)}, 1--48.
+  \doi{10.18637/jss.v017.i03}.
 }
 \seealso{
   \code{\link{assocplot}},

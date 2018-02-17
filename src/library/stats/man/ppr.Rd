@@ -1,6 +1,6 @@
 % File src/library/stats/man/ppr.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 % file stats/man/ppr.Rd
@@ -165,18 +165,20 @@ method functions.
 }
 
 \references{
-  Friedman, J. H. and Stuetzle, W. (1981)
+  Friedman, J. H. and Stuetzle, W. (1981).
   Projection pursuit regression.
   \emph{Journal of the American Statistical Association},
   \bold{76}, 817--823.
+  \doi{10.2307/2287576}.
 
-  Friedman, J. H. (1984)
+  Friedman, J. H. (1984).
   SMART User's Guide.
   Laboratory for Computational Statistics, Stanford University Technical
   Report No.\sspace{}1.
 
-  Venables, W. N. and Ripley, B. D. (2002)
-  \emph{Modern Applied Statistics with S.}  Springer.
+  Venables, W. N. and Ripley, B. D. (2002).
+  \emph{Modern Applied Statistics with S}.
+  Springer.
 }
 \seealso{
   \code{\link{plot.ppr}}, \code{\link{supsmu}}, \code{\link{smooth.spline}}

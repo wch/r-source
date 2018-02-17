@@ -1,6 +1,6 @@
 % File src/library/stats/man/oneway.test.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{oneway.test}
@@ -46,9 +46,10 @@ oneway.test(formula, data, subset, na.action, var.equal = FALSE)
   their interaction is taken to form the grouping.
 }
 \references{
-  B. L. Welch (1951),
+  B. L. Welch (1951).
   On the comparison of several mean values: an alternative approach.
   \emph{Biometrika}, \bold{38}, 330--336.
+  \doi{10.2307/2332579}.
 }
 \seealso{
   The standard t test (\code{\link{t.test}}) as the special case for two

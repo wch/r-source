@@ -1,6 +1,6 @@
 % File src/library/datasets/man/UKDriverDeaths.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{UKDriverDeaths}
@@ -37,19 +37,22 @@ Seatbelts
   }
 }
 \source{
-  Harvey, A.C. (1989)
-  \emph{Forecasting, Structural Time Series Models and the Kalman Filter.}
+  Harvey, A.C. (1989).
+  \emph{Forecasting, Structural Time Series Models and the Kalman Filter}.
   Cambridge University Press, pp.\sspace{}519--523.
 
-  Durbin, J. and Koopman, S. J. (2001) \emph{Time Series Analysis by
-    State Space Methods.}  Oxford University Press.
+  Durbin, J. and Koopman, S. J. (2001).
+  \emph{Time Series Analysis by State Space Methods}.
+  Oxford University Press.
   \url{http://www.ssfpack.com/dkbook/}
 }
 \references{
-  Harvey, A. C. and Durbin, J. (1986) The effects of seat belt
-  legislation on British road casualties: A case study in structural
-  time series modelling. \emph{Journal of the Royal Statistical Society}
-  series B, \bold{149}, 187--227.
+  Harvey, A. C. and Durbin, J. (1986).
+  The effects of seat belt legislation on British road casualties: A
+  case study in structural time series modelling.
+  \emph{Journal of the Royal Statistical Society} series A, \bold{149},
+  187--227.
+  \doi{10.2307/2981553}.
 }
 \examples{
 require(stats); require(graphics)

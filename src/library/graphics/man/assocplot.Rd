@@ -1,6 +1,6 @@
 % File src/library/graphics/man/assocplot.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{assocplot}
@@ -49,7 +49,7 @@ assocplot(x, col = c("black", "red"), space = 0.3,
   A more flexible and extensible implementation of association plots
   written in the grid graphics system is provided in the function
   \code{\link[vcd]{assoc}} in the contributed package \CRANpkg{vcd}
-  (Meyer, Zeileis and Hornik, 2005).
+  (Meyer, Zeileis and Hornik, 2006).
 }
 \seealso{
   \code{\link{mosaicplot}}, \code{\link{chisq.test}}.
@@ -58,8 +58,9 @@ assocplot(x, col = c("black", "red"), space = 0.3,
   Cohen, A. (1980),
   On the graphical display of the significant components in a two-way
   contingency table.
-  \emph{Communications in Statistics---Theory and Methods}, \bold{A9},
+  \emph{Communications in Statistics---Theory and Methods}, \bold{9},
   1025--1041.
+  \doi{10.1080/03610928008827940}.
 
   Friendly, M. (1992),
   Graphical methods for categorical data.
@@ -67,11 +68,11 @@ assocplot(x, col = c("black", "red"), space = 0.3,
   190--200.
   \url{http://www.math.yorku.ca/SCS/sugi/sugi17-paper.html}
 
-  Meyer, D., Zeileis, A., and Hornik, K. (2005)
-  The strucplot framework: Visualizing multi-way contingency tables with vcd.
-  \emph{Report 22}, Department of Statistics and Mathematics,
-  \enc{Wirtschaftsuniversität}{Wirtschaftsuniversitaet} Wien, Research Report Series.
-  \url{http://epub.wu.ac.at/dyn/openURL?id=oai:epub.wu-wien.ac.at:epub-wu-01_8a1}
+  Meyer, D., Zeileis, A., and Hornik, K. (2006)  
+  The strucplot Framework: Visualizing Multi-Way Contingency Tables with
+  \pkg{vcd}.
+  \emph{Journal of Statistical Software}, \bold{17(3)}, 1--48.
+  \doi{10.18637/jss.v017.i03}.
 }
 \examples{
 ## Aggregate over sex:

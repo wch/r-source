@@ -1,6 +1,6 @@
 % File src/library/graphics/man/boxplot.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{boxplot}
@@ -126,14 +126,17 @@ boxplot(x, \dots)
   \item{names}{a vector of names for the groups.}
 }
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988).
   \emph{The New S Language}.
   Wadsworth & Brooks/Cole.
 
-  Chambers, J. M., Cleveland, W. S., Kleiner, B. and Tukey, P. A. (1983)
-  \emph{Graphical Methods for Data Analysis.}  Wadsworth & Brooks/Cole.
+  Chambers, J. M., Cleveland, W. S., Kleiner, B. and Tukey, P. A. (1983).
+  \emph{Graphical Methods for Data Analysis}.
+  Wadsworth & Brooks/Cole.
 
-  Murrell, P. (2005) \emph{R Graphics}. Chapman & Hall/CRC Press.
+  Murrell, P. (2005).
+  \emph{R Graphics}.
+  Chapman & Hall/CRC Press.
 
   See also \code{\link{boxplot.stats}}.
 }

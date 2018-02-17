@@ -1,6 +1,6 @@
 % File src/library/stats/man/r2dtable.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{r2dtable}
@@ -27,10 +27,11 @@ r2dtable(n, r, c)
   components.
 }
 \references{
-  Patefield, W. M. (1981)
-  Algorithm AS159.  An efficient method of generating r x c tables
+  Patefield, W. M. (1981).
+  Algorithm AS 159: An efficient method of generating r x c tables
   with given row and column totals.
-  \emph{Applied Statistics} \bold{30}, 91--97.
+  \emph{Applied Statistics}, \bold{30}, 91--97.
+  \doi{10.2307/2346669}.
 }
 \examples{
 ## Fisher's Tea Drinker data.

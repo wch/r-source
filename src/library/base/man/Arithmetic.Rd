@@ -1,6 +1,6 @@
 % File src/library/base/man/Arithmetic.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Arithmetic}
@@ -168,12 +168,16 @@ x \%/\% y
   \emph{The New S Language}.
   Wadsworth & Brooks/Cole.
 
-  D. Goldberg (1991) \emph{What Every Computer Scientist Should Know
-    about Floating-Point Arithmetic}  ACM Computing Surveys, \bold{23(1)}.\cr
+  D. Goldberg (1991).
+  What Every Computer Scientist Should Know about Floating-Point
+  Arithmetic.
+  \emph{ACM Computing Surveys}, \bold{23}(1), 5--48.
+  \doi{10.1145/103162.103163}.
+  \cr
   Postscript version available at
-  \url{http://www.validlab.com/goldberg/paper.ps}
-  Extended PDF version at \url{http://www.validlab.com/goldberg/paper.pdf}
-
+  \url{http://www.validlab.com/goldberg/paper.ps}.
+  Extended PDF version at
+  \url{http://www.validlab.com/goldberg/paper.pdf}.
 }
 \seealso{
   \code{\link{sqrt}} for miscellaneous and \code{\link{Special}} for special

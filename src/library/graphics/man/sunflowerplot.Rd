@@ -1,6 +1,6 @@
 % File src/library/graphics/man/sunflowerplot.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{sunflowerplot}
@@ -100,14 +100,18 @@ sunflowerplot(x, \dots)
   \pkg{grDevices}) if you are only interested in this return value.
 }
 \references{
-  Chambers, J. M., Cleveland, W. S., Kleiner, B. and Tukey, P. A. (1983)
-  \emph{Graphical Methods for Data Analysis.}  Wadsworth.
+  Chambers, J. M., Cleveland, W. S., Kleiner, B. and Tukey, P. A. (1983).
+  \emph{Graphical Methods for Data Analysis}.
+  Wadsworth.
 
-  Schilling, M. F. and Watkins, A. E. (1994)
+  Schilling, M. F. and Watkins, A. E. (1994).
   A suggestion for sunflower plots.
   \emph{The American Statistician}, \bold{48}, 303--305.
+  \doi{10.2307/2684839}.
 
-  Murrell, P. (2005) \emph{R Graphics}. Chapman & Hall/CRC Press.
+  Murrell, P. (2005).
+  \emph{R Graphics}.
+  Chapman & Hall/CRC Press.
 }
 \author{
   Andreas Ruckstuhl, Werner Stahel, Martin Maechler, Tim Hesterberg,

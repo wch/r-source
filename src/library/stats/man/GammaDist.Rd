@@ -1,6 +1,6 @@
 % File src/library/stats/man/GammaDist.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{GammaDist}
@@ -143,13 +143,14 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
   distributions. \emph{Computing}, \bold{12}, 223--246.
 }
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988).
   \emph{The New S Language}.
   Wadsworth & Brooks/Cole.
 
-  Shea, B. L. (1988)
-  Algorithm AS 239,  Chi-squared and incomplete Gamma integral,
-  \emph{Applied Statistics (JRSS C)} \bold{37}, 466--473.
+  Shea, B. L. (1988).
+  Algorithm AS 239: Chi-squared and incomplete Gamma integral,
+  \emph{Applied Statistics (JRSS C)}, \bold{37}, 466--473.
+  \doi{10.2307/2347328}.
 
   Abramowitz, M. and Stegun, I. A. (1972)
   \emph{Handbook of Mathematical Functions.} New York: Dover.

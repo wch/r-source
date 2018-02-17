@@ -1,6 +1,6 @@
 % File src/library/grid/man/grid.layout.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{grid.layout}
@@ -70,9 +70,13 @@ grid.layout(nrow = 1, ncol = 1,
 \value{
   A Grid layout object.
 }
-\references{Murrell, P. R. (1999), Layouts: A Mechanism for Arranging
-  Plots on a Page, \emph{Journal of Computational and Graphical
-  Statistics}, \bold{8}, 121--134.}
+\references{
+  Murrell, P. R. (1999).
+  Layouts: A Mechanism for Arranging Plots on a Page.
+  \emph{Journal of Computational and Graphical Statistics}, \bold{8},
+  121--134.
+  \doi{10.2307/1390924}.
+}
 \author{Paul Murrell}
 \seealso{
   \link{Grid},

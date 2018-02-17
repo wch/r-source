@@ -1,6 +1,6 @@
 % File src/library/stats/man/binom.test.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{binom.test}
@@ -51,6 +51,7 @@ binom.test(x, n, p = 0.5,
   The use of confidence or fiducial limits illustrated in the case of
   the binomial.
   \emph{Biometrika}, \bold{26}, 404--413.
+  \doi{10.2307/2331986}.
 
   William J. Conover (1971),
   \emph{Practical nonparametric statistics}.

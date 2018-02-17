@@ -1,6 +1,6 @@
 % File src/library/datasets/man/ToothGrowth.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ToothGrowth}
@@ -24,20 +24,20 @@
   }
 }
 \source{
-  C. I. Bliss (1952)
+  C. I. Bliss (1952).
   \emph{The Statistics of Bioassay}.
   Academic Press.
 }
 \references{
-  McNeil, D. R. (1977)
+  McNeil, D. R. (1977).
   \emph{Interactive Data Analysis}.
   New York: Wiley.
 
-  Crampton, E. W. (1947)
+  Crampton, E. W. (1947).
   The growth of the odontoblast of the incisor teeth as a criterion of
-  vitamin C intake of the guinea pig. \emph{The Journal of Nutrition}
-  \bold{33(5)}: 491--504.
-  \url{http://jn.nutrition.org/content/33/5/491.full.pdf}
+  vitamin C intake of the guinea pig.
+  \emph{The Journal of Nutrition}, \bold{33}(5), 491--504.
+  \doi{10.1093/jn/33.5.491}.
 }
 \examples{
 require(graphics)

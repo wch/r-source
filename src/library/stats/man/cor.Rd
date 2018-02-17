@@ -1,6 +1,6 @@
 % File src/library/stats/man/cor.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{cor}
@@ -125,15 +125,19 @@ cov2cor(V)
   \code{\link[pcaPP:cor.fk]{cor.fk}} in package \CRANpkg{pcaPP}.
 }
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988).
   \emph{The New S Language}.
   Wadsworth & Brooks/Cole.
 
-  Kendall, M. G. (1938)  A new measure of rank correlation,
-  \emph{Biometrika} \bold{30}, 81--93. \url{https://dx.doi.org/10.1093/biomet/30.1-2.81}
+  Kendall, M. G. (1938).
+  A new measure of rank correlation,
+  \emph{Biometrika}, \bold{30}, 81--93.
+  \doi{10.1093/biomet/30.1-2.81}.
 
-  Kendall, M. G. (1945)  The treatment of ties in rank problems.
-  \emph{Biometrika} \bold{33} 239--251. \url{https://dx.doi.org/10.1093/biomet/33.3.239}
+  Kendall, M. G. (1945).
+  The treatment of ties in rank problems.
+  \emph{Biometrika}, \bold{33} 239--251.
+  \doi{10.1093/biomet/33.3.239}
 }
 \seealso{
   \code{\link{cor.test}} for confidence intervals (and tests).

@@ -1,6 +1,6 @@
 % File src/library/stats/man/arima.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{arima}
@@ -183,22 +183,31 @@ arima(x, order = c(0L, 0L, 0L),
     fitting.  See \code{\link{KalmanLike}}.}
 }
 \references{
-  Brockwell, P. J. and Davis, R. A. (1996) \emph{Introduction to Time
-    Series and Forecasting.} Springer, New York. Sections 3.3 and 8.3.
+  Brockwell, P. J. and Davis, R. A. (1996).
+  \emph{Introduction to Time Series and Forecasting}.
+  Springer, New York.
+  Sections 3.3 and 8.3.
 
-  Durbin, J. and Koopman, S. J. (2001) \emph{Time Series Analysis by
-    State Space Methods.}  Oxford University Press.
+  Durbin, J. and Koopman, S. J. (2001).
+  \emph{Time Series Analysis by State Space Methods}.
+  Oxford University Press.
 
-  Gardner, G, Harvey, A. C. and Phillips, G. D. A. (1980) Algorithm
-  AS154. An algorithm for exact maximum likelihood estimation of
-  autoregressive-moving average models by means of Kalman filtering.
-  \emph{Applied Statistics} \bold{29}, 311--322.
+  Gardner, G, Harvey, A. C. and Phillips, G. D. A. (1980).
+  Algorithm AS 154: An algorithm for exact maximum likelihood estimation
+  of autoregressive-moving average models by means of Kalman filtering.
+  \emph{Applied Statistics}, \bold{29}, 311--322.
+  \doi{10.2307/2346910}.
 
-  Harvey, A. C. (1993) \emph{Time Series Models},
-  2nd Edition, Harvester Wheatsheaf, sections 3.3 and 4.4.
+  Harvey, A. C. (1993).
+  \emph{Time Series Models}. 2nd Edition.
+  Harvester Wheatsheaf.
+  Sections 3.3 and 4.4.
 
-  Jones, R. H. (1980) Maximum likelihood fitting of ARMA models to time
-  series with missing observations. \emph{Technometrics} \bold{22} 389--395.
+  Jones, R. H. (1980).
+  Maximum likelihood fitting of ARMA models to time series with missing
+  observations.
+  \emph{Technometrics}, \bold{22}, 389--395.
+  \doi{10.2307/1268324}.
 
   Ripley, B. D. (2002) Time series in \R 1.5.0.
   \emph{R News}, \bold{2/2}, 2--7.

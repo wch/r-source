@@ -1,6 +1,6 @@
 % File src/library/stats/man/birthday.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{birthday}
@@ -44,9 +44,11 @@ pbirthday(n, classes = 365, coincident = 2)
  good for very small probabilities.
 }
 \references{
-  Diaconis, P. and Mosteller F. (1989)
+  Diaconis, P. and Mosteller F. (1989).
   Methods for studying coincidences.
-  \emph{J. American Statistical Association}, \bold{84}, 853--861.
+  \emph{Journal of the American Statistical Association}, \bold{84},
+  853--861.
+  \doi{10.1080/01621459.1989.10478847}.
 }
 \examples{
 require(graphics)

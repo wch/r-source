@@ -1,6 +1,6 @@
 % File src/library/base/man/polyroot.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{polyroot}
@@ -39,9 +39,10 @@ polyroot(z)
   modifications by the R Core Team.
 }
 \references{
-  Jenkins and Traub (1972)
-  TOMS Algorithm 419.
-  \emph{Comm. ACM}, \bold{15}, 97--99.
+  Jenkins, M. A. and Traub, J. F. (1972).
+  Algorithm 419: zeros of a complex polynomial.
+  \emph{Communications of the ACM}, \bold{15}(2), 97--99.
+  \doi{10.1145/361254.361262}.
 }
 \seealso{
   \code{\link{uniroot}} for numerical root finding of arbitrary

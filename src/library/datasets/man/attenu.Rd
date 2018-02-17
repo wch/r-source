@@ -1,6 +1,6 @@
 % File src/library/datasets/man/attenu.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{attenu}
@@ -30,26 +30,30 @@
   Open File report 81-365. Menlo Park, Ca.
 }
 \references{
-  Boore, D. M. and Joyner, W.B.(1982)
+  Boore, D. M. and Joyner, W. B.(1982).
   The empirical prediction of ground motion,
-  \emph{Bull. Seism. Soc. Am.}, \bold{72}, S269--S268.
+  \emph{Bulletin of the Seismological Society of America}, \bold{72},
+  S269--S268.
 
-  Bolt, B. A. and Abrahamson, N. A. (1982)
+  Bolt, B. A. and Abrahamson, N. A. (1982).
   New attenuation relations for peak and expected accelerations of
-  strong ground motion,
-  \emph{Bull. Seism. Soc. Am.}, \bold{72}, 2307--2321.
+  strong ground motion.
+  \emph{Bulletin of the Seismological Society of America}, \bold{72},
+  2307--2321.
 
-  Bolt B. A. and Abrahamson, N. A. (1983)
+  Bolt B. A. and Abrahamson, N. A. (1983).
   Reply to W. B. Joyner & D. M. Boore's \dQuote{Comments on: New
     attenuation relations for peak and expected accelerations for peak
     and expected accelerations of strong ground motion},
-  \emph{Bull. Seism. Soc. Am.}, \bold{73}, 1481--1483.
+  \emph{Bulletin of the Seismological Society of America}, \bold{73},
+  1481--1483.
 
-  Brillinger, D. R. and Preisler, H. K. (1984)
+  Brillinger, D. R. and Preisler, H. K. (1984).
   An exploratory analysis of the Joyner-Boore attenuation data,
-  \emph{Bull. Seism. Soc. Am.}, \bold{74}, 1441--1449.
+  \emph{Bulletin of the Seismological Society of America}, \bold{74},
+  1441--1449.
 
-  Brillinger, D. R. and Preisler, H. K. (1984)
+  Brillinger, D. R. and Preisler, H. K. (1984).
   \emph{Further analysis of the Joyner-Boore attenuation data}.
   Manuscript.
 }
