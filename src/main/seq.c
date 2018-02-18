@@ -101,7 +101,7 @@ static SEXP seq_colon(double n1, double n2, SEXP call)
 	errorcall(call, _("result would be too long a vector"));
 
     if (n1 == (R_xlen_t) n1 && n2 == (R_xlen_t) n2)
-	return R_compact_intrange(n1, n2);
+	return R_compact_intrange((R_xlen_t) n1, (R_xlen_t) n2);
 
     SEXP ans;
     R_xlen_t n = (R_xlen_t)(r + 1 + FLT_EPSILON);
@@ -119,9 +119,9 @@ static SEXP seq_colon(double n1, double n2, SEXP call)
     }
     if (useInt) {
 	if (n1 <= n2)
-	    ans = R_compact_intrange(n1, n1 + n - 1);
+	    ans = R_compact_intrange((R_xlen_t) n1, (R_xlen_t)(n1 + n - 1));
 	else
-	    ans = R_compact_intrange(n1, n1 - n + 1);
+	    ans = R_compact_intrange((R_xlen_t) n1, (R_xlen_t)(n1 - n + 1));
     } else {
 	ans = allocVector(REALSXP, n);
 	if (n1 <= n2)
