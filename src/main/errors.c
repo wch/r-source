@@ -128,9 +128,7 @@ void R_CheckUserInterrupt(void)
        concurrency support. LT */
 
     R_ProcessEvents(); /* Also processes timing limits */
-#ifndef Win32
     if (R_interrupts_pending) onintr();
-#endif
 }
 
 static SEXP getInterruptCondition();
