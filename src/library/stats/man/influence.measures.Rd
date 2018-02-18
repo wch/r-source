@@ -1,6 +1,6 @@
 % File src/library/stats/man/influence.measures.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{influence.measures}
@@ -150,26 +150,29 @@ hat(x, intercept = TRUE)
   package.
 }
 \references{
-  Belsley, D. A., Kuh, E. and Welsch, R. E. (1980)
+  Belsley, D. A., Kuh, E. and Welsch, R. E. (1980).
   \emph{Regression Diagnostics}.
   New York: Wiley.
 
-  Cook, R. D. and Weisberg, S. (1982)
+  Cook, R. D. and Weisberg, S. (1982).
   \emph{Residuals and Influence in Regression}.
   London: Chapman and Hall.
 
-  Williams, D. A. (1987)
+  Williams, D. A. (1987).
   Generalized linear model diagnostics using the deviance and single
-  case deletions. \emph{Applied Statistics} \bold{36}, 181--191.
+  case deletions.
+  \emph{Applied Statistics}, \bold{36}, 181--191.
+  \doi{10.2307/2347550}.
 
-  Fox, J. (1997)
-  \emph{Applied Regression, Linear Models, and Related Methods}. Sage.
+  Fox, J. (1997).
+  \emph{Applied Regression, Linear Models, and Related Methods}.
+  Sage.
 
   Fox, J. (2002)
   \emph{An R and S-Plus Companion to Applied Regression}.
   Sage Publ.
 
-  Fox, J. and Weisberg, S. (2011)
+  Fox, J. and Weisberg, S. (2011).
   \emph{An R Companion to Applied Regression}, second edition.
   Sage Publ;
   \url{http://socserv.socsci.mcmaster.ca/jfox/Books/Companion/}.

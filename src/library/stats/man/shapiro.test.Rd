@@ -1,6 +1,6 @@
 % File src/library/stats/man/shapiro.test.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{shapiro.test}
@@ -25,18 +25,22 @@ shapiro.test(x)
   \item{data.name}{a character string giving the name(s) of the data.}
 }
 \references{
-  Patrick Royston (1982)
+  Patrick Royston (1982).
   An extension of Shapiro and Wilk's \eqn{W} test for normality to large
   samples.
   \emph{Applied Statistics}, \bold{31}, 115--124.
+  \doi{10.2307/2347973}.
 
-  Patrick Royston (1982)
+  Patrick Royston (1982).
   Algorithm AS 181: The \eqn{W} test for Normality.
   \emph{Applied Statistics}, \bold{31}, 176--180.
+  \doi{10.2307/2347986}.
 
-  Patrick Royston (1995)
-  Remark AS R94: A remark on Algorithm AS 181: The \eqn{W} test for normality.
+  Patrick Royston (1995).
+  Remark AS R94: A remark on Algorithm AS 181: The \eqn{W} test for
+  normality.
   \emph{Applied Statistics}, \bold{44}, 547--551.
+  \doi{10.2307/2986146}.
 }
 \source{
   The algorithm used is a C translation of the Fortran code described in

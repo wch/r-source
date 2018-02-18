@@ -102,8 +102,8 @@ srcref(srcfile, lloc)
   Bytes (elements 2, 4) and
   columns (elements 5, 6) may be different due to multibyte
   characters.  If only four values are given, the columns and bytes
-  are assumed to match.  Lines (elements 1, 3) and parsed lines (
-  elements 7, 8) may differ if a \code{#line} directive is used in
+  are assumed to match.  Lines (elements 1, 3) and parsed lines
+  (elements 7, 8) may differ if a \code{#line} directive is used in
   code:  the former will respect the directive, the latter will just
   count lines.  If only 4 or 6 elements are given, the parsed lines
   will be assumed to match the lines.

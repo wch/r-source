@@ -1,6 +1,6 @@
 % File src/library/stats/man/pp.test.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{PP.test}
@@ -41,13 +41,15 @@ PP.test(x, lshort = TRUE)
   \item{data.name}{a character string giving the name of the data.}
 }
 \references{
-  A. Banerjee, J. J. Dolado, J. W. Galbraith, and D. F. Hendry (1993)
+  A. Banerjee, J. J. Dolado, J. W. Galbraith, and D. F. Hendry (1993).
   \emph{Cointegration, Error Correction, and the Econometric Analysis
-    of Non-Stationary Data}, Oxford University Press, Oxford.
+    of Non-Stationary Data}.
+  Oxford University Press, Oxford.
 
-  P. Perron (1988) Trends and random walks in macroeconomic time
-  series. \emph{Journal of Economic Dynamics and Control} \bold{12},
-  297--332.
+  P. Perron (1988).
+  Trends and random walks in macroeconomic time series.
+  \emph{Journal of Economic Dynamics and Control}, \bold{12}, 297--332.
+  \doi{10.1016/0165-1889(88)90043-7}.
 }
 \author{A. Trapletti}
 \examples{

@@ -1,6 +1,6 @@
 % File src/library/stats/man/spec.ar.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{spec.ar}
@@ -30,8 +30,11 @@ spec.ar(x, n.freq, order = NULL, plot = TRUE, na.action = na.fail,
   The result is returned invisibly if \code{plot} is true.
 }
 \references{
-  Thompson, D.J. (1990) Time series analysis of Holocene climate data.
-  \emph{Phil. Trans. Roy. Soc. A} \bold{330}, 601--616.
+  Thompson, D.J. (1990).
+  Time series analysis of Holocene climate data.
+  \emph{Philosophical Transactions of the Royal Society of London Series
+    A}, \bold{330}, 601--616.
+  \url{http://www.jstor.org/stable/53609}.
 
   Venables, W.N. and Ripley, B.D. (2002) \emph{Modern Applied
     Statistics with S.} Fourth edition. Springer. (Especially

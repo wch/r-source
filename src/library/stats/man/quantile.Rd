@@ -147,6 +147,7 @@ quantile(x, \dots)
 
   Hyndman, R. J. and Fan, Y. (1996) Sample quantiles in statistical
   packages, \emph{American Statistician} \bold{50}, 361--365.
+  \doi{10.2307/2684934}.
 }
 \seealso{
   \code{\link{ecdf}} for empirical distributions of which

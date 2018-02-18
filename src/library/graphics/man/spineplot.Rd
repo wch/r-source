@@ -1,6 +1,6 @@
 % File src/library/graphics/man/spineplot.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{spineplot}
@@ -98,17 +98,23 @@ spineplot(x, \dots)
   \code{\link{mosaicplot}}, \code{\link{hist}}, \code{\link{cdplot}}
 }
 \references{
-  Friendly, M. (1994), Mosaic displays for multi-way contingency tables.
+  Friendly, M. (1994).
+  Mosaic displays for multi-way contingency tables.
   \emph{Journal of the American Statistical Association}, \bold{89},
   190--200.
+  \doi{10.2307/2291215}.
 
-  Hartigan, J.A., and Kleiner, B. (1984), A mosaic of television ratings.
+  Hartigan, J.A., and Kleiner, B. (1984).
+  A mosaic of television ratings.
   \emph{The American Statistician}, \bold{38}, 32--35.
+  \doi{10.2307/2683556}.
 
-  Hofmann, H., Theus, M. (2005), \emph{Interactive graphics for visualizing
-  conditional distributions}, Unpublished Manuscript.
+  Hofmann, H., Theus, M. (2005),
+  \emph{Interactive graphics for visualizing conditional distributions}.
+  Unpublished Manuscript.
 
-  Hummel, J. (1996), Linked bar charts: Analysing categorical data graphically.
+  Hummel, J. (1996).
+  Linked bar charts: Analysing categorical data graphically.
   \emph{Computational Statistics}, \bold{11}, 23--33.
 }
 \author{

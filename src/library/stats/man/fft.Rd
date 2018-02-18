@@ -1,6 +1,6 @@
 % File src/library/stats/man/fft.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{fft}
@@ -52,20 +52,20 @@ mvfft(z, inverse = FALSE)
   Uses C translation of Fortran code in Singleton (1979).
 }
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988).
   \emph{The New S Language}.
   Wadsworth & Brooks/Cole.
 
-  Singleton, R. C. (1979)
+  Singleton, R. C. (1979).
   Mixed Radix Fast Fourier Transforms,
   in \emph{Programs for Digital Signal Processing},
   IEEE Digital Signal Processing Committee eds.
   IEEE Press.
 
-  Cooley, James W., and Tukey, John W. (1965)
+  Cooley, James W., and Tukey, John W. (1965).
   An algorithm for the machine calculation of complex Fourier series,
-  \emph{Math. Comput.} \bold{19}(90), 297--301.
-  \url{https://dx.doi.org/10.1090/S0025-5718-1965-0178586-1}
+  \emph{Mathematics of Computation}, \bold{19}(90), 297--301.
+  \doi{10.2307/2003354}.
 }
 \seealso{
   \code{\link{convolve}}, \code{\link{nextn}}.

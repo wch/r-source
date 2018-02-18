@@ -1,6 +1,6 @@
 % File src/library/stats/man/cancor.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{cancor}
@@ -39,17 +39,19 @@ cancor(x, y, xcenter = TRUE, ycenter = TRUE)
   \item{ycenter}{the values used to adjust the \code{x} variables.}
 }
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988).
   \emph{The New S Language}.
   Wadsworth & Brooks/Cole.
 
   Hotelling H. (1936).
   Relations between two sets of variables.
   \emph{Biometrika}, \bold{28}, 321--327.
+  \doi{biomet/28.3-4.321}.
 
   Seber, G. A. F. (1984).
   \emph{Multivariate Observations}.
-  New York: Wiley, p.\sspace{}506f.
+  New York: Wiley.
+  Page\sspace{}506f.
 }
 \seealso{
   \code{\link{qr}}, \code{\link{svd}}.

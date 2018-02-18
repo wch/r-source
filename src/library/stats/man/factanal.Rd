@@ -1,6 +1,6 @@
 % File src/library/stats/man/factanal.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{factanal}
@@ -157,19 +157,26 @@ factanal(x, factors, data = NULL, covmat = NULL, n.obs = NA,
 }
 
 \references{
-  Bartlett, M. S. (1937) The statistical conception of mental factors.
+  Bartlett, M. S. (1937).
+  The statistical conception of mental factors.
   \emph{British Journal of Psychology}, \bold{28}, 97--104.
+  \doi{10.1111/j.2044-8295.1937.tb00863.x}.
 
-  Bartlett, M. S. (1938) Methods of estimating mental
-  factors. \emph{Nature}, \bold{141}, 609--610.
+  Bartlett, M. S. (1938).
+  Methods of estimating mental factors.
+  \emph{Nature}, \bold{141}, 609--610.
+  \doi{10.1038/141246a0}.
 
-  \enc{Jöreskog}{Joreskog}, K. G. (1963)
-  \emph{Statistical Estimation in Factor Analysis.}  Almqvist and Wicksell.
+  \enc{Jöreskog}{Joreskog}, K. G. (1963).
+  \emph{Statistical Estimation in Factor Analysis}.
+  Almqvist and Wicksell.
 
-  Lawley, D. N. and Maxwell, A. E. (1971) \emph{Factor Analysis as a
-    Statistical Method.} Second edition. Butterworths.
+  Lawley, D. N. and Maxwell, A. E. (1971).
+  \emph{Factor Analysis as a Statistical Method}. Second edition.
+  Butterworths.
 
-  Thomson, G. H. (1951) \emph{The Factorial Analysis of Human Ability.}
+  Thomson, G. H. (1951).
+  \emph{The Factorial Analysis of Human Ability}.
   London University Press.
 }
 

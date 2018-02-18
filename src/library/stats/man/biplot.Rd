@@ -1,6 +1,6 @@
 % File src/library/stats/man/biplot.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{biplot}
@@ -66,11 +66,15 @@ biplot(x, \dots)
   a plot is produced on the current graphics device.
 }
 \references{
-  K. R. Gabriel (1971).  The biplot graphical display of matrices with
-  application to principal component analysis. \emph{Biometrika}
-  \bold{58}, 453--467.
+  K. R. Gabriel (1971).
+  The biplot graphical display of matrices with application to principal
+  component analysis.
+  \emph{Biometrika}, \bold{58}, 453--467.
+  \doi{10.2307/2334381}.
 
-  J.C. Gower and D. J. Hand (1996). \emph{Biplots}. Chapman & Hall.
+  J.C. Gower and D. J. Hand (1996).
+  \emph{Biplots}.
+  Chapman & Hall.
 }
 \seealso{\code{\link{biplot.princomp}}, also for examples.}
 \keyword{hplot}

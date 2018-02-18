@@ -296,7 +296,7 @@
       \code{exprs} which is nicer and useful when testing several
       expressions in one call.
 
-      \item The environment variable \env{R_MAX_VZISE} can now be used
+      \item The environment variable \env{R_MAX_VSIZE} can now be used
       to specify the maximal vector heap size. On macOS, unless specified
       by this environment variable, the maximal vector heap size is set to
       the maximum on 16GB and the available physical memory. This is to
@@ -307,6 +307,20 @@
       long logical and integer vectors no longer overflows (and returns
       \code{NA} with a warning), but returns \code{double} numbers now
       in such cases.
+
+      \item Single components of POSIXlt objects can now be extracted
+      and replaced via \code{[} indexing with 2 indices.
+
+      \item S3 method lookup now searches the namespace registry after
+      the top level environment of the calling environment.
+
+      \item Arithmetic sequences created by \code{1:n},
+      \code{seq_along}, and the like now use compact internal
+      representations via the \code{ALTREP} framework.  Coercing Integer
+      and numeric vectors to character also now uses the \code{ALTREP}
+      framework to defer the actual conversion until first use.
+
+      \item Finalizers are now run with interrupts suspended.
     }
   }
 
@@ -554,7 +568,8 @@
       \item The \code{duplicated()} method for data frames is now based
       on \code{list}s (instead of string coercion).  Consequently
       \code{unique()} is better distinguishing data frame rows, fixing
-      \PR{17369} and \PR{17381}.
+      \PR{17369} and \PR{17381}.  The methods for matrices and arrays
+      are changed accordingly.
 
       \item Calling \code{names()} on an S4 object derived from
       \code{"environment"} behaves (by default) like calling

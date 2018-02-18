@@ -1,6 +1,6 @@
 % File src/library/parallel/man/RngStream.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2011-2014 R Core Team
+% Copyright 2011-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{RNGstreams}
@@ -71,13 +71,17 @@ mc.reset.stream()
   a value which can be assigned to \code{.Random.seed}.
 }
 \references{
-  L'Ecuyer, P. (1999) Good parameters and implementations for combined
-  multiple recursive random number generators.  \emph{Operations
-  Research} \bold{47}, 159--164.
+  L'Ecuyer, P. (1999).
+  Good parameters and implementations for combined multiple recursive
+  random number generators.
+  \emph{Operations Research}, \bold{47}, 159--164.
+  \doi{10.1287/opre.47.1.159}.
 
-  L'Ecuyer, P., Simard, R.,  Chen, E. J. and Kelton, W. D. (2002)
+  L'Ecuyer, P., Simard, R.,  Chen, E. J. and Kelton, W. D. (2002).
   An object-oriented random-number package with many long streams
-  and substreams.  \emph{Operations Research} \bold{50} 1073--5.
+  and substreams.
+  \emph{Operations Research}, \bold{50}, 1073--1075.
+  \doi{10.1287/opre.50.6.1073.358}.
 }
 \author{
   Brian Ripley

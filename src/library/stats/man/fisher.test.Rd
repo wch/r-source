@@ -1,6 +1,6 @@
 % File src/library/stats/man/fisher.test.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{fisher.test}
@@ -139,49 +139,57 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
   of the algorithm of Patefield (1981) is used.)
 }
 \references{
-  Agresti, A. (1990)
+  Agresti, A. (1990).
   \emph{Categorical data analysis}.
   New York: Wiley.
   Pages 59--66.
 
-  Agresti, A. (2002)
+  Agresti, A. (2002).
   \emph{Categorical data analysis}. Second edition.
   New York: Wiley.
   Pages 91--101.
 
-  Fisher, R. A. (1935)
+  Fisher, R. A. (1935).
   The logic of inductive inference.
-  \emph{Journal of the Royal Statistical Society Series A} \bold{98},
+  \emph{Journal of the Royal Statistical Society Series A}, \bold{98},
   39--54.
+  \doi{10.2307/2342435}.
 
-  Fisher, R. A. (1962)
+  Fisher, R. A. (1962).
   Confidence limits for a cross-product ratio.
-  \emph{Australian Journal of Statistics} \bold{4}, 41.
+  \emph{Australian Journal of Statistics}, \bold{4}, 41.
+  \doi{10.1111/j.1467-842X.1962.tb00285.x}.
 
-  Fisher, R. A. (1970)
-  \emph{Statistical Methods for Research Workers.}  Oliver & Boyd.
+  Fisher, R. A. (1970).
+  \emph{Statistical Methods for Research Workers}.
+  Oliver & Boyd.
 
-  Mehta, Cyrus R. and Patel, Nitin R. (1983)
-  A network algorithm for performing Fisher's exact test in \eqn{r \times c}{r * c}
-  contingency tables.
-  \emph{Journal of the American Statistical Association} \bold{78}, 427--434.
+  Mehta, Cyrus R. and Patel, Nitin R. (1983).
+  A network algorithm for performing Fisher's exact test in \eqn{r
+  \times c}{r x c} contingency tables.
+  \emph{Journal of the American Statistical Association}, \bold{78},
+  427--434.
+  \doi{10.1080/01621459.1983.10477989}.
 
-  Mehta, C. R. and Patel, N. R. (1986)
-  Algorithm 643. FEXACT: A Fortran subroutine for Fisher's exact test
-  on unordered \eqn{r*c} contingency tables.
+  Mehta, C. R. and Patel, N. R. (1986).
+  Algorithm 643: FEXACT, a FORTRAN subroutine for Fisher's exact test
+  on unordered \eqn{r \times c}{r x c} contingency tables.
   \emph{ACM Transactions on Mathematical Software}, \bold{12},
   154--161.
+  \doi{10.1145/6497.214326}.
 
   Clarkson, D. B., Fan, Y. and Joe, H. (1993)
   A Remark on Algorithm 643: FEXACT: An Algorithm for Performing
   Fisher's Exact Test in \eqn{r \times c}{r x c} Contingency Tables.
   \emph{ACM Transactions on Mathematical Software}, \bold{19},
   484--488.
+  \doi{10.1145/168173.168412}.
 
-  Patefield, W. M. (1981)
-  Algorithm AS159.  An efficient method of generating r x c tables
+  Patefield, W. M. (1981).
+  Algorithm AS 159: An efficient method of generating r x c tables
   with given row and column totals.
-  \emph{Applied Statistics} \bold{30}, 91--97.
+  \emph{Applied Statistics}, \bold{30}, 91--97.
+  \doi{10.2307/2346669}.
 }
 \seealso{
   \code{\link{chisq.test}}

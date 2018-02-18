@@ -1,6 +1,6 @@
 % File src/library/stats/man/ansari.test.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ansari.test}
@@ -97,17 +97,18 @@ ansari.test(x, \dots)
   for \eqn{s^2} in the F test.
 }
 \references{
-  David F. Bauer (1972),
+  David F. Bauer (1972).
   Constructing confidence sets using rank statistics.
-  \emph{Journal of the American Statistical Association}
+  \emph{Journal of the American Statistical Association},
   \bold{67}, 687--690.
+  \doi{10.1080/01621459.1972.10481279}.
 
-  Jaroslav Hajek, Zbynek Sidak and Pranab K. Sen (1999),
+  Jaroslav Hajek, Zbynek Sidak and Pranab K. Sen (1999).
   \emph{Theory of Rank Tests}.
   San Diego, London: Academic Press.
 
-  Myles Hollander and Douglas A. Wolfe (1973),
-  \emph{Nonparametric Statistical Methods.}
+  Myles Hollander and Douglas A. Wolfe (1973).
+  \emph{Nonparametric Statistical Methods}.
   New York: John Wiley & Sons.
   Pages 83--92.
 }

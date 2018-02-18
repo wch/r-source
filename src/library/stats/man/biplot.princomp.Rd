@@ -1,6 +1,6 @@
 % File src/library/stats/man/biplot.princomp.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{biplot.princomp}
@@ -56,10 +56,12 @@ Biplot for Principal Components
     The biplot graphical display of matrices with applications to
     principal component analysis.
     \emph{Biometrika}, \bold{58}, 453--467.
+    \doi{10.2307/2334381}.
 
     Gabriel, K. R. and Odoroff, C. L. (1990).
     Biplots in biomedical research.
     \emph{Statistics in Medicine}, \bold{9}, 469--485.
+    \doi{10.1002/sim.4780090502}.
 }
 \seealso{
     \code{\link{biplot}},

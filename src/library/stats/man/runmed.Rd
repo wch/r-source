@@ -1,6 +1,6 @@
 % File src/library/stats/man/runmed.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{runmed}
@@ -76,8 +76,9 @@ runmed(x, k, endrule = c("median", "keep", "constant"),
 }
 \references{
   \enc{Härdle}{Haerdle}, W. and Steiger, W. (1995)
-  [Algorithm AS 296] Optimal median smoothing,
+  Algorithm AS 296: Optimal median smoothing,
   \emph{Applied Statistics} \bold{44}, 258--264.
+  \doi{10.2307/2986349}.
 
   Jerome H. Friedman and Werner Stuetzle (1982)
   \emph{Smoothing of Scatterplots};

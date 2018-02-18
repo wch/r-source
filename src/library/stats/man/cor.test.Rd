@@ -1,6 +1,6 @@
 % File src/library/stats/man/cor.test.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{cor.test}
@@ -117,9 +117,10 @@ cor.test(x, \dots)
   sizes (the cutoff has been changed from the original paper).
 }
 \references{
-  D. J. Best & D. E. Roberts (1975),
+  D. J. Best & D. E. Roberts (1975).
   Algorithm AS 89: The Upper Tail Probabilities of Spearman's \eqn{\rho}{rho}.
   \emph{Applied Statistics}, \bold{24}, 377--379.
+  \doi{10.2307/2347111}.
 
   Myles Hollander & Douglas A. Wolfe (1973),
   \emph{Nonparametric Statistical Methods.}

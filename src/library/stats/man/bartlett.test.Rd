@@ -1,6 +1,6 @@
 % File src/library/stats/man/bartlett.test.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{bartlett.test}
@@ -74,6 +74,7 @@ bartlett.test(x, \dots)
   Properties of sufficiency and statistical tests.
   \emph{Proceedings of the Royal Society of London Series A}
   \bold{160}, 268--282.
+  \doi{10.1098/rspa.1937.0109}.
 }
 
 % FIXME: could use something more interesting here

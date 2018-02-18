@@ -1,6 +1,6 @@
 % File src/library/stats/man/KalmanLike.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{KalmanLike}
@@ -121,13 +121,15 @@ makeARIMA(phi, theta, Delta, kappa = 1e6,
 }
 
 \references{
-  Durbin, J. and Koopman, S. J. (2001) \emph{Time Series Analysis by
-    State Space Methods.}  Oxford University Press.
+  Durbin, J. and Koopman, S. J. (2001).
+  \emph{Time Series Analysis by State Space Methods}.
+  Oxford University Press.
 
-  Gardner, G, Harvey, A. C. and Phillips, G. D. A. (1980) Algorithm
-  AS154. An algorithm for exact maximum likelihood estimation of
-  autoregressive-moving average models by means of Kalman filtering.
-  \emph{Applied Statistics} \bold{29}, 311--322.
+  Gardner, G, Harvey, A. C. and Phillips, G. D. A. (1980).
+  Algorithm AS 154: An algorithm for exact maximum likelihood estimation
+  of  autoregressive-moving average models by means of Kalman filtering.
+  \emph{Applied Statistics}, \bold{29}, 311--322.
+  \doi{10.2307/2346910}.
 
   R bug report PR#14682 (2011-2013)
   \url{https://bugs.r-project.org/bugzilla3/show_bug.cgi?id=14682}.

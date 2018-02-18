@@ -1,6 +1,6 @@
 % File src/library/stats/man/predict.arima.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{predict.Arima}
@@ -37,15 +37,20 @@
   the estimated standard errors.  Both components are time series.
 }
 \references{
-  Durbin, J. and Koopman, S. J. (2001) \emph{Time Series Analysis by
-    State Space Methods.}  Oxford University Press.
+  Durbin, J. and Koopman, S. J. (2001).
+  \emph{Time Series Analysis by State Space Methods}.
+  Oxford University Press.
 
-  Harvey, A. C. and McKenzie, C. R. (1982) Algorithm AS182.
-  An algorithm for finite sample prediction from ARIMA processes.
-  \emph{Applied Statistics} \bold{31}, 180--187.
+  Harvey, A. C. and McKenzie, C. R. (1982).
+  Algorithm AS 182: An algorithm for finite sample prediction from ARIMA
+  processes. 
+  \emph{Applied Statistics}, \bold{31}, 180--187.
+  \doi{10.2307/2347987}.
 
-  Harvey, A. C. (1993) \emph{Time Series Models},
-  2nd Edition, Harvester Wheatsheaf, sections 3.3 and 4.4.
+  Harvey, A. C. (1993).
+  \emph{Time Series Models}, 2nd Edition.
+  Harvester Wheatsheaf.
+  Sections 3.3 and 4.4.
 }
 
 \seealso{

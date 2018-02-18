@@ -1,6 +1,6 @@
 % File src/library/datasets/man/UCBAdmissions.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{UCBAdmissions}
@@ -42,9 +42,10 @@
   or the \link{fourfoldplot} for 2-by-2-by-\eqn{k} tables.
 }
 \references{
-  Bickel, P. J., Hammel, E. A., and O'Connell, J. W. (1975)
+  Bickel, P. J., Hammel, E. A., and O'Connell, J. W. (1975).
   Sex bias in graduate admissions: Data from Berkeley.
   \emph{Science}, \bold{187}, 398--403.
+  \url{http://www.jstor.org/stable/1739581}.
 }
 \examples{
 require(graphics)

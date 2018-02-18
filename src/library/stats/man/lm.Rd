@@ -1,6 +1,6 @@
 % File src/library/stats/man/lm.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{lm}
@@ -209,9 +209,10 @@ lm(formula, data, subset, weights, na.action,
   Chapter 4 of \emph{Statistical Models in S}
   eds J. M. Chambers and T. J. Hastie, Wadsworth & Brooks/Cole.
 
-  Wilkinson, G. N. and Rogers, C. E. (1973)
+  Wilkinson, G. N. and Rogers, C. E. (1973).
   Symbolic descriptions of factorial models for analysis of variance.
-  \emph{Applied Statistics}, \bold{22}, 392--9.
+  \emph{Applied Statistics}, \bold{22}, 392--399.
+  \doi{10.2307/2346786}.
 }
 \author{
   The design was inspired by the S function of the same name described

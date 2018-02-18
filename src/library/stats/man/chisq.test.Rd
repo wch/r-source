@@ -1,6 +1,6 @@
 % File src/library/stats/man/chisq.test.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{chisq.test}
@@ -103,17 +103,20 @@ chisq.test(x, y = NULL, correct = TRUE,
 }
 
 \references{
-  Hope, A. C. A. (1968)
+  Hope, A. C. A. (1968).
   A simplified Monte Carlo significance test procedure.
-  \emph{J. Roy, Statist. Soc. B} \bold{30}, 582--598.
+  \emph{Journal of the Royal Statistical Society Series B}, \bold{30},
+  582--598.
+  \url{http://www.jstor.org/stable/2984263}.
 
-  Patefield, W. M. (1981)
-  Algorithm AS159.  An efficient method of generating r x c tables
+  Patefield, W. M. (1981).
+  Algorithm AS 159: An efficient method of generating r x c tables
   with given row and column totals.
-  \emph{Applied Statistics} \bold{30}, 91--97.
+  \emph{Applied Statistics}, \bold{30}, 91--97.
+  \doi{10.2307/2346669}.
 
-  Agresti, A. (2007)
-  \emph{An Introduction to Categorical Data Analysis, 2nd ed.},
+  Agresti, A. (2007).
+  \emph{An Introduction to Categorical Data Analysis}, 2nd ed.
   New York: John Wiley & Sons.
   Page 38.
 }

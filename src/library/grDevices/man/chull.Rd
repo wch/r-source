@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/chull.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{chull}
@@ -30,19 +30,24 @@ chull(x, y = NULL)
   duplicate points.)
 }
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988).
   \emph{The New S Language}.
   Wadsworth & Brooks/Cole.
 
-  Eddy, W. F. (1977) A new convex hull algorithm for planar sets.
+  Eddy, W. F. (1977).
+  A new convex hull algorithm for planar sets.
   \emph{ACM Transactions on Mathematical Software}, \bold{3}, 398--403.
+  \doi{10.1145/355759.355766}.
 
-  Eddy, W. F. (1977) Algorithm 523. CONVEX, A new convex hull
-  algorithm for planar sets[Z]. \emph{ACM Transactions on
-    Mathematical Software}, \bold{3}, 411--412.
+  Eddy, W. F. (1977).
+  Algorithm 523: CONVEX, A new convex hull algorithm for planar sets [Z].
+  \emph{ACM Transactions on Mathematical Software}, \bold{3}, 411--412.
+  \doi{10.1145/355759.355768}.
 }
-\seealso{\code{\link{xy.coords}}, \code{\link{polygon}}}
-
+\seealso{
+  \code{\link{xy.coords}},
+  \code{\link{polygon}}
+}
 \examples{
 X <- matrix(stats::rnorm(2000), ncol = 2)
 chull(X)

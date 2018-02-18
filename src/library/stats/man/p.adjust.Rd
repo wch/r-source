@@ -1,6 +1,6 @@
 % File src/library/stats/man/p.adjust.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{p.adjust}
@@ -69,46 +69,55 @@ p.adjust.methods
   Benjamini, Y., and Hochberg, Y. (1995).
   Controlling the false discovery rate: a practical and powerful
   approach to multiple testing.
-  \emph{Journal of the Royal Statistical Society Series B} \bold{57},
+  \emph{Journal of the Royal Statistical Society Series B}, \bold{57},
   289--300.
+  \url{http://www.jstor.org/stable/2346101}.
 
   Benjamini, Y., and Yekutieli, D. (2001).
   The control of the false discovery rate in multiple testing under
   dependency.
-  \emph{Annals of Statistics} \bold{29}, 1165--1188.
+  \emph{Annals of Statistics}, \bold{29}, 1165--1188.
+  \doi{10.1214/aos/1013699998}.
 
   Holm, S. (1979).
   A simple sequentially rejective multiple test procedure.
-  \emph{Scandinavian Journal of Statistics} \bold{6}, 65--70.
+  \emph{Scandinavian Journal of Statistics}, \bold{6}, 65--70.
+  \url{http://www.jstor.org/stable/4615733}.
 
   Hommel, G. (1988).
   A stagewise rejective multiple test procedure based on a modified
   Bonferroni test.
-  \emph{Biometrika} \bold{75}, 383--386.
+  \emph{Biometrika}, \bold{75}, 383--386.
+  \doi{10.2307/2336190}.
 
   Hochberg, Y. (1988).
   A sharper Bonferroni procedure for multiple tests of significance.
-  \emph{Biometrika} \bold{75}, 800--803.
+  \emph{Biometrika}, \bold{75}, 800--803.
+  \doi{10.2307/2336325}.
 
   Shaffer, J. P. (1995).
   Multiple hypothesis testing.
-  \emph{Annual Review of Psychology} \bold{46}, 561--576.
+  \emph{Annual Review of Psychology}, \bold{46}, 561--576.
+  \doi{10.1146/annurev.ps.46.020195.003021}.
   (An excellent review of the area.)
 
   Sarkar, S. (1998).
   Some probability inequalities for ordered MTP2 random variables: a
   proof of Simes conjecture.
-  \emph{Annals of Statistics} \bold{26}, 494--504.
+  \emph{Annals of Statistics}, \bold{26}, 494--504.
+  \doi{10.1214/aos/1028144846}.
 
   Sarkar, S., and Chang, C. K. (1997).
-  Simes' method for multiple hypothesis testing with positively
+  The Simes method for multiple hypothesis testing with positively
   dependent test statistics.
-  \emph{Journal of the American Statistical Association} \bold{92},
+  \emph{Journal of the American Statistical Association}, \bold{92},
   1601--1608.
+  \doi{10.2307/2965431}.
 
   Wright, S. P. (1992).
   Adjusted P-values for simultaneous inference.
-  \emph{Biometrics} \bold{48}, 1005--1013.
+  \emph{Biometrics}, \bold{48}, 1005--1013.
+  \doi{10.2307/2532694}.
   (Explains the adjusted P-value approach.)
 }
 

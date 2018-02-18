@@ -164,7 +164,9 @@ Sys.junction(from, to)
 
   There are \sQuote{junctions} (or \sQuote{junction points}),
   unfortunately without a public API: a Windows version of the Unix
-  concept of mounting one directory on another. Function
+  concept of mounting one directory on another. A junction can link
+  directories located on the same or different local volumes of the same
+  computer, but cannot link to a network drive. Function
   \code{Sys.junction} creates one or more junctions: \code{to} should
   either specify a single existing directory or a set of non-existent
   file paths of the same length as \code{from}.  (Command

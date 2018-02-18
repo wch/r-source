@@ -1,6 +1,6 @@
 % File src/library/stats/man/optim.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{optim}
@@ -235,24 +235,34 @@ optimHess(par, fn, gr = NULL, \dots, control = list())
   The code for method \code{"SANN"} was contributed by A. Trapletti.
 }
 \references{
-  Belisle, C. J. P. (1992) Convergence theorems for a class of simulated
-  annealing algorithms on \eqn{R^d}{Rd}. \emph{J. Applied Probability},
-  \bold{29}, 885--895.
+  Belisle, C. J. P. (1992).
+  Convergence theorems for a class of simulated annealing algorithms on
+  \eqn{R^d}{Rd}.
+  \emph{Journal of Applied Probability}, \bold{29}, 885--895.
+  \doi{10.2307/3214721}.
 
-  Byrd, R. H., Lu, P., Nocedal, J. and Zhu, C.  (1995) A limited
-  memory algorithm for bound constrained optimization.
-  \emph{SIAM J. Scientific Computing}, \bold{16}, 1190--1208.
+  Byrd, R. H., Lu, P., Nocedal, J. and Zhu, C. (1995).
+  A limited memory algorithm for bound constrained optimization.
+  \emph{SIAM Journal on Scientific Computing}, \bold{16}, 1190--1208.
+  \doi{10.1137/0916069}.
 
-  Fletcher, R. and Reeves, C. M. (1964) Function minimization by
-  conjugate gradients. \emph{Computer Journal} \bold{7}, 148--154.
+  Fletcher, R. and Reeves, C. M. (1964).
+  Function minimization by conjugate gradients.
+  \emph{Computer Journal} \bold{7}, 148--154.
+  \doi{10.1093/comjnl/7.2.149}.
 
-  Nash, J. C. (1990) \emph{Compact Numerical Methods for
-    Computers. Linear Algebra and Function Minimisation.} Adam Hilger.
+  Nash, J. C. (1990).
+  \emph{Compact Numerical Methods for Computers. Linear Algebra and
+    Function Minimisation}.
+  Adam Hilger. 
 
-  Nelder, J. A. and Mead, R. (1965) A simplex algorithm for function
-  minimization. \emph{Computer Journal} \bold{7}, 308--313.
+  Nelder, J. A. and Mead, R. (1965).
+  A simplex algorithm for function minimization.
+  \emph{Computer Journal}, \bold{7}, 308--313.
+  \doi{10.1093/comjnl/7.4.308}.
 
-  Nocedal, J. and Wright, S. J. (1999) \emph{Numerical Optimization}.
+  Nocedal, J. and Wright, S. J. (1999).
+  \emph{Numerical Optimization}.
   Springer.
 }
 

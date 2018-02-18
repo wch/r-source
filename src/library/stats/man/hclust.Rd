@@ -1,6 +1,6 @@
 % File src/library/stats/man/hclust.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{hclust}
@@ -160,7 +160,7 @@ hclust(d, method = "complete", members = NULL)
   \emph{squared} Euclidean distances.
 }
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988).
   \emph{The New S Language}.
   Wadsworth & Brooks/Cole. (S version.)
 
@@ -194,6 +194,7 @@ hclust(d, method = "complete", members = NULL)
   Similarity Analysis by Reciprocal Pairs for Discrete and Continuous
   Data.
   \emph{Educational and Psychological Measurement}, \bold{26}, 825--831.
+  \doi{10.1177/001316446602600402}.
 
   Legendre, P. and L. Legendre (2012).
   \emph{Numerical Ecology},
@@ -202,7 +203,8 @@ hclust(d, method = "complete", members = NULL)
   Murtagh, Fionn and Legendre, Pierre (2014).
   Ward's hierarchical agglomerative clustering method: which algorithms
   implement Ward's criterion?
-  \emph{Journal of Classification} \bold{31} (forthcoming).
+  \emph{Journal of Classification}, \bold{31}, 274--295.
+  \doi{10.1007/s00357-014-9161-z}.
 }
 \author{
   The \code{hclust} function is based on Fortran code

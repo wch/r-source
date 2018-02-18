@@ -897,6 +897,17 @@ SEXP R_UnwindProtect(SEXP (*fun)(void *data), void *data,
     SEXP result;
     Rboolean jump;
 
+    /* Allow simple usage with a NULL continuotion token. This _could_
+       result in a failure in allocation or exceeding the PROTECT
+       stack limit before calling fun(), so fun() and cleanfun should
+       be written accordingly. */
+    if (cont == NULL) {
+	PROTECT(cont = R_MakeUnwindCont());
+	result = R_UnwindProtect(fun, data, cleanfun, cleandata, cont);
+	UNPROTECT(1);
+	return result;
+    }
+
     begincontext(&thiscontext, CTXT_UNWIND, R_NilValue, R_GlobalEnv,
 		 R_BaseEnv, R_NilValue, R_NilValue);
     if (SETJMP(thiscontext.cjmpbuf)) {

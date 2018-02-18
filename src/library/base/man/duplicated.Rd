@@ -70,11 +70,6 @@ anyDuplicated(x, incomparables = FALSE, \dots)
   \code{duplicated(x, fromLast = TRUE)} is equivalent to but faster than
   \code{rev(duplicated(rev(x)))}.
 
-  The data frame method works by pasting together a character
-  representation of the rows separated by \code{\\r}, so may be imperfect
-  if the data frame has characters with embedded carriage returns or
-  columns which do not reliably map to characters.
-
   The array method calculates for each element of the sub-array
   specified by \code{MARGIN} if the remaining dimensions are identical
   to those for an earlier (or later, when \code{fromLast = TRUE}) element
@@ -91,12 +86,6 @@ anyDuplicated(x, incomparables = FALSE, \dots)
   Values in \code{incomparables} will never be marked as duplicated.
   This is intended to be used for a fairly small set of values and will
   not be efficient for a very large set.
-
-  When used on a data frame with more than one column, or an array or
-  matrix when comparing dimensions of length greater than one, this
-  tests for identity of character representations.  This will
-  catch people who unwisely rely on exact equality of floating-point
-  numbers!
 
   Except for factors, logical and raw vectors the default \code{nmax = NA} is
   equivalent to \code{nmax = length(x)}.  Since a hash table of size

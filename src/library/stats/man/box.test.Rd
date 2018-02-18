@@ -1,6 +1,6 @@
 % File src/library/stats/man/box.test.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Box.test}
@@ -48,10 +48,12 @@ Box.test(x, lag = 1, type = c("Box-Pierce", "Ljung-Box"), fitdf = 0)
   moving average time series models.
   \emph{Journal of the American Statistical Association}, \bold{65},
   1509--1526.
+  \doi{10.2307/2284333}.
 
   Ljung, G. M. and Box, G. E. P. (1978),
   On a measure of lack of fit in time series models.
-  \emph{Biometrika} \bold{65}, 297--303.
+  \emph{Biometrika}, \bold{65}, 297--303.
+  \doi{10.2307/2335207}.
 
   Harvey, A. C. (1993)
   \emph{Time Series Models}.

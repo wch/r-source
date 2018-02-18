@@ -1,6 +1,6 @@
 % File src/library/base/man/Bessel.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Bessel}
@@ -71,32 +71,38 @@ besselY(x, nu)
   }
 }
 \references{
-  Abramowitz, M. and Stegun, I. A. (1972)
-  \emph{Handbook of Mathematical Functions.} Dover, New York;
+  Abramowitz, M. and Stegun, I. A. (1972).
+  \emph{Handbook of Mathematical Functions}.
+  Dover, New York;
   Chapter 9: Bessel Functions of Integer Order.
 
   In order of \dQuote{Source} citation above:
 
-  Sockne, David J. (1973)
+  Sockne, David J. (1973).
   Bessel Functions of Real Argument and Integer Order.
-  \emph{NBS Jour. of Res. B.} \bold{77B}, 125--132.
+  \emph{Journal of Research of the National Bureau of Standards},
+  \bold{77B}, 125--132.
 
-  Cody, William J. (1983)
+  Cody, William J. (1983).
   Algorithm 597: Sequence of modified Bessel functions of the first kind.
-  \emph{ACM Transactions on Mathematical Software} \bold{9}(2), 242--245.% TOMS
+  \emph{ACM Transactions on Mathematical Software}, \bold{9}(2), 242--245.
+  \doi{10.1145/357456.357462}.
 
-  Campbell, J.B. (1980)
+  Campbell, J.B. (1980).
   On Temme's algorithm for the modified Bessel function of the third kind.
-  \emph{ACM Transactions on Mathematical Software} \bold{6}(4), 581--586.
-
-  Campbell, J.B. (1979)
+  \emph{ACM Transactions on Mathematical Software}, \bold{6}(4), 581--586.
+  \doi{10.1145/355921.355928}.
+  
+  Campbell, J.B. (1979).
   Bessel functions J_nu(x) and Y_nu(x) of float order and float argument.
-  \emph{Comp. Phy. Comm.} \bold{18}, 133--142.
+  \emph{Computer Physics Communications}, \bold{18}, 133--142.
+  \doi{10.1016/0010-4655(79)90030-4}.
 
-  Temme, Nico M. (1976)
-  On the numerical evaluation of the ordinary Bessel function of the second kind.
-  \emph{J. Comput. Phys.} \bold{21}, 343--350.
-
+  Temme, Nico M. (1976).
+  On the numerical evaluation of the ordinary Bessel function of the
+  second kind.
+  \emph{Journal of Computational Physics}, \bold{21}, 343--350.
+  \doi{10.1016/0021-9991(76)90032-2}.
 }
 \seealso{
   Other special mathematical functions, such as

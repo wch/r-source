@@ -1,6 +1,6 @@
 % File src/library/datasets/man/ability.cov.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ability.cov}
@@ -28,16 +28,20 @@
 }
 \usage{ability.cov}
 \source{
-  Bartholomew, D. J. (1987) \emph{Latent Variable Analysis and Factor
-    Analysis.} Griffin.
+  Bartholomew, D. J. (1987).
+  \emph{Latent Variable Analysis and Factor Analysis}.
+  Griffin.
 
-  Bartholomew, D. J.  and Knott, M. (1990) \emph{Latent Variable Analysis
-    and Factor Analysis.} Second Edition, Arnold.
+  Bartholomew, D. J. and Knott, M. (1990).
+  \emph{Latent Variable Analysis and Factor Analysis}.
+  Second Edition, Arnold.
 }
 \references{
-  Smith, G. A. and Stanley G. (1983)
+  Smith, G. A. and Stanley G. (1983).
   Clocking \eqn{g}: relating intelligence and measures of timed
-  performance. \emph{Intelligence}, \bold{7}, 353--368.
+  performance.
+  \emph{Intelligence}, \bold{7}, 353--368.
+  \doi{10.1016/0160-2896(83)90010-7}.
 }
 \examples{\donttest{
 require(stats)

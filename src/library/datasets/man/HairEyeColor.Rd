@@ -1,6 +1,6 @@
 % File src/library/datasets/man/HairEyeColor.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{HairEyeColor}
@@ -40,24 +40,25 @@
   changed to agree with that used by Friendly (2000).
 }
 \references{
-  Snee, R. D. (1974)
+  Snee, R. D. (1974).
   Graphical display of two-way contingency tables.
   \emph{The American Statistician}, \bold{28}, 9--12.
+  \doi{10.2307/2683520}.
 
-  Friendly, M. (1992a)
+  Friendly, M. (1992a).
   Graphical methods for categorical data.
   \emph{SAS User Group International Conference Proceedings}, \bold{17},
   190--200.
   \url{http://www.math.yorku.ca/SCS/sugi/sugi17-paper.html}
 
-  Friendly, M. (1992b)
+  Friendly, M. (1992b).
   Mosaic displays for loglinear models.
   \emph{Proceedings of the Statistical Graphics Section},
   American Statistical Association, pp.\sspace{}61--68.
   \url{http://www.math.yorku.ca/SCS/Papers/asa92.html}
 
-  Friendly, M. (2000)
-  \emph{Visualizing Categorical Data.}
+  Friendly, M. (2000).
+  \emph{Visualizing Categorical Data}.
   SAS Institute, ISBN 1-58025-660-0.
 }
 \seealso{

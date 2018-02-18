@@ -1,6 +1,6 @@
 % File src/library/base/man/zMachine.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{.Machine}
@@ -116,9 +116,10 @@
   R Core Team to defeat over-optimization in recent compilers.
 }
 \references{
-  Cody, W. J. (1988)
+  Cody, W. J. (1988).
   MACHAR: A subroutine to dynamically determine machine parameters.
-  \emph{Transactions on Mathematical Software}, \bold{14}, 4, 303--311.
+  \emph{Transactions on Mathematical Software}, \bold{14}(4), 303--311.
+  \doi{10.1145/50063.51907}.
 }
 \seealso{
   \code{\link{.Platform}} for details of the platform.

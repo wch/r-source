@@ -1,6 +1,6 @@
 % File src/library/stats/man/prop.test.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{prop.test}
@@ -98,17 +98,23 @@ prop.test(x, n, p = NULL,
   \item{data.name}{a character string giving the names of the data.}
 }
 \references{
-  Wilson, E.B. (1927) Probable inference, the law of succession, and
-  statistical inference.
-  \emph{J. Am. Stat. Assoc.}, \bold{22}, 209--212.
+  Wilson, E.B. (1927).
+  Probable inference, the law of succession, and statistical inference.
+  \emph{Journal of the American Statistical Association}, \bold{22},
+  209--212.
+  \doi{10.2307/2276774}.
 
-  Newcombe R.G. (1998) Two-Sided Confidence Intervals for the Single
-  Proportion: Comparison of Seven Methods.
-  \emph{Statistics in Medicine} \bold{17}, 857--872.
+  Newcombe R.G. (1998).
+  Two-Sided Confidence Intervals for the Single Proportion: Comparison
+  of Seven Methods.
+  \emph{Statistics in Medicine}, \bold{17}, 857--872.
+  \doi{10.1002/(SICI)1097-0258(19980430)17:8<857::AID-SIM777>3.0.CO;2-E}.
 
-  Newcombe R.G. (1998) Interval Estimation for the Difference Between
-  Independent Proportions: Comparison of Eleven Methods.
-  \emph{Statistics in Medicine} \bold{17}, 873--890.
+  Newcombe R.G. (1998).
+  Interval Estimation for the Difference Between Independent
+  Proportions: Comparison of Eleven Methods.
+  \emph{Statistics in Medicine}, \bold{17}, 873--890.
+  \doi{10.1002/(SICI)1097-0258(19980430)17:8<873::AID-SIM779>3.0.CO;2-I}.
 }
 \seealso{\code{\link{binom.test}} for an \emph{exact} test of a binomial
   hypothesis.}

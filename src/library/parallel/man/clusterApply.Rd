@@ -1,6 +1,6 @@
 % File src/library/parallel/man/clusterApply.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2003-2014 R Core Team
+% Copyright 2003-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{clusterApply}
@@ -78,14 +78,14 @@ parSapplyLB(cl = NULL, X, FUN, ..., simplify = TRUE,
   convenience function invoking \code{clusterCall}.
 
   \code{clusterApply} calls \code{fun} on the first node with
-  arguments \code{seq[[1]]} and \code{...}, on the second node with
-  \code{seq[[2]]} and \code{...}, and so on, recycling nodes as needed.
+  arguments \code{x[[1]]} and \code{...}, on the second node with
+  \code{x[[2]]} and \code{...}, and so on, recycling nodes as needed.
 
   \code{clusterApplyLB} is a load balancing version of
-  \code{clusterApply}.  If the length \code{p} of \code{seq} is not
-  greater than the number of nodes \code{n}, then a job is sent to
-  \code{p} nodes.  Otherwise the first \code{n} jobs are placed in order
-  on the \code{n} nodes.  When the first job completes, the next job is
+  \code{clusterApply}.  If the length \code{n} of \code{x} is not
+  greater than the number of nodes \code{p}, then a job is sent to
+  \code{n} nodes.  Otherwise the first \code{p} jobs are placed in order
+  on the \code{p} nodes.  When the first job completes, the next job is
   placed on the node that has become free; this continues until all jobs
   are complete.  Using \code{clusterApplyLB} can result in better
   cluster utilization than using \code{clusterApply}, but increased
@@ -129,7 +129,7 @@ parSapplyLB(cl = NULL, X, FUN, ..., simplify = TRUE,
   list with one element per node.
 
   For \code{clusterApply} and \code{clusterApplyLB}, a list the same
-  length as \code{seq}.
+  length as \code{x}.
 
   \code{clusterMap} follows \code{\link{mapply}}.
 

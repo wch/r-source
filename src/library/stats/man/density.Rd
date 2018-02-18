@@ -1,6 +1,6 @@
 % File src/library/stats/man/density.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{density}
@@ -130,24 +130,26 @@ density(x, \dots)
   \code{x} and \code{y} components.
 }
 \references{
-  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988).
   \emph{The New S Language}.
   Wadsworth & Brooks/Cole (for S version).
 
-  Scott, D. W. (1992)
+  Scott, D. W. (1992).
   \emph{Multivariate Density Estimation. Theory, Practice and Visualization}.
   New York: Wiley.
 
-  Sheather, S. J. and Jones M. C. (1991)
+  Sheather, S. J. and Jones, M. C. (1991).
   A reliable data-based bandwidth selection method for kernel density
   estimation.
-  \emph{J. Roy. Statist. Soc.} \bold{B}, 683--690.
+  \emph{Journal of the Royal Statistical Society series B},
+  \bold{53}, 683--690.
+  \url{http://www.jstor.org/stable/2345597}.
 
-  Silverman, B. W. (1986)
+  Silverman, B. W. (1986).
   \emph{Density Estimation}.
   London: Chapman and Hall.
 
-  Venables, W. N. and Ripley, B. D. (2002)
+  Venables, W. N. and Ripley, B. D. (2002).
   \emph{Modern Applied Statistics with S}.
   New York: Springer.
 }

@@ -1,6 +1,6 @@
 % File src/library/stats/man/plot.lm.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{plot.lm}
@@ -105,22 +105,27 @@
   labelled with the magnitudes.
 }
 \references{
-  Belsley, D. A., Kuh, E. and Welsch, R. E. (1980)
-  \emph{Regression Diagnostics.}  New York: Wiley.
+  Belsley, D. A., Kuh, E. and Welsch, R. E. (1980).
+  \emph{Regression Diagnostics}.
+  New York: Wiley.
 
-  Cook, R. D. and Weisberg, S. (1982)
-  \emph{Residuals and Influence in Regression.}
+  Cook, R. D. and Weisberg, S. (1982).
+  \emph{Residuals and Influence in Regression}.
   London: Chapman and Hall.
 
-  Firth, D. (1991) Generalized Linear Models.  In Hinkley, D. V. and
-  Reid, N. and Snell, E. J., eds: Pp.\sspace{}55-82 in Statistical Theory and
-  Modelling. In Honour of Sir David Cox, FRS.  London: Chapman and Hall.
+  Firth, D. (1991) Generalized Linear Models.
+  In Hinkley, D. V. and Reid, N. and Snell, E. J., eds:
+  Pp.\sspace{}55-82 in Statistical Theory and Modelling.
+  In Honour of Sir David Cox, FRS.
+  London: Chapman and Hall.
 
-  Hinkley, D. V. (1975) On power transformations to
-  symmetry. \emph{Biometrika} \bold{62}, 101--111.
+  Hinkley, D. V. (1975).
+  On power transformations to symmetry.
+  \emph{Biometrika}, \bold{62}, 101--111.
+  \doi{10.2307/2334491}.
 
-  McCullagh, P. and Nelder, J. A. (1989)
-  \emph{Generalized Linear Models.}
+  McCullagh, P. and Nelder, J. A. (1989).
+  \emph{Generalized Linear Models}.
   London: Chapman and Hall.
 }
 \author{

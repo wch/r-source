@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/boxplot.stats.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{boxplot.stats}
@@ -62,23 +62,32 @@ boxplot.stats(x, coef = 1.5, do.conf = TRUE, do.out = TRUE)
   interval for the difference in two medians.
 }
 \references{
-  Tukey, J. W. (1977) \emph{Exploratory Data Analysis.} Section 2C.
+  Tukey, J. W. (1977).
+  \emph{Exploratory Data Analysis}.
+  Section 2C.
 
-  McGill, R., Tukey, J. W. and Larsen, W. A. (1978) Variations of box
-  plots. \emph{The American Statistician} \bold{32}, 12--16.
+  McGill, R., Tukey, J. W. and Larsen, W. A. (1978).
+  Variations of box plots.
+  \emph{The American Statistician}, \bold{32}, 12--16.
+  \doi{10.2307/2683468}.
 
-  Velleman, P. F. and Hoaglin, D. C. (1981) \emph{Applications, Basics
-    and Computing of Exploratory Data Analysis.}  Duxbury Press.
+  Velleman, P. F. and Hoaglin, D. C. (1981).
+  \emph{Applications, Basics and Computing of Exploratory Data Analysis}.
+  Duxbury Press.
 
-  Emerson, J. D and Strenio, J. (1983). Boxplots and batch comparison.
+  Emerson, J. D and Strenio, J. (1983).
+  Boxplots and batch comparison.
   Chapter 3 of \emph{Understanding Robust and Exploratory Data
     Analysis}, eds. D. C. Hoaglin, F. Mosteller and J. W. Tukey.  Wiley.
 
-  Chambers, J. M., Cleveland, W. S., Kleiner, B. and Tukey, P. A. (1983)
-  \emph{Graphical Methods for Data Analysis.}  Wadsworth & Brooks/Cole.
+  Chambers, J. M., Cleveland, W. S., Kleiner, B. and Tukey, P. A. (1983).
+  \emph{Graphical Methods for Data Analysis}.
+  Wadsworth & Brooks/Cole.
 }
 \seealso{
-  \code{\link{fivenum}}, \code{\link{boxplot}}, \code{\link{bxp}}.
+  \code{\link{fivenum}},
+  \code{\link{boxplot}},
+  \code{\link{bxp}}.
 }
 \examples{
 require(stats)
