@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2016  The R Core Team
+ *  Copyright (C) 1997--2018  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Pulic License as published by
@@ -254,7 +254,7 @@ SEXP attribute_hidden do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
     int *s_ = INTEGER(s);
     for (R_xlen_t i = 0; i < len; i++) {
 	SEXP sxi = STRING_ELT(x, i);
-	char msg_i[20]; sprintf(msg_i, "element %ld", (long)i+1);
+	char msg_i[30]; sprintf(msg_i, "element %ld", (long)i+1);
 	s_[i] = R_nchar(sxi, type_, allowNA, keepNA, msg_i);
     }
     R_FreeStringBufferL(&cbuff);
