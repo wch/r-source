@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/windows/savePlot.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2008-9 R Core Team
+% Copyright 2008-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{savePlot}
@@ -16,8 +16,7 @@ savePlot(filename = paste("Rplot", type, sep = "."),
 }
 \arguments{
   \item{filename}{filename to save to.}
-  \item{type}{file type: only \code{"png"} will be accepted for cairo
-    version 1.0.}
+  \item{type}{file type.}
   \item{device}{the device to save from.}
 }
 \details{
@@ -30,9 +29,9 @@ savePlot(filename = paste("Rplot", type, sep = "."),
   For devices with buffering this copies the buffer's image surface, so
   works even if \code{\link{dev.hold}} has been called.
 
-  At present the plot is saved after rendering onto the canvas (default
-  opaque white), so for the default \code{bg = "transparent"} the
-  effective background colour is the canvas colour.
+  The plot is saved after rendering onto the canvas (default opaque
+  white), so for the default \code{bg = "transparent"} the effective
+  background colour is the canvas colour.
 }
 \value{
   Invisible \code{NULL}.
@@ -40,7 +39,8 @@ savePlot(filename = paste("Rplot", type, sep = "."),
 
 \note{
   There is a similar function of the same name but more types for
-  \code{windows} devices on Windows.
+  \code{windows} devices on Windows: that has an additional argument
+  \code{restoreConsole} which is only supported on Windows.
 }
 
 \seealso{
