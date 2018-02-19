@@ -4205,7 +4205,10 @@ add_dummies <- function(dir, Log)
                              ## Solaris cc has
                              "Warning: # *warning",
                              # these are from era of static HTML
-                             "missing links?:")
+                             "missing links?:",
+                             ## From the byte compiler's 'warn' methods
+                             "^Note: possible error in"
+                             )
                 ## Warnings spotted by gcc with
                 ##   '-Wimplicit-function-declaration'
                 ## which is implied by '-Wall'.
