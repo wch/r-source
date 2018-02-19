@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/windows/savePlot.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2009 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{savePlot}
@@ -21,7 +21,8 @@ savePlot(filename = "Rplot",
   \item{device}{A device number of a \code{windows} device, by default
     the current device.}
   \item{restoreConsole}{See the \sQuote{Details} section
-    of \code{\link{windows}}.}
+    of \code{\link{windows}}.  Do not use this in programming without
+    first checking that the platform is Windows.}
 }
 \description{
   Saves the current plot on a \code{windows} device to a file.
@@ -52,7 +53,8 @@ savePlot(filename = "Rplot",
 
 \note{
   There is a similar function of the same name but fewer types for
-  cairo-based \code{X11} devices on Unix-alikes
+  cairo-based \code{X11} devices on Unix-alikes, and without the
+  \code{restoreConsole} argument.
 }
 
 \seealso{
