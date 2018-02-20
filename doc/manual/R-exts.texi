@@ -12471,7 +12471,7 @@ to create marked character strings of a given length.
 
 @menu
 * Memory allocation::           
-* Error handling::              
+* Error signaling::              
 * Random numbers::              
 * Missing and IEEE values::     
 * Printing::                    
@@ -12547,7 +12547,7 @@ Entry points that are where possible (Windows and some modern Unix-alike
 compilers/loaders when using @R{} as a shared library) not exported.
 @end table
 
-@node Memory allocation, Error handling, The R API, The R API
+@node Memory allocation, Error signaling, The R API, The R API
 @section Memory allocation
 @cindex Memory allocation from C
 
@@ -12655,7 +12655,7 @@ never from front-ends.  They are not thread-safe.
 @findex Free
 
 The other form of memory allocation is an interface to @code{malloc},
-the interface providing @R{} error handling.  This memory lasts until
+the interface providing @R{} error signaling.  This memory lasts until
 freed by the user and is additional to the memory allocated for the @R{}
 workspace.
 
@@ -12692,11 +12692,11 @@ These entry points need to be prefixed by @code{R_} if
 @code{STRICT_R_HEADERS} has been defined.
 
 
-@node Error handling, Random numbers, Memory allocation, The R API
-@section Error handling
-@cindex Error handling from C
+@node Error signaling, Random numbers, Memory allocation, The R API
+@section Error signaling
+@cindex Error signaling from C
 
-The basic error handling routines are the equivalents of @code{stop} and
+The basic error signaling routines are the equivalents of @code{stop} and
 @code{warning} in @R{} code, and use the same interface.
 
 @example
@@ -12730,12 +12730,12 @@ the last two being the forms available in all @Sl{} versions.  Here
 or a format string followed by arguments separated by commas.
 
 @menu
-* Error handling from FORTRAN::  
+* Error signaling from FORTRAN::  
 @end menu
 
-@node Error handling from FORTRAN,  , Error handling, Error handling
-@subsection Error handling from FORTRAN
-@cindex Error handling from FORTRAN
+@node Error signaling from FORTRAN,  , Error signaling, Error signaling
+@subsection Error signaling from FORTRAN
+@cindex Error signaling from FORTRAN
 
 There are two interface function provided to call @code{error} and
 @code{warning} from FORTRAN code, in each case with a simple character
@@ -12751,7 +12751,7 @@ subroutine rwarn(@var{message})
 Messages of more than 255 characters are truncated, with a warning.
 
 
-@node Random numbers, Missing and IEEE values, Error handling, The R API
+@node Random numbers, Missing and IEEE values, Error signaling, The R API
 @section Random number generation
 @cindex Random numbers in C
 @findex unif_rand
@@ -13775,7 +13775,7 @@ subroutine rchkusr()
 @end example
 
 These check if the user has requested an interrupt, and if so branch to
-@R{}'s error handling functions.
+@R{}'s error signaling functions.
 
 Note that it is possible that the code behind one of the entry points
 defined here if called from your C or FORTRAN code could be interruptible
@@ -14035,7 +14035,7 @@ The following headers are included by @file{R.h}:
 @item @file{R_ext/Boolean.h} @tab @code{TRUE}/@code{FALSE} type
 @item @file{R_ext/Complex.h} @tab C typedefs for @R{}'s @code{complex}
 @item @file{R_ext/Constants.h} @tab constants
-@item @file{R_ext/Error.h} @tab error handling
+@item @file{R_ext/Error.h} @tab error signaling
 @item @file{R_ext/Memory.h} @tab memory allocation
 @item @file{R_ext/Print.h} @tab @code{Rprintf} and variations.
 @item @file{R_ext/RS.h} @tab definitions common to @file{R.h} and
