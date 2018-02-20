@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2014   R Core Team
+ *  Copyright (C) 1997-2018   R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -61,6 +61,7 @@ stem_leaf(double *x, int n, double scale, int width, double atom)
 	return FALSE;
 
     Rprintf("\n");
+    mu = 10;
     if(x[n-1] > x[0]) {
 	r = atom + (x[n-1] - x[0])/scale;
 	// this needs to be exact: exp10 in glibc is not accurate
@@ -78,14 +79,8 @@ stem_leaf(double *x, int n, double scale, int width, double atom)
     } else {
 	r = atom + fabs(x[0])/scale;
 	c = R_pow_di(10.0, (int)(1.0 - floor(log10(r))));
-	k = 2; // not important what
     }
     
-    mu = 10;
-    if (k*(k-4)*(k-8) == 0) mu = 5;
-    if ((k-1)*(k-5)*(k-6) == 0) mu = 20;
-
-
     /* Find the print width of the stem. */
 
     lo = floor(x[0]*c/mu)*mu;
