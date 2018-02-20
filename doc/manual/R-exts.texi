@@ -12481,6 +12481,7 @@ to create marked character strings of a given length.
 * Integration::                 
 * Utility functions::           
 * Re-encoding::                 
+* Condition handling and cleanup code::
 * Allowing interrupts::         
 * Platform and version information::  
 * Inlining C functions::        
@@ -13720,7 +13721,7 @@ the original functions by Fox, Hall and Schryer on NetLib at
 @uref{http://www.netlib.org/slatec/src/} for IEC 60559 arithmetic
 (required by @R{}).
 
-@node Re-encoding, Allowing interrupts, Utility functions, The R API
+@node Re-encoding, Condition handling and cleanup code, Utility functions, The R API
 @section Re-encoding
 
 @R{} has its own C-level interface to the encoding conversion
@@ -13753,7 +13754,78 @@ input does not end with a complete multi-byte character).
 Free the resources of an encoding object.
 
 
-@node Allowing interrupts, Platform and version information, Re-encoding, The R API
+@node Condition handling and cleanup code, Allowing interrupts, Re-encoding, The R API
+@section Condition handling and cleanup code
+@cindex Condition handling
+@cindex Cleanup code
+@cindex Error handling
+
+Two functions are available for establishing condition handlers from
+within C code:
+
+@example
+#include <Rinternals.h>
+
+SEXP R_tryCatchError(SEXP (*fun)(void *data), void *data,
+		     SEXP (*hndlr)(SEXP cond, void *hdata), void *hdata);
+
+SEXP R_tryCatch(SEXP (*fun)(void *data), void *data,
+		SEXP,
+		SEXP (*hndlr)(SEXP cond, void *hdata), void *hdata,
+		void (*clean)(void *cdata), void *cdata);
+@end example
+
+@code{R_tryCatchError} establishes an exiting handler for conditions
+inheriting form class @code{error}.
+
+@code{R_tryCatch} can be used to establish a handler for other
+conditions and to register a cleanup action. The conditions to be
+handled are specified as a character vector (@code{STRSXP}).
+A @code{NULL} pointer can be passed as @code{fun} or @code{clean}
+if condition handling or cleanup are not needed.
+
+These are currently implemented using the R-level @code{tryCatch}
+mechanism so are subject to some overhead.
+
+The function @code{R_UnwindProtect} can be used to ensure that a cleanup
+action takes place on ordinary return as well as on a non-local transfer
+of control, which R implements as a @code{longjmp}.
+
+@example
+SEXP R_UnwindProtect(SEXP (*fun)(void *data), void *data,
+                     void (*clean)(void *data, Rboolean jump), void *cdata,
+                     SEXP cont);
+@end example
+
+@code{R_UnwindProtect} can be used in two ways.  The simper usage,
+suitable for use in C code, passes @code{NULL} for the @code{cont}
+argument.  @code{R_UnwindProtect} will call @code{fun(data)}.  If
+@code{fun} returns a value, then @code{R_UnwindProtect} calls
+@code{clean(cleandata, FALSE)} before returning the value returned by
+@code{fun}. If @code{fun} executes a non-local transfer of control, then
+@code{clean(cleandata, TRUE)} is called, and the non-local transfer of
+control is resumed.
+
+The second use pattern, suitable to support C++ stack unwinding, uses
+two additional functions:
+
+@example
+SEXP R_MakeUnwindCont();
+void NORET R_ContinueUnwind(SEXP cont);
+@end example
+
+@code{R_MakeUnwindCont} allocates a @emph{continuation token}
+@code{cont} to pass to @code{R_UnwindProtect}. This token should be
+protected with @code{PROTECT} before calling
+@code{R_UnwindProtect}. When the @code{clean} function is called with
+@code{jump == TRUE}, indicating that R is executing a non-local transfer
+of control, it can throw a C++ exception to a C++ @code{catch} outside
+the C++ code to be unwound, and then use the continuation token in the a
+call @code{R_ContinueUnwind(cont)} to resume the non-local transfer of
+control within R.
+
+
+@node Allowing interrupts, Platform and version information, Condition handling and cleanup code, The R API
 @section Allowing interrupts
 @cindex Interrupts
 

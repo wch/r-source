@@ -385,6 +385,10 @@
       \item The object header layout has been changed to support merging
       the \code{ALTREP} branch. This requires re-installing packages
       that use compiled code.
+
+      \item \sQuote{Writing R Extensions} now documents the
+      \code{R_tryCatch}, \code{R_tryCatchError}, and
+      \code{R_UnwindProtect} functions.      
     }
   }
 
