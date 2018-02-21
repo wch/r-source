@@ -1,6 +1,6 @@
 % File src/library/base/man/Foreign.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{CallExternal}
@@ -39,13 +39,13 @@
   The functions are used to call compiled code which makes use of
   internal \R objects, passing the arguments to the code as a sequence
   of \R objects.  They assume C calling conventions, so can usually
-  also be used of C++ code.
+  also be used for C++ code.
 
   For details about how to write code to use with these functions see
   the chapter on \sQuote{System and foreign language interfaces} in
   the \sQuote{Writing \R Extensions} manual.  They differ in the way the
   arguments are passed to the C code:  \code{.External} allows for a
-  variable number of arguments.
+  variable or unlimited number of arguments.
 
   These functions are \link{primitive}, and \code{.NAME} is always
   matched to the first argument supplied (which should not be named).
