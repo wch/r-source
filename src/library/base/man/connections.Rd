@@ -373,7 +373,7 @@ isIncomplete(con)
   When writing to a text connection, the connections code always assumes its
   input is in native encoding, so e.g.  \code{\link{writeLines}} has to
   convert text to native encoding.  \code{\link{writeLines}} does not do the
-  conversion when \code{useBytes=FALSE} (for expert use only), but the
+  conversion when \code{useBytes=TRUE} (for expert use only), but the
   connections code still behaves as if the text was in native encoding, so
   any attempt to convert encoding (\code{encoding} argument other than
   \code{""} and \code{"native.enc"}) in connections will produce incorrect
