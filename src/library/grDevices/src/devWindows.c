@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2004-2017   The R Core Team
+ *  Copyright (C) 2004-2018   The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
  *  Copyright (C) 2004        The R Foundation
@@ -3641,7 +3641,7 @@ SEXP devga(SEXP args)
 
     vmax = vmaxget();
     args = CDR(args); /* skip entry point name */
-    display = CHAR(STRING_ELT(CAR(args), 0));
+    display = translateChar(STRING_ELT(CAR(args), 0));
     args = CDR(args);
     width = asReal(CAR(args));
     args = CDR(args);
