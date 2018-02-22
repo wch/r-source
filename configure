@@ -35824,6 +35824,10 @@ if test "$ac_res" != no; then :
 
 fi
 
+## -lnsl is needed on Solaris
+## 2018: Sun RPC is being unbundled from glibc, at least in Fedora 28
+## (https://fedoraproject.org/wiki/Changes/SunRPCRemoval)
+## Use libtirpc instead, which has been a possible source since ca 2007
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for library containing xdr_string" >&5
 $as_echo_n "checking for library containing xdr_string... " >&6; }
 if ${ac_cv_search_xdr_string+:} false; then :
