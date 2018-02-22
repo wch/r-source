@@ -1594,7 +1594,26 @@ assert({
     identical(anyDuplicated(dMb), 0L)
 }) # both differing in R <= 3.4.x
 
+## when sep is given, an opening quote may be preceded by non-space
+stopifnot(ncol(read.table(text="=\"Total\t\"\t1\n",sep="\t")) == 2)
+stopifnot(length(scan(what=list("foo",1), text="=\"Total\t\"\t1\n",sep="\t")) == 2)
 
+## in 3.4.x, read.table failed on this
+stopifnot(ncol(read.table(text="=\"CJ01 \"\t550\n",sep="\t"))==2)
+stopifnot(length(scan(what=list("foo",1), text="=\"CJ01 \"\t550\n",sep="\t")) == 2)
+
+## when no sep is given, quotes preceded by non-space have no special
+## meaning and are retained (related to PR#15245)
+stopifnot(read.table(text="HO5\'\'\tH")[1,1] == "HO5\'\'")
+stopifnot(read.table(text="HO5\'\tH")[1,1] == "HO5\'")
+stopifnot(scan(what=list("foo","foo"),text="HO5\'\'\tH")[[1]] == "HO5\'\'")
+stopifnot(scan(what=list("foo","foo"),text="HO5\'\tH")[[1]] == "HO5\'")
+
+## when no sep is given, there does not have to be a separator between
+## quoted entries; testing here to ensure read.table and scan agree,
+## but without claiming this particular behavior is needed
+stopifnot(read.table(text="\"A\"\" B \"")$V2 == " B ")
+stopifnot(scan(what=list("foo","foo"),text="\"A\"\" B \"")[[2]] == " B ")
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

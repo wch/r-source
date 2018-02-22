@@ -578,6 +578,10 @@
       \item Calling \code{names()} on an S4 object derived from
       \code{"environment"} behaves (by default) like calling
       \code{names()} on an ordinary environment.
+
+      \item \code{read.table()} with non-default separator now supports
+      quotes following a non-whitespace, matching the behavior of
+      \code{scan()}.
     }
   }
 }
