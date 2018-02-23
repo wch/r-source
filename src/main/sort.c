@@ -182,9 +182,10 @@ SEXP attribute_hidden do_isunsorted(SEXP call, SEXP op, SEXP args, SEXP rho)
       hopefully someday it will work for descending too */
     
     if(!asLogical(CADR(args))) { /*not strict since we don't memoize that */
-	if(sorted == KNOWN_INCR)
+	if(KNOWN_INCR(sorted))
 	    return ScalarLogical(FALSE);
-	else if( sorted == KNOWN_DECR || sorted == KNOWN_UNSORTED)
+	/* is.unsorted returns TRUE for vectors sorted in descending order */
+	else if( KNOWN_DECR(sorted) || sorted == KNOWN_UNSORTED)
 	    return ScalarLogical(TRUE);
     }
 		
@@ -334,6 +335,9 @@ void revsort(double *a, int *ib, int n)
     }
 }
 
+/* ALTREP sortedness fastpass now occurs before this primitive is called, so
+   no special-casing required here as it's currently factored. */
+
 SEXP attribute_hidden do_sort(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans;
@@ -353,35 +357,6 @@ SEXP attribute_hidden do_sort(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* we need consistent behaviour here, including dropping attibutes,
        so as from 2.3.0 we always duplicate. */
     int nprot = 0;
-    SEXP x = PROTECT(CAR(args)); nprot++;   
-    if(ALTREP(x)) {
-	int sorted = UNKNOWN_SORTEDNESS;
-	switch(TYPEOF(x)) {
-	case INTSXP:
-	    sorted = INTEGER_IS_SORTED(x);
-	    break;
-	case REALSXP:
-	    sorted = REAL_IS_SORTED(x);
-	    break;
-	default:
-	    break;
-	}
-	if((decreasing && sorted == KNOWN_DECR) ||
-	   (!decreasing && sorted == KNOWN_INCR)) {
-	    if (ATTRIB(x) == R_NilValue)
-		ans = x;
-	    else {
-		/* instead of duplicating we could create a no-atrbute
-		   wrapper */
-		PROTECT(ans = ALTREP_DUPLICATE_EX(x, FALSE)); nprot++;
-		SET_ATTRIB(ans, R_NilValue);
-		if (OBJECT(ans)) SET_OBJECT(ans, 0);
-		if (IS_S4_OBJECT(ans)) UNSET_S4_OBJECT(ans);
-	    }
-	    UNPROTECT(nprot);
-	    return ans;
-	}
-    }
     PROTECT(ans = duplicate(CAR(args))); nprot++;
     SET_ATTRIB(ans, R_NilValue);  /* this is never called with names */
     SET_OBJECT(ans, 0);		  /* we may have just stripped off the class */
@@ -390,6 +365,53 @@ SEXP attribute_hidden do_sort(SEXP call, SEXP op, SEXP args, SEXP rho)
     return(ans); /* wrapping with metadata happens at end of sort.int */
 }
 
+
+
+Rboolean fastpass_sortcheck(SEXP x, int wanted) {
+    int sorted = UNKNOWN_SORTEDNESS;
+    if(!KNOWN_SORTED(wanted)) 
+	return FALSE;
+    
+    Rboolean noNA, done = FALSE;
+    
+    switch(TYPEOF(x)) {
+    case INTSXP:
+	sorted = INTEGER_IS_SORTED(x);
+	noNA = INTEGER_NO_NA(x);
+	break;
+    case REALSXP:
+	sorted = REAL_IS_SORTED(x);
+	noNA = REAL_NO_NA(x);
+	break;
+    default:
+	/* keep sorted == UNKNOWN_SORTEDNESS */
+	break;
+    }
+    /* we know wanted is not NA_INTEGER or 0 at this point because
+       of the immediate return at the beginning for that case */
+    if(!KNOWN_SORTED(sorted)) {
+	done = FALSE;
+    } else if(sorted == wanted) {   
+	done = TRUE;
+	/* if there are no NAs, na.last can be ignored */
+    } else if(noNA && sorted * wanted > 0) { /* same sign, thus same direction of sort */
+	done = TRUE;
+    }
+    return done;
+}
+
+
+SEXP attribute_hidden do_sorted_fpass(SEXP call, SEXP op, SEXP args, SEXP rho) {
+    int wanted; 
+
+    checkArity(op, args);
+
+    wanted = asInteger(CADR(args));
+    SEXP x = PROTECT(CAR(args)); 
+    Rboolean wassorted = fastpass_sortcheck(x, wanted);
+    UNPROTECT(1);
+    return ScalarLogical(wassorted);
+}
 /* faster versions of shellsort, following Sedgewick (1986) */
 
 /* c(1, 4^k +3*2^(k-1)+1) */

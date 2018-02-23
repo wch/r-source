@@ -1045,27 +1045,27 @@ SEXP attribute_hidden do_match(SEXP call, SEXP op, SEXP args, SEXP env)
     int nomatch = asInteger(CADDR(args)), nprot=0;
     SEXP incomp = CADDDR(args);
     SEXP incomp2;
-    if(ALTREP(CADR(args)) && !OBJECT(CADR(args)) && !OBJECT(CAR(args))) {
-	if (isNull(incomp) || /* S has FALSE to mean empty */
-	    (length(incomp) == 1 && isLogical(incomp) && LOGICAL(incomp)[0] == 0))
-	    incomp2 = NULL;
-	else {
-	    PROTECT(incomp2 = incomp); nprot++;
-	}
-	SEXP ans = NULL;
-	if(TYPEOF(CADR(args)) == INTSXP)
-	    ans = ALTINTEGER_MATCH(CADR(args), CAR(args), nomatch,
-				   incomp2, env, TRUE);
-	else if(TYPEOF(CADR(args)) == REALSXP)
-	    ans = ALTREAL_MATCH(CADR(args), CAR(args), nomatch,
-				   incomp2, env, TRUE);
+    /* if(ALTREP(CADR(args)) && !OBJECT(CADR(args)) && !OBJECT(CAR(args))) { */
+    /* 	if (isNull(incomp) || /\* S has FALSE to mean empty *\/ */
+    /* 	    (length(incomp) == 1 && isLogical(incomp) && LOGICAL(incomp)[0] == 0)) */
+    /* 	    incomp2 = NULL; */
+    /* 	else { */
+    /* 	    PROTECT(incomp2 = incomp); nprot++; */
+    /* 	} */
+    /* 	SEXP ans = NULL; */
+    /* 	if(TYPEOF(CADR(args)) == INTSXP) */
+    /* 	    ans = ALTINTEGER_MATCH(CADR(args), CAR(args), nomatch, */
+    /* 				   incomp2, env, TRUE); */
+    /* 	else if(TYPEOF(CADR(args)) == REALSXP) */
+    /* 	    ans = ALTREAL_MATCH(CADR(args), CAR(args), nomatch, */
+    /* 				   incomp2, env, TRUE); */
 
-	if(ans != NULL) {
-	    if(nprot >0) UNPROTECT(nprot);
-	    return ans;
-	}
+    /* 	if(ans != NULL) { */
+    /* 	    if(nprot >0) UNPROTECT(nprot); */
+    /* 	    return ans; */
+    /* 	} */
 	
-    }
+    /* } */
   
     if (isNull(incomp) || /* S has FALSE to mean empty */
 	(length(incomp) == 1 && isLogical(incomp) &&

@@ -95,8 +95,8 @@ typedef R_xlen_t (*R_altinteger_Which_max_method_t)(SEXP);
 typedef SEXP (*R_altinteger_Match_method_t)(SEXP, SEXP, int, SEXP, SEXP, Rboolean);
 typedef SEXP (*R_altinteger_Unique_method_t)(SEXP);
 typedef SEXP (*R_altinteger_Scalar_compare_mehtod_t)(SEXP, int, Rboolean);
-typedef double (*R_altinteger_Compression_ratio_method_t)(SEXP);
-typedef SEXP (*R_altinteger_As_subscripts_method_t)(SEXP);
+/* typedef double (*R_altinteger_Compression_ratio_method_t)(SEXP); */
+/* typedef SEXP (*R_altinteger_As_subscripts_method_t)(SEXP); */
 
 typedef double (*R_altreal_Elt_method_t)(SEXP, R_xlen_t);
 typedef void (*R_altreal_Set_elt_method_t)(SEXP, R_xlen_t, double);
@@ -116,8 +116,8 @@ typedef R_xlen_t (*R_altreal_Which_max_method_t)(SEXP);
 typedef SEXP (*R_altreal_Match_method_t)(SEXP, SEXP, int, SEXP, SEXP, Rboolean);
 typedef SEXP (*R_altreal_Unique_method_t)(SEXP);
 typedef SEXP (*R_altreal_Scalar_compare_method_t)(SEXP, double, Rboolean);
-typedef double (*R_altreal_Compression_ratio_method_t)(SEXP);
-typedef SEXP (*R_altreal_As_subscripts_method_t)(SEXP);
+/* typedef double (*R_altreal_Compression_ratio_method_t)(SEXP); */
+/* typedef SEXP (*R_altreal_As_subscripts_method_t)(SEXP); */
 
 typedef SEXP (*R_altstring_Elt_method_t)(SEXP, R_xlen_t);
 typedef void (*R_altstring_Set_elt_method_t)(SEXP, R_xlen_t, SEXP);
@@ -157,8 +157,8 @@ DECLARE_METHOD_SETTER(altinteger, Which_min)
 DECLARE_METHOD_SETTER(altinteger, Which_max)
 DECLARE_METHOD_SETTER(altinteger, Match)
 DECLARE_METHOD_SETTER(altinteger, Unique)
-DECLARE_METHOD_SETTER(altinteger, Compression_ratio)
-DECLARE_METHOD_SETTER(altinteger, As_subscripts)
+/* DECLARE_METHOD_SETTER(altinteger, Compression_ratio) */
+/* DECLARE_METHOD_SETTER(altinteger, As_subscripts) */
 
 DECLARE_METHOD_SETTER(altreal, Elt)
 DECLARE_METHOD_SETTER(altreal, Set_elt)
@@ -175,8 +175,8 @@ DECLARE_METHOD_SETTER(altreal, Which_min)
 DECLARE_METHOD_SETTER(altreal, Which_max)
 DECLARE_METHOD_SETTER(altreal, Match)
 DECLARE_METHOD_SETTER(altreal, Unique)
-DECLARE_METHOD_SETTER(altreal, Compression_ratio)
-DECLARE_METHOD_SETTER(altreal, As_subscripts)
+/* DECLARE_METHOD_SETTER(altreal, Compression_ratio) */
+/* DECLARE_METHOD_SETTER(altreal, As_subscripts) */
 
 DECLARE_METHOD_SETTER(altstring, Elt)
 DECLARE_METHOD_SETTER(altstring, Set_elt)
@@ -184,10 +184,23 @@ DECLARE_METHOD_SETTER(altstring, Is_sorted)
 DECLARE_METHOD_SETTER(altstring, No_NA)
 
 /*INT_MIN is NA_INTEGER! */
-enum {KNOWN_DECR = -1,
+enum {SORTED_DECR_NA_1ST = -2,
+      SORTED_DECR = -1,
       UNKNOWN_SORTEDNESS = INT_MIN,
-      KNOWN_INCR = 1,
+      SORTED_INCR = 1,
+      SORTED_INCR_NA_1ST = 2,
       KNOWN_UNSORTED = 0};
-#define KNOWN_SORTED(sorted) (sorted == KNOWN_DECR || sorted == KNOWN_INCR)
+#define KNOWN_SORTED(sorted) (sorted == SORTED_DECR ||			\
+			      sorted == SORTED_INCR ||			\
+			      sorted == SORTED_DECR_NA_1ST ||		\
+			      sorted == SORTED_INCR_NA_1ST)
 
+#define KNOWN_NA_1ST(sorted) (sorted == SORTED_INCR_NA_1ST ||	\
+			      sorted == SORTED_DECR_NA_1ST)
+
+#define KNOWN_INCR(sorted) (sorted == SORTED_INCR ||		\
+			    sorted == SORTED_INCR_NA_1ST)
+
+#define KNOWN_DECR(sorted) (sorted == SORTED_DECR ||	\
+			    sorted == SORTED_DECR_NA_1ST)
 #endif /* R_EXT_ALTREP_H_ */

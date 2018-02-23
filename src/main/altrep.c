@@ -160,10 +160,7 @@ static void SET_ALTREP_CLASS(SEXP x, SEXP class)
     R_altinteger_Which_max_method_t Which_max;				\
     R_altinteger_Match_method_t Match;					\
     R_altinteger_Unique_method_t Unique;				\
-    R_altinteger_Order_method_t Order;					\
-    R_altinteger_As_subscripts_method_t As_subscripts;			\
-    R_altinteger_Compression_ratio_method_t Compression_ratio
-    
+    R_altinteger_Order_method_t Order;					    
 
 #define ALTREAL_METHODS							\
     ALTVEC_METHODS;							\
@@ -181,9 +178,7 @@ static void SET_ALTREP_CLASS(SEXP x, SEXP class)
     R_altreal_Which_max_method_t Which_max;				\
     R_altreal_Match_method_t Match;					\
     R_altreal_Unique_method_t Unique;					\
-    R_altreal_Order_method_t Order;					\
-    R_altreal_As_subscripts_method_t As_subscripts;			\
-    R_altreal_Compression_ratio_method_t Compression_ratio
+    R_altreal_Order_method_t Order;					
 
     
 #define ALTSTRING_METHODS			\
@@ -797,7 +792,7 @@ static SEXP altinteger_Sum_default(SEXP x, Rboolean narm) { return NULL; }
 
 #define ALT_MINMAX(x, TYPE, ALTPREFIX, COMP, DOMAX, NARM, WHICH, NACHK) do { \
 	int sorted = ALTPREFIX##_IS_SORTED(x);				\
-	if(sorted == KNOWN_INCR) {					\
+	if(KNOWN_INCR(sorted)) {					\
 	    if(DOMAX) {							\
 		pos = XLENGTH(x) - 1;					\
 		val = ALTPREFIX##_ELT(x, pos);				\
@@ -810,7 +805,7 @@ static SEXP altinteger_Sum_default(SEXP x, Rboolean narm) { return NULL; }
 		pos = 0;						\
 	    }								\
 	    if(NARM && NACHK(val)) { val = R_NegInf; pos = -1;}		\
-	} else if(sorted == KNOWN_DECR) {			 	\
+	} else if(KNOWN_DECR(sorted)) {					\
 	    if(!DOMAX) {						\
 		pos = XLENGTH(x) - 1;					\
 		val = ALTPREFIX##_ELT(x, pos);				\
@@ -897,32 +892,6 @@ static SEXP altinteger_Order_default(SEXP x) {
 static void altinteger_Set_elt_default(SEXP x, R_xlen_t i, int v) {
     error("altinteger classes must define a specific Set_elt method");
 }
-
-#ifdef DODO
-static SEXP altinteger_As_subscripts_default(SEXP x) {
-    return x;
-}
-#endif
-
-/* right now this returns 1.0, ie we don't know of any compression benefit
-   it could also throw an error and force all classes to implement a method */
-static double altinteger_Compression_ratio_default(SEXP x) {
-    //error("altinteger classes must define a specific Compression_Ratio method");
-    return 1.0;
-}
-
-#ifdef DODO
-static SEXP altinteger_order_default(SEXP x, Rboolean decr, int nalast) {
-    
-    R_xlen_t n = XLENGTH(x);
-    int sorted = INTEGER_IS_SORTED(x);
-    if(sorted == KNOWN_INCR) 
-	return decr ? R_compact_intrange(n, 1) : R_compact_intrange(1, n);
-    else if(sorted == KNOWN_DECR)
-	return decr ? R_compact_intrange(1, n) : R_compact_intrange(n, 1);
-    return NULL;
-}
-#endif
 
 static double altreal_Elt_default(SEXP x, R_xlen_t i) { return REAL(x)[i]; }
 
@@ -1030,13 +999,13 @@ static R_xlen_t altreal_Which_max_default(SEXP x) {
 	cval = tbeltfun(tb, pos);					\
 	while(u > l + 1) {						\
 	    cval = tbeltfun(tb, pos);					\
-	    if(nachk(cval) || (cval > qval && sd == KNOWN_INCR) ||	\
-	       (cval < qval && sd == KNOWN_DECR) ||			\
+	    if(nachk(cval) || (cval > qval && KNOWN_INCR(sd)) ||	\
+	       (cval < qval && KNOWN_DECR(sd)) ||			\
 	       (cval == qval && frst)) {				\
 		/* walk to lower indices, sorted implies na.last */	\
 		    u = pos;						\
-	    } else if((cval < qval && sd == KNOWN_INCR )  ||		\
-		      (cval > qval && sd == KNOWN_DECR ) ||		\
+	    } else if((cval < qval && KNOWN_INCR(sd)) ||		\
+		      (cval > qval && KNOWN_DECR(sd)) ||		\
 		      (cval == qval && !frst)) {			\
 		/*walk to higher indices */				\
 		l = pos;						\
@@ -1228,12 +1197,12 @@ static void altreal_Set_elt_default(SEXP x, R_xlen_t i, double v) {
 static SEXP altreal_As_subscripts_default(SEXP x) {
     return x;
 }
-#endif
+
 
 static double altreal_Compression_ratio_default(SEXP x) {
     error("altreal classes must define a specific Compression_Ratio method");
 }
-
+#endif
 
 static SEXP altstring_Elt_default(SEXP x, R_xlen_t i)
 {
@@ -1280,8 +1249,7 @@ static altinteger_methods_t altinteger_default_methods = {
     .Which_min = altinteger_Which_min_default,
     .Which_max = altinteger_Which_max_default,
     .Match = altinteger_Match_default,
-    .Unique = altinteger_Unique_default,
-    .Compression_ratio = altinteger_Compression_ratio_default
+    .Unique = altinteger_Unique_default
 };
 
 static altreal_methods_t altreal_default_methods = {
@@ -1310,8 +1278,7 @@ static altreal_methods_t altreal_default_methods = {
     .Which_min = altreal_Which_min_default,
     .Which_max = altreal_Which_max_default,
     .Match = altreal_Match_default,
-    .Unique = altreal_Unique_default,
-    .Compression_ratio = altreal_Compression_ratio_default
+    .Unique = altreal_Unique_default
 
 };
 
@@ -1436,8 +1403,8 @@ DEFINE_METHOD_SETTER(altinteger, Which_min)
 DEFINE_METHOD_SETTER(altinteger, Which_max)
 DEFINE_METHOD_SETTER(altinteger, Match)
 DEFINE_METHOD_SETTER(altinteger, Unique)
-DEFINE_METHOD_SETTER(altinteger, As_subscripts)
-DEFINE_METHOD_SETTER(altinteger, Compression_ratio)
+/* DEFINE_METHOD_SETTER(altinteger, As_subscripts) */
+/* DEFINE_METHOD_SETTER(altinteger, Compression_ratio) */
 
 
 
@@ -1459,8 +1426,8 @@ DEFINE_METHOD_SETTER(altstring, Elt)
 DEFINE_METHOD_SETTER(altstring, Set_elt)
 DEFINE_METHOD_SETTER(altstring, Is_sorted)
 DEFINE_METHOD_SETTER(altstring, No_NA)
-DEFINE_METHOD_SETTER(altreal, As_subscripts)
-DEFINE_METHOD_SETTER(altreal, Compression_ratio)
+/* DEFINE_METHOD_SETTER(altreal, As_subscripts) */
+/* DEFINE_METHOD_SETTER(altreal, Compression_ratio) */
 
 
 
@@ -1677,7 +1644,7 @@ static int compact_intseq_Is_sorted(SEXP x)
 	return UNKNOWN_SORTEDNESS;
 #endif
     int inc = COMPACT_INTSEQ_INFO_INCR(COMPACT_SEQ_INFO(x));
-    return inc < 0 ? KNOWN_DECR : KNOWN_INCR;
+    return inc < 0 ? SORTED_DECR : SORTED_INCR;
 }
 
 static int compact_intseq_No_NA(SEXP x)
@@ -2067,7 +2034,7 @@ static int virtrep_intvec_Is_sorted(SEXP x)
 
     /* we could be cleverer here...
        ie check if only one unique value...*/
-    return plen == 1 ? KNOWN_INCR : UNKNOWN_SORTEDNESS;
+    return plen == 1 ? SORTED_INCR : UNKNOWN_SORTEDNESS;
 }
 
 static int virtrep_intvec_No_NA(SEXP x)
@@ -2332,7 +2299,7 @@ static int compact_realseq_Is_sorted(SEXP x)
 	return UNKNOWN_SORTEDNESS;
 #endif
     double inc = COMPACT_REALSEQ_INFO_INCR(COMPACT_SEQ_INFO(x));
-    return inc < 0 ? KNOWN_DECR : KNOWN_INCR;
+    return inc < 0 ? SORTED_DECR : SORTED_INCR;
 }
 
 static int compact_realseq_No_NA(SEXP x)
@@ -2360,17 +2327,17 @@ static SEXP compact_realseq_Sum(SEXP x, Rboolean narm)
 }
 
 
-static double compact_realseq_Compression_ratio(SEXP x) {
-    double ret;
-    if(ALTREP_EXPANDED(x) != R_NilValue)
-	ret = 1.0;
-    else {
-	SEXP info = ALTREP_INFO(x);
-	ret = (double) COMPACT_REALSEQ_INFO_LENGTH(info) / 2.0;
-    }
+/* static double compact_realseq_Compression_ratio(SEXP x) { */
+/*     double ret; */
+/*     if(ALTREP_EXPANDED(x) != R_NilValue) */
+/* 	ret = 1.0; */
+/*     else { */
+/* 	SEXP info = ALTREP_INFO(x); */
+/* 	ret = (double) COMPACT_REALSEQ_INFO_LENGTH(info) / 2.0; */
+/*     } */
 
-    return ret;
-}
+/*     return ret; */
+/* } */
 
 
 /*
@@ -2403,7 +2370,7 @@ static void InitCompactRealClass()
     R_set_altreal_Is_sorted_method(cls, compact_realseq_Is_sorted);
     R_set_altreal_No_NA_method(cls, compact_realseq_No_NA);
     R_set_altreal_Sum_method(cls, compact_realseq_Sum);
-    R_set_altreal_Compression_ratio_method(cls, compact_realseq_Compression_ratio);
+    /* R_set_altreal_Compression_ratio_method(cls, compact_realseq_Compression_ratio); */
 }
 
 
@@ -3801,9 +3768,8 @@ SEXP attribute_hidden do_wrap_meta(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     
     int srt = asInteger(CADR(args));
-    if (srt != KNOWN_INCR && srt != KNOWN_DECR && srt != KNOWN_UNSORTED &&
-	srt != UNKNOWN_SORTEDNESS)
-	error("srt must be -1, 0, or +1, or NA");
+    if (!KNOWN_SORTED(srt) && srt != KNOWN_UNSORTED && srt != UNKNOWN_SORTEDNESS)
+	error("srt must be -2, -1, 0, or +1, +2, or NA");
     
     int no_na = asInteger(CADDR(args));
     if (no_na < 0 || no_na > 1)

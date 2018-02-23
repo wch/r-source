@@ -519,4 +519,9 @@ SEXP do_envprofile(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP do_tracemem(SEXP, SEXP, SEXP, SEXP);
 SEXP do_retracemem(SEXP, SEXP, SEXP, SEXP);
 SEXP do_untracemem(SEXP, SEXP, SEXP, SEXP);
+
+/* ALTREP-related */
+
+SEXP do_sorted_fpass(SEXP, SEXP, SEXP, SEXP);
+
 #endif /* not R_INTERNAL_H */
