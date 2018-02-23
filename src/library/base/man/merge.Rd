@@ -1,6 +1,6 @@
 % File src/library/base/man/merge.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2018 R Core Team
 % Copyright 2002-2016 The R Foundation
 % Distributed under GPL 2 or later
 
@@ -21,7 +21,7 @@ merge(x, y, \dots)
 
 \method{merge}{data.frame}(x, y, by = intersect(names(x), names(y)),
       by.x = by, by.y = by, all = FALSE, all.x = all, all.y = all,
-      sort = TRUE, suffixes = c(".x",".y"),
+      sort = TRUE, suffixes = c(".x",".y"), no.dups = TRUE,
       incomparables = NULL, \dots)
 }
 \arguments{
@@ -43,6 +43,9 @@ merge(x, y, \dots)
   \item{suffixes}{a character vector of length 2 specifying the suffixes
     to be used for making unique the names of columns in the result
     which are not used for merging (appearing in \code{by} etc).}
+  \item{no.dups}{logical indicating that \code{suffixes} are appended in
+    more cases to avoid duplicated column names in the result.  This
+    was implicitly false before \R version 3.5.0.}
   \item{incomparables}{values which cannot be matched.  See
     \code{\link{match}}.  This is intended to be used for merging on one
     column, so these are incomparable values of that column.}
@@ -79,6 +82,10 @@ merge(x, y, \dots)
   names, these have \code{suffixes} (\code{".x"} and \code{".y"} by
   default) appended to try to make the names of the result unique.  If
   this is not possible, an error is thrown.
+
+  If a \code{by.x} column name matches one of \code{y}, and if
+  \code{no.dups} is true (as by default), the y version gets suffixed as
+  well, avoiding duplicate column names in the result.
 
   The complexity of the algorithm used is proportional to the length of
   the answer.
@@ -119,11 +126,12 @@ merge(x, y, \dots)
 }
 
 \examples{
-## use character columns of names to get sensible sort order
 authors <- data.frame(
+    ## I(*) : use character columns of names to get sensible sort order
     surname = I(c("Tukey", "Venables", "Tierney", "Ripley", "McNeil")),
     nationality = c("US", "Australia", "US", "UK", "Australia"),
     deceased = c("yes", rep("no", 4)))
+authorN <- within(authors, { name <- surname; rm(surname) })
 books <- data.frame(
     name = I(c("Tukey", "Venables", "Tierney",
              "Ripley", "Ripley", "McNeil", "R Core")),
@@ -136,14 +144,20 @@ books <- data.frame(
     other.author = c(NA, "Ripley", NA, NA, NA, NA,
                      "Venables & Smith"))
 
+(m0 <- merge(authorN, books))
 (m1 <- merge(authors, books, by.x = "surname", by.y = "name"))
-(m2 <- merge(books, authors, by.x = "name", by.y = "surname"))
-stopifnot(as.character(m1[, 1]) == as.character(m2[, 1]),
-          all.equal(m1[, -1], m2[, -1][ names(m1)[-1] ]),
-          dim(merge(m1, m2, by = integer(0))) == c(36, 10))
+ m2 <- merge(books, authors, by.x = "name", by.y = "surname")
+stopifnot(exprs = {
+   identical(m0, m2[, names(m0)])
+   as.character(m1[, 1]) == as.character(m2[, 1])
+   all.equal(m1[, -1], m2[, -1][ names(m1)[-1] ])
+   identical(dim(merge(m1, m2, by = NULL)),
+             c(nrow(m1)*nrow(m2), ncol(m1)+ncol(m2)))
+})
 
 ## "R core" is missing from authors and appears only here :
 merge(authors, books, by.x = "surname", by.y = "name", all = TRUE)
+
 
 ## example of using 'incomparables'
 x <- data.frame(k1 = c(NA,NA,3,4,5), k2 = c(1,NA,NA,4,5), data = 1:5)

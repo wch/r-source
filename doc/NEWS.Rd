@@ -316,11 +316,15 @@
 
       \item Arithmetic sequences created by \code{1:n},
       \code{seq_along}, and the like now use compact internal
-      representations via the \code{ALTREP} framework.  Coercing Integer
+      representations via the \code{ALTREP} framework.  Coercing integer
       and numeric vectors to character also now uses the \code{ALTREP}
       framework to defer the actual conversion until first use.
 
       \item Finalizers are now run with interrupts suspended.
+
+      \item \code{merge()} gains new option \code{no.dups} and by
+      default suffixes the second of two duplicated column names,
+      thanks to a proposal by Scott Ritchie (and Gabe Becker).
     }
   }
 
