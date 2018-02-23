@@ -648,8 +648,8 @@ SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 
     PROTECT(newcall = duplicate(cptr->call));
 
-    /* eg get("print.ts")(1) */
-    if (TYPEOF(CAR(cptr->call)) == LANGSXP)
+    /* eg get("print.ts")(1) or do.call() */
+    if (TYPEOF(CAR(cptr->call)) != SYMSXP)
        error(_("'NextMethod' called from an anonymous function"));
 
     readS3VarsFromFrame(sysp, &generic, &group, &klass, &method,
