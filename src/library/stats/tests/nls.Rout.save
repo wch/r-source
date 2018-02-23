@@ -1,5 +1,5 @@
 
-R version 3.4.3 Patched (2018-01-01 r74004) -- "Kite-Eating Tree"
+R version 3.4.3 Patched (2018-02-21 r74291) -- "Kite-Eating Tree"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -737,4 +737,4 @@ Consider specifying 'start' or using a selfStart model
 > 
 > proc.time()
    user  system elapsed 
-  3.439   0.092   7.299 
+  1.571   0.052   1.609 

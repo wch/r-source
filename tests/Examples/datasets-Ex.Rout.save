@@ -1,5 +1,5 @@
 
-R version 3.4.3 Patched (2018-01-01 r74004) -- "Kite-Eating Tree"
+R version 3.4.3 Patched (2018-02-21 r74291) -- "Kite-Eating Tree"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -3488,7 +3488,7 @@ c0   -5.14
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  3.799 0.09 4.055 0 0 
+Time elapsed:  2.043 0.074 2.128 0 0 
 > grDevices::dev.off()
 null device 
           1 

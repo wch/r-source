@@ -1,5 +1,5 @@
 
-R version 3.4.3 Patched (2018-01-01 r74004) -- "Kite-Eating Tree"
+R version 3.4.3 Patched (2018-02-21 r74291) -- "Kite-Eating Tree"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -3804,7 +3804,7 @@ sigma^2 estimated as 0.4566:  log likelihood = -101.2,  aic = 212.4
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x4c08a68>
+<environment: 0x56eba00>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -4789,7 +4789,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x367e318>
+<bytecode: 0x62826a0>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -7345,7 +7345,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x566a3b0>
+<environment: 0x6214e98>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -11955,14 +11955,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x59e36c0>
-<environment: 0x59ea1f0>
+<bytecode: 0x656e988>
+<environment: 0x6576110>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x59e3570>
-<environment: 0x59ea1f0>
+<bytecode: 0x656e838>
+<environment: 0x6576110>
 
 > 
 > 
@@ -16073,8 +16073,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f)
-<bytecode: 0x49cb610>
-<environment: 0x57e09a8>
+<bytecode: 0x55250d0>
+<environment: 0x62df858>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -18398,7 +18398,7 @@ Number of Fisher Scoring iterations: 6
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  12.22 0.39 12.952 0 0 
+Time elapsed:  6.431 0.185 6.652 0 0 
 > grDevices::dev.off()
 null device 
           1 

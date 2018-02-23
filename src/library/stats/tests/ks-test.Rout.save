@@ -1,5 +1,5 @@
 
-R version 3.4.3 Patched (2018-01-01 r74004) -- "Kite-Eating Tree"
+R version 3.4.3 Patched (2018-02-21 r74291) -- "Kite-Eating Tree"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -362,4 +362,4 @@ difference in location  3.741417e-05  3.741417e-05  3.741417e-05
 > 
 > proc.time()
    user  system elapsed 
-  0.884   0.048   1.959 
+  0.355   0.036   0.371 
