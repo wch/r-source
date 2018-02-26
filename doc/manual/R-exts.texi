@@ -4620,15 +4620,19 @@ portable, annoyingly so if this is not declared in the
 @command{pandoc}, which is only available for a very limited range of
 platforms (and has onerous requirements to install from source) and has
 capabilities@footnote{For example, the ability to handle @samp{https://}
-URLs, which even the build in some major Linux distributions in 2017 did
-not possess.} that vary by build but are not documented.
-
-An external command can be an optional requirement for an imported
-package but needed for examples or tests in the package itself.  
+URLs, which even the build in some major Linux distributions in 2018 did
+not possess.  Further, Linux and macOS builds from late 2017 with
+@samp{https://} support were unable to download from some sites using or
+redirecting to @samp{https://} URLs.} that vary by build but are not
+documented.
 
 Usage of external commands should always be conditional on a test for
 existence (perhaps using @code{Sys.which}), as well as declared in the
 @samp{SystemRequirements} field.
+
+An external command can be a (possibly optional) requirement for an
+imported or suggested package but needed for examples or tests in the
+package itself.  Such usages should always be declared and conditional.
 
 @item
 Be sure to use portable encoding names: none of @code{utf8}, @code{mac}
