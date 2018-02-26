@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2017  The R Core Team
+ *  Copyright (C) 1997--2018  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -58,22 +58,6 @@ void NORET F77_SYMBOL(rexitc)(char *msg, int *nchar);
 #include <rlocale.h>
 
 /* Many small functions are included from ../include/Rinlinedfuns.h */
-
-attribute_hidden
-Rboolean tsConform(SEXP x, SEXP y)
-{
-    if ((x = getAttrib(x, R_TspSymbol)) != R_NilValue &&
-	(y = getAttrib(y, R_TspSymbol)) != R_NilValue) {
-	/* tspgets should enforce this, but prior to 2.4.0
-	   had INTEGER() here */
-	if(TYPEOF(x) == REALSXP && TYPEOF(y) == REALSXP)
-	    return REAL(x)[0] == REAL(x)[0] &&
-		REAL(x)[1] == REAL(x)[1] &&
-		REAL(x)[2] == REAL(x)[2];
-	/* else fall through */
-    }
-    return FALSE;
-}
 
 int nrows(SEXP s)
 {

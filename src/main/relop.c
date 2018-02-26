@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2017  The R Core Team
+ *  Copyright (C) 1997--2018  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -198,8 +198,7 @@ SEXP attribute_hidden do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
     SEXP klass = NULL, tsp = NULL; // -Wall
     if (xts || yts) {
 	if (xts && yts) {
-	    if (!tsConform(x, y))
-		errorcall(call, _("non-conformable time series"));
+	    /* could check ts conformance here */
 	    PROTECT(tsp = getAttrib(x, R_TspSymbol));
 	    PROTECT(klass = getAttrib(x, R_ClassSymbol));
 	}
