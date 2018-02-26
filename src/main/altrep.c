@@ -744,48 +744,9 @@ static int altinteger_Sort_check_default(SEXP x) {
 
 #define INTVAL_ISNA(val) (val == NA_INTEGER)
 
-#define ALT_ISNA_DEFAULT(x, ALTPREFIX, NACHK) do {			\
-	/* *_IS_SORTED imples na.last */				\
-	int sorted = ALTPREFIX##_IS_SORTED(x);				\
-	SEXP ans;							\
-	R_xlen_t i;							\
-	if(KNOWN_SORTED(sorted)) {					\
-	    R_xlen_t cnt = 0;						\
-	    i = XLENGTH(x) - 1;						\
-	    while(i >= 0 && NACHK(ALTPREFIX##_ELT(x, i))) {		\
-		cnt++;							\
-		i--;							\
-	    }								\
-	    								\
-	    /* XXX this will be altlogical Rle once it exists*/		\
-	    PROTECT(ans= allocVector(LGLSXP, XLENGTH(x)));		\
-	int *ptr = LOGICAL(ans);					\
-	if(XLENGTH(x) - cnt > 0) {					\
-	    memset(ptr, 0, sizeof(int) *(XLENGTH(x)  - cnt));		\
-	}								\
-	if(cnt > 0) {							\
-	    for(R_xlen_t j = 1; j <= cnt; j++)				\
-		ptr[XLENGTH(x) - 1 - cnt + j] = TRUE;			\
-	}								\
-    } else {	/*not known sorted (unknown or known unsorted)	*/	\
-	PROTECT(ans= allocVector(LGLSXP, XLENGTH(x)));			\
-	int *ptr = LOGICAL(ans);					\
-	if(TYPEOF(x) == INTSXP || TYPEOF(x) == REALSXP) {		\
-	    for(i = 0; i < LENGTH(x); i++) {				\
-		ptr[i] = NACHK(ALTPREFIX##_ELT(x, i));			\
-	    }								\
-	} else {							\
-	    ans = NULL;							\
-	}								\
-									\
-    }									\
-    UNPROTECT(1); /*ans, PROTECTED in if and else block */		\
-    return ans;								\
-    } while(0);				
-
 
 static SEXP altinteger_Is_NA_default(SEXP x) {
-    ALT_ISNA_DEFAULT(x, INTEGER, INTVAL_ISNA);
+    return NULL;
 }
 
 static SEXP altinteger_Sum_default(SEXP x, Rboolean narm) { return NULL; }
@@ -917,7 +878,7 @@ static SEXP altreal_Order_default(SEXP x) {
 }
 
 static SEXP altreal_Is_NA_default(SEXP x) {
-    ALT_ISNA_DEFAULT(x, REAL, ISNAN)
+    return NULL;
 }
 
 static SEXP altreal_Sum_default(SEXP x, Rboolean narm) { return NULL; }

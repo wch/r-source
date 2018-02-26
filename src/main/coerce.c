@@ -33,6 +33,7 @@
 #define R_MSG_list_vec	_("applies only to lists and vectors")
 #include <Rmath.h>
 #include <Print.h>
+#include <R_ext/Altrep.h>
 
 
 /* This section of code handles type conversion for elements */
@@ -2039,6 +2040,59 @@ static R_INLINE void copyDimAndNames(SEXP x, SEXP ans)
     }
 }
 
+/* we could expose these as an  API point or leave it hidden for use here only...
+   could also use a macro to reduce code duplication, but abstraction doesn't 
+   seem to buy us enough in this case...*/
+
+R_xlen_t REAL_COUNT_NAS(SEXP x) {
+    if(REAL_NO_NA(x))
+	return 0;
+    R_xlen_t ret = -1; /* sentinel value for no information */
+    R_xlen_t i;
+    int sorted = REAL_IS_SORTED(x);
+    if(KNOWN_NA_1ST(sorted)) {
+	ret = 0;
+	i = 0;
+	while(i < XLENGTH(x) && ISNAN(REAL_ELT(x, i))) {
+	    ret++;
+	    i++;
+	}
+    } else if(KNOWN_SORTED(sorted)) { /* na last since we already hit na 1st */
+	ret = 0;
+	i = XLENGTH(x) - 1;
+	while(i >= 0 && ISNAN(REAL_ELT(x, i))) {
+	    ret++;
+	    i--;
+	}
+    }
+    return ret;
+}
+
+
+R_xlen_t INTEGER_COUNT_NAS(SEXP x) {
+    if(INTEGER_NO_NA(x))
+	return 0;
+    R_xlen_t ret = -1; /* sentinel value for no information */
+    R_xlen_t i;
+    int sorted = INTEGER_IS_SORTED(x);
+    if(KNOWN_NA_1ST(sorted)) {
+	ret = 0;
+	i = 0;
+	while(i < XLENGTH(x) && INTEGER_ELT(x, i) == NA_INTEGER) {
+	    ret++;
+	    i++;
+	}
+    } else if(KNOWN_SORTED(sorted)) { /* na last since we already hit na 1st */
+	ret = 0;
+	i = XLENGTH(x) - 1;
+	while(i >= 0 && INTEGER_ELT(x, i) == NA_INTEGER) {
+	    ret++;
+	    i--;
+	}
+    }
+    return ret;
+}
+
 SEXP attribute_hidden do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, x;
@@ -2049,7 +2103,8 @@ SEXP attribute_hidden do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if (DispatchOrEval(call, op, "is.na", args, rho, &ans, 1, 1))
 	return(ans);
-    PROTECT(args = ans);
+    int nprot = 0;
+    PROTECT(args = ans); nprot++;
 #ifdef stringent_is
     if (!isList(CAR(args)) && !isVector(CAR(args)))
 	errorcall_return(call, "is.na " R_MSG_list_vec);
@@ -2058,6 +2113,47 @@ SEXP attribute_hidden do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
     x = CAR(args);
     n = xlength(x);
 
+    /* fastpass based on ALTREP known metadata */
+    R_xlen_t nacnt;
+    int sorted = UNKNOWN_SORTEDNESS;
+    switch(TYPEOF(x)) {
+    case INTSXP:
+	nacnt = INTEGER_COUNT_NAS(x);
+	sorted = INTEGER_IS_SORTED(x);
+	break;
+    case REALSXP:
+	nacnt = REAL_COUNT_NAS(x);
+	sorted = REAL_IS_SORTED(x);
+	break;
+	/* case LGLSXP here someday */
+    default:
+	nacnt = -1;
+	break;
+    }
+    if(nacnt >= 0) { /* we have a count */
+	// Someday this will use ALTREP logical RLE for major memory savings;
+	PROTECT(ans = allocVector(LGLSXP, n)); nprot++;
+	int *ptr = LOGICAL(ans);
+	if(nacnt == 0) {
+	    memset(ptr, 0, sizeof(int) * n);
+	} else if(KNOWN_NA_1ST(sorted)) {
+	    for(R_xlen_t j = 0; j < nacnt; j++)
+		ptr[j] = TRUE;
+	    memset(ptr + nacnt, 0, sizeof(int) * (n - nacnt));
+	} else if(KNOWN_SORTED(sorted)) { //should always be true if we get here
+	    for(R_xlen_t j = n - 1; j > n - 1 - nacnt; j--) 
+		ptr[j] = TRUE;
+	    memset(ptr, 0, sizeof(int) * (n - nacnt));
+	}
+	copyDimAndNames(x, ans);
+	UNPROTECT(nprot);
+	return(ans);
+    }
+
+    // uncomment to do dispatch to ATLREP custom NA methods, keep commented
+    // or remove for metadata fastpass only;
+    /*
+	
     if (ALTREP(x)) {
 	switch(TYPEOF(x)) {
 	case INTSXP:
@@ -2071,12 +2167,13 @@ SEXP attribute_hidden do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	if (ans != NULL) {
 	    copyDimAndNames(x, ans);
-	    UNPROTECT(1); /* args */
+	    UNPROTECT(nprot);
 	    return ans;
 	}
     }
+*/
 
-    PROTECT(ans = allocVector(LGLSXP, n));
+    PROTECT(ans = allocVector(LGLSXP, n)); nprot++;
     int *pa = LOGICAL(ans);
     switch (TYPEOF(x)) {
     case LGLSXP:
@@ -2155,7 +2252,7 @@ SEXP attribute_hidden do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 
     copyDimAndNames(x, ans);
-    UNPROTECT(2); /* args, ans */
+    UNPROTECT(nprot); /* args, ans */
     return ans;
 }
 
