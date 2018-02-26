@@ -571,7 +571,7 @@
 
       \item \code{aggregate(<data.frame>, drop=FALSE)} no longer calls
       the function on <empty> parts but sets corresponding results to
-      \code{NA}.  Tthanks to Suharto Anggono's patches in \PR{17280}).
+      \code{NA}.  Thanks to Suharto Anggono's patches in \PR{17280}).
 
       \item The \code{duplicated()} method for data frames is now based
       on \code{list}s (instead of string coercion).  Consequently
