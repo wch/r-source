@@ -1817,12 +1817,17 @@ AC_CHECK_DECLS([alloca], , ,
 ## C99 functions: 
 ## not all C99 runtimes are complete,
 ## but we had substitutes for expm1 hypot log1p and (internally) nearbyint[l]
-## FreeBSD used to lack log1pl, but 10 seems to have it.
-## FreeBSD 8.2 lacks log2
-## FreeBSD 7.3 lacks nearbyintl/rintl (nearbyint appeared in 5.2)
+## FreeBSD used to lack log1pl, but 6.0 had it
+## FreeBSD 8.3 first had log2
+## FreeBSD 8.3 first had nearbyintl/rintl (from 2012)
+## https://www.freebsd.org/cgi/man.cgi?query=log&apropos=0&sektion=3&manpath=FreeBSD+11-current&format=html will give an overview.
 ## Apparently rint was once broken on HP-UX: undefine HAVE_RINT for such platforms
-## Cygwin and FreeBSD lacked powl (FreeBSD 10 seems to have it).
+## Cygwin and FreeBSD lacked powl (FreeBSD 10.4 (2017-10) has it).
 ## Cygwin had rintl but not nearbyintl
+## https://cygwin.com/cygwin-api/compatibility.html claims it has powl and nearbyintl .
+## powl nearbyintl and rintl are only used in format.c
+## nearbyint is used in fprec.c fround.c qpois.c format.c
+## rint is used as an alternative in fprec.c fround.c format.c
 R_CHECK_FUNCS([expm1 hypot log1p log1pl log2 log10 nearbyint nearbyintl powl rint rintl], [#include <math.h>])
 ## require these from R 3.5.0.
 if test "${ac_cv_have_decl_expm1}" = "no"; then
@@ -2031,6 +2036,8 @@ if test "${ac_cv_have_decl_isfinite}" = "yes"; then
 R_FUNC_ISFINITE
 fi
 ## check accuracy of log1p
+## issues are probably ancient history: 
+## reported for NetBSD 1.6 and OpenBSD 3.2 (both 2002).
 R_FUNC_LOG1P
 R_FUNC_FTELL
 R_FUNC_SIGACTION
