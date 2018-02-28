@@ -998,7 +998,7 @@ static int compact_intseq_Elt(SEXP x, R_xlen_t i)
 	SEXP info = COMPACT_SEQ_INFO(x);
 	int n1 = COMPACT_INTSEQ_INFO_FIRST(info);
 	int inc = COMPACT_INTSEQ_INFO_INCR(info);
-	return n1 + inc * i;
+	return (int) (n1 + inc * i);
     }
 }
 
