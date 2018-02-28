@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000-11 The R Core Team
+ *  Copyright (C) 2000-2018 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -31,43 +31,6 @@
 #include <config.h> /* needed for HAVE_* */
 #include "nmath.h"
 
-
-/*  nearbyint is C99, so all platforms should have it (and AFAIK, all do) */
-#ifdef HAVE_NEARBYINT
-# define R_rint nearbyint
-#elif defined(HAVE_RINT)
-# define R_rint rint
-#else
-# define R_rint private_rint
-# include "nmath2.h" // for private_rint
-
-/* also used potentially in fprec.c and main/format.c */
-double attribute_hidden private_rint(double x)
-{
-    double tmp, sgn = 1.0;
-    long ltmp;
-
-    if (x != x) return x;			/* NaN */
-
-    if (x < 0.0) {
-	x = -x;
-	sgn = -1.0;
-    }
-
-    if(x < (double) LONG_MAX) { /* in <limits.h> is architecture dependent */
-	ltmp = x + 0.5;
-	/* implement round to even */
-	if(fabs(x + 0.5 - ltmp) < 10*DBL_EPSILON
-	   && (ltmp % 2 == 1)) ltmp--;
-	tmp = ltmp;
-    } else {
-	/* ignore round to even: too small a point to bother */
-	tmp = floor(x + 0.5);
-    }
-    return sgn * tmp;
-}
-#endif
-
 double fround(double x, double digits) {
 #define MAX_DIGITS DBL_MAX_10_EXP
     /* = 308 (IEEE); was till R 0.99: (DBL_DIG - 1) */
@@ -90,13 +53,13 @@ double fround(double x, double digits) {
     } else
 	sgn = 1.;
     if (dig == 0) {
-	return (double)(sgn * R_rint(x));
+	return (double)(sgn * nearbyint(x));
     } else if (dig > 0) {
         pow10 = R_pow_di(10., dig);
 	intx = floor(x);
-	return (double)(sgn * (intx + R_rint((double)((x-intx) * pow10)) / pow10));
+	return (double)(sgn * (intx + nearbyint((double)((x-intx) * pow10)) / pow10));
     } else {
         pow10 = R_pow_di(10., -dig);
-        return (double)(sgn * R_rint((double)(x/pow10)) * pow10);
+        return (double)(sgn * nearbyint((double)(x/pow10)) * pow10);
     }
 }

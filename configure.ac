@@ -1827,8 +1827,7 @@ AC_CHECK_DECLS([alloca], , ,
 ## https://cygwin.com/cygwin-api/compatibility.html claims it has powl and nearbyintl .
 ## powl nearbyintl and rintl are only used in format.c
 ## nearbyint is used in fprec.c fround.c qpois.c format.c
-## rint is used as an alternative in fprec.c fround.c format.c
-R_CHECK_FUNCS([expm1 hypot log1p log1pl log2 log10 nearbyint nearbyintl powl rint rintl], [#include <math.h>])
+R_CHECK_FUNCS([expm1 hypot log1p log1pl log2 log10 nearbyint nearbyintl powl rintl], [#include <math.h>])
 ## require these from R 3.5.0.
 if test "${ac_cv_have_decl_expm1}" = "no"; then
    AC_MSG_ERROR([Building R requires the 'expm1' C99 function])
@@ -1838,6 +1837,9 @@ if test "${ac_cv_have_decl_hypot}" = "no"; then
 fi
 if test "${ac_cv_have_decl_log1p}" = "no"; then
    AC_MSG_ERROR([Building R requires the 'log1p' C99 function])
+fi
+if test "${ac_cv_have_decl_nearbyint}" = "no"; then
+   AC_MSG_ERROR([Building R requires the 'nearbyint' C99 function])
 fi
 ## va_copy is C99: required as from R 2.13.0
 R_CHECK_FUNCS([va_copy], [#include <stdarg.h>])

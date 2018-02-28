@@ -22,7 +22,6 @@
 #define MATHLIB_PRIVATE2_H
 
 
-double private_rint(double x);
 extern N01type N01_kind;
 extern double BM_norm_keep;
 

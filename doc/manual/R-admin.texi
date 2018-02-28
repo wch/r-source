@@ -3313,12 +3313,12 @@ functionality of headers @file{wchar.h} and @file{wctype.h}, types
 @code{mbstowcs}, @code{wcrtomb}, @code{wcscoll}, @code{wcstombs},
 @code{wctrans}, @code{wctype}, and @code{iswctype}.} for wide-character
 types: this is checked at configuration.  Some C99
-functions@footnote{including @code{expm1}, @code{hypot}, @code{log1p}
-and @code{va_copy}.} are required and checked for at configuration.  A
-small number of POSIX functions@footnote{including @code{opendir},
-@code{readdir}, @code{closedir}, @code{popen}, @code{stat}, @code{glob},
-@code{access}, @code{getcwd} and @code{chdir} system calls,
-@code{select} on a Unix-alike, and either @code{putenv} or
+functions@footnote{including @code{expm1}, @code{hypot}, @code{log1p},
+@code{nearbyint} and @code{va_copy}.} are required and checked for at
+configuration.  A small number of POSIX functions@footnote{including
+@code{opendir}, @code{readdir}, @code{closedir}, @code{popen},
+@code{stat}, @code{glob}, @code{access}, @code{getcwd} and @code{chdir}
+system calls, @code{select} on a Unix-alike, and either @code{putenv} or
 @code{setenv}.} are essential, and others@footnote{such as
 @code{realpath}, @code{symlink}.} will be used if available.
 

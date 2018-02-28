@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000-2014 The R Core Team
+ *  Copyright (C) 2000-2018 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -37,17 +37,6 @@
 
 #include <config.h>
 #include "nmath.h"
-
-
-/*  nearbyint is C99, so all platforms should have it (and AFAIK, all do) */
-#ifdef HAVE_NEARBYINT
-# define R_rint nearbyint
-#elif defined(HAVE_RINT)
-# define R_rint rint
-#else
-# define R_rint private_rint
-# include "nmath2.h" // for private_rint
-#endif
 
 /* Improvements by Martin Maechler, May 1997;
    further ones, Feb.2000:
@@ -103,10 +92,10 @@ double fprec(double x, double digits)
 	if(e10 > 0) { /* Try always to have pow >= 1
 			 and so exactly representable */
 	    pow10 = R_pow_di(10., e10);
-	    return(sgn*(R_rint((x*pow10)*p10)/pow10)/p10);
+	    return(sgn*(nearbyint((x*pow10)*p10)/pow10)/p10);
 	} else {
 	    pow10 = R_pow_di(10., -e10);
-	    return(sgn*(R_rint((x/pow10))*pow10));
+	    return(sgn*(nearbyint((x/pow10))*pow10));
 	}
     } else { /* -- LARGE or small -- */
 	do_round = max10e - l10	 >= R_pow_di(10., -dig);

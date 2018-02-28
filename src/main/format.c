@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2016  The R Core Team.
+ *  Copyright (C) 1997--2018  The R Core Team.
  *  Copyright (C) 2003--2016  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -145,14 +145,7 @@ LDOUBLE private_nearbyintl(LDOUBLE x)
 }
 # endif
 # else /* no long double */
-# ifdef HAVE_NEARBYINT
-#  define R_nearbyint nearbyint
-# elif defined(HAVE_RINT)
-#  define R_nearbyint rint
-# else
-#  define R_nearbyint private_rint
-#  include "nmath2.h" // for private_rint
-# endif
+# define R_nearbyint nearbyint
 #endif
 
 #define NB 1000
