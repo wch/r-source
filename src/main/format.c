@@ -122,11 +122,15 @@ void formatInteger(const int *x, R_xlen_t n, int *fieldwidth)
  * Using GLOBAL	 R_print.digits	 -- had	 #define MAXDIG R_print.digits
 */
 
-/* long double is C99, so should always be defined but may be slow */
+/* long double is C99, so should always be defined but may be slow.
+  It could be the same as double.
+
+  Very likely everyone has nearbyintl now, but it took to 2012 for
+  FreeBSD to get it, and longer for Cygwin.
+ */
 #if defined(HAVE_LONG_DOUBLE) && (SIZEOF_LONG_DOUBLE > SIZEOF_DOUBLE)
 # ifdef HAVE_NEARBYINTL
 # define R_nearbyintl nearbyintl
-/* Cygwin had rintl but not nearbyintl */
 # elif defined(HAVE_RINTL)
 # define R_nearbyintl rintl
 # else
@@ -145,6 +149,7 @@ LDOUBLE private_nearbyintl(LDOUBLE x)
 }
 # endif
 # else /* no long double */
+/* This is not used below */
 # define R_nearbyint nearbyint
 #endif
 
@@ -222,6 +227,7 @@ scientific(const double *x, int *neg, int *kpower, int *nsig, Rboolean *rounding
             if (kp > 0) r_prec /= tbl[kp+1]; else if (kp < 0) r_prec *= tbl[ -kp+1];
         }
 #ifdef HAVE_POWL
+	// powl is C99 but only in FreeBSD in 2017.
 	else
             r_prec /= powl(10.0, (long double) kp);
 #else
