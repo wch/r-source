@@ -415,6 +415,9 @@
       The undocumented \sQuote{hidden} objects \code{.__H__.cbind} and
       \code{.__H__.rbind} in package \pkg{base} are deprecated (in
       favour of \code{cbind} and \code{rbind}).
+
+      \item The declaratation of \code{pythag()} in \file{Rmath.h} has
+      been removed --- it has not been provided since \R 2.14.0.
     }
   }
 

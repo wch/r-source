@@ -54,14 +54,13 @@ using namespace std;
 
 #define R_VERSION_STRING "@PACKAGE_VERSION@"
 
+// Legacy defines -- C99 functions which R >= 3.5.0 reauires
 #ifndef HAVE_EXPM1
 # define HAVE_EXPM1 1
 #endif
-
 #ifndef HAVE_HYPOT
 # define HAVE_HYPOT 1
 #endif
-
 #ifndef HAVE_LOG1P
 # define HAVE_LOG1P 1
 #endif
@@ -583,16 +582,6 @@ double	bessel_y_ex(double, double, double *);
 
 	/* General Support Functions */
 
-#ifndef HAVE_HYPOT
-double 	hypot(double, double);
-#endif
-double 	pythag(double, double);
-#ifndef HAVE_EXPM1
-double  expm1(double); /* = exp(x)-1 {care for small x} */
-#endif
-#ifndef HAVE_LOG1P
-double  log1p(double); /* = log(1+x) {care for small x} */
-#endif
 int	imax2(int, int);
 int	imin2(int, int);
 double	fmax2(double, double);
@@ -631,14 +620,6 @@ double  logspace_sub(double logx, double logy);
 
 
 /* ----------------- Private part of the header file ------------------- */
-
-	/* old-R Compatibility */
-
-#ifdef OLD_RMATH_COMPAT
-# define snorm	norm_rand
-# define sunif	unif_rand
-# define sexp	exp_rand
-#endif
 
 #if defined(MATHLIB_STANDALONE) && !defined(MATHLIB_PRIVATE_H)
 /* second is defined by nmath.h */
