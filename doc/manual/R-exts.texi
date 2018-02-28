@@ -4912,9 +4912,11 @@ used.  On macOS extensions are declared unless one of these macros is
 given too small a value.} they are not declared otherwise.  So you may
 need to include something like one of @footnote{Solaris 10 does not
 recognize this value of @code{_POSIX_C_SOURCE}, nor values of
-@code{_XOPEN_SOURCE} beyond 600.}
+@code{_XOPEN_SOURCE} beyond 600 (700 corresponds to POSIX 2008).
+Further, the value of 500 is not allowed in C99 mode, @R{}'s default for
+C code.}
 @example
-#define _XOPEN_SOURCE 500
+#define _XOPEN_SOURCE 600
 @end example
 @noindent
 or
