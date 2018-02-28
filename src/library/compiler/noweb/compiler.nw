@@ -3447,7 +3447,8 @@ setInlineHandler("$", function(e, cb, cntxt) {
     if (any.dots(e) || length(e) != 3)
         cmpSpecial(e, cb, cntxt)
     else {
-        sym <- if (is.character(e[[3]]))
+        sym <- if (is.character(e[[3]]) && length(e[[3]]) == 1
+                   && e[[3]] != "")
             as.name(e[[3]]) else e[[3]]
         if (is.name(sym)) {
             ncntxt <- make.argContext(cntxt)
