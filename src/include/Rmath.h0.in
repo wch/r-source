@@ -582,6 +582,8 @@ double	bessel_y_ex(double, double, double *);
 
 	/* General Support Functions */
 
+double 	pythag(double, double);  // Legacy, but used by Rcpp
+
 int	imax2(int, int);
 int	imin2(int, int);
 double	fmax2(double, double);
