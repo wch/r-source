@@ -1816,7 +1816,7 @@ AC_CHECK_DECLS([alloca], , ,
 
 ## C99 functions: 
 ## not all C99 runtimes are complete,
-## but we have substitutes for expm1 hypot log1p and (internally) nearbyint[l]
+## but we had substitutes for expm1 hypot log1p and (internally) nearbyint[l]
 ## FreeBSD used to lack log1pl, but 10 seems to have it.
 ## FreeBSD 8.2 lacks log2
 ## FreeBSD 7.3 lacks nearbyintl/rintl (nearbyint appeared in 5.2)
@@ -1824,6 +1824,16 @@ AC_CHECK_DECLS([alloca], , ,
 ## Cygwin and FreeBSD lacked powl (FreeBSD 10 seems to have it).
 ## Cygwin had rintl but not nearbyintl
 R_CHECK_FUNCS([expm1 hypot log1p log1pl log2 log10 nearbyint nearbyintl powl rint rintl], [#include <math.h>])
+## require these from R 3.5.0.
+if test "${ac_cv_have_decl_expm1}" = "no"; then
+   AC_MSG_ERROR([Building R requires the 'expm1' C99 function])
+fi
+if test "${ac_cv_have_decl_hypot}" = "no"; then
+   AC_MSG_ERROR([Building R requires the 'hypot' C99 function])
+fi
+if test "${ac_cv_have_decl_log1p}" = "no"; then
+   AC_MSG_ERROR([Building R requires the 'log1p' C99 function])
+fi
 ## va_copy is C99: required as from R 2.13.0
 R_CHECK_FUNCS([va_copy], [#include <stdarg.h>])
 if test "${ac_cv_have_decl_va_copy}" = "no"; then
@@ -2000,24 +2010,6 @@ AM_LANGINFO_CODESET
 ## a) that would comment out #undef statements in Rmath.h.in and
 ## b) Rmath.h should be a self-contained file for standalone Rmath use.
 ## </NOTE>
-if test "${ac_cv_have_decl_expm1}" = yes; then
-  RMATH_HAVE_EXPM1="# define HAVE_EXPM1 1"
-else
-  RMATH_HAVE_EXPM1="# undef HAVE_EXPM1"
-fi
-AC_SUBST(RMATH_HAVE_EXPM1)
-if test "${ac_cv_have_decl_hypot}" = yes; then
-  RMATH_HAVE_HYPOT="# define HAVE_HYPOT 1"
-else
-  RMATH_HAVE_HYPOT="# undef HAVE_HYPOT"
-fi
-AC_SUBST(RMATH_HAVE_HYPOT)
-if test "${ac_cv_have_decl_log1p}" = yes; then
-  RMATH_HAVE_LOG1P="# define HAVE_LOG1P 1"
-else
-  RMATH_HAVE_LOG1P="# undef HAVE_LOG1P"
-fi
-AC_SUBST(RMATH_HAVE_LOG1P)
 
 ## Do we need substitutes?
 ## mkdtemp is not on Solaris 10, added in POSIX 2008

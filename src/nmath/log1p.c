@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000, 2003, 2011 The R Core Team
+ *  Copyright (C) 2000-2018 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -41,13 +41,8 @@
 #endif
 #include "nmath.h"
 
-/* want to compile log1p as Rlog1p if HAVE_LOG1P && !HAVE_WORKING_LOG1P */
-#if defined(HAVE_LOG1P) && !defined(HAVE_WORKING_LOG1P)
-#undef HAVE_LOG1P
-#endif
-
-#ifndef HAVE_LOG1P
-double log1p(double x)
+#ifndef HAVE_WORKING_LOG1P
+double Rlog1p(double x)
 {
     /* series for log1p on the interval -.375 to .375
      *				     with weighted error   6.35e-32
@@ -135,53 +130,5 @@ double log1p(double x)
 	ML_ERROR(ME_PRECISION, "log1p");
     }
     return log(1 + x);
-}
-#endif
-
-
-
-#ifndef HAVE_HYPOT
-/* Used as a substitute for the C99 function hypot, which all currently
-   known platforms have */
-
-/* hypot(a,b)	finds sqrt(a^2 + b^2)
- *		without overflow or destructive underflow.
- */
-
-double hypot(double a, double b)
-{
-    double p, r, s, t, tmp, u;
-
-    if(ISNAN(a) || ISNAN(b)) /* propagate Na(N)s: */
-        return
-#ifdef IEEE_754
-	  a + b;
-#else
-          ML_NAN;
-#endif
-    if (!R_FINITE(a) || !R_FINITE(b)) {
-        return ML_POSINF;
-    }
-    p = fmax2(fabs(a), fabs(b));
-    if (p != 0.0) {
-
-	/* r = (min(|a|,|b|) / p) ^2 */
-	tmp = fmin2(fabs(a), fabs(b))/p;
-	r = tmp * tmp;
-	for(;;) {
-	    t = 4.0 + r;
-	    /* This was a test of 4.0 + r == 4.0, but optimizing
-		compilers nowadays infinite loop on that. */
-	    if(fabs(r) < 2*DBL_EPSILON) break;
-	    s = r / t;
-	    u = 1. + 2. * s;
-	    p *= u ;
-
-	    /* r = (s / u)^2 * r */
-	    tmp = s / u;
-	    r *= tmp * tmp;
-	}
-    }
-    return p;
 }
 #endif

@@ -376,6 +376,9 @@
 
       In rare circumstances it may be necessary to override the
       setting of \samp{SAFE_FFLAGS}.
+
+      \item C99 functions \code{expm1}, \code{hypot} and \code{log1p}
+      are now required.
     }
   }
 
