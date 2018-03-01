@@ -2878,7 +2878,7 @@ notifyWrongDotsUse <- function(var, cntxt, loc = NULL) {
 
 notifyWrongBreakNext <- function(fun, cntxt, loc = NULL) {
     if (! suppressAll(cntxt)) {
-        msg <- paste(fun, "may be used in wrong context: no loop is visible")
+        msg <- paste(fun, "used in wrong context: no loop is visible")
         cntxt$warn(msg, cntxt, loc)
     }
 }
