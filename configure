@@ -755,9 +755,6 @@ BLAS_SHLIB_FALSE
 BLAS_SHLIB_TRUE
 RMATH_HAVE_WORKING_LOG1P
 LIBOBJS
-RMATH_HAVE_LOG1P
-RMATH_HAVE_HYPOT
-RMATH_HAVE_EXPM1
 MACOS_SIERRA
 ALLOCA
 R_OPENMP_FFLAGS
@@ -25271,7 +25268,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:25274: \"$ac_link\") >&5
+(eval echo $as_me:25271: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -25346,7 +25343,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:25349: \"$ac_link\") >&5
+(eval echo $as_me:25346: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -33807,14 +33804,18 @@ _ACEOF
 
 ## C99 functions:
 ## not all C99 runtimes are complete,
-## but we have substitutes for expm1 hypot log1p and (internally) nearbyint[l]
-## FreeBSD used to lack log1pl, but 10 seems to have it.
-## FreeBSD 8.2 lacks log2
-## FreeBSD 7.3 lacks nearbyintl/rintl (nearbyint appeared in 5.2)
+## but we had substitutes for expm1 hypot log1p and (internally) nearbyint[l]
+## FreeBSD used to lack log1pl, but 6.0 had it
+## FreeBSD 8.3 first had log2
+## FreeBSD 8.3 first had nearbyintl/rintl (from 2012)
+## https://www.freebsd.org/cgi/man.cgi?query=log&apropos=0&sektion=3&manpath=FreeBSD+11-current&format=html will give an overview.
 ## Apparently rint was once broken on HP-UX: undefine HAVE_RINT for such platforms
-## Cygwin and FreeBSD lacked powl (FreeBSD 10 seems to have it).
+## Cygwin and FreeBSD lacked powl (FreeBSD 10.4 (2017-10) has it).
 ## Cygwin had rintl but not nearbyintl
-for ac_func in expm1 hypot log1p log1pl log2 log10 nearbyint nearbyintl powl rint rintl
+## https://cygwin.com/cygwin-api/compatibility.html claims it has powl and nearbyintl .
+## powl nearbyintl and rintl are only used in format.c
+## nearbyint is used in fprec.c fround.c qpois.c format.c
+for ac_func in expm1 hypot log1p log1pl log2 log10 nearbyint nearbyintl powl rintl
 do
 as_ac_Symbol=`$as_echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $ac_func exists and is declared" >&5
@@ -33864,6 +33865,19 @@ _ACEOF
 fi
 done
 
+## require these from R 3.5.0.
+if test "${ac_cv_have_decl_expm1}" = "no"; then
+   as_fn_error $? "Building R requires the 'expm1' C99 function" "$LINENO" 5
+fi
+if test "${ac_cv_have_decl_hypot}" = "no"; then
+   as_fn_error $? "Building R requires the 'hypot' C99 function" "$LINENO" 5
+fi
+if test "${ac_cv_have_decl_log1p}" = "no"; then
+   as_fn_error $? "Building R requires the 'log1p' C99 function" "$LINENO" 5
+fi
+if test "${ac_cv_have_decl_nearbyint}" = "no"; then
+   as_fn_error $? "Building R requires the 'nearbyint' C99 function" "$LINENO" 5
+fi
 ## va_copy is C99: required as from R 2.13.0
 for ac_func in va_copy
 do
@@ -35600,24 +35614,6 @@ $as_echo "#define HAVE_LANGINFO_CODESET 1" >>confdefs.h
 ## a) that would comment out #undef statements in Rmath.h.in and
 ## b) Rmath.h should be a self-contained file for standalone Rmath use.
 ## </NOTE>
-if test "${ac_cv_have_decl_expm1}" = yes; then
-  RMATH_HAVE_EXPM1="# define HAVE_EXPM1 1"
-else
-  RMATH_HAVE_EXPM1="# undef HAVE_EXPM1"
-fi
-
-if test "${ac_cv_have_decl_hypot}" = yes; then
-  RMATH_HAVE_HYPOT="# define HAVE_HYPOT 1"
-else
-  RMATH_HAVE_HYPOT="# undef HAVE_HYPOT"
-fi
-
-if test "${ac_cv_have_decl_log1p}" = yes; then
-  RMATH_HAVE_LOG1P="# define HAVE_LOG1P 1"
-else
-  RMATH_HAVE_LOG1P="# undef HAVE_LOG1P"
-fi
-
 
 ## Do we need substitutes?
 ## mkdtemp is not on Solaris 10, added in POSIX 2008
@@ -35972,6 +35968,8 @@ fi
 
 fi
 ## check accuracy of log1p
+## issues are probably ancient history:
+## reported for NetBSD 1.6 and OpenBSD 3.2 (both 2002).
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for working log1p" >&5
 $as_echo_n "checking for working log1p... " >&6; }
 if ${r_cv_func_log1p_works+:} false; then :
