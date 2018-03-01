@@ -122,12 +122,9 @@ void formatInteger(const int *x, R_xlen_t n, int *fieldwidth)
  * Using GLOBAL	 R_print.digits	 -- had	 #define MAXDIG R_print.digits
 */
 
-/* long double is C99, so should always be defined but may be slow.
-  It could be the same as double.
-
-  Very likely everyone has nearbyintl now, but it took to 2012 for
-  FreeBSD to get it, and longer for Cygwin.
- */
+/*  Very likely everyone has nearbyintl now (2018), but it took until
+    2012 for FreeBSD to get it, and longer for Cygwin.
+*/
 #if defined(HAVE_LONG_DOUBLE) && (SIZEOF_LONG_DOUBLE > SIZEOF_DOUBLE)
 # ifdef HAVE_NEARBYINTL
 # define R_nearbyintl nearbyintl
@@ -148,9 +145,6 @@ LDOUBLE private_nearbyintl(LDOUBLE x)
     }
 }
 # endif
-# else /* no long double */
-/* This is not used below */
-# define R_nearbyint nearbyint
 #endif
 
 #define NB 1000
@@ -227,7 +221,7 @@ scientific(const double *x, int *neg, int *kpower, int *nsig, Rboolean *rounding
             if (kp > 0) r_prec /= tbl[kp+1]; else if (kp < 0) r_prec *= tbl[ -kp+1];
         }
 #ifdef HAVE_POWL
-	// powl is C99 but only in FreeBSD in 2017.
+	// powl is C99 but only added to FreeBSD in 2017.
 	else
             r_prec /= powl(10.0, (long double) kp);
 #else
@@ -244,13 +238,13 @@ scientific(const double *x, int *neg, int *kpower, int *nsig, Rboolean *rounding
 	   accuracy limited by double rounding problem,
 	   alpha already rounded to 64 bits */
         alpha = (double) R_nearbyintl(r_prec);
-#else
+#else /* not using long doubles */
 	double r_prec = r;
         /* use exact scaling factor in double precision, if possible */
         if (abs(kp) <= 22) {
             if (kp >= 0) r_prec /= tbl[kp+1]; else r_prec *= tbl[ -kp+1];
         }
-        /* on IEEE 1e-308 is not representable except by gradual underflow.
+        /* For IEC60559 1e-308 is not representable except by gradual underflow.
            Shifting by 303 allows for any potential denormalized numbers x,
            and makes the reasonable assumption that R_dec_min_exponent+303
            is in range. Representation of 1e+303 has low error.
@@ -266,7 +260,7 @@ scientific(const double *x, int *neg, int *kpower, int *nsig, Rboolean *rounding
         /* round alpha to integer, 10^(digits-1) <= alpha <= 10^digits */
         /* accuracy limited by double rounding problem,
 	   alpha already rounded to 53 bits */
-        alpha = R_nearbyint(r_prec);
+        alpha = nearbyint(r_prec);
 #endif
         *nsig = R_print.digits;
         for (j = 1; j <= R_print.digits; j++) {
@@ -393,10 +387,11 @@ void formatReal(const double *x, R_xlen_t n, int *w, int *d, int *e, int nsmall)
     if (neginf && *w < 4) *w = 4;
 }
 
-/* As from 2.2.0 the number of digits applies to real and imaginary parts
-   together, not separately */
+/*   From complex.c. */
 void z_prec_r(Rcomplex *r, const Rcomplex *x, double digits);
 
+/* As from 2.2.0 the number of digits applies to real and imaginary parts
+   together, not separately */
 void formatComplex(const Rcomplex *x, R_xlen_t n, int *wr, int *dr, int *er,
 		   int *wi, int *di, int *ei, int nsmall)
 {
