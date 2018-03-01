@@ -1821,12 +1821,10 @@ AC_CHECK_DECLS([alloca], , ,
 ## FreeBSD 8.3 first had log2
 ## FreeBSD 8.3 first had nearbyintl/rintl (from 2012)
 ## https://www.freebsd.org/cgi/man.cgi?query=log&apropos=0&sektion=3&manpath=FreeBSD+11-current&format=html will give an overview.
-## Apparently rint was once broken on HP-UX: undefine HAVE_RINT for such platforms
 ## Cygwin and FreeBSD lacked powl (FreeBSD 10.4 (2017-10) has it).
 ## Cygwin had rintl but not nearbyintl
-## https://cygwin.com/cygwin-api/compatibility.html claims it has powl and nearbyintl .
+## https://cygwin.com/cygwin-api/compatibility.html says it now has powl and nearbyintl .
 ## powl nearbyintl and rintl are only used in format.c
-## nearbyint is used in fprec.c fround.c qpois.c format.c
 R_CHECK_FUNCS([expm1 hypot log1p log1pl log2 log10 nearbyint nearbyintl powl rintl], [#include <math.h>])
 ## require these from R 3.5.0.
 if test "${ac_cv_have_decl_expm1}" = "no"; then
