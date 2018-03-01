@@ -118,12 +118,12 @@ static SEXP seq_colon(double n1, double n2, SEXP call)
 	int in1 = (int)(n1);
 	ans = allocVector(INTSXP, n);
 	if (n1 <= n2)
-	    for (int i = 0; i < n; i++) {
+	    for (R_xlen_t i = 0; i < n; i++) {
 //		if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 		INTEGER(ans)[i] = in1 + i;
 	    }
 	else
-	    for (int i = 0; i < n; i++) {
+	    for (R_xlen_t i = 0; i < n; i++) {
 //		if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
 		INTEGER(ans)[i] = in1 - i;
 	    }
