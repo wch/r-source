@@ -583,7 +583,10 @@ double	bessel_y_ex(double, double, double *);
 
 	/* General Support Functions */
 
-double 	pythag(double, double);  // Legacy, but used by Rcpp. Remove in due cource
+/* This is a legacy declaration: the entry point was removed in
+   R 2.14.0 (2011-10).  But the declaration is still used by Rcpp 
+   in 2018-03 */
+double 	pythag(double, double);
 
 int	imax2(int, int);
 int	imin2(int, int);

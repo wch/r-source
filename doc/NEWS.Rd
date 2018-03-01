@@ -377,8 +377,8 @@
       In rare circumstances it may be necessary to override the
       setting of \samp{SAFE_FFLAGS}.
 
-      \item C99 functions \code{expm1}, \code{hypot} and \code{log1p}
-      are now required.
+      \item C99 functions \code{expm1}, \code{hypot}, \code{log1p} and
+      \code{nearbyint} are now required.
     }
   }
 
@@ -418,6 +418,7 @@
 
       \item The declaratation of \code{pythag()} in \file{Rmath.h} has
       been removed --- it has not been provided since \R 2.14.0.
+      [Deferred until \CRANpkg{Rcpp} catches up.]
     }
   }
 
