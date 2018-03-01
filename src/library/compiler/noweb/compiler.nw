@@ -935,7 +935,7 @@ counter).
 <<source location tracking functions>>=
 extractSrcref <- function(sref, idx) {
     if (is.list(sref) && length(sref) >= idx)
-        sref <- sref[[idx]]
+        sref[[idx]]
     else if (is.integer(sref) && length(sref) >= 6)
         sref
     else
