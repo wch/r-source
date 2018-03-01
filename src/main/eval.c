@@ -262,19 +262,19 @@ static void doprof(int sig)  /* sig is ignored in Windows */
 		       real. */
 		    SEXP arg1 = CADR(fun);
 		    SEXP arg2 = CADDR(fun);
-		    char arg2buf[PROFITEMMAX];
+		    char arg2buf[PROFITEMMAX-5];
 
 		    if (TYPEOF(arg2) == SYMSXP) {
-			snprintf(arg2buf, PROFITEMMAX-1, "%s", CHAR(PRINTNAME(arg2)));
+			snprintf(arg2buf, PROFITEMMAX-6, "%s", CHAR(PRINTNAME(arg2)));
 
 		    } else if (TYPEOF(arg2) == STRSXP) {
-			snprintf(arg2buf, PROFITEMMAX-1, "\"%s\"", CHAR(STRING_ELT(arg2, 0)));
+			snprintf(arg2buf, PROFITEMMAX-6, "\"%s\"", CHAR(STRING_ELT(arg2, 0)));
 
 		    } else if (TYPEOF(arg2) == INTSXP) {
-			snprintf(arg2buf, PROFITEMMAX-1, "%d", INTEGER(arg2)[0]);
+			snprintf(arg2buf, PROFITEMMAX-6, "%d", INTEGER(arg2)[0]);
 
 		    } else if (TYPEOF(arg2) == REALSXP) {
-			snprintf(arg2buf, PROFITEMMAX-1, "%.0f", REAL(arg2)[0]);
+			snprintf(arg2buf, PROFITEMMAX-6, "%.0f", REAL(arg2)[0]);
 
 		    } else {
 			/* Shouldn't get here, but just in case. */

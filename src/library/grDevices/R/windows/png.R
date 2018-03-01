@@ -115,7 +115,7 @@ jpeg <-
     g <- .geometry(width, height, units, res)
     if(match.arg(type) == "cairo") {
         antialias <- match(match.arg(antialias), aa.cairo)
-        invisible(.External(C_devCairo, filename, 3L, g$width, height, pointsize,
+        invisible(.External(C_devCairo, filename, 3L, g$width, g$height, pointsize,
                             bg, res, antialias, quality,
                             if(nzchar(family)) family else "sans", 300))
     } else {

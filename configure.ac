@@ -1816,14 +1816,29 @@ AC_CHECK_DECLS([alloca], , ,
 
 ## C99 functions: 
 ## not all C99 runtimes are complete,
-## but we have substitutes for expm1 hypot log1p and (internally) nearbyint[l]
-## FreeBSD used to lack log1pl, but 10 seems to have it.
-## FreeBSD 8.2 lacks log2
-## FreeBSD 7.3 lacks nearbyintl/rintl (nearbyint appeared in 5.2)
-## Apparently rint was once broken on HP-UX: undefine HAVE_RINT for such platforms
-## Cygwin and FreeBSD lacked powl (FreeBSD 10 seems to have it).
+## but we had substitutes for expm1 hypot log1p and (internally) nearbyint[l]
+## FreeBSD used to lack log1pl, but 6.0 had it
+## FreeBSD 8.3 first had log2
+## FreeBSD 8.3 first had nearbyintl/rintl (from 2012)
+## https://www.freebsd.org/cgi/man.cgi?query=log&apropos=0&sektion=3&manpath=FreeBSD+11-current&format=html will give an overview.
+## Cygwin and FreeBSD lacked powl (FreeBSD 10.4 (2017-10) has it).
 ## Cygwin had rintl but not nearbyintl
-R_CHECK_FUNCS([expm1 hypot log1p log1pl log2 log10 nearbyint nearbyintl powl rint rintl], [#include <math.h>])
+## https://cygwin.com/cygwin-api/compatibility.html says it now has powl and nearbyintl .
+## powl nearbyintl and rintl are only used in format.c
+R_CHECK_FUNCS([expm1 hypot log1p log1pl log2 log10 nearbyint nearbyintl powl rintl], [#include <math.h>])
+## require these from R 3.5.0.
+if test "${ac_cv_have_decl_expm1}" = "no"; then
+   AC_MSG_ERROR([Building R requires the 'expm1' C99 function])
+fi
+if test "${ac_cv_have_decl_hypot}" = "no"; then
+   AC_MSG_ERROR([Building R requires the 'hypot' C99 function])
+fi
+if test "${ac_cv_have_decl_log1p}" = "no"; then
+   AC_MSG_ERROR([Building R requires the 'log1p' C99 function])
+fi
+if test "${ac_cv_have_decl_nearbyint}" = "no"; then
+   AC_MSG_ERROR([Building R requires the 'nearbyint' C99 function])
+fi
 ## va_copy is C99: required as from R 2.13.0
 R_CHECK_FUNCS([va_copy], [#include <stdarg.h>])
 if test "${ac_cv_have_decl_va_copy}" = "no"; then
@@ -2000,24 +2015,6 @@ AM_LANGINFO_CODESET
 ## a) that would comment out #undef statements in Rmath.h.in and
 ## b) Rmath.h should be a self-contained file for standalone Rmath use.
 ## </NOTE>
-if test "${ac_cv_have_decl_expm1}" = yes; then
-  RMATH_HAVE_EXPM1="# define HAVE_EXPM1 1"
-else
-  RMATH_HAVE_EXPM1="# undef HAVE_EXPM1"
-fi
-AC_SUBST(RMATH_HAVE_EXPM1)
-if test "${ac_cv_have_decl_hypot}" = yes; then
-  RMATH_HAVE_HYPOT="# define HAVE_HYPOT 1"
-else
-  RMATH_HAVE_HYPOT="# undef HAVE_HYPOT"
-fi
-AC_SUBST(RMATH_HAVE_HYPOT)
-if test "${ac_cv_have_decl_log1p}" = yes; then
-  RMATH_HAVE_LOG1P="# define HAVE_LOG1P 1"
-else
-  RMATH_HAVE_LOG1P="# undef HAVE_LOG1P"
-fi
-AC_SUBST(RMATH_HAVE_LOG1P)
 
 ## Do we need substitutes?
 ## mkdtemp is not on Solaris 10, added in POSIX 2008
@@ -2029,12 +2026,18 @@ AC_CHECK_DECLS([mkdtemp, strdup, strncasecmp])
 AC_SEARCH_LIBS(connect, [socket])
 # gethostbyname was removed in POSIX 2008 (in favour of getaddrinfo, POSIX 2001)
 AC_SEARCH_LIBS(gethostbyname, [nsl socket])
+## -lnsl is needed on Solaris
+## 2018: Sun RPC is being unbundled from glibc, at least in Fedora 28
+## (https://fedoraproject.org/wiki/Changes/SunRPCRemoval)
+## Use libtirpc instead, which has been a possible source since ca 2007
 AC_SEARCH_LIBS(xdr_string, [nsl tirpc])
 R_FUNC_CALLOC
 if test "${ac_cv_have_decl_isfinite}" = "yes"; then
 R_FUNC_ISFINITE
 fi
 ## check accuracy of log1p
+## issues are probably ancient history: 
+## reported for NetBSD 1.6 and OpenBSD 3.2 (both 2002).
 R_FUNC_LOG1P
 R_FUNC_FTELL
 R_FUNC_SIGACTION

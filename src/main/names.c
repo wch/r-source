@@ -1132,8 +1132,8 @@ static void SymbolShortcuts(void)
 static SEXP DDVALSymbols[N_DDVAL_SYMBOLS];
 
 static SEXP createDDVALSymbol(int n) {
-    char buf[10];
-    snprintf(buf, 10, "..%d", n);
+    char buf[15];
+    snprintf(buf, 15, "..%d", n);
     return install(buf);
 }
 

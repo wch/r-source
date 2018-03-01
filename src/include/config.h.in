@@ -642,9 +642,6 @@
 /* Define to 1 if you have the `realpath' function. */
 #undef HAVE_REALPATH
 
-/* Define to 1 if you have the `rint' function. */
-#undef HAVE_RINT
-
 /* Define to 1 if you have the `rintl' function. */
 #undef HAVE_RINTL
 

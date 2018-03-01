@@ -1592,7 +1592,7 @@ char *pcre_string_adj(char *target, const char *orig, const char *repl,
 			for (j = 0; j < nc; j++) wc[j] = towctrans(wc[j], tr);
 			nb = (int) wcstoutf8(NULL, wc, INT_MAX);
 			wcstoutf8(xi, wc, nb);
-			for (j = 0; j < nb; j++) *t++ = *xi++;
+			for (j = 0; j < nb - 1; j++) *t++ = *xi++;
 		    }
 		} else
 		    for (i = ovec[2*k] ; i < ovec[2*k+1] ; i++) {

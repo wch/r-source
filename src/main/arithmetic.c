@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995--1997 Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2016 The R Core Team.
+ *  Copyright (C) 1998--2018 The R Core Team.
  *  Copyright (C) 2003--2016 The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -215,9 +215,10 @@ double R_pow(double x, double y) /* = x ^ y */
 	   gcc 4.3.0 -g -O2 mis-compiled it.  Showed up with
 	   100^0.5 as 3.162278, example(pbirthday) failed. */
 #ifdef USE_POWL_IN_R_POW
-    return powl(x, y);
+	// this is used only on 64-bit Windows (so has powl).
+	return powl(x, y);
 #else
-    return pow(x, y);
+	return pow(x, y);
 #endif
     }
     if (ISNAN(x) || ISNAN(y))
@@ -625,8 +626,7 @@ SEXP attribute_hidden R_binary(SEXP call, SEXP op, SEXP x, SEXP y)
     SEXP klass = NULL, tsp = NULL; // -Wall
     if (xts || yts) {
 	if (xts && yts) {
-	    if (!tsConform(x, y))
-		errorcall(call, _("non-conformable time-series"));
+	    /* could check ts conformance here */
 	    PROTECT(tsp = getAttrib(x, R_TspSymbol));
 	    PROTECT(klass = getAttrib(x, R_ClassSymbol));
 	}

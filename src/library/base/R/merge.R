@@ -1,7 +1,7 @@
 #  File src/library/base/R/merge.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -24,8 +24,8 @@ merge.default <- function(x, y, ...)
 merge.data.frame <-
     function(x, y, by = intersect(names(x), names(y)), by.x = by, by.y = by,
              all = FALSE, all.x = all, all.y = all,
-             sort = TRUE, suffixes = c(".x",".y"), incomparables = NULL,
-             ...)
+             sort = TRUE, suffixes = c(".x",".y"), no.dups = TRUE,
+             incomparables = NULL, ...)
 {
     fix.by <- function(by, df)
     {
@@ -77,7 +77,8 @@ merge.data.frame <-
             res <- cbind(x[FALSE, ], y[FALSE, ])
         } else {
             ij <- expand.grid(seq_len(nx), seq_len(ny))
-            res <- cbind(x[ij[, 1L], , drop = FALSE], y[ij[, 2L], , drop = FALSE])
+            res <- cbind(x[ij[, 1L], , drop = FALSE],
+                         y[ij[, 2L], , drop = FALSE])
         }
     }
     else {
@@ -157,6 +158,11 @@ merge.data.frame <-
         }
 
         if(has.common.nms) names(y) <- nm.y
+        ## If by.x %in% names(y) , duplicate column names may still arise.
+        ## Apply suffixes to just y - keeping back compatibility when referring to by.x:
+        if(no.dups && any((mi <- match(nm.by, names(y), 0L)) > 0L) && nzchar(suffixes[2L]))
+            names(y)[mi] <- paste0(names(y)[mi], suffixes[2L])
+        ## if(!no.dups) ## <<- speedup if we were sure we'd caught all dups above 
         nm <- c(names(x), names(y))
         if(any(d <- duplicated(nm)))
             if(sum(d) > 1L)

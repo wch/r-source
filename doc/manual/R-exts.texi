@@ -2496,7 +2496,8 @@ commonly accept C99 extensions to C++98.  A minor update@footnote{The
 changes are linked from
 @uref{https://isocpp.org/@/std/@/standing-documents/@/sd-6-sg10-feature-test-recommendations}.}
 to C++11 (C++14) was published in December 2014.  The latest standard
-(C++17) was published in December 2017.
+(C++17) was published in December 2017, and a further revision (`C++20')
+is in preparation.
 
 What standard a C++ compiler aims to support can be hard to determine:
 the value@footnote{Values @code{199711}, @code{201103L} and
@@ -2506,13 +2507,14 @@ may help but some compilers use it to denote a standard which is
 partially supported and some the latest standard which is (almost) fully
 supported.  As from version 6, @command{g++} defaults to C++14 (with GNU
 extensions): earlier versions aim to support C++03 with many extensions
-(including support for TR1).  @command{clang} with its
+(including support for TR1) with version 5 having fairly complete C++14
+support enabled by flag @option{-std=gnu++14}.  @command{clang} with its
 native@footnote{Some distributions, notably Debian, have supplied a
 build of @command{clang} with @command{g++}'s headers and library.
 Conversely, Apple's command named @command{g++} is based on
-@command{clang} using @code{libc++}.}  @code{libc++} headers and library
-includes most C++14 features, and does not support TR1.  As from version
-6.0.0, @command{clang} is expected to default to C++14.
+@command{clang} using @code{libc++}.} @code{libc++} headers and library
+has since version 3.4 included almost all C++14 features, but does not
+support TR1.  As from version 6.0.0, @command{clang} defaults to C++14.
 
 Since version 3.1.0, @R{} has provided support for C++11 in packages in
 addition to C++98.  This support is not uniform across platforms as it
@@ -4616,15 +4618,19 @@ portable, annoyingly so if this is not declared in the
 @command{pandoc}, which is only available for a very limited range of
 platforms (and has onerous requirements to install from source) and has
 capabilities@footnote{For example, the ability to handle @samp{https://}
-URLs, which even the build in some major Linux distributions in 2017 did
-not possess.} that vary by build but are not documented.
-
-An external command can be an optional requirement for an imported
-package but needed for examples or tests in the package itself.  
+URLs, which even the build in some major Linux distributions in 2018 did
+not possess.  Further, Linux and macOS builds from late 2017 with
+@samp{https://} support were unable to download from some sites using or
+redirecting to @samp{https://} URLs.} that vary by build but are not
+documented.
 
 Usage of external commands should always be conditional on a test for
 existence (perhaps using @code{Sys.which}), as well as declared in the
 @samp{SystemRequirements} field.
+
+An external command can be a (possibly optional) requirement for an
+imported or suggested package but needed for examples or tests in the
+package itself.  Such usages should always be declared and conditional.
 
 @item
 Be sure to use portable encoding names: none of @code{utf8}, @code{mac}
@@ -4906,9 +4912,11 @@ used.  On macOS extensions are declared unless one of these macros is
 given too small a value.} they are not declared otherwise.  So you may
 need to include something like one of @footnote{Solaris 10 does not
 recognize this value of @code{_POSIX_C_SOURCE}, nor values of
-@code{_XOPEN_SOURCE} beyond 600.}
+@code{_XOPEN_SOURCE} beyond 600 (700 corresponds to POSIX 2008).
+Further, the value of 500 is not allowed in C99 mode, @R{}'s default for
+C code.}
 @example
-#define _XOPEN_SOURCE 500
+#define _XOPEN_SOURCE 600
 @end example
 @noindent
 or
@@ -12469,7 +12477,7 @@ to create marked character strings of a given length.
 
 @menu
 * Memory allocation::           
-* Error handling::              
+* Error signaling::              
 * Random numbers::              
 * Missing and IEEE values::     
 * Printing::                    
@@ -12479,6 +12487,7 @@ to create marked character strings of a given length.
 * Integration::                 
 * Utility functions::           
 * Re-encoding::                 
+* Condition handling and cleanup code::
 * Allowing interrupts::         
 * Platform and version information::  
 * Inlining C functions::        
@@ -12545,7 +12554,7 @@ Entry points that are where possible (Windows and some modern Unix-alike
 compilers/loaders when using @R{} as a shared library) not exported.
 @end table
 
-@node Memory allocation, Error handling, The R API, The R API
+@node Memory allocation, Error signaling, The R API, The R API
 @section Memory allocation
 @cindex Memory allocation from C
 
@@ -12653,7 +12662,7 @@ never from front-ends.  They are not thread-safe.
 @findex Free
 
 The other form of memory allocation is an interface to @code{malloc},
-the interface providing @R{} error handling.  This memory lasts until
+the interface providing @R{} error signaling.  This memory lasts until
 freed by the user and is additional to the memory allocated for the @R{}
 workspace.
 
@@ -12690,11 +12699,11 @@ These entry points need to be prefixed by @code{R_} if
 @code{STRICT_R_HEADERS} has been defined.
 
 
-@node Error handling, Random numbers, Memory allocation, The R API
-@section Error handling
-@cindex Error handling from C
+@node Error signaling, Random numbers, Memory allocation, The R API
+@section Error signaling
+@cindex Error signaling from C
 
-The basic error handling routines are the equivalents of @code{stop} and
+The basic error signaling routines are the equivalents of @code{stop} and
 @code{warning} in @R{} code, and use the same interface.
 
 @example
@@ -12728,12 +12737,12 @@ the last two being the forms available in all @Sl{} versions.  Here
 or a format string followed by arguments separated by commas.
 
 @menu
-* Error handling from FORTRAN::  
+* Error signaling from FORTRAN::  
 @end menu
 
-@node Error handling from FORTRAN,  , Error handling, Error handling
-@subsection Error handling from FORTRAN
-@cindex Error handling from FORTRAN
+@node Error signaling from FORTRAN,  , Error signaling, Error signaling
+@subsection Error signaling from FORTRAN
+@cindex Error signaling from FORTRAN
 
 There are two interface function provided to call @code{error} and
 @code{warning} from FORTRAN code, in each case with a simple character
@@ -12749,7 +12758,7 @@ subroutine rwarn(@var{message})
 Messages of more than 255 characters are truncated, with a warning.
 
 
-@node Random numbers, Missing and IEEE values, Error handling, The R API
+@node Random numbers, Missing and IEEE values, Error signaling, The R API
 @section Random number generation
 @cindex Random numbers in C
 @findex unif_rand
@@ -13718,7 +13727,7 @@ the original functions by Fox, Hall and Schryer on NetLib at
 @uref{http://www.netlib.org/slatec/src/} for IEC 60559 arithmetic
 (required by @R{}).
 
-@node Re-encoding, Allowing interrupts, Utility functions, The R API
+@node Re-encoding, Condition handling and cleanup code, Utility functions, The R API
 @section Re-encoding
 
 @R{} has its own C-level interface to the encoding conversion
@@ -13751,7 +13760,78 @@ input does not end with a complete multi-byte character).
 Free the resources of an encoding object.
 
 
-@node Allowing interrupts, Platform and version information, Re-encoding, The R API
+@node Condition handling and cleanup code, Allowing interrupts, Re-encoding, The R API
+@section Condition handling and cleanup code
+@cindex Condition handling
+@cindex Cleanup code
+@cindex Error handling
+
+Two functions are available for establishing condition handlers from
+within C code:
+
+@example
+#include <Rinternals.h>
+
+SEXP R_tryCatchError(SEXP (*fun)(void *data), void *data,
+		     SEXP (*hndlr)(SEXP cond, void *hdata), void *hdata);
+
+SEXP R_tryCatch(SEXP (*fun)(void *data), void *data,
+		SEXP,
+		SEXP (*hndlr)(SEXP cond, void *hdata), void *hdata,
+		void (*clean)(void *cdata), void *cdata);
+@end example
+
+@code{R_tryCatchError} establishes an exiting handler for conditions
+inheriting form class @code{error}.
+
+@code{R_tryCatch} can be used to establish a handler for other
+conditions and to register a cleanup action. The conditions to be
+handled are specified as a character vector (@code{STRSXP}).
+A @code{NULL} pointer can be passed as @code{fun} or @code{clean}
+if condition handling or cleanup are not needed.
+
+These are currently implemented using the R-level @code{tryCatch}
+mechanism so are subject to some overhead.
+
+The function @code{R_UnwindProtect} can be used to ensure that a cleanup
+action takes place on ordinary return as well as on a non-local transfer
+of control, which R implements as a @code{longjmp}.
+
+@example
+SEXP R_UnwindProtect(SEXP (*fun)(void *data), void *data,
+                     void (*clean)(void *data, Rboolean jump), void *cdata,
+                     SEXP cont);
+@end example
+
+@code{R_UnwindProtect} can be used in two ways.  The simper usage,
+suitable for use in C code, passes @code{NULL} for the @code{cont}
+argument.  @code{R_UnwindProtect} will call @code{fun(data)}.  If
+@code{fun} returns a value, then @code{R_UnwindProtect} calls
+@code{clean(cleandata, FALSE)} before returning the value returned by
+@code{fun}. If @code{fun} executes a non-local transfer of control, then
+@code{clean(cleandata, TRUE)} is called, and the non-local transfer of
+control is resumed.
+
+The second use pattern, suitable to support C++ stack unwinding, uses
+two additional functions:
+
+@example
+SEXP R_MakeUnwindCont();
+void NORET R_ContinueUnwind(SEXP cont);
+@end example
+
+@code{R_MakeUnwindCont} allocates a @emph{continuation token}
+@code{cont} to pass to @code{R_UnwindProtect}. This token should be
+protected with @code{PROTECT} before calling
+@code{R_UnwindProtect}. When the @code{clean} function is called with
+@code{jump == TRUE}, indicating that R is executing a non-local transfer
+of control, it can throw a C++ exception to a C++ @code{catch} outside
+the C++ code to be unwound, and then use the continuation token in the a
+call @code{R_ContinueUnwind(cont)} to resume the non-local transfer of
+control within R.
+
+
+@node Allowing interrupts, Platform and version information, Condition handling and cleanup code, The R API
 @section Allowing interrupts
 @cindex Interrupts
 
@@ -13773,7 +13853,7 @@ subroutine rchkusr()
 @end example
 
 These check if the user has requested an interrupt, and if so branch to
-@R{}'s error handling functions.
+@R{}'s error signaling functions.
 
 Note that it is possible that the code behind one of the entry points
 defined here if called from your C or FORTRAN code could be interruptible
@@ -14033,7 +14113,7 @@ The following headers are included by @file{R.h}:
 @item @file{R_ext/Boolean.h} @tab @code{TRUE}/@code{FALSE} type
 @item @file{R_ext/Complex.h} @tab C typedefs for @R{}'s @code{complex}
 @item @file{R_ext/Constants.h} @tab constants
-@item @file{R_ext/Error.h} @tab error handling
+@item @file{R_ext/Error.h} @tab error signaling
 @item @file{R_ext/Memory.h} @tab memory allocation
 @item @file{R_ext/Print.h} @tab @code{Rprintf} and variations.
 @item @file{R_ext/RS.h} @tab definitions common to @file{R.h} and

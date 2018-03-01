@@ -90,7 +90,7 @@ makeJSS <- function() {
     fmtISSN <- label(prefix="ISSN ")
     fmtInstitution <- plainclean
     fmtNote <- plainclean
-    fmtPages <- label(prefix="pp. ")
+    fmtPages <- plain
     fmtSchool <- plainclean
     fmtTechreportnumber <- labelclean(prefix="Technical Report ")
     fmtUrl <- label(prefix="\\url{", suffix="}")
