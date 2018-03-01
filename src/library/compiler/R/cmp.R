@@ -784,7 +784,7 @@ BASEGUARD.OP <- 123
 
 extractSrcref <- function(sref, idx) {
     if (is.list(sref) && length(sref) >= idx)
-        sref <- sref[[idx]]
+        sref[[idx]]
     else if (is.integer(sref) && length(sref) >= 6)
         sref
     else
@@ -3027,6 +3027,7 @@ cmpfile <- function(infile, outfile, ascii = FALSE, env = .GlobalEnv,
         stop("input and output file names are the same")
     forms <- parse(infile)
     nforms <- length(forms)
+    srefs <- attr(forms, "srcref")
     if (nforms > 0) {
         expr.needed <- 1000
         expr.old <- getOption("expressions")
@@ -3040,6 +3041,7 @@ cmpfile <- function(infile, outfile, ascii = FALSE, env = .GlobalEnv,
         cntxt$env <- addCenvVars(cenv, findLocalsList(forms, cntxt))
         for (i in 1:nforms) {
             e <- forms[[i]]
+            sref <- srefs[[i]]
             if (verbose) {
                 if (typeof(e) == "language" && e[[1]] == "<-" &&
                     typeof(e[[3]]) == "language" && e[[3]][[1]] == "function")
@@ -3049,7 +3051,8 @@ cmpfile <- function(infile, outfile, ascii = FALSE, env = .GlobalEnv,
                               "...\n"))
             }
             if (!mayCallBrowser(e, cntxt))
-                cforms[[i]] <- genCode(e, cntxt)
+                cforms[[i]] <- genCode(e, cntxt,
+                                       loc = list(expr = e, srcref = sref))
         }
         cat(gettextf("saving to file \"%s\" ... ", outfile))
         .Internal(save.to.file(cforms, outfile, ascii))
