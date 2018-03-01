@@ -3512,13 +3512,12 @@ have higher performance).  @acronym{XDR} is part of @acronym{RPC} and
 historically has been part of @file{libc} on a Unix-alike.  (In
 principle @command{man xdr_string} should tell you which library is
 needed, but it often does not: on Solaris and others it is provided by
-@code{libnsl}.)  
-@c  Fedora 28 will remove it from glibc, as the older version does not
-@c  support IPv6 (relevant for RPC but not XDR).
-However some builds of @code{glibc} remove or hide it with the intention
-that the @acronym{TI-RPC} library be used, in which case @code{libtirpc}
-(and its development version) needs to be installed, and its headers
-need to be on the C include path or in @file{/usr/include/tirpc}.
+@code{libnsl}.)  However some builds@footnote{This is the default as
+from @code{glibc} 2.26 and has been announced for Fedora 28.} of
+@code{glibc} omit or hide it with the intention that the
+@acronym{TI-RPC} library be used, in which case @code{libtirpc} (and its
+development version) needs to be installed, and its headers need to be
+on the C include path or in @file{/usr/include/tirpc}.
 
 Use of the X11 clipboard selection requires the @code{Xmu} headers and
 libraries.  These are normally part of an X11 installation (e.g.@: the
