@@ -253,6 +253,9 @@
    */
 #define HAVE_DIRENT_H 1
 
+/* Define to 1 if you have the `dladdr' function. */
+/* #undef HAVE_DLADDR */
+
 /* Define to 1 if you have the <dlfcn.h> header file. */
 /* #undef HAVE_DLFCN_H */
 
@@ -344,9 +347,6 @@
 
 /* Define to 1 if you have the `getrlimit' function. */
 /* #undef HAVE_GETRLIMIT */
-
-/* Define to 1 if you have the `setrlimit' function. */
-/* #undef HAVE_SETRLIMIT */
 
 /* Define to 1 if you have the `getrusage' function. */
 /* #undef HAVE_GETRUSAGE */
@@ -588,6 +588,9 @@
 // #define HAVE_OPENMP 1
 #endif
 
+/* Define if your OpenMP 4 implementation fully supports SIMD reduction */
+/* #undef HAVE_OPENMP_SIMDRED */
+
 /* Define to 1 if you have pangocairo. */
 /* #undef HAVE_PANGOCAIRO */
 
@@ -657,6 +660,9 @@
 /* Define to 1 if you have the `rintl' function. */
 #define HAVE_RINTL 1
 
+/* Define to 1 if you have the `rl_callback_sigcleanup' function. */
+/* #undef HAVE_RL_CALLBACK_SIGCLEANUP */
+
 /* Define to 1 if you have the `rl_completion_matches' function. */
 /* #undef HAVE_RL_COMPLETION_MATCHES */
 
@@ -686,6 +692,9 @@
 
 /* Define to 1 if you have the `setlocale' function. */
 #define HAVE_SETLOCALE 1
+
+/* Define to 1 if you have the `setrlimit' function. */
+/* #undef HAVE_SETRLIMIT */
 
 /* Define to 1 if you have the `sigaction' function. */
 /* #undef HAVE_SIGACTION */
