@@ -72,7 +72,6 @@
 
       \item \command{R CMD INSTALL} now correctly sets C++ compiler flags
       when all source files are in sub-directories of \file{src}.
-     }
     }
   }
 }

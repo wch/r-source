@@ -120,12 +120,12 @@ static SEXP seq_colon(double n1, double n2, SEXP call)
 	if (n1 <= n2)
 	    for (R_xlen_t i = 0; i < n; i++) {
 //		if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-		INTEGER(ans)[i] = in1 + i;
+		INTEGER(ans)[i] = (int)(in1 + i);
 	    }
 	else
 	    for (R_xlen_t i = 0; i < n; i++) {
 //		if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
-		INTEGER(ans)[i] = in1 - i;
+		INTEGER(ans)[i] = (int)(in1 - i);
 	    }
     } else {
 	ans = allocVector(REALSXP, n);
