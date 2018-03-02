@@ -688,7 +688,7 @@ assert({
               as_A(c(120, 17, -17, 207, NA, 0, -327, 0, 0), xtN))
 })
 ## 'sparse = TRUE requires recommended package Matrix
-if(requireNamespace('Matrix')) {
+if(requireNamespace('Matrix', lib.loc=.Library)) {
     xtS <- xtabs(Freq ~ Gender + Admit, DN, na.action = na.pass, sparse = TRUE)# error in R <= 3.3.2
     xtNS <- xtabs(Freq ~ Gender + Admit, DN, addNA = TRUE, sparse = TRUE)
     stopifnot(
@@ -1638,6 +1638,24 @@ assert({
     identical(dim(m),   c(3L, 6L))
     identical(dim(m__), c(4L, 6L))
 })
+
+
+## scale(*, <non-numeric>)
+if(requireNamespace('Matrix', lib.loc=.Library)) {
+    de <- data.frame(Type = structure(c(1L, 1L, 4L, 1L, 4L, 2L, 2L, 2L, 4L, 1L),
+				      .Label = paste0("T", 1:4), class = "factor"),
+		     Subj = structure(c(9L, 5L, 8L, 3L, 3L, 4L, 3L, 6L, 6L, 1L),
+				      .Label = as.character(1:9), class = "factor"))
+    show(SM <- xtabs(~ Type + Subj, data = de, sparse=TRUE))
+    assert({
+	inherits(SM, "sparseMatrix")
+	all.equal(scale(SM, Matrix::colMeans(SM)),
+		  scale(SM, Matrix::colMeans(SM, sparse=TRUE)),
+		  check.attributes=FALSE)
+    })
+}
+## 2nd scale() gave wrong error "length of 'center' must equal [..] columns of 'x'"
+## in R <= 3.4.x
 
 
 

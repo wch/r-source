@@ -325,6 +325,11 @@
       \item \code{merge()} gains new option \code{no.dups} and by
       default suffixes the second of two duplicated column names,
       thanks to a proposal by Scott Ritchie (and Gabe Becker).
+
+      \item \code{scale.default(x, center, scale)} now also allows
+      \code{center} or \code{scale} to be \dQuote{numeric-alike}, i.e.,
+      such that \code{as.numeric(.)} coerces them correctly.  This also
+      eliminates a wrong error message in such cases.
     }
   }
 
@@ -395,8 +400,8 @@
 
       \item \sQuote{Writing R Extensions} now documents the
       \code{R_tryCatch}, \code{R_tryCatchError}, and
-      \code{R_UnwindProtect} functions.      
-  
+      \code{R_UnwindProtect} functions.
+
       \item \code{NAMEDMAX} has been raised to 3 to allow protection of
       intermediate results from (usually ill-advised) assignments in
       arguments to \code{BUILTIN} functions. Package \code{C} code using
