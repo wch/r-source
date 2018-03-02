@@ -4449,8 +4449,9 @@ add_dummies <- function(dir, Log)
                     printLog0(Log, sprintf("See %s for details.\n",
                                            sQuote(outfile)))
                     if(any(grepl("^Note:", lines, useBytes = TRUE)))
-                        wrapLog("Further information on the location(s)",
-                                "of code generating the", sQuote("Notes"),
+                        wrapLog("Information on the location(s)",
+                                "of code generating the",
+                                paste0(sQuote("Note"), "s"),
                                 "can be obtained by re-running with",
                                 "environnment variable R_KEEP_PKG_SOURCE",
                                 "set to 'yes'.\n")
