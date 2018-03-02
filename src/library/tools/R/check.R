@@ -4453,7 +4453,7 @@ add_dummies <- function(dir, Log)
                                 "of code generating the",
                                 paste0(sQuote("Note"), "s"),
                                 "can be obtained by re-running with",
-                                "environnment variable R_KEEP_PKG_SOURCE",
+                                "environment variable R_KEEP_PKG_SOURCE",
                                 "set to 'yes'.\n")
 
                 } else if(length(notes)) {
