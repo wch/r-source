@@ -69,6 +69,10 @@
       \item \code{rf()} and \code{rbeta()} now also work correctly when
       \code{ncp} is not scalar, notably when (partly) \code{NA}.
       (\PR{17375})
+
+      \item \command{R CMD INSTALL} now correctly sets C++ compiler flags
+      when all source files are in sub-directories of \file{src}.
+     }
     }
   }
 }
