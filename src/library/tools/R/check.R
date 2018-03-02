@@ -4448,6 +4448,13 @@ add_dummies <- function(dir, Log)
                     }
                     printLog0(Log, sprintf("See %s for details.\n",
                                            sQuote(outfile)))
+                    if(any(grepl("^Note:", lines, useBytes = TRUE)))
+                        wrapLog("Further information on the location(s)",
+                                "of code generating the", sQuote("Notes"),
+                                "can be obtained by re-running with",
+                                "environnment variable R_KEEP_PKG_SOURCE",
+                                "set to 'yes'.\n")
+
                 } else if(length(notes)) {
                     noteLog(Log, "Found the following warnings:")
                     printLog0(Log, .format_lines_with_indent(notes), "\n")
