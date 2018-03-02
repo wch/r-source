@@ -668,6 +668,9 @@
       (\PR{17375})
 
       \item \code{is.na(NULL)} no longer warns.  (\PR{16107})
+
+      \item \command{R CMD INSTALL} now correctly sets C++ compiler flags
+      when all source files are in sub-directories of \file{src}.
     }
   }
 }
