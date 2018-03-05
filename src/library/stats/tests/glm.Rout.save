@@ -1,5 +1,5 @@
 
-R version 3.4.3 Patched (2018-02-21 r74291) -- "Kite-Eating Tree"
+R version 3.4.4 beta (2018-03-04 r74346) -- "Someone to Lean On"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -29,4 +29,4 @@ Warning messages:
 > 
 > proc.time()
    user  system elapsed 
-  0.154   0.028   0.161 
+  0.145   0.029   0.161 
