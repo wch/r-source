@@ -204,7 +204,7 @@ static void initLoadedDLL()
 	      _("R_MAX_NUM_DLLS cannot be bigger than %d"), 1000);
 	    R_Suicide(msg);
 	}
-	int needed_fds = (int)(1.67 * reqlimit);
+	int needed_fds = (int)ceil(reqlimit / 0.6);
 	int fdlimit = R_EnsureFDLimit(needed_fds);
 	if (fdlimit < 0 && reqlimit > 100) {
 	    /* this is very unlikely */
@@ -214,10 +214,13 @@ static void initLoadedDLL()
 	      100);
 	    R_Suicide(msg);
 	} else if (fdlimit >= 0 && fdlimit < needed_fds) {
+	    int maxdlllimit = (int) (0.6 * fdlimit);
+	    if (maxdlllimit < 100)
+		R_Suicide(_("the limit on the number of open files is too low"));
 	    char msg[128];
 	    snprintf(msg, 128,
 	      _("R_MAX_NUM_DLLS bigger than %d may exhaust open files limit"),
-	      (int) (0.6 * fdlimit));
+	      maxdlllimit);
 	    R_Suicide(msg);
 	}
 	/* when fdlimit == -1 (not known), currently only reqlimit of 100 is
