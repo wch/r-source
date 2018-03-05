@@ -4330,7 +4330,7 @@ functions where Windows does not support @code{%lld}, @code{%Lf} and
 similar formats (and has its own formats such as @code{%I64d} for 64-bit
 integers).  It is very rare to need to output such types, and 64-bit
 integers can usually be converted to doubles for output.  However, the
-C11 standard (ยง7.8.1) includes @code{PRIxNN} macros@footnote{These are
+C11 standard (ง7.8.1) includes @code{PRIxNN} macros@footnote{These are
 optional because the corresponding types are, but must be provided if the
 types are.} in C header @file{inttypes.h} (for example @code{PRId64}) so
 the portable approach is to test for these and if not available provide
