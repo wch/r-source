@@ -330,6 +330,10 @@
       \code{center} or \code{scale} to be \dQuote{numeric-alike}, i.e.,
       such that \code{as.numeric(.)} coerces them correctly.  This also
       eliminates a wrong error message in such cases.
+
+      \item \code{par*apply} and \code{par*applyLB} gain an optional
+      argument \code{chunk.size} which allows to specify the granularity of
+      scheduling.
     }
   }
 
@@ -598,6 +602,11 @@
       \item \code{read.table()} with a non-default separator now
       supports quotes following a non-whitespace character, matching the
       behavior of \code{scan()}.
+
+      \item \code{parLapplyLB} and \code{parSapplyLB} have been fixed to do
+      load balancing (dynamic scheduling).  This also means that results of
+      computations depending on random number generators will now really be
+      non-reproducible, as documented.
     }
   }
 }

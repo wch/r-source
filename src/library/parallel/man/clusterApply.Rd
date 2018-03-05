@@ -36,16 +36,16 @@ clusterMap(cl = NULL, fun, ..., MoreArgs = NULL, RECYCLE = TRUE,
            .scheduling = c("static", "dynamic"))
 clusterSplit(cl = NULL, seq)
 
-parLapply(cl = NULL, X, fun, ...)
+parLapply(cl = NULL, X, fun, ..., chunk.size = NULL)
 parSapply(cl = NULL, X, FUN, ..., simplify = TRUE,
-          USE.NAMES = TRUE)
-parApply(cl = NULL, X, MARGIN, FUN, ...)
-parRapply(cl = NULL, x, FUN, ...)
-parCapply(cl = NULL, x, FUN, ...)
+          USE.NAMES = TRUE, chunk.size = NULL)
+parApply(cl = NULL, X, MARGIN, FUN, ..., chunk.size = NULL)
+parRapply(cl = NULL, x, FUN, ..., chunk.size = NULL)
+parCapply(cl = NULL, x, FUN, ..., chunk.size = NULL)
 
-parLapplyLB(cl = NULL, X, fun, ...)
+parLapplyLB(cl = NULL, X, fun, ..., chunk.size = NULL)
 parSapplyLB(cl = NULL, X, FUN, ..., simplify = TRUE,
-            USE.NAMES = TRUE)
+            USE.NAMES = TRUE, chunk.size = NULL)
 }
 \arguments{
   \item{cl}{a cluster object, created by this package or by package
@@ -63,6 +63,8 @@ parSapplyLB(cl = NULL, X, FUN, ..., simplify = TRUE,
   \item{RECYCLE}{logical; if true shorter arguments are recycled.}
   \item{X}{A vector (atomic or list) for \code{parLapply} and
     \code{parSapply}, an array for \code{parApply}.}
+  \item{chunk.size}{scalar number; number of invocations of \code{fun} or
+    \code{FUN} in one chunk; a chunk is a unit for scheduling.}
   \item{MARGIN}{vector specifying the dimensions to use.}
   \item{simplify, USE.NAMES}{logical; see \code{\link{sapply}}.}
   \item{SIMPLIFY}{logical; see \code{\link{mapply}}.}
@@ -113,16 +115,27 @@ parSapplyLB(cl = NULL, X, FUN, ..., simplify = TRUE,
   to equal in length: the computation is done on the master.
 
   \code{parLapply}, \code{parSapply}, and \code{parApply} are parallel
-  versions of \code{lapply}, \code{sapply} and \code{apply}.
+  versions of \code{lapply}, \code{sapply} and \code{apply}.  Chunks of
+  computation are statically allocated to nodes using \code{clusterApply}.
+  By default, the number of chunks is the same as the number of nodes.
   \code{parLapplyLB}, \code{parSapplyLB} are load-balancing versions,
   intended for use when applying \code{FUN} to different elements of
-  \code{X} takes quite variable amounts of time, and either the function
-  is deterministic or reproducible results are not required.
+  \code{X} takes quite variable amounts of time, and either the function is
+  deterministic or reproducible results are not required.  Chunks of
+  computation are allocated dynamically to nodes using
+  \code{clusterApplyLB}.  From \R 3.5.0, the default number of chunks is
+  twice the number of nodes. Before \R 3.5.0, the (fixed) number of chunks
+  was the same as the number of nodes.
 
   \code{parRapply} and \code{parCapply} are parallel row and column
   \code{apply} functions for a matrix \code{x}; they may be slightly
   more efficient than \code{parApply} but do less post-processing of the
   result.
+
+  A chunk size of \code{0} with static scheduling uses the default (one
+  chunk per node).  With dynamic scheduling, chunk size of \code{0} has the
+  same effect as \code{1} (one invocation of \code{FUN}/\code{fun} per
+  chunk).
 }
 \value{
   For \code{clusterCall}, \code{clusterEvalQ} and \code{clusterSplit}, a
