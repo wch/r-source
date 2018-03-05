@@ -128,7 +128,7 @@ regexec(pattern, text, ignore.case = FALSE, perl = FALSE,
 \value{
   \code{grep(value = FALSE)} returns a vector of the indices
   of the elements of \code{x} that yielded a match (or not, for
-  \code{invert = TRUE}.  This will be an integer vector unless the input
+  \code{invert = TRUE}).  This will be an integer vector unless the input
   is a \emph{long vector}, when it will be a double vector.
 
   \code{grep(value = TRUE)} returns a character vector containing the
