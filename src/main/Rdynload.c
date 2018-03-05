@@ -183,9 +183,9 @@ static void initLoadedDLL()
        that matches the fd limit. R attempts to increase the limit if it
        is too small. The goal for maximum number of DLLs is currently 614.
 
-       The limit receives increased attention with 'workflow' documents
-       which load increasingly more packages, hitting the fd limit of 256
-       on macOS systems.
+       The limit receives increased attention with 'workflow'
+       documents which load increasingly more packages, hitting the
+       default fd limit of 256 on macOS systems.
     */
 
     char *req = getenv("R_MAX_NUM_DLLS");
