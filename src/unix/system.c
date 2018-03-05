@@ -609,6 +609,7 @@ int R_EnsureFDLimit(int desired) {
 	return (int) lim; /* also could return error */
     
     return (int) rlim.rlim_cur;
+#else
+    return -1;
 #endif
 }
-
