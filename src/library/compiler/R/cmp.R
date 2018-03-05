@@ -803,8 +803,8 @@ addLocString <- function(msg, loc) {
     if (is.null(loc$srcref))
         msg
     else
-        paste0(msg, " at ", getSrcFilename(loc$srcref), ":",
-               getSrcLocation(loc$srcref, "line"))
+        paste0(msg, " at ", utils::getSrcFilename(loc$srcref), ":",
+               utils::getSrcLocation(loc$srcref, "line"))
 }
 
 make.codeBuf <- function(expr, loc = NULL) {
