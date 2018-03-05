@@ -421,7 +421,7 @@
       \code{.__H__.rbind} in package \pkg{base} are deprecated (in
       favour of \code{cbind} and \code{rbind}).
 
-      \item The declaratation of \code{pythag()} in \file{Rmath.h} has
+      \item The declaration of \code{pythag()} in \file{Rmath.h} has
       been removed --- it has not been provided since \R 2.14.0.
       [Deferred until \CRANpkg{Rcpp} catches up.]
     }
