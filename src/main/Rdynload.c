@@ -213,13 +213,15 @@ static void initLoadedDLL()
 	      _("R_MAX_NUM_DLLS cannot be bigger than %d when fd limit is not known"),
 	      100);
 	    R_Suicide(msg);
-	} else if (fdlimit != needed_fds) {
+	} else if (fdlimit >= 0 && fdlimit < needed_fds) {
 	    char msg[128];
 	    snprintf(msg, 128,
 	      _("R_MAX_NUM_DLLS bigger than %d may exhaust open files limit"),
 	      (int) (0.6 * fdlimit));
 	    R_Suicide(msg);
 	}
+	/* when fdlimit == -1 (not known), currently only reqlimit of 100 is
+	   allowed */
 	MaxNumDLLs = reqlimit;
     } else {
 	/* set a reasonable default limit */
