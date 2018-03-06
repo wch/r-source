@@ -67,7 +67,7 @@ is.relistable(x)
 
         ll <- function(param.vector)
         {
-           param <- relist(param.vector, skeleton = ipar))
+           param <- relist(param.vector, skeleton = ipar)
            -sum(mvdnorm(x, mean = param$mean, vcov = param$vcov,
                         log = TRUE))
         }

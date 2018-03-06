@@ -35,7 +35,7 @@ help(topic, package = NULL, lib.loc = NULL,
    or \code{NULL}.  The default value of \code{NULL} corresponds to all
    libraries currently known.  If the default is used, the loaded
    packages are searched before the libraries.  This is not used for
-   HTML help (see \sQuote{Details}.}
+   HTML help (see \sQuote{Details}).}
  \item{verbose}{logical; if \code{TRUE}, the file name is reported.}
  \item{try.all.packages}{logical; see \code{Note}.}
  \item{help_type}{character string: the type of help required.
