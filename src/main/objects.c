@@ -291,7 +291,7 @@ SEXP R_LookupMethod(SEXP method, SEXP rho, SEXP callrho, SEXP defrho)
 	if (top == R_GlobalEnv)
 	    top = R_BaseEnv;
 	else
-	    top = ENCLOS(rho);
+	    top = ENCLOS(top);
 	val = findFunWithBaseEnvAfterGlobalEnv(method, top);
     }
     else
