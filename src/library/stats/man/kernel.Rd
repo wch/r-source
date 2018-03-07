@@ -32,7 +32,7 @@ is.tskernel(k)
   \item{coef}{the upper half of the smoothing kernel coefficients
     (including coefficient zero) \emph{or} the name of a kernel
     (currently \code{"daniell"}, \code{"dirichlet"}, \code{"fejer"} or
-    \code{"modified.daniell"}.}
+    \code{"modified.daniell"}).}
   \item{m}{the kernel dimension(s) if \code{coef} is a name.  When \code{m}
     has length larger than one, it means the convolution of
     kernels of dimension \code{m[j]}, for \code{j in 1:length(m)}.

@@ -14,7 +14,7 @@ spec.taper(x, p = 0.1)
  \item{p}{The proportion to be tapered at each end of the series,
    either a scalar (giving the proportion for all series)
    or a vector of the length of the number of series (giving the
-   proportion for each series..}
+   proportion for each series).}
 }
 \description{
   Apply a cosine-bell taper to a time series.

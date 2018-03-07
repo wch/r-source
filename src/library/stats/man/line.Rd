@@ -11,7 +11,7 @@
   Fit a line robustly as recommended in \emph{Exploratory Data Analysis}.
 
   Currently the initial median-median line is \emph{not} iterated (as
-  opposed to Tukey's \dQuote{resistant line} in the references.
+  opposed to Tukey's \dQuote{resistant line} in the references).
 }
 \usage{
 line(x, y, iter = 1)

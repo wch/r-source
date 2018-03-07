@@ -36,7 +36,7 @@ postDrawDetails(x)
 
   \code{drawDetails} is called next and is where any additional
   calculations and graphical output should occur (see, for example,
-  \code{grid:::drawDetails.xaxis}.  Note that the default behaviour
+  \code{grid:::drawDetails.xaxis}).  Note that the default behaviour
   for gTrees is to draw all grobs in the \code{children} slot
   so there is typically nothing to do here.
 

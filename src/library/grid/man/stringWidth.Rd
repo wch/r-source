@@ -22,7 +22,7 @@ stringDescent(string)
 }
 \arguments{
   \item{string}{A character vector or a language object (as used for
-    \sQuote{\link{plotmath}} calls.}
+    \sQuote{\link{plotmath}} calls).}
 }
 \value{
   A \code{\link{unit}} object.

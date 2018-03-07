@@ -23,7 +23,7 @@ Sys.localeconv()
   (when \R may not work correctly).
 
   The monetary components will only be set to non-default values (see
-  the \sQuote{Examples} section if the \code{LC_MONETARY} category is
+  the \sQuote{Examples} section) if the \code{LC_MONETARY} category is
   set.  It often is not set: set the examples for how to trigger setting it.
 }
 \value{

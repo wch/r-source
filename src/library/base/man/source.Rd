@@ -154,7 +154,7 @@ withAutoprint(exprs, evaluated = FALSE, local = parent.frame(),
   in the result will be translated to the current encoding and marked as
   such (see \code{\link{Encoding}}).
 
-  If \code{file} is a connection (including one specified by \code{""},
+  If \code{file} is a connection (including one specified by \code{""}),
   it is not possible to re-encode the input inside \code{source}, and so
   the \code{encoding} argument is just used to mark character strings in the
   parsed input in Latin-1 and UTF-8 locales: see \code{\link{parse}}.
@@ -178,7 +178,7 @@ withAutoprint(exprs, evaluated = FALSE, local = parent.frame(),
 \examples{
 someCond <- 7 > 6
 ## want an if-clause to behave "as top level" wrt auto-printing :
-## (all should look "as if on top level", e.g. non-assignments should print:
+## (all should look "as if on top level", e.g. non-assignments should print:)
 if(someCond) withAutoprint({
    x <- 1:12
    x-1

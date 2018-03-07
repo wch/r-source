@@ -31,7 +31,7 @@ x != y
 \details{
   The binary comparison operators are generic functions: methods can be
   written for them individually or via the
-  \code{\link[=S3groupGeneric]{Ops}}) group generic function.  (See
+  \code{\link[=S3groupGeneric]{Ops}} group generic function.  (See
   \code{\link[=S3groupGeneric]{Ops}} for how dispatch is computed.)
 
   Comparison of strings in character vectors is lexicographic within the

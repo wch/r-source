@@ -310,7 +310,7 @@ postscript(file = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
   (\url{https://en.wikipedia.org/wiki/CMYK_color_model#Mapping_RGB_to_CMYK}),
   and raster images are output in RGB.
 
-  Color models provided for backwards compatibility are \code{"rgb"})
+  Color models provided for backwards compatibility are \code{"rgb"}
   (which is RGB+gray) and \code{"rgb-nogray"} which use uncalibrated RGB
   (as used in \R prior to 2.13.0).  These result in slightly smaller
   files which may render faster, but do rely on the viewer being

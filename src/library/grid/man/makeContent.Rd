@@ -37,7 +37,7 @@ makeContent(x)
   \code{makeContent} is called next and is where any additional
   calculations should occur and graphical content should
   be generated (see, for example,
-  \code{grid:::makeContent.xaxis}.
+  \code{grid:::makeContent.xaxis}).
   This function should be used to \emph{modify} the \code{children}
   of a gTree.
   The function \emph{must} return the modified \code{x}.

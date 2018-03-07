@@ -31,7 +31,7 @@
 
 \section{Methods}{
  Methods are defined for operators and math functions (groups
- \code{\link{Ops}}, \code{\link{Math}} and  \code{\link{Math2}}.  In
+ \code{\link{Ops}}, \code{\link{Math}} and  \code{\link{Math2}}).  In
  all cases the result is an ordinary vector of the appropriate type.
 }
 \references{

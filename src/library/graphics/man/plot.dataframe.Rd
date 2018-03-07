@@ -22,7 +22,7 @@
   This is intended for data frames with \emph{numeric} columns. For more
   than two columns it first calls \code{\link{data.matrix}} to convert
   the data frame to a numeric matrix and then calls \code{\link{pairs}}
-  to produce a scatterplot matrix).  This can fail and may well be
+  to produce a scatterplot matrix.  This can fail and may well be
   inappropriate: for example numerical conversion of dates will lose
   their special meaning and a warning will be given.
 

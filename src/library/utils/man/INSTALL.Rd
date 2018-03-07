@@ -177,6 +177,6 @@
   (on the Help menu in \code{RGui}),
 #endif
   \code{\link{RShowDoc}} and the \file{doc/manual} subdirectory of the
-  \R source tree).
+  \R source tree.
 }
 \keyword{utilities}

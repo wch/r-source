@@ -166,7 +166,7 @@ OlsonNames(tzdir = NULL)
   variable \env{TZDIR} can be used to point to a different
   \file{zoneinfo} database: this is also supported by the native
   services on some OSes, e.g.\sspace{}Linux using \code{glibc} except in
-  secure modes).
+  secure modes.
   %% But not Linux with musl
   
   Time zones given by name (\emph{via} environment variable \env{TZ}, in
@@ -289,8 +289,8 @@ OlsonNames(tzdir = NULL)
   name of a file in the time-zone database.  (The systems probably use
   the time-zone file (symlinked to) \file{/etc/localtime}, but the
   \code{Sys.timezone} code
-  does not check that is the same as the named file in the database.
-  (Deliberately as they may be from different dates.)
+  does not check that is the same as the named file in the database.  This is deliberate
+  as they may be from different dates.)
 }
 #endif
 

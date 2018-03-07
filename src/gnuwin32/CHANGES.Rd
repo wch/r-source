@@ -428,7 +428,7 @@
   \subsection{NEW FEATURES}{
     \itemize{
       \item Building badly-written vignettes which used the default
-      device (\code{pdf(file = "Rplots.pdf")} could leave the device
+      device (\code{pdf(file = "Rplots.pdf")}) could leave the device
       open and hence the file \file{Rplots.pdf} could not be removed on
       Windows: all devices are now closed.
     }

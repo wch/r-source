@@ -32,7 +32,7 @@ lm.wfit(x, y, w, offset = NULL, method = "qr", tol = 1e-7,
   \item{w}{vector of weights (length \code{n}) to be used in the fitting
     process for the \code{wfit} functions.  Weighted least squares is
     used with weights \code{w}, i.e., \code{sum(w * e^2)} is minimized.}
-  \item{offset}{numeric of length \code{n}).  This can be used to
+  \item{offset}{(numeric of length \code{n}).  This can be used to
     specify an \emph{a priori} known component to be included in the
     linear predictor during fitting.}
 

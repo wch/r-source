@@ -42,7 +42,7 @@
 \details{
   \code{predict.lm} produces predicted values, obtained by evaluating
   the regression function in the frame \code{newdata} (which defaults to
-  \code{model.frame(object)}.  If the logical \code{se.fit} is
+  \code{model.frame(object)}).  If the logical \code{se.fit} is
   \code{TRUE}, standard errors of the predictions are calculated.  If
   the numeric argument \code{scale} is set (with optional \code{df}), it
   is used as the residual standard deviation in the computation of the

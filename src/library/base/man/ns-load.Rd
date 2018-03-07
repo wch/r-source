@@ -39,7 +39,7 @@ isNamespaceLoaded(name)
   }
   \item{partial}{logical; if true, stop just after loading code.}
   \item{versionCheck}{\code{NULL} or a version specification (a list
-    with components \code{op} and \code{version})).}
+    with components \code{op} and \code{version}).}
   \item{quietly}{logical: should progress and error messages be suppressed?}
   \item{name}{string or \sQuote{name}, see \code{\link{as.symbol}},
     of a package, e.g., \code{"stats"}.}

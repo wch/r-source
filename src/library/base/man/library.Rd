@@ -30,7 +30,7 @@ require(package, lib.loc = NULL, quietly = FALSE,
   \item{package, help}{the name of a package, given as a \link{name} or
     literal character string, or a character string, depending on
     whether \code{character.only} is \code{FALSE} (default) or
-    \code{TRUE}).}
+    \code{TRUE}.}
   \item{pos}{the position on the search list at which to attach the
     loaded namespace.  Can also be the name of a position on the current
     search list as given by \code{\link{search}()}.}

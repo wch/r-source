@@ -587,7 +587,7 @@
 
       \item \code{aggregate(<data.frame>, drop=FALSE)} no longer calls
       the function on <empty> parts but sets corresponding results to
-      \code{NA}.  Thanks to Suharto Anggono's patches in \PR{17280}).
+      \code{NA}.  (Thanks to Suharto Anggono's patches in \PR{17280}).
 
       \item The \code{duplicated()} method for data frames is now based
       on \code{list}s (instead of string coercion).  Consequently
@@ -1441,7 +1441,7 @@
 
       \item An alternative compiler for C++11 is now specified with
       \samp{CXX11}, not \samp{CXX1X}. Likewise C++11 flags are specified
-      with \samp{CXX11FLAGS} and the standard (e.g., \samp{-std=gnu++11}
+      with \samp{CXX11FLAGS} and the standard (e.g., \samp{-std=gnu++11})
       is specified with \samp{CXX11STD}.
 
       \item \command{configure} now tests for a C++14-compliant compiler
