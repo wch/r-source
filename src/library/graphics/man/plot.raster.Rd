@@ -15,9 +15,9 @@
 \arguments{
   \item{x, y}{raster. \code{y} will be ignored.}
   \item{xlim, ylim}{Limits on the plot region (default from dimensions
-    of the raster.}
+    of the raster).}
   \item{xaxs, yaxs}{Axis interval calculation style (default means that
-    raster fills plot region.}
+    raster fills plot region).}
   \item{asp}{Aspect ratio (default retains aspect ratio of the raster).}
   \item{add}{Logical indicating whether to simply add raster to an
     existing plot.}

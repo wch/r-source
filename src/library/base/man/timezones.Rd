@@ -160,7 +160,7 @@ OlsonNames()
   variable \env{TZDIR} can be used to point to a different
   \file{zoneinfo} database: this is also supported by the native
   services on some OSes, e.g.\sspace{}Linux using \code{glibc} except in
-  secure modes).
+  secure modes.
   %% But not Linux with musl
   
   Time zones given by name (\emph{via} environment variable \env{TZ}, in

@@ -88,7 +88,7 @@ returnValue(default = NULL)
   \item{expr, msg}{arguments to the support function \code{.doTrace}, calls to
     which are inserted into the modified function or method:
     \code{expr} is the tracing action (such as a call to
-    \code{browser()}, and \code{msg} is a string identifying the
+    \code{browser()}), and \code{msg} is a string identifying the
     place where the trace action occurs.
   }
   \item{default}{If \code{returnValue} finds no return value (e.g.
@@ -127,7 +127,7 @@ returnValue(default = NULL)
 
   When the \code{at} argument is supplied, it can be a vector of
   integers referring to the substeps of the body of the function (this
-  only works if the body of the function is enclosed in \code{{ ...}}.  In
+  only works if the body of the function is enclosed in \code{{ ...}}).  In
   this case \code{tracer} is \emph{not} called on entry, but instead
   just before evaluating each of the steps listed in \code{at}.  (Hint:
   you don't want to try to count the steps in the printed version of a

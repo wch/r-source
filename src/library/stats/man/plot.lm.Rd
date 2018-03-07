@@ -80,7 +80,7 @@
 
   The \sQuote{Scale-Location} plot, also called \sQuote{Spread-Location} or
   \sQuote{S-L} plot, takes the square root of the absolute residuals in
-  order to diminish skewness (\eqn{\sqrt{| E |}}{sqrt(|E|)}) is much less skewed
+  order to diminish skewness (\eqn{\sqrt{| E |}}{sqrt(|E|)} is much less skewed
   than \eqn{| E |} for Gaussian zero-mean \eqn{E}).
 
   The \sQuote{S-L}, the Q-Q, and the Residual-Leverage plot, use

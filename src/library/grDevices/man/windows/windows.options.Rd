@@ -33,7 +33,7 @@ windows.options(\dots, reset = FALSE)
   values are applied.
 
   Option \code{antialias} applies to screen devices (\code{windows},
-  \code{win.graph}, \code{X11} and \code{x11})).  There is a separate option,
+  \code{win.graph}, \code{X11} and \code{x11}).  There is a separate option,
   \code{bitmap.aa.win}, for bitmap devices with \code{type = "windows"}.
 }
 \value{

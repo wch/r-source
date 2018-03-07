@@ -28,7 +28,7 @@ isTRUE(x)
 }
 \arguments{
   \item{x, y}{raw or logical or \sQuote{number-like} vectors (i.e., of types
-    \code{\link{double}} (class \code{\link{numeric}}), \code{\link{integer}}
+    \code{\link{double}} (class \code{\link{numeric}}, \code{\link{integer}}
     and \code{\link{complex}})), or objects for
     which methods have been written.}
 }

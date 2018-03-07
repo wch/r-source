@@ -74,7 +74,7 @@ j <- 10*(0:5)
 rect(125+j, 360+j,   141+j, 405+j/2, col = c(NA,0),
      border = "gold", lwd = 2)
 rect(125+j, 296+j/2, 141+j, 331+j/5, col = c(NA,"midnightblue"))
-mtext("+  2 x 6 rect(*, col = c(NA,0)) and  col = c(NA,\"m..blue\"))")
+mtext("+  2 x 6 rect(*, col = c(NA,0)) and  col = c(NA,\"m..blue\")")
 
 ## an example showing colouring and shading
 plot(c(100, 200), c(300, 450), type= "n", xlab = "", ylab = "")

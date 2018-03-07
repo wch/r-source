@@ -385,7 +385,7 @@ isIncomplete(con)
   choose the appropriate byte order, some (including earlier versions of
   \code{glibc}) will not.  There is a subtle distinction between
   \code{"UTF-16"} and \code{"UCS-2"} (see
-  \url{https://en.wikipedia.org/wiki/UTF-16}: the use of characters in
+  \url{https://en.wikipedia.org/wiki/UTF-16}): the use of characters in
   the \sQuote{Supplementary Planes} which need surrogate pairs is very
   rare so \code{"UCS-2LE"} is an appropriate first choice (as it is more
   widely implemented).

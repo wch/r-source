@@ -216,7 +216,7 @@ X11.options(\dots, reset = FALSE)
 
   %  https://bugs.launchpad.net/ubuntu/+source/fontconfig/+bug/551977
   Problems with incorrect rendering of symbols (e.g., of
-  \code{quote(pi)} and \code{expression(10^degree))})
+  \code{quote(pi)} and \code{expression(10^degree)})
   have been seen on Linux systems which have the Wine
   symbol font installed -- \code{fontconfig} then prefers this and
   misinterprets its encoding.  Adding the following lines

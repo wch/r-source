@@ -54,7 +54,7 @@ chol(x, \dots)
   
   The value of \code{tol} is passed to LAPACK, with negative values
   selecting the default tolerance of (usually) \code{nrow(x) *
-  .Machine$double.neg.eps * max(diag(x)}.  The algorithm terminates once
+  .Machine$double.neg.eps * max(diag(x))}.  The algorithm terminates once
   the pivot is less than \code{tol}.
 
   Unsuccessful results from the underlying LAPACK code will result in an

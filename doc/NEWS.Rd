@@ -6,6 +6,7 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R 3.4.4}{
+\section{\Rlogo CHANGES IN R 3.4.4}{
 
   \subsection{NEW FEATURES}{
     \itemize{
@@ -833,7 +834,7 @@
 
       \item An alternative compiler for C++11 is now specified with
       \samp{CXX11}, not \samp{CXX1X}. Likewise C++11 flags are specified
-      with \samp{CXX11FLAGS} and the standard (e.g., \samp{-std=gnu++11}
+      with \samp{CXX11FLAGS} and the standard (e.g., \samp{-std=gnu++11})
       is specified with \samp{CXX11STD}.
 
       \item \command{configure} now tests for a C++14-compliant compiler

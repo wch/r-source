@@ -64,7 +64,7 @@ lfactorial(x)
   for all real \code{x} except zero and negative integers (when
   \code{NaN} is returned).  There will be a warning on possible loss of
   precision for values which are too close (within about
-  \eqn{10^{-8}}{1e-8})) to a negative integer less than \samp{-10}.
+  \eqn{10^{-8}}{1e-8}) to a negative integer less than \samp{-10}.
 
   \code{factorial(x)} (\eqn{x!} for non-negative integer \code{x})
   is defined to be \code{gamma(x+1)} and \code{lfactorial} to be

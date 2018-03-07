@@ -66,7 +66,7 @@ addNA(x, ifany = FALSE)
   \item{nmax}{an upper bound on the number of levels; see \sQuote{Details}.}
   \item{\dots}{(in \code{ordered(.)}): any of the above, apart from
     \code{ordered} itself.}
-  \item{ifany}{(only add an \code{NA} level if it is used, i.e.
+  \item{ifany}{only add an \code{NA} level if it is used, i.e.
     if \code{any(is.na(x))}.}
 }
 \value{

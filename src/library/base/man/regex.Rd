@@ -206,7 +206,7 @@
 
   For complete details please consult the man pages for PCRE (and not
   PCRE2), especially \command{man pcrepattern} and \command{man
-  pcreapi}), on your system or from the sources at
+  pcreapi}, on your system or from the sources at
   \url{http://www.pcre.org}.  (The version in use can be found by
   calling \code{\link{extSoftVersion}}.  It need not be the version
   described in the system's man page.  As PCRE has been feature-frozen

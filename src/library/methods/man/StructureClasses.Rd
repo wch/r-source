@@ -95,7 +95,7 @@
   Time-series objects, in contrast to matrices and arrays, have a valid
   S3 class, \code{"ts"}, registered  using an S4-style definition (see the
   documentation for \code{\link{setOldClass}} in the examples section
-  for an abbreviated listing of how this is done.  The S3
+  for an abbreviated listing of how this is done).  The S3
   inheritance of \code{"mts"} in package \pkg{stats} is also
   registered.
   These classes, as well as \code{"matrix"} and \code{"array"} should

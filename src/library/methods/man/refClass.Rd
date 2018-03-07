@@ -651,7 +651,7 @@ binding of the class definition.
 
 The new methods can refer to any currently defined method by name
 (including other methods supplied in this call to
-\code{$methods()}. %$
+\code{$methods()}). %$
 Note though that previously defined methods are not re-analyzed
 meaning that they will not call the new method (unless it redefines an
 existing method of the same name).

@@ -65,7 +65,7 @@ makeARIMA(phi, theta, Delta, kappa = 1e6,
     \item{\code{a}}{the current state estimate}
     \item{\code{P}}{the current estimate of the state uncertainty matrix \eqn{Q}}
     \item{\code{Pn}}{the estimate at time \eqn{t-1} of the state
-      uncertainty matrix \eqn{Q} (not updated by \code{KalmanForecast}.}
+      uncertainty matrix \eqn{Q} (not updated by \code{KalmanForecast}).}
   }
 
   \code{KalmanSmooth} is the workhorse function for \code{\link{tsSmooth}}.

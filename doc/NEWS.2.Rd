@@ -468,7 +468,7 @@
       In interactive use it will ask whether to choose the source
       version of a package if the binary version is older and contains
       compiled code, and also asks if source packages with no binary
-      version should be installed).
+      version should be installed.
     }
   }
 
@@ -682,7 +682,7 @@
       \sQuote{spectral} or 2-norm) as well, mainly for didactical
       completeness.
 
-      \item \code{pmin()} and \code{pmax())} now also work when one of
+      \item \code{pmin()} and \code{pmax()} now also work when one of
       the inputs is of length zero and others are not, returning a
       zero-length vector, analogously to, say, \code{+}.
 
@@ -941,7 +941,7 @@
       active could abort the \R process.
 
       \item \code{getMethod(f, sig)} produced an incorrect error message
-      in some cases when \code{f} was not a string).
+      in some cases when \code{f} was not a string.
 
       \item Using a string as a \dQuote{call} in an error condition
       with \code{options(showErrorCalls=TRUE)} could cause a segfault.
@@ -1674,7 +1674,7 @@
       \item \code{tools::deparseLatex(dropBraces=TRUE)} could drop
       text as well as braces.
 
-      \item \code{colormodel = "grey"} (new in \R 2.14.0))
+      \item \code{colormodel = "grey"} (new in \R 2.14.0)
       did not always work in \code{postscript()} and \code{pdf()}.
 
       \item \code{file.append()} could return \code{TRUE} for failures.
@@ -4465,7 +4465,7 @@
        It avoids the use of \command{texindy} by \command{texinfo}'s
        \command{texi2dvi >= 1.157}, since that does not emulate
        'makeindex' well enough to avoid problems with special characters
-       (such as \samp{(}, \samp{\{}, \samp{!}) in indices.
+       (such as \samp{(}, \samp{\{}, \samp{!}) in indices. % )
 
       \item The ability of \code{readLines()} and \code{scan()} to
        re-encode inputs to marked UTF-8 strings on Windows since \R 2.7.0

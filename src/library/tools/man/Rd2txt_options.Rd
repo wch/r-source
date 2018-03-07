@@ -39,7 +39,7 @@ Rd2txt_options(...)
       expanding \verb{\href} tags.}
     \item{code_quote}{(default \code{TRUE}):  Whether to render
       \verb{\code} and similar with single quotes.}
-    \item{underline_titles}{default \code{TRUE}):  Whether to render
+    \item{underline_titles}{(default \code{TRUE}):  Whether to render
       section titles with underlines (via backspacing).}
   }
 }

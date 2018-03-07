@@ -83,7 +83,7 @@ as.vector(x)
 ## append to a list:
 ll <- list(A = 1, c = "C")
 ## do *not* use
-c(ll, d = 1:3) # which is == c(ll, as.list(c(d = 1:3))
+c(ll, d = 1:3) # which is == c(ll, as.list(c(d = 1:3)))
 ## but rather
 c(ll, d = list(1:3))  # c() combining two lists
 

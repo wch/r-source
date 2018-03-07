@@ -46,7 +46,7 @@ substring(text, first, last = 1000000L) <- value
   the answer is \code{NA}.
 
   Elements of the result will be have the encoding declared as that of
-  the current locale (see \code{\link{Encoding}} if the corresponding
+  the current locale (see \code{\link{Encoding}}) if the corresponding
   input had a declared Latin-1 or UTF-8 encoding and the current locale
   is either Latin-1 or UTF-8.
 

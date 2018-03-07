@@ -70,7 +70,7 @@ is.na(x) <- value
   if the expression does not depend on the \code{NA} operand.
   
   The default method for \code{anyNA} handles atomic vectors without a
-  class and \code{NULL}.  It calls \code{any(is.na(x)} on objects with
+  class and \code{NULL}.  It calls \code{any(is.na(x))} on objects with
   classes and for \code{recursive = FALSE}, on lists and pairlists.
 }
 \value{

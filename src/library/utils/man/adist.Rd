@@ -33,7 +33,7 @@ adist(x, y = NULL, costs = NULL, counts = FALSE, fixed = TRUE,
     elements are used as string literals.  Otherwise, they are taken as
     regular expressions and \code{partial = TRUE} is implied
     (corresponding to the approximate string distance used by
-    \code{\link{agrep}} with \code{fixed = FALSE}.}
+    \code{\link{agrep}} with \code{fixed = FALSE}).}
   \item{partial}{a logical indicating whether the transformed \code{x}
     elements must exactly match the complete \code{y} elements, or only
     substrings of these.  The latter corresponds to the approximate

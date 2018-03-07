@@ -64,7 +64,7 @@ system(command, intern = FALSE,
 
   \code{command} must be an executable (extensions \file{.exe},
   \file{.com}) or a batch file (extensions \file{.cmd} and \file{.bat}):
-  these extensions are tried in turn if none is supplied.)  This means
+  these extensions are tried in turn if none is supplied. This means
   that redirection, pipes, DOS internal commands, \dots cannot be used:
   see \code{\link{shell}} if you want to pass a shell command-line.
 

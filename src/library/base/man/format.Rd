@@ -79,7 +79,7 @@ format(x, \dots)
 \details{
   \code{format} is a generic function.  Apart from the methods described
   here there are methods for dates (see \code{\link{format.Date}}),
-  date-times (see \code{\link{format.POSIXct}})) and for other classes such
+  date-times (see \code{\link{format.POSIXct}}) and for other classes such
   as \code{format.octmode} and \code{format.dist}.
 
   \code{format.data.frame} formats the data frame column by column,

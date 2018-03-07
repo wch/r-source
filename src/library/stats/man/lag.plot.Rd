@@ -23,7 +23,7 @@ lag.plot(x, lags = 1, layout = NULL, set.lags = 1:lags,
   \item{lags}{number of lag plots desired, see arg \code{set.lags}.}
   \item{layout}{the layout of multiple plots, basically the \code{mfrow}
     \code{\link{par}()} argument.  The default uses about a square
-    layout (see \code{\link{n2mfrow}} such that all plots are on one page.}
+    layout (see \code{\link{n2mfrow}}) such that all plots are on one page.}
   \item{set.lags}{vector of positive integers allowing specification of
     the set of lags used; defaults to \code{1:lags}.}
   \item{main}{character with a main header title to be done on the top

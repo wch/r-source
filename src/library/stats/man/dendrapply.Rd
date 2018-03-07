@@ -11,7 +11,7 @@
   recursively.  When  \code{y <- dendrapply(x, fn)}, then \code{y} is a
   dendrogram of the same graph structure as \code{x} and for each node,
   \code{y.node[j] <- FUN( x.node[j], ...)} (where \code{y.node[j]} is an
-  (invalid!) notation for the j-th node of y.
+  (invalid!) notation for the j-th node of y).
 }
 \usage{
 dendrapply(X, FUN, ...)

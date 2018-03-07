@@ -53,7 +53,7 @@ readLines(con = stdin(), n = -1L, ok = TRUE, warn = TRUE,
 
   Embedded nuls in the input stream will terminate the line currently
   being read, with a warning (unless \code{skipNul = TRUE} or \code{warn
-    = FALSE)}).
+    = FALSE}).
   
   If \code{con} is a not-already-open \link{connection} with a non-default
   \code{encoding} argument, the text is converted to UTF-8 and declared

@@ -50,7 +50,7 @@
 require(graphics)
 
 rock1 <- within(rock, { area1 <- area/10000; peri1 <- peri/10000 })
-par(mfrow = c(3,2)) # maybe: , pty = "s")
+par(mfrow = c(3,2)) # maybe: , pty = "s"
 rock.ppr <- ppr(log(perm) ~ area1 + peri1 + shape,
                 data = rock1, nterms = 2, max.terms = 5)
 plot(rock.ppr, main = "ppr(log(perm)~ ., nterms=2, max.terms=5)")

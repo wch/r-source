@@ -100,11 +100,11 @@ rc.options(\dots)
       \item{\code{quotes}:}{ Enables completion in \R code when inside
         quotes.  This normally leads to filename completion, but can be
         otherwise depending on context (for example, when the open quote
-        is preceded by \code{?}, help completion is invoked.  Setting
+        is preceded by \code{?}), help completion is invoked.  Setting
         this to \code{FALSE} relegates completion to the underlying
         completion front-end, which may do its own processing (for
         example, \code{readline} on Unix-alikes will do filename
-        completion.  }
+        completion).  }
 
       \item{\code{files}:}{ Deprecated.  Use \code{quotes} instead.  }
 

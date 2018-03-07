@@ -58,7 +58,7 @@ is.matrix(x)
   vectors (\code{0} for raw vectors) and \code{NULL} for lists.
 
   \code{is.matrix} returns \code{TRUE} if \code{x} is a vector and has a
-  \code{"\link{dim}"} attribute of length 2) and \code{FALSE} otherwise.
+  \code{"\link{dim}"} attribute of length 2 and \code{FALSE} otherwise.
   Note that a \code{\link{data.frame}} is \strong{not} a matrix by this
   test.  The function is generic: you can write methods to handle
   specific classes of objects, see \link{InternalMethods}.
