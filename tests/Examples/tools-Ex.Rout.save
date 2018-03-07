@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2018-02-27 r74307) -- "Unsuffered Consequences"
+R Under development (unstable) (2018-03-06 r74362) -- "Unsuffered Consequences"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -203,14 +203,14 @@ Error in assertWarning(ff()) :
 > bibstyle("unsorted", sortKeys = function(refs) seq_along(refs),
 +     fmtPrefix = function(paper) paste0("[", paper$.index, "]"),
 +        .init = TRUE)
-<environment: 0x55edfff16e90>
+<environment: 0x557e11d54340>
 > print(refs, .bibstyle = "unsorted")
 [1] R Core Team (2013). _R: A Language and Environment for Statistical
 Computing_. R Foundation for Statistical Computing, Vienna, Austria.
 <URL: https://www.R-project.org>.
 
-[2] Box GEP and Cox DR (1964). "An Analysis of Transformations."
-_Journal of the Royal Statistical Society, Series B_, *26*, 211-252.
+[2] Box GEP, Cox DR (1964). "An Analysis of Transformations." _Journal
+of the Royal Statistical Society, Series B_, *26*, 211-252.
 > 
 > 
 > 
@@ -998,7 +998,7 @@ List of 6
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.228 0.009 0.237 0 0 
+Time elapsed:  0.23 0.004 0.234 0 0 
 > grDevices::dev.off()
 null device 
           1 
