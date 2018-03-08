@@ -2686,8 +2686,7 @@ using std::make_unique;
 The webpage
 @uref{http://en.cppreference.com/@/w/@/cpp/@/compiler_support} gives
 some information on which compilers are known to support recent C++
-features, including those in the C++17 drafts (for which feature tests
-should be used).
+features.
 
 @node Using C++17 code,  , Using C++14 code, Configure and cleanup
 @subsection Using C++17 code
@@ -2716,6 +2715,9 @@ SystemRequirements: C++17
 @noindent
 in the @file{DESCRIPTION} file. Finally, the C++17 compiler can be
 used systematically by setting the environment variable @env{USE_CXX17}.
+
+As for C++14, feature tests can be used (and probably should be as
+compiler support is still patchy).
 
 @node Checking and building packages, Writing package vignettes, Configure and cleanup, Creating R packages
 @section Checking and building packages
