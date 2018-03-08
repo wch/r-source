@@ -1,5 +1,5 @@
 
-R version 3.4.4 beta (2018-03-04 r74346) -- "Someone to Lean On"
+R version 3.4.4 RC (2018-03-08 r74371) -- "Someone to Lean On"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -46,4 +46,4 @@ In bw.bcv(precip) : minimum occurred at one end of the range
 > 
 > proc.time()
    user  system elapsed 
-  0.203   0.022   0.214 
+  0.202   0.027   0.209 

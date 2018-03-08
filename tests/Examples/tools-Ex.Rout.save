@@ -1,5 +1,5 @@
 
-R version 3.4.4 beta (2018-03-04 r74346) -- "Someone to Lean On"
+R version 3.4.4 RC (2018-03-08 r74371) -- "Someone to Lean On"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -202,7 +202,7 @@ Error in assertWarning(ff()) :
 > bibstyle("unsorted", sortKeys = function(refs) seq_along(refs),
 +     fmtPrefix = function(paper) paste0("[", paper$.index, "]"),
 +        .init = TRUE)
-<environment: 0x35d97f8>
+<environment: 0x37441c0>
 > print(refs, .bibstyle = "unsorted")
 [1] R Core Team (2013). _R: A Language and Environment for Statistical
 Computing_. R Foundation for Statistical Computing, Vienna, Austria.
@@ -997,7 +997,7 @@ List of 6
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.342 0.012 0.365 0 0 
+Time elapsed:  0.344 0.01 0.356 0 0 
 > grDevices::dev.off()
 null device 
           1 

@@ -1,5 +1,5 @@
 
-R version 3.4.4 beta (2018-03-04 r74346) -- "Someone to Lean On"
+R version 3.4.4 RC (2018-03-08 r74371) -- "Someone to Lean On"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -29,4 +29,4 @@ Warning messages:
 > 
 > proc.time()
    user  system elapsed 
-  0.145   0.029   0.161 
+  0.161   0.024   0.165 

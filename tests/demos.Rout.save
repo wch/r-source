@@ -1,5 +1,5 @@
 
-R version 3.4.4 beta (2018-03-04 r74346) -- "Someone to Lean On"
+R version 3.4.4 RC (2018-03-08 r74371) -- "Someone to Lean On"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -1510,5 +1510,5 @@ sm     3    3    3    3    4    4    4    4    2     2     2
 > par(op)
 > 
 > cat("Time elapsed: ", proc.time() - .ptime, "\n")
-Time elapsed:  1.478 0.033 1.517 0 0 
+Time elapsed:  1.478 0.039 1.524 0 0 
 > 
