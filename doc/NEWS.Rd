@@ -334,6 +334,13 @@
       \item \code{par*apply} and \code{par*applyLB} gain an optional
       argument \code{chunk.size} which allows to specify the granularity of
       scheduling.
+
+      \item Some \code{as.data.frame()} methods, notably the
+      \code{matrix} one, are now more careful in not accepting
+      duplicated or \code{NA} row names, and by default produce unique
+      non-NA row names.  This is based on \code{row.names(x, make.names = *)
+	<- rNms} where \code{make.names} is a new logical, with back
+      compatible default.
     }
   }
 

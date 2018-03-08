@@ -1658,6 +1658,21 @@ if(requireNamespace('Matrix', lib.loc=.Library)) {
 ## in R <= 3.4.x
 
 
+## as.data.frame.matrix() method not eliminating duplicated rownames
+(m <- rbind(x = 1:3, x = 2:4, z = 0)) # matrix with duplicated rownams
+rownames(d <- as.data.frame(m)) # --> fixed up to  "x" "x.1" "z"
+## new feature -- 'make.names = *'  with '*' in non-defaults :
+dN <- as.data.frame(m, make.names=NA)
+tools::assertError( dF <- as.data.frame(m, make.names=FALSE) )
+assert({
+    !anyDuplicated(rownames(d))
+    identical(colnames(d), paste0("V", 1:3))
+    ## dN has correct automatic row names:
+    identical(.row_names_info(dN, 0), .set_row_names(3L))
+})
+## as.data.frame(m)  kept the duplicated row names in R 3.4.x
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
