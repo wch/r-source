@@ -4246,6 +4246,8 @@ add_dummies <- function(dir, Log)
                              ": warning: .* \\[-Wterminate\\]",
                              ## Solaris warns on this next one. Also clang
                              ": warning: .* \\[-Wint-conversion\\]",
+                             ## clang calls these 'a GNU extension'
+                             ": warning: .* GCC extension",
                              ": warning: .* \\[-Wstringop", # mainly gcc8
                              ": warning: .* \\[-Wclass-memaccess\\]", # gcc8
                              ## Fatal on clang and Solaris ODS
