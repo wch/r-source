@@ -8330,11 +8330,10 @@ mechanism can be helpful in isolating memory protect problems.
 @subsection Using valgrind
 
 If you have access to Linux on a common CPU type or supported versions
-of macOS@footnote{at the time of writing mainly for 10.9 with some
-support for 10.8, none for the current 10.10.} you can use
-@code{valgrind} (@uref{http://www.valgrind.org/}, pronounced to rhyme
-with `tinned') to check for possible problems.  To run some examples
-under @code{valgrind} use something like
+of macOS or Solaris you can use @code{valgrind}
+(@uref{http://www.valgrind.org/}, pronounced to rhyme with `tinned') to
+check for possible problems.  To run some examples under @code{valgrind}
+use something like
 
 @example
 R -d valgrind --vanilla < mypkg-Ex.R
