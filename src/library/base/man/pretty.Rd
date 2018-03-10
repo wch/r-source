@@ -54,7 +54,7 @@ pretty(x, \dots)
 
   Now determine the basic \emph{unit} \eqn{u} as one of
   \eqn{\{1,2,5,10\} b}{{1,2,5,10} b}, depending on
-  \eqn{c/b \in [1,10)}{c/b in [1,10}
+  \eqn{c/b \in [1,10)}{c/b in [1,10)}
   and the two \sQuote{\emph{bias}} coefficients, \eqn{h
   =}\code{high.u.bias} and \eqn{f =}\code{u5.bias}.
 

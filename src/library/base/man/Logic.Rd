@@ -29,10 +29,10 @@ isFALSE(x)
   These operators act on raw, logical and number-like vectors.
 }
 \arguments{
-  \item{x, y}{raw or logical or \sQuote{number-like} vectors (i.e., of types
-    \code{\link{double}} (class \code{\link{numeric}}, \code{\link{integer}}
-    and \code{\link{complex}})), or objects for
-    which methods have been written.}
+  \item{x, y}{raw or logical or \sQuote{number-like} vectors (i.e., of
+    types \code{\link{double}} (class \code{\link{numeric}},
+    \code{\link{integer}}) and \code{\link{complex}}), or objects for
+    which methods have been written.} 
 }
 \details{
   \code{!} indicates logical negation (NOT).
