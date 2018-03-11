@@ -4579,7 +4579,7 @@ names, which are (confusingly)
 1.1 1.2 1.3 1.4 5.0 6 7 8 9
 @end example
 @noindent
-and will in 2018 move to a year.month scheme such as @samp{18.3}.
+and supposedly will in 2018 move to a year.month scheme such as @samp{18.3}.
 
 A suitable test for packages using @CRANpkg{rJava} would be something like
 @example
