@@ -41,6 +41,7 @@ typedef struct {
     label lab;
     int width;
     double min, max, val;
+    int buttonFlags;
 } winprogressbar;
 
 static void pbarFinalizer(SEXP ptr)
@@ -59,11 +60,11 @@ static void pbarFinalizer(SEXP ptr)
 }
 
 
-/* winProgressBar(width, title, label, min, max, initial) */
+/* winProgressBar(width, title, label, min, max, initial, buttonFlags) */
 SEXP winProgressBar(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP tmp, ptr;
-    int width, iv;
+    SEXP tmp, ptr, s;
+    int width, iv, lines, bFlags;
     double d;
     const char *title, *label;
     winprogressbar *pbar;
@@ -80,8 +81,11 @@ SEXP winProgressBar(SEXP call, SEXP op, SEXP args, SEXP env)
     tmp = CAR(args); args = CDR(args);
     if(!isString(tmp) || length(tmp) < 1 || STRING_ELT(tmp, 0) == NA_STRING)
 	errorcall(call, "invalid '%s' argument", "Label");
+    s = tmp;
+    for (lines=0; s[lines]; s[lines]=='\n' ? lines++ : *s++);
     label = translateChar(STRING_ELT(tmp, 0));
     haveLabel = strlen(label) > 0;
+    if (haveLabel) lines++;
     d = asReal(CAR(args)); args = CDR(args);
     if (!R_FINITE(d)) errorcall(call, "invalid '%s' argument", "min");
     pbar->min = d;
@@ -91,14 +95,14 @@ SEXP winProgressBar(SEXP call, SEXP op, SEXP args, SEXP env)
     d = asReal(CAR(args)); args = CDR(args);
     if (!R_FINITE(d)) errorcall(call, "invalid '%s' argument", "initial");
     pbar->val = d;
+    bFlags = asInteger(CAR(args)); args = CDR(args);
+    if(bFlags == NA_INTEGER || bFlags < 0) bFlags = Titlebar | Centered | Minimize | Closebox; //WS_MINIMIZEBOX | WS_SYSMENU;
 
-    pbar->width = width;
-    pbar->wprog = newwindow(title, rect(0, 0, width+40, haveLabel ? 100: 80),
-			    Titlebar | Centered);
+    pbar->wprog = newwindow(title, rect(0, 0, width+40, 80 + lines*20), bFlags);
     setbackground(pbar->wprog, dialog_bg());
     if(haveLabel)
 	pbar->lab = newlabel(label, rect(10, 15, width+20, 25), AlignCenter);
-    pbar->pb = newprogressbar(rect(20, haveLabel ? 50 : 30, width, 20),
+    pbar->pb = newprogressbar(rect(20, 30 + lines*20, width, 20),
 			      0, width, 1, 1);
     iv = pbar->width * (pbar->val - pbar->min)/(pbar->max - pbar->min);
     setprogressbar(pbar->pb, iv);
