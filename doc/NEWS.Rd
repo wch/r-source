@@ -339,15 +339,10 @@
       \code{matrix} one, are now more careful in not accepting
       duplicated or \code{NA} row names, and by default produce unique
       non-NA row names.  This is based on new function
-      \code{.rowNamesDF(x, make.names = *) <- rNms} where the logical \code{make.names}
-      allows to specify \emph{how} invalid row names \code{rNms} are
-      handled.  \code{.rowNamesDF()} is a \dQuote{workaround}
-      compatible default.<-`}
-
-
-function \code{row.names(x, make.names = *)
-	<- rNms} where \code{make.names} is a new logical, with back
-      compatible default.
+      \code{.rowNamesDF(x, make.names = *) <- rNms} where the logical
+      argument \code{make.names} allows to specify \emph{how} invalid
+      row names \code{rNms} are handled.  \code{.rowNamesDF()} is a
+      \dQuote{workaround} compatible default.
     }
   }
 
