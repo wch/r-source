@@ -11,6 +11,7 @@
 \alias{row.names<-}
 \alias{row.names<-.data.frame}
 \alias{row.names<-.default}
+\alias{.rowNamesDF<-}
 \description{
   All data frames have a row names attribute, a character vector of
   length the number of rows with no duplicates nor missing values.
@@ -18,10 +19,17 @@
   For convenience, these are generic functions for which users can write
   other methods, and there are default methods for arrays.  The
   description here is for the \code{data.frame} method.
+
+  \code{`.rowNamesDF<-`} is a (non-generic replacement) function to set
+  row names for data frames, with extra argument \code{make.names}.
+  This function only exists as workaround as we cannot easily change the
+  \code{row.names<-} generic without breaking legacy code in existing packages.
+  %% would like generic (and default)   row.names(x, ...) <- value
 }
 \usage{
 row.names(x)
-row.names(x, make.names=FALSE) <- value
+row.names(x) <- value
+.rowNamesDF(x, make.names=FALSE) <- value
 }
 \arguments{
   \item{x}{object of class \code{"data.frame"}, or any other class for

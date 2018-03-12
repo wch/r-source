@@ -43,9 +43,14 @@ row.names.default <- function(x) if(!is.null(dim(x))) rownames(x)# else NULL
 .set_row_names <- function(n)
     if(n > 0) c(NA_integer_, -n) else integer()
 
-`row.names<-` <- function(x, make.names = FALSE, value) UseMethod("row.names<-")
 
-`row.names<-.data.frame` <- function(x, make.names = FALSE, value)
+##_H Hack around the fact that other packages fail with a newly improved `row.names<-`:
+##_H
+##_H `row.names<-` <- function(x, make.names = FALSE, value) UseMethod("row.names<-")
+`row.names<-` <- function(x, value) UseMethod("row.names<-")
+
+##_H `row.names<-.data.frame` <-
+`.rowNamesDF<-` <- function(x, make.names = FALSE, value)
 {
     if (!is.data.frame(x)) x <- as.data.frame(x)
     n <- .row_names_info(x, 2L)
@@ -111,7 +116,10 @@ row.names.default <- function(x) if(!is.null(dim(x))) rownames(x)# else NULL
     x
 }
 
-`row.names<-.default` <- function(x, ..., value) `rownames<-`(x, value)
+`row.names<-.data.frame` <- function(x, value) `.rowNamesDF<-`(x, value=value)
+
+##_H `row.names<-.default` <- function(x, ..., value) `rownames<-`(x, value)
+`row.names<-.default` <- function(x, value) `rownames<-`(x, value)
 
 is.na.data.frame <- function (x)
 {
@@ -237,6 +245,7 @@ as.data.frame.vector <- function(x, row.names = NULL, optional = FALSE, ...,
     nrows <- length(x)
     ## ## row.names -- for now warn about and "forget" illegal row.names
     ## ##           -- can simplify much (move this *after* the is.null(.) case) once we stop() !
+### FIXME: allow  integer [of full length]
     if(!(is.null(row.names) || (is.character(row.names) && length(row.names) == nrows))) {
 	warning(gettextf(
 	    "'row.names' is not a character vector of length %d -- omitting it. Will be an error!",
@@ -327,12 +336,12 @@ as.data.frame.matrix <- function(x, row.names = NULL, optional = FALSE, make.nam
     if(autoRN)
         attr(value, "row.names") <- .set_row_names(nrows)
     else
-        row.names(value, make.names=make.names) <- row.names
+        .rowNamesDF(value, make.names=make.names) <- row.names
     value
 }
 
 as.data.frame.model.matrix <-
-    function(x, row.names = NULL, optional = FALSE, ...)
+    function(x, row.names = NULL, optional = FALSE, make.names = TRUE, ...)
 {
     d <- dim(x)
     nrows <- d[[1L]]
@@ -348,7 +357,7 @@ as.data.frame.model.matrix <-
                                   "supplied %d row name for %d rows",
                                   "supplied %d row names for %d rows"),
                           length(row.names), nrows), domain = NA)
-        row.names(value) <- row.names
+        .rowNamesDF(value, make.names=make.names) <- row.names
     }
     else attr(value, "row.names") <- .set_row_names(nrows)
     value

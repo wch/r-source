@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2018-03-07 r74365) -- "Unsuffered Consequences"
+R Under development (unstable) (2018-03-12 r74387) -- "Unsuffered Consequences"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -5742,8 +5742,7 @@ Levels: 2000-01-01 2001-01-01
 > ## manipulating rownames: problems in pre-2.5.0
 > A <- data.frame(a=character(0))
 > try(row.names(A) <- 1:10) # succeeded in Dec 2006
-Error in `row.names<-.data.frame`(`*tmp*`, value = 1:10) : 
-  invalid 'row.names' length
+Error in `.rowNamesDF<-`(x, value = value) : invalid 'row.names' length
 > A <- list(a=1:3)
 > class(A) <- "data.frame"
 > row.names(A) <- letters[24:26] # failed at one point in Dec 2006
