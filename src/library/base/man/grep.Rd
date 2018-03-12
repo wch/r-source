@@ -109,7 +109,7 @@ regexec(pattern, text, ignore.case = FALSE, perl = FALSE,
   \code{regexpr} it changes the interpretation of the output.
   It inhibits the conversion of inputs with marked encodings, and is
   forced if any input is found which is marked as \code{"bytes"}
-  see \code{\link{Encoding}}).
+  (see \code{\link{Encoding}}).
 
   Caseless matching does not make much sense for bytes in a multibyte
   locale, and you should expect it only to work for ASCII characters if
@@ -128,7 +128,7 @@ regexec(pattern, text, ignore.case = FALSE, perl = FALSE,
 \value{
   \code{grep(value = FALSE)} returns a vector of the indices
   of the elements of \code{x} that yielded a match (or not, for
-  \code{invert = TRUE}.  This will be an integer vector unless the input
+  \code{invert = TRUE}).  This will be an integer vector unless the input
   is a \emph{long vector}, when it will be a double vector.
 
   \code{grep(value = TRUE)} returns a character vector containing the

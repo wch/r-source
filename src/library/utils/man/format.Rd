@@ -27,7 +27,7 @@ formatOL(x, type = "arabic", offset = 0, start = 1,
     labels in the ordered list.  If \code{"arabic"} (default), arabic
     numerals are used.  For \code{"Alph"} or \code{"alph"}, single upper
     or lower case letters are employed (in this case, the number of the
-    last item must not exceed 26.  Finally, for \code{"Roman"} or
+    last item must not exceed 26).  Finally, for \code{"Roman"} or
     \code{"roman"}, the labels are given as upper or lower case roman
     numerals (with the number of the last item maximally 3899).
     \code{type} can be given as a unique abbreviation of the above, or

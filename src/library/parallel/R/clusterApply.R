@@ -165,47 +165,71 @@ splitRows <- function(x, ncl)
 splitCols <- function(x, ncl)
     lapply(splitIndices(ncol(x), ncl), function(i) x[, i, drop=FALSE])
 
-parLapply <- function(cl = NULL, X, fun, ...)
+#internal
+staticNChunks <- function(nelems, nnodes, chunk.size) {
+    if (is.null(chunk.size) || chunk.size <= 0)
+        nnodes
+    else
+        max(1, ceiling(nelems / chunk.size))
+}
+
+#internal
+dynamicNChunks <- function(nelems, nnodes, chunk.size) {
+    if (is.null(chunk.size))
+        2 * nnodes
+    else if (chunk.size <= 0)
+        nelems
+    else
+        max(1, ceiling(nelems / chunk.size))
+}
+
+parLapply <- function(cl = NULL, X, fun, ..., chunk.size = NULL)
 {
     cl <- defaultCluster(cl)
+    nchunks <- staticNChunks(length(X), length(cl), chunk.size)
     do.call(c,
-            clusterApply(cl, x = splitList(X, length(cl)),
+            clusterApply(cl, x = splitList(X, nchunks),
                          fun = lapply, fun, ...),
             quote = TRUE)
 }
 
-parLapplyLB <- function(cl = NULL, X, fun, ...)
+parLapplyLB <- function(cl = NULL, X, fun, ..., chunk.size = NULL)
 {
     cl <- defaultCluster(cl)
+    nchunks <- dynamicNChunks(length(X), length(cl), chunk.size)
     do.call(c,
-            clusterApplyLB(cl, x = splitList(X, length(cl)),
+            clusterApplyLB(cl, x = splitList(X, nchunks),
                            fun = lapply, fun, ...),
             quote = TRUE)
 }
 
-parRapply <- function(cl = NULL, x, FUN, ...)
+parRapply <- function(cl = NULL, x, FUN, ..., chunk.size = NULL)
 {
     cl <- defaultCluster(cl)
+    nchunks <- staticNChunks(nrow(x), length(cl), chunk.size)
     do.call(c,
-            clusterApply(cl = cl, x = splitRows(x, length(cl)),
+            clusterApply(cl = cl, x = splitRows(x, nchunks),
                          fun = apply, MARGIN = 1L, FUN = FUN, ...),
             quote = TRUE)
 }
 
-parCapply <- function(cl = NULL, x, FUN, ...) {
+parCapply <- function(cl = NULL, x, FUN, ..., chunk.size = NULL) {
     cl <- defaultCluster(cl)
+    nchunks <- staticNChunks(ncol(x), length(cl), chunk.size)
     do.call(c,
-            clusterApply(cl = cl, x = splitCols(x, length(cl)),
+            clusterApply(cl = cl, x = splitCols(x, nchunks),
                          fun = apply, MARGIN = 2L, FUN = FUN, ...),
             quote = TRUE)
 }
 
 
 parSapply <-
-    function (cl = NULL, X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE)
+    function (cl = NULL, X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE,
+              chunk.size = NULL)
 {
     FUN <- match.fun(FUN) # should this be done on worker?
-    answer <- parLapply(cl, X = as.list(X), fun = FUN, ...)
+    answer <- parLapply(cl, X = as.list(X), fun = FUN, ...,
+                        chunk.size = chunk.size)
     if(USE.NAMES && is.character(X) && is.null(names(answer)))
 	names(answer) <- X
     if(!identical(simplify, FALSE) && length(answer))
@@ -214,10 +238,12 @@ parSapply <-
 }
 
 parSapplyLB <-
-    function (cl = NULL, X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE)
+    function (cl = NULL, X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE,
+              chunk.size = NULL)
 {
     FUN <- match.fun(FUN) # should this be done on worker?
-    answer <- parLapplyLB(cl, X = as.list(X), fun = FUN, ...)
+    answer <- parLapplyLB(cl, X = as.list(X), fun = FUN, ...,
+                          chunk.size = chunk.size)
     if(USE.NAMES && is.character(X) && is.null(names(answer)))
 	names(answer) <- X
     if(!identical(simplify, FALSE) && length(answer))
@@ -226,7 +252,7 @@ parSapplyLB <-
 }
 
 
-parApply <- function(cl = NULL, X, MARGIN, FUN, ...)
+parApply <- function(cl = NULL, X, MARGIN, FUN, ..., chunk.size = NULL)
 {
     cl <- defaultCluster(cl) # initial sanity check
     FUN <- match.fun(FUN) # should this be done on worker?
@@ -281,7 +307,8 @@ parApply <- function(cl = NULL, X, MARGIN, FUN, ...)
         lapply(seq_len(d2), function(i) newX[,i])
     } else
         lapply(seq_len(d2), function(i) array(newX[,i], d.call, dn.call))
-    ans <- parLapply(cl = cl, X = arglist, fun = FUN, ...)
+    ans <- parLapply(cl = cl, X = arglist, fun = FUN, ...,
+                     chunk.size = chunk.size)
 
     ## answer dims and dimnames
 

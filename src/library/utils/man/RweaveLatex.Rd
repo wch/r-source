@@ -9,7 +9,7 @@
 \title{R/LaTeX Driver for Sweave}
 \description{
   A driver for \code{\link{Sweave}} that translates \R code chunks in
-  LaTeX files by \dQuote{running them}, i.e., \code{\link{parse}()} and
+  \LaTeX files by \dQuote{running them}, i.e., \code{\link{parse}()} and
   \code{\link{eval}()} each.
 }
 \usage{
@@ -35,12 +35,12 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
       Options}.}
 }
 \details{
-  The LaTeX file generated needs to contain the line
+  The \LaTeX file generated needs to contain the line
   \samp{\\usepackage\{Sweave\}}, and if this is not present in the
   Sweave source file (possibly in a comment), it is inserted by the
   \code{RweaveLatex} driver.  If \code{stylepath = TRUE}, a hard-coded
   path to the file \file{Sweave.sty} in the \R installation is set in
-  place of \code{Sweave}.  The hard-coded path makes the LaTeX file less
+  place of \code{Sweave}.  The hard-coded path makes the \LaTeX file less
   portable, but avoids the problem of installing the current version of
   \file{Sweave.sty} to some place in your TeX input path.  However, TeX
   may not be able to process the hard-coded path if it contains spaces
@@ -74,7 +74,7 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
   You can adjust the default value by including the
   \samp{\\setkeys{Gin}{width=...}} directive in your \file{.Rnw} file
   after the \samp{\\begin{document}} directive and changing the
-  \code{width} option value as you prefer, using standard LaTeX
+  \code{width} option value as you prefer, using standard \LaTeX
   measurement values.
 
   If you wish to override this default behavior entirely, you can add a
@@ -95,13 +95,13 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
 
   The use of fancy quotes (see \code{\link{sQuote}}) can cause problems
   when setting \R output.  Either set
-  \code{\link{options}(useFancyQuotes = FALSE)} or arrange that LaTeX is
+  \code{\link{options}(useFancyQuotes = FALSE)} or arrange that \LaTeX is
   aware of the encoding used (by a \samp{\\usepackage[utf8]\{inputenc\}}
   declaration: Windows users of \code{Sweave} from \command{Rgui.exe}
   will need to replace \samp{utf8} by \samp{cp1252} or similar) and
   ensure that typewriter fonts containing directional quotes are used.
 
-  Some LaTeX graphics drivers do not include \samp{.png} or \samp{.jpg}
+  Some \LaTeX graphics drivers do not include \samp{.png} or \samp{.jpg}
   in the list of known extensions.  To enable them, add something like
   \samp{\\DeclareGraphicsExtensions{.png,.pdf,.jpg}} to the preamble of
   your document or check the behavior of your graphics driver.  When
@@ -124,8 +124,8 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
       file?}
 
     \item{keep.source:}{logical (\code{TRUE}).  When echoing, if
-      \code{keep.source == TRUE} the original source is copied to the
-      file.  Otherwise, deparsed source is echoed.}
+      \code{TRUE} the original source is copied to the file.  Otherwise,
+      deparsed source is echoed.} 
 
     \item{eval:}{logical (\code{TRUE}).  If \code{FALSE}, the code chunk
       is not evaluated, and hence no text nor graphical output
@@ -134,7 +134,7 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
     \item{results:}{character string (\code{"verbatim"}).  If
       \code{"verbatim"}, the output of \R commands is included in the
       verbatim-like \samp{Soutput} environment.  If \code{"tex"}, the
-      output is taken to be already proper LaTeX markup and included as
+      output is taken to be already proper \LaTeX markup and included as
       is.  If \code{"hide"} then all output is completely suppressed
       (but the code executed during the weave).  Values can be abbreviated.}
 
@@ -195,16 +195,16 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
       not).  Defaults taken from \code{pdf.options()}.}
 
     \item{png:}{logical (\code{FALSE}), indicating whether PNG figures
-      should be generated.  Ignored if \code{fig = FALSE}.  Only
-      available in \R >= 2.13.0.}
+      should be generated.  Ignored if \code{fig = FALSE}.
+      Only available in \eqn{\R \ge 2.13.0}{R >= 2.13.0}.}
 
     \item{jpeg:}{logical (\code{FALSE}), indicating whether JPEG figures
-      should be generated.  Ignored if \code{fig = FALSE}.  Only
-      available in \R >= 2.13.0.}
+      should be generated.  Ignored if \code{fig = FALSE}.
+      Only available in \eqn{\R \ge 2.13.0}{R >= 2.13.0}.}
 
-    \item{grdevice:}{character (\code{NULL}): see section \sQuote{Custom
-	Graphics Devices}.  Ignored if \code{fig = FALSE}.  Only
-      available in \R >= 2.13.0.}
+    \item{grdevice:}{character (\code{NULL}): see section
+      \sQuote{Custom Graphics Devices}.  Ignored if \code{fig = FALSE}.
+      Only available in \eqn{\R \ge 2.13.0}{R >= 2.13.0}.}
 
     \item{width:}{numeric (6), width of figures in inches.  See
       \sQuote{Details}.}

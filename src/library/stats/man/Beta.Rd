@@ -91,7 +91,7 @@ rbeta(n, shape1, shape2, ncp = 0)
   The non-central case is based on the derivation as a Poisson
   mixture of betas (Johnson \emph{et al}, 1995, pp.\sspace{}502--3).
 
-  \item The central \code{pbeta} for the default \code{log_p = FALSE})
+  \item The central \code{pbeta} for the default (\code{log_p = FALSE})
   uses a C translation based on
 
   Didonato, A. and Morris, A., Jr, (1992)

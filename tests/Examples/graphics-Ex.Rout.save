@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2018-02-28 r74309) -- "Unsuffered Consequences"
+R Under development (unstable) (2018-03-06 r74362) -- "Unsuffered Consequences"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -2362,7 +2362,7 @@ Warning in matrix(0:1, ncol = 5, nrow = 3) :
 > rect(125+j, 360+j,   141+j, 405+j/2, col = c(NA,0),
 +      border = "gold", lwd = 2)
 > rect(125+j, 296+j/2, 141+j, 331+j/5, col = c(NA,"midnightblue"))
-> mtext("+  2 x 6 rect(*, col = c(NA,0)) and  col = c(NA,\"m..blue\"))")
+> mtext("+  2 x 6 rect(*, col = c(NA,0)) and  col = c(NA,\"m..blue\")")
 > 
 > ## an example showing colouring and shading
 > plot(c(100, 200), c(300, 450), type= "n", xlab = "", ylab = "")

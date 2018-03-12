@@ -35,7 +35,7 @@ dget(file, keep.source = FALSE)
   Deparsing an object is difficult, and not always possible.  With the
   default \code{control}, \code{dput()} attempts to deparse in a way
   that is readable, but for more complex or unusual objects (see
-  \code{\link{dump}}, not likely
+  \code{\link{dump}}), not likely
   to be parsed as identical to the original.  Use \code{control = "all"}
   for the most complete deparsing; use \code{control = NULL} for the
   simplest deparsing, not even including attributes.

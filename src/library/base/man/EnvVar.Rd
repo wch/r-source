@@ -1,6 +1,6 @@
 % File src/library/base/man/EnvVar.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2007-2017 R Core Team
+% Copyright 2007-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{EnvVar}
@@ -31,6 +31,7 @@
 % R_LIBS* are in ?.libPaths
 % TZ, TZDIR are in ?Sys.timezone
 % R_HOME is in ?R.home.
+% R_MAX_NUM_DLLS is in ?dyn.load
 
 #ifdef unix
 \alias{DISPLAY}

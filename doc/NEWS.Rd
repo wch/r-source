@@ -325,6 +325,24 @@
       \item \code{merge()} gains new option \code{no.dups} and by
       default suffixes the second of two duplicated column names,
       thanks to a proposal by Scott Ritchie (and Gabe Becker).
+
+      \item \code{scale.default(x, center, scale)} now also allows
+      \code{center} or \code{scale} to be \dQuote{numeric-alike}, i.e.,
+      such that \code{as.numeric(.)} coerces them correctly.  This also
+      eliminates a wrong error message in such cases.
+
+      \item \code{par*apply} and \code{par*applyLB} gain an optional
+      argument \code{chunk.size} which allows to specify the granularity of
+      scheduling.
+
+      \item Some \code{as.data.frame()} methods, notably the
+      \code{matrix} one, are now more careful in not accepting
+      duplicated or \code{NA} row names, and by default produce unique
+      non-NA row names.  This is based on new function
+      \code{.rowNamesDF(x, make.names = *) <- rNms} where the logical
+      argument \code{make.names} allows to specify \emph{how} invalid
+      row names \code{rNms} are handled.  \code{.rowNamesDF()} is a
+      \dQuote{workaround} compatible default.
     }
   }
 
@@ -395,8 +413,8 @@
 
       \item \sQuote{Writing R Extensions} now documents the
       \code{R_tryCatch}, \code{R_tryCatchError}, and
-      \code{R_UnwindProtect} functions.      
-  
+      \code{R_UnwindProtect} functions.
+
       \item \code{NAMEDMAX} has been raised to 3 to allow protection of
       intermediate results from (usually ill-advised) assignments in
       arguments to \code{BUILTIN} functions. Package \code{C} code using
@@ -416,7 +434,7 @@
       \code{.__H__.rbind} in package \pkg{base} are deprecated (in
       favour of \code{cbind} and \code{rbind}).
 
-      \item The declaratation of \code{pythag()} in \file{Rmath.h} has
+      \item The declaration of \code{pythag()} in \file{Rmath.h} has
       been removed --- it has not been provided since \R 2.14.0.
       [Deferred until \CRANpkg{Rcpp} catches up.]
     }
@@ -578,7 +596,7 @@
 
       \item \code{aggregate(<data.frame>, drop=FALSE)} no longer calls
       the function on <empty> parts but sets corresponding results to
-      \code{NA}.  Thanks to Suharto Anggono's patches in \PR{17280}).
+      \code{NA}.  (Thanks to Suharto Anggono's patches in \PR{17280}).
 
       \item The \code{duplicated()} method for data frames is now based
       on \code{list}s (instead of string coercion).  Consequently
@@ -593,6 +611,11 @@
       \item \code{read.table()} with a non-default separator now
       supports quotes following a non-whitespace character, matching the
       behavior of \code{scan()}.
+
+      \item \code{parLapplyLB} and \code{parSapplyLB} have been fixed to do
+      load balancing (dynamic scheduling).  This also means that results of
+      computations depending on random number generators will now really be
+      non-reproducible, as documented.
     }
   }
 }
@@ -663,6 +686,9 @@
       (\PR{17375})
 
       \item \code{is.na(NULL)} no longer warns.  (\PR{16107})
+
+      \item \command{R CMD INSTALL} now correctly sets C++ compiler flags
+      when all source files are in sub-directories of \file{src}.
     }
   }
 }
@@ -1424,7 +1450,7 @@
 
       \item An alternative compiler for C++11 is now specified with
       \samp{CXX11}, not \samp{CXX1X}. Likewise C++11 flags are specified
-      with \samp{CXX11FLAGS} and the standard (e.g., \samp{-std=gnu++11}
+      with \samp{CXX11FLAGS} and the standard (e.g., \samp{-std=gnu++11})
       is specified with \samp{CXX11STD}.
 
       \item \command{configure} now tests for a C++14-compliant compiler

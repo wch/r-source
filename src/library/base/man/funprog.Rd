@@ -126,7 +126,7 @@ cfrac(c(2, 1, 2, 1, 1, 4, 1, 1, 6, 1, 1, 8))
 
 ## Iterative function application:
 Funcall <- function(f, ...) f(...)
-## Compute log(exp(acos(cos(0))
+## Compute log(exp(acos(cos(0))))
 Reduce(Funcall, list(log, exp, acos, cos), 0, right = TRUE)
 ## n-fold iterate of a function, functional style:
 Iterate <- function(f, n = 1)

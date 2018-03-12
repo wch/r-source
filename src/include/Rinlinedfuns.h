@@ -75,6 +75,7 @@
 /* define inline-able functions */
 #ifdef TESTING_WRITE_BARRIER
 # define STRICT_TYPECHECK
+# define CATCH_ZERO_LENGTH_ACCESS
 #endif
 
 #ifdef STRICT_TYPECHECK
@@ -103,6 +104,16 @@ INLINE_FUN void *DATAPTR(SEXP x) {
     CHKVEC(x);
     if (ALTREP(x))
 	return ALTVEC_DATAPTR(x);
+#ifdef CATCH_ZERO_LENGTH_ACCESS
+    /* Attempts to read or write elements of a zero length vector will
+       result in a segfault, rather than read and write random memory.
+       Returning NULL would be more natural, but Matrix seems to assume
+       that even zero-length vectors have non-NULL data pointers, so
+       return (void *) 1 instead. Zero-length CHARSXP objects still
+       have a trailing zero byte so they are not handled. */
+    else if (STDVEC_LENGTH(x) == 0 && TYPEOF(x) != CHARSXP)
+	return (void *) 1;
+#endif
     else
 	return STDVEC_DATAPTR(x);
 }

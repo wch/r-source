@@ -38,7 +38,7 @@ mosaicplot(x, \dots)
   \item{off}{vector of offsets to determine percentage spacing at each
     level of the mosaic (appropriate values are between 0 and 20,
     and the default is 20 times the number of splits for 2-dimensional
-    tables, and 10 otherwise.  Rescaled to maximally 50, and recycled if
+    tables, and 10 otherwise).  Rescaled to maximally 50, and recycled if
     necessary.}
   \item{dir}{vector of split directions (\code{"v"} for vertical and
     \code{"h"} for horizontal) for each level of the mosaic, one

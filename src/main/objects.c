@@ -287,8 +287,13 @@ SEXP R_LookupMethod(SEXP method, SEXP rho, SEXP callrho, SEXP defrho)
 	}
     } 
 
-    if(lookup_baseenv_after_globalenv)
-	val = findFunWithBaseEnvAfterGlobalEnv(method, ENCLOS(top));
+    if(lookup_baseenv_after_globalenv) {
+	if (top == R_GlobalEnv)
+	    top = R_BaseEnv;
+	else
+	    top = ENCLOS(top);
+	val = findFunWithBaseEnvAfterGlobalEnv(method, top);
+    }
     else
 	val = findFunInEnvRange(method, ENCLOS(top), R_EmptyEnv);
     UNPROTECT(1);

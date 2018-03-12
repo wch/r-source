@@ -27,7 +27,7 @@
   \code{\link{dump}} to process their \code{control} argument.
 
   The \code{control} argument is a vector containing zero or more of the
-  following strings (exactly those in \code{..deparseOpts}.  Partial
+  following strings (exactly those in \code{..deparseOpts}).  Partial
   string matching is used.
   \describe{
     \item{\code{"keepInteger"}:}{

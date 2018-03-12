@@ -286,7 +286,7 @@ balanceMethodsList(mlist, args, check = TRUE) # <- deprecated since R 3.2.0
       A generic function that finds the next method for
       the signature of the method definition \code{method}  and caches
       that method in the method definition (promoting the class to
-      \code{"MethodWithNext"}.  Note that argument \code{mlist} is
+      \code{"MethodWithNext"}).  Note that argument \code{mlist} is
       obsolete and not used.
     }
 

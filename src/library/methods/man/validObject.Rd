@@ -33,7 +33,7 @@ A class definition may have a validity method, set by a call to
   and any strings from failure will be included in the result or the
   error message.
 Any validity methods defined for superclasses (from the \code{contains=}
-argument to \code{\link{setClass}}, will also be called.
+argument to \code{\link{setClass}}), will also be called.
 
 
 }

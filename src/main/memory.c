@@ -3579,18 +3579,17 @@ SEXP (VECTOR_ELT)(SEXP x, R_xlen_t i) {
     return CHK(VECTOR_ELT(CHK(x), i));
 }
 
-#ifdef TESTING_WRITE_BARRIER
-# define CATCH_ZERO_LENGTH_ACCESS
-#endif
 #ifdef CATCH_ZERO_LENGTH_ACCESS
 /* Attempts to read or write elements of a zero length vector will
    result in a segfault, rather than read and write random memory.
    Returning NULL would be more natural, but Matrix seems to assume
    that even zero-length vectors have non-NULL data pointers, so
-   return (void *) NULL instead. */
-# define CHKZLN(x) do {					\
-	CHK(x);						\
-	if (STDVEC_LENGTH(x) == 0) return (void *) 1;	\
+   return (void *) 1 instead. Zero-length CHARSXP objects still have a
+   trailing zero byte so they are not handled. */
+# define CHKZLN(x) do {					   \
+	CHK(x);						   \
+	if (STDVEC_LENGTH(x) == 0 && TYPEOF(x) != CHARSXP) \
+	    return (void *) 1;				   \
     } while (0)
 #else
 # define CHKZLN(x) do { } while (0)

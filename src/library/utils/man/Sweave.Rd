@@ -68,11 +68,11 @@ Stangle(file, driver = Rtangle(),
   statement in a document.
 
   Non-ASCII source files must contain a line of the form
-\preformatted{\usepackage[foo]{inputenc}}
+\preformatted{  \usepackage[foo]{inputenc}}
   (where \samp{foo} is typically \samp{latin1}, \samp{latin2}, \samp{utf8} or
   \samp{cp1252} or \samp{cp1250}) or they will give an error.
-  Re-encoding can be turned off completely with argument \code{encoding
-    = "bytes"}.
+  Re-encoding can be turned off completely with argument
+  \code{encoding = "bytes"}.
 }
 
 \section{Syntax Definition}{

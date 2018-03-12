@@ -48,7 +48,7 @@ paste0(\dots, collapse = NULL)
   which case it is a single empty string.
 
   If any input into an element of the result is in UTF-8 (and none are
-  declared with encoding \code{"bytes"}, (see \code{\link{Encoding}}),
+  declared with encoding \code{"bytes"}, see \code{\link{Encoding}}),
   that element will be in UTF-8, otherwise in the current encoding in
   which case the encoding of the element is declared if the current
   locale is either Latin-1 or UTF-8, at least one of the corresponding

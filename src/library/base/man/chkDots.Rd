@@ -6,7 +6,7 @@
   utility to be used e.g., in S3 methods which need a formal \code{...}
   argument but do not make any use of it.  This helps catching user
   errors in calling the function in question (which is the caller of
-  \code{chkDots()}.
+  \code{chkDots()}).
 }
 \usage{
 chkDots(..., which.call = -1, allowed = character(0))

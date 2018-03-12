@@ -2684,8 +2684,7 @@ using std::make_unique;
 The webpage
 @uref{http://en.cppreference.com/@/w/@/cpp/@/compiler_support} gives
 some information on which compilers are known to support recent C++
-features, including those in the C++17 drafts (for which feature tests
-should be used).
+features.
 
 @node Using C++17 code,  , Using C++14 code, Configure and cleanup
 @subsection Using C++17 code
@@ -2714,6 +2713,9 @@ SystemRequirements: C++17
 @noindent
 in the @file{DESCRIPTION} file. Finally, the C++17 compiler can be
 used systematically by setting the environment variable @env{USE_CXX17}.
+
+As for C++14, feature tests can be used (and probably should be as
+compiler support is still patchy).
 
 @node Checking and building packages, Writing package vignettes, Configure and cleanup, Creating R packages
 @section Checking and building packages
@@ -4330,11 +4332,11 @@ functions where Windows does not support @code{%lld}, @code{%Lf} and
 similar formats (and has its own formats such as @code{%I64d} for 64-bit
 integers).  It is very rare to need to output such types, and 64-bit
 integers can usually be converted to doubles for output.  However, the
-C11 standard (§7.8.1) includes @code{PRIxNN} macros@footnote{These are
-optional because the corresponding types are, but must be provided if the
-types are.} in C header @file{inttypes.h} (for example @code{PRId64}) so
-the portable approach is to test for these and if not available provide
-emulations in the package.
+C11 standard (section 7.8.1) includes @code{PRIxNN}
+macros@footnote{These are optional because the corresponding types are,
+but must be provided if the types are.} in C header @file{inttypes.h}
+(for example @code{PRId64}) so the portable approach is to test for
+these and if not available provide emulations in the package.
 
 @item
 @command{R CMD check} performs some checks for non-portable
@@ -4575,7 +4577,7 @@ names, which are (confusingly)
 1.1 1.2 1.3 1.4 5.0 6 7 8 9
 @end example
 @noindent
-and will in 2018 move to a year.month scheme such as @samp{18.3}.
+and supposedly will in 2018 move to a year.month scheme such as @samp{18.3}.
 
 A suitable test for packages using @CRANpkg{rJava} would be something like
 @example
@@ -8328,11 +8330,10 @@ mechanism can be helpful in isolating memory protect problems.
 @subsection Using valgrind
 
 If you have access to Linux on a common CPU type or supported versions
-of macOS@footnote{at the time of writing mainly for 10.9 with some
-support for 10.8, none for the current 10.10.} you can use
-@code{valgrind} (@uref{http://www.valgrind.org/}, pronounced to rhyme
-with `tinned') to check for possible problems.  To run some examples
-under @code{valgrind} use something like
+of macOS or Solaris you can use @code{valgrind}
+(@uref{http://www.valgrind.org/}, pronounced to rhyme with `tinned') to
+check for possible problems.  To run some examples under @code{valgrind}
+use something like
 
 @example
 R -d valgrind --vanilla < mypkg-Ex.R

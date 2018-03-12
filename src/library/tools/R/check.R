@@ -4246,6 +4246,8 @@ add_dummies <- function(dir, Log)
                              ": warning: .* \\[-Wterminate\\]",
                              ## Solaris warns on this next one. Also clang
                              ": warning: .* \\[-Wint-conversion\\]",
+                             ## clang calls these 'a GNU extension'
+                             ": warning: .* GCC extension",
                              ": warning: .* \\[-Wstringop", # mainly gcc8
                              ": warning: .* \\[-Wclass-memaccess\\]", # gcc8
                              ## Fatal on clang and Solaris ODS
@@ -4448,6 +4450,14 @@ add_dummies <- function(dir, Log)
                     }
                     printLog0(Log, sprintf("See %s for details.\n",
                                            sQuote(outfile)))
+                    if(any(grepl("^Note:", lines, useBytes = TRUE)))
+                        wrapLog("Information on the location(s)",
+                                "of code generating the",
+                                paste0(sQuote("Note"), "s"),
+                                "can be obtained by re-running with",
+                                "environment variable R_KEEP_PKG_SOURCE",
+                                "set to 'yes'.\n")
+
                 } else if(length(notes)) {
                     noteLog(Log, "Found the following warnings:")
                     printLog0(Log, .format_lines_with_indent(notes), "\n")

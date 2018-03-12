@@ -1,6 +1,6 @@
 % File src/library/base/man/as.data.frame.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{as.data.frame}
@@ -40,7 +40,8 @@ as.data.frame(x, row.names = NULL, optional = FALSE, \dots)
               cut.names = FALSE, col.names = names(x), fix.empty.names = TRUE,
               stringsAsFactors = default.stringsAsFactors())
 
-\method{as.data.frame}{matrix}(x, row.names = NULL, optional = FALSE, \dots,
+\method{as.data.frame}{matrix}(x, row.names = NULL, optional = FALSE,
+              make.names = TRUE, \dots,
               stringsAsFactors = default.stringsAsFactors())
 
 is.data.frame(x)
@@ -54,7 +55,8 @@ is.data.frame(x)
     \code{\link{make.names}}) is optional.  Note that all of \R's
     \pkg{base} package \code{as.data.frame()} methods use
     \code{optional} only for column names treatment, basically with the
-    meaning of \code{\link{data.frame}(*, check.names = !optional)}.}
+    meaning of \code{\link{data.frame}(*, check.names = !optional)}.
+    See also the \code{make.names} argument of the \code{matrix} method.}
   \item{\dots}{additional arguments to be passed to or from methods.}
   \item{stringsAsFactors}{logical: should the character vector be converted
     to a factor?}
@@ -65,6 +67,13 @@ is.data.frame(x)
   \item{col.names}{(optional) character vector of column names.}
   \item{fix.empty.names}{logical indicating if empty column names, i.e.,
     \code{""} should be fixed up (in \code{\link{data.frame}}) or not.}
+  %% matrix method:
+  \item{make.names}{a \code{\link{logical}}, i.e., one of \code{FALSE, NA, TRUE},
+    indicating what should happen if the row names (of the matrix
+    \code{x}) are invalid.  If they are invalid, the default,
+    \code{TRUE}, calls \code{\link{make.names}(*, unique=TRUE)};
+    \code{make.names=NA} will use \dQuote{automatic} row names and a
+    \code{FALSE} value will signal an error for invalid row names.}
 }
 \value{
   \code{as.data.frame} returns a data frame, normally with all row names

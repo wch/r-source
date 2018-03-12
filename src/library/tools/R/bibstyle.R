@@ -131,9 +131,8 @@ makeJSS <- function() {
     # Format all authors for one paper
     authorList <- function(paper) {
         names <- sapply(paper$author, shortName)
-        if (length(names) > 1)
-            result <- paste( paste(names[-length(names)], collapse=", "),
-                            "and", names[length(names)])
+        if (length(names) > 1L)
+            result <- paste(names, collapse = ", ")
         else
             result <- names
         result
@@ -142,9 +141,8 @@ makeJSS <- function() {
     # Format all editors for one paper
     editorList <- function(paper) {
         names <- sapply(paper$editor, shortName)
-        if (length(names) > 1)
-            result <- paste( paste(names[-length(names)], collapse=", "),
-                            "and", names[length(names)], "(eds.)")
+        if (length(names) > 1L)
+            result <- paste(paste(names, collapse = ", "), "(eds.)")
         else if (length(names))
             result <- paste(names, "(ed.)")
         else

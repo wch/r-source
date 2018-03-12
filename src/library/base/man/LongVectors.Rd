@@ -48,7 +48,7 @@
   It is now possible to use \eqn{m \times n}{m x n} matrices with more
   than 2 billion elements.  Whether matrix algebra (including
   \code{\link{\%*\%}}, \code{\link{crossprod}}, \code{\link{svd}},
-  \code{\link{qr}}, \code{\link{solve}} and \code{\link{eigen}} will
+  \code{\link{qr}}, \code{\link{solve}} and \code{\link{eigen}}) will
   actually work is somewhat implementation dependent, including the
   Fortran compiler used and if an external BLAS or LAPACK is used.
 

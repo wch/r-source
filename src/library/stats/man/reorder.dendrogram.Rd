@@ -29,7 +29,7 @@
   weights.  At each node, the branches are ordered in
   increasing weights where the weight of a branch is defined as
   \eqn{f(w_j)} where \eqn{f} is \code{agglo.FUN} and \eqn{w_j} is the
-  weight of the \eqn{j}-th sub branch).
+  weight of the \eqn{j}-th sub branch.
 }
 \value{
   A dendrogram where each node has a further attribute \code{value} with

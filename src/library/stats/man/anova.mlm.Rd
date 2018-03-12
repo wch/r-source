@@ -45,7 +45,7 @@
   \code{\link{summary.manova}} for further details.
 
   For the \code{"Spherical"} test, proportionality is usually with the
-  identity matrix but a different matrix can be specified using \code{Sigma}).
+  identity matrix but a different matrix can be specified using \code{Sigma}.
   Corrections for asphericity known as the Greenhouse--Geisser,
   respectively Huynh--Feldt, epsilons are given and adjusted \eqn{F} tests are
   performed.

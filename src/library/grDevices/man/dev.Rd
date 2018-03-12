@@ -39,7 +39,7 @@ graphics.off()
   which all graphics operations occur.  There is a \code{"null device"}
   which is always open but is really a placeholder: any attempt to use
   it will open a new device specified by
-  \code{\link{getOption}("device")}).
+  \code{\link{getOption}("device")}.
 
   Devices are associated with a name (e.g., \code{"X11"} or
   \code{"postscript"}) and a number in the range 1 to 63; the

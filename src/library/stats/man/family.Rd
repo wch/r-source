@@ -136,7 +136,7 @@ quasipoisson(link = "log")
     \eqn{d\mu/d\eta}.}
   \item{initialize}{expression.  This needs to set up whatever data
     objects are needed for the family as well as \code{n} (needed for
-    AIC in the binomial family) and \code{mustart} (see \code{\link{glm}}.}
+    AIC in the binomial family) and \code{mustart} (see \code{\link{glm}}).}
   \item{validmu}{logical function.  Returns \code{TRUE} if a mean
     vector \code{mu} is within the domain of \code{variance}.}
   \item{valideta}{logical function.   Returns \code{TRUE} if a linear
