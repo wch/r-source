@@ -5222,10 +5222,11 @@ tclvalue(.Tcl("tk windowingsystem"))  # "x11" or "aqua"
 @node Java (macOS), Frameworks, Tcl/Tk headers and libraries, macOS
 @subsection Java
 
-The situation with Java support on macOS is messy.@footnote{For more
-details see @uref{http://www.macstrategy.com/@/article.php?3}.}  As from
-@R{} 3.4.0 the @acronym{CRAN} distribution of @CRANpkg{rJava} requires
-Java 8.
+The situation with Java support on macOS is messy,@footnote{For more
+details see @uref{http://www.macstrategy.com/@/article.php?3}.} and
+distribution of Java for all platforms is changing during 2018.  The
+@acronym{CRAN} distribution of @CRANpkg{rJava} currently requires Java
+8.
 
 macOS no longer comes with an installed Java runtime (JRE), and a macOS
 upgrade may remove one if already installed: it is intended to be
@@ -5236,17 +5237,13 @@ not start with @code{1.8.0} or @code{9} you need to update your Java.}
 this should prompt you to install it.  You can also install directly a
 recent Java from Oracle (currently from
 @uref{http://www.oracle.com/@/technetwork/@/java/@/javase/@/downloads/@/index.html}:
-note that Java 9 has a limited lifetime and at the time of writing
-@CRANpkg{rJava} did not install with Java 10).
+note that Java 9 and 10 have a limited lifetime and at the time of
+writing @CRANpkg{rJava} did not install with Java 10).  Builds of
+OpenJDK may also be available, e.g.@: from @uref{http://jdk.java.net/}.
 
 Binary distributions of @R{} are built against a specific version (e.g.@:
 1.8.0_161) of Oracle Java so @command{sudo R CMD javareconf} may be
 needed before using Java-using packages.
-
-@c You may need to install what Apple calls `legacy Java'@footnote{e.g.@:
-@c @code{Java For OS X 2015-001} from
-@c @uref{https://support.apple.com/@/kb/@/DL1572}.} to suppress pop-up messages
-@c even if you have a current version installed.
 
 To see what compatible versions of Java are currently installed, run
 @command{/usr/libexec/java_home -V -a x86_64}.  If needed, set the
