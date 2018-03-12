@@ -60,7 +60,16 @@ winProgressBar <- function(title = "R progress bar", label = "",
 {
     res <- .External2(C_winProgressBar, as.integer(width), as.character(title),
                       as.character(label), as.double(min),
-                      as.double(max), as.double(initial))
+                      as.double(max), as.double(initial), as.integer(-1))
+    structure(list(pb=res), class = "winProgressBar")
+}
+
+winProgressBarML <- function(title = "R progress bar", label = "",
+                           min = 0, max = 1, initial = 0, width = 300L, buttonFlags = -1)
+{
+    res <- .External2(C_winProgressBar, as.integer(width), as.character(title),
+                      as.character(label), as.double(min),
+                      as.double(max), as.double(initial), as.integer(buttonFlags))
     structure(list(pb=res), class = "winProgressBar")
 }
 
