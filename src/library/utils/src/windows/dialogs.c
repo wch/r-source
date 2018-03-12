@@ -61,12 +61,17 @@ static void pbarFinalizer(SEXP ptr)
 
 
 /* winProgressBar(width, title, label, min, max, initial, buttonFlags) */
+/*http://adv-r.had.co.nz/C-interface.html: Strings and lists are more complicated because the individual elements of a vector are SEXPs, 
+not basic C data structures. Each element of a STRSXP is a CHARSXPs, an immutable object that contains a pointer to C string 
+stored in a global pool. Use STRING_ELT(x, i) to extract the CHARSXP, and CHAR(STRING_ELT(x, i)) to get the actual const char* string.
+Set values with SET_STRING_ELT(x, i, value). Use mkChar() to turn a C string into a CHARSXP and mkString() to turn a C string into a STRSXP.
+Use mkChar() to create strings to insert in an existing vector, use mkString() to create a new (length 1) vector.*/
 SEXP winProgressBar(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP tmp, ptr, s;
+    SEXP tmp, ptr;
     int width, iv, lines, bFlags;
     double d;
-    const char *title, *label;
+    const char *title, *label, *s;
     winprogressbar *pbar;
     Rboolean haveLabel;
 
@@ -81,7 +86,7 @@ SEXP winProgressBar(SEXP call, SEXP op, SEXP args, SEXP env)
     tmp = CAR(args); args = CDR(args);
     if(!isString(tmp) || length(tmp) < 1 || STRING_ELT(tmp, 0) == NA_STRING)
 	errorcall(call, "invalid '%s' argument", "Label");
-    s = tmp;
+    s = CHAR(tmp);
     for (lines=0; s[lines]; s[lines]=='\n' ? lines++ : *s++);
     label = translateChar(STRING_ELT(tmp, 0));
     haveLabel = strlen(label) > 0;
