@@ -56,11 +56,11 @@ winMenuItems <- function(menuname) .External2(C_winMenuItems, menuname)
 
 ## There is internal coercion, but using as.xxx here allows method dispatch
 winProgressBar <- function(title = "R progress bar", label = "",
-                           min = 0, max = 1, initial = 0, width = 300L)
+                           min = 0, max = 1, initial = 0, width = 300L, buttonFlags = -1)
 {
     res <- .External2(C_winProgressBar, as.integer(width), as.character(title),
                       as.character(label), as.double(min),
-                      as.double(max), as.double(initial))
+                      as.double(max), as.double(initial), as.integer(buttonFlags))
     structure(list(pb=res), class = "winProgressBar")
 }
 
