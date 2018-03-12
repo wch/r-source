@@ -1826,7 +1826,7 @@ typed as commands like any other Unix-alike: see the next chapter of
 this manual.  There are some small differences which may surprise users
 of @R{} on other platforms, notably the default location of the personal
 library directory (under @file{~/Library/R},
-e.g. @file{~/Library/R/3.4/library}), and that warnings, messages and
+e.g. @file{~/Library/R/3.5/library}), and that warnings, messages and
 other output to @file{stderr} are highlighted in bold.
 
 @c https://stat.ethz.ch/pipermail/r-sig-mac/2014-October/011131.html
@@ -1920,18 +1920,18 @@ These are paths relative to @file{/}, the root of the file system.
 @section Multiple versions
 
 The installer will remove any previous version@footnote{More precisely,
-of the package of the same name: this means that installing a package for
-3.3.x does 3.4.x does not remove an installation of the other series.} of
+of the Apple package of the same name: this means that installing a package for
+3.3.x does not remove an installation for 3.4.x or 3.5.x.} of
 the @R{} framework which it finds installed.  This can be avoided by
 using @command{pkgutil --forget} (see the previous section).  However,
 note that different versions are installed under
-@file{/Library/Frameworks/R.framework/Versions} as @file{3.3},
-@file{3.4} and so on, so it is not possible to have different
+@file{/Library/Frameworks/R.framework/Versions} as @file{3.4},
+@file{3.5} and so on, so it is not possible to have different
 @samp{3.x.y} versions installed for the same @samp{x}.
 
 A version of @R{} can be run directly from the command-line as e.g.@:
 @example
-/Library/Frameworks/R.framework/Versions/3.4/Resources/bin/R
+/Library/Frameworks/R.framework/Versions/3.5/Resources/bin/R
 @end example
 
 @noindent
@@ -2302,7 +2302,7 @@ source versions of packages without compiled C/C++/Fortran code and offer
 to do so for those with, if @command{make} is available.
 
 Note that most binary packages including compiled code are tied to a
-particular series (e.g.@: @R{} 3.4.x or 3.3.x) of @R{}.
+particular series (e.g.@: @R{} 3.5.x or 3.4.x) of @R{}.
 
 Installing source packages which do not contain compiled code should
 work with no additional tools. For others you will need the
@@ -3043,7 +3043,7 @@ is the current working directory (in the build directory tree on a
 Unix-alike if that is separate from the sources).
 
 @file{Rmath.h} contains @samp{R_VERSION_STRING}, which is a character
-string containing the current @R{} version, for example @code{"3.4.0"}.
+string containing the current @R{} version, for example @code{"3.5.0"}.
 
 There is full access to @R{}'s handling of @code{NaN}, @code{Inf} and
 @code{-Inf} via special versions of the macros and functions
@@ -4196,7 +4196,7 @@ by option @option{--with-system-valgrind-headers}: they will be used if
 present (on Linux they may be in a separate package such as
 @pkg{valgrind-devel}).  Note though that there is no guarantee that the
 code in @R{} will be compatible with very old@footnote{We believe that
-versions 3.4.0 to 3.10.1 are compatible.} or future @command{valgrind}
+versions 3.4.0 to 3.13.0 are compatible.} or future @command{valgrind}
 headers.
 
 If you need to re-configure @R{} with different options you may need to run
@@ -5057,13 +5057,14 @@ FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin16/6.3.0
 
 More recent and complete distributions of @command{clang} are often
 available from @uref{http://llvm.org/releases/}: for example at the time
-of writing of 5.0.0 built for Sierra or later.  In particular, these
-should include support for OpenMP.  Another build of clang 4.0.0 is
-available at
-@uref{https://r.research.att.com/@/libs/@/clang-4.0.0-darwin15.6-Release.tar.gz}.
-Suppose one of these distributions is installed under
-@file{/usr/local/clang4}.  Then @R{} could be configured by something
-like
+of writing@footnote{It is unstated what the minimum OS requirement is
+for these: the distribution of 5.0.0 required Sierra or later.} of 5.0.1
+and 6.0.0.  In particular, these include support for OpenMP.  Another
+build of clang 4.0.0 with OpenMP is available at
+@uref{https://r.research.att.com/@/libs/@/clang-4.0.0-darwin15.6-Release.tar.gz}
+and used for the @acronym{CRAN} binary distributions.  Suppose one of
+these distributions is installed under @file{/usr/local/clang4}.  Then
+@R{} could be configured by something like
 @example
 ./configure --x-includes=/opt/X11/include --x-libraries=/opt/X11/lib \
 PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig \
@@ -5236,7 +5237,7 @@ this should prompt you to install it.  You can also install directly a
 recent Java from Oracle (currently from
 @uref{http://www.oracle.com/@/technetwork/@/java/@/javase/@/downloads/@/index.html}:
 note that Java 9 has a limited lifetime and at the time of writing
-@CRANpkg{rJava} did not install with Java 10 ).
+@CRANpkg{rJava} did not install with Java 10).
 
 Binary distributions of @R{} are built against a specific version (e.g.@:
 1.8.0_161) of Oracle Java so @command{sudo R CMD javareconf} may be
@@ -5293,7 +5294,7 @@ selected by the option
 @end example
 
 (This is intended to be used with an Apple toolchain: others may not
-support frameworks correctly but that from @code{llvm.org} does.)
+support frameworks correctly but those from @code{llvm.org} do.)
 
 It is only needed if you want to build @R{} for use with the @Rapp{}
 console, and implies @option{--enable-R-shlib} to build @R{} as a
