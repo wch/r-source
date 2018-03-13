@@ -435,8 +435,8 @@
       favour of \code{cbind} and \code{rbind}).
 
       \item The declaration of \code{pythag()} in \file{Rmath.h} has
-      been removed --- the entry point has not been provided since \R
-      2.14.0.
+      been removed --- it has not been provided since \R 2.14.0.
+      [Deferred until \CRANpkg{Rcpp} catches up.]
     }
   }
 
