@@ -144,43 +144,42 @@ static void SET_ALTREP_CLASS(SEXP x, SEXP class)
     R_altvec_Dataptr_or_null_method_t Dataptr_or_null;	\
     R_altvec_Extract_subset_method_t Extract_subset
 
-#define ALTINTEGER_METHODS						\
-    ALTVEC_METHODS;							\
-    R_altinteger_Elt_method_t Elt;					\
-    R_altinteger_Set_elt_method_t Set_elt;				\
-    R_altinteger_Get_region_method_t Get_region;			\
-    R_altinteger_Is_sorted_method_t Is_sorted;				\
-    R_altinteger_No_NA_method_t No_NA;					\
-    R_altinteger_Sort_check_method_t Sort_check;			\
-    R_altinteger_Is_NA_method_t Is_NA;					\
-    R_altinteger_Sum_method_t Sum ;					\
-    R_altinteger_Min_method_t Min;					\
-    R_altinteger_Max_method_t Max;					\
-    R_altinteger_Which_min_method_t Which_min;				\
-    R_altinteger_Which_max_method_t Which_max;				\
-    R_altinteger_Match_method_t Match;					\
-    R_altinteger_Unique_method_t Unique;				\
-    R_altinteger_Order_method_t Order;					    
+#define ALTINTEGER_METHODS				\
+    ALTVEC_METHODS;					\
+    R_altinteger_Elt_method_t Elt;			\
+    R_altinteger_Set_elt_method_t Set_elt;		\
+    R_altinteger_Get_region_method_t Get_region;	\
+    R_altinteger_Is_sorted_method_t Is_sorted;		\
+    R_altinteger_No_NA_method_t No_NA;			\
+    R_altinteger_Sort_check_method_t Sort_check;	\
+    R_altinteger_Is_NA_method_t Is_NA;			\
+    R_altinteger_Sum_method_t Sum ;			\
+    R_altinteger_Min_method_t Min;			\
+    R_altinteger_Max_method_t Max;			\
+    R_altinteger_Which_min_method_t Which_min;		\
+    R_altinteger_Which_max_method_t Which_max;		\
+    R_altinteger_Match_method_t Match;			\
+    R_altinteger_Unique_method_t Unique;		\
+    R_altinteger_Order_method_t Order
 
-#define ALTREAL_METHODS							\
-    ALTVEC_METHODS;							\
-    R_altreal_Elt_method_t Elt;						\
-    R_altreal_Set_elt_method_t Set_elt;					\
-    R_altreal_Get_region_method_t Get_region;				\
-    R_altreal_Is_sorted_method_t Is_sorted;				\
-    R_altreal_No_NA_method_t No_NA;					\
-    R_altreal_Sort_check_method_t Sort_check;				\
-    R_altreal_Is_NA_method_t Is_NA;					\
-    R_altreal_Sum_method_t Sum;						\
-    R_altreal_Min_method_t Min;						\
-    R_altreal_Max_method_t Max;						\
-    R_altreal_Which_min_method_t Which_min;				\
-    R_altreal_Which_max_method_t Which_max;				\
-    R_altreal_Match_method_t Match;					\
-    R_altreal_Unique_method_t Unique;					\
-    R_altreal_Order_method_t Order;					
+#define ALTREAL_METHODS				\
+    ALTVEC_METHODS;				\
+    R_altreal_Elt_method_t Elt;			\
+    R_altreal_Set_elt_method_t Set_elt;		\
+    R_altreal_Get_region_method_t Get_region;	\
+    R_altreal_Is_sorted_method_t Is_sorted;	\
+    R_altreal_No_NA_method_t No_NA;		\
+    R_altreal_Sort_check_method_t Sort_check;	\
+    R_altreal_Is_NA_method_t Is_NA;		\
+    R_altreal_Sum_method_t Sum;			\
+    R_altreal_Min_method_t Min;			\
+    R_altreal_Max_method_t Max;			\
+    R_altreal_Which_min_method_t Which_min;	\
+    R_altreal_Which_max_method_t Which_max;	\
+    R_altreal_Match_method_t Match;		\
+    R_altreal_Unique_method_t Unique;		\
+    R_altreal_Order_method_t Order
 
-    
 #define ALTSTRING_METHODS			\
     ALTVEC_METHODS;				\
     R_altstring_Elt_method_t Elt;		\

@@ -25,16 +25,18 @@ SORT_ENUM=list(INCR_NA_1ST  = 2,
                UNKNOWN = NA_integer_ )
 
 
-isWrappable = function(x) is.atomic(x) && mode(x) %in% c("integer", "numeric", "character")
+isWrappable = function(x)
+    is.atomic(x) && mode(x) %in% c("integer", "numeric", "character")
 
 .makeSortEnum = function(decr, na.last) {
     if(decr) {
-        ret = if(is.na(na.last) || na.last) SORT_ENUM[["DECR"]] else SORT_ENUM[["DECR_NA_1ST"]]
+        ret = if(is.na(na.last) || na.last) SORT_ENUM[["DECR"]]
+              else SORT_ENUM[["DECR_NA_1ST"]]
     } else {
-        ret = if(is.na(na.last) || na.last) SORT_ENUM[["INCR"]] else SORT_ENUM[["INCR_NA_1ST"]]
+        ret = if(is.na(na.last) || na.last) SORT_ENUM[["INCR"]]
+              else SORT_ENUM[["INCR_NA_1ST"]]
     }
 }
-
 
 .doWrap = function(vec, decr, nalast, noNA = NA) {
     if(length(vec) > 0 && (is.integer(vec) || is.numeric(vec))) {
@@ -67,7 +69,7 @@ sort.default <- function(x, decreasing = FALSE, na.last = NA, ...)
     ## to what other code assumes. ie for factors the vector itself is
     ## not guaranteed to be sorted in numeric order, since it goes by level
     ## values
-    if(is.object(x)) 
+    if(is.object(x))
         x[order(x, na.last = na.last, decreasing = decreasing)]
     else
         sort.int(x, na.last = na.last, decreasing = decreasing, ...)
@@ -177,6 +179,7 @@ order <- function(..., na.last = TRUE, decreasing = FALSE,
                   method = c("auto", "shell", "radix"))
 {
     z <- list(...)
+
     ## fastpass, take advantage of ALTREP metadata
     if(length(z) == 1L && is.numeric(z[[1L]]) && !is.object(z[[1]]) &&
        length(z[[1L]]) > 0) {
@@ -192,7 +195,6 @@ order <- function(..., na.last = TRUE, decreasing = FALSE,
             return(seq(length(x), 1))
     }
     
-
     method <- match.arg(method)
     if(any(vapply(z, is.object, logical(1L)))) {
         z <- lapply(z, function(x) if(is.object(x)) as.vector(xtfrm(x)) else x)

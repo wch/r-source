@@ -27,7 +27,6 @@
 #include <Internal.h>
 #include <Rmath.h>
 #include <R_ext/RS.h>  /* for Calloc/Free */
-#include <R_ext/Altrep.h> /* for sortedness  stuff */
 
 			/*--- Part I: Comparison Utilities ---*/
 
@@ -167,6 +166,10 @@ SEXP attribute_hidden do_isunsorted(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
 
     SEXP ans, x = CAR(args);
+    if(DispatchOrEval(call, op, "is.unsorted", args, rho, &ans, 0, 1))
+	return ans;
+    PROTECT(args = ans); // args evaluated now
+
     int sorted = UNKNOWN_SORTEDNESS;
     switch(TYPEOF(x)) {
     case INTSXP:
@@ -178,20 +181,20 @@ SEXP attribute_hidden do_isunsorted(SEXP call, SEXP op, SEXP args, SEXP rho)
     default:
 	break;
     }
+
     /* right now is.unsorted only tells you if something is sorted ascending
       hopefully someday it will work for descending too */
-    
     if(!asLogical(CADR(args))) { /*not strict since we don't memoize that */
-	if(KNOWN_INCR(sorted))
+	if(KNOWN_INCR(sorted)) {
+	    UNPROTECT(1);
 	    return ScalarLogical(FALSE);
+	}
 	/* is.unsorted returns TRUE for vectors sorted in descending order */
-	else if( KNOWN_DECR(sorted) || sorted == KNOWN_UNSORTED)
+	else if( KNOWN_DECR(sorted) || sorted == KNOWN_UNSORTED) {
+	    UNPROTECT(1);
 	    return ScalarLogical(TRUE);
+	}
     }
-		
-    if(DispatchOrEval(call, op, "is.unsorted", args, rho, &ans, 0, 1))
-	return ans;
-    PROTECT(args = ans); // args evaluated now
 
     int strictly = asLogical(CADR(args));
     if(strictly == NA_LOGICAL)
@@ -208,9 +211,11 @@ SEXP attribute_hidden do_isunsorted(SEXP call, SEXP op, SEXP args, SEXP rho)
 	ans = eval(call, rho);
 	UNPROTECT(2);
 	return ans;
-    } // else
+    }
+    else {
 	UNPROTECT(1);
-    return ScalarLogical(NA_LOGICAL);
+	return ScalarLogical(NA_LOGICAL);
+    }
 }
 
 
@@ -335,8 +340,6 @@ void revsort(double *a, int *ib, int n)
     }
 }
 
-/* ALTREP sortedness fastpass now occurs before this primitive is called, so
-   no special-casing required here as it's currently factored. */
 
 SEXP attribute_hidden do_sort(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -353,27 +356,24 @@ SEXP attribute_hidden do_sort(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("only atomic vectors can be sorted"));
     if(TYPEOF(CAR(args)) == RAWSXP)
 	error(_("raw vectors cannot be sorted"));
-    
+
     /* we need consistent behaviour here, including dropping attibutes,
        so as from 2.3.0 we always duplicate. */
-    int nprot = 0;
-    PROTECT(ans = duplicate(CAR(args))); nprot++;
+    PROTECT(ans = duplicate(CAR(args)));
     SET_ATTRIB(ans, R_NilValue);  /* this is never called with names */
     SET_OBJECT(ans, 0);		  /* we may have just stripped off the class */
     sortVector(ans, decreasing);
-    UNPROTECT(nprot);
+    UNPROTECT(1);
     return(ans); /* wrapping with metadata happens at end of sort.int */
 }
-
-
 
 Rboolean fastpass_sortcheck(SEXP x, int wanted) {
     int sorted = UNKNOWN_SORTEDNESS;
     if(!KNOWN_SORTED(wanted)) 
 	return FALSE;
-    
+
     Rboolean noNA, done = FALSE;
-    
+
     switch(TYPEOF(x)) {
     case INTSXP:
 	sorted = INTEGER_IS_SORTED(x);
@@ -412,6 +412,8 @@ SEXP attribute_hidden do_sorted_fpass(SEXP call, SEXP op, SEXP args, SEXP rho) {
     UNPROTECT(1);
     return ScalarLogical(wassorted);
 }
+
+
 /* faster versions of shellsort, following Sedgewick (1986) */
 
 /* c(1, 4^k +3*2^(k-1)+1) */

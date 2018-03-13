@@ -183,24 +183,4 @@ DECLARE_METHOD_SETTER(altstring, Set_elt)
 DECLARE_METHOD_SETTER(altstring, Is_sorted)
 DECLARE_METHOD_SETTER(altstring, No_NA)
 
-/*INT_MIN is NA_INTEGER! */
-enum {SORTED_DECR_NA_1ST = -2,
-      SORTED_DECR = -1,
-      UNKNOWN_SORTEDNESS = INT_MIN,
-      SORTED_INCR = 1,
-      SORTED_INCR_NA_1ST = 2,
-      KNOWN_UNSORTED = 0};
-#define KNOWN_SORTED(sorted) (sorted == SORTED_DECR ||			\
-			      sorted == SORTED_INCR ||			\
-			      sorted == SORTED_DECR_NA_1ST ||		\
-			      sorted == SORTED_INCR_NA_1ST)
-
-#define KNOWN_NA_1ST(sorted) (sorted == SORTED_INCR_NA_1ST ||	\
-			      sorted == SORTED_DECR_NA_1ST)
-
-#define KNOWN_INCR(sorted) (sorted == SORTED_INCR ||		\
-			    sorted == SORTED_INCR_NA_1ST)
-
-#define KNOWN_DECR(sorted) (sorted == SORTED_DECR ||	\
-			    sorted == SORTED_DECR_NA_1ST)
 #endif /* R_EXT_ALTREP_H_ */
