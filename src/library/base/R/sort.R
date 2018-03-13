@@ -27,7 +27,7 @@ isWrappable <- function(x)
                       DECR_NA_1st = -2,
                       UNSORTED = 0,
                       UNKNOWN = NA_integer_ )
-    
+
     function(decr, na.last) {
         if(decr) {
             if (is.na(na.last) || na.last) SORT_ENUM[["DECR"]]
@@ -40,9 +40,9 @@ isWrappable <- function(x)
 })
 
 .doWrap <- function(vec, decr, nalast, noNA = NA) {
-    if(length(vec) > 0 && (is.integer(vec) || is.numeric(vec))) {
+    if (length(vec) > 0 && (is.integer(vec) || is.numeric(vec))) {
         sorted <- .makeSortEnum(decr, nalast)
-        if(is.na(noNA)) {
+        if (is.na(noNA)) {
             if(is.na(nalast)) ## NAs were removed
                 noNA <- TRUE
             else if(nalast) ## NAs are last
@@ -165,12 +165,12 @@ sort.int <-
                        y <- .Internal(sort(x, decreasing))
                })
     }
-    if(!is.na(na.last) && has.na)
-	y <- if(!na.last) c(nas, y) else c(y, nas)
-    if(isfact)
+    if (!is.na(na.last) && has.na)
+	y <- if (!na.last) c(nas, y) else c(y, nas)
+    if (isfact)
         y <- (if (isord) ordered else factor)(y, levels = seq_len(nlev),
             labels = lev)
-    if(is.null(partial)) {
+    if (is.null(partial)) {
         y <- .doWrap(y, decreasing, na.last)
     }
     y
