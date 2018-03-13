@@ -10,14 +10,16 @@
 \description{
   If any of the expressions (in \code{\dots} or \code{exprs}) are not
   \code{\link{all}} \code{TRUE}, \code{\link{stop}} is called, producing
-  an error message indicating the \emph{first} expression which was not true.
+  an error message indicating the \emph{first} expression which was not
+  (\code{\link{all}}) true.
 }
 \usage{
 stopifnot(\dots, exprs, local = TRUE)
 }
 \arguments{
   \item{\dots, exprs}{any number of (typically but not necessarily
-    \code{\link{logical}}) \R expressions, which should evaluate to
+    \code{\link{logical}}) \R expressions, which should each evaluate to
+    (a logical vector of all)
     \code{\link{TRUE}}.  Use \emph{either} \code{\dots} \emph{or}
     \code{exprs}, the latter typically an unevaluated expression of the
     form \preformatted{\{

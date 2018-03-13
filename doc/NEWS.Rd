@@ -616,6 +616,9 @@
       load balancing (dynamic scheduling).  This also means that results of
       computations depending on random number generators will now really be
       non-reproducible, as documented.
+
+      \item Indexing a list using dollar and empty string (\code{l$""})
+      returns NULL.
     }
   }
 }
