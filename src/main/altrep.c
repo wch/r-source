@@ -3758,7 +3758,7 @@ SEXP attribute_hidden do_wrap_meta(SEXP call, SEXP op, SEXP args, SEXP env)
 
 	/*experimental implementation of what's described above */
 	SEXP attr = PROTECT(ATTRIB(x)); nprot++;
-	if(NAMED(x) <= 1) {
+	if(NO_REFERENCES(x)) {
 	    SET_ATTRIB(ans, attr);
 	    SET_ATTRIB(x, R_NilValue);
 	} else {
