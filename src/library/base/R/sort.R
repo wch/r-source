@@ -85,10 +85,11 @@ sort.int <-
         wanted = .makeSortEnum(decreasing, na.last)
         done = .Internal(sorted_fpass(x, wanted))
         if(done) {
-            ## stripping attributes required by SORT contract
-            y = x
-            attributes(y) <- NULL
-            return(y)
+            ## strip attributes other than 'names'
+            attr <- attributes(x)
+            if (! is.null(attr) && ! identical(names(attr), "names"))
+                attributes(x) <- list(names = attr$names)
+            return(x)
         }
     }
     method <- match.arg(method)
