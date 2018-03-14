@@ -128,7 +128,7 @@ sQuote <- function(x)
     before <- after <- "'"
     q <- getOption("useFancyQuotes")
     if(!is.null(q)) {
-        if(identical(q, TRUE)) {
+        if(isTRUE(q)) {
             li <- l10n_info()
             if(li$"UTF-8") q <- "UTF-8"
             if(!is.null(li$codepage) && li$codepage > 0L) {
@@ -164,7 +164,7 @@ dQuote <- function(x)
     before <- after <- "\""
     q <- getOption("useFancyQuotes")
     if(!is.null(q)) {
-        if(identical(q, TRUE)) {
+        if(isTRUE(q)) {
             li <- l10n_info()
             if(li$"UTF-8") q <- "UTF-8"
             if(!is.null(li$codepage) && li$codepage > 0L) {

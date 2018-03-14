@@ -52,7 +52,7 @@
                 environment(where)
             getPackageName(where)
         } else ""
-    doEdit <- !identical(edit, FALSE)
+    doEdit <- !isFALSE(edit)
     whereF <- NULL
     pname <- character()
     def <- NULL
@@ -155,11 +155,11 @@
         whereF <- as.environment(allWhere[[1L]])
     }
     ## detect use with no action specified (old-style R trace())
-    if(is.null(tracer) && is.null(exit) && identical(edit, FALSE))
+    if(is.null(tracer) && is.null(exit) && isFALSE(edit))
         tracer <- quote({})
     if(is.null(def))
         def <- getFunction(what, where = whereF)
-    if(is(def, "traceable") && identical(edit, FALSE) && !untrace)
+    if(is(def, "traceable") && isFALSE(edit) && !untrace)
         def <- .untracedFunction(def)
     if(!is.null(signature)) {
         fdef <- if (!is(def, "genericFunction"))
@@ -352,7 +352,7 @@
                warning("making a traced version of a special; arguments may be altered")
            }
            )
-    if(!identical(doEdit, FALSE)) {
+    if(!isFALSE(doEdit)) {
         if(is.character(doEdit) || is.function(doEdit)) {
             editor <- doEdit
             doEdit <- TRUE

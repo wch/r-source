@@ -50,16 +50,16 @@ as <-
             if(is(object, Class)) {
                 ClassDef <- getClassDef(Class, where)
                 ## use the ext information, computed or supplied
-                if(identical(ext, FALSE))
+                if(isFALSE(ext))
                     stop(sprintf("internal problem in as(): %s is(object, \"%s\") is TRUE, but the metadata asserts that the 'is' relation is FALSE",
                                  dQuote(thisClass), Class),
                          domain = NA)
-                else if(identical(ext, TRUE))
+                else if(isTRUE(ext))
                     asMethod <- .makeAsMethod(quote(from), TRUE, Class, ClassDef, where)
                 else {
                   test <- ext@test
                   asMethod <- .makeAsMethod(ext@coerce, ext@simple, Class, ClassDef, where)
-                  canCache <- (!is(test, "function")) || identical(body(test), TRUE)
+                  canCache <- (!is(test, "function")) || isTRUE(body(test))
                  }
             }
             if(is.null(asMethod) && extends(Class, thisClass)) {
@@ -163,14 +163,14 @@ as <-
         if(is.null(asMethod)) {
             if(is(object, Class)) {
                 asMethod <- possibleExtends(thisClass, Class)
-                if(identical(asMethod, TRUE)) {# trivial, probably identical classes
+                if(isTRUE(asMethod)) {# trivial, probably identical classes
                     class(value) <- class(object)
                     return(value)
                 }
                 else {
                     test <- asMethod@test
                     asMethod <- asMethod@replace
-                    canCache <- (!is(test, "function")) || identical(body(test), TRUE)
+                    canCache <- (!is(test, "function")) || isTRUE(body(test))
                     if(canCache) { ##the replace code is a bare function
                         ClassDef <- getClassDef(Class, where)
                         asMethod <- .asCoerceMethod(asMethod, thisClass, ClassDef, TRUE, where)
@@ -210,7 +210,7 @@ setAs <-
         test <- NULL
         setIs(from, to, test = test, coerce = def, replace = replace, where = where)
     }
-    else if(identical(extds, TRUE)) {
+    else if(isTRUE(extds)) {
         if(.identC(from, to))
             stop(gettextf("trying to set an 'as' relation from %s to itself",
                           dQuote(.class1(from))),

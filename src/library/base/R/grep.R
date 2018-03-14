@@ -279,7 +279,7 @@ function(x, m, invert = FALSE)
     ## direct matches give nothing and inverse matches give NA (as
     ## nothing was matched).
 
-    if(!ili && identical(invert, FALSE)) {
+    if(!ili && isFALSE(invert)) {
         so <- m[ind <- (!is.na(m) & (m > -1L))]
         eo <- so + attr(m, "match.length")[ind] - 1L
         return(substring(x[ind], so, eo))

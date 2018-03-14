@@ -1,7 +1,7 @@
 #  File src/library/tools/R/QC.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -539,7 +539,7 @@ function(package, dir, lib.loc = NULL,
         ## Compare the formals of the function in the code named 'fName'
         ## and formals 'ffd' obtained from the documentation.
         ffc <- function_args_in_code[[fName]]
-        if(identical(use.values, FALSE)) {
+        if(isFALSE(use.values)) {
             ffc <- names(ffc)
             ffd <- names(ffd)
             ok <- identical(ffc, ffd)
@@ -549,7 +549,7 @@ function(package, dir, lib.loc = NULL,
             else {
                 vffc <- as.character(ffc) # values
                 vffd <- as.character(ffd) # values
-                if(!identical(use.values, TRUE)) {
+                if(!isTRUE(use.values)) {
                     ind <- nzchar(as.character(ffd))
                     vffc <- vffc[ind]
                     vffd <- vffd[ind]
@@ -2059,7 +2059,7 @@ function(package, dir, file, lib.loc = NULL,
             if(deparse(e[[1L]])[1L] %in% FF_funs) {
                 if(registration) check_registration(e, fr)
                 dup <- e[["DUP"]]
-                if(!is.null(dup) && !identical(dup, TRUE))
+                if(!is.null(dup) && !isTRUE(dup))
                     dup_false <<- c(dup_false, e)
                 this <- ""
                 this <- parg <- e[["PACKAGE"]]
@@ -2864,7 +2864,7 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE,
         }
 
     if(length(dir) != 1L)
-        stop("argument 'package' must be of length 1")
+        stop("The package 'dir' argument must be of length 1")
 
     ## We definitely need a valid DESCRIPTION file.
     db <- .read_description(file.path(dir, "DESCRIPTION"))
@@ -3368,7 +3368,7 @@ function(x, ...)
         }
         writeLines("")
     }
-    if(identical(x$bad_vignettebuilder, TRUE)) {
+    if(isTRUE(x$bad_vignettebuilder)) {
         writeLines(c(gettext("Invalid VignetteBuilder field."),
                      strwrap(gettextf("This field must contain one or more packages (and no version requirement).")),
                      ""))
@@ -3379,10 +3379,10 @@ function(x, ...)
                      strwrap(gettextf("Packages with priorities 'base' or 'recommended' or 'defunct-base' must already be known to R.")),
                      ""))
 
-    if(identical(x$bad_Title, TRUE))
+    if(isTRUE(x$bad_Title))
         writeLines(gettext("Malformed Title field: should not end in a period."))
 
-    if(identical(x$bad_Description, TRUE))
+    if(isTRUE(x$bad_Description))
         writeLines(gettext("Malformed Description field: should contain one or more complete sentences."))
 
     xx<- x; xx$bad_Title <- xx$bad_Description <- NULL
@@ -4982,8 +4982,7 @@ function(x, ...)
                                sQuote("installed.packages")),
                       exdent = 2L),
               gettextf("See section %s in '%s'.",
-                       sQuote("Good practice"),
-                       "?.onAttach")
+                       sQuote("Good practice"), "?.onAttach")
               )
     }
     res
@@ -5398,7 +5397,7 @@ function(package, dir, lib.loc = NULL)
                     ## (BTW, what if character.only is given a value
                     ## which is an expression evaluating to TRUE?)
                     dunno <- FALSE
-                    if(identical(mc$character.only, TRUE)
+                    if(isTRUE(mc$character.only)
                        && !identical(class(pkg), "character"))
                         dunno <- TRUE
                     ## </NOTE>
@@ -5777,7 +5776,7 @@ function(x, ...)
                          sQuote(xxx)), msg)
           }
       },
-      if(identical(x$imp3self, TRUE)) {
+      if(isTRUE(x$imp3self)) {
           msg <-
               c("There are ::: calls to the package's namespace in its code.",
                 "A package almost never needs to use ::: for its own objects:")
@@ -5853,7 +5852,7 @@ function(db, files)
                         pos <- which(!is.na(pmatch(names(e),
                                                    "character.only")))
                         if(length(pos)
-                           && identical(e[[pos]], TRUE)
+                           && isTRUE(e[[pos]])
                            && !identical(class(e[[2L]]), "character"))
                             dunno <- TRUE
                         ## </NOTE>
@@ -7498,7 +7497,7 @@ function(x, ...)
                           lapply(s, paste, collapse = ", "))),
                 collapse = "\n")
       },
-      if(identical(x$foss_with_BuildVignettes, TRUE)) {
+      if(isTRUE(x$foss_with_BuildVignettes)) {
           "FOSS licence with BuildVignettes: false"
       },
       if(length(y <- x$fields)) {
@@ -7594,7 +7593,7 @@ function(x, ...)
                 collapse = "\n")
       },
       if(length(y <- x$vignette_sources_only_in_inst_doc)) {
-          if(identical(x$have_vignettes_dir, FALSE))
+          if(isFALSE(x$have_vignettes_dir))
               paste(c("Vignette sources in 'inst/doc' with no 'vignettes' directory:",
                       strwrap(paste(sQuote(y), collapse = ", "),
                               indent = 2L, exdent = 2L),

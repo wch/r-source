@@ -1,7 +1,7 @@
 #  File src/library/utils/R/packages.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -161,7 +161,7 @@ function(contriburl = contrib.url(repos, type), method,
                 rp[!is.na(path)] <- paste(repos, path[!is.na(path)], sep = "/")
             } else rp <- repos
             res0 <- cbind(res0[, fields, drop = FALSE], Repository = rp)
-            res <- rbind(res, res0)
+            res <- rbind(res, res0, deparse.level = 0L)
         }
     }
 
@@ -175,7 +175,7 @@ function(contriburl = contrib.url(repos, type), method,
     if(is.list(filters)) {
         ## If filters is a list with an add = TRUE element, add the
         ## given filters to the default ones.
-        if(identical(filters$add, TRUE)) {
+        if(isTRUE(filters$add)) {
             filters$add <- NULL
             filters <- c(available_packages_filters_default, filters)
         }
@@ -634,7 +634,7 @@ installed.packages <-
     for(lib in lib.loc) {
         if(noCache) {
             ret0 <- .readPkgDesc(lib, fields)
-            if(length(ret0)) retval <- rbind(retval, ret0)
+            if(length(ret0)) retval <- rbind(retval, ret0, deparse.level = 0L)
         } else {
             ## Previously used URLencode for e.g. Windows paths with drives
             ## This version works for very long file names.
@@ -652,7 +652,7 @@ installed.packages <-
             else {
                 ret0 <- .readPkgDesc(lib, fields)
                 if(length(ret0)) {
-                    retval <- rbind(retval, ret0)
+                    retval <- rbind(retval, ret0, deparse.level = 0L)
                     ## save the cache file
                     saveRDS(list(base = base, value = ret0), dest)
                 } else unlink(dest)
@@ -951,7 +951,7 @@ setRepositories <-
         aa[aa == ""] <- repos[new][aa == ""]
         newa <- data.frame(menu_name=aa, URL=repos[new], default=TRUE)
         row.names(newa) <- aa
-        a <- rbind(a, newa)
+        a <- rbind(a, newa, deparse.level = 0L)
     }
 
     default <- a[["default"]]

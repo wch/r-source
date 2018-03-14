@@ -145,7 +145,7 @@ findHomeNS <- function(sym, ns, cntxt) {
         for (i in rev(seq_along(imports))) {
             iname <- names(imports)[i]
             ins <- getNamespace(iname)
-            if (identical(imports[[i]], TRUE)) {
+            if (isTRUE(imports[[i]])) {
                 if (identical(ins, .BaseNamespaceEnv))
                     exports <- .BaseNamespaceEnv
                 else
@@ -1080,9 +1080,9 @@ cmp <- function(e, cb, cntxt, missingOK = FALSE, setloc = TRUE) {
 cmpConst <- function(val, cb, cntxt) {
     if (identical(val, NULL))
         cb$putcode(LDNULL.OP)
-    else if (identical(val, TRUE))
+    else if (isTRUE(val))
         cb$putcode(LDTRUE.OP)
-    else if (identical(val, FALSE))
+    else if (isFALSE(val))
         cb$putcode(LDFALSE.OP)
     else {
         ci <- cb$putconst(val)
@@ -1211,9 +1211,9 @@ cmpCallArgs <- function(args, cb, cntxt, nse = FALSE) {
 cmpConstArg <- function(a, cb, cntxt) {
     if (identical(a, NULL))
         cb$putcode(PUSHNULLARG.OP)
-    else if (identical(a, TRUE))
+    else if (isTRUE(a))
         cb$putcode(PUSHTRUEARG.OP)
-    else if (identical(a, FALSE))
+    else if (isFALSE(a))
         cb$putcode(PUSHFALSEARG.OP)
     else {
         ci <- cb$putconst(a)
@@ -1357,7 +1357,7 @@ getInlineInfo <- function(name, cntxt, guardOK = FALSE) {
                 info$package <- packFrameName(frame)
                 info$guard <- TRUE
                 info
-            }                
+            }
             else NULL
         }
     }
@@ -2815,16 +2815,16 @@ setInlineHandler("require", function(e, cb, cntxt) {
 ##
 
 suppressAll <- function(cntxt)
-    identical(cntxt$suppressAll, TRUE)
+    isTRUE(cntxt$suppressAll)
 
 suppressUndef <- function(name, cntxt) {
-    if (identical(cntxt$suppressAll, TRUE))
+    if (isTRUE(cntxt$suppressAll))
         TRUE
     else {
         suppress <- cntxt$suppressUndefined
         if (is.null(suppress))
             FALSE
-        else if (identical(suppress, TRUE))
+        else if (isTRUE(suppress))
             TRUE
         else if (is.character(suppress) && as.character(name) %in% suppress)
             TRUE
@@ -3106,14 +3106,14 @@ setCompilerOptions <- function(...) {
                    }
                },
                suppressAll = {
-                   if (identical(op, TRUE) || identical(op, FALSE)) {
+                   if (isTRUE(op) || isFALSE(op)) {
                        old <- c(old, list(suppressAll =
                                           compilerOptions$suppressAll))
                        newOptions$suppressAll <- op
                    }
                },
                suppressUndefined = {
-                   if (identical(op, TRUE) || identical(op, FALSE) ||
+                   if (isTRUE(op) || isFALSE(op) ||
                        is.character(op)) {
                        old <- c(old, list(suppressUndefined =
                                           compilerOptions$suppressUndefined))

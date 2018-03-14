@@ -32,7 +32,7 @@ mahalanobis <- function(x, center, cov, inverted=FALSE, ...)
 {
     x <- if(is.vector(x)) matrix(x, ncol=length(x)) else as.matrix(x)
     ## save speed in customary case
-    if(!identical(center, FALSE))
+    if(!isFALSE(center))
 	x <- sweep(x, 2L, center)# = "x - center"
     ## NB:  sweep(...., check.margin=FALSE) does not measurably save time
 

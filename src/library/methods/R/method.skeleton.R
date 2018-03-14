@@ -48,7 +48,7 @@ method.skeleton <- function (generic, signature, file, external = FALSE,
 		paste0("    signature(", paste0(sigNames, ' = "', signature, '"',
 						collapse = ", "), "),"))
     method <- deparse(method)
-    if (identical(external, FALSE))
+    if (isFALSE(external))
         output <- c(output, paste0("    ", method), ")")
     else {
         if(is(external, "character") )

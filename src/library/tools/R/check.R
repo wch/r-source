@@ -832,7 +832,7 @@ add_dummies <- function(dir, Log)
                 TRUE
             } else config_val_to_logical(Check_license)
         } else FALSE
-        if (!identical(check_license, FALSE)) {
+        if (!isFALSE(check_license)) {
             Rcmd <- sprintf("tools:::.check_package_license(\"%s\", \"%s\")",
                             dfile, pkgdir)
             ## FIXME: this does not need to be run in another process
@@ -4606,7 +4606,7 @@ add_dummies <- function(dir, Log)
                 bad <- TRUE
             } else if(length(res$bad_version) ||
                       length(res$strong_dependencies_not_in_mainstream_repositories) ||
-                      identical(res$foss_with_BuildVignettes, TRUE) ||
+                      isTRUE(res$foss_with_BuildVignettes) ||
                       res$Maintainer_invalid_or_multi_person ||
                       res$empty_Maintainer_name ||
                       res$Maintainer_needs_quotes)
@@ -5121,7 +5121,7 @@ add_dummies <- function(dir, Log)
                      error = function(e) "")
     }
 
-    if (!identical(multiarch, FALSE)) {
+    if (!isFALSE(multiarch)) {
         ## see if there are multiple installed architectures, and if they work
         if (WINDOWS) {
             ## always has sub-archs as from R 2.12.0.

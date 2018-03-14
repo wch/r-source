@@ -81,9 +81,9 @@ extends <-
         if(is.null(classDef1))
             return(class1)
         ext <- classDef1@contains
-        if(!identical(maybe, TRUE) && length(ext) > 0)
+        if(!isTRUE(maybe) && length(ext) > 0)
         {
-            noTest <- vapply(ext, function(obj)identical(body(obj@test), TRUE), NA)
+            noTest <- vapply(ext, function(obj)isTRUE(body(obj@test)), NA)
             ext <- ext[noTest]
         }
         if(fullInfo) {
@@ -115,7 +115,7 @@ extends <-
         value
     else if(is.logical(value))
         value
-    else if(value@simple || identical(body(value@test), TRUE))
+    else if(value@simple || isTRUE(body(value@test)))
         TRUE
     else
         maybe
@@ -176,7 +176,7 @@ setIs <-
         obj <- extensionObject
     ## revise the superclass/subclass info in the stored class definition
     ok <- .validExtends(class1, class2, classDef,  classDef2, obj@simple)
-    if(!identical(ok, TRUE))
+    if(!isTRUE(ok))
       stop(ok)
     where2 <- .findOrCopyClass(class2, classDef2, where, "subclass")
     classDef2@subclasses[[class1]] <- obj

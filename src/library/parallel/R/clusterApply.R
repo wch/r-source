@@ -121,7 +121,7 @@ clusterMap <- function (cl = NULL, fun, ..., MoreArgs = NULL, RECYCLE = TRUE,
         else if (!is.null(names1))
             names(answer) <- names1
     }
-    if (!identical(SIMPLIFY, FALSE) && length(answer))
+    if (!isFALSE(SIMPLIFY) && length(answer))
         simplify2array(answer, higher = (SIMPLIFY == "array"))
     else answer
 }
@@ -232,7 +232,7 @@ parSapply <-
                         chunk.size = chunk.size)
     if(USE.NAMES && is.character(X) && is.null(names(answer)))
 	names(answer) <- X
-    if(!identical(simplify, FALSE) && length(answer))
+    if(!isFALSE(simplify) && length(answer))
 	simplify2array(answer, higher = (simplify == "array"))
     else answer
 }
@@ -246,7 +246,7 @@ parSapplyLB <-
                           chunk.size = chunk.size)
     if(USE.NAMES && is.character(X) && is.null(names(answer)))
 	names(answer) <- X
-    if(!identical(simplify, FALSE) && length(answer))
+    if(!isFALSE(simplify) && length(answer))
 	simplify2array(answer, higher = (simplify == "array"))
     else answer
 }

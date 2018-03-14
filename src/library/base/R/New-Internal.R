@@ -45,7 +45,7 @@ try <- function(expr, silent = FALSE,
         ## Store the error message for legacy uses of try() with
         ## geterrmessage().
         .Internal(seterrmessage(msg[1L]))
-        if (! silent && identical(getOption("show.error.messages"), TRUE)) {
+        if (! silent && isTRUE(getOption("show.error.messages"))) {
             cat(msg, file = outFile)
             .Internal(printDeferredWarnings())
         }

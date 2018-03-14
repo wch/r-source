@@ -799,9 +799,9 @@ getGenerics <- function(where, searchForm = FALSE)
     attr(funNames, "package") <- packageNames
     ## Would prefer following, but may be trouble bootstrapping methods
     ## funNames <- new("ObjectsWithPackage", funNames, package = packageNames)
-    if(identical(trim, TRUE))
+    if(isTRUE(trim))
         funNames
-    else if(identical(trim, FALSE))
+    else if(isFALSE(trim))
         these
     else
         gsub(".__T__", as.character(trim), these)
@@ -1654,7 +1654,7 @@ utils::globalVariables(c(".MTable", ".AllMTable", ".dotsCall"))
 }
 
 .isSingleString <- function(what)
-  is.character(what) && identical(nzchar(what), TRUE)
+  is.character(what) && isTRUE(nzchar(what))
 
 .notSingleString <- function(what)
 {
@@ -1677,7 +1677,7 @@ utils::globalVariables(c(".MTable", ".AllMTable", ".dotsCall"))
 ## a utility to exclude various annoying glitches during
 ## loading of the methods package
 .methodsIsLoaded <- function()
-    identical(.saveImage, TRUE)
+    isTRUE(.saveImage)
 
 if(FALSE) {
 ## Defined but not currently used:

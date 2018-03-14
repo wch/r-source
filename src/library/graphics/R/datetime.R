@@ -76,9 +76,9 @@ axis.POSIXct <- function(side, x, at, format, labels = TRUE, ...)
     keep <- z >= range[1L] & z <= range[2L]
     z <- z[keep]
     if (!is.logical(labels)) labels <- labels[keep]
-    else if (identical(labels, TRUE))
+    else if (isTRUE(labels))
 	labels <- format(z, format = format)
-    else if (identical(labels, FALSE))
+    else if (isFALSE(labels))
 	labels <- rep("", length(z)) # suppress labelling of ticks
     axis(side, at = z, labels = labels, ...)
 }
@@ -241,9 +241,9 @@ axis.Date <- function(side, x, at, format, labels = TRUE, ...)
     z <- z[keep]
     z <- sort(unique(z)); class(z) <- "Date"
     if (!is.logical(labels)) labels <- labels[keep]
-    else if (identical(labels, TRUE))
+    else if (isTRUE(labels))
 	labels <- format.Date(z, format = format)
-    else if (identical(labels, FALSE))
+    else if (isFALSE(labels))
 	labels <- rep("", length(z)) # suppress labelling of ticks
     axis(side, at = z, labels = labels, ...)
 }
