@@ -16,6 +16,45 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
+isWrappable <- function(x)
+    is.atomic(x) && mode(x) %in% c("integer", "numeric", "character")
+
+.makeSortEnum <- local({
+    ## this matches the enum in R_ext/Altrep.h
+    SORT_ENUM <- list(INCR_NA_1ST  = 2,
+                      INCR = 1,
+                      DECR = -1,
+                      DECR_NA_1st = -2,
+                      UNSORTED = 0,
+                      UNKNOWN = NA_integer_ )
+
+    function(decr, na.last) {
+        if(decr) {
+            if (is.na(na.last) || na.last) SORT_ENUM[["DECR"]]
+            else SORT_ENUM[["DECR_NA_1ST"]]
+        } else {
+            if (is.na(na.last) || na.last) SORT_ENUM[["INCR"]]
+            else SORT_ENUM[["INCR_NA_1ST"]]
+        }
+    }
+})
+
+.doWrap <- function(vec, decr, nalast, noNA = NA) {
+    if (length(vec) > 0 && (is.integer(vec) || is.numeric(vec))) {
+        sorted <- .makeSortEnum(decr, nalast)
+        if (is.na(noNA)) {
+            if(is.na(nalast)) ## NAs were removed
+                noNA <- TRUE
+            else if(nalast) ## NAs are last
+                noNA <- !is.na(vec[length(vec)])
+            else ## NAs are first
+                noNA <- !is.na(vec[1L])
+        }
+        .Internal(wrap_meta(vec, sorted, noNA))
+    }
+    else vec
+}
+
 sort <- function(x, decreasing = FALSE, ...)
 {
     if(!is.logical(decreasing) || length(decreasing) != 1L)
@@ -26,8 +65,15 @@ sort <- function(x, decreasing = FALSE, ...)
 sort.default <- function(x, decreasing = FALSE, na.last = NA, ...)
 {
     ## The first case includes factors.
-    if(is.object(x)) x[order(x, na.last = na.last, decreasing = decreasing)]
-    else sort.int(x, na.last = na.last, decreasing = decreasing, ...)
+
+    ## no wrapping/altrep fastpass here because sortedness may not correspond
+    ## to what other code assumes. ie for factors the vector itself is
+    ## not guaranteed to be sorted in numeric order, since it goes by level
+    ## values
+    if(is.object(x))
+        x[order(x, na.last = na.last, decreasing = decreasing)]
+    else
+        sort.int(x, na.last = na.last, decreasing = decreasing, ...)
 }
 
 sort.int <-
@@ -35,6 +81,18 @@ sort.int <-
              method = c("auto", "shell", "quick", "radix"),
              index.return = FALSE)
 {
+    ## fastpass
+    decreasing <- as.logical(decreasing)
+    if (is.null(partial) && !index.return && is.numeric(x)) {
+        wanted <- .makeSortEnum(decreasing, na.last)
+        if (.Internal(sorted_fpass(x, wanted))) {
+            ## strip attributes other than 'names'
+            attr <- attributes(x)
+            if (! is.null(attr) && ! identical(names(attr), "names"))
+                attributes(x) <- list(names = attr$names)
+            return(x)
+        }
+    }
     method <- match.arg(method)
     if (method == "auto" && is.null(partial) &&
         (is.numeric(x) || is.factor(x) || is.logical(x)) &&
@@ -51,6 +109,8 @@ sort.int <-
         o <- order(x, na.last = na.last, decreasing = decreasing,
                    method = "radix")
         y <- x[o]
+        
+        y <- .doWrap(y, decreasing, na.last)
         return(if (index.return) list(x = y, ix = o) else y)
     }
     else if (method == "auto" || !is.numeric(x))
@@ -106,11 +166,14 @@ sort.int <-
                        y <- .Internal(sort(x, decreasing))
                })
     }
-    if(!is.na(na.last) && has.na)
-	y <- if(!na.last) c(nas, y) else c(y, nas)
-    if(isfact)
+    if (!is.na(na.last) && has.na)
+	y <- if (!na.last) c(nas, y) else c(y, nas)
+    if (isfact)
         y <- (if (isord) ordered else factor)(y, levels = seq_len(nlev),
-                                              labels = lev)
+            labels = lev)
+    if (is.null(partial)) {
+        y <- .doWrap(y, decreasing, na.last)
+    }
     y
 }
 
@@ -119,6 +182,20 @@ order <- function(..., na.last = TRUE, decreasing = FALSE,
 {
     z <- list(...)
 
+    ## fastpass, take advantage of ALTREP metadata
+    decreasing <- as.logical(decreasing)
+    if (length(z) == 1L && is.numeric(z[[1L]]) && !is.object(z[[1]]) &&
+       length(z[[1L]]) > 0) {
+        x <- z[[1L]]
+        wanted <- .makeSortEnum(decreasing, na.last)
+        if (.Internal(sorted_fpass(x, wanted)))
+            return(seq(along = x))
+        ## try the reverse since that's easy too...
+        wanted <- .makeSortEnum(!decreasing, na.last)
+        if (.Internal(sorted_fpass(x, wanted)))
+            return(seq(length(x), 1))
+    }
+    
     method <- match.arg(method)
     if(any(vapply(z, is.object, logical(1L)))) {
         z <- lapply(z, function(x) if(is.object(x)) as.vector(xtfrm(x)) else x)
@@ -157,6 +234,19 @@ order <- function(..., na.last = TRUE, decreasing = FALSE,
 sort.list <- function(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
                       method = c("auto", "shell", "quick", "radix"))
 {
+    ## fastpass, take advantage of ALTREP metadata
+    decreasing <- as.logical(decreasing)
+    if(is.null(partial) && is.numeric(x) && !is.object(x) &&
+       length(x) > 0){
+        wanted <- .makeSortEnum(decreasing, na.last)
+        if (.Internal(sorted_fpass(x, wanted)))
+            return(seq(along = x))
+        ## try the reverse since that's easy too...
+        wanted <- .makeSortEnum(!decreasing, na.last)
+        if (.Internal(sorted_fpass(x, wanted)))
+            return(seq(length(x), 1))
+    }
+    
     method <- match.arg(method)
     if (method == "auto" && (is.numeric(x) || is.factor(x) || is.logical(x)) &&
         is.integer(length(x)))

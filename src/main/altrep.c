@@ -365,7 +365,7 @@ R_xlen_t INTEGER_GET_REGION(SEXP sx, R_xlen_t i, R_xlen_t n, int *buf)
 
 int INTEGER_IS_SORTED(SEXP x)
 {
-    return ALTREP(x) ? ALTINTEGER_DISPATCH(Is_sorted, x) : 0;
+    return ALTREP(x) ? ALTINTEGER_DISPATCH(Is_sorted, x) : UNKNOWN_SORTEDNESS;
 }
 
 int INTEGER_NO_NA(SEXP x)
@@ -395,7 +395,7 @@ R_xlen_t REAL_GET_REGION(SEXP sx, R_xlen_t i, R_xlen_t n, double *buf)
 
 int REAL_IS_SORTED(SEXP x)
 {
-    return ALTREP(x) ? ALTREAL_DISPATCH(Is_sorted, x) : 0;
+    return ALTREP(x) ? ALTREAL_DISPATCH(Is_sorted, x) : UNKNOWN_SORTEDNESS;
 }
 
 int REAL_NO_NA(SEXP x)
@@ -434,7 +434,7 @@ void attribute_hidden ALTSTRING_SET_ELT(SEXP x, R_xlen_t i, SEXP v)
 
 int STRING_IS_SORTED(SEXP x)
 {
-    return ALTREP(x) ? ALTSTRING_DISPATCH(Is_sorted, x) : 0;
+    return ALTREP(x) ? ALTSTRING_DISPATCH(Is_sorted, x) : UNKNOWN_SORTEDNESS;
 }
 
 int STRING_NO_NA(SEXP x)
@@ -608,7 +608,7 @@ altinteger_Get_region_default(SEXP sx, R_xlen_t i, R_xlen_t n, int *buf)
     return ncopy;
 }
 
-static int altinteger_Is_sorted_default(SEXP x) { return 0; }
+static int altinteger_Is_sorted_default(SEXP x) { return UNKNOWN_SORTEDNESS; }
 static int altinteger_No_NA_default(SEXP x) { return 0; }
 
 static SEXP altinteger_Sum_default(SEXP x, Rboolean narm) { return NULL; }
@@ -627,7 +627,7 @@ altreal_Get_region_default(SEXP sx, R_xlen_t i, R_xlen_t n, double *buf)
     return ncopy;
 }
 
-static int altreal_Is_sorted_default(SEXP x) { return 0; }
+static int altreal_Is_sorted_default(SEXP x) { return UNKNOWN_SORTEDNESS; }
 static int altreal_No_NA_default(SEXP x) { return 0; }
 
 static SEXP altreal_Sum_default(SEXP x, Rboolean narm) { return NULL; }
@@ -644,7 +644,7 @@ static void altstring_Set_elt_default(SEXP x, R_xlen_t i, SEXP v)
     error("ALTSTRING classes must provide a Set_elt method");
 }
 
-static int altstring_Is_sorted_default(SEXP x) { return 0; }
+static int altstring_Is_sorted_default(SEXP x) { return UNKNOWN_SORTEDNESS; }
 static int altstring_No_NA_default(SEXP x) { return 0; }
 
 
@@ -670,7 +670,7 @@ static altinteger_methods_t altinteger_default_methods = {
     .No_NA = altinteger_No_NA_default,
     .Sum = altinteger_Sum_default,
     .Min = altinteger_Min_default,
-    .Max = altinteger_Max_default    
+    .Max = altinteger_Max_default
 };
 
 static altreal_methods_t altreal_default_methods = {
@@ -1046,7 +1046,7 @@ static int compact_intseq_Is_sorted(SEXP x)
 	return UNKNOWN_SORTEDNESS;
 #endif
     int inc = COMPACT_INTSEQ_INFO_INCR(COMPACT_SEQ_INFO(x));
-    return inc < 0 ? KNOWN_DECR : KNOWN_INCR;
+    return inc < 0 ? SORTED_DECR : SORTED_INCR;
 }
 
 static int compact_intseq_No_NA(SEXP x)
@@ -1287,7 +1287,7 @@ static int compact_realseq_Is_sorted(SEXP x)
 	return UNKNOWN_SORTEDNESS;
 #endif
     double inc = COMPACT_REALSEQ_INFO_INCR(COMPACT_SEQ_INFO(x));
-    return inc < 0 ? KNOWN_DECR : KNOWN_INCR;
+    return inc < 0 ? SORTED_DECR : SORTED_INCR;
 }
 
 static int compact_realseq_No_NA(SEXP x)
@@ -2479,16 +2479,19 @@ SEXP attribute_hidden do_wrap_meta(SEXP call, SEXP op, SEXP args, SEXP env)
     case STRSXP: break;
     default: error("only INTSXP, REALSXP, STRSXP vectors suppoted for now");
     }
+
     if (ATTRIB(x) != R_NilValue)
 	/* For objects without references we could move the attributes
 	   to the wrapper. For objects with references the attributes
 	   would have to be shallow duplicated at least. The object/S4
 	   bits would need to be moved as well.	*/
-	error("only vectors without attributes are supported for now");
+	/* For now, just return the original object. */
+	return x;
 
     int srt = asInteger(CADR(args));
-    if (srt < -1 || srt > 1)
-	error("srt must be -1, 0, or +1");
+    if (!KNOWN_SORTED(srt) && srt != KNOWN_UNSORTED &&
+	srt != UNKNOWN_SORTEDNESS)
+	error("srt must be -2, -1, 0, or +1, +2, or NA");
     
     int no_na = asInteger(CADDR(args));
     if (no_na < 0 || no_na > 1)

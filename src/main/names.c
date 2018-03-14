@@ -714,6 +714,7 @@ FUNTAB R_FunTab[] =
 {"parent.frame",do_parentframe,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"sort",	do_sort,	1,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"is.unsorted",	do_isunsorted,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+{"sorted_fpass",do_sorted_fpass,0,      11,     2,      {PP_FUNCALL, PREC_FN,	0}},
 {"psort",	do_psort,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"qsort",	do_qsort,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"radixsort",	do_radixsort,	0,	11,	-1,	{PP_FUNCALL, PREC_FN,	0}},

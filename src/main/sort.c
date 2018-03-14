@@ -170,6 +170,32 @@ SEXP attribute_hidden do_isunsorted(SEXP call, SEXP op, SEXP args, SEXP rho)
 	return ans;
     PROTECT(args = ans); // args evaluated now
 
+    int sorted = UNKNOWN_SORTEDNESS;
+    switch(TYPEOF(x)) {
+    case INTSXP:
+	sorted = INTEGER_IS_SORTED(x);
+	break;
+    case REALSXP:
+	sorted = REAL_IS_SORTED(x);
+	break;
+    default:
+	break;
+    }
+
+    /* right now is.unsorted only tells you if something is sorted ascending
+      hopefully someday it will work for descending too */
+    if(!asLogical(CADR(args))) { /*not strict since we don't memoize that */
+	if(KNOWN_INCR(sorted)) {
+	    UNPROTECT(1);
+	    return ScalarLogical(FALSE);
+	}
+	/* is.unsorted returns TRUE for vectors sorted in descending order */
+	else if( KNOWN_DECR(sorted) || sorted == KNOWN_UNSORTED) {
+	    UNPROTECT(1);
+	    return ScalarLogical(TRUE);
+	}
+    }
+
     int strictly = asLogical(CADR(args));
     if(strictly == NA_LOGICAL)
 	error(_("invalid '%s' argument"), "strictly");
@@ -185,9 +211,11 @@ SEXP attribute_hidden do_isunsorted(SEXP call, SEXP op, SEXP args, SEXP rho)
 	ans = eval(call, rho);
 	UNPROTECT(2);
 	return ans;
-    } // else
+    }
+    else {
 	UNPROTECT(1);
-    return ScalarLogical(NA_LOGICAL);
+	return ScalarLogical(NA_LOGICAL);
+    }
 }
 
 
@@ -328,6 +356,7 @@ SEXP attribute_hidden do_sort(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("only atomic vectors can be sorted"));
     if(TYPEOF(CAR(args)) == RAWSXP)
 	error(_("raw vectors cannot be sorted"));
+
     /* we need consistent behaviour here, including dropping attibutes,
        so as from 2.3.0 we always duplicate. */
     PROTECT(ans = duplicate(CAR(args)));
@@ -335,8 +364,55 @@ SEXP attribute_hidden do_sort(SEXP call, SEXP op, SEXP args, SEXP rho)
     SET_OBJECT(ans, 0);		  /* we may have just stripped off the class */
     sortVector(ans, decreasing);
     UNPROTECT(1);
-    return(ans);
+    return(ans); /* wrapping with metadata happens at end of sort.int */
 }
+
+Rboolean fastpass_sortcheck(SEXP x, int wanted) {
+    int sorted = UNKNOWN_SORTEDNESS;
+    if(!KNOWN_SORTED(wanted)) 
+	return FALSE;
+
+    Rboolean noNA, done = FALSE;
+
+    switch(TYPEOF(x)) {
+    case INTSXP:
+	sorted = INTEGER_IS_SORTED(x);
+	noNA = INTEGER_NO_NA(x);
+	break;
+    case REALSXP:
+	sorted = REAL_IS_SORTED(x);
+	noNA = REAL_NO_NA(x);
+	break;
+    default:
+	/* keep sorted == UNKNOWN_SORTEDNESS */
+	break;
+    }
+    /* we know wanted is not NA_INTEGER or 0 at this point because
+       of the immediate return at the beginning for that case */
+    if(!KNOWN_SORTED(sorted)) {
+	done = FALSE;
+    } else if(sorted == wanted) {   
+	done = TRUE;
+	/* if there are no NAs, na.last can be ignored */
+    } else if(noNA && sorted * wanted > 0) { /* same sign, thus same direction of sort */
+	done = TRUE;
+    }
+    return done;
+}
+
+
+SEXP attribute_hidden do_sorted_fpass(SEXP call, SEXP op, SEXP args, SEXP rho) {
+    int wanted; 
+
+    checkArity(op, args);
+
+    wanted = asInteger(CADR(args));
+    SEXP x = PROTECT(CAR(args)); 
+    Rboolean wassorted = fastpass_sortcheck(x, wanted);
+    UNPROTECT(1);
+    return ScalarLogical(wassorted);
+}
+
 
 /* faster versions of shellsort, following Sedgewick (1986) */
 

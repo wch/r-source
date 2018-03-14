@@ -1673,10 +1673,22 @@ assert({
 ## as.data.frame(m)  kept the duplicated row names in R 3.4.x
 
 
-## check that sorting preserves names
+## check that sorting preserves names and no other attributes
 v <- sort(c(1,2,3))
 names(v) <- letters[1:3]
 assert(identical(sort(v), v))
+vv <- sort(c(1,2,3))
+names(vv) <- names(v)
+attr(vv, "foo") <- "bar"
+assert(identical(sort(vv), v))
+## failed initially in ALTREP
+
+
+## check that "TRUE", "FALSE" work in order, sort.int
+order(1:3, decreasing = "TRUE")
+order(1:3, decreasing = "FALSE")
+sort.int(1:3, decreasing = "TRUE")
+sort.int(1:3, decreasing = "FALSE")
 ## failed initially in ALTREP
 
 
