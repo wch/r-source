@@ -1,6 +1,6 @@
 % File src/library/base/man/attributes.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{attributes}
@@ -36,8 +36,11 @@ mostattributes(obj) <- value
   \code{levels} replacement function.)
 
   Attributes are not stored internally as a list and should be thought
-  of as a set and not a vector.  They must have unique
-  names (and \code{NA} is taken as \code{"NA"}, not a missing value).
+  of as a set and not a vector, i.e, the \emph{order} of the elements of
+  \code{attributes()} does not matter.  This is also reflected by
+  \code{\link{identical}()}'s behaviour with the default argument
+  \code{attrib.as.set = TRUE}.  Attributes must have unique names (and
+  \code{NA} is taken as \code{"NA"}, not a missing value).
 
   Assigning attributes first removes all attributes, then sets any
   \code{dim} attribute and then the remaining attributes in the order
@@ -55,7 +58,7 @@ mostattributes(obj) <- value
   The names of a pairlist are not stored as attributes, but are reported
   as if they were (and can be set by the replacement form of
   \code{attributes}).
-  
+
   \code{\link{NULL}} objects cannot have attributes and attempts to
   assign them will promote the object to an empty list.
 
