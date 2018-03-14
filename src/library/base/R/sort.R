@@ -82,6 +82,7 @@ sort.int <-
              index.return = FALSE)
 {
     ## fastpass
+    decreasing <- as.logical(decreasing)
     if (is.null(partial) && !index.return && is.numeric(x)) {
         wanted <- .makeSortEnum(decreasing, na.last)
         if (.Internal(sorted_fpass(x, wanted))) {
@@ -182,6 +183,7 @@ order <- function(..., na.last = TRUE, decreasing = FALSE,
     z <- list(...)
 
     ## fastpass, take advantage of ALTREP metadata
+    decreasing <- as.logical(decreasing)
     if (length(z) == 1L && is.numeric(z[[1L]]) && !is.object(z[[1]]) &&
        length(z[[1L]]) > 0) {
         x <- z[[1L]]
@@ -233,6 +235,7 @@ sort.list <- function(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
                       method = c("auto", "shell", "quick", "radix"))
 {
     ## fastpass, take advantage of ALTREP metadata
+    decreasing <- as.logical(decreasing)
     if(is.null(partial) && is.numeric(x) && !is.object(x) &&
        length(x) > 0){
         wanted <- .makeSortEnum(decreasing, na.last)
