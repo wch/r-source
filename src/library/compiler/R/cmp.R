@@ -24,6 +24,7 @@
 compilerOptions <- new.env(hash = TRUE, parent = emptyenv())
 compilerOptions$optimize <- 2
 compilerOptions$suppressAll <- TRUE
+compilerOptions$suppressNoSuperAssignVar <- FALSE
 compilerOptions$suppressUndefined <-
     c(".Generic", ".Method", ".Random.seed", ".self")
 
@@ -989,6 +990,8 @@ make.toplevelContext <- function(cenv, options = NULL)
                    env = cenv,
                    optimize = getCompilerOption("optimize", options),
                    suppressAll = getCompilerOption("suppressAll", options),
+                   suppressNoSuperAssignVar =
+                       getCompilerOption("suppressNoSuperAssignVar", options),
                    suppressUndefined = getCompilerOption("suppressUndefined",
                                                          options),
                    call = NULL,
@@ -1018,6 +1021,7 @@ make.functionContext <- function(cntxt, forms, body) {
     ncntxt <- make.toplevelContext(nenv)
     ncntxt$optimize <- cntxt$optimize
     ncntxt$suppressAll <- cntxt$suppressAll
+    ncntxt$suppressNoSuperAssignVar <- cntxt$suppressNoSuperAssignVar
     ncntxt$suppressUndefined <- cntxt$suppressUndefined
     ncntxt
 }
@@ -2817,6 +2821,9 @@ setInlineHandler("require", function(e, cb, cntxt) {
 suppressAll <- function(cntxt)
     isTRUE(cntxt$suppressAll)
 
+suppressNoSuperAssignVar <- function(cntxt)
+    isTRUE(cntxt$suppressNoSuperAssignVar)
+
 suppressUndef <- function(name, cntxt) {
     if (isTRUE(cntxt$suppressAll))
         TRUE
@@ -2854,7 +2861,7 @@ notifyUndefVar <- function(var, cntxt, loc = NULL) {
 }
 
 notifyNoSuperAssignVar <- function(symbol, cntxt, loc = NULL) {
-    if (! suppressAll(cntxt)) {
+    if (! suppressAll(cntxt) && ! suppressNoSuperAssignVar(cntxt)) {
         msg <- gettextf("no visible binding for '<<-' assignment to '%s'",
                         as.character(symbol))
         cntxt$warn(msg, cntxt, loc)
@@ -3112,6 +3119,14 @@ setCompilerOptions <- function(...) {
                        newOptions$suppressAll <- op
                    }
                },
+               suppressNoSuperAssignVar = {
+                   if (isTRUE(op) || isFALSE(op)) {
+                       old <- c(old, list(
+                           suppressNoSuperAssignVar =
+                               compilerOptions$suppressNoSuperAssignVar))
+                       newOptions$suppressNoSuperAssignVar <- op
+                   }
+               },
                suppressUndefined = {
                    if (isTRUE(op) || isFALSE(op) ||
                        is.character(op)) {
@@ -3146,6 +3161,9 @@ setCompilerOptions <- function(...) {
     val <- envAsLogical("R_COMPILER_SUPPRESS_UNDEFINED")
     if (!is.na(val))
         setCompilerOptions(suppressUndefined = val)
+    val <- envAsLogical("R_COMPILER_SUPPRESS_NO_SUPER_ASSIGN_VAR")
+    if (!is.na(val))
+        setCompilerOptions(suppressNoSuperAssignVar = val)
     if (Sys.getenv("R_COMPILER_OPTIMIZE") != "")
         tryCatch({
             lev <- as.integer(Sys.getenv("R_COMPILER_OPTIMIZE"))

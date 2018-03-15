@@ -1120,6 +1120,8 @@ make.toplevelContext <- function(cenv, options = NULL)
                    env = cenv,
                    optimize = getCompilerOption("optimize", options),
                    suppressAll = getCompilerOption("suppressAll", options),
+                   suppressNoSuperAssignVar =
+                       getCompilerOption("suppressNoSuperAssignVar", options),
                    suppressUndefined = getCompilerOption("suppressUndefined",
                                                          options),
                    call = NULL,
@@ -1185,6 +1187,7 @@ make.functionContext <- function(cntxt, forms, body) {
     ncntxt <- make.toplevelContext(nenv)
     ncntxt$optimize <- cntxt$optimize
     ncntxt$suppressAll <- cntxt$suppressAll
+    ncntxt$suppressNoSuperAssignVar <- cntxt$suppressNoSuperAssignVar
     ncntxt$suppressUndefined <- cntxt$suppressUndefined
     ncntxt
 }
@@ -1238,6 +1241,8 @@ Default compiler options are maintained in an environment.  For now,
 the supported options are [[optimize]], which is initialized to level
 2, and two options for controlling compiler messages.  The
 [[suppressAll]] option, if [[TRUE]], suppresses all notifications.
+The [[suppressNoSuperAssignVar]] option, if [[TRUE]], suppresses
+notifications about missing binding for a super-assigned variable.
 The [[suppressUndefined]] option can be [[TRUE]] to suppress all
 notifications about undefined variables and functions, or it can be a
 character vector of the names of variables for which warnings should
@@ -1246,6 +1251,7 @@ be suppressed.
 compilerOptions <- new.env(hash = TRUE, parent = emptyenv())
 compilerOptions$optimize <- 2
 compilerOptions$suppressAll <- TRUE
+compilerOptions$suppressNoSuperAssignVar <- FALSE
 compilerOptions$suppressUndefined <-
     c(".Generic", ".Method", ".Random.seed", ".self")
 @ %def compilerOptions
@@ -1266,6 +1272,12 @@ The [[suppressAll]] function determines whether a context has its
 suppressAll <- function(cntxt)
     isTRUE(cntxt$suppressAll)
 @ %def suppressAll
+The [[suppressNoSuperAssignVar]] function determines whether a context has
+its [[suppressNoSuperAssignVar]] property set to [[TRUE]].
+<<[[suppressNoSuperAssignVar]] function>>=
+suppressNoSuperAssignVar <- function(cntxt)
+    isTRUE(cntxt$suppressNoSuperAssignVar)
+@ %def suppressNoSuperAssignVar
 The [[suppressUndef]] function determines whether undefined variable
 or function definition notifications for a particular variable should
 be suppressed in a particular compiler context.
@@ -1381,7 +1393,7 @@ target variable should be defined; otherwise there will be a runtime
 warning.
 <<[[notifyNoSuperAssignVar]] function>>=
 notifyNoSuperAssignVar <- function(symbol, cntxt, loc = NULL) {
-    if (! suppressAll(cntxt)) {
+    if (! suppressAll(cntxt) && ! suppressNoSuperAssignVar(cntxt)) {
         msg <- gettextf("no visible binding for '<<-' assignment to '%s'",
                         as.character(symbol))
         cntxt$warn(msg, cntxt, loc)
@@ -5228,6 +5240,14 @@ setCompilerOptions <- function(...) {
                        newOptions$suppressAll <- op
                    }
                },
+               suppressNoSuperAssignVar = {
+                   if (isTRUE(op) || isFALSE(op)) {
+                       old <- c(old, list(
+                           suppressNoSuperAssignVar =
+                               compilerOptions$suppressNoSuperAssignVar))
+                       newOptions$suppressNoSuperAssignVar <- op
+                   }
+               },
                suppressUndefined = {
                    if (isTRUE(op) || isFALSE(op) ||
                        is.character(op)) {
@@ -5270,6 +5290,9 @@ optimization level to be specified using environment variables.
     val <- envAsLogical("R_COMPILER_SUPPRESS_UNDEFINED")
     if (!is.na(val))
         setCompilerOptions(suppressUndefined = val)
+    val <- envAsLogical("R_COMPILER_SUPPRESS_NO_SUPER_ASSIGN_VAR")
+    if (!is.na(val))
+        setCompilerOptions(suppressNoSuperAssignVar = val)
     if (Sys.getenv("R_COMPILER_OPTIMIZE") != "")
         tryCatch({
             lev <- as.integer(Sys.getenv("R_COMPILER_OPTIMIZE"))
@@ -6643,6 +6666,8 @@ Opcodes.names <- names(Opcodes.argc)
 ##
 
 <<[[suppressAll]] function>>
+
+<<[[suppressNoSuperAssignVar]] function>>
 
 <<[[suppressUndef]] function>>
 

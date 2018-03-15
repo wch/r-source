@@ -94,15 +94,20 @@ setCompilerOptions(...)
   this by using \code{cat} to print messages.  Eventually this should
   use the condition handling mechanism.
 
-  The \code{options} argument can be used to control compiler operation.
-  There are currently three options: \code{optimize},
-  \code{suppressAll}, and \code{suppressUndefined}. \code{optimize}
-  specifies the optimization level, an integer from \code{0} to \code{3}
-  (the current out-of-the-box default is \code{2}).  \code{suppressAll}
-  should be a scalar logical; if \code{TRUE} no messages will be
-  shown. \code{suppressUndefined} can be \code{TRUE} to suppress all
-  messages about undefined variables, or it can be a character vector of
-  the names of variables for which messages should not be shown.
+  The \code{options} argument can be used to control compiler operation. 
+  There are currently four options: \code{optimize}, \code{suppressAll},
+  \code{suppressUndefined}, and \code{suppressNoSuperAssignVar}. 
+  \code{optimize} specifies the optimization level, an integer from \code{0}
+  to \code{3} (the current out-of-the-box default is \code{2}). 
+  \code{suppressAll} should be a scalar logical; if \code{TRUE} no messages
+  will be shown (this is the default). \code{suppressUndefined} can be
+  \code{TRUE} to suppress all messages about undefined variables, or it can
+  be a character vector of the names of variables for which messages should
+  not be shown.  \code{suppressNoSuperAssignVar} can be \code{TRUE} to
+  suppress messages about super assignments to a variable for which no
+  binding is visible at compile time.  During compilation of packages,
+  \code{suppressAll} is currently \code{FALSE}, \code{suppressUndefined} is
+  \code{TRUE} and \code{suppressNoSuperAssignVar} is \code{TRUE}.
 
   \code{getCompilerOption} returns the value of the specified option.
   The default value is returned unless a value is supplied in the
