@@ -1357,7 +1357,7 @@ getInlineInfo <- function(name, cntxt, guardOK = FALSE) {
                 info$package <- packFrameName(frame)
                 info$guard <- TRUE
                 info
-            }
+            }                
             else NULL
         }
     }
