@@ -881,11 +881,12 @@ SEXP R_MakeUnwindCont()
     return CONS(R_NilValue, allocVector(RAWSXP, sizeof(unwind_cont_t)));
 }
 
+#define RAWDATA(x) ((void *) RAW0(x))
 
 void NORET R_ContinueUnwind(SEXP cont)
 {
     SEXP retval = CAR(cont);
-    unwind_cont_t *u = DATAPTR(CDR(cont));
+    unwind_cont_t *u = RAWDATA(CDR(cont));
     R_jumpctxt(u->jumptarget, u->jumpmask, retval);
 }
 
@@ -913,7 +914,7 @@ SEXP R_UnwindProtect(SEXP (*fun)(void *data), void *data,
     if (SETJMP(thiscontext.cjmpbuf)) {
 	jump = TRUE;
 	SETCAR(cont, R_ReturnedValue);
-	unwind_cont_t *u = DATAPTR(CDR(cont));
+	unwind_cont_t *u = RAWDATA(CDR(cont));
 	u->jumpmask = thiscontext.jumpmask;
 	u->jumptarget = thiscontext.jumptarget;
 	thiscontext.jumptarget = NULL;
