@@ -2627,12 +2627,12 @@ nor to compilation done in vignettes or @emph{via} other packages.
 @node Using C++14 code, Using C++17 code, Using C++11 code, Configure and cleanup
 @subsection Using C++14 code
 
-Support for a C++14 has been explicitly added to @R{} from version
-3.4.0. Similar considerations to C++11 apply, except that the variables
-associated with the C++14 compiler use the prefix @samp{CXX14} instead
-of @samp{CXX11}. Hence to use C++14 code in a package, the package's
-@file{Makevars} file (or @file{Makevars.win} on Windows) should include
-the line
+Support for a C++14 (where available) has been explicitly added to @R{}
+from version 3.4.0. Similar considerations to C++11 apply, except that
+the variables associated with the C++14 compiler use the prefix
+@samp{CXX14} instead of @samp{CXX11}. Hence to use C++14 code in a
+package, the package's @file{Makevars} file (or @file{Makevars.win} on
+Windows) should include the line
 @example
 CXX_STD = CXX14
 @end example
@@ -2651,7 +2651,7 @@ not necessarily compile under a C++14 compiler@footnote{As from @R{}
 3.4.0, @command{configure} attempts to supply a C++14 compiler only if
 explicitly requested.  However, earlier versions of @R{} will use the
 default C++14 mode of @command{g++} 6 and later.}, since the emulation
-typically leads to a namespace clash. In order to ensure that the code
+typically leads to a namespace clash.  In order to ensure that the code
 also compiles under C++14, something like the following should be
 done:
 @example
@@ -2684,7 +2684,20 @@ using std::make_unique;
 The webpage
 @uref{http://en.cppreference.com/@/w/@/cpp/@/compiler_support} gives
 some information on which compilers are known to support recent C++
-features.
+features.  Note that @command{g++} 4.9.x (as used for @R{} on Windows at
+the time of writing) has only partial C++14 support, and the flag to
+obtain that support is not included in the default Windows build of @R{}
+--- one could try something like
+
+@example
+CXX14="$(BINPREF)g++ $(M_ARCH)"
+CXX14FLAGS="-O2 -Wall" 
+CXX14STD=-std=gnu1y 
+@end example
+
+@noindent
+in @file{@var{HOME}/.R/Makevars.win}.
+
 
 @node Using C++17 code,  , Using C++14 code, Configure and cleanup
 @subsection Using C++17 code
@@ -2716,6 +2729,9 @@ used systematically by setting the environment variable @env{USE_CXX17}.
 
 As for C++14, feature tests can be used (and probably should be as
 compiler support is still patchy).
+
+No C++17 support is enabled in the current default build of @R{} on
+Windows.
 
 @node Checking and building packages, Writing package vignettes, Configure and cleanup, Creating R packages
 @section Checking and building packages
