@@ -99,6 +99,7 @@ initDefaultClusterOptions <- function(libname)
     }
     Sys.i <- Sys.info()
     options <- list(port = as.integer(port),
+                    setup_timeout = 60 * 2,      # 2 minutes
                     timeout = 60 * 60 * 24 * 30, # 30 days
                     master = Sys.i[["nodename"]],
                     homogeneous = TRUE,
