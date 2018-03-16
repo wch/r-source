@@ -6801,13 +6801,14 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	SEXP body = VECTOR_ELT(fb, 1);
 	SEXP value = mkCLOSXP(forms, body, rho);
 	/* The LENGTH check below allows for byte code object created
-	   by oder versions of the compiler that did not record a
+	   by older versions of the compiler that did not record a
 	   source attribute. */
 	/* FIXME: bump bc version and don't check LENGTH? */
 	if (LENGTH(fb) > 2) {
 	  SEXP srcref = VECTOR_ELT(fb, 2);
 	  if (!isNull(srcref)) setAttrib(value, R_SrcrefSymbol, srcref);
 	}
+	R_Visible = TRUE;
 	BCNPUSH(value);
 	NEXT();
       }
