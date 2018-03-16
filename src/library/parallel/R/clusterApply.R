@@ -188,8 +188,8 @@ parLapply <- function(cl = NULL, X, fun, ..., chunk.size = NULL)
     cl <- defaultCluster(cl)
     nchunks <- staticNChunks(length(X), length(cl), chunk.size)
     do.call(c,
-            clusterApply(cl, x = splitList(X, nchunks),
-                         fun = lapply, fun, ...),
+            clusterApply(cl = cl, x = splitList(X, nchunks),
+                         fun = lapply, FUN = fun, ...),
             quote = TRUE)
 }
 
@@ -198,8 +198,8 @@ parLapplyLB <- function(cl = NULL, X, fun, ..., chunk.size = NULL)
     cl <- defaultCluster(cl)
     nchunks <- dynamicNChunks(length(X), length(cl), chunk.size)
     do.call(c,
-            clusterApplyLB(cl, x = splitList(X, nchunks),
-                           fun = lapply, fun, ...),
+            clusterApplyLB(cl = cl, x = splitList(X, nchunks),
+                           fun = lapply, FUN = fun, ...),
             quote = TRUE)
 }
 
@@ -228,7 +228,7 @@ parSapply <-
               chunk.size = NULL)
 {
     FUN <- match.fun(FUN) # should this be done on worker?
-    answer <- parLapply(cl, X = as.list(X), fun = FUN, ...,
+    answer <- parLapply(cl = cl, X = as.list(X), fun = FUN, ...,
                         chunk.size = chunk.size)
     if(USE.NAMES && is.character(X) && is.null(names(answer)))
 	names(answer) <- X
@@ -242,7 +242,7 @@ parSapplyLB <-
               chunk.size = NULL)
 {
     FUN <- match.fun(FUN) # should this be done on worker?
-    answer <- parLapplyLB(cl, X = as.list(X), fun = FUN, ...,
+    answer <- parLapplyLB(cl = cl, X = as.list(X), fun = FUN, ...,
                           chunk.size = chunk.size)
     if(USE.NAMES && is.character(X) && is.null(names(answer)))
 	names(answer) <- X

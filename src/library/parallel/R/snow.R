@@ -1,7 +1,7 @@
 #  File src/library/parallel/R/snow.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -148,11 +148,11 @@ makeCluster <-
     function (spec, type = getClusterOption("type"), ...)
 {
     switch(type,
-           PSOCK = makePSOCKcluster(spec, ...),
-           FORK = makeForkCluster(spec, ...),
-           SOCK = snow::makeSOCKcluster(spec, ...),
-           MPI = snow::makeMPIcluster(spec, ...),
-           NWS = snow::makeNWScluster(spec, ...),
+           PSOCK = makePSOCKcluster(names = spec, ...),
+           FORK = makeForkCluster(nnodes = spec, ...),
+           SOCK = snow::makeSOCKcluster(names = spec, ...),
+           MPI = snow::makeMPIcluster(count = spec, ...),
+           NWS = snow::makeNWScluster(names = spec, ...),
            stop("unknown cluster type"))
 }
 
