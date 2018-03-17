@@ -1,6 +1,6 @@
 % File src/library/base/man/Logic.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Logic}
@@ -29,10 +29,10 @@ isFALSE(x)
   These operators act on raw, logical and number-like vectors.
 }
 \arguments{
-  \item{x, y}{raw or logical or \sQuote{number-like} vectors (i.e., of
-    types \code{\link{double}} (class \code{\link{numeric}},
-    \code{\link{integer}}) and \code{\link{complex}}), or objects for
-    which methods have been written.} 
+  \item{x, y}{\code{\link{raw}}, \code{\link{logical}} or \sQuote{number-like} vectors (i.e., of
+    types \code{\link{double}} (class \code{\link{numeric}}),
+    \code{\link{integer}} and \code{\link{complex}}), or objects for
+    which methods have been written.}
 }
 \details{
   \code{!} indicates logical negation (NOT).
