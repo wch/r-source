@@ -92,7 +92,8 @@ parSapplyLB(cl = NULL, X, FUN, ..., simplify = TRUE,
   are complete.  Using \code{clusterApplyLB} can result in better
   cluster utilization than using \code{clusterApply}, but increased
   communication can reduce performance.  Furthermore, the node that
-  executes a particular job is non-deterministic.
+  executes a particular job is non-deterministic. This means that
+  simulations that assign RNG streams to nodes will not be reproducible.
 
   \code{clusterMap} is a multi-argument version of \code{clusterApply},
   analogous to \code{\link{mapply}} and \code{\link{Map}}.  If
@@ -125,7 +126,10 @@ parSapplyLB(cl = NULL, X, FUN, ..., simplify = TRUE,
   computation are allocated dynamically to nodes using
   \code{clusterApplyLB}.  From \R 3.5.0, the default number of chunks is
   twice the number of nodes. Before \R 3.5.0, the (fixed) number of chunks
-  was the same as the number of nodes.
+  was the same as the number of nodes.  As for \code{clusterApplyLB},
+  with load balancing the node that executes a particular job is
+  non-deterministic and simulations that assign RNG streams to nodes
+  will not be reproducible.
 
   \code{parRapply} and \code{parCapply} are parallel row and column
   \code{apply} functions for a matrix \code{x}; they may be slightly
