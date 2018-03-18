@@ -1561,12 +1561,17 @@ SEXP attribute_hidden do_attrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(DispatchOrEval(call, op, "@<-", args, env, &ans, 0, 0))
 	    return(ans);
 
-	PROTECT(obj = CAR(ans));
 	PROTECT(value = CADDR(ans));
+	obj = CAR(ans);
+	if (MAYBE_SHARED(obj))
+	    PROTECT(obj = shallow_duplicate(obj));
+	else
+	    PROTECT(obj);
 	check_slot_assign(obj, input, value, env);
-	value = R_do_slot_assign(obj, input, value);
+	obj = R_do_slot_assign(obj, input, value);
 	UNPROTECT(2);
-	return value;
+	SETTER_CLEAR_NAMED(obj);
+	return obj;
     }
     else { // attr(obj, "name") <- value :
 	SEXP argList;
