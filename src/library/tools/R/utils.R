@@ -934,7 +934,7 @@ function()
 .get_requires_from_package_db <-
 function(db,
          category = c("Depends", "Imports", "LinkingTo", "VignetteBuilder",
-         "Suggests", "Enhances"))
+         "Suggests", "Enhances", "RdMacros"))
 {
     category <- match.arg(category)
     if(category %in% names(db)) {

@@ -3043,6 +3043,11 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE,
         if(length(hd)) bad_depends$hdOnly <- hd
     }
 
+    ## Check RdMacros.
+    RM <- setdiff(.get_requires_from_package_db(db, "RdMacros"),
+                  c(depends, imports, suggests))
+    if(length(RM)) bad_depends$missing_rdmacros_depends <- RM
+
     class(bad_depends) <- "check_package_depends"
     bad_depends
 }
@@ -3115,10 +3120,18 @@ function(x, ...)
           c(if(length(bad) > 1L) {
                 c("Vignette dependencies not required:", .pretty_format(bad))
             } else {
-                sprintf("Vignette dependencies not required: %s", sQuote(bad))
+                sprintf("Vignette dependency not required: %s", sQuote(bad))
             },
             strwrap(gettextf("Vignette dependencies (%s entries) must be contained in the DESCRIPTION Depends/Suggests/Imports entries.",
                              "\\VignetteDepends{}")),
+            "")
+      },
+      if(length(bad <- x$missing_rdmacros_depends)) {
+          c(if(length(bad) > 1L)
+                .pretty_format2("RdMacros packages not required:", bad)
+            else
+                sprintf("RdMacros package not required: %s", sQuote(bad)),
+            strwrap("RdMacros packages must be contained in the DESCRIPTION Imports/Suggests/Depends entries."),
             "")
       },
       if(length(bad <- x$missing_namespace_depends) > 1L) {
@@ -3145,7 +3158,7 @@ function(x, ...)
             "")
       }
       )
-  }
+}
 
 ### * .check_package_description
 
