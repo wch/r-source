@@ -4590,10 +4590,10 @@ fewer still (at the time of writing, only @cputype{x86_64} Linux, macOS,
 When specifying a minimum Java version please use the official version
 names, which are (confusingly)
 @example
-1.1 1.2 1.3 1.4 5.0 6 7 8 9
+1.1 1.2 1.3 1.4 5.0 6 7 8 9 10
 @end example
 @noindent
-and supposedly will in 2018 move to a year.month scheme such as @samp{18.3}.
+and supposedly will in 2018 move to a year.month scheme such as @samp{18.9}.
 
 A suitable test for packages using @CRANpkg{rJava} would be something like
 @example
