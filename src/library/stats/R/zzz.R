@@ -1,7 +1,7 @@
 #  File src/library/stats/R/zzz.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -20,7 +20,6 @@
 
 .onLoad <- function(libname, pkgname)
 {
-    op <- options()
     op.stats <-
         list(contrasts =
 		 c(unordered = "contr.treatment", ordered = "contr.poly"),
@@ -30,7 +29,7 @@
 	     str.dendrogram.last = "`",
              ts.eps = 1e-5,
              ts.S.compat = FALSE)
-    toset <- !(names(op.stats) %in% names(op))
+    toset <- !(names(op.stats) %in% names(.Options))
     if(any(toset)) options(op.stats[toset])
 }
 

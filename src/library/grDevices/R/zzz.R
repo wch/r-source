@@ -34,7 +34,7 @@ if (.Platform$OS.type == "windows") {
         else if(.Call(C_cairoProps, 2L)) "cairo" else "Xlib")
     op.grDevices <- c(list(locatorBell = TRUE, device.ask.default = FALSE),
                       extras, list(device = .select_device()))
-    toset <- !(names(op.grDevices) %in% names(options()))
+    toset <- !(names(op.grDevices) %in% names(.Options))
     if(any(toset)) options(op.grDevices[toset])
 }
 
