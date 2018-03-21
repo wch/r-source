@@ -1,7 +1,7 @@
 #  File src/library/parallel/R/snowSOCK.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@ newPSOCKnode <- function(machine = "localhost", ...,
     ## build the local command for starting the worker
     env <- paste0("MASTER=", master,
                  " PORT=", port,
-                 " OUT=", outfile,
+                 " OUT=", shQuote(outfile),
                  " SETUPTIMEOUT=", setup_timeout,
                  " TIMEOUT=", timeout,
                  " XDR=", useXDR)
