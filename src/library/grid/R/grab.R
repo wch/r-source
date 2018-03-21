@@ -212,9 +212,14 @@ grid.grab <- function(warn=2, wrap=FALSE, ...) {
   grabDL(warn, wrap, ...)
 }
 
-grid.grabExpr <- function(expr, warn=2, wrap=FALSE, ...) {
+offscreen <- function(width, height) {
+    pdf(file=NULL, width=width, height=height)
+}
+
+grid.grabExpr <- function(expr, warn=2, wrap=FALSE,
+                          width=7, height=7, device=offscreen, ...) {
     ## Start an "offline" PDF device for this function
-    pdf(file=NULL)
+    device(width, height)
     on.exit(dev.off())
     ## Run the graphics code in expr
     ## Rely on lazy evaluation for correct "timing"
