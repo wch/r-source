@@ -72,7 +72,6 @@ system2(command, args = character(),
   number of seconds.  The termination works for typical commands, but is not
   guaranteed: it is possible to write a program that would keep running
   after the time is out.  Timeouts can only be set with \code{wait = TRUE}.
-  The \code{timeout} option is currently experimental.
 
 #ifdef unix
   Timeouts cannot be used with interactive commands: the command is run with
