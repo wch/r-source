@@ -1,6 +1,6 @@
 % File src/library/base/man/system.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{system2}
@@ -34,7 +34,7 @@ system2(command, args = character(),
   \item{wait}{a logical (not \code{NA}) indicating whether the \R
     interpreter should wait for the command to finish, or run it
     asynchronously.  This will be ignored (and the interpreter will
-    always wait) if \code{stdout = TRUE}.}
+    always wait) if \code{stdout = TRUE} or \code{stderr = TRUE}.}
   \item{timeout}{timeout in seconds, ignored if 0.  This is a limit for the
     elapsed time running \code{command} in a separate process.   Fractions
     of seconds are ignored.}
