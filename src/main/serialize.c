@@ -60,7 +60,15 @@
  *    provided in a released version, then these should specify the
  *    oldest reader R version as -1.
  */
-
+ 
+ /* It is now customary that the version (1, 2, 3) of the format is
+  * reflected also in magic numbers (such as RDX2, RDX3, ...), together with
+  * type (xdr/ascii/binary).  Adding a new serialization format thus now
+  * also requires adding a new set of magic numbers, yet in principle this
+  * could be changed in the future.  The code in this file does not need the
+  * magic numbers, it relies on version and type information in the
+  * serialization header (version 2 and 3).
+  */
 
 /* ----- V e r s i o n -- T w o -- S a v e / R e s t o r e ----- */
 
@@ -139,7 +147,7 @@
    consists of a function pointer and a data value.  The serialization
    function pointer is called with the reference object and the data
    value as arguments.  It should return R_NilValue for standard
-   handling and an STRSXP for special handling.  In an STRSXP is
+   handling and an STRSXP for special handling.  If an STRSXP is
    returned, then a special handing mark is written followed by the
    strings in the STRSXP (attributes are ignored).  On unserializing,
    any specially marked entry causes a call to the hook function with
@@ -157,11 +165,15 @@
 
 /* ----- V e r s i o n -- T h r e e -- S a v e / R e s t o r e ----- */
 
-/* Experimental version. Currently extends version 2 by adding current native
-   encoding to the serialization header. This information is used
-   on de-serialization: deserialized strings without an encoding flag will be
-   converted to the current native encoding, if possible, or to (flagged)
-   UTF-8.
+/* This format extends version 2 format by adding an identifier of the
+   current native encoding to the serialization header.  On deserialization,
+   strings without an encoding flag will be converted to the current native
+   encoding, if possible, or to (flagged) UTF-8.  The conversion may fail
+   when the original encoding is not supported by iconv (unlikely) or when
+   the string is not valid in its declared encoding, which unfortunately is
+   not uncommon.  The conversion code now deliberately does not check
+   whether strings are valid when no conversion is needed, but such check
+   could be added in the future without changing the format.
 
    Version 3 also adds support for custom ALTREP serialization. Under
    version 2 ALTREP objects are serialied like non-ALTREP ones. */
@@ -1360,7 +1372,7 @@ void R_Serialize(SEXP s, R_outpstream_t stream)
     {
 	OutInteger(stream, version);
 	OutInteger(stream, R_VERSION);
-	OutInteger(stream, -1); /* released R versions can't read yet */
+	OutInteger(stream, R_Version(3,5,0));
 	const char *natenc = R_nativeEncoding();
 	int nelen = (int) strlen(natenc);
 	OutInteger(stream, nelen);
