@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995--2017  The R Core Team
+ *  Copyright (C) 1995--2018  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -57,10 +57,18 @@
  *    versions are stored as an integer packed by the R_Version macro
  *    from Rversion.h.  Some workspace formats may only exist
  *    temporarily in the development stage.  If readers are not
- *    provided in a release version, then these should specify the
+ *    provided in a released version, then these should specify the
  *    oldest reader R version as -1.
  */
-
+ 
+ /* It is now customary that the version (1, 2, 3) of the format is
+  * reflected also in magic numbers (such as RDX2, RDX3, ...), together with
+  * type (xdr/ascii/binary).  Adding a new serialization format thus now
+  * also requires adding a new set of magic numbers, yet in principle this
+  * could be changed in the future.  The code in this file does not need the
+  * magic numbers, it relies on version and type information in the
+  * serialization header (version 2 and 3).
+  */
 
 /* ----- V e r s i o n -- T w o -- S a v e / R e s t o r e ----- */
 
@@ -139,7 +147,7 @@
    consists of a function pointer and a data value.  The serialization
    function pointer is called with the reference object and the data
    value as arguments.  It should return R_NilValue for standard
-   handling and an STRSXP for special handling.  In an STRSXP is
+   handling and an STRSXP for special handling.  If an STRSXP is
    returned, then a special handing mark is written followed by the
    strings in the STRSXP (attributes are ignored).  On unserializing,
    any specially marked entry causes a call to the hook function with
@@ -157,11 +165,15 @@
 
 /* ----- V e r s i o n -- T h r e e -- S a v e / R e s t o r e ----- */
 
-/* Experimental version. Currently extends version 2 by adding current native
-   encoding to the serialization header. This information is used
-   on de-serialization: deserialized strings without an encoding flag will be
-   converted to the current native encoding, if possible, or to (flagged)
-   UTF-8.
+/* This format extends version 2 format by adding an identifier of the
+   current native encoding to the serialization header.  On deserialization,
+   strings without an encoding flag will be converted to the current native
+   encoding, if possible, or to (flagged) UTF-8.  The conversion may fail
+   when the original encoding is not supported by iconv (unlikely) or when
+   the string is not valid in its declared encoding, which unfortunately is
+   not uncommon.  The conversion code now deliberately does not check
+   whether strings are valid when no conversion is needed, but such check
+   could be added in the future without changing the format.
 
    Version 3 also adds support for custom ALTREP serialization. Under
    version 2 ALTREP objects are serialied like non-ALTREP ones. */
@@ -1360,7 +1372,7 @@ void R_Serialize(SEXP s, R_outpstream_t stream)
     {
 	OutInteger(stream, version);
 	OutInteger(stream, R_VERSION);
-	OutInteger(stream, -1); /* released R versions can't read yet */
+	OutInteger(stream, R_Version(3,5,0));
 	const char *natenc = R_nativeEncoding();
 	int nelen = (int) strlen(natenc);
 	OutInteger(stream, nelen);
@@ -2094,7 +2106,7 @@ static void DecodeVersion(int packed, int *v, int *p, int *s)
 SEXP R_Unserialize(R_inpstream_t stream)
 {
     int version;
-    int writer_version, release_version;
+    int writer_version, min_reader_version;
     SEXP obj, ref_table;
 
     InFormat(stream);
@@ -2102,7 +2114,7 @@ SEXP R_Unserialize(R_inpstream_t stream)
     /* Read the version numbers */
     version = InInteger(stream);
     writer_version = InInteger(stream);
-    release_version = InInteger(stream);
+    min_reader_version = InInteger(stream); 
     switch (version) {
     case 2: break;
     case 3:
@@ -2120,11 +2132,11 @@ SEXP R_Unserialize(R_inpstream_t stream)
 	{
 	    int vw, pw, sw;
 	    DecodeVersion(writer_version, &vw, &pw, &sw);
-	    if (release_version < 0)
+	    if (min_reader_version < 0)
 		error(_("cannot read unreleased workspace version %d written by experimental R %d.%d.%d"), version, vw, pw, sw);
 	    else {
 		int vm, pm, sm;
-		DecodeVersion(release_version, &vm, &pm, &sm);
+		DecodeVersion(min_reader_version, &vm, &pm, &sm);
 		error(_("cannot read workspace version %d written by R %d.%d.%d; need R %d.%d.%d or newer"),
 		      version, vw, pw, sw, vm, pm, sm);
 	    }
@@ -2153,7 +2165,7 @@ SEXP R_Unserialize(R_inpstream_t stream)
 SEXP R_SerializeInfo(R_inpstream_t stream)
 {
     int version;
-    int writer_version, release_version, vv, vp, vs;
+    int writer_version, min_reader_version, vv, vp, vs;
     int anslen = 4;
     SEXP ans, names;
     char buf[128];
@@ -2165,7 +2177,7 @@ SEXP R_SerializeInfo(R_inpstream_t stream)
     if (version == 3)
 	anslen++;
     writer_version = InInteger(stream);
-    release_version = InInteger(stream);
+    min_reader_version = InInteger(stream);
 
     PROTECT(ans = allocVector(VECSXP, anslen));
     PROTECT(names = allocVector(STRSXP, anslen));
@@ -2175,12 +2187,12 @@ SEXP R_SerializeInfo(R_inpstream_t stream)
     DecodeVersion(writer_version, &vv, &vp, &vs);
     snprintf(buf, 128, "%d.%d.%d", vv, vp, vs); 
     SET_VECTOR_ELT(ans, 1, mkString(buf));
-    SET_STRING_ELT(names, 2, mkChar("min_release_version"));
-    if (release_version < 0)
+    SET_STRING_ELT(names, 2, mkChar("min_reader_version"));
+    if (min_reader_version < 0)
 	/* unreleased version of R */
 	SET_VECTOR_ELT(ans, 2, ScalarString(NA_STRING));
     else { 
-	DecodeVersion(release_version, &vv, &vp, &vs);
+	DecodeVersion(min_reader_version, &vv, &vp, &vs);
 	snprintf(buf, 128, "%d.%d.%d", vv, vp, vs);
 	SET_VECTOR_ELT(ans, 2, mkString(buf));
     }
@@ -2511,13 +2523,14 @@ do_serializeToConn(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 }
 
-/* Used from readRDS().
-   This became public in R 2.13.0, and that version added support for
+/* unserializeFromConn(conn, hook) used from readRDS().
+   It became public in R 2.13.0, and that version added support for
    connections internally */
 SEXP attribute_hidden
 do_unserializeFromConn(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    /* unserializeFromConn(conn, hook) */
+    /* 0 .. unserializeFromConn(conn, hook) */
+    /* 1 .. serializeInfoFromConn(conn) */
 
     struct R_inpstream_st in;
     Rconnection con;
@@ -2530,76 +2543,37 @@ do_unserializeFromConn(SEXP call, SEXP op, SEXP args, SEXP env)
 
     con = getConnection(asInteger(CAR(args)));
 
-    fun = CADR(args);
+    /* Now we need to do some sanity checking of the arguments.
+       A filename will already have been opened, so anything
+       not open was specified as a connection directly.
+     */
+    wasopen = con->isopen;
+    if(!wasopen) {
+	char mode[5];
+	strcpy(mode, con->mode);
+	strcpy(con->mode, "rb");
+	if(!con->open(con)) error(_("cannot open the connection"));
+	strcpy(con->mode, mode);
+	/* Set up a context which will close the connection on error */
+	begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
+		     R_NilValue, R_NilValue);
+	cntxt.cend = &con_cleanup;
+	cntxt.cenddata = con;
+    }
+    if(!con->canread) error(_("connection not open for reading"));
+
+    fun = PRIMVAL(op) == 0 ? CADR(args) : R_NilValue;
     hook = fun != R_NilValue ? CallHook : NULL;
-
-    /* Now we need to do some sanity checking of the arguments.
-       A filename will already have been opened, so anything
-       not open was specified as a connection directly.
-     */
-    wasopen = con->isopen;
-    if(!wasopen) {
-	char mode[5];
-	strcpy(mode, con->mode);
-	strcpy(con->mode, "rb");
-	if(!con->open(con)) error(_("cannot open the connection"));
-	strcpy(con->mode, mode);
-	/* Set up a context which will close the connection on error */
-	begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
-		     R_NilValue, R_NilValue);
-	cntxt.cend = &con_cleanup;
-	cntxt.cenddata = con;
-    }
-    if(!con->canread) error(_("connection not open for reading"));
-
     R_InitConnInPStream(&in, con, R_pstream_any_format, hook, fun);
-    PROTECT(ans = R_Unserialize(&in)); /* paranoia about next line */
-    if(!wasopen) {endcontext(&cntxt); con->close(con);}
-    UNPROTECT(1);
-    return ans;
-}
-
-SEXP attribute_hidden
-do_serializeInfoFromConn(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    /* serializeInfoFromConn(conn) */
-
-    struct R_inpstream_st in;
-    Rconnection con;
-    SEXP ans;
-    Rboolean wasopen;
-    RCNTXT cntxt;
-
-    checkArity(op, args);
-
-    con = getConnection(asInteger(CAR(args)));
-
-    /* Now we need to do some sanity checking of the arguments.
-       A filename will already have been opened, so anything
-       not open was specified as a connection directly.
-     */
-    wasopen = con->isopen;
+    ans = PRIMVAL(op) == 0 ? R_Unserialize(&in) : R_SerializeInfo(&in);    
     if(!wasopen) {
-	char mode[5];
-	strcpy(mode, con->mode);
-	strcpy(con->mode, "rb");
-	if(!con->open(con)) error(_("cannot open the connection"));
-	strcpy(con->mode, mode);
-	/* Set up a context which will close the connection on error */
-	begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
-		     R_NilValue, R_NilValue);
-	cntxt.cend = &con_cleanup;
-	cntxt.cenddata = con;
+	PROTECT(ans); /* paranoia about next line */
+	endcontext(&cntxt);
+	con->close(con);
+	UNPROTECT(1);
     }
-    if(!con->canread) error(_("connection not open for reading"));
-
-    R_InitConnInPStream(&in, con, R_pstream_any_format, NULL, R_NilValue);
-    PROTECT(ans = R_SerializeInfo(&in)); /* paranoia about next line */
-    if(!wasopen) {endcontext(&cntxt); con->close(con);}
-    UNPROTECT(1);
     return ans;
 }
-
 
 /*
  * Persistent Buffered Binary Connection Streams

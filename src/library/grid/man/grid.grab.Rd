@@ -13,7 +13,8 @@
 }
 \usage{
 grid.grab(warn = 2, wrap = FALSE, ...)
-grid.grabExpr(expr, warn = 2, wrap = FALSE, ...)
+grid.grabExpr(expr, warn = 2, wrap = FALSE,
+              width = 7, height = 7, device = offscreen, ...)
 }
 \arguments{
   \item{expr}{ An expression to be evaluated.  Typically,
@@ -28,6 +29,13 @@ grid.grabExpr(expr, warn = 2, wrap = FALSE, ...)
   \item{wrap}{ A logical indicating how the output should
     be captured. If \code{TRUE}, each non-grob element on the
     display list is captured by wrapping it in a grob.
+  }
+  \item{width, height}{ Size of the device used for temporary
+    rendering. }
+  \item{device}{ A function that opens a graphics device for temporary
+    rendering. By default this is an off-screen, in-memory device
+    based on the \code{pdf} device, but this default device may not be
+    satisfactory when using custom fonts.
   }
   \item{\dots}{ arguments passed to gTree, for example, a
     name and/or class for the gTree that is created.}

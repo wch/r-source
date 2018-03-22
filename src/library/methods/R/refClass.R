@@ -89,7 +89,7 @@ installClassMethod <- function(def, self, me, selfEnv, thisClass) {
 
 ..hasCodeTools <- FALSE
 .hasCodeTools <- function() {
-    if(!identical(..hasCodeTools, TRUE)) # will be FALSE when methods is built, keep checking
+    if(!isTRUE(..hasCodeTools)) # will be FALSE when methods is built, keep checking
         .assignOverBinding("..hasCodeTools",length(list.files(system.file(package = "codetools"))) > 0,
                            .methodsNamespace, FALSE)
     ..hasCodeTools
@@ -968,7 +968,7 @@ insertClassMethods <- function(methods, Class, value, fieldNames, returnAll) {
 
 ## refField <- function(class = "ANY", get = .stdGetField, set = .stdSetField, binding = NULL,
 ##                      name = "", where = topenv(parent.frame())) {
-##     if(identical(set, FALSE))
+##     if(isFALSE(set))
 ##         set <- .invalidSetField
 ##     new("refFieldDefinition",  fieldName = name, fieldClass = class,
 ##         get = get, set = set, binding = binding)

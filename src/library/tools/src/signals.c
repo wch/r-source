@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2011   The R Core Team.
+ *  Copyright (C) 2011--2018   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -41,17 +41,18 @@ SEXP ps_kill(SEXP spid, SEXP ssignal)
 #if !defined(_WIN32) && !defined(HAVE_KILL)
     warning(_("pskill() is not supported on this platform"));
 #endif
-    if(signal != NA_INTEGER) {
-	for (int i = 0; i < ns; i++) {
+    for (int i = 0; i < ns; i++) {
+	res[i] = FALSE;
+	if(signal != NA_INTEGER) {
 #ifdef _WIN32
 	    HANDLE hProc = OpenProcess(PROCESS_TERMINATE, FALSE, pid[i]);
 	    if (hProc) {
-                TerminateProcess(hProc, 1);
+                if (TerminateProcess(hProc, 1) != 0) res[i] = TRUE;
                 CloseHandle(hProc);
 	    }
 #elif defined(HAVE_KILL)
-	    if (pid[i] <= 0) continue;
-	    if (pid[i] != NA_INTEGER) res[i] = kill(pid[i], signal);
+	    if (pid[i] > 0 && pid[i] != NA_INTEGER &&
+	        kill(pid[i], signal) == 0) res[i] = TRUE;
 #endif
 	}
     }

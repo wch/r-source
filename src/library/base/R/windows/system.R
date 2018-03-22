@@ -111,7 +111,8 @@ system2 <- function(command, args = character(),
         writeLines(input, f)
     } else f <- stdin
     flag <- if (isTRUE(stdout) || isTRUE(stderr)) 3L
-    else if (wait) ifelse(identical(stdout, ""), 2L, 1L)
+    else if (wait)
+        ifelse(identical(stdout, "") || identical(stderr, ""), 2L, 1L)
     else 0L
     if (invisible) flag <- 20L + flag
     else if (minimized) flag <- 10L + flag

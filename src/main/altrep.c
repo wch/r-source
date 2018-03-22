@@ -1174,7 +1174,6 @@ static void altstring_Set_elt_default(SEXP x, R_xlen_t i, SEXP v)
     error("ALTSTRING classes must provide a Set_elt method");
 }
 
-
 static int altstring_Is_sorted_default(SEXP x) { return UNKNOWN_SORTEDNESS; }
 static int altstring_No_NA_default(SEXP x) { return 0; }
 
@@ -3737,9 +3736,10 @@ SEXP attribute_hidden do_wrap_meta(SEXP call, SEXP op, SEXP args, SEXP env)
     case STRSXP: break;
     default:  return x; //error("only INTSXP, REALSXP, STRSXP vectors suppoted for now");
     }
-    
+
     int srt = asInteger(CADR(args));
-    if (!KNOWN_SORTED(srt) && srt != KNOWN_UNSORTED && srt != UNKNOWN_SORTEDNESS)
+    if (!KNOWN_SORTED(srt) && srt != KNOWN_UNSORTED &&
+	srt != UNKNOWN_SORTEDNESS)
 	error("srt must be -2, -1, 0, or +1, +2, or NA");
     
     int no_na = asInteger(CADDR(args));

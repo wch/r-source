@@ -30,11 +30,11 @@ curve <- function(expr, from = NULL, to = NULL, n = 101, add = FALSE,
 	    stop(gettextf("'expr' must be a function, or a call or an expression containing '%s'", xname), domain = NA)
 	expr <- sexpr
     }
-    if (dev.cur() == 1L && !identical(add, FALSE)) {
+    if (dev.cur() == 1L && !isFALSE(add)) {
         warning("'add' will be ignored as there is no existing plot")
         add <- FALSE
     }
-    addF <- identical(add, FALSE)
+    addF <- isFALSE(add)
     if (is.null(ylab)) ylab <- deparse(expr)
     if (is.null(from) || is.null(to)) {
         xl <- if (!is.null(xlim)) xlim

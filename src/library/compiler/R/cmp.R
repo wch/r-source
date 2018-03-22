@@ -24,6 +24,7 @@
 compilerOptions <- new.env(hash = TRUE, parent = emptyenv())
 compilerOptions$optimize <- 2
 compilerOptions$suppressAll <- TRUE
+compilerOptions$suppressNoSuperAssignVar <- FALSE
 compilerOptions$suppressUndefined <-
     c(".Generic", ".Method", ".Random.seed", ".self")
 
@@ -145,7 +146,7 @@ findHomeNS <- function(sym, ns, cntxt) {
         for (i in rev(seq_along(imports))) {
             iname <- names(imports)[i]
             ins <- getNamespace(iname)
-            if (identical(imports[[i]], TRUE)) {
+            if (isTRUE(imports[[i]])) {
                 if (identical(ins, .BaseNamespaceEnv))
                     exports <- .BaseNamespaceEnv
                 else
@@ -989,6 +990,8 @@ make.toplevelContext <- function(cenv, options = NULL)
                    env = cenv,
                    optimize = getCompilerOption("optimize", options),
                    suppressAll = getCompilerOption("suppressAll", options),
+                   suppressNoSuperAssignVar =
+                       getCompilerOption("suppressNoSuperAssignVar", options),
                    suppressUndefined = getCompilerOption("suppressUndefined",
                                                          options),
                    call = NULL,
@@ -1018,6 +1021,7 @@ make.functionContext <- function(cntxt, forms, body) {
     ncntxt <- make.toplevelContext(nenv)
     ncntxt$optimize <- cntxt$optimize
     ncntxt$suppressAll <- cntxt$suppressAll
+    ncntxt$suppressNoSuperAssignVar <- cntxt$suppressNoSuperAssignVar
     ncntxt$suppressUndefined <- cntxt$suppressUndefined
     ncntxt
 }
@@ -1080,9 +1084,9 @@ cmp <- function(e, cb, cntxt, missingOK = FALSE, setloc = TRUE) {
 cmpConst <- function(val, cb, cntxt) {
     if (identical(val, NULL))
         cb$putcode(LDNULL.OP)
-    else if (identical(val, TRUE))
+    else if (isTRUE(val))
         cb$putcode(LDTRUE.OP)
-    else if (identical(val, FALSE))
+    else if (isFALSE(val))
         cb$putcode(LDFALSE.OP)
     else {
         ci <- cb$putconst(val)
@@ -1211,9 +1215,9 @@ cmpCallArgs <- function(args, cb, cntxt, nse = FALSE) {
 cmpConstArg <- function(a, cb, cntxt) {
     if (identical(a, NULL))
         cb$putcode(PUSHNULLARG.OP)
-    else if (identical(a, TRUE))
+    else if (isTRUE(a))
         cb$putcode(PUSHTRUEARG.OP)
-    else if (identical(a, FALSE))
+    else if (isFALSE(a))
         cb$putcode(PUSHFALSEARG.OP)
     else {
         ci <- cb$putconst(a)
@@ -2815,16 +2819,19 @@ setInlineHandler("require", function(e, cb, cntxt) {
 ##
 
 suppressAll <- function(cntxt)
-    identical(cntxt$suppressAll, TRUE)
+    isTRUE(cntxt$suppressAll)
+
+suppressNoSuperAssignVar <- function(cntxt)
+    isTRUE(cntxt$suppressNoSuperAssignVar)
 
 suppressUndef <- function(name, cntxt) {
-    if (identical(cntxt$suppressAll, TRUE))
+    if (isTRUE(cntxt$suppressAll))
         TRUE
     else {
         suppress <- cntxt$suppressUndefined
         if (is.null(suppress))
             FALSE
-        else if (identical(suppress, TRUE))
+        else if (isTRUE(suppress))
             TRUE
         else if (is.character(suppress) && as.character(name) %in% suppress)
             TRUE
@@ -2854,7 +2861,7 @@ notifyUndefVar <- function(var, cntxt, loc = NULL) {
 }
 
 notifyNoSuperAssignVar <- function(symbol, cntxt, loc = NULL) {
-    if (! suppressAll(cntxt)) {
+    if (! suppressAll(cntxt) && ! suppressNoSuperAssignVar(cntxt)) {
         msg <- gettextf("no visible binding for '<<-' assignment to '%s'",
                         as.character(symbol))
         cntxt$warn(msg, cntxt, loc)
@@ -3106,14 +3113,22 @@ setCompilerOptions <- function(...) {
                    }
                },
                suppressAll = {
-                   if (identical(op, TRUE) || identical(op, FALSE)) {
+                   if (isTRUE(op) || isFALSE(op)) {
                        old <- c(old, list(suppressAll =
                                           compilerOptions$suppressAll))
                        newOptions$suppressAll <- op
                    }
                },
+               suppressNoSuperAssignVar = {
+                   if (isTRUE(op) || isFALSE(op)) {
+                       old <- c(old, list(
+                           suppressNoSuperAssignVar =
+                               compilerOptions$suppressNoSuperAssignVar))
+                       newOptions$suppressNoSuperAssignVar <- op
+                   }
+               },
                suppressUndefined = {
-                   if (identical(op, TRUE) || identical(op, FALSE) ||
+                   if (isTRUE(op) || isFALSE(op) ||
                        is.character(op)) {
                        old <- c(old, list(suppressUndefined =
                                           compilerOptions$suppressUndefined))
@@ -3146,6 +3161,9 @@ setCompilerOptions <- function(...) {
     val <- envAsLogical("R_COMPILER_SUPPRESS_UNDEFINED")
     if (!is.na(val))
         setCompilerOptions(suppressUndefined = val)
+    val <- envAsLogical("R_COMPILER_SUPPRESS_NO_SUPER_ASSIGN_VAR")
+    if (!is.na(val))
+        setCompilerOptions(suppressNoSuperAssignVar = val)
     if (Sys.getenv("R_COMPILER_OPTIMIZE") != "")
         tryCatch({
             lev <- as.integer(Sys.getenv("R_COMPILER_OPTIMIZE"))

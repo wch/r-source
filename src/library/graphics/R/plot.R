@@ -129,7 +129,7 @@ plot.table <-
 	     ylim = ylim, xlab = xlab, ylab = ylab, frame.plot = frame.plot,
 	     lwd = lwd, ..., xaxt = "n")
         localaxis <- function(..., col, bg, pch, cex, lty) axis(...)
-	if(!identical(list(...)$axes, FALSE))
+	if(!isFALSE(list(...)$axes))
             localaxis(1, at = x0, labels = nx, ...)
     } else {
 	if(length(dots <- list(...)) && !is.null(dots$main)) # use 'main'

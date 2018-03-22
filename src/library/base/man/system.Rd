@@ -1,6 +1,6 @@
 % File src/library/base/man/system.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{system}
@@ -98,7 +98,6 @@ system(command, intern = FALSE,
   number of seconds.  The termination works for typical commands, but is not
   guaranteed: it is possible to write a program that would keep running
   after the time is out.  Timeouts can only be set with \code{wait = TRUE}.
-  The \code{timeout} option is currently experimental.
 
 #ifdef unix
   Timeouts cannot be used with interactive commands: the command is run with

@@ -1,6 +1,6 @@
 % File src/library/base/man/pretty.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{pretty}
@@ -21,8 +21,8 @@ pretty(x, \dots)
   \item{min.n}{nonnegative integer giving the \emph{minimal} number of
     intervals.  If \code{min.n == 0}, \code{pretty(.)} may return a
     single value.}
-  \item{shrink.sml}{positive numeric
-    by a which a default scale is shrunk in the case when
+  \item{shrink.sml}{positive number, a factor (smaller than one)
+    by which a default scale is shrunk in the case when
     \code{range(x)} is very small (usually 0).}
   \item{high.u.bias}{non-negative numeric, typically \eqn{> 1}.
     The interval unit is determined as \{1,2,5,10\} times \code{b}, a

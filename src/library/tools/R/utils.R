@@ -1,7 +1,7 @@
 #  File src/library/tools/R/utils.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -934,7 +934,7 @@ function()
 .get_requires_from_package_db <-
 function(db,
          category = c("Depends", "Imports", "LinkingTo", "VignetteBuilder",
-         "Suggests", "Enhances"))
+         "Suggests", "Enhances", "RdMacros"))
 {
     category <- match.arg(category)
     if(category %in% names(db)) {
@@ -1816,6 +1816,7 @@ function(x, dfile)
         if(!identical(asc, x)) {
             warning(gettext("Unknown encoding with non-ASCII data: converting to ASCII"),
                     domain = NA)
+	    ind <- is.na(asc) | (asc != x)
             x[ind] <- iconv(x[ind], "latin1", "ASCII", sub = "byte")
         }
     }

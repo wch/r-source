@@ -124,7 +124,7 @@ print.raster <- function(x, ...) print(as.matrix(x), ...)
 {
     mdrop <- missing(drop)
     nA <- nargs() - (!mdrop)
-    if(!mdrop && !identical(drop,FALSE))
+    if(!mdrop && !isFALSE(drop))
         warning("'drop' is always implicitly FALSE in '[.raster'")
     m <- as.matrix(x)
     m <-

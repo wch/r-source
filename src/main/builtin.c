@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2017  The R Core Team
+ *  Copyright (C) 1999-2018  The R Core Team
  *  Copyright (C) 1995-1998  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -824,7 +824,7 @@ SEXP attribute_hidden do_makevector(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* (if it is vectorizable). We could probably be fairly */
 /* clever with memory here if we wanted to. */
 
-/* used in connections.c */
+/* used in connections.c, attrib.c, seq.c, .. */
 SEXP xlengthgets(SEXP x, R_xlen_t len)
 {
     R_xlen_t lenx, i;
@@ -921,7 +921,7 @@ SEXP xlengthgets(SEXP x, R_xlen_t len)
     return rval;
 }
 
-/* public older version */
+/* older version */
 SEXP lengthgets(SEXP x, R_len_t len)
 {
     return xlengthgets(x, (R_xlen_t) len);
@@ -940,23 +940,17 @@ SEXP attribute_hidden do_lengthgets(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(isObject(x) && DispatchOrEval(call, op, "length<-", args,
 				     rho, &ans, 0, 1))
 	return(ans);
-    // more 'x' checks in x?lengthgets()
+    // more 'x' checks in xlengthgets()
     if (length(CADR(args)) != 1)
 	error(_("wrong length for '%s' argument"), "value");
     R_xlen_t len = asVecSize(CADR(args));
-    if (PRIMVAL(op)) { /* xlength<- */
-	return xlengthgets(x, len);
-    }
-    // else  length<- :
+#ifndef LONG_VECTOR_SUPPORT
     if (len > R_LEN_T_MAX) {
-#ifdef LONG_VECTOR_SUPPORT
-	return xlengthgets(x, len);
-#else
 	error(_("vector size specified is too large"));
 	return x; /* -Wall */
-#endif
     }
-    return lengthgets(x, (R_len_t) len);
+#endif
+    return xlengthgets(x, len);
 }
 
 /* Expand dots in args, but do not evaluate */

@@ -260,7 +260,7 @@ MethodsListSelect <-
     }
     else
         thisClass <- get(as.character(argName), envir = env, inherits = FALSE)
-    if(identical(useInherited, TRUE) || identical(useInherited, FALSE))
+    if(isTRUE(useInherited) || isFALSE(useInherited))
         thisInherit <- nextUseInherited <- useInherited
     else {
         which <- match(as.character(argName), names(useInherited))
@@ -604,7 +604,7 @@ function(mlist, includeDefs = TRUE, inherited = TRUE, classes = NULL, useArgName
          printTo = stdout())
 {
     .MlistDeprecated("showMlist()")
-    if(identical(printTo, FALSE)) {
+    if(isFALSE(printTo)) {
         tmp <- tempfile()
         con <- file(tmp, "w")
     }
@@ -659,7 +659,7 @@ function(mlist, includeDefs = TRUE, inherited = TRUE, classes = NULL, useArgName
       cat(file=con, "\n")
     }
   }
-    if(identical(printTo, FALSE)) {
+    if(isFALSE(printTo)) {
         close(con)
         value <- readLines(tmp)
         unlink(tmp)
@@ -713,10 +713,10 @@ promptMethods <- function(f, filename = NULL, methods)
                    "}{\n%%  ~~describe this method here~~\n}")
     text <- c("\\section{Methods}{\n\\describe{", text, "}}")
     aliasText <- c(paste0("\\alias{", escape(fullName), "}"), escape(aliases))
-    if(identical(filename, FALSE))
+    if(isFALSE(filename))
         return(c(aliasText, text))
 
-    if(is.null(filename) || identical(filename, TRUE))
+    if(is.null(filename) || isTRUE(filename))
         filename <- paste0(fullName, ".Rd")
 
     Rdtxt <-
@@ -885,7 +885,7 @@ asMethodDefinition <- function(def, signature = list(.anyClassName), sealed = FA
 .noMlists <- function() {
    ## if this were to be dynamically variable, but
   ## it can't, IMO
-  ## identical(getOption("noMlists"), TRUE)
+  ## isTRUE(getOption("noMlists"))
   ## so instead
   .noMlistsFlag
 }

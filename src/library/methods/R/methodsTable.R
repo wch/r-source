@@ -1,7 +1,7 @@
 #  File src/library/methods/R/methodsTable.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -674,7 +674,7 @@
 		   if(simpleOnly)
 		   function(x) (is.logical(x) && x) || x@simple
 		   else # eliminate conditional inheritance
-		   function(x) (is.logical(x) && x) || x@simple || identical(body(x@test), TRUE), NA)
+		   function(x) (is.logical(x) && x) || x@simple || isTRUE(body(x@test)), NA)
 	what[eligible]
     }
 }
@@ -1523,7 +1523,7 @@ testInheritedMethods <- function(f, signatures, test = TRUE,  virtual = FALSE,
       classDefs[[iAny]] <- getClassDef(".Other")
     }
     if(excludeVirtual)
-      classes <- classes[vapply(classDefs, function(def) identical(def@virtual, FALSE), NA)]
+      classes <- classes[vapply(classDefs, function(def) isFALSE(def@virtual), NA)]
     unique(c(classes, allSubs))
   }
   ## end of .relevantClasses

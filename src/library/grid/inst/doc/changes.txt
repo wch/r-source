@@ -8,6 +8,10 @@ Changes from grid_3.4.* to grid_3.5.0:
 
     Reported by Prem Thomas.
 
+2.  Added 'device' (and 'width' and 'height') arguments to grid.grabExpr()
+
+    Suggestion from Claus Wilke.
+
 
 Changes from grid_3.3.* to grid_3.4.0:
 -------------------------------------

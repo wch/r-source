@@ -355,7 +355,7 @@
                   else {
                       cl <- .class1(from)
                       classDef <- getClass(cl)
-                      if(identical(classDef@virtual, TRUE))
+                      if(isTRUE(classDef@virtual))
                         stop(gettextf("class %s is VIRTUAL; not meaningful to create an S4 object from this class",
                                       dQuote(cl)),
                              domain = NA)

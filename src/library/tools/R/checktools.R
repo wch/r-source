@@ -1,7 +1,7 @@
 #  File src/library/tools/R/checktools.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2013-2017 The R Core Team
+#  Copyright (C) 2013-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -64,7 +64,7 @@ function(dir,
     if(os_type == "windows")
         xvfb <- FALSE
     else if(is.logical(xvfb)) {
-        if(!identical(xvfb, TRUE))
+        if(!isTRUE(xvfb))
             xvfb <- FALSE
     } else {
         xvfb_options <- as.character(xvfb)
@@ -139,7 +139,7 @@ function(dir,
     pnames_using_install_fake <-
         intersect(pnames_using_install_fake, available[, "Package"])
 
-    if(!is.null(reverse) && !identical(reverse, FALSE)) {
+    if(!is.null(reverse) && !isFALSE(reverse)) {
         ## Determine and download reverse dependencies to be checked as
         ## well.
 
@@ -908,7 +908,7 @@ function(log, drop_ok = TRUE)
                    })
 
         status <- vapply(chunks, `[[`, "", "status")
-        if(identical(drop_ok, TRUE) ||
+        if(isTRUE(drop_ok) ||
            (is.na(drop_ok)
                && all(is.na(match(c("ERROR", "FAIL"), status)))))
             chunks <- chunks[is.na(match(status, drop_ok_status_tags))]
@@ -917,7 +917,7 @@ function(log, drop_ok = TRUE)
     }
 
     chunks <- analyze_lines(lines)
-    if(!length(chunks) && !identical(drop_ok, FALSE)) {
+    if(!length(chunks) && !isFALSE(drop_ok)) {
         chunks <- list(list(check = "*", status = "OK", output = ""))
     }
 

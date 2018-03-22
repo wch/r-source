@@ -286,8 +286,6 @@ double  Rlog1p(double);
 #define pt		Rf_pt
 #define ptukey		Rf_ptukey
 #define punif		Rf_punif
-// This is legacy: remove in due course.
-#define pythag		Rf_pythag
 #define pweibull	Rf_pweibull
 #define pwilcox		Rf_pwilcox
 #define qbeta		Rf_qbeta
@@ -582,11 +580,6 @@ double	bessel_y_ex(double, double, double *);
 
 
 	/* General Support Functions */
-
-/* This is a legacy declaration: the entry point was removed in
-   R 2.14.0 (2011-10).  But the declaration is still used by Rcpp 
-   in 2018-03 */
-double 	pythag(double, double);
 
 int	imax2(int, int);
 int	imin2(int, int);

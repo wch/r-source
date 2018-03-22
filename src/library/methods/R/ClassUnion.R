@@ -19,7 +19,7 @@
 .InitClassUnion <- function(where) {
     setClass("ClassUnionRepresentation",  "classRepresentation",
              validity =function(object) {
-                 if(identical(object@virtual, TRUE) && length(object@slots)==0 &&
+                 if(isTRUE(object@virtual) && length(object@slots)==0 &&
                     is.null(object@prototype))
                      TRUE
                  else

@@ -3500,7 +3500,7 @@ void (SETLENGTH)(SEXP x, R_xlen_t newlen)
     
 #define DATA_DOT_TABLE_WORKAROUND
 #ifdef DATA_DOT_TABLE_WORKAROUND
-    SET_STDVEC_LENGTH(x, newlen);
+    SET_STDVEC_LENGTH(CHK2(x), newlen);
 #else
     R_xlen_t len = XLENGTH(CHK2(x));
     R_xlen_t truelen = XTRUELENGTH(x);
@@ -3539,7 +3539,6 @@ void (SETLENGTH)(SEXP x, R_xlen_t newlen)
 	error("can't increase length of non-growable vector from %ld to %ld",
 	      len, newlen);
 #endif
-
 }
 
 void (SET_TRUELENGTH)(SEXP x, R_xlen_t v) { SET_TRUELENGTH(CHK2(x), v); }
