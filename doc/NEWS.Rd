@@ -7,17 +7,6 @@
 
 \section{\Rlogo CHANGES IN R-devel}{
 
-%%   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
-%%     \itemize{
-%%       \item The default version for \code{save()}, \code{saveRDS()},
-%%       \code{serialize()} and similar has been changed to \samp{3}.
-%%       Objects saved with version 3 are not readable by earlier versions
-%%       of \R.
-
-%%       This includes saved workspaces.
-%%     }
-%%   }
-
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{factor()} now uses \code{order()} to sort its levels,
@@ -343,6 +332,18 @@
       argument \code{make.names} allows to specify \emph{how} invalid
       row names \code{rNms} are handled.  \code{.rowNamesDF()} is a
       \dQuote{workaround} compatible default.
+
+      \item R has new serialization format (version 3) which supports custom
+      serialization of \code{ALTREP} framework objects.  These objects can
+      still be serialized in format 2, but less efficiently.  Serialization
+      format 3 also records the current native encoding of unflagged strings
+      and converts them when de-serialized in R running under different
+      native encoding.  Format 3 comes with new serialization magic numbers
+      (RDA3, RDB3, RDX3).  Format 3 can be selected by \code{version = 3} in
+      \code{save()}, \code{serialize()} and \code{saveRDS()}, but format 2
+      remains the default for all serialization and saving of the workspace. 
+      Serialized data in format 3 cannot be read in \R prior to version
+      3.5.0.
     }
   }
 
