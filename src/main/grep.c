@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2017  The R Core Team
+ *  Copyright (C) 1997--2018  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Pulic License as published by
@@ -2559,7 +2559,7 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!isString(text))
 	error(_("invalid '%s' argument"), "text");
 
-    itype = ScalarString(mkChar(useBytes ? "bytes" : "chars"));
+    PROTECT(itype = ScalarString(mkChar(useBytes ? "bytes" : "chars")));
 
     n = XLENGTH(text);
     if (!useBytes) {
@@ -2842,7 +2842,7 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     } else
 	tre_regfree(&reg);
 
-    UNPROTECT(1);
+    UNPROTECT(2);
     return ans;
 }
 
@@ -2892,7 +2892,7 @@ SEXP attribute_hidden do_regexec(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!isString(text))
 	error(_("invalid '%s' argument"), "text");
 
-    itype = ScalarString(mkChar(useBytes ? "bytes" : "chars"));
+    PROTECT(itype = ScalarString(mkChar(useBytes ? "bytes" : "chars")));
 
     n = XLENGTH(text);
 
@@ -3025,7 +3025,7 @@ SEXP attribute_hidden do_regexec(SEXP call, SEXP op, SEXP args, SEXP env)
 
     tre_regfree(&reg);
 
-    UNPROTECT(1);
+    UNPROTECT(2);
 
     return ans;
 }
