@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995--2017  The R Core Team
+ *  Copyright (C) 1995--2018  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -57,7 +57,7 @@
  *    versions are stored as an integer packed by the R_Version macro
  *    from Rversion.h.  Some workspace formats may only exist
  *    temporarily in the development stage.  If readers are not
- *    provided in a release version, then these should specify the
+ *    provided in a released version, then these should specify the
  *    oldest reader R version as -1.
  */
 
@@ -2094,7 +2094,7 @@ static void DecodeVersion(int packed, int *v, int *p, int *s)
 SEXP R_Unserialize(R_inpstream_t stream)
 {
     int version;
-    int writer_version, release_version;
+    int writer_version, min_reader_version;
     SEXP obj, ref_table;
 
     InFormat(stream);
@@ -2102,7 +2102,7 @@ SEXP R_Unserialize(R_inpstream_t stream)
     /* Read the version numbers */
     version = InInteger(stream);
     writer_version = InInteger(stream);
-    release_version = InInteger(stream);
+    min_reader_version = InInteger(stream); 
     switch (version) {
     case 2: break;
     case 3:
@@ -2120,11 +2120,11 @@ SEXP R_Unserialize(R_inpstream_t stream)
 	{
 	    int vw, pw, sw;
 	    DecodeVersion(writer_version, &vw, &pw, &sw);
-	    if (release_version < 0)
+	    if (min_reader_version < 0)
 		error(_("cannot read unreleased workspace version %d written by experimental R %d.%d.%d"), version, vw, pw, sw);
 	    else {
 		int vm, pm, sm;
-		DecodeVersion(release_version, &vm, &pm, &sm);
+		DecodeVersion(min_reader_version, &vm, &pm, &sm);
 		error(_("cannot read workspace version %d written by R %d.%d.%d; need R %d.%d.%d or newer"),
 		      version, vw, pw, sw, vm, pm, sm);
 	    }
@@ -2153,7 +2153,7 @@ SEXP R_Unserialize(R_inpstream_t stream)
 SEXP R_SerializeInfo(R_inpstream_t stream)
 {
     int version;
-    int writer_version, release_version, vv, vp, vs;
+    int writer_version, min_reader_version, vv, vp, vs;
     int anslen = 4;
     SEXP ans, names;
     char buf[128];
@@ -2165,7 +2165,7 @@ SEXP R_SerializeInfo(R_inpstream_t stream)
     if (version == 3)
 	anslen++;
     writer_version = InInteger(stream);
-    release_version = InInteger(stream);
+    min_reader_version = InInteger(stream);
 
     PROTECT(ans = allocVector(VECSXP, anslen));
     PROTECT(names = allocVector(STRSXP, anslen));
@@ -2175,12 +2175,12 @@ SEXP R_SerializeInfo(R_inpstream_t stream)
     DecodeVersion(writer_version, &vv, &vp, &vs);
     snprintf(buf, 128, "%d.%d.%d", vv, vp, vs); 
     SET_VECTOR_ELT(ans, 1, mkString(buf));
-    SET_STRING_ELT(names, 2, mkChar("min_release_version"));
-    if (release_version < 0)
+    SET_STRING_ELT(names, 2, mkChar("min_reader_version"));
+    if (min_reader_version < 0)
 	/* unreleased version of R */
 	SET_VECTOR_ELT(ans, 2, ScalarString(NA_STRING));
     else { 
-	DecodeVersion(release_version, &vv, &vp, &vs);
+	DecodeVersion(min_reader_version, &vv, &vp, &vs);
 	snprintf(buf, 128, "%d.%d.%d", vv, vp, vs);
 	SET_VECTOR_ELT(ans, 2, mkString(buf));
     }
