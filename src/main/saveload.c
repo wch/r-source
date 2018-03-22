@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2017  The R Core Team
+ *  Copyright (C) 1997--2018  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -2371,11 +2371,12 @@ SEXP attribute_hidden do_saveToConn(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP attribute_hidden do_loadFromConn2(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    /* loadFromConn2(conn, environment, verbose) */
+    /* 0 .. loadFromConn2(conn, environment, verbose) */
+    /* 1 .. loadInfoFromConn2(conn) */
 
     struct R_inpstream_st in;
     Rconnection con;
-    SEXP aenv, res = R_NilValue;
+    SEXP aenv = R_NilValue, res = R_NilValue;
     unsigned char buf[6];
     size_t count;
     Rboolean wasopen;
@@ -2402,66 +2403,13 @@ SEXP attribute_hidden do_loadFromConn2(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!con->canread) error(_("connection not open for reading"));
     if(con->text) error(_("can only load() from a binary connection"));
 
-    aenv = CADR(args);
-    if (TYPEOF(aenv) == NILSXP)
-	error(_("use of NULL environment is defunct"));
-    else if (TYPEOF(aenv) != ENVSXP)
-	error(_("invalid '%s' argument"), "envir");
-
-    /* check magic */
-    memset(buf, 0, 6);
-    count = con->read(buf, sizeof(char), 5, con);
-    if (count == 0) error(_("no input is available"));
-    if (strncmp((char*)buf, "RDA2\n", 5) == 0 ||
-	strncmp((char*)buf, "RDB2\n", 5) == 0 ||
-	strncmp((char*)buf, "RDX2\n", 5) == 0 ||
-	strncmp((char*)buf, "RDA3\n", 5) == 0 ||
-	strncmp((char*)buf, "RDB3\n", 5) == 0 ||
-	strncmp((char*)buf, "RDX3\n", 5) == 0) {
-	R_InitConnInPStream(&in, con, R_pstream_any_format, NULL, NULL);
-	/* PROTECT is paranoia: some close() method might allocate */
-	R_InitReadItemDepth = R_ReadItemDepth = -asInteger(CADDR(args));
-	PROTECT(res = RestoreToEnv(R_Unserialize(&in), aenv));
-	R_ReadItemDepth = 0;
-	if(!wasopen) {endcontext(&cntxt); con->close(con);}
-	UNPROTECT(1);
-    } else
-	error(_("the input does not start with a magic number compatible with loading from a connection"));
-    return res;
-}
-
-SEXP attribute_hidden do_loadInfoFromConn2(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    /* loadInfoFromConn2(conn) */
-
-    struct R_inpstream_st in;
-    Rconnection con;
-    SEXP res = R_NilValue;
-    unsigned char buf[6];
-    size_t count;
-    Rboolean wasopen;
-    RCNTXT cntxt;
-
-    checkArity(op, args);
-
-    con = getConnection(asInteger(CAR(args)));
-
-    wasopen = con->isopen;
-    if(!wasopen) {
-	char mode[5];
-	strcpy(mode, con->mode);
-	strcpy(con->mode, "rb");
-	if(!con->open(con)) error(_("cannot open the connection"));
-	strcpy(con->mode, mode);
-	/* set up a context which will close the connection
-	   if there is an error */
-	begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
-		     R_NilValue, R_NilValue);
-	cntxt.cend = &con_cleanup;
-	cntxt.cenddata = con;
+    if (PRIMVAL(op) == 0) {
+	aenv = CADR(args);
+	if (TYPEOF(aenv) == NILSXP)
+	    error(_("use of NULL environment is defunct"));
+	else if (TYPEOF(aenv) != ENVSXP)
+	    error(_("invalid '%s' argument"), "envir");
     }
-    if(!con->canread) error(_("connection not open for reading"));
-    if(con->text) error(_("can only load() from a binary connection"));
 
     /* check magic */
     memset(buf, 0, 6);
@@ -2474,10 +2422,19 @@ SEXP attribute_hidden do_loadInfoFromConn2(SEXP call, SEXP op, SEXP args, SEXP e
 	strncmp((char*)buf, "RDB3\n", 5) == 0 ||
 	strncmp((char*)buf, "RDX3\n", 5) == 0) {
 	R_InitConnInPStream(&in, con, R_pstream_any_format, NULL, NULL);
-	/* PROTECT is paranoia: some close() method might allocate */
-	PROTECT(res = R_SerializeInfo(&in));
-	if(!wasopen) {endcontext(&cntxt); con->close(con);}
-	UNPROTECT(1);
+	if (PRIMVAL(op) == 0) {
+	    R_InitReadItemDepth = R_ReadItemDepth = -asInteger(CADDR(args));
+	    res = RestoreToEnv(R_Unserialize(&in), aenv);
+	    R_ReadItemDepth = 0;
+	} else 
+	    res = R_SerializeInfo(&in);
+	if(!wasopen) {
+	    /* PROTECT is paranoia: some close() method might allocate */
+	    PROTECT(res);
+	    endcontext(&cntxt);
+	    con->close(con);
+	    UNPROTECT(1);
+	}
     } else
 	error(_("the input does not start with a magic number compatible with loading from a connection"));
     return res;

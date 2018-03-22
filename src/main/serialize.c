@@ -2511,13 +2511,14 @@ do_serializeToConn(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 }
 
-/* Used from readRDS().
-   This became public in R 2.13.0, and that version added support for
+/* unserializeFromConn(conn, hook) used from readRDS().
+   It became public in R 2.13.0, and that version added support for
    connections internally */
 SEXP attribute_hidden
 do_unserializeFromConn(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    /* unserializeFromConn(conn, hook) */
+    /* 0 .. unserializeFromConn(conn, hook) */
+    /* 1 .. serializeInfoFromConn(conn) */
 
     struct R_inpstream_st in;
     Rconnection con;
@@ -2530,76 +2531,37 @@ do_unserializeFromConn(SEXP call, SEXP op, SEXP args, SEXP env)
 
     con = getConnection(asInteger(CAR(args)));
 
-    fun = CADR(args);
+    /* Now we need to do some sanity checking of the arguments.
+       A filename will already have been opened, so anything
+       not open was specified as a connection directly.
+     */
+    wasopen = con->isopen;
+    if(!wasopen) {
+	char mode[5];
+	strcpy(mode, con->mode);
+	strcpy(con->mode, "rb");
+	if(!con->open(con)) error(_("cannot open the connection"));
+	strcpy(con->mode, mode);
+	/* Set up a context which will close the connection on error */
+	begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
+		     R_NilValue, R_NilValue);
+	cntxt.cend = &con_cleanup;
+	cntxt.cenddata = con;
+    }
+    if(!con->canread) error(_("connection not open for reading"));
+
+    fun = PRIMVAL(op) == 0 ? CADR(args) : R_NilValue;
     hook = fun != R_NilValue ? CallHook : NULL;
-
-    /* Now we need to do some sanity checking of the arguments.
-       A filename will already have been opened, so anything
-       not open was specified as a connection directly.
-     */
-    wasopen = con->isopen;
-    if(!wasopen) {
-	char mode[5];
-	strcpy(mode, con->mode);
-	strcpy(con->mode, "rb");
-	if(!con->open(con)) error(_("cannot open the connection"));
-	strcpy(con->mode, mode);
-	/* Set up a context which will close the connection on error */
-	begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
-		     R_NilValue, R_NilValue);
-	cntxt.cend = &con_cleanup;
-	cntxt.cenddata = con;
-    }
-    if(!con->canread) error(_("connection not open for reading"));
-
     R_InitConnInPStream(&in, con, R_pstream_any_format, hook, fun);
-    PROTECT(ans = R_Unserialize(&in)); /* paranoia about next line */
-    if(!wasopen) {endcontext(&cntxt); con->close(con);}
-    UNPROTECT(1);
-    return ans;
-}
-
-SEXP attribute_hidden
-do_serializeInfoFromConn(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    /* serializeInfoFromConn(conn) */
-
-    struct R_inpstream_st in;
-    Rconnection con;
-    SEXP ans;
-    Rboolean wasopen;
-    RCNTXT cntxt;
-
-    checkArity(op, args);
-
-    con = getConnection(asInteger(CAR(args)));
-
-    /* Now we need to do some sanity checking of the arguments.
-       A filename will already have been opened, so anything
-       not open was specified as a connection directly.
-     */
-    wasopen = con->isopen;
+    ans = PRIMVAL(op) == 0 ? R_Unserialize(&in) : R_SerializeInfo(&in);    
     if(!wasopen) {
-	char mode[5];
-	strcpy(mode, con->mode);
-	strcpy(con->mode, "rb");
-	if(!con->open(con)) error(_("cannot open the connection"));
-	strcpy(con->mode, mode);
-	/* Set up a context which will close the connection on error */
-	begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
-		     R_NilValue, R_NilValue);
-	cntxt.cend = &con_cleanup;
-	cntxt.cenddata = con;
+	PROTECT(ans); /* paranoia about next line */
+	endcontext(&cntxt);
+	con->close(con);
+	UNPROTECT(1);
     }
-    if(!con->canread) error(_("connection not open for reading"));
-
-    R_InitConnInPStream(&in, con, R_pstream_any_format, NULL, R_NilValue);
-    PROTECT(ans = R_SerializeInfo(&in)); /* paranoia about next line */
-    if(!wasopen) {endcontext(&cntxt); con->close(con);}
-    UNPROTECT(1);
     return ans;
 }
-
 
 /*
  * Persistent Buffered Binary Connection Streams
