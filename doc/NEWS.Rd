@@ -619,6 +619,9 @@
 
       \item Indexing a list using dollar and empty string (\code{l$""})
       returns NULL.
+
+      \item Using \code{ \\usage\{ data(<name>, package="<pkg>") \} }
+      no longer produces \command{R CMD check} warnings.
     }
   }
 }
