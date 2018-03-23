@@ -6,6 +6,15 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R-devel}{
+  
+  \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
+    \itemize{
+      \item All packages are by default byte-compiled on installation.
+      This makes the installed packages larger (usually marginally so)
+      and may affect the format of messages and tracebacks (which often
+      exclude \code{.Cal}l and similar).
+    }
+  }
 
   \subsection{NEW FEATURES}{
     \itemize{
@@ -374,12 +383,6 @@
       test-suite-management packages available and (for the time being)
       works around a common omission of \CRANpkg{rmarkdown} from the
       \samp{VignetteBuilder} field.
-    }
-  }
-
-  \subsection{PACKAGE INSTALLATION}{
-    \itemize{
-      \item By default, packages are now byte-compiled on installation.
     }
   }
 
