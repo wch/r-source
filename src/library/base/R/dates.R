@@ -222,6 +222,8 @@ Summary.Date <- function (..., na.rm)
     .Date(NextMethod(.Generic), oldClass(x))
 }
 
+`length<-.Date` <- function(x, value) structure(NextMethod(), class = class(x))
+
 as.character.Date <- function(x, ...) format(x, ...)
 
 as.data.frame.Date <- as.data.frame.vector

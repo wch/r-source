@@ -6,7 +6,7 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R-devel}{
-  
+
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
       \item All packages are by default byte-compiled on installation.
@@ -350,9 +350,13 @@
       native encoding.  Format 3 comes with new serialization magic numbers
       (RDA3, RDB3, RDX3).  Format 3 can be selected by \code{version = 3} in
       \code{save()}, \code{serialize()} and \code{saveRDS()}, but format 2
-      remains the default for all serialization and saving of the workspace. 
+      remains the default for all serialization and saving of the workspace.
       Serialized data in format 3 cannot be read in \R prior to version
       3.5.0.
+
+      \item The \code{"Date"} and \dQuote{date-time} classes
+      \code{"POSIXlt"} and \code{"POSIXct"} now have a working
+      \code{`length<-`} method, as wished in \PR{17387}.
     }
   }
 

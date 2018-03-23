@@ -1,6 +1,6 @@
 % File src/library/base/man/Dates.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Dates}
@@ -12,6 +12,7 @@
 \alias{Summary.Date}
 \alias{[.Date}
 \alias{[<-.Date}
+\alias{length<-.Date}
 \alias{[[.Date}
 \alias{as.data.frame.Date}
 \alias{as.list.Date}
@@ -25,11 +26,15 @@
 }
 \usage{
 \method{summary}{Date}(object, digits = 12, \dots)
+% not sure if we should not rather _drop_ the 'recursive'!
+%\method{c}{Date}(\dots, recursive = FALSE)
 }
 \arguments{
-  \item{object}{An object summarized.}
+  \item{object}{a \code{Date} object to be summarized.}
   \item{digits}{Number of significant digits for the computations.}
   \item{\dots}{Further arguments to be passed from or to other methods.}
+  %% \item{\dots, recursive}{further arguments to be passed from or to
+  %%   other methods; \code{recursive} is not considered in \code{Date} method.}
 }
 \details{
   Dates are represented as the number of days since 1970-01-01, with
@@ -69,7 +74,18 @@ format(today, "\%d \%b \%Y")  # with month as a word
 (tenweeks <- seq(today, length.out=10, by="1 week")) # next ten weeks
 weekdays(today)
 months(tenweeks)
-as.Date(.leap.seconds)
+(Dls <- as.Date(.leap.seconds))
+
+##  length(<Date>) <- n   now works
+ls <- Dls; length(ls) <- 12
+l2 <- Dls; length(l2) <- 5 + length(Dls)
+stopifnot(exprs = {
+  ## length(.) <- * is compatible to subsetting/indexing:
+  identical(ls, Dls[seq_along(ls)])
+  identical(l2, Dls[seq_along(l2)])
+  ## has filled with NA's
+  is.na(l2[(length(Dls)+1):length(l2)])
+})
 }}
 \keyword{utilities}
 \keyword{chron}
