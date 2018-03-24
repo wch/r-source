@@ -1,7 +1,7 @@
 #  File src/library/base/R/factor.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -44,7 +44,7 @@ factor <- function(x = character(), levels, labels = levels,
 	    nlevs <- unique(xlevs <- as.character(labels))
 	    at <- attributes(f)
 	    at$levels <- nlevs
-	    f <- match(xlevs[f], nlevs)
+	    f <- match(xlevs, nlevs)[f]
 	    attributes(f) <- at
 	}
 	else if(nlab == 1L)
@@ -108,7 +108,7 @@ nlevels <- function(x) length(levels(x))
     nlevs <- unique(nlevs)
     at <- attributes(x)
     at$levels <- nlevs
-    y <- match(xlevs[x], nlevs)
+    y <- match(xlevs, nlevs)[x]
     attributes(y) <- at
     y
 }
@@ -212,7 +212,7 @@ Ops.factor <- function(e1, e2)
 	r
     }
     if (nzchar(.Method[1L])) { # e1 *is* a factor
-        ## fastpath for factor w/ no NA levels vs scalar character    
+        ## fastpath for factor w/ no NA levels vs scalar character
         if(!anyNA(levels(e1)) && is.character(e2) && length(e2) == 1L) {
             if(.Generic == "==") {
                 ## if e1[i] OR e2 is NA then (leq[e1])[i] is NA

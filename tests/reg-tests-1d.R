@@ -925,8 +925,8 @@ stopifnot(exprs = { ## all these have been TRUE "forever" :
 	      structure(c(NA, 1L, NA), .Label = "my", class = "factor"))
     identical(factor(ff, exclude=NULL),
 	      structure(c(2L, 1L, 2L), .Label = c("my", NA), class = "factor"))
-    identical(as.integer(ff), # <- new in R 3.5.0 : c(2, 1, 2); before was c(2, 1, NA)
-	      as.integer(factor(ff, exclude=NULL)))
+    identical(as.integer(       ff),                c(2:1,NA))
+    identical(as.integer(factor(ff, exclude=NULL)), c(2:1,2L))
 })
 
 

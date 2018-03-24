@@ -1,6 +1,6 @@
 % File src/library/base/man/factor.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{factor}
@@ -107,7 +107,7 @@ addNA(x, ifany = FALSE)
 \details{
   The type of the vector \code{x} is not restricted; it only must have
   an \code{\link{as.character}} method and be sortable (by
-  \code{\link{sort.list}}).
+  \code{\link{order}}).
 
   Ordered factors differ from factors only in their class, but methods
   and the model-fitting functions treat the two classes quite differently.
