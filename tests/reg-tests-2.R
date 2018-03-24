@@ -3095,7 +3095,7 @@ stopifnot(exprs = {
 })
 ## without "{ .. }" :
 stopifnot(exprs = 2 == 2)
-try(stopifnot(exprs =  1 < 2))
+try(stopifnot(exprs = 1 > 2))
 ## passing an expression object:
 stopifnot(exprs = expression(2 == 2, pi < 4))
 tryCatch(stopifnot(exprs = expression(

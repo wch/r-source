@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2018-03-24 r74449) -- "Unsuffered Consequences"
+R Under development (unstable) (2018-03-24 r74452) -- "Unsuffered Consequences"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -7921,7 +7921,8 @@ Error:  pi < 3 is not TRUE
 Kilroy was here! ... and I'm printed as well ...
 > ## without "{ .. }" :
 > stopifnot(exprs = 2 == 2)
-> try(stopifnot(exprs =  1 < 2))
+> try(stopifnot(exprs = 1 > 2))
+Error in try(stopifnot(exprs = 1 > 2)) : 1 > 2 is not TRUE
 > ## passing an expression object:
 > stopifnot(exprs = expression(2 == 2, pi < 4))
 > tryCatch(stopifnot(exprs = expression(

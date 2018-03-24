@@ -34,30 +34,25 @@ stop <- function(..., call. = TRUE, domain = NULL)
 stopifnot <- function(..., exprs, local = TRUE)
 {
     missE <- missing(exprs)
-    if(missE) {  ## use '...' instead of exprs
-        cl <- match.call()[-1L]
-        ## ?? not back-compatible; get rid of need for explicit 'exprs=':
-        ## if(...length() == 1L && identical(cl[[c(1L,1L)]], quote(`{`)))
-        ##     exprs <- as.expression(as.list(cl[[1L]][-1L]))
-        ## missE <- FALSE
-    }
-    else {
-	if(...length())
-	    stop("Must use 'exprs' or unnamed expressions, but not both")
-	envir <- if (isTRUE(local)) parent.frame()
-		 else if(isFALSE(local)) .GlobalEnv
-		 else if (is.environment(local)) local
-		 else stop("'local' must be TRUE, FALSE or an environment")
-	exprs <- substitute(exprs) # protect from evaluation
-	E1 <- exprs[[1]]
-	exprs <-
+    cl <-
+	if(missE) {  ## use '...' instead of exprs
+	    match.call()[-1L]
+	} else {
+	    if(...length())
+		stop("Must use 'exprs' or unnamed expressions, but not both")
+	    envir <- if (isTRUE(local)) parent.frame()
+		     else if(isFALSE(local)) .GlobalEnv
+		     else if (is.environment(local)) local
+		     else stop("'local' must be TRUE, FALSE or an environment")
+	    exprs <- substitute(exprs) # protect from evaluation
+	    E1 <- exprs[[1]]
 	    if(identical(quote(`{`), E1)) # { ... }
 		do.call(expression, as.list(exprs[-1]))
 	    else if(identical(quote(expression), E1))
 		eval(exprs, envir=envir)
 	    else
 		as.expression(exprs) # or fail ..
-    }
+	}
     Dparse <- function(call, cutoff = 60L) {
 	ch <- deparse(call, width.cutoff = cutoff)
 	if(length(ch) > 1L) paste(ch[1L], "....") else ch
@@ -67,8 +62,8 @@ stopifnot <- function(..., exprs, local = TRUE)
     abbrev <- function(ae, n = 3L)
 	paste(c(head(ae, n), if(length(ae) > n) "...."), collapse="\n  ")
     ## benv <- baseenv()
-    for (i in seq_along(if(missE) cl else exprs)) {
-	cl.i <- (if(missE) cl else exprs)[[i]]
+    for (i in seq_along(cl)) {
+	cl.i <- cl[[i]]
 	## r <- eval(cl.i, ..)   # with correct warn/err messages:
 	r <- withCallingHandlers(
 		tryCatch(if(missE) ...elt(i) else eval(cl.i, envir=envir),
