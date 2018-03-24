@@ -51,13 +51,21 @@ stopifnot(\dots, exprs, local = TRUE)
   Also, since \R version 3.5.0, \code{stopifnot(exprs = { ... })} can be used
   alternatively and may be preferable in the case of several
   expressions, as they are more conveniently evaluated interactively
-  (\dQuote{no extraneous \code{,} }).  At the beginning of a testing \R
-  script, it may further be useful to set the \dQuote{alias}, \preformatted{ assert <- function(exprs) stopifnot(exprs = exprs) }
+  (\dQuote{no extraneous \code{,} }).
 
   Since \R version 3.4.0, when an expression (from \code{\dots}) is not
   true \emph{and} is a call to \code{\link{all.equal}}, the error
   message will report the (first part of the) differences reported by
   \code{\link{all.equal}(*)}.
+}
+\section{Warning}{
+ Trying to use the \code{stopifnot(exprs = ..)} version via a shortcut,
+ say, \preformatted{ assert <- function(exprs) stopifnot(exprs = exprs) }
+ is \emph{not a good idea at all}.  Contrary to \code{stopifnot()}
+ which takes care to evaluate the parts of \code{exprs} one by one and
+  stop at the first non-TRUE, such an \code{assert()} typically would
+  evaluate all parts of \code{exprs} and pass the result, i.e., typically
+  of the \emph{last} entry of \code{exprs} to \code{stopifnot()}.
 }
 \value{
   (\code{\link{NULL}} if all statements in \code{\dots} are \code{TRUE}.)

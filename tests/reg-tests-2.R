@@ -3065,3 +3065,46 @@ setNames(as.raw(1:3), c("a", "bbbb", "c"))
 ## str(x) when is.vector(x) is false :
 str(structure(c(a = 1, b = 2:7), color = "blue"))
 ## did print " atomic [1:7] ..." in R <= 3.4.x
+
+
+## check stopifnot(exprs = ....)
+tryCatch(stopifnot(exprs = {
+  all.equal(pi, 3.1415927)
+  2 < 2
+  cat("Kilroy was here!\n")
+  all(1:10 < 12)
+  "a" < "b"
+}), error = function(e) e$message) -> M ; cat("Error: ", M, "\n")
+
+tryCatch(stopifnot(exprs = {
+  all.equal(pi, 3.1415927)
+  { cat("Kilroy was here!\n"); TRUE }
+  pi < 3
+  cat("whereas I won't be printed ...\n")
+  all(1:10 < 12)
+  "a" < "b"
+}), error = function(e) e$message) -> M2 ; cat("Error: ", M2, "\n")
+
+stopifnot(exprs = {
+  all.equal(pi, 3.1415927)
+  { cat("\nKilroy was here! ... "); TRUE }
+  pi > 3
+  all(1:10 < 12)
+  "a" < "b"
+  { cat("and I'm printed as well ...\n"); TRUE}
+})
+## without "{ .. }" :
+stopifnot(exprs = 2 == 2)
+try(stopifnot(exprs =  1 < 2))
+## passing an expression object:
+stopifnot(exprs = expression(2 == 2, pi < 4))
+tryCatch(stopifnot(exprs = expression(
+                       2 == 2,
+                       { cat("\n Kilroy again .."); TRUE },
+                       pi < 4,
+                       0 == 1,
+                       { cat("\n no way..\n"); TRUE })),
+         error = function(e) e$message) -> M3
+cat("Error: ", M3, "\n")
+## was partly not ok for many weeks in R-devel, early 2018
+

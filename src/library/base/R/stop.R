@@ -42,14 +42,21 @@ stopifnot <- function(..., exprs, local = TRUE)
         ## missE <- FALSE
     }
     else {
-        if(...length())
-            stop("Must use 'exprs' or unnamed expressions, but not both")
-        if(!is.expression(exprs))
-            exprs <- as.expression(exprs)
-        envir <- if (isTRUE(local)) parent.frame()
-                 else if(isFALSE(local)) .GlobalEnv
-                 else if (is.environment(local)) local
-                 else stop("'local' must be TRUE, FALSE or an environment")
+	if(...length())
+	    stop("Must use 'exprs' or unnamed expressions, but not both")
+	envir <- if (isTRUE(local)) parent.frame()
+		 else if(isFALSE(local)) .GlobalEnv
+		 else if (is.environment(local)) local
+		 else stop("'local' must be TRUE, FALSE or an environment")
+	exprs <- substitute(exprs) # protect from evaluation
+	E1 <- exprs[[1]]
+	exprs <-
+	    if(identical(quote(`{`), E1)) # { ... }
+		do.call(expression, as.list(exprs[-1]))
+	    else if(identical(quote(expression), E1))
+		eval(exprs, envir=envir)
+	    else
+		as.expression(exprs) # or fail ..
     }
     Dparse <- function(call, cutoff = 60L) {
 	ch <- deparse(call, width.cutoff = cutoff)
@@ -60,7 +67,7 @@ stopifnot <- function(..., exprs, local = TRUE)
     abbrev <- function(ae, n = 3L)
 	paste(c(head(ae, n), if(length(ae) > n) "...."), collapse="\n  ")
     ## benv <- baseenv()
-    for (i in if(missE) seq_along(cl) else length(exprs)) {
+    for (i in seq_along(if(missE) cl else exprs)) {
 	cl.i <- (if(missE) cl else exprs)[[i]]
 	## r <- eval(cl.i, ..)   # with correct warn/err messages:
 	r <- withCallingHandlers(
