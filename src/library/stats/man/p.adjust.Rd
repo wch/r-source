@@ -17,8 +17,9 @@ p.adjust.methods
 #   "fdr", "none")
 }
 \arguments{
-  \item{p}{numeric vector of p-values (possibly with \code{\link{NA}}s).
-    Any other \R is coerced by \code{\link{as.numeric}}.}
+  \item{p}{numeric vector of p-values (possibly with
+    \code{\link{NA}}s).  Any other \R object is coerced by
+    \code{\link{as.numeric}}.}
   \item{method}{correction method.  Can be abbreviated.}
   \item{n}{number of comparisons, must be at least \code{length(p)};
     only set this (to non-default) when you know what you are doing!}
