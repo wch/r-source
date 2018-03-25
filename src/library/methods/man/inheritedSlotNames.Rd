@@ -1,6 +1,6 @@
 % File src/library/methods/man/inheritedSlotNames.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2009-2014 R Core Team
+% Copyright 2009-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{inheritedSlotNames}
@@ -25,7 +25,6 @@ inheritedSlotNames(Class, where = topenv(parent.frame()))
 \value{
   character vector of slot names, or \code{\link{NULL}}.
 }
-
 \seealso{
   \code{\link{slotNames}}, \code{\link{slot}}, \code{\link{setClass}}, etc.
 }
@@ -34,16 +33,14 @@ inheritedSlotNames(Class, where = topenv(parent.frame()))
 library(stats4)
 inheritedSlotNames("mle")
 
-if(require("Matrix")) {
-  print( inheritedSlotNames("Matrix") ) # NULL
+if(require("Matrix")) withAutoprint({
+  inheritedSlotNames("Matrix")       # NULL
   ## whereas
-  print( inheritedSlotNames("sparseMatrix") ) # --> Dim & Dimnames
+  inheritedSlotNames("sparseMatrix") # --> Dim & Dimnames
   ##  i.e. inherited from "Matrix" class
-
-  print( cl <- getClass("dgCMatrix") ) # six slots, etc
-
-  print( inheritedSlotNames(cl) ) # *all* six slots are inherited
-}
+  cl <- getClass("dgCMatrix")        # six slots, etc
+  inheritedSlotNames(cl) # *all* six slots are inherited
+})
 \dontrun{
 % currently, don't do this when running all examples: classes remain
 % cached anyway :
