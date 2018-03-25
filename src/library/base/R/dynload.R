@@ -1,7 +1,7 @@
 #  File src/library/base/R/dynload.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,16 +16,17 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
-if(.Platform$OS.type == "windows") {
-    dyn.load <- function(x, local = TRUE, now = TRUE, ...) {
-        inDL <- function(x, local, now, ..., DLLpath = "")
-            .Internal(dyn.load(x, local, now, DLLpath))
-        inDL(x, as.logical(local), as.logical(now), ...)
+dyn.load <-
+    if(.Platform$OS.type == "windows") {
+        function(x, local = TRUE, now = TRUE, ...) {
+            inDL <- function(x, local, now, ..., DLLpath = "")
+                .Internal(dyn.load(x, local, now, DLLpath))
+            inDL(x, as.logical(local), as.logical(now), ...)
+        }
+    } else {
+        function(x, local = TRUE, now = TRUE, ...)
+            .Internal(dyn.load(x, as.logical(local), as.logical(now), ""))
     }
-} else {
-    dyn.load <- function(x, local = TRUE, now = TRUE, ...)
-        .Internal(dyn.load(x, as.logical(local), as.logical(now), ""))
-}
 
 dyn.unload <- function(x)
     .Internal(dyn.unload(x))
