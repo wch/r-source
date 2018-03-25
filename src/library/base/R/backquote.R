@@ -18,7 +18,7 @@
 
 ## quote() is .Primitive
 
-### PR15077: need to substitute in a length-one pairlist, so
+### PR#15077: need to substitute in a length-one pairlist, so
 ### handle pairlists first
 bquote <- function(expr, where=parent.frame())
 {

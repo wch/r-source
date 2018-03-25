@@ -1,8 +1,8 @@
 #  File src/library/stats/R/mlm.R
 #  Part of the R package, https://www.R-project.org
 #
+#  Copyright (C) 1998-2018 The R Core Team
 #  Copyright (C) 1998 B. D. Ripley
-#  Copyright (C) 1998-2012 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -26,11 +26,11 @@ summary.mlm <- function(object, ...)
     resid <- object$residuals
     fitted <- object$fitted.values
     ynames <- colnames(coef)
-    if(is.null(ynames)) {
+    if(is.null(ynames)) ynames <- {
 	lhs <- object$terms[[2L]]
 	if(mode(lhs) == "call" && lhs[[1L]] == "cbind")
-	    ynames <- as.character(lhs)[-1L]
-	else ynames <- paste0("Y", seq_len(ny))
+	    as.character(lhs)[-1L]
+	else paste0("Y", seq_len(ny))
     }
     ## we need to ensure that _all_ responses are named
     ind <- ynames == ""

@@ -32,7 +32,7 @@ static SEXP removeAttrib(SEXP, SEXP);
 SEXP comment(SEXP);
 static SEXP commentgets(SEXP, SEXP);
 
-static SEXP row_names_gets(SEXP vec , SEXP val)
+static SEXP row_names_gets(SEXP vec, SEXP val)
 {
     SEXP ans;
 
@@ -263,7 +263,7 @@ SEXP setAttrib(SEXP vec, SEXP name, SEXP val)
 	return tspgets(vec, val);
     else if (name == R_CommentSymbol)
 	return commentgets(vec, val);
-    else if (name == R_RowNamesSymbol)
+    else if (name == R_RowNamesSymbol) // "row.names" -> care for data frames
 	return row_names_gets(vec, val);
     else
 	return installAttrib(vec, name, val);
@@ -902,7 +902,7 @@ SEXP attribute_hidden do_namesgets(SEXP call, SEXP op, SEXP args, SEXP env)
     /* FIXME:
        Need to special-case names(x) <- NULL for 1-d arrays to perform
          setAttrib(x, R_DimNamesSymbol, R_NilValue)
-       (and remove the dimnames) here if we want 
+       (and remove the dimnames) here if we want
          setAttrib(x, R_NamesSymbol, R_NilValue)
        to actually remove the names, as needed in subset.c.
     */
@@ -1255,7 +1255,7 @@ SEXP attribute_hidden do_attributes(SEXP call, SEXP op, SEXP args, SEXP env)
 	    MARK_NOT_MUTABLE(CAR(attrs));
 	    SET_VECTOR_ELT(value, nvalues, CAR(attrs));
 	    SET_STRING_ELT(names, nvalues, R_BlankString);
-	}	
+	}
 	attrs = CDR(attrs);
 	nvalues++;
     }

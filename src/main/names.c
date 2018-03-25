@@ -82,7 +82,7 @@
 
 FUNTAB R_FunTab[] =
 {
-
+    
 /* printname	c-entry		offset	eval	arity	pp-kind	     precedence	rightassoc
  * ---------	-------		------	----	-----	-------      ----------	----------*/
 

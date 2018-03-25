@@ -48,7 +48,7 @@ by.data.frame <- function(data, INDICES, FUN, ..., simplify = TRUE)
         names(IND) <- deparse(substitute(INDICES))[1L]
     } else IND <- INDICES
     FUNx <- function(x) FUN(data[x,, drop=FALSE], ...) # (PR#10506)
-    nd <- nrow(data)
+    nd <- nrow(data) # so 'data' is not substitute()d below
     structure(eval(substitute(tapply(seq_len(nd), IND, FUNx,
 				     simplify = simplify)), data),
 	      call = match.call(),

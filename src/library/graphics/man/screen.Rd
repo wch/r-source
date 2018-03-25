@@ -1,6 +1,6 @@
 % File src/library/graphics/man/screen.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{screen}
@@ -16,22 +16,22 @@ close.screen(n, all.screens = FALSE)
 \alias{erase.screen}
 \alias{close.screen}
 \arguments{
-  \item{figs}{A two-element vector describing the number of rows and the
+  \item{figs}{a two-element vector describing the number of rows and the
     number of columns in a screen matrix \emph{or} a matrix with 4 columns.
     If a matrix, then each row describes a screen with values for the left,
     right, bottom, and top of the screen (in that order) in NDC units,
     that is 0 at the lower left corner of the device surface, and 1 at
     the upper right corner.}
-  \item{screen}{A number giving the screen to be split.  It defaults to
+  \item{screen}{a number giving the screen to be split.  It defaults to
     the current screen if there is one, otherwise the whole device region.}
-  \item{erase}{logical: should be selected screen be cleared?}
-  \item{n}{A number indicating which screen to prepare for drawing
+  \item{erase}{logical: should the selected screen be cleared?}
+  \item{n}{a number indicating which screen to prepare for drawing
     (\code{screen}), erase (\code{erase.screen}), or close
     (\code{close.screen}).  (\code{close.screen} will accept a vector of
     screen numbers.)}
-  \item{new}{A logical value indicating whether the screen should be
+  \item{new}{logical value indicating whether the screen should be
     erased as part of the preparation for drawing in the screen.}
-  \item{all.screens}{A logical value indicating whether all of the
+  \item{all.screens}{logical value indicating whether all of the
     screens should be closed.}
 }
 \description{
@@ -60,15 +60,15 @@ close.screen(n, all.screens = FALSE)
   to the first available screen.
 }
 \value{
-  \code{split.screen} returns a vector of screen numbers for the
-  newly-created screens.  With no arguments, \code{split.screen} returns
-  a vector of valid screen numbers.
+  \code{split.screen(*)} returns a vector of screen numbers for the
+  newly-created screens.  With no arguments, \code{split.screen()}
+  returns a vector of valid screen numbers.
 
-  \code{screen} invisibly returns the number of the selected screen.
-  With no arguments, \code{screen} returns the number of the current
-  screen.
+  \code{screen(n)} invisibly returns \code{n}, the number of the
+  selected screen. With no arguments, \code{screen()} returns the number
+  of the current screen.
 
-  \code{close.screen} returns a vector of valid screen numbers.
+  \code{close.screen()} returns a vector of valid screen numbers.
 
   \code{screen}, \code{erase.screen}, and \code{close.screen} all return
   \code{FALSE} if \R is not in split-screen mode.

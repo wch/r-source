@@ -4,6 +4,8 @@ c
 C Purpose :  Computes Inner Products between columns of L^{-1}
 C            where L = abd is a Banded Matrix with 3 subdiagonals
 
+C In R, only called in one place, from sslrvg() [ ./sslvrg.f ] with flag = 0
+
 C The algorithm works in two passes:
 C
 C               Pass 1 computes (cj,ck) k=j,j-1,j-2,j-3 ;  j=nk, .. 1
@@ -12,7 +14,7 @@ C
 C               A refinement of Elden's trick is used.
 c Args
       integer ld4,nk,ldnk,flag
-      DOUBLE precision abd(ld4,nk),p1ip(ld4,nk), p2ip(ldnk,nk)
+      DOUBLE precision abd(ld4,nk), p1ip(ld4,nk), p2ip(ldnk,nk)
 c Locals
       integer i,j,k
       DOUBLE precision  wjm3(3),wjm2(2),wjm1(1),c0,c1,c2,c3
@@ -64,32 +66,30 @@ C Pass 1
          wjm1(1)=p1ip(4,j)
  100  continue
 
-      if(flag.ne.0)then
+      if(flag.ne.0) then
 
-C     ____ Pass 2 _____
-
-C     Compute p2ip
+C     ____ Pass 2 _____  Compute p2ip  [never from R's code!]
          do 120 i=1,nk
             j=nk-i+1
 C           for(k=1;k<=4 & j+k-1<=nk;k=k+1) { p2ip(.) = .. }:
-            do 160 k=1,4
-               if(j+k-1 .gt. nk)goto 120
+            do k=1,4
+               if(j+k-1 .gt. nk) goto 120
                p2ip(j,j+k-1) = p1ip(5-k,j)
- 160        continue
+            end do
  120     continue
 
          do 170 i=1,nk
             j=nk-i+1
 c           for(k=j-4;k>=1;k=k-1){
             if(j-4 .ge. 1) then
-               do 210 k= j-4,1, -1
+               do k= j-4,1, -1
                   c0 = 1d0/abd(4,k)
                   c1 = abd(1,k+3)*c0
                   c2 = abd(2,k+2)*c0
                   c3 = abd(3,k+1)*c0
                   p2ip(k,j)= 0d0 - ( c1*p2ip(k+3,j) + c2*p2ip(k+2,j) +
      &                 c3*p2ip(k+1,j) )
- 210           continue
+               end do
             endif
  170     continue
       endif

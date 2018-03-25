@@ -917,6 +917,7 @@ SEXP xlengthgets(SEXP x, R_xlen_t len)
     }
     if (isVector(x) && xnames != R_NilValue)
 	setAttrib(rval, R_NamesSymbol, names);
+    // *not* keeping "class": in line with  x[1:k]
     UNPROTECT(2);
     return rval;
 }
