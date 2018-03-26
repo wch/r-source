@@ -310,12 +310,12 @@ function(x, header = TRUE, ...)
                                                 urlify,
                                                 2L)
             s <- .gsub_with_transformed_matches("&lt;(DOI|doi):[[:space:]]*([^<[:space:]]+[[:alnum:]])&gt;",
-                                                "&lt;<a href=\"http://dx.doi.org/%s\">doi:\\2</a>&gt;",
+                                                "&lt;<a href=\"https://doi.org/%s\">doi:\\2</a>&gt;",
                                                 s,
                                                 urlify,
                                                 2L)
             s <- .gsub_with_transformed_matches("[^>\"](DOI|doi):[[:space:]]*([^<[:space:]]+[[:alnum:]])",
-                                                "&lt;<a href=\"http://dx.doi.org/%s\">doi:\\2</a>&gt;",
+                                                "&lt;<a href=\"https://doi.org/%s\">doi:\\2</a>&gt;",
                                                 s,
                                                 urlify,
                                                 2L)
