@@ -1,6 +1,6 @@
 % File src/library/stats/man/confint.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2017 R Core Team
 % Distributed under GPL 2 or later
 
 \name{confint}
@@ -31,7 +31,7 @@ confint(object, parm, level = 0.95, \dots)
 }
 \details{
   \code{confint} is a generic function.  The default method assumes
-  asymptotic normality, and needs suitable \code{\link{coef}} and
+  normality, and needs suitable \code{\link{coef}} and
   \code{\link{vcov}} methods to be available.  The default method can be
   called directly for comparison with other methods.
 
