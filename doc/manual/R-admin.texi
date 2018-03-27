@@ -5264,14 +5264,15 @@ this should prompt you to install it.  You can also install directly a
 recent Java from Oracle (currently from
 @uref{http://www.oracle.com/@/technetwork/@/java/@/javase/@/downloads/@/index.html}:
 note that Java 9 and 10 have a limited lifetime and at the time of
-writing @CRANpkg{rJava} did not install with Java 10).  Builds of
-OpenJDK may also be available, e.g.@: from @uref{http://jdk.java.net/}.
+writing @CRANpkg{rJava}@footnote{the current version @code{0.9-9}.} did
+not install with Java 10).  Builds of OpenJDK may also be available,
+e.g.@: from @uref{http://jdk.java.net/}.
 
 Binary distributions of @R{} are built against a specific version (e.g.@:
 1.8.0_161) of Oracle Java so @command{sudo R CMD javareconf} may be
 needed before using Java-using packages.
 
-To see what compatible versions of Java are currently installed, run
+To see what compatible versions of Oracle Java are currently installed, run
 @command{/usr/libexec/java_home -V -a x86_64}.  If needed, set the
 environment variable @env{JAVA_HOME} to choose between these, both when
 @R{} is built from the sources and when @command{R CMD javareconf} is
@@ -5301,6 +5302,21 @@ JAVA_LIBS="-L/$@{JAVA_HOME@}/lib/server -ljvm"
 @end example
 @noindent
 in @file{config.site}.
+
+To use the builds of OpenJDK from  @uref{http://jdk.java.net/}, set
+@env{JAVA_HOME}:
+@example
+JAVA_HOME=@var{/path/to/JDK}/jdk-10.jdk/Contents/Home
+@end example
+@noindent
+where @file{@var{/path/to/JDK}} is wherever the distribution tarball was
+unpacked.  Java 10 JDKs do not contain @command{javah}, but @R{}
+configuration / @command{R CMD javareconf} can use one from an earlier
+installation if @env{JAVAH} is set, e.g.,
+@example
+JAVAH=/Library/Java/JavaVirtualMachines/jdk1.8.0_161.jdk/Contents/Home/bin/javah
+@end example
+
 
 Note that it is necessary to set the environment variable @env{NOAWT} to
 @code{1} to install many of the Java-using packages.
