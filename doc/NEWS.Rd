@@ -7,6 +7,24 @@
 
 \section{\Rlogo CHANGES IN R-devel}{
 
+   \subsection{NEW FEATURES}{
+    \itemize{ 
+      \item \code{optim(*, control = list(warn.1d.NelderMead = FALSE))}
+      allows to turn off the warning when applying the default
+      \code{"Nelder-Mead"} method to 1-dimensional problems.
+    }
+  }
+  
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item Speedup of \code{getOption(*, <default>)} from \PR{17394},
+      thanks to Matt Dowle.
+    }
+  }
+}
+
+\section{\Rlogo CHANGES IN R 3.5.0}{
+
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
       \item All packages are by default byte-compiled on installation.
@@ -357,10 +375,6 @@
       \item The \code{"Date"} and \dQuote{date-time} classes
       \code{"POSIXlt"} and \code{"POSIXct"} now have a working
       \code{`length<-`} method, as wished in \PR{17387}.
-
-      \item \code{optim(*, control = list(warn.1d.NelderMead = FALSE))}
-      allows to turn off the warning when applying the default
-      \code{"Nelder-Mead"} method to 1-dimensional problems.
     }
   }
 
@@ -634,9 +648,6 @@
 
       \item Using \code{ \\usage\{ data(<name>, package="<pkg>") \} }
       no longer produces \command{R CMD check} warnings.
-
-      \item Speedup of \code{getOption(*, <default>)} from \PR{17394},
-      thanks to Matt Dowle.
     }
   }
 }
