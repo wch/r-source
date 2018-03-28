@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2018-02-28 r74309) -- "Unsuffered Consequences"
+R version 3.5.0 alpha (2018-03-27 r74478)
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -340,4 +340,4 @@ List of 6
 > 
 > proc.time()
    user  system elapsed 
-  0.272   0.036   0.295 
+  0.498   0.053   0.695 
