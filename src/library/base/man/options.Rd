@@ -1,6 +1,6 @@
 % File src/library/base/man/options.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{options}
@@ -54,11 +54,15 @@ getOption(x, default = NULL)
   For compatibility with S there is a visible object \code{.Options} whose
   value is a pairlist containing  the current \code{options()} (in no
   particular order).  Assigning to it will make a local copy and not
-  change the original.
+  change the original. (\emph{Using} it however is faster than calling
+  \code{options()}).
+
+  An option set to \code{NULL} is indistinguishable from a non existing
+  option.
 }
 \value{
   For \code{getOption}, the current value set for option \code{x}, or
-  \code{NULL} if the option is unset.
+  \code{default} (which defaults to \code{NULL}) if the option is unset.
 
   For \code{options()}, a list of all set options sorted by name.  For
   \code{options(name)}, a list of length one containing the set value,
@@ -76,8 +80,8 @@ getOption(x, default = NULL)
     \item{\code{askYesNo}:}{a function (typically set by a front-end)
       to ask the user binary response functions in a consistent way,
       or a vector of strings used by \code{\link{askYesNo}} to use
-      as default responses for such questions.}      
-    
+      as default responses for such questions.}
+
     \item{\code{browserNLdisabled}:}{logical: whether newline is
       disabled as a synonym for \code{"n"} in the browser.}
 
@@ -266,7 +270,7 @@ getOption(x, default = NULL)
       \code{"a4"}, or \code{"letter"} in US and Canadian locales.
 #endif
     }
-    
+
     \item{\code{PCRE_limit_recursion}:}{Logical: should
       \code{\link{grep}(perl = TRUE)} and similar limit the maximal
       recursion allowed when matching?  PCRE can be built not to use a
@@ -277,7 +281,7 @@ getOption(x, default = NULL)
       true, the limit is reduced using \R's estimate of the C stack size
       available (if known), otherwise 10000.  If \code{NA}, the limit is
       imposed only if any input string has 1000 or more bytes.}
-       
+
      \item{\code{PCRE_study}:}{Logical or integer: should
       \code{\link{grep}(perl = TRUE)} and similar \sQuote{study} the
       patterns?  Either logical or a numerical threshold for the minimum
@@ -289,7 +293,7 @@ getOption(x, default = NULL)
 	TRUE)}, \code{\link{strsplit}(perl = TRUE)} and similar make use
       of PCRE's Just-In-Time compiler for studied patterns, if
       available?  Missing values are treated as false.}
-      
+
     \item{\code{pdfviewer}:}{default PDF viewer.
       The default is set from the environment variable \env{R_PDFVIEWER},
 #ifdef unix

@@ -634,6 +634,9 @@
 
       \item Using \code{ \\usage\{ data(<name>, package="<pkg>") \} }
       no longer produces \command{R CMD check} warnings.
+
+      \item Speedup of \code{getOption(*, <default>)} from \PR{17394},
+      thanks to Matt Dowle.
     }
   }
 }
