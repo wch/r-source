@@ -1691,6 +1691,16 @@ sort.int(1:3, decreasing = "FALSE")
 ## failed initially in ALTREP
 
 
+## match.arg()s 'choices' evaluation, PR#17401
+f <- function(x = y) {
+    y <- c("a", "b")
+    match.arg(x)
+}
+stopifnot(identical(f(), "a"))
+## failed in R <= 3.4.x
+
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())
