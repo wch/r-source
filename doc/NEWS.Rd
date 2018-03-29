@@ -8,13 +8,13 @@
 \section{\Rlogo CHANGES IN R-devel}{
 
    \subsection{NEW FEATURES}{
-    \itemize{ 
+    \itemize{
       \item \code{optim(*, control = list(warn.1d.NelderMead = FALSE))}
       allows to turn off the warning when applying the default
       \code{"Nelder-Mead"} method to 1-dimensional problems.
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item Speedup of \code{getOption(*, <default>)} from \PR{17394},
@@ -30,7 +30,7 @@
       \item All packages are by default byte-compiled on installation.
       This makes the installed packages larger (usually marginally so)
       and may affect the format of messages and tracebacks (which often
-      exclude \code{.Cal}l and similar).
+      exclude \code{.Call} and similar).
     }
   }
 
