@@ -122,11 +122,11 @@ function(x)
     y <- gsub("/", "\\\\out{\\\\slash{}}", gsub("-", "\\\\out{\\\\-}", x))
 
     sprintf("\\ifelse{text}{%s}{\\ifelse{latex}{%s}{%s}}",
-            sprintf("doi: %s (URL: http://doi.org/%s)",
+            sprintf("doi: %s (URL: https://doi.org/%s)",
                     x, x),
-            sprintf("doi:\\out{\\nobreakspace{}}\\href{http://doi.org/%s}{%s}",
+            sprintf("doi:\\out{\\nobreakspace{}}\\href{https://doi.org/%s}{%s}",
                     x, y),
-            sprintf("doi: \\href{http://doi.org/%s}{%s}",
+            sprintf("doi: \\href{https://doi.org/%s}{%s}",
                     x, x)
             )
 }
