@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-09-21 07:12\n"
+"POT-Creation-Date: 2018-03-30 07:33\n"
 "PO-Revision-Date: 2016-04-11 13:08-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: Chel Hee Lee <chl948@mail.usask.ca>\n"
@@ -27,7 +27,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-msgid "invalid value of 'seed'"
+#, fuzzy
+msgid "invalid value of %s"
 msgstr "'seed'값이 올바르지 않습니다."
 
 msgid "need at least one argument"
@@ -84,8 +85,14 @@ msgstr "'what'은 반드시 문자 또는 raw 벡터이어야 합니다"
 msgid "'mc.cores' must be >= 1"
 msgstr "'mc.cores'는 1보다 크거나 같아야 합니다."
 
+msgid "affinity.list and X must have the same length"
+msgstr ""
+
 msgid "%d function calls resulted in an error"
 msgstr "%d번의 함수 호출결과 에러가 발생했습니다"
+
+msgid "'mc.preschedule' must be false if 'affinity.list' is used"
+msgstr ""
 
 msgid "all scheduled cores encountered errors in user code"
 msgstr "모든 예약된 코어들은 사용자코드내 에러를 접했습니다"

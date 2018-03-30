@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
+"POT-Creation-Date: 2018-03-30 07:33\n"
 "PO-Revision-Date: 2016-04-11 13:08-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: Chel Hee Lee <chl948@mail.usask.ca>\n"
@@ -38,6 +38,11 @@ msgstr "'a'와 'b'가 'coef'에 의하여 덮어씌어졌습니다"
 
 msgid "one of 'x1' and 'y1' must be given"
 msgstr "'x1'와 'y1' 중 반드시 하나가 주어져야 합니다"
+
+msgid ""
+"'length', 'angle', or 'code' greater than length 1; values after the first "
+"are ignored"
+msgstr ""
 
 msgid "'x' must be a 2-d contingency table"
 msgstr "'x'는 반드시 2차원 분할표이어야 합니다"
@@ -123,6 +128,9 @@ msgstr "'x'와 'y'의 값은 증가해야만 합니다"
 
 msgid "no proper 'z' matrix specified"
 msgstr "적합한 'z' 행렬이 지정되지 않았습니다"
+
+msgid "'labels' is length zero.  Use 'drawlabels = FALSE' to suppress labels."
+msgstr ""
 
 msgid "invalid conditioning formula"
 msgstr "유효하지 않은 conditioning formula입니다"
@@ -212,6 +220,9 @@ msgstr "알수없는 'breaks' 알고리즘입니다"
 
 msgid "invalid number of 'breaks'"
 msgstr "유효하지 않은 'breaks'의 개수입니다"
+
+msgid "'breaks = %g' is too large and set to 1e6"
+msgstr ""
 
 msgid "hist.default: pretty() error, breaks=%s"
 msgstr "hist.default: pretty() 에러, breaks=%s"

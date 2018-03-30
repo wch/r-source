@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
+"POT-Creation-Date: 2018-03-30 07:33\n"
 "PO-Revision-Date: 2016-04-11 13:08-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: Chel Hee Lee <chl948@mail.usask.ca>\n"
@@ -38,10 +38,6 @@ msgstr ""
 
 msgid "namespace found within global environments"
 msgstr ""
-
-msgid "'ns' must be a namespace or a namespace imports environment"
-msgstr ""
-"'ns'는 반드시 네임스페이스 또는 환경을  불러오는 네임스페이스이어야 합니다"
 
 msgid "bad assignment: %s"
 msgstr ""
@@ -76,9 +72,6 @@ msgstr ""
 msgid "invalid function in complex assignment"
 msgstr ""
 
-msgid "is not a registered math1 function"
-msgstr ""
-
 msgid "missing arguments are not allowed"
 msgstr "누락된 인자들이 있어서는 안됩니다"
 
@@ -101,6 +94,9 @@ msgid "more than one default provided in switch() call"
 msgstr "switch() 함수호출시 주어진 기본값이 하나이상입니다"
 
 msgid "'switch' with no alternatives"
+msgstr ""
+
+msgid "Error: compilation failed -"
 msgstr ""
 
 msgid "cannot compile a non-function"
@@ -130,6 +126,9 @@ msgstr "파일 '%s'은 존재하지 않습니다"
 msgid "'%s' is not a valid compiler option"
 msgstr "'%s'은 선택가능한 컴파일러가 아닙니다"
 
+msgid "invalid environment variable value: %s==%s"
+msgstr ""
+
 msgid "invalid compiler options: optimize(==%d)<2 and jitEnabled(==%d)>2"
 msgstr ""
 
@@ -143,3 +142,7 @@ msgid "local assignment to syntactic function: "
 msgid_plural "local assignments to syntactic functions: "
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "'ns' must be a namespace or a namespace imports environment"
+#~ msgstr ""
+#~ "'ns'는 반드시 네임스페이스 또는 환경을  불러오는 네임스페이스이어야 합니다"

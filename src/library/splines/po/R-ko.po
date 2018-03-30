@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
+"POT-Creation-Date: 2018-03-30 07:34\n"
 "PO-Revision-Date: 2016-04-11 13:08-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: Chel Hee Lee <chl948@mail.usask.ca>\n"
@@ -53,6 +53,10 @@ msgstr "%s는 올바르게 설치된 패키지 'Matrix'를 필요로 합니다"
 msgid "values of 'x' must be distinct"
 msgstr "'x'의 값들은 반드시 고유하게 구별되어야 합니다"
 
+#, fuzzy
+msgid "must have at least 'ord'=%d points"
+msgstr "반드시 적어도 'ord' 놋트를 가져야 합니다"
+
 msgid "'formula' must be of the form \"y ~ x\""
 msgstr "'formula'는 반드시 \"y ~ x\"와 같은 형식을 가지고 있어야 합니다"
 
@@ -79,6 +83,9 @@ msgstr "'deriv'는 반드시 0과 %d 사이에 있어야 합니다"
 
 msgid "knot positions must be strictly increasing"
 msgstr "놋트 위치들은 반드시 감소없이 증가해야만 합니다"
+
+msgid "currently implemented only for cubic splines"
+msgstr ""
 
 msgid "spline must be monotone"
 msgstr "spline은 반드시 monotone해야 합니다"

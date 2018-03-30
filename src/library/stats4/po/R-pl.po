@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-04 08:15\n"
+"POT-Creation-Date: 2018-03-30 07:34\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -16,31 +16,6 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Generator: Poedit 1.8.7\n"
 
-#. R/mle.R: stop("'start' must be a named list")
-#: R/mle.R:0
-msgid "'start' must be a named list"
-msgstr "'start' musi być nazwaną listą"
-
-#. R/mle.R: warning("extra arguments discarded")
-#: R/mle.R:0
-msgid "extra arguments discarded"
-msgstr "dodatkowe argumenty zostały odrzucone"
-
-#. R/mle.R: warning("levels truncated to positive values only")
-#: R/mle.R:0
-msgid "levels truncated to positive values only"
-msgstr "poziomy przycięto do wartości dodatnich"
-
-#. R/mle.R: stop("profiling has found a better solution, so original fit had not converged")
-#: R/mle.R:0
-msgid ""
-"profiling has found a better solution, so original fit had not converged"
-msgstr ""
-"profilowanie znalazło lepsze rozwiązanie, tak więc oryginalne dopasowanie "
-"nie uzbieżniło się"
-
-#. R/mle.R: stop("some named arguments in 'fixed' are not arguments to the supplied log-likelihood")
-#: R/mle.R:0
 msgid ""
 "some named arguments in 'fixed' are not arguments to the supplied log-"
 "likelihood"
@@ -48,11 +23,24 @@ msgstr ""
 "niektóre nazwane argumenty w funkcji 'fixed' nie są argumentami do "
 "dostarczonej logarytmicznej funkcji wiarygodności"
 
-#. R/mle.R: stop("some named arguments in 'start' are not arguments to the supplied log-likelihood")
-#: R/mle.R:0
+msgid "'start' must be a named list"
+msgstr "'start' musi być nazwaną listą"
+
 msgid ""
 "some named arguments in 'start' are not arguments to the supplied log-"
 "likelihood"
 msgstr ""
 "niektóre nazwane argumenty w funkcji 'start' nie są argumentami do "
 "dostarczonej logarytmicznej funkcji wiarygodności"
+
+msgid ""
+"profiling has found a better solution, so original fit had not converged"
+msgstr ""
+"profilowanie znalazło lepsze rozwiązanie, tak więc oryginalne dopasowanie "
+"nie uzbieżniło się"
+
+msgid "levels truncated to positive values only"
+msgstr "poziomy przycięto do wartości dodatnich"
+
+msgid "extra arguments discarded"
+msgstr "dodatkowe argumenty zostały odrzucone"

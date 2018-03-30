@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
+"POT-Creation-Date: 2018-03-30 07:33\n"
 "PO-Revision-Date: 2016-04-11 13:08-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: Chel Hee Lee <chl948@mail.usask.ca>\n"
@@ -111,6 +111,9 @@ msgstr "유효하지 않은 'f'입니다"
 
 msgid "'gpar' element '%s' must not be length 0"
 msgstr "'gpar' 요소 '%s'는 반드시 길이가 0이 아닙니다"
+
+msgid "mixture of missing and non-missing values for %s"
+msgstr ""
 
 msgid "'gamma' 'gpar' element is defunct"
 msgstr "'gamma' 'gpar' 요소는 더이상 지원되지 않습니다"

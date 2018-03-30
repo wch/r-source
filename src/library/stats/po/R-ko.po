@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
+"POT-Creation-Date: 2018-03-30 07:34\n"
 "PO-Revision-Date: 2016-04-11 13:08-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: Chel Hee Lee <chl948@mail.usask.ca>\n"
@@ -289,10 +289,15 @@ msgstr "NA가 아닌 포인트들의 개수는 0입니다"
 msgid "'approx' requires n >= 1"
 msgstr "'approx'는 n이 1 보다 크거나 같아야 합니다"
 
+#, fuzzy
+msgid "NAs in 'x' must be the same row-wise"
+msgstr "'x'와 'g'는 반드시 같은 길이를 가지고 있어야 합니다"
+
 msgid "'order.max' must be >= 1"
 msgstr "'order.max'는 반드시 1 보다 크거나 같아야 합니다"
 
-msgid "'order.max' must be < 'n.used'"
+#, fuzzy
+msgid "'order.max' must be < 'n.obs'"
 msgstr "'order.max'는 반드시 'n.used'보다 작아야 합니다"
 
 msgid "zero-variance series"
@@ -312,6 +317,9 @@ msgstr "MLE가 단변량시리즈에 대해서만 구현되어 있습니다"
 
 msgid "'order.max' must be >= 0"
 msgstr "'order.max'는 반드시 0보다 크거나 같아야 합니다"
+
+msgid "'order.max' must be < 'n.used'"
+msgstr "'order.max'는 반드시 'n.used'보다 작아야 합니다"
 
 msgid "'order' must be a non-negative numeric vector of length 3"
 msgstr ""
@@ -499,7 +507,8 @@ msgstr "list.=FALSE가 주어진 경우에 x.ret=TRUE는 사용되지 않습니�
 msgid "distances must be result of 'dist' or a square matrix"
 msgstr "distances는 반드시 'dist'의 결과이거나 정방행렬이어야 합니다"
 
-msgid "invalid value of 'n'"
+#, fuzzy
+msgid "invalid value of %s"
 msgstr "유효한 'n'의 값이 아닙니다"
 
 msgid "'k' must be in {1, 2, ..  n - 1}"
@@ -714,9 +723,6 @@ msgstr "인자 'x'는 반드시 수치형이어야 합니다"
 
 msgid "'x' contains missing values"
 msgstr "'x'는 결측치들을 포함하고 있습니다"
-
-msgid "invalid value of length(x)"
-msgstr "유효하지 않은 length(x)의 값입니다"
 
 msgid "'x' and 'weights' have unequal length"
 msgstr "'x'와 'weights'는 서로 다른 길이를 가지고 있습니다"
@@ -985,6 +991,9 @@ msgstr "0의 값을 가지지 않는 행방향의 marginal들이 2개 이상 필
 msgid "need 2 or more non-zero column marginals"
 msgstr "0의 값을 가지지 않는 열방향의 marginal들이 2개 이상 필요합니다"
 
+msgid "names(hybridPars) should be NULL or be identical to the default's"
+msgstr ""
+
 msgid "'hybrid' is ignored for a 2 x 2 table"
 msgstr "2 x 2 분할표에서 'hybrid'는 무시됩니다"
 
@@ -1105,6 +1114,9 @@ msgstr ""
 
 msgid "non-finite coefficients at iteration %d"
 msgstr "iteration %d에서 얻어진 계수의 값은 유한하지 않습니다"
+
+msgid "singular fit encountered"
+msgstr ""
 
 msgid ""
 "no valid set of coefficients has been found: please supply starting values"
@@ -1280,9 +1292,6 @@ msgstr ""
 msgid "more cluster centers than data points"
 msgstr "데이터 포인트들보다 더 많은 cluster centers가 있습니다"
 
-msgid "'invalid value of 'k'"
-msgstr "'k'의 값이 유효하지 않습니다"
-
 msgid "'iter.max' must be positive"
 msgstr "'iter.max'는 반드시 양수이어야 합니다"
 
@@ -1337,9 +1346,6 @@ msgstr ""
 msgid "incompatible dimensions"
 msgstr ""
 
-msgid "singular fit encountered"
-msgstr ""
-
 msgid "missing or negative weights not allowed"
 msgstr "weights는 누락되거나 음수이어서는 안됩니다"
 
@@ -1362,6 +1368,10 @@ msgid ""
 msgstr ""
 "lm 객체는 적절한 'qr' 요소를 가지고 있지 않습니다.\n"
 " Rank zero인 경우 lm(.., qr=FALSE)를 사용하지 말아야 합니다."
+
+#, fuzzy
+msgid "simulate() is not yet implemented for multivariate lm()"
+msgstr "다변량모델을 위한 'se.fit'은 아직 구현되어 있지 않습니다"
 
 msgid "family '%s' not implemented"
 msgstr "페밀리 '%s'는 구현되지 않았습니다"
@@ -1845,6 +1855,15 @@ msgstr ""
 "'n', 'p1', 'p2', 'power', 그리고 'sig.level' 중의 하나는 반드시 NULL이어야 합"
 "니다"
 
+msgid "No p1 in in [0, p2] can be found to achieve the desired power"
+msgstr ""
+
+msgid "No p2 in in [p1, 1] can be found to achieve the desired power"
+msgstr ""
+
+msgid "No significance level [0, 1] can be found to achieve the desired power"
+msgstr ""
+
 msgid ""
 "exactly one of 'groups', 'n', 'between.var', 'within.var', 'power', and 'sig."
 "level' must be NULL"
@@ -1937,6 +1956,9 @@ msgstr "y는 비어 있거나 오로지 NA만을 가집니다"
 msgid "'formula' missing"
 msgstr "'formula'가 없습니다"
 
+msgid "'type' must be 1 or 3 for ordered factors"
+msgstr ""
+
 msgid "factors are not allowed"
 msgstr "요인은 허용되지 않습니다"
 
@@ -1958,7 +1980,10 @@ msgstr "유효하지 않은 인자 'c'입니다"
 msgid "arguments 'r' and 'c' must have the same sums"
 msgstr "인자들 'r'과 'c'는 반드시 같은 총계를 가져야 합니다"
 
-msgid "'relevel' only for factors"
+msgid "'relevel' only for (unordered) factors"
+msgstr ""
+
+msgid "'relevel' only for unordered factors"
 msgstr ""
 
 msgid "'ref' must be of length one"
@@ -2003,9 +2028,6 @@ msgid ""
 msgstr ""
 "'varying'의 길이는 반드시 'v.names'의 길이와 'times'의 길이를 곱한 것과 같아"
 "야 합니다"
-
-msgid "invalid value of 'k'"
-msgstr "'k'의 값이 유효하지 않습니다"
 
 msgid "'k' must be positive"
 msgstr "'k'는 반드시 양수이어야 합니다"
@@ -2064,6 +2086,10 @@ msgstr "일부 weights는 양수이어야 합니다"
 msgid "'tol' must be strictly positive and finite"
 msgstr "'tol'은 반드시 양수이고 유한해야 합니다"
 
+#, fuzzy
+msgid "invalid 'keep.stuff'"
+msgstr "유효하지 않은 'x'입니다"
+
 msgid "need at least four unique 'x' values"
 msgstr "적어도 네개의 고유한 'x'값들이 필요합니다"
 
@@ -2071,6 +2097,17 @@ msgid "'cv' must not be NA when 'df' is specified"
 msgstr "'df'가 지정되었을때 'cv'는 반드시 NA이서는 안됩니다"
 
 msgid "cross-validation with non-unique 'x' values seems doubtful"
+msgstr ""
+
+#, fuzzy
+msgid "Numeric 'all.knots' must be strictly increasing"
+msgstr "'x'는 반드시 *단조* 증가해야합니다 (non - NA)"
+
+#, fuzzy
+msgid "'all.knots' is vector of knots; 'nknots' specification is disregarded"
+msgstr "'all.knots'가 TRUE이기 때문에 'nknots'지정은 사용되지 않습니다"
+
+msgid "numeric 'all.knots' must cover [0,1] (= the transformed data-range)"
 msgstr ""
 
 msgid "'all.knots' is TRUE; 'nknots' specification is disregarded"
@@ -2085,13 +2122,13 @@ msgstr "'nknots'은 반드시 적어도 1이어야 합니다"
 msgid "cannot use more inner knots than unique 'x' values"
 msgstr ""
 
+msgid "must not specify both 'spar' and 'lambda'"
+msgstr ""
+
 msgid "'spar' must be of length 1"
 msgstr "'spar'은 반드시 길이가 1 이어야 합니다"
 
-msgid "specified both 'df' and 'cv'; will disregard the latter"
-msgstr "'df'와 'cv' 모두 지정되었으므로 나중의 것은 사용되지 않을 것입니다"
-
-msgid "you must supply 1 < df <= n,  n = #{unique x} ="
+msgid "not using invalid df; must have 1 < df <= n := #{unique x} ="
 msgstr ""
 
 msgid "NA lev[]; probably smoothing parameter 'spar' way too large!"
@@ -2109,6 +2146,9 @@ msgstr "type에 \"partial\" 옵션은 아직 구현되지 않았습니다"
 msgid "not a valid \"smooth.spline\" object"
 msgstr "유효한 \"smooth.spline\" 객체가 아닙니다"
 
+msgid "'span' must be between 0 and 1."
+msgstr "'span'은 반드시 0과 1 사이에 있어야 합니다"
+
 msgid "'y' must be numeric vector"
 msgstr "'y'는 반드시 수치형 벡터이어야 합니다"
 
@@ -2117,9 +2157,6 @@ msgstr "'x'와 'y'의 관측치의 개수는 반드시 일치해야 합니다"
 
 msgid "number of weights must match number of observations."
 msgstr "가중치의 개수는 반드시 관측치의 개수와 일치해야 합니다"
-
-msgid "'span' must be between 0 and 1."
-msgstr "'span'은 반드시 0과 1 사이에 있어야 합니다"
 
 msgid "'x' must be between 0 and 1 for periodic smooth"
 msgstr ""
@@ -2351,7 +2388,9 @@ msgstr ""
 msgid "requested conf.level not achievable"
 msgstr "수행할 수 없는 conf.level의 값이 주어졌습니다."
 
-msgid "cannot compute confidence interval when all observations are tied"
+#, fuzzy
+msgid ""
+"cannot compute confidence interval when all observations are zero or tied"
 msgstr "모든 관측치들의 값이 같다면 신뢰구간을 계산 할 수 없습니다"
 
 msgid "cannot compute exact confidence interval with ties"
@@ -2365,6 +2404,9 @@ msgstr ""
 
 msgid "Requested conf.level not achievable"
 msgstr "수행할 수 없는 conf.level의 값이 주어졌습니다."
+
+msgid "cannot compute confidence interval when all observations are tied"
+msgstr "모든 관측치들의 값이 같다면 신뢰구간을 계산 할 수 없습니다"
 
 msgid "must supply either 'formula' or 'data'"
 msgstr "'formula' 또는 'data' 둘 중 하나는 반드시 제공되어야 합니다"
@@ -2555,6 +2597,18 @@ msgstr[0] ""
 msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] ""
+
+#~ msgid "invalid value of length(x)"
+#~ msgstr "유효하지 않은 length(x)의 값입니다"
+
+#~ msgid "'invalid value of 'k'"
+#~ msgstr "'k'의 값이 유효하지 않습니다"
+
+#~ msgid "invalid value of 'k'"
+#~ msgstr "'k'의 값이 유효하지 않습니다"
+
+#~ msgid "specified both 'df' and 'cv'; will disregard the latter"
+#~ msgstr "'df'와 'cv' 모두 지정되었으므로 나중의 것은 사용되지 않을 것입니다"
 
 #~ msgid "need CRAN package 'SuppDists' for the 'inverse.gaussian' family"
 #~ msgstr "'inverse.gaussian' 페밀리는 CRAN 패키지 'SuppDists'를 필요로 합니다"
