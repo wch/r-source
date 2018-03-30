@@ -1,7 +1,7 @@
 #  File src/library/base/R/sort.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ isWrappable <- function(x)
     INCR_NA_1ST <-  2
     INCR        <-  1
     DECR        <- -1
-    DECR_NA_1st <- -2
+    DECR_NA_1ST <- -2
     UNSORTED    <-  0
     UNKNOWN     <-  NA_integer_
 
@@ -108,7 +108,7 @@ sort.int <-
         o <- order(x, na.last = na.last, decreasing = decreasing,
                    method = "radix")
         y <- x[o]
-        
+
         y <- .doWrap(y, decreasing, na.last)
         return(if (index.return) list(x = y, ix = o) else y)
     }
@@ -192,7 +192,7 @@ order <- function(..., na.last = TRUE, decreasing = FALSE,
         if (.Internal(sorted_fpass(x, !decreasing, na.last)))
             return(seq(length(x), 1))
     }
-    
+
     method <- match.arg(method)
     if(any(vapply(z, is.object, logical(1L)))) {
         z <- lapply(z, function(x) if(is.object(x)) as.vector(xtfrm(x)) else x)
@@ -241,7 +241,7 @@ sort.list <- function(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
         if (.Internal(sorted_fpass(x, !decreasing, na.last)))
             return(seq(length(x), 1))
     }
-    
+
     method <- match.arg(method)
     if (method == "auto" && (is.numeric(x) || is.factor(x) || is.logical(x)) &&
         is.integer(length(x)))
