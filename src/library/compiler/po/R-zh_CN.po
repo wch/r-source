@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -29,9 +29,6 @@ msgstr "'ns'必须是一个命名空间或命名空间的进口环境"
 
 msgid "namespace found within global environments"
 msgstr ""
-
-msgid "'ns' must be a namespace or a namespace imports environment"
-msgstr "'ns'必须是一个命名空间或命名空间的进口环境"
 
 msgid "bad assignment: %s"
 msgstr "坏的分配：%s"
@@ -66,9 +63,6 @@ msgstr "2分配出了错"
 msgid "invalid function in complex assignment"
 msgstr "复杂分配里的函数不对"
 
-msgid "is not a registered math1 function"
-msgstr ""
-
 msgid "missing arguments are not allowed"
 msgstr "不允许缺少参数"
 
@@ -91,6 +85,9 @@ msgid "more than one default provided in switch() call"
 msgstr "调用switch()时只能有一个默认值"
 
 msgid "'switch' with no alternatives"
+msgstr ""
+
+msgid "Error: compilation failed -"
 msgstr ""
 
 msgid "cannot compile a non-function"
@@ -120,6 +117,9 @@ msgstr "没有'%s'这样的文件"
 msgid "'%s' is not a valid compiler option"
 msgstr "没有'%s'这样的编译器选项"
 
+msgid "invalid environment variable value: %s==%s"
+msgstr ""
+
 msgid "invalid compiler options: optimize(==%d)<2 and jitEnabled(==%d)>2"
 msgstr ""
 
@@ -134,6 +134,9 @@ msgid "local assignment to syntactic function: "
 msgid_plural "local assignments to syntactic functions: "
 msgstr[0] "为句法函数作了本地分配："
 msgstr[1] "为句法函数作了本地分配："
+
+#~ msgid "'ns' must be a namespace or a namespace imports environment"
+#~ msgstr "'ns'必须是一个命名空间或命名空间的进口环境"
 
 #~ msgid "expected a single logical value for the S4 state flag"
 #~ msgstr "S4状态标志需要单一的逻辑值"

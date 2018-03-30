@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-01 10:28-0700\n"
+"POT-Creation-Date: 2018-03-29 07:06-0700\n"
 "PO-Revision-Date: 2011-04-02 18:24+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -88,33 +88,33 @@ msgstr "plot.new henüz çağırılmadı"
 msgid "invalid graphics state"
 msgstr "geçersiz grafik durumu"
 
-#: graphics.c:2555
+#: graphics.c:2564
 msgid "graphics device closed during call to locator or identify"
 msgstr ""
 
-#: graphics.c:2604
+#: graphics.c:2614
 msgid "No graphics device is active"
 msgstr "Hiç bir grafik aygıtı aktif değil"
 
-#: graphics.c:3063
+#: graphics.c:3073
 msgid "zero-length arrow is of indeterminate angle and so skipped"
 msgstr "belirsiz açıda sıfır uzunlukta ok, atlandı"
 
-#: graphics.c:3144
+#: graphics.c:3154
 #, c-format
 msgid "invalid par(\"bty\") = '%c'; no box() drawn"
 msgstr "geçersiz par(\"bty\") = '%c'; box() çizilmedi"
 
-#: graphics.c:3161
+#: graphics.c:3171
 msgid "invalid argument to GBox"
 msgstr "GBox a geçersiz argüman"
 
-#: graphics.c:3406
+#: graphics.c:3416
 #, fuzzy
 msgid "metric information not available for this device"
 msgstr "Bu aygıtta metrik bilgisi bulunmuyor"
 
-#: par-common.c:143
+#: par-common.c:146
 msgid "graphical parameter 'family' has a maximum length of 200 bytes"
 msgstr "grafiksel parametre 'family' 200 bayt üst sınırına sahip"
 
@@ -372,8 +372,8 @@ msgstr "'a' ve 'b' sonlu olmalıdır"
 
 #: plot.c:2925 plot.c:4051 plot.c:4055 plot.c:4058 plot.c:4078 plot.c:4082
 #: plot.c:4085 plot3d.c:1085 plot3d.c:1089 plot3d.c:1094 plot3d.c:1098
-#: plot3d.c:1102 plot3d.c:1106 stem.c:158 stem.c:159 stem.c:161 stem.c:162
-#: stem.c:208 stem.c:209
+#: plot3d.c:1102 plot3d.c:1106 stem.c:153 stem.c:154 stem.c:156 stem.c:157
+#: stem.c:203 stem.c:204
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "hatalı '%s' argümanı"
@@ -581,7 +581,7 @@ msgstr "tüm z değerleri eşit"
 msgid "all z values are NA"
 msgstr "tüm z değerleri NA"
 
-#: stem.c:155
+#: stem.c:150
 #, c-format
 msgid "long vector '%s' is not supported"
 msgstr ""

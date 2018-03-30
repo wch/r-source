@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
 "PO-Revision-Date: 2011-03-26 08:56-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -113,6 +113,9 @@ msgstr "'f' inválido"
 #, fuzzy
 msgid "'gpar' element '%s' must not be length 0"
 msgstr "elemento gpar '%s' não deve ser de comprimento 0"
+
+msgid "mixture of missing and non-missing values for %s"
+msgstr ""
 
 #, fuzzy
 msgid "'gamma' 'gpar' element is defunct"

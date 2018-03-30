@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -159,6 +159,10 @@ msgstr "文件'%s':"
 msgid "found T/F in %s"
 msgstr "%s里不能有T/F这样的值"
 
+#, fuzzy
+msgid "The package 'dir' argument must be of length 1"
+msgstr "参数'package'的长度必需为一"
+
 msgid "package name '%s' seems invalid; using directory name '%s' instead"
 msgstr "程辑包的名字'%s'好象有问题；用文件目录名'%s'替代"
 
@@ -254,11 +258,21 @@ msgstr "畸形Authors@R域."
 msgid "Cannot extract Author field from Authors@R field:"
 msgstr "无法从Authors@R 域中抽取作者域"
 
-msgid "Authors@R field gives no person with author role."
+#, fuzzy
+msgid "Authors@R field gives no person with name and roles."
 msgstr "Authors@R域没有提供有作者作用的人"
 
-msgid "Authors@R field gives persons with no valid roles:"
+#, fuzzy
+msgid "Authors@R field gives persons with no name:"
 msgstr "Authors@R领域里没有有效作用的人"
+
+#, fuzzy
+msgid "Authors@R field gives persons with no role:"
+msgstr "Authors@R领域里没有有效作用的人"
+
+#, fuzzy
+msgid "Authors@R field gives no person with name and author role"
+msgstr "Authors@R域没有提供有作者作用的人"
 
 msgid "Cannot extract Maintainer field from Authors@R field:"
 msgstr "无法从Authors@R 抽取维修人域"
@@ -522,6 +536,10 @@ msgid "Macro file %s should only contain Rd macro definitions and comments"
 msgstr ""
 
 #, fuzzy
+msgid "Rd macro package '%s' is not installed."
+msgstr "程序包%s里没有任何文件"
+
+#, fuzzy
 msgid "No Rd macros in package '%s'."
 msgstr "程序包%s里没有任何文件"
 
@@ -761,11 +779,33 @@ msgstr "改动需要特别'style'"
 msgid "The default JSS style may not be modified."
 msgstr "不能对缺省JSS式样进行修改"
 
+msgid "inst/doc"
+msgstr ""
+
+msgid "file"
+msgstr "文件"
+
+#, fuzzy
+msgid "files"
+msgstr "文件"
+
+msgid ","
+msgstr ","
+
+msgid "ignored as vignettes have been rebuilt."
+msgstr ""
+
+msgid "Run R CMD build with --no-build-vignettes to prevent rebuilding."
+msgstr ""
+
 msgid "invalid value for '--compact-vignettes', assuming %s"
 msgstr "--compact-vignettes的值不对，假定用%s "
 
 msgid "Error: cannot rename directory to %s"
 msgstr "错误：无法改变目录名字到时%s"
+
+msgid "elapsed-time limit of %g %s reached for sub-process"
+msgstr ""
 
 msgid "cannot link from %s"
 msgstr "无法打开%s联结"
@@ -802,6 +842,9 @@ msgstr "下载%s。。。"
 
 msgid "checking %s ..."
 msgstr "%s…"
+
+msgid "wrong class"
+msgstr "类别错了"
 
 msgid "non-ASCII input in a CITATION file without a declared encoding"
 msgstr "CITATION文件没有声明编码，但文件里出现了非ASCII的输入"
@@ -873,6 +916,10 @@ msgstr "打不开httpd服务器"
 msgid "cannot read index information in file '%s'"
 msgstr "无法从文件'%s'中读取索引信息"
 
+#, fuzzy
+msgid ".install_packages() exit status"
+msgstr "程辑包无效."
+
 msgid "error reading file '%s'"
 msgstr "读取文件'%s'时出了错"
 
@@ -933,6 +980,18 @@ msgstr "错误：没有在这个目录里安装的许可"
 msgid "building a fake installation is disallowed"
 msgstr "不充许伪造安装"
 
+msgid "C++17 standard requested but CXX17 is not defined"
+msgstr ""
+
+msgid "C++14 standard requested but CXX14 is not defined"
+msgstr ""
+
+msgid "C++11 standard requested but CXX11 is not defined"
+msgstr ""
+
+msgid "C++98 standard requested but CXX98 is not defined"
+msgstr ""
+
 msgid ""
 "See\n"
 "  %s\n"
@@ -956,9 +1015,6 @@ msgstr "源列里所有单元都必需要带名字"
 
 msgid "source must be an environment or a list"
 msgstr "源码要么是环境要么是列"
-
-msgid "invalid value for 'compress': should be FALSE, TRUE, 2 or 3"
-msgstr "'compress'的值不对：只能是FALSE, TRUE, 2或3其中的一个"
 
 msgid "this cannot be used for package 'base'"
 msgstr "这个程序无法用在程辑包'base'上"
@@ -1055,9 +1111,6 @@ msgstr "找不到xref表"
 msgid "cannot read xref table"
 msgstr "读不到xref表"
 
-msgid "wrong class"
-msgstr "类别错了"
-
 msgid "attempting to select less than one element"
 msgstr "至少得选择一个元素"
 
@@ -1115,29 +1168,23 @@ msgstr "不支持%s预测器%d "
 msgid "unsupported PNG filter %d"
 msgstr "不支持PNG过滤器%d"
 
-msgid "argument 'pkg' must be of length 1"
-msgstr "参数'pkg'的长度必需是一"
-
-msgid "package '%s' was not found"
-msgstr "找不到程辑包'%s'"
-
-msgid "the 'lib.loc' argument has always been unused and is deprecated now"
-msgstr ""
-
-msgid "bad operand"
-msgstr "操作数不对"
-
-msgid "Package '%s' had its dependencies reduced to a minimal set."
-msgstr "程辑包'%s'的从属被减低成最小集."
-
 msgid "argument '%s' must be a character string or connection"
 msgstr "参数'%s'必需是字符串或联结"
 
 msgid "unimplemented encoding"
 msgstr "还没有实现的编码"
 
+msgid "this requires 'objdump.exe' to be on the PATH"
+msgstr ""
+
+msgid "this requires 'nm' to be on the PATH"
+msgstr ""
+
 msgid "Found %s, possibly from %s"
 msgstr "找到了%s,可能是从%s来的"
+
+msgid "no native symbols were extracted"
+msgstr ""
 
 msgid "testing '%s' failed"
 msgstr "试用'%s'失败了"
@@ -1148,11 +1195,18 @@ msgstr "试验程序包%s的范例"
 msgid "comparing %s to %s ..."
 msgstr "比较%s和%s"
 
-msgid "OK"
-msgstr "好"
+#, fuzzy
+msgid "ERROR"
+msgstr "错误："
+
+msgid "NOTE"
+msgstr ""
 
 msgid "results differ from reference results"
 msgstr "结果与参考结果不一样"
+
+msgid "OK"
+msgstr "好"
 
 msgid "no examples found for package %s"
 msgstr "程序包%s没有示例"
@@ -1180,6 +1234,25 @@ msgstr ""
 
 msgid "running tests of random deviate generation -- fails occasionally"
 msgstr "执行随机偏离检验--偶尔会失败"
+
+#, fuzzy
+msgid "unknown header specification"
+msgstr "非标准执照规格"
+
+msgid "argument 'pkg' must be of length 1"
+msgstr "参数'pkg'的长度必需是一"
+
+msgid "package '%s' was not found"
+msgstr "找不到程辑包'%s'"
+
+msgid "the 'lib.loc' argument has always been unused and is deprecated now"
+msgstr ""
+
+msgid "bad operand"
+msgstr "操作数不对"
+
+msgid "Package '%s' had its dependencies reduced to a minimal set."
+msgstr "程辑包'%s'的从属被减低成最小集."
 
 msgid "R CMD build failed"
 msgstr "R CMD build失败"
@@ -1233,7 +1306,8 @@ msgstr "带空行"
 msgid "Unknown encoding with non-ASCII data: converting to ASCII"
 msgstr "没有这样带非ASCII数据的编码: 转换为ASCII "
 
-msgid "cannot source package code"
+#, fuzzy
+msgid "cannot source package code:"
 msgstr "无法读取程辑包源编码"
 
 msgid "Call sequence:"
@@ -1352,6 +1426,11 @@ msgid_plural "unable to re-encode %s lines %s"
 msgstr[0] "无法重新编码%s行%s"
 
 #, fuzzy
+msgid " file\n"
+msgid_plural " files\n"
+msgstr[0] "文件"
+
+#, fuzzy
 msgid "Required field missing or empty:"
 msgid_plural "Required fields missing or empty:"
 msgstr[0] "所需要的域缺少:"
@@ -1368,8 +1447,12 @@ msgid "%d of the package tests failed"
 msgid_plural "%d of the package tests failed"
 msgstr[0] ""
 
-#~ msgid ","
-#~ msgstr ","
+msgid "Corresponding BibTeX entry:"
+msgid_plural "Corresponding BibTeX entries:"
+msgstr[0] ""
+
+#~ msgid "invalid value for 'compress': should be FALSE, TRUE, 2 or 3"
+#~ msgstr "'compress'的值不对：只能是FALSE, TRUE, 2或3其中的一个"
 
 #~ msgid "installing dependencies %s"
 #~ msgstr "安装依赖关系%s"
@@ -1549,10 +1632,6 @@ msgstr[0] ""
 #~ msgid "packageStartupMessage"
 #~ msgstr "packageStartupMessage"
 
-#, fuzzy
-#~ msgid "installed.packages"
-#~ msgstr "程辑包无效."
-
 #~ msgid "Good practice"
 #~ msgstr "良好实践"
 
@@ -1572,9 +1651,6 @@ msgstr[0] ""
 #~ msgid "demo/"
 #~ msgstr "demo/"
 
-#~ msgid "file"
-#~ msgstr "文件"
-
 #~ msgid "ssname"
 #~ msgstr "ssname"
 
@@ -1590,9 +1666,6 @@ msgstr[0] ""
 
 #~ msgid "Unrecognized search field:"
 #~ msgstr "无法识别这个搜索字段："
-
-#~ msgid "ERROR:"
-#~ msgstr "错误："
 
 #~ msgid "running 'zip' failed"
 #~ msgstr "调用'zip'失败"

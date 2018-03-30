@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
 "PO-Revision-Date: 2015-03-27 15:15+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -91,6 +91,19 @@ msgstr " 'strip.white' オプションの値は小文字でなければなりま
 
 msgid "elements of 'what' after the first will be ignored"
 msgstr " 'what' の要素の最初のもの以降は無視されます "
+
+msgid "Yes"
+msgstr ""
+
+msgid "No"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+#, fuzzy
+msgid "Unrecognized response"
+msgstr " 認識不能な特殊データ値です "
 
 msgid "No suitable spell-checker program found"
 msgstr " 適切なスペルチェックプログラムが見つかりません "
@@ -182,6 +195,10 @@ msgstr " 添え字が範囲を超えています "
 
 msgid "%s should be one of %s"
 msgstr " %s は %s のどれかである必要があります "
+
+#, fuzzy
+msgid "Argument '%s' is deprecated; rather set '%s' instead."
+msgstr " 引数 'namespace' は廃止される予定です。 "
 
 msgid "A BibTeX entry for LaTeX users is"
 msgstr " LaTeX ユーザのための BibTeX エントリーは "
@@ -427,6 +444,12 @@ msgstr " %s の作成に失敗しました "
 msgid "Saving help page to %s"
 msgstr " ヘルプページを %s に保存しています "
 
+msgid "Cancelled by user"
+msgstr ""
+
+msgid "Unable to connect to CRAN to check R version."
+msgstr ""
+
 msgid "argument %s must be a single character string"
 msgstr " 引数 %s は単一の文字列でなければなりません "
 
@@ -507,6 +530,9 @@ msgid "DESCRIPTION file of package '%s' is missing or broken"
 msgstr ""
 " パッケージ '%s' に対する DESCRIPTION ファイルは存在しないか壊れています "
 
+msgid "Invalid \"Built\":"
+msgstr ""
+
 msgid "cannot update HTML package index"
 msgstr " HTML パッケージ索引を更新出来ません "
 
@@ -519,8 +545,17 @@ msgstr " menu() は対話的にしか使用できません "
 msgid "Enter an item from the menu, or 0 to exit"
 msgstr " メニューから項目を入力するか、0 を入力して終了して下さい "
 
+msgid "%d errors caught in %s.  The error messages and their frequencies are"
+msgstr ""
+
 msgid "invalid query"
 msgstr " 不正な問い合わせ "
+
+msgid "For SI units, specify 'standard = \"SI\"'"
+msgstr ""
+
+msgid "Unit \"%s\" is not part of standard \"%s\""
+msgstr ""
 
 msgid "'%s' is a formal generic function; S3 methods will not likely be found"
 msgstr " '%s' は形式的な総称的関数です; S3 メソッドは見付かりそうもありません "
@@ -690,8 +725,24 @@ msgstr " 如何なるパッケージも指定されませんでした "
 msgid "'lib = \"%s\"' is not writable"
 msgstr " 'lib = \"%s\"' は書き込み可能ではありません "
 
+#, fuzzy
+msgid "Would you like to use a personal library instead?"
+msgstr ""
+" パッケージをインストールするために個人的なライブラリ \n"
+" '%s' \n"
+" を作りたいのですか？ "
+
 msgid "unable to install packages"
 msgstr " パッケージをインストール出来ませんでした "
+
+msgid ""
+"Would you like to create a personal library\n"
+"%s\n"
+"to install packages into?"
+msgstr ""
+" パッケージをインストールするために個人的なライブラリ \n"
+" '%s' \n"
+" を作りたいのですか？ "
 
 msgid "unable to create %s"
 msgstr " %s を生成できませんでした "
@@ -702,8 +753,8 @@ msgstr " 'pkgs'から 'repos = NULL' を推測 "
 msgid "unable to create temporary directory %s"
 msgstr " 一時的ディレクトリ %s を作ることが出来ません "
 
-msgid ""
-"type == \"both\" can only be used on Windows or a CRAN build for Mac OS X"
+#, fuzzy
+msgid "type == \"both\" can only be used on Windows or a CRAN build for macOS"
 msgstr ""
 " type == \"both\" はWindows か Mac OS X に対する CRAN build に対してだけ使え"
 "ます "
@@ -711,17 +762,16 @@ msgstr ""
 msgid "type == \"both\" cannot be used with 'repos = NULL'"
 msgstr " type == \"both\" は 'repos = NULL' の時は使用出来ません "
 
-msgid "Do you want to attempt to install these from sources?"
-msgstr " ソースファイルからのインストールを試みますか？ "
-
 msgid "source repository is unavailable to check versions"
 msgstr " バージョン確認のためのソースリポジトリが利用できません "
 
-msgid "cannot install MacOS X binary packages on Windows"
+#, fuzzy
+msgid "cannot install macOS binary packages on Windows"
 msgstr ""
 " MacOS X バイナリのパッケージを Windows 上にインストールすることはできません "
 
-msgid "cannot install MacOS X binary packages on this platform"
+#, fuzzy
+msgid "cannot install macOS binary packages on this platform"
 msgstr ""
 " MacOS X バイナリのパッケージをこのプラットフォームにインストールすることはで"
 "きません "
@@ -750,6 +800,9 @@ msgstr " foundpkgs: %s "
 
 msgid "files: %s"
 msgstr " ファイル：%s "
+
+msgid "timeouts for parallel installs require the 'timeout' command"
+msgstr ""
 
 msgid ""
 "installation of one or more packages failed,\n"
@@ -960,6 +1013,9 @@ msgstr " options(\"str\") の中に不正な要素があります: %s "
 msgid "'str.default': 'le' is NA, so taken as 0"
 msgstr " 'str.default': 'le' が NA です、'le' を 0 として扱います "
 
+msgid "'nchar.max = %d' is too small"
+msgstr ""
+
 msgid "'object' does not have valid levels()"
 msgstr " 'object' は有効な levels() を持ちません "
 
@@ -967,7 +1023,7 @@ msgid "'digits' and 'digits.d' are both specified and the latter is not used"
 msgstr ""
 " 'digits' と 'digits.d' の両方が指定されています。'digits.d' は使われません "
 
-msgid "number of matches does not always match ncol(proto)"
+msgid "The number of captures in 'pattern' != 'length(proto)'"
 msgstr ""
 
 msgid "no lines found in %s"
@@ -1110,13 +1166,22 @@ msgstr " 'url' は長さ1の文字ベクトルでなければなりません "
 msgid "'destfile' must be a length-one character vector"
 msgstr " 'destfile' は長さ1の文字ベクトルでなければなりません "
 
+#, fuzzy
+msgid "'wget' call had nonzero exit status"
+msgstr " ダウンロードはゼロ以外の終了状態を持ちました "
+
+#, fuzzy
+msgid "'curl' call had nonzero exit status"
+msgstr " ダウンロードはゼロ以外の終了状態を持ちました "
+
 msgid "download had nonzero exit status"
 msgstr " ダウンロードはゼロ以外の終了状態を持ちました "
 
 msgid "'tar' returned non-zero exit code %d"
 msgstr " 'tar' がゼロでない終了コード %d を返しました "
 
-msgid "file %s is not an OS X binary package"
+#, fuzzy
+msgid "file %s is not a macOS binary package"
 msgstr " ファイル %s は OS X 用バイナリパッケージではありません "
 
 msgid "package %s successfully unpacked and MD5 sums checked"
@@ -1199,6 +1264,10 @@ msgstr[0] " 列 %s からクラスが切り捨てられたクラス "
 msgid "matched %d object."
 msgid_plural "matched %d objects."
 msgstr[0] " %d 個のオブジェクトがマッチしました "
+
+msgid "%d error caught in %s: %s"
+msgid_plural "%d times caught the same error in %s: %s"
+msgstr[0] ""
 
 msgid "object '%s' not found"
 msgid_plural "objects '%s' not found"
@@ -1295,6 +1364,9 @@ msgstr[0] " 不正なローマ数字です: %s "
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] " パッケージ %s は使用中のため、インストールされません "
+
+#~ msgid "Do you want to attempt to install these from sources?"
+#~ msgstr " ソースファイルからのインストールを試みますか？ "
 
 #~ msgid "cannot choose a BioC mirror non-interactively"
 #~ msgstr " BioC ミラーの選択は対話的にしかできません "
@@ -1440,9 +1512,6 @@ msgstr[0] " パッケージ %s は使用中のため、インストールされ�
 #~ msgid "From R 2.14.0 on, every package gets a NAMESPACE."
 #~ msgstr "R 2.14.0以降、すべてのパッケージは名前空間を持つ必要があります。 "
 
-#~ msgid "Argument 'namespace' is deprecated."
-#~ msgstr " 引数 'namespace' は廃止される予定です。 "
-
 #~ msgid "Creating NAMESPACE ..."
 #~ msgstr " NAMESPACE を作成中 ... "
 
@@ -1472,15 +1541,6 @@ msgstr[0] " パッケージ %s は使用中のため、インストールされ�
 
 #~ msgid "Further steps are described in '%s'."
 #~ msgstr " これ以上のステップが '%s' 中に説明されています "
-
-#~ msgid ""
-#~ "Would you like to create a personal library\n"
-#~ "%s\n"
-#~ "to install packages into?"
-#~ msgstr ""
-#~ " パッケージをインストールするために個人的なライブラリ \n"
-#~ " '%s' \n"
-#~ " を作りたいのですか？ "
 
 #~ msgid "Postscript offline help is deprecated"
 #~ msgstr "Postscript のオフラインヘルプは廃止されました  "

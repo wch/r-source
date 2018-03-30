@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.14.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-09-21 07:12\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
 "PO-Revision-Date: 2013-03-18 22:08+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -18,7 +18,8 @@ msgstr ""
 "Plural-Forms: nplurals=2;plural=(n > 1);\n"
 "X-Generator: Poedit 1.5.5\n"
 
-msgid "invalid value of 'seed'"
+#, fuzzy
+msgid "invalid value of %s"
 msgstr "valeur incorrecte pour 'seed'"
 
 msgid "need at least one argument"
@@ -78,8 +79,14 @@ msgstr "'what' doit être une chaine de caractères ou un vecteur 'raw'"
 msgid "'mc.cores' must be >= 1"
 msgstr "'mc.cores' doit être >= 1"
 
+msgid "affinity.list and X must have the same length"
+msgstr ""
+
 msgid "%d function calls resulted in an error"
 msgstr "les appels de fonction %d ont produit une erreur"
+
+msgid "'mc.preschedule' must be false if 'affinity.list' is used"
+msgstr ""
 
 msgid "all scheduled cores encountered errors in user code"
 msgstr ""

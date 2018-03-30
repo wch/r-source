@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -267,10 +267,15 @@ msgstr "没有非NA数据点"
 msgid "'approx' requires n >= 1"
 msgstr "'approx'需要n大于等于一"
 
+#, fuzzy
+msgid "NAs in 'x' must be the same row-wise"
+msgstr "'x'和'g'的长度必需相同"
+
 msgid "'order.max' must be >= 1"
 msgstr "'order.max'必需大于等于一"
 
-msgid "'order.max' must be < 'n.used'"
+#, fuzzy
+msgid "'order.max' must be < 'n.obs'"
 msgstr "'order.max'必需小于'n.used'"
 
 msgid "zero-variance series"
@@ -290,6 +295,9 @@ msgstr "MLE只为单变量序列实现"
 
 msgid "'order.max' must be >= 0"
 msgstr "'order.max'必需大于等于零"
+
+msgid "'order.max' must be < 'n.used'"
+msgstr "'order.max'必需小于'n.used'"
 
 msgid "'order' must be a non-negative numeric vector of length 3"
 msgstr "'order'必需是长度为三的非负数值矢量"
@@ -474,7 +482,8 @@ msgstr ""
 msgid "distances must be result of 'dist' or a square matrix"
 msgstr "距离必需是'dist'计算出结果或是正方形矩阵"
 
-msgid "invalid value of 'n'"
+#, fuzzy
+msgid "invalid value of %s"
 msgstr "'n'的值不对"
 
 msgid "'k' must be in {1, 2, ..  n - 1}"
@@ -685,9 +694,6 @@ msgstr "参数'x'必需是数值"
 
 msgid "'x' contains missing values"
 msgstr "'x'内含遺漏值"
-
-msgid "invalid value of length(x)"
-msgstr "length(x)的值不对"
 
 msgid "'x' and 'weights' have unequal length"
 msgstr "'x'和'weights'的长度必需相同"
@@ -940,6 +946,9 @@ msgstr "至少需要多于两个非零行边"
 msgid "need 2 or more non-zero column marginals"
 msgstr "至少需要多于两个非零列边"
 
+msgid "names(hybridPars) should be NULL or be identical to the default's"
+msgstr ""
+
 msgid "'hybrid' is ignored for a 2 x 2 table"
 msgstr "'hybrid'对2x2的表无用"
 
@@ -1058,6 +1067,9 @@ msgstr "观察量不含信息，于迭代%d"
 
 msgid "non-finite coefficients at iteration %d"
 msgstr "迭代%d时出现了无限大的係數值"
+
+msgid "singular fit encountered"
+msgstr "遇到了奇异拟合"
 
 msgid ""
 "no valid set of coefficients has been found: please supply starting values"
@@ -1226,9 +1238,6 @@ msgstr "初始中心的值有些是相同的"
 msgid "more cluster centers than data points"
 msgstr "群集中心的数目要比数据点数目多"
 
-msgid "'invalid value of 'k'"
-msgstr "参数'k'不对"
-
 msgid "'iter.max' must be positive"
 msgstr "'iter.max'必需是正数"
 
@@ -1281,9 +1290,6 @@ msgstr "没有(非NA)案例可用"
 msgid "incompatible dimensions"
 msgstr "维度不相配"
 
-msgid "singular fit encountered"
-msgstr "遇到了奇异拟合"
-
 msgid "missing or negative weights not allowed"
 msgstr "权数不允许是遺漏值或负值"
 
@@ -1306,6 +1312,10 @@ msgid ""
 msgstr ""
 "lm对象的'qr'组件不对。\n"
 " 其秩零，要么不应该调用lm(.., qr=FALSE)."
+
+#, fuzzy
+msgid "simulate() is not yet implemented for multivariate lm()"
+msgstr "'se.fit'没有为多变量的模型实现"
 
 msgid "family '%s' not implemented"
 msgstr "分布族'%s'还没有实现"
@@ -1786,6 +1796,15 @@ msgstr "'sig.level'必需是在[0, 1] 里的数值"
 msgid "exactly one of 'n', 'p1', 'p2', 'power', and 'sig.level' must be NULL"
 msgstr "'n', 'p1', 'p2', 'power',和'sig.level'之中只能有一个取NULL值"
 
+msgid "No p1 in in [0, p2] can be found to achieve the desired power"
+msgstr ""
+
+msgid "No p2 in in [p1, 1] can be found to achieve the desired power"
+msgstr ""
+
+msgid "No significance level [0, 1] can be found to achieve the desired power"
+msgstr ""
+
 msgid ""
 "exactly one of 'groups', 'n', 'between.var', 'within.var', 'power', and 'sig."
 "level' must be NULL"
@@ -1876,6 +1895,9 @@ msgstr "y是空的或只含NA"
 msgid "'formula' missing"
 msgstr "没有'formula'"
 
+msgid "'type' must be 1 or 3 for ordered factors"
+msgstr ""
+
 msgid "factors are not allowed"
 msgstr "因子不适用于此"
 
@@ -1897,7 +1919,12 @@ msgstr "参数'c'不对"
 msgid "arguments 'r' and 'c' must have the same sums"
 msgstr "参数'r'和'c'的和必需是一样的"
 
-msgid "'relevel' only for factors"
+#, fuzzy
+msgid "'relevel' only for (unordered) factors"
+msgstr "'relevel'只适用于因子"
+
+#, fuzzy
+msgid "'relevel' only for unordered factors"
 msgstr "'relevel'只适用于因子"
 
 msgid "'ref' must be of length one"
@@ -1940,9 +1967,6 @@ msgid ""
 "length of 'varying' must be the product of length of 'v.names' and length of "
 "'times'"
 msgstr "'varying'的长度必需是'v.names'和'times'长度的乘積"
-
-msgid "invalid value of 'k'"
-msgstr "参数'k'不对"
 
 msgid "'k' must be positive"
 msgstr "'k'必需是正数"
@@ -2001,6 +2025,10 @@ msgstr "至少有一些权数应该是正的"
 msgid "'tol' must be strictly positive and finite"
 msgstr "'tol'必需是有限的正数"
 
+#, fuzzy
+msgid "invalid 'keep.stuff'"
+msgstr "'method'不对"
+
 msgid "need at least four unique 'x' values"
 msgstr "至少需要四个相互不同的'x'值"
 
@@ -2009,6 +2037,17 @@ msgstr "当'df'有定义时'cv'不能是NA"
 
 msgid "cross-validation with non-unique 'x' values seems doubtful"
 msgstr "用有重复的'x'来做交叉验证好象不太对"
+
+#, fuzzy
+msgid "Numeric 'all.knots' must be strictly increasing"
+msgstr "'x'必需*严格*增加(非NA)"
+
+#, fuzzy
+msgid "'all.knots' is vector of knots; 'nknots' specification is disregarded"
+msgstr "'all.knots'的值为TRUE；因此'nknots'就略过不用"
+
+msgid "numeric 'all.knots' must cover [0,1] (= the transformed data-range)"
+msgstr ""
 
 msgid "'all.knots' is TRUE; 'nknots' specification is disregarded"
 msgstr "'all.knots'的值为TRUE；因此'nknots'就略过不用"
@@ -2022,13 +2061,14 @@ msgstr "'nknots'必需至少为一"
 msgid "cannot use more inner knots than unique 'x' values"
 msgstr "内部结点数止比相互不同的'x'数目要多"
 
+msgid "must not specify both 'spar' and 'lambda'"
+msgstr ""
+
 msgid "'spar' must be of length 1"
 msgstr "'spar'的长度必需是一"
 
-msgid "specified both 'df' and 'cv'; will disregard the latter"
-msgstr "'df'和'cv'都有设定；后者略过不用"
-
-msgid "you must supply 1 < df <= n,  n = #{unique x} ="
+#, fuzzy
+msgid "not using invalid df; must have 1 < df <= n := #{unique x} ="
 msgstr "你必需提供1 < df <= n,  n = #{unique x} ="
 
 msgid "NA lev[]; probably smoothing parameter 'spar' way too large!"
@@ -2046,6 +2086,9 @@ msgstr "还没有实现type=\"partial\"的算法"
 msgid "not a valid \"smooth.spline\" object"
 msgstr " \"smooth.spline\"对象不对"
 
+msgid "'span' must be between 0 and 1."
+msgstr "'span'必需在零和一之间。"
+
 msgid "'y' must be numeric vector"
 msgstr "'y'必需是数值矢量"
 
@@ -2054,9 +2097,6 @@ msgstr " 'x'和'y'里的观察量数目必需相等。"
 
 msgid "number of weights must match number of observations."
 msgstr "权数数目必需和观察量数目相同。"
-
-msgid "'span' must be between 0 and 1."
-msgstr "'span'必需在零和一之间。"
 
 msgid "'x' must be between 0 and 1 for periodic smooth"
 msgstr "做周期平滑时'x'必需在零和一之间"
@@ -2286,7 +2326,9 @@ msgstr "(有限)'x'观察量数目不够"
 msgid "requested conf.level not achievable"
 msgstr "无法达到所要求的conf.level"
 
-msgid "cannot compute confidence interval when all observations are tied"
+#, fuzzy
+msgid ""
+"cannot compute confidence interval when all observations are zero or tied"
 msgstr "所有观察数据值都是一样的话无法計算精確的置信区间"
 
 msgid "cannot compute exact confidence interval with ties"
@@ -2300,6 +2342,9 @@ msgstr "有零时无法計算精確的置信区间"
 
 msgid "Requested conf.level not achievable"
 msgstr "无法达到所要求的conf.level"
+
+msgid "cannot compute confidence interval when all observations are tied"
+msgstr "所有观察数据值都是一样的话无法計算精確的置信区间"
 
 msgid "must supply either 'formula' or 'data'"
 msgstr "至少要提供'formula'和'data'中间的一个"
@@ -2465,6 +2510,18 @@ msgstr[0] "删除了含NA, NaN或Inf的%d个观察量"
 msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] "'start.innov'太短了，需要%d个点"
+
+#~ msgid "invalid value of length(x)"
+#~ msgstr "length(x)的值不对"
+
+#~ msgid "'invalid value of 'k'"
+#~ msgstr "参数'k'不对"
+
+#~ msgid "invalid value of 'k'"
+#~ msgstr "参数'k'不对"
+
+#~ msgid "specified both 'df' and 'cv'; will disregard the latter"
+#~ msgstr "'df'和'cv'都有设定；后者略过不用"
 
 #~ msgid "a limit is missing"
 #~ msgstr "極限有遺漏"
@@ -2662,9 +2719,6 @@ msgstr[0] "'start.innov'太短了，需要%d个点"
 
 #~ msgid "invalid 'method': %s"
 #~ msgstr "'method'有错: %s"
-
-#~ msgid "invalid 'method'"
-#~ msgstr "'method'不对"
 
 #~ msgid "'newdata' does not contain the variables needed"
 #~ msgstr "'newdata'不包含需要的变量"

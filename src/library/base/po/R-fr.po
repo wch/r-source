@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
 "PO-Revision-Date: 2014-03-17 10:41+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -103,12 +103,10 @@ msgstr "'dim' est trop large pour un tableau"
 msgid "incorrect value for 'MARGIN'"
 msgstr "valeur incorrecte pour 'MARGIN'"
 
-msgid "*** 'pos=1' is not possible; setting 'pos=2' for now."
+#, fuzzy
+msgid "'pos=1' is not possible and has been warned about for years"
 msgstr ""
 "*** 'pos=1' n'est pas possible ; utilisation de 'pos=2' pour le moment."
-
-msgid "*** Note that 'pos=1' will give an error in the future"
-msgstr "*** Notez que 'pos=1' engendrera une erreur à l'avenir"
 
 msgid "file '%s' not found"
 msgstr "fichier '%s' introuvable"
@@ -217,6 +215,10 @@ msgstr "les longueurs de 'breaks' et 'labels' diffèrent"
 msgid "invalid 'row.names' length"
 msgstr "longueur de 'row.names' incorrecte"
 
+#, fuzzy
+msgid "invalid 'make.names'"
+msgstr "nom de package incorrect"
+
 msgid "duplicate 'row.names' are not allowed"
 msgstr "les duplications dans 'row.names' ne sont pas autorisées"
 
@@ -226,7 +228,8 @@ msgstr "les valeurs manquantes dans 'row.names' ne sont pas autorisées"
 msgid "invalid 'dimnames' given for data frame"
 msgstr "'dimnames' incorrect pour ce tableau de données"
 
-msgid "cannot coerce class \"%s\" to a data.frame"
+#, fuzzy
+msgid "cannot coerce class %s to a data.frame"
 msgstr ""
 "impossible de convertir automatiquement la classe  \"%s\" en un tableau de "
 "données (data.frame)"
@@ -341,8 +344,12 @@ msgstr ""
 msgid "<0 rows> (or 0-length row.names)"
 msgstr "<0 lignes> (ou 'row.names' de longueur nulle)"
 
-msgid "non-numeric variable in data frame:"
+#, fuzzy
+msgid "non-numeric variable(s) in data frame:"
 msgstr "variable non numérique dans le tableau de données :"
+
+msgid ","
+msgstr ","
 
 #, fuzzy
 msgid "%s only defined for equally-sized data frames"
@@ -364,12 +371,6 @@ msgstr "'origin' doit être spécifié"
 
 msgid "do not know how to convert '%s' to class %s"
 msgstr "incapable de convertir '%s' dans la classe %s"
-
-msgid "'%s' is not a \"date\" object"
-msgstr "'%s' n'est pas un objet \"date\""
-
-msgid "'%s' is not a \"dates\" object"
-msgstr "'%s' n'est pas un objet \"dates\""
 
 msgid "binary + is not defined for \"Date\" objects"
 msgstr "l'addition binaire (+) n'est pas définie pour les objets \"Date\""
@@ -440,6 +441,9 @@ msgstr "'origin' doit être de longueur un"
 
 msgid "'lag' and 'differences' must be integers >= 1"
 msgstr "'lag' et 'differences' doivent être des entiers >= 1"
+
+msgid "unable to deduce timezone name from"
+msgstr ""
 
 msgid "wrong class"
 msgstr "mauvaise classe"
@@ -667,6 +671,14 @@ msgstr "utilisation du premier élément de 'value' de type \"expression\""
 msgid "class of 'x' was discarded"
 msgstr "la classe de 'x' est éliminée"
 
+#, fuzzy
+msgid "'flag' must be a string, i.e., of length 1"
+msgstr "'arg' doit être de longueur 1"
+
+#, fuzzy
+msgid "'flag' should contain only characters from [0+- #'I]"
+msgstr "'flag' ne peut contenir que des '0+- #'"
+
 msgid "'mode' must be \"double\" (\"real\"), \"integer\" or \"character\""
 msgstr ""
 "'mode' doit être un de \"double\" (\"real\"), \"integer\" ou \"character\""
@@ -681,9 +693,6 @@ msgstr ""
 
 msgid "'digits' reduced to %d"
 msgstr "'digits' réduit à %d"
-
-msgid "'flag' can contain only '0+- #'"
-msgstr "'flag' ne peut contenir que des '0+- #'"
 
 msgid "corrupt data frame: columns will be truncated or padded with NAs"
 msgstr ""
@@ -779,31 +788,6 @@ msgstr "le package %s a été compilé pour %s"
 msgid "package %s is not installed for 'arch = %s'"
 msgstr "le package %s n'a pas été installé pour 'arch = %s'"
 
-msgid ""
-"package %s has a license that you need to accept in an interactive session"
-msgstr ""
-"le package %s a une licence que vous devez accepter dans une session "
-"interactive"
-
-msgid "package %s has a license that you need to accept after viewing"
-msgstr "Le package %s a une licence que vous devez accepter après l'avoir lue"
-
-#, fuzzy
-msgid "package %s has a license that you need to accept:"
-msgstr "Le package %s a une licence que vous devez accepter après l'avoir lue"
-
-#, fuzzy
-msgid "according to the DESCRIPTION file it is"
-msgstr ""
-"Le package %s a une licence que vous devez accepter :\n"
-"d'après le fichier DESCRIPTION, il s'agit de"
-
-msgid "%s"
-msgstr ""
-
-msgid "license for package %s not accepted"
-msgstr "La licence du package %s n'est pas acceptée"
-
 msgid "Attaching package: %s"
 msgstr "Attachement du package : %s"
 
@@ -829,10 +813,15 @@ msgstr ""
 "%s n'est pas trouvé dans le chemin de recherche, utilisation de pos = 2"
 
 #, fuzzy
-msgid "Package %s version %s cannot be unloaded"
+msgid ""
+"Package %s version %s cannot be unloaded:\n"
+" %s"
 msgstr "la package %s n'est pas chargé"
 
-msgid "package or namespace load failed for %s"
+#, fuzzy
+msgid ""
+"package or namespace load failed for %s%s:\n"
+" %s"
 msgstr "le chargement du package ou de l'espace de noms a échoué pour %s"
 
 msgid "package %s does not have a namespace and should be re-installed"
@@ -898,9 +887,10 @@ msgstr "Le chargement a nécessité le package : %s"
 msgid "none of the packages are loaded"
 msgstr "aucun des packages n'est chargé"
 
+#, fuzzy
 msgid ""
-"package %s found more than once,\n"
-"using the one found in %s"
+"package %s found more than once, using the first from\n"
+"  %s"
 msgstr ""
 "le package %s est trouvé en plusieurs exemplaires,\n"
 "utilisation de celui trouvé dans %s"
@@ -987,9 +977,6 @@ msgstr ""
 
 msgid "may not have argument(s) named"
 msgstr ""
-
-msgid ","
-msgstr ","
 
 msgid "'arg' must be NULL or a character vector"
 msgstr "'arg' doit être NULL ou une chaîne de caractères"
@@ -1120,6 +1107,36 @@ msgstr "le package %s n'a pas d'espace de noms"
 msgid "namespace %s %s is being loaded, but %s %s is required"
 msgstr "l'espace de noms %s %s est en train de charger, mais %s %s est requis"
 
+msgid ""
+"package %s has a license that you need to accept in an interactive session"
+msgstr ""
+"le package %s a une licence que vous devez accepter dans une session "
+"interactive"
+
+msgid "package %s has a license that you need to accept after viewing"
+msgstr "Le package %s a une licence que vous devez accepter après l'avoir lue"
+
+#, fuzzy
+msgid "package %s has a license that you need to accept:"
+msgstr "Le package %s a une licence que vous devez accepter après l'avoir lue"
+
+#, fuzzy
+msgid "according to the DESCRIPTION file it is"
+msgstr ""
+"Le package %s a une licence que vous devez accepter :\n"
+"d'après le fichier DESCRIPTION, il s'agit de"
+
+msgid "%s"
+msgstr ""
+
+msgid "license for package %s not accepted"
+msgstr "La licence du package %s n'est pas acceptée"
+
+msgid ""
+"package %s was installed by an R version with different internals; it needs "
+"to be reinstalled for use with this R version"
+msgstr ""
+
 msgid "unable to load R code in package %s"
 msgstr "impossible de charger le code R depuis le package %s"
 
@@ -1194,14 +1211,6 @@ msgstr ""
 msgid "replacing previous import %s by %s when loading %s"
 msgstr ""
 "remplacement de l'importation précédente par %s lors du chargement de %s"
-
-msgid "No methods found in \"%s\" for requests: %s"
-msgstr "Pas de méthodes trouvées das \"%s\" pour les requêtes : %s"
-
-msgid "requested methods not found in environment/package %s: %s"
-msgstr ""
-"des méthodes demandées sont introuvables dans l'environnement / le package "
-"%s : %s"
 
 #, fuzzy
 msgid ""
@@ -1340,8 +1349,9 @@ msgstr "la longueur de 'scale' doit être égale au nombre de colonnes de 'x'"
 msgid "either specify 'nmax' or 'n', but not both."
 msgstr "spécifiez soit 'nmax', soit 'n', mais pas les deux à la fois"
 
-msgid "'from' cannot be NA, NaN or infinite"
-msgstr "'from' ne peut être NA, NaN ou infini"
+#, fuzzy
+msgid "'from' must be a finite number"
+msgstr "'from' doit être un objet \"Date\""
 
 msgid "argument 'length.out' must be of length 1"
 msgstr "l'argument 'length.out' doit être de longueur 1"
@@ -1349,10 +1359,12 @@ msgstr "l'argument 'length.out' doit être de longueur 1"
 msgid "first element used of 'length.out' argument"
 msgstr "seul le premier élément de 'length.out' est utilisé"
 
-msgid "'to' cannot be NA, NaN or infinite"
-msgstr "'to' ne peut être NA, NaN ou infini"
+#, fuzzy
+msgid "'to' must be a finite number"
+msgstr "'to' doit être un objet \"Date\""
 
-msgid "invalid (to - from)/by in seq(.)"
+#, fuzzy
+msgid "invalid '(to - from)/by'"
 msgstr "(to - from) / by incorrect dans seq(.)"
 
 msgid "wrong sign in 'by' argument"
@@ -1361,7 +1373,8 @@ msgstr "signe incorrect de l'argument 'by'"
 msgid "'by' argument is much too small"
 msgstr "l'argument 'by' est bien trop petit"
 
-msgid "length must be non-negative number"
+#, fuzzy
+msgid "'length.out' must be a non-negative number"
 msgstr "'length' doit être positif ou nul"
 
 msgid "too many arguments"
@@ -1464,6 +1477,10 @@ msgstr ""
 msgid "'chdir = TRUE' makes no sense for a connection"
 msgstr "'chdir = TRUE' n'a pas de sens pour une connection"
 
+#, fuzzy
+msgid "specify either 'file' or 'exprs' but not both"
+msgstr "spécifiez soit 'nmax', soit 'n', mais pas les deux à la fois"
+
 msgid "'%s' is not an existing file"
 msgstr "'%s' n'est pas un fichier existant"
 
@@ -1477,17 +1494,27 @@ msgstr "'x' et 'y' doivent avoir la même longueur"
 msgid "additional arguments ignored in stop()"
 msgstr "arguments supplémentaires ignorés dans stop()"
 
+msgid "Must use 'exprs' or unnamed expressions, but not both"
+msgstr ""
+
+msgid ""
+"%s and %s are not equal:\n"
+"  %s"
+msgstr ""
+
 msgid "additional arguments ignored in warning()"
 msgstr "arguments supplémentaires ignorés dans warning()"
+
+msgid ""
+"Calling 'structure(NULL, *)' is deprecated, as NULL cannot have attributes.\n"
+"  Consider 'structure(list(), *)' instead."
+msgstr ""
 
 msgid "incorrect value for 'x'"
 msgstr "valeur de 'x' incorrecte"
 
 msgid "'x' and 'y' must have the same length"
 msgstr "'x' et 'y' doivent avoir la même longueur"
-
-msgid "incorrect values of 'indent' and 'width'"
-msgstr "valeurs incorrectes de 'indent' et 'width'"
 
 msgid "probably wrong encoding in names(.) of column"
 msgstr "encodage probablement erroné dans les noms de colonnes 'names(.)'"
@@ -1500,6 +1527,9 @@ msgstr "STATS ne se recycle pas complètement le long de MARGIN"
 
 msgid "length(STATS) or dim(STATS) do not match dim(x)[MARGIN]"
 msgstr "length(STATS) ou dim(STATS) ne correspond pas à dim(x)[MARGIN]"
+
+msgid "'exclude' containing NA and 'useNA' != \"no\"' are a bit contradicting"
+msgstr ""
 
 msgid "nothing to tabulate"
 msgstr "rien à tabuler"
@@ -1527,7 +1557,8 @@ msgstr "'x' n'est pas un tableau"
 msgid "'bin' must be numeric or a factor"
 msgstr "'bin' doit être numérique ou un facteur"
 
-msgid "invalid value of 'nbins'"
+#, fuzzy
+msgid "invalid value of %s"
 msgstr "valeur incorrecte pour 'nbins'"
 
 msgid "'INDEX' is of length zero"
@@ -1551,6 +1582,9 @@ msgstr "Elimination de %s"
 
 msgid "Registering 'evaluate' as low-level callback"
 msgstr "Enregistrement de 'evaluate' comme rappel de bas niveau"
+
+msgid "Timing stopped at:"
+msgstr ""
 
 msgid "user"
 msgstr "utilisateur"
@@ -1584,6 +1618,13 @@ msgstr "%s non défini pour des objets \"numeric_version\""
 
 msgid "<0 elements>"
 msgstr "<0 éléments>"
+
+#, fuzzy
+msgid "'tags' must be a character vector of the same length as 'x'"
+msgstr "'input' doit être un vecteur de chaînes de caractères ou 'NULL'"
+
+msgid "Summary of (a total of %d) warning messages:"
+msgstr ""
 
 msgid "invalid 'digits'"
 msgstr "'digits' incorrect"
@@ -1807,6 +1848,24 @@ msgstr[1] ""
 "Des fonctions qui ne sont pas génériques S4 sont trouvées lors de "
 "l'exportation des méthodes de l'espace de noms %s : %s"
 
+#, fuzzy
+msgid "No methods found in package %s for request: %s when loading %s"
+msgid_plural "No methods found in package %s for requests: %s when loading %s"
+msgstr[0] "Pas de méthodes trouvées das \"%s\" pour les requêtes : %s"
+msgstr[1] "Pas de méthodes trouvées das \"%s\" pour les requêtes : %s"
+
+#, fuzzy
+msgid ""
+"requested method not found in environment/package %s: %s when loading %s"
+msgid_plural ""
+"requested methods not found in environment/package %s: %s when loading %s"
+msgstr[0] ""
+"des méthodes demandées sont introuvables dans l'environnement / le package "
+"%s : %s"
+msgstr[1] ""
+"des méthodes demandées sont introuvables dans l'environnement / le package "
+"%s : %s"
+
 msgid "class %s is not exported by 'namespace:%s'"
 msgid_plural "classes %s are not exported by 'namespace:%s'"
 msgstr[0] "la classe %s n'est pas exportée par 'namespace:%s'"
@@ -1847,6 +1906,24 @@ msgid_plural ""
 " extra arguments %s will be disregarded"
 msgstr[0] "l'argument supplémentaire %s sera ignoré"
 msgstr[1] "l'argument supplémentaire %s sera ignoré"
+
+#~ msgid "*** Note that 'pos=1' will give an error in the future"
+#~ msgstr "*** Notez que 'pos=1' engendrera une erreur à l'avenir"
+
+#~ msgid "'%s' is not a \"date\" object"
+#~ msgstr "'%s' n'est pas un objet \"date\""
+
+#~ msgid "'%s' is not a \"dates\" object"
+#~ msgstr "'%s' n'est pas un objet \"dates\""
+
+#~ msgid "'from' cannot be NA, NaN or infinite"
+#~ msgstr "'from' ne peut être NA, NaN ou infini"
+
+#~ msgid "'to' cannot be NA, NaN or infinite"
+#~ msgstr "'to' ne peut être NA, NaN ou infini"
+
+#~ msgid "incorrect values of 'indent' and 'width'"
+#~ msgstr "valeurs incorrectes de 'indent' et 'width'"
 
 #~ msgid "'vec' contains NAs"
 #~ msgstr "'vec' contient des valeurs manquantes (NAs)"

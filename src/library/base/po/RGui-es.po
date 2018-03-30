@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-01 10:28-0700\n"
+"POT-Creation-Date: 2018-03-29 07:06-0700\n"
 "PO-Revision-Date: 2012-03-16 15:43+0100\n"
 "Last-Translator: Dr. Pablo Emilio Verde <pabloemilio.verde@uni-duesseldorf."
 "de>\n"
@@ -19,24 +19,24 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Poedit-Language: Spanish\n"
 
-#: src/gnuwin32/console.c:1167 src/gnuwin32/console.c:1209
+#: src/gnuwin32/console.c:1170 src/gnuwin32/console.c:1212
 msgid "Not enough memory"
 msgstr "Memoria insuficiente"
 
-#: src/gnuwin32/console.c:1256 src/gnuwin32/console.c:1260
+#: src/gnuwin32/console.c:1259 src/gnuwin32/console.c:1263
 msgid "Insufficient memory: text not copied to the clipboard"
 msgstr "Memoria insuficiente: texto no copiado en el área de transferencia"
 
-#: src/gnuwin32/console.c:1296 src/extra/graphapp/clipboard.c:53
+#: src/gnuwin32/console.c:1299 src/extra/graphapp/clipboard.c:53
 #: src/extra/graphapp/clipboard.c:79
 msgid "Unable to open the clipboard"
 msgstr "No es posible abrir el área de transferencia"
 
-#: src/gnuwin32/console.c:1919
+#: src/gnuwin32/console.c:1922
 msgid "Insufficient memory. Please close the console"
 msgstr "Memoria insuficiente. Por favor cierre la consola"
 
-#: src/gnuwin32/console.c:1974 src/gnuwin32/console.c:2028
+#: src/gnuwin32/console.c:1977 src/gnuwin32/console.c:2031
 #: src/gnuwin32/preferences.c:333
 #, c-format
 msgid ""
@@ -46,23 +46,23 @@ msgstr ""
 "Fuente %s-%d-%d  no encontrada.\n"
 "Usando fuente dada por el sistema"
 
-#: src/gnuwin32/console.c:2133
+#: src/gnuwin32/console.c:2136
 msgid "Save selection to"
 msgstr "Guardar como"
 
-#: src/gnuwin32/console.c:2135
+#: src/gnuwin32/console.c:2138
 msgid "Save console contents to"
 msgstr "Guardar contenido de la consola en "
 
-#: src/gnuwin32/console.c:2234
+#: src/gnuwin32/console.c:2237
 msgid "Scrolling.\n"
 msgstr "Desplazarse.\n"
 
-#: src/gnuwin32/console.c:2235
+#: src/gnuwin32/console.c:2238
 msgid "  Keyboard: PgUp, PgDown, Ctrl+Arrows, Ctrl+Home, Ctrl+End,\n"
 msgstr "  Teclado:  PgUp, PgDown, Ctrl+Arrows, Ctrl+Home, Ctrl+End,\n"
 
-#: src/gnuwin32/console.c:2236
+#: src/gnuwin32/console.c:2239
 msgid ""
 "  Mouse: use the scrollbar(s).\n"
 "\n"
@@ -70,75 +70,75 @@ msgstr ""
 "  Mouse: use la barra de desplazamiento.\n"
 "\n"
 
-#: src/gnuwin32/console.c:2237
+#: src/gnuwin32/console.c:2240
 msgid "Editing.\n"
 msgstr "Editando.\n"
 
-#: src/gnuwin32/console.c:2238
+#: src/gnuwin32/console.c:2241
 msgid "  Moving the cursor: \n"
 msgstr " Moviendo el cursor: \n"
 
-#: src/gnuwin32/console.c:2239
+#: src/gnuwin32/console.c:2242
 msgid "     Left arrow or Ctrl+B: move backward one character;\n"
 msgstr "    Flecha izquierda or Ctrl+B: mueve un caracter para atras;\n"
 
-#: src/gnuwin32/console.c:2240
+#: src/gnuwin32/console.c:2243
 msgid "     Right arrow or Ctrl+F: move forward one character;\n"
 msgstr "     Flecha derecha o  Ctrl+F: mueve un caracter para adelante;\n"
 
-#: src/gnuwin32/console.c:2241
+#: src/gnuwin32/console.c:2244
 msgid "     Home or Ctrl+A: go to beginning of line;\n"
 msgstr "     Home o Ctrl+A: va al principio de linea;\n"
 
-#: src/gnuwin32/console.c:2242
+#: src/gnuwin32/console.c:2245
 msgid "     End or Ctrl+E: go to end of line;\n"
 msgstr "     End o Ctrl+E: va al fin de linea;\n"
 
-#: src/gnuwin32/console.c:2243
+#: src/gnuwin32/console.c:2246
 msgid "  History: Up and Down Arrows, Ctrl+P, Ctrl+N\n"
 msgstr "  Histórico: flechas arriba y abajo, Ctrl+P, Ctrl+N\n"
 
-#: src/gnuwin32/console.c:2244
+#: src/gnuwin32/console.c:2247
 msgid "  Deleting:\n"
 msgstr "  Borrando:\n"
 
-#: src/gnuwin32/console.c:2245
+#: src/gnuwin32/console.c:2248
 msgid "     Del or Ctrl+D: delete current character or selection;\n"
 msgstr "     Del o Ctrl+D: borrar caracter actual o sección;\n"
 
-#: src/gnuwin32/console.c:2246
+#: src/gnuwin32/console.c:2249
 msgid "     Backspace: delete preceding character;\n"
 msgstr "     Backspace: delete preceding character;\n"
 
-#: src/gnuwin32/console.c:2247
+#: src/gnuwin32/console.c:2250
 msgid ""
 "     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"
 msgstr ""
 "     Ctrl+Del o Ctrl+K: borra texto desde caracter actual al fin de linea.\n"
 
-#: src/gnuwin32/console.c:2248
+#: src/gnuwin32/console.c:2251
 msgid "     Ctrl+U: delete all text from current line.\n"
 msgstr "     Ctrl+U: borrar todo el texto desde la linea actual.\n"
 
-#: src/gnuwin32/console.c:2249
+#: src/gnuwin32/console.c:2252
 msgid "  Copy and paste.\n"
 msgstr "  Copiar y pegar.\n"
 
-#: src/gnuwin32/console.c:2250
+#: src/gnuwin32/console.c:2253
 msgid ""
 "     Use the mouse (with the left button held down) to mark (select) text.\n"
 msgstr ""
 "     Use el mouse (con el botón izquierdo sujetado) para marcar (selecionar) "
 "texto.\n"
 
-#: src/gnuwin32/console.c:2251
+#: src/gnuwin32/console.c:2254
 msgid ""
 "     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
 msgstr ""
 "     Use Shift+Del (o Ctrl+C) para copiar el texto selecionado para a área "
 "de transferencia\n"
 
-#: src/gnuwin32/console.c:2252
+#: src/gnuwin32/console.c:2255
 msgid ""
 "     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard "
 "(if any)  \n"
@@ -146,29 +146,29 @@ msgstr ""
 "     Shift+Ins (o Ctrl+V o Ctrl+Y) para pegar el contenido del área de "
 "transferencia (si hubiera alguno)  \n"
 
-#: src/gnuwin32/console.c:2253
+#: src/gnuwin32/console.c:2256
 msgid "     to the console, Ctrl+X first copy then paste\n"
 msgstr "     para la consola, Ctrl+X primeiro copie depues pegue\n"
 
-#: src/gnuwin32/console.c:2254
+#: src/gnuwin32/console.c:2257
 msgid "  Misc:\n"
 msgstr "  Misc:\n"
 
-#: src/gnuwin32/console.c:2255
+#: src/gnuwin32/console.c:2258
 msgid "     Ctrl+L: Clear the console.\n"
 msgstr "     Ctrl+L: Limpia la consola.\n"
 
-#: src/gnuwin32/console.c:2256
+#: src/gnuwin32/console.c:2259
 msgid "     Ctrl+O or INS: Toggle overwrite mode: initially off.\n"
 msgstr ""
 "     Ctrl+O o INS: Alterna o modo de sobre ecritura: inicialmente "
 "desactivado.\n"
 
-#: src/gnuwin32/console.c:2257
+#: src/gnuwin32/console.c:2260
 msgid "     Ctrl+T: Interchange current char with one to the left.\n"
 msgstr "     Ctrl+T: Intercambia caracter actual con uno de la izquierda.\n"
 
-#: src/gnuwin32/console.c:2258
+#: src/gnuwin32/console.c:2261
 msgid ""
 "\n"
 "Note: Console is updated only when some input is required.\n"
@@ -176,7 +176,7 @@ msgstr ""
 "\n"
 "Nota: Consola es actualizada solo cuando alguna entrada es requerida.\n"
 
-#: src/gnuwin32/console.c:2259
+#: src/gnuwin32/console.c:2262
 msgid ""
 "  Use Ctrl+W to toggle this feature off/on.\n"
 "\n"
@@ -184,7 +184,7 @@ msgstr ""
 "  Use Ctrl+W para alternar esta caracteristica prendido/apagado.\n"
 "\n"
 
-#: src/gnuwin32/console.c:2260
+#: src/gnuwin32/console.c:2263
 msgid ""
 "Use ESC to stop the interpreter.\n"
 "\n"
@@ -192,7 +192,7 @@ msgstr ""
 "Use ESC para parar el interprete.\n"
 "\n"
 
-#: src/gnuwin32/console.c:2261
+#: src/gnuwin32/console.c:2264
 msgid ""
 "TAB starts completion of the current word.\n"
 "\n"
@@ -200,11 +200,11 @@ msgstr ""
 "TAB comienza a completar la palabra.\n"
 "\n"
 
-#: src/gnuwin32/console.c:2262
+#: src/gnuwin32/console.c:2265
 msgid "Standard Windows hotkeys can be used to switch to the\n"
 msgstr "Teclas estandards de Windows pueden ser utilizadas para cambiar a\n"
 
-#: src/gnuwin32/console.c:2263
+#: src/gnuwin32/console.c:2266
 msgid "graphics device (Ctrl+Tab or Ctrl+F6 in MDI, Alt+Tab in SDI)"
 msgstr "dispositivo gráfico (Ctrl+Tab ou Ctrl+F6 en MDI, Alt+Tab en SDI)"
 
@@ -231,8 +231,8 @@ msgstr "No se puede guardar el archivo '%s"
 msgid "Save script as"
 msgstr "Guardar script como ..."
 
-#: src/gnuwin32/editor.c:379 src/gnuwin32/editor.c:696
-#: src/gnuwin32/pager.c:430 src/gnuwin32/rui.c:1076
+#: src/gnuwin32/editor.c:379 src/gnuwin32/editor.c:696 src/gnuwin32/pager.c:430
+#: src/gnuwin32/rui.c:1076
 msgid "Open script"
 msgstr "Abrir script"
 
@@ -300,9 +300,9 @@ msgstr "Deshacer"
 msgid "Cut"
 msgstr "Cortar"
 
-#: src/gnuwin32/editor.c:632 src/gnuwin32/editor.c:752
-#: src/gnuwin32/pager.c:304 src/gnuwin32/pager.c:477 src/gnuwin32/rui.c:859
-#: src/gnuwin32/rui.c:1088 src/gnuwin32/rui.c:1144
+#: src/gnuwin32/editor.c:632 src/gnuwin32/editor.c:752 src/gnuwin32/pager.c:304
+#: src/gnuwin32/pager.c:477 src/gnuwin32/rui.c:859 src/gnuwin32/rui.c:1088
+#: src/gnuwin32/rui.c:1144
 msgid "Copy"
 msgstr "Copiar"
 
@@ -315,9 +315,8 @@ msgstr "Pegar"
 msgid "Delete"
 msgstr "Borrar"
 
-#: src/gnuwin32/editor.c:636 src/gnuwin32/editor.c:758
-#: src/gnuwin32/pager.c:307 src/gnuwin32/pager.c:483 src/gnuwin32/rui.c:866
-#: src/gnuwin32/rui.c:1149
+#: src/gnuwin32/editor.c:636 src/gnuwin32/editor.c:758 src/gnuwin32/pager.c:307
+#: src/gnuwin32/pager.c:483 src/gnuwin32/rui.c:866 src/gnuwin32/rui.c:1149
 msgid "Select all"
 msgstr "Seleccionar todo"
 
@@ -418,7 +417,7 @@ msgstr "No fue posible crear una ventana de edición"
 msgid "Untitled"
 msgstr "Sin nombre"
 
-#: src/gnuwin32/extra.c:825
+#: src/gnuwin32/extra.c:844
 msgid "Select file"
 msgstr "Selecionar archivo"
 
@@ -789,7 +788,7 @@ msgstr "Listar el camino de busqueda"
 msgid "Console"
 msgstr "Consola"
 
-#: src/gnuwin32/rui.c:1251
+#: src/gnuwin32/rui.c:1248
 msgid "'mname' is limited to 1000 bytes"
 msgstr "'mname' limitado a 1000 caracteres"
 
@@ -834,7 +833,7 @@ msgstr "menu no encontrado"
 msgid "menu or item does not exist"
 msgstr "menu o item no existente"
 
-#: src/gnuwin32/system.c:446
+#: src/gnuwin32/system.c:447
 msgid "Save workspace image?"
 msgstr "Guardar imagen de área de trabajo?"
 
@@ -1056,7 +1055,7 @@ msgid "Enhanced metafiles"
 msgstr "Realzar metafiles"
 
 #: src/library/grDevices/src/devWindows.c:1007
-#: src/library/grDevices/src/devWindows.c:3445
+#: src/library/grDevices/src/devWindows.c:3455
 msgid "file path selected is too long: only 512 bytes are allowed"
 msgstr ""
 "camino de archivo seleccionado es demaciado largo: solamente 512 bytes son "
@@ -1200,15 +1199,15 @@ msgstr "Guardar como metafile..."
 msgid "Save as postscript..."
 msgstr "Guardar como postscript..."
 
-#: src/library/grDevices/src/devWindows.c:3143
+#: src/library/grDevices/src/devWindows.c:3147
 msgid "Locator is active"
 msgstr "Localizador está activo"
 
-#: src/library/grDevices/src/devWindows.c:3769
+#: src/library/grDevices/src/devWindows.c:3779
 msgid "Waiting to confirm page change..."
 msgstr "Esperando para confirmar cambio de página..."
 
-#: src/library/grDevices/src/devWindows.c:3781
+#: src/library/grDevices/src/devWindows.c:3791
 msgid "Click or hit ENTER for next page"
 msgstr "Clique con el mouse o presione ENTER para próxima página"
 

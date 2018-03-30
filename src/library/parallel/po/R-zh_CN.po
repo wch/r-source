@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-09-21 07:12\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
 "PO-Revision-Date: 2012-02-29 14:00+0000\n"
 "Last-Translator: Fei Chen <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -17,7 +17,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=0;\n"
 
-msgid "invalid value of 'seed'"
+#, fuzzy
+msgid "invalid value of %s"
 msgstr "'seed'的值不对"
 
 msgid "need at least one argument"
@@ -75,8 +76,14 @@ msgstr "'what'必须是一个字符或原始向量"
 msgid "'mc.cores' must be >= 1"
 msgstr "'mc.cores'必需>=1"
 
+msgid "affinity.list and X must have the same length"
+msgstr ""
+
 msgid "%d function calls resulted in an error"
 msgstr "%d个函数调用导致错误"
+
+msgid "'mc.preschedule' must be false if 'affinity.list' is used"
+msgstr ""
 
 msgid "all scheduled cores encountered errors in user code"
 msgstr "用户代码中所有预定的核心都出了错"

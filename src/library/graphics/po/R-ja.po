@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
 "PO-Revision-Date: 2015-03-27 14:16+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -26,6 +26,11 @@ msgstr " 'a' と 'b' は 'coef' により置き換えられます "
 
 msgid "one of 'x1' and 'y1' must be given"
 msgstr " 'x1' と 'y1' のどちらかは必要です "
+
+msgid ""
+"'length', 'angle', or 'code' greater than length 1; values after the first "
+"are ignored"
+msgstr ""
 
 msgid "'x' must be a 2-d contingency table"
 msgstr " 'x' は二元分割表でなければなりません "
@@ -111,6 +116,9 @@ msgstr " 'x' と 'y' の値は昇順であることが期待されています "
 
 msgid "no proper 'z' matrix specified"
 msgstr " 適切な 'z' 行列が指定されていません "
+
+msgid "'labels' is length zero.  Use 'drawlabels = FALSE' to suppress labels."
+msgstr ""
 
 msgid "invalid conditioning formula"
 msgstr " 条件付けのモデル式が誤っています "
@@ -199,6 +207,9 @@ msgstr " 未知の 'breaks' アルゴリズムです "
 
 msgid "invalid number of 'breaks'"
 msgstr " 'breaks' の数が無効です "
+
+msgid "'breaks = %g' is too large and set to 1e6"
+msgstr ""
 
 msgid "hist.default: pretty() error, breaks=%s"
 msgstr " hist.default: pretty() の間違いです。分割点 = %s "

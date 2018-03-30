@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
 "PO-Revision-Date: 2011-03-26 08:57-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -47,6 +47,10 @@ msgstr ""
 msgid "values of 'x' must be distinct"
 msgstr "valores de 'x' devem ser distintos"
 
+#, fuzzy
+msgid "must have at least 'ord'=%d points"
+msgstr "pelo menos os nós 'ord' devem estar presentes"
+
 msgid "'formula' must be of the form \"y ~ x\""
 msgstr "'formula' deve ser da forma \"y ~ x\""
 
@@ -73,6 +77,9 @@ msgstr "'deriv' deve estar entre 0 e %d"
 
 msgid "knot positions must be strictly increasing"
 msgstr "posições dos nós devem ser estritamente crescentes"
+
+msgid "currently implemented only for cubic splines"
+msgstr ""
 
 msgid "spline must be monotone"
 msgstr "spline deve ser monótono"

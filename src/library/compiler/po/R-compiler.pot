@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: compiler 3.4.0\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
+"Project-Id-Version: compiler 3.6.0\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,9 +20,6 @@ msgid "non-namespace found within namespace environments"
 msgstr ""
 
 msgid "namespace found within global environments"
-msgstr ""
-
-msgid "'ns' must be a namespace or a namespace imports environment"
 msgstr ""
 
 msgid "bad assignment: %s"
@@ -58,9 +55,6 @@ msgstr ""
 msgid "invalid function in complex assignment"
 msgstr ""
 
-msgid "is not a registered math1 function"
-msgstr ""
-
 msgid "missing arguments are not allowed"
 msgstr ""
 
@@ -83,6 +77,9 @@ msgid "more than one default provided in switch() call"
 msgstr ""
 
 msgid "'switch' with no alternatives"
+msgstr ""
+
+msgid "Error: compilation failed -"
 msgstr ""
 
 msgid "cannot compile a non-function"
@@ -110,6 +107,9 @@ msgid "file '%s' does not exist"
 msgstr ""
 
 msgid "'%s' is not a valid compiler option"
+msgstr ""
+
+msgid "invalid environment variable value: %s==%s"
 msgstr ""
 
 msgid "invalid compiler options: optimize(==%d)<2 and jitEnabled(==%d)>2"

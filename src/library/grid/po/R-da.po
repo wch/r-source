@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
 "PO-Revision-Date: 2012-01-29 12:58+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -111,6 +111,9 @@ msgid "invalid 'f'"
 msgstr "Ugyldig »frame«"
 
 msgid "'gpar' element '%s' must not be length 0"
+msgstr ""
+
+msgid "mixture of missing and non-missing values for %s"
 msgstr ""
 
 msgid "'gamma' 'gpar' element is defunct"

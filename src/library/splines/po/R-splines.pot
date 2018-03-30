@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: splines 3.4.0\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
+"Project-Id-Version: splines 3.6.0\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -34,6 +34,9 @@ msgstr ""
 msgid "values of 'x' must be distinct"
 msgstr ""
 
+msgid "must have at least 'ord'=%d points"
+msgstr ""
+
 msgid "'formula' must be of the form \"y ~ x\""
 msgstr ""
 
@@ -59,6 +62,9 @@ msgid "'deriv' must be between 0 and %d"
 msgstr ""
 
 msgid "knot positions must be strictly increasing"
+msgstr ""
+
+msgid "currently implemented only for cubic splines"
 msgstr ""
 
 msgid "spline must be monotone"

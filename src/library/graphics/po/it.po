@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-01 10:28-0700\n"
+"POT-Creation-Date: 2018-03-29 07:06-0700\n"
 "PO-Revision-Date: 2006-01-16 09:11+0100\n"
 "Last-Translator: Daniele Medri <daniele.medri2@unibo.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
@@ -92,35 +92,35 @@ msgstr "plot.new non è ancora stato chiamato"
 msgid "invalid graphics state"
 msgstr "stato grafico non valido"
 
-#: graphics.c:2555
+#: graphics.c:2564
 msgid "graphics device closed during call to locator or identify"
 msgstr ""
 
-#: graphics.c:2604
+#: graphics.c:2614
 msgid "No graphics device is active"
 msgstr "Nessun dispositivo grafico attivo"
 
-#: graphics.c:3063
+#: graphics.c:3073
 msgid "zero-length arrow is of indeterminate angle and so skipped"
 msgstr ""
 "frecce di lunghezza nulla hanno un angolo indeterminato e quindi saranno "
 "ignorate"
 
-#: graphics.c:3144
+#: graphics.c:3154
 #, c-format
 msgid "invalid par(\"bty\") = '%c'; no box() drawn"
 msgstr "par(\"bty\") = '%c' non valido; no disegno il box()"
 
-#: graphics.c:3161
+#: graphics.c:3171
 msgid "invalid argument to GBox"
 msgstr "argomento non valido in GBox"
 
-#: graphics.c:3406
+#: graphics.c:3416
 #, fuzzy
 msgid "metric information not available for this device"
 msgstr "'truncation' non disponibile per questa connessione"
 
-#: par-common.c:143
+#: par-common.c:146
 msgid "graphical parameter 'family' has a maximum length of 200 bytes"
 msgstr "il parametro grafico 'family' ha una lunghezza massima di 200 byte"
 
@@ -378,8 +378,8 @@ msgstr "'a' e 'b' devono essere finiti"
 
 #: plot.c:2925 plot.c:4051 plot.c:4055 plot.c:4058 plot.c:4078 plot.c:4082
 #: plot.c:4085 plot3d.c:1085 plot3d.c:1089 plot3d.c:1094 plot3d.c:1098
-#: plot3d.c:1102 plot3d.c:1106 stem.c:158 stem.c:159 stem.c:161 stem.c:162
-#: stem.c:208 stem.c:209
+#: plot3d.c:1102 plot3d.c:1106 stem.c:153 stem.c:154 stem.c:156 stem.c:157
+#: stem.c:203 stem.c:204
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "argomento '%s' non valido"
@@ -587,7 +587,7 @@ msgstr "tutti i valori di z sono uguali"
 msgid "all z values are NA"
 msgstr "tutti i valori di z sono NA"
 
-#: stem.c:155
+#: stem.c:150
 #, c-format
 msgid "long vector '%s' is not supported"
 msgstr ""

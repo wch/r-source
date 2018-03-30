@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -271,10 +271,15 @@ msgstr "sıfır NA-olmayan nokta"
 msgid "'approx' requires n >= 1"
 msgstr "'approx' n >= 1 gerektirir"
 
+#, fuzzy
+msgid "NAs in 'x' must be the same row-wise"
+msgstr "'x' ve 'g' aynı uzunluğa sahip olmalı"
+
 msgid "'order.max' must be >= 1"
 msgstr "'order.max' >= 1 olmalı"
 
-msgid "'order.max' must be < 'n.used'"
+#, fuzzy
+msgid "'order.max' must be < 'n.obs'"
 msgstr "'order.max' < 'n.used' olmalı"
 
 msgid "zero-variance series"
@@ -294,6 +299,9 @@ msgstr "MLE sadece tek değişkenli tek değişkenli seriler için tanımlı"
 
 msgid "'order.max' must be >= 0"
 msgstr "'order.max' >= 0 olmalı"
+
+msgid "'order.max' must be < 'n.used'"
+msgstr "'order.max' < 'n.used' olmalı"
 
 msgid "'order' must be a non-negative numeric vector of length 3"
 msgstr "'order' negatif olmayan 3 uzunluğunda bir sayısal vektör olmalı"
@@ -484,7 +492,7 @@ msgid "distances must be result of 'dist' or a square matrix"
 msgstr ""
 
 #, fuzzy
-msgid "invalid value of 'n'"
+msgid "invalid value of %s"
 msgstr "geçersiz argüman 'n'"
 
 msgid "'k' must be in {1, 2, ..  n - 1}"
@@ -699,9 +707,6 @@ msgstr "'x' argümanı nümerik olmalı"
 
 msgid "'x' contains missing values"
 msgstr "'x' eksik değerler içeriyor"
-
-msgid "invalid value of length(x)"
-msgstr ""
 
 msgid "'x' and 'weights' have unequal length"
 msgstr "'x' ve 'weights' eşit olmayan uzunluklara sahip"
@@ -963,6 +968,9 @@ msgstr ""
 msgid "need 2 or more non-zero column marginals"
 msgstr ""
 
+msgid "names(hybridPars) should be NULL or be identical to the default's"
+msgstr ""
+
 msgid "'hybrid' is ignored for a 2 x 2 table"
 msgstr "bir 2 x 2 tablo için 'hybrid' görmezden gelindi"
 
@@ -1084,6 +1092,9 @@ msgid "no observations informative at iteration %d"
 msgstr ""
 
 msgid "non-finite coefficients at iteration %d"
+msgstr ""
+
+msgid "singular fit encountered"
 msgstr ""
 
 msgid ""
@@ -1260,10 +1271,6 @@ msgstr ""
 msgid "more cluster centers than data points"
 msgstr ""
 
-#, fuzzy
-msgid "'invalid value of 'k'"
-msgstr "geçersiz argüman 'n'"
-
 msgid "'iter.max' must be positive"
 msgstr "'iter.max' pozitif olmalı"
 
@@ -1314,9 +1321,6 @@ msgstr ""
 msgid "incompatible dimensions"
 msgstr "uyumsuz boyutlar"
 
-msgid "singular fit encountered"
-msgstr ""
-
 msgid "missing or negative weights not allowed"
 msgstr "eksik veya negatif sıklıklara izin verilmiyor"
 
@@ -1336,6 +1340,10 @@ msgid ""
 "lm object does not have a proper 'qr' component.\n"
 " Rank zero or should not have used lm(.., qr=FALSE)."
 msgstr ""
+
+#, fuzzy
+msgid "simulate() is not yet implemented for multivariate lm()"
+msgstr "'se.fit' çok değişkenli modeller için henüz tanımlanmadı"
 
 #, fuzzy
 msgid "family '%s' not implemented"
@@ -1825,6 +1833,15 @@ msgstr "'sig.level' [0,1] aralığında bir sayı olmalı"
 msgid "exactly one of 'n', 'p1', 'p2', 'power', and 'sig.level' must be NULL"
 msgstr ""
 
+msgid "No p1 in in [0, p2] can be found to achieve the desired power"
+msgstr ""
+
+msgid "No p2 in in [p1, 1] can be found to achieve the desired power"
+msgstr ""
+
+msgid "No significance level [0, 1] can be found to achieve the desired power"
+msgstr ""
+
 msgid ""
 "exactly one of 'groups', 'n', 'between.var', 'within.var', 'power', and 'sig."
 "level' must be NULL"
@@ -1913,6 +1930,9 @@ msgstr ""
 msgid "'formula' missing"
 msgstr "'formula' eksik"
 
+msgid "'type' must be 1 or 3 for ordered factors"
+msgstr ""
+
 msgid "factors are not allowed"
 msgstr "faktörlere izin verilmiyor"
 
@@ -1934,7 +1954,10 @@ msgstr "geçersiz argüman 'c'"
 msgid "arguments 'r' and 'c' must have the same sums"
 msgstr ""
 
-msgid "'relevel' only for factors"
+msgid "'relevel' only for (unordered) factors"
+msgstr ""
+
+msgid "'relevel' only for unordered factors"
 msgstr ""
 
 msgid "'ref' must be of length one"
@@ -1978,10 +2001,6 @@ msgid ""
 "length of 'varying' must be the product of length of 'v.names' and length of "
 "'times'"
 msgstr ""
-
-#, fuzzy
-msgid "invalid value of 'k'"
-msgstr "geçersiz argüman 'n'"
 
 msgid "'k' must be positive"
 msgstr "'k' pozitif olmalı"
@@ -2046,6 +2065,10 @@ msgstr "bazı sıklıkların pozitif olması tavsiye edilir"
 msgid "'tol' must be strictly positive and finite"
 msgstr "'ratio' tek bir pozitif tamsayı olmalı"
 
+#, fuzzy
+msgid "invalid 'keep.stuff'"
+msgstr "geçersiz 'x'"
+
 msgid "need at least four unique 'x' values"
 msgstr "en az dört eşsiz 'x' değeri gerekli"
 
@@ -2053,6 +2076,17 @@ msgid "'cv' must not be NA when 'df' is specified"
 msgstr "'df' seçildiğinde 'cv' NA olmamalı"
 
 msgid "cross-validation with non-unique 'x' values seems doubtful"
+msgstr ""
+
+#, fuzzy
+msgid "Numeric 'all.knots' must be strictly increasing"
+msgstr "'ratio' tek bir pozitif tamsayı olmalı"
+
+#, fuzzy
+msgid "'all.knots' is vector of knots; 'nknots' specification is disregarded"
+msgstr "'all.knots' TRUE durumunda; 'nknots' özelliği ihmal edildi"
+
+msgid "numeric 'all.knots' must cover [0,1] (= the transformed data-range)"
 msgstr ""
 
 msgid "'all.knots' is TRUE; 'nknots' specification is disregarded"
@@ -2067,14 +2101,14 @@ msgstr "'nknots' en az 1 olmalı"
 msgid "cannot use more inner knots than unique 'x' values"
 msgstr ""
 
+msgid "must not specify both 'spar' and 'lambda'"
+msgstr ""
+
 #, fuzzy
 msgid "'spar' must be of length 1"
 msgstr "'model$order' 3 uzunluğunda olmalı"
 
-msgid "specified both 'df' and 'cv'; will disregard the latter"
-msgstr ""
-
-msgid "you must supply 1 < df <= n,  n = #{unique x} ="
+msgid "not using invalid df; must have 1 < df <= n := #{unique x} ="
 msgstr ""
 
 msgid "NA lev[]; probably smoothing parameter 'spar' way too large!"
@@ -2092,6 +2126,9 @@ msgstr "type = \"partial\" henüz tanımlanmadı"
 msgid "not a valid \"smooth.spline\" object"
 msgstr ""
 
+msgid "'span' must be between 0 and 1."
+msgstr "'span' 0 ile 1 arasında olmalı"
+
 msgid "'y' must be numeric vector"
 msgstr "'y' sayısal bir vektör olmalı"
 
@@ -2100,9 +2137,6 @@ msgstr "'x' ve 'y' deki gözlem sayıları eşleşmeli"
 
 msgid "number of weights must match number of observations."
 msgstr "sıklıkların sayısı ile gözlemlerin sayısı eşleşmeli"
-
-msgid "'span' must be between 0 and 1."
-msgstr "'span' 0 ile 1 arasında olmalı"
 
 msgid "'x' must be between 0 and 1 for periodic smooth"
 msgstr ""
@@ -2341,8 +2375,10 @@ msgstr "yetersiz (sonlu) 'x' gözlemleri"
 msgid "requested conf.level not achievable"
 msgstr "İstenen conf.level elde edilemiyor"
 
-msgid "cannot compute confidence interval when all observations are tied"
-msgstr ""
+#, fuzzy
+msgid ""
+"cannot compute confidence interval when all observations are zero or tied"
+msgstr "sıfırlarla kesin güven aralığı hesaplanamıyor"
 
 msgid "cannot compute exact confidence interval with ties"
 msgstr ""
@@ -2355,6 +2391,9 @@ msgstr "sıfırlarla kesin güven aralığı hesaplanamıyor"
 
 msgid "Requested conf.level not achievable"
 msgstr "İstenen conf.level elde edilemiyor"
+
+msgid "cannot compute confidence interval when all observations are tied"
+msgstr ""
 
 msgid "must supply either 'formula' or 'data'"
 msgstr "'formula' veya 'data' verilmeli"
@@ -2564,6 +2603,14 @@ msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] "'start.innov' çok kısa: %d nokta gerekli"
 msgstr[1] "'start.innov' çok kısa: %d nokta gerekli"
+
+#, fuzzy
+#~ msgid "'invalid value of 'k'"
+#~ msgstr "geçersiz argüman 'n'"
+
+#, fuzzy
+#~ msgid "invalid value of 'k'"
+#~ msgstr "geçersiz argüman 'n'"
 
 #~ msgid "a limit is missing"
 #~ msgstr "a sınırı eksik"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-01 10:28-0700\n"
+"POT-Creation-Date: 2018-03-29 07:06-0700\n"
 "PO-Revision-Date: 2011-11-28 22:24+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -53,81 +53,81 @@ msgstr ""
 msgid "at most one asterisk '*' is supported in each conversion specification"
 msgstr ""
 
-#: gramLatex.c:2499 gramRd.c:3933
+#: gramLatex.c:2376 gramRd.c:3898
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr ""
 
-#: gramLatex.c:2736 gramRd.c:4422 gramRd.c:4428
+#: gramLatex.c:2613 gramRd.c:4387 gramRd.c:4393
 #, fuzzy, c-format
 msgid "invalid '%s' value"
 msgstr "ugyldig argumenttype"
 
-#: gramRd.c:2591 gramRd.c:2594
+#: gramRd.c:2531 gramRd.c:2534
 #, c-format
 msgid "bad markup (extra space?) at %s:%d:%d"
 msgstr ""
 
-#: gramRd.c:3150
+#: gramRd.c:3113
 #, c-format
 msgid "Macro '%s' previously defined."
 msgstr ""
 
-#: gramRd.c:3160
+#: gramRd.c:3123
 #, c-format
 msgid "At most 4 arguments are allowed for user defined macros."
 msgstr ""
 
-#: gramRd.c:3194
+#: gramRd.c:3157
 #, c-format
 msgid "No macro definition for '%s'."
 msgstr ""
 
-#: gramRd.c:3348 gramRd.c:3352
+#: gramRd.c:3313 gramRd.c:3317
 #, c-format
 msgid "newline within quoted string at %s:%d"
 msgstr ""
 
-#: gramRd.c:3371
+#: gramRd.c:3336
 #, c-format
 msgid "unable to allocate buffer for long macro at line %d"
 msgstr ""
 
-#: gramRd.c:3401
+#: gramRd.c:3366
 msgid "macros nested too deeply: infinite recursion?"
 msgstr ""
 
-#: gramRd.c:3795
+#: gramRd.c:3760
 #, c-format
 msgid "Unable to find macro %s"
 msgstr ""
 
-#: gramRd.c:3993
+#: gramRd.c:3958
 #, c-format
 msgid "Unexpected end of input (in %c quoted string opened at %s:%d:%d)"
 msgstr ""
 
-#: gramRd.c:4435
+#: gramRd.c:4400
 msgid "cannot open the connection"
 msgstr ""
 
-#: gramRd.c:4442
+#: gramRd.c:4407
 msgid "cannot read from this connection"
 msgstr ""
 
-#: gramRd.c:4450
+#: gramRd.c:4415
 msgid "invalid Rd file"
 msgstr ""
 
-#: gramRd.c:4469
+#: gramRd.c:4434
 msgid "'deparseRd' only supports deparsing character elements"
 msgstr ""
 
-#: gramRd.c:4472
+#: gramRd.c:4437
 msgid "bad state"
 msgstr ""
 
-#: gramRd.c:4485
+#: gramRd.c:4450
 #, c-format
 msgid "bad text mode %d in 'deparseRd'"
 msgstr ""
@@ -149,7 +149,7 @@ msgstr ""
 msgid "pskill() is not supported on this platform"
 msgstr "pskill() er ikke understøttet på denne platform"
 
-#: signals.c:139
+#: signals.c:140
 msgid "psnice() is not supported on this platform"
 msgstr "psnice() er ikke understøttet på denne platform"
 

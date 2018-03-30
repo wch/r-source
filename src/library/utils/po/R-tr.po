@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -94,6 +94,18 @@ msgstr ""
 msgid "elements of 'what' after the first will be ignored"
 msgstr ""
 
+msgid "Yes"
+msgstr ""
+
+msgid "No"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+msgid "Unrecognized response"
+msgstr ""
+
 msgid "No suitable spell-checker program found"
 msgstr ""
 
@@ -175,6 +187,9 @@ msgid "subscript out of bounds"
 msgstr ""
 
 msgid "%s should be one of %s"
+msgstr ""
+
+msgid "Argument '%s' is deprecated; rather set '%s' instead."
 msgstr ""
 
 msgid "A BibTeX entry for LaTeX users is"
@@ -405,6 +420,12 @@ msgstr ""
 msgid "Saving help page to %s"
 msgstr ""
 
+msgid "Cancelled by user"
+msgstr ""
+
+msgid "Unable to connect to CRAN to check R version."
+msgstr ""
+
 msgid "argument %s must be a single character string"
 msgstr ""
 
@@ -477,6 +498,9 @@ msgstr ""
 msgid "DESCRIPTION file of package '%s' is missing or broken"
 msgstr ""
 
+msgid "Invalid \"Built\":"
+msgstr ""
+
 msgid "cannot update HTML package index"
 msgstr ""
 
@@ -489,7 +513,16 @@ msgstr ""
 msgid "Enter an item from the menu, or 0 to exit"
 msgstr ""
 
+msgid "%d errors caught in %s.  The error messages and their frequencies are"
+msgstr ""
+
 msgid "invalid query"
+msgstr ""
+
+msgid "For SI units, specify 'standard = \"SI\"'"
+msgstr ""
+
+msgid "Unit \"%s\" is not part of standard \"%s\""
 msgstr ""
 
 msgid "'%s' is a formal generic function; S3 methods will not likely be found"
@@ -645,8 +678,17 @@ msgstr ""
 msgid "'lib = \"%s\"' is not writable"
 msgstr ""
 
+msgid "Would you like to use a personal library instead?"
+msgstr ""
+
 msgid "unable to install packages"
 msgstr "paketler yüklenemedi"
+
+msgid ""
+"Would you like to create a personal library\n"
+"%s\n"
+"to install packages into?"
+msgstr ""
 
 #, fuzzy
 msgid "unable to create %s"
@@ -658,23 +700,19 @@ msgstr ""
 msgid "unable to create temporary directory %s"
 msgstr ""
 
-msgid ""
-"type == \"both\" can only be used on Windows or a CRAN build for Mac OS X"
+msgid "type == \"both\" can only be used on Windows or a CRAN build for macOS"
 msgstr ""
 
 msgid "type == \"both\" cannot be used with 'repos = NULL'"
 msgstr ""
 
-msgid "Do you want to attempt to install these from sources?"
-msgstr ""
-
 msgid "source repository is unavailable to check versions"
 msgstr ""
 
-msgid "cannot install MacOS X binary packages on Windows"
+msgid "cannot install macOS binary packages on Windows"
 msgstr ""
 
-msgid "cannot install MacOS X binary packages on this platform"
+msgid "cannot install macOS binary packages on this platform"
 msgstr ""
 
 msgid "cannot install Windows binary packages on this platform"
@@ -695,6 +733,9 @@ msgid "foundpkgs: %s"
 msgstr ""
 
 msgid "files: %s"
+msgstr ""
+
+msgid "timeouts for parallel installs require the 'timeout' command"
 msgstr ""
 
 msgid ""
@@ -884,13 +925,16 @@ msgstr ""
 msgid "'str.default': 'le' is NA, so taken as 0"
 msgstr ""
 
+msgid "'nchar.max = %d' is too small"
+msgstr ""
+
 msgid "'object' does not have valid levels()"
 msgstr ""
 
 msgid "'digits' and 'digits.d' are both specified and the latter is not used"
 msgstr ""
 
-msgid "number of matches does not always match ncol(proto)"
+msgid "The number of captures in 'pattern' != 'length(proto)'"
 msgstr ""
 
 msgid "no lines found in %s"
@@ -1026,13 +1070,19 @@ msgstr ""
 msgid "'destfile' must be a length-one character vector"
 msgstr ""
 
+msgid "'wget' call had nonzero exit status"
+msgstr ""
+
+msgid "'curl' call had nonzero exit status"
+msgstr ""
+
 msgid "download had nonzero exit status"
 msgstr ""
 
 msgid "'tar' returned non-zero exit code %d"
 msgstr ""
 
-msgid "file %s is not an OS X binary package"
+msgid "file %s is not a macOS binary package"
 msgstr ""
 
 msgid "package %s successfully unpacked and MD5 sums checked"
@@ -1116,6 +1166,11 @@ msgstr[1] ""
 
 msgid "matched %d object."
 msgid_plural "matched %d objects."
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "%d error caught in %s: %s"
+msgid_plural "%d times caught the same error in %s: %s"
 msgstr[0] ""
 msgstr[1] ""
 

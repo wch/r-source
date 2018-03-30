@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: graphics 3.4.0\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
+"Project-Id-Version: graphics 3.6.0\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,6 +20,9 @@ msgid "'a' and 'b' are overridden by 'coef'"
 msgstr ""
 
 msgid "one of 'x1' and 'y1' must be given"
+msgstr ""
+
+msgid "'length', 'angle', or 'code' greater than length 1; values after the first are ignored"
 msgstr ""
 
 msgid "'x' must be a 2-d contingency table"
@@ -101,6 +104,9 @@ msgid "increasing 'x' and 'y' values expected"
 msgstr ""
 
 msgid "no proper 'z' matrix specified"
+msgstr ""
+
+msgid "'labels' is length zero.  Use 'drawlabels = FALSE' to suppress labels."
 msgstr ""
 
 msgid "invalid conditioning formula"
@@ -188,6 +194,9 @@ msgid "unknown 'breaks' algorithm"
 msgstr ""
 
 msgid "invalid number of 'breaks'"
+msgstr ""
+
+msgid "'breaks = %g' is too large and set to 1e6"
 msgstr ""
 
 msgid "hist.default: pretty() error, breaks=%s"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
 "PO-Revision-Date: 2015-03-27 14:18+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -273,10 +273,15 @@ msgstr " 非 NA 値がありません "
 msgid "'approx' requires n >= 1"
 msgstr " 'approx' は n > = 1 であることを必要とします "
 
+#, fuzzy
+msgid "NAs in 'x' must be the same row-wise"
+msgstr " 'x' と 'g' は同じ長さを持たねばなりません "
+
 msgid "'order.max' must be >= 1"
 msgstr " 'order.max' は 1 以上でなければなりません "
 
-msgid "'order.max' must be < 'n.used'"
+#, fuzzy
+msgid "'order.max' must be < 'n.obs'"
 msgstr " 'order.max' は 'n.used' より小さくなければなりません "
 
 msgid "zero-variance series"
@@ -296,6 +301,9 @@ msgstr " MLE は一変量系列にだけ実装されています "
 
 msgid "'order.max' must be >= 0"
 msgstr " 'order.max' は >= 0 でなければなりません "
+
+msgid "'order.max' must be < 'n.used'"
+msgstr " 'order.max' は 'n.used' より小さくなければなりません "
 
 msgid "'order' must be a non-negative numeric vector of length 3"
 msgstr " 'order' は長さ 3 の非負の数値ベクトルでなければなりません "
@@ -481,7 +489,8 @@ msgstr ""
 msgid "distances must be result of 'dist' or a square matrix"
 msgstr " 距離は 'dist' の結果であるか、正方行列である必要があります "
 
-msgid "invalid value of 'n'"
+#, fuzzy
+msgid "invalid value of %s"
 msgstr " 'n' が無効な値です "
 
 msgid "'k' must be in {1, 2, ..  n - 1}"
@@ -697,9 +706,6 @@ msgstr " 引数 'x' は数値でなければなりません "
 
 msgid "'x' contains missing values"
 msgstr " 'x' は欠測値を含んでいます "
-
-msgid "invalid value of length(x)"
-msgstr " length(x) の値が不正です "
 
 msgid "'x' and 'weights' have unequal length"
 msgstr " 'x' と 'weights' は同じ長さを持たねばなりません "
@@ -970,6 +976,9 @@ msgstr " 2 もしくはそれ以上のゼロでない列周辺を持たなけれ
 msgid "need 2 or more non-zero column marginals"
 msgstr " 2 もしくはそれ以上のゼロでない行周辺を持たなければなりません "
 
+msgid "names(hybridPars) should be NULL or be identical to the default's"
+msgstr ""
+
 msgid "'hybrid' is ignored for a 2 x 2 table"
 msgstr " 'hybrid' は 2 x 2 分割表に対しては無視されます "
 
@@ -1093,6 +1102,9 @@ msgstr " 繰り返し %d において意味のある観測値がありません 
 
 msgid "non-finite coefficients at iteration %d"
 msgstr " 繰り返し %d において有限でない係数が得られました "
+
+msgid "singular fit encountered"
+msgstr " 特異な当てはめに遭遇しました "
 
 msgid ""
 "no valid set of coefficients has been found: please supply starting values"
@@ -1264,9 +1276,6 @@ msgstr " 中心の初期値に同じものがあります "
 msgid "more cluster centers than data points"
 msgstr " データ点よりも多くのクラスタ中心があります "
 
-msgid "'invalid value of 'k'"
-msgstr " 'k' の値が不正です "
-
 msgid "'iter.max' must be positive"
 msgstr " 'iter.max' は正でなければなりません "
 
@@ -1320,9 +1329,6 @@ msgstr " (非 NA 値の) ケースが 0 です "
 msgid "incompatible dimensions"
 msgstr " 矛盾した次元です "
 
-msgid "singular fit encountered"
-msgstr " 特異な当てはめに遭遇しました "
-
 msgid "missing or negative weights not allowed"
 msgstr " 欠損もしくは負の重みは許されません "
 
@@ -1346,6 +1352,10 @@ msgid ""
 msgstr ""
 " lm オブジェクトは適切な 'qr' 成分を持ちません。 \n"
 " ランクがゼロか lm(.., qr=FALSE) を使うべきではありませんでした。 "
+
+#, fuzzy
+msgid "simulate() is not yet implemented for multivariate lm()"
+msgstr " 'se.fit' は多変量モデルにはまだ実装されていません "
 
 msgid "family '%s' not implemented"
 msgstr " ファミリ '%s' は実装されていません "
@@ -1838,6 +1848,15 @@ msgstr ""
 " 'n', 'p1', 'p2', 'power', 及び 'sig.level' の内、丁度一つが NULL でなければ"
 "なりません "
 
+msgid "No p1 in in [0, p2] can be found to achieve the desired power"
+msgstr ""
+
+msgid "No p2 in in [p1, 1] can be found to achieve the desired power"
+msgstr ""
+
+msgid "No significance level [0, 1] can be found to achieve the desired power"
+msgstr ""
+
 msgid ""
 "exactly one of 'groups', 'n', 'between.var', 'within.var', 'power', and 'sig."
 "level' must be NULL"
@@ -1928,6 +1947,9 @@ msgstr " y は空か、または NA 値しか持っていません "
 msgid "'formula' missing"
 msgstr " モデル式 ('formula') がありません "
 
+msgid "'type' must be 1 or 3 for ordered factors"
+msgstr ""
+
 msgid "factors are not allowed"
 msgstr " 要因 (factor) は許されません "
 
@@ -1949,7 +1971,12 @@ msgstr " 無効な引数 'c' です "
 msgid "arguments 'r' and 'c' must have the same sums"
 msgstr " 引数 'r' と　'c' は同じ総和を持たなければなりません "
 
-msgid "'relevel' only for factors"
+#, fuzzy
+msgid "'relevel' only for (unordered) factors"
+msgstr " 'relevel' は因子専用です "
+
+#, fuzzy
+msgid "'relevel' only for unordered factors"
 msgstr " 'relevel' は因子専用です "
 
 msgid "'ref' must be of length one"
@@ -1994,9 +2021,6 @@ msgid ""
 msgstr ""
 " 'varying' の長さは 'v.names' の長さと 'times' の長さの積でなければなりませ"
 "ん "
-
-msgid "invalid value of 'k'"
-msgstr " 'k' の値が不正です "
 
 msgid "'k' must be positive"
 msgstr " 'k' は正でなければなりません "
@@ -2057,6 +2081,10 @@ msgstr " 重みの幾つかは正である必要があります "
 msgid "'tol' must be strictly positive and finite"
 msgstr " 'tol' は正で有限な数値でなければなりません "
 
+#, fuzzy
+msgid "invalid 'keep.stuff'"
+msgstr " 無効な 'method' です "
+
 msgid "need at least four unique 'x' values"
 msgstr " 'x' には少なくとも 4 つの異なる値が必要です "
 
@@ -2066,6 +2094,17 @@ msgstr " 'df' が特定されているので、'cv' は NA になってはいけ
 msgid "cross-validation with non-unique 'x' values seems doubtful"
 msgstr ""
 " 一意でない 'x' 値によるクロスバリデーションには問題があるかも知れません "
+
+#, fuzzy
+msgid "Numeric 'all.knots' must be strictly increasing"
+msgstr " 'x' は厳密に増加している必要があります (non - NA) "
+
+#, fuzzy
+msgid "'all.knots' is vector of knots; 'nknots' specification is disregarded"
+msgstr " 'all.knots' が TRUE なので 'nknots' の指定は無視されます "
+
+msgid "numeric 'all.knots' must cover [0,1] (= the transformed data-range)"
+msgstr ""
 
 msgid "'all.knots' is TRUE; 'nknots' specification is disregarded"
 msgstr " 'all.knots' が TRUE なので 'nknots' の指定は無視されます "
@@ -2079,13 +2118,14 @@ msgstr " 'nknots' は少なくとも 1 でなければなりません "
 msgid "cannot use more inner knots than unique 'x' values"
 msgstr " 相異なる 'x' 値の数より多くの内部結節点を使用することはできません "
 
+msgid "must not specify both 'spar' and 'lambda'"
+msgstr ""
+
 msgid "'spar' must be of length 1"
 msgstr " 'spar' の長さは 1 でなければなりません "
 
-msgid "specified both 'df' and 'cv'; will disregard the latter"
-msgstr " 'df' と 'cv' の両方が特定されているので、後者は無視されます "
-
-msgid "you must supply 1 < df <= n,  n = #{unique x} ="
+#, fuzzy
+msgid "not using invalid df; must have 1 < df <= n := #{unique x} ="
 msgstr ""
 " 自由度 1 < df < n を与えなければなりません。ここで n = #{unique x} =　 "
 
@@ -2104,6 +2144,9 @@ msgstr " type = \"partial\" はまだ実装されていません "
 msgid "not a valid \"smooth.spline\" object"
 msgstr " 有効な \"smooth.spline\" オブジェクトではありません "
 
+msgid "'span' must be between 0 and 1."
+msgstr " 'span' は 0 と 1 の間になければなりません。 "
+
 msgid "'y' must be numeric vector"
 msgstr " 'y' は数値ベクトルでなければなりません "
 
@@ -2112,9 +2155,6 @@ msgstr " 'x' と 'y' の観測値の数は一致しなければなりません�
 
 msgid "number of weights must match number of observations."
 msgstr " 重みの数は観測値の数と一致する必要があります "
-
-msgid "'span' must be between 0 and 1."
-msgstr " 'span' は 0 と 1 の間になければなりません。 "
 
 msgid "'x' must be between 0 and 1 for periodic smooth"
 msgstr " 周期的な平滑化のためには 'x' は 0 と 1 の間に位置する必要があります "
@@ -2350,7 +2390,9 @@ msgstr " (有限な) 'x' の観察値の数が十分ではありません "
 msgid "requested conf.level not achievable"
 msgstr " 指定された conf.level を達成できませんでした "
 
-msgid "cannot compute confidence interval when all observations are tied"
+#, fuzzy
+msgid ""
+"cannot compute confidence interval when all observations are zero or tied"
 msgstr " すべての観測値がタイの場合信頼区間を計算することができません "
 
 msgid "cannot compute exact confidence interval with ties"
@@ -2364,6 +2406,9 @@ msgstr " ゼロ値のため、正確な信頼区間を計算することがで�
 
 msgid "Requested conf.level not achievable"
 msgstr " 要求された conf.level は達成不能です "
+
+msgid "cannot compute confidence interval when all observations are tied"
+msgstr " すべての観測値がタイの場合信頼区間を計算することができません "
 
 msgid "must supply either 'formula' or 'data'"
 msgstr " 'formula' か 'data' のどちらかを与えなければなりません "
@@ -2525,6 +2570,18 @@ msgstr[0] " NA, NaN および Inf を含む %d 個のの観測値は削除され
 msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] " 'start.innov' が短すぎます: %d 個の点が必要です "
+
+#~ msgid "invalid value of length(x)"
+#~ msgstr " length(x) の値が不正です "
+
+#~ msgid "'invalid value of 'k'"
+#~ msgstr " 'k' の値が不正です "
+
+#~ msgid "invalid value of 'k'"
+#~ msgstr " 'k' の値が不正です "
+
+#~ msgid "specified both 'df' and 'cv'; will disregard the latter"
+#~ msgstr " 'df' と 'cv' の両方が特定されているので、後者は無視されます "
 
 #~ msgid "a limit is missing"
 #~ msgstr " 限界がありません "
@@ -2727,9 +2784,6 @@ msgstr[0] " 'start.innov' が短すぎます: %d 個の点が必要です "
 
 #~ msgid "invalid 'method': %s"
 #~ msgstr " 無効な 'method' です: %s "
-
-#~ msgid "invalid 'method'"
-#~ msgstr " 無効な 'method' です "
 
 #~ msgid "'newdata' does not contain the variables needed"
 #~ msgstr " 'newdata' は必要とされる変数を含んでいません "

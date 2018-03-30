@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
 "PO-Revision-Date: 2014-03-26 10:01+0200 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -99,6 +99,9 @@ msgstr " 不正な 'f' です "
 
 msgid "'gpar' element '%s' must not be length 0"
 msgstr " 'gpar' 要素 '%s' は長さ 0 にしてはいけません "
+
+msgid "mixture of missing and non-missing values for %s"
+msgstr ""
 
 msgid "'gamma' 'gpar' element is defunct"
 msgstr " 'gamma' 'gpar' 要素は廃止されました "

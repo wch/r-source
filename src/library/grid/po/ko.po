@@ -16,8 +16,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R-3.3.0\n"
-"Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-01 10:01-0700\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-03-29 07:06-0700\n"
 "PO-Revision-Date: 2016-04-11 13:08-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: Chel Hee Lee <chl948@mail.usask.ca>\n"
@@ -33,7 +33,9 @@ msgstr "회전된 뷰포트에 고정 할 수 없습니다"
 
 #: grid.c:697 grid.c:702 grid.c:792 grid.c:797
 msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
-msgstr "최상단 뷰포트를 띄울 수 없습니다 ('grid'와 'graphics' 출력을 혼용하고 있나요?)"
+msgstr ""
+"최상단 뷰포트를 띄울 수 없습니다 ('grid'와 'graphics' 출력을 혼용하고 있나"
+"요?)"
 
 #: grid.c:977
 msgid "attempt to plot on null device"

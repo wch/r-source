@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -28,6 +28,11 @@ msgstr "'a'和'b'被' coef'覆盖"
 
 msgid "one of 'x1' and 'y1' must be given"
 msgstr "至少需要设定'x1'和'y1'中的一个"
+
+msgid ""
+"'length', 'angle', or 'code' greater than length 1; values after the first "
+"are ignored"
+msgstr ""
 
 msgid "'x' must be a 2-d contingency table"
 msgstr "'x'必需是二维列联表"
@@ -109,6 +114,9 @@ msgstr "需要递增的'x'和'y'值"
 
 msgid "no proper 'z' matrix specified"
 msgstr "没有设定正确的'z'矩阵"
+
+msgid "'labels' is length zero.  Use 'drawlabels = FALSE' to suppress labels."
+msgstr ""
 
 msgid "invalid conditioning formula"
 msgstr "条件公式不对"
@@ -196,6 +204,9 @@ msgstr "没有'breaks'这样的算法"
 
 msgid "invalid number of 'breaks'"
 msgstr "'breaks'数目不对"
+
+msgid "'breaks = %g' is too large and set to 1e6"
+msgstr ""
 
 msgid "hist.default: pretty() error, breaks=%s"
 msgstr "hist.default: pretty()错误, breaks=%s"

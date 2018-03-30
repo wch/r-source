@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
 "PO-Revision-Date: 2014-03-17 11:53+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -172,6 +172,10 @@ msgstr "Fichier '%s' :"
 msgid "found T/F in %s"
 msgstr "T/F trouvé(s) dans %s"
 
+#, fuzzy
+msgid "The package 'dir' argument must be of length 1"
+msgstr "l'argument 'package' doit être de longueur 1"
+
 msgid "package name '%s' seems invalid; using directory name '%s' instead"
 msgstr ""
 "le nom du package '%s' semble incorrect ; utilisation du nom de répertoire "
@@ -276,11 +280,21 @@ msgstr "Champ 'Author@R' mal orthographié."
 msgid "Cannot extract Author field from Authors@R field:"
 msgstr "Impossible d'extraire le champ 'Author' du champ 'Authors@R' :"
 
-msgid "Authors@R field gives no person with author role."
+#, fuzzy
+msgid "Authors@R field gives no person with name and roles."
 msgstr "Le champ 'Authors@R' ne renvoie aucune personne avec un rôle d'auteur."
 
-msgid "Authors@R field gives persons with no valid roles:"
+#, fuzzy
+msgid "Authors@R field gives persons with no name:"
 msgstr "Le champ Authors@R ne renvoie aucune personne avec un rôle reconnu."
+
+#, fuzzy
+msgid "Authors@R field gives persons with no role:"
+msgstr "Le champ Authors@R ne renvoie aucune personne avec un rôle reconnu."
+
+#, fuzzy
+msgid "Authors@R field gives no person with name and author role"
+msgstr "Le champ 'Authors@R' ne renvoie aucune personne avec un rôle d'auteur."
 
 msgid "Cannot extract Maintainer field from Authors@R field:"
 msgstr "Impossible d'extraire le champ 'Maintainer' du champ 'Authors@R' :"
@@ -564,6 +578,10 @@ msgid "Macro file %s should only contain Rd macro definitions and comments"
 msgstr ""
 
 #, fuzzy
+msgid "Rd macro package '%s' is not installed."
+msgstr "Pas de docs trouvés pour le package %s"
+
+#, fuzzy
 msgid "No Rd macros in package '%s'."
 msgstr "Pas de docs trouvés pour le package %s"
 
@@ -811,11 +829,33 @@ msgstr "Les modifications nécessite le 'style' spécifié"
 msgid "The default JSS style may not be modified."
 msgstr "Le style par défaut JSS ne peut être modifié."
 
+msgid "inst/doc"
+msgstr ""
+
+msgid "file"
+msgstr "fichier"
+
+#, fuzzy
+msgid "files"
+msgstr "fichier"
+
+msgid ","
+msgstr ","
+
+msgid "ignored as vignettes have been rebuilt."
+msgstr ""
+
+msgid "Run R CMD build with --no-build-vignettes to prevent rebuilding."
+msgstr ""
+
 msgid "invalid value for '--compact-vignettes', assuming %s"
 msgstr "valeur incorrecte pour '--compact-vignettes', utilisation de %s"
 
 msgid "Error: cannot rename directory to %s"
 msgstr "Erreur : impossible de renommer le répertoire vers %s"
+
+msgid "elapsed-time limit of %g %s reached for sub-process"
+msgstr ""
 
 msgid "cannot link from %s"
 msgstr "impossible de créer un lien depuis %s"
@@ -854,6 +894,9 @@ msgstr "téléchargement de %s ..."
 
 msgid "checking %s ..."
 msgstr "vérification de %s ..."
+
+msgid "wrong class"
+msgstr "mauvaise classe"
 
 msgid "non-ASCII input in a CITATION file without a declared encoding"
 msgstr "entrées non-ASCII dans un fichier CITATION sans encodage déclaré"
@@ -927,6 +970,10 @@ msgstr "erreur de démarrage du serveur httpd"
 msgid "cannot read index information in file '%s'"
 msgstr "impossible de lire l'indice de l'information dans le fichier '%s'"
 
+#, fuzzy
+msgid ".install_packages() exit status"
+msgstr "installed.packages"
+
 msgid "error reading file '%s'"
 msgstr "erreur de lecture dans le fichier '%s'"
 
@@ -992,6 +1039,18 @@ msgstr "ERREUR : pas de permission pour installer dans le répertoire"
 msgid "building a fake installation is disallowed"
 msgstr "construire une installation fantôme n'est pas permise"
 
+msgid "C++17 standard requested but CXX17 is not defined"
+msgstr ""
+
+msgid "C++14 standard requested but CXX14 is not defined"
+msgstr ""
+
+msgid "C++11 standard requested but CXX11 is not defined"
+msgstr ""
+
+msgid "C++98 standard requested but CXX98 is not defined"
+msgstr ""
+
 msgid ""
 "See\n"
 "  %s\n"
@@ -1015,9 +1074,6 @@ msgstr "la liste de source doit avoir des noms pour tous ses éléments"
 
 msgid "source must be an environment or a list"
 msgstr "source doit être un environnement ou une liste"
-
-msgid "invalid value for 'compress': should be FALSE, TRUE, 2 or 3"
-msgstr "valeur incorrecte pour 'compress' : utilisez FALSE, TRUE, 2 ou 3"
 
 msgid "this cannot be used for package 'base'"
 msgstr "ceci ne peut être utilisé pour le package 'base'"
@@ -1120,9 +1176,6 @@ msgstr "impossible de trouver la table xref"
 msgid "cannot read xref table"
 msgstr "impossible de lire la table xref"
 
-msgid "wrong class"
-msgstr "mauvaise classe"
-
 msgid "attempting to select less than one element"
 msgstr "tentative de sélection de moins d'un élément"
 
@@ -1180,29 +1233,23 @@ msgstr "%s predictor %d non supporté"
 msgid "unsupported PNG filter %d"
 msgstr "filtre PNG %d non supporté"
 
-msgid "argument 'pkg' must be of length 1"
-msgstr "l'argument 'pkg' doit être de longueur 1"
-
-msgid "package '%s' was not found"
-msgstr "le package '%s' est introuvable"
-
-msgid "the 'lib.loc' argument has always been unused and is deprecated now"
-msgstr ""
-
-msgid "bad operand"
-msgstr "un opérateur erroné"
-
-msgid "Package '%s' had its dependencies reduced to a minimal set."
-msgstr "Le package '%s' a ses dépendances réduites à un ensemble minimal."
-
 msgid "argument '%s' must be a character string or connection"
 msgstr "l'argument '%s' doit être une chaîne de caractères ou une connexion"
 
 msgid "unimplemented encoding"
 msgstr "encodage non implémenté"
 
+msgid "this requires 'objdump.exe' to be on the PATH"
+msgstr ""
+
+msgid "this requires 'nm' to be on the PATH"
+msgstr ""
+
 msgid "Found %s, possibly from %s"
 msgstr "%s est trouvé, sans doute depuis %s"
+
+msgid "no native symbols were extracted"
+msgstr ""
 
 msgid "testing '%s' failed"
 msgstr "le test '%s' a échoué"
@@ -1213,11 +1260,18 @@ msgstr "Vérification des exemples du package %s"
 msgid "comparing %s to %s ..."
 msgstr "comparaison de %s à %s ..."
 
-msgid "OK"
-msgstr "OK"
+#, fuzzy
+msgid "ERROR"
+msgstr "ERREUR :"
+
+msgid "NOTE"
+msgstr ""
 
 msgid "results differ from reference results"
 msgstr "les résultats ne sont pas identiques aux résultats de référence"
+
+msgid "OK"
+msgstr "OK"
 
 msgid "no examples found for package %s"
 msgstr "Pas d'examples trouvés pour le package %s"
@@ -1247,6 +1301,25 @@ msgid "running tests of random deviate generation -- fails occasionally"
 msgstr ""
 "exécution des tests de génération de déviance aléatoire -- peut échouer de "
 "temps en temps"
+
+#, fuzzy
+msgid "unknown header specification"
+msgstr "Spécification de licence non standard :"
+
+msgid "argument 'pkg' must be of length 1"
+msgstr "l'argument 'pkg' doit être de longueur 1"
+
+msgid "package '%s' was not found"
+msgstr "le package '%s' est introuvable"
+
+msgid "the 'lib.loc' argument has always been unused and is deprecated now"
+msgstr ""
+
+msgid "bad operand"
+msgstr "un opérateur erroné"
+
+msgid "Package '%s' had its dependencies reduced to a minimal set."
+msgstr "Le package '%s' a ses dépendances réduites à un ensemble minimal."
 
 msgid "R CMD build failed"
 msgstr "R CMD build a échoué"
@@ -1300,7 +1373,8 @@ msgstr "contient une ligne blanche"
 msgid "Unknown encoding with non-ASCII data: converting to ASCII"
 msgstr "Encodage inconnu avec des données non-ASCII : conversion vers ASCII"
 
-msgid "cannot source package code"
+#, fuzzy
+msgid "cannot source package code:"
 msgstr "impossible de sourcer le code du package"
 
 msgid "Call sequence:"
@@ -1461,6 +1535,12 @@ msgid_plural "unable to re-encode %s lines %s"
 msgstr[0] "impossible de réencoder %s ligne %s"
 msgstr[1] "impossible de réencoder %s lignes %s"
 
+#, fuzzy
+msgid " file\n"
+msgid_plural " files\n"
+msgstr[0] "fichier"
+msgstr[1] "fichier"
+
 msgid "Required field missing or empty:"
 msgid_plural "Required fields missing or empty:"
 msgstr[0] "Champ requis mais manquant ou vide :"
@@ -1482,11 +1562,16 @@ msgid_plural "%d of the package tests failed"
 msgstr[0] "%d des tests du package ont échoué"
 msgstr[1] "%d des tests du package ont échoué"
 
+msgid "Corresponding BibTeX entry:"
+msgid_plural "Corresponding BibTeX entries:"
+msgstr[0] ""
+msgstr[1] ""
+
+#~ msgid "invalid value for 'compress': should be FALSE, TRUE, 2 or 3"
+#~ msgstr "valeur incorrecte pour 'compress' : utilisez FALSE, TRUE, 2 ou 3"
+
 #~ msgid "assertCondition: caught %s"
 #~ msgstr "assertCondition : capture de %s"
-
-#~ msgid ","
-#~ msgstr ","
 
 #~ msgid "installing dependencies %s"
 #~ msgstr "installation des dépendances %s"
@@ -1681,9 +1766,6 @@ msgstr[1] "%d des tests du package ont échoué"
 #~ msgid "packageStartupMessage"
 #~ msgstr "packageStartupMessage"
 
-#~ msgid "installed.packages"
-#~ msgstr "installed.packages"
-
 #~ msgid "Good practice"
 #~ msgstr "Bonne pratique"
 
@@ -1703,9 +1785,6 @@ msgstr[1] "%d des tests du package ont échoué"
 #~ msgid "demo/"
 #~ msgstr "demo/"
 
-#~ msgid "file"
-#~ msgstr "fichier"
-
 #~ msgid "%s (%s)"
 #~ msgstr "%s (%s)"
 
@@ -1724,9 +1803,6 @@ msgstr[1] "%d des tests du package ont échoué"
 
 #~ msgid "Unrecognized search field:"
 #~ msgstr "Champ de recherche inconnu :"
-
-#~ msgid "ERROR:"
-#~ msgstr "ERREUR :"
 
 #~ msgid "running 'zip' failed"
 #~ msgstr "l'exécution de 'zip' a échoué"

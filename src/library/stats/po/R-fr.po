@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
 "PO-Revision-Date: 2014-03-17 11:23+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -290,10 +290,15 @@ msgstr "zéro points non NA"
 msgid "'approx' requires n >= 1"
 msgstr "'approx' nécessite n >= 1"
 
+#, fuzzy
+msgid "NAs in 'x' must be the same row-wise"
+msgstr "'x' et 'g' doivent avoir la même longueur"
+
 msgid "'order.max' must be >= 1"
 msgstr "'order.max' doit être >= 1"
 
-msgid "'order.max' must be < 'n.used'"
+#, fuzzy
+msgid "'order.max' must be < 'n.obs'"
 msgstr "'order.max' doit être < 'n.used'"
 
 msgid "zero-variance series"
@@ -313,6 +318,9 @@ msgstr "MLE n'est implémenté que pour des séries univariées"
 
 msgid "'order.max' must be >= 0"
 msgstr "'order.max' doit être >= 0"
+
+msgid "'order.max' must be < 'n.used'"
+msgstr "'order.max' doit être < 'n.used'"
 
 msgid "'order' must be a non-negative numeric vector of length 3"
 msgstr "'order' doit être un vecteur numérique positif ou nul de longueur 3"
@@ -495,7 +503,8 @@ msgstr ""
 msgid "distances must be result of 'dist' or a square matrix"
 msgstr "les distances doivent provenir de 'dist' ou d'une matrice carrée"
 
-msgid "invalid value of 'n'"
+#, fuzzy
+msgid "invalid value of %s"
 msgstr "valeur 'n' incorrect"
 
 msgid "'k' must be in {1, 2, ..  n - 1}"
@@ -719,9 +728,6 @@ msgstr "l'argument 'x' doit être numérique"
 
 msgid "'x' contains missing values"
 msgstr "'x' contient une valeur manquante"
-
-msgid "invalid value of length(x)"
-msgstr "valeur incorrectye pour length(x)"
 
 msgid "'x' and 'weights' have unequal length"
 msgstr "'x' et 'weights' n'ont pas la même longueur"
@@ -1000,6 +1006,9 @@ msgstr "il faut au moins deux lignes marginales"
 msgid "need 2 or more non-zero column marginals"
 msgstr "il faut au moins deux colonnes marginales"
 
+msgid "names(hybridPars) should be NULL or be identical to the default's"
+msgstr ""
+
 msgid "'hybrid' is ignored for a 2 x 2 table"
 msgstr "'hybrid' est ignoré pour une table 2 x 2"
 
@@ -1124,6 +1133,9 @@ msgstr "aucune observation informative à l'itération %d"
 
 msgid "non-finite coefficients at iteration %d"
 msgstr "coefficients indéfinis à l'itération %d"
+
+msgid "singular fit encountered"
+msgstr "ajustement singulier rencontré"
 
 msgid ""
 "no valid set of coefficients has been found: please supply starting values"
@@ -1304,9 +1316,6 @@ msgstr "les centres initiaux ne sont pas distincts"
 msgid "more cluster centers than data points"
 msgstr "le nombre de centres de classes est supérieur au nombre de points"
 
-msgid "'invalid value of 'k'"
-msgstr "valeur de 'k' incorrecte"
-
 msgid "'iter.max' must be positive"
 msgstr "'iter.max' doit être positif"
 
@@ -1363,9 +1372,6 @@ msgstr "aucun cas ne contient autre chose que des valeurs manquantes (NA)"
 msgid "incompatible dimensions"
 msgstr "dimensions incompatibles"
 
-msgid "singular fit encountered"
-msgstr "ajustement singulier rencontré"
-
 msgid "missing or negative weights not allowed"
 msgstr "les poids manquants ou négatifs ne sont pas autorisés"
 
@@ -1392,6 +1398,10 @@ msgid ""
 msgstr ""
 "l'object lm n'a pas de composante 'qr' adéquate.\\n\n"
 " Rang nul ou appel lm(..., qr=FALSE) inapproprié."
+
+#, fuzzy
+msgid "simulate() is not yet implemented for multivariate lm()"
+msgstr "'se.fit' n'est pas encore implémenté pour des modèles multivariés"
 
 msgid "family '%s' not implemented"
 msgstr "famille '%s' non implémentée"
@@ -1914,6 +1924,15 @@ msgid "exactly one of 'n', 'p1', 'p2', 'power', and 'sig.level' must be NULL"
 msgstr ""
 "un et un seul parmi 'n', 'p1', 'p2', 'power', et 'sig.level' doit être NULL"
 
+msgid "No p1 in in [0, p2] can be found to achieve the desired power"
+msgstr ""
+
+msgid "No p2 in in [p1, 1] can be found to achieve the desired power"
+msgstr ""
+
+msgid "No significance level [0, 1] can be found to achieve the desired power"
+msgstr ""
+
 msgid ""
 "exactly one of 'groups', 'n', 'between.var', 'within.var', 'power', and 'sig."
 "level' must be NULL"
@@ -2008,6 +2027,9 @@ msgstr "y est vide ou ne contient que des NA"
 msgid "'formula' missing"
 msgstr "'formula' manquante"
 
+msgid "'type' must be 1 or 3 for ordered factors"
+msgstr ""
+
 msgid "factors are not allowed"
 msgstr "les facteurs ne sont pas autorisés"
 
@@ -2030,7 +2052,12 @@ msgstr "argument 'c' incorrect"
 msgid "arguments 'r' and 'c' must have the same sums"
 msgstr "les arguments 'r' et 'c' doivent avoir la même somme"
 
-msgid "'relevel' only for factors"
+#, fuzzy
+msgid "'relevel' only for (unordered) factors"
+msgstr "'relevel' n'est utilisable que pour des facteurs"
+
+#, fuzzy
+msgid "'relevel' only for unordered factors"
 msgstr "'relevel' n'est utilisable que pour des facteurs"
 
 msgid "'ref' must be of length one"
@@ -2079,9 +2106,6 @@ msgid ""
 msgstr ""
 "la longueur de 'varying' doit être le produit des longueurs de 'v.names' et "
 "de 'times'"
-
-msgid "invalid value of 'k'"
-msgstr "valeur de 'k' incorrecte"
 
 msgid "'k' must be positive"
 msgstr "'k' doit être positif"
@@ -2141,6 +2165,10 @@ msgstr "certains poids doivent être positifs"
 msgid "'tol' must be strictly positive and finite"
 msgstr "'top' doit être un nombre positif et non infini"
 
+#, fuzzy
+msgid "invalid 'keep.stuff'"
+msgstr "'x' incorrect"
+
 msgid "need at least four unique 'x' values"
 msgstr "il faut au moins quatre valeurs de 'x' différentes"
 
@@ -2150,6 +2178,18 @@ msgstr "'cv' ne peut être NA lorsque 'df' est spécifié"
 msgid "cross-validation with non-unique 'x' values seems doubtful"
 msgstr ""
 "la validation croisée avec des valeurs de 'x' non uniques paraît douteuse"
+
+#, fuzzy
+msgid "Numeric 'all.knots' must be strictly increasing"
+msgstr "'x' doit être *strictement* croissant (non - NA)"
+
+#, fuzzy
+msgid "'all.knots' is vector of knots; 'nknots' specification is disregarded"
+msgstr ""
+"'all.knots' est vrai (TRUE) ; la valeur fournie pour 'nknots' est ignorée "
+
+msgid "numeric 'all.knots' must cover [0,1] (= the transformed data-range)"
+msgstr ""
 
 msgid "'all.knots' is TRUE; 'nknots' specification is disregarded"
 msgstr ""
@@ -2166,13 +2206,14 @@ msgstr ""
 "impossible d'utiliser un nombre de noeuds internes supérieur au nombre de "
 "valeurs différentes de 'x'"
 
+msgid "must not specify both 'spar' and 'lambda'"
+msgstr ""
+
 msgid "'spar' must be of length 1"
 msgstr "'spar' doit être de longueur 1"
 
-msgid "specified both 'df' and 'cv'; will disregard the latter"
-msgstr "'df' et 'cv' sont spécifiés simultanément ; le second sera ignoré"
-
-msgid "you must supply 1 < df <= n,  n = #{unique x} ="
+#, fuzzy
+msgid "not using invalid df; must have 1 < df <= n := #{unique x} ="
 msgstr "il faut fournir 1 < df <= n,  n = #{unique x} ="
 
 msgid "NA lev[]; probably smoothing parameter 'spar' way too large!"
@@ -2192,6 +2233,9 @@ msgstr "type = \"partial\" n'est pas encore implémenté"
 msgid "not a valid \"smooth.spline\" object"
 msgstr "objet \"smooth.spline\" incorrect"
 
+msgid "'span' must be between 0 and 1."
+msgstr "'span' doit être compris entre 0 et 1."
+
 msgid "'y' must be numeric vector"
 msgstr "'y' doit être un vecteur numérique"
 
@@ -2200,9 +2244,6 @@ msgstr "les nombres d'observations de 'x' et de 'y' doivent correspondre"
 
 msgid "number of weights must match number of observations."
 msgstr "le nombre de poids doit correspondre au nombre d'observations"
-
-msgid "'span' must be between 0 and 1."
-msgstr "'span' doit être compris entre 0 et 1."
 
 msgid "'x' must be between 0 and 1 for periodic smooth"
 msgstr "'x' doit être compris entre 0 et 1 pour un lissage périodique"
@@ -2443,7 +2484,9 @@ msgstr "pas assez d'observations 'x' (définies)"
 msgid "requested conf.level not achievable"
 msgstr "requête conf.level impossible à atteindre"
 
-msgid "cannot compute confidence interval when all observations are tied"
+#, fuzzy
+msgid ""
+"cannot compute confidence interval when all observations are zero or tied"
 msgstr ""
 "impossible de calculer un intervalle de confiance avec des observations "
 "toutes égales"
@@ -2460,6 +2503,11 @@ msgstr "impossible de calculer un intervalle de confiance exact avec des zéros"
 
 msgid "Requested conf.level not achievable"
 msgstr "Requête 'conf.level' impossible à atteindre"
+
+msgid "cannot compute confidence interval when all observations are tied"
+msgstr ""
+"impossible de calculer un intervalle de confiance avec des observations "
+"toutes égales"
 
 msgid "must supply either 'formula' or 'data'"
 msgstr "il faut fournir soit 'formula', soit 'data'"
@@ -2668,6 +2716,18 @@ msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] "'start.innov' est trop court : il faut %d point"
 msgstr[1] "'start.innov' est trop court : il faut %d points"
+
+#~ msgid "invalid value of length(x)"
+#~ msgstr "valeur incorrectye pour length(x)"
+
+#~ msgid "'invalid value of 'k'"
+#~ msgstr "valeur de 'k' incorrecte"
+
+#~ msgid "invalid value of 'k'"
+#~ msgstr "valeur de 'k' incorrecte"
+
+#~ msgid "specified both 'df' and 'cv'; will disregard the latter"
+#~ msgstr "'df' et 'cv' sont spécifiés simultanément ; le second sera ignoré"
 
 #~ msgid "a limit is missing"
 #~ msgstr "il manque une limite"

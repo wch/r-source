@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-01 10:01-0700\n"
+"POT-Creation-Date: 2018-03-29 07:06-0700\n"
 "PO-Revision-Date: 2013-03-01 04:12+0200 \n"
 "Last-Translator: Triad sou  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0; \n"
 "X-Generator: Pootle 2.0.5 \n"
 
-#: class_support.c:32
+#: class_support.c:29
 msgid "calling the C routine used as an initializer for 'externalptr' objects"
 msgstr ""
 " 'externalptr' オブジェクトを初期化する C ルーティンを呼び出しています "
@@ -27,7 +27,7 @@ msgstr ""
 msgid "invalid list for substitution"
 msgstr " 代入するリストが不正です "
 
-#: methods_list_dispatch.c:149
+#: methods_list_dispatch.c:151
 msgid ""
 "could not find the skeleton calls for 'methods' (package detached?): expect "
 "very bad things to happen"
@@ -35,7 +35,7 @@ msgstr ""
 " 'methods' に対するスケルトンコールを見付けられませんでした (パッケージが "
 "detach された？): 非常にまずいことが起きるかもしれません "
 
-#: methods_list_dispatch.c:215
+#: methods_list_dispatch.c:217
 #, c-format
 msgid ""
 "no \"allMethods\" slot found in object of class \"%s\" used as methods list "
@@ -44,18 +44,18 @@ msgstr ""
 " 関数 '%s' のメソッドリストとして使われるクラス \"%s\" のオブジェクト中に "
 "\"allMethods\" スロットが見付かりませんでした "
 
-#: methods_list_dispatch.c:443
+#: methods_list_dispatch.c:445
 #, c-format
 msgid "no generic function definition found for '%s'"
 msgstr " '%s' に対する総称的関数は定義されていません "
 
-#: methods_list_dispatch.c:446
+#: methods_list_dispatch.c:448
 #, c-format
 msgid ""
 "no generic function definition found for '%s' in the supplied environment"
 msgstr " 与えられた環境中では '%s' に対する総称的関数は定義されていません "
 
-#: methods_list_dispatch.c:481
+#: methods_list_dispatch.c:483
 #, c-format
 msgid ""
 "invalid generic function object for method selection for function '%s': "
@@ -64,22 +64,22 @@ msgstr ""
 " 関数 '%s' のメソッド選択に対する不正な総称的関数オブジェクト: 関数かプリミ"
 "ティブを期待しましたが、クラス \"%s\" のオブジェクトを得ました "
 
-#: methods_list_dispatch.c:496
+#: methods_list_dispatch.c:498
 #, c-format
 msgid "no direct or inherited method for function '%s' for this call"
 msgstr ""
 " この呼び出しでは 関数 '%s' に対する直接的または継承メソッドはありません "
 
-#: methods_list_dispatch.c:526 methods_list_dispatch.c:1071
+#: methods_list_dispatch.c:528 methods_list_dispatch.c:1077
 msgid "invalid object (non-function) used as method"
 msgstr " (関数ではない) 不正なオブジェクトがメソッドとして使われました "
 
-#: methods_list_dispatch.c:547
+#: methods_list_dispatch.c:549
 #, c-format
 msgid "could not find symbol '%s' in frame of call"
 msgstr " 呼び出しのフレーム中ではシンボル '%s' を見付けられませんでした "
 
-#: methods_list_dispatch.c:555
+#: methods_list_dispatch.c:557
 #, c-format
 msgid ""
 "invalid symbol in checking for missing argument in method dispatch: expected "
@@ -88,11 +88,11 @@ msgstr ""
 " メソッド割り当て時、欠損引数のチェックで不正なシンボルがありました: 名前を期"
 "待しましたがクラス \"%s\" のオブジェクトでした "
 
-#: methods_list_dispatch.c:558
+#: methods_list_dispatch.c:560
 msgid "use of NULL environment is defunct"
 msgstr " NULL 環境の使用は廃止予定です "
 
-#: methods_list_dispatch.c:562
+#: methods_list_dispatch.c:564
 #, c-format
 msgid ""
 "invalid environment in checking for missing argument, '%s', in methods "
@@ -101,7 +101,7 @@ msgstr ""
 " メソッド割り当て時、欠損引数 '%s' に対するチェックで不正な環境がありました: "
 "クラス \"%s\" のオブジェクトでした "
 
-#: methods_list_dispatch.c:588
+#: methods_list_dispatch.c:590
 #, c-format
 msgid ""
 "object of class \"%s\" used as methods list for function '%s' ( no "
@@ -110,7 +110,7 @@ msgstr ""
 " クラス \"%s\" のオブジェクトが関数 '%s' のメソッドリストととして使われまし"
 "た ('argument' スロットがありません) "
 
-#: methods_list_dispatch.c:599
+#: methods_list_dispatch.c:601
 #, c-format
 msgid ""
 "(in selecting a method for function '%s') '...' and related variables cannot "
@@ -119,7 +119,7 @@ msgstr ""
 " (関数 '%s' に対するメソッドの選択時) '...' と関連する変数はメソッド割り当て"
 "には使えません "
 
-#: methods_list_dispatch.c:602
+#: methods_list_dispatch.c:604
 #, c-format
 msgid ""
 "(in selecting a method for function '%s') the 'environment' argument for "
@@ -128,8 +128,8 @@ msgstr ""
 " (関数 '%s' に対するメソッドの選択時) 割り当て用の 'environment' 引数は R 環"
 "境でなければなりません; クラス \"%s\" のオブジェクトでした "
 
-#: methods_list_dispatch.c:616 methods_list_dispatch.c:628
-#: methods_list_dispatch.c:1017
+#: methods_list_dispatch.c:618 methods_list_dispatch.c:630
+#: methods_list_dispatch.c:1023
 #, c-format
 msgid ""
 "error in evaluating the argument '%s' in selecting a method for function "
@@ -138,52 +138,52 @@ msgstr ""
 " 引数 '%s' の評価中にエラーが起きました (関数 '%s' に対するメソッドの選択"
 "時): %s "
 
-#: methods_list_dispatch.c:636
+#: methods_list_dispatch.c:638
 #, c-format
 msgid "no matching method for function '%s' (argument '%s', with class \"%s\")"
 msgstr ""
 " 関数 '%s' に対するマッチするメソッド (引数 '%s' でクラス \"%s\" を持つ) はあ"
 "りませんでした "
 
-#: methods_list_dispatch.c:643
+#: methods_list_dispatch.c:645
 #, c-format
 msgid ""
 "recursive use of function '%s' in method selection, with no default method"
 msgstr " 既定メソッド無しの、メソッド選択時の関数 '%s' の再帰的使用です "
 
-#: methods_list_dispatch.c:712
+#: methods_list_dispatch.c:716
 #, c-format
 msgid "error in evaluating a 'primitive' next method: %s"
 msgstr " 'primitive' なメソッド %s の評価中にエラーが起きました "
 
-#: methods_list_dispatch.c:810
+#: methods_list_dispatch.c:816
 #, c-format
 msgid "'%s' must be a single string (got a character vector of length %d)"
 msgstr ""
 " '%s' は単一の文字列でなければなりません(長さ %d の文字ベクトルでした) "
 
-#: methods_list_dispatch.c:814
+#: methods_list_dispatch.c:820
 #, c-format
 msgid "'%s' must be a non-empty string; got an empty string"
 msgstr " '%s' は空でない文字列でなければなりません; 空の文字列でした "
 
-#: methods_list_dispatch.c:818
+#: methods_list_dispatch.c:824
 #, c-format
 msgid "'%s' must be a single string (got an object of class \"%s\")"
 msgstr ""
 " '%s' は単一の文字列でなければなりません (クラス \"%s\" のオブジェクトでし"
 "た) "
 
-#: methods_list_dispatch.c:895
+#: methods_list_dispatch.c:901
 msgid "class should be either a character-string name or a class definition"
 msgstr " クラスは文字列の名前かクラス定義のどちらかでなければなりません "
 
-#: methods_list_dispatch.c:975
+#: methods_list_dispatch.c:981
 #, c-format
 msgid "failed to get the generic for the primitive \"%s\""
 msgstr " プリミティブな \"%s\" に対する総称 (generic) を得るのに失敗しました "
 
-#: methods_list_dispatch.c:982
+#: methods_list_dispatch.c:988
 #, c-format
 msgid ""
 "expected a generic function or a primitive for dispatch, got an object of "

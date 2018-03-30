@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -42,6 +42,10 @@ msgstr "程序包'Matrix'必需安装了以后才能用%s"
 msgid "values of 'x' must be distinct"
 msgstr "'x'的值不能有重复"
 
+#, fuzzy
+msgid "must have at least 'ord'=%d points"
+msgstr "至少需要有'ord'个结"
+
 msgid "'formula' must be of the form \"y ~ x\""
 msgstr "'formula'的格式必需为\"y ~ x\""
 
@@ -68,6 +72,9 @@ msgstr "'deriv'的值必需在零和%d之间"
 
 msgid "knot positions must be strictly increasing"
 msgstr "结的位置值必需严格递增"
+
+msgid "currently implemented only for cubic splines"
+msgstr ""
 
 msgid "spline must be monotone"
 msgstr "样条必需是单凋的"

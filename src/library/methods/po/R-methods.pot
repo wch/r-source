@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: methods 3.4.0\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
+"Project-Id-Version: methods 3.6.0\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -74,6 +74,9 @@ msgid "the member classes must be defined: not true of %s"
 msgstr ""
 
 msgid "unable to create union class:  could not set members %s"
+msgstr ""
+
+msgid "methods:::bind_activation() is defunct;\n rather provide methods for cbind2() / rbind2()"
 msgstr ""
 
 msgid "invalid argument 'name': %s"
@@ -481,6 +484,9 @@ msgstr ""
 msgid "Found more than one class \"%s\" in cache; using the first, from namespace '%s'"
 msgstr ""
 
+msgid "Also defined by"
+msgstr ""
+
 msgid "undefined subclass %s of class %s; definition not updated"
 msgstr ""
 
@@ -532,7 +538,7 @@ msgstr ""
 msgid "methods can add arguments to the generic %s only if '...' is an argument to the generic"
 msgstr ""
 
-msgid "arguments (%s) after '...' in the generic must appear in the method, in the same place at the end of the argument list"
+msgid "%s arguments (%s) after %s in the generic must appear in the method, in the same place at the end of the argument list"
 msgstr ""
 
 msgid "argument 'f' must be a string, generic function, or primitive: got an ordinary function"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
 "PO-Revision-Date: 2015-03-27 14:15+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -28,11 +28,6 @@ msgstr ""
 
 msgid "namespace found within global environments"
 msgstr ""
-
-msgid "'ns' must be a namespace or a namespace imports environment"
-msgstr ""
-" 'ns' はネームスペースか、あるいは環境をインポートしたネームスペースでなけれ"
-"ばなりません "
 
 msgid "bad assignment: %s"
 msgstr " 誤った付値: %s "
@@ -67,10 +62,6 @@ msgstr " 付値の誤り 2 "
 msgid "invalid function in complex assignment"
 msgstr " complex の付値に不正な関数があります "
 
-#, fuzzy
-msgid "is not a registered math1 function"
-msgstr " %s は登録された math1 関数ではありません "
-
 msgid "missing arguments are not allowed"
 msgstr " 引数の欠損は許されません "
 
@@ -93,6 +84,9 @@ msgid "more than one default provided in switch() call"
 msgstr " switch() 呼び出しの中で、デフォルト選択肢が 2 つ以上あります "
 
 msgid "'switch' with no alternatives"
+msgstr ""
+
+msgid "Error: compilation failed -"
 msgstr ""
 
 msgid "cannot compile a non-function"
@@ -122,6 +116,9 @@ msgstr " ファイル '%s' は存在しません "
 msgid "'%s' is not a valid compiler option"
 msgstr " '%s' は有効なコンパイルオプションではありません "
 
+msgid "invalid environment variable value: %s==%s"
+msgstr ""
+
 msgid "invalid compiler options: optimize(==%d)<2 and jitEnabled(==%d)>2"
 msgstr ""
 
@@ -134,6 +131,15 @@ msgstr " この式はコンパイルできません "
 msgid "local assignment to syntactic function: "
 msgid_plural "local assignments to syntactic functions: "
 msgstr[0] " シンタックス関数へのローカル付値です: "
+
+#~ msgid "'ns' must be a namespace or a namespace imports environment"
+#~ msgstr ""
+#~ " 'ns' はネームスペースか、あるいは環境をインポートしたネームスペースでなけ"
+#~ "ればなりません "
+
+#, fuzzy
+#~ msgid "is not a registered math1 function"
+#~ msgstr " %s は登録された math1 関数ではありません "
 
 #~ msgid "expected a single logical value for the S4 state flag"
 #~ msgstr "S4の状態フラグは, 単一の真偽値であるべきです "
