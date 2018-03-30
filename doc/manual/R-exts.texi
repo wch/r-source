@@ -4599,13 +4599,14 @@ A suitable test for packages using @CRANpkg{rJava} would be something like
 @example
 .jinit()
 jv <- .jcall("java/lang/System", "S", "getProperty", "java.runtime.version")
-if(substr(jv, 1L, 1L) == "1") @{
+if(substr(jv, 1L, 2L) == "1.") @{
   jvn <- as.numeric(paste0(strsplit(jv, "[.]")[[1L]][1:2], collapse = "."))
-  if(jvn < 1.8) stop("Java 8 is needed for this package but not available")
+  if(jvn < 1.8) stop("Java >= 8 is needed for this package but not available")
 @}
 @end example
 @noindent
-(Java 9 changed the format of this string.)
+(Java 9 changed the format of this string, and Java 10 gives @code{jv}
+as something like @samp{10+46}.)
 
 Note too that the compiler used to produce a @code{jar} can impose a minimum
 Java version, often resulting in an arcane message like
