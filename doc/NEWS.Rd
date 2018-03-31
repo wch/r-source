@@ -17,9 +17,6 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item Speedup of \code{getOption(*, <default>)} from \PR{17394},
-      thanks to Matt Dowle.
-
       \item \code{match.arg()} more carefully chooses the environment
       for constucting default \code{choices}, fixing \PR{17401} as
       proposed by Duncan Murdoch.

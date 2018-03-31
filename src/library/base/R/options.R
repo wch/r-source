@@ -19,8 +19,13 @@
 options <- function(...)
     .Internal(options(...))
 
-getOption <- function(x, default = NULL) {
-    ans <- .Internal(getOption(x))
-    ## not distinguishing an option that's NULL from a non-existing option
-    if(is.null(ans)) default else ans
+getOption <- function(x, default = NULL)
+{
+    ## To avoid always performing the %in%,
+    ## we use the original code if default is not specified.
+    ## if(missing(default)) return(options(x)[[1L]])
+    if(missing(default) || x %in% names(.Options))
+	.Internal(getOption(x))
+    else
+	default
 }

@@ -1707,6 +1707,13 @@ stopifnot(identical(f(), "a"))
 ## failed in R <= 3.4.x
 
 
+## getOption(op, def) -- where 'def' is missing (passed down):
+getO <- function(op, def) getOption(op, def)
+stopifnot(is.null(getO("foobar")))
+## failed for a few days in R-devel, when using MD's proposal of PR#17394,
+## notably "killing"  parallelMap::getParallelOptions()
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
