@@ -1690,6 +1690,13 @@ sort.int(1:3, decreasing = "TRUE")
 sort.int(1:3, decreasing = "FALSE")
 ## failed initially in ALTREP
 
+## check sort argument combinations
+sort(1:3, decreasing = TRUE, na.last = NA)
+sort(1:3, decreasing = TRUE, na.last = TRUE)
+sort(1:3, decreasing = TRUE, na.last = FALSE)
+sort(1:3, decreasing = FALSE, na.last = NA)
+sort(1:3, decreasing = FALSE, na.last = TRUE)
+sort(1:3, decreasing = FALSE, na.last = FALSE)
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

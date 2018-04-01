@@ -57,9 +57,7 @@
 \alias{.fixupGFortranStdout}
 #endif
 
-\alias{SORT_ENUM}
 \alias{isWrappable}
-\alias{.makeSortEnum}
 \alias{.doWrap}
 \title{Internal Objects in Package \pkg{base}}
 \description{% 'most': see e.g., .mapply
