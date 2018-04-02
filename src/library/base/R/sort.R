@@ -16,10 +16,7 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
-isWrappable <- function(x)
-    is.atomic(x) && mode(x) %in% c("integer", "numeric", "character")
-
-.doWrap <- local({
+.doSortWrap <- local({
     ## this matches the enum in Rinternals.h
     INCR_NA_1ST <-  2
     INCR        <-  1
@@ -54,6 +51,8 @@ isWrappable <- function(x)
         else vec
     }
 })
+## temporary, for sort.int and sort.list captured as S4 default methods
+.doWrap <- .doSortWrap
 
 sort <- function(x, decreasing = FALSE, ...)
 {
@@ -109,7 +108,7 @@ sort.int <-
                    method = "radix")
         y <- x[o]
 
-        y <- .doWrap(y, decreasing, na.last)
+        y <- .doSortWrap(y, decreasing, na.last)
         return(if (index.return) list(x = y, ix = o) else y)
     }
     else if (method == "auto" || !is.numeric(x))
@@ -171,7 +170,7 @@ sort.int <-
         y <- (if (isord) ordered else factor)(y, levels = seq_len(nlev),
             labels = lev)
     if (is.null(partial)) {
-        y <- .doWrap(y, decreasing, na.last)
+        y <- .doSortWrap(y, decreasing, na.last)
     }
     y
 }
