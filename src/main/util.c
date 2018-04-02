@@ -1492,8 +1492,8 @@ void R_fixslash(char *s)
 	}
     } else
 	for (; *p; p++) if (*p == '\\') *p = '/';
-	/* preserve network shares */
-	if(s[0] == '/' && s[1] == '/') s[0] = s[1] = '\\';
+    /* preserve network shares */
+    if(s[0] == '/' && s[1] == '/') s[0] = s[1] = '\\';
 }
 
 void R_UTF8fixslash(char *s)

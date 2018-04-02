@@ -2385,8 +2385,10 @@ static int do_copy(const wchar_t* from, const wchar_t* name, const wchar_t* to,
 	  nfail++;
 	  goto copy_error;
 	}
-	if(fp1) fclose(fp1); fp1 = NULL;
-	if(fp2) fclose(fp2); fp2 = NULL;
+	if(fp1) fclose(fp1);
+	fp1 = NULL;
+	if(fp2) fclose(fp2);
+	fp2 = NULL;
 	/* FIXME: perhaps manipulate mode as we do in Sys.chmod? */
 	if(perms) _wchmod(dest, sb.st_mode & 0777);
 	if(dates) copyFileTime(this, dest);
