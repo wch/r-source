@@ -6168,17 +6168,13 @@ Rboolean attribute_hidden R_BCVersionOK(SEXP s)
 	(version >= R_bcMinVersion && version <= R_bcVersion);
 }
 
-static R_INLINE Rboolean FIND_ON_STACK(SEXP x, R_bcstack_t *base,
-				       int skip, int crude)
+static R_INLINE Rboolean FIND_ON_STACK(SEXP x, R_bcstack_t *base, int skip)
 {
     /* Check whether the value is on the stack before modifying.  If
-       'crude' is true possible existence of BCNALLOC is ignored,
-       which could result in false positives avoids checking and
-       branching. If 'skip' is true the top value on the stack is
-       ignored. LT */
+       'skip' is true the top value on the stack is ignored. LT */
     R_bcstack_t *checktop = skip ? R_BCNodeStackTop - 1 : R_BCNodeStackTop;
     for (R_bcstack_t *p = base; p < checktop; p++) {
-	if (crude && p->tag == RAWMEM_TAG)
+	if (p->tag == RAWMEM_TAG)
 	    p += p->u.ival;
 	else if (p->u.sxpval == x && p->tag == 0)
 	    return TRUE;
@@ -6542,7 +6538,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 		   branching. LT */
 		int tag = s->tag;
 		if (R_BCNodeStackTop - vcache_top > MAX_ON_STACK_CHECK ||
-		    FIND_ON_STACK(x, vcache_top, TRUE, TRUE))
+		    FIND_ON_STACK(x, vcache_top, TRUE))
 		    tag = 0;		
 
 		switch (tag) {
@@ -6852,7 +6848,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	    value = EnsureLocal(symbol, rho);
 
 	if (MAYBE_REFERENCED(value) &&
-	    FIND_ON_STACK(value, vcache_top, FALSE, FALSE))
+	    FIND_ON_STACK(value, vcache_top, FALSE))
 	    value = shallow_duplicate(value);
 
 	BCNPUSH(value);
@@ -7193,7 +7189,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	(IS_STACKVAL_BOXED(idx) &&				\
 	 MAYBE_SHARED(GETSTACK_SXPVAL_PTR(R_BCNodeStackTop + (idx))))
 #define STACKVAL_IS_ON_STACK(idx)					\
-	FIND_ON_STACK(GETSTACK_SXPVAL(idx), vcache_top, TRUE, FALSE)
+	FIND_ON_STACK(GETSTACK_SXPVAL(idx), vcache_top, TRUE)
 
 	if (STACKVAL_MAYBE_REFERENCED(-1) &&
 	    (STACKVAL_MAYBE_SHARED(-1) ||
