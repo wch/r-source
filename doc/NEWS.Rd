@@ -12,7 +12,7 @@
       \item All packages are by default byte-compiled on installation.
       This makes the installed packages larger (usually marginally so)
       and may affect the format of messages and tracebacks (which often
-      exclude \code{.Cal}l and similar).
+      exclude \code{.Call} and similar).
     }
   }
 
@@ -254,9 +254,9 @@
 
       \item \code{write.dcf()} gets optional argument \code{useBytes}.
 
-      \item New function \code{packageDate()} which tries to get a valid
-      \code{"Date"} object from a package \file{DESCRIPTION} file,
-      thanks to suggestions in \PR{17324}.
+      \item New, partly experimental \code{packageDate()} which tries to
+      get a valid \code{"Date"} object from a package \file{DESCRIPTION}
+      file, thanks to suggestions in \PR{17324}.
 
       \item \code{tools::resaveRdaFiles()} gains a \code{version}
       argument, for use when packages should remain compatible with
@@ -4371,7 +4371,7 @@
 
       \item \code{as.environment(list())} now works, and
       \code{as.list()} of such an environment is now the same as
-      \code{list()}.
+      \code{list()}. (\PR{15926})
 
       \item Several \pkg{tcltk} functions failed when run in unusual
       environments. (\PR{15970})
