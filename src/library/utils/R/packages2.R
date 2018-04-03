@@ -395,16 +395,16 @@ install.packages <-
         binvers <- av2[bins, "Version"]
 
         ## In most cases, packages that need compilation have non-NA "Archs"
-        ## in their binary version and "NeedsCompilation" with value
-        ## "yes"/"Yes" in their source version.  However, the fields are not
-        ## always filled in correctly and some binary packages have
-        ## executable code outside "libs" (so "Archs" is NA), also a later
-        ## version of a package may need compilation but an older one not. 
-        ## To reduce the risk that the user will attempt to install a
-        ## package from source but without having the necessary tools to
-        ## build it, packages are treated as needing compilation whenever
-        ## they have non-NA "Archs" in binary version or/and non-"no"
-        ## "NeedsCompilation" in source version.
+        ## in their binary version and "NeedsCompilation" with value "yes"
+        ## in their source version.  However, the fields are not always
+        ## filled in correctly and some binary packages have executable code
+        ## outside "libs" (so "Archs" is NA), also a later version of a
+        ## package may need compilation but an older one not.  To reduce the
+        ## risk that the user will attempt to install a package from source
+        ## but without having the necessary tools to build it, packages are
+        ## treated as needing compilation whenever they have non-NA "Archs"
+        ## in binary version or/and "NeedsCompilation"="yes" in source
+        ## version.
 
         hasArchs <-  !is.na(av2[bins, "Archs"])
         needsCmp <- !(available[bins, "NeedsCompilation"] %in% "no")
