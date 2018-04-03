@@ -102,3 +102,9 @@ stopifnot(identical(p, pp))
 stopifnot(all(sapply(compiler:::safeBaseInternals,
                      function(f)
                      compiler:::is.simpleInternal(get(f, "package:base")))))
+
+## Optimization level 3 was wrong for ~ 3 weeks from c74403 (2018-03-14) till c74510
+foo <- function() { c("bar" = TRUE) }
+(r <- cmpfun(foo, options=list(optimize = 3))())
+stopifnot(identical(r, c(bar = TRUE)))
+
