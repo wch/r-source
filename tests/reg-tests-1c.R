@@ -1578,6 +1578,16 @@ options(op)
 ## for R <= 3.3.z
 
 
+## check for incorect inlining of named logicals
+foo <- compiler::cmpfun(function() c("bar" = TRUE),
+                        options = list(optimize = 3))
+stopifnot(identical(names(foo()), "bar"))
+foo <- compiler::cmpfun(function() c("bar" = FALSE),
+                        options = list(optimize = 3))
+stopifnot(identical(names(foo()), "bar"))
+## Failed after changes to use isTRUE/isFALSE instead of identical in r74403.
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
