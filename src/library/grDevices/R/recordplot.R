@@ -1,7 +1,7 @@
 #  File src/library/grDevices/R/recordplot.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -36,11 +36,18 @@ replayPlot <- function(x, reloadPkgs=FALSE)
         stop(gettextf("argument is not of class %s", dQuote("recordedplot")),
              domain = NA)
     pid <- attr(x, "pid") ## added after R 3.0.2
-    if (is.null(pid) || pid != Sys.getpid()) {
+    if (doRestore <- (is.null(pid) || pid != Sys.getpid())) {
         # This is a "recordedplot" loaded from another session
         x <- restoreRecordedPlot(x, reloadPkgs)
     }
-    invisible(.External2(C_playSnapshot, x))
+    r <- tryCatch(.External2(C_playSnapshot, x), error = function(e) {
+        if(doRestore)
+            stop("invalid \"recordedplot\": ", conditionMessage(e))
+        ## else: typically deserialized recordedplot from this session:
+        .External2(C_playSnapshot,
+                   restoreRecordedPlot(x, reloadPkgs))
+    })
+    invisible(r)
 }
 
 print.recordedplot <- function(x, ...)
@@ -54,8 +61,8 @@ print.recordedplot <- function(x, ...)
 # - warn if have R version mismatch
 # - restore NativeSymbolInfo on each element of the snapshot display list
 # - bail out gracefully if something is not right
-restoreRecordedPlot <- function(x, reloadPkgs) {
-    snapshotRversion <- attr(x, "Rversion")
+restoreRecordedPlot <- function(plot, reloadPkgs) {
+    snapshotRversion <- attr(plot, "Rversion")
     if (is.null(snapshotRversion)) {
         warning("snapshot recorded in different R version (pre 3.3.0)")
     } else if (snapshotRversion != getRversion()) {
@@ -65,35 +72,30 @@ restoreRecordedPlot <- function(x, reloadPkgs) {
     # Ensure that all graphics systems in the snapshot are available
     # (snapshots only started recording pkgName in R 3.3.0)
     # Similar for any 'pkgs' saved with the snapshot
-    n <- length(x)
-    if (n > 1 &&
-        !is.null(snapshotRversion) &&
+    if (!is.null(snapshotRversion) &&
         snapshotRversion >= R_system_version("3.3.0")) {
-        for (i in 2:n) {
-            library(attr(x[[i]], "pkgName"), character.only=TRUE)
+        for (i in seq_along(plot)[-1]) { # " 2:length(plot) "
+            library(attr(plot[[i]], "pkgName"), character.only=TRUE)
         }
         if (reloadPkgs) {
-            load <- attr(x, "load")
+            load <- attr(plot, "load")
             for (i in load) {
                 loadNamespace(i)
             }
-            attach <- attr(x, "attach")
+            attach <- attr(plot, "attach")
             for (i in attach) {
                 library(i, character.only=TRUE)
             }
         }
     }
     # The display list is the first component of the snapshot
-    plot <- x
-    for (i in 1:length(plot[[1]])) {
+    for (i in seq_along(plot[[1]])) {
         # get the symbol then test if it's a native symbol
-        symbol <- plot[[1]][[i]][[2]][[1]]
-        if ("NativeSymbolInfo" %in% class(symbol)) {
+        symbol <- plot[[c(1L, i, 2L, 1L)]]
+        if (inherits(symbol, "NativeSymbolInfo")) {
             # determine the dll that the symbol lives in
-            if (!is.null(symbol$package))
-                name <- symbol$package[["name"]]
-            else
-                name <- symbol$dll[["name"]]
+            name <- (if(!is.null(symbol$package))
+                         symbol$package else symbol$dll)[["name"]]
             pkgDLL <- getLoadedDLLs()[[name]]
             # reconstruct the native symbol and assign it into the plot
             # This will error out if it fails to find the symbol, which
@@ -109,7 +111,7 @@ restoreRecordedPlot <- function(x, reloadPkgs) {
             if (nativeSymbol$numParameters != symbol$numParameters) {
                 stop("snapshot contains invalid graphics call")
             }
-            plot[[1]][[i]][[2]][[1]] <- nativeSymbol
+            plot[[c(1L, i, 2L, 1L)]] <- nativeSymbol
         }
     }
     plot

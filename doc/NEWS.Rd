@@ -20,6 +20,10 @@
       \item \code{match.arg()} more carefully chooses the environment
       for constucting default \code{choices}, fixing \PR{17401} as
       proposed by Duncan Murdoch.
+
+      \item \code{replayPlot(r)} now also works in the same \R session
+      when \code{r} has been \dQuote{reproduced} from serialization,
+      typically after saving to and reading from an RDS file.
     }
   }
 }
@@ -273,9 +277,9 @@
 
       \item \code{write.dcf()} gets optional argument \code{useBytes}.
 
-      \item New function \code{packageDate()} which tries to get a valid
-      \code{"Date"} object from a package \file{DESCRIPTION} file,
-      thanks to suggestions in \PR{17324}.
+      \item New, partly experimental \code{packageDate()} which tries to
+      get a valid \code{"Date"} object from a package \file{DESCRIPTION}
+      file, thanks to suggestions in \PR{17324}.
 
       \item \code{tools::resaveRdaFiles()} gains a \code{version}
       argument, for use when packages should remain compatible with
@@ -4390,7 +4394,7 @@
 
       \item \code{as.environment(list())} now works, and
       \code{as.list()} of such an environment is now the same as
-      \code{list()}.
+      \code{list()}. (\PR{15926})
 
       \item Several \pkg{tcltk} functions failed when run in unusual
       environments. (\PR{15970})
