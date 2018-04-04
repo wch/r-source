@@ -634,6 +634,10 @@
 
       \item Using \code{ \\usage\{ data(<name>, package="<pkg>") \} }
       no longer produces \command{R CMD check} warnings.
+
+      \item \code{match.arg()} more carefully chooses the environment
+      for constucting default \code{choices}, fixing \PR{17401} as
+      proposed by Duncan Murdoch.
     }
   }
 }
