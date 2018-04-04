@@ -409,6 +409,10 @@
 
       \item C99 functions \code{expm1}, \code{hypot}, \code{log1p} and
       \code{nearbyint} are now required.
+
+      \item \command{configure} sets the \option{-std} flag for the C++
+      compiler for all supported C++ standards (e.g., \option{-std=gnu++11}
+      for the C++11 compiler).
     }
   }
 
