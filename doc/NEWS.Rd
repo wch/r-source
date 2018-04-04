@@ -9,18 +9,12 @@
 
    \subsection{NEW FEATURES}{
     \itemize{
-      \item \code{optim(*, control = list(warn.1d.NelderMead = FALSE))}
-      allows to turn off the warning when applying the default
-      \code{"Nelder-Mead"} method to 1-dimensional problems.
+      \item (none yet)%place holder
     }
   }
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item \code{match.arg()} more carefully chooses the environment
-      for constucting default \code{choices}, fixing \PR{17401} as
-      proposed by Duncan Murdoch.
-
       \item \code{replayPlot(r)} now also works in the same \R session
       when \code{r} has been \dQuote{reproduced} from serialization,
       typically after saving to and reading from an RDS file.
@@ -380,6 +374,10 @@
       \item The \code{"Date"} and \dQuote{date-time} classes
       \code{"POSIXlt"} and \code{"POSIXct"} now have a working
       \code{`length<-`} method, as wished in \PR{17387}.
+
+      \item \code{optim(*, control = list(warn.1d.NelderMead = FALSE))}
+      allows to turn off the warning when applying the default
+      \code{"Nelder-Mead"} method to 1-dimensional problems.
     }
   }
 
@@ -653,6 +651,10 @@
 
       \item Using \code{ \\usage\{ data(<name>, package="<pkg>") \} }
       no longer produces \command{R CMD check} warnings.
+
+      \item \code{match.arg()} more carefully chooses the environment
+      for constucting default \code{choices}, fixing \PR{17401} as
+      proposed by Duncan Murdoch.
     }
   }
 }
