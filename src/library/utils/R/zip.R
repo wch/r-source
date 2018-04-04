@@ -69,11 +69,13 @@ unzip <-
             z[, "Date"] <- zz
             z[c("Name", "Length", "Date")]
         } else {
-            ## -n -o -q are supported in Unzip 5.52 and 6.00
+            ## -n -o -q -j are supported in Unzip 5.52 and 6.00
+            args <- character()
+            if (junkpaths) args <- c(args, "-j")
             if (overwrite)
-                args <- c("-oq", shQuote(zipfile))
+                args <- c(args, "-oq", shQuote(zipfile))
             else
-                args <- c("-nq", shQuote(zipfile))
+                args <- c(args, "-nq", shQuote(zipfile))
             if (length(files)) args <- c(args, shQuote(files))
             if (exdir != ".") args <- c(args, "-d", shQuote(exdir))
             ## there is an unzip clone about that does not respect -q
