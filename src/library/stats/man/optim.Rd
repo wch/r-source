@@ -41,7 +41,7 @@ optimHess(par, fn, gr = NULL, \dots, control = list())
  \item{method}{The method to be used. See \sQuote{Details}.  Can be abbreviated.}
  \item{lower, upper}{Bounds on the variables for the \code{"L-BFGS-B"}
    method, or bounds in which to \emph{search} for method \code{"Brent"}.}
- \item{control}{A list of control parameters. See \sQuote{Details}.}
+ \item{control}{a \code{\link{list}} of control parameters.  See \sQuote{Details}.}
  \item{hessian}{Logical. Should a numerically differentiated Hessian
    matrix be returned?}
 }
@@ -155,7 +155,12 @@ optimHess(par, fn, gr = NULL, \dots, control = list())
       \code{"L-BFGS-B"} and \code{"SANN"} methods if \code{control$trace}
       is positive. Defaults to every 10 iterations for \code{"BFGS"} and
       \code{"L-BFGS-B"}, or every 100 temperatures for \code{"SANN"}.}
-    \item{\code{type}}{for the conjugate-gradients method. Takes value
+    \item{\code{warn.1d.NelderMead}}{a \code{\link{logical}} indicating
+      if the (default) \code{"Nelder-Mean"} method should signal a
+      warning when used for one-dimensional minimization.  As the
+      warning is sometimes inappropriate, you can suppress it by setting
+      this option to false.}
+    \item{\code{type}}{for the conjugate-gradients method.  Takes value
       \code{1} for the Fletcher--Reeves update, \code{2} for
       Polak--Ribiere and \code{3} for Beale--Sorenson.}
     \item{\code{lmm}}{is an integer giving the number of BFGS updates
@@ -254,7 +259,7 @@ optimHess(par, fn, gr = NULL, \dots, control = list())
   Nash, J. C. (1990).
   \emph{Compact Numerical Methods for Computers. Linear Algebra and
     Function Minimisation}.
-  Adam Hilger. 
+  Adam Hilger.
 
   Nelder, J. A. and Mead, R. (1965).
   A simplex algorithm for function minimization.
@@ -359,6 +364,14 @@ plot(x, y, type = "n", asp = 1, xlab = "", ylab = "",
 arrows(tspres[s,1], tspres[s,2], tspres[s+1,1], tspres[s+1,2],
        angle = 10, col = "red")
 text(x, y, labels(eurodist), cex = 0.8)
+
+## 1-D minimization: "Brent" or optimize() being preferred.. but NM may be ok and "unavoidable",
+## ----------------   so we can suppress the check+warning :
+system.time(rO <- optimize(function(x) (x-pi)^2, c(0, 10)))
+system.time(ro <- optim(1, function(x) (x-pi)^2, control=list(warn.1d.NelderMead = FALSE)))
+rO$minimum - pi # 0 (perfect), on one platform
+ro$par - pi     # ~= 1.9e-4    on one platform
+utils::str(ro)
 }}
 \keyword{nonlinear}
 \keyword{optimize}

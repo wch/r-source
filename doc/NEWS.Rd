@@ -357,6 +357,10 @@
       \item The \code{"Date"} and \dQuote{date-time} classes
       \code{"POSIXlt"} and \code{"POSIXct"} now have a working
       \code{`length<-`} method, as wished in \PR{17387}.
+
+      \item \code{optim(*, control = list(warn.1d.NelderMead = FALSE))}
+      allows to turn off the warning when applying the default
+      \code{"Nelder-Mead"} method to 1-dimensional problems.
     }
   }
 
