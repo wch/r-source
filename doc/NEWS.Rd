@@ -9,7 +9,9 @@
 
    \subsection{NEW FEATURES}{
     \itemize{
-      \item (none yet)%place holder
+      \item \code{matplot(.., panel.first = .)} etc now work, as
+      \code{log} becomes explicit argument and \code{...} is passed to
+      \code{plot()} unevaluated, as suggested by Sebastian Meyer in \PR{17386}.
     }
   }
 
