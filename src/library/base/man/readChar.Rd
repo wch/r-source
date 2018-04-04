@@ -104,18 +104,19 @@ writeChar(object, con, nchars = nchar(object, type = "chars"),
 }
 \examples{
 ## test fixed-length strings
-zz <- file("testchar", "wb")
+zzfil <- tempfile(fileext = "testchar")
+zz <- file(zzfil, "wb")
 x <- c("a", "this will be truncated", "abc")
 nc <- c(3, 10, 3)
 writeChar(x, zz, nc, eos = NULL)
 writeChar(x, zz, eos = "\r\n")
 close(zz)
 
-zz <- file("testchar", "rb")
+zz <- file(zzfil, "rb")
 readChar(zz, nc)
 readChar(zz, nchar(x)+3) # need to read the terminator explicitly
 close(zz)
-unlink("testchar")
+unlink(zzfil)
 }
 \keyword{file}
 \keyword{connection}

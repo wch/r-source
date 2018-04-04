@@ -54,8 +54,9 @@ count.fields(file, sep = "", quote = "\"'", skip = 0,
   \code{\link{read.table}}
 }
 \examples{
-cat("NAME", "1:John", "2:Paul", file = "foo", sep = "\n")
-count.fields("foo", sep = ":")
-unlink("foo")
+fil <- tempfile(fileext = "foo")
+cat("NAME", "1:John", "2:Paul", file = fil, sep = "\n")
+count.fields(fil, sep = ":")
+unlink(fil)
 }
 \keyword{file}

@@ -13,8 +13,9 @@ write(x, file = "data",
 \alias{write}
 \arguments{
   \item{x}{the data to be written out, usually an atomic vector.}
-  \item{file}{A connection, or a character string naming the file to write to.
-    If \code{""}, print to the standard output connection.
+  \item{file}{a \code{\link{connection}}, or a character string naming
+    the file to write to.  If \code{""}, print to the standard output
+    connection.
 #ifdef unix
     If it is \code{"|cmd"}, the output is piped to the command given
     by \file{cmd}.
@@ -48,14 +49,16 @@ write(x, file = "data",
 # create a 2 by 5 matrix
 x <- matrix(1:10, ncol = 5)
 
+fil <- tempfile(fileext = "data")
 # the file data contains x, two rows, five cols
 # 1 3 5 7 9 will form the first row
-write(t(x))
+write(t(x), file = fil)
+if(interactive()) file.show(fil)
+unlink(fil) # tidy up
 
 # Writing to the "console" 'tab-delimited'
 # two rows, five cols but the first row is 1 2 3 4 5
 write(x, "", sep = "\t")
-unlink("data") # tidy up
 }
 \keyword{file}
 \keyword{connection}
