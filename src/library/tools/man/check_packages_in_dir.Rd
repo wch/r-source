@@ -27,7 +27,7 @@ check_packages_in_dir(dir,
                       ...)
 
 summarize_check_packages_in_dir_results(dir, all = TRUE,
-                                        full = FALSE)
+                                        full = FALSE, ...)
 summarize_check_packages_in_dir_timings(dir, all = FALSE,
                                         full = FALSE)
 summarize_check_packages_in_dir_depends(dir, all = FALSE,
@@ -36,8 +36,8 @@ summarize_check_packages_in_dir_depends(dir, all = FALSE,
                                                   "LinkingTo"))
 
 check_packages_in_dir_changes(dir, old,
-                              outputs = FALSE, sources = FALSE)
-check_packages_in_dir_details(dir, logs = NULL, drop_ok = TRUE)
+                              outputs = FALSE, sources = FALSE, ...)
+check_packages_in_dir_details(dir, logs = NULL, drop_ok = TRUE, ...)
 }
 \arguments{
   \item{dir}{a character string giving the path to the directory with
@@ -70,7 +70,9 @@ check_packages_in_dir_details(dir, logs = NULL, drop_ok = TRUE)
     installation and checking.}
   \item{clean}{a logical indicating whether to remove the downloaded
     reverse dependency sources.}
-  \item{...}{currently not used.}
+  \item{...}{passed to \code{\link{readLines}}, e.g. for reading log files 
+    produced in a different encoding; currently not used by 
+    \code{check_packages_in_dir}.}
   \item{all}{a logical indicating whether to also summarize the reverse
     dependencies checked.}
   \item{full}{a logical indicating whether to also give details for

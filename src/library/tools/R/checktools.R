@@ -533,14 +533,14 @@ function(dir, all = FALSE, which = c("Depends", "Imports", "LinkingTo"))
 ### ** summarize_check_packages_in_dir_results
 
 summarize_check_packages_in_dir_results <-
-function(dir, all = TRUE, full = FALSE)
+function(dir, all = TRUE, full = FALSE, ...)
 {
     dir <- normalizePath(dir)
     outdirs <- R_check_outdirs(dir, all = all)
     logs <- file.path(outdirs, "00check.log")
     logs <- logs[file_test("-f", logs)]
 
-    results <- check_packages_in_dir_results(logs = logs)
+    results <- check_packages_in_dir_results(logs = logs, ...)
 
     writeLines("Check status summary:")
     tab <- check_packages_in_dir_results_summary(results)
@@ -626,7 +626,7 @@ function(dir, all = FALSE, full = FALSE)
 ## </FIXME>
 
 check_packages_in_dir_results <-
-function(dir, logs = NULL)
+function(dir, logs = NULL, ...)
 {
     if(is.null(logs))
         logs <- Sys.glob(file.path(dir, "*.Rcheck", "00check.log"))
@@ -636,8 +636,8 @@ function(dir, logs = NULL)
     ## available?
     ## </NOTE>
 
-    results <- lapply(logs, function(log) {
-        lines <- read_check_log(log)
+    results <- lapply(logs, function(log, ...) {
+        lines <- read_check_log(log, ...)
         ## See analyze_lines() inside analyze_check_log():
         re <- "^\\* (loading checks for arch|checking (examples|tests) \\.\\.\\.$)"
         pos <- grep(re, lines, perl = TRUE, useBytes = TRUE)
@@ -659,7 +659,7 @@ function(dir, logs = NULL)
                 "OK"
             }
         list(status = status, lines = lines[ind])
-    })
+    }, ...)
     names(results) <- sub("\\.Rcheck$", "", basename(dirname(logs)))
 
     results
@@ -687,9 +687,9 @@ function(results)
 ### ** read_check_log
 
 read_check_log <-
-function(log, drop = TRUE)
+function(log, drop = TRUE, ...)
 {
-    lines <- readLines(log, warn = FALSE)
+    lines <- readLines(log, warn = FALSE, ...)
 
     if(drop) {
         ## Drop CRAN check status footer.
@@ -728,7 +728,7 @@ function(log, drop = TRUE)
 ## </FIXME>
 
 analyze_check_log <-
-function(log, drop_ok = TRUE)
+function(log, drop_ok = TRUE, ...)
 {
     make_results <- function(package, version, flags, chunks)
         list(Package = package, Version = version,
@@ -756,7 +756,7 @@ function(log, drop_ok = TRUE)
     }
 
     ## Start by reading in.
-    lines <- read_check_log(log)
+    lines <- read_check_log(log, ...)
 
     ## Re-encode to UTF-8 using the session charset info.
     ## All regexp computations will be done using perl = TRUE and
@@ -927,15 +927,15 @@ function(log, drop_ok = TRUE)
 ### ** check_packages_in_dir_details
 
 check_packages_in_dir_details <-
-function(dir, logs = NULL, drop_ok = TRUE)
+function(dir, logs = NULL, drop_ok = TRUE, ...)
 {
     ## Build a data frame with columns
     ##   Package Version Check Status Output Flags
     ## and some optimizations (in particular, Check Status Flags can be
     ## factors).
 
-    db_from_logs <- function(logs, drop_ok) {
-        out <- lapply(logs, analyze_check_log, drop_ok)
+    db_from_logs <- function(logs, drop_ok, ...) {
+        out <- lapply(logs, analyze_check_log, drop_ok, ...)
         out <- out[lengths(out) > 0L]
         if(!length(out))
             return(matrix(character(), ncol = 6L))
@@ -956,7 +956,7 @@ function(dir, logs = NULL, drop_ok = TRUE)
         logs <- Sys.glob(file.path(dir, "*.Rcheck", "00check.log"))
     }
 
-    db <- db_from_logs(logs, drop_ok)
+    db <- db_from_logs(logs, drop_ok, ...)
     colnames(db) <- c("Package", "Version", "Check", "Status",
                       "Output", "Flags")
 
@@ -1026,7 +1026,7 @@ function(x, ...)
 ### ** check_packages_in_dir_changes
 
 check_packages_in_dir_changes <-
-function(dir, old, outputs = FALSE, sources = FALSE)
+function(dir, old, outputs = FALSE, sources = FALSE, ...)
 {
     dir <- if(inherits(dir, "check_packages_in_dir"))
         dir <- attr(dir, "dir")
@@ -1036,7 +1036,7 @@ function(dir, old, outputs = FALSE, sources = FALSE)
     outdirs <- R_check_outdirs(dir, all = sources, invert = TRUE)
     logs <- file.path(outdirs, "00check.log")
     logs <- logs[file_test("-f", logs)]
-    new <- check_packages_in_dir_details(logs = logs, drop_ok = FALSE)
+    new <- check_packages_in_dir_details(logs = logs, drop_ok = FALSE, ...)
 
     ## Use
     ##   old = tools:::CRAN_check_details(FLAVOR)
