@@ -1438,9 +1438,7 @@ AC_DEFUN([R_PROG_OBJCXX],
 [AC_BEFORE([AC_PROG_CXX], [$0])
 AC_BEFORE([AC_PROG_OBJC], [$0])
 
-AC_MSG_CHECKING([for Objective C++ compiler])
 AC_CACHE_VAL([r_cv_OBJCXX],[
-AC_MSG_RESULT([trying some possibilities])
 if test -n "${OBJCXX}"; then
   R_PROG_OBJCXX_WORKS(${OBJCXX},,OBJCXX='')
 fi
@@ -1455,6 +1453,7 @@ fi
 r_cv_OBJCXX="${OBJCXX}"
 ])
 OBJCXX="${r_cv_OBJCXX}"
+AC_MSG_CHECKING([for Objective C++ compiler])
 if test -z "${OBJCXX}"; then
   AC_MSG_RESULT([no working ObjC++ compiler found])
 else
