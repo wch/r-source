@@ -39,7 +39,9 @@ promptData(object, filename = NULL, name = NULL)
 }
 \seealso{\code{\link{prompt}}}
 \examples{
+\dontshow{oldwd <- setwd(tempdir())}
 promptData(sunspots)
 unlink("sunspots.Rd")
+\dontshow{setwd(oldwd)}
 }
 \keyword{documentation}

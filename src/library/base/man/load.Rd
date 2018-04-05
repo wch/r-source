@@ -1,6 +1,6 @@
 % File src/library/base/man/load.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{load}
@@ -87,31 +87,30 @@ load(file, envir = parent.frame(), verbose = FALSE)
 }
 \examples{
 ## save all data
+\dontshow{oldwd <- setwd(tempdir())}
 xx <- pi # to ensure there is some data
-save(list = ls(all = TRUE), file= "all.RData")
+save(list = ls(all = TRUE), file= "all.rda")
 rm(xx)
 
 ## restore the saved values to the current environment
 local({
-   load("all.RData")
+   load("all.rda")
    ls()
 })
 
 xx <- exp(1:3)
 ## restore the saved values to the user's workspace
-load("all.RData") ## which is here *equivalent* to
-## load("all.RData", .GlobalEnv)
+load("all.rda") ## which is here *equivalent* to
+## load("all.rda", .GlobalEnv)
 ## This however annihilates all objects in .GlobalEnv with the same names !
 xx # no longer exp(1:3)
 rm(xx)
-attach("all.RData") # safer and will warn about masked objects w/ same name in .GlobalEnv
+attach("all.rda") # safer and will warn about masked objects w/ same name in .GlobalEnv
 ls(pos = 2)
 ##  also typically need to cleanup the search path:
-detach("file:all.RData")
-
-## clean up (the example):
-unlink("all.RData")
-
+detach("file:all.rda")
+unlink("all.rda")
+\dontshow{setwd(oldwd)}
 \dontrun{
 con <- url("http://some.where.net/R/data/example.rda")
 ## print the value to see what objects were created.

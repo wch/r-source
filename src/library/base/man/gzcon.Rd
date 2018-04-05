@@ -63,19 +63,22 @@ dat[1:4, ]
 ## gzfile and gzcon can inter-work.
 ## Of course here one would use gzfile, but file() can be replaced by
 ## any other connection generator.
-zz <- gzfile("ex.gz", "w")
+zzfil <- tempfile(fileext = ".gz")
+zz <- gzfile(zzfil, "w")
 cat("TITLE extra line", "2 3 5 7", "", "11 13 17", file = zz, sep = "\n")
 close(zz)
-readLines(zz <- gzcon(file("ex.gz", "rb")))
+readLines(zz <- gzcon(file(zzfil, "rb")))
 close(zz)
-unlink("ex.gz")
+unlink(zzfil)
+
 % Cygwin seems to require a different name
-zz <- gzcon(file("ex2.gz", "wb"))
+zzfil2 <- tempfile(fileext = ".gz")
+zz <- gzcon(file(zzfil2, "wb"))
 cat("TITLE extra line", "2 3 5 7", "", "11 13 17", file = zz, sep = "\n")
 close(zz)
-readLines(zz <- gzfile("ex2.gz"))
+readLines(zz <- gzfile(zzfil2))
 close(zz)
-unlink("ex2.gz")
+unlink(zzfil2)
 }
 \keyword{file}
 \keyword{connection}

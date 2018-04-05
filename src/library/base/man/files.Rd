@@ -218,23 +218,31 @@ Sys.junction(from, to)
 }
 
 \examples{
-cat("file A\n", file = "A")
-cat("file B\n", file = "B")
-file.append("A", "B")
-file.create("A")
-file.append("A", rep("B", 10))
-if(interactive()) file.show("A")
-file.copy("A", "C")
-dir.create("tmp")
-file.copy(c("A", "B"), "tmp")
-list.files("tmp")
+\dontshow{origwd <- getwd()}
+A <- file.path(tempdir(), "A")
+B <- file.path(tempdir(), "B")
+cat("file A\n", file = A)
+cat("file B\n", file = B)
+file.append(A, B)
+file.create(A) # (trashing previous)
+file.append(A, rep(B, 10))
+if(interactive()) file.show(A) # -> the 10 lines from 'B'
+C <- file.path(tempdir(), "C")
+file.copy(A, C)
+tdir <- file.path(tempdir(), "tmp")
+dir.create(tdir)
+file.copy(c(A, B), tdir)
+list.files(tdir) # -> "A" and "B"
 #ifdef unix
-setwd("tmp")
-file.remove("B")
+setwd(tdir)
+file.remove("A") # the tempdir()/A file
 file.symlink(file.path("..", c("A", "B")), ".")
-setwd("..")
+                     # |--> (TRUE,FALSE) : ok for A but not B as it exists already
 #endif
+setwd(tempdir())
 unlink("tmp", recursive = TRUE)
 file.remove("A", "B", "C")
+unlink(c(A, B, C))
+\dontshow{setwd(origwd)}
 }
 \keyword{file}

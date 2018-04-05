@@ -1,6 +1,6 @@
 % File src/library/utils/man/Sweave.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Sweave}
@@ -119,11 +119,12 @@ Stangle(file, driver = Rtangle(),
 
 \examples{
 testfile <- system.file("Sweave", "Sweave-test-1.Rnw", package = "utils")
+\dontshow{oldwd <- setwd(tempdir()) # so we will write only to a temp directory}
 
 ## enforce par(ask = FALSE)
 options(device.ask.default = FALSE)
 
-## create a LaTeX file
+## create a LaTeX file - in the current working directory, getwd():
 Sweave(testfile)
 
 ## This can be compiled to PDF by
@@ -143,6 +144,9 @@ Stangle(testfile)
 ## which can be sourced, e.g.
 source("Sweave-test-1.R")
 
-\dontshow{if(!interactive()) unlink("Sweave-test-1*")}
+\dontshow{
+if(!interactive()) unlink("Sweave-test-1*")
+setwd(oldwd)
+}
 }
 \keyword{utilities}
