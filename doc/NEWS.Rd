@@ -20,6 +20,8 @@
       \item \code{replayPlot(r)} now also works in the same \R session
       when \code{r} has been \dQuote{reproduced} from serialization,
       typically after saving to and reading from an RDS file.
+      \item \code{substr()} and \code{substring()} now signal error when
+      the input is invalid UTF-8.
     }
   }
 }
