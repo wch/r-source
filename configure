@@ -8455,14 +8455,10 @@ fi
 
 
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for Objective C++ compiler" >&5
-$as_echo_n "checking for Objective C++ compiler... " >&6; }
 if ${r_cv_OBJCXX+:} false; then :
   $as_echo_n "(cached) " >&6
 else
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: trying some possibilities" >&5
-$as_echo "trying some possibilities" >&6; }
 if test -n "${OBJCXX}"; then
   { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether ${OBJCXX} can compile ObjC++" >&5
 $as_echo_n "checking whether ${OBJCXX} can compile ObjC++... " >&6; }
@@ -8592,6 +8588,8 @@ r_cv_OBJCXX="${OBJCXX}"
 fi
 
 OBJCXX="${r_cv_OBJCXX}"
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for Objective C++ compiler" >&5
+$as_echo_n "checking for Objective C++ compiler... " >&6; }
 if test -z "${OBJCXX}"; then
   { $as_echo "$as_me:${as_lineno-$LINENO}: result: no working ObjC++ compiler found" >&5
 $as_echo "no working ObjC++ compiler found" >&6; }
@@ -25268,7 +25266,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:25271: \"$ac_link\") >&5
+(eval echo $as_me:25269: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -25343,7 +25341,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:25346: \"$ac_link\") >&5
+(eval echo $as_me:25344: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
