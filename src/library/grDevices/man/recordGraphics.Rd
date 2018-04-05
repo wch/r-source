@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/recordGraphics.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{recordGraphics}
@@ -20,9 +20,8 @@ recordGraphics(expr, list, env)
     an unevaluated expression.}
   \item{list}{a list defining the environment in which \code{expr} is to
     be evaluated.}
-  \item{env}{An \code{\link{environment}} specifying
-    where \R looks for objects not found in
-    \code{envir}.}
+  \item{env}{an \code{\link{environment}} specifying
+    where \R looks for objects not found in \code{list}.}
 }
 \value{
   The value from evaluating \code{expr}.
