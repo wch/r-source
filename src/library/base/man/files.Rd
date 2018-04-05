@@ -218,6 +218,7 @@ Sys.junction(from, to)
 }
 
 \examples{
+\dontshow{origwd <- getwd()}
 A <- file.path(tempdir(), "A")
 B <- file.path(tempdir(), "B")
 cat("file A\n", file = A)
@@ -242,5 +243,6 @@ setwd(tempdir())
 unlink("tmp", recursive = TRUE)
 file.remove("A", "B", "C")
 unlink(c(A, B, C))
+\dontshow{setwd(origwd)}
 }
 \keyword{file}
