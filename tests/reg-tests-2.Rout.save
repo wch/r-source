@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2018-03-29 r74484) -- "Unsuffered Consequences"
+R Under development (unstable) (2018-04-05 r74535) -- "Unsuffered Consequences"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -7714,7 +7714,7 @@ a + b < c + d
 > quote(`!`(a < b))
 !a < b
 > quote(`<`(!b, !d))
-(!b) < (!d)
+(!b) < !d
 > quote(`&`(!b, !d))
 !b & !d
 > quote(`!`(a & b))
@@ -7753,6 +7753,21 @@ b = `?`(d)
 > dput(a)
 list(one = 1, two = )
 > ## deparsed two to quote()
+> 
+> ## Deparsing of repeated unary operators; the first 3 were "always" ok:
+> quote(~~x)
+~~x
+> quote(++x)
+++x
+> quote(--x)
+--x
+> quote(!!x) # was `!(!x)`
+!!x
+> quote(??x) # Suboptimal
+`?`(`?`(x))
+> quote(~+-!?x) # ditto: ....`?`(x)
+~+-!`?`(x)
+> ## `!` no longer produces parentheses now
 > 
 > 
 > ## summary.data.frame() with NAs in columns of class "Date" -- PR#16709

@@ -20,8 +20,14 @@
       \item \code{replayPlot(r)} now also works in the same \R session
       when \code{r} has been \dQuote{reproduced} from serialization,
       typically after saving to and reading from an RDS file.
+
       \item \code{substr()} and \code{substring()} now signal error when
       the input is invalid UTF-8.
+
+      \item Deparsing of consecutive \code{!} calls is now consistent
+      with deparsing unary \code{-} and \code{+} calls and creates
+      code that can be reparsed exactly; thanks to a patch
+      Lionel Henry in \PR{17397}.
     }
   }
 }
