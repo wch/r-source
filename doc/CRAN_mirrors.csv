@@ -61,7 +61,7 @@ Denmark,Denmark,Aalborg,http://mirrors.dotsrc.org/cran/,"Aalborg University","st
 "France (Marseille)",France,Marseille,"http://cran.biotools.fr/","IBDM, Marseille","andrew.saurin # univ-amu.fr",1,fr,"secure_mirror_from_master"
 "France (Montpellier) [https]",France,Montpellier,https://ftp.igh.cnrs.fr/pub/CRAN/,"Institut de Genetique Humaine, Montpellier","guillaume.gielly # igh.cnrs.fr",1,fr,"secure_mirror_from_master"
 "France (Montpellier)",France,Montpellier,http://ftp.igh.cnrs.fr/pub/CRAN/,"Institut de Genetique Humaine, Montpellier","guillaume.gielly # igh.cnrs.fr",1,fr,"secure_mirror_from_master"
-"France (Paris 1)",France,Paris,http://cran.irsn.fr/,"French Nuclear Safety Institute, Paris","yann.richet # irsn.fr",1,fr
+"France (Paris 1)",France,Paris,http://cran.irsn.fr/,"French Nuclear Safety Institute, Paris","yann.richet # irsn.fr",0,fr
 "France (Paris 2) [https]",France,Paris,https://cran.univ-paris1.fr/,"SAMM, Université Paris 1 Panthéon-Sorbonne","pierre.latouche # univ-paris1.fr",1,fr,"secure_mirror_from_master"
 "France (Paris 2)",France,Paris,http://cran.univ-paris1.fr/,"SAMM, Université Paris 1 Panthéon-Sorbonne","pierre.latouche # univ-paris1.fr",1,fr,"secure_mirror_from_master"
 "Germany (Erlangen) [https]",Germany,Erlangen,https://ftp.fau.de/cran/,"Friedrich-Alexander-Universität Erlangen-Nürnberg (FAU)","rrze-ftp-admins # fau.de",1,de,"secure_mirror_from_master"
@@ -133,7 +133,7 @@ Thailand,Thailand,Hatyai,http://mirrors.psu.ac.th/pub/cran/,"Prince of Songkla U
 "UK (London 1)",UK,London,http://cran.ma.imperial.ac.uk/,"Imperial College London","andy.thomas # imperial.ac.uk",1,uk,"secure_mirror_from_master"
 "USA (CA 1) [https]",USA,Berkeley,https://cran.cnr.berkeley.edu/,"University of California, Berkeley, CA","casterln # nature.berkeley.edu",1,us,"secure_mirror_from_master"
 "USA (CA 1)",USA,Berkeley,http://cran.cnr.berkeley.edu/,"University of California, Berkeley, CA","casterln # nature.berkeley.edu",1,us,"secure_mirror_from_master"
-"USA (CA 2)",USA,"Los Angeles",http://cran.stat.ucla.edu/,"University of California, Los Angeles, CA","Jose Hales-Garcia <jose # stat.ucla.edu>",1,us
+"USA (CA 2)",USA,"Los Angeles",http://cran.stat.ucla.edu/,"University of California, Los Angeles, CA","Jose Hales-Garcia <jose # stat.ucla.edu>",0,us
 "USA (IA) [https]",USA,Ames,https://mirror.las.iastate.edu/CRAN/,"Iowa State University, Ames, IA","statit # iastate.edu",1,us,"secure_mirror_from_master"
 "USA (IA)",USA,Ames,http://mirror.las.iastate.edu/CRAN/,"Iowa State University, Ames, IA","statit # iastate.edu",1,us,"secure_mirror_from_master"
 "USA (IN) [https]",USA,Bloomington,https://ftp.ussg.iu.edu/CRAN/,"Indiana University","rtadmin # indiana.edu",1,us
