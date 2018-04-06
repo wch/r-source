@@ -104,6 +104,7 @@ deploy:
     secure: H6xdVAb9PHDLvpqnJd0axb2XtxV0bPYbl3o8eevGfUTvpK6gDuXpm7/glpdfTu2iKxR1nQ1i1xAc+D5trLjlGHn+xuuKc8LNebIUaqtb1BrL+ENJVU8SuCA/q0R9dSpy1Jvv4v8l1X8KVKDGYJf1gWWC9vgqk/RZ8uDT/ymhtn4=
   bucket: rstudio-travis
   local-dir: /tmp/R-bin
+  cache_control: "public,max-age=3600"
   on:
     repo: wch/r-source
     branch: build-trunk
