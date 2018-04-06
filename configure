@@ -28336,7 +28336,7 @@ $as_echo "$ac_res" >&6; }
   fi
 
     if test x$ac_success = xno; then
-                for alternative in ${ax_cxx_compile_alternatives}; do
+                    for alternative in ${ax_cxx_compile_alternatives}; do
       for switch in -std=c++${alternative}; do
         cachevar=`$as_echo "ax_cv_cxx_compile_cxx98_$switch" | $as_tr_sh`
         { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CXX supports C++98 features with $switch" >&5
@@ -28487,34 +28487,10 @@ else
 /* end confdefs.h.  */
 #ifndef __cplusplus
 # error "This is not a C++ compiler"
-#elif defined(__GNUC__)  && __GNUC__ == 4 && __GNUC_MINOR__ < 8
-
-
-  //This is the earlier, less stringent test used in R 3.3.0
-  //Keep this for long-term support platforms with older gcc compilers
-
-  template <typename T>
-  struct check
-  {
-    static_assert(sizeof(int) <= sizeof(T), "not big enough");
-  };
-
-  typedef check<check<bool>> right_angle_brackets;
-
-  int a;
-  decltype(a) b;
-
-  typedef check<int> check_type;
-  check_type c;
-  check_type&& cr = static_cast<check_type&&>(c);
-
-  auto d = a;
-
-
 #elif __cplusplus < 201103L
 # error "This is not a C++11 compiler"
 #elif __cplusplus >= 201402L
-# error "This is a C++14 compiler"
+# error "This is a compiler for C++14 or later"
 #else
 
 
@@ -28817,7 +28793,7 @@ $as_echo "$ac_res" >&6; }
   fi
 
     if test x$ac_success = xno; then
-                for alternative in ${ax_cxx_compile_alternatives}; do
+                    for alternative in ${ax_cxx_compile_alternatives}; do
       for switch in -std=c++${alternative}; do
         cachevar=`$as_echo "ax_cv_cxx_compile_cxx11_$switch" | $as_tr_sh`
         { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CXX supports C++11 features with $switch" >&5
@@ -28831,34 +28807,10 @@ else
 /* end confdefs.h.  */
 #ifndef __cplusplus
 # error "This is not a C++ compiler"
-#elif defined(__GNUC__)  && __GNUC__ == 4 && __GNUC_MINOR__ < 8
-
-
-  //This is the earlier, less stringent test used in R 3.3.0
-  //Keep this for long-term support platforms with older gcc compilers
-
-  template <typename T>
-  struct check
-  {
-    static_assert(sizeof(int) <= sizeof(T), "not big enough");
-  };
-
-  typedef check<check<bool>> right_angle_brackets;
-
-  int a;
-  decltype(a) b;
-
-  typedef check<int> check_type;
-  check_type c;
-  check_type&& cr = static_cast<check_type&&>(c);
-
-  auto d = a;
-
-
 #elif __cplusplus < 201103L
 # error "This is not a C++11 compiler"
 #elif __cplusplus >= 201402L
-# error "This is a C++14 compiler"
+# error "This is a compiler for C++14 or later"
 #else
 
 
@@ -29269,6 +29221,8 @@ else
 # error "This is not a C++ compiler"
 #elif __cplusplus < 201402L
 # error "This is not a C++14 compiler"
+#elif __cplusplus >= 201703L
+# error "This is a C++17 compiler"
 #else
 
 
@@ -29676,7 +29630,7 @@ $as_echo "$ac_res" >&6; }
   fi
 
     if test x$ac_success = xno; then
-                for alternative in ${ax_cxx_compile_alternatives}; do
+                    for alternative in ${ax_cxx_compile_alternatives}; do
       for switch in -std=c++${alternative}; do
         cachevar=`$as_echo "ax_cv_cxx_compile_cxx14_$switch" | $as_tr_sh`
         { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CXX supports C++14 features with $switch" >&5
@@ -29692,6 +29646,8 @@ else
 # error "This is not a C++ compiler"
 #elif __cplusplus < 201402L
 # error "This is not a C++14 compiler"
+#elif __cplusplus >= 201703L
+# error "This is a C++17 compiler"
 #else
 
 
@@ -30205,7 +30161,7 @@ else
 /* end confdefs.h.  */
 #ifndef __cplusplus
 #error "This is not a C++ compiler"
-#elif __cplusplus <= 201402L
+#elif __cplusplus < 201703L
 #error "This is not a C++17 compiler"
 #else
 
@@ -30942,10 +30898,7 @@ namespace cxx17
 #endif // !defined(REALLY_CLANG)
 */
 
-/*
-  P0012R1 is supported by clang 4.0.0 - MTP
-  #if !defined(REALLY_CLANG)
-*/
+  // P0012R1: clang >= 4
   namespace test_exception_spec_type_system
   {
 
@@ -30968,9 +30921,6 @@ namespace cxx17
     static_assert (std::is_same_v<Good, decltype(f(g1, g2))>);
 
   }
-/*
-  #endif // !defined(REALLY_CLANG)
-*/
 
   namespace test_inline_variables
   {
@@ -31022,7 +30972,7 @@ $as_echo "$ac_res" >&6; }
   fi
 
     if test x$ac_success = xno; then
-                for alternative in ${ax_cxx_compile_alternatives}; do
+                    for alternative in ${ax_cxx_compile_alternatives}; do
       for switch in -std=c++${alternative}; do
         cachevar=`$as_echo "ax_cv_cxx_compile_cxx17_$switch" | $as_tr_sh`
         { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CXX supports C++17 features with $switch" >&5
@@ -31036,7 +30986,7 @@ else
 /* end confdefs.h.  */
 #ifndef __cplusplus
 #error "This is not a C++ compiler"
-#elif __cplusplus <= 201402L
+#elif __cplusplus < 201703L
 #error "This is not a C++17 compiler"
 #else
 
@@ -31773,10 +31723,7 @@ namespace cxx17
 #endif // !defined(REALLY_CLANG)
 */
 
-/*
-  P0012R1 is supported by clang 4.0.0 - MTP
-  #if !defined(REALLY_CLANG)
-*/
+  // P0012R1: clang >= 4
   namespace test_exception_spec_type_system
   {
 
@@ -31799,9 +31746,6 @@ namespace cxx17
     static_assert (std::is_same_v<Good, decltype(f(g1, g2))>);
 
   }
-/*
-  #endif // !defined(REALLY_CLANG)
-*/
 
   namespace test_inline_variables
   {
@@ -31913,6 +31857,15 @@ fi
 
 
 
+
+## Set default compiler to C++11 if available; otherwise C++98
+if test -n "${CXX}" && test -z "${CXXSTD}"; then
+  if test -n "${CXX11}"; then
+    CXXSTD=${CXX11STD}
+  elif test -n "${CXX98}"; then
+    CXXSTD=${CXX98STD}
+  fi
+fi
 
 ### OpenMP.
 

@@ -37,6 +37,13 @@
       of length greater than one.
     }
   }
+
+  \subsection{INSTALLATION on a UNIX-ALIKE}{
+    \itemize{
+      \item The C++ compiler defaults to the C++11 standard, if
+      suported; otherwise to the C++98 standard.
+    }
+  }
 }
 
 \section{\Rlogo CHANGES IN R 3.5.0}{

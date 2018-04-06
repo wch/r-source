@@ -1723,6 +1723,15 @@ R_STDCXX([11], [CXX11], [CXX])
 R_STDCXX([14], [CXX14], [CXX11])
 R_STDCXX([17], [CXX17], [CXX14])
 
+## Set default compiler to C++11 if available; otherwise C++98
+if test -n "${CXX}" && test -z "${CXXSTD}"; then
+  if test -n "${CXX11}"; then
+    CXXSTD=${CXX11STD}
+  elif test -n "${CXX98}"; then
+    CXXSTD=${CXX98STD}
+  fi
+fi   
+
 ### OpenMP.
 
 ## The basic checking is performed via AC_OPENMP added in Autoconf 2.62,
