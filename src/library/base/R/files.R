@@ -1,7 +1,7 @@
 #  File src/library/base/R/files.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -238,9 +238,9 @@ normalizePath <- function(path, winslash = "\\", mustWork = NA)
 
 Sys.setFileTime <- function(path, time)
 {
-    if (!is.character(path) || length(path) != 1L)
+    if (!is.character(path))
         stop("invalid 'path' argument")
     time <- as.POSIXct(time)
-    if (is.na(time))  stop("invalid 'time' argument")
+    if (anyNA(time))  stop("invalid 'time' argument")
     .Internal(setFileTime(path, time))
 }

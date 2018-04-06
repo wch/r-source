@@ -12,6 +12,10 @@
       \item \code{matplot(.., panel.first = .)} etc now work, as
       \code{log} becomes explicit argument and \code{...} is passed to
       \code{plot()} unevaluated, as suggested by Sebastian Meyer in \PR{17386}.
+
+      \item \code{Sys.setFileTime()} has been vectorized, its arguments
+      \code{path} and \code{time} of length greater than one are now
+      supported.
     }
   }
 
@@ -28,6 +32,9 @@
       with deparsing unary \code{-} and \code{+} calls and creates
       code that can be reparsed exactly; thanks to a patch
       Lionel Henry in \PR{17397}.
+
+      \item \code{file.copy()} now works also when its argument \code{to} is
+      of length greater than one.
     }
   }
 }
