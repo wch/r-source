@@ -1,6 +1,6 @@
 % File src/library/base/man/readChar.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{readChar}
@@ -104,7 +104,7 @@ writeChar(object, con, nchars = nchar(object, type = "chars"),
 }
 \examples{
 ## test fixed-length strings
-zzfil <- tempfile(fileext = "testchar")
+zzfil <- tempfile("testchar")
 zz <- file(zzfil, "wb")
 x <- c("a", "this will be truncated", "abc")
 nc <- c(3, 10, 3)

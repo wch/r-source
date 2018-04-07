@@ -76,22 +76,24 @@ readLines(con = stdin(), n = -1L, ok = TRUE, warn = TRUE,
   \code{\link{scan}}}
 
 \examples{
-fil <- tempfile(fileext = "ex.data")
+fil <- tempfile(fileext = ".data")
 cat("TITLE extra line", "2 3 5 7", "", "11 13 17", file = fil,
     sep = "\n")
 readLines(fil, n = -1)
+unlink(fil) # tidy up
 
 ## difference in blocking
-fil2 <- tempfile(fileext = "test1")
-cat("123\nabc", file = fil2)
-readLines(fil2) # line with a warning
+fil <- tempfile("test")
+cat("123\nabc", file = fil)
+readLines(fil) # line with a warning
 
-con <- file(fil2, "r", blocking = FALSE)
+con <- file(fil, "r", blocking = FALSE)
 readLines(con) # empty
-cat(" def\n", file = fil2, append = TRUE)
+cat(" def\n", file = fil, append = TRUE)
 readLines(con) # gets both
 close(con)
-unlink(c(fil, fil2)) # tidy up
+
+unlink(fil) # tidy up
 
 \dontrun{
 # read a 'Windows Unicode' file

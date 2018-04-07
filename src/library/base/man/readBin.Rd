@@ -1,6 +1,6 @@
 % File src/library/base/man/readBin.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{readBin}
@@ -121,8 +121,8 @@ writeBin(object, con, size = NA_integer_,
   and \code{long double}.
 }
 \examples{
-fil <- tempfile(fileext = "testbin")
-zz <- file(fil, "wb")
+zzfil <- tempfile("testbin")
+zz <- file(zzfil, "wb")
 writeBin(1:10, zz)
 writeBin(pi, zz, endian = "swap")
 writeBin(pi, zz, size = 4)
@@ -137,7 +137,7 @@ if((s <- .Machine$sizeof.longdouble) > 8)
     writeBin((pi/3)^(1:10), zz, size = s)
 close(zz)
 
-zz <- file(fil, "rb")
+zz <- file(zzfil, "rb")
 readBin(zz, integer(), 4)
 readBin(zz, integer(), 6)
 readBin(zz, numeric(), 1, endian = "swap")
@@ -151,12 +151,12 @@ if(.Machine$sizeof.long == 8 || .Machine$sizeof.longlong == 8)
 if((s <- .Machine$sizeof.longdouble) > 8)
     readBin(zz, numeric(), 10, size = s)
 close(zz)
+unlink(zzfil)
 stopifnot(z2 == z)
-unlink(fil)
 
-fil2 <- tempfile(fileext = "testbin2")
 ## signed vs unsigned ints
-zz <- file(fil2, "wb")
+zzfil <- tempfile("testbin")
+zz <- file(zzfil, "wb")
 x <- as.integer(seq(0, 255, 32))
 writeBin(x, zz, size = 1)
 writeBin(x, zz, size = 1)
@@ -164,13 +164,13 @@ x <- as.integer(seq(0, 60000, 10000))
 writeBin(x, zz, size = 2)
 writeBin(x, zz, size = 2)
 close(zz)
-zz <- file(fil2, "rb")
+zz <- file(zzfil, "rb")
 readBin(zz, integer(), 8, size = 1)
 readBin(zz, integer(), 8, size = 1, signed = FALSE)
 readBin(zz, integer(), 7, size = 2)
 readBin(zz, integer(), 7, size = 2, signed = FALSE)
 close(zz)
-unlink(fil2)
+unlink(zzfil)
 
 ## use of raw
 z <- writeBin(pi^{1:5}, raw(), size = 4)

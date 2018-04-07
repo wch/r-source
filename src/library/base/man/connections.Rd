@@ -580,9 +580,10 @@ cat("TITLE extra line", "2 3 5 7", "", "11 13 17", file = zz, sep = "\n")
 close(zz)
 readLines(zz <- gzfile(zzfil))
 close(zz)
+unlink(zzfil)
 zz # an invalid connection
 
-zzfil <- tempfile(fileext="bz2")
+zzfil <- tempfile(fileext=".bz2")
 zz <- bzfile(zzfil, "w")  # bzip2-ed file
 cat("TITLE extra line", "2 3 5 7", "", "11 13 17", file = zz, sep = "\n")
 close(zz)
@@ -591,9 +592,8 @@ print(readLines(zz <- bzfile(zzfil)))
 close(zz)
 unlink(zzfil)
 
-
 ## An example of a file open for reading and writing
-Tpath <- tempfile()
+Tpath <- tempfile("test")
 Tfile <- file(Tpath, "w+")
 c(isOpen(Tfile, "r"), isOpen(Tfile, "w")) # both TRUE
 cat("abc\ndef\n", file = Tfile)
@@ -605,22 +605,22 @@ readLines(Tfile)
 Tfile # -> print() :  "valid" connection
 close(Tfile)
 Tfile # -> print() :  "invalid" connection
+unlink(Tpath)
 
 ## We can do the same thing with an anonymous file.
 Tfile <- file()
 cat("abc\ndef\n", file = Tfile)
 readLines(Tfile)
 close(Tfile)
-unlink(Tfile)
 
 \dontrun{## fifo example -- may hang even with OS support for fifos
 if(capabilities("fifo")) {
-  fifofil <- tempfile(fileext="fifo")
-  zz <- fifo(fifofil, "w+")
+  zzfil <- tempfile(fileext="-fifo")
+  zz <- fifo(zzfil, "w+")
   writeLines("abc", zz)
   print(readLines(zz))
   close(zz)
-  unlink(fifofil)
+  unlink(zzfil)
 }}
 #ifdef unix
 \donttest{
@@ -630,23 +630,22 @@ if(capabilities("fifo")) {
 readLines(pipe("ls -1"))
 
 # remove trailing commas.  Suppose
-
 \dontshow{
-fil <- tempfile(fileext="data2_")
+oldwd <- setwd(tempdir())
 writeLines(c("450, 390, 467, 654,  30, 542, 334, 432, 421,",
 "357, 497, 493, 550, 549, 467, 575, 578, 342,",
-"446, 547, 534, 495, 979, 479"), fil)}
+"446, 547, 534, 495, 979, 479"), "data2_")}
 \dontrun{\% cat data2_
 450, 390, 467, 654,  30, 542, 334, 432, 421,
 357, 497, 493, 550, 549, 467, 575, 578, 342,
 446, 547, 534, 495, 979, 479}
 # Then read this by
-scan(pipe(paste("sed -e s/,$//", fil), sep = ",")
-\dontshow{unlink(fil)}
+scan(pipe("sed -e s/,$// data2_"), sep = ",")
+\dontshow{unlink("data2_"); setwd(oldwd)}
 
 # convert decimal point to comma in output: see also write.table
 # both R strings and (probably) the shell need \ doubled
-zzfil <- file.path(tdir, "outfile")
+zzfil <- tempfile("outfile")
 zz <- pipe(paste("sed s/\\\\\\\\./,/ >", zzfil), "w")
 cat(format(round(stats::rnorm(48), 4)), fill = 70, file = zz)
 close(zz)

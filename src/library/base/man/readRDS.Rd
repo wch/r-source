@@ -79,7 +79,7 @@ readRDS(file, refhook = NULL)
 }
 
 \examples{
-fil <- tempfile(fileext = "women.rds")
+fil <- tempfile("women", fileext = ".rds")
 ## save a single object to file
 saveRDS(women, fil)
 ## restore it under a different name
@@ -99,22 +99,20 @@ con <- gzfile(fil, "rb")
 wm <- readBin(con, "raw", n = 1e4) # size is a guess
 close(con)
 identical(unserialize(wm), women)
-unlink(fil)
 
 ## Format compatibility with serialize():
-fil2 <- tempfile(fileext = "women2")
+fil2 <- tempfile("women")
 con <- file(fil2, "w")
 serialize(women, con) # ASCII, uncompressed
 close(con)
 identical(women, readRDS(fil2))
-unlink(fil2)
-
-fil3 <- tempfile(fileext = "women3")
+fil3 <- tempfile("women")
 con <- bzfile(fil3, "w")
 serialize(women, con) # binary, bzip2-compressed
 close(con)
 identical(women, readRDS(fil3))
-unlink(fil3)
+
+unlink(c(fil, fil2, fil3))
 }
 
 \keyword{file}

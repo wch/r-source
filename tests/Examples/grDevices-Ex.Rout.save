@@ -1,5 +1,5 @@
 
-R version 3.5.0 alpha (2018-03-27 r74478)
+R Under development (unstable) (2018-04-07 r74546) -- "Unsuffered Consequences"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -2582,6 +2582,9 @@ List of 18
 > ### ** Examples
 > 
 > require(graphics)
+> ## Don't show: 
+> oldwd <- setwd(tempdir())
+> ## End(Don't show)
 > 
 > pictex()
 > plot(1:11, (-5:5)^2, type = "b", main = "Simple Example Plot")
@@ -2605,6 +2608,9 @@ pdf
 > ## End(Not run)
 > ##--------------------
 > unlink("Rplots.tex")
+> ## Don't show: 
+> setwd(oldwd)
+> ## End(Don't show)
 > 
 > 
 > 
