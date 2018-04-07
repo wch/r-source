@@ -1,6 +1,6 @@
 % File src/library/base/man/parse.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{parse}
@@ -123,7 +123,7 @@ parse(file = "", n = NULL, text = NULL, prompt = "?",
 }
 
 \examples{
-fil <- tempfile(fileext = "xyz.Rdmped")
+fil <- tempfile(fileext = ".Rdmped")
 cat("x <- c(1, 4)\n  x ^ 3 -10 ; outer(1:7, 5:9)\n", file = fil)
 # parse 3 statements from our temp file
 parse(file = fil, n = 3)

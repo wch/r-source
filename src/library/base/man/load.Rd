@@ -86,8 +86,9 @@ load(file, envir = parent.frame(), verbose = FALSE)
   \code{\link{unserialize}} and \code{\link{readRDS}}.
 }
 \examples{
-## save all data
 \dontshow{oldwd <- setwd(tempdir())}
+
+## save all data
 xx <- pi # to ensure there is some data
 save(list = ls(all = TRUE), file= "all.rda")
 rm(xx)
@@ -109,8 +110,11 @@ attach("all.rda") # safer and will warn about masked objects w/ same name in .Gl
 ls(pos = 2)
 ##  also typically need to cleanup the search path:
 detach("file:all.rda")
+
+## clean up (the example):
 unlink("all.rda")
 \dontshow{setwd(oldwd)}
+
 \dontrun{
 con <- url("http://some.where.net/R/data/example.rda")
 ## print the value to see what objects were created.

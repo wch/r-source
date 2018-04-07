@@ -88,9 +88,7 @@ baz <- function(x) {
 dput(baz)
 ## and now display the saved source
 dput(baz, control = "useSource")
-unlink(fil)
 
-fil <- tempfile()
 ## Numeric values:
 xx <- pi^(1:3)
 dput(xx)

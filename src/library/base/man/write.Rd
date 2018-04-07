@@ -1,6 +1,6 @@
 % File src/library/base/man/write.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{write}
@@ -49,10 +49,10 @@ write(x, file = "data",
 # create a 2 by 5 matrix
 x <- matrix(1:10, ncol = 5)
 
-fil <- tempfile(fileext = "data")
+fil <- tempfile("data")
 # the file data contains x, two rows, five cols
 # 1 3 5 7 9 will form the first row
-write(t(x), file = fil)
+write(t(x), fil)
 if(interactive()) file.show(fil)
 unlink(fil) # tidy up
 
