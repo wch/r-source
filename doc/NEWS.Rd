@@ -9,10 +9,6 @@
 
    \subsection{NEW FEATURES}{
     \itemize{
-      \item \code{matplot(.., panel.first = .)} etc now work, as
-      \code{log} becomes explicit argument and \code{...} is passed to
-      \code{plot()} unevaluated, as suggested by Sebastian Meyer in \PR{17386}.
-
       \item \code{Sys.setFileTime()} has been vectorized, its arguments
       \code{path} and \code{time} of length greater than one are now
       supported.
@@ -27,11 +23,6 @@
 
       \item \code{substr()} and \code{substring()} now signal error when
       the input is invalid UTF-8.
-
-      \item Deparsing of consecutive \code{!} calls is now consistent
-      with deparsing unary \code{-} and \code{+} calls and creates
-      code that can be reparsed exactly; thanks to a patch
-      Lionel Henry in \PR{17397}.
 
       \item \code{file.copy()} now works also when its argument \code{to} is
       of length greater than one.
@@ -402,6 +393,10 @@
       \item \code{optim(*, control = list(warn.1d.NelderMead = FALSE))}
       allows to turn off the warning when applying the default
       \code{"Nelder-Mead"} method to 1-dimensional problems.
+
+      \item \code{matplot(.., panel.first = .)} etc now work, as
+      \code{log} becomes explicit argument and \code{...} is passed to
+      \code{plot()} unevaluated, as suggested by Sebastian Meyer in \PR{17386}.
     }
   }
 
@@ -683,6 +678,11 @@
       \item \code{match.arg()} more carefully chooses the environment
       for constructing default \code{choices}, fixing \PR{17401} as
       proposed by Duncan Murdoch.
+
+      \item Deparsing of consecutive \code{!} calls is now consistent
+      with deparsing unary \code{-} and \code{+} calls and creates
+      code that can be reparsed exactly; thanks to a patch
+      Lionel Henry in \PR{17397}.
     }
   }
 }
