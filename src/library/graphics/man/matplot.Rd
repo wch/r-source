@@ -1,6 +1,6 @@
 % File src/library/graphics/man/matplot.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{matplot}
@@ -13,7 +13,7 @@ matplot(x, y, type = "p", lty = 1:5, lwd = 1, lend = par("lend"),
         pch = NULL,
         col = 1:6, cex = NULL, bg = NA,
         xlab = NULL, ylab = NULL, xlim = NULL, ylim = NULL,
-        \dots, add = FALSE, verbose = getOption("verbose"))
+        log = "", \dots, add = FALSE, verbose = getOption("verbose"))
 
 matpoints(x, y, type = "p", lty = 1:5, lwd = 1, pch = NULL,
           col = 1:6, \dots)
@@ -59,9 +59,10 @@ matlines (x, y, type = "l", lty = 1:5, lwd = 1, pch = NULL,
     \code{\link{plot.xy}}.}
   \item{xlab, ylab}{titles for x and y axes, as in \code{\link{plot}}.}
   \item{xlim, ylim}{ranges of x and y axes, as in \code{\link{plot}}.}
-  \item{\dots}{Graphical parameters (see \code{\link{par}}) and any further
+  \item{log, \dots}{Graphical parameters (see \code{\link{par}}) and any further
     arguments of \code{plot}, typically \code{\link{plot.default}}, may also be
-    supplied as arguments to this function.  Hence, the high-level
+    supplied as arguments to this function; even \code{panel.first} etc
+    now work.  Hence, the high-level
     graphics control arguments described under \code{\link{par}} and the
     arguments to \code{\link{title}} may be supplied to this function.}
   \item{add}{logical.  If \code{TRUE}, plots are added to current one,

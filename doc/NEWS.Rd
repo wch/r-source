@@ -361,6 +361,10 @@
       \item \code{optim(*, control = list(warn.1d.NelderMead = FALSE))}
       allows to turn off the warning when applying the default
       \code{"Nelder-Mead"} method to 1-dimensional problems.
+
+      \item \code{matplot(.., panel.first = .)} etc now work, as
+      \code{log} becomes explicit argument and \code{...} is passed to
+      \code{plot()} unevaluated, as suggested by Sebastian Meyer in \PR{17386}.
     }
   }
 
@@ -640,7 +644,7 @@
       no longer produces \command{R CMD check} warnings.
 
       \item \code{match.arg()} more carefully chooses the environment
-      for constucting default \code{choices}, fixing \PR{17401} as
+      for constructing default \code{choices}, fixing \PR{17401} as
       proposed by Duncan Murdoch.
     }
   }
