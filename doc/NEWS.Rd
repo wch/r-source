@@ -646,6 +646,11 @@
       \item \code{match.arg()} more carefully chooses the environment
       for constructing default \code{choices}, fixing \PR{17401} as
       proposed by Duncan Murdoch.
+
+      \item Deparsing of consecutive \code{!} calls is now consistent
+      with deparsing unary \code{-} and \code{+} calls and creates
+      code that can be reparsed exactly; thanks to a patch
+      Lionel Henry in \PR{17397}.
     }
   }
 }

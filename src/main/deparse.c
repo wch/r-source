@@ -567,7 +567,8 @@ static Rboolean needsparens(PPinfo mainop, SEXP arg, unsigned int left)
 			if (arginfo.precedence == PREC_SUM)   /* binary +/- precedence upgraded as unary */
 			    arginfo.precedence = PREC_SIGN;
 		    case 2:
-			if (mainop.precedence == PREC_COMPARE && arginfo.precedence == PREC_COMPARE)
+			if (mainop.precedence == PREC_COMPARE &&
+			    arginfo.precedence == PREC_COMPARE)
 		          return TRUE;     /*   a < b < c   is not legal syntax */
 			break;
 		    default:
@@ -581,6 +582,9 @@ static Rboolean needsparens(PPinfo mainop, SEXP arg, unsigned int left)
 		case PP_ASSIGN2:
 		case PP_UNARY:
 		case PP_DOLLAR:
+		    /* Same as other unary operators above */
+		    if (arginfo.precedence == PREC_NOT && !left)
+			return FALSE;
 		    if (mainop.precedence > arginfo.precedence
 			|| (mainop.precedence == arginfo.precedence && left == mainop.rightassoc)) {
 			return TRUE;
