@@ -187,9 +187,6 @@ order <- function(..., na.last = TRUE, decreasing = FALSE,
         x <- z[[1L]]
         if (.Internal(sorted_fpass(x, decreasing, na.last)))
             return(seq(along = x))
-        ## try the reverse since that's easy too...
-        if (.Internal(sorted_fpass(x, !decreasing, na.last)))
-            return(seq(length(x), 1))
     }
 
     method <- match.arg(method)
@@ -236,9 +233,6 @@ sort.list <- function(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
        length(x) > 0){
         if (.Internal(sorted_fpass(x, decreasing, na.last)))
             return(seq(along = x))
-        ## try the reverse since that's easy too...
-        if (.Internal(sorted_fpass(x, !decreasing, na.last)))
-            return(seq(length(x), 1))
     }
 
     method <- match.arg(method)

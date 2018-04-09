@@ -1698,6 +1698,24 @@ sort(1:3, decreasing = FALSE, na.last = NA)
 sort(1:3, decreasing = FALSE, na.last = TRUE)
 sort(1:3, decreasing = FALSE, na.last = FALSE)
 
+
+## check for incorect inlining of named logicals
+foo <- compiler::cmpfun(function() c("bar" = TRUE),
+                        options = list(optimize = 3))
+stopifnot(identical(names(foo()), "bar"))
+foo <- compiler::cmpfun(function() c("bar" = FALSE),
+                        options = list(optimize = 3))
+stopifnot(identical(names(foo()), "bar"))
+## Failed after changes to use isTRUE/isFALSE instead of identical in r74403.
+
+
+## check that reverse sort is stable
+x <- sort(c(1, 1, 3))
+stopifnot(identical(sort.list(x, decreasing=TRUE), as.integer(c(3, 1, 2))))
+stopifnot(identical(order(x, decreasing=TRUE), as.integer(c(3, 1, 2))))
+## was incorrect with wrapper optimization (reported by Suharto Anggono)
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())
