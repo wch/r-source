@@ -2710,8 +2710,8 @@ path specifications (the last being the current directory on drive
 systems to be installed on top on the graphics `engine' -- currently
 there are two such systems, one supporting `base' graphics (based on
 that in S and whose @R{} code@footnote{The C code is in files
-@code{base.c}, @code{graphics.c}, @code{par.c}, @code{plot.c} and
-@code{plot3d.c} in directory @file{src/main}.} is in package
+@file{base.c}, @file{graphics.c}, @file{par.c}, @file{plot.c} and
+@file{plot3d.c} in directory @file{src/main}.} is in package
 @pkg{graphics}) and one implemented in package @pkg{grid}.
 
 Some notes on the historical changes can be found at
@@ -3499,7 +3499,7 @@ The base graphics system was migrated to package @pkg{graphics} in @R{}
 3.0.0: it was previously implemented in files in @file{src/main}.
 
 For historical reasons it is largely implemented in two layers.
-Files @file{plot.c}, @code{plot3d.c} and @code{par.c} contain the code
+Files @file{plot.c}, @file{plot3d.c} and @file{par.c} contain the code
 for the around 30 @code{.External} calls that implement the basic
 graphics operations.  This code then calls functions with names starting
 with @code{G} and declared in header @file{Rgraphics.h} in file
