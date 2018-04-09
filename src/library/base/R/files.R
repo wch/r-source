@@ -122,6 +122,15 @@ file.copy <- function(from, to,
     if(nt > nf) from <- rep_len(from, length.out = nt)
     okay <- file.exists(from)
     if (!overwrite) okay[file.exists(to)] <- FALSE
+    else {
+        dirtofile <- dir.exists(from[okay]) & file.exists(to[okay]) & !dir.exists(to[okay])
+        if (any(dirtofile)) {
+            warning("cannot overwrite a non-directory with a directory")
+            okay[okay] <- !dirtofile
+        }
+        # note: could also warn whenever "from" is a directory as it will
+        # be copied into an empty file, or support creating of directories
+    }
     if (any(from[okay] %in% to[okay]))
         stop("file can not be copied both 'from' and 'to'")
     if (any(okay)) { # care: file.create could fail but file.append work.
