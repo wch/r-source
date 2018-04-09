@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2017   The R Core Team.
+ *  Copyright (C) 2000-2018   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -547,7 +547,8 @@ int dummy_fgetc(Rconnection con)
 	    con->navail = (short)(50 - onb);
 	}
 	con->navail--;
-	return *con->next++;
+	/* the cast prevents sign extension of 0xFF to -1 (R_EOF) */
+	return (unsigned char)*con->next++;
     } else if (con->buff)
 	return buff_fgetc(con);
     else
