@@ -1882,17 +1882,20 @@ if(FALSE) {
             cxxstd <- gsub(" *", "", cxxstd)
             if (cxxstd == "CXX17") {
                 use_cxx17 <- TRUE
+                with_cxx <- TRUE
             }
             else if (cxxstd == "CXX14") {
                 use_cxx14 <- TRUE
+                with_cxx <- TRUE
             }
             else if (cxxstd == "CXX11") {
                 use_cxx11 <- TRUE
+                with_cxx <- TRUE
             }
             else if (cxxstd == "CXX98") {
                 use_cxx98 <- TRUE
+                with_cxx <- TRUE
             }
-            with_cxx <- TRUE
         }
     } else if (file.exists("Makevars")) {
         makefiles <- c("Makevars", makefiles)
@@ -1905,17 +1908,20 @@ if(FALSE) {
             cxxstd <- gsub(" *", "", cxxstd)
             if (cxxstd == "CXX17") {
                 use_cxx17 <- TRUE
+                with_cxx <- TRUE
             }
             else if (cxxstd == "CXX14") {
                 use_cxx14 <- TRUE
+                with_cxx <- TRUE
             }
             else if (cxxstd == "CXX11") {
                 use_cxx11 <- TRUE
+                with_cxx <- TRUE
             }
             else if (cxxstd == "CXX98") {
                 use_cxx98 <- TRUE
+                with_cxx <- TRUE
             }
-            with_cxx <- TRUE
         }
     }
     if (!use_cxx11 && !use_cxx14 && !use_cxx17 && !use_cxx98) {
@@ -1950,7 +1956,6 @@ if(FALSE) {
                 use_cxx98 <- TRUE
             }
         }
-        with_cxx <- TRUE
     }
 
     if (with_cxx) {
