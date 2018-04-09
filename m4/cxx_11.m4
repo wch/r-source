@@ -110,7 +110,7 @@ AC_DEFUN([AX_CXX_COMPILE_STDCXX], [dnl
     dnl Cray's crayCC needs "-h std=c++11"
     dnl Both omitted here
     for alternative in ${ax_cxx_compile_alternatives}; do
-      for switch in -std=c++${alternative}; do
+      for switch in -std=c++${alternative} -std=sun${alternative}; do
         cachevar=AS_TR_SH([ax_cv_cxx_compile_cxx$1_$switch])
         AC_CACHE_CHECK(whether $CXX supports C++$1 features with $switch,
                        $cachevar,

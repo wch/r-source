@@ -1726,9 +1726,15 @@ R_STDCXX([17], [CXX17], [CXX14])
 ## Set default compiler to C++11 if available; otherwise C++98
 if test -n "${CXX}" && test -z "${CXXSTD}"; then
   if test -n "${CXX11}"; then
+    CXX=${CXX11}
     CXXSTD=${CXX11STD}
+    CXXFLAGS=${CXX11FLAGS}
+    CXXPICFLAGS=${CXX11PICFLAGS}
   elif test -n "${CXX98}"; then
+    CXX=${CXX98}
     CXXSTD=${CXX98STD}
+    CXXFLAGS=${CXX98FLAGS}
+    CXXPICFLAGS=${CXX98PICFLAGS}
   fi
 fi   
 
