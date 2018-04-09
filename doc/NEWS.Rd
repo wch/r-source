@@ -26,6 +26,9 @@
 
       \item \code{file.copy()} now works also when its argument \code{to} is
       of length greater than one.
+
+      \item \code{mantelhaen.test()} no longer suffers from integer
+      overflow in largish cases, thanks to Ben Bolker's \PR{17383}.
     }
   }
 

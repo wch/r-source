@@ -1714,6 +1714,19 @@ stopifnot(is.null(getO("foobar")))
 ## notably "killing"  parallelMap::getParallelOptions()
 
 
+## Mantel-Haenszel test in "large" case, PR#17383:
+set.seed(101)
+aTab <- table(
+    educ = factor(sample(1:3, replace=TRUE, size=n)),
+    score= factor(sample(1:5, replace=TRUE, size=n)),
+    sex  = sample(c("M","F"), replace=TRUE, size=n))
+(MT <- mantelhaen.test(aTab))
+stopifnot(all.equal(
+    lapply(MT[1:3], unname),
+    list(statistic = 7.766963, parameter = 8, p.value = 0.4565587), tol = 6e-6))
+## gave integer overflow and error in R <= 3.4.x
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
