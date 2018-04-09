@@ -547,7 +547,8 @@ int dummy_fgetc(Rconnection con)
 	    con->navail = (short)(50 - onb);
 	}
 	con->navail--;
-	return *con->next++;
+	/* the cast prevents sign extension of 0xFF to -1 (R_EOF) */
+	return (unsigned char)*con->next++;
     } else if (con->buff)
 	return buff_fgetc(con);
     else
