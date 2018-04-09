@@ -323,3 +323,31 @@ withRestarts <- function(expr, ...) {
     if (! is.null(r))
         invokeRestart(r)
 }
+
+
+##
+## Suspending/Allowing Interrupts
+##
+
+
+suspendInterrupts <- function(expr) {
+    suspended <- .Internal(interruptsSuspended())
+    if (suspended)
+        expr
+    else {
+        on.exit(.Internal(interruptsSuspended(suspended)))
+        .Internal(interruptsSuspended(TRUE))
+        expr
+    }
+}
+
+allowInterrupts <- function(expr) {
+    suspended <- .Internal(interruptsSuspended())
+    if (suspended) {
+        on.exit(.Internal(interruptsSuspended(suspended)))
+        .Internal(interruptsSuspended(FALSE))
+        expr
+    }
+    else
+        expr
+}
