@@ -653,7 +653,7 @@
       \item Deparsing of consecutive \code{!} calls is now consistent
       with deparsing unary \code{-} and \code{+} calls and creates code
       that can be reparsed exactly; thanks to a patch by Lionel Henry in
-      \PR{17397}.  (As a side effedt, this uses fewer parentheses in
+      \PR{17397}.  (As a side effect, this uses fewer parentheses in
       some other deparsing involving \code{!} calls.)
     }
   }
