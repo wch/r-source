@@ -23,6 +23,8 @@
 \alias{tryCatch}
 \alias{withCallingHandlers}
 \alias{withRestarts}
+\alias{suspendInterrupts}
+\alias{allowInterrupts}
 
 \alias{.signalSimpleWarning}
 \alias{.handleSimpleError}
