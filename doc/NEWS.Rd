@@ -332,7 +332,7 @@
       \item The environment variable \env{R_MAX_VSIZE} can now be used
       to specify the maximal vector heap size. On macOS, unless specified
       by this environment variable, the maximal vector heap size is set to
-      the maximum on 16GB and the available physical memory. This is to
+      the maximum of 16GB and the available physical memory. This is to
       avoid having the \command{R} process killed when macOS over-commits
       memory.
 
@@ -377,17 +377,18 @@
       row names \code{rNms} are handled.  \code{.rowNamesDF()} is a
       \dQuote{workaround} compatible default.
 
-      \item R has new serialization format (version 3) which supports custom
-      serialization of \code{ALTREP} framework objects.  These objects can
-      still be serialized in format 2, but less efficiently.  Serialization
-      format 3 also records the current native encoding of unflagged strings
-      and converts them when de-serialized in R running under different
-      native encoding.  Format 3 comes with new serialization magic numbers
-      (RDA3, RDB3, RDX3).  Format 3 can be selected by \code{version = 3} in
-      \code{save()}, \code{serialize()} and \code{saveRDS()}, but format 2
-      remains the default for all serialization and saving of the workspace.
-      Serialized data in format 3 cannot be read in \R prior to version
-      3.5.0.
+      \item R has new serialization format (version 3) which supports
+      custom serialization of \code{ALTREP} framework objects.  These
+      objects can still be serialized in format 2, but less efficiently.
+      Serialization format 3 also records the current native encoding of
+      unflagged strings and converts them when de-serialized in R
+      running under different native encoding.  Format 3 comes with new
+      serialization magic numbers (RDA3, RDB3, RDX3).  Format 3 can be
+      selected by \code{version = 3} in \code{save()},
+      \code{serialize()} and \code{saveRDS()}, but format 2 remains the
+      default for all serialization and saving of the workspace.
+      Serialized data in format 3 cannot be read by versions of \R prior
+      to version 3.5.0.
 
       \item The \code{"Date"} and \dQuote{date-time} classes
       \code{"POSIXlt"} and \code{"POSIXct"} now have a working
@@ -449,9 +450,11 @@
       \item C99 functions \code{expm1}, \code{hypot}, \code{log1p} and
       \code{nearbyint} are now required.
 
-      \item \command{configure} sets the \option{-std} flag for the C++
+      \item \command{configure} sets a \option{-std} flag for the C++
       compiler for all supported C++ standards (e.g., \option{-std=gnu++11}
-      for the C++11 compiler).
+      for the C++11 compiler).   Previously this was not done in a few
+      cases where the default standard passed the tests made
+      (e.g.\space\command{clang 6.0.0} for C++11).
     }
   }
 
@@ -683,9 +686,10 @@
       proposed by Duncan Murdoch.
 
       \item Deparsing of consecutive \code{!} calls is now consistent
-      with deparsing unary \code{-} and \code{+} calls and creates
-      code that can be reparsed exactly; thanks to a patch
-      Lionel Henry in \PR{17397}.
+      with deparsing unary \code{-} and \code{+} calls and creates code
+      that can be reparsed exactly; thanks to a patch by Lionel Henry in
+      \PR{17397}.  (As a side effedt, this uses fewer parentheses in
+      some other deparsing involving \code{!} calls.)
     }
   }
 }
