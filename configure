@@ -28338,8 +28338,8 @@ $as_echo "$ac_res" >&6; }
   fi
 
     if test x$ac_success = xno; then
-                for alternative in ${ax_cxx_compile_alternatives}; do
-      for switch in -std=c++${alternative}; do
+                    for alternative in ${ax_cxx_compile_alternatives}; do
+      for switch in -std=c++${alternative} -std=sun${alternative}; do
         cachevar=`$as_echo "ax_cv_cxx_compile_cxx98_$switch" | $as_tr_sh`
         { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CXX supports C++98 features with $switch" >&5
 $as_echo_n "checking whether $CXX supports C++98 features with $switch... " >&6; }
@@ -28819,8 +28819,8 @@ $as_echo "$ac_res" >&6; }
   fi
 
     if test x$ac_success = xno; then
-                for alternative in ${ax_cxx_compile_alternatives}; do
-      for switch in -std=c++${alternative}; do
+                    for alternative in ${ax_cxx_compile_alternatives}; do
+      for switch in -std=c++${alternative} -std=sun${alternative}; do
         cachevar=`$as_echo "ax_cv_cxx_compile_cxx11_$switch" | $as_tr_sh`
         { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CXX supports C++11 features with $switch" >&5
 $as_echo_n "checking whether $CXX supports C++11 features with $switch... " >&6; }
@@ -29678,8 +29678,8 @@ $as_echo "$ac_res" >&6; }
   fi
 
     if test x$ac_success = xno; then
-                for alternative in ${ax_cxx_compile_alternatives}; do
-      for switch in -std=c++${alternative}; do
+                    for alternative in ${ax_cxx_compile_alternatives}; do
+      for switch in -std=c++${alternative} -std=sun${alternative}; do
         cachevar=`$as_echo "ax_cv_cxx_compile_cxx14_$switch" | $as_tr_sh`
         { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CXX supports C++14 features with $switch" >&5
 $as_echo_n "checking whether $CXX supports C++14 features with $switch... " >&6; }
@@ -31024,8 +31024,8 @@ $as_echo "$ac_res" >&6; }
   fi
 
     if test x$ac_success = xno; then
-                for alternative in ${ax_cxx_compile_alternatives}; do
-      for switch in -std=c++${alternative}; do
+                    for alternative in ${ax_cxx_compile_alternatives}; do
+      for switch in -std=c++${alternative} -std=sun${alternative}; do
         cachevar=`$as_echo "ax_cv_cxx_compile_cxx17_$switch" | $as_tr_sh`
         { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CXX supports C++17 features with $switch" >&5
 $as_echo_n "checking whether $CXX supports C++17 features with $switch... " >&6; }
