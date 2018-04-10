@@ -419,7 +419,7 @@
       compiler for all supported C++ standards (e.g., \option{-std=gnu++11}
       for the C++11 compiler).   Previously this was not done in a few
       cases where the default standard passed the tests made
-      (e.g.\space\command{clang 6.0.0} for C++11).
+      (e.g.\sspace\command{clang 6.0.0} for C++11).
     }
   }
 
