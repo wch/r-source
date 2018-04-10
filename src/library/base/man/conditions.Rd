@@ -23,6 +23,8 @@
 \alias{tryCatch}
 \alias{withCallingHandlers}
 \alias{withRestarts}
+\alias{suspendInterrupts}
+\alias{allowInterrupts}
 
 \alias{.signalSimpleWarning}
 \alias{.handleSimpleError}
@@ -72,6 +74,9 @@ invokeRestartInteractively(r)
 isRestart(x)
 restartDescription(r)
 restartFormals(r)
+
+suspendInterrupts(expr)
+allowInterrupts(expr)
 
 .signalSimpleWarning(msg, call)
 .handleSimpleError(h, msg, call)
@@ -193,6 +198,11 @@ restartFormals(r)
    obtain the arguments to use when invoking the restart.  The default
    \code{interactive} method queries the user for values for the
    formal arguments of the handler function.
+
+   Interrupts can be suspended while evaluating an expression using
+   \code{suspendInterrupts}. Subexpression can be evaluated with
+   interrupts enabled using \code{allowInterrupts}. These functions
+   can be used to make sure cleanup handlers cannon be interrupted.
 
    \code{.signalSimpleWarning}, \code{.handleSimpleError}, and
    \code{.tryResumeInterrupt} are used internally and should not be
