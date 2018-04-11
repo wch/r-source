@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2018-03-29 r74484) -- "Unsuffered Consequences"
+R Under development (unstable) (2018-04-10 r74578) -- "Unsuffered Consequences"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -211,9 +211,8 @@ Levels: a b <NA>
 > ### Checking parse(* deparse()) "inversion property" ----------------------------
 > ## EPD := eval-parse-deparse :  eval(text = parse(deparse(*)))
 > ## Hopefully typically the identity():
-> pd0 <- function(expr, backtick = TRUE,
-+                 control = c("keepInteger","showAttributes","keepNA"), ...)
-+     parse(text = deparse(expr, backtick=backtick, control=control, ...))
+> pd0 <- function(expr, backtick = TRUE, ...)
++     parse(text = deparse(expr, backtick=backtick, ...))
 > id_epd <- function(expr, control = c("all","digits17"), ...)
 +     eval(pd0(expr, control=control, ...))
 > dPut <- function(x, control = c("all","digits17")) dput(x, control=control)
@@ -247,6 +246,8 @@ Levels: a b <NA>
 +     } else isMissObj(obj)
 + }
 > check_EPD <- function(obj, show = !hasReal(obj),
++                       ## FIXME: add  "niceNames" here:   ?!?
++                       control = c("keepInteger","showAttributes","keepNA"),
 +                       eq.tol = if(.Machine$sizeof.longdouble <= 8) # no long-double
 +                                    2*.Machine$double.eps else 0) {
 +     if(show) dPut(obj)
@@ -256,9 +257,9 @@ Levels: a b <NA>
 +         return(invisible(obj)) # cannot parse it
 +     }
 +     ob2 <- id_epd(obj)
-+     po <- tryCatch(pd0(obj),# the default deparse() *should* typically parse
++     po <- tryCatch(pd0(obj, control=control),# the default deparse() *should* typically parse
 +                    error = function(e) {
-+                        cat("default deparse() was not parse():\n  ",
++                        cat("default parse(*, deparse(obj)) failed:\n  ",
 +                            conditionMessage(e),
 +                            "\n  but deparse(*, control='all') should work.\n")
 +                        pd0(obj, control = "all") })
@@ -272,11 +273,11 @@ Levels: a b <NA>
 +         if(!isTRUE(ae)) stop("Not equal: ", ae.txt, " giving\n", ae)
 +     }
 +     if(!is.language(obj)) {
-+ 	ob2. <- eval(pd0) ## almost always *NOT* identical to obj, but eval()ed
++ 	ob2. <- eval(obj) ## almost always *NOT* identical to obj, but eval()ed
 +     }
 +     if(show || !is.list(obj)) { ## check it works when wrapped (but do not recurse inf.!)
 +         cat(" --> checking list(*): ")
-+         check_EPD(list(.chk = obj), show = FALSE)
++         check_EPD(list(.chk = obj), show = FALSE, eq.tol=eq.tol)
 +         cat("Ok\n")
 +     }
 +     invisible(obj)
@@ -821,7 +822,8 @@ checking formals(.):
 pairlist(a = 1, mm = quote(c("Abc", "Bde")))
  --> checking list(*): Ok
 --=--=--=--=--
-check_EPD: function (obj, show = !hasReal(obj), eq.tol = if (.Machine$sizeof.longdouble <= 
+check_EPD: function (obj, show = !hasReal(obj), control = c("keepInteger", 
+    "showAttributes", "keepNA"), eq.tol = if (.Machine$sizeof.longdouble <= 
     8) 2 * .Machine$double.eps else 0) 
 {
     if (show) 
@@ -833,8 +835,8 @@ check_EPD: function (obj, show = !hasReal(obj), eq.tol = if (.Machine$sizeof.lon
         return(invisible(obj))
     }
     ob2 <- id_epd(obj)
-    po <- tryCatch(pd0(obj), error = function(e) {
-        cat("default deparse() was not parse():\n  ", conditionMessage(e), 
+    po <- tryCatch(pd0(obj, control = control), error = function(e) {
+        cat("default parse(*, deparse(obj)) failed:\n  ", conditionMessage(e), 
             "\n  but deparse(*, control='all') should work.\n")
         pd0(obj, control = "all")
     })
@@ -848,11 +850,11 @@ check_EPD: function (obj, show = !hasReal(obj), eq.tol = if (.Machine$sizeof.lon
             stop("Not equal: ", ae.txt, " giving\n", ae)
     }
     if (!is.language(obj)) {
-        ob2. <- eval(pd0)
+        ob2. <- eval(obj)
     }
     if (show || !is.list(obj)) {
         cat(" --> checking list(*): ")
-        check_EPD(list(.chk = obj), show = FALSE)
+        check_EPD(list(.chk = obj), show = FALSE, eq.tol = eq.tol)
         cat("Ok\n")
     }
     invisible(obj)
@@ -869,8 +871,8 @@ quote({
         return(invisible(obj))
     }
     ob2 <- id_epd(obj)
-    po <- tryCatch(pd0(obj), error = function(e) {
-        cat("default deparse() was not parse():\n  ", conditionMessage(e), 
+    po <- tryCatch(pd0(obj, control = control), error = function(e) {
+        cat("default parse(*, deparse(obj)) failed:\n  ", conditionMessage(e), 
             "\n  but deparse(*, control='all') should work.\n")
         pd0(obj, control = "all")
     })
@@ -884,18 +886,19 @@ quote({
             stop("Not equal: ", ae.txt, " giving\n", ae)
     }
     if (!is.language(obj)) {
-        ob2. <- eval(pd0)
+        ob2. <- eval(obj)
     }
     if (show || !is.list(obj)) {
         cat(" --> checking list(*): ")
-        check_EPD(list(.chk = obj), show = FALSE)
+        check_EPD(list(.chk = obj), show = FALSE, eq.tol = eq.tol)
         cat("Ok\n")
     }
     invisible(obj)
 })
  --> checking list(*): Ok
 checking formals(.):
-as.pairlist(alist(obj = , show = quote(!hasReal(obj)), eq.tol = quote(if (.Machine$sizeof.longdouble <= 
+as.pairlist(alist(obj = , show = quote(!hasReal(obj)), control = quote(c("keepInteger", 
+    "showAttributes", "keepNA")), eq.tol = quote(if (.Machine$sizeof.longdouble <= 
     8) 2 * .Machine$double.eps else 0)))
 __ not parse()able __: hasMissObj(.) is true 
 --=--=--=--=--
@@ -1153,18 +1156,14 @@ nA: new("ngCMatrix", i = c(0L, 3L, 4L, 5L, 2L, 6L, 7L), p = c(0L,
 nmdExp: expression(e1 = sin(pi), e2 = cos(-pi))
  --> checking list(*): Ok
 --=--=--=--=--
-pd0: function (expr, backtick = TRUE, control = c("keepInteger", "showAttributes", 
-    "keepNA"), ...) 
-parse(text = deparse(expr, backtick = backtick, control = control, 
-    ...))
+pd0: function (expr, backtick = TRUE, ...) 
+parse(text = deparse(expr, backtick = backtick, ...))
  --> checking list(*): Ok
 checking body(.):
-quote(parse(text = deparse(expr, backtick = backtick, control = control, 
-    ...)))
+quote(parse(text = deparse(expr, backtick = backtick, ...)))
  --> checking list(*): Ok
 checking formals(.):
-as.pairlist(alist(expr = , backtick = TRUE, control = quote(c("keepInteger", 
-    "showAttributes", "keepNA")), ... = ))
+as.pairlist(alist(expr = , backtick = TRUE, ... = ))
 __ not parse()able __: hasMissObj(.) is true 
 --=--=--=--=--
 perm: c(2L, 3L, 6L, 4L, 1L, 7L, 5L)
@@ -1273,30 +1272,23 @@ ysmooth: 1:10
 --=--=--=--=--
 Warning messages:
 1: In dput(x, control = control) : deparse may be incomplete
-2: In deparse(expr, backtick = backtick, control = control, ...) :
-  deparse may be incomplete
-3: In deparse(expr, backtick = backtick, control = control, ...) :
-  deparse may be incomplete
+2: In deparse(expr, backtick = backtick, ...) : deparse may be incomplete
+3: In deparse(expr, backtick = backtick, ...) : deparse may be incomplete
 4: In dput(x, control = control) : deparse may be incomplete
-5: In deparse(expr, backtick = backtick, control = control, ...) :
-  deparse may be incomplete
-6: In deparse(expr, backtick = backtick, control = control, ...) :
-  deparse may be incomplete
+5: In deparse(expr, backtick = backtick, ...) : deparse may be incomplete
+6: In deparse(expr, backtick = backtick, ...) : deparse may be incomplete
 7: In dput(x, control = control) : deparse may be incomplete
-8: In deparse(expr, backtick = backtick, control = control, ...) :
-  deparse may be incomplete
-9: In deparse(expr, backtick = backtick, control = control, ...) :
-  deparse may be incomplete
+8: In deparse(expr, backtick = backtick, ...) : deparse may be incomplete
+9: In deparse(expr, backtick = backtick, ...) : deparse may be incomplete
 > summary(warnings())
 Summary of (a total of 9) warning messages:
 6x : In dput(x, control = control) : deparse may be incomplete
-3x : In deparse(expr, backtick = backtick, control = control,  ... :
-  deparse may be incomplete
+3x : In deparse(expr, backtick = backtick, ...) : deparse may be incomplete
 > ## "dput    may be incomplete"
 > ## "deparse may be incomplete"
 > 
 > 
 > ## at the very end
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  1.402 0.099 1.526 0 0 
+Time elapsed:  0.98 0.087 1.118 0 0 
 > 
