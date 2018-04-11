@@ -229,7 +229,15 @@ check_EPD <- function(obj, show = !hasReal(obj),
 library(stats)
 ## some more "critical" cases
 nmdExp <- expression(e1 = sin(pi), e2 = cos(-pi))
-xn <- setNames(pi^(1:3), paste0("pi^",1:3))
+xn <- setNames(3.5^(1:3), paste0("3½^",1:3)) # 3.5: so have 'show'
+## "" in names :
+x0 <- xn; names(x0)[2] <- ""
+en0  <- setNames(0L, "")
+en12 <- setNames(1:2, c("",""))
+en24 <- setNames(2:4, c("two","","vier"))
+enx0  <- `storage.mode<-`(en0, "double")
+enx12 <- `storage.mode<-`(en12,"double")
+enx24 <- `storage.mode<-`(en24,"double")
 L1 <- list(c(A="Txt"))
 L2 <- list(el = c(A=2.5))
 ## "m:n" named integers and _inside list_
