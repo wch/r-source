@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2018-04-10 r74578) -- "Unsuffered Consequences"
+R Under development (unstable) (2018-04-11 r74580) -- "Unsuffered Consequences"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -245,11 +245,11 @@ Levels: a b <NA>
 +             any(vapply(obj, hasMissObj, NA))
 +     } else isMissObj(obj)
 + }
-> check_EPD <- function(obj, show = !hasReal(obj),
+> check_EPD <- function(obj, show = !hasReal(obj), oNam = substitute(obj),
 +                       ## FIXME: add  "niceNames" here:   ?!?
 +                       control = c("keepInteger","showAttributes","keepNA"),
-+                       eq.tol = if(.Machine$sizeof.longdouble <= 8) # no long-double
-+                                    2*.Machine$double.eps else 0) {
++                       not.identical.ldouble = if(!interactive()) c("t1", "t2", "ydata"),
++                       eq.tol = if(noLdbl) 2*.Machine$double.eps else 0) {
 +     if(show) dPut(obj)
 +     if(is.environment(obj) || hasMissObj(obj)) {
 +         cat("__ not parse()able __:",
@@ -263,13 +263,15 @@ Levels: a b <NA>
 +                            conditionMessage(e),
 +                            "\n  but deparse(*, control='all') should work.\n")
 +                        pd0(obj, control = "all") })
++     noLdbl <- (.Machine$sizeof.longdouble <= 8) ## TRUE typically from  --disable-long-double
 +     if(!identical(obj, ob2, ignore.environment=TRUE,
 +                   ignore.bytecode=TRUE, ignore.srcref=TRUE)) {
 +         ae <- all.equal(obj, ob2, tolerance = eq.tol)
-+         ae.txt <- sprintf("all.equal(*,*, tol = %.3g)", eq.tol)
-+         cat("not identical(*, ignore.env=T),",
-+             if(isTRUE(ae)) paste("but", ae.txt),
-+             "\n")
++         if(is.na(match(oNam, not.identical.ldouble))) {
++             ae.txt <- "all.equal(*,*, tol = ..)"
++             ## differs for "no-ldouble": sprintf("all.equal(*,*, tol = %.3g)", eq.tol)
++             cat("not identical(*, ignore.env=T),", if(isTRUE(ae)) paste("but", ae.txt), "\n")
++         }
 +         if(!isTRUE(ae)) stop("Not equal: ", ae.txt, " giving\n", ae)
 +     }
 +     if(!is.language(obj)) {
@@ -277,7 +279,7 @@ Levels: a b <NA>
 +     }
 +     if(show || !is.list(obj)) { ## check it works when wrapped (but do not recurse inf.!)
 +         cat(" --> checking list(*): ")
-+         check_EPD(list(.chk = obj), show = FALSE, eq.tol=eq.tol)
++         check_EPD(list(.chk = obj), show = FALSE, oNam=oNam, eq.tol=eq.tol)
 +         cat("Ok\n")
 +     }
 +     invisible(obj)
@@ -576,7 +578,7 @@ Matrix+           is(Matrix(FALSE, 1,1), "sparseMatrix"))
 > for(nm in ls(env=.GlobalEnv)) {
 +     cat(nm,": ", sep="")
 +     ## if(!any(nm == "mf")) ## 'mf' [bug in deparse(mf, control="all") now fixed]
-+         check_EPD(obj = (x <- .GlobalEnv[[nm]]))
++         check_EPD(obj = (x <- .GlobalEnv[[nm]]), oNam=nm)
 +     if(is.function(x) && !inherits(x, "classGeneratorFunction")) {
 +         ## FIXME? classGeneratorFunction, e.g., mForm don't "work" yet
 +         cat("checking body(.):\n"   ); check_EPD(   body(x))
@@ -830,9 +832,9 @@ checking formals(.):
 pairlist(a = 1, mm = quote(c("Abc", "Bde")))
  --> checking list(*): Ok
 --=--=--=--=--
-check_EPD: function (obj, show = !hasReal(obj), control = c("keepInteger", 
-    "showAttributes", "keepNA"), eq.tol = if (.Machine$sizeof.longdouble <= 
-    8) 2 * .Machine$double.eps else 0) 
+check_EPD: function (obj, show = !hasReal(obj), oNam = substitute(obj), 
+    control = c("keepInteger", "showAttributes", "keepNA"), not.identical.ldouble = if (!interactive()) c("t1", 
+        "t2", "ydata"), eq.tol = if (noLdbl) 2 * .Machine$double.eps else 0) 
 {
     if (show) 
         dPut(obj)
@@ -848,12 +850,15 @@ check_EPD: function (obj, show = !hasReal(obj), control = c("keepInteger",
             "\n  but deparse(*, control='all') should work.\n")
         pd0(obj, control = "all")
     })
+    noLdbl <- (.Machine$sizeof.longdouble <= 8)
     if (!identical(obj, ob2, ignore.environment = TRUE, ignore.bytecode = TRUE, 
         ignore.srcref = TRUE)) {
         ae <- all.equal(obj, ob2, tolerance = eq.tol)
-        ae.txt <- sprintf("all.equal(*,*, tol = %.3g)", eq.tol)
-        cat("not identical(*, ignore.env=T),", if (isTRUE(ae)) 
-            paste("but", ae.txt), "\n")
+        if (is.na(match(oNam, not.identical.ldouble))) {
+            ae.txt <- "all.equal(*,*, tol = ..)"
+            cat("not identical(*, ignore.env=T),", if (isTRUE(ae)) 
+                paste("but", ae.txt), "\n")
+        }
         if (!isTRUE(ae)) 
             stop("Not equal: ", ae.txt, " giving\n", ae)
     }
@@ -862,7 +867,8 @@ check_EPD: function (obj, show = !hasReal(obj), control = c("keepInteger",
     }
     if (show || !is.list(obj)) {
         cat(" --> checking list(*): ")
-        check_EPD(list(.chk = obj), show = FALSE, eq.tol = eq.tol)
+        check_EPD(list(.chk = obj), show = FALSE, oNam = oNam, 
+            eq.tol = eq.tol)
         cat("Ok\n")
     }
     invisible(obj)
@@ -884,12 +890,15 @@ quote({
             "\n  but deparse(*, control='all') should work.\n")
         pd0(obj, control = "all")
     })
+    noLdbl <- (.Machine$sizeof.longdouble <= 8)
     if (!identical(obj, ob2, ignore.environment = TRUE, ignore.bytecode = TRUE, 
         ignore.srcref = TRUE)) {
         ae <- all.equal(obj, ob2, tolerance = eq.tol)
-        ae.txt <- sprintf("all.equal(*,*, tol = %.3g)", eq.tol)
-        cat("not identical(*, ignore.env=T),", if (isTRUE(ae)) 
-            paste("but", ae.txt), "\n")
+        if (is.na(match(oNam, not.identical.ldouble))) {
+            ae.txt <- "all.equal(*,*, tol = ..)"
+            cat("not identical(*, ignore.env=T),", if (isTRUE(ae)) 
+                paste("but", ae.txt), "\n")
+        }
         if (!isTRUE(ae)) 
             stop("Not equal: ", ae.txt, " giving\n", ae)
     }
@@ -898,16 +907,17 @@ quote({
     }
     if (show || !is.list(obj)) {
         cat(" --> checking list(*): ")
-        check_EPD(list(.chk = obj), show = FALSE, eq.tol = eq.tol)
+        check_EPD(list(.chk = obj), show = FALSE, oNam = oNam, 
+            eq.tol = eq.tol)
         cat("Ok\n")
     }
     invisible(obj)
 })
  --> checking list(*): Ok
 checking formals(.):
-as.pairlist(alist(obj = , show = quote(!hasReal(obj)), control = quote(c("keepInteger", 
-    "showAttributes", "keepNA")), eq.tol = quote(if (.Machine$sizeof.longdouble <= 
-    8) 2 * .Machine$double.eps else 0)))
+as.pairlist(alist(obj = , show = quote(!hasReal(obj)), oNam = quote(substitute(obj)), control = quote(c("keepInteger", 
+    "showAttributes", "keepNA")), not.identical.ldouble = quote(if (!interactive()) c("t1", 
+    "t2", "ydata")), eq.tol = quote(if (noLdbl) 2 * .Machine$double.eps else 0)))
 __ not parse()able __: hasMissObj(.) is true 
 --=--=--=--=--
 dPut: function (x, control = c("all", "digits17")) 
@@ -966,8 +976,8 @@ as.pairlist(alist(x = , ... = ))
 __ not parse()able __: hasMissObj(.) is true 
 --=--=--=--=--
 fm: y ~ f(x)
-not identical(*, ignore.env=T), but all.equal(*,*, tol = 0) 
- --> checking list(*): not identical(*, ignore.env=T), but all.equal(*,*, tol = 0) 
+not identical(*, ignore.env=T), but all.equal(*,*, tol = ..) 
+ --> checking list(*): not identical(*, ignore.env=T), but all.equal(*,*, tol = ..) 
 Ok
 --=--=--=--=--
 fx: structure(c(1L, 3L, 2L), .Label = c("a", "b", NA), class = "factor")
@@ -1108,8 +1118,8 @@ FALSE), .Dim = c(3L, 3L))
  --> checking list(*): Ok
 --=--=--=--=--
 lf: list(ff = y ~ f(x), osf = ~sin(x))
-not identical(*, ignore.env=T), but all.equal(*,*, tol = 0) 
- --> checking list(*): not identical(*, ignore.env=T), but all.equal(*,*, tol = 0) 
+not identical(*, ignore.env=T), but all.equal(*,*, tol = ..) 
+ --> checking list(*): not identical(*, ignore.env=T), but all.equal(*,*, tol = ..) 
 Ok
 --=--=--=--=--
 m: new("dgCMatrix", i = c(2L, 0L, 1L, 2L, 0L, 1L), p = c(0L, 1L, 
@@ -1127,27 +1137,27 @@ m1: new("mp", .Data = list(new("mp1", prec = integer(0), d = integer(0)),
 mExpr: new("classGeneratorFunction", .Data = function (...) 
 new("mExpr", ...), className = structure("mExpr", package = ".GlobalEnv"), 
     package = ".GlobalEnv")
-not identical(*, ignore.env=T), but all.equal(*,*, tol = 0) 
- --> checking list(*): not identical(*, ignore.env=T), but all.equal(*,*, tol = 0) 
+not identical(*, ignore.env=T), but all.equal(*,*, tol = ..) 
+ --> checking list(*): not identical(*, ignore.env=T), but all.equal(*,*, tol = ..) 
 Ok
 --=--=--=--=--
 mForm: new("classGeneratorFunction", .Data = function (...) 
 new("mForm", ...), className = structure("mForm", package = ".GlobalEnv"), 
     package = ".GlobalEnv")
-not identical(*, ignore.env=T), but all.equal(*,*, tol = 0) 
- --> checking list(*): not identical(*, ignore.env=T), but all.equal(*,*, tol = 0) 
+not identical(*, ignore.env=T), but all.equal(*,*, tol = ..) 
+ --> checking list(*): not identical(*, ignore.env=T), but all.equal(*,*, tol = ..) 
 Ok
 --=--=--=--=--
 mList: new("classGeneratorFunction", .Data = function (...) 
 new("mList", ...), className = structure("mList", package = ".GlobalEnv"), 
     package = ".GlobalEnv")
-not identical(*, ignore.env=T), but all.equal(*,*, tol = 0) 
- --> checking list(*): not identical(*, ignore.env=T), but all.equal(*,*, tol = 0) 
+not identical(*, ignore.env=T), but all.equal(*,*, tol = ..) 
+ --> checking list(*): not identical(*, ignore.env=T), but all.equal(*,*, tol = ..) 
 Ok
 --=--=--=--=--
 mf: new("mForm", .S3Class = "formula", ~f(x))
-not identical(*, ignore.env=T), but all.equal(*,*, tol = 0) 
- --> checking list(*): not identical(*, ignore.env=T), but all.equal(*,*, tol = 0) 
+not identical(*, ignore.env=T), but all.equal(*,*, tol = ..) 
+ --> checking list(*): not identical(*, ignore.env=T), but all.equal(*,*, tol = ..) 
 Ok
 --=--=--=--=--
 missL: structure(list(, , ), .Names = c("", NA, "c"))
@@ -1320,5 +1330,5 @@ Summary of (a total of 9) warning messages:
 > 
 > ## at the very end
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.98 0.087 1.118 0 0 
+Time elapsed:  0.814 0.116 0.933 0 0 
 > 
