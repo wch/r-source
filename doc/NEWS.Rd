@@ -21,14 +21,17 @@
       when \code{r} has been \dQuote{reproduced} from serialization,
       typically after saving to and reading from an RDS file.
 
-      \item \code{substr()} and \code{substring()} now signal error when
-      the input is invalid UTF-8.
+      \item \code{substr()} and \code{substring()} now signal an error
+      when the input is invalid UTF-8.
 
-      \item \code{file.copy()} now works also when its argument \code{to} is
-      of length greater than one.
+      \item \code{file.copy()} now works also when its argument \code{to}
+      is of length greater than one.
 
       \item \code{mantelhaen.test()} no longer suffers from integer
       overflow in largish cases, thanks to Ben Bolker's \PR{17383}.
+
+      \item \code{dput()} and \code{dump()} are no longer truncating
+      when \code{options(deparse.max.lines = *)} is set.
     }
   }
 

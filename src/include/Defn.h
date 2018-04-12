@@ -698,17 +698,17 @@ extern0 RCNTXT* R_ExitContext;      /* The active context for on.exit processing
 #endif
 extern Rboolean R_Visible;	    /* Value visibility flag */
 extern0 int	R_EvalDepth	INI_as(0);	/* Evaluation recursion depth */
-extern0 int	R_BrowseLines	INI_as(0);	/* lines/per call in browser */
-
+extern0 int	R_BrowseLines	INI_as(0);	/* lines/per call in browser :
+						 * options(deparse.max.lines) */
 extern0 int	R_Expressions	INI_as(5000);	/* options(expressions) */
-extern0 int	R_Expressions_keep INI_as(5000);	/* options(expressions) */
+extern0 int	R_Expressions_keep INI_as(5000);/* options(expressions) */
 extern0 Rboolean R_KeepSource	INI_as(FALSE);	/* options(keep.source) */
 extern0 Rboolean R_CBoundsCheck	INI_as(FALSE);	/* options(CBoundsCheck) */
 extern0 MATPROD_TYPE R_Matprod	INI_as(MATPROD_DEFAULT);  /* options(matprod) */
 extern0 int	R_WarnLength	INI_as(1000);	/* Error/warning max length */
 extern0 int	R_nwarnings	INI_as(50);
 extern uintptr_t R_CStackLimit	INI_as((uintptr_t)-1);	/* C stack limit */
-extern uintptr_t R_OldCStackLimit INI_as((uintptr_t)0); /* Old value while 
+extern uintptr_t R_OldCStackLimit INI_as((uintptr_t)0); /* Old value while
 							   handling overflow */
 extern uintptr_t R_CStackStart	INI_as((uintptr_t)-1);	/* Initial stack address */
 extern int	R_CStackDir	INI_as(1);	/* C stack direction */

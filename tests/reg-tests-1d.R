@@ -1744,6 +1744,24 @@ stopifnot(identical(order(x, decreasing=TRUE), as.integer(c(3, 1, 2))))
 ## was incorrect with wrapper optimization (reported by Suharto Anggono)
 
 
+## dump() & dput() where influenced by  "deparse.max.lines" option
+op <- options(deparse.max.lines=NULL) # here
+oNam <- "simplify2array" # (base function which is not very small)
+fn <- get(oNam)
+ffn <- format(fn)
+dp.1 <- capture.output(dput(fn))
+dump(oNam, textConnection("du.1", "w"))
+stopifnot(length(ffn) > 3, identical(dp.1, ffn), identical(du.1[-1], dp.1))
+options(deparse.max.lines = 2) ## "truncate heavily"
+dp.2 <- capture.output(dput(fn))
+dump(oNam, textConnection("du.2", "w"))
+stopifnot(identical(dp.2, dp.1),
+          identical(du.2, du.1))
+options(op); rm(du.1, du.2) # connections
+writeLines(tail(dp.2))
+## dp.2 and du.2  where heavily truncated in R <= 3.4.4, ending  "  ..."
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

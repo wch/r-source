@@ -35,7 +35,8 @@
  *    do_dump() -> deparse1() -> deparse1WithCutoff()
  *  ---------
  *  Workhorse: deparse1WithCutoff() -> deparse2() -> deparse2buff() --> {<itself>, ...}
- *  ---------
+ *  ---------  ~~~~~~~~~~~~~~~~~~ `-- implicit arg R_BrowseLines == getOption("deparse.max.lines")
+ *
  *  ./errors.c: PrintWarnings() | warningcall_dflt() ... -> deparse1s() -> deparse1WithCutoff()
  *  ./print.c : Print[Language|Closure|Expression]()    --> deparse1w() -> deparse1WithCutoff()
  *  bind.c,match.c,..: c|rbind(), match(), switch()...-> deparse1line() -> deparse1WithCutoff()
@@ -185,7 +186,8 @@ SEXP attribute_hidden do_deparse(SEXP call, SEXP op, SEXP args, SEXP rho)
     return deparse1WithCutoff(expr, FALSE, cut0, backtick, opts, nlines);
 }
 
-SEXP deparse1(SEXP call, Rboolean abbrev, int opts)
+// deparse1() version *looking* at getOption("deparse.max.lines")
+SEXP deparse1m(SEXP call, Rboolean abbrev, int opts)
 {
     Rboolean backtick = TRUE;
     int old_bl = R_BrowseLines,
@@ -198,13 +200,25 @@ SEXP deparse1(SEXP call, Rboolean abbrev, int opts)
     return result;
 }
 
+// deparse1() version with R_BrowseLines := 0
+SEXP deparse1(SEXP call, Rboolean abbrev, int opts)
+{
+    Rboolean backtick = TRUE;
+    int old_bl = R_BrowseLines;
+    R_BrowseLines = 0;
+    SEXP result = deparse1WithCutoff(call, abbrev, DEFAULT_Cutoff, backtick,
+				     opts, 0);
+    R_BrowseLines = old_bl;
+    return result;
+}
+
+
 /* used for language objects in print() */
 attribute_hidden
 SEXP deparse1w(SEXP call, Rboolean abbrev, int opts)
 {
     Rboolean backtick = TRUE;
-    return deparse1WithCutoff(call, abbrev, R_print.cutoff, backtick,
-			      opts, -1);
+    return deparse1WithCutoff(call, abbrev, R_print.cutoff, backtick, opts, -1);
 }
 
 static SEXP deparse1WithCutoff(SEXP call, Rboolean abbrev, int cutoff,
@@ -219,14 +233,16 @@ static SEXP deparse1WithCutoff(SEXP call, Rboolean abbrev, int cutoff,
     int savedigits;
     Rboolean need_ellipses = FALSE;
     LocalParseData localData =
-	    {0, 0, 0, 0, /*startline = */TRUE, 0,
-	     NULL,
-	     /*DeparseBuffer=*/{NULL, 0, BUFSIZE},
-	     DEFAULT_Cutoff, FALSE, 0, TRUE,
+	{/* linenumber */ 0,
+	 0, 0, 0, /*startline = */TRUE, 0,
+	 NULL,
+	 /* DeparseBuffer= */ {NULL, 0, BUFSIZE},
+	 DEFAULT_Cutoff, FALSE, 0, TRUE,
 #ifdef longstring_WARN
-	     FALSE,
+	 FALSE,
 #endif
-	     INT_MAX, TRUE, 0, FALSE};
+	 /* maxlines = */ INT_MAX,
+	 /* active = */TRUE, 0, FALSE};
     localData.cutoff = cutoff;
     localData.backtick = backtick;
     localData.opts = opts;
@@ -239,9 +255,9 @@ static SEXP deparse1WithCutoff(SEXP call, Rboolean abbrev, int cutoff,
     svec = R_NilValue;
     if (nlines > 0) {
 	localData.linenumber = localData.maxlines = nlines;
-    } else {
-        if (R_BrowseLines > 0)  /* enough to determine linenumber */
-            localData.maxlines = R_BrowseLines + 1;
+    } else { // default: nlines = -1 (from R), or = 0 (from other C fn's)
+	if(R_BrowseLines > 0)// not by default; e.g. from getOption("deparse.max.lines")
+	    localData.maxlines = R_BrowseLines + 1; // enough to determine linenumber
 	deparse2(call, svec, &localData);
 	localData.active = TRUE;
 	if(R_BrowseLines > 0 && localData.linenumber > R_BrowseLines) {
@@ -292,11 +308,9 @@ static SEXP deparse1WithCutoff(SEXP call, Rboolean abbrev, int cutoff,
  * that it can be reparsed correctly */
 SEXP deparse1line_(SEXP call, Rboolean abbrev, int opts)
 {
-    SEXP temp;
     Rboolean backtick=TRUE;
     int lines;
-
-    PROTECT(temp =
+    SEXP temp = PROTECT(
 	    deparse1WithCutoff(call, abbrev, MAX_Cutoff, backtick, opts, -1));
     if ((lines = length(temp)) > 1) {
 	char *buf;
@@ -335,12 +349,10 @@ SEXP deparse1line(SEXP call, Rboolean abbrev)
 // called only from ./errors.c  for calls in warnings and errors :
 SEXP attribute_hidden deparse1s(SEXP call)
 {
-   SEXP temp;
    Rboolean backtick=TRUE;
-
-   temp = deparse1WithCutoff(call, FALSE, DEFAULT_Cutoff, backtick,
-			     DEFAULTDEPARSE, 1);
-   return(temp);
+   return
+       deparse1WithCutoff(call, FALSE, DEFAULT_Cutoff, backtick,
+			  DEFAULTDEPARSE, /* nlines = */ 1);
 }
 
 #include "Rconnections.h"
