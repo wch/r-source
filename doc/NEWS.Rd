@@ -366,6 +366,12 @@
       \item \code{matplot(.., panel.first = .)} etc now work, as
       \code{log} becomes explicit argument and \code{...} is passed to
       \code{plot()} unevaluated, as suggested by Sebastian Meyer in \PR{17386}.
+
+      \item Interrupts can be suspended while evaluating an expression
+      using \code{suspendInterrupts}. Subexpression can be evaluated
+      with interrupts enabled using \code{allowInterrupts}. These
+      functions can be used to make sure cleanup handlers cannon be
+      interrupted.
     }
   }
 
