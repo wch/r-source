@@ -407,6 +407,13 @@
       with interrupts enabled using \code{allowInterrupts}. These
       functions can be used to make sure cleanup handlers cannon be
       interrupted.
+
+      \item \R 3.5.0 includes a framework that allows packages to
+      provide alternate representations of basic \R objects
+      (\code{ALTREP}).  The framework is still experimental and may
+      undergo changes in future \R releases as more experience is
+      gained. For now, documentation is provided in
+      \url{https://svn.r-project.org/R/branches/ALTREP/ALTREP.html}.
     }
   }
 
