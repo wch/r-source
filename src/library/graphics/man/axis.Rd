@@ -1,6 +1,6 @@
 % File src/library/graphics/man/axis.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{axis}
@@ -106,6 +106,9 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
 
   The code tries hard not to draw overlapping tick labels, and so will
   omit labels where they would abut or overlap previously drawn labels.
+  Currently, this applies only for labels written \emph{parallel} to the
+  axis direction, hence not for e.g., \code{las = 2}.  It is planned to
+  extend this, so perpendicular labels would also not overlap.% \PR{17384}
   This can result in, for example, every other tick being labelled.
   (The ticks are drawn left to right or bottom to top, and space at
   least the size of an \sQuote{m} is left between labels.)
