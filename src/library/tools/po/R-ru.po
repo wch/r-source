@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-29 07:06\n"
-"PO-Revision-Date: 2016-04-05 18:06-0600\n"
+"POT-Creation-Date: 2018-03-30 07:34\n"
+"PO-Revision-Date: 2018-04-07 01:48-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
@@ -19,13 +19,13 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 1.8.7.1\n"
 
 msgid "Checking %s"
 msgstr "Проверяю %s"
 
-#, fuzzy
 msgid "Processing %s ..."
-msgstr "обрабатываю %s"
+msgstr "Обрабатываю %s ..."
 
 msgid "argument 'package' must be of length 1"
 msgstr "аргумент 'package' должен быть единичной длины"
@@ -164,9 +164,8 @@ msgstr "Файл '%s':"
 msgid "found T/F in %s"
 msgstr "найден T/F в %s"
 
-#, fuzzy
 msgid "The package 'dir' argument must be of length 1"
-msgstr "аргумент 'package' должен быть единичной длины"
+msgstr "аргумент пакета 'dir' должен быть единичной длины"
 
 msgid "package name '%s' seems invalid; using directory name '%s' instead"
 msgstr ""
@@ -272,21 +271,17 @@ msgstr "Плохо сформированное поле Authors@R:"
 msgid "Cannot extract Author field from Authors@R field:"
 msgstr "Не могу вынуть поле Author из поля Authors@R:"
 
-#, fuzzy
 msgid "Authors@R field gives no person with name and roles."
-msgstr "В поле Authors@R нет никого в роли автора."
+msgstr "В поле Authors@R нет никого с именем и ролью."
 
-#, fuzzy
 msgid "Authors@R field gives persons with no name:"
-msgstr "В поле Authors@R есть люди без правильных ролей:"
+msgstr "В поле Authors@R есть люди без имени:"
 
-#, fuzzy
 msgid "Authors@R field gives persons with no role:"
-msgstr "В поле Authors@R есть люди без правильных ролей:"
+msgstr "В поле Authors@R есть люди без ролей:"
 
-#, fuzzy
 msgid "Authors@R field gives no person with name and author role"
-msgstr "В поле Authors@R нет никого в роли автора."
+msgstr "В поле Authors@R нет никого с именем и в роли автора"
 
 msgid "Cannot extract Maintainer field from Authors@R field:"
 msgstr "Не могу вынуть поле Maintainer из поля Authors@R:"
@@ -547,9 +542,8 @@ msgstr "'macros' должен быть TRUE или должен указывать существующий макрос"
 msgid "Macro file %s should only contain Rd macro definitions and comments"
 msgstr "Макро файл %s должен включать Rd макроопределения и комментарии"
 
-#, fuzzy
 msgid "Rd macro package '%s' is not installed."
-msgstr "У пакета '%s' нет Rd макроса."
+msgstr "Rd макропакет '%s' не инсталлирован."
 
 msgid "No Rd macros in package '%s'."
 msgstr "У пакета '%s' нет Rd макроса."
@@ -788,23 +782,24 @@ msgid "The default JSS style may not be modified."
 msgstr "Исходную библиотеку стиля JSS нельзя изменять. "
 
 msgid "inst/doc"
-msgstr ""
+msgstr "inst/doc"
 
 msgid "file"
 msgstr "файл"
 
-#, fuzzy
 msgid "files"
-msgstr "файл"
+msgstr "файлы"
 
 msgid ","
 msgstr ","
 
 msgid "ignored as vignettes have been rebuilt."
-msgstr ""
+msgstr "проигнорировано, потому что очерки будут сделаны заново."
 
 msgid "Run R CMD build with --no-build-vignettes to prevent rebuilding."
 msgstr ""
+"Запустите R CMD build с опцией --no-build-vignettes, чтобы предотвратить "
+"создание очерков заново."
 
 msgid "invalid value for '--compact-vignettes', assuming %s"
 msgstr "неправильное значение для '--compact-vignettes', предполагаю %s"
@@ -813,7 +808,7 @@ msgid "Error: cannot rename directory to %s"
 msgstr "Ошибка: не могу переименовать папку в %s"
 
 msgid "elapsed-time limit of %g %s reached for sub-process"
-msgstr ""
+msgstr "достигнуто ограничение затраченного времени %g %s для субпроцесса"
 
 msgid "cannot link from %s"
 msgstr "не могу линковать с %s"
@@ -926,9 +921,8 @@ msgstr "не удалось запустить httpd сервер"
 msgid "cannot read index information in file '%s'"
 msgstr "не могу прочитать индексную информацию из файла '%s'"
 
-#, fuzzy
 msgid ".install_packages() exit status"
-msgstr "installed.packages"
+msgstr ".install_packages() статус выхода"
 
 msgid "error reading file '%s'"
 msgstr "ошибка чтения файла '%s'"
@@ -967,9 +961,8 @@ msgstr "не найдено файлов исходников"
 msgid "empty 'data' directory"
 msgstr "пустая папка 'data'"
 
-#, fuzzy
 msgid "cannot create unique directory for build"
-msgstr "Не могу создать папку '%s'"
+msgstr "не могу особую директорию для сборки"
 
 msgid "cannot create temporary directory"
 msgstr "Не могу создать врЕменную"
@@ -993,16 +986,16 @@ msgid "building a fake installation is disallowed"
 msgstr "сборка ложной установки не разрешается"
 
 msgid "C++17 standard requested but CXX17 is not defined"
-msgstr ""
+msgstr "запрошен C++17 стандарт, но CXX17 не определен"
 
 msgid "C++14 standard requested but CXX14 is not defined"
-msgstr ""
+msgstr "запрошен C++14 стандарт, но CXX14 не определен"
 
 msgid "C++11 standard requested but CXX11 is not defined"
-msgstr ""
+msgstr "запрошен C++11 стандарт, но CXX11 не определен"
 
 msgid "C++98 standard requested but CXX98 is not defined"
-msgstr ""
+msgstr "запрошен C++98 стандарт, но CXX98 не определен"
 
 msgid ""
 "See\n"
@@ -1047,13 +1040,11 @@ msgstr ""
 "Не могу обработать группу/строки:\n"
 "%s"
 
-#, fuzzy
 msgid "DESCRIPTION file not found"
-msgstr "Неправильный файл 'DESCRIPTION'"
+msgstr "файл 'DESCRIPTION' не найден"
 
-#, fuzzy
 msgid "NEWS file not found"
-msgstr "файл '%s' не найден"
+msgstr "файл NEWS не найден"
 
 msgid "No news found in given file using old-style R-like format."
 msgstr "В используемом формате, похожем на старый R, нет новостей."
@@ -1102,11 +1093,12 @@ msgstr ""
 msgid "Processing packages:"
 msgstr "Обрабатываю пакеты:"
 
-#, fuzzy
 msgid ""
 "reading DESCRIPTION for package %s failed with message:\n"
 "  %s"
-msgstr "Чтение %s не удалось с сообщением: %s"
+msgstr ""
+"чтение файла DESCRIPTION пакета %s не удалось с сообщением:\n"
+" %s"
 
 msgid "%s must be a character string or a file/raw connection"
 msgstr "%s должен быть текстовой строкой или файлом/простым соединением"
@@ -1190,16 +1182,16 @@ msgid "unimplemented encoding"
 msgstr "не разработанная кодировка"
 
 msgid "this requires 'objdump.exe' to be on the PATH"
-msgstr ""
+msgstr "нужно чтобы 'objdump.exe' был указан в PATH"
 
 msgid "this requires 'nm' to be on the PATH"
-msgstr ""
+msgstr "требуется, чтобы 'nm' был указан PATH"
 
 msgid "Found %s, possibly from %s"
 msgstr "Нашел %s, возможно, из %s"
 
 msgid "no native symbols were extracted"
-msgstr ""
+msgstr "не выявлено нативных знаков"
 
 msgid "testing '%s' failed"
 msgstr "тестирование '%s' не удалось"
@@ -1210,12 +1202,11 @@ msgstr "Проверяю примеры к пакету %s"
 msgid "comparing %s to %s ..."
 msgstr "сравниваю %s и %s ..."
 
-#, fuzzy
 msgid "ERROR"
-msgstr "ОШИБКА:"
+msgstr "ОШИБКА"
 
 msgid "NOTE"
-msgstr ""
+msgstr "ЗАМЕЧАНИЕ"
 
 msgid "results differ from reference results"
 msgstr "результаты отличаются от эталонных"
@@ -1250,9 +1241,8 @@ msgstr "РАЗЛИЧНЫ"
 msgid "running tests of random deviate generation -- fails occasionally"
 msgstr "запускаю тесты на генерацию случайных отклонений -- иногда не удаются"
 
-#, fuzzy
 msgid "unknown header specification"
-msgstr "Нестандартная лицензия:"
+msgstr "неизвестная спецификация заголовка"
 
 msgid "argument 'pkg' must be of length 1"
 msgstr "аргумент 'pkg' должен быть единичной длины"
@@ -1261,7 +1251,7 @@ msgid "package '%s' was not found"
 msgstr "пакет '%s' не найден"
 
 msgid "the 'lib.loc' argument has always been unused and is deprecated now"
-msgstr ""
+msgstr "аргумент 'lib.loc' никогда не использовался и сейчас не рекомендуется"
 
 msgid "bad operand"
 msgstr "плохой операнд"
@@ -1320,9 +1310,8 @@ msgstr "содержит пустую строку"
 msgid "Unknown encoding with non-ASCII data: converting to ASCII"
 msgstr "Неизвестная кодировка с не-ASCII данными: конвертирую в ASCII"
 
-#, fuzzy
 msgid "cannot source package code:"
-msgstr "не могу выполнить код пакета"
+msgstr "не могу выполнить код пакета:"
 
 msgid "Call sequence:"
 msgstr "Последовательность вызова:"
@@ -1499,12 +1488,11 @@ msgstr[0] "не могу перекодировать %s строку %s"
 msgstr[1] "не могу перекодировать %s строки %s"
 msgstr[2] "не могу перекодировать %s строки %s"
 
-#, fuzzy
 msgid " file\n"
 msgid_plural " files\n"
-msgstr[0] "файл"
-msgstr[1] "файл"
-msgstr[2] "файл"
+msgstr[0] "файл\n"
+msgstr[1] "файлы\n"
+msgstr[2] "файлы\n"
 
 msgid "Required field missing or empty:"
 msgid_plural "Required fields missing or empty:"
@@ -1532,9 +1520,9 @@ msgstr[2] "%d из теста пакета не удались"
 
 msgid "Corresponding BibTeX entry:"
 msgid_plural "Corresponding BibTeX entries:"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Соответствующая запись BibTeX:"
+msgstr[1] "Соответствующие записи BibTeX:"
+msgstr[2] "Соответствующие записи BibTeX:"
 
 #~ msgid "invalid value for 'compress': should be FALSE, TRUE, 2 or 3"
 #~ msgstr ""
