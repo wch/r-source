@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.4.0\n"
+"Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-29 07:06-0700\n"
 "PO-Revision-Date: \n"
@@ -14,7 +14,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.8.7\n"
+"X-Generator: Poedit 2.0.4\n"
 
 #: Srunmed.c:54
 msgid "bandwidth/span of running medians is larger than n"
@@ -114,7 +114,7 @@ msgstr "Funkcja '%s' nie znajduje się w tablicy pochodnych"
 #: deriv.c:789
 #, c-format
 msgid "expression must not be type '%s'"
-msgstr ""
+msgstr "wyrażenie nie może być typu '%s'"
 
 #: deriv.c:792
 msgid "variable must be a character string"
@@ -175,7 +175,7 @@ msgstr "argument '%s' musi być wektorem liczbowym o długości 1 lub długości
 #: fexact.c:273
 #, c-format
 msgid "integer overflow would happen in 'mult * ldkey' = %g"
-msgstr ""
+msgstr "nastąpiłoby przepełnienie całkowitoliczbowe w 'mult * ldkey' = %g"
 
 #: fexact.c:653
 #, c-format
@@ -184,11 +184,14 @@ msgid ""
 "  (ii := key2[itp=%d] = %d, ldstp=%d)\n"
 "Try increasing the size of the workspace and possibly 'mult'"
 msgstr ""
+"FEXACT error 6.  LDKEY=%d jest zbyt małe dla tego problemu,\n"
+"  (ii := key2[itp=%d] = %d, ldstp=%d)\n"
+"Spróbuj zwiększyć rozmiar przestrzeni roboczej oraz być może 'mult'"
 
 #: fexact.c:1035
 #, c-format
 msgid "Bug in fexact3, it[i=%d]=%d: negative key %d (kyy=%d)\n"
-msgstr ""
+msgstr "Błąd w fexact3, it[i=%d]=%d: ujemny klucz %d (kyy=%d)\n"
 
 #: fexact.c:1064
 #, c-format
@@ -197,6 +200,9 @@ msgid ""
 "  (ldst=%d, key=%d, ipn=%d, itp=%d, ist[ii=%d]=%d).\n"
 "Increase workspace or consider using 'simulate.p.value=TRUE'"
 msgstr ""
+"FEXACT błąd 30. Długość stosu przekroczona w f3xact,\n"
+"  (ldst=%d, key=%d, ipn=%d, itp=%d, ist[ii=%d]=%d).\n"
+"Zwiększ przestrzeń roboczą lub rozważ użycie 'simulate.p.value=TRUE'"
 
 #: fexact.c:1399
 #, c-format
@@ -204,6 +210,8 @@ msgid ""
 "FEXACT error 6 (f5xact).  LDKEY=%d is too small for this problem: kval=%d.\n"
 "Try increasing the size of the workspace."
 msgstr ""
+"FEXACT błąd 6 (f5xact). LDKEY=%d jest zbyt małe dla tego problemu: kval=%d.\n"
+"Spróbuj zwiększyć rozmiar przestrzeni roboczej."
 
 #: fexact.c:1412
 #, c-format
@@ -212,6 +220,9 @@ msgid ""
 "  (kval=%d, itop-ldstp=%d).\n"
 "Increase workspace or consider using 'simulate.p.value=TRUE'."
 msgstr ""
+"FEXACT error 7(%s). LDSTP=%d jest zbyt małe dla tego problemu,\n"
+"  (kval=%d, itop-ldstp=%d).\n"
+"Zwiększ przestrzeń roboczą lub rozważ użycie 'simulate.p.value=TRUE'"
 
 #: fexact.c:1449
 #, c-format
@@ -220,6 +231,9 @@ msgid ""
 "  (pastp=%g, ipn_0:=ipoin[itp=%d]=%d, stp[ipn_0]=%g).\n"
 "Increase workspace or consider using 'simulate.p.value=TRUE'"
 msgstr ""
+"FEXACT error 7(%s). LDSTP=%d jest zbyt małe dla tego problemu,\n"
+"  (pastp=%g, ipn_0:=ipoin[itp=%d]=%d, stp[ipn_0]=%g).\n"
+"Zwiększ przestrzeń roboczą lub rozważ użycie 'simulate.p.value=TRUE'"
 
 #: fourier.c:66 fourier.c:161
 msgid "non-numeric argument"
