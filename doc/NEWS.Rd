@@ -673,7 +673,7 @@
       \code{NA}.  (Thanks to Suharto Anggono's patches in \PR{17280}).
 
       \item The \code{duplicated()} method for data frames is now based
-      on \code{list}s (instead of string coercion).  Consequently
+      on the \code{list} method (instead of string coercion).  Consequently
       \code{unique()} is better distinguishing data frame rows, fixing
       \PR{17369} and \PR{17381}.  The methods for matrices and arrays
       are changed accordingly.
