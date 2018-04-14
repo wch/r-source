@@ -1,31 +1,17 @@
 # Korean translation for R base package
-# ./base/po/ko.po
-#
-# Copyright (C) 1995-2016 The R Core Team
+# Copyright (C) 1995-2018 The R Core Team
 #
 # This file is distributed under the same license as the R base package.
-# Maintained by Chel Hee Lee <chl948@mail.usask.ca>, 2008-2016.
-# Contact: Chel Hee Lee <gnustats@gmail.com>
-#
-# Notes:
-# Under development (unstable) starting from 31-MAR-2016 for R-3.3.1 - QC: TBA
-# Freezed on 10-APR-2016 for R-3.3.0 - QC: PASS
-# Freezed on 30-MAR-2015 for R-3.2.0 - QC: PASS
-# Freezed on 06-FEB-2015 for R-3.1.3 - QC: PASS
-# Freezed on 13-AUG-2013 for R-3.1.0 - QC: PASS
-# Freezed on 08-MAR-2012 for R-2.15.0 - QC: PASS
-# Freezed on 20-APR-2010 for R-2.11.0 (25-MAR-2010 as well)
-# Freezed on 14-FEB-2010 for R-2.10.0 - QC: PASS
-# Freezed on 25-JAN-2009 for R-
+# Maintained by Chel Hee Lee <gnustats@gmail.com>, 2008-2018.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R-3.3.0\n"
-"Report-Msgid-Bugs-To: \n"
+"Project-Id-Version: R-3.5.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2018-03-29 07:06-0700\n"
-"PO-Revision-Date: 2016-04-11 13:08-0600\n"
-"Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
-"Language-Team: Chel Hee Lee <chl948@mail.usask.ca>\n"
+"PO-Revision-Date: 2018-04-09 12:04-0600\n"
+"Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
+"Language-Team: \n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -34,7 +20,7 @@ msgstr ""
 
 #: src/appl/optim.c:60
 msgid "non-finite value supplied by 'optim'"
-msgstr "'optim'에서 유한(finite)하지 않은 값이 반환되었습니다."
+msgstr "'optim'을 통하여 얻은 값이 유한하지 않습니다. "
 
 #: src/appl/optim.c:67
 #, c-format
@@ -360,9 +346,9 @@ msgid "character string expected as third argument"
 msgstr "세번째 인자에는 문자열이 입력되어야 합니다"
 
 #: src/gnuwin32/sys-win32.c:286 src/unix/sys-unix.c:748 src/unix/sys-unix.c:783
-#, fuzzy, c-format
+#, c-format
 msgid "command '%s' timed out after %ds"
-msgstr "명령 '%s'의 실행으로 상태 %d가 되었습니다"
+msgstr ""
 
 #: src/gnuwin32/sys-win32.c:289 src/unix/sys-unix.c:641
 #, c-format
@@ -622,12 +608,13 @@ msgstr ""
 #: src/main/Rdynload.c:204
 #, c-format
 msgid "R_MAX_NUM_DLLS cannot be bigger than %d"
-msgstr ""
+msgstr "R_MAX_NUM_DLLS의 값이 %d 보다 클 수 없습니다. "
 
 #: src/main/Rdynload.c:213
 #, c-format
 msgid "R_MAX_NUM_DLLS cannot be bigger than %d when fd limit is not known"
 msgstr ""
+"R_MAX_NUM_DLLS의 값은 fd limt을 알 수 없는 경우에 %d보다 클 수 없습니다. "
 
 #: src/main/Rdynload.c:219 src/main/Rdynload.c:238
 msgid "the limit on the number of open files is too low"
@@ -639,9 +626,8 @@ msgid "R_MAX_NUM_DLLS bigger than %d may exhaust open files limit"
 msgstr ""
 
 #: src/main/Rdynload.c:245
-#, fuzzy
 msgid "could not allocate space for DLL table"
-msgstr "'name'에 공간을 할당할 수 없습니다"
+msgstr ""
 
 #: src/main/Rdynload.c:331
 msgid "R_RegisterRoutines called with invalid DllInfo object."
@@ -1034,7 +1020,7 @@ msgstr "'allocArray': 'dims'에 의하여 지정된 요소들의 개수가 너�
 #: src/main/array.c:535
 #, c-format
 msgid "'%s' must be a list or atomic vector"
-msgstr "'%s'는 반드시 리스트(list) 또는 원형벡터(atomic vector)이어야 합니다. "
+msgstr "'%s'는 반드시 리스트 또는 원형벡터이어야 합니다. "
 
 #: src/main/array.c:579
 #, c-format
@@ -1118,9 +1104,8 @@ msgid "getAttrib: invalid type (%s) for TAG"
 msgstr "getAttrib: TAG에 유효한 타입 %s가 아닙니다"
 
 #: src/main/attrib.c:351
-#, fuzzy
 msgid "cannot set attribute on a symbol"
-msgstr "이 시스템에서는 시간대를 설정할 수 없습니다"
+msgstr ""
 
 #: src/main/attrib.c:396
 #, c-format
@@ -1166,11 +1151,8 @@ msgid "attempt to set invalid 'class' attribute"
 msgstr "유효하지 않은 'class' 속성을 지정하려고 시도합니다"
 
 #: src/main/attrib.c:888
-#, fuzzy, c-format
 msgid "invalid to use names()<- on an S4 object of class '%s'"
 msgstr ""
-"벡터가 아닌 클래스 ('%s')에 있는 'names' 슬롯을 지정하기 위해서 names()<- 와 "
-"같은 구문을 이용하는 것은 유효하지 않습니다"
 
 #: src/main/attrib.c:931
 msgid "incompatible 'names' argument"
@@ -1464,9 +1446,8 @@ msgid "vector: cannot make a vector of mode '%s'."
 msgstr "벡터: 모드가 '%s'인 벡터를 만들 수 없습니다."
 
 #: src/main/builtin.c:833
-#, fuzzy
 msgid "cannot set length of non-(vector or list)"
-msgstr "벡터가 아닌 것은 길이를 지정할 수 없습니다"
+msgstr "벡터형 또는 리스트형이 아닌 것에 길이를 설정할 수 없습니다."
 
 #: src/main/builtin.c:834 src/main/character.c:544 src/main/coerce.c:2888
 msgid "invalid value"
@@ -2193,18 +2174,16 @@ msgid "unknown 'rw' value"
 msgstr "알 수 없는 'rw' 값입니다"
 
 #: src/main/connections.c:3520
-#, fuzzy, c-format
 msgid "Problem closing connection:  %s"
-msgstr "커녁센에 쓰기 문제가 발생했습니다"
+msgstr "다음의 커넥션을 닫는 도중에 문제가 발생했습니다:  %s"
 
 #: src/main/connections.c:3522
-#, fuzzy
 msgid "Problem closing connection"
-msgstr "커녁센에 쓰기 문제가 발생했습니다"
+msgstr "커넥션을 닫는 도중에 문제가 발생했습니다."
 
 #: src/main/connections.c:3592
 msgid "cannot close standard connections"
-msgstr "표준 커넥션들을 닫을 수 없습니다"
+msgstr "표준 커넥션들을 닫을 수 없습니다."
 
 #: src/main/connections.c:3595
 msgid "cannot close 'output' sink connection"
@@ -2221,19 +2200,16 @@ msgid "connection is not open"
 msgstr "커넥션이 열려 있지 않습니다"
 
 #: src/main/connections.c:3720 src/main/connections.c:3733
-#, fuzzy, c-format
 msgid "line longer than buffer size %lu"
-msgstr "행이 버퍼사이즈보다 길어지고 있습니다"
+msgstr "행길이가 버퍼사이즈 %lu 보다 깁니다."
 
 #: src/main/connections.c:3751
-#, fuzzy, c-format
 msgid "Error writing to connection:  %s"
-msgstr "커녁센에 쓰기 문제가 발생했습니다"
+msgstr "다음의 커녁센에 쓰기 문제가 발생했습니다:  %s"
 
 #: src/main/connections.c:3753
-#, fuzzy
 msgid "Error writing to connection"
-msgstr "커녁센에 쓰기 문제가 발생했습니다"
+msgstr ""
 
 #: src/main/connections.c:3812 src/main/connections.c:3814
 #: src/main/connections.c:4096 src/main/connections.c:4667
@@ -2494,9 +2470,8 @@ msgid "target context is not on the stack"
 msgstr "타겟 컨텍스트가 스택에 존재하지 않습니다"
 
 #: src/main/context.c:376
-#, fuzzy
 msgid "NA argument is invalid"
-msgstr "인자가 행렬을 가지지 않습니다"
+msgstr "인자에 NA를 사용할 수 없습니다"
 
 #: src/main/context.c:384 src/main/context.c:399 src/main/context.c:482
 #: src/main/context.c:494 src/main/context.c:505 src/main/context.c:517
@@ -2568,9 +2543,8 @@ msgstr "시간대가 설정되어 있지 않아서 생긴 문제입니다"
 
 #: src/main/datetime.c:808 src/main/datetime.c:811 src/main/datetime.c:907
 #: src/main/datetime.c:1261 src/main/datetime.c:1264
-#, fuzzy, c-format
 msgid "zero-length component [[%d]] in non-empty \"POSIXlt\" structure"
-msgstr "비어있지 않은 \"POSIXlt\" 스트럭쳐에 길이가 영인 구성요소가 있습니다"
+msgstr ""
 
 #: src/main/datetime.c:920
 msgid "invalid component [[10]] in \"POSIXlt\" should be 'zone'"
@@ -3154,10 +3128,9 @@ msgid "indexing '...' with non-positive index %d"
 msgstr ""
 
 #: src/main/envir.c:1375
-#, fuzzy, c-format
 msgid "the ... list does not contain any elements"
 msgid_plural "the ... list does not contain %d elements"
-msgstr[0] "... 목록은 %d개의 구성요소들을 가지고 있지 않습니다"
+msgstr[0] ""
 
 #: src/main/envir.c:1378
 #, c-format
@@ -3165,9 +3138,8 @@ msgid "..%d used in an incorrect context, no ... to look in"
 msgstr "부정확한 콘텍스트에서 사용된 %d,  안을 볼 수 없는 "
 
 #: src/main/envir.c:1404
-#, fuzzy
 msgid "incorrect context: the current call has no '...' to look in"
-msgstr "부정확한 콘텍스트에서 사용된 %d,  안을 볼 수 없는 "
+msgstr ""
 
 #: src/main/envir.c:1500
 #, c-format
@@ -4735,9 +4707,8 @@ msgid "\"par.ask.default\" has been replaced by \"device.ask.default\""
 msgstr "\"par.ask.default\"은 \"device.ask.default\"로 변경되었습니다"
 
 #: src/main/options.c:696
-#, fuzzy
 msgid "OpenMP SIMD is not supported in this build of R"
-msgstr "이 빌드에서는 ICU는 지원되지 않습니다"
+msgstr "OpenMP SIMD는 현재 사용중 빌드에서는 지원되지 않습니다."
 
 #: src/main/options.c:738
 msgid "invalid argument"
@@ -4819,9 +4790,8 @@ msgstr "이 버전의 윈도우즈에서는 심볼릭 링크를 지원하지 않
 
 #: src/main/platform.c:602 src/main/platform.c:677 src/main/platform.c:2432
 #: src/main/platform.c:2441
-#, fuzzy, c-format
 msgid "'%s' path too long"
-msgstr "경로가 너무 깁니다"
+msgstr ""
 
 #: src/main/platform.c:611
 #, c-format
@@ -4920,9 +4890,8 @@ msgid "cannot create dir '%s', reason '%s'"
 msgstr "디렉토리 '%s'를 만들 수 없습니다. 그 이유는 '%s'입니다"
 
 #: src/main/platform.c:2230
-#, fuzzy, c-format
 msgid "'%s' too long"
-msgstr "심볼 '%s'는 너무 깁니다"
+msgstr ""
 
 #: src/main/platform.c:2261
 #, c-format
@@ -5184,9 +5153,8 @@ msgid "invalid UTF-8 string"
 msgstr "잘못된 UTF-8 문자열입니다"
 
 #: src/main/raw.c:310
-#, fuzzy
 msgid "argument 'allow_surrogate_pairs' must be TRUE or FALSE"
-msgstr "인자 'multiple'은 반드시 TRUE 또는 FALSE이어야 합니다"
+msgstr "인자 'allow_surrogate_pairs'은 TRUE 또는 FALSE 이어야 합니다."
 
 #: src/main/relop.c:161
 #, c-format
@@ -5529,10 +5497,8 @@ msgid "NA/NaN argument"
 msgstr "인자의 값이 NA/NaN 입니다."
 
 #: src/main/seq.c:351
-#, fuzzy, c-format
 msgid "invalid type (%s) for '%s' (must be a vector)"
 msgstr ""
-"%s는 'dimnames'에 유효한 유형이 아닙니다 (이는 반드시 벡터이어야 합니다)"
 
 #: src/main/seq.c:355
 #, c-format
@@ -5555,23 +5521,20 @@ msgstr ""
 #: src/main/seq.c:809 src/main/seq.c:841 src/main/seq.c:848 src/main/seq.c:920
 #: src/main/seq.c:921 src/main/seq.c:951 src/main/seq.c:952 src/main/seq.c:971
 #: src/main/seq.c:972
-#, fuzzy, c-format
 msgid "'%s' must be a finite number"
-msgstr "'pos'는 반드시 정수이어야 합니다"
+msgstr ""
 
 #: src/main/seq.c:827
 msgid "'length.out' must be a non-negative number"
 msgstr "'length.out'은 반드시 음이 아닌 숫자이어야 합니다"
 
 #: src/main/seq.c:838 src/main/seq.c:845 src/main/seq.c:853
-#, fuzzy, c-format
 msgid "'%s' must be of length 1"
-msgstr "'fromLast'는 반드시 길이가 1 이어야 합니다"
+msgstr "'%s'의 길이는 반드시 1이어야 합니다."
 
 #: src/main/seq.c:866
-#, fuzzy
 msgid "invalid '(to - from)/by'"
-msgstr "'seq'에 유효하지 않은 '(to - from)/by'입니다"
+msgstr ""
 
 #: src/main/seq.c:878
 msgid "'by' argument is much too small"
@@ -5641,9 +5604,8 @@ msgid "names in persistent strings are not supported yet"
 msgstr ""
 
 #: src/main/serialize.c:1648
-#, fuzzy, c-format
 msgid "deserializing invalid UTF-8 string '%s'"
-msgstr "유효하지 않은 UTF-8 문자열 'old'입니다"
+msgstr ""
 
 #: src/main/serialize.c:1668
 #, c-format
@@ -5966,9 +5928,8 @@ msgid "assignment outside vector/list limits (extending from %d to %d)"
 msgstr ""
 
 #: src/main/subassign.c:272
-#, fuzzy
 msgid "bad names attribute"
-msgstr "잘못된 네임스페이스명입니다"
+msgstr ""
 
 #: src/main/subassign.c:481
 #, c-format
@@ -6305,9 +6266,8 @@ msgid "internal error: no translation needed"
 msgstr "내부오류: 번역이 필요하지 않습니다."
 
 #: src/main/sysutils.c:944 src/main/sysutils.c:963 src/main/sysutils.c:1003
-#, fuzzy, c-format
 msgid "'%s' must be called on a CHARSXP, but got '%s'"
-msgstr "'%s'는 반드시 CHARSXP 상에서 호출되어야 합니다"
+msgstr ""
 
 #: src/main/sysutils.c:1122
 #, c-format
@@ -6886,9 +6846,9 @@ msgstr "URL '%s'를 열 수 없습니다"
 
 #: src/modules/internet/internet.c:785 src/modules/internet/internet.c:950
 #: src/modules/internet/libcurl.c:214
-#, fuzzy, c-format
+#, c-format
 msgid "cannot open URL '%s': %s status was '%d %s'"
-msgstr "URL '%s'를 열 수 없습니다.  그 이유는 '%s'입니다"
+msgstr ""
 
 #: src/modules/internet/internet.c:921 src/modules/internet/internet.c:935
 #: src/modules/internet/internet.c:1027 src/modules/internet/internet.c:1036
@@ -6932,14 +6892,12 @@ msgid "URL %s: cannot open destfile '%s', reason '%s'"
 msgstr ""
 
 #: src/modules/internet/libcurl.c:666
-#, fuzzy
 msgid "cannot download any files"
-msgstr "모든 파일들을 다운로드 할 수 없습니다. "
+msgstr ""
 
 #: src/modules/internet/libcurl.c:667
-#, fuzzy
 msgid "some files were not downloaded"
-msgstr "복원하려는 파일이 비어있는 것 같습니다 -- 로드된 데이터가 없습니다"
+msgstr ""
 
 #: src/modules/internet/libcurl.c:672
 #, c-format
@@ -6948,12 +6906,12 @@ msgstr ""
 
 #: src/modules/internet/libcurl.c:809
 msgid "cannot read from connection"
-msgstr "이 커넥션으로부터 읽어올 수 없습니다."
+msgstr ""
 
 #: src/modules/internet/libcurl.c:847
-#, fuzzy, c-format
+#, c-format
 msgid "cannot open the connection to '%s'"
-msgstr "커넥션을 열 수 없습니다"
+msgstr ""
 
 #: src/modules/internet/libcurl.c:914
 msgid "url(method = \"libcurl\") is not supported on this platform"
@@ -7226,22 +7184,22 @@ msgstr ""
 
 #: src/modules/lapack/Lapack.c:1003
 msgid "'size' argument must be a positive integer"
-msgstr "'size' 인자는 반드시 양의 정수이어야 합니다"
+msgstr "'size' 인자는 반드시 양의 정수이어야 합니다."
 
 #: src/modules/lapack/Lapack.c:1018
 #, c-format
 msgid "'size' cannot exceed ncol(x) = %d"
-msgstr "'size'는 열의 개수 %d를 초과할 수 없습니다"
+msgstr "'size'는 열의 개수 %d를 초과할 수 없습니다."
 
 #: src/modules/lapack/Lapack.c:1019
 #, c-format
 msgid "'size' cannot exceed nrow(x) = %d"
-msgstr "'size'는 행의 개수 %d를 초과할 수 없습니다"
+msgstr "'size'는 행의 개수 %d를 초과할 수 없습니다."
 
 #: src/modules/lapack/Lapack.c:1031
 #, c-format
 msgid "element (%d, %d) is zero, so the inverse cannot be computed"
-msgstr "구성요소 (%d, %d)는 영이기 때문에 인버스를 계산할 수 없습니다"
+msgstr ""
 
 #: src/modules/lapack/Lapack.c:1110
 #, c-format
@@ -7255,15 +7213,15 @@ msgstr ""
 
 #: src/modules/lapack/Lapack.c:1185 src/modules/lapack/Lapack.c:1226
 msgid "'b' must be a numeric matrix"
-msgstr "'b'는 반드시 수치형 행렬이어야 합니다"
+msgstr "'b'는 반드시 수치형 행렬이어야 합니다."
 
 #: src/modules/lapack/Lapack.c:1260
 msgid "argument 'logarithm' must be logical"
-msgstr "'logarithm' 인자는 반드시 논리적이어야 합니다"
+msgstr "'logarithm' 인자는 반드시 논리형이어야 합니다."
 
 #: src/nmath/bessel_i.c:69
 msgid "bessel_i allocation error"
-msgstr "bessel_i 할당 에러입니다"
+msgstr ""
 
 #: src/nmath/bessel_i.c:77 src/nmath/bessel_i.c:122
 #, c-format
@@ -7273,7 +7231,7 @@ msgstr ""
 #: src/nmath/bessel_i.c:80 src/nmath/bessel_i.c:125
 #, c-format
 msgid "bessel_i(%g,nu=%g): precision lost in result\n"
-msgstr "bessel_i(%g,nu=%g): 결과가 정밀하지 않습니다\n"
+msgstr ""
 
 #: src/nmath/bessel_j.c:64 src/nmath/bessel_j.c:118
 #, c-format
@@ -7282,7 +7240,7 @@ msgstr ""
 
 #: src/nmath/bessel_j.c:72
 msgid "bessel_j allocation error"
-msgstr "bessel_j 할당 에러입니다"
+msgstr ""
 
 #: src/nmath/bessel_j.c:80 src/nmath/bessel_j.c:127
 #, c-format
@@ -7292,11 +7250,11 @@ msgstr ""
 #: src/nmath/bessel_j.c:83 src/nmath/bessel_j.c:130
 #, c-format
 msgid "bessel_j(%g,nu=%g): precision lost in result\n"
-msgstr "bessel_j(%g,nu=%g): 결과가 정밀하지 않습니다\n"
+msgstr ""
 
 #: src/nmath/bessel_k.c:63
 msgid "bessel_k allocation error"
-msgstr "bessel_k 할당 에러"
+msgstr ""
 
 #: src/nmath/bessel_k.c:71 src/nmath/bessel_k.c:108
 #, c-format
@@ -7306,7 +7264,7 @@ msgstr ""
 #: src/nmath/bessel_k.c:74 src/nmath/bessel_k.c:111
 #, c-format
 msgid "bessel_k(%g,nu=%g): precision lost in result\n"
-msgstr "bessel_k(%g,nu=%g): 결과가 정밀하지 않습니다\n"
+msgstr ""
 
 #: src/nmath/bessel_y.c:63 src/nmath/bessel_y.c:125
 #, c-format
@@ -7315,7 +7273,7 @@ msgstr ""
 
 #: src/nmath/bessel_y.c:71
 msgid "bessel_y allocation error"
-msgstr "bessel_y 할당 에러입니다"
+msgstr ""
 
 #: src/nmath/bessel_y.c:87 src/nmath/bessel_y.c:136
 #, c-format
@@ -7401,7 +7359,6 @@ msgstr ""
 msgid "wilcox allocation error %d"
 msgstr ""
 
-# updated on 28-MAR-2013
 #: src/unix/X11.c:54
 msgid "X11 module is not available under this GUI"
 msgstr ""
@@ -7517,7 +7474,6 @@ msgstr "'%s'을 열 수 없습니다, 아마도 '%s'이기 때문입니다"
 msgid "line %d may be truncated in call to system(, intern = TRUE)"
 msgstr ""
 
-# QC: PASS
 #: src/unix/sys-unix.c:741
 #, c-format
 msgid "error in running command: '%s'"
@@ -7525,28 +7481,25 @@ msgstr "다음의 명령을 실행하는 도중 에러가 발생했습니다: '%
 
 #: src/unix/sys-unix.c:859
 msgid "Sys.info() is not implemented on this system"
-msgstr "이 시스템에서 Sys.info()는 구현되지 않았습니다"
+msgstr "이 시스템에서는 Sys.info()가 구현되지 않았습니다"
 
 #: src/unix/system.c:348
 #, c-format
 msgid "WARNING: --gui or -g without value ignored"
 msgstr ""
 
-# updated on 28-MAR-2013
 #: src/unix/system.c:366
 #, c-format
 msgid "WARNING: unknown gui '%s', using X11\n"
 msgstr ""
-"경고: '%s'는 알 수 없는 그래픽 사용자 인터페이스 (gui)이므로 X11을 사용합니"
-"다.\n"
+"경고: '%s'는 알 수 없는 그래픽 사용자 인터페이스이므로 X11을 사용합니다.\n"
 
-# updated on 28-MAR-2013
 #: src/unix/system.c:369
 #, c-format
 msgid "WARNING: unknown gui '%s', using none\n"
 msgstr ""
-"경고: '%s'는 알 수 없는 그래픽 사용자 인터페이스 (gui)이므로 아무것도 사용하"
-"지 않습니다.\n"
+"경고: '%s'는 알 수 없는 그래픽 사용자 인터페이스이므로 아무것도 사용하지 않았"
+"습니다.\n"
 
 #: src/unix/system.c:454
 msgid "creating temporary file for '-e' failed"
@@ -7554,193 +7507,4 @@ msgstr ""
 
 #: src/unix/system.c:535
 msgid "WARNING: Only editing the first in the list of files"
-msgstr "경고: 파일들의 목록에서 오로지 첫번째 것만을 편집합니다"
-
-#~ msgid "non-conformable time-series"
-#~ msgstr "시계열의 크기가 올바르지 않습니다"
-
-#~ msgid "class '%s' has no 'names' slot"
-#~ msgstr "클래스 '%s'는 'names' 슬롯을 가지고 있지 않습니다"
-
-#~ msgid ""
-#~ "class '%s' has no 'names' slot; assigning a names attribute will create "
-#~ "an invalid object"
-#~ msgstr ""
-#~ "클래스 '%s'는 아무런 'names' 슬롯을 가지지 않기 때문에 names 속성을 부여하"
-#~ "는 것은 유효하지 않은 객체를 생성하게 할 것입니다"
-
-#~ msgid "deparse of an S4 object will not be source()able"
-#~ msgstr "S4객체의 deparse는 source() 할 수 없는 것 같습니다"
-
-#~ msgid "use 'is()' instead of 'inherits()' on S4 objects"
-#~ msgstr "S4 객체들에 대해서는 'inherits()' 보다는 'is()'를 사용해주세요"
-
-#~ msgid "incorrect type for second argument"
-#~ msgstr "두번째 인자에 대한 형식이 잘못되었습니다"
-
-#~ msgid "'from' must be finite"
-#~ msgstr "'from'은 반드시 유한값을 가지고 있어야 합니다"
-
-#~ msgid "'to' must be finite"
-#~ msgstr "'to'는 반드시 유한값을 가지고 있어야 합니다"
-
-#~ msgid "'by' must be finite"
-#~ msgstr "'by'는 반드시 유한값을 가지고 있어야 합니다"
-
-#~ msgid "factor has bad level"
-#~ msgstr "요인이 올바른 수준을 가지고 있지 않습니다"
-
-#~ msgid "cannot open connection"
-#~ msgstr "커넥션을 열 수 없습니다."
-
-#~ msgid ""
-#~ "number of characters is not computable for element %d in \"bytes\" "
-#~ "encoding"
-#~ msgstr ""
-#~ "요소 %d에 대한 글자의 개수를 \"bytes\" 인코딩으로는 계산을 할 수 없습니다"
-
-#~ msgid "width is not computable for element %d in \"bytes\" encoding"
-#~ msgstr "요소 %d에 대한 너비를 \"bytes\" 인코딩으로는 계산을 할 수 없습니다"
-
-#~ msgid "'what' must be a character string or a function"
-#~ msgstr "'what'은 반드시 문자열 또는 함수이어야 합니다"
-
-#~ msgid "sockets are not available on this system"
-#~ msgstr "이 시스템에서는 소켓을 사용할 수 없습니다"
-
-#~ msgid "no function to restart"
-#~ msgstr "재시작을 할 함수가 없습니다"
-
-#~ msgid "argument must be a closure"
-#~ msgstr "인자는 반드시 클로우져이어야 합니다"
-
-#~ msgid "'hostname' must be a character vector of length 1"
-#~ msgstr "'hostname'은 반드시 길이가 1인 문자형 벡터이어야 합니다"
-
-#~ msgid "unknown format returned by C function 'gethostbyname'"
-#~ msgstr ""
-#~ "알수 없는 형식이 C로 작성된 함수 'gethostbyname'에 의하여 반환되었습니다"
-
-#~ msgid "nsl() is not supported on this platform"
-#~ msgstr "이 플랫폼에서는 nsl()가 지원되지 않습니다"
-
-#~ msgid "attempt to select more than one element"
-#~ msgstr "한 개 이상의 구성요소 선택을 시도합니다"
-
-#~ msgid "non-numeric argument"
-#~ msgstr "수치형 인자가 아닙니다"
-
-#~ msgid "'x' must be a list of NULL or raw vectors"
-#~ msgstr "'x'는 반드시 NULL 또는 벡터들로 구성된 리스트이어야 합니다"
-
-#~ msgid "unsupported URL scheme"
-#~ msgstr "지원되지 않는 URG scheme입니다"
-
-#~ msgid ""
-#~ "bessel_i(%g): ncalc (=%ld) != nb (=%ld); alpha=%g. Arg. out of range?\n"
-#~ msgstr ""
-#~ "bessel_i(%g): ncalc (=%ld) != nb (=%ld); alpha=%g. 인자가 범위 밖에 있나"
-#~ "요?\n"
-
-#~ msgid ""
-#~ "bessel_j(%g): ncalc (=%ld) != nb (=%ld); alpha=%g. Arg. out of range?\n"
-#~ msgstr ""
-#~ "bessel_j(%g): ncalc (=%ld) != nb (=%ld); alpha=%g. Arg. 인자가 범위 밖에 "
-#~ "있나요?\n"
-
-#~ msgid ""
-#~ "bessel_k(%g): ncalc (=%ld) != nb (=%ld); alpha=%g. Arg. out of range?\n"
-#~ msgstr ""
-#~ "bessel_k(%g): ncalc (=%ld) != nb (=%ld); alpha=%g. 인자가 범위 밖에 있나"
-#~ "요?\n"
-
-#~ msgid ""
-#~ "bessel_y(%g): ncalc (=%ld) != nb (=%ld); alpha=%g. Arg. out of range?\n"
-#~ msgstr ""
-#~ "bessel_y(%g): ncalc (=%ld) != nb (=%ld); alpha=%g. 인자가 범위 밖에 있나"
-#~ "요?\n"
-
-#~ msgid "'dimnames' must be a list"
-#~ msgstr "'dimnames'은 반드시 리스트이어야 합니다"
-
-#~ msgid "'args' must be a list"
-#~ msgstr "'args'는 반드시 리스트이어야 합니다"
-
-#~ msgid "binary operations require two arguments"
-#~ msgstr "바이너리 연산자는 두개의 인수들을 필요로 합니다"
-
-#~ msgid "opened URL\n"
-#~ msgstr "URL을 열었습니다\n"
-
-#~ msgid "internet routines were already initialized"
-#~ msgstr "인터넷 루틴들은 이미 초기화되어 있었습니다"
-
-#~ msgid "'msg1' must be a character string"
-#~ msgstr "'msg1'은 반드시 문자열이어야 합니다"
-
-#~ msgid "'msg2' must be a character string"
-#~ msgstr "'msg2'는 반드시 문자열이어야 합니다"
-
-#~ msgid "argument 'code' must be a character string"
-#~ msgstr "인자 'code'는 반드시 문자형이어야 합니다"
-
-#~ msgid "argument 'type' must be a character string"
-#~ msgstr "인자 'type'은 반드시 문자열이어야 합니다"
-
-#~ msgid "vfont routines cannot be accessed in module"
-#~ msgstr "vfont 루틴들은 이 모듈내에서 접근되어질 수 없습니다"
-
-#~ msgid "Hershey fonts cannot be loaded"
-#~ msgstr "Hershey 글꼴들은 로드되어질 수 없습니다"
-
-#~ msgid "invalid generic function in 'usemethod'"
-#~ msgstr "'usemethod'에 유효하지 않은 제네릭 함수가 있습니다"
-
-#~ msgid "'UseMethod' called from outside a function"
-#~ msgstr "함수 외부로부터 호출된 'UseMethod'입니다"
-
-#~ msgid "first argument must be a generic name"
-#~ msgstr "첫번째 인자는 반드시 제네릭명이어야 합니다"
-
-#~ msgid ""
-#~ "explicit request not to duplicate arguments in call to '%s', but argument "
-#~ "%d is of the wrong type (%d != %d)"
-#~ msgstr ""
-#~ "'%1$s' 호출시에 중복된 인자들을 사용하지 말라는 요청에도 불구하고, 인자 "
-#~ "%2$d의 타입이 잘못되었습니다 (%3$d != %4$d)"
-
-#~ msgid "character variables must be duplicated in .C/.Fortran"
-#~ msgstr "문자 변수들이 .C/.Fortran 내에서 중복되었음에 틀림없습니다"
-
-#~ msgid "call name too long in '%s'"
-#~ msgstr "'%s'에 있는 호출명이 너무 깁니다"
-
-#~ msgid "generic name too long in '%s'"
-#~ msgstr "'%s'에 있는 제네릭 이름이 너무 깁니다"
-
-#~ msgid "method name too long in '%s'"
-#~ msgstr "'%s'에 있는 메소드명이 너무 깁니다"
-
-#~ msgid "%d arguments passed to 'log' which requires 1 or 2"
-#~ msgstr ""
-#~ "'log'함수는 1개 혹은 2개의 인자들을 필요로 하지만 %d개의 인자들이 전달되었"
-#~ "습니다"
-
-#~ msgid ""
-#~ "Warning in %s :\n"
-#~ "  %s\n"
-#~ msgstr ""
-#~ "%s에서 다음과 같은 경고가 발생했습니다 :\n"
-#~ "  %s\n"
-
-#~ msgid "input"
-#~ msgstr "입력"
-
-#~ msgid "symbol"
-#~ msgstr "심볼"
-
-#~ msgid "assignment"
-#~ msgstr "대입"
-
-#~ msgid "negative value in 'x'"
-#~ msgstr "'x'에 음수의 값이 주어졌습니다"
+msgstr "경고: 파일들의 목록에서 오로지 첫번째 것만을 편집합니다."

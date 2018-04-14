@@ -1,26 +1,17 @@
 # Korean translation for R tools package
-# ./tools/po/R-ko.po
-#
-# Copyright (C) 1995-2016 The R Core Team
+# Copyright (C) 1995-2018 The R Core Team
 #
 # This file is distributed under the same license as the R tools package.
-# Maintained by Chel Hee Lee <chl948@mail.usask.ca>, 2008-2016.
-# Contact: Chel Hee Lee <gnustats@gmail.com>
-#
-# Notes:
-# Under development (unstable) starting from 11-APR-2016 for R-3.3.1 - QC: in progress
-# Freezed on 10-APR-2016 for R-3.3.0 - QC: PASS
-# Freezed on 31-MAR-2015 for R-3.2.0 - QC: PASS
-# Freezed on 06-FEB-2015 for R-3.1.3 - QC: PASS
+# Maintained by Chel Hee Lee <gnustats@gmail.com>, 2008-2018.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R-3.3.0\n"
+"Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2018-03-29 07:06\n"
-"PO-Revision-Date: 2016-04-11 13:08-0600\n"
-"Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
-"Language-Team: Chel Hee Lee <chl948@mail.usask.ca>\n"
+"PO-Revision-Date: 2018-04-09 12:11-0600\n"
+"Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
+"Language-Team: \n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -179,9 +170,8 @@ msgstr "파일 '%s':"
 msgid "found T/F in %s"
 msgstr "%s 내에서 T/F를 찾았습니다"
 
-#, fuzzy
 msgid "The package 'dir' argument must be of length 1"
-msgstr "인자 'package'는 반드시 길이가 1 이어야 합니다"
+msgstr "패키지 'dir' 인자의 길이는 1 이어야 합니다."
 
 msgid "package name '%s' seems invalid; using directory name '%s' instead"
 msgstr ""
@@ -288,25 +278,17 @@ msgstr "Authors@R 항목이 잘못되었습니다:"
 msgid "Cannot extract Author field from Authors@R field:"
 msgstr "Author 항목을 Authors@R 항목으로부터 추출할 수 없습니다:"
 
-#, fuzzy
 msgid "Authors@R field gives no person with name and roles."
 msgstr ""
-"Authors@R 항목으로부터 저자의 역할(author role)을 가진 개발자를 찾을 수 없습"
-"니다."
 
-#, fuzzy
 msgid "Authors@R field gives persons with no name:"
-msgstr "Authors@R 항목으로부터 다음의 저자들에 대한 역할을 찾을 수 없습니다:"
+msgstr ""
 
-#, fuzzy
 msgid "Authors@R field gives persons with no role:"
-msgstr "Authors@R 항목으로부터 다음의 저자들에 대한 역할을 찾을 수 없습니다:"
+msgstr ""
 
-#, fuzzy
 msgid "Authors@R field gives no person with name and author role"
 msgstr ""
-"Authors@R 항목으로부터 저자의 역할(author role)을 가진 개발자를 찾을 수 없습"
-"니다."
 
 msgid "Cannot extract Maintainer field from Authors@R field:"
 msgstr "Maintainer의 항목을 Authors@R 항목으로부터 추출할 수 없습니다:"
@@ -579,9 +561,8 @@ msgid "Macro file %s should only contain Rd macro definitions and comments"
 msgstr ""
 "매크로 파일 %s는 오로지 Rd 매크로 정의와 주석만을 포함하고 있어야 합니다."
 
-#, fuzzy
 msgid "Rd macro package '%s' is not installed."
-msgstr "패키지 %s로부터 Rd macro를 찾을 수 없습니다."
+msgstr ""
 
 msgid "No Rd macros in package '%s'."
 msgstr "패키지 %s로부터 Rd macro를 찾을 수 없습니다."
@@ -1264,9 +1245,8 @@ msgstr ""
 msgid "running tests of random deviate generation -- fails occasionally"
 msgstr ""
 
-#, fuzzy
 msgid "unknown header specification"
-msgstr "비표준 라이센스 지정(non-standard license specification)입니다:"
+msgstr ""
 
 msgid "argument 'pkg' must be of length 1"
 msgstr "인자 'pkg'는 반드시 길이가 1이어야 합니다"
@@ -1336,9 +1316,8 @@ msgstr ""
 "ASCII가 아닌 데이터에 대한 인코딩을 알 수 없으므로 ASCII로의 변환을 시도합니"
 "다."
 
-#, fuzzy
 msgid "cannot source package code:"
-msgstr "패키지 코드를 읽어(source)들일 수 없습니다."
+msgstr "패키지 코드를 읽어들일 수 없습니다:"
 
 msgid "Call sequence:"
 msgstr "호출 시퀀스: "
@@ -1386,7 +1365,6 @@ msgid ""
 msgid_plural ""
 "Found possibly global 'T' or 'F' in the examples of the following Rd files:"
 msgstr[0] ""
-msgstr[1] ""
 
 msgid "Found a .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
@@ -1439,7 +1417,6 @@ msgstr[0] "다음과 같은 특정 플랫폼 디바이스를 찾았습니다:"
 msgid "Generic without any methods in %s: %s"
 msgid_plural "Generics without any methods in %s: %s"
 msgstr[0] ""
-msgstr[1] ""
 
 msgid ""
 "missing/empty \\name field in Rd file\n"
@@ -1452,7 +1429,6 @@ msgstr[0] ""
 msgid "unable to re-encode %s line %s"
 msgid_plural "unable to re-encode %s lines %s"
 msgstr[0] ""
-msgstr[1] ""
 
 msgid " file\n"
 msgid_plural " files\n"
@@ -1477,35 +1453,3 @@ msgstr[0] ""
 msgid "Corresponding BibTeX entry:"
 msgid_plural "Corresponding BibTeX entries:"
 msgstr[0] ""
-
-#~ msgid "invalid value for 'compress': should be FALSE, TRUE, 2 or 3"
-#~ msgstr ""
-#~ "'compress'의 값이 잘못되었습니다.  가질 수 있는 값들은 FALSE, TRUE, 2 또"
-#~ "는 3 입니다"
-
-#~ msgid "Reading %s failed with message: %s"
-#~ msgstr "다음과 같은 이유로 %s를 읽는데 실패했습니다: %s"
-
-#~ msgid "installing dependencies %s"
-#~ msgstr "종속된 %s들을 설치하고 있습니다"
-
-#~ msgid "%s"
-#~ msgstr "%s"
-
-#~ msgid ""
-#~ "Authors@R field gives no person with maintainer role and email address."
-#~ msgstr ""
-#~ "Authors@R 항목에서 유지보수의 역할을 담당하고 이메일 주소를 가진 개발자를 "
-#~ "찾을 수 없습니다."
-
-#~ msgid "Inconsistent encoding specifications: %s with %%\\SweaveUTF8"
-#~ msgstr "다음은 일치하지 않는 인코딩 지정들입니다:"
-
-#~ msgid "argument 'file' must be a character string or connection"
-#~ msgstr "인자 'file'은 반드시 문자열 또는 연결이어야 합니다"
-
-#~ msgid "Sweave"
-#~ msgstr "Sweave"
-
-#~ msgid "'file' must be a character string or connection"
-#~ msgstr "'file'은 반드시 문자열 또는 연결이어야 합니다"

@@ -1,26 +1,17 @@
 # Korean translation for R stats package
-# ./stats/po/ko.po
-#
-# Copyright (C) 1995-2016 The R Core Team
+# Copyright (C) 1995-2018 The R Core Team
 #
 # This file is distributed under the same license as the R stats package.
-# Maintained by Chel Hee Lee <chl948@mail.usask.ca>, 2008-2016.
-# Contact: Chel Hee Lee <gnustats@gmail.com>
-#
-# Notes:
-# Under development (unstable) starting from 11-APR-2016 for R-3.3.1 - QC: in progress
-# Freezed on 10-APR-2016 for R-3.3.0 - QC: PASS
-# Freezed on 30-MAR-2015 for R-3.2.0 - QC: PASS
-# Freezed on 06-FEB-2015 for R-3.1.3 - QC: PASS
+# Maintained by Chel Hee Lee <gnustats@gmail.com>, 2008-2018.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R-3.3.0\n"
-"Report-Msgid-Bugs-To: \n"
+"Project-Id-Version: R-3.5.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2018-03-29 07:06-0700\n"
-"PO-Revision-Date: 2016-04-11 13:08-0600\n"
-"Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
-"Language-Team: Chel Hee Lee <chl948@mail.usask.ca>\n"
+"PO-Revision-Date: 2018-04-09 12:10-0600\n"
+"Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
+"Language-Team: \n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -212,7 +203,8 @@ msgstr ""
 #: fexact.c:1399
 #, c-format
 msgid ""
-"FEXACT error 6 (f5xact).  LDKEY=%d is too small for this problem: kval=%d.\n"
+"FEXACT error 6 (f5xact).  LDKEY=%d is too small for this problem: kval="
+"%d.\n"
 "Try increasing the size of the workspace."
 msgstr ""
 
@@ -319,7 +311,8 @@ msgstr "유효하지 않은 vmethod입니다"
 
 #: mAR.c:836
 msgid "Burg's algorithm failed to find partial correlation"
-msgstr "partial correlation을 찾기 위해 사용된 Burg의 알고리즘이 실패했습니다"
+msgstr ""
+"partial correlation을 찾기 위해 사용된 Burg의 알고리즘이 실패했습니다"
 
 #: model.c:97
 msgid "invalid variables"
@@ -397,8 +390,8 @@ msgstr "행렬은 %.0g 열들을 필요로 합니다"
 #, c-format
 msgid "problem with term %d in model.matrix: no columns are assigned"
 msgstr ""
-"model.matrix에 있는 항 %d에 문제가 있습니다: 아무런 열들도 할당되지 않았습니"
-"다"
+"model.matrix에 있는 항 %d에 문제가 있습니다: 아무런 열들도 할당되지 않았습"
+"니다"
 
 #: model.c:624 model.c:629 model.c:635 model.c:646 model.c:652 model.c:658
 msgid "term names will be truncated"
@@ -752,7 +745,8 @@ msgstr "얻어진 hessian의 길이 또는 모드가 잘못되었으므로, 사�
 
 #: optimize.c:804
 msgid "gradient supplied is of the wrong length or mode, so ignored"
-msgstr "얻어진 gradient의 길이 또는 모드가 잘못되었으므로, 사용하지 않습니다."
+msgstr ""
+"얻어진 gradient의 길이 또는 모드가 잘못되었으므로, 사용하지 않습니다."
 
 #: pacf.c:87
 msgid "bad Starma struct"
@@ -817,8 +811,8 @@ msgstr "'lower'와 'upper'는 반드시 수치형 벡터들이어야 합니다."
 #: port.c:460
 msgid "'getElement' applies only to named lists"
 msgstr ""
-"'getElement'는 오로지 원소에 이름이 주어진 리스트(list)들에만 적용할 수 있습"
-"니다."
+"'getElement'는 오로지 원소에 이름이 주어진 리스트(list)들에만 적용할 수 있"
+"습니다."
 
 #: port.c:481
 #, c-format
@@ -834,8 +828,8 @@ msgstr "'gradient'는 반드시 크기가 (%d,%d)인 수치형 행렬이어야 �
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
 msgstr ""
-"fcn은 본래 모드 %3$d와 길이 %4$d이어야 하는데 모드 %1$d와 길이 %2$d를 생성하"
-"였습니다."
+"fcn은 본래 모드 %3$d와 길이 %4$d이어야 하는데 모드 %1$d와 길이 %2$d를 생성"
+"하였습니다."
 
 #: port.c:528
 msgid "invalid type for eval_check_store"
@@ -905,6 +899,3 @@ msgstr ""
 #, c-format
 msgid "missing value in last %d observations"
 msgstr "마지막 %d개의 관측치들이 결측입니다."
-
-#~ msgid "'expr' must be an expression or call"
-#~ msgstr "'expr'는 표현식(expression) 또는 호출(call)이어야 합니다."
