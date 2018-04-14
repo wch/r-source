@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.3.0\n"
+"Project-Id-Version: R 3.4.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-29 07:06\n"
-"PO-Revision-Date: 2016-04-07 10:44+0200\n"
+"POT-Creation-Date: 2018-03-30 07:33\n"
+"PO-Revision-Date: 2018-04-05 09:12+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsuhh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
 "Language: de\n"
@@ -18,17 +18,16 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
 
 msgid "namespace found within local environments"
-msgstr ""
+msgstr "Namensraum in lokalen Umgebungen gefunden"
 
 msgid "not a proper evaluation environment"
 msgstr "keine geeignete Evaluationsumgebung"
 
-#, fuzzy
 msgid "non-namespace found within namespace environments"
-msgstr "'ns' muss eine Namensraum oder eine Umgebung mit Namensraumimport sein"
+msgstr "ein nicht-Namensraum innerhalb einer Namensraumumgebung gefunden"
 
 msgid "namespace found within global environments"
-msgstr ""
+msgstr "Namensraum in globalen Umgebungen gefunden"
 
 msgid "bad assignment: %s"
 msgstr "unzulässige Zuweisung: %s"
@@ -85,10 +84,10 @@ msgid "more than one default provided in switch() call"
 msgstr "mehr als ein Default im Aufruf von switch()"
 
 msgid "'switch' with no alternatives"
-msgstr ""
+msgstr "'switch' ohne Alternativen"
 
 msgid "Error: compilation failed -"
-msgstr ""
+msgstr "Fehler: Kompilierung fehlgeschlagen -"
 
 msgid "cannot compile a non-function"
 msgstr "kann keine nicht-Funktion kompilieren"
@@ -118,10 +117,10 @@ msgid "'%s' is not a valid compiler option"
 msgstr "'%s' ist keine zulässige Compiler-Option"
 
 msgid "invalid environment variable value: %s==%s"
-msgstr ""
+msgstr "unzulässiger Wert in Umgebungsvariable: %s==%s"
 
 msgid "invalid compiler options: optimize(==%d)<2 and jitEnabled(==%d)>2"
-msgstr ""
+msgstr "unzulässige Komppileroptionen: optimize(==%d)<2 und jitEnabled(==%d)>2"
 
 msgid "function is not compiled"
 msgstr "Funktion ist nicht kompiliert"

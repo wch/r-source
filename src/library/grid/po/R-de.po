@@ -4,10 +4,10 @@
 # Detlef Steuer <steuer@hsu-hh.de>, 2007-2014.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.2.0\n"
+"Project-Id-Version: R 3.4.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-29 07:06\n"
-"PO-Revision-Date: 2016-04-08 11:20+0200\n"
+"POT-Creation-Date: 2018-03-30 07:33\n"
+"PO-Revision-Date: 2018-04-05 10:55+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
 "Language: de\n"
@@ -100,7 +100,7 @@ msgid "'gpar' element '%s' must not be length 0"
 msgstr "'gpar' Element '%s' darf nicht Länge 0 haben"
 
 msgid "mixture of missing and non-missing values for %s"
-msgstr ""
+msgstr "Mischung von fehlenden und nicht-fehlenden Werten für %s"
 
 msgid "'gamma' 'gpar' element is defunct"
 msgstr "'gamma' 'gpar' Element ist nicht mehr funktional"
@@ -457,9 +457,8 @@ msgstr "Index außerhalb des Bereichs (arithmetische Teilsauswahl)"
 msgid "index out of bounds (unit list subsetting)"
 msgstr "Index außerhalb des Bereichs (Einheitenlistenteilauswahl)"
 
-#, fuzzy
 msgid "Value being assigned must be a unit"
-msgstr "x und y müssen Einheiten sein"
+msgstr "zugewiesener Wert muss eine Einheiten sein"
 
 msgid "it is invalid to combine 'unit' objects with other types"
 msgstr "unzulässig 'unit' Objekte mit anderen Typen zu kombinieren"

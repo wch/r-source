@@ -874,6 +874,12 @@ msgstr ""
 msgid "The number of captures in 'pattern' != 'length(proto)'"
 msgstr ""
 
+msgid "The number of tokens != 'length(proto)'"
+msgstr ""
+
+msgid "The number of tokens is not consistent across 'x'"
+msgstr ""
+
 msgid "no lines found in %s"
 msgstr ""
 

@@ -4,10 +4,10 @@
 # Detlef Steuer <steuer@hsu-hh.de>, 2008-2014.
 msgid ""
 msgstr ""
-"Project-Id-Version: R-3.3.0\n"
+"Project-Id-Version: R-3.4.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-29 07:06\n"
-"PO-Revision-Date: 2016-04-08 12:38+0200\n"
+"POT-Creation-Date: 2018-03-30 07:34\n"
+"PO-Revision-Date: 2018-04-06 09:36+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
 "Language: de\n"
@@ -20,9 +20,8 @@ msgstr ""
 msgid "Checking %s"
 msgstr "Überprüfe %s"
 
-#, fuzzy
 msgid "Processing %s ..."
-msgstr "bearbeite %s'"
+msgstr "Bearbeite %s ..."
 
 msgid "argument 'package' must be of length 1"
 msgstr "Argument 'package' muss Länge 1 haben"
@@ -163,9 +162,8 @@ msgstr "Datei '%s':"
 msgid "found T/F in %s"
 msgstr "T/F in %s gefunden"
 
-#, fuzzy
 msgid "The package 'dir' argument must be of length 1"
-msgstr "Argument 'package' muss Länge 1 haben"
+msgstr "Argument 'dir' bei einem Paket muss Länge 1 haben"
 
 msgid "package name '%s' seems invalid; using directory name '%s' instead"
 msgstr ""
@@ -273,21 +271,17 @@ msgstr "Falsch formatiertes Authors@R Feld:"
 msgid "Cannot extract Author field from Authors@R field:"
 msgstr "Kann kein Author Feld aus dem Authors@R Feld extrahieren:"
 
-#, fuzzy
 msgid "Authors@R field gives no person with name and roles."
-msgstr "Das Authors@R Feld enthält keine Person mit Autorenrolle"
+msgstr "Das Authors@R Feld enthält keine Person mit Namen und Rollen"
 
-#, fuzzy
 msgid "Authors@R field gives persons with no name:"
-msgstr "Das Authors@R Feld enthält Personen ohne gültige Rolle."
+msgstr "Das Authors@R Feld enthält Personen ohne Namen:"
 
-#, fuzzy
 msgid "Authors@R field gives persons with no role:"
-msgstr "Das Authors@R Feld enthält Personen ohne gültige Rolle."
+msgstr "Das Authors@R Feld enthält Personen ohne Rolle:"
 
-#, fuzzy
 msgid "Authors@R field gives no person with name and author role"
-msgstr "Das Authors@R Feld enthält keine Person mit Autorenrolle"
+msgstr "Das Authors@R Feld enthält keine Person mit Namen und Autorenrolle"
 
 msgid "Cannot extract Maintainer field from Authors@R field:"
 msgstr "Kann kein Maintainer Feld aus dem Authors@R Feld extrahieren:"
@@ -554,9 +548,8 @@ msgstr ""
 msgid "Macro file %s should only contain Rd macro definitions and comments"
 msgstr "Makrodatei %s sollte nur Rd Makrodefinitionen und Kommentare enthalten"
 
-#, fuzzy
 msgid "Rd macro package '%s' is not installed."
-msgstr "Keine Rd Makros in Paket '%s'"
+msgstr "DAs Rd Makro-Paket '%s' ist nicht installiert"
 
 msgid "No Rd macros in package '%s'."
 msgstr "Keine Rd Makros in Paket '%s'"
@@ -795,23 +788,22 @@ msgid "The default JSS style may not be modified."
 msgstr "Der Standard JSS style darf nicht geändert werden"
 
 msgid "inst/doc"
-msgstr ""
+msgstr "inst/doc"
 
 msgid "file"
 msgstr "Datei"
 
-#, fuzzy
 msgid "files"
-msgstr "Datei"
+msgstr "Dateien"
 
 msgid ","
 msgstr ","
 
 msgid "ignored as vignettes have been rebuilt."
-msgstr ""
+msgstr "ignoriert, da Vignetten neu erzeugt wurden."
 
 msgid "Run R CMD build with --no-build-vignettes to prevent rebuilding."
-msgstr ""
+msgstr "Starte R CMD build with --no-build-vignettes um das erneute Erzeugen der Vignetten zu unterdrücken"
 
 msgid "invalid value for '--compact-vignettes', assuming %s"
 msgstr "unzulässiger Wert für '--compact-vignettes', nehme %s an"
@@ -820,7 +812,7 @@ msgid "Error: cannot rename directory to %s"
 msgstr "Fehler: kann  Verzeichnis nicht in %s umbennen "
 
 msgid "elapsed-time limit of %g %s reached for sub-process"
-msgstr ""
+msgstr "Grenze für Zeitverbrauch von %g %s für Subprozess erreicht"
 
 msgid "cannot link from %s"
 msgstr "kann nicht von %s aus linken"
@@ -934,9 +926,8 @@ msgstr "Starten des httpd Servers fehlgeschlagen"
 msgid "cannot read index information in file '%s'"
 msgstr "kann die Indexinformation in Datei '%s' nicht lesen"
 
-#, fuzzy
 msgid ".install_packages() exit status"
-msgstr "installed.packages"
+msgstr "install_packages() Exitstatus"
 
 msgid "error reading file '%s'"
 msgstr "Fehler beim Lesen der Datei '%s'"
@@ -976,9 +967,8 @@ msgstr "kein Quellkode gefunden"
 msgid "empty 'data' directory"
 msgstr "leeres 'data' Verzeichnis"
 
-#, fuzzy
 msgid "cannot create unique directory for build"
-msgstr "kann  Verzeichnis '%s' nicht erzeugen"
+msgstr "kann kein eindeutiges Verzeichnis für den Build erzeugen"
 
 msgid "cannot create temporary directory"
 msgstr "kann temporäres Verzeichnis nicht erzeugen"
@@ -1002,16 +992,16 @@ msgid "building a fake installation is disallowed"
 msgstr "eine Scheininstallation ist nicht erlaubt"
 
 msgid "C++17 standard requested but CXX17 is not defined"
-msgstr ""
+msgstr "C++17 Standard verlangt, aber CXX17 nicht definiert"
 
 msgid "C++14 standard requested but CXX14 is not defined"
-msgstr ""
+msgstr "C++14 Standard verlangt, aber CXX14 nicht definiert<"
 
 msgid "C++11 standard requested but CXX11 is not defined"
-msgstr ""
+msgstr "C++11 Standard verlangt, aber CXX11 nicht definiert<"
 
 msgid "C++98 standard requested but CXX98 is not defined"
-msgstr ""
+msgstr "C++98 Standard verlangt, aber CXX98 nicht definiert<"
 
 msgid ""
 "See\n"
@@ -1055,13 +1045,11 @@ msgstr ""
 "Kann die Zeilen/den Happen:\n"
 "\"%s\" nicht verarbeiten"
 
-#, fuzzy
 msgid "DESCRIPTION file not found"
-msgstr "Unzulässige DESCRIPTION Datei"
+msgstr "DESCRIPTION Datei nicht gefunden"
 
-#, fuzzy
 msgid "NEWS file not found"
-msgstr "Datei '%s' nicht gefunden"
+msgstr "NEWS Datei nicht gefunden"
 
 msgid "No news found in given file using old-style R-like format."
 msgstr ""
@@ -1114,11 +1102,12 @@ msgstr ""
 msgid "Processing packages:"
 msgstr "Bearbeitete Pakete:"
 
-#, fuzzy
 msgid ""
 "reading DESCRIPTION for package %s failed with message:\n"
 "  %s"
-msgstr "Einlesen von %s fehlgeschlagen mit Nachricht: %s"
+msgstr ""
+"Einlesen der DESCRIPTION für Paket %s fehlgeschlagen mit Nachricht:\n"
+" %s"
 
 msgid "%s must be a character string or a file/raw connection"
 msgstr "%s muss eine Zeichenkette oder eine Datei/raw -Verbindung sein"
@@ -1202,16 +1191,16 @@ msgid "unimplemented encoding"
 msgstr "nicht implementierte Kodierung"
 
 msgid "this requires 'objdump.exe' to be on the PATH"
-msgstr ""
+msgstr "hiefür muss 'objdump.exe' im Pfad liegen"
 
 msgid "this requires 'nm' to be on the PATH"
-msgstr ""
+msgstr "hiefür muss 'nm' im Pfad liegen<"
 
 msgid "Found %s, possibly from %s"
 msgstr "%s gefunden, vielleicht aus %s"
 
 msgid "no native symbols were extracted"
-msgstr ""
+msgstr "keine nativen Symbole extrahiert"
 
 msgid "testing '%s' failed"
 msgstr "Test von '%s' fehlgeschlagen"
@@ -1222,12 +1211,11 @@ msgstr "Teste die Beispiele für Paket %s"
 msgid "comparing %s to %s ..."
 msgstr "vergleiche %s mit %s ..."
 
-#, fuzzy
 msgid "ERROR"
-msgstr "Fehler:"
+msgstr "FEHLER"
 
 msgid "NOTE"
-msgstr ""
+msgstr "BEMERKUNG"
 
 msgid "results differ from reference results"
 msgstr "Ergebnisse unterscheiden sich von den Referenzergebnissen"
@@ -1263,9 +1251,8 @@ msgid "running tests of random deviate generation -- fails occasionally"
 msgstr ""
 "Ausführen von Tests zur Zufallszahlenerzeugung -- schlägt manchmal fehl"
 
-#, fuzzy
 msgid "unknown header specification"
-msgstr "Nicht-Standard Lizenzspezifikation:"
+msgstr "Unbekannte Header-Spezifikation"
 
 msgid "argument 'pkg' must be of length 1"
 msgstr "Argument 'pkg' muss Länge 1 haben"
@@ -1274,7 +1261,7 @@ msgid "package '%s' was not found"
 msgstr "Paket '%s' nicht gefunden"
 
 msgid "the 'lib.loc' argument has always been unused and is deprecated now"
-msgstr ""
+msgstr "das 'lib.loc' Argument wurde nie genutzt und ist nun veraltet"
 
 msgid "bad operand"
 msgstr "ungeeigneter Operand"
@@ -1333,9 +1320,8 @@ msgstr "enthält Leerzeile"
 msgid "Unknown encoding with non-ASCII data: converting to ASCII"
 msgstr "Unbekannte Kodierung mit nicht-ASCII Daten: konvertiere nach ASCII"
 
-#, fuzzy
 msgid "cannot source package code:"
-msgstr "kann Paketquelltext nicht einlesen"
+msgstr "kann Paketquelltext nicht einlesen:"
 
 msgid "Call sequence:"
 msgstr "Aufrufsequenz:"
@@ -1483,11 +1469,10 @@ msgid_plural "unable to re-encode %s lines %s"
 msgstr[0] "kann %s Zeile %s nicht rekodieren"
 msgstr[1] "kann '%s' Zeilen %s nicht rekodieren"
 
-#, fuzzy
 msgid " file\n"
 msgid_plural " files\n"
-msgstr[0] "Datei"
-msgstr[1] "Datei"
+msgstr[0] "Datei\n"
+msgstr[1] "Dateien\n"
 
 msgid "Required field missing or empty:"
 msgid_plural "Required fields missing or empty:"
@@ -1511,8 +1496,8 @@ msgstr[1] "%d der Pakettests fehlgeschlagen"
 
 msgid "Corresponding BibTeX entry:"
 msgid_plural "Corresponding BibTeX entries:"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Zugehöriger BibTeX Eintrag:"
+msgstr[1] "Zugehörige BibTeX Einträge:"
 
 #~ msgid "invalid value for 'compress': should be FALSE, TRUE, 2 or 3"
 #~ msgstr "ungültiger Wert für 'compress': muss FALSE, TRUE, 2 oder 3 sein"
