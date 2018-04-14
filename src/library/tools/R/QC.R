@@ -7727,8 +7727,8 @@ function(x, ...)
                 "The Title field starts with the package name."
             },
             if(length(y <- x$title_case)) {
-                paste(c("The Title field should be in title case, current version then in title case:",
-                        sQuote(y)),
+                paste(c("The Title field should be in title case. Current version is:",
+                        sQuote(y[1L]), "In title case that is:", sQuote(y[2L])),
                       collapse = "\n")
             })),
       fmt(c(if(length(x$descr_bad_initial)) {
