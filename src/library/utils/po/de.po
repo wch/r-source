@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.3.0\n"
+"Project-Id-Version: R 3.4.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-30 07:34-0700\n"
-"PO-Revision-Date: 2016-04-21 09:14+0200\n"
+"PO-Revision-Date: 2018-04-06 09:46+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
 "Language: de\n"
@@ -79,12 +79,11 @@ msgstr "Index außerhalb der Grenzen"
 #: io.c:1053
 #, c-format
 msgid "Problem closing connection:  %s"
-msgstr ""
+msgstr "Problem beim Schliessen der Verbindung: %s"
 
 #: io.c:1055
-#, fuzzy
 msgid "Problem closing connection"
-msgstr "'file' ist keine Verbindung"
+msgstr "Problem beim Schliessen der Verbindung"
 
 #: io.c:1078
 msgid "'file' is not a connection"
@@ -101,8 +100,7 @@ msgstr "'dec' muss ein einzelnes Zeichen sein"
 #: io.c:1137
 #, c-format
 msgid "corrupt data frame -- length of column %d does not not match nrows"
-msgstr ""
-"beschädigterter Dataframe -- Länge der Spalte %d entspricht nicht nrows"
+msgstr "beschädigter Dataframe -- Länge der Spalte %d entspricht nicht nrows"
 
 #: io.c:1168
 #, c-format

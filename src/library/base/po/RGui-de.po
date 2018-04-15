@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R-3.1.0\n"
+"Project-Id-Version: R-3.4.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2018-03-30 07:35-0700\n"
-"PO-Revision-Date: 2016-04-07 11:28+0200\n"
+"PO-Revision-Date: 2018-04-05 08:30+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
 "Language: de\n"
@@ -621,9 +621,8 @@ msgid "Update packages..."
 msgstr "Aktualisiere Pakete..."
 
 #: src/gnuwin32/rui.c:920
-#, fuzzy
 msgid "Install package(s) from local files..."
-msgstr "Installiere Paket(e) aus lokalen Zip-Dateien..."
+msgstr "Installiere Paket(e) aus lokalen Dateien..."
 
 #: src/gnuwin32/rui.c:944
 msgid "FAQ on R"

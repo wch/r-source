@@ -4,10 +4,10 @@
 # Detlef Steuer <steuer@hsu-hh.de>, 2007-2014.
 msgid ""
 msgstr ""
-"Project-Id-Version: R-3.3.0\n"
+"Project-Id-Version: R-3.4.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2018-03-30 07:33\n"
-"PO-Revision-Date: 2016-04-08 11:31+0200\n"
+"PO-Revision-Date: 2018-04-05 14:50+0200\n"
 "Last-Translator: Detlef Steuer <detlef.steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
 "Language: de\n"
@@ -137,17 +137,16 @@ msgid ""
 "methods:::bind_activation() is defunct;\n"
 " rather provide methods for cbind2() / rbind2()"
 msgstr ""
+"methods:::bind_activation() funktioniert nicht mehr;\n"
+" besser Methoden für cbind2()/rbind2() bereit stellen"
 
 msgid "invalid argument 'name': %s"
 msgstr "unzulässiges Argument 'name': %s"
 
-#, fuzzy
 msgid ""
 "%s dispatches internally;  methods can be defined, but the generic function "
 "is implicit, and cannot be changed."
-msgstr ""
-"\"%s\" ist eine primitive Funktion; es können Methoden definiert werden, die "
-"generische Funktion ist jedoch implizit und kann nicht geändert werden"
+msgstr "\"%s\" dispatched intern; es können Methoden definiert werden, die generische Funktion ist jedoch implizit und kann nicht geändert werden"
 
 msgid ""
 "if the 'def' argument is supplied, it must be a function that calls "
@@ -776,10 +775,10 @@ msgstr ""
 msgid ""
 "Found more than one class \"%s\" in cache; using the first, from namespace "
 "'%s'"
-msgstr ""
+msgstr "Mehr als eine Klasse \"%s\" im Cache gefunden; nutze die erste, kommt aus Namensraum '%s'"
 
 msgid "Also defined by"
-msgstr ""
+msgstr "Auch definiert durch"
 
 msgid "undefined subclass %s of class %s; definition not updated"
 msgstr ""
@@ -867,13 +866,10 @@ msgstr ""
 "Methoden können nur Argumente zur generischen %s hinzufügen, wenn '...' ein "
 "Argument ebendieser ist"
 
-#, fuzzy
 msgid ""
 "%s arguments (%s) after %s in the generic must appear in the method, in the "
 "same place at the end of the argument list"
-msgstr ""
-"Argumente (%s) nach '...' in der Generischen müssen in der Methode an "
-"derselben Stelle am Ende der Argumentliste auftreten"
+msgstr "%s Argumente (%s) nach '%s' in der Generischen müssen in der Methode an derselben Stelle am Ende der Argumentliste auftreten"
 
 msgid ""
 "argument 'f' must be a string, generic function, or primitive: got an "
@@ -1233,12 +1229,11 @@ msgstr ""
 "momentan existieren Methoden zur Umwandlung von %s nach %s; diese werden "
 "ersetzt"
 
-#, fuzzy
 msgid "Function must be an S4 generic"
-msgstr "Leerer Funktionsname in .getGeneric"
+msgstr "Funktion muss eine S4 Generische sein"
 
 msgid "method is not being debugged"
-msgstr ""
+msgstr "Methode wird nicht ge-debugged"
 
 msgid "object %s not found"
 msgstr "Objekt %s nicht gefunden"
@@ -1542,9 +1537,8 @@ msgstr ""
 msgid "%s is not a field in this class"
 msgstr "%s ist kein Feld dieser Klasse"
 
-#, fuzzy
 msgid "Methods not found: %s"
-msgstr "Objekt %s nicht gefunden"
+msgstr "Methoden nicht gefunden: %s"
 
 msgid ""
 "the definition of class %s in package %s is locked, methods may not be "
@@ -1677,6 +1671,8 @@ msgid ""
 "Reference superclasses must come from the same package for the environment "
 "to be defined:  got %s and %s"
 msgstr ""
+"Referenzoberklasse muss aus dem selben Paket stammen, damit die Umgebung\n"
+"definiert ist: bekam %s und %s"
 
 msgid ""
 "Class %s is not a subclass of %s; functional semantics not defined for this "
@@ -1729,11 +1725,8 @@ msgstr ""
 msgid "the method for %s for this signature was not being traced"
 msgstr "die Methode für %s für diese Signatur wurde nicht verfolgt"
 
-#, fuzzy
 msgid "making a traced version of a special; arguments may be altered"
-msgstr ""
-"erzeuge verfolgte Version einer Primitiven; Argumente werden wie '...' "
-"behandelt"
+msgstr "erzeuge verfolgte Version einer Speziellen; Argumente werden evtl. verändert"
 
 msgid ""
 "the editing in trace() can only change the body of the function; got an "

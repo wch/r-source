@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2018-03-30 07:34\n"
-"PO-Revision-Date: 2016-04-05 18:08-0600\n"
+"PO-Revision-Date: 2018-04-07 02:09-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
@@ -20,16 +20,16 @@ msgstr ""
 "First-Translator: Dmitri I GOULIAEV <dmitri.gouliaev@telkel.net\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 1.8.7.1\n"
 
 msgid "must have at least 'ord' knots"
 msgstr "должно быть по крайней мере 'ord' узлов"
 
-#, fuzzy
 msgid "length of 'derivs' is larger than length of 'x'"
-msgstr "длина 'derivs' должна соответствовать длине 'x'"
+msgstr "длина 'derivs' должна быть больше длины 'x'"
 
 msgid "empty 'derivs'"
-msgstr ""
+msgstr "пустой 'derivs'"
 
 msgid "'ord' must be positive integer, at most the number of knots"
 msgstr "'ord' должен быть положительным целым, максимум количеством узлов"
@@ -47,9 +47,8 @@ msgstr "%s хочет, чтобы пакет 'Matrix' был установлен правильно"
 msgid "values of 'x' must be distinct"
 msgstr "значения 'x' должны бить разными"
 
-#, fuzzy
 msgid "must have at least 'ord'=%d points"
-msgstr "должно быть по крайней мере 'ord' узлов"
+msgstr "должно быть по крайней мере 'ord'=%d узлов"
 
 msgid "'formula' must be of the form \"y ~ x\""
 msgstr "'formula' должна быть в виде \"y ~ x\""
@@ -79,7 +78,7 @@ msgid "knot positions must be strictly increasing"
 msgstr "позиции узлов должны постоянно возрастать"
 
 msgid "currently implemented only for cubic splines"
-msgstr ""
+msgstr "на сегодняшний день, разработан только для кубических сплайнов"
 
 msgid "spline must be monotone"
 msgstr "кривая должна быть монотонной"

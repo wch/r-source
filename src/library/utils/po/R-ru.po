@@ -11,16 +11,16 @@ msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2018-03-30 07:34\n"
-"PO-Revision-Date: 2016-04-05 18:05-0600\n"
+"PO-Revision-Date: 2018-04-07 01:35-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=KOI8-R\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: Russian\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 1.8.7.1\n"
 
 msgid ""
 "RShowDoc() should be used with a character string argument specifying\n"
@@ -104,17 +104,16 @@ msgid "elements of 'what' after the first will be ignored"
 msgstr "элементы 'what' после первого будут пропущены"
 
 msgid "Yes"
-msgstr ""
+msgstr "Да"
 
 msgid "No"
-msgstr ""
+msgstr "Нет"
 
 msgid "Cancel"
-msgstr ""
+msgstr "Отмена"
 
-#, fuzzy
 msgid "Unrecognized response"
-msgstr "Нераспознанное специальное значение данных"
+msgstr "Нераспознанный ответ"
 
 msgid "No suitable spell-checker program found"
 msgstr "Не найдено подходящей программы проверки грамматики"
@@ -205,9 +204,8 @@ msgstr "индекс за границами"
 msgid "%s should be one of %s"
 msgstr "%s должен быть одним из %s"
 
-#, fuzzy
 msgid "Argument '%s' is deprecated; rather set '%s' instead."
-msgstr "аргумент 'namespace' устарел и не рекомендуется."
+msgstr "аргумент '%s' устарел; вместо него используйте %s."
 
 msgid "A BibTeX entry for LaTeX users is"
 msgstr "BibTeX запись для пользователей LaTeX"
@@ -293,6 +291,8 @@ msgid ""
 "Cannot debug primitive functions unless they are implicit generics (requires "
 "loading the methods package)"
 msgstr ""
+"Не могу проверить функции-примитивы, если они не явные общие (требуется "
+"загрузить пакет methods)"
 
 msgid "error in trying to evaluate the expression for argument %s (%s)"
 msgstr "ошибка при попытке выполнить выражение для аргумента %s (%s)"
@@ -453,10 +453,10 @@ msgid "Saving help page to %s"
 msgstr "Сохраняю страницу помощи в %s"
 
 msgid "Cancelled by user"
-msgstr ""
+msgstr "Отменено пользователем"
 
 msgid "Unable to connect to CRAN to check R version."
-msgstr ""
+msgstr "Не могу соединиться с CRAN, чтобы проверить версию R."
 
 msgid "argument %s must be a single character string"
 msgstr "аргумент %s должен быть одной текстовой строкой"
@@ -534,7 +534,7 @@ msgid "DESCRIPTION file of package '%s' is missing or broken"
 msgstr "файл DESCRIPTION пакета '%s' пропущен или поврежден"
 
 msgid "Invalid \"Built\":"
-msgstr ""
+msgstr "Неправильный \"Built\":"
 
 msgid "cannot update HTML package index"
 msgstr "не могу обновить HTML-индекс пакетов"
@@ -549,16 +549,16 @@ msgid "Enter an item from the menu, or 0 to exit"
 msgstr "Введите пункт из меню или 0 для выхода"
 
 msgid "%d errors caught in %s.  The error messages and their frequencies are"
-msgstr ""
+msgstr "%d ошибок найдено в %s.  Сообщения об ошибках и их частоты:"
 
 msgid "invalid query"
 msgstr "неправильный запрос"
 
 msgid "For SI units, specify 'standard = \"SI\"'"
-msgstr ""
+msgstr "Чтобы использовать единицы СИ, укажите 'standard = \"SI\"'"
 
 msgid "Unit \"%s\" is not part of standard \"%s\""
-msgstr ""
+msgstr "Единица \"%s\" не относится к стандарту \"%s\""
 
 msgid "'%s' is a formal generic function; S3 methods will not likely be found"
 msgstr ""
@@ -681,19 +681,17 @@ msgstr ""
 msgid "trying to use CRAN without setting a mirror"
 msgstr "пробую использовать CRAN без установки зеркала"
 
-#, fuzzy
 msgid "'download.file()' error code '%d'"
-msgstr "Ошибка read.dcf() на файле '%s'"
+msgstr "'download.file()' код ошибки '%d'"
 
 msgid "failed to download mirrors file (%s); using local file '%s'"
-msgstr ""
+msgstr "не удалось скачать файл зеркал (%s); использую локальный файл '%s'"
 
 msgid "cannot choose a"
-msgstr ""
+msgstr "не могу выбрать"
 
-#, fuzzy
 msgid "mirror non-interactively"
-msgstr "не могу выбрать зеркало CRAN неинтерактивно"
+msgstr "использую зеркало неинтерактивно"
 
 msgid "cannot set repositories non-interactively"
 msgstr "не могу установить хранилища неинтерактивно"
@@ -726,12 +724,8 @@ msgstr "не указаны пакеты"
 msgid "'lib = \"%s\"' is not writable"
 msgstr "'lib = \"%s\"' не для записи"
 
-#, fuzzy
 msgid "Would you like to use a personal library instead?"
-msgstr ""
-"Не хотите ли Вы создать персональную библиотеку\n"
-"%s\n"
-"для того чтобы инсталлировать пакеты в нее?"
+msgstr "Не хотите ли использовать персональную библиотеку?"
 
 msgid "unable to install packages"
 msgstr "не могу установить пакеты"
@@ -754,11 +748,10 @@ msgstr "выставляю 'repos = NULL' на основе 'pkgs'"
 msgid "unable to create temporary directory %s"
 msgstr "не могу создать временную директорию %s"
 
-#, fuzzy
 msgid "type == \"both\" can only be used on Windows or a CRAN build for macOS"
 msgstr ""
 "type == \"both\" можно использовать только на Windows или CRAN-сборке для "
-"Mac OS X"
+"macOS"
 
 msgid "type == \"both\" cannot be used with 'repos = NULL'"
 msgstr "type == \"both\" нельзя использовать вместе с 'repos = NULL'"
@@ -766,13 +759,11 @@ msgstr "type == \"both\" нельзя использовать вместе с 'repos = NULL'"
 msgid "source repository is unavailable to check versions"
 msgstr "репозиторий исходников недоступен для того, чтобы проверить версии"
 
-#, fuzzy
 msgid "cannot install macOS binary packages on Windows"
-msgstr "не могу установить бинарные пакеты MacOS X под Windows"
+msgstr "не могу установить бинарные пакеты macOS под Windows"
 
-#, fuzzy
 msgid "cannot install macOS binary packages on this platform"
-msgstr "не могу установить бинарные пакеты MacOS X на этой платформе"
+msgstr "не могу установить бинарные пакеты  macOS на этой платформе"
 
 msgid "cannot install Windows binary packages on this platform"
 msgstr "не могу установить бинарные пакеты Windows на этой платформе"
@@ -797,7 +788,7 @@ msgid "files: %s"
 msgstr "files: %s"
 
 msgid "timeouts for parallel installs require the 'timeout' command"
-msgstr ""
+msgstr "таймауты для параллельной инсталляции требуют команду 'timeout'"
 
 msgid ""
 "installation of one or more packages failed,\n"
@@ -1001,7 +992,7 @@ msgid "'str.default': 'le' is NA, so taken as 0"
 msgstr "'str.default': 'le' -- это NA, так что беру как 0"
 
 msgid "'nchar.max = %d' is too small"
-msgstr ""
+msgstr "'nchar.max = %d' слишком маленький"
 
 msgid "'object' does not have valid levels()"
 msgstr "'object' не имеет правильных levels()"
@@ -1010,7 +1001,7 @@ msgid "'digits' and 'digits.d' are both specified and the latter is not used"
 msgstr "определены и 'digits', и 'digits.d', последняя не используется"
 
 msgid "The number of captures in 'pattern' != 'length(proto)'"
-msgstr ""
+msgstr "Число находок в 'pattern' != 'length(proto)'"
 
 msgid "no lines found in %s"
 msgstr "в '%s' нет строк"
@@ -1155,13 +1146,11 @@ msgstr "'url' должен быть текстовым вектором единичной длины"
 msgid "'destfile' must be a length-one character vector"
 msgstr "'destfile' должен быть текстовым вектором единичной длины"
 
-#, fuzzy
 msgid "'wget' call had nonzero exit status"
-msgstr "у скачивания ненулевой статус выхода"
+msgstr "'wget' с ненулевым статусом выхода"
 
-#, fuzzy
 msgid "'curl' call had nonzero exit status"
-msgstr "у скачивания ненулевой статус выхода"
+msgstr "'curl' с ненулевым статусом выхода"
 
 msgid "download had nonzero exit status"
 msgstr "у скачивания ненулевой статус выхода"
@@ -1169,9 +1158,8 @@ msgstr "у скачивания ненулевой статус выхода"
 msgid "'tar' returned non-zero exit code %d"
 msgstr "'tar' вернул ненулевой код выхода %d"
 
-#, fuzzy
 msgid "file %s is not a macOS binary package"
-msgstr "файл %s -- не бинарный пакет OS X"
+msgstr "файл %s -- не бинарный пакет macOS"
 
 msgid "package %s successfully unpacked and MD5 sums checked"
 msgstr "пакет %s успешно распакован, MD5-суммы проверены"
@@ -1267,9 +1255,9 @@ msgstr[2] "соответствует %d объектам."
 
 msgid "%d error caught in %s: %s"
 msgid_plural "%d times caught the same error in %s: %s"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%d ошибка найдена в %s: %s"
+msgstr[1] "%d ошибки найдены в %s: %s"
+msgstr[2] "%d ошибок найдено в %s: %s"
 
 msgid "object '%s' not found"
 msgid_plural "objects '%s' not found"
@@ -1299,12 +1287,11 @@ msgstr[0] "пакет '%s' недоступен (%s)"
 msgstr[1] "пакета %s недоступны (%s)"
 msgstr[2] "пакетов %s недоступно (%s)"
 
-#, fuzzy
 msgid "package %s is a base package, and should not be updated"
 msgid_plural "packages %s are base packages, and should not be updated"
-msgstr[0] "пакет '%s' сейчас используется и не будет установлен"
-msgstr[1] "пакеты '%s' сейчас используются и не будут установлены"
-msgstr[2] "пакеты '%s' сейчас используются и не будут установлены"
+msgstr[0] "пакет '%s' -- это базовый пакет, он не будет установлен"
+msgstr[1] "пакет '%s' -- это базовый пакеты, они не будут установлены"
+msgstr[2] "пакет '%s' -- это базовый пакеты, они не будут установлены"
 
 msgid "dependency %s is not available"
 msgid_plural "dependencies %s are not available"

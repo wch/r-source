@@ -4,10 +4,10 @@
 # Detlef Steuer <steuer@hsu-hh.de>, 2011-2014.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.1.0\n"
+"Project-Id-Version: R 3.4.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-30 07:34-0700\n"
-"PO-Revision-Date: 2013-03-01 16:29+0100\n"
+"PO-Revision-Date: 2018-04-06 09:33+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
 "Language: de\n"
@@ -17,14 +17,14 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
 
 #: fork.c:181
-#, fuzzy, c-format
+#, c-format
 msgid "unable to terminate child process: %s"
-msgstr "kann nicht forken, möglicher Grund: %s"
+msgstr "kann Kindprozess nicht beenden: %s"
 
 #: fork.c:208
-#, fuzzy, c-format
+#, c-format
 msgid "unable to terminate child: %s"
-msgstr "kann keine pipe erzeugen"
+msgstr "kann Kindprozess nicht beenden: %s"
 
 #: fork.c:287 fork.c:556
 msgid "memory allocation error"
@@ -33,13 +33,15 @@ msgstr "Speicherallozierungsfehler"
 #: fork.c:337 fork.c:341 fork.c:345
 #, c-format
 msgid "invalid '%s' argument"
-msgstr ""
+msgstr "unzulässiges '%s' Argument"
 
 #: fork.c:401
 msgid ""
 "Error while shutting down parallel: unable to terminate some child "
 "processes\n"
 msgstr ""
+"Fehler beim Beenden von parallel: nicht alle Kindprozesse konnten beendet\n"
+"werden\n"
 
 #: fork.c:490 fork.c:493
 msgid "unable to create a pipe"
@@ -80,9 +82,9 @@ msgid "write error"
 msgstr "Schreibfehler"
 
 #: fork.c:781
-#, fuzzy, c-format
+#, c-format
 msgid "cannot wait for child %d as it does not exist"
-msgstr "Kindprozess %d existiert nicht"
+msgstr "kann nicht auf Kindprozess %d warten, da dieser nicht exisitiert"
 
 #: fork.c:848 fork.c:971
 #, c-format

@@ -4,10 +4,10 @@
 # Detlef Steuer <steuer@hsu-hh.de>, 2008-2014.
 msgid ""
 msgstr ""
-"Project-Id-Version: R-3.2.0\n"
+"Project-Id-Version: R-3.4.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-30 07:34-0700\n"
-"PO-Revision-Date: 2016-04-07 10:58+0200\n"
+"PO-Revision-Date: 2018-04-05 16:17+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
 "Language: de\n"
@@ -75,14 +75,12 @@ msgid "'x' is NULL"
 msgstr "'x' ist NULL"
 
 #: cov.c:645
-#, fuzzy
 msgid "'x' is a factor"
-msgstr "'x' ist keine Matrix"
+msgstr "'x' ist ein Faktor"
 
 #: cov.c:665
-#, fuzzy
 msgid "'y' is a factor"
-msgstr "'fn' ist keine Funktion"
+msgstr "'y' ist ein Faktor"
 
 #: cov.c:673 cov.c:679
 msgid "incompatible dimensions"
@@ -116,7 +114,7 @@ msgstr "Funktion '%s' ist nicht in der Tabelle der Ableitungen"
 #: deriv.c:789
 #, c-format
 msgid "expression must not be type '%s'"
-msgstr ""
+msgstr "Ausdruck darf nicht vom Typ '%s' sein"
 
 #: deriv.c:792
 msgid "variable must be a character string"
@@ -177,7 +175,7 @@ msgstr "Argument %s muss ein numerischer Vektor der Länge 1 oder %d sein"
 #: fexact.c:273
 #, c-format
 msgid "integer overflow would happen in 'mult * ldkey' = %g"
-msgstr ""
+msgstr "Ganzzahlüberlauf würde passieren in 'mult * ldkey' = %g"
 
 #: fexact.c:653
 #, c-format
@@ -186,11 +184,14 @@ msgid ""
 "  (ii := key2[itp=%d] = %d, ldstp=%d)\n"
 "Try increasing the size of the workspace and possibly 'mult'"
 msgstr ""
+"FEXACT Fehler 6. LDKEY=%d ist für dieses Problem zu klein,\n"
+" (ii := key2[itp=%d] = %d, ldstp=%d)\n"
+" Versuchen Sie größeren Workspace und evtl. 'mult'"
 
 #: fexact.c:1035
 #, c-format
 msgid "Bug in fexact3, it[i=%d]=%d: negative key %d (kyy=%d)\n"
-msgstr ""
+msgstr "Fehler in fexact3, it[i=%d]=%d: negativer Schlüssel %d (kyy=%d)\n"
 
 #: fexact.c:1064
 #, c-format
@@ -199,6 +200,9 @@ msgid ""
 "  (ldst=%d, key=%d, ipn=%d, itp=%d, ist[ii=%d]=%d).\n"
 "Increase workspace or consider using 'simulate.p.value=TRUE'"
 msgstr ""
+"FEXACT Fehler 30. Stacklänge überschritten in f3xact,\n"
+" (ldst=%d, key=%d, ipn=%d, itp=%d, ist[ii=%d]=%d).\n"
+"Workspace vergrößern oder evtl. 'simulate.p.value=TRUE' nutzen."
 
 #: fexact.c:1399
 #, c-format
@@ -206,6 +210,8 @@ msgid ""
 "FEXACT error 6 (f5xact).  LDKEY=%d is too small for this problem: kval=%d.\n"
 "Try increasing the size of the workspace."
 msgstr ""
+"FEXACT Fehler 6 (f5xact). LDKEY=%d ist für dieses Problem zu klein: kval=%d\n"
+" Versuchen Sie größeren Workspace.<"
 
 #: fexact.c:1412
 #, c-format
@@ -214,6 +220,9 @@ msgid ""
 "  (kval=%d, itop-ldstp=%d).\n"
 "Increase workspace or consider using 'simulate.p.value=TRUE'."
 msgstr ""
+"FEXACT Fehler 7(%s). LDSTP=%d ist für dieses Problem zu klein,\n"
+" (kval=%d, itop-ldstp=%d).\n"
+"Workspace vergrößern oder evtl. 'simulate.p.value=TRUE' nutzen."
 
 #: fexact.c:1449
 #, c-format
@@ -222,6 +231,9 @@ msgid ""
 "  (pastp=%g, ipn_0:=ipoin[itp=%d]=%d, stp[ipn_0]=%g).\n"
 "Increase workspace or consider using 'simulate.p.value=TRUE'"
 msgstr ""
+"FEXACT error 7(%s). LDSTP=%d ist für dieses Problem zu klein,\n"
+" (pastp=%g, ipn_0:=ipoin[itp=%d]=%d, stp[ipn_0]=%g).\n"
+"Workspace vergrößern oder evtl. 'simulate.p.value=TRUE' nutzen."
 
 #: fourier.c:66 fourier.c:161
 msgid "non-numeric argument"
@@ -244,9 +256,9 @@ msgid "invalid factors"
 msgstr "ungültige Faktoren"
 
 #: integrate.c:84 integrate.c:86 integrate.c:128
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' must be of length one"
-msgstr "'m' muss eine Liste sein"
+msgstr "'%s' muss Länge 1 haben"
 
 #: ksmooth.c:69
 msgid "only 2500 rows are allowed for sm.method=\"spline\""

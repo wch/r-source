@@ -10,16 +10,16 @@ msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-30 07:33-0700\n"
-"PO-Revision-Date: 2016-04-05 18:07-0600\n"
+"PO-Revision-Date: 2018-04-07 01:16-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=KOI8-R\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: Russian\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 1.8.7.1\n"
 
 #: axis_scales.c:37 axis_scales.c:38 axis_scales.c:55
 #, c-format
@@ -68,7 +68,7 @@ msgstr "уровень альфа %d, не в 0:255"
 
 #: colors.c:113
 msgid "inputs must be finite"
-msgstr ""
+msgstr "ввод должен быть конечным"
 
 #: colors.c:128
 msgid "bad hsv to rgb color conversion"
@@ -532,6 +532,8 @@ msgid ""
 "Cannot open temporary file '%s' for compression (reason: %s); compression "
 "has been turned off for this device"
 msgstr ""
+"Не могу открыть временный файл '%s' для сжатия (причина: %s); сжатие для "
+"этого устройства выключено"
 
 #: devPS.c:7704 devPS.c:8066 devPS.c:8113
 msgid "failed to find or load PDF font"
@@ -697,7 +699,7 @@ msgstr "попытка использовать locator после dev.hold()"
 
 #: devWindows.c:3166
 msgid "graphics device closed during call to locator or identify"
-msgstr ""
+msgstr "графическое устройство закрыто во время вызова locator или identify"
 
 #: devWindows.c:3407
 msgid "option 'windowsTimeouts' should be integer"
@@ -746,7 +748,7 @@ msgstr "неправильный аргумент"
 
 #: devices.c:89 devices.c:97 devices.c:105
 msgid "NA argument is invalid"
-msgstr ""
+msgstr "аргумент NA неправильный"
 
 #: qdBitmap.c:79
 #, c-format

@@ -11,16 +11,16 @@ msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-30 07:34-0700\n"
-"PO-Revision-Date: 2016-04-05 18:09-0600\n"
+"PO-Revision-Date: 2018-04-07 01:58-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=KOI8-R\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: Russian\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 1.8.7.1\n"
 
 #: Srunmed.c:54
 msgid "bandwidth/span of running medians is larger than n"
@@ -81,14 +81,12 @@ msgid "'x' is NULL"
 msgstr "'x' -- это NULL"
 
 #: cov.c:645
-#, fuzzy
 msgid "'x' is a factor"
-msgstr "'x' -- не матрица"
+msgstr "'x' -- это фактор"
 
 #: cov.c:665
-#, fuzzy
 msgid "'y' is a factor"
-msgstr "'fn' не является функцией"
+msgstr "'y' -- это фактор"
 
 #: cov.c:673 cov.c:679
 msgid "incompatible dimensions"
@@ -122,7 +120,7 @@ msgstr "Функция '%s' отсутствует в таблице производных"
 #: deriv.c:789
 #, c-format
 msgid "expression must not be type '%s'"
-msgstr ""
+msgstr "выражение не должно быть типа '%s'"
 
 #: deriv.c:792
 msgid "variable must be a character string"
@@ -183,7 +181,7 @@ msgstr "аргумент %s должен быть числовым вектором длины 1 или %d"
 #: fexact.c:273
 #, c-format
 msgid "integer overflow would happen in 'mult * ldkey' = %g"
-msgstr ""
+msgstr "может произойти  целочисленное переполнение в 'mult * ldkey' = %g"
 
 #: fexact.c:653
 #, c-format
@@ -192,11 +190,14 @@ msgid ""
 "  (ii := key2[itp=%d] = %d, ldstp=%d)\n"
 "Try increasing the size of the workspace and possibly 'mult'"
 msgstr ""
+"FEXACT ошибка 6.  LDKEY=%d слишком мал для этой проблемы,\n"
+"  (ii := key2[itp=%d] = %d, ldstp=%d)\n"
+"Попробуйте увеличить размер рабочего пространства и, возможно, 'mult'"
 
 #: fexact.c:1035
 #, c-format
 msgid "Bug in fexact3, it[i=%d]=%d: negative key %d (kyy=%d)\n"
-msgstr ""
+msgstr "Ошибка в fexact3, it[i=%d]=%d: отрицательный ключ %d (kyy=%d)\n"
 
 #: fexact.c:1064
 #, c-format
@@ -205,13 +206,21 @@ msgid ""
 "  (ldst=%d, key=%d, ipn=%d, itp=%d, ist[ii=%d]=%d).\n"
 "Increase workspace or consider using 'simulate.p.value=TRUE'"
 msgstr ""
+"FEXACT ошибка 30.  Превышена длина стека в f3xact,\n"
+"  (ldst=%d, key=%d, ipn=%d, itp=%d, ist[ii=%d]=%d).\n"
+"Увеличьте рабочее пространство или попробуйте использовать 'simulate.p."
+"value=TRUE'"
 
 #: fexact.c:1399
 #, c-format
 msgid ""
-"FEXACT error 6 (f5xact).  LDKEY=%d is too small for this problem: kval=%d.\n"
+"FEXACT error 6 (f5xact).  LDKEY=%d is too small for this problem: kval="
+"%d.\n"
 "Try increasing the size of the workspace."
 msgstr ""
+"FEXACT ошибка 6 (f5xact).  LDKEY=%d слишком мал для этой проблемы: kval="
+"%d.\n"
+"Попробуйте увеличить размер рабочего пространства."
 
 #: fexact.c:1412
 #, c-format
@@ -220,6 +229,10 @@ msgid ""
 "  (kval=%d, itop-ldstp=%d).\n"
 "Increase workspace or consider using 'simulate.p.value=TRUE'."
 msgstr ""
+"FEXACT ошибка 7(%s). LDSTP=%d слишком маленький для этой проблемы,\n"
+"  (kval=%d, itop-ldstp=%d).\n"
+"Увеличьте рабочее пространство или попробуйте использовать 'simulate.p."
+"value=TRUE'."
 
 #: fexact.c:1449
 #, c-format
@@ -228,6 +241,10 @@ msgid ""
 "  (pastp=%g, ipn_0:=ipoin[itp=%d]=%d, stp[ipn_0]=%g).\n"
 "Increase workspace or consider using 'simulate.p.value=TRUE'"
 msgstr ""
+"FEXACT ошибка 7(%s). LDSTP=%d слишком маленький для этой проблемы,\n"
+"  (pastp=%g, ipn_0:=ipoin[itp=%d]=%d, stp[ipn_0]=%g).\n"
+"Увеличьте рабочее пространство или попробуйте использовать 'simulate.p."
+"value=TRUE'"
 
 #: fourier.c:66 fourier.c:161
 msgid "non-numeric argument"
@@ -250,9 +267,9 @@ msgid "invalid factors"
 msgstr "неправильные факторы"
 
 #: integrate.c:84 integrate.c:86 integrate.c:128
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' must be of length one"
-msgstr "'m' должен быть списком"
+msgstr "'%s' должен быть единичной длины"
 
 #: ksmooth.c:69
 msgid "only 2500 rows are allowed for sm.method=\"spline\""

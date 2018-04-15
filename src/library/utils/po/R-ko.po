@@ -1,26 +1,17 @@
 # Korean translation for R utils package
-# ./utils/po/R-ko.po
-#
-# Copyright (C) 1995-2016 The R Core Team
+# Copyright (C) 1995-2018 The R Core Team
 #
 # This file is distributed under the same license as the R utils package.
-# Maintained by Chel Hee Lee <chl948@mail.usask.ca>, 2008-2016.
-# Contact: Chel Hee Lee <gnustats@gmail.com>
-#
-# Notes:
-# Under development (unstable) starting from 11-APR-2016 for R-3.3.1 - QC: in progress
-# Freezed on 10-APR-2016 for R-3.3.0 - QC: PASS
-# Freezed on 30-MAR-2015 for R-3.2.0 - QC: PASS
-# Freezed on 06-FEB-2015 for R-3.1.3 - QC: PASS
+# Maintained by Chel Hee Lee <gnustats@gmail.com>, 2008-2018.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R-3.3.0\n"
+"Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-30 07:34\n"
-"PO-Revision-Date: 2016-04-11 13:08-0600\n"
-"Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
-"Language-Team: Chel Hee Lee <chl948@mail.usask.ca>\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
+"PO-Revision-Date: 2018-04-09 12:11-0600\n"
+"Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
+"Language-Team: \n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -31,7 +22,7 @@ msgid ""
 "RShowDoc() should be used with a character string argument specifying\n"
 "   a documentation file"
 msgstr ""
-"RShowDoc()은 반드시 문서파일을 지정하는 문자열(character string) 인자와 \n"
+"RShowDoc()은 반드시 문서파일을 지정하는 문자열 인자와 \n"
 "   함께 사용되어야 합니다."
 
 msgid "no documentation for %s found in package %s"
@@ -41,7 +32,7 @@ msgid "document not found"
 msgstr "문서를 찾을 수 없습니다."
 
 msgid "A search query has been submitted to %s"
-msgstr "서치쿼리(search query)가 %s에 전달되었습니다."
+msgstr "서치쿼리가 %s에 전달되었습니다."
 
 msgid "The results page should open in your browser shortly"
 msgstr "결과가 곧 브라우저에 나타날 것입니다."
@@ -53,15 +44,13 @@ msgid "no Sweave file with name %s found"
 msgstr "%s이라는 이름을 가진 Sweave 파일을 찾을 수 없습니다."
 
 msgid "more than one syntax specification found, using the first one"
-msgstr ""
-"하나 이상의 구문지정(syntax specification)이 있었으나, 가장 처음 것을 사용합"
-"니다."
+msgstr "하나 이상의 구문지정이 찾았으나, 가장 처음 것을 사용합니다."
 
 msgid "object %s does not have class \"SweaveSyntax\""
 msgstr "객체 %s는 클래스 \"SweaveSyntax\"를 가지지 않습니다."
 
 msgid "recursive Sweave input %s in stack"
-msgstr "스택(stack)에 반복되는 Sweave 입력 %s가 있습니다."
+msgstr "스택에 반복되는 Sweave 입력 %s가 있습니다."
 
 msgid "target syntax not of class %s"
 msgstr "클래스 %s가 아닌 target syntax입니다."
@@ -73,7 +62,7 @@ msgid ""
 "parse error or empty option in\n"
 "%s"
 msgstr ""
-"다음으로부터 구문분석 에러(parse error) 또는 empty option를 발견했습니다.\n"
+"다음으로부터 구문분석 에러 또는 empty option를 발견했습니다.\n"
 "%s"
 
 msgid "Warning: unknown option '--clean='%s"
@@ -118,15 +107,14 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#, fuzzy
 msgid "Unrecognized response"
-msgstr "인식할 수 없는 특수한 데이터 값입니다"
+msgstr ""
 
 msgid "No suitable spell-checker program found"
-msgstr "적절한 맞춤법 검사 프로그램(spell-checker program)을 찾을 수 없습니다."
+msgstr "적절한 맞춤법 검사 프로그램을 찾을 수 없습니다."
 
 msgid "Filter '%s' is not available."
-msgstr "필터(filter) '%s'를 사용할 수 없습니다."
+msgstr "필터 '%s'를 사용할 수 없습니다."
 
 msgid "Invalid 'filter' argument."
 msgstr "인자 'filter'가 올바르지 않습니다."
@@ -135,7 +123,7 @@ msgid ""
 "The following dictionaries were not found:\n"
 "%s"
 msgstr ""
-"다음에 보이는 사전(dictionary)을 찾을 수 없었습니다:\n"
+"다음에 표시된 사전을 찾을 수 없었습니다:\n"
 "%s"
 
 msgid "Processing file %s"
@@ -149,7 +137,7 @@ msgstr ""
 "%s"
 
 msgid "No suitable spell check program found."
-msgstr "적절한 맞춤법 검사 프로그램(spell check program)을 찾을 수 없습니다."
+msgstr "적절한 맞춤법 검사 프로그램을 찾을 수 없습니다."
 
 msgid ""
 "Use <code> %s </code> \n"
@@ -159,25 +147,22 @@ msgstr ""
 " to list the vignettes in all <strong>available</strong> packages."
 
 msgid "No vignettes found by %s"
-msgstr "%s에 의해 발견된 비네트(vignettes)가 없습니다."
+msgstr "%s에 의해 발견된 비네트가 없습니다."
 
 msgid "Package %s: DESCRIPTION file not found"
 msgstr "패키지 %s: DESCRIPTION 파일을 찾을 수 없습니다."
 
 msgid "'file' must be NULL, a character string or a connection"
-msgstr ""
-"'file'은 반드시 NULL, 문자열(character string), 또는 커넥션(connection)이어"
-"야 합니다."
+msgstr "'file'은 반드시 NULL, 문자열, 또는 커넥션이어야 합니다."
 
 msgid "bad argument"
 msgstr "잘못된 인자입니다."
 
 msgid "'full.names' must be TRUE for multiple paths."
-msgstr ""
-"'full.names'은 다중 경로(multiple paths)에 대해서 반드시 TRUE이어야 합니다."
+msgstr "'full.names'은 다중 경로에 대해서 반드시 TRUE이어야 합니다."
 
 msgid "Timestamp file no longer exists."
-msgstr "타임스탬프(timestamp) 파일이 더 이상 존재하지 않습니다."
+msgstr "타임스탬프 파일이 더 이상 존재하지 않습니다."
 
 msgid ""
 "Not all arguments are of the same length, the following need to be recycled: "
@@ -200,7 +185,7 @@ msgid "It is recommended to use %s/%s instead of %s/%s/%s."
 msgstr "%3$s/%4$s/%5$s 대신에 %1$s/%2$s를 사용하는 것이 권장됩니다."
 
 msgid "method is only applicable to %s objects"
-msgstr "객체 %s에만 사용할 수 있는 메소드(method)입니다."
+msgstr "객체 %s에만 사용할 수 있는 메소드입니다."
 
 msgid "all arguments must be of class %s"
 msgstr "입력된 각 인자들의 클래스는 반드시 %s이어야 합니다."
@@ -234,7 +219,7 @@ msgid "package %s not found"
 msgstr "패키지 %s를 찾을 수 없습니다"
 
 msgid "no date field in DESCRIPTION file of package %s"
-msgstr "패키지 %s에 있는 DESCRIPTION 파일에 날짜(date) 항목이 없습니다"
+msgstr "패키지 %s에 있는 DESCRIPTION 파일에 날짜 항목이 없습니다"
 
 msgid "could not determine year for %s from package DESCRIPTION file"
 msgstr "패키지 내 DESCRIPTION 파일로부터 %s에 대한 년도를 알 수 없습니다"
@@ -753,11 +738,8 @@ msgstr "'pkgs'로부터 'repos = NULL'임을 알 수 있습니다."
 msgid "unable to create temporary directory %s"
 msgstr "임시 디렉토리 %s를 생성할 수 없습니다."
 
-#, fuzzy
 msgid "type == \"both\" can only be used on Windows or a CRAN build for macOS"
 msgstr ""
-"type == \"both\"는 오로지 윈도우즈에서만 사용되거나 Mac OS X에 대한 CRAN 빌드"
-"입니다"
 
 msgid "type == \"both\" cannot be used with 'repos = NULL'"
 msgstr "type == \"both\"은 'repos = NULL'과 함께 사용될 수 없습니다"
@@ -765,13 +747,11 @@ msgstr "type == \"both\"은 'repos = NULL'과 함께 사용될 수 없습니다"
 msgid "source repository is unavailable to check versions"
 msgstr "소스저장소는 버전을 체크할 수 없습니다"
 
-#, fuzzy
 msgid "cannot install macOS binary packages on Windows"
-msgstr "MacOS X 바이너리 패키지들을 윈도우즈에 설치할 수 없습니다"
+msgstr "macOS 바이너리 패키지들은 윈도우즈에 설치할 수 없습니다."
 
-#, fuzzy
 msgid "cannot install macOS binary packages on this platform"
-msgstr "이 플랫폼에서는 MacOS X 바이너리 패키지들을  설치할 수 없습니다"
+msgstr "이 플랫폼에서는 macOS 바이너리 패키지들을  설치할 수 없습니다."
 
 msgid "cannot install Windows binary packages on this platform"
 msgstr "이 플랫폼에서는 윈도우즈 바이너리 패키지들을 설치할 수 없습니다"
@@ -1153,13 +1133,11 @@ msgstr "'url'은 반드시 길이가 1인 문자형 벡터이어야 합니다."
 msgid "'destfile' must be a length-one character vector"
 msgstr "'destfile'은 반드시 길이가 1인 문자형 벡터이어야 합니다."
 
-#, fuzzy
 msgid "'wget' call had nonzero exit status"
-msgstr "다운로드의 종료상태(exit status)가 0이 아닙니다."
+msgstr ""
 
-#, fuzzy
 msgid "'curl' call had nonzero exit status"
-msgstr "다운로드의 종료상태(exit status)가 0이 아닙니다."
+msgstr ""
 
 msgid "download had nonzero exit status"
 msgstr "다운로드의 종료상태(exit status)가 0이 아닙니다."
@@ -1167,9 +1145,8 @@ msgstr "다운로드의 종료상태(exit status)가 0이 아닙니다."
 msgid "'tar' returned non-zero exit code %d"
 msgstr "'tar'는 0 이 아닌 종료코드 %d를 반환했습니다"
 
-#, fuzzy
 msgid "file %s is not a macOS binary package"
-msgstr "파일 %s는 OS X 바이너리 패키지입니다"
+msgstr "파일 %s는 macOS 바이너리 패키지입니다."
 
 msgid "package %s successfully unpacked and MD5 sums checked"
 msgstr "패키지 %s를 성공적으로 압축해제하였고 MD5 sums 이 확인되었습니다"
@@ -1351,44 +1328,3 @@ msgstr[0] ""
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "패키지 %s가 사용중이므로 설치되지 않을 것입니다"
-
-#~ msgid "Do you want to attempt to install these from sources?"
-#~ msgstr "이것들을 소스들로부터 설치를 시도하길 원하시나요?"
-
-#~ msgid "cannot choose a CRAN mirror non-interactively"
-#~ msgstr "비대화식으로 CRAN 미러를 선택할 수 없습니다"
-
-#~ msgid "cannot choose a BioC mirror non-interactively"
-#~ msgstr "비대화식으로 BioC 미러를 선택할 수 없습니다"
-
-#~ msgid "no download method found"
-#~ msgstr "다운로드 메소드(download method)를 찾을 수 없습니다"
-
-#~ msgid "function '%s' appears not to be generic"
-#~ msgstr "함수 '%s'는 제네릭처럼 나타나지 않을 것입니다"
-
-#~ msgid ""
-#~ "type == \"both\" cannot be used if 'available' or 'contriburl' is "
-#~ "specified"
-#~ msgstr ""
-#~ "type == \"both\" 은 만약 'available' 또는 'contriburl'이 지정되지 않았다"
-#~ "면 사용할 수 없습니다"
-
-#~ msgid "method 'lynx' is untested and deprecated as from R 3.1.0"
-#~ msgstr "메소드 'lynx'는 테스트되지 않았고 R 3.1.0에서는 지원되지 않습니다"
-
-#~ msgid ""
-#~ "If nothing happens, you should open\n"
-#~ "'%s' yourself"
-#~ msgstr ""
-#~ "만약 아무것도 일어나지 않았다면\n"
-#~ "'%s'를 직접 열어봐야합니다"
-
-#~ msgid "test '%s' is not available"
-#~ msgstr "테스트 '%s'는 사용할 수 없습니다"
-
-#~ msgid "broken installation, no CITATION file in the base package."
-#~ msgstr "설치시 문제로 인하여 base 패키지 내에 CITATION 파일이 없습니다."
-
-#~ msgid "Created PDF document %s"
-#~ msgstr "PDF 문서 %s가 생성되었습니다"

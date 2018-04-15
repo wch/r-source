@@ -1,0 +1,259 @@
+# Russian translations for R
+# Русский перевод для R
+#
+# Copyright (C) 2015 The R Foundation
+# This file is distributed under the same license as the R package.
+# Copyright (C) 2015 Alexey Shipunov <dactylorhiza at gmail>
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 3.3.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2015-03-24 11:52\n"
+"PO-Revision-Date: 2018-04-07 01:19-0500\n"
+"Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
+"Language-Team: Russian\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=KOI8-R\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 1.8.7.1\n"
+
+#: io.c:324 io.c:328 io.c:338 io.c:569 io.c:769 io.c:822 io.c:834 io.c:838
+#: io.c:844 io.c:845 io.c:1068 io.c:1069 io.c:1071 io.c:1072 io.c:1073
+#: io.c:1074 io.c:1075 io.c:1076 stubs.c:47 stubs.c:67 windows/dialogs.c:169
+#: windows/dialogs.c:194 windows/dialogs.c:197 windows/dialogs.c:241
+#: windows/dialogs.c:278 windows/dialogs.c:289 windows/dialogs.c:313
+#: windows/dialogs.c:321 windows/util.c:111 windows/widgets.c:78
+#: windows/widgets.c:81 windows/widgets.c:86
+#, c-format
+msgid "invalid '%s' argument"
+msgstr "неправильный аргумент '%s'"
+
+#: io.c:347 io.c:831
+msgid "invalid quote symbol set"
+msgstr "неправильная установка символа кавычек"
+
+#: io.c:359 io.c:854 io.c:1056
+msgid "cannot open the connection"
+msgstr "не могу открыть соединение"
+
+#: io.c:362 io.c:366
+msgid "cannot read from this connection"
+msgstr "не могу прочитать из соединения"
+
+#: io.c:413 io.c:431
+#, c-format
+msgid "quoted string on line %d terminated by EOF"
+msgstr "закавыченная подстрока строки %d заканчивается EOF"
+
+#: io.c:565
+msgid "the first argument must be of mode character"
+msgstr "первый аргумент должен быть текстовым"
+
+#: io.c:595
+#, c-format
+msgid "invalid 'numerals' string: \"%s\""
+msgstr "неправильная строка 'numerals': \"%s\""
+
+#: io.c:771
+#, c-format
+msgid "Selection: "
+msgstr "Выбор:"
+
+#: io.c:863 io.c:877
+msgid "cannot allocate buffer in 'readTableHead'"
+msgstr "не могу разместить буфер в 'readTableHead'"
+
+#: io.c:888
+msgid "\\ followed by EOF"
+msgstr "\\ завершается EOF"
+
+#: io.c:937 io.c:940
+#, c-format
+msgid "incomplete final line found by readTableHeader on '%s'"
+msgstr "readTableHeader нашел неполную последнюю строку в '%s'"
+
+#: io.c:997
+msgid "index out of range"
+msgstr "индекс вне пределов"
+
+#: io.c:1049
+msgid "'file' is not a connection"
+msgstr "'file' -- это не соединение"
+
+#: io.c:1052
+msgid "cannot write to this connection"
+msgstr "не могу писать в это соединение"
+
+#: io.c:1082
+msgid "'dec' must be a single character"
+msgstr "'dec' должен быть одним символом"
+
+#: io.c:1108
+#, c-format
+msgid "corrupt data frame -- length of column %d does not not match nrows"
+msgstr "поврежденная таблица данных -- длина колонки %d не соответствует строкам"
+
+#: io.c:1139
+#, c-format
+msgid "column %s claims to be a factor but does not have numeric codes"
+msgstr "колонка %s считает себя фактором, но у нее нет числовых кодов"
+
+#: io.c:1157
+msgid "corrupt matrix -- dims not not match length"
+msgstr "поврежденная матрица -- длины измерений не сходятся"
+
+#: stubs.c:56
+msgid "'savehistory' can only be used in Rgui and Rterm"
+msgstr "'savehistory' можно использовать только в Rgui и Rterm"
+
+#: stubs.c:73
+msgid "'loadhistory' can only be used in Rgui and Rterm"
+msgstr "'loadhistory' можно использовать только Rgui и Rterm"
+
+#: stubs.c:85
+msgid "invalid timestamp"
+msgstr "неправильная дата и время"
+
+#: stubs.c:151 stubs.c:159
+msgid "X11 dataentry cannot be loaded"
+msgstr "таблицу X11 нельзя загрузить"
+
+#: stubs.c:155 stubs.c:184 stubs.c:190
+msgid "X11 is not available"
+msgstr "X11 недоступна"
+
+#: stubs.c:248 stubs.c:251
+#, c-format
+msgid "invalid '%s' specification"
+msgstr "неправильное определение '%s'"
+
+#: utils.c:83
+msgid "'hostname' must be a character vector of length 1"
+msgstr "'hostname' должно быть текстовым вектором длиной 1"
+
+#: utils.c:89
+#, c-format
+msgid "nsl() was unable to resolve host '%s'"
+msgstr "nsl() не смог разрешить хост '%s'"
+
+#: utils.c:96
+msgid "unknown format returned by 'gethostbyname'"
+msgstr "'gethostbyname' вернула неправильный формат"
+
+#: utils.c:105
+msgid "nsl() is not supported on this platform"
+msgstr "nsl() не поддерживается на этой платформе"
+
+#: windows/dialogs.c:181
+msgid "unknown type"
+msgstr "неизвестный тип"
+
+#: windows/dialogs.c:213 windows/dialogs.c:237 windows/dialogs.c:275
+#: windows/dialogs.c:310
+msgid "menu functions can only be used in the GUI"
+msgstr "функции меню можно использовать только в GUI"
+
+#: windows/dialogs.c:245
+#, c-format
+msgid "unable to retrieve items for %s (%s)"
+msgstr "не могу получить элементы для %s (%s)"
+
+#: windows/dialogs.c:283
+#, c-format
+msgid "unable to add menu (%s)"
+msgstr "не могу добавить меню (%s)"
+
+#: windows/dialogs.c:295
+#, c-format
+msgid "unable to add menu item (%s)"
+msgstr "не могу добавить элемент меню (%s)"
+
+#: windows/dialogs.c:318
+msgid "menu does not exist"
+msgstr "меню не существует"
+
+#: windows/dialogs.c:325
+#, c-format
+msgid "unable to delete menu item (%s)"
+msgstr "не могу удалить элемент меню (%s)"
+
+#: windows/registry.c:73 windows/registry.c:248 windows/registry.c:251
+#: windows/registry.c:254
+#, c-format
+msgid "invalid '%s' value"
+msgstr "неправильное значение '%s'"
+
+#: windows/registry.c:266
+#, c-format
+msgid "Registry key '%ls' not found"
+msgstr "Ключ реестра '%ls' не найден"
+
+#: windows/util.c:41
+msgid "unsupported version of Windows"
+msgstr "неподдерживаемая версия Windows"
+
+#: windows/util.c:275
+msgid "argument must be a character vector or a raw vector"
+msgstr "аргумент должен быть текстовым вектором или простым вектором"
+
+#: windows/util.c:312
+msgid "unable to open the clipboard"
+msgstr "не могу открыть буфер обмена"
+
+#: windows/util.c:317
+msgid "unable to write to the clipboard"
+msgstr "не могу писать в буфер обмена"
+
+#: windows/util.c:396
+msgid "'title' must be a character string"
+msgstr "'title' должен быть текстовой строкой"
+
+#: windows/util.c:405
+msgid "'text' must be a character string"
+msgstr "'text' должен быть текстовой строкой"
+
+#: windows/util.c:444
+#, c-format
+msgid "'%s' must be length 1"
+msgstr "'%s' должен быть длиной 1"
+
+#: windows/util.c:557
+#, c-format
+msgid "'%s' must be a list"
+msgstr "'%s' должен быть списком"
+
+#: windows/util.c:561
+#, c-format
+msgid "'%s' element %d is not a window handle"
+msgstr "'%s' элемент из %d -- не дескриптор окна"
+
+#: windows/widgets.c:108
+msgid "Select one or more"
+msgstr "Выберите один или больше"
+
+#: windows/widgets.c:108
+msgid "Select one"
+msgstr "Выберите один"
+
+#: windows/widgets.c:182 windows/widgets.c:247
+msgid "'default' must be a character string"
+msgstr "'default' должен быть текстовой строкой"
+
+#: windows/widgets.c:184 windows/widgets.c:249
+msgid "'default' is overlong"
+msgstr "'default' слишком длинный"
+
+#: windows/widgets.c:188 windows/widgets.c:253
+msgid "'caption' must be a character string"
+msgstr "'caption' должен быть текстовой строкой"
+
+#: windows/widgets.c:190
+msgid "'multi' must be a logical value"
+msgstr "'multi' должен быть логическим"
+
+#: windows/widgets.c:192
+msgid "'filterindex' must be an integer value"
+msgstr "'filterindex' должен быть целочисленным"

@@ -4,10 +4,10 @@
 # Detlef Steuer <steuer@hsu-hh.de>, 2009-2014.
 msgid ""
 msgstr ""
-"Project-Id-Version: R-3.2.0\n"
+"Project-Id-Version: R-3.4.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-30 07:33-0700\n"
-"PO-Revision-Date: 2015-03-20 16:05+0100\n"
+"PO-Revision-Date: 2018-04-05 09:21+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
 "Language: de\n"
@@ -63,7 +63,7 @@ msgstr "alpha Level %d nicht in 0:255"
 
 #: colors.c:113
 msgid "inputs must be finite"
-msgstr ""
+msgstr "Eingaben müssen endlich sein"
 
 #: colors.c:128
 msgid "bad hsv to rgb color conversion"
@@ -535,6 +535,8 @@ msgid ""
 "Cannot open temporary file '%s' for compression (reason: %s); compression "
 "has been turned off for this device"
 msgstr ""
+"Kann temporärere Datei '%s' nicht zum Komprimieren öffnen (Grund: %s); Kompression\n"
+"ist für dieses Device ausgeschaltet worden"
 
 #: devPS.c:7704 devPS.c:8066 devPS.c:8113
 msgid "failed to find or load PDF font"
@@ -700,7 +702,7 @@ msgstr "Versuch den Lokator zu nutzen nach Aufruf von dev.hold()"
 
 #: devWindows.c:3166
 msgid "graphics device closed during call to locator or identify"
-msgstr ""
+msgstr "Grafikdevice wurde während eines Aufrufs von locator oder identify geschlossen"
 
 #: devWindows.c:3407
 msgid "option 'windowsTimeouts' should be integer"
@@ -747,9 +749,10 @@ msgstr "Argument muss positive Länge haben"
 msgid "invalid argument"
 msgstr "unzulässiges Argument"
 
+# https://slashdot.org/
 #: devices.c:89 devices.c:97 devices.c:105
 msgid "NA argument is invalid"
-msgstr ""
+msgstr "NA Argument ist unzulässig"
 
 #: qdBitmap.c:79
 #, c-format

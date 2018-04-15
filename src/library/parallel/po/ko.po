@@ -1,26 +1,17 @@
 # Korean translation for R parallel package
-# ./parallel/po/ko.po
-#
-# Copyright (C) 1995-2016 The R Core Team
+# Copyright (C) 1995-2018 The R Core Team
 #
 # This file is distributed under the same license as the R parallel package.
-# Maintained by Chel Hee Lee <chl948@mail.usask.ca>, 2008-2016.
-# Contact: Chel Hee Lee <gnustats@gmail.com>
-#
-# Notes:
-# Under development (unstable) starting from 11-APR-2016 for R-3.3.1 - QC: in progress
-# Freezed on 10-APR-2016 for R-3.3.0 - QC: PASS
-# Freezed on 30-MAR-2015 for R-3.2.0 - QC: PASS
-# Freezed on 06-FEB-2015 for R-3.1.3 - QC: PASS
+# Maintained by Chel Hee Lee <gnustats@gmail.com>, 2008-2018.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R-3.3.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-30 07:34-0700\n"
-"PO-Revision-Date: 2016-04-11 13:08-0600\n"
-"Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
-"Language-Team: Chel Hee Lee <chl948@mail.usask.ca>\n"
+"Project-Id-Version: R-3.5.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2018-03-29 07:06-0700\n"
+"PO-Revision-Date: 2018-04-09 12:09-0600\n"
+"Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
+"Language-Team: \n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -28,14 +19,12 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: fork.c:181
-#, fuzzy, c-format
 msgid "unable to terminate child process: %s"
-msgstr "포크할 수 없습니다. 아마도 다음과 같은 이유때문입니다: %s"
+msgstr "자식 프로세스를 종료할 수 없습니다: %s"
 
 #: fork.c:208
-#, fuzzy, c-format
 msgid "unable to terminate child: %s"
-msgstr "파이프(pipe)를 생성할 수 없습니다."
+msgstr ""
 
 #: fork.c:287 fork.c:556
 msgid "memory allocation error"
@@ -63,7 +52,9 @@ msgstr "포크할 수 없습니다. 아마도 다음과 같은 이유때문입�
 
 #: fork.c:683
 msgid "only children can send data to the master process"
-msgstr "오로지 자식 프로세스들만이 데이터를 마스터 프로세스에 보낼 수 있습니다"
+msgstr ""
+"오로지 자식 프로세스들만이 데이터를 마스터 프로세스에 보낼 수 있습"
+"니다"
 
 #: fork.c:685
 msgid "there is no pipe to the master process"
@@ -72,7 +63,8 @@ msgstr "마스터 프로세스에 연결된 파이프가 없습니다."
 #: fork.c:687
 msgid "content to send must be RAW, use serialize() if needed"
 msgstr ""
-"보내야할 컨텐츠는 반드시 RAW이어야 하며, 필요하다면 serialize()를 이용하세요"
+"보내야할 컨텐츠는 반드시 RAW이어야 하며, 필요하다면 serialize()를 "
+"이용하세요"
 
 #: fork.c:696 fork.c:704 fork.c:1080
 msgid "write error, closing pipe to the master"
@@ -80,7 +72,8 @@ msgstr "쓰기 에러입니다.  마스터에 연결된 파이프를 닫습니�
 
 #: fork.c:714
 msgid "only the master process can send data to a child process"
-msgstr "오로지 마스터 프로세스만이 데이터를 자식프로세스에 보낼 수 있습니다"
+msgstr ""
+"오로지 마스터 프로세스만이 데이터를 자식프로세스에 보낼 수 있습니다"
 
 #: fork.c:722
 #, c-format
@@ -92,9 +85,8 @@ msgid "write error"
 msgstr "쓰기 에러가 발생했습니다."
 
 #: fork.c:781
-#, fuzzy, c-format
 msgid "cannot wait for child %d as it does not exist"
-msgstr "child %d는 존재하지 않습니다"
+msgstr ""
 
 #: fork.c:848 fork.c:971
 #, c-format

@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.3.0\n"
+"Project-Id-Version: R 3.4.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2018-03-30 07:34\n"
-"PO-Revision-Date: 2016-04-21 09:13+0200\n"
+"PO-Revision-Date: 2018-04-06 09:37+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
 "Language: de\n"
@@ -98,17 +98,16 @@ msgid "elements of 'what' after the first will be ignored"
 msgstr "Elemente von 'what' nach dem ersten werden ignoriert"
 
 msgid "Yes"
-msgstr ""
+msgstr "Yes"
 
 msgid "No"
-msgstr ""
+msgstr "No"
 
 msgid "Cancel"
-msgstr ""
+msgstr "Abbrechen"
 
-#, fuzzy
 msgid "Unrecognized response"
-msgstr "Unerkannte spezielle Datenwerte"
+msgstr "Nicht erkannte Antwort"
 
 msgid "No suitable spell-checker program found"
 msgstr "Keine passende Rechtschreibprüfung gefunden"
@@ -201,9 +200,8 @@ msgstr "Index außerhalb der Grenzen"
 msgid "%s should be one of %s"
 msgstr "%s sollte einer von %s sein"
 
-#, fuzzy
 msgid "Argument '%s' is deprecated; rather set '%s' instead."
-msgstr "Argument 'namespace' ist veraltet"
+msgstr "Argument '%s ist veraltet; besser '%s' setzen."
 
 msgid "A BibTeX entry for LaTeX users is"
 msgstr "Ein BibTeX-Eintrag für LaTeX-Benutzer ist"
@@ -288,7 +286,7 @@ msgstr "habe nichts assign()-ed"
 msgid ""
 "Cannot debug primitive functions unless they are implicit generics (requires "
 "loading the methods package)"
-msgstr ""
+msgstr "Kann primitive Funktionen nicht debuggen, außer sie sind implizite Generische (benötigt das geladene methods Paket)"
 
 msgid "error in trying to evaluate the expression for argument %s (%s)"
 msgstr "Fehler beim Versuch den Ausdruck für Argument %s (%s) auszuwerten"
@@ -449,10 +447,10 @@ msgid "Saving help page to %s"
 msgstr "Sichere Hilfeseiten nach %s"
 
 msgid "Cancelled by user"
-msgstr ""
+msgstr "Von Benutzer abgebrochen"
 
 msgid "Unable to connect to CRAN to check R version."
-msgstr ""
+msgstr "Kann nicht mit CRAN verbinden, um R Version zu checken."
 
 msgid "argument %s must be a single character string"
 msgstr "Argument %s muss einzelne Zeichkette sein"
@@ -530,7 +528,7 @@ msgid "DESCRIPTION file of package '%s' is missing or broken"
 msgstr "DESCRIPTION von Paket '%s' fehlt oder zerstört"
 
 msgid "Invalid \"Built\":"
-msgstr ""
+msgstr "Unzulässiges \"Built\":"
 
 msgid "cannot update HTML package index"
 msgstr "kann HTML-Paketindex nicht aktualisieren"
@@ -545,16 +543,16 @@ msgid "Enter an item from the menu, or 0 to exit"
 msgstr "Geben Sie Menüpunkt ein oder 0 zum Abbruch"
 
 msgid "%d errors caught in %s.  The error messages and their frequencies are"
-msgstr ""
+msgstr "%d Fehler in %s abgefangen. Die Fehlermeldungen und ihre Häufigkeiten sind"
 
 msgid "invalid query"
 msgstr "unzulässige Anfrage"
 
 msgid "For SI units, specify 'standard = \"SI\"'"
-msgstr ""
+msgstr "Für SI Einheiten bitte 'standard = \"SI\"' spezifizieren"
 
 msgid "Unit \"%s\" is not part of standard \"%s\""
-msgstr ""
+msgstr "Einheit \"%s\" ist nicht teil des Standards \"%s\""
 
 msgid "'%s' is a formal generic function; S3 methods will not likely be found"
 msgstr ""
@@ -679,19 +677,17 @@ msgstr "--- Bitte einen CRAN-Spiegelserver für diese Sitzung auswählen ---"
 msgid "trying to use CRAN without setting a mirror"
 msgstr "versuche CRAN ohne einen Spiegelserver zu nutzen"
 
-#, fuzzy
 msgid "'download.file()' error code '%d'"
-msgstr "Fehler in read.dcf() bei Datei '%s'"
+msgstr "'download.file()' Fehlercode '%d'"
 
 msgid "failed to download mirrors file (%s); using local file '%s'"
-msgstr ""
+msgstr "Herunterladen der Mirrorliste (%s) fehlgeschlagen; nutze lokale Datei '%s'"
 
 msgid "cannot choose a"
-msgstr ""
+msgstr "kann nicht wählen"
 
-#, fuzzy
 msgid "mirror non-interactively"
-msgstr "kann keinen CRAN-Spiegelserver nicht-interaktiv nutzen"
+msgstr "mirror nicht interaktiv"
 
 msgid "cannot set repositories non-interactively"
 msgstr "kann keine Repositories nicht-interaktiv setzen"
@@ -724,12 +720,8 @@ msgstr "keine Pakete angegeben"
 msgid "'lib = \"%s\"' is not writable"
 msgstr "'lib = \"%s\" ist nicht schreibbar"
 
-#, fuzzy
 msgid "Would you like to use a personal library instead?"
-msgstr ""
-"Soll eine persönliche Bibliothek\n"
-"%s\n"
-"eingerichtet werden, um dort Pakete zu installieren?"
+msgstr "Soll eine persönliche Bibliothek eingerichtet werden?"
 
 msgid "unable to install packages"
 msgstr "kann keine Pakete installieren"
@@ -752,11 +744,8 @@ msgstr "leite 'repos = NULL' aus 'pkgs' ab"
 msgid "unable to create temporary directory %s"
 msgstr "kann temporäres Verzeichnis %s nicht erzeugen"
 
-#, fuzzy
 msgid "type == \"both\" can only be used on Windows or a CRAN build for macOS"
-msgstr ""
-"type == \"both\" kann nur unter Windows oder einem CRAN-build für MacOS\n"
-"X benutzt werden"
+msgstr "type == \"both\" kann nur unter Windows oder einem CRAN-build für MacOS benutzt werden"
 
 msgid "type == \"both\" cannot be used with 'repos = NULL'"
 msgstr "type == \"both\" kann nicht mit 'repos = NULL' benutzt werden"
@@ -764,13 +753,11 @@ msgstr "type == \"both\" kann nicht mit 'repos = NULL' benutzt werden"
 msgid "source repository is unavailable to check versions"
 msgstr "Quelltextrepository nicht verfügbar um Versionen zu überprüfen"
 
-#, fuzzy
 msgid "cannot install macOS binary packages on Windows"
-msgstr "kann keine MacOS-X-Binaries auf Windows installieren"
+msgstr "kann keine macOS Binaries auf Windows installieren"
 
-#, fuzzy
 msgid "cannot install macOS binary packages on this platform"
-msgstr "kann keine MacOS-X-Binaries auf dieser Plattform installieren"
+msgstr "kann keine macOS Binaries auf dieser Plattform installieren"
 
 msgid "cannot install Windows binary packages on this platform"
 msgstr "kann keine Windows-Binaries auf dieser Plattform installieren"
@@ -795,7 +782,7 @@ msgid "files: %s"
 msgstr "files: %s"
 
 msgid "timeouts for parallel installs require the 'timeout' command"
-msgstr ""
+msgstr "Zeitgrenzen für parallele Installationen benötigen ein 'timeout' Kommando"
 
 msgid ""
 "installation of one or more packages failed,\n"
@@ -1003,7 +990,7 @@ msgid "'str.default': 'le' is NA, so taken as 0"
 msgstr "'str.default': 'le' is NA, also als 0 betrachtet"
 
 msgid "'nchar.max = %d' is too small"
-msgstr ""
+msgstr "'nchar.max = %d' ist zu klein"
 
 msgid "'object' does not have valid levels()"
 msgstr "'object' hat keine gültigen levels()"
@@ -1013,7 +1000,7 @@ msgstr ""
 "'digits' und 'digits.d' sind beide angegeben und das letztere wird ignoriert"
 
 msgid "The number of captures in 'pattern' != 'length(proto)'"
-msgstr ""
+msgstr "Die Anzahl von Treffern in 'pattern' != 'length(proto)'"
 
 msgid "no lines found in %s"
 msgstr "keine Zeilen in '%s'"
@@ -1155,13 +1142,11 @@ msgstr "'url' muss ein Zeichenkettenvektor mit Länge 1 sein"
 msgid "'destfile' must be a length-one character vector"
 msgstr "'destfile' muss ein Zeichenkettenvektor mit Länge 1 sein"
 
-#, fuzzy
 msgid "'wget' call had nonzero exit status"
-msgstr "Download hatte Exit-Status ungleich 0"
+msgstr "Aufruf von 'wget' hatte Exit-Status ungleich 0"
 
-#, fuzzy
 msgid "'curl' call had nonzero exit status"
-msgstr "Download hatte Exit-Status ungleich 0"
+msgstr "Aufruf von 'curl' hatte Exit-Status ungleich 0"
 
 msgid "download had nonzero exit status"
 msgstr "Download hatte Exit-Status ungleich 0"
@@ -1169,9 +1154,8 @@ msgstr "Download hatte Exit-Status ungleich 0"
 msgid "'tar' returned non-zero exit code %d"
 msgstr "'tar' hatte Exit-Status %d"
 
-#, fuzzy
 msgid "file %s is not a macOS binary package"
-msgstr "Datei %s ist kein OS-X-Binärpaket"
+msgstr "Datei %s ist kein macOS Binärpaket"
 
 msgid "package %s successfully unpacked and MD5 sums checked"
 msgstr "Paket %s erfolgreich ausgepackt und MD5 Summen abgeglichen"
@@ -1261,8 +1245,8 @@ msgstr[1] "%d übereinstimmende Objekte."
 
 msgid "%d error caught in %s: %s"
 msgid_plural "%d times caught the same error in %s: %s"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d Fehler abgefangen in %s: %s"
+msgstr[1] "%d Mal denselben Fehler abgefangen in %s: %s"
 
 msgid "object '%s' not found"
 msgid_plural "objects '%s' not found"
@@ -1287,11 +1271,10 @@ msgid_plural "packages %s are not available (%s)"
 msgstr[0] "Paket %s ist nicht verfügbar (%s)"
 msgstr[1] "Pakete %s sind nicht verfügbar (%s)"
 
-#, fuzzy
 msgid "package %s is a base package, and should not be updated"
 msgid_plural "packages %s are base packages, and should not be updated"
-msgstr[0] "Paket %s wird gerade benutzt und deshab nicht installiert"
-msgstr[1] "Pakete %s werden gerade benutzt und deshalb nicht installiert"
+msgstr[0] "Paket %s ist ein Basispaket und sollte nicht aktualisiert werden"
+msgstr[1] "Pakete %s sind Basispakete und sollten nicht aktualisiert werden"
 
 msgid "dependency %s is not available"
 msgid_plural "dependencies %s are not available"

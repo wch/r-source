@@ -1,27 +1,17 @@
 # Korean translation for R base package
-# ./base/po/RGui-ko.po
-#
-# Copyright (C) 1995-2016 The R Core Team
+# Copyright (C) 1995-2018 The R Core Team
 #
 # This file is distributed under the same license as the R base package.
-# Maintained by Chel Hee Lee <chl948@mail.usask.ca>, 2008-2016.
-# Contact: Chel Hee Lee <gnustats@gmail.com>
-#
-# Notes:
-# Under development (unstable) starting from 11-APR-2016 for R-3.3.1 - QC: in progress
-# Freezed on 10-APR-2016 for R-3.3.0 - QC: PASS
-# Freezed on 30-MAR-2015 for R-3.2.0 - QC: PASS
-# Freezed on 06-FEB-2015 for R-3.1.3 - QC: PASS
-# Bug-reports are processed (17-JAN-2015)
+# Maintained by Chel Hee Lee <gnustats@gmail.com>, 2008-2018.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R-3.3.0\n"
+"Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-30 07:35-0700\n"
-"PO-Revision-Date: 2016-04-11 13:08-0600\n"
-"Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
-"Language-Team: Chel Hee Lee <chl948@mail.usask.ca>\n"
+"POT-Creation-Date: 2018-03-29 07:06-0700\n"
+"PO-Revision-Date: 2018-04-09 12:05-0600\n"
+"Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
+"Language-Team: \n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -529,11 +519,11 @@ msgstr "Rgui 구성 편집기"
 
 #: src/gnuwin32/rui.c:140
 msgid "Select file to source"
-msgstr "소스(source)를 실행할 파일을 선택하세요"
+msgstr "불러올 파일을 선택하세요"
 
 #: src/gnuwin32/rui.c:161
 msgid "Select image to load"
-msgstr "로드할 이미지를 선택하세요"
+msgstr "불러올 이미지를 선택하세요"
 
 #: src/gnuwin32/rui.c:176
 msgid "Save image in"
@@ -638,7 +628,7 @@ msgstr "R에 대한 FAQ (&Windows 버전)"
 
 #: src/gnuwin32/rui.c:952 src/gnuwin32/rui.c:955
 msgid "Manuals (in PDF)"
-msgstr "PDF 매뉴얼"
+msgstr "PDF 형식의 매뉴얼"
 
 #: src/gnuwin32/rui.c:985
 msgid "R functions (text)..."
@@ -1046,7 +1036,7 @@ msgstr "Jpeg 파일"
 
 #: src/library/grDevices/src/devWindows.c:980
 msgid "Postscript file"
-msgstr "포스트스크립트(postscript) 파일"
+msgstr "포스트스크립트 형식의 파일"
 
 #: src/library/grDevices/src/devWindows.c:992
 msgid "PDF file"
@@ -1054,7 +1044,7 @@ msgstr "PDF 파일"
 
 #: src/library/grDevices/src/devWindows.c:1004
 msgid "Enhanced metafiles"
-msgstr "확장형 메타파일(enhanced metafiles)"
+msgstr "확장형 메타파일"
 
 #: src/library/grDevices/src/devWindows.c:1007
 #: src/library/grDevices/src/devWindows.c:3455
@@ -1184,19 +1174,19 @@ msgstr "고정 크기 사용하기"
 
 #: src/library/grDevices/src/devWindows.c:1695
 msgid "Copy as metafile"
-msgstr "메타파일(metafile) 형식으로 복사"
+msgstr "메타파일 형식으로 복사"
 
 #: src/library/grDevices/src/devWindows.c:1697
 msgid "Copy as bitmap"
-msgstr "비트맵(bitmap) 형식으로 복사"
+msgstr "비트맵 형식으로 복사"
 
 #: src/library/grDevices/src/devWindows.c:1700
 msgid "Save as metafile..."
-msgstr "메타파일(metafile) 형식으로 저장..."
+msgstr "메타파일 형식으로 저장..."
 
 #: src/library/grDevices/src/devWindows.c:1702
 msgid "Save as postscript..."
-msgstr "포스트스크립트(postscript) 형식으로 저장..."
+msgstr "포스트스크립트 형식으로 저장..."
 
 #: src/library/grDevices/src/devWindows.c:3147
 msgid "Locator is active"
@@ -1209,9 +1199,3 @@ msgstr "페이지 변경을 확인하기 위해 기다리는 중..."
 #: src/library/grDevices/src/devWindows.c:3791
 msgid "Click or hit ENTER for next page"
 msgstr "다음 페이지로 이동하기 위해서는 클릭 또는 엔터키를 누르세요"
-
-#~ msgid "Print...\tCTRL+P"
-#~ msgstr "인쇄...\tCTRL+P"
-
-#~ msgid "invalid device"
-#~ msgstr "잘못된 장치입니다"
