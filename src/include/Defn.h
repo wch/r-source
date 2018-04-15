@@ -895,6 +895,7 @@ extern0 int R_PCRE_limit_recursion;
 # define DataFrameClass		Rf_DataFrameClass
 # define ddfindVar		Rf_ddfindVar
 # define deparse1		Rf_deparse1
+# define deparse1m		Rf_deparse1m
 # define deparse1w		Rf_deparse1w
 # define deparse1line		Rf_deparse1line
 # define deparse1s		Rf_deparse1s
@@ -1111,6 +1112,7 @@ double currentTime(void);
 void DataFrameClass(SEXP);
 SEXP ddfindVar(SEXP, SEXP);
 SEXP deparse1(SEXP,Rboolean,int);
+SEXP deparse1m(SEXP call, Rboolean abbrev, int opts);
 SEXP deparse1w(SEXP,Rboolean,int);
 SEXP deparse1line (SEXP, Rboolean);
 SEXP deparse1line_(SEXP, Rboolean, int);
