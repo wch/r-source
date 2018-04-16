@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.4.4\n"
+"Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-30 07:34-0700\n"
-"PO-Revision-Date: 2018-04-06 09:46+0200\n"
+"PO-Revision-Date: 2018-04-16 10:36+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
 "Language: de\n"
@@ -79,11 +79,11 @@ msgstr "Index außerhalb der Grenzen"
 #: io.c:1053
 #, c-format
 msgid "Problem closing connection:  %s"
-msgstr "Problem beim Schliessen der Verbindung: %s"
+msgstr "Problem beim Schließen der Verbindung: %s"
 
 #: io.c:1055
 msgid "Problem closing connection"
-msgstr "Problem beim Schliessen der Verbindung"
+msgstr "Problem beim Schließen der Verbindung"
 
 #: io.c:1078
 msgid "'file' is not a connection"

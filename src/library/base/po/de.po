@@ -4,10 +4,10 @@
 # Detlef Steuer <steuer@hsu-hh.de>, 2005-2014.
 msgid ""
 msgstr ""
-"Project-Id-Version: R-3.4.4\n"
+"Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-30 07:33-0700\n"
-"PO-Revision-Date: 2018-04-05 08:29+0200\n"
+"PO-Revision-Date: 2018-04-16 10:26+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
 "Language: de\n"
@@ -2188,11 +2188,11 @@ msgstr "unbekannter 'rw' Wert"
 #: src/main/connections.c:3520
 #, c-format
 msgid "Problem closing connection:  %s"
-msgstr "Problem beim Schliessen der Verbindung: %s"
+msgstr "Problem beim Schließen der Verbindung: %s"
 
 #: src/main/connections.c:3522
 msgid "Problem closing connection"
-msgstr "Problem beim Schliessen in Verbindung"
+msgstr "Problem beim Schließen in Verbindung"
 
 #: src/main/connections.c:3592
 msgid "cannot close standard connections"
@@ -4148,7 +4148,7 @@ msgstr "Socket-Routinen können nicht geladen werden"
 
 #: src/main/internet.c:237
 msgid "attempt to close invalid socket"
-msgstr "Versuch ungültigen socket zu schliessen"
+msgstr "Versuch ungültigen socket zu schließen"
 
 #: src/main/lapack.c:39
 msgid "LAPACK routines cannot be accessed in module"

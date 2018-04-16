@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.4.4\n"
+"Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2018-03-30 07:34\n"
-"PO-Revision-Date: 2018-04-06 09:37+0200\n"
+"PO-Revision-Date: 2018-04-16 10:35+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
 "Language: de\n"
@@ -552,7 +552,7 @@ msgid "For SI units, specify 'standard = \"SI\"'"
 msgstr "Für SI Einheiten bitte 'standard = \"SI\"' spezifizieren"
 
 msgid "Unit \"%s\" is not part of standard \"%s\""
-msgstr "Einheit \"%s\" ist nicht teil des Standards \"%s\""
+msgstr "Einheit \"%s\" ist nicht Teil des Standards \"%s\""
 
 msgid "'%s' is a formal generic function; S3 methods will not likely be found"
 msgstr ""
@@ -745,7 +745,7 @@ msgid "unable to create temporary directory %s"
 msgstr "kann temporäres Verzeichnis %s nicht erzeugen"
 
 msgid "type == \"both\" can only be used on Windows or a CRAN build for macOS"
-msgstr "type == \"both\" kann nur unter Windows oder einem CRAN-build für MacOS benutzt werden"
+msgstr "type == \"both\" kann nur unter Windows oder einem CRAN-build für macOS benutzt werden"
 
 msgid "type == \"both\" cannot be used with 'repos = NULL'"
 msgstr "type == \"both\" kann nicht mit 'repos = NULL' benutzt werden"

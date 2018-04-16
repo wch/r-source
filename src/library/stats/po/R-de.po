@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R-3.4.4\n"
+"Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2018-03-30 07:34\n"
-"PO-Revision-Date: 2018-04-06 09:45+0200\n"
+"PO-Revision-Date: 2018-04-16 10:32+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
 "Language: de\n"
@@ -1862,7 +1862,7 @@ msgid "No p1 in in [0, p2] can be found to achieve the desired power"
 msgstr "Es kann kein p1 in [0, p2] gefunden werden, um die gewünschte Power zu erreichen"
 
 msgid "No p2 in in [p1, 1] can be found to achieve the desired power"
-msgstr "Es kann kein p2 in [p1, 1] gefunden werden, um die gewünschte Power zu erreichen<"
+msgstr "Es kann kein p2 in [p1, 1] gefunden werden, um die gewünschte Power zu erreichen"
 
 msgid "No significance level [0, 1] can be found to achieve the desired power"
 msgstr "Es kann kein Signifikanzniveau in [0, 1] gefunden werden, um die gewünschte Power zu erreichen"
@@ -2124,7 +2124,7 @@ msgstr ""
 "Kann nicht mehr innere Knoten brauchen als es verschiedene 'x' Werte gibt"
 
 msgid "must not specify both 'spar' and 'lambda'"
-msgstr "es dürfen nicht beide 'spar' und 'lambda' angegeben werden"
+msgstr "es dürfen nicht sowohl 'spar' als auch 'lambda' angegeben werden"
 
 msgid "'spar' must be of length 1"
 msgstr "'spar' muss Länge eins haben"
