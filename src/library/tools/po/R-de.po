@@ -4,10 +4,10 @@
 # Detlef Steuer <steuer@hsu-hh.de>, 2008-2014.
 msgid ""
 msgstr ""
-"Project-Id-Version: R-3.4.4\n"
+"Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2018-03-30 07:34\n"
-"PO-Revision-Date: 2018-04-06 09:36+0200\n"
+"PO-Revision-Date: 2018-04-16 10:34+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
 "Language: de\n"
@@ -549,7 +549,7 @@ msgid "Macro file %s should only contain Rd macro definitions and comments"
 msgstr "Makrodatei %s sollte nur Rd Makrodefinitionen und Kommentare enthalten"
 
 msgid "Rd macro package '%s' is not installed."
-msgstr "DAs Rd Makro-Paket '%s' ist nicht installiert"
+msgstr "Das Rd Makro-Paket '%s' ist nicht installiert"
 
 msgid "No Rd macros in package '%s'."
 msgstr "Keine Rd Makros in Paket '%s'"
@@ -995,13 +995,13 @@ msgid "C++17 standard requested but CXX17 is not defined"
 msgstr "C++17 Standard verlangt, aber CXX17 nicht definiert"
 
 msgid "C++14 standard requested but CXX14 is not defined"
-msgstr "C++14 Standard verlangt, aber CXX14 nicht definiert<"
+msgstr "C++14 Standard verlangt, aber CXX14 nicht definiert"
 
 msgid "C++11 standard requested but CXX11 is not defined"
-msgstr "C++11 Standard verlangt, aber CXX11 nicht definiert<"
+msgstr "C++11 Standard verlangt, aber CXX11 nicht definiert"
 
 msgid "C++98 standard requested but CXX98 is not defined"
-msgstr "C++98 Standard verlangt, aber CXX98 nicht definiert<"
+msgstr "C++98 Standard verlangt, aber CXX98 nicht definiert"
 
 msgid ""
 "See\n"
