@@ -1,5 +1,5 @@
 
-R version 3.5.0 alpha (2018-03-27 r74478)
+R version 3.5.0 RC (2018-04-15 r74605) -- "Joy in Playing"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -1298,5 +1298,5 @@ Summary of (a total of 9) warning messages:
 > 
 > ## at the very end
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  2.616 0.163 3.147 0 0 
+Time elapsed:  1.576 0.082 1.681 0 0 
 > 

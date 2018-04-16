@@ -1,5 +1,5 @@
 
-R version 3.5.0 alpha (2018-03-27 r74478)
+R version 3.5.0 RC (2018-04-15 r74605) -- "Joy in Playing"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -362,4 +362,4 @@ difference in location  3.741417e-05  3.741417e-05  3.741417e-05
 > 
 > proc.time()
    user  system elapsed 
-  0.683   0.069   1.109 
+  0.358   0.033   0.373 

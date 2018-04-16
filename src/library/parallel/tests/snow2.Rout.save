@@ -1,5 +1,5 @@
 
-R version 3.5.0 alpha (2018-03-27 r74478)
+R version 3.5.0 RC (2018-04-15 r74605) -- "Joy in Playing"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -50,4 +50,4 @@ Calculations on Transformed Scale;  Intervals on Original Scale
 > 
 > proc.time()
    user  system elapsed 
-  0.312   0.064   1.340 
+  0.179   0.057   0.733 
