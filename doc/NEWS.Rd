@@ -38,7 +38,7 @@
   \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
       \item The C++ compiler defaults to the C++11 standard, if
-      suported; otherwise to the C++98 standard.
+      supported; otherwise to the C++98 standard.
     }
   }
 }
