@@ -1076,7 +1076,9 @@ function(object, ...)
 {
     format_author <- function(author) paste(sapply(author, function(p) {
 	fnms <- p$family
-	only_given_or_family <- is.null(fnms) || is.null(p$given)
+	only_given_or_family <-
+            (is.null(fnms) || is.null(p$given)) &&
+            !(identical(fnms, "others") || identical(p$given, "others"))
 	fbrc <- if(length(fnms) > 1L ||
                    any(grepl("[[:space:]]", fnms)) ||
                    only_given_or_family) c("{", "}") else ""
