@@ -12,6 +12,14 @@
       \item \code{Sys.setFileTime()} has been vectorized, its arguments
       \code{path} and \code{time} of length greater than one are now
       supported.
+
+      \item \code{axis()} gets new option \code{gap.axis = NA} for
+      specifying a multiplication factor for the minimal \dQuote{gap}
+      (distance) between axis labels drawn.   Its default is \code{1}
+      for labels \emph{parallel} to the axis, and \code{0.5} for
+      perpendicular ones.
+
+      These (perpendicular labels) no longer overlap, fixing bug \PR{17384}.
     }
   }
 
