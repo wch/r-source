@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2018-03-29 r74484) -- "Unsuffered Consequences"
+R Under development (unstable) (2018-04-17 r74612) -- "Unsuffered Consequences"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -571,5 +571,110 @@ In options(max.print = Inf) : NAs introduced by coercion to integer range
 > t2 <- tail(capture.output(print(dd, max = 500)))
 > stopifnot(identical(t1, t2), l6 == 121)
 > ## not quite consistent in R <= 2.14.x
+> 
+> 
+> ## Calls with S3 class are not evaluated when (auto)-printed
+> obj <- structure(quote(stop("should not be evaluated")), class = "foo")
+> #--
+> a <- list(obj)
+> b <- pairlist(obj)
+> c <- structure(list(), attr = obj)
+> d <- list(list(obj, pairlist(obj, structure(list(obj), attr = obj)), NULL))
+> # Now auto-print, and explicit print(.) :
+> a
+[[1]]
+stop("should not be evaluated")
+attr(,"class")
+[1] "foo"
+
+> b
+[[1]]
+stop("should not be evaluated")
+attr(,"class")
+[1] "foo"
+
+> c
+list()
+attr(,"attr")
+stop("should not be evaluated")
+attr(,"class")
+[1] "foo"
+> d # (not printed correctly, will be fixed later)
+[[1]]
+[[1]][[1]]
+stop("should not be evaluated")
+attr(,"class")
+[1] "foo"
+
+[[1]][[2]]
+[[1]][[2]][[1]]
+stop("should not be evaluated")
+attr(,"class")
+[1] "foo"
+
+
+[[1]]
+stop("should not be evaluated")
+attr(,"class")
+[1] "foo"
+
+attr(,"attr")
+stop("should not be evaluated")
+attr(,"class")
+[1] "foo"
+
+
+
+NULL
+
+
+> print(a)
+[[1]]
+stop("should not be evaluated")
+attr(,"class")
+[1] "foo"
+
+> print(b)
+[[1]]
+stop("should not be evaluated")
+attr(,"class")
+[1] "foo"
+
+> print(c)
+list()
+attr(,"attr")
+stop("should not be evaluated")
+attr(,"class")
+[1] "foo"
+> print(d)
+[[1]]
+[[1]][[1]]
+stop("should not be evaluated")
+attr(,"class")
+[1] "foo"
+
+[[1]][[2]]
+[[1]][[2]][[1]]
+stop("should not be evaluated")
+attr(,"class")
+[1] "foo"
+
+
+[[1]]
+stop("should not be evaluated")
+attr(,"class")
+[1] "foo"
+
+attr(,"attr")
+stop("should not be evaluated")
+attr(,"class")
+[1] "foo"
+
+
+
+NULL
+
+
+> ## all 4 x 2 = 8  cases produced an Error in R <= 3.5.0
 > 
 > 
