@@ -43,6 +43,9 @@
 
       \item Calls with an S3 class are no longer evaluated when printed,
       fixing part of \PR{17398}, thanks to a patch from Lionel Henry.
+
+      \item \code{optim(*, lower = c(-Inf, -Inf))} no longer warns (and
+      switches the method), thanks to a suggestion by John Nash.
     }
   }
 
