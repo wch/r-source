@@ -20,6 +20,9 @@
       perpendicular ones.
 
       These (perpendicular labels) no longer overlap, fixing bug \PR{17384}.
+
+      \item \code{removeSource()} now works not only for functions but
+      also for some language objects.
     }
   }
 
