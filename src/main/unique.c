@@ -1474,7 +1474,7 @@ SEXP attribute_hidden do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
     rlist = StripUnmatched(rlist);
 
     PROTECT(rval = allocSExp(LANGSXP));
-    SETCAR(rval, duplicate(CAR(funcall)));
+    SETCAR(rval, lazy_duplicate(CAR(funcall)));
     SETCDR(rval, rlist);
     UNPROTECT(3);
     return rval;
