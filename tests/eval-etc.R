@@ -188,11 +188,12 @@ hasMissObj <- function(obj) {
             any(vapply(obj, hasMissObj, NA))
     } else isMissObj(obj)
 }
-check_EPD <- function(obj, show = !hasReal(obj), oNam = substitute(obj),
+check_EPD <- function(obj, show = !hasReal(obj), oNam = deparse(substitute(obj)),
                       ## FIXME: add  "niceNames" here:   ?!?
                       control = c("keepInteger","showAttributes","keepNA"),
                       not.identical.ldouble = if(!interactive()) c("t1", "t2", "ydata"),
                       eq.tol = if(noLdbl) 2*.Machine$double.eps else 0) {
+    stopifnot(is.character(oNam))
     if(show) dPut(obj)
     if(is.environment(obj) || hasMissObj(obj)) {
         cat("__ not parse()able __:",

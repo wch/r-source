@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2018-04-11 r74580) -- "Unsuffered Consequences"
+R Under development (unstable) (2018-04-20 r74620) -- "Unsuffered Consequences"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -245,11 +245,12 @@ Levels: a b <NA>
 +             any(vapply(obj, hasMissObj, NA))
 +     } else isMissObj(obj)
 + }
-> check_EPD <- function(obj, show = !hasReal(obj), oNam = substitute(obj),
+> check_EPD <- function(obj, show = !hasReal(obj), oNam = deparse(substitute(obj)),
 +                       ## FIXME: add  "niceNames" here:   ?!?
 +                       control = c("keepInteger","showAttributes","keepNA"),
 +                       not.identical.ldouble = if(!interactive()) c("t1", "t2", "ydata"),
 +                       eq.tol = if(noLdbl) 2*.Machine$double.eps else 0) {
++     stopifnot(is.character(oNam))
 +     if(show) dPut(obj)
 +     if(is.environment(obj) || hasMissObj(obj)) {
 +         cat("__ not parse()able __:",
@@ -832,10 +833,11 @@ checking formals(.):
 pairlist(a = 1, mm = quote(c("Abc", "Bde")))
  --> checking list(*): Ok
 --=--=--=--=--
-check_EPD: function (obj, show = !hasReal(obj), oNam = substitute(obj), 
+check_EPD: function (obj, show = !hasReal(obj), oNam = deparse(substitute(obj)), 
     control = c("keepInteger", "showAttributes", "keepNA"), not.identical.ldouble = if (!interactive()) c("t1", 
         "t2", "ydata"), eq.tol = if (noLdbl) 2 * .Machine$double.eps else 0) 
 {
+    stopifnot(is.character(oNam))
     if (show) 
         dPut(obj)
     if (is.environment(obj) || hasMissObj(obj)) {
@@ -876,6 +878,7 @@ check_EPD: function (obj, show = !hasReal(obj), oNam = substitute(obj),
  --> checking list(*): Ok
 checking body(.):
 quote({
+    stopifnot(is.character(oNam))
     if (show) 
         dPut(obj)
     if (is.environment(obj) || hasMissObj(obj)) {
@@ -915,7 +918,7 @@ quote({
 })
  --> checking list(*): Ok
 checking formals(.):
-as.pairlist(alist(obj = , show = quote(!hasReal(obj)), oNam = quote(substitute(obj)), control = quote(c("keepInteger", 
+as.pairlist(alist(obj = , show = quote(!hasReal(obj)), oNam = quote(deparse(substitute(obj))), control = quote(c("keepInteger", 
     "showAttributes", "keepNA")), not.identical.ldouble = quote(if (!interactive()) c("t1", 
     "t2", "ydata")), eq.tol = quote(if (noLdbl) 2 * .Machine$double.eps else 0)))
 __ not parse()able __: hasMissObj(.) is true 
@@ -1330,5 +1333,5 @@ Summary of (a total of 9) warning messages:
 > 
 > ## at the very end
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.814 0.116 0.933 0 0 
+Time elapsed:  0.816 0.121 0.94 0 0 
 > 
