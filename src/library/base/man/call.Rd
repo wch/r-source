@@ -9,8 +9,8 @@
 \alias{as.call}
 \title{Function Calls}
 \description{
-  Create or test for objects of \code{\link{mode}} \code{"call"} (which
-  is equivalent to \code{\link{typeof}} \code{"language"}).
+  Create or test for objects of \code{\link{mode}} \code{"call"} (or
+  \code{"("}, see Details).
 }
 \usage{
 call(name, \dots)
@@ -35,10 +35,14 @@ as.call(x)
   partially match \code{name}.
 
   \code{is.call} is used to determine whether \code{x} is a call (i.e.,
-  of mode \code{"call"}).  Note that \code{\link{is.language}} is also
-  \code{TRUE} for calls (but also for \code{\link{symbol}}s and
-  \code{\link{expression}}s where \code{is.call()} is false).
-
+  of mode \code{"call"} or \code{"("}).  Note that
+  \itemize{
+    \item{\code{is.call(x)} is strictly equivalent to
+      \code{typeof(x) == "language"}.}
+    \item{\code{\link{is.language}()} is also true for calls (but also
+      for \code{\link{symbol}}s and \code{\link{expression}}s where
+      \code{is.call()} is false).}
+  }
   Objects of mode \code{"list"} can be coerced to mode \code{"call"}.
   The first element of the list becomes the function part of the call,
   so should be a function or the name of one (as a symbol; a quoted
