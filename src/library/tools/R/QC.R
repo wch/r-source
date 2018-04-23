@@ -7054,11 +7054,15 @@ function(dir, localOnly = FALSE)
         out$size_of_tarball <- size
 
     ## Check URLs.
-    if(!capabilities("libcurl") && !localOnly)
+    remote <-
+        (!localOnly &&
+         !config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_SKIP_URL_CHECKS_IF_REMOTE_",
+                                           "FALSE")))
+    if(!capabilities("libcurl") && remote)
         out$no_url_checks <- TRUE
     else {
         bad <- tryCatch(check_url_db(url_db_from_package_sources(dir),
-                                     remote = !localOnly),
+                                     remote = remote),
                         error = identity)
         if(inherits(bad, "error")) {
             out$bad_urls <- bad
@@ -7322,7 +7326,9 @@ function(dir, localOnly = FALSE)
     }
 
     ## Check DOIs.
-    if(capabilities("libcurl")) {
+    if(capabilities("libcurl") &&
+       !config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_SKIP_DOI_CHECKS_",
+                                         "FALSE"))) {
         bad <- tryCatch(check_doi_db(doi_db_from_package_sources(dir)),
                         error = identity)
         if(inherits(bad, "error") || NROW(bad))
