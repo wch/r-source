@@ -13,6 +13,7 @@ export(
        "convertNative",
        "grid.convertWidth", "grid.convertX", "grid.convertY",
        "grid.convert", "grid.convertHeight",
+       "deviceLoc", "deviceDim",
 
        "current.viewport", "current.vpPath", "current.vpTree",
        "current.transform", "current.rotation", "current.parent",

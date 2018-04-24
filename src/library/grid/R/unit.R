@@ -105,6 +105,24 @@ convertNative <- function(unit, dimension="x", type="location") {
   .Defunct("convertUnit")
 }
 
+deviceLoc <- function(x, y, valueOnly=FALSE) {
+    result <- grid.Call(C_devLoc, x, y)
+    names(result) <- c("x", "y")
+    if (!valueOnly)
+        list(x=unit(result$x, "in"), y=unit(result$y, "in"))
+    else
+        result
+}
+
+deviceDim <- function(w, h, valueOnly=FALSE) {
+    result <- grid.Call(C_devDim, w, h)
+    names(result) <- c("w", "h")
+    if (!valueOnly)
+        list(w=unit(result$w, "in"), h=unit(result$h, "in"))
+    else
+        result
+}
+
 # This is like the "convert" functions:  it evaluates units (immediately)
 # in the current context
 calcStringMetric <- function(text) {

@@ -305,6 +305,8 @@ SEXP L_pretty(SEXP scale);
 SEXP L_locator();
 SEXP L_convert(SEXP x, SEXP whatfrom,
 	       SEXP whatto, SEXP unitto);
+SEXP L_devLoc(SEXP x, SEXP y);
+SEXP L_devDim(SEXP x, SEXP y);
 SEXP L_layoutRegion(SEXP layoutPosRow, SEXP layoutPosCol);
 
 SEXP L_stringMetric(SEXP label);
