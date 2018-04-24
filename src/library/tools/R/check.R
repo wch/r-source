@@ -3020,24 +3020,32 @@ add_dummies <- function(dir, Log)
                 ##   base/recommended packages which are overwritten
                 ##   when this package's namespace is loaded.
                 ## As of 2017-12, to make this work as documented we
-                ## really need to load all base and recommended packages
-                ## which register S3 methods first, which takes *quite
-                ## some time*.  There really should be a better way ...
+                ## really need to load all base and recommended
+                ## ("standard") packages which register S3 methods
+                ## first, which takes *quite some time*.
+                ## There really should be a better way ...
                 ## Running with
                 ##   R_DEFAULT_PACKAGES=MASS,Matrix,boot,class,cluster,grDevices,graphics,grid,lattice,mgcv,nlme,nnet,parallel,rpart,spatial,splines,stats,survival,tcltk,tools,utils
                 ## does not suppress package startup messages: so try to
-                ## load the relevant base and recommended package
-                ## namespaces quietly ...
+                ## load the relevant standard package namespaces quietly.
+                ## When checking a standard package p we should preload
+                ## only the standard packages not depending on p.
+                preloads <-
+                    c("MASS", "Matrix", "boot", "class", "cluster",
+                      "grDevices",  "graphics", "grid", "lattice",
+                      "mgcv", "nlme", "nnet", "parallel", "rpart",
+                      "spatial", "splines", "stats", "survival",
+                      "tcltk", "tools", "utils")
+                if(!is.na(match(pkgname, preloads))) {
+                    rdepends <-
+                        .get_standard_package_dependencies(reverse = TRUE,
+                                                           recursive = TRUE)
+                    preloads <- setdiff(preloads,
+                                        c(pkgname, rdepends[[pkgname]]))
+                }
                 Rcmd <-
                     c(sprintf("suppressPackageStartupMessages(loadNamespace('%s', lib.loc = '%s'))",
-                              ## Perhaps provide these sorted according
-                              ## to dependency?
-                              c("MASS", "Matrix", "boot", "class",
-                                "cluster", "grDevices",  "graphics",
-                                "grid", "lattice", "mgcv", "nlme",
-                                "nnet", "parallel", "rpart", "spatial",
-                                "splines", "stats", "survival", "tcltk",
-                                "tools", "utils"),
+                              preloads,
                               .Library),
                       Rcmd)
                 env <- c(env, "R_DEFAULT_PACKAGES=NULL")
