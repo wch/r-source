@@ -5925,7 +5925,7 @@ It is important to set your @env{PATH} properly.  The installer
 installs.
 
 Your @env{PATH} may include @file{.} first, then the @file{bin}
-directories of the tools, the compiler toolchain and @LaTeX{}.  Do not
+directories of the tools and @LaTeX{}.  Do not
 use filepaths containing spaces: you can always use the short forms
 (found by @code{dir /x} at the Windows command line).  Network shares
 (with paths starting @code{\\}) are not supported.
