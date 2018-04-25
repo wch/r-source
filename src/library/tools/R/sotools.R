@@ -1,7 +1,7 @@
 #  File src/library/tools/R/sotools.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2011-2017 The R Core Team
+#  Copyright (C) 2011-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -19,11 +19,21 @@
 if(.Platform$OS.type == "windows") {
     read_symbols_from_dll <- function(f, rarch)
     {
-        ## reasonable to assume this on the path
-        DLL_nm <- "objdump.exe"
-        if(!nzchar(Sys.which(DLL_nm))) {
-            warning("this requires 'objdump.exe' to be on the PATH")
-            return()
+        ff <- file.path(R.home("etc"), rarch, "Makeconf")
+        if (file.exists(ff)) {
+            ## if possible, use objdump.exe from the compiler
+            ## toolchain
+            etc <- readLines(ff)
+            bp <- grep("^BINPREF", etc, value = TRUE)
+	    bp <- sub("^BINPREF.*=[ \t]*", "", bp)
+            DLL_nm <- paste0(bp, "objdump.exe")
+        } else {
+            ## reasonable to assume this on the path
+            DLL_nm <- "objdump.exe"
+            if(!nzchar(Sys.which(DLL_nm))) {
+                warning("this requires 'objdump.exe' to be on the PATH")
+                return()
+            }
         }
         f <- file_path_as_absolute(f)
         s0 <- suppressWarnings(system2(DLL_nm, c("-x", shQuote(f)),
