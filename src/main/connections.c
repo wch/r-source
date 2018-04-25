@@ -5374,10 +5374,9 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 		)
 		con = newclp(url, strlen(open) ? open : "r");
 	    else {
+		const char *efn = R_ExpandFileName(url);
 #ifndef Win32
-		const char *efn = NULL;
 		if (!raw) {
-		    efn = R_ExpandFileName(url);
 		    struct stat sb;
 		    int res = stat(efn, &sb);
 		    if (!res && (sb.st_mode & S_IFIFO)) {
