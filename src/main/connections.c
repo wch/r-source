@@ -713,6 +713,7 @@ static Rboolean file_open(Rconnection con)
 	    setmode(dstdin, _O_BINARY);
 # endif
         fp = fdopen(dstdin, con->mode);
+	con->canseek = FALSE;
 #else
 	warning(_("cannot open file '%s': %s"), name,
 		"fdopen is not supported on this platform");
@@ -3816,7 +3817,7 @@ SEXP attribute_hidden do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
 	/* for a non-blocking connection, more input may
 	   have become available, so re-position */
 	if(con->canseek && !con->blocking)
-	    Rconn_seek(con, con->seek(con, -1, 1, 1), 1, 1);
+	    Rconn_seek(con, Rconn_seek(con, -1, 1, 1), 1, 1);
     }
     con->incomplete = FALSE;
     if(con->UTF8out || streql(encoding, "UTF-8")) oenc = CE_UTF8;
