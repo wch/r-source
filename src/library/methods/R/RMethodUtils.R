@@ -55,7 +55,7 @@
         }
         fdef <- fdefault
         body(fdef) <- substitute(standardGeneric(NAME), list(NAME = f))
-        environment(fdef) <- asNamespace(package)
+        environment(fdef) <- .NamespaceOrPackage(package)
     }
     ## give the function a new environment, to cache methods later
     ev <- new.env()

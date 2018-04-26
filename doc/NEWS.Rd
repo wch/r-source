@@ -53,6 +53,10 @@
       switches the method), thanks to a suggestion by John Nash.
 
       \item \code{file("stdin")} is no longer considered seekable.
+
+      \item Calling \code{setGeneric("foo")} in a package no longer
+      fails when the enclosing environment of the implicit generic
+      \code{foo()} is \code{.GlobalEnv}.
     }
   }
 
