@@ -139,6 +139,7 @@ OBJC = $(CC)
 OBJCFLAGS = -O2
 OBJC_LIBS = -lobjc
 OBJCXX =
+OBJDUMP = $(BINPREF)objdump
 R_ARCH =
 RANLIB = $(BINPREF)ranlib
 SAFE_FFLAGS = -O2 -msse2 -mfpmath=sse
