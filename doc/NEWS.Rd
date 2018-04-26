@@ -23,6 +23,8 @@
 
       \item \code{removeSource()} now works not only for functions but
       also for some language objects.
+
+      \item \code{as.call()} dispatches internally.
     }
   }
 
