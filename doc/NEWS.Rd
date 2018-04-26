@@ -25,6 +25,10 @@
       also for some language objects.
 
       \item \code{as.call()} dispatches internally.
+
+      \item \code{is(object, class2)} looks for \code{class2} in the
+      calling namespace after looking in the namespace of
+      \code{class(object)}.
     }
   }
 

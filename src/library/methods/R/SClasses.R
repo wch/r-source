@@ -252,10 +252,13 @@ getClassDef <-
         if(is.character(where)) {
             package <- where
         }
-	if(isTRUE(nzchar(package))) {
-	    whereP <- .requirePackage(package)
-	    value <- get0(cname, whereP, inherits = inherits) # NULL if not existing
-	}
+
+        if(isTRUE(nzchar(package))) {
+	    package <- .requirePackage(package)
+        }
+        if (is.environment(package)) {
+            value <- get0(cname, package, inherits = inherits)
+        }
 	if(is.null(value))
 	    value <- get0(cname, where, inherits = inherits) # NULL if not existing
     }
