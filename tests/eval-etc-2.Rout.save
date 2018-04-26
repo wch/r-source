@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2018-04-21 r74622) -- "Unsuffered Consequences"
+R Under development (unstable) (2018-04-26 r74643) -- "Unsuffered Consequences"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -18,7 +18,7 @@ Type 'q()' to quit R.
 > ####  eval / parse / deparse / substitute ...
 > 
 > ####  Part 2
-> ####  ======  Recommended packages allowed : "sloppy" comparison with *.Rout.save
+> ####  ======  Recommended packages allowed  .. output tests *sloppily*
 > 
 > source(file.path(Sys.getenv("SRCDIR"), "eval-fns.R"), echo = TRUE)
 
@@ -46,6 +46,11 @@ Type 'q()' to quit R.
 
 > check_EPD <- function(obj, show = !hasReal(obj), oNam = deparse(substitute(obj)), 
 +     control = c("keepInteger", "showAttributes", "keepNA"), not .... [TRUNCATED] 
+
+> runEPD_checks <- function(env = .GlobalEnv) {
++     stopifnot(is.environment(env))
++     for (nm in ls(envir = env)) {
++         cat(nm, ": ", sep = .... [TRUNCATED] 
 >                                         #---------
 > 
 > if(require("Matrix")) withAutoprint({ cat("Trying some Matrix objects, too\n")
@@ -272,21 +277,13 @@ Matrix+           is(Matrix(FALSE, 1,1), "sparseMatrix"))
 
 > check_EPD <- function(obj, show = !hasReal(obj), oNam = deparse(substitute(obj)), 
 +     control = c("keepInteger", "showAttributes", "keepNA"), not .... [TRUNCATED] 
+
+> runEPD_checks <- function(env = .GlobalEnv) {
++     stopifnot(is.environment(env))
++     for (nm in ls(envir = env)) {
++         cat(nm, ": ", sep = .... [TRUNCATED] 
 >                                         #---------
-> 
-> 
-> ## Check deparse <--> parse  consistency for *all* objects:
-> for(nm in ls(env=.GlobalEnv)) {
-+     cat(nm,": ", sep="")
-+     ## if(!any(nm == "mf")) ## 'mf' [bug in deparse(mf, control="all") now fixed]
-+         check_EPD(obj = (x <- .GlobalEnv[[nm]]), oNam=nm)
-+     if(is.function(x) && !inherits(x, "classGeneratorFunction")) {
-+         ## FIXME? classGeneratorFunction, e.g., mForm don't "work" yet
-+         cat("checking body(.):\n"   ); check_EPD(   body(x))
-+         cat("checking formals(.):\n"); check_EPD(formals(x))
-+     }
-+     cat("--=--=--=--=--\n")
-+ }
+> runEPD_checks() # Action!
 A: new("dgCMatrix", i = c(0L, 3L, 4L, 5L, 2L, 6L, 7L), p = c(0L, 
 0L, 1L, 1L, 1L, 1L, 2L, 3L, 4L, 6L, 7L), Dim = c(8L, 10L), Dimnames = list(
     NULL, NULL), x = c(7, 21, 28, 35, 14, 42, 49), factors = list())
@@ -565,6 +562,48 @@ __ not parse()able __: hasMissObj(.) is true
 perm: c(2L, 3L, 6L, 4L, 1L, 7L, 5L)
  --> checking list(*): Ok
 --=--=--=--=--
+runEPD_checks: function (env = .GlobalEnv) 
+{
+    stopifnot(is.environment(env))
+    for (nm in ls(envir = env)) {
+        cat(nm, ": ", sep = "")
+        x <- env[[nm]]
+        check_EPD(x, oNam = nm)
+        if (is.function(x) && !inherits(x, "classGeneratorFunction")) {
+            cat("checking body(.):\n")
+            check_EPD(if (is.language(bx <- body(x))) 
+                removeSource(bx)
+            else bx)
+            cat("checking formals(.):\n")
+            check_EPD(formals(x))
+        }
+        cat("--=--=--=--=--\n")
+    }
+}
+ --> checking list(*): Ok
+checking body(.):
+quote({
+    stopifnot(is.environment(env))
+    for (nm in ls(envir = env)) {
+        cat(nm, ": ", sep = "")
+        x <- env[[nm]]
+        check_EPD(x, oNam = nm)
+        if (is.function(x) && !inherits(x, "classGeneratorFunction")) {
+            cat("checking body(.):\n")
+            check_EPD(if (is.language(bx <- body(x))) 
+                removeSource(bx)
+            else bx)
+            cat("checking formals(.):\n")
+            check_EPD(formals(x))
+        }
+        cat("--=--=--=--=--\n")
+    }
+})
+ --> checking list(*): Ok
+checking formals(.):
+pairlist(env = quote(.GlobalEnv))
+ --> checking list(*): Ok
+--=--=--=--=--
 sA: new("dsCMatrix", i = c(0L, 3L, 4L, 5L, 2L, 6L, 7L), p = c(0L, 
 0L, 1L, 1L, 1L, 1L, 2L, 3L, 4L, 6L, 7L), Dim = c(10L, 10L), Dimnames = list(
     NULL, NULL), x = c(7, 21, 28, 35, 14, 42, 49), uplo = "U", 
@@ -582,18 +621,14 @@ tA: new("dtCMatrix", i = c(0L, 3L, 4L, 5L, 2L, 6L, 7L), p = c(0L,
     diag = "N")
  --> checking list(*): Ok
 --=--=--=--=--
-x: new("dtCMatrix", i = c(0L, 3L, 4L, 5L, 2L, 6L, 7L), p = c(0L, 
-0L, 1L, 1L, 1L, 1L, 2L, 3L, 4L, 6L, 7L), Dim = c(10L, 10L), Dimnames = list(
-    NULL, NULL), x = c(7, 21, 28, 35, 14, 42, 49), uplo = "U", 
-    diag = "N")
+x: c(7, 14, 21, 28, 35, 42, 49)
  --> checking list(*): Ok
 --=--=--=--=--
+> 
 > summary(warnings())
 Length  Class   Mode 
      0   NULL   NULL 
-> 
-> 
 > ## at the very end
 > cat('Time elapsed: ', proc.time(), "\n")
-Time elapsed:  0.79 0.114 0.904 0 0 
+Time elapsed:  0.948 0.109 1.2 0 0 
 > 

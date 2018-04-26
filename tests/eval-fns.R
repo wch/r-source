@@ -75,3 +75,22 @@ check_EPD <- function(obj, show = !hasReal(obj), oNam = deparse(substitute(obj))
     }
     invisible(obj)
 }
+
+
+##' Check deparse <--> parse  consistency for *all* objects:
+runEPD_checks <- function(env = .GlobalEnv) {
+    stopifnot(is.environment(env))
+    for(nm in ls(envir=env)) {
+	cat(nm,": ", sep="")
+	x <- env[[nm]]
+	## if(!any(nm == "mf")) ## 'mf' [bug in deparse(mf, control="all") now fixed]
+	check_EPD(x, oNam=nm)
+	if(is.function(x) && !inherits(x, "classGeneratorFunction")) {
+	    ## FIXME? classGeneratorFunction, e.g., mForm don't "work" yet
+	    cat("checking body(.):\n")
+	    check_EPD(if(is.language(bx <- body(x))) removeSource(bx) else bx)
+	    cat("checking formals(.):\n"); check_EPD(formals(x))
+	}
+	cat("--=--=--=--=--\n")
+    }
+}

@@ -40,22 +40,8 @@ if(require("Matrix")) withAutoprint({ cat("Trying some Matrix objects, too\n")
 
 source(file.path(Sys.getenv("SRCDIR"), "eval-fns.R"), echo = TRUE)
                                         #---------
+runEPD_checks() # Action!
 
-
-## Check deparse <--> parse  consistency for *all* objects:
-for(nm in ls(env=.GlobalEnv)) {
-    cat(nm,": ", sep="")
-    ## if(!any(nm == "mf")) ## 'mf' [bug in deparse(mf, control="all") now fixed]
-        check_EPD(obj = (x <- .GlobalEnv[[nm]]), oNam=nm)
-    if(is.function(x) && !inherits(x, "classGeneratorFunction")) {
-        ## FIXME? classGeneratorFunction, e.g., mForm don't "work" yet
-        cat("checking body(.):\n"   ); check_EPD(   body(x))
-        cat("checking formals(.):\n"); check_EPD(formals(x))
-    }
-    cat("--=--=--=--=--\n")
-}
 summary(warnings())
-
-
 ## at the very end
 cat('Time elapsed: ', proc.time(), "\n")

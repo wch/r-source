@@ -220,17 +220,8 @@ stopifnot(identical(mf, eval(parse(text=deparse(mf)))))
 }# S4 deparse()ing only since R 3.5.0
 
 ## Action!  Check deparse <--> parse  consistency for *all* objects:
-for(nm in ls(env=.GlobalEnv)) {
-    cat(nm,": ", sep="")
-    ## if(!any(nm == "mf")) ## 'mf' [bug in deparse(mf, control="all") now fixed]
-        check_EPD(obj = (x <- .GlobalEnv[[nm]]), oNam=nm)
-    if(is.function(x) && !inherits(x, "classGeneratorFunction")) {
-        ## FIXME? classGeneratorFunction, e.g., mForm don't "work" yet
-        cat("checking body(.):\n"   ); check_EPD(   body(x))
-        cat("checking formals(.):\n"); check_EPD(formals(x))
-    }
-    cat("--=--=--=--=--\n")
-}
+runEPD_checks()
+
 summary(warnings())
 ## "dput    may be incomplete"
 ## "deparse may be incomplete"
