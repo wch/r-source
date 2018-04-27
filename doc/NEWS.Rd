@@ -62,11 +62,14 @@
       \item \code{optim(*, lower = c(-Inf, -Inf))} no longer warns (and
       switches the method), thanks to a suggestion by John Nash.
 
-      \item \code{file("stdin")} is no longer considered seekable.
-
       \item Calling \code{setGeneric("foo")} in a package no longer
       fails when the enclosing environment of the implicit generic
       \code{foo()} is \code{.GlobalEnv}.
+
+      \item \code{predict(fm, newdata)} is now correct also for models
+      where the formula has terms such as \code{splines::ns(..)} or
+      \code{stats::poly(..)}, fixing \PR{17414}, based on a patch from
+      Duncan Murdoch.
     }
   }
 
@@ -74,6 +77,15 @@
     \itemize{
       \item The C++ compiler defaults to the C++11 standard, if
       supported; otherwise to the C++98 standard.
+    }
+  }
+}
+
+\section{\Rlogo CHANGES IN R 3.5.0 patched}{
+
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{file("stdin")} is no longer considered seekable.
     }
   }
 }

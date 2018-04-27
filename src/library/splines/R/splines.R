@@ -180,7 +180,7 @@ predict.ns <- function(object, newx, ...)
 
 makepredictcall.ns <- function(var, call)
 {
-    if(as.character(call)[1L] != "ns") return(call)
+    if(!identical(eval(call[[1L]]), ns)) return(call)
     at <- attributes(var)[c("knots", "Boundary.knots", "intercept")]
     xxx <- call[1L:2L]
     xxx[names(at)] <- at
@@ -189,9 +189,9 @@ makepredictcall.ns <- function(var, call)
 
 makepredictcall.bs <- function(var, call)
 {
-    if(as.character(call)[1L] != "bs") return(call)
+    if(!identical(eval(call[[1L]]), bs)) return(call)
     at <- attributes(var)[c("degree", "knots", "Boundary.knots", "intercept")]
-    xxx <- call[1L:2]
+    xxx <- call[1L:2L]
     xxx[names(at)] <- at
     xxx
 }
