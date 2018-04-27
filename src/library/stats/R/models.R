@@ -1,7 +1,7 @@
 #  File src/library/stats/R/models.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -172,7 +172,7 @@ drop.terms <- function(termobj, dropx = NULL, keep.response = FALSE)
                           dQuote("terms")),
                  domain = NA)
 	newformula <- reformulate(attr(termobj, "term.labels")[-dropx],
-				  if (keep.response) termobj[[2L]] else NULL,
+				  if (keep.response) termobj[[2L]],
                                   attr(termobj, "intercept"))
         environment(newformula) <- environment(termobj)
 	result <- terms(newformula, specials=names(attr(termobj, "specials")))
@@ -204,7 +204,7 @@ drop.terms <- function(termobj, dropx = NULL, keep.response = FALSE)
 
 `[.terms` <- function (termobj, i)
 {
-    resp <- if (attr(termobj, "response")) termobj[[2L]] else NULL
+    resp <- if (attr(termobj, "response")) termobj[[2L]]
     newformula <- attr(termobj, "term.labels")[i]
     if (length(newformula) == 0L) newformula <- "1"
     newformula <- reformulate(newformula, resp, attr(termobj, "intercept"))
@@ -511,7 +511,8 @@ model.frame.default <-
                              domain = NA)
 		    data[[nm]] <- factor(xi, levels=xl, exclude=NULL)
 		    if (!identical(attr(data[[nm]], "contrasts"), ctr))
-		    	warning(gettext(sprintf("contrasts dropped from factor %s", nm), domain = NA),
+		    	warning(gettext(sprintf("contrasts dropped from factor %s",
+						nm), domain = NA),
 		    	        call. = FALSE)
 		}
 	    }
@@ -523,8 +524,9 @@ model.frame.default <-
 	        ctr <- attr(x, "contrasts")
 		data[[nm]] <- x[, drop = TRUE]
 		if (!identical(attr(data[[nm]], "contrasts"), ctr))
-		    warning(gettext(sprintf("contrasts dropped from factor %s due to missing levels", nm), domain = NA),
-		            call. = FALSE)
+		    warning(gettext(sprintf(
+				"contrasts dropped from factor %s due to missing levels",
+					    nm), domain = NA), call. = FALSE)
 	    }
 	}
     }
@@ -602,9 +604,8 @@ model.matrix.default <- function(object, data = environment(object),
 	data[["x"]] <- raw(nrow(data))
     }
     ans <- .External2(C_modelmatrix, t, data) # modelmatrix() in ../src/model.c
-    cons <- if(any(isF))
-	lapply(data[isF], attr, "contrasts") ## else NULL
-    attr(ans, "contrasts") <- cons
+    if(any(isF))
+	attr(ans, "contrasts") <- lapply(data[isF], attr, "contrasts")
     ans
 }
 
@@ -674,13 +675,11 @@ makepredictcall.default  <- function(var, call)
     xvars <- vapply(attr(Terms, "variables"), deparse2, "")[-1L]
     if((yvar <- attr(Terms, "response")) > 0) xvars <- xvars[-yvar]
     if(length(xvars)) {
-        xlev <- lapply(m[xvars],
-        	    function(x)
-        	    	if(is.factor(x)) levels(x)
-        	    	else if (is.character(x)) levels(as.factor(x))
-        	    	else NULL)
-        xlev[!vapply(xlev, is.null, NA)]
-    } else NULL
+	xlev <- lapply(m[xvars], function(x)
+	    if(is.factor(x)) levels(x)
+	    else if(is.character(x)) levels(as.factor(x))) # else NULL
+	xlev[!vapply(xlev, is.null, NA)]
+    }
 }
 
 get_all_vars <- function(formula, data = NULL, ...)
