@@ -1,7 +1,7 @@
 #  File src/library/grDevices/R/utils.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -30,12 +30,12 @@ extendrange <- function(x, r = range(x, na.rm = TRUE), f = 0.05)
     ## Purpose: extend a range by a factor 'f' - on each side
     if(!missing(r) && length(r) != 2)
         stop("'r' must be a \"range\", hence of length 2")
-    r + c(-f,f) * diff(r)
-
+    f <- if(length(f) == 1L) c(-f,f) else c(-f[1L], f[2L])
+    r + f * diff(r)
 }
 
 trans3d <- function(x,y,z, pmat) {
-    tr <- cbind(x,y,z,1) %*% pmat
+    tr <- cbind(x,y,z,1, deparse.level=0L) %*% pmat
     list(x = tr[,1]/tr[,4],
 	 y = tr[,2]/tr[,4])
 }

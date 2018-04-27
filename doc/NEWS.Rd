@@ -29,6 +29,9 @@
       \item \code{is(object, class2)} looks for \code{class2} in the
       calling namespace after looking in the namespace of
       \code{class(object)}.
+
+      \item \code{extendrange(.., f)} with a length-2 \code{f} now
+      extends separately to the left and the right.
     }
   }
 
