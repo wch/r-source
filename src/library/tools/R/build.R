@@ -341,8 +341,9 @@ inRbuildignore <- function(files, pkgdir) {
                     tocopy <- c(vigns$docs, vigns$outputs, unlist(vigns$sources))
                     copied <- file.copy(tocopy, doc_dir, copy.date = TRUE)
                     if (!all(copied)) {
-                    	warning(sQuote("inst/doc"),
-                    	        ngettext(sum(!copied), " file\n", " files\n"),
+                    	warning(sprintf(ngettext(sum(!copied),
+                                                 "%s file\n", "%s files\n"),
+                                        sQuote("inst/doc")),
                     	        strwrap(paste(sQuote(basename(tocopy[!copied])), collapse=", "),
                     	                indent = 4, exdent = 2),
 			        "\n  ignored as vignettes have been rebuilt.",

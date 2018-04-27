@@ -125,12 +125,12 @@ power.prop.test <-
     else if (is.null(p1)) {
 	p1 <- uniroot(function(p1) eval(p.body) - power,
 		      c(0,p2), tol=tol, extendInt = "yes")$root
-        if(p1 < 0) warning("No p1 in in [0, p2] can be found to achieve the desired power")
+        if(p1 < 0) warning("No p1 in [0, p2] can be found to achieve the desired power")
     }
     else if (is.null(p2)) {
 	p2 <- uniroot(function(p2) eval(p.body) - power,
 		      c(p1,1), tol=tol, extendInt = "yes")$root
-        if(p2 > 1) warning("No p2 in in [p1, 1] can be found to achieve the desired power")
+        if(p2 > 1) warning("No p2 in [p1, 1] can be found to achieve the desired power")
     }
     else if (is.null(sig.level)) {
 	sig.level <- uniroot(function(sig.level) eval(p.body) - power,

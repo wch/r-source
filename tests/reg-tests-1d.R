@@ -810,7 +810,7 @@ stopifnot(identical(t1(pi, 2), pi), identical(t1(t1), t1),
 	  identical(t2(pi, 2), 2))
 et1 <- tryCatch(t1(), error=identity)
 if(englishMsgs)
-    stopifnot(identical("the ... list does not contain any elements",
+    stopifnot(identical("the ... list contains fewer than 1 element",
 			conditionMessage(et1)))
 ## previously gave   "'nthcdr' needs a list to CDR down"
 et0   <- tryCatch(t0(),  error=identity); (mt0   <- conditionMessage(et0))
@@ -818,7 +818,7 @@ et2.0 <- tryCatch(t2(),  error=identity); (mt2.0 <- conditionMessage(et2.0))
 et2.1 <- tryCatch(t2(1), error=identity); (mt2.1 <- conditionMessage(et2.1))
 if(englishMsgs)
     stopifnot(grepl("indexing '...' with .* index 0", mt0),
-	      identical("the ... list does not contain 2 elements", mt2.0),
+	      identical("the ... list contains fewer than 2 elements", mt2.0),
 	      identical(mt2.0, mt2.1))
 tools::assertError(t0(1))
 tools::assertError(t0(1, 2))
