@@ -53,12 +53,6 @@
       \item \code{mantelhaen.test()} no longer suffers from integer
       overflow in largish cases, thanks to Ben Bolker's \PR{17383}.
 
-      \item \code{dput()} and \code{dump()} are no longer truncating
-      when \code{options(deparse.max.lines = *)} is set.
-
-      \item Calls with an S3 class are no longer evaluated when printed,
-      fixing part of \PR{17398}, thanks to a patch from Lionel Henry.
-
       \item \code{optim(*, lower = c(-Inf, -Inf))} no longer warns (and
       switches the method), thanks to a suggestion by John Nash.
 
@@ -86,6 +80,12 @@
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{file("stdin")} is no longer considered seekable.
+
+      \item \code{dput()} and \code{dump()} are no longer truncating
+      when \code{options(deparse.max.lines = *)} is set.
+
+      \item Calls with an S3 class are no longer evaluated when printed,
+      fixing part of \PR{17398}, thanks to a patch from Lionel Henry.
     }
   }
 }
