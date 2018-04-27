@@ -28,14 +28,24 @@ strcapture <- function(pattern, x, proto, perl = FALSE, useBytes = FALSE) {
     }
     mat <- matrix(as.character(unlist(str)), ncol=ntokens,
                   byrow=TRUE)[,-1L,drop=FALSE]
+    conformToProto(mat, proto)
+}
+
+## Not yet exported
+strextract <- function(pattern, x, perl = FALSE, useBytes = FALSE) {
+    m <- regexec(pattern, x, perl=perl, useBytes=useBytes)
+    unlist(regmatches(x, m))
+}
+
+conformToProto <- function(mat, proto) {
     ans <- lapply(seq_along(proto), function(i) {
-                      if (isS4(proto[[i]])) {
-                          methods::as(mat[,i], class(proto[[i]]))
-                      } else {
-                          fun <- match.fun(paste0("as.", class(proto[[i]])))
-                          fun(mat[,i])
-                      }
-                  })
+        if (isS4(proto[[i]])) {
+            methods::as(mat[,i], class(proto[[i]]))
+        } else {
+            fun <- match.fun(paste0("as.", class(proto[[i]])))
+            fun(mat[,i])
+        }
+    })
     names(ans) <- names(proto)
     if (isS4(proto)) {
         methods::as(ans, class(proto))
@@ -45,9 +55,18 @@ strcapture <- function(pattern, x, proto, perl = FALSE, useBytes = FALSE) {
 }
 
 ## Not yet exported
-strextract <- function(pattern, x, perl = FALSE, useBytes = FALSE) {
-    m <- regexec(pattern, x, perl=perl, useBytes=useBytes)
-    unlist(regmatches(x, m))
+strslice <- function(x, split, proto, fixed = FALSE, perl = FALSE,
+                     useBytes = FALSE)
+{
+    str <- strsplit(x, split, fixed=fixed, perl=perl, useBytes=useBytes)
+    ntokens <- length(proto)
+    if (length(str) > 0L) {
+        if (length(str[[1L]]) != ntokens) {
+            stop("The number of tokens != 'length(proto)'")
+        } else if (length(unique(lengths(str))) > 1L) {
+            stop("The number of tokens is not consistent across 'x'")
+        }
+    }
+    mat <- matrix(as.character(unlist(str)), ncol=ntokens, byrow=TRUE)
+    conformToProto(mat, proto)
 }
-
-### TODO: strslice(), like strcapture() but based on strsplit().
