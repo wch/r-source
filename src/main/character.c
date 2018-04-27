@@ -217,7 +217,7 @@ int R_nchar(SEXP string, nchar_type type_,
 
 SEXP attribute_hidden do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP d, s, x, stype;
+    SEXP d, s, x, stype, ans;
     int nargs = length(args);
 
 #ifdef R_version_3_4_or_so
@@ -230,6 +230,8 @@ SEXP attribute_hidden do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
 			   (unsigned long) nargs),
 	      nargs, PRIMNAME(op), 3, 4);
 #endif
+    if (DispatchOrEval(call, op, "nchar", args, env, &ans, 0, 1))
+      return(ans);
     if (isFactor(CAR(args)))
 	error(_("'%s' requires a character vector"), "nchar()");
     PROTECT(x = coerceVector(CAR(args), STRSXP));
