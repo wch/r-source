@@ -5384,7 +5384,8 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 			raw = TRUE;
 			warning(_("using 'raw = TRUE' because '%s' is a fifo or pipe"),
 				url);
-		    } else if (!res && !(sb.st_mode & S_IFREG))
+		    } else if (!res && !(sb.st_mode & S_IFREG) &&
+			       strcmp(efn, "/dev/null"))
 			/* not setting 'raw' to FALSE because character devices may be
 			   seekable; unfortunately there is no reliable way to detect
 			   that without changing the device state */
