@@ -32,6 +32,8 @@
 
       \item \code{extendrange(.., f)} with a length-2 \code{f} now
       extends separately to the left and the right.
+
+      \item \code{lengths()} dispatches internally to S4 methods.
     }
   }
 
