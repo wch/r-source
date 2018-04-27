@@ -8,8 +8,11 @@
 \section{\Rlogo CHANGES IN R 3.5.0 patched}{
 
   \subsection{BUG FIXES}{
-    \itemize{      
+    \itemize{
       \item \code{file("stdin")} is no longer considered seekable.
+
+      \item \code{dput()} and \code{dump()} are no longer truncating
+      when \code{options(deparse.max.lines = *)} is set.
     }
   }
 }

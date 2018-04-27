@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995--2017  The R Core Team.
+ *  Copyright (C) 1995--2018  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1308,7 +1308,7 @@ void WarningMessage(SEXP call, R_WARNING which_warn, ...)
     }
 
 /* clang pre-3.9.0 says
-      warning: passing an object that undergoes default argument promotion to 
+      warning: passing an object that undergoes default argument promotion to
       'va_start' has undefined behavior [-Wvarargs]
 */
     va_start(ap, which_warn);
@@ -1406,7 +1406,7 @@ SEXP R_GetTraceback(int skip)
 	    if (skip > 0)
 		skip--;
 	    else {
-		SETCAR(t, deparse1(c->call, 0, DEFAULTDEPARSE));
+		SETCAR(t, deparse1m(c->call, 0, DEFAULTDEPARSE));
 		if (c->srcref && !isNull(c->srcref)) {
 		    SEXP sref;
 		    if (c->srcref == R_InBCInterpreter)
@@ -2092,7 +2092,7 @@ SEXP R_tryCatch(SEXP (*body)(void *), void *bdata,
 					      R_BaseNamespace);
 	R_PreserveObject(trycatch_callback);
     }
-    
+
     tryCatchData_t tcd = {
 	.body = body,
 	.bdata = bdata,
@@ -2126,7 +2126,7 @@ SEXP do_tryCatchHelper(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP eptr = CAR(args);
     SEXP sw = CADR(args);
     SEXP cond = CADDR(args);
-    
+
     if (TYPEOF(eptr) != EXTPTRSXP)
 	error("not an external pointer");
 
