@@ -13,6 +13,9 @@
 
       \item \code{dput()} and \code{dump()} are no longer truncating
       when \code{options(deparse.max.lines = *)} is set.
+
+      \item Calls with an S3 class are no longer evaluated when printed,
+      fixing part of \PR{17398}, thanks to a patch from Lionel Henry.
     }
   }
 }
