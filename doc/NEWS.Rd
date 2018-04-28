@@ -64,6 +64,9 @@
       where the formula has terms such as \code{splines::ns(..)} or
       \code{stats::poly(..)}, fixing \PR{17414}, based on a patch from
       Duncan Murdoch.
+
+      \item Allow \code{file} argument of \command{Rscript} to include space
+      even when it is first on the command line.
     }
   }
 
