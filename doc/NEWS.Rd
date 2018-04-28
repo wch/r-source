@@ -16,6 +16,9 @@
 
       \item Calls with an S3 class are no longer evaluated when printed,
       fixing part of \PR{17398}, thanks to a patch from Lionel Henry.
+
+      \item Allow \code{file} argument of \command{Rscript} to include space
+      even when it is first on the command line.
     }
   }
 }
