@@ -4147,7 +4147,7 @@ routines and to suppress dynamic search are not found in a package's
 DLL.  (@strong{NB:} this requires system command @command{nm} to be on the
 @env{PATH}. On Windows, @command{objdump.exe} is first searched for in
 compiler toolchain specified via @code{Makeconf} (can be customized by
-environment vairable @env{BINPREF}). If not found there, it must be on the
+environment variable @env{BINPREF}). If not found there, it must be on the
 @env{PATH}. On Unix this would be normal when using a package with compiled
 code (which are the only ones this checks), but Windows' users should check.)
 Default: false (but true for CRAN submission checks).
