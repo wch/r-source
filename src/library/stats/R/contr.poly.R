@@ -131,7 +131,7 @@ predict.poly <- function(object, newdata, ...)
 
 makepredictcall.poly  <- function(var, call)
 {
-    if(identical(eval(call[[1L]]), poly))
+    if(as.character(call)[1L] == "poly" || (is.call(call) && identical(eval(call[[1L]]), poly)))
 	call$coefs <- attr(var, "coefs")
     call
 }
