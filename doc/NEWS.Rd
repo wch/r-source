@@ -19,6 +19,10 @@
 
       \item Allow \code{file} argument of \command{Rscript} to include space
       even when it is first on the command line.
+
+      \item \code{callNextMethod()} uses the generic from the
+      environment of the calling method. Reported by Hervé Pagès with
+      well documented examples.
     }
   }
 }

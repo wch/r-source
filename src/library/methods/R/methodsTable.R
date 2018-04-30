@@ -697,7 +697,7 @@
 
 .findNextFromTable <- function(method, f, optional, envir, prev = character())
 {
-    fdef <- getGeneric(f)
+    fdef <- getGeneric(f, where=envir)
     env <- environment(fdef)
 ##    target <- method@target
     n <- get(".SigLength", envir = env)
