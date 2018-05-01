@@ -893,6 +893,35 @@ function(nsInfo)
     S3_methods_list
 }
 
+### ** .get_namespace_S3_methods_with_homes
+
+.get_namespace_S3_methods_with_homes <- 
+function(package, lib.loc = NULL)
+{
+    ## Get the registered S3 methods with the 'homes' of the generics
+    ## they are registered for.
+    ## Original code provided by Luke Tierney.
+    path <- system.file(package = package, lib.loc = lib.loc)
+    if(!nzchar(path)) return(NULL)
+    lib.loc <- dirname(path)
+    nsinfo <- parseNamespaceFile(package, lib.loc)
+    S3methods <- nsinfo$S3methods
+    if(!length(S3methods)) return(NULL)
+    generic <- S3methods[, 1L]
+    nsenv <- loadNamespace(package, lib.loc)
+    ## Possibly speed things up by only looking up the unique generics.
+    generics <- unique(generic)
+    homes <- unlist(lapply(generics,
+                           function(f) {
+                               f <- get(f, nsenv)
+                               getNamespaceName(topenv(environment(f)))
+                           }),
+                    use.names = FALSE)
+    home <- homes[match(generic, generics)]
+    class <- S3methods[, 2L]
+    data.frame(generic, home, class, stringsAsFactors = FALSE)
+}
+
 ### ** .get_package_metadata
 
 .get_package_metadata <-
