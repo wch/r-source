@@ -150,6 +150,7 @@ stopifnot(
     identical(r1,r2)
 )
 ## partly failed in R 3.4.0 alpha
+rm(CO) # as its deparse() depends on if utils was installed w/ keep.source.pkgs=TRUE
 
 source(file.path(Sys.getenv("SRCDIR"), "eval-fns.R"), echo = TRUE)
                                         #---------

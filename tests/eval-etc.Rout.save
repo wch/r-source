@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2018-04-26 r74643) -- "Unsuffered Consequences"
+R Under development (unstable) (2018-04-30 r74674) -- "Unsuffered Consequences"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -207,6 +207,7 @@ Levels: a b <NA>
 +     identical(r1,r2)
 + )
 > ## partly failed in R 3.4.0 alpha
+> rm(CO) # as its deparse() depends on if utils was installed w/ keep.source.pkgs=TRUE
 > 
 > source(file.path(Sys.getenv("SRCDIR"), "eval-fns.R"), echo = TRUE)
 
@@ -393,98 +394,6 @@ quote(match.call())
  --> checking list(*): Ok
 checking formals(.):
 as.pairlist(alist(... = ))
-__ not parse()able __: hasMissObj(.) is true 
---=--=--=--=--
-CO: function (..., file = NULL, append = FALSE, type = c("output", 
-    "message"), split = FALSE) 
-{
-    args <- substitute(list(...))[-1L]
-    type <- match.arg(type)
-    rval <- NULL
-    closeit <- TRUE
-    if (is.null(file)) 
-        file <- textConnection("rval", "w", local = TRUE)
-    else if (is.character(file)) 
-        file <- file(file, if (append) 
-            "a"
-        else "w")
-    else if (inherits(file, "connection")) {
-        if (!isOpen(file)) 
-            open(file, if (append) 
-                "a"
-            else "w")
-        else closeit <- FALSE
-    }
-    else stop("'file' must be NULL, a character string or a connection")
-    sink(file, type = type, split = split)
-    on.exit({
-        sink(type = type, split = split)
-        if (closeit) close(file)
-    })
-    pf <- parent.frame()
-    evalVis <- function(expr) withVisible(eval(expr, pf))
-    for (i in seq_along(args)) {
-        expr <- args[[i]]
-        tmp <- switch(mode(expr), expression = lapply(expr, evalVis), 
-            call = , name = list(evalVis(expr)), stop("bad argument"))
-        for (item in tmp) if (item$visible) 
-            print(item$value)
-    }
-    on.exit()
-    sink(type = type, split = split)
-    if (closeit) 
-        close(file)
-    if (is.null(rval)) 
-        invisible(NULL)
-    else rval
-}
- --> checking list(*): Ok
-checking body(.):
-quote({
-    args <- substitute(list(...))[-1L]
-    type <- match.arg(type)
-    rval <- NULL
-    closeit <- TRUE
-    if (is.null(file)) 
-        file <- textConnection("rval", "w", local = TRUE)
-    else if (is.character(file)) 
-        file <- file(file, if (append) 
-            "a"
-        else "w")
-    else if (inherits(file, "connection")) {
-        if (!isOpen(file)) 
-            open(file, if (append) 
-                "a"
-            else "w")
-        else closeit <- FALSE
-    }
-    else stop("'file' must be NULL, a character string or a connection")
-    sink(file, type = type, split = split)
-    on.exit({
-        sink(type = type, split = split)
-        if (closeit) close(file)
-    })
-    pf <- parent.frame()
-    evalVis <- function(expr) withVisible(eval(expr, pf))
-    for (i in seq_along(args)) {
-        expr <- args[[i]]
-        tmp <- switch(mode(expr), expression = lapply(expr, evalVis), 
-            call = , name = list(evalVis(expr)), stop("bad argument"))
-        for (item in tmp) if (item$visible) 
-            print(item$value)
-    }
-    on.exit()
-    sink(type = type, split = split)
-    if (closeit) 
-        close(file)
-    if (is.null(rval)) 
-        invisible(NULL)
-    else rval
-})
- --> checking list(*): Ok
-checking formals(.):
-as.pairlist(alist(... = , file = NULL, append = FALSE, type = quote(c("output", 
-    "message")), split = FALSE))
 __ not parse()able __: hasMissObj(.) is true 
 --=--=--=--=--
 DD: function (...) 
