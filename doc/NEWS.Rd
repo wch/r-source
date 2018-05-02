@@ -71,6 +71,9 @@
       \item \code{callNextMethod()} uses the generic from the
       environment of the calling method. Reported by Hervé Pagès with
       well documented examples.
+
+      \item \code{untar(file("<some>.tar.gz"), *)} now gives a better
+      error message, suggesting to use \code{gzfile()} instead.
     }
   }
 

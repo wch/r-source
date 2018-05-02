@@ -1,7 +1,7 @@
 #  File src/library/utils/R/tar.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -145,9 +145,15 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
     if(is.character(tarfile) && length(tarfile) == 1L) {
         con <- gzfile(path.expand(tarfile), "rb") # reads compressed formats
         on.exit(close(con))
-    } else if(inherits(tarfile, "connection")) con <- tarfile
+    } else if(inherits(tarfile, "connection")) {
+        con <- tarfile
+        ## solves file("foo.tar.gz") automagically, but unneeded for "*.tar":
+        ## if(summary(con)$class != "gzcon") con <- gzcon(con)
+        ## ==> prefer the gzfile() error message below
+    }
     else stop("'tarfile' must be a character string or a connection")
-    if (!missing(exdir)) {
+    ## now 'con' is a connection
+    if (exdir != ".") {
         mydir.create(exdir)
         od <- setwd(exdir)
         on.exit(setwd(od), add = TRUE)
@@ -157,7 +163,9 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
     repeat{
         block <- readBin(con, "raw", n = 512L)
         if(!length(block)) break
-        if(length(block) < 512L) stop("incomplete block on file")
+        if(length(block) < 512L)
+            stop(if(is.character(tarfile)) "incomplete block on file"
+		 else "incomplete block: rather use gzfile(.) created connection?")
         if(all(block == 0)) break
         ## This should be non-empty, but whole name could be in prefix
         w <- which(block[1:100] > 0)
