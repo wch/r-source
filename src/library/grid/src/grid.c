@@ -1582,10 +1582,10 @@ static void polygonEdge(double *x, double *y, int n,
 	 * so check is more complicated
 	 */
 	if ((vangle1 >= vangle2 && 
-	     vangle1 >= angle && vangle2 < angle) || 
+	     vangle1 >= angle && vangle2 <= angle) || 
 	    (vangle1 < vangle2 && 
 	     ((vangle1 >= angle && 0 <= angle) ||
-	      (vangle2 < angle && 2*M_PI >= angle)))) {
+	      (vangle2 <= angle && 2*M_PI >= angle)))) {
 	    found = 1;
 	    break;
 	}
