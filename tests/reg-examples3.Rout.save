@@ -1,5 +1,5 @@
 
-R version 3.5.0 RC (2018-04-15 r74605) -- "Joy in Playing"
+R version 3.5.0 Patched (2018-04-30 r74684) -- "Joy in Playing"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -48,9 +48,9 @@ spontaneous     7.285     0.1373     3.651    14.536
 induced         4.092     0.2444     2.018     8.298
 
 Rsquare= 0.193   (max possible= 0.519 )
-Likelihood ratio test= 53.15  on 2 df,   p=2.869e-12
-Wald test            = 31.84  on 2 df,   p=1.221e-07
-Score (logrank) test = 48.44  on 2 df,   p=3.032e-11
+Likelihood ratio test= 53.15  on 2 df,   p=3e-12
+Wald test            = 31.84  on 2 df,   p=1e-07
+Score (logrank) test = 48.44  on 2 df,   p=3e-11
 
 > 
 > 

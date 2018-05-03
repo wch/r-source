@@ -1,5 +1,5 @@
 
-R version 3.5.0 RC (2018-04-15 r74605) -- "Joy in Playing"
+R version 3.5.0 Patched (2018-04-30 r74684) -- "Joy in Playing"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -323,5 +323,5 @@ Warning messages:
 > 
 > ## Last Line:
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.382 0.014 0.398 0 0 
+Time elapsed:  0.337 0.013 0.351 0 0 
 > 

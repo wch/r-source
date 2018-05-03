@@ -1,5 +1,5 @@
 
-R version 3.5.0 RC (2018-04-15 r74605) -- "Joy in Playing"
+R version 3.5.0 Patched (2018-04-30 r74685) -- "Joy in Playing"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -340,4 +340,4 @@ List of 6
 > 
 > proc.time()
    user  system elapsed 
-  0.279   0.033   0.299 
+  0.285   0.030   0.303 
