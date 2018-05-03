@@ -327,7 +327,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         if(out$status &&
            file_test("-f", log) &&
            any(grepl("(Rerun to get|biblatex.*\\(re\\)run)",
-                     readLines(log, warn = FALSE)), useBytes = TRUE)) {
+                     readLines(log, warn = FALSE), useBytes = TRUE))) {
             out <- .system_with_capture(texi2dvi,
                                         c(opt_pdf, opt_quiet, opt_extra,
                                           shQuote(file)),
