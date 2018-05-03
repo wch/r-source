@@ -1769,6 +1769,7 @@ o2 <- optim(rep(3, 5), flb, lower = rep(-Inf, 5))
 stopifnot(all.equal(o1,o2))
 ## the 2nd optim() call gave a warning and switched to "L-BFGS-B" in R <= 3.5.0
 
+
 ## Check that call matching doesn't mutate input
 cl <- as.call(list(quote(x[0])))
 cl[[1]][[3]] <- 1
@@ -1776,6 +1777,15 @@ v <- .Internal(match.call(function(x) NULL, cl, TRUE, .GlobalEnv))
 cl[[1]][[3]] <- 2
 stopifnot(v[[1]][[3]] == 1)
 ## initial patch proposal to reduce duplicating failed on this
+
+
+## simulate.lm(<glm gaussian, non-default-link>), PR#17415
+set.seed(7); y <- rnorm(n = 1000, mean = 10, sd = sqrt(10))
+fmglm <- glm(y ~ 1, family = gaussian(link = "log"))
+dv <- apply(s <- simulate(fmglm, 99, seed=1), 2, var) - var(y)
+stopifnot(abs(dv) < 1.14, abs(mean(dv)) < .07)
+## failed in R <= 3.5.0 (had simulated variances ~ 0.1)
+
 
 
 ## keep at end

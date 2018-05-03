@@ -74,6 +74,9 @@
 
       \item \code{untar(file("<some>.tar.gz"), *)} now gives a better
       error message, suggesting to use \code{gzfile()} instead.
+
+      \item \code{simulate.lm(glm(*, gaussian(link = <non-default>)))}
+      has been corrected, fixing \PR{17415} thanks to Alex Courtiol.
     }
   }
 

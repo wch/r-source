@@ -1,7 +1,7 @@
 #  File src/library/stats/R/lm.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -467,7 +467,7 @@ simulate.lm <- function(object, nsim = 1, seed = NULL, ...)
         RNGstate <- structure(seed, kind = as.list(RNGkind()))
         on.exit(assign(".Random.seed", R.seed, envir = .GlobalEnv))
     }
-    fam <- if(inherits(object, "glm")) object$family$family else "gaussian"
+    fam <- if(isGlm <- inherits(object, "glm")) object$family$family else "gaussian"
     ftd <- fitted(object)             # == napredict(*, object$fitted)
     isMlm <- identical(fam, "gaussian") && is.matrix(ftd)
     nm <- if(isMlm) dimnames(ftd) else names(ftd)
@@ -482,7 +482,13 @@ simulate.lm <- function(object, nsim = 1, seed = NULL, ...)
                           ## _TODO_
                           ## weights ==> "vars / weights" as matrix with  dim(ftd)
                       } else {
-                          if (!is.null(object$weights)) vars <- vars/object$weights
+                          if(isGlm) {
+                              if(!is.null(object$prior.weights))
+                                  vars <- vars/object$prior.weights
+                          } else # lm()
+                              if(!(is.null(w <- object$weights) ||
+                                   (length(w) == 1L && w == 1)))
+                                  vars <- vars/w
                           ftd + rnorm(ntot, sd = sqrt(vars))
                       }
                   },
