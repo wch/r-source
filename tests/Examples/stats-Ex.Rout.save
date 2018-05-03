@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2018-04-27 r74655) -- "Unsuffered Consequences"
+R Under development (unstable) (2018-05-03 r74684) -- "Unsuffered Consequences"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -3827,7 +3827,7 @@ sigma^2 estimated as 0.4566:  log likelihood = -101.2,  aic = 212.4
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x552bc98>
+<environment: 0x468ece0>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -4825,7 +4825,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x63c47e8>
+<bytecode: 0x54c14b0>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -7405,7 +7405,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x6038c38>
+<environment: 0x5443ae0>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -9472,11 +9472,7 @@ List of 5
 > fm <- lm(weight ~ poly(height, 2), data = women)
 > plot(women, xlab = "Height (in)", ylab = "Weight (lb)")
 > ht <- seq(57, 73, len = 200)
-> nD <- data.frame(height = ht)
-> pfm <- predict(fm, nD)
-> lines(ht, pfm)
-> pf2 <- predict(update(fm, ~ stats::poly(height, 2)), nD)
-> stopifnot(all.equal(pfm, pf2)) ## was off (rel.diff. 0.0766) in R <= 3.5.0
+> lines(ht, predict(fm, data.frame(height = ht)))
 > 
 > ## see also example(cars)
 > 
@@ -12064,14 +12060,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x5ba9160>
-<environment: 0x5bbfb38>
+<bytecode: 0x5322d70>
+<environment: 0x532fd48>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x5ba9010>
-<environment: 0x5bbfb38>
+<bytecode: 0x5322c20>
+<environment: 0x532fd48>
 
 > 
 > 
@@ -16197,8 +16193,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f)
-<bytecode: 0x35a1030>
-<environment: 0x54c15b0>
+<bytecode: 0x18c67f0>
+<environment: 0x4dfdc00>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -18523,7 +18519,7 @@ Number of Fisher Scoring iterations: 6
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  7.09 0.236 7.367 0 0 
+Time elapsed:  6.631 0.206 7.364 0 0 
 > grDevices::dev.off()
 null device 
           1 
