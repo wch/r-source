@@ -1,6 +1,6 @@
 % File src/library/base/man/Rhome.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2016, 2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Rhome}
@@ -48,6 +48,15 @@ R.home(component = "home")
   the Windows service to do that is enabled.  The value of
   \env{R_HOME} is set to use forward slashes (since many package
   maintainers pass it unquoted to shells, for example in
-  \file{Makefile}s).  
+  \file{Makefile}s).
 }
 \keyword{utilities}
+\seealso{
+  \code{\link{commandArgs}()[1]} may provide related information.
+}
+\examples{
+## These result quite platform dependently :
+rbind(home = R.home(),
+      bin  = R.home("bin")) # often a sub directory of 'home'
+list.files(R.home("bin"))
+}
