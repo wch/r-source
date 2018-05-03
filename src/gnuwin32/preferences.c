@@ -2,7 +2,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  file preferences.c
  *  Copyright (C) 2000      Guido Masarotto and Brian Ripley
- *                2004-2014 R Core Team
+ *                2004-2018 R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -98,11 +98,14 @@ static void getChoices(Gui p)
     p->toolbar = ischecked(toolbar);
     p->statusbar = ischecked(statusbar);
     p->pagerMultiple = ischecked(rb_mwin);
-    strcpy(p->language, gettext(f_lang));
-    strcpy(p->font, gettext(f_font));
+    strncpy(p->language, gettext(f_lang), sizeof(p->language)-1);
+    p->language[sizeof(p->language)-1] = '\0';
+    strncpy(p->font, gettext(f_font), sizeof(p->font)-1);
+    p->font[sizeof(p->font)-1] = '\0';
     p->tt_font = ischecked(tt_font);
     p->pointsize = atoi(gettext(d_point));
-    strcpy(p->style, gettext(f_style));
+    strncpy(p->style, gettext(f_style), sizeof(p->style)-1);
+    p->style[sizeof(p->style)-1] = '\0';
     p->crows = atoi(gettext(f_crows));
     p->ccols = atoi(gettext(f_ccols));
     p->cx = atoi(gettext(f_cx));
@@ -177,7 +180,8 @@ void getActive(Gui gui)
 	gui->pagerMultiple = pagerMultiple;
 	{
 	    const char *p = getenv("LANGUAGE");
-	    strcpy(gui->language, p ? p : "");
+	    strncpy(gui->language, p ? p : "", sizeof(gui->language)-1);
+	    gui->language[sizeof(gui->language)-1] = '\0';
 	}
 
 	/* Font, pointsize, style */
@@ -190,7 +194,8 @@ void getActive(Gui gui)
 		gui->tt_font = TRUE;
 		for (pf = fontname+2; isspace(*pf) ; pf++);
 	    } else pf = fontname;
-	    strcpy(gui->font, pf);
+	    strncpy(gui->font, pf, sizeof(gui->font)-1);
+	    gui->font[sizeof(gui->font)-1] = '\0';
 	}
 
 	gui->pointsize = pointsize;
@@ -405,12 +410,14 @@ static void save(button b)
     FILE *fp;
 
     setuserfilter("All files (*.*)\0*.*\0\0");
-    strcpy(buf, getenv("R_USER"));
+    strncpy(buf, getenv("R_USER"), sizeof(buf)-1);
+    buf[sizeof(buf)-1] = '\0';
     R_fixbackslash(buf);
     file = askfilesavewithdir(G_("Select directory for file 'Rconsole'"),
 			      "Rconsole", buf);
     if(!file) return;
-    strcpy(buf, file);
+    strncpy(buf, file, sizeof(buf)-1);
+    buf[sizeof(buf)-1] = '\0';
     p = buf + strlen(buf) - 2;
     if(!strncmp(p, ".*", 2)) *p = '\0';
 
@@ -498,7 +505,8 @@ static void load(button b) /* button callback */
     struct structGUI newGUI;
 
     setuserfilter("All files (*.*)\0*.*\0\0");
-    strcpy(buf, getenv("R_USER"));
+    strncpy(buf, getenv("R_USER"), sizeof(buf)-1);
+    buf[sizeof(buf)-1] = '\0';
     R_fixbackslash(buf);
     optf = askfilenamewithdir(G_("Select 'Rconsole' file"), "Rconsole", buf);
     if(!optf) return;
@@ -533,7 +541,8 @@ int loadRconsole(Gui gui, const char *optf)
 			gui->tt_font = TRUE;
 			for (pf = opt[1]+2; isspace(*pf) ; pf++);
 		    } else pf = opt[1];
-		    strcpy(gui->font, pf);
+		    strncpy(gui->font, pf, sizeof(gui->font)-1);
+		    gui->font[sizeof(gui->font)-1] = '\0';
 		}
 		done = 1;
 	    }
@@ -542,7 +551,8 @@ int loadRconsole(Gui gui, const char *optf)
 		done = 1;
 	    }
 	    if (!strcmp(opt[0], "style")) {
-		strcpy(gui->style, opt[1]);
+		strncpy(gui->style, opt[1], sizeof(gui->style)-1);
+		gui->style[sizeof(gui->style)-1] = 0;
 		done = 1;
 	    }
 	    if (!strcmp(opt[0], "rows")) {
@@ -667,7 +677,8 @@ int loadRconsole(Gui gui, const char *optf)
 		done = 1;
 	    }
 	    if (!strcmp(opt[0], "language")) {
-		strcpy(gui->language, opt[1]);
+		strncpy(gui->language, opt[1], sizeof(gui->language)-1);
+		gui->language[sizeof(gui->language)-1] = '\0';
 		done = 1;
 	    }
 	    if (!strcmp(opt[0], "buffered")) {
