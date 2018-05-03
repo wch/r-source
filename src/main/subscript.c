@@ -809,7 +809,7 @@ static SEXP
 stringSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, SEXP names,
 		R_xlen_t *stretch, SEXP call)
 {
-    SEXP indx, indexnames;
+    SEXP indx, indexnames = R_NilValue;
     R_xlen_t i, j, nnames, extra, sub;
     int canstretch = *stretch > 0;
     /* product may overflow, so check factors as well. */
