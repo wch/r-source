@@ -327,7 +327,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         if(out$status &&
            file_test("-f", log) &&
            any(grepl("(Rerun to get|biblatex.*\\(re\\)run)",
-                     readLines(log, warn = FALSE)))) {
+                     readLines(log, warn = FALSE), useBytes = TRUE))) {
             out <- .system_with_capture(texi2dvi,
                                         c(opt_pdf, opt_quiet, opt_extra,
                                           shQuote(file)),
@@ -459,7 +459,8 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
             stop(gettextf("unable to run '%s' on '%s'", latex, file),
                  domain = NA)
         nmiss <- length(grep("Warning:.*Citation.*undefined",
-                             readLines(paste0(base, ".log"))))
+                             readLines(paste0(base, ".log")),
+                             useBytes = TRUE))
         for(iter in 1L:10L) { ## safety check
             ## This might fail as the citations have been included in the Rnw
             if(nmiss) sys2(bibtex, shQuote(base))
@@ -481,9 +482,11 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
                      domain = NA)
             }
             Log <- readLines(paste0(base, ".log"))
-            nmiss <- length(grep("Warning:.*Citation.*undefined", Log))
+            nmiss <- length(grep("Warning:.*Citation.*undefined", Log,
+                                 useBytes = TRUE))
             if(nmiss == nmiss_prev &&
-               !any(grepl("(Rerun to get|biblatex.*\\(re\\)run)", Log)) ) break
+               !any(grepl("(Rerun to get|biblatex.*\\(re\\)run)", Log,
+                          useBytes = TRUE)) ) break
         }
         do_cleanup(clean)
     }
