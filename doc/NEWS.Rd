@@ -35,6 +35,12 @@
       extends separately to the left and the right.
 
       \item \code{lengths()} dispatches internally to S4 methods.
+
+      \item \code{download.file()} on Windows now by default also uses
+      binary transfer (\code{mode = "wb"}) for file extension
+      \file{.rds} and in the case the file extension dot (\file{.})
+      needs \code{URLdecode()}ing.   The help page \code{?download.file}
+      now contains the same information platform independently.
     }
   }
 
@@ -65,13 +71,6 @@
       \code{stats::poly(..)}, fixing \PR{17414}, based on a patch from
       Duncan Murdoch.
 
-      \item Allow \code{file} argument of \command{Rscript} to include space
-      even when it is first on the command line.
-
-      \item \code{callNextMethod()} uses the generic from the
-      environment of the calling method. Reported by Hervé Pagès with
-      well documented examples.
-
       \item \code{untar(file("<some>.tar.gz"), *)} now gives a better
       error message, suggesting to use \code{gzfile()} instead.
 
@@ -99,6 +98,13 @@
 
       \item Calls with an S3 class are no longer evaluated when printed,
       fixing part of \PR{17398}, thanks to a patch from Lionel Henry.
+
+      \item Allow \code{file} argument of \command{Rscript} to include space
+      even when it is first on the command line.
+
+      \item \code{callNextMethod()} uses the generic from the
+      environment of the calling method. Reported by Hervé Pagès with
+      well documented examples.
     }
   }
 }

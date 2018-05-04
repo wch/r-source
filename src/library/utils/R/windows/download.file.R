@@ -1,7 +1,7 @@
 #  File src/library/utils/R/windows/download.file.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -27,7 +27,8 @@ download.file <-
         match.arg(method, c("auto", "internal", "wininet", "libcurl",
                             "wget", "curl", "lynx"))
 
-    if(missing(mode) && length(grep("\\.(gz|bz2|xz|tgz|zip|rda|RData)$", url)))
+    if(missing(mode) && length(grep("\\.(gz|bz2|xz|tgz|zip|rd[as]|RData)$",
+				    URLdecode(url))))
         mode <- "wb"
     if(method == "auto") {
         if(length(url) != 1L || typeof(url) != "character")

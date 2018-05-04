@@ -1,6 +1,6 @@
 % File src/library/utils/man/download.file.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{download.file}
@@ -18,11 +18,13 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
               extra = getOption("download.file.extra"), \dots)
 }
 \arguments{
-  \item{url}{A character string naming the URL of a resource to be
+  \item{url}{a \code{\link{character}} string (or longer vector e.g.,
+    for the \code{"libcurl"} method) naming the URL of a resource to be
     downloaded.}
 
-  \item{destfile}{A character string with the name where the downloaded
-    file is saved.  Tilde-expansion is performed.}
+  \item{destfile}{a character string (or vector, see \code{url}) with
+    the name where the downloaded file is saved.  Tilde-expansion is
+    performed.}
 
   \item{method}{Method to be used for downloading files.  Current
     download methods are \code{"internal"}, \code{"wininet"} (Windows
@@ -39,9 +41,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   \item{mode}{character.  The mode with which to write the file.  Useful
     values are \code{"w"}, \code{"wb"} (binary), \code{"a"} (append) and
     \code{"ab"}.  Not used for methods \code{"wget"} and \code{"curl"}.
-#ifdef windows
-    (See also \sQuote{Details}.)
-#endif
+    See also \sQuote{Details}, notably about using \code{"wb"} for Windows.
   }
   \item{cacheOK}{logical.  Is a server-side cached value acceptable?}
 
@@ -57,31 +57,25 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   The \code{url} must start with a scheme such as
   \samp{http://}, \samp{https://}, \samp{ftp://} or \samp{file://}.
 
-#ifdef unix
-  If \code{method = "auto"} is chosen (the default), on a Unix-alike
-  method \code{"libcurl"} is used except \code{"internal"} for
-  \samp{file://} URLs.
-#endif
-#ifdef windows
-  If \code{method = "auto"} is chosen (the default), on Windows the
-  \code{"wininet"} method is used apart from for \samp{ftps://} URLs
-  where \code{"libcurl"} is tried.  The \code{"wininet"} method uses the
-  WinINet functions (part of the OS).
-#endif
-% https://msdn.microsoft.com/en-us/library/windows/desktop/aa383630%28v=vs.85%29.aspx
-  
-#ifdef unix
-  Method \code{"libcurl"} uses the library of that name
-  (\url{http://curl.haxx.se/libcurl/}).
-  It provides
-#endif
-#ifdef windows
-  Support for method \code{"libcurl"} is optional on Windows: use
-  \code{\link{capabilities}("libcurl")} to see if it is supported on
-  your build.  It uses an external library of that name
-  (\url{http://curl.haxx.se/libcurl/}) against which \R can be compiled.
-  If supported it will provide
-#endif
+  If \code{method = "auto"} is chosen (the default), the behavior
+  depends on the platform:
+  \itemize{
+    \item On a Unix-alike method \code{"libcurl"} is used except
+    \code{"internal"} for \samp{file://} URLs, where \code{"libcurl"}
+    uses the library of that name (\url{http://curl.haxx.se/libcurl/}).
+
+    \item On Windows the \code{"wininet"} method is used apart from for
+    \samp{ftps://} URLs where \code{"libcurl"} is tried.  The
+    \code{"wininet"} method uses the WinINet functions (part of the OS).
+    % https://msdn.microsoft.com/en-us/library/windows/desktop/aa383630%28v=vs.85%29.aspx
+
+    Support for method \code{"libcurl"} is optional on Windows: use
+    \code{\link{capabilities}("libcurl")} to see if it is supported on
+    your build.  It uses an external library of that name
+    (\url{http://curl.haxx.se/libcurl/}) against which \R can be compiled.
+  }
+
+  When method \code{"libcurl"} is used, it provides
   (non-blocking) access to \samp{https://} and (usually) \samp{ftps://}
   URLs.  There is support for simultaneous downloads, so \code{url} and
   \code{destfile} can be character vectors of the same length greater
@@ -108,7 +102,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   "--max-redirect=0"}.)  The \code{"wininet"} method supports some
   redirections but not all.  (For method \code{"libcurl"}, messages will
   quote the endpoint of redirections.)
-  
+
   Note that \samp{https://} URLs are not supported by the
   \code{"internal"} method but are supported by the \code{"libcurl"}
   method and the \code{"wininet"} method on Windows.
@@ -138,30 +132,34 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   \code{"libcurl"} method values of the option less than 2 give verbose
   output.
 
-#ifdef windows
-  A progress bar tracks the transfer.  If the file length is known, the
-  full width of the bar is the known length.  Otherwise the initial
-  width represents 100 Kbytes and is doubled whenever the current width
-  is exceeded.  (In non-interactive use this uses a text version.  If the
-  file length is known, an equals sign represents 2\% of the transfer
-  completed: otherwise a dot represents 10Kb.)
+  A progress bar tracks the transfer platform specifically:
+  \describe{
+    \item{On Windows}{If the file length is known, the
+      full width of the bar is the known length.  Otherwise the initial
+      width represents 100 Kbytes and is doubled whenever the current width
+      is exceeded.  (In non-interactive use this uses a text version.  If the
+      file length is known, an equals sign represents 2\% of the transfer
+      completed: otherwise a dot represents 10Kb.)}
+    \item{On a unix-alike}{If the file length is known, an
+      equals sign represents 2\% of the transfer completed: otherwise a dot
+      represents 10Kb.}
+  }
 
 
-  If \code{mode} is not supplied and \code{url} ends in one of
+  The choice of binary transfer (\code{mode = "wb"} or \code{"ab"}) is
+  important on Windows, since unlike Unix-alikes it does distinguish
+  between text and binary files and for text transfers changes \code{\\n}
+  line endings to \code{\\r\\n} (aka \file{CRLF}).
+
+  On Windows, if \code{mode} is not supplied (\code{\link{missing}()})
+  and \code{url} ends in one of
   \code{.gz}, \code{.bz2}, \code{.xz}, \code{.tgz}, \code{.zip},
-  \code{.rda} or \code{.RData} a binary transfer is done.  Since Windows
-  (unlike Unix-alikes) does distinguish between text and binary files,
-  care is needed that other binary file types are transferred with
-  \code{mode = "wb"}.
-#endif
-#ifdef unix
-  A progress bar tracks the transfer.  If the file length is known, an
-  equals sign represents 2\% of the transfer completed: otherwise a dot
-  represents 10Kb.
+  \code{.rda}, \code{.rds} or \code{.RData}, \code{mode = "wb"} is set
+  such that a binary transfer is done to help unwary users.
 
-  Code written to download binary files must use \code{mode = "wb"}, but
-  the problems incurred by a text transfer will only be seen on Windows.
-#endif
+  Code written to download binary files must use \code{mode = "wb"} (or
+  \code{"ab"}), but the problems incurred by a text transfer will only
+  be seen on Windows.
 }
 \note{
   Files of more than 2GB are supported on 64-bit builds of \R; they
@@ -183,11 +181,9 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   commonly on Unix-alikes.  Windows binaries are available at that URL.
 }
 \section{Setting Proxies}{
-#ifdef windows
   For the Windows-only method \code{"wininet"}, the \sQuote{Internet
   Options} of the system are used to choose proxies and so on; these are
   set in the Control Panel and are those used for Internet Explorer.
-#endif
 
   The next two paragraphs apply to the internal code only.
 
@@ -212,13 +208,13 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   form \code{http://user:pass@proxy.dom.com:8080/} for compatibility
   with \code{wget}.  Only the HTTP/1.0 basic authentication scheme is
   supported.
-#ifdef windows
+  \cr
   Under Windows, if \env{http_proxy_user} is set to \code{ask} then
   a dialog box will come up for the user to enter the username and
   password.  \bold{NB:} you will be given only one opportunity to enter this,
   but if proxy authentication is required and fails there will be one
   further prompt per download.
-#endif
+
 
   Much the same scheme is supported by \code{method = "libcurl"}, including
   \env{no_proxy}, \env{http_proxy} and \env{ftp_proxy}, and for the last
@@ -247,7 +243,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   Currently one can download a copy from
   \url{https://raw.githubusercontent.com/bagder/ca-bundle/master/ca-bundle.crt}
   and set \env{CURL_CA_BUNDLE} to the full path to the downloaded file.
-  
+
   Note that the root certificates used by \R may or may not be the same
   as used in a browser, and indeed different browsers may use different
   certificate bundles (there is typically a build option to choose
@@ -267,7 +263,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   the \command{wget} nor \command{curl} commands is widely available:
   you can check if one is available \emph{via} \code{\link{Sys.which}},
   and should do so in a package or script.
-  
+
   If you use \code{download.file} in a package or script, you must check
   the return value, since it is possible that the download will fail
   with a non-zero status but not an \R error. (This was more likely
