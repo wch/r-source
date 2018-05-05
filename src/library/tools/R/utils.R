@@ -906,6 +906,13 @@ function(package, lib.loc = NULL)
     ## Original code provided by Luke Tierney.
     path <- system.file(package = package, lib.loc = lib.loc)
     if(!nzchar(path)) return(NULL)
+    if(package == "base") {
+        return(data.frame(generic = .S3_methods_table[, 1L],
+                          home = rep_len("base",
+                                         nrow(.S3_methods_table)),
+                          class = .S3_methods_table[, 2L],
+                          stringsAsFactors = FALSE))
+    }
     lib.loc <- dirname(path)
     nsinfo <- parseNamespaceFile(package, lib.loc)
     S3methods <- nsinfo$S3methods
@@ -914,12 +921,17 @@ function(package, lib.loc = NULL)
     nsenv <- loadNamespace(package, lib.loc)
     ## Possibly speed things up by only looking up the unique generics.
     generics <- unique(generic)
-    homes <- unlist(lapply(generics,
-                           function(f) {
-                               f <- get(f, nsenv)
-                               getNamespaceName(topenv(environment(f)))
-                           }),
-                    use.names = FALSE)
+    homes <- character(length(generics))
+    ind <- is.na(match(generics, .get_S3_group_generics()))
+    homes[ind] <-
+        unlist(lapply(generics[ind],
+                      function(f) {
+                          f <- get(f, nsenv)
+                          getNamespaceName(topenv(environment(f)))
+                      }),
+               use.names = FALSE)
+    ## S3 group generics belong to base.
+    homes[!ind] <- "base"
     home <- homes[match(generic, generics)]
     class <- S3methods[, 2L]
     data.frame(generic, home, class, stringsAsFactors = FALSE)
