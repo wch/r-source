@@ -1137,27 +1137,85 @@ function(x, units = c("secs", "mins", "hours", "days", "months", "years"))
 
 ## ---- additions in 1.5.0 -----
 
+## R 3.5.0 added a j index to the [ POSIXlt extract and replace methods,
+## in order to avoid having users unclass (and reclass) for extracting
+## or replacing single components (as the [[ method was changed to work
+## on datetimes rather than components, and the $ methods are convenient
+## for component literals only).
+##
+## Dealing with the j index is not quite straightforward though: we now
+## insist on it being a character string, and if it does not exactly
+## match a component name we extract or replace nothing.  If it matches,
+## the replace method currently does not ensure the "validity" (correct
+## length or type etc) of the replacement (as the internal POSIXlt codes
+## seem rather generous when dealing with invalid components).
+##
+## Dealing with a character i index is not quite straightforward either,
+## as the names of POSIXlt objects are kept in the 'year' component.  It
+## seems that for extracting we can get by (and get results consistent
+## with the POSIXct case) via matching i against the names of x, whereas
+## this does not deal with all boundary (out-of-bounds etc) cases for
+## replacing: hence for the latter, we simply add the names to all
+## components (if i is character).
+
 `[.POSIXlt` <- function(x, i, j, drop = TRUE)
 {
-    if(missing(j)) {
-        .POSIXlt(lapply(X = unclass(x), FUN = "[", i, drop = drop),
-                 attr(x, "tzone"), oldClass(x))
+    if(!(mj <- missing(j)))
+        if(!is.character(j) || (length(j) != 1L))
+            stop("component subscript must be a character string")
+
+    if(missing(i)) {
+        if(mj)
+            x
+        else
+            unclass(x)[[j]]
     } else {
-        unclass(x)[[j]][i]
+        if(is.character(i))
+            i <- match(i, names(x),
+                       incomparables = c("", NA_character_))
+        if(mj)
+            .POSIXlt(lapply(X = unclass(x), FUN = "[", i, drop = drop),
+                     attr(x, "tzone"), oldClass(x))
+        else
+            unclass(x)[[j]][i]
     }
 }
 
 `[<-.POSIXlt` <- function(x, i, j, value)
 {
-    if(!length(value)) return(x)
+    if(!(mj <- missing(j)))
+        if(!is.character(j) || (length(j) != 1L))
+            stop("component subscript must be a character string")
+
+    if(!length(value)) 
+        return(x)
     cl <- oldClass(x)
     class(x) <- NULL
-    if(missing(j)) {
-        value <- unclass(as.POSIXlt(value))
-        for(n in names(x)) x[[n]][i] <- value[[n]]
+
+    if(missing(i)) {
+        if(mj)
+            x <- as.POSIXlt(value)
+        else
+            x[[j]] <- value
     } else {
-        x[[j]][i] <- value
+        ici <- is.character(i)
+        nms <- names(x$year)
+        if(mj) {
+            value <- unclass(as.POSIXlt(value))
+            if(ici) {
+                for(n in names(x))
+                    names(x[[n]]) <- nms
+            }
+            for(n in names(x))
+                x[[n]][i] <- value[[n]]
+        } else {
+            if(ici) {
+                names(x[[j]]) <- nms
+            }
+            x[[j]][i] <- value
+        }
     }
+    
     class(x) <- cl
     x
 }
@@ -1321,9 +1379,14 @@ OlsonNames <- function(tzdir = NULL)
 
 ## Added in 3.5.0.
 
-`[[.POSIXlt` <- function(x, ..., drop = TRUE)
-    .POSIXlt(lapply(X = unclass(x), FUN = "[[", ..., drop = drop),
+`[[.POSIXlt` <- function(x, i, drop = TRUE)
+{
+    if(!missing(i) && is.character(i)) {
+        i <- match(i, names(x), incomparables = c("", NA_character_))
+    }
+    .POSIXlt(lapply(X = unclass(x), FUN = "[[", i, drop = drop),
              attr(x, "tzone"), oldClass(x))
+}
 
 as.list.POSIXlt <- function(x, ...)
 {
@@ -1334,3 +1397,26 @@ as.list.POSIXlt <- function(x, ...)
     names(y) <- nms
     y
 }
+
+## Added in 3.6.0.
+
+`[[<-.POSIXlt` <- function(x, i, value)
+{
+    cl <- oldClass(x)
+    class(x) <- NULL
+    
+    if(!missing(i) && is.character(i)) {
+        nms <- names(x$year)
+        for(n in names(x))
+            names(x[[n]]) <- nms
+    }
+
+    value <- unclass(as.POSIXlt(value))
+    for(n in names(x))
+        x[[n]][[i]] <- value[[n]]
+
+    class(x) <- cl
+    x
+}
+
+
