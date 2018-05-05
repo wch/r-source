@@ -25,7 +25,8 @@ Austria,Austria,Wien,http://cran.wu.ac.at/,"Wirtschaftsuniversität Wien","CRAN 
 "Brazil (SP 2)",Brazil,Piracicaba,http://brieger.esalq.usp.br/CRAN/,"University of Sao Paulo, Piracicaba","A Augusto F Garcia <aafgarci # gmail.com>, augusto.garcia # usp.br",1,br,"secure_mirror_from_master"
 "Bulgaria [https]",Bulgaria,Sofia,https://ftp.uni-sofia.bg/CRAN/,"Sofia University","Alexander Velin <velin # fccf.net>",1,bg,"secure_mirror_from_master"
 Bulgaria,Bulgaria,Sofia,http://ftp.uni-sofia.bg/CRAN/,"Sofia University","Alexander Velin <velin # fccf.net>",1,bg,"secure_mirror_from_master"
-"Canada (BC)",Canada,Burnaby,http://cran.stat.sfu.ca/,"Simon Fraser University, Burnaby","gripe # sfu.ca",1,ca,"maintainer_address_bounces"
+"Canada (BC) [https]",Canada,Burnaby,https://mirror.its.sfu.ca/mirror/CRAN/,"Simon Fraser University, Burnaby","research-support # sfu.ca",1,ca
+"Canada (BC)",Canada,Burnaby,http://cran.stat.sfu.ca/,"Simon Fraser University, Burnaby","research-support # sfu.ca",1,ca
 "Canada (MB) [https]",Canada,Winnipeg,https://muug.ca/mirror/cran/,"Manitoba Unix User Group","mirror # muug.ca",1,ca
 "Canada (MB)",Canada,Winnipeg,http://muug.ca/mirror/cran/,"Manitoba Unix User Group","mirror # muug.ca",1,ca
 "Canada (NS) [https]",Canada,Halifax,https://mirror.its.dal.ca/cran/,"Dalhousie University, Halifax","mirror # lists.dal.ca",1,ca
