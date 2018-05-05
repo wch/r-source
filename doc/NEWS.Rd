@@ -36,11 +36,11 @@
 
       \item \code{lengths()} dispatches internally to S4 methods.
 
-      \item \code{download.file()} on Windows now by default also uses
-      binary transfer (\code{mode = "wb"}) for file extension
-      \file{.rds} and in the case the file extension dot (\file{.})
-      needs \code{URLdecode()}ing.   The help page \code{?download.file}
-      now contains the same information platform independently.
+      \item \code{download.file()} on Windows now uses \code{URLdecode()}
+      to determine the file extension, and uses binary transfer
+      (\code{mode = "wb"}) also for file extension \file{.rds}.  The
+      help page \code{?download.file} now contains the same information
+      platform independently.
     }
   }
 
