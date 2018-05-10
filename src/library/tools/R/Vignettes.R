@@ -609,7 +609,7 @@ buildVignette <-
 
     if (!is.null(buildPkg))
 	for (pkg in buildPkg)
-	    loadNamespace(pkg)
+	    suppressPackageStartupMessages(loadNamespace(pkg))
 
     if (is.null(engine))
     # Infer vignette engine from vignette content
@@ -1072,7 +1072,7 @@ vignetteEngine <- local({
                 } else {
                     key <- engineKey(name)
                 }
-		loadNamespace(key[1])
+		suppressPackageStartupMessages(loadNamespace(key[1]))
                 name <- paste(key, collapse = "::")
                 result <- registry[[name]]
                 if (is.null(result))
@@ -1081,7 +1081,8 @@ vignetteEngine <- local({
             } else {
                 for (pkg in package) {
                     key <- engineKey(name, pkg)
-		    try(loadNamespace(key[1]), silent = TRUE)
+		    try(suppressPackageStartupMessages(loadNamespace(key[1])),
+                        silent = TRUE)
                     nameT <- paste(key, collapse = "::")
                     result <- registry[[nameT]]
                     if (!is.null(result))
@@ -1183,7 +1184,8 @@ function(pkgdir, mustwork = TRUE)
     pkgs <- unique(c(pkgs, "utils"))
 
     for (pkg in pkgs) {
-	res <- tryCatch(loadNamespace(pkg), error = function(e)e)
+	res <- tryCatch(suppressPackageStartupMessages(loadNamespace(pkg)),
+                        error = function(e)e)
 	if (mustwork && inherits(res, "error"))
             stop(gettextf("vignette builder '%s' not found", pkg), domain = NA)
     }

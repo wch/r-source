@@ -1573,23 +1573,41 @@ registerS3methods <- function(info, package, env)
     fin <- Info[!l2, , drop = FALSE]
     for(i in seq_len(nrow(fin)))
         .registerS3method(fin[i, 1], fin[i, 2], fin[i, 3], fin[i, 4], env)
-    if(package != "MASS" && ## MASS is providing methods for stubs in stats
-       nrow(overwrite) &&
-       Sys.getenv("_R_LOAD_CHECK_OVERWRITE_S3_METHODS_")
-          %in% c(package, "all")) {
-        std <- unlist(tools:::.get_standard_package_names(), use.names=FALSE)
-        overwrite <- overwrite[overwrite[, 2L] %in% std, , drop = FALSE]
-       if(nr <- nrow(overwrite)) {
-           msg <- ngettext(nr,
-                           "Registered S3 method from a standard package overwritten by '%s':",
-                           "Registered S3 methods from standard package(s) overwritten by '%s':",
-                           domain = NA)
-           message(sprintf(msg, package))
-           colnames(overwrite) <- c("method", "from")
-           m <- as.matrix(format(as.data.frame(overwrite)))
-           rownames(m) <- rep.int(" ", nrow(m))
-           print(m, right = FALSE, quote = FALSE)
-       }
+    if(package != "MASS" && nrow(overwrite)) {
+        ## MASS is providing methods for stubs in stats.
+        .fmt <- function(o) {
+            sprintf("  %s %s",
+                    format(c("method", o[, 1L])),
+                    format(c("from", o[, 2L])))
+        }
+        if(Sys.getenv("_R_LOAD_CHECK_OVERWRITE_S3_METHODS_") %in%
+           c(package, "all")) {
+            ind <- overwrite[, 2L] %in% 
+                unlist(tools:::.get_standard_package_names(),
+                       use.names = FALSE)
+            bad <- overwrite[ind, , drop = FALSE]
+            if(nr <- nrow(bad)) {
+                msg <- ngettext(nr,
+                                "Registered S3 method from a standard package overwritten by '%s':",
+                                "Registered S3 methods from standard package(s) overwritten by '%s':",
+                                domain = NA)
+                msg <- paste(c(sprintf(msg, package), .fmt(bad)),
+                             collapse = "\n")
+                message(msg, domain = NA)
+                overwrite <- overwrite[!ind, , drop = FALSE]
+            }
+        }
+        if((nr <- nrow(overwrite)) &&
+           (tolower(Sys.getenv("_R_S3_METHOD_REGISTRATION_NOTE_OVERWRITES_")) %in%
+            c("1", "yes", "true"))) {
+            msg <- ngettext(nr,
+                            "Registered S3 method overwritten by '%s':",
+                            "Registered S3 methods overwritten by '%s':",
+                            domain = NA)
+            msg <- paste(c(sprintf(msg, package), .fmt(overwrite)),
+                         collapse = "\n")
+            packageStartupMessage(msg, domain = NA)
+        }
     }
 
     setNamespaceInfo(env, "S3methods",
