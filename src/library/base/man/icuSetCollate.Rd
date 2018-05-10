@@ -1,6 +1,6 @@
 % File src/library/base/man/icuSetCollate.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2008-2017 R Core Team
+% Copyright 2008-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{icuSetCollate}
@@ -71,7 +71,9 @@ icuGetCollate(type = c("actual", "valid"))
     \item{\code{"default"}:}{
       obtains the locale from the OS as is done at the start of the
       session.  If environment variable \env{R_ICU_LOCALE} is set to a
-      non-empty value, its value is used rather than consulting the OS.
+      non-empty value, its value is used rather than consulting the OS,
+      unless environment variable \env{LC_ALL} is set to 'C' (or unset but
+      \env{LC_COLLATE} is set to 'C').
     }
     \item{\code{""}, \code{"root"}:}{
       the \sQuote{root} collation: see
@@ -85,16 +87,25 @@ icuGetCollate(type = c("actual", "valid"))
   \code{icuGetCollate("actual")}, often \code{"root"}).  Most English
   locales fall back to \code{"root"} as although e.g.\sspace{}\code{"en_GB"} is
   a valid locale (at least on some platforms), it contains no special
-  rules for collation.  Note that \code{"C"} is not a supported ICU locale.
+  rules for collation.  Note that \code{"C"} is not a supported ICU locale
+  and hence \env{R_ICU_LOCALE} should never be set to \code{"C"}.
   
   Some examples are \code{case_level = "on", strength = "primary"} to ignore
   accent differences and \code{alternate_handling = "shifted"} to ignore
   space and punctuation characters.
   
-  Initially ICU will not be used for collation if the OS is set to use
-  the \code{C} locale for collation.  Once this function is called with
-  a value for \code{locale}, ICU will be used until it is called again
-  with \code{locale = "none"}.
+  Initially ICU will not be used for collation if the OS is set to use the
+  \code{C} locale for collation and \env{R_ICU_LOCALE} is not set.  Once
+  this function is called with a value for \code{locale}, ICU will be used
+  until it is called again with \code{locale = "none"}.  ICU will not be
+  used once \code{Sys.setlocale} is called with a \code{"C"} value for
+  \code{LC_ALL} or \code{LC_COLLATE}, even if \env{R_ICU_LOCALE} is set. 
+  ICU will be used again honoring \env{R_ICU_LOCALE} once
+  \code{Sys.setlocale} is called to set a different collation order. 
+  Environment variables \env{LC_ALL} (or \env{LC_COLLATE}) take precedence
+  over \env{R_ICU_LOCALE} if and only if they are set to 'C'.  Due to the
+  interaction with other ways of setting the collation order,
+  \env{R_ICU_LOCALE} should be used with care and only when needed.
 
   All customizations are reset to the default for the locale if
   \code{locale} is specified: the collation engine is reset if the
