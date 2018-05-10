@@ -360,11 +360,16 @@ static int islistfactor(SEXP X)
     switch(TYPEOF(X)) {
     case VECSXP:
     case EXPRSXP: {
-	int n = LENGTH(X);
-        if(n == 0) return NA_LOGICAL;
-	for(int i = 0; i < n; i++)
-	    if(!islistfactor(VECTOR_ELT(X, i))) return FALSE;
-	return TRUE;
+	int n = LENGTH(X), ans = NA_LOGICAL;
+	for(int i = 0; i < n; i++) {
+	    int isLF = islistfactor(VECTOR_ELT(X, i));
+	    if(!isLF)
+		return FALSE;
+	    else if(isLF == TRUE)
+		ans = TRUE;
+	    // else isLF is NA
+	}
+	return ans;
     }
     default:
 	return isFactor(X);
@@ -383,23 +388,14 @@ SEXP attribute_hidden do_islistfactor(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(n == 0 || !isVectorList(X))
 	return ScalarLogical(FALSE);
 
-    Rboolean lans;
     if(!recursive) {
-	lans = TRUE;
 	for(int i = 0; i < n; i++)
 	    if(!isFactor(VECTOR_ELT(X, i)))
 		return ScalarLogical(FALSE);
+
+	return ScalarLogical(TRUE);
     }
     else { // recursive:  isVectorList(X) <==> X is VECSXP or EXPRSXP
-        lans = FALSE;
-	for(int i = 0; i < n; i++) {
-            int isfactor = islistfactor(VECTOR_ELT(X, i));
-	    if(!isfactor) {
-		return ScalarLogical(FALSE);
-	    } else if (isfactor == TRUE)
-                lans = TRUE;
-	    // else isfactor is NA
-        }
+	return ScalarLogical((islistfactor(X) == TRUE) ? TRUE : FALSE);
     }
-    return ScalarLogical(lans);
 }

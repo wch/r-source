@@ -76,6 +76,9 @@
 
       \item \code{simulate.lm(glm(*, gaussian(link = <non-default>)))}
       has been corrected, fixing \PR{17415} thanks to Alex Courtiol.
+
+      \item \code{unlist(x)} no longer fails in some cases of nested
+      empty lists.  Reported by Steven Nydick.
     }
   }
 

@@ -1787,6 +1787,24 @@ stopifnot(abs(dv) < 1.14, abs(mean(dv)) < .07)
 ## failed in R <= 3.5.0 (had simulated variances ~ 0.1)
 
 
+## unlist() failed for nested lists of empty lists:
+isLF <- function(x) .Internal(islistfactor(x, recursive=TRUE))
+ex <- list(x0 = list()
+         , x1 = list(list())
+         , x12 = list(list(), list())
+         , x12. = list(list(), expression(list()))
+         , x2 = list(list(list(), list())) # <-- Steven Nydick's example
+         , x212 = list(list(list(), list(list())))
+         , x222 = list(list(list(list()), list(list())))
+)
+(exis <- vapply(ex, isLF, NA))
+ue <- lapply(ex, unlist)# gave errors in R <= 3.3.x  but not 3.{4.x,5.0}
+stopifnot(exprs = {
+    !any(exis)
+    identical(names(ue), names(ex))
+    vapply(ue[names(ue) != "x12."], is.null, NA)
+})
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
