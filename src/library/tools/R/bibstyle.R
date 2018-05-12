@@ -21,7 +21,7 @@
 # Clean up LaTeX accents and braces
 cleanupLatex <- function(x) {
     if (!length(x)) return(x)
-    latex <- tryCatch(parseLatex(x), error = function(e)e)
+    latex <- tryCatch(parseLatex(x), error = identity)
     if (inherits(latex, "error")) {
     	x
     } else {

@@ -1185,7 +1185,7 @@ function(pkgdir, mustwork = TRUE)
 
     for (pkg in pkgs) {
 	res <- tryCatch(suppressPackageStartupMessages(loadNamespace(pkg)),
-                        error = function(e)e)
+                        error = identity)
 	if (mustwork && inherits(res, "error"))
             stop(gettextf("vignette builder '%s' not found", pkg), domain = NA)
     }

@@ -225,7 +225,7 @@ checkPoFile <- function(f, strictPlural = FALSE)
 		i <- i + 1L
 		s1 <- paste0(s1, sub('^["](.*)["][[:blank:]]*$', "\\1", lines[i]))
 	    }
-	    f1 <- tryCatch(getfmts(s1), error = function(e)e)
+	    f1 <- tryCatch(getfmts(s1), error = identity)
 	    j <- i + 1L
 
 	    if (noCformat || inherits(f1, "error")) {
@@ -256,7 +256,7 @@ checkPoFile <- function(f, strictPlural = FALSE)
 		    break
 		}
 
-		f2 <- tryCatch(getfmts(s2), error = function(e)e)
+		f2 <- tryCatch(getfmts(s2), error = identity)
 
 		if (statement == "msgid_plural") {
 		    if (!strictPlural) {

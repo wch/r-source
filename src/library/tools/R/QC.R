@@ -6398,7 +6398,7 @@ function(dir, silent = FALSE, def_enc = FALSE, minlevel = -1)
 	tmp <- tryCatch(suppressMessages(checkRd(f, encoding = enc,
 						 def_enc = def_enc,
                                                  macros = macros)),
-			error = function(e)e)
+			error = identity)
 	if(inherits(tmp, "error")) {
 	    bad <- c(bad, f)
             if(!silent) message(geterrmessage())
