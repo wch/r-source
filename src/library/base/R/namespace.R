@@ -1580,6 +1580,11 @@ registerS3methods <- function(info, package, env)
                     format(c("method", o[, 1L])),
                     format(c("from", o[, 2L])))
         }
+        ## Unloading does not unregister, so reloading "overwrites":
+        ## hence, always drop same-package overwrites.
+        overwrite <-
+            overwrite[overwrite[, 2L] != package, , drop = FALSE]
+        ## (Seen e.g. for recommended packages in reg-tests-3.R.)
         if(Sys.getenv("_R_LOAD_CHECK_OVERWRITE_S3_METHODS_") %in%
            c(package, "all")) {
             ind <- overwrite[, 2L] %in% 
@@ -1597,9 +1602,19 @@ registerS3methods <- function(info, package, env)
                 overwrite <- overwrite[!ind, , drop = FALSE]
             }
         }
+        ## Do not note when
+        ## * There are no overwrites (left)
+        ## * Env var _R_S3_METHOD_REGISTRATION_NOTE_OVERWRITES_ is not
+        ##   set to something true (for the time being)
+        ## * Env var _R_CHECK_PACKAGE_NAME_ is set to something
+        ##   different than 'package'.
+        ## With the last, when checking we only note overwrites from the
+        ## package under check (as recorded via _R_CHECK_PACKAGE_NAME_).
         if((nr <- nrow(overwrite)) &&
            (tolower(Sys.getenv("_R_S3_METHOD_REGISTRATION_NOTE_OVERWRITES_")) %in%
-            c("1", "yes", "true"))) {
+            c("1", "yes", "true")) &&
+           (!is.na(match(Sys.getenv("_R_CHECK_PACKAGE_NAME_"),
+                         c("", package))))) {
             msg <- ngettext(nr,
                             "Registered S3 method overwritten by '%s':",
                             "Registered S3 methods overwritten by '%s':",
