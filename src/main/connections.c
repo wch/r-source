@@ -2220,6 +2220,7 @@ SEXP attribute_hidden do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     ncon = NextConnection();
     Connections[ncon] = con;
+    con->blocking = TRUE;
     strncpy(con->encname, CHAR(STRING_ELT(enc, 0)), 100); /* ASCII */
     con->encname[100 - 1] = '\0';
 

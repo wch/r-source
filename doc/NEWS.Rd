@@ -111,6 +111,8 @@
       \item \code{callNextMethod()} uses the generic from the
       environment of the calling method. Reported by Hervé Pagès with
       well documented examples.
+
+      \item Compressed file connections are marked as blocking.
     }
   }
 }
