@@ -392,7 +392,7 @@ getBibstyle <- function(all = FALSE) {
 
 toRd.bibentry <- function(obj, style=NULL, ...) {
     obj <- sort(obj, .bibstyle=style)
-    style <- bibstyle(style)
+    style <- bibstyle(style, .default = FALSE)
     env <- new.env(hash = FALSE, parent = style)
     bib <- unclass(obj)
     result <- character(length(bib))
