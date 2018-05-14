@@ -1885,16 +1885,20 @@ void attribute_hidden R_SaveToFileV(SEXP obj, FILE *fp, int ascii, int version)
 	struct R_outpstream_st out;
 	R_pstream_format_t type;
 	int magic;
-	/* version == 0 means R_DefaultSerializeVersion, currently 3 */
+
+	/* version == 0 means default version */
+	int v = (version == 0) ? defaultSaveVersion() : version;
 	if (ascii) {
-	    magic = (version == 2) ? R_MAGIC_ASCII_V2 : R_MAGIC_ASCII_V3;
+	    magic = (v == 2) ? R_MAGIC_ASCII_V2 : R_MAGIC_ASCII_V3;
 	    type = R_pstream_ascii_format;
 	}
 	else {
-	    magic = (version == 2) ? R_MAGIC_XDR_V2 : R_MAGIC_XDR_V3;
+	    magic = (v == 2) ? R_MAGIC_XDR_V2 : R_MAGIC_XDR_V3;
 	    type = R_pstream_xdr_format;
 	}
 	R_WriteMagic(fp, magic);
+	/* version == 0 means defaultSerializeVersion()
+	   unsupported version will result in error  */
 	R_InitFileOutPStream(&out, fp, type, version, NULL, NULL);
 	R_Serialize(obj, &out);
     }
