@@ -559,7 +559,7 @@ function(dir, all = TRUE, full = FALSE, ...)
        !all(as.character(unlist(lapply(results, `[[`, "status"))) ==
             "OK")) {
         writeLines(c("", "Check results details:"))
-        details <- check_packages_in_dir_details(logs = logs)
+        details <- check_packages_in_dir_details(logs = logs, ...)
         writeLines(paste(format(details), collapse = "\n\n"))
         invisible(TRUE)
     } else {
@@ -1043,7 +1043,7 @@ function(dir, old, outputs = FALSE, sources = FALSE, ...)
     ## to compare against the results/details of a CRAN check flavor.
 
     if(!inherits(old, "check_details"))
-        old <- check_packages_in_dir_details(old, drop_ok = FALSE)
+        old <- check_packages_in_dir_details(old, drop_ok = FALSE, ...)
 
     check_details_changes(new, old, outputs)
 }
