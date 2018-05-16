@@ -41,6 +41,11 @@
       (\code{mode = "wb"}) also for file extension \file{.rds}.  The
       help page \code{?download.file} now contains the same information
       platform independently.
+
+      \item Setting 'C' locale for collation via environment variables
+      \env{LC_ALL} and \env{LC_COLLATE} and via a call to
+      \code{Sys.setlocale()} now takes precedence over environment variable
+      \env{R_ICU_LOCALE}.
     }
   }
 
