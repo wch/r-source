@@ -3921,6 +3921,9 @@ command is found (including one that does not respect the @option{-k}
 flag to report in units of 1Kb, or reports in a different format -- the
 GNU, macOS and Solaris @command{du} commands have been tested).
 Default: true if @command{du} is found.
+@item _R_CHECK_PKG_SIZES_THRESHOLD_
+Threshold used for @env{_R_CHECK_PKG_SIZES_} (in Mb).
+Default: 5
 @item _R_CHECK_DOC_SIZES_
 Should @command{qpdf} be used to check the installed sizes of PDFs?
 Default: true if @command{qpdf} is found.
