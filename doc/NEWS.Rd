@@ -87,6 +87,14 @@
 
       \item Method dispatch uses more relevant environments when looking
       up class definitions.
+
+      \item The documentation for \code{identify()} claimed that the
+      indices of identified points were returned in the order that the
+      points were selected, which was cow manure.  \code{identify()} now
+      has a new argument \code{order} to allow the return value to
+      include the order in which points were identified; the
+      documenation has been updated.  Reported by Richard Rowe and
+      Samuel Granjeaud. 
     }
   }
 
