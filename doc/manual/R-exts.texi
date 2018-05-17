@@ -2143,10 +2143,11 @@ extended-precision arithmetic which is the default for the main process.
 @c mingw64-public, 2015-02-02.
 @c https://stackoverflow.com/questions/2553725/is-the-fpu-control-word-setting-per-thread-or-per-process
 
-Calling any of the @R{} API from threaded code is `for experts only':
-they will need to read the source code to determine if it is
-thread-safe.  In particular, code which makes use of the stack-checking
-mechanism must not be called from threaded code.
+Calling any of the @R{} API from threaded code is `for experts only' and
+strongly discouraged. Many functions in the @R{} API modify internal
+@R{} data structures and might corrupt these data structures if called
+simultaneously from multiple threads. Most @R{} API functions can signal
+errors, which must only happen on the @R{} main thread.
 
 Packages are not standard-alone programs, and an @R{} process could
 contain more than one OpenMP-enabled package as well as other components
@@ -12407,22 +12408,31 @@ connection if it is no longer is use.
 
 The vector accessors like @code{REAL} and @code{INTEGER} and
 @code{VECTOR_ELT} are @emph{functions} when used in @R{} extensions.
-(For efficiency they are macros when used in the @R{} source code, apart
-from @code{SET_STRING_ELT} and @code{SET_VECTOR_ELT} which are always
-functions.)
+(For efficiency they may be macros or inline functions when used in
+the @R{} source code, apart from @code{SET_STRING_ELT} and
+@code{SET_VECTOR_ELT} which are always functions.) 
 
 The accessor functions check that they are being used on an appropriate
 type of @code{SEXP}.
 
-If efficiency is essential, the macro versions of the accessors can be
+If efficiency is essential, the internal versions of the accessors can be
 obtained by defining @samp{USE_RINTERNALS} before including
 @file{Rinternals.h}.  If you find it necessary to do so, please do test
 that your code compiles without @samp{USE_RINTERNALS} defined, as this
 provides a stricter test that the accessors have been used correctly.
+Also be prepared to adjust your code should @R{} internals change.
 Note too that the use of @samp{USE_RINTERNALS} when the header is
 included in C++ code is not supported: doing so may use C99 features
 which are not necessarily supported by the C++ compiler.  Nor is use
 with @file{Rdefines.h} supported.
+
+The accessor functions, and other functions in the @R{} API, are also
+subject to change to support the @samp{ALTREP} project
+(@uref{https://svn.r-project.org/R/branches/ALTREP/ALTREP.html}). Code
+that does not define @samp{USE_RINTERNALS} should not be affected by
+these changes, but code that does define @samp{USE_RINTERNALS} may need
+to be adjusted.
+
 
 @node Character encoding issues,  , Vector accessor functions, System and foreign language interfaces
 @section Character encoding issues
