@@ -8,7 +8,8 @@
 \alias{xtfrm.default}
 \alias{xtfrm.factor}
 \alias{xtfrm.AsIs}
-\alias{xtfrm.Surv}
+%% Moved to package survival.
+%% \alias{xtfrm.Surv}
 \alias{xtfrm.Date}
 \alias{xtfrm.POSIXct}
 \alias{xtfrm.POSIXlt}
@@ -31,11 +32,11 @@ xtfrm(x)
     na.last = "keep")}, so \code{NA} values are given rank \code{NA} and all
   tied values are given equal integer rank.
 
-  The \code{\link{factor}} method extracts the codes.  The
-  \code{\link[survival]{Surv}} method sorts first on times and then on
-  status code(s), finally on \code{timme2} if present.  Note that with
-  the conventional status codes this sorts individuals still alive before
-  deaths.
+  The \code{\link{factor}} method extracts the codes.
+  %% The \code{\link[survival]{Surv}} method sorts first on times and
+  %% then on status code(s), finally on \code{timme2} if present.  Note
+  %% that with the conventional status codes this sorts individuals
+  %% still alive before deaths.
 
   The default method will unclass the object if
   \code{\link{is.numeric}(x)} is true but otherwise make use of
