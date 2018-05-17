@@ -106,7 +106,7 @@ Norway,Norway,Bergen,http://cran.uib.no/,"University of Bergen","sundrift # It.u
 "Philippines [https]",Philippines,"Quezon City",https://cran.stat.upd.edu.ph/,"University of the Philippines and PREGINET","Bert Mendoza <bert # asti.dost.gov.ph>, ops # pregi.net",1,ph,"secure_mirror_from_master"
 Philippines,Philippines,"Quezon City",http://cran.stat.upd.edu.ph/,"University of the Philippines and PREGINET","Bert Mendoza <bert # asti.dost.gov.ph>, ops # pregi.net",1,ph,"secure_mirror_from_master"
 "Portugal (Lisbon)",Portugal,Lisbon,http://cran.radicaldevelop.com/,"RadicalDevelop, Lda","geral # radicaldevelop.com",1,pt
-"Portugal (Porto)",Portugal,Porto,http://cran.dcc.fc.up.pt/,"University of Porto","labcc # labcc.dcc.fc.up.pt",0,pt
+"Portugal (Porto)",Portugal,Porto,http://cran.dcc.fc.up.pt/,"University of Porto","labcc # labcc.dcc.fc.up.pt",1,pt
 "Serbia [https]",Serbia,Belgrade,https://fourdots.com/mirror/CRAN/,"Four Dots","Goran Tepsic <goran.tepsic # fourdots.com>",1,rs,"secure_mirror_from_master"
 "Singapore (Singapore 1) [https]",Singapore,Singapore,https://cran.kst.asia/,"Viewqwest broadband, cloudflare CDN, Singapore","tanlikang11 # gmail.com",1,asia
 "Singapore (Singapore 2) [https]",Singapore,Singapore,https://cran.stat.nus.edu.sg/,"National University of Singapore, Singapore","ccezr # nus.edu.sg",1,sg
