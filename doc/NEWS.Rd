@@ -93,7 +93,7 @@
       points were selected, which was cow manure.  \code{identify()} now
       has a new argument \code{order} to allow the return value to
       include the order in which points were identified; the
-      documenation has been updated.  Reported by Richard Rowe and
+      documentation has been updated.  Reported by Richard Rowe and
       Samuel Granjeaud. 
     }
   }

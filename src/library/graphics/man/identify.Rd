@@ -110,7 +110,7 @@ identify(x, \dots)
   an integer vector containing the
   indices of the identified points.
 
-  If either of \code{pos} ord \code{order} is \code{TRUE},
+  If either of \code{pos} or \code{order} is \code{TRUE},
   a list containing a component
   \code{ind}, indicating which points were identified and (if
   \code{pos} is \code{TRUE}) a component
