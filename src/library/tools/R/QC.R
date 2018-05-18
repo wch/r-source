@@ -5397,7 +5397,7 @@ function(package, dir, lib.loc = NULL)
             if((Call %in%
                 c("library", "require", "loadNamespace", "requireNamespace"))
                && (length(e) >= 2L)) {
-                ## We need to rempve '...': OTOH the argument could be NULL
+                ## We need to remove '...': OTOH the argument could be NULL
                 keep <- sapply(e, function(x) deparse(x)[1L] != "...")
                 mc <- match.call(get(Call, baseenv()), e[keep])
                 if(!is.null(pkg <- mc$package)) {
@@ -5848,7 +5848,7 @@ function(db, files)
             if(Call %in%
                c("library", "require", "loadNamespace", "requireNamespace")) {
                 if(length(e) >= 2L) {
-                    ## We need to rempve '...': OTOH the argument could be NULL
+                    ## We need to remove '...': OTOH the argument could be NULL
                     keep <- sapply(e, function(x) deparse(x)[1L] != "...")
                     mc <- match.call(get(Call, baseenv()), e[keep])
                     if(!is.null(pkg <- mc$package)) {
@@ -5986,9 +5986,42 @@ function(dir, testdir, lib.loc = NULL)
     testsrcdir <- file.path(dir, testdir)
     od <- setwd(testsrcdir)
     on.exit(setwd(od))
-    Rinfiles <- dir(".", pattern="\\.Rin$") # only trackOjs has *.Rin
-    Rfiles <- dir(".", pattern="\\.[rR]$")
-    .check_packages_used_helper(db, c(Rinfiles, Rfiles))
+    Rinfiles <- list.files(".", pattern = "\\.Rin$")
+    Rfiles <- list.files(".", pattern = "\\.[rR]$")
+    if(testdir != "tests") {
+        use_subdirs <- FALSE
+    } else {
+        use_subdirs <-
+            Sys.getenv("_R_CHECK_PACKAGES_USED_IN_TESTS_USE_SUBDIRS_",
+                       "FALSE")
+        use_subdirs <- config_val_to_logical(use_subdirs)
+        if(use_subdirs) {
+            subdirs <- c("testthat", "testit", "unitizer", "RUnit")
+            subdirs <- subdirs[dir.exists(subdirs)]
+            if(length(subdirs)) {
+                Rfiles <-
+                    c(Rfiles,
+                      unlist(lapply(subdirs, list.files,
+                                    pattern = "\\.[rR]$",
+                                    full.names = TRUE),
+                             use.names = FALSE))
+            } else {
+                use_subdirs <- FALSE
+            }
+        }
+    }
+    res <- .check_packages_used_helper(db, c(Rinfiles, Rfiles))
+    if(use_subdirs && any(lengths(bad <- res[1L : 3L]))) {
+        ## Filter results against available package names to avoid (too
+        ## many) false positives.
+        ## <FIXME>
+        ## Should really standardize getting available packages when
+        ## checking.
+        repos <- .get_standard_repository_URLs()
+        available <- utils::available.packages(repos = repos)
+        res[1L : 3L] <- lapply(bad, intersect, available[, "Package"])
+    }
+    res
 }
 
 ### * .check_packages_used_in_vignettes
