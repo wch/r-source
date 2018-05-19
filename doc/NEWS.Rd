@@ -95,6 +95,9 @@
       include the order in which points were identified; the
       documentation has been updated.  Reported by Richard Rowe and
       Samuel Granjeaud. 
+
+      \item \code{order(...., decreasing=c(TRUE,FALSE)} could fail in
+      some cases. Reported from StackOverflow via Karl Nordström.
     }
   }
 

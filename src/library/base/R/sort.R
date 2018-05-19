@@ -192,8 +192,8 @@ order <- function(..., na.last = TRUE, decreasing = FALSE,
     method <- match.arg(method)
     if(any(vapply(z, is.object, logical(1L)))) {
         z <- lapply(z, function(x) if(is.object(x)) as.vector(xtfrm(x)) else x)
-        return(do.call("order", c(z, na.last = na.last, decreasing = decreasing,
-                                  method = method)))
+        return(do.call("order", c(z, list(na.last = na.last, decreasing = decreasing,
+                                  method = method))))
     }
 
     if (method == "auto") {
@@ -220,7 +220,7 @@ order <- function(..., na.last = TRUE, decreasing = FALSE,
     ok <- if(is.matrix(na)) rowSums(na) == 0L else !any(na)
     if(all(!ok)) return(integer())
     z[[1L]][!ok] <- NA
-    ans <- do.call("order", c(z, decreasing = decreasing))
+    ans <- do.call("order", c(z, list(decreasing = decreasing)))
     ans[ok[ans]]
 }
 

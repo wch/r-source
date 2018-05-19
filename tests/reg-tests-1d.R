@@ -1690,6 +1690,12 @@ sort.int(1:3, decreasing = "TRUE")
 sort.int(1:3, decreasing = "FALSE")
 ## failed initially in ALTREP
 
+## this failed until 3.5.x
+c1 <- c(1,1,2,2)
+c2 <- as.Date(c("2010-1-1", "2011-1-1", "2013-1-1", "2012-1-1"))
+order(c1, c2, decreasing = c(TRUE, FALSE), method="radix")
+
+
 ## check sort argument combinations
 sort(1:3, decreasing = TRUE, na.last = NA)
 sort(1:3, decreasing = TRUE, na.last = TRUE)
