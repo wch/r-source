@@ -419,9 +419,12 @@ SEXP dispatchMethod(SEXP op, SEXP sxp, SEXP dotClass, RCNTXT *cptr, SEXP method,
 	}
     }
 
-    if( (RDEBUG(op) && R_current_debug_state()) || RSTEP(op) ) {
+    /* Debug a method when debugging the generic. When called via UseMethod or
+       NextMethod, RSTEP(op) will always be zero because the bit is cleared by
+       applyClosure. We thus approximate and enter the debugger also when
+       RDEBUG(rho) is set. */
+    if ((RDEBUG(op) && R_current_debug_state()) || RSTEP(op) || RDEBUG(rho))
 	SET_RSTEP(sxp, 1);
-    }
 
     SEXP newcall =  PROTECT(shallow_duplicate(cptr->call));
     SETCAR(newcall, method);
