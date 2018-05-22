@@ -128,7 +128,9 @@ isIncomplete(con)
   C-level \sQuote{standard input} of the process (which need not be
   connected to anything in a console or embedded version of \R, and is
   not in \code{RGui} on Windows).  See also \code{\link{stdin}()} for
-  the subtly different R-level concept of \code{stdin}.
+  the subtly different R-level concept of \code{stdin}. See
+  \code{\link{nullfile}()} for a platform-independent way to get
+  filename of the null device.
 
   For \code{url} the description is a complete URL including scheme
   (such as \samp{http://}, \samp{https://}, \samp{ftp://} or
