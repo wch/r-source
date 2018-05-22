@@ -46,6 +46,9 @@
       \env{LC_ALL} and \env{LC_COLLATE} and via a call to
       \code{Sys.setlocale()} now takes precedence over environment variable
       \env{R_ICU_LOCALE}.
+
+      \item There is a new function, \code{nullfile()}, to give the file
+      name of the null device on the current platform.
     }
   }
 
