@@ -1134,7 +1134,7 @@ SEXP writetable(SEXP call, SEXP op, SEXP args, SEXP env)
 	for(int j = 0; j < nc; j++) {
 	    xj = VECTOR_ELT(x, j);
 	    if(LENGTH(xj) != nr)
-		error(_("corrupt data frame -- length of column %d does not not match nrows"),
+		error(_("corrupt data frame -- length of column %d does not match nrows"),
 		      j+1);
 	    if(inherits(xj, "factor")) {
 		levels[j] = getAttrib(xj, R_LevelsSymbol);
@@ -1183,7 +1183,7 @@ SEXP writetable(SEXP call, SEXP op, SEXP args, SEXP env)
 	    UNIMPLEMENTED_TYPE("write.table, matrix method", x);
 	/* quick integrity check */
 	if(XLENGTH(x) != (R_len_t)nr * nc)
-	    error(_("corrupt matrix -- dims not not match length"));
+	    error(_("corrupt matrix -- dims do not match length"));
 
 	for(int i = 0; i < nr; i++) {
 	    if(i % 1000 == 999) R_CheckUserInterrupt();
