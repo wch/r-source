@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2018-05-03 r74684) -- "Unsuffered Consequences"
+R Under development (unstable) (2018-05-22 r74752) -- "Unsuffered Consequences"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -277,6 +277,8 @@ Levels: a b <NA>
 + 		    deparse(lf)))
 Warning message:
 In deparse(lf, control = "all") : deparse may be incomplete
+> abc <- setNames(letters[1:4], c("one", "recursive", "use.names", "four"))
+> r13 <- i13 <- setNames(1:3, names(abc)[3:1]); mode(r13) <- "double"
 > if(getRversion() >= "3.5.0") {
 +     ## Creating a collection of S4 objects, ensuring deparse <-> parse are inverses
 + library(methods)
@@ -457,6 +459,10 @@ a3: quote(CC(1, 2, 3))
 aa: quote(B(a = x + y, b = 3))
  --> checking list(*): Ok
 --=--=--=--=--
+abc: structure(c("a", "b", "c", "d"), .Names = c("one", "recursive", 
+"use.names", "four"))
+ --> checking list(*): Ok
+--=--=--=--=--
 attrS4: function (x) 
 c(S4 = isS4(x), obj = is.object(x), type.S4 = typeof(x) == "S4")
  --> checking list(*): Ok
@@ -517,7 +523,8 @@ check_EPD: function (obj, show = !hasReal(obj), oNam = deparse(substitute(obj)),
                 paste("but", ae.txt), "\n")
         }
         if (!isTRUE(ae)) 
-            stop("Not equal: ", ae.txt, " giving\n", ae)
+            stop("Not equal: ", ae.txt, paste(c(" giving", head(ae, 
+                2), if (length(ae) > 2) "...."), collapse = "\n  "))
     }
     if (!is.language(obj)) {
         ob2. <- eval(obj)
@@ -558,7 +565,8 @@ quote({
                 paste("but", ae.txt), "\n")
         }
         if (!isTRUE(ae)) 
-            stop("Not equal: ", ae.txt, " giving\n", ae)
+            stop("Not equal: ", ae.txt, paste(c(" giving", head(ae, 
+                2), if (length(ae) > 2) "...."), collapse = "\n  "))
     }
     if (!is.language(obj)) {
         ob2. <- eval(obj)
@@ -725,6 +733,9 @@ i0: structure(integer(0), .Names = character(0), foo = "bar")
 i00: structure(integer(0), .Names = character(0))
  --> checking list(*): Ok
 --=--=--=--=--
+i13: structure(1:3, .Names = c("use.names", "recursive", "one"))
+ --> checking list(*): Ok
+--=--=--=--=--
 i6: structure(5:6, .Names = c("e", "f"))
  --> checking list(*): Ok
 --=--=--=--=--
@@ -864,6 +875,10 @@ r1: list(value = quote({
         width.cutoff = width.cutoff, deparseCtrl = deparseCtrl, 
         ...)
 }), visible = TRUE)
+ --> checking list(*): Ok
+--=--=--=--=--
+r13: structure(c(1, 2, 3), .Names = c("use.names", "recursive", "one"
+))
  --> checking list(*): Ok
 --=--=--=--=--
 r2: list(value = quote({

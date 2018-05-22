@@ -188,6 +188,8 @@ fm <- y ~ f(x)
 lf <- list(ff = fm, osf = ~ sin(x))
 stopifnot(identical(deparse(lf, control="all"), # no longer quote()s
 		    deparse(lf)))
+abc <- setNames(letters[1:4], c("one", "recursive", "use.names", "four"))
+r13 <- i13 <- setNames(1:3, names(abc)[3:1]); mode(r13) <- "double"
 if(getRversion() >= "3.5.0") {
     ## Creating a collection of S4 objects, ensuring deparse <-> parse are inverses
 library(methods)

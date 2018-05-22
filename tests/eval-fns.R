@@ -63,7 +63,9 @@ check_EPD <- function(obj, show = !hasReal(obj), oNam = deparse(substitute(obj))
             ## differs for "no-ldouble": sprintf("all.equal(*,*, tol = %.3g)", eq.tol)
             cat("not identical(*, ignore.env=T),", if(isTRUE(ae)) paste("but", ae.txt), "\n")
         }
-        if(!isTRUE(ae)) stop("Not equal: ", ae.txt, " giving\n", ae)
+        if(!isTRUE(ae)) stop("Not equal: ", ae.txt,
+                             paste(c(" giving", head(ae, 2),
+                                     if(length(ae) > 2) "...."), collapse = "\n  "))
     }
     if(!is.language(obj)) {
 	ob2. <- eval(obj) ## almost always *NOT* identical to obj, but eval()ed

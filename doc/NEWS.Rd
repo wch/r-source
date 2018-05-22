@@ -97,10 +97,15 @@
       has a new argument \code{order} to allow the return value to
       include the order in which points were identified; the
       documentation has been updated.  Reported by Richard Rowe and
-      Samuel Granjeaud. 
+      Samuel Granjeaud.
 
-      \item \code{order(...., decreasing=c(TRUE,FALSE)} could fail in
+      \item \code{order(...., decreasing=c(TRUE,FALSE))} could fail in
       some cases. Reported from StackOverflow via Karl Nordström.
+
+      \item \code{deparse(x)}, \code{dput(x)} and \code{dump()} now
+      respect \code{c()}'s argument names \code{recursive} and
+      \code{use.names}, e.g., for \code{x <- setNames(0, "recursive")},
+      thanks to Suharto Anggono's \PR{17427}.
     }
   }
 
