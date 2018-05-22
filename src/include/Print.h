@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2014   The R Core Team.
+ *  Copyright (C) 1997-2018   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -59,7 +59,7 @@ void formatRaw(const Rbyte *, R_xlen_t, int *);
 void formatString(const SEXP*, R_xlen_t, int*, int);
 
 /* Formating of values */
-const char *EncodeElement0(SEXP, int, int, const char *);
+const char *EncodeElement0(SEXP, R_xlen_t, int, const char *);
 const char *EncodeEnvironment(SEXP);
 /* Legacy, for R.app */
 const char *EncodeElement(SEXP, int, int, char);

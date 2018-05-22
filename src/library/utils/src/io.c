@@ -977,7 +977,7 @@ no_more_lines:
    quote is a numeric vector
  */
 
-static Rboolean isna(SEXP x, int indx)
+static Rboolean isna(SEXP x, R_xlen_t indx)
 {
     Rcomplex rc;
     switch(TYPEOF(x)) {
@@ -1005,14 +1005,14 @@ static Rboolean isna(SEXP x, int indx)
 
 /* a version of EncodeElement with different escaping of char strings */
 static const char
-*EncodeElement2(SEXP x, int indx, Rboolean quote,
+*EncodeElement2(SEXP x, R_xlen_t indx, Rboolean quote,
 		Rboolean qmethod, R_StringBuffer *buff, const char *dec)
 {
     int nbuf;
     char *q;
     const char *p, *p0;
 
-    if (indx < 0 || indx >= length(x))
+    if (indx < 0 || indx >= xlength(x))
 	error(_("index out of range"));
     if(TYPEOF(x) == STRSXP) {
 	const void *vmax = vmaxget();
@@ -1161,7 +1161,7 @@ SEXP writetable(SEXP call, SEXP op, SEXP args, SEXP env)
 						 &strBuf, sdec);
 			else if(TYPEOF(xj) == REALSXP)
 			    tmp = EncodeElement2(levels[j],
-						 (int) (REAL(xj)[i] - 1),
+						 (R_xlen_t) (REAL(xj)[i] - 1),
 						 quote_col[j], qmethod,
 						 &strBuf, sdec);
 			else
@@ -1182,7 +1182,7 @@ SEXP writetable(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(!isVectorAtomic(x))
 	    UNIMPLEMENTED_TYPE("write.table, matrix method", x);
 	/* quick integrity check */
-	if(XLENGTH(x) != (R_len_t)nr * nc)
+	if(XLENGTH(x) != (R_xlen_t)nr * nc)
 	    error(_("corrupt matrix -- dims do not match length"));
 
 	for(int i = 0; i < nr; i++) {
@@ -1193,9 +1193,10 @@ SEXP writetable(SEXP call, SEXP op, SEXP args, SEXP env)
 					    &strBuf, sdec), csep);
 	    for(int j = 0; j < nc; j++) {
 		if(j > 0) Rconn_printf(con, "%s", csep);
-		if(isna(x, i + j*nr)) tmp = cna;
+		if(isna(x, i + (R_xlen_t)j*nr)) tmp = cna;
 		else {
-		    tmp = EncodeElement2(x, i + j*nr, quote_col[j], qmethod,
+		    tmp = EncodeElement2(x, i + (R_xlen_t)j*nr,
+		                         quote_col[j], qmethod,
 					&strBuf, sdec);
 		}
 		Rconn_printf(con, "%s", tmp);
