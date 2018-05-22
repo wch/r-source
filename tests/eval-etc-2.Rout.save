@@ -250,8 +250,6 @@ Matrix+           is(Matrix(FALSE, 1,1), "sparseMatrix"))
 + })
 > sy <- sparseMatrix(i = c(2, 4, 3:5), j = c(4, 7:5, 5), x = 1:5, dims = c(7, 
 +     7), symmetric = TRUE)
-> 
-> source(file.path(Sys.getenv("SRCDIR"), "eval-fns.R"), echo = TRUE)
 
 > pd0 <- function(expr, backtick = TRUE, ...) parse(text = deparse(expr, 
 +     backtick = backtick, ...))

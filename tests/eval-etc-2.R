@@ -38,8 +38,6 @@ if(require("Matrix")) withAutoprint({ cat("Trying some Matrix objects, too\n")
                        dims = c(7,7), symmetric=TRUE)
 })
 
-source(file.path(Sys.getenv("SRCDIR"), "eval-fns.R"), echo = TRUE)
-                                        #---------
 runEPD_checks() # Action!
 
 summary(warnings())
