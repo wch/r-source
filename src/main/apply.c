@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2016  The R Core Team
+ *  Copyright (C) 2000-2018  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -349,20 +349,31 @@ SEXP attribute_hidden do_rapply(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
-static Rboolean islistfactor(SEXP X)
+/**
+ * Recursively check if  X  is a tree with only factor leaves;
+ *   the "work horse" for do_islistfactor()
+ * @param X  list or expression
+ * @return TRUE(1), FALSE(0) or NA_LOGICAL
+ */
+static int islistfactor(SEXP X)
 {
-    int i, n = length(X);
-    
     switch(TYPEOF(X)) {
     case VECSXP:
-    case EXPRSXP:
-        if(n == 0) return NA_LOGICAL;
-	for(i = 0; i < LENGTH(X); i++)
-	    if(!islistfactor(VECTOR_ELT(X, i))) return FALSE;
-	return TRUE;
-	break;
+    case EXPRSXP: {
+	int n = LENGTH(X), ans = NA_LOGICAL;
+	for(int i = 0; i < n; i++) {
+	    int isLF = islistfactor(VECTOR_ELT(X, i));
+	    if(!isLF)
+		return FALSE;
+	    else if(isLF == TRUE)
+		ans = TRUE;
+	    // else isLF is NA
+	}
+	return ans;
     }
-    return isFactor(X);
+    default:
+	return isFactor(X);
+    }
 }
 
 
@@ -370,42 +381,21 @@ static Rboolean islistfactor(SEXP X)
 
 SEXP attribute_hidden do_islistfactor(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP X;
-    Rboolean lans = TRUE, recursive;
-    int i, n;
-
     checkArity(op, args);
-    X = CAR(args);
-    recursive = asLogical(CADR(args));
-    n = length(X);
-    if(n == 0 || !isVectorList(X)) {
-	lans = FALSE;
-	goto do_ans;
-    }
+    SEXP X = CAR(args);
+    Rboolean recursive = asLogical(CADR(args));
+    int n = length(X);
+    if(n == 0 || !isVectorList(X))
+	return ScalarLogical(FALSE);
+
     if(!recursive) {
-	for(i = 0; i < LENGTH(X); i++)
-	    if(!isFactor(VECTOR_ELT(X, i))) {
-		lans = FALSE;
-		break;
-	    }
-    } else {
-	switch(TYPEOF(X)) {
-	case VECSXP:
-	case EXPRSXP:
-	    break;
-	default:
-	    goto do_ans;
-	}
-        lans = FALSE;
-	for(i = 0; i < LENGTH(X); i++) {
-            Rboolean isfactor = islistfactor(VECTOR_ELT(X, i));
-	    if(!isfactor) {
-		lans = FALSE;
-		break;
-	    } else if (isfactor == TRUE)
-                lans = TRUE;
-        }
+	for(int i = 0; i < n; i++)
+	    if(!isFactor(VECTOR_ELT(X, i)))
+		return ScalarLogical(FALSE);
+
+	return ScalarLogical(TRUE);
     }
-do_ans:
-    return ScalarLogical(lans);
+    else { // recursive:  isVectorList(X) <==> X is VECSXP or EXPRSXP
+	return ScalarLogical((islistfactor(X) == TRUE) ? TRUE : FALSE);
+    }
 }
