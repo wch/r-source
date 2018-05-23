@@ -36,7 +36,7 @@ stopifnot <- function(..., exprs, local = TRUE)
     missE <- missing(exprs)
     cl <-
 	if(missE) {  ## use '...' instead of exprs
-	    match.call()[-1L]
+	    match.call(expand.dots=FALSE)$...
 	} else {
 	    if(...length())
 		stop("Must use 'exprs' or unnamed expressions, but not both")
@@ -61,7 +61,7 @@ stopifnot <- function(..., exprs, local = TRUE)
 	x[seq_len(if(n < 0L) max(length(x) + n, 0L) else min(n, length(x)))]
     abbrev <- function(ae, n = 3L)
 	paste(c(head(ae, n), if(length(ae) > n) "...."), collapse="\n  ")
-    ## benv <- baseenv()
+    ##
     for (i in seq_along(cl)) {
 	cl.i <- cl[[i]]
 	## r <- eval(cl.i, ..)   # with correct warn/err messages:
