@@ -75,26 +75,12 @@
       \item \code{mantelhaen.test()} no longer suffers from integer
       overflow in largish cases, thanks to Ben Bolker's \PR{17383}.
 
-      \item \code{optim(*, lower = c(-Inf, -Inf))} no longer warns (and
-      switches the method), thanks to a suggestion by John Nash.
-
       \item Calling \code{setGeneric("foo")} in a package no longer
       fails when the enclosing environment of the implicit generic
       \code{foo()} is \code{.GlobalEnv}.
 
-      \item \code{predict(fm, newdata)} is now correct also for models
-      where the formula has terms such as \code{splines::ns(..)} or
-      \code{stats::poly(..)}, fixing \PR{17414}, based on a patch from
-      Duncan Murdoch.
-
       \item \code{untar(file("<some>.tar.gz"), *)} now gives a better
       error message, suggesting to use \code{gzfile()} instead.
-
-      \item \code{simulate.lm(glm(*, gaussian(link = <non-default>)))}
-      has been corrected, fixing \PR{17415} thanks to Alex Courtiol.
-
-      \item \code{unlist(x)} no longer fails in some cases of nested
-      empty lists.  Reported by Steven Nydick.
 
       \item Method dispatch uses more relevant environments when looking
       up class definitions.
@@ -145,6 +131,20 @@
       well documented examples.
 
       \item Compressed file connections are marked as blocking.
+
+      \item \code{optim(*, lower = c(-Inf, -Inf))} no longer warns (and
+      switches the method), thanks to a suggestion by John Nash.
+
+      \item \code{predict(fm, newdata)} is now correct also for models
+      where the formula has terms such as \code{splines::ns(..)} or
+      \code{stats::poly(..)}, fixing \PR{17414}, based on a patch from
+      Duncan Murdoch.
+
+      \item \code{simulate.lm(glm(*, gaussian(link = <non-default>)))}
+      has been corrected, fixing \PR{17415} thanks to Alex Courtiol.
+
+      \item \code{unlist(x)} no longer fails in some cases of nested
+      empty lists.  Reported by Steven Nydick.
     }
   }
 }
