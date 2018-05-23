@@ -28,6 +28,11 @@
 
       \item \code{optim(*, lower = c(-Inf, -Inf))} no longer warns (and
       switches the method), thanks to a suggestion by John Nash.
+
+      \item \code{predict(fm, newdata)} is now correct also for models
+      where the formula has terms such as \code{splines::ns(..)} or
+      \code{stats::poly(..)}, fixing \PR{17414}, based on a patch from
+      Duncan Murdoch.
     }
   }
 }
