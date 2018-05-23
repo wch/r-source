@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 1998-2018   The R Core Team.
+ *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -65,6 +65,8 @@
  *	"paper.size"		./devPS.c
 
  *	"timeout"		./connections.c
+
+ *      "deparse.max.lines"     ./deparse.c (& PrintCall() in ./eval.c, ./main.c
 
  *	"check.bounds"
  *	"error"
@@ -345,9 +347,9 @@ void attribute_hidden InitOptions(void)
     v = CDR(v);
 
     SET_TAG(v, install("PCRE_study"));
-    if (R_PCRE_study == -1) 
+    if (R_PCRE_study == -1)
 	SETCAR(v, ScalarLogical(TRUE));
-    else if (R_PCRE_study == -2) 
+    else if (R_PCRE_study == -2)
 	SETCAR(v, ScalarLogical(FALSE));
     else
 	SETCAR(v, ScalarInteger(R_PCRE_study));
@@ -714,28 +716,28 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 		if (TYPEOF(argi) == LGLSXP) {
 		    int k = asLogical(argi) > 0;
 		    R_PCRE_study = k ? -1 : -2;
-		    SET_VECTOR_ELT(value, i, 
+		    SET_VECTOR_ELT(value, i,
 				   SetOption(tag, ScalarLogical(k)));
 		} else {
 		    R_PCRE_study = asInteger(argi);
 		    if (R_PCRE_study < 0) {
 			R_PCRE_study = -2;
-			SET_VECTOR_ELT(value, i, 
+			SET_VECTOR_ELT(value, i,
 				       SetOption(tag, ScalarLogical(-2)));
 		    } else
-			SET_VECTOR_ELT(value, i, 
+			SET_VECTOR_ELT(value, i,
 				       SetOption(tag, ScalarInteger(R_PCRE_study)));
 		}
 	    }
 	    else if (streql(CHAR(namei), "PCRE_use_JIT")) {
 		int use_JIT = asLogical(argi);
 		R_PCRE_use_JIT = (use_JIT > 0); // NA_LOGICAL is < 0
-		SET_VECTOR_ELT(value, i, 
+		SET_VECTOR_ELT(value, i,
 			       SetOption(tag, ScalarLogical(R_PCRE_use_JIT)));
 	    }
 	    else if (streql(CHAR(namei), "PCRE_limit_recursion")) {
 		R_PCRE_limit_recursion = asLogical(argi);
-		SET_VECTOR_ELT(value, i, 
+		SET_VECTOR_ELT(value, i,
 			       SetOption(tag, ScalarLogical(R_PCRE_limit_recursion)));
 	    }
 	    else {
