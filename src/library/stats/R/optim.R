@@ -25,8 +25,7 @@ optim <-
     fn1 <- function(par) fn(par,...)
     gr1 <- if (!is.null(gr)) function(par) gr(par,...)
     method <- match.arg(method)
-    if((length(lower) > 1L || length(upper) > 1L ||
-       lower[1L] != -Inf || upper[1L] != Inf)
+    if((any(lower > -Inf) || any(upper < Inf))
        && !any(method == c("L-BFGS-B","Brent"))) {
 	warning("bounds can only be used with method L-BFGS-B (or Brent)")
 	method <- "L-BFGS-B"

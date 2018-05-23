@@ -25,6 +25,9 @@
       well documented examples.
 
       \item Compressed file connections are marked as blocking.
+
+      \item \code{optim(*, lower = c(-Inf, -Inf))} no longer warns (and
+      switches the method), thanks to a suggestion by John Nash.
     }
   }
 }
