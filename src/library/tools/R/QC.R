@@ -7451,6 +7451,16 @@ function(dir, localOnly = FALSE)
     if(!foss && analyze_license(l_d)$is_verified)
         out$new_license <- list(meta["License"], l_d)
 
+    ## for incoming check we may want to check for GNU make in SystemRequirements here
+	## in order to auto-accept packages once this was already accepted before
+	if(config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_NOTE_GNUMAKE_INCOMING_",
+                                           "FALSE"))){
+        SysReq <- meta["SystemRequirements"]
+        if(!is.na(SysReq) && grepl("GNU [Mm]ake", SysReq)) {
+            out$GNUmake <- TRUE
+        }
+    }
+	
     ## Re-check for some notes if enabled and current version was published recently enough.
     if(!inherits(year <- tryCatch(format(as.Date(meta0["Published"]), "%Y"),
                                      error = identity),
@@ -7498,6 +7508,18 @@ function(dir, localOnly = FALSE)
                 if(grepl(paste0("^['\"]?", package), ignore.case = TRUE, descr0) 
                         || grepl("^(The|This|A|In this|In the) package", descr0)){
                     out$descr_bad_start <- NULL
+                }
+        }
+		
+        # possible GNU make usage and only report if this is new
+        if(NROW(out$GNUmake)
+            && config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_GNUMAKE_RECHECK_MAYBE_",
+                                 "TRUE"))
+            && (year >= as.numeric(Sys.getenv("_R_CHECK_CRAN_INCOMING_GNUMAKE_RECHECK_START_",
+                                 "2015")))) {
+                SysReq0 <- meta0["SystemRequirements"]
+                if(!is.na(SysReq0) && grepl("GNU [Mm]ake", SysReq0)) {
+                    out$GNUmake <- NULL
                 }
         }
     }
@@ -7831,6 +7853,9 @@ function(x, ...)
                       collapse = "\n")
             }
             )),
+      fmt(c(if(length(x$GNUmake)) {
+                "GNU make is a SystemRequirements."
+            })),
       fmt(c(if(length(x$bad_date)) {
                 "The Date field is not in ISO 8601 yyyy-mm-dd format."
             },
