@@ -33,6 +33,12 @@
       where the formula has terms such as \code{splines::ns(..)} or
       \code{stats::poly(..)}, fixing \PR{17414}, based on a patch from
       Duncan Murdoch.
+
+      \item \code{simulate.lm(glm(*, gaussian(link = <non-default>)))}
+      has been corrected, fixing \PR{17415} thanks to Alex Courtiol.
+
+      \item \code{simulate.lm(glm(*, gaussian(link = <non-default>)))}
+      has been corrected, fixing \PR{17415} thanks to Alex Courtiol.
     }
   }
 }
