@@ -1,7 +1,7 @@
 #  File src/library/base/R/namespace.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -192,7 +192,8 @@ dynGet <- function(x, ifnotfound = stop(gettextf("%s not found",
 
 loadNamespace <- function (package, lib.loc = NULL,
                            keep.source = getOption("keep.source.pkgs"),
-                           partial = FALSE, versionCheck = NULL)
+                           partial = FALSE, versionCheck = NULL,
+                           keep.parse.data = getOption("keep.parse.data.pkgs"))
 {
     libpath <- attr(package, "LibPath")
     package <- as.character(package)[[1L]]
@@ -524,7 +525,8 @@ loadNamespace <- function (package, lib.loc = NULL,
         if (file.exists(codeFile)) {
 	    # The code file has been converted to the native encoding
 	    save.enc <- options(encoding = "native.enc")
-            res <- try(sys.source(codeFile, env, keep.source = keep.source))
+            res <- try(sys.source(codeFile, env, keep.source = keep.source,
+                                  keep.parse.data = keep.parse.data))
 	    options(save.enc)
             if(inherits(res, "try-error"))
                 stop(gettextf("unable to load R code in package %s",

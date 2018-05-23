@@ -49,6 +49,14 @@
 
       \item There is a new function, \code{nullfile()}, to give the file
       name of the null device on the current platform.
+
+      \item There are two new options, \code{keep.parse.data} and
+      \code{keep.parse.data.pkgs}, which control whether parse data are
+      included into sources when \code{keep.source} or
+      \code{keep.source.pkgs} is \code{TRUE}.  By default,
+      \code{keep.parse.data.pkgs} is now \code{FALSE}, which changes
+      previous behavior and significantly reduces space and time overhead
+      when sources are kept when installing packages.
     }
   }
 

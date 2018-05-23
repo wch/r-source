@@ -1,6 +1,6 @@
 % File src/library/base/man/sys.source.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{sys.source}
@@ -13,6 +13,7 @@
 \usage{
 sys.source(file, envir = baseenv(), chdir = FALSE,
            keep.source = getOption("keep.source.pkgs"),
+           keep.parse.data = getOption("keep.parse.data.pkgs"),
            toplevel.env = as.environment(envir))
 }
 \arguments{
@@ -27,13 +28,17 @@ sys.source(file, envir = baseenv(), chdir = FALSE,
   \item{keep.source}{logical.  If \code{TRUE}, functions keep
     their source including comments, see
     \code{\link{options}(keep.source = *)} for more details.}
+  \item{keep.parse.data}{logical.  If \code{TRUE} and \code{keep.source} is
+    also \code{TRUE}, functions keep parse data with their source, see
+    \code{\link{options}(keep.parse.data = *)} for more details.}
   \item{toplevel.env}{an \R environment to be used as top level while
     evaluating the expressions.  This argument is useful for frameworks
     running package tests; the default should be used in other cases}
 }
 \details{
   For large files, \code{keep.source = FALSE} may save quite a bit of
-  memory.
+  memory. Disabling only parse data via \code{keep.parse.data = FALSE}
+  can already save a lot.
 %%FIXME:  the following paragraph should be somewhere it's likely to be seen
   In order for the code being evaluated to use the correct environment
   (for example, in global assignments), source code in packages should

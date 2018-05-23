@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2005 R Core Team
+ *  Copyright (C) 1998-2018 R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -35,6 +35,7 @@ typedef struct SrcRefState SrcRefState;
 struct SrcRefState {
 
     Rboolean keepSrcRefs;	/* Whether to attach srcrefs to objects as they are parsed */
+    Rboolean keepParseData;	/* Whether to attach also parse data to srcrefs */
     Rboolean didAttach;		/* Record of whether a srcref was attached */
     SEXP SrcFile;		/* The srcfile object currently being parsed */
     SEXP Original;		/* The underlying srcfile object */

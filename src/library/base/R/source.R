@@ -1,7 +1,7 @@
 #  File src/library/base/R/source.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -249,13 +249,16 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 sys.source <-
 function(file, envir = baseenv(), chdir = FALSE,
 	 keep.source = getOption("keep.source.pkgs"),
+	 keep.parse.data = getOption("keep.parse.data.pkgs"),
 	 toplevel.env = as.environment(envir))
 {
     if(!(is.character(file) && file.exists(file)))
 	stop(gettextf("'%s' is not an existing file", file))
     keep.source <- as.logical(keep.source)
+    keep.parse.data <- as.logical(keep.parse.data)
     oop <- options(keep.source = keep.source,
-		   topLevelEnvironment = toplevel.env)
+                   keep.parse.data = keep.parse.data,
+                   topLevelEnvironment = toplevel.env)
     on.exit(options(oop))
     if (keep.source) {
     	lines <- readLines(file, warn = FALSE)

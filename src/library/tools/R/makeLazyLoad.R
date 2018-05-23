@@ -1,7 +1,7 @@
 #  File src/library/tools/R/makeLazyLoad.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 code2LazyLoadDB <-
     function(package, lib.loc = NULL,
              keep.source = getOption("keep.source.pkgs"),
+             keep.parse.data = getOption("keep.parse.data.pkgs"),
              compress = TRUE)
 {
     pkgpath <- find.package(package, lib.loc, quiet = TRUE)
@@ -28,7 +29,10 @@ code2LazyLoadDB <-
     if (packageHasNamespace(package, dirname(pkgpath))) {
         if (! is.null(.getNamespace(as.name(package))))
             stop("namespace must not be already loaded")
-        ns <- suppressPackageStartupMessages(loadNamespace(package, lib.loc, keep.source, partial = TRUE))
+        ns <- suppressPackageStartupMessages(loadNamespace(
+                  package = package, lib.loc = lib.loc,
+                  keep.source = keep.source, keep.parse.data = keep.parse.data,
+                  partial = TRUE))
         makeLazyLoadDB(ns, dbbase, compress = compress)
     }
     else
@@ -256,7 +260,8 @@ makeLazyLoadDB <- function(from, filebase, compress = TRUE, ascii = FALSE,
 
 makeLazyLoading <-
     function(package, lib.loc = NULL, compress = TRUE,
-             keep.source = getOption("keep.source.pkgs"))
+             keep.source = getOption("keep.source.pkgs"),
+             keep.parse.data = getOption("keep.parse.data.pkgs"))
 {
     if(!is.logical(compress) && compress %notin% c(2,3))
 	stop(gettextf("invalid value for '%s' : %s", "compress",
@@ -285,7 +290,9 @@ makeLazyLoading <-
         warning("package seems to be using lazy loading already")
     else {
         code2LazyLoadDB(package, lib.loc = lib.loc,
-                        keep.source = keep.source, compress = compress)
+                        keep.source = keep.source,
+                        keep.parse.data = keep.parse.data,
+                        compress = compress)
         file.copy(loaderFile, codeFile, TRUE)
     }
 

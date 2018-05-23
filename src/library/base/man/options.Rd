@@ -178,6 +178,19 @@ getOption(x, default = NULL)
       on a user interrupt if the interrupt condition is not otherwise
       handled.}
 
+    \item{\code{keep.parse.data}:}{When internally storing source code
+      (\code{keep.source} is TRUE), also store parse data.  Parse data can
+      then be retrieved with \code{\link{getParseData}()} and used e.g.  for
+      spell checking of string constants or syntax highlighting.  The value
+      has effect only when internally storing source code (see
+      \code{keep.source}).  The default is \code{TRUE}.}
+
+    \item{\code{keep.parse.data.pkgs}:}{As for \code{keep.parse.data}, used
+      only when packages are installed.  Defaults to \code{FALSE} unless the
+      environment variable \env{R_KEEP_PKG_PARSE_DATA} is set to \code{yes}. 
+      The space overhead of parse data can be substantial even after
+      compression and it causes performace overhead when loading packages.}
+
     \item{\code{keep.source}:}{When \code{TRUE}, the source code for
       functions (newly defined or loaded) is stored internally
       allowing comments to be kept in the right places.  Retrieve the
