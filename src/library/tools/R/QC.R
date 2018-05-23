@@ -7451,22 +7451,57 @@ function(dir, localOnly = FALSE)
     if(!foss && analyze_license(l_d)$is_verified)
         out$new_license <- list(meta["License"], l_d)
 
-    ## Re-check for possible mis-spellings and keep only the new ones,
-    ## if enabled and current version was published recently enough.
-    if(NROW(a <- out$spelling)
-       && config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_ASPELL_RECHECK_MAYBE_",
-                                           "TRUE"))
-       && !inherits(year <- tryCatch(format(as.Date(meta0["Published"]),
-                                            "%Y"),
+    ## Re-check for some notes if enabled and current version was published recently enough.
+    if(!inherits(year <- tryCatch(format(as.Date(meta0["Published"]), "%Y"),
                                      error = identity),
-                    "error")
-       && (year >=
-           as.numeric(Sys.getenv("_R_CHECK_CRAN_INCOMING_ASPELL_RECHECK_START_",
-                                 "2013")))) {
-        a0 <- .aspell_package_description_for_CRAN(meta = meta0)
-        out$spelling <- a[is.na(match(a$Original, a0$Original)), ]
-    }
+                    "error")){
+					
+        # possible mis-spellings and keep only the new ones:
+		if(NROW(a <- out$spelling)
+           && config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_ASPELL_RECHECK_MAYBE_",
+                                               "TRUE"))
+           && (year >=
+               as.numeric(Sys.getenv("_R_CHECK_CRAN_INCOMING_ASPELL_RECHECK_START_",
+                                     "2013")))) {
+            a0 <- .aspell_package_description_for_CRAN(meta = meta0)
+            out$spelling <- a[is.na(match(a$Original, a0$Original)), ]
+        }
 
+        # possible title_includes_name and only report if the title actually changed
+        if(NROW(out$title_includes_name)
+            && config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_TITLE_INCLUDES_NAME_RECHECK_MAYBE_",
+                                "TRUE"))
+            && (year >= as.numeric(Sys.getenv("_R_CHECK_CRAN_INCOMING_TITLE_INCLUDES_NAME_RECHECK_START_",
+                                     "2016")))
+            && meta0["Title"] == meta["Title"]) {
+                out$title_includes_name <- NULL
+		}
+		
+        # possible title case problems and only report if the title actually changed
+        if(NROW(out$title_case)
+            && config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_TITLE_CASE_RECHECK_MAYBE_",
+                                           "TRUE"))
+            && (year >= as.numeric(Sys.getenv("_R_CHECK_CRAN_INCOMING_TITLE_CASE_RECHECK_START_",
+                                 "2016")))
+            && meta0["Title"] == meta["Title"]) {
+                out$title_case <- NULL
+        }
+
+        # possible bad Description start and only report if new:
+        if(NROW(out$descr_bad_start)
+            && config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_DESCR_BAD_START_RECHECK_MAYBE_",
+                                           "TRUE"))
+            && (year >= as.numeric(Sys.getenv("_R_CHECK_CRAN_INCOMING_DESCR_BAD_START_RECHECK_START_",
+                                 "2016")))) {
+                descr0 <- trimws(as.vector(meta0["Description"]))
+                descr0 <- gsub("[\n\t]", " ", descr0)
+                if(grepl(paste0("^['\"]?", package), ignore.case = TRUE, descr0) 
+                        || grepl("^(The|This|A|In this|In the) package", descr0)){
+                    out$descr_bad_start <- NULL
+                }
+        }
+    }
+	
     out
 }
 
