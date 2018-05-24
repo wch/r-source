@@ -145,6 +145,9 @@
 
       \item \code{unlist(x)} no longer fails in some cases of nested
       empty lists.  Reported by Steven Nydick.
+
+      \item \code{qr.coef(qr(<all 0, w/ colnames>))} now works.
+      Reported by Kun Ren.
     }
   }
 }

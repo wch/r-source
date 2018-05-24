@@ -1812,6 +1812,14 @@ stopifnot(exprs = {
 })
 
 
+## qr.coef(qr(<all 0, w/ colnames>)) 
+qx <- qr(x <- matrix(0, 10, 2, dimnames = list(NULL, paste0("x", 1:2))))
+qc <- qr.coef(qx, x[,1])
+stopifnot(identical(qc, c(x1 = NA_real_, x2 = NA_real_)))
+## qr.coef() gave  Error ...: object 'pivotted' not found | in R <= 3.5.0
+
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())
