@@ -820,7 +820,7 @@ the current package when @code{library} or @code{require} is called.
 Each package name may be optionally followed by a comment in parentheses
 specifying a version requirement.  The comment should contain a
 comparison operator, whitespace and a valid version number,
-e.g. @samp{MASS (>= 3.1-20)}.
+e.g.@: @samp{MASS (>= 3.1-20)}.
 
 The @samp{Depends} field can also specify a dependence on a certain
 version of @R{} --- e.g., if the package works only with @R{}
@@ -3470,7 +3470,7 @@ need to be declared to @LaTeX{} via a line like
 @end example
 @noindent
 (It is also possible to use the more recent @samp{inputenx} @LaTeX{}
-package.) For files where this line is not needed (e.g. chapters
+package.) For files where this line is not needed (e.g.@: chapters
 included within the body of a larger document, or non-Sweave
 vignettes), the encoding may be declared using a comment like
 @example
@@ -3799,7 +3799,7 @@ These hooks are often used incorrectly.  People forget to export
 @code{.Last.lib}.   Compiled code should be loaded in @code{.onLoad} (or
 @emph{via} a @code{useDynLb} directive: see below) and unloaded in
 @code{.onUnload}.  Do remember that a package's namespace can be loaded
-without the namespace being attached (e.g. by @code{pkgname::fun}) and
+without the namespace being attached (e.g.@: by @code{pkgname::fun}) and
 that a package can be detached and re-attached whilst its namespace
 remains loaded.
 
@@ -5819,8 +5819,8 @@ technical discussion of current @file{Rd} syntax, see
 
 @file{Rd} files consist of four types of text input.  The most common
 is @LaTeX{}-like, with the backslash used as a prefix on markup
-(e.g. @code{\alias}), and braces used to indicate arguments
-(e.g. @code{@{load@}}).  The least common type of text is `verbatim'
+(e.g.@: @code{\alias}), and braces used to indicate arguments
+(e.g.@: @code{@{load@}}).  The least common type of text is `verbatim'
 text, where no markup other than the comment marker (@code{%}) is
 processed.  There is also a rare variant of `verbatim' text
 (used in @code{\eqn}, @code{\deqn}, @code{\figure},
@@ -5828,8 +5828,8 @@ and @code{\newcommand}) where comment markers need not be escaped.
 The final type is @R{}-like, intended for @R{} code, but allowing some
 embedded macros.  Quoted strings within @R{}-like text are handled
 specially: regular character escapes such as @code{\n} may be entered
-as-is.  Only markup starting with @code{\l} (e.g.  @code{\link}) or
-@code{\v} (e.g. @code{\var}) will be recognized within quoted strings.
+as-is.  Only markup starting with @code{\l} (e.g.@: @code{\link}) or
+@code{\v} (e.g.@: @code{\var}) will be recognized within quoted strings.
 The rarely used vertical tab @code{\v} must be entered as @code{\\v}.
 
 Each macro defines the input type for its argument.  For example, the
@@ -6163,7 +6163,7 @@ line) to mark code that should be run by @code{example()} but not by
 @code{R CMD check} (by default: the option @option{--run-donttest} can
 be used).  This should be needed only occasionally but can be used for
 code which might fail in circumstances that are hard to test for, for
-example in some locales.  (Use e.g. @code{capabilities()} or
+example in some locales.  (Use e.g.@: @code{capabilities()} or
 @code{nzchar(Sys.which("someprogram"))} to test for features needed in
 the examples wherever possible, and you can also use @code{try()} or
 @code{tryCatch()}.  Use @code{interactive()} to condition examples which
@@ -6395,7 +6395,7 @@ The @code{\subsection} macro takes arguments in the same format as
 @code{\section}, but is used within a section, so it may be used to
 nest subsections within sections or other subsections.  There is no
 predefined limit on the nesting level, but formatting is not designed
-for more than 3 levels (i.e. subsections within subsections within
+for more than 3 levels (i.e.@: subsections within subsections within
 sections).
 
 Note that additional named sections are always inserted at a fixed
@@ -7003,7 +7003,7 @@ The macro is run when displaying the help page.
 Conditionals such as @code{#ifdef}
 (@pxref{Platform-specific sections}) are applied after the
 @code{build} macros but before the @code{install} macros.  In some
-situations (e.g. installing directly from a source directory without a
+situations (e.g.@: installing directly from a source directory without a
 tarball, or building a binary package) the above description is not
 literally accurate, but authors can rely on the sequence being
 @code{build}, @code{#ifdef}, @code{install}, @code{render}, with all
@@ -7197,7 +7197,7 @@ including the information in the @file{DESCRIPTION} files.
 @findex R CMD Sweave
 @findex R CMD Stangle
 @code{R CMD Sweave} and @code{R CMD Stangle} process vignette-like
-documentation files (e.g. Sweave vignettes with extension
+documentation files (e.g.@: Sweave vignettes with extension
 @samp{.Snw} or @samp{.Rnw}, or other non-Sweave vignettes).
 @code{R CMD Stangle} is used to extract the @R{} code fragments.
 

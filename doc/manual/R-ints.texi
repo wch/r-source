@@ -418,7 +418,7 @@ elements (rounded up to a multiple of 8 bytes, with the 8-byte blocks
 being the `Vcells' referred in the documentation for @code{gc()}).
 
 The `data' for the various types are given in the table below.  A lot of
-this is interpretation, i.e. the types are not checked.
+this is interpretation, i.e.@: the types are not checked.
 
 @table @code
 @item NILSXP
@@ -860,7 +860,7 @@ context stack.
 
 Note that the @code{sysparent} element of the structure is not the same
 thing as @code{sys.parent()}.  Element @code{sysparent} is primarily
-used in managing changes of the function being evaluated, i.e. by
+used in managing changes of the function being evaluated, i.e.@: by
 @code{Recall} and method dispatch.
 
 @code{CTXT_CCODE} contexts are currently used in @code{cat()},
@@ -1258,7 +1258,7 @@ not all) of the character manipulation functions will either preserve
 the declaration or re-encode the character string.
 
 Strings that refer to the OS such as file names need to be passed
-through a wide-character interface on some OSes (e.g. Windows).
+through a wide-character interface on some OSes (e.g.@: Windows).
 
 When are character strings declared to be of known encoding?  One way is
 to do so directly via @code{Encoding}.  The parser declares the encoding
@@ -2753,7 +2753,7 @@ the user for confirmation.
 @item when a device become the current device or stops being the current
 device (this is usually used to change the window title on a screen
 device).
-@item when drawing starts or finishes (e.g. used to flush graphics to
+@item when drawing starts or finishes (e.g.@: used to flush graphics to
 the screen when drawing stops).
 @item wait for an event, for example a mouse click or keypress.
 @item an `onexit' action, to clean up if plotting is interrupted (by an
@@ -3049,7 +3049,7 @@ and @code{descent} how far it extends below the baseline.
 the character is placed.  For @code{ascent} and @code{descent} this is
 intended to be the bounding box of the `ink' put down by the glyph and
 not the box which might be used when assembling a line of conventional
-text (it needs to be for e.g. @code{hat(beta)} to work correctly).
+text (it needs to be for e.g.@: @code{hat(beta)} to work correctly).
 However, the @code{width} is used in plotmath to advance to the next
 character, and so needs to include left and right bearings.
 

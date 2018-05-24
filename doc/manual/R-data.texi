@@ -414,7 +414,7 @@ currently support for export to @code{SAS}, @code{SPSS} and @code{Stata}.
 
 When reading data from text files, it is the responsibility of the user
 to know and to specify the conventions used to create that file,
-e.g. the comment character, whether a header line is present, the value
+e.g.@: the comment character, whether a header line is present, the value
 separator, the representation for missing values (and so on) described
 in @ref{Export to text files}.  A markup language which can be used to
 describe not only content but also the structure of the content can
@@ -776,7 +776,7 @@ covered under @code{read.table}.  The most crucial argument is
 @code{what}, which specifies a list of modes of variables to be read
 from the file.  If the list is named, the names are used for the
 components of the returned list.  Modes can be numeric, character or
-complex, and are usually specified by an example, e.g. @code{0},
+complex, and are usually specified by an example, e.g.@: @code{0},
 @code{""} or @code{0i}.  For example
 
 @example
@@ -2099,7 +2099,7 @@ including closed and terminal connections, by @code{showConnections(all
 The generic function @code{seek} can be used to read and (on some
 connections) reset the current position for reading or writing.
 Unfortunately it depends on OS facilities which may be unreliable
-(e.g. with text files under Windows).  Function @code{isSeekable}
+(e.g.@: with text files under Windows).  Function @code{isSeekable}
 reports if @code{seek} can change the position on the connection
 given by its argument.
 
@@ -2139,7 +2139,7 @@ memory.
 
 @code{readBin} reads a stream of bytes from the file and interprets them
 as a vector of mode given by @code{what}.  This can be either an object
-of the appropriate mode (e.g. @code{what=integer()}) or a character
+of the appropriate mode (e.g.@: @code{what=integer()}) or a character
 string describing the mode (one of the five given in the previous
 paragraph or @code{"double"} or @code{"int"}).  Argument @code{n}
 specifies the maximum number of vector elements to read from the

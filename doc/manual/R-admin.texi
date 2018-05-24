@@ -1808,7 +1808,7 @@ There are two ways to run @R{} on macOS from a @acronym{CRAN} binary
 distribution.
 
 There is a GUI console normally installed with the @R{} icon in
-@file{/Applications} which you can run by double-clicking (e.g. from
+@file{/Applications} which you can run by double-clicking (e.g.@: from
 Launchpad or Finder).  (If you cannot find it there it was possibly
 installed elsewhere so try searching for it in Spotlight.) This is
 usually referred to as @Rapp{} to distinguish it from command-line @R{}:
@@ -1826,7 +1826,7 @@ typed as commands like any other Unix-alike: see the next chapter of
 this manual.  There are some small differences which may surprise users
 of @R{} on other platforms, notably the default location of the personal
 library directory (under @file{~/Library/R},
-e.g. @file{~/Library/R/3.5/library}), and that warnings, messages and
+e.g.@: @file{~/Library/R/3.5/library}), and that warnings, messages and
 other output to @file{stderr} are highlighted in bold.
 
 @c https://stat.ethz.ch/pipermail/r-sig-mac/2014-October/011131.html
@@ -4353,7 +4353,7 @@ scripts (or using the @env{SHELL} chosen by @file{configure}).  This is
 almost always satisfactory, but on a few systems @file{/bin/sh} is not a
 Bourne shell or clone, and the shell to be used can be changed by
 setting the configure variable @env{R_SHELL} to a suitable value (a full
-path to a shell, e.g. @file{/usr/local/bin/bash}).
+path to a shell, e.g.@: @file{/usr/local/bin/bash}).
 
 @node Using make, Using FORTRAN, Setting the shell, Configuration on a Unix-alike
 @section Using make
