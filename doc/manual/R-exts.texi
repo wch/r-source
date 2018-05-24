@@ -8706,7 +8706,7 @@ where @code{float-divide-by-zero} is not desirable for @R{} uses and
 @c and @code{vptr} checks produced many warnings on GCC's own C++ headers,
 @c so should be disabled.
 
-From GCC 8 @code{signed-integer-overflow} will no longer be a default
+From GCC 8 @code{signed-integer-overflow} is no longer be a default
 part of @option{-fsanitize=undefined}, but can be specified separately.
 It adds options @option{-fsanitize=pointer-overflow} an
 @option{-fsanitize=builtin}.
