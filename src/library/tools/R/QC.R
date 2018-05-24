@@ -7453,7 +7453,7 @@ function(dir, localOnly = FALSE)
 
     ## for incoming check we may want to check for GNU make in SystemRequirements here
 	## in order to auto-accept packages once this was already accepted before
-	if(config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_NOTE_GNUMAKE_INCOMING_",
+	if(config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_NOTE_GNU_MAKE_",
                                            "FALSE"))){
         SysReq <- meta["SystemRequirements"]
         if(!is.na(SysReq) && grepl("GNU [Mm]ake", SysReq)) {
@@ -7513,9 +7513,9 @@ function(dir, localOnly = FALSE)
 		
         # possible GNU make usage and only report if this is new
         if(NROW(out$GNUmake)
-            && config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_GNUMAKE_RECHECK_MAYBE_",
+            && config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_GNU_MAKE_RECHECK_MAYBE_",
                                  "TRUE"))
-            && (year >= as.numeric(Sys.getenv("_R_CHECK_CRAN_INCOMING_GNUMAKE_RECHECK_START_",
+            && (year >= as.numeric(Sys.getenv("_R_CHECK_CRAN_INCOMING_GNU_MAKE_RECHECK_START_",
                                  "2015")))) {
                 SysReq0 <- meta0["SystemRequirements"]
                 if(!is.na(SysReq0) && grepl("GNU [Mm]ake", SysReq0)) {
