@@ -1,6 +1,6 @@
 % File src/library/base/man/scan.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{scan}
@@ -61,7 +61,7 @@ scan(file = "", what = double(), nmax = -1, n = -1, sep = "",
     should have elements which are one of the first six (\link{atomic})
     types listed or \code{NULL}, see section \sQuote{Details} below.}
 
-  \item{nmax}{integer: the maximum number of data values to be read, or if
+  \item{nmax}{the maximum number of data values to be read, or if
     \code{what} is a list, the maximum number of records to be read.  If
     omitted or not positive or an invalid value for an integer
     (and \code{nlines} is not set to a positive value), \code{scan} will

@@ -1718,6 +1718,40 @@ int asInteger(SEXP x)
     return NA_INTEGER;
 }
 
+R_xlen_t asXLength(SEXP x)
+{
+    int warn = 0;
+    R_xlen_t res;
+    const R_xlen_t na = -999; /* any negative number should do */
+
+    if (isVectorAtomic(x) && XLENGTH(x) >= 1) {
+	switch (TYPEOF(x)) {
+	case INTSXP:
+	{
+	    int res = INTEGER_ELT(x, 0);
+	    if (res == NA_INTEGER)
+		return na;
+	    else
+		return (R_xlen_t) res;
+	}
+	case LGLSXP:
+	case REALSXP:
+	case CPLXSXP:
+	case STRSXP:
+	    break;
+	default:
+	    UNIMPLEMENTED_TYPE("asXLength", x);
+	}
+    } else if(TYPEOF(x) != CHARSXP)
+	return na;
+
+    double d = asReal(x);
+    if (!R_FINITE(d) || d > R_XLEN_T_MAX || d < 0)
+	return na;
+    else
+	return (R_xlen_t) d;
+}
+
 double asReal(SEXP x)
 {
     int warn = 0;

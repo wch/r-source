@@ -877,6 +877,7 @@ extern0 int R_PCRE_limit_recursion;
 
 # define allocCharsxp		Rf_allocCharsxp
 # define asVecSize		Rf_asVecSize
+# define asXLength		Rf_asXLength
 # define begincontext		Rf_begincontext
 # define BindDomain		Rf_BindDomain
 # define check_stack_balance	Rf_check_stack_balance
@@ -1099,6 +1100,7 @@ SEXP Rf_EnsureString(SEXP);
 SEXP Rf_allocCharsxp(R_len_t);
 SEXP Rf_append(SEXP, SEXP); /* apparently unused now */
 R_xlen_t asVecSize(SEXP x);
+R_xlen_t asXLength(SEXP x);
 void check1arg(SEXP, SEXP, const char *);
 void Rf_checkArityCall(SEXP, SEXP, SEXP);
 void CheckFormals(SEXP);
