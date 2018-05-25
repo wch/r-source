@@ -1720,8 +1720,6 @@ int asInteger(SEXP x)
 
 R_xlen_t asXLength(SEXP x)
 {
-    int warn = 0;
-    R_xlen_t res;
     const R_xlen_t na = -999; /* any negative number should do */
 
     if (isVectorAtomic(x) && XLENGTH(x) >= 1) {
