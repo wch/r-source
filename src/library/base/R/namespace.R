@@ -1527,7 +1527,8 @@ registerS3methods <- function(info, package, env)
 	    table <- new.env(hash = TRUE, parent = baseenv())
 	    defenv[[".__S3MethodsTable__."]] <- table
 	}
-        if(!is.null(e <- table[[nm]])) {
+        if(!is.null(e <- table[[nm]]) &&
+           !identical(e, get(method, envir = envir))) {
             current <- environmentName(environment(e))
             overwrite <<- rbind(overwrite, c(as.vector(nm), current))
         }
