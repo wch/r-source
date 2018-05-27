@@ -189,7 +189,7 @@ getOption(x, default = NULL)
       only when packages are installed.  Defaults to \code{FALSE} unless the
       environment variable \env{R_KEEP_PKG_PARSE_DATA} is set to \code{yes}. 
       The space overhead of parse data can be substantial even after
-      compression and it causes performace overhead when loading packages.}
+      compression and it causes performance overhead when loading packages.}
 
     \item{\code{keep.source}:}{When \code{TRUE}, the source code for
       functions (newly defined or loaded) is stored internally
