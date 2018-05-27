@@ -45,7 +45,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
     Tilde-expansion will be done on file paths.
 #endif
 
-    If this is missing or a zero-length character vector, a listbox of
+    If this is missing, a listbox of
     available packages is presented where possible in an interactive \R
     session.
   }

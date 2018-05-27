@@ -215,7 +215,7 @@ install.packages <-
             paste(INSTALL_opts[[get_package_name(pkg)]], collapse = " ")
     }
 
-    if(missing(pkgs) || !length(pkgs)) {
+    if(missing(pkgs)) {
         if(!interactive()) stop("no packages were specified")
         ## if no packages were specified, use a menu
 	if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA"
@@ -242,9 +242,10 @@ install.packages <-
                                 multiple = TRUE,
                                 title = "Packages", graphics = TRUE)
 	}
-	if(!length(pkgs)) stop("no packages were specified")
     }
 
+    if(!length(pkgs)) return(invisible())
+        
     if(missing(lib) || is.null(lib)) {
         lib <- .libPaths()[1L]
 	if(!quiet && length(.libPaths()) > 1L)
