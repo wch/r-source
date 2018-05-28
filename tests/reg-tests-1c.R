@@ -538,6 +538,20 @@ rd <- tools::parse_Rd(f)
 ## Gave syntax errors because the percent sign in Usage
 ## was taken as the start of a comment.
 
+## pass no arguments to 0-parameter macro
+cat("\\newcommand{\\mac0}{MAC0}\\mac0", file=f)
+rd <- tools::parse_Rd(f)
+stopifnot(identical(as.character(rd), "MAC0\n"))
+
+## pass empty argument to a 1-parameter macro (failed in 3.5.0 and earlier)
+cat("\\newcommand{\\mac1}{MAC1:#1}\\mac1{}", file=f)
+rd <- tools::parse_Rd(f)
+stopifnot(identical(as.character(rd), "MAC1:\n"))
+
+## pass empty argument to a 2-parameter macro (failed in 3.5.0 and earlier)
+cat("\\newcommand{\\mac2}{MAC2:#2}\\mac2{}{XX}", file=f)
+rd <- tools::parse_Rd(f)
+stopifnot(identical(as.character(rd), "MAC2:XX\n"))
 
 ## power.t.test() failure for very large n (etc): PR#15792
 (ptt <- power.t.test(delta = 1e-4, sd = .35, power = .8))
