@@ -1,7 +1,7 @@
 #  File src/library/base/R/qr.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -60,7 +60,7 @@ qr.coef <- function(qr, y)
     if( !is.qr(qr) ) stop("first argument must be a QR decomposition")
     n <- as.integer(nrow(qr$qr)); if(is.na(n)) stop("invalid nrow(qr$qr)")
     p <- as.integer(ncol(qr$qr)); if(is.na(p)) stop("invalid ncol(qr$qr)")
-    k <- as.integer(qr$rank); if(is.na(k)) stop("invalid ncol(qr$rank)")
+    k <- as.integer(qr$rank);     if(is.na(k)) stop("invalid ncol(qr$rank)")
     im <- is.matrix(y)
     if (!im) y <- as.matrix(y)
     ny <- as.integer(ncol(y))
@@ -69,14 +69,12 @@ qr.coef <- function(qr, y)
     isC <- is.complex(qr$qr)
     coef <- matrix(if(isC) NA_complex_ else NA_real_, p, ny)
     ix <- if (p > n) c(seq_len(n), rep(NA, p - n)) else seq_len(p)
-    nam <- colnames(qr$qr)
+    if(!is.null(nam <- colnames(qr$qr))) pivotted <- NA
     if (p == 0L) {
 	pivotted <- FALSE
     } else if(isC) {
-	if(!is.null(nam)) pivotted <- is.unsorted(qr$pivot)
 	coef[qr$pivot, ] <- .Internal(qr_coef_cmplx(qr, y))[ix, ]
     } else if(isTRUE(attr(qr, "useLAPACK"))) {
-	if(!is.null(nam)) pivotted <- is.unsorted(qr$pivot)
 	coef[qr$pivot, ] <- .Internal(qr_coef_real(qr, y))[ix, ]
     } else if (k > 0L) { ## else "Linpack" case, k > 0 :
 	storage.mode(y) <- "double"
@@ -95,12 +93,15 @@ qr.coef <- function(qr, y)
 	    coef[qr$pivot[seq_len(k)], ] <- z$coef
 	else coef                        <- z$coef
     }
-    ## in all cases, fixup dimnames (and drop to vector when y was):
-    if(!is.null(nam))
+    ## else k == 0
+    ## In all cases, fixup dimnames (and drop to vector when y was):
+    if(!is.null(nam)) {
+	if(is.na(pivotted)) pivotted <- is.unsorted(qr$pivot)
 	if(pivotted)
 	    rownames(coef)[qr$pivot] <- nam
 	else # faster
 	    rownames(coef)           <- nam
+    }
     if(im && !is.null(nam <- colnames(y)))
 	colnames(coef) <- nam
     if(im) coef else drop(coef)
