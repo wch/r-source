@@ -5106,8 +5106,11 @@ SEXP attribute_hidden do_sinknumber(SEXP call, SEXP op, SEXP args, SEXP rho)
 #ifdef Win32
 void WinCheckUTF8(void)
 {
-    if(CharacterMode == RGui) WinUTF8out = (SinkCons[R_SinkNumber] == 1);
-    else WinUTF8out = FALSE;
+    if(CharacterMode == RGui)
+	WinUTF8out = (SinkCons[R_SinkNumber] == 1 ||
+	              SinkCons[R_SinkNumber] == 2);
+    else
+	WinUTF8out = FALSE;
 }
 #endif
 
