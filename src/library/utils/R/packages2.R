@@ -1,7 +1,7 @@
 #  File src/library/utils/R/packages2.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -393,7 +393,22 @@ install.packages <-
         bins <- pkgs[pkgs %in% bins]
         srcOnly <- pkgs[! pkgs %in% bins]
         binvers <- av2[bins, "Version"]
-        hasSrc <-  !is.na(av2[bins, "Archs"])
+
+        ## In most cases, packages that need compilation have non-NA "Archs"
+        ## in their binary version and "NeedsCompilation" with value "yes"
+        ## in their source version.  However, the fields are not always
+        ## filled in correctly and some binary packages have executable code
+        ## outside "libs" (so "Archs" is NA), also a later version of a
+        ## package may need compilation but an older one not.  To reduce the
+        ## risk that the user will attempt to install a package from source
+        ## but without having the necessary tools to build it, packages are
+        ## treated as needing compilation whenever they have non-NA "Archs"
+        ## in binary version or/and "NeedsCompilation"="yes" in source
+        ## version.
+
+        hasArchs <-  !is.na(av2[bins, "Archs"])
+        needsCmp <- !(available[bins, "NeedsCompilation"] %in% "no")
+        hasSrc <- hasArchs | needsCmp  
 
         srcvers <- available[bins, "Version"]
         later <- as.numeric_version(binvers) < srcvers
