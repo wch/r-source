@@ -7,6 +7,19 @@
 
 \section{\Rlogo CHANGES IN R-devel}{
 
+   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
+    \itemize{
+      \item Serialization format version 3 becomes the default for all
+      serialization and saving of the workspace. Serialized data in format
+      3 cannot be read by versions of \R prior to version 3.5.0. 
+      Serialization format version 2 is still supported and can be selected
+      by \code{version = 2} in \code{save()}, \code{serialize()} and
+      \code{saveRDS()}. The default can also be changed back for the whole R
+      session by setting environment variables \env{R_DEFAULT_SAVE_VERSION} and
+      \env{R_DEFAULT_SERIALIZE_VERSION} to \code{2}.
+    }
+   }
+
    \subsection{NEW FEATURES}{
     \itemize{
       \item \code{Sys.setFileTime()} has been vectorized, its arguments

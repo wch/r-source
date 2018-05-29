@@ -207,7 +207,7 @@ static int defaultSerializeVersion()
 	if (val == 2 || val == 3)
 	    dflt = val;
 	else
-	    dflt = 2; /* the default */
+	    dflt = 3; /* the default */
     }
     return dflt;
 }
