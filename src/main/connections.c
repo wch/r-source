@@ -4098,7 +4098,12 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	if(!con->canread) error(_("cannot read from this connection"));
     }
+    if(!isRaw && con->text &&
+	(con->buff || con->nPushBack >= 0 || con->inconv))
 
+	/* could be turned into runtime error */
+	warning(_("text connection used with %s(), results may be incorrect"),
+	          "readBin");
     if(!strcmp(what, "character")) {
 	SEXP onechar;
 	PROTECT(ans = allocVector(STRSXP, n));
@@ -4363,6 +4368,10 @@ SEXP attribute_hidden do_writebin(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(!con->canwrite) error(_("cannot write to this connection"));
     }
 
+    if(!isRaw && con->text && con->outconv)
+	/* could be turned into runtime error */
+	warning(_("text connection used with %s(), results may be incorrect"),
+	          "writeBin");
 
     if(TYPEOF(object) == STRSXP) {
 	if(isRaw) {
@@ -4697,6 +4706,12 @@ SEXP attribute_hidden do_readchar(SEXP call, SEXP op, SEXP args, SEXP env)
     if (mbcslocale && !utf8locale && !useBytes)
 	warning(_("can only read in bytes in a non-UTF-8 MBCS locale" ));
     PROTECT(ans = allocVector(STRSXP, n));
+    if(!isRaw && con->text &&
+       (con->buff || con->nPushBack >= 0 || con->inconv))
+
+	/* could be turned into runtime error */
+	warning(_("text connection used with %s(), results may be incorrect"),
+	          "readChar");
     for(i = 0, m = 0; i < n; i++) {
 	int len = INTEGER(nchars)[i];
 	if(len == NA_INTEGER || len < 0)
@@ -4814,6 +4829,10 @@ SEXP attribute_hidden do_writechar(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(!con->canwrite) error(_("cannot write to this connection"));
     }
 
+    if(!isRaw && con->text && con->outconv)
+	/* could be turned into runtime error */
+	warning(_("text connection used with %s(), results may be incorrect"),
+	          "writeChar");
 
     for(i = 0; i < n; i++) {
 	len = INTEGER(nchars)[i];
