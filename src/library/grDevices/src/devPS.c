@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2017  The R Core Team
+ *  Copyright (C) 1998--2018  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -309,7 +309,7 @@ static int GetCharInfo(char *buf, FontMetricInfo *metrics,
     if (!MatchKey(p, "N ")) return 0;
     p = SkipToNextItem(p);
     if(reencode) {
-	sscanf(p, "%s", charname);
+	sscanf(p, "%39s", charname);
 #ifdef DEBUG_PS2
 	Rprintf("char name %s\n", charname);
 #endif
@@ -322,7 +322,7 @@ static int GetCharInfo(char *buf, FontMetricInfo *metrics,
 	    }
 	if (nchar == -1) return 1;
     } else {
-	sscanf(p, "%s", charnames[nchar].cname);
+	sscanf(p, "%39s", charnames[nchar].cname);
     }
     metrics->CharInfo[nchar].WX = WX;
     p = SkipToNextKey(p);
@@ -370,7 +370,7 @@ static int GetKPX(char *buf, int nkp, FontMetricInfo *metrics,
     int i, done = 0;
 
     p = SkipToNextItem(p);
-    sscanf(p, "%s %s %hd", c1, c2, &(metrics->KernPairs[nkp].kern));
+    sscanf(p, "%49s %49s %hd", c1, c2, &(metrics->KernPairs[nkp].kern));
     if (streql(c1, "space") || streql(c2, "space")) return 0;
     for(i = 0; i < 256; i++) {
 	if (!strcmp(c1, charnames[i].cname)) {
