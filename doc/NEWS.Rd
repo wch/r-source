@@ -163,6 +163,10 @@
 
       \item \code{qr.coef(qr(<all 0, w/ colnames>))} now works.
       Reported by Kun Ren.
+
+      \item The radix sort is robust to vectors with >1 billion elements
+      (but long vectors are still unsupported). Thanks to Matt Dowle for
+      the fix.
     }
   }
 }
