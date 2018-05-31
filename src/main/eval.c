@@ -3907,6 +3907,7 @@ SEXP do_subassign2_dflt(SEXP, SEXP, SEXP, SEXP);
 
 static SEXP seq_int(int n1, int n2)
 {
+#define USE_ALTREP_COMPACT_INTRANGE
 #ifdef USE_ALTREP_COMPACT_INTRANGE
     return R_compact_intrange(n1, n2);
 #else
