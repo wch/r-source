@@ -140,7 +140,7 @@ static void growstack(uint64_t newlen)
     if (gs[flip] == NULL)
 	Error("Failed to realloc working memory stack to %d*4bytes (flip=%d)",
 	      (int)newlen /* no bigger than gsmaxalloc */, flip);
-    gsalloc[flip] = newlen;
+    gsalloc[flip] = (int)newlen;
 }
 
 static void push(int x)
