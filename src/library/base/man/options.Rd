@@ -585,9 +585,9 @@ getOption(x, default = NULL)
       \code{log} in \code{\link{plot.spec}}.}
   }
 }
-\section{Options set in package utils}{
-  These will be set when package \pkg{utils} (or its namespace)
-  is loaded if not already set.
+\section{Options set (or used) in package utils}{
+  These will be set (apart from \code{Ncpus}) when package \pkg{utils}
+  (or its namespace) is loaded if not already set.
   \describe{
     \item{\code{BioC_mirror}:}{The URL of a Bioconductor mirror
       for use by \code{\link{setRepositories}},
@@ -685,6 +685,12 @@ getOption(x, default = NULL)
       \code{\link{select.list}}, \code{\link{chooseCRANmirror}},
       \code{\link{setRepositories}} and to select from multiple (text)
       help files in \code{\link{help}}.}
+
+    \item{\code{Ncpus}:}{an integer \eqn{n \ge 1}{n >= 1}, used in
+      \code{\link{install.packages}} as default for the number of cpus
+      to use in a potentially parallel installation, as
+      \code{Ncpus = getOption("Ncpus", 1L)}, i.e., when unset is
+      equivalent to a setting of 1.}
 
     \item{\code{pkgType}:}{The default type of packages to be downloaded
       and installed -- see \code{\link{install.packages}}.
