@@ -4207,6 +4207,11 @@ It does so by putting scripts at the head of the path which print a
 message and fail.
 Default: false (but true for CRAN submission checks).
 
+@item _R_CHECK_PACKAGES_USED_IN_TESTS_USE_SUBDIRS_
+If set to a true value, also check the R code in common unit test
+subdirectories of @file{tests} for undeclared package dependencies.
+Default: false (but true for CRAN submission checks).
+
 @end vtable
 
 CRAN's submission checks use something like
@@ -4237,6 +4242,7 @@ _R_CHECK_COMPILATION_FLAGS_=TRUE
 _R_CHECK_R_DEPENDS_=warn
 _R_CHECK_SERIALIZATION_=TRUE
 _R_CHECK_R_ON_PATH_=TRUE
+_R_CHECK_PACKAGES_USED_IN_TESTS_USE_SUBDIRS_=TRUE
 @end example
 
 @noindent
