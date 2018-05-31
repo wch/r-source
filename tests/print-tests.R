@@ -276,5 +276,21 @@ print(a)
 print(b)
 print(c)
 print(d)
-## all 4 x 2 = 8  cases produced an Error in R <= 3.5.0
 
+## tagbuf is preserved after print dispatch in pairlists
+obj <- structure(list(), class = "foo")
+pairlist(a = list(A = obj, B = obj))
+list(list(pairlist(obj), NULL))
+list(list(obj, pairlist(obj, structure(list(obj), attr = obj)), NULL))
+
+## show() is preferred over print() when printing recursively
+print.callS4Class <- function(x, ...) stop("shouldn't dispatch to print()")
+.CallS4Class <- setClass("callS4Class", slots = c(x = "numeric"))
+setMethod("show", "callS4Class", function(object) cat("S4 show!\n"))
+x <- .CallS4Class(x = 1)
+list(x)
+pairlist(x)
+structure(list(), attr = x)
+rm(x, .CallS4Class)
+# Cleanup
+rm(print.foo, obj, a, b, c, d)

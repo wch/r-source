@@ -834,6 +834,16 @@
       that can be reparsed exactly; thanks to a patch by Lionel Henry in
       \PR{17397}.  (As a side effect, this uses fewer parentheses in
       some other deparsing involving \code{!} calls.)
+
+      \item Printing lists, pairlists or attributes containing calls
+      with S3 class no longer evaluate those.
+
+      \item Printing S4 objects within lists and pairlists dispatches
+      with \code{show()} rather than \code{print()}. This is
+      consistent with auto-printing.
+
+      \item The indexing tags of recursive data structures are now
+      printed correctly in complex cases.
     }
   }
 }
