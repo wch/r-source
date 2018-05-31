@@ -734,15 +734,6 @@ function(log, drop_ok = TRUE, ...)
         list(Package = package, Version = version,
              Flags = flags, Chunks = chunks)
 
-    ## <FIXME>
-    ## All calls to grep(), grepl() and sub() use arguments
-    ## perl = TRUE and useBytes = TRUE.
-    ## Simplify by using inlined functions pgrep() etc, a la
-    psub <- function(pattern, replacement, x)
-        sub(pattern, replacement, x, perl = TRUE, useBytes = TRUE)
-        ## .Internal(sub(pattern, replacement, x, FALSE, TRUE, FALSE, TRUE))
-    ## </FIXME>
-
     ## Alternatives for left and right quotes.
     lqa <- paste0("'|", intToUtf8(0x2018))
     rqa <- paste0("'|", intToUtf8(0x2019))
@@ -760,7 +751,7 @@ function(log, drop_ok = TRUE, ...)
 
     ## Re-encode to UTF-8 using the session charset info.
     ## All regexp computations will be done using perl = TRUE and
-    ## useBytes = TRUE.
+    ## use useBytes = TRUE for matching and extracting ASCII content.
     re <- "^\\* using session charset: "
     pos <- grep(re, lines, perl = TRUE, useBytes = TRUE)
     if(length(pos)) {
@@ -967,26 +958,29 @@ function(dir, logs = NULL, drop_ok = TRUE, ...)
     rqa <- paste0("'|", intToUtf8(0x2019))
     ## Group when used ...
 
-    mysub <- function(p, r, x) sub(p, r, x, perl = TRUE, useBytes = TRUE)
-
     checks <- db[, "Check"]
-    checks <- mysub(sprintf("checking whether package (%s).*(%s) can be installed",
-                            lqa, rqa),
-                    "checking whether package can be installed", checks)
-    checks <- mysub("creating .*-Ex.R",
-                    "checking examples creation", checks)
-    checks <- mysub("creating .*-manual\\.tex",
-                    "checking manual creation", checks)
-    checks <- mysub("checking .*-manual\\.tex", "checking manual", checks)
-    checks <- mysub(sprintf("checking package vignettes in (%s)inst/doc(%s)",
-                            lqa, rqa),
-                    "checking package vignettes", checks)
-    checks <- mysub("^checking *", "", checks)
+    checks <- sub(sprintf("checking whether package (%s).*(%s) can be installed",
+                          lqa, rqa),
+                  "checking whether package can be installed",
+                  checks, perl = TRUE, useBytes = TRUE)
+    checks <- sub("creating .*-Ex.R", "checking examples creation",
+                  checks, perl = TRUE, useBytes = TRUE)
+    checks <- sub("creating .*-manual\\.tex", "checking manual creation",
+                  checks, perl = TRUE, useBytes = TRUE)
+    checks <- sub("checking .*-manual\\.tex", "checking manual",
+                  checks, perl = TRUE, useBytes = TRUE)
+    checks <- sub(sprintf("checking package vignettes in (%s)inst/doc(%s)",
+                          lqa, rqa),
+                  "checking package vignettes",
+                  checks, perl = TRUE, useBytes = TRUE)
+    checks <- sub("^checking *", "",
+                  checks, perl = TRUE, useBytes = TRUE)
     db[, "Check"] <- checks
     ## In fact, for tabulation purposes it would even be more convenient
     ## to shorten the check names ...
 
-    db[, "Output"] <- mysub("[[:space:]]+$", "", db[, "Output"])
+    db[, "Output"] <-
+        sub("[[:space:]]+$", "", db[, "Output"], perl = TRUE)
 
     db <- as.data.frame(db, stringsAsFactors = FALSE)
     db$Check <- as.factor(db$Check)
@@ -1012,8 +1006,8 @@ function(x, ...)
            sprintf("Check: %s, Result: %s\n",
                    x$Check, x$Status),
            sprintf("  %s",
-                   gsub("\n", "\n  ", x$Output,
-                        perl = TRUE, useBytes = TRUE)))
+                   gsub("\n", "\n  ", x$Output, perl = TRUE))
+           )
 }
 
 print.check_details <-

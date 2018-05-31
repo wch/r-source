@@ -614,9 +614,9 @@ function(x)
 function(txt)
 {
     txt <- gsub(paste0("(", intToUtf8(0x2018), "|", intToUtf8(0x2019), ")"),
-                "'", txt, perl = TRUE, useBytes = TRUE)
+                "'", txt, perl = TRUE)
     txt <- gsub(paste0("(", intToUtf8(0x201c), "|", intToUtf8(0x201d), ")"),
-                "'", txt, perl = TRUE, useBytes = TRUE)
+                "'", txt, perl = TRUE)
     txt
 }
 
