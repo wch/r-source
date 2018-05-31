@@ -53,10 +53,6 @@
  *  Also ./printvector.c,  ./printarray.c
  *
  *  do_sink moved to connections.c as of 1.3.0
- *
- *  <FIXME> These routines are not re-entrant: they reset the
- *  global R_print.
- *  </FIXME>
  */
 
 #ifdef HAVE_CONFIG_H
@@ -105,6 +101,7 @@ void PrintDefaults(void)
     R_print.width = GetOptionWidth();
     R_print.useSource = USESOURCE;
     R_print.cutoff = GetOptionCutoff();
+    R_print.callArgs = R_NilValue;
 }
 
 SEXP attribute_hidden do_invisible(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -191,7 +188,10 @@ static void PrintLanguageEtc(SEXP s, Rboolean useSource, Rboolean isClosure)
 	t = eval(t, R_BaseEnv);
 	UNPROTECT(1);
     } else {
+	/* Save parameters as deparsing calls PrintDefaults() */
+	R_print_par_t pars = R_print;
 	t = deparse1w(s, 0, useSource | DEFAULTDEPARSE);
+	R_print = pars;
     }
     PROTECT(t);
     for (i = 0; i < LENGTH(t); i++) {
@@ -223,7 +223,6 @@ void PrintLanguage(SEXP s, Rboolean useSource)
 SEXP attribute_hidden do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP x, naprint;
-    int tryS4;
 
     checkArity(op, args);
     PrintDefaults();
@@ -280,12 +279,14 @@ SEXP attribute_hidden do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(R_print.useSource) R_print.useSource = USESOURCE;
     args = CDR(args);
 
-    tryS4 = asLogical(CAR(args));
-    if(tryS4 == NA_LOGICAL)
-	error(_("invalid 'tryS4' internal argument"));
+    int noParams = asLogical(CAR(args)); args = CDR(args);
+    if (noParams == NA_LOGICAL)
+	error(_("invalid 'noParams' internal argument"));
+
+    R_print.callArgs = CAR(args);
 
     tagbuf[0] = '\0';
-    if (tryS4 && IS_S4_OBJECT(x) && isMethodsDispatchOn())
+    if (noParams && IS_S4_OBJECT(x) && isMethodsDispatchOn())
 	PrintObject(x, rho);
     else
 	PrintValueRec(x, rho);
@@ -332,13 +333,15 @@ static void PrintObjectS3(SEXP s, SEXP env)
     SEXP mask = PROTECT(NewEnvironment(R_NilValue, R_NilValue, env));
     defineVar(xsym, s, mask);
 
+    /* Forward user-supplied arguments to print() */
     SEXP fun = findVar(install("print"), R_BaseNamespace);
-    SEXP call = PROTECT(lang2(fun, xsym));
+    SEXP args = PROTECT(cons(xsym, R_print.callArgs));
+    SEXP call = PROTECT(lcons(fun, args));
 
     eval(call, mask);
 
     defineVar(xsym, R_NilValue, mask); /* To eliminate reference to s */
-    UNPROTECT(2);
+    UNPROTECT(3);
 }
 
 static void PrintObject(SEXP s, SEXP env)
@@ -348,11 +351,15 @@ static void PrintObject(SEXP s, SEXP env)
     char save[TAGBUFLEN0];
     strcpy(save, tagbuf);
 
+    /* Save the R_print structure since it might be reset by print.default() */
+    R_print_par_t pars = R_print;
+
     if (isMethodsDispatchOn() && IS_S4_OBJECT(s))
 	PrintObjectS4(s, env);
     else
 	PrintObjectS3(s, env);
 
+    R_print = pars;
     strcpy(tagbuf, save);
 }
 
@@ -683,7 +690,11 @@ static void PrintExpression(SEXP s)
     SEXP u;
     int i, n;
 
+    /* Save parameters as deparsing calls PrintDefaults() */
+    R_print_par_t pars = R_print;
     u = PROTECT(deparse1w(s, 0, R_print.useSource | DEFAULTDEPARSE));
+    R_print = pars;
+
     n = LENGTH(u);
     for (i = 0; i < n; i++)
 	Rprintf("%s\n", CHAR(STRING_ELT(u, i))); /*translated */
@@ -712,7 +723,10 @@ static void PrintSpecial(SEXP s)
     if(s2 != R_UnboundValue) {
 	SEXP t;
 	PROTECT(s2);
+        /* Save parameters as deparsing calls PrintDefaults() */
+        R_print_par_t pars = R_print;
 	t = deparse1m(s2, 0, DEFAULTDEPARSE); // or deparse1() ?
+        R_print = pars;
 	Rprintf("%s ", CHAR(STRING_ELT(t, 0))); /* translated */
 	Rprintf(".Primitive(\"%s\")\n", PRIMNAME(s));
 	UNPROTECT(1);
@@ -757,11 +771,15 @@ void attribute_hidden PrintValueRec(SEXP s, SEXP env)
     case NILSXP:
 	Rprintf("NULL\n");
 	break;
-    case SYMSXP: /* Use deparse here to handle backtick quotification
-		  * of "weird names" */
+    case SYMSXP: {
+	/* Use deparse here to handle backtick quotification of "weird names".
+	   Save parameters as deparsing calls PrintDefaults(). */
+	R_print_par_t pars = R_print;
 	t = deparse1(s, 0, SIMPLEDEPARSE); // TODO ? rather deparse1m()
+	R_print = pars;
 	Rprintf("%s\n", CHAR(STRING_ELT(t, 0))); /* translated */
 	break;
+    }
     case SPECIALSXP:
     case BUILTINSXP:
 	PrintSpecial(s);
@@ -928,53 +946,7 @@ static void printAttributes(SEXP s, SEXP env, Rboolean useSlots)
 		UNPROTECT(1);
 		goto nextattr;
 	    }
-	    if (isMethodsDispatchOn() && IS_S4_OBJECT(CAR(a))) {
-                PrintObject(CAR(a), env);
-	    } else if (isObject(CAR(a))) {
-		/* Need to construct a call to
-		   print(CAR(a), digits)
-		   based on the R_print structure, then eval(call, env).
-		   See do_docall for the template for this sort of thing.
-
-		   quote, right, gap should probably be included if
-		   they have non-missing values.
-
-		   This will not dispatch to show() as 'digits' is supplied.
-		*/
-		SEXP s, t, na_string = R_print.na_string,
-		    na_string_noquote = R_print.na_string_noquote;
-		int quote = R_print.quote,
-		    digits = R_print.digits, gap = R_print.gap,
-		    na_width = R_print.na_width,
-		    na_width_noquote = R_print.na_width_noquote;
-		Rprt_adj right = R_print.right;
-
-                /* Prevent evaluation of calls, see PrintObject() */
-                SEXP xsym = install("x");
-                SEXP mask = PROTECT(NewEnvironment(R_NilValue, R_NilValue, env));
-                defineVar(xsym, CAR(a), mask);
-
-		PROTECT(t = s = allocList(3));
-		SET_TYPEOF(s, LANGSXP);
-		SETCAR(t, install("print")); t = CDR(t);
-		SETCAR(t,  xsym); t = CDR(t);
-		SETCAR(t, ScalarInteger(digits));
-		SET_TAG(t, install("digits"));
-
-                eval(s, mask);
-                defineVar(xsym, R_NilValue, mask); /* To eliminate reference to s */
-                UNPROTECT(2);
-
-		R_print.quote = quote;
-		R_print.right = right;
-		R_print.digits = digits;
-		R_print.gap = gap;
-		R_print.na_width = na_width;
-		R_print.na_width_noquote = na_width_noquote;
-		R_print.na_string = na_string;
-		R_print.na_string_noquote = na_string_noquote;
-	    } else
-		PrintValueRec(CAR(a), env);
+	    PrintDispatch(CAR(a), env);
 	nextattr:
 	    *ptag = '\0';
 	    a = CDR(a);

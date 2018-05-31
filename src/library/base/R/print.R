@@ -1,7 +1,7 @@
 #  File src/library/base/R/print.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -23,11 +23,30 @@ print.default <- function(x, digits = NULL, quote = TRUE, na.print = NULL,
                           print.gap = NULL, right = FALSE, max = NULL,
                           useSource = TRUE, ...)
 {
-    noOpt <- missing(digits) && missing(quote) && missing(na.print) &&
-	missing(print.gap) && missing(right) && missing(max) &&
-	missing(useSource) && missing(...)
+    missings <- c(missing(digits), missing(quote), missing(na.print),
+		  missing(print.gap), missing(right), missing(max),
+		  missing(useSource))
+
+    # Need to be a bit careful with argument matching. We need to
+    # capture the pairlist of arguments actually supplied by the user.
+    # We check for missingness instead of using match.call() tricks
+    # because arguments should be evaluated only once.
+    callArgs <- list(
+	digits = digits,
+	quote = quote,
+	na.print = na.print,
+	print.gap = print.gap,
+	right = right,
+	max = max,
+	useSource = useSource
+    )
+    callArgs <- c(callArgs[!missings], list(...))
+    callArgs <- as.pairlist(callArgs)
+
+    noOpt <- all(missings) && missing(...)
+
     .Internal(print.default(x, digits, quote, na.print, print.gap, right, max,
-			    useSource, noOpt))
+			    useSource, noOpt, callArgs))
 }
 
 prmatrix <-

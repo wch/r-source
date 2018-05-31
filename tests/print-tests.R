@@ -271,26 +271,62 @@ d <- list(list(obj, pairlist(obj, structure(list(obj), attr = obj)), NULL))
 a
 b
 c
-d # (not printed correctly, will be fixed later)
+d
 print(a)
 print(b)
 print(c)
 print(d)
+# Now with a method defined (again "auto" + explicit print()):
+print.foo <- function(x, ...) cat("dispatched\n")
+a ; print(a)
+b ; print(b)
+c ; print(c)
+d ; print(d)
+
 
 ## tagbuf is preserved after print dispatch in pairlists
 obj <- structure(list(), class = "foo")
 pairlist(a = list(A = obj, B = obj))
-list(list(pairlist(obj), NULL))
-list(list(obj, pairlist(obj, structure(list(obj), attr = obj)), NULL))
+list(list(pairlist(obj), NULL)) ## should print [[1]][[2]] \n NULL
+LLo <- list(list(obj,
+                 pairlist(a=obj, b=structure(list(C=obj), attr=obj)),
+                 NULL))
+LLo ## tags (names and [[<n>]]) were lost in R <= 3.5.0
 
 ## show() is preferred over print() when printing recursively
-print.callS4Class <- function(x, ...) stop("shouldn't dispatch to print()")
+print.callS4Class <- function(x, ...) stop("should not be dispatched")
 .CallS4Class <- setClass("callS4Class", slots = c(x = "numeric"))
 setMethod("show", "callS4Class", function(object) cat("S4 show!\n"))
 x <- .CallS4Class(x = 1)
-list(x)
-pairlist(x)
+## these should all say 'S4 show!'
+list(x) ; pairlist(x) # these 2 failed in R <= 3.5.0
 structure(list(), attr = x)
 rm(x, .CallS4Class)
-# Cleanup
+
+
+## Print dispatch does not reset parameters
+local({
+    num <- 0.123456789
+    print(list(num, obj, num), digits = 2) # should print 2 x '0.12'
+})
+
+
+## User-supplied arguments are forwarded on print-dispatch
+print.foo <- function(x, other = FALSE, digits = 0L, ...) {
+    cat("digits: ", digits, "\n")
+    stopifnot(other, digits == 4, !...length())
+}
+a <- list(obj)
+b <- pairlist(obj)
+c <- LLo[[1]][[2]]$b
+d <- LLo
+print(a, digits = 4, other = TRUE)
+print(b, digits = 4, other = TRUE)
+print(c, digits = 4, other = TRUE)
+print(d, digits = 4, other = TRUE)
+#
+## Deparsing should not reset parameters
+print(list(a, expression(foo), b, quote(foo), c, base::list, d),
+      digits = 4, other = TRUE)
+## Cleanup
 rm(print.foo, obj, a, b, c, d)

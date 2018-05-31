@@ -11,7 +11,7 @@
     \itemize{
       \item Serialization format version 3 becomes the default for all
       serialization and saving of the workspace. Serialized data in format
-      3 cannot be read by versions of \R prior to version 3.5.0. 
+      3 cannot be read by versions of \R prior to version 3.5.0.
       Serialization format version 2 is still supported and can be selected
       by \code{version = 2} in \code{save()}, \code{serialize()} and
       \code{saveRDS()}. The default can also be changed back for the whole R
@@ -115,6 +115,26 @@
       thanks to Suharto Anggono's \PR{17427}.
 
       \item User macros in Rd files now accept empty arguments.
+
+      %% Lionel Henry's patches from \PR{17398} :
+      \item Printing lists, pairlists or attributes containing calls
+      with S3 class no longer evaluate those.
+
+      \item Printing S4 objects within lists and pairlists dispatches
+      with \code{show()} rather than \code{print()}, as with
+      auto-printing.
+
+      \item The indexing tags (names or \code{[[<n>]]}) of recursive
+      data structures are now printed correctly in complex cases.
+
+      \item Arguments supplied to \code{print()} are now properly
+      forwarded to print methods when printing lists, pairlists or
+      attributes containing S3 objects.
+
+      \item The print parameters are now preserved when printing S3
+      objects or deparsing symbols and calls.  Previously, printing
+      lists containing S3 objects or expressions would reset these
+      parameters.
     }
   }
 
@@ -834,16 +854,6 @@
       that can be reparsed exactly; thanks to a patch by Lionel Henry in
       \PR{17397}.  (As a side effect, this uses fewer parentheses in
       some other deparsing involving \code{!} calls.)
-
-      \item Printing lists, pairlists or attributes containing calls
-      with S3 class no longer evaluate those.
-
-      \item Printing S4 objects within lists and pairlists dispatches
-      with \code{show()} rather than \code{print()}. This is
-      consistent with auto-printing.
-
-      \item The indexing tags of recursive data structures are now
-      printed correctly in complex cases.
     }
   }
 }
