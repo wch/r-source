@@ -69,8 +69,8 @@ regexec(pattern, text, ignore.case = FALSE, perl = FALSE,
   \item{invert}{logical.  If \code{TRUE} return indices or values for
     elements that do \emph{not} match.}
   \item{replacement}{a replacement for matched pattern in \code{sub} and
-    \code{gsub}.  Coerced to character if possible.  For \code{fixed =
-      FALSE} this can include backreferences \code{"\\1"} to
+    \code{gsub}.  Coerced to character if possible.  For
+    \code{fixed = FALSE} this can include backreferences \code{"\\1"} to
     \code{"\\9"} to parenthesized subexpressions of \code{pattern}.  For
     \code{perl = TRUE} only, it can also contain \code{"\\U"} or
     \code{"\\L"} to convert the rest of the replacement to upper or
@@ -179,8 +179,9 @@ regexec(pattern, text, ignore.case = FALSE, perl = FALSE,
 
 \section{Warning}{
   The POSIX 1003.2 mode of \code{gsub} and \code{gregexpr} does not
-  work correctly with repeated word-boundaries (e.g., \code{pattern =
-  "\\b"}).  Use \code{perl = TRUE} for such matches (but that may not
+  work correctly with repeated word-boundaries (e.g.,
+  \code{pattern = "\\b"}).
+  Use \code{perl = TRUE} for such matches (but that may not
   work as expected with non-ASCII inputs, as the meaning of
   \sQuote{word} is system-dependent).
 }
