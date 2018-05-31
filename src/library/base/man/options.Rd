@@ -125,7 +125,7 @@ getOption(x, default = NULL)
       and upon entry to a function whose debugging flag is set.
       Initially unset, and only used if set to a positive integer.}
 
-    \item{\code{digits}:}{controls the number of significant digits to
+    \item{\code{digits}:}{controls the number of \emph{significant} (see \code{\link{signif}}) digits to
       print when printing numeric values.  It is a suggestion only.
       Valid values are 1\dots{}22 with default 7.  See the note in
       \code{\link{print.default}} about values greater than 15.}
