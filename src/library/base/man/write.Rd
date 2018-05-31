@@ -16,10 +16,10 @@ write(x, file = "data",
   \item{file}{a \code{\link{connection}}, or a character string naming
     the file to write to.  If \code{""}, print to the standard output
     connection.
-#ifdef unix
-    If it is \code{"|cmd"}, the output is piped to the command given
+
+    When \code{\link{.Platform}$OS.type != "windows"}, and it
+    is \code{"|cmd"}, the output is piped to the command given
     by \file{cmd}.
-#endif
   }
   \item{ncolumns}{the number of columns to write the data in.}
   \item{append}{if \code{TRUE} the data \code{x} are appended to the
