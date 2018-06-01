@@ -88,8 +88,9 @@ example(topic, package = NULL, lib.loc = NULL,
       and the \code{example()} function.  This was previously
       \code{testonly}, and that form is still accepted.}
     \item{\code{donttest}}{encloses code that typically should be run,
-      but not during package checking.  The default \code{run.donttest
-	= \link{interactive}()} leads \code{example()} use in other help
+      but not during package checking.  The default
+      \code{run.donttest = \link{interactive}()}
+      leads \code{example()} use in other help
       page examples to skip \verb{\donttest} sections appropriately.}
   }
 }

@@ -83,8 +83,9 @@ news(query, package = "R", lib.loc = NULL, format = NULL,
   Package \pkg{tools} provides an (internal) utility function
   \code{news2Rd} to convert plain text \file{NEWS} files to Rd.  For
   \file{NEWS} files in a format which can successfully be handled by the
-  default reader, package maintainers can use \code{tools:::news2Rd(dir,
-    "NEWS.Rd")}, possibly with additional argument \code{codify = TRUE},
+  default reader, package maintainers can use
+  \code{tools:::news2Rd(dir, "NEWS.Rd")},
+  possibly with additional argument \code{codify = TRUE},
   with \code{dir} a character string specifying the path to a package's
   root directory.  Upon success, the \file{NEWS.Rd} file can further be
   improved and then be moved to the \file{inst} subdirectory of the

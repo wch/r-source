@@ -81,9 +81,9 @@ RtangleSetup(file, syntax, output = NULL, annotate = TRUE,
     \item{engine:}{character string (\code{"R"}).  Only chunks with
       \code{engine} equal to \code{"R"} or \code{"S"} are processed.}
 
-    \item{keep.source:}{logical (\code{TRUE}).  If \code{keep.source ==
-      TRUE} the original source is copied to the file.  Otherwise,
-      deparsed source is output.}
+    \item{keep.source:}{logical (\code{TRUE}).  If
+      \code{keep.source == TRUE} the original source is copied to the
+      file.  Otherwise, deparsed source is output.}
 
     \item{eval:}{logical (\code{TRUE}).  If \code{FALSE}, the code chunk
       is copied across but commented out.}

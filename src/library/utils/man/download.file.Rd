@@ -97,9 +97,10 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   The \code{"libcurl"} and \code{"wget"} methods follow \samp{http://}
   and \samp{https://} redirections to any scheme they support: the
   \code{"internal"} method follows \samp{http://} to \samp{http://}
-  redirections only.  (For method \code{"curl"} use argument \code{extra
-  = "-L"}.  To disable redirection in \command{wget}, use \code{extra =
-  "--max-redirect=0"}.)  The \code{"wininet"} method supports some
+  redirections only.  (For method \code{"curl"} use argument
+  \code{extra = "-L"}.  To disable redirection in \command{wget}, use
+  \code{extra = "--max-redirect=0"}.)
+  The \code{"wininet"} method supports some
   redirections but not all.  (For method \code{"libcurl"}, messages will
   quote the endpoint of redirections.)
 

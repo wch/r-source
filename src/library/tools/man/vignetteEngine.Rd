@@ -52,8 +52,8 @@ The \file{.tex} files will be processed by \command{pdflatex} to
 produce \file{.pdf} output for display to the user; the others will be
 displayed as produced.  The \code{tangle} function must produce a file
 named \file{<name>[.][rRsS]} containing the executable \R{} code from
-the vignette.  The \code{tangle} function may support a \code{split =
-TRUE} argument, and then it should produce files named
+the vignette.  The \code{tangle} function may support a
+\code{split = TRUE} argument, and then it should produce files named
 \file{<name>.*[.][rRsS]}.
 
 The \code{pattern} argument gives a regular expression to match the

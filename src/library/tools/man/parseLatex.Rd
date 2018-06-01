@@ -59,8 +59,8 @@ in the \code{verbatim} argument.
 }
 \value{
 The \code{parseLatex()} function returns a recursive object of class
-\code{"LaTeX"}.  Each of the entries in this object will have a \code{
-"latex_tag"} attribute identifying its syntactic role.
+\code{"LaTeX"}.  Each of the entries in this object will have a
+\code{"latex_tag"} attribute identifying its syntactic role.
 
 The \code{deparseLatex()} function returns a single element character
 vector, possibly containing embedded newlines.
