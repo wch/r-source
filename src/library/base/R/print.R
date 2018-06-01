@@ -124,7 +124,7 @@ print.simple.list <- function(x, ...)
     print(noquote(cbind("_"=unlist(x))), ...)
 
 print.function <- function(x, useSource = TRUE, ...)
-    .Internal(print.function(x, useSource, ...))
+    print.default(x, useSource=useSource, ...)
 
 ## used for getenv()
 print.Dlist <- function(x, ...)

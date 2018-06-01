@@ -35,8 +35,7 @@
  *		-> printAttributes	-> PrintValueRec  (recursion)
  *		-> PrintSpecial
  *		-> PrintExpression
- *		-> PrintLanguage        -> PrintLanguageEtc
- *		-> PrintClosure         -> PrintLanguageEtc
+ *		-> PrintClosure         -> PrintLanguage
  *		-> printVector		>>>>> ./printvector.c
  *		-> printNamedVector	>>>>> ./printvector.c
  *		-> printMatrix		>>>>> ./printarray.c
@@ -71,7 +70,6 @@ R_print_par_t R_print;
 
 static void printAttributes(SEXP, SEXP, Rboolean);
 static void PrintSpecial(SEXP);
-static void PrintLanguageEtc(SEXP, Rboolean, Rboolean);
 static void PrintObject(SEXP, SEXP);
 
 
@@ -156,29 +154,7 @@ SEXP attribute_hidden do_prmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     return x;
 }/* do_prmatrix */
 
-/* .Internal( print.function(f, useSource, ...)) */
-SEXP attribute_hidden do_printfunction(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-    checkArity(op,args);
-    SEXP s = CAR(args);
-    switch (TYPEOF(s)) {
-    case CLOSXP:
-	PrintLanguageEtc(s, asLogical(CADR(args)), /*is closure = */ TRUE);
-	printAttributes(s, rho, FALSE);
-	break;
-    case BUILTINSXP:
-    case SPECIALSXP:
-	PrintSpecial(s);
-	break;
-
-    default: /* if(!isFunction(s)) */
-	error(_("non-function argument to .Internal(print.function(.))"));
-    }
-    return s;
-}
-
-/* PrintLanguage() or PrintClosure() : */
-static void PrintLanguageEtc(SEXP s, Rboolean useSource, Rboolean isClosure)
+static void PrintLanguage(SEXP s, Rboolean useSource)
 {
     int i;
     SEXP t = getAttrib(s, R_SrcrefSymbol);
@@ -198,24 +174,17 @@ static void PrintLanguageEtc(SEXP s, Rboolean useSource, Rboolean isClosure)
  	Rprintf("%s\n", translateChar(STRING_ELT(t, i))); // translate: for srcref part (PR#16732)
     }
     UNPROTECT(1);
-    if (isClosure) {
-	if (isByteCode(BODY(s))) Rprintf("<bytecode: %p>\n", BODY(s));
-	t = CLOENV(s);
-	if (t != R_GlobalEnv)
-	    Rprintf("%s\n", EncodeEnvironment(t));
-    }
 }
 
-static
-void PrintClosure(SEXP s, Rboolean useSource)
+static void PrintClosure(SEXP s, Rboolean useSource)
 {
-    PrintLanguageEtc(s, useSource, TRUE);
-}
+    PrintLanguage(s, useSource);
 
-static
-void PrintLanguage(SEXP s, Rboolean useSource)
-{
-    PrintLanguageEtc(s, useSource, FALSE);
+    if (isByteCode(BODY(s)))
+	Rprintf("<bytecode: %p>\n", BODY(s));
+    SEXP t = CLOENV(s);
+    if (t != R_GlobalEnv)
+	Rprintf("%s\n", EncodeEnvironment(t));
 }
 
 /* .Internal(print.default(x, digits, quote, na.print, print.gap,
@@ -794,10 +763,10 @@ void attribute_hidden PrintValueRec(SEXP s, SEXP env)
 	PrintExpression(s);
 	break;
     case LANGSXP:
-	PrintLanguage(s, FALSE);
+	PrintLanguage(s, R_print.useSource);
 	break;
     case CLOSXP:
-	PrintClosure(s, FALSE);
+	PrintClosure(s, R_print.useSource);
 	break;
     case ENVSXP:
 	Rprintf("%s\n", EncodeEnvironment(s));
@@ -965,13 +934,7 @@ void attribute_hidden PrintValueEnv(SEXP s, SEXP env)
     tagbuf[0] = '\0';
     PROTECT(s);
 
-    /* FIXME: Functions are printed via base::print() in order to allow
-       user-defined print.function() methods. This is covered by unit
-       tests but is this needed? Why make an exception for that type? */
-    if (isFunction(s))
-        PrintObject(s, env);
-    else
-        PrintDispatch(s, env);
+    PrintDispatch(s, env);
 
     UNPROTECT(1);
 }

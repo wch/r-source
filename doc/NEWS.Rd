@@ -135,6 +135,11 @@
       objects or deparsing symbols and calls.  Previously, printing
       lists containing S3 objects or expressions would reset these
       parameters.
+
+      \item Printing lists, pairlists or attributes containing
+      functions now uses \code{srcref} attributes if present.
+      %%----end{LH's patches related to print() from \PR{17398} ---------
+
     }
   }
 

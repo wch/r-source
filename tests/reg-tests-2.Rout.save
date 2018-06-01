@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2018-05-03 r74684) -- "Unsuffered Consequences"
+R Under development (unstable) (2018-05-31 r74823) -- "Unsuffered Consequences"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -6378,8 +6378,13 @@ function(){}
 attr(,"note")
 [1] "just a note"
 attr(,"yada")
-function () 
-"not the same"
+function() "not the same"
+> print(f, useSource = TRUE)
+function(){}
+attr(,"note")
+[1] "just a note"
+attr(,"yada")
+function() "not the same"
 > print(f, useSource = FALSE) # must print attributes
 function () 
 {
@@ -6389,21 +6394,60 @@ attr(,"note")
 attr(,"yada")
 function () 
 "not the same"
-> print.function <- function(x, ...) { str(x,...); invisible(x) }
-> print.function
-function (x, ...)  
- - attr(*, "srcref")= 'srcref' int [1:8] 1 19 1 63 19 63 1 1
-  ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x349a888> 
-> f
-function ()  
- - attr(*, "srcref")= 'srcref' int [1:8] 1 17 1 28 17 28 1 1
-  ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x2ace460> 
- - attr(*, "note")= chr "just a note"
- - attr(*, "yada")=function ()  
-  ..- attr(*, "srcref")= 'srcref' int [1:8] 2 24 2 48 24 48 2 2
-  .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x2ace460> 
-> rm(print.function)
 > ## auto-printing and printing differed up to R 2.9.x
+> 
+> ## Make sure deparsing does not reset parameters
+> print(list(f, expression(foo), f, quote(foo), f, base::list, f),
++       useSource = FALSE)
+[[1]]
+function () 
+{
+}
+attr(,"note")
+[1] "just a note"
+attr(,"yada")
+function () 
+"not the same"
+
+[[2]]
+expression(foo)
+
+[[3]]
+function () 
+{
+}
+attr(,"note")
+[1] "just a note"
+attr(,"yada")
+function () 
+"not the same"
+
+[[4]]
+foo
+
+[[5]]
+function () 
+{
+}
+attr(,"note")
+[1] "just a note"
+attr(,"yada")
+function () 
+"not the same"
+
+[[6]]
+function (...)  .Primitive("list")
+
+[[7]]
+function () 
+{
+}
+attr(,"note")
+[1] "just a note"
+attr(,"yada")
+function () 
+"not the same"
+
 > 
 > printCoefmat(cbind(0,1))
      [,1] [,2]
@@ -7032,8 +7076,7 @@ x %^% (y %^% z)
 > 
 > ## Anonymous function calls were not deparsed properly
 > substitute(f(x), list(f = function(x) x + 1))
-(function (x) 
-x + 1)(x)
+(function(x) x + 1)(x)
 > substitute(f(x), list(f = quote(function(x) x + 1)))
 (function(x) x + 1)(x)
 > substitute(f(x), list(f = quote(f+g)))
