@@ -463,7 +463,7 @@ standard, RFC 5322, allows periods but RFC 2822 did not.)
 Both @samp{Author} and @samp{Maintainer} fields can be omitted if a
 suitable @samp{Authors@@R} field is given.  This field can be used to
 provide a refined and machine-readable description of the package
-``authors'' (in particular specifying their precise @emph{roles}), via
+``authors'' (in particular specifying their precise @emph{roles}), @emph{via}
 suitable @R{} code. It should create an object of class @code{"person"},
 by either a call to @code{person} or a series of calls (one per
 ``author'') concatenated by @code{c()}: see the example
@@ -2160,7 +2160,7 @@ first level.  The correctness of the detected number of `CPUs' and the
 assumption that the @R{} process is entitled to use them all are both
 dubious assumptions.  The best way to limit resources is to limit the
 overall number of threads available to OpenMP in the @R{} process: this
-can be done via environment variable @env{OMP_THREAD_LIMIT}, where
+can be done @emph{via} environment variable @env{OMP_THREAD_LIMIT}, where
 implemented.@footnote{Which it was at the time of writing with GCC,
 Oracle, Intel and Clang compilers.}  Alternatively, the
 number of threads per region can be limited by the environment variable
@@ -3419,8 +3419,8 @@ the package.  If you do supply a @file{inst/doc/index.html} file it
 should contain relative links only to files under the installed
 @file{doc} directory, or perhaps (not really an index) to @HTML{} help
 files or to the @file{DESCRIPTION} file, and be valid @HTML{} as
-confirmed via the @uref{https://validator.w3.org, W3C Markup Validation
-Service} or @uref{https://validator.nu/, Validator.nu}.
+confirmed @emph{via} the @uref{https://validator.w3.org, W3C Markup
+Validation Service} or @uref{https://validator.nu/, Validator.nu}.
 
 Sweave/Stangle allows the document to specify the @code{split=TRUE}
 option to create a single @R{} file for each code chunk: this will not
@@ -4591,7 +4591,7 @@ fewer still (at the time of writing, only @cputype{x86_64} Linux, macOS,
 When specifying a minimum Java version please use the official version
 names, which are (confusingly)
 @example
-1.1 1.2 1.3 1.4 5.0 6 7 8 9 10
+1.1 1.2 1.3 1.4 5.0 6 7 8 9 10 11
 @end example
 @noindent
 and as from 2018 a year.month scheme such as @samp{18.3} is also in use.
@@ -4608,8 +4608,8 @@ if(substr(jv, 1L, 2L) == "1.") @{
 @end example
 @noindent
 Java 9 changed the format of this string (which used to be something
-like @samp{1.8.0_162-b12}) and Java 10 gives @code{jv} as @samp{10+46}:
-on the other hand Java 10.0.1 gives
+like @samp{1.8.0_162-b12}); Java 10 gives @code{jv} as @samp{10+46}:
+whereas Java 10.0.1 gives
 @samp{10.0.1+10}. (@uref{http://openjdk.java.net/jeps/322} details the
 current scheme.)
 
@@ -4626,12 +4626,12 @@ like @command{javac -target 1.6} to ensure this is avoided. (As from
 Java 8, @command{javac} defaults to compiling for Java 8.  Versions as
 old as @samp{1.6} are already deprecated and will give a warning with
 Java 10's @command{javac}.)  Note this also applies to packages
-distributing compiled Java code (such as @pkg{jgraph}) produced by
+distributing (or even downloading) compiled Java code produced by
 others, so their requirements need to be checked (they are often not
-documented accurately) and accounted for.  The class-file version can in
-principle be checked @emph{via} command-line utility @command{javap}, if
-necessary after extracting the @file{.class} files from a @file{.jar}
-archive.
+documented accurately) and accounted for.  It should be possible to
+check the class-file version @emph{via} command-line utility
+@command{javap}, if necessary after extracting the @file{.class} files
+from a @file{.jar} archive.
 
 Some packages have stated a requirement on a particular JDK, but a
 package should only be requiring a JRE unless providing its own Java
@@ -4884,8 +4884,8 @@ There is a portable way to have arbitrary text in character strings
 encoding the parser will encode the character string as UTF-8 and mark
 it as such.  This applies also to character strings in datasets: they
 can be prepared using @samp{\uxxxx} escapes or encoded in UTF-8 in a
-UTF-8 locale, or even converted to UTF-8 via @code{iconv()}.  If you do
-this, make sure you have @samp{R (>= 2.10)} (or later) in the
+UTF-8 locale, or even converted to UTF-8 @emph{via} @code{iconv()}.  If
+you do this, make sure you have @samp{R (>= 2.10)} (or later) in the
 @samp{Depends} field of the @file{DESCRIPTION} file.
 
 @R{} sessions running in non-UTF-8 locales will if possible re-encode
@@ -5631,9 +5631,9 @@ information which can be provided.
 
 In case a bibentry contains @LaTeX{} markup (e.g., for accented
 characters or mathematical symbols), it may be necessary to provide a
-text representation to be used for printing via the @code{textVersion}
-argument to @code{bibentry}.  E.g., earlier versions of
-@CRANpkg{nlme} additionally used
+text representation to be used for printing @emph{via} the
+@code{textVersion} argument to @code{bibentry}.  E.g., earlier versions
+of @CRANpkg{nlme} additionally used
 
 @example
          textVersion =
@@ -7733,7 +7733,7 @@ dominated, so those calls were cached for @R{} 3.0.3: the time spent in
 @code{no-vmlinux} (the kernel) was reduced dramatically.
 
 On platforms which support it, call graphs can be produced by
-@command{opcontrol --callgraph} if collected via @command{operf
+@command{opcontrol --callgraph} if collected @emph{via} @command{operf
 --callgraph}.
 
 The profiling data is by default stored in sub-directory
@@ -9310,10 +9310,10 @@ integer code: similarly FORTRAN code that wants to generate diagnostic
 messages can pass an integer code to a C or @R{} wrapper which will
 convert it to a character string.
 
-It is possible to pass some @R{} objects other than atomic vectors via
+It is possible to pass some @R{} objects other than atomic vectors @emph{via}
 @code{.C}, but this is only supported for historical compatibility: use
 the @code{.Call} or @code{.External} interfaces for such objects.  Any
-C/C++ code that includes @file{Rinternals.h} should be called via
+C/C++ code that includes @file{Rinternals.h} should be called @emph{via}
 @code{.Call} or @code{.External}.
 
 @node dyn.load and dyn.unload, Registering native routines, Interface functions .C and .Fortran, System and foreign language interfaces
@@ -11264,8 +11264,8 @@ rho, inherits = TRUE)}.
 @subsection Some convenience functions
 
 Some operations are done so frequently that there are convenience
-functions to handle them. (All these are provided via the header file
-@file{Rinternals.h}.)
+functions to handle them. (All these are provided @emph{via} the header
+file @file{Rinternals.h}.)
 
 Suppose we wanted to pass a single logical argument
 @code{ignore_quotes}: we could use
@@ -14584,11 +14584,11 @@ R CMD make
 R CMD myfe
 @end example
 
-Even though not recommended, @code{$@{R_HOME@}} may contain spaces.  In that
-case, it cannot be passed as an argument to @code{include} in the makefile. 
-Instead, one can instruct @command{make} using the @code{-f} option to
-include @file{Makeconf}, for example via recursive invocation of
-@command{make}, see @ref{Writing portable packages}.
+Even though not recommended, @code{$@{R_HOME@}} may contain spaces.  In
+that case, it cannot be passed as an argument to @code{include} in the
+makefile.  Instead, one can instruct @command{make} using the @code{-f}
+option to include @file{Makeconf}, for example @emph{via} recursive
+invocation of @command{make}, see @ref{Writing portable packages}.
 
 @example
 all:
