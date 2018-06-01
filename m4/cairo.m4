@@ -20,14 +20,14 @@
 
 
 AC_DEFUN([R_PANGO_CAIRO], [
-if test "x${PKGCONF}" = "x"; then
+if test "x${PKG_CONFIG}" = "x"; then
   AC_MSG_NOTICE([not checking for cairo as pkg-config is not present])
 else
   save_CPPFLAGS=${CPPFLAGS}
   save_LIBS=${LIBS}
   AC_CACHE_CHECK([whether pkg-config knows about cairo and pango], 
       [r_cv_has_pangocairo],
-      [if "${PKGCONF}" --exists pangocairo; then
+      [if "${PKG_CONFIG}" --exists pangocairo; then
          r_cv_has_pangocairo="yes"
        else
          r_cv_has_pangocairo="no"
@@ -36,31 +36,31 @@ else
   if test "x${r_cv_has_pangocairo}" = "xyes"; then
     modlist="pangocairo"
     for module in cairo-png; do
-      if "${PKGCONF}" --exists ${module}; then
+      if "${PKG_CONFIG}" --exists ${module}; then
 	modlist="${modlist} ${module}"
       fi
     done
-    if "${PKGCONF}" --exists cairo-pdf; then
+    if "${PKG_CONFIG}" --exists cairo-pdf; then
        modlist="${modlist} cairo-pdf"
        r_cairo_pdf=yes
     fi
-    if "${PKGCONF}" --exists cairo-ps; then
+    if "${PKG_CONFIG}" --exists cairo-ps; then
        modlist="${modlist} cairo-ps"
        r_cairo_ps=yes
     fi
-    if "${PKGCONF}" --exists cairo-svg; then
+    if "${PKG_CONFIG}" --exists cairo-svg; then
        modlist="${modlist} cairo-svg"
        r_cairo_svg=yes
     fi
-      if "${PKGCONF}" --exists cairo-xlib; then
+      if "${PKG_CONFIG}" --exists cairo-xlib; then
          xmodlist="${modlist} cairo-xlib"
       else
          xmodlist="${modlist}"
       fi
-    CAIRO_CPPFLAGS=`"${PKGCONF}" --cflags ${modlist}`
-    CAIROX11_CPPFLAGS=`"${PKGCONF}" --cflags ${xmodlist}`
-    CAIRO_LIBS=`"${PKGCONF}" --libs ${modlist}`
-    CAIROX11_LIBS=`"${PKGCONF}" --libs ${xmodlist}`
+    CAIRO_CPPFLAGS=`"${PKG_CONFIG}" --cflags ${modlist}`
+    CAIROX11_CPPFLAGS=`"${PKG_CONFIG}" --cflags ${xmodlist}`
+    CAIRO_LIBS=`"${PKG_CONFIG}" --libs ${modlist}`
+    CAIROX11_LIBS=`"${PKG_CONFIG}" --libs ${xmodlist}`
 
     CPPFLAGS="${CPPFLAGS} ${CAIRO_CPPFLAGS}"
     LIBS="${LIBS} ${CAIRO_LIBS}"
@@ -89,7 +89,7 @@ int main(void) {
     LIBS=${save_LIBS}
   else  ## no pangocairo, check for just cairo
     AC_CACHE_CHECK([whether pkg-config knows about cairo], [r_cv_has_cairo],
-	[if "${PKGCONF}" --exists cairo; then
+	[if "${PKG_CONFIG}" --exists cairo; then
 	   r_cv_has_cairo="yes"
 	 else
 	   r_cv_has_cairo="no"
@@ -100,39 +100,39 @@ int main(void) {
       ## on Linux, cairo-ft brings in header paths <cairo-ft.h>:
       ## the code which needs this is currently conditionalized
       for module in cairo-png cairo-ft; do
-	if "${PKGCONF}" --exists ${module}; then
+	if "${PKG_CONFIG}" --exists ${module}; then
 	  modlist="${modlist} ${module}"
 	fi
       done
-      if "${PKGCONF}" --exists cairo-pdf; then
+      if "${PKG_CONFIG}" --exists cairo-pdf; then
          modlist="${modlist} cairo-pdf"
          r_cairo_pdf=yes
       fi
-      if "${PKGCONF}" --exists cairo-ps; then
+      if "${PKG_CONFIG}" --exists cairo-ps; then
          modlist="${modlist} cairo-ps"
          r_cairo_ps=yes
       fi
-      if "${PKGCONF}" --exists cairo-svg; then
+      if "${PKG_CONFIG}" --exists cairo-svg; then
          modlist="${modlist} cairo-svg"
          r_cairo_svg=yes
       fi
-      if "${PKGCONF}" --exists cairo-xlib; then
+      if "${PKG_CONFIG}" --exists cairo-xlib; then
          xmodlist="${modlist} cairo-xlib"
       else
          xmodlist="${modlist}"
       fi
-      CAIRO_CPPFLAGS=`"${PKGCONF}" --cflags ${modlist}`
-      CAIROX11_CPPFLAGS=`"${PKGCONF}" --cflags ${xmodlist}`
+      CAIRO_CPPFLAGS=`"${PKG_CONFIG}" --cflags ${modlist}`
+      CAIROX11_CPPFLAGS=`"${PKG_CONFIG}" --cflags ${xmodlist}`
       case "${host_os}" in
         darwin*)
           ## This is for static macOS build
 	  ## FIXME: doing that unconditionally is really not a good idea
-          CAIRO_LIBS=`"${PKGCONF}" --static --libs ${modlist}`
-          CAIROX11_LIBS=`"${PKGCONF}" --static --libs ${xmodlist}`
+          CAIRO_LIBS=`"${PKG_CONFIG}" --static --libs ${modlist}`
+          CAIROX11_LIBS=`"${PKG_CONFIG}" --static --libs ${xmodlist}`
           ;;
         *)
-          CAIRO_LIBS=`"${PKGCONF}" --libs ${modlist}`
-          CAIROX11_LIBS=`"${PKGCONF}" --libs ${xmodlist}`
+          CAIRO_LIBS=`"${PKG_CONFIG}" --libs ${modlist}`
+          CAIROX11_LIBS=`"${PKG_CONFIG}" --libs ${xmodlist}`
           ;;
       esac
 

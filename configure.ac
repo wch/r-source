@@ -631,9 +631,9 @@ AC_PATH_PROG(REALPATH, realpath, false)
 
 ## Search for cairographics needs pkg-config, 
 ## helps find jpeg, libpng and libtiff.
-AC_PATH_TOOL(PKGCONF, pkg-config , [], 
+AC_PATH_TOOL(PKG_CONFIG, pkg-config , [], 
 	     [$PATH:/usr/local/bin:/ext/bin:/ext:/sw/bin:/opt/bin])
-AC_ARG_VAR([PKGCONF], [path to pkg-config utility])
+AC_ARG_VAR([PKG_CONFIG], [path to pkg-config utility])
 AC_ARG_VAR([PKG_CONFIG_PATH], [directories to add to pkg-config's search path])
 AC_ARG_VAR([PKG_CONFIG_LIBDIR], [path overriding pkg-config's default search path])
 
@@ -2350,7 +2350,7 @@ R_LIBCURL
 
 
 ## Bitmap headers and libraries.
-if test -n "${PKGCONF}"; then
+if test -n "${PKG_CONFIG}"; then
 R_BITMAPS2
 else
 R_BITMAPS
