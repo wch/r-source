@@ -754,7 +754,8 @@ static Rboolean file_open(Rconnection con)
     if(mlen >= 2 && con->mode[mlen-1] == 'b') con->text = FALSE;
     else con->text = TRUE;
     con->save = -1000;
-    set_buffer(con);
+    if (!isatty(fileno(fp)))
+	set_buffer(con);
     set_iconv(con);
 
 #ifdef HAVE_FCNTL
