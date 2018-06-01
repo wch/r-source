@@ -1165,7 +1165,7 @@ pairlist of the objects to be saved and serializing that single object.
 pairlist or a vector list) and assigns the elements of the object in the
 specified environment.  The header line serves two purposes in @R{}: it
 identifies the serialization format so @code{load} can switch to the
-appropriate reader code, and the linefeed allows the detection of files
+appropriate reader code, and the newline @code{\n} allows the detection of files
 which have been subjected to a non-binary transfer which re-mapped line
 endings.  It can also be thought of as a `magic number' in the sense
 used by the @command{file} program (although @R{} save files are not yet
