@@ -140,6 +140,8 @@
       functions now uses \code{srcref} attributes if present.
       %%----end{LH's patches related to print() from \PR{17398} ---------
 
+      \item Calling \code{install.packages()} with a length zero
+      \code{pkgs} argument now is a no-op (\PR{17422}).
     }
   }
 
