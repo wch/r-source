@@ -1410,7 +1410,7 @@ tools::assertWarning(
 ## silently gave p2 = 1.03 > 1 in R versions v, 3.1.3 <= v <= 3.4.3
 
 
-## removeSource() [for a function w/ body containing NULL]:
+## 1) removeSource() [for a function w/ body containing NULL]:
 op <- options(keep.source=TRUE)
 bod <- quote( foo(x, NULL) )
 testf  <- function(x) { }; body(testf)[[2]] <- bod
@@ -1419,8 +1419,22 @@ testfN <- removeSource(testf)
 stopifnot(identical(body(testf )[[2]], bod)
         , identical(body(testfN)[[2]], bod)
 )
-options(op)
 ## erronously changed  '(x, NULL)'  to  '(x)'  in R version <= 3.4.3
+##
+## 2) source *should* be kept:
+f <- function(x=1) { # 'x' not really needed
+    x+x + 2*x+1 # (note spaces)
+}
+stopifnot(exprs = {
+    identical(capture.output(f) -> fsrc,
+              capture.output(print(f)))
+    length(fsrc) == 3
+    grepl("(x=1)",             fsrc[1], fixed=TRUE)
+    grepl("really needed",     fsrc[1], fixed=TRUE)
+    grepl("x + 2*x+1 # (note", fsrc[2], fixed=TRUE)
+})
+options(op)
+## (was fine, but not tested in R <= 3.5.0)
 
 
 ## ar.yw(x) with missing values in x, PR#17366
@@ -1812,7 +1826,7 @@ stopifnot(exprs = {
 })
 
 
-## qr.coef(qr(<all 0, w/ colnames>)) 
+## qr.coef(qr(<all 0, w/ colnames>))
 qx <- qr(x <- matrix(0, 10, 2, dimnames = list(NULL, paste0("x", 1:2))))
 qc <- qr.coef(qx, x[,1])
 stopifnot(identical(qc, c(x1 = NA_real_, x2 = NA_real_)))
