@@ -73,6 +73,10 @@
 
       \item In \code{rapply(x, ..)}, \code{x} can also be
       \dQuote{list-like} and of length \eqn{\ge 2^{31}}{>= 2^{31}}.
+
+      \item \code{trimws()} gets new optional \code{whitespace}
+      argument, allowing larger definitions of \dQuote{space}, e.g.,
+      including unicode spaces as wished in \PR{17431}.
     }
   }
 
