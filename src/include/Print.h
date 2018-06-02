@@ -37,22 +37,9 @@
 #define printNamedVector    Rf_printNamedVector
 #define printVector         Rf_printVector
 
-typedef struct {
-    int width;
-    int na_width;
-    int na_width_noquote;
-    int digits;
-    int scipen;
-    int gap;
-    int quote;
-    int right;
-    int max;
-    SEXP na_string;
-    SEXP na_string_noquote;
-    int useSource;
-    int cutoff; // for deparsed language objects
-    SEXP callArgs;
-} R_print_par_t;
+/* For backward compatibility */
+#define R_print_par_t R_PrintData
+
 extern R_print_par_t R_print;
 
 /* Computation of printing formats */

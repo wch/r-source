@@ -981,6 +981,7 @@ extern0 int R_PCRE_limit_recursion;
 # define onsigusr2              Rf_onsigusr2
 # define parse			Rf_parse
 # define patchArgsByActuals	Rf_patchArgsByActuals
+# define PrintInit              Rf_PrintInit
 # define PrintDefaults		Rf_PrintDefaults
 # define PrintGreeting		Rf_PrintGreeting
 # define PrintValueEnv		Rf_PrintValueEnv
@@ -1095,6 +1096,25 @@ SEXP Rf_StringFromReal(double, int*);
 SEXP Rf_StringFromComplex(Rcomplex, int*);
 SEXP Rf_EnsureString(SEXP);
 
+/* ../../main/print.c : */
+typedef struct {
+    int width;
+    int na_width;
+    int na_width_noquote;
+    int digits;
+    int scipen;
+    int gap;
+    int quote;
+    int right;
+    int max;
+    SEXP na_string;
+    SEXP na_string_noquote;
+    int useSource;
+    int cutoff; // for deparsed language objects
+    SEXP env;
+    SEXP callArgs;
+} R_PrintData;
+
 /* Other Internally Used Functions */
 
 SEXP Rf_allocCharsxp(R_len_t);
@@ -1196,10 +1216,11 @@ RETSIGTYPE onsigusr2(int);
 R_xlen_t OneIndex(SEXP, SEXP, R_xlen_t, int, SEXP*, int, SEXP);
 SEXP parse(FILE*, int);
 SEXP patchArgsByActuals(SEXP, SEXP, SEXP);
+void PrintInit(R_PrintData *, SEXP);
 void PrintDefaults(void);
 void PrintGreeting(void);
 void PrintValueEnv(SEXP, SEXP);
-void PrintValueRec(SEXP, SEXP);
+void PrintValueRec(SEXP, R_PrintData *);
 void PrintVersion(char *, size_t len);
 void PrintVersion_part_1(char *, size_t len);
 void PrintVersionString(char *, size_t len);
