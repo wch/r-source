@@ -266,24 +266,24 @@ SEXP attribute_hidden do_vapply(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
+//  Apply FUN() to X recursively;  workhorse of rapply()
 static SEXP do_one(SEXP X, SEXP FUN, SEXP classes, SEXP deflt,
 		   Rboolean replace, SEXP rho)
 {
     SEXP ans, names, klass;
-    int i, j, n;
     Rboolean matched = FALSE;
 
     /* if X is a list, recurse.  Otherwise if it matches classes call f */
-    if(isNewList(X)) {
-	n = length(X);
-  if (replace) {
-    PROTECT(ans = shallow_duplicate(X));
-  } else {
-    PROTECT(ans = allocVector(VECSXP, n));
-    names = getAttrib(X, R_NamesSymbol);
-    if(!isNull(names)) setAttrib(ans, R_NamesSymbol, names);
-  }
-	for(i = 0; i < n; i++)
+    if(X == R_NilValue || isVectorList(X)) {
+	R_xlen_t n = length(X);
+	if (replace) {
+	    PROTECT(ans = shallow_duplicate(X));
+	} else {
+	    PROTECT(ans = allocVector(VECSXP, n));
+	    names = getAttrib(X, R_NamesSymbol);
+	    if(!isNull(names)) setAttrib(ans, R_NamesSymbol, names);
+	}
+	for(R_xlen_t i = 0; i < n; i++)
 	    SET_VECTOR_ELT(ans, i, do_one(VECTOR_ELT(X, i), FUN, classes,
 					  deflt, replace, rho));
 	UNPROTECT(1);
@@ -293,8 +293,8 @@ static SEXP do_one(SEXP X, SEXP FUN, SEXP classes, SEXP deflt,
 	matched = TRUE;
     else {
 	PROTECT(klass = R_data_class(X, FALSE));
-	for(i = 0; i < LENGTH(klass); i++)
-	    for(j = 0; j < length(classes); j++)
+	for(int i = 0; i < LENGTH(klass); i++)
+	    for(int j = 0; j < length(classes); j++)
 		if(Seql(STRING_ELT(klass, i), STRING_ELT(classes, j)))
 		    matched = TRUE;
 	UNPROTECT(1);
@@ -320,12 +320,12 @@ static SEXP do_one(SEXP X, SEXP FUN, SEXP classes, SEXP deflt,
 
 SEXP attribute_hidden do_rapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP X, FUN, classes, deflt, how, ans, names;
-    int i, n;
-    Rboolean replace;
+    SEXP X, FUN, classes, deflt, how, ans;
 
     checkArity(op, args);
     X = CAR(args); args = CDR(args);
+    if(!isVectorList(X))
+	error(_("'%s' must be a list or expression"), "object");
     FUN = CAR(args); args = CDR(args);
     if(!isFunction(FUN)) error(_("invalid '%s' argument"), "f");
     classes = CAR(args); args = CDR(args);
@@ -333,16 +333,16 @@ SEXP attribute_hidden do_rapply(SEXP call, SEXP op, SEXP args, SEXP rho)
     deflt = CAR(args); args = CDR(args);
     how = CAR(args);
     if(!isString(how)) error(_("invalid '%s' argument"), "how");
-    replace = strcmp(CHAR(STRING_ELT(how, 0)), "replace") == 0; /* ASCII */
-    n = length(X);
+    Rboolean replace = strcmp(CHAR(STRING_ELT(how, 0)), "replace") == 0; /* ASCII */
+    R_xlen_t n = xlength(X);
     if (replace) {
       PROTECT(ans = shallow_duplicate(X));
     } else {
       PROTECT(ans = allocVector(VECSXP, n));
-      names = getAttrib(X, R_NamesSymbol);
+      SEXP names = getAttrib(X, R_NamesSymbol);
       if(!isNull(names)) setAttrib(ans, R_NamesSymbol, names);
     }
-    for(i = 0; i < n; i++)
+    for(R_xlen_t i = 0; i < n; i++)
 	SET_VECTOR_ELT(ans, i, do_one(VECTOR_ELT(X, i), FUN, classes, deflt,
 				      replace, rho));
     UNPROTECT(1);
@@ -378,7 +378,7 @@ static int islistfactor(SEXP X)
 
 
 /* is this a tree with only factor leaves? */
-
+// currently only called from unlist()
 SEXP attribute_hidden do_islistfactor(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);

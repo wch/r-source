@@ -70,6 +70,9 @@
       \code{keep.parse.data.pkgs} is now \code{FALSE}, which changes
       previous behavior and significantly reduces space and time overhead
       when sources are kept when installing packages.
+
+      \item In \code{rapply(x, ..)}, \code{x} can also be
+      \dQuote{list-like} and of length \eqn{\ge 2^{31}}{>= 2^{31}}.
     }
   }
 
