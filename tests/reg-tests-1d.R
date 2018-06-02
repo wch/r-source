@@ -1833,6 +1833,24 @@ stopifnot(identical(qc, c(x1 = NA_real_, x2 = NA_real_)))
 ## qr.coef() gave  Error ...: object 'pivotted' not found | in R <= 3.5.0
 
 
+## unlist(<factor-leaves>)
+x <- list(list(v=factor("a")))
+y <- list(data.frame(v=factor("a")))
+x. <- list(list(factor("a")), list(factor(LETTERS[2:4])), factor("lol"))
+fN <- factor(LETTERS[c(2:4,30)])
+xN <- list(list(factor("a")), list(list(fN)), L=factor("lol"))
+stopifnot(exprs = {
+    .valid.factor(ux <- unlist(x))
+    identical(ux, unlist(y))
+    identical(ux, as.factor(c(v="a")))
+    .valid.factor(ux. <- unlist(x.))
+    .valid.factor(uxN <- unlist(xN))
+    identical(levels(ux.), c("a", "B", "C", "D", "lol"))
+    identical(levels      (uxN), levels(ux.))
+    identical(as.character(uxN), levels(ux.)[c(1:4,11L,5L)])
+})
+## gave invalid factor()s [if at all]
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

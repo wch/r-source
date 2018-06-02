@@ -145,6 +145,10 @@
 
       \item Calling \code{install.packages()} with a length zero
       \code{pkgs} argument now is a no-op (\PR{17422}).
+
+      \item \code{unlist(x)} now returns a correct \code{factor} when
+      \code{x} is a nested list with factor leaves, fixing \PR{12572}
+      and \PR{17419}.
     }
   }
 
