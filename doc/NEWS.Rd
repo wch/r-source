@@ -153,6 +153,8 @@
       \item \code{unlist(x)} now returns a correct \code{factor} when
       \code{x} is a nested list with factor leaves, fixing \PR{12572}
       and \PR{17419}.
+
+      \item \code{printCoefmat()} now also works with explicit \code{right=TRUE}.
     }
   }
 

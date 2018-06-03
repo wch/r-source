@@ -1852,6 +1852,17 @@ stopifnot(exprs = {
 ## gave invalid factor()s [if at all]
 
 
+## printCoefMat()  w/ unusual arguments
+cm <- matrix(c(9.2, 2.5, 3.6, 0.00031), 1, 4,
+            dimnames = list("beta", c("Estimate", "Std.Err", "Z value", "Pr(>z)")))
+cc <- capture.output(printCoefmat(cm))
+stopifnot(grepl(" [*]{3}$", cc[2]),
+          identical(cc, capture.output(
+                     printCoefmat(cm, right=TRUE))))
+## gave Error: 'formal argument "right" matched by multiple actual arguments'
+
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())
