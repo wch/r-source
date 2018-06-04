@@ -553,6 +553,24 @@ cat("\\newcommand{\\mac2}{MAC2:#2}\\mac2{}{XX}", file=f)
 rd <- tools::parse_Rd(f)
 stopifnot(identical(as.character(rd), "MAC2:XX\n"))
 
+cat("\\newcommand{\\mac2}{MAC2:#2#1}\\mac2{YY}{}", file=f)
+rd <- tools::parse_Rd(f)
+stopifnot(identical(as.character(rd), "MAC2:YY\n"))
+
+## pass multi-line argument to a user macro (failed in 3.5.0 and earlier)
+cat("\\newcommand{\\mac1}{MAC1:#1}\\mac1{XXX\nYYY}", file=f)
+rd <- tools::parse_Rd(f)
+stopifnot(identical(as.character(rd), c("MAC1:XXX\n","YYY\n")))
+
+## comments are removed from macro arguments (not in 3.5.0 and earlier)
+cat("\\newcommand{\\mac1}{MAC1:#1}\\mac1{XXX%com\n}", file=f)
+rd <- tools::parse_Rd(f)
+stopifnot(identical(as.character(rd), c("MAC1:XXX\n","\n")))
+
+cat("\\newcommand{\\mac1}{MAC1:#1}\\mac1{XXX%com\nYYY}", file=f)
+rd <- tools::parse_Rd(f)
+stopifnot(identical(as.character(rd), c("MAC1:XXX\n","YYY\n")))
+
 ## power.t.test() failure for very large n (etc): PR#15792
 (ptt <- power.t.test(delta = 1e-4, sd = .35, power = .8))
 (ppt <- power.prop.test(p1 = .5, p2 = .501, sig.level=.001, power=0.90, tol=1e-8))

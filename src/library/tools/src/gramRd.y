@@ -570,7 +570,18 @@ static SEXP xxnewcommand(SEXP cmd, SEXP name, SEXP defn, YYLTYPE *lloc)
 
 #define START_MACRO -2
 #define END_MACRO -3
-    	
+
+static Rboolean isComment(SEXP elt)
+{
+    static SEXP s_Rd_tag = NULL;
+    if (!s_Rd_tag)
+	s_Rd_tag = install("Rd_tag");
+
+    SEXP a = getAttrib(elt, s_Rd_tag);
+    return isString(a) && LENGTH(a) == 1 &&
+           !strcmp(CHAR(STRING_ELT(a, 0)), "COMMENT");
+}
+
 static SEXP xxusermacro(SEXP macro, SEXP args, YYLTYPE *lloc)
 {
     SEXP ans, value, nextarg;
@@ -587,21 +598,55 @@ static SEXP xxusermacro(SEXP macro, SEXP args, YYLTYPE *lloc)
     	SET_STRING_ELT(ans, 0, STRING_ELT(value, 0));
     else
     	error(_("No macro definition for '%s'."), CHAR(STRING_ELT(macro,0)));
-/*    Rprintf("len = %d", len); */
+
     for (i = 0, nextarg=args; i < len; i++, nextarg = CDR(nextarg)) {
-/*        Rprintf("arg i is");
-        PrintValue(CADR(CADR(nextarg))); */
-	SEXP s = CADR(CADR(nextarg));
-	if (isNull(s))
+	if (isNull(CDR(CADR(nextarg)))) {
 	    /* This happens for an empty argument {} and for invocation
 	       of a macro with zero parameters. In that case, the ""
 	       element of ans is not needed but does no harm. */
 	    SET_STRING_ELT(ans, i+1, mkChar(""));
-	else if (TYPEOF(s) == STRSXP && LENGTH(s) == 1)
-	    SET_STRING_ELT(ans, i+1, STRING_ELT(s, 0));
-	else
-	    error("internal error: invalid argument to xxusermacro");
-    }	
+	    continue;
+	}
+	if (isNull(CDR(CDR(CADR(nextarg))))) {
+	    /* The common case: argument without newline nor comment.
+	       (when the length is 1, there can be no comment) */
+	    SEXP s = CADR(CADR(nextarg));
+	    if (TYPEOF(s) == STRSXP && LENGTH(s) == 1)
+		SET_STRING_ELT(ans, i+1, STRING_ELT(s, 0));
+	    else
+		error("internal error: invalid argument to xxusermacro");
+	    continue;
+	}
+
+	/* An argument with a newline or comment or both. Exclude comments and
+	   concatenate VERBs from different lines (newline characters are
+	   in the VERBs already. */
+	const void *vmax = vmaxget();
+	SEXP si;
+	size_t ilen = 0;
+	for(si = CDR(CADR(nextarg)); si != R_NilValue; si = CDR(si)) {
+	    SEXP stri = CAR(si);
+	    if (TYPEOF(stri) == STRSXP && LENGTH(stri) == 1) {
+		if (!isComment(stri))
+		    ilen += LENGTH(STRING_ELT(stri, 0));
+	    } else
+		error("internal error: invalid argument to xxusermacro");
+	}
+
+	char *str = (char *)R_alloc(ilen + 1, sizeof(char));
+	size_t offset = 0;
+	for(si = CDR(CADR(nextarg)); si != R_NilValue; si = CDR(si)) {
+	    SEXP stri = CAR(si);
+	    if (!isComment(stri)) {
+		int nc = LENGTH(STRING_ELT(stri, 0));
+		memcpy(str + offset, CHAR(STRING_ELT(stri, 0)), nc);
+		offset += nc;
+	    }
+	}
+	str[offset] = '\0';
+	SET_STRING_ELT(ans, i+1, mkChar(str));
+        vmaxset(vmax);
+    }
     UNPROTECT_PTR(args);
 
     /* Now push the expanded macro onto the input stream, in reverse order */
