@@ -123,29 +123,31 @@
 
       \item User macros in Rd files now accept empty arguments.
 
-      %% Lionel Henry's patches from \PR{17398} :
-      \item Printing lists, pairlists or attributes containing calls
-      with S3 class no longer evaluate those.
+      \item Changes in \code{print.*()}, thanks to Lionel Henry's
+      patches in \PR{17398}:
+      \itemize{
+	\item Printing lists, pairlists or attributes containing calls
+	with S3 class no longer evaluate those.
 
-      \item Printing S4 objects within lists and pairlists dispatches
-      with \code{show()} rather than \code{print()}, as with
-      auto-printing.
+	\item Printing S4 objects within lists and pairlists dispatches
+	with \code{show()} rather than \code{print()}, as with
+	auto-printing.
 
-      \item The indexing tags (names or \code{[[<n>]]}) of recursive
-      data structures are now printed correctly in complex cases.
+	\item The indexing tags (names or \code{[[<n>]]}) of recursive
+	data structures are now printed correctly in complex cases.
 
-      \item Arguments supplied to \code{print()} are now properly
-      forwarded to print methods when printing lists, pairlists or
-      attributes containing S3 objects.
+	\item Arguments supplied to \code{print()} are now properly
+	forwarded to print methods when printing lists, pairlists or
+	attributes containing S3 objects.
 
-      \item The print parameters are now preserved when printing S3
-      objects or deparsing symbols and calls.  Previously, printing
-      lists containing S3 objects or expressions would reset these
-      parameters.
+	\item The print parameters are now preserved when printing S3
+	objects or deparsing symbols and calls.  Previously, printing
+	lists containing S3 objects or expressions would reset these
+	parameters.
 
-      \item Printing lists, pairlists or attributes containing
-      functions now uses \code{srcref} attributes if present.
-      %%----end{LH's patches related to print() from \PR{17398} ---------
+	\item Printing lists, pairlists or attributes containing
+	functions now uses \code{srcref} attributes if present.
+      }
 
       \item Calling \code{install.packages()} with a length zero
       \code{pkgs} argument now is a no-op (\PR{17422}).
