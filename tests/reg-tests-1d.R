@@ -1861,6 +1861,9 @@ stopifnot(grepl(" [*]{3}$", cc[2]),
                      printCoefmat(cm, right=TRUE))))
 ## gave Error: 'formal argument "right" matched by multiple actual arguments'
 
+## print.noquote() w/ unusual argument -- inspite of user error, be forgiving:
+print(structure("foo bar", class="noquote"), quote=FALSE)
+## gave Error: 'formal argument "quote" matched by multiple actual arguments'
 
 
 ## keep at end
