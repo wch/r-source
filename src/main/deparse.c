@@ -628,37 +628,34 @@ static Rboolean needsparens(PPinfo mainop, SEXP arg, unsigned int left)
     return FALSE;
 }
 
-// unused:
-#ifdef _NEVER_
-// does the character() vector x contain `NA_character_` ?
-static Rboolean anyNA_chr(SEXP x)
-{
-    if(TYPEOF(x) == STRSXP) {
-	R_xlen_t i, n = xlength(x);
-	for (i = 0; i < n; i++) {
-	    if (STRING_ELT(x, i) == NA_STRING)
-		return TRUE;
-	}
-    }
-    return FALSE;
-}
-#endif
 
-// does the character() vector x contain one `NA_character_` or is all "" ?
-static Rboolean anyNA_or_all0_chr(SEXP x)
+/* does the character() vector x contain one `NA_character_` or is all "",
+ * or if(isAtomic) does it have one "recursive" or "use.names" ?  */
+static Rboolean usable_nice_names(SEXP x, Rboolean isAtomic)
 {
     if(TYPEOF(x) == STRSXP) {
 	R_xlen_t i, n = xlength(x);
 	Rboolean all_0 = TRUE;
-	for (i = 0; i < n; i++) {
-	    if (STRING_ELT(x, i) == NA_STRING)
-		return TRUE;
-	    else if (all_0 && *CHAR(STRING_ELT(x, i))) /* length test */
-		all_0 = FALSE;
-	}
-	return all_0;
+	if(isAtomic) // c(*, recursive=, use.names=): cannot use these as nice_names
+	    for (i = 0; i < n; i++) {
+		if (STRING_ELT(x, i) == NA_STRING
+		    || strcmp(CHAR(STRING_ELT(x, i)), "recursive") == 0
+		    || strcmp(CHAR(STRING_ELT(x, i)), "use.names") == 0)
+		    return FALSE;
+		else if (all_0 && *CHAR(STRING_ELT(x, i))) /* length test */
+		    all_0 = FALSE;
+	    }
+	else
+	    for (i = 0; i < n; i++) {
+		if (STRING_ELT(x, i) == NA_STRING)
+		    return FALSE;
+		else if (all_0 && *CHAR(STRING_ELT(x, i))) /* length test */
+		    all_0 = FALSE;
+	    }
+
+	return !all_0;
     }
-    return FALSE;
+    return TRUE;
 }
 
 
@@ -715,8 +712,8 @@ static attr_type attr1(SEXP s, LocalParseData *d)
     REprintf("  attr1(): has_names = %s", ChTF(has_names));
 #endif
     if(has_names) {
-	// ok only if there's no  NA_character_ and no "" in names(.):
-	ok_names = nice_names && !anyNA_or_all0_chr(nm);
+	// ok only if there's no  NA_character_,.. in names() nor all """
+	ok_names = nice_names && usable_nice_names(nm, isVectorAtomic(s));
 #ifdef DEBUG_DEPARSE
 	REprintf(", ok_names = %s", ChTF(ok_names));
 #endif
