@@ -116,11 +116,6 @@
       \item \code{order(...., decreasing=c(TRUE,FALSE))} could fail in
       some cases. Reported from StackOverflow via Karl Nordström.
 
-      \item \code{deparse(x)}, \code{dput(x)} and \code{dump()} now
-      respect \code{c()}'s argument names \code{recursive} and
-      \code{use.names}, e.g., for \code{x <- setNames(0, "recursive")},
-      thanks to Suharto Anggono's \PR{17427}.
-
       \item User macros in Rd files now accept empty arguments.
 
       \item Changes in \code{print.*()}, thanks to Lionel Henry's
@@ -214,6 +209,11 @@
 
       \item Terminal connections (e.g., stdin) are no longer
       buffered. Fixes \PR{17432}.
+
+      \item \code{deparse(x)}, \code{dput(x)} and \code{dump()} now
+      respect \code{c()}'s argument names \code{recursive} and
+      \code{use.names}, e.g., for \code{x <- setNames(0, "recursive")},
+      thanks to Suharto Anggono's \PR{17427}.
     }
   }
 }
