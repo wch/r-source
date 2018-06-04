@@ -116,7 +116,8 @@
       \item \code{order(...., decreasing=c(TRUE,FALSE))} could fail in
       some cases. Reported from StackOverflow via Karl Nordström.
 
-      \item User macros in Rd files now accept empty arguments.
+      \item User macros in Rd files now accept empty and multi-line
+      arguments.
 
       \item Changes in \code{print.*()}, thanks to Lionel Henry's
       patches in \PR{17398}:
