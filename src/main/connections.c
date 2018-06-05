@@ -508,7 +508,10 @@ int dummy_fgetc(Rconnection con)
 	    }
 	    p = con->iconvbuff + con->inavail;
 	    for(i = con->inavail; i < 25; i++) {
-		c = buff_fgetc(con);
+		if (con->buff)
+		    c = buff_fgetc(con);
+		else
+		    c = con->fgetc_internal(con);
 		if(c == R_EOF){ con->EOF_signalled = TRUE; break; }
 		*p++ = (char) c;
 		con->inavail++;
