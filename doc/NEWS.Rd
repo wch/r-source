@@ -215,6 +215,9 @@
       respect \code{c()}'s argument names \code{recursive} and
       \code{use.names}, e.g., for \code{x <- setNames(0, "recursive")},
       thanks to Suharto Anggono's \PR{17427}.
+
+      \item Unbuffered connections now work with encoding conversion.
+      Reported by Stephen Berman.
     }
   }
 }
