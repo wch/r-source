@@ -929,6 +929,18 @@ int cmdlineoptions(int ac, char **av)
     for (i = 1; i < ac; i++)
 	if (!strcmp(av[i], "--no-environ") || !strcmp(av[i], "--vanilla"))
 	    Rp->NoRenviron = TRUE;
+	else if (!strcmp(av[i], "--cd-to-userdocs")) {
+	    /* This is used in shortcuts created by the installer. Previously, the
+	       installer resolved the user documents folder at installation time,
+	       but that is not good for installation under SCCM/system context where
+	       it resolved to documents folder in systemprofile. This has do be done
+	       before process_user_Renviron(), because user .Renviron may be read from
+	       the current directory, which is expected to be userdocs. */
+	    TCHAR mydocs[MAX_PATH + 1];
+	    if (SUCCEEDED(SHGetFolderPath(NULL, CSIDL_PERSONAL|CSIDL_FLAG_CREATE,
+					  NULL, 0, mydocs))) 
+		SetCurrentDirectory(mydocs);
+	}
 
     Rp->CallBack = R_DoNothing;
     /* Here so that --ess and similar can change */
@@ -1006,14 +1018,7 @@ int cmdlineoptions(int ac, char **av)
 		R_ShowMessage(PrintUsage());
 		exit(0);
 	    } else if (!strcmp(*av, "--cd-to-userdocs")) {
-		/* This is used in shortcuts created by the installer. Previously, the
-		   installer resolved the user documents folder at installation time,
-		   but that is not good for installation under SCCM/system context where
-		   it resolved to documents folder in systemprofile. */
-		TCHAR mydocs[MAX_PATH + 1];
-		if (SUCCEEDED(SHGetFolderPath(NULL, CSIDL_PERSONAL|CSIDL_FLAG_CREATE,
-		                              NULL, 0, mydocs))) 
-		    SetCurrentDirectory(mydocs);
+		/* handled above before processing Renviron */
 	    } else if (!strcmp(*av, "--no-environ")) {
 		Rp->NoRenviron = TRUE;
 	    } else if (!strcmp(*av, "--ess")) {
