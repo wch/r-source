@@ -218,6 +218,10 @@
 
       \item Unbuffered connections now work with encoding conversion.
       Reported by Stephen Berman.
+
+      \item \file{.Renviron} on Windows with \command{Rgui} is again by
+      default searched for in user documents directory when invoked via the
+      launcher icon. Reported by Jeroen Ooms.
     }
   }
 }
