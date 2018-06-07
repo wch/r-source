@@ -155,10 +155,6 @@
       \item \code{unlist(x)} now returns a correct \code{factor} when
       \code{x} is a nested list with factor leaves, fixing \PR{12572}
       and \PR{17419}.
-
-      \item \code{printCoefmat()} now also works with explicit \code{right=TRUE}.
-
-      \item \code{print.noquote()} now also works with explicit \code{quote=FALSE}.
     }
   }
 
@@ -226,6 +222,10 @@
       \item \file{.Renviron} on Windows with \command{Rgui} is again by
       default searched for in user documents directory when invoked via the
       launcher icon. Reported by Jeroen Ooms.
+
+      \item \code{printCoefmat()} now also works with explicit \code{right=TRUE}.
+
+      \item \code{print.noquote()} now also works with explicit \code{quote=FALSE}.
     }
   }
 }
