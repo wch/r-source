@@ -158,3 +158,25 @@ toD <- as.Date("2016-08-19"); dates <- c(toD - 10, toD)
 plot(dates, 1:2, xlim = rev(dates),
      ann=FALSE, yaxt="n", frame.plot=FALSE)
 ## failed to label the dates in R <= 3.3.1
+
+
+## axis() -- labels only written when there's room
+plot2 <- function(at, wait=FALSE) {
+    plot1 <- function(x,y) plot(x,y, type="n", xlab="", ylab="", tck=0, frame.plot=FALSE)
+    plot1( at, at); axis(3, at= at, tck=0)
+    plot1(-at,-at); axis(3, at=-at, tck=0)
+    if(wait) { mtext("Click here to advance!", line=-2, cex=1.5, col=2); locator(1) }
+}
+at <- c(7:15, 2*(8:15), 5*(7:15), 10*(8:15))
+op <- par(mfrow=2:1, mgp = c(1.5, 0.6, 0), mar = .1+c(2,2,2,1),
+          lab = c(20,20,7), las = 1) # las=1: all horizontal => y-axis perpendicular
+interAct <- dev.interactive()
+
+if(interAct) { xMar <- c(1,3)/2  ; nP <- 10
+} else {       xMar <- c(1,3)*3/2; nP <-  3 }
+## Now increasing margins ==> decreasing plot area ==> shrinking plot
+## (*is* device dependent [here have "a4r"-pdf]) :
+for(n in 1:nP) {
+    par(mar = par("mar") + xMar)
+    plot2(at, n < nP && interAct)
+}
