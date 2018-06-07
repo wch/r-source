@@ -2261,6 +2261,40 @@ char *S_realloc(char *p, long new, long old, int size)
     return q;
 }
 
+
+/* Allocation functions that GC on initial failure */
+
+void *R_malloc_gc(size_t n)
+{
+    void *np = malloc(n);
+    if (np == NULL) {
+	R_gc();
+	np = malloc(n);
+    }
+    return np;
+}
+
+void *R_calloc_gc(size_t n, size_t s)
+{
+    void *np = calloc(n, s);
+    if (np == NULL) {
+	R_gc();
+	np = calloc(n, s);
+    }
+    return np;
+}
+
+void *R_realloc_gc(void *p, size_t n)
+{
+    void *np = realloc(p, n);
+    if (np == NULL) {
+	R_gc();
+	np = realloc(p, n);
+    }
+    return np;
+}
+
+
 /* "allocSExp" allocate a SEXPREC */
 /* call gc if necessary */
 
