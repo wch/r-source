@@ -622,10 +622,11 @@
 
 .checkDuplicateMethodClasses <- function(classDefs, env, label){
     supers <- strsplit(label, "#", TRUE)[[1]]
-    plabels <- strsplit(sort(names(env)), "#", TRUE)
+    sigs <- sort(names(env))
+    plabels <- strsplit(sigs, "#", TRUE)
     hasSubclass <- vapply(plabels, .hasThisSubclass, logical(1L),
                           classDefs=classDefs, supers=supers)
-    mget(plabels[hasSubclass], env)
+    mget(sigs[hasSubclass], env)
 }
 
 .hasThisSubclass <- function(classDefs, supers, plabel) {
