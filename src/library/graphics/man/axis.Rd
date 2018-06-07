@@ -64,14 +64,17 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
   \item{gap.axis}{an optional (typically non-negative) numeric factor to
     be multiplied with the size of an \sQuote{m} to determine the
     minimal gap between labels that are drawn, see \sQuote{Details}.
-    The default, \code{NA}, corresponds to \code{1} when tick labels drawn
+    The default, \code{NA}, corresponds to \code{1} for tick labels drawn
     \emph{parallel} to the axis and \code{0.25} otherwise, i.e., the
     default is equivalent to \preformatted{  perpendicular <- function(side, las) {
     is.x <- (side \%\% 2 == 1) # is horizontal x-axis
     ( is.x && (las \%in\% 2:3)) ||
     (!is.x && (las \%in\% 1:2))
   }
-  gap.axis <- if(perpendicular(side, las)) 0.25 else 1}
+  gap.axis <- if(perpendicular(side, las)) 0.25 else 1}% end{pre..}
+
+    \code{gap.axis} may typically be relevant when \code{at = ..}
+    tick-mark positions are specified explicitly.
   }
   \item{\dots}{other \link{graphical parameters} may also be passed as
     arguments to this function, particularly, \code{cex.axis}, \code{col.axis}

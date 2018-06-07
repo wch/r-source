@@ -1,7 +1,7 @@
 #  File src/library/graphics/R/plot.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -51,14 +51,15 @@ plot.default <-
     function(x, y = NULL, type = "p", xlim = NULL, ylim = NULL,
              log = "", main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
              ann = par("ann"), axes = TRUE, frame.plot = axes,
-             panel.first = NULL, panel.last = NULL, asp = NA, ...)
+             panel.first = NULL, panel.last = NULL, asp = NA,
+             xgap.axis = NA, ygap.axis = NA, ...)
 {
     ## These col, bg, pch, cex can be vectors, so exclude them
     ## Also, axis and box accept some of these
-    localAxis <- function(..., col, bg, pch, cex, lty, lwd) Axis(...)
-    localBox <- function(..., col, bg, pch, cex, lty, lwd) box(...)
+    localAxis   <- function(..., col, bg, pch, cex, lty, lwd) Axis(...)
+    localBox    <- function(..., col, bg, pch, cex, lty, lwd) box(...)
     localWindow <- function(..., col, bg, pch, cex, lty, lwd) plot.window(...)
-    localTitle <- function(..., col, bg, pch, cex, lty, lwd) title(...)
+    localTitle  <- function(..., col, bg, pch, cex, lty, lwd) title(...)
     xlabel <- if (!missing(x)) deparse(substitute(x))
     ylabel <- if (!missing(y)) deparse(substitute(y))
     xy <- xy.coords(x, y, xlabel, ylabel, log)
@@ -73,8 +74,8 @@ plot.default <-
     plot.xy(xy, type, ...)
     panel.last
     if (axes) {
-	localAxis(if(is.null(y)) xy$x else x, side = 1, ...)
-	localAxis(if(is.null(y))  x   else y, side = 2, ...)
+	localAxis(if(is.null(y)) xy$x else x, side = 1, gap.axis = xgap.axis, ...)
+	localAxis(if(is.null(y))  x   else y, side = 2, gap.axis = ygap.axis, ...)
     }
     if (frame.plot) localBox(...)
     if (ann) localTitle(main = main, sub = sub, xlab = xlab, ylab = ylab, ...)
