@@ -64,23 +64,18 @@ c.noquote <- function(..., recursive = FALSE)
     r
 }
 
-print.noquote <- function(x, ...) {
-    rgt.in.dots <- any("right" == names(list(...)))
+print.noquote <- function(x, quote = FALSE, right = FALSE, ...) {
     if(copy <- !is.null(cl <- attr(x, "class"))) {
 	isNQ <- cl == "noquote"
-	if(!rgt.in.dots)
+	if(missing(right))
 	    right <- any("right" == names(cl[isNQ]))
 	if(copy <- any(isNQ)) {
 	    ox <- x
 	    cl <- cl[!isNQ]
 	    attr(x, "class") <- if(length(cl)) cl # else NULL
 	}
-    } else
-	right <- FALSE
-    if(rgt.in.dots)
-	print(x, quote = FALSE, ...)
-    else
-	print(x, quote = FALSE, right = right, ...)
+    }
+    print(x, quote = quote, right = right, ...)
     invisible(if(copy) ox else x)
 }
 

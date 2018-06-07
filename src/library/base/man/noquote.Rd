@@ -1,6 +1,6 @@
 % File src/library/base/man/noquote.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{noquote}
@@ -16,7 +16,7 @@
 \usage{
 noquote(obj, right = FALSE)
 
-\method{print}{noquote}(x, \dots)
+\method{print}{noquote}(x, quote = FALSE, right = FALSE, \dots)
 
 \method{c}{noquote}(\dots, recursive = FALSE)
 }
@@ -27,7 +27,7 @@ noquote(obj, right = FALSE)
     \code{print()}, used by \code{\link{print.default}()}, indicating
     whether or not strings should be right aligned.}
   \item{x}{an object of class \code{"noquote"}.}
-  \item{\dots}{further options passed to next methods, such as \code{\link{print}}.}
+  \item{quote, \dots}{further options passed to next methods, such as \code{\link{print}}.}
   \item{recursive}{for compatibility with the generic \code{\link{c}} function.}
 }
 \details{
@@ -36,6 +36,10 @@ noquote(obj, right = FALSE)
   method (\code{"[.noquote"}) which ensures that the class is not lost
   by subsetting.  The print method (\code{print.noquote}) prints
   character strings \emph{without} quotes (\code{"\dots"}).
+
+  If \code{right} is specified in a call \code{print(x, right=*)}, it
+  takes precedence over a possible \code{right} setting of \code{x},
+  e.g., created by \code{x <- noquote(*, right=TRUE)}.
 
   These functions exist both as utilities and as an example of using (S3)
   \code{\link{class}} and object orientation.
@@ -63,11 +67,11 @@ chmat <- as.matrix(format(stackloss)) # a "typical" character matrix
 ## noquote(*, right=TRUE)  so it prints exactly like a data frame
 chmat <- noquote(chmat, right = TRUE)
 chmat
-%% \dontshow{ ========   FIXME(?) problem in capture.output()
-%% stopifnot(identical(
-%%    capture.output(stackloss),
-%%    capture.output(chmat)))
-%% }%dont
+\dontshow{
+stopifnot(identical(
+   capture.output(stackloss),
+   capture.output(chmat)))
+}%dont
 }
 \keyword{print}
 \keyword{methods}

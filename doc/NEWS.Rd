@@ -63,6 +63,8 @@
       launcher icon. Reported by Jeroen Ooms.
 
       \item \code{printCoefmat()} now also works with explicit \code{right=TRUE}.
+
+      \item \code{print.noquote()} now also works with explicit \code{quote=FALSE}.
     }
   }
 }
