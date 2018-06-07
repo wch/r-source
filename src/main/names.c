@@ -681,7 +681,7 @@ FUNTAB R_FunTab[] =
 {"dump",	do_dump,	0,	111,	5,	{PP_FUNCALL, PREC_FN,	0}},
 {"quit",	do_quit,	0,	111,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"readline",	do_readln,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{"print.default",do_printdefault,0,	111,	10,	{PP_FUNCALL, PREC_FN,	0}},
+{"print.default",do_printdefault,0,	111,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"prmatrix",	do_prmatrix,	0,	111,	6,	{PP_FUNCALL, PREC_FN,	0}},
 {"gc",		do_gc,		0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"gcinfo",	do_gcinfo,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},

@@ -192,8 +192,26 @@ static void PrintClosure(SEXP s, R_PrintData *data)
 	Rprintf("%s\n", EncodeEnvironment(t));
 }
 
-/* .Internal(print.default(x, digits, quote, na.print, print.gap,
-			   right, max, useS4)) */
+/* This advances `args` and `prev`. If an argument should not be
+   forwarded because it was not explicitly supplied by the user,
+   `prev` skips one element. If an argument is found to be
+   non-missing, we set `allMissing` to false so we know we cannot use
+   show() on S4 objects. */
+static void advancePrintArgs(SEXP* args, SEXP* prev,
+			     int** missingArg, int* allMissing) {
+    *args = CDR(*args);
+
+    if (**missingArg) {
+	SETCDR(*prev, *args);
+    } else {
+	*allMissing = 0;
+	*prev = CDR(*prev);
+    }
+
+    ++(*missingArg);
+}
+
+/* .Internal(print.default(x, args, missings)) */
 SEXP attribute_hidden do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
@@ -203,6 +221,18 @@ SEXP attribute_hidden do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
     R_PrintData data;
     PrintInit(&data, rho);
 
+    /* These indicate whether an argument should be forwarded */
+    int* missingArg = LOGICAL(CADR(args));
+    int allMissing = 1;
+
+    /* The remaining arguments are wrapped in another pairlist that
+       will be forwarded on recursion */
+    args = CAR(args);
+
+    /* Wrap in a parent node to facilitate rechaining */
+    SEXP orig = PROTECT(CONS(R_NilValue, args));
+    SEXP prev = orig;
+
     if(!isNull(CAR(args))) {
 	data.digits = asInteger(CAR(args));
 	if (data.digits == NA_INTEGER ||
@@ -210,12 +240,12 @@ SEXP attribute_hidden do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    data.digits > R_MAX_DIGITS_OPT)
 	    error(_("invalid '%s' argument"), "digits");
     }
-    args = CDR(args);
+    advancePrintArgs(&args, &prev, &missingArg, &allMissing);
 
     data.quote = asLogical(CAR(args));
     if(data.quote == NA_LOGICAL)
 	error(_("invalid '%s' argument"), "quote");
-    args = CDR(args);
+    advancePrintArgs(&args, &prev, &missingArg, &allMissing);
 
     SEXP naprint = CAR(args);
     if(!isNull(naprint))  {
@@ -225,40 +255,43 @@ SEXP attribute_hidden do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
 	data.na_width = data.na_width_noquote =
 	    (int) strlen(CHAR(data.na_string));
     }
-    args = CDR(args);
+    advancePrintArgs(&args, &prev, &missingArg, &allMissing);
 
-    if(!isNull(CAR(args))) {
-	data.gap = asInteger(CAR(args));
+    SEXP gap = CAR(args);
+    if(!isNull(gap)) {
+	data.gap = asInteger(gap);
 	if (data.gap == NA_INTEGER || data.gap < 0)
 	    error(_("'gap' must be non-negative integer"));
     }
-    args = CDR(args);
+    advancePrintArgs(&args, &prev, &missingArg, &allMissing);
 
     data.right = (Rprt_adj) asLogical(CAR(args)); /* Should this be asInteger()? */
     if(data.right == NA_LOGICAL)
 	error(_("invalid '%s' argument"), "right");
-    args = CDR(args);
+    advancePrintArgs(&args, &prev, &missingArg, &allMissing);
 
-    if(!isNull(CAR(args))) {
-	data.max = asInteger(CAR(args));
+    SEXP max = CAR(args);
+    if(!isNull(max)) {
+	data.max = asInteger(max);
 	if(data.max == NA_INTEGER || data.max < 0)
 	    error(_("invalid '%s' argument"), "max");
 	else if(data.max == INT_MAX) data.max--; // so we can add
     }
-    args = CDR(args);
+    advancePrintArgs(&args, &prev, &missingArg, &allMissing);
 
     data.useSource = asLogical(CAR(args));
     if(data.useSource == NA_LOGICAL)
 	error(_("invalid '%s' argument"), "useSource");
     if(data.useSource) data.useSource = USESOURCE;
-    args = CDR(args);
+    advancePrintArgs(&args, &prev, &missingArg, &allMissing);
 
-    int noParams = asLogical(CAR(args)); args = CDR(args);
-    if (noParams == NA_LOGICAL)
-	error(_("invalid 'noParams' internal argument"));
+    /* The next arguments are those forwarded in `...`. If all named
+       arguments were missing and there are no arguments in `...`, the
+       user has not supplied any parameter and we can use show() on S4
+       objects */
+    int noParams = allMissing && args == R_NilValue;
 
-    data.callArgs = CAR(args);
-
+    data.callArgs = CDR(orig);
 
     /* Initialise the global R_init as other routines still depend on it */
     R_print = data;
@@ -270,6 +303,8 @@ SEXP attribute_hidden do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PrintValueRec(x, &data);
 
     PrintDefaults(); /* reset, as na.print etc may have been set */
+
+    UNPROTECT(1);
     return x;
 }/* do_printdefault */
 

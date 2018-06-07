@@ -23,30 +23,27 @@ print.default <- function(x, digits = NULL, quote = TRUE, na.print = NULL,
                           print.gap = NULL, right = FALSE, max = NULL,
                           useSource = TRUE, ...)
 {
-    missings <- c(missing(digits), missing(quote), missing(na.print),
-		  missing(print.gap), missing(right), missing(max),
-		  missing(useSource))
-
-    # Need to be a bit careful with argument matching. We need to
-    # capture the pairlist of arguments actually supplied by the user.
-    # We check for missingness instead of using match.call() tricks
-    # because arguments should be evaluated only once.
-    callArgs <- list(
+    # Arguments are wrapped in another pairlist because we need to
+    # forward them to recursive print() calls.
+    args <- pairlist(
 	digits = digits,
 	quote = quote,
 	na.print = na.print,
 	print.gap = print.gap,
 	right = right,
 	max = max,
-	useSource = useSource
+	useSource = useSource,
+        ...
     )
-    callArgs <- c(callArgs[!missings], list(...))
-    callArgs <- as.pairlist(callArgs)
 
-    noOpt <- all(missings) && missing(...)
+    # Missing elements are not forwarded so we pass their
+    # `missingness`. Also this helps decide whether to call show()
+    # with S4 objects (if any argument print() is used instead).
+    missings <- c(missing(digits), missing(quote), missing(na.print),
+		  missing(print.gap), missing(right), missing(max),
+		  missing(useSource))
 
-    .Internal(print.default(x, digits, quote, na.print, print.gap, right, max,
-			    useSource, noOpt, callArgs))
+    .Internal(print.default(x, args, missings))
 }
 
 prmatrix <-
