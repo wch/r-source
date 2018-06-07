@@ -46,7 +46,7 @@
       \item The radix sort is robust to vectors with >1 billion elements
       (but long vectors are still unsupported). Thanks to Matt Dowle for
       the fix.
-      
+
       \item Terminal connections (e.g., stdin) are no longer
       buffered. Fixes \PR{17432}.
 
@@ -61,6 +61,8 @@
       \item \file{.Renviron} on Windows with \command{Rgui} is again by
       default searched for in user documents directory when invoked via the
       launcher icon. Reported by Jeroen Ooms.
+
+      \item \code{printCoefmat()} now also works with explicit \code{right=TRUE}.
     }
   }
 }
