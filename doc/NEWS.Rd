@@ -81,6 +81,13 @@
       \item \code{trimws()} gets new optional \code{whitespace}
       argument, allowing larger definitions of \dQuote{space}, e.g.,
       including unicode spaces as wished in \PR{17431}.
+
+      \item \code{weighted.mean()} no longer coerces the weights to a
+      double/numeric vector, since \code{sum()} now handles integer
+      overflow properly. This makes \code{weighted.mean()} more
+      polymorphic and endomorphic, but be aware that the results are no
+      longer guaranteed to be a double vector.
+
     }
   }
 
