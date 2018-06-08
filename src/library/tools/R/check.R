@@ -4441,7 +4441,7 @@ add_dummies <- function(dir, Log)
                 lines <- unique(lines)
 
                 ## Can get reports like
-                ## Warning: No generic function ‘as.vector’ found corresponding to requested imported methods from package ‘Matrix’ when loading ‘MatrixModels’ (malformed exports?)
+                ## Warning: No generic function `as.vector' found corresponding to requested imported methods from package `Matrix' when loading `MatrixModels' (malformed exports?)
                 ## Exclude these unless they are about the current package.
                 load_re <- "Warning: No generic function.*corresponding to requested imported methods"
                 ex <- grepl(load_re, lines, useBytes = TRUE) &
