@@ -180,3 +180,38 @@ for(n in 1:nP) {
     par(mar = par("mar") + xMar)
     plot2(at, n < nP && interAct)
 }
+par(op)
+
+
+##----- pairs() using verInd & horInd ----------
+mpairs <- function(..., p=3, npp=2, main) { # p=4, npp=7 was Chris Andrews' example
+    x <- matrix((1:(p*npp))/npp, ncol=p, dimnames=list(NULL, paste0("x", 1:p)))
+    ## -> x \in [1/npp,.., p]  <==> ceiling(x) \in {1,2,...,p}
+    ## the panel function
+    mP <- function(x,y, ...) { ## really made for the 'x = ...' above
+        j <- ceiling(mean(y)) # in 1:p
+        points(x,y, col=ceiling(mean(x)), pch= 3*j, cex=((p-1.5)*j+1)/p, ...)
+        g <- 1:(p-1); abline(h=g, v=g, lty=3, col="gray33")
+    }
+    if(missing(main))
+        main <- if(...length()) sub("mpairs", '', deparse(sys.call()))
+    lim <- range(x)
+    k <- max(2, npp-2) ## bug in R(?): par(lab = c(1,1,7)) giving nonsense!
+    op <- par(lab = c(k,k,7), oma=c(1,0,0,0)); on.exit(par(op))
+    pairs(x, panel=mP, xlim=lim, ylim=lim, main=main, cex.main=1, ...)
+}
+
+mpairs() # 4x4 matrix of scatterplots
+if(interAct) dev.set(if(length(dev.list()) < 2) dev.new() else dev.prev())
+mpairs(horInd=1:2,verInd=  1:3 ) # 3x2 matrix: upper left [WRONG in R <= 3.5.0]
+mpairs(horInd=3:2)               # 2x4: middle rows swapped
+mpairs(           verInd=c(3,1)) # 4x2: cols 3,1
+##
+## now all with  'row1attop=FALSE'=======
+if(interAct) dev.set(dev.prev())
+mpairs(row1attop=FALSE) # 4x4 matrix of scatterplots -- perfect in R <= 3.5.0
+if(interAct) dev.set(dev.next())
+## a version of those above, with 'row1attop = FALSE'
+mpairs(horInd=2:1,verInd=3:1   , row1attop=FALSE) # 3x2: *swapped* upper left
+mpairs(horInd=c(3,1)           , row1attop=FALSE) # 2x3: swapped outer rows
+mpairs(           verInd=c(3,2), row1attop=FALSE) # 3x2: cols 3,2

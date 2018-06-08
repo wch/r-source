@@ -162,6 +162,12 @@
       \item \code{unlist(x)} now returns a correct \code{factor} when
       \code{x} is a nested list with factor leaves, fixing \PR{12572}
       and \PR{17419}.
+
+      \item \code{pairs.default(.., horInd=*, verInd=*)} now gets the
+      correct order, thanks to reports by Chris Andrews and Gerrit
+      Eichner.  Additionally, when \code{horInd} or \code{verInd}
+      contain only a subset of variables, all the axis are labeled now,
+      which may be toggled by new options \code{horOdd} and \code{verOdd}.
     }
   }
 
