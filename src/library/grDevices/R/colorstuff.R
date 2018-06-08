@@ -93,7 +93,7 @@ rainbow <-
     if ((n <- as.integer(n[1L])) > 0) {
 	if(start == end || any(c(start,end) < 0)|| any(c(start,end) > 1))
 	    stop("'start' and 'end' must be distinct and in [0, 1].")
-	hsv(h = seq.int(start, ifelse(start > end, 1, 0) + end,
+	hsv(h = seq.int(start, (start > end)*1 + end,
                         length.out = n) %% 1, s, v, alpha)
     } else character()
 }
@@ -148,7 +148,7 @@ cm.colors <- function (n, alpha = 1)
 	l1 <- k + 1L - even.n
 	l2 <- n - k + even.n
 	c(if(l1 > 0L)
-	  hsv(h =  6/12, s = seq.int(.5, ifelse(even.n,.5/k,0), length.out = l1),
+	  hsv(h =  6/12, s = seq.int(.5, if(even.n) .5/k else 0, length.out = l1),
 	      v = 1, alpha = alpha),
 	  if(l2 > 1)
 	  hsv(h = 10/12, s = seq.int(0, 0.5, length.out = l2)[-1L],

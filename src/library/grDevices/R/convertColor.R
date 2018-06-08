@@ -87,7 +87,7 @@ chromaticAdaptation <- function(xyz, from, to) {
                    -0.08081,  0.04570, 0.91822), nrow = 3L, byrow = TRUE)
     nWhite <- colnames(white.points)
     from <- c2to3(white.points[, match.arg(from, nWhite)])
-    to   <- c2to3(white.points[, match.arg(to, nWhite)])
+    to   <- c2to3(white.points[, match.arg(to,   nWhite)])
     from.cone <- drop(from %*% Ma)
     to.cone   <- drop(to %*% Ma)
     ## M <- Ma %*% diag(to.cone/from.cone) %*% solve(Ma)
@@ -146,15 +146,15 @@ colorspaces <-
              epsilon <- 216/24389
              kappa <- 24389/27
 
-             yr <- ifelse(Lab[1L] < kappa*epsilon, Lab[1L]/kappa, ((Lab[1L]+16)/116)^3)
-             fy <- ifelse(yr <= epsilon, (kappa*yr+16)/116, (Lab[1L]+16)/116)
+             yr <- if(Lab[1L] < kappa*epsilon) Lab[1L]/kappa else ((Lab[1L]+16)/116)^3
+             fy <- ((if(yr <= epsilon) kappa*yr else Lab[1L]) + 16)/116
              fx <- Lab[2L]/500+fy
              fz <- fy-Lab[3L]/200
 
-             zr <- ifelse(fz^3 <= epsilon, (116*fz-16)/kappa, fz^3)
-             xr <- ifelse(fx^3 <= epsilon, (116*fx-16)/kappa, fx^3)
+             zr <- if(fz^3 <= epsilon) (116*fz-16)/kappa else fz^3
+             xr <- if(fx^3 <= epsilon) (116*fx-16)/kappa else fx^3
 
-             c(X = xr,Y = yr,Z = zr)*white
+             c(X = xr, Y = yr, Z = zr)*white
 
          }, name = "Lab", white = NULL),
 
@@ -165,15 +165,15 @@ colorspaces <-
 
              yr <- XYZ[2L]/white[2L]
 
-             denom <- sum(XYZ*c(1,15,3))
+             denom  <- sum(XYZ * c(1,15,3))
              wdenom <- sum(white*c(1,15,3))
 
-             u1 <- ifelse(denom == 0, 1, 4*XYZ[1L]/denom)
-             v1 <- ifelse(denom == 0, 1, 9*XYZ[2L]/denom)
+             u1 <- if(denom == 0) 1 else 4*XYZ[1L]/denom
+             v1 <- if(denom == 0) 1 else 9*XYZ[2L]/denom
              ur <- 4*white[1L]/wdenom
              vr <- 9*white[2L]/wdenom
 
-             L <- ifelse(yr <= epsilon, kappa*yr, 116*(yr^(1/3))-16)
+             L <- if(yr <= epsilon) kappa*yr else 116*(yr^(1/3))-16
              c(L = L, u = 13*L*(u1-ur), v = 13*L*(v1-vr))
          }, toXYZ = function(Luv,white) {
              epsilon <- 216/24389
@@ -184,8 +184,8 @@ colorspaces <-
              u0 <- 4*white[1L]/(white[1L]+15*white[2L]+3*white[3L])
              v0 <- 9*white[2L]/(white[1L]+15*white[2L]+3*white[3L])
 
-             Y <- ifelse(Luv[1L] <= kappa*epsilon,
-                         Luv[1L]/kappa, ((Luv[1L]+16)/116)^3)
+             Y <- if(Luv[1L] <= kappa*epsilon)
+                     Luv[1L]/kappa else ((Luv[1L]+16)/116)^3
              a <- (52*Luv[1L]/(Luv[2L]+13*Luv[1L]*u0)-1)/3
              b <- -5*Y
              c <- -1/3

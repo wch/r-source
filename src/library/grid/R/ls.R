@@ -782,7 +782,7 @@ grid.grep <- function(path, x = NULL, grobs = TRUE, viewports = FALSE,
     pathPieces <- explode(path)
 
     if (is.null(x)) {
-        dl <- grid.ls(grobs=grobs, viewports=viewports, print = FALSE)
+        dl <- grid.ls(   grobs=grobs, viewports=viewports, print = FALSE)
     } else {
         dl <- grid.ls(x, grobs=grobs, viewports=viewports, print = FALSE)
     }

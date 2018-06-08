@@ -418,8 +418,8 @@ inRbuildignore <- function(files, pkgdir) {
                 gs_quality <- "none"
             }
             qpdf <-
-                ifelse(compact_vignettes %in% c("qpdf", "gs+qpdf", "both"),
-                       Sys.which(Sys.getenv("R_QPDF", "qpdf")), "")
+                if(compact_vignettes %in% c("qpdf", "gs+qpdf", "both"))
+                    Sys.which(Sys.getenv("R_QPDF", "qpdf")) else ""
             res <- compactPDF(pdfs, qpdf = qpdf,
                               gs_cmd = gs_cmd, gs_quality = gs_quality)
             res <- format(res, diff = 1e5)

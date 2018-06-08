@@ -1,7 +1,7 @@
 #  File src/library/stats/R/ks.test.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -130,9 +130,9 @@ ks.test <-
         ## (1973), if m < n/10, we should use the
         ## * Kolmogorov approximation with c.c. -1/(2*n) if 1 < m < 80;
         ## * Smirnov approximation with c.c. 1/(2*sqrt(n)) if m >= 80.
-        PVAL <- ifelse(alternative == "two.sided",
-                       1 - pkstwo(sqrt(n) * STATISTIC),
-                       exp(- 2 * n * STATISTIC^2))
+        PVAL <- if(alternative == "two.sided")
+                    1 - pkstwo(sqrt(n) * STATISTIC)
+                else exp(- 2 * n * STATISTIC^2)
         ## </FIXME>
     }
 

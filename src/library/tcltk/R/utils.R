@@ -1,7 +1,7 @@
 #  File src/library/tcltk/R/utils.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -53,9 +53,10 @@ tk_select.list <-
     scht <- as.numeric(tclvalue(tkwinfo("screenheight", dlg))) - 200L
     ## allow for win furniture and buttons, and for e.g. KDE panel
     ht <- min(length(choices), scht %/% 20) # a guess of font height
+    s_mode <- if(multiple) "multiple" else "single"
     box <- tklistbox(dlg, height = ht,
                      listvariable = lvar, bg = "white", setgrid = 1,
-                     selectmode = ifelse(multiple, "multiple", "single"))
+                     selectmode = s_mode)
     tmp <- tcl("font", "metrics", tkcget(box, font=NULL))
     ## fudge factor here seems to be 1 on Windows, 3 on X11.
     tmp <- as.numeric(sub(".*linespace ([0-9]+) .*", "\\1", tclvalue(tmp)))+3
@@ -66,14 +67,14 @@ tk_select.list <-
         else tkscrollbar(dlg, repeatinterval=5, command = function(...) tkyview(box, ...))
         box <- tklistbox(dlg, height = ht, width = 0,
                          listvariable = lvar, bg = "white", setgrid = 1,
-                         selectmode = ifelse(multiple, "multiple", "single"),
+                         selectmode = s_mode,
                          yscrollcommand = function(...)tkset(scr,...))
         tkpack(box, side="left", fill="both", expand=TRUE)
         tkpack(scr, side="right", fill="y")
     } else {
         box <- tklistbox(dlg, height = ht, width = 0,
                          listvariable = lvar, bg = "white",
-                         selectmode = ifelse(multiple, "multiple", "single"))
+                         selectmode = s_mode)
         tkpack(box, side="left", fill="both")
     }
     preselect <- match(preselect, choices)
