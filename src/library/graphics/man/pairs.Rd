@@ -1,6 +1,6 @@
 % File src/library/graphics/man/pairs.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{pairs}
@@ -71,7 +71,9 @@ pairs(x, \dots)
     at the top, or graph-like with row 1 at the bottom?}
   \item{gap}{distance between subplots, in margin lines.}
   \item{log}{a character string indicating if logarithmic axes are to be
-    used: see \code{\link{plot.default}}.  \code{log = "xy"} specifies
+    used, see \code{\link{plot.default}} \emph{or} a numeric vector of
+    indices specifying the indices of those variables where logarithmic
+    axes should be used for both x and y.  \code{log = "xy"} specifies
     logarithmic axes for all variables.}
 }
 \details{
@@ -101,12 +103,12 @@ pairs(x, \dots)
   \code{na.action = na.omit}, all cases which contain a missing values for
   any of the variables are omitted completely (including when the scales
   are selected).
-  
+
   Arguments \code{horInd} and \code{verInd} were introduced in \R
   3.2.0. If given the same value they can be used to select or re-order
   variables: with different ranges of consecutive values they can be
   used to plot rectangular windows of a full pairs plot; in the latter
-  case \sQuote{diagonal} refers to the diagonal of the full plot. 
+  case \sQuote{diagonal} refers to the diagonal of the full plot.
 }
 \author{
   Enhancements for \R 1.0.0 contributed by Dr. Jens
