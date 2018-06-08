@@ -1844,9 +1844,11 @@ findLocalsList1 <- function(elist, shadowed, cntxt) {
         newtodo <- list()
         lapply(todo, function(e)
             lapply(findLocals1(e, shadowed, cntxt, vars),
-                function(x) newtodo <<- append(newtodo, x))
+                   function(x)
+		       if (typeof(x) == "language")
+		           newtodo <<- append(newtodo, x))
         )
-       todo <- newtodo
+	todo <- newtodo
     }
     ls(vars, all.names=T)
 }
