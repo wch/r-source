@@ -80,7 +80,7 @@
 
       \item \code{trimws()} gets new optional \code{whitespace}
       argument, allowing larger definitions of \dQuote{space}, e.g.,
-      including unicode spaces as wished in \PR{17431}.
+      including Unicode spaces as wished in \PR{17431}.
 
       \item \code{weighted.mean()} no longer coerces the weights to a
       double/numeric vector, since \code{sum()} now handles integer
