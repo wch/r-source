@@ -211,12 +211,22 @@ function(generic.function, class, envir=parent.frame())
 methods <-
 function(generic.function, class)
 {
-    if (!missing(generic.function) && !is.character(generic.function))
-        generic.function <- deparse(substitute(generic.function))
+    envir <- parent.frame()
+    if(!missing(generic.function) && !is.character(generic.function)) {
+        what <- substitute(generic.function)
+        if(is.function(generic.function) &&
+           is.call(what) &&
+           (deparse(what[[1L]])[1L] %in% c("::", ":::"))) {
+            generic.function <- as.character(what[[3L]])
+            envir <- asNamespace(as.character(what[[2L]]))
+        } else
+            generic.function <- deparse(what)
+    }
+
     if (!missing(class) && !is.character(class))
         class <- paste(deparse(substitute(class)))
 
-    s3 <- .S3methods(generic.function, class, parent.frame())
+    s3 <- .S3methods(generic.function, class, envir)
     s4 <- if (.isMethodsDispatchOn()) {
         methods::.S4methods(generic.function, class)
     } else NULL
