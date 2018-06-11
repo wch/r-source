@@ -46,7 +46,7 @@ cancor(x, y, xcenter = TRUE, ycenter = TRUE)
   Hotelling H. (1936).
   Relations between two sets of variables.
   \emph{Biometrika}, \bold{28}, 321--327.
-  \doi{biomet/28.3-4.321}.
+  \doi{10.1093/biomet/28.3-4.321}.
 
   Seber, G. A. F. (1984).
   \emph{Multivariate Observations}.
