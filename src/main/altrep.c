@@ -1379,9 +1379,6 @@ SEXP attribute_hidden R_compact_intrange(R_xlen_t n1, R_xlen_t n2)
 {
     R_xlen_t n = n1 <= n2 ? n2 - n1 + 1 : n1 - n2 + 1;
 
-    if(n >= R_XLEN_T_MAX)
-	error("result would be too long a vector");
-
     if (n1 <= INT_MIN || n1 > INT_MAX || n2 <= INT_MIN || n2 > INT_MAX)
 	return new_compact_realseq(n, n1, n1 <= n2 ? 1 : -1);
     else

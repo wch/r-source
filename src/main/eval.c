@@ -1304,7 +1304,6 @@ SEXP attribute_hidden R_cmpfun1(SEXP fun)
     PROTECT(fcall = lang3(R_TripleColonSymbol, packsym, funsym));
     PROTECT(call = lang2(fcall, fun));
     val = eval(call, R_GlobalEnv);
-#ifdef DODO
     if (TYPEOF(BODY(val)) != BCODESXP)
 	/* Compilation may have failed because R alocator could not malloc
 	   memory to extend the R heap, so we run GC to release some pages.
@@ -1314,8 +1313,8 @@ SEXP attribute_hidden R_cmpfun1(SEXP fun)
 	   A more general solution might be to run the GC conditionally inside
 	   error handling. */
 	R_gc();
-#endif
     UNPROTECT(2);
+
     R_Visible = old_visible;
     return val;
 }
