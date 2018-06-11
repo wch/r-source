@@ -88,6 +88,10 @@
       polymorphic and endomorphic, but be aware that the results are no
       longer guaranteed to be a double vector.
 
+      \item When loading namespaces, S3 method registrations which
+      overwrite previous registrations are now noted by default (using
+      \code{packageStartupMessage()}).
+
     }
   }
 
