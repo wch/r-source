@@ -2697,7 +2697,7 @@ static void resize_buffer(membuf_t mb, R_size_t needed)
     else if(needed < INT_MAX - INCR)
 	needed = (1+needed/INCR) * INCR;
 #endif
-    unsigned char *tmp = realloc(mb->buf, needed);
+    unsigned char *tmp = R_realloc_gc(mb->buf, needed);
     if (tmp == NULL) {
 	free(mb->buf); mb->buf = NULL;
 	error(_("cannot allocate buffer"));
