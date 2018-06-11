@@ -22,7 +22,7 @@
 
    \subsection{NEW FEATURES}{
     \itemize{
-      \item \code{Sys.setFileTime()} has been vectorized, its arguments
+      \item \code{Sys.setFileTime()} has been vectorized so arguments
       \code{path} and \code{time} of length greater than one are now
       supported.
 
@@ -32,11 +32,11 @@
       for labels \emph{parallel} to the axis, and \code{0.25} for
       perpendicular ones.
 
-      These (perpendicular labels) no longer overlap, fixing bug \PR{17384}.
+      Perpendicular labels no longer overlap, fixing bug \PR{17384}.
 
-      \item \code{plot.default()} gains new arguments \code{xgap.axis = NA}
-      and \code{ygap.axis = NA} to be passed to the x-- and y--
-      \code{axis(.., gap.axis=*)} calls.
+      \item The default method of \code{plot()} gains new arguments
+      \code{xgap.axis = NA} and \code{ygap.axis = NA} to be passed to
+      the x-- and y-- \code{axis(.., gap.axis=*)} calls.
 
       \item \code{removeSource()} now works not only for functions but
       also for some language objects.
@@ -55,17 +55,19 @@
 
       \item \code{download.file()} on Windows now uses \code{URLdecode()}
       to determine the file extension, and uses binary transfer
-      (\code{mode = "wb"}) also for file extension \file{.rds}.  The
-      help page \code{?download.file} now contains the same information
-      platform independently.
+      (\code{mode = "wb"}) also for file extension \file{.rds}.
 
-      \item Setting 'C' locale for collation via environment variables
-      \env{LC_ALL} and \env{LC_COLLATE} and via a call to
-      \code{Sys.setlocale()} now takes precedence over environment variable
-      \env{R_ICU_LOCALE}.
+      The help page for \code{download.file()} now contains the same
+      information on allplatforms.
+
+      \item Setting \samp{C} locale for collation \emph{via} environment
+      variables \env{LC_ALL} and \env{LC_COLLATE} and \emph{via} a call
+      to \code{Sys.setlocale()} now takes precedence over environment
+      variable \env{R_ICU_LOCALE}.
 
       \item There is a new function, \code{nullfile()}, to give the file
-      name of the null device on the current platform.
+      name of the null system device (e.g., \file{/dev/null}) on the
+      current platform. % not the null graphics device.
 
       \item There are two new options, \code{keep.parse.data} and
       \code{keep.parse.data.pkgs}, which control whether parse data are
@@ -79,19 +81,26 @@
       \dQuote{list-like} and of length \eqn{\ge 2^{31}}{>= 2^{31}}.
 
       \item \code{trimws()} gets new optional \code{whitespace}
-      argument, allowing larger definitions of \dQuote{space}, e.g.,
-      including Unicode spaces as wished in \PR{17431}.
+      argument, allowing more extensive definitions of \dQuote{space},
+      such as including Unicode spaces (as wished in \PR{17431}).
 
       \item \code{weighted.mean()} no longer coerces the weights to a
       double/numeric vector, since \code{sum()} now handles integer
-      overflow properly. This makes \code{weighted.mean()} more
-      polymorphic and endomorphic, but be aware that the results are no
-      longer guaranteed to be a double vector.
+      overflow. This makes \code{weighted.mean()} more polymorphic and
+      endomorphic, but be aware that the results are no longer
+      guaranteed to be a vector of type \samp{double}.
 
       \item When loading namespaces, S3 method registrations which
       overwrite previous registrations are now noted by default (using
       \code{packageStartupMessage()}).
 
+    }
+  }
+
+  \subsection{INSTALLATION on a UNIX-ALIKE}{
+    \itemize{
+      \item The C++ compiler defaults to the C++11 standard, if
+      supported; otherwise to the C++98 standard.
     }
   }
 
@@ -120,13 +129,12 @@
       \item Method dispatch uses more relevant environments when looking
       up class definitions.
 
-      \item The documentation for \code{identify()} claimed that the
-      indices of identified points were returned in the order that the
-      points were selected, which was cow manure.  \code{identify()} now
-      has a new argument \code{order} to allow the return value to
-      include the order in which points were identified; the
-      documentation has been updated.  Reported by Richard Rowe and
-      Samuel Granjeaud.
+      \item The documentation for \code{identify()} incorrectly claimed
+      that the indices of identified points were returned in the order
+      that the points were selected..  \code{identify()} now has a new
+      argument \code{order} to allow the return value to include the
+      order in which points were identified; the documentation has been
+      updated.  Reported by Richard Rowe and Samuel Granjeaud.
 
       \item \code{order(...., decreasing=c(TRUE,FALSE))} could fail in
       some cases. Reported from StackOverflow via Karl Nordström.
@@ -148,7 +156,7 @@
 	data structures are now printed correctly in complex cases.
 
 	\item Arguments supplied to \code{print()} are now properly
-	forwarded to print methods when printing lists, pairlists or
+	forwarded to methods when printing lists, pairlists or
 	attributes containing S3 objects.
 
 	\item The print parameters are now preserved when printing S3
@@ -167,18 +175,12 @@
       \code{x} is a nested list with factor leaves, fixing \PR{12572}
       and \PR{17419}.
 
-      \item \code{pairs.default(.., horInd=*, verInd=*)} now gets the
-      correct order, thanks to reports by Chris Andrews and Gerrit
-      Eichner.  Additionally, when \code{horInd} or \code{verInd}
+      \item The default method for\code{pairs(.., horInd=*, verInd=*)}
+      now gets the correct order, thanks to reports by Chris Andrews and
+      Gerrit Eichner.  Additionally, when \code{horInd} or \code{verInd}
       contain only a subset of variables, all the axis are labeled now,
-      which may be toggled by new options \code{horOdd} and \code{verOdd}.
-    }
-  }
-
-  \subsection{INSTALLATION on a UNIX-ALIKE}{
-    \itemize{
-      \item The C++ compiler defaults to the C++11 standard, if
-      supported; otherwise to the C++98 standard.
+      which may be toggled by new options \code{horOdd} and
+      \code{verOdd}.
     }
   }
 }
@@ -237,12 +239,14 @@
       Reported by Stephen Berman.
 
       \item \file{.Renviron} on Windows with \command{Rgui} is again by
-      default searched for in user documents directory when invoked via the
-      launcher icon. Reported by Jeroen Ooms.
+      default searched for in user documents directory when invoked
+      \emph{via} the launcher icon. Reported by Jeroen Ooms.
 
-      \item \code{printCoefmat()} now also works with explicit \code{right=TRUE}.
+      \item \code{printCoefmat()} now also works with explicit
+      \code{right=TRUE}.
 
-      \item \code{print.noquote()} now also works with explicit \code{quote=FALSE}.
+      \item \code{print.noquote()} now also works with explicit
+    \code{quote=FALSE}. 
     }
   }
 }
@@ -599,7 +603,7 @@
 
       \item The \code{"Date"} and \dQuote{date-time} classes
       \code{"POSIXlt"} and \code{"POSIXct"} now have a working
-      \code{`length<-`} method, as wished in \PR{17387}.
+      \code{length<-()} method, as wished in \PR{17387}.
 
       \item \code{optim(*, control = list(warn.1d.NelderMead = FALSE))}
       allows to turn off the warning when applying the default
