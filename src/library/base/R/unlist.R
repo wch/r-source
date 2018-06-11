@@ -21,8 +21,8 @@ unlist <- function(x, recursive=TRUE, use.names=TRUE)
     if(.Internal(islistfactor(x, recursive))) {
         URapply <-
             if(recursive) # use rapply()
-                 function(x, Fn) .Internal(unlist(rapply(x, Fn), recursive, FALSE))
-            else function(x, Fn) .Internal(unlist(lapply(x, Fn), recursive, FALSE))
+                 function(x, Fn) .Internal(unlist(rapply(x, Fn, how="list"), recursive, FALSE))
+            else function(x, Fn) .Internal(unlist(lapply(x, Fn),             recursive, FALSE))
         lv <- unique(URapply(x, levels))
         nm <- if(use.names) names(.Internal(unlist(x, recursive, use.names)))
         res <- match(URapply(x, as.character), lv)
