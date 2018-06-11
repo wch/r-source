@@ -563,7 +563,14 @@ function()
     if(nzchar(OS)) OS else .Platform$OS.type
 }
 
-### .R_top_srcdir
+### ** .R_copyright_msg
+
+.R_copyright_msg <- 
+function(year)
+    sprintf("Copyright (C) %s-%s The R Core Team.",
+            year, R.version$year)
+
+### ** .R_top_srcdir
 
 ## Find the root directory of the source tree used for building this
 ## version of R (corresponding to Unix configure @top_srcdir@).
