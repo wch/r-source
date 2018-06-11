@@ -1042,6 +1042,8 @@ SEXP attribute_hidden do_seq_len(SEXP call, SEXP op, SEXP args, SEXP rho)
     double dlen = asReal(CAR(args));
     if(!R_FINITE(dlen) || dlen < 0)
 	errorcall(call, _("argument must be coercible to non-negative integer"));
+    if(dlen >= R_XLEN_T_MAX)
+    	errorcall(call, _("result would be too long a vector"));
     len = (R_xlen_t) dlen;
 #else
     len = asInteger(CAR(args));
