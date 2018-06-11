@@ -1607,15 +1607,15 @@ registerS3methods <- function(info, package, env)
         }
         ## Do not note when
         ## * There are no overwrites (left)
-        ## * Env var _R_S3_METHOD_REGISTRATION_NOTE_OVERWRITES_ is not
-        ##   set to something true (for the time being)
+        ## * Env var _R_S3_METHOD_REGISTRATION_NOTE_OVERWRITES_ is set
+        ##   to something false (for the time being) 
         ## * Env var _R_CHECK_PACKAGE_NAME_ is set to something
         ##   different than 'package'.
         ## With the last, when checking we only note overwrites from the
         ## package under check (as recorded via _R_CHECK_PACKAGE_NAME_).
         if((nr <- nrow(overwrite)) &&
-           (tolower(Sys.getenv("_R_S3_METHOD_REGISTRATION_NOTE_OVERWRITES_")) %in%
-            c("1", "yes", "true")) &&
+           is.na(match(tolower(Sys.getenv("_R_S3_METHOD_REGISTRATION_NOTE_OVERWRITES_")),
+                       c("0", "no", "false"))) &&
            (!is.na(match(Sys.getenv("_R_CHECK_PACKAGE_NAME_"),
                          c("", package))))) {
             msg <- ngettext(nr,
