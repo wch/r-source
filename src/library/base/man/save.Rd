@@ -43,9 +43,9 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
     \code{version >= 2}, a different ASCII representation is used which
     writes double/complex numbers as binary fractions.}
   \item{version}{the workspace format version to use.  \code{NULL}
-    specifies the current default format (2).  Version 1 was the default
-    from \R 0.99.0 to \R 1.3.1 and version 2 from \R 1.4.0. Version 3 is
-    supported from \R 3.5.0.}
+    specifies the current default format (3).  Version 1 was the default
+    from \R 0.99.0 to \R 1.3.1 and version 2 from \R 1.4.0 to 3.5.0.
+    Version 3 is supported from \R 3.5.0.}
   \item{envir}{environment to search for objects to be saved.}
   \item{compress}{logical or character string specifying whether saving
     to a named file is to use compression.  \code{TRUE} corresponds to
