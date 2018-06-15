@@ -25,7 +25,7 @@ writeBin(object, con, size = NA_integer_,
     the mode: one of \code{"numeric"}, \code{"double"},
     \code{"integer"}, \code{"int"}, \code{"logical"}, \code{"complex"},
     \code{"character"}, \code{"raw"}.}
-  \item{n}{integer.  The (maximal) number of records to be
+  \item{n}{numeric.  The (maximal) number of records to be
     read.  You can use an over-estimate here, but not too large as
     storage is reserved for \code{n} items.}
   \item{size}{integer.  The number of bytes per element in the byte
