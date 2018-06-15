@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2017	The R Core Team.
+ *  Copyright (C) 1998--2018	The R Core Team.
  *  Copyright (C) 1995, 1996	Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -7701,49 +7701,6 @@ SEXP attribute_hidden do_bcversion(SEXP call, SEXP op, SEXP args, SEXP rho)
   SEXP ans = allocVector(INTSXP, 1);
   INTEGER(ans)[0] = R_bcVersion;
   return ans;
-}
-
-SEXP attribute_hidden do_loadfile(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    SEXP file, s;
-    FILE *fp;
-
-    checkArity(op, args);
-
-    PROTECT(file = coerceVector(CAR(args), STRSXP));
-
-    if (! isValidStringF(file))
-	error(_("bad file name"));
-
-    fp = RC_fopen(STRING_ELT(file, 0), "rb", TRUE);
-    if (!fp)
-	error(_("unable to open 'file'"));
-    s = R_LoadFromFile(fp, 0);
-    fclose(fp);
-
-    UNPROTECT(1);
-    return s;
-}
-
-SEXP attribute_hidden do_savefile(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    FILE *fp;
-
-    checkArity(op, args);
-
-    if (!isValidStringF(CADR(args)))
-	error(_("'file' must be non-empty string"));
-    if (TYPEOF(CADDR(args)) != LGLSXP)
-	error(_("'ascii' must be logical"));
-
-    fp = RC_fopen(STRING_ELT(CADR(args), 0), "wb", TRUE);
-    if (!fp)
-	error(_("unable to open 'file'"));
-
-    R_SaveToFileV(CAR(args), fp, INTEGER(CADDR(args))[0], 0);
-
-    fclose(fp);
-    return R_NilValue;
 }
 
 #ifdef UNUSED

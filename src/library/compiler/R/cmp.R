@@ -3025,7 +3025,7 @@ cmplib <- function(package, file) {
 }
 
 cmpfile <- function(infile, outfile, ascii = FALSE, env = .GlobalEnv,
-                    verbose = FALSE, options = NULL) {
+                    verbose = FALSE, options = NULL, version = NULL) {
     if (! is.environment(env) || ! identical(env, topenv(env)))
         stop("'env' must be a top level environment")
     if (missing(outfile)) {
@@ -3064,7 +3064,7 @@ cmpfile <- function(infile, outfile, ascii = FALSE, env = .GlobalEnv,
                                        loc = list(expr = e, srcref = sref))
         }
         cat(gettextf("saving to file \"%s\" ... ", outfile))
-        .Internal(save.to.file(cforms, outfile, ascii))
+        .Internal(save.to.file(cforms, outfile, ascii, version))
         cat(gettext("done"), "\n", sep = "")
     }
     else warning("empty input file; no output written");

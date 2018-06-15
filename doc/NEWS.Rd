@@ -99,6 +99,8 @@
       overwrite previous registrations are now noted by default (using
       \code{packageStartupMessage()}).
 
+      \item \code{compiler::cmpfile()} gains a \code{version} argument, for
+      use when the output file should be saved in serialization format 2.
     }
   }
 
