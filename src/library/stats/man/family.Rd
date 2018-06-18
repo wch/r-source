@@ -136,7 +136,7 @@ quasipoisson(link = "log")
     parameters.  Note that the penalty term for the location parameters
     (typically the \dQuote{regression coefficients}) is added elsewhere,
     e.g., in \code{\link{glm.fit}()}, or \code{\link{AIC}()}, see the
-    AIC example in \code{\link{glm}}}.
+    AIC example in \code{\link{glm}}.
     See \code{\link{logLik}} for the assumptions made about the
     dispersion parameter.}
   \item{mu.eta}{function: derivative of the inverse-link function
