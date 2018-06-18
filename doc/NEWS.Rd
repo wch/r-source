@@ -5,6 +5,7 @@
 \title{R News}
 \encoding{UTF-8}
 
+
 \section{\Rlogo CHANGES IN R 3.5.0 patched}{
 
   \subsection{BUG FIXES}{
@@ -59,12 +60,18 @@
       Reported by Stephen Berman.
 
       \item \file{.Renviron} on Windows with \command{Rgui} is again by
-      default searched for in user documents directory when invoked via the
-      launcher icon. Reported by Jeroen Ooms.
+      default searched for in user documents directory when invoked
+      \emph{via} the launcher icon.  Reported by Jeroen Ooms.
 
       \item \code{printCoefmat()} now also works with explicit \code{right=TRUE}.
 
       \item \code{print.noquote()} now also works with explicit \code{quote=FALSE}.
+
+      \item The default method for \code{pairs(.., horInd=*, verInd=*)}
+      now gets the correct order, thanks to reports by Chris Andrews and
+      Gerrit Eichner.  Additionally, when \code{horInd} or \code{verInd}
+      contain only a subset of variables, all the axes are labeled
+      correctly now.
     }
   }
 }
@@ -421,7 +428,7 @@
 
       \item The \code{"Date"} and \dQuote{date-time} classes
       \code{"POSIXlt"} and \code{"POSIXct"} now have a working
-      \code{`length<-`} method, as wished in \PR{17387}.
+      \code{length<-()} method, as wished in \PR{17387}.
 
       \item \code{optim(*, control = list(warn.1d.NelderMead = FALSE))}
       allows to turn off the warning when applying the default

@@ -1,7 +1,7 @@
 #  File src/library/graphics/R/pairs.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #  Some parts  Copyright (C) 1999 Dr. Jens Oehlschlaegel-Akiyoshi
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -109,11 +109,11 @@ function (x, labels, panel = points, ...,
 	}
 	else if(is.null(labels)) doText <- FALSE
     }
-    oma <- if("oma" %in% nmdots) dots$oma
+    oma  <- if("oma"  %in% nmdots) dots$oma
     main <- if("main" %in% nmdots) dots$main
     if (is.null(oma))
 	oma <- c(4, 4, if(!is.null(main)) 6 else 4, 4)
-    opar <- par(mfrow = c(length(horInd), length(verInd)),
+    opar <- par(mfcol = c(length(horInd), length(verInd)),
                 mar = rep.int(gap/2, 4), oma = oma)
     on.exit(par(opar))
     dev.hold(); on.exit(dev.flush(), add = TRUE)
@@ -121,20 +121,25 @@ function (x, labels, panel = points, ...,
     xl <- yl <- logical(nc)
     if (is.numeric(log)) xl[log] <- yl[log] <- TRUE
     else {xl[] <- grepl("x", log); yl[] <- grepl("y", log)}
-    for (i in if(row1attop) verInd else rev(verInd))
-        for (j in horInd) {
-            l <- paste0(ifelse(xl[j], "x", ""), ifelse(yl[i], "y", ""))
+    ni <- length(iSet <- if(row1attop) horInd else rev(horInd))
+    nj <- length(jSet <- verInd)
+    for(j in jSet)
+        for(i in iSet) {
+            l <- paste0(if(xl[j]) "x" else "",
+                        if(yl[i]) "y" else "")
             localPlot(x[, j], x[, i], xlab = "", ylab = "",
                       axes = FALSE, type = "n", ..., log = l)
             if(i == j || (i < j && has.lower) || (i > j && has.upper) ) {
                 box()
-                if(i == 1  && (!(j %% 2L) || !has.upper || !has.lower ))
-                    localAxis(1L + 2L*row1attop, x[, j], x[, i], ...)
-                if(i == nc && (  j %% 2L  || !has.upper || !has.lower ))
-                    localAxis(3L - 2L*row1attop, x[, j], x[, i], ...)
-                if(j == 1  && (!(i %% 2L) || !has.upper || !has.lower ))
+                j.odd <- (match(j, jSet) + !row1attop) %% 2L
+                i.odd <- (match(i, iSet) + !row1attop) %% 2L
+                if(i == iSet[1L] && (!j.odd || !has.upper || !has.lower))
+                    localAxis(3L, x[, j], x[, i], ...)
+                if(i == iSet[ni] && ( j.odd || !has.upper || !has.lower))
+                    localAxis(1L, x[, j], x[, i], ...)
+                if(j == jSet[1L] && (!i.odd || !has.upper || !has.lower))
                     localAxis(2L, x[, j], x[, i], ...)
-                if(j == nc && (  i %% 2L  || !has.upper || !has.lower ))
+                if(j == jSet[nj] && ( i.odd || !has.upper || !has.lower))
                     localAxis(4L, x[, j], x[, i], ...)
                 mfg <- par("mfg")
                 if(i == j) {
@@ -156,12 +161,12 @@ function (x, labels, panel = points, ...,
                     localUpperPanel(as.vector(x[, j]), as.vector(x[, i]), ...)
                 if (any(par("mfg") != mfg))
                     stop("the 'panel' function made a new plot")
-            } else par(new = FALSE)
-
+            }
+            else par(new = FALSE)
         }
     if (!is.null(main)) {
         font.main <- if("font.main" %in% nmdots) dots$font.main else par("font.main")
-        cex.main <- if("cex.main" %in% nmdots) dots$cex.main else par("cex.main")
+        cex.main  <- if("cex.main"  %in% nmdots) dots$cex.main  else par("cex.main")
         mtext(main, 3, line.main, outer=TRUE, at = 0.5, cex = cex.main, font = font.main)
     }
     invisible(NULL)

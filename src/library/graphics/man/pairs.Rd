@@ -1,6 +1,6 @@
 % File src/library/graphics/man/pairs.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{pairs}
@@ -67,11 +67,14 @@ pairs(x, \dots)
     the \code{line} argument to \code{\link{mtext}()} which draws the
     title.  You may want to specify \code{oma} when changing \code{line.main}.}
   \item{cex.labels, font.labels}{graphics parameters for the text panel.}
-  \item{row1attop}{logical. Should the layout be matrix-like with row 1
-    at the top, or graph-like with row 1 at the bottom?}
+  \item{row1attop}{logical.  Should the layout be matrix-like with row 1
+    at the top, or graph-like with row 1 at the bottom?  The latter (non
+    default) leads to a basically symmetric scatterplot matrix.}
   \item{gap}{distance between subplots, in margin lines.}
   \item{log}{a character string indicating if logarithmic axes are to be
-    used: see \code{\link{plot.default}}.  \code{log = "xy"} specifies
+    used, see \code{\link{plot.default}} \emph{or} a numeric vector of
+    indices specifying the indices of those variables where logarithmic
+    axes should be used for both x and y.  \code{log = "xy"} specifies
     logarithmic axes for all variables.}
 }
 \details{
@@ -101,12 +104,12 @@ pairs(x, \dots)
   \code{na.action = na.omit}, all cases which contain a missing values for
   any of the variables are omitted completely (including when the scales
   are selected).
-  
+
   Arguments \code{horInd} and \code{verInd} were introduced in \R
   3.2.0. If given the same value they can be used to select or re-order
   variables: with different ranges of consecutive values they can be
   used to plot rectangular windows of a full pairs plot; in the latter
-  case \sQuote{diagonal} refers to the diagonal of the full plot. 
+  case \sQuote{diagonal} refers to the diagonal of the full plot.
 }
 \author{
   Enhancements for \R 1.0.0 contributed by Dr. Jens
@@ -121,11 +124,11 @@ pairs(x, \dots)
 pairs(iris[1:4], main = "Anderson's Iris Data -- 3 species",
       pch = 21, bg = c("red", "green3", "blue")[unclass(iris$Species)])
 
-## formula method
-pairs(~ Fertility + Education + Catholic, data = swiss,
+## formula method, "graph" layout (row 1 at bottom):
+pairs(~ Fertility + Education + Catholic, data = swiss, row1attop=FALSE,
       subset = Education < 20, main = "Swiss data, Education < 20")
 
-pairs(USJudgeRatings)
+pairs(USJudgeRatings, gap=1/10) # (gap: not wasting plotting area)
 ## show only lower triangle (and suppress labeling for whatever reason):
 pairs(USJudgeRatings, text.panel = NULL, upper.panel = NULL)
 
@@ -155,7 +158,8 @@ panel.cor <- function(x, y, digits = 2, prefix = "", cex.cor, ...)
     if(missing(cex.cor)) cex.cor <- 0.8/strwidth(txt)
     text(0.5, 0.5, txt, cex = cex.cor * r)
 }
-pairs(USJudgeRatings, lower.panel = panel.smooth, upper.panel = panel.cor)
+pairs(USJudgeRatings, lower.panel = panel.smooth, upper.panel = panel.cor,
+      gap=0, row1attop=FALSE)
 
 pairs(iris[-5], log = "xy") # plot all variables on log scale
 pairs(iris, log = 1:4, # log the first four
