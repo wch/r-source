@@ -185,12 +185,6 @@
       \code{x} is a nested list with factor leaves, fixing \PR{12572}
       and \PR{17419}.
 
-      \item The default method for \code{pairs(.., horInd=*, verInd=*)}
-      now gets the correct order, thanks to reports by Chris Andrews and
-      Gerrit Eichner.  Additionally, when \code{horInd} or \code{verInd}
-      contain only a subset of variables, all the axes are labeled
-      correctly now.
-
       \item The documentation \code{help(family)} gives more details
       about the \code{aic} component, thanks to Ben Bolker's prompting.
 
@@ -258,13 +252,19 @@
 
       \item \file{.Renviron} on Windows with \command{Rgui} is again by
       default searched for in user documents directory when invoked
-      \emph{via} the launcher icon. Reported by Jeroen Ooms.
+      \emph{via} the launcher icon.  Reported by Jeroen Ooms.
 
       \item \code{printCoefmat()} now also works with explicit
       \code{right=TRUE}.
 
       \item \code{print.noquote()} now also works with explicit
       \code{quote=FALSE}.
+
+      \item The default method for \code{pairs(.., horInd=*, verInd=*)}
+      now gets the correct order, thanks to reports by Chris Andrews and
+      Gerrit Eichner.  Additionally, when \code{horInd} or \code{verInd}
+      contain only a subset of variables, all the axes are labeled
+      correctly now.
     }
   }
 }
