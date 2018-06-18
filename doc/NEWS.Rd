@@ -101,6 +101,9 @@
 
       \item \code{compiler::cmpfile()} gains a \code{version} argument, for
       use when the output file should be saved in serialization format 2.
+
+      \item The axis labeling in \code{pairs.default()} may now be
+      toggled by new options \code{horOdd} and \code{verOdd}.
     }
   }
 
@@ -185,9 +188,11 @@
       \item The default method for\code{pairs(.., horInd=*, verInd=*)}
       now gets the correct order, thanks to reports by Chris Andrews and
       Gerrit Eichner.  Additionally, when \code{horInd} or \code{verInd}
-      contain only a subset of variables, all the axis are labeled now,
-      which may be toggled by new options \code{horOdd} and
-      \code{verOdd}.
+      contain only a subset of variables, all the axes are labeled
+      correctly now.
+
+      \item The documentation \code{help(family)} gives more details
+      about the \code{aic} component, thanks to Ben Bolker's prompting.
     }
   }
 }
@@ -253,7 +258,7 @@
       \code{right=TRUE}.
 
       \item \code{print.noquote()} now also works with explicit
-    \code{quote=FALSE}. 
+      \code{quote=FALSE}.
     }
   }
 }

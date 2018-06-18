@@ -1,6 +1,6 @@
 % File src/library/stats/man/glm.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{glm}
@@ -223,10 +223,10 @@ glm.fit(x, y, weights = rep(1, nobs),
     saturated model has deviance zero.}
   \item{aic}{A version of Akaike's \emph{An Information Criterion},
     minus twice the maximized log-likelihood plus twice the number of
-    parameters, computed by the \code{aic} component of the family.
+    parameters, computed via the \code{aic} component of the family.
     For binomial and Poison families the dispersion is
     fixed at one and the number of parameters is the number of
-    coefficients. For gaussian, Gamma and inverse gaussian families the
+    coefficients.  For gaussian, Gamma and inverse gaussian families the
     dispersion is estimated from the residual deviance, and the number
     of parameters is the number of coefficients plus one.  For a
     gaussian family the MLE of the dispersion is used so this is a valid
@@ -338,6 +338,18 @@ print(d.AD <- data.frame(treatment, outcome, counts))
 glm.D93 <- glm(counts ~ outcome + treatment, family = poisson())
 anova(glm.D93)
 \donttest{summary(glm.D93)}
+## Computing AIC [in many ways]:
+(A0 <- AIC(glm.D93))
+(ll <- logLik(glm.D93))
+A1 <- -2*c(ll) + 2*attr(ll, "df")
+A2 <- glm.D93$family$aic(counts, mu=fitted(glm.D93), wt=1) +
+        2 * length(coef(glm.D93))
+stopifnot(exprs = {
+  all.equal(A0, A1)
+  all.equal(A1, A2)
+  all.equal(A1, glm.D93$aic)
+})
+
 
 \donttest{## an example with offsets from Venables & Ripley (2002, p.189)
 utils::data(anorexia, package = "MASS")

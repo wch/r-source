@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2018-05-03 r74689) -- "Unsuffered Consequences"
+R Under development (unstable) (2018-06-18 r74906) -- "Unsuffered Consequences"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -6972,13 +6972,29 @@ function (eta)
 > gf$variance(-3:4) #- == (.)^2
 [1]  9  4  1  0  1  4  9 16
 > 
+> ## Binomial with default 'logit' link:  Check some properties visually:
+> bi <- binomial()
+> et <- seq(-10,10, by=1/8)
+> plot(et, bi$mu.eta(et), type="l")
+> ## show that mu.eta() is derivative of linkinv() :
+> lines((et[-1]+et[-length(et)])/2, col=adjustcolor("red", 1/4),
++       diff(bi$linkinv(et))/diff(et), type="l", lwd=4)
+> ## which here is the logistic density:
+> lines(et, dlogis(et), lwd=3, col=adjustcolor("blue", 1/4))
+> stopifnot(exprs = {
++   all.equal(bi$ mu.eta(et), dlogis(et))
++   all.equal(bi$linkinv(et), plogis(et) -> m)
++   all.equal(bi$linkfun(m ), qlogis(m))    #  logit(.) == qlogis(.) !
++ })
 > 
-> ## quasipoisson. compare with example(glm)
-> counts <- c(18,17,15,20,10,20,25,13,12)
-> outcome <- gl(3,1,9)
-> treatment <- gl(3,3)
-> d.AD <- data.frame(treatment, outcome, counts)
-> glm.qD93 <- glm(counts ~ outcome + treatment, family = quasipoisson())
+> ## Data from example(glm) :
+> d.AD <- data.frame(treatment = gl(3,3),
++                    outcome   = gl(3,1,9),
++                    counts    = c(18,17,15, 20,10,20, 25,13,12))
+> glm.D93 <- glm(counts ~ outcome + treatment, d.AD, family = poisson())
+> ## Quasipoisson: compare with above / example(glm) :
+> glm.qD93 <- glm(counts ~ outcome + treatment, d.AD, family = quasipoisson())
+> 
 > 
 > ## Example of user-specified link, a logit model for p^days
 > ## See Shaffer, T.  2004. Auk 121(2): 526-540.
@@ -7002,8 +7018,20 @@ Link function: logexp(3)
 > ## which case use an offset of 0 in the corresponding formula
 > ## to get the null deviance right.
 > 
-> ## Binomial with identity link: often not a good idea.
-> ## Not run: binomial(link = make.link("identity"))
+> ## Binomial with identity link: often not a good idea, as both
+> ## computationally and conceptually difficult:
+> binomial(link = "identity")  ## is exactly the same as
+
+Family: binomial 
+Link function: identity 
+
+> binomial(link = make.link("identity"))
+
+Family: binomial 
+Link function: identity 
+
+> 
+> 
 > 
 > ## tests of quasi
 > x <- rnorm(100)
@@ -7823,6 +7851,20 @@ Terms added sequentially (first to last)
 NULL                          8    10.5814
 outcome    2   5.4523         6     5.1291
 treatment  2   0.0000         4     5.1291
+> ## Computing AIC [in many ways]:
+> (A0 <- AIC(glm.D93))
+[1] 56.76132
+> (ll <- logLik(glm.D93))
+'log Lik.' -23.38066 (df=5)
+> A1 <- -2*c(ll) + 2*attr(ll, "df")
+> A2 <- glm.D93$family$aic(counts, mu=fitted(glm.D93), wt=1) +
++         2 * length(coef(glm.D93))
+> stopifnot(exprs = {
++   all.equal(A0, A1)
++   all.equal(A1, A2)
++   all.equal(A1, glm.D93$aic)
++ })
+> 
 > 
 > 
 > # A Gamma example, from McCullagh & Nelder (1989, pp. 300-2)
@@ -18523,7 +18565,7 @@ Number of Fisher Scoring iterations: 6
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  6.631 0.206 7.364 0 0 
+Time elapsed:  5.582 0.215 5.955 0 0 
 > grDevices::dev.off()
 null device 
           1 
