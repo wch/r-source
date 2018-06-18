@@ -15,16 +15,17 @@
   side of the assignment as the object's attributes (if appropriate).
 }
 \usage{
-attributes(obj)
-attributes(obj) <- value
-mostattributes(obj) <- value
+attributes(x)
+attributes(x) <- value
+mostattributes(x) <- value
 }
 \arguments{
-  \item{obj}{an object}
-  \item{value}{an appropriate named list of attributes, or \code{NULL}.}
+  \item{x}{any \R object}
+  \item{value}{an appropriate named \code{\link{list}} of attributes, or
+    \code{NULL}.}
 }
 \details{
-  Unlike \code{\link{attr}} it is possible to set attributes on a
+  Unlike \code{\link{attr}} it is not an error to set attributes on a
   \code{NULL} object: it will first be coerced to an empty list.
 
   Note that some attributes (namely \code{\link{class}},

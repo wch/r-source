@@ -1,7 +1,7 @@
 #  File src/library/base/R/zzz.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -80,8 +80,8 @@ assign(".subset2", function(x, ...) NULL, envir = .ArgsEnv)
 assign("UseMethod", function(generic, object) NULL, envir = .ArgsEnv)
 assign("attr", function(x, which, exact = FALSE) NULL, envir = .ArgsEnv)
 assign("attr<-", function(x, which, value) NULL, envir = .ArgsEnv)
-assign("attributes", function(obj) NULL, envir = .ArgsEnv)
-assign("attributes<-", function(obj, value) NULL, envir = .ArgsEnv)
+assign("attributes", function(x) NULL, envir = .ArgsEnv)
+assign("attributes<-", function(x, value) NULL, envir = .ArgsEnv)
 assign("baseenv", function() NULL, envir = .ArgsEnv)
 assign("browser",
        function(text="", condition=NULL, expr = TRUE, skipCalls = 0L) NULL,

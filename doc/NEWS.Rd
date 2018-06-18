@@ -185,7 +185,7 @@
       \code{x} is a nested list with factor leaves, fixing \PR{12572}
       and \PR{17419}.
 
-      \item The default method for\code{pairs(.., horInd=*, verInd=*)}
+      \item The default method for \code{pairs(.., horInd=*, verInd=*)}
       now gets the correct order, thanks to reports by Chris Andrews and
       Gerrit Eichner.  Additionally, when \code{horInd} or \code{verInd}
       contain only a subset of variables, all the axes are labeled
@@ -193,6 +193,12 @@
 
       \item The documentation \code{help(family)} gives more details
       about the \code{aic} component, thanks to Ben Bolker's prompting.
+
+      \item The documentation for \code{attributes} and
+      \code{`attributes<-`} now gives \code{x} as name of the first and
+      main argument which the implementation has been requiring, fixing
+      \PR{17434}.  For consistency, the first argument name is also
+      changed from \code{obj} to \code{x} for \code{`mostattributes<-`}.
     }
   }
 }
