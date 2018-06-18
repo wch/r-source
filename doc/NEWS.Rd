@@ -193,6 +193,9 @@
       main argument which the implementation has been requiring, fixing
       \PR{17434}.  For consistency, the first argument name is also
       changed from \code{obj} to \code{x} for \code{`mostattributes<-`}.
+
+      \item \code{strwidth()} now uses \code{par("font")} as default
+      font face (\PR{17352}).
     }
   }
 }

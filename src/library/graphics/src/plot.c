@@ -3345,7 +3345,9 @@ SEXP C_identify(SEXP call, SEXP op, SEXP args, SEXP rho)
 	strncpy(gpptr(dd)->family, "Hershey ", 201);			\
 	gpptr(dd)->family[7] = (char)INTEGER(vfont)[0];			\
 	gpptr(dd)->font = INTEGER(vfont)[1];				\
-    } else gpptr(dd)->font = INTEGER(font)[0];				\
+    } else if (INTEGER(font)[0] != NA_INTEGER) {                        \
+        gpptr(dd)->font = INTEGER(font)[0];                             \
+    }                                                                   \
 									\
     n = LENGTH(str);							\
     PROTECT(ans = allocVector(REALSXP, n));				\
