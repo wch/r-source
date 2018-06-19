@@ -18,7 +18,7 @@
 
 /* used on console.c, EncodeString and do_cat */
 
-/* \001 is STX, \002 is ETX: they should not occur in other text,
+/* \002 is STX, \003 is ETX: they should not occur in other text,
    But we use a 3-byte escape to be even safer. */
 
 #ifdef IN_CONSOLE
