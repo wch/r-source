@@ -1,6 +1,6 @@
 % File src/library/base/man/agrep.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{agrep}
@@ -105,6 +105,8 @@ agrepl(pattern, x, max.distance = 0.1, costs = NULL,
 }
 \seealso{
   \code{\link{grep}}, \code{\link{adist}}.
+  A different interface to approximate string matching is provided by
+  \code{\link{aregexec}()}.
 }
 \examples{
 agrep("lasy", "1 lazy 2")

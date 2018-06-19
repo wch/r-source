@@ -1861,9 +1861,20 @@ stopifnot(grepl(" [*]{3}$", cc[2]),
                      printCoefmat(cm, right=TRUE))))
 ## gave Error: 'formal argument "right" matched by multiple actual arguments'
 
+
 ## print.noquote() w/ unusual argument -- inspite of user error, be forgiving:
 print(structure("foo bar", class="noquote"), quote=FALSE)
 ## gave Error: 'formal argument "quote" matched by multiple actual arguments'
+
+
+## agrep(".|.", ch, fixed=FALSE)
+chvec <- c(".BCD", "yz", "AB", "wyz")
+patt <- "ABC|xyz"
+stopifnot(identical(c(list(0L[0]), rep(list(1:4), 2)),
+    lapply(0:2, function(m) agrep(patt, chvec, max.distance=m, fixed=FALSE))
+))
+## all three were empty in R <= 3.5.0
+
 
 
 ## keep at end

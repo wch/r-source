@@ -196,6 +196,9 @@
 
       \item \code{strwidth()} now uses \code{par("font")} as default
       font face (\PR{17352}).
+
+      \item \code{agrep("..|..", .., fixed=FALSE)} now matches when it
+      should, thanks to a reminder by Andreas Kolter.
     }
   }
 }
