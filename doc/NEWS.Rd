@@ -63,7 +63,7 @@
       (\code{mode = "wb"}) also for file extension \file{.rds}.
 
       The help page for \code{download.file()} now contains the same
-      information on allplatforms.
+      information on all platforms.
 
       \item Setting \samp{C} locale for collation \emph{via} environment
       variables \env{LC_ALL} and \env{LC_COLLATE} and \emph{via} a call
