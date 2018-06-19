@@ -107,7 +107,7 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
     regex_t reg;
     regaparams_t params;
     regamatch_t match;
-    int rc, cflags = REG_NOSUB;
+    int rc, cflags = REG_EXTENDED | REG_NOSUB;
 
     checkArity(op, args);
     pat = CAR(args); args = CDR(args);
