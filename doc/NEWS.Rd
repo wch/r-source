@@ -72,6 +72,9 @@
       Gerrit Eichner.  Additionally, when \code{horInd} or \code{verInd}
       contain only a subset of variables, all the axes are labeled
       correctly now.
+
+      \item \code{agrep("..|..", .., fixed=FALSE)} now matches when it
+      should, thanks to a reminder by Andreas Kolter.
     }
   }
 }
