@@ -1,7 +1,7 @@
 #  File src/library/utils/R/str.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -548,9 +548,12 @@ str.default <-
 	    ## FIXME: need combined  encode.and.trim.string(object, m)  with O(m) !
 	    encObj <- tryCatch(strtrim(object, trimWidth), error=function(e) NULL)
 	    encObj <-
-		if(is.null(encObj)) # must first encodeString() before we can trim
-		    strtrim(encodeString(object, quote= '"', na.encode= FALSE),
-			    trimWidth)
+		if(is.null(encObj)) { # must first encodeString() before we can trim
+		    e <- encodeString(object, quote= '"', na.encode= FALSE)
+		    r <- tryCatch(strtrim(e, trimWidth), error=function(e) NULL)
+		    ## What else can we try?
+		    if(is.null(r)) e else r
+		}
 		else
 		    encodeString(encObj, quote= '"', na.encode= FALSE)
 	    if(le > 0) ## truncate if LONG char:
