@@ -198,6 +198,8 @@
       font face (\PR{17352}).
 
       \item \code{plot(<table>, log="x")} no longer warns about \code{log}.
+
+      \item \code{str(ch)} now works for more invalid multibyte strings.
     }
   }
 }

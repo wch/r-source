@@ -1876,6 +1876,18 @@ stopifnot(identical(c(list(0L[0]), rep(list(1:4), 2)),
 ## all three were empty in R <= 3.5.0
 
 
+## str(<invalid>)
+typeof(nn <- c(0xc4, 0x88, 0xa9, 0x02))
+cc <- ch <- rawToChar(as.raw(nn))
+str(ch)# worked already
+nchar(cc, type="bytes")# 4, but  nchar(cc)  gives  "invalid multibyte string"
+Encoding(cc) <- "UTF-8" # << makes it invalid for strtrim(.)!
+as.octmode(as.integer(nn))
+str(cc)
+## In R <= 3.5.0, [strtrim() & nchar()] gave invalid multibyte string at '<a9>\002"'
+
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
