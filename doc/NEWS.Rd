@@ -197,8 +197,7 @@
       \item \code{strwidth()} now uses \code{par("font")} as default
       font face (\PR{17352}).
 
-      \item \code{agrep("..|..", .., fixed=FALSE)} now matches when it
-      should, thanks to a reminder by Andreas Kolter.
+      \item \code{plot(<table>, log="x")} no longer warns about \code{log}.
     }
   }
 }
@@ -271,6 +270,9 @@
       Gerrit Eichner.  Additionally, when \code{horInd} or \code{verInd}
       contain only a subset of variables, all the axes are labeled
       correctly now.
+
+      \item \code{agrep("..|..", .., fixed=FALSE)} now matches when it
+      should, thanks to a reminder by Andreas Kolter.
     }
   }
 }
