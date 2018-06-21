@@ -5,7 +5,6 @@
 \title{R News}
 \encoding{UTF-8}
 
-
 \section{\Rlogo CHANGES IN R 3.5.0 patched}{
 
   \subsection{BUG FIXES}{
@@ -75,6 +74,8 @@
 
       \item \code{agrep("..|..", .., fixed=FALSE)} now matches when it
       should, thanks to a reminder by Andreas Kolter.
+
+      \item \code{str(ch)} now works for more invalid multibyte strings.
     }
   }
 }
