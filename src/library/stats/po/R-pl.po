@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.4.0\n"
+"Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-04 19:01\n"
+"POT-Creation-Date: 2018-04-01 16:26\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.8.7\n"
+"X-Generator: Poedit 2.0.4\n"
 "X-Poedit-Bookmarks: -1,20,-1,-1,-1,-1,-1,-1,-1,-1\n"
 
 #. R/xtabs.R: gettextf("%s applies only to two-way tables", "xtabs(*, sparse=TRUE)")
@@ -96,6 +96,13 @@ msgstr "'acf' musi być długości równej dwa lub więcej"
 msgid "'all.knots' is TRUE; 'nknots' specification is disregarded"
 msgstr ""
 "argument 'all.knots' ma wartość TRUE; specyfikacja 'nknots' została odrzucona"
+
+#. R/smspline.R: warning("'all.knots' is vector of knots; 'nknots' specification is disregarded")
+#: R/smspline.R:0
+msgid "'all.knots' is vector of knots; 'nknots' specification is disregarded"
+msgstr ""
+"argument 'all.knots' jest wektorem węzłów; specyfikacja 'nknots' została "
+"odrzucona"
 
 #. R/HoltWinters.R: stop("'alpha', 'beta' and 'gamma' must be within the unit interval")
 #: R/HoltWinters.R:0
@@ -369,20 +376,10 @@ msgstr "argument 'init' ma niepoprawną długość"
 msgid "'interval' must be a vector of length 2"
 msgstr "argument 'interval' musi być wektorem liczbowym o długości 2"
 
-#. R/kmeans.R: stop("'invalid value of 'k'")
-#: R/kmeans.R:0
-msgid "'invalid value of 'k'"
-msgstr "niepoprawna wartość 'k'"
-
 #. R/kmeans.R: stop("'iter.max' must be positive")
 #: R/kmeans.R:0
 msgid "'iter.max' must be positive"
 msgstr "argument 'iter.max' musi być dodatni"
-
-#. R/loess.R: gettextf("'iterTrace = %s' not obeyed as iterations = %d", iterTrace,     iterations)
-#: R/loess.R:0
-msgid "'iterTrace = %s' not obeyed as iterations = %d"
-msgstr "'iterTrace = %s' nie jest przestrzegane, ponieważ iteracje = %d"
 
 #. R/identify.hclust.R: stop("'k' and 'h' must be a scalar")
 #: R/identify.hclust.R:0
@@ -434,6 +431,11 @@ msgstr "argument 'lag.max' musi wynosić co najmniej 0"
 #: R/acf.R:0
 msgid "'lag.max' must be at least 1"
 msgstr "argument 'lag.max' musi wynosić co najmniej 1"
+
+#. R/reshape.R: stop("'lengths(varying)' must all match 'length(times)'")
+#: R/reshape.R:0
+msgid "'lengths(varying)' must all match 'length(times)'"
+msgstr "'lengths(varying)' musi zgadzać się z 'length(times)'"
 
 #. R/logLik.R: stop("'logLik.lm' does not support multiple responses")
 #: R/logLik.R:0
@@ -595,7 +597,11 @@ msgstr "'order' musi być nieujemnym wektorem liczbowym o długości 3"
 msgid "'order.dendrogram' requires a dendrogram"
 msgstr "'order.dendrogram' wymaga drzewa celu"
 
-#. R/ar.R: stop("'order.max' must be < 'n.used'")
+#. R/ar.R: stop("'order.max' must be < 'n.obs'")
+#: R/ar.R:0
+msgid "'order.max' must be < 'n.obs'"
+msgstr "argument 'order.max' musi być < argument 'n.obs'"
+
 #. R/ar.R: stop("'order.max' must be < 'n.used'")
 #. R/ar.R: stop("'order.max' must be < 'n.used'")
 #. R/ar.R: stop("'order.max' must be < 'n.used'")
@@ -708,11 +714,15 @@ msgstr "'ref' musi być istniejącym poziomem"
 msgid "'ref' must be of length one"
 msgstr "argument 'ref' musi być długości 1"
 
-#. R/relevel.R: stop("'relevel' only for factors")
-#. R/relevel.R: stop("'relevel' only for factors")
+#. R/relevel.R: stop("'relevel' only for (unordered) factors")
 #: R/relevel.R:0
-msgid "'relevel' only for factors"
-msgstr "'relevel' tylko dla czynników"
+msgid "'relevel' only for (unordered) factors"
+msgstr "'relevel' tylko dla nieuporządkowanych czynników"
+
+#. R/relevel.R: stop("'relevel' only for unordered factors")
+#: R/relevel.R:0
+msgid "'relevel' only for unordered factors"
+msgstr "'relevel' tylko dla nieuporządkowanych czynników"
 
 #. R/dendrogram.R: stop("'reorder.dendrogram' requires a dendrogram")
 #: R/dendrogram.R:0
@@ -825,11 +835,6 @@ msgstr ""
 msgid "'termobj' must be a object of class %s"
 msgstr "argument 'termobj' musi być obiektem klasy %s"
 
-#. R/reshape.R: stop("'times' is wrong length")
-#: R/reshape.R:0
-msgid "'times' is wrong length"
-msgstr "argument 'times' ma niepoprawną długość"
-
 #. R/smspline.R: stop("'tol' must be strictly positive and finite")
 #: R/smspline.R:0
 msgid "'tol' must be strictly positive and finite"
@@ -844,6 +849,12 @@ msgstr "'trace != 0' potrzebuje 'REPORT >= 1'"
 #: R/ts.R:0
 msgid "'ts' object must have one or more observations"
 msgstr "obiekt 'ts' musi mieć jedną lub więcej obserwacji"
+
+#. R/quantile.R: stop("'type' must be 1 or 3 for ordered factors")
+#: R/quantile.R:0
+msgid "'type' must be 1 or 3 for ordered factors"
+msgstr ""
+"argument 'type' musi mieć wartość 1 lub 3 dla uporządkowanych czynników"
 
 #. R/family.R: gettextf("'variance' \"%s\" is invalid: possible values are \"mu(1-mu)\", \"mu\", \"mu^2\", \"mu^3\" and \"constant\"",     variance_nm)
 #: R/family.R:0
@@ -1242,6 +1253,12 @@ msgstr "'y' musi być o jeden dłuższy niż 'x'"
 msgid "'y', 'groups' and 'blocks' must have the same length"
 msgstr "argumenty 'y', 'groups' oraz 'block' muszą mieć tę samą długość"
 
+#. R/glm.R: paste(deparse(dotargs[named]), collapse = ", ")
+#. R/optim.R: paste(noNms, collapse = ", ")
+#: R/glm.R:0 R/optim.R:0
+msgid ","
+msgstr ","
+
 #. R/smspline.R: message(".nknots.smspl() is now exported; use it instead of n.knots()")
 #: R/smspline.R:0
 msgid ".nknots.smspl() is now exported; use it instead of n.knots()"
@@ -1382,11 +1399,15 @@ msgstr "wartości NA w '%s'"
 #. R/ar.R: stop("NAs in 'x'")
 #. R/ar.R: stop("NAs in 'x'")
 #. R/ar.R: stop("NAs in 'x'")
-#. R/ar.R: stop("NAs in 'x'")
-#. R/ar.R: stop("NAs in 'x'")
 #: R/acf.R:0 R/ar.R:0
 msgid "NAs in 'x'"
 msgstr "wartości NA w 'x'"
+
+#. R/ar.R: stop("NAs in 'x' must be the same row-wise")
+#. R/ar.R: stop("NAs in 'x' must be the same row-wise")
+#: R/ar.R:0
+msgid "NAs in 'x' must be the same row-wise"
+msgstr "wartości NA w 'x' muszą być takie same względem wiersza"
 
 #. R/glm.R: stop("NAs in V(mu)")
 #: R/glm.R:0
@@ -1402,6 +1423,30 @@ msgstr "wartości NA w 'd(mu)/d(eta)'"
 #: R/arma0.R:0
 msgid "NAs present: setting 'delta' to -1"
 msgstr "wartości NA są obecne: ustawianie 'delta' na wartość -1"
+
+#. R/power.R: warning("No p1 in in [0, p2] can be found to achieve the desired power")
+#: R/power.R:0
+msgid "No p1 in in [0, p2] can be found to achieve the desired power"
+msgstr ""
+"Żaden p1 w [0, p2] nie może być znaleziony celem zyskania oczekiwanej mocy"
+
+#. R/power.R: warning("No p2 in in [p1, 1] can be found to achieve the desired power")
+#: R/power.R:0
+msgid "No p2 in in [p1, 1] can be found to achieve the desired power"
+msgstr ""
+"Żaden p2 w [p1, 1] nie może być znaleziony celem zyskania oczekiwanej mocy"
+
+#. R/power.R: warning("No significance level [0, 1] can be found to achieve the desired power")
+#: R/power.R:0
+msgid "No significance level [0, 1] can be found to achieve the desired power"
+msgstr ""
+"Żaden poziom istotności [0, 1] nie może być znaleziony celem zyskania "
+"oczekiwanej mocy"
+
+#. R/smspline.R: stop("Numeric 'all.knots' must be strictly increasing")
+#: R/smspline.R:0
+msgid "Numeric 'all.knots' must be strictly increasing"
+msgstr "Liczbowy argument 'all.knots' musi być ściśle rosnący"
 
 #. R/constrOptim.R: gettextf("Objective function decreased at outer iteration %d",     i)
 #: R/constrOptim.R:0
@@ -1742,12 +1787,19 @@ msgstr "nie można zmienić częstotliwości z %g na %g"
 msgid "cannot compute asymptotic confidence set or estimator"
 msgstr "nie można obliczyć asymptotycznego przedziału ufności lub estymatora"
 
-#. R/wilcox.test.R: stop("cannot compute confidence interval when all observations are tied",     call. = FALSE)
-#. R/wilcox.test.R: stop("cannot compute confidence interval when all observations are tied",     call. = FALSE)
+#. R/wilcox.test.R: warning("cannot compute confidence interval when all observations are tied",     call. = FALSE)
 #: R/wilcox.test.R:0
 msgid "cannot compute confidence interval when all observations are tied"
 msgstr ""
 "nie można obliczyć przedziału ufności gdy wszystkie obserwacje są powtórzone"
+
+#. R/wilcox.test.R: warning("cannot compute confidence interval when all observations are zero or tied",     call. = FALSE)
+#: R/wilcox.test.R:0
+msgid ""
+"cannot compute confidence interval when all observations are zero or tied"
+msgstr ""
+"nie można obliczyć przedziału ufności gdy wszystkie obserwacje wynoszą zero "
+"lub są powtórzone"
 
 #. R/ansari.test.R: warning("cannot compute confidence set, returning NA")
 #: R/ansari.test.R:0
@@ -2370,6 +2422,11 @@ msgstr "niepoprawny argument 'endrule'"
 msgid "invalid 'extendInt'; please report"
 msgstr "niepoprawny argument 'extendInt'; proszę zgłosić raport"
 
+#. R/smspline.R: stop("invalid 'keep.stuff'")
+#: R/smspline.R:0
+msgid "invalid 'keep.stuff'"
+msgstr "niepoprawna wartość 'keep.stuff'"
+
 #. R/lm.R: stop("invalid 'lm' object:  no 'terms' component")
 #: R/lm.R:0
 msgid "invalid 'lm' object:  no 'terms' component"
@@ -2563,24 +2620,25 @@ msgstr "niepoprawne wartości parametrów"
 msgid "invalid response type"
 msgstr "niepoprawny typ zmiennej zależnej"
 
-#. R/runmed.R: stop("invalid value of 'k'")
-#: R/runmed.R:0
-msgid "invalid value of 'k'"
-msgstr "niepoprawna wartość 'k'"
+#. R/cmdscale.R: gettextf("invalid value of %s", "'n'")
+#. R/density.R: gettextf("invalid value of %s", "length(x)")
+#. R/diffinv.R: gettextf("invalid value of %s", "length(x)")
+#. R/filter.R: gettextf("invalid value of %s", "NROW(x)")
+#. R/filter.R: gettextf("invalid value of %s", "length(filter)")
+#. R/kmeans.R: gettextf("invalid value of %s", "'k'")
+#. R/runmed.R: gettextf("invalid value of %s", "length(x)")
+#. R/runmed.R: gettextf("invalid value of %s", "'k'")
+#. R/spline.R: gettextf("invalid value of %s", "length(x)")
+#. R/splinefun.R: gettextf("invalid value of %s", "length(x)")
+#: R/cmdscale.R:0 R/density.R:0 R/diffinv.R:0 R/filter.R:0 R/kmeans.R:0
+#: R/runmed.R:0 R/spline.R:0 R/splinefun.R:0
+msgid "invalid value of %s"
+msgstr "niepoprawna wartość %s"
 
-#. R/cmdscale.R: stop("invalid value of 'n'")
-#: R/cmdscale.R:0
-msgid "invalid value of 'n'"
-msgstr "niepoprawna wartość 'n'"
-
-#. R/density.R: stop("invalid value of length(x)")
-#. R/diffinv.R: stop("invalid value of length(x)")
-#. R/runmed.R: stop("invalid value of length(x)")
-#. R/spline.R: stop("invalid value of length(x)")
-#. R/splinefun.R: stop("invalid value of length(x)")
-#: R/density.R:0 R/diffinv.R:0 R/runmed.R:0 R/spline.R:0 R/splinefun.R:0
-msgid "invalid value of length(x)"
-msgstr "niepoprawna wartość 'length(x)'"
+#. R/loess.R: warning("iterTrace = ", iterTrace, " not obeyed as iterations = ",     iterations)
+#: R/loess.R:0
+msgid "iterTrace ="
+msgstr "iterTrace ="
 
 #. R/identify.hclust.R: gettextf("k must be between 2 and %d", length(tree$height))
 #: R/identify.hclust.R:0
@@ -2884,6 +2942,11 @@ msgstr "co najmniej 2 obiekty są potrzebne aby móc grupować"
 msgid "must have same number of columns in 'x' and 'centers'"
 msgstr "potrzeba mieć tę samą liczbę kolumn w 'x' oraz 'centers'"
 
+#. R/smspline.R: stop("must not specify both 'spar' and 'lambda'")
+#: R/smspline.R:0
+msgid "must not specify both 'spar' and 'lambda'"
+msgstr "nie wolno określać równocześnie argumentu 'spar' oraz 'lambda'"
+
 #. R/spectrum.R: stop("must specify 'spans' or a valid kernel")
 #: R/spectrum.R:0
 msgid "must specify 'spans' or a valid kernel"
@@ -2903,6 +2966,13 @@ msgstr "potrzeba dostarczyć jeden lub więecj wektorów"
 #: R/model.tables.R:0
 msgid "na.action must be a function"
 msgstr "argument 'na.action' musi być funkcją"
+
+#. R/fisher.test.R: stop("names(hybridPars) should be NULL or be identical to the default's")
+#: R/fisher.test.R:0
+msgid "names(hybridPars) should be NULL or be identical to the default's"
+msgstr ""
+"'names(hybridPars)' powinno mieć wartość NULL lub być ustawione na wartości "
+"domyślne"
 
 #. R/fisher.test.R: stop("need 2 or more non-zero column marginals")
 #: R/fisher.test.R:0
@@ -2976,6 +3046,7 @@ msgstr "potrzeba wielokrotnych zmiennych zależnych"
 msgid "need numeric data"
 msgstr "potrzeba danych liczbowych"
 
+#. R/smspline.R: stop("need result of smooth.spline(keep.data = TRUE)")
 #. R/smspline.R: stop("need result of smooth.spline(keep.data = TRUE)")
 #. R/smspline.R: stop("need result of smooth.spline(keep.data = TRUE)")
 #: R/smspline.R:0
@@ -3313,6 +3384,11 @@ msgstr "niewystarczająca liczba grup"
 msgid "not enough observations"
 msgstr "niewystarczająca liczba obserwacji"
 
+#. R/loess.R: warning("iterTrace = ", iterTrace, " not obeyed as iterations = ",     iterations)
+#: R/loess.R:0
+msgid "not obeyed as iterations ="
+msgstr "nie jest przestrzegane, ponieważ iteracje ="
+
 #. R/plot.lm.R: gettextf("not plotting observations with leverage one:\n  %s",     paste(which(isInf), collapse = ", "))
 #: R/plot.lm.R:0
 msgid ""
@@ -3321,6 +3397,13 @@ msgid ""
 msgstr ""
 "brak wykreślalnych obserwacji z jednej transmisji:\n"
 "  %s"
+
+#. R/smspline.R: warning("not using invalid df; must have 1 < df <= n := #{unique x} = ",     nx)
+#: R/smspline.R:0
+msgid "not using invalid df; must have 1 < df <= n := #{unique x} ="
+msgstr ""
+"ignorowanie niepoprawnej wartości stopni swodoby; wartość musi spełniać "
+"warunek: 1 < df <= n, n = #{unikalne x} ="
 
 #. R/ftable.R: stop("nothing to tabulate")
 #: R/ftable.R:0
@@ -3402,6 +3485,13 @@ msgstr "liczba wag = %d powinna być równa %d (liczbie zmiennych zależnych)"
 #: R/smspline.R:0
 msgid "number of weights must match number of observations."
 msgstr "liczba wag musi zgadzać się z liczbą obserwacji"
+
+#. R/smspline.R: stop("numeric 'all.knots' must cover [0,1] (= the transformed data-range)")
+#: R/smspline.R:0
+msgid "numeric 'all.knots' must cover [0,1] (= the transformed data-range)"
+msgstr ""
+"liczbowe 'all.knots' musi pokryć przedział [0,1] (= przekształcony zakres "
+"danych)"
 
 #. R/contrast.R: stop("numeric contrasts or contrast name expected")
 #: R/contrast.R:0
@@ -3717,14 +3807,22 @@ msgstr "setVarying : długość 'vary' musi zgadzać się z długością paramet
 msgid "setting df = 1  __use with care!__"
 msgstr "ustawianie 'df = 1'  __używaj z ostrożnością!__"
 
+#. R/lm.R: stop("simulate() is not yet implemented for multivariate lm()")
+#: R/lm.R:0
+msgid "simulate() is not yet implemented for multivariate lm()"
+msgstr ""
+"funkcja 'simulate()' nie jest jeszcze zaimplementowana dla wielowymiarowych "
+"'lm()'"
+
 #. R/contrast.R: stop("singular contrast matrix")
 #: R/contrast.R:0
 msgid "singular contrast matrix"
 msgstr "osobliwa macierz kontrastów"
 
+#. R/glm.R: stop("singular fit encountered")
 #. R/lm.R: stop("singular fit encountered")
 #. R/lm.R: stop("singular fit encountered")
-#: R/lm.R:0
+#: R/glm.R:0 R/lm.R:0
 msgid "singular fit encountered"
 msgstr "napotkano osobliwe dopasowanie"
 
@@ -3783,11 +3881,6 @@ msgstr ""
 #: R/smspline.R:0
 msgid "some weights should be positive"
 msgstr "niektóre wagi powinny być dodatnie"
-
-#. R/smspline.R: warning("specified both 'df' and 'cv'; will disregard the latter")
-#: R/smspline.R:0
-msgid "specified both 'df' and 'cv'; will disregard the latter"
-msgstr "określono jednocześnie 'df' oraz 'cv'; drugi zostanie odrzucony"
 
 #. R/loess.R: stop("specified parametric for all predictors")
 #: R/loess.R:0
@@ -3910,12 +4003,12 @@ msgstr "zdefiniowany kontrast jest pusty (nie ma elementów TRUE)"
 msgid "the first value of the time series must not be missing"
 msgstr "pierwsza wartość szeregu czasowego nie może być brakującą"
 
-#. R/glm.R: gettextf("the following arguments to 'anova.glm' are invalid and dropped: %s",     paste(deparse(dotargs[named]), collapse = ", "))
+#. R/glm.R: warning("the following arguments to 'anova.glm' are invalid and dropped: ",     paste(deparse(dotargs[named]), collapse = ", "))
 #: R/glm.R:0
-msgid "the following arguments to 'anova.glm' are invalid and dropped: %s"
+msgid "the following arguments to 'anova.glm' are invalid and dropped:"
 msgstr ""
 "następujące argumenty przekazane do 'anova.glm()' są niepoprawne i zostały "
-"pominięte: %s"
+"pominięte:"
 
 #. R/StructTS.R: stop("the series is entirely NA")
 #. R/StructTS.R: stop("the series is entirely NA")
@@ -4073,10 +4166,10 @@ msgstr "nieznana reguła szerokości pasma"
 msgid "unknown named kernel"
 msgstr "nieznane nazwane jądro"
 
-#. R/optim.R: gettextf("unknown names in control: %s", paste(noNms, collapse = ", "))
+#. R/optim.R: warning("unknown names in control: ", paste(noNms, collapse = ", "))
 #: R/optim.R:0
-msgid "unknown names in control: %s"
-msgstr "nieznane nazwy w kontroli: %s"
+msgid "unknown names in control:"
+msgstr "nieznane nazwy w kontroli:"
 
 #. R/stl.R: stop("unknown string value for s.window")
 #: R/stl.R:0
@@ -4226,11 +4319,6 @@ msgstr "argument 'y' jest pusty lub posiada jedynie wartości NA"
 #: R/family.R:0
 msgid "y values must be 0 <= y <= 1"
 msgstr "wartości 'y' muszą być z przedziału 0 <= y <= 1"
-
-#. R/smspline.R: warning("you must supply 1 < df <= n,  n = #{unique x} = ", nx)
-#: R/smspline.R:0
-msgid "you must supply 1 < df <= n,  n = #{unique x} ="
-msgstr "musisz dostarczyć 1 < df <= n,  n = #{unikalne x} ="
 
 #. R/approx.R: stop("zero non-NA points")
 #. R/approx.R: stop("zero non-NA points")
@@ -4474,11 +4562,20 @@ msgstr[0] "używanie %d/%d wiersza z połączonego dopasowania"
 msgstr[1] "używanie %d/%d wierszy z połączonego dopasowania"
 msgstr[2] "używanie %d/%d wierszy z połączonego dopasowania"
 
-#~ msgid ","
-#~ msgstr ","
+#~ msgid "'invalid value of 'k'"
+#~ msgstr "niepoprawna wartość 'k'"
 
-#~ msgid "iterTrace ="
-#~ msgstr "iterTrace ="
+#~ msgid "'times' is wrong length"
+#~ msgstr "argument 'times' ma niepoprawną długość"
+
+#~ msgid "invalid value of 'n'"
+#~ msgstr "niepoprawna wartość 'n'"
+
+#~ msgid "invalid value of length(x)"
+#~ msgstr "niepoprawna wartość 'length(x)'"
+
+#~ msgid "specified both 'df' and 'cv'; will disregard the latter"
+#~ msgstr "określono jednocześnie 'df' oraz 'cv'; drugi zostanie odrzucony"
 
 #~ msgid "a limit is missing"
 #~ msgstr "brakuje co najmniej jednej granicy całkowania"

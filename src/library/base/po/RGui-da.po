@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RGUi\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-01 10:28-0700\n"
+"POT-Creation-Date: 2018-03-29 07:06-0700\n"
 "PO-Revision-Date: 2014-03-18 23:36+0200\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <debian-l10n-danish@lists.debian.org>\n"
@@ -18,26 +18,26 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Pootle 2.1.6\n"
 
-#: src/gnuwin32/console.c:1167 src/gnuwin32/console.c:1209
+#: src/gnuwin32/console.c:1170 src/gnuwin32/console.c:1212
 msgid "Not enough memory"
 msgstr "Ikke nok hukommelse"
 
-#: src/gnuwin32/console.c:1256 src/gnuwin32/console.c:1260
+#: src/gnuwin32/console.c:1259 src/gnuwin32/console.c:1263
 msgid "Insufficient memory: text not copied to the clipboard"
 msgstr ""
 "Utilstrækkelig hukommelse: Tekst blev ikke kopieret til udklipsholderen"
 
-#: src/gnuwin32/console.c:1296 src/extra/graphapp/clipboard.c:53
+#: src/gnuwin32/console.c:1299 src/extra/graphapp/clipboard.c:53
 #: src/extra/graphapp/clipboard.c:79
 msgid "Unable to open the clipboard"
 msgstr "Kan ikke åbne udklipsholderen"
 
-#: src/gnuwin32/console.c:1919
+#: src/gnuwin32/console.c:1922
 msgid "Insufficient memory. Please close the console"
 msgstr "Utilstrækkelig hukommelse. Luk venligst konsollen"
 
 # engelsk fejl, ekstra mellemrum.
-#: src/gnuwin32/console.c:1974 src/gnuwin32/console.c:2028
+#: src/gnuwin32/console.c:1977 src/gnuwin32/console.c:2031
 #: src/gnuwin32/preferences.c:333
 #, c-format
 msgid ""
@@ -47,23 +47,23 @@ msgstr ""
 "Skrifttype %s-%d-%d blev ikke fundet.\n"
 "Bruger systemskrifttype"
 
-#: src/gnuwin32/console.c:2133
+#: src/gnuwin32/console.c:2136
 msgid "Save selection to"
 msgstr "Gem markering til"
 
-#: src/gnuwin32/console.c:2135
+#: src/gnuwin32/console.c:2138
 msgid "Save console contents to"
 msgstr "Gem konsolindhold til"
 
-#: src/gnuwin32/console.c:2234
+#: src/gnuwin32/console.c:2237
 msgid "Scrolling.\n"
 msgstr "Rulle.\n"
 
-#: src/gnuwin32/console.c:2235
+#: src/gnuwin32/console.c:2238
 msgid "  Keyboard: PgUp, PgDown, Ctrl+Arrows, Ctrl+Home, Ctrl+End,\n"
 msgstr "  Tastatur: PgUp, PgDown, Ctrl+pile, Ctrl+Home, Ctrl+End,\n"
 
-#: src/gnuwin32/console.c:2236
+#: src/gnuwin32/console.c:2239
 msgid ""
 "  Mouse: use the scrollbar(s).\n"
 "\n"
@@ -71,75 +71,75 @@ msgstr ""
 "  Mus: Brug rullebjælkerne.\n"
 "\n"
 
-#: src/gnuwin32/console.c:2237
+#: src/gnuwin32/console.c:2240
 msgid "Editing.\n"
 msgstr "Redigere.\n"
 
-#: src/gnuwin32/console.c:2238
+#: src/gnuwin32/console.c:2241
 msgid "  Moving the cursor: \n"
 msgstr "  Flytning af markøren: \n"
 
-#: src/gnuwin32/console.c:2239
+#: src/gnuwin32/console.c:2242
 msgid "     Left arrow or Ctrl+B: move backward one character;\n"
 msgstr "     Venstre pil eller Ctrl+B: Flyt et tegn tilbage;\n"
 
-#: src/gnuwin32/console.c:2240
+#: src/gnuwin32/console.c:2243
 msgid "     Right arrow or Ctrl+F: move forward one character;\n"
 msgstr "     Højre pil eller Ctrl+F: Flyt et tegn fremad;\n"
 
-#: src/gnuwin32/console.c:2241
+#: src/gnuwin32/console.c:2244
 msgid "     Home or Ctrl+A: go to beginning of line;\n"
 msgstr "     Home eller Ctrl+A: Gå til begyndelsen af linjen;\n"
 
-#: src/gnuwin32/console.c:2242
+#: src/gnuwin32/console.c:2245
 msgid "     End or Ctrl+E: go to end of line;\n"
 msgstr "     End eller Ctrl+E: Gå til slutningen af linjen;\n"
 
-#: src/gnuwin32/console.c:2243
+#: src/gnuwin32/console.c:2246
 msgid "  History: Up and Down Arrows, Ctrl+P, Ctrl+N\n"
 msgstr "  Historik: Pilene op og ned, Ctrl+P, Ctrl+N\n"
 
-#: src/gnuwin32/console.c:2244
+#: src/gnuwin32/console.c:2247
 msgid "  Deleting:\n"
 msgstr "  Slette:\n"
 
-#: src/gnuwin32/console.c:2245
+#: src/gnuwin32/console.c:2248
 msgid "     Del or Ctrl+D: delete current character or selection;\n"
 msgstr "     Del eller Ctrl+D: Slet aktuelt tegn eller markering;\n"
 
-#: src/gnuwin32/console.c:2246
+#: src/gnuwin32/console.c:2249
 msgid "     Backspace: delete preceding character;\n"
 msgstr "     Slet tilbage: Slet foregående tegn;\n"
 
-#: src/gnuwin32/console.c:2247
+#: src/gnuwin32/console.c:2250
 msgid ""
 "     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"
 msgstr ""
 "     Ctrl+Del eller Ctrl+K: Slet tekst fra aktuel tegn til slutningen af "
 "linjen.\n"
 
-#: src/gnuwin32/console.c:2248
+#: src/gnuwin32/console.c:2251
 msgid "     Ctrl+U: delete all text from current line.\n"
 msgstr "     Ctrl+U: Slet al tekst fra aktuel linje.\n"
 
-#: src/gnuwin32/console.c:2249
+#: src/gnuwin32/console.c:2252
 msgid "  Copy and paste.\n"
 msgstr "  Kopier og indsæt.\n"
 
-#: src/gnuwin32/console.c:2250
+#: src/gnuwin32/console.c:2253
 msgid ""
 "     Use the mouse (with the left button held down) to mark (select) text.\n"
 msgstr ""
 "     Brug musen (med den venstre tast nede) til at markere (vælge) tekst.\n"
 
-#: src/gnuwin32/console.c:2251
+#: src/gnuwin32/console.c:2254
 msgid ""
 "     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
 msgstr ""
 "     Brug Skift+Del (eller Ctrl+C) til at kopiere den markerede tekst til "
 "udklipsholderen og\n"
 
-#: src/gnuwin32/console.c:2252
+#: src/gnuwin32/console.c:2255
 msgid ""
 "     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard "
 "(if any)  \n"
@@ -147,28 +147,28 @@ msgstr ""
 "     Skift+Ins (eller Ctrl+V eller Ctrl+Y) til at indsætte indholdet af "
 "udklipsholderen (hvis der er noget)  \n"
 
-#: src/gnuwin32/console.c:2253
+#: src/gnuwin32/console.c:2256
 msgid "     to the console, Ctrl+X first copy then paste\n"
 msgstr "     til konsollen, Ctrl+X først kopier så indsæt\n"
 
-#: src/gnuwin32/console.c:2254
+#: src/gnuwin32/console.c:2257
 msgid "  Misc:\n"
 msgstr "  Div.:\n"
 
-#: src/gnuwin32/console.c:2255
+#: src/gnuwin32/console.c:2258
 msgid "     Ctrl+L: Clear the console.\n"
 msgstr "     Ctrl+L: Ryd konsollen.\n"
 
-#: src/gnuwin32/console.c:2256
+#: src/gnuwin32/console.c:2259
 msgid "     Ctrl+O or INS: Toggle overwrite mode: initially off.\n"
 msgstr ""
 "     Ctrl+O eller INS: Skift tilstand for overskrivning: Som start slukket.\n"
 
-#: src/gnuwin32/console.c:2257
+#: src/gnuwin32/console.c:2260
 msgid "     Ctrl+T: Interchange current char with one to the left.\n"
 msgstr "     Ctrl+T: Udveksl aktuelt tegn med tegnet til venstre.\n"
 
-#: src/gnuwin32/console.c:2258
+#: src/gnuwin32/console.c:2261
 msgid ""
 "\n"
 "Note: Console is updated only when some input is required.\n"
@@ -176,7 +176,7 @@ msgstr ""
 "\n"
 "Bemærk: Konsol opdateres kun når inddata er krævet..\n"
 
-#: src/gnuwin32/console.c:2259
+#: src/gnuwin32/console.c:2262
 msgid ""
 "  Use Ctrl+W to toggle this feature off/on.\n"
 "\n"
@@ -184,7 +184,7 @@ msgstr ""
 "  Brug Ctrl+W til at tænde og slukke denne funktion..\n"
 "\n"
 
-#: src/gnuwin32/console.c:2260
+#: src/gnuwin32/console.c:2263
 msgid ""
 "Use ESC to stop the interpreter.\n"
 "\n"
@@ -192,7 +192,7 @@ msgstr ""
 "Brug ESC til at stoppe fortolkeren.\n"
 "\n"
 
-#: src/gnuwin32/console.c:2261
+#: src/gnuwin32/console.c:2264
 msgid ""
 "TAB starts completion of the current word.\n"
 "\n"
@@ -200,11 +200,11 @@ msgstr ""
 "TAB påbegynder færdiggørelse af det aktuelle ord.\n"
 "\n"
 
-#: src/gnuwin32/console.c:2262
+#: src/gnuwin32/console.c:2265
 msgid "Standard Windows hotkeys can be used to switch to the\n"
 msgstr "Standardgenvejstaster for Windows kan bruges til at skifte til\n"
 
-#: src/gnuwin32/console.c:2263
+#: src/gnuwin32/console.c:2266
 msgid "graphics device (Ctrl+Tab or Ctrl+F6 in MDI, Alt+Tab in SDI)"
 msgstr "den grafiske enhed (Ctrl+Tab eller Ctrl+F6 i MDI, Alt+Tab i SDI)"
 
@@ -231,8 +231,8 @@ msgstr "Kunne ikke gemme fil »%s«"
 msgid "Save script as"
 msgstr "Gem skript som"
 
-#: src/gnuwin32/editor.c:379 src/gnuwin32/editor.c:696
-#: src/gnuwin32/pager.c:430 src/gnuwin32/rui.c:1076
+#: src/gnuwin32/editor.c:379 src/gnuwin32/editor.c:696 src/gnuwin32/pager.c:430
+#: src/gnuwin32/rui.c:1076
 msgid "Open script"
 msgstr "Åbn skript"
 
@@ -299,9 +299,9 @@ msgstr "Fortryd"
 msgid "Cut"
 msgstr "Klip"
 
-#: src/gnuwin32/editor.c:632 src/gnuwin32/editor.c:752
-#: src/gnuwin32/pager.c:304 src/gnuwin32/pager.c:477 src/gnuwin32/rui.c:859
-#: src/gnuwin32/rui.c:1088 src/gnuwin32/rui.c:1144
+#: src/gnuwin32/editor.c:632 src/gnuwin32/editor.c:752 src/gnuwin32/pager.c:304
+#: src/gnuwin32/pager.c:477 src/gnuwin32/rui.c:859 src/gnuwin32/rui.c:1088
+#: src/gnuwin32/rui.c:1144
 msgid "Copy"
 msgstr "Kopier"
 
@@ -314,9 +314,8 @@ msgstr "Indsæt"
 msgid "Delete"
 msgstr "Slet"
 
-#: src/gnuwin32/editor.c:636 src/gnuwin32/editor.c:758
-#: src/gnuwin32/pager.c:307 src/gnuwin32/pager.c:483 src/gnuwin32/rui.c:866
-#: src/gnuwin32/rui.c:1149
+#: src/gnuwin32/editor.c:636 src/gnuwin32/editor.c:758 src/gnuwin32/pager.c:307
+#: src/gnuwin32/pager.c:483 src/gnuwin32/rui.c:866 src/gnuwin32/rui.c:1149
 msgid "Select all"
 msgstr "Vælg alle"
 
@@ -417,7 +416,7 @@ msgstr "Kunne ikke oprette redigeringsvindue"
 msgid "Untitled"
 msgstr "Uden titel"
 
-#: src/gnuwin32/extra.c:825
+#: src/gnuwin32/extra.c:844
 msgid "Select file"
 msgstr "Vælg fil"
 
@@ -787,7 +786,7 @@ msgstr "Vis søge&sti"
 msgid "Console"
 msgstr "Konsol"
 
-#: src/gnuwin32/rui.c:1251
+#: src/gnuwin32/rui.c:1248
 msgid "'mname' is limited to 1000 bytes"
 msgstr "»mname« er begrænset til 1.000 byte"
 
@@ -833,7 +832,7 @@ msgstr "menu ikke fundet"
 msgid "menu or item does not exist"
 msgstr "menu eller punkt findes ikke"
 
-#: src/gnuwin32/system.c:446
+#: src/gnuwin32/system.c:447
 msgid "Save workspace image?"
 msgstr "Gem arbejdsrumsbillede?"
 
@@ -1054,7 +1053,7 @@ msgid "Enhanced metafiles"
 msgstr "Forbedrede metafiler"
 
 #: src/library/grDevices/src/devWindows.c:1007
-#: src/library/grDevices/src/devWindows.c:3445
+#: src/library/grDevices/src/devWindows.c:3455
 msgid "file path selected is too long: only 512 bytes are allowed"
 msgstr "den valgte filsti er for langt: Kun 512 byte er tilladt"
 
@@ -1195,15 +1194,15 @@ msgstr "Gem som metafil..."
 msgid "Save as postscript..."
 msgstr "Gem som postscript..."
 
-#: src/library/grDevices/src/devWindows.c:3143
+#: src/library/grDevices/src/devWindows.c:3147
 msgid "Locator is active"
 msgstr "Lokalisering er aktiv"
 
-#: src/library/grDevices/src/devWindows.c:3769
+#: src/library/grDevices/src/devWindows.c:3779
 msgid "Waiting to confirm page change..."
 msgstr "Venter på at bekræfte sideændring..."
 
-#: src/library/grDevices/src/devWindows.c:3781
+#: src/library/grDevices/src/devWindows.c:3791
 msgid "Click or hit ENTER for next page"
 msgstr "Klik eller tryk på RETUR for næste side"
 

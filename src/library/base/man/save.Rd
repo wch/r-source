@@ -1,6 +1,6 @@
 % File src/library/base/man/save.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{save}
@@ -44,7 +44,8 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
     writes double/complex numbers as binary fractions.}
   \item{version}{the workspace format version to use.  \code{NULL}
     specifies the current default format (3).  Version 1 was the default
-    from \R 0.99.0 to \R 1.3.1 and version 2 from \R 1.4.0 to 3.4.4.} 
+    from \R 0.99.0 to \R 1.3.1 and version 2 from \R 1.4.0 to 3.5.0.
+    Version 3 is supported from \R 3.5.0.}
   \item{envir}{environment to search for objects to be saved.}
   \item{compress}{logical or character string specifying whether saving
     to a named file is to use compression.  \code{TRUE} corresponds to
@@ -139,6 +140,10 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
 }
 
 \note{
+  For saving single \R objects, \code{\link{saveRDS}()} is mostly
+  preferable to \code{save()}, notably because of the \emph{functional}
+  nature of \code{\link{readRDS}()}, as opposed to \code{\link{load}()}.
+
   The most common reason for failure is lack of write permission in the
   current directory.  For \code{save.image} and for saving at the end of
   a session this will shown by messages like
@@ -188,16 +193,21 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
   \code{\link{serialize}} and \code{\link{saveRDS}}.
 }
 \examples{
+\dontshow{oldwd <- setwd(tempdir()) # so examples do write there}
 x <- stats::runif(20)
 y <- list(a = 1, b = TRUE, c = "oops")
 save(x, y, file = "xy.RData")
-save.image()
+save.image() # creating ".RData" in current working directory
 unlink("xy.RData")
-unlink(".RData")
 
 # set save defaults using option:
 options(save.defaults = list(ascii = TRUE, safe = FALSE))
-save.image()
+save.image() # creating ".RData"
+if(interactive()) withAutoprint({
+   file.info(".RData")
+   readLines(".RData", n = 7) # first 7 lines; first starts w/ "RDA"..
+})
 unlink(".RData")
+\dontshow{setwd(oldwd)}
 }
 \keyword{file}

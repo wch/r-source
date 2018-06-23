@@ -1,6 +1,6 @@
 % File src/library/stats/man/printCoefmat.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{printCoefmat}
@@ -23,7 +23,7 @@ printCoefmat(x, digits = max(3, getOption("digits") - 2),
              has.Pvalue = nc >= 4L && length(cn <- colnames(x)) &&
                           substr(cn[nc], 1L, 3L) \%in\% c("Pr(", "p-v"),
              eps.Pvalue = .Machine$double.eps,
-             na.print = "NA", \dots)
+             na.print = "NA", quote = FALSE, right = TRUE, \dots)
 }
 \arguments{
   \item{x}{a numeric matrix like object, to be printed.}
@@ -58,7 +58,8 @@ printCoefmat(x, digits = max(3, getOption("digits") - 2),
   \item{eps.Pvalue}{number, ..}
   \item{na.print}{a character string to code \code{\link{NA}} values in
     printed output.}
- \item{\dots}{further arguments for \code{\link{print}}.}
+  \item{quote, right, \dots}{further arguments passed to
+    \code{\link{print.default}}.}
 }
 \value{
   Invisibly returns its argument, \code{x}.

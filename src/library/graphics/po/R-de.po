@@ -4,10 +4,10 @@
 # Detlef Steuer <steuer@hsu-hh.de>, 2007-2014.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.2.0\n"
+"Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51\n"
-"PO-Revision-Date: 2016-04-08 11:14+0200\n"
+"POT-Creation-Date: 2018-03-30 07:33\n"
+"PO-Revision-Date: 2018-04-16 10:30+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
 "Language: de\n"
@@ -27,6 +27,11 @@ msgstr "'a' und 'b' werden überschrieben durch 'coef'"
 
 msgid "one of 'x1' and 'y1' must be given"
 msgstr "entweder 'x1' oder 'y1' müssen angegeben werden"
+
+msgid ""
+"'length', 'angle', or 'code' greater than length 1; values after the first "
+"are ignored"
+msgstr "'length', 'angle' oder 'code' größere Länge als 1; Werte nach dem Ersten werden ignoriert"
 
 msgid "'x' must be a 2-d contingency table"
 msgstr "'x' muss eine 2-D Kontingenztafel sein"
@@ -112,6 +117,9 @@ msgstr "ansteigende 'x' und 'y' Werte erwartet"
 
 msgid "no proper 'z' matrix specified"
 msgstr "keine geeignete 'z' Matrix spezifiziert"
+
+msgid "'labels' is length zero.  Use 'drawlabels = FALSE' to suppress labels."
+msgstr "'labels' hat Länge 0. Nutze 'drawlabels = FALSE', um Label zu unterdrücken."
 
 msgid "invalid conditioning formula"
 msgstr "ungeeignete bedingende Formel"
@@ -201,6 +209,9 @@ msgstr "unbekannter Algorithmus für 'breaks'"
 
 msgid "invalid number of 'breaks'"
 msgstr "unzulässige Anzahl für 'breaks'"
+
+msgid "'breaks = %g' is too large and set to 1e6"
+msgstr "'breaks = %g' ist zu groß und wird auf 1e6 gesetzt"
 
 msgid "hist.default: pretty() error, breaks=%s"
 msgstr "hist.default: Fehler in pretty(), breaks=%s"
@@ -342,6 +353,9 @@ msgstr "'x' Werte müssen positiv sein."
 
 msgid "invalid table 'x'"
 msgstr "ungültige Tabelle 'x'"
+
+msgid "the formula '%s' is treated as '%s'"
+msgstr "Formel '%s' wird behandelt wie '%s'"
 
 msgid "cannot handle more than one 'x' coordinate"
 msgstr "kann nicht mehr als eine 'x' Koordinate behandeln"

@@ -130,7 +130,7 @@ static void savetl(SEXP s)
 /* use malloc/realloc (not Calloc/Realloc) so we can trap errors
    and call savetl_end() before the error(). */
 
-static void growstack(int newlen)
+static void growstack(uint64_t newlen)
 {
     // no link to icount range restriction,
     // just 100,000 seems a good minimum at 0.4MB
@@ -139,8 +139,8 @@ static void growstack(int newlen)
     gs[flip] = realloc(gs[flip], newlen * sizeof(int));
     if (gs[flip] == NULL)
 	Error("Failed to realloc working memory stack to %d*4bytes (flip=%d)",
-	      newlen, flip);
-    gsalloc[flip] = newlen;
+	      (int)newlen /* no bigger than gsmaxalloc */, flip);
+    gsalloc[flip] = (int)newlen;
 }
 
 static void push(int x)
@@ -148,7 +148,7 @@ static void push(int x)
     if (!stackgrps || x == 0)
 	return;
     if (gsalloc[flip] == gsngrp[flip])
-	growstack(gsngrp[flip] * 2);
+	growstack((uint64_t)(gsngrp[flip]) * 2);
     gs[flip][gsngrp[flip]++] = x;
     if (x > gsmax[flip])
 	gsmax[flip] = x;
@@ -159,7 +159,7 @@ static void mpush(int x, int n)
     if (!stackgrps || x == 0)
 	return;
     if (gsalloc[flip] < gsngrp[flip] + n)
-	growstack((gsngrp[flip] + n) * 2);
+	growstack(((uint64_t)(gsngrp[flip]) + n) * 2);
     for (int i = 0; i < n; i++)
 	gs[flip][gsngrp[flip]++] = x;
     if (x > gsmax[flip])
@@ -172,7 +172,7 @@ static void flipflop()
     gsngrp[flip] = 0;
     gsmax[flip] = 0;
     if (gsalloc[flip] < gsalloc[1 - flip])
-	growstack(gsalloc[1 - flip] * 2);
+	growstack((uint64_t)(gsalloc[1 - flip]) * 2);
 }
 
 static void gsfree()

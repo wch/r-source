@@ -336,7 +336,7 @@
 
 ## Path to the version of pkg-config to be used for locating cairographics,
 ## and possibly jpeg, libpng and libtiff.
-## PKGCONF=
+## PKG_CONFIG=
 ## search path for pkg-config
 ## PKG_CONFIG_PATH=
 ## path overriding pkg-config's default search path

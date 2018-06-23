@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2017  The R Core Team
+ *  Copyright (C) 1997--2018  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -32,7 +32,7 @@ static SEXP removeAttrib(SEXP, SEXP);
 SEXP comment(SEXP);
 static SEXP commentgets(SEXP, SEXP);
 
-static SEXP row_names_gets(SEXP vec , SEXP val)
+static SEXP row_names_gets(SEXP vec, SEXP val)
 {
     SEXP ans;
 
@@ -263,7 +263,7 @@ SEXP setAttrib(SEXP vec, SEXP name, SEXP val)
 	return tspgets(vec, val);
     else if (name == R_CommentSymbol)
 	return commentgets(vec, val);
-    else if (name == R_RowNamesSymbol)
+    else if (name == R_RowNamesSymbol) // "row.names" -> care for data frames
 	return row_names_gets(vec, val);
     else
 	return installAttrib(vec, name, val);
@@ -565,7 +565,7 @@ SEXP classgets(SEXP vec, SEXP klass)
 SEXP attribute_hidden do_classgets(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
-    check1arg(args, call, "x");
+    // have 2 args: check1arg(args, call, "x");
 
     if (MAYBE_SHARED(CAR(args))) SETCAR(args, shallow_duplicate(CAR(args)));
     if (length(CADR(args)) == 0) SETCADR(args, R_NilValue);
@@ -872,7 +872,7 @@ SEXP attribute_hidden do_namesgets(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans;
     checkArity(op, args);
-    check1arg(args, call, "x");
+    // 2 args ("x", "value")
 
     if (DispatchOrEval(call, op, "names<-", args, env, &ans, 0, 1))
 	return(ans);
@@ -902,7 +902,7 @@ SEXP attribute_hidden do_namesgets(SEXP call, SEXP op, SEXP args, SEXP env)
     /* FIXME:
        Need to special-case names(x) <- NULL for 1-d arrays to perform
          setAttrib(x, R_DimNamesSymbol, R_NilValue)
-       (and remove the dimnames) here if we want 
+       (and remove the dimnames) here if we want
          setAttrib(x, R_NamesSymbol, R_NilValue)
        to actually remove the names, as needed in subset.c.
     */
@@ -1012,8 +1012,7 @@ SEXP attribute_hidden do_dimnamesgets(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP ans;
 
     checkArity(op, args);
-    check1arg(args, call, "x");
-
+    // 2 args ("x", "value")
     if (DispatchOrEval(call, op, "dimnames<-", args, env, &ans, 0, 1))
 	return(ans);
     PROTECT(args = ans);
@@ -1255,7 +1254,7 @@ SEXP attribute_hidden do_attributes(SEXP call, SEXP op, SEXP args, SEXP env)
 	    MARK_NOT_MUTABLE(CAR(attrs));
 	    SET_VECTOR_ELT(value, nvalues, CAR(attrs));
 	    SET_STRING_ELT(names, nvalues, R_BlankString);
-	}	
+	}
 	attrs = CDR(attrs);
 	nvalues++;
     }
@@ -1270,8 +1269,7 @@ SEXP attribute_hidden do_levelsgets(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP ans;
 
     checkArity(op, args);
-    check1arg(args, call, "x");
-
+    // 2 args ("x", "value")
     if (DispatchOrEval(call, op, "levels<-", args, env, &ans, 0, 1))
 	/* calls, e.g., levels<-.factor() */
 	return(ans);
@@ -1300,7 +1298,6 @@ SEXP attribute_hidden do_attributesgets(SEXP call, SEXP op, SEXP args, SEXP env)
     /* Extract the arguments from the argument list */
 
     checkArity(op, args);
-    check1arg(args, call, "x");
 
     object = CAR(args);
     attrs = CADR(args);

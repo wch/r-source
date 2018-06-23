@@ -13,6 +13,7 @@ export(
        "convertNative",
        "grid.convertWidth", "grid.convertX", "grid.convertY",
        "grid.convert", "grid.convertHeight",
+       "deviceLoc", "deviceDim",
 
        "current.viewport", "current.vpPath", "current.vpTree",
        "current.transform", "current.rotation", "current.parent",
@@ -21,7 +22,7 @@ export(
        "gpar", "get.gpar",
        "grid.collection",
        "grid.copy", "grid.display.list", "grid.draw",
-       "grid.record", "recordGrob", "grid.delay", "grid.DLapply",
+       "grid.record", "recordGrob", "grid.delay", "delayGrob", "grid.DLapply",
        "grid.grill",
        "grid.layout", "grid.locator",
        "grid.newpage",

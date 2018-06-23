@@ -42,9 +42,9 @@ asDateBuilt(built)
     should re-encoding be attempted?  If \code{NA}, no re-encoding.  The
     other values are as used by \code{\link{iconv}}, so the default
     \code{""} indicates the encoding of the current locale.}
-  \item{date.fields}{character vector field tags to be tried.  The
+  \item{date.fields}{character vector of field tags to be tried.  The
     first for which \code{\link{as.Date}(.)} is not \code{\link{NA}}
-    will be returned.}
+    will be returned. (Partly experimental, see \emph{Note}.)}
   \item{tryFormats}{date formats to try, see \code{\link{as.Date.character}()}.}
   \item{desc}{optionally, a named \code{\link{list}} with components
     named from \code{date.fields};  where the default is fine, a
@@ -66,6 +66,11 @@ asDateBuilt(built)
 
   For \code{packageDate()}, if \code{desc} is valid, both \code{pkg} and
   \code{lib.loc} are not made use of.
+}
+\note{The default behavior of \code{packageDate()}, notably for
+  \code{date.fields}, is somewhat experimental and may change.  Using
+  \code{date.fields = <string>}
+  single
 }
 \value{
   If a \file{DESCRIPTION} file for the given package is found and can

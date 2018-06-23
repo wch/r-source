@@ -2375,6 +2375,9 @@ SEXP attribute_hidden R_compact_intrange(R_xlen_t n1, R_xlen_t n2)
 {
     R_xlen_t n = n1 <= n2 ? n2 - n1 + 1 : n1 - n2 + 1;
 
+    if (n >= R_XLEN_T_MAX)
+	error("result would be too long a vector");
+
     if (n1 <= INT_MIN || n1 > INT_MAX || n2 <= INT_MIN || n2 > INT_MAX)
 	return new_compact_realseq(n, n1, n1 <= n2 ? 1 : -1);
     else
@@ -2853,12 +2856,15 @@ SEXP attribute_hidden R_deferred_coerceToString(SEXP v, SEXP sp)
     switch (TYPEOF(v)) {
     case INTSXP:
     case REALSXP:
-	if (sp == NULL)
+	PROTECT(v); /* may not be needed, but to be safe ... */
+	if (sp == NULL) {
+	    PrintDefaults(); /* to set R_print from options */
 	    sp = ScalarInteger(R_print.scipen);
+	}
 	MARK_NOT_MUTABLE(v); /* make sure it can't change once captured */
 	ans = PROTECT(MAKE_DEFERRED_STRING_STATE(v, sp));
 	ans = R_new_altrep(R_deferred_string_class, ans, R_NilValue);
-	UNPROTECT(1); /* ans */
+	UNPROTECT(2); /* ans, v */
 	break;
     default:
 	error("unsupported type for deferred string coercion");

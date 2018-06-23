@@ -1,7 +1,7 @@
 #  File src/library/splines/R/splines.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -180,20 +180,23 @@ predict.ns <- function(object, newx, ...)
 
 makepredictcall.ns <- function(var, call)
 {
-    if(as.character(call)[1L] != "ns") return(call)
-    at <- attributes(var)[c("knots", "Boundary.knots", "intercept")]
-    xxx <- call[1L:2L]
-    xxx[names(at)] <- at
-    xxx
+    ## check must work correctly when call is a symbol, both for quote(ns) and quote(t1):
+    if(as.character(call)[1L] == "ns" || (is.call(call) && identical(eval(call[[1L]]), ns))) {
+	at <- attributes(var)[c("knots", "Boundary.knots", "intercept")]
+	call <- call[1L:2L]
+	call[names(at)] <- at
+    }
+    call
 }
 
 makepredictcall.bs <- function(var, call)
 {
-    if(as.character(call)[1L] != "bs") return(call)
-    at <- attributes(var)[c("degree", "knots", "Boundary.knots", "intercept")]
-    xxx <- call[1L:2]
-    xxx[names(at)] <- at
-    xxx
+    if(as.character(call)[1L] == "bs" || (is.call(call) && identical(eval(call[[1L]]), bs))) {
+	at <- attributes(var)[c("degree", "knots", "Boundary.knots", "intercept")]
+	call <- call[1L:2L]
+	call[names(at)] <- at
+    }
+    call
 }
 
 

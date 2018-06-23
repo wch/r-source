@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
 "PO-Revision-Date: 2015-03-27 14:17+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -226,6 +226,9 @@ msgstr " 無効な出力書式です "
 
 msgid "status %d in running command '%s'"
 msgstr " 状態 %d が命令 '%s' 実行中に起きました "
+
+msgid "failed to add more ticks; 'min.n' too large?"
+msgstr ""
 
 msgid "a raster matrix must be character, or numeric, or logical"
 msgstr " ラスター行列は文字、数値もしくは論理値でなければなりません "

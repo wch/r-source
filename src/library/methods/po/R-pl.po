@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.4.0\n"
+"Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-04 08:15\n"
+"POT-Creation-Date: 2018-04-01 16:26\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.8.7\n"
+"X-Generator: Poedit 2.0.4\n"
 
 #. R/RMethodUtils.R: warning("\"MethodsList\" is defunct; allMethods now are empty")
 #: R/RMethodUtils.R:0
@@ -38,6 +38,15 @@ msgid ""
 "%f is not a valid generic function: methods list was an object of class %s"
 msgstr ""
 "%f nie jest poprawną ogólną funkcją: lista metod była obiektem klasy %s"
+
+#. R/RMethodUtils.R: gettextf("%s arguments (%s) after %s in the generic must appear in the method, in the same place at the end of the argument list",     .renderSignature(generic@generic, signature), paste(sQuote(trailingArgs),         collapse = ", "), sQuote("..."))
+#: R/RMethodUtils.R:0
+msgid ""
+"%s arguments (%s) after %s in the generic must appear in the method, in the "
+"same place at the end of the argument list"
+msgstr ""
+"argumenty %s (%s) po %s w ogólnej funkcji muszą pojawić się w metodzie w tym "
+"samym miejscu na końcu listy argumentów"
 
 #. R/Methods.R: gettextf("%s dispatches internally;  methods can be defined, but the generic function is implicit, and cannot be changed.",     sQuote(name))
 #: R/Methods.R:0
@@ -278,6 +287,11 @@ msgstr ""
 "Wszystkie nazwy %s muszą być niepuste w:\n"
 "(%s)"
 
+#. R/RClassUtils.R: message("Also defined by ", paste(sQuote(pkgs[-1]), collapse = " "))
+#: R/RClassUtils.R:0
+msgid "Also defined by"
+msgstr "Również zdefiniowane przez"
+
 #. R/show.R: gettextf("An object of class %s", dQuote(class(object)))
 #: R/show.R:0
 msgid "An object of class %s"
@@ -371,7 +385,7 @@ msgstr ""
 "Dla funkcji %s, sygnatura %s: argument w definicji metody zmienił się z (%s) "
 "na (%s)"
 
-#. R/RClassUtils.R: gettextf("Found more than one class \"%s\" in cache; using the first, from namespace '%s'",     name, pkgs[1])
+#. R/RClassUtils.R: gettextf("Found more than one class \"%s\" in cache; using the first, from namespace '%s'",     value[[1]]@className, pkgs[1])
 #: R/RClassUtils.R:0
 msgid ""
 "Found more than one class \"%s\" in cache; using the first, from namespace "
@@ -726,15 +740,6 @@ msgstr ""
 msgid "arguments 'names' and 'signature' must have the same length"
 msgstr "argumenty 'names' oraz 'signature' muszą posiadać tę samą długość"
 
-#. R/RMethodUtils.R: gettextf("arguments (%s) after '...' in the generic must appear in the method, in the same place at the end of the argument list",     paste(trailingArgs, collapse = ", "))
-#: R/RMethodUtils.R:0
-msgid ""
-"arguments (%s) after '...' in the generic must appear in the method, in the "
-"same place at the end of the argument list"
-msgstr ""
-"argumenty (%s) po '...' w ogólnej funkcji muszą pojawić się w metodzie w tym "
-"samym miejscu na końcu listy argumentów"
-
 #. R/refClass.R: stop("arguments must all be character string names of fields")
 #: R/refClass.R:0
 msgid "arguments must all be character string names of fields"
@@ -831,7 +836,7 @@ msgstr "nie można znaleźć środowiska odpowiadającego nazwie pakietu '%s'"
 msgid "cannot have more than one unnamed argument as environment"
 msgstr "nie można mieć więcej niż jeden nienazwany argument jako środowisko"
 
-#. R/trace.R: gettextf("cannot insert methods for these functions (methods table not found in source): %s",     paste("\"", methods[notThere], "\"", sep = "", collapse = ", "))
+#. R/trace.R: gettextf("cannot insert methods for these functions (methods table not found in source): %s",     paste0("\"", methods[notThere], "\"", collapse = ", "))
 #: R/trace.R:0
 msgid ""
 "cannot insert methods for these functions (methods table not found in "
@@ -840,7 +845,7 @@ msgstr ""
 "nie można wstawić metod dla tych funkcji (tablica metod nie została "
 "znaleziona w źródle): %s"
 
-#. R/trace.R: gettextf("cannot insert these (not found in source): %s", paste("\"",     functions[notThere], "\"", sep = "", collapse = ", "))
+#. R/trace.R: gettextf("cannot insert these (not found in source): %s", paste0("\"",     functions[notThere], "\"", collapse = ", "))
 #: R/trace.R:0
 msgid "cannot insert these (not found in source): %s"
 msgstr "nie można ich wstawić (nie znaleziono w źródle): %s"
@@ -1627,6 +1632,15 @@ msgid ""
 "methods may not be defined for primitive function %s in this version of R"
 msgstr ""
 "metody nie mogą być zdefiniowane dla prymitywnej funkcji %s w tej wersji R"
+
+#. R/Defunct.R: stop("methods:::bind_activation() is defunct;\n rather provide methods for cbind2() / rbind2()")
+#: R/Defunct.R:0
+msgid ""
+"methods:::bind_activation() is defunct;\n"
+" rather provide methods for cbind2() / rbind2()"
+msgstr ""
+"'methods:::bind_activation()' jest przestarzałe;\n"
+" dostarcz raczej metod dla cbind2() / rbind2()"
 
 #. R/RMethodUtils.R: gettextf("missing function for load action: %s", what)
 #: R/RMethodUtils.R:0

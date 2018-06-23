@@ -25,7 +25,7 @@ Axis(x = NULL, at = NULL, \dots, side, labels = NULL)
     tickpoints. If this is specified as a character or expression
     vector, \code{at} should be supplied and they should be the same
     length.}
-  \item{\dots}{Arguments to be passed to methods and perhaps then to
+  \item{\dots}{arguments to be passed to methods and perhaps then to
     \code{\link{axis}}.}
 }
 \value{
@@ -55,6 +55,7 @@ Axis(x = NULL, at = NULL, \dots, side, labels = NULL)
   \code{\link{axis.POSIXct}}).
 }
 \seealso{
-  \code{\link{axis}}.
+  \code{\link{axis}} (which is eventually called from all \code{Axis()}
+  methods in package \pkg{graphics}.
 }
 \keyword{aplot}

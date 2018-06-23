@@ -463,7 +463,7 @@ standard, RFC 5322, allows periods but RFC 2822 did not.)
 Both @samp{Author} and @samp{Maintainer} fields can be omitted if a
 suitable @samp{Authors@@R} field is given.  This field can be used to
 provide a refined and machine-readable description of the package
-``authors'' (in particular specifying their precise @emph{roles}), via
+``authors'' (in particular specifying their precise @emph{roles}), @emph{via}
 suitable @R{} code. It should create an object of class @code{"person"},
 by either a call to @code{person} or a series of calls (one per
 ``author'') concatenated by @code{c()}: see the example
@@ -820,7 +820,7 @@ the current package when @code{library} or @code{require} is called.
 Each package name may be optionally followed by a comment in parentheses
 specifying a version requirement.  The comment should contain a
 comparison operator, whitespace and a valid version number,
-e.g. @samp{MASS (>= 3.1-20)}.
+e.g.@: @samp{MASS (>= 3.1-20)}.
 
 The @samp{Depends} field can also specify a dependence on a certain
 version of @R{} --- e.g., if the package works only with @R{}
@@ -1108,7 +1108,7 @@ be readable in e.g.@: a UTF-8 locale.  Non-@acronym{ASCII} characters in
 object names will normally@footnote{This is true for OSes which
 implement the @samp{C} locale: Windows' idea of the @samp{C} locale uses
 the WinAnsi charset.} fail when the package is installed.  Any byte will
-be allowed in a quoted character string but @code{\uxxxx} escapes should
+be allowed in a quoted character string but @samp{\uxxxx} escapes should
 be used for non-@acronym{ASCII} characters.  However,
 non-@acronym{ASCII} character strings may not be usable in some locales
 and may display incorrectly in others.
@@ -2143,10 +2143,11 @@ extended-precision arithmetic which is the default for the main process.
 @c mingw64-public, 2015-02-02.
 @c https://stackoverflow.com/questions/2553725/is-the-fpu-control-word-setting-per-thread-or-per-process
 
-Calling any of the @R{} API from threaded code is `for experts only':
-they will need to read the source code to determine if it is
-thread-safe.  In particular, code which makes use of the stack-checking
-mechanism must not be called from threaded code.
+Calling any of the @R{} API from threaded code is `for experts only' and
+strongly discouraged. Many functions in the @R{} API modify internal
+@R{} data structures and might corrupt these data structures if called
+simultaneously from multiple threads. Most @R{} API functions can signal
+errors, which must only happen on the @R{} main thread.
 
 Packages are not standard-alone programs, and an @R{} process could
 contain more than one OpenMP-enabled package as well as other components
@@ -2159,7 +2160,7 @@ first level.  The correctness of the detected number of `CPUs' and the
 assumption that the @R{} process is entitled to use them all are both
 dubious assumptions.  The best way to limit resources is to limit the
 overall number of threads available to OpenMP in the @R{} process: this
-can be done via environment variable @env{OMP_THREAD_LIMIT}, where
+can be done @emph{via} environment variable @env{OMP_THREAD_LIMIT}, where
 implemented.@footnote{Which it was at the time of writing with GCC,
 Oracle, Intel and Clang compilers.}  Alternatively, the
 number of threads per region can be limited by the environment variable
@@ -3418,8 +3419,8 @@ the package.  If you do supply a @file{inst/doc/index.html} file it
 should contain relative links only to files under the installed
 @file{doc} directory, or perhaps (not really an index) to @HTML{} help
 files or to the @file{DESCRIPTION} file, and be valid @HTML{} as
-confirmed via the @uref{https://validator.w3.org, W3C Markup Validation
-Service} or @uref{https://validator.nu/, Validator.nu}.
+confirmed @emph{via} the @uref{https://validator.w3.org, W3C Markup
+Validation Service} or @uref{https://validator.nu/, Validator.nu}.
 
 Sweave/Stangle allows the document to specify the @code{split=TRUE}
 option to create a single @R{} file for each code chunk: this will not
@@ -3469,7 +3470,7 @@ need to be declared to @LaTeX{} via a line like
 @end example
 @noindent
 (It is also possible to use the more recent @samp{inputenx} @LaTeX{}
-package.) For files where this line is not needed (e.g. chapters
+package.) For files where this line is not needed (e.g.@: chapters
 included within the body of a larger document, or non-Sweave
 vignettes), the encoding may be declared using a comment like
 @example
@@ -3798,7 +3799,7 @@ These hooks are often used incorrectly.  People forget to export
 @code{.Last.lib}.   Compiled code should be loaded in @code{.onLoad} (or
 @emph{via} a @code{useDynLb} directive: see below) and unloaded in
 @code{.onUnload}.  Do remember that a package's namespace can be loaded
-without the namespace being attached (e.g. by @code{pkgname::fun}) and
+without the namespace being attached (e.g.@: by @code{pkgname::fun}) and
 that a package can be detached and re-attached whilst its namespace
 remains loaded.
 
@@ -4583,29 +4584,34 @@ Make sure that any version requirement for Java code is both declared in
 the @samp{SystemRequirements} field and tested at runtime (not least as
 the Java installation when the package is installed might not be the
 same as when the package is run and will not be for binary packages).
-Java 8 is available for fewer platforms than Java 7, and Java 9 for
+Java 8 is available for fewer platforms than Java 7, and Java 9/10 for
 fewer still (at the time of writing, only @cputype{x86_64} Linux, macOS,
 64-bit Windows and 64-bit Sparc Solaris from Oracle).
 
 When specifying a minimum Java version please use the official version
 names, which are (confusingly)
 @example
-1.1 1.2 1.3 1.4 5.0 6 7 8 9 10
+1.1 1.2 1.3 1.4 5.0 6 7 8 9 10 11
 @end example
 @noindent
-and supposedly will in 2018 move to a year.month scheme such as @samp{18.9}.
+and as from 2018 a year.month scheme such as @samp{18.3} is also in use.
 
-A suitable test for packages using @CRANpkg{rJava} would be something like
+A suitable test Java at least version 8 for packages using
+@CRANpkg{rJava} would be something like
 @example
 .jinit()
 jv <- .jcall("java/lang/System", "S", "getProperty", "java.runtime.version")
-if(substr(jv, 1L, 1L) == "1") @{
+if(substr(jv, 1L, 2L) == "1.") @{
   jvn <- as.numeric(paste0(strsplit(jv, "[.]")[[1L]][1:2], collapse = "."))
-  if(jvn < 1.8) stop("Java 8 is needed for this package but not available")
+  if(jvn < 1.8) stop("Java >= 8 is needed for this package but not available")
 @}
 @end example
 @noindent
-(Java 9 changed the format of this string.)
+Java 9 changed the format of this string (which used to be something
+like @samp{1.8.0_162-b12}); Java 10 gives @code{jv} as @samp{10+46}:
+whereas Java 10.0.1 gives
+@samp{10.0.1+10}. (@uref{http://openjdk.java.net/jeps/322} details the
+current scheme.)
 
 Note too that the compiler used to produce a @code{jar} can impose a minimum
 Java version, often resulting in an arcane message like
@@ -4617,13 +4623,15 @@ java.lang.UnsupportedClassVersionError: ... Unsupported major.minor version 52.0
 (Where @uref{https://en.wikipedia.org/@/wiki/@/Java_class_file} maps
 class-file version numbers to Java versions.)  Compile with something
 like @command{javac -target 1.6} to ensure this is avoided. (As from
-Java 8, @command{javac} defaults to compiling for Java 8.)  Note this
-also applies to packages distributing compiled Java code (such as
-@pkg{jgraph}) produced by others, so their requirements need to be
-checked (they are often not documented accurately) and accounted for.
-The class-file version can in principle be checked @emph{via}
-command-line utility @command{javap}, if necessary after extracting the
-@file{.class} files from a @file{.jar} archive.
+Java 8, @command{javac} defaults to compiling for Java 8.  Versions as
+old as @samp{1.6} are already deprecated and will give a warning with
+Java 10's @command{javac}.)  Note this also applies to packages
+distributing (or even downloading) compiled Java code produced by
+others, so their requirements need to be checked (they are often not
+documented accurately) and accounted for.  It should be possible to
+check the class-file version @emph{via} command-line utility
+@command{javap}, if necessary after extracting the @file{.class} files
+from a @file{.jar} archive.
 
 Some packages have stated a requirement on a particular JDK, but a
 package should only be requiring a JRE unless providing its own Java
@@ -4872,12 +4880,12 @@ finding non-@acronym{ASCII} bytes in files.
 
 There is a portable way to have arbitrary text in character strings
 (only) in your @R{} code, which is to supply them in Unicode as
-@code{\uxxxx} escapes.  If there are any characters not in the current
+@samp{\uxxxx} escapes.  If there are any characters not in the current
 encoding the parser will encode the character string as UTF-8 and mark
 it as such.  This applies also to character strings in datasets: they
-can be prepared using @code{\uxxxx} escapes or encoded in UTF-8 in a
-UTF-8 locale, or even converted to UTF-8 via @samp{iconv()}.  If you do
-this, make sure you have @samp{R (>= 2.10)} (or later) in the
+can be prepared using @samp{\uxxxx} escapes or encoded in UTF-8 in a
+UTF-8 locale, or even converted to UTF-8 @emph{via} @code{iconv()}.  If
+you do this, make sure you have @samp{R (>= 2.10)} (or later) in the
 @samp{Depends} field of the @file{DESCRIPTION} file.
 
 @R{} sessions running in non-UTF-8 locales will if possible re-encode
@@ -5623,9 +5631,9 @@ information which can be provided.
 
 In case a bibentry contains @LaTeX{} markup (e.g., for accented
 characters or mathematical symbols), it may be necessary to provide a
-text representation to be used for printing via the @code{textVersion}
-argument to @code{bibentry}.  E.g., earlier versions of
-@CRANpkg{nlme} additionally used
+text representation to be used for printing @emph{via} the
+@code{textVersion} argument to @code{bibentry}.  E.g., earlier versions
+of @CRANpkg{nlme} additionally used
 
 @example
          textVersion =
@@ -5811,8 +5819,8 @@ technical discussion of current @file{Rd} syntax, see
 
 @file{Rd} files consist of four types of text input.  The most common
 is @LaTeX{}-like, with the backslash used as a prefix on markup
-(e.g. @code{\alias}), and braces used to indicate arguments
-(e.g. @code{@{load@}}).  The least common type of text is `verbatim'
+(e.g.@: @code{\alias}), and braces used to indicate arguments
+(e.g.@: @code{@{load@}}).  The least common type of text is `verbatim'
 text, where no markup other than the comment marker (@code{%}) is
 processed.  There is also a rare variant of `verbatim' text
 (used in @code{\eqn}, @code{\deqn}, @code{\figure},
@@ -5820,8 +5828,8 @@ and @code{\newcommand}) where comment markers need not be escaped.
 The final type is @R{}-like, intended for @R{} code, but allowing some
 embedded macros.  Quoted strings within @R{}-like text are handled
 specially: regular character escapes such as @code{\n} may be entered
-as-is.  Only markup starting with @code{\l} (e.g.  @code{\link}) or
-@code{\v} (e.g. @code{\var}) will be recognized within quoted strings.
+as-is.  Only markup starting with @code{\l} (e.g.@: @code{\link}) or
+@code{\v} (e.g.@: @code{\var}) will be recognized within quoted strings.
 The rarely used vertical tab @code{\v} must be entered as @code{\\v}.
 
 Each macro defines the input type for its argument.  For example, the
@@ -6155,7 +6163,7 @@ line) to mark code that should be run by @code{example()} but not by
 @code{R CMD check} (by default: the option @option{--run-donttest} can
 be used).  This should be needed only occasionally but can be used for
 code which might fail in circumstances that are hard to test for, for
-example in some locales.  (Use e.g. @code{capabilities()} or
+example in some locales.  (Use e.g.@: @code{capabilities()} or
 @code{nzchar(Sys.which("someprogram"))} to test for features needed in
 the examples wherever possible, and you can also use @code{try()} or
 @code{tryCatch()}.  Use @code{interactive()} to condition examples which
@@ -6387,7 +6395,7 @@ The @code{\subsection} macro takes arguments in the same format as
 @code{\section}, but is used within a section, so it may be used to
 nest subsections within sections or other subsections.  There is no
 predefined limit on the nesting level, but formatting is not designed
-for more than 3 levels (i.e. subsections within subsections within
+for more than 3 levels (i.e.@: subsections within subsections within
 sections).
 
 Note that additional named sections are always inserted at a fixed
@@ -6995,7 +7003,7 @@ The macro is run when displaying the help page.
 Conditionals such as @code{#ifdef}
 (@pxref{Platform-specific sections}) are applied after the
 @code{build} macros but before the @code{install} macros.  In some
-situations (e.g. installing directly from a source directory without a
+situations (e.g.@: installing directly from a source directory without a
 tarball, or building a binary package) the above description is not
 literally accurate, but authors can rely on the sequence being
 @code{build}, @code{#ifdef}, @code{install}, @code{render}, with all
@@ -7189,7 +7197,7 @@ including the information in the @file{DESCRIPTION} files.
 @findex R CMD Sweave
 @findex R CMD Stangle
 @code{R CMD Sweave} and @code{R CMD Stangle} process vignette-like
-documentation files (e.g. Sweave vignettes with extension
+documentation files (e.g.@: Sweave vignettes with extension
 @samp{.Snw} or @samp{.Rnw}, or other non-Sweave vignettes).
 @code{R CMD Stangle} is used to extract the @R{} code fragments.
 
@@ -7725,7 +7733,7 @@ dominated, so those calls were cached for @R{} 3.0.3: the time spent in
 @code{no-vmlinux} (the kernel) was reduced dramatically.
 
 On platforms which support it, call graphs can be produced by
-@command{opcontrol --callgraph} if collected via @command{operf
+@command{opcontrol --callgraph} if collected @emph{via} @command{operf
 --callgraph}.
 
 The profiling data is by default stored in sub-directory
@@ -8699,7 +8707,7 @@ where @code{float-divide-by-zero} is not desirable for @R{} uses and
 @c and @code{vptr} checks produced many warnings on GCC's own C++ headers,
 @c so should be disabled.
 
-From GCC 8 @code{signed-integer-overflow} will no longer be a default
+From GCC 8 @code{signed-integer-overflow} is no longer be a default
 part of @option{-fsanitize=undefined}, but can be specified separately.
 It adds options @option{-fsanitize=pointer-overflow} an
 @option{-fsanitize=builtin}.
@@ -9302,10 +9310,10 @@ integer code: similarly FORTRAN code that wants to generate diagnostic
 messages can pass an integer code to a C or @R{} wrapper which will
 convert it to a character string.
 
-It is possible to pass some @R{} objects other than atomic vectors via
+It is possible to pass some @R{} objects other than atomic vectors @emph{via}
 @code{.C}, but this is only supported for historical compatibility: use
 the @code{.Call} or @code{.External} interfaces for such objects.  Any
-C/C++ code that includes @file{Rinternals.h} should be called via
+C/C++ code that includes @file{Rinternals.h} should be called @emph{via}
 @code{.Call} or @code{.External}.
 
 @node dyn.load and dyn.unload, Registering native routines, Interface functions .C and .Fortran, System and foreign language interfaces
@@ -11256,8 +11264,8 @@ rho, inherits = TRUE)}.
 @subsection Some convenience functions
 
 Some operations are done so frequently that there are convenience
-functions to handle them. (All these are provided via the header file
-@file{Rinternals.h}.)
+functions to handle them. (All these are provided @emph{via} the header
+file @file{Rinternals.h}.)
 
 Suppose we wanted to pass a single logical argument
 @code{ignore_quotes}: we could use
@@ -12400,22 +12408,31 @@ connection if it is no longer is use.
 
 The vector accessors like @code{REAL} and @code{INTEGER} and
 @code{VECTOR_ELT} are @emph{functions} when used in @R{} extensions.
-(For efficiency they are macros when used in the @R{} source code, apart
-from @code{SET_STRING_ELT} and @code{SET_VECTOR_ELT} which are always
-functions.)
+(For efficiency they may be macros or inline functions when used in
+the @R{} source code, apart from @code{SET_STRING_ELT} and
+@code{SET_VECTOR_ELT} which are always functions.) 
 
 The accessor functions check that they are being used on an appropriate
 type of @code{SEXP}.
 
-If efficiency is essential, the macro versions of the accessors can be
+If efficiency is essential, the internal versions of the accessors can be
 obtained by defining @samp{USE_RINTERNALS} before including
 @file{Rinternals.h}.  If you find it necessary to do so, please do test
 that your code compiles without @samp{USE_RINTERNALS} defined, as this
 provides a stricter test that the accessors have been used correctly.
+Also be prepared to adjust your code should @R{} internals change.
 Note too that the use of @samp{USE_RINTERNALS} when the header is
 included in C++ code is not supported: doing so may use C99 features
 which are not necessarily supported by the C++ compiler.  Nor is use
 with @file{Rdefines.h} supported.
+
+The accessor functions, and other functions in the @R{} API, are also
+subject to change to support the @samp{ALTREP} project
+(@uref{https://svn.r-project.org/R/branches/ALTREP/ALTREP.html}). Code
+that does not define @samp{USE_RINTERNALS} should not be affected by
+these changes, but code that does define @samp{USE_RINTERNALS} may need
+to be adjusted.
+
 
 @node Character encoding issues,  , Vector accessor functions, System and foreign language interfaces
 @section Character encoding issues
@@ -14567,11 +14584,11 @@ R CMD make
 R CMD myfe
 @end example
 
-Even though not recommended, @code{$@{R_HOME@}} may contain spaces.  In that
-case, it cannot be passed as an argument to @code{include} in the makefile. 
-Instead, one can instruct @command{make} using the @code{-f} option to
-include @file{Makeconf}, for example via recursive invocation of
-@command{make}, see @ref{Writing portable packages}.
+Even though not recommended, @code{$@{R_HOME@}} may contain spaces.  In
+that case, it cannot be passed as an argument to @code{include} in the
+makefile.  Instead, one can instruct @command{make} using the @code{-f}
+option to include @file{Makeconf}, for example @emph{via} recursive
+invocation of @command{make}, see @ref{Writing portable packages}.
 
 @example
 all:

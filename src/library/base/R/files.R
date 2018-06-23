@@ -1,7 +1,7 @@
 #  File src/library/base/R/files.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -122,6 +122,15 @@ file.copy <- function(from, to,
     if(nt > nf) from <- rep_len(from, length.out = nt)
     okay <- file.exists(from)
     if (!overwrite) okay[file.exists(to)] <- FALSE
+    else {
+        dirtofile <- dir.exists(from[okay]) & file.exists(to[okay]) & !dir.exists(to[okay])
+        if (any(dirtofile)) {
+            warning("cannot overwrite a non-directory with a directory")
+            okay[okay] <- !dirtofile
+        }
+        # note: could also warn whenever "from" is a directory as it will
+        # be copied into an empty file, or support creating of directories
+    }
     if (any(from[okay] %in% to[okay]))
         stop("file can not be copied both 'from' and 'to'")
     if (any(okay)) { # care: file.create could fail but file.append work.
@@ -238,9 +247,9 @@ normalizePath <- function(path, winslash = "\\", mustWork = NA)
 
 Sys.setFileTime <- function(path, time)
 {
-    if (!is.character(path) || length(path) != 1L)
+    if (!is.character(path))
         stop("invalid 'path' argument")
     time <- as.POSIXct(time)
-    if (is.na(time))  stop("invalid 'time' argument")
+    if (anyNA(time))  stop("invalid 'time' argument")
     .Internal(setFileTime(path, time))
 }

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.4.0\n"
+"Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-04 08:15\n"
+"POT-Creation-Date: 2018-04-01 16:26\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.8.7\n"
+"X-Generator: Poedit 2.0.4\n"
 
 #. R/image.R: gettextf("%s can only be used with a regular grid", sQuote("useRaster = TRUE"))
 #: R/image.R:0
@@ -45,6 +45,11 @@ msgstr "argument 'at' musi mieć długość równą liczbie %d grup"
 #: R/boxplot.R:0
 msgid "'at' must have same length as 'z$n', i.e. %d"
 msgstr "'at' musi mieć tę samą długość co 'z$n', tzn. %d"
+
+#. R/hist.R: gettextf("'breaks = %g' is too large and set to 1e6", breaks)
+#: R/hist.R:0
+msgid "'breaks = %g' is too large and set to 1e6"
+msgstr "'breaks = %g' jest zbyt duże i zostało ustawione na 1e6"
 
 #. R/hist.R: stop("'breaks' are not strictly increasing")
 #: R/hist.R:0
@@ -109,10 +114,26 @@ msgstr "'height' musi być wektorem lub macierzą"
 msgid "'include.lowest' ignored as 'breaks' is not a vector"
 msgstr "'include.lowest' zignorowano ponieważ 'breaks' nie jest wektorem"
 
+#. R/contour.R: stop("'labels' is length zero.  Use 'drawlabels = FALSE' to suppress labels.")
+#: R/contour.R:0
+msgid "'labels' is length zero.  Use 'drawlabels = FALSE' to suppress labels."
+msgstr ""
+"argument 'labels' ma wartość zero. Użyj 'drawlabels = FALSE' aby ukryć "
+"etykiety."
+
 #. R/legend.R: stop("'legend' is of length 0")
 #: R/legend.R:0
 msgid "'legend' is of length 0"
 msgstr "argument 'legend' ma długość 0"
+
+#. R/arrows.R: warning("'length', 'angle', or 'code' greater than length 1; values after the first are ignored")
+#: R/arrows.R:0
+msgid ""
+"'length', 'angle', or 'code' greater than length 1; values after the first "
+"are ignored"
+msgstr ""
+"argument 'length', 'angle', lub 'code' mają długość większą niż 1; wszystkie "
+"wartości oprócz pierwszych zostaną zignorowane"
 
 #. R/stars.R: stop("'locations' must be a 2-column matrix.")
 #: R/stars.R:0

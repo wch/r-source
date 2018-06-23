@@ -341,8 +341,9 @@ inRbuildignore <- function(files, pkgdir) {
                     tocopy <- c(vigns$docs, vigns$outputs, unlist(vigns$sources))
                     copied <- file.copy(tocopy, doc_dir, copy.date = TRUE)
                     if (!all(copied)) {
-                    	warning(sQuote("inst/doc"),
-                    	        ngettext(sum(!copied), " file\n", " files\n"),
+                    	warning(sprintf(ngettext(sum(!copied),
+                                                 "%s file\n", "%s files\n"),
+                                        sQuote("inst/doc")),
                     	        strwrap(paste(sQuote(basename(tocopy[!copied])), collapse=", "),
                     	                indent = 4, exdent = 2),
 			        "\n  ignored as vignettes have been rebuilt.",
@@ -386,8 +387,10 @@ inRbuildignore <- function(files, pkgdir) {
 
 		## Save the list
 		dir.create("build", showWarnings = FALSE)
+		## version = 2L for maximal back-compatibility
 		saveRDS(vignetteIndex,
-			file = vignette_index_path)
+			file = vignette_index_path,
+			version = 2L)
             }
         } else {
             fv <- file.path("build", "vignette.rds")
@@ -417,8 +420,8 @@ inRbuildignore <- function(files, pkgdir) {
                 gs_quality <- "none"
             }
             qpdf <-
-                ifelse(compact_vignettes %in% c("qpdf", "gs+qpdf", "both"),
-                       Sys.which(Sys.getenv("R_QPDF", "qpdf")), "")
+                if(compact_vignettes %in% c("qpdf", "gs+qpdf", "both"))
+                    Sys.which(Sys.getenv("R_QPDF", "qpdf")) else ""
             res <- compactPDF(pdfs, qpdf = qpdf,
                               gs_cmd = gs_cmd, gs_quality = gs_quality)
             res <- format(res, diff = 1e5)
@@ -596,7 +599,8 @@ inRbuildignore <- function(files, pkgdir) {
 	    messageLog(Log, "saving partial Rd database")
 	    partial <- db[containsBuildSexprs]
 	    dir.create("build", showWarnings = FALSE)
-	    saveRDS(partial, build_partial_Rd_db_path)
+	    ## version = 2L for maximal back-compatibility
+	    saveRDS(partial, build_partial_Rd_db_path, version = 2L)
 	}
 	needRefman <- manual &&
             parse_description_field(desc, "BuildManual", TRUE) &&
@@ -764,10 +768,12 @@ inRbuildignore <- function(files, pkgdir) {
             lapply(Rs, function(x){
                 envir <- new.env(hash = TRUE)
                 sys.source(x, chdir = TRUE, envir = envir)
+                ## version = 2L for maximal back-compatibility
                 save(list = ls(envir, all.names = TRUE),
                      file = sub("\\.[Rr]$", ".rda", x),
                      compress = TRUE, compression_level = 9,
-                     envir = envir)
+                     envir = envir,
+                     version = 2L)
                 resaved <<- c(resaved, x)
             })
             printLog(Log,
@@ -853,7 +859,7 @@ inRbuildignore <- function(files, pkgdir) {
                 R.version[["major"]], ".",  R.version[["minor"]],
                 " (r", R.version[["svn rev"]], ")\n", sep = "")
             cat("",
-                "Copyright (C) 1997-2016 The R Core Team.",
+                .R_copyright_msg(1997),
                 "This is free software; see the GNU General Public License version 2",
                 "or later for copying conditions.  There is NO warranty.",
                 sep = "\n")

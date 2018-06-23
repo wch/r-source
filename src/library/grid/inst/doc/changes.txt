@@ -1,4 +1,10 @@
 
+Changes from grid_3.6.* to grid_3.6.0:
+-------------------------------------
+
+1.  New functions deviceLoc() and deviceDim().
+
+
 Changes from grid_3.4.* to grid_3.5.0:
 -------------------------------------
 

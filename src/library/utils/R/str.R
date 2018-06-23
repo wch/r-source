@@ -1,7 +1,7 @@
 #  File src/library/utils/R/str.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -162,8 +162,17 @@ str.default <-
         vec.len <- 0
     }
 
-    ## x: character
-    maybe_truncate <- function(x, nx = nchar(x, type="w"), S = "\"", ch = "| __truncated__")
+    nchar.w <- function(x) nchar(x, type="w", allowNA=TRUE)
+    ncharN  <- function(x) {
+	r <- nchar(x, type="w", allowNA=TRUE)
+	if(anyNA(r)) {
+	    iN <- is.na(r)
+	    r[iN] <- nchar(x[iN], type="bytes")
+	}
+	r
+    }
+    ## x: character ; using "global" 'nchar.max'
+    maybe_truncate <- function(x, nx = nchar.w(x), S = "\"", ch = "| __truncated__")
     {
 	ok <- if(anyNA(nx)) !is.na(nx) else TRUE
 	if(any(lrg <- ok & nx > nchar.max)) {
@@ -316,7 +325,7 @@ str.default <-
 	    if (is.na(max.level) || nest.lev < max.level) {
 		nam.ob <-
 		    if(is.null(nam.ob <- names(object))) rep.int("", le)
-		    else { ncn <- nchar(nam.ob, type="w")
+		    else { ncn <- nchar.w(nam.ob)
 			   if(anyNA(ncn)) ## slower, but correct:
 			      ncn <- vapply(nam.ob, format.info, 0L)
 			   format(nam.ob, width = max(ncn), justify="left")
@@ -351,7 +360,7 @@ str.default <-
 	    object <- unclass(object)
 	    if(nl) {
 		## as from 2.1.0, quotes are included ==> '-2':
-		lenl <- cumsum(3 + (nchar(lev.att, type="w") - 2))# level space
+		lenl <- cumsum(3 + (ncharN(lev.att) - 2))# level space
 		ml <- if(n.l <= 1 || lenl[n.l] <= 13)
 		    n.l else which.max(lenl > 13)
 		lev.att <- maybe_truncate(lev.att[seq_len(ml)])
@@ -548,18 +557,21 @@ str.default <-
 	    ## FIXME: need combined  encode.and.trim.string(object, m)  with O(m) !
 	    encObj <- tryCatch(strtrim(object, trimWidth), error=function(e) NULL)
 	    encObj <-
-		if(is.null(encObj)) # must first encodeString() before we can trim
-		    strtrim(encodeString(object, quote= '"', na.encode= FALSE),
-			    trimWidth)
+		if(is.null(encObj)) { # must first encodeString() before we can trim
+		    e <- encodeString(object, quote= '"', na.encode= FALSE)
+		    r <- tryCatch(strtrim(e, trimWidth), error=function(.) NULL)
+		    ## What else can we try?
+		    if(is.null(r)) e else r
+		}
 		else
 		    encodeString(encObj, quote= '"', na.encode= FALSE)
 	    if(le > 0) ## truncate if LONG char:
 		encObj <- maybe_truncate(encObj)
 	    v.len <-
 		if(missing(vec.len)) {
-		    max(1,sum(cumsum(1 + if(le>0) nchar(encObj, type="w") else 0) <
+		    max(1,sum(cumsum(1 + if(le>0) ncharN(encObj) else 0) <
 			      width - (4 + 5*nest.lev + nchar(str1, type="w"))))
-		}		      # '5*ne..' above is fudge factor
+		}	 	      # '5*ne..' above is fudge factor
 		else round(v.len)
 	    ile <- min(le, v.len)
 	    if(ile >= 1)

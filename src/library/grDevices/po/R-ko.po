@@ -1,26 +1,17 @@
 # Korean translation for R grDevices package
-# ./grDevices/po/R-ko.po
-#
-# Copyright (C) 1995-2016 The R Core Team
+# Copyright (C) 1995-2018 The R Core Team
 #
 # This file is distributed under the same license as the R grDevices package.
-# Maintained by Chel Hee Lee <chl948@mail.usask.ca>, 2008-2016.
-# Contact: Chel Hee Lee <gnustats@gmail.com>
-#
-# Notes:
-# Under development (unstable) starting from 11-APR-2016 for R-3.3.1 - QC: in progress
-# Freezed on 10-APR-2016 for R-3.3.0 - QC: PASS
-# Freezed on 30-MAR-2015 for R-3.2.0 - QC: PASS
-# Freezed on 06-FEB-2015 for R-3.1.3 - QC: PASS
+# Maintained by Chel Hee Lee <gnustats@gmail.com>, 2008-2018.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R-3.3.0\n"
+"Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
-"PO-Revision-Date: 2016-04-11 13:08-0600\n"
-"Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
-"Language-Team: Chel Hee Lee <chl948@mail.usask.ca>\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
+"PO-Revision-Date: 2018-04-09 12:06-0600\n"
+"Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
+"Language-Team: \n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -170,7 +161,8 @@ msgid "NOT changing %s"
 msgstr "%s를 변경하지 않습니다"
 
 msgid "argument 'append' is for back-compatibility and will be ignored"
-msgstr "'append'는 back-compatibility를 위한 것이므로 사용되지 않을 것입니다"
+msgstr ""
+"'append'는 back-compatibility를 위한 것이므로 사용되지 않을 것입니다"
 
 msgid "unknown family '%s'"
 msgstr "알 수 없는 페밀리 '%s'입니다"
@@ -215,7 +207,8 @@ msgid "font %s already in use"
 msgstr "폰트 %s는 이미 사용중입니다"
 
 msgid "invalid arguments in '%s' (must be font names)"
-msgstr "'%s'에 유효하지 않은 인자들이 있습니다 (반드시 폰트명이어야 합니다)"
+msgstr ""
+"'%s'에 유효하지 않은 인자들이 있습니다 (반드시 폰트명이어야 합니다)"
 
 msgid "unknown font"
 msgstr "알수없는 폰트입니다"
@@ -234,6 +227,9 @@ msgstr "올바른 출력형식(output format)이 아닙니다."
 
 msgid "status %d in running command '%s'"
 msgstr "명령어 '%2$s'를 실행하던 중 상태 %1$d가 되었습니다"
+
+msgid "failed to add more ticks; 'min.n' too large?"
+msgstr ""
 
 msgid "a raster matrix must be character, or numeric, or logical"
 msgstr "래스터 행렬은 반드시 문자, 또는 숫자, 또는 논리값이어야 합니다"
@@ -339,15 +335,18 @@ msgstr "유효하지 않은 Quartz 폰트이므로 반드시 4 문자열이어�
 
 msgid "invalid arguments in 'quartzFonts' (must be font names)"
 msgstr ""
-"'quartzFonts'에 유효하지 않은 인자들이 있습니다 (반드시 폰트명이어야 합니다)"
+"'quartzFonts'에 유효하지 않은 인자들이 있습니다 (반드시 폰트명이어야 합"
+"니다)"
 
 msgid "invalid arguments in 'quartzFonts' (need named args)"
 msgstr ""
-"'quartzFonts'에 유효하지 않은 인자들이 있습니다 (named args가 필요합니다)"
+"'quartzFonts'에 유효하지 않은 인자들이 있습니다 (named args가 필요합니"
+"다)"
 
 msgid "cairo-based types are not supported on this build - using \"Xlib\""
 msgstr ""
-"cairo-기반의 타입들은 현재 빌드에서 지원하지 않습니다 - \"Xlib\"를 이용하세요"
+"cairo-기반의 타입들은 현재 빌드에서 지원하지 않습니다 - \"Xlib\"를 이용"
+"하세요"
 
 msgid "unknown family for X11(type = \"XLib\")"
 msgstr "X11(type = \"XLib\")에 알 수 없는 페밀리입니다"
@@ -357,12 +356,13 @@ msgstr "유효하지 않은 X11 폰트 지정입니다: "
 
 msgid "invalid arguments in 'X11Fonts' (must be font names)"
 msgstr ""
-"'X11Fonts'에 유효하지 않은 인자들이 있습니다 (반드시 폰트명이어야 합니다)"
+"'X11Fonts'에 유효하지 않은 인자들이 있습니다 (반드시 폰트명이어야 합니"
+"다)"
 
 msgid "invalid arguments in 'X11Fonts' (need named args)"
 msgstr ""
-"'X11Fonts'에 유효하지 않은 인자들이 있습니다 (반드시 named args를 필요로 합니"
-"다)"
+"'X11Fonts'에 유효하지 않은 인자들이 있습니다 (반드시 named args를 필요"
+"로 합니다)"
 
 msgid "no such device"
 msgstr "그런 장치가 없습니다"
@@ -389,11 +389,13 @@ msgid "subscript out of range"
 msgstr "첨자가 범위외에 있습니다"
 
 msgid "invalid Windows font:  must be a single font family name"
-msgstr "유효한 Windows 폰트가 아닙니다: 반드시 싱글폰트 페밀리명이어야 합니다"
+msgstr ""
+"유효한 Windows 폰트가 아닙니다: 반드시 싱글폰트 페밀리명이어야 합니다"
 
 msgid "invalid arguments in 'windowsFonts' (must be font names)"
 msgstr ""
-"'windowsFonts'내에 유효하지 않은 인자들입니다 (반드시 폰트명이어야 합니다)"
+"'windowsFonts'내에 유효하지 않은 인자들입니다 (반드시 폰트명이어야 합니"
+"다)"
 
 msgid "invalid arguments in 'windowsFonts' (need named args)"
 msgstr ""
@@ -418,15 +420,3 @@ msgstr[0] ""
 msgid "%d z value <= 0 omitted from logarithmic plot"
 msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] ""
-
-#~ msgid "range too small for 'min.n'"
-#~ msgstr "'min.n'에 대한 범위가 너무 작습니다"
-
-#~ msgid "loading snapshot from a different session"
-#~ msgstr "다른 세션으로부터 스냅샷을 로딩합니다"
-
-#~ msgid "sorry, 'gs' cannot be found"
-#~ msgstr "미안합니다, 'gs'를 찾을 수 없습니다"
-
-#~ msgid "loading snapshot from pre-3.0.0 R version"
-#~ msgstr "pre-3.0.0 R 버전으로부터 스냅샷을 로딩합니다"

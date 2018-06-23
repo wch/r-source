@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1 \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-01 10:28-0700\n"
+"POT-Creation-Date: 2018-03-29 07:06-0700\n"
 "PO-Revision-Date: 2005-06-02 16:10+0900 \n"
 "Last-Translator: Nobuo Funao \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -16,6 +16,16 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8 \n"
 "Content-Transfer-Encoding: 8bit \n"
 
-#: splines.c:153
+#: splines.c:154
 msgid "'ord' must be a positive integer"
 msgstr " 'ord' は正の値でなければいけません "
+
+#: splines.c:222
+#, c-format
+msgid "derivs = %d >= ord = %d, but should be in {0,..,ord-1}"
+msgstr ""
+
+#: splines.c:225
+#, c-format
+msgid "derivs[%d] = %d >= ord = %d, but should be in {0,..,ord-1}"
+msgstr ""

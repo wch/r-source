@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2017 The R Core Team
+ *  Copyright (C) 1998--2018 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1764,7 +1764,9 @@ SEXP attribute_hidden do_setlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
 	/* assume we can set LC_CTYPE iff we can set the rest */
 	if ((p = setlocale(LC_CTYPE, l))) {
 	    setlocale(LC_COLLATE, l);
-	    resetICUcollator();
+	    /* disable the collator when setting to C to take
+	       precedence over R_ICU_LOCALE */
+	    resetICUcollator(!strcmp(l, "C"));
 	    setlocale(LC_MONETARY, l);
 	    setlocale(LC_TIME, l);
 	    dt_invalidate_locale();
@@ -1774,10 +1776,15 @@ SEXP attribute_hidden do_setlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
 	break;
     }
     case 2:
+    {
+	const char *l = CHAR(STRING_ELT(locale, 0));
 	cat = LC_COLLATE;
-	p = setlocale(cat, CHAR(STRING_ELT(locale, 0)));
-	resetICUcollator();
+	p = setlocale(cat, l);
+	/* disable the collator when setting to C to take
+	   precedence over R_ICU_LOCALE */
+	resetICUcollator(!strcmp(l, "C"));
 	break;
+    }
     case 3:
 	cat = LC_CTYPE;
 	p = setlocale(cat, CHAR(STRING_ELT(locale, 0)));
@@ -2327,10 +2334,21 @@ static int do_copy(const wchar_t* from, const wchar_t* name, const wchar_t* to,
 	wsprintfW(dest, L"%ls%ls", to, name);
 	/* We could set the mode (only the 200 part matters) later */
 	res = _wmkdir(dest);
-	if (res && errno != EEXIST) {
-	    warning(_("problem creating directory %ls: %s"),
-		    dest, strerror(errno));
-	    return 1;
+	if (res) {
+	    if (errno == EEXIST) {
+		struct _stati64 dsb;
+		if (over && _wstati64(dest, &dsb) == 0 &&
+		   (dsb.st_mode & S_IFDIR) == 0) {
+
+		    warning(_("cannot overwrite non-directory %ls with directory %ls"),
+		            dest, this);
+		    return 1;
+		}
+	    } else {
+		warning(_("problem creating directory %ls: %s"),
+		          dest, strerror(errno));
+		return 1;
+	    }
 	}
 	// NB Windows' mkdir appears to require \ not /.
 	if ((dir = _wopendir(this)) != NULL) {
@@ -2385,8 +2403,10 @@ static int do_copy(const wchar_t* from, const wchar_t* name, const wchar_t* to,
 	  nfail++;
 	  goto copy_error;
 	}
-	if(fp1) fclose(fp1); fp1 = NULL;
-	if(fp2) fclose(fp2); fp2 = NULL;
+	if(fp1) fclose(fp1);
+	fp1 = NULL;
+	if(fp2) fclose(fp2);
+	fp2 = NULL;
 	/* FIXME: perhaps manipulate mode as we do in Sys.chmod? */
 	if(perms) _wchmod(dest, sb.st_mode & 0777);
 	if(dates) copyFileTime(this, dest);
@@ -2566,10 +2586,21 @@ static int do_copy(const char* from, const char* name, const char* to,
 	   we will fail to create files in that directory, so defer
 	   setting mode */
 	res = mkdir(dest, 0700);
-	if (res && errno != EEXIST) {
-	    warning(_("problem creating directory %s: %s"),
-		    this, strerror(errno));
-	    return 1;
+	if (res) {
+	    if (errno == EEXIST) {
+		struct stat dsb;
+		if (over && stat(dest, &dsb) == 0 &&
+		   (dsb.st_mode & S_IFDIR) == 0) {
+
+		    warning(_("cannot overwrite non-directory %s with directory %s"),
+		            dest, this);
+		    return 1;
+		}
+	    } else {
+		warning(_("problem creating directory %s: %s"),
+		        this, strerror(errno));
+		return 1;
+	    }
 	}
 	strcat(dest, "/");
 	if ((dir = opendir(this)) != NULL) {
@@ -2911,32 +2942,54 @@ SEXP attribute_hidden
 do_setFileTime(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
-    const char *fn = translateChar(STRING_ELT(CAR(args), 0));
-    double ftime = asReal(CADR(args));
+    const char *fn;
+    double ftime;
     int res;
+    R_xlen_t n, m;
+    SEXP paths, times, ans;
+    const void *vmax;
 
-#ifdef Win32
-    res  = winSetFileTime(fn, ftime);
-#elif defined(HAVE_UTIMENSAT)
-    struct timespec times[2];
+    paths = CAR(args);
+    if (!isString(paths))
+	error(_("invalid '%s' argument"), "path");
+    n = XLENGTH(paths);
+    PROTECT(times = coerceVector(CADR(args), REALSXP));
+    m = XLENGTH(times);
+    if (!m && n) error(_("'%s' must be of length at least one"), "time");
+    
+    PROTECT(ans = allocVector(LGLSXP, n));
+    vmax = vmaxget();
+    for(R_xlen_t i = 0; i < n; i++) {
+	fn = translateChar(STRING_ELT(paths, i));
+	ftime = REAL(times)[i % m];
+	#ifdef Win32
+	    res = winSetFileTime(fn, ftime);
+	#elif defined(HAVE_UTIMENSAT)
+	    struct timespec times[2];
 
-    times[0].tv_sec = times[1].tv_sec = (int)ftime;
-    times[0].tv_nsec = times[1].tv_nsec = (int)(1e9*(ftime - (int)ftime));
+	    times[0].tv_sec = times[1].tv_sec = (int)ftime;
+	    times[0].tv_nsec = times[1].tv_nsec = (int)(1e9*(ftime - (int)ftime));
 
-    res = utimensat(AT_FDCWD, fn, times, 0) == 0;
-#elif defined(HAVE_UTIMES)
-    struct timeval times[2];
+	    res = utimensat(AT_FDCWD, fn, times, 0) == 0;
+	#elif defined(HAVE_UTIMES)
+	    struct timeval times[2];
 
-    times[0].tv_sec = times[1].tv_sec = (int)ftime;
-    times[0].tv_usec = times[1].tv_usec = (int)(1e6*(ftime - (int)ftime));
-    res = utimes(fn, times) == 0;
-#elif defined(HAVE_UTIME)
-    struct utimbuf settime;
+	    times[0].tv_sec = times[1].tv_sec = (int)ftime;
+	    times[0].tv_usec = times[1].tv_usec = (int)(1e6*(ftime - (int)ftime));
 
-    settime.actime = settime.modtime = (int)ftime;
-    res = utime(fn, &settime) == 0;
-#endif
-    return ScalarLogical(res);
+	    res = utimes(fn, times) == 0;
+	#elif defined(HAVE_UTIME)
+	    struct utimbuf settime;
+
+	    settime.actime = settime.modtime = (int)ftime;
+	    res = utime(fn, &settime) == 0;
+	#endif
+	LOGICAL(ans)[i] = (res == 0) ? FALSE : TRUE;
+	fn = NULL;
+	vmaxset(vmax); // throws away result of translateChar
+    }
+    UNPROTECT(2); /* times, ans */
+    return ans;
 }
 
 #ifdef Win32

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2006-2017  The R Core Team
+ *  Copyright (C) 2006-2018  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -132,24 +132,32 @@ int main(int argc_, char *argv_[])
 
        argv_[1] is split here into individual arguments assuming any space or
        tab is a separator - no quoting is supported
+
+       This code is, however, also used with explicit invocation of Rscript
+       where arguments are not joined and the first argument may be a file
+       name, which is explicitly allowed to contain space. Thus, only split the
+       first argument if it starts with "--"  (a file name for Rscript cannot
+       start with "--"; it can start with "-", but the only short option is "-e"
+       and that is not usable with '#!' invocation).
     */
 
     /* compute number of arguments included in argv_[1] */
     char *s = argv_[1];
     int njoined = 0;
     size_t j;
-    for(j = 0; s[j] != 0; j++)
-	if (s[j] != ' ' && s[j] != '\t' &&
-		(j == 0 || s[j-1] == ' ' || s[j-1] == '\t'))
-	    /* first character of an argument */
-	    njoined++;
+    if (strncmp(s, "--", 2) == 0)
+	for(j = 0; s[j] != 0; j++)
+	    if (s[j] != ' ' && s[j] != '\t' &&
+		    (j == 0 || s[j-1] == ' ' || s[j-1] == '\t'))
+		/* first character of an argument */
+		njoined++;
 
     int argc;
     char **argv;
 
     if (njoined > 1) { /* need to split argv_[1] */
 	argc = argc_ - 1 + njoined;
-        argv = (char **) malloc((size_t) (argc+1)*sizeof(char *));
+	argv = (char **) malloc((size_t) (argc+1)*sizeof(char *));
 	if (!argv) {
 	    fprintf(stderr, "malloc failure\n");
 	    exit(1);

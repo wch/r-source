@@ -27,7 +27,6 @@ weighted.mean.default <- function(x, w, ..., na.rm = FALSE)
     }
     if (length(w) != length(x))
         stop("'x' and 'w' must have the same length")
-    w <- as.double(w) # avoid overflow in sum for integer weights.
     if (na.rm) { i <- !is.na(x); w <- w[i]; x <- x[i] }
     sum((x*w)[w != 0])/sum(w) # --> NaN in empty case
 }

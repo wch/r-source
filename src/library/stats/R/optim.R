@@ -1,7 +1,7 @@
 #  File src/library/stats/R/optim.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2000-12 The R Core Team
+#  Copyright (C) 2000-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -25,8 +25,7 @@ optim <-
     fn1 <- function(par) fn(par,...)
     gr1 <- if (!is.null(gr)) function(par) gr(par,...)
     method <- match.arg(method)
-    if((length(lower) > 1L || length(upper) > 1L ||
-       lower[1L] != -Inf || upper[1L] != Inf)
+    if((any(lower > -Inf) || any(upper < Inf))
        && !any(method == c("L-BFGS-B","Brent"))) {
 	warning("bounds can only be used with method L-BFGS-B (or Brent)")
 	method <- "L-BFGS-B"
@@ -37,7 +36,7 @@ optim <-
 		ndeps = rep.int(1e-3, npar),
 		maxit = 100L, abstol = -Inf, reltol = sqrt(.Machine$double.eps),
 		alpha = 1.0, beta = 0.5, gamma = 2.0,
-		REPORT = 10,
+		REPORT = 10, warn.1d.NelderMead = TRUE,
 		type = 1,
 		lmm = 5, factr = 1e7, pgtol = 0,
 		tmax = 10, temp = 10.0)
@@ -57,7 +56,7 @@ optim <-
     if (method == "L-BFGS-B" &&
 	any(!is.na(match(c("reltol","abstol"), namc))))
 	warning("method L-BFGS-B uses 'factr' (and 'pgtol') instead of 'reltol' and 'abstol'")
-    if(npar == 1 && method == "Nelder-Mead")
+    if(npar == 1 && method == "Nelder-Mead" && isTRUE(con$warn.1d.NelderMead))
         warning("one-dimensional optimization by Nelder-Mead is unreliable:\nuse \"Brent\" or optimize() directly")
     if(npar > 1 && method == "Brent")
 	stop('method = "Brent" is only available for one-dimensional optimization')

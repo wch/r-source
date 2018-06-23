@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2018-03-06 r74362) -- "Unsuffered Consequences"
+R Under development (unstable) (2018-06-18 r74906) -- "Unsuffered Consequences"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -3827,7 +3827,7 @@ sigma^2 estimated as 0.4566:  log likelihood = -101.2,  aic = 212.4
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x5756bd8>
+<environment: 0x468ece0>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -4825,7 +4825,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x66ae7c0>
+<bytecode: 0x54c14b0>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -6972,13 +6972,29 @@ function (eta)
 > gf$variance(-3:4) #- == (.)^2
 [1]  9  4  1  0  1  4  9 16
 > 
+> ## Binomial with default 'logit' link:  Check some properties visually:
+> bi <- binomial()
+> et <- seq(-10,10, by=1/8)
+> plot(et, bi$mu.eta(et), type="l")
+> ## show that mu.eta() is derivative of linkinv() :
+> lines((et[-1]+et[-length(et)])/2, col=adjustcolor("red", 1/4),
++       diff(bi$linkinv(et))/diff(et), type="l", lwd=4)
+> ## which here is the logistic density:
+> lines(et, dlogis(et), lwd=3, col=adjustcolor("blue", 1/4))
+> stopifnot(exprs = {
++   all.equal(bi$ mu.eta(et), dlogis(et))
++   all.equal(bi$linkinv(et), plogis(et) -> m)
++   all.equal(bi$linkfun(m ), qlogis(m))    #  logit(.) == qlogis(.) !
++ })
 > 
-> ## quasipoisson. compare with example(glm)
-> counts <- c(18,17,15,20,10,20,25,13,12)
-> outcome <- gl(3,1,9)
-> treatment <- gl(3,3)
-> d.AD <- data.frame(treatment, outcome, counts)
-> glm.qD93 <- glm(counts ~ outcome + treatment, family = quasipoisson())
+> ## Data from example(glm) :
+> d.AD <- data.frame(treatment = gl(3,3),
++                    outcome   = gl(3,1,9),
++                    counts    = c(18,17,15, 20,10,20, 25,13,12))
+> glm.D93 <- glm(counts ~ outcome + treatment, d.AD, family = poisson())
+> ## Quasipoisson: compare with above / example(glm) :
+> glm.qD93 <- glm(counts ~ outcome + treatment, d.AD, family = quasipoisson())
+> 
 > 
 > ## Example of user-specified link, a logit model for p^days
 > ## See Shaffer, T.  2004. Auk 121(2): 526-540.
@@ -7002,8 +7018,20 @@ Link function: logexp(3)
 > ## which case use an offset of 0 in the corresponding formula
 > ## to get the null deviance right.
 > 
-> ## Binomial with identity link: often not a good idea.
-> ## Not run: binomial(link = make.link("identity"))
+> ## Binomial with identity link: often not a good idea, as both
+> ## computationally and conceptually difficult:
+> binomial(link = "identity")  ## is exactly the same as
+
+Family: binomial 
+Link function: identity 
+
+> binomial(link = make.link("identity"))
+
+Family: binomial 
+Link function: identity 
+
+> 
+> 
 > 
 > ## tests of quasi
 > x <- rnorm(100)
@@ -7405,7 +7433,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x5dc46d0>
+<environment: 0x5443ae0>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -7823,6 +7851,20 @@ Terms added sequentially (first to last)
 NULL                          8    10.5814
 outcome    2   5.4523         6     5.1291
 treatment  2   0.0000         4     5.1291
+> ## Computing AIC [in many ways]:
+> (A0 <- AIC(glm.D93))
+[1] 56.76132
+> (ll <- logLik(glm.D93))
+'log Lik.' -23.38066 (df=5)
+> A1 <- -2*c(ll) + 2*attr(ll, "df")
+> A2 <- glm.D93$family$aic(counts, mu=fitted(glm.D93), wt=1) +
++         2 * length(coef(glm.D93))
+> stopifnot(exprs = {
++   all.equal(A0, A1)
++   all.equal(A1, A2)
++   all.equal(A1, glm.D93$aic)
++ })
+> 
 > 
 > 
 > # A Gamma example, from McCullagh & Nelder (1989, pp. 300-2)
@@ -9472,7 +9514,11 @@ List of 5
 > fm <- lm(weight ~ poly(height, 2), data = women)
 > plot(women, xlab = "Height (in)", ylab = "Weight (lb)")
 > ht <- seq(57, 73, len = 200)
-> lines(ht, predict(fm, data.frame(height = ht)))
+> nD <- data.frame(height = ht)
+> pfm <- predict(fm, nD)
+> lines(ht, pfm)
+> pf2 <- predict(update(fm, ~ stats::poly(height, 2)), nD)
+> stopifnot(all.equal(pfm, pf2)) ## was off (rel.diff. 0.0766) in R <= 3.5.0
 > 
 > ## see also example(cars)
 > 
@@ -12060,14 +12106,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x62e0568>
-<environment: 0x62eb448>
+<bytecode: 0x5322d70>
+<environment: 0x532fd48>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x62e0418>
-<environment: 0x62eb448>
+<bytecode: 0x5322c20>
+<environment: 0x532fd48>
 
 > 
 > 
@@ -12221,7 +12267,7 @@ NOTE: n is number in *each* group
 +  power.prop.test(n=30, p1=0.90, p2=NULL, power=0.8)
 + ) # a warning  (which may become an error)
 Warning in power.prop.test(n = 30, p1 = 0.9, p2 = NULL, power = 0.8) :
-  No p2 in in [p1, 1] can be found to achieve the desired power
+  No p2 in [p1, 1] can be found to achieve the desired power
 
      Two-sample comparison of proportions power calculation 
 
@@ -14077,8 +14123,11 @@ X-squared = 12.173, df = 1, p-value = 0.0004848
 > qqplot(qchisq(ppoints(500), df = 3), y,
 +        main = expression("Q-Q plot for" ~~ {chi^2}[nu == 3]))
 > qqline(y, distribution = function(p) qchisq(p, df = 3),
-+        prob = c(0.1, 0.6), col = 2)
++        probs = c(0.1, 0.6), col = 2)
 > mtext("qqline(*, dist = qchisq(., df=3), prob = c(0.1, 0.6))")
+> ## (Note that the above uses ppoints() with a = 1/2, giving the
+> ## probability points for quantile type 5: so theoretically, using
+> ## qqline(qtype = 5) might be preferable.) 
 > 
 > 
 > 
@@ -16190,8 +16239,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f)
-<bytecode: 0x249ba20>
-<environment: 0x6fccb38>
+<bytecode: 0x18c67f0>
+<environment: 0x4dfdc00>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -18516,7 +18565,7 @@ Number of Fisher Scoring iterations: 6
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  6.487 0.178 6.739 0 0 
+Time elapsed:  5.582 0.215 5.955 0 0 
 > grDevices::dev.off()
 null device 
           1 

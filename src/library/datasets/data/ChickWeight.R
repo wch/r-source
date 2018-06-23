@@ -157,5 +157,6 @@ formula = weight ~ Time | Chick,
 outer = ~ Diet,
 labels = list(x = "Time", y = "Body weight"),
 units = list(x = "(days)", y = "(gm)"))
+
 environment(attr(ChickWeight, "formula")) <- emptyenv()
 environment(attr(ChickWeight, "outer")) <- emptyenv()

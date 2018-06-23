@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
 "PO-Revision-Date: 2014-03-17 10:52+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -105,6 +105,9 @@ msgstr "'f' incorrect"
 
 msgid "'gpar' element '%s' must not be length 0"
 msgstr "l'élément '%s' de 'gpar' doit être de longueur unitaire"
+
+msgid "mixture of missing and non-missing values for %s"
+msgstr ""
 
 msgid "'gamma' 'gpar' element is defunct"
 msgstr "'gamma' 'gpar' n'existe plus"

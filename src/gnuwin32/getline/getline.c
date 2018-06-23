@@ -123,6 +123,15 @@ gl_getc(void)
 /* get a character without echoing it to screen */
 {
     int             c;
+    static char buf[9] = "";
+    static int bufavail = 0;
+    static int bufpos = 0;
+
+    if (bufavail > 0) {
+	bufavail--;
+	return buf[bufpos++];
+    }
+    bufpos = 0;
 
 /* guido masarotto (3/12/98)
  * get Ansi char code from a Win32 console
@@ -142,7 +151,7 @@ gl_getc(void)
       */
       GetConsoleScreenBufferInfo(Win32OutputStream, &csb);
       SetConsoleCursorPosition(Win32OutputStream, csb.dwCursorPosition);
-      ReadConsoleInput(Win32InputStream, &r, 1, &a);
+      ReadConsoleInputW(Win32InputStream, &r, 1, &a);
       if (!(r.EventType == KEY_EVENT)) break;
       st = r.Event.KeyEvent.dwControlKeyState;
       vk = r.Event.KeyEvent.wVirtualKeyCode;
@@ -186,9 +195,28 @@ gl_getc(void)
 	    nAlt = 0;
 	  } 
 	} 
-	else 
-	    /* There is also UnicodeChar -- not clear how it works */
-	  c = r.Event.KeyEvent.uChar.AsciiChar;
+	else {
+	  /* Originally uChar.AsciiChar was used here and for MBCS characters
+	     GetConsoleInput returned as many events as bytes in the character.
+	     As of Windows 8 this reportedly no longer works, GetConsoleInput
+	     would only generate one event with the first byte in AsciiChar.
+	     The bug still exists in Windows 10, and thus we now call
+	     GetConsoleInputW to get uchar.UnicodeChar. Ideally (at least for
+	     Windows) all of getline code would be refactored to work with wide
+	     characters, but for now we just convert the character back to bytes
+	     in current native locale to recover the old behavior of gl_getc. */
+	  wchar_t wc = r.Event.KeyEvent.uChar.UnicodeChar;
+	  mbstate_t mb_st;
+	  mbs_init(&mb_st);
+	  if (wc != L'\0') {
+	    size_t cres = wcrtomb(buf, wc, &mb_st);
+	    if (cres != (size_t)-1) {
+	      bufavail = (int) cres - 1;
+	      bufpos = 1;
+	      c = buf[0];
+	    }
+	  }
+	}
       }
       else if (vk == VK_MENU && AltIsDown) { 
            /* Alt key up event: could be AltGr, but let's hope users 

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R /3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
 "PO-Revision-Date: 2011-11-29 17:20+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,9 +25,6 @@ msgstr "'ns' skal være et navnerum eller et importmiljø for navnerum"
 
 msgid "namespace found within global environments"
 msgstr ""
-
-msgid "'ns' must be a namespace or a namespace imports environment"
-msgstr "'ns' skal være et navnerum eller et importmiljø for navnerum"
 
 msgid "bad assignment: %s"
 msgstr "ugyldig tildeling: %s"
@@ -62,9 +59,6 @@ msgstr "ugyldig tildeling 2"
 msgid "invalid function in complex assignment"
 msgstr "ugyldig funktion i kompleks tildeling"
 
-msgid "is not a registered math1 function"
-msgstr ""
-
 msgid "missing arguments are not allowed"
 msgstr "manglende argumenter er ikke tilladt"
 
@@ -88,6 +82,9 @@ msgid "more than one default provided in switch() call"
 msgstr "mere end en standard tilbudt i kontaktkald"
 
 msgid "'switch' with no alternatives"
+msgstr ""
+
+msgid "Error: compilation failed -"
 msgstr ""
 
 msgid "cannot compile a non-function"
@@ -117,6 +114,9 @@ msgstr "fil '%s' findes ikke"
 msgid "'%s' is not a valid compiler option"
 msgstr "'%s' er ikke et gyldigt kompilertilvalg"
 
+msgid "invalid environment variable value: %s==%s"
+msgstr ""
+
 msgid "invalid compiler options: optimize(==%d)<2 and jitEnabled(==%d)>2"
 msgstr ""
 
@@ -131,6 +131,9 @@ msgid "local assignment to syntactic function: "
 msgid_plural "local assignments to syntactic functions: "
 msgstr[0] "lokal tildeling til syntaksfunktion: "
 msgstr[1] "lokale tildelinger til syntaksfunktioner: "
+
+#~ msgid "'ns' must be a namespace or a namespace imports environment"
+#~ msgstr "'ns' skal være et navnerum eller et importmiljø for navnerum"
 
 #~ msgid "expected a single logical value for the S4 state flag"
 #~ msgstr "forventede en enkel logisk værdi for S4-tilstandsflaget"

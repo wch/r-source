@@ -1,7 +1,7 @@
 #  File src/library/base/R/unlist.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -19,10 +19,13 @@
 unlist <- function(x, recursive=TRUE, use.names=TRUE)
 {
     if(.Internal(islistfactor(x, recursive))) {
-        lv <- unique(.Internal(unlist(lapply(x, levels), recursive, FALSE)))
+        URapply <-
+            if(recursive) # use rapply()
+                 function(x, Fn) .Internal(unlist(rapply(x, Fn, how="list"), recursive, FALSE))
+            else function(x, Fn) .Internal(unlist(lapply(x, Fn),             recursive, FALSE))
+        lv <- unique(URapply(x, levels))
         nm <- if(use.names) names(.Internal(unlist(x, recursive, use.names)))
-        res <- .Internal(unlist(lapply(x, as.character), recursive, FALSE))
-        res <- match(res, lv)
+        res <- match(URapply(x, as.character), lv)
         ## we cannot make this ordered as level set may have been changed
         structure(res, levels=lv, names=nm, class="factor")
     } else .Internal(unlist(x, recursive, use.names))

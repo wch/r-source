@@ -1,6 +1,6 @@
 % File src/library/utils/man/unzip.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{unzip}
@@ -26,8 +26,9 @@ unzip(zipfile, files = NULL, list = FALSE, overwrite = TRUE,
   \item{list}{If \code{TRUE}, list the files and extract none.  The
     equivalent of \command{unzip -l}.}
 
-  \item{overwrite}{If \code{TRUE}, overwrite existing files, otherwise
-    ignore such files.  The equivalent of \command{unzip -o}.}
+  \item{overwrite}{If \code{TRUE}, overwrite existing files (the equivalent
+    of \command{unzip -o}), otherwise ignore such files (the equivalent of
+    \command{unzip -n}).}
 
   \item{junkpaths}{If \code{TRUE}, use only the basename of the stored
     filepath when extracting.  The equivalent of \command{unzip -j}.}

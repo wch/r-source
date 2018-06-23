@@ -14,7 +14,7 @@
 rank(x, na.last = TRUE,
      ties.method = c("average", "first", "last", "random", "max", "min"))
 }
-\arguments{
+\arguments{% x: actually, only  x[!is.na(x)]  must be such a vector
   \item{x}{a numeric, complex, character or logical vector.}
   \item{na.last}{for controlling the treatment of \code{\link{NA}}s.
     If \code{TRUE}, missing values in the data are put last; if

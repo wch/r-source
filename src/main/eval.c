@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2017	The R Core Team.
+ *  Copyright (C) 1998--2018	The R Core Team.
  *  Copyright (C) 1995, 1996	Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1304,6 +1304,15 @@ SEXP attribute_hidden R_cmpfun1(SEXP fun)
     PROTECT(fcall = lang3(R_TripleColonSymbol, packsym, funsym));
     PROTECT(call = lang2(fcall, fun));
     val = eval(call, R_GlobalEnv);
+    if (TYPEOF(BODY(val)) != BCODESXP)
+	/* Compilation may have failed because R alocator could not malloc
+	   memory to extend the R heap, so we run GC to release some pages.
+	   This problem has been observed while byte-compiling packages on
+	   installation: serialization uses malloc to allocate buffers and
+	   fails when the compiler makes R allocator exhaust malloc memory.
+	   A more general solution might be to run the GC conditionally inside
+	   error handling. */
+	R_gc();
     UNPROTECT(2);
 
     R_Visible = old_visible;
@@ -1484,7 +1493,11 @@ static void PrintCall(SEXP call, SEXP rho)
         blines = asInteger(GetOption1(install("deparse.max.lines")));
     if(blines != NA_INTEGER && blines > 0)
 	R_BrowseLines = blines;
-    PrintValueRec(call, rho);
+
+    R_PrintData pars;
+    PrintInit(&pars, rho);
+    PrintValueRec(call, &pars);
+
     R_BrowseLines = old_bl;
 }
 
@@ -1770,6 +1783,10 @@ static R_INLINE SEXP R_execClosure(SEXP call, SEXP newrho, SEXP sysparent,
 	Rprintf("exiting from: ");
 	PrintCall(call, rho);
     }
+
+    /* clear R_ReturnedValue to allow GC to reclaim old value */
+    R_ReturnedValue = R_NilValue;
+
     return cntxt.returnValue;
 }
 
@@ -3903,6 +3920,7 @@ SEXP do_subassign2_dflt(SEXP, SEXP, SEXP, SEXP);
 
 static SEXP seq_int(int n1, int n2)
 {
+#define USE_ALTREP_COMPACT_INTRANGE
 #ifdef USE_ALTREP_COMPACT_INTRANGE
     return R_compact_intrange(n1, n2);
 #else
@@ -6164,17 +6182,13 @@ Rboolean attribute_hidden R_BCVersionOK(SEXP s)
 	(version >= R_bcMinVersion && version <= R_bcVersion);
 }
 
-static R_INLINE Rboolean FIND_ON_STACK(SEXP x, R_bcstack_t *base,
-				       int skip, int crude)
+static R_INLINE Rboolean FIND_ON_STACK(SEXP x, R_bcstack_t *base, int skip)
 {
     /* Check whether the value is on the stack before modifying.  If
-       'crude' is true possible existence of BCNALLOC is ignored,
-       which could result in false positives avoids checking and
-       branching. If 'skip' is true the top value on the stack is
-       ignored. LT */
+       'skip' is true the top value on the stack is ignored. LT */
     R_bcstack_t *checktop = skip ? R_BCNodeStackTop - 1 : R_BCNodeStackTop;
     for (R_bcstack_t *p = base; p < checktop; p++) {
-	if (crude && p->tag == RAWMEM_TAG)
+	if (p->tag == RAWMEM_TAG)
 	    p += p->u.ival;
 	else if (p->u.sxpval == x && p->tag == 0)
 	    return TRUE;
@@ -6538,7 +6552,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 		   branching. LT */
 		int tag = s->tag;
 		if (R_BCNodeStackTop - vcache_top > MAX_ON_STACK_CHECK ||
-		    FIND_ON_STACK(x, vcache_top, TRUE, TRUE))
+		    FIND_ON_STACK(x, vcache_top, TRUE))
 		    tag = 0;		
 
 		switch (tag) {
@@ -6848,7 +6862,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	    value = EnsureLocal(symbol, rho);
 
 	if (MAYBE_REFERENCED(value) &&
-	    FIND_ON_STACK(value, vcache_top, FALSE, FALSE))
+	    FIND_ON_STACK(value, vcache_top, FALSE))
 	    value = shallow_duplicate(value);
 
 	BCNPUSH(value);
@@ -7189,7 +7203,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	(IS_STACKVAL_BOXED(idx) &&				\
 	 MAYBE_SHARED(GETSTACK_SXPVAL_PTR(R_BCNodeStackTop + (idx))))
 #define STACKVAL_IS_ON_STACK(idx)					\
-	FIND_ON_STACK(GETSTACK_SXPVAL(idx), vcache_top, TRUE, FALSE)
+	FIND_ON_STACK(GETSTACK_SXPVAL(idx), vcache_top, TRUE)
 
 	if (STACKVAL_MAYBE_REFERENCED(-1) &&
 	    (STACKVAL_MAYBE_SHARED(-1) ||
@@ -7687,49 +7701,6 @@ SEXP attribute_hidden do_bcversion(SEXP call, SEXP op, SEXP args, SEXP rho)
   SEXP ans = allocVector(INTSXP, 1);
   INTEGER(ans)[0] = R_bcVersion;
   return ans;
-}
-
-SEXP attribute_hidden do_loadfile(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    SEXP file, s;
-    FILE *fp;
-
-    checkArity(op, args);
-
-    PROTECT(file = coerceVector(CAR(args), STRSXP));
-
-    if (! isValidStringF(file))
-	error(_("bad file name"));
-
-    fp = RC_fopen(STRING_ELT(file, 0), "rb", TRUE);
-    if (!fp)
-	error(_("unable to open 'file'"));
-    s = R_LoadFromFile(fp, 0);
-    fclose(fp);
-
-    UNPROTECT(1);
-    return s;
-}
-
-SEXP attribute_hidden do_savefile(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    FILE *fp;
-
-    checkArity(op, args);
-
-    if (!isValidStringF(CADR(args)))
-	error(_("'file' must be non-empty string"));
-    if (TYPEOF(CADDR(args)) != LGLSXP)
-	error(_("'ascii' must be logical"));
-
-    fp = RC_fopen(STRING_ELT(CADR(args), 0), "wb", TRUE);
-    if (!fp)
-	error(_("unable to open 'file'"));
-
-    R_SaveToFileV(CAR(args), fp, INTEGER(CADDR(args))[0], 0);
-
-    fclose(fp);
-    return R_NilValue;
 }
 
 #ifdef UNUSED

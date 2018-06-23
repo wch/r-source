@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2018-03-06 r74362) -- "Unsuffered Consequences"
+R Under development (unstable) (2018-06-07 r74868) -- "Unsuffered Consequences"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -255,6 +255,24 @@ Hair    Brown Blue Hazel Green
 > # one way to have a custom x axis
 > plot(1:10, xaxt = "n")
 > axis(1, xaxp = c(2, 9, 7))
+> 
+> ## Changing default gap between labels:
+> plot(0:100, type="n", axes=FALSE, ann=FALSE)
+> title(quote("axis(1, .., gap.axis = f)," ~~ f >= 0))
+> axis(2, at = 5*(0:20), las = 1, gap.axis = 1/4)
+> gaps <- c(4, 2, 1, 1/2, 1/4, 0.1, 0)
+> chG <- paste0(ifelse(gaps == 1, "default:  ", ""),
++               "gap.axis=", formatC(gaps))
+> jj <- seq_along(gaps)
+> linG <- -2.5*(jj-1)
+> for(j in jj) {
++     isD <- gaps[j] == 1 # is default
++     axis (1, at=5*(0:20), gap.axis = gaps[j], padj=-1, line = linG[j],
++           col.axis = if(isD) "forest green" else 1, font.axis= 1+isD)
++ }
+> mtext(chG, side=1, padj=-1, line = linG -1/2, cex=3/4,
++       col = ifelse(gaps == 1, "forest green", "blue3"))
+> ## now shrink the window (in x- and y-direction) and observe the axis labels drawn
 > 
 > 
 > 
@@ -1496,11 +1514,11 @@ List of 2
 > pairs(iris[1:4], main = "Anderson's Iris Data -- 3 species",
 +       pch = 21, bg = c("red", "green3", "blue")[unclass(iris$Species)])
 > 
-> ## formula method
-> pairs(~ Fertility + Education + Catholic, data = swiss,
+> ## formula method, "graph" layout (row 1 at bottom):
+> pairs(~ Fertility + Education + Catholic, data = swiss, row1attop=FALSE,
 +       subset = Education < 20, main = "Swiss data, Education < 20")
 > 
-> pairs(USJudgeRatings)
+> pairs(USJudgeRatings, gap=1/10) # (gap: not wasting plotting area)
 > ## show only lower triangle (and suppress labeling for whatever reason):
 > pairs(USJudgeRatings, text.panel = NULL, upper.panel = NULL)
 > 
@@ -1515,7 +1533,7 @@ List of 2
 +     rect(breaks[-nB], 0, breaks[-1], y, col = "cyan", ...)
 + }
 > pairs(USJudgeRatings[1:5], panel = panel.smooth,
-+       cex = 1.5, pch = 24, bg = "light blue",
++       cex = 1.5, pch = 24, bg = "light blue", horOdd=TRUE,
 +       diag.panel = panel.hist, cex.labels = 2, font.labels = 2)
 > 
 > ## put (absolute) correlations on the upper panels,
@@ -1530,7 +1548,8 @@ List of 2
 +     if(missing(cex.cor)) cex.cor <- 0.8/strwidth(txt)
 +     text(0.5, 0.5, txt, cex = cex.cor * r)
 + }
-> pairs(USJudgeRatings, lower.panel = panel.smooth, upper.panel = panel.cor)
+> pairs(USJudgeRatings, lower.panel = panel.smooth, upper.panel = panel.cor,
++       gap=0, row1attop=FALSE)
 > 
 > pairs(iris[-5], log = "xy") # plot all variables on log scale
 > pairs(iris, log = 1:4, # log the first four
@@ -2081,7 +2100,7 @@ N
 > points.default # to see how it calls "plot.xy(xy.coords(x, y), ...)"
 function (x, y = NULL, type = "p", ...) 
 plot.xy(xy.coords(x, y), type = type, ...)
-<bytecode: 0x3032508>
+<bytecode: 0x387a658>
 <environment: namespace:graphics>
 > 
 > 
@@ -2951,7 +2970,7 @@ function (xy = 1, warn.log = TRUE)
     u <- par("usr")
     xy * c(u[2L] - u[1L], u[4L] - u[3L])/par("pin")
 }
-<bytecode: 0x4d5f0b0>
+<bytecode: 0x292aec0>
 <environment: namespace:graphics>
 > 
 > ## plot labels offset 0.12 inches to the right
@@ -3032,7 +3051,7 @@ function (xy = 1, warn.log = TRUE)
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.762 0.049 2.824 0 0 
+Time elapsed:  2.956 0.055 3.029 0 0 
 > grDevices::dev.off()
 null device 
           1 

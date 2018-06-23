@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -104,11 +104,9 @@ msgstr "'dim'的值太大"
 msgid "incorrect value for 'MARGIN'"
 msgstr "'MARGIN'的值有错"
 
-msgid "*** 'pos=1' is not possible; setting 'pos=2' for now."
+#, fuzzy
+msgid "'pos=1' is not possible and has been warned about for years"
 msgstr "*** 'pos=1'不可能对；以'pos=2'代而用之。"
-
-msgid "*** Note that 'pos=1' will give an error in the future"
-msgstr "*** 请注意将来再用'pos=1'的话会引起错误信条"
 
 msgid "file '%s' not found"
 msgstr "没有'%s'文件"
@@ -212,6 +210,10 @@ msgstr "'breaks'和'labels'的长度不一样"
 msgid "invalid 'row.names' length"
 msgstr "'row.names'的长度不对"
 
+#, fuzzy
+msgid "invalid 'make.names'"
+msgstr "程辑包名字不对"
+
 msgid "duplicate 'row.names' are not allowed"
 msgstr "不允许有重复的'row.names'"
 
@@ -221,7 +223,8 @@ msgstr "'row.names'里不允许有遗漏值"
 msgid "invalid 'dimnames' given for data frame"
 msgstr "数据框的'dimnames'给得不对"
 
-msgid "cannot coerce class \"%s\" to a data.frame"
+#, fuzzy
+msgid "cannot coerce class %s to a data.frame"
 msgstr "不能把\"%s\"类别强迫变成数据框"
 
 msgid ""
@@ -324,8 +327,12 @@ msgstr "串列参数有错：所有变数的长度都应该是一样的"
 msgid "<0 rows> (or 0-length row.names)"
 msgstr "<0 行> (或0-长度的row.names)"
 
-msgid "non-numeric variable in data frame:"
+#, fuzzy
+msgid "non-numeric variable(s) in data frame:"
 msgstr "数据框里有非数值的参数"
+
+msgid ","
+msgstr "，"
 
 #, fuzzy
 msgid "%s only defined for equally-sized data frames"
@@ -345,12 +352,6 @@ msgstr "'origin'一定得给值"
 
 msgid "do not know how to convert '%s' to class %s"
 msgstr "不知如何将'%s'转换成%s类别"
-
-msgid "'%s' is not a \"date\" object"
-msgstr "'%s'不是\"dates\"对象"
-
-msgid "'%s' is not a \"dates\" object"
-msgstr "'%s'不是\"dates\"对象"
 
 msgid "binary + is not defined for \"Date\" objects"
 msgstr "二进列的+法对\"Date\"对象不适用"
@@ -418,6 +419,9 @@ msgstr "'origin'的长度必需为一"
 
 msgid "'lag' and 'differences' must be integers >= 1"
 msgstr "'lag'和'differences'的值必需为大于等于一的整数"
+
+msgid "unable to deduce timezone name from"
+msgstr ""
 
 msgid "wrong class"
 msgstr "类别不对"
@@ -634,6 +638,14 @@ msgstr "用种类为\"expression\"的'value'的第一个元素"
 msgid "class of 'x' was discarded"
 msgstr ""
 
+#, fuzzy
+msgid "'flag' must be a string, i.e., of length 1"
+msgstr "'arg'的长度必需为一"
+
+#, fuzzy
+msgid "'flag' should contain only characters from [0+- #'I]"
+msgstr "'flag'只能含'0+- #'"
+
 msgid "'mode' must be \"double\" (\"real\"), \"integer\" or \"character\""
 msgstr ""
 "'mode'的值必需是\"double\" (\"real\")， \"integer\"或\"character\"中的一个"
@@ -647,9 +659,6 @@ msgstr ""
 
 msgid "'digits' reduced to %d"
 msgstr "'digits'被减少到%d"
-
-msgid "'flag' can contain only '0+- #'"
-msgstr "'flag'只能含'0+- #'"
 
 msgid "corrupt data frame: columns will be truncated or padded with NAs"
 msgstr "破损的数据框：縮短列的长度或用NA来填充空白"
@@ -740,29 +749,6 @@ msgstr "程辑包%s是为%s建造的"
 msgid "package %s is not installed for 'arch = %s'"
 msgstr "程辑包%s没有安装在'arch=%s'中"
 
-msgid ""
-"package %s has a license that you need to accept in an interactive session"
-msgstr "程辑包%s的使用许可要求你先通过交互式会话时接受它"
-
-msgid "package %s has a license that you need to accept after viewing"
-msgstr "程辑包%s的使用许可证要求你在看完后接受它"
-
-#, fuzzy
-msgid "package %s has a license that you need to accept:"
-msgstr "程辑包%s的使用许可证要求你在看完后接受它"
-
-#, fuzzy
-msgid "according to the DESCRIPTION file it is"
-msgstr ""
-"程辑包%s的使用许可证要求你接受它:\n"
-"按照DESCRIPTION文件它是"
-
-msgid "%s"
-msgstr ""
-
-msgid "license for package %s not accepted"
-msgstr "程辑包%s的使用许可证没有被接受"
-
 msgid "Attaching package: %s"
 msgstr "载入程辑包：%s"
 
@@ -785,10 +771,15 @@ msgid "%s not found on search path, using pos = 2"
 msgstr "在搜索路径上找不到%s，用pos=2"
 
 #, fuzzy
-msgid "Package %s version %s cannot be unloaded"
+msgid ""
+"Package %s version %s cannot be unloaded:\n"
+" %s"
 msgstr "没有载入程辑包%s"
 
-msgid "package or namespace load failed for %s"
+#, fuzzy
+msgid ""
+"package or namespace load failed for %s%s:\n"
+" %s"
 msgstr "%s程辑包或名字空间载入失败，"
 
 msgid "package %s does not have a namespace and should be re-installed"
@@ -851,9 +842,10 @@ msgstr "载入需要的程辑包：%s"
 msgid "none of the packages are loaded"
 msgstr "没有载入任何程辑包"
 
+#, fuzzy
 msgid ""
-"package %s found more than once,\n"
-"using the one found in %s"
+"package %s found more than once, using the first from\n"
+"  %s"
 msgstr ""
 "找到多个叫%s的程辑包，\n"
 "载入'%s'里找到的那一个"
@@ -936,9 +928,6 @@ msgstr ""
 
 msgid "may not have argument(s) named"
 msgstr ""
-
-msgid ","
-msgstr "，"
 
 msgid "'arg' must be NULL or a character vector"
 msgstr "'arg'要么是NULL，要么是字符矢量。"
@@ -1056,6 +1045,34 @@ msgstr "程辑包%s没有名字空间"
 msgid "namespace %s %s is being loaded, but %s %s is required"
 msgstr "载入了名字空间%1$s %2$s，但需要的是%3$s %4$s"
 
+msgid ""
+"package %s has a license that you need to accept in an interactive session"
+msgstr "程辑包%s的使用许可要求你先通过交互式会话时接受它"
+
+msgid "package %s has a license that you need to accept after viewing"
+msgstr "程辑包%s的使用许可证要求你在看完后接受它"
+
+#, fuzzy
+msgid "package %s has a license that you need to accept:"
+msgstr "程辑包%s的使用许可证要求你在看完后接受它"
+
+#, fuzzy
+msgid "according to the DESCRIPTION file it is"
+msgstr ""
+"程辑包%s的使用许可证要求你接受它:\n"
+"按照DESCRIPTION文件它是"
+
+msgid "%s"
+msgstr ""
+
+msgid "license for package %s not accepted"
+msgstr "程辑包%s的使用许可证没有被接受"
+
+msgid ""
+"package %s was installed by an R version with different internals; it needs "
+"to be reinstalled for use with this R version"
+msgstr ""
+
 msgid "unable to load R code in package %s"
 msgstr "程辑包%s里的R写碼载入失败"
 
@@ -1120,12 +1137,6 @@ msgstr "%s函数有可进口的方法，但找不到它的同属方法"
 #, fuzzy
 msgid "replacing previous import %s by %s when loading %s"
 msgstr "输入%2$s将代替前次引进%1$s"
-
-msgid "No methods found in \"%s\" for requests: %s"
-msgstr "在\"%s\"找不到%s需要的索取"
-
-msgid "requested methods not found in environment/package %s: %s"
-msgstr "环境/程辑包%s里找不到所要求的方法：%s"
 
 #, fuzzy
 msgid ""
@@ -1263,8 +1274,9 @@ msgstr "'scale'的长度必需和'x'列的数目相同"
 msgid "either specify 'nmax' or 'n', but not both."
 msgstr "'nmax'和'n'两者只能有一个设定"
 
-msgid "'from' cannot be NA, NaN or infinite"
-msgstr ""
+#, fuzzy
+msgid "'from' must be a finite number"
+msgstr "'from'一定得是\"Date\"对象"
 
 msgid "argument 'length.out' must be of length 1"
 msgstr "'length.out'参数的长度必需为一"
@@ -1272,10 +1284,12 @@ msgstr "'length.out'参数的长度必需为一"
 msgid "first element used of 'length.out' argument"
 msgstr "用了'length.out'参数里的第一个元素"
 
-msgid "'to' cannot be NA, NaN or infinite"
-msgstr ""
+#, fuzzy
+msgid "'to' must be a finite number"
+msgstr "'to'一定得是\"Date\"对象"
 
-msgid "invalid (to - from)/by in seq(.)"
+#, fuzzy
+msgid "invalid '(to - from)/by'"
 msgstr "seq(.)里的(to - from)/by 有错"
 
 msgid "wrong sign in 'by' argument"
@@ -1284,7 +1298,8 @@ msgstr "'by'参数的正負號不对"
 msgid "'by' argument is much too small"
 msgstr "'by'参数太小"
 
-msgid "length must be non-negative number"
+#, fuzzy
+msgid "'length.out' must be a non-negative number"
 msgstr "长度必需为非负数"
 
 msgid "too many arguments"
@@ -1384,6 +1399,10 @@ msgstr "'chdir'没有作用，因为不知道目前的工作目录在哪里"
 msgid "'chdir = TRUE' makes no sense for a connection"
 msgstr "'chdir = TRUE'对联结来说没有任何意义"
 
+#, fuzzy
+msgid "specify either 'file' or 'exprs' but not both"
+msgstr "'nmax'和'n'两者只能有一个设定"
+
 msgid "'%s' is not an existing file"
 msgstr "'%s'不存在"
 
@@ -1397,17 +1416,27 @@ msgstr "'x'和'y'的长度必需一致"
 msgid "additional arguments ignored in stop()"
 msgstr "stop()里的附加参数略过不用"
 
+msgid "Must use 'exprs' or unnamed expressions, but not both"
+msgstr ""
+
+msgid ""
+"%s and %s are not equal:\n"
+"  %s"
+msgstr ""
+
 msgid "additional arguments ignored in warning()"
 msgstr "warning()里的附加参数略过不用"
+
+msgid ""
+"Calling 'structure(NULL, *)' is deprecated, as NULL cannot have attributes.\n"
+"  Consider 'structure(list(), *)' instead."
+msgstr ""
 
 msgid "incorrect value for 'x'"
 msgstr "'x'的值不对"
 
 msgid "'x' and 'y' must have the same length"
 msgstr "'x'和'y'的长度必需一致"
-
-msgid "incorrect values of 'indent' and 'width'"
-msgstr "'indent'和'width'的值有错"
 
 msgid "probably wrong encoding in names(.) of column"
 msgstr "列名称的编码可能不对"
@@ -1420,6 +1449,9 @@ msgstr "STATS 没有確切地再利用于界限"
 
 msgid "length(STATS) or dim(STATS) do not match dim(x)[MARGIN]"
 msgstr "length(STATS)或dim(STATS)于dim(x)[MARGIN]不相配"
+
+msgid "'exclude' containing NA and 'useNA' != \"no\"' are a bit contradicting"
+msgstr ""
 
 msgid "nothing to tabulate"
 msgstr "没有可列表的东西"
@@ -1445,7 +1477,8 @@ msgstr "'x'不是陈列"
 msgid "'bin' must be numeric or a factor"
 msgstr "'bin'必需是数值或是因子"
 
-msgid "invalid value of 'nbins'"
+#, fuzzy
+msgid "invalid value of %s"
 msgstr "'nbins'的值无效"
 
 msgid "'INDEX' is of length zero"
@@ -1469,6 +1502,9 @@ msgstr "删除 %s"
 
 msgid "Registering 'evaluate' as low-level callback"
 msgstr "把’评估’登记为低阶回叫"
+
+msgid "Timing stopped at:"
+msgstr ""
 
 msgid "user"
 msgstr "用户"
@@ -1502,6 +1538,13 @@ msgstr "'%s'对numeric_version对象没有定义"
 
 msgid "<0 elements>"
 msgstr "<0 元素>"
+
+#, fuzzy
+msgid "'tags' must be a character vector of the same length as 'x'"
+msgstr "'input'只能为字符矢量或NULL值"
+
+msgid "Summary of (a total of %d) warning messages:"
+msgstr ""
 
 msgid "invalid 'digits'"
 msgstr "'digits'的值不对"
@@ -1687,6 +1730,18 @@ msgid_plural ""
 "S4 generic: %s"
 msgstr[0] "在从名字空间%s中出口方法时发现了不是S4通用的函数%s"
 
+#, fuzzy
+msgid "No methods found in package %s for request: %s when loading %s"
+msgid_plural "No methods found in package %s for requests: %s when loading %s"
+msgstr[0] "在\"%s\"找不到%s需要的索取"
+
+#, fuzzy
+msgid ""
+"requested method not found in environment/package %s: %s when loading %s"
+msgid_plural ""
+"requested methods not found in environment/package %s: %s when loading %s"
+msgstr[0] "环境/程辑包%s里找不到所要求的方法：%s"
+
 msgid "class %s is not exported by 'namespace:%s'"
 msgid_plural "classes %s are not exported by 'namespace:%s'"
 msgstr[0] "'namespace:%2$s'没有出口%1$s这个类别"
@@ -1719,6 +1774,18 @@ msgid_plural ""
 "In %s :\n"
 " extra arguments %s will be disregarded"
 msgstr[0] "额外参数%s忽略不用"
+
+#~ msgid "*** Note that 'pos=1' will give an error in the future"
+#~ msgstr "*** 请注意将来再用'pos=1'的话会引起错误信条"
+
+#~ msgid "'%s' is not a \"date\" object"
+#~ msgstr "'%s'不是\"dates\"对象"
+
+#~ msgid "'%s' is not a \"dates\" object"
+#~ msgstr "'%s'不是\"dates\"对象"
+
+#~ msgid "incorrect values of 'indent' and 'width'"
+#~ msgstr "'indent'和'width'的值有错"
 
 #~ msgid "'vec' contains NAs"
 #~ msgstr "'vec'内有NA值"

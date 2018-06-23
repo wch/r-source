@@ -98,8 +98,8 @@ data(\dots, list = character(), package = NULL, lib.loc = NULL,
   already loaded from another library.
 
   To just look in the \file{data} directory of the current working
-  directory, set \code{package = character(0)} (and \code{lib.loc =
-    NULL}, the default).
+  directory, set \code{package = character(0)}
+  (and \code{lib.loc = NULL}, the default).
 }
 \value{
   A character vector of all data sets specified, or information about
@@ -121,8 +121,9 @@ data(\dots, list = character(), package = NULL, lib.loc = NULL,
   has the almost always undesirable side-effect of putting an object in
   the user's workspace (and indeed, of replacing any object of that name
   already there).  It would almost always be better to put the object in
-  the current evaluation environment by \code{data(\dots, envir =
-  environment())}.  However, two alternatives are usually preferable,
+  the current evaluation environment by
+  \code{data(\dots, envir = environment())}.
+  However, two alternatives are usually preferable,
   both described in the \sQuote{Writing R Extensions} manual.
   \itemize{
     \item For sets of data, set up a package to use lazy-loading of data.

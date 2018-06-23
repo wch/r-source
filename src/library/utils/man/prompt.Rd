@@ -104,6 +104,7 @@ promptImport(object, filename = NULL, name = NULL,
 }
 \examples{
 require(graphics)
+\dontshow{oldwd <- setwd(tempdir())}
 prompt(plot.default)
 prompt(interactive, force.function = TRUE)
 unlink("plot.default.Rd")
@@ -115,6 +116,7 @@ unlink("women.Rd")
 prompt(sunspots) # non-data.frame data
 unlink("sunspots.Rd")
 
+\dontshow{setwd(oldwd)}
 \dontrun{
 ## Create a help file for each function in the .GlobalEnv:
 for(f in ls()) if(is.function(get(f))) prompt(name = f)

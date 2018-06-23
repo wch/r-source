@@ -73,8 +73,9 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
   \item{decreasing}{logical, passed to \code{\link{order}} indicating
     the sort direction.}
   \item{.bibstyle}{a character string naming a bibliography style.}
-  \item{citation.bibtex.max}{(\emph{deprecated}, use \code{bibtex =
-    T|F} instead!) a number, say \eqn{m}, indicating that the bibtex
+  \item{citation.bibtex.max}{(\emph{deprecated}, use
+    \code{bibtex = T|F}
+    instead!) a number, say \eqn{m}, indicating that the bibtex
     code should be given in addition to the formatted tex \emph{when}
     there are not more than \eqn{m} entries.  The default is taken as
     \code{\link{getOption}("citation.bibtex.max", 1)} which is \code{1}

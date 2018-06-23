@@ -163,6 +163,10 @@ utils::globalVariables(".addBasicGeneric")
     ## funs <- .addBasicGeneric(funs, "is.unsorted", internal=TRUE,
     ##                          internalArgs=c("x", "strictly"))
     funs <- .addBasicGeneric(funs, "as.vector", internal=TRUE)
+    funs <- .addBasicGeneric(funs, "lengths", internal=TRUE)
+    ## funs <- .addBasicGeneric(funs, "nchar", internal=TRUE)
+    ## funs <- .addBasicGeneric(funs, "rep_len", internal=TRUE)
+    ## funs <- .addBasicGeneric(funs, "rep.int", internal=TRUE)
 
     assign(".BasicFunsList", funs, envir=where)
     rm(.addBasicGeneric, envir=where)

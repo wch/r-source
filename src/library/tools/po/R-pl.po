@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.4.0\n"
+"Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-04 08:15\n"
+"POT-Creation-Date: 2018-04-01 16:26\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.8.7\n"
+"X-Generator: Poedit 2.0.4\n"
 "X-Poedit-Bookmarks: -1,232,-1,-1,-1,-1,-1,-1,-1,-1\n"
 
 #. R/QC.R: gettextf("  %s calls:", f)
@@ -159,6 +159,11 @@ msgstr "argument 'x' musi być pojedynczym łańcuchem tekstowym"
 msgid "*** someone has corrupted the Built field in package '%s' ***"
 msgstr "*** ktoś uszkodził pole 'Built' w pakiecie %s ***"
 
+#. R/build.R: paste(sQuote(basename(tocopy[!copied])), collapse = ", ")
+#: R/build.R:0
+msgid ","
+msgstr ","
+
 #. R/check.R: stop("-l option without value", call. = FALSE)
 #. R/install.R: stop("-l option without value", call. = FALSE)
 #: R/check.R:0 R/install.R:0
@@ -177,6 +182,11 @@ msgstr "opcja '-o' bez wartości"
 #: R/Rd2pdf.R:0
 msgid "-t option without value"
 msgstr "opcja '-t' bez wartości"
+
+#. R/install.R: stop(".install_packages() exit status ", status)
+#: R/install.R:0
+msgid ".install_packages() exit status"
+msgstr "Status wyjścia dla funkcji '.install_packages()'"
 
 #. R/QC.R: gettext("All field tags must be ASCII.")
 #. R/QC.R: gettext("All field tags must be ASCII.")
@@ -230,11 +240,6 @@ msgstr "Przypisania w '\\usage' w obiekcie dokumentacji '%s':"
 msgid "Authors@R field gives more than one person with maintainer role:"
 msgstr "Pole 'Authors@R' zawiera więcej niż jedną osobę z rolą opiekuna:"
 
-#. R/QC.R: gettext("Authors@R field gives no person with author role.")
-#: R/QC.R:0
-msgid "Authors@R field gives no person with author role."
-msgstr "Pole 'Authors@R' nie zawiera danych osoby z rolą autora."
-
 #. R/QC.R: gettext("Authors@R field gives no person with maintainer role, valid email address and non-empty name.")
 #: R/QC.R:0
 msgid ""
@@ -244,10 +249,25 @@ msgstr ""
 "Pole 'Authors@R' nie zawiera danych osoby z rolą opiekuna, poprawnym adresem "
 "e-mail oraz niepustą nazwą."
 
-#. R/QC.R: gettext("Authors@R field gives persons with no valid roles:")
+#. R/QC.R: gettext("Authors@R field gives no person with name and author role")
 #: R/QC.R:0
-msgid "Authors@R field gives persons with no valid roles:"
-msgstr "Pole 'Authors@R' wskazuje na osoby z niepoprawnymi rolami:"
+msgid "Authors@R field gives no person with name and author role"
+msgstr "Pole 'Authors@R' nie zawiera danych osoby z imieniem oraz rolą autora."
+
+#. R/QC.R: gettext("Authors@R field gives no person with name and roles.")
+#: R/QC.R:0
+msgid "Authors@R field gives no person with name and roles."
+msgstr "Pole 'Authors@R' nie zawiera danych osoby z imieniem oraz rolą autora."
+
+#. R/QC.R: gettext("Authors@R field gives persons with no name:")
+#: R/QC.R:0
+msgid "Authors@R field gives persons with no name:"
+msgstr "Pole 'Authors@R' wskazuje na osoby beż żadnych imion:"
+
+#. R/QC.R: gettext("Authors@R field gives persons with no role:")
+#: R/QC.R:0
+msgid "Authors@R field gives persons with no role:"
+msgstr "Pole 'Authors@R' wskazuje na osoby bez żadnej roli:"
 
 #. R/QC.R: gettextf("Auto-generated content requiring editing in Rd object '%s':",     nm)
 #: R/QC.R:0
@@ -260,6 +280,26 @@ msgstr ""
 #: R/QC.R:0
 msgid "Bad \\usage lines found in documentation object '%s':"
 msgstr "Znaleziono niepoprawne linie '\\usage' w obiekcie dokumentacji '%s':"
+
+#. R/install.R: stop("C++11 standard requested but CXX11 is not defined")
+#: R/install.R:0
+msgid "C++11 standard requested but CXX11 is not defined"
+msgstr "Zażądano standardu C++11 ale CXX11 nie jest zdefiniowany"
+
+#. R/install.R: stop("C++14 standard requested but CXX14 is not defined")
+#: R/install.R:0
+msgid "C++14 standard requested but CXX14 is not defined"
+msgstr "Zażądano standardu C++14 ale CXX14 nie jest zdefiniowany"
+
+#. R/install.R: stop("C++17 standard requested but CXX17 is not defined")
+#: R/install.R:0
+msgid "C++17 standard requested but CXX17 is not defined"
+msgstr "Zażądano standardu C++17 ale CXX17 nie jest zdefiniowany"
+
+#. R/install.R: stop("C++98 standard requested but CXX98 is not defined")
+#: R/install.R:0
+msgid "C++98 standard requested but CXX98 is not defined"
+msgstr "Zażądano standardu C++98 ale CXX98 nie jest zdefiniowany"
 
 #. R/utils.R: stop(conditionMessage(e), "\nCall sequence:\n", paste(.eval_with_capture(traceback(tb))$output,     collapse = "\n"), call. = FALSE)
 #: R/utils.R:0
@@ -414,6 +454,11 @@ msgstr "Powtórzone wpisy '\\argument' w obiekcie dokumentacji '%s':"
 msgid "EOF marker not found"
 msgstr "nie znaleziono znacznika EOF"
 
+#. R/testing.R: message(" ERROR")
+#: R/testing.R:0
+msgid "ERROR"
+msgstr "BŁĄD"
+
 #. R/install.R: stop("ERROR: '--merge-multiarch' applies only to a single tarball",     call. = FALSE)
 #: R/install.R:0
 msgid "ERROR: '--merge-multiarch' applies only to a single tarball"
@@ -534,6 +579,7 @@ msgstr "Pola z wartościami innymi niż ASCII:"
 #. R/QC.R: gettextf("File %s:", sQuote(f))
 #. R/QC.R: gettextf("File %s:", sQuote(f))
 #. R/QC.R: gettextf("File %s:", sQuote(f))
+#. R/sotools.R: gettextf("File %s:", sQuote(attr(x, "file")))
 #. R/sotools.R: gettextf("File %s:", sQuote(attr(x, "file")))
 #. R/sotools.R: gettextf("File %s:", sQuote(attr(x, "file")))
 #: R/QC.R:0 R/sotools.R:0
@@ -779,6 +825,12 @@ msgstr ""
 msgid "NEWS file not found"
 msgstr "plik 'NEWS' nie został znaleziony"
 
+#. R/testing.R: message(" NOTE")
+#. R/testing.R: message(" NOTE")
+#: R/testing.R:0
+msgid "NOTE"
+msgstr "UWAGA"
+
 #. R/QC.R: gettextf("Namespace in Imports field not imported from: %s",     sQuote(xx))
 #: R/QC.R:0
 msgid "Namespace in Imports field not imported from: %s"
@@ -910,8 +962,8 @@ msgstr "Jedynie operatory '<=' oraz '>=' są możliwe."
 msgid "PDF header not found"
 msgstr "nie znaleziono nagłówka PDF"
 
-#. R/pkgDepends.R: gettextf("Package '%s' had its dependencies reduced to a minimal set.",     pkgMtrx[1, ])
-#: R/pkgDepends.R:0
+#. R/tools-deprecated.R: gettextf("Package '%s' had its dependencies reduced to a minimal set.",     pkgMtrx[1, ])
+#: R/tools-deprecated.R:0
 msgid "Package '%s' had its dependencies reduced to a minimal set."
 msgstr "Pakiet '%s' swoje zależności zredukował do najmniejszego zbioru."
 
@@ -1026,10 +1078,22 @@ msgstr "Pliki Rd z powtórzonym aliasem '%s':"
 msgid "Rd files with duplicated name '%s':"
 msgstr "Pliki Rd z powtórzoną nazwą '%s':"
 
+#. R/Rd.R: gettextf("Rd macro package '%s' is not installed.", p)
+#: R/Rd.R:0
+msgid "Rd macro package '%s' is not installed."
+msgstr "Pakiet '%s' dla makr Rd nie jest zainstalowany."
+
 #. R/Rd.R: stop("Rd object required")
 #: R/Rd.R:0
 msgid "Rd object required"
 msgstr "Wymagany jest obiekt Rd"
+
+#. R/build.R: warning(sQuote("inst/doc"), ngettext(sum(!copied), " file\n",     " files\n"), strwrap(paste(sQuote(basename(tocopy[!copied])),     collapse = ", "), indent = 4, exdent = 2), "\n  ignored as vignettes have been rebuilt.",     "\n  Run R CMD build with --no-build-vignettes to prevent rebuilding.",     call. = FALSE)
+#: R/build.R:0
+msgid "Run R CMD build with --no-build-vignettes to prevent rebuilding."
+msgstr ""
+"Uruchom 'R CMD build' z opcją '--no-build-vignettes' aby wyłączyć "
+"odtwarzanie ilustracji."
 
 #. R/Vignettes.R: message("  Running ", sQuote(file))
 #: R/Vignettes.R:0
@@ -1134,6 +1198,11 @@ msgstr "Testowanie przykładów dla pakietu %s"
 #: R/bibstyle.R:0
 msgid "The default JSS style may not be modified."
 msgstr "Domyślny styl JSS nie może być zmieniony."
+
+#. R/QC.R: stop("The package 'dir' argument must be of length 1")
+#: R/QC.R:0
+msgid "The package 'dir' argument must be of length 1"
+msgstr "argument 'dir' pakiety musi być długości 1"
 
 #. R/QC.R: gettext("These fields must have ASCII values.")
 #: R/QC.R:0
@@ -1348,15 +1417,14 @@ msgstr "argument 'outfile' musi być łańcuchem tekstowym lub połączeniem"
 #. R/QC.R: stop("argument 'package' must be of length 1")
 #. R/QC.R: stop("argument 'package' must be of length 1")
 #. R/QC.R: stop("argument 'package' must be of length 1")
-#. R/QC.R: stop("argument 'package' must be of length 1")
 #. R/Rd.R: stop("argument 'package' must be of length 1")
 #. R/Vignettes.R: stop("argument 'package' must be of length 1")
 #: R/QC.R:0 R/Rd.R:0 R/Vignettes.R:0
 msgid "argument 'package' must be of length 1"
 msgstr "argument 'package' musi być długości 1"
 
-#. R/pkgDepends.R: stop("argument 'pkg' must be of length 1")
-#: R/pkgDepends.R:0
+#. R/tools-deprecated.R: stop("argument 'pkg' must be of length 1")
+#: R/tools-deprecated.R:0
 msgid "argument 'pkg' must be of length 1"
 msgstr "argument 'pkg' musi być długości 1"
 
@@ -1385,8 +1453,8 @@ msgstr "próba wybrania mniej niż jednego elementu"
 msgid "attempting to select more than one element"
 msgstr "próba wybrania więcej niż jednego elementu"
 
-#. R/pkgDepends.R: stop("bad operand")
-#: R/pkgDepends.R:0
+#. R/tools-deprecated.R: stop("bad operand")
+#: R/tools-deprecated.R:0
 msgid "bad operand"
 msgstr "zły operand"
 
@@ -1515,10 +1583,10 @@ msgstr "nie można odczytać strumienia obiektu"
 msgid "cannot read xref table"
 msgstr "nie można odczytać tabeli 'xref'"
 
-#. R/utils.R: stop("cannot source package code\n", conditionMessage(e), call. = FALSE)
+#. R/utils.R: stop("cannot source package code:\n", conditionMessage(e), call. = FALSE)
 #: R/utils.R:0
-msgid "cannot source package code"
-msgstr "nie można wykonać kodu pakietu"
+msgid "cannot source package code:"
+msgstr "nie można wykonać kodu pakietu:"
 
 #. R/admin.R: warning("cannot turn off locale-specific sorting via LC_COLLATE")
 #: R/admin.R:0
@@ -1659,6 +1727,13 @@ msgstr "pobieranie wstecznych zależności ..."
 msgid "duplicated files in '%s' field:"
 msgstr "powtórzone pliki w polu '%s':"
 
+#. R/check.R: gettextf("elapsed-time limit of %g %s reached for sub-process",     round(tlim/3600, 1L), "hours")
+#. R/check.R: gettextf("elapsed-time limit of %g %s reached for sub-process",     round(tlim/60, 1L), "minutes")
+#. R/check.R: gettextf("elapsed-time limit of %g %s reached for sub-process",     tlim, "seconds")
+#: R/check.R:0
+msgid "elapsed-time limit of %g %s reached for sub-process"
+msgstr "granica upływu czasu o wartości %g %s został osiągnięta dla podprocesu"
+
 #. R/install.R: warning("empty 'data' directory", call. = FALSE)
 #: R/install.R:0
 msgid "empty 'data' directory"
@@ -1684,6 +1759,11 @@ msgstr "rozszerzanie %s"
 msgid "failed to start the httpd server"
 msgstr "nie udało się uruchomić serwera httpd"
 
+#. R/build.R: ngettext(sum(!copied), " file\n", " files\n")
+#: R/build.R:0
+msgid "file"
+msgstr "plik"
+
 #. R/QC.R: gettextf("file '%s' does not exist", file)
 #. R/QC.R: gettextf("file '%s' does not exist", file)
 #. R/utils.R: gettextf("file '%s' does not exist", x)
@@ -1702,6 +1782,11 @@ msgstr "plik '%s' nie jest poprawnym formatem DCF"
 #: R/Vignettes.R:0
 msgid "file '%s' not found"
 msgstr "plik '%s' nie został znaleziony"
+
+#. R/build.R: ngettext(sum(!copied), " file\n", " files\n")
+#: R/build.R:0
+msgid "files"
+msgstr "pliki"
 
 #. R/admin.R: gettextf("\nfiles in '%s' field missing from '%s':", collationField,     codeDir)
 #: R/admin.R:0
@@ -1728,6 +1813,16 @@ msgstr "tworzenie symboli debugowania (%s)"
 msgid "httpd server disabled by R_DISABLE_HTTPD"
 msgstr "serwer httpd wyłączony przez R_DISABLE_HTTPD"
 
+#. R/build.R: warning(sQuote("inst/doc"), ngettext(sum(!copied), " file\n",     " files\n"), strwrap(paste(sQuote(basename(tocopy[!copied])),     collapse = ", "), indent = 4, exdent = 2), "\n  ignored as vignettes have been rebuilt.",     "\n  Run R CMD build with --no-build-vignettes to prevent rebuilding.",     call. = FALSE)
+#: R/build.R:0
+msgid "ignored as vignettes have been rebuilt."
+msgstr "zostały zignorowane ponieważ ilustracje zostały odtworzone."
+
+#. R/build.R: sQuote("inst/doc")
+#: R/build.R:0
+msgid "inst/doc"
+msgstr "inst/doc"
+
 #. R/pdftools.R: stop("invalid index in object stream lookup")
 #: R/pdftools.R:0
 msgid "invalid index in object stream lookup"
@@ -1744,7 +1839,8 @@ msgid "invalid package layout"
 msgstr "niepoprawna struktura pakietu"
 
 #. R/RdConv2.R: gettextf("invalid value for '%s' : %s", opt, oldval)
-#: R/RdConv2.R:0
+#. R/makeLazyLoad.R: gettextf("invalid value for '%s' : %s", "compress", "should be FALSE, TRUE, 2 or 3")
+#: R/RdConv2.R:0 R/makeLazyLoad.R:0
 msgid "invalid value for '%s' : %s"
 msgstr "niepoprawna wartość dla '%s' : %s"
 
@@ -1752,11 +1848,6 @@ msgstr "niepoprawna wartość dla '%s' : %s"
 #: R/build.R:0
 msgid "invalid value for '--compact-vignettes', assuming %s"
 msgstr "Niepoprawna wartość '--compact-vignettes', zakładanie %s"
-
-#. R/makeLazyLoad.R: stop("invalid value for 'compress': should be FALSE, TRUE, 2 or 3")
-#: R/makeLazyLoad.R:0
-msgid "invalid value for 'compress': should be FALSE, TRUE, 2 or 3"
-msgstr "niepoprawna wartość dla 'compress': powinno być FALSE, TRUE, 2 lub 3"
 
 #. R/admin.R: stop("loading failed", call. = FALSE)
 #: R/admin.R:0
@@ -1828,6 +1919,11 @@ msgstr "nie znaleziono przykładów dla pakietu %s"
 msgid "no inputs"
 msgstr "brak wejść"
 
+#. R/sotools.R: message("no native symbols were extracted")
+#: R/sotools.R:0
+msgid "no native symbols were extracted"
+msgstr "żadne natywne symbole nie zostały wydobyte"
+
 #. R/checktools.R: message("no packages to check")
 #: R/checktools.R:0
 msgid "no packages to check"
@@ -1879,8 +1975,8 @@ msgid "package %s successfully unpacked and MD5 sums checked"
 msgstr ""
 "pakiet %s został pomyślnie rozpakowany oraz sumy MD5 zostały sprawdzone"
 
-#. R/pkgDepends.R: gettextf("package '%s' was not found", pkg)
-#: R/pkgDepends.R:0
+#. R/tools-deprecated.R: gettextf("package '%s' was not found", pkg)
+#: R/tools-deprecated.R:0
 msgid "package '%s' was not found"
 msgstr "pakiet '%s' nie został znaleziony"
 
@@ -1928,7 +2024,7 @@ msgstr "błąd przetwarzania w pliku '%s':"
 
 #. R/QC.R: gettextf("parse error in file '%s':\n%s", file, .massage_file_parse_error_message(conditionMessage(e)))
 #. R/QC.R: gettextf("parse error in file '%s':\n%s", file, .massage_file_parse_error_message(conditionMessage(e)))
-#. R/QC.R: gettextf("parse error in file '%s':\n%s", f, .massage_file_parse_error_message(conditionMessage(e)))
+#. R/QC.R: gettextf("parse error in file '%s':\n%s", f, msg)
 #. R/QC.R: gettextf("parse error in file '%s':\n%s", summary(files)$description,     .massage_file_parse_error_message(conditionMessage(e)))
 #: R/QC.R:0
 msgid ""
@@ -1948,7 +2044,10 @@ msgstr "przetwarzanie pliku %s"
 #. R/doitools.R: sprintf("processing %s", p)
 #. R/doitools.R: sprintf("processing %s", d)
 #. R/pdftools.R: sprintf("processing %s", paste(names(entry), entry, collapse = " "))
+#. R/urltools.R: sprintf("processing %s", .file_path_relative_to_dir(f, dir))
+#. R/urltools.R: sprintf("processing %s", .file_path_relative_to_dir(f, dir))
 #. R/urltools.R: sprintf("processing %s", p)
+#. R/urltools.R: sprintf("processing %s", u)
 #. R/urltools.R: sprintf("processing %s", u)
 #. R/utils.R: sprintf("processing %s", basename(dir))
 #: R/admin.R:0 R/doitools.R:0 R/pdftools.R:0 R/urltools.R:0 R/utils.R:0
@@ -2050,8 +2149,8 @@ msgstr "test '%s' nie jest dostępny"
 msgid "testing '%s' failed"
 msgstr "testowanie '%s' nie powiodło się"
 
-#. R/pkgDepends.R: warning("the 'lib.loc' argument has always been unused and is deprecated now")
-#: R/pkgDepends.R:0
+#. R/tools-deprecated.R: warning("the 'lib.loc' argument has always been unused and is deprecated now")
+#: R/tools-deprecated.R:0
 msgid "the 'lib.loc' argument has always been unused and is deprecated now"
 msgstr "argument 'lib.loc' nigdy nie był używany i teraz jest przestarzały"
 
@@ -2067,6 +2166,16 @@ msgstr "nie ma pakietu o nazwie '%s'"
 #: R/makeLazyLoad.R:0
 msgid "this cannot be used for package 'base'"
 msgstr "to nie może zostać użyte dla pakietu 'base'"
+
+#. R/sotools.R: warning("this requires 'nm' to be on the PATH")
+#: R/sotools.R:0
+msgid "this requires 'nm' to be on the PATH"
+msgstr "'nm' musi być określowe w ścieżce środowiskowej PATH"
+
+#. R/sotools.R: warning("this requires 'objdump.exe' to be on the PATH")
+#: R/sotools.R:0
+msgid "this requires 'objdump.exe' to be on the PATH"
+msgstr "'objdump.exe' musi być określowe w ścieżce środowiskowej PATH"
 
 #. R/install.R: stop("this seems to be a bundle -- and they are defunct")
 #: R/install.R:0
@@ -2118,6 +2227,11 @@ msgstr "nie można zapisać plików kodu"
 msgid "unimplemented encoding"
 msgstr "niezaimplementowana strona kodowa"
 
+#. R/toHTML.R: warning("unknown header specification")
+#: R/toHTML.R:0
+msgid "unknown header specification"
+msgstr "nieznana specyfikacja nagłówka"
+
 #. R/pdftools.R: gettextf("unsupported %s predictor %d", "flatedecode", predictor)
 #: R/pdftools.R:0
 msgid "unsupported %s predictor %d"
@@ -2150,6 +2264,8 @@ msgstr ""
 "nazwa pliku ilustracji '%s' nie zgadza się z żadną ze ścieżek nazwy pliku "
 "'%s'"
 
+#. R/checktools.R: stop("wrong class")
+#. R/checktools.R: stop("wrong class")
 #. R/pdftools.R: stop("wrong class")
 #. R/pdftools.R: stop("wrong class")
 #. R/pdftools.R: stop("wrong class")
@@ -2158,7 +2274,7 @@ msgstr ""
 #. R/pdftools.R: stop("wrong class")
 #. R/pdftools.R: stop("wrong class")
 #. R/pdftools.R: stop("wrong class")
-#: R/pdftools.R:0
+#: R/checktools.R:0 R/pdftools.R:0
 msgid "wrong class"
 msgstr "błędna klasa"
 
@@ -2189,6 +2305,14 @@ msgstr "musisz określić argument 'package' lub 'dir'"
 msgid "you must specify 'package', 'dir' or 'file'"
 msgstr "musisz określić 'package', 'dir' lub 'file'"
 
+#. R/build.R: ngettext(sum(!copied), " file\n", " files\n")
+#: R/build.R:0
+msgid " file\n"
+msgid_plural " files\n"
+msgstr[0] ": poniższy plik\n"
+msgstr[1] ": poniższe pliki\n"
+msgstr[2] ": poniższe pliki\n"
+
 #. R/testing.R: ngettext(sum(res), "%d of the package tests failed", "%d of the package tests failed",     domain = "R-tools")
 #: R/testing.R:0
 msgid "%d of the package tests failed"
@@ -2196,6 +2320,14 @@ msgid_plural "%d of the package tests failed"
 msgstr[0] "%d z testów pakietu nie powiodło się"
 msgstr[1] "%d z testów pakietu nie powiodło się"
 msgstr[2] "%d z testów pakietu nie powiodło się"
+
+#. R/toHTML.R: ngettext(len, "Corresponding BibTeX entry:", "Corresponding BibTeX entries:")
+#: R/toHTML.R:0
+msgid "Corresponding BibTeX entry:"
+msgid_plural "Corresponding BibTeX entries:"
+msgstr[0] "Odpowiedni wpis BibTeX:"
+msgstr[1] "Odpowiednie wpisy BibTeX:"
+msgstr[2] "Odpowiednie wpisy BibTeX:"
 
 #. R/QC.R: ngettext(length(x$bad_refs), "Found a .Internal call in methods for the following reference class:",     "Found .Internal calls in methods for the following reference classes:")
 #: R/QC.R:0
@@ -2454,11 +2586,12 @@ msgstr[0] "nie można przekodować %s linia %s"
 msgstr[1] "nie można przekodować %s linie %s"
 msgstr[2] "nie można przekodować %s linie %s"
 
+#~ msgid "invalid value for 'compress': should be FALSE, TRUE, 2 or 3"
+#~ msgstr ""
+#~ "niepoprawna wartość dla 'compress': powinno być FALSE, TRUE, 2 lub 3"
+
 #~ msgid "assertCondition: caught %s"
 #~ msgstr "assertCondition: przechwycono %s"
-
-#~ msgid ","
-#~ msgstr ","
 
 #~ msgid "installing dependencies %s"
 #~ msgstr "instalowanie zależności %s"

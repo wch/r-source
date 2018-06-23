@@ -47,7 +47,9 @@ normalizePath(path, winslash = "\\\\", mustWork = NA)
 \note{
   The canonical form of paths may not be what you expect.  For example,
   on macOS absolute paths such as \file{/tmp} and \file{/var} are
-  symbolic links.
+  symbolic links. On Linux, a path produced by bash process substitution is
+  a symbolic link (such as \file{/proc/fd/63}) to a pipe and there is no
+  canonical form of such path.
 }
 
 \value{

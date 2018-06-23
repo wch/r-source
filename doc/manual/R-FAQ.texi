@@ -3409,7 +3409,7 @@ options(download.file.method = "libcurl", url.method = "libcurl")
 (Method @code{"wininet"} is the default on Windows as from R 3.2.2.)
 
 Note that the @code{"libcurl"} method may or may not have been compiled
-in.  In the case that it was not, i.e.. @code{capabilities("libcurl") ==
+in.  In the case that it was not, i.e.@: @code{capabilities("libcurl") ==
 FALSE}, we recommend method @code{"wget"} on Linux and @code{"curl"} on
 macOS.  It is possible that system versions of @code{"libcurl"},
 @command{wget} or @command{curl} may have been compiled without

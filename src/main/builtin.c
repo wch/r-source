@@ -177,7 +177,7 @@ SEXP attribute_hidden do_onexit(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    else {
                 if (after) {
                     SEXP codelist = PROTECT(CONS(code, R_NilValue));
-                    ctxt->conexit = listAppend(duplicate(oldcode), codelist);
+                    ctxt->conexit = listAppend(shallow_duplicate(oldcode), codelist);
                     UNPROTECT(1);
                 } else {
                     ctxt->conexit = CONS(code, oldcode);
@@ -917,6 +917,7 @@ SEXP xlengthgets(SEXP x, R_xlen_t len)
     }
     if (isVector(x) && xnames != R_NilValue)
 	setAttrib(rval, R_NamesSymbol, names);
+    // *not* keeping "class": in line with  x[1:k]
     UNPROTECT(2);
     return rval;
 }

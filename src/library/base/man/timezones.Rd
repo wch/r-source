@@ -130,8 +130,8 @@ OlsonNames(tzdir = NULL)
   (Australian) Eastern Standard Time.)  The designation can also be an
   optional colon prepended to the path to a file giving complied zone
   information (and the examples above are all files in a system-specific
-  location).  See \url{http://www.twinsun.com/tz/tz-link.htm} for more
-  details and references.  By convention, regions with a unique
+  location).  See \url{https://data.iana.org/time-zones/tz-link.html}
+  for more details and references.  By convention, regions with a unique
   time-zone history since 1970 have specific names in the database, but
   those with different earlier histories may not.  Each time zone has
   one or two (the second for DST) \emph{abbreviations} used when

@@ -1,10 +1,11 @@
 % File src/library/base/man/unlist.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{unlist}
 \title{Flatten Lists}
+\alias{unlist}
 \description{
   Given a list structure \code{x}, \code{unlist} simplifies it to
   produce a vector which contains all the atomic components
@@ -13,7 +14,6 @@
 \usage{
 unlist(x, recursive = TRUE, use.names = TRUE)
 }
-\alias{unlist}
 \arguments{
   \item{x}{an \R object, typically a list or vector.}
   \item{recursive}{logical.  Should unlisting be applied to list
@@ -30,7 +30,8 @@ unlist(x, recursive = TRUE, use.names = TRUE)
   first level items in \code{x}.
 
   Factors are treated specially.  If all non-list elements of \code{x}
-  are factors (or ordered factors) then the result will be a factor with
+  are \code{\link{factor}} (or ordered factor) objects then the result
+  will be a factor with
   levels the union of the level sets of the elements, in the order the
   levels occur in the level sets of the elements (which means that if
   all the elements have the same level set, that is the level set of the

@@ -1,6 +1,6 @@
 % File src/library/base/man/options.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{options}
@@ -54,11 +54,15 @@ getOption(x, default = NULL)
   For compatibility with S there is a visible object \code{.Options} whose
   value is a pairlist containing  the current \code{options()} (in no
   particular order).  Assigning to it will make a local copy and not
-  change the original.
+  change the original. (\emph{Using} it however is faster than calling
+  \code{options()}).
+
+  An option set to \code{NULL} is indistinguishable from a non existing
+  option.
 }
 \value{
   For \code{getOption}, the current value set for option \code{x}, or
-  \code{NULL} if the option is unset.
+  \code{default} (which defaults to \code{NULL}) if the option is unset.
 
   For \code{options()}, a list of all set options sorted by name.  For
   \code{options(name)}, a list of length one containing the set value,
@@ -76,8 +80,8 @@ getOption(x, default = NULL)
     \item{\code{askYesNo}:}{a function (typically set by a front-end)
       to ask the user binary response functions in a consistent way,
       or a vector of strings used by \code{\link{askYesNo}} to use
-      as default responses for such questions.}      
-    
+      as default responses for such questions.}
+
     \item{\code{browserNLdisabled}:}{logical: whether newline is
       disabled as a synonym for \code{"n"} in the browser.}
 
@@ -121,7 +125,7 @@ getOption(x, default = NULL)
       and upon entry to a function whose debugging flag is set.
       Initially unset, and only used if set to a positive integer.}
 
-    \item{\code{digits}:}{controls the number of significant digits to
+    \item{\code{digits}:}{controls the number of \emph{significant} (see \code{\link{signif}}) digits to
       print when printing numeric values.  It is a suggestion only.
       Valid values are 1\dots{}22 with default 7.  See the note in
       \code{\link{print.default}} about values greater than 15.}
@@ -173,6 +177,19 @@ getOption(x, default = NULL)
     \item{\code{interrupt}:}{a function taking no arguments to be called
       on a user interrupt if the interrupt condition is not otherwise
       handled.}
+
+    \item{\code{keep.parse.data}:}{When internally storing source code
+      (\code{keep.source} is TRUE), also store parse data.  Parse data can
+      then be retrieved with \code{\link{getParseData}()} and used e.g.  for
+      spell checking of string constants or syntax highlighting.  The value
+      has effect only when internally storing source code (see
+      \code{keep.source}).  The default is \code{TRUE}.}
+
+    \item{\code{keep.parse.data.pkgs}:}{As for \code{keep.parse.data}, used
+      only when packages are installed.  Defaults to \code{FALSE} unless the
+      environment variable \env{R_KEEP_PKG_PARSE_DATA} is set to \code{yes}. 
+      The space overhead of parse data can be substantial even after
+      compression and it causes performance overhead when loading packages.}
 
     \item{\code{keep.source}:}{When \code{TRUE}, the source code for
       functions (newly defined or loaded) is stored internally
@@ -266,7 +283,7 @@ getOption(x, default = NULL)
       \code{"a4"}, or \code{"letter"} in US and Canadian locales.
 #endif
     }
-    
+
     \item{\code{PCRE_limit_recursion}:}{Logical: should
       \code{\link{grep}(perl = TRUE)} and similar limit the maximal
       recursion allowed when matching?  PCRE can be built not to use a
@@ -277,7 +294,7 @@ getOption(x, default = NULL)
       true, the limit is reduced using \R's estimate of the C stack size
       available (if known), otherwise 10000.  If \code{NA}, the limit is
       imposed only if any input string has 1000 or more bytes.}
-       
+
      \item{\code{PCRE_study}:}{Logical or integer: should
       \code{\link{grep}(perl = TRUE)} and similar \sQuote{study} the
       patterns?  Either logical or a numerical threshold for the minimum
@@ -289,7 +306,7 @@ getOption(x, default = NULL)
 	TRUE)}, \code{\link{strsplit}(perl = TRUE)} and similar make use
       of PCRE's Just-In-Time compiler for studied patterns, if
       available?  Missing values are treated as false.}
-      
+
     \item{\code{pdfviewer}:}{default PDF viewer.
       The default is set from the environment variable \env{R_PDFVIEWER},
 #ifdef unix
@@ -568,9 +585,9 @@ getOption(x, default = NULL)
       \code{log} in \code{\link{plot.spec}}.}
   }
 }
-\section{Options set in package utils}{
-  These will be set when package \pkg{utils} (or its namespace)
-  is loaded if not already set.
+\section{Options set (or used) in package utils}{
+  These will be set (apart from \code{Ncpus}) when package \pkg{utils}
+  (or its namespace) is loaded if not already set.
   \describe{
     \item{\code{BioC_mirror}:}{The URL of a Bioconductor mirror
       for use by \code{\link{setRepositories}},
@@ -668,6 +685,12 @@ getOption(x, default = NULL)
       \code{\link{select.list}}, \code{\link{chooseCRANmirror}},
       \code{\link{setRepositories}} and to select from multiple (text)
       help files in \code{\link{help}}.}
+
+    \item{\code{Ncpus}:}{an integer \eqn{n \ge 1}{n >= 1}, used in
+      \code{\link{install.packages}} as default for the number of cpus
+      to use in a potentially parallel installation, as
+      \code{Ncpus = getOption("Ncpus", 1L)}, i.e., when unset is
+      equivalent to a setting of 1.}
 
     \item{\code{pkgType}:}{The default type of packages to be downloaded
       and installed -- see \code{\link{install.packages}}.

@@ -1,7 +1,7 @@
 #  File src/library/graphics/R/matplot.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -32,6 +32,7 @@ matplot <- function(x, y, type = "p",
 		    lty = 1:5, lwd = 1, lend = par("lend"),
                     pch = NULL, col = 1:6, cex = NULL, bg = NA,
 		    xlab = NULL, ylab = NULL, xlim = NULL, ylim = NULL,
+		    log = "",
 		    ..., add = FALSE, verbose = getOption("verbose"))
 {
     paste.ch <- function(chv) paste0('"',chv,'"', collapse=" ")
@@ -73,8 +74,6 @@ matplot <- function(x, y, type = "p",
 		paste0(" col= (", paste.ch(col), ")"),
 		paste0(" pch= (", paste.ch(pch), ")"),
 		" ...\n", domain=NA)
-    ii <- match("log", names(xargs <- list(...)), nomatch = 0L)
-    log <- if (ii != 0) xargs[[ii]]
     xy <- xy.coords(x, y, xlabel, ylabel, log = log)
     xlab <- if (is.null(xlab)) xy$xlab else xlab
     ylab <- if (is.null(ylab)) xy$ylab else ylab
@@ -98,7 +97,7 @@ matplot <- function(x, y, type = "p",
 	plot(x[, 1L],y[, 1L], type = type[1L], xlab = xlab, ylab = ylab,
 	     xlim  =  xlim, ylim  =  ylim, lty = lty[1L], lwd = lwd[1L],
              lend = lend[1L], pch = pch[1L], col = col[1L], cex = cex[1L],
-             bg = bg[1L], ...)
+             bg = bg[1L], log = log, ...)
     }
     for (i in ii)
 	lines(x[,i], y[,i], type = type[i], lty = lty[i], lwd = lwd[i],

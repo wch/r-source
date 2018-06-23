@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-01 10:28-0700\n"
+"POT-Creation-Date: 2018-03-29 07:06-0700\n"
 "PO-Revision-Date: 2012-10-26 22:30+0330\n"
 "Last-Translator: Seyed Mahmood Taghavi Shahri <taghavi_m@razi.tums.ac.ir>\n"
 "Language-Team: Persian\n"
@@ -16,24 +16,24 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/gnuwin32/console.c:1167 src/gnuwin32/console.c:1209
+#: src/gnuwin32/console.c:1170 src/gnuwin32/console.c:1212
 msgid "Not enough memory"
 msgstr "حافظه کافی نیست"
 
-#: src/gnuwin32/console.c:1256 src/gnuwin32/console.c:1260
+#: src/gnuwin32/console.c:1259 src/gnuwin32/console.c:1263
 msgid "Insufficient memory: text not copied to the clipboard"
 msgstr "به علت کمبود حافظه متن در کلیپ‌بود کپی نشد"
 
-#: src/gnuwin32/console.c:1296 src/extra/graphapp/clipboard.c:53
+#: src/gnuwin32/console.c:1299 src/extra/graphapp/clipboard.c:53
 #: src/extra/graphapp/clipboard.c:79
 msgid "Unable to open the clipboard"
 msgstr "ناتوان در باز کردن کلیپ‌بود"
 
-#: src/gnuwin32/console.c:1919
+#: src/gnuwin32/console.c:1922
 msgid "Insufficient memory. Please close the console"
 msgstr "به علت کمبود حافظه لطفا کنسول را ببندید"
 
-#: src/gnuwin32/console.c:1974 src/gnuwin32/console.c:2028
+#: src/gnuwin32/console.c:1977 src/gnuwin32/console.c:2031
 #: src/gnuwin32/preferences.c:333
 #, c-format
 msgid ""
@@ -43,24 +43,24 @@ msgstr ""
 ".پیدا نشد %s-%d-%d فونت \n"
 "از فونت ثابت سیستم استفاده می‌شود"
 
-#: src/gnuwin32/console.c:2133
+#: src/gnuwin32/console.c:2136
 msgid "Save selection to"
 msgstr "ذخیره متن منتخب"
 
-#: src/gnuwin32/console.c:2135
+#: src/gnuwin32/console.c:2138
 msgid "Save console contents to"
 msgstr "ذخیره تمام متن"
 
-#: src/gnuwin32/console.c:2234
+#: src/gnuwin32/console.c:2237
 msgid "Scrolling.\n"
 msgstr "راهنمای پیمایش کنسول \n"
 
-#: src/gnuwin32/console.c:2235
+#: src/gnuwin32/console.c:2238
 msgid "  Keyboard: PgUp, PgDown, Ctrl+Arrows, Ctrl+Home, Ctrl+End,\n"
 msgstr ""
 " و کنترل کلیدهای جهتی Ctrl+End و Ctrl+Home و PgDown و PgUp :صفحه‌کلید \n"
 
-#: src/gnuwin32/console.c:2236
+#: src/gnuwin32/console.c:2239
 msgid ""
 "  Mouse: use the scrollbar(s).\n"
 "\n"
@@ -68,73 +68,73 @@ msgstr ""
 " موشی: از میله لغزشی که در لبه راست یا پایین کنسول ظاهر می‌شود استفاده کنید \n"
 "\n"
 
-#: src/gnuwin32/console.c:2237
+#: src/gnuwin32/console.c:2240
 msgid "Editing.\n"
 msgstr "راهنمای ویرایش در کنسول \n"
 
-#: src/gnuwin32/console.c:2238
+#: src/gnuwin32/console.c:2241
 msgid "  Moving the cursor: \n"
 msgstr "برای جابجایی مکان‌نمای چشمک‌زن: \n"
 
-#: src/gnuwin32/console.c:2239
+#: src/gnuwin32/console.c:2242
 msgid "     Left arrow or Ctrl+B: move backward one character;\n"
 msgstr " مکان‌نمای چشمک‌زن را یک حرف به عقب می‌برد Ctrl+B کلید جهتی چپ یا \n"
 
-#: src/gnuwin32/console.c:2240
+#: src/gnuwin32/console.c:2243
 msgid "     Right arrow or Ctrl+F: move forward one character;\n"
 msgstr " مکان‌نمای چشمک‌زن را یک حرف به جلو می‌برد Ctrl+F کلید جهتی راست یا \n"
 
-#: src/gnuwin32/console.c:2241
+#: src/gnuwin32/console.c:2244
 msgid "     Home or Ctrl+A: go to beginning of line;\n"
 msgstr " مکان‌نمای چشمک‌زن را به ابتدای خط انتقال می‌دهد Ctrl+A یا Home \n"
 
-#: src/gnuwin32/console.c:2242
+#: src/gnuwin32/console.c:2245
 msgid "     End or Ctrl+E: go to end of line;\n"
 msgstr " مکان‌نمای چشمک‌زن را به انتهای خط انتقال می‌دهد Ctrl+E یا End \n"
 
-#: src/gnuwin32/console.c:2243
+#: src/gnuwin32/console.c:2246
 msgid "  History: Up and Down Arrows, Ctrl+P, Ctrl+N\n"
 msgstr ""
 " تاریخچه را نشان می‌دهند Ctrl+N و Ctrl+P کلیدهای جهتی بالا و پایین یا \n"
 
-#: src/gnuwin32/console.c:2244
+#: src/gnuwin32/console.c:2247
 msgid "  Deleting:\n"
 msgstr "برای پاک کردن متن: \n"
 
-#: src/gnuwin32/console.c:2245
+#: src/gnuwin32/console.c:2248
 msgid "     Del or Ctrl+D: delete current character or selection;\n"
 msgstr " حرف (جاری) سمت راست یا محدوده منتخب را پاک می‌کند Ctrl+D یا Del \n"
 
-#: src/gnuwin32/console.c:2246
+#: src/gnuwin32/console.c:2249
 msgid "     Backspace: delete preceding character;\n"
 msgstr " حرف (قبلی) سمت چپ را پاک می‌کند Backspace \n"
 
-#: src/gnuwin32/console.c:2247
+#: src/gnuwin32/console.c:2250
 msgid ""
 "     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"
 msgstr ""
 " از حرف (جاری) سمت راست تا انتهای خط را پاک می‌کند Ctrl+K یا Ctrl+Del \n"
 
-#: src/gnuwin32/console.c:2248
+#: src/gnuwin32/console.c:2251
 msgid "     Ctrl+U: delete all text from current line.\n"
 msgstr " نمام متن خط جاری را پاک می‌کند Ctrl+U \n"
 
-#: src/gnuwin32/console.c:2249
+#: src/gnuwin32/console.c:2252
 msgid "  Copy and paste.\n"
 msgstr "برای کپی و جای گذاری: \n"
 
-#: src/gnuwin32/console.c:2250
+#: src/gnuwin32/console.c:2253
 msgid ""
 "     Use the mouse (with the left button held down) to mark (select) text.\n"
 msgstr ""
 " برای علامت‌گذاری متن (انتخاب) از موشی (با نگه داشتن دکمه چپ) استفاده کنید \n"
 
-#: src/gnuwin32/console.c:2251
+#: src/gnuwin32/console.c:2254
 msgid ""
 "     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
 msgstr " برای کپی متن علامت‌گذاری به کلیپ‌بورد بکار می‌رود Shift+Del یا Ctrl+C \n"
 
-#: src/gnuwin32/console.c:2252
+#: src/gnuwin32/console.c:2255
 msgid ""
 "     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard "
 "(if any)  \n"
@@ -142,27 +142,27 @@ msgstr ""
 " در کنسول برای Shift+Ins یا Ctrl+Y یا Ctrl+V \n"
 " جای گذاری محتوای کلیپ‌بورد (اگر وجود داشته باشد) بکار می‌رود \n"
 
-#: src/gnuwin32/console.c:2253
+#: src/gnuwin32/console.c:2256
 msgid "     to the console, Ctrl+X first copy then paste\n"
 msgstr " از متن کپی گرفته و همزمان جای گذاری می کند Ctrl+X \n"
 
-#: src/gnuwin32/console.c:2254
+#: src/gnuwin32/console.c:2257
 msgid "  Misc:\n"
 msgstr "راهنمای موارد دیگر \n"
 
-#: src/gnuwin32/console.c:2255
+#: src/gnuwin32/console.c:2258
 msgid "     Ctrl+L: Clear the console.\n"
 msgstr " متن کنسول را پاک می‌کند Ctrl+L \n"
 
-#: src/gnuwin32/console.c:2256
+#: src/gnuwin32/console.c:2259
 msgid "     Ctrl+O or INS: Toggle overwrite mode: initially off.\n"
 msgstr " حالت جای‌نوشت را که ابتدائا خاموش است روشن می‌کند Ctrl+O یا INS \n"
 
-#: src/gnuwin32/console.c:2257
+#: src/gnuwin32/console.c:2260
 msgid "     Ctrl+T: Interchange current char with one to the left.\n"
 msgstr " حروف راست و چپ مکان‌نمای چشمک‌زن را با هم عوض می‌کند Ctrl+T \n"
 
-#: src/gnuwin32/console.c:2258
+#: src/gnuwin32/console.c:2261
 msgid ""
 "\n"
 "Note: Console is updated only when some input is required.\n"
@@ -170,7 +170,7 @@ msgstr ""
 "\n"
 " نکته: بطور پیش‌فرض خروجی کنسول غیر لحظه‌ای نمایش داده می‌شود \n"
 
-#: src/gnuwin32/console.c:2259
+#: src/gnuwin32/console.c:2262
 msgid ""
 "  Use Ctrl+W to toggle this feature off/on.\n"
 "\n"
@@ -178,7 +178,7 @@ msgstr ""
 " بکار می‌رود Ctrl+W برای تغییر حالت خروجی به لحظه‌ای و بالعکس \n"
 "\n"
 
-#: src/gnuwin32/console.c:2260
+#: src/gnuwin32/console.c:2263
 msgid ""
 "Use ESC to stop the interpreter.\n"
 "\n"
@@ -186,7 +186,7 @@ msgstr ""
 " برای توقف محاسبات نرم‌افزار بکار می‌رود ESC \n"
 "\n"
 
-#: src/gnuwin32/console.c:2261
+#: src/gnuwin32/console.c:2264
 msgid ""
 "TAB starts completion of the current word.\n"
 "\n"
@@ -194,11 +194,11 @@ msgstr ""
 " در هنگام تایپ دستورات باعث کامل نمودن نام اشیاء و توابع می‌شود TAB \n"
 "\n"
 
-#: src/gnuwin32/console.c:2262
+#: src/gnuwin32/console.c:2265
 msgid "Standard Windows hotkeys can be used to switch to the\n"
 msgstr " با کلیدهای تعریف شده در ویندوز می‌توان بین پنجره‌ها جابه‌جا شد \n"
 
-#: src/gnuwin32/console.c:2263
+#: src/gnuwin32/console.c:2266
 msgid "graphics device (Ctrl+Tab or Ctrl+F6 in MDI, Alt+Tab in SDI)"
 msgstr " SDI در حالت Alt+Tab و MDI در حالت Ctrl+F6 یا Ctrl+Tab"
 
@@ -225,8 +225,8 @@ msgstr "را ذخیره کرد '%s' نمی‌توان فایل"
 msgid "Save script as"
 msgstr "ذخیره دست‌نوشته به عنوان"
 
-#: src/gnuwin32/editor.c:379 src/gnuwin32/editor.c:696
-#: src/gnuwin32/pager.c:430 src/gnuwin32/rui.c:1076
+#: src/gnuwin32/editor.c:379 src/gnuwin32/editor.c:696 src/gnuwin32/pager.c:430
+#: src/gnuwin32/rui.c:1076
 msgid "Open script"
 msgstr "باز کردن دست‌نوشته"
 
@@ -291,9 +291,9 @@ msgstr "واگرد"
 msgid "Cut"
 msgstr "برش"
 
-#: src/gnuwin32/editor.c:632 src/gnuwin32/editor.c:752
-#: src/gnuwin32/pager.c:304 src/gnuwin32/pager.c:477 src/gnuwin32/rui.c:859
-#: src/gnuwin32/rui.c:1088 src/gnuwin32/rui.c:1144
+#: src/gnuwin32/editor.c:632 src/gnuwin32/editor.c:752 src/gnuwin32/pager.c:304
+#: src/gnuwin32/pager.c:477 src/gnuwin32/rui.c:859 src/gnuwin32/rui.c:1088
+#: src/gnuwin32/rui.c:1144
 msgid "Copy"
 msgstr "کپی"
 
@@ -306,9 +306,8 @@ msgstr "جای گذاری"
 msgid "Delete"
 msgstr "حذف"
 
-#: src/gnuwin32/editor.c:636 src/gnuwin32/editor.c:758
-#: src/gnuwin32/pager.c:307 src/gnuwin32/pager.c:483 src/gnuwin32/rui.c:866
-#: src/gnuwin32/rui.c:1149
+#: src/gnuwin32/editor.c:636 src/gnuwin32/editor.c:758 src/gnuwin32/pager.c:307
+#: src/gnuwin32/pager.c:483 src/gnuwin32/rui.c:866 src/gnuwin32/rui.c:1149
 msgid "Select all"
 msgstr "انتخاب همه"
 
@@ -409,7 +408,7 @@ msgstr "ناتوان در ایجاد پنجره ویرایشگر دست‌نوش
 msgid "Untitled"
 msgstr "بدون عنوان"
 
-#: src/gnuwin32/extra.c:825
+#: src/gnuwin32/extra.c:844
 msgid "Select file"
 msgstr "انتخاب پرونده"
 
@@ -777,7 +776,7 @@ msgstr "نمایش مسیرهای در دسترس"
 msgid "Console"
 msgstr "راهنمای کنسول"
 
-#: src/gnuwin32/rui.c:1251
+#: src/gnuwin32/rui.c:1248
 msgid "'mname' is limited to 1000 bytes"
 msgstr "به 1000 بایت محدود می‌باشد 'mname'"
 
@@ -822,7 +821,7 @@ msgstr "منو پیدا نشد"
 msgid "menu or item does not exist"
 msgstr "منو یا گزینه موجود نیست"
 
-#: src/gnuwin32/system.c:446
+#: src/gnuwin32/system.c:447
 msgid "Save workspace image?"
 msgstr "فضای کار در مکان پوشه کاری ذخیره شود؟"
 
@@ -1041,7 +1040,7 @@ msgid "Enhanced metafiles"
 msgstr "Metafile ذخیره تصویر در قالب"
 
 #: src/library/grDevices/src/devWindows.c:1007
-#: src/library/grDevices/src/devWindows.c:3445
+#: src/library/grDevices/src/devWindows.c:3455
 msgid "file path selected is too long: only 512 bytes are allowed"
 msgstr "مسیر پرونده انتخاب شده بسیار طولانی است؛ فقط 512 بایت مجاز می‌باشد"
 
@@ -1183,15 +1182,15 @@ msgstr "metafile ذخیره به عنوان ..."
 msgid "Save as postscript..."
 msgstr "postscript ذخیره به عنوان ..."
 
-#: src/library/grDevices/src/devWindows.c:3143
+#: src/library/grDevices/src/devWindows.c:3147
 msgid "Locator is active"
 msgstr "مختصات‌یاب فعال می‌باشد"
 
-#: src/library/grDevices/src/devWindows.c:3769
+#: src/library/grDevices/src/devWindows.c:3779
 msgid "Waiting to confirm page change..."
 msgstr "منتظر اجازه شما برای تغییر تصویر  ..."
 
-#: src/library/grDevices/src/devWindows.c:3781
+#: src/library/grDevices/src/devWindows.c:3791
 msgid "Click or hit ENTER for next page"
 msgstr "برای دیدن تصویر بعد در این پنجره تلیک کنید یا کلید اینتر را بزنید"
 

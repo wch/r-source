@@ -1276,6 +1276,94 @@ SEXP L_convert(SEXP x, SEXP whatfrom,
 }
 
 /*
+ * Convert locations or dimensions to device inches
+ */
+SEXP L_devLoc(SEXP x, SEXP y) {
+    double xx, yy;
+    double vpWidthCM, vpHeightCM;
+    double rotationAngle;
+    LViewportContext vpc;
+    R_GE_gcontext gc;
+    LTransform transform;
+    SEXP devx, devy, result;
+    SEXP currentvp, currentgp;
+    int i, maxn, ny;
+    /* Get the current device 
+     */
+    pGEDevDesc dd = getDevice();
+    currentvp = gridStateElement(dd, GSS_VP);
+    currentgp = gridStateElement(dd, GSS_GPAR);
+    getViewportTransform(currentvp, dd, 
+			 &vpWidthCM, &vpHeightCM, 
+			 transform, &rotationAngle);
+    getViewportContext(currentvp, &vpc);
+    gcontextFromgpar(currentgp, 0, &gc, dd);
+    /* Convert the x and y values to device inches locations */
+    maxn = unitLength(x); 
+    ny = unitLength(y); 
+    if (ny > maxn)
+	maxn = ny;
+    PROTECT(devx = allocVector(REALSXP, maxn));
+    PROTECT(devy = allocVector(REALSXP, maxn));
+    PROTECT(result = allocVector(VECSXP, 2));
+    for (i=0; i<maxn; i++) {
+        transformLocn(x, y, i, vpc, &gc,
+                      vpWidthCM, vpHeightCM,
+                      dd,
+                      transform,
+                      &xx, &yy);
+        REAL(devx)[i] = xx;
+        REAL(devy)[i] = yy;
+    }
+    SET_VECTOR_ELT(result, 0, devx);
+    SET_VECTOR_ELT(result, 1, devy);
+    UNPROTECT(3);
+    return result;
+}
+
+SEXP L_devDim(SEXP x, SEXP y) {
+    double xx, yy;
+    double vpWidthCM, vpHeightCM;
+    double rotationAngle;
+    LViewportContext vpc;
+    R_GE_gcontext gc;
+    LTransform transform;
+    SEXP devx, devy, result;
+    SEXP currentvp, currentgp;
+    int i, maxn, ny;
+    /* Get the current device 
+     */
+    pGEDevDesc dd = getDevice();
+    currentvp = gridStateElement(dd, GSS_VP);
+    currentgp = gridStateElement(dd, GSS_GPAR);
+    getViewportTransform(currentvp, dd, 
+			 &vpWidthCM, &vpHeightCM, 
+			 transform, &rotationAngle);
+    getViewportContext(currentvp, &vpc);
+    gcontextFromgpar(currentgp, 0, &gc, dd);
+    /* Convert the x and y values to device inches locations */
+    maxn = unitLength(x); 
+    ny = unitLength(y); 
+    if (ny > maxn)
+	maxn = ny;
+    PROTECT(devx = allocVector(REALSXP, maxn));
+    PROTECT(devy = allocVector(REALSXP, maxn));
+    PROTECT(result = allocVector(VECSXP, 2));
+    for (i=0; i<maxn; i++) {
+        transformDimn(x, y, i, vpc, &gc,
+                      vpWidthCM, vpHeightCM,
+                      dd, rotationAngle,
+                      &xx, &yy);
+        REAL(devx)[i] = xx;
+        REAL(devy)[i] = yy;
+    }
+    SET_VECTOR_ELT(result, 0, devx);
+    SET_VECTOR_ELT(result, 1, devy);
+    UNPROTECT(3);
+    return result;
+}
+
+/*
  * Given a layout.pos.row and a layout.pos.col, calculate
  * the region allocated by the layout of the current viewport
  *
@@ -1494,10 +1582,10 @@ static void polygonEdge(double *x, double *y, int n,
 	 * so check is more complicated
 	 */
 	if ((vangle1 >= vangle2 && 
-	     vangle1 >= angle && vangle2 < angle) || 
+	     vangle1 >= angle && vangle2 <= angle) || 
 	    (vangle1 < vangle2 && 
 	     ((vangle1 >= angle && 0 <= angle) ||
-	      (vangle2 < angle && 2*M_PI >= angle)))) {
+	      (vangle2 <= angle && 2*M_PI >= angle)))) {
 	    found = 1;
 	    break;
 	}

@@ -59,8 +59,9 @@ package_native_routine_registration_skeleton(dir, con = stdout(),
   \file{init.c}).
   
   The default value of \code{character_only} is appropriate when working
-  on a package without any existing registration: \code{character_only =
-  FALSE} can be used to suggest updates for a package which has been
+  on a package without any existing registration:
+  \code{character_only = FALSE}
+  can be used to suggest updates for a package which has been
   extended since registration.  For the default value, if \code{.NAME}
   values are found which are not character strings (e.g.\sspace{}names
   or expressions) this is noted via a comment in the output.

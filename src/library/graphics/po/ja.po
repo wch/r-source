@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-01 10:28-0700\n"
+"POT-Creation-Date: 2018-03-29 07:06-0700\n"
 "PO-Revision-Date: 2014-03-26 13:54+0200 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: R-core <R-core@R-project.org> \n"
@@ -82,33 +82,33 @@ msgstr " まだ plot.new が呼ばれていません "
 msgid "invalid graphics state"
 msgstr " グラフィックスの状態が不正です "
 
-#: graphics.c:2555
+#: graphics.c:2564
 msgid "graphics device closed during call to locator or identify"
 msgstr ""
 " locatorまたはidentifyの呼び出し中にグラフィックデバイスが閉じられました "
 
-#: graphics.c:2604
+#: graphics.c:2614
 msgid "No graphics device is active"
 msgstr " 現在有効なグラフィックデバイスがありません "
 
-#: graphics.c:3063
+#: graphics.c:3073
 msgid "zero-length arrow is of indeterminate angle and so skipped"
 msgstr " 長さゼロの arrow は角度が不定ですので，スキップされました "
 
-#: graphics.c:3144
+#: graphics.c:3154
 #, c-format
 msgid "invalid par(\"bty\") = '%c'; no box() drawn"
 msgstr " par(\"bty\") = '%c' が不正です; box() は描画されません "
 
-#: graphics.c:3161
+#: graphics.c:3171
 msgid "invalid argument to GBox"
 msgstr " GBox の引数が不正です "
 
-#: graphics.c:3406
+#: graphics.c:3416
 msgid "metric information not available for this device"
 msgstr " このデバイスに対してメトリック情報は利用できません "
 
-#: par-common.c:143
+#: par-common.c:146
 msgid "graphical parameter 'family' has a maximum length of 200 bytes"
 msgstr " グラフィックスパラメータ 'family' の最大長は 200 バイトです "
 
@@ -362,8 +362,8 @@ msgstr " 'a' と 'b' は有限でなければなりません "
 
 #: plot.c:2925 plot.c:4051 plot.c:4055 plot.c:4058 plot.c:4078 plot.c:4082
 #: plot.c:4085 plot3d.c:1085 plot3d.c:1089 plot3d.c:1094 plot3d.c:1098
-#: plot3d.c:1102 plot3d.c:1106 stem.c:158 stem.c:159 stem.c:161 stem.c:162
-#: stem.c:208 stem.c:209
+#: plot3d.c:1102 plot3d.c:1106 stem.c:153 stem.c:154 stem.c:156 stem.c:157
+#: stem.c:203 stem.c:204
 #, c-format
 msgid "invalid '%s' argument"
 msgstr " 引数 '%s' が不正です "
@@ -570,7 +570,7 @@ msgstr " z 変数の値が全部同じ値です "
 msgid "all z values are NA"
 msgstr " z 変数の値が全部 NA です "
 
-#: stem.c:155
+#: stem.c:150
 #, c-format
 msgid "long vector '%s' is not supported"
 msgstr " long vector '%s' はサポートされていません "

@@ -50,9 +50,9 @@ compactPDF(paths,
   \url{http://qpdf.sourceforge.net/} (including as a Windows binary) and
   included with the CRAN macOS distribution of \R.  If \code{gs_cmd}
   is non-empty and \code{gs_quality != "none"}, GhostScript will used
-  first, then \command{qpdf} if it is available.  If \code{gs_quality !=
-  "none"} and \code{gs_cmd} is \code{""}, an attempt will be made to find a
-  GhostScript executable.
+  first, then \command{qpdf} if it is available.  If
+  \code{gs_quality != "none"} and \code{gs_cmd} is \code{""}, an attempt
+  will be made to find a GhostScript executable.
 
   \command{qpdf} and/or \command{gs_cmd} are run on all PDF files found,
   and those which are reduced in size by at least 10\% and 10Kb are

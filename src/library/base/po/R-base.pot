@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: base 3.4.0\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
+"Project-Id-Version: base 3.6.0\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -94,10 +94,7 @@ msgstr ""
 msgid "incorrect value for 'MARGIN'"
 msgstr ""
 
-msgid "*** 'pos=1' is not possible; setting 'pos=2' for now."
-msgstr ""
-
-msgid "*** Note that 'pos=1' will give an error in the future"
+msgid "'pos=1' is not possible and has been warned about for years"
 msgstr ""
 
 msgid "file '%s' not found"
@@ -196,6 +193,9 @@ msgstr ""
 msgid "invalid 'row.names' length"
 msgstr ""
 
+msgid "invalid 'make.names'"
+msgstr ""
+
 msgid "duplicate 'row.names' are not allowed"
 msgstr ""
 
@@ -205,7 +205,7 @@ msgstr ""
 msgid "invalid 'dimnames' given for data frame"
 msgstr ""
 
-msgid "cannot coerce class \"%s\" to a data.frame"
+msgid "cannot coerce class %s to a data.frame"
 msgstr ""
 
 msgid "'row.names' is not a character vector of length %d -- omitting it. Will be an error!"
@@ -304,7 +304,10 @@ msgstr ""
 msgid "<0 rows> (or 0-length row.names)"
 msgstr ""
 
-msgid "non-numeric variable in data frame:"
+msgid "non-numeric variable(s) in data frame:"
+msgstr ""
+
+msgid ","
 msgstr ""
 
 msgid "%s only defined for equally-sized data frames"
@@ -323,12 +326,6 @@ msgid "'origin' must be supplied"
 msgstr ""
 
 msgid "do not know how to convert '%s' to class %s"
-msgstr ""
-
-msgid "'%s' is not a \"date\" object"
-msgstr ""
-
-msgid "'%s' is not a \"dates\" object"
 msgstr ""
 
 msgid "binary + is not defined for \"Date\" objects"
@@ -395,6 +392,9 @@ msgid "'origin' must be of length one"
 msgstr ""
 
 msgid "'lag' and 'differences' must be integers >= 1"
+msgstr ""
+
+msgid "unable to deduce timezone name from"
 msgstr ""
 
 msgid "wrong class"
@@ -589,6 +589,12 @@ msgstr ""
 msgid "class of 'x' was discarded"
 msgstr ""
 
+msgid "'flag' must be a string, i.e., of length 1"
+msgstr ""
+
+msgid "'flag' should contain only characters from [0+- #'I]"
+msgstr ""
+
 msgid "'mode' must be \"double\" (\"real\"), \"integer\" or \"character\""
 msgstr ""
 
@@ -599,9 +605,6 @@ msgid "'format' must be one of {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
 msgstr ""
 
 msgid "'digits' reduced to %d"
-msgstr ""
-
-msgid "'flag' can contain only '0+- #'"
 msgstr ""
 
 msgid "corrupt data frame: columns will be truncated or padded with NAs"
@@ -691,24 +694,6 @@ msgstr ""
 msgid "package %s is not installed for 'arch = %s'"
 msgstr ""
 
-msgid "package %s has a license that you need to accept in an interactive session"
-msgstr ""
-
-msgid "package %s has a license that you need to accept after viewing"
-msgstr ""
-
-msgid "package %s has a license that you need to accept:"
-msgstr ""
-
-msgid "according to the DESCRIPTION file it is"
-msgstr ""
-
-msgid "%s"
-msgstr ""
-
-msgid "license for package %s not accepted"
-msgstr ""
-
 msgid "Attaching package: %s"
 msgstr ""
 
@@ -730,10 +715,10 @@ msgstr ""
 msgid "%s not found on search path, using pos = 2"
 msgstr ""
 
-msgid "Package %s version %s cannot be unloaded"
+msgid "Package %s version %s cannot be unloaded:\n %s"
 msgstr ""
 
-msgid "package or namespace load failed for %s"
+msgid "package or namespace load failed for %s%s:\n %s"
 msgstr ""
 
 msgid "package %s does not have a namespace and should be re-installed"
@@ -796,7 +781,7 @@ msgstr ""
 msgid "none of the packages are loaded"
 msgstr ""
 
-msgid "package %s found more than once,\nusing the one found in %s"
+msgid "package %s found more than once, using the first from\n  %s"
 msgstr ""
 
 msgid "Further information is available in the following vignettes in directory %s:"
@@ -875,9 +860,6 @@ msgid "FUN"
 msgstr ""
 
 msgid "may not have argument(s) named"
-msgstr ""
-
-msgid ","
 msgstr ""
 
 msgid "'arg' must be NULL or a character vector"
@@ -985,6 +967,27 @@ msgstr ""
 msgid "namespace %s %s is being loaded, but %s %s is required"
 msgstr ""
 
+msgid "package %s has a license that you need to accept in an interactive session"
+msgstr ""
+
+msgid "package %s has a license that you need to accept after viewing"
+msgstr ""
+
+msgid "package %s has a license that you need to accept:"
+msgstr ""
+
+msgid "according to the DESCRIPTION file it is"
+msgstr ""
+
+msgid "%s"
+msgstr ""
+
+msgid "license for package %s not accepted"
+msgstr ""
+
+msgid "package %s was installed by an R version with different internals; it needs to be reinstalled for use with this R version"
+msgstr ""
+
 msgid "unable to load R code in package %s"
 msgstr ""
 
@@ -1043,12 +1046,6 @@ msgid "found methods to import for function %s but not the generic itself"
 msgstr ""
 
 msgid "replacing previous import %s by %s when loading %s"
-msgstr ""
-
-msgid "No methods found in \"%s\" for requests: %s"
-msgstr ""
-
-msgid "requested methods not found in environment/package %s: %s"
 msgstr ""
 
 msgid "No generic function %s found corresponding to requested imported methods from package %s when loading %s (malformed exports?)"
@@ -1180,7 +1177,7 @@ msgstr ""
 msgid "either specify 'nmax' or 'n', but not both."
 msgstr ""
 
-msgid "'from' cannot be NA, NaN or infinite"
+msgid "'from' must be a finite number"
 msgstr ""
 
 msgid "argument 'length.out' must be of length 1"
@@ -1189,10 +1186,10 @@ msgstr ""
 msgid "first element used of 'length.out' argument"
 msgstr ""
 
-msgid "'to' cannot be NA, NaN or infinite"
+msgid "'to' must be a finite number"
 msgstr ""
 
-msgid "invalid (to - from)/by in seq(.)"
+msgid "invalid '(to - from)/by'"
 msgstr ""
 
 msgid "wrong sign in 'by' argument"
@@ -1201,7 +1198,7 @@ msgstr ""
 msgid "'by' argument is much too small"
 msgstr ""
 
-msgid "length must be non-negative number"
+msgid "'length.out' must be a non-negative number"
 msgstr ""
 
 msgid "too many arguments"
@@ -1294,6 +1291,9 @@ msgstr ""
 msgid "'chdir = TRUE' makes no sense for a connection"
 msgstr ""
 
+msgid "specify either 'file' or 'exprs' but not both"
+msgstr ""
+
 msgid "'%s' is not an existing file"
 msgstr ""
 
@@ -1306,16 +1306,22 @@ msgstr ""
 msgid "additional arguments ignored in stop()"
 msgstr ""
 
+msgid "Must use 'exprs' or unnamed expressions, but not both"
+msgstr ""
+
+msgid "%s and %s are not equal:\n  %s"
+msgstr ""
+
 msgid "additional arguments ignored in warning()"
+msgstr ""
+
+msgid "Calling 'structure(NULL, *)' is deprecated, as NULL cannot have attributes.\n  Consider 'structure(list(), *)' instead."
 msgstr ""
 
 msgid "incorrect value for 'x'"
 msgstr ""
 
 msgid "'x' and 'y' must have the same length"
-msgstr ""
-
-msgid "incorrect values of 'indent' and 'width'"
 msgstr ""
 
 msgid "probably wrong encoding in names(.) of column"
@@ -1328,6 +1334,9 @@ msgid "STATS does not recycle exactly across MARGIN"
 msgstr ""
 
 msgid "length(STATS) or dim(STATS) do not match dim(x)[MARGIN]"
+msgstr ""
+
+msgid "'exclude' containing NA and 'useNA' != \"no\"' are a bit contradicting"
 msgstr ""
 
 msgid "nothing to tabulate"
@@ -1354,7 +1363,7 @@ msgstr ""
 msgid "'bin' must be numeric or a factor"
 msgstr ""
 
-msgid "invalid value of 'nbins'"
+msgid "invalid value of %s"
 msgstr ""
 
 msgid "'INDEX' is of length zero"
@@ -1376,6 +1385,9 @@ msgid "Removing %s"
 msgstr ""
 
 msgid "Registering 'evaluate' as low-level callback"
+msgstr ""
+
+msgid "Timing stopped at:"
 msgstr ""
 
 msgid "user"
@@ -1409,6 +1421,12 @@ msgid "%s not defined for \"numeric_version\" objects"
 msgstr ""
 
 msgid "<0 elements>"
+msgstr ""
+
+msgid "'tags' must be a character vector of the same length as 'x'"
+msgstr ""
+
+msgid "Summary of (a total of %d) warning messages:"
 msgstr ""
 
 msgid "invalid 'digits'"
@@ -1583,6 +1601,16 @@ msgstr[1]    ""
 
 msgid        "Function found when exporting methods from the namespace %s which is not S4 generic: %s"
 msgid_plural "Functions found when exporting methods from the namespace %s which are not S4 generic: %s"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "No methods found in package %s for request: %s when loading %s"
+msgid_plural "No methods found in package %s for requests: %s when loading %s"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "requested method not found in environment/package %s: %s when loading %s"
+msgid_plural "requested methods not found in environment/package %s: %s when loading %s"
 msgstr[0]    ""
 msgstr[1]    ""
 

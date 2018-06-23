@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
 "PO-Revision-Date: 2011-03-26 08:55-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -26,10 +26,6 @@ msgstr ""
 
 msgid "namespace found within global environments"
 msgstr ""
-
-msgid "'ns' must be a namespace or a namespace imports environment"
-msgstr ""
-"'ns' deve ser um espaço de nomes ou um ambiente importado de espaço de nomes"
 
 msgid "bad assignment: %s"
 msgstr "atribuição não apropriada: %s"
@@ -64,9 +60,6 @@ msgstr "atribuição inválida 2"
 msgid "invalid function in complex assignment"
 msgstr "função inválida em atribuição complexa"
 
-msgid "is not a registered math1 function"
-msgstr ""
-
 msgid "missing arguments are not allowed"
 msgstr "argumentos faltantes não são permitidos"
 
@@ -90,6 +83,9 @@ msgid "more than one default provided in switch() call"
 msgstr "mais de um valor default fornecido na chamada de switch"
 
 msgid "'switch' with no alternatives"
+msgstr ""
+
+msgid "Error: compilation failed -"
 msgstr ""
 
 msgid "cannot compile a non-function"
@@ -119,6 +115,9 @@ msgstr "arquivo '%s' não existe"
 msgid "'%s' is not a valid compiler option"
 msgstr "'%s' não é uma opção válida de compilação"
 
+msgid "invalid environment variable value: %s==%s"
+msgstr ""
+
 msgid "invalid compiler options: optimize(==%d)<2 and jitEnabled(==%d)>2"
 msgstr ""
 
@@ -133,6 +132,11 @@ msgid "local assignment to syntactic function: "
 msgid_plural "local assignments to syntactic functions: "
 msgstr[0] "atribuição local para função sintática: "
 msgstr[1] "atribuições locais para funções sintáticas: "
+
+#~ msgid "'ns' must be a namespace or a namespace imports environment"
+#~ msgstr ""
+#~ "'ns' deve ser um espaço de nomes ou um ambiente importado de espaço de "
+#~ "nomes"
 
 #~ msgid "expected a single logical value for the S4 state flag"
 #~ msgstr "esperado somente um valor lógico para a flag de estado S4"

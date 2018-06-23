@@ -1,6 +1,6 @@
 % File src/library/base/man/serialize.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{readRDS}
@@ -24,8 +24,8 @@ readRDS(file, refhook = NULL)
     representation is written; otherwise (default), a binary one is used.
     See the comments in the help for \code{\link{save}}.}
   \item{version}{the workspace format version to use.  \code{NULL}
-    specifies the current default version (3).  The only other supported
-    value is 2, the default from \R 1.4.0 to \R 3.4.4.}
+    specifies the current default version (3). The only other supported
+    value is 2, the default from \R 1.4.0 to \R 3.5.0.}
   \item{compress}{a logical specifying whether saving to a named file is
     to use \code{"gzip"} compression, or one of \code{"gzip"},
     \code{"bzip2"} or \code{"xz"} to indicate the type of compression to
@@ -78,37 +78,40 @@ readRDS(file, refhook = NULL)
 }
 
 \examples{
+fil <- tempfile("women", fileext = ".rds")
 ## save a single object to file
-saveRDS(women, "women.rds")
+saveRDS(women, fil)
 ## restore it under a different name
-women2 <- readRDS("women.rds")
+women2 <- readRDS(fil)
 identical(women, women2)
 ## or examine the object via a connection, which will be opened as needed.
-con <- gzfile("women.rds")
+con <- gzfile(fil)
 readRDS(con)
 close(con)
 
 ## Less convenient ways to restore the object
 ## which demonstrate compatibility with unserialize()
-con <- gzfile("women.rds", "rb")
+con <- gzfile(fil, "rb")
 identical(unserialize(con), women)
 close(con)
-con <- gzfile("women.rds", "rb")
+con <- gzfile(fil, "rb")
 wm <- readBin(con, "raw", n = 1e4) # size is a guess
 close(con)
 identical(unserialize(wm), women)
 
 ## Format compatibility with serialize():
-con <- file("women2", "w")
+fil2 <- tempfile("women")
+con <- file(fil2, "w")
 serialize(women, con) # ASCII, uncompressed
 close(con)
-identical(women, readRDS("women2"))
-con <- bzfile("women3", "w")
+identical(women, readRDS(fil2))
+fil3 <- tempfile("women")
+con <- bzfile(fil3, "w")
 serialize(women, con) # binary, bzip2-compressed
 close(con)
-identical(women, readRDS("women2"))
+identical(women, readRDS(fil3))
 
-\dontshow{unlink(c("women.rds", "women2", "women3"))}
+unlink(c(fil, fil2, fil3))
 }
 
 \keyword{file}

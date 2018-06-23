@@ -327,7 +327,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         if(out$status &&
            file_test("-f", log) &&
            any(grepl("(Rerun to get|biblatex.*\\(re\\)run)",
-                     readLines(log, warn = FALSE)))) {
+                     readLines(log, warn = FALSE), useBytes = TRUE))) {
             out <- .system_with_capture(texi2dvi,
                                         c(opt_pdf, opt_quiet, opt_extra,
                                           shQuote(file)),
@@ -459,7 +459,8 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
             stop(gettextf("unable to run '%s' on '%s'", latex, file),
                  domain = NA)
         nmiss <- length(grep("Warning:.*Citation.*undefined",
-                             readLines(paste0(base, ".log"))))
+                             readLines(paste0(base, ".log")),
+                             useBytes = TRUE))
         for(iter in 1L:10L) { ## safety check
             ## This might fail as the citations have been included in the Rnw
             if(nmiss) sys2(bibtex, shQuote(base))
@@ -481,9 +482,11 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
                      domain = NA)
             }
             Log <- readLines(paste0(base, ".log"))
-            nmiss <- length(grep("Warning:.*Citation.*undefined", Log))
+            nmiss <- length(grep("Warning:.*Citation.*undefined", Log,
+                                 useBytes = TRUE))
             if(nmiss == nmiss_prev &&
-               !any(grepl("(Rerun to get|biblatex.*\\(re\\)run)", Log)) ) break
+               !any(grepl("(Rerun to get|biblatex.*\\(re\\)run)", Log,
+                          useBytes = TRUE)) ) break
         }
         do_cleanup(clean)
     }
@@ -560,7 +563,14 @@ function()
     if(nzchar(OS)) OS else .Platform$OS.type
 }
 
-### .R_top_srcdir
+### ** .R_copyright_msg
+
+.R_copyright_msg <- 
+function(year)
+    sprintf("Copyright (C) %s-%s The R Core Team.",
+            year, R.version$year)
+
+### ** .R_top_srcdir
 
 ## Find the root directory of the source tree used for building this
 ## version of R (corresponding to Unix configure @top_srcdir@).
@@ -600,7 +610,7 @@ function(val) {
 .canonicalize_doi <-
 function(x)
 {
-    x <- sub("^((doi|DOI):)?[[:space:]]*http://(dx[.])?doi[.]org/", "",
+    x <- sub("^((doi|DOI):)?[[:space:]]*https?://(dx[.])?doi[.]org/", "",
              x)
     sub("^(doi|DOI):", "", x)
 }
@@ -611,9 +621,9 @@ function(x)
 function(txt)
 {
     txt <- gsub(paste0("(", intToUtf8(0x2018), "|", intToUtf8(0x2019), ")"),
-                "'", txt, perl = TRUE, useBytes = TRUE)
+                "'", txt, perl = TRUE)
     txt <- gsub(paste0("(", intToUtf8(0x201c), "|", intToUtf8(0x201d), ")"),
-                "'", txt, perl = TRUE, useBytes = TRUE)
+                "'", txt, perl = TRUE)
     txt
 }
 
@@ -893,6 +903,47 @@ function(nsInfo)
     S3_methods_list
 }
 
+### ** .get_namespace_S3_methods_with_homes
+
+.get_namespace_S3_methods_with_homes <-
+function(package, lib.loc = NULL)
+{
+    ## Get the registered S3 methods with the 'homes' of the generics
+    ## they are registered for.
+    ## Original code provided by Luke Tierney.
+    path <- system.file(package = package, lib.loc = lib.loc)
+    if(!nzchar(path)) return(NULL)
+    if(package == "base") {
+        return(data.frame(generic = .S3_methods_table[, 1L],
+                          home = rep_len("base",
+                                         nrow(.S3_methods_table)),
+                          class = .S3_methods_table[, 2L],
+                          stringsAsFactors = FALSE))
+    }
+    lib.loc <- dirname(path)
+    nsinfo <- parseNamespaceFile(package, lib.loc)
+    S3methods <- nsinfo$S3methods
+    if(!length(S3methods)) return(NULL)
+    generic <- S3methods[, 1L]
+    nsenv <- loadNamespace(package, lib.loc)
+    ## Possibly speed things up by only looking up the unique generics.
+    generics <- unique(generic)
+    homes <- character(length(generics))
+    ind <- is.na(match(generics, .get_S3_group_generics()))
+    homes[ind] <-
+        unlist(lapply(generics[ind],
+                      function(f) {
+                          f <- get(f, nsenv)
+                          getNamespaceName(topenv(environment(f)))
+                      }),
+               use.names = FALSE)
+    ## S3 group generics belong to base.
+    homes[!ind] <- "base"
+    home <- homes[match(generic, generics)]
+    class <- S3methods[, 2L]
+    data.frame(generic, home, class, stringsAsFactors = FALSE)
+}
+
 ### ** .get_package_metadata
 
 .get_package_metadata <-
@@ -1069,7 +1120,27 @@ local({
     names(out) <-
         tolower(sub("^R_PKGS_([[:upper:]]+) *=.*", "\\1", lines))
     eval(substitute(function() {out}, list(out=out)), envir=NULL)
-})
+    })
+
+### ** .get_standard_package_dependencies
+
+.get_standard_package_dependencies <-
+function(reverse = FALSE, recursive = FALSE)
+{
+    names <- unlist(.get_standard_package_names())
+    paths <- file.path(.Library, names, "DESCRIPTION")
+    ## Be nice ...
+    paths <- paths[file.exists(paths)]
+    which <- c("Depends", "Imports")
+    fields <- c("Package", which)
+    ## Create a minimal available packages db.
+    a <- do.call(rbind,
+                 lapply(paths,
+                        function(p) .read_description(p)[fields]))
+    colnames(a) <- fields
+    package_dependencies(names, a, which = which,
+                         reverse = reverse, recursive = recursive)
+}
 
 ### ** .get_standard_repository_URLs
 

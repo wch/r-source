@@ -1,24 +1,24 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.4.0\n"
+"Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-01 10:28-0700\n"
-"PO-Revision-Date: 2016-04-04 09:57+0200\n"
+"POT-Creation-Date: 2018-03-29 07:06-0700\n"
+"PO-Revision-Date: 2018-04-01 14:31+0200\n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language: pl_PL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.7\n"
+"X-Generator: Poedit 2.0.4\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 
-#: io.c:329 io.c:333 io.c:343 io.c:574 io.c:774 io.c:827 io.c:839 io.c:843
-#: io.c:849 io.c:850 io.c:1073 io.c:1074 io.c:1076 io.c:1077 io.c:1078
-#: io.c:1079 io.c:1080 io.c:1081 stubs.c:47 stubs.c:67 windows/dialogs.c:169
+#: io.c:329 io.c:333 io.c:343 io.c:574 io.c:774 io.c:827 io.c:840 io.c:844
+#: io.c:850 io.c:851 io.c:1097 io.c:1098 io.c:1100 io.c:1101 io.c:1102
+#: io.c:1103 io.c:1104 io.c:1105 stubs.c:47 stubs.c:67 windows/dialogs.c:169
 #: windows/dialogs.c:194 windows/dialogs.c:197 windows/dialogs.c:241
 #: windows/dialogs.c:278 windows/dialogs.c:289 windows/dialogs.c:313
 #: windows/dialogs.c:321 windows/util.c:117 windows/widgets.c:78
@@ -27,11 +27,11 @@ msgstr ""
 msgid "invalid '%s' argument"
 msgstr "niepoprawny argument '%s'"
 
-#: io.c:352 io.c:836
+#: io.c:352 io.c:837
 msgid "invalid quote symbol set"
 msgstr "niepoprawne ustawiony symbol cudzysłowiu"
 
-#: io.c:364 io.c:859 io.c:1061
+#: io.c:364 io.c:860 io.c:1085
 msgid "cannot open the connection"
 msgstr "nie można otworzyć połączenia"
 
@@ -59,48 +59,57 @@ msgstr "niepoprawny łańcuch tekstowy 'numerals': \"%s\""
 msgid "Selection: "
 msgstr "Wybór: "
 
-#: io.c:868 io.c:882
+#: io.c:870 io.c:886
 msgid "cannot allocate buffer in 'readTableHead'"
 msgstr "nie można przydzielić bufora w 'readTableHead'"
 
-#: io.c:893
+#: io.c:900
 msgid "\\ followed by EOF"
 msgstr "\\ a następnie EOF"
 
-#: io.c:942 io.c:945
+#: io.c:953 io.c:958
 #, c-format
 msgid "incomplete final line found by readTableHeader on '%s'"
 msgstr "niekompletna końcowa linia znaleziona przez 'readTableHeader' w '%s'"
 
-#: io.c:1002
+#: io.c:1016
 msgid "index out of range"
 msgstr "indeks poza zakresem"
 
-#: io.c:1054
+#: io.c:1053
+#, c-format
+msgid "Problem closing connection:  %s"
+msgstr "Problem podczas zamykania połączenia: %s"
+
+#: io.c:1055
+msgid "Problem closing connection"
+msgstr "Problem podczas zamykania połączenia"
+
+#: io.c:1078
 msgid "'file' is not a connection"
 msgstr "argument 'file' nie jest połączeniem"
 
-#: io.c:1057
+#: io.c:1081
 msgid "cannot write to this connection"
 msgstr "nie można zapisać w tym połączeniu"
 
-#: io.c:1087
+#: io.c:1111
 msgid "'dec' must be a single character"
 msgstr "argument 'dec' musi być pojedynczym znakiem"
 
-#: io.c:1113
+#: io.c:1137
 #, c-format
 msgid "corrupt data frame -- length of column %d does not not match nrows"
 msgstr ""
 "uszkodzona ramka danych -- długość kolumny %d nie zgadza się z liczbą wierszy"
 
-#: io.c:1144
+#: io.c:1168
 #, c-format
 msgid "column %s claims to be a factor but does not have numeric codes"
 msgstr ""
 "kolumna %s twierdzi, że jest czynnikiem, ale nie posiada kodów liczbowych"
 
-#: io.c:1162
+#: io.c:1186
 msgid "corrupt matrix -- dims not not match length"
 msgstr "macierz jest uszkodzona -- wymiary nie zgadzają się z długością"
 
@@ -237,15 +246,15 @@ msgstr "Wybierz jeden lub więcej"
 msgid "Select one"
 msgstr "Wybierz jeden"
 
-#: windows/widgets.c:182 windows/widgets.c:247
+#: windows/widgets.c:182 windows/widgets.c:250
 msgid "'default' must be a character string"
 msgstr "argument 'default' musi być łańcuchem tekstowym"
 
-#: windows/widgets.c:184 windows/widgets.c:249
+#: windows/widgets.c:184 windows/widgets.c:252
 msgid "'default' is overlong"
 msgstr "argument 'default' jest zbyt długi"
 
-#: windows/widgets.c:188 windows/widgets.c:253
+#: windows/widgets.c:188 windows/widgets.c:256
 msgid "'caption' must be a character string"
 msgstr "argument 'caption' musi być łańcuchem tekstowym"
 

@@ -5,10 +5,10 @@
 # Detlef Steuer <steuer@hsu-hh.de>, 2007-2014.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.1.0\n"
+"Project-Id-Version: R 3.4.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-01 10:28-0700\n"
-"PO-Revision-Date: 2009-10-07 14:28+0200\n"
+"POT-Creation-Date: 2018-03-30 07:34-0700\n"
+"PO-Revision-Date: 2018-04-05 14:56+0200\n"
 "Last-Translator: Detlef Steuer <detlef.steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
 "Language: de\n"
@@ -17,6 +17,16 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
 
-#: splines.c:153
+#: splines.c:154
 msgid "'ord' must be a positive integer"
 msgstr "'ord' muss eine positive ganze Zahl sein"
+
+#: splines.c:222
+#, c-format
+msgid "derivs = %d >= ord = %d, but should be in {0,..,ord-1}"
+msgstr "derivs = %d >= ord = %d, sollte aber in {0,..,ord-1} liegen"
+
+#: splines.c:225
+#, c-format
+msgid "derivs[%d] = %d >= ord = %d, but should be in {0,..,ord-1}"
+msgstr "derivs[%d] = %d >= ord = %d, sollte aber in {0,..,ord-1} liegen<"

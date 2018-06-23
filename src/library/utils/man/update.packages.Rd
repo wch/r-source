@@ -106,9 +106,9 @@ new.packages(lib.loc = NULL, repos = getOption("repos"),
   but it is advertised as being suitable for this version.)
 
   \code{new.packages} does the same comparison but reports uninstalled
-  packages that are available at the repositories.  If \code{ask !=
-  FALSE} it asks which packages should be installed in the first element
-  of \code{lib.loc}.
+  packages that are available at the repositories.  If
+  \code{ask != FALSE} it asks which packages should be installed in the
+  first element of \code{lib.loc}.
 
   The main function of the set is \code{update.packages}.  First a list
   of all packages found in \code{lib.loc} is created and compared with

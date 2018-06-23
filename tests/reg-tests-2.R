@@ -2344,12 +2344,13 @@ attr(foo, "srcref") <- NULL
 foo
 (f <- structure(function(){}, note = "just a note",
                 yada = function() "not the same"))
+print(f, useSource = TRUE)
 print(f, useSource = FALSE) # must print attributes
-print.function <- function(x, ...) { str(x,...); invisible(x) }
-print.function
-f
-rm(print.function)
 ## auto-printing and printing differed up to R 2.9.x
+
+## Make sure deparsing does not reset parameters
+print(list(f, expression(foo), f, quote(foo), f, base::list, f),
+      useSource = FALSE)
 
 printCoefmat(cbind(0,1))
 ## would print NaN up to R 2.9.0
@@ -2998,6 +2999,15 @@ a <- alist(one = 1, two = )
 dput(a)
 ## deparsed two to quote()
 
+## Deparsing of repeated unary operators; the first 3 were "always" ok:
+quote(~~x)
+quote(++x)
+quote(--x)
+quote(!!x) # was `!(!x)`
+quote(??x) # Suboptimal
+quote(~+-!?x) # ditto: ....`?`(x)
+## `!` no longer produces parentheses now
+
 
 ## summary.data.frame() with NAs in columns of class "Date" -- PR#16709
 x <- c(18000000, 18810924, 19091227, 19027233, 19310526, 19691228, NA)
@@ -3065,3 +3075,46 @@ setNames(as.raw(1:3), c("a", "bbbb", "c"))
 ## str(x) when is.vector(x) is false :
 str(structure(c(a = 1, b = 2:7), color = "blue"))
 ## did print " atomic [1:7] ..." in R <= 3.4.x
+
+
+## check stopifnot(exprs = ....)
+tryCatch(stopifnot(exprs = {
+  all.equal(pi, 3.1415927)
+  2 < 2
+  cat("Kilroy was here!\n")
+  all(1:10 < 12)
+  "a" < "b"
+}), error = function(e) e$message) -> M ; cat("Error: ", M, "\n")
+
+tryCatch(stopifnot(exprs = {
+  all.equal(pi, 3.1415927)
+  { cat("Kilroy was here!\n"); TRUE }
+  pi < 3
+  cat("whereas I won't be printed ...\n")
+  all(1:10 < 12)
+  "a" < "b"
+}), error = function(e) e$message) -> M2 ; cat("Error: ", M2, "\n")
+
+stopifnot(exprs = {
+  all.equal(pi, 3.1415927)
+  { cat("\nKilroy was here! ... "); TRUE }
+  pi > 3
+  all(1:10 < 12)
+  "a" < "b"
+  { cat("and I'm printed as well ...\n"); TRUE}
+})
+## without "{ .. }" :
+stopifnot(exprs = 2 == 2)
+try(stopifnot(exprs = 1 > 2))
+## passing an expression object:
+stopifnot(exprs = expression(2 == 2, pi < 4))
+tryCatch(stopifnot(exprs = expression(
+                       2 == 2,
+                       { cat("\n Kilroy again .."); TRUE },
+                       pi < 4,
+                       0 == 1,
+                       { cat("\n no way..\n"); TRUE })),
+         error = function(e) e$message) -> M3
+cat("Error: ", M3, "\n")
+## was partly not ok for many weeks in R-devel, early 2018
+

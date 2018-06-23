@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995--2017  The R Core Team.
+ *  Copyright (C) 1995--2018  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1308,7 +1308,7 @@ void WarningMessage(SEXP call, R_WARNING which_warn, ...)
     }
 
 /* clang pre-3.9.0 says
-      warning: passing an object that undergoes default argument promotion to 
+      warning: passing an object that undergoes default argument promotion to
       'va_start' has undefined behavior [-Wvarargs]
 */
     va_start(ap, which_warn);
@@ -1406,7 +1406,7 @@ SEXP R_GetTraceback(int skip)
 	    if (skip > 0)
 		skip--;
 	    else {
-		SETCAR(t, deparse1(c->call, 0, DEFAULTDEPARSE));
+		SETCAR(t, deparse1m(c->call, 0, DEFAULTDEPARSE));
 		if (c->srcref && !isNull(c->srcref)) {
 		    SEXP sref;
 		    if (c->srcref == R_InBCInterpreter)
@@ -1659,7 +1659,7 @@ static void vsignalError(SEXP call, const char *format, va_list ap)
 		return; /* go to default error handling; do not reset stack */
 	    else {
 		/* if we are in the process of handling a C stack
-		   overflow, treat all calling handlers ar failed */
+		   overflow, treat all calling handlers as failed */
 		if (R_OldCStackLimit)
 		    break;
 		SEXP hooksym, hcall, qcall;
@@ -2053,6 +2053,7 @@ typedef struct {
     void *hdata;
     void (*finally)(void *);
     void *fdata;
+    int suspended;
 } tryCatchData_t;
 
 static SEXP default_tryCatch_handler(SEXP cond, void *data)
@@ -2091,15 +2092,22 @@ SEXP R_tryCatch(SEXP (*body)(void *), void *bdata,
 					      R_BaseNamespace);
 	R_PreserveObject(trycatch_callback);
     }
-    
+
     tryCatchData_t tcd = {
 	.body = body,
 	.bdata = bdata,
 	.handler = handler != NULL ? handler : default_tryCatch_handler,
 	.hdata = hdata,
 	.finally = finally != NULL ? finally : default_tryCatch_finally,
-	.fdata = fdata
+	.fdata = fdata,
+	.suspended = R_interrupts_suspended
     };
+
+    /* Interrupts are suspended while in the infrastructure R code and
+       enabled, if the were on entry to R_TryCatch, while calling the
+       body function in do_tryCatchHelper */
+
+    R_interrupts_suspended = TRUE;
 
     if (conds == NULL) conds = allocVector(STRSXP, 0);
     PROTECT(conds);
@@ -2109,6 +2117,7 @@ SEXP R_tryCatch(SEXP (*body)(void *), void *bdata,
     PROTECT(expr);
     SEXP val = eval(expr, R_GlobalEnv);
     UNPROTECT(2); /* conds, expr */
+    R_interrupts_suspended = tcd.suspended;
     return val;
 }
 
@@ -2117,7 +2126,7 @@ SEXP do_tryCatchHelper(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP eptr = CAR(args);
     SEXP sw = CADR(args);
     SEXP cond = CADDR(args);
-    
+
     if (TYPEOF(eptr) != EXTPTRSXP)
 	error("not an external pointer");
 
@@ -2125,7 +2134,20 @@ SEXP do_tryCatchHelper(SEXP call, SEXP op, SEXP args, SEXP env)
 
     switch (asInteger(sw)) {
     case 0:
-	return ptcd->body(ptcd->bdata);
+	if (ptcd->suspended)
+	    /* Interrupts were suspended for the call to R_TryCatch,
+	       so leave them that way */
+	    return ptcd->body(ptcd->bdata);
+	else {
+	    /* Interrupts were not suspended for the call to
+	       R_TryCatch, but were suspended for the call through
+	       R. So enable them for the body and suspend again on the
+	       way out. */
+	    R_interrupts_suspended = FALSE;
+	    SEXP val = ptcd->body(ptcd->bdata);
+	    R_interrupts_suspended = TRUE;
+	    return val;
+	}
     case 1:
 	if (ptcd->handler != NULL)
 	    return ptcd->handler(cond, ptcd->hdata);

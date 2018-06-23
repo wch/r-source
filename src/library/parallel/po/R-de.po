@@ -4,10 +4,10 @@
 # Detlef Steuer <steuer@hsu-hh.de>, 2011-2014.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.2.0\n"
+"Project-Id-Version: R 3.4.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-09-21 07:12\n"
-"PO-Revision-Date: 2015-03-20 16:16+0100\n"
+"POT-Creation-Date: 2018-03-30 07:33\n"
+"PO-Revision-Date: 2018-04-05 14:54+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <r-core@r-project.org>\n"
 "Language: de\n"
@@ -16,16 +16,16 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
 
-msgid "invalid value of 'seed'"
-msgstr "unzulässiger Wert für 'seed'"
+msgid "invalid value of %s"
+msgstr "unzulässiger Wert für %s"
 
 msgid "need at least one argument"
 msgstr "benötige mindestens ein Argument"
 
 msgid "zero-length inputs cannot be mixed with those of non-zero length"
 msgstr ""
-"Eingaben mit Länge Null können nicht mit Eingaben anderer Länge "
-"gemischt werden"
+"Eingaben mit Länge Null können nicht mit Eingaben anderer Länge gemischt "
+"werden"
 
 msgid "dim(X) must have a positive length"
 msgstr "dim(X) muss positive Länge haben"
@@ -76,16 +76,22 @@ msgstr "'what' muss ein Zeichen oder ein ein raw Vektor sein"
 msgid "'mc.cores' must be >= 1"
 msgstr "'mc.cores' muss >= 1 sein"
 
+msgid "affinity.list and X must have the same length"
+msgstr "affinity.list und X müssen dieselbe Länge haben"
+
 msgid "%d function calls resulted in an error"
 msgstr "%d Funktionsaufrufe endeten in einem Fehler"
+
+msgid "'mc.preschedule' must be false if 'affinity.list' is used"
+msgstr "'mc.preschedule' muss FALSE sein, wenn 'affinity.list' benutzt wird"
 
 msgid "all scheduled cores encountered errors in user code"
 msgstr "alle verplanten Kerne berichten Fehler im Benutzerkode"
 
 msgid "Zero-length inputs cannot be mixed with those of non-zero length"
 msgstr ""
-"Eingaben mit Länge Null können nicht mit Eingaben anderer Länge "
-"gemischt werden"
+"Eingaben mit Länge Null können nicht mit Eingaben anderer Länge gemischt "
+"werden"
 
 msgid "invalid 'jobs' argument"
 msgstr "unzulässiges 'jobs' Argument"

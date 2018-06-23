@@ -283,8 +283,9 @@ static int mbcs_get_next(int c, wchar_t *wc)
     if(utf8locale) {
 	clen = utf8clen((char) c);
 	for(i = 1; i < clen; i++) {
-	    s[i] = (char) xxgetc();
-	    if(s[i] == R_EOF) error(_("EOF whilst reading MBCS char at line %d"), ParseState.xxlineno);
+	    c = xxgetc();
+	    if(c == R_EOF) error(_("EOF whilst reading MBCS char at line %d"), ParseState.xxlineno);
+	    s[i] = (char) c;
 	}
 	s[clen] ='\0'; /* x86 Solaris requires this */
 	res = (int) mbrtowc(wc, s, clen, NULL);
@@ -820,16 +821,16 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   334,   334,   335,   336,   337,   338,   341,   342,   345,
-     348,   349,   350,   351,   353,   354,   356,   357,   358,   359,
-     360,   362,   363,   364,   365,   366,   367,   368,   369,   370,
-     371,   372,   373,   374,   375,   376,   377,   378,   379,   380,
-     381,   383,   384,   385,   387,   388,   389,   390,   391,   392,
-     393,   394,   395,   396,   397,   398,   399,   400,   401,   402,
-     403,   404,   405,   406,   407,   408,   412,   415,   418,   422,
-     423,   424,   425,   426,   427,   430,   431,   434,   435,   436,
-     437,   438,   439,   440,   441,   444,   445,   446,   447,   448,
-     452
+       0,   335,   335,   336,   337,   338,   339,   342,   343,   346,
+     349,   350,   351,   352,   354,   355,   357,   358,   359,   360,
+     361,   363,   364,   365,   366,   367,   368,   369,   370,   371,
+     372,   373,   374,   375,   376,   377,   378,   379,   380,   381,
+     382,   384,   385,   386,   388,   389,   390,   391,   392,   393,
+     394,   395,   396,   397,   398,   399,   400,   401,   402,   403,
+     404,   405,   406,   407,   408,   409,   413,   416,   419,   423,
+     424,   425,   426,   427,   428,   431,   432,   435,   436,   437,
+     438,   439,   440,   441,   442,   445,   446,   447,   448,   449,
+     453
 };
 #endif
 
@@ -3425,6 +3426,7 @@ void R_InitSrcRefState(void)
     } else
         ParseState.prevState = NULL;
     ParseState.keepSrcRefs = FALSE;
+    ParseState.keepParseData = TRUE;
     ParseState.didAttach = FALSE;
     PROTECT_WITH_INDEX(ParseState.SrcFile = R_NilValue, &(ParseState.SrcFileProt));
     PROTECT_WITH_INDEX(ParseState.Original = R_NilValue, &(ParseState.OriginalProt));
@@ -3478,6 +3480,7 @@ void R_FinalizeSrcRefState(void)
 static void UseSrcRefState(SrcRefState *state)
 {
     ParseState.keepSrcRefs = state->keepSrcRefs;
+    ParseState.keepParseData = state->keepParseData;
     ParseState.SrcFile = state->SrcFile;
     ParseState.Original = state->Original;
     ParseState.SrcFileProt = state->SrcFileProt;
@@ -3498,6 +3501,7 @@ static void PutSrcRefState(SrcRefState *state)
 {
     if (state) {
 	state->keepSrcRefs = ParseState.keepSrcRefs;
+	state->keepParseData = ParseState.keepParseData;
 	state->SrcFile = ParseState.SrcFile;
 	state->Original = ParseState.Original;
 	state->SrcFileProt = ParseState.SrcFileProt;
@@ -3613,6 +3617,8 @@ SEXP R_Parse1Buffer(IoBuffer *buffer, int gencode, ParseStatus *status)
     	keepSource = asLogical(GetOption1(install("keep.source")));
     	if (keepSource) {
     	    ParseState.keepSrcRefs = TRUE;
+	    ParseState.keepParseData =
+		asLogical(GetOption1(install("keep.parse.data")));
     	    REPROTECT(ParseState.SrcFile = NewEnvironment(R_NilValue, R_NilValue, R_EmptyEnv), ParseState.SrcFileProt);
 	    REPROTECT(ParseState.Original = ParseState.SrcFile, ParseState.OriginalProt);
 	    PROTECT_WITH_INDEX(SrcRefs = R_NilValue, &srindex);
@@ -3674,6 +3680,8 @@ static SEXP R_Parse(int n, ParseStatus *status, SEXP srcfile)
     
     if (isEnvironment(ParseState.SrcFile)) {
     	ParseState.keepSrcRefs = TRUE;
+	ParseState.keepParseData =
+	    asLogical(GetOption1(install("keep.parse.data")));
 	PROTECT_WITH_INDEX(SrcRefs = R_NilValue, &srindex);
     }
     
@@ -3690,7 +3698,7 @@ static SEXP R_Parse(int n, ParseStatus *status, SEXP srcfile)
 	    break;
 	case PARSE_INCOMPLETE:
 	case PARSE_ERROR:
-	    if (ParseState.keepSrcRefs) 
+	    if (ParseState.keepSrcRefs && ParseState.keepParseData)
 	        finalizeData();
 	    R_PPStackTop = savestack;
 	    R_FinalizeSrcRefState();	    
@@ -3709,7 +3717,8 @@ finish:
     for (n = 0 ; n < LENGTH(rval) ; n++, t = CDR(t))
 	SET_VECTOR_ELT(rval, n, CAR(t));
     if (ParseState.keepSrcRefs) {
-	finalizeData();
+	if (ParseState.keepParseData)
+	    finalizeData();
 	rval = attachSrcrefs(rval);
     }
     R_PPStackTop = savestack;    /* UNPROTECT lots! */
@@ -3806,6 +3815,8 @@ SEXP R_ParseBuffer(IoBuffer *buffer, int n, ParseStatus *status, SEXP prompt,
     
     if (isEnvironment(ParseState.SrcFile)) {
     	ParseState.keepSrcRefs = TRUE;
+	ParseState.keepParseData =
+	    asLogical(GetOption1(install("keep.parse.data")));
 	PROTECT_WITH_INDEX(SrcRefs = R_NilValue, &srindex);
     }
     
@@ -3855,7 +3866,8 @@ finish:
     for (n = 0 ; n < LENGTH(rval) ; n++, t = CDR(t))
 	SET_VECTOR_ELT(rval, n, CAR(t));
     if (ParseState.keepSrcRefs) {
-	finalizeData();
+	if (ParseState.keepParseData)
+	    finalizeData();
 	rval = attachSrcrefs(rval);
     }
     R_PPStackTop = savestack; /* UNPROTECT lots! */
@@ -4482,8 +4494,9 @@ static int mbcs_get_next2(int c, ucs_t *wc)
     if(utf8locale) {
 	clen = utf8clen(c);
 	for(i = 1; i < clen; i++) {
-	    s[i] = xxgetc();
-	    if(s[i] == R_EOF) error(_("EOF whilst reading MBCS char at line %d"), ParseState.xxlineno);
+	    c = xxgetc();
+	    if(c == R_EOF) error(_("EOF whilst reading MBCS char at line %d"), ParseState.xxlineno);
+	    s[i] = (char) c;
 	}
 	s[clen] ='\0'; /* x86 Solaris requires this */
 	res = mbtoucs(wc, s, clen);
@@ -5457,7 +5470,8 @@ static void record_( int first_parsed, int first_column, int last_parsed, int la
 		colon = 0 ;
 	}
 	
-	if (!ParseState.keepSrcRefs || id == NA_INTEGER) return;
+	if (!ParseState.keepSrcRefs || !ParseState.keepParseData
+	    || id == NA_INTEGER) return;
 	
 	// don't care about zero sized things
 	if( !yytext[0] ) return ;
@@ -5527,8 +5541,8 @@ static void modif_token( yyltype* loc, int tok ){
 	
 	int id = loc->id ;
 	
-	if (!ParseState.keepSrcRefs || id < 0 || id > ID_COUNT) 
-	    return;
+	if (!ParseState.keepSrcRefs || !ParseState.keepParseData
+	    || id < 0 || id > ID_COUNT) return;
 	    
 	if( tok == SYMBOL_FUNCTION_CALL ){
 		// looking for first child of id

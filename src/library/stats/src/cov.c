@@ -178,7 +178,7 @@ static void cov_pairwise2(int n, int ncx, int ncy, double *x, double *y,
 #define COV_ini_0				\
     LDOUBLE sum, tmp, xxm, yym;			\
     double *xx, *yy;				\
-    int i, j, k, n1=-1/* -Wall */
+    R_xlen_t i, j, k, n1=-1/* -Wall */
 
 #define COV_n_le_1(_n_,_k_)			\
     if (_n_ <= 1) {/* too many missing */	\

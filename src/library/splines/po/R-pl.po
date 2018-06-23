@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.4.0\n"
+"Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-04 08:15\n"
+"POT-Creation-Date: 2018-04-01 16:26\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.8.7\n"
+"X-Generator: Poedit 2.0.4\n"
 
 #. R/splineClasses.R: gettextf("%s needs package 'Matrix' correctly installed", "splineDesign(*, sparse=TRUE)")
 #: R/splineClasses.R:0
@@ -55,6 +55,11 @@ msgid "'ord' must be positive integer, at most the number of knots"
 msgstr ""
 "'ord' musi być dodatnią liczbą całkowitą, równą co najwyżej liczbie węzłów"
 
+#. R/splineClasses.R: stop("currently implemented only for cubic splines")
+#: R/splineClasses.R:0
+msgid "currently implemented only for cubic splines"
+msgstr "aktualnie zaimplementowane tylko dla szcześciennych splajnów"
+
 #. R/splineClasses.R: stop("empty 'derivs'")
 #: R/splineClasses.R:0
 msgid "empty 'derivs'"
@@ -91,6 +96,11 @@ msgstr "długości 'x' oraz 'y' muszą być zgodne"
 msgid "must have at least 'ord' knots"
 msgstr "potrzeba mieć przynajmniej węzły 'ord'"
 
+#. R/splineClasses.R: gettextf("must have at least 'ord'=%d points", ord)
+#: R/splineClasses.R:0
+msgid "must have at least 'ord'=%d points"
+msgstr "wymagane jest co najmniej 'ord' = %d punktów"
+
 #. R/splineClasses.R: gettextf("need at least %s (=%d) knots", "2*ord -1", 2 * ord -     1)
 #: R/splineClasses.R:0
 msgid "need at least %s (=%d) knots"
@@ -108,7 +118,7 @@ msgstr ""
 msgid "spline must be monotone"
 msgstr "funkcja sklejana musi być funkcją monotoniczną"
 
-#. R/splineClasses.R: gettextf("the 'x' data must be in the range %g to %g unless you set '%s'",     knots[ord], knots[nk - o1], "outer.ok = TRUE")
+#. R/splineClasses.R: gettextf("the 'x' data must be in the range %g to %g unless you set '%s'",     knots[ord], knots[nk - degree], "outer.ok = TRUE")
 #: R/splineClasses.R:0
 msgid "the 'x' data must be in the range %g to %g unless you set '%s'"
 msgstr "dane 'x' muszą być w przedziale od %g do %g chyba, że ustawiono '%s'"

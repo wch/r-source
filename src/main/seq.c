@@ -347,6 +347,9 @@ SEXP attribute_hidden do_rep_int(SEXP call, SEXP op, SEXP args, SEXP rho)
     R_xlen_t nc;
     SEXP a;
 
+    if (DispatchOrEval(call, op, "rep.int", args, rho, &a, 0, 0))
+      return(a);
+
     if (!isVector(ncopy))
 	error(_("invalid type (%s) for '%s' (must be a vector)"),
 	      type2char(TYPEOF(ncopy)), "times");
@@ -403,6 +406,10 @@ SEXP attribute_hidden do_rep_len(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP a, s, len;
 
     checkArity(op, args);
+
+    if (DispatchOrEval(call, op, "rep_len", args, rho, &a, 0, 0))
+      return(a);
+
     s = CAR(args);
 
     if (!isVector(s) && s != R_NilValue)
@@ -1042,6 +1049,8 @@ SEXP attribute_hidden do_seq_len(SEXP call, SEXP op, SEXP args, SEXP rho)
     double dlen = asReal(CAR(args));
     if(!R_FINITE(dlen) || dlen < 0)
 	errorcall(call, _("argument must be coercible to non-negative integer"));
+    if(dlen >= R_XLEN_T_MAX)
+    	errorcall(call, _("result would be too long a vector"));
     len = (R_xlen_t) dlen;
 #else
     len = asInteger(CAR(args));

@@ -1,6 +1,6 @@
 % File src/library/utils/man/SweaveSyntConv.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{SweaveSyntConv}
@@ -31,6 +31,7 @@ SweaveSyntConv(file, syntax, output = NULL)
 }
 \examples{
 testfile <- system.file("Sweave", "Sweave-test-1.Rnw", package = "utils")
+\dontshow{oldwd <- setwd(tempdir())}
 
 ## convert the file to latex syntax
 SweaveSyntConv(testfile, SweaveSyntaxLatex)
@@ -38,6 +39,6 @@ SweaveSyntConv(testfile, SweaveSyntaxLatex)
 ## and run it through Sweave
 Sweave("Sweave-test-1.Stex")
 
-\dontshow{if(!interactive()) unlink("Sweave-test-1*")}
+\dontshow{ if(!interactive()) unlink("Sweave-test-1*") ; setwd(oldwd) }
 }
 \keyword{utilities}

@@ -1492,8 +1492,8 @@ void R_fixslash(char *s)
 	}
     } else
 	for (; *p; p++) if (*p == '\\') *p = '/';
-	/* preserve network shares */
-	if(s[0] == '/' && s[1] == '/') s[0] = s[1] = '\\';
+    /* preserve network shares */
+    if(s[0] == '/' && s[1] == '/') s[0] = s[1] = '\\';
 }
 
 void R_UTF8fixslash(char *s)
@@ -1947,11 +1947,11 @@ static UCollator *collator = NULL;
 static int collationLocaleSet = 0;
 
 /* called from platform.c */
-void attribute_hidden resetICUcollator(void)
+void attribute_hidden resetICUcollator(Rboolean disable)
 {
     if (collator) ucol_close(collator);
     collator = NULL;
-    collationLocaleSet = 0;
+    collationLocaleSet = disable ? 1 : 0;
 }
 
 static const struct {
@@ -2101,11 +2101,27 @@ int Scollate(SEXP a, SEXP b)
     if (!collationLocaleSet) {
 	int errsv = errno;      /* OSX may set errno in the operations below. */
 	collationLocaleSet = 1;
+
+	/* A lot of code depends on that setting LC_ALL or LC_COLLATE to "C"
+	   via environment variables or Sys.setlocale ensures the "C" collation
+	   order. Originally, R_ICU_LOCALE always took precedence over LC_ALL
+	   and LC_COLLATE variables and over Sys.setlocale (except on Unix when
+	   R_ICU_LOCALE=C). This now adds an exception: when LC_ALL is set to "C"
+	   (or unset and LC_COLLATE is set to "C"), the "C" collation order will
+	   be used. */
+	const char *envl = getenv("LC_ALL");
+	if (!envl || !envl[0])
+	    envl = getenv("LC_COLLATE");
+	int useC = envl && !strcmp(envl, "C");
+	    
 #ifndef Win32
-	if (strcmp("C", getLocale()) ) {
+	if (!useC && strcmp("C", getLocale()) ) {
 #else
+	/* On Windows, ICU is used for R_ICU_LOCALE=C, on Unix, it is not. */
+	/* FIXME: as ICU does not support C as locale, could we use the Unix
+	   behavior on all systems? */
 	const char *p = getenv("R_ICU_LOCALE");
-	if(p && p[0]) {
+	if(p && p[0] && (!useC || !strcmp(p, "C"))) {
 #endif
 	    UErrorCode status = U_ZERO_ERROR;
 	    uloc_setDefault(getLocale(), &status);
@@ -2149,7 +2165,7 @@ SEXP attribute_hidden do_ICUget(SEXP call, SEXP op, SEXP args, SEXP rho)
     return mkString("ICU not in use");
 }
 
-void attribute_hidden resetICUcollator(void) {}
+void attribute_hidden resetICUcollator(Rboolean disable) {}
 
 # ifdef Win32
 

@@ -45,7 +45,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
     Tilde-expansion will be done on file paths.
 #endif
 
-    If this is missing or a zero-length character vector, a listbox of
+    If this is missing, a listbox of
     available packages is presented where possible in an interactive \R
     session.
   }
@@ -89,8 +89,9 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   }
   \item{dependencies}{logical indicating whether to also install
     uninstalled packages which these packages depend on/link
-    to/import/suggest (and so on recursively).  Not used if \code{repos
-    = NULL}.  Can also be a character vector, a subset of
+    to/import/suggest (and so on recursively).
+    Not used if \code{repos = NULL}.
+    Can also be a character vector, a subset of
     \code{c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")}.
 
     Only supported if \code{lib} is of length one (or missing),
@@ -144,8 +145,8 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   \item{Ncpus}{the number of parallel processes to use for a parallel
     install of more than one source package.  Values greater than one
     are supported if the \command{make} command specified by
-    \code{Sys.getenv("MAKE", "make")} accepts argument \code{-k -j
-    \var{Ncpus}}.
+    \code{Sys.getenv("MAKE", "make")} accepts argument
+    \code{-k -j \var{Ncpus}}.
   }
   \item{verbose}{
     a logical indicating if some \dQuote{progress report} should be given.

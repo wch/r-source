@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
 "PO-Revision-Date: 2011-03-26 08:56-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -151,6 +151,11 @@ msgstr "as classes membro devem estar definidas: isso não se aplica para %s"
 
 msgid "unable to create union class:  could not set members %s"
 msgstr "impossível criar classe união: não foi possível definir os membros %s"
+
+msgid ""
+"methods:::bind_activation() is defunct;\n"
+" rather provide methods for cbind2() / rbind2()"
+msgstr ""
 
 #, fuzzy
 msgid "invalid argument 'name': %s"
@@ -877,6 +882,9 @@ msgid ""
 "'%s'"
 msgstr ""
 
+msgid "Also defined by"
+msgstr ""
+
 msgid "undefined subclass %s of class %s; definition not updated"
 msgstr "subclasse %s da classe %s não definida; definição não atualizada"
 
@@ -949,7 +957,7 @@ msgid ""
 msgstr ""
 
 msgid ""
-"arguments (%s) after '...' in the generic must appear in the method, in the "
+"%s arguments (%s) after %s in the generic must appear in the method, in the "
 "same place at the end of the argument list"
 msgstr ""
 

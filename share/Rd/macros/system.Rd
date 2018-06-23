@@ -49,3 +49,8 @@
 % To indicate LaTeX.
 \newcommand{\LaTeX}{\ifelse{latex}{\out{{\LaTeX}}}{LaTeX}}
 
+% To indicate a programming language.
+% Ideally this would also do something like
+%   \ifelse{html}{\out{<span style="font-family: sans-serif;">#1</span>}}
+% but this does not always work correctly with Rd2HTML() as of 2018-05.
+\newcommand{\proglang}{\ifelse{latex}{\out{\textsf{#1}}}{#1}}

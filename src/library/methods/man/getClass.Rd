@@ -22,7 +22,7 @@ getClassDef(Class, where, package, inherits = TRUE)
   \item{where}{ environment from which to begin the search for the definition; by default,
     start at the top-level (global) environment and proceed through
     the search list.}
-  \item{package}{ the name of the package asserted to hold the
+  \item{package}{ the name or environment of the package asserted to hold the
       definition.  If it is a non-empty string it is used instead of
       \code{where}, as the first place to look for the class.
       Note that the package must be loaded but need not be attached.  By

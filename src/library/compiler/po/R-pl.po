@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.4.0\n"
+"Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-04 08:15\n"
+"POT-Creation-Date: 2018-04-01 16:26\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.8.7\n"
+"X-Generator: Poedit 2.0.4\n"
 
 #. R/cmp.R: gettextf("'%s' is not a valid compiler option", n)
 #: R/cmp.R:0
@@ -26,23 +26,22 @@ msgstr "'%s' nie jest prawidłową opcją kompilatora"
 msgid "'env' must be a top level environment"
 msgstr "'env' musi być środowiskiem o najwyższym poziomie"
 
-#. R/cmp.R: stop("'ns' must be a namespace or a namespace imports environment")
-#: R/cmp.R:0
-msgid "'ns' must be a namespace or a namespace imports environment"
-msgstr ""
-"'ns' musi być przestrzenią nazw lub przestrzenią nazw importującą środowisko"
-
 #. R/cmp.R: gettext("'switch' with no alternatives")
 #: R/cmp.R:0
 msgid "'switch' with no alternatives"
 msgstr "funkcja 'switch()' bez żadnych alternatyw"
 
-#. R/cmp.R: stop("bad assignment 1")
+#. R/cmp.R: gettext("Error: compilation failed - ")
+#: R/cmp.R:0
+msgid "Error: compilation failed -"
+msgstr "Błąd: kompilacja nie powiodła się -"
+
+#. R/cmp.R: gettext("bad assignment 1")
 #: R/cmp.R:0
 msgid "bad assignment 1"
 msgstr "złe przypisanie 1"
 
-#. R/cmp.R: stop("bad assignment 2")
+#. R/cmp.R: gettext("bad assignment 2")
 #: R/cmp.R:0
 msgid "bad assignment 2"
 msgstr "złe przypisanie 2"
@@ -139,16 +138,16 @@ msgid "invalid compiler options: optimize(==%d)<2 and jitEnabled(==%d)>2"
 msgstr ""
 "niepoprawne opcje kompilatora: 'optimize(==%d)<2' oraz 'jitEnabled(==%d)>2'"
 
+#. R/cmp.R: gettextf("invalid environment variable value: %s==%s", varName,     value)
+#: R/cmp.R:0
+msgid "invalid environment variable value: %s==%s"
+msgstr "niepoprawa wartość zmiennej środowiskowej: %s==%s"
+
 #. R/cmp.R: gettext("invalid function in complex assignment")
 #. R/cmp.R: gettext("invalid function in complex assignment")
 #: R/cmp.R:0
 msgid "invalid function in complex assignment"
 msgstr "niepoprawna funkcja w zespolonym przypisaniu"
-
-#. R/cmp.R: stop(sQuote(name), "is not a registered math1 function")
-#: R/cmp.R:0
-msgid "is not a registered math1 function"
-msgstr ": to nie jest zarejestrowana funkcja math1"
 
 #. R/cmp.R: gettext("missing arguments are not allowed")
 #: R/cmp.R:0
@@ -220,13 +219,21 @@ msgstr "zapisywanie do pliku '%s' ..."
 msgid "wrong number of arguments to '%s'"
 msgstr "błędna liczba argumentów w '%s'"
 
-#. R/cmp.R: ngettext(sum(rdsf), "local assignment to syntactic function: ",     "local assignments to syntactic functions: ")
+#. R/cmp.R: ngettext(length(funs), "local assignment to syntactic function: ",     "local assignments to syntactic functions: ")
 #: R/cmp.R:0
 msgid "local assignment to syntactic function: "
 msgid_plural "local assignments to syntactic functions: "
 msgstr[0] "lokalne przypisanie do funkcji syntaktycznej:"
 msgstr[1] "lokalne przypisania do funkcji syntaktycznych:"
 msgstr[2] "lokalne przypisania do funkcji syntaktycznych:"
+
+#~ msgid "'ns' must be a namespace or a namespace imports environment"
+#~ msgstr ""
+#~ "'ns' musi być przestrzenią nazw lub przestrzenią nazw importującą "
+#~ "środowisko"
+
+#~ msgid "is not a registered math1 function"
+#~ msgstr ": to nie jest zarejestrowana funkcja math1"
 
 #~ msgid "%s is not a registered math1 function"
 #~ msgstr "%s nie jest zarejestrowaną funkcją 'math1'"

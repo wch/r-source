@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.4.0\n"
+"Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-04 19:01\n"
+"POT-Creation-Date: 2018-04-01 16:26\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -14,12 +14,26 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 2.0.4\n"
 
 #. R/New-Internal.R: stop("\"hexNumeric\" and \"digits17\" are mutually exclusive")
 #: R/New-Internal.R:0
 msgid "\"hexNumeric\" and \"digits17\" are mutually exclusive"
 msgstr "argumenty \"hexNumeric\" oraz \"digits17\" wzajemnie się wykluczają"
+
+#. R/namespace.R: paste("package %s has a license that you need to accept:", "according to the DESCRIPTION file it is",     "%s", sep = "\n")
+#: R/namespace.R:0
+msgid "%s"
+msgstr "%s"
+
+#. R/stop.R: gettext("%s and %s are not equal:\n  %s")
+#: R/stop.R:0
+msgid ""
+"%s and %s are not equal:\n"
+"  %s"
+msgstr ""
+"%s oraz %s nie są równe:\n"
+"  %s"
 
 #. R/grep.R: gettextf("%s and %s must have the same length", sQuote("x"),     sQuote("m"))
 #: R/grep.R:0
@@ -50,11 +64,6 @@ msgstr ""
 #: R/library.R:0
 msgid "%s is not a valid installed package"
 msgstr "%s nie jest poprawnie zainstalowanym pakietem"
-
-#. R/mapply.R: gettextf("%s may not have argument(s) named %s", sQuote("FUN"),     paste(sQuote(arg.names[collisions]), collapse = ", "))
-#: R/mapply.R:0
-msgid "%s may not have argument(s) named %s"
-msgstr "%s nie może mieć argumentów o nazwach %s"
 
 #. R/attach.R: gettextf("%s namespace cannot be unloaded:\n  ", sQuote(pkgname))
 #: R/attach.R:0
@@ -112,7 +121,7 @@ msgstr "'%s' nie mogło zostać uruchomione"
 msgid "'%s' execution failed with error code %d"
 msgstr "wykonywanie '%s' nie powiodło się zwracając kod błędu %d"
 
-#. R/Defunct.R: gettextf("'%s' is defunct.\n", as.character(sys.call(sys.parent())[[1L]]))
+#. R/Defunct.R: gettextf("'%s' is defunct.\n", fname[length(fname)])
 #: R/Defunct.R:0
 msgid "'%s' is defunct."
 msgstr "Funkcja '%s' została zlikwidowana."
@@ -121,18 +130,6 @@ msgstr "Funkcja '%s' została zlikwidowana."
 #: R/Deprecated.R:0
 msgid "'%s' is deprecated."
 msgstr "Funkcja '%s' jest przestarzała."
-
-#. R/dates.R: gettextf("'%s' is not a \"date\" object", deparse(substitute(x)))
-#. R/datetime.R: gettextf("'%s' is not a \"date\" object", deparse(substitute(x)))
-#: R/dates.R:0 R/datetime.R:0
-msgid "'%s' is not a \"date\" object"
-msgstr "argument '%s' nie jest obiektem klasy \"date\""
-
-#. R/dates.R: gettextf("'%s' is not a \"dates\" object", deparse(substitute(x)))
-#. R/datetime.R: gettextf("'%s' is not a \"dates\" object", deparse(substitute(x)))
-#: R/dates.R:0 R/datetime.R:0
-msgid "'%s' is not a \"dates\" object"
-msgstr "argument '%s' nie jest obiektem klasy \"dates\""
 
 #. R/match.fun.R: gettextf("'%s' is not a function, character or symbol", deparse(FUN))
 #: R/match.fun.R:0
@@ -284,7 +281,8 @@ msgstr "'by' posiada wartość NA"
 
 #. R/dates.R: stop("'by' must be of length 1")
 #. R/datetime.R: stop("'by' must be of length 1")
-#: R/dates.R:0 R/datetime.R:0
+#. R/seq.R: stop("'by' must be of length 1")
+#: R/dates.R:0 R/datetime.R:0 R/seq.R:0
 msgid "'by' must be of length 1"
 msgstr "argument 'by' musi mieć długość 1"
 
@@ -384,6 +382,13 @@ msgstr "argument 'drop' zostanie zignorowany"
 msgid "'echo' must be logical"
 msgstr "'echo' musi być zmienną logiczną"
 
+#. R/table.R: warning("'exclude' containing NA and 'useNA' != \"no\"' are a bit contradicting")
+#: R/table.R:0
+msgid "'exclude' containing NA and 'useNA' != \"no\"' are a bit contradicting"
+msgstr ""
+"argument 'exclude' zawierający wartość NA oraz argument 'useNA' != \"no\"' "
+"są sprzeczne"
+
 #. R/namespace.R: gettextf("'exportClassPattern' specified in 'NAMESPACE' but no matching classes in package %s",     sQuote(package))
 #: R/namespace.R:0
 msgid ""
@@ -422,10 +427,15 @@ msgstr "argument 'file' musi być niepustym łańcuchem tekstowym"
 msgid "'file' must be specified"
 msgstr "argument 'file' musi być określony"
 
-#. R/format.R: stop("'flag' can contain only '0+- #'")
+#. R/format.R: stop("'flag' must be a string, i.e., of length 1")
 #: R/format.R:0
-msgid "'flag' can contain only '0+- #'"
-msgstr "'flag' może zawierać jedynie znaki '0+- #'"
+msgid "'flag' must be a string, i.e., of length 1"
+msgstr "argument 'flag' musi mieć długość 1"
+
+#. R/format.R: stop("'flag' should contain only characters from [0+- #'I]")
+#: R/format.R:0
+msgid "'flag' should contain only characters from [0+- #'I]"
+msgstr "argument 'flag' powinien zawierać jedynie znaki z zakresu [0+- #'I]"
 
 #. R/format.R: stop("'format' must be one of {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}")
 #: R/format.R:0
@@ -433,12 +443,6 @@ msgid "'format' must be one of {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
 msgstr ""
 "argument 'format' musi być jednym z {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", "
 "\"s\"}"
-
-#. R/seq.R: stop("'from' cannot be NA, NaN or infinite")
-#. R/seq.R: stop("'from' cannot be NA, NaN or infinite")
-#: R/seq.R:0
-msgid "'from' cannot be NA, NaN or infinite"
-msgstr "argument 'from' nie może mieć wartości NA, NaN lub nieskończoność"
 
 #. R/dates.R: stop("'from' must be a \"Date\" object")
 #: R/dates.R:0
@@ -449,6 +453,12 @@ msgstr "argument 'from' musi być obiektem klasy \"Date\""
 #: R/datetime.R:0
 msgid "'from' must be a \"POSIXt\" object"
 msgstr "argument 'from' musi być obiektem klasy \"POSIXt\""
+
+#. R/seq.R: stop("'from' must be a finite number")
+#. R/seq.R: stop("'from' must be a finite number")
+#: R/seq.R:0
+msgid "'from' must be a finite number"
+msgstr "argument 'from' musi być skończoną liczcbą"
 
 #. R/dates.R: stop("'from' must be of length 1")
 #. R/datetime.R: stop("'from' must be of length 1")
@@ -560,6 +570,11 @@ msgstr ""
 msgid "'lag' and 'differences' must be integers >= 1"
 msgstr "argumenty 'lag' oraz 'differences' muszą być liczbami całkowitymi >= 1"
 
+#. R/seq.R: stop("'length.out' must be a non-negative number")
+#: R/seq.R:0
+msgid "'length.out' must be a non-negative number"
+msgstr "argument 'length.out' musi być liczbą nieujemną"
+
 #. R/dates.R: stop("'length.out' must be of length 1")
 #. R/datetime.R: stop("'length.out' must be of length 1")
 #: R/dates.R:0 R/datetime.R:0
@@ -567,7 +582,8 @@ msgid "'length.out' must be of length 1"
 msgstr "argument 'length.out' musi mieć długość 1"
 
 #. R/source.R: stop("'local' must be TRUE, FALSE or an environment")
-#: R/source.R:0
+#. R/stop.R: stop("'local' must be TRUE, FALSE or an environment")
+#: R/source.R:0 R/stop.R:0
 msgid "'local' must be TRUE, FALSE or an environment"
 msgstr "argument 'local' musi być TRUE, FALSE lub musi być środowiskiem"
 
@@ -632,6 +648,11 @@ msgstr "argument 'package' musi mieć długość 1"
 msgid "'partial' sorting not supported by radix method"
 msgstr "sortowanie 'partial' nie jest wspierane przez metodę 'radix'"
 
+#. R/attach.R: stop("'pos=1' is not possible and has been warned about for years")
+#: R/attach.R:0
+msgid "'pos=1' is not possible and has been warned about for years"
+msgstr "'pos=1' nie jest możliwe co było już przez lata wskazywane"
+
 #. R/qr.R: stop("'qr' and 'y' must have the same number of rows")
 #. R/qr.R: stop("'qr' and 'y' must have the same number of rows")
 #. R/qr.R: stop("'qr' and 'y' must have the same number of rows")
@@ -673,12 +694,14 @@ msgid "'show.output.on.console' must be TRUE or FALSE"
 msgstr "argument 'show.output.on.console' musi mieć wartość TRUE lub FALSE"
 
 #. R/unix/system.unix.R: stop("'stderr' must be of length 1")
-#: R/unix/system.unix.R:0
+#. R/windows/system.R: stop("'stderr' must be of length 1")
+#: R/unix/system.unix.R:0 R/windows/system.R:0
 msgid "'stderr' must be of length 1"
 msgstr "'stderr' musi mieć długość 1"
 
 #. R/unix/system.unix.R: stop("'stdout' must be of length 1")
-#: R/unix/system.unix.R:0
+#. R/windows/system.R: stop("'stdout' must be of length 1")
+#: R/unix/system.unix.R:0 R/windows/system.R:0
 msgid "'stdout' must be of length 1"
 msgstr "'stdout' musi mieć długość 1"
 
@@ -688,6 +711,12 @@ msgstr "'stdout' musi mieć długość 1"
 #: R/frametools.R:0
 msgid "'subset' must be logical"
 msgstr "'subset' musi być zmienną logiczną"
+
+#. R/warnings.R: stop("'tags' must be a character vector of the same length as 'x'")
+#: R/warnings.R:0
+msgid "'tags' must be a character vector of the same length as 'x'"
+msgstr ""
+"argument 'tags' musi być wektorem tekstowym o tej samej długości co 'x'"
 
 #. R/datetime.R: stop("'tim' is not character or numeric")
 #: R/datetime.R:0
@@ -699,11 +728,6 @@ msgstr "argument 'tim' nie jest tekstem ani liczbą"
 msgid "'timeout' must be NULL or a non-negative number"
 msgstr "argument 'timeout' musi być wartością NULL lub nieujemną liczbą"
 
-#. R/seq.R: stop("'to' cannot be NA, NaN or infinite")
-#: R/seq.R:0
-msgid "'to' cannot be NA, NaN or infinite"
-msgstr "argument 'to' nie może mieć wartości NA, NaN lub nieskończoność"
-
 #. R/dates.R: stop("'to' must be a \"Date\" object")
 #: R/dates.R:0
 msgid "'to' must be a \"Date\" object"
@@ -713,6 +737,11 @@ msgstr "argument 'to' musi być obiektem klasy \"Date\""
 #: R/datetime.R:0
 msgid "'to' must be a \"POSIXt\" object"
 msgstr "argument 'to' musi być obiektem klasy \"POSIXt\""
+
+#. R/seq.R: stop("'to' must be a finite number")
+#: R/seq.R:0
+msgid "'to' must be a finite number"
+msgstr "argument 'to' musi być skończoną liczbą"
 
 #. R/dates.R: stop("'to' must be of length 1")
 #. R/datetime.R: stop("'to' must be of length 1")
@@ -875,15 +904,12 @@ msgstr "'zero.print' ma długość > 1"
 msgid "'zero.print' must be character, logical or NULL"
 msgstr "'zero.print' musi być tekstem, wartością logiczną lub NULL"
 
-#. R/attach.R: warning("*** 'pos=1' is not possible; setting 'pos=2' for now.\n",     "*** Note that 'pos=1' will give an error in the future")
-#: R/attach.R:0
-msgid "*** 'pos=1' is not possible; setting 'pos=2' for now."
-msgstr "*** 'pos=1' nie jest możliwe; na chwilę obecną ustawianie 'pos=2'."
-
-#. R/attach.R: warning("*** 'pos=1' is not possible; setting 'pos=2' for now.\n",     "*** Note that 'pos=1' will give an error in the future")
-#: R/attach.R:0
-msgid "*** Note that 'pos=1' will give an error in the future"
-msgstr "*** Zwróć uwagę, że 'pos=1' będzie zwracało błąd w przyszłości"
+#. R/dataframe.R: paste(vnames[!mode.ok], collapse = ", ")
+#. R/mapply.R: paste(sQuote(arg.names[collisions]), collapse = ", ")
+#. R/summary.R: paste(which(is.na(lw)), collapse = ", ")
+#: R/dataframe.R:0 R/mapply.R:0 R/summary.R:0
+msgid ","
+msgstr ","
 
 #. R/../../../../share/R/REMOVE.R: stop("-l option without value", call. = FALSE)
 #: R/../../../../share/R/REMOVE.R:0
@@ -919,6 +945,16 @@ msgstr "Dołączanie pakietu: %s"
 #: R/load.R:0
 msgid "Attempting to load the environment %s"
 msgstr "Próba załadowania środowiska %s"
+
+#. R/structure.R: warning("Calling 'structure(NULL, *)' is deprecated, as NULL cannot have attributes.\n  Consider 'structure(list(), *)' instead.")
+#: R/structure.R:0
+msgid ""
+"Calling 'structure(NULL, *)' is deprecated, as NULL cannot have attributes.\n"
+"  Consider 'structure(list(), *)' instead."
+msgstr ""
+"Wywoływanie 'structure(NULL, *)' jest przestarzałe z uwagi na to, że NULL "
+"nie może mieć atrybutów.\n"
+"  Zastosuje zamiast tego polecenie 'structure(list(), *)'."
 
 #. R/library.R: gettextf("DLL %s already loaded", sQuote(chname1))
 #: R/library.R:0
@@ -966,6 +1002,11 @@ msgstr "BŁĄD: nie określono pakietów"
 #: R/../../../../share/R/REMOVE.R:0
 msgid "ERROR: no permission to remove from directory"
 msgstr "BŁĄD: brak uprawnień aby usunąć z katalogu"
+
+#. R/mapply.R: sQuote("FUN")
+#: R/mapply.R:0
+msgid "FUN"
+msgstr "FUN"
 
 #. R/library.R: gettextf("Further information is available in the following vignettes in directory %s:",     sQuote(file.path(x$path, "doc")))
 #: R/library.R:0
@@ -1028,6 +1069,12 @@ msgstr "Ładowanie wymaganego pakietu: %s"
 msgid "MARGIN = %d is invalid for dim = %d"
 msgstr "MARGIN = %d jest niepoprawny dla dim =%d"
 
+#. R/stop.R: stop("Must use 'exprs' or unnamed expressions, but not both")
+#: R/stop.R:0
+msgid "Must use 'exprs' or unnamed expressions, but not both"
+msgstr ""
+"Konieczne jest użycie 'exprs' lub nienazwanych wyrażeń, ale nie oba naraz"
+
 #. R/dynload.R: gettextf("No DLL currently loaded with name or path %s", sQuote(dll))
 #: R/dynload.R:0
 msgid "No DLL currently loaded with name or path %s"
@@ -1047,20 +1094,19 @@ msgstr ""
 "Nie znaleziono ogólnej funkcji %s odpowiadającej zażądanym zaimportowanym "
 "metodom z pakietu '%s' podczas ładowania %s (uszkodzone eksporty?)"
 
-#. R/namespace.R: gettextf("No methods found in \"%s\" for requests: %s", pkg,     paste(vars[is.na(match(vars, allFuns))], collapse = ", "))
-#: R/namespace.R:0
-msgid "No methods found in \"%s\" for requests: %s"
-msgstr "Nie znaleziono metod w pakiecie '%s' dla żądań: %s"
-
 #. R/traceback.R: gettext("No traceback available")
 #: R/traceback.R:0
 msgid "No traceback available"
 msgstr "Śledzenie nie jest dostepne"
 
-#. R/library.R: gettextf("Package %s version %s cannot be unloaded", sQuote(package),     oldversion)
+#. R/library.R: gettextf("Package %s version %s cannot be unloaded:\n %s", sQuote(package),     oldversion, paste0(P, conditionMessage(e), "\n"))
 #: R/library.R:0
-msgid "Package %s version %s cannot be unloaded"
-msgstr "Pakiet %s w wersji %s nie może być zwolniony"
+msgid ""
+"Package %s version %s cannot be unloaded:\n"
+" %s"
+msgstr ""
+"Pakiet %s w wersji %s nie może być zwolniony:\n"
+" %s"
 
 #. R/dataframe.R: gettextf("Partial match of '%s' to '%s' in data frame", name,     names[pmatch(name, names)])
 #: R/dataframe.R:0
@@ -1128,6 +1174,11 @@ msgid "Specified environment not found: using '.GlobalEnv' instead"
 msgstr ""
 "Nie znaleziono określonego środowiska: zamiast tego używanie '.GlobalEnv'"
 
+#. R/warnings.R: gettextf("Summary of (a total of %d) warning messages:\n", sum(cn))
+#: R/warnings.R:0
+msgid "Summary of (a total of %d) warning messages:"
+msgstr "Podsumowanie (całości z %d) komunikatów ostrzegawczych:"
+
 #. R/library.R: gettextf("This is R %s, package %s needs %s %s", current, sQuote(pkgname),     dep$op, target)
 #: R/library.R:0
 msgid "This is R %s, package %s needs %s %s"
@@ -1137,6 +1188,11 @@ msgstr "To jest R %s, pakiet %s potrzebuje %s %s"
 #: R/srcfile.R:0
 msgid "Timestamp of %s has changed"
 msgstr "Sygnatura czasu dla %s zmieniła się"
+
+#. R/time.R: message("Timing stopped at: ", ppt(proc.time() - time))
+#: R/time.R:0
+msgid "Timing stopped at:"
+msgstr "Odliczanie zatrzymało się na:"
 
 #. R/Defunct.R: gettextf("Use '%s' instead.\n", new)
 #. R/Deprecated.R: gettextf("Use '%s' instead.\n", new)
@@ -1154,6 +1210,11 @@ msgstr "[Poprzednio zapisany obszar roboczy został przywrócony]"
 #: R/LAPACK.R:0 R/svd.R:0
 msgid "a dimension is zero"
 msgstr "wymiar wynosi zero"
+
+#. R/namespace.R: paste("package %s has a license that you need to accept:", "according to the DESCRIPTION file it is",     "%s", sep = "\n")
+#: R/namespace.R:0
+msgid "according to the DESCRIPTION file it is"
+msgstr "zgodnie z opisem w pliku 'DESCRIPTION' jest to"
 
 #. R/message.R: warning("additional arguments ignored in message()")
 #: R/message.R:0
@@ -1392,10 +1453,10 @@ msgstr "nie można wykonać 'chdir' ponieważ bieżący katalog nie jest znany"
 msgid "cannot add to exports of a sealed namespace"
 msgstr "nie można dodać do eksportów zamkniętej przestrzeni nazw"
 
-#. R/dataframe.R: gettextf("cannot coerce class \"%s\" to a data.frame", deparse(class(x)))
+#. R/dataframe.R: gettextf("cannot coerce class %s to a data.frame", sQuote(deparse(class(x))[1L]))
 #: R/dataframe.R:0
-msgid "cannot coerce class \"%s\" to a data.frame"
-msgstr "nie można przekształcić klasy \"%s\" w klasę \"data.frame\""
+msgid "cannot coerce class %s to a data.frame"
+msgstr "nie można przekształcić klasy %s w klasę \"data.frame\""
 
 #. R/table.R: stop("cannot coerce to a table")
 #: R/table.R:0
@@ -1675,11 +1736,6 @@ msgstr "niepoprawna wartość dla argumentu 'MARGIN'"
 msgid "incorrect value for 'x'"
 msgstr "niepoprawna wartość dla argumentu 'x'"
 
-#. R/strwrap.R: stop("incorrect values of 'indent' and 'width'")
-#: R/strwrap.R:0
-msgid "incorrect values of 'indent' and 'width'"
-msgstr "niepoprawne wartości 'indent' oraz 'width'"
-
 #. R/LAPACK.R: stop("infinite or missing values in 'x'")
 #. R/eigen.R: stop("infinite or missing values in 'x'")
 #. R/svd.R: stop("infinite or missing values in 'x'")
@@ -1691,6 +1747,11 @@ msgstr "wartość nieskończona lub brakuje wartości w 'x'"
 #: R/load.R:0
 msgid "input has been corrupted, with LF replaced by CR"
 msgstr "wejście zostało uszkodzone z LF zastąpionym przez CR"
+
+#. R/seq.R: stop("invalid '(to - from)/by'")
+#: R/seq.R:0
+msgid "invalid '(to - from)/by'"
+msgstr "niepoprawne '(to - from)/by'"
 
 #. R/dates.R: stop("invalid 'by' string")
 #. R/datetime.R: stop("invalid 'by' string")
@@ -1728,10 +1789,17 @@ msgstr "niepoprawne 'dimnames' dla podanej ramki danych"
 msgid "invalid 'dims'"
 msgstr "niepoprawny argument 'dims'"
 
-#. R/factor.R: gettextf("invalid 'labels'; length %d should be 1 or %d", nl,     nL)
+#. R/factor.R: gettextf("invalid 'labels'; length %d should be 1 or %d", nlab,     length(levels))
 #: R/factor.R:0
 msgid "invalid 'labels'; length %d should be 1 or %d"
 msgstr "nieprawidłowe 'labels'; długość %d powinna wynosić 1 lub %d"
+
+#. R/dataframe.R: stop("invalid 'make.names'")
+#. R/dataframe.R: stop("invalid 'make.names'")
+#. R/dataframe.R: stop("invalid 'make.names'")
+#: R/dataframe.R:0
+msgid "invalid 'make.names'"
+msgstr "niepoprawne 'make.names'"
 
 #. R/attach.R: stop("invalid 'name' argument")
 #: R/attach.R:0
@@ -1766,11 +1834,6 @@ msgstr "niepoprawny argument 'time'"
 #: R/version.R:0
 msgid "invalid 'value'"
 msgstr "niepoprawna wartość 'value'"
-
-#. R/seq.R: stop("invalid (to - from)/by in seq(.)")
-#: R/seq.R:0
-msgid "invalid (to - from)/by in seq(.)"
-msgstr "niepoprawne '(to - from)/by' w 'seq(.)'"
 
 #. R/qr.R: stop("invalid NCOL(R)")
 #: R/qr.R:0
@@ -1881,20 +1944,15 @@ msgstr "nie można zmienić trybu przechowywania czynnika"
 msgid "invalid units specified"
 msgstr "niepoprawne określenie 'units'"
 
-#. R/tabulate.R: stop("invalid value of 'nbins'")
+#. R/tabulate.R: gettextf("invalid value of %s", "'nbins'")
 #: R/tabulate.R:0
-msgid "invalid value of 'nbins'"
-msgstr "niepoprawna wartość 'nbins'"
+msgid "invalid value of %s"
+msgstr "niepoprawna wartość '%s'"
 
 #. R/version.R: gettextf("invalid version specification %s", paste(sQuote(unique(x[!ok])),     collapse = ", "))
 #: R/version.R:0
 msgid "invalid version specification %s"
 msgstr "niepoprawne określenie wersji %s"
-
-#. R/seq.R: stop("length must be non-negative number")
-#: R/seq.R:0
-msgid "length must be non-negative number"
-msgstr "długość musi być liczbą nieujemną"
 
 #. R/scale.R: stop("length of 'center' must equal the number of columns of 'x'")
 #: R/scale.R:0
@@ -1923,8 +1981,8 @@ msgstr "długości argumentów 'breaks' oraz 'labels' różnią się"
 msgid "level sets of factors are different"
 msgstr "poziomy czynników są różne"
 
-#. R/library.R: gettextf("license for package %s not accepted", sQuote(package))
-#: R/library.R:0
+#. R/namespace.R: gettextf("license for package %s not accepted", sQuote(package))
+#: R/namespace.R:0
 msgid "license for package %s not accepted"
 msgstr "licencja dla pakietu %s nie została zaakceptowana"
 
@@ -1962,6 +2020,11 @@ msgstr "zniekształcony łańcuch tekstowy wersji"
 #: R/grep.R:0
 msgid "match distance components must be non-negative"
 msgstr "komponenty o dopasowanej odległości muszą być nieujemne"
+
+#. R/mapply.R: stop(sQuote("FUN"), " may not have argument(s) named ", paste(sQuote(arg.names[collisions]),     collapse = ", "))
+#: R/mapply.R:0
+msgid "may not have argument(s) named"
+msgstr "nie może mieć argumentów o nazwach"
 
 #. R/sort.R: stop("method = \"quick\" is only for numeric 'x'")
 #: R/sort.R:0
@@ -2005,7 +2068,7 @@ msgstr "brakujące wartości w 'row.names' nie są dozwolone"
 msgid "more 'from' files than 'to' files"
 msgstr "więcej plików 'from' niż plików 'to'"
 
-#. R/dynload.R: gettextf("multiple DLLs match '%s'. Using '%s'", dll, dll[["path"]])
+#. R/dynload.R: gettextf("multiple DLLs match '%s'. Using '%s'", names(dll),     dlls[[dll]][["path"]])
 #: R/dynload.R:0
 msgid "multiple DLLs match '%s'. Using '%s'"
 msgstr "wielokrotna zgodność plików DLL z '%s'. Używanie '%s'"
@@ -2223,9 +2286,9 @@ msgstr "nieistniejące wiersze nie są dozwolone"
 msgid "non-finite 'partial'"
 msgstr "nieskończona wartość 'partial'"
 
-#. R/dataframe.R: stop("non-numeric variable in data frame: ", vnames[!mode.ok])
+#. R/dataframe.R: stop("non-numeric variable(s) in data frame: ", paste(vnames[!mode.ok],     collapse = ", "))
 #: R/dataframe.R:0
-msgid "non-numeric variable in data frame:"
+msgid "non-numeric variable(s) in data frame:"
 msgstr "zmienna nieliczbowa w ramce danych:"
 
 #. R/eigen.R: stop("non-square matrix in 'eigen'")
@@ -2391,37 +2454,32 @@ msgstr ""
 "pakiet %s nie posiada przestrzeni nazw i powinien zostać zainstalowany "
 "ponownie"
 
-#. R/library.R: gettextf("package %s found more than once,\nusing the one found in %s",     sQuote(pkg), sQuote(paths))
+#. R/library.R: gettextf("package %s found more than once, using the first from\n  %s",     sQuote(pkg), paste(dQuote(paths), collapse = ",\n  "))
 #: R/library.R:0
 msgid ""
-"package %s found more than once,\n"
-"using the one found in %s"
+"package %s found more than once, using the first from\n"
+"  %s"
 msgstr ""
-"pakiet %s został znaleziony więcej niż raz. Używanie tego znalezionego w %s"
+"pakiet %s został znaleziony więcej niż raz. Używanie pierwszego z\n"
+"  %s"
 
-#. R/library.R: gettextf("package %s has a license that you need to accept after viewing",     sQuote(pkg))
-#: R/library.R:0
+#. R/namespace.R: gettextf("package %s has a license that you need to accept after viewing",     sQuote(pkg))
+#: R/namespace.R:0
 msgid "package %s has a license that you need to accept after viewing"
 msgstr ""
 "pakiet %s posiada licencję, którą musisz zaakceptować po przeglądnięciu"
 
-#. R/library.R: gettextf("package %s has a license that you need to accept in an interactive session",     sQuote(pkg))
-#: R/library.R:0
+#. R/namespace.R: gettextf("package %s has a license that you need to accept in an interactive session",     sQuote(pkg))
+#: R/namespace.R:0
 msgid ""
 "package %s has a license that you need to accept in an interactive session"
 msgstr ""
 "Pakiet %s posiada licencję, którą musisz zaakceptować w interaktywnej sesji"
 
-#. R/library.R: gettextf("package %s has a license that you need to accept:\naccording to the DESCRIPTION file it is\n%s",     sQuote(pkg), pkgInfo$DESCRIPTION["License"])
-#: R/library.R:0
-msgid ""
-"package %s has a license that you need to accept:\n"
-"according to the DESCRIPTION file it is\n"
-"%s"
-msgstr ""
-"pakiet %s posiada licencję, którą musisz zaakceptować:\n"
-"według pliku 'DESCRIPTION' jest to\n"
-"%s"
+#. R/namespace.R: paste("package %s has a license that you need to accept:", "according to the DESCRIPTION file it is",     "%s", sep = "\n")
+#: R/namespace.R:0
+msgid "package %s has a license that you need to accept:"
+msgstr "pakiet %s posiada licencję, którą musisz zaakceptować:"
 
 #. R/namespace.R: gettextf("package %s has no 'NAMESPACE' file", sQuote(package))
 #: R/namespace.R:0
@@ -2472,15 +2530,28 @@ msgstr "pakiet %s został zbudowany dla platformy %s"
 msgid "package %s was built under R version %s"
 msgstr "pakiet %s został zbudowany w wersji R %s"
 
-#. R/library.R: gettextf("package or namespace load failed for %s", sQuote(package))
-#: R/library.R:0
-msgid "package or namespace load failed for %s"
-msgstr "ładowanie pakietu lub przestrzeni nazw nie powiodło się dla pakietu %s"
+#. R/namespace.R: gettextf("package %s was installed by an R version with different internals; it needs to be reinstalled for use with this R version",     sQuote(package))
+#: R/namespace.R:0
+msgid ""
+"package %s was installed by an R version with different internals; it needs "
+"to be reinstalled for use with this R version"
+msgstr ""
+"pakiet %s był zainstalowany przez wersję R z innymi metodami wewnętrznymi; "
+"musi być przeinstalowany aby móc użyć go z tą wersją R"
 
-#. R/summary.R: gettextf("probably wrong encoding in names(.) of column %s",     paste(which(is.na(lw)), collapse = ", "))
+#. R/library.R: gettextf("package or namespace load failed for %s%s:\n %s", sQuote(package),     P, conditionMessage(e))
+#: R/library.R:0
+msgid ""
+"package or namespace load failed for %s%s:\n"
+" %s"
+msgstr ""
+"ładowanie pakietu lub przestrzeni nazw nie powiodło się dla %s%s:\n"
+" %s"
+
+#. R/summary.R: warning("probably wrong encoding in names(.) of column ", paste(which(is.na(lw)),     collapse = ", "))
 #: R/summary.R:0
-msgid "probably wrong encoding in names(.) of column %s"
-msgstr "prawdopodobnie błędne kodowanie w 'names(.)' kolumny %s"
+msgid "probably wrong encoding in names(.) of column"
+msgstr "prawdopodobnie błędne kodowanie w 'names(.)' kolumny"
 
 #. R/attach.R: warning("replaced '[<-' by '\\\\[<-' in regular expression pattern")
 #: R/attach.R:0
@@ -2524,11 +2595,6 @@ msgid "replacing previous import by %s when loading %s"
 msgstr ""
 "zastępowanie poprzedniego importu przez %s podczas ładowanie przestrzeni "
 "nazw %s"
-
-#. R/namespace.R: gettextf("requested methods not found in environment/package %s: %s",     sQuote(pkg), paste(vars[is.na(match(vars, allFuns))], collapse = ", "))
-#: R/namespace.R:0
-msgid "requested methods not found in environment/package %s: %s"
-msgstr "zażądane metody nie zostały znalezione w środowisku/pakiecie %s: %s"
 
 #. R/dataframe.R: stop("row names contain missing values")
 #. R/dataframe.R: stop("row names contain missing values")
@@ -2605,6 +2671,11 @@ msgstr ""
 "niektóre wartości 'row.names' są powtórzone: %s --> nazwy wierszy nie "
 "zostały użyte"
 
+#. R/source.R: stop("specify either 'file' or 'exprs' but not both")
+#: R/source.R:0
+msgid "specify either 'file' or 'exprs' but not both"
+msgstr "określ albo 'file' albo 'exprs', ale nie oba naraz"
+
 #. R/time.R: gettext("system")
 #: R/time.R:0
 msgid "system"
@@ -2666,6 +2737,11 @@ msgstr "macierz trójkątna powinna mieć równą liczbę wierszy i kolumn"
 #: R/mean.R:0
 msgid "trimmed means are not defined for complex data"
 msgstr "przycięte średnie nie są zdefiniowane dla danych złożonych"
+
+#. R/datetime.R: message("unable to deduce timezone name from ", sQuote(lt))
+#: R/datetime.R:0
+msgid "unable to deduce timezone name from"
+msgstr "nie jest możliwe wykrycie nazwy strefy czasowej z"
 
 #. R/source.R: stop("unable to find a plausible encoding")
 #: R/source.R:0
@@ -2859,6 +2935,17 @@ msgstr[1] ""
 msgstr[2] ""
 "W poleceniu '%s':\n"
 " dodatkowe argumenty %s zostaną odrzucone"
+
+#. R/namespace.R: ngettext(sum(!found), "No methods found in package %s for request: %s when loading %s",     "No methods found in package %s for requests: %s when loading %s")
+#: R/namespace.R:0
+msgid "No methods found in package %s for request: %s when loading %s"
+msgid_plural "No methods found in package %s for requests: %s when loading %s"
+msgstr[0] ""
+"Nie znaleziono metod w pakiecie %s dla żądania: %s podczas ładowania %s"
+msgstr[1] ""
+"Nie znaleziono metod w pakiecie %s dla żądań: %s podczas ładowania %s"
+msgstr[2] ""
+"Nie znaleziono metod w pakiecie %s dla żądań: %s podczas ładowania %s"
 
 #. R/namespace.R: ngettext(sum(notex), "S3 method %s was declared in NAMESPACE but not found",     "S3 methods %s were declared in NAMESPACE but not found")
 #: R/namespace.R:0
@@ -3065,6 +3152,22 @@ msgstr[0] "zamiana ma %d wiersz, dane mają %d"
 msgstr[1] "zamiana ma %d wiersze, dane mają %d"
 msgstr[2] "zamiana ma %d wierszy, dane mają %d"
 
+#. R/namespace.R: ngettext(sum(!found), "requested method not found in environment/package %s: %s when loading %s",     "requested methods not found in environment/package %s: %s when loading %s")
+#: R/namespace.R:0
+msgid ""
+"requested method not found in environment/package %s: %s when loading %s"
+msgid_plural ""
+"requested methods not found in environment/package %s: %s when loading %s"
+msgstr[0] ""
+"zażądana metoda nie została znaleziona w środowisku/pakiecie %s: %s podczas "
+"ładowania %s"
+msgstr[1] ""
+"zażądane metody nie zostały znalezione w środowisku/pakiecie %s: %s podczas "
+"ładowania %s"
+msgstr[2] ""
+"zażądane metody nie zostały znalezione w środowisku/pakiecie %s: %s podczas "
+"ładowania %s"
+
 #. R/dataframe.R: ngettext(length(row.names), "supplied %d row name for %d rows",     "supplied %d row names for %d rows")
 #: R/dataframe.R:0
 msgid "supplied %d row name for %d rows"
@@ -3081,20 +3184,32 @@ msgstr[0] "nie ma pakietu o nazwie"
 msgstr[1] "nie ma pakietów o nazwach"
 msgstr[2] "nie ma pakietów o nazwach"
 
-#~ msgid "%s"
-#~ msgstr "%s"
+#~ msgid "'%s' is not a \"date\" object"
+#~ msgstr "argument '%s' nie jest obiektem klasy \"date\""
 
-#~ msgid ","
-#~ msgstr ","
+#~ msgid "'%s' is not a \"dates\" object"
+#~ msgstr "argument '%s' nie jest obiektem klasy \"dates\""
 
-#~ msgid "FUN"
-#~ msgstr "FUN"
+#~ msgid "'from' cannot be NA, NaN or infinite"
+#~ msgstr "argument 'from' nie może mieć wartości NA, NaN lub nieskończoność"
 
-#~ msgid "according to the DESCRIPTION file it is"
-#~ msgstr "zgodnie z opisem w pliku 'DESCRIPTION' jest to"
+#~ msgid "'to' cannot be NA, NaN or infinite"
+#~ msgstr "argument 'to' nie może mieć wartości NA, NaN lub nieskończoność"
 
-#~ msgid "package %s has a license that you need to accept:"
-#~ msgstr "pakiet %s posiada licencję, którą musisz zaakceptować:"
+#~ msgid "*** Note that 'pos=1' will give an error in the future"
+#~ msgstr "*** Zwróć uwagę, że 'pos=1' będzie zwracało błąd w przyszłości"
+
+#~ msgid "incorrect values of 'indent' and 'width'"
+#~ msgstr "niepoprawne wartości 'indent' oraz 'width'"
+
+#~ msgid ""
+#~ "package %s has a license that you need to accept:\n"
+#~ "according to the DESCRIPTION file it is\n"
+#~ "%s"
+#~ msgstr ""
+#~ "pakiet %s posiada licencję, którą musisz zaakceptować:\n"
+#~ "według pliku 'DESCRIPTION' jest to\n"
+#~ "%s"
 
 #~ msgid "'vec' contains NAs"
 #~ msgstr "argument 'vec' zawiera wartości NA"

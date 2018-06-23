@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
 "PO-Revision-Date: 2014-03-17 10:44+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -29,6 +29,11 @@ msgstr "'a' et 'b' sont ignorés au bénéfice de 'coef'"
 
 msgid "one of 'x1' and 'y1' must be given"
 msgstr "il faut fournir soit 'x1', soit 'y1'"
+
+msgid ""
+"'length', 'angle', or 'code' greater than length 1; values after the first "
+"are ignored"
+msgstr ""
 
 msgid "'x' must be a 2-d contingency table"
 msgstr "'x' doit être une table de contingence à 2 dimensions"
@@ -118,6 +123,9 @@ msgstr "les valeurs de 'x' et de 'y' doivent être croissantes"
 msgid "no proper 'z' matrix specified"
 msgstr "aucune matrice 'z' correcte spécifiée"
 
+msgid "'labels' is length zero.  Use 'drawlabels = FALSE' to suppress labels."
+msgstr ""
+
 msgid "invalid conditioning formula"
 msgstr "formule conditionnelle incorrecte"
 
@@ -205,6 +213,9 @@ msgstr "algorithme inconnu pour 'breaks'"
 
 msgid "invalid number of 'breaks'"
 msgstr "nombre de 'breaks' incorrect"
+
+msgid "'breaks = %g' is too large and set to 1e6"
+msgstr ""
 
 msgid "hist.default: pretty() error, breaks=%s"
 msgstr "hist.default : erreur pour pretty(), breaks=%s"

@@ -65,6 +65,9 @@ object.size(x)
   Object sizes are larger on 64-bit builds than 32-bit ones, but will
   very likely be the same on different platforms with the same word
   length and pointer size.
+
+  Sizes of objects using a compact internal representation may be
+  over-estimated.
 }
 
 \section{Formatting and printing object sizes}{

@@ -1,7 +1,7 @@
 #  File src/library/base/R/source.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
          skip.echo = 0, keep.source = getOption("keep.source"))
 {
     envir <- if (isTRUE(local)) parent.frame()
-	     else if(identical(local, FALSE)) .GlobalEnv
+	     else if(isFALSE(local)) .GlobalEnv
 	     else if (is.environment(local)) local
 	     else stop("'local' must be TRUE, FALSE or an environment")
     if (!missing(echo)) {
@@ -47,97 +47,97 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 
     if(use_file <- missing(exprs)) {
 
-    ofile <- file # for use with chdir = TRUE
-    from_file <- FALSE # true, if not stdin() nor from srcref
-    srcfile <- NULL
-    if(is.character(file)) {
-        have_encoding <- !missing(encoding) && encoding != "unknown"
-        if(identical(encoding, "unknown")) {
-            enc <- utils::localeToCharset()
-            encoding <- enc[length(enc)]
-        } else enc <- encoding
-        if(length(enc) > 1L) {
-            encoding <- NA
-	    owarn <- options(warn = 2)
-            for(e in enc) {
-                if(is.na(e)) next
-                zz <- file(file, encoding = e)
-                res <- tryCatch(readLines(zz, warn = FALSE), error = identity)
-                close(zz)
-                if(!inherits(res, "error")) { encoding <- e; break }
+        ofile <- file # for use with chdir = TRUE
+        from_file <- FALSE # true, if not stdin() nor from srcref
+        srcfile <- NULL
+        if(is.character(file)) {
+            have_encoding <- !missing(encoding) && encoding != "unknown"
+            if(identical(encoding, "unknown")) {
+                enc <- utils::localeToCharset()
+                encoding <- enc[length(enc)]
+            } else enc <- encoding
+            if(length(enc) > 1L) {
+                encoding <- NA
+                owarn <- options(warn = 2)
+                for(e in enc) {
+                    if(is.na(e)) next
+                    zz <- file(file, encoding = e)
+                    res <- tryCatch(readLines(zz, warn = FALSE), error = identity)
+                    close(zz)
+                    if(!inherits(res, "error")) { encoding <- e; break }
+                }
+                options(owarn)
             }
-            options(owarn)
-        }
-        if(is.na(encoding))
-            stop("unable to find a plausible encoding")
-        if(verbose)
-            cat(gettextf('encoding = "%s" chosen', encoding), "\n", sep = "")
-        if(file == "") {
-	    file <- stdin()
-	    srcfile <- "<stdin>"
-        } else {
-            filename <- file
-	    file <- file(filename, "r", encoding = encoding)
-	    on.exit(close(file))
-            if (isTRUE(keep.source)) {
-	    	lines <- readLines(file, warn = FALSE)
-	    	on.exit()
-	    	close(file)
-            	srcfile <- srcfilecopy(filename, lines, file.mtime(filename)[1],
-            			       isFile = TRUE)
-	    } else {
-            	from_file <- TRUE
-		srcfile <- filename
-	    }
+            if(is.na(encoding))
+                stop("unable to find a plausible encoding")
+            if(verbose)
+                cat(gettextf('encoding = "%s" chosen', encoding), "\n", sep = "")
+            if(file == "") {
+                file <- stdin()
+                srcfile <- "<stdin>"
+            } else {
+                filename <- file
+                file <- file(filename, "r", encoding = encoding)
+                on.exit(close(file))
+                if (isTRUE(keep.source)) {
+                    lines <- readLines(file, warn = FALSE)
+                    on.exit()
+                    close(file)
+                    srcfile <- srcfilecopy(filename, lines, file.mtime(filename)[1],
+                                           isFile = TRUE)
+                } else {
+                    from_file <- TRUE
+                    srcfile <- filename
+                }
 
-            ## We translated the file (possibly via a guess),
-            ## so don't want to mark the strings.as from that encoding
-            ## but we might know what we have encoded to, so
-            loc <- utils::localeToCharset()[1L]
-            encoding <- if(have_encoding)
-                switch(loc,
-                       "UTF-8" = "UTF-8",
-                       "ISO8859-1" = "latin1",
-                       "unknown")
-            else "unknown"
-	}
-    } else {
-    	lines <- readLines(file, warn = FALSE)
-        srcfile <-
-            if (isTRUE(keep.source))
-                srcfilecopy(deparse(substitute(file)), lines)
-            else
-                deparse(substitute(file))
-    }
-
-    exprs <- if (!from_file) {
-        if (length(lines))  # there is a C-level test for this
-            .Internal(parse(stdin(), n = -1, lines, "?", srcfile, encoding))
-        else expression()
-    } else
-    	.Internal(parse(file, n = -1, NULL, "?", srcfile, encoding))
-
-    on.exit()
-    if (from_file) close(file)
-
-    if (verbose)
-	cat("--> parsed", length(exprs), "expressions; now eval(.)ing them:\n")
-
-    if (chdir){
-        if(is.character(ofile)) {
-	    if(grepl("^(ftp|http|file)://", ofile)) ## is URL
-                warning("'chdir = TRUE' makes no sense for a URL")
-	    else if((path <- dirname(ofile)) != ".") {
-                owd <- getwd()
-                if(is.null(owd))
-                    stop("cannot 'chdir' as current directory is unknown")
-                on.exit(setwd(owd), add=TRUE)
-                setwd(path)
+                ## We translated the file (possibly via a guess),
+                ## so don't want to mark the strings.as from that encoding
+                ## but we might know what we have encoded to, so
+                loc <- utils::localeToCharset()[1L]
+                encoding <- if(have_encoding)
+                                switch(loc,
+                                       "UTF-8" = "UTF-8",
+                                       "ISO8859-1" = "latin1",
+                                       "unknown")
+                            else "unknown"
             }
         } else {
-            warning("'chdir = TRUE' makes no sense for a connection")
+            lines <- readLines(file, warn = FALSE)
+            srcfile <-
+                if (isTRUE(keep.source))
+                    srcfilecopy(deparse(substitute(file)), lines)
+                else
+                    deparse(substitute(file))
         }
-    }
+
+        exprs <- if (!from_file) {
+                     if (length(lines))  # there is a C-level test for this
+                         .Internal(parse(stdin(), n = -1, lines, "?", srcfile, encoding))
+                     else expression()
+                 } else
+                     .Internal(parse(file, n = -1, NULL, "?", srcfile, encoding))
+
+        on.exit()
+        if (from_file) close(file)
+
+        if (verbose)
+            cat("--> parsed", length(exprs), "expressions; now eval(.)ing them:\n")
+
+        if (chdir){
+            if(is.character(ofile)) {
+                if(grepl("^(ftp|http|file)://", ofile)) ## is URL
+                    warning("'chdir = TRUE' makes no sense for a URL")
+                else if((path <- dirname(ofile)) != ".") {
+                    owd <- getwd()
+                    if(is.null(owd))
+                        stop("cannot 'chdir' as current directory is unknown")
+                    on.exit(setwd(owd), add=TRUE)
+                    setwd(path)
+                }
+            } else {
+                warning("'chdir = TRUE' makes no sense for a connection")
+            }
+        }
 
     } else { # 'exprs' specified: !use_file
 	if(!missing(file)) stop("specify either 'file' or 'exprs' but not both")
@@ -249,13 +249,16 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 sys.source <-
 function(file, envir = baseenv(), chdir = FALSE,
 	 keep.source = getOption("keep.source.pkgs"),
+	 keep.parse.data = getOption("keep.parse.data.pkgs"),
 	 toplevel.env = as.environment(envir))
 {
     if(!(is.character(file) && file.exists(file)))
 	stop(gettextf("'%s' is not an existing file", file))
     keep.source <- as.logical(keep.source)
+    keep.parse.data <- as.logical(keep.parse.data)
     oop <- options(keep.source = keep.source,
-		   topLevelEnvironment = toplevel.env)
+                   keep.parse.data = keep.parse.data,
+                   topLevelEnvironment = toplevel.env)
     on.exit(options(oop))
     if (keep.source) {
     	lines <- readLines(file, warn = FALSE)

@@ -1,6 +1,6 @@
 % File src/library/stats/man/xtabs.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{xtabs}
@@ -132,19 +132,19 @@ ftable(xtabs(breaks ~ wool + tension + replicate, data = warpbreaks))
 
 ### ---- Sparse Examples ----
 
-\donttest{if(require("Matrix")) {
+\donttest{if(require("Matrix")) withAutoprint({
  ## similar to "nlme"s  'ergoStool' :
  d.ergo <- data.frame(Type = paste0("T", rep(1:4, 9*4)),
                       Subj = gl(9, 4, 36*4))
- print(xtabs(~ Type + Subj, data = d.ergo)) # 4 replicates each
+ xtabs(~ Type + Subj, data = d.ergo) # 4 replicates each
  set.seed(15) # a subset of cases:
- print(xtabs(~ Type + Subj, data = d.ergo[sample(36, 10), ], sparse = TRUE))
+ xtabs(~ Type + Subj, data = d.ergo[sample(36, 10), ], sparse = TRUE)
 
  ## Hypothetical two-level setup:
  inner <- factor(sample(letters[1:25], 100, replace = TRUE))
  inout <- factor(sample(LETTERS[1:5], 25, replace = TRUE))
  fr <- data.frame(inner = inner, outer = inout[as.integer(inner)])
- print(xtabs(~ inner + outer, fr, sparse = TRUE))
-}}% only if Matrix is available
+ xtabs(~ inner + outer, fr, sparse = TRUE)
+})}% only if Matrix is available
 }
 \keyword{category}

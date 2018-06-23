@@ -186,8 +186,8 @@ setGeneric <-
                     message(gettextf(
                          "Creating a new generic function for %s in %s",
                                      sQuote(name), thisPName),
-                        domain = NA)
-                    fdef@package <- attr(fdef@generic, "package") <- thisPackage
+                         domain = NA)
+                    fdef@package <- packageSlot(fdef@generic) <- packageSlot(environment(fdef)$.Generic) <- thisPackage
                 }
             }
             else { # generic prohibited
@@ -196,7 +196,7 @@ setGeneric <-
                                  sQuote(name), sQuote(package),
                                  thisPName),
                         domain = NA)
-                fdef@package <- attr(fdef@generic, "package") <- thisPackage
+                fdef@package <- packageSlot(fdef@generic) <- packageSlot(environment(fdef)$.Generic) <- thisPackage
             }
         }
     }

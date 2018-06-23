@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
 "PO-Revision-Date: 2015-03-27 15:16+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -164,6 +164,10 @@ msgstr " ファイル '%s': "
 msgid "found T/F in %s"
 msgstr " %s 中に T/F が見つかりました "
 
+#, fuzzy
+msgid "The package 'dir' argument must be of length 1"
+msgstr " 引数 'package' は 長さ 1 でなければなりません "
+
 msgid "package name '%s' seems invalid; using directory name '%s' instead"
 msgstr ""
 " パッケージ名 '%s' は無効のようです。代わりにディレクトリ名 '%s' を使います "
@@ -267,11 +271,21 @@ msgstr " 不正な Authors@R フィールドです: "
 msgid "Cannot extract Author field from Authors@R field:"
 msgstr " Authors@R フィールドから Author フィールドを抽出できません: "
 
-msgid "Authors@R field gives no person with author role."
+#, fuzzy
+msgid "Authors@R field gives no person with name and roles."
 msgstr " Authors@R フィールドに役割が明示された人がいません "
 
-msgid "Authors@R field gives persons with no valid roles:"
+#, fuzzy
+msgid "Authors@R field gives persons with no name:"
 msgstr " Authors@Rフィールドに役割が明示されていない人がいます "
+
+#, fuzzy
+msgid "Authors@R field gives persons with no role:"
+msgstr " Authors@Rフィールドに役割が明示されていない人がいます "
+
+#, fuzzy
+msgid "Authors@R field gives no person with name and author role"
+msgstr " Authors@R フィールドに役割が明示された人がいません "
 
 msgid "Cannot extract Maintainer field from Authors@R field:"
 msgstr " Authors@R フィールドから Maintainer フィールドを抽出できません: "
@@ -558,6 +572,10 @@ msgid "Macro file %s should only contain Rd macro definitions and comments"
 msgstr ""
 " マクロファイル %s は Rd マクロの定義とコメントのみを含んでいるべきです "
 
+#, fuzzy
+msgid "Rd macro package '%s' is not installed."
+msgstr " パッケージ '%s' にRdマクロは見つけられませんでした "
+
 msgid "No Rd macros in package '%s'."
 msgstr " パッケージ '%s' にRdマクロは見つけられませんでした "
 
@@ -808,11 +826,33 @@ msgstr " 指定された 'style' の変更が必要です "
 msgid "The default JSS style may not be modified."
 msgstr " 既定の JSS スタイルは変更できないかもしれません "
 
+msgid "inst/doc"
+msgstr ""
+
+msgid "file"
+msgstr " ファイル "
+
+#, fuzzy
+msgid "files"
+msgstr " ファイル "
+
+msgid ","
+msgstr " , "
+
+msgid "ignored as vignettes have been rebuilt."
+msgstr ""
+
+msgid "Run R CMD build with --no-build-vignettes to prevent rebuilding."
+msgstr ""
+
 msgid "invalid value for '--compact-vignettes', assuming %s"
 msgstr " '--compact-vignettes' に対する不正な値です、%s であるとします "
 
 msgid "Error: cannot rename directory to %s"
 msgstr " エラー: ディレクトリの名前を %s に変更できません "
+
+msgid "elapsed-time limit of %g %s reached for sub-process"
+msgstr ""
 
 msgid "cannot link from %s"
 msgstr " %s からリンク出来ません "
@@ -850,6 +890,9 @@ msgstr " %s をダウンロードしています... "
 
 msgid "checking %s ..."
 msgstr " %s をチェックしています... "
+
+msgid "wrong class"
+msgstr " クラスが間違っています "
 
 msgid "non-ASCII input in a CITATION file without a declared encoding"
 msgstr " CITATION ファイルにエンコーディングの宣言なしの非アスキー入力 "
@@ -923,6 +966,10 @@ msgstr " httpd サーバーを起動することができませんでした "
 msgid "cannot read index information in file '%s'"
 msgstr " ファイル '%s' 中のインデックス情報を読み取ることが出来ません "
 
+#, fuzzy
+msgid ".install_packages() exit status"
+msgstr " 不正なパッケージです "
+
 msgid "error reading file '%s'"
 msgstr " ファイル '%s' の読み込みにエラーが発生 "
 
@@ -987,6 +1034,18 @@ msgstr " エラー: ディレクトリへのインストール許可がありま
 msgid "building a fake installation is disallowed"
 msgstr " まがい物 (fake) インストールの構築は許されていません "
 
+msgid "C++17 standard requested but CXX17 is not defined"
+msgstr ""
+
+msgid "C++14 standard requested but CXX14 is not defined"
+msgstr ""
+
+msgid "C++11 standard requested but CXX11 is not defined"
+msgstr ""
+
+msgid "C++98 standard requested but CXX98 is not defined"
+msgstr ""
+
 msgid ""
 "See\n"
 "  %s\n"
@@ -1011,11 +1070,6 @@ msgstr " ソースリストには全ての要素の名前が含まれていな�
 
 msgid "source must be an environment or a list"
 msgstr " ソースは環境またはリストでなければなりません "
-
-msgid "invalid value for 'compress': should be FALSE, TRUE, 2 or 3"
-msgstr ""
-" 'compress' に対して不正な値が入力されています。FALSE, TRUE, 2, 3 を入力すべ"
-"きです "
 
 msgid "this cannot be used for package 'base'"
 msgstr " これはパッケージ 'base' に使用することが出来ません "
@@ -1114,9 +1168,6 @@ msgstr " xref テーブルが見つかりません "
 msgid "cannot read xref table"
 msgstr " xref テーブルを読み込めません "
 
-msgid "wrong class"
-msgstr " クラスが間違っています "
-
 msgid "attempting to select less than one element"
 msgstr " 1 個未満の要素を選択しようとしました "
 
@@ -1174,29 +1225,23 @@ msgstr " サポートされていない %s 予測子 %d "
 msgid "unsupported PNG filter %d"
 msgstr " 未サポートの PNG フィルタ %d "
 
-msgid "argument 'pkg' must be of length 1"
-msgstr " 引数 'pkg' は長さ 1 でなければなりません "
-
-msgid "package '%s' was not found"
-msgstr " パッケージ '%s' は見つかりませんでした "
-
-msgid "the 'lib.loc' argument has always been unused and is deprecated now"
-msgstr ""
-
-msgid "bad operand"
-msgstr " 誤ったオペランド "
-
-msgid "Package '%s' had its dependencies reduced to a minimal set."
-msgstr " パッケージ '%s' は最小のセットに縮小された依存関係を持ちます "
-
 msgid "argument '%s' must be a character string or connection"
 msgstr " 引数 '%s' は文字列かコネクションでなければなりません "
 
 msgid "unimplemented encoding"
 msgstr " 実装されていないエンコード "
 
+msgid "this requires 'objdump.exe' to be on the PATH"
+msgstr ""
+
+msgid "this requires 'nm' to be on the PATH"
+msgstr ""
+
 msgid "Found %s, possibly from %s"
 msgstr " %s が見つかりました（おそらく %s から） "
+
+msgid "no native symbols were extracted"
+msgstr ""
 
 msgid "testing '%s' failed"
 msgstr " '%s' のテストに失敗しました "
@@ -1207,11 +1252,18 @@ msgstr " %s パッケージに対する例をテストしています "
 msgid "comparing %s to %s ..."
 msgstr " %s と %s を比較しています... "
 
-msgid "OK"
-msgstr " OK "
+#, fuzzy
+msgid "ERROR"
+msgstr " エラー: "
+
+msgid "NOTE"
+msgstr ""
 
 msgid "results differ from reference results"
 msgstr " 結果が参照結果と異なります "
+
+msgid "OK"
+msgstr " OK "
 
 msgid "no examples found for package %s"
 msgstr " パッケージ %s に対する例文が見つかりません "
@@ -1239,6 +1291,25 @@ msgstr " 相違 "
 
 msgid "running tests of random deviate generation -- fails occasionally"
 msgstr " ランダムな偏差の生成テストを実行中 -- 失敗する事もあります "
+
+#, fuzzy
+msgid "unknown header specification"
+msgstr " 標準ではないライセンス指定: "
+
+msgid "argument 'pkg' must be of length 1"
+msgstr " 引数 'pkg' は長さ 1 でなければなりません "
+
+msgid "package '%s' was not found"
+msgstr " パッケージ '%s' は見つかりませんでした "
+
+msgid "the 'lib.loc' argument has always been unused and is deprecated now"
+msgstr ""
+
+msgid "bad operand"
+msgstr " 誤ったオペランド "
+
+msgid "Package '%s' had its dependencies reduced to a minimal set."
+msgstr " パッケージ '%s' は最小のセットに縮小された依存関係を持ちます "
 
 msgid "R CMD build failed"
 msgstr " R CMD によるビルドに失敗 "
@@ -1291,7 +1362,8 @@ msgstr " 空白行があります "
 msgid "Unknown encoding with non-ASCII data: converting to ASCII"
 msgstr " 非 ASCII データをもつ未知のエンコーディングです: ASCII に変換します "
 
-msgid "cannot source package code"
+#, fuzzy
+msgid "cannot source package code:"
 msgstr " パッケージコードを読み込めません "
 
 msgid "Call sequence:"
@@ -1416,6 +1488,11 @@ msgid "unable to re-encode %s line %s"
 msgid_plural "unable to re-encode %s lines %s"
 msgstr[0] " %s (%s行) を再エンコード出来ません "
 
+#, fuzzy
+msgid " file\n"
+msgid_plural " files\n"
+msgstr[0] " ファイル "
+
 msgid "Required field missing or empty:"
 msgid_plural "Required fields missing or empty:"
 msgstr[0] " 必要なフィールドがないか、空です: "
@@ -1432,11 +1509,17 @@ msgid "%d of the package tests failed"
 msgid_plural "%d of the package tests failed"
 msgstr[0] " パッケージテストのうち %d 個が失敗しました "
 
+msgid "Corresponding BibTeX entry:"
+msgid_plural "Corresponding BibTeX entries:"
+msgstr[0] ""
+
+#~ msgid "invalid value for 'compress': should be FALSE, TRUE, 2 or 3"
+#~ msgstr ""
+#~ " 'compress' に対して不正な値が入力されています。FALSE, TRUE, 2, 3 を入力す"
+#~ "べきです "
+
 #~ msgid "assertCondition: caught %s"
 #~ msgstr " assertCondition:  %s をキャッチしました "
-
-#~ msgid ","
-#~ msgstr " , "
 
 #~ msgid "installing dependencies %s"
 #~ msgstr " 依存する %s をインストールしています "
@@ -1623,10 +1706,6 @@ msgstr[0] " パッケージテストのうち %d 個が失敗しました "
 #~ msgid "packageStartupMessage"
 #~ msgstr " packageStartupMessage "
 
-#, fuzzy
-#~ msgid "installed.packages"
-#~ msgstr " 不正なパッケージです "
-
 #~ msgid "Good practice"
 #~ msgstr " 良い方法です。 "
 
@@ -1646,9 +1725,6 @@ msgstr[0] " パッケージテストのうち %d 個が失敗しました "
 #~ msgid "demo/"
 #~ msgstr " demo/ "
 
-#~ msgid "file"
-#~ msgstr " ファイル "
-
 #~ msgid "%s (%s)"
 #~ msgstr " %s (%s) "
 
@@ -1667,9 +1743,6 @@ msgstr[0] " パッケージテストのうち %d 個が失敗しました "
 
 #~ msgid "Unrecognized search field:"
 #~ msgstr " 認識できない検索フィールド: "
-
-#~ msgid "ERROR:"
-#~ msgstr " エラー: "
 
 #~ msgid "running 'zip' failed"
 #~ msgstr " 'zip' の実行に失敗しました "

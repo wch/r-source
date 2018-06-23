@@ -150,7 +150,7 @@ function(db, verbose = FALSE)
     }
 
     .check <- function(d) {
-        u <- paste0("http://doi.org/", d)
+        u <- paste0("https://doi.org/", d)
         ## Do we need to percent encode parts of the DOI name?
         h <- .fetch(u, d)
         if(inherits(h, "error")) {
@@ -162,7 +162,7 @@ function(db, verbose = FALSE)
         }
 
         ## Similar to URLs, see e.g.
-        ##   curl -I -L http://doi.org/10.1016/j.csda.2009.12.005
+        ##   curl -I -L https://doi.org/10.1016/j.csda.2009.12.005
         ## (As of 2016-12, this actually gives 400 Bad Request.)
         if(any(grepl("301 Moved Permanently", h, useBytes = TRUE))) {
             ind <- grep("^[Ll]ocation: ", h, useBytes = TRUE)

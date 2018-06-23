@@ -1,6 +1,6 @@
 % File src/library/splines/man/ns.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ns}
@@ -73,13 +73,17 @@ attr(terms(fm1), "predvars")
 
 ## example of safe prediction
 plot(women, xlab = "Height (in)", ylab = "Weight (lb)")
-ht <- seq(57, 73, length.out = 200)
-lines(ht, predict(fm1, data.frame(height = ht)))
+ht <- seq(57, 73, length.out = 200) ; nD <- data.frame(height = ht)
+lines(ht, p1 <- predict(fm1, nD))
+stopifnot(all.equal(p1, predict(update(fm1, . ~
+                            splines::ns(height, df=5)), nD)))
+          # not true in R < 3.5.0
 \dontshow{
 ## Consistency:
 x <- c(1:3, 5:6)
 stopifnot(identical(ns(x), ns(x, df = 1)),
-          identical(ns(x, df = 2), ns(x, df = 2, knots = NULL)), # not true till 2.15.2
+          identical(ns(x, df = 2),
+                    ns(x, df = 2, knots = NULL)), # not true till 2.15.2
           !is.null(kk <- attr(ns(x), "knots")), # not true till 1.5.1
           length(kk) == 0)
 }

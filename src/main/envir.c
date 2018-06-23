@@ -1372,8 +1372,9 @@ SEXP ddfind(int i, SEXP rho)
 	    return(CAR(vl));
 	}
 	else // length(...) < i
-	    error(ngettext("the ... list does not contain any elements",
-			   "the ... list does not contain %d elements", i), i);
+	    error(ngettext("the ... list contains fewer than %d element",
+			   "the ... list contains fewer than %d elements", i),
+                  i);
     }
     else error(_("..%d used in an incorrect context, no ... to look in"), i);
 

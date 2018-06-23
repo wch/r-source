@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
 "PO-Revision-Date: 2013-03-18 22:00+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -32,11 +32,6 @@ msgstr ""
 
 msgid "namespace found within global environments"
 msgstr ""
-
-msgid "'ns' must be a namespace or a namespace imports environment"
-msgstr ""
-"'ns' doit être être un espace de noms (namespace) ou un environnement "
-"d'importation d'espace de noms"
 
 msgid "bad assignment: %s"
 msgstr "affectation incorrecte: %s"
@@ -75,9 +70,6 @@ msgstr "mauvaise affectation 1"
 msgid "invalid function in complex assignment"
 msgstr "function incorrecte dans une affectation complexe"
 
-msgid "is not a registered math1 function"
-msgstr ""
-
 msgid "missing arguments are not allowed"
 msgstr "les arguments manquants ne sont pas autorisés"
 
@@ -100,6 +92,9 @@ msgid "more than one default provided in switch() call"
 msgstr "plus d'une valeur par défaut fournie dans une construction switch()"
 
 msgid "'switch' with no alternatives"
+msgstr ""
+
+msgid "Error: compilation failed -"
 msgstr ""
 
 msgid "cannot compile a non-function"
@@ -129,6 +124,9 @@ msgstr "le fichier '%s' n'existe pas"
 msgid "'%s' is not a valid compiler option"
 msgstr "'%s' n'est pas une option de compilation reconnue"
 
+msgid "invalid environment variable value: %s==%s"
+msgstr ""
+
 msgid "invalid compiler options: optimize(==%d)<2 and jitEnabled(==%d)>2"
 msgstr ""
 
@@ -143,6 +141,11 @@ msgid "local assignment to syntactic function: "
 msgid_plural "local assignments to syntactic functions: "
 msgstr[0] "affectation locale vers une fonction syntaxique :"
 msgstr[1] "affectations locales vers des fonctions syntaxiques :"
+
+#~ msgid "'ns' must be a namespace or a namespace imports environment"
+#~ msgstr ""
+#~ "'ns' doit être être un espace de noms (namespace) ou un environnement "
+#~ "d'importation d'espace de noms"
 
 #~ msgid "expected a single logical value for the S4 state flag"
 #~ msgstr ""

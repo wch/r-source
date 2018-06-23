@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.4.0\n"
+"Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-04 08:15\n"
+"POT-Creation-Date: 2018-04-01 16:26\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.8.7\n"
+"X-Generator: Poedit 2.0.4\n"
 
 #. R/unix/mclapply.R: gettextf("%d function calls resulted in an error", has.errors)
 #: R/unix/mclapply.R:0
@@ -53,6 +53,13 @@ msgstr "argument 'mc.cores' > 1 nie jest wspierany w systemach Windows"
 msgid "'mc.cores' must be >= 1"
 msgstr "argument 'mc.cores' musi być >= 1"
 
+#. R/unix/mclapply.R: warning("'mc.preschedule' must be false if 'affinity.list' is used")
+#: R/unix/mclapply.R:0
+msgid "'mc.preschedule' must be false if 'affinity.list' is used"
+msgstr ""
+"'mc.preschedule' musi mieć wartość FALSE jeśli argument 'affinity.list' jest "
+"użyty"
+
 #. R/unix/forkCluster.R: stop("'nnodes' must be >= 1")
 #: R/unix/forkCluster.R:0
 msgid "'nnodes' must be >= 1"
@@ -86,6 +93,11 @@ msgstr ""
 "Wejścia o zerowej długości nie mogą być pomieszane z tymi o niezerowej "
 "długości"
 
+#. R/unix/mclapply.R: stop("affinity.list and X must have the same length")
+#: R/unix/mclapply.R:0
+msgid "affinity.list and X must have the same length"
+msgstr "'affinity.list' oraz 'X' muszą mieć tę samą długość"
+
 #. R/unix/mclapply.R: warning("all scheduled cores encountered errors in user code")
 #: R/unix/mclapply.R:0
 msgid "all scheduled cores encountered errors in user code"
@@ -112,11 +124,11 @@ msgstr "niepoprawny argument 'child'"
 msgid "invalid 'jobs' argument"
 msgstr "niepoprawny argument 'jobs'"
 
-#. R/RngStream.R: stop("invalid value of 'seed'")
-#. R/RngStream.R: stop("invalid value of 'seed'")
+#. R/RngStream.R: gettextf("invalid value of %s", "'seed'")
+#. R/RngStream.R: gettextf("invalid value of %s", "'seed'")
 #: R/RngStream.R:0
-msgid "invalid value of 'seed'"
-msgstr "niepoprawna wartość 'seed'"
+msgid "invalid value of %s"
+msgstr "niepoprawna wartość '%s'"
 
 #. R/clusterApply.R: stop("need at least one argument")
 #: R/clusterApply.R:0

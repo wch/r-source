@@ -1,7 +1,7 @@
 #  File src/library/utils/R/zip.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -69,12 +69,21 @@ unzip <-
             z[, "Date"] <- zz
             z[c("Name", "Length", "Date")]
         } else {
-            args <- c("-oq", shQuote(zipfile))
+            ## -n -o -q -j are supported in Unzip 5.52 and 6.00
+            args <- character()
+            if (junkpaths) args <- c(args, "-j")
+            if (overwrite)
+                args <- c(args, "-oq", shQuote(zipfile))
+            else
+                args <- c(args, "-nq", shQuote(zipfile))
             if (length(files)) args <- c(args, shQuote(files))
             if (exdir != ".") args <- c(args, "-d", shQuote(exdir))
             ## there is an unzip clone about that does not respect -q
-            system2(unzip, args, stdout = NULL, stderr = NULL,
-                    invisible = TRUE)
+            if (WINDOWS)
+                system2(unzip, args, stdout = NULL, stderr = NULL,
+                        invisible = TRUE)
+            else
+                system2(unzip, args, stdout = NULL, stderr = NULL)
             invisible(NULL)
         }
     }

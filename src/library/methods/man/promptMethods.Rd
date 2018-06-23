@@ -1,6 +1,6 @@
 % File src/library/methods/man/promptMethods.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{promptMethods}
@@ -21,13 +21,13 @@ promptMethods(f, filename = NULL, methods)
     The default corresponds to the coded topic name for these methods
     (currently, \code{f} followed by \code{"-methods.Rd"}).  Can also be
     \code{FALSE} or \code{NA} (see below).}
-  \item{methods}{Optional methods list object giving the methods to be
+  \item{methods}{optional \code{"\linkS4class{listOfMethods}"} object giving the methods to be
     documented.  By default, the first methods object for this generic
     is used (for example, if the current global environment has some
     methods for \code{f}, these would be documented).
 
     If this argument is supplied, it is likely to be
-    \code{getMethods(f, where)}, with \code{where} some package
+    \code{\link{findMethods}(f, where)}, with \code{where} some package
     containing methods for \code{f}.}
 }
 \value{

@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.3.0\n"
+"Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51\n"
-"PO-Revision-Date: 2016-04-07 10:44+0200\n"
+"POT-Creation-Date: 2018-03-30 07:33\n"
+"PO-Revision-Date: 2018-04-16 10:28+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsuhh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
 "Language: de\n"
@@ -17,11 +17,17 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
 
+msgid "namespace found within local environments"
+msgstr "Namensraum in lokalen Umgebungen gefunden"
+
 msgid "not a proper evaluation environment"
 msgstr "keine geeignete Evaluationsumgebung"
 
-msgid "'ns' must be a namespace or a namespace imports environment"
-msgstr "'ns' muss eine Namensraum oder eine Umgebung mit Namensraumimport sein"
+msgid "non-namespace found within namespace environments"
+msgstr "ein Nicht-Namensraum innerhalb einer Namensraumumgebung gefunden"
+
+msgid "namespace found within global environments"
+msgstr "Namensraum in globalen Umgebungen gefunden"
 
 msgid "bad assignment: %s"
 msgstr "unzulässige Zuweisung: %s"
@@ -56,9 +62,6 @@ msgstr "unzulässige Zuweisung 2"
 msgid "invalid function in complex assignment"
 msgstr "unzulässige Funktion in komplexer Zuweisung"
 
-msgid "%s is not a registered math1 function"
-msgstr "%S ist keine registrierte math1 Funktion"
-
 msgid "missing arguments are not allowed"
 msgstr "fehlende Argumente sind nicht zugelassen"
 
@@ -80,8 +83,14 @@ msgstr "falsche Anzahl von Argumenten für '%s'"
 msgid "more than one default provided in switch() call"
 msgstr "mehr als ein Default im Aufruf von switch()"
 
+msgid "'switch' with no alternatives"
+msgstr "'switch' ohne Alternativen"
+
+msgid "Error: compilation failed -"
+msgstr "Fehler: Kompilierung fehlgeschlagen -"
+
 msgid "cannot compile a non-function"
-msgstr "kann keine nicht-Funktion kompilieren"
+msgstr "kann keine Nicht-Funktion kompilieren"
 
 msgid "compiling '%s'"
 msgstr "kompiliere '%s'"
@@ -107,6 +116,12 @@ msgstr "Datei '%s' existiert nicht"
 msgid "'%s' is not a valid compiler option"
 msgstr "'%s' ist keine zulässige Compiler-Option"
 
+msgid "invalid environment variable value: %s==%s"
+msgstr "unzulässiger Wert in Umgebungsvariable: %s==%s"
+
+msgid "invalid compiler options: optimize(==%d)<2 and jitEnabled(==%d)>2"
+msgstr "unzulässige Kompileroptionen: optimize(==%d)<2 und jitEnabled(==%d)>2"
+
 msgid "function is not compiled"
 msgstr "Funktion ist nicht kompiliert"
 
@@ -117,6 +132,9 @@ msgid "local assignment to syntactic function: "
 msgid_plural "local assignments to syntactic functions: "
 msgstr[0] "lokale Zuweisung an syntaktische Funktion:"
 msgstr[1] "lokale Zuweisungen an syntaktische Funktionen:"
+
+#~ msgid "%s is not a registered math1 function"
+#~ msgstr "%S ist keine registrierte math1 Funktion"
 
 #~ msgid "expected a single logical value for the S4 state flag"
 #~ msgstr "erwartete einen einzelnen logischen Wert für das S4 Status-Flag"

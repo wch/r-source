@@ -146,7 +146,7 @@ findHomeNS <- function(sym, ns, cntxt) {
         for (i in rev(seq_along(imports))) {
             iname <- names(imports)[i]
             ins <- getNamespace(iname)
-            if (isTRUE(imports[[i]])) {
+            if (identical(imports[[i]], TRUE)) {
                 if (identical(ins, .BaseNamespaceEnv))
                     exports <- .BaseNamespaceEnv
                 else
@@ -261,9 +261,11 @@ findLocalsList1 <- function(elist, shadowed, cntxt) {
         newtodo <- list()
         lapply(todo, function(e)
             lapply(findLocals1(e, shadowed, cntxt, vars),
-                function(x) newtodo <<- append(newtodo, x))
+                   function(x)
+                       if (typeof(x) == "language")
+                           newtodo <<- append(newtodo, x))
         )
-       todo <- newtodo
+        todo <- newtodo
     }
     ls(vars, all.names=T)
 }
@@ -1084,9 +1086,9 @@ cmp <- function(e, cb, cntxt, missingOK = FALSE, setloc = TRUE) {
 cmpConst <- function(val, cb, cntxt) {
     if (identical(val, NULL))
         cb$putcode(LDNULL.OP)
-    else if (isTRUE(val))
+    else if (identical(val, TRUE))
         cb$putcode(LDTRUE.OP)
-    else if (isFALSE(val))
+    else if (identical(val, FALSE))
         cb$putcode(LDFALSE.OP)
     else {
         ci <- cb$putconst(val)
@@ -1215,9 +1217,9 @@ cmpCallArgs <- function(args, cb, cntxt, nse = FALSE) {
 cmpConstArg <- function(a, cb, cntxt) {
     if (identical(a, NULL))
         cb$putcode(PUSHNULLARG.OP)
-    else if (isTRUE(a))
+    else if (identical(a, TRUE))
         cb$putcode(PUSHTRUEARG.OP)
-    else if (isFALSE(a))
+    else if (identical(a, FALSE))
         cb$putcode(PUSHFALSEARG.OP)
     else {
         ci <- cb$putconst(a)
@@ -2819,19 +2821,19 @@ setInlineHandler("require", function(e, cb, cntxt) {
 ##
 
 suppressAll <- function(cntxt)
-    isTRUE(cntxt$suppressAll)
+    identical(cntxt$suppressAll, TRUE)
 
 suppressNoSuperAssignVar <- function(cntxt)
     isTRUE(cntxt$suppressNoSuperAssignVar)
 
 suppressUndef <- function(name, cntxt) {
-    if (isTRUE(cntxt$suppressAll))
+    if (identical(cntxt$suppressAll, TRUE))
         TRUE
     else {
         suppress <- cntxt$suppressUndefined
         if (is.null(suppress))
             FALSE
-        else if (isTRUE(suppress))
+        else if (identical(suppress, TRUE))
             TRUE
         else if (is.character(suppress) && as.character(name) %in% suppress)
             TRUE
@@ -3023,7 +3025,7 @@ cmplib <- function(package, file) {
 }
 
 cmpfile <- function(infile, outfile, ascii = FALSE, env = .GlobalEnv,
-                    verbose = FALSE, options = NULL) {
+                    verbose = FALSE, options = NULL, version = NULL) {
     if (! is.environment(env) || ! identical(env, topenv(env)))
         stop("'env' must be a top level environment")
     if (missing(outfile)) {
@@ -3062,7 +3064,7 @@ cmpfile <- function(infile, outfile, ascii = FALSE, env = .GlobalEnv,
                                        loc = list(expr = e, srcref = sref))
         }
         cat(gettextf("saving to file \"%s\" ... ", outfile))
-        .Internal(save.to.file(cforms, outfile, ascii))
+        .Internal(save.to.file(cforms, outfile, ascii, version))
         cat(gettext("done"), "\n", sep = "")
     }
     else warning("empty input file; no output written");
@@ -3113,7 +3115,7 @@ setCompilerOptions <- function(...) {
                    }
                },
                suppressAll = {
-                   if (isTRUE(op) || isFALSE(op)) {
+                   if (identical(op, TRUE) || identical(op, FALSE)) {
                        old <- c(old, list(suppressAll =
                                           compilerOptions$suppressAll))
                        newOptions$suppressAll <- op
@@ -3128,7 +3130,7 @@ setCompilerOptions <- function(...) {
                    }
                },
                suppressUndefined = {
-                   if (isTRUE(op) || isFALSE(op) ||
+                   if (identical(op, TRUE) || identical(op, FALSE) ||
                        is.character(op)) {
                        old <- c(old, list(suppressUndefined =
                                           compilerOptions$suppressUndefined))

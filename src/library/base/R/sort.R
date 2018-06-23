@@ -1,7 +1,7 @@
 #  File src/library/base/R/sort.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,44 +16,43 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
-isWrappable <- function(x)
-    is.atomic(x) && mode(x) %in% c("integer", "numeric", "character")
+.doSortWrap <- local({
+    ## this matches the enum in Rinternals.h
+    INCR_NA_1ST <-  2
+    INCR        <-  1
+    DECR        <- -1
+    DECR_NA_1ST <- -2
+    UNSORTED    <-  0
+    UNKNOWN     <-  NA_integer_
 
-.makeSortEnum <- local({
-    ## this matches the enum in R_ext/Altrep.h
-    SORT_ENUM <- list(INCR_NA_1ST  = 2,
-                      INCR = 1,
-                      DECR = -1,
-                      DECR_NA_1st = -2,
-                      UNSORTED = 0,
-                      UNKNOWN = NA_integer_ )
-
-    function(decr, na.last) {
+    .makeSortEnum <- function(decr, na.last) {
         if(decr) {
-            if (is.na(na.last) || na.last) SORT_ENUM[["DECR"]]
-            else SORT_ENUM[["DECR_NA_1ST"]]
+            if (is.na(na.last) || na.last) DECR
+            else DECR_NA_1ST
         } else {
-            if (is.na(na.last) || na.last) SORT_ENUM[["INCR"]]
-            else SORT_ENUM[["INCR_NA_1ST"]]
+            if (is.na(na.last) || na.last) INCR
+            else INCR_NA_1ST
         }
+    }
+
+    function(vec, decr, nalast, noNA = NA) {
+        if (length(vec) > 0 && is.numeric(vec)) {
+            sorted <- .makeSortEnum(decr, nalast)
+            if (is.na(noNA)) {
+                if(is.na(nalast)) ## NAs were removed
+                    noNA <- TRUE
+                else if(nalast) ## NAs are last
+                    noNA <- !is.na(vec[length(vec)])
+                else ## NAs are first
+                    noNA <- !is.na(vec[1L])
+            }
+            .Internal(wrap_meta(vec, sorted, noNA))
+        }
+        else vec
     }
 })
-
-.doWrap <- function(vec, decr, nalast, noNA = NA) {
-    if (length(vec) > 0 && (is.integer(vec) || is.numeric(vec))) {
-        sorted <- .makeSortEnum(decr, nalast)
-        if (is.na(noNA)) {
-            if(is.na(nalast)) ## NAs were removed
-                noNA <- TRUE
-            else if(nalast) ## NAs are last
-                noNA <- !is.na(vec[length(vec)])
-            else ## NAs are first
-                noNA <- !is.na(vec[1L])
-        }
-        .Internal(wrap_meta(vec, sorted, noNA))
-    }
-    else vec
-}
+## temporary, for sort.int and sort.list captured as S4 default methods
+.doWrap <- .doSortWrap
 
 sort <- function(x, decreasing = FALSE, ...)
 {
@@ -84,8 +83,7 @@ sort.int <-
     ## fastpass
     decreasing <- as.logical(decreasing)
     if (is.null(partial) && !index.return && is.numeric(x)) {
-        wanted <- .makeSortEnum(decreasing, na.last)
-        if (.Internal(sorted_fpass(x, wanted))) {
+        if (.Internal(sorted_fpass(x, decreasing, na.last))) {
             ## strip attributes other than 'names'
             attr <- attributes(x)
             if (! is.null(attr) && ! identical(names(attr), "names"))
@@ -109,8 +107,8 @@ sort.int <-
         o <- order(x, na.last = na.last, decreasing = decreasing,
                    method = "radix")
         y <- x[o]
-        
-        y <- .doWrap(y, decreasing, na.last)
+
+        y <- .doSortWrap(y, decreasing, na.last)
         return(if (index.return) list(x = y, ix = o) else y)
     }
     else if (method == "auto" || !is.numeric(x))
@@ -172,7 +170,7 @@ sort.int <-
         y <- (if (isord) ordered else factor)(y, levels = seq_len(nlev),
             labels = lev)
     if (is.null(partial)) {
-        y <- .doWrap(y, decreasing, na.last)
+        y <- .doSortWrap(y, decreasing, na.last)
     }
     y
 }
@@ -187,20 +185,15 @@ order <- function(..., na.last = TRUE, decreasing = FALSE,
     if (length(z) == 1L && is.numeric(z[[1L]]) && !is.object(z[[1]]) &&
        length(z[[1L]]) > 0) {
         x <- z[[1L]]
-        wanted <- .makeSortEnum(decreasing, na.last)
-        if (.Internal(sorted_fpass(x, wanted)))
+        if (.Internal(sorted_fpass(x, decreasing, na.last)))
             return(seq(along = x))
-        ## try the reverse since that's easy too...
-        wanted <- .makeSortEnum(!decreasing, na.last)
-        if (.Internal(sorted_fpass(x, wanted)))
-            return(seq(length(x), 1))
     }
-    
+
     method <- match.arg(method)
     if(any(vapply(z, is.object, logical(1L)))) {
         z <- lapply(z, function(x) if(is.object(x)) as.vector(xtfrm(x)) else x)
-        return(do.call("order", c(z, na.last = na.last, decreasing = decreasing,
-                                  method = method)))
+        return(do.call("order", c(z, list(na.last = na.last, decreasing = decreasing,
+                                  method = method))))
     }
 
     if (method == "auto") {
@@ -227,7 +220,7 @@ order <- function(..., na.last = TRUE, decreasing = FALSE,
     ok <- if(is.matrix(na)) rowSums(na) == 0L else !any(na)
     if(all(!ok)) return(integer())
     z[[1L]][!ok] <- NA
-    ans <- do.call("order", c(z, decreasing = decreasing))
+    ans <- do.call("order", c(z, list(decreasing = decreasing)))
     ans[ok[ans]]
 }
 
@@ -238,15 +231,10 @@ sort.list <- function(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
     decreasing <- as.logical(decreasing)
     if(is.null(partial) && is.numeric(x) && !is.object(x) &&
        length(x) > 0){
-        wanted <- .makeSortEnum(decreasing, na.last)
-        if (.Internal(sorted_fpass(x, wanted)))
+        if (.Internal(sorted_fpass(x, decreasing, na.last)))
             return(seq(along = x))
-        ## try the reverse since that's easy too...
-        wanted <- .makeSortEnum(!decreasing, na.last)
-        if (.Internal(sorted_fpass(x, wanted)))
-            return(seq(length(x), 1))
     }
-    
+
     method <- match.arg(method)
     if (method == "auto" && (is.numeric(x) || is.factor(x) || is.logical(x)) &&
         is.integer(length(x)))
@@ -280,8 +268,11 @@ xtfrm.default <- function(x)
     if(is.numeric(x)) unclass(x) else as.vector(rank(x, ties.method = "min",
                                                      na.last = "keep"))
 xtfrm.factor <- function(x) as.integer(x) # primitive, so needs a wrapper
-xtfrm.Surv <- function(x)
-    order(if(ncol(x) == 2L) order(x[,1L], x[,2L]) else order(x[,1L], x[,2L], x[,3L])) # needed by 'party'
+
+## ## Moved to package survival
+## xtfrm.Surv <- function(x)
+##     order(if(ncol(x) == 2L) order(x[,1L], x[,2L]) else order(x[,1L], x[,2L], x[,3L])) # needed by 'party'
+
 xtfrm.AsIs <- function(x)
 {
     if(length(cl <- class(x)) > 1) oldClass(x) <- cl[-1L]

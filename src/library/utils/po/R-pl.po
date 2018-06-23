@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.4.0\n"
+"Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-04 19:01\n"
+"POT-Creation-Date: 2018-04-01 16:26\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -14,8 +14,15 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 2.0.4\n"
 "X-Poedit-Bookmarks: -1,203,-1,-1,-1,-1,-1,-1,-1,-1\n"
+
+#. R/modifyList.R: gettextf("%d errors caught in %s.  The error messages and their frequencies are",     sum(tt), e.call)
+#: R/modifyList.R:0
+msgid "%d errors caught in %s.  The error messages and their frequencies are"
+msgstr ""
+"%d błędów przechwycono w %s. Komunikaty błędów oraz ich częstotliwości "
+"występowania to"
 
 #. R/example.R: gettextf("%s has a help file but no examples", sQuote(topic))
 #: R/example.R:0
@@ -96,6 +103,12 @@ msgstr "'col.names = NA' nie ma sensu kiedy 'row.names = FALSE'"
 #: R/tar.R:0
 msgid "'compressed' must be logical or character"
 msgstr "argument 'compressed' musi być wartością logiczną lub znakiem"
+
+#. R/unix/download.file.R: stop("'curl' call had nonzero exit status")
+#. R/windows/download.file.R: stop("'curl' call had nonzero exit status")
+#: R/unix/download.file.R:0 R/windows/download.file.R:0
+msgid "'curl' call had nonzero exit status"
+msgstr "'curl()' miało niezerowy status wyjściowy"
 
 #. R/packages.R: stop("'destdir' is not a directory")
 #: R/packages.R:0
@@ -223,6 +236,11 @@ msgstr "argument 'modes' został zignorowany"
 msgid "'names' argument ignored"
 msgstr "argument 'names' został zignorowany"
 
+#. R/str.R: gettextf("'nchar.max = %d' is too small", nchar.max)
+#: R/str.R:0
+msgid "'nchar.max = %d' is too small"
+msgstr "'nchar.max = %d' jest zbyt małe"
+
 #. R/str.R: warning("'object' does not have valid levels()")
 #: R/str.R:0
 msgid "'object' does not have valid levels()"
@@ -312,6 +330,12 @@ msgstr "argument 'url' musi być wektorem tekstowym o długości 1"
 msgid "'url' must be a non-empty character string"
 msgstr "argument 'url' musi być niepustym łańcuchem tekstowym"
 
+#. R/unix/download.file.R: stop("'wget' call had nonzero exit status")
+#. R/windows/download.file.R: stop("'wget' call had nonzero exit status")
+#: R/unix/download.file.R:0 R/windows/download.file.R:0
+msgid "'wget' call had nonzero exit status"
+msgstr "'wget()' miało niezerowy status wyjściowy"
+
 #. R/packages.R: gettext("--- Please select a CRAN mirror for use in this session ---")
 #: R/packages.R:0
 msgid "--- Please select a CRAN mirror for use in this session ---"
@@ -341,6 +365,11 @@ msgstr ""
 "UWAGA: Informacja o cytowaniu została automatycznie wygenerowana z pliku "
 "DESCRIPTION pakietu i może wymagać ręcznej edycji, sobacz %s."
 
+#. R/citation.R: gettextf("Argument '%s' is deprecated; rather set '%s' instead.",     "citation.bibtex.max", "bibtex=*")
+#: R/citation.R:0
+msgid "Argument '%s' is deprecated; rather set '%s' instead."
+msgstr "Argument '%s' jest przestarzały; użyj raczej '%s'."
+
 #. R/debugger.R: gettext("Available environments had calls:\n")
 #: R/debugger.R:0
 msgid "Available environments had calls:"
@@ -350,6 +379,20 @@ msgstr "Dostępne środowiska miały wywołania:"
 #: R/debugger.R:0
 msgid "Browsing in the environment with call:"
 msgstr "Przeglądanie w środowisku z wywołaniem:"
+
+#. R/askYesNo.R: c("Yes", "No", "Cancel")
+#: R/askYesNo.R:0
+msgid "Cancel"
+msgstr "Anuluj"
+
+#. R/help.request.R: stop("Cancelled by user")
+#. R/help.request.R: stop("Cancelled by user")
+#. R/help.request.R: stop("Cancelled by user")
+#. R/packages2.R: stop("Cancelled by user")
+#. R/packages2.R: stop("Cancelled by user")
+#: R/help.request.R:0 R/packages2.R:0
+msgid "Cancelled by user"
+msgstr "Anulowane przez użytkownika"
 
 #. R/debugcall.R: stop("Cannot debug primitive functions unless they are implicit generics (requires loading the methods package)")
 #: R/debugcall.R:0
@@ -410,11 +453,6 @@ msgid ""
 msgstr ""
 "Nie wiadomo, do którego elementu 'lib' zainstalować zależności\n"
 "pomijanie zależności"
-
-#. R/packages2.R: message("Do you want to attempt to install these from sources?")
-#: R/packages2.R:0
-msgid "Do you want to attempt to install these from sources?"
-msgstr "Czy chcesz spróbować zainstalować je ze źródeł?"
 
 #. R/citation.R: gettextf("Dropping invalid entry %d:\n%s", pc[b], conditionMessage(status[[b]]))
 #: R/citation.R:0
@@ -482,6 +520,11 @@ msgstr ""
 msgid "Filter '%s' is not available."
 msgstr "Filtr '%s' nie jest dostępny."
 
+#. R/object.size.R: stop("For SI units, specify 'standard = \"SI\"'")
+#: R/object.size.R:0
+msgid "For SI units, specify 'standard = \"SI\"'"
+msgstr "Dla jednostek SI, określ 'standard = \"SI\"'"
+
 #. R/help.R: warning("HTML help is unavailable", call. = FALSE)
 #: R/help.R:0
 msgid "HTML help is unavailable"
@@ -518,6 +561,11 @@ msgid ""
 msgstr ""
 "Jeśli przeglądarka uruchomiona przez '%s' już działa, *nie* zostanie "
 "zrestartowana, a ty musisz przejść na jej okno."
+
+#. R/indices.R: warning("Invalid \"Built\": ", conditionMessage(e))
+#: R/indices.R:0
+msgid "Invalid \"Built\":"
+msgstr "Niepoprawne \"Built\":"
 
 #. R/aspell.R: stop("Invalid 'filter' argument.")
 #: R/aspell.R:0
@@ -565,6 +613,11 @@ msgstr "Więcej kolumn niż określono w nagłówku; może użyj 'transpose=TRUE
 #: R/read.DIF.R:0
 msgid "More rows than specified in header; maybe use 'transpose=TRUE'"
 msgstr "Więcej wierszy niż określono w nagłówku; może użyj 'transpose=TRUE'"
+
+#. R/askYesNo.R: c("Yes", "No", "Cancel")
+#: R/askYesNo.R:0
+msgid "No"
+msgstr "Nie"
 
 #. R/read.DIF.R: stop("No DIF data on clipboard")
 #: R/read.DIF.R:0
@@ -720,6 +773,11 @@ msgstr ""
 "Przestrzeń nazw dla pakietu '%s' jest zablokowana; nie można dokonać żadnych "
 "zmian w globalnej liście zmiennych."
 
+#. R/strcapture.R: stop("The number of captures in 'pattern' != 'length(proto)'")
+#: R/strcapture.R:0
+msgid "The number of captures in 'pattern' != 'length(proto)'"
+msgstr "Liczba przechwytań w 'pattern' != 'length(proto)'"
+
 #. R/RSiteSearch.R: gettext("The results page should open in your browser shortly\n")
 #: R/RSiteSearch.R:0
 msgid "The results page should open in your browser shortly"
@@ -743,6 +801,21 @@ msgstr "Plik sygnatury czasu już nie istnieje."
 #: R/citation.R:0
 msgid "To cite package %s in publications use:"
 msgstr "Aby zacytować pakiet %s w publikacjach użyj:"
+
+#. R/help.request.R: warning("Unable to connect to CRAN to check R version.")
+#: R/help.request.R:0
+msgid "Unable to connect to CRAN to check R version."
+msgstr "Nie można połączyć się z CRAN by sprawdzić wersję R."
+
+#. R/object.size.R: gettextf("Unit \"%s\" is not part of standard \"%s\"", sQuote(units),     sQuote(standard))
+#: R/object.size.R:0
+msgid "Unit \"%s\" is not part of standard \"%s\""
+msgstr "Jednostka \"%s\" nie jest częścią standardu \"%s\""
+
+#. R/askYesNo.R: stop("Unrecognized response ", dQuote(ans))
+#: R/askYesNo.R:0
+msgid "Unrecognized response"
+msgstr "Nierozpoznana odpowiedź"
 
 #. R/read.DIF.R: stop("Unrecognized special data value")
 #: R/read.DIF.R:0
@@ -801,6 +874,27 @@ msgstr "Ostrzeżenie: nieznana opcja %s"
 msgid "Warning: unknown option '--clean='%s"
 msgstr "Ostrzeżenie: nieznana opcja '--clean='%s"
 
+#. R/packages2.R: gettextf("Would you like to create a personal library\n%s\nto install packages into?",     sQuote(userdir))
+#: R/packages2.R:0
+msgid ""
+"Would you like to create a personal library\n"
+"%s\n"
+"to install packages into?"
+msgstr ""
+"Czy chciałbyś utworzyć osobistą bibliotekę\n"
+"%s\n"
+"do której zainstalować pakiety?"
+
+#. R/packages2.R: gettext("Would you like to use a personal library instead?")
+#: R/packages2.R:0
+msgid "Would you like to use a personal library instead?"
+msgstr "Czy chcesz użyć w zamian osobistej biblioteki?"
+
+#. R/askYesNo.R: c("Yes", "No", "Cancel")
+#: R/askYesNo.R:0
+msgid "Yes"
+msgstr "Tak"
+
 #. R/edit.R: gettextf("added factor levels in '%s'", names(out)[i])
 #: R/edit.R:0
 msgid "added factor levels in '%s'"
@@ -857,10 +951,10 @@ msgstr "można obsłużyć jedynie elementy wektora oraz czynnika"
 msgid "can only receive calls on local machine"
 msgstr "można odbierać wywołania jedynie na lokalnej maszynie"
 
-#. R/packages.R: gettextf("cannot choose a %s mirror non-interactively", label,     domain = "R-utils")
+#. R/packages.R: stop("cannot choose a ", label, " mirror non-interactively")
 #: R/packages.R:0
-msgid "cannot choose a %s mirror non-interactively"
-msgstr "nie można wybrać serweru lustrzanego %s nieinteraktywnie"
+msgid "cannot choose a"
+msgstr "nie można wybrać serwera lustrzanego"
 
 #. R/roman.R: stop("cannot coerce 'x' to roman")
 #: R/roman.R:0
@@ -903,22 +997,22 @@ msgstr ""
 msgid "cannot handle S4 methods yet"
 msgstr "jeszcze nie można obsłużyć metod S4"
 
-#. R/packages2.R: stop("cannot install MacOS X binary packages on Windows")
-#: R/packages2.R:0
-msgid "cannot install MacOS X binary packages on Windows"
-msgstr "nie można zainstalować pakietów binarnych dla MacOS w systemie Windows"
-
-#. R/packages2.R: stop("cannot install MacOS X binary packages on this platform")
-#: R/packages2.R:0
-msgid "cannot install MacOS X binary packages on this platform"
-msgstr "nie można zainstalować pakietów binarnych dla MacOS na tej platformie"
-
 #. R/packages2.R: stop("cannot install Windows binary packages on this platform")
 #: R/packages2.R:0
 msgid "cannot install Windows binary packages on this platform"
 msgstr ""
 "nie można zainstalować pakietów binarnych dla systemu Windows na tej "
 "platformie"
+
+#. R/packages2.R: stop("cannot install macOS binary packages on Windows")
+#: R/packages2.R:0
+msgid "cannot install macOS binary packages on Windows"
+msgstr "nie można zainstalować pakietów binarnych dla macOS w systemie Windows"
+
+#. R/packages2.R: stop("cannot install macOS binary packages on this platform")
+#: R/packages2.R:0
+msgid "cannot install macOS binary packages on this platform"
+msgstr "nie można zainstalować pakietów binarnych dla macOS na tej platformie"
 
 #. R/unix/mac.install.R: gettextf("cannot remove prior installation of package %s", sQuote(pkgname))
 #. R/windows/install.packages.R: gettextf("cannot remove prior installation of package %s", sQuote(pkgname))
@@ -1106,12 +1200,12 @@ msgstr ""
 "nie udało się pobrać pliku (%s) serwerów lustrzanych; używanie lokalnego "
 "pliku '%s'"
 
-#. R/unix/mac.install.R: gettextf("file %s is not an OS X binary package", sQuote(pkg))
-#. R/unix/mac.install.R: gettextf("file %s is not an OS X binary package", sQuote(pkg))
-#. R/unix/mac.install.R: gettextf("file %s is not an OS X binary package", sQuote(pkg))
+#. R/unix/mac.install.R: gettextf("file %s is not a macOS binary package", sQuote(pkg))
+#. R/unix/mac.install.R: gettextf("file %s is not a macOS binary package", sQuote(pkg))
+#. R/unix/mac.install.R: gettextf("file %s is not a macOS binary package", sQuote(pkg))
 #: R/unix/mac.install.R:0
-msgid "file %s is not an OS X binary package"
-msgstr "plik %s nie jest pakietem binarnym OS X"
+msgid "file %s is not a macOS binary package"
+msgstr "plik %s nie jest pakietem binarnym macOS"
 
 #. R/tar.R: gettextf("file '%s' did not have execute permissions: corrected",     f)
 #: R/tar.R:0
@@ -1411,6 +1505,11 @@ msgstr "metoda 'mailx' jest tylko dla systemów Unix"
 msgid "method is only applicable to %s objects"
 msgstr "metoda jest stosowalna jedynie do obiektów %s"
 
+#. R/packages.R: stop("cannot choose a ", label, " mirror non-interactively")
+#: R/packages.R:0
+msgid "mirror non-interactively"
+msgstr "nieinteraktywnie"
+
 #. R/read.fortran.R: stop("missing lengths for some fields")
 #: R/read.fortran.R:0
 msgid "missing lengths for some fields"
@@ -1598,11 +1697,6 @@ msgstr "nie wszystkie kolumny nazwane w 'as.is' istnieją"
 #: R/read.DIF.R:0 R/readtable.R:0
 msgid "not all columns named in 'colClasses' exist"
 msgstr "nie wszystkie kolumny nazwane w 'colClasses' istnieją"
-
-#. R/strcapture.R: stop("number of matches does not always match ncol(proto)")
-#: R/strcapture.R:0
-msgid "number of matches does not always match ncol(proto)"
-msgstr "liczba dopasowań nie zawsze pasuje do 'ncol(proto)'"
 
 #. R/Sweave.R: gettextf("object %s does not have class \"SweaveSyntax\"", sQuote(sname))
 #: R/Sweave.R:0
@@ -1804,6 +1898,12 @@ msgstr "nie ma katalogu 'libs' w pakiecie %s"
 msgid "this may cause problems when running LaTeX"
 msgstr "to może spowodować problemy podczas uruchamiania LaTeX'a"
 
+#. R/packages2.R: warning("timeouts for parallel installs require the 'timeout' command")
+#: R/packages2.R:0
+msgid "timeouts for parallel installs require the 'timeout' command"
+msgstr ""
+"czas oczekiwania dla równoległych instalacji wymaga polecenia 'timeout'"
+
 #. R/format.R: gettextf("too many list items (at most up to %d)", 26L)
 #. R/format.R: gettextf("too many list items (at most up to %d)", 3899L)
 #: R/format.R:0
@@ -1825,13 +1925,12 @@ msgstr "próba użycia CRAN bez ustawienia serwera lustrzanego"
 msgid "type 'binary' is not supported on this platform"
 msgstr "typ 'binary' nie jest wspierany na tej platformie"
 
-#. R/packages2.R: stop("type == \"both\" can only be used on Windows or a CRAN build for Mac OS X")
+#. R/packages2.R: stop("type == \"both\" can only be used on Windows or a CRAN build for macOS")
 #: R/packages2.R:0
-msgid ""
-"type == \"both\" can only be used on Windows or a CRAN build for Mac OS X"
+msgid "type == \"both\" can only be used on Windows or a CRAN build for macOS"
 msgstr ""
 "'type == \"both\"' może być użyte jedynie w systemie Windows lub kompilacji "
-"CRAN dla systemów Mac OS X"
+"CRAN dla systemów macOS"
 
 #. R/packages2.R: stop("type == \"both\" cannot be used with 'repos = NULL'")
 #: R/packages2.R:0
@@ -1952,6 +2051,14 @@ msgid_plural "%d Sweave files for basename %s found"
 msgstr[0] "znaleziono %d plik 'Sweave' dla nazwy bazowej %s"
 msgstr[1] "znaleziono %d pliki 'Sweave' dla nazwy bazowej %s"
 msgstr[2] "znaleziono %d plików 'Sweave' dla nazwy bazowej %s"
+
+#. R/modifyList.R: ngettext(tt[[1L]], "%d error caught in %s: %s", "%d times caught the same error in %s: %s")
+#: R/modifyList.R:0
+msgid "%d error caught in %s: %s"
+msgid_plural "%d times caught the same error in %s: %s"
+msgstr[0] "%d przechwycony błąd w %s: %s"
+msgstr[1] "%d razy przechwycony ten sam błąd w %s: %s"
+msgstr[2] "%d razy przechwycony ten sam błąd w %s: %s"
 
 #. R/apropos.R: ngettext(ll, "%d occurrence in %s", "%d occurrences in %s")
 #: R/apropos.R:0
@@ -2178,11 +2285,14 @@ msgstr[0] "pakiet %s nie jest dostępny (%s)"
 msgstr[1] "pakiety %s nie są dostępne (%s)"
 msgstr[2] "pakiety %s nie są dostępne (%s)"
 
-#~ msgid "cannot choose a"
-#~ msgstr "nie można wybrać serwera lustrzanego"
+#~ msgid "Do you want to attempt to install these from sources?"
+#~ msgstr "Czy chcesz spróbować zainstalować je ze źródeł?"
 
-#~ msgid "mirror non-interactively"
-#~ msgstr "nieinteraktywnie"
+#~ msgid "cannot choose a %s mirror non-interactively"
+#~ msgstr "nie można wybrać serweru lustrzanego %s nieinteraktywnie"
+
+#~ msgid "number of matches does not always match ncol(proto)"
+#~ msgstr "liczba dopasowań nie zawsze pasuje do 'ncol(proto)'"
 
 #~ msgid "no download method found"
 #~ msgstr "nie znaleziono metody pobierania"

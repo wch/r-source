@@ -1,7 +1,7 @@
 #  File src/library/stats/R/mantelhaen.test.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -80,7 +80,6 @@ function(x, y = NULL, z = NULL,
                 z <- sign(DELTA) * sqrt(STATISTIC)
                 PVAL <- pnorm(z, lower.tail = (alternative == "less"))
             }
-
 
             names(STATISTIC) <- "Mantel-Haenszel X-squared"
             names(PARAMETER) <- "df"
@@ -162,22 +161,14 @@ function(x, y = NULL, z = NULL,
             }
             pn2x2xk <- function(q, ncp = 1, upper.tail = FALSE) {
                 if(ncp == 0) {
-                    if(upper.tail)
-                        return(as.numeric(q <= lo))
-                    else
-                        return(as.numeric(q >= lo))
+                    as.numeric(if(upper.tail) q <= lo else q >= lo)
                 }
-                if(ncp == Inf) {
-                    if(upper.tail)
-                        return(as.numeric(q <= hi))
-                    else
-                        return(as.numeric(q >= hi))
+                else if(ncp == Inf)
+                    as.numeric(if(upper.tail) q <= hi else q >= hi)
+                else {
+                    d <- dn2x2xk(ncp)
+                    sum(d[if(upper.tail) support >= q else support <= q])
                 }
-                d <- dn2x2xk(ncp)
-                if(upper.tail)
-                    sum(d[support >= q])
-                else
-                    sum(d[support <= q])
             }
 
             ## Determine the p-value.
@@ -260,7 +251,6 @@ function(x, y = NULL, z = NULL,
                        estimate = ESTIMATE,
                        null.value = NVAL,
                        alternative = alternative))
-
     }
     else {
         ## Generalized Cochran-Mantel-Haenszel I x J x K test
@@ -273,16 +263,14 @@ function(x, y = NULL, z = NULL,
         V <- matrix(0, nrow = df, ncol = df)
         for (k in 1 : K) {
             f <- x[ , , k]              # frequencies in stratum k
-            ntot <- sum(f)              # n_{..k}
-            rowsums <- apply(f, 1L, sum)[-I]
-                                        # n_{i.k}, i = 1 to I-1
-            colsums <- apply(f, 2L, sum)[-J]
-                                        # n_{.jk}, j = 1 to J-1
+            ntot <- as.double(sum(f))   # n_{..k}   (and avoid overflow)
+            rowsums <- rowSums(f)[-I]   # n_{i.k}, i = 1 to I-1
+            colsums <- colSums(f)[-J]   # n_{.jk}, j = 1 to J-1
             n <- n + c(f[-I, -J])
             m <- m + c(outer(rowsums, colsums, "*")) / ntot
-            V <- V + (kronecker(diag(ntot * colsums, nrow = J - 1)
+            V <- V + (kronecker(diag(ntot * colsums, nrow = J - 1L)
                                 - outer(colsums, colsums),
-                                diag(ntot * rowsums, nrow = I - 1)
+                                diag(ntot * rowsums, nrow = I - 1L)
                                 - outer(rowsums, rowsums))
                       / (ntot^2 * (ntot - 1)))
         }
@@ -297,10 +285,8 @@ function(x, y = NULL, z = NULL,
                      parameter = PARAMETER,
                      p.value = PVAL)
     }
-
-    RVAL <- c(RVAL,
-              list(method = METHOD,
-                   data.name = DNAME))
-    class(RVAL) <- "htest"
-    return(RVAL)
+    structure(c(RVAL,
+                list(method = METHOD,
+                     data.name = DNAME)),
+              class = "htest")
 }

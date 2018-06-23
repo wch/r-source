@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.3.0\n"
+"Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2015-06-06 13:51\n"
-"PO-Revision-Date: 2016-04-21 09:13+0200\n"
+"POT-Creation-Date: 2018-03-30 07:34\n"
+"PO-Revision-Date: 2018-04-16 10:35+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
 "Language: de\n"
@@ -96,6 +96,18 @@ msgstr "Wert der 'strip.white' Option sollte in Kleinbuchstaben sein"
 
 msgid "elements of 'what' after the first will be ignored"
 msgstr "Elemente von 'what' nach dem ersten werden ignoriert"
+
+msgid "Yes"
+msgstr "Yes"
+
+msgid "No"
+msgstr "No"
+
+msgid "Cancel"
+msgstr "Abbrechen"
+
+msgid "Unrecognized response"
+msgstr "Nicht erkannte Antwort"
 
 msgid "No suitable spell-checker program found"
 msgstr "Keine passende Rechtschreibprüfung gefunden"
@@ -188,6 +200,9 @@ msgstr "Index außerhalb der Grenzen"
 msgid "%s should be one of %s"
 msgstr "%s sollte einer von %s sein"
 
+msgid "Argument '%s' is deprecated; rather set '%s' instead."
+msgstr "Argument '%s ist veraltet; besser '%s' setzen."
+
 msgid "A BibTeX entry for LaTeX users is"
 msgstr "Ein BibTeX-Eintrag für LaTeX-Benutzer ist"
 
@@ -267,6 +282,14 @@ msgstr "konnte Variablen nicht angemessen wiederherstellen"
 
 msgid "did not assign() anything"
 msgstr "habe nichts assign()-ed"
+
+msgid ""
+"Cannot debug primitive functions unless they are implicit generics (requires "
+"loading the methods package)"
+msgstr "Kann primitive Funktionen nicht debuggen, außer sie sind implizite Generische (benötigt das geladene methods Paket)"
+
+msgid "error in trying to evaluate the expression for argument %s (%s)"
+msgstr "Fehler beim Versuch den Ausdruck für Argument %s (%s) auszuwerten"
 
 msgid "Browsing in the environment with call:"
 msgstr "Untersuche die Umgebung mit Aufruf:"
@@ -423,6 +446,12 @@ msgstr "Erzeugung von %s fehlgeschlagen"
 msgid "Saving help page to %s"
 msgstr "Sichere Hilfeseiten nach %s"
 
+msgid "Cancelled by user"
+msgstr "Von Benutzer abgebrochen"
+
+msgid "Unable to connect to CRAN to check R version."
+msgstr "Kann nicht mit CRAN verbinden, um R Version zu checken."
+
 msgid "argument %s must be a single character string"
 msgstr "Argument %s muss einzelne Zeichkette sein"
 
@@ -435,15 +464,15 @@ msgstr "weiß nicht, wonach suchen"
 msgid "argument 'help.db' is deprecated"
 msgstr "Argument 'help.db' ist veraltet"
 
+msgid "incorrect type specification"
+msgstr "falsche Typspezifikation"
+
 msgid "no information in the database for package %s: need 'rebuild = TRUE'?"
 msgstr ""
 "keine Information in der Datenbank für Paket %s: benötige 'rebuild = TRUE'?"
 
 msgid "incorrect 'agrep' specification"
 msgstr "falsche 'agrep' Spezifikation"
-
-msgid "incorrect type specification"
-msgstr "falsche Typspezifikation"
 
 msgid "could not find package %s"
 msgstr "konnte Paket %s nicht finden"
@@ -498,6 +527,9 @@ msgstr ""
 msgid "DESCRIPTION file of package '%s' is missing or broken"
 msgstr "DESCRIPTION von Paket '%s' fehlt oder zerstört"
 
+msgid "Invalid \"Built\":"
+msgstr "Unzulässiges \"Built\":"
+
 msgid "cannot update HTML package index"
 msgstr "kann HTML-Paketindex nicht aktualisieren"
 
@@ -510,8 +542,17 @@ msgstr "menu() kann nicht nicht-interaktiv genutzt werden"
 msgid "Enter an item from the menu, or 0 to exit"
 msgstr "Geben Sie Menüpunkt ein oder 0 zum Abbruch"
 
+msgid "%d errors caught in %s.  The error messages and their frequencies are"
+msgstr "%d Fehler in %s abgefangen. Die Fehlermeldungen und ihre Häufigkeiten sind"
+
 msgid "invalid query"
 msgstr "unzulässige Anfrage"
+
+msgid "For SI units, specify 'standard = \"SI\"'"
+msgstr "Für SI Einheiten bitte 'standard = \"SI\"' spezifizieren"
+
+msgid "Unit \"%s\" is not part of standard \"%s\""
+msgstr "Einheit \"%s\" ist nicht Teil des Standards \"%s\""
 
 msgid "'%s' is a formal generic function; S3 methods will not likely be found"
 msgstr ""
@@ -636,11 +677,17 @@ msgstr "--- Bitte einen CRAN-Spiegelserver für diese Sitzung auswählen ---"
 msgid "trying to use CRAN without setting a mirror"
 msgstr "versuche CRAN ohne einen Spiegelserver zu nutzen"
 
-msgid "cannot choose a CRAN mirror non-interactively"
-msgstr "kann keinen CRAN-Spiegelserver nicht-interaktiv nutzen"
+msgid "'download.file()' error code '%d'"
+msgstr "'download.file()' Fehlercode '%d'"
 
-msgid "cannot choose a BioC mirror non-interactively"
-msgstr "kann keinen BioC-Spiegelserver nicht-interaktiv wählen"
+msgid "failed to download mirrors file (%s); using local file '%s'"
+msgstr "Herunterladen der Mirrorliste (%s) fehlgeschlagen; nutze lokale Datei '%s'"
+
+msgid "cannot choose a"
+msgstr "kann nicht wählen"
+
+msgid "mirror non-interactively"
+msgstr "mirror nicht interaktiv"
 
 msgid "cannot set repositories non-interactively"
 msgstr "kann keine Repositories nicht-interaktiv setzen"
@@ -673,8 +720,20 @@ msgstr "keine Pakete angegeben"
 msgid "'lib = \"%s\"' is not writable"
 msgstr "'lib = \"%s\" ist nicht schreibbar"
 
+msgid "Would you like to use a personal library instead?"
+msgstr "Soll eine persönliche Bibliothek eingerichtet werden?"
+
 msgid "unable to install packages"
 msgstr "kann keine Pakete installieren"
+
+msgid ""
+"Would you like to create a personal library\n"
+"%s\n"
+"to install packages into?"
+msgstr ""
+"Soll eine persönliche Bibliothek\n"
+"%s\n"
+"eingerichtet werden, um dort Pakete zu installieren?"
 
 msgid "unable to create %s"
 msgstr "kann %s nicht erzeugen"
@@ -685,26 +744,20 @@ msgstr "leite 'repos = NULL' aus 'pkgs' ab"
 msgid "unable to create temporary directory %s"
 msgstr "kann temporäres Verzeichnis %s nicht erzeugen"
 
-msgid ""
-"type == \"both\" can only be used on Windows or a CRAN build for Mac OS X"
-msgstr ""
-"type == \"both\" kann nur unter Windows oder einem CRAN-build für MacOS\n"
-"X benutzt werden"
+msgid "type == \"both\" can only be used on Windows or a CRAN build for macOS"
+msgstr "type == \"both\" kann nur unter Windows oder einem CRAN-build für macOS benutzt werden"
 
 msgid "type == \"both\" cannot be used with 'repos = NULL'"
 msgstr "type == \"both\" kann nicht mit 'repos = NULL' benutzt werden"
 
-msgid "Do you want to attempt to install these from sources?"
-msgstr "Möchten Sie aus den Quelltexten installieren?"
-
 msgid "source repository is unavailable to check versions"
 msgstr "Quelltextrepository nicht verfügbar um Versionen zu überprüfen"
 
-msgid "cannot install MacOS X binary packages on Windows"
-msgstr "kann keine MacOS-X-Binaries auf Windows installieren"
+msgid "cannot install macOS binary packages on Windows"
+msgstr "kann keine macOS Binaries auf Windows installieren"
 
-msgid "cannot install MacOS X binary packages on this platform"
-msgstr "kann keine MacOS-X-Binaries auf dieser Plattform installieren"
+msgid "cannot install macOS binary packages on this platform"
+msgstr "kann keine macOS Binaries auf dieser Plattform installieren"
 
 msgid "cannot install Windows binary packages on this platform"
 msgstr "kann keine Windows-Binaries auf dieser Plattform installieren"
@@ -727,6 +780,9 @@ msgstr "foundpkgs: %s"
 
 msgid "files: %s"
 msgstr "files: %s"
+
+msgid "timeouts for parallel installs require the 'timeout' command"
+msgstr "Zeitgrenzen für parallele Installationen benötigen ein 'timeout' Kommando"
 
 msgid ""
 "installation of one or more packages failed,\n"
@@ -792,9 +848,6 @@ msgid "no methods for %s and no documentation for it as a function"
 msgstr ""
 "keine Methoden für %s und keine Dokumentation darüber, es als Funktion zu "
 "nutzen"
-
-msgid "error in trying to evaluate the expression for argument %s (%s)"
-msgstr "Fehler beim Versuch den Ausdruck für Argument %s (%s) auszuwerten"
 
 msgid "no method defined for function %s and signature %s"
 msgstr "keine Methode für Funktion %s und Signatur %s definiert"
@@ -924,8 +977,8 @@ msgstr "socket nicht etabliert"
 
 msgid "str.data.frame() called with non-data.frame -- coercing to one."
 msgstr ""
-"str.data.frame() nicht mit einem data.frame aufgerufen -- umgewandelt in einen "
-"solchen."
+"str.data.frame() nicht mit einem data.frame aufgerufen -- umgewandelt in "
+"einen solchen."
 
 msgid "invalid options(\"str\") -- using defaults instead"
 msgstr "ungültige options(\"str\") -- nutze stattdessen Standard"
@@ -936,12 +989,18 @@ msgstr "ungültige Komponenten in options(\"str\"): %s"
 msgid "'str.default': 'le' is NA, so taken as 0"
 msgstr "'str.default': 'le' is NA, also als 0 betrachtet"
 
+msgid "'nchar.max = %d' is too small"
+msgstr "'nchar.max = %d' ist zu klein"
+
 msgid "'object' does not have valid levels()"
 msgstr "'object' hat keine gültigen levels()"
 
 msgid "'digits' and 'digits.d' are both specified and the latter is not used"
 msgstr ""
 "'digits' und 'digits.d' sind beide angegeben und das letztere wird ignoriert"
+
+msgid "The number of captures in 'pattern' != 'length(proto)'"
+msgstr "Die Anzahl von Treffern in 'pattern' != 'length(proto)'"
 
 msgid "no lines found in %s"
 msgstr "keine Zeilen in '%s'"
@@ -1077,14 +1136,17 @@ msgstr "'subject' fehlt"
 msgid "'ccaddress' must be of length 1"
 msgstr "'ccaddress' muss die Länge 1 haben"
 
-msgid "no download method found"
-msgstr "keine Downloadmethode gefunden"
-
 msgid "'url' must be a length-one character vector"
 msgstr "'url' muss ein Zeichenkettenvektor mit Länge 1 sein"
 
 msgid "'destfile' must be a length-one character vector"
 msgstr "'destfile' muss ein Zeichenkettenvektor mit Länge 1 sein"
+
+msgid "'wget' call had nonzero exit status"
+msgstr "Aufruf von 'wget' hatte Exit-Status ungleich 0"
+
+msgid "'curl' call had nonzero exit status"
+msgstr "Aufruf von 'curl' hatte Exit-Status ungleich 0"
 
 msgid "download had nonzero exit status"
 msgstr "Download hatte Exit-Status ungleich 0"
@@ -1092,8 +1154,8 @@ msgstr "Download hatte Exit-Status ungleich 0"
 msgid "'tar' returned non-zero exit code %d"
 msgstr "'tar' hatte Exit-Status %d"
 
-msgid "file %s is not an OS X binary package"
-msgstr "Datei %s ist kein OS-X-Binärpaket"
+msgid "file %s is not a macOS binary package"
+msgstr "Datei %s ist kein macOS Binärpaket"
 
 msgid "package %s successfully unpacked and MD5 sums checked"
 msgstr "Paket %s erfolgreich ausgepackt und MD5 Summen abgeglichen"
@@ -1181,6 +1243,11 @@ msgid_plural "matched %d objects."
 msgstr[0] "%d übereinstimmendes Objekt."
 msgstr[1] "%d übereinstimmende Objekte."
 
+msgid "%d error caught in %s: %s"
+msgid_plural "%d times caught the same error in %s: %s"
+msgstr[0] "%d Fehler abgefangen in %s: %s"
+msgstr[1] "%d Mal denselben Fehler abgefangen in %s: %s"
+
 msgid "object '%s' not found"
 msgid_plural "objects '%s' not found"
 msgstr[0] "Objekt '%s' nicht gefunden"
@@ -1203,6 +1270,11 @@ msgid "package %s is not available (%s)"
 msgid_plural "packages %s are not available (%s)"
 msgstr[0] "Paket %s ist nicht verfügbar (%s)"
 msgstr[1] "Pakete %s sind nicht verfügbar (%s)"
+
+msgid "package %s is a base package, and should not be updated"
+msgid_plural "packages %s are base packages, and should not be updated"
+msgstr[0] "Paket %s ist ein Basispaket und sollte nicht aktualisiert werden"
+msgstr[1] "Pakete %s sind Basispakete und sollten nicht aktualisiert werden"
 
 msgid "dependency %s is not available"
 msgid_plural "dependencies %s are not available"
@@ -1242,11 +1314,12 @@ msgid ""
 "Do you want to install from sources the package which needs compilation?"
 msgid_plural ""
 "Do you want to install from sources the packages which need compilation?"
-msgstr[0] "Möchten Sie versuchen, das Paket, welches eine Kompilierung erfordert,"
-" aus den Quelltexten zu installieren?"
+msgstr[0] ""
+"Möchten Sie versuchen, das Paket, welches eine Kompilierung erfordert, aus "
+"den Quelltexten zu installieren?"
 msgstr[1] ""
-"Möchten Sie versuchen, die Pakete, welche eine Kompilierung erfordern,"
-" aus den Quelltexten zu installieren?"
+"Möchten Sie versuchen, die Pakete, welche eine Kompilierung erfordern, aus "
+"den Quelltexten zu installieren?"
 
 msgid ""
 "Package which is only available in source form, and may need compilation of "
@@ -1254,7 +1327,9 @@ msgid ""
 msgid_plural ""
 "Packages which are only available in source form, and may need compilation "
 "of C/C++/Fortran"
-msgstr[0] "Paket, das nur als Quelltext vorliegt und eventuell Übersetzung von C/C++/Fortran benötigt."
+msgstr[0] ""
+"Paket, das nur als Quelltext vorliegt und eventuell Übersetzung von C/C++/"
+"Fortran benötigt."
 msgstr[1] ""
 "Pakete, die nur als Quelltext vorliegen und eventuell Übersetzung von C/C++/"
 "Fortran benötigen."
@@ -1297,6 +1372,15 @@ msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] "Paket %s wird gerade benutzt und deshab nicht installiert"
 msgstr[1] "Pakete %s werden gerade benutzt und deshalb nicht installiert"
+
+#~ msgid "cannot choose a BioC mirror non-interactively"
+#~ msgstr "kann keinen BioC-Spiegelserver nicht-interaktiv wählen"
+
+#~ msgid "Do you want to attempt to install these from sources?"
+#~ msgstr "Möchten Sie aus den Quelltexten installieren?"
+
+#~ msgid "no download method found"
+#~ msgstr "keine Downloadmethode gefunden"
 
 #~ msgid ","
 #~ msgstr ","
@@ -1428,9 +1512,6 @@ msgstr[1] "Pakete %s werden gerade benutzt und deshalb nicht installiert"
 #~ msgid "From R 2.14.0 on, every package gets a NAMESPACE."
 #~ msgstr "Ab R-2.14.0 bekommt jedes Paket einen NAMESPACE"
 
-#~ msgid "Argument 'namespace' is deprecated."
-#~ msgstr "Argument 'namespace' ist veraltet"
-
 #~ msgid "Creating NAMESPACE ..."
 #~ msgstr "Erzeuge NAMESPACE ..."
 
@@ -1460,15 +1541,6 @@ msgstr[1] "Pakete %s werden gerade benutzt und deshalb nicht installiert"
 
 #~ msgid "Further steps are described in '%s'."
 #~ msgstr "Die nächsten Schritte werden in '%s' beschrieben."
-
-#~ msgid ""
-#~ "Would you like to create a personal library\n"
-#~ "%s\n"
-#~ "to install packages into?"
-#~ msgstr ""
-#~ "Soll eine persönliche Bibliothek\n"
-#~ "%s\n"
-#~ "eingerichtet werden, um dort Pakete zu installieren?"
 
 #~ msgid "running %s failed"
 #~ msgstr "Ausführen von %s fehlgeschlagen"
@@ -1512,9 +1584,6 @@ msgstr[1] "Pakete %s werden gerade benutzt und deshalb nicht installiert"
 
 #~ msgid "updating HTML package descriptions"
 #~ msgstr "aktualisiere HTML Paketbeschreibungen"
-
-#~ msgid "read.dcf() error on file '%s'"
-#~ msgstr "Fehler in read.dcf() bei Datei '%s'"
 
 #~ msgid "Could not find aspell or ispell executable."
 #~ msgstr "Konnte weder aspell noch ispell finden"

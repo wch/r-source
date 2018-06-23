@@ -1,6 +1,6 @@
 % File src/library/base/man/commandArgs.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{commandArgs}
@@ -35,9 +35,9 @@ commandArgs(trailingOnly = FALSE)
   If \code{trailingOnly = TRUE}, a character vector of those arguments
   (if any) supplied after \option{--args}.
 }
-\seealso{\code{\link{Startup}}
+\seealso{\code{\link{R.home}()}, \code{\link{Startup}}
 #ifdef unix
-\code{\link{BATCH}}
+and \code{\link{BATCH}}
 #endif
 }
 \examples{

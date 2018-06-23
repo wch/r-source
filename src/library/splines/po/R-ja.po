@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
 "PO-Revision-Date: 2013-02-28 04:15+0200 \n"
 "Last-Translator: Triad sou  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -41,6 +41,10 @@ msgstr ""
 msgid "values of 'x' must be distinct"
 msgstr " 'x' の値はすべて別々の値でなければなりません "
 
+#, fuzzy
+msgid "must have at least 'ord'=%d points"
+msgstr " 少なくとも 'ord' 個のノットを持たなければなりません "
+
 msgid "'formula' must be of the form \"y ~ x\""
 msgstr " 'formula' は \"y ~ x\" という形式でなければなりません "
 
@@ -67,6 +71,9 @@ msgstr " 'deriv' は 0 と %d の間でなければなりません "
 
 msgid "knot positions must be strictly increasing"
 msgstr " ノットの位置は狭義の単調増加でなければなりません "
+
+msgid "currently implemented only for cubic splines"
+msgstr ""
 
 msgid "spline must be monotone"
 msgstr " スプラインは単調でなければなりません "

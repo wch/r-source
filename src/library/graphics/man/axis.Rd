@@ -1,6 +1,6 @@
 % File src/library/graphics/man/axis.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{axis}
@@ -13,7 +13,7 @@
 axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
      pos = NA, outer = FALSE, font = NA, lty = "solid",
      lwd = 1, lwd.ticks = lwd, col = NULL, col.ticks = NULL,
-     hadj = NA, padj = NA, \dots)
+     hadj = NA, padj = NA, gap.axis = NA, \dots)
 }
 \arguments{
   \item{side}{an integer specifying which side of the plot the axis is
@@ -42,7 +42,7 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
   \item{font}{font for text.  Defaults to \code{par("font")}.}
   \item{lty}{line type for both the axis line and the tick marks.}
   \item{lwd, lwd.ticks}{line widths for the axis line and the tick
-    marks. Zero or negative values will suppress the line or ticks.}
+    marks.  Zero or negative values will suppress the line or ticks.}
   \item{col, col.ticks}{colors for the axis line and the tick marks
     respectively.  \code{col = NULL} means to use \code{par("fg")},
     possibly specified inline, and \code{col.ticks = NULL} means to use
@@ -61,10 +61,24 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
     If \code{padj} is not a finite value (the default), the value of
     \code{par("las")} determines the adjustment.  For strings plotted
     perpendicular to the axis the default is to centre the string.}
+  \item{gap.axis}{an optional (typically non-negative) numeric factor to
+    be multiplied with the size of an \sQuote{m} to determine the
+    minimal gap between labels that are drawn, see \sQuote{Details}.
+    The default, \code{NA}, corresponds to \code{1} for tick labels drawn
+    \emph{parallel} to the axis and \code{0.25} otherwise, i.e., the
+    default is equivalent to \preformatted{  perpendicular <- function(side, las) {
+    is.x <- (side \%\% 2 == 1) # is horizontal x-axis
+    ( is.x && (las \%in\% 2:3)) ||
+    (!is.x && (las \%in\% 1:2))
+  }
+  gap.axis <- if(perpendicular(side, las)) 0.25 else 1}% end{pre..}
 
+    \code{gap.axis} may typically be relevant when \code{at = ..}
+    tick-mark positions are specified explicitly.
+  }
   \item{\dots}{other \link{graphical parameters} may also be passed as
-    arguments to this function, particularly, \code{cex.axis},
-    \code{col.axis} and \code{font.axis} for axis annotation, \code{mgp}
+    arguments to this function, particularly, \code{cex.axis}, \code{col.axis}
+    and \code{font.axis} for axis annotation, i.e. tick labels, \code{mgp}
     and \code{xaxp} or \code{yaxp} for positioning, \code{tck} or
     \code{tcl} for tick mark length and direction, \code{las} for
     vertical/horizontal label orientation, or \code{fg} instead of
@@ -107,8 +121,12 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
   The code tries hard not to draw overlapping tick labels, and so will
   omit labels where they would abut or overlap previously drawn labels.
   This can result in, for example, every other tick being labelled.
-  (The ticks are drawn left to right or bottom to top, and space at
-  least the size of an \sQuote{m} is left between labels.)
+  The ticks are drawn left to right or bottom to top, and space at
+  least the size of an \sQuote{m}, multiplied by \code{gap.axis},
+  is left between labels.  In previous \R versions, this applied only
+  for labels written \emph{parallel} to the axis direction, hence not
+  for e.g., \code{las = 2}.  Using \code{gap.axis = -1} restores that
+  (buggy) previous behaviour (in the perpendicular case).
 
   If either \code{line} or \code{pos} is set, they (rather than
   \code{par("mgp")[3]}) determine the position of the axis line and tick
@@ -158,5 +176,23 @@ axis(3, col = "gold", lty = 2, lwd = 0.5)
 # one way to have a custom x axis
 plot(1:10, xaxt = "n")
 axis(1, xaxp = c(2, 9, 7))
+
+## Changing default gap between labels:
+plot(0:100, type="n", axes=FALSE, ann=FALSE)
+title(quote("axis(1, .., gap.axis = f)," ~~ f >= 0))
+axis(2, at = 5*(0:20), las = 1, gap.axis = 1/4)
+gaps <- c(4, 2, 1, 1/2, 1/4, 0.1, 0)
+chG <- paste0(ifelse(gaps == 1, "default:  ", ""),
+              "gap.axis=", formatC(gaps))
+jj <- seq_along(gaps)
+linG <- -2.5*(jj-1)
+for(j in jj) {
+    isD <- gaps[j] == 1 # is default
+    axis (1, at=5*(0:20), gap.axis = gaps[j], padj=-1, line = linG[j],
+          col.axis = if(isD) "forest green" else 1, font.axis= 1+isD)
+}
+mtext(chG, side=1, padj=-1, line = linG -1/2, cex=3/4,
+      col = ifelse(gaps == 1, "forest green", "blue3"))
+## now shrink the window (in x- and y-direction) and observe the axis labels drawn
 }
 \keyword{aplot}

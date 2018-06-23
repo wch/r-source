@@ -25,7 +25,7 @@ include $(srcdir)/Makefile.common
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 
 DISTFILES = Makefile.in Makefile.win Makefile.install Makefile.common \
-	$(INSTFILES) gct-foot.R reg-win.R \
+	$(INSTFILES) gct-foot.R reg-win.R eval-fns.R \
 	testit.Rd testit.txt.save testit.html.save \
 	testit.tex.save testit-Ex.R.save \
 	ver20.Rd ver20.txt.save ver20.html.save ver20.tex.save ver20-Ex.R.save \

@@ -1,6 +1,6 @@
 % File src/library/base/man/connections.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{connections}
@@ -128,7 +128,9 @@ isIncomplete(con)
   C-level \sQuote{standard input} of the process (which need not be
   connected to anything in a console or embedded version of \R, and is
   not in \code{RGui} on Windows).  See also \code{\link{stdin}()} for
-  the subtly different R-level concept of \code{stdin}.
+  the subtly different R-level concept of \code{stdin}. See
+  \code{\link{nullfile}()} for a platform-independent way to get
+  filename of the null device.
 
   For \code{url} the description is a complete URL including scheme
   (such as \samp{http://}, \samp{https://}, \samp{ftp://} or
@@ -566,31 +568,35 @@ isIncomplete(con)
 }
 
 \examples{
-zz <- file("ex.data", "w")  # open an output file connection
+zzfil <- tempfile(fileext=".data")
+zz <- file(zzfil, "w")  # open an output file connection
 cat("TITLE extra line", "2 3 5 7", "", "11 13 17", file = zz, sep = "\n")
 cat("One more line\n", file = zz)
 close(zz)
-readLines("ex.data")
-unlink("ex.data")
+readLines(zzfil)
+unlink(zzfil)
 
-zz <- gzfile("ex.gz", "w")  # compressed file
+zzfil <- tempfile(fileext=".gz")
+zz <- gzfile(zzfil, "w")  # compressed file
 cat("TITLE extra line", "2 3 5 7", "", "11 13 17", file = zz, sep = "\n")
 close(zz)
-readLines(zz <- gzfile("ex.gz"))
+readLines(zz <- gzfile(zzfil))
 close(zz)
-unlink("ex.gz")
+unlink(zzfil)
 zz # an invalid connection
 
-zz <- bzfile("ex.bz2", "w")  # bzip2-ed file
+zzfil <- tempfile(fileext=".bz2")
+zz <- bzfile(zzfil, "w")  # bzip2-ed file
 cat("TITLE extra line", "2 3 5 7", "", "11 13 17", file = zz, sep = "\n")
 close(zz)
 zz # print() method: invalid connection
-print(readLines(zz <- bzfile("ex.bz2")))
+print(readLines(zz <- bzfile(zzfil)))
 close(zz)
-unlink("ex.bz2")
+unlink(zzfil)
 
 ## An example of a file open for reading and writing
-Tfile <- file("test1", "w+")
+Tpath <- tempfile("test")
+Tfile <- file(Tpath, "w+")
 c(isOpen(Tfile, "r"), isOpen(Tfile, "w")) # both TRUE
 cat("abc\ndef\n", file = Tfile)
 readLines(Tfile)
@@ -601,7 +607,7 @@ readLines(Tfile)
 Tfile # -> print() :  "valid" connection
 close(Tfile)
 Tfile # -> print() :  "invalid" connection
-unlink("test1")
+unlink(Tpath)
 
 ## We can do the same thing with an anonymous file.
 Tfile <- file()
@@ -611,11 +617,12 @@ close(Tfile)
 
 \dontrun{## fifo example -- may hang even with OS support for fifos
 if(capabilities("fifo")) {
-  zz <- fifo("foo-fifo", "w+")
+  zzfil <- tempfile(fileext="-fifo")
+  zz <- fifo(zzfil, "w+")
   writeLines("abc", zz)
   print(readLines(zz))
   close(zz)
-  unlink("foo-fifo")
+  unlink(zzfil)
 }}
 #ifdef unix
 \donttest{
@@ -626,6 +633,7 @@ readLines(pipe("ls -1"))
 
 # remove trailing commas.  Suppose
 \dontshow{
+oldwd <- setwd(tempdir())
 writeLines(c("450, 390, 467, 654,  30, 542, 334, 432, 421,",
 "357, 497, 493, 550, 549, 467, 575, 578, 342,",
 "446, 547, 534, 495, 979, 479"), "data2_")}
@@ -635,14 +643,15 @@ writeLines(c("450, 390, 467, 654,  30, 542, 334, 432, 421,",
 446, 547, 534, 495, 979, 479}
 # Then read this by
 scan(pipe("sed -e s/,$// data2_"), sep = ",")
-\dontshow{unlink("data2_")}
+\dontshow{unlink("data2_"); setwd(oldwd)}
 
 # convert decimal point to comma in output: see also write.table
 # both R strings and (probably) the shell need \ doubled
-zz <- pipe(paste("sed s/\\\\\\\\./,/ >", "outfile"), "w")
+zzfil <- tempfile("outfile")
+zz <- pipe(paste("sed s/\\\\\\\\./,/ >", zzfil), "w")
 cat(format(round(stats::rnorm(48), 4)), fill = 70, file = zz)
 close(zz)
-file.show("outfile", delete.file = TRUE)
+file.show(zzfil, delete.file = TRUE)
 }
 \dontrun{
 ## example for a machine running a finger daemon

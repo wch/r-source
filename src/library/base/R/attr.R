@@ -1,7 +1,7 @@
 #  File src/library/base/R/attr.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
-`mostattributes<-` <- function(obj, value)
+`mostattributes<-` <- function(x, value)
 {
     if(length(value)) {
 	if(!is.list(value)) stop("'value' must be a list")
@@ -26,18 +26,18 @@
 	    d1 <- value[[idin]];	value <- value[-idin] }
 	if(h.dmn <- !is.na(idmn <- match("dimnames", names(value)))) {
 	    dn1 <- value[[idmn]];	value <- value[-idmn] }
-	attributes(obj) <- value
-        dm <- attr(obj, "dim")
+	attributes(x) <- value
+        dm <- attr(x, "dim")
 	## for list-like objects with a length() method, e.g. POSIXlt
-	L <- length(if(is.list(obj)) unclass(obj) else obj)
+	L <- length(if(is.list(x)) unclass(x) else x)
         ## Be careful to set dim before dimnames.
-	if(h.dim && L == prod(d1)) attr(obj, "dim") <- dm <- d1
+	if(h.dim && L == prod(d1)) attr(x, "dim") <- dm <- d1
 	if(h.dmn && !is.null(dm)) {
             ddn <- vapply(dn1, length, 1, USE.NAMES=FALSE)
-            if( all((dm == ddn)[ddn > 0]) ) attr(obj, "dimnames") <- dn1
+            if( all((dm == ddn)[ddn > 0]) ) attr(x, "dimnames") <- dn1
         }
         ## don't set if it has 'dim' now
-	if(h.nam && is.null(dm) && L == length(n1)) attr(obj, "names") <- n1
+	if(h.nam && is.null(dm) && L == length(n1)) attr(x, "names") <- n1
     }
-    obj
+    x
 }

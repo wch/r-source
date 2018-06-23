@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-01 10:01-0700\n"
+"POT-Creation-Date: 2018-03-29 07:06-0700\n"
 "PO-Revision-Date: 2011-11-29 09:10+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Pootle 2.1.6\n"
 
-#: class_support.c:32
+#: class_support.c:29
 msgid "calling the C routine used as an initializer for 'externalptr' objects"
 msgstr "kalder C-rutinen brugt som en opstarter for 'externalptr'-objekter"
 
@@ -25,7 +25,7 @@ msgstr "kalder C-rutinen brugt som en opstarter for 'externalptr'-objekter"
 msgid "invalid list for substitution"
 msgstr "ugyldig liste for substitution"
 
-#: methods_list_dispatch.c:149
+#: methods_list_dispatch.c:151
 msgid ""
 "could not find the skeleton calls for 'methods' (package detached?): expect "
 "very bad things to happen"
@@ -33,7 +33,7 @@ msgstr ""
 "kan ikke finde skeletkaldene for 'methods' (pakke fjernet?): forvent det "
 "værste"
 
-#: methods_list_dispatch.c:215
+#: methods_list_dispatch.c:217
 #, c-format
 msgid ""
 "no \"allMethods\" slot found in object of class \"%s\" used as methods list "
@@ -42,18 +42,18 @@ msgstr ""
 "ingen 'allMethods'-slot fundet i objekt af klasse »%s« brugt som metodeliste "
 "for funktion '%s'"
 
-#: methods_list_dispatch.c:443
+#: methods_list_dispatch.c:445
 #, c-format
 msgid "no generic function definition found for '%s'"
 msgstr "ingen generisk funktionsdefinition fundet for '%s'"
 
-#: methods_list_dispatch.c:446
+#: methods_list_dispatch.c:448
 #, fuzzy, c-format
 msgid ""
 "no generic function definition found for '%s' in the supplied environment"
 msgstr "Ingen generisk funktionsdefinition fundet for '%s' i det angivne miljø"
 
-#: methods_list_dispatch.c:481
+#: methods_list_dispatch.c:483
 #, c-format
 msgid ""
 "invalid generic function object for method selection for function '%s': "
@@ -62,21 +62,21 @@ msgstr ""
 "ugyldig generisk funktionsobjekt for metodevalg for funktion '%s': "
 "forventede en funktion eller en grundform, fik et objekt af klasse »%s«"
 
-#: methods_list_dispatch.c:496
+#: methods_list_dispatch.c:498
 #, c-format
 msgid "no direct or inherited method for function '%s' for this call"
 msgstr "ingen direkte eller arvet metode for funktion '%s' for dette kald"
 
-#: methods_list_dispatch.c:526 methods_list_dispatch.c:1071
+#: methods_list_dispatch.c:528 methods_list_dispatch.c:1077
 msgid "invalid object (non-function) used as method"
 msgstr "ugyldig objekt (ikkefunktion) brugt som metode"
 
-#: methods_list_dispatch.c:547
+#: methods_list_dispatch.c:549
 #, c-format
 msgid "could not find symbol '%s' in frame of call"
 msgstr "kunne ikke finde symbol '%s' i kaldramme"
 
-#: methods_list_dispatch.c:555
+#: methods_list_dispatch.c:557
 #, c-format
 msgid ""
 "invalid symbol in checking for missing argument in method dispatch: expected "
@@ -85,11 +85,11 @@ msgstr ""
 "ugyldigt symbol under kontrol af manglende argument i metodeafsendelse: "
 "forventede et navn, fik et objekt af klasse »%s«"
 
-#: methods_list_dispatch.c:558
+#: methods_list_dispatch.c:560
 msgid "use of NULL environment is defunct"
 msgstr "brug af NULL-miljø er ikke længere i brug"
 
-#: methods_list_dispatch.c:562
+#: methods_list_dispatch.c:564
 #, c-format
 msgid ""
 "invalid environment in checking for missing argument, '%s', in methods "
@@ -98,7 +98,7 @@ msgstr ""
 "ugyldigt miljø under kontrol af manglende argument, '%s', i "
 "metodeafsendelse: fik et objekt af klasse »%s«"
 
-#: methods_list_dispatch.c:588
+#: methods_list_dispatch.c:590
 #, c-format
 msgid ""
 "object of class \"%s\" used as methods list for function '%s' ( no "
@@ -107,7 +107,7 @@ msgstr ""
 "objekt af klasse »%s« brugt som metodeliste for funktion '%s' (intet "
 "'argument'-slot)"
 
-#: methods_list_dispatch.c:599
+#: methods_list_dispatch.c:601
 #, c-format
 msgid ""
 "(in selecting a method for function '%s') '...' and related variables cannot "
@@ -116,7 +116,7 @@ msgstr ""
 "(under valg af metode for funktion '%s') '...' og relaterede variabler kan "
 "ikke bruges for metodeafsendelse"
 
-#: methods_list_dispatch.c:602
+#: methods_list_dispatch.c:604
 #, c-format
 msgid ""
 "(in selecting a method for function '%s') the 'environment' argument for "
@@ -125,8 +125,8 @@ msgstr ""
 "(under valg af metode for funktion '%s') 'miljø'-argumentet for afsendelse "
 "skal være et R-miljø; fik et objekt af klasse »%s«"
 
-#: methods_list_dispatch.c:616 methods_list_dispatch.c:628
-#: methods_list_dispatch.c:1017
+#: methods_list_dispatch.c:618 methods_list_dispatch.c:630
+#: methods_list_dispatch.c:1023
 #, c-format
 msgid ""
 "error in evaluating the argument '%s' in selecting a method for function "
@@ -135,49 +135,49 @@ msgstr ""
 "fejl under evaluering af argument '%s' under valg af metode for funktion "
 "'%s': %s"
 
-#: methods_list_dispatch.c:636
+#: methods_list_dispatch.c:638
 #, c-format
 msgid "no matching method for function '%s' (argument '%s', with class \"%s\")"
 msgstr ""
 "ingen matchende metode for funktion '%s' (argument '%s', med klasse »%s«)"
 
-#: methods_list_dispatch.c:643
+#: methods_list_dispatch.c:645
 #, c-format
 msgid ""
 "recursive use of function '%s' in method selection, with no default method"
 msgstr "rekursiv brug af funktion '%s' i metodevalg, uden en standardmetode"
 
-#: methods_list_dispatch.c:712
+#: methods_list_dispatch.c:716
 #, c-format
 msgid "error in evaluating a 'primitive' next method: %s"
 msgstr "fejl under evaluering af en 'primitive' next-metode: %s"
 
-#: methods_list_dispatch.c:810
+#: methods_list_dispatch.c:816
 #, c-format
 msgid "'%s' must be a single string (got a character vector of length %d)"
 msgstr "'%s' skal være en enkelt streng (fik en tegnvektor med længden %d)"
 
-#: methods_list_dispatch.c:814
+#: methods_list_dispatch.c:820
 #, c-format
 msgid "'%s' must be a non-empty string; got an empty string"
 msgstr "'%s' skal være en udfyldt streng; fik en tom streng"
 
-#: methods_list_dispatch.c:818
+#: methods_list_dispatch.c:824
 #, c-format
 msgid "'%s' must be a single string (got an object of class \"%s\")"
 msgstr "'%s' skal være en enkel streng (fik et objekt af klasse »%s«)"
 
-#: methods_list_dispatch.c:895
+#: methods_list_dispatch.c:901
 #, fuzzy
 msgid "class should be either a character-string name or a class definition"
 msgstr "Klasse skal enten være et tegn-streng navn eller en klassedefinition"
 
-#: methods_list_dispatch.c:975
+#: methods_list_dispatch.c:981
 #, fuzzy, c-format
 msgid "failed to get the generic for the primitive \"%s\""
 msgstr "Kunne ikke indhente den generiske for primitive »%s«"
 
-#: methods_list_dispatch.c:982
+#: methods_list_dispatch.c:988
 #, fuzzy, c-format
 msgid ""
 "expected a generic function or a primitive for dispatch, got an object of "

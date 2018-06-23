@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: parallel 3.4.0\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
+"Project-Id-Version: parallel 3.6.0\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,7 +10,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 
-msgid "invalid value of 'seed'"
+msgid "invalid value of %s"
 msgstr ""
 
 msgid "need at least one argument"
@@ -67,7 +67,13 @@ msgstr ""
 msgid "'mc.cores' must be >= 1"
 msgstr ""
 
+msgid "affinity.list and X must have the same length"
+msgstr ""
+
 msgid "%d function calls resulted in an error"
+msgstr ""
+
+msgid "'mc.preschedule' must be false if 'affinity.list' is used"
 msgstr ""
 
 msgid "all scheduled cores encountered errors in user code"

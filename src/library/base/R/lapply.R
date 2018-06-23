@@ -1,7 +1,7 @@
 #  File src/library/base/R/lapply.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -32,8 +32,7 @@ rapply <-
     function(object, f, classes = "ANY", deflt = NULL,
              how = c("unlist", "replace", "list"), ...)
 {
-    if(typeof(object) != "list")
-        stop("'object' must be a list")
+    ## 'object' is checked in C now
     how <- match.arg(how)
     res <- .Internal(rapply(object, f, classes, deflt, how))
     if(how == "unlist") unlist(res, recursive = TRUE) else res

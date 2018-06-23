@@ -53,7 +53,7 @@ length(x) <- value
   Package authors have written methods that return a result of length
   other than one (\CRANpkg{Formula}) and that return a vector of type
   \code{\link{double}} (\CRANpkg{Matrix}), even with non-integer values
-  (earlier versions of \CRANpkg{sets}). Where a single double value is
+  (earlier versions of \CRANpkg{sets}).  Where a single double value is
   returned that can be represented as an integer it is returned as a
   length-one integer vector.
 }

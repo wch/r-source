@@ -1,7 +1,7 @@
 #  File src/library/base/R/zzz.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -78,11 +78,10 @@ assign(".primUntrace", function(obj) NULL, envir = .ArgsEnv)
 assign(".subset", function(x, ...) NULL, envir = .ArgsEnv)
 assign(".subset2", function(x, ...) NULL, envir = .ArgsEnv)
 assign("UseMethod", function(generic, object) NULL, envir = .ArgsEnv)
-assign("as.call", function(x) NULL, envir = .ArgsEnv)
 assign("attr", function(x, which, exact = FALSE) NULL, envir = .ArgsEnv)
 assign("attr<-", function(x, which, value) NULL, envir = .ArgsEnv)
-assign("attributes", function(obj) NULL, envir = .ArgsEnv)
-assign("attributes<-", function(obj, value) NULL, envir = .ArgsEnv)
+assign("attributes", function(x) NULL, envir = .ArgsEnv)
+assign("attributes<-", function(x, value) NULL, envir = .ArgsEnv)
 assign("baseenv", function() NULL, envir = .ArgsEnv)
 assign("browser",
        function(text="", condition=NULL, expr = TRUE, skipCalls = 0L) NULL,
@@ -149,8 +148,9 @@ assign("untracemem", function(x) NULL, envir = .ArgsEnv)
 ## 2) .GenericArgsEnv : The generic .Primitives :
 
 .S3PrimitiveGenerics <-
-  c("anyNA", "as.character", "as.complex", "as.double", "as.environment",
-    "as.integer", "as.logical", "as.numeric", "as.raw",
+  c("anyNA", "as.character", "as.complex", "as.double",
+    "as.environment", "as.integer", "as.logical", "as.call",
+    "as.numeric", "as.raw",
     "c", "dim", "dim<-", "dimnames", "dimnames<-",
     "is.array", "is.finite",
     "is.infinite", "is.matrix", "is.na", "is.nan", "is.numeric",
@@ -256,6 +256,7 @@ assign("as.numeric", get("as.double", envir = .GenericArgsEnv),
 ## for computing the methods table and
 ##   tools:::.deparse_S3_methods_table_for_base()
 ## for obtaining the representation used.
+## Always sort with LC_COLLATE=C.
 .S3_methods_table <-
 matrix(c("!", "hexmode",
          "!", "octmode",
@@ -300,6 +301,7 @@ matrix(c("!", "hexmode",
          "[[", "data.frame",
          "[[", "factor",
          "[[", "numeric_version",
+         "[[<-", "POSIXlt",
          "[[<-", "data.frame",
          "[[<-", "factor",
          "[[<-", "numeric_version",
@@ -487,6 +489,10 @@ matrix(c("!", "hexmode",
          "kappa", "qr",
          "labels", "default",
          "length", "POSIXlt",
+         "length<-", "Date",
+         "length<-", "POSIXct",
+         "length<-", "POSIXlt",
+         "length<-", "difftime",
          "length<-", "factor",
          "levels", "default",
          "levels<-", "factor",
@@ -618,7 +624,6 @@ matrix(c("!", "hexmode",
          "xtfrm", "Date",
          "xtfrm", "POSIXct",
          "xtfrm", "POSIXlt",
-         "xtfrm", "Surv",
          "xtfrm", "default",
          "xtfrm", "difftime",
          "xtfrm", "factor",

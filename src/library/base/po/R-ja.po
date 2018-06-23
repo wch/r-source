@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
 "PO-Revision-Date: 2015-03-27 14:42+0900 \n"
 "Last-Translator: Masafumi  \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -98,11 +98,9 @@ msgstr " 'dim' の指定する配列が大きすぎます "
 msgid "incorrect value for 'MARGIN'"
 msgstr " 'MARGIN' の値が不正です "
 
-msgid "*** 'pos=1' is not possible; setting 'pos=2' for now."
+#, fuzzy
+msgid "'pos=1' is not possible and has been warned about for years"
 msgstr " *** 'pos=1' は不可能です。今は 'pos=2' と設定します "
-
-msgid "*** Note that 'pos=1' will give an error in the future"
-msgstr " *** 'pos=1' はいずれエラーを与えることを注意して下さい "
 
 msgid "file '%s' not found"
 msgstr " ファイル '%s' が見付かりません "
@@ -209,6 +207,10 @@ msgstr " 'breaks' と 'labels' の長さが異なります "
 msgid "invalid 'row.names' length"
 msgstr " 無効な 'row.names' 長です "
 
+#, fuzzy
+msgid "invalid 'make.names'"
+msgstr " 不当なパッケージ名 "
+
 msgid "duplicate 'row.names' are not allowed"
 msgstr " 重複した 'row.names' は許されません "
 
@@ -218,7 +220,8 @@ msgstr " 'row.names' に欠損値があってはなりません "
 msgid "invalid 'dimnames' given for data frame"
 msgstr " データフレームに無効な 'dimnames' が与えられました "
 
-msgid "cannot coerce class \"%s\" to a data.frame"
+#, fuzzy
+msgid "cannot coerce class %s to a data.frame"
 msgstr " クラス \"%s\" はデータフレームに強制変換できません "
 
 msgid ""
@@ -322,8 +325,12 @@ msgstr " 無効なリストの引数です。全ての変数は同じ長さを�
 msgid "<0 rows> (or 0-length row.names)"
 msgstr " <0 行> (または長さ 0 の row.names) "
 
-msgid "non-numeric variable in data frame:"
+#, fuzzy
+msgid "non-numeric variable(s) in data frame:"
 msgstr " 以下のデータフレーム中に数値でない変数があります: "
+
+msgid ","
+msgstr " , "
 
 msgid "%s only defined for equally-sized data frames"
 msgstr " %s は同じ大きさのデータフレームに対してだけ定義されています "
@@ -342,12 +349,6 @@ msgstr " 'origin' を指定しなければなりません "
 
 msgid "do not know how to convert '%s' to class %s"
 msgstr " '%s' からクラス %s へ変換は定義されていません "
-
-msgid "'%s' is not a \"date\" object"
-msgstr " '%s' は \"date\" オブジェクトではありません "
-
-msgid "'%s' is not a \"dates\" object"
-msgstr " '%s' は \"dates\" オブジェクトではありません "
 
 msgid "binary + is not defined for \"Date\" objects"
 msgstr " 二項演算 + は \"Date\" オブジェクトに対して定義されていません "
@@ -417,6 +418,9 @@ msgstr " 'origin' は長さ 1 でなければなりません "
 
 msgid "'lag' and 'differences' must be integers >= 1"
 msgstr " 'lag' そして 'differences' は 1 以上の整数でなければなりません "
+
+msgid "unable to deduce timezone name from"
+msgstr ""
 
 msgid "wrong class"
 msgstr " 間違ったクラスです "
@@ -642,6 +646,14 @@ msgstr " タイプ \"expression\" の 'value' の最初の要素だけを使い�
 msgid "class of 'x' was discarded"
 msgstr " クラス 'x' は捨てられました "
 
+#, fuzzy
+msgid "'flag' must be a string, i.e., of length 1"
+msgstr " 'arg' は長さ 1 でなければなりません "
+
+#, fuzzy
+msgid "'flag' should contain only characters from [0+- #'I]"
+msgstr " 'flag' は '0 + - #' だけを含むことができます "
+
 msgid "'mode' must be \"double\" (\"real\"), \"integer\" or \"character\""
 msgstr ""
 " 'mode' は \"double\" (\"real\") , \"integer\" または \"character\" でなけれ"
@@ -657,9 +669,6 @@ msgstr ""
 
 msgid "'digits' reduced to %d"
 msgstr " 'digits' は %d に減少しました "
-
-msgid "'flag' can contain only '0+- #'"
-msgstr " 'flag' は '0 + - #' だけを含むことができます "
 
 msgid "corrupt data frame: columns will be truncated or padded with NAs"
 msgstr ""
@@ -752,31 +761,6 @@ msgstr " パッケージ %s は %s に対して造られました "
 msgid "package %s is not installed for 'arch = %s'"
 msgstr " パッケージ %s は 'arch = %s' に対してインストールされていません "
 
-msgid ""
-"package %s has a license that you need to accept in an interactive session"
-msgstr ""
-" パッケージ %s を使うには対話的セッションでライセンスを受諾する必要がありま"
-"す "
-
-msgid "package %s has a license that you need to accept after viewing"
-msgstr " パッケージ %s を使うにはライセンスを確認して受諾する必要があります "
-
-#, fuzzy
-msgid "package %s has a license that you need to accept:"
-msgstr " パッケージ %s を使うにはライセンスを確認して受諾する必要があります "
-
-#, fuzzy
-msgid "according to the DESCRIPTION file it is"
-msgstr ""
-" パッケージ %s を使うにはライセンスを受諾する必要があります。以下をご確認くだ"
-"さい。: "
-
-msgid "%s"
-msgstr ""
-
-msgid "license for package %s not accepted"
-msgstr " パッケージ %s のライセンスは受諾されていません "
-
 msgid "Attaching package: %s"
 msgstr " 次のパッケージを付け加えます: %s "
 
@@ -798,10 +782,16 @@ msgstr " %s は有効なインストール済みパッケージではありま�
 msgid "%s not found on search path, using pos = 2"
 msgstr " %s は検索パス上には見つかりませんでした。pos = 2 を使用します "
 
-msgid "Package %s version %s cannot be unloaded"
+#, fuzzy
+msgid ""
+"Package %s version %s cannot be unloaded:\n"
+" %s"
 msgstr " パッケージ %s のバージョン %s はアンロードできません "
 
-msgid "package or namespace load failed for %s"
+#, fuzzy
+msgid ""
+"package or namespace load failed for %s%s:\n"
+" %s"
 msgstr " %s に対するパッケージもしくは名前空間のロードが失敗しました "
 
 msgid "package %s does not have a namespace and should be re-installed"
@@ -870,9 +860,10 @@ msgstr " 要求されたパッケージ %s をロード中です "
 msgid "none of the packages are loaded"
 msgstr " どのパッケージもロードされません "
 
+#, fuzzy
 msgid ""
-"package %s found more than once,\n"
-"using the one found in %s"
+"package %s found more than once, using the first from\n"
+"  %s"
 msgstr ""
 " パッケージ %s が複数見つかりました。 \n"
 " %s 中に見つかったものを使います "
@@ -957,9 +948,6 @@ msgstr ""
 
 msgid "may not have argument(s) named"
 msgstr ""
-
-msgid ","
-msgstr " , "
 
 msgid "'arg' must be NULL or a character vector"
 msgstr " 'arg' は、NULL かひとつの文字ベクトルでなければなりません "
@@ -1087,6 +1075,36 @@ msgstr " パッケージ %s は名前空間を持っていません "
 msgid "namespace %s %s is being loaded, but %s %s is required"
 msgstr " 名前空間 %s %s はロードされていますが、%s %s が要求されています "
 
+msgid ""
+"package %s has a license that you need to accept in an interactive session"
+msgstr ""
+" パッケージ %s を使うには対話的セッションでライセンスを受諾する必要がありま"
+"す "
+
+msgid "package %s has a license that you need to accept after viewing"
+msgstr " パッケージ %s を使うにはライセンスを確認して受諾する必要があります "
+
+#, fuzzy
+msgid "package %s has a license that you need to accept:"
+msgstr " パッケージ %s を使うにはライセンスを確認して受諾する必要があります "
+
+#, fuzzy
+msgid "according to the DESCRIPTION file it is"
+msgstr ""
+" パッケージ %s を使うにはライセンスを受諾する必要があります。以下をご確認くだ"
+"さい。: "
+
+msgid "%s"
+msgstr ""
+
+msgid "license for package %s not accepted"
+msgstr " パッケージ %s のライセンスは受諾されていません "
+
+msgid ""
+"package %s was installed by an R version with different internals; it needs "
+"to be reinstalled for use with this R version"
+msgstr ""
+
 msgid "unable to load R code in package %s"
 msgstr " パッケージ %s 中の R コードをロードできません "
 
@@ -1157,14 +1175,6 @@ msgstr ""
 #, fuzzy
 msgid "replacing previous import %s by %s when loading %s"
 msgstr " %2$s のロード中に、以前のインポート %1$s を置き換えています "
-
-msgid "No methods found in \"%s\" for requests: %s"
-msgstr " \"%s\" 中には要求に対するメソッドが見つかりません: %s "
-
-msgid "requested methods not found in environment/package %s: %s"
-msgstr ""
-" 要求された methods オブジェクトは環境もしくはパッケージ %s 中に見付かりませ"
-"ん: %s "
 
 #, fuzzy
 msgid ""
@@ -1302,8 +1312,9 @@ msgstr " 'scale' の長さは 'x' の列数に等しくなければなりませ�
 msgid "either specify 'nmax' or 'n', but not both."
 msgstr " 'nmax' か 'n' を指定して下さい。しかし両方はだめです "
 
-msgid "'from' cannot be NA, NaN or infinite"
-msgstr " 'from' はNA, NaN, infinite であってはなりません "
+#, fuzzy
+msgid "'from' must be a finite number"
+msgstr " 'from' は \"Date\" オブジェクトでなければなりません "
 
 msgid "argument 'length.out' must be of length 1"
 msgstr " 引数 'length.out' は長さ 1 でなければなりません "
@@ -1311,10 +1322,12 @@ msgstr " 引数 'length.out' は長さ 1 でなければなりません "
 msgid "first element used of 'length.out' argument"
 msgstr " 最初の要素は 引数 'length.out' として使われます "
 
-msgid "'to' cannot be NA, NaN or infinite"
-msgstr " 'to' はNA, NaN, infinite であってはなりません "
+#, fuzzy
+msgid "'to' must be a finite number"
+msgstr " 'to' は \"Date\" オブジェクトでなければなりません "
 
-msgid "invalid (to - from)/by in seq(.)"
+#, fuzzy
+msgid "invalid '(to - from)/by'"
 msgstr " seq(.) 中の (to - from)/by が不正です "
 
 msgid "wrong sign in 'by' argument"
@@ -1323,7 +1336,8 @@ msgstr " 'by' 引数中に誤った符号があります "
 msgid "'by' argument is much too small"
 msgstr " 'by' 引数がかなり小さすぎます "
 
-msgid "length must be non-negative number"
+#, fuzzy
+msgid "'length.out' must be a non-negative number"
 msgstr " 長さは非負の数値でなければなりません "
 
 msgid "too many arguments"
@@ -1428,6 +1442,10 @@ msgstr " 現在のディレクトリが未知なので 'chdir' できません "
 msgid "'chdir = TRUE' makes no sense for a connection"
 msgstr " 'chdir = TRUE' はコネクションに対しては意味がありません "
 
+#, fuzzy
+msgid "specify either 'file' or 'exprs' but not both"
+msgstr " 'nmax' か 'n' を指定して下さい。しかし両方はだめです "
+
 msgid "'%s' is not an existing file"
 msgstr " '%s' は既存のファイルではありません "
 
@@ -1441,17 +1459,27 @@ msgstr " 'x' と 'y' は同じ長さを持たなければなりません "
 msgid "additional arguments ignored in stop()"
 msgstr " stop() により追加の引数は無視されました "
 
+msgid "Must use 'exprs' or unnamed expressions, but not both"
+msgstr ""
+
+msgid ""
+"%s and %s are not equal:\n"
+"  %s"
+msgstr ""
+
 msgid "additional arguments ignored in warning()"
 msgstr " warning() 中の追加引数は無視されます "
+
+msgid ""
+"Calling 'structure(NULL, *)' is deprecated, as NULL cannot have attributes.\n"
+"  Consider 'structure(list(), *)' instead."
+msgstr ""
 
 msgid "incorrect value for 'x'"
 msgstr " 'x' に対する値が不正です "
 
 msgid "'x' and 'y' must have the same length"
 msgstr " 'x' と 'y' は同じ長さを持たなければなりません "
-
-msgid "incorrect values of 'indent' and 'width'"
-msgstr " 'indent' と 'width' に対する値が不正です "
 
 msgid "probably wrong encoding in names(.) of column"
 msgstr " おそらく列の names(.) 中に間違ったエンコーディングがあります "
@@ -1464,6 +1492,9 @@ msgstr " STATS は MARGIN に渡って正確にリサイクルされません "
 
 msgid "length(STATS) or dim(STATS) do not match dim(x)[MARGIN]"
 msgstr " length(STATS) または dim(STATS) は dim(x)[MARGIN] にマッチしません "
+
+msgid "'exclude' containing NA and 'useNA' != \"no\"' are a bit contradicting"
+msgstr ""
 
 msgid "nothing to tabulate"
 msgstr " 表にするものが何もありません "
@@ -1489,7 +1520,8 @@ msgstr " 'x' は配列ではありません "
 msgid "'bin' must be numeric or a factor"
 msgstr " 'bin' は数値または因子でなければなりません "
 
-msgid "invalid value of 'nbins'"
+#, fuzzy
+msgid "invalid value of %s"
 msgstr " 'nbins' の値が不正です "
 
 msgid "'INDEX' is of length zero"
@@ -1513,6 +1545,9 @@ msgstr " %s を取除きます "
 
 msgid "Registering 'evaluate' as low-level callback"
 msgstr " 'evaluate' は低水準のコールバックとして登録されます "
+
+msgid "Timing stopped at:"
+msgstr ""
 
 msgid "user"
 msgstr " ユーザ "
@@ -1547,6 +1582,13 @@ msgstr " %s は \"numeric_version\" オブジェクトに対しては定義さ�
 
 msgid "<0 elements>"
 msgstr " <0 要素> "
+
+#, fuzzy
+msgid "'tags' must be a character vector of the same length as 'x'"
+msgstr " 'input' は文字ベクトルまたは 'NULL' でなければなりません "
+
+msgid "Summary of (a total of %d) warning messages:"
+msgstr ""
 
 msgid "invalid 'digits'"
 msgstr " 無効な 'digits' です "
@@ -1734,6 +1776,20 @@ msgstr[0] ""
 " 名前空間 %s からメソッドをエクスポートする際に S4 総称的でない関数がみつかり"
 "ました: %s "
 
+#, fuzzy
+msgid "No methods found in package %s for request: %s when loading %s"
+msgid_plural "No methods found in package %s for requests: %s when loading %s"
+msgstr[0] " \"%s\" 中には要求に対するメソッドが見つかりません: %s "
+
+#, fuzzy
+msgid ""
+"requested method not found in environment/package %s: %s when loading %s"
+msgid_plural ""
+"requested methods not found in environment/package %s: %s when loading %s"
+msgstr[0] ""
+" 要求された methods オブジェクトは環境もしくはパッケージ %s 中に見付かりませ"
+"ん: %s "
+
 msgid "class %s is not exported by 'namespace:%s'"
 msgid_plural "classes %s are not exported by 'namespace:%s'"
 msgstr[0] " クラス %s は 'namespace:%s' によってエクスポートされていません "
@@ -1768,6 +1824,24 @@ msgid_plural ""
 "In %s :\n"
 " extra arguments %s will be disregarded"
 msgstr[0] " 余分な引数 %s は無視されます "
+
+#~ msgid "*** Note that 'pos=1' will give an error in the future"
+#~ msgstr " *** 'pos=1' はいずれエラーを与えることを注意して下さい "
+
+#~ msgid "'%s' is not a \"date\" object"
+#~ msgstr " '%s' は \"date\" オブジェクトではありません "
+
+#~ msgid "'%s' is not a \"dates\" object"
+#~ msgstr " '%s' は \"dates\" オブジェクトではありません "
+
+#~ msgid "'from' cannot be NA, NaN or infinite"
+#~ msgstr " 'from' はNA, NaN, infinite であってはなりません "
+
+#~ msgid "'to' cannot be NA, NaN or infinite"
+#~ msgstr " 'to' はNA, NaN, infinite であってはなりません "
+
+#~ msgid "incorrect values of 'indent' and 'width'"
+#~ msgstr " 'indent' と 'width' に対する値が不正です "
 
 #~ msgid "'vec' contains NAs"
 #~ msgstr " 'vec' は NA 値を含んでいます "

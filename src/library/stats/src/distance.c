@@ -123,7 +123,7 @@ static double R_canberra(double *x, int nr, int nc, int i1, int i2)
 		dev = diff/sum;
 		if(!ISNAN(dev) ||
 		   (!R_FINITE(diff) && diff == sum &&
-		    /* use Inf = lim x -> oo */ (int) (dev = 1.))) {
+		    /* use Inf = lim x -> oo */ (dev = 1., TRUE))) {
 		    dist += dev;
 		    count++;
 		}

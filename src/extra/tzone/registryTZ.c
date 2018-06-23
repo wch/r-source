@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2007-2015   The R Core Team
+ *  Copyright (C) 2007-2018   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -303,7 +303,7 @@ const static struct {
     { L"Russia Time Zone 4", "Asia/Yekaterinburg" },
     { L"Russia Time Zone 5", "Asia/Novosibirsk" },
     { L"Russia Time Zone 6", "Asia/Krasnoyarsk" },
-    { L"Russia Time Zone 7", "Asia/Irtutsk" },
+    { L"Russia Time Zone 7", "Asia/Irkutsk" },
     { L"Russia Time Zone 8", "Asia/Yakutsk" },
     { L"Russia Time Zone 9", "Asia/Magadan" },
     { L"Russia Time Zone 10", "Asia/Srednekolymsk" },

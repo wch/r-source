@@ -31,8 +31,13 @@ is <- function(object, class2)
     class1Def <- getClassDef(class1)
     if(is.null(class1Def)) # an unregistered S3 class
         return(inherits(object, class2))
-    if(is.character(class2))
-        class2Def <- getClassDef(class2, .classDefEnv(class1Def))
+    if(is.character(class2)) {
+        package <- packageSlot(class2)
+        if (is.null(package)) {
+            package <- getPackageName(topenv(parent.frame()))
+        }
+        class2Def <- getClassDef(class2, .classDefEnv(class1Def), package)
+    }
     else {
         class2Def <- class2
         class2 <- class2Def@ className

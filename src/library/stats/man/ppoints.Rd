@@ -33,6 +33,10 @@ ppoints(n, a = if(n <= 10) 3/8 else 1/2)
   same name in Becker \emph{et al} (1988), and appears to have been
   motivated by results from Blom (1958) on approximations to expect normal
   order statistics (see also \code{\link{quantile}}).
+
+  The probability points for the continuous sample quantile types 5 to 9
+  (see \code{\link{quantile}}) can be obtained by taking \code{a} as,
+  respectively, 1/2, 0, 1, 1/3, and 3/8.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

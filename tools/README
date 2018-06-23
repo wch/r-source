@@ -6,7 +6,7 @@ The files are as follows.
   config.guess
   config.sub
 	auxiliary scripts for configure.
-	From http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD etc
+	From https://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD etc
 
   config.rpath
 	from gettext 1.18.1.1 sources.  Modified here to allow for FreeBSD 10.x.

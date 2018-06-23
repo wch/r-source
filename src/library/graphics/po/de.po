@@ -4,10 +4,10 @@
 # Detlef Steuer <steuer@hsu-hh.de>, 2005-2014.
 msgid ""
 msgstr ""
-"Project-Id-Version: R-3.1.0\n"
+"Project-Id-Version: R-3.4.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-01 10:28-0700\n"
-"PO-Revision-Date: 2013-02-28 16:20+0100\n"
+"POT-Creation-Date: 2018-03-30 07:33-0700\n"
+"PO-Revision-Date: 2018-04-05 09:13+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
 "Language: de\n"
@@ -21,9 +21,8 @@ msgid "no base graphics system is registered"
 msgstr "kein Basisgrafiksystem registriert"
 
 #: base.c:310
-#, fuzzy
 msgid "Incompatible graphics state"
-msgstr "ungültiger Grafikzustand"
+msgstr "inkompatibler Grafikzustand"
 
 #: base.c:385 base.c:392 base.c:400
 msgid "the base graphics system is not registered"
@@ -81,33 +80,33 @@ msgstr "plot.new wurde noch nicht aufgerufen"
 msgid "invalid graphics state"
 msgstr "ungültiger Grafikzustand"
 
-#: graphics.c:2555
+#: graphics.c:2564
 msgid "graphics device closed during call to locator or identify"
 msgstr ""
 "Grafikdevice während eines Aufrufs von locator oder identify geschlossen"
 
-#: graphics.c:2604
+#: graphics.c:2614
 msgid "No graphics device is active"
 msgstr "kein aktives Grafikdevice"
 
-#: graphics.c:3063
+#: graphics.c:3073
 msgid "zero-length arrow is of indeterminate angle and so skipped"
 msgstr "Pfeil ohne Länge hat keine Richtung und wird ignoriert"
 
-#: graphics.c:3144
+#: graphics.c:3154
 #, c-format
 msgid "invalid par(\"bty\") = '%c'; no box() drawn"
 msgstr "ungültiger par(\"bty\") = '%c': keine box() gezeichnet"
 
-#: graphics.c:3161
+#: graphics.c:3171
 msgid "invalid argument to GBox"
 msgstr "ungültiges Argument für GBox"
 
-#: graphics.c:3406
+#: graphics.c:3416
 msgid "metric information not available for this device"
 msgstr "Metrikinformation für dieses Device nicht verfügbar"
 
-#: par-common.c:143
+#: par-common.c:146
 msgid "graphical parameter 'family' has a maximum length of 200 bytes"
 msgstr "Grafikparameter 'family' hat eine maximale Länge von 200 bytes"
 
@@ -361,8 +360,8 @@ msgstr "'a' und 'b' müssen endlich sein"
 
 #: plot.c:2925 plot.c:4051 plot.c:4055 plot.c:4058 plot.c:4078 plot.c:4082
 #: plot.c:4085 plot3d.c:1085 plot3d.c:1089 plot3d.c:1094 plot3d.c:1098
-#: plot3d.c:1102 plot3d.c:1106 stem.c:158 stem.c:159 stem.c:161 stem.c:162
-#: stem.c:208 stem.c:209
+#: plot3d.c:1102 plot3d.c:1106 stem.c:153 stem.c:154 stem.c:156 stem.c:157
+#: stem.c:203 stem.c:204
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "ungültiges '%s' Argument"
@@ -566,7 +565,7 @@ msgstr "alle z Werte sind gleich"
 msgid "all z values are NA"
 msgstr "alle z Werte sind NA"
 
-#: stem.c:155
+#: stem.c:150
 #, c-format
 msgid "long vector '%s' is not supported"
 msgstr "langer Vektor '%s' wird nicht unterstützt"

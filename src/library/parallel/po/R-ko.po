@@ -1,34 +1,25 @@
 # Korean translation for R parallel package
-# ./parallel/po/R-ko.po
-#
-# Copyright (C) 1995-2016 The R Core Team
+# Copyright (C) 1995-2018 The R Core Team
 #
 # This file is distributed under the same license as the R parallel package.
-# Maintained by Chel Hee Lee <chl948@mail.usask.ca>, 2008-2016.
-# Contact: Chel Hee Lee <gnustats@gmail.com>
-#
-# Notes:
-# Under development (unstable) starting from 11-APR-2016 for R-3.3.1 - QC: in progress
-# Freezed on 10-APR-2016 for R-3.3.0 - QC: PASS
-# Freezed on 30-MAR-2015 for R-3.2.0 - QC: PASS
-# Freezed on 06-FEB-2015 for R-3.1.3 - QC: PASS
+# Maintained by Chel Hee Lee <gnustats@gmail.com>, 2008-2018.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R-3.3.0\n"
+"Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-09-21 07:12\n"
-"PO-Revision-Date: 2016-04-11 13:08-0600\n"
-"Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
-"Language-Team: Chel Hee Lee <chl948@mail.usask.ca>\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
+"PO-Revision-Date: 2018-04-09 12:09-0600\n"
+"Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
+"Language-Team: \n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-msgid "invalid value of 'seed'"
-msgstr "'seed'값이 올바르지 않습니다."
+msgid "invalid value of %s"
+msgstr ""
 
 msgid "need at least one argument"
 msgstr "최소한 하나 이상의 인자가 필요합니다."
@@ -84,8 +75,14 @@ msgstr "'what'은 반드시 문자 또는 raw 벡터이어야 합니다"
 msgid "'mc.cores' must be >= 1"
 msgstr "'mc.cores'는 1보다 크거나 같아야 합니다."
 
+msgid "affinity.list and X must have the same length"
+msgstr ""
+
 msgid "%d function calls resulted in an error"
 msgstr "%d번의 함수 호출결과 에러가 발생했습니다"
+
+msgid "'mc.preschedule' must be false if 'affinity.list' is used"
+msgstr ""
 
 msgid "all scheduled cores encountered errors in user code"
 msgstr "모든 예약된 코어들은 사용자코드내 에러를 접했습니다"
@@ -119,5 +116,3 @@ msgid_plural ""
 "scheduled cores %s encountered errors in user code, all values of the jobs "
 "will be affected"
 msgstr[0] ""
-"예약된 코어 %s는 사용자코드 내의 에러를 만났으므로, 작업의 모든 값들이 영향"
-"을 받게 될 것입니다"

@@ -3,7 +3,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2016  The R Core Team
+ *  Copyright (C) 1997--2018  The R Core Team
  *  Copyright (C) 2010 Duncan Murdoch
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -541,7 +541,7 @@ static int char_getc(void)
 static
 SEXP R_ParseLatex(SEXP text, ParseStatus *status, SEXP srcfile)
 {
-    nextchar_parse = CHAR(STRING_ELT(text, 0));
+    nextchar_parse = translateCharUTF8(STRING_ELT(text, 0));
     ptr_getc = char_getc;
     return ParseLatex(status, srcfile);
 }

@@ -368,10 +368,10 @@ SEXP attribute_hidden do_sort(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 Rboolean fastpass_sortcheck(SEXP x, int wanted) {
-    int sorted = UNKNOWN_SORTEDNESS;
     if(!KNOWN_SORTED(wanted)) 
 	return FALSE;
 
+    int sorted = UNKNOWN_SORTEDNESS;
     Rboolean noNA, done = FALSE;
 
     switch(TYPEOF(x)) {
@@ -400,14 +400,30 @@ Rboolean fastpass_sortcheck(SEXP x, int wanted) {
     return done;
 }
 
+static int makeSortEnum(int decr, int nalast) {
+    
+    /* passing decr = NA_INTEGER indicates UNKNOWN_SORTEDNESS. */
+    if (decr == NA_INTEGER)
+	return UNKNOWN_SORTEDNESS;
+    
+    if (nalast == NA_INTEGER)
+	nalast = 1; //  they were/will be removed so we say they are "last"
 
-SEXP attribute_hidden do_sorted_fpass(SEXP call, SEXP op, SEXP args, SEXP rho) {
-    int wanted; 
+    if (decr)
+	return nalast ? SORTED_DECR : SORTED_DECR_NA_1ST;
+    else /* increasing */
+	return nalast ? SORTED_INCR : SORTED_INCR_NA_1ST;
+}
 
+/* .Internal(sorted_fpass(x, decr, nalast)) */
+SEXP attribute_hidden do_sorted_fpass(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
     checkArity(op, args);
 
-    wanted = asInteger(CADR(args));
-    SEXP x = PROTECT(CAR(args)); 
+    int decr = asInteger(CADR(args)); 
+    int nalast = asInteger(CADDR(args)); 
+    int wanted = makeSortEnum(decr, nalast);
+    SEXP x = PROTECT(CAR(args));
     Rboolean wassorted = fastpass_sortcheck(x, wanted);
     UNPROTECT(1);
     return ScalarLogical(wassorted);

@@ -1,26 +1,17 @@
 # Korean translation for R graphics package
-# ./graphics/po/R-ko.po
-#
-# Copyright (C) 1995-2016 The R Core Team
+# Copyright (C) 1995-2018 The R Core Team
 #
 # This file is distributed under the same license as the R graphics package.
-# Maintained by Chel Hee Lee <chl948@mail.usask.ca>, 2008-2016.
-# Contact: Chel Hee Lee <gnustats@gmail.com>
-#
-# Notes:
-# Under development (unstable) starting from 11-APR-2016 for R-3.3.1 - QC: in progress
-# Freezed on 10-APR-2016 for R-3.3.0 - QC: PASS
-# Freezed on 30-MAR-2015 for R-3.2.0 - QC: PASS
-# Freezed on 06-FEB-2015 for R-3.1.3 - QC: PASS
+# Maintained by Chel Hee Lee <gnustats@gmail.com>, 2008-2018.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R-3.3.0\n"
+"Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
-"PO-Revision-Date: 2016-04-11 13:08-0600\n"
-"Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
-"Language-Team: Chel Hee Lee <chl948@mail.usask.ca>\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
+"PO-Revision-Date: 2018-04-09 12:06-0600\n"
+"Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
+"Language-Team: \n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -38,6 +29,11 @@ msgstr "'a'와 'b'가 'coef'에 의하여 덮어씌어졌습니다"
 
 msgid "one of 'x1' and 'y1' must be given"
 msgstr "'x1'와 'y1' 중 반드시 하나가 주어져야 합니다"
+
+msgid ""
+"'length', 'angle', or 'code' greater than length 1; values after the first "
+"are ignored"
+msgstr ""
 
 msgid "'x' must be a 2-d contingency table"
 msgstr "'x'는 반드시 2차원 분할표이어야 합니다"
@@ -123,6 +119,9 @@ msgstr "'x'와 'y'의 값은 증가해야만 합니다"
 
 msgid "no proper 'z' matrix specified"
 msgstr "적합한 'z' 행렬이 지정되지 않았습니다"
+
+msgid "'labels' is length zero.  Use 'drawlabels = FALSE' to suppress labels."
+msgstr ""
 
 msgid "invalid conditioning formula"
 msgstr "유효하지 않은 conditioning formula입니다"
@@ -213,6 +212,9 @@ msgstr "알수없는 'breaks' 알고리즘입니다"
 msgid "invalid number of 'breaks'"
 msgstr "유효하지 않은 'breaks'의 개수입니다"
 
+msgid "'breaks = %g' is too large and set to 1e6"
+msgstr ""
+
 msgid "hist.default: pretty() error, breaks=%s"
 msgstr "hist.default: pretty() 에러, breaks=%s"
 
@@ -230,8 +232,8 @@ msgstr "'probability'은 '!freq'의 alias이지만, 이 둘은 다릅니다"
 
 msgid "some 'x' not counted; maybe 'breaks' do not span range of 'x'"
 msgstr ""
-"일부 'x'가 세어지지 않았습니다; 아마도 'breaks'가 'x'의 범위를 모두 포함하지 "
-"않은 것 같습니다"
+"일부 'x'가 세어지지 않았습니다; 아마도 'breaks'가 'x'의 범위를 모두 포함하"
+"지 않은 것 같습니다"
 
 msgid "the AREAS in the plot are wrong -- rather use 'freq = FALSE'"
 msgstr "플랏내의 AREAS가 잘못되었으므로 'freq = FALSE'를 사용합니다"
@@ -460,13 +462,13 @@ msgid "exactly one symbol type must be specified"
 msgstr "반드시 하나의 심볼유형이 지정되어져야 합니다"
 
 msgid "x log scale:  xinch() is nonsense"
-msgstr "x log scale: xinch()는 넌센스입니다"
+msgstr "x log scale: xinch()는 아무런 의미가 없습니다."
 
 msgid "y log scale:  yinch() is nonsense"
-msgstr "y log scale:  yinch()는 넌센스입니다"
+msgstr "y log scale:  yinch()는 아무런 의미가 없습니다."
 
 msgid "log scale:  xyinch() is nonsense"
-msgstr "log scale: xyinch()는 넌센스입니다"
+msgstr "log scale: xyinch()는 아무런 의미가 없습니다."
 
 msgid "Outlier (%s) in boxplot %d is not drawn"
 msgid_plural "Outliers (%s) in boxplot %d are not drawn"
@@ -475,7 +477,3 @@ msgstr[0] "박스플랏 %2$d내에 이상값 (%1$s)가 그려지지 않았습니
 msgid "argument %s is not made use of"
 msgid_plural "arguments %s are not made use of"
 msgstr[0] ""
-
-#~ msgid "extra argument %s will be disregarded"
-#~ msgid_plural "extra arguments %s will be disregarded"
-#~ msgstr[0] "추가적인 인자들 %s은 무시되어질 것입니다"

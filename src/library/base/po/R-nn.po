@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
 "PO-Revision-Date: 2012-09-28 22:18+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -104,11 +104,9 @@ msgstr "«dim» definerer for stort array-objekt"
 msgid "incorrect value for 'MARGIN'"
 msgstr "ugyldig verdi av «MARGIN»"
 
-msgid "*** 'pos=1' is not possible; setting 'pos=2' for now."
+#, fuzzy
+msgid "'pos=1' is not possible and has been warned about for years"
 msgstr "*** «pos = 1» er ikkje mogleg – set «pos = 2»."
-
-msgid "*** Note that 'pos=1' will give an error in the future"
-msgstr "*** Merk at «pos = 1» vil gje feilmelding i framtida."
 
 msgid "file '%s' not found"
 msgstr "fann ikkje fila «%s»"
@@ -217,6 +215,10 @@ msgstr ""
 msgid "invalid 'row.names' length"
 msgstr "ugyldig «row.names»-lengd"
 
+#, fuzzy
+msgid "invalid 'make.names'"
+msgstr "ugyldig pakkenamn"
+
 msgid "duplicate 'row.names' are not allowed"
 msgstr "duplikatverdiar i «row.names» er ikkje tillatne"
 
@@ -227,7 +229,7 @@ msgid "invalid 'dimnames' given for data frame"
 msgstr "ugyldig «dimnames» oppgjeve for dataramme"
 
 #, fuzzy
-msgid "cannot coerce class \"%s\" to a data.frame"
+msgid "cannot coerce class %s to a data.frame"
 msgstr "kan ikkje gjera klassen «%s» om til ei dataramme"
 
 msgid ""
@@ -338,8 +340,12 @@ msgstr "ugyldig listeargument: alle variablar må vera like lange"
 msgid "<0 rows> (or 0-length row.names)"
 msgstr "<0 rader> (eller row.names av lengd null)"
 
-msgid "non-numeric variable in data frame:"
+#, fuzzy
+msgid "non-numeric variable(s) in data frame:"
 msgstr "ikkje numerisk variabel i dataramme:"
+
+msgid ","
+msgstr ","
 
 #, fuzzy
 msgid "%s only defined for equally-sized data frames"
@@ -360,12 +366,6 @@ msgstr "må oppgje «origin»"
 #, fuzzy
 msgid "do not know how to convert '%s' to class %s"
 msgstr "kan ikkje konvertera «%s» til klassen «Date»"
-
-msgid "'%s' is not a \"date\" object"
-msgstr "«%s» er ikkje eit «date»-objekt"
-
-msgid "'%s' is not a \"dates\" object"
-msgstr "«%s» er ikkje eit «dates»-objekt"
 
 #, fuzzy
 msgid "binary + is not defined for \"Date\" objects"
@@ -441,6 +441,9 @@ msgstr "«origin» må ha lengd 1"
 
 msgid "'lag' and 'differences' must be integers >= 1"
 msgstr "«lag» og «differences» må vera heiltal større eller lik 1"
+
+msgid "unable to deduce timezone name from"
+msgstr ""
 
 msgid "wrong class"
 msgstr "feil klasse"
@@ -675,6 +678,14 @@ msgstr "brukar første element av «value» i uttrykket"
 msgid "class of 'x' was discarded"
 msgstr ""
 
+#, fuzzy
+msgid "'flag' must be a string, i.e., of length 1"
+msgstr "«arg» må ha eitt element"
+
+#, fuzzy
+msgid "'flag' should contain only characters from [0+- #'I]"
+msgstr "«flag» kan berre innehalda «0+- #»"
+
 msgid "'mode' must be \"double\" (\"real\"), \"integer\" or \"character\""
 msgstr "«mode» må vera «double» («real»), «integer» eller «character»"
 
@@ -687,9 +698,6 @@ msgstr "«format» må vera éin av «f», «e», «E», «g», «G», «fg» el
 #, fuzzy
 msgid "'digits' reduced to %d"
 msgstr "«digits» redusert til"
-
-msgid "'flag' can contain only '0+- #'"
-msgstr "«flag» kan berre innehalda «0+- #»"
 
 msgid "corrupt data frame: columns will be truncated or padded with NAs"
 msgstr "ugyldig dataramme: kolonnar vert trunkerte eller fylde med NA-verdiar"
@@ -783,31 +791,6 @@ msgstr "pakken %s vart bygd for %s"
 msgid "package %s is not installed for 'arch = %s'"
 msgstr "pakken %s er ikkje installert for «arch = %s»"
 
-msgid ""
-"package %s has a license that you need to accept in an interactive session"
-msgstr "pakken %s har lisensvilkår som du må godta i ei interaktiv økt"
-
-#, fuzzy
-msgid "package %s has a license that you need to accept after viewing"
-msgstr "Pakken %s har lisensvilkår som du må godta etter at du har lese"
-
-#, fuzzy
-msgid "package %s has a license that you need to accept:"
-msgstr "Pakken %s har lisensvilkår som du må godta etter at du har lese"
-
-#, fuzzy
-msgid "according to the DESCRIPTION file it is"
-msgstr ""
-"Pakken %s har lisensvilkår som du må godta:\n"
-"Ifølgje DESCRIPTION-fila er vilkåra"
-
-msgid "%s"
-msgstr ""
-
-#, fuzzy
-msgid "license for package %s not accepted"
-msgstr "Lisensvilkåra for pakken %s ikkje godtekne"
-
 msgid "Attaching package: %s"
 msgstr "Koplar til pakke: %s"
 
@@ -830,11 +813,15 @@ msgid "%s not found on search path, using pos = 2"
 msgstr "fann ikkje «%s» i søkjestigen – brukar «pos = 2»"
 
 #, fuzzy
-msgid "Package %s version %s cannot be unloaded"
+msgid ""
+"Package %s version %s cannot be unloaded:\n"
+" %s"
 msgstr "pakken «%s» er ikkje lasta"
 
 #, fuzzy
-msgid "package or namespace load failed for %s"
+msgid ""
+"package or namespace load failed for %s%s:\n"
+" %s"
 msgstr "feil ved lasting av pakke/namnerom for «%s»"
 
 #, fuzzy
@@ -899,9 +886,10 @@ msgstr "Lastar nødvendig pakke: %s"
 msgid "none of the packages are loaded"
 msgstr "ingen av pakkane er lasta"
 
+#, fuzzy
 msgid ""
-"package %s found more than once,\n"
-"using the one found in %s"
+"package %s found more than once, using the first from\n"
+"  %s"
 msgstr ""
 "fann pakken «%s» meir enn éin gong –\n"
 "\n"
@@ -988,9 +976,6 @@ msgstr ""
 
 msgid "may not have argument(s) named"
 msgstr ""
-
-msgid ","
-msgstr ","
 
 msgid "'arg' must be NULL or a character vector"
 msgstr "«arg» må vera NULL eller ein teiknvektor"
@@ -1117,6 +1102,36 @@ msgstr "pakken «%s» har ikkje noko namnerom"
 msgid "namespace %s %s is being loaded, but %s %s is required"
 msgstr "pakken «%s %s» er lasta, men «%s %s» trengst av «%s»"
 
+msgid ""
+"package %s has a license that you need to accept in an interactive session"
+msgstr "pakken %s har lisensvilkår som du må godta i ei interaktiv økt"
+
+#, fuzzy
+msgid "package %s has a license that you need to accept after viewing"
+msgstr "Pakken %s har lisensvilkår som du må godta etter at du har lese"
+
+#, fuzzy
+msgid "package %s has a license that you need to accept:"
+msgstr "Pakken %s har lisensvilkår som du må godta etter at du har lese"
+
+#, fuzzy
+msgid "according to the DESCRIPTION file it is"
+msgstr ""
+"Pakken %s har lisensvilkår som du må godta:\n"
+"Ifølgje DESCRIPTION-fila er vilkåra"
+
+msgid "%s"
+msgstr ""
+
+#, fuzzy
+msgid "license for package %s not accepted"
+msgstr "Lisensvilkåra for pakken %s ikkje godtekne"
+
+msgid ""
+"package %s was installed by an R version with different internals; it needs "
+"to be reinstalled for use with this R version"
+msgstr ""
+
 msgid "unable to load R code in package %s"
 msgstr "klarte ikkje lasta R-kode i pakken «%s»"
 
@@ -1191,12 +1206,6 @@ msgstr ""
 #, fuzzy
 msgid "replacing previous import %s by %s when loading %s"
 msgstr "byt ut førre import «%s» ved lasting av «%s»"
-
-msgid "No methods found in \"%s\" for requests: %s"
-msgstr "Fann ingen metodar i «%s» for førespurnader: %s"
-
-msgid "requested methods not found in environment/package %s: %s"
-msgstr "fann ikkje førespurde metodar i omgjevnaden/pakken «%s»: %s"
 
 #, fuzzy
 msgid ""
@@ -1339,8 +1348,9 @@ msgstr "lengda av «scale» må vera lik talet på kolonnar til «x»"
 msgid "either specify 'nmax' or 'n', but not both."
 msgstr "oppgje «nmax» eller «n», men ikkje begge"
 
-msgid "'from' cannot be NA, NaN or infinite"
-msgstr ""
+#, fuzzy
+msgid "'from' must be a finite number"
+msgstr "«from» må vera eit «Date»-objekt"
 
 msgid "argument 'length.out' must be of length 1"
 msgstr "argumentet «length.out» må ha lengd 1"
@@ -1348,10 +1358,12 @@ msgstr "argumentet «length.out» må ha lengd 1"
 msgid "first element used of 'length.out' argument"
 msgstr "det første element i «length.out» vert brukt"
 
-msgid "'to' cannot be NA, NaN or infinite"
-msgstr ""
+#, fuzzy
+msgid "'to' must be a finite number"
+msgstr "«to» må vera eit «Date»-objekt"
 
-msgid "invalid (to - from)/by in seq(.)"
+#, fuzzy
+msgid "invalid '(to - from)/by'"
 msgstr "ugyldig (to - from)/by i seq(.)"
 
 msgid "wrong sign in 'by' argument"
@@ -1360,7 +1372,8 @@ msgstr "feil forteikn i «by»-argument"
 msgid "'by' argument is much too small"
 msgstr "«by»-argumentet er for lite"
 
-msgid "length must be non-negative number"
+#, fuzzy
+msgid "'length.out' must be a non-negative number"
 msgstr "lengda må vera eit ikkje-negativt tal"
 
 msgid "too many arguments"
@@ -1463,6 +1476,10 @@ msgstr "kan ikkje køyra «chdir» sidan gjeldande mappe er ukjend"
 msgid "'chdir = TRUE' makes no sense for a connection"
 msgstr "«chdir = TRUE» gjev ikkje meining for eit samband"
 
+#, fuzzy
+msgid "specify either 'file' or 'exprs' but not both"
+msgstr "oppgje «nmax» eller «n», men ikkje begge"
+
 msgid "'%s' is not an existing file"
 msgstr "«%s» er ikkje ei fil som finst"
 
@@ -1477,17 +1494,27 @@ msgstr "«x» og «y» må ha same lengd"
 msgid "additional arguments ignored in stop()"
 msgstr "fleire argument ignorerte i stop()"
 
+msgid "Must use 'exprs' or unnamed expressions, but not both"
+msgstr ""
+
+msgid ""
+"%s and %s are not equal:\n"
+"  %s"
+msgstr ""
+
 msgid "additional arguments ignored in warning()"
 msgstr "fleire argument ignorerte i warning()"
+
+msgid ""
+"Calling 'structure(NULL, *)' is deprecated, as NULL cannot have attributes.\n"
+"  Consider 'structure(list(), *)' instead."
+msgstr ""
 
 msgid "incorrect value for 'x'"
 msgstr "ugyldig verdi for «x»"
 
 msgid "'x' and 'y' must have the same length"
 msgstr "«x» og «y» må ha same lengd"
-
-msgid "incorrect values of 'indent' and 'width'"
-msgstr "ugyldige verdiar til «indent» og «width»"
 
 msgid "probably wrong encoding in names(.) of column"
 msgstr "truleg feil teiknkoding for names(.) til kolonne"
@@ -1500,6 +1527,9 @@ msgstr "STATS kan ikkje resirkulerast fullstendig over MARGIN"
 
 msgid "length(STATS) or dim(STATS) do not match dim(x)[MARGIN]"
 msgstr "length(STATS) eller dim(STATS) er ikkje i samsvar med dim(x)[MARGIN]"
+
+msgid "'exclude' containing NA and 'useNA' != \"no\"' are a bit contradicting"
+msgstr ""
 
 msgid "nothing to tabulate"
 msgstr "ingenting å tabulera"
@@ -1529,7 +1559,7 @@ msgid "'bin' must be numeric or a factor"
 msgstr "«bin» må vera numerisk eller ein faktor"
 
 #, fuzzy
-msgid "invalid value of 'nbins'"
+msgid "invalid value of %s"
 msgstr "ugyldig verdi for nbins"
 
 msgid "'INDEX' is of length zero"
@@ -1555,6 +1585,9 @@ msgstr "Fjernar"
 #, fuzzy
 msgid "Registering 'evaluate' as low-level callback"
 msgstr "Registrerer «evaluate» som lågnivå-callback"
+
+msgid "Timing stopped at:"
+msgstr ""
 
 msgid "user"
 msgstr "brukar"
@@ -1591,6 +1624,13 @@ msgstr "«%s» er ikkje definert for «numeric_version»-objekt"
 
 msgid "<0 elements>"
 msgstr "<0 element>"
+
+#, fuzzy
+msgid "'tags' must be a character vector of the same length as 'x'"
+msgstr "«input» må vera ein teiknvektor eller «NULL»"
+
+msgid "Summary of (a total of %d) warning messages:"
+msgstr ""
 
 msgid "invalid 'digits'"
 msgstr "ugyldig «digits»-verdi"
@@ -1806,6 +1846,20 @@ msgstr[1] ""
 "Fann funksjonar som ikkje er S4-generiske ved eksportering av metodar frå "
 "namnerommet «%s»: %s"
 
+#, fuzzy
+msgid "No methods found in package %s for request: %s when loading %s"
+msgid_plural "No methods found in package %s for requests: %s when loading %s"
+msgstr[0] "Fann ingen metodar i «%s» for førespurnader: %s"
+msgstr[1] "Fann ingen metodar i «%s» for førespurnader: %s"
+
+#, fuzzy
+msgid ""
+"requested method not found in environment/package %s: %s when loading %s"
+msgid_plural ""
+"requested methods not found in environment/package %s: %s when loading %s"
+msgstr[0] "fann ikkje førespurde metodar i omgjevnaden/pakken «%s»: %s"
+msgstr[1] "fann ikkje førespurde metodar i omgjevnaden/pakken «%s»: %s"
+
 msgid "class %s is not exported by 'namespace:%s'"
 msgid_plural "classes %s are not exported by 'namespace:%s'"
 msgstr[0] "klassen «%s» er ikkje eksportert av «namespace:%s»"
@@ -1846,6 +1900,18 @@ msgid_plural ""
 " extra arguments %s will be disregarded"
 msgstr[0] "ekstraargument(a) «%s» vert ikkje brukt(e)"
 msgstr[1] "ekstraargument(a) «%s» vert ikkje brukt(e)"
+
+#~ msgid "*** Note that 'pos=1' will give an error in the future"
+#~ msgstr "*** Merk at «pos = 1» vil gje feilmelding i framtida."
+
+#~ msgid "'%s' is not a \"date\" object"
+#~ msgstr "«%s» er ikkje eit «date»-objekt"
+
+#~ msgid "'%s' is not a \"dates\" object"
+#~ msgstr "«%s» er ikkje eit «dates»-objekt"
+
+#~ msgid "incorrect values of 'indent' and 'width'"
+#~ msgstr "ugyldige verdiar til «indent» og «width»"
 
 #~ msgid "'vec' contains NAs"
 #~ msgstr "«vec» inneheld NA-verdiar"

@@ -1,6 +1,6 @@
 % File src/library/datasets/man/mtcars.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{mtcars}
@@ -15,7 +15,7 @@
 }
 \usage{mtcars}
 \format{
-  A data frame with 32 observations on 11 variables.
+  A data frame with 32 observations on 11 (numeric) variables.
   \tabular{rll}{
     [, 1] \tab mpg  \tab Miles/(US) gallon \cr
     [, 2] \tab cyl  \tab Number of cylinders \cr
@@ -24,7 +24,7 @@
     [, 5] \tab drat \tab Rear axle ratio \cr
     [, 6] \tab wt   \tab Weight (1000 lbs) \cr
     [, 7] \tab qsec \tab 1/4 mile time \cr
-    [, 8] \tab vs   \tab V/S \cr
+    [, 8] \tab vs   \tab Engine (0 = V-shaped, 1 = straight) \cr
     [, 9] \tab am   \tab Transmission (0 = automatic, 1 = manual) \cr
     [,10] \tab gear \tab Number of forward gears \cr
     [,11] \tab carb \tab Number of carburetors
@@ -37,8 +37,17 @@
 }
 \examples{
 require(graphics)
-pairs(mtcars, main = "mtcars data")
+pairs(mtcars, main = "mtcars data", gap = 1/4)
 coplot(mpg ~ disp | as.factor(cyl), data = mtcars,
        panel = panel.smooth, rows = 1)
+## possibly more meaningful, e.g., for summary() or bivariate plots:
+mtcars2 <- within(mtcars, {
+   vs <- factor(vs, labels = c("V", "S"))
+   am <- factor(am, labels = c("automatic", "manual"))
+   cyl  <- ordered(cyl)
+   gear <- ordered(gear)
+   carb <- ordered(carb)
+})
+summary(mtcars2)
 }
 \keyword{datasets}

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
 "PO-Revision-Date: 2011-03-26 08:55-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -24,6 +24,11 @@ msgstr "'a' e 'b' sobrescritos por 'coef'"
 
 msgid "one of 'x1' and 'y1' must be given"
 msgstr "somente 'x1' ou 'y1' devem ser fornecidos"
+
+msgid ""
+"'length', 'angle', or 'code' greater than length 1; values after the first "
+"are ignored"
+msgstr ""
 
 msgid "'x' must be a 2-d contingency table"
 msgstr "'x' deve ser uma tabela de contingência 2-d"
@@ -112,6 +117,9 @@ msgstr "valores crescentes de 'x' e 'y' esperados"
 
 msgid "no proper 'z' matrix specified"
 msgstr "nenhuma matriz 'z' apropriada especificada"
+
+msgid "'labels' is length zero.  Use 'drawlabels = FALSE' to suppress labels."
+msgstr ""
 
 msgid "invalid conditioning formula"
 msgstr "fórmula de condicionamento inválida"
@@ -203,6 +211,9 @@ msgstr "algoritmo 'breaks' desconhecido"
 
 msgid "invalid number of 'breaks'"
 msgstr "número inválido de 'breaks'"
+
+msgid "'breaks = %g' is too large and set to 1e6"
+msgstr ""
 
 #, fuzzy
 msgid "hist.default: pretty() error, breaks=%s"

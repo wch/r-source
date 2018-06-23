@@ -100,9 +100,10 @@ dump(list, file = "dumpdata.R", append = FALSE,
 }
 \examples{
 x <- 1; y <- 1:10
-dump(ls(pattern = '^[xyz]'), "xyz.Rdmped")
+fil <- tempfile(fileext=".Rdmped")
+dump(ls(pattern = '^[xyz]'), fil)
 print(.Last.value)
-unlink("xyz.Rdmped")
+unlink(fil)
 }
 \keyword{file}
 \keyword{connection}

@@ -1,6 +1,6 @@
 % File src/library/base/man/file.info.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2009-2015 R Core Team
+% Copyright 2009-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Sys.readlink}
@@ -34,5 +34,11 @@ Sys.readlink(paths)
 \seealso{
   \code{\link{file.symlink}} for the creation of symbolic links (and
   their Windows analogues), \code{\link{file.info}}
+}
+\examples{
+##' To check if files (incl. directories) are symbolic links:
+is.symlink <- function(paths) isTRUE(nzchar(Sys.readlink(paths), keepNA=TRUE))
+## will return all FALSE when the platform has no `readlink` system call.
+is.symlink("/foo/bar")
 }
 \keyword{file}

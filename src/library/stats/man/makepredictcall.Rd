@@ -1,6 +1,6 @@
 % File src/library/stats/man/makepredictcall.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{makepredictcall}
@@ -54,7 +54,11 @@ require(graphics)
 fm <- lm(weight ~ poly(height, 2), data = women)
 plot(women, xlab = "Height (in)", ylab = "Weight (lb)")
 ht <- seq(57, 73, len = 200)
-lines(ht, predict(fm, data.frame(height = ht)))
+nD <- data.frame(height = ht)
+pfm <- predict(fm, nD)
+lines(ht, pfm)
+pf2 <- predict(update(fm, ~ stats::poly(height, 2)), nD)
+stopifnot(all.equal(pfm, pf2)) ## was off (rel.diff. 0.0766) in R <= 3.5.0
 
 ## see also example(cars)
 

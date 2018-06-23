@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2014-09-21 07:12\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
 "PO-Revision-Date: 2012-01-07 21:49+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -13,7 +13,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Pootle 2.1.6\n"
 
-msgid "invalid value of 'seed'"
+#, fuzzy
+msgid "invalid value of %s"
 msgstr "ugyldig værdi for »seed«"
 
 msgid "need at least one argument"
@@ -73,8 +74,14 @@ msgstr "»what« skal være et tegn eller rå vektor"
 msgid "'mc.cores' must be >= 1"
 msgstr "»mc.cores« skal være >= 1"
 
+msgid "affinity.list and X must have the same length"
+msgstr ""
+
 msgid "%d function calls resulted in an error"
 msgstr "%d funktionskald resulterede i en fejl"
+
+msgid "'mc.preschedule' must be false if 'affinity.list' is used"
+msgstr ""
 
 msgid "all scheduled cores encountered errors in user code"
 msgstr "alle planlagte kerner mødte fejl i brugerkode"

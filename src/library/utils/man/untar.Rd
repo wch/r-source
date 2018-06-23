@@ -1,6 +1,6 @@
 % File src/library/utils/man/untar.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2009-2016 R Core Team
+% Copyright 2009-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{untar}
@@ -19,7 +19,12 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
 \arguments{
   \item{tarfile}{The pathname of the tar file: tilde expansion (see
     \code{\link{path.expand}}) will be performed.  Alternatively, a
-    \link{connection} that can be used for binary reads.}
+    \link{connection} that can be used for binary reads.  For a
+    \emph{compressed} \code{tarfile}, and if a connection is to be used,
+    that should be created by \code{\link{gzfile}(.)} (or
+    \code{\link{gzcon}(.)} which currently only works for \code{"gzip"},
+    whereas \code{gzfile()} works for all compressions available in
+    \code{\link{tar}()}).}
 
   \item{files}{A character vector of recorded filepaths to be extracted:
     the default is to extract all files.}

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.4.0\n"
+"Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-01 10:01-0700\n"
+"POT-Creation-Date: 2018-03-29 07:06-0700\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.8.7\n"
+"X-Generator: Poedit 2.0.4\n"
 
 #: Srunmed.c:54
 msgid "bandwidth/span of running medians is larger than n"
@@ -24,19 +24,19 @@ msgstr "pasmo/rozpiętość ruchomych median jest większe niż 'n'"
 msgid "probabilities outside [0,1] in qansari()"
 msgstr "prawdopodobieństwa poza przedziałem [0,1] w 'qansari()'"
 
-#: approx.c:102
+#: approx.c:113
 msgid "approx(): invalid f value"
 msgstr "approx(): niepoprawna wartość 'f'"
 
-#: approx.c:105
+#: approx.c:116
 msgid "approx(): invalid interpolation method"
 msgstr "approx(): niepoprawna metoda interpolacji"
 
-#: approx.c:111
+#: approx.c:122
 msgid "approx(): attempted to interpolate NA values"
 msgstr "approx(): próbowano interpolować wartości NA"
 
-#: arima.c:81 arima.c:192 arima.c:377 arima.c:608
+#: arima.c:81 arima.c:192 arima.c:377 arima.c:608 optim.c:39
 msgid "invalid argument type"
 msgstr "niepoprawny typ argumentu"
 
@@ -48,7 +48,7 @@ msgstr "można przekształcić tylko do 100 par w 'arima0'"
 msgid "maximum supported lag is 350"
 msgstr "maksymalne obsługiwane opóźnienie wynosi 350"
 
-#: bandwidths.c:121
+#: bandwidths.c:126
 #, c-format
 msgid "non-finite x[%d] in bandwidth calculation"
 msgstr "nieskończone x[%d] w obliczeniach pasma"
@@ -102,37 +102,38 @@ msgstr "'x' jest puste"
 msgid "the standard deviation is zero"
 msgstr "odchylenie standardowe wynosi zero"
 
-#: deriv.c:126
+#: deriv.c:158
 msgid "invalid form in unary minus check"
 msgstr "niepoprawna forma sprawdzania jednoargumentowej operacji minus"
 
-#: deriv.c:535
+#: deriv.c:682
 #, c-format
 msgid "Function '%s' is not in the derivatives table"
 msgstr "Funkcja '%s' nie znajduje się w tablicy pochodnych"
 
-#: deriv.c:641
-msgid "'expr' must be an expression or call"
-msgstr "argument 'expr' musi być wyrażeniem lub wywołaniem"
+#: deriv.c:789
+#, c-format
+msgid "expression must not be type '%s'"
+msgstr "wyrażenie nie może być typu '%s'"
 
-#: deriv.c:644
+#: deriv.c:792
 msgid "variable must be a character string"
 msgstr "zmienna musi być łańcuchem tekstowym"
 
-#: deriv.c:646
+#: deriv.c:794
 msgid "only the first element is used as variable name"
 msgstr "tylko pierwszy element jest używany jako nazwa zmiennej"
 
-#: deriv.c:659
+#: deriv.c:807
 #, c-format
 msgid "invalid expression in '%s'"
 msgstr "niepoprawne wyrażenie w '%s'"
 
-#: deriv.c:937 model.c:99
+#: deriv.c:1085 model.c:99
 msgid "invalid variable names"
 msgstr "niepoprawne nazwy zmiennych"
 
-#: deriv.c:946
+#: deriv.c:1094
 msgid "invalid tag"
 msgstr "niepoprawny znacznik"
 
@@ -144,15 +145,15 @@ msgstr "traktowanie nieskończonych wartości jako NA"
 msgid "distance(): invalid p"
 msgstr "distance(): niepoprawne 'p'"
 
-#: distance.c:228
+#: distance.c:229
 msgid "distance(): invalid distance"
 msgstr "distance(): niepoprawna odległość"
 
-#: distn.c:41
+#: distn.c:44
 msgid "NaNs produced"
 msgstr "wyprodukowano wartości NaN"
 
-#: distn.c:42
+#: distn.c:45
 msgid "Non-numeric argument to mathematical function"
 msgstr "Argument nieliczbowy przekazany do funkcji matematycznej"
 
@@ -170,6 +171,69 @@ msgstr "Argument '%s' musi być niepustym wektorem liczbowym"
 #, c-format
 msgid "argument %s must be a numeric vector of length 1 or length %d"
 msgstr "argument '%s' musi być wektorem liczbowym o długości 1 lub długości %d"
+
+#: fexact.c:273
+#, c-format
+msgid "integer overflow would happen in 'mult * ldkey' = %g"
+msgstr "nastąpiłoby przepełnienie całkowitoliczbowe w 'mult * ldkey' = %g"
+
+#: fexact.c:653
+#, c-format
+msgid ""
+"FEXACT error 6.  LDKEY=%d is too small for this problem,\n"
+"  (ii := key2[itp=%d] = %d, ldstp=%d)\n"
+"Try increasing the size of the workspace and possibly 'mult'"
+msgstr ""
+"FEXACT error 6.  LDKEY=%d jest zbyt małe dla tego problemu,\n"
+"  (ii := key2[itp=%d] = %d, ldstp=%d)\n"
+"Spróbuj zwiększyć rozmiar przestrzeni roboczej oraz być może 'mult'"
+
+#: fexact.c:1035
+#, c-format
+msgid "Bug in fexact3, it[i=%d]=%d: negative key %d (kyy=%d)\n"
+msgstr "Błąd w fexact3, it[i=%d]=%d: ujemny klucz %d (kyy=%d)\n"
+
+#: fexact.c:1064
+#, c-format
+msgid ""
+"FEXACT error 30.  Stack length exceeded in f3xact,\n"
+"  (ldst=%d, key=%d, ipn=%d, itp=%d, ist[ii=%d]=%d).\n"
+"Increase workspace or consider using 'simulate.p.value=TRUE'"
+msgstr ""
+"FEXACT błąd 30. Długość stosu przekroczona w f3xact,\n"
+"  (ldst=%d, key=%d, ipn=%d, itp=%d, ist[ii=%d]=%d).\n"
+"Zwiększ przestrzeń roboczą lub rozważ użycie 'simulate.p.value=TRUE'"
+
+#: fexact.c:1399
+#, c-format
+msgid ""
+"FEXACT error 6 (f5xact).  LDKEY=%d is too small for this problem: kval=%d.\n"
+"Try increasing the size of the workspace."
+msgstr ""
+"FEXACT błąd 6 (f5xact). LDKEY=%d jest zbyt małe dla tego problemu: kval=%d.\n"
+"Spróbuj zwiększyć rozmiar przestrzeni roboczej."
+
+#: fexact.c:1412
+#, c-format
+msgid ""
+"FEXACT error 7(%s). LDSTP=%d is too small for this problem,\n"
+"  (kval=%d, itop-ldstp=%d).\n"
+"Increase workspace or consider using 'simulate.p.value=TRUE'."
+msgstr ""
+"FEXACT error 7(%s). LDSTP=%d jest zbyt małe dla tego problemu,\n"
+"  (kval=%d, itop-ldstp=%d).\n"
+"Zwiększ przestrzeń roboczą lub rozważ użycie 'simulate.p.value=TRUE'"
+
+#: fexact.c:1449
+#, c-format
+msgid ""
+"FEXACT error 7(%s). LDSTP=%d is too small for this problem,\n"
+"  (pastp=%g, ipn_0:=ipoin[itp=%d]=%d, stp[ipn_0]=%g).\n"
+"Increase workspace or consider using 'simulate.p.value=TRUE'"
+msgstr ""
+"FEXACT error 7(%s). LDSTP=%d jest zbyt małe dla tego problemu,\n"
+"  (pastp=%g, ipn_0:=ipoin[itp=%d]=%d, stp[ipn_0]=%g).\n"
+"Zwiększ przestrzeń roboczą lub rozważ użycie 'simulate.p.value=TRUE'"
 
 #: fourier.c:66 fourier.c:161
 msgid "non-numeric argument"
@@ -196,7 +260,7 @@ msgstr "niepoprawne czynniki"
 msgid "'%s' must be of length one"
 msgstr "argument '%s' musi mieć długość 1"
 
-#: ksmooth.c:68
+#: ksmooth.c:69
 msgid "only 2500 rows are allowed for sm.method=\"spline\""
 msgstr "tylko 2500 wierszy jest dozwolonych dla 'sm.method=\"spline\"'"
 
@@ -294,7 +358,7 @@ msgstr "długości zmiennych różnią się (znaleziono dla '%s')"
 msgid "invalid result from na.action"
 msgstr "niepoprawny wynik z 'na.action'"
 
-#: model.c:372 model.c:380 optim.c:197
+#: model.c:372 model.c:380 optim.c:199
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "niepoprawny argument '%s'"
@@ -359,44 +423,44 @@ msgstr "niepoprawna formuła w 'update'"
 msgid "formula expected"
 msgstr "oczekiwano formuły"
 
-#: model.c:1049
+#: model.c:1050
 msgid "invalid term in model formula"
 msgstr "niepoprawny człon w formule modelu"
 
-#: model.c:1124
+#: model.c:1125
 msgid "invalid model formula"
 msgstr "niepoprawna formuła modelu"
 
-#: model.c:1150 model.c:1410
+#: model.c:1151 model.c:1411
 msgid "invalid power in formula"
 msgstr "niepoprawna potęga w formule"
 
-#: model.c:1186
+#: model.c:1187
 msgid "invalid model formula in ExtractVars"
 msgstr "niepoprawna formuła modelu w funkcji 'ExtractVars()'"
 
-#: model.c:1533
+#: model.c:1534
 #, c-format
 msgid "duplicated name '%s' in data frame using '.'"
 msgstr "powtórzona nazwa '%s' w ramce danych używając '.'"
 
-#: model.c:1594
+#: model.c:1595
 msgid "invalid model formula in EncodeVars"
 msgstr "niepoprawna formuła modelu w funkcji 'EncodeVars()'"
 
-#: model.c:1680
+#: model.c:1681
 msgid "argument is not a valid model"
 msgstr "argument nie jest poprawnym modelem"
 
-#: model.c:1690
+#: model.c:1691
 msgid "'specials' must be NULL or a character vector"
 msgstr "'specials' musi być wektorem tekstowym lub wartością 'NULL'"
 
-#: model.c:1702
+#: model.c:1703
 msgid "'data' argument is of the wrong type"
 msgstr "argument 'data' posiada niepoprawny typ"
 
-#: model.c:1972
+#: model.c:1974
 msgid "'.' in formula and no 'data' argument"
 msgstr "'.' w formule oraz brak argumentu 'data'"
 
@@ -480,45 +544,45 @@ msgstr "zmienna '%s' jest liczbą całkowitą, a nie rzeczywistą"
 msgid "variable '%s' is not numeric"
 msgstr "zmienna '%s' nie jest liczbą rzeczywistą"
 
-#: optim.c:80 optim.c:107
+#: optim.c:82 optim.c:109
 msgid "non-finite value supplied by optim"
 msgstr "nieskończona wartość dostarczona przez 'optim()'"
 
-#: optim.c:87
+#: optim.c:89
 #, c-format
 msgid "objective function in optim evaluates to length %d not 1"
 msgstr "funkcja celu w 'optim' została obliczona do długości %d a nie 1"
 
-#: optim.c:114
+#: optim.c:116
 #, c-format
 msgid "gradient in optim evaluated to length %d not %d"
 msgstr "gradient w 'optim' obliczony do długości %d a nie %d"
 
-#: optim.c:193 optim.c:399
+#: optim.c:195 optim.c:401
 msgid "'fn' is not a function"
 msgstr "argument 'fn' nie jest funkcją"
 
-#: optim.c:211 optim.c:405
+#: optim.c:213 optim.c:407
 msgid "'parscale' is of the wrong length"
 msgstr "argument 'parscale' posiada niepoprawną długość"
 
-#: optim.c:240
+#: optim.c:242
 msgid "'maxit' is not an integer"
 msgstr "argument 'maxit' nie jest liczbą całkowitą"
 
-#: optim.c:260
+#: optim.c:262
 msgid "'tmax' is not a positive integer"
 msgstr "argument 'tmax' nie jest dodatnią liczbą całkowitą"
 
-#: optim.c:262 optim.c:279 optim.c:304 optim.c:334 optim.c:413
+#: optim.c:264 optim.c:281 optim.c:306 optim.c:336 optim.c:415
 msgid "'gr' is not a function"
 msgstr "argument 'gr' nie jest funkcją"
 
-#: optim.c:285 optim.c:310 optim.c:340 optim.c:419
+#: optim.c:287 optim.c:312 optim.c:342 optim.c:421
 msgid "'ndeps' is of the wrong length"
 msgstr "argument 'ndeps' posiada niepoprawną długość"
 
-#: optim.c:370
+#: optim.c:372
 msgid "unknown 'method'"
 msgstr "nieznana wartość 'method'"
 
@@ -850,6 +914,9 @@ msgstr "niepoprawna końcowa reguła dla ruchomiej mediany 3: %d"
 #, c-format
 msgid "missing value in last %d observations"
 msgstr "brakuje wartości w ostatnich %d obserwacjach"
+
+#~ msgid "'expr' must be an expression or call"
+#~ msgstr "argument 'expr' musi być wyrażeniem lub wywołaniem"
 
 #~ msgid "stats"
 #~ msgstr "stats"

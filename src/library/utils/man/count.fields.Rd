@@ -1,6 +1,6 @@
 % File src/library/utils/man/count.fields.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{count.fields}
@@ -54,8 +54,9 @@ count.fields(file, sep = "", quote = "\"'", skip = 0,
   \code{\link{read.table}}
 }
 \examples{
-cat("NAME", "1:John", "2:Paul", file = "foo", sep = "\n")
-count.fields("foo", sep = ":")
-unlink("foo")
+fil <- tempfile()
+cat("NAME", "1:John", "2:Paul", file = fil, sep = "\n")
+count.fields(fil, sep = ":")
+unlink(fil)
 }
 \keyword{file}

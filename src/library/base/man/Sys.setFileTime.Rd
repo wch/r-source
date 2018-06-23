@@ -1,6 +1,6 @@
 % File src/library/base/man/Sys.setFileTime.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2011-2016 R Core Team
+% Copyright 2011-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Sys.setFileTime}
@@ -17,11 +17,12 @@ Sys.setFileTime(path, time)
 
 \arguments{
   \item{path}{
-    A length-one character vector specifying the path to a file or directory.
+    A character vector containing file or directory paths.
   }
   \item{time}{
-    A date-time of class \code{"\link{POSIXct}"} or an object which can
-    be coerced to one.  Fractions of a second may be ignored.
+    A date-time of class \code{"\link{POSIXct}"} or an object which can be
+    coerced to one.  Fractions of a second may be ignored.  Recycled along
+    \code{paths}.
   }
 }
 \details{
@@ -36,9 +37,13 @@ Sys.setFileTime(path, time)
   On Windows it uses the system call \code{SetFileTime} to set the
   \sQuote{last write time}.  Some Windows file systems only record the
   time at a resolution of two seconds.
+
+  \code{Sys.setFileTime} has been vectorized in \R 3.6.0.  Earlier versions
+  of \R required \code{path} and \code{time} to be vectors of length one.
 }
 \value{
-  Logical, invisibly.  An indication if the operation succeeded.
+  A logical vector indicating if the operation succeeded for each of the
+  files and directories attempted, returned invisibly.
 }
 \keyword{file}
 

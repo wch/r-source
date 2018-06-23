@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
 "PO-Revision-Date: 2012-01-07 22:11+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -156,6 +156,10 @@ msgstr "Fil »%s«:"
 msgid "found T/F in %s"
 msgstr "fandt T/F i %s"
 
+#, fuzzy
+msgid "The package 'dir' argument must be of length 1"
+msgstr "argument »package« skal være af længde 1"
+
 msgid "package name '%s' seems invalid; using directory name '%s' instead"
 msgstr ""
 "pakkenavn »%s« ser ud til at være ugyldigt; bruger mappenavn »%s« i stedet "
@@ -254,10 +258,16 @@ msgstr ""
 msgid "Cannot extract Author field from Authors@R field:"
 msgstr ""
 
-msgid "Authors@R field gives no person with author role."
+msgid "Authors@R field gives no person with name and roles."
 msgstr ""
 
-msgid "Authors@R field gives persons with no valid roles:"
+msgid "Authors@R field gives persons with no name:"
+msgstr ""
+
+msgid "Authors@R field gives persons with no role:"
+msgstr ""
+
+msgid "Authors@R field gives no person with name and author role"
 msgstr ""
 
 msgid "Cannot extract Maintainer field from Authors@R field:"
@@ -503,6 +513,9 @@ msgstr ""
 msgid "Macro file %s should only contain Rd macro definitions and comments"
 msgstr ""
 
+msgid "Rd macro package '%s' is not installed."
+msgstr ""
+
 msgid "No Rd macros in package '%s'."
 msgstr ""
 
@@ -725,10 +738,31 @@ msgstr ""
 msgid "The default JSS style may not be modified."
 msgstr ""
 
+msgid "inst/doc"
+msgstr ""
+
+msgid "file"
+msgstr ""
+
+msgid "files"
+msgstr ""
+
+msgid ","
+msgstr ""
+
+msgid "ignored as vignettes have been rebuilt."
+msgstr ""
+
+msgid "Run R CMD build with --no-build-vignettes to prevent rebuilding."
+msgstr ""
+
 msgid "invalid value for '--compact-vignettes', assuming %s"
 msgstr ""
 
 msgid "Error: cannot rename directory to %s"
+msgstr ""
+
+msgid "elapsed-time limit of %g %s reached for sub-process"
 msgstr ""
 
 msgid "cannot link from %s"
@@ -766,6 +800,9 @@ msgid "downloading %s ..."
 msgstr ""
 
 msgid "checking %s ..."
+msgstr ""
+
+msgid "wrong class"
 msgstr ""
 
 msgid "non-ASCII input in a CITATION file without a declared encoding"
@@ -838,6 +875,9 @@ msgstr ""
 msgid "cannot read index information in file '%s'"
 msgstr ""
 
+msgid ".install_packages() exit status"
+msgstr ""
+
 msgid "error reading file '%s'"
 msgstr ""
 
@@ -896,6 +936,18 @@ msgstr ""
 msgid "building a fake installation is disallowed"
 msgstr ""
 
+msgid "C++17 standard requested but CXX17 is not defined"
+msgstr ""
+
+msgid "C++14 standard requested but CXX14 is not defined"
+msgstr ""
+
+msgid "C++11 standard requested but CXX11 is not defined"
+msgstr ""
+
+msgid "C++98 standard requested but CXX98 is not defined"
+msgstr ""
+
 msgid ""
 "See\n"
 "  %s\n"
@@ -918,9 +970,6 @@ msgid "source list must have names for all elements"
 msgstr ""
 
 msgid "source must be an environment or a list"
-msgstr ""
-
-msgid "invalid value for 'compress': should be FALSE, TRUE, 2 or 3"
 msgstr ""
 
 msgid "this cannot be used for package 'base'"
@@ -1001,9 +1050,6 @@ msgstr ""
 msgid "cannot read xref table"
 msgstr ""
 
-msgid "wrong class"
-msgstr ""
-
 msgid "attempting to select less than one element"
 msgstr ""
 
@@ -1061,28 +1107,22 @@ msgstr ""
 msgid "unsupported PNG filter %d"
 msgstr ""
 
-msgid "argument 'pkg' must be of length 1"
-msgstr ""
-
-msgid "package '%s' was not found"
-msgstr ""
-
-msgid "the 'lib.loc' argument has always been unused and is deprecated now"
-msgstr ""
-
-msgid "bad operand"
-msgstr ""
-
-msgid "Package '%s' had its dependencies reduced to a minimal set."
-msgstr ""
-
 msgid "argument '%s' must be a character string or connection"
 msgstr ""
 
 msgid "unimplemented encoding"
 msgstr ""
 
+msgid "this requires 'objdump.exe' to be on the PATH"
+msgstr ""
+
+msgid "this requires 'nm' to be on the PATH"
+msgstr ""
+
 msgid "Found %s, possibly from %s"
+msgstr ""
+
+msgid "no native symbols were extracted"
 msgstr ""
 
 msgid "testing '%s' failed"
@@ -1094,10 +1134,16 @@ msgstr ""
 msgid "comparing %s to %s ..."
 msgstr ""
 
-msgid "OK"
+msgid "ERROR"
+msgstr ""
+
+msgid "NOTE"
 msgstr ""
 
 msgid "results differ from reference results"
+msgstr ""
+
+msgid "OK"
 msgstr ""
 
 msgid "no examples found for package %s"
@@ -1125,6 +1171,24 @@ msgid "DIFFERED"
 msgstr ""
 
 msgid "running tests of random deviate generation -- fails occasionally"
+msgstr ""
+
+msgid "unknown header specification"
+msgstr ""
+
+msgid "argument 'pkg' must be of length 1"
+msgstr ""
+
+msgid "package '%s' was not found"
+msgstr ""
+
+msgid "the 'lib.loc' argument has always been unused and is deprecated now"
+msgstr ""
+
+msgid "bad operand"
+msgstr ""
+
+msgid "Package '%s' had its dependencies reduced to a minimal set."
 msgstr ""
 
 msgid "R CMD build failed"
@@ -1178,7 +1242,7 @@ msgstr ""
 msgid "Unknown encoding with non-ASCII data: converting to ASCII"
 msgstr ""
 
-msgid "cannot source package code"
+msgid "cannot source package code:"
 msgstr ""
 
 msgid "Call sequence:"
@@ -1314,6 +1378,11 @@ msgid_plural "unable to re-encode %s lines %s"
 msgstr[0] "kan ikke skrive kodefiler"
 msgstr[1] "kan ikke skrive kodefiler"
 
+msgid " file\n"
+msgid_plural " files\n"
+msgstr[0] ""
+msgstr[1] ""
+
 #, fuzzy
 msgid "Required field missing or empty:"
 msgid_plural "Required fields missing or empty:"
@@ -1332,6 +1401,11 @@ msgstr[1] ""
 
 msgid "%d of the package tests failed"
 msgid_plural "%d of the package tests failed"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Corresponding BibTeX entry:"
+msgid_plural "Corresponding BibTeX entries:"
 msgstr[0] ""
 msgstr[1] ""
 

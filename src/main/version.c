@@ -104,7 +104,7 @@ void attribute_hidden PrintVersion(char *s, size_t len)
 	   "You are welcome to redistribute it under the terms of the\n"
 	   "GNU General Public License versions 2 or 3.\n"
 	   "For more information about these matters see\n"
-	   "http://www.gnu.org/licenses/.\n");
+	   "https://www.gnu.org/licenses/.\n");
 }
 
 void attribute_hidden PrintVersionString(char *s, size_t len)

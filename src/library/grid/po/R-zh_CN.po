@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -99,6 +99,9 @@ msgstr "'f'的值不对"
 
 msgid "'gpar' element '%s' must not be length 0"
 msgstr "'gpar'成分'%s'的长度不能为零"
+
+msgid "mixture of missing and non-missing values for %s"
+msgstr ""
 
 msgid "'gamma' 'gpar' element is defunct"
 msgstr "'gamma' gpar已经不再有用"

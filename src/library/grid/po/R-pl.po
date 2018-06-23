@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 3.4.0\n"
+"Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-04 08:15\n"
+"POT-Creation-Date: 2018-04-01 16:26\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.8.7\n"
+"X-Generator: Poedit 2.0.4\n"
 
 #. R/unit.R: gettextf("'Summary' function '%s' not meaningful for units",     .Generic)
 #: R/unit.R:0
@@ -768,6 +768,11 @@ msgstr "poprawne jest jedynie ustawienie dziecka \"gTree\""
 #: R/components.R:0
 msgid "logical 'label' supplied of length 0"
 msgstr "dostarczono logiczną wartość argumentu 'label' o długości 0"
+
+#. R/gpar.R: gettextf("mixture of missing and non-missing values for %s",     gparname)
+#: R/gpar.R:0
+msgid "mixture of missing and non-missing values for %s"
+msgstr "kombinacja brakujących i niebrakujących wartości dla %s"
 
 #. R/primitives.R: stop("must have exactly 4 control points")
 #: R/primitives.R:0

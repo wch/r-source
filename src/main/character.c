@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2017  The R Core Team
+ *  Copyright (C) 1997--2018  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Pulic License as published by
@@ -217,7 +217,7 @@ int R_nchar(SEXP string, nchar_type type_,
 
 SEXP attribute_hidden do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP d, s, x, stype;
+    SEXP d, s, x, stype, ans;
     int nargs = length(args);
 
 #ifdef R_version_3_4_or_so
@@ -230,6 +230,8 @@ SEXP attribute_hidden do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
 			   (unsigned long) nargs),
 	      nargs, PRIMNAME(op), 3, 4);
 #endif
+    if (DispatchOrEval(call, op, "nchar", args, env, &ans, 0, 1))
+      return(ans);
     if (isFactor(CAR(args)))
 	error(_("'%s' requires a character vector"), "nchar()");
     PROTECT(x = coerceVector(CAR(args), STRSXP));
@@ -273,12 +275,18 @@ SEXP attribute_hidden do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
     return s;
 }
 
-static void substr(char *buf, const char *str, int ienc, int sa, int so)
+static void substr(char *buf, const char *str, int ienc, int sa, int so,
+                   R_xlen_t idx)
 {
 /* Store the substring	str [sa:so]  into buf[] */
     int i, j, used;
 
     if (ienc == CE_UTF8) {
+	if (!utf8Valid(str)) {
+	    char msg[30];
+	    sprintf(msg, "element %ld", (long)idx+1);
+	    error(_("invalid multibyte string, %s"), msg);
+	}
 	const char *end = str + strlen(str);
 	for (i = 0; i < so && str < end; i++) {
 	    int used = utf8clen(*str);
@@ -339,7 +347,7 @@ do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
 		buf[0] = '\0';
 	    } else {
 		if (stop > slen) stop = (int) slen;
-		substr(buf, ss, ienc, start, stop);
+		substr(buf, ss, ienc, start, stop, i);
 	    }
 	    SET_STRING_ELT(s, i, mkCharCE(buf, ienc));
 	}
@@ -458,12 +466,23 @@ do_startsWith(SEXP call, SEXP op, SEXP args, SEXP env)
 
 
 static void
-substrset(char *buf, const char *const str, cetype_t ienc, int sa, int so)
+substrset(char *buf, const char *const str, cetype_t ienc, int sa, int so,
+          R_xlen_t xidx, R_xlen_t vidx)
 {
     /* Replace the substring buf[sa:so] by str[] */
     int i, in = 0, out = 0;
 
     if (ienc == CE_UTF8) {
+	if (!utf8Valid(buf)) {
+	    char msg[30];
+	    sprintf(msg, "element %ld", (long)xidx+1);
+	    error(_("invalid multibyte string, %s"), msg);
+	}
+	if (!utf8Valid(str)) {
+	    char msg[30];
+	    sprintf(msg, "value element %ld", (long)vidx+1);
+	    error(_("invalid multibyte string, %s"), msg);
+	}
 	for (i = 1; i < sa; i++) buf += utf8clen(*buf);
 	for (i = sa; i <= so && in < strlen(str); i++) {
 	    in +=  utf8clen(str[in]);
@@ -561,7 +580,7 @@ SEXP attribute_hidden do_substrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 		/* might expand under MBCS */
 		buf = R_AllocStringBuffer(slen+strlen(v_ss), &cbuff);
 		strcpy(buf, ss);
-		substrset(buf, v_ss, ienc2, start, stop);
+		substrset(buf, v_ss, ienc2, start, stop, i, i % v);
 		SET_STRING_ELT(s, i, mkCharCE(buf, ienc2));
 	    }
 	    vmaxset(vmax);

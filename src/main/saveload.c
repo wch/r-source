@@ -1861,7 +1861,7 @@ static int defaultSaveVersion()
 	if (val == 2 || val == 3)
 	    dflt = val;
 	else
-	    dflt = 2; /* the default */
+	    dflt = 3; /* the default */
     }
     return dflt;
 }
@@ -1885,16 +1885,20 @@ void attribute_hidden R_SaveToFileV(SEXP obj, FILE *fp, int ascii, int version)
 	struct R_outpstream_st out;
 	R_pstream_format_t type;
 	int magic;
-	/* version == 0 means R_DefaultSerializeVersion, currently 3 */
+
+	/* version == 0 means default version */
+	int v = (version == 0) ? defaultSaveVersion() : version;
 	if (ascii) {
-	    magic = (version == 2) ? R_MAGIC_ASCII_V2 : R_MAGIC_ASCII_V3;
+	    magic = (v == 2) ? R_MAGIC_ASCII_V2 : R_MAGIC_ASCII_V3;
 	    type = R_pstream_ascii_format;
 	}
 	else {
-	    magic = (version == 2) ? R_MAGIC_XDR_V2 : R_MAGIC_XDR_V3;
+	    magic = (v == 2) ? R_MAGIC_XDR_V2 : R_MAGIC_XDR_V3;
 	    type = R_pstream_xdr_format;
 	}
 	R_WriteMagic(fp, magic);
+	/* version == 0 means defaultSerializeVersion()
+	   unsupported version will result in error  */
 	R_InitFileOutPStream(&out, fp, type, version, NULL, NULL);
 	R_Serialize(obj, &out);
     }
@@ -1957,6 +1961,56 @@ SEXP attribute_hidden R_LoadFromFile(FILE *fp, int startup)
 	}
 	return(R_NilValue);/* for -Wall */
     }
+}
+
+SEXP attribute_hidden do_loadfile(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP file, s;
+    FILE *fp;
+
+    checkArity(op, args);
+
+    PROTECT(file = coerceVector(CAR(args), STRSXP));
+
+    if (! isValidStringF(file))
+	error(_("bad file name"));
+
+    fp = RC_fopen(STRING_ELT(file, 0), "rb", TRUE);
+    if (!fp)
+	error(_("unable to open 'file'"));
+    s = R_LoadFromFile(fp, 0);
+    fclose(fp);
+
+    UNPROTECT(1);
+    return s;
+}
+
+SEXP attribute_hidden do_savefile(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    FILE *fp;
+    int version;
+
+    checkArity(op, args);
+
+    if (!isValidStringF(CADR(args)))
+	error(_("'file' must be non-empty string"));
+    if (TYPEOF(CADDR(args)) != LGLSXP)
+	error(_("'ascii' must be logical"));
+    if (CADDDR(args) == R_NilValue)
+	version = defaultSaveVersion();
+    else
+	version = asInteger(CADDDR(args));
+    if (version == NA_INTEGER || version <= 0)
+	error(_("invalid '%s' argument"), "version");
+
+    fp = RC_fopen(STRING_ELT(CADR(args), 0), "wb", TRUE);
+    if (!fp)
+	error(_("unable to open 'file'"));
+
+    R_SaveToFileV(CAR(args), fp, INTEGER(CADDR(args))[0], version);
+
+    fclose(fp);
+    return R_NilValue;
 }
 
 static void saveload_cleanup(void *data)

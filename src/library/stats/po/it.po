@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-01 10:01-0700\n"
+"POT-Creation-Date: 2018-03-29 07:06-0700\n"
 "PO-Revision-Date: 2005-04-14 18:06+0200\n"
 "Last-Translator: stefano iacus <stefano.iacus@r-project.org>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -25,19 +25,19 @@ msgstr "ampiezza/copertura mediane più grande di n"
 msgid "probabilities outside [0,1] in qansari()"
 msgstr "probabilità esterne a [0,1] in qansari()"
 
-#: approx.c:102
+#: approx.c:113
 msgid "approx(): invalid f value"
 msgstr ""
 
-#: approx.c:105
+#: approx.c:116
 msgid "approx(): invalid interpolation method"
 msgstr ""
 
-#: approx.c:111
+#: approx.c:122
 msgid "approx(): attempted to interpolate NA values"
 msgstr ""
 
-#: arima.c:81 arima.c:192 arima.c:377 arima.c:608
+#: arima.c:81 arima.c:192 arima.c:377 arima.c:608 optim.c:39
 msgid "invalid argument type"
 msgstr "tipo argomento non valido"
 
@@ -49,7 +49,7 @@ msgstr "posso trasformare al più 100 parametri in arima0"
 msgid "maximum supported lag is 350"
 msgstr ""
 
-#: bandwidths.c:121
+#: bandwidths.c:126
 #, c-format
 msgid "non-finite x[%d] in bandwidth calculation"
 msgstr ""
@@ -106,37 +106,38 @@ msgstr "'x' è vuoto"
 msgid "the standard deviation is zero"
 msgstr "la deviazione standard è zero"
 
-#: deriv.c:126
+#: deriv.c:158
 msgid "invalid form in unary minus check"
 msgstr ""
 
-#: deriv.c:535
+#: deriv.c:682
 #, c-format
 msgid "Function '%s' is not in the derivatives table"
 msgstr "Funzione '%s' non presente nelle tavole delle derivate"
 
-#: deriv.c:641
-msgid "'expr' must be an expression or call"
+#: deriv.c:789
+#, c-format
+msgid "expression must not be type '%s'"
 msgstr ""
 
-#: deriv.c:644
+#: deriv.c:792
 msgid "variable must be a character string"
 msgstr "la variabile deve essere una stringa character"
 
-#: deriv.c:646
+#: deriv.c:794
 msgid "only the first element is used as variable name"
 msgstr "solo il primo elemento è utilizzato come nome di variabile"
 
-#: deriv.c:659
+#: deriv.c:807
 #, fuzzy, c-format
 msgid "invalid expression in '%s'"
 msgstr "espressione non valida in \"%s\""
 
-#: deriv.c:937 model.c:99
+#: deriv.c:1085 model.c:99
 msgid "invalid variable names"
 msgstr "nomi variabili non validi"
 
-#: deriv.c:946
+#: deriv.c:1094
 msgid "invalid tag"
 msgstr "'tag' non valido"
 
@@ -148,15 +149,15 @@ msgstr ""
 msgid "distance(): invalid p"
 msgstr "distance(): p non valido"
 
-#: distance.c:228
+#: distance.c:229
 msgid "distance(): invalid distance"
 msgstr "distance(): distanza non valida"
 
-#: distn.c:41
+#: distn.c:44
 msgid "NaNs produced"
 msgstr "Si è prodotto un NaN"
 
-#: distn.c:42
+#: distn.c:45
 msgid "Non-numeric argument to mathematical function"
 msgstr "Argomento non numerico in una funzione matematica"
 
@@ -173,6 +174,55 @@ msgstr ""
 #: family.c:131 family.c:134
 #, c-format
 msgid "argument %s must be a numeric vector of length 1 or length %d"
+msgstr ""
+
+#: fexact.c:273
+#, c-format
+msgid "integer overflow would happen in 'mult * ldkey' = %g"
+msgstr ""
+
+#: fexact.c:653
+#, c-format
+msgid ""
+"FEXACT error 6.  LDKEY=%d is too small for this problem,\n"
+"  (ii := key2[itp=%d] = %d, ldstp=%d)\n"
+"Try increasing the size of the workspace and possibly 'mult'"
+msgstr ""
+
+#: fexact.c:1035
+#, c-format
+msgid "Bug in fexact3, it[i=%d]=%d: negative key %d (kyy=%d)\n"
+msgstr ""
+
+#: fexact.c:1064
+#, c-format
+msgid ""
+"FEXACT error 30.  Stack length exceeded in f3xact,\n"
+"  (ldst=%d, key=%d, ipn=%d, itp=%d, ist[ii=%d]=%d).\n"
+"Increase workspace or consider using 'simulate.p.value=TRUE'"
+msgstr ""
+
+#: fexact.c:1399
+#, c-format
+msgid ""
+"FEXACT error 6 (f5xact).  LDKEY=%d is too small for this problem: kval=%d.\n"
+"Try increasing the size of the workspace."
+msgstr ""
+
+#: fexact.c:1412
+#, c-format
+msgid ""
+"FEXACT error 7(%s). LDSTP=%d is too small for this problem,\n"
+"  (kval=%d, itop-ldstp=%d).\n"
+"Increase workspace or consider using 'simulate.p.value=TRUE'."
+msgstr ""
+
+#: fexact.c:1449
+#, c-format
+msgid ""
+"FEXACT error 7(%s). LDSTP=%d is too small for this problem,\n"
+"  (pastp=%g, ipn_0:=ipoin[itp=%d]=%d, stp[ipn_0]=%g).\n"
+"Increase workspace or consider using 'simulate.p.value=TRUE'"
 msgstr ""
 
 #: fourier.c:66 fourier.c:161
@@ -200,7 +250,7 @@ msgstr "fattori non validi"
 msgid "'%s' must be of length one"
 msgstr "'m' deve essere di tipo list"
 
-#: ksmooth.c:68
+#: ksmooth.c:69
 msgid "only 2500 rows are allowed for sm.method=\"spline\""
 msgstr "sm.method=\"spline\" permette solo 2500 righe"
 
@@ -299,7 +349,7 @@ msgstr "la lunghezza delle variabili differisce"
 msgid "invalid result from na.action"
 msgstr "risultato non valido da na.action"
 
-#: model.c:372 model.c:380 optim.c:197
+#: model.c:372 model.c:380 optim.c:199
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "argomento '%s' non valido"
@@ -363,46 +413,46 @@ msgstr "formula non valida in 'update'"
 msgid "formula expected"
 msgstr "necessaria formula"
 
-#: model.c:1049
+#: model.c:1050
 #, fuzzy
 msgid "invalid term in model formula"
 msgstr "valore di lag.max non valido"
 
-#: model.c:1124
+#: model.c:1125
 msgid "invalid model formula"
 msgstr "formula modello non valida"
 
-#: model.c:1150 model.c:1410
+#: model.c:1151 model.c:1411
 msgid "invalid power in formula"
 msgstr "potenza non valida nella formula"
 
-#: model.c:1186
+#: model.c:1187
 msgid "invalid model formula in ExtractVars"
 msgstr "formula modello non valida in ExtractVars"
 
-#: model.c:1533
+#: model.c:1534
 #, c-format
 msgid "duplicated name '%s' in data frame using '.'"
 msgstr "duplicazione nome '%s' nel data frame nell'usare '.'"
 
-#: model.c:1594
+#: model.c:1595
 msgid "invalid model formula in EncodeVars"
 msgstr "formula modello non valida in EncodeVars"
 
-#: model.c:1680
+#: model.c:1681
 msgid "argument is not a valid model"
 msgstr "l'argomento non è un modello valido"
 
-#: model.c:1690
+#: model.c:1691
 #, fuzzy
 msgid "'specials' must be NULL or a character vector"
 msgstr "'path' deve essere un vettore di tipo character"
 
-#: model.c:1702
+#: model.c:1703
 msgid "'data' argument is of the wrong type"
 msgstr "l'argomento 'data' è di tipo sbagliato"
 
-#: model.c:1972
+#: model.c:1974
 msgid "'.' in formula and no 'data' argument"
 msgstr "nella formula c'è il '.' ma nessun argomento 'data'"
 
@@ -487,47 +537,47 @@ msgstr ""
 msgid "variable '%s' is not numeric"
 msgstr ""
 
-#: optim.c:80 optim.c:107
+#: optim.c:82 optim.c:109
 msgid "non-finite value supplied by optim"
 msgstr "valore non finito fornito da optim"
 
-#: optim.c:87
+#: optim.c:89
 #, c-format
 msgid "objective function in optim evaluates to length %d not 1"
 msgstr ""
 "la funzione obiettivo in optim restituisce valori di lunghezza %d anziché 1"
 
-#: optim.c:114
+#: optim.c:116
 #, c-format
 msgid "gradient in optim evaluated to length %d not %d"
 msgstr "il gradiente in optim restituisce valori di lunghezza %d e non %d"
 
-#: optim.c:193 optim.c:399
+#: optim.c:195 optim.c:401
 msgid "'fn' is not a function"
 msgstr "'fn' non è una funzione"
 
-#: optim.c:211 optim.c:405
+#: optim.c:213 optim.c:407
 msgid "'parscale' is of the wrong length"
 msgstr "'parscale' è della lunghezza sbagliata"
 
-#: optim.c:240
+#: optim.c:242
 msgid "'maxit' is not an integer"
 msgstr "'maxit' non è un intero"
 
-#: optim.c:260
+#: optim.c:262
 #, fuzzy
 msgid "'tmax' is not a positive integer"
 msgstr "'tmax' non è un intero"
 
-#: optim.c:262 optim.c:279 optim.c:304 optim.c:334 optim.c:413
+#: optim.c:264 optim.c:281 optim.c:306 optim.c:336 optim.c:415
 msgid "'gr' is not a function"
 msgstr "'gr' non è una funzione"
 
-#: optim.c:285 optim.c:310 optim.c:340 optim.c:419
+#: optim.c:287 optim.c:312 optim.c:342 optim.c:421
 msgid "'ndeps' is of the wrong length"
 msgstr "'ndeps' è della lunghezza sbagliata"
 
-#: optim.c:370
+#: optim.c:372
 msgid "unknown 'method'"
 msgstr "'method' sconosciuto"
 

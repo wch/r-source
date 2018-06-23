@@ -1,6 +1,6 @@
 % File src/library/base/man/DateTimeClasses.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{DateTimeClasses}
@@ -26,6 +26,7 @@
 \alias{[.POSIXlt}
 \alias{[<-.POSIXlt}
 \alias{[[.POSIXlt}
+\alias{[[<-.POSIXlt}
 \alias{as.data.frame.POSIXct}
 \alias{as.data.frame.POSIXlt}
 \alias{as.list.POSIXct}
@@ -37,6 +38,8 @@
 \alias{c.POSIXlt}
 \alias{as.matrix.POSIXlt}
 \alias{length.POSIXlt}
+\alias{length<-.POSIXct}
+\alias{length<-.POSIXlt}
 \alias{mean.POSIXct}
 \alias{mean.POSIXlt}
 \alias{str.POSIXt}
@@ -278,7 +281,7 @@
   objects must not be changed, as several C-based conversion methods
   rely on the order for efficiency.
 }
-\examples{\donttest{% <-->  may fail on platforms wrongly set up
+\examples{\donttest{% <--> may fail / be platform dependent
 (z <- Sys.time())             # the current date, as class "POSIXct"
 
 Sys.time() - 3600             # an hour ago
@@ -286,6 +289,7 @@ Sys.time() - 3600             # an hour ago
 as.POSIXlt(Sys.time(), "GMT") # the current time in GMT
 format(.leap.seconds)         # the leap seconds in your time zone
 print(.leap.seconds, tz = "PST8PDT")  # and in Seattle's
+}% ..test should be diffable from here on:
 
 ## look at *internal* representation of "POSIXlt" :
 leapS <- as.POSIXlt(.leap.seconds)
@@ -294,6 +298,19 @@ names(leapS) ; is.list(leapS)
 utils::str(unclass(leapS), vec.len = 7)
 ## Extracting *single* components of POSIXlt objects:
 leapS[1 : 5, "year"]
-}}
+
+##  length(.) <- n   now works for "POSIXct" and "POSIXlt" :
+for(lpS in list(.leap.seconds, leapS)) {
+    ls <- lpS; length(ls) <- 12
+    l2 <- lpS; length(l2) <- 5 + length(lpS)
+    stopifnot(exprs = {
+      ## length(.) <- * is compatible to subsetting/indexing:
+      identical(ls, lpS[seq_along(ls)])
+      identical(l2, lpS[seq_along(l2)])
+      ## has filled with NA's
+      is.na(l2[(length(lpS)+1):length(l2)])
+    })
+}% for
+}
 \keyword{utilities}
 \keyword{chron}

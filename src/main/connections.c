@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2017   The R Core Team.
+ *  Copyright (C) 2000-2018   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -288,7 +288,8 @@ static size_t buff_fill(Rconnection con) {
 
     free_len = con->buff_len - con->buff_stored_len;
     read_len = con->read(con->buff, sizeof(unsigned char), free_len, con);
-
+    if ((int)read_len < 0)
+	error("error reading from the connection");
     con->buff_stored_len += read_len;
 
     return read_len;
@@ -508,7 +509,10 @@ int dummy_fgetc(Rconnection con)
 	    }
 	    p = con->iconvbuff + con->inavail;
 	    for(i = con->inavail; i < 25; i++) {
-		c = buff_fgetc(con);
+		if (con->buff)
+		    c = buff_fgetc(con);
+		else
+		    c = con->fgetc_internal(con);
 		if(c == R_EOF){ con->EOF_signalled = TRUE; break; }
 		*p++ = (char) c;
 		con->inavail++;
@@ -547,7 +551,8 @@ int dummy_fgetc(Rconnection con)
 	    con->navail = (short)(50 - onb);
 	}
 	con->navail--;
-	return *con->next++;
+	/* the cast prevents sign extension of 0xFF to -1 (R_EOF) */
+	return (unsigned char)*con->next++;
     } else if (con->buff)
 	return buff_fgetc(con);
     else
@@ -712,6 +717,7 @@ static Rboolean file_open(Rconnection con)
 	    setmode(dstdin, _O_BINARY);
 # endif
         fp = fdopen(dstdin, con->mode);
+	con->canseek = FALSE;
 #else
 	warning(_("cannot open file '%s': %s"), name,
 		"fdopen is not supported on this platform");
@@ -752,7 +758,8 @@ static Rboolean file_open(Rconnection con)
     if(mlen >= 2 && con->mode[mlen-1] == 'b') con->text = FALSE;
     else con->text = TRUE;
     con->save = -1000;
-    set_buffer(con);
+    if (!isatty(fileno(fp)))
+	set_buffer(con);
     set_iconv(con);
 
 #ifdef HAVE_FCNTL
@@ -2218,6 +2225,7 @@ SEXP attribute_hidden do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     ncon = NextConnection();
     Connections[ncon] = con;
+    con->blocking = TRUE;
     strncpy(con->encname, CHAR(STRING_ELT(enc, 0)), 100); /* ASCII */
     con->encname[100 - 1] = '\0';
 
@@ -3815,7 +3823,7 @@ SEXP attribute_hidden do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
 	/* for a non-blocking connection, more input may
 	   have become available, so re-position */
 	if(con->canseek && !con->blocking)
-	    Rconn_seek(con, con->seek(con, -1, 1, 1), 1, 1);
+	    Rconn_seek(con, Rconn_seek(con, -1, 1, 1), 1, 1);
     }
     con->incomplete = FALSE;
     if(con->UTF8out || streql(encoding, "UTF-8")) oenc = CE_UTF8;
@@ -4095,7 +4103,6 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	if(!con->canread) error(_("cannot read from this connection"));
     }
-
     if(!strcmp(what, "character")) {
 	SEXP onechar;
 	PROTECT(ans = allocVector(STRSXP, n));
@@ -4359,7 +4366,6 @@ SEXP attribute_hidden do_writebin(SEXP call, SEXP op, SEXP args, SEXP env)
 	cntxt.cenddata = con;
 	if(!con->canwrite) error(_("cannot write to this connection"));
     }
-
 
     if(TYPEOF(object) == STRSXP) {
 	if(isRaw) {
@@ -4694,6 +4700,12 @@ SEXP attribute_hidden do_readchar(SEXP call, SEXP op, SEXP args, SEXP env)
     if (mbcslocale && !utf8locale && !useBytes)
 	warning(_("can only read in bytes in a non-UTF-8 MBCS locale" ));
     PROTECT(ans = allocVector(STRSXP, n));
+    if(!isRaw && con->text &&
+       (con->buff || con->nPushBack >= 0 || con->inconv))
+
+	/* could be turned into runtime error */
+	warning(_("text connection used with %s(), results may be incorrect"),
+	          "readChar");
     for(i = 0, m = 0; i < n; i++) {
 	int len = INTEGER(nchars)[i];
 	if(len == NA_INTEGER || len < 0)
@@ -4811,6 +4823,10 @@ SEXP attribute_hidden do_writechar(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(!con->canwrite) error(_("cannot write to this connection"));
     }
 
+    if(!isRaw && con->text && con->outconv)
+	/* could be turned into runtime error */
+	warning(_("text connection used with %s(), results may be incorrect"),
+	          "writeChar");
 
     for(i = 0; i < n; i++) {
 	len = INTEGER(nchars)[i];
@@ -5103,8 +5119,11 @@ SEXP attribute_hidden do_sinknumber(SEXP call, SEXP op, SEXP args, SEXP rho)
 #ifdef Win32
 void WinCheckUTF8(void)
 {
-    if(CharacterMode == RGui) WinUTF8out = (SinkCons[R_SinkNumber] == 1);
-    else WinUTF8out = FALSE;
+    if(CharacterMode == RGui)
+	WinUTF8out = (SinkCons[R_SinkNumber] == 1 ||
+	              SinkCons[R_SinkNumber] == 2);
+    else
+	WinUTF8out = FALSE;
 }
 #endif
 
@@ -5370,10 +5389,28 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 		)
 		con = newclp(url, strlen(open) ? open : "r");
 	    else {
+		const char *efn = R_ExpandFileName(url);
+#ifndef Win32
+		if (!raw) {
+		    struct stat sb;
+		    int res = stat(efn, &sb);
+		    if (!res && (sb.st_mode & S_IFIFO)) {
+			raw = TRUE;
+			warning(_("using 'raw = TRUE' because '%s' is a fifo or pipe"),
+				url);
+		    } else if (!res && !(sb.st_mode & S_IFREG) &&
+			       strcmp(efn, "/dev/null"))
+			/* not setting 'raw' to FALSE because character devices may be
+			   seekable; unfortunately there is no reliable way to detect
+			   that without changing the device state */
+			warning(_("'raw = FALSE' but '%s' is not a regular file"),
+			        url);
+		}
+#endif		
 		if (!raw &&
 		    (!strlen(open) || streql(open, "r") || streql(open, "rt"))) {
 		    /* check if this is a compressed file */
-		    FILE *fp = fopen(R_ExpandFileName(url), "rb");
+		    FILE *fp = fopen(efn, "rb");
 		    char buf[7];
 		    int ztype = -1, subtype = 0, compress = 0;
 		    if (fp) {

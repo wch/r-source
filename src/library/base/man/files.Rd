@@ -218,23 +218,26 @@ Sys.junction(from, to)
 }
 
 \examples{
+\dontshow{oldwd <- setwd(tempdir())}
 cat("file A\n", file = "A")
 cat("file B\n", file = "B")
 file.append("A", "B")
-file.create("A")
+file.create("A") # (trashing previous)
 file.append("A", rep("B", 10))
-if(interactive()) file.show("A")
+if(interactive()) file.show("A") # -> the 10 lines from 'B'
 file.copy("A", "C")
 dir.create("tmp")
 file.copy(c("A", "B"), "tmp")
-list.files("tmp")
+list.files("tmp") # -> "A" and "B"
 #ifdef unix
 setwd("tmp")
-file.remove("B")
+file.remove("A") # the tmp/A file
 file.symlink(file.path("..", c("A", "B")), ".")
+                     # |--> (TRUE,FALSE) : ok for A but not B as it exists already
 setwd("..")
 #endif
 unlink("tmp", recursive = TRUE)
 file.remove("A", "B", "C")
+\dontshow{setwd(oldwd)}
 }
 \keyword{file}

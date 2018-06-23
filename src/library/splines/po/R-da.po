@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
 "PO-Revision-Date: 2012-01-28 15:52+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,6 +42,10 @@ msgstr ""
 msgid "values of 'x' must be distinct"
 msgstr "værdier for »x« skal være unikke"
 
+#, fuzzy
+msgid "must have at least 'ord'=%d points"
+msgstr "skal have mindst »ord« knob"
+
 msgid "'formula' must be of the form \"y ~ x\""
 msgstr "»formula« skal være i formen »y ~ x«"
 
@@ -68,6 +72,9 @@ msgstr "»deriv« skal være mellem 0 og %d"
 
 msgid "knot positions must be strictly increasing"
 msgstr "knobplaceringer skal være strengt øgende"
+
+msgid "currently implemented only for cubic splines"
+msgstr ""
 
 msgid "spline must be monotone"
 msgstr "kurve skal være monoton"

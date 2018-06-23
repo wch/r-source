@@ -1,7 +1,7 @@
 #  File src/library/graphics/R/axis.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@ axis <- function(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
                  pos = NA, outer = FALSE, font = NA,
                  lty = "solid", lwd = 1, lwd.ticks = lwd,
                  col = NULL, col.ticks = NULL,
-                 hadj = NA, padj = NA, ...)
+                 hadj = NA, padj = NA, gap.axis = NA, ...)
 {
     ## we need to do this as the C code processes 'col' before '...'
     if(is.null(col) && !missing(...) && !is.null(fg <- list(...)$fg))
@@ -31,7 +31,7 @@ axis <- function(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
     ## which depends on the order of evaluation of the args.
     invisible(.External.graphics(C_axis, side, at, as.graphicsAnnot(labels),
           tick, line, pos, outer, font, lty, lwd, lwd.ticks,
-          col, col.ticks, hadj, padj, ...))
+          col, col.ticks, hadj, padj, gap.axis, ...))
 }
 
 

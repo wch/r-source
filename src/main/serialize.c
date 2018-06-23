@@ -207,7 +207,7 @@ static int defaultSerializeVersion()
 	if (val == 2 || val == 3)
 	    dflt = val;
 	else
-	    dflt = 2; /* the default */
+	    dflt = 3; /* the default */
     }
     return dflt;
 }
@@ -410,7 +410,7 @@ static int InInteger(R_inpstream_t stream)
     switch (stream->type) {
     case R_pstream_ascii_format:
 	InWord(stream, word, sizeof(word));
-	if(sscanf(word, "%s", buf) != 1) error(_("read error"));
+	if(sscanf(word, "%127s", buf) != 1) error(_("read error"));
 	if (strcmp(buf, "NA") == 0)
 	    return NA_INTEGER;
 	else
@@ -441,7 +441,7 @@ static double InReal(R_inpstream_t stream)
     switch (stream->type) {
     case R_pstream_ascii_format:
 	InWord(stream, word, sizeof(word));
-	if(sscanf(word, "%s", buf) != 1) error(_("read error"));
+	if(sscanf(word, "%127s", buf) != 1) error(_("read error"));
 	if (strcmp(buf, "NA") == 0)
 	    return NA_REAL;
 	else if (strcmp(buf, "NaN") == 0)
@@ -1006,8 +1006,20 @@ static void WriteItem (SEXP s, SEXP ref_table, R_outpstream_t stream)
     SEXP t;
 
     if (R_compile_pkgs && TYPEOF(s) == CLOSXP && TYPEOF(BODY(s)) != BCODESXP &&
-        !R_disable_bytecode) {
+        !R_disable_bytecode &&
+        (!IS_S4_OBJECT(s) || (!inherits(s, "refMethodDef") &&
+                              !inherits(s, "defaultBindingFunction")))) {
 
+	/* Do not compile reference class methods in their generators, because
+	   the byte-code is dropped as soon as the method is installed into a
+	   new environment. This is a performance optimization but it also
+	   prevents byte-compiler warnings about no visible binding for super
+	   assignment to a class field.
+
+	   Do not compile default binding functions, because the byte-code is
+	   dropped as fields are set in constructors (just an optimization).
+	*/
+	    
 	SEXP new_s;
 	R_compile_pkgs = FALSE;
 	PROTECT(new_s = R_cmpfun1(s));
@@ -2830,7 +2842,7 @@ R_serialize(SEXP object, SEXP icon, SEXP ascii, SEXP Sversion, SEXP fun)
     }
     else {
 	Rconnection con = getConnection(asInteger(icon));
-	R_InitConnOutPStream(&out, con, type, 0, hook, fun);
+	R_InitConnOutPStream(&out, con, type, version, hook, fun);
 	R_Serialize(object, &out);
 	return R_NilValue;
     }

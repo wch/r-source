@@ -62,8 +62,8 @@ tail(x, \dots)
 
   If a matrix has no row names, then \code{tail()} will add row names of
   the form \code{"[n,]"} to the result, so that it looks similar to the
-  last lines of \code{x} when printed.  Setting \code{addrownums =
-    FALSE} suppresses this behaviour.
+  last lines of \code{x} when printed.  Setting
+  \code{addrownums = FALSE} suppresses this behaviour.
 }
 \value{
   An object (usually) like \code{x} but generally smaller.  For

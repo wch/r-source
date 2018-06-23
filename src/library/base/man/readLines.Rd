@@ -1,6 +1,6 @@
 % File src/library/base/man/readLines.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{readLines}
@@ -55,7 +55,7 @@ readLines(con = stdin(), n = -1L, ok = TRUE, warn = TRUE,
   Embedded nuls in the input stream will terminate the line currently
   being read, with a warning (unless \code{skipNul = TRUE} or \code{warn
     = FALSE}).
-  
+
   If \code{con} is a not-already-open \link{connection} with a non-default
   \code{encoding} argument, the text is converted to UTF-8 and declared
   as such (and the \code{encoding} argument to \code{readLines} is ignored).
@@ -76,22 +76,24 @@ readLines(con = stdin(), n = -1L, ok = TRUE, warn = TRUE,
   \code{\link{scan}}}
 
 \examples{
-cat("TITLE extra line", "2 3 5 7", "", "11 13 17", file = "ex.data",
+fil <- tempfile(fileext = ".data")
+cat("TITLE extra line", "2 3 5 7", "", "11 13 17", file = fil,
     sep = "\n")
-readLines("ex.data", n = -1)
-unlink("ex.data") # tidy up
+readLines(fil, n = -1)
+unlink(fil) # tidy up
 
 ## difference in blocking
-cat("123\nabc", file = "test1")
-readLines("test1") # line with a warning
+fil <- tempfile("test")
+cat("123\nabc", file = fil)
+readLines(fil) # line with a warning
 
-con <- file("test1", "r", blocking = FALSE)
+con <- file(fil, "r", blocking = FALSE)
 readLines(con) # empty
-cat(" def\n", file = "test1", append = TRUE)
+cat(" def\n", file = fil, append = TRUE)
 readLines(con) # gets both
 close(con)
 
-unlink("test1") # tidy up
+unlink(fil) # tidy up
 
 \dontrun{
 # read a 'Windows Unicode' file

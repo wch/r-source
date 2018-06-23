@@ -21,7 +21,7 @@ identify <- function(x, ...) UseMethod("identify")
 identify.default <-
     function(x, y = NULL, labels = seq_along(x), pos = FALSE,
              n = length(x), plot = TRUE, atpen = FALSE,
-             offset = 0.5, tolerance = 0.25, ...)
+             offset = 0.5, tolerance = 0.25, order = FALSE, ...)
 {
     if(length(extras <- list(...))) {
         opar <- par(extras)
@@ -30,14 +30,29 @@ identify.default <-
     xy <- xy.coords(x, y, setLab = FALSE)
     x <- xy$x
     y <- xy$y
-    if (length(x)==0) {
-        if (pos)
-            return(list(ind=numeric(), pos=numeric()))
-        else
+    if (length(x) == 0) {
+        if (!pos && !order)
             return(numeric())
+        else {
+            result <- list(ind = numeric())
+            if (pos)
+                result$pos <- numeric()
+            if (order)
+                result$order <- numeric()
+            return(result)
+        }
     }
     z <- .External2(C_identify, x, y, as.character(labels), n, plot,
                     offset, tolerance, atpen)
     i <- seq.int(z[[1L]])[z[[1L]]]
-    if(pos) list(ind = i, pos = z[[2L]][z[[1L]]]) else i
+    if (!pos && !order) 
+        i
+    else {
+        result <- list(ind = i)
+        if (pos)
+            result$pos = z[[2L]][z[[1L]]]
+        if (order)
+            result$order = z[[3L]][z[[1L]]]
+        result
+    }
 }

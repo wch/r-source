@@ -81,8 +81,8 @@ conceptual_base_code <- c("c.default")
 .haveRds <- function(dir)
 {
     ## either source package or pre-2.10.0 installed package
-    if (dir.exists(file.path(dir, "man"))) return(TRUE)
-    file.exists((file.path(dir, "help", "paths.rds")))
+    dir.exists (file.path(dir, "man")) ||
+    file.exists(file.path(dir, "help", "paths.rds"))
 }
 
 ### * undoc/F/out
@@ -315,6 +315,10 @@ function(x, ...)
 }
 
 ### * codoc
+
+##
+is_data_for_dataset <- function(e) ## trigger for data(foo) or data(foo, package="bar") and similar
+    length(e) >= 2L && e[[1L]] == quote(data) && e[[2L]] != quote(...) && length(e) <= 4L
 
 codoc <-
 function(package, dir, lib.loc = NULL,
@@ -602,9 +606,7 @@ function(package, dir, lib.loc = NULL,
                   sapply(exprs[ind], deparse))
             exprs <- exprs[!ind]
         }
-        ind <- vapply(exprs, function(e) (length(e) == 2L) &&
-                                         e[[1L]] == as.symbol("data"),
-                      NA, USE.NAMES=FALSE)
+        ind <- vapply(exprs, is_data_for_dataset, NA, USE.NAMES=FALSE)
         if(any(ind)) {
             data_sets <- sapply(exprs[ind],
                                 function(e) as.character(e[[2L]]))
@@ -619,7 +621,7 @@ function(package, dir, lib.loc = NULL,
         replace_exprs <- exprs[ind]
         exprs <- exprs[!ind]
         ## Ordinary functions.
-        functions <- sapply(exprs, function(e) as.character(e[[1L]]))
+        functions <- vapply(exprs, function(e) as.character(e[[1L]]), "")
         ## Catch assignments: checkDocFiles() will report these, so drop
         ## them here.
         ## And also unary/binary operators
@@ -1331,7 +1333,7 @@ function(package, dir, lib.loc = NULL)
                function(e) .Rd_deparse(.Rd_drop_comments(e)))
     ## </FIXME>
     db_usages <- lapply(db_usages, .parse_usage_as_much_as_possible)
-    ind <- as.logical(sapply(db_usages,
+    ind <- as.logical(lapply(db_usages,
                              function(x) !is.null(attr(x, "bad_lines"))))
     bad_lines <- lapply(db_usages[ind], attr, "bad_lines")
 
@@ -1359,15 +1361,11 @@ function(package, dir, lib.loc = NULL)
         ## Determine function names ('functions') and corresponding
         ## arguments ('arg_names_in_usage') in the \usage.  Note how we
         ## try to deal with data set documentation.
-        ind <- as.logical(sapply(exprs,
-                                 function(e)
-                                 ((length(e) > 1L) &&
-                                  !((length(e) == 2L)
-                                    && e[[1L]] == as.symbol("data")))))
+        ind <- as.logical( ## as.logical(lapply( * )) : more "defensive" than vapply() [?]
+            lapply(exprs, function(e) length(e) > 1L && !is_data_for_dataset(e)))
         exprs <- exprs[ind]
         ## Split out replacement function usages.
-        ind <- as.logical(sapply(exprs,
-                                 .is_call_from_replacement_function_usage))
+        ind <- as.logical(lapply(exprs, .is_call_from_replacement_function_usage))
         replace_exprs <- exprs[ind]
         exprs <- exprs[!ind]
         ## Ordinary functions.
@@ -5399,7 +5397,7 @@ function(package, dir, lib.loc = NULL)
             if((Call %in%
                 c("library", "require", "loadNamespace", "requireNamespace"))
                && (length(e) >= 2L)) {
-                ## We need to rempve '...': OTOH the argument could be NULL
+                ## We need to remove '...': OTOH the argument could be NULL
                 keep <- sapply(e, function(x) deparse(x)[1L] != "...")
                 mc <- match.call(get(Call, baseenv()), e[keep])
                 if(!is.null(pkg <- mc$package)) {
@@ -5850,7 +5848,7 @@ function(db, files)
             if(Call %in%
                c("library", "require", "loadNamespace", "requireNamespace")) {
                 if(length(e) >= 2L) {
-                    ## We need to rempve '...': OTOH the argument could be NULL
+                    ## We need to remove '...': OTOH the argument could be NULL
                     keep <- sapply(e, function(x) deparse(x)[1L] != "...")
                     mc <- match.call(get(Call, baseenv()), e[keep])
                     if(!is.null(pkg <- mc$package)) {
@@ -5988,9 +5986,42 @@ function(dir, testdir, lib.loc = NULL)
     testsrcdir <- file.path(dir, testdir)
     od <- setwd(testsrcdir)
     on.exit(setwd(od))
-    Rinfiles <- dir(".", pattern="\\.Rin$") # only trackOjs has *.Rin
-    Rfiles <- dir(".", pattern="\\.[rR]$")
-    .check_packages_used_helper(db, c(Rinfiles, Rfiles))
+    Rinfiles <- list.files(".", pattern = "\\.Rin$")
+    Rfiles <- list.files(".", pattern = "\\.[rR]$")
+    if(testdir != "tests") {
+        use_subdirs <- FALSE
+    } else {
+        use_subdirs <-
+            Sys.getenv("_R_CHECK_PACKAGES_USED_IN_TESTS_USE_SUBDIRS_",
+                       "FALSE")
+        use_subdirs <- config_val_to_logical(use_subdirs)
+        if(use_subdirs) {
+            subdirs <- c("testthat", "testit", "unitizer", "RUnit")
+            subdirs <- subdirs[dir.exists(subdirs)]
+            if(length(subdirs)) {
+                Rfiles <-
+                    c(Rfiles,
+                      unlist(lapply(subdirs, list.files,
+                                    pattern = "\\.[rR]$",
+                                    full.names = TRUE),
+                             use.names = FALSE))
+            } else {
+                use_subdirs <- FALSE
+            }
+        }
+    }
+    res <- .check_packages_used_helper(db, c(Rinfiles, Rfiles))
+    if(use_subdirs && any(lengths(bad <- res[1L : 3L]))) {
+        ## Filter results against available package names to avoid (too
+        ## many) false positives.
+        ## <FIXME>
+        ## Should really standardize getting available packages when
+        ## checking.
+        repos <- .get_standard_repository_URLs()
+        available <- utils::available.packages(repos = repos)
+        res[1L : 3L] <- lapply(bad, intersect, available[, "Package"])
+    }
+    res
 }
 
 ### * .check_packages_used_in_vignettes
@@ -6400,7 +6431,7 @@ function(dir, silent = FALSE, def_enc = FALSE, minlevel = -1)
 	tmp <- tryCatch(suppressMessages(checkRd(f, encoding = enc,
 						 def_enc = def_enc,
                                                  macros = macros)),
-			error = function(e)e)
+			error = identity)
 	if(inherits(tmp, "error")) {
 	    bad <- c(bad, f)
             if(!silent) message(geterrmessage())
@@ -6676,7 +6707,8 @@ function(dir, localOnly = FALSE)
         stop("Package has no 'Version' field", call. = FALSE)
     if(grepl("(^|[.-])0[0-9]+", ver))
         out$version_with_leading_zeroes <- ver
-    if(any(unlist(package_version(ver)) >= 1234))
+    unlisted_version <- unlist(package_version(ver))
+    if(any(unlisted_version >= 1234 & unlisted_version != as.integer(format(Sys.Date(), "%Y"))))
         out$version_with_large_components <- ver
 
     .aspell_package_description_for_CRAN <- function(dir, meta = NULL) {
@@ -7056,11 +7088,15 @@ function(dir, localOnly = FALSE)
         out$size_of_tarball <- size
 
     ## Check URLs.
-    if(!capabilities("libcurl") && !localOnly)
+    remote <-
+        (!localOnly &&
+         !config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_SKIP_URL_CHECKS_IF_REMOTE_",
+                                           "FALSE")))
+    if(!capabilities("libcurl") && remote)
         out$no_url_checks <- TRUE
     else {
         bad <- tryCatch(check_url_db(url_db_from_package_sources(dir),
-                                     remote = !localOnly),
+                                     remote = remote),
                         error = identity)
         if(inherits(bad, "error")) {
             out$bad_urls <- bad
@@ -7324,7 +7360,9 @@ function(dir, localOnly = FALSE)
     }
 
     ## Check DOIs.
-    if(capabilities("libcurl")) {
+    if(capabilities("libcurl") &&
+       !config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_SKIP_DOI_CHECKS_",
+                                         "FALSE"))) {
         bad <- tryCatch(check_doi_db(doi_db_from_package_sources(dir)),
                         error = identity)
         if(inherits(bad, "error") || NROW(bad))
@@ -7413,22 +7451,79 @@ function(dir, localOnly = FALSE)
     if(!foss && analyze_license(l_d)$is_verified)
         out$new_license <- list(meta["License"], l_d)
 
-    ## Re-check for possible mis-spellings and keep only the new ones,
-    ## if enabled and current version was published recently enough.
-    if(NROW(a <- out$spelling)
-       && config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_ASPELL_RECHECK_MAYBE_",
-                                           "TRUE"))
-       && !inherits(year <- tryCatch(format(as.Date(meta0["Published"]),
-                                            "%Y"),
-                                     error = identity),
-                    "error")
-       && (year >=
-           as.numeric(Sys.getenv("_R_CHECK_CRAN_INCOMING_ASPELL_RECHECK_START_",
-                                 "2013")))) {
-        a0 <- .aspell_package_description_for_CRAN(meta = meta0)
-        out$spelling <- a[is.na(match(a$Original, a0$Original)), ]
+    ## for incoming check we may want to check for GNU make in SystemRequirements here
+	## in order to auto-accept packages once this was already accepted before
+	if(config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_NOTE_GNU_MAKE_",
+                                           "FALSE"))){
+        SysReq <- meta["SystemRequirements"]
+        if(!is.na(SysReq) && grepl("GNU [Mm]ake", SysReq)) {
+            out$GNUmake <- TRUE
+        }
     }
+	
+    ## Re-check for some notes if enabled and current version was published recently enough.
+    if(!inherits(year <- tryCatch(format(as.Date(meta0["Published"]), "%Y"),
+                                     error = identity),
+                    "error")){
+					
+        # possible mis-spellings and keep only the new ones:
+		if(NROW(a <- out$spelling)
+           && config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_ASPELL_RECHECK_MAYBE_",
+                                               "TRUE"))
+           && (year >=
+               as.numeric(Sys.getenv("_R_CHECK_CRAN_INCOMING_ASPELL_RECHECK_START_",
+                                     "2013")))) {
+            a0 <- .aspell_package_description_for_CRAN(meta = meta0)
+            out$spelling <- a[is.na(match(a$Original, a0$Original)), ]
+        }
 
+        # possible title_includes_name and only report if the title actually changed
+        if(NROW(out$title_includes_name)
+            && config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_TITLE_INCLUDES_NAME_RECHECK_MAYBE_",
+                                "TRUE"))
+            && (year >= as.numeric(Sys.getenv("_R_CHECK_CRAN_INCOMING_TITLE_INCLUDES_NAME_RECHECK_START_",
+                                     "2016")))
+            && meta0["Title"] == meta["Title"]) {
+                out$title_includes_name <- NULL
+		}
+		
+        # possible title case problems and only report if the title actually changed
+        if(NROW(out$title_case)
+            && config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_TITLE_CASE_RECHECK_MAYBE_",
+                                           "TRUE"))
+            && (year >= as.numeric(Sys.getenv("_R_CHECK_CRAN_INCOMING_TITLE_CASE_RECHECK_START_",
+                                 "2016")))
+            && meta0["Title"] == meta["Title"]) {
+                out$title_case <- NULL
+        }
+
+        # possible bad Description start and only report if new:
+        if(NROW(out$descr_bad_start)
+            && config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_DESCR_BAD_START_RECHECK_MAYBE_",
+                                           "TRUE"))
+            && (year >= as.numeric(Sys.getenv("_R_CHECK_CRAN_INCOMING_DESCR_BAD_START_RECHECK_START_",
+                                 "2016")))) {
+                descr0 <- trimws(as.vector(meta0["Description"]))
+                descr0 <- gsub("[\n\t]", " ", descr0)
+                if(grepl(paste0("^['\"]?", package), ignore.case = TRUE, descr0) 
+                        || grepl("^(The|This|A|In this|In the) package", descr0)){
+                    out$descr_bad_start <- NULL
+                }
+        }
+		
+        # possible GNU make usage and only report if this is new
+        if(NROW(out$GNUmake)
+            && config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_GNU_MAKE_RECHECK_MAYBE_",
+                                 "TRUE"))
+            && (year >= as.numeric(Sys.getenv("_R_CHECK_CRAN_INCOMING_GNU_MAKE_RECHECK_START_",
+                                 "2015")))) {
+                SysReq0 <- meta0["SystemRequirements"]
+                if(!is.na(SysReq0) && grepl("GNU [Mm]ake", SysReq0)) {
+                    out$GNUmake <- NULL
+                }
+        }
+    }
+	
     out
 }
 
@@ -7729,8 +7824,8 @@ function(x, ...)
                 "The Title field starts with the package name."
             },
             if(length(y <- x$title_case)) {
-                paste(c("The Title field should be in title case, current version then in title case:",
-                        sQuote(y)),
+                paste(c("The Title field should be in title case. Current version is:",
+                        sQuote(y[1L]), "In title case that is:", sQuote(y[2L])),
                       collapse = "\n")
             })),
       fmt(c(if(length(x$descr_bad_initial)) {
@@ -7758,6 +7853,9 @@ function(x, ...)
                       collapse = "\n")
             }
             )),
+      fmt(c(if(length(x$GNUmake)) {
+                "GNU make is a SystemRequirements."
+            })),
       fmt(c(if(length(x$bad_date)) {
                 "The Date field is not in ISO 8601 yyyy-mm-dd format."
             },
@@ -8309,8 +8407,8 @@ function(env)
 function(x)
 {
     ((length(x) == 3L)
-     && (identical(x[[1L]], as.symbol("<-")))
-     && (length(x[[2L]]) > 1L)
+     && identical(x[[1L]], quote(`<-`))
+     && (length(  x[[2L]]) > 1L)
      && is.symbol(x[[3L]]))
 }
 

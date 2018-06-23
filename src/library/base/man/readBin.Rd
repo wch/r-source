@@ -1,6 +1,6 @@
 % File src/library/base/man/readBin.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{readBin}
@@ -25,7 +25,7 @@ writeBin(object, con, size = NA_integer_,
     the mode: one of \code{"numeric"}, \code{"double"},
     \code{"integer"}, \code{"int"}, \code{"logical"}, \code{"complex"},
     \code{"character"}, \code{"raw"}.}
-  \item{n}{integer.  The (maximal) number of records to be
+  \item{n}{numeric.  The (maximal) number of records to be
     read.  You can use an over-estimate here, but not too large as
     storage is reserved for \code{n} items.}
   \item{size}{integer.  The number of bytes per element in the byte
@@ -41,7 +41,7 @@ writeBin(object, con, size = NA_integer_,
   \item{useBytes}{See \code{\link{writeLines}}.}
 }
 \details{
-  These functions are intended to be used with binary-mode connections.
+  These functions can only be used with binary-mode connections.
   If \code{con} is a character string, the functions call
   \code{\link{file}} to obtain a binary-mode file connection which is
   opened for the duration of the function call.
@@ -96,10 +96,6 @@ writeBin(object, con, size = NA_integer_,
   which does not contain C-style character strings, warnings (usually
   many) are given.  From a file or connection, the input will be broken
   into pieces of length 10000 with any final part being discarded.
-
-  Using these functions on a text-mode connection may work but should
-  not be mixed with text-mode access to the connection, especially if
-  the connection was opened with an \code{encoding} argument.
 }
 
 \value{
@@ -121,7 +117,8 @@ writeBin(object, con, size = NA_integer_,
   and \code{long double}.
 }
 \examples{
-zz <- file("testbin", "wb")
+zzfil <- tempfile("testbin")
+zz <- file(zzfil, "wb")
 writeBin(1:10, zz)
 writeBin(pi, zz, endian = "swap")
 writeBin(pi, zz, size = 4)
@@ -136,7 +133,7 @@ if((s <- .Machine$sizeof.longdouble) > 8)
     writeBin((pi/3)^(1:10), zz, size = s)
 close(zz)
 
-zz <- file("testbin", "rb")
+zz <- file(zzfil, "rb")
 readBin(zz, integer(), 4)
 readBin(zz, integer(), 6)
 readBin(zz, numeric(), 1, endian = "swap")
@@ -150,11 +147,12 @@ if(.Machine$sizeof.long == 8 || .Machine$sizeof.longlong == 8)
 if((s <- .Machine$sizeof.longdouble) > 8)
     readBin(zz, numeric(), 10, size = s)
 close(zz)
-unlink("testbin")
+unlink(zzfil)
 stopifnot(z2 == z)
 
 ## signed vs unsigned ints
-zz <- file("testbin", "wb")
+zzfil <- tempfile("testbin")
+zz <- file(zzfil, "wb")
 x <- as.integer(seq(0, 255, 32))
 writeBin(x, zz, size = 1)
 writeBin(x, zz, size = 1)
@@ -162,13 +160,13 @@ x <- as.integer(seq(0, 60000, 10000))
 writeBin(x, zz, size = 2)
 writeBin(x, zz, size = 2)
 close(zz)
-zz <- file("testbin", "rb")
+zz <- file(zzfil, "rb")
 readBin(zz, integer(), 8, size = 1)
 readBin(zz, integer(), 8, size = 1, signed = FALSE)
 readBin(zz, integer(), 7, size = 2)
 readBin(zz, integer(), 7, size = 2, signed = FALSE)
 close(zz)
-unlink("testbin")
+unlink(zzfil)
 
 ## use of raw
 z <- writeBin(pi^{1:5}, raw(), size = 4)

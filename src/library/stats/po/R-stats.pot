@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: stats 3.4.0\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
+"Project-Id-Version: stats 3.6.0\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -256,10 +256,13 @@ msgstr ""
 msgid "'approx' requires n >= 1"
 msgstr ""
 
+msgid "NAs in 'x' must be the same row-wise"
+msgstr ""
+
 msgid "'order.max' must be >= 1"
 msgstr ""
 
-msgid "'order.max' must be < 'n.used'"
+msgid "'order.max' must be < 'n.obs'"
 msgstr ""
 
 msgid "zero-variance series"
@@ -278,6 +281,9 @@ msgid "MLE only implemented for univariate series"
 msgstr ""
 
 msgid "'order.max' must be >= 0"
+msgstr ""
+
+msgid "'order.max' must be < 'n.used'"
 msgstr ""
 
 msgid "'order' must be a non-negative numeric vector of length 3"
@@ -460,7 +466,7 @@ msgstr ""
 msgid "distances must be result of 'dist' or a square matrix"
 msgstr ""
 
-msgid "invalid value of 'n'"
+msgid "invalid value of %s"
 msgstr ""
 
 msgid "'k' must be in {1, 2, ..  n - 1}"
@@ -665,9 +671,6 @@ msgid "argument 'x' must be numeric"
 msgstr ""
 
 msgid "'x' contains missing values"
-msgstr ""
-
-msgid "invalid value of length(x)"
 msgstr ""
 
 msgid "'x' and 'weights' have unequal length"
@@ -901,6 +904,9 @@ msgstr ""
 msgid "need 2 or more non-zero column marginals"
 msgstr ""
 
+msgid "names(hybridPars) should be NULL or be identical to the default's"
+msgstr ""
+
 msgid "'hybrid' is ignored for a 2 x 2 table"
 msgstr ""
 
@@ -1016,6 +1022,9 @@ msgid "no observations informative at iteration %d"
 msgstr ""
 
 msgid "non-finite coefficients at iteration %d"
+msgstr ""
+
+msgid "singular fit encountered"
 msgstr ""
 
 msgid "no valid set of coefficients has been found: please supply starting values"
@@ -1183,9 +1192,6 @@ msgstr ""
 msgid "more cluster centers than data points"
 msgstr ""
 
-msgid "'invalid value of 'k'"
-msgstr ""
-
 msgid "'iter.max' must be positive"
 msgstr ""
 
@@ -1234,9 +1240,6 @@ msgstr ""
 msgid "incompatible dimensions"
 msgstr ""
 
-msgid "singular fit encountered"
-msgstr ""
-
 msgid "missing or negative weights not allowed"
 msgstr ""
 
@@ -1253,6 +1256,9 @@ msgid "essentially perfect fit: summary may be unreliable"
 msgstr ""
 
 msgid "lm object does not have a proper 'qr' component.\n Rank zero or should not have used lm(.., qr=FALSE)."
+msgstr ""
+
+msgid "simulate() is not yet implemented for multivariate lm()"
 msgstr ""
 
 msgid "family '%s' not implemented"
@@ -1705,6 +1711,15 @@ msgstr ""
 msgid "exactly one of 'n', 'p1', 'p2', 'power', and 'sig.level' must be NULL"
 msgstr ""
 
+msgid "No p1 in in [0, p2] can be found to achieve the desired power"
+msgstr ""
+
+msgid "No p2 in in [p1, 1] can be found to achieve the desired power"
+msgstr ""
+
+msgid "No significance level [0, 1] can be found to achieve the desired power"
+msgstr ""
+
 msgid "exactly one of 'groups', 'n', 'between.var', 'within.var', 'power', and 'sig.level' must be NULL"
 msgstr ""
 
@@ -1789,6 +1804,9 @@ msgstr ""
 msgid "'formula' missing"
 msgstr ""
 
+msgid "'type' must be 1 or 3 for ordered factors"
+msgstr ""
+
 msgid "factors are not allowed"
 msgstr ""
 
@@ -1810,7 +1828,10 @@ msgstr ""
 msgid "arguments 'r' and 'c' must have the same sums"
 msgstr ""
 
-msgid "'relevel' only for factors"
+msgid "'relevel' only for (unordered) factors"
+msgstr ""
+
+msgid "'relevel' only for unordered factors"
 msgstr ""
 
 msgid "'ref' must be of length one"
@@ -1850,9 +1871,6 @@ msgid "length of 'v.names' does not evenly divide length of 'varying'"
 msgstr ""
 
 msgid "length of 'varying' must be the product of length of 'v.names' and length of 'times'"
-msgstr ""
-
-msgid "invalid value of 'k'"
 msgstr ""
 
 msgid "'k' must be positive"
@@ -1912,6 +1930,9 @@ msgstr ""
 msgid "'tol' must be strictly positive and finite"
 msgstr ""
 
+msgid "invalid 'keep.stuff'"
+msgstr ""
+
 msgid "need at least four unique 'x' values"
 msgstr ""
 
@@ -1919,6 +1940,15 @@ msgid "'cv' must not be NA when 'df' is specified"
 msgstr ""
 
 msgid "cross-validation with non-unique 'x' values seems doubtful"
+msgstr ""
+
+msgid "Numeric 'all.knots' must be strictly increasing"
+msgstr ""
+
+msgid "'all.knots' is vector of knots; 'nknots' specification is disregarded"
+msgstr ""
+
+msgid "numeric 'all.knots' must cover [0,1] (= the transformed data-range)"
 msgstr ""
 
 msgid "'all.knots' is TRUE; 'nknots' specification is disregarded"
@@ -1933,13 +1963,13 @@ msgstr ""
 msgid "cannot use more inner knots than unique 'x' values"
 msgstr ""
 
+msgid "must not specify both 'spar' and 'lambda'"
+msgstr ""
+
 msgid "'spar' must be of length 1"
 msgstr ""
 
-msgid "specified both 'df' and 'cv'; will disregard the latter"
-msgstr ""
-
-msgid "you must supply 1 < df <= n,  n = #{unique x} ="
+msgid "not using invalid df; must have 1 < df <= n := #{unique x} ="
 msgstr ""
 
 msgid "NA lev[]; probably smoothing parameter 'spar' way too large!"
@@ -1957,6 +1987,9 @@ msgstr ""
 msgid "not a valid \"smooth.spline\" object"
 msgstr ""
 
+msgid "'span' must be between 0 and 1."
+msgstr ""
+
 msgid "'y' must be numeric vector"
 msgstr ""
 
@@ -1964,9 +1997,6 @@ msgid "number of observations in 'x' and 'y' must match."
 msgstr ""
 
 msgid "number of weights must match number of observations."
-msgstr ""
-
-msgid "'span' must be between 0 and 1."
 msgstr ""
 
 msgid "'x' must be between 0 and 1 for periodic smooth"
@@ -2194,7 +2224,7 @@ msgstr ""
 msgid "requested conf.level not achievable"
 msgstr ""
 
-msgid "cannot compute confidence interval when all observations are tied"
+msgid "cannot compute confidence interval when all observations are zero or tied"
 msgstr ""
 
 msgid "cannot compute exact confidence interval with ties"
@@ -2207,6 +2237,9 @@ msgid "cannot compute exact confidence interval with zeroes"
 msgstr ""
 
 msgid "Requested conf.level not achievable"
+msgstr ""
+
+msgid "cannot compute confidence interval when all observations are tied"
 msgstr ""
 
 msgid "must supply either 'formula' or 'data'"

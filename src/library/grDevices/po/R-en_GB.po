@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
 "PO-Revision-Date: 2005-08-15 11:43+0000\n"
 "Last-Translator: Prof Brian Ripley <ripley@stats.ox.ac.uk>\n"
 "Language-Team: English\n"
@@ -217,6 +217,9 @@ msgid "invalid output format"
 msgstr ""
 
 msgid "status %d in running command '%s'"
+msgstr ""
+
+msgid "failed to add more ticks; 'min.n' too large?"
 msgstr ""
 
 msgid "a raster matrix must be character, or numeric, or logical"

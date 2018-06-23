@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2016-04-01 09:50\n"
+"POT-Creation-Date: 2018-03-29 07:06\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@normipaiva.com>\n"
 "Language-Team: Chinese\n"
@@ -111,6 +111,11 @@ msgstr "必需设定成员类别: %s没有这样的设定"
 
 msgid "unable to create union class:  could not set members %s"
 msgstr "无法建立併集类别: 无法设定%s成员"
+
+msgid ""
+"methods:::bind_activation() is defunct;\n"
+" rather provide methods for cbind2() / rbind2()"
+msgstr ""
 
 msgid "invalid argument 'name': %s"
 msgstr "参数'name'无效: %s"
@@ -658,6 +663,9 @@ msgid ""
 "'%s'"
 msgstr ""
 
+msgid "Also defined by"
+msgstr ""
+
 msgid "undefined subclass %s of class %s; definition not updated"
 msgstr "%2$s类别的子类别%1$s没有定义；因此没有更新"
 
@@ -729,8 +737,9 @@ msgid ""
 "the generic"
 msgstr "只有当'...'是泛型方法参数时方法才能给泛型%s加参数"
 
+#, fuzzy
 msgid ""
-"arguments (%s) after '...' in the generic must appear in the method, in the "
+"%s arguments (%s) after %s in the generic must appear in the method, in the "
 "same place at the end of the argument list"
 msgstr ""
 "泛型方法里在'...'之后的参数(%s)必需也存在于方法里，在参数串列同一个最后的地方"

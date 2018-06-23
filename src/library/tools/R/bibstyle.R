@@ -21,7 +21,7 @@
 # Clean up LaTeX accents and braces
 cleanupLatex <- function(x) {
     if (!length(x)) return(x)
-    latex <- tryCatch(parseLatex(x), error = function(e)e)
+    latex <- tryCatch(parseLatex(x), error = identity)
     if (inherits(latex, "error")) {
     	x
     } else {
@@ -92,7 +92,7 @@ makeJSS <- function() {
     fmtNote <- plainclean
     fmtPages <- plain
     fmtSchool <- plainclean
-    fmtTechreportnumber <- labelclean(prefix="Technical Report ")
+    ## fmtTechreportnumber <- labelclean(prefix="Technical Report ")
     fmtUrl <- label(prefix="\\url{", suffix="}")
     fmtTitle <- function(title)
         if (length(title))
@@ -102,6 +102,13 @@ makeJSS <- function() {
     fmtYear <- function(year) {
         if (!length(year)) year <- "????"
         paste0("(", collapse(year), ")")
+    }
+
+    fmtType <- function(type, default) {
+        if(length(type) && any(nzchar(type)))
+            plainclean(type)
+        else
+            default
     }
 
     # Now some more complicated ones that look at multiple fields
@@ -186,6 +193,13 @@ makeJSS <- function() {
         }
     }
 
+    fmtTechreportnumber <- function(paper) {
+        if(length(paper$number)) {
+            paste(fmtType(paper$type, "Technical Report"),
+                  plainclean(paper$number))
+        }
+    }
+
     formatArticle <- function(paper) {
         collapse(c(fmtPrefix(paper),
                    sentence(authorList(paper), fmtYear(paper$year), sep = " "),
@@ -265,7 +279,8 @@ makeJSS <- function() {
         collapse(c(fmtPrefix(paper),
                    sentence(authorList(paper), fmtYear(paper$year), sep = " "),
                    sentence(fmtBtitle(paper$title)),
-                   sentence("Master's thesis", fmtSchool(paper$school),
+                   sentence(fmtType(paper$type, "Master's thesis"),
+                            fmtSchool(paper$school),
                             fmtAddress(paper$address)),
                    sentence(extraInfo(paper))))
     }
@@ -274,7 +289,8 @@ makeJSS <- function() {
         collapse(c(fmtPrefix(paper),
                    sentence(authorList(paper), fmtYear(paper$year), sep = " "),
                    sentence(fmtBtitle(paper$title)),
-                   sentence("PhD thesis", fmtSchool(paper$school),
+                   sentence(fmtType(paper$type, "Ph.D. thesis"),
+                            fmtSchool(paper$school),
                             fmtAddress(paper$address)),
                    sentence(extraInfo(paper))))
     }
@@ -302,7 +318,7 @@ makeJSS <- function() {
         collapse(c(fmtPrefix(paper),
                    sentence(authorList(paper), fmtYear(paper$year), sep = " "),
                    fmtTitle(paper$title),
-                   sentence(fmtTechreportnumber(paper$number),
+                   sentence(fmtTechreportnumber(paper),
                             fmtInstitution(paper$institution),
                             fmtAddress(paper$address)),
                    sentence(extraInfo(paper))))
@@ -376,7 +392,7 @@ getBibstyle <- function(all = FALSE) {
 
 toRd.bibentry <- function(obj, style=NULL, ...) {
     obj <- sort(obj, .bibstyle=style)
-    style <- bibstyle(style)
+    style <- bibstyle(style, .default = FALSE)
     env <- new.env(hash = FALSE, parent = style)
     bib <- unclass(obj)
     result <- character(length(bib))
