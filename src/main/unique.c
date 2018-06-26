@@ -27,7 +27,6 @@
 #define R_USE_SIGNALS 1
 #include <Defn.h>
 #include <Internal.h>
-#include <R_ext/Altrep.h>
 
 #define NIL -1
 #define ARGUSED(x) LEVELS(x)
@@ -1042,9 +1041,10 @@ SEXP attribute_hidden do_match(SEXP call, SEXP op, SEXP args, SEXP env)
 	|| (!isVector(CADR(args)) && !isNull(CADR(args))))
 	error(_("'match' requires vector arguments"));
 
-    int nomatch = asInteger(CADDR(args)), nprot=0;
+    int nomatch = asInteger(CADDR(args));
     SEXP incomp = CADDDR(args);
-    SEXP incomp2;
+    /* SEXP incomp2; */
+    /* int nprot = 0 */
     /* if(ALTREP(CADR(args)) && !OBJECT(CADR(args)) && !OBJECT(CAR(args))) { */
     /* 	if (isNull(incomp) || /\* S has FALSE to mean empty *\/ */
     /* 	    (length(incomp) == 1 && isLogical(incomp) && LOGICAL(incomp)[0] == 0)) */
@@ -1064,9 +1064,8 @@ SEXP attribute_hidden do_match(SEXP call, SEXP op, SEXP args, SEXP env)
     /* 	    if(nprot >0) UNPROTECT(nprot); */
     /* 	    return ans; */
     /* 	} */
-	
     /* } */
-  
+
     if (isNull(incomp) || /* S has FALSE to mean empty */
 	(length(incomp) == 1 && isLogical(incomp) &&
 	 LOGICAL_ELT(incomp, 0) == 0))

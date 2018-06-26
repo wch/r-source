@@ -33,7 +33,6 @@
 #define R_MSG_list_vec	_("applies only to lists and vectors")
 #include <Rmath.h>
 #include <Print.h>
-#include <R_ext/Altrep.h>
 
 
 /* This section of code handles type conversion for elements */
