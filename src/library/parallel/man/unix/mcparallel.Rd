@@ -1,6 +1,6 @@
 % File src/library/parallel/man/unix/mcparallel.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2009-2017 R Core Team
+% Copyright 2009-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{mcparallel}
@@ -25,7 +25,9 @@ mccollect(jobs, wait = TRUE, timeout = 0, intermediate = FALSE)
 }
 \arguments{
   \item{expr}{expression to evaluate (do \emph{not} use any on-screen
-    devices or GUI elements in this code).}
+    devices or GUI elements in this code).  Raw vectors are reserved for
+    internal use and cannot be returned, but the expression may evaluate
+    e.g. to a list holding a raw vector.}
   \item{name}{an optional name (character vector of length one) that can
     be associated with the job.}
   \item{mc.set.seed}{logical: see section \sQuote{Random numbers}.}

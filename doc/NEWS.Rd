@@ -198,8 +198,6 @@
       font face (\PR{17352}).
 
       \item \code{plot(<table>, log="x")} no longer warns about \code{log}.
-
-      \item \code{str(ch)} now works for more invalid multibyte strings.
     }
   }
 }
@@ -275,6 +273,8 @@
 
       \item \code{agrep("..|..", .., fixed=FALSE)} now matches when it
       should, thanks to a reminder by Andreas Kolter.
+
+      \item \code{str(ch)} now works for more invalid multibyte strings.
     }
   }
 }

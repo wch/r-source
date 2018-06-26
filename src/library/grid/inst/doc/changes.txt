@@ -1,8 +1,12 @@
 
-Changes from grid_3.6.* to grid_3.6.0:
+Changes from grid_3.5.* to grid_3.6.0:
 -------------------------------------
 
 1.  New functions deviceLoc() and deviceDim().
+
+2.  Improve handling of graphics devices in grid.grabExpr().
+    Should now work when multiple graphics devices already open
+    (e.g., within 'knitr' document).
 
 
 Changes from grid_3.4.* to grid_3.5.0:
