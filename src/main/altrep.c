@@ -457,15 +457,6 @@ SEXP ALTINTEGER_MAX(SEXP x, Rboolean narm)
 
 }
 
-/* is this TOO general? I don't think so..., possible it should be ALTVEC? */
-
-#define DISPATCH_METHOD(type, fun, ...)					\
-    type##_METHODS_TABLE(DISPATCH_TARGET(__VA_ARGS__))->fun
-
-#define ALTREP_INFO(x) R_altrep_data1(x)
-#define ALTREP_EXPANDED(x) R_altrep_data2(x)
-#define ALTREP_NONEXP(x) (ALTREP(x) && ALTREP_EXPANDED(x) == R_NilValue)
-
 SEXP ALTINTEGER_MATCH(SEXP table, SEXP x, int nm, SEXP incomp, SEXP env,
 		      Rboolean first) {
     /* TODO: be cleverer about this when they're factors?? */
@@ -656,6 +647,14 @@ static SEXP altreal_Sum_default(SEXP x, Rboolean narm) { return NULL; }
 static SEXP altreal_Min_default(SEXP x, Rboolean narm) { return NULL; }
 static SEXP altreal_Max_default(SEXP x, Rboolean narm) { return NULL; }
 
+#ifdef ALTREP_MATCH_CODE
+/* is this TOO general? I don't think so..., possible it should be ALTVEC? */
+
+#define DISPATCH_METHOD(type, fun, ...)					\
+    type##_METHODS_TABLE(DISPATCH_TARGET(__VA_ARGS__))->fun
+
+#define ALTREP_INFO(x) R_altrep_data1(x)
+#define ALTREP_EXPANDED(x) R_altrep_data2(x)
 
 #define INTVAL_ISNA(x) ((x) == NA_INTEGER)
 
@@ -858,7 +857,21 @@ static SEXP altinteger_Match_default(SEXP table, SEXP q,
     ALT_MATCH_DEFAULT(int, INTSXP, INTEGER, firstonly, INTEGER_ELT,
 		      R_altinteger_Elt_method_t, INTVAL_ISNA);
 }
+#else
+static SEXP altreal_Match_default(SEXP table, SEXP q,
+				  int nmatch, SEXP incomp,
+				  SEXP env,
+				  Rboolean firstonly) {
+    return NULL;
+}
 
+static SEXP altinteger_Match_default(SEXP table, SEXP q,
+				     int nmatch, SEXP incomp,
+				     SEXP env,
+				     Rboolean firstonly) {
+    return NULL;
+}
+#endif /* ALTREP_MATCH_CODE */
 
 static SEXP altstring_Elt_default(SEXP x, R_xlen_t i)
 {
@@ -1333,7 +1346,7 @@ static SEXP compact_intseq_Match(SEXP table, SEXP x, int nm, SEXP incomp,
        XLENGTH(x) == 0 || XLENGTH(table) == 0)
 	return NULL;
 
-    SEXP ans, info = ALTREP_INFO(table);
+    SEXP ans, info = COMPACT_SEQ_INFO(table);
     int inc = COMPACT_INTSEQ_INFO_INCR(info);
     int nt = COMPACT_INTSEQ_INFO_LENGTH(info);
     int minval, maxval;
@@ -1452,6 +1465,7 @@ static SEXP new_compact_intseq(R_xlen_t n, int n1, int inc)
 }
 
 
+#ifdef VIRTREP_CLASS
 /* 
  * Virtually rep'ed integer vector
  */
@@ -1783,6 +1797,7 @@ static SEXP new_virtrep_intvec(SEXP parent, R_xlen_t len)
     return ans;
     
 }
+#endif /* VIRTREP_CLASS */
 
 
 /**
@@ -1885,11 +1900,11 @@ static const void *compact_realseq_Dataptr_or_null(SEXP x)
 
 static double compact_realseq_Elt(SEXP x, R_xlen_t i)
 {
-    SEXP ex = ALTREP_EXPANDED(x);
+    SEXP ex = COMPACT_SEQ_EXPANDED(x);
     if (ex != R_NilValue)
 	return REAL0(ex)[i];
     else {
-	SEXP info = ALTREP_INFO(x);
+	SEXP info = COMPACT_SEQ_INFO(x);
 	double n1 = COMPACT_REALSEQ_INFO_FIRST(info);
 	double inc = COMPACT_REALSEQ_INFO_INCR(info);
 	return n1 + inc * i;
@@ -3059,7 +3074,9 @@ static R_altrep_class_t wrap_string_class;
  * ALTREP Methods
  */
 
-static SEXP wrapper_Serialized_state(SEXP x)
+static SEXP make_wrapper(SEXP, SEXP);
+
+ static SEXP wrapper_Serialized_state(SEXP x)
 {
     return CONS(WRAPPER_WRAPPED(x), WRAPPER_METADATA(x));
 }
@@ -3114,6 +3131,8 @@ static R_xlen_t wrapper_Length(SEXP x)
 /*
  * ALTVEC Methods
  */
+
+#define NMETA 2
 
 static void clear_meta_data(SEXP x)
 {
@@ -3191,6 +3210,7 @@ static SEXP wrapper_integer_Match(SEXP table, SEXP q,
 					    int nmatch, SEXP incomp,
 					    SEXP env,
 					    Rboolean firstonly) {
+#ifdef ALTREP_MATCH_CODE
     //  fprintf(stderr, "Hit altinteger_Match_default");
     if (!ALTREP(WRAPPER_WRAPPED(table))) {
 	int *ptr = INTEGER(WRAPPER_WRAPPED(table));
@@ -3201,6 +3221,9 @@ static SEXP wrapper_integer_Match(SEXP table, SEXP q,
 			  R_altinteger_Elt_method_t, INTVAL_ISNA);
     }
     //fprintf(stderr, "Leaving altintger_Match_default");
+#else
+    return NULL;
+#endif
 }
 
 
@@ -3242,6 +3265,7 @@ static SEXP wrapper_real_Match(SEXP table, SEXP q,
 					    int nmatch, SEXP incomp,
 					    SEXP env,
 					    Rboolean firstonly) {
+#ifdef ALTREP_MATCH_CODE
     //  fprintf(stderr, "Hit altinteger_Match_default");
     if(!ALTREP(WRAPPER_WRAPPED(table))) {
 	double *ptr = REAL(WRAPPER_WRAPPED(table));
@@ -3252,6 +3276,9 @@ static SEXP wrapper_real_Match(SEXP table, SEXP q,
 			  R_altreal_Elt_method_t, ISNA);
     }
     //fprintf(stderr, "Leaving altintger_Match_default");
+#else
+    return NULL;
+#endif
 }
 
 
@@ -3457,7 +3484,9 @@ void attribute_hidden R_init_altrep()
     InitWrapIntegerClass(NULL);
     InitWrapRealClass(NULL);
     InitWrapStringClass(NULL);
+#ifdef VIRTREP_CLASS
     InitVirtRepIntegerClass();
+#endif
 #ifdef DODO
     InitSubsettedRealClass();
     InitSubsettedIntegerClass();
