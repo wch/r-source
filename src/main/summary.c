@@ -517,6 +517,37 @@ static R_INLINE SEXP complex_mean(SEXP x)
     return ScalarComplex(val);
 }
 
+static R_INLINE SEXP AltMinMax(SEXP x, Rboolean narm, int max,
+			       int (*is_sorted)(SEXP),
+			       int (*no_na)(SEXP),
+			       SEXP(*elt)(SEXP, R_xlen_t),
+			       SEXP (*dispatch)(SEXP, Rboolean))
+{
+    /* Fast return for sorted data with no NA values.  If there are NA
+       values, then these need to be handled based on 'narm' and the
+       no non-NA convention.  */
+    int sorted = is_sorted(x);
+    R_xlen_t len = XLENGTH(x);
+    if (len > 0 && no_na(x)) {
+	if (KNOWN_INCR(sorted)) 
+	    return elt(x, max ? len - 1 : 0);
+	else if (KNOWN_DECR(sorted))
+	    return elt(x, max ? 0 : len - 1);
+    }
+
+    return dispatch(x, narm);
+}
+
+static R_INLINE SEXP ScalarIntegerElt(SEXP x, R_xlen_t i)
+{
+    return ScalarInteger(INTEGER_ELT(x, i));
+}
+
+static R_INLINE SEXP ScalarRealElt(SEXP x, R_xlen_t i)
+{
+    return ScalarReal(REAL_ELT(x, i));
+}
+
 SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
@@ -564,16 +595,24 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 		toret = ALTREAL_SUM(vec, narm);
 	    break; 
 	case 2:
-	    if(TYPEOF(vec) == INTSXP) 
-		toret = ALTINTEGER_MIN(vec, narm);
+	    if(TYPEOF(vec) == INTSXP)
+		toret =  AltMinMax(vec, narm, FALSE, INTEGER_IS_SORTED,
+				   INTEGER_NO_NA, ScalarIntegerElt,
+				   ALTINTEGER_MIN);
 	    else if (TYPEOF(vec) == REALSXP)
-		toret = ALTREAL_MIN(vec, narm);
+		toret =  AltMinMax(vec, narm, FALSE, REAL_IS_SORTED,
+				   REAL_NO_NA, ScalarRealElt,
+				   ALTREAL_MIN);
 	    break;
 	case 3:
 	    if(TYPEOF(vec) == INTSXP) 
-		toret = ALTINTEGER_MAX(vec, narm);
+		toret =  AltMinMax(vec, narm, TRUE, INTEGER_IS_SORTED,
+				   INTEGER_NO_NA, ScalarIntegerElt,
+				   ALTINTEGER_MAX); 
 	    else if (TYPEOF(vec) == REALSXP)
-		toret = ALTREAL_MAX(vec, narm);
+		toret =  AltMinMax(vec, narm, TRUE, REAL_IS_SORTED,
+				   REAL_NO_NA, ScalarRealElt,
+				   ALTREAL_MAX);
 	    break;
 	default:
 	    break;

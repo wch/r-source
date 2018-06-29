@@ -2184,29 +2184,6 @@ SEXP attribute_hidden do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
 	return(ans);
     }
 
-    // uncomment to do dispatch to ATLREP custom NA methods, keep commented
-    // or remove for metadata fastpass only;
-    /*
-	
-    if (ALTREP(x)) {
-	switch(TYPEOF(x)) {
-	case INTSXP:
-	    ans = INTEGER_IS_NA(x);
-	    break;
-	case REALSXP:
-	    ans = REAL_IS_NA(x);
-	    break;
-	default:
-	    ans = NULL;
-	}
-	if (ans != NULL) {
-	    copyDimAndNames(x, ans);
-	    UNPROTECT(nprot);
-	    return ans;
-	}
-    }
-*/
-
     PROTECT(ans = allocVector(LGLSXP, n)); nprot++;
     int *pa = LOGICAL(ans);
     switch (TYPEOF(x)) {

@@ -78,46 +78,24 @@ SEXP multmatchsetToSEXP(multmatchset_t matches, Rboolean firstonly);
     error("tried to get match position beyond length of mset");
 
 typedef int (*R_altinteger_Elt_method_t)(SEXP, R_xlen_t);
-typedef void (*R_altinteger_Set_elt_method_t)(SEXP, R_xlen_t, int);
 typedef R_xlen_t
 (*R_altinteger_Get_region_method_t)(SEXP, R_xlen_t, R_xlen_t, int *);
 typedef int (*R_altinteger_Is_sorted_method_t)(SEXP);
 typedef int (*R_altinteger_No_NA_method_t)(SEXP);
-typedef int (*R_altinteger_Sort_check_method_t)(SEXP);
-typedef SEXP (*R_altintger_Sort_method_t)(SEXP, Rboolean);
-typedef SEXP (*R_altinteger_Order_method_t)(SEXP);
-typedef SEXP (*R_altinteger_Is_NA_method_t)(SEXP);
 typedef SEXP (*R_altinteger_Sum_method_t)(SEXP, Rboolean); 
 typedef SEXP (*R_altinteger_Min_method_t)(SEXP, Rboolean);
 typedef SEXP (*R_altinteger_Max_method_t)(SEXP, Rboolean);
-typedef R_xlen_t (*R_altinteger_Which_min_method_t)(SEXP);
-typedef R_xlen_t (*R_altinteger_Which_max_method_t)(SEXP);
 typedef SEXP (*R_altinteger_Match_method_t)(SEXP, SEXP, int, SEXP, SEXP, Rboolean);
-typedef SEXP (*R_altinteger_Unique_method_t)(SEXP);
-typedef SEXP (*R_altinteger_Scalar_compare_mehtod_t)(SEXP, int, Rboolean);
-/* typedef double (*R_altinteger_Compression_ratio_method_t)(SEXP); */
-/* typedef SEXP (*R_altinteger_As_subscripts_method_t)(SEXP); */
 
 typedef double (*R_altreal_Elt_method_t)(SEXP, R_xlen_t);
-typedef void (*R_altreal_Set_elt_method_t)(SEXP, R_xlen_t, double);
 typedef R_xlen_t
 (*R_altreal_Get_region_method_t)(SEXP, R_xlen_t, R_xlen_t, double *);
 typedef int (*R_altreal_Is_sorted_method_t)(SEXP);
 typedef int (*R_altreal_No_NA_method_t)(SEXP);
-typedef SEXP (*R_altreal_Sort_method_t)(SEXP, Rboolean);
-typedef int (*R_altreal_Sort_check_method_t)(SEXP);
-typedef SEXP (*R_altreal_Order_method_t)(SEXP);
-typedef SEXP (*R_altreal_Is_NA_method_t)(SEXP);
 typedef SEXP (*R_altreal_Sum_method_t)(SEXP, Rboolean); 
 typedef SEXP (*R_altreal_Min_method_t)(SEXP, Rboolean);
 typedef SEXP (*R_altreal_Max_method_t)(SEXP, Rboolean);
-typedef R_xlen_t (*R_altreal_Which_min_method_t)(SEXP);
-typedef R_xlen_t (*R_altreal_Which_max_method_t)(SEXP);
 typedef SEXP (*R_altreal_Match_method_t)(SEXP, SEXP, int, SEXP, SEXP, Rboolean);
-typedef SEXP (*R_altreal_Unique_method_t)(SEXP);
-typedef SEXP (*R_altreal_Scalar_compare_method_t)(SEXP, double, Rboolean);
-/* typedef double (*R_altreal_Compression_ratio_method_t)(SEXP); */
-/* typedef SEXP (*R_altreal_As_subscripts_method_t)(SEXP); */
 
 typedef SEXP (*R_altstring_Elt_method_t)(SEXP, R_xlen_t);
 typedef void (*R_altstring_Set_elt_method_t)(SEXP, R_xlen_t, SEXP);
@@ -143,40 +121,22 @@ DECLARE_METHOD_SETTER(altvec, Dataptr_or_null)
 DECLARE_METHOD_SETTER(altvec, Extract_subset)
 
 DECLARE_METHOD_SETTER(altinteger, Elt)
-DECLARE_METHOD_SETTER(altinteger, Set_elt)
 DECLARE_METHOD_SETTER(altinteger, Get_region)
 DECLARE_METHOD_SETTER(altinteger, Is_sorted)
 DECLARE_METHOD_SETTER(altinteger, No_NA)
-DECLARE_METHOD_SETTER(altinteger, Sort_check)
-DECLARE_METHOD_SETTER(altinteger, Order)
-DECLARE_METHOD_SETTER(altinteger, Is_NA)
 DECLARE_METHOD_SETTER(altinteger, Sum)
 DECLARE_METHOD_SETTER(altinteger, Min)
 DECLARE_METHOD_SETTER(altinteger, Max)
-DECLARE_METHOD_SETTER(altinteger, Which_min)
-DECLARE_METHOD_SETTER(altinteger, Which_max)
 DECLARE_METHOD_SETTER(altinteger, Match)
-DECLARE_METHOD_SETTER(altinteger, Unique)
-/* DECLARE_METHOD_SETTER(altinteger, Compression_ratio) */
-/* DECLARE_METHOD_SETTER(altinteger, As_subscripts) */
 
 DECLARE_METHOD_SETTER(altreal, Elt)
-DECLARE_METHOD_SETTER(altreal, Set_elt)
 DECLARE_METHOD_SETTER(altreal, Get_region)
 DECLARE_METHOD_SETTER(altreal, Is_sorted)
 DECLARE_METHOD_SETTER(altreal, No_NA)
-DECLARE_METHOD_SETTER(altreal, Sort_check)
-DECLARE_METHOD_SETTER(altreal, Order)
-DECLARE_METHOD_SETTER(altreal, Is_NA)
 DECLARE_METHOD_SETTER(altreal, Sum)
 DECLARE_METHOD_SETTER(altreal, Min)
 DECLARE_METHOD_SETTER(altreal, Max)
-DECLARE_METHOD_SETTER(altreal, Which_min)
-DECLARE_METHOD_SETTER(altreal, Which_max)
 DECLARE_METHOD_SETTER(altreal, Match)
-DECLARE_METHOD_SETTER(altreal, Unique)
-/* DECLARE_METHOD_SETTER(altreal, Compression_ratio) */
-/* DECLARE_METHOD_SETTER(altreal, As_subscripts) */
 
 DECLARE_METHOD_SETTER(altstring, Elt)
 DECLARE_METHOD_SETTER(altstring, Set_elt)

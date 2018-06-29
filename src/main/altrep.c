@@ -23,18 +23,11 @@
 
 #include <Defn.h>
 #include <R_ext/Altrep.h>
-#include <float.h> /* for DBL_DIG */
-#include <Print.h> /* for R_print */
-#include <R_ext/Itermacros.h>
 
-static SEXP make_wrapper(SEXP, SEXP);
-#define NMETA 2
 
-/* passed to matching macros in various places w/in this file, results in
-   major speed benefit. ptr/qptr MUST already exist/be defined before
-   these end up getting called */
-#define fastgetptr(x,i) ptr[i]
-#define fastgetqptr(x,i) qptr[i]
+/***
+ *** ALTREP Abstract Class Framework 
+ ***/
 
 /**
  **  ALTREP Class Registry for Serialization
@@ -147,38 +140,24 @@ static void SET_ALTREP_CLASS(SEXP x, SEXP class)
 #define ALTINTEGER_METHODS				\
     ALTVEC_METHODS;					\
     R_altinteger_Elt_method_t Elt;			\
-    R_altinteger_Set_elt_method_t Set_elt;		\
     R_altinteger_Get_region_method_t Get_region;	\
     R_altinteger_Is_sorted_method_t Is_sorted;		\
     R_altinteger_No_NA_method_t No_NA;			\
-    R_altinteger_Sort_check_method_t Sort_check;	\
-    R_altinteger_Is_NA_method_t Is_NA;			\
     R_altinteger_Sum_method_t Sum ;			\
     R_altinteger_Min_method_t Min;			\
     R_altinteger_Max_method_t Max;			\
-    R_altinteger_Which_min_method_t Which_min;		\
-    R_altinteger_Which_max_method_t Which_max;		\
-    R_altinteger_Match_method_t Match;			\
-    R_altinteger_Unique_method_t Unique;		\
-    R_altinteger_Order_method_t Order
+    R_altinteger_Match_method_t Match
 
 #define ALTREAL_METHODS				\
     ALTVEC_METHODS;				\
     R_altreal_Elt_method_t Elt;			\
-    R_altreal_Set_elt_method_t Set_elt;		\
     R_altreal_Get_region_method_t Get_region;	\
     R_altreal_Is_sorted_method_t Is_sorted;	\
     R_altreal_No_NA_method_t No_NA;		\
-    R_altreal_Sort_check_method_t Sort_check;	\
-    R_altreal_Is_NA_method_t Is_NA;		\
     R_altreal_Sum_method_t Sum;			\
     R_altreal_Min_method_t Min;			\
     R_altreal_Max_method_t Max;			\
-    R_altreal_Which_min_method_t Which_min;	\
-    R_altreal_Which_max_method_t Which_max;	\
-    R_altreal_Match_method_t Match;		\
-    R_altreal_Unique_method_t Unique;		\
-    R_altreal_Order_method_t Order
+    R_altreal_Match_method_t Match
 
 #define ALTSTRING_METHODS			\
     ALTVEC_METHODS;				\
@@ -203,20 +182,12 @@ typedef struct { ALTSTRING_METHODS; } altstring_methods_t;
 #define DO_DISPATCH(type, fun, ...)					\
     type##_METHODS_TABLE(DISPATCH_TARGET(__VA_ARGS__))->fun(__VA_ARGS__)
 
-#define DISPATCH_METHOD(type, fun, ...)					\
-    type##_METHODS_TABLE(DISPATCH_TARGET(__VA_ARGS__))->fun
-
 #define ALTREP_DISPATCH(fun, ...) DO_DISPATCH(ALTREP, fun, __VA_ARGS__)
 #define ALTVEC_DISPATCH(fun, ...) DO_DISPATCH(ALTVEC, fun, __VA_ARGS__)
 #define ALTINTEGER_DISPATCH(fun, ...) DO_DISPATCH(ALTINTEGER, fun, __VA_ARGS__)
 #define ALTREAL_DISPATCH(fun, ...) DO_DISPATCH(ALTREAL, fun, __VA_ARGS__)
 #define ALTSTRING_DISPATCH(fun, ...) DO_DISPATCH(ALTSTRING, fun, __VA_ARGS__)
 
-/* is this TOO general? I don't think so..., possible it should be ALTVEC? */
-
-#define ALTREP_INFO(x) R_altrep_data1(x)
-#define ALTREP_EXPANDED(x) R_altrep_data2(x)
-#define ALTREP_NONEXP(x) (ALTREP(x) && ALTREP_EXPANDED(x) == R_NilValue)
 
 /*
  * Generic ALTREP support
@@ -224,9 +195,6 @@ typedef struct { ALTSTRING_METHODS; } altstring_methods_t;
 
 SEXP attribute_hidden ALTREP_COERCE(SEXP x, int type)
 {
-    /* is this safe at this level? */
-    if(ALTREP_EXPANDED(x) != R_NilValue)
-	return NULL;
     return ALTREP_DISPATCH(Coerce, x, type);
 }
 
@@ -374,23 +342,9 @@ SEXP attribute_hidden ALTVEC_EXTRACT_SUBSET(SEXP x, SEXP indx, SEXP call)
  * Typed ALTVEC support
  */
 
-#define CHECK_NOT_EXPANDED(x)					\
-    if (DATAPTR_OR_NULL(x) != NULL)				\
-	error("method should only handle unexpanded vectors")
-
-#define ALTINTEGER_EXPANDED(x) R_altrep_data2(x)
-#define ALTREAL_EXPANDED(x) R_altrep_data2(x)
-#define SET_ALTINTEGER_EXPANDED(x, v) R_set_altrep_data2(x, v)
-#define SET_ALTREAL_EXPANDED(x, v) R_set_altrep_data2(x, v)
-
 int attribute_hidden ALTINTEGER_ELT(SEXP x, R_xlen_t i)
 {
     return ALTINTEGER_DISPATCH(Elt, x, i);
-}
-
-void attribute_hidden ALTINTEGER_SET_ELT(SEXP x, R_xlen_t i, int v)
-{
-    ALTINTEGER_DISPATCH(Set_elt, x, i, v);
 }
 
 R_xlen_t INTEGER_GET_REGION(SEXP sx, R_xlen_t i, R_xlen_t n, int *buf)
@@ -410,58 +364,17 @@ R_xlen_t INTEGER_GET_REGION(SEXP sx, R_xlen_t i, R_xlen_t n, int *buf)
 
 int INTEGER_IS_SORTED(SEXP x)
 {
-#ifdef CHECK_FOR_NONEXP
-    return ALTREP_NONEXP(x) ?
-	ALTINTEGER_DISPATCH(Is_sorted, x) : UNKNOWN_SORTEDNESS;
-#else
     return ALTREP(x) ? ALTINTEGER_DISPATCH(Is_sorted, x) : UNKNOWN_SORTEDNESS;
-#endif
 }
 
 int INTEGER_NO_NA(SEXP x)
 {
-#ifdef CHECK_FOR_NONEXP
-    return ALTREP_NONEXP(x) ? ALTINTEGER_DISPATCH(No_NA, x) : 0;
-#else
     return ALTREP(x) ? ALTINTEGER_DISPATCH(No_NA, x) : 0;
-#endif    
 }
-
-SEXP INTEGER_IS_NA(SEXP x)
-{
-    Rboolean noNA = INTEGER_NO_NA(x);
-    if(noNA) {
-	SEXP ans = PROTECT(allocVector(LGLSXP, XLENGTH(x)));
-	int *ptr = LOGICAL(ans);
-	memset(ptr, 0, sizeof(int) * XLENGTH(x));
-	UNPROTECT(1);
-	return ans;
-    }
-    return ALTREP_NONEXP(x) ? ALTINTEGER_DISPATCH(Is_NA, x) : NULL;
-}	
-
-
-SEXP REAL_IS_NA(SEXP x)
-{
-    Rboolean noNA = REAL_NO_NA(x);
-    if(noNA) {
-	SEXP ans = PROTECT(allocVector(LGLSXP, XLENGTH(x)));
-	int *ptr = LOGICAL(ans);
-	memset(ptr, 0, sizeof(int) * XLENGTH(x));
-	UNPROTECT(1);
-	return ans;
-    }
-    return ALTREP_NONEXP(x) ? ALTREAL_DISPATCH(Is_NA, x) : NULL;
-}	
 
 double attribute_hidden ALTREAL_ELT(SEXP x, R_xlen_t i)
 {
     return ALTREAL_DISPATCH(Elt, x, i);
-}
-
-void attribute_hidden ALTREAL_SET_ELT(SEXP x, R_xlen_t i, double v)
-{
-    ALTREAL_DISPATCH(Set_elt, x, i, v);
 }
 
 R_xlen_t REAL_GET_REGION(SEXP sx, R_xlen_t i, R_xlen_t n, double *buf)
@@ -481,21 +394,12 @@ R_xlen_t REAL_GET_REGION(SEXP sx, R_xlen_t i, R_xlen_t n, double *buf)
 
 int REAL_IS_SORTED(SEXP x)
 {
-#ifdef CHECK_FOR_NONEXP
-    return ALTREP_NONEXP(x) ?
-	ALTREAL_DISPATCH(Is_sorted, x) : UNKNOWN_SORTEDNESS;
-#else
     return ALTREP(x) ? ALTREAL_DISPATCH(Is_sorted, x) : UNKNOWN_SORTEDNESS;
-#endif
 }
 
 int REAL_NO_NA(SEXP x)
 {
-#ifdef CHECK_FOR_NONEXP
-    return ALTREP_NONEXP(x) ? ALTREAL_DISPATCH(No_NA, x) : 0;
-#else
     return ALTREP(x) ? ALTREAL_DISPATCH(No_NA, x) : 0;
-#endif
 }
 
 SEXP /*attribute_hidden*/ ALTSTRING_ELT(SEXP x, R_xlen_t i)
@@ -553,6 +457,15 @@ SEXP ALTINTEGER_MAX(SEXP x, Rboolean narm)
 
 }
 
+/* is this TOO general? I don't think so..., possible it should be ALTVEC? */
+
+#define DISPATCH_METHOD(type, fun, ...)					\
+    type##_METHODS_TABLE(DISPATCH_TARGET(__VA_ARGS__))->fun
+
+#define ALTREP_INFO(x) R_altrep_data1(x)
+#define ALTREP_EXPANDED(x) R_altrep_data2(x)
+#define ALTREP_NONEXP(x) (ALTREP(x) && ALTREP_EXPANDED(x) == R_NilValue)
+
 SEXP ALTINTEGER_MATCH(SEXP table, SEXP x, int nm, SEXP incomp, SEXP env,
 		      Rboolean first) {
     /* TODO: be cleverer about this when they're factors?? */
@@ -584,7 +497,6 @@ SEXP ALTREAL_MATCH(SEXP table, SEXP x, int nm, SEXP incomp, SEXP env,
 }
 
 
-
 /*
  * Not yet implemented
  */
@@ -604,9 +516,19 @@ Rbyte attribute_hidden ALTRAW_ELT(SEXP x, R_xlen_t i)
     return RAW(x)[i]; /* dispatch here */
 }
 
+void ALTINTEGER_SET_ELT(SEXP x, R_xlen_t i, int v)
+{
+    INTEGER(x)[i] = v; /* dispatch here */
+}
+
 void ALTLOGICAL_SET_ELT(SEXP x, R_xlen_t i, int v)
 {
     LOGICAL(x)[i] = v; /* dispatch here */
+}
+
+void ALTREAL_SET_ELT(SEXP x, R_xlen_t i, double v)
+{
+    REAL(x)[i] = v; /* dispatch here */
 }
 
 void ALTCOMPLEX_SET_ELT(SEXP x, R_xlen_t i, Rcomplex v)
@@ -708,150 +630,12 @@ altinteger_Get_region_default(SEXP sx, R_xlen_t i, R_xlen_t n, int *buf)
     return ncopy;
 }
 
-#define DECLARE_ATOMIC_VEC_DATAPTR_DEFAULT(type, altpref, TYPEPTR, SXPTYPE ) \
-    static type *altpref##_Dataptr(SEXP x)				\
-    {									\
-	if(ALT##TYPEPTR##_EXPANDED(x) != R_NilValue) {			\
-	    PROTECT(x);							\
-	    R_xlen_t n = XLENGTH(x);					\
-	    SEXP ans =  allocVector(SXPTYPE, n);			\
-	    type *data = TYPEPTR(ans);					\
-	    TYPEPTR##_GET_REGION(x, 0, n, data);			\
-	    SET_ALT##TYPEPTR##_EXPANDED(x, ans);			\
-	}								\
-	return DATAPTR(ALT##TYPEPTR##_EXPANDED(x));			\
-    }
-
-//DECLARE_ATOMIC_VEC_DATAPTR_DEFAULT(int, altinteger, INTEGER, INTSXP)
-//DECLARE_ATOMIC_VEC_DATAPTR_DEFAULT(double, altreal, REAL, REALSXP)
-//DECLARE_ATOMIC_VEC_DATAPTR_DEFAULT(int, altlogical, LOGICAL, LGLSXP)
-
-
-
-
 static int altinteger_Is_sorted_default(SEXP x) { return UNKNOWN_SORTEDNESS; }
 static int altinteger_No_NA_default(SEXP x) { return 0; }
-/* purpose of this is to memoise sortedness as side-effect. 
-   No point in default method unless we have default way of
-   indicating sortedness on the object. */
-static int altinteger_Sort_check_default(SEXP x) {
-    error("ALTINTEGER classes must provide a Sort_check method");
-}
-
-
-
-
-#define INTVAL_ISNA(val) (val == NA_INTEGER)
-
-
-static SEXP altinteger_Is_NA_default(SEXP x) {
-    return NULL;
-}
 
 static SEXP altinteger_Sum_default(SEXP x, Rboolean narm) { return NULL; }
-
-#define ALT_MINMAX(x, TYPE, ALTPREFIX, COMP, DOMAX, NARM, WHICH, NACHK) do { \
-	int sorted = ALTPREFIX##_IS_SORTED(x);				\
-	if(KNOWN_INCR(sorted)) {					\
-	    if(DOMAX) {							\
-		pos = XLENGTH(x) - 1;					\
-		val = ALTPREFIX##_ELT(x, pos);				\
-		while(NACHK(val) && pos > 0) {				\
-		    pos--;						\
-		    val = ALTPREFIX##_ELT(x, pos);			\
-		}							\
-	    } else {							\
-		val = ALTPREFIX##_ELT(x, 0);				\
-		pos = 0;						\
-	    }								\
-	    if(NARM && NACHK(val)) { val = R_NegInf; pos = -1;}		\
-	} else if(KNOWN_DECR(sorted)) {					\
-	    if(!DOMAX) {						\
-		pos = XLENGTH(x) - 1;					\
-		val = ALTPREFIX##_ELT(x, pos);				\
-		while(NACHK(val) && pos > 0) {				\
-		    pos--;						\
-		    val = ALTPREFIX##_ELT(x, pos);			\
-		}							\
-	    } else {							\
-		val = ALTPREFIX##_ELT(x, 0);				\
-		pos = 0;						\
-	    }								\
-	    if(NARM && NACHK(val)) { val = R_NegInf; pos = -1;}		\
-	} else {							\
-	    Rboolean noNA = ALTPREFIX##_NO_NA(x);			\
-	    TYPE ret = ALTPREFIX##_ELT(x, 0);				\
-	    pos = NACHK(ret) ? -1 : 0;					\
-	    TYPE cur = (TYPE)0;						\
-	    if(noNA) {							\
-		for(R_xlen_t i = 1; i < LENGTH(x); i++) {		\
-		    cur = ALTPREFIX##_ELT(x, i);			\
-		    if(COMP(cur, ret)) {				\
-			ret = cur;					\
-			pos = i;					\
-		    }							\
-		}							\
-	    } else {							\
-		R_xlen_t j = 1;						\
-		while(NACHK(cur) && j < LENGTH(x)) {			\
-		    cur = ALTPREFIX##_ELT(x, j);			\
-		    j++;						\
-		}							\
-		ret = cur;						\
-		pos = j;						\
-		for( ; j < LENGTH(x); j++) {				\
-		    cur = ALTPREFIX##_ELT(x, j);			\
-		    if(!NACHK(cur) && cur < ret) {			\
-			ret = cur;					\
-			pos = j;					\
-		    }							\
-		}							\
-	    }								\
-	    val = ret;							\
-	}								\
-    } while (0);
-
-#define LT(x,y) x < y
-#define GT(x,y) x > y
-
-static SEXP altinteger_Min_default(SEXP x, Rboolean narm) {
-    if (! ALTREP_NONEXP(x)) return NULL;
-    R_xlen_t pos;
-    int val;
-    ALT_MINMAX(x, int, INTEGER, LT, FALSE, narm, FALSE, INTVAL_ISNA);
-    return ScalarInteger(val);
-}
-
-static SEXP altinteger_Max_default(SEXP x, Rboolean narm) {
-    if (! ALTREP_NONEXP(x)) return NULL;
-    R_xlen_t pos;
-    int val;
-    ALT_MINMAX(x, int, INTEGER, GT, TRUE, narm, FALSE, INTVAL_ISNA);
-    return ScalarInteger(val);
-}
-
-
-static R_xlen_t altinteger_Which_min_default(SEXP x){
-    R_xlen_t pos;
-    int val;
-    ALT_MINMAX(x, int, INTEGER, LT, FALSE, TRUE, TRUE, INTVAL_ISNA);
-    return pos;
-}
-
-static R_xlen_t altinteger_Which_max_default(SEXP x) {
-    R_xlen_t pos;
-    int val;
-    ALT_MINMAX(x, int, INTEGER, GT, TRUE, TRUE, TRUE, INTVAL_ISNA);
-    return pos;
-}
-
-static SEXP altinteger_Order_default(SEXP x) {
-    return NULL;
-}
-
-static void altinteger_Set_elt_default(SEXP x, R_xlen_t i, int v) {
-    error("altinteger classes must define a specific Set_elt method");
-}
+static SEXP altinteger_Min_default(SEXP x, Rboolean narm) { return NULL; }
+static SEXP altinteger_Max_default(SEXP x, Rboolean narm) { return NULL; }
 
 static double altreal_Elt_default(SEXP x, R_xlen_t i) { return REAL(x)[i]; }
 
@@ -868,52 +652,12 @@ altreal_Get_region_default(SEXP sx, R_xlen_t i, R_xlen_t n, double *buf)
 static int altreal_Is_sorted_default(SEXP x) { return UNKNOWN_SORTEDNESS; }
 static int altreal_No_NA_default(SEXP x) { return 0; }
 
-static int altreal_Sort_check_default (SEXP x) {
-    error("altreal calsses must provide Sort_check method");
-}
-
-static SEXP altreal_Order_default(SEXP x) {
-    return NULL;
-}
-
-static SEXP altreal_Is_NA_default(SEXP x) {
-    return NULL;
-}
-
 static SEXP altreal_Sum_default(SEXP x, Rboolean narm) { return NULL; }
-    
-static SEXP altreal_Min_default(SEXP x, Rboolean narm) {
-    if (! ALTREP_NONEXP(x)) return NULL;
-    R_xlen_t pos;
-    double val;
-    ALT_MINMAX(x, double, REAL, LT, FALSE, narm, FALSE, ISNAN);
-    return ScalarReal(val);
-}
-
-static SEXP altreal_Max_default(SEXP x, Rboolean narm) {
-    if (! ALTREP_NONEXP(x)) return NULL;
-    R_xlen_t pos;
-    double val;
-    ALT_MINMAX(x, double, REAL, GT, TRUE, narm, FALSE, ISNAN);
-    return ScalarReal(val);
-}
+static SEXP altreal_Min_default(SEXP x, Rboolean narm) { return NULL; }
+static SEXP altreal_Max_default(SEXP x, Rboolean narm) { return NULL; }
 
 
-static R_xlen_t altreal_Which_min_default(SEXP x) {
-    R_xlen_t pos;
-    double val;
-    ALT_MINMAX(x, double, REAL, LT, FALSE, TRUE, TRUE, ISNAN);
-    return pos;
-}
-
-static R_xlen_t altreal_Which_max_default(SEXP x) {
-    R_xlen_t pos;
-    double val;
-    ALT_MINMAX(x, double, REAL, GT, TRUE, TRUE, TRUE, ISNAN);
-    return pos;
-}
-
-
+#define INTVAL_ISNA(x) ((x) == NA_INTEGER)
 
 /* Currently this code doesn't deal with incomp, so it should never be
    hit when that is in play. check must happen outside of macro. */
@@ -1045,6 +789,15 @@ static R_xlen_t altreal_Which_max_default(SEXP x) {
     } while(0);
 
 
+static SEXP make_wrapper(SEXP, SEXP);
+#define NMETA 2
+
+/* passed to matching macros in various places w/in this file, results in
+   major speed benefit. ptr/qptr MUST already exist/be defined before
+   these end up getting called */
+#define fastgetptr(x,i) ptr[i]
+#define fastgetqptr(x,i) qptr[i]
+
 
 #define ALT_MATCH_DEFAULT(TYPE, SXPTYPE, ALTPREFIX, FIRSTONLY, ELTFUN,	\
 			  QELTFUNTYPE, NACHK)				\
@@ -1107,63 +860,6 @@ static SEXP altinteger_Match_default(SEXP table, SEXP q,
 }
 
 
-static SEXP altreal_Unique_default(SEXP x) {
-    SEXP duped;
-    PROTECT(duped= duplicated(x, FALSE));
-
-    R_xlen_t k = 0, i, j = 0;
-    /* this should be a sum call to take advantage of logical rles that might
-       eventually come out of duplicated when x is sorted, or an Rle itself*/
-    for(i = 0; i < XLENGTH(x); i++) {
-	if(LOGICAL_ELT(duped, i) == 0)
-	    k++;
-    }
-    SEXP ans;
-    PROTECT(ans = allocVector(TYPEOF(x), k));
-    for(i = 0; i < XLENGTH(x); i++) {
-	if(LOGICAL_ELT(duped, i) == 0)
-	    SET_REAL_ELT(ans, j++, REAL_ELT(x, i));
-    }
-    UNPROTECT(2);
-    return ans;
-}
-
-static SEXP altinteger_Unique_default(SEXP x) {
-    SEXP duped;
-    PROTECT(duped= duplicated(x, FALSE));
-
-    R_xlen_t k = 0, i, j = 0;
-    /* this should be a sum call to take advantage of logical rles that might
-       eventually come out of duplicated, or an Rle itself*/
-    for(i = 0; i < XLENGTH(x); i++) {
-	if(LOGICAL_ELT(duped, i) == 0)
-	    k++;
-    }
-    SEXP ans;
-    PROTECT(ans = allocVector(TYPEOF(x), k));
-    for(i = 0; i < XLENGTH(x); i++) {
-	if(LOGICAL_ELT(duped, i) == 0)
-	    SET_INTEGER_ELT(ans, j++, INTEGER_ELT(x, i));
-    }
-    UNPROTECT(2);
-    return ans;
-}
-
-static void altreal_Set_elt_default(SEXP x, R_xlen_t i, double v) {
-    error("altreal classes must define a specific Set_elt method");
-}
-
-#ifdef DODO
-static SEXP altreal_As_subscripts_default(SEXP x) {
-    return x;
-}
-
-
-static double altreal_Compression_ratio_default(SEXP x) {
-    error("altreal classes must define a specific Compression_Ratio method");
-}
-#endif
-
 static SEXP altstring_Elt_default(SEXP x, R_xlen_t i)
 {
     error("ALTSTRING classes must provide an Elt method");
@@ -1195,20 +891,13 @@ static altinteger_methods_t altinteger_default_methods = {
     .Dataptr_or_null = altvec_Dataptr_or_null_default,
     .Extract_subset = altvec_Extract_subset_default,
     .Elt = altinteger_Elt_default,
-    .Set_elt = altinteger_Set_elt_default,
     .Get_region = altinteger_Get_region_default,
     .Is_sorted = altinteger_Is_sorted_default,
     .No_NA = altinteger_No_NA_default,
-    .Sort_check = altinteger_Sort_check_default,
-    .Order = altinteger_Order_default,
-    .Is_NA = altinteger_Is_NA_default,
     .Sum = altinteger_Sum_default,
     .Min = altinteger_Min_default,
     .Max = altinteger_Max_default,
-    .Which_min = altinteger_Which_min_default,
-    .Which_max = altinteger_Which_max_default,
-    .Match = altinteger_Match_default,
-    .Unique = altinteger_Unique_default
+    .Match = altinteger_Match_default
 };
 
 static altreal_methods_t altreal_default_methods = {
@@ -1224,21 +913,13 @@ static altreal_methods_t altreal_default_methods = {
     .Dataptr_or_null = altvec_Dataptr_or_null_default,
     .Extract_subset = altvec_Extract_subset_default,
     .Elt = altreal_Elt_default,
-    .Set_elt = altreal_Set_elt_default,
     .Get_region = altreal_Get_region_default,
     .Is_sorted = altreal_Is_sorted_default,
     .No_NA = altreal_No_NA_default,
-    .Sort_check = altreal_Sort_check_default,
-    .Order = altreal_Order_default,
-    .Is_NA = altreal_Is_NA_default,
     .Sum = altreal_Sum_default,
     .Min = altreal_Min_default,
     .Max = altreal_Max_default,
-    .Which_min = altreal_Which_min_default,
-    .Which_max = altreal_Which_max_default,
-    .Match = altreal_Match_default,
-    .Unique = altreal_Unique_default
-
+    .Match = altreal_Match_default
 };
 
 
@@ -1352,42 +1033,24 @@ DEFINE_METHOD_SETTER(altinteger, Elt)
 DEFINE_METHOD_SETTER(altinteger, Get_region)
 DEFINE_METHOD_SETTER(altinteger, Is_sorted)
 DEFINE_METHOD_SETTER(altinteger, No_NA)
-DEFINE_METHOD_SETTER(altinteger, Sort_check)
-DEFINE_METHOD_SETTER(altinteger, Order)
-DEFINE_METHOD_SETTER(altinteger, Is_NA)
 DEFINE_METHOD_SETTER(altinteger, Sum)
 DEFINE_METHOD_SETTER(altinteger, Min)
 DEFINE_METHOD_SETTER(altinteger, Max)
-DEFINE_METHOD_SETTER(altinteger, Which_min)
-DEFINE_METHOD_SETTER(altinteger, Which_max)
 DEFINE_METHOD_SETTER(altinteger, Match)
-DEFINE_METHOD_SETTER(altinteger, Unique)
-/* DEFINE_METHOD_SETTER(altinteger, As_subscripts) */
-/* DEFINE_METHOD_SETTER(altinteger, Compression_ratio) */
-
-
 
 DEFINE_METHOD_SETTER(altreal, Elt)
 DEFINE_METHOD_SETTER(altreal, Get_region)
 DEFINE_METHOD_SETTER(altreal, Is_sorted)
 DEFINE_METHOD_SETTER(altreal, No_NA)
-DEFINE_METHOD_SETTER(altreal, Sort_check)
-DEFINE_METHOD_SETTER(altreal, Order)
-DEFINE_METHOD_SETTER(altreal, Is_NA)
 DEFINE_METHOD_SETTER(altreal, Sum)
 DEFINE_METHOD_SETTER(altreal, Min)
 DEFINE_METHOD_SETTER(altreal, Max)
-DEFINE_METHOD_SETTER(altreal, Which_min)
-DEFINE_METHOD_SETTER(altreal, Which_max)
 DEFINE_METHOD_SETTER(altreal, Match)
-DEFINE_METHOD_SETTER(altreal, Unique)
+
 DEFINE_METHOD_SETTER(altstring, Elt)
 DEFINE_METHOD_SETTER(altstring, Set_elt)
 DEFINE_METHOD_SETTER(altstring, Is_sorted)
 DEFINE_METHOD_SETTER(altstring, No_NA)
-/* DEFINE_METHOD_SETTER(altreal, As_subscripts) */
-/* DEFINE_METHOD_SETTER(altreal, Compression_ratio) */
-
 
 
 /**
@@ -1409,6 +1072,19 @@ Rboolean R_altrep_inherits(SEXP x, R_altrep_class_t class)
     return ALTREP(x) && ALTREP_CLASS(x) == R_SEXP(class);
 }
 
+
+#include <float.h> /* for DBL_DIG */
+#include <Print.h> /* for R_print */
+#include <R_ext/Itermacros.h>
+
+#define CHECK_NOT_EXPANDED(x)					\
+    if (DATAPTR_OR_NULL(x) != NULL)				\
+	error("method should only handle unexpanded vectors")
+
+#define ALTINTEGER_EXPANDED(x) R_altrep_data2(x)
+#define ALTREAL_EXPANDED(x) R_altrep_data2(x)
+#define SET_ALTINTEGER_EXPANDED(x, v) R_set_altrep_data2(x, v)
+#define SET_ALTREAL_EXPANDED(x, v) R_set_altrep_data2(x, v)
 
 /**
  ** Compact Integer Sequences
@@ -1714,21 +1390,6 @@ static SEXP compact_intseq_Match(SEXP table, SEXP x, int nm, SEXP incomp,
     UNPROTECT(1); /* ans, in both branches */
     return ans;
 }
-
-
-#ifdef DODO
-static double compact_intseq_Compression_ratio(SEXP x) {
-    double ret;
-    if(ALTREP_EXPANDED(x) != R_NilValue)
-	ret = 1.0;
-    else {
-	SEXP info = ALTREP_INFO(x);
-	ret = (double) COMPACT_INTSEQ_INFO_LENGTH(info) / 2.0;
-    }
-
-    return ret;
-}
-#endif
 
 
 /*
