@@ -1059,7 +1059,7 @@ SEXP dimnamesgets(SEXP vec, SEXP val)
     /* This is probably overkill, but you never know; */
     /* there may be old pair-lists out there */
     /* There are, when this gets used as names<- for 1-d arrays */
-    if (!isPairList(val) && !isNewList(val))
+    if (!isList(val) && !isNewList(val))
 	error(_("'%s' must be a list"), "dimnames");
     dims = getAttrib(vec, R_DimSymbol);
     if ((k = LENGTH(dims)) < length(val))
