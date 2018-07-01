@@ -43,8 +43,6 @@ function(x, g, ...)
         OK <- complete.cases(x, g)
         x <- x[OK]
         g <- g[OK]
-        if (!all(is.finite(g)))
-            stop("all group levels must be finite")
         g <- factor(g)
         k <- nlevels(g)
         if (k < 2)
