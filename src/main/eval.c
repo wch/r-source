@@ -6087,6 +6087,8 @@ static SEXP inflateAssignmentCall(SEXP expr) {
     if (slen <= 2 || name[slen - 2] != '<' || name[slen - 1] != '-')
 	return expr;
 
+    // gcc 8 warns here, but this is intentional
+    // ‘strncpy’ specified bound depends on the length of the source argument
     char nonAssignName[slen - 1]; /* "names" for "names<-" */
     strncpy(nonAssignName, name, slen - 2);
     nonAssignName[slen - 2] = '\0';

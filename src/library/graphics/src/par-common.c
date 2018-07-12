@@ -145,9 +145,11 @@
 	if(strlen(ss) > 200)
 	    error(_("graphical parameter 'family' has a maximum length of 200 bytes"));
 #ifdef FOR_PAR
-	strncpy(dpptr(dd)->family, ss, 201);
+	strncpy(dpptr(dd)->family, ss, 200);
+	dpptr(dd)->family[200] = '\0';
 #endif
-	strncpy(gpptr(dd)->family, ss, 201);
+	strncpy(gpptr(dd)->family, ss, 200);
+	gpptr(dd)->family[200] = '\0';
 	vmaxset(vmax);
     }
     else if (streql(what, "fg")) {

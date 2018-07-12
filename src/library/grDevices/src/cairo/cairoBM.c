@@ -404,7 +404,8 @@ BMDeviceDriver(pDevDesc dd, int kind, const char *filename,
     xd->quality = quality;
     xd->windowWidth = width;
     xd->windowHeight = height;
-    strncpy(xd->basefontfamily, family, 500);
+    strncpy(xd->basefontfamily, family, 499);
+    xd->basefontfamily[499] = '\0';
 #ifdef HAVE_PANGOCAIRO
     /* Pango's default resolution is 96 dpi */
     dps *= res0/96.0;
