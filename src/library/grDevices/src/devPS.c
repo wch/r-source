@@ -3130,9 +3130,10 @@ PSDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     /* initialise postscript device description */
     strcpy(pd->filename, file);
     strcpy(pd->papername, paper);
-    strncpy(pd->title, title, 1024);
+    strncpy(pd->title, title, 1023);
+    pd->title[1023] = '\0';
     if (streql(colormodel, "grey")) strcpy(pd->colormodel, "grey");
-    else strncpy(pd->colormodel, colormodel, 30);
+    else { strncpy(pd->colormodel, colormodel, 29); pd->colormodel[29] = '\0';}
     pd->useKern = (useKern != 0);
     pd->fillOddEven = fillOddEven;
 
@@ -4940,7 +4941,8 @@ XFigDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     dd->canClip = FALSE;
     dd->canHAdj = 1; /* 0, 0.5, 1 */
     dd->canChangeGamma = FALSE;
-    strncpy(pd->encoding, encoding, 50);
+    strncpy(pd->encoding, encoding, 49);
+    pd->encoding[49] = '\0';
 
     XF_resetColors(pd);
 
@@ -5908,10 +5910,11 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     else 
         strcpy(pd->filename, "nullPDF");
     strcpy(pd->papername, paper);
-    strncpy(pd->title, title, 1024);
+    strncpy(pd->title, title, 1023);
+    pd->title[1023] = '\0';
     memset(pd->fontUsed, 0, 100*sizeof(Rboolean));
     if (streql(colormodel, "grey")) strcpy(pd->colormodel, "gray");
-    else strncpy(pd->colormodel, colormodel, 30);
+    else {strncpy(pd->colormodel, colormodel, 29); pd->colormodel[29] = '\0';}
     pd->dingbats = (dingbats != 0);
     pd->useKern = (useKern != 0);
     pd->fillOddEven = fillOddEven;
@@ -7077,9 +7080,11 @@ static Rboolean PDF_Open(pDevDesc dd, PDFDesc *pd)
         return TRUE;
     
     if (pd->filename[0] == '|') {
-	strncpy(pd->cmd, pd->filename + 1, PATH_MAX);
+	strncpy(pd->cmd, pd->filename + 1, PATH_MAX - 1);
+	pd->cmd[PATH_MAX - 1] = '\0';
 	char *tmp = R_tmpnam("Rpdf", R_TempDir);
-	strncpy(pd->filename, tmp, PATH_MAX);
+	strncpy(pd->filename, tmp, PATH_MAX - 1);
+	pd->filename[PATH_MAX - 1] = '\0';
 	free(tmp);
 	errno = 0;
 	pd->pipefp = R_popen(pd->cmd, "w");
