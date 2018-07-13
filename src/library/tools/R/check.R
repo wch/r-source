@@ -4265,6 +4265,8 @@ add_dummies <- function(dir, Log)
                              ": warning: suggest parentheses around (comparison|assignment)",
                              ": warning: .* \\[-Wstringop", # mainly gcc8
                              ": warning: .* \\[-Wclass-memaccess\\]", # gcc8
+                             ## used for things deprecated in C++11, for example
+                             ": warning: .* \\[-Wdeprecated\\]",
                              ## Fatal on clang and Solaris ODS
                              ": warning: .* with a value, in function returning void"
                             )
@@ -4499,7 +4501,7 @@ add_dummies <- function(dir, Log)
         dirs <- sub("^\\d*\\s*", "", res)
         res2 <- data.frame(size = sizes, dir = I(dirs))
         total <- res2[nrow(res2), 1L]
-        if(!is.na(total) && 
+        if(!is.na(total) &&
            total > 1024 * as.numeric(Sys.getenv("_R_CHECK_PKG_SIZES_THRESHOLD_", unset = 5)) && # report at 5Mb
            pkgname != "Matrix") { # <- large recommended package
             noteLog(Log)
