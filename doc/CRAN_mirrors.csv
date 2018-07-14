@@ -132,8 +132,6 @@ Thailand,Thailand,Hatyai,http://mirrors.psu.ac.th/pub/cran/,"Prince of Songkla U
 "Turkey (Mersin)",Turkey,Mersin,http://cran.ncc.metu.edu.tr/,"Middle East Technical University Northern Cyprus Campus, Mersin","atasiran # metu.edu.tr, ncc-cc # metu.edu.tr",1,tr,"secure_mirror_from_master"
 "UK (Bristol) [https]",UK,Bristol,https://www.stats.bris.ac.uk/R/,"University of Bristol","Guy Nason <G.P.Nason # bristol.ac.uk>, it-zone-d # bristol.ac.uk",1,uk,"secure_mirror_from_master"
 "UK (Bristol)",UK,Bristol,http://www.stats.bris.ac.uk/R/,"University of Bristol","Guy Nason <G.P.Nason # bristol.ac.uk>, it-zone-d # bristol.ac.uk",1,uk,"secure_mirror_from_master"
-"UK (Cambridge) [https]",UK,"Cambridge",https://mirrors.ebi.ac.uk/CRAN/,"EMBL-EBI (European Bioinformatics Institute)","Andrew Tikhonov <andrew # ebi.ac.uk>",1,uk,"secure_mirror_from_master"
-"UK (Cambridge)",UK,"Cambridge",http://mirrors.ebi.ac.uk/CRAN/,"EMBL-EBI (European Bioinformatics Institute)","Andrew Tikhonov <andrew # ebi.ac.uk>",1,uk,"secure_mirror_from_master"
 "UK (London 1) [https]",UK,London,https://cran.ma.imperial.ac.uk/,"Imperial College London","andy.thomas # imperial.ac.uk",1,uk,"secure_mirror_from_master"
 "UK (London 1)",UK,London,http://cran.ma.imperial.ac.uk/,"Imperial College London","andy.thomas # imperial.ac.uk",1,uk,"secure_mirror_from_master"
 "USA (CA 1) [https]",USA,Berkeley,https://cran.cnr.berkeley.edu/,"University of California, Berkeley, CA","casterln # nature.berkeley.edu",1,us,"secure_mirror_from_master"
