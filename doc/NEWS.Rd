@@ -102,15 +102,21 @@
       \item \code{compiler::cmpfile()} gains a \code{version} argument, for
       use when the output file should be saved in serialization format 2.
 
-      \item The axis labeling in \code{pairs.default()} may now be
-      toggled by new options \code{horOdd} and \code{verOdd}.
+      \item The axis labeling in the default method of \code{pairs()}
+      may now be toggled by new options \code{horOdd} and \code{verOdd}.
+
+      \item (Not Windows nor macOS.) Package \pkg{tcltk} now supports an
+      environment variable \env{R_DONT_USE_TK} which if set disables Tk
+      initialization.  This is intended for use to circumvent errors in
+      loading the package, e.g.\sspace{}with recent Linux running under
+      ASAN.
     }
   }
 
   \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
-      \item The C++ compiler defaults to the C++11 standard, if
-      supported; otherwise to the C++98 standard.
+      \item The C++ compiler defaults to the C++11 standard if
+      supported, otherwise to the C++98 standard.
     }
   }
 
