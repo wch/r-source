@@ -60,6 +60,8 @@ assign("cleanEx",
                        call. = FALSE, immediate. = TRUE, domain = NA)
                setwd(.old_wd)
            }
+		   ## stop in case users left connections open, 
+		   ## also indicating that parallel cluster are still running
            sC <- showConnections()
            if(nrow(sC)){
                stop("connections left open:\n",
