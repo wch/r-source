@@ -65,7 +65,7 @@ assign("cleanEx",
            sC <- showConnections()
            if(nrow(sC)){
                stop("connections left open:\n",
-                   paste(apply(sC[,1:2, drop = TRUE], 1L, function(x) 
+                   paste(apply(sC[,1:2, drop = FALSE], 1L, function(x) 
                        paste0("\t", x[1L], " (", x[2L], ")")), collapse="\n"),
 				   call. = FALSE, domain = NA)
            }           
