@@ -60,6 +60,13 @@ assign("cleanEx",
                        call. = FALSE, immediate. = TRUE, domain = NA)
                setwd(.old_wd)
            }
+           sC <- showConnections()
+           if(nrow(sC)){
+               stop("connections left open:\n",
+                   paste(apply(sC[,1:2], 1, function(x) 
+                       paste0("\t", x[1], " (", x[2], ")")), collapse="\n"),
+				   call. = FALSE, domain = NA)
+           }           
        },
        pos = "CheckExEnv")
 assign("ptime", proc.time(), pos = "CheckExEnv")
