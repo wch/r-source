@@ -3092,8 +3092,11 @@ add_dummies <- function(dir, Log)
                          sQuote(basename(exfile)),
                          " failed")
                 ## Try to spot the offending example right away.
-                txt <- paste(readLines(exout, warn = FALSE),
-                             collapse = "\n")
+                ## Sometimes processes need extra time to shut down, 
+                ## particularly parallel cluster on Windows, hence a hack to retry after 2 sec:
+                txt <- tryCatch(suppressWarnings(readLines(exout, warn = FALSE)), 
+                                error = function(e){Sys.sleep(2); readLines(exout, warn = FALSE)})
+                txt <- paste(txt, collapse = "\n")
                 ## Look for the header section anchored by a
                 ## subsequent call to flush(): needs to be kept in
                 ## sync with the code in massageExamples (in
@@ -3120,7 +3123,10 @@ add_dummies <- function(dir, Log)
             ## deprecated , as the next release will make
             ## them defunct and hence using them an error.
             bad <- FALSE
-            lines <- readLines(exout, warn = FALSE)
+            ## Sometimes processes need extra time to shut down, 
+            ## particularly parallel cluster on Windows, hence a hack to retry after 2 sec:
+            lines <- tryCatch(suppressWarnings(readLines(exout, warn = FALSE)), 
+                              error = function(e){Sys.sleep(2); readLines(exout, warn = FALSE)})
             bad_lines <- grep("^Warning: .*is deprecated.$",
                               lines, useBytes = TRUE, value = TRUE)
             if(length(bad_lines)) {
