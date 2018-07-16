@@ -4273,6 +4273,7 @@ add_dummies <- function(dir, Log)
                              ": warning: .* \\[-Wclass-memaccess\\]", # gcc8
                              ## used for things deprecated in C++11, for example
                              ": warning: .* \\[-Wdeprecated\\]",
+                             ": warning: .* \\[-Waligned-new",
                              ## Fatal on clang and Solaris ODS
                              ": warning: .* with a value, in function returning void"
                             )
