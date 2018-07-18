@@ -208,7 +208,7 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R 3.5.0 patched}{
+\section{\Rlogo CHANGES IN R 3.5.1}{
 
   \subsection{BUG FIXES}{
     \itemize{
