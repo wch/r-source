@@ -1449,7 +1449,7 @@ size_t ucstomb(char *s, const unsigned int wc)
 #ifndef  Win32
 	    char tocode[128];
 	    /* locale set fuzzy case */
-	    strncpy(tocode, locale2charset(NULL), sizeof(tocode));
+	    strncpy(tocode, locale2charset(NULL), sizeof(tocode) - 1);
 	    tocode[sizeof(tocode) - 1] = '\0';
 	    if((void *)(-1) == (cd = Riconv_open(tocode, UNICODE)))
 		return (size_t)(-1);
