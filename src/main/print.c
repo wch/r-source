@@ -736,7 +736,7 @@ void attribute_hidden PrintValueRec(SEXP s, SEXP env)
 			CHAR(STRING_ELT(cl, 0)), CHAR(STRING_ELT(pkg, 0)));
 	    }
 	}
-	return;
+	goto done;
     }
     switch (TYPEOF(s)) {
     case NILSXP:
@@ -755,8 +755,8 @@ void attribute_hidden PrintValueRec(SEXP s, SEXP env)
 	Rprintf("<CHARSXP: ");
 	Rprintf("%s", EncodeString(s, 0, '"', Rprt_adj_left));
 	Rprintf(">\n");
-	return; /* skip attribute printing for CHARSXP; they are used */
-		/* in managing the CHARSXP cache. */
+	goto done; /* skip attribute printing for CHARSXP; they are used */
+		   /* in managing the CHARSXP cache. */
     case EXPRSXP:
 	PrintExpression(s);
 	break;
@@ -777,7 +777,7 @@ void attribute_hidden PrintValueRec(SEXP s, SEXP env)
 	break;
     case VECSXP:
 	PrintGenericVector(s, env); /* handles attributes/slots */
-	return;
+	goto done;
     case LISTSXP:
 	printList(s,env);
 	break;
@@ -849,6 +849,8 @@ void attribute_hidden PrintValueRec(SEXP s, SEXP env)
 	UNIMPLEMENTED_TYPE("PrintValueRec", s);
     }
     printAttributes(s, env, FALSE);
+
+done:
 #ifdef Win32
     WinUTF8out = FALSE;
 #endif
