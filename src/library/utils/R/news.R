@@ -1,7 +1,7 @@
 #  File src/library/utils/R/news.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -82,7 +82,9 @@ format.news_db <-
 function(x, ...)
 {
     if(inherits(x, "news_db_from_Rd") ||
-       (!is.null(bad <- attr(x, "bad")) && length(bad) == NROW(x) && !any(bad))) {
+       (!is.null(bad <- attr(x, "bad"))
+           && (length(bad) == NROW(x))
+           && !any(bad))) {
 
         ## Format news in the preferred input format:
         ##   Changes in $VERSION [($DATE)]:
@@ -91,6 +93,12 @@ function(x, ...)
         ## <FIXME>
         ## Add support for DATE.
         ## </FIXME>
+
+        ## When formatting version and category headers, mimic the HTML
+        ## and legacy R layouts: center the former, and left-justify the
+        ## latter.  (Alternatively, we could e.g. left-justify the
+        ## former and also the latter with an extra indent of 2, but it
+        ## seems preferable to be consistent.)
 
         vchunks <- split(x, x$Version)
         ## Re-order according to decreasing version.
@@ -110,10 +118,12 @@ function(x, ...)
             ind <- vstrings != "R-devel"
             vstrings[ind] <- sprintf("version %s", vstrings[ind])
             vheaders <-
-                sprintf("Changes in %s%s:",
-                        vstrings,
-                        ifelse(is.na(dates), "",
-                               sprintf(" (%s)", dates)))
+                format(sprintf("Changes in %s%s",
+                               vstrings,
+                               ifelse(is.na(dates), "",
+                                      sprintf(" (%s)", dates))),
+                       justify = "centre", width = 72L)
+            ## No trailing colon when centering.
         } else vheaders <- character()
 
         format_items <- function(x)
@@ -125,7 +135,8 @@ function(x, ...)
                 cchunks <-
                     split(vchunk,
                           factor(category, levels = unique(category)))
-                Map(c, names(cchunks), lapply(cchunks, format_items),
+                cheaders <- names(cchunks)
+                Map(c, cheaders, lapply(cchunks, format_items),
                     USE.NAMES = FALSE)
             } else {
                 format_items(vchunk)
@@ -145,22 +156,31 @@ function(x, ...)
     }
 }
 
-print.news_db <- function(x, doBrowse = interactive(), browser = getOption("browser"), ...)
+print.news_db <-
+function(x, doBrowse = interactive(), browser = getOption("browser"), ...)
 {
     port <- if (doBrowse && !identical("false", browser) &&
                 is.character(pkg <- attr(x, "package")))
         tools::startDynamicHelp(NA) else 0L
     if (port > 0L) {
-        url <- if (pkg == "R")
-    	    sprintf("http://127.0.0.1:%d/doc/html/NEWS.html", port)
-    	else
-    	    sprintf("http://127.0.0.1:%d/library/%s/NEWS", port, pkg)
-    	if (!is.null(subset <- attr(x, "subset"))) {
-	    # Subsets are typically ranges of dates or version numbers, so we run-length encode
-	    # the subset vector.  We put TRUE in front so the values alternate TRUE, FALSE, ... .
-    	    rle <- paste(rle(c(TRUE, subset))$lengths, collapse="_")
-    	    url <- paste0(url, "?subset=", rle)
-    	}
+        tools:::.httpd_objects(port, x)
+        url <- if (pkg == "R") {
+            if(is.null(attr(x, "subset"))) {
+                ## Use the pre-built NEWS.html.
+                sprintf("http://127.0.0.1:%d/doc/html/NEWS.html",
+                        port)
+            } else
+                sprintf("http://127.0.0.1:%d/doc/html/NEWS.html?objects=1&port=%d",
+                        port, port)
+        } else
+            sprintf("http://127.0.0.1:%d/library/%s/NEWS?objects=1&port=%d",
+                    port, pkg, port)
+    	## if (!is.null(subset <- attr(x, "subset"))) {
+	##     # Subsets are typically ranges of dates or version numbers, so we run-length encode
+	##     # the subset vector.  We put TRUE in front so the values alternate TRUE, FALSE, ... .
+    	##     rle <- paste(rle(c(TRUE, subset))$lengths, collapse="_")
+    	##     url <- paste0(url, "?subset=", rle)
+        ## }
     	browseURL(url)
     } else ## simply show in console:
 	writeLines(paste(unlist(format(x, ...)), collapse = "\n\n"))

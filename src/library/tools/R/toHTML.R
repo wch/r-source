@@ -1,7 +1,7 @@
 toHTML <- function(x, ...) UseMethod("toHTML")
 
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 
 HTMLheader <-
 function(title="R", logo=TRUE,
@@ -113,9 +113,10 @@ function(x, ...)
         return(character())
 
     print_items <- function(x)
-        c("<ul>", sprintf("<li>%s</li>", htmlify2(x)), "</ul>")
+        c("<ul>", sprintf("<li>%s</li>", x), "</ul>")
 
-    x$Text <- iconv(x$Text, to = "UTF-8")
+    if(is.null(x$HTML))
+        x$HTML <- htmlify2(iconv(x$Text, to = "UTF-8"))
 
     vchunks <- split(x, x$Version)
     vchunks <-
@@ -135,7 +136,7 @@ function(x, ...)
                                              factor(category, levels=unique(category)))
                             c(vheaders[i],
                               Map(function(h, t)
-                                  c(h, print_items(t$Text)),
+                                  c(h, print_items(t$HTML)),
                                   sprintf("<h3>%s</h3>",
                                           htmlify2(names(cchunks))),
                                   cchunks))
@@ -155,11 +156,11 @@ function(x, ...)
 
 makeVignetteTable <- function(vignettes, depth=2) {
     out <- c('<table width="100%">',
-	      '<col style="width: 22%;" />',
-	      '<col style="width:  2%;" />',
-	      '<col style="width: 50%;" />',
-	      '<col style="width:  8%;" />',
-	      '<col style="width:  8%;" />',
+             '<col style="width: 22%;" />',
+             '<col style="width:  2%;" />',
+             '<col style="width: 50%;" />',
+             '<col style="width:  8%;" />',
+             '<col style="width:  8%;" />',
              '<col style="width:  8%;" />')
     for (i in seq_len(nrow(vignettes))) {
 	Outfile <- vignettes[i, "PDF"]

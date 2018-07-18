@@ -1,7 +1,7 @@
 #  File src/library/tools/R/news.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -296,16 +296,17 @@ function(file)
 .make_news_db <-
 function(x, bad = NULL, classes = NULL)
 {
-    ## Expect x to be a 4 column
+    ## Expect x to be a character matrix giving at least
     ##   version date category text
-    ## character matrix.
+    ## in its first 4 columns.
     ## Could of course check for this using
-    ##   if(!is.character(x) || ncol(x) != 4L)
+    ##   if(!is.character(x) || ncol(x) < 4L)
     out <- data.frame(x, row.names = NULL, stringsAsFactors = FALSE)
     ## Note that we cannot do
     ##   dimnames(out) <- list(NULL,
     ##                         c("Version", "Date", "Category", "Text"))
-    colnames(out) <- c("Version", "Date", "Category", "Text")
+    colnames(out)[1L : 4L] <-
+        c("Version", "Date", "Category", "Text")
     if(!is.null(bad))
         attr(out, "bad") <- bad
     class(out) <- unique(c(classes, "news_db", "data.frame"))
@@ -553,7 +554,8 @@ function(file = NULL)
     .make_news_db(cbind(sub("^CHANGES IN (R )?(VERSION )?", "", db[, 1L]),
                         NA_character_,
                         db[, 2L],
-                        sub("\n*$", "", db[, 3L])),
+                        Text = sub("\n*$", "", db[, 3L]),
+                        HTML = db[, 4L]),
                   logical(nrow(db)),
                   "news_db_from_Rd")
 }
@@ -588,7 +590,8 @@ function(file)
 				      sub(re_d2, "\\1", nms, perl = TRUE),
 				      NA_character_)),
 			db[, 2L],
-                        sub("\n*$", "", db[, 3L])),
+                        Text = sub("\n*$", "", db[, 3L]),
+                        HTML = db[, 4L]),
                   logical(nrow(db)),
                   "news_db_from_Rd")
 }
@@ -619,56 +622,67 @@ function(x)
                     domain = NA)
             pos <- pos[1L]
         }
-        x <- x[pos]
 
-        out <- NULL
-        zz <- textConnection("out", "w", local = TRUE)
-        on.exit(close(zz))
-        Rd2txt(x, out = zz, fragment = TRUE,
-               options =
-               c(Rd2txt_NEWS_in_Rd_options,
-                 list(itemBullet = "\036  ")))
+        x <- x[[pos]]
 
-        ## Try to find the column offset of the top-level bullets.
-        pat <- "^( *)\036.*"
-        pos <- grep(pat, out)
-        if(!length(pos)) return(character())
-        off <- min(nchar(sub(pat, "\\1", out[pos])))
-        pat <- sprintf("^%s\036 *", strrep(" ", off))
-        s <- sub(pat, "\036", out)
-        ## Try to remove some indent for nested material.
-        pat <- sprintf("^%s", strrep(" ", off + 2L))
-        s <- sub(pat, "", s)
+        out <- file()
+        on.exit(close(out))
 
-        s <- paste(s, collapse = "\n")
-        s <- trimws(gsub("\036", "*",
-                         unlist(strsplit(s, "\n\036", fixed = TRUE))))
-        s[nzchar(s)]
+        Rd2txt_options <- Rd2txt_NEWS_in_Rd_options
+        Rd2txt_options$width <- 72L
+
+        ## Extract and process \item chunks:
+        x <- split(x, cumsum(RdTags(x) == "\\item"))
+        do.call(rbind,
+                lapply(x[names(x) != "0"],
+                       function(e) {
+                           ## Drop \item.
+                           e <- e[-1L]
+                           ## Convert to text.
+                           Rd2txt(e, fragment = TRUE, out = out,
+                                  options = Rd2txt_options)
+                           one <- paste(readLines(out, warn = FALSE),
+                                        collapse = "\n")
+                           ## Need warn = FALSE to avoid warning about
+                           ## incomplete final line for e.g. 'cluster'.
+                           ## Convert to HTML.
+                           Rd2HTML(e, fragment = TRUE, out = out)
+                           two <- paste(readLines(out, warn = FALSE),
+                                        collapse = "\n")
+                           cbind(Text = one, HTML = two)
+                       }))
     }
 
     cbind_safely <- function(u, v)
         cbind(rep_len(u, NROW(v)), v)
 
-    y <- x[RdTags(x) == "\\section"]
-    do.call(rbind,
-            Map(cbind_safely,
-                get_section_names(y),
-                lapply(y,
-                       function(e) {
-                           z <- e[[2L]]
-                           ind <- RdTags(z) == "\\subsection"
-                           if(any(ind)) {
-                               z <- z[ind]
-                               do.call(rbind,
-                                       Map(cbind_safely,
-                                           get_section_names(z),
-                                           lapply(z,
-                                                  function(e)
-                                                  get_item_texts(e[[2L]]))))
-                           } else {
-                               cbind_safely(NA_character_,
-                                            get_item_texts(z))
-                           }
-                       })))
+    x <- x[RdTags(x) == "\\section"]
+    y <- Map(cbind_safely,
+             get_section_names(x),
+             lapply(x,
+                    function(e) {
+                        z <- e[[2L]]
+                        ind <- RdTags(z) == "\\subsection"
+                        if(any(ind)) {
+                            z <- z[ind]
+                            do.call(rbind,
+                                    Map(cbind_safely,
+                                        get_section_names(z),
+                                        lapply(z,
+                                               function(e)
+                                                   get_item_texts(e[[2L]]))))
+                        } else {
+                            cbind_safely(NA_character_,
+                                         get_item_texts(z))
+                        }
+                    }))
+    y <- do.call(rbind, y)
+    ## Sanitze HTML.
+    s <- trimws(y[, "HTML"])
+    i <- startsWith(s, "<p>") & !endsWith(s, "</p>")
+    s[i] <- paste0(s[i], "</p>")
+    y[, "HTML"] <- s
+
+    y
 
 }
