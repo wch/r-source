@@ -912,6 +912,7 @@ done:
 	endcontext(&cntxt);
     print_cleanup(NULL);
 #endif
+    return; /* needed when Win32 is not defined */
 }
 
 /* 2000-12-30 PR#715: remove list tags from tagbuf here
