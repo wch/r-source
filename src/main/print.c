@@ -854,6 +854,7 @@ done:
 #ifdef Win32
     WinUTF8out = FALSE;
 #endif
+    return;
 }
 
 /* 2000-12-30 PR#715: remove list tags from tagbuf here
