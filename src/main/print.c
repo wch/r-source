@@ -61,6 +61,7 @@
 #include <config.h>
 #endif
 
+#define R_USE_SIGNALS 1
 #include "Defn.h"
 #include <Internal.h>
 #include "Print.h"
@@ -742,6 +743,13 @@ static void PrintSpecial(SEXP s, R_PrintData *data)
     UNPROTECT(1);
 }
 
+#ifdef Win32
+static void print_cleanup(void *data)
+{
+    WinUTF8out = FALSE;
+}
+#endif
+
 /* PrintValueRec -- recursively print an SEXP
 
  * This is the "dispatching" function for  print.default()
@@ -751,7 +759,17 @@ void attribute_hidden PrintValueRec(SEXP s, R_PrintData *data)
     SEXP t;
 
 #ifdef Win32
+    RCNTXT cntxt;
+    Rboolean havecontext = FALSE;
+
     WinCheckUTF8();
+    if (WinUTF8out) {
+	begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
+	             R_NilValue, R_NilValue);
+	cntxt.cend = &print_cleanup;
+	cntxt.cenddata = NULL;
+	havecontext = TRUE;
+    }
 #endif
     if(!isMethodsDispatchOn() && (IS_S4_OBJECT(s) || TYPEOF(s) == S4SXP) ) {
 	SEXP cl = getAttrib(s, R_ClassSymbol);
@@ -772,7 +790,7 @@ void attribute_hidden PrintValueRec(SEXP s, R_PrintData *data)
 			CHAR(STRING_ELT(cl, 0)), CHAR(STRING_ELT(pkg, 0)));
 	    }
 	}
-	return;
+	goto done;
     }
     switch (TYPEOF(s)) {
     case NILSXP:
@@ -792,8 +810,8 @@ void attribute_hidden PrintValueRec(SEXP s, R_PrintData *data)
 	Rprintf("<CHARSXP: ");
 	Rprintf("%s", EncodeString(s, 0, '"', Rprt_adj_left));
 	Rprintf(">\n");
-	return; /* skip attribute printing for CHARSXP; they are used */
-		/* in managing the CHARSXP cache. */
+	goto done; /* skip attribute printing for CHARSXP; they are used */
+		   /* in managing the CHARSXP cache. */
     case EXPRSXP:
 	PrintExpression(s, data);
 	break;
@@ -814,7 +832,7 @@ void attribute_hidden PrintValueRec(SEXP s, R_PrintData *data)
 	break;
     case VECSXP:
 	PrintGenericVector(s, data); /* handles attributes/slots */
-	return;
+	goto done;
     case LISTSXP:
 	printList(s, data);
 	break;
@@ -886,8 +904,13 @@ void attribute_hidden PrintValueRec(SEXP s, R_PrintData *data)
 	UNIMPLEMENTED_TYPE("PrintValueRec", s);
     }
     printAttributes(s, data, FALSE);
+
+done:
+
 #ifdef Win32
-    WinUTF8out = FALSE;
+    if (havecontext)
+	endcontext(&cntxt);
+    print_cleanup(NULL);
 #endif
 }
 
