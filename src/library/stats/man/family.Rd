@@ -239,14 +239,16 @@ logexp <- function(days = 1)
 {
     linkfun <- function(mu) qlogis(mu^(1/days))
     linkinv <- function(eta) plogis(eta)^days
-    mu.eta <- function(eta) days * plogis(eta)^(days-1) * binomial()$mu_eta
+    mu.eta  <- function(eta) days * plogis(eta)^(days-1) *
+                  binomial()$mu.eta(eta)
     valideta <- function(eta) TRUE
     link <- paste0("logexp(", days, ")")
     structure(list(linkfun = linkfun, linkinv = linkinv,
                    mu.eta = mu.eta, valideta = valideta, name = link),
               class = "link-glm")
 }
-binomial(logexp(3))
+(bil3 <- binomial(logexp(3)))
+\dontshow{stopifnot(length(bil3$mu.eta(as.double(0:5))) == 6)}
 ## in practice this would be used with a vector of 'days', in
 ## which case use an offset of 0 in the corresponding formula
 ## to get the null deviance right.
