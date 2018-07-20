@@ -1,7 +1,7 @@
 #  File src/library/base/R/outer.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@ outer <- function (X, Y, FUN = "*", ...)
         if (is.character(FUN) && FUN=="*") {
             if(!missing(...)) stop('using ... with FUN = "*" is an error')
             ## this is for numeric vectors, so dropping attributes is OK
-            as.vector(X) %*% t(as.vector(Y))
+            tcrossprod(as.vector(X), as.vector(Y))# faster than  as.vector(X) %*% t(as.vector(Y))
         } else {
             FUN <- match.fun(FUN)
             ## Y may have a class, so don't use rep.int
