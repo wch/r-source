@@ -110,6 +110,10 @@
       initialization.  This is intended for use to circumvent errors in
       loading the package, e.g.\sspace{}with recent Linux running under
       ASAN.
+
+      \item The \code{numeric} method of \code{all.equal()} gets an
+      optional argument \code{countEQ}.  If that is true, the mean error
+      is more sensible when many entries are \bold{eq}ual.
     }
   }
 
