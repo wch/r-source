@@ -632,9 +632,19 @@ function(x)
         Rd2txt_options$width <- 72L
 
         ## Extract and process \item chunks:
-        x <- split(x, cumsum(RdTags(x) == "\\item"))
+        y <- split(x, cumsum(RdTags(x) == "\\item"))
+        y <- y[names(y) != "0"]
+        if(!length(y)) {
+            warning(gettextf("Malformed NEWS.Rd file:\nChunk starting\n  %s\ncontains no \\item.",
+                             substring(sub("^[[:space:]]*", "",
+                                           .Rd_deparse(x)),
+                                       1L, 60L)),
+                    domain = NA)
+            return(matrix(character(), 0L, 2L,
+                          dimnames = list(NULL, c("Text", "HTML"))))
+        }
         do.call(rbind,
-                lapply(x[names(x) != "0"],
+                lapply(y,
                        function(e) {
                            ## Drop \item.
                            e <- e[-1L]
