@@ -402,11 +402,11 @@ BMDeviceDriver(pDevDesc dd, int kind, SEXP filename,
     /* allocate new device description */
     if (!(xd = (pX11Desc) calloc(1, sizeof(X11Desc)))) return FALSE;
     strncpy(xd->filename, R_ExpandFileName(translateChar(filename)),
-            PATH_MAX);
+            PATH_MAX - 1);
     xd->filename[PATH_MAX - 1] = '\0';
 #ifdef R_CAIRO_UTF8_FILENAMES
     strncpy(xd->filenameUTF8, R_ExpandFileNameUTF8(translateCharUTF8(filename)),
-            PATH_MAX);
+            PATH_MAX - 1);
     xd->filenameUTF8[PATH_MAX - 1] = '\0';
 #endif
     xd->quality = quality;
