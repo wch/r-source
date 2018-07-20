@@ -53,11 +53,13 @@ lm <- function (formula, data, subset, weights, na.action,
 
     if (is.empty.model(mt)) {
 	x <- NULL
-	z <- list(coefficients = if (is.matrix(y))
-                  matrix(,0,3) else numeric(), residuals = y,
+	z <- list(coefficients = if(is.matrix(y)) matrix(NA_real_, 0, ncol(y))
+				 else numeric(),
+		  residuals = y,
 		  fitted.values = 0 * y, weights = w, rank = 0L,
-		  df.residual = if(!is.null(w)) sum(w != 0) else
-                  if (is.matrix(y)) nrow(y) else length(y))
+		  df.residual = if(!is.null(w)) sum(w != 0)
+				else if(is.matrix(y)) nrow(y)
+				else length(y))
         if(!is.null(offset)) {
             z$fitted.values <- offset
             z$residuals <- y - offset

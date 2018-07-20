@@ -1887,6 +1887,13 @@ str(cc)
 ## In R <= 3.5.0, [strtrim() & nchar()] gave invalid multibyte string at '<a9>\002"'
 
 
+## multivariate <empty model> lm():
+y <- matrix(cos(1:(7*5)), 7,5) # <- multivariate y
+lms <- list(m0 = lm(y ~ 0), m1 = lm(y ~ 1), m2 = lm(y ~ exp(y[,1]^2)))
+dcf <- sapply(lms, function(fm) dim(coef(fm)))
+stopifnot(dcf[1,] == 0:2, dcf[2,] == 5)
+## coef(lm(y ~ 0)) had 3 instead of 5 columns in R <= 3.5.1
+
 
 
 ## keep at end

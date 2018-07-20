@@ -212,6 +212,17 @@
   }
 }
 
+\section{\Rlogo CHANGES IN R 3.5.1 patched}{
+
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item Linear multivariate empty models such as \code{lm(y ~ 0)}
+      now have a correctly dimensioned empty coefficient matrix;
+      reported by Brett Presnell.
+    }
+  }
+}
+
 \section{\Rlogo CHANGES IN R 3.5.1}{
 
   \subsection{BUG FIXES}{
