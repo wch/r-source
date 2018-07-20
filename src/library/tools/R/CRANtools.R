@@ -739,3 +739,9 @@ function(lst, dir, verbose = FALSE)
     invisible()
 }
 
+CRAN_package_URL <- function(p)
+    paste0("https://CRAN.R-project.org/package=", p)
+
+CRAN_package_check_URL <- function(p)
+    sprintf("https://CRAN.R-project.org/web/checks/check_results_%s.html",
+            p)
