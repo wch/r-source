@@ -114,6 +114,9 @@
       \item The \code{numeric} method of \code{all.equal()} gets an
       optional argument \code{countEQ}.  If that is true, the mean error
       is more sensible when many entries are \bold{eq}ual.
+
+      \item \code{outer(x,y, FUN = "*")} is more efficient using
+      \code{tcrossprod(u,v)} instead of \code{u \%*\% t(v)}.
     }
   }
 
@@ -546,6 +549,8 @@
       prints \code{"atomic"}.  This is a slight non-back-compatible
       change producing typically both more informative and shorter
       output.
+
+      \item \code{gc()} gets new argument \code{full}.
 
       \item \code{write.dcf()} gets optional argument \code{useBytes}.
 
