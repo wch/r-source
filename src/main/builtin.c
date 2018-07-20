@@ -647,7 +647,7 @@ SEXP attribute_hidden do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 		   Use strncpy is in case these assumptions change.
 		*/
 		p = EncodeElement0(s, 0, 0, OutDec);
-		strncpy(buf, p, 512); buf[511] = '\0';
+		strncpy(buf, p, 511); buf[511] = '\0';
 		p = buf;
 	    }
 #ifdef fixed_cat
@@ -678,7 +678,7 @@ SEXP attribute_hidden do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 			p = trChar(STRING_ELT(s, i+1));
 		    else {
 			p = EncodeElement0(s, i+1, 0, OutDec);
-			strncpy(buf, p, 512); buf[511] = '\0';
+			strncpy(buf, p, 511); buf[511] = '\0';
 			p = buf;
 		    }
 		    w = (int) strlen(p);
