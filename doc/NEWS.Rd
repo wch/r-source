@@ -5,6 +5,17 @@
 \title{R News}
 \encoding{UTF-8}
 
+\section{\Rlogo CHANGES IN R 3.5.1 patched}{
+
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item Linear multivariate empty models such as \code{lm(y ~ 0)}
+      now have a correctly dimensioned empty coefficient matrix;
+      reported by Brett Presnell.
+    }
+  }
+}
+
 \section{\Rlogo CHANGES IN R 3.5.1}{
 
   \subsection{BUG FIXES}{
@@ -62,9 +73,11 @@
       default searched for in user documents directory when invoked
       \emph{via} the launcher icon.  Reported by Jeroen Ooms.
 
-      \item \code{printCoefmat()} now also works with explicit \code{right=TRUE}.
+      \item \code{printCoefmat()} now also works with explicit
+      \code{right=TRUE}.
 
-      \item \code{print.noquote()} now also works with explicit \code{quote=FALSE}.
+      \item \code{print.noquote()} now also works with explicit
+      \code{quote=FALSE}.
 
       \item The default method for \code{pairs(.., horInd=*, verInd=*)}
       now gets the correct order, thanks to reports by Chris Andrews and
