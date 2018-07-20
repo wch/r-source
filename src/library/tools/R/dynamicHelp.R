@@ -62,8 +62,8 @@ httpd <- function(path, query, ...)
     	bool <- function(x) as.logical(as.numeric(x))
         res <- if(identical(names(query), "category")) {
             utils::help.search(keyword = query, verbose = 1L, use_UTF8 = TRUE)
-        } else if(identical(names(query), "results")) {
-            utils:::.hsearch_results()
+        } else if(identical(names(query), c("objects", "port"))) {
+            .httpd_objects(query["port"])
         } else {
             fields <- types <- NULL
             args <- list(pattern = ".")
