@@ -12,6 +12,12 @@
       \item Linear multivariate empty models such as \code{lm(y ~ 0)}
       now have a correctly dimensioned empty coefficient matrix;
       reported by Brett Presnell.
+
+      \item \code{vcov(<empty mlm>)} and hence \code{confint()} now
+      work (via a consistency change in \code{summary.lm()}).
+
+      \item \code{confint(<multivariate lm()>)} now works correctly;
+      reported on R-devel by Steven Pav.
     }
   }
 }
