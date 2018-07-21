@@ -117,6 +117,9 @@
 
       \item \code{outer(x,y, FUN = "*")} is more efficient using
       \code{tcrossprod(u,v)} instead of \code{u \%*\% t(v)}.
+
+      \item \code{vcov(<mlm>)} is more efficient via new optional
+      arguments in \code{summary.mlm()}.
     }
   }
 
