@@ -187,7 +187,7 @@ getOption(x, default = NULL)
 
     \item{\code{keep.parse.data.pkgs}:}{As for \code{keep.parse.data}, used
       only when packages are installed.  Defaults to \code{FALSE} unless the
-      environment variable \env{R_KEEP_PKG_PARSE_DATA} is set to \code{yes}. 
+      environment variable \env{R_KEEP_PKG_PARSE_DATA} is set to \code{yes}.
       The space overhead of parse data can be substantial even after
       compression and it causes performance overhead when loading packages.}
 
@@ -254,18 +254,16 @@ getOption(x, default = NULL)
     }
 
     \item{\code{pager}:}{the command used for displaying text files by
-      \code{\link{file.show}}.
-#ifdef unix
-      Defaults to \file{\var{\link{R_HOME}}/bin/pager}, which is a shell
-      script running the command-line specified by the environment
-      variable \env{PAGER} whose default is set at configuration,
-      usually to \command{less}.
-#endif
-#ifdef windows
-      Defaults to \code{"internal"}, which uses a pager similar to the
-      GUI console.  Another possibility is \code{"console"} to use the
-      console itself.
-#endif
+      \code{\link{file.show}}, details depending on the platform:
+      \describe{
+	\item{On a unix-alike}{defaults to \file{\var{\link{R_HOME}}/bin/pager}, which is a shell
+	  script running the command-line specified by the environment
+	  variable \env{PAGER} whose default is set at configuration,
+	  usually to \command{less}.}
+	\item{On Windows}{defaults to \code{"internal"}, which uses a pager similar to the
+	  GUI console.  Another possibility is \code{"console"} to use the
+	  console itself.}
+      }
       Can be a character string or an \R function, in which case it
       needs to accept the arguments \code{(files, header,
 	title, delete.file)} corresponding to the first four arguments of
@@ -274,15 +272,14 @@ getOption(x, default = NULL)
     \item{\code{papersize}:}{the default paper format used by
       \code{\link{postscript}};  set by environment variable
       \env{R_PAPERSIZE} when \R is started: if that is unset or invalid
-      it defaults to
-#ifdef unix
-      a value derived from the locale category \code{LC_PAPER}, or
-      if that is unavailable to a default set when \R was built.
-#endif
-#ifdef windows
-      \code{"a4"}, or \code{"letter"} in US and Canadian locales.
-#endif
-    }
+      it defaults platform dependently
+      \describe{
+	\item{on a unix-alike}{to a value derived from the locale category
+	  \code{LC_PAPER}, or if that is unavailable to a default set
+	  when \R was built.}
+	\item{on Windows}{to \code{"a4"}, or \code{"letter"} in US and
+	  Canadian locales.}
+      }}
 
     \item{\code{PCRE_limit_recursion}:}{Logical: should
       \code{\link{grep}(perl = TRUE)} and similar limit the maximal
@@ -309,14 +306,12 @@ getOption(x, default = NULL)
 
     \item{\code{pdfviewer}:}{default PDF viewer.
       The default is set from the environment variable \env{R_PDFVIEWER},
-#ifdef unix
-      the default value of which is set when \R is configured.
-#endif
-#ifdef windows
-      which defaults to the full path to \command{open.exe}, a utility
-      supplied with \R.
-#endif
-    }
+      the default value of which
+      \describe{
+	\item{on a unix-alike}{is set when \R is configured, and}
+	\item{on Windows}{is the full path to \command{open.exe}, a utility
+	  supplied with \R.}
+      }}
 
     \item{\code{printcmd}:}{the command used by \code{\link{postscript}}
       for printing; set by environment variable \env{R_PRINTCMD} when
@@ -328,8 +323,7 @@ getOption(x, default = NULL)
       should usually end in a blank (\code{" "}).}
 
       % verbatim, for checking " \t\n\"\\'`><=%;,|&{()}"
-#ifdef unix
-    \item{\code{rl_word_breaks}:}{Used for the readline-based terminal
+    \item{\code{rl_word_breaks}:}{(Unix only:) Used for the readline-based terminal
       interface.  Default value \code{" \\t\\n\\"\\\\'`><=\%;,|&{()}"}.%"
 
       This is the set of characters use to break the input line into
@@ -337,7 +331,6 @@ getOption(x, default = NULL)
       spaces around operators may prefer\cr
       \code{" \\t\\n\\"\\\\'`><=+-*\%;,|&{()}"}%"
       }
-#endif
 
     \item{\code{save.defaults}, \code{save.image.defaults}:}{
       see \code{\link{save}}.}
@@ -382,13 +375,15 @@ getOption(x, default = NULL)
 
     \item{\code{texi2dvi}:}{used by functions
       \code{\link{texi2dvi}} and \code{\link{texi2pdf}} in package \pkg{tools}.
-#ifdef unix
+      \describe{
+	\item{unix-alike only:}{
       Set at startup from the environment variable \env{R_TEXI2DVICMD},
       which defaults first to the value of environment variable
       \env{TEXI2DVI}, and then to a value set when \R was installed (the
       full path to a \command{texi2dvi} script if one was found).  If
-      necessary, that environment variable can be set to \code{"emulation"}.
-#endif
+      necessary, that environment variable can be set to
+      \code{"emulation"}.
+      } }
     }
 
     \item{\code{timeout}:}{integer.  The timeout for some Internet
@@ -496,12 +491,11 @@ getOption(x, default = NULL)
   These will be set when package \pkg{grDevices} (or its namespace)
   is loaded if not already set.
   \describe{
-#ifdef unix
-    \item{\code{bitmapType}:}{(Unix-only) character.  The default type for the
+    \item{\code{bitmapType}:}{(Unix only, incl. macOS) character.  The
+      default type for the
       bitmap devices such as \code{\link{png}}.  Defaults to
       \code{"cairo"} on systems where that is available, or to
       \code{"quartz"} on macOS where that is available.}
-#endif
 
     \item{\code{device}:}{a character string giving
       the name of a function, or the function object itself,
@@ -533,7 +527,6 @@ getOption(x, default = NULL)
       and \code{identify} be confirmed by a bell?  Default \code{TRUE}.
       Honoured at least on \code{X11} and \code{windows} devices.}
 
-#ifdef windows
     \item{\code{windowsTimeout}:}{(Windows-only) integer vector of length 2
       representing two times in milliseconds.  These control the
       double-buffering of \code{\link{windows}} devices when that is
@@ -541,7 +534,6 @@ getOption(x, default = NULL)
       (default 100) and the second is the update interval during
       continuous plotting (default 500).  The values at the time the
       device is opened are used.}
-#endif
   }
 }
 \section{Other options used by package graphics}{
@@ -694,19 +686,17 @@ getOption(x, default = NULL)
 
     \item{\code{pkgType}:}{The default type of packages to be downloaded
       and installed -- see \code{\link{install.packages}}.
-#ifdef windows
-      Possible values are \code{"win.binary"}, \code{"source"} and
-      \code{"both"} (the default).  Some macOS builds use
-      \code{"mac.binary.el-capitan"}.
-#endif
-#ifdef unix
-      Possible values are \code{"source"} (the default except under a
-      CRAN macOS build), \code{"mac.binary.el-capitan"} and
-      \code{"both"} (the default for CRAN macOS builds).  Windows uses
-      \code{"win.binary"}. (\code{"mac.binary.mavericks"},
-      \code{"mac.binary.leopard"}, \code{"mac.binary.universal"} are no
-      longer in use.)
-#endif
+      Possible values are platform dependently
+      \describe{
+	\item{on Windows}{
+	  \code{"win.binary"}, \code{"source"} and
+	  \code{"both"} (the default).}
+	\item{on unix-alikes}{\code{"source"} (the default except under a
+	  CRAN macOS build), \code{"mac.binary.el-capitan"} and
+	  \code{"both"} (the default for CRAN macOS builds).
+	  (\code{"mac.binary.mavericks"}, \code{"mac.binary.leopard"},
+	  \code{"mac.binary.universal"} are no longer in use.)}
+      }
       Value \code{"binary"} is a synonym for the native binary type (if
       there is one); \code{"both"} is used by
       \code{\link{install.packages}} to choose between source and binary
@@ -731,16 +721,16 @@ getOption(x, default = NULL)
 
     \item{\code{unzip}:}{a character string used by \code{\link{unzip}}:
       the path of the external program \command{unzip} or \code{"internal"}.
-#ifdef unix
-      Defaults to the value of \env{R_UNZIPCMD}, which is set in
-      \file{etc/Renviron} if an \code{unzip} command was found during
-      configuration.
-#endif
-#ifdef windows
-      Defaults to \code{"internal"} when the internal unzip code is
-      used.
-#endif
+      Defaults (platform dependently)
+      \describe{
+	\item{on unix-alikes}{to the value of \env{R_UNZIPCMD}, which is set in
+	  \file{etc/Renviron} to the path of the \code{unzip} command found
+	  during configuration and otherwise to \code{""}.}
+	\item{on Windows}{to \code{"internal"} when the internal unzip
+	  code is used.}
+      }
     }
+
   }
 }
 \section{Options set in package parallel}{
