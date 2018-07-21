@@ -281,11 +281,12 @@ summary.lm <- function (object, correlation = FALSE, symbolic.cor = FALSE, ...)
         ans$aliased <- is.na(coef(object))  # used in print method
         ans$residuals <- r
         ans$df <- c(0L, n, length(ans$aliased))
-        ans$coefficients <- matrix(NA, 0L, 4L)
-        dimnames(ans$coefficients) <-
-            list(NULL, c("Estimate", "Std. Error", "t value", "Pr(>|t|)"))
+        ans$coefficients <- matrix(NA_real_, 0L, 4L, dimnames =
+			list(NULL, c("Estimate", "Std. Error", "t value", "Pr(>|t|)")))
         ans$sigma <- sqrt(resvar)
         ans$r.squared <- ans$adj.r.squared <- 0
+        ans$cov.unscaled <- matrix(NA_real_, 0L, 0L)
+        if (correlation) ans$correlation <- ans$cov.unscaled
         return(ans)
     }
     if (is.null(z$terms))
