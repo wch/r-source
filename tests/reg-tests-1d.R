@@ -1895,6 +1895,36 @@ stopifnot(dcf[1,] == 0:2, dcf[2,] == 5)
 ## coef(lm(y ~ 0)) had 3 instead of 5 columns in R <= 3.5.1
 
 
+## confint(<mlm>)
+n <- 20
+set.seed(1234)
+datf <- local({
+    x1 <- rnorm(n)
+    x2 <- x1^2 + rnorm(n)
+    y1 <- 100*x1 + 20*x2 + rnorm(n)
+    data.frame(x1=x1, x2=x2, y1=y1, y2 = y1 + 10*x1 + 50*x2 + rnorm(n))
+})
+fitm <- lm(cbind(y1,y2) ~ x1 + x2, data=datf)
+zapsmall(CI <- confint(fitm))
+ciT <- cbind(c(-0.98031,  99.2304, 19.6859, -0.72741, 109.354, 69.4632),
+             c( 0.00984, 100.179,  20.1709,  0.60374, 110.63,  70.1152))
+dimnames(ciT) <- dimnames(CI)
+## also checking confint(*, parm=*) :
+pL <- list(c(1,3:4), rownames(CI)[c(6,2)], 1)
+ciL  <- lapply(pL, function(ii) confint(fitm, parm=ii))
+ciTL <- lapply(pL, function(ii) ciT[ii, , drop=FALSE])
+stopifnot(exprs = {
+    all.equal(ciT, CI,  tolerance = 4e-6)
+    all.equal(ciL, ciTL,tolerance = 8e-6)
+})
+## confint(<mlm>) gave an empty matrix in R <= 3.5.1
+## For an *empty* mlm :
+mlm0 <- lm(cbind(y1,y2) ~ 0, datf)
+stopifnot(identical(confint(mlm0),
+                    matrix(numeric(0), 0L, 2L, dimnames = list(NULL, c("2.5 %", "97.5 %")))))
+## failed inside vcov.mlm() because summary.lm()$cov.unscaled was NULL
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
