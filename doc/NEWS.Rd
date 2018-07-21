@@ -120,6 +120,10 @@
 
       \item \code{vcov(<mlm>)} is more efficient via new optional
       arguments in \code{summary.mlm()}.
+
+      \item The default method of \code{summary()} gets an option to
+      choose the \emph{kind} of \code{quantile()}s to use; wish of
+      \PR{17438}.
     }
   }
 

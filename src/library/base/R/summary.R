@@ -1,7 +1,7 @@
 #  File src/library/base/R/summary.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,15 +18,15 @@
 
 summary <- function (object, ...) UseMethod("summary")
 
-summary.default <- function(object, ..., digits)
+summary.default <- function(object, ..., digits, quantile.type = 7)
 {
     if(is.factor(object))
 	return(summary.factor(object, ...))
     else if(is.matrix(object)) {
 	if(missing(digits))
-            return(summary.matrix(object, ...))
-        else
-            return(summary.matrix(object, digits = digits, ...))
+	    return(summary.matrix(object,                  quantile.type=quantile.type, ...))
+	else
+	    return(summary.matrix(object, digits = digits, quantile.type=quantile.type, ...))
     }
 
     value <- if(is.logical(object)) # scalar or array!
@@ -39,7 +39,7 @@ summary.default <- function(object, ..., digits)
     else if(is.numeric(object)) {
 	nas <- is.na(object)
 	object <- object[!nas]
-	qq <- stats::quantile(object)
+	qq <- stats::quantile(object, names = FALSE, type = quantile.type)
         qq <- c(qq[1L:3L], mean(object), qq[4L:5L])
 	if(!missing(digits)) qq <- signif(qq, digits)
 	names(qq) <- c("Min.", "1st Qu.", "Median", "Mean", "3rd Qu.", "Max.")

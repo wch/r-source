@@ -1,6 +1,6 @@
 % File src/library/base/man/summary.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2016, 2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{summary}
@@ -21,7 +21,7 @@
 \usage{
 summary(object, \dots)
 
-\method{summary}{default}(object, \dots, digits)
+\method{summary}{default}(object, \dots, digits, quantile.type = 7)
 \method{summary}{data.frame}(object, maxsum = 7,
        digits = max(3, getOption("digits")-3), \dots)
 
@@ -44,6 +44,8 @@ summary(object, \dots)
     \code{\link{missing}(.)}), \code{signif()} will \emph{not} be called
     anymore (since \R >= 3.4.0, where the default has been changed to
     only round in the \code{print} and \code{format} methods).}% for "summaryDefault"
+  \item{quantile.type}{integer code used in \code{quantile(*, type=quantile.type)}
+    for the default method.}
   \item{\dots}{additional arguments affecting the summary produced.}
 }
 \details{
