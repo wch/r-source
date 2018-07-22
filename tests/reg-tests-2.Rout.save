@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2018-07-12 r74955) -- "Unsuffered Consequences"
+R Under development (unstable) (2018-07-21 r74997) -- "Unsuffered Consequences"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -7995,4 +7995,20 @@ Error in try(stopifnot(exprs = 1 > 2)) : 1 > 2 is not TRUE
 Error:  0 == 1 is not TRUE 
 > ## was partly not ok for many weeks in R-devel, early 2018
 > 
+> 
+> ## print.htest() with small 'digits'
+> print(t.test(1:28), digits = 3)
+
+	One Sample t-test
+
+data:  1:28
+t = 9, df = 27, p-value = 6e-10
+alternative hypothesis: true mean is not equal to 0
+95 percent confidence interval:
+ 11.3 17.7
+sample estimates:
+mean of x 
+     14.5 
+
+> ## showed 'df = 30' from signif(*, digits=1) and too many digits for CI, in R <= 3.5.1
 > 

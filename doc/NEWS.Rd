@@ -218,6 +218,9 @@
       font face (\PR{17352}).
 
       \item \code{plot(<table>, log="x")} no longer warns about \code{log}.
+
+      \item Printing of \code{t.test()} results with a small number of
+      digits now shows non-large \code{df}'s to the full precision.
     }
   }
 }

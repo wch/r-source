@@ -1,7 +1,7 @@
 #  File src/library/stats/R/htest.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -25,10 +25,10 @@ print.htest <- function(x, digits = getOption("digits"), prefix = "\t", ...)
     out <- character()
     if(!is.null(x$statistic))
 	out <- c(out, paste(names(x$statistic), "=",
-			    format(signif(x$statistic, max(1L, digits - 2L)))))
+			    format(x$statistic, digits = max(1L, digits - 2L))))
     if(!is.null(x$parameter))
 	out <- c(out, paste(names(x$parameter), "=",
-			    format(signif(x$parameter, max(1L, digits - 2L)))))
+			    format(x$parameter, digits = max(1L, digits - 2L))))
     if(!is.null(x$p.value)) {
 	fp <- format.pval(x$p.value, digits = max(1L, digits - 3L))
 	out <- c(out, paste("p-value",
@@ -57,7 +57,7 @@ print.htest <- function(x, digits = getOption("digits"), prefix = "\t", ...)
     if(!is.null(x$conf.int)) {
 	cat(format(100 * attr(x$conf.int, "conf.level")),
 	    " percent confidence interval:\n", " ",
-	    paste(format(c(x$conf.int[1L], x$conf.int[2L])), collapse = " "),
+	    paste(format(x$conf.int[1:2], digits=digits), collapse = " "),
             "\n", sep = "")
     }
     if(!is.null(x$estimate)) {
