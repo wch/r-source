@@ -221,6 +221,9 @@
 
       \item Printing of \code{t.test()} results with a small number of
       digits now shows non-large \code{df}'s to the full precision.
+
+      \item \code{kruskal.test()} and \code{fligner.test()} no longer
+      erroneously insists on numeric \code{g} group arguments (\PR{16719}).
     }
   }
 }

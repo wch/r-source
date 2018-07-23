@@ -1925,6 +1925,12 @@ stopifnot(identical(confint(mlm0),
 ## failed inside vcov.mlm() because summary.lm()$cov.unscaled was NULL
 
 
+## kruskal.test(<non-numeric g>>), PR#16719
+data(mtcars)
+mtcars$type <- rep(letters[1:2], c(16, 16))
+kruskal.test(mpg ~ type, mtcars)
+## gave 'Error: all group levels must be finite'
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
