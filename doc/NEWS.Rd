@@ -224,6 +224,9 @@
 
       \item \code{kruskal.test()} and \code{fligner.test()} no longer
       erroneously insists on numeric \code{g} group arguments (\PR{16719}).
+
+      \item Printing a news db via the browser now does a much better
+      job (\PR{17433}).
     }
   }
 }
