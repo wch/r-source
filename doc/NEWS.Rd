@@ -222,8 +222,8 @@
       \item The \code{print()} method for \code{"htest"} objects now
       formats the test statistic and parameter directly and hence no
       longer rounds to units \emph{before} the decimal point.  Consequently,
-      printing of \code{t.test()} results with a small number of
-      digits now shows non-large \code{df}'s to the full precision.
+      printing of \code{t.test()} results with a small number of digits
+      now shows non-large \code{df}'s to the full precision (\PR{17444}).
 
       \item \code{kruskal.test()} and \code{fligner.test()} no longer
       erroneously insists on numeric \code{g} group arguments (\PR{16719}).
