@@ -1661,19 +1661,16 @@ function(package, dir, lib.loc = NULL)
         ## We should really determine the name g dispatches for, see
         ## a current version of methods() [2003-07-07].  (Care is needed
         ## for internal generics and group generics.)
-        ## Matching via grep() is tricky with e.g. a '$' in the name of
-        ## the generic function ... hence substr().
         name <- paste0(g, ".")
         methods <-
-            functions_in_code[substr(functions_in_code, 1L,
-                                     nchar(name, type = "c")) == name]
+            functions_in_code[startsWith(functions_in_code, name)]
         ## </FIXME>
         methods <- setdiff(methods, methods_stop_list)
         if(has_namespace) {
             ## Find registered methods for generic g.
             methods2 <- ns_S3_methods[ns_S3_generics == g]
             ## but for these purposes check name.
-            OK <- substr(methods2, 1L, nchar(name, type = "c")) == name
+            OK <- startsWith(methods2, name)
             methods <- c(methods, methods2[OK])
         }
         methods
@@ -2484,12 +2481,9 @@ function(package, dir, lib.loc = NULL)
         ## We should really determine the name g dispatches for, see
         ## a current version of methods() [2003-07-07].  (Care is
         ## needed for internal generics and group generics.)
-        ## Matching via grep() is tricky with e.g. a '$' in the name
-        ## of the generic function ... hence substr().
         name <- paste0(g, ".")
         methods <-
-            functions_in_code[substr(functions_in_code, 1L,
-                                     nchar(name, type="c")) == name]
+            functions_in_code[startsWith(functions_in_code, name)]
         ## </FIXME>
         methods <- setdiff(methods, methods_stop_list)
         if(has_namespace) {
@@ -7345,7 +7339,7 @@ function(dir, localOnly = FALSE)
             unused <- character()
             for(u in aurls) {
                 cu <- utils::contrib.url(u, "source")
-                ind <- substring(tab[, 3L], 1, nchar(cu)) == cu
+                ind <- startsWith(tab[, 3L], cu)
                 if(any(ind)) {
                     tab[ind, 3L] <- u
                 } else {
