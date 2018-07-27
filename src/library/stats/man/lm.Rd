@@ -65,8 +65,8 @@ lm(formula, data, subset, weights, na.action,
 
   \item{offset}{this can be used to specify an \emph{a priori} known
     component to be included in the linear predictor during fitting.
-    This should be \code{NULL} or a numeric vector of length equal to
-    the number of cases.  One or more \code{\link{offset}} terms can be
+    This should be \code{NULL} or a numeric vector or matrix of extents
+    matching those of the response.  One or more \code{\link{offset}} terms can be
     included in the formula instead or as well, and if more than one are
     specified their sum is used.  See \code{\link{model.offset}}.}
 

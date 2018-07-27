@@ -1925,11 +1925,21 @@ stopifnot(identical(confint(mlm0),
 ## failed inside vcov.mlm() because summary.lm()$cov.unscaled was NULL
 
 
-## kruskal.test(<non-numeric g>>), PR#16719
+## kruskal.test(<non-numeric g>), PR#16719
 data(mtcars)
 mtcars$type <- rep(letters[1:2], c(16, 16))
 kruskal.test(mpg ~ type, mtcars)
 ## gave 'Error: all group levels must be finite'
+
+
+## Multivariate lm() with matrix offset, PR#17407
+ss <- list(s1 = summary(fm1 <- lm(cbind(mpg,qsec) ~ 1, data=mtcars, offset=cbind(wt,wt*2))),
+           s2 = summary(fm2 <- lm(cbind(mpg,qsec) ~ offset(cbind(wt,wt*2)), data=mtcars)))
+## drop "call" and "terms" parts which differ; rest must match:
+ss[] <- lapply(ss, function(s) lapply(s, function(R) R[setdiff(names(R), c("call","terms"))]))
+stopifnot(all.equal(ss[["s1"]], ss[["s2"]], tolerance = 1e-15))
+## lm() calls gave error 'number of offsets is 64, should equal 32 ...' in R <= 3.5.1
+
 
 
 ## keep at end

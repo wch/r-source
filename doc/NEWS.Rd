@@ -124,6 +124,9 @@
       \item The default method of \code{summary()} gets an option to
       choose the \emph{kind} of \code{quantile()}s to use; wish of
       \PR{17438}.
+
+      \item Multivariate linear models, \code{lm()} now do work with
+      \emph{matrix} offsets, as suggested in \PR{17407}.
     }
   }
 
