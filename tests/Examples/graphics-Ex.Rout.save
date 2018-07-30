@@ -1,5 +1,5 @@
 
-R version 3.5.1 Patched (2018-07-12 r74954) -- "Feather Spray"
+R version 3.5.1 Patched (2018-07-24 r75008) -- "Feather Spray"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -2082,7 +2082,7 @@ N
 > points.default # to see how it calls "plot.xy(xy.coords(x, y), ...)"
 function (x, y = NULL, type = "p", ...) 
 plot.xy(xy.coords(x, y), type = type, ...)
-<bytecode: 0x28679e0>
+<bytecode: 0x16a6190>
 <environment: namespace:graphics>
 > 
 > 
@@ -2952,7 +2952,7 @@ function (xy = 1, warn.log = TRUE)
     u <- par("usr")
     xy * c(u[2L] - u[1L], u[4L] - u[3L])/par("pin")
 }
-<bytecode: 0x4063a38>
+<bytecode: 0x2e55300>
 <environment: namespace:graphics>
 > 
 > ## plot labels offset 0.12 inches to the right
@@ -3033,7 +3033,7 @@ function (xy = 1, warn.log = TRUE)
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  5.604 0.102 5.746 0 0 
+Time elapsed:  2.837 0.059 2.91 0 0 
 > grDevices::dev.off()
 null device 
           1 
