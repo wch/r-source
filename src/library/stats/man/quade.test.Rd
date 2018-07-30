@@ -1,6 +1,6 @@
 % File src/library/stats/man/quade.test.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{quade.test}
@@ -95,6 +95,16 @@ y <- matrix(c( 5,  4,  7, 10, 12,
             list(Store = as.character(1:7),
                  Brand = LETTERS[1:5]))
 y
-quade.test(y)
+(qTst <- quade.test(y))
+
+## Show equivalence of different versions of test :
+utils::str(dy <- as.data.frame(as.table(y)))
+qT. <- quade.test(Freq ~ Brand|Store, data = dy)
+qT.$data.name <- qTst$data.name
+stopifnot(all.equal(qTst, qT., tolerance = 1e-15))
+dys <- dy[order(dy[,"Freq"]),]
+qTs <- quade.test(Freq ~ Brand|Store, data = dys)
+qTs$data.name <- qTst$data.name
+stopifnot(all.equal(qTst, qTs, tolerance = 1e-15))
 }
 \keyword{htest}

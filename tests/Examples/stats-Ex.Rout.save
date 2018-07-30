@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2018-07-16 r74967) -- "Unsuffered Consequences"
+R Under development (unstable) (2018-07-30 r75010) -- "Unsuffered Consequences"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -14172,13 +14172,27 @@ Store  A  B  C  D  E
     5 10  9  7 13 10
     6 19 18 28 37 58
     7 10  7  6  8  7
-> quade.test(y)
+> (qTst <- quade.test(y))
 
 	Quade test
 
 data:  y
 Quade F = 3.8293, num df = 4, denom df = 24, p-value = 0.01519
 
+> 
+> ## Show equivalence of different versions of test :
+> utils::str(dy <- as.data.frame(as.table(y)))
+'data.frame':	35 obs. of  3 variables:
+ $ Store: Factor w/ 7 levels "1","2","3","4",..: 1 2 3 4 5 6 7 1 2 3 ...
+ $ Brand: Factor w/ 5 levels "A","B","C","D",..: 1 1 1 1 1 1 1 2 2 2 ...
+ $ Freq : num  5 1 16 5 10 19 10 4 3 12 ...
+> qT. <- quade.test(Freq ~ Brand|Store, data = dy)
+> qT.$data.name <- qTst$data.name
+> stopifnot(all.equal(qTst, qT., tolerance = 1e-15))
+> dys <- dy[order(dy[,"Freq"]),]
+> qTs <- quade.test(Freq ~ Brand|Store, data = dys)
+> qTs$data.name <- qTst$data.name
+> stopifnot(all.equal(qTst, qTs, tolerance = 1e-15))
 > 
 > 
 > 
@@ -18569,7 +18583,7 @@ Number of Fisher Scoring iterations: 6
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  6.444 0.21 6.688 0 0 
+Time elapsed:  5.384 0.205 5.743 0 0 
 > grDevices::dev.off()
 null device 
           1 
