@@ -4427,6 +4427,38 @@ AC_DEFUN([R_MNT_WARN],
 fi
 ])# R_MNT_WARN
 
+## R_PTHREAD
+## ---------
+## Check is pthread support is available and needs to be declared explicitly
+## (Often provided by OpenMP support.)
+AC_DEFUN([R_PTHREAD],
+[
+AC_CACHE_CHECK([whether POSIX threads are supported],
+	       [r_cv_have_pthread],
+[
+case "${host_os}" in
+  mingw*|windows*|winnt)
+    ;;
+  darwin*)
+    ## macOS does have -pthread and libpthread, but includes it implicitly.
+    r_cv_have_pthread=yes
+    ;;
+  *)
+    r_cv_have_pthread=yes
+    PTHREAD_LIBS=-pthread
+    PTHREAD_CFLAGS=-pthread
+    R_SH_VAR_ADD(MAIN_LDFLAGS, [${PTHREAD_LIBS}])
+    R_SH_VAR_ADD(DYLIB_LDFLAGS, [${PTHREAD_LIBS}])
+    ;;
+esac
+])
+if test "x${r_cv_have_pthread}" = xyes; then
+    AC_DEFINE(HAVE_PTHREAD, 1, [Define if have support for POSIX threads.])
+fi
+AC_SUBST(PTHREAD_CFLAGS)
+AC_SUBST(PTHREAD_LIBS)
+])# R_PTHREAD
+
 ### Local variables: ***
 ### mode: outline-minor ***
 ### outline-regexp: "### [*]+" ***
