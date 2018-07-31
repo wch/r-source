@@ -1796,39 +1796,12 @@ AC_SUBST(R_OPENMP_FFLAGS)
 ##    OPENMP_CFLAGS to the respective linker flags, and add the OPENMP
 ##    flags to all (C, C++, Fortran and Fortran 77) compiler flags.
 
+R_PTHREAD
+
 ## <FIXME>
 ## Need to do this after configuring Fortran 90/95 support, which comes
 ## way below: should this be moved up to the compiler section?
 ## </FIXME>
-
-
-### POSIX threads.
-## This is a near-stub pro tem as all known platforms support -pthread but
-## macOS sets it implicitly.
-AC_MSG_CHECKING([whether POSIX threads are supported])
-case "${host_os}" in
-  mingw*|windows*|winnt)
-    ;;
-  darwin*) 
-    have_pthread=1
-    ;;
-  *)
-    have_pthread=1
-    PTHREAD_LIBS=-pthread
-    PTHREAD_CFLAGS=-pthread
-    R_SH_VAR_ADD(MAIN_LDFLAGS, [${PTHREAD_LIBS}])
-    R_SH_VAR_ADD(DYLIB_LDFLAGS, [${PTHREAD_LIBS}])
-    ;;
-esac
-if test -n "${have_pthread}"; then
-    AC_DEFINE(HAVE_PTHREAD, 1, [Define if have support for POSIX threads.])
-    AC_MSG_RESULT([yes])
-else
-    AC_MSG_RESULT([no])
-fi
-AC_SUBST(PTHREAD_CFLAGS)
-AC_SUBST(PTHREAD_LIBS)
-
 
 ### Now we have found all the flags, we need to use them to test appropriately.
 ### We don't currently have any C++ tests, but future-proof.
