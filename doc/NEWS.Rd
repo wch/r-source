@@ -127,6 +127,11 @@
 
       \item Multivariate linear models, \code{lm()} now do work with
       \emph{matrix} offsets, as suggested in \PR{17407}.
+
+      \item The a new functions \code{mem.maxVSize} and
+      \code{mem.maxMSize} allow the maximal size of the vector heap and
+      the maximal number of nodes allowed in the current \command{R}
+      process to be queried and set.
     }
   }
 
