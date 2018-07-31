@@ -27,9 +27,6 @@
 ## .check_package_ASCII_code
 ## .check_package_code_syntax
 ## .check_packages_used
-## .checkS3methods
-## .checkReplaceFuns
-## .checkFF
 ## .check_package_code_shlib
 ## .check_package_code_startup_functions
 ## .check_package_code_assign_to_globalenv
@@ -43,9 +40,12 @@
 ## undoc
 ## codoc
 ## codocData
-## codocClass
+## codocClasses
 ## checkDocFiles
 ## checkDocStyle
+## checkFF
+## checkReplaceFuns
+## checkS3methods
 ## .check_package_datasets
 ## .check_package_compact_datasets
 ## .check_package_compact_sysdata
