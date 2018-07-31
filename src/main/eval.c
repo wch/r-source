@@ -416,6 +416,8 @@ static void R_InitProfiling(SEXP filename, int append, double dinterval,
 #else /* not Win32 */
 #ifdef HAVE_PTHREAD
     R_profiled_thread = pthread_self();
+#else
+    error("profiling requires 'pthread' support");
 #endif
 
     signal(SIGPROF, doprof);
