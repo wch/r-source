@@ -8873,10 +8873,7 @@ function(ns)
 {
     env <- asNamespace(ns)
     nms <- sort(intersect(names(env), getNamespaceExports(env)))
-    if(".no_S3_generics" %in% nms)
-        character()
-    else
-        Filter(function(f) .is_S3_generic(f, envir = env), nms)
+    .get_S3_generics_in_env(env, nms)
 }
 
 

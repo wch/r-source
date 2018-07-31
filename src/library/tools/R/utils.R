@@ -1060,15 +1060,21 @@ function(dir, installed = TRUE, primitive = FALSE)
     ## some BioC packages warn here
     suppressWarnings(
     unique(c(.get_internal_S3_generics(primitive),
-             unlist(lapply(env_list,
-                           function(env) {
-                               nms <- sort(names(env))
-                               if(".no_S3_generics" %in% nms)
-                                   character()
-                               else Filter(function(f)
-                                           .is_S3_generic(f, envir = env),
-                                           nms)
-                           })))))
+             unlist(lapply(env_list, .get_S3_generics_in_env))))
+    )
+}
+
+### ** .get_S3_generics_in_env
+
+.get_S3_generics_in_env <-
+function(env, nms = NULL)
+{
+    if(is.null(nms))
+        nms <- sort(names(env))
+    if(".no_S3_generics" %in% nms)
+        character()
+    else
+        Filter(function(f) .is_S3_generic(f, envir = env), nms)
 }
 
 ### ** .get_S3_group_generics
