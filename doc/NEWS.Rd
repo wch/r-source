@@ -258,6 +258,10 @@
       \samp{pthread} library where required (rather than relying on
       OpenMP to provide it: configuring with \option{--disable-openmp}
       was failing on some Linux systems).
+
+      \item The \code{data.frame} method for \code{print(x)} is fast now
+      also for large data frames \code{x} and got an optional argument
+      \code{max}, thanks to suggestions by Juan Telleria.
     }
   }
 }

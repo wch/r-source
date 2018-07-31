@@ -1941,6 +1941,23 @@ stopifnot(all.equal(ss[["s1"]], ss[["s2"]], tolerance = 1e-15))
 ## lm() calls gave error 'number of offsets is 64, should equal 32 ...' in R <= 3.5.1
 
 
+## print.data.frame(<non-small>)
+USJ   <- USJudgeRatings
+USJe6 <- USJudgeRatings[rep_len(seq_len(nrow(USJ)), 1e6),]
+op <- options(max.print=500)
+t1 <- max(0.001, system.time(r1 <- print(USJ))[[1]]) # baseline > 0
+t2 <- system.time(r2 <- print(USJe6))[[1]]
+      system.time(r3 <- print(USJe6, row.names=FALSE))
+stopifnot(exprs = {
+    identical(r1, USJ  )# print() must return its arg
+    identical(r2, USJe6)
+    identical(r3, USJe6)
+    print(t2 / t1) < 9 # now typically in [1,2]
+})
+options(op); rm(USJe6)# reset
+## had t2/t1 > 4000 in R <= 3.5.1, because the whole data frame was formatted.
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
