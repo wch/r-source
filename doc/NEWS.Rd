@@ -253,6 +253,11 @@
 
       \item \code{quade.test()} now also works correctly when its
       arguments are not yet sorted along \code{groups}, fixing \PR{15842}.
+
+      \item Installation on a Unix-alike tries harder to link to the
+      \samp{pthread} library where required (rather than relying on
+      OpenMP to provide it: configuring with \option{--disable-openmp}
+      was failing on some Linux systems).
     }
   }
 }
