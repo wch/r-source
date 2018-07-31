@@ -1,6 +1,6 @@
 ### R.m4 -- extra macros for configuring R		-*- Autoconf -*-
 ###
-### Copyright (C) 1998-2017 R Core Team
+### Copyright (C) 1998-2018 R Core Team
 ###
 ### This file is part of R.
 ###
@@ -4427,29 +4427,59 @@ AC_DEFUN([R_MNT_WARN],
 fi
 ])# R_MNT_WARN
 
+
+### A modified version of AC_SEARCH_LIBS
+AC_DEFUN([R_SEARCH_OPTS],
+[AS_VAR_PUSHDEF([r_Search], [r_cv_search_$1])dnl
+  AC_CACHE_CHECK([for option providing $1], [r_Search],
+  [r_save_LIBS=$LIBS
+    AC_LANG_CONFTEST([AC_LANG_CALL([], [$1])])
+    for r_opt in '' $2; do
+      if test -z "$r_opt"; then
+        r_res="none required"
+      else
+        r_res=$r_opt
+        LIBS="$r_opt $r_save_LIBS"
+      fi
+     AC_LINK_IFELSE([], [AS_VAR_SET([r_Search], [$r_res])])
+     AS_VAR_SET_IF([r_Search], [break])
+    done
+    AS_VAR_SET_IF([r_Search], , [AS_VAR_SET([r_Search], [no])])
+    rm conftest.$ac_ext
+    LIBS=$r_save_LIBS
+  ])
+  AS_VAR_COPY([r_res], [r_Search])
+  AS_VAR_POPDEF([r_Search])dnl
+])
+
+
 ## R_PTHREAD
 ## ---------
-### POSIX threads.
-## This is a near-stub pro tem as all known platforms support -pthread but
-## macOS sets it implicitly.
+## POSIX threads.
 AC_DEFUN([R_PTHREAD],
-[
-AC_MSG_CHECKING([whether POSIX threads are supported])
-case "${host_os}" in
+[case "${host_os}" in
   mingw*|windows*|winnt)
     ;;
-  darwin*)
-    ## macOS has -pthread and libpthread but always includes them implicitly
-    have_pthread=1
-    ;;
   *)
-    have_pthread=1
-    PTHREAD_LIBS=-pthread
-    PTHREAD_CFLAGS=-pthread
-    R_SH_VAR_ADD(MAIN_LDFLAGS, [${PTHREAD_LIBS}])
-    R_SH_VAR_ADD(DYLIB_LDFLAGS, [${PTHREAD_LIBS}])
+    R_SEARCH_OPTS([pthread_kill], [-pthread])
+    case "${r_cv_search_pthread_kill}" in
+    "none required")
+      ## expected on macOS
+      have_pthread=1
+      ;;
+    no)
+      ;;
+    *)
+      have_pthread=1
+      PTHREAD_LIBS=${r_cv_search_pthread_kill}
+      PTHREAD_CFLAGS=${r_cv_search_pthread_kill}
+      R_SH_VAR_ADD(MAIN_LDFLAGS, [${PTHREAD_LIBS}])
+      R_SH_VAR_ADD(DYLIB_LDFLAGS, [${PTHREAD_LIBS}])
+      ;;
+    esac
     ;;
 esac
+AC_MSG_CHECKING([whether POSIX threads are supported])
 if test -n "${have_pthread}"; then
     AC_DEFINE(HAVE_PTHREAD, 1, [Define if have support for POSIX threads.])
     AC_MSG_RESULT([yes])

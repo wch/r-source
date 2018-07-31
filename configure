@@ -31915,36 +31915,102 @@ fi
 ##    OPENMP_CFLAGS to the respective linker flags, and add the OPENMP
 ##    flags to all (C, C++, Fortran and Fortran 77) compiler flags.
 
-
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether POSIX threads are supported" >&5
-$as_echo_n "checking whether POSIX threads are supported... " >&6; }
 case "${host_os}" in
   mingw*|windows*|winnt)
     ;;
-  darwin*)
-    ## macOS as -pthread and libpthread but always includes them implicitly
-    have_pthread=1
-    ;;
   *)
-    have_pthread=1
-    PTHREAD_LIBS=-pthread
-    PTHREAD_CFLAGS=-pthread
-    separator=""
+      { $as_echo "$as_me:${as_lineno-$LINENO}: checking for option providing pthread_kill" >&5
+$as_echo_n "checking for option providing pthread_kill... " >&6; }
+if ${r_cv_search_pthread_kill+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  r_save_LIBS=$LIBS
+    cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+char pthread_kill ();
+#ifdef F77_DUMMY_MAIN
+
+#  ifdef __cplusplus
+     extern "C"
+#  endif
+   int F77_DUMMY_MAIN() { return 1; }
+
+#endif
+int
+main ()
+{
+return pthread_kill ();
+  ;
+  return 0;
+}
+_ACEOF
+    for r_opt in '' -pthread; do
+      if test -z "$r_opt"; then
+        r_res="none required"
+      else
+        r_res=$r_opt
+        LIBS="$r_opt $r_save_LIBS"
+      fi
+     if ac_fn_c_try_link "$LINENO"; then :
+  r_cv_search_pthread_kill=$r_res
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext
+     if ${r_cv_search_pthread_kill+:} false; then :
+  break
+fi
+    done
+    if ${r_cv_search_pthread_kill+:} false; then :
+
+else
+  r_cv_search_pthread_kill=no
+fi
+    rm conftest.$ac_ext
+    LIBS=$r_save_LIBS
+
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $r_cv_search_pthread_kill" >&5
+$as_echo "$r_cv_search_pthread_kill" >&6; }
+  r_res=$r_cv_search_pthread_kill
+
+    case "${r_cv_search_pthread_kill}" in
+    "none required")
+      ## expected on macOS
+      have_pthread=1
+      ;;
+    no)
+      ;;
+    *)
+      have_pthread=1
+      PTHREAD_LIBS=${r_cv_search_pthread_kill}
+      PTHREAD_CFLAGS=${r_cv_search_pthread_kill}
+      separator=""
 test -z "${separator}" && separator=" "
 if test -z "${MAIN_LDFLAGS}"; then
   MAIN_LDFLAGS="${PTHREAD_LIBS}"
 else
   MAIN_LDFLAGS="${MAIN_LDFLAGS}${separator}${PTHREAD_LIBS}"
 fi
-    separator=""
+      separator=""
 test -z "${separator}" && separator=" "
 if test -z "${DYLIB_LDFLAGS}"; then
   DYLIB_LDFLAGS="${PTHREAD_LIBS}"
 else
   DYLIB_LDFLAGS="${DYLIB_LDFLAGS}${separator}${PTHREAD_LIBS}"
 fi
+      ;;
+    esac
     ;;
 esac
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether POSIX threads are supported" >&5
+$as_echo_n "checking whether POSIX threads are supported... " >&6; }
 if test -n "${have_pthread}"; then
 
 $as_echo "#define HAVE_PTHREAD 1" >>confdefs.h
