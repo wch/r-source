@@ -611,6 +611,9 @@
 /* Define to 1 if you have the `pown' function. */
 #undef HAVE_POWN
 
+/* Define if have support for POSIX threads. */
+#undef HAVE_PTHREAD
+
 /* Define if the <pthread.h> defines PTHREAD_MUTEX_RECURSIVE. (For intl) */
 #undef HAVE_PTHREAD_MUTEX_RECURSIVE
 
