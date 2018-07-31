@@ -358,9 +358,7 @@ function(package, dir, lib.loc = NULL,
             objects_in_ns <-
                 setdiff(sort(names(ns_env)),
                         c(".__NAMESPACE__.", ".__S3MethodsTable__."))
-            ns_S3_methods_db <- ns_env$".__NAMESPACE__."$S3methods
-            ## Alternatively, use
-            ##   ns_S3_methods_db <- getNamespaceInfo(package, "S3methods")
+            ns_S3_methods_db <- getNamespaceInfo(package, "S3methods")
             ns_S3_methods <- if(is.null(ns_S3_methods_db))
                                  character()
                              else
@@ -1576,8 +1574,15 @@ function(package, dir, lib.loc = NULL)
             ## Determine names of declared S3 methods and associated S3
             ## generics.
             ns_S3_methods_db <- getNamespaceInfo(package, "S3methods")
-            ns_S3_generics <- ns_S3_methods_db[, 1L]
+            ns_S3_generics <- as.character(ns_S3_methods_db[, 1L])
             ns_S3_methods <- ns_S3_methods_db[, 3L]
+            if(!is.character(ns_S3_methods)) {
+                ## As of 2018-07, direct calls to registerS3method()
+                ## could have registered a function object (not name).
+                ind <- vapply(ns_S3_methods, is.character, NA)
+                ns_S3_methods[!ind] <- ""
+                ns_S3_methods <- as.character(ns_S3_methods)
+            }
         }
     }
     else {
@@ -1680,7 +1685,7 @@ function(package, dir, lib.loc = NULL)
     ## functions (i.e., with their full name), if they do something
     ## useful also for arguments not inheriting from the class they
     ## provide a method for.
-    ## But they they should be exported under another name, and
+    ## But then they should be exported under another name, and
     ## registered as an S3 method.
     ## Prior to 2.14.0 we used to allow this in the case the
     ## package has a namespace and the method is exported (even though
@@ -2305,11 +2310,13 @@ function(package, dir, lib.loc = NULL)
             ## Determine names of declared S3 methods and associated S3
             ## generics.
             ns_S3_methods_db <- getNamespaceInfo(package, "S3methods")
-            ns_S3_generics <- ns_S3_methods_db[, 1L]
+            ns_S3_generics <- as.character(ns_S3_methods_db[, 1L])
             ## We really need the GENERIC.CLASS method names used in the
             ## registry:
             ns_S3_methods <-
-                paste(ns_S3_generics, ns_S3_methods_db[, 2L], sep = ".")
+                paste(ns_S3_generics,
+                      as.character(ns_S3_methods_db[, 2L]),
+                      sep = ".")
             ## Determine unexported but declared S3 methods.
             S3_reg <- setdiff(ns_S3_methods, objects_in_code)
         }
@@ -2624,8 +2631,15 @@ function(package, dir, lib.loc = NULL)
     replace_funs <- character()
 
     if(has_namespace) {
-        ns_S3_generics <- ns_S3_methods_db[, 1L]
+        ns_S3_generics <- as.character(ns_S3_methods_db[, 1L])
         ns_S3_methods <- ns_S3_methods_db[, 3L]
+        if(!is.character(ns_S3_methods)) {
+            ## As of 2018-07, direct calls to registerS3method()
+            ## could have registered a function object (not name).
+            ind <- vapply(ns_S3_methods, is.character, NA)
+            ns_S3_methods[!ind] <- ""
+            ns_S3_methods <- as.character(ns_S3_methods)
+        }
         ## S3 replacement methods from namespace registration?
         idx <- grep("<-$", ns_S3_generics)
         if(length(idx)) replace_funs <- ns_S3_methods[idx]
