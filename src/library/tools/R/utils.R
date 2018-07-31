@@ -894,14 +894,15 @@ function(nsInfo)
     ## Get the registered S3 methods for an 'nsInfo' object returned by
     ## parseNamespaceFile(), as a 3-column character matrix with the
     ## names of the generic, class and method (as a function).
-    S3_methods_list <- nsInfo$S3methods
-    if(!length(S3_methods_list)) return(matrix(character(), ncol = 3L))
-    idx <- is.na(S3_methods_list[, 3L])
-    S3_methods_list[idx, 3L] <-
-        paste(S3_methods_list[idx, 1L],
-              S3_methods_list[idx, 2L],
+    S3_methods_db <- nsInfo$S3methods
+    if(!length(S3_methods_db))
+        return(matrix(character(), ncol = 3L))
+    idx <- is.na(S3_methods_db[, 3L])
+    S3_methods_db[idx, 3L] <-
+        paste(S3_methods_db[idx, 1L],
+              S3_methods_db[idx, 2L],
               sep = ".")
-    S3_methods_list
+    S3_methods_db
 }
 
 ### ** .get_namespace_S3_methods_with_homes
