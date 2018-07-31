@@ -1948,12 +1948,17 @@ op <- options(max.print=500)
 t1 <- max(0.001, system.time(r1 <- print(USJ))[[1]]) # baseline > 0
 t2 <- system.time(r2 <- print(USJe6))[[1]]
       system.time(r3 <- print(USJe6, row.names=FALSE))
+out <- capture.output(print(USJe6, max = 600)) # max > getOption("max.print")
 stopifnot(exprs = {
     identical(r1, USJ  )# print() must return its arg
     identical(r2, USJe6)
     identical(r3, USJe6)
     print(t2 / t1) < 9 # now typically in [1,2]
+    length(out) == 52
+    grepl("CALLAHAN", out[51], fixed=TRUE)
+    identical(2L, grep("omitted", out[51:52], fixed=TRUE))
 })
+
 options(op); rm(USJe6)# reset
 ## had t2/t1 > 4000 in R <= 3.5.1, because the whole data frame was formatted.
 

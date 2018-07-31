@@ -1490,6 +1490,7 @@ print.data.frame <-
 	cat(gettext("<0 rows> (or 0-length row.names)\n"))
     } else {
 	if(is.null(max)) max <- getOption("max.print", 99999L)
+        if(!is.finite(max)) stop("invalid 'max' / getOption(\"max.print\"): ", max)
 	## format.<*>() : avoiding picking up e.g. format.AsIs
 	omit <- (n0 <- max %/% length(x)) < n
 	m <- as.matrix(
@@ -1499,7 +1500,7 @@ print.data.frame <-
 	    dimnames(m)[[1L]] <-
 		if(isFALSE(row.names)) rep.int("", if(omit) n0 else n)
 		else row.names
-	print(m, ..., quote = quote, right = right)
+	print(m, ..., quote = quote, right = right, max = max)
 	if(omit)
 	    cat(" [ reached 'max' / getOption(\"max.print\") -- omitted",
 		n - n0, "rows ]\n")
