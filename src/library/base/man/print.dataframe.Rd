@@ -11,7 +11,7 @@
 }
 \usage{
 \method{print}{data.frame}(x, \dots, digits = NULL,
-      quote = FALSE, right = TRUE, max = NULL, row.names = TRUE)
+      quote = FALSE, right = TRUE, row.names = TRUE, max = NULL)
 }
 \arguments{
   \item{x}{object of class \code{data.frame}.}
@@ -22,11 +22,11 @@
     printed with surrounding quotes.}
   \item{right}{logical, indicating whether or not strings should be
     right-aligned.  The default is right-alignment.}
+  \item{row.names}{logical (or character vector), indicating whether (or
+    what) row names should be printed.}
   \item{max}{numeric or \code{NULL}, specifying the maximal number of
     entries to be printed.  By default, when \code{NULL},
     \code{\link{getOption}("max.print")} used.}
-  \item{row.names}{logical (or character vector), indicating whether (or
-    what) row names should be printed.}
 }
 \details{
   This calls \code{\link{format}} which formats the data frame
