@@ -30,6 +30,8 @@
 
 # [a small part, modified for clang and Intel in 2015,6, Solaris in 2017.]
 
+# _AC_LANG_OPENMP is a language-dependent program defined in c.m4 in
+# the autoconf library.
 
 # R_OPENMP
 # --------
