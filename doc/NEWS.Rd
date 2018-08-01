@@ -109,7 +109,7 @@
       environment variable \env{R_DONT_USE_TK} which if set disables Tk
       initialization.  This is intended for use to circumvent errors in
       loading the package, e.g.\sspace{}with recent Linux running under
-      ASAN.
+      an address sanitizer.
 
       \item The \code{numeric} method of \code{all.equal()} gets an
       optional argument \code{countEQ}.  If that is true, the mean error
@@ -128,9 +128,9 @@
       \item Multivariate linear models, \code{lm()} now do work with
       \emph{matrix} offsets, as suggested in \PR{17407}.
 
-      \item The a new functions \code{mem.maxVSize} and
-      \code{mem.maxMSize} allow the maximal size of the vector heap and
-      the maximal number of nodes allowed in the current \command{R}
+      \item The a new functions \code{mem.maxVSize()} and
+      \code{mem.maxMSize()} allow the maximal size of the vector heap
+      and the maximal number of nodes allowed in the current \command{R}
       process to be queried and set.
     }
   }
