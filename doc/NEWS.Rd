@@ -142,6 +142,14 @@
     }
   }
 
+  \subsection{TESTING}{
+    \itemize{
+      \item The random number generator tests in
+      \file{tests/p-r-random-tests.R} no longer fail occasionally as
+      they now randomly sample from \dQuote{certified} random seeds.
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{replayPlot(r)} now also works in the same \R session
