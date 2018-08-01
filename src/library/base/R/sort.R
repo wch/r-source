@@ -227,10 +227,9 @@ sort.list <- function(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
 {
     ## fastpass, take advantage of ALTREP metadata
     decreasing <- as.logical(decreasing)
-    if(is.null(partial) && is.numeric(x) && !is.object(x) &&
-       length(x) > 0){
+    if(is.null(partial) && is.numeric(x) && !is.object(x) && length(x) > 0) {
         if (.Internal(sorted_fpass(x, decreasing, na.last)))
-            return(seq(along = x))
+            return(seq_along(x))
     }
 
     method <- match.arg(method)
