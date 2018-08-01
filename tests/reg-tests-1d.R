@@ -1958,9 +1958,15 @@ stopifnot(exprs = {
     grepl("CALLAHAN", out[51], fixed=TRUE)
     identical(2L, grep("omitted", out[51:52], fixed=TRUE))
 })
-
 options(op); rm(USJe6)# reset
 ## had t2/t1 > 4000 in R <= 3.5.1, because the whole data frame was formatted.
+
+
+## hist.default() in rare cases
+hh <- hist(seq(1e6, 2e6, by=20), plot=FALSE)
+hd <- hh$density*1e6
+stopifnot(0.999 <= hd, hd <= 1.001)
+## in R <= 3.5.1: warning 'In n * h : NAs produced by integer overflow' and then NA's
 
 
 

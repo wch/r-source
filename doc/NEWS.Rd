@@ -267,6 +267,9 @@
       \item The \code{data.frame} method for \code{print(x)} is fast now
       also for large data frames \code{x} and got an optional argument
       \code{max}, thanks to suggestions by Juan Telleria.
+
+      \item \code{hist()} no longer integer overflows in very rare
+      cases, fixing \PR{17450}.
     }
   }
 }
