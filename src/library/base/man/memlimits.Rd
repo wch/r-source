@@ -26,12 +26,12 @@ mem.maxNSize(nsize = 0)
 
   The default maximal values are unlimited on most platforms, but can be
   adjusted using environment variables as described in
-  \code{\link{Memory}}. On Mac OS a lower default vector heap limit is
-  used to protect against the \R process being killed when Mac OS
+  \code{\link{Memory}}. On macOS a lower default vector heap limit is
+  used to protect against the \R process being killed when macOS
   over-commits memory.
 
   Adjusting the maximal number of nodes is rarely necessary. Adjusting
-  the vector heap size limit can be useeful on Mac OS in particular but
+  the vector heap size limit can be useful on macOS in particular but
   should be done with caution.
 }
 \value{
