@@ -1,13 +1,14 @@
 % File src/library/base/man/is.language.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{is.language}
+\title{Is an Object a Language Object?}
 \alias{is.language}
+\alias{language}
 \alias{language object}
 \alias{language objects}
-\title{Is an Object a Language Object?}
 \usage{
 is.language(x)
 }
@@ -22,6 +23,10 @@ is.language(x)
 \note{
   A \code{name} is also known as \sQuote{symbol}, from its type
   (\code{\link{typeof}}), see \code{\link{is.symbol}}.
+
+  If \code{\link{typeof}(x) == "language"}, then \code{is.language(x)}
+  is always true, but the reverse does not hold as expressions or
+  names \code{y} also fulfill \code{is.language(y)}, see the examples.
 
   This is a \link{primitive} function.
 }

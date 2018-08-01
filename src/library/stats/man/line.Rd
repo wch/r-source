@@ -10,7 +10,7 @@
 \description{
   Fit a line robustly as recommended in \emph{Exploratory Data Analysis}.
 
-  Currently the initial median-median line is \emph{not} iterated (as
+  Currently by default (\code{iter = 1}) the initial median-median line is \emph{not} iterated (as
   opposed to Tukey's \dQuote{resistant line} in the references).
 }
 \usage{
