@@ -3725,7 +3725,7 @@ more elapsed time (occasionally dramatically so) than using a similar
 single-threaded @acronym{BLAS}.  On a machine running other tasks, there
 can be contention for CPU caches that reduces the effectiveness of the
 optimization of cache use by a @acronym{BLAS} implementation: some
-people warn that this is especially problematic for hyperthreaded CPUs
+people warn that this is especially problematic for hyperthreaded CPUs.
 
 Note that under Unix (but not under Windows) if @R{} is compiled against
 a non-default @acronym{BLAS} and @option{--enable-BLAS-shlib} is
@@ -4170,7 +4170,10 @@ You can use @option{--without-foo} or @option{--disable-foo} for the
 negatives.
 
 You will want to use @option{--disable-R-profiling} if you are building
-a profiled executable of @R{} (e.g.@: with @samp{-pg)}.
+a profiled executable of @R{} (e.g.@: with @samp{-pg)}.  Support for @R{}
+profiling requires OS support for POSIX theads (@emph{aka}
+@samp{pthreads}), which are available on all mainstream Unix-alike
+platforms.
 
 Flag @option{--enable-R-shlib} causes the make process to build @R{} as
 a dynamic (shared) library, typically called @file{libR.so}, and link
