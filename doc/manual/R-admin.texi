@@ -4171,7 +4171,7 @@ negatives.
 
 You will want to use @option{--disable-R-profiling} if you are building
 a profiled executable of @R{} (e.g.@: with @samp{-pg)}.  Support for @R{}
-profiling requires OS support for POSIX theads (@emph{aka}
+profiling requires OS support for POSIX threads (@emph{aka}
 @samp{pthreads}), which are available on all mainstream Unix-alike
 platforms.
 
