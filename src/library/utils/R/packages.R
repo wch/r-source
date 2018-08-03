@@ -44,7 +44,7 @@ function(contriburl = contrib.url(repos, type), method,
         localcran <- length(grep("^file:", repos)) > 0L
         if(localcran) {
             ## see note in download.packages
-            if(substring(repos, 1L, 8L) == "file:///") {
+            if(startsWith(repos, "file:///")) {
                 tmpf <- paste0(substring(repos, 8L), "/PACKAGES")
                 if(.Platform$OS.type == "windows") {
                     if(length(grep("^/[A-Za-z]:", tmpf)))
@@ -333,7 +333,7 @@ function(db)
     if(is.na(CRAN)) return(db)
     for(d in dups) {
         pos <- which(packages == d)
-        ind <- substring(db[pos, "Repository"], 1, nchar(CRAN)) != CRAN
+        ind <- !startsWith(db[pos, "Repository"], CRAN)
         if(!all(ind)) drop <- c(drop, pos[ind])
     }
     if(length(drop)) db[-drop, , drop = FALSE] else db
@@ -763,7 +763,7 @@ download.packages <- function(pkgs, destdir, available = NULL,
             repos <- available[ok, "Repository"]
             if(length(grep("^file:", repos)) > 0L) { # local repository
                 ## This could be file: + file path or a file:/// URL.
-                if(substring(repos, 1L, 8L) == "file:///") {
+                if(startsWith(repos, "file:///")) {
                     ## We need to derive the file name from the URL
                     ## This is tricky as so many forms have been allowed,
                     ## and indeed external methods may do even more.

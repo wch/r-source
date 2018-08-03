@@ -715,7 +715,7 @@ function(file1, file2)
 .file_path_relative_to_dir <-
 function(x, dir, add = FALSE)
 {
-    if(any(ind <- (substring(x, 1L, nchar(dir)) == dir))) {
+    if(any(ind <- startsWith(x, dir))) {
         ## Assume .Platform$file.sep is a single character.
         x[ind] <- if(add)
             file.path(basename(dir), substring(x[ind], nchar(dir) + 2L))
