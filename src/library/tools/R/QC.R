@@ -2641,8 +2641,7 @@ function(package, dir, lib.loc = NULL)
             ns_S3_methods <- as.character(ns_S3_methods)
         }
         ## S3 replacement methods from namespace registration?
-        idx <- grep("<-$", ns_S3_generics)
-        if(length(idx)) replace_funs <- ns_S3_methods[idx]
+        replace_funs <- ns_S3_methods[endsWith(ns_S3_generics, "<-")]
         ## Now remove the functions registered as S3 methods.
         objects_in_code <- setdiff(objects_in_code, ns_S3_methods)
     }
