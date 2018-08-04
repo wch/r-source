@@ -4432,21 +4432,21 @@ fi
 AC_DEFUN([R_SEARCH_OPTS],
 [AS_VAR_PUSHDEF([r_Search], [r_cv_search_$1])dnl
   AC_CACHE_CHECK([for option providing $1], [r_Search],
-  [r_save_LIBS=$LIBS
+  [r_opts_save_CFLAGS=$CFLAGS
     AC_LANG_CONFTEST([AC_LANG_CALL([], [$1])])
     for r_opt in '' $2; do
       if test -z "$r_opt"; then
         r_res="none required"
       else
         r_res=$r_opt
-        LIBS="$r_opt $r_save_LIBS"
+        CFLAGS="$r_opt $r_opts_save_CFLAGS"
       fi
      AC_LINK_IFELSE([], [AS_VAR_SET([r_Search], [$r_res])])
      AS_VAR_SET_IF([r_Search], [break])
     done
     AS_VAR_SET_IF([r_Search], , [AS_VAR_SET([r_Search], [no])])
     rm conftest.$ac_ext
-    LIBS=$r_save_LIBS
+    CFLAGS=$r_save_CFLAGS
   ])
   AS_VAR_COPY([r_res], [r_Search])
   AS_VAR_POPDEF([r_Search])dnl
@@ -4461,20 +4461,24 @@ AC_DEFUN([R_PTHREAD],
   mingw*|windows*|winnt)
     ;;
   *)
-    R_SEARCH_OPTS([pthread_kill], [-pthread])
+    r_save_CFLAGS=${CFLAGS}
+    CFLAGS="${CFLAGS} ${OPENMP_CFLAGS}"
+    ## Other things one might want to try for ancient systems
+    ## -Kthread (Sequent) -pthreads (Solaris/gcc, but -pthread works)
+    R_SEARCH_OPTS([pthread_kill], [${PTHREAD_OPT} -pthread])
+    CFLAGS=${r_save_CFLAGS}
     case "${r_cv_search_pthread_kill}" in
     "none required")
-      ## expected on macOS
+      ## expected on macOS and Solaris, and other platforms with OpenMP in use
       have_pthread=1
       ;;
     no)
       ;;
     *)
       have_pthread=1
-      PTHREAD_LIBS=${r_cv_search_pthread_kill}
-      PTHREAD_CFLAGS=${r_cv_search_pthread_kill}
-      R_SH_VAR_ADD(MAIN_LDFLAGS, [${PTHREAD_LIBS}])
-      R_SH_VAR_ADD(DYLIB_LDFLAGS, [${PTHREAD_LIBS}])
+      PTHREAD_OPT=${r_cv_search_pthread_kill}
+      R_SH_VAR_ADD(MAIN_LDFLAGS, [${PTHREAD_OPT}])
+      R_SH_VAR_ADD(DYLIB_LDFLAGS, [${PTHREAD_OPT}])
       ;;
     esac
     ;;
@@ -4486,8 +4490,6 @@ if test -n "${have_pthread}"; then
 else
     AC_MSG_RESULT([no])
 fi
-AC_SUBST(PTHREAD_CFLAGS)
-AC_SUBST(PTHREAD_LIBS)
 ])# R_PTHREAD
 
 ### Local variables: ***
