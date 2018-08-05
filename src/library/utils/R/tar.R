@@ -426,7 +426,7 @@ tar <- function(tarfile, files = NULL,
         }
         header <- raw(512L)
         ## add trailing / to dirs.
-        if(info$isdir && !grepl("/$", f)) f <- paste0(f, "/")
+        if(info$isdir && !endsWith(f, "/")) f <- paste0(f, "/")
         name <- charToRaw(f)
         if(length(name) > 100L) {
             OK <- TRUE

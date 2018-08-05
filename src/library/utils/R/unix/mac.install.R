@@ -17,7 +17,7 @@
 #  https://www.R-project.org/Licenses/
 
 
-if(substr(R.version$os, 1L, 6L) != "darwin") {
+if(!startsWith(R.version$os, "darwin")) {
 .install.macbinary <-
     function(pkgs, lib, repos = getOption("repos"),
              contriburl = contrib.url(repos, type="mac.binary"),

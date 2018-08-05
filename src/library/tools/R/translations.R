@@ -38,7 +38,7 @@ en_quote <- function(potfile, outfile)
         start <- sub('([^"]*)"(.*)"$', "\\1", lines[s])
         this <- sub('([^"]*)"(.*)"$', "\\2", lines[s])
         current <- s+1L
-        while(grepl('^"', lines[current])) {
+        while(startsWith(lines[current], '"')) {
             this <- c(this, sub('^"(.*)"$', "\\1", lines[current]))
             current <- current + 1L
         }

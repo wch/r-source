@@ -2674,7 +2674,7 @@ function(package, dir, lib.loc = NULL)
         S4_generics <- .get_S4_generics(code_env)
         ## Assume that the ones with names ending in '<-' are always
         ## replacement functions.
-        S4_generics <- S4_generics[grepl("<-$", names(S4_generics))]
+        S4_generics <- S4_generics[endsWith(names(S4_generics), "<-")]
         bad_S4_replace_methods <-
             sapply(S4_generics,
                    function(f) {
@@ -3313,7 +3313,7 @@ function(dfile, strict = FALSE)
 
     ## Minimal check (so far) of Title and Description.
     if(strict && !is.na(val <- db["Title"])
-       && grepl("[.]$", val)
+       && endsWith(val, ".")
        && !grepl("[[:space:]][.][.][.]|et[[:space:]]al[.]", trimws(val)))
         out$bad_Title <- TRUE
     ## some people put punctuation inside quotes, some outside.

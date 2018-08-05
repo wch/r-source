@@ -322,7 +322,7 @@ Rd2txt_NEWS_in_Rd_options <-
 
 Rd2txt_NEWS_in_Rd <-
 function(f, out = "") {
-    if (grepl("[.]rds$", f)) f <- readRDS(f)
+    if (endsWith(f, ".rds")) f <- readRDS(f)
     Rd2txt(f, out,
            stages = c("install", "render"),
            outputEncoding = if(l10n_info()[["UTF-8"]]) "" else "ASCII//TRANSLIT",
@@ -332,7 +332,7 @@ function(f, out = "") {
 
 Rd2HTML_NEWS_in_Rd <-
 function(f, out, ...) {
-    if (grepl("[.]rds$", f)) f <- readRDS(f)
+    if (endsWith(f, ".rds")) f <- readRDS(f)
     Rd2HTML(f, out, stages = c("install", "render"),
            macros = file.path(R.home("share"), "Rd", "macros", "system.Rd"), ...)
 }
@@ -340,7 +340,7 @@ function(f, out, ...) {
 Rd2pdf_NEWS_in_Rd <-
 function(f, pdf_file)
 {
-    if (grepl("[.]rds$", f)) f <- readRDS(f)
+    if (endsWith(f, ".rds")) f <- readRDS(f)
     f2 <- tempfile()
     ## See the comments in ?texi2dvi about spaces in paths
     f3 <- if(grepl(" ", Sys.getenv("TMPDIR")))

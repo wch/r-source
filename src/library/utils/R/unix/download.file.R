@@ -30,7 +30,7 @@ download.file <-
         if(length(url) != 1L || typeof(url) != "character")
             stop("'url' must be a length-one character vector");
         ## As from 3.3.0 all Unix-alikes support libcurl.
-	method <- if(grepl("^file:", url)) "internal" else "libcurl"
+	method <- if(startsWith(url, "file:")) "internal" else "libcurl"
     }
 
     switch(method,

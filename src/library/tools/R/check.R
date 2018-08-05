@@ -27,11 +27,11 @@
 get_timeout <- function(tlim)
 {
     if(is.character(tlim)) {
-        if(grepl("m$", tlim))
+        if(endsWith(tlim, "m"))
             tlim <- 60*as.numeric(sub("m$", "", tlim))
-        else if(grepl("h$", tlim))
+        else if(endsWith(tlim, "h"))
             tlim <- 3600*as.numeric(sub("h$", "", tlim))
-        else if(grepl("s$", tlim))  # for completeness, like GNU timeout.
+        else if(endsWith(tlim, "s"))  # for completeness, like GNU timeout.
             tlim <- as.numeric(sub("s$", "", tlim))
     }
     tlim <- as.numeric(tlim)
@@ -603,7 +603,7 @@ add_dummies <- function(dir, Log)
         allfiles <- filtergrep(ignore_re, allfiles)
         bad_files <- allfiles[grepl("[[:cntrl:]\"*/:<>?\\|]",
                                     basename(allfiles))]
-        is_man <- grepl("man$", dirname(allfiles))
+        is_man <- endsWith(dirname(allfiles), "man")
         bad <- sapply(strsplit(basename(allfiles[is_man]), ""),
                       function(x) any(grepl("[^ -~]|%", x)))
         if (length(bad))
@@ -1304,7 +1304,7 @@ add_dummies <- function(dir, Log)
         ## ./bicreduc/OldFiles/bicreduc.Rcheck
         ## ./waved/man/waved.Rcheck
         ## ./waved/..Rcheck
-        ind <- grepl("\\.Rcheck$", all_dirs)
+        ind <- endsWith(all_dirs, ".Rcheck")
         if(any(ind)) {
             if(!any) warningLog(Log)
             any <- TRUE
@@ -2788,7 +2788,7 @@ add_dummies <- function(dir, Log)
                 opts <- grep("-f(fast-math|unsafe-math-optimizations|associative-math|reciprocal-math)",
                              tokens, useBytes = TRUE, value = TRUE)
                 warns <- c(warns, diags, opts)
-                if(any(grepl("^-Wno-", warns)) || length(diags)) {
+                if(any(startsWith(warns, "-Wno-")) || length(diags)) {
                     warningLog(Log)
                     msg <- c("Compilation used the following non-portable flag(s):",
                              .pretty_format(sort(warns)),
@@ -4158,7 +4158,7 @@ add_dummies <- function(dir, Log)
                     ## but what if there is output from do_cleanup
                     ## in (Unix) R CMD INSTALL?
                     ## </NOTE>
-                    install_error <- !any(grepl("^\\* DONE", lines))
+                    install_error <- !any(startsWith(lines, "* DONE"))
                 } else {
                     ## record in the log what options were used
                     cat("* install options ", sQuote(INSTALL_opts),
@@ -4560,7 +4560,7 @@ add_dummies <- function(dir, Log)
                 do_exit(1L)
             }
             if(!grepl("^[[:alpha:]][[:alnum:].]*[[:alnum:]]$", desc["Package"])
-               || grepl("[.]$", desc["Package"])) {
+               || endsWith(desc["Package"], ".")) {
                 warningLog(Log)
                 printLog(Log,"  Package name is not portable:\n",
                          "  It must start with a letter, contain letters, digits or dot\n",
@@ -5113,7 +5113,7 @@ add_dummies <- function(dir, Log)
         stop_on_test_error <- FALSE
         } else if (substr(a, 1, 9) == "--rcfile=") {
             warning("configuration files are not supported as from R 2.12.0")
-        } else if (substr(a, 1, 1) == "-") {
+        } else if (startsWith(a, "-")) {
             message("Warning: unknown option ", sQuote(a))
         } else pkgs <- c(pkgs, a)
         args <- args[-1L]

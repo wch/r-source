@@ -257,7 +257,7 @@ wsbrowser <- function(IDS, IsRoot, IsContainer, ItemsPerContainer,
 	   windows = , ## do we need anything here?
 	   unix = { url <- fname },
 	   )
-    if(substr(url, 1L, 1L) != "/")
+    if(!startsWith(url, "/"))
 	url <- paste0("/", url)
     url <- paste0("file://", URLencode(url))
 
