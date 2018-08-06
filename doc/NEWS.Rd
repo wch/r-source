@@ -132,6 +132,8 @@
       \code{mem.maxMSize()} allow the maximal size of the vector heap
       and the maximal number of nodes allowed in the current \command{R}
       process to be queried and set.
+
+      \item \code{news()} gains support for \file{NEWS.md} files.
     }
   }
 

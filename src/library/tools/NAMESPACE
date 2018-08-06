@@ -104,6 +104,8 @@ S3method("format", "undoc")
 S3method("format", "CRAN_package_reverse_dependencies_and_views")
 S3method("format", "summarize_CRAN_check_status")
 
+S3method("format", "news_db_from_md")
+
 S3method("format", "pdf_fonts")
 S3method("format", "pdf_info")
 S3method("format", "PDF_Array")
@@ -192,6 +194,7 @@ S3method("summary", "PDF_Stream")
 S3method("summary", "check_packages_in_dir")
 
 S3method("toHTML", "news_db")
+S3method("toHTML", "news_db_from_md")
 S3method("toHTML", "packageIQR")
 S3method("toHTML", "citation")
 
