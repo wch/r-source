@@ -2068,7 +2068,7 @@ SHLIB_OPENMP_FFLAGS
 
 @noindent
 are available for use in @file{src/Makevars} or @file{src/Makevars.win}.
-Include the appropriate macro in @code{PKG_CFLAGS}, @code{PKG_CPPFLAGS}
+Include the appropriate macro in @code{PKG_CFLAGS}, @code{PKG_CXXFLAGS}
 and so on, and also in @code{PKG_LIBS}.  C/C++ code that needs to be
 conditioned on the use of OpenMP can be used inside @code{#ifdef
 _OPENMP}: note that some toolchains used for @R{} (including Apple's for
