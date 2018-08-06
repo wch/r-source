@@ -353,3 +353,10 @@
 ## SHLIB_OPENMP_FFLAGS=
 ## For R itself (src/main/array.c and src/library/stats/src/distance.c)
 ## R_OPENMP_CFLAGS=
+
+## POSIX threads setting
+## pthreads is used in src/main/eval.c.  The configure code sees if
+## any flag is needed to link to pthread functions (after the OpenMP
+## CFLAGS) and if so tries -pthread.  Setting this allows an
+## alternative to be tried immediately before -pthread.
+## PTHREAD_OPT=
