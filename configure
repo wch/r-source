@@ -757,8 +757,6 @@ RMATH_HAVE_WORKING_LOG1P
 LIBOBJS
 MACOS_SIERRA
 ALLOCA
-PTHREAD_LIBS
-PTHREAD_CFLAGS
 R_OPENMP_FFLAGS
 R_OPENMP_CFLAGS
 SHLIB_CXX17LDFLAGS
@@ -25327,7 +25325,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:25330: \"$ac_link\") >&5
+(eval echo $as_me:25328: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -25402,7 +25400,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:25405: \"$ac_link\") >&5
+(eval echo $as_me:25403: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -32024,12 +32022,16 @@ case "${host_os}" in
   mingw*|windows*|winnt)
     ;;
   *)
+    r_save_CFLAGS=${CFLAGS}
+    CFLAGS="${CFLAGS} ${OPENMP_CFLAGS}"
+    ## Other things one might want to try for ancient systems
+    ## -Kthread (Sequent) -pthreads (Solaris/gcc, but -pthread works)
       { $as_echo "$as_me:${as_lineno-$LINENO}: checking for option providing pthread_kill" >&5
 $as_echo_n "checking for option providing pthread_kill... " >&6; }
 if ${r_cv_search_pthread_kill+:} false; then :
   $as_echo_n "(cached) " >&6
 else
-  r_save_LIBS=$LIBS
+  r_opts_save_CFLAGS=$CFLAGS
     cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 
@@ -32056,12 +32058,12 @@ return pthread_kill ();
   return 0;
 }
 _ACEOF
-    for r_opt in '' -pthread; do
+    for r_opt in '' ${PTHREAD_OPT} -pthread; do
       if test -z "$r_opt"; then
         r_res="none required"
       else
         r_res=$r_opt
-        LIBS="$r_opt $r_save_LIBS"
+        CFLAGS="$r_opt $r_opts_save_CFLAGS"
       fi
      if ac_fn_c_try_link "$LINENO"; then :
   r_cv_search_pthread_kill=$r_res
@@ -32078,37 +32080,37 @@ else
   r_cv_search_pthread_kill=no
 fi
     rm conftest.$ac_ext
-    LIBS=$r_save_LIBS
+    CFLAGS=$r_save_CFLAGS
 
 fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $r_cv_search_pthread_kill" >&5
 $as_echo "$r_cv_search_pthread_kill" >&6; }
   r_res=$r_cv_search_pthread_kill
 
+    CFLAGS=${r_save_CFLAGS}
     case "${r_cv_search_pthread_kill}" in
     "none required")
-      ## expected on macOS
+      ## expected on macOS and Solaris, and other platforms with OpenMP in use
       have_pthread=1
       ;;
     no)
       ;;
     *)
       have_pthread=1
-      PTHREAD_LIBS=${r_cv_search_pthread_kill}
-      PTHREAD_CFLAGS=${r_cv_search_pthread_kill}
+      PTHREAD_OPT=${r_cv_search_pthread_kill}
       separator=""
 test -z "${separator}" && separator=" "
 if test -z "${MAIN_LDFLAGS}"; then
-  MAIN_LDFLAGS="${PTHREAD_LIBS}"
+  MAIN_LDFLAGS="${PTHREAD_OPT}"
 else
-  MAIN_LDFLAGS="${MAIN_LDFLAGS}${separator}${PTHREAD_LIBS}"
+  MAIN_LDFLAGS="${MAIN_LDFLAGS}${separator}${PTHREAD_OPT}"
 fi
       separator=""
 test -z "${separator}" && separator=" "
 if test -z "${DYLIB_LDFLAGS}"; then
-  DYLIB_LDFLAGS="${PTHREAD_LIBS}"
+  DYLIB_LDFLAGS="${PTHREAD_OPT}"
 else
-  DYLIB_LDFLAGS="${DYLIB_LDFLAGS}${separator}${PTHREAD_LIBS}"
+  DYLIB_LDFLAGS="${DYLIB_LDFLAGS}${separator}${PTHREAD_OPT}"
 fi
       ;;
     esac
@@ -32126,8 +32128,6 @@ else
     { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
 fi
-
-
 
 
 ## <FIXME>
