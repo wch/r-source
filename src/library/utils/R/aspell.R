@@ -1130,10 +1130,11 @@ function(ifile, encoding = "UTF-8")
         ## Legibility ...
         l1 <- p[1L]; c1 <- p[2L]; l2 <- p[3L]; c2 <- p[4L]
         if(l1 < l2) {
-            w <- seq(l1 + 1L, l2 - 1L)
-            if(length(w))
-                y[w] <- x[w]
             substring(y[l1], c1, n[l1]) <- substring(x[l1], c1, n[l1])
+            if(l1 + 1L < l2) {
+                w <- seq.int(from = l1 + 1L, to = l2 - 1L)
+                y[w] <- x[w]
+            }
             substring(y[l2], 1L, c2) <- substring(x[l2], 1L, c2)
         } else {
             substring(y[l1], c1, c2) <- substring(x[l1], c1, c2)
