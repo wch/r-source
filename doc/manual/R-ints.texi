@@ -4217,6 +4217,12 @@ Check correct and portable use of @code{SHLIB_OPENMP_*FLAGS} in
 @file{src/Makevars} (and similar).
 Default: false (but true for CRAN submission checks).
 
+@item _R_CHECK_CONNECTIONS_LEFT_OPEN_
+When checking examples, check for each example if connections are left
+open: if any are found, this is reported with a fatal error.  NB:
+`connections' includes most use of files and any parallel clusters which
+have not be stopped by @code{stopCluster()}.
+Default: false (but true for CRAN submission checks).
 @end vtable
 
 CRAN's submission checks use something like
