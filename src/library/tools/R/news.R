@@ -561,7 +561,7 @@ function(file = NULL)
                         db[, 2L],
                         Text = sub("\n*$", "", db[, 3L]),
                         HTML = db[, 4L]),
-                  logical(nrow(db)),
+                  NULL,
                   "news_db_from_Rd")
 }
 
@@ -597,7 +597,7 @@ function(file)
 			db[, 2L],
                         Text = sub("\n*$", "", db[, 3L]),
                         HTML = db[, 4L]),
-                  logical(nrow(db)),
+                  NULL,
                   "news_db_from_Rd")
 }
 
@@ -854,7 +854,7 @@ function(f)
                         db[, 2L],
                         Text = sub("\n*$", "", db[, 3L]),
                         HTML = db[, 4L]),
-                  logical(nrow(db)),
+                  NULL,
                   "news_db_from_md")
 }
 
@@ -887,3 +887,9 @@ function(x, ...)
         USE.NAMES = FALSE)
 }
 
+.news_db_has_no_bad_entries <-
+function(x)     
+{
+    (is.null(bad <- attr(x, "bad")) ||
+     (length(bad) == NROW(x)) && !any(bad))
+}

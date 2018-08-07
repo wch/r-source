@@ -107,9 +107,7 @@ function(x, ...)
 
     ## For now, only do something if the NEWS file could be read without
     ## problems, see utils:::print.news_db():
-    if(is.null(bad <- attr(x, "bad"))
-       || (length(bad) != NROW(x))
-       || any(bad))
+    if(!.news_db_has_no_bad_entries(x))
         return(character())
 
     print_items <- function(x)

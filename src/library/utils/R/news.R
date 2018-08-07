@@ -46,9 +46,6 @@ function(query, package = "R", lib.loc = NULL,
     ## versions (e.g., R NEWS has "2.8.1 patched") or could have the
     ## version info missing (and package_version() does not like NAs).
 
-    has_bad_attr <-
-        !is.null(bad <- attr(db, "bad")) && (length(bad) == NROW(db))
-
     ## Manipulate fields for querying (but return the original ones).
     db1 <- db
     ## Canonicalize version entries which *start* with a valid numeric
@@ -70,21 +67,21 @@ function(query, package = "R", lib.loc = NULL,
 	    stop("invalid query")
 	r <- r & !is.na(r)
 	db <- db[r, ]
-	if (!all(r))
-	    db <- structure(db, subset = r)
-	if(has_bad_attr)
-	    db <- structure(db, bad = bad[r])
+	if(!is.null(bad <- attr(db, "bad"))
+           && (length(bad) == NROW(db)))
+	    attr(db, "bad") <- bad[r]
+        ## This should no longer be necessary ...?
+	if(!all(r))
+	    attr(db, "subset") <- r
     }
+    
     db
 }
 
 format.news_db <-
 function(x, ...)
 {
-    if(inherits(x, "news_db_from_Rd") ||
-       (!is.null(bad <- attr(x, "bad"))
-           && (length(bad) == NROW(x))
-           && !any(bad))) {
+    if(tools:::.news_db_has_no_bad_entries(x)) {
 
         ## Format news in the preferred input format:
         ##   Changes in $VERSION [($DATE)]:
@@ -159,8 +156,9 @@ function(x, ...)
 print.news_db <-
 function(x, doBrowse = interactive(), browser = getOption("browser"), ...)
 {
-    port <- if (doBrowse && !identical("false", browser) &&
-                is.character(pkg <- attr(x, "package")))
+    port <- if(doBrowse && !identical("false", browser) &&
+               is.character(pkg <- attr(x, "package")) &&
+               tools:::.news_db_has_no_bad_entries(x))
         tools::startDynamicHelp(NA) else 0L
     if (port > 0L) {
         tools:::.httpd_objects(port, x)
@@ -185,4 +183,20 @@ function(x, doBrowse = interactive(), browser = getOption("browser"), ...)
     } else ## simply show in console:
 	writeLines(paste(unlist(format(x, ...)), collapse = "\n\n"))
     invisible(x)
+}
+
+`[.news_db` <- function(x, i, j, drop) {
+    ## Ensure that 'bad' attribute is subscripted as necessary.
+    y <- NextMethod()
+    if(inherits(y, "news_db")
+       && !missing(i)
+       && !is.null(bad <- attr(x, "bad"))) {
+        attr(y, "bad") <- bad[i]
+    }
+    y
+}
+
+subset.news_db <-
+function(x, subset, ...) {
+    do.call("news", list(substitute(subset), db = x))
 }
