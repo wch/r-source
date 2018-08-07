@@ -173,7 +173,7 @@ function(x, ...)
                         ifelse(is.na(dates), "",
                                sprintf(" (%s)", dates)))
 
-    c(HTMLheader(),
+    c(HTMLheader(...),
       unlist(Map(c, vheaders, lapply(vchunks, do_vchunk))),
       "</body></html>")
 }

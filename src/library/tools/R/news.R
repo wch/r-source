@@ -748,6 +748,15 @@ function(f)
         nodes <- nodes[-1L]
         if(!length(nodes))
             return(rbind(c(version, "", "", "")))
+        ## Unlike news in Rd where we (currently) insist on all news to
+        ## be given as items in itemize lists, for md we only split news
+        ## in version chunks according to category.  If the chunks has
+        ## headings, we take those with the same level as the first one
+        ## to start category chunks, and everything before the first
+        ## such heading as a chunk with an empty category (empty instead
+        ## of missing to make querying more convenient).  If there are
+        ## no headings, we have a single version chunk with no (empty)
+        ## category.
         ind <- .xml_name(nodes) == "heading"
         pos <- which(ind)
         if(length(pos)) {
@@ -772,16 +781,24 @@ function(f)
     }
 
     do_cchunk <- function(nodes, heading) {
+        ## See above: if the category chunk has a heading, we extract
+        ## the category from it.  Otherwise, the category is empty.
         if(heading) {
             category <- .xml_text(nodes[[1L]])
             nodes <- nodes[-1L]
         } else {
             category <- ""
         }
+        
         if(!length(nodes))
             return(c(category, "", ""))
+
+        ## Compute text and HTML by converting everything from the start
+        ## of the first sourcepos to the end of the last sourcepos.
         sp <- c(.xml_attr(nodes[[1L]], "sourcepos"),
                 .xml_attr(nodes[[length(nodes)]], "sourcepos"))
+        ## (If there is one node, nodes[c(1L, length(nodes))] would give
+        ## that node only once.  Could also special case ...)
         sp <- as.integer(unlist(strsplit(sp, "[:-]"))[c(1L, 2L, 7L, 8L)])
         
         c(category, get_text_and_HTML(sp))
@@ -791,13 +808,17 @@ function(f)
     pos <- which(ind)
     if(!length(pos)) return()
 
+    ## Skip leading headings until we find one from which we can extract
+    ## a version number.  Then drop everything ahead of this, and take 
+    ## all headings with the same level to start version chunks.
+    
     re_v <- sprintf("(^|.*[[:space:]]+)[vV]?(%s).*$",
                     .standard_regexps()$valid_package_version)
     while(length(pos) &&
           !grepl(re_v, .xml_text(nodes[[pos[1L]]])))
         pos <- pos[-1L]
     if(!length(pos)) return()
-    
+
     lev <- .xml_attr(nodes[pos], "level")
     ind[pos] <- (lev == lev[1L])
     if(pos[1L] > 1L) {
