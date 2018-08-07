@@ -174,7 +174,7 @@ strptime(x, format, tz = "")
     \item{\code{\%z}}{Signed offset in hours and minutes
       from UTC, so \code{-0800} is 8 hours behind UTC. Values up to
       \code{+1400} are accepted.  (Standard only for output.  For input
-      this was added by C99 and \R currently supports it on all platforms.)} 
+      \R currently supports it on all platforms.)} 
     \item{\code{\%Z}}{(Output only.)  Time zone abbreviation as a
       character string (empty if not available).  This may not be reliable
       when a time zone has changed abbreviations over the years.}
