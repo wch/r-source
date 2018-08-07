@@ -1,6 +1,6 @@
 % File src/library/base/man/strptime.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{strptime}
@@ -173,7 +173,8 @@ strptime(x, format, tz = "")
       For input, only years \code{0:9999} are accepted.}
     \item{\code{\%z}}{Signed offset in hours and minutes
       from UTC, so \code{-0800} is 8 hours behind UTC. Values up to
-      \code{+1400} are accepted.  (Standard only for output.)} 
+      \code{+1400} are accepted.  (Standard only for output.  For input
+      this was added by C99 and \R currently supports it on all platforms.)} 
     \item{\code{\%Z}}{(Output only.)  Time zone abbreviation as a
       character string (empty if not available).  This may not be reliable
       when a time zone has changed abbreviations over the years.}
