@@ -2697,7 +2697,7 @@ add_dummies <- function(dir, Log)
             ## If any of these flags are included in PKG_*FLAGS, it
             ## should also be included in PKG_LIBS.  And it is
             ## not portable to use more than one of these in one package.
-            any <- msg2 <- FALSE
+            any <- msg2 <- msg3 <- FALSE
             for (m in makefiles) {
                 lines <- readLines(m, warn = FALSE)
                 ## Combine lines ending in escaped newlines.
@@ -2716,7 +2716,7 @@ add_dummies <- function(dir, Log)
                 lines <- lines[nzchar(lines)]
 
                 c1 <- grepl("^[[:space:]]*PKG_LIBS", lines, useBytes = TRUE)
-
+                anyInLIBS <- any(grepl("SHLIB_OPENMP_", lines[c1], useBytes = TRUE))
                 used <- character()
                 for (f in c("C", "CXX", "F", "FC"))  {
                     this <- paste0(f, "FLAGS")
@@ -2731,11 +2731,17 @@ add_dummies <- function(dir, Log)
                         if(!any(grepl(pat2, lines[c1], useBytes = TRUE))) {
                             if (!any) noteLog(Log)
                             any <- TRUE
-                            msg <- if (f == "F")
+                            msg <- if(anyInLIBS) {
+                                if (f == "F")
                                 "SHLIB_OPENMP_FFLAGS is included in PKG_FFLAGS but not SHLIB_OPENMP_CFLAGS in PKG_LIBS\n"
                             else
                                 sprintf("SHLIB_OPENMP_%s is included in PKG_%s but not in PKG_LIBS\n",
                                            this, this)
+                            } else {
+                                msg3 <- TRUE
+                                sprintf("SHLIB_OPENMP_%s is included in PKG_%s but no OPENMP macro in PKG_LIBS\n",
+                                           this, this)
+                            }
                             printLog(Log, "  ", m, ": ", msg)
                         }
                     } else {
@@ -2744,6 +2750,7 @@ add_dummies <- function(dir, Log)
                         if(any(c2 <- grepl(pat, lines, useBytes = TRUE))) {
                             if (!any) noteLog(Log)
                             any <- TRUE
+                            if (!anyInLIBS) msg3 <- TRUE
                             ## assume just one
                             l <- lines[c2][1L]
                             found <- sub(".*SHLIB_OPENMP_([A-Z]*).*", "\\1", l, useBytes = TRUE)
@@ -2775,6 +2782,7 @@ add_dummies <- function(dir, Log)
                 if (cnt > 1L) {
                     if (!any) noteLog(Log)
                     any <- TRUE
+                    if (!anyInLIBS) msg3 <- TRUE
                     printLog(Log, "  ", m, ": ",
                              "it is not portable to include multiple",
                              " SHLIB_OPENMP_*' macros in PKG_LIBS",
@@ -2806,6 +2814,11 @@ add_dummies <- function(dir, Log)
                     wrapLog("PKG_CPPFLAGS is used for both C and C++ code",
                             "so it is not portable to use it",
                             "for these macros.\n")
+                if (msg3)
+                    wrapLog("Using a SHLIB_OPENMP_ macro for compilation",
+                            "but none in PKG_LIBS",
+                            "is not portable and may result in",
+                            "installation errors.\n")
             }
         }
 
