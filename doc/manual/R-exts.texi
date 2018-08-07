@@ -2069,13 +2069,14 @@ SHLIB_OPENMP_FFLAGS
 @noindent
 are available for use in @file{src/Makevars} or @file{src/Makevars.win}.
 Include the appropriate macro in @code{PKG_CFLAGS}, @code{PKG_CXXFLAGS}
-and so on, and also in @code{PKG_LIBS}.  C/C++ code that needs to be
-conditioned on the use of OpenMP can be used inside @code{#ifdef
-_OPENMP}: note that some toolchains used for @R{} (including Apple's for
-macOS and some others using @command{clang}@footnote{Default builds of
-@command{clang} 3.8.0 and later have support for OpenMP, but the
-@code{libomp} run-time library may not be installed.}) have no OpenMP
-support at all, not even @file{omp.h}.
+and so on, and also in @code{PKG_LIBS} (but see below for Fortran 77).
+C/C++ code that needs to be conditioned on the use of OpenMP can be used
+inside @code{#ifdef _OPENMP}: note that some toolchains used for @R{}
+(including Apple's for macOS and some others using
+@command{clang}@footnote{Default builds of @command{clang} 3.8.0 and
+later have support for OpenMP, but the @code{libomp} run-time library
+may not be installed.}) have no OpenMP support at all, not even
+@file{omp.h}.
 
 For example, a package with C code written for OpenMP should have in
 @file{src/Makevars} the lines
@@ -2092,7 +2093,7 @@ use your own checks, make sure that OpenMP support is complete by
 compiling and linking an OpenMP-using program: on some platforms the
 runtime library is optional and on others that library depends on other
 optional libraries.
-@c For clang 7, libomp.so depends on libatomic.
+@c For clang pre-7, libomp.so depended on libatomic.
 
 Some care is needed when compilers are from different families which may
 use different OpenMP runtimes (e.g.@: @command{clang} @emph{vs} GCC
@@ -2146,6 +2147,10 @@ word, so computations done on OpenMP threads will not make use of
 extended-precision arithmetic which is the default for the main process.
 @c mingw64-public, 2015-02-02.
 @c https://stackoverflow.com/questions/2553725/is-the-fpu-control-word-setting-per-thread-or-per-process
+
+Do not include these macros unless your code does make use of OpenMP
+(possibly for C++ via included external headers): this can result in the
+OpenMP runtime being linked in, threads being started, @dots{}.
 
 Calling any of the @R{} API from threaded code is `for experts only' and
 strongly discouraged. Many functions in the @R{} API modify internal
