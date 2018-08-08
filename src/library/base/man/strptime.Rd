@@ -278,8 +278,8 @@ strptime(x, format, tz = "")
   East of the meridian.  Although there have been time zones with
   offsets like 00:09:21 (Paris in 1900), and 00:44:30 (Liberia until
   1972), offsets are usually treated as whole numbers of minutes, and
-  are most often seen in RFC 822 email headers in forms like
-  \code{-0800} (e.g., used on the Pacific coast of the US in winter).
+  are most often seen in RFC 5322 email headers in forms like
+  \code{-0800} (e.g., used on the Pacific coast of the USA in winter).
   
   Format \code{\%z} can be used for input or output: it is a character
   string, conventionally plus or minus followed by two digits for
@@ -320,6 +320,22 @@ strptime(x, format, tz = "")
   used by \R on Windows in all locales.
 }
 
+\section{Sources}{
+  Input uses the POSIX function \code{strptime} and output the C99
+  function \code{strftime}.
+
+  However, not all OSes (notably Windows) provided \code{strptime} and
+  many issues were found for those which did, so since 2000 \R has used
+  a fork of code from \samp{glibc}.  The forked code uses the
+  system's \code{strftime} to find the locale-specific day and month
+  names and any AM/PM indicator.
+
+  On some platforms (including Windows and by default on macOS) the
+  system's \code{strftime} is replaced (along with most of the rest of
+  the C-level datetime code) by code modified from IANA's \samp{tzcode}
+  distribution (\url{https://www.iana.org/time-zones}).
+}
+
 \references{
   International Organization for Standardization (2004, 2000, \dots)
   \emph{ISO 8601.  Data elements and interchange formats --
@@ -347,7 +363,7 @@ format(Sys.time(), "\%a \%b \%d \%X \%Y \%Z")
 format(Sys.time(), "\%H:\%M:\%OS3")
 
 ## read in date info in format 'ddmmmyyyy'
-## This will give NA(s) in some locales; setting the C locale
+## This will give NA(s) in some non-English locales; setting the C locale
 ## as in the commented lines will overcome this on most systems.
 ## lct <- Sys.getlocale("LC_TIME"); Sys.setlocale("LC_TIME", "C")
 x <- c("1jan1960", "2jan1960", "31mar1960", "30jul1960")
@@ -368,7 +384,7 @@ op <- options(digits.secs = 3)
 z
 options(op)
 
-## time zones name are not portable, but 'EST5EDT' comes pretty close.
+## time zone names are not portable, but 'EST5EDT' comes pretty close.
 (x <- strptime(c("2006-01-08 10:07:52", "2006-08-07 19:33:02"),
                "\%Y-\%m-\%d \%H:\%M:\%S", tz = "EST5EDT"))
 attr(x, "tzone")
