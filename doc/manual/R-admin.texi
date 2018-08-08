@@ -2828,10 +2828,8 @@ compatibility.
 
 Windows also uses locales, but specified in a rather less concise way.
 Most users will encounter locales only via drop-down menus, but more
-information and lists can be found at
-@uref{https://msdn.microsoft.com/@/en-us/@/library/@/hzz3tw78(v=vs.80)}
-(or if Microsoft moves it yet again, search for @samp{Windows language
-country strings}).
+information and lists can be found by searching for @samp{Windows
+language country strings}).
 
 It offers only one encoding per language.
 
@@ -3514,11 +3512,13 @@ historically has been part of @file{libc} on a Unix-alike.  (In
 principle @command{man xdr_string} should tell you which library is
 needed, but it often does not: on Solaris and others it is provided by
 @code{libnsl}.)  However some builds@footnote{This is the default as
-from @code{glibc} 2.26 and has been announced for Fedora 28.} of
+from @code{glibc} 2.26 and has been confirmed for Fedora 28.} of
 @code{glibc} omit or hide it with the intention that the
 @acronym{TI-RPC} library be used, in which case @code{libtirpc} (and its
-development version) needs to be installed, and its headers need to be
-on the C include path or in @file{/usr/include/tirpc}.
+development version) needs to be installed, and its
+headers@footnote{@R{} uses @file{rpc/xdr.h} but that includes
+@file{netconfig.h} from the top @file{tirpc} directory.} need to be on the
+C include path or under @file{/usr/include/tirpc}.
 
 Use of the X11 clipboard selection requires the @code{Xmu} headers and
 libraries.  These are normally part of an X11 installation (e.g.@: the

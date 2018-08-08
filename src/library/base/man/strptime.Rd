@@ -72,9 +72,9 @@ strptime(x, format, tz = "")
   locale} of the descriptions might mean the locale in use at the start
   of the \R session or when these functions are first used.  (For input,
   the locale-specific conversions can be changed by calling
-  \code{\link{Sys.setlocale}} with category \code{LC_TIME} since \R
-  3.1.0 or \code{LC_ALL} since \R 3.4.1.  For output, what happens
-  depends on the OS.)
+  \code{\link{Sys.setlocale}} with category \code{LC_TIME} (or
+  \code{LC_ALL}).  For output, what happens depends on the OS but
+  usually works.)
 
   % strftime is C99: strptime is POSIX.
   The details of the formats are platform-specific, but the following are
@@ -373,8 +373,11 @@ options(op)
                "\%Y-\%m-\%d \%H:\%M:\%S", tz = "EST5EDT"))
 attr(x, "tzone")
 
-## An RFC 822 header (Eastern Canada, during DST)
-strptime("Tue, 23 Mar 2010 14:36:38 -0400",  "\%a, \%d \%b \%Y \%H:\%M:\%S \%z")
+## An RFC 5322 header (Eastern Canada, during DST)
+## In a non-English locale the commented lines may be needed.
+## prev <- Sys.getlocale("LC_TIME"); Sys.setlocale("LC_TIME", "C")
+strptime("Tue, 23 Mar 2010 14:36:38 -0400", "\%a, \%d \%b \%Y \%H:\%M:\%S \%z")
+## Sys.setlocale("LC_TIME", prev)
 
 ## Make sure you know what the abbreviated names are for you if you wish
 ## to use them for input (they are matched case-insensitively):
