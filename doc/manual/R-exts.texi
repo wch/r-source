@@ -8664,7 +8664,7 @@ Finer control of what is checked can be achieved by other options: for
 @uref{https://clang.llvm.org/@/docs/@/UsersManual.html#controlling-code-generation}.@footnote{or
 the user manual for your version of @command{clang}, e.g.@: (the paths
 have differed for some versions)
-@uref{http://llvm.org/@/releases/@/4.0.0/@/tools/@/clang/@/docs/@/UsersManual.html}.}
+@uref{http://llvm.org/@/releases/@/6.0.0/@/tools/@/clang/@/docs/@/UsersManual.html}.}
 The current set for @command{clang} is (on a single line):
 @example
 -fsanitize=alignment,bool,bounds,enum,float-cast-overflow,
@@ -8717,9 +8717,9 @@ where @code{float-divide-by-zero} is not desirable for @R{} uses and
 @c and @code{vptr} checks produced many warnings on GCC's own C++ headers,
 @c so should be disabled.
 
-From GCC 8 @code{signed-integer-overflow} is no longer be a default
-part of @option{-fsanitize=undefined}, but can be specified separately.
-It adds options @option{-fsanitize=pointer-overflow} an
+From GCC 8 @code{signed-integer-overflow} is no longer a default part of
+@option{-fsanitize=undefined}, but can be specified separately.  It adds
+options @option{-fsanitize=pointer-overflow} and
 @option{-fsanitize=builtin}.
 
 Other useful flags include
