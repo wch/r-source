@@ -65,7 +65,7 @@ news(query, package = "R", lib.loc = NULL, format = NULL,
   primary heading level giving the version number after a prefix
   followed by a space, and optionally followed by a space and a
   parenthesized ISO 8601 format date.  Where available, secondary
-  heading are taken to indicate categories.  To accomodate for common
+  heading are taken to indicate categories.  To accommodate for common
   practice, news entries are only split down to the category level.
 
   The plain text \file{NEWS} files in add-on packages use a variety of
