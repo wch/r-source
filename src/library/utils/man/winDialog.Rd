@@ -1,6 +1,6 @@
-% File src/library/utils/man/windows/winDialog.Rd
+% File src/library/utils/man/winDialog.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{winDialog}
@@ -8,9 +8,9 @@
 \alias{winDialogString}
 \title{Dialog Boxes under Windows}
 \description{
-  Put up a Windows dialog box to communicate with the user. There are
-  various types, either for the user to select from a set of buttons or
-  to edit a string.
+  On MS Windows only, put up a dialog box to communicate with the user.
+  There are various types, either for the user to select from a set of
+  buttons or to edit a string.
 }
 \usage{
 winDialog(type = c("ok", "okcancel", "yesno", "yesnocancel"),

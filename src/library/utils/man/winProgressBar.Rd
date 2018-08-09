@@ -1,6 +1,6 @@
-% File src/library/utils/man/windows/winProgressBar.Rd
+% File src/library/utils/man/winProgressBar.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2008 R Core Team
+% Copyright 2008-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{winProgressBar}
@@ -8,9 +8,9 @@
 \alias{getWinProgressBar}
 \alias{setWinProgressBar}
 \alias{close.winProgressBar}
-\title{Progress Bars under Windows}
+\title{Progress Bars under MS Windows}
 \description{
-  Put up a Windows progress bar widget.
+  Put up a Windows progress bar widget, update and access it.
 }
 \usage{
 winProgressBar(title = "R progress bar", label = "",
@@ -51,9 +51,10 @@ setWinProgressBar(pb, value, title = NULL, label = NULL)
   \code{setWinProgressBar}).
 }
 \note{
-    These functions are only available on Windows.
+  These functions are only available on Windows.% incl RStudio, not yet in ESS
 }
 \seealso{
+  On all platforms,
   \code{\link{txtProgressBar}}, \code{\link{tkProgressBar}}
 }
 \examples{\donttest{% popups are irritating

@@ -1,14 +1,14 @@
-% File src/library/utils/man/windows/shortPathName.Rd
+% File src/library/utils/man/shortPathName.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{shortPathName}
 \alias{shortPathName}
-\title{Express File Paths in Short Form}
+\title{Express File Paths in Short Form on Windows}
 \description{
   Convert file paths to the short form.  This is an interface to the
-  Windows API call \code{GetShortPathName}.
+  Windows API call \code{GetShortPathNameW}.
 }
 \usage{
 shortPathName(path)
@@ -34,10 +34,11 @@ shortPathName(path)
 \seealso{
   \code{\link{normalizePath}}.
 }
-\examples{\donttest{
-cat(shortPathName(c(R.home(), tempdir())), sep = "\n")
+\examples{% (spacing: for nice rendering of visual part of example)
+if(.Platform$OS.type == "windows") withAutoprint({
+
+\donttest{  cat(shortPathName(c(R.home(), tempdir())), sep = "\n")}
+\dontshow{  cat(shortPathName(R.home()), sep = "\n")}
+})
 }
-\testonly{
-cat(shortPathName(R.home()), sep = "\n")
-}}
 \keyword{ utilities }

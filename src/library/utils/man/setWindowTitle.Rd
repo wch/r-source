@@ -1,6 +1,6 @@
-% File src/library/utils/man/windows/setWindowTitle.Rd
+% File src/library/utils/man/setWindowTitle.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{setWindowTitle}
@@ -8,10 +8,10 @@
 \alias{getWindowTitle}
 \alias{getIdentification}
 \alias{setStatusBar}
-\title{Set or get the Window Title, or Set the Statusbar}
+\title{Set the Window Title or the Statusbar of the RGui in Windows}
 \description{
-  Set the title of the R window which will appear in the task bar, or of
-  the statusbar (if in use).
+  Set or get the title of the \R (i.e. \command{RGui}) window  which
+  will appear in the task bar, or set the statusbar (if in use).
 }
 \usage{
 setWindowTitle(suffix, title = paste(getIdentification(), suffix))
@@ -30,7 +30,8 @@ setStatusBar(text)
 }
 \details{
   \code{setWindowTitle} appends \code{suffix} to the normal window
-  identification (\code{RGui}, \code{R Console} or \code{Rterm}).  Use
+  identification (\command{RGui}, \command{R Console} or
+  \command{Rterm}).  Use
   \code{suffix = ""} to reset the title.
 
   \code{getWindowTitle} gets the current title.
@@ -54,9 +55,13 @@ setStatusBar(text)
   window title and the normal window identification, respectively.
 }
 \note{
-  This is only available on Windows.
+  These functions are only available on Windows and only make sense when
+  using the \command{Rgui}.  E.g., in \command{Rterm} (and hence in \command{ESS})
+  the title is not visible (but can be set and gotten), and in a version of
+  \command{RStudio} it has been \code{""}, invariably.
 }
 \examples{
+if(.Platform$OS.type == "windows") withAutoprint({
 ## show the current working directory in the title, saving the old one
 oldtitle <- setWindowTitle(getwd())
 Sys.sleep(0.5)
@@ -65,5 +70,6 @@ setWindowTitle("")
 Sys.sleep(0.5)
 ## restore the original title
 setWindowTitle(title = oldtitle)
+})% Windows-only
 }
 \keyword{utilities}

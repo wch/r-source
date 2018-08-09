@@ -1,13 +1,13 @@
-% File src/library/utils/man/windows/DLL.version.Rd
+% File src/library/utils/man/DLL.version.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{DLL.version}
 \alias{DLL.version}
-\title{DLL Version Information}
+\title{DLL Version Information on MS Windows}
 \description{
-  Return the version of the package and the version of \R used to
+  On MS Windows only, return the version of the package and the version of \R used to
   build the DLL, if available.
 }
 \usage{
@@ -28,7 +28,9 @@ DLL.version(path)
   This is only available on Windows.
 }
 \examples{
-DLL.version(file.path(R.home("bin"), "R.dll"))
-DLL.version(file.path(R.home(), "library/stats/libs", .Platform$r_arch, "stats.dll"))
+if(.Platform$OS.type == "windows") withAutoprint({
+  DLL.version(file.path(R.home("bin"), "R.dll"))
+  DLL.version(file.path(R.home(), "library/stats/libs", .Platform$r_arch, "stats.dll"))
+})
 }
 \keyword{utilities}

@@ -1,13 +1,14 @@
-% File src/library/utils/man/windows/shortPathName.Rd
+% File src/library/utils/man/shortPathName.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2008-2014 R Core Team
+% Copyright 2008-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{readRegistry}
 \alias{readRegistry}
-\title{Read a Windows Registy Hive}
+\title{Read a Windows Registry Hive}
 \description{
-  Read values of keys in the Windows Registry, and optionally whole hives.
+  On Windows, read values of keys in the Windows Registry, and
+  optionally whole hives.
 }
 \usage{
 readRegistry(key, hive = c("HLM", "HCR", "HCU", "HU", "HCC", "HPD"),
@@ -46,18 +47,20 @@ readRegistry(key, hive = c("HLM", "HCR", "HCU", "HU", "HCC", "HPD"),
   This is only available on Windows.
 }
 \examples{\donttest{
-## only in HLM if set in an admin-mode install.
-try(readRegistry("SOFTWARE\\\\R-core", maxdepth = 3))
+if(.Platform$OS.type == "windows") withAutoprint({
+  ## only in HLM if set in an admin-mode install.
+  try(readRegistry("SOFTWARE\\\\R-core", maxdepth = 3))
 
-gmt <- file.path("SOFTWARE", "Microsoft", "Windows NT",
-                 "CurrentVersion", "Time Zones",
-                 "GMT Standard Time", fsep = "\\\\")
-readRegistry(gmt, "HLM")}
-\dontrun{
-## on a 64-bit R need this to find 32-bit JAGS
+  gmt <- file.path("SOFTWARE", "Microsoft", "Windows NT",
+                   "CurrentVersion", "Time Zones",
+		   "GMT Standard Time", fsep = "\\\\")
+  readRegistry(gmt, "HLM")
+}) }%donttest
+\dontrun{## on a 64-bit R need this to find 32-bit JAGS
 readRegistry("SOFTWARE\\\\JAGS", maxdepth = 3, view = "32")
 
 ## See if there is a 64-bit user install
 readRegistry("SOFTWARE\\\\R-core\\\\R64", "HCU", maxdepth = 2)
-}}
+}
+}
 \keyword{ utilities }
