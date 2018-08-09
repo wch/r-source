@@ -1,6 +1,6 @@
 % File src/library/utils/man/help.start.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2009 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{help.start}
@@ -57,9 +57,8 @@ help.start(update = FALSE, gui = "irrelevant",
 \examples{
 \donttest{help.start()}
 \dontrun{
-#ifdef unix
-## the 'remote' arg can be tested by
-help.start(remote = paste0("file://", R.home()))
-#endif
+if(.Platform$OS.type == "unix") # includes Mac
+  ## the 'remote' arg can be tested by
+  help.start(remote = paste0("file://", R.home()))
 }}
 \keyword{documentation}

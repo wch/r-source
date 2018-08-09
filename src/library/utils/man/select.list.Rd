@@ -1,6 +1,6 @@
 % File src/library/utils/man/select.list.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{select.list}
@@ -25,23 +25,21 @@ select.list(choices, preselect = NULL, multiple = FALSE,
 }
 \details{
   The normal default is \code{graphics = TRUE}.
-#ifdef windows
-  This  brings up a modal dialog box with a (scrollable) list
-  of items, which can be selected by the mouse.  If \code{multiple} is
-  true, further items can be selected or deselected by holding the
-  control key down whilst selecting, and shift-clicking can be used to
-  select ranges.
+  \describe{
+    \item{On Windows,}{this brings up a modal dialog box with a (scrollable) list
+      of items, which can be selected by the mouse.  If \code{multiple} is
+      true, further items can be selected or deselected by holding the
+      control key down whilst selecting, and shift-clicking can be used to
+      select ranges.
 
-  Normal termination is via the \sQuote{OK} button or by hitting Enter or
-  double-clicking an item.  Selection can be aborted via the
-  \sQuote{Cancel} button or pressing Escape.
-#endif
-#ifdef unix
-  Under the macOS GUI this brings up a modal dialog box
-  with a (scrollable) list of items, which can be selected by the mouse.
-  On other Unix-like platforms it will use a
-  Tcl/Tk listbox widget if possible.
-#endif
+      Normal termination is via the \sQuote{OK} button or by hitting Enter or
+      double-clicking an item.  Selection can be aborted via the
+      \sQuote{Cancel} button or pressing Escape.}
+    \item{Under the macOS GUI,}{this brings up a modal dialog box
+      with a (scrollable) list of items, which can be selected by the mouse.}
+    \item{On other Unix-like platforms}{it will use a Tcl/Tk listbox
+      widget if possible.}
+  }
 
   If \code{graphics} is FALSE or no graphical widget is available it
   displays a text list from which the user can choose by number(s). The
