@@ -138,6 +138,9 @@
       \item An effort has been started to have our reference manuals,
       i.e., all help pages show platform independent information (rather
       than Windows or unix-alike specifics visible only on that platform).
+
+      \item \code{sessionInfo()$running} has been factored out in a new
+      variable \code{osVersion}. % precomputed at utils namespace load time
     }
   }
 
