@@ -67,9 +67,6 @@ function(query, package = "R", lib.loc = NULL,
 	    stop("invalid query")
 	r <- r & !is.na(r)
 	db <- db[r, ]
-	if(!is.null(bad <- attr(db, "bad"))
-           && (length(bad) == NROW(db)))
-	    attr(db, "bad") <- bad[r]
         ## This should no longer be necessary ...?
 	if(!all(r))
 	    attr(db, "subset") <- r
