@@ -129,15 +129,15 @@ Sweave(testfile)
 
 ## This can be compiled to PDF by
 ## tools::texi2pdf("Sweave-test-1.tex")
+
 ## or outside R by
-#ifdef unix
-## R CMD texi2pdf Sweave-test-1.tex
-## which sets the appropriate TEXINPUTS path.
-#endif
-#ifdef windows
-## Rcmd texify --pdf Sweave-test-1.tex
+##
+## 	R CMD texi2pdf Sweave-test-1.tex
+## on Unix-alikes which sets the appropriate TEXINPUTS path.
+##
+## On Windows,
+##      Rcmd texify --pdf Sweave-test-1.tex
 ## if MiKTeX is available.
-#endif
 
 ## create an R source file from the code chunks
 Stangle(testfile)

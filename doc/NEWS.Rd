@@ -134,6 +134,10 @@
       process to be queried and set.
 
       \item \code{news()} gains support for \file{NEWS.md} files.
+
+      \item An effort has been started to have our reference manuals,
+      i.e., all help pages show platform independent information (rather
+      than Windows or unix-alike specifics visible only on that platform).
     }
   }
 
@@ -143,7 +147,7 @@
       supported, otherwise to the C++98 standard.
     }
   }
-  
+
   \subsection{UTILITIES}{
     \itemize{
       \item \command{R CMD check} now optionally checks makefiles for
