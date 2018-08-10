@@ -141,6 +141,9 @@
 
       \item \code{sessionInfo()$running} has been factored out in a new
       variable \code{osVersion}. % precomputed at utils namespace load time
+
+      \item \code{slice.index()} now also works for multi-dimensional
+      margins.
     }
   }
 

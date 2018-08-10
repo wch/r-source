@@ -48,19 +48,35 @@ function(x, MARGIN)
         d <- length(x)
     n <- length(d)
 
-    if((length(MARGIN) > 1L) || (MARGIN < 1L) || (MARGIN > n))
+    if(!length(MARGIN) || any(MARGIN < 1L) || any(MARGIN > n))
         stop("incorrect value for 'MARGIN'")
 
     if(any(d == 0L)) return(array(integer(), d))
 
-    y <- rep.int(rep.int(1L:d[MARGIN],
-			 prod(d[seq_len(MARGIN - 1L)]) * rep.int(1L, d[MARGIN])),
-		 prod(d[seq.int(from = MARGIN + 1L, length.out = n - MARGIN)]))
+    m <- MARGIN[1L]
+    y <- rep.int(rep.int(1L:d[m],
+                         prod(d[seq_len(m - 1L)]) *
+                         rep.int(1L, d[m])),
+                 prod(d[seq.int(from = m + 1L,
+                                length.out = n - m)]))
+    if(length(MARGIN) > 1L) {
+        p <- d[m]
+        for(m in MARGIN[-1L]) {
+            y <- y + p * rep.int(rep.int(seq.int(0L, d[m] - 1L),
+                                         prod(d[seq_len(m - 1L)]) *
+                                         rep.int(1L, d[m])),
+                                 prod(d[seq.int(from = m + 1L,
+                                                length.out = n - m)]))
+            p <- p * d[m]
+        }
+    }
+
     dim(y) <- d
     y
 }
 
-provideDimnames <- function(x, sep = "", base = list(LETTERS), unique = TRUE)
+provideDimnames <-
+function(x, sep = "", base = list(LETTERS), unique = TRUE)
 {
     ## provide dimnames where missing - not copying x unnecessarily
     dx <- dim(x)
