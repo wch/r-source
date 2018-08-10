@@ -1974,6 +1974,13 @@ sort.int(integer(0))  ## would segfault with barrier testing
 stopifnot(identical(sort.int(NA_integer_), integer(0)))
 
 
+## attribute handling in the fastpass was not quite right
+x <- sort.int(c(1,2))
+dim(x) <- 2
+dimnames(x) <- list(c("a", "b"))
+stopifnot(! is.null(names(sort.int(x))))
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())
