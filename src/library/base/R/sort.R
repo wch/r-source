@@ -87,7 +87,7 @@ sort.int <-
             ## strip attributes other than 'names'
             attr <- attributes(x)
             if (! is.null(attr) && ! identical(names(attr), "names"))
-                attributes(x) <- list(names = attr$names)
+                attributes(x) <- list(names = names(x))
             return(x)
         }
     }

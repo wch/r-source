@@ -1716,6 +1716,13 @@ stopifnot(identical(order(x, decreasing=TRUE), as.integer(c(3, 1, 2))))
 ## was incorrect with wrapper optimization (reported by Suharto Anggono)
 
 
+## attribute handling in the fastpass was not quite right
+x <- sort.int(c(1,2))
+dim(x) <- 2
+dimnames(x) <- list(c("a", "b"))
+stopifnot(! is.null(names(sort.int(x))))
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())
