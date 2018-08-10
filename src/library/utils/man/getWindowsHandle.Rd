@@ -15,7 +15,6 @@ getWindowsHandle(which = "Console")
 \arguments{
   \item{which}{a string (see below), or the number of a graphics device
     window (which must a \code{\link{windows}} one).}
-  }
 }
 \details{
   \code{getWindowsHandle} gets the Windows handle.
