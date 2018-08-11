@@ -578,6 +578,7 @@ function(package, dir, lib.loc = NULL,
     db_names <- db_names[!ind]
 
     db_usages <- lapply(db, .Rd_get_section, "usage")
+    ## FIXME: all db_usages entries are full of "srcref" which are never used
     db_usages <- lapply(db_usages, .parse_usage_as_much_as_possible)
     ind <- vapply(db_usages,
                   function(x) !is.null(attr(x, "bad_lines")), NA, USE.NAMES=FALSE)
@@ -589,9 +590,11 @@ function(package, dir, lib.loc = NULL,
     data_sets_in_usages <- character()
     functions_in_usages_not_in_code <- list()
     data_sets_in_usages_not_in_code <- list()
+    objects_in_other_platforms <- names(compatibilityEnv())
+    objects_as_in <- c(objects_in_code_or_namespace,
+                       objects_in_other_platforms)
 
     for(docObj in db_names) {
-
         exprs <- db_usages[[docObj]]
         if(!length(exprs)) next
 
@@ -639,7 +642,7 @@ function(package, dir, lib.loc = NULL,
             replace_funs <-
                 paste0(sapply(replace_exprs,
                              function(e) as.character(e[[2L]][[1L]])),
-                      "<-")
+                       "<-")
             replace_funs <- .transform_S3_method_markup(replace_funs)
             functions <- c(functions, replace_funs)
             ind <- (replace_funs %in% functions_in_code)
@@ -664,7 +667,8 @@ function(package, dir, lib.loc = NULL,
         ## Determine functions with a \usage entry in the documentation
         ## but 'missing from the code'.  If a package has a namespace, we
         ## really need to look at all objects in the namespace (hence
-        ## 'objects_in_code_or_namespace'), as one can access the internal
+        ## 'objects_as_in' contains 'objects_in_code_or_namespace'),
+        ## as one can access the internal
         ## symbols via ':::' and hence package developers might want to
         ## provide function usages for some of the internal functions.
         ## <FIXME>
@@ -678,7 +682,7 @@ function(package, dir, lib.loc = NULL,
         if(any(ind))
             functions <- functions[!ind]
         ## </FIXME>
-        bad_functions <- setdiff(functions, objects_in_code_or_namespace)
+        bad_functions <- setdiff(functions, objects_as_in)
         if(length(bad_functions))
             functions_in_usages_not_in_code[[docObj]] <- bad_functions
 
@@ -3921,6 +3925,111 @@ function(x, ...)
 
 ### * .check_code_usage_in_package
 
+## First, its auxiliaries
+##
+## - .unix_only_proto_objects
+## - .windows_only_proto_objects
+## - compatibilityEnv ()        -- used also in codoc()
+
+.unix_only_proto_objects <- as.environment(list(
+    nsl = function(hostname) {}
+  , X11Font = function(font) {}
+  , X11Fonts = function(...) {}
+  , X11.options = function(..., reset = TRUE) {}
+  , quartz = function(title, width, height, pointsize, family,
+                      fontsmooth, antialias, type, file = NULL,
+                      bg, canvas, dpi) {}
+  , quartzFont = function(family) {}
+  , quartzFonts = function(...) {}
+  , quartz.options = function(..., reset = TRUE) {}
+))
+
+.windows_only_proto_objects <- as.environment(list(
+    arrangeWindows = function(action = c("vertical", "horizontal",
+                                         "cascade", "minimize", "restore"),
+                              windows, preserve = TRUE, outer = FALSE) {}
+  , askYesNoWinDialog = function(msg, ...) {}
+  , bringToTop = function(which = grDevices::dev.cur(), stay = FALSE) {}
+  , choose.dir = function(default = "", caption = "Select folder") {}
+  , choose.files = function(default = "", caption = "Select files", multi = TRUE,
+                            filters = Filters, index = nrow(Filters)) {
+      Filters <- NULL }
+  , close.winProgressBar(con, ...) {}
+  , DLL.version = function(path) {}
+  , getClipboardFormats = function(numeric = FALSE) {}
+  , getIdentification = function() {}
+  , getWindowsHandle = function(which = "Console") {}
+  , getWindowsHandles = function(which = "R", pattern = "", minimized = FALSE) {}
+  , getWindowTitle = function() {}
+  , getWinProgressBar = function(pb) {}
+  , .install.winbinary = function(pkgs, lib, repos = getOption("repos"),
+                                  contriburl = utils::contrib.url(repos),
+                                  method, available = NULL, destdir = NULL,
+                                  dependencies = FALSE, libs_only = FALSE, ...) {}
+  , loadRconsole = function(file = choose.files(file.path(
+                                Sys.getenv("R_USER"), "Rconsole"))) {}
+  , msgWindow = function(type = c("minimize", "restore", "maximize", "hide",
+                                  "recordOn", "recordOff"),
+                         which = dev.cur()) {}
+  , readClipboard = function(format = 1, raw = FALSE) {}
+  , readRegistry = function(key,
+                            hive = c("HLM", "HCR", "HCU", "HU", "HCC", "HPD"),
+                            maxdepth = 1,
+                            view = c("default", "32-bit", "64-bit")) {}
+  ## Exists on all platforms though with differing formals :
+  ## , savePlot = function(filename = "Rplot",
+  ##                       type = c("wmf", "emf", "png", "jpeg", "jpg",
+  ##                                "bmp", "ps", "eps", "pdf"),
+  ##                       device = grDevices::dev.cur(), restoreConsole = TRUE) {}
+  , setStatusBar = function(text) {}
+  , setWindowTitle = function(suffix, title = paste(utils::getIdentification(),
+                                                    suffix)) {}
+  , setWinProgressBar = function(pb, value, title=NULL, label=NULL) {}
+  , shell = function(cmd, shell, flag = "/c", intern = FALSE,
+                     wait = TRUE, translate = FALSE, mustWork = FALSE, ...) {}
+  , shell.exec = function(file) {}
+  , shortPathName = function(path) {}
+  , Sys.junction = function(from, to) {}
+  , win.graph = function(width = 7, height = 7, pointsize = 12,
+                         restoreConsole = FALSE) {}
+  , win.metafile = function(filename = "", width = 7, height = 7,
+                            pointsize = 12, family = "",
+                            restoreConsole = TRUE) {}
+  , win.print = function(width = 7, height = 7, pointsize = 12,
+                         printer = "", family = "", antialias = "default",
+                         restoreConsole = TRUE) {}
+  , win.version = function() {}
+  , windows = function(width, height, pointsize,
+                       record, rescale, xpinch, ypinch,
+                       bg, canvas, gamma, xpos, ypos,
+                       buffered, title, restoreConsole, clickToConfirm,
+                       fillOddEven, family = "", antialias) {}
+  , windowsFont = function(font) {}
+  , windowsFonts = function(...) {}
+  , windows.options = function(..., reset = TRUE) {}
+  , winDialog = function(type = "ok", message) {}
+  , winDialogString = function(message, default) {}
+  , winMenuAdd = function(menuname) {}
+  , winMenuAddItem = function(menuname, itemname, action) {}
+  , winMenuDel = function(menuname) {}
+  , winMenuDelItem = function(menuname, itemname) {}
+  , winMenuNames = function() {}
+  , winMenuItems = function(menuname) {}
+  , winProgressBar = function(title = "R progress bar", label = "",
+                              min = 0, max = 1, initial = 0, width = 300) {}
+  , writeClipboard = function(str, format = 1L) {}
+  , zip.unpack = function(zipname, dest) {}
+))
+
+compatibilityEnv <- function() {
+    ## (this formulation allows more than two OS.type s)
+    switch(.Platform$OS.type,
+           "windows" = .unix_only_proto_objects,
+           "unix" = .windows_only_proto_objects,
+           ## in such a future case, possibly the "union" of these environments:
+           stop(gettextf("invalid 'OS.type' \"%s\".  Should not happen")))
+}
+
 .check_code_usage_in_package <-
 function(package, lib.loc = NULL)
 {
@@ -3943,123 +4052,16 @@ function(package, lib.loc = NULL)
                 for(pkg in unique(c(pkgs1, pkgs2)))
                     ## tcltk warns if no DISPLAY variable
                     ##, errors if not compiled in
-                    suppressWarnings(suppressMessages(try(require(pkg,
-                                                                  character.only = TRUE,
-                                                                  quietly = TRUE),
-                                                          silent = TRUE)))
+                    suppressMessages(
+                        tryCatch(require(pkg, character.only = TRUE,
+                                         quietly = TRUE),
+                                 error  = function(.) NULL,
+                                 warning= function(.) NULL))
             }, type = "output")
         }
-        stats::runif(1)                 # create .Random.seed
-        compat <- new.env(hash=TRUE)
-        if(.Platform$OS.type != "unix") {
-            assign("nsl", function(hostname) {}, envir = compat)
-            assign("X11Font", function(font) {}, envir = compat)
-            assign("X11Fonts", function(...) {}, envir = compat)
-            assign("X11.options", function(..., reset = TRUE) {},
-                   envir = compat)
-            assign("quartz",
-                   function(title, width, height, pointsize, family,
-                            fontsmooth, antialias, type, file = NULL,
-                            bg, canvas, dpi) {},
-                   envir = compat)
-            assign("quartzFont", function(family) {}, envir = compat)
-            assign("quartzFonts", function(...) {}, envir = compat)
-            assign("quartz.options", function(..., reset = TRUE) {},
-                   envir = compat)
-        }
-        if(.Platform$OS.type != "windows") {
-            assign("askYesNoWinDialog",
-                   function(msg, ...) {},
-                   envir = compat)
-            assign("bringToTop", function (which = grDevices::dev.cur(), stay = FALSE) {},
-                   envir = compat)
-            assign("choose.dir",
-                   function (default = "", caption = "Select folder") {},
-                   envir = compat)
-            assign("choose.files",
-                   function (default = "", caption = "Select files",
-                             multi = TRUE, filters = Filters,
-                             index = nrow(Filters)) {Filters=NULL}, envir = compat)
-            assign("DLL.version", function(path) {}, envir = compat)
-            assign("getClipboardFormats", function(numeric = FALSE) {},
-                   envir = compat)
-            assign("getIdentification", function() {}, envir = compat)
-            assign("getWindowsHandle", function(which = "Console") {},
-                   envir = compat)
-            assign("getWindowTitle", function() {}, envir = compat)
-            assign("readClipboard", function(format = 1, raw = FALSE) {},
-                   envir = compat)
-            assign("setWindowTitle",
-                   function(suffix, title = paste(utils::getIdentification(), suffix)) {},
-                   envir = compat)
-            assign("shell",
-                   function(cmd, shell, flag = "/c", intern = FALSE,
-                            wait = TRUE, translate = FALSE, mustWork = FALSE,
-                            ...) {},
-                   envir = compat)
-            assign("shell.exec", function(file) {}, envir = compat)
-            assign("shortPathName", function(path) {}, envir = compat)
-            assign("win.version", function() {}, envir = compat)
-            assign("zip.unpack", function(zipname, dest) {}, envir = compat)
-            assign("savePlot",
-                   function (filename = "Rplot",
-                             type = c("wmf", "emf", "png", "jpeg", "jpg",
-                                      "bmp", "ps", "eps", "pdf"),
-                             device = grDevices::dev.cur(), restoreConsole = TRUE) {},
-                   envir = compat)
-            assign("win.graph",
-                   function(width = 7, height = 7, pointsize = 12,
-                            restoreConsole = FALSE) {}, envir = compat)
-            assign("win.metafile",
-                   function (filename = "", width = 7, height = 7,
-                             pointsize = 12, family = "",
-                             restoreConsole = TRUE) {},
-                   envir = compat)
-            assign("win.print",
-                   function(width = 7, height = 7, pointsize = 12,
-                            printer = "", family = "", antialias = "default",
-                            restoreConsole = TRUE) {},
-                   envir = compat)
-            assign("windows",
-                   function(width, height, pointsize,
-                            record, rescale, xpinch, ypinch,
-                            bg, canvas, gamma, xpos, ypos,
-                            buffered, title, restoreConsole, clickToConfirm,
-                            fillOddEven, family = "", antialias) {},
-                            envir = compat)
-            assign("windowsFont", function(font) {}, envir = compat)
-            assign("windowsFonts", function(...) {}, envir = compat)
-            assign("windows.options", function(..., reset = TRUE) {},
-                   envir = compat)
-
-            assign("winDialog", function(type = "ok", message) {},
-                   envir = compat)
-            assign("winDialogString", function(message, default) {},
-                   envir = compat)
-            assign("winMenuAdd", function(menuname) {}, envir = compat)
-            assign("winMenuAddItem", function(menuname, itemname, action) {},
-                   envir = compat)
-            assign("winMenuDel", function(menuname) {}, envir = compat)
-            assign("winMenuDelItem", function(menuname, itemname) {},
-                   envir = compat)
-            assign("winMenuNames", function() {}, envir = compat)
-            assign("winMenuItems", function(menuname) {}, envir = compat)
-            assign("winProgressBar",
-                   function(title = "R progress bar", label = "",
-                            min = 0, max = 1, initial = 0, width = 300) {},
-                   envir = compat)
-            assign("setWinProgressBar",
-                   function(pb, value, title=NULL, label=NULL) {},
-                   envir = compat)
-            assign(".install.winbinary",
-                   function(pkgs, lib, repos = getOption("repos"),
-                            contriburl = utils::contrib.url(repos),
-                            method, available = NULL, destdir = NULL,
-                            dependencies = FALSE, libs_only = FALSE,
-                            ...) {}, envir = compat)
-            assign("Sys.junction", function(from, to) {}, envir = compat)
-        }
-        attach(compat, name="compat", pos = length(search()),
+        if(is.null(.GlobalEnv$.Random.seed)) # create .Random.seed if necessary
+            stats::runif(1)
+        attach(compatibilityEnv(), name="compat", pos = length(search()),
                warn.conflicts = FALSE)
         on.exit(detach("compat"))
     }
@@ -7467,14 +7469,13 @@ function(dir, localOnly = FALSE)
             out$GNUmake <- TRUE
         }
     }
-	
+
     ## Re-check for some notes if enabled and current version was published recently enough.
     if(!inherits(year <- tryCatch(format(as.Date(meta0["Published"]), "%Y"),
                                      error = identity),
                     "error")){
-					
-        # possible mis-spellings and keep only the new ones:
-		if(NROW(a <- out$spelling)
+        ## possible mis-spellings and keep only the new ones:
+        if(NROW(a <- out$spelling)
            && config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_ASPELL_RECHECK_MAYBE_",
                                                "TRUE"))
            && (year >=
@@ -7493,7 +7494,7 @@ function(dir, localOnly = FALSE)
             && meta0["Title"] == meta["Title"]) {
                 out$title_includes_name <- NULL
 		}
-		
+
         # possible title case problems and only report if the title actually changed
         if(NROW(out$title_case)
             && config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_TITLE_CASE_RECHECK_MAYBE_",
@@ -7512,12 +7513,12 @@ function(dir, localOnly = FALSE)
                                  "2016")))) {
                 descr0 <- trimws(as.vector(meta0["Description"]))
                 descr0 <- gsub("[\n\t]", " ", descr0)
-                if(grepl(paste0("^['\"]?", package), ignore.case = TRUE, descr0) 
+                if(grepl(paste0("^['\"]?", package), ignore.case = TRUE, descr0)
                         || grepl("^(The|This|A|In this|In the) package", descr0)){
                     out$descr_bad_start <- NULL
                 }
         }
-		
+
         # possible GNU make usage and only report if this is new
         if(NROW(out$GNUmake)
             && config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_GNU_MAKE_RECHECK_MAYBE_",
@@ -7530,7 +7531,7 @@ function(dir, localOnly = FALSE)
                 }
         }
     }
-	
+
     out
 }
 
@@ -8813,14 +8814,14 @@ function(package, lib.loc = NULL)
                                   c("Package", "Generic", "Method")))
     out <- list(mat = mat, bad = character())
     class(out) <- "check_S3_methods_needing_delayed_registration"
-        
+
     if(length(package) != 1L)
         stop("argument 'package' must be of length 1")
     dir <- find.package(package, lib.loc)
     if(!dir.exists(file.path(dir, "R"))) return
     db <- .read_description(file.path(dir, "DESCRIPTION"))
     suggests <- unname(.get_requires_from_package_db(db, "Suggests"))
-    
+
     if(!length(suggests)) return
 
     if(basename(package) != "base")
@@ -8828,7 +8829,7 @@ function(package, lib.loc = NULL)
     ok <- vapply(suggests, requireNamespace, quietly = TRUE,
                  FUN.VALUE = NA)
     out$bad <- suggests[!ok]
-   
+
     suggests <- suggests[ok]
     generics <- lapply(suggests, .get_S3_generics_in_ns_exports)
 
@@ -8854,16 +8855,14 @@ function(package, lib.loc = NULL)
     if(!any(ind)) return(out)
 
     len <- len[ind]
-
     out$mat <-
         cbind(Package = rep.int(packages[ind], len),
               Generic = rep.int(generics[ind], len),
               Method = unlist(methods[ind], use.names = FALSE))
-    
     out
 }
 
-format.check_S3_methods_needing_delayed_registration <- 
+format.check_S3_methods_needing_delayed_registration <-
 function(x, ...)
 {
     c(character(),
