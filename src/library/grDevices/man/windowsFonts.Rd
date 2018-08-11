@@ -1,6 +1,6 @@
-% File src/library/grDevices/man/windows/windowsFonts.Rd
+% File src/library/grDevices/man/windowsFonts.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2007, 2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{windowsFonts}
@@ -10,7 +10,8 @@
 \title{Windows Fonts}
 \description{
   These functions handle the translation of a device-independent R graphics
-  font family name to a windows font description.
+  font family name to a windows font description  and are available only
+  on Windows.
 }
 \usage{
 windowsFont(family)
@@ -50,11 +51,12 @@ windowsFonts(...)
   \code{\link{windows}}
 }
 \examples{
-windowsFonts()
-windowsFonts("mono")
-
+if(.Platform$OS.type == "windows") withAutoprint({
+  windowsFonts()
+  windowsFonts("mono")
+})
 \dontrun{## set up for Japanese: needs the fonts installed
-windows()  # make sure we have the right device type
+windows()  # make sure we have the right device type (available on Windows only)
 Sys.setlocale("LC_ALL", "ja")
 windowsFonts(JP1 = windowsFont("MS Mincho"),
              JP2 = windowsFont("MS Gothic"),

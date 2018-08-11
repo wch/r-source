@@ -1,16 +1,16 @@
-% File src/library/grDevices/man/unix/quartz.Rd
+% File src/library/grDevices/man/quartz.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{quartz}
+\title{macOS Quartz Device}
 \alias{quartz}
 \alias{quartz.options}
 \alias{quartz.save}
 
-\title{macOS Quartz Device}
 \description{
-  \code{quartz} starts a graphics device driver for the macOS System.
+  \code{quartz} starts a graphics device driver for the macOS system.
   It supports plotting both to the screen (the default) and to various
   graphics file formats.
 }
@@ -132,7 +132,7 @@ quartz.save(file, type = "png", device = dev.cur(), dpi = 100, ...)
   For a long time the default font family was documented as
   \code{"Helvetica"} after it had been changed to \code{"Arial"} to work
   around a deficiency in macOS 10.4.   It may be changed back in future.
-  
+
   A fairly common Mac problem is no text appearing on plots due to
   corrupted or duplicated fonts on your system.  You may be able to
   confirm this by using another font family,
@@ -147,6 +147,7 @@ quartz.save(file, type = "png", device = dev.cur(), dpi = 100, ...)
   via \R's standard bitmap devices.
 }
 \examples{\dontrun{
+## Only on a Mac,
 ## put something like this is your .Rprofile to customize the defaults
 setHook(packageEvent("grDevices", "onLoad"),
         function(...) grDevices::quartz.options(width = 8, height = 6,

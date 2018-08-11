@@ -161,13 +161,13 @@
     \code{group(lceil, x, rceil)} \tab special delimiters \cr
     \code{group(lfloor, x, rfloor)} \tab special delimiters \cr
   }
-  
+
   The supported \sQuote{scalable delimiters} are \code{| ( [ \{},
   \code{lceil}, \code{lfloor} and their right-hand versions.
   \code{"."} is equivalent to \code{""}: the corresponding delimiter
   will be omitted. Delimiter \code{||} is supported but has the same
   effect as \code{|}.
-  
+
   The symbol font uses Adobe Symbol encoding so, for example, a lower
   case mu can be obtained either by the special symbol \code{mu} or by
   \code{symbol("m")}.  This provides access to symbols that have no
@@ -208,7 +208,8 @@
   more than European (not Greek) and CJK characters and the Adobe Symbol
   encoding (and in a few fonts, also Cyrillic characters).
 
-#ifdef unix
+  \describe{
+    \item{On Unix-alikes:}{
   In a UTF-8 locale any Unicode character can be entered, perhaps as a
   \samp{\\uxxxx} or \samp{\\Uxxxxxxxx} escape sequence, but the issue is
   whether the graphics device is able to display the character.  The
@@ -219,8 +220,8 @@
 
   In non-UTF-8 locales there is normally no support for symbols not in
   the languages for which the current encoding was intended.
-#endif
-#ifdef windows
+    }
+    \item{On Windows:}{
   Any Unicode character can be entered into a text string \emph{via} a
   \samp{\\uxxxx} escape, or used by number in a call to
   \code{\link{points}}.  The \code{\link{windows}} family of devices can
@@ -233,7 +234,8 @@
   \sQuote{Accessories->System Tools}).  You can also copy-and-paste
   characters from the \sQuote{Character Map} window to the \code{Rgui}
   console (but not to \code{Rterm}).
-#endif
+    }
+ }
 }
 \references{
   Murrell, P. and Ihaka, R. (2000).
