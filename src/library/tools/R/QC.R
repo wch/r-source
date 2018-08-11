@@ -3954,7 +3954,7 @@ function(x, ...)
   , choose.files = function(default = "", caption = "Select files", multi = TRUE,
                             filters = Filters, index = nrow(Filters)) {
       Filters <- NULL }
-  , close.winProgressBar(con, ...) {}
+  , close.winProgressBar = function(con, ...) {}
   , DLL.version = function(path) {}
   , getClipboardFormats = function(numeric = FALSE) {}
   , getIdentification = function() {}
