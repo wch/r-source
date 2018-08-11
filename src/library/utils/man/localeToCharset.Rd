@@ -21,17 +21,17 @@ localeToCharset(locale = Sys.getlocale("LC_CTYPE"))
 }
 \details{
   The operation differs by OS.
-#ifdef windows
-  A Windows locale is specified like \code{"English_United Kingdom.1252"}.
+  \describe{
+    \item{On Windows,}{a locale is specified like \code{"English_United Kingdom.1252"}.
   The final component gives the codepage, and this defines the encoding.
-#endif
-#ifdef unix
+    }
+    \item{On Unix-alikes:}{
   Locale names are normally like \code{es_MX.iso88591}.  If final
   component indicates an encoding and it is not \code{utf8} we just need
   to look up the equivalent encoding name.  Otherwise, the language
   (here \code{es}) is used to choose a primary or fallback encoding.
-#endif
-
+    }
+  }
   In the \code{C} locale the answer will be \code{"ASCII"}.
 }
 \value{

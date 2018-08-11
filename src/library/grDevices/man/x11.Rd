@@ -18,16 +18,15 @@
 
       Almost all information below does \emph{not} apply on Windows.}
 
-    \item{on Unix-alikes}{\code{X11} starts a graphics device driver for the X Window System
-      (version 11).  This can only be done on machines/accounts that have
-      access to an X server.
+    \item{on Unix-alikes}{\code{X11} starts a graphics device driver for
+      the X Window System (version 11).  This can only be done on
+      machines/accounts that have access to an X server.
 
       \code{x11} is recognized as a synonym for \code{X11}.
 
       The \R function is a wrapper for two devices, one based on Xlib
       (\url{https://en.wikipedia.org/wiki/Xlib}) and one using cairographics
-      (\url{http://www.cairographics.org}).
-    }
+      (\url{http://www.cairographics.org}).}
   }
 }
 \usage{

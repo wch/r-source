@@ -41,29 +41,28 @@ timestamp(stamp = date(),
 }
 \details{
   There are several history mechanisms available for the different \R
-  consoles, which work in similar but not identical ways.  There are
-  separate versions of this help file for Unix and Windows.
+  consoles, which work in similar but not identical ways.  Notably,
+  there are different implementations for Unix and Windows.
 
-#ifdef windows
+  \describe{
+    \item{Windows:}{
   The functions described here work in \command{Rgui} and interactive
   \command{Rterm} but not in batch use of \command{Rterm} nor in
   embedded/DCOM versions.
-
-  The history mechanism is
-#endif
-#ifdef unix
-  The functions described here work on Unix-alikes under the
-  \code{readline} command-line interface but may not otherwise (for
+    }
+    \item{Unix-alikes:}{
+  The functions described here work under the
+  \command{readline} command-line interface but may not otherwise (for
   example, in batch use or in an embedded application).  Note that \R
-  can be built without \code{readline}.
+  can be built without \command{readline}.
 
   \command{R.app}, the console on macOS, has a separate and largely
   incompatible history mechanism, which by default uses a file
   \file{.Rapp.history} and saves up to 250 entries.  These functions are
   not currently implemented there.
-
-  The \code{readline} history mechanism
-#endif
+    }
+  }
+  The (\command{readline} on Unix-alikes) history mechanism
   is controlled by two environment variables: \env{R_HISTSIZE} controls
   the number of lines that are saved (default 512), and \env{R_HISTFILE}
   (default \file{.Rhistory}) sets the filename used for the
@@ -77,11 +76,10 @@ timestamp(stamp = date(),
   These environment variables are read at the time of saving, so can be
   altered within a session by the use of \code{\link{Sys.setenv}}.
 
-#ifdef unix
-  Note that \code{readline} history library saves files with permission
+  On Unix-alikes:
+  Note that \command{readline} history library saves files with permission
   \code{0600}, that is with read/write permission for the user and not
   even read permission for any other account.
-#endif
 
   The \code{timestamp} function writes a timestamp (or other message)
   into the history and echos it to the console.  On platforms that do not

@@ -36,11 +36,10 @@ Rprofmem(filename = "Rprofmem.out", append = FALSE, threshold = 0)
 \note{
   The memory profiler slows down R even when not in use, and so is a
   compile-time option.
-#ifdef Windows
   (It is enabled in a standard Windows build of \R.)
-#endif
+
   The memory profiler can be used at the same time as other \R and C profilers.
-  }
+}
 \value{
   None
 }

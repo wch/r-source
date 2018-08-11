@@ -1,6 +1,6 @@
 % File src/library/utils/man/help.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{help}
@@ -28,7 +28,7 @@ help(topic, package = NULL, lib.loc = NULL,
    See \sQuote{Details} for what happens if this is omitted.
  }
  \item{package}{a name or character vector giving the packages to look
-   into for documentation, or \code{NULL}.  By default, all packages 
+   into for documentation, or \code{NULL}.  By default, all packages
    whose namespaces are loaded are used.  To avoid a name being deparsed use e.g.
    \code{(pkg_ref)} (see the examples).}
  \item{lib.loc}{a character vector of directory names of \R libraries,
@@ -48,25 +48,27 @@ help(topic, package = NULL, lib.loc = NULL,
     \item Plain text help
     \item HTML help pages with hyperlinks to other topics, shown in a
     browser by \code{\link{browseURL}}.
-#ifdef unix
-    (Where possible an existing browser window is re-used: the macOS
+    \cr
+    (On Unix-alikes,
+    where possible an existing browser window is re-used: the macOS
     GUI uses its own browser window.)
-#endif
+
     If for some reason HTML help is unavailable (see
     \code{\link{startDynamicHelp}}), plain text help will be used
     instead.
     \item For \code{help} only, typeset as PDF --
     see the section on \sQuote{Offline help}.
   }
-#ifdef unix
+  \describe{
+    \item{On Unix-alikes:}{
   The \sQuote{factory-fresh} default is text help except from the macOS
   GUI, which uses HTML help displayed in its own browser window.
-#endif
-#ifdef windows
+    }
+    \item{On Windows:}{
   The default for the type of help is selected when \R is installed --
   the \sQuote{factory-fresh} default is HTML help.
-#endif
-
+    }
+  }
   The rendering of text help will use directional quotes in suitable
   locales (UTF-8 and single-byte Windows locales): sometimes the fonts
   used do not support these quotes so this can be turned off by setting

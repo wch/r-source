@@ -1,6 +1,6 @@
 % File src/library/utils/man/browseURL.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{browseURL}
@@ -32,8 +32,9 @@ browseURL(url, browser = getOption("browser"),
     systems and for \samp{http://} URLs passed to some CGI applications.
     Fortunately, most URLs do not need encoding.}
 }
-#ifdef unix
 \details{
+  \describe{
+    \item{On Unix-alikes:}{
   The default browser is set by option \code{"browser"}, in turn set by
   the environment variable \env{R_BROWSER} which is by default set in
   file \file{\var{\link{R_HOME}}/etc/Renviron} to a choice
@@ -70,15 +71,9 @@ browseURL(url, browser = getOption("browser"),
   The behaviour for arguments \code{url} which are not URLs is
   platform-dependent.  Some platforms accept absolute file paths; fewer
   accept relative file paths.
-}
-\examples{
-\dontrun{## for KDE users who want to open files in a new tab
-options(browser = "kfmclient newTab")
-browseURL("https://www.r-project.org")
-}}
-#endif
-#ifdef windows
-\details{
+
+    }
+    \item{On Windows:}{
   The default browser is set by option \code{"browser"}, in turn set by
   the environment variable \env{R_BROWSER} if that is set, otherwise to
   \code{NULL}.
@@ -89,13 +84,22 @@ browseURL("https://www.r-project.org")
   path separator even though the RFC1738 standard requires \code{/}.
 
   To suppress showing URLs altogether, set \code{browser = "false"}.
+    }
+  }% {describe}
 }
+
 \examples{
-\dontrun{browseURL("https://www.r-project.org")
+\dontrun{
+## for KDE users who want to open files in a new tab
+options(browser = "kfmclient newTab")
+
+browseURL("https://www.r-project.org")
+
+## On Windows-only, something like
 browseURL("file://d:/R/R-2.5.1/doc/html/index.html",
           browser = "C:/Program Files/Mozilla Firefox/firefox.exe")
 }}
-#endif
+
 \section{URL schemes}{
   Which URL schemes are accepted is platform-specific: expect
   \samp{http://}, \samp{https://} and \samp{ftp://} to work, but

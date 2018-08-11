@@ -1,6 +1,6 @@
 % File src/library/utils/man/txtProgressBar.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2008-11 R Core Team
+% Copyright 2008-11, 18 R Core Team
 % Distributed under GPL 2 or later
 
 \name{txtProgressBar}
@@ -70,14 +70,8 @@ setTxtProgressBar(pb, value, title = NULL, label = NULL)
   redirected to a file.
 }
 \seealso{
-#ifdef windows
-  \code{\link{winProgressBar}},
-#endif
-  \code{\link{tkProgressBar}}.
-#ifdef unix
-
-  Windows versions of \R also have \code{winProgressBar}.
-#endif
+  \code{\link{winProgressBar}} (Windows only),
+  \code{\link{tkProgressBar}} (Unix-alike platforms).
 }
 \examples{\donttest{ # slow
 testit <- function(x = sort(runif(20)), ...)
