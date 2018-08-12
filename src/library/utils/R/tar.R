@@ -35,8 +35,8 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
     cflag <- ""
     if (is.character(compressed)) {
         ## Any tar which supports -J does not need it for extraction
-        switch(match.arg(compressed, c("gzip", "bzip2", "xz")),
-               "gzip" = "z", "bzip2" = "j", "xz" = "J")
+        cflag <- switch(match.arg(compressed, c("gzip", "bzip2", "xz")),
+                        "gzip" = "z", "bzip2" = "j", "xz" = "J")
     } else if (is.logical(compressed)) {
         if (is.na(compressed)) {
             magic <- readBin(tarfile, "raw", n = 3L)

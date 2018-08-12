@@ -297,6 +297,13 @@
 
       \item \code{hist()} no longer integer overflows in very rare
       cases, fixing \PR{17450}.
+      
+      \item \code{untar()} always ignored a character \code{compressed}
+      argument: however many external \command{tar} programs ignore
+      the flags which should have been set and automagically chose the
+      compression type, and if appropriate \command{gzip} or
+      \command{bzip2} compression would have been chosen from the magic
+      header of the tarball.
     }
   }
 }
