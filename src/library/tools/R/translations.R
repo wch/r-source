@@ -30,7 +30,7 @@ en_quote <- function(potfile, outfile)
     cmd <- paste("msgconv -t UTF-8 -o", tfile2, tfile)
     if(system(cmd) != 0L) stop("running msgconv failed", domain = NA)
     lines <- readLines(tfile2) # will be in UTF-8
-    starts <- grep("^msgstr", lines)
+    starts <- which(startsWith(lines, "msgstr"))
     current <- 1L; out <- character()
     for (s in starts) {
         if (current < s)

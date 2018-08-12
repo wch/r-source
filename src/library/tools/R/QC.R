@@ -1445,7 +1445,7 @@ function(package, dir, lib.loc = NULL)
         ## Also test whether the objects we found from the \usage all
         ## have aliases, provided that there is no alias which ends in
         ## '-deprecated' (see e.g. base-deprecated.Rd).
-        if(!length(grep("-deprecated$", aliases))) {
+        if(!any(endsWith(aliases, "-deprecated"))) {
             ## Argh.  There are good reasons for keeping \S4method{}{}
             ## as is, but of course this is not what the aliases use ...
             ## <FIXME>
@@ -2422,7 +2422,7 @@ function(package, dir, lib.loc = NULL)
         ## If m is a formula method, its first argument *may* be called
         ## formula.  (Note that any argument name mismatch throws an
         ## error in current S-PLUS versions.)
-        if(length(grep("\\.formula$", m))) {
+        if(endsWith(m, ".formula")) {
             if(gArgs[1L] != "...") gArgs <- gArgs[-1L]
             mArgs <- mArgs[-1L]
         }
@@ -2515,7 +2515,7 @@ function(package, dir, lib.loc = NULL)
         for(m in methods)
             ## Both all() and all.equal() are generic.
             bad_methods <- if(g == "all") {
-                m1 <- m[-grep("^all\\.equal", m)]
+                m1 <- m[!startsWith(m, "all.equal")]
                 c(bad_methods, if(length(m1)) checkArgs(g, m1))
             } else c(bad_methods, checkArgs(g, m))
     }
@@ -4481,7 +4481,7 @@ function(pkgDir, thorough = FALSE)
         files <- Sys.glob(c(file.path(pkgDir, "data", "*.rda"),
                             file.path(pkgDir, "data", "*.RData")))
         ## Exclude .RData, which this may or may not match
-        files <- filtergrep("/[.]RData$", files)
+        files <- files[!endsWith(files, "/.RData")]
         if (length(files)) {
             cpdir <- tempfile('cp')
             dir.create(cpdir)
@@ -4626,7 +4626,7 @@ function(dir, doDelete = FALSE)
                                           OS_subdirs = OS_subdirs))
         wrong <- setdiff(all_files, R_files)
         ## now configure might generate files in this directory
-        generated <- grep("\\.in$", wrong)
+        generated <- which(endsWith(wrong, ".in"))
         if(length(generated)) wrong <- wrong[-generated]
         if(length(wrong)) {
             wrong_things$R <- wrong

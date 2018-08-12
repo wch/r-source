@@ -301,7 +301,7 @@ install.packages <-
     ## check if we should infer repos = NULL
     if(length(pkgs) == 1L && missing(repos) && missing(contriburl)) {
         if((type == "source" && any(grepl("[.]tar[.](gz|bz2|xz)$", pkgs))) ||
-           (type %in% "win.binary" && length(grep("[.]zip$", pkgs))) ||
+           (type %in% "win.binary" && endsWith(pkgs, ".zip")) ||
            (startsWith(type, "mac.binary") && endsWith(pkgs, ".tgz"))) {
             repos <- NULL
             message("inferring 'repos = NULL' from 'pkgs'")
@@ -688,7 +688,7 @@ install.packages <-
     }
 
     tmpd <- destdir
-    nonlocalrepos <- length(grep("^file:", contriburl)) < length(contriburl)
+    nonlocalrepos <- !all(startsWith(contriburl, "file:"))
     if(is.null(destdir) && nonlocalrepos) {
         tmpd <- file.path(tempdir(), "downloaded_packages")
         if (!file.exists(tmpd) && !dir.create(tmpd))

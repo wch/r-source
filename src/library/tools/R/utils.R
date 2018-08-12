@@ -809,7 +809,7 @@ function(con)
     ## How can we find out for sure that there were errors?  Try
     ## guessing ... and peeking at tex-buf.el from AUCTeX.
     really_has_errors <-
-        (length(grep("^---", lines)) ||
+        (any(startsWith(lines, "---")) ||
          regexpr("There (was|were) ([0123456789]+) error messages?",
                  lines[length(lines)]) > -1L)
     ## (Note that warnings are ignored for now.)
@@ -1786,7 +1786,7 @@ function(con)
     ## Read lines from a connection to an Rd file, trying to suppress
     ## "incomplete final line found by readLines" warnings.
     if(is.character(con)) {
-        con <- if(length(grep("\\.gz$", con))) gzfile(con, "r") else file(con, "r")
+        con <- if(endsWith(con, ".gz")) gzfile(con, "r") else file(con, "r")
         on.exit(close(con))
     }
     .try_quietly(readLines(con, warn=FALSE))

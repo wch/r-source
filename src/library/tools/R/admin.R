@@ -933,7 +933,7 @@ checkRdaFiles <- function(paths)
         paths <- Sys.glob(c(file.path(paths, "*.rda"),
                             file.path(paths, "*.RData")))
         ## Exclude .RData, which this may or may not match
-        paths <- filtergrep("/[.]RData$", paths)
+        paths <- paths[!endsWith(paths, "/.RData")]
     }
     res <- data.frame(size = NA_real_, ASCII = NA,
                       compress = NA_character_, version = NA_integer_,

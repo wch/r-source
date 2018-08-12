@@ -1629,7 +1629,8 @@ add_dummies <- function(dir, Log)
                       sprintf("tools::checkS3methods(dir = \"%s\")\n", pkgdir))
         out <- R_runR2(Rcmd)
         if (length(out)) {
-            pos <- grep("^Found the following apparent S3 methods", out)
+            pos <- which(startsWith(out,
+                                    "Found the following apparent S3 methods"))
             if(!length(pos)) {
                 out1 <- out
                 out2 <- character()
@@ -1769,9 +1770,8 @@ add_dummies <- function(dir, Log)
             if(config_val_to_logical(Sys.getenv("_R_CHECK_CODE_USAGE_WITH_ONLY_BASE_ATTACHED_",
                                                 "true"))) {
                 out3 <-  R_runR2(Rcmd, "R_DEFAULT_PACKAGES=NULL")
-                if(length(pos <-
-                          grep("^Undefined global functions or variables:",
-                               out3))) {
+                if(length(pos <- which(startsWith(out3,
+                                                  "Undefined global functions or variables:")))) {
                     Rcmd <-
                         sprintf("writeLines(strwrap(tools:::imports_for_undefined_globals(\"%s\"), exdent = 11))\n",
                                 paste(utils::tail(out3, -pos),
@@ -1779,8 +1779,8 @@ add_dummies <- function(dir, Log)
                     miss <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=")
                     ## base has no NAMESPACE
                     if(length(miss) && pkgname != "base") {
-                        msg3 <- if(length(grep("^importFrom\\(\"methods\"",
-                                               miss))) {
+                        msg3 <- if(any(startsWith(miss,
+                                                  "importFrom(\"methods\""))) {
                             strwrap("to your NAMESPACE file (and ensure that your DESCRIPTION Imports field contains 'methods').")
                         } else "to your NAMESPACE file."
                         out3 <- c(out3,
@@ -1843,7 +1843,7 @@ add_dummies <- function(dir, Log)
             length(out7) || length(out8)) {
             ini <- character()
             if(length(out4) ||
-               length(grep("^Found the defunct/removed function", out8)))
+               any(startsWith(out8, "Found the defunct/removed function")))
                 warningLog(Log) else noteLog(Log)
             if (length(out4)) {
                 first <- grep("^Found.* .Internal call", out4)[1L]
@@ -1857,7 +1857,7 @@ add_dummies <- function(dir, Log)
             }
             if (length(out8)) {
                 printLog0(Log, paste(c(ini, out8, ""), collapse = "\n"))
-                if(length(grep("^Found the defunct/removed function", out8)))
+                if(any(startsWith(out8, "Found the defunct/removed function")))
                     ini <- ""
             }
             ## All remaining checks give notes and not warnings.
@@ -2007,12 +2007,12 @@ add_dummies <- function(dir, Log)
             } else R_runR2(Rcmd)
             ## Grr, get() in undoc can change the search path
             ## Current example is TeachingDemos
-            out <- filtergrep("^Loading required package:", out)
-            err <- grep("^Error", out)
-            if (length(err)) {
+            out <- out[!startsWith(out, "Loading required package:")]
+            err <- startsWith(out, "Error")
+            if (any(err)) {
                 errorLog(Log)
                 printLog0(Log, paste(c(out, ""), collapse = "\n"))
-        maybe_exit(1L)
+                maybe_exit(1L)
             } else if (length(out)) {
                 warningLog(Log)
                 printLog0(Log, paste(c(out, ""), collapse = "\n"))
@@ -2183,8 +2183,8 @@ add_dummies <- function(dir, Log)
             out <- filtergrep("Loading required package", out)
             out <- filtergrep("Warning: changing locked binding", out, fixed = TRUE)
            if (length(out)) {
-                bad <- grep("^Warning:", out)
-                if (length(bad)) warningLog(Log) else noteLog(Log)
+                bad <- startsWith(out, "Warning:")
+                if(any(bad)) warningLog(Log) else noteLog(Log)
                 printLog0(Log, .format_lines_with_indent(out), "\n")
             } else resultLog(Log, "OK")
         }
@@ -2208,8 +2208,8 @@ add_dummies <- function(dir, Log)
             out <- R_runR0("tools:::.check_package_compact_sysdata('.', TRUE)",
                            R_opts2)
             if (length(out)) {
-                bad <- grep("^Warning:", out)
-                if (length(bad)) warningLog(Log) else noteLog(Log)
+                bad <- startsWith(out, "Warning:")
+                if (any(bad)) warningLog(Log) else noteLog(Log)
                 printLog0(Log, .format_lines_with_indent(out), "\n")
             } else resultLog(Log, "OK")
         }
@@ -3191,7 +3191,7 @@ add_dummies <- function(dir, Log)
                 out <- R_runR0(Rcmd, opts, env, arch = arch)
                 ## </FIXME>
                 if (any(grepl("^Registered S3 method.*standard package.*overwritten", out))) {
-                    out <- filtergrep("^<environment: namespace:", out)
+                    out <- out[!startsWith(out, "<environment: namespace:")]
                     warningLog(Log)
                     printLog0(Log, paste(out, collapse = "\n"), "\n")
                 } else resultLog(Log, "OK")

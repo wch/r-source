@@ -133,7 +133,7 @@ as.character.Rd <- function(x, deparse = FALSE, ...)
     	        result <- character()
     	    	for (i in seq_along(x))
                     result <- c(result, pr(x[[i]], quoteBraces))
-    	    } else if (length(grep("^#", tag))) {
+    	    } else if (startsWith(tag, "#")) {
     	    	if (deparse) {
     	    	    dep <- deparseRdElement(x[[1L]][[1L]],
                                             c(state, modes["LATEXLIKE"],
