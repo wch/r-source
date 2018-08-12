@@ -1,7 +1,7 @@
 #  File src/library/utils/R/tar.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -74,12 +74,12 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
     }
     if (!gzOK && cflag == "j" && nzchar(ZIP <- Sys.getenv("R_BZIPCMD"))) {
         TAR <- paste(ZIP,  "-dc", shQuote(tarfile), "|", TAR)
-        tarfile < "-"
+        tarfile <- "-"
         cflag <- ""
     }
     if (cflag == "J" && nzchar(Sys.which("xz"))) {
         TAR <- paste("xz -dc", shQuote(tarfile), "|", TAR)
-        tarfile < "-"
+        tarfile <- "-"
         cflag <- ""
     }
     if (list) {
