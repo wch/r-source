@@ -1033,6 +1033,9 @@ visible (and if it is, it need not be the one from that namespace:
 give an error if the suggested package is not available, simply use
 e.g.@: @code{rgl::plot3d}.
 
+If the conditional code produces @code{print} output, function
+@code{withAutoprint} can be useful.
+
 Note that the recommendation to use suggested packages conditionally in
 tests does also apply to packages used to manage test suites: a
 notorious example was @CRANpkg{testthat} which in version 1.0.0 contained
