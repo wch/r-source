@@ -32,6 +32,14 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
     if (!nzchar(TAR) || TAR == "internal")
         return(untar2(tarfile, files, list, exdir))
 
+    ## The ability of external tar commands to handle compressed tarfiles
+    ## automagically varies and is poorly documented.
+    ## E.g. macOS says its tar handles bzip2 but does not mention xz nor lzma.
+    ## (And it supports -J and --lzma flags not mentioned by man tar.)
+    ##
+    ## These days it might be better to give up trying to detect for
+    ## ourselves and rely on the external tar to do so.
+    ##
     cflag <- ""
     if (is.character(compressed)) {
         ## Any tar which supports -J does not need it for extraction
@@ -43,7 +51,7 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
             if(all(magic[1:2] == c(0x1f, 0x8b))) cflag <- "z"
             else if(all(magic[1:2] == c(0x1f, 0x9d))) cflag <- "z" # compress
             else if(rawToChar(magic[1:3]) == "BZh") cflag <- "j"
-        } else if (compressed) cflag <- "z"
+       } else if (compressed) cflag <- "z"
     } else stop("'compressed' must be logical or character")
 
     gzOK <- .Platform$OS.type == "windows"
@@ -69,12 +77,13 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
         tarfile < "-"
         cflag <- ""
     }
-    if (cflag == "J") {
+    if (cflag == "J" && nzchar(Sys.which("xz"))) {
         TAR <- paste("xz -dc", shQuote(tarfile), "|", TAR)
         tarfile < "-"
         cflag <- ""
     }
     if (list) {
+        ## TAR might be a command+flags or piped commands, so don't quote it
         cmd <- paste0(TAR, " -", cflag, "tf ", shQuote(tarfile))
         if (length(extras)) cmd <- paste(cmd, extras, collapse = " ")
         if (verbose) message("untar: using cmd = ", sQuote(cmd), domain = NA)
@@ -394,6 +403,7 @@ tar <- function(tarfile, files = NULL,
     } else if(inherits(tarfile, "connection")) con <- tarfile
     else stop("'tarfile' must be a character string or a connection")
 
+    ## (Comment from 2013)
     ## FIXME: eventually we should use the pax extension, but
     ## that was first supported in R 2.15.3.
     GNUname <- function(name, link = FALSE)

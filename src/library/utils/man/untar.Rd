@@ -36,19 +36,25 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   \item{exdir}{The directory to extract files to (the equivalent of
     \command{tar -C}).  It will be created if necessary.}
 
-  \item{compressed}{logical or character string.  Values \code{"gzip"},
+  \item{compressed}{logical or character string, used only for an
+    external \command{tar} command.  Values \code{"gzip"},
     \code{"bzip2"} and \code{"xz"} select that form of compression (and
     may be abbreviated to the first letter).  \code{TRUE} indicates gzip
     compression, \code{FALSE} no known compression (but an external
     \command{tar} command may detect compression automagically), and
     \code{NA} (the default) indicates that the type is inferred from the
-    file header.}
+    file header.
+
+    The external command may ignore the selected compression type but
+    detect a type automagically.
+  }
 
   \item{extras}{\code{NULL} or a character string: further command-line
     flags such as \option{-p} to be passed to an external \command{tar}
     program.}
 
-  \item{verbose}{logical: if true echo the command used.}
+  \item{verbose}{logical: if true echo the command used for an external
+    \command{tar} program.}
 
   \item{restore_times}{logical.  If true (default) restore file
     modification times.  If false, the equivalent of the \option{-m}
@@ -88,6 +94,18 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
 
   Arguments \code{compressed}, \code{extras} and \code{verbose} are only
   used when an external \command{tar} is used.
+
+  Setting \code{compressed = FALSE} allows an external \command{tar} to
+  select the compression type from the file header: some external
+  commands will detect \command{lrzip}, \command{lzma}, \command{lz4},
+  \command{lzop} or \command{zstd} compression
+  in addition to the three documented character values of
+  \code{compressed}.  (For some external \command{tar} commands,
+  compressed tarfiles can only be read if the appropriate utility
+  programm is available.)  For GNU \command{tar}, further (de)compression
+  programs can be specified by e.g.\sspace{}\code{extras = "-I lz4"}.
+  %% with restrictions, see
+  %% https://www.gnu.org/software/tar/manual/html_section/tar_68.html#SEC135
 
   The internal implementation restores symbolic links as links on a
   Unix-alike, and as file copies on Windows (which works only for
