@@ -1,6 +1,6 @@
 % File src/library/utils/man/tar.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2009-2017 R Core Team
+% Copyright 2009-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{tar}
@@ -57,9 +57,9 @@ tar(tarfile, files = NULL,
   \command{Rtools} \command{tar}).  For GNU \command{tar},
   \option{--format=ustar} forces a more portable format. (The default is
   set at compilation and will be shown at the end of the output from
-  \command{tar --help}: for version 1.28 \sQuote{out-of-the-box} it is 
+  \command{tar --help}: for version 1.30 \sQuote{out-of-the-box} it is 
   \option{--format=gnu}, but the manual says the intention is to change
-  to \option{--format=pax} which GNU incorrectly calls \sQuote{POSIX} --
+  to \option{--format=posix} which is the same as \code{pax} --
   it was never part of the POSIX standard for \command{tar} and should
   not be used.)
   For libarchive's \command{bsdtar}, \option{--format=ustar} is more
@@ -88,10 +88,10 @@ tar(tarfile, files = NULL,
   removed in favour of \command{pax}, and in any case many common
   implementations diverged from the former standard.  Many \R platforms
   use a version of GNU \command{tar} (including \command{Rtools} on
-  Windows), but the behaviour seems to be changed with each version.  OS
-  X >= 10.6 and FreeBSD use \command{bsdttar} from the
-  \sQuote{libarchive} project, and commercial Unixes will have their own
-  versions.
+  Windows), but the behaviour seems to be changed with each version.
+  macOS >= 10.6 and FreeBSD use \command{bsdttar} from the
+  \sQuote{libarchive} project (but for macOS, a version from 2010), and
+  commercial Unixes will have their own versions.
 
   Known problems arise from
   \itemize{
@@ -144,6 +144,19 @@ tar(tarfile, files = NULL,
   The \sQuote{ustar} format records file modification times to a
   resolution of 1 second: on file systems with higher resolution it is
   conventional to discard fractional seconds.
+}
+
+\section{Compression}{
+  When an external \command{tar} command is used, compressing the tar
+  archive often requires the appropriate command (\command{gzip},
+  \command{bzip2} or \command{xz}) to be available.  For GNU
+  \command{tar}, further compression programs can be specified by
+  e.g.\sspace{}\code{extra_flags = "-I lz4"}.
+  %% with some restrictions, see
+  %% https://www.gnu.org/software/tar/manual/html_section/tar_68.html#SEC135
+  Some versions of \command{bsdtar} accept options such as \code{--lz4},
+  \code{--lzop} and \code{--lrzip} which could be supplied in
+  \code{extra_flags}.
 }
 
 \note{
