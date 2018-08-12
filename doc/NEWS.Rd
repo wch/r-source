@@ -26,6 +26,13 @@
       \samp{pthread} library where required (rather than relying on
       OpenMP to provide it: configuring with \option{--disable-openmp}
       was failing on some Linux systems).
+      
+      \item \code{untar()} always ignored a character \code{compressed}
+      argument: however many external \command{tar} programs ignore
+      the flags which should have been set and automagically chose the
+      compression type, and if appropriate \command{gzip} or
+      \command{bzip2} compression would have been chosen from the magic
+      header of the tarball.
     }
   }
 }
