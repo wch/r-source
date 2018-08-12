@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/x11Fonts.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{X11Fonts}
@@ -57,9 +57,11 @@ X11Fonts(...)
   Available only when \code{\link{capabilities}()[["X11"]]} is true.
 }
 \examples{
+if(capabilities()[["X11"]]) withAutoprint({
 X11Fonts()
 X11Fonts("mono")
 utopia <- X11Font("-*-utopia-*-*-*-*-*-*-*-*-*-*-*-*")
 X11Fonts(utopia = utopia)
+})
 }
 \keyword{device}
