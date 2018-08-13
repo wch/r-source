@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2018-08-10 r75098) -- "Unsuffered Consequences"
+R Under development (unstable) (2018-08-13 r75123) -- "Unsuffered Consequences"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -2703,26 +2703,6 @@ pdf
 > 
 > 
 > cleanEx()
-> nameEx("png")
-> ### * png
-> 
-> flush(stderr()); flush(stdout())
-> 
-> ### Name: png
-> ### Title: BMP, JPEG, PNG and TIFF graphics devices
-> ### Aliases: png jpeg tiff bmp
-> ### Keywords: device
-> 
-> ### ** Examples
-> 
-> ## these examples will work only if the devices are available
-> ## and cairo or an X11 display or a macOS display is available.
-> 
-> ## copy current plot to a (large) PNG file
-> ## Not run: dev.print(png, file = "myplot.png", width = 1024, height = 768)
-> 
-> 
-> cleanEx()
 > nameEx("postscriptFonts")
 > ### * postscriptFonts
 > 
@@ -3735,6 +3715,12 @@ v 0.98039216 0.7647059 0.4588235 0.8549020 0.9960784
 > 
 > ### ** Examples
 > 
+> if(capabilities()[["X11"]]) withAutoprint({
++ X11Fonts()
++ X11Fonts("mono")
++ utopia <- X11Font("-*-utopia-*-*-*-*-*-*-*-*-*-*-*-*")
++ X11Fonts(utopia = utopia)
++ })
 > X11Fonts()
 $serif
 [1] "-*-times-%s-%s-*-*-%d-*-*-*-*-*-*-*"
@@ -4027,7 +4013,7 @@ $zlab
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  10.955 0.239 11.238 0 0 
+Time elapsed:  11.049 0.293 11.393 0 0 
 > grDevices::dev.off()
 null device 
           1 
