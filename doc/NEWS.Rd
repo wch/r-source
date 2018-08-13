@@ -136,14 +136,20 @@
       \item \code{news()} gains support for \file{NEWS.md} files.
 
       \item An effort has been started to have our reference manuals,
-      i.e., all help pages show platform independent information (rather
-      than Windows or unix-alike specifics visible only on that platform).
+      i.e., all help pages show platform-independent information (rather
+      than Windows or Unix-alike specifics visible only on that platform).
 
       \item \code{sessionInfo()$running} has been factored out in a new
       variable \code{osVersion}. % precomputed at utils namespace load time
 
       \item \code{slice.index()} now also works for multi-dimensional
       margins.
+      
+      \item \code{untar()} used with an external \command{tar} command
+      assumes this supports decompression and automagically detecting
+      the compression type.  This has been true of all mainstream
+      implementations since 2009: older implementations are still
+      supported \emph{via} the new argument \code{support_old_tars}.
     }
   }
 

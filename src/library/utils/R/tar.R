@@ -18,13 +18,17 @@
 
 untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
                   compressed = NA, extras = NULL, verbose = FALSE,
-                  restore_times = TRUE, tar = Sys.getenv("TAR"))
+                  restore_times = TRUE,
+                  support_old_tars = Sys.getenv("R_SUPPORT_OLD_TARS", FALSE),
+                  tar = Sys.getenv("TAR"))
 {
     if (inherits(tarfile, "connection") || identical(tar, "internal"))
         return(untar2(tarfile, files, list, exdir, restore_times))
 
     if (!(is.character(tarfile) && length(tarfile) == 1L))
         stop("invalid 'tarfile' argument")
+    tarfile <- path.expand(tarfile)
+    support_old_tars <- isTRUE(as.logical(support_old_tars))
 
     TAR <- tar
     if (!nzchar(TAR) && .Platform$OS.type == "windows" &&
@@ -37,51 +41,44 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
     ## E.g. macOS says its tar handles bzip2 but does not mention xz nor lzma.
     ## (And it supports -J and --lzma flags not mentioned by man tar.)
     ##
-    ## These days it might be better to give up trying to detect for
-    ## ourselves and rely on the external tar to do so.
-    ##
+    ## But as all commonly-used tars do (some commercial Unix do not,
+    ## but GNU tar is commonly used there).
     cflag <- ""
     if (is.character(compressed)) {
-        ## Any tar which supports -J does not need it for extraction
         cflag <- switch(match.arg(compressed, c("gzip", "bzip2", "xz")),
                         "gzip" = "z", "bzip2" = "j", "xz" = "J")
     } else if (is.logical(compressed)) {
-        if (is.na(compressed)) {
-            magic <- readBin(tarfile, "raw", n = 3L)
+        if (is.na(compressed) && support_old_tars) {
+            magic <- readBin(tarfile, "raw", n = 6L)
             if(all(magic[1:2] == c(0x1f, 0x8b))) cflag <- "z"
             else if(all(magic[1:2] == c(0x1f, 0x9d))) cflag <- "z" # compress
             else if(rawToChar(magic[1:3]) == "BZh") cflag <- "j"
-       } else if (compressed) cflag <- "z"
+            ## (https://tukaani.org/xz/xz-file-format.txt)
+            else if(all(magic[1:6] == c(0xFD, 0x37, 0x7A, 0x58, 0x5A, 0x00))) cflag <- "J"
+        } else if (isTRUE(compressed)) cflag <- "z"
     } else stop("'compressed' must be logical or character")
 
-    gzOK <- .Platform$OS.type == "windows"
-    if (!gzOK ) {
-        ## version info may be sent to stdout or stderr
-        tf <- tempfile()
-        ## TAR might be a command+flags, so don't quote it
-        cmd <- paste0(TAR, " -", cflag, "tf ", shQuote(tarfile))
-        system(paste(TAR, "--version >", tf, "2>&1"))
-        if (file.exists(tf)) {
-            gzOK <- any(grepl("GNU", readLines(tf), fixed = TRUE))
-            unlink(tf)
-        }
+    if (support_old_tars) {
+        if (cflag == "z")
+            if (nzchar(ZIP <- Sys.getenv("R_GZIPCMD"))) {
+                TAR <- paste(ZIP, "-dc", shQuote(tarfile), "|", TAR)
+                tarfile <- "-"
+                cflag <- ""
+            } else stop(sprintf("No %s command found", sQuote("gzip")))
+        if (cflag == "j")
+            if (nzchar(ZIP <- Sys.getenv("R_BZIPCMD"))) {
+                TAR <- paste(ZIP,  "-dc", shQuote(tarfile), "|", TAR)
+                tarfile <- "-"
+                cflag <- ""
+            } else stop(sprintf("No %s command found", sQuote("bzip2")))
+        if (cflag == "J")
+            if (nzchar(Sys.which("xz"))) {
+                TAR <- paste("xz -dc", shQuote(tarfile), "|", TAR)
+                tarfile <- "-"
+                cflag <- ""
+            } else stop(sprintf("No %s command found", sQuote("xz")))
     }
-    tarfile <- path.expand(tarfile)
-    if (!gzOK && cflag == "z" && nzchar(ZIP <- Sys.getenv("R_GZIPCMD"))) {
-        TAR <- paste(ZIP, "-dc", shQuote(tarfile), "|", TAR)
-        tarfile <- "-"
-        cflag <- ""
-    }
-    if (!gzOK && cflag == "j" && nzchar(ZIP <- Sys.getenv("R_BZIPCMD"))) {
-        TAR <- paste(ZIP,  "-dc", shQuote(tarfile), "|", TAR)
-        tarfile < "-"
-        cflag <- ""
-    }
-    if (cflag == "J" && nzchar(Sys.which("xz"))) {
-        TAR <- paste("xz -dc", shQuote(tarfile), "|", TAR)
-        tarfile < "-"
-        cflag <- ""
-    }
+
     if (list) {
         ## TAR might be a command+flags or piped commands, so don't quote it
         cmd <- paste0(TAR, " -", cflag, "tf ", shQuote(tarfile))

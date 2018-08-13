@@ -14,7 +14,9 @@
 \usage{
 untar(tarfile, files = NULL, list = FALSE, exdir = ".",
       compressed = NA, extras = NULL, verbose = FALSE,
-      restore_times =  TRUE, tar = Sys.getenv("TAR"))
+      restore_times =  TRUE,
+      support_old_tars = Sys.getenv("R_SUPPORT_OLD_TARS", FALSE),
+      tar = Sys.getenv("TAR"))
 }
 \arguments{
   \item{tarfile}{The pathname of the tar file: tilde expansion (see
@@ -66,7 +68,17 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
     second, and can only be restored to the resolution supported by the
     file system (which on a FAT system is 2 seconds).
   }
+  
+  \item{support_old_tars}{logical.  If true, the external \command{tar}
+    command is assumed to be able handle compressed tarfiles and if
+    needed to automagically detect the type of compression.  (All major
+    implementations have done so since 2009.)
 
+    Otherwise the \R code calls an apppopriate decompressor and pipes
+    the output to tar, if necessary examining the tarfile header to
+    determine the type of compression.
+    
+  }
   \item{tar}{character string: the path to the command to be used.  If
     the command itself contains spaces it needs to be quoted -- but
     \code{tar} can also contain flags separated from the command by spaces.}
