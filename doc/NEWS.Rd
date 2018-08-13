@@ -26,7 +26,14 @@
       \samp{pthread} library where required (rather than relying on
       OpenMP to provide it: configuring with \option{--disable-openmp}
       was failing on some Linux systems).
-      
+
+      \item The \code{data.frame} method for \code{print(x)} is fast now
+      also for large data frames \code{x} and got an optional argument
+      \code{max}, thanks to suggestions by Juan Telleria.
+
+      \item \code{hist()} no longer integer overflows in very rare
+      cases, fixing \PR{17450}.
+
       \item \code{untar()} always ignored a character \code{compressed}
       argument: however many external \command{tar} programs ignore
       the flags which should have been set and automagically chose the
@@ -360,6 +367,8 @@
       prints \code{"atomic"}.  This is a slight non-back-compatible
       change producing typically both more informative and shorter
       output.
+
+      \item \code{gc()} gets new argument \code{full}.
 
       \item \code{write.dcf()} gets optional argument \code{useBytes}.
 

@@ -1,7 +1,7 @@
 #  File src/library/graphics/R/hist.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -98,7 +98,7 @@ hist.default <-
 
     ## Do this *before* adding fuzz or logic breaks down...
 
-    h <- diff(breaks)
+    h <- as.double(diff(breaks))
     equidist <- !use.br || diff(range(h)) < 1e-7 * mean(h)
     if (!use.br && any(h <= 0))
 	stop("'breaks' are not strictly increasing")
