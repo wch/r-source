@@ -187,6 +187,15 @@ making matching really fast.
 Vectors which carry around their order, making them fast to sort,
 match against, etc.
 
+### Rcpp Integration
+
+Integration, probably in both directions, with the Rcpp Vector c++ classes.
+
+Boths ways, here, meaning an ALTREP that operates on those classes and using the ALTREP API in the definition of those classes to implement the various things that the Vector classes do.
+
+### Arrow Integration
+
+ALTREP vectors backed by the Apache Arrow interoperability framework.
 
 # Other work
 
