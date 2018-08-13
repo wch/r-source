@@ -214,7 +214,7 @@ function(x, intercept = FALSE, tol = sqrt(.Machine$double.eps), ...)
         ssp <- apply(zapsmall(ss), 2L, format)
         tmp <- t(cbind(ssp, format(df)))
         if(ncol(effects) > 1L) {
-            rn <- colnames(x$coeffficients)
+            rn <- colnames(x$coefficients)
             if(is.null(rn)) rn <- paste("resp", seq(ncol(effects)))
         } else rn <- "Sum of Squares"
         dimnames(tmp) <- list(c(rn, "Deg. of Freedom"), nmeffect)

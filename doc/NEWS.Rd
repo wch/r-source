@@ -271,6 +271,11 @@
 
       \item Printing a news db via the browser now does a much better
       job (\PR{17433}).
+
+      \item \code{print.aov()} missed column names in the multivariate case
+      due to misspelling (reported by Chris Andrews).
+D
+      ()
     }
   }
 }
