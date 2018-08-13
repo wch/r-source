@@ -4209,11 +4209,13 @@ stopifnot(identical(x, xx))
 ## Allowed in R < 2.4.0, but corrupted tsp.
 
 
-## Looking up generic in UseMethod
-mycoef <- function(object, ....) UseMethod("coef")
-x <- list(coefficients=1:3)
-mycoef(x)
-## failed to find default method < 2.4.0
+## This only "works" by having an S3 generic use the registry
+## of another S3 generic, which seems a very bad idea.
+## ## Looking up generic in UseMethod
+## mycoef <- function(object, ....) UseMethod("coef")
+## x <- list(coefficients=1:3)
+## mycoef(x)
+## ## failed to find default method < 2.4.0
 
 
 ## regression tests on changes to model.frame and model.matrix

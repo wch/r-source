@@ -522,7 +522,7 @@ SEXP attribute_hidden NORET do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env
     if(lookup_use_topenv_as_defenv == -1) {
 	lookup = getenv("_R_S3_METHOD_LOOKUP_USE_TOPENV_AS_DEFENV_");
 	lookup_use_topenv_as_defenv = 
-	    ((lookup != NULL) && StringTrue(lookup)) ? 1 : 0;
+	    ((lookup != NULL) && StringFalse(lookup)) ? 0 : 1;
     }
 
     /* get environments needed for dispatching.
