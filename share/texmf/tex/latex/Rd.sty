@@ -218,6 +218,9 @@
 %% list for \code and \samp and their variants.
 \def\Rd@nolig@list{\do\`\do\,\do\'\do\-}
 \def\Rd@noligs{\let\do\do@noligs \Rd@nolig@list}
+%% Using \frenchspacing in \Rd@code gives 'Undefined control sequence'
+%% errors in combination with hyperref and amsmath (e.g., parallel.Rnw):
+%% Hence try using the variant below.
 \def\Rd@frenchspacing{\sfcode`.=\@m \sfcode`?=\@m \sfcode`!=\@m
   \sfcode`:=\@m \sfcode`;=\@m \sfcode`,=\@m }
 
