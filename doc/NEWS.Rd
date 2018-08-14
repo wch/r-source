@@ -148,8 +148,10 @@
       \item \code{untar()} used with an external \command{tar} command
       assumes this supports decompression and automagically detecting
       the compression type.  This has been true of all mainstream
-      implementations since 2009: older implementations are still
-      supported \emph{via} the new argument \code{support_old_tars}.
+      implementations since 2009 (for GNU \command{tar}, since version
+      1.22): older implementations are still supported \emph{via} the
+      new argument \code{support_old_tars} whose default is controlled
+      by environment variable \env{R_SUPPORT_OLD_TARS}.
     }
   }
 
@@ -175,6 +177,15 @@
     }
   }
 
+  \subsection{DEPRECATED AND DEFUNCT}{
+    \itemize{
+      \item Argument \code{compressed} of \code{untar()} is
+      deprecated---it is only used for externsal \code{tar} commands
+      which increasingly for extraction auto-detect compression and
+      ignore their \option{zjJ} flags.
+    }
+  }
+  
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{replayPlot(r)} now also works in the same \R session

@@ -44,6 +44,8 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
     ## But as all commonly-used tars do (some commercial Unix do not,
     ## but GNU tar is commonly used there).
     cflag <- ""
+    if (!missing(compressed))
+        warning("untar(compressed=) is deprecated", call. = FALSE, domain = NA)
     if (is.character(compressed)) {
         cflag <- switch(match.arg(compressed, c("gzip", "bzip2", "xz")),
                         "gzip" = "z", "bzip2" = "j", "xz" = "J")
