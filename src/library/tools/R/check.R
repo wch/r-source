@@ -1843,7 +1843,9 @@ add_dummies <- function(dir, Log)
             length(out7) || length(out8)) {
             ini <- character()
             if(length(out4) ||
-               any(startsWith(out8, "Found the defunct/removed function")))
+               (length(out8) &&
+                any(startsWith(out8,
+                               "Found the defunct/removed function"))))
                 warningLog(Log) else noteLog(Log)
             if (length(out4)) {
                 first <- grep("^Found.* .Internal call", out4)[1L]

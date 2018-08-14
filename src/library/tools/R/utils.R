@@ -1653,6 +1653,7 @@ nonS3methods <- function(package)
                       "dim.inq.ncdf", "dim.same.ncdf"),
              quadprog = c("solve.QP", "solve.QP.compact"),
              reposTools = "update.packages2",
+             reshape = "all.vars.character",
              rgeos = "scale.poly",
              sac = "cumsum.test",
              sfsmisc = "cumsum.test",
