@@ -129,7 +129,7 @@
       \item Multivariate linear models, \code{lm()} now do work with
       \emph{matrix} offsets, as suggested in \PR{17407}.
 
-      \item The a new functions \code{mem.maxVSize()} and
+      \item The new functions \code{mem.maxVSize()} and
       \code{mem.maxMSize()} allow the maximal size of the vector heap
       and the maximal number of nodes allowed in the current \command{R}
       process to be queried and set.
@@ -137,7 +137,7 @@
       \item \code{news()} gains support for \file{NEWS.md} files.
 
       \item An effort has been started to have our reference manuals,
-      i.e., all help pages show platform-independent information (rather
+      i.e., all help pages. show platform-independent information (rather
       than Windows or Unix-alike specifics visible only on that platform).
 
       \item \code{sessionInfo()$running} has been factored out in a new
@@ -321,9 +321,9 @@ D
       \item \code{hist()} no longer integer overflows in very rare
       cases, fixing \PR{17450}.
       
-      \item \code{untar()} always ignored a character \code{compressed}
+      \item \code{untar()} ignored a character \code{compressed}
       argument: however many external \command{tar} programs ignore
-      the flags which should have been set and automagically chose the
+      the flags which should have been set and automagically choose the
       compression type, and if appropriate \command{gzip} or
       \command{bzip2} compression would have been chosen from the magic
       header of the tarball.
