@@ -159,8 +159,8 @@ tar(tarfile, files = NULL,
   e.g.\sspace{}\code{extra_flags = "-I lz4"}.
   %% with some restrictions, see
   %% https://www.gnu.org/software/tar/manual/html_section/tar_68.html#SEC135
-  Some versions of \command{bsdtar} accept options such as \code{--lz4},
-  \code{--lzop} and \code{--lrzip} which could be supplied in
+  Some versions of \command{bsdtar} accept options such as \option{--lz4},
+  \option{--lzop} and \option{--lrzip} which could be supplied in
   \code{extra_flags}.
 }
 
