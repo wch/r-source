@@ -3368,9 +3368,11 @@ static libraries.} there are macros to do so described in file
 A @command{tar} program is needed to unpack the sources and packages
 (including the recommended packages).  A version@footnote{Such as
 @acronym{GNU} @command{tar} 1.15 or later, @command{bsdtar} (from
-@uref{https://github.com/@/libarchive/@/libarchive/}, as used by FreeBSD and OS
-X 10.6 and later) or @command{tar} from the Heirloom Toolchest
-(@uref{http://heirloom.sourceforge.net/@/tools.html}).} that can
+@uref{https://github.com/@/libarchive/@/libarchive/}, as used as
+@command{tar} by FreeBSD and macOS 10.6 and later) or @command{tar} from
+the Heirloom Toolchest
+(@uref{http://heirloom.sourceforge.net/@/tools.html}), although the
+latter does not support @command{xz} compression.} that can
 automagically detect compressed archives is preferred for use with
 @code{untar()}: the configure script looks for @command{gtar} and
 @command{gnutar} before
