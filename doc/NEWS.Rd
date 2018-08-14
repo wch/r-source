@@ -147,12 +147,14 @@
       margins.
       
       \item \code{untar()} used with an external \command{tar} command
-      assumes this supports decompression and automagically detecting
-      the compression type.  This has been true of all mainstream
-      implementations since 2009 (for GNU \command{tar}, since version
-      1.22): older implementations are still supported \emph{via} the
-      new argument \code{support_old_tars} whose default is controlled
-      by environment variable \env{R_SUPPORT_OLD_TARS}.
+      assumes this supports decompression including \command{xz} and
+      automagically detecting the compression type.  This has been true
+      of all mainstream implementations since 2009 (for GNU
+      \command{tar}, since version 1.22): older implementations are
+      still supported \emph{via} the new argument
+      \code{support_old_tars} whose default is controlled by environment
+      variable \env{R_SUPPORT_OLD_TARS}.  (It looks like NetBSD and
+      OpenBSD have \sQuote{older} \command{tar} for this purpose.)
     }
   }
 

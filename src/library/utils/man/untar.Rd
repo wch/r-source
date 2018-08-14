@@ -41,9 +41,10 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   \item{compressed}{(Deprecated.)  Logical or character string, used
     only for an external \command{tar} command.  Values \code{"gzip"},
     \code{"bzip2"} and \code{"xz"} select that form of compression (and
-    may be abbreviated to the first letter).  \code{TRUE} indicates gzip
-    compression, \code{FALSE} no known compression, and \code{NA} (the
-    default) indicates that the type is inferred from the file header.
+    may be abbreviated to the first letter).  \code{TRUE} indicates
+    \command{gzip} compression, \code{FALSE} no known compression, and
+    \code{NA} (the default) indicates that the type is inferred from the
+    file header.
 
     The external command may ignore the selected compression type but
     detect a type automagically.
@@ -67,20 +68,25 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
     file system (which on a FAT system is 2 seconds).
   }
   
+  %% even RHEL6 had GNU tar 1.23, Ububtu 14.04 has 1.27
+  %% macOS has bsdtar from 2010: this supports xz but does not docuemnt it.
+  %% bsdtar had lzma/xz supoort before April 2009 when it added
+  %% support for command-line unxz etc, not just libraries.
   \item{support_old_tars}{logical.  If true, the external \command{tar}
     command is assumed to be able handle compressed tarfiles and if
-    needed to automagically detect the type of compression.  (The major
-    implementations have done so since 2009; for GNU \command{tar} since
-    version 1.22.)
+    \code{compressed} does not specify it, to automagically detect the
+    type of compression.  (The major implementations have done so since
+    2009; for GNU \command{tar} since version 1.22.)
 
     Otherwise the \R code calls an appropriate decompressor and pipes
-    the output to tar, for \code{compressed = NA} examining the tarfile
-    header to determine the type of compression.
+    the output to \command{tar}, for \code{compressed = NA} examining
+    the tarfile header to determine the type of compression.
   }
 
-  \item{tar}{character string: the path to the command to be used.  If
-    the command itself contains spaces it needs to be quoted -- but
-    \code{tar} can also contain flags separated from the command by spaces.}
+  \item{tar}{character string: the path to the command to be used or
+    \code{"internal"}.  If the command itself contains spaces it needs
+    to be quoted -- but \code{tar} can also contain flags separated from
+    the command by spaces.}
 }
 
 \details{
@@ -89,34 +95,68 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   \code{tarfile} is a connection or if the argument \code{tar} is
   \code{"internal"} or \code{""} (except on Windows, when
   \command{tar.exe} is tried first).
+  
+  Unless otherwise stated three types of compression of the tar file are
+  supported: \command{gzip}, \command{bzip2} and \command{xz}.
+  
+  What options are supported will depend on the \command{tar}
+  implementation used: the \code{"internal"} one is intended to provide
+  support for most in a platform-independent way.
+  \describe{
+    \item{GNU tar:}{Modern GNU \command{tar} versions support
+      compressed archives and since 1.15 are able to detect the type of
+      compression automatically: version 1.22 added support for
+      \command{xz} compression.
 
-  What options are supported will depend on the \command{tar} used.
-  Modern GNU flavours of \command{tar} will support compressed archives,
-  and since 1.15 are able to detect the type of compression
-  automatically: version 1.20 added support for \command{lzma} and
-  version 1.22 for \command{xz} compression using LZMA2.  macOS 10.6 and
-  later (and FreeBSD and some other OSes) have a \command{tar} (also
-  known as \command{bsdtar}) from the \samp{libarchive} project which
-  can also detect \command{gzip} and \command{bzip2} compression
-  automatically.  For other flavours of \command{tar}, environment
-  variable \env{R_GZIPCMD} gives the command to decompress
-  \command{gzip} and \command{compress} files, and \command{R_BZIPCMD}
-  for \command{bzip2} files.
+      On a Unix-alike, \command{configure} will set environment variable
+      \env{TAR}, preferring GNU tar if found.}
+
+    %% bsdtar had it in FreeBSB 5.3 (2004)
+    \item{\code{bsdtar}:}{macOS 10.6 and later (and FreeBSD and some
+      other OSes) have a \command{tar}
+      from the libarchive project which detects all three forms
+      of compression automagically (even if undocumented in macOS).}
+
+    \item{NetBSD:}{It is undocumented if NetBSD's \command{tar} can
+      detect compression automagically: for versions before 8 the flag
+      for \command{xz} compression was \option{--xz} not \option{-J}.
+      So \code{support_old_tars = TRUE} is recommended (or use
+      \command{bsdtar} if installed).}
+
+    %% https://news.ycombinator.com/item?id=10722697
+    \item{OpenBSD:}{OpenBSD's \command{tar} does not detect compression
+      automagically.  It has no support for \command{xz} beyond reporting
+      that the file is \command{xz}-compressed.  So \code{support_old_tars
+	= TRUE} is recommended.}
+
+    \item{Heirloom Toolchest:}{This \command{tar} does automagically
+      detect \command{gzip} and \command{bzip2} compression (undocumented)
+      but has no support for \command{xz} compression.}
+
+    \item{Older support:}{Environment variable \env{R_GZIPCMD} gives the
+      command to decompress \command{gzip} files, and
+      \env{R_BZIPCMD} for \command{bzip2} files. (On Unix-alikes
+      these are set at installation if found.)  \command{xz} is used if
+      available: if not decompression is expected to fail.}
+  }
 
   Arguments \code{compressed}, \code{extras} and \code{verbose} are only
   used when an external \command{tar} is used.
 
-  An external \command{tar} may select the compression type from the file
-  header: some external commands will detect \command{lrzip},
+  Some external \command{tar} commands will detect \command{lrzip},
   \command{lzma}, \command{lz4}, \command{lzop} or \command{zstd}
-  compression in addition to the \command{gzip}, \command{bzip2} and
-  \command{xz} (For some external \command{tar} commands, compressed
+  compression in addition to \command{gzip}, \command{bzip2} and
+  \command{xz}.  (For some external \command{tar} commands, compressed
   tarfiles can only be read if the appropriate utility program is
   available.)  For GNU \command{tar}, further (de)compression programs
   can be specified by e.g.\sspace{}\code{extras = "-I lz4"}.
   %% with restrictions, see
   %% https://www.gnu.org/software/tar/manual/html_section/tar_68.html#SEC135
-
+  For \command{bsdtar} this could be
+  \code{extras = "--use-compress-program lz4"}.
+  Most commands will detect (the nowadays rarely seen) \file{.tar.Z}
+  archives compressed by \code{compress}.
+  
   The internal implementation restores symbolic links as links on a
   Unix-alike, and as file copies on Windows (which works only for
   existing files, not for directories), and hard links as links.  If the
