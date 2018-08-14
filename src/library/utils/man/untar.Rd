@@ -73,7 +73,7 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
     implementations have done so since 2009; for GNU \command{tar} since
     version 1.22.)
 
-    Otherwise the \R code calls an apppopriate decompressor and pipes
+    Otherwise the \R code calls an appropriate decompressor and pipes
     the output to tar, for \code{compressed = NA} examining the tarfile
     header to determine the type of compression.
   }
@@ -111,7 +111,7 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   \command{lzma}, \command{lz4}, \command{lzop} or \command{zstd}
   compression in addition to the \command{gzip}, \command{bzip2} and
   \command{xz} (For some external \command{tar} commands, compressed
-  tarfiles can only be read if the appropriate utility programm is
+  tarfiles can only be read if the appropriate utility program is
   available.)  For GNU \command{tar}, further (de)compression programs
   can be specified by e.g.\sspace{}\code{extras = "-I lz4"}.
   %% with restrictions, see
