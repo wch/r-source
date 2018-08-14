@@ -223,17 +223,20 @@
 %% Hence try using the variant below.
 \def\Rd@frenchspacing{\sfcode`.=\@m \sfcode`?=\@m \sfcode`!=\@m
   \sfcode`:=\@m \sfcode`;=\@m \sfcode`,=\@m }
-
-\DeclareRobustCommand{\code}[1]{{\Rd@code{#1}\null}}
 \def\Rd@code#1{%
-  \normalfont \Rd@noligs \Rd@frenchspacing
+  \normalfont
+  \Rd@frenchspacing
   \spaceskip=\fontdimen2\font\relax
   \texttt{#1}%
+  \egroup
 }
+
+\DeclareRobustCommand{\code}{\bgroup\Rd@noligs\Rd@code}
 \let\command=\code
 \let\env=\code
 
-\DeclareRobustCommand{\samp}[1]{{\lq\Rd@code{#1}\rq\null}}
+\def\Rd@samp#1{\Rd@code{#1}\rq}
+\DeclareRobustCommand{\samp}{\lq\bgroup\Rd@noligs\Rd@samp}
 \let\option=\samp
 
 \def\AsIs{\bgroup\let\do\@makeother\Rd@AsIs@dospecials\@noligs\obeylines\@vobeyspaces\parskip\z@skip\Rd@AsIsX}
