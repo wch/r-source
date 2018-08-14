@@ -34,10 +34,10 @@ tar(tarfile, files = NULL,
 
   \item{tar}{character string: the path to the command to be used.  If
     the command itself contains spaces it needs to be quoted (e.g., by
-    \code{\link{shQuote}}) -- but argument \code{tar} can also contain
+    \code{\link{shQuote}}) -- but argument \code{tar} may also contain
     flags separated from the command by spaces.}
 
-  \item{extra_flags}{any extra flags for an external \command{tar}.}
+  \item{extra_flags}{Any extra flags for an external \command{tar}.}
 }
 
 \details{
@@ -86,17 +86,18 @@ tar(tarfile, files = NULL,
   The \sQuote{tar} format no longer has an agreed standard!
   \sQuote{Unix Standard Tar} was part of POSIX 1003.1:1998 but has been
   removed in favour of \command{pax}, and in any case many common
-  implementations diverged from the former standard.  Many \R platforms
-  use a version of GNU \command{tar} (including \command{Rtools} on
-  Windows), but the behaviour seems to be changed with each version.
-  macOS >= 10.6 and FreeBSD use \command{bsdtar} from the
-  \sQuote{libarchive} project (but for macOS, a version from 2010), and
-  commercial Unixes will have their own versions.  (\command{bsdtar} is
+  implementations diverged from the former standard.
+
+  Many \R platforms use a version of GNU \command{tar} (including
+  \command{Rtools} on Windows), but the behaviour seems to be changed
+  with each version.  macOS >= 10.6 and FreeBSD use \command{bsdtar}
+  from the libarchive project (but for macOS, a version from 2010), and
+  commercial Unixes will have their own versions.  \command{bsdtar} is
   available for many other platforms: macOS up to at least 10.9 had GNU
   \command{tar} as \command{gnutar} and other platforms,
-  e.g.\sspace{}Solaris have it as \command{gtar}: on a Unix-alike
+  e.g.\sspace{}Solaris, have it as \command{gtar}: on a Unix-alike
   \command{configure} will try \command{gnutar} and \command{gtar}
-  before \code{tar}.)
+  before \code{tar}.
 
   Known problems arise from
   \itemize{
@@ -153,15 +154,21 @@ tar(tarfile, files = NULL,
 
 \section{Compression}{
   When an external \command{tar} command is used, compressing the tar
-  archive often requires the appropriate command (\command{gzip},
+  archive may require the appropriate command (\command{gzip},
   \command{bzip2} or \command{xz}) to be available.  For GNU
   \command{tar}, further compression programs can be specified by
   e.g.\sspace{}\code{extra_flags = "-I lz4"}.
   %% with some restrictions, see
   %% https://www.gnu.org/software/tar/manual/html_section/tar_68.html#SEC135
-  Some versions of \command{bsdtar} accept options such as \option{--lz4},
-  \option{--lzop} and \option{--lrzip} which could be supplied in
-  \code{extra_flags}.
+  Some versions of \command{bsdtar} accept options such as
+  \option{--lz4}, \option{--lzop} and \option{--lrzip} or an external
+  compressor \emph{via} \code{--use-compress-program lz4}: these could
+  be supplied in \code{extra_flags}.
+  
+  NetBSD prior to 8.0 used flag \option{--xz} rather than \option{-J},
+  so this should be used \emph{via} \code{extra_flags = "--xz"} rather
+  than \code{compression = "xz"}.  The commands from OpenBSD and the
+  Heirloom Toolchest are not doumented to support \command{xz}.
 }
 
 \note{

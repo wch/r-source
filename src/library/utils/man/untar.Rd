@@ -1,6 +1,6 @@
 % File src/library/utils/man/untar.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2009-2016 R Core Team
+% Copyright 2009-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{untar}
@@ -34,11 +34,11 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   \item{compressed}{logical or character string, used only for an
     external \command{tar} command.  Values \code{"gzip"},
     \code{"bzip2"} and \code{"xz"} select that form of compression (and
-    may be abbreviated to the first letter).  \code{TRUE} indicates gzip
-    compression, \code{FALSE} no known compression (but an external
-    \command{tar} command may detect compression automagically), and
-    \code{NA} (the default) indicates that the type is inferred from the
-    file header.
+    may be abbreviated to the first letter).  \code{TRUE} indicates
+    \command{gzip} compression, \code{FALSE} no known compression (but
+    an external \command{tar} command may detect compression
+    automagically), and \code{NA} (the default) indicates that the type
+    is inferred from the file header.
 
     The external command may ignore the selected compression type but
     detect a type automagically.
@@ -62,9 +62,10 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
     file system (which on a FAT system is 2 seconds).
   }
 
-  \item{tar}{character string: the path to the command to be used.  If
-    the command itself contains spaces it needs to be quoted -- but
-    \code{tar} can also contain flags separated from the command by spaces.}
+  \item{tar}{character string: the path to the command to be used or
+    \code{"internal"}.  If the command itself contains spaces it needs
+    to be quoted -- but \code{tar} can also contain flags separated from
+    the command by spaces.}
 }
 
 \details{
@@ -75,17 +76,16 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   \command{tar.exe} is tried first).
 
   What options are supported will depend on the \command{tar} used.
-  Modern GNU flavours of \command{tar} will support compressed archives,
+  Modern GNU \command{tar} versions support compressed archives,
   and since 1.15 are able to detect the type of compression
-  automatically: version 1.20 added support for \command{lzma} and
-  version 1.22 for \command{xz} compression.  macOS 10.6 and
-  later (and FreeBSD and some other OSes) have a \command{tar} (also
-  known as \command{bsdtar}) from the \samp{libarchive} project which
-  can also detect \command{gzip} and \command{bzip2} compression
-  automatically.  For other flavours of \command{tar}, environment
-  variable \env{R_GZIPCMD} gives the command to decompress
-  \command{gzip} and \command{compress} files, and \env{R_BZIPCMD}
-  for \command{bzip2} files.
+  automatically: version 1.22 added support \command{xz} compression.
+  macOS 10.6 and later (and FreeBSD and some other OSes) have a
+  \command{tar} (also known as \command{bsdtar}) from the
+  libarchive project which can also detect \command{gzip} and
+  \command{bzip2} compression automatically.  For other flavours of
+  \command{tar}, environment variable \env{R_GZIPCMD} gives the command
+  to decompress \command{gzip} and \command{compress} files, and
+  \env{R_BZIPCMD} for \command{bzip2} files.
 
   Arguments \code{compressed}, \code{extras} and \code{verbose} are only
   used when an external \command{tar} is used.
@@ -97,11 +97,13 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   in addition to the three documented character values of
   \code{compressed}.  (For some external \command{tar} commands,
   compressed tarfiles can only be read if the appropriate utility
-  programm is available.)  For GNU \command{tar}, further (de)compression
+  program is available.)  For GNU \command{tar}, further (de)compression
   programs can be specified by e.g.\sspace{}\code{extras = "-I lz4"}.
-  %% with restrictions, see
-  %% https://www.gnu.org/software/tar/manual/html_section/tar_68.html#SEC135
-
+  For \command{bsdtar} this could be
+  \code{extras = "--use-compress-program lz4"}.
+  Most commands will detect (the nowadays rarely seen) \file{.tar.Z}
+  archives compressed by \code{compress}.
+  
   The internal implementation restores symbolic links as links on a
   Unix-alike, and as file copies on Windows (which works only for
   existing files, not for directories), and hard links as links.  If the
