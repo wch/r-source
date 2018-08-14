@@ -89,9 +89,14 @@ tar(tarfile, files = NULL,
   implementations diverged from the former standard.  Many \R platforms
   use a version of GNU \command{tar} (including \command{Rtools} on
   Windows), but the behaviour seems to be changed with each version.
-  macOS >= 10.6 and FreeBSD use \command{bsdttar} from the
+  macOS >= 10.6 and FreeBSD use \command{bsdtar} from the
   \sQuote{libarchive} project (but for macOS, a version from 2010), and
-  commercial Unixes will have their own versions.
+  commercial Unixes will have their own versions.  (\command{bsdtar} is
+  available for many other platforms: macOS up to at least 10.9 had GNU
+  \command{tar} as \command{gnutar} and other platforms,
+  e.g.\sspace{}Solaris have it as \command{gtar}: on a Unix-alike
+  \command{configure} will try \command{gnutar} and \command{gtar}
+  before \code{tar}.)
 
   Known problems arise from
   \itemize{
