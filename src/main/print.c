@@ -348,7 +348,7 @@ static void PrintObjectS3(SEXP s, R_PrintData *data)
     defineVar(xsym, s, mask);
 
     /* Forward user-supplied arguments to print() */
-    SEXP fun = findVar(install("print"), R_BaseNamespace);
+    SEXP fun = findFun(install("print"), R_BaseNamespace);
     SEXP args = PROTECT(cons(xsym, data->callArgs));
     SEXP call = PROTECT(lcons(fun, args));
 
