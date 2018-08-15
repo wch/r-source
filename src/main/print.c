@@ -326,6 +326,11 @@ static void PrintObjectS4(SEXP s, R_PrintData *data)
 	error("missing methods namespace: this should not happen");
 
     SEXP fun = findVarInFrame3(methodsNS, install("show"), TRUE);
+    if (TYPEOF(fun) == PROMSXP) {
+	PROTECT(fun);
+	fun = eval(fun, R_BaseEnv);
+	UNPROTECT(1);
+    }
     if (fun == R_UnboundValue)
 	error("missing show() in methods namespace: this should not happen");
 
