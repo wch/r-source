@@ -98,7 +98,7 @@ p.adjust.methods
 
   Shaffer, J. P. (1995).
   Multiple hypothesis testing.
-  \emph{Annual Review of Psychology}, \bold{46}, 561--576.
+  \emph{Annual Review of Psychology}, \bold{46}, 561--584.
   \doi{10.1146/annurev.ps.46.020195.003021}.
   (An excellent review of the area.)
 
