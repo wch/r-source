@@ -184,7 +184,7 @@ tar(tarfile, files = NULL,
   them as separate files.
 
   When argument \code{tar} is set to the command \command{tar} on macOS,
-  environment variable \env{COPYFILE_DISABLE=1} is set, these for the
+  environment variable \env{COPYFILE_DISABLE=1} is set, which for the
   system version of \command{tar} prevents these separate files being
   included in the tarball.
 }

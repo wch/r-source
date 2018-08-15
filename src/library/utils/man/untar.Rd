@@ -150,8 +150,6 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   tarfiles can only be read if the appropriate utility program is
   available.)  For GNU \command{tar}, further (de)compression programs
   can be specified by e.g.\sspace{}\code{extras = "-I lz4"}.
-  %% with restrictions, see
-  %% https://www.gnu.org/software/tar/manual/html_section/tar_68.html#SEC135
   For \command{bsdtar} this could be
   \code{extras = "--use-compress-program lz4"}.
   Most commands will detect (the nowadays rarely seen) \file{.tar.Z}
