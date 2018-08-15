@@ -3378,6 +3378,8 @@ automagically detect compressed archives is preferred for use with
 @command{gnutar} before
 @enindex TAR
 @command{tar} -- use environment variable @env{TAR} to override this.
+(On NetBSD/OpenBSD systems set this to @command{bsdtar} if that is
+installed.)
 
 There need to be suitable versions of the tools @command{grep} and
 @command{sed}: the problems are usually with old AT&T and BSD variants.
