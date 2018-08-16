@@ -1808,7 +1808,7 @@ There are two ways to run @R{} on macOS from a @acronym{CRAN} binary
 distribution.
 
 There is a GUI console normally installed with the @R{} icon in
-@file{/Applications} which you can run by double-clicking (e.g. from
+@file{/Applications} which you can run by double-clicking (e.g.@: from
 Launchpad or Finder).  (If you cannot find it there it was possibly
 installed elsewhere so try searching for it in Spotlight.) This is
 usually referred to as @Rapp{} to distinguish it from command-line @R{}:
@@ -1826,7 +1826,7 @@ typed as commands like any other Unix-alike: see the next chapter of
 this manual.  There are some small differences which may surprise users
 of @R{} on other platforms, notably the default location of the personal
 library directory (under @file{~/Library/R},
-e.g. @file{~/Library/R/3.5/library}), and that warnings, messages and
+e.g.@: @file{~/Library/R/3.5/library}), and that warnings, messages and
 other output to @file{stderr} are highlighted in bold.
 
 @c https://stat.ethz.ch/pipermail/r-sig-mac/2014-October/011131.html
@@ -3729,7 +3729,7 @@ more elapsed time (occasionally dramatically so) than using a similar
 single-threaded @acronym{BLAS}.  On a machine running other tasks, there
 can be contention for CPU caches that reduces the effectiveness of the
 optimization of cache use by a @acronym{BLAS} implementation: some
-people warn that this is especially problematic for hyperthreaded CPUs
+people warn that this is especially problematic for hyperthreaded CPUs.
 
 Note that under Unix (but not under Windows) if @R{} is compiled against
 a non-default @acronym{BLAS} and @option{--enable-BLAS-shlib} is
@@ -4357,7 +4357,7 @@ scripts (or using the @env{SHELL} chosen by @file{configure}).  This is
 almost always satisfactory, but on a few systems @file{/bin/sh} is not a
 Bourne shell or clone, and the shell to be used can be changed by
 setting the configure variable @env{R_SHELL} to a suitable value (a full
-path to a shell, e.g. @file{/usr/local/bin/bash}).
+path to a shell, e.g.@: @file{/usr/local/bin/bash}).
 
 @node Using make, Using FORTRAN, Setting the shell, Configuration on a Unix-alike
 @section Using make
@@ -4635,9 +4635,9 @@ Windows: _WIN32, _WIN64
 @section X11 issues
 
 The @samp{X11()} graphics device is the one started automatically on
-Unix-alikes when plotting.  As its name implies, it displays on a (local
-or remote) X server, and relies on the services provided by the X
-server.
+Unix-alikes (except most macOS builds) when plotting.  As its name
+implies, it displays on a (local or remote) X server, and relies on the
+services provided by the X server.
 
 The `modern' version of the @samp{X11()} device is based on @samp{cairo}
 graphics and (in most implementations) uses @samp{fontconfig} to pick and
@@ -4790,7 +4790,7 @@ LDFLAGS="-L/usr/local/lib64 -L/usr/local/lib"
 @noindent
 is appropriate since most (but not all) software installs its 64-bit
 libraries in @file{/usr/local/lib64}.  To build a 32-bit version of @R{}
-on @cputype{x86_64} with Fedora 26 we used
+on @cputype{x86_64} with Fedora 28 we used
 
 @example
 CC="gcc -m32"
@@ -4923,7 +4923,7 @@ few diagnostics even with @option{-Wall -pedantic}.
 
 @command{flang}'s Fortran runtime is compiled against OpenMP and it
 seems this conflicts with using OpenMP in @R{}.  So it may be necessary
-to disable the latter by configuring using @option{--without-openmp}.
+to disable the latter by configuring @R{} using @option{--disable-openmp}.
 
 It is not clear what architectures @command{flang} intends to support:
 our experiments were done on @cputype{x86_64}.
@@ -5006,7 +5006,7 @@ offer the installation of the command-line tools.  If you have installed
 Xcode, this provides the command-line tools.  The tools will need to be
 reinstalled when macOS is upgraded, as upgrading partially removes them.)
 
-You need GNU @code{readline}@footnote{Apple provides a partial emulation
+You need GNU @code{readline}.@footnote{Apple provides a partial emulation
 of GNU readline 4.2 based on the NetBSD @code{editline} library.  That
 is not recommended but for the time being @R{}'s installation scripts
 will make use of it if GNU readline is not found.}  That and other
@@ -5266,10 +5266,8 @@ not start with @code{1.8.0} or @code{9} you need to update your Java.}
 this should prompt you to install it.  You can also install directly a
 recent Java from Oracle (currently from
 @uref{http://www.oracle.com/@/technetwork/@/java/@/javase/@/downloads/@/index.html}:
-note that Java 9 and 10 have a limited lifetime and at the time of
-writing @CRANpkg{rJava}@footnote{the current version @code{0.9-9}.} did
-not install with Java 10).  Builds of OpenJDK may also be available,
-e.g.@: from @uref{http://jdk.java.net/}.
+note that Java 9 and 10 have a limited lifetime.  Builds of OpenJDK may
+also be available, e.g.@: from @uref{http://jdk.java.net/}.
 
 Binary distributions of @R{} are built against a specific version (e.g.@:
 1.8.0_161) of Oracle Java so @command{sudo R CMD javareconf} may be
@@ -5313,13 +5311,7 @@ JAVA_HOME=@var{/path/to/JDK}/jdk-10.jdk/Contents/Home
 @end example
 @noindent
 where @file{@var{/path/to/JDK}} is wherever the distribution tarball was
-unpacked.  Java 10 JDKs do not contain @command{javah}, but @R{}
-configuration / @command{R CMD javareconf} can use one from an earlier
-installation if @env{JAVAH} is set, e.g.,
-@example
-JAVAH=/Library/Java/JavaVirtualMachines/jdk1.8.0_161.jdk/Contents/Home/bin/javah
-@end example
-
+unpacked.
 
 Note that it is necessary to set the environment variable @env{NOAWT} to
 @code{1} to install many of the Java-using packages.
