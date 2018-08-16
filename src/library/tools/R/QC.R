@@ -3546,6 +3546,8 @@ function(aar, strict = FALSE)
                                   is.na(match("aut", e$role)),
                                   NA)))
                         out$bad_authors_at_R_field_has_no_author_roles <- TRUE
+                }
+                if(strict >= 3L) {
                     non_standard_roles <-
                         lapply(aar$role, setdiff,
                                utils:::MARC_relator_db_codes_used_with_R)
