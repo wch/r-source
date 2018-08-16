@@ -38,13 +38,13 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   \item{exdir}{The directory to extract files to (the equivalent of
     \command{tar -C}).  It will be created if necessary.}
 
-  \item{compressed}{(Deprecated.)  Logical or character string, used
-    only for an external \command{tar} command.  Values \code{"gzip"},
-    \code{"bzip2"} and \code{"xz"} select that form of compression (and
-    may be abbreviated to the first letter).  \code{TRUE} indicates
-    \command{gzip} compression, \code{FALSE} no known compression, and
-    \code{NA} (the default) indicates that the type is inferred from the
-    file header.
+  \item{compressed}{(Deprecated in favour of auto-detection.)  Logical
+    or character string, used only for an external \command{tar}
+    command.  Values \code{"gzip"}, \code{"bzip2"} and \code{"xz"}
+    select that form of compression (and may be abbreviated to the first
+    letter).  \code{TRUE} indicates \command{gzip} compression,
+    \code{FALSE} no known compression, and \code{NA} (the default)
+    indicates that the type is inferred from the file header.
 
     The external command may ignore the selected compression type but
     detect a type automagically.

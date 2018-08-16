@@ -22,8 +22,11 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
                   support_old_tars = Sys.getenv("R_SUPPORT_OLD_TARS", FALSE),
                   tar = Sys.getenv("TAR"))
 {
-    if (inherits(tarfile, "connection") || identical(tar, "internal"))
+    if (inherits(tarfile, "connection") || identical(tar, "internal")) {
+        if (!missing(compressed))
+            warning("argument 'compressed' is ignored for the internal method")
         return(untar2(tarfile, files, list, exdir, restore_times))
+    }
 
     if (!(is.character(tarfile) && length(tarfile) == 1L))
         stop("invalid 'tarfile' argument")
@@ -357,6 +360,8 @@ tar <- function(tarfile, files = NULL,
 
             ## Could pipe through gzip etc: might be safer for xz
             ## as -J was lzma in GNU tar 1.20:21
+            ## NetBSD < 8 used --xz not -J
+            ## OpenBSD and Heirloom Toolchest have no support for xz
             flags <- switch(match.arg(compression),
                             "none" = "-cf",
                             "gzip" = "-zcf",
