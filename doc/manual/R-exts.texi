@@ -4744,6 +4744,12 @@ if(interactive()) View(obj) else str(obj)
 @end example
 
 @item
+Be careful when comparing file paths.  There can be multiple paths to a
+single file, and some of these can be very long character strings.  If
+possible canonicalize paths before comparisons, but study
+@code{?normalizePath} to be aware of the pitfalls.
+
+@item
 Only test the accuracy of results if you have done a formal error
 analysis.  Things such as checking that probabilities numerically sum to
 one are silly: numerical tests should always have a tolerance.  That the
@@ -5279,6 +5285,31 @@ Inclusion by such headers of C-style headers such as @file{math.h} (see above).
 @noindent
 The most portable way to interface to other software with a C API is to
 use C code (which can normally be mixed with C++ code in a package).
+
+@item
+Avoid platform-specific code if at all possible, but if you need to test
+for a platform ensure that all platforms are covered.  For example,
+@code{__unix__} is not defined on all Unix-alikes, in particular not on
+macOS.  A reasonably portable way to condition code for a Unix-alike is
+@example
+#if defined (__unix__) || (defined (__APPLE__) && defined (__MACH__))
+#endif
+@end example
+@noindent
+but
+@example
+#ifdef _WIN32
+// Windows-specific code
+#else
+// Unix-alike code
+#endif
+@end example
+@noindent
+would be better.  For a Unix-alike it is much better to use
+@command{configure} to test for the functionality needed than make
+assumptions about OSes (and people all too frequently forget @R{} is
+used on platforms other than Linux, Windows and macOS --- and some
+forget macOS).
 
 @end itemize
 
