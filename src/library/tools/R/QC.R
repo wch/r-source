@@ -3944,6 +3944,8 @@ function(x, ...)
   , quartzFont = function(family) {}
   , quartzFonts = function(...) {}
   , quartz.options = function(..., reset = TRUE) {}
+  , quartz.save = function(file, type = "png", device = dev.cur(),
+                           dpi = 100, ...) {}
 ))
 
 .windows_only_proto_objects <- as.environment(list(
