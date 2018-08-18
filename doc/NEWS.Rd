@@ -293,8 +293,8 @@
 
       \item The tools-internal function called from \command{R CMD
 	INSTALL} now gets a \code{warnOption = 1} argument and only sets
-	\code{options(warn = warnOption)} when that increases the
-	warning level (\PR{17453}).
+      \code{options(warn = warnOption)} when that increases the warning
+      level (\PR{17453}).
     }
   }
 }
@@ -334,6 +334,8 @@
       compression type, and if appropriate \command{gzip} or
       \command{bzip2} compression would have been chosen from the magic
       header of the tarball.
+
+      \item \code{zapsmall(x)} now works for more \dQuote{number-like} objects.
     }
   }
 }
