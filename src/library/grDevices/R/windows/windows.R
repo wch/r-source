@@ -108,8 +108,10 @@ windows <-
 win.graph <- function(width, height, pointsize)
     windows(width = width, height = height, pointsize = pointsize)
 
-x11 <- X11 <-
-     function(width, height, pointsize, bg, gamma, xpos, ypos, title)
+x11 <-
+X11 <- function(display = "", width, height, pointsize, gamma,
+                       bg, canvas, fonts, family,
+                       xpos, ypos, title, type, antialias)
     windows(width = width, height = height, pointsize = pointsize,
             bg = bg, gamma = gamma,
             xpos = xpos, ypos = ypos, title = title)

@@ -13,8 +13,12 @@
   \describe{
     \item{on Windows,}{the \code{X11()} and \code{x11()} functions are
       simple wrappers to \code{\link{windows}()} for historical
-      compatibility convenience: Calling \code{X11()} would work in most
+      compatibility convenience: Calling \code{x11()} or \code{X11()} would work in most
       cases to open an interactive graphics device.
+
+      In \R versions before 3.6.0, the Windows version had a shorter
+      list of formal arguments.  Consequently, calls to \code{X11(*)}
+      with arguments should \emph{name} them for back compatibility.
 
       Almost all information below does \emph{not} apply on Windows.}
 

@@ -139,13 +139,15 @@
       \item An effort has been started to have our reference manuals,
       i.e., all help pages. show platform-independent information (rather
       than Windows or Unix-alike specifics visible only on that platform).
+      Consequently, the Windows version of \code{X11()} / \code{x11()}
+      got identical formal arguments the unix one.
 
       \item \code{sessionInfo()$running} has been factored out in a new
       variable \code{osVersion}. % precomputed at utils namespace load time
 
       \item \code{slice.index()} now also works for multi-dimensional
       margins.
-      
+
       \item \code{untar()} used with an external \command{tar} command
       assumes this supports decompression including \command{xz} and
       automagically detecting the compression type.  This has been true
@@ -188,7 +190,7 @@
       ignore their \option{zjJ} flags.
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{replayPlot(r)} now also works in the same \R session
@@ -322,7 +324,7 @@ D
 
       \item \code{hist()} no longer integer overflows in very rare
       cases, fixing \PR{17450}.
-      
+
       \item \code{untar()} ignored a character \code{compressed}
       argument: however many external \command{tar} programs ignore
       the flags which should have been set and automagically choose the
