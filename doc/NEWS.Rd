@@ -185,7 +185,7 @@
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item Argument \code{compressed} of \code{untar()} is
-      deprecated --- it is only used for externsal \code{tar} commands
+      deprecated --- it is only used for external \code{tar} commands
       which increasingly for extraction auto-detect compression and
       ignore their \option{zjJ} flags.
     }
