@@ -1,11 +1,11 @@
 % File src/library/base/man/zapsmall.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2009 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{zapsmall}
 \alias{zapsmall}
-\title{Rounding of Numbers}
+\title{Rounding of Numbers: Zapping Small Ones to Zero}
 \usage{
 zapsmall(x, digits = getOption("digits"))
 }
@@ -13,10 +13,12 @@ zapsmall(x, digits = getOption("digits"))
   \code{zapsmall} determines a \code{digits} argument \code{dr} for
   calling \code{round(x, digits = dr)} such that values close to
   zero (compared with the maximal absolute value) are \sQuote{zapped},
-  i.e., treated as \code{0}.
+  i.e., replaced by \code{0}.
 }
 \arguments{
-  \item{x}{a numeric or complex vector.}
+  \item{x}{a numeric or complex vector or any \R number-like object
+    which has a \code{\link{round}} method and basic arithmetic methods
+    including \code{\link{log10}()}.}
   \item{digits}{integer indicating the precision to be used.}
 }
 \references{

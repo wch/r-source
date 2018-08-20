@@ -6,6 +6,7 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R 3.5.1 patched}{
+\section{\Rlogo CHANGES IN R 3.5.1 patched}{
 
   \subsection{BUG FIXES}{
     \itemize{
@@ -40,6 +41,8 @@
       compression type, and if appropriate \command{gzip} or
       \command{bzip2} compression would have been chosen from the magic
       header of the tarball.
+
+      \item \code{zapsmall(x)} now works for more \dQuote{number-like} objects.
     }
   }
 }
