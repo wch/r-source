@@ -6,7 +6,6 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R 3.5.1 patched}{
-\section{\Rlogo CHANGES IN R 3.5.1 patched}{
 
   \subsection{BUG FIXES}{
     \itemize{
@@ -34,7 +33,7 @@
 
       \item \code{hist()} no longer integer overflows in very rare
       cases, fixing \PR{17450}.
-      
+
       \item \code{untar()} ignored a character \code{compressed}
       argument: however many external \command{tar} programs ignore
       the flags which should have been set and automagically choose the
