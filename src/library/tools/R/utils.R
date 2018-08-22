@@ -621,6 +621,7 @@ function(x)
 .canonicalize_quotes <-
 function(txt)
 {
+    txt <- as.character(txt)
     enc <- Encoding(txt)
     txt <- gsub(paste0("(", intToUtf8(0x2018), "|", intToUtf8(0x2019), ")"),
                 "'", txt, perl = TRUE, useBytes = TRUE)
