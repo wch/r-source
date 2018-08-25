@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995-2017  The R Core Team
+ *  Copyright (C) 1995-2018  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -68,7 +68,9 @@
 
 attribute_hidden
 double R_pretty(double *lo, double *up, int *ndiv, int min_n,
-		double shrink_sml, double high_u_fact[],
+		double shrink_sml,
+		const double high_u_fact[],
+		// (h, h5) = c(high.u.bias, u5.bias) in base::pretty.default()
 		int eps_correction, int return_bounds)
 {
 /* From version 0.65 on, we had rounding_eps := 1e-5, before, r..eps = 0
@@ -181,10 +183,10 @@ double R_pretty(double *lo, double *up, int *ndiv, int min_n,
     else {
 	*ndiv = k;
     }
-    if(return_bounds) { /* if()'s to ensure that result covers original range */
+    if(return_bounds) {// used in pretty.default(), ensure result covers original range
 	if(ns * unit < *lo) *lo = ns * unit;
 	if(nu * unit > *up) *up = nu * unit;
-    } else {
+    } else { // used in graphics GEpretty()
 	*lo = ns;
 	*up = nu;
     }

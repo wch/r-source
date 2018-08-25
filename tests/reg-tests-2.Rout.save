@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2018-08-13 r75123) -- "Unsuffered Consequences"
+R Under development (unstable) (2018-08-25 r75180) -- "Unsuffered Consequences"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -2290,11 +2290,11 @@ par("yaxp") :            2         4         4
 
 Warning messages:
 1: In plot.window(...) :
-  relative range of values =  43 * EPS, is small (axis 2)
+  relative range of values (  43 * EPS) is small (axis 2)
 2: In plot.window(...) :
-  relative range of values =  36 * EPS, is small (axis 2)
+  relative range of values (  36 * EPS) is small (axis 2)
 3: In plot.window(...) :
-  relative range of values =   0 * EPS, is small (axis 2)
+  relative range of values (   0 * EPS) is small (axis 2)
 > par(mfrow = c(1,1))
 > ## The warnings from inside GScale() will differ in their  relrange() ...
 > ## >> do sloppy testing

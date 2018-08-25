@@ -467,10 +467,6 @@ SEXP C_plot_new(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP C_plot_window(SEXP args)
 {
     SEXP xlim, ylim, logarg;
-    double asp, xmin, xmax, ymin, ymax;
-    Rboolean logscale;
-    const char *p;
-    pGEDevDesc dd = GEcurrentDevice();
 
     args = CDR(args);
     if (length(args) < 3)
@@ -486,11 +482,12 @@ SEXP C_plot_window(SEXP args)
 	error(_("invalid '%s' value"), "ylim");
     args = CDR(args);
 
-    logscale = FALSE;
     logarg = CAR(args);
     if (!isString(logarg))
 	error(_("\"log=\" specification must be character"));
-    p = CHAR(STRING_ELT(logarg, 0));
+    Rboolean logscale = FALSE;
+    pGEDevDesc dd = GEcurrentDevice();
+    const char *p = CHAR(STRING_ELT(logarg, 0));
     while (*p) {
 	switch (*p) {
 	case 'x':
@@ -506,13 +503,14 @@ SEXP C_plot_window(SEXP args)
     }
     args = CDR(args);
 
-    asp = (logscale) ? NA_REAL : asReal(CAR(args));;
+    double asp = (logscale) ? NA_REAL : asReal(CAR(args));;
     args = CDR(args);
 
     /* This reads [xy]axs and lab, used in GScale */
     GSavePars(dd);
     ProcessInlinePars(args, dd);
 
+    double xmin, xmax, ymin, ymax;
     if (isInteger(xlim)) {
 	if (INTEGER(xlim)[0] == NA_INTEGER || INTEGER(xlim)[1] == NA_INTEGER)
 	    error(_("NAs not allowed in 'xlim'"));
@@ -538,7 +536,7 @@ SEXP C_plot_window(SEXP args)
 	ymax = REAL(ylim)[1];
     }
     if ((dpptr(dd)->xlog && (xmin < 0 || xmax < 0)) ||
-       (dpptr(dd)->ylog && (ymin < 0 || ymax < 0)))
+	(dpptr(dd)->ylog && (ymin < 0 || ymax < 0)))
 	    error(_("Logarithmic axis must have positive limits"));
 
     if (R_FINITE(asp) && asp > 0) {

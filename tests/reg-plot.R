@@ -215,3 +215,19 @@ if(interAct) dev.set(dev.next())
 mpairs(horInd=2:1,verInd=3:1   , row1attop=FALSE) # 3x2: *swapped* upper left
 mpairs(horInd=c(3,1)           , row1attop=FALSE) # 2x3: swapped outer rows
 mpairs(           verInd=c(3,2), row1attop=FALSE) # 3x2: cols 3,2
+
+
+## axis() when in subnormal range (x is subnormal if 0 < x < .Machine$double.xmin):
+(.min.exp.subnormal <- with(.Machine, double.min.exp + double.ulp.digits)) # -1074
+(ry <- range(y74 <- 2^(.min.exp.subnormal + 0:50))) # all subnormal
+plotNchk <- function(y) {
+    plot(y, log = "y")
+    ry <- range(y)
+    xp <- par("yaxp")
+    ## and indeed yaxp do cover the range(y) :
+    stopifnot(xp[1] <= ry[1], ry[2] <= xp[2], xp[3] == 1)
+    invisible(xp)
+}
+plotNchk(y74) # gives 3 warnings; 1. from pretty(): "very small range"
+plotNchk(y74[1:8]) # 3 warnings *and* no error anymore
+plotNchk(y74[1:2]) #    (ditto)
