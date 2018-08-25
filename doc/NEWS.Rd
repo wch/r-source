@@ -42,6 +42,11 @@
       header of the tarball.
 
       \item \code{zapsmall(x)} now works for more \dQuote{number-like} objects.
+
+      \item The tools-internal function called from \command{R CMD
+	INSTALL} now gets a \code{warnOption = 1} argument and only sets
+      \code{options(warn = warnOption)} when that increases the warning
+      level (\PR{17453}).
     }
   }
 }
