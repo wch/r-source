@@ -61,8 +61,8 @@ getDLLRegisteredRoutines(dll, addNames = TRUE)
   A list of class \code{"DLLRegisteredRoutines"} with four elements
   corresponding to the routines registered for the \code{.C},
   \code{.Call}, \code{.Fortran} and \code{.External} interfaces. Each is
-  a list with as many elements as there were routines registered for
-  that interface.
+  a list (of class \code{"NativeRoutineList"}) with as many elements as
+  there were routines registered for that interface.
 
   Each element identifies a routine and is an object
   of class \code{"NativeSymbolInfo"}.
@@ -75,8 +75,7 @@ getDLLRegisteredRoutines(dll, addNames = TRUE)
   \item{dll}{an object of class \code{DLLInfo} describing the DLL.
     This is same for all elements returned.}
   \item{numParameters}{the number of arguments the native routine is to
-    be called with.  In the future, we will provide information about
-    the types of the parameters also.
+    be called with.
   }
 }
 \references{
