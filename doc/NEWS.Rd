@@ -293,6 +293,12 @@
 
       \item \code{axis()} now creates valid \code{at} locations also for
       small subnormal number ranges in log scale plots.
+
+      \item \code{format.POSIXlt()} now also recycles the \code{zone}
+      and \code{gmtoff} list components to full length when needed,
+      and its internal C code detects \code{have_zone} in more cases.
+      In some cases, this changes its output to become
+      \code{format.POSIXct} compatible.
     }
   }
 }

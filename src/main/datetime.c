@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2017  The R Core Team.
+ *  Copyright (C) 2000-2018  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -666,6 +666,7 @@ makelt(stm *tm, SEXP ans, R_xlen_t i, int valid, double frac_secs)
 
 // We assume time zone names/abbreviations are ASCII, as all known ones are.
 
+// .Internal(as.POSIXlt(x, tz)) -- called only from  as.POSIXlt.POSIXct()
 SEXP attribute_hidden do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP stz, x, ans, ansnames, klass, tzone;
@@ -730,7 +731,7 @@ SEXP attribute_hidden do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	stm dummy, *ptm = &dummy;
 	double d = REAL(x)[i];
 	if(R_FINITE(d)) {
-	    ptm = localtime0(&d, 1 - isgmt, &dummy);
+	    ptm = localtime0(&d, !isgmt, &dummy);
 	    /* in theory localtime/gmtime always return a valid
 	       struct tm pointer, but Windows uses NULL for error
 	       conditions (like negative times). */
@@ -835,14 +836,14 @@ SEXP attribute_hidden do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
 	    REAL(ans)[i] = NA_REAL;
 	else {
 	    errno = 0;
-	    tmp = mktime0(&tm, 1 - isgmt);
+	    tmp = mktime0(&tm, !isgmt);
 #ifdef MKTIME_SETS_ERRNO
 	    REAL(ans)[i] = errno ? NA_REAL : tmp + (secs - fsecs);
 #else
 	    REAL(ans)[i] = ((tmp == -1.)
 			    /* avoid silly gotcha at epoch minus one sec */
 			    && (tm.tm_sec != 59)
-			    && ((tm.tm_sec = 58), (mktime0(&tm, 1 - isgmt) != -2.))
+			    && ((tm.tm_sec = 58), (mktime0(&tm, !isgmt) != -2.))
 			    ) ?
 	      NA_REAL : tmp + (secs - fsecs);
 #endif
@@ -893,16 +894,17 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     memset(&tm, 0, sizeof(tm));
 
     /* coerce fields, find length of longest one */
-    R_xlen_t n = 0, nlen[9];
-    for(int i = 0; i < 9; i++) {
+    R_xlen_t n = 0, nlen[11];
+    int nn = imin2(LENGTH(x), 11);
+    for(int i = 0; i < nn; i++) {
 	nlen[i] = XLENGTH(VECTOR_ELT(x, i));
 	if(nlen[i] > n) n = nlen[i];
-	// real for 'sec', the first; integer for the rest:
-	SET_VECTOR_ELT(x, i, coerceVector(VECTOR_ELT(x, i),
-					  i > 0 ? INTSXP : REALSXP));
+	if(i != 9) // real for 'sec', the first; integer for the rest:
+	    SET_VECTOR_ELT(x, i, coerceVector(VECTOR_ELT(x, i),
+					      i > 0 ? INTSXP : REALSXP));
     }
     if(n > 0) {
-	for(int i = 0; i < 9; i++)
+	for(int i = 0; i < nn; i++)
 	    if(nlen[i] == 0)
 		error(_("zero-length component [[%d]] in non-empty \"POSIXlt\" structure"),
 		      i+1);
@@ -911,13 +913,14 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP ans = PROTECT(allocVector(STRSXP, N));
     char tm_zone[20];
 #ifdef HAVE_TM_GMTOFF
-    Rboolean have_zone = LENGTH(x) >= 11 && XLENGTH(VECTOR_ELT(x, 9)) == n &&
-	XLENGTH(VECTOR_ELT(x, 10)) == n;
+    Rboolean have_zone = LENGTH(x) >= 11;// and components w/ length >= 1
 #else
-    Rboolean have_zone = LENGTH(x) >= 10 && XLENGTH(VECTOR_ELT(x, 9)) == n;
+    Rboolean have_zone = LENGTH(x) >= 10;
 #endif
     if(have_zone && !isString(VECTOR_ELT(x, 9)))
 	error(_("invalid component [[10]] in \"POSIXlt\" should be 'zone'"));
+    if(!have_zone && LENGTH(x) > 9) // rather even error ?
+	warning(_("More than 9 list components in \"POSIXlt\" without timezone"));
     for(R_xlen_t i = 0; i < N; i++) {
 	double secs = REAL(VECTOR_ELT(x, 0))[i%nlen[0]], fsecs = floor(secs);
 	// avoid (int) NAN
@@ -930,8 +933,8 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	tm.tm_wday  = INTEGER(VECTOR_ELT(x, 6))[i%nlen[6]];
 	tm.tm_yday  = INTEGER(VECTOR_ELT(x, 7))[i%nlen[7]];
 	tm.tm_isdst = INTEGER(VECTOR_ELT(x, 8))[i%nlen[8]];
-	if(have_zone) {
-	    strncpy(tm_zone, CHAR(STRING_ELT(VECTOR_ELT(x, 9), i%n)), 20 - 1);
+	if(have_zone) { // not "UTC", e.g.
+	    strncpy(tm_zone, CHAR(STRING_ELT(VECTOR_ELT(x, 9), i%nlen[9])), 20 - 1);
 	    tm_zone[20 - 1] = '\0';
 #ifdef HAVE_TM_ZONE
 	    tm.tm_zone = tm_zone;
@@ -942,7 +945,7 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if(tm.tm_isdst >= 0) tzname[tm.tm_isdst] = tm_zone;
 #endif
 #ifdef HAVE_TM_GMTOFF
-	    int tmp = INTEGER(VECTOR_ELT(x, 10))[i%n];
+	    int tmp = INTEGER(VECTOR_ELT(x, 10))[i%nlen[10]];
 	    tm.tm_gmtoff = (tmp == NA_INTEGER) ? 0 : tmp;
 #endif
 	}
@@ -1008,7 +1011,7 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	    // but they are currently 3 or 4 bytes.
 	    if(UseTZ) {
 		if(have_zone) {
-		    const char *p = CHAR(STRING_ELT(VECTOR_ELT(x, 9), i%n));
+		    const char *p = CHAR(STRING_ELT(VECTOR_ELT(x, 9), i%nlen[9]));
 		    if(strlen(p)) {strcat(buff, " "); strcat(buff, p);}
 		} else if(!isNull(tz)) {
 		    int ii = 0;
@@ -1142,7 +1145,7 @@ SEXP attribute_hidden do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 		/* we do want to set wday, yday, isdst, but not to
 		   adjust structure at DST boundaries */
 		memcpy(&tm2, &tm, sizeof(stm));
-		mktime0(&tm2, 1-isgmt); /* set wday, yday, isdst */
+		mktime0(&tm2, !isgmt); /* set wday, yday, isdst */
 		tm.tm_wday = tm2.tm_wday;
 		tm.tm_yday = tm2.tm_yday;
 		tm.tm_isdst = isgmt ? 0: tm2.tm_isdst;
