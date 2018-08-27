@@ -3760,6 +3760,7 @@ SEXP R_ParseBuffer(IoBuffer *buffer, int n, ParseStatus *status, SEXP prompt,
     bufp = buf;
     R_InitSrcRefState();    
     savestack = R_PPStackTop;
+    ParseContextInit();
     PROTECT(t = NewList());
     
     GenerateCode = 1;
@@ -3792,7 +3793,8 @@ SEXP R_ParseBuffer(IoBuffer *buffer, int n, ParseStatus *status, SEXP prompt,
 	/* Was a call to R_Parse1Buffer, but we don't want to reset
 	   xxlineno and xxcolno */
 	ParseInit();
-	ParseContextInit();
+	/* Not calling ParseContextInit() as it resets parse data, and
+	   to be consistent with R_Parse */
 	R_Parse1(status);
 	rval = R_CurrentExpr;
 
