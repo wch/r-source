@@ -249,7 +249,6 @@ static int mbcs_get_next(int c, wchar_t *wc)
 
 void		R_SetInput(int);
 int		R_fgetc(FILE*);
-static int colon ;
 
 /* Routines used to build the parse tree */
 
@@ -1300,8 +1299,6 @@ static void ParseContextInit(void)
     R_ParseContextLast = 0;
     R_ParseContext[0] = '\0';
     
-    colon = 0 ;
-
     /* starts the identifier counter*/
     initId();
 
@@ -3219,12 +3216,6 @@ static int yylex(void)
  */
 static void record_( int first_parsed, int first_column, int last_parsed, int last_column,
 	int token, int id, char* text_in ){
-       
-	
-	if( token == LEFT_ASSIGN && colon == 1){
-		token = COLON_ASSIGN ;
-		colon = 0 ;
-	}
 	
 	if (!ParseState.keepSrcRefs || !ParseState.keepParseData
 	    || id == NA_INTEGER) return;
