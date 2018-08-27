@@ -2,8 +2,8 @@
 %Å‚Å„ÅœÅ”\r
 1 0 obj
 <<
-/CreationDate (D:20180608161037)
-/ModDate (D:20180608161037)
+/CreationDate (D:20180827190428)
+/ModDate (D:20180827190428)
 /Title (R Graphics Output)
 /Producer (R 3.6.0)
 /Creator (R)
@@ -9035,13 +9035,133 @@ endobj
 132 0 obj
 5515
 endobj
+133 0 obj
+<< /Type /Page /Parent 3 0 R /Contents 134 0 R /Resources 4 0 R >>
+endobj
+134 0 obj
+<<
+/Length 135 0 R
+>>
+stream
+1 J 1 j q
+Q q 227.98 119.08 414.72 371.52 re W n
+/sRGB CS
+0.000 0.000 0.000 SCN
+0.75 w
+[] 0 d
+1 J
+1 j
+10.00 M
+BT
+/F1 1 Tf 1 Tr 7.48 0 0 7.48 240.38 130.24 Tm (l) Tj 0 Tr
+ET
+BT
+/F1 1 Tf 1 Tr 7.48 0 0 7.48 295.24 179.39 Tm (l) Tj 0 Tr
+ET
+BT
+/F1 1 Tf 1 Tr 7.48 0 0 7.48 350.10 228.53 Tm (l) Tj 0 Tr
+ET
+BT
+/F1 1 Tf 1 Tr 7.48 0 0 7.48 404.95 277.67 Tm (l) Tj 0 Tr
+ET
+BT
+/F1 1 Tf 1 Tr 7.48 0 0 7.48 459.81 326.81 Tm (l) Tj 0 Tr
+ET
+BT
+/F1 1 Tf 1 Tr 7.48 0 0 7.48 514.67 375.96 Tm (l) Tj 0 Tr
+ET
+BT
+/F1 1 Tf 1 Tr 7.48 0 0 7.48 569.53 425.10 Tm (l) Tj 0 Tr
+ET
+BT
+/F1 1 Tf 1 Tr 7.48 0 0 7.48 624.38 474.24 Tm (l) Tj 0 Tr
+ET
+Q q 168.94 45.64 504.00 504.00 re W n
+/sRGB CS
+0.000 0.000 0.000 SCN
+0.75 w
+[] 0 d
+1 J
+1 j
+10.00 M
+227.98 132.84 m 227.98 459.34 l S
+227.98 132.84 m 220.78 132.84 l S
+227.98 296.09 m 220.78 296.09 l S
+227.98 459.34 m 220.78 459.34 l S
+BT
+/sRGB cs
+0.000 0.000 0.000 scn
+/F2 1 Tf 0.00 12.00 -12.00 0.00 210.70 254.22 Tm (4.940656e-323) Tj
+ET
+BT
+/F2 1 Tf 0.00 12.00 -12.00 0.00 210.70 417.47 Tm (4.940656e-322) Tj
+ET
+227.98 119.08 m
+642.70 119.08 l
+642.70 490.60 l
+227.98 490.60 l
+227.98 119.08 l
+S
+Q q 168.94 45.64 504.00 504.00 re W n
+Q
+endstream
+endobj
+135 0 obj
+1150
+endobj
+136 0 obj
+<< /Type /Page /Parent 3 0 R /Contents 137 0 R /Resources 4 0 R >>
+endobj
+137 0 obj
+<<
+/Length 138 0 R
+>>
+stream
+1 J 1 j q
+Q q 227.98 119.08 414.72 371.52 re W n
+/sRGB CS
+0.000 0.000 0.000 SCN
+0.75 w
+[] 0 d
+1 J
+1 j
+10.00 M
+BT
+/F1 1 Tf 1 Tr 7.48 0 0 7.48 240.38 130.24 Tm (l) Tj 0 Tr
+ET
+BT
+/F1 1 Tf 1 Tr 7.48 0 0 7.48 624.38 474.24 Tm (l) Tj 0 Tr
+ET
+Q q 168.94 45.64 504.00 504.00 re W n
+/sRGB CS
+0.000 0.000 0.000 SCN
+0.75 w
+[] 0 d
+1 J
+1 j
+10.00 M
+227.98 132.84 m 227.98 132.84 l S
+227.98 132.84 m 220.78 132.84 l S
+227.98 119.08 m
+642.70 119.08 l
+642.70 490.60 l
+227.98 490.60 l
+227.98 119.08 l
+S
+Q q 168.94 45.64 504.00 504.00 re W n
+Q
+endstream
+endobj
+138 0 obj
+525
+endobj
 3 0 obj
-<< /Type /Pages /Kids [ 7 0 R 10 0 R 13 0 R 16 0 R 19 0 R 22 0 R 25 0 R 28 0 R 31 0 R 34 0 R 37 0 R 40 0 R 43 0 R 46 0 R 49 0 R 52 0 R 55 0 R 58 0 R 61 0 R 64 0 R 67 0 R 70 0 R 73 0 R 76 0 R 79 0 R 82 0 R 85 0 R 88 0 R 91 0 R 94 0 R 97 0 R 100 0 R 103 0 R 106 0 R 109 0 R 112 0 R 115 0 R 118 0 R 121 0 R 124 0 R 127 0 R 130 0 R ] /Count 42 /MediaBox [0 0 841 595] >>
+<< /Type /Pages /Kids [ 7 0 R 10 0 R 13 0 R 16 0 R 19 0 R 22 0 R 25 0 R 28 0 R 31 0 R 34 0 R 37 0 R 40 0 R 43 0 R 46 0 R 49 0 R 52 0 R 55 0 R 58 0 R 61 0 R 64 0 R 67 0 R 70 0 R 73 0 R 76 0 R 79 0 R 82 0 R 85 0 R 88 0 R 91 0 R 94 0 R 97 0 R 100 0 R 103 0 R 106 0 R 109 0 R 112 0 R 115 0 R 118 0 R 121 0 R 124 0 R 127 0 R 130 0 R 133 0 R 136 0 R ] /Count 44 /MediaBox [0 0 841 595] >>
 endobj
 4 0 obj
 <<
 /ProcSet [/PDF /Text]
-/Font << /F1 134 0 R /F2 135 0 R /F3 136 0 R /F6 137 0 R >>
+/Font << /F1 140 0 R /F2 141 0 R /F3 142 0 R /F6 143 0 R >>
 /ExtGState << >>
 /ColorSpace << /sRGB 5 0 R >>
 >>
@@ -9251,7 +9371,7 @@ f9 c7 fa 57 fa e7 fb 77 fc 07 fc 98 fd 29 fd ba
 fe 4b fe dc ff 6d ff ff >
 endstream
 endobj
-133 0 obj
+139 0 obj
 <<
 /Type /Encoding /BaseEncoding /WinAnsiEncoding
 /Differences [ 45/minus 96/quoteleft
@@ -9259,30 +9379,30 @@ endobj
 /dieresis /.notdef /ring /cedilla /.notdef /hungarumlaut /ogonek /caron /space]
 >>
 endobj
-134 0 obj
+140 0 obj
 << /Type /Font /Subtype /Type1 /Name /F1 /BaseFont /ZapfDingbats >>
 endobj
-135 0 obj
+141 0 obj
 << /Type /Font /Subtype /Type1 /Name /F2 /BaseFont /Helvetica
-/Encoding 133 0 R >>
+/Encoding 139 0 R >>
 endobj
-136 0 obj
+142 0 obj
 << /Type /Font /Subtype /Type1 /Name /F3 /BaseFont /Helvetica-Bold
-/Encoding 133 0 R >>
+/Encoding 139 0 R >>
 endobj
-137 0 obj
+143 0 obj
 << /Type /Font /Subtype /Type1 /Name /F6 /BaseFont /Symbol
 >>
 endobj
 xref
-0 138
+0 144
 0000000000 65535 f 
 0000000021 00000 n 
 0000000163 00000 n 
-0000175857 00000 n 
-0000176239 00000 n 
-0000176389 00000 n 
-0000176422 00000 n 
+0000177855 00000 n 
+0000178253 00000 n 
+0000178403 00000 n 
+0000178436 00000 n 
 0000000212 00000 n 
 0000000292 00000 n 
 0000001974 00000 n 
@@ -9409,13 +9529,19 @@ xref
 0000170180 00000 n 
 0000170264 00000 n 
 0000175835 00000 n 
-0000185958 00000 n 
-0000186217 00000 n 
-0000186302 00000 n 
-0000186402 00000 n 
-0000186507 00000 n 
+0000175857 00000 n 
+0000175941 00000 n 
+0000177147 00000 n 
+0000177169 00000 n 
+0000177253 00000 n 
+0000177834 00000 n 
+0000187972 00000 n 
+0000188231 00000 n 
+0000188316 00000 n 
+0000188416 00000 n 
+0000188521 00000 n 
 trailer
-<< /Size 138 /Info 1 0 R /Root 2 0 R >>
+<< /Size 144 /Info 1 0 R /Root 2 0 R >>
 startxref
-186586
+188600
 %%EOF

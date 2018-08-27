@@ -492,12 +492,22 @@ stopifnot(
 
 
 ## format()ing invalid hand-constructed  POSIXlt  objects
-d <- as.POSIXlt("2016-12-06"); d$zone <- 1
-tools::assertError(format(d))
-d$zone <- NULL
-stopifnot(identical(format(d),"2016-12-06"))
-d$zone <- "CET" # = previous, but 'zone' now is last
-tools::assertError(format(d))
+if(hasTZ <- nzchar(.TZ <- Sys.getenv("TZ"))) cat(sprintf("env.var. TZ='%s'\n",.TZ))
+d <- as.POSIXlt("2016-12-06")
+op <- options(warn = 1)# ==> assert*() will match behavior
+for(EX in expression({}, Sys.setenv(TZ = "UTC"), Sys.unsetenv("TZ"))) {
+    cat(format(EX),":\n---------\n")
+    eval(EX)
+    dz <- d$zone
+    d$zone <- 1
+    tools::assertError(format(d))
+    d$zone <- NULL # now has 'gmtoff' but no 'zone' --> warning:
+    tools::assertWarning(stopifnot(identical(format(d),"2016-12-06")))
+    d$zone <- dz # = previous, but 'zone' now is last
+    tools::assertError(format(d))
+}
+if(hasTZ) Sys.setenv(TZ = .TZ); options(op)# revert
+
 dlt <- structure(
     list(sec = 52, min = 59L, hour = 18L, mday = 6L, mon = 11L, year = 116L,
          wday = 2L, yday = 340L, isdst = 0L, zone = "CET", gmtoff = 3600L),
