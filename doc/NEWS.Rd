@@ -339,6 +339,8 @@
 	INSTALL} now gets a \code{warnOption = 1} argument and only sets
       \code{options(warn = warnOption)} when that increases the warning
       level (\PR{17453}).
+
+      \item Parse data now have deterministic parent nodes (\PR{16041}).
     }
   }
 }
