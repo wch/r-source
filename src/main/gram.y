@@ -305,7 +305,7 @@ static int	xxvalue(SEXP, int, YYLTYPE *);
 %token		EQ_SUB SYMBOL_SUB
 %token		SYMBOL_FUNCTION_CALL
 %token		SYMBOL_PACKAGE
-%token		COLON_ASSIGN
+/* no longer used: %token COLON_ASSIGN */
 %token		SLOT
 
 /* This is the precedence table, low to high */
