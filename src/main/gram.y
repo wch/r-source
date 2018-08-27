@@ -133,12 +133,14 @@ static void setId( SEXP expr, yyltype loc){
 	    incrementId( ) ; 						\
 	    (Current).id = identifier ; 				\
 	    _current_token = yyr1[yyn] ; 				\
-	    yyltype childs[N] ;						\
-	    int ii = 0; 						\
-	    for( ii=0; ii<N; ii++){ 					\
-		      childs[ii] = YYRHSLOC (Rhs, (ii+1) ) ; 		\
-	    } 								\
-	    recordParents( identifier, childs, N) ; 			\
+	    if (ParseState.keepSrcRefs) {				\
+		yyltype childs[N];					\
+		int ii = 0; 						\
+		for( ii=0; ii<N; ii++){ 				\
+		    childs[ii] = YYRHSLOC (Rhs, (ii+1) ) ; 		\
+		} 							\
+		recordParents( identifier, childs, N) ; 		\
+	    }								\
 	} else	{							\
 	  (Current).first_line   = (Current).last_line   =		\
 	    YYRHSLOC (Rhs, 0).last_line;				\
