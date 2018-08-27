@@ -1205,6 +1205,7 @@ void R_FinalizeSrcRefState(void)
 	    R_ReleaseObject(ParseState.data);
 	    R_ReleaseObject(ParseState.text);
 	    ParseState.data = NULL;
+	    ParseState.text = NULL;
 	} else /* Remove all the strings from the text vector so they don't take up memory, and clean up data */
 	    for (int i=0; i < ParseState.data_count; i++) {
 	    	SET_STRING_ELT(ParseState.text, i, R_BlankString);
@@ -1217,8 +1218,10 @@ void R_FinalizeSrcRefState(void)
 	    ParseState.ids = NULL;
         } else {/* Remove the parent records */
             if (identifier > ID_COUNT) identifier = ID_COUNT;
-            for (int i=0; i < identifier; i++)
+            for (int i=0; i < identifier; i++) {
+		ID_ID(i) = 0;
 	        ID_PARENT(i) = 0;
+	    }
 	}
     }
     ParseState.SrcFileProt = NA_INTEGER;
@@ -1289,8 +1292,6 @@ static void ParseInit(void)
 static void initData(void)
 {
     ParseState.data_count = 0 ;
-    for (int i = 1; i <= ID_COUNT; i++)
-	ID_ID( i ) = 0;
 }
 
 
@@ -1301,7 +1302,6 @@ static void ParseContextInit(void)
     
     /* starts the identifier counter*/
     initId();
-
     initData();
 }
 
@@ -1365,7 +1365,7 @@ SEXP R_Parse1Buffer(IoBuffer *buffer, int gencode, ParseStatus *status)
     int savestack;    
 
     R_InitSrcRefState();
-    savestack = R_PPStackTop;       
+    savestack = R_PPStackTop;
     if (gencode) {
     	keepSource = asLogical(GetOption1(install("keep.source")));
     	if (keepSource) {
@@ -3069,7 +3069,10 @@ static int yylex(void)
 		xxparsesave = yylloc.first_parsed;
 		SavedLval = yylval;
 		setlastloc();
-		if (yytext[0]) /* unrecord the pushed back token if not null */
+		if (ParseState.keepSrcRefs && ParseState.keepParseData &&
+		    yytext[0])
+
+		    /* unrecord the pushed back token if not null */
 		    ParseState.data_count--;
 		return '\n';
 	    }
@@ -3240,9 +3243,9 @@ static void record_( int first_parsed, int first_column, int last_parsed, int la
 	else
 	    SET_STRING_ELT(ParseState.text, ParseState.data_count, mkChar(""));
 	
-	if( id > ID_COUNT ){
-		growID(id) ;
-	}
+	if( id > ID_COUNT )
+	    growID(id) ;
+
 	ID_ID( id ) = ParseState.data_count ; 
 	
 	ParseState.data_count++ ;
@@ -3275,7 +3278,7 @@ static void recordParents( int parent, yyltype * childs, int nchilds){
 		if (loc.id < 0 || loc.id > identifier) {
 		    error(_("internal parser error at line %d"),  ParseState.xxlineno);
 		}
-		ID_PARENT( (childs[ii]).id ) = parent  ;
+		ID_PARENT( loc.id ) = parent;
 	}
 	
 }
