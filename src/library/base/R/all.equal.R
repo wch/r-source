@@ -46,7 +46,9 @@ all.equal.default <- function(target, current, ...)
 
 all.equal.numeric <-
     function(target, current, tolerance = sqrt(.Machine$double.eps),
-             scale = NULL, countEQ = FALSE, ..., check.attributes = TRUE)
+             scale = NULL, countEQ = FALSE,
+             formatFUN = function(err, what) format(err),
+             ..., check.attributes = TRUE)
 {
     if (!is.numeric(tolerance))
         stop("'tolerance' should be numeric")
@@ -110,7 +112,7 @@ all.equal.numeric <-
 
     if (cplx) what <- paste(what, "Mod") # PR#10575
     if(is.na(xy) || xy > tolerance)
-        msg <- c(msg, paste("Mean", what, "difference:", format(xy)))
+        msg <- c(msg, paste("Mean", what, "difference:", formatFUN(xy, what)))
 
     if(is.null(msg)) TRUE else msg
 }

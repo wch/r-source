@@ -112,9 +112,10 @@
       loading the package, e.g.\sspace{}with recent Linux running under
       an address sanitizer.
 
-      \item The \code{numeric} method of \code{all.equal()} gets an
-      optional argument \code{countEQ}.  If that is true, the mean error
-      is more sensible when many entries are \bold{eq}ual.
+      \item The \code{numeric} method of \code{all.equal()} gets
+      optional arguments \code{countEQ} and \code{formatFUN}.  If
+      \code{countEQ} is true, the mean error is more sensible when many
+      entries are \bold{eq}ual.
 
       \item \code{outer(x,y, FUN = "*")} is more efficient using
       \code{tcrossprod(u,v)} instead of \code{u \%*\% t(v)}.

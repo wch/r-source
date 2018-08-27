@@ -27,6 +27,7 @@ all.equal(target, current, \dots)
 \method{all.equal}{numeric}(target, current,
           tolerance = sqrt(.Machine$double.eps), scale = NULL,
           countEQ = FALSE,
+          formatFUN = function(err, what) format(err),
           \dots, check.attributes = TRUE)
 
 \method{all.equal}{list}(target, current, \dots,
@@ -54,6 +55,10 @@ attr.all.equal(target, current, \dots,
     relative) differences.  The default, \code{FALSE} may seem
     misleading in cases where \code{target} and \code{current} only
     differ in a few places; see the extensive example.}
+  \item{formatFUN}{a \code{\link{function}} of two arguments,
+    \code{err}, the relative, absolute or scaled error, and
+    \code{what}, a character string indicating the \emph{kind} of error;
+    maybe used, e.g., to format relative and absolute errors differently.}
   \item{check.attributes}{logical indicating if the
     \code{\link{attributes}} of \code{target} and \code{current}
     (other than the names) should be compared.}
