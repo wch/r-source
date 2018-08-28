@@ -1,7 +1,7 @@
 #  File src/library/parallel/R/unix/forkCluster.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -45,9 +45,26 @@ newForkNode <- function(..., options = defaultClusterOptions, rank)
         makeSOCKmaster <- function(master, port, timeout)
         {
             port <- as.integer(port)
-            ## maybe use `try' and sleep/retry if first time fails?
-            con <- socketConnection(master, port = port, blocking = TRUE,
-                                    open = "a+b", timeout = timeout)
+
+            ## FIXME: common code with .slaveRSOCK
+            retryDelay <- 0.05   # 0.05 seconds initial delay before retrying
+            retryScale <- 1.5    # 50% increase of delay at each retry
+            setup_timeout <- 10  # retry setup for 10 seconds before failing
+
+            ## Retry multiple times in case the master is not yet ready
+            t0 <- Sys.time()
+            repeat { 
+                con <- tryCatch({
+                    socketConnection(master, port = port, blocking = TRUE,
+                                     open = "a+b", timeout = timeout)
+                }, error = identity)
+                if (inherits(con, "connection")) break
+                if (Sys.time() - t0 > setup_timeout) break
+                Sys.sleep(retryDelay)
+                retryDelay <- retryScale * retryDelay
+            }
+            if (inherits(con, "error")) stop(con)
+
             structure(list(con = con), class = "SOCK0node")
         }
         sinkWorkerOutput(outfile)
