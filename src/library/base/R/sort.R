@@ -87,7 +87,7 @@ sort.int <-
             ## strip attributes other than 'names'
             attr <- attributes(x)
             if (! is.null(attr) && ! identical(names(attr), "names"))
-                attributes(x) <- list(names = attr$names)
+                attributes(x) <- list(names = names(x))
             return(x)
         }
     }
@@ -182,11 +182,9 @@ order <- function(..., na.last = TRUE, decreasing = FALSE,
 
     ## fastpass, take advantage of ALTREP metadata
     decreasing <- as.logical(decreasing)
-    if (length(z) == 1L && is.numeric(z[[1L]]) && !is.object(z[[1]]) &&
-       length(z[[1L]]) > 0) {
-        x <- z[[1L]]
+    if (length(z) == 1L && is.numeric(x <- z[[1L]]) && !is.object(x) && length(x) > 0) {
         if (.Internal(sorted_fpass(x, decreasing, na.last)))
-            return(seq(along = x))
+            return(seq_along(x))
     }
 
     method <- match.arg(method)
@@ -229,10 +227,9 @@ sort.list <- function(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
 {
     ## fastpass, take advantage of ALTREP metadata
     decreasing <- as.logical(decreasing)
-    if(is.null(partial) && is.numeric(x) && !is.object(x) &&
-       length(x) > 0){
+    if(is.null(partial) && is.numeric(x) && !is.object(x) && length(x) > 0) {
         if (.Internal(sorted_fpass(x, decreasing, na.last)))
-            return(seq(along = x))
+            return(seq_along(x))
     }
 
     method <- match.arg(method)

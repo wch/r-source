@@ -43,6 +43,7 @@ SEXP R_CreateAtVector(SEXP axp, SEXP usr, SEXP nint, SEXP is_log)
     return res;
 }
 
+// R's  .axisPars(usr, log, nintLog)
 SEXP R_GAxisPars(SEXP usr, SEXP is_log, SEXP nintLog)
 {
     Rboolean logflag = asLogical(is_log);

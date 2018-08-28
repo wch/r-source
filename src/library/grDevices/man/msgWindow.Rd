@@ -1,4 +1,4 @@
-% File src/library/grDevices/man/windows/msgWindow.Rd
+% File src/library/grDevices/man/msgWindow.Rd
 % Part of the R package, https://www.R-project.org
 % Copyright 2008 R Core Team
 % Distributed under GPL 2 or later

@@ -65,11 +65,8 @@ as.POSIXlt(x, tz = "", \dots)
 \details{
   The \code{as.POSIX*} functions convert an object to one of the two
   classes used to represent date/times (calendar dates plus time to the
-  nearest second).  They can convert a wide variety of objects,
-  including objects of the other class and of classes \code{"Date"},
-  \code{"date"} (from package \pkg{\link[date:as.date]{date}}),
-  \code{"chron"} and \code{"dates"} (from package
-  \pkg{\link[chron]{chron}}) to these classes.  Dates without times are
+  nearest second).  They can convert objects of the other class and of
+  class \code{"Date"} to these classes.  Dates without times are
   treated as being at midnight UTC.
 
   They can also convert character strings of the formats

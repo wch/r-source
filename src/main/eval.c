@@ -176,17 +176,11 @@ static void lineprof(char* buf, SEXP srcref)
     }
 }
 
-/* FIXME: This should be done wih a proper configure test, also making
-   sure that the pthreads library is linked in. LT */
-#ifndef Win32
-#if (defined(__APPLE__) || defined(_REENTRANT) || defined(HAVE_OPENMP)) && \
-     ! defined(HAVE_PTHREAD)
-# define HAVE_PTHREAD
-#endif
-#ifdef HAVE_PTHREAD
+#if !defined(Win32) && defined(HAVE_PTHREAD)
+// <signal.h> is needed for pthread_kill on most platforms (and by POSIX
+//  but apparently not FreeBSD): it is included above.
 # include <pthread.h>
 static pthread_t R_profiled_thread;
-# endif
 #endif
 
 static void doprof(int sig)  /* sig is ignored in Windows */
@@ -424,6 +418,8 @@ static void R_InitProfiling(SEXP filename, int append, double dinterval,
 #else /* not Win32 */
 #ifdef HAVE_PTHREAD
     R_profiled_thread = pthread_self();
+#else
+    error("profiling requires 'pthread' support");
 #endif
 
     signal(SIGPROF, doprof);
@@ -6091,6 +6087,8 @@ static SEXP inflateAssignmentCall(SEXP expr) {
     if (slen <= 2 || name[slen - 2] != '<' || name[slen - 1] != '-')
 	return expr;
 
+    // gcc 8 warns here, but this is intentional
+    // ‘strncpy’ specified bound depends on the length of the source argument
     char nonAssignName[slen - 1]; /* "names" for "names<-" */
     strncpy(nonAssignName, name, slen - 2);
     nonAssignName[slen - 2] = '\0';

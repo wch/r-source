@@ -26,8 +26,8 @@ function(file = NULL)
                           "character-sets")
     lines <- readLines(file)
     ## Start with first Name: entry, and end with REFERENCES.
-    spos <- min(grep("^Name:", lines))
-    epos <- min(grep("^REFERENCES", lines)) - 1
+    spos <- min(which(startsWith(lines, "Name:")))
+    epos <- min(which(startsWith(lines, "REFERENCES"))) - 1
     lines <- lines[spos : epos]
     ## Omit 'Alias: None' and similar lines.
     if(any(ind <- grep("^[[:alnum:]]+:[[:space:]]+None[[:space:]]*$",

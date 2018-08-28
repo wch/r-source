@@ -1,6 +1,6 @@
-% File src/library/grDevices/man/windows/windows.Rd
+% File src/library/grDevices/man/windows.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{windows}
@@ -8,14 +8,13 @@
 \alias{win.graph}
 \alias{win.metafile}
 \alias{win.print}
-\alias{x11}
-\alias{X11}
 \alias{print.SavedPlots}
 \alias{[.SavedPlots}
 
 \title{Windows Graphics Devices}
 
 \description{
+  Available only on Windows.
   A graphics device is opened.  For \code{windows}, \code{win.graph},
   \code{x11} and \code{X11} this is a window on the current
   Windows display: the multiple names are for compatibility with other
@@ -30,8 +29,6 @@ windows(width, height, pointsize, record, rescale, xpinch, ypinch,
         family, antialias)
 
 win.graph(width, height, pointsize)
-x11(width, height, pointsize, bg, gamma, xpos, ypos, title)
-X11(width, height, pointsize, bg, gamma, xpos, ypos, title)
 
 win.metafile(filename = "", width = 7, height = 7, pointsize = 12,
              family, restoreConsole = TRUE)
@@ -39,7 +36,6 @@ win.metafile(filename = "", width = 7, height = 7, pointsize = 12,
 win.print(width = 7, height = 7, pointsize = 12, printer = "",
           family, antialias, restoreConsole = TRUE)
 }
-
 \arguments{
   \item{width, height}{the (nominal) width and height of the canvas of
     the plotting window in inches.  Default \code{7}.}
@@ -101,6 +97,13 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
     \code{"gray"}.  See the \sQuote{Fonts} section.}
 }
 
+\note{
+  \code{x11()}, \code{X11()} and \code{win.graph()} are simple wrappers
+  calling \code{windows()}, and mainly exist for compatibility reasons.
+
+  Further, \code{\link{x11}()} and \code{X11()} have their own help page
+  for Unix-alikes (where they also have more arguments).
+}
 \details{
   All these devices are implemented as variants of the same device.
 
@@ -248,9 +251,11 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
 \seealso{
   \code{\link{windowsFonts}},
   \code{\link{savePlot}}, \code{\link{bringToTop}},
-  \code{\link{Devices}}, \code{\link{postscript}}
+  \code{\link{Devices}}, \code{\link{postscript}},
+  \code{\link{x11}} for Unix-alikes.
 }
 \examples{\dontrun{## A series of plots written to a sequence of metafiles
-win.metafile("Rplot\%02d.wmf", pointsize = 10)
+if(.Platform$OS.type == "windows")
+   win.metafile("Rplot\%02d.wmf", pointsize = 10)
 }}
 \keyword{device}

@@ -32018,6 +32018,118 @@ fi
 ##    OPENMP_CFLAGS to the respective linker flags, and add the OPENMP
 ##    flags to all (C, C++, Fortran and Fortran 77) compiler flags.
 
+case "${host_os}" in
+  mingw*|windows*|winnt)
+    ;;
+  *)
+    r_save_CFLAGS=${CFLAGS}
+    CFLAGS="${CFLAGS} ${OPENMP_CFLAGS}"
+    ## Other things one might want to try for ancient systems
+    ## -Kthread (Sequent) -pthreads (Solaris/gcc, but -pthread works)
+      { $as_echo "$as_me:${as_lineno-$LINENO}: checking for option providing pthread_kill" >&5
+$as_echo_n "checking for option providing pthread_kill... " >&6; }
+if ${r_cv_search_pthread_kill+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  r_opts_save_CFLAGS=$CFLAGS
+    cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+char pthread_kill ();
+#ifdef F77_DUMMY_MAIN
+
+#  ifdef __cplusplus
+     extern "C"
+#  endif
+   int F77_DUMMY_MAIN() { return 1; }
+
+#endif
+int
+main ()
+{
+return pthread_kill ();
+  ;
+  return 0;
+}
+_ACEOF
+    for r_opt in '' ${PTHREAD_OPT} -pthread; do
+      if test -z "$r_opt"; then
+        r_res="none required"
+      else
+        r_res=$r_opt
+        CFLAGS="$r_opt $r_opts_save_CFLAGS"
+      fi
+     if ac_fn_c_try_link "$LINENO"; then :
+  r_cv_search_pthread_kill=$r_res
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext
+     if ${r_cv_search_pthread_kill+:} false; then :
+  break
+fi
+    done
+    if ${r_cv_search_pthread_kill+:} false; then :
+
+else
+  r_cv_search_pthread_kill=no
+fi
+    rm conftest.$ac_ext
+    CFLAGS=$r_save_CFLAGS
+
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $r_cv_search_pthread_kill" >&5
+$as_echo "$r_cv_search_pthread_kill" >&6; }
+  r_res=$r_cv_search_pthread_kill
+
+    CFLAGS=${r_save_CFLAGS}
+    case "${r_cv_search_pthread_kill}" in
+    "none required")
+      ## expected on macOS and Solaris, and other platforms with OpenMP in use
+      have_pthread=1
+      ;;
+    no)
+      ;;
+    *)
+      have_pthread=1
+      PTHREAD_OPT=${r_cv_search_pthread_kill}
+      separator=""
+test -z "${separator}" && separator=" "
+if test -z "${MAIN_LDFLAGS}"; then
+  MAIN_LDFLAGS="${PTHREAD_OPT}"
+else
+  MAIN_LDFLAGS="${MAIN_LDFLAGS}${separator}${PTHREAD_OPT}"
+fi
+      separator=""
+test -z "${separator}" && separator=" "
+if test -z "${DYLIB_LDFLAGS}"; then
+  DYLIB_LDFLAGS="${PTHREAD_OPT}"
+else
+  DYLIB_LDFLAGS="${DYLIB_LDFLAGS}${separator}${PTHREAD_OPT}"
+fi
+      ;;
+    esac
+    ;;
+esac
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether POSIX threads are supported" >&5
+$as_echo_n "checking whether POSIX threads are supported... " >&6; }
+if test -n "${have_pthread}"; then
+
+$as_echo "#define HAVE_PTHREAD 1" >>confdefs.h
+
+    { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+else
+    { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+fi
+
+
 ## <FIXME>
 ## Need to do this after configuring Fortran 90/95 support, which comes
 ## way below: should this be moved up to the compiler section?

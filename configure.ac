@@ -1796,6 +1796,8 @@ AC_SUBST(R_OPENMP_FFLAGS)
 ##    OPENMP_CFLAGS to the respective linker flags, and add the OPENMP
 ##    flags to all (C, C++, Fortran and Fortran 77) compiler flags.
 
+R_PTHREAD
+
 ## <FIXME>
 ## Need to do this after configuring Fortran 90/95 support, which comes
 ## way below: should this be moved up to the compiler section?

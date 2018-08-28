@@ -305,6 +305,8 @@ curlGetHeaders <- function(url, redirect = TRUE, verify = TRUE)
 
 lengths <- function(x, use.names=TRUE) .Internal(lengths(x, use.names))
 
+mem.maxVSize <- function(vsize = 0) .Internal(mem.maxVSize(vsize))
+mem.maxNSize <- function(nsize = 0) .Internal(mem.maxNSize(nsize))
 
 ## base has no S4 generics
 .noGenerics <- TRUE

@@ -1,8 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2014  The R Core Team
+ *  Copyright (C) 1997--2018  The R Core Team
  *  Copyright (C) 2002--2011  The R Foundation
+ *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -36,8 +36,9 @@
 
 static void GLPretty(double *ul, double *uh, int *n);
 
-// used in GScale(), but also grDevices/src/axis_scales.c :
-// (usr, log, n_inp) |--> (axp, n_out) :
+/* used in GScale() (../library/graphics/src/graphics.c), but also in
+                     ../library/grDevices/src/axis_scales.c : */
+// (usr, log, n_inp) |--> (axp = (min, max), n_out) :
 void GAxisPars(double *min, double *max, int *n, Rboolean log, int axis)
 {
 #define EPS_FAC_2 100
@@ -52,8 +53,8 @@ void GAxisPars(double *min, double *max, int *n, Rboolean log, int axis)
 
     if(log) {
 	/* Avoid infinities */
-	if(*max > 308) *max = 308;
-	if(*min < -307) *min = -307;
+	if(*max >  308) { *max =  308; if(*min > *max) *min = *max; }
+	if(*min < -307) { *min = -307; if(*max < *min) *max = *min; }
 	*min = Rexp10(*min);
 	*max = Rexp10(*max);
 	GLPretty(min, max, n);
@@ -64,7 +65,7 @@ void GAxisPars(double *min, double *max, int *n, Rboolean log, int axis)
     if(fabs(*max - *min) < (t_ = fmax2(fabs(*max), fabs(*min)))* tmp2) {
 	/* Treat this case somewhat similar to the (min ~= max) case above */
 	/* Too much accuracy here just shows machine differences */
-	warning(_("relative range of values =%4.0f * EPS, is small (axis %d)")
+	warning(_("relative range of values (%4.0f * EPS) is small (axis %d)")
 		/*"to compute accurately"*/,
 		fabs(*max - *min) / (t_*DBL_EPSILON), axis);
 
@@ -96,10 +97,10 @@ static void GLPretty(double *ul, double *uh, int *n)
  * The real work happens when the axis is drawn. */
     int p1, p2;
     double dl = *ul, dh = *uh;
-    p1 = (int) ceil(log10(dl));
+    p1 = (int) ceil (log10(dl));
     p2 = (int) floor(log10(dh));
     if(p2 <= p1 &&  dh/dl > 10.0) {
-	p1 = (int) ceil(log10(dl) - 0.5);
+	p1 = (int) ceil (log10(dl) - 0.5);
 	p2 = (int) floor(log10(dh) + 0.5);
     }
 

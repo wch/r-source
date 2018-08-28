@@ -117,7 +117,7 @@ function(file, cache = TRUE)
     ## Read header.
     .con_seek(con, 0L)
     header <- rawToChar(read_next_bytes_until_whitespace(con))
-    if(substring(header, 1L, 5L) != "%PDF-")
+    if(!startsWith(header, "%PDF-"))
         stop("PDF header not found")
 
     ## Go to the end.
@@ -149,7 +149,7 @@ function(file, cache = TRUE)
     bytes <- read_prev_bytes_after_bytes(con, pdf_bytes_whitespaces)
     startxref <- suppressWarnings(as.integer(rawToChar(bytes)))
     bytes <- read_prev_bytes_after_bytes(con, pdf_bytes_whitespaces)
-    if(substring(rawToChar(bytes), 1L, 9L) != "startxref")
+    if(!startsWith(rawToChar(bytes), "startxref"))
         stop("cannot find 'startxref' keyword")
 
     xref_tabs <-

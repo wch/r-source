@@ -1,12 +1,12 @@
-% File src/library/utils/man/windows/choose.files.Rd
+% File src/library/utils/man/choose.files.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2009 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{choose.files}
 \alias{choose.files}
 \alias{Filters}
-\title{Choose a List of Files Interactively}
+\title{Choose a List of Files Interactively on MS Windows}
 \description{
   Use a Windows file dialog to choose a list of zero or more files
 interactively.
@@ -70,7 +70,7 @@ Filters
   files by pattern.
 }
 \examples{
-  if (interactive())
+  if (interactive() && .Platform$OS.type == "windows")
        choose.files(filters = Filters[c("zip", "All"),])
 }
 \keyword{file}

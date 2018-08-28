@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  (C) Copyright 2008-2011 Simon Urbanek
- *      Copyright 2011-2017 R Core Team.
+ *      Copyright 2011-2018 R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -81,7 +81,7 @@ void Dprintf(char *format, ...) {
    can never become attached.
 
    An attached child is visible to R user code and always has file descriptors
-   sifd and pifd open and >= 0). It becomes detached via readChild() when it
+   sifd and pifd open and >= 0. It becomes detached via readChild() when it
    returns an integer (signalling to user that the child is finishing or has
    failed). An attached child is never waited for in the signal handler as
    user R code is allowed to invoke operations on the child, such as kill - if
@@ -256,7 +256,7 @@ static void compact_children() {
 	    if (ci->ppid != ppid) {
 		close_fds_child_ci(ci);
 #ifdef MC_DEBUG
-		Dprintf("removing child %d from the listi as it is not ours\n", ci->pid);
+		Dprintf("removing child %d from the list as it is not ours\n", ci->pid);
 #endif
 	    }
 #ifdef MC_DEBUG
@@ -288,6 +288,8 @@ SEXP mc_prepare_cleanup()
     ci->waitedfor = 1;
     ci->detached = 1;
     ci->pid = -1; /* a cleanup mark */
+    ci->pfd = -1;
+    ci->sifd = -1; /* set fds to -1 to simplify close */
     ci->ppid = getpid();
     ci->next = children;
     children = ci;

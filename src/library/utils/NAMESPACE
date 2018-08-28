@@ -27,6 +27,7 @@ export("?", .DollarNames, .S3methods, .romans, CRAN.packages, Rprof,
        ls.str, lsf.str, maintainer, make.packages.html, make.socket,
        memory.limit, memory.size, menu, methods, mirror2html,
        modifyList, new.packages, news, object.size, old.packages,
+       osVersion,
        package.skeleton, packageDate, packageDescription, packageName,
        packageVersion, packageStatus, page, person, personList, pico,
        process.events, prompt, promptData, promptImport,
@@ -48,6 +49,7 @@ export(txtProgressBar, getTxtProgressBar, setTxtProgressBar)
 export("hsearch_db", "hsearch_db_concepts", "hsearch_db_keywords")
 
 S3method("[", getAnywhere)
+S3method("[", "news_db")
 S3method("[", roman)
 S3method(Ops, roman)
 S3method(as.character, person)
@@ -108,6 +110,7 @@ S3method(str, POSIXt)
 S3method(str, Date)
 S3method(str, data.frame)
 S3method(str, default)
+S3method(subset, "news_db")
 S3method(summary, aspell)
 S3method(summary, packageStatus)
 S3method(tail, data.frame)

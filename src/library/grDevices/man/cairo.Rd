@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/cairo.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{cairo}
@@ -45,9 +45,9 @@ cairo_ps(filename = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
     \code{"sans"}, \code{"serif"} and \code{"mono"}, or a character
     string specify a font family to be searched for in a
     system-dependent way.
-#ifdef unix
-    See, the \sQuote{Cairo fonts} section in the help for \code{\link{X11}}.
-#endif
+
+    On unix-alikes (incl.\ Mac), see
+    the \sQuote{Cairo fonts} section in the help for \code{\link{X11}}.
   }
   \item{bg}{the initial background colour: can be overridden by setting
     par("bg").}
@@ -89,7 +89,7 @@ cairo_ps(filename = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
 
 \note{
   Cairo 1.2.4 (seen in Centos/RHEL 5) is known to give incorrect SVG output.
-  
+
   In principle these devices are independent of X11 (as is seen by their
   presence on Windows).  But on a Unix-alike the cairo libraries may be
   distributed as part of the X11 system and hence that (on macOS,

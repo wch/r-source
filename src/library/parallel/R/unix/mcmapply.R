@@ -25,7 +25,7 @@ mcmapply <-
     FUN <- match.fun(FUN)
     dots <- list(...)
     if(!length(dots)) return(list())
-    lens <- sapply(dots, length)
+    lens <- lengths(dots)
     n <- max(lens)
     if(n && min(lens) == 0L)
         stop("Zero-length inputs cannot be mixed with those of non-zero length")

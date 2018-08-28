@@ -1,6 +1,6 @@
 % File src/library/utils/man/tar.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2009-2017 R Core Team
+% Copyright 2009-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{tar}
@@ -34,10 +34,10 @@ tar(tarfile, files = NULL,
 
   \item{tar}{character string: the path to the command to be used.  If
     the command itself contains spaces it needs to be quoted (e.g., by
-    \code{\link{shQuote}}) -- but argument \code{tar} can also contain
+    \code{\link{shQuote}}) -- but argument \code{tar} may also contain
     flags separated from the command by spaces.}
 
-  \item{extra_flags}{any extra flags for an external \command{tar}.}
+  \item{extra_flags}{Any extra flags for an external \command{tar}.}
 }
 
 \details{
@@ -57,9 +57,9 @@ tar(tarfile, files = NULL,
   \command{Rtools} \command{tar}).  For GNU \command{tar},
   \option{--format=ustar} forces a more portable format. (The default is
   set at compilation and will be shown at the end of the output from
-  \command{tar --help}: for version 1.28 \sQuote{out-of-the-box} it is 
+  \command{tar --help}: for version 1.30 \sQuote{out-of-the-box} it is 
   \option{--format=gnu}, but the manual says the intention is to change
-  to \option{--format=pax} which GNU incorrectly calls \sQuote{POSIX} --
+  to \option{--format=posix} which is the same as \code{pax} --
   it was never part of the POSIX standard for \command{tar} and should
   not be used.)
   For libarchive's \command{bsdtar}, \option{--format=ustar} is more
@@ -86,12 +86,21 @@ tar(tarfile, files = NULL,
   The \sQuote{tar} format no longer has an agreed standard!
   \sQuote{Unix Standard Tar} was part of POSIX 1003.1:1998 but has been
   removed in favour of \command{pax}, and in any case many common
-  implementations diverged from the former standard.  Many \R platforms
-  use a version of GNU \command{tar} (including \command{Rtools} on
-  Windows), but the behaviour seems to be changed with each version.  OS
-  X >= 10.6 and FreeBSD use \command{bsdttar} from the
-  \sQuote{libarchive} project, and commercial Unixes will have their own
-  versions.
+  implementations diverged from the former standard.
+
+  Many \R platforms use a version of GNU \command{tar} (including
+  \command{Rtools} on Windows), but the behaviour seems to be changed
+  with each version.  macOS >= 10.6 and FreeBSD use \command{bsdtar}
+  from the libarchive project (but for macOS, a version from 2010), and
+  commercial Unixes will have their own versions.  \command{bsdtar} is
+  available for many other platforms: macOS up to at least 10.9 had GNU
+  \command{tar} as \command{gnutar} and other platforms,
+  e.g.\sspace{}Solaris, have it as \command{gtar}: on a Unix-alike
+  \command{configure} will try \command{gnutar} and \command{gtar}
+  before \code{tar}.
+
+  %% Heirloom Toolchest (http://heirloom.sourceforge.net/) is
+  %% another implementation available on NetBSD, but probably not the default.
 
   Known problems arise from
   \itemize{
@@ -144,6 +153,27 @@ tar(tarfile, files = NULL,
   The \sQuote{ustar} format records file modification times to a
   resolution of 1 second: on file systems with higher resolution it is
   conventional to discard fractional seconds.
+}
+
+\section{Compression}{
+  When an external \command{tar} command is used, compressing the tar
+  archive requires that \command{tar} supports the \option{-z},
+  \option{-j} or \option{-J} flag, and may require the appropriate
+  command (\command{gzip}, \command{bzip2} or \command{xz}) to be
+  available.  For GNU \command{tar}, further compression programs can be
+  specified by e.g.\sspace{}\code{extra_flags = "-I lz4"}.
+  Some versions of \command{bsdtar} accept options such as
+  \option{--lz4}, \option{--lzop} and \option{--lrzip} or an external
+  compressor \emph{via} \code{--use-compress-program lz4}: these could
+  be supplied in \code{extra_flags}.
+  
+  NetBSD prior to 8.0 used flag \option{--xz} rather than \option{-J},
+  so this should be used \emph{via} \code{extra_flags = "--xz"} rather
+  than \code{compression = "xz"}.  The commands from OpenBSD and the
+  Heirloom Toolchest are not documented to support \command{xz}.
+
+  The \command{tar} programs in commercial Unixen such as AIX and
+  Solaris do not support compression.
 }
 
 \note{

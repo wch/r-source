@@ -426,7 +426,7 @@
             os <- substr(a, 6, 1000)
         } else if (substr(a, 1, 11) == "--RdMacros=") {
             pkglist <- substr(a, 12, 1000)
-        } else if (substr(a, 1, 1) == "-") {
+        } else if (startsWith(a, "-")) {
             message("Warning: unknown option ", sQuote(a))
         } else files <- c(files, a)
         args <- args[-1L]
@@ -791,7 +791,7 @@ function(pkgdir, outfile, title, batch = FALSE,
             force <- TRUE
         } else if (a == "--only-meta") {
             only_meta <- TRUE
-        } else if (substr(a, 1, 5) == "--OS=" || substr(a, 1, 5) == "--OS=") {
+        } else if (substr(a, 1, 5) %in% c("--os=", "--OS=")) {
             OSdir <- substr(a, 6, 1000)
         } else if (substr(a, 1, 11) == "--encoding=") {
             enc <- substr(a, 12, 1000)
@@ -807,7 +807,7 @@ function(pkgdir, outfile, title, batch = FALSE,
             internals <- TRUE
         } else if (substr(a, 1, 11) == "--RdMacros=") {
             pkglist <- substr(a, 12, 1000)
-        } else if (substr(a, 1, 1) == "-") {
+        } else if (startsWith(a, "-")) {
             message("Warning: unknown option ", sQuote(a))
         } else files <- c(files, a)
         args <- args[-1L]

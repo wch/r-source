@@ -1,6 +1,6 @@
 % File src/library/utils/man/install.packages.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{install.packages}
@@ -26,24 +26,25 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   \item{pkgs}{character vector of the names of packages whose
     current versions should be downloaded from the repositories.
 
-    If \code{repos = NULL}, a character vector of
-#ifdef windows
+    If \code{repos = NULL}, a character vector of file paths,
+    \describe{
+      \item{on windows,}{
     file paths of \file{.zip} files containing binary builds of
     packages.  (\code{http://} and \code{file://} URLs are also accepted
     and the files will be downloaded and installed from local copies.)
     Source directories or file paths or URLs of archives may be
     specified with \code{type = "source"}, but some packages need
     suitable tools installed (see the \sQuote{Details} section).
-#endif
-#ifdef unix
-    file paths.  These can be source directories or archives
+      }
+      \item{On Unix-alikes,}{these file paths can be source directories or archives
     or binary package archive files (as created by \command{R CMD build
       --binary}).  (\code{http://} and \code{file://} URLs are also
     accepted and the files will be downloaded and installed from local
     copies.)  On a CRAN build of \R for macOS these can be \file{.tgz}
     files containing binary package archives.
     Tilde-expansion will be done on file paths.
-#endif
+      }
+    }
 
     If this is missing, a listbox of
     available packages is presented where possible in an interactive \R
@@ -191,10 +192,9 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   one and is not a (group) writable directory, in interactive use the
   code offers to create a personal library tree (the first element of
   \code{Sys.getenv("R_LIBS_USER")}) and install there.
-#ifdef windows
+
   Detection of a writable directory is problematic on Windows: see the
   \sQuote{Note} section.
-#endif
 
   For installs from a repository an attempt is made to install the
   packages in an order that respects their dependencies.  This does
@@ -241,8 +241,9 @@ install.packages(pkgs, lib, repos = getOption("repos"),
 
   Using packages with \code{type = "source"} always works provided the
   package contains no C/C++/Fortran code that needs compilation.
-#ifdef windows
-  Otherwise you will need to have installed the Rtools
+  Otherwise,
+  \describe{
+    \item{on Windows}{you will need to have installed the Rtools
   collection as described in the \sQuote{R for Windows FAQ} \emph{and}
   you must have the \env{PATH} environment variable set up as required
   by Rtools.
@@ -259,13 +260,14 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   currently in use.  In some circumstances (e.g., multiple instances of
   \R running at the same time and sharing a library) it will not detect a
   problem, but the installation may fail as Windows locks files in use.
-#endif
-#ifdef unix
-  Otherwise, on macOS you need to have installed the
+    }
+    \item{On Unix-alikes,}{when the package contains C/C++/Fortran code
+      that needs compilation, on macOS you need to have installed the
   \sQuote{Command-line tools for Xcode} (see the \sQuote{R Installation
     and Administration Manual}) and if needed by the package a Fortran
   compiler, and have them in your path.
-#endif
+    }
+  }
 }
 
 \section{Locking}{
@@ -339,9 +341,9 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   Timeouts during installation might leave lock directories behind and
   not restore previous versions.
 }
-
-#ifdef unix
 \note{
+  \describe{
+    \item{On Unix-alikes:}{
   Some binary distributions of \R have \code{INSTALL} in a separate
   bundle, e.g.\sspace{}an \code{R-devel} RPM.  \code{install.packages} will
   give an error if called with \code{type = "source"} on such a system.
@@ -350,10 +352,8 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   without the tools needed to install packages: a possible remedy is to
   do a complete install of \R which should bring in all those tools as
   dependencies.
-}
-#endif
-#ifdef windows
-\note{
+    }
+    \item{On Windows:}{
   \code{install.packages} tries to detect if you have write permission
   on the library directories specified, but Windows reports unreliably.
   If there is only one library directory (the default), \R tries to
@@ -361,8 +361,9 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   whole story: you may have permission to write in a library directory
   but lack permission to write binary files (such as \file{.dll} files)
   there.  See the \sQuote{R for Windows FAQ} for workarounds.
+    }
+  }
 }
-#endif
 \seealso{
   \code{\link{update.packages}},
   \code{\link{available.packages}},

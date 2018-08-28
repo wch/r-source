@@ -1,13 +1,14 @@
 % File src/library/utils/man/unix/nsl.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{nsl}
 \alias{nsl}
-\title{Look up the IP Address by Hostname}
+\title{Look up the IP Address by Hostname (on Unix-alikes)}
 \description{
-  Interface to \code{gethostbyname}.
+  Interface to the system \command{gethostbyname}, currently available
+  only on unix-alikes, i.e., not on Windows.
 }
 \usage{
 nsl(hostname)
@@ -27,6 +28,7 @@ nsl(hostname)
   This function is not available on Windows.
 }
 \examples{
-\dontrun{nsl("www.r-project.org")}
+if(.Platform$OS.type == "unix") # includes Mac
+  print( nsl("www.r-project.org") )
 }
 \keyword{utilities}

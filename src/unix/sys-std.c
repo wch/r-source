@@ -91,10 +91,12 @@ void attribute_hidden Rstd_Suicide(const char *s)
 /*
   The following provides a version of select() that catches interrupts
   and handles them using the supplied interrupt handler or the default
-  one if NULL is supplied.  The interrupt handler must exit using a
-  longjmp.  If the supplied timout value os zero, select is called
-  without setting up an error handler since it should return
-  immediately.
+  one if NULL is supplied.  The interrupt handler can return,
+  e.g. after invoking a resume restart. If the interrupt handler
+  returns then the select call is retried. If the timeout is not NULL
+  then the timeout is adjusted for the elapsed time before the retry.
+  If the supplied timout value is zero, select is called without
+  setting up an error handler since it should return immediately.
  */
 
 static SIGJMP_BUF seljmpbuf;
@@ -114,18 +116,36 @@ int R_SelectEx(int  n,  fd_set  *readfds,  fd_set  *writefds,
 	       void (*intr)(void))
 {
     if (timeout != NULL && timeout->tv_sec == 0 && timeout->tv_usec == 0)
-	/* Is it right for select calls with a timeout to be
-	   non-interruptable? LT */
 	return select(n, readfds, writefds, exceptfds, timeout);
     else {
 	volatile sel_intr_handler_t myintr = intr != NULL ?
-	    intr : onintrNoResume;
+	    intr : onintr;
 	volatile int old_interrupts_suspended = R_interrupts_suspended;
+	volatile double base_time = currentTime();
+	struct timeval tm;
+	if (timeout != NULL)
+	    tm = *timeout;
+    retry:
 	if (SIGSETJMP(seljmpbuf, 1)) {
 	    myintr();
-	    R_interrupts_suspended = old_interrupts_suspended;
-	    error(_("interrupt handler must not return"));
-	    return 0; /* not reached */
+
+	    if (timeout != NULL) {
+		/* Ajdust timeout for elapsed complete seconds; ignore
+		   microseconde for now. This modifies the data pointed to
+		   by timeval, which is what select() on Linux does as
+		   well. */
+		double new_time = currentTime();
+		double elapsed = new_time = base_time;
+		base_time = new_time;
+		time_t elapsed_sec = (time_t) elapsed;
+		if (tm.tv_sec > elapsed_sec)
+		    tm.tv_sec -= elapsed_sec;
+		else
+		    tm.tv_sec = 0;
+		*timeout = tm;
+	    }
+
+	    goto retry;
 	}
 	else {
 	    int val;

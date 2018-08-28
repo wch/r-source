@@ -270,7 +270,7 @@ set.seed(seed, kind = NULL, normal.kind = NULL)
   \bold{8}, 3--30.\cr
   Source code formerly at \code{http://www.math.keio.ac.jp/~matumoto/emt.html}.\cr
   Now see \url{http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/VERSIONS/C-LANG/c-lang.html}.
-  
+
   Reeds, J., Hubert, S. and Abrahams, M. (1982--4).
   C implementation of SuperDuper, University of California at Berkeley.
   (Personal communication from Jim Reeds to Ross Ihaka.)
@@ -290,14 +290,19 @@ set.seed(seed, kind = NULL, normal.kind = NULL)
   \link{Distributions} for functions for random-variate generation from
   standard distributions.
 }
-\examples{\donttest{
+\examples{
 require(stats)
 
-## the default random seed is 626 integers, so only print a few
-runif(1); .Random.seed[1:6]; runif(1); .Random.seed[1:6]
-## If there is no seed, a "random" new one is created:
-rm(.Random.seed); runif(1); .Random.seed[1:6]
+## Seed the current RNG, i.e., set the RNG status
+set.seed(42); u1 <- runif(30)
+set.seed(42); u2 <- runif(30) # the same because of identical RNG status:
+stopifnot(identical(u1, u2))
 
+\donttest{## the default random seed is 626 integers, so only print a few
+ runif(1); .Random.seed[1:6]; runif(1); .Random.seed[1:6]
+ ## If there is no seed, a "random" new one is created:
+ rm(.Random.seed); runif(1); .Random.seed[1:6]
+}
 ok <- RNGkind()
 RNGkind("Wich")  # (partial string matching on 'kind')
 
@@ -310,6 +315,7 @@ next.WHseed <- function(i.seed = .Random.seed[-1])
   { (a.WH * i.seed) \%\% p.WH }
 my.runif1 <- function(i.seed = .Random.seed)
   { ns <- next.WHseed(i.seed[-1]); sum(ns / p.WH) \%\% 1 }
+set.seed(1998-12-04)# (when the next lines were added to the souRce)
 rs <- .Random.seed
 (WHs <- next.WHseed(rs[-1]))
 u <- runif(1)
@@ -331,6 +337,6 @@ RNGkind(ok[1])
 sum(duplicated(runif(1e6))) # around 110 for default generator
 ## and we would expect about almost sure duplicates beyond about
 qbirthday(1 - 1e-6, classes = 2e9) # 235,000
-}}
+}
 \keyword{distribution}
 \keyword{sysdata}

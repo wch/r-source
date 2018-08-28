@@ -1,7 +1,7 @@
 #  File src/library/stats/R/vcov.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2002-2017 The R Core Team
+#  Copyright (C) 2002-2018 The R Core Team
 #  Copyright (C) 1994-2002 W. N. Venables and B. D. Ripley
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -48,7 +48,7 @@ vcov.aov <- vcov.lm ; formals(vcov.aov)$complete <- FALSE
 
 vcov.mlm <- function(object, complete = TRUE, ...)
 {
-    so <- summary.mlm(object)[[1L]]
+    so <- summary.mlm(object, ny = 1L, names=FALSE)[[1L]]
     kronecker(estVar(object),
 	      .vcov.aliased(so$aliased, so$cov.unscaled, complete=complete),
 	      make.dimnames = TRUE)

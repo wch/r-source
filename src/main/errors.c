@@ -603,7 +603,7 @@ static SEXP GetSrcLoc(SEXP srcref)
 
 static char errbuf[BUFSIZE];
 
-#define ERRBUFCAT(txt) strncat(errbuf, txt, BUFSIZE - 1 - strlen(errbuf))
+#define ERRBUFCAT(txt) strncat(errbuf, txt, BUFSIZE - strlen(errbuf))
 
 const char *R_curErrorBuf() {
     return (const char *)errbuf;
@@ -706,6 +706,9 @@ verrorcall_dflt(SEXP call, const char *format, va_list ap)
 		    msgline1 = wd(tmp);
 		    *p = '\n';
 		} else msgline1 = wd(tmp);
+		// gcc 8 warns here
+		// 'output may be truncated copying between 0 and 8191 bytes from a string of length 8191'
+		// but truncation is intentional.
 		if (14 + wd(dcall) + msgline1 > LONGWARN)
 		    ERRBUFCAT(tail);
 	    } else {
@@ -1651,7 +1654,7 @@ static void vsignalError(SEXP call, const char *format, va_list ap)
 	char *buf = errbuf;
 	SEXP entry = CAR(list);
 	R_HandlerStack = CDR(list);
-	strncpy(buf, localbuf, BUFSIZE - 1);
+	strncpy(buf, localbuf, BUFSIZE);
 	/*	Rvsnprintf(buf, BUFSIZE - 1, format, ap);*/
 	buf[BUFSIZE - 1] = 0;
 	if (IS_CALLING_ENTRY(entry)) {

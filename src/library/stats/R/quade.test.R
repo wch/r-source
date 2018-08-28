@@ -1,7 +1,7 @@
 #  File src/library/stats/R/quade.test.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -23,8 +23,9 @@ function(y, groups, blocks, ...)
 {
     DNAME <- deparse(substitute(y))
     if(is.matrix(y)) {
-        groups <- factor(c(col(y)))
-        blocks <- factor(c(row(y)))
+        d <- dim(y)
+        groups <- factor(.col(d))
+        blocks <- factor(.row(d))
     }
     else {
         if(anyNA(groups) || anyNA(blocks))
@@ -36,8 +37,10 @@ function(y, groups, blocks, ...)
                         deparse(substitute(blocks)))
         if(any(table(groups, blocks) != 1))
             stop("not an unreplicated complete block design")
-        groups <- factor(groups)
-        blocks <- factor(blocks)
+        ord <- order(groups)
+        y <- y[ord]
+        groups <- factor(groups[ord])
+        blocks <- factor(blocks[ord])
     }
     k <- nlevels(groups)
     b <- nlevels(blocks)

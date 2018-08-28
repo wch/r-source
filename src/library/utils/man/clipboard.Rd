@@ -1,6 +1,6 @@
-% File src/library/utils/man/windows/clipboard.Rd
+% File src/library/utils/man/clipboard.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{clipboard}
@@ -9,9 +9,10 @@
 \alias{readClipboard}
 \alias{writeClipboard}
 \alias{clipboard}
-\title{Read/Write to/from the Windows Clipboard}
+\title{Read/Write to/from the Clipboard in MS Windows}
 \description{
-  Transfer text between a character vector and the Windows clipboard.
+  Transfer text between a character vector and the Windows clipboard in
+  MS Windows (only).
 }
 \usage{
 getClipboardFormats(numeric = FALSE)

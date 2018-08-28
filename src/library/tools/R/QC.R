@@ -27,9 +27,6 @@
 ## .check_package_ASCII_code
 ## .check_package_code_syntax
 ## .check_packages_used
-## .checkS3methods
-## .checkReplaceFuns
-## .checkFF
 ## .check_package_code_shlib
 ## .check_package_code_startup_functions
 ## .check_package_code_assign_to_globalenv
@@ -43,9 +40,12 @@
 ## undoc
 ## codoc
 ## codocData
-## codocClass
+## codocClasses
 ## checkDocFiles
 ## checkDocStyle
+## checkFF
+## checkReplaceFuns
+## checkS3methods
 ## .check_package_datasets
 ## .check_package_compact_datasets
 ## .check_package_compact_sysdata
@@ -358,9 +358,7 @@ function(package, dir, lib.loc = NULL,
             objects_in_ns <-
                 setdiff(sort(names(ns_env)),
                         c(".__NAMESPACE__.", ".__S3MethodsTable__."))
-            ns_S3_methods_db <- ns_env$".__NAMESPACE__."$S3methods
-            ## Alternatively, use
-            ##   ns_S3_methods_db <- getNamespaceInfo(package, "S3methods")
+            ns_S3_methods_db <- getNamespaceInfo(package, "S3methods")
             ns_S3_methods <- if(is.null(ns_S3_methods_db))
                                  character()
                              else
@@ -580,6 +578,7 @@ function(package, dir, lib.loc = NULL,
     db_names <- db_names[!ind]
 
     db_usages <- lapply(db, .Rd_get_section, "usage")
+    ## FIXME: all db_usages entries are full of "srcref" which are never used
     db_usages <- lapply(db_usages, .parse_usage_as_much_as_possible)
     ind <- vapply(db_usages,
                   function(x) !is.null(attr(x, "bad_lines")), NA, USE.NAMES=FALSE)
@@ -591,9 +590,11 @@ function(package, dir, lib.loc = NULL,
     data_sets_in_usages <- character()
     functions_in_usages_not_in_code <- list()
     data_sets_in_usages_not_in_code <- list()
+    objects_in_other_platforms <- names(compatibilityEnv())
+    objects_as_in <- c(objects_in_code_or_namespace,
+                       objects_in_other_platforms)
 
     for(docObj in db_names) {
-
         exprs <- db_usages[[docObj]]
         if(!length(exprs)) next
 
@@ -641,7 +642,7 @@ function(package, dir, lib.loc = NULL,
             replace_funs <-
                 paste0(sapply(replace_exprs,
                              function(e) as.character(e[[2L]][[1L]])),
-                      "<-")
+                       "<-")
             replace_funs <- .transform_S3_method_markup(replace_funs)
             functions <- c(functions, replace_funs)
             ind <- (replace_funs %in% functions_in_code)
@@ -666,7 +667,8 @@ function(package, dir, lib.loc = NULL,
         ## Determine functions with a \usage entry in the documentation
         ## but 'missing from the code'.  If a package has a namespace, we
         ## really need to look at all objects in the namespace (hence
-        ## 'objects_in_code_or_namespace'), as one can access the internal
+        ## 'objects_as_in' contains 'objects_in_code_or_namespace'),
+        ## as one can access the internal
         ## symbols via ':::' and hence package developers might want to
         ## provide function usages for some of the internal functions.
         ## <FIXME>
@@ -680,7 +682,7 @@ function(package, dir, lib.loc = NULL,
         if(any(ind))
             functions <- functions[!ind]
         ## </FIXME>
-        bad_functions <- setdiff(functions, objects_in_code_or_namespace)
+        bad_functions <- setdiff(functions, objects_as_in)
         if(length(bad_functions))
             functions_in_usages_not_in_code[[docObj]] <- bad_functions
 
@@ -1443,7 +1445,7 @@ function(package, dir, lib.loc = NULL)
         ## Also test whether the objects we found from the \usage all
         ## have aliases, provided that there is no alias which ends in
         ## '-deprecated' (see e.g. base-deprecated.Rd).
-        if(!length(grep("-deprecated$", aliases))) {
+        if(!any(endsWith(aliases, "-deprecated"))) {
             ## Argh.  There are good reasons for keeping \S4method{}{}
             ## as is, but of course this is not what the aliases use ...
             ## <FIXME>
@@ -1576,8 +1578,15 @@ function(package, dir, lib.loc = NULL)
             ## Determine names of declared S3 methods and associated S3
             ## generics.
             ns_S3_methods_db <- getNamespaceInfo(package, "S3methods")
-            ns_S3_generics <- ns_S3_methods_db[, 1L]
+            ns_S3_generics <- as.character(ns_S3_methods_db[, 1L])
             ns_S3_methods <- ns_S3_methods_db[, 3L]
+            if(!is.character(ns_S3_methods)) {
+                ## As of 2018-07, direct calls to registerS3method()
+                ## could have registered a function object (not name).
+                ind <- vapply(ns_S3_methods, is.character, NA)
+                ns_S3_methods[!ind] <- ""
+                ns_S3_methods <- as.character(ns_S3_methods)
+            }
         }
     }
     else {
@@ -1661,19 +1670,16 @@ function(package, dir, lib.loc = NULL)
         ## We should really determine the name g dispatches for, see
         ## a current version of methods() [2003-07-07].  (Care is needed
         ## for internal generics and group generics.)
-        ## Matching via grep() is tricky with e.g. a '$' in the name of
-        ## the generic function ... hence substr().
         name <- paste0(g, ".")
         methods <-
-            functions_in_code[substr(functions_in_code, 1L,
-                                     nchar(name, type = "c")) == name]
+            functions_in_code[startsWith(functions_in_code, name)]
         ## </FIXME>
         methods <- setdiff(methods, methods_stop_list)
         if(has_namespace) {
             ## Find registered methods for generic g.
             methods2 <- ns_S3_methods[ns_S3_generics == g]
             ## but for these purposes check name.
-            OK <- substr(methods2, 1L, nchar(name, type = "c")) == name
+            OK <- startsWith(methods2, name)
             methods <- c(methods, methods2[OK])
         }
         methods
@@ -1683,7 +1689,7 @@ function(package, dir, lib.loc = NULL)
     ## functions (i.e., with their full name), if they do something
     ## useful also for arguments not inheriting from the class they
     ## provide a method for.
-    ## But they they should be exported under another name, and
+    ## But then they should be exported under another name, and
     ## registered as an S3 method.
     ## Prior to 2.14.0 we used to allow this in the case the
     ## package has a namespace and the method is exported (even though
@@ -2308,11 +2314,13 @@ function(package, dir, lib.loc = NULL)
             ## Determine names of declared S3 methods and associated S3
             ## generics.
             ns_S3_methods_db <- getNamespaceInfo(package, "S3methods")
-            ns_S3_generics <- ns_S3_methods_db[, 1L]
+            ns_S3_generics <- as.character(ns_S3_methods_db[, 1L])
             ## We really need the GENERIC.CLASS method names used in the
             ## registry:
             ns_S3_methods <-
-                paste(ns_S3_generics, ns_S3_methods_db[, 2L], sep = ".")
+                paste(ns_S3_generics,
+                      as.character(ns_S3_methods_db[, 2L]),
+                      sep = ".")
             ## Determine unexported but declared S3 methods.
             S3_reg <- setdiff(ns_S3_methods, objects_in_code)
         }
@@ -2414,7 +2422,7 @@ function(package, dir, lib.loc = NULL)
         ## If m is a formula method, its first argument *may* be called
         ## formula.  (Note that any argument name mismatch throws an
         ## error in current S-PLUS versions.)
-        if(length(grep("\\.formula$", m))) {
+        if(endsWith(m, ".formula")) {
             if(gArgs[1L] != "...") gArgs <- gArgs[-1L]
             mArgs <- mArgs[-1L]
         }
@@ -2484,12 +2492,9 @@ function(package, dir, lib.loc = NULL)
         ## We should really determine the name g dispatches for, see
         ## a current version of methods() [2003-07-07].  (Care is
         ## needed for internal generics and group generics.)
-        ## Matching via grep() is tricky with e.g. a '$' in the name
-        ## of the generic function ... hence substr().
         name <- paste0(g, ".")
         methods <-
-            functions_in_code[substr(functions_in_code, 1L,
-                                     nchar(name, type="c")) == name]
+            functions_in_code[startsWith(functions_in_code, name)]
         ## </FIXME>
         methods <- setdiff(methods, methods_stop_list)
         if(has_namespace) {
@@ -2510,7 +2515,7 @@ function(package, dir, lib.loc = NULL)
         for(m in methods)
             ## Both all() and all.equal() are generic.
             bad_methods <- if(g == "all") {
-                m1 <- m[-grep("^all\\.equal", m)]
+                m1 <- m[!startsWith(m, "all.equal")]
                 c(bad_methods, if(length(m1)) checkArgs(g, m1))
             } else c(bad_methods, checkArgs(g, m))
     }
@@ -2630,11 +2635,17 @@ function(package, dir, lib.loc = NULL)
     replace_funs <- character()
 
     if(has_namespace) {
-        ns_S3_generics <- ns_S3_methods_db[, 1L]
+        ns_S3_generics <- as.character(ns_S3_methods_db[, 1L])
         ns_S3_methods <- ns_S3_methods_db[, 3L]
+        if(!is.character(ns_S3_methods)) {
+            ## As of 2018-07, direct calls to registerS3method()
+            ## could have registered a function object (not name).
+            ind <- vapply(ns_S3_methods, is.character, NA)
+            ns_S3_methods[!ind] <- ""
+            ns_S3_methods <- as.character(ns_S3_methods)
+        }
         ## S3 replacement methods from namespace registration?
-        idx <- grep("<-$", ns_S3_generics)
-        if(length(idx)) replace_funs <- ns_S3_methods[idx]
+        replace_funs <- ns_S3_methods[endsWith(ns_S3_generics, "<-")]
         ## Now remove the functions registered as S3 methods.
         objects_in_code <- setdiff(objects_in_code, ns_S3_methods)
     }
@@ -2667,7 +2678,7 @@ function(package, dir, lib.loc = NULL)
         S4_generics <- .get_S4_generics(code_env)
         ## Assume that the ones with names ending in '<-' are always
         ## replacement functions.
-        S4_generics <- S4_generics[grepl("<-$", names(S4_generics))]
+        S4_generics <- S4_generics[endsWith(names(S4_generics), "<-")]
         bad_S4_replace_methods <-
             sapply(S4_generics,
                    function(f) {
@@ -3306,7 +3317,7 @@ function(dfile, strict = FALSE)
 
     ## Minimal check (so far) of Title and Description.
     if(strict && !is.na(val <- db["Title"])
-       && grepl("[.]$", val)
+       && endsWith(val, ".")
        && !grepl("[[:space:]][.][.][.]|et[[:space:]]al[.]", trimws(val)))
         out$bad_Title <- TRUE
     ## some people put punctuation inside quotes, some outside.
@@ -3535,6 +3546,8 @@ function(aar, strict = FALSE)
                                   is.na(match("aut", e$role)),
                                   NA)))
                         out$bad_authors_at_R_field_has_no_author_roles <- TRUE
+                }
+                if(strict >= 3L) {
                     non_standard_roles <-
                         lapply(aar$role, setdiff,
                                utils:::MARC_relator_db_codes_used_with_R)
@@ -3914,6 +3927,113 @@ function(x, ...)
 
 ### * .check_code_usage_in_package
 
+## First, its auxiliaries
+##
+## - .unix_only_proto_objects
+## - .windows_only_proto_objects
+## - compatibilityEnv ()        -- used also in codoc()
+
+.unix_only_proto_objects <- as.environment(list(
+    nsl = function(hostname) {}
+  , X11Font = function(font) {}
+  , X11Fonts = function(...) {}
+  , X11.options = function(..., reset = TRUE) {}
+  , quartz = function(title, width, height, pointsize, family,
+                      fontsmooth, antialias, type, file = NULL,
+                      bg, canvas, dpi) {}
+  , quartzFont = function(family) {}
+  , quartzFonts = function(...) {}
+  , quartz.options = function(..., reset = TRUE) {}
+  , quartz.save = function(file, type = "png", device = dev.cur(),
+                           dpi = 100, ...) {}
+))
+
+.windows_only_proto_objects <- as.environment(list(
+    arrangeWindows = function(action = c("vertical", "horizontal",
+                                         "cascade", "minimize", "restore"),
+                              windows, preserve = TRUE, outer = FALSE) {}
+  , askYesNoWinDialog = function(msg, ...) {}
+  , bringToTop = function(which = grDevices::dev.cur(), stay = FALSE) {}
+  , choose.dir = function(default = "", caption = "Select folder") {}
+  , choose.files = function(default = "", caption = "Select files", multi = TRUE,
+                            filters = Filters, index = nrow(Filters)) {
+      Filters <- NULL }
+  , close.winProgressBar = function(con, ...) {}
+  , DLL.version = function(path) {}
+  , getClipboardFormats = function(numeric = FALSE) {}
+  , getIdentification = function() {}
+  , getWindowsHandle = function(which = "Console") {}
+  , getWindowsHandles = function(which = "R", pattern = "", minimized = FALSE) {}
+  , getWindowTitle = function() {}
+  , getWinProgressBar = function(pb) {}
+  , .install.winbinary = function(pkgs, lib, repos = getOption("repos"),
+                                  contriburl = utils::contrib.url(repos),
+                                  method, available = NULL, destdir = NULL,
+                                  dependencies = FALSE, libs_only = FALSE, ...) {}
+  , loadRconsole = function(file = choose.files(file.path(
+                                Sys.getenv("R_USER"), "Rconsole"))) {}
+  , msgWindow = function(type = c("minimize", "restore", "maximize", "hide",
+                                  "recordOn", "recordOff"),
+                         which = dev.cur()) {}
+  , readClipboard = function(format = 1, raw = FALSE) {}
+  , readRegistry = function(key,
+                            hive = c("HLM", "HCR", "HCU", "HU", "HCC", "HPD"),
+                            maxdepth = 1,
+                            view = c("default", "32-bit", "64-bit")) {}
+  ## Exists on all platforms though with differing formals :
+  ## , savePlot = function(filename = "Rplot",
+  ##                       type = c("wmf", "emf", "png", "jpeg", "jpg",
+  ##                                "bmp", "ps", "eps", "pdf"),
+  ##                       device = grDevices::dev.cur(), restoreConsole = TRUE) {}
+  , setStatusBar = function(text) {}
+  , setWindowTitle = function(suffix, title = paste(utils::getIdentification(),
+                                                    suffix)) {}
+  , setWinProgressBar = function(pb, value, title=NULL, label=NULL) {}
+  , shell = function(cmd, shell, flag = "/c", intern = FALSE,
+                     wait = TRUE, translate = FALSE, mustWork = FALSE, ...) {}
+  , shell.exec = function(file) {}
+  , shortPathName = function(path) {}
+  , Sys.junction = function(from, to) {}
+  , win.graph = function(width = 7, height = 7, pointsize = 12,
+                         restoreConsole = FALSE) {}
+  , win.metafile = function(filename = "", width = 7, height = 7,
+                            pointsize = 12, family = "",
+                            restoreConsole = TRUE) {}
+  , win.print = function(width = 7, height = 7, pointsize = 12,
+                         printer = "", family = "", antialias = "default",
+                         restoreConsole = TRUE) {}
+  , win.version = function() {}
+  , windows = function(width, height, pointsize,
+                       record, rescale, xpinch, ypinch,
+                       bg, canvas, gamma, xpos, ypos,
+                       buffered, title, restoreConsole, clickToConfirm,
+                       fillOddEven, family = "", antialias) {}
+  , windowsFont = function(font) {}
+  , windowsFonts = function(...) {}
+  , windows.options = function(..., reset = TRUE) {}
+  , winDialog = function(type = "ok", message) {}
+  , winDialogString = function(message, default) {}
+  , winMenuAdd = function(menuname) {}
+  , winMenuAddItem = function(menuname, itemname, action) {}
+  , winMenuDel = function(menuname) {}
+  , winMenuDelItem = function(menuname, itemname) {}
+  , winMenuNames = function() {}
+  , winMenuItems = function(menuname) {}
+  , winProgressBar = function(title = "R progress bar", label = "",
+                              min = 0, max = 1, initial = 0, width = 300) {}
+  , writeClipboard = function(str, format = 1L) {}
+  , zip.unpack = function(zipname, dest) {}
+))
+
+compatibilityEnv <- function() {
+    ## (this formulation allows more than two OS.type s)
+    switch(.Platform$OS.type,
+           "windows" = .unix_only_proto_objects,
+           "unix" = .windows_only_proto_objects,
+           ## in such a future case, possibly the "union" of these environments:
+           stop(gettextf("invalid 'OS.type' \"%s\".  Should not happen")))
+}
+
 .check_code_usage_in_package <-
 function(package, lib.loc = NULL)
 {
@@ -3936,123 +4056,16 @@ function(package, lib.loc = NULL)
                 for(pkg in unique(c(pkgs1, pkgs2)))
                     ## tcltk warns if no DISPLAY variable
                     ##, errors if not compiled in
-                    suppressWarnings(suppressMessages(try(require(pkg,
-                                                                  character.only = TRUE,
-                                                                  quietly = TRUE),
-                                                          silent = TRUE)))
+                    suppressMessages(
+                        tryCatch(require(pkg, character.only = TRUE,
+                                         quietly = TRUE),
+                                 error  = function(.) NULL,
+                                 warning= function(.) NULL))
             }, type = "output")
         }
-        stats::runif(1)                 # create .Random.seed
-        compat <- new.env(hash=TRUE)
-        if(.Platform$OS.type != "unix") {
-            assign("nsl", function(hostname) {}, envir = compat)
-            assign("X11Font", function(font) {}, envir = compat)
-            assign("X11Fonts", function(...) {}, envir = compat)
-            assign("X11.options", function(..., reset = TRUE) {},
-                   envir = compat)
-            assign("quartz",
-                   function(title, width, height, pointsize, family,
-                            fontsmooth, antialias, type, file = NULL,
-                            bg, canvas, dpi) {},
-                   envir = compat)
-            assign("quartzFont", function(family) {}, envir = compat)
-            assign("quartzFonts", function(...) {}, envir = compat)
-            assign("quartz.options", function(..., reset = TRUE) {},
-                   envir = compat)
-        }
-        if(.Platform$OS.type != "windows") {
-            assign("askYesNoWinDialog",
-                   function(msg, ...) {},
-                   envir = compat)
-            assign("bringToTop", function (which = grDevices::dev.cur(), stay = FALSE) {},
-                   envir = compat)
-            assign("choose.dir",
-                   function (default = "", caption = "Select folder") {},
-                   envir = compat)
-            assign("choose.files",
-                   function (default = "", caption = "Select files",
-                             multi = TRUE, filters = Filters,
-                             index = nrow(Filters)) {Filters=NULL}, envir = compat)
-            assign("DLL.version", function(path) {}, envir = compat)
-            assign("getClipboardFormats", function(numeric = FALSE) {},
-                   envir = compat)
-            assign("getIdentification", function() {}, envir = compat)
-            assign("getWindowsHandle", function(which = "Console") {},
-                   envir = compat)
-            assign("getWindowTitle", function() {}, envir = compat)
-            assign("readClipboard", function(format = 1, raw = FALSE) {},
-                   envir = compat)
-            assign("setWindowTitle",
-                   function(suffix, title = paste(utils::getIdentification(), suffix)) {},
-                   envir = compat)
-            assign("shell",
-                   function(cmd, shell, flag = "/c", intern = FALSE,
-                            wait = TRUE, translate = FALSE, mustWork = FALSE,
-                            ...) {},
-                   envir = compat)
-            assign("shell.exec", function(file) {}, envir = compat)
-            assign("shortPathName", function(path) {}, envir = compat)
-            assign("win.version", function() {}, envir = compat)
-            assign("zip.unpack", function(zipname, dest) {}, envir = compat)
-            assign("savePlot",
-                   function (filename = "Rplot",
-                             type = c("wmf", "emf", "png", "jpeg", "jpg",
-                                      "bmp", "ps", "eps", "pdf"),
-                             device = grDevices::dev.cur(), restoreConsole = TRUE) {},
-                   envir = compat)
-            assign("win.graph",
-                   function(width = 7, height = 7, pointsize = 12,
-                            restoreConsole = FALSE) {}, envir = compat)
-            assign("win.metafile",
-                   function (filename = "", width = 7, height = 7,
-                             pointsize = 12, family = "",
-                             restoreConsole = TRUE) {},
-                   envir = compat)
-            assign("win.print",
-                   function(width = 7, height = 7, pointsize = 12,
-                            printer = "", family = "", antialias = "default",
-                            restoreConsole = TRUE) {},
-                   envir = compat)
-            assign("windows",
-                   function(width, height, pointsize,
-                            record, rescale, xpinch, ypinch,
-                            bg, canvas, gamma, xpos, ypos,
-                            buffered, title, restoreConsole, clickToConfirm,
-                            fillOddEven, family = "", antialias) {},
-                            envir = compat)
-            assign("windowsFont", function(font) {}, envir = compat)
-            assign("windowsFonts", function(...) {}, envir = compat)
-            assign("windows.options", function(..., reset = TRUE) {},
-                   envir = compat)
-
-            assign("winDialog", function(type = "ok", message) {},
-                   envir = compat)
-            assign("winDialogString", function(message, default) {},
-                   envir = compat)
-            assign("winMenuAdd", function(menuname) {}, envir = compat)
-            assign("winMenuAddItem", function(menuname, itemname, action) {},
-                   envir = compat)
-            assign("winMenuDel", function(menuname) {}, envir = compat)
-            assign("winMenuDelItem", function(menuname, itemname) {},
-                   envir = compat)
-            assign("winMenuNames", function() {}, envir = compat)
-            assign("winMenuItems", function(menuname) {}, envir = compat)
-            assign("winProgressBar",
-                   function(title = "R progress bar", label = "",
-                            min = 0, max = 1, initial = 0, width = 300) {},
-                   envir = compat)
-            assign("setWinProgressBar",
-                   function(pb, value, title=NULL, label=NULL) {},
-                   envir = compat)
-            assign(".install.winbinary",
-                   function(pkgs, lib, repos = getOption("repos"),
-                            contriburl = utils::contrib.url(repos),
-                            method, available = NULL, destdir = NULL,
-                            dependencies = FALSE, libs_only = FALSE,
-                            ...) {}, envir = compat)
-            assign("Sys.junction", function(from, to) {}, envir = compat)
-        }
-        attach(compat, name="compat", pos = length(search()),
+        if(is.null(.GlobalEnv$.Random.seed)) # create .Random.seed if necessary
+            stats::runif(1)
+        attach(compatibilityEnv(), name="compat", pos = length(search()),
                warn.conflicts = FALSE)
         on.exit(detach("compat"))
     }
@@ -4472,7 +4485,7 @@ function(pkgDir, thorough = FALSE)
         files <- Sys.glob(c(file.path(pkgDir, "data", "*.rda"),
                             file.path(pkgDir, "data", "*.RData")))
         ## Exclude .RData, which this may or may not match
-        files <- filtergrep("/[.]RData$", files)
+        files <- files[!endsWith(files, "/.RData")]
         if (length(files)) {
             cpdir <- tempfile('cp')
             dir.create(cpdir)
@@ -4617,7 +4630,7 @@ function(dir, doDelete = FALSE)
                                           OS_subdirs = OS_subdirs))
         wrong <- setdiff(all_files, R_files)
         ## now configure might generate files in this directory
-        generated <- grep("\\.in$", wrong)
+        generated <- which(endsWith(wrong, ".in"))
         if(length(generated)) wrong <- wrong[-generated]
         if(length(wrong)) {
             wrong_things$R <- wrong
@@ -7345,7 +7358,7 @@ function(dir, localOnly = FALSE)
             unused <- character()
             for(u in aurls) {
                 cu <- utils::contrib.url(u, "source")
-                ind <- substring(tab[, 3L], 1, nchar(cu)) == cu
+                ind <- startsWith(tab[, 3L], cu)
                 if(any(ind)) {
                     tab[ind, 3L] <- u
                 } else {
@@ -7460,14 +7473,13 @@ function(dir, localOnly = FALSE)
             out$GNUmake <- TRUE
         }
     }
-	
+
     ## Re-check for some notes if enabled and current version was published recently enough.
     if(!inherits(year <- tryCatch(format(as.Date(meta0["Published"]), "%Y"),
                                      error = identity),
                     "error")){
-					
-        # possible mis-spellings and keep only the new ones:
-		if(NROW(a <- out$spelling)
+        ## possible mis-spellings and keep only the new ones:
+        if(NROW(a <- out$spelling)
            && config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_ASPELL_RECHECK_MAYBE_",
                                                "TRUE"))
            && (year >=
@@ -7486,7 +7498,7 @@ function(dir, localOnly = FALSE)
             && meta0["Title"] == meta["Title"]) {
                 out$title_includes_name <- NULL
 		}
-		
+
         # possible title case problems and only report if the title actually changed
         if(NROW(out$title_case)
             && config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_TITLE_CASE_RECHECK_MAYBE_",
@@ -7505,12 +7517,12 @@ function(dir, localOnly = FALSE)
                                  "2016")))) {
                 descr0 <- trimws(as.vector(meta0["Description"]))
                 descr0 <- gsub("[\n\t]", " ", descr0)
-                if(grepl(paste0("^['\"]?", package), ignore.case = TRUE, descr0) 
+                if(grepl(paste0("^['\"]?", package), ignore.case = TRUE, descr0)
                         || grepl("^(The|This|A|In this|In the) package", descr0)){
                     out$descr_bad_start <- NULL
                 }
         }
-		
+
         # possible GNU make usage and only report if this is new
         if(NROW(out$GNUmake)
             && config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_GNU_MAKE_RECHECK_MAYBE_",
@@ -7523,7 +7535,7 @@ function(dir, localOnly = FALSE)
                 }
         }
     }
-	
+
     out
 }
 
@@ -8753,7 +8765,8 @@ function(x)
 
 ### ** .check_pragmas
 
-.check_pragmas <- function(dir)
+.check_pragmas <-
+function(dir)
 {
     ## Check a source package for disallowed pragmas in src and inst/include
     ## Try (not very hard) to avoid ones which are commented out (RcppParallel)
@@ -8782,7 +8795,8 @@ function(x)
     structure(found, class = "check_pragmas", warn = warn)
 }
 
-print.check_pragmas <- function(x, ...)
+print.check_pragmas <-
+function(x, ...)
 {
     if(length(x)) {
         if(length(x) == 1L)
@@ -8793,6 +8807,91 @@ print.check_pragmas <- function(x, ...)
     }
     x
 }
+
+### ** .check_S3_methods_needing_delayed_registration
+
+.check_S3_methods_needing_delayed_registration <-
+function(package, lib.loc = NULL)
+{
+    mat <- matrix(character(), 0L, 3L,
+                  dimnames = list(NULL,
+                                  c("Package", "Generic", "Method")))
+    out <- list(mat = mat, bad = character())
+    class(out) <- "check_S3_methods_needing_delayed_registration"
+
+    if(length(package) != 1L)
+        stop("argument 'package' must be of length 1")
+    dir <- find.package(package, lib.loc)
+    if(!dir.exists(file.path(dir, "R"))) return
+    db <- .read_description(file.path(dir, "DESCRIPTION"))
+    suggests <- unname(.get_requires_from_package_db(db, "Suggests"))
+
+    if(!length(suggests)) return
+
+    if(basename(package) != "base")
+        .load_package_quietly(package, dirname(dir))
+    ok <- vapply(suggests, requireNamespace, quietly = TRUE,
+                 FUN.VALUE = NA)
+    out$bad <- suggests[!ok]
+
+    suggests <- suggests[ok]
+    generics <- lapply(suggests, .get_S3_generics_in_ns_exports)
+
+    packages <- rep.int(suggests, lengths(generics))
+    generics <- unlist(generics, use.names = FALSE)
+
+    code_env <- .package_env(package)
+    objects_in_code <- sort(names(code_env))
+    functions_in_code <-
+        Filter(function(f) is.function(code_env[[f]]),
+               objects_in_code)
+    methods_stop_list <- nonS3methods(basename(dir))
+    methods <- lapply(generics,
+                      function(g) {
+                          i <- startsWith(functions_in_code,
+                                          paste0(g, "."))
+                          setdiff(functions_in_code[i],
+                                  methods_stop_list)
+                      })
+    len <- lengths(methods)
+    ind <- (len > 0L)
+
+    if(!any(ind)) return(out)
+
+    len <- len[ind]
+    out$mat <-
+        cbind(Package = rep.int(packages[ind], len),
+              Generic = rep.int(generics[ind], len),
+              Method = unlist(methods[ind], use.names = FALSE))
+    out
+}
+
+format.check_S3_methods_needing_delayed_registration <-
+function(x, ...)
+{
+    c(character(),
+      if(length(bad <- x$bad)) {
+          c("Suggested packages not available for checking:",
+            strwrap(paste(bad, collapse = " "), indent = 2L))
+      },
+      if(length(mat <- x$mat)) {
+          c("Apparent S3 methods needing delayed registration:",
+            sprintf("  %s %s %s",
+                    format(c("Package", mat[, 1L])),
+                    format(c("Generic", mat[, 2L])),
+                    format(c("Method", mat[, 3L])))
+            )
+      })
+}
+
+.get_S3_generics_in_ns_exports <-
+function(ns)
+{
+    env <- asNamespace(ns)
+    nms <- sort(intersect(names(env), getNamespaceExports(env)))
+    .get_S3_generics_in_env(env, nms)
+}
+
 
 ### Local variables: ***
 ### mode: outline-minor ***

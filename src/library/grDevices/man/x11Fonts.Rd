@@ -1,6 +1,6 @@
-% File src/library/grDevices/man/unix/x11Fonts.Rd
+% File src/library/grDevices/man/x11Fonts.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{X11Fonts}
@@ -10,7 +10,7 @@
 \title{X11 Fonts}
 \description{
   These functions handle the translation of a device-independent R graphics
-  font family name to an X11 font description.
+  font family name to an X11 font description on Unix-alike platforms.
 }
 \usage{
 X11Font(font)
@@ -53,10 +53,15 @@ X11Fonts(...)
 \seealso{
   \code{\link{X11}}
 }
+\note{
+  Available only when \code{\link{capabilities}()[["X11"]]} is true.
+}
 \examples{
+if(capabilities()[["X11"]]) withAutoprint({
 X11Fonts()
 X11Fonts("mono")
 utopia <- X11Font("-*-utopia-*-*-*-*-*-*-*-*-*-*-*-*")
 X11Fonts(utopia = utopia)
+})
 }
 \keyword{device}

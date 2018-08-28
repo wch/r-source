@@ -1,6 +1,6 @@
 ### R.m4 -- extra macros for configuring R		-*- Autoconf -*-
 ###
-### Copyright (C) 1998-2017 R Core Team
+### Copyright (C) 1998-2018 R Core Team
 ###
 ### This file is part of R.
 ###
@@ -4426,6 +4426,71 @@ AC_DEFUN([R_MNT_WARN],
   AC_MSG_WARN([$1])
 fi
 ])# R_MNT_WARN
+
+
+### A modified version of AC_SEARCH_LIBS
+AC_DEFUN([R_SEARCH_OPTS],
+[AS_VAR_PUSHDEF([r_Search], [r_cv_search_$1])dnl
+  AC_CACHE_CHECK([for option providing $1], [r_Search],
+  [r_opts_save_CFLAGS=$CFLAGS
+    AC_LANG_CONFTEST([AC_LANG_CALL([], [$1])])
+    for r_opt in '' $2; do
+      if test -z "$r_opt"; then
+        r_res="none required"
+      else
+        r_res=$r_opt
+        CFLAGS="$r_opt $r_opts_save_CFLAGS"
+      fi
+     AC_LINK_IFELSE([], [AS_VAR_SET([r_Search], [$r_res])])
+     AS_VAR_SET_IF([r_Search], [break])
+    done
+    AS_VAR_SET_IF([r_Search], , [AS_VAR_SET([r_Search], [no])])
+    rm conftest.$ac_ext
+    CFLAGS=$r_save_CFLAGS
+  ])
+  AS_VAR_COPY([r_res], [r_Search])
+  AS_VAR_POPDEF([r_Search])dnl
+])
+
+
+## R_PTHREAD
+## ---------
+## POSIX threads.
+AC_DEFUN([R_PTHREAD],
+[case "${host_os}" in
+  mingw*|windows*|winnt)
+    ;;
+  *)
+    r_save_CFLAGS=${CFLAGS}
+    CFLAGS="${CFLAGS} ${OPENMP_CFLAGS}"
+    ## Other things one might want to try for ancient systems
+    ## -Kthread (Sequent) -pthreads (Solaris/gcc, but -pthread works)
+    R_SEARCH_OPTS([pthread_kill], [${PTHREAD_OPT} -pthread])
+    CFLAGS=${r_save_CFLAGS}
+    case "${r_cv_search_pthread_kill}" in
+    "none required")
+      ## expected on macOS and Solaris, and other platforms with OpenMP in use
+      have_pthread=1
+      ;;
+    no)
+      ;;
+    *)
+      have_pthread=1
+      PTHREAD_OPT=${r_cv_search_pthread_kill}
+      R_SH_VAR_ADD(MAIN_LDFLAGS, [${PTHREAD_OPT}])
+      R_SH_VAR_ADD(DYLIB_LDFLAGS, [${PTHREAD_OPT}])
+      ;;
+    esac
+    ;;
+esac
+AC_MSG_CHECKING([whether POSIX threads are supported])
+if test -n "${have_pthread}"; then
+    AC_DEFINE(HAVE_PTHREAD, 1, [Define if have support for POSIX threads.])
+    AC_MSG_RESULT([yes])
+else
+    AC_MSG_RESULT([no])
+fi
+])# R_PTHREAD
 
 ### Local variables: ***
 ### mode: outline-minor ***

@@ -41,15 +41,15 @@ Sys.setlocale(category = "LC_ALL", locale = "")
 }
 \details{
   The locale describes aspects of the internationalization of a program.
-  Initially most aspects of the locale of \R are set to \code{"C"} (which
-  is the default for the C language and reflects North-American usage).
-  \R sets \code{"LC_CTYPE"} and \code{"LC_COLLATE"}, which allow the
-  use of a different character set and alphabetic
-  comparisons in that character set (including the use of
+  Initially most aspects of the locale of \R are set to \code{"C"}
+  (which is the default for the C language and reflects North-American
+  usage -- also known as \code{"POSIX"}).  \R sets \code{"LC_CTYPE"} and
+  \code{"LC_COLLATE"}, which allow the use of a different character set
+  and alphabetic comparisons in that character set (including the use of
   \code{\link{sort}}), \code{"LC_MONETARY"} (for use by
-  \code{\link{Sys.localeconv}}) and \code{"LC_TIME"} may affect
-  the behaviour of \code{\link{as.POSIXlt}} and \code{\link{strptime}}
-  and functions which use them (but not \code{\link{date}}).
+  \code{\link{Sys.localeconv}}) and \code{"LC_TIME"} may affect the
+  behaviour of \code{\link{as.POSIXlt}} and \code{\link{strptime}} and
+  functions which use them (but not \code{\link{date}}).
 
   The first seven categories described here are those specified by
   POSIX.  \code{"LC_MESSAGES"} will be \code{"C"} on systems that do not
@@ -92,6 +92,20 @@ Sys.setlocale(category = "LC_ALL", locale = "")
   \code{foo <- Sys.getlocale()} can be used in
   \code{Sys.setlocale("LC_ALL", locale = foo)}.
 }
+
+\section{Available locales}{
+  On most Unix-alikes the POSIX shell command \command{locale -a} will
+  list the \sQuote{available public} locales.  What that means is
+  platform-dependent.  On recent Linuxen this may mean \sQuote{available
+  to be installed} as on some RPM-based systems the locale data is in
+  separate RPMs.  On Debian/Ubuntu the set of available locales is
+  managed by OS-specific facilities such as \command{locale-gen} and
+  \command{locale -a} lists those currently enabled.
+
+  For Windows, Microsoft moves its documentation frequently so a Web
+  search is the best way to find current information.
+}
+
 % assume this just affects strtod/atof, scanf/printf and friends,
 % as seems to be the case in glibc.
 \section{Warning}{

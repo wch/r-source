@@ -52,7 +52,7 @@ anyDuplicated(x, incomparables = FALSE, \dots)
   \item{nmax}{the maximum number of unique items expected (greater than one).}
   \item{\dots}{arguments for particular methods.}
   \item{MARGIN}{the array margin to be held fixed: see
-    \code{\link{apply}}, and note that \code{MARGIN = 0} maybe useful.}
+    \code{\link{apply}}, and note that \code{MARGIN = 0} may be useful.}
 }
 \details{
   These are generic functions with methods for vectors (including

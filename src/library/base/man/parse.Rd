@@ -28,7 +28,7 @@ parse(file = "", n = NULL, text = NULL, prompt = "?",
     to character if possible.}
   \item{prompt}{the prompt to print when parsing from the keyboard.
     \code{NULL} means to use \R's prompt, \code{getOption("prompt")}.}
-  \item{keep.source}{a logical value; if \code{TRUE}, keep 
+  \item{keep.source}{a logical value; if \code{TRUE}, keep
     source reference information.}
   \item{srcfile}{\code{NULL}, a character vector, or a
     \code{\link{srcfile}} object.  See the \sQuote{Details} section.}
@@ -44,9 +44,9 @@ parse(file = "", n = NULL, text = NULL, prompt = "?",
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
   Wadsworth & Brooks/Cole.
-  
-  Murdoch, D. (2010).  
-  \href{https://journal.r-project.org/archive/2010-2/RJournal_2010-2_Murdoch.pdf}{Source 
+
+  Murdoch, D. (2010).
+  \href{https://journal.r-project.org/archive/2010-2/RJournal_2010-2_Murdoch.pdf}{Source
   References}.  \emph{The R Journal} 2/2, 16-19.
 }
 \seealso{
@@ -86,19 +86,19 @@ parse(file = "", n = NULL, text = NULL, prompt = "?",
   When \code{srcfile} is a character string, error messages will
   include the name, but source reference information will not be added
   to the result.  When \code{srcfile} is a \code{\link{srcfile}}
-  object, source reference information will be retained. 
+  object, source reference information will be retained.
 }
 \section{Partial parsing}{
-  When a syntax error occurs during parsing, \code{parse} 
+  When a syntax error occurs during parsing, \code{parse}
   signals an error.  The partial parse data will be stored in the
   \code{srcfile} argument if it is a \code{\link{srcfile}} object
   and the \code{text} argument was used to supply the text.  In other
   cases it will be lost when the error is triggered.
-  
+
   The partial parse data can be retrieved using
   \code{\link{getParseData}} applied to the \code{srcfile} object.
   Because parsing was incomplete, it will typically include references
-  to \code{"parent"} entries that are not present.  
+  to \code{"parent"} entries that are not present.
 }
 \value{
   An object of type \code{"\link{expression}"}, with up to \code{n}

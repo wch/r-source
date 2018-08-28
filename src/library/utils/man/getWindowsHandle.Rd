@@ -1,20 +1,20 @@
-% File src/library/utils/man/windows/getWindowsHandle.Rd
+% File src/library/utils/man/getWindowsHandle.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{getWindowsHandle}
 \alias{getWindowsHandle}
 \title{Get a Windows Handle}
 \description{
-  Get the Windows handle of a window or of the \R{} process.
+  Get the Windows handle of a window or of the \R{} process in MS Windows.
 }
 \usage{
 getWindowsHandle(which = "Console")
 }
 \arguments{
-  \item{which}{A string (see below), or the number of a
-                graphics device window}
+  \item{which}{a string (see below), or the number of a graphics device
+    window (which must a \code{\link{windows}} one).}
 }
 \details{
   \code{getWindowsHandle} gets the Windows handle.
@@ -44,6 +44,7 @@ getWindowsHandle(which = "Console")
 }
 \seealso{\code{\link{getIdentification}}, \code{\link{getWindowsHandles}}}
 \examples{
-getWindowsHandle()
+if(.Platform$OS.type == "windows")
+  print( getWindowsHandle() )
 }
 \keyword{utilities}

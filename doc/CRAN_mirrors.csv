@@ -39,6 +39,7 @@ Bulgaria,Bulgaria,Sofia,http://ftp.uni-sofia.bg/CRAN/,"Sofia University","Alexan
 "China (Beijing)",China,Beijing,http://mirrors.tuna.tsinghua.edu.cn/CRAN/,"TUNA Team, Tsinghua University","Justin Wong <justin.w.xd # gmail.com>",1,cn
 "China (Hefei) [https]",China,Hefei,https://mirrors.ustc.edu.cn/CRAN/,"University of Science and Technology of China","mirrors # Ustc.edu.cn",1,cn
 "China (Hefei)",China,Hefei,http://mirrors.ustc.edu.cn/CRAN/,"University of Science and Technology of China","mirrors # Ustc.edu.cn",1,cn
+"China (Hong Kong) [https]",China,"Hong Kong",https://mirror-hk.koddos.net/CRAN/,"KoDDoS in Hong Kong","mirror # koddos.net",1,cn,"secure_mirror_from_master"
 "China (Guangzhou) [https]",China,Guangzhou,https://mirrors.eliteu.cn/CRAN/,"Elite Education","x.liu # eliteu.cn",1,cn,"secure_mirror_from_master"
 "China (Lanzhou) [https]",China,Lanzhou,https://mirror.lzu.edu.cn/CRAN/,"Lanzhou University Open Source Society","oss.lzu.edu.cn # gmail.com",1,cn,"secure_mirror_from_master"
 "China (Lanzhou)",China,Lanzhou,http://mirror.lzu.edu.cn/CRAN/,"Lanzhou University Open Source Society","oss.lzu.edu.cn # gmail.com",1,cn,"secure_mirror_from_master"
@@ -87,10 +88,11 @@ Ireland,Ireland,Dublin,http://ftp.heanet.ie/mirrors/cran.r-project.org/,"HEAnet,
 "Italy (Milano)",Italy,Milano,http://cran.mirror.garr.it/mirrors/CRAN/,"Garr Mirror, Milano","mirror-service # garr.it",1,it
 "Italy (Padua) [https]",Italy,Padua,https://cran.stat.unipd.it/,"University of Padua","cran # stat.unipd.it",1,it,"secure_mirror_from_master"
 "Italy (Padua)",Italy,Padua,http://cran.stat.unipd.it/,"University of Padua","cran # stat.unipd.it",1,it,"secure_mirror_from_master"
-"Italy (Palermo)",Italy,Palermo,http://dssm.unipa.it/CRAN/,"Universita degli Studi di Palermo","angelo.mineo # unipa.it, apontillo # gmail.com",1,it
+"Italy (Palermo)",Italy,Palermo,http://dssm.unipa.it/CRAN/,"Universita degli Studi di Palermo","angelo.mineo # unipa.it, apontillo # gmail.com",0,it
 "Japan (Tokyo) [https]",Japan,Tokyo,https://cran.ism.ac.jp/,"The Institute of Statistical Mathematics, Tokyo","Junji Nakano <nakanoj # ism.ac.jp>",1,jp,"secure_mirror_from_master"
 "Japan (Tokyo)",Japan,Tokyo,http://cran.ism.ac.jp/,"The Institute of Statistical Mathematics, Tokyo","Junji Nakano <nakanoj # ism.ac.jp>",1,jp,"secure_mirror_from_master"
 "Japan (Yonezawa) [https]",Japan,Yonezawa,https://ftp.yz.yamagata-u.ac.jp/pub/cran/,"Yamagata University","www-admin # ftp.yz.yamagata-u.ac.jp",1,jp,"secure_mirror_from_master"
+"Korea (Busan) [https]",Korea,Busan,https://ftp.harukasan.org/CRAN/,"Information and Database Systems Laboratory, Pukyong National University","Jongmin Kim <jmkim # ftp.harukasan.org>",1,kr,"secure_mirror_from_master"
 "Korea (Seoul 1) [https]",Korea,Seoul,https://cran.seoul.go.kr/,"Bigdata Campus, Seoul Metropolitan Govermment","leewj # seoul.go.kr",1,kr,"secure_mirror_from_master"
 "Korea (Seoul 2)",Korea,Seoul,http://healthstat.snu.ac.kr/CRAN/,"Graduate School of Public Health, Seoul National University, Seoul","Sunghow # gmail.com",1,kr,"secure_mirror_from_master"
 "Korea (Ulsan) [https]",Korea,Ulsan,https://cran.biodisk.org/,"The Genome Institute of UNIST (Ulsan National Institute of Science and Technology)","dr.kyusang.lee # gmail.com",1,kr,"secure_mirror_from_master"
@@ -109,9 +111,8 @@ Philippines,Philippines,"Quezon City",http://cran.stat.upd.edu.ph/,"University o
 "Portugal (Lisbon)",Portugal,Lisbon,http://cran.radicaldevelop.com/,"RadicalDevelop, Lda","geral # radicaldevelop.com",1,pt
 "Portugal (Porto)",Portugal,Porto,http://cran.dcc.fc.up.pt/,"University of Porto","labcc # labcc.dcc.fc.up.pt",1,pt
 "Serbia [https]",Serbia,Belgrade,https://fourdots.com/mirror/CRAN/,"Four Dots","Goran Tepsic <goran.tepsic # fourdots.com>",1,rs,"secure_mirror_from_master"
-"Singapore (Singapore 1) [https]",Singapore,Singapore,https://cran.kst.asia/,"Viewqwest broadband, cloudflare CDN, Singapore","tanlikang11 # gmail.com",0,asia
-"Singapore (Singapore 2) [https]",Singapore,Singapore,https://cran.stat.nus.edu.sg/,"National University of Singapore, Singapore","ccezr # nus.edu.sg",1,sg
-"Singapore (Singapore 2)",Singapore,Singapore,http://cran.stat.nus.edu.sg/,"National University of Singapore, Singapore","ccezr # nus.edu.sg",1,sg
+"Singapore (Singapore) [https]",Singapore,Singapore,https://cran.stat.nus.edu.sg/,"National University of Singapore, Singapore","ccezr # nus.edu.sg",1,sg
+"Singapore (Singapore)",Singapore,Singapore,http://cran.stat.nus.edu.sg/,"National University of Singapore, Singapore","ccezr # nus.edu.sg",1,sg
 "South Africa (Cape Town)","South Africa","Cape Town",http://r.adu.org.za/,"University of Cape Town","michael.brooks # uct.ac.za",1,za
 "South Africa (Johannesburg)","South Africa",Johannesburg,http://cran.mirror.ac.za/,"TENET, Johannesburg","Patrick Holahan <patrickh # tenet.ac.za>",1,za
 "Spain (A Coruña) [https]","Spain","A Coruña",https://ftp.cixug.es/CRAN/,"Oficina de software libre (CIXUG)","<osl # cixug.es>",1,es,"secure_mirror_from_master"
@@ -132,8 +133,6 @@ Thailand,Thailand,Hatyai,http://mirrors.psu.ac.th/pub/cran/,"Prince of Songkla U
 "Turkey (Mersin)",Turkey,Mersin,http://cran.ncc.metu.edu.tr/,"Middle East Technical University Northern Cyprus Campus, Mersin","atasiran # metu.edu.tr, ncc-cc # metu.edu.tr",1,tr,"secure_mirror_from_master"
 "UK (Bristol) [https]",UK,Bristol,https://www.stats.bris.ac.uk/R/,"University of Bristol","Guy Nason <G.P.Nason # bristol.ac.uk>, it-zone-d # bristol.ac.uk",1,uk,"secure_mirror_from_master"
 "UK (Bristol)",UK,Bristol,http://www.stats.bris.ac.uk/R/,"University of Bristol","Guy Nason <G.P.Nason # bristol.ac.uk>, it-zone-d # bristol.ac.uk",1,uk,"secure_mirror_from_master"
-"UK (Cambridge) [https]",UK,"Cambridge",https://mirrors.ebi.ac.uk/CRAN/,"EMBL-EBI (European Bioinformatics Institute)","Andrew Tikhonov <andrew # ebi.ac.uk>",1,uk,"secure_mirror_from_master"
-"UK (Cambridge)",UK,"Cambridge",http://mirrors.ebi.ac.uk/CRAN/,"EMBL-EBI (European Bioinformatics Institute)","Andrew Tikhonov <andrew # ebi.ac.uk>",1,uk,"secure_mirror_from_master"
 "UK (London 1) [https]",UK,London,https://cran.ma.imperial.ac.uk/,"Imperial College London","andy.thomas # imperial.ac.uk",1,uk,"secure_mirror_from_master"
 "UK (London 1)",UK,London,http://cran.ma.imperial.ac.uk/,"Imperial College London","andy.thomas # imperial.ac.uk",1,uk,"secure_mirror_from_master"
 "USA (CA 1) [https]",USA,Berkeley,https://cran.cnr.berkeley.edu/,"University of California, Berkeley, CA","casterln # nature.berkeley.edu",1,us,"secure_mirror_from_master"

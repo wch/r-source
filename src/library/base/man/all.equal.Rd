@@ -1,6 +1,6 @@
 % File src/library/base/man/all.equal.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{all.equal}
@@ -26,6 +26,8 @@ all.equal(target, current, \dots)
 
 \method{all.equal}{numeric}(target, current,
           tolerance = sqrt(.Machine$double.eps), scale = NULL,
+          countEQ = FALSE,
+          formatFUN = function(err, what) format(err),
           \dots, check.attributes = TRUE)
 
 \method{all.equal}{list}(target, current, \dots,
@@ -42,12 +44,21 @@ attr.all.equal(target, current, \dots,
 \arguments{
   \item{target}{\R object.}
   \item{current}{other \R object, to be compared with \code{target}.}
-  \item{\dots}{Further arguments for different methods, notably the
+  \item{\dots}{further arguments for different methods, notably the
     following two, for numerical comparison:}
   \item{tolerance}{numeric \eqn{\ge} 0.  Differences smaller than
     \code{tolerance} are not reported.  The default value is close to
     \code{1.5e-8}.}
   \item{scale}{numeric scalar > 0 (or \code{NULL}). See \sQuote{Details}.}
+  \item{countEQ}{logical indicating if the \code{target == current}
+    cases should be counted when computing the mean (absolute or
+    relative) differences.  The default, \code{FALSE} may seem
+    misleading in cases where \code{target} and \code{current} only
+    differ in a few places; see the extensive example.}
+  \item{formatFUN}{a \code{\link{function}} of two arguments,
+    \code{err}, the relative, absolute or scaled error, and
+    \code{what}, a character string indicating the \emph{kind} of error;
+    maybe used, e.g., to format relative and absolute errors differently.}
   \item{check.attributes}{logical indicating if the
     \code{\link{attributes}} of \code{target} and \code{current}
     (other than the names) should be compared.}
@@ -87,8 +98,10 @@ attr.all.equal(target, current, \dots,
   \code{tolerance} or not finite, absolute differences are used,
   otherwise relative differences scaled by the mean absolute
   \code{target} value.
-  (Note that these comparisons are computed only for those vector elements
-  where \code{target} is not \code{\link{NA}} and differs from \code{current}.)
+  Note that these comparisons are computed only for those vector elements
+  where \code{target} is not \code{\link{NA}} and differs from \code{current}.
+  If \code{countEQ} is true, the equal and \code{NA} cases are
+  \emph{counted} in determining \dQuote{sample} size.
 
   If \code{scale} is positive, absolute comparisons are made after
   scaling (dividing) by \code{scale}.
@@ -142,6 +155,23 @@ ae <- all.equal(as.environment("package:stats"),
 stopifnot(is.character(ae), length(ae) > 10,
           ## were incorrectly "considered equal" in R <= 3.1.1
           all.equal(asNamespace("stats"), asNamespace("stats")))
+
+## A situation where  'countEQ = TRUE' makes sense:
+x1 <- x2 <- (1:100)/10;  x2[2] <- 1.1*x1[2]
+## 99 out of 100 pairs (x1[i], x2[i]) are equal:
+plot(x1,x2, main = "all.equal.numeric() -- not counting equal parts")
+all.equal(x1,x2) ## "Mean relative difference: 0.1"
+mtext(paste("all.equal(x1,x2) :", all.equal(x1,x2)), line= -2)
+##' extract the 'Mean relative difference' as number:
+all.eqNum <- function(...) as.numeric(sub(".*:", '', all.equal(...)))
+set.seed(17)
+## When x2 is jittered, typically all pairs (x1[i],x2[i]) do differ:
+summary(r <- replicate(100, all.eqNum(x1, x2*(1+rnorm(x1)*1e-7))))
+mtext(paste("mean(all.equal(x1, x2*(1 + eps_k))) {100 x} Mean rel.diff.=",
+            signif(mean(r), 3)), line = -4, adj=0)
+## With argument  countEQ=TRUE, get "the same" (w/o need for jittering):
+mtext(paste("all.equal(x1,x2, countEQ=TRUE) :",
+          signif(all.eqNum(x1,x2, countEQ=TRUE), 3)), line= -6, col=2)
 }
 \keyword{programming}% is.*
 \keyword{utilities}

@@ -1,7 +1,7 @@
 #  File src/library/base/R/duplicated.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,15 +16,17 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
-duplicated <- function(x, incomparables = FALSE, ...) UseMethod("duplicated")
+duplicated <-
+function(x, incomparables = FALSE, ...)
+    UseMethod("duplicated")
 
 duplicated.default <-
-    function(x, incomparables = FALSE, fromLast = FALSE, nmax = NA, ...)
+function(x, incomparables = FALSE, fromLast = FALSE, nmax = NA, ...)
     .Internal(duplicated(x, incomparables, fromLast,
                          if(is.factor(x)) min(length(x), nlevels(x) + 1L) else nmax))
 
 duplicated.data.frame <-
-    function(x, incomparables = FALSE, fromLast = FALSE, ...)
+function(x, incomparables = FALSE, fromLast = FALSE, ...)
 {
     if(!isFALSE(incomparables))
 	.NotYetUsed("incomparables != FALSE")
@@ -34,17 +36,19 @@ duplicated.data.frame <-
 }
 
 duplicated.matrix <- duplicated.array <-
-    function(x, incomparables = FALSE, MARGIN = 1L, fromLast = FALSE, ...)
+function(x, incomparables = FALSE, MARGIN = 1L, fromLast = FALSE, ...)
 {
     if(!isFALSE(incomparables))
 	.NotYetUsed("incomparables != FALSE")
     dx <- dim(x)
     ndim <- length(dx)
-    if (length(MARGIN) > ndim || any(MARGIN > ndim))
-        stop(gettextf("MARGIN = %d is invalid for dim = %d", MARGIN, dx),
+    if (any(MARGIN > ndim))
+        stop(gettextf("MARGIN = %s is invalid for dim = %s",
+                      paste(MARGIN, collapse = ","),
+                      paste(dx, collapse = ",")),
              domain = NA)
     temp <- if((ndim > 1L) && (prod(dx[-MARGIN]) > 1L))
-                apply(x, MARGIN, list)
+                asplit(x, MARGIN)
             else x
     res <- duplicated.default(temp, fromLast = fromLast, ...)
     dim(res) <- dim(temp)
@@ -52,16 +56,16 @@ duplicated.matrix <- duplicated.array <-
     res
 }
 
-anyDuplicated <- function(x, incomparables = FALSE, ...)
+anyDuplicated <-
+function(x, incomparables = FALSE, ...)
     UseMethod("anyDuplicated")
 
 anyDuplicated.default <-
-    function(x, incomparables = FALSE, fromLast = FALSE, ...)
+function(x, incomparables = FALSE, fromLast = FALSE, ...)
     .Internal(anyDuplicated(x, incomparables, fromLast))
 
-
 anyDuplicated.data.frame <-
-    function(x, incomparables = FALSE, fromLast = FALSE, ...)
+function(x, incomparables = FALSE, fromLast = FALSE, ...)
 {
     if(!isFALSE(incomparables))
 	.NotYetUsed("incomparables != FALSE")
@@ -69,28 +73,31 @@ anyDuplicated.data.frame <-
 }
 
 anyDuplicated.matrix <- anyDuplicated.array <-
-    function(x, incomparables = FALSE, MARGIN = 1L, fromLast = FALSE, ...)
+function(x, incomparables = FALSE, MARGIN = 1L, fromLast = FALSE, ...)
 {
     if(!isFALSE(incomparables))
 	.NotYetUsed("incomparables != FALSE")
     dx <- dim(x)
     ndim <- length(dx)
-    if (length(MARGIN) > ndim || any(MARGIN > ndim))
-        stop(gettextf("MARGIN = %d is invalid for dim = %d", MARGIN, dx),
+    if (any(MARGIN > ndim))
+        stop(gettextf("MARGIN = %s is invalid for dim = %s",
+                      paste(MARGIN, collapse = ","),
+                      paste(dx, collapse = ",")),
              domain = NA)
     temp <- if((ndim > 1L) && (prod(dx[-MARGIN]) > 1L))
-                apply(x, MARGIN, list)
+                asplit(x, MARGIN)
             else x
     anyDuplicated.default(temp, fromLast = fromLast)
 }
 
-unique <- function(x, incomparables = FALSE, ...) UseMethod("unique")
-
+unique <-
+function(x, incomparables = FALSE, ...)
+    UseMethod("unique")
 
 ## NB unique.default is used by factor to avoid unique.matrix,
 ## so it needs to handle some other cases.
 unique.default <-
-    function(x, incomparables = FALSE, fromLast = FALSE, nmax = NA, ...)
+function(x, incomparables = FALSE, fromLast = FALSE, nmax = NA, ...)
 {
     if(is.factor(x)) {
         z <- .Internal(unique(x, incomparables, fromLast,
@@ -106,7 +113,8 @@ unique.default <-
     else z
 }
 
-unique.data.frame <- function(x, incomparables = FALSE, fromLast = FALSE, ...)
+unique.data.frame <-
+function(x, incomparables = FALSE, fromLast = FALSE, ...)
 {
     if(!isFALSE(incomparables))
 	.NotYetUsed("incomparables != FALSE")
@@ -114,17 +122,19 @@ unique.data.frame <- function(x, incomparables = FALSE, fromLast = FALSE, ...)
 }
 
 unique.matrix <- unique.array <-
-    function(x, incomparables = FALSE , MARGIN = 1, fromLast = FALSE, ...)
+function(x, incomparables = FALSE, MARGIN = 1, fromLast = FALSE, ...)
 {
     if(!isFALSE(incomparables))
 	.NotYetUsed("incomparables != FALSE")
     dx <- dim(x)
     ndim <- length(dx)
-    if (length(MARGIN) > ndim || any(MARGIN > ndim))
-        stop(gettextf("MARGIN = %d is invalid for dim = %d", MARGIN, dx),
+    if (length(MARGIN) != 1L || (MARGIN > ndim))
+        stop(gettextf("MARGIN = %s is invalid for dim = %s",
+                      paste(MARGIN, collapse = ","),
+                      paste(dx, collapse = ",")),
              domain = NA)
     temp <- if((ndim > 1L) && (prod(dx[-MARGIN]) > 1L))
-                apply(x, MARGIN, list)
+                asplit(x, MARGIN)
             else x
     args <- rep(alist(a=), ndim)
     names(args) <- NULL

@@ -4103,7 +4103,7 @@ Default: false (but true for CRAN submission checks).
 
 @item _R_CHECK_GCT_N_
 Should the @option{--use-gct} use @code{gctorture2(@var{n})} rather than
-@code{gctorture(TRUE)}?  Use to a positive integer to enable this.
+@code{gctorture(TRUE)}?  Use a positive integer to enable this.
 Default: @code{0}.
 
 @item _R_CHECK_LIMIT_CORES_
@@ -4212,6 +4212,17 @@ If set to a true value, also check the R code in common unit test
 subdirectories of @file{tests} for undeclared package dependencies.
 Default: false (but true for CRAN submission checks).
 
+@item _R_CHECK_SHLIB_OPENMP_FLAGS_
+Check correct and portable use of @code{SHLIB_OPENMP_*FLAGS} in
+@file{src/Makevars} (and similar).
+Default: false (but true for CRAN submission checks).
+
+@item _R_CHECK_CONNECTIONS_LEFT_OPEN_
+When checking examples, check for each example if connections are left
+open: if any are found, this is reported with a fatal error.  NB:
+`connections' includes most use of files and any parallel clusters which
+have not be stopped by @code{stopCluster()}.
+Default: false (but true for CRAN submission checks).
 @end vtable
 
 CRAN's submission checks use something like

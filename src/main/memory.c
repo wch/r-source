@@ -414,13 +414,13 @@ static int vsfac = 1; /* current units for vsize: changes at initialization */
 R_size_t attribute_hidden R_GetMaxVSize(void)
 {
     if (R_MaxVSize == R_SIZE_T_MAX) return R_SIZE_T_MAX;
-    return R_MaxVSize*vsfac;
+    return R_MaxVSize * vsfac;
 }
 
 void attribute_hidden R_SetMaxVSize(R_size_t size)
 {
     if (size == R_SIZE_T_MAX) return;
-    if (size / vsfac >= R_VSize) R_MaxVSize = (size+1)/vsfac;
+    if (size / vsfac >= R_VSize) R_MaxVSize = (size + 1) / vsfac;
 }
 
 R_size_t attribute_hidden R_GetMaxNSize(void)
@@ -437,6 +437,42 @@ void attribute_hidden R_SetPPSize(R_size_t size)
 {
     R_PPStackSize = (int) size;
 }
+
+SEXP attribute_hidden do_maxVSize(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    const double MB = 1048576.0;
+    double newval = asReal(CAR(args));
+
+    if (newval > 0) {
+	if (newval == R_PosInf)
+	    R_MaxVSize = R_SIZE_T_MAX;
+	else
+	    R_SetMaxVSize((R_size_t) (newval * MB));
+    }
+
+    if (R_MaxVSize == R_SIZE_T_MAX)
+	return ScalarReal(R_PosInf);
+    else
+	return ScalarReal(R_GetMaxVSize() / MB);
+}
+
+SEXP attribute_hidden do_maxNSize(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    double newval = asReal(CAR(args));
+
+    if (newval > 0) {
+	if (newval == R_PosInf)
+	    R_MaxNSize = R_SIZE_T_MAX;
+	else
+	    R_SetMaxNSize((R_size_t) newval);
+    }
+
+    if (R_MaxNSize == R_SIZE_T_MAX)
+	return ScalarReal(R_PosInf);
+    else
+	return ScalarReal(R_GetMaxNSize());
+}
+
 
 /* Miscellaneous Globals. */
 

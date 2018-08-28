@@ -54,9 +54,9 @@ Sys.info()
   \code{release} contains a numeric version and \code{version} gives
   additional information.  Examples for \code{release}:
 \preformatted{
-  "4.1.3-100.fc21.x86_64"   # Linux (Fedora)
-  "3.2.0-4-amd64"           # Linux (Debian)
-  "14.5.0"                  # macOS 10.10.5
+  "4.17.11-200.fc28.x86_64" # Linux (Fedora)
+  "3.16.0-5-amd64"          # Linux (Debian)
+  "17.7.0"                  # macOS 10.13.6
   "5.11"                    # Solaris
 }
   
@@ -67,8 +67,9 @@ Sys.info()
 
   The use of alternatives such as \code{system("whoami")} is not
   portable: the POSIX command \code{system("id")} is much more portable
-  on Unix-alikes, provided only the POSIX options are used (and not the
-  many BSD and GNU extensions).
+  on Unix-alikes, provided only the POSIX options \option{-[Ggu][nr]} are
+  used (and not the many BSD and GNU extensions).  \command{whoami} is
+  equivalent to \command{id -un} (on Solaris, \command{/usr/xpg4/bin/id -un}).
 #ifdef windows
 
   Windows may report unexpected versions: see the help for

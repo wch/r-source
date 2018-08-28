@@ -828,9 +828,8 @@ static SEXP scanFrame(SEXP what, R_xlen_t maxitems, R_xlen_t maxlines,
 SEXP attribute_hidden do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, file, sep, what, stripwhite, dec, quotes, comstr;
-    int c, flush, fill, blskip, multiline,
-	escapes, skipNul;
-    R_xlen_t i, nmax, nlines, nskip;
+    int c, flush, fill, blskip, multiline, escapes, skipNul;
+    R_xlen_t nmax, nlines, nskip;
     const char *p, *encoding;
     RCNTXT cntxt;
     LocalData data = {NULL, 0, 0, '.', NULL, NO_COMCHAR, 0, NULL, FALSE,
@@ -924,9 +923,9 @@ SEXP attribute_hidden do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("invalid '%s' argument"), "skipNul");
     data.skipNul = skipNul != 0;
 
-    i = asInteger(file);
-    data.con = getConnection(i);
-    if(i == 0) {
+    int ii = asInteger(file);
+    data.con = getConnection(ii);
+    if(ii == 0) {
 	data.atStart = FALSE;
 	data.ttyflag = 1;
     } else {
@@ -946,7 +945,7 @@ SEXP attribute_hidden do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if(!data.con->canread)
 		error(_("cannot read from this connection"));
 	}
-	for (i = 0; i < nskip; i++) /* MBCS-safe */
+	for (R_xlen_t i = 0; i < nskip; i++) /* MBCS-safe */
 	    while ((c = scanchar(FALSE, &data)) != '\n' && c != R_EOF);
     }
 

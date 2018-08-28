@@ -2828,10 +2828,8 @@ compatibility.
 
 Windows also uses locales, but specified in a rather less concise way.
 Most users will encounter locales only via drop-down menus, but more
-information and lists can be found at
-@uref{https://msdn.microsoft.com/@/en-us/@/library/@/hzz3tw78(v=vs.80)}
-(or if Microsoft moves it yet again, search for @samp{Windows language
-country strings}).
+information and lists can be found by searching for @samp{Windows
+language country strings}).
 
 It offers only one encoding per language.
 
@@ -3370,14 +3368,18 @@ static libraries.} there are macros to do so described in file
 A @command{tar} program is needed to unpack the sources and packages
 (including the recommended packages).  A version@footnote{Such as
 @acronym{GNU} @command{tar} 1.15 or later, @command{bsdtar} (from
-@uref{https://github.com/@/libarchive/@/libarchive/}, as used by FreeBSD and OS
-X 10.6 and later) or @command{tar} from the Heirloom Toolchest
-(@uref{http://heirloom.sourceforge.net/@/tools.html}).} that can
+@uref{https://github.com/@/libarchive/@/libarchive/}, as used as
+@command{tar} by FreeBSD and macOS 10.6 and later) or @command{tar} from
+the Heirloom Toolchest
+(@uref{http://heirloom.sourceforge.net/@/tools.html}), although the
+latter does not support @command{xz} compression.} that can
 automagically detect compressed archives is preferred for use with
 @code{untar()}: the configure script looks for @command{gtar} and
 @command{gnutar} before
 @enindex TAR
 @command{tar} -- use environment variable @env{TAR} to override this.
+(On NetBSD/OpenBSD systems set this to @command{bsdtar} if that is
+installed.)
 
 There need to be suitable versions of the tools @command{grep} and
 @command{sed}: the problems are usually with old AT&T and BSD variants.
@@ -3514,11 +3516,13 @@ historically has been part of @file{libc} on a Unix-alike.  (In
 principle @command{man xdr_string} should tell you which library is
 needed, but it often does not: on Solaris and others it is provided by
 @code{libnsl}.)  However some builds@footnote{This is the default as
-from @code{glibc} 2.26 and has been announced for Fedora 28.} of
+from @code{glibc} 2.26 and has been confirmed for Fedora 28.} of
 @code{glibc} omit or hide it with the intention that the
 @acronym{TI-RPC} library be used, in which case @code{libtirpc} (and its
-development version) needs to be installed, and its headers need to be
-on the C include path or in @file{/usr/include/tirpc}.
+development version) needs to be installed, and its
+headers@footnote{@R{} uses @file{rpc/xdr.h} but that includes
+@file{netconfig.h} from the top @file{tirpc} directory.} need to be on the
+C include path or under @file{/usr/include/tirpc}.
 
 Use of the X11 clipboard selection requires the @code{Xmu} headers and
 libraries.  These are normally part of an X11 installation (e.g.@: the
@@ -3725,7 +3729,7 @@ more elapsed time (occasionally dramatically so) than using a similar
 single-threaded @acronym{BLAS}.  On a machine running other tasks, there
 can be contention for CPU caches that reduces the effectiveness of the
 optimization of cache use by a @acronym{BLAS} implementation: some
-people warn that this is especially problematic for hyperthreaded CPUs
+people warn that this is especially problematic for hyperthreaded CPUs.
 
 Note that under Unix (but not under Windows) if @R{} is compiled against
 a non-default @acronym{BLAS} and @option{--enable-BLAS-shlib} is
@@ -4170,7 +4174,10 @@ You can use @option{--without-foo} or @option{--disable-foo} for the
 negatives.
 
 You will want to use @option{--disable-R-profiling} if you are building
-a profiled executable of @R{} (e.g.@: with @samp{-pg)}.
+a profiled executable of @R{} (e.g.@: with @samp{-pg)}.  Support for @R{}
+profiling requires OS support for POSIX threads (@emph{aka}
+@samp{pthreads}), which are available on all mainstream Unix-alike
+platforms.
 
 Flag @option{--enable-R-shlib} causes the make process to build @R{} as
 a dynamic (shared) library, typically called @file{libR.so}, and link
@@ -4361,8 +4368,7 @@ path to a shell, e.g.@: @file{/usr/local/bin/bash}).
 
 To compile @R{}, you will most likely find it easiest to use
 @acronym{GNU} @command{make}, although the Sun @command{make} works on
-Solaris.  The native @command{make} has been reported to fail on SGI
-Irix 6.5 and Alpha/OSF1 (aka Tru64).
+Solaris.
 
 To build in a separate directory you need a @command{make} that supports
 the @code{VPATH} variable, for example @acronym{GNU} @command{make} and
@@ -4592,9 +4598,9 @@ Success in building @R{} depends on the proper installation and functioning
 of support software; your results may differ if you have other versions
 of compilers and support libraries.
 
-Older versions of this manual (for @R{} < 2.10.0) contain notes on
-platforms such as HP-UX, IRIX and Alpha/OSF1 for which we have had no
-recent reports.
+Older versions of this manual contain notes on platforms such as HP-UX,
+IRIX, Alpha/OSF1 (for @R{} < 2.10.0) and AIX (for @R{} < = 3.5.x) for
+which we have had no recent reports.
 
 C macros to select particular platforms can be tricky to track down
 (there is a fair amount of misinformation on the Web).  The Wiki
@@ -4620,7 +4626,6 @@ Windows: _WIN32, _WIN64
 * Linux::                       
 * macOS::                       
 * Solaris::                     
-* AIX::                         
 * FreeBSD::                     
 * OpenBSD::                     
 * Cygwin::                      
@@ -4631,9 +4636,9 @@ Windows: _WIN32, _WIN64
 @section X11 issues
 
 The @samp{X11()} graphics device is the one started automatically on
-Unix-alikes when plotting.  As its name implies, it displays on a (local
-or remote) X server, and relies on the services provided by the X
-server.
+Unix-alikes (except most macOS builds) when plotting.  As its name
+implies, it displays on a (local or remote) X server, and relies on the
+services provided by the X server.
 
 The `modern' version of the @samp{X11()} device is based on @samp{cairo}
 graphics and (in most implementations) uses @samp{fontconfig} to pick and
@@ -4765,18 +4770,6 @@ increase the optimization levels to @option{-O3}: however for many
 versions of the compilers this has caused problems in at least one
 @acronym{CRAN} package.
 
-As from @command{g++} 6 the default C++ standard is C++14.
-Compatibility with earlier releases can be obtained by using
-
-@example
-CXXSTD=-std=gnu++98
-@end example
-
-@noindent
-in @file{config.site}.  This is desirable when checking packages, to
-ensure as far as possible that features from later C++ standards are not
-used unintentionally.
-
 For platforms with both 64- and 32-bit support, it is likely that
 
 @example
@@ -4786,7 +4779,7 @@ LDFLAGS="-L/usr/local/lib64 -L/usr/local/lib"
 @noindent
 is appropriate since most (but not all) software installs its 64-bit
 libraries in @file{/usr/local/lib64}.  To build a 32-bit version of @R{}
-on @cputype{x86_64} with Fedora 26 we used
+on @cputype{x86_64} with Fedora 28 we used
 
 @example
 CC="gcc -m32"
@@ -4876,20 +4869,6 @@ the @code{libc++} project (@url{http://libcxx.llvm.org/}, Fedora RPM
 @code{libcxx-devel}) @emph{via} @option{-stdlib=libc++} has also been
 tested.
 
-As from @command{clang++} 6.0.0 the default C++ standard is C++14, which
-@R{}'s configure also uses when C++11 is requested.  Compatibility with
-earlier releases can be obtained by using
-
-@example
-CXXSTD=-std=gnu++98
-CX11STD=-std=gnu++11
-@end example
-
-@noindent
-in @file{config.site}.  These are desirable when checking packages, to
-ensure as far as possible that features from later C++ standards are not
-used unintentionally.
-
 Recent versions have (optional when built) OpenMP support.@footnote{This
 also needs the OpenMP runtime which has sometimes been distributed
 separately.}
@@ -4919,7 +4898,7 @@ few diagnostics even with @option{-Wall -pedantic}.
 
 @command{flang}'s Fortran runtime is compiled against OpenMP and it
 seems this conflicts with using OpenMP in @R{}.  So it may be necessary
-to disable the latter by configuring using @option{--without-openmp}.
+to disable the latter by configuring @R{} using @option{--disable-openmp}.
 
 It is not clear what architectures @command{flang} intends to support:
 our experiments were done on @cputype{x86_64}.
@@ -5002,7 +4981,7 @@ offer the installation of the command-line tools.  If you have installed
 Xcode, this provides the command-line tools.  The tools will need to be
 reinstalled when macOS is upgraded, as upgrading partially removes them.)
 
-You need GNU @code{readline}@footnote{Apple provides a partial emulation
+You need GNU @code{readline}.@footnote{Apple provides a partial emulation
 of GNU readline 4.2 based on the NetBSD @code{editline} library.  That
 is not recommended but for the time being @R{}'s installation scripts
 will make use of it if GNU readline is not found.}  That and other
@@ -5262,10 +5241,8 @@ not start with @code{1.8.0} or @code{9} you need to update your Java.}
 this should prompt you to install it.  You can also install directly a
 recent Java from Oracle (currently from
 @uref{http://www.oracle.com/@/technetwork/@/java/@/javase/@/downloads/@/index.html}:
-note that Java 9 and 10 have a limited lifetime and at the time of
-writing @CRANpkg{rJava}@footnote{the current version @code{0.9-9}.} did
-not install with Java 10).  Builds of OpenJDK may also be available,
-e.g.@: from @uref{http://jdk.java.net/}.
+note that Java 9 and 10 have a limited lifetime.  Builds of OpenJDK may
+also be available, e.g.@: from @uref{http://jdk.java.net/}.
 
 Binary distributions of @R{} are built against a specific version (e.g.@:
 1.8.0_161) of Oracle Java so @command{sudo R CMD javareconf} may be
@@ -5309,13 +5286,7 @@ JAVA_HOME=@var{/path/to/JDK}/jdk-10.jdk/Contents/Home
 @end example
 @noindent
 where @file{@var{/path/to/JDK}} is wherever the distribution tarball was
-unpacked.  Java 10 JDKs do not contain @command{javah}, but @R{}
-configuration / @command{R CMD javareconf} can use one from an earlier
-installation if @env{JAVAH} is set, e.g.,
-@example
-JAVAH=/Library/Java/JavaVirtualMachines/jdk1.8.0_161.jdk/Contents/Home/bin/javah
-@end example
-
+unpacked.
 
 Note that it is necessary to set the environment variable @env{NOAWT} to
 @code{1} to install many of the Java-using packages.
@@ -5380,7 +5351,7 @@ application bundle can be run anywhere and it is customary to place it
 in the @file{/Applications} folder.
 
 
-@node Solaris, AIX, macOS, Platform notes
+@node Solaris, FreeBSD, macOS, Platform notes
 @section Solaris
 @cindex Solaris
 
@@ -5629,154 +5600,7 @@ and @file{/opt/csw/lib/amd64} may need to be in the
 @env{LD_LIBRARY_PATH} during configuration.
 
 
-@node AIX, FreeBSD, Solaris, Platform notes
-@section AIX
-@cindex AIX
-
-We no longer support AIX prior to 4.2, and @command{configure} will
-throw an error on such systems.
-
-Ei-ji Nakama was able to build under AIX 5.2 on @cputype{powerpc} with
-GCC 4.0.3 in several configurations.  32-bit versions could be
-configured with @option{--without-iconv} as well as
-@option{--enable-R-shlib}.  For 64-bit versions he used
-
-@example
-OBJECT_MODE=64
-CC="gcc -maix64"
-CXX="g++ -maix64"
-F77="gfortran -maix64"
-FC="gfortran -maix64"
-@end example
-
-@noindent
-and was also able to build with the IBM @code{xlc} and Hitachi
-@code{f90} compilers by
-
-@example
-OBJECT_MODE=64
-CC="xlc -q64"
-CXX="g++ -maix64"
-F77="f90 -cpu=pwr4 -hf77 -parallel=0 -i,L -O3 -64"
-FC="f90 -cpu=pwr4 -hf77 -parallel=0 -i,L -O3 -64"
-FLIBS="-L/opt/ofort90/lib -lhf90vecmath -lhf90math -lf90"
-@end example
-
-Some systems have @command{f95} as an IBM compiler that does not by
-default accept FORTRAN 77.  It needs the flag @option{-qfixed=72}, or to
-be invoked as @command{xlf_r}.
-@c http://publib.boulder.ibm.com/infocenter/comphelp/v7v91/index.jsp?topic=/com.ibm.xlf91a.doc/xlfug/hu00465.htm
-
-The AIX native @code{iconv} does not support encodings @samp{latin1} nor
-@samp{""} and so cannot be used.  (As far as we know @acronym{GNU}
-@code{libiconv} could be installed.)
-
-Fan Long reported success on AIX 5.3 using
-@c https://stat.ethz.ch/pipermail/r-devel/2008-August/050318.html
-
-@example
-OBJECT_MODE=64
-LIBICONV=@var{/where/libiconv/installed}
-CC="xlc_r -q64" 
-CFLAGS="-O -qstrict"
-CXX="xlC_r -q64"
-CXXFLAGS="-O -qstrict"
-F77="xlf_r -q64"
-AR="ar -X64"
-CPPFLAGS="-I$LIBICONV/include -I/usr/lpp/X11/include/X11"
-LDFLAGS="-L$LIBICONV/lib -L/usr/lib -L/usr/X11R6/lib"
-@end example
-
-@enindex R_SHELL
-On one AIX 6.x system it was necessary to use @env{R_SHELL} to set the
-default shell to be Bash rather than Zsh.
-
-Kurt Hornik and Stefan Theussl at WU (Wirtschaftsuniversit@"at Wien)
-successfully built @R{} on a @cputype{powerpc} (8-@acronym{CPU} Power6
-system) running AIX 6.1, configuring with or without
-@option{--enable-R-shlib} (Ei-ji Nakama's support is gratefully
-acknowledged).
-
-It helps to describe the WU build environment first.  A small part of
-the software needed to build @R{} and/or install packages is available
-directly from the AIX Installation DVDs, e.g., Java 6 and  X11.
-Additional open source software (OSS) is packaged for AIX in @file{.rpm}
-files and available from both IBM's ``AIX Toolbox for Linux
-Applications''
-(@uref{http://www-03.ibm.com/@/systems/@/power/@/software/@/aix/@/linux/}) and
-@uref{http://www.oss4aix.org/@/download/}.  The latter website typically
-offers more recent versions of the available OSS.  All tools needed and
-libraries downloaded from these repositories (e.g., GCC, Make,
-@code{libreadline}, etc.) are typically installed to
-@file{/opt/freeware}, hence corresponding executables are found in
-@enindex PATH
-@file{/opt/freeware/bin} which thus needs to be in @env{PATH} for using
-these tools.  As on other Unix systems one needs @acronym{GNU}
-@code{libiconv} as the AIX version of iconv is not sufficiently
-powerful.  Additionally, for proper Unicode compatibility one should
-install the corresponding package from the ICU project
-(@uref{http://www.icu-project.org/@/download/}), which offers pre-compiled
-binaries for various platforms which in case of AIX can be installed via
-unpacking the tarball to the root file system.  For full @LaTeX{}
-support one can install the @TeX{} Live DVD distribution
-(@uref{https://www.tug.org/@/texlive/}): it is recommended to update the
-distribution using the @code{tlmgr} update manager.  For 64-bit @R{} builds
-supporting Tcl/Tk this needs to installed from the sources as available
-pre-compiled binaries supply only 32-bit shared objects.
-
-The recent WU testing was done using compilers from both the
-@acronym{GNU} Compiler Collection (version 4.2.4) which is available
-from one of the above OSS repositories, and the IBM C/C++ (XL C/C++
-10.01) as well as FORTRAN (XL Fortran 12.01) compilers
-(@uref{http://www14.software.ibm.com/@/webapp/@/download/@/byproduct.jsp#X}).
-
-To compile for a 64-bit @cputype{powerpc} (Power6 @acronym{CPU}) target
-one can use
-
-@example
-CC ="gcc -maix64 -pthread"
-CXX="g++ -maix64 -pthread"
-FC="gfortran -maix64 -pthread"
-F77="gfortran -maix64 -pthread"
-CFLAGS="-O2 -g -mcpu=power6"
-FFLAGS="-O2 -g -mcpu=power6"
-FCFLAGS="-O2 -g -mcpu=power6"
-@end example
-
-@noindent
-for the GCC and
-
-@example
-CC=xlc
-CXX=xlc++
-FC=xlf
-F77=xlf
-CFLAGS="-qarch=auto -qcache=auto -qtune=auto -O3 -qstrict -ma"
-FFLAGS="-qarch=auto -qcache=auto -qtune=auto -O3 -qstrict"
-FCFLAGS="-qarch=auto -qcache=auto -qtune=auto -O3 -qstrict"
-CXXFLAGS="-qarch=auto -qcache=auto -qtune=auto -O3 -qstrict"
-@end example
-
-@noindent
-for the IBM XL compilers.  For the latter, it is important to note that
-the decision for generating 32-bit or 64-bit code is done by setting the
-@enindex OBJECT_MODE
-@env{OBJECT_MODE} environment variable appropriately (recommended) or
-using an additional compiler flag (@option{-q32} or @option{-q64}).  By
-default the IBM XL compilers produce 32 bit code.  Thus, to build @R{} with
-64-bit support one needs to either export @env{OBJECT_MODE=64} in the
-environment or, alternatively, use the @option{-q64} compiler options.
-
-It is strongly recommended to install Bash and use it as the configure
-shell, e.g., via setting @code{CONFIG_SHELL=/usr/bin/bash} in the
-environment, and to use @acronym{GNU} Make (e.g., via
-(@code{MAKE=/opt/freeware/bin/make}).
-
-Further installation instructions to set up a proper @R{} development
-environment can be found in the ``R on AIX'' project on R-Forge
-(@uref{https://R-Forge.R-project.org/@/projects/@/aix/}).
-
-@node FreeBSD, OpenBSD, AIX, Platform notes
+@node FreeBSD, OpenBSD, Solaris, Platform notes
 @section FreeBSD
 @cindex FreeBSD
 

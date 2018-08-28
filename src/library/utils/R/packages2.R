@@ -301,18 +301,18 @@ install.packages <-
     ## check if we should infer repos = NULL
     if(length(pkgs) == 1L && missing(repos) && missing(contriburl)) {
         if((type == "source" && any(grepl("[.]tar[.](gz|bz2|xz)$", pkgs))) ||
-           (type %in% "win.binary" && length(grep("[.]zip$", pkgs))) ||
-           (substr(type, 1L, 10L) == "mac.binary" && grepl("[.]tgz$", pkgs))) {
+           (type %in% "win.binary" && endsWith(pkgs, ".zip")) ||
+           (startsWith(type, "mac.binary") && endsWith(pkgs, ".tgz"))) {
             repos <- NULL
             message("inferring 'repos = NULL' from 'pkgs'")
         }
         if (type == "both") {
-            if (type2 %in% "win.binary" && grepl("[.]zip$", pkgs)) {
+            if (type2 %in% "win.binary" && endsWith(pkgs, ".zip")) {
                 repos <- NULL
                 type <- type2
                 message("inferring 'repos = NULL' from 'pkgs'")
-            } else if (substr(type2, 1L, 10L) == "mac.binary"
-                       && grepl("[.]tgz$", pkgs)) {
+            } else if (startsWith(type2, "mac.binary")
+                       && endsWith(pkgs, ".tgz")) {
                 repos <- NULL
                 type <- type2
                 message("inferring 'repos = NULL' from 'pkgs'")
@@ -326,9 +326,9 @@ install.packages <-
 
     ## check if we should infer the type
     if (length(pkgs) == 1L && is.null(repos) && type == "both") {
-    	if (  (type2 %in% "win.binary" && grepl("[.]zip$", pkgs))
-	    ||(substr(type2, 1L, 10L) == "mac.binary"
-		   && grepl("[.]tgz$", pkgs))) {
+    	if (  (type2 %in% "win.binary" && endsWith(pkgs, ".zip"))
+	    ||(startsWith(type2, "mac.binary")
+		   && endsWith(pkgs, ".tgz"))) {
 	    type <- type2
 	} else if (grepl("[.]tar[.](gz|bz2|xz)$", pkgs)) {
 	    type <- "source"
@@ -495,7 +495,7 @@ install.packages <-
 	flush.console()
         ## end of "both"
     } else if (getOption("install.packages.check.source", "yes") %in% "yes"
-               && (type %in% "win.binary" || substr(type, 1L, 10L) == "mac.binary")) {
+               && (type %in% "win.binary" || startsWith(type, "mac.binary"))) {
         if (missing(contriburl) && is.null(available) && !is.null(repos)) {
             contriburl2 <- contrib.url(repos, "source")
 	    # The line above may have changed the repos option, so..
@@ -549,7 +549,7 @@ install.packages <-
     }
 
     if(.Platform$OS.type == "windows") {
-        if(substr(type, 1L, 10L) == "mac.binary")
+        if(startsWith(type, "mac.binary"))
             stop("cannot install macOS binary packages on Windows")
 
         if(type %in% "win.binary") {
@@ -574,7 +574,7 @@ install.packages <-
         ## -- will mess up UNC names, but they don't work
         pkgs <- gsub("\\\\", "/", pkgs)
     } else {
-        if(substr(type, 1L, 10L) == "mac.binary") {
+        if(startsWith(type, "mac.binary")) {
             if(!grepl("darwin", R.version$platform))
                 stop("cannot install macOS binary packages on this platform")
             .install.macbinary(pkgs = pkgs, lib = lib, contriburl = contriburl,
@@ -688,7 +688,7 @@ install.packages <-
     }
 
     tmpd <- destdir
-    nonlocalrepos <- length(grep("^file:", contriburl)) < length(contriburl)
+    nonlocalrepos <- !all(startsWith(contriburl, "file:"))
     if(is.null(destdir) && nonlocalrepos) {
         tmpd <- file.path(tempdir(), "downloaded_packages")
         if (!file.exists(tmpd) && !dir.create(tmpd))

@@ -1449,7 +1449,7 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE)
          S3methods = unique(S3methods[seq_len(nS3), , drop = FALSE]) )
 } ## end{parseNamespaceFile}
 
-## unused
+## Still used inside registerS3methods().
 registerS3method <- function(genname, class, method, envir = parent.frame()) {
     addNamespaceS3method <- function(ns, generic, class, method) {
 	regs <- rbind(.getNamespaceInfo(ns, "S3methods"),

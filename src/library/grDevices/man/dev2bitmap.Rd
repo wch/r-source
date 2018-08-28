@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/dev2bitmap.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{dev2bitmap}
@@ -87,21 +87,19 @@ dev2bitmap(file, type = "png16m", height = 7, width = 7, res = 72,
   For graphics parameters such as \code{"cra"} that need to work in
   pixels, the default resolution of 72dpi is always used.
 
-#ifdef windows
-  Paths for \code{file} and \env{R_GSCMD} which contain spaces are
+  On Windows only,
+  paths for \code{file} and \env{R_GSCMD} which contain spaces are
   mapped to short names \emph{via} \code{\link{shortPathName}}.
-#endif
 }
 \value{
   None.
 }
 
 \note{
-#ifdef windows
+  On Windows,
   Use of \code{bitmap} will leave a temporary file (with file name
   starting \code{Rbit}).
 
-#endif
   Although using \code{type = "pdfwrite"} will work for simple plots, it
   is not recommended.  Either use \code{\link{pdf}} to produce PDF
   directly, or call \command{ps2pdf -dAutoRotatePages=/None} on the

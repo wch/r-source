@@ -538,8 +538,9 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
 
 ### ** filtergrep
 
-filtergrep <- function(pattern, x, ...) grep(pattern, x, invert = TRUE, value = TRUE, ...)
-
+filtergrep <-
+function(pattern, x, ...)
+    grep(pattern, x, invert = TRUE, value = TRUE, ...)
 
 ### ** %notin%
 
@@ -620,10 +621,13 @@ function(x)
 .canonicalize_quotes <-
 function(txt)
 {
+    txt <- as.character(txt)
+    enc <- Encoding(txt)
     txt <- gsub(paste0("(", intToUtf8(0x2018), "|", intToUtf8(0x2019), ")"),
-                "'", txt, perl = TRUE)
+                "'", txt, perl = TRUE, useBytes = TRUE)
     txt <- gsub(paste0("(", intToUtf8(0x201c), "|", intToUtf8(0x201d), ")"),
-                "'", txt, perl = TRUE)
+                '"', txt, perl = TRUE, useBytes = TRUE)
+    Encoding(txt) <- enc
     txt
 }
 
@@ -714,7 +718,7 @@ function(file1, file2)
 .file_path_relative_to_dir <-
 function(x, dir, add = FALSE)
 {
-    if(any(ind <- (substring(x, 1L, nchar(dir)) == dir))) {
+    if(any(ind <- startsWith(x, dir))) {
         ## Assume .Platform$file.sep is a single character.
         x[ind] <- if(add)
             file.path(basename(dir), substring(x[ind], nchar(dir) + 2L))
@@ -808,7 +812,7 @@ function(con)
     ## How can we find out for sure that there were errors?  Try
     ## guessing ... and peeking at tex-buf.el from AUCTeX.
     really_has_errors <-
-        (length(grep("^---", lines)) ||
+        (any(startsWith(lines, "---")) ||
          regexpr("There (was|were) ([0123456789]+) error messages?",
                  lines[length(lines)]) > -1L)
     ## (Note that warnings are ignored for now.)
@@ -893,14 +897,15 @@ function(nsInfo)
     ## Get the registered S3 methods for an 'nsInfo' object returned by
     ## parseNamespaceFile(), as a 3-column character matrix with the
     ## names of the generic, class and method (as a function).
-    S3_methods_list <- nsInfo$S3methods
-    if(!length(S3_methods_list)) return(matrix(character(), ncol = 3L))
-    idx <- is.na(S3_methods_list[, 3L])
-    S3_methods_list[idx, 3L] <-
-        paste(S3_methods_list[idx, 1L],
-              S3_methods_list[idx, 2L],
+    S3_methods_db <- nsInfo$S3methods
+    if(!length(S3_methods_db))
+        return(matrix(character(), ncol = 3L))
+    idx <- is.na(S3_methods_db[, 3L])
+    S3_methods_db[idx, 3L] <-
+        paste(S3_methods_db[idx, 1L],
+              S3_methods_db[idx, 2L],
               sep = ".")
-    S3_methods_list
+    S3_methods_db
 }
 
 ### ** .get_namespace_S3_methods_with_homes
@@ -1059,15 +1064,21 @@ function(dir, installed = TRUE, primitive = FALSE)
     ## some BioC packages warn here
     suppressWarnings(
     unique(c(.get_internal_S3_generics(primitive),
-             unlist(lapply(env_list,
-                           function(env) {
-                               nms <- sort(names(env))
-                               if(".no_S3_generics" %in% nms)
-                                   character()
-                               else Filter(function(f)
-                                           .is_S3_generic(f, envir = env),
-                                           nms)
-                           })))))
+             unlist(lapply(env_list, .get_S3_generics_in_env))))
+    )
+}
+
+### ** .get_S3_generics_in_env
+
+.get_S3_generics_in_env <-
+function(env, nms = NULL)
+{
+    if(is.null(nms))
+        nms <- sort(names(env))
+    if(".no_S3_generics" %in% nms)
+        character()
+    else
+        Filter(function(f) .is_S3_generic(f, envir = env), nms)
 }
 
 ### ** .get_S3_group_generics
@@ -1353,8 +1364,9 @@ function(x)
 {
     ## Determine whether the strings in a character vector are ASCII or
     ## not.
-    vapply(as.character(x), function(txt)
-           all(charToRaw(txt) <= as.raw(127)), NA)
+    vapply(as.character(x),
+           function(txt) all(charToRaw(txt) <= as.raw(127)),
+           NA)
 }
 
 ### ** .is_ISO_8859
@@ -1366,10 +1378,12 @@ function(x)
     ## some ISO 8859 character set or not.
     raw_ub <- as.raw(0x7f)
     raw_lb <- as.raw(0xa0)
-    vapply(as.character(x), function(txt) {
-        raw <- charToRaw(txt)
-        all(raw <= raw_ub | raw >= raw_lb)
-    }, NA)
+    vapply(as.character(x),
+           function(txt) {
+               raw <- charToRaw(txt)
+               all(raw <= raw_ub | raw >= raw_lb)
+           },
+           NA)
 }
 
 ### ** .is_primitive_in_base
@@ -1642,6 +1656,7 @@ nonS3methods <- function(package)
                       "dim.inq.ncdf", "dim.same.ncdf"),
              quadprog = c("solve.QP", "solve.QP.compact"),
              reposTools = "update.packages2",
+             reshape = "all.vars.character",
              rgeos = "scale.poly",
              sac = "cumsum.test",
              sfsmisc = "cumsum.test",
@@ -1711,7 +1726,8 @@ function()
 ### ** .package_apply
 
 .package_apply <-
-function(packages = NULL, FUN, ...)
+function(packages = NULL, FUN, ...,
+         Ncpus = getOption("Ncpus", 1L))
 {
     ## Apply FUN and extra '...' args to all given packages.
     ## The default corresponds to all installed packages with high
@@ -1719,12 +1735,28 @@ function(packages = NULL, FUN, ...)
     if(is.null(packages))
         packages <-
             unique(utils::installed.packages(priority = "high")[ , 1L])
-    out <- lapply(packages, function(p)
-                  tryCatch(FUN(p, ...),
-                           error = function(e)
-                           noquote(paste("Error:",
-                                         conditionMessage(e)))))
+
+    one <- function(p)
+        tryCatch(FUN(p, ...),
+                 error = function(e)
+                     noquote(paste("Error:",
+                                   conditionMessage(e))))
     ## (Just don't throw the error ...)
+
+    ## Would be good to have a common wrapper ...
+    if(Ncpus > 1L) {
+        if(.Platform$OS.type != "windows") {
+            out <- parallel::mclapply(packages, one, mc.cores = Ncpus)
+        } else {
+            cl <- parallel::makeCluster(Ncpus)
+            args <- list(FUN, ...)      # Eval promises.
+            out <- parallel::parLapply(cl, packages, one)
+            parallel::stopCluster(cl)
+        }
+    } else {
+        out <- lapply(packages, one)
+    }
+    
     names(out) <- packages
     out
 }
@@ -1775,7 +1807,7 @@ function(con)
     ## Read lines from a connection to an Rd file, trying to suppress
     ## "incomplete final line found by readLines" warnings.
     if(is.character(con)) {
-        con <- if(length(grep("\\.gz$", con))) gzfile(con, "r") else file(con, "r")
+        con <- if(endsWith(con, ".gz")) gzfile(con, "r") else file(con, "r")
         on.exit(close(con))
     }
     .try_quietly(readLines(con, warn=FALSE))
@@ -2064,31 +2096,6 @@ function(x)
     } else list(name = x1)
 }
 
-## <FIXME>
-## We now have base::trimws(), so this is no longer needed.
-## Remove eventually.
-
-### ** .strip_whitespace
-
-## <NOTE>
-## Other languages have this as strtrim() (or variants for left or right
-## trimming only), but R has a different strtrim().
-## So perhaps strstrip()?
-## Could more generally do
-##   strstrip(x, pattern, which = c("both", "left", "right"))
-## </NOTE>
-
-.strip_whitespace <-
-function(x)
-{
-    ## Strip leading and trailing whitespace.
-    x <- sub("^[[:space:]]+", "", x)
-    x <- sub("[[:space:]]+$", "", x)
-    x
-}
-
-## </FIXME>
-
 ### ** .system_with_capture
 
 .system_with_capture <-
@@ -2152,21 +2159,36 @@ function(expr)
 ### ** .unpacked_source_repository_apply
 
 .unpacked_source_repository_apply <-
-function(dir, fun, ..., pattern = "*", verbose = FALSE)
+function(dir, FUN, ..., pattern = "*", verbose = FALSE,
+         Ncpus = getOption("Ncpus", 1L))
 {
     dir <- file_path_as_absolute(dir)
 
     dfiles <- Sys.glob(file.path(dir, pattern, "DESCRIPTION"))
+    paths <- dirname(dfiles)
 
-    results <-
-        lapply(dirname(dfiles),
-               function(dir) {
-                   if(verbose)
-                       message(sprintf("processing %s", basename(dir)))
-                   fun(dir, ...)
-               })
-    names(results) <- basename(dirname(dfiles))
-    results
+    one <- function(p) {
+        if(verbose)
+            message(sprintf("processing %s", basename(p)))
+        FUN(p, ...)
+    }
+
+    ## Would be good to have a common wrapper ...
+    if(Ncpus > 1L) {
+        if(.Platform$OS.type != "windows") {
+            out <- parallel::mclapply(paths, one, mc.cores = Ncpus)
+        } else {
+            cl <- parallel::makeCluster(Ncpus)
+            args <- list(FUN, ...)      # Eval promises.
+            out <- parallel::parLapply(cl, paths, one)
+            parallel::stopCluster(cl)
+        }
+    } else {
+        out <- lapply(paths, one)
+    }
+
+    names(out) <- basename(paths)
+    out
 }
 
 ### ** .wrong_args
@@ -2192,7 +2214,8 @@ function(args, msg)
 
 ### ** Rcmd
 
-Rcmd <- function(args, ...)
+Rcmd <-
+function(args, ...)
 {
     if(.Platform$OS.type == "windows")
         system2(file.path(R.home("bin"), "Rcmd.exe"), args, ...)
@@ -2202,12 +2225,14 @@ Rcmd <- function(args, ...)
 
 ### ** pskill
 
-pskill <- function(pid, signal = SIGTERM)
+pskill <-
+function(pid, signal = SIGTERM)
     invisible(.Call(C_ps_kill, pid, signal))
 
 ### ** psnice
 
-psnice <- function(pid = Sys.getpid(), value = NA_integer_)
+psnice <-
+function(pid = Sys.getpid(), value = NA_integer_)
 {
     res <- .Call(C_ps_priority, pid, value)
     if(is.na(value)) res else invisible(res)
@@ -2217,7 +2242,8 @@ psnice <- function(pid = Sys.getpid(), value = NA_integer_)
 
 ## original version based on http://daringfireball.net/2008/05/title_case
 ## but much altered before release.
-toTitleCase <- function(text)
+toTitleCase <-
+function(text)
 {
     ## leave these alone: the internal caps rule would do that
     ## in some cases.  We could insist on this exact capitalization.
@@ -2271,7 +2297,8 @@ toTitleCase <- function(text)
 ### ** path_and_libPath
 
 ##' Typically the union of R_LIBS and current .libPaths(); may differ e.g. via R_PROFILE
-path_and_libPath <- function(...)
+path_and_libPath <-
+function(...)
 {
     lP <- .libPaths()
     ## don't call normalizePath on paths which do not exist: allowed in R_LIBS!
@@ -2283,7 +2310,9 @@ path_and_libPath <- function(...)
 ### ** str_parse_logic
 
 ##' @param otherwise: can be call, such as quote(errmesg(...))
-str_parse_logic <- function(ch, default = TRUE, otherwise = default, n = 1L) {
+str_parse_logic <-
+function(ch, default = TRUE, otherwise = default, n = 1L)
+{
     if (is.na(ch)) default
     else switch(ch,
                 "yes"=, "Yes" =, "true" =, "True" =, "TRUE" = TRUE,
@@ -2293,7 +2322,9 @@ str_parse_logic <- function(ch, default = TRUE, otherwise = default, n = 1L) {
 
 ### ** str_parse
 
-str_parse <- function(ch, default = TRUE, logical = TRUE, otherwise = default, n = 2L) {
+str_parse <-
+function(ch, default = TRUE, logical = TRUE, otherwise = default, n = 2L)
+{
     if(logical)
         str_parse_logic(ch, default=default, otherwise=otherwise, n = n)
     else if(is.na(ch))

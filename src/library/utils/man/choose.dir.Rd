@@ -1,11 +1,11 @@
-% File src/library/utils/man/windows/choose.dir.Rd
+% File src/library/utils/man/choose.dir.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2007-13 R Core Team
+% Copyright 2007-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{choose.dir}
 \alias{choose.dir}
-\title{Choose a Folder Interactively}
+\title{Choose a Folder Interactively on MS Windows}
 \description{
   Use a Windows shell folder widget to choose a folder interactively.
 }
@@ -32,10 +32,11 @@ choose.dir(default = "", caption = "Select folder")
   This is only available on Windows.
 }
 \seealso{
-  \code{\link{choose.files}}
+  \code{\link{choose.files}} (on Windows) and \code{\link{file.choose}}
+  (on all platforms).
 }
 \examples{
-  if (interactive())
+  if (interactive() && .Platform$OS.type == "windows")
         choose.dir(getwd(), "Choose a suitable folder")
 }
 \keyword{file}

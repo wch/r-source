@@ -14,7 +14,7 @@ R_PRINTCMD=${R_PRINTCMD-'@R_PRINTCMD@'}
 R_RD4PDF=${R_RD4PDF-'@R_RD4PDF@'}
 ## used for options("texi2dvi")
 R_TEXI2DVICMD=${R_TEXI2DVICMD-${TEXI2DVI-'@TEXI2DVICMD@'}}
-## used by INSTALL, untar() and installing grDevices
+## used by untar(support_old_tars = TRUE) and installing grDevices
 R_GZIPCMD=${R_GZIPCMD-'@R_GZIPCMD@'}
 ## Default zip/unzip commands
 R_UNZIPCMD=${R_UNZIPCMD-'@R_UNZIPCMD@'}
@@ -34,7 +34,6 @@ MAKE=${MAKE-'@MAKE@'}
 ## Prefer a POSIX-compliant sed on e.g. Solaris
 SED=${SED-'@SED@'}
 ## Prefer a tar that can automagically read compressed archives
-## Used in R CMD INSTALL for binary packages
 TAR=${TAR-'@TAR@'}
 
 ## System and compiler types.

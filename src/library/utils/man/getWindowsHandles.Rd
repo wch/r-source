@@ -1,16 +1,14 @@
-% File src/library/utils/man/windows/getWindowsHandles.Rd
+% File src/library/utils/man/getWindowsHandles.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2009-10 Duncan Murdoch and the R Core Team
+% Copyright 2009-2018 Duncan Murdoch and the R Core Team
 % Distributed under GPL 2 or later
 
 \name{getWindowsHandles}
 \alias{getWindowsHandles}
-\title{
-  Get handles of windows.
-}
+\title{Get handles of Windows in the MS Windows RGui}
 \description{
   This function gets the Windows handles of visible top level windows or
-  windows within the \R MDI frame.
+  windows within the \R MDI frame (when using the \command{Rgui}).
 }
 \usage{
 getWindowsHandles(which = "R", pattern = "", minimized = FALSE)
@@ -42,8 +40,8 @@ getWindowsHandles(which = "R", pattern = "", minimized = FALSE)
 
   If an element of \code{which} is \code{"R"}, only windows belonging to
   the current \R process will be returned.  In MDI mode, those will be the
-  child windows within the \R GUI frame.  In SDI mode, all windows
-  belonging to the process will be included.
+  child windows within the \R GUI (\command{Rgui}) frame.  In SDI mode,
+  all windows belonging to the process will be included.
 
   If the element is \code{"all"}, then top level windows will be returned.
 
@@ -62,10 +60,13 @@ getWindowsHandles(which = "R", pattern = "", minimized = FALSE)
   Duncan Murdoch
 }
 \seealso{
-  \code{\link{arrangeWindows}}
+  \code{\link{arrangeWindows}},
+  \code{\link{getWindowsHandle}} (singular).
 }
 \examples{\donttest{
-getWindowsHandles()
-getWindowsHandles("all")
+if(.Platform$OS.type == "windows") withAutoprint({
+  getWindowsHandles()
+  getWindowsHandles("all")
+})
 }}
 \keyword{ utilities }

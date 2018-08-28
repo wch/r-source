@@ -3118,3 +3118,7 @@ tryCatch(stopifnot(exprs = expression(
 cat("Error: ", M3, "\n")
 ## was partly not ok for many weeks in R-devel, early 2018
 
+
+## print.htest() with small 'digits'
+print(t.test(1:28), digits = 3)
+## showed 'df = 30' from signif(*, digits=1) and too many digits for CI, in R <= 3.5.1

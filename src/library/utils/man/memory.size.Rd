@@ -1,18 +1,24 @@
-% File src/library/utils/man/windows/memory.size.Rd
+% File src/library/utils/man/memory.size.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2012 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{memory.size}
 \alias{memory.size}
 \alias{memory.limit}
-\title{Report on Memory Allocation}
+\title{Report on Memory Allocation (on Windows)}
 \description{
-  \code{memory.size} reports the current or maximum memory allocation of
-  the \code{malloc} function used in this version of \R.
+  \describe{
+  \item{On MS Windows,}{
+    \code{memory.size()} reports the current or maximum memory allocation of
+    the \code{malloc} function used in this version of \R.
 
-  \code{memory.limit} reports or increases the limit in force
-  on the total allocation.
+    \code{memory.limit()} reports or increases the limit in force
+    on the total allocation.}
+
+  \item{On non-Windows platforms}{these are
+    stubs which report infinity (\code{\link{Inf}}) with a warning.}
+  }
 }
 \usage{
 memory.size(max = FALSE)
@@ -43,22 +49,25 @@ memory.limit(size = NA)
   specify the initial limit.
 }
 \value{
-  Size in Mb (1048576 bytes), rounded to 0.01 Mb for \code{memory.size}
+  A number: On Windows, size in Mb (1048576 bytes), rounded to 0.01 Mb for \code{memory.size}
   and rounded down for \code{memory.limit}.
+  \cr On other platforms: \code{\link{Inf}} always.
 }
 \note{
-  These functions exist on other platforms but always report infinity as
-  \R does itself provide limits on memory allocation---the OS's own
-  facilities can be used. 
+  These functions exist on all platforms, but on non-Windows always
+  report infinity as \R does itself provide limits on memory
+  allocation---the OS's own facilities can be used.
 }
 \seealso{
   \link{Memory-limits} for other limits.
 
-  The rw-FAQ for more details and references.
+  On Windows: The rw-FAQ for more details and references.
 }
 \examples{
+if(.Platform$OS.type == "windows") withAutoprint({
 memory.size()
 memory.size(TRUE)
 memory.limit()
+})
 }
 \keyword{utilities}

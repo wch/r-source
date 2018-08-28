@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-2017  The R Core Team.
+ *  Copyright (C) 2001-2018  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -2357,11 +2357,10 @@ void GEPretty(double *lo, double *up, int *ndiv)
     // The following is ugly since it kind of happens already in R_pretty(..):
 #define rounding_eps 1e-10 /* <- compatible to seq*(); was 1e-7 till 2017-08-14 */
     if(nu >= ns + 1) {
-	if(               ns * unit < *lo - rounding_eps*unit)
-	    ns++;
-	if(nu > ns + 1 && nu * unit > *up + rounding_eps*unit)
-	    nu--;
-	*ndiv = (int)(nu - ns);
+	int mod = 0;
+	if(               ns * unit < *lo - rounding_eps*unit) { ns++; mod++; }
+	if(nu > ns + 1 && nu * unit > *up + rounding_eps*unit) { nu--; mod++; }
+	if(mod) *ndiv = (int)(nu - ns);
     }
     *lo = ns * unit;
     *up = nu * unit;

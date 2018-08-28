@@ -72,7 +72,7 @@ optimHess(par, fn, gr = NULL, \dots, control = list())
   allows \emph{box constraints}, that is each variable can be given a lower
   and/or upper bound. The initial value must satisfy the constraints.
   This uses a limited-memory modification of the BFGS quasi-Newton
-  method. If non-trivial bounds are supplied, this method will be
+  method.  If non-trivial bounds are supplied, this method will be
   selected, with a warning.
 
   Nocedal and Wright (1999) is a comprehensive reference for the
@@ -307,6 +307,7 @@ flb <- function(x)
 optim(rep(3, 25), flb, NULL, method = "L-BFGS-B",
       lower = rep(2, 25), upper = rep(4, 25)) # par[24] is *not* at boundary
 
+
 ## "wild" function , global minimum at about -15.81515
 fw <- function (x)
     10*sin(0.3*x)*sin(1.3*x^2) + 0.00001*x^4 + 0.2*x+80
@@ -317,7 +318,7 @@ res <- optim(50, fw, method = "SANN",
 res
 ## Now improve locally {typically only by a small bit}:
 (r2 <- optim(res$par, fw, method = "BFGS"))
-points(r2$par, r2$value, pch = 8, col = "red", cex = 2)
+points(r2$par,  r2$value,  pch = 8, col = "red", cex = 2)
 
 ## Combinatorial optimization: Traveling salesman problem
 library(stats) # normally loaded

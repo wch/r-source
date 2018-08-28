@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/pdf.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{pdf}
@@ -82,10 +82,8 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
     around font display problems in broken PDF viewers: although this
     font is one of the 14 guaranteed to be available in all PDF viewers,
     that guarantee is not always honoured.
-#ifdef unix
-    See the \sQuote{Note} for a possible fix for some viewers.
-#endif
-    }
+
+    On Unix-alikes (incl. Mac), see the \sQuote{Note} for a possible fix for some viewers.}
   \item{useKerning}{logical.  Should kerning corrections be included in
     setting text and calculating string widths?  Defaults to \code{TRUE}.}
   \item{fillOddEven}{logical controlling the polygon fill mode:  see
@@ -127,14 +125,12 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
   software (e.g., Ghostscript) may be required to embed the fonts so
   that the PDF can be included in other documents (e.g., LaTeX): see
   \code{\link{embedFonts}}.  The URW-based families described for
-  \code{\link{postscript}} can be used with viewers
-#ifdef unix
-  set up to use URW fonts, which is usual with those based on
-  \code{xpdf} or Ghostscript.
-#endif
-#ifdef windows
-  such as GSView which utilise URW fonts.
-#endif
+  \code{\link{postscript}} can be used with viewers, platform dependently:
+  \describe{
+    \item{on Unix-alikes}{viewers set up to use URW fonts, which is
+      usual with those based on \code{xpdf} or Ghostscript.}
+    \item{on Windows}{viewers such as GSView which utilise URW fonts.}
+  }
   Since \code{\link{embedFonts}} makes use of Ghostscript, it should be
   able to embed the URW-based families for use with other viewers.
 
@@ -245,8 +241,9 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
   be needed for the full use of encodings other than Latin-1 (although
   they may be offered for download as needed).
 
-#ifdef unix
-  On some systems the default plotting character \code{pch = 1} was
+  \describe{
+    \item{On some Unix-alike systems}{the default plotting character
+      \code{pch = 1} was
   displayed in some PDF viewers incorrectly as a \code{"q"}
   character.  (These seem to be viewers based on the \samp{poppler} PDF
   rendering library).  This may be due to incorrect or incomplete mapping
@@ -264,14 +261,15 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
   Some further workarounds for problems with symbol fonts on
   viewers using \sQuote{fontconfig} are given in the \sQuote{Cairo Fonts}
   section of the help for \code{\link{X11}}.
-#endif
-#ifdef windows
+ }
+ \item{On Windows:}{
   The TeXworks PDF viewer was one of those which has been seen to fail to
   display Dingbats (used by e.g.\sspace{}\code{pch = 1}) correctly.
   Whereas on other platforms the problems seen were incorrect output, on
   Windows points were silently omitted: however recent versions seem to
   manage to display Dingbats.
-#endif
+ }
+}%end{describe}
 
   There is a different font bug in the \command{pdf.js} viewer included
   in Firefox 19 and later: that maps Dingbats to the Symbol font and so
@@ -284,14 +282,8 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
   \code{\link{Devices}},
   \code{\link{postscript}}.
 
-#ifdef unix
   \code{\link{cairo_pdf}} and (on macOS only) \code{\link{quartz}}
   for other devices that can produce PDF.
-#endif
-#ifdef windows
-  \code{\link{cairo_pdf}} and (on macOS only) \code{quartz}
-  for other devices that can produce PDF.
-#endif
 
   More details of font families and encodings and especially handling
   text in a non-Latin-1 encoding and embedding fonts can be found in

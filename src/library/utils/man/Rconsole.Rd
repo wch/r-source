@@ -1,9 +1,10 @@
-% File src/library/utils/man/windows/Rconsole.Rd
+% File src/library/utils/man/Rconsole.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Rwin configuration}
+\title{R for Windows Configuration}
 \Rdversion{1.1}
 \alias{Rconsole}
 \alias{Rdevga}
@@ -11,11 +12,9 @@
 \concept{console}
 \concept{fonts}
 \concept{preferences}
-\title{R for Windows Configuration}
 \description{
-  The file \file{Rconsole} configures the R GUI console in this
-  Windows port. The \code{loadRconsole} function loads a new
-  configuration.
+  The file \file{Rconsole} configures the R GUI (\command{Rgui}) console
+  under MS Windows and \code{loadRconsole(*)} loads a new configuration.
 
   The file \file{Rdevga} configures the graphics devices
   \code{\link{windows}}, \code{win.graph}, \code{win.metafile} and
@@ -86,20 +85,22 @@
 }
 \seealso{\code{\link{windows}}}
 \examples{
-ruser <- Sys.getenv("R_USER")
-cat("\n\nLocation for personal configuration files is\n   R_USER = ",
-    ruser, "\n\n", sep = "")
-## see if there are personal configuration files
-file.exists(file.path(ruser, c("Rconsole", "Rdevga")))
+if(.Platform$OS.type == "windows") withAutoprint({
+  ruser <- Sys.getenv("R_USER")
+  cat("\n\nLocation for personal configuration files is\n   R_USER = ",
+      ruser, "\n\n", sep = "")
+  ## see if there are personal configuration files
+  file.exists(file.path(ruser, c("Rconsole", "Rdevga")))
 
-## show the configuration files used
-showConfig <- function(file)
-{
-    ruser <- Sys.getenv("R_USER")
-    path <- file.path(ruser, file)
-    if(!file.exists(path)) path <- file.path(R.home(), "etc", file)
-    file.show(path, header = path)
-}
-showConfig("Rconsole")
+  ## show the configuration files used
+  showConfig <- function(file)
+  {
+      ruser <- Sys.getenv("R_USER")
+      path <- file.path(ruser, file)
+      if(!file.exists(path)) path <- file.path(R.home(), "etc", file)
+      file.show(path, header = path)
+  }
+  showConfig("Rconsole")
+})
 }
 \keyword{utilities}

@@ -1,6 +1,6 @@
 % File src/library/base/man/strptime.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{strptime}
@@ -72,9 +72,9 @@ strptime(x, format, tz = "")
   locale} of the descriptions might mean the locale in use at the start
   of the \R session or when these functions are first used.  (For input,
   the locale-specific conversions can be changed by calling
-  \code{\link{Sys.setlocale}} with category \code{LC_TIME} since \R
-  3.1.0 or \code{LC_ALL} since \R 3.4.1.  For output, what happens
-  depends on the OS.)
+  \code{\link{Sys.setlocale}} with category \code{LC_TIME} (or
+  \code{LC_ALL}).  For output, what happens depends on the OS but
+  usually works.)
 
   % strftime is C99: strptime is POSIX.
   The details of the formats are platform-specific, but the following are
@@ -173,7 +173,8 @@ strptime(x, format, tz = "")
       For input, only years \code{0:9999} are accepted.}
     \item{\code{\%z}}{Signed offset in hours and minutes
       from UTC, so \code{-0800} is 8 hours behind UTC. Values up to
-      \code{+1400} are accepted.  (Standard only for output.)} 
+      \code{+1400} are accepted.  (Standard only for output.  For input
+      \R currently supports it on all platforms.)} 
     \item{\code{\%Z}}{(Output only.)  Time zone abbreviation as a
       character string (empty if not available).  This may not be reliable
       when a time zone has changed abbreviations over the years.}
@@ -277,8 +278,8 @@ strptime(x, format, tz = "")
   East of the meridian.  Although there have been time zones with
   offsets like 00:09:21 (Paris in 1900), and 00:44:30 (Liberia until
   1972), offsets are usually treated as whole numbers of minutes, and
-  are most often seen in RFC 822 email headers in forms like
-  \code{-0800} (e.g., used on the Pacific coast of the US in winter).
+  are most often seen in RFC 5322 email headers in forms like
+  \code{-0800} (e.g., used on the Pacific coast of the USA in winter).
   
   Format \code{\%z} can be used for input or output: it is a character
   string, conventionally plus or minus followed by two digits for
@@ -319,6 +320,22 @@ strptime(x, format, tz = "")
   used by \R on Windows in all locales.
 }
 
+\section{Sources}{
+  Input uses the POSIX function \code{strptime} and output the C99
+  function \code{strftime}.
+
+  However, not all OSes (notably Windows) provided \code{strptime} and
+  many issues were found for those which did, so since 2000 \R has used
+  a fork of code from \samp{glibc}.  The forked code uses the
+  system's \code{strftime} to find the locale-specific day and month
+  names and any AM/PM indicator.
+
+  On some platforms (including Windows and by default on macOS) the
+  system's \code{strftime} is replaced (along with most of the rest of
+  the C-level datetime code) by code modified from IANA's \samp{tzcode}
+  distribution (\url{https://www.iana.org/time-zones}).
+}
+
 \references{
   International Organization for Standardization (2004, 2000, \dots)
   \emph{ISO 8601.  Data elements and interchange formats --
@@ -346,7 +363,7 @@ format(Sys.time(), "\%a \%b \%d \%X \%Y \%Z")
 format(Sys.time(), "\%H:\%M:\%OS3")
 
 ## read in date info in format 'ddmmmyyyy'
-## This will give NA(s) in some locales; setting the C locale
+## This will give NA(s) in some non-English locales; setting the C locale
 ## as in the commented lines will overcome this on most systems.
 ## lct <- Sys.getlocale("LC_TIME"); Sys.setlocale("LC_TIME", "C")
 x <- c("1jan1960", "2jan1960", "31mar1960", "30jul1960")
@@ -367,13 +384,16 @@ op <- options(digits.secs = 3)
 z
 options(op)
 
-## time zones name are not portable, but 'EST5EDT' comes pretty close.
+## time zone names are not portable, but 'EST5EDT' comes pretty close.
 (x <- strptime(c("2006-01-08 10:07:52", "2006-08-07 19:33:02"),
                "\%Y-\%m-\%d \%H:\%M:\%S", tz = "EST5EDT"))
 attr(x, "tzone")
 
-## An RFC 822 header (Eastern Canada, during DST)
-strptime("Tue, 23 Mar 2010 14:36:38 -0400",  "\%a, \%d \%b \%Y \%H:\%M:\%S \%z")
+## An RFC 5322 header (Eastern Canada, during DST)
+## In a non-English locale the commented lines may be needed.
+## prev <- Sys.getlocale("LC_TIME"); Sys.setlocale("LC_TIME", "C")
+strptime("Tue, 23 Mar 2010 14:36:38 -0400", "\%a, \%d \%b \%Y \%H:\%M:\%S \%z")
+## Sys.setlocale("LC_TIME", prev)
 
 ## Make sure you know what the abbreviated names are for you if you wish
 ## to use them for input (they are matched case-insensitively):

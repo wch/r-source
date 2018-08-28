@@ -1,7 +1,7 @@
 # This file is part of Autoconf.			-*- Autoconf -*-
 # Programming languages support.
 # Copyright (C) 2001-2012 Free Software Foundation, Inc.
-# Copyright (C) 2015-2016 R Core Team
+# Copyright (C) 2015-2018 R Core Team
 
 # This file is part of Autoconf.  This program is free
 # software; you can redistribute it and/or modify it under the
@@ -30,6 +30,8 @@
 
 # [a small part, modified for clang and Intel in 2015,6, Solaris in 2017.]
 
+# _AC_LANG_OPENMP is a language-dependent program defined in c.m4 in
+# the autoconf library.
 
 # R_OPENMP
 # --------

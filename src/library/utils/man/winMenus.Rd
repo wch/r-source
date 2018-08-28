@@ -1,18 +1,18 @@
-% File src/library/utils/man/windows/winMenus.Rd
+% File src/library/utils/man/winMenus.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{winMenus}
+\title{User Menus under MS Windows (Rgui)}
 \alias{winMenuAdd}
 \alias{winMenuAddItem}
 \alias{winMenuDel}
 \alias{winMenuDelItem}
 \alias{winMenuNames}
 \alias{winMenuItems}
-\title{User Menus under Windows}
 \description{
-  Enables users to add, delete and program menus under Windows.
+  Enables users to add, delete and program menus for the \command{Rgui} in MS Windows.
 }
 \usage{
 winMenuAdd(menuname)
@@ -78,7 +78,8 @@ winMenuItems(menuname)
   message will be given.
 }
 \note{
-    These functions are only available on Windows.
+    These functions are only available on Windows and only when using
+    the \command{Rgui}, hence not in \command{ESS} nor \command{RStudio}.
 }
 \seealso{\code{\link{winDialog}}}
 \examples{\dontrun{

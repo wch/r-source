@@ -18,13 +18,20 @@
 
 untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
                   compressed = NA, extras = NULL, verbose = FALSE,
-                  restore_times = TRUE, tar = Sys.getenv("TAR"))
+                  restore_times = TRUE,
+                  support_old_tars = Sys.getenv("R_SUPPORT_OLD_TARS", FALSE),
+                  tar = Sys.getenv("TAR"))
 {
-    if (inherits(tarfile, "connection") || identical(tar, "internal"))
+    if (inherits(tarfile, "connection") || identical(tar, "internal")) {
+        if (!missing(compressed))
+            warning("argument 'compressed' is ignored for the internal method")
         return(untar2(tarfile, files, list, exdir, restore_times))
+    }
 
     if (!(is.character(tarfile) && length(tarfile) == 1L))
         stop("invalid 'tarfile' argument")
+    tarfile <- path.expand(tarfile)
+    support_old_tars <- isTRUE(as.logical(support_old_tars))
 
     TAR <- tar
     if (!nzchar(TAR) && .Platform$OS.type == "windows" &&
@@ -32,57 +39,59 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
     if (!nzchar(TAR) || TAR == "internal")
         return(untar2(tarfile, files, list, exdir))
 
+    ## The ability of external tar commands to handle compressed tarfiles
+    ## automagically varies and is poorly documented.
+    ## E.g. macOS says its tar handles bzip2 but does not mention xz nor lzma.
+    ## (And it supports -J and --lzma flags not mentioned by man tar.)
+    ##
+    ## But as all commonly-used tars do (some commercial Unix do not,
+    ## but GNU tar is commonly used there).
     cflag <- ""
+    if (!missing(compressed))
+        warning("untar(compressed=) is deprecated", call. = FALSE, domain = NA)
     if (is.character(compressed)) {
-        ## Any tar which supports -J does not need it for extraction
-        switch(match.arg(compressed, c("gzip", "bzip2", "xz")),
-               "gzip" = "z", "bzip2" = "j", "xz" = "J")
+        cflag <- switch(match.arg(compressed, c("gzip", "bzip2", "xz")),
+                        "gzip" = "z", "bzip2" = "j", "xz" = "J")
     } else if (is.logical(compressed)) {
-        if (is.na(compressed)) {
-            magic <- readBin(tarfile, "raw", n = 3L)
+        if (is.na(compressed) && support_old_tars) {
+            magic <- readBin(tarfile, "raw", n = 6L)
             if(all(magic[1:2] == c(0x1f, 0x8b))) cflag <- "z"
             else if(all(magic[1:2] == c(0x1f, 0x9d))) cflag <- "z" # compress
             else if(rawToChar(magic[1:3]) == "BZh") cflag <- "j"
-            else if(rawToChar(magic[1:5]) == paste0(rawToChar(as.raw(0xfd)),"7zXZ"))
-                 cflag <- "J"
-        } else if (compressed) cflag <- "z"
+            ## (https://tukaani.org/xz/xz-file-format.txt)
+            else if(all(magic[1:6] == c(0xFD, 0x37, 0x7A, 0x58, 0x5A, 0x00))) cflag <- "J"
+        } else if (isTRUE(compressed)) cflag <- "z"
     } else stop("'compressed' must be logical or character")
-    if (!restore_times) cflag <- paste0(cflag, "m")
 
-    gzOK <- .Platform$OS.type == "windows"
-    if (!gzOK ) {
-        ## version info may be sent to stdout or stderr
-        tf <- tempfile()
-        ## TAR might be a command+flags, so don't quote it
-        cmd <- paste0(TAR, " -", cflag, "tf ", shQuote(tarfile))
-        system(paste(TAR, "--version >", tf, "2>&1"))
-        if (file.exists(tf)) {
-            gzOK <- any(grepl("GNU", readLines(tf), fixed = TRUE))
-            unlink(tf)
-        }
+    if (support_old_tars) {
+        if (cflag == "z")
+            if (nzchar(ZIP <- Sys.getenv("R_GZIPCMD"))) {
+                TAR <- paste(ZIP, "-dc", shQuote(tarfile), "|", TAR)
+                tarfile <- "-"
+                cflag <- ""
+            } else stop(sprintf("No %s command found", sQuote("gzip")))
+        if (cflag == "j")
+            if (nzchar(ZIP <- Sys.getenv("R_BZIPCMD"))) {
+                TAR <- paste(ZIP,  "-dc", shQuote(tarfile), "|", TAR)
+                tarfile <- "-"
+                cflag <- ""
+            } else stop(sprintf("No %s command found", sQuote("bzip2")))
+        if (cflag == "J")
+            if (nzchar(Sys.which("xz"))) {
+                TAR <- paste("xz -dc", shQuote(tarfile), "|", TAR)
+                tarfile <- "-"
+                cflag <- ""
+            } else stop(sprintf("No %s command found", sQuote("xz")))
     }
-    tarfile <- path.expand(tarfile)
-    if (!gzOK && cflag == "z" && nzchar(ZIP <- Sys.getenv("R_GZIPCMD"))) {
-        TAR <- paste(ZIP, "-dc", shQuote(tarfile), "|", TAR)
-        tarfile <- "-"
-        cflag <- ""
-    }
-    if (!gzOK && cflag == "j" && nzchar(ZIP <- Sys.getenv("R_BZIPCMD"))) {
-        TAR <- paste(ZIP,  "-dc", shQuote(tarfile), "|", TAR)
-        tarfile < "-"
-        cflag <- ""
-    }
-    if (cflag == "J") {
-        TAR <- paste("xz -dc", shQuote(tarfile), "|", TAR)
-        tarfile < "-"
-        cflag <- ""
-    }
+
     if (list) {
+        ## TAR might be a command+flags or piped commands, so don't quote it
         cmd <- paste0(TAR, " -", cflag, "tf ", shQuote(tarfile))
         if (length(extras)) cmd <- paste(cmd, extras, collapse = " ")
         if (verbose) message("untar: using cmd = ", sQuote(cmd), domain = NA)
         system(cmd, intern = TRUE)
     } else {
+        if (!restore_times) cflag <- paste0(cflag, "m")
         cmd <- paste0(TAR, " -", cflag, "xf ", shQuote(tarfile))
         if (!missing(exdir)) {
             if (!dir.exists(exdir)) {
@@ -351,6 +360,8 @@ tar <- function(tarfile, files = NULL,
 
             ## Could pipe through gzip etc: might be safer for xz
             ## as -J was lzma in GNU tar 1.20:21
+            ## NetBSD < 8 used --xz not -J
+            ## OpenBSD and Heirloom Toolchest have no support for xz
             flags <- switch(match.arg(compression),
                             "none" = "-cf",
                             "gzip" = "-zcf",
@@ -396,6 +407,7 @@ tar <- function(tarfile, files = NULL,
     } else if(inherits(tarfile, "connection")) con <- tarfile
     else stop("'tarfile' must be a character string or a connection")
 
+    ## (Comment from 2013)
     ## FIXME: eventually we should use the pax extension, but
     ## that was first supported in R 2.15.3.
     GNUname <- function(name, link = FALSE)
@@ -426,7 +438,7 @@ tar <- function(tarfile, files = NULL,
         }
         header <- raw(512L)
         ## add trailing / to dirs.
-        if(info$isdir && !grepl("/$", f)) f <- paste0(f, "/")
+        if(info$isdir && !endsWith(f, "/")) f <- paste0(f, "/")
         name <- charToRaw(f)
         if(length(name) > 100L) {
             OK <- TRUE

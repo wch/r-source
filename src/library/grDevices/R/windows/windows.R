@@ -1,7 +1,7 @@
 #  File src/library/grDevices/R/windows/windows.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -39,7 +39,8 @@ assign(".Windows.Options.default",
        get(".Windows.Options", envir = .WindowsEnv),
        envir = .WindowsEnv)
 
-aa.win <- c("default", "none", "cleartype", "gray")
+## antialias options;  on Windows, used in png() only:
+aa.win   <- c("default", "none", "cleartype", "gray")
 aa.cairo <- c("default", "none", "gray", "subpixel")
 
 windows.options <- function(..., reset=FALSE)
@@ -108,11 +109,25 @@ windows <-
 win.graph <- function(width, height, pointsize)
     windows(width = width, height = height, pointsize = pointsize)
 
-x11 <- X11 <-
-     function(width, height, pointsize, bg, gamma, xpos, ypos, title)
+x11 <-
+X11 <- function(display = "", width, height, pointsize, gamma,
+                       bg, canvas, fonts, family,
+                       xpos, ypos, title, type, antialias)
+{
+    ## Arguments now identical on Windows / other.
+    ## Some back compatibility for R <= 3.5.x for Windows which had
+    ##		(width, height, .....)
+    if(is.numeric(display) && missing(height) &&
+       (missing(width) || is.numeric(width))) {
+        warning(gettextf("Calls like '%s' are unsafe and should be replaced by '%s'",
+                         "x11(w, h)", "x11(width=w, height=h)"), domain = NA)
+        if(!missing(width)) height <- width
+        width <- display
+    }
     windows(width = width, height = height, pointsize = pointsize,
             bg = bg, gamma = gamma,
             xpos = xpos, ypos = ypos, title = title)
+}
 
 win.print <-
     function(width = 7, height = 7, pointsize = 12, printer = "",

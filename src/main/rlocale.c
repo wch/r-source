@@ -161,7 +161,7 @@ int Ri18n_wcwidth(Rwchar_t c)
     static int lc = 0;
 
     if (0 != strcmp(setlocale(LC_CTYPE, NULL), lc_cache)) {
-	strncpy(lc_str, setlocale(LC_CTYPE, NULL), sizeof(lc_str));
+	strncpy(lc_str, setlocale(LC_CTYPE, NULL), sizeof(lc_str) - 1);
         lc_str[sizeof(lc_str) - 1] = '\0';
 	for (i = 0, j = (int) strlen(lc_str); i < j && i < sizeof(lc_str); i++)
 	    lc_str[i] = (char) toupper(lc_str[i]);

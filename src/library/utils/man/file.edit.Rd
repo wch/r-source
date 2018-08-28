@@ -1,6 +1,6 @@
 % File src/library/utils/man/file.edit.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{file.edit}
@@ -39,10 +39,9 @@ file.edit(\dots, title = file, editor = getOption("editor"),
   \code{editor}.  On Unix the default is set from the environment
   variables \env{EDITOR} or \env{VISUAL} if either is set, otherwise
   \code{vi} is used.
-#ifdef windows
 
+  On Windows,
   UTF-8-encoded paths not valid in the current locale can be used.
-#endif
 }
 \seealso{
   \code{\link{files}},

@@ -1,6 +1,6 @@
 % File src/library/utils/man/View.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{View}
@@ -21,7 +21,7 @@ View(x, title)
 \details{
 
   Object \code{x} is coerced (if possible) to a data frame, then
-  columns are converted to character using \code{\link{format.data.frame}}.  
+  columns are converted to character using \code{\link{format.data.frame}}.
   The object is then viewed in a spreadsheet-like data viewer, a
   read-only version of \code{\link{data.entry}}.
 
@@ -29,21 +29,18 @@ View(x, title)
   they are displayed in a separate first column called \code{row.names}.
 
   Objects with zero columns or zero rows are not accepted.
-#ifdef unix
 
-  The array of cells can be navigated by the cursor keys and Home, End,
-  Page Up and Page Down (where supported by X11) as well as Enter
-  and Tab.
-#endif
-#ifdef windows
+  \describe{
+    \item{On Unix-alikes,}{the array of cells can be navigated by the
+      cursor keys and Home, End, Page Up and Page Down (where supported by
+      X11) as well as Enter and Tab.}
+    \item{On Windows,}{the array of cells can be navigated \emph{via}
+      the scrollbars and by the cursor keys, Home, End, Page Up and Page Down.
 
-  The array of cells can be navigated \emph{via} the scrollbars and
-  by the cursor keys, Home, End, Page Up and Page Down.
-
-  The initial size of the data viewer window is taken from the default
-  dimensions of a pager (see \code{\link{Rconsole}}), but adjusted
-  downwards to show a whole number of rows and columns.
-#endif
+      On Windows, the initial size of the data viewer window is taken
+      from the default dimensions of a pager (see \code{\link{Rconsole}}),
+      but adjusted downwards to show a whole number of rows and columns.}
+  }
 }
 \value{
   Invisible \code{NULL}.  The functions puts up a window and returns

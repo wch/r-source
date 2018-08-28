@@ -1033,6 +1033,9 @@ visible (and if it is, it need not be the one from that namespace:
 give an error if the suggested package is not available, simply use
 e.g.@: @code{rgl::plot3d}.
 
+If the conditional code produces @code{print} output, function
+@code{withAutoprint} can be useful.
+
 Note that the recommendation to use suggested packages conditionally in
 tests does also apply to packages used to manage test suites: a
 notorious example was @CRANpkg{testthat} which in version 1.0.0 contained
@@ -2068,14 +2071,15 @@ SHLIB_OPENMP_FFLAGS
 
 @noindent
 are available for use in @file{src/Makevars} or @file{src/Makevars.win}.
-Include the appropriate macro in @code{PKG_CFLAGS}, @code{PKG_CPPFLAGS}
-and so on, and also in @code{PKG_LIBS}.  C/C++ code that needs to be
-conditioned on the use of OpenMP can be used inside @code{#ifdef
-_OPENMP}: note that some toolchains used for @R{} (including that of
-macOS and some others using @command{clang}@footnote{Default builds of
-@command{clang} 3.8.0 and later have support for OpenMP, but the
-@code{libomp} run-time library may not be installed.}) have no OpenMP
-support at all, not even @file{omp.h}.
+Include the appropriate macro in @code{PKG_CFLAGS}, @code{PKG_CXXFLAGS}
+and so on, and also in @code{PKG_LIBS} (but see below for Fortran 77).
+C/C++ code that needs to be conditioned on the use of OpenMP can be used
+inside @code{#ifdef _OPENMP}: note that some toolchains used for @R{}
+(including Apple's for macOS and some others using
+@command{clang}@footnote{Default builds of @command{clang} 3.8.0 and
+later have support for OpenMP, but the @code{libomp} run-time library
+may not be installed.}) have no OpenMP support at all, not even
+@file{omp.h}.
 
 For example, a package with C code written for OpenMP should have in
 @file{src/Makevars} the lines
@@ -2086,9 +2090,13 @@ PKG_LIBS = $(SHLIB_OPENMP_CFLAGS)
 @end example
 
 Note that the macro @code{SHLIB_OPENMP_CXXFLAGS} applies to the default
-C++ compiler and not necessarily to the C++11/14/17 compiler: users of the
-latter should do their own @command{configure} checks (an example is
-available in CRAN package @CRANpkg{ARTP2}).
+C++ compiler and not necessarily to the C++11/14/17 compiler: users of
+the latter should do their own @command{configure} checks.  If you do
+use your own checks, make sure that OpenMP support is complete by
+compiling and linking an OpenMP-using program: on some platforms the
+runtime library is optional and on others that library depends on other
+optional libraries.
+@c For clang pre-7, libomp.so depended on libatomic.
 
 Some care is needed when compilers are from different families which may
 use different OpenMP runtimes (e.g.@: @command{clang} @emph{vs} GCC
@@ -2112,24 +2120,24 @@ include the @file{omp.h} header: some compilers (but not all) include it
 when OpenMP mode is switched on (e.g.@: @emph{via} flag
 @option{-fopenmp}).
 
-@c http://openmp.org/wp/openmp-compilers/
+@c http://openmp.org/wp/openmp-compilers-tools/
 @c clang 3.8.x reports 201307 but has full suport only for 3.1 (201111)
 @c clang 3.9.x reports 201111 but has all but offloading support of 4.0.
+@c Debian Wheezy is on ELTS until 2019-05-31
+@c Centos 6 EOL 2020-11-30, defaults to gcc 4.7
 There is nothing@footnote{In most implementations the @code{_OPENMP}
 macro has value a date which can be mapped to an OpenMP version: for
 example, value @code{201307} is the date of version 4.0 (July
 2013). However this may be used to denote the latest version which is
 partially supported, not that which is fully implemented.}  to say what
 version of OpenMP is supported: version 3.1 (and much of 4.0) is
-supported by recent versions@footnote{GCC since 4.7, hence @R{} builds
-for Windows since @R{} 3.3.0, which also support OpenMP 4.0.} of the
-Linux, Windows and Solaris platforms, but portable packages cannot
-assume that end users have recent versions.@footnote{People do use older
-versions of OSes such as Ubuntu 12.04LTS and Debian Wheezy LTS which
-have GCC 4.4.}  macOS currently uses Apple builds of @command{clang}
-with no OpenMP support (even if invoked as @command{gcc} and despite the
-@command{man} page including the flag @option{-fopenmp} for that
-command).  @uref{http://www.openmp.org/@/resources/@/openmp-compilers}
+supported by recent versions of the Linux, Windows and Solaris
+platforms, but portable packages cannot assume that end users have
+recent versions.@footnote{People do use older versions of OSes such as
+Debian Wheezy which has GCC 4.4.}  Apple builds of @command{clang}
+on macOS currently have no OpenMP support, but @acronym{CRAN} binary
+packages are built with a @command{clang}-based toolchain which supports
+OpenMP.  @uref{http://www.openmp.org/@/resources/@/openmp-compilers-tools}
 gives some idea of what compilers support what versions.
 
 The performance of OpenMP varies substantially between platforms.  The
@@ -2142,6 +2150,10 @@ word, so computations done on OpenMP threads will not make use of
 extended-precision arithmetic which is the default for the main process.
 @c mingw64-public, 2015-02-02.
 @c https://stackoverflow.com/questions/2553725/is-the-fpu-control-word-setting-per-thread-or-per-process
+
+Do not include these macros unless your code does make use of OpenMP
+(possibly for C++ via included external headers): this can result in the
+OpenMP runtime being linked in, threads being started, @dots{}.
 
 Calling any of the @R{} API from threaded code is `for experts only' and
 strongly discouraged. Many functions in the @R{} API modify internal
@@ -4655,8 +4667,9 @@ existence (perhaps using @code{Sys.which}), as well as declared in the
 @samp{SystemRequirements} field.
 
 An external command can be a (possibly optional) requirement for an
-imported or suggested package but needed for examples or tests in the
-package itself.  Such usages should always be declared and conditional.
+imported or suggested package but needed for examples, tests or
+vignettes in the package itself.  Such usages should always be declared
+and conditional.
 
 @item
 Be sure to use portable encoding names: none of @code{utf8}, @code{mac}
@@ -4729,6 +4742,12 @@ is no one to look at the output.  It is better to use something like one of
 if(interactive()) View(obj) else print(head(obj))
 if(interactive()) View(obj) else str(obj)
 @end example
+
+@item
+Be careful when comparing file paths.  There can be multiple paths to a
+single file, and some of these can be very long character strings.  If
+possible canonicalize paths before comparisons, but study
+@code{?normalizePath} to be aware of the pitfalls.
 
 @item
 Only test the accuracy of results if you have done a formal error
@@ -5266,6 +5285,31 @@ Inclusion by such headers of C-style headers such as @file{math.h} (see above).
 @noindent
 The most portable way to interface to other software with a C API is to
 use C code (which can normally be mixed with C++ code in a package).
+
+@item
+Avoid platform-specific code if at all possible, but if you need to test
+for a platform ensure that all platforms are covered.  For example,
+@code{__unix__} is not defined on all Unix-alikes, in particular not on
+macOS.  A reasonably portable way to condition code for a Unix-alike is
+@example
+#if defined (__unix__) || (defined (__APPLE__) && defined (__MACH__))
+#endif
+@end example
+@noindent
+but
+@example
+#ifdef _WIN32
+// Windows-specific code
+#else
+// Unix-alike code
+#endif
+@end example
+@noindent
+would be better.  For a Unix-alike it is much better to use
+@command{configure} to test for the functionality needed than make
+assumptions about OSes (and people all too frequently forget @R{} is
+used on platforms other than Linux, Windows and macOS --- and some
+forget macOS).
 
 @end itemize
 
@@ -8654,7 +8698,7 @@ Finer control of what is checked can be achieved by other options: for
 @uref{https://clang.llvm.org/@/docs/@/UsersManual.html#controlling-code-generation}.@footnote{or
 the user manual for your version of @command{clang}, e.g.@: (the paths
 have differed for some versions)
-@uref{http://llvm.org/@/releases/@/4.0.0/@/tools/@/clang/@/docs/@/UsersManual.html}.}
+@uref{http://llvm.org/@/releases/@/6.0.0/@/tools/@/clang/@/docs/@/UsersManual.html}.}
 The current set for @command{clang} is (on a single line):
 @example
 -fsanitize=alignment,bool,bounds,enum,float-cast-overflow,
@@ -8707,9 +8751,9 @@ where @code{float-divide-by-zero} is not desirable for @R{} uses and
 @c and @code{vptr} checks produced many warnings on GCC's own C++ headers,
 @c so should be disabled.
 
-From GCC 8 @code{signed-integer-overflow} is no longer be a default
-part of @option{-fsanitize=undefined}, but can be specified separately.
-It adds options @option{-fsanitize=pointer-overflow} an
+From GCC 8 @code{signed-integer-overflow} is no longer a default part of
+@option{-fsanitize=undefined}, but can be specified separately.  It adds
+options @option{-fsanitize=pointer-overflow} and
 @option{-fsanitize=builtin}.
 
 Other useful flags include

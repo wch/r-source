@@ -1,6 +1,6 @@
 % File src/library/utils/man/Rprof.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Rprof}
@@ -11,7 +11,7 @@
 }
 \usage{
 Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02,
-       memory.profiling = FALSE, gc.profiling = FALSE, 
+       memory.profiling = FALSE, gc.profiling = FALSE,
        line.profiling = FALSE, numfiles = 100L, bufsize = 10000L)
 }
 \arguments{
@@ -40,7 +40,9 @@ Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02,
   process the output file to produce a summary of the usage; use
   \command{R CMD Rprof --help} for usage information.
 
-#ifdef windows
+  How time is measured varies by platform:
+   \describe{
+     \item{On Windows:}{
   Exactly what the time interval measures is subtle: it is time that the
   \R process is running and executing an \R command.  It is not however just
   CPU time, for if \code{readline()} is waiting for input, that counts
@@ -49,32 +51,33 @@ Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02,
   Note that the timing interval cannot be too small, for the time spent
   in each profiling step is added to the interval.  What is feasible is
   machine-dependent, but 10ms seemed as small as advisable on a 1GHz machine.
-#endif
-#ifdef unix
-  How time is measured varies by platform: on a Unix-alike it is the CPU
+    }
+    \item{On Unix-alikes}{it is the CPU
   time of the \R process, so for example excludes time when \R is waiting
   for input or for processes run by \code{\link{system}} to return.
 
   Note that the timing interval cannot usefully be too small: once the
   timer goes off, the information is not recorded until the next timing
-  click (probably in the range 1--10msecs).
-#endif
+  click (probably in the range 1--10 ms).
+    }
+  }
 
   Functions will only be recorded in the profile log if they put a
   context on the call stack (see \code{\link{sys.calls}}).  Some
   \link{primitive} functions do not do so: specifically those which are
   of \link{type} \code{"special"} (see the \sQuote{R Internals} manual
   for more details).
-  
+
   Individual statements will be recorded in the profile log if
   \code{line.profiling} is \code{TRUE}, and if the code being executed
   was parsed with source references.  See \code{\link{parse}} for a
   discussion of source references.  By default the statement locations
   are not shown in \code{\link{summaryRprof}}, but see that help page
-  for options to enable the display.    
+  for options to enable the display.
 }
-#ifdef unix
 \note{
+  \describe{
+    \item{On Unix-alikes:}{
   Profiling is not available on all platforms.  By default,
   support for profiling is compiled in if possible -- configure \R with
   \option{--disable-R-profiling} to change this.
@@ -82,19 +85,17 @@ Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02,
   As \R profiling uses the same mechanisms as C profiling, the two
   cannot be used together, so do not use \code{Rprof} in an executable
   built for C-level profiling.
-}
-#endif
-#ifdef windows
-\note{
+    }
+    \item{On Windows:}{
   \code{filename} can be a UTF-8-encoded filepath that cannot be translated to
   the current locale.
-}
-#endif
-\note{
+    }
+  }
+
 The profiler interrupts R asynchronously, and it cannot allocate
 memory to store results as it runs.  This affects line profiling,
 which needs to store an unknown number of file pathnames.  The
-\code{numfiles} and \code{bufsize} arguments control the size of 
+\code{numfiles} and \code{bufsize} arguments control the size of
 pre-allocated buffers to hold these results:  the former counts the
 maximum number of paths, the latter counts the numbers of bytes in
 them.  If the profiler runs out of space it will skip recording the

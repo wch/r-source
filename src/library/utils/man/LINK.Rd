@@ -1,13 +1,14 @@
-% File src/library/utils/man/unix/LINK.Rd
+% File src/library/utils/man/LINK.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{LINK}
 \alias{LINK}
-\title{Create Executable Programs}
+\title{Create Executable Programs on Unix-alikes}
 \description{
-  Front-end for creating executable programs.
+  Front-end for creating executable programs on unix-alikes, i.e., not
+  on Windows.
 }
 \usage{
 \special{R CMD LINK [options] linkcmd}
@@ -30,7 +31,7 @@
 \note{
   Some binary distributions of \R have \code{LINK} in a separate
   bundle, e.g.\sspace{}an \code{R-devel} RPM.
-  
+
   This is not available on Windows.
 }
 \seealso{

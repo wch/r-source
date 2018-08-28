@@ -902,24 +902,15 @@ SEXP attribute_hidden do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
 	    strcpy(tmp, translateChar(STRING_ELT(arg, i)));
 	}
 	if (mbcslocale) {
-	    /* This cannot lengthen the string, so safe to overwrite it.
-	       Would also be possible a char at a time.
-	     */
+	    /* This cannot lengthen the string, so safe to overwrite it. */
 	    int nc = (int) mbstowcs(NULL, tmp, 0);
-	    wchar_t *wstr = Calloc(nc+1, wchar_t), *wc;
 	    if (nc >= 0) {
+		wchar_t *wstr = Calloc(nc+1, wchar_t);
 		mbstowcs(wstr, tmp, nc+1);
-		for (wc = wstr; *wc; wc++) {
+		for (wchar_t * wc = wstr; *wc; wc++) {
 		    if (*wc == L'.' || (allow_ && *wc == L'_'))
 			/* leave alone */;
 		    else if (!iswalnum((int)*wc)) *wc = L'.';
-		    /* If it changes into dot here,
-		     * length will become short on mbcs.
-		     * The name which became short will contain garbage.
-		     * cf.
-		     *   >  make.names(c("\u30fb"))
-		     *   [1] "X.\0"
-		     */
 		}
 		wcstombs(tmp, wstr, strlen(tmp)+1);
 		Free(wstr);
@@ -931,7 +922,7 @@ SEXP attribute_hidden do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
 		/* else leave alone */
 	    }
 	}
-	l = (int) strlen(tmp);        /* needed? */
+//	l = (int) strlen(tmp);        /* needed? */
 	SET_STRING_ELT(ans, i, mkChar(tmp));
 	/* do we have a reserved word?  If so the name is invalid */
 	if (!isValidName(tmp)) {

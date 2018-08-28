@@ -31,9 +31,9 @@ md5sum(files)
 }
 \value{
   A character vector of the same length as \code{files}, with names
-  equal to \code{files}.  The elements will be \code{NA} for non-existent
-  or unreadable files, otherwise a 32-character string of hexadecimal
-  digits.
+  equal to \code{files} (possibly expanded).  The elements will be
+  \code{NA} for non-existent or unreadable files, otherwise a
+  32-character string of hexadecimal digits.
 }
 \source{
   The underlying C code was written by Ulrich Drepper and extracted from

@@ -76,7 +76,7 @@ as.factor <- function(x) {
     if (is.factor(x)) x
     else if (!is.object(x) && is.integer(x)) {
         ## optimization for calls from tapply via split.default
-        levels <- sort(unique.default(x)) # avoid array methods
+        levels <- sort.int(unique.default(x)) # avoid array methods
         f <- match(x, levels)
         levels(f) <- as.character(levels)
 	if(!is.null(nx <- names(x))) names(f) <- nx

@@ -22,6 +22,7 @@
 \alias{R_PLATFORM}
 \alias{R_RD4PDF}
 \alias{R_SHARE_DIR}
+\alias{R_SUPPORT_OLD_TARS}
 \alias{R_TEXI2DVICMD}
 \alias{R_UNZIPCMD}
 \alias{R_ZIPCMD}
@@ -169,6 +170,11 @@
     \item{\env{R_PRINTCMD}:}{Sets the default for
       \code{\link{options}("printcmd")}, which sets the default print
       command to be used by \code{\link{postscript}}.}
+    \item{\env{R_SUPPORT_OLD_TARS}}{logical. Sets the default for the
+      \code{support_old_tars} argument of \code{\link{untar}}.  Should
+      be set to \code{TRUE} if an old system \command{tar} command is
+      used which does not support either \command{xz} compression or
+      automagically detecting compression type.}
   }
 }
 #endif

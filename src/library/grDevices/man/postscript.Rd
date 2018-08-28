@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/postscript.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{postscript}
@@ -51,17 +51,19 @@ postscript(file = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
     in the PostScript file and are available for use with the device.
     See \sQuote{Families} below.  Defaults to \code{NULL}.}
   \item{encoding}{the name of an encoding file.  Defaults to
-    \code{"default"}.  The latter is interpreted as
-#ifdef unix
-    \file{"ISOLatin1.enc"} unless the locale is recognized as
+    \code{"default"}.  The latter is interpreted
+    \describe{
+      \item{on Unix-alikes}{
+	as \file{"ISOLatin1.enc"} unless the locale is recognized as
     corresponding to a language using ISO 8859-\{2,5,7,13,15\} or KOI8-\{R,U\}.
-#endif
-#ifdef windows
-    \file{"CP1250.enc"} (Central European), \code{"CP1251.enc"} (Cyrillic),
+      }
+      \item{on Windows}{
+    as \file{"CP1250.enc"} (Central European), \code{"CP1251.enc"} (Cyrillic),
     \code{"CP1253.enc"} (Greek) or \code{"CP1257.enc"} (Baltic) if one
     of those codepages is in use, otherwise \file{"WinAnsi.enc"}
     (codepage 1252).
-#endif
+      }
+    }
     The file is looked for in the \file{enc} directory of package
     \pkg{grDevices} if the path does not contain a path separator.  An
     extension \code{".enc"} can be omitted.
@@ -100,12 +102,7 @@ postscript(file = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
   \item{command}{the command to be used for \sQuote{printing}.  Defaults
     to \code{"default"}, the value of option \code{"printcmd"}.  The
     length limit is \code{2*PATH_MAX},
-#ifdef unix
-    typically 8096 bytes.
-#endif
-#ifdef windows
-    520 bytes.
-#endif
+    typically 8096 bytes on Unix-alikes and 520 bytes on Windows.
   }
   \item{colormodel}{a character string describing the color model:
     currently allowed values as \code{"srgb"}, \code{"srgb+gray"},
@@ -330,7 +327,7 @@ postscript(file = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
     to the terminal but not to \R, in which case close the
     device by \code{dev.off} immediately.
   }
-#ifdef windows
+
   On Windows the default
   \code{"printcmd"} is empty and will give an error if
   \code{print.it = TRUE} is used.  Suitable commands to spool a PostScript
@@ -339,7 +336,6 @@ postscript(file = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
   run in a minimized window.   GSView 4.x provides \file{gsprint.exe}
   which may be more convenient (it requires Ghostscript version 6.50
   or later).
-#endif
 }
 \section{Conventions}{
   This section describes the implementation of the conventions for
@@ -406,19 +402,20 @@ require(graphics)
 postscript("foo.ps")
 # produce the desired graph(s)
 dev.off()              # turn off the postscript device
-#ifdef unix
+
+## On Unix-alikes only:
 postscript("|lp -dlw")
 # produce the desired graph(s)
 dev.off()              # plot will appear on printer
-#endif
-#ifdef windows
+
+## On Windows:
 options(printcmd = 'redpr -P"\\\\printhost\\lw"')
 postscript(file = tempfile("Rps."), print.it = TRUE)
 # produce the desired graph(s)
 dev.off()              # send plot file to the printer
-## alternative using GSView 4.x
+## alternative using GSView 4.x :
 options(printcmd = '/GhostGum/gsview/gsprint -query')
-#endif
+
 
 # for URW PostScript devices
 postscript("foo.ps", family = "NimbusSan")

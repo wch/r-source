@@ -1,24 +1,37 @@
-% File src/library/grDevices/man/unix/x11.Rd
+% File src/library/grDevices/man/x11.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{x11}
+\title{X Window System Graphics (X11)}
 \alias{x11}
 \alias{X11}
 \alias{X11.options}
 
-\title{X Window System Graphics}
 \description{
-  \code{X11} starts a graphics device driver for the X Window System
-  (version 11).  This can only be done on machines/accounts that have
-  access to an X server.
+  \describe{
+    \item{on Windows,}{the \code{X11()} and \code{x11()} functions are
+      simple wrappers to \code{\link{windows}()} for historical
+      compatibility convenience: Calling \code{x11()} or \code{X11()} would work in most
+      cases to open an interactive graphics device.
 
-  \code{x11} is recognized as a synonym for \code{X11}.
+      In \R versions before 3.6.0, the Windows version had a shorter
+      list of formal arguments.  Consequently, calls to \code{X11(*)}
+      with arguments should \emph{name} them for back compatibility.
 
-  The \R function is a wrapper for two devices, one based on Xlib
-  (\url{https://en.wikipedia.org/wiki/Xlib}) and one using cairographics
-  (\url{http://www.cairographics.org}).
+      Almost all information below does \emph{not} apply on Windows.}
+
+    \item{on Unix-alikes}{\code{X11} starts a graphics device driver for
+      the X Window System (version 11).  This can only be done on
+      machines/accounts that have access to an X server.
+
+      \code{x11} is recognized as a synonym for \code{X11}.
+
+      The \R function is a wrapper for two devices, one based on Xlib
+      (\url{https://en.wikipedia.org/wiki/Xlib}) and one using cairographics
+      (\url{http://www.cairographics.org}).}
+  }
 }
 \usage{
 X11(display = "", width, height, pointsize, gamma, bg, canvas,
@@ -334,9 +347,10 @@ If that shows \code{symbol.ttf} that may be the Wine symbol font -- use
   \code{\link{Devices}}, \code{\link{X11Fonts}}, \code{\link{savePlot}}.
 }
 \examples{\dontrun{
+if(.Platform$OS.type == "unix") { # Only on unix-alikes, possibly Mac,
 ## put something like this is your .Rprofile to customize the defaults
 setHook(packageEvent("grDevices", "onLoad"),
         function(...) grDevices::X11.options(width = 8, height = 6, xpos = 0,
                                              pointsize = 10))
-}}
+}}}
 \keyword{device}

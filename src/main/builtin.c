@@ -522,6 +522,9 @@ typedef struct cat_info {
     Rboolean wasopen;
     int changedcon;
     Rconnection con;
+#ifdef Win32
+    Rboolean saveWinUTF8out;
+#endif
 } cat_info;
 
 static void cat_cleanup(void *data)
@@ -536,7 +539,7 @@ static void cat_cleanup(void *data)
     /* previous line might have closed it */
     if(!wasopen && con->isopen) con->close(con);
 #ifdef Win32
-    WinUTF8out = FALSE;
+    WinUTF8out = pci->saveWinUTF8out;
 #endif
 }
 
@@ -607,6 +610,7 @@ SEXP attribute_hidden do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* will open new connection if required, and check for writeable */
 #ifdef Win32
     /* do this after re-sinking output */
+    ci.saveWinUTF8out = WinUTF8out;
     WinCheckUTF8();
 #endif
 
@@ -647,7 +651,7 @@ SEXP attribute_hidden do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 		   Use strncpy is in case these assumptions change.
 		*/
 		p = EncodeElement0(s, 0, 0, OutDec);
-		strncpy(buf, p, 512); buf[511] = '\0';
+		strncpy(buf, p, 511); buf[511] = '\0';
 		p = buf;
 	    }
 #ifdef fixed_cat
@@ -678,7 +682,7 @@ SEXP attribute_hidden do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 			p = trChar(STRING_ELT(s, i+1));
 		    else {
 			p = EncodeElement0(s, i+1, 0, OutDec);
-			strncpy(buf, p, 512); buf[511] = '\0';
+			strncpy(buf, p, 511); buf[511] = '\0';
 			p = buf;
 		    }
 		    w = (int) strlen(p);

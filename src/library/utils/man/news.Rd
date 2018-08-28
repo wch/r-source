@@ -37,15 +37,17 @@ news(query, package = "R", lib.loc = NULL, format = NULL,
 \value{
   A data frame inheriting from class \code{"news_db"}, with
   \code{\link{attributes}} \code{"package"} (and \code{"subset"} if the
-    \code{query} lead to proper subsetting).
+  \code{query} lead to proper subsetting).
 }
 \details{
   If \code{package} is \code{"R"} (default), a news db is built with the
   news since the 3.0.0 release of R (corresponding to R's top-level
   \file{NEWS} file).  Otherwise, if the given add-on package can be
   found in the given libraries, it is attempted to read its news in
-  structured form from files \file{inst/NEWS.Rd}, \file{NEWS} or
-  \file{inst/NEWS} (in that order).
+  structured form from files \file{inst/NEWS.Rd}, \file{NEWS.md}
+  (since \R version 3.6.0, needs packages \CRANpkg{commonmark} and
+  \CRANpkg{xml2} to be available), \file{NEWS} or \file{inst/NEWS}
+  (in that order).
 
   File \file{inst/NEWS.Rd} should be an Rd file given the entries as Rd
   \verb{\itemize} lists, grouped according to version using
@@ -57,6 +59,14 @@ news(query, package = "R", lib.loc = NULL, format = NULL,
   \verb{\subsection} elements named as the categories.
   At the very end of \verb{\section{..}}, the date may also be specified
   as \verb{(\%Y-\%m-\%d, <note>)}, i.e., including parentheses.
+
+  File \file{NEWS.md} should contain the news in Markdown (following the
+  CommonMark (\url{https://commonmark.org/}) specification), with the
+  primary heading level giving the version number after a prefix
+  followed by a space, and optionally followed by a space and a
+  parenthesized ISO 8601 format date.  Where available, secondary
+  heading are taken to indicate categories.  To accommodate for common
+  practice, news entries are only split down to the category level.
 
   The plain text \file{NEWS} files in add-on packages use a variety of
   different formats; the default news reader should be capable to

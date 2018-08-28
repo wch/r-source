@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000--2013  The R Core Team
+ *  Copyright (C) 2000--2018  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -690,23 +690,25 @@ void tcltk_init(int *TkUp)
 */
 #if !defined(Win32) && !defined(HAVE_AQUA)
     char *p= getenv("DISPLAY");
-    if(p && p[0])  /* exclude DISPLAY = "" */
+    if(!getenv("R_DONT_USE_TK")) {
+	if(p && p[0])  /* exclude DISPLAY = "" */
 #endif
-    {
-	code = Tk_Init(RTcl_interp);  /* Load Tk into interpreter */
-	if (code != TCL_OK) {
-	    warning(Tcl_GetStringResult(RTcl_interp));
-	} else {
-	    Tcl_StaticPackage(RTcl_interp, "Tk", Tk_Init, Tk_SafeInit);
-
-	    code = Tcl_Eval(RTcl_interp, "wm withdraw .");  /* Hide window */
-	    if (code != TCL_OK) error(Tcl_GetStringResult(RTcl_interp));
-	    *TkUp = 1;
+	{
+	    code = Tk_Init(RTcl_interp);  /* Load Tk into interpreter */
+	    if (code != TCL_OK) {
+		warning(Tcl_GetStringResult(RTcl_interp));
+	    } else {
+		Tcl_StaticPackage(RTcl_interp, "Tk", Tk_Init, Tk_SafeInit);
+		
+		code = Tcl_Eval(RTcl_interp, "wm withdraw .");  /* Hide window */
+		if (code != TCL_OK) error(Tcl_GetStringResult(RTcl_interp));
+		*TkUp = 1;
+	    }
 	}
-    }
 #if !defined(Win32) && !defined(HAVE_AQUA)
-    else
-	warningcall(R_NilValue, _("no DISPLAY variable so Tk is not available"));
+	else
+	    warningcall(R_NilValue, _("no DISPLAY variable so Tk is not available"));
+    }
 #endif
 
     Tcl_CreateCommand(RTcl_interp,

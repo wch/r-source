@@ -375,7 +375,7 @@ Rd2txt <-
 
     put <- function(...) {
         txt <- paste0(..., collapse="")
-        trail <- grepl("\n$", txt)
+        trail <- endsWith(txt, "\n")
         # Convert newlines
         txt <- strsplit(txt, "\n", fixed = TRUE)[[1L]]
         if (dropBlank) {

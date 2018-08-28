@@ -2708,7 +2708,7 @@ SEXP attribute_hidden do_filecopy(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if (STRING_ELT(fn, i) != NA_STRING) {
 		strncpy(from,
 			R_ExpandFileName(translateChar(STRING_ELT(fn, i))),
-			PATH_MAX);
+			PATH_MAX - 1);
 		from[PATH_MAX - 1] = '\0';
 		size_t ll = strlen(from);
 		if (ll) {  // people do pass ""
@@ -2717,7 +2717,7 @@ SEXP attribute_hidden do_filecopy(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    if(*p == '/') *p = '\0';
 		    p = strrchr(from, '/') ;
 		    if (p) {
-			strncpy(name, p+1, PATH_MAX);
+			strncpy(name, p+1, PATH_MAX - 1);
 			name[PATH_MAX - 1] = '\0';
 			*(p+1) = '\0';
 		    } else {

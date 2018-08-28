@@ -1,7 +1,7 @@
 #  File src/library/tools/R/dynamicHelp.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -27,8 +27,7 @@
 ##             or by file, /library/<pkg>/html/<file>.html
 httpd <- function(path, query, ...)
 {
-    .HTMLdirListing <- function(dir, base, up)
-    {
+    .HTMLdirListing <- function(dir, base, up) {
         files <- list.files(dir)    # note, no hidden files are listed
         out <- HTMLheader(paste0("Listing of directory<br/>", dir),
         		  headerTitle = paste("R:", dir), logo=FALSE,
@@ -45,8 +44,7 @@ httpd <- function(path, query, ...)
         list(payload = paste(out, collapse="\n"))
     }
 
-    .HTMLusermanuals <- function()
-    {
+    .HTMLusermanuals <- function() {
         pkgs <- unlist(.get_standard_package_names())
 
         out <- HTMLheader("R User Manuals")
@@ -60,13 +58,12 @@ httpd <- function(path, query, ...)
         list(payload = paste(out, collapse="\n"))
     }
 
-    .HTMLsearch <- function(query)
-    {
+    .HTMLsearch <- function(query) {
     	bool <- function(x) as.logical(as.numeric(x))
         res <- if(identical(names(query), "category")) {
             utils::help.search(keyword = query, verbose = 1L, use_UTF8 = TRUE)
-        } else if(identical(names(query), "results")) {
-            utils:::.hsearch_results()
+        } else if(identical(names(query), c("objects", "port"))) {
+            .httpd_objects(query["port"])
         } else {
             fields <- types <- NULL
             args <- list(pattern = ".")
@@ -213,8 +210,7 @@ httpd <- function(path, query, ...)
         list(payload = paste(out, collapse = "\n"))
     }
 
-    unfix <- function(file)
-    {
+    unfix <- function(file) {
         ## we need to re-fix links altered by fixup.package.URLs
         ## in R < 2.10.0
         fixedfile <- sub("/html/.*", "/fixedHTMLlinks", file)
@@ -230,13 +226,12 @@ httpd <- function(path, query, ...)
         list(file = file)
     }
 
-    mime_type <- function(path)
-    {
+    mime_type <- function(path) {
         ext <- strsplit(path, ".", fixed = TRUE)[[1L]]
         if(n <- length(ext)) ext <- ext[n] else ""
         switch(ext,
                "css" = "text/css",
-               "gif" = "image/gif", # in R2HTML
+               "gif" = "image/gif",     # in R2HTML
                "jpg" = "image/jpeg",
                "png" = "image/png",
                "svg" = "image/svg+xml",
@@ -244,8 +239,8 @@ httpd <- function(path, query, ...)
                "pdf" = "application/pdf",
                "eps" =,
                "ps" = "application/postscript", # in GLMMGibbs, mclust
-               "sgml" = "text/sgml", # in RGtk2
-               "xml" = "text/xml",  # in RCurl
+               "sgml" = "text/sgml",    # in RGtk2
+               "xml" = "text/xml",      # in RCurl
                "text/plain")
     }
 
@@ -274,10 +269,17 @@ httpd <- function(path, query, ...)
     else if(path == "/favicon.ico")
         return(list(file = file.path(R.home("doc"), "html", "favicon.ico")))
     else if(path == "/NEWS")
-         return(list(file = file.path(R.home("doc"), "html", "NEWS.html")))
+         return(list(file = file.path(R.home("doc"), "html", "NEWS.html"),
+                     "content-type" = "text/html"))
     else if(grepl("^/NEWS[.][[:digit:]]$", path))
     	return(list(file = file.path(R.home("doc"), sub("/", "", path)),
-    	            "content-type" = "text/plain; encoding=utf-8"))
+    	            "content-type" = "text/plain; charset=utf-8"))
+    else if((path == "/doc/html/NEWS.html") &&
+            identical(names(query), c("objects", "port"))) {
+        news <- .httpd_objects(query["port"])
+    	formatted <- toHTML(news, title = "R News")
+        return( list(payload = paste(formatted, collapse="\n")) )
+    }
     else if(!grepl("^/(doc|library|session)/", path))
         return(error_page(paste("Only NEWS and URLs under", mono("/doc"),
                                 "and", mono("/library"), "are allowed")))
@@ -490,15 +492,24 @@ httpd <- function(path, query, ...)
 				")' in the console.")) )
     } else if (grepl(newsRegexp, path)) {
     	pkg <- sub(newsRegexp, "\\1", path)
-    	if (!is.null(query) && !is.na(subset <- query["subset"])) {
-    	    # See utils:::print.news_db for the encoding of the subset
-    	    rle <- strsplit(subset, "_")[[1]]
-    	    rle <- structure(list(lengths = as.numeric(rle),
-    	    	                  values = rep(c(TRUE, FALSE), length.out = length(rle))),
-    	    	             class = "rle")
-    	    news <- news(inverse.rle(rle)[-1], package = pkg)
-	} else
-    	    news <- news(package = pkg)
+        if(identical(names(query), c("objects", "port")))
+            news <- .httpd_objects(query["port"])
+        else {
+            ## <FIXME>
+            ## This should no longer be used ...
+            if (!is.null(query) && !is.na(subset <- query["subset"])) {
+                ## See utils:::print.news_db for the encoding of the
+                ## subset 
+                rle <- strsplit(subset, "_")[[1L]]
+                rle <- structure(list(lengths = as.numeric(rle),
+                                      values = rep(c(TRUE, FALSE),
+                                                   length.out = length(rle))),
+                                 class = "rle")
+                news <- news(inverse.rle(rle)[-1L], package = pkg)
+            } else
+                news <- news(package = pkg)
+            ## </FIXME>
+        }
     	formatted <- toHTML(news,
     		            title=paste("NEWS in package", sQuote(pkg)),
     			    up="html/00Index.html")
@@ -671,3 +682,14 @@ function(path, port = httpdPort())
 ## environment holding potential custom httpd handlers
 .httpd.handlers.env <- new.env()
 
+.httpd_objects <-
+local({
+    val <- list()
+    function(port, new) {
+        port <- as.character(port)
+        if(!missing(new))
+            val[[port]] <<- new
+        else
+            val[[port]]
+    }
+})
