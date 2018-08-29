@@ -1,6 +1,6 @@
 % File src/library/base/man/bindenv.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{bindenv}
@@ -56,6 +56,8 @@ bindingIsActive(sym, env)
   things like C variables linked to \R variables and variables linked to
   databases, and is used to implement \code{\link{setRefClass}}.  It may
   also be useful for making thread-safe versions of some system globals.
+  Currently active bindings are not preserved during package installation,
+  but they can be created in \code{\link{.onLoad}}.
 }
 \value{
   The \code{bindingIsLocked} and \code{environmentIsLocked} return a
