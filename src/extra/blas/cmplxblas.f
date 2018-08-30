@@ -324,7 +324,7 @@ c
 *     .. Scalar Arguments ..
       COMPLEX*16         ALPHA, BETA
       INTEGER            INCX, INCY, LDA, M, N
-      CHARACTER(1)        TRANS
+      CHARACTER*1        TRANS
 *     .. Array Arguments ..
       COMPLEX*16         A( LDA, * ), X( * ), Y( * )
 *     ..
@@ -344,7 +344,7 @@ c
 *  Parameters
 *  ==========
 *
-*  TRANS  - CHARACTER(1).
+*  TRANS  - CHARACTER*1.
 *           On entry, TRANS specifies the operation to be performed as
 *           follows:
 *
@@ -762,7 +762,7 @@ c            END IF
 *     .. Scalar Arguments ..
       COMPLEX*16         ALPHA, BETA
       INTEGER            INCX, INCY, LDA, N
-      CHARACTER(1)        UPLO
+      CHARACTER*1        UPLO
 *     .. Array Arguments ..
       COMPLEX*16         A( LDA, * ), X( * ), Y( * )
 *     ..
@@ -780,7 +780,7 @@ c            END IF
 *  Parameters
 *  ==========
 *
-*  UPLO   - CHARACTER(1).
+*  UPLO   - CHARACTER*1.
 *           On entry, UPLO specifies whether the upper or lower
 *           triangular part of the array A is to be referenced as
 *           follows:
@@ -1027,7 +1027,7 @@ c            END IF
 *     .. Scalar Arguments ..
       COMPLEX*16         ALPHA
       INTEGER            INCX, INCY, LDA, N
-      CHARACTER(1)        UPLO
+      CHARACTER*1        UPLO
 *     .. Array Arguments ..
       COMPLEX*16         A( LDA, * ), X( * ), Y( * )
 *     ..
@@ -1045,7 +1045,7 @@ c            END IF
 *  Parameters
 *  ==========
 *
-*  UPLO   - CHARACTER(1).
+*  UPLO   - CHARACTER*1.
 *           On entry, UPLO specifies whether the upper or lower
 *           triangular part of the array A is to be referenced as
 *           follows:
@@ -1302,7 +1302,7 @@ c               END IF
 *  Parameters
 *  ==========
 *
-*  UPLO   - CHARACTER(1).
+*  UPLO   - CHARACTER*1.
 *           On  entry,   UPLO  specifies  whether  the  upper  or  lower
 *           triangular  part  of the  array  C  is to be  referenced  as
 *           follows:
@@ -1315,7 +1315,7 @@ c               END IF
 *
 *           Unchanged on exit.
 *
-*  TRANS  - CHARACTER(1).
+*  TRANS  - CHARACTER*1.
 *           On entry,  TRANS  specifies the operation to be performed as
 *           follows:
 *
@@ -1712,7 +1712,7 @@ c       code for both increments equal to 1
       SUBROUTINE ZTRMM ( SIDE, UPLO, TRANSA, DIAG, M, N, ALPHA, A, LDA,
      $                   B, LDB )
 *     .. Scalar Arguments ..
-      CHARACTER(1)        SIDE, UPLO, TRANSA, DIAG
+      CHARACTER*1        SIDE, UPLO, TRANSA, DIAG
       INTEGER            M, N, LDA, LDB
       COMPLEX*16         ALPHA
 *     .. Array Arguments ..
@@ -1734,7 +1734,7 @@ c       code for both increments equal to 1
 *  Parameters
 *  ==========
 *
-*  SIDE   - CHARACTER(1).
+*  SIDE   - CHARACTER*1.
 *           On entry,  SIDE specifies whether  op( A ) multiplies B from
 *           the left or right as follows:
 *
@@ -1744,7 +1744,7 @@ c       code for both increments equal to 1
 *
 *           Unchanged on exit.
 *
-*  UPLO   - CHARACTER(1).
+*  UPLO   - CHARACTER*1.
 *           On entry, UPLO specifies whether the matrix A is an upper or
 *           lower triangular matrix as follows:
 *
@@ -1754,7 +1754,7 @@ c       code for both increments equal to 1
 *
 *           Unchanged on exit.
 *
-*  TRANSA - CHARACTER(1).
+*  TRANSA - CHARACTER*1.
 *           On entry, TRANSA specifies the form of op( A ) to be used in
 *           the matrix multiplication as follows:
 *
@@ -1766,7 +1766,7 @@ c       code for both increments equal to 1
 *
 *           Unchanged on exit.
 *
-*  DIAG   - CHARACTER(1).
+*  DIAG   - CHARACTER*1.
 *           On entry, DIAG specifies whether or not A is unit triangular
 *           as follows:
 *
@@ -2104,7 +2104,7 @@ c                     END IF
       SUBROUTINE ZTRMV ( UPLO, TRANS, DIAG, N, A, LDA, X, INCX )
 *     .. Scalar Arguments ..
       INTEGER            INCX, LDA, N
-      CHARACTER(1)        DIAG, TRANS, UPLO
+      CHARACTER*1        DIAG, TRANS, UPLO
 *     .. Array Arguments ..
       COMPLEX*16         A( LDA, * ), X( * )
 *     ..
@@ -2122,7 +2122,7 @@ c                     END IF
 *  Parameters
 *  ==========
 *
-*  UPLO   - CHARACTER(1).
+*  UPLO   - CHARACTER*1.
 *           On entry, UPLO specifies whether the matrix is an upper or
 *           lower triangular matrix as follows:
 *
@@ -2132,7 +2132,7 @@ c                     END IF
 *
 *           Unchanged on exit.
 *
-*  TRANS  - CHARACTER(1).
+*  TRANS  - CHARACTER*1.
 *           On entry, TRANS specifies the operation to be performed as
 *           follows:
 *
@@ -2144,7 +2144,7 @@ c                     END IF
 *
 *           Unchanged on exit.
 *
-*  DIAG   - CHARACTER(1).
+*  DIAG   - CHARACTER*1.
 *           On entry, DIAG specifies whether or not A is unit
 *           triangular as follows:
 *
@@ -2425,7 +2425,7 @@ c                  END IF
       SUBROUTINE ZTRSM ( SIDE, UPLO, TRANSA, DIAG, M, N, ALPHA, A, LDA,
      $                   B, LDB )
 *     .. Scalar Arguments ..
-      CHARACTER(1)        SIDE, UPLO, TRANSA, DIAG
+      CHARACTER*1        SIDE, UPLO, TRANSA, DIAG
       INTEGER            M, N, LDA, LDB
       COMPLEX*16         ALPHA
 *     .. Array Arguments ..
@@ -2449,7 +2449,7 @@ c                  END IF
 *  Parameters
 *  ==========
 *
-*  SIDE   - CHARACTER(1).
+*  SIDE   - CHARACTER*1.
 *           On entry, SIDE specifies whether op( A ) appears on the left
 *           or right of X as follows:
 *
@@ -2459,7 +2459,7 @@ c                  END IF
 *
 *           Unchanged on exit.
 *
-*  UPLO   - CHARACTER(1).
+*  UPLO   - CHARACTER*1.
 *           On entry, UPLO specifies whether the matrix A is an upper or
 *           lower triangular matrix as follows:
 *
@@ -2469,7 +2469,7 @@ c                  END IF
 *
 *           Unchanged on exit.
 *
-*  TRANSA - CHARACTER(1).
+*  TRANSA - CHARACTER*1.
 *           On entry, TRANSA specifies the form of op( A ) to be used in
 *           the matrix multiplication as follows:
 *
@@ -2481,7 +2481,7 @@ c                  END IF
 *
 *           Unchanged on exit.
 *
-*  DIAG   - CHARACTER(1).
+*  DIAG   - CHARACTER*1.
 *           On entry, DIAG specifies whether or not A is unit triangular
 *           as follows:
 *
@@ -2839,7 +2839,7 @@ c                     END IF
       SUBROUTINE ZTRSV ( UPLO, TRANS, DIAG, N, A, LDA, X, INCX )
 *     .. Scalar Arguments ..
       INTEGER            INCX, LDA, N
-      CHARACTER(1)        DIAG, TRANS, UPLO
+      CHARACTER*1        DIAG, TRANS, UPLO
 *     .. Array Arguments ..
       COMPLEX*16         A( LDA, * ), X( * )
 *     ..
@@ -2860,7 +2860,7 @@ c                     END IF
 *  Parameters
 *  ==========
 *
-*  UPLO   - CHARACTER(1).
+*  UPLO   - CHARACTER*1.
 *           On entry, UPLO specifies whether the matrix is an upper or
 *           lower triangular matrix as follows:
 *
@@ -2870,7 +2870,7 @@ c                     END IF
 *
 *           Unchanged on exit.
 *
-*  TRANS  - CHARACTER(1).
+*  TRANS  - CHARACTER*1.
 *           On entry, TRANS specifies the equations to be solved as
 *           follows:
 *
@@ -2882,7 +2882,7 @@ c                     END IF
 *
 *           Unchanged on exit.
 *
-*  DIAG   - CHARACTER(1).
+*  DIAG   - CHARACTER*1.
 *           On entry, DIAG specifies whether or not A is unit
 *           triangular as follows:
 *
@@ -3203,7 +3203,7 @@ c
 *     .. Scalar Arguments ..
       COMPLEX*16         ALPHA, BETA
       INTEGER            INCX, INCY, KL, KU, LDA, M, N
-      CHARACTER(1)        TRANS
+      CHARACTER*1        TRANS
 *     .. Array Arguments ..
       COMPLEX*16         A( LDA, * ), X( * ), Y( * )
 *     ..
@@ -3223,7 +3223,7 @@ c
 *  Parameters
 *  ==========
 *
-*  TRANS  - CHARACTER(1).
+*  TRANS  - CHARACTER*1.
 *           On entry, TRANS specifies the operation to be performed as
 *           follows:
 *
@@ -3682,7 +3682,7 @@ c            END IF
 *     .. Scalar Arguments ..
       COMPLEX*16         ALPHA, BETA
       INTEGER            INCX, INCY, K, LDA, N
-      CHARACTER(1)        UPLO
+      CHARACTER*1        UPLO
 *     .. Array Arguments ..
       COMPLEX*16         A( LDA, * ), X( * ), Y( * )
 *     ..
@@ -3700,7 +3700,7 @@ c            END IF
 *  Parameters
 *  ==========
 *
-*  UPLO   - CHARACTER(1).
+*  UPLO   - CHARACTER*1.
 *           On entry, UPLO specifies whether the upper or lower
 *           triangular part of the band matrix A is being supplied as
 *           follows:
@@ -3989,7 +3989,7 @@ c            END IF
       SUBROUTINE ZHEMM ( SIDE, UPLO, M, N, ALPHA, A, LDA, B, LDB,
      $                   BETA, C, LDC )
 *     .. Scalar Arguments ..
-      CHARACTER(1)        SIDE, UPLO
+      CHARACTER*1        SIDE, UPLO
       INTEGER            M, N, LDA, LDB, LDC
       COMPLEX*16         ALPHA, BETA
 *     .. Array Arguments ..
@@ -4013,7 +4013,7 @@ c            END IF
 *  Parameters
 *  ==========
 *
-*  SIDE   - CHARACTER(1).
+*  SIDE   - CHARACTER*1.
 *           On entry,  SIDE  specifies whether  the  hermitian matrix  A
 *           appears on the  left or right  in the  operation as follows:
 *
@@ -4023,7 +4023,7 @@ c            END IF
 *
 *           Unchanged on exit.
 *
-*  UPLO   - CHARACTER(1).
+*  UPLO   - CHARACTER*1.
 *           On  entry,   UPLO  specifies  whether  the  upper  or  lower
 *           triangular  part  of  the  hermitian  matrix   A  is  to  be
 *           referenced as follows:
@@ -4294,7 +4294,7 @@ c            END IF
 *     .. Scalar Arguments ..
       DOUBLE PRECISION   ALPHA
       INTEGER            INCX, LDA, N
-      CHARACTER(1)        UPLO
+      CHARACTER*1        UPLO
 *     .. Array Arguments ..
       COMPLEX*16         A( LDA, * ), X( * )
 *     ..
@@ -4312,7 +4312,7 @@ c            END IF
 *  Parameters
 *  ==========
 *
-*  UPLO   - CHARACTER(1).
+*  UPLO   - CHARACTER*1.
 *           On entry, UPLO specifies whether the upper or lower
 *           triangular part of the array A is to be referenced as
 *           follows:
@@ -4530,7 +4530,7 @@ c               END IF
 *  Parameters
 *  ==========
 *
-*  UPLO   - CHARACTER(1).
+*  UPLO   - CHARACTER*1.
 *           On  entry,   UPLO  specifies  whether  the  upper  or  lower
 *           triangular  part  of the  array  C  is to be  referenced  as
 *           follows:
@@ -4543,7 +4543,7 @@ c               END IF
 *
 *           Unchanged on exit.
 *
-*  TRANS  - CHARACTER(1).
+*  TRANS  - CHARACTER*1.
 *           On entry,  TRANS  specifies the operation to be performed as
 *           follows:
 *
@@ -4836,7 +4836,7 @@ c               END IF
 *     .. Scalar Arguments ..
       COMPLEX*16         ALPHA, BETA
       INTEGER            INCX, INCY, N
-      CHARACTER(1)        UPLO
+      CHARACTER*1        UPLO
 *     .. Array Arguments ..
       COMPLEX*16         AP( * ), X( * ), Y( * )
 *     ..
@@ -4854,7 +4854,7 @@ c               END IF
 *  Parameters
 *  ==========
 *
-*  UPLO   - CHARACTER(1).
+*  UPLO   - CHARACTER*1.
 *           On entry, UPLO specifies whether the upper or lower
 *           triangular part of the matrix A is supplied in the packed
 *           array AP as follows:
@@ -5106,7 +5106,7 @@ c               END IF
 *     .. Scalar Arguments ..
       DOUBLE PRECISION   ALPHA
       INTEGER            INCX, N
-      CHARACTER(1)        UPLO
+      CHARACTER*1        UPLO
 *     .. Array Arguments ..
       COMPLEX*16         AP( * ), X( * )
 *     ..
@@ -5124,7 +5124,7 @@ c               END IF
 *  Parameters
 *  ==========
 *
-*  UPLO   - CHARACTER(1).
+*  UPLO   - CHARACTER*1.
 *           On entry, UPLO specifies whether the upper or lower
 *           triangular part of the matrix A is supplied in the packed
 *           array AP as follows:
@@ -5323,7 +5323,7 @@ c               END IF
 *     .. Scalar Arguments ..
       COMPLEX*16         ALPHA
       INTEGER            INCX, INCY, N
-      CHARACTER(1)        UPLO
+      CHARACTER*1        UPLO
 *     .. Array Arguments ..
       COMPLEX*16         AP( * ), X( * ), Y( * )
 *     ..
@@ -5341,7 +5341,7 @@ c               END IF
 *  Parameters
 *  ==========
 *
-*  UPLO   - CHARACTER(1).
+*  UPLO   - CHARACTER*1.
 *           On entry, UPLO specifies whether the upper or lower
 *           triangular part of the matrix A is supplied in the packed
 *           array AP as follows:
@@ -5595,7 +5595,7 @@ c               END IF
       SUBROUTINE ZSYMM ( SIDE, UPLO, M, N, ALPHA, A, LDA, B, LDB,
      $                   BETA, C, LDC )
 *     .. Scalar Arguments ..
-      CHARACTER(1)        SIDE, UPLO
+      CHARACTER*1        SIDE, UPLO
       INTEGER            M, N, LDA, LDB, LDC
       COMPLEX*16         ALPHA, BETA
 *     .. Array Arguments ..
@@ -5619,7 +5619,7 @@ c               END IF
 *  Parameters
 *  ==========
 *
-*  SIDE   - CHARACTER(1).
+*  SIDE   - CHARACTER*1.
 *           On entry,  SIDE  specifies whether  the  symmetric matrix  A
 *           appears on the  left or right  in the  operation as follows:
 *
@@ -5629,7 +5629,7 @@ c               END IF
 *
 *           Unchanged on exit.
 *
-*  UPLO   - CHARACTER(1).
+*  UPLO   - CHARACTER*1.
 *           On  entry,   UPLO  specifies  whether  the  upper  or  lower
 *           triangular  part  of  the  symmetric  matrix   A  is  to  be
 *           referenced as follows:
@@ -5891,7 +5891,7 @@ c               END IF
       SUBROUTINE ZSYR2K( UPLO, TRANS, N, K, ALPHA, A, LDA, B, LDB,
      $                   BETA, C, LDC )
 *     .. Scalar Arguments ..
-      CHARACTER(1)        UPLO, TRANS
+      CHARACTER*1        UPLO, TRANS
       INTEGER            N, K, LDA, LDB, LDC
       COMPLEX*16         ALPHA, BETA
 *     .. Array Arguments ..
@@ -5916,7 +5916,7 @@ c               END IF
 *  Parameters
 *  ==========
 *
-*  UPLO   - CHARACTER(1).
+*  UPLO   - CHARACTER*1.
 *           On  entry,   UPLO  specifies  whether  the  upper  or  lower
 *           triangular  part  of the  array  C  is to be  referenced  as
 *           follows:
@@ -5929,7 +5929,7 @@ c               END IF
 *
 *           Unchanged on exit.
 *
-*  TRANS  - CHARACTER(1).
+*  TRANS  - CHARACTER*1.
 *           On entry,  TRANS  specifies the operation to be performed as
 *           follows:
 *
@@ -6215,7 +6215,7 @@ c                  END IF
       SUBROUTINE ZSYRK ( UPLO, TRANS, N, K, ALPHA, A, LDA,
      $                   BETA, C, LDC )
 *     .. Scalar Arguments ..
-      CHARACTER(1)        UPLO, TRANS
+      CHARACTER*1        UPLO, TRANS
       INTEGER            N, K, LDA, LDC
       COMPLEX*16         ALPHA, BETA
 *     .. Array Arguments ..
@@ -6240,7 +6240,7 @@ c                  END IF
 *  Parameters
 *  ==========
 *
-*  UPLO   - CHARACTER(1).
+*  UPLO   - CHARACTER*1.
 *           On  entry,   UPLO  specifies  whether  the  upper  or  lower
 *           triangular  part  of the  array  C  is to be  referenced  as
 *           follows:
@@ -6253,7 +6253,7 @@ c                  END IF
 *
 *           Unchanged on exit.
 *
-*  TRANS  - CHARACTER(1).
+*  TRANS  - CHARACTER*1.
 *           On entry,  TRANS  specifies the operation to be performed as
 *           follows:
 *
@@ -6508,7 +6508,7 @@ c                  END IF
       SUBROUTINE ZTBMV ( UPLO, TRANS, DIAG, N, K, A, LDA, X, INCX )
 *     .. Scalar Arguments ..
       INTEGER            INCX, K, LDA, N
-      CHARACTER(1)        DIAG, TRANS, UPLO
+      CHARACTER*1        DIAG, TRANS, UPLO
 *     .. Array Arguments ..
       COMPLEX*16         A( LDA, * ), X( * )
 *     ..
@@ -6526,7 +6526,7 @@ c                  END IF
 *  Parameters
 *  ==========
 *
-*  UPLO   - CHARACTER(1).
+*  UPLO   - CHARACTER*1.
 *           On entry, UPLO specifies whether the matrix is an upper or
 *           lower triangular matrix as follows:
 *
@@ -6536,7 +6536,7 @@ c                  END IF
 *
 *           Unchanged on exit.
 *
-*  TRANS  - CHARACTER(1).
+*  TRANS  - CHARACTER*1.
 *           On entry, TRANS specifies the operation to be performed as
 *           follows:
 *
@@ -6548,7 +6548,7 @@ c                  END IF
 *
 *           Unchanged on exit.
 *
-*  DIAG   - CHARACTER(1).
+*  DIAG   - CHARACTER*1.
 *           On entry, DIAG specifies whether or not A is unit
 *           triangular as follows:
 *
@@ -6885,7 +6885,7 @@ c                  END IF
       SUBROUTINE ZTBSV ( UPLO, TRANS, DIAG, N, K, A, LDA, X, INCX )
 *     .. Scalar Arguments ..
       INTEGER            INCX, K, LDA, N
-      CHARACTER(1)        DIAG, TRANS, UPLO
+      CHARACTER*1        DIAG, TRANS, UPLO
 *     .. Array Arguments ..
       COMPLEX*16         A( LDA, * ), X( * )
 *     ..
@@ -6907,7 +6907,7 @@ c                  END IF
 *  Parameters
 *  ==========
 *
-*  UPLO   - CHARACTER(1).
+*  UPLO   - CHARACTER*1.
 *           On entry, UPLO specifies whether the matrix is an upper or
 *           lower triangular matrix as follows:
 *
@@ -6917,7 +6917,7 @@ c                  END IF
 *
 *           Unchanged on exit.
 *
-*  TRANS  - CHARACTER(1).
+*  TRANS  - CHARACTER*1.
 *           On entry, TRANS specifies the equations to be solved as
 *           follows:
 *
@@ -6929,7 +6929,7 @@ c                  END IF
 *
 *           Unchanged on exit.
 *
-*  DIAG   - CHARACTER(1).
+*  DIAG   - CHARACTER*1.
 *           On entry, DIAG specifies whether or not A is unit
 *           triangular as follows:
 *
@@ -7266,7 +7266,7 @@ c                  END IF
       SUBROUTINE ZTPMV ( UPLO, TRANS, DIAG, N, AP, X, INCX )
 *     .. Scalar Arguments ..
       INTEGER            INCX, N
-      CHARACTER(1)        DIAG, TRANS, UPLO
+      CHARACTER*1        DIAG, TRANS, UPLO
 *     .. Array Arguments ..
       COMPLEX*16         AP( * ), X( * )
 *     ..
@@ -7284,7 +7284,7 @@ c                  END IF
 *  Parameters
 *  ==========
 *
-*  UPLO   - CHARACTER(1).
+*  UPLO   - CHARACTER*1.
 *           On entry, UPLO specifies whether the matrix is an upper or
 *           lower triangular matrix as follows:
 *
@@ -7294,7 +7294,7 @@ c                  END IF
 *
 *           Unchanged on exit.
 *
-*  TRANS  - CHARACTER(1).
+*  TRANS  - CHARACTER*1.
 *           On entry, TRANS specifies the operation to be performed as
 *           follows:
 *
@@ -7306,7 +7306,7 @@ c                  END IF
 *
 *           Unchanged on exit.
 *
-*  DIAG   - CHARACTER(1).
+*  DIAG   - CHARACTER*1.
 *           On entry, DIAG specifies whether or not A is unit
 *           triangular as follows:
 *
@@ -7604,7 +7604,7 @@ c                  END IF
       SUBROUTINE ZTPSV ( UPLO, TRANS, DIAG, N, AP, X, INCX )
 *     .. Scalar Arguments ..
       INTEGER            INCX, N
-      CHARACTER(1)        DIAG, TRANS, UPLO
+      CHARACTER*1        DIAG, TRANS, UPLO
 *     .. Array Arguments ..
       COMPLEX*16         AP( * ), X( * )
 *     ..
@@ -7625,7 +7625,7 @@ c                  END IF
 *  Parameters
 *  ==========
 *
-*  UPLO   - CHARACTER(1).
+*  UPLO   - CHARACTER*1.
 *           On entry, UPLO specifies whether the matrix is an upper or
 *           lower triangular matrix as follows:
 *
@@ -7635,7 +7635,7 @@ c                  END IF
 *
 *           Unchanged on exit.
 *
-*  TRANS  - CHARACTER(1).
+*  TRANS  - CHARACTER*1.
 *           On entry, TRANS specifies the equations to be solved as
 *           follows:
 *
@@ -7647,7 +7647,7 @@ c                  END IF
 *
 *           Unchanged on exit.
 *
-*  DIAG   - CHARACTER(1).
+*  DIAG   - CHARACTER*1.
 *           On entry, DIAG specifies whether or not A is unit
 *           triangular as follows:
 *
@@ -7945,7 +7945,7 @@ c                  END IF
       SUBROUTINE ZGEMM ( TRANSA, TRANSB, M, N, K, ALPHA, A, LDA, B, LDB,
      $                   BETA, C, LDC )
 *     .. Scalar Arguments ..
-      CHARACTER(1)        TRANSA, TRANSB
+      CHARACTER*1        TRANSA, TRANSB
       INTEGER            M, N, K, LDA, LDB, LDC
       COMPLEX*16         ALPHA, BETA
 *     .. Array Arguments ..
@@ -7969,7 +7969,7 @@ c                  END IF
 *  Parameters
 *  ==========
 *
-*  TRANSA - CHARACTER(1).
+*  TRANSA - CHARACTER*1.
 *           On entry, TRANSA specifies the form of op( A ) to be used in
 *           the matrix multiplication as follows:
 *
@@ -7981,7 +7981,7 @@ c                  END IF
 *
 *           Unchanged on exit.
 *
-*  TRANSB - CHARACTER(1).
+*  TRANSB - CHARACTER*1.
 *           On entry, TRANSB specifies the form of op( B ) to be used in
 *           the matrix multiplication as follows:
 *
