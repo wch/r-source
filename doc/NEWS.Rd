@@ -300,6 +300,11 @@
       and its internal C code detects \code{have_zone} in more cases.
       In some cases, this changes its output to become
       \code{format.POSIXct} compatible.
+
+      \item On Windows, \code{detectCores()} now detects processors in all
+      processor groups, not just the group \R is running in (impacts
+      particularly systems with more than 64 logical processors). Reported
+      by Arunkumar Srinivasan.
     }
   }
 }
