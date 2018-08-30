@@ -324,7 +324,7 @@ c
 *     .. Scalar Arguments ..
       COMPLEX*16         ALPHA, BETA
       INTEGER            INCX, INCY, LDA, M, N
-      CHARACTER*1        TRANS
+      CHARACTER          TRANS
 *     .. Array Arguments ..
       COMPLEX*16         A( LDA, * ), X( * ), Y( * )
 *     ..
@@ -762,7 +762,7 @@ c            END IF
 *     .. Scalar Arguments ..
       COMPLEX*16         ALPHA, BETA
       INTEGER            INCX, INCY, LDA, N
-      CHARACTER*1        UPLO
+      CHARACTER          UPLO
 *     .. Array Arguments ..
       COMPLEX*16         A( LDA, * ), X( * ), Y( * )
 *     ..
@@ -1027,7 +1027,7 @@ c            END IF
 *     .. Scalar Arguments ..
       COMPLEX*16         ALPHA
       INTEGER            INCX, INCY, LDA, N
-      CHARACTER*1        UPLO
+      CHARACTER          UPLO
 *     .. Array Arguments ..
       COMPLEX*16         A( LDA, * ), X( * ), Y( * )
 *     ..
@@ -1712,7 +1712,7 @@ c       code for both increments equal to 1
       SUBROUTINE ZTRMM ( SIDE, UPLO, TRANSA, DIAG, M, N, ALPHA, A, LDA,
      $                   B, LDB )
 *     .. Scalar Arguments ..
-      CHARACTER*1        SIDE, UPLO, TRANSA, DIAG
+      CHARACTER          SIDE, UPLO, TRANSA, DIAG
       INTEGER            M, N, LDA, LDB
       COMPLEX*16         ALPHA
 *     .. Array Arguments ..
@@ -2104,7 +2104,7 @@ c                     END IF
       SUBROUTINE ZTRMV ( UPLO, TRANS, DIAG, N, A, LDA, X, INCX )
 *     .. Scalar Arguments ..
       INTEGER            INCX, LDA, N
-      CHARACTER*1        DIAG, TRANS, UPLO
+      CHARACTER          DIAG, TRANS, UPLO
 *     .. Array Arguments ..
       COMPLEX*16         A( LDA, * ), X( * )
 *     ..
@@ -2425,7 +2425,7 @@ c                  END IF
       SUBROUTINE ZTRSM ( SIDE, UPLO, TRANSA, DIAG, M, N, ALPHA, A, LDA,
      $                   B, LDB )
 *     .. Scalar Arguments ..
-      CHARACTER*1        SIDE, UPLO, TRANSA, DIAG
+      CHARACTER          SIDE, UPLO, TRANSA, DIAG
       INTEGER            M, N, LDA, LDB
       COMPLEX*16         ALPHA
 *     .. Array Arguments ..
@@ -2839,7 +2839,7 @@ c                     END IF
       SUBROUTINE ZTRSV ( UPLO, TRANS, DIAG, N, A, LDA, X, INCX )
 *     .. Scalar Arguments ..
       INTEGER            INCX, LDA, N
-      CHARACTER*1        DIAG, TRANS, UPLO
+      CHARACTER          DIAG, TRANS, UPLO
 *     .. Array Arguments ..
       COMPLEX*16         A( LDA, * ), X( * )
 *     ..
@@ -3203,7 +3203,7 @@ c
 *     .. Scalar Arguments ..
       COMPLEX*16         ALPHA, BETA
       INTEGER            INCX, INCY, KL, KU, LDA, M, N
-      CHARACTER*1        TRANS
+      CHARACTER          TRANS
 *     .. Array Arguments ..
       COMPLEX*16         A( LDA, * ), X( * ), Y( * )
 *     ..
@@ -3682,7 +3682,7 @@ c            END IF
 *     .. Scalar Arguments ..
       COMPLEX*16         ALPHA, BETA
       INTEGER            INCX, INCY, K, LDA, N
-      CHARACTER*1        UPLO
+      CHARACTER          UPLO
 *     .. Array Arguments ..
       COMPLEX*16         A( LDA, * ), X( * ), Y( * )
 *     ..
@@ -3989,7 +3989,7 @@ c            END IF
       SUBROUTINE ZHEMM ( SIDE, UPLO, M, N, ALPHA, A, LDA, B, LDB,
      $                   BETA, C, LDC )
 *     .. Scalar Arguments ..
-      CHARACTER*1        SIDE, UPLO
+      CHARACTER          SIDE, UPLO
       INTEGER            M, N, LDA, LDB, LDC
       COMPLEX*16         ALPHA, BETA
 *     .. Array Arguments ..
@@ -4294,7 +4294,7 @@ c            END IF
 *     .. Scalar Arguments ..
       DOUBLE PRECISION   ALPHA
       INTEGER            INCX, LDA, N
-      CHARACTER*1        UPLO
+      CHARACTER          UPLO
 *     .. Array Arguments ..
       COMPLEX*16         A( LDA, * ), X( * )
 *     ..
@@ -4836,7 +4836,7 @@ c               END IF
 *     .. Scalar Arguments ..
       COMPLEX*16         ALPHA, BETA
       INTEGER            INCX, INCY, N
-      CHARACTER*1        UPLO
+      CHARACTER          UPLO
 *     .. Array Arguments ..
       COMPLEX*16         AP( * ), X( * ), Y( * )
 *     ..
@@ -5106,7 +5106,7 @@ c               END IF
 *     .. Scalar Arguments ..
       DOUBLE PRECISION   ALPHA
       INTEGER            INCX, N
-      CHARACTER*1        UPLO
+      CHARACTER          UPLO
 *     .. Array Arguments ..
       COMPLEX*16         AP( * ), X( * )
 *     ..
@@ -5323,7 +5323,7 @@ c               END IF
 *     .. Scalar Arguments ..
       COMPLEX*16         ALPHA
       INTEGER            INCX, INCY, N
-      CHARACTER*1        UPLO
+      CHARACTER          UPLO
 *     .. Array Arguments ..
       COMPLEX*16         AP( * ), X( * ), Y( * )
 *     ..
@@ -5595,7 +5595,7 @@ c               END IF
       SUBROUTINE ZSYMM ( SIDE, UPLO, M, N, ALPHA, A, LDA, B, LDB,
      $                   BETA, C, LDC )
 *     .. Scalar Arguments ..
-      CHARACTER*1        SIDE, UPLO
+      CHARACTER          SIDE, UPLO
       INTEGER            M, N, LDA, LDB, LDC
       COMPLEX*16         ALPHA, BETA
 *     .. Array Arguments ..
@@ -5891,7 +5891,7 @@ c               END IF
       SUBROUTINE ZSYR2K( UPLO, TRANS, N, K, ALPHA, A, LDA, B, LDB,
      $                   BETA, C, LDC )
 *     .. Scalar Arguments ..
-      CHARACTER*1        UPLO, TRANS
+      CHARACTER          UPLO, TRANS
       INTEGER            N, K, LDA, LDB, LDC
       COMPLEX*16         ALPHA, BETA
 *     .. Array Arguments ..
@@ -6215,7 +6215,7 @@ c                  END IF
       SUBROUTINE ZSYRK ( UPLO, TRANS, N, K, ALPHA, A, LDA,
      $                   BETA, C, LDC )
 *     .. Scalar Arguments ..
-      CHARACTER*1        UPLO, TRANS
+      CHARACTER          UPLO, TRANS
       INTEGER            N, K, LDA, LDC
       COMPLEX*16         ALPHA, BETA
 *     .. Array Arguments ..
@@ -6508,7 +6508,7 @@ c                  END IF
       SUBROUTINE ZTBMV ( UPLO, TRANS, DIAG, N, K, A, LDA, X, INCX )
 *     .. Scalar Arguments ..
       INTEGER            INCX, K, LDA, N
-      CHARACTER*1        DIAG, TRANS, UPLO
+      CHARACTER          DIAG, TRANS, UPLO
 *     .. Array Arguments ..
       COMPLEX*16         A( LDA, * ), X( * )
 *     ..
@@ -6885,7 +6885,7 @@ c                  END IF
       SUBROUTINE ZTBSV ( UPLO, TRANS, DIAG, N, K, A, LDA, X, INCX )
 *     .. Scalar Arguments ..
       INTEGER            INCX, K, LDA, N
-      CHARACTER*1        DIAG, TRANS, UPLO
+      CHARACTER          DIAG, TRANS, UPLO
 *     .. Array Arguments ..
       COMPLEX*16         A( LDA, * ), X( * )
 *     ..
@@ -7266,7 +7266,7 @@ c                  END IF
       SUBROUTINE ZTPMV ( UPLO, TRANS, DIAG, N, AP, X, INCX )
 *     .. Scalar Arguments ..
       INTEGER            INCX, N
-      CHARACTER*1        DIAG, TRANS, UPLO
+      CHARACTER          DIAG, TRANS, UPLO
 *     .. Array Arguments ..
       COMPLEX*16         AP( * ), X( * )
 *     ..
@@ -7604,7 +7604,7 @@ c                  END IF
       SUBROUTINE ZTPSV ( UPLO, TRANS, DIAG, N, AP, X, INCX )
 *     .. Scalar Arguments ..
       INTEGER            INCX, N
-      CHARACTER*1        DIAG, TRANS, UPLO
+      CHARACTER          DIAG, TRANS, UPLO
 *     .. Array Arguments ..
       COMPLEX*16         AP( * ), X( * )
 *     ..
@@ -7945,7 +7945,7 @@ c                  END IF
       SUBROUTINE ZGEMM ( TRANSA, TRANSB, M, N, K, ALPHA, A, LDA, B, LDB,
      $                   BETA, C, LDC )
 *     .. Scalar Arguments ..
-      CHARACTER*1        TRANSA, TRANSB
+      CHARACTER          TRANSA, TRANSB
       INTEGER            M, N, K, LDA, LDB, LDC
       COMPLEX*16         ALPHA, BETA
 *     .. Array Arguments ..

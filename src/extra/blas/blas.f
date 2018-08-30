@@ -193,7 +193,7 @@ c
 *     .. Scalar Arguments ..
       DOUBLE PRECISION   ALPHA, BETA
       INTEGER            INCX, INCY, KL, KU, LDA, M, N
-      CHARACTER*1        TRANS
+      CHARACTER          TRANS
 *     .. Array Arguments ..
       DOUBLE PRECISION   A( LDA, * ), X( * ), Y( * )
 *     ..
@@ -491,7 +491,7 @@ c               END IF
       SUBROUTINE DGEMM ( TRANSA, TRANSB, M, N, K, ALPHA, A, LDA, B, LDB,
      $                   BETA, C, LDC )
 *     .. Scalar Arguments ..
-      CHARACTER*1        TRANSA, TRANSB
+      CHARACTER          TRANSA, TRANSB
       INTEGER            M, N, K, LDA, LDB, LDC
       DOUBLE PRECISION   ALPHA, BETA
 *     .. Array Arguments ..
@@ -806,7 +806,7 @@ c                  END IF
 *     .. Scalar Arguments ..
       DOUBLE PRECISION   ALPHA, BETA
       INTEGER            INCX, INCY, LDA, M, N
-      CHARACTER*1        TRANS
+      CHARACTER          TRANS
 *     .. Array Arguments ..
       DOUBLE PRECISION   A( LDA, * ), X( * ), Y( * )
 *     ..
@@ -1638,7 +1638,7 @@ C          IF(DFLAG)250,230,240
 *     .. Scalar Arguments ..
       DOUBLE PRECISION   ALPHA, BETA
       INTEGER            INCX, INCY, K, LDA, N
-      CHARACTER*1        UPLO
+      CHARACTER          UPLO
 *     .. Array Arguments ..
       DOUBLE PRECISION   A( LDA, * ), X( * ), Y( * )
 *     ..
@@ -2061,7 +2061,7 @@ C
 *     .. Scalar Arguments ..
       DOUBLE PRECISION   ALPHA, BETA
       INTEGER            INCX, INCY, N
-      CHARACTER*1        UPLO
+      CHARACTER          UPLO
 *     .. Array Arguments ..
       DOUBLE PRECISION   AP( * ), X( * ), Y( * )
 *     ..
@@ -2323,7 +2323,7 @@ C
 *     .. Scalar Arguments ..
       DOUBLE PRECISION   ALPHA
       INTEGER            INCX, N
-      CHARACTER*1        UPLO
+      CHARACTER          UPLO
 *     .. Array Arguments ..
       DOUBLE PRECISION   AP( * ), X( * )
 *     ..
@@ -2521,7 +2521,7 @@ C
 *     .. Scalar Arguments ..
       DOUBLE PRECISION   ALPHA
       INTEGER            INCX, INCY, N
-      CHARACTER*1        UPLO
+      CHARACTER          UPLO
 *     .. Array Arguments ..
       DOUBLE PRECISION   AP( * ), X( * ), Y( * )
 *     ..
@@ -2805,7 +2805,7 @@ c
       SUBROUTINE DSYMM ( SIDE, UPLO, M, N, ALPHA, A, LDA, B, LDB,
      $                   BETA, C, LDC )
 *     .. Scalar Arguments ..
-      CHARACTER*1        SIDE, UPLO
+      CHARACTER          SIDE, UPLO
       INTEGER            M, N, LDA, LDB, LDC
       DOUBLE PRECISION   ALPHA, BETA
 *     .. Array Arguments ..
@@ -3101,7 +3101,7 @@ c
 *     .. Scalar Arguments ..
       DOUBLE PRECISION   ALPHA, BETA
       INTEGER            INCX, INCY, LDA, N
-      CHARACTER*1        UPLO
+      CHARACTER          UPLO
 *     .. Array Arguments ..
       DOUBLE PRECISION   A( LDA, * ), X( * ), Y( * )
 *     ..
@@ -3362,7 +3362,7 @@ c
 *     .. Scalar Arguments ..
       DOUBLE PRECISION   ALPHA
       INTEGER            INCX, LDA, N
-      CHARACTER*1        UPLO
+      CHARACTER          UPLO
 *     .. Array Arguments ..
       DOUBLE PRECISION   A( LDA, * ), X( * )
 *     ..
@@ -3559,7 +3559,7 @@ c
 *     .. Scalar Arguments ..
       DOUBLE PRECISION   ALPHA
       INTEGER            INCX, INCY, LDA, N
-      CHARACTER*1        UPLO
+      CHARACTER          UPLO
 *     .. Array Arguments ..
       DOUBLE PRECISION   A( LDA, * ), X( * ), Y( * )
 *     ..
@@ -3788,7 +3788,7 @@ c
       SUBROUTINE DSYR2K( UPLO, TRANS, N, K, ALPHA, A, LDA, B, LDB,
      $                   BETA, C, LDC )
 *     .. Scalar Arguments ..
-      CHARACTER*1        UPLO, TRANS
+      CHARACTER          UPLO, TRANS
       INTEGER            N, K, LDA, LDB, LDC
       DOUBLE PRECISION   ALPHA, BETA
 *     .. Array Arguments ..
@@ -4115,7 +4115,7 @@ c
       SUBROUTINE DSYRK ( UPLO, TRANS, N, K, ALPHA, A, LDA,
      $                   BETA, C, LDC )
 *     .. Scalar Arguments ..
-      CHARACTER*1        UPLO, TRANS
+      CHARACTER          UPLO, TRANS
       INTEGER            N, K, LDA, LDC
       DOUBLE PRECISION   ALPHA, BETA
 *     .. Array Arguments ..
@@ -4409,7 +4409,7 @@ c
       SUBROUTINE DTBMV ( UPLO, TRANS, DIAG, N, K, A, LDA, X, INCX )
 *     .. Scalar Arguments ..
       INTEGER            INCX, K, LDA, N
-      CHARACTER*1        DIAG, TRANS, UPLO
+      CHARACTER          DIAG, TRANS, UPLO
 *     .. Array Arguments ..
       DOUBLE PRECISION   A( LDA, * ), X( * )
 *     ..
@@ -4751,7 +4751,7 @@ c
       SUBROUTINE DTBSV ( UPLO, TRANS, DIAG, N, K, A, LDA, X, INCX )
 *     .. Scalar Arguments ..
       INTEGER            INCX, K, LDA, N
-      CHARACTER*1        DIAG, TRANS, UPLO
+      CHARACTER          DIAG, TRANS, UPLO
 *     .. Array Arguments ..
       DOUBLE PRECISION   A( LDA, * ), X( * )
 *     ..
@@ -5097,7 +5097,7 @@ c
       SUBROUTINE DTPMV ( UPLO, TRANS, DIAG, N, AP, X, INCX )
 *     .. Scalar Arguments ..
       INTEGER            INCX, N
-      CHARACTER*1        DIAG, TRANS, UPLO
+      CHARACTER          DIAG, TRANS, UPLO
 *     .. Array Arguments ..
       DOUBLE PRECISION   AP( * ), X( * )
 *     ..
@@ -5396,7 +5396,7 @@ c
       SUBROUTINE DTPSV ( UPLO, TRANS, DIAG, N, AP, X, INCX )
 *     .. Scalar Arguments ..
       INTEGER            INCX, N
-      CHARACTER*1        DIAG, TRANS, UPLO
+      CHARACTER          DIAG, TRANS, UPLO
 *     .. Array Arguments ..
       DOUBLE PRECISION   AP( * ), X( * )
 *     ..
@@ -5698,7 +5698,7 @@ c
       SUBROUTINE DTRMM ( SIDE, UPLO, TRANSA, DIAG, M, N, ALPHA, A, LDA,
      $                   B, LDB )
 *     .. Scalar Arguments ..
-      CHARACTER*1        SIDE, UPLO, TRANSA, DIAG
+      CHARACTER          SIDE, UPLO, TRANSA, DIAG
       INTEGER            M, N, LDA, LDB
       DOUBLE PRECISION   ALPHA
 *     .. Array Arguments ..
@@ -6053,7 +6053,7 @@ c
       SUBROUTINE DTRMV ( UPLO, TRANS, DIAG, N, A, LDA, X, INCX )
 *     .. Scalar Arguments ..
       INTEGER            INCX, LDA, N
-      CHARACTER*1        DIAG, TRANS, UPLO
+      CHARACTER          DIAG, TRANS, UPLO
 *     .. Array Arguments ..
       DOUBLE PRECISION   A( LDA, * ), X( * )
 *     ..
@@ -6339,7 +6339,7 @@ c
       SUBROUTINE DTRSM ( SIDE, UPLO, TRANSA, DIAG, M, N, ALPHA, A, LDA,
      $                   B, LDB )
 *     .. Scalar Arguments ..
-      CHARACTER*1        SIDE, UPLO, TRANSA, DIAG
+      CHARACTER          SIDE, UPLO, TRANSA, DIAG
       INTEGER            M, N, LDA, LDB
       DOUBLE PRECISION   ALPHA
 *     .. Array Arguments ..
@@ -6717,7 +6717,7 @@ c
       SUBROUTINE DTRSV ( UPLO, TRANS, DIAG, N, A, LDA, X, INCX )
 *     .. Scalar Arguments ..
       INTEGER            INCX, LDA, N
-      CHARACTER*1        DIAG, TRANS, UPLO
+      CHARACTER          DIAG, TRANS, UPLO
 *     .. Array Arguments ..
       DOUBLE PRECISION   A( LDA, * ), X( * )
 *     ..
