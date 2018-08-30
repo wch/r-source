@@ -610,10 +610,12 @@ getOption(x, default = NULL)
     \item{\code{demo.ask}:}{default for the \code{ask} argument of
       \code{\link{demo}}.}
 
-    \item{\code{editor}:}{a non-empty string or a function that sets the
-      default text editor, e.g., for \code{\link{edit}}.  Set from the
-      environment variable \env{EDITOR} on UNIX, or if unset
-      \env{VISUAL} or \command{vi}.}
+    \item{\code{editor}:}{a non-empty character string or an \R function
+      that sets the default text editor, e.g., for \code{\link{edit}}
+      and \code{\link{file.edit}}.  Set from the environment variable
+      \env{EDITOR} on UNIX, or if unset \env{VISUAL} or \command{vi}.
+      As a string it should specify the name of or path to an external
+      command.}
 
     \item{\code{example.ask}:}{default for the \code{ask} argument of
       \code{\link{example}}.}
