@@ -35,6 +35,14 @@
   Building multiple regression models interactively.
   \emph{Biometrics}, \bold{37}, 391--411.
 }
+\note{
+  Henderson and Velleman (1981) comment in a footnote to Table 1:
+  \sQuote{Hocking [original transcriber]'s noncrucial coding of the
+    Mazda's rotary engine as a straight six-cylinder engine and the
+    Porsche's flat engine as a V engine, as well as the inclusion of the
+    diesel Mercedes 240D, have been retained to enable direct comparisons
+    to be made with previous analyses.}
+}
 \examples{
 require(graphics)
 pairs(mtcars, main = "mtcars data", gap = 1/4)
