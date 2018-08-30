@@ -158,6 +158,9 @@
       \code{support_old_tars} whose default is controlled by environment
       variable \env{R_SUPPORT_OLD_TARS}.  (It looks like NetBSD and
       OpenBSD have \sQuote{older} \command{tar} for this purpose.)
+
+      \item The new function \code{asplit()} allows to split an array or
+      matrix by its margins.
     }
   }
 
