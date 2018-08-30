@@ -3166,7 +3166,7 @@ c     applies a plane rotation, where the cos and sin (c and s) are
 c     double precision and the vectors zx and zy are double complex.
 c     jack dongarra, linpack, 3/11/78.
 c
-      double complex zx(1),zy(1),ztemp
+      double complex zx(*),zy(*),ztemp
       double precision c,s
       integer i,incx,incy,ix,iy,n
 c
