@@ -1,7 +1,7 @@
 #  File src/library/stats/R/ts.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -78,7 +78,7 @@ ts <- function(data = NA, start = 1, end = numeric(), frequency = 1,
     ## FIXME: The following "attr<-"() calls C tspgets() which uses a
     ##  	fixed equivalent of ts.eps := 1e-5
     attr(data, "tsp") <- c(start, end, frequency) #-- order is fixed
-    if(!is.null(class) && class != "none") attr(data, "class") <- class
+    if(!is.null(class) && class[[1]] != "none") attr(data, "class") <- class
     ## if you alter the return structure, you also need to alter
     ## newBasic in methods/R/RClassUtils.R.  So please don't.
     data
