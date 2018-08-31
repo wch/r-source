@@ -1,7 +1,7 @@
 #  File src/library/grid/R/primitives.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -760,7 +760,7 @@ validDetails.xspline <- function(x) {
     x$id.lengths <- as.integer(x$id.lengths)
   if (!(is.null(x$arrow) || inherits(x$arrow, "arrow")))
       stop("invalid 'arrow' argument")
-  if (any(x$shape < -1 || x$shape > 1))
+  if (any(x$shape < -1 | x$shape > 1))
     stop("'shape' must be between -1 and 1")
   x$open <- as.logical(x$open)
   # Force all first and last shapes to be 0 for open xsplines

@@ -14,8 +14,8 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
+## Copyright (C) 1999-2018  The R Core Team
 ## Copyright (C) 1997-1999  Adrian Trapletti
-## Copyright (C) 1999-2013  The R Core Team
 ## This version distributed under LGPL (version 2 or later)
 
 
@@ -75,7 +75,7 @@ kernel <- function (coef, m = 2, r, name="unknown")
     }
 
     if(!missing(m))
-	if(!is.numeric(m) || length(m) < 1L || m != round(m) || any(m < 0L))
+	if(!is.numeric(m) || length(m) < 1L || any(m != round(m)) || any(m < 0L))
 	    stop("'m' must be numeric with non-negative integers")
 
     if(is.character(coef)) {
