@@ -8,6 +8,12 @@ Changes from grid_3.5.* to grid_3.6.0:
     Should now work when multiple graphics devices already open
     (e.g., within 'knitr' document).
 
+3.  Fix bug in grid.layout() when viewport has negative width/height
+    (e.g., due to being sized in "native" units within viewport
+     with flipped scales).
+
+    Thanks to report by Silas Dean.
+
 
 Changes from grid_3.4.* to grid_3.5.0:
 -------------------------------------
