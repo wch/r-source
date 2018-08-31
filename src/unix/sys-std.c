@@ -115,6 +115,13 @@ int R_SelectEx(int  n,  fd_set  *readfds,  fd_set  *writefds,
 	       fd_set *exceptfds, struct timeval *timeout,
 	       void (*intr)(void))
 {
+    /* FD_SETSIZE should be at least 1024 on all supported
+       platforms. If this still turns out to be limiting we will
+       probably need to rewrite internals to use poll() instead of
+       select().  LT */
+    if (n > FD_SETSIZE)
+	error("file descriptor is too large for select()");
+
     if (timeout != NULL && timeout->tv_sec == 0 && timeout->tv_usec == 0)
 	return select(n, readfds, writefds, exceptfds, timeout);
     else {
