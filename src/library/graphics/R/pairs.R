@@ -98,9 +98,9 @@ function (x, labels, panel = points, ...,
 
     nc <- ncol(x)
     if (nc < 2L) stop("only one column in the argument to 'pairs'")
-    if(!all(horInd >= 1L && horInd <= nc))
+    if(!all(1L <= horInd & horInd <= nc))
         stop("invalid argument 'horInd'")
-    if(!all(verInd >= 1L && verInd <= nc))
+    if(!all(1L <= verInd & verInd <= nc))
         stop("invalid argument 'verInd'")
     if(doText) {
 	if (missing(labels)) {
