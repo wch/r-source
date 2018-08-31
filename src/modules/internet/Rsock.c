@@ -154,6 +154,7 @@ void in_Rsockwrite(int *sockp, char **buf, int *start, int *end, int *len)
 #include <R_ext/R-ftp-http.h>
 
 #ifdef Win32
+#define FD_SETSIZE 1024
 #include <winsock2.h>
 #include <io.h>
 #define EWOULDBLOCK             WSAEWOULDBLOCK

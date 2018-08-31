@@ -308,6 +308,10 @@
       processor groups, not just the group \R is running in (impacts
       particularly systems with more than 64 logical processors). Reported
       by Arunkumar Srinivasan.
+
+      \item On Windows, \code{socketSelect} would hang with more than 64
+      sockets, and hence \code{parallel::clusterApplyLB} would hang with
+      more than 64 workers. Reported by Arunkumar Srinivasan.
     }
   }
 }
