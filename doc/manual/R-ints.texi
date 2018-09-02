@@ -4223,6 +4223,13 @@ open: if any are found, this is reported with a fatal error.  NB:
 `connections' includes most use of files and any parallel clusters which
 have not be stopped by @code{stopCluster()}.
 Default: false (but true for CRAN submission checks).
+
+@item _R_CHECK_FUTURE_FILE_TIMESTAMPS
+Check if any of the input files has a timestamp in the future (and to do
+so, checks that the system clock is correct to within 5 minutes).
+Default: false (but true for CRAN submission checks).
+@c _R_CHECK_SYSTEM_CLOCK_ can be used to disable the clock check, for
+@c use on a check farm.
 @end vtable
 
 CRAN's submission checks use something like

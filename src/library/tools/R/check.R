@@ -427,6 +427,57 @@ add_dummies <- function(dir, Log)
             do_exit(1L)
         }
 
+        if (config_val_to_logical(Sys.getenv("_R_CHECK_FUTURE_FILE_TIMESTAMPS_",
+                                             "FALSE"))) {
+            now_local <- Sys.time()
+            any <- FALSE
+            checkingLog(Log, "for future file timestanps")
+            if(config_val_to_logical(Sys.getenv("_R_CHECK_SYSTEM_CLOCK_", "TRUE"))) {
+                ## First check time on system running 'check',
+                ## by reading an external source in UTC: gives time in mins
+                now <- tryCatch({
+                    foo <- readLines("http://worldclockapi.com/api/json/utc/now",
+                                     warn = FALSE)
+                    as.POSIXct(gsub(".*\"currentDateTime\":\"([^Z]*).*", "\\1", foo),
+                               "UTC", "%Y-%m-%dT%H:%M")
+                }, error = function(e) NA)
+                if (is.na(now)) {
+                    any <- TRUE
+                    warningLog(Log, "unable to verify current time")
+                } else {
+                    ## 5 mins leeway is a reasonable compromise
+                    if (abs(unclass(now_local) - unclass(now)) > 300) {
+                        any <- TRUE
+                        fmt <- "%Y-%m-%d %H:%M"
+                        errorLog(Log, "This system is set to the wrong time: please correct")
+                        now0 <- sprintf("  correct: %s (UTC)\n",
+                                        format(now, fmt, tz = "UTC"))
+                        local0 <- sprintf("   system: %s (UTC)\n",
+                                          format(now_local, fmt, tz = "UTC"))
+                        printLog0(Log, local0, now0)
+                        summaryLog(Log)
+                        do_exit(1L)
+                    }
+                }
+            }
+
+            ## However, we might not care about directories
+            files <- list.files(all.files = TRUE, full.names = TRUE,
+                                include.dirs = TRUE)
+            files <- setdiff(files, c("./.", "./.."))
+            ftimes <- file.mtime(files)
+            ## 5 mins leeway is to allow for clock-skew from a file server.
+            fu <- unclass(ftimes) > unclass(now_local) + 300
+            if (any(fu)) {
+                if (!any) warningLog(Log)
+                any <- TRUE
+                wrong <- sub("^[.]/", "", files[fu])
+                printLog(Log, "Files with future time stamps:\n")
+                printLog0(Log, .format_lines_with_indent(wrong), "\n")
+            }
+            if(!any) resultLog(Log, "OK")
+        }
+
         haveR <- dir.exists("R") && !extra_arch
 
         if (!extra_arch) {
