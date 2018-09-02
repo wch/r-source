@@ -626,7 +626,7 @@ add_dummies <- function(dir, Log)
                     "Please rename the files and try again.\n",
                     "See section 'Package structure'",
                     "in the 'Writing R Extensions' manual.\n")
-        maybe_exit(1L)
+            maybe_exit(1L)
         }
 
         ## Next check for name clashes on case-insensitive file systems
@@ -3416,7 +3416,7 @@ add_dummies <- function(dir, Log)
                           paste(readLines(Rout, warn = FALSE),
                                 collapse = "\n"),
                           "\n")
-        maybe_exit(1L)
+                maybe_exit(1L)
             }
             ## It ran, but did it create any examples?
             if (file.exists(exfile)) {
@@ -4037,7 +4037,7 @@ add_dummies <- function(dir, Log)
                 lines <- filtergrep("^(Hmm|Execution)", lines)
                 printLog0(Log, paste(c(lines, ""), collapse = "\n"))
                 unlink(build_dir, recursive = TRUE)
-        maybe_exit(1L)
+                maybe_exit(1L)
             } else if (res > 0) {
                 latex_file <- file.path(build_dir, "Rd2.tex")
                 if (file.exists(latex_file))
@@ -4087,7 +4087,7 @@ add_dummies <- function(dir, Log)
                         run_Rcmd(args, timeout = tlim)
                     }
                     unlink(build_dir, recursive = TRUE)
-            maybe_exit(1L)
+                    maybe_exit(1L)
                 } else {
                     unlink(build_dir, recursive = TRUE)
                     resultLog(Log, "OK")
@@ -5037,11 +5037,11 @@ add_dummies <- function(dir, Log)
         function(status) q("no", status = status, runLast = FALSE)
 
     maybe_exit <- function(status = 1L) {
-    if (R_check_exit_on_first_error) {
-        printLog(Log, "NOTE:  Quitting check on first error.\n")
-        summaryLog(Log)
-        do_exit(status)
-    }
+        if (R_check_exit_on_first_error) {
+            printLog(Log, "NOTE:  Quitting check on first error.\n")
+            summaryLog(Log)
+            do_exit(status)
+        }
     }
 
     Usage <- function() {
@@ -5443,6 +5443,7 @@ add_dummies <- function(dir, Log)
         Sys.setenv("_R_CHECK_PACKAGES_USED_IN_TESTS_USE_SUBDIRS_" = "TRUE")
         Sys.setenv("_R_CHECK_CONNECTIONS_LEFT_OPEN_" = "TRUE")
         Sys.setenv("_R_CHECK_SHLIB_OPENMP_FLAGS_" = "TRUE")
+        Sys.setenv("_R_CHECK_FUTURE_FILE_TIMESTAMPS_" = "TRUE")
         R_check_vc_dirs <- TRUE
         R_check_executables_exclusions <- FALSE
         R_check_doc_sizes2 <- TRUE
