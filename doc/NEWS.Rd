@@ -161,6 +161,10 @@
 
       \item The new function \code{asplit()} allows to split an array or
       matrix by its margins.
+  
+      \item New functions \code{errorCondition} and
+      \code{warningCondition} provide a convenient way to create
+      structured error and warning objects.
     }
   }
 

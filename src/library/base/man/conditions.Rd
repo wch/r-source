@@ -20,6 +20,8 @@
 \alias{simpleError}
 \alias{simpleWarning}
 \alias{simpleMessage}
+\alias{errorCondition}
+\alias{warningCondition}
 \alias{tryCatch}
 \alias{withCallingHandlers}
 \alias{withRestarts}
@@ -53,6 +55,9 @@ simpleCondition(message, call = NULL)
 simpleError    (message, call = NULL)
 simpleWarning  (message, call = NULL)
 simpleMessage  (message, call = NULL)
+
+errorCondition(msg, ..., class = NULL, call = NULL)
+warningCondition(msg, ..., class = NULL, call = NULL)
 
 \method{as.character}{condition}(x, \dots)
 \method{as.character}{error}(x, \dots)
@@ -95,6 +100,7 @@ allowInterrupts(expr)
   \item{name}{character string naming a restart.}
   \item{r}{restart object.}
   \item{x}{object.}
+  \item{class}{character string naming a condition class.}
   \item{\dots}{additional arguments; see details below.}
 }
 
@@ -118,6 +124,11 @@ allowInterrupts(expr)
    functions \code{conditionMessage} and \code{conditionCall} are
    generic functions that return the message and call of a condition.
 
+   The function \code{errorCondition} and \code{warningCondition} can be
+   used to consturct error conditions of a particular class with
+   additional fields specified as the \code{\dots} argument.
+   \code{warningCondition} is analogous for warnings.
+   
    Conditions are signaled by \code{signalCondition}.  In addition,
    the \code{stop} and \code{warning} functions have been modified to
    also accept condition arguments.
