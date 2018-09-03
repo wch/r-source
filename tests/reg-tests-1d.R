@@ -1991,6 +1991,12 @@ dimnames(x) <- list(c("a", "b"))
 stopifnot(! is.null(names(sort.int(x))))
 
 
+## match() with length one x and POSIXlt table (PR#17459):
+d <- as.POSIXlt("2018-01-01")
+match(0, d)
+## Gave a segfault in R < 3.6.0.
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())
