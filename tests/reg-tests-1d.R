@@ -1997,6 +1997,33 @@ match(0, d)
 ## Gave a segfault in R < 3.6.0.
 
 
+## as(1L, "double") - PR#17457
+stopifnot(exprs = {
+    identical(as(1L,   "double"), 1.) # new
+    ## "double" is quite the same as "numeric" :
+    validObject(Dbl <- getClass("double"))
+    validObject(Num <- getClass("numeric"))
+    c("double", "numeric") %in% extends(Dbl)
+    setdiff(names(Num@subclasses),
+            names(Dbl@subclasses) -> dblSub) == "double"
+    "integer" %in% dblSub
+    ## These all remain as they were in R <= 3.5.x , the first one important for back-compatibility:
+    identical(1:2, local({
+        myN <- setClass("myN", contains="numeric", slots = c(truly = "numeric"))
+        myN(log(1:2), truly = 1:2) })@truly)
+    removeClass("myN")
+    identical(as(1L,  "numeric"), 1L) # << disputable, but hard to change w/o changing myN() behavior
+    identical(as(TRUE, "double"), 1.)
+    identical(as(TRUE,"numeric"), 1.)
+    !is(TRUE, "numeric") # "logical" should _not_ be a subclass of "numeric"
+    ## We agree these should not change :
+    typeof(1.0) == "double"  &  typeof(1L) == "integer"
+    class (1.0) == "numeric" &  class (1L) == "integer"
+    mode  (1.0) == "numeric" &  mode  (1L) == "numeric"
+})
+## as(*, "double") now gives what was promised
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())

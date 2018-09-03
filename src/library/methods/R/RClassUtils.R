@@ -604,6 +604,7 @@ newBasic <-
                "numeric" =,
                "character" =,
                "complex" =,
+               "double" =,
                "integer" =,
                "raw" =,
                "list" =  as.vector(c(...), Class),
@@ -1397,7 +1398,7 @@ getDataPart <- function(object) {
 }
 
 setDataPart <- function(object, value, check = TRUE) {
-    if(check || identical(typeof(object), "S4")) {
+    if(check || typeof(object) == "S4") {
         classDef <- getClass(class(object))
         slots <- getSlots(classDef)
         dataSlot <- .dataSlot(names(slots))
@@ -1410,7 +1411,7 @@ setDataPart <- function(object, value, check = TRUE) {
         else # this case occurs in making the methods package. why?
           return(.mergeAttrs(value, object))
         value <- as(value, dataClass)  # note that this is strict as()
-        if(identical(typeof(object), "S4")) {
+        if(typeof(object) == "S4") {
             if(is.null(value))
               value <- .pseudoNULL
             attr(object, dataSlot) <- value
@@ -2019,7 +2020,7 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
         prevWhat <- prevClasses[[what]]
         if(!identical(as.character(clWhat), as.character(prevWhat)) ||
            (dupsExist && !identical(as.character(packageSlot(clWhat)),
-              as.character(packageSlot(prevWhat)))))
+                                    as.character(packageSlot(prevWhat)))))
             return(FALSE)
     }
     if(verbose)

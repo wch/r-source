@@ -312,6 +312,8 @@
       \item On Windows, \code{socketSelect} would hang with more than 64
       sockets, and hence \code{parallel::clusterApplyLB} would hang with
       more than 64 workers. Reported by Arunkumar Srinivasan.
+
+      \item \code{as(1L, "double")} now does coerce (\PR{17457}).
     }
   }
 }
@@ -360,6 +362,9 @@
       level (\PR{17453}).
 
       \item Parse data now have deterministic parent nodes (\PR{16041}).
+
+      \item Calling \code{match()} with length one \code{x} and POSIXlt
+      \code{table} gave a segfault (\PR{17459}).
     }
   }
 }
@@ -5794,9 +5799,6 @@
 
       \item The clipping region for a device was sometimes used in base
       graphics before it was set.
-
-      \item Calling \code{match()} with length one \code{x} and POSIXlt
-      \code{table} gave a segfault (\PR{17459}).
     }
   }
 }

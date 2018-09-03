@@ -26,8 +26,6 @@ as <-
   ## no valid way to coerce the two objects).  Otherwise, `NULL' is returned.
   function(object, Class, strict = TRUE, ext = possibleExtends(thisClass, Class))
 {
-    ## prior to 2.7.0 there was a pseudo-class "double"
-    if(.identC(Class, "double")) Class <- "numeric"
     thisClass <- .class1(object)
     if(.identC(thisClass, Class) || .identC(Class, "ANY"))
         return(object)
@@ -288,7 +286,7 @@ setAs <-
       }, where = where)
   basics <- c(
  "POSIXct",  "POSIXlt", "Date",  "array",  "call",  "character",  "complex",  "data.frame",
- ## "double",
+ "double",
  "environment",  "expression",  "factor",  "formula",  "function",  "integer",
  "list",  "logical",  "matrix",  "name",  "numeric",  "ordered",
   "single",  "table",   "vector")
