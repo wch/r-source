@@ -911,6 +911,11 @@ SEXP match5(SEXP itable, SEXP ix, int nmatch, SEXP incomp, SEXP env)
     // special case scalar x -- for speed only :
     if(XLENGTH(x) == 1 && !incomp) {
       int val = nmatch;
+      /* FIXME:
+	 The code for the special case uses LENGTH(table),
+	 the code for the regular case uses length(table):
+	 These should use the same.
+      */
       int ntable = LENGTH(table);
       switch (type) {
       case STRSXP: {
