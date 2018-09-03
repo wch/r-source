@@ -127,7 +127,7 @@ fixups:
 	$(RM) $(RPREFIX)/Tcl*/lib/*.lib
 ifneq ($(strip $(QPDF)),)
 	@for f in $(PDF_FILES); do \
-	  $(QPDF)/bin/qpdf --stream-data=compress $${f} tmp.pdf; \
+	  $(QPDF)/bin/qpdf $${f} tmp.pdf; \
 	  mv tmp.pdf $${f}; \
 	done
 endif

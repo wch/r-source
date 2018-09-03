@@ -1044,14 +1044,19 @@ compactPDF <-
             if(!res && use_qpdf) {
                 unlink(tf2) # precaution
                 file.rename(tf, tf2)
-                res <- system2(qpdf, c("--stream-data=compress",
-                                       "--object-streams=generate",
+                ## <NOTE>
+                ## Before 2018-09, we also passed
+                ##   --stream-data=compress
+                ## to QPDF: but this is now deprecated, corresponds to
+                ## the default since at least QPDF 6.0.0, and it at
+                ## least once case caused trouble when given.
+                ## </NOTE>
+                res <- system2(qpdf, c("--object-streams=generate",
                                        tf2, tf), FALSE, FALSE)
                 unlink(tf2)
             }
         } else if(use_qpdf) {
-            res <- system2(qpdf, c("--stream-data=compress",
-                                   "--object-streams=generate",
+            res <- system2(qpdf, c("--object-streams=generate",
                                    p, tf), FALSE, FALSE)
         }
         if(!res && file.exists(tf)) {
