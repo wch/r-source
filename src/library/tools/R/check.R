@@ -432,6 +432,7 @@ add_dummies <- function(dir, Log)
             now_local <- Sys.time()
             any <- FALSE
             checkingLog(Log, "for future file timestanps")
+            ## allow skipping clock check on CRAN incoming systems
             if(config_val_to_logical(Sys.getenv("_R_CHECK_SYSTEM_CLOCK_", "TRUE"))) {
                 ## First check time on system running 'check',
                 ## by reading an external source in UTC: gives time in mins
@@ -445,7 +446,7 @@ add_dummies <- function(dir, Log)
                     any <- TRUE
                     warningLog(Log, "unable to verify current time")
                 } else {
-                    ## 5 mins leeway is a reasonable compromise
+                    ## 5 mins leeway seems a reasonable compromise
                     if (abs(unclass(now_local) - unclass(now)) > 300) {
                         any <- TRUE
                         fmt <- "%Y-%m-%d %H:%M"
@@ -461,7 +462,8 @@ add_dummies <- function(dir, Log)
                 }
             }
 
-            ## However, we might not care about directories
+            ## Both files and directories get timestamps in the
+            ## tarball, so future stamps give annoying messages.
             files <- list.files(all.files = TRUE, full.names = TRUE,
                                 include.dirs = TRUE)
             files <- setdiff(files, c("./.", "./.."))
