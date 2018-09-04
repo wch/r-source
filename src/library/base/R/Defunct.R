@@ -17,8 +17,8 @@
 #  https://www.R-project.org/Licenses/
 
 .Defunct <- function(new, package=NULL, msg) {
+    fname <- as.character(sys.call(sys.parent())[[1L]])
     if (missing(msg)) {
-        fname <- as.character(sys.call(sys.parent())[[1L]])
 	msg <- gettextf("'%s' is defunct.\n", fname[length(fname)])
 	if(!missing(new))
 	    msg <- c(msg, gettextf("Use '%s' instead.\n", new))
@@ -29,8 +29,11 @@
 		 else gettext("See help(\"Defunct\")"))
     }
     else msg <- as.character(msg)
+    msg <- paste(msg, collapse = "")
 
-    stop(paste(msg, collapse=""), call. = FALSE, domain = NA)
+    if (missing(new)) new <- NULL
+    stop(errorCondition(msg, old = fname, new = new, package = package,
+                        class = "defunctError"))
 }
 
 ## Version <- function() .Defunct("R.Version")

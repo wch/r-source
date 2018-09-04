@@ -37,6 +37,9 @@
   available at \code{help("oldName-deprecated")} (note the quotes).
   Functions should be listed in \code{help("pkg-deprecated")} for an
   appropriate \code{pkg}, including \code{base}.
+
+  \code{.Deprecated} signals a warning of class \code{deprecatedWarning}
+  with fields \code{old}, \code{new}, and \code{package}.
 }
 \seealso{
   \code{\link{Defunct}}

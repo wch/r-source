@@ -165,6 +165,10 @@
       \item New functions \code{errorCondition} and
       \code{warningCondition} provide a convenient way to create
       structured error and warning objects.
+
+      \code{.Deprecated} now signals a warning of class
+      \code{deprecatedWarning}, and \code{.Defunct} now signals an error
+      of class \code{defunctError}.
     }
   }
 

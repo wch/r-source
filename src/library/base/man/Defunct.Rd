@@ -34,6 +34,9 @@
   listed in \code{help("pkg-defunct")} for an appropriate \code{pkg},
   including \code{base} (with the alias added to the respective Rd
   file).
+
+  \code{.Defunct} signals an error of class \code{defunctError}
+  with fields \code{old}, \code{new}, and \code{package}.
 }
 \seealso{
   \code{\link{Deprecated}}.
