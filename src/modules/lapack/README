@@ -75,10 +75,6 @@ dtrevc3 and ztrevc3 were new in LAPACK 3.6.1 and added in R 3.4.0.
 
 -------------------------------------------------
 
-R.patch helps with Fortran array-bounds checking.
-
--------------------------------------------------
-
 For 'base' R addition of a new .Call()able Lapack routine,
 all these files must be updated {path relative to R's topdir}:
 
