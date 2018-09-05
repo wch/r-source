@@ -44,7 +44,7 @@ c
 *     .. Scalar Arguments ..
       INTEGER                           INCX, N
 *     .. Array Arguments ..
-      COMPLEX*16                        X( * )
+      DOUBLE COMPLEX                    X( * )
 *     ..
 *
 *  DZNRM2 returns the euclidean norm of a vector via the function
@@ -322,11 +322,11 @@ c
       SUBROUTINE ZGEMV ( TRANS, M, N, ALPHA, A, LDA, X, INCX,
      $                   BETA, Y, INCY )
 *     .. Scalar Arguments ..
-      COMPLEX*16         ALPHA, BETA
+      DOUBLE COMPLEX     ALPHA, BETA
       INTEGER            INCX, INCY, LDA, M, N
       CHARACTER          TRANS
 *     .. Array Arguments ..
-      COMPLEX*16         A( LDA, * ), X( * ), Y( * )
+      DOUBLE COMPLEX     A( LDA, * ), X( * ), Y( * )
 *     ..
 *
 *  Purpose
@@ -366,11 +366,11 @@ c
 *           N must be at least zero.
 *           Unchanged on exit.
 *
-*  ALPHA  - COMPLEX*16      .
+*  ALPHA  - DOUBLE COMPLEX  .
 *           On entry, ALPHA specifies the scalar alpha.
 *           Unchanged on exit.
 *
-*  A      - COMPLEX*16       array of DIMENSION ( LDA, n ).
+*  A      - DOUBLE COMPLEX   array of DIMENSION ( LDA, n ).
 *           Before entry, the leading m by n part of the array A must
 *           contain the matrix of coefficients.
 *           Unchanged on exit.
@@ -381,7 +381,7 @@ c
 *           max( 1, m ).
 *           Unchanged on exit.
 *
-*  X      - COMPLEX*16       array of DIMENSION at least
+*  X      - DOUBLE COMPLEX   array of DIMENSION at least
 *           ( 1 + ( n - 1 )*abs( INCX ) ) when TRANS = 'N' or 'n'
 *           and at least
 *           ( 1 + ( m - 1 )*abs( INCX ) ) otherwise.
@@ -394,12 +394,12 @@ c
 *           X. INCX must not be zero.
 *           Unchanged on exit.
 *
-*  BETA   - COMPLEX*16      .
+*  BETA   - DOUBLE COMPLEX  .
 *           On entry, BETA specifies the scalar beta. When BETA is
 *           supplied as zero then Y need not be set on input.
 *           Unchanged on exit.
 *
-*  Y      - COMPLEX*16       array of DIMENSION at least
+*  Y      - DOUBLE COMPLEX   array of DIMENSION at least
 *           ( 1 + ( m - 1 )*abs( INCY ) ) when TRANS = 'N' or 'n'
 *           and at least
 *           ( 1 + ( n - 1 )*abs( INCY ) ) otherwise.
@@ -423,12 +423,12 @@ c
 *
 *
 *     .. Parameters ..
-      COMPLEX*16         ONE
+      DOUBLE COMPLEX     ONE
       PARAMETER        ( ONE  = ( 1.0D+0, 0.0D+0 ) )
-      COMPLEX*16         ZERO
+      DOUBLE COMPLEX     ZERO
       PARAMETER        ( ZERO = ( 0.0D+0, 0.0D+0 ) )
 *     .. Local Scalars ..
-      COMPLEX*16         TEMP
+      DOUBLE COMPLEX     TEMP
       INTEGER            I, INFO, IX, IY, J, JX, JY, KX, KY, LENX, LENY
       LOGICAL            NOCONJ
 *     .. External Functions ..
@@ -602,10 +602,10 @@ c               END IF
       END
       SUBROUTINE ZGERC ( M, N, ALPHA, X, INCX, Y, INCY, A, LDA )
 *     .. Scalar Arguments ..
-      COMPLEX*16         ALPHA
+      DOUBLE COMPLEX     ALPHA
       INTEGER            INCX, INCY, LDA, M, N
 *     .. Array Arguments ..
-      COMPLEX*16         A( LDA, * ), X( * ), Y( * )
+      DOUBLE COMPLEX     A( LDA, * ), X( * ), Y( * )
 *     ..
 *
 *  Purpose
@@ -631,11 +631,11 @@ c               END IF
 *           N must be at least zero.
 *           Unchanged on exit.
 *
-*  ALPHA  - COMPLEX*16      .
+*  ALPHA  - DOUBLE COMPLEX  .
 *           On entry, ALPHA specifies the scalar alpha.
 *           Unchanged on exit.
 *
-*  X      - COMPLEX*16       array of dimension at least
+*  X      - DOUBLE COMPLEX   array of dimension at least
 *           ( 1 + ( m - 1 )*abs( INCX ) ).
 *           Before entry, the incremented array X must contain the m
 *           element vector x.
@@ -646,7 +646,7 @@ c               END IF
 *           X. INCX must not be zero.
 *           Unchanged on exit.
 *
-*  Y      - COMPLEX*16       array of dimension at least
+*  Y      - DOUBLE COMPLEX   array of dimension at least
 *           ( 1 + ( n - 1 )*abs( INCY ) ).
 *           Before entry, the incremented array Y must contain the n
 *           element vector y.
@@ -657,7 +657,7 @@ c               END IF
 *           Y. INCY must not be zero.
 *           Unchanged on exit.
 *
-*  A      - COMPLEX*16       array of DIMENSION ( LDA, n ).
+*  A      - DOUBLE COMPLEX   array of DIMENSION ( LDA, n ).
 *           Before entry, the leading m by n part of the array A must
 *           contain the matrix of coefficients. On exit, A is
 *           overwritten by the updated matrix.
@@ -679,10 +679,10 @@ c               END IF
 *
 *
 *     .. Parameters ..
-      COMPLEX*16         ZERO
+      DOUBLE COMPLEX     ZERO
       PARAMETER        ( ZERO = ( 0.0D+0, 0.0D+0 ) )
 *     .. Local Scalars ..
-      COMPLEX*16         TEMP
+      DOUBLE COMPLEX     TEMP
       INTEGER            I, INFO, IX, J, JY, KX
 *     .. External Subroutines ..
       EXTERNAL           XERBLA
@@ -760,11 +760,11 @@ c            END IF
       SUBROUTINE ZHEMV ( UPLO, N, ALPHA, A, LDA, X, INCX,
      $                   BETA, Y, INCY )
 *     .. Scalar Arguments ..
-      COMPLEX*16         ALPHA, BETA
+      DOUBLE COMPLEX     ALPHA, BETA
       INTEGER            INCX, INCY, LDA, N
       CHARACTER          UPLO
 *     .. Array Arguments ..
-      COMPLEX*16         A( LDA, * ), X( * ), Y( * )
+      DOUBLE COMPLEX     A( LDA, * ), X( * ), Y( * )
 *     ..
 *
 *  Purpose
@@ -798,11 +798,11 @@ c            END IF
 *           N must be at least zero.
 *           Unchanged on exit.
 *
-*  ALPHA  - COMPLEX*16      .
+*  ALPHA  - DOUBLE COMPLEX  .
 *           On entry, ALPHA specifies the scalar alpha.
 *           Unchanged on exit.
 *
-*  A      - COMPLEX*16       array of DIMENSION ( LDA, n ).
+*  A      - DOUBLE COMPLEX   array of DIMENSION ( LDA, n ).
 *           Before entry with  UPLO = 'U' or 'u', the leading n by n
 *           upper triangular part of the array A must contain the upper
 *           triangular part of the hermitian matrix and the strictly
@@ -821,7 +821,7 @@ c            END IF
 *           max( 1, n ).
 *           Unchanged on exit.
 *
-*  X      - COMPLEX*16       array of dimension at least
+*  X      - DOUBLE COMPLEX   array of dimension at least
 *           ( 1 + ( n - 1 )*abs( INCX ) ).
 *           Before entry, the incremented array X must contain the n
 *           element vector x.
@@ -832,12 +832,12 @@ c            END IF
 *           X. INCX must not be zero.
 *           Unchanged on exit.
 *
-*  BETA   - COMPLEX*16      .
+*  BETA   - DOUBLE COMPLEX  .
 *           On entry, BETA specifies the scalar beta. When BETA is
 *           supplied as zero then Y need not be set on input.
 *           Unchanged on exit.
 *
-*  Y      - COMPLEX*16       array of dimension at least
+*  Y      - DOUBLE COMPLEX   array of dimension at least
 *           ( 1 + ( n - 1 )*abs( INCY ) ).
 *           Before entry, the incremented array Y must contain the n
 *           element vector y. On exit, Y is overwritten by the updated
@@ -859,12 +859,12 @@ c            END IF
 *
 *
 *     .. Parameters ..
-      COMPLEX*16         ONE
+      DOUBLE COMPLEX     ONE
       PARAMETER        ( ONE  = ( 1.0D+0, 0.0D+0 ) )
-      COMPLEX*16         ZERO
+      DOUBLE COMPLEX     ZERO
       PARAMETER        ( ZERO = ( 0.0D+0, 0.0D+0 ) )
 *     .. Local Scalars ..
-      COMPLEX*16         TEMP1, TEMP2
+      DOUBLE COMPLEX     TEMP1, TEMP2
       INTEGER            I, INFO, IX, IY, J, JX, JY, KX, KY
 *     .. External Functions ..
       LOGICAL            LSAME
@@ -1025,11 +1025,11 @@ c            END IF
       END
       SUBROUTINE ZHER2 ( UPLO, N, ALPHA, X, INCX, Y, INCY, A, LDA )
 *     .. Scalar Arguments ..
-      COMPLEX*16         ALPHA
+      DOUBLE COMPLEX     ALPHA
       INTEGER            INCX, INCY, LDA, N
       CHARACTER          UPLO
 *     .. Array Arguments ..
-      COMPLEX*16         A( LDA, * ), X( * ), Y( * )
+      DOUBLE COMPLEX     A( LDA, * ), X( * ), Y( * )
 *     ..
 *
 *  Purpose
@@ -1063,11 +1063,11 @@ c            END IF
 *           N must be at least zero.
 *           Unchanged on exit.
 *
-*  ALPHA  - COMPLEX*16      .
+*  ALPHA  - DOUBLE COMPLEX  .
 *           On entry, ALPHA specifies the scalar alpha.
 *           Unchanged on exit.
 *
-*  X      - COMPLEX*16       array of dimension at least
+*  X      - DOUBLE COMPLEX   array of dimension at least
 *           ( 1 + ( n - 1 )*abs( INCX ) ).
 *           Before entry, the incremented array X must contain the n
 *           element vector x.
@@ -1078,7 +1078,7 @@ c            END IF
 *           X. INCX must not be zero.
 *           Unchanged on exit.
 *
-*  Y      - COMPLEX*16       array of dimension at least
+*  Y      - DOUBLE COMPLEX   array of dimension at least
 *           ( 1 + ( n - 1 )*abs( INCY ) ).
 *           Before entry, the incremented array Y must contain the n
 *           element vector y.
@@ -1089,7 +1089,7 @@ c            END IF
 *           Y. INCY must not be zero.
 *           Unchanged on exit.
 *
-*  A      - COMPLEX*16       array of DIMENSION ( LDA, n ).
+*  A      - DOUBLE COMPLEX   array of DIMENSION ( LDA, n ).
 *           Before entry with  UPLO = 'U' or 'u', the leading n by n
 *           upper triangular part of the array A must contain the upper
 *           triangular part of the hermitian matrix and the strictly
@@ -1123,10 +1123,10 @@ c            END IF
 *
 *
 *     .. Parameters ..
-      COMPLEX*16         ZERO
+      DOUBLE COMPLEX     ZERO
       PARAMETER        ( ZERO = ( 0.0D+0, 0.0D+0 ) )
 *     .. Local Scalars ..
-      COMPLEX*16         TEMP1, TEMP2
+      DOUBLE COMPLEX     TEMP1, TEMP2
       INTEGER            I, INFO, IX, IY, J, JX, JY, KX, KY
 *     .. External Functions ..
       LOGICAL            LSAME
@@ -1278,10 +1278,10 @@ c               END IF
       CHARACTER          TRANS, UPLO
       INTEGER            K, LDA, LDB, LDC, N
       DOUBLE PRECISION   BETA
-      COMPLEX*16         ALPHA
+      DOUBLE COMPLEX     ALPHA
 *     ..
 *     .. Array Arguments ..
-      COMPLEX*16         A( LDA, * ), B( LDB, * ), C( LDC, * )
+      DOUBLE COMPLEX     A( LDA, * ), B( LDB, * ), C( LDC, * )
 *     ..
 *
 *  Purpose
@@ -1341,11 +1341,11 @@ c               END IF
 *           matrices  A and B.  K must be at least zero.
 *           Unchanged on exit.
 *
-*  ALPHA  - COMPLEX*16         .
+*  ALPHA  - DOUBLE COMPLEX     .
 *           On entry, ALPHA specifies the scalar alpha.
 *           Unchanged on exit.
 *
-*  A      - COMPLEX*16       array of DIMENSION ( LDA, ka ), where ka is
+*  A      - DOUBLE COMPLEX   array of DIMENSION ( LDA, ka ), where ka is
 *           k  when  TRANS = 'N' or 'n',  and is  n  otherwise.
 *           Before entry with  TRANS = 'N' or 'n',  the  leading  n by k
 *           part of the array  A  must contain the matrix  A,  otherwise
@@ -1360,7 +1360,7 @@ c               END IF
 *           be at least  max( 1, k ).
 *           Unchanged on exit.
 *
-*  B      - COMPLEX*16       array of DIMENSION ( LDB, kb ), where kb is
+*  B      - DOUBLE COMPLEX   array of DIMENSION ( LDB, kb ), where kb is
 *           k  when  TRANS = 'N' or 'n',  and is  n  otherwise.
 *           Before entry with  TRANS = 'N' or 'n',  the  leading  n by k
 *           part of the array  B  must contain the matrix  B,  otherwise
@@ -1379,7 +1379,7 @@ c               END IF
 *           On entry, BETA specifies the scalar beta.
 *           Unchanged on exit.
 *
-*  C      - COMPLEX*16          array of DIMENSION ( LDC, n ).
+*  C      - DOUBLE COMPLEX      array of DIMENSION ( LDC, n ).
 *           Before entry  with  UPLO = 'U' or 'u',  the leading  n by n
 *           upper triangular part of the array C must contain the upper
 *           triangular part  of the  hermitian matrix  and the strictly
@@ -1428,12 +1428,12 @@ c               END IF
 *     .. Local Scalars ..
       LOGICAL            UPPER
       INTEGER            I, INFO, J, L, NROWA
-      COMPLEX*16         TEMP1, TEMP2
+      DOUBLE COMPLEX     TEMP1, TEMP2
 *     ..
 *     .. Parameters ..
       DOUBLE PRECISION   ONE
       PARAMETER          ( ONE = 1.0D+0 )
-      COMPLEX*16         ZERO
+      DOUBLE COMPLEX     ZERO
       PARAMETER          ( ZERO = ( 0.0D+0, 0.0D+0 ) )
 *     ..
 *     .. Executable Statements ..
@@ -1714,9 +1714,9 @@ c       code for both increments equal to 1
 *     .. Scalar Arguments ..
       CHARACTER          SIDE, UPLO, TRANSA, DIAG
       INTEGER            M, N, LDA, LDB
-      COMPLEX*16         ALPHA
+      DOUBLE COMPLEX     ALPHA
 *     .. Array Arguments ..
-      COMPLEX*16         A( LDA, * ), B( LDB, * )
+      DOUBLE COMPLEX     A( LDA, * ), B( LDB, * )
 *     ..
 *
 *  Purpose
@@ -1787,13 +1787,13 @@ c       code for both increments equal to 1
 *           at least zero.
 *           Unchanged on exit.
 *
-*  ALPHA  - COMPLEX*16      .
+*  ALPHA  - DOUBLE COMPLEX  .
 *           On entry,  ALPHA specifies the scalar  alpha. When  alpha is
 *           zero then  A is not referenced and  B need not be set before
 *           entry.
 *           Unchanged on exit.
 *
-*  A      - COMPLEX*16       array of DIMENSION ( LDA, k ), where k is m
+*  A      - DOUBLE COMPLEX   array of DIMENSION ( LDA, k ), where k is m
 *           when  SIDE = 'L' or 'l'  and is  n  when  SIDE = 'R' or 'r'.
 *           Before entry  with  UPLO = 'U' or 'u',  the  leading  k by k
 *           upper triangular part of the array  A must contain the upper
@@ -1814,7 +1814,7 @@ c       code for both increments equal to 1
 *           then LDA must be at least max( 1, n ).
 *           Unchanged on exit.
 *
-*  B      - COMPLEX*16       array of DIMENSION ( LDB, n ).
+*  B      - DOUBLE COMPLEX   array of DIMENSION ( LDB, n ).
 *           Before entry,  the leading  m by n part of the array  B must
 *           contain the matrix  B,  and  on exit  is overwritten  by the
 *           transformed matrix.
@@ -1845,11 +1845,11 @@ c       code for both increments equal to 1
 *     .. Local Scalars ..
       LOGICAL            LSIDE, NOCONJ, NOUNIT, UPPER
       INTEGER            I, INFO, J, K, NROWA
-      COMPLEX*16         TEMP
+      DOUBLE COMPLEX     TEMP
 *     .. Parameters ..
-      COMPLEX*16         ONE
+      DOUBLE COMPLEX     ONE
       PARAMETER        ( ONE  = ( 1.0D+0, 0.0D+0 ) )
-      COMPLEX*16         ZERO
+      DOUBLE COMPLEX     ZERO
       PARAMETER        ( ZERO = ( 0.0D+0, 0.0D+0 ) )
 *     ..
 *     .. Executable Statements ..
@@ -2106,7 +2106,7 @@ c                     END IF
       INTEGER            INCX, LDA, N
       CHARACTER          DIAG, TRANS, UPLO
 *     .. Array Arguments ..
-      COMPLEX*16         A( LDA, * ), X( * )
+      DOUBLE COMPLEX     A( LDA, * ), X( * )
 *     ..
 *
 *  Purpose
@@ -2160,7 +2160,7 @@ c                     END IF
 *           N must be at least zero.
 *           Unchanged on exit.
 *
-*  A      - COMPLEX*16       array of DIMENSION ( LDA, n ).
+*  A      - DOUBLE COMPLEX   array of DIMENSION ( LDA, n ).
 *           Before entry with  UPLO = 'U' or 'u', the leading n by n
 *           upper triangular part of the array A must contain the upper
 *           triangular matrix and the strictly lower triangular part of
@@ -2179,7 +2179,7 @@ c                     END IF
 *           max( 1, n ).
 *           Unchanged on exit.
 *
-*  X      - COMPLEX*16       array of dimension at least
+*  X      - DOUBLE COMPLEX   array of dimension at least
 *           ( 1 + ( n - 1 )*abs( INCX ) ).
 *           Before entry, the incremented array X must contain the n
 *           element vector x. On exit, X is overwritten with the
@@ -2201,10 +2201,10 @@ c                     END IF
 *
 *
 *     .. Parameters ..
-      COMPLEX*16         ZERO
+      DOUBLE COMPLEX     ZERO
       PARAMETER        ( ZERO = ( 0.0D+0, 0.0D+0 ) )
 *     .. Local Scalars ..
-      COMPLEX*16         TEMP
+      DOUBLE COMPLEX     TEMP
       INTEGER            I, INFO, IX, J, JX, KX
       LOGICAL            NOCONJ, NOUNIT
 *     .. External Functions ..
@@ -2427,9 +2427,9 @@ c                  END IF
 *     .. Scalar Arguments ..
       CHARACTER          SIDE, UPLO, TRANSA, DIAG
       INTEGER            M, N, LDA, LDB
-      COMPLEX*16         ALPHA
+      DOUBLE COMPLEX     ALPHA
 *     .. Array Arguments ..
-      COMPLEX*16         A( LDA, * ), B( LDB, * )
+      DOUBLE COMPLEX     A( LDA, * ), B( LDB, * )
 *     ..
 *
 *  Purpose
@@ -2502,13 +2502,13 @@ c                  END IF
 *           at least zero.
 *           Unchanged on exit.
 *
-*  ALPHA  - COMPLEX*16      .
+*  ALPHA  - DOUBLE COMPLEX  .
 *           On entry,  ALPHA specifies the scalar  alpha. When  alpha is
 *           zero then  A is not referenced and  B need not be set before
 *           entry.
 *           Unchanged on exit.
 *
-*  A      - COMPLEX*16       array of DIMENSION ( LDA, k ), where k is m
+*  A      - DOUBLE COMPLEX   array of DIMENSION ( LDA, k ), where k is m
 *           when  SIDE = 'L' or 'l'  and is  n  when  SIDE = 'R' or 'r'.
 *           Before entry  with  UPLO = 'U' or 'u',  the  leading  k by k
 *           upper triangular part of the array  A must contain the upper
@@ -2529,7 +2529,7 @@ c                  END IF
 *           then LDA must be at least max( 1, n ).
 *           Unchanged on exit.
 *
-*  B      - COMPLEX*16       array of DIMENSION ( LDB, n ).
+*  B      - DOUBLE COMPLEX   array of DIMENSION ( LDB, n ).
 *           Before entry,  the leading  m by n part of the array  B must
 *           contain  the  right-hand  side  matrix  B,  and  on exit  is
 *           overwritten by the solution matrix  X.
@@ -2560,11 +2560,11 @@ c                  END IF
 *     .. Local Scalars ..
       LOGICAL            LSIDE, NOCONJ, NOUNIT, UPPER
       INTEGER            I, INFO, J, K, NROWA
-      COMPLEX*16         TEMP
+      DOUBLE COMPLEX     TEMP
 *     .. Parameters ..
-      COMPLEX*16         ONE
+      DOUBLE COMPLEX     ONE
       PARAMETER        ( ONE  = ( 1.0D+0, 0.0D+0 ) )
-      COMPLEX*16         ZERO
+      DOUBLE COMPLEX     ZERO
       PARAMETER        ( ZERO = ( 0.0D+0, 0.0D+0 ) )
 *     ..
 *     .. Executable Statements ..
@@ -2841,7 +2841,7 @@ c                     END IF
       INTEGER            INCX, LDA, N
       CHARACTER          DIAG, TRANS, UPLO
 *     .. Array Arguments ..
-      COMPLEX*16         A( LDA, * ), X( * )
+      DOUBLE COMPLEX     A( LDA, * ), X( * )
 *     ..
 *
 *  Purpose
@@ -2898,7 +2898,7 @@ c                     END IF
 *           N must be at least zero.
 *           Unchanged on exit.
 *
-*  A      - COMPLEX*16       array of DIMENSION ( LDA, n ).
+*  A      - DOUBLE COMPLEX   array of DIMENSION ( LDA, n ).
 *           Before entry with  UPLO = 'U' or 'u', the leading n by n
 *           upper triangular part of the array A must contain the upper
 *           triangular matrix and the strictly lower triangular part of
@@ -2917,7 +2917,7 @@ c                     END IF
 *           max( 1, n ).
 *           Unchanged on exit.
 *
-*  X      - COMPLEX*16       array of dimension at least
+*  X      - DOUBLE COMPLEX   array of dimension at least
 *           ( 1 + ( n - 1 )*abs( INCX ) ).
 *           Before entry, the incremented array X must contain the n
 *           element right-hand side vector b. On exit, X is overwritten
@@ -2939,10 +2939,10 @@ c                     END IF
 *
 *
 *     .. Parameters ..
-      COMPLEX*16         ZERO
+      DOUBLE COMPLEX     ZERO
       PARAMETER        ( ZERO = ( 0.0D+0, 0.0D+0 ) )
 *     .. Local Scalars ..
-      COMPLEX*16         TEMP
+      DOUBLE COMPLEX     TEMP
       INTEGER            I, INFO, IX, J, JX, KX
       LOGICAL            NOCONJ, NOUNIT
 *     .. External Functions ..
@@ -3201,11 +3201,11 @@ c
       SUBROUTINE ZGBMV ( TRANS, M, N, KL, KU, ALPHA, A, LDA, X, INCX,
      $                   BETA, Y, INCY )
 *     .. Scalar Arguments ..
-      COMPLEX*16         ALPHA, BETA
+      DOUBLE COMPLEX     ALPHA, BETA
       INTEGER            INCX, INCY, KL, KU, LDA, M, N
       CHARACTER          TRANS
 *     .. Array Arguments ..
-      COMPLEX*16         A( LDA, * ), X( * ), Y( * )
+      DOUBLE COMPLEX     A( LDA, * ), X( * ), Y( * )
 *     ..
 *
 *  Purpose
@@ -3255,11 +3255,11 @@ c
 *           matrix A. KU must satisfy  0 .le. KU.
 *           Unchanged on exit.
 *
-*  ALPHA  - COMPLEX*16      .
+*  ALPHA  - DOUBLE COMPLEX  .
 *           On entry, ALPHA specifies the scalar alpha.
 *           Unchanged on exit.
 *
-*  A      - COMPLEX*16       array of DIMENSION ( LDA, n ).
+*  A      - DOUBLE COMPLEX   array of DIMENSION ( LDA, n ).
 *           Before entry, the leading ( kl + ku + 1 ) by n part of the
 *           array A must contain the matrix of coefficients, supplied
 *           column by column, with the leading diagonal of the matrix in
@@ -3287,7 +3287,7 @@ c
 *           ( kl + ku + 1 ).
 *           Unchanged on exit.
 *
-*  X      - COMPLEX*16       array of DIMENSION at least
+*  X      - DOUBLE COMPLEX   array of DIMENSION at least
 *           ( 1 + ( n - 1 )*abs( INCX ) ) when TRANS = 'N' or 'n'
 *           and at least
 *           ( 1 + ( m - 1 )*abs( INCX ) ) otherwise.
@@ -3300,12 +3300,12 @@ c
 *           X. INCX must not be zero.
 *           Unchanged on exit.
 *
-*  BETA   - COMPLEX*16      .
+*  BETA   - DOUBLE COMPLEX  .
 *           On entry, BETA specifies the scalar beta. When BETA is
 *           supplied as zero then Y need not be set on input.
 *           Unchanged on exit.
 *
-*  Y      - COMPLEX*16       array of DIMENSION at least
+*  Y      - DOUBLE COMPLEX   array of DIMENSION at least
 *           ( 1 + ( m - 1 )*abs( INCY ) ) when TRANS = 'N' or 'n'
 *           and at least
 *           ( 1 + ( n - 1 )*abs( INCY ) ) otherwise.
@@ -3329,12 +3329,12 @@ c
 *
 *
 *     .. Parameters ..
-      COMPLEX*16         ONE
+      DOUBLE COMPLEX     ONE
       PARAMETER        ( ONE  = ( 1.0D+0, 0.0D+0 ) )
-      COMPLEX*16         ZERO
+      DOUBLE COMPLEX     ZERO
       PARAMETER        ( ZERO = ( 0.0D+0, 0.0D+0 ) )
 *     .. Local Scalars ..
-      COMPLEX*16         TEMP
+      DOUBLE COMPLEX     TEMP
       INTEGER            I, INFO, IX, IY, J, JX, JY, K, KUP1, KX, KY,
      $                   LENX, LENY
       LOGICAL            NOCONJ
@@ -3522,10 +3522,10 @@ c               END IF
       END
       SUBROUTINE ZGERU ( M, N, ALPHA, X, INCX, Y, INCY, A, LDA )
 *     .. Scalar Arguments ..
-      COMPLEX*16         ALPHA
+      DOUBLE COMPLEX     ALPHA
       INTEGER            INCX, INCY, LDA, M, N
 *     .. Array Arguments ..
-      COMPLEX*16         A( LDA, * ), X( * ), Y( * )
+      DOUBLE COMPLEX     A( LDA, * ), X( * ), Y( * )
 *     ..
 *
 *  Purpose
@@ -3551,11 +3551,11 @@ c               END IF
 *           N must be at least zero.
 *           Unchanged on exit.
 *
-*  ALPHA  - COMPLEX*16      .
+*  ALPHA  - DOUBLE COMPLEX  .
 *           On entry, ALPHA specifies the scalar alpha.
 *           Unchanged on exit.
 *
-*  X      - COMPLEX*16       array of dimension at least
+*  X      - DOUBLE COMPLEX   array of dimension at least
 *           ( 1 + ( m - 1 )*abs( INCX ) ).
 *           Before entry, the incremented array X must contain the m
 *           element vector x.
@@ -3566,7 +3566,7 @@ c               END IF
 *           X. INCX must not be zero.
 *           Unchanged on exit.
 *
-*  Y      - COMPLEX*16       array of dimension at least
+*  Y      - DOUBLE COMPLEX   array of dimension at least
 *           ( 1 + ( n - 1 )*abs( INCY ) ).
 *           Before entry, the incremented array Y must contain the n
 *           element vector y.
@@ -3577,7 +3577,7 @@ c               END IF
 *           Y. INCY must not be zero.
 *           Unchanged on exit.
 *
-*  A      - COMPLEX*16       array of DIMENSION ( LDA, n ).
+*  A      - DOUBLE COMPLEX   array of DIMENSION ( LDA, n ).
 *           Before entry, the leading m by n part of the array A must
 *           contain the matrix of coefficients. On exit, A is
 *           overwritten by the updated matrix.
@@ -3599,10 +3599,10 @@ c               END IF
 *
 *
 *     .. Parameters ..
-      COMPLEX*16         ZERO
+      DOUBLE COMPLEX     ZERO
       PARAMETER        ( ZERO = ( 0.0D+0, 0.0D+0 ) )
 *     .. Local Scalars ..
-      COMPLEX*16         TEMP
+      DOUBLE COMPLEX     TEMP
       INTEGER            I, INFO, IX, J, JY, KX
 *     .. External Subroutines ..
       EXTERNAL           XERBLA
@@ -3680,11 +3680,11 @@ c            END IF
       SUBROUTINE ZHBMV ( UPLO, N, K, ALPHA, A, LDA, X, INCX,
      $                   BETA, Y, INCY )
 *     .. Scalar Arguments ..
-      COMPLEX*16         ALPHA, BETA
+      DOUBLE COMPLEX     ALPHA, BETA
       INTEGER            INCX, INCY, K, LDA, N
       CHARACTER          UPLO
 *     .. Array Arguments ..
-      COMPLEX*16         A( LDA, * ), X( * ), Y( * )
+      DOUBLE COMPLEX     A( LDA, * ), X( * ), Y( * )
 *     ..
 *
 *  Purpose
@@ -3723,11 +3723,11 @@ c            END IF
 *           matrix A. K must satisfy  0 .le. K.
 *           Unchanged on exit.
 *
-*  ALPHA  - COMPLEX*16      .
+*  ALPHA  - DOUBLE COMPLEX  .
 *           On entry, ALPHA specifies the scalar alpha.
 *           Unchanged on exit.
 *
-*  A      - COMPLEX*16       array of DIMENSION ( LDA, n ).
+*  A      - DOUBLE COMPLEX   array of DIMENSION ( LDA, n ).
 *           Before entry with UPLO = 'U' or 'u', the leading ( k + 1 )
 *           by n part of the array A must contain the upper triangular
 *           band part of the hermitian matrix, supplied column by
@@ -3774,7 +3774,7 @@ c            END IF
 *           ( k + 1 ).
 *           Unchanged on exit.
 *
-*  X      - COMPLEX*16       array of DIMENSION at least
+*  X      - DOUBLE COMPLEX   array of DIMENSION at least
 *           ( 1 + ( n - 1 )*abs( INCX ) ).
 *           Before entry, the incremented array X must contain the
 *           vector x.
@@ -3785,11 +3785,11 @@ c            END IF
 *           X. INCX must not be zero.
 *           Unchanged on exit.
 *
-*  BETA   - COMPLEX*16      .
+*  BETA   - DOUBLE COMPLEX  .
 *           On entry, BETA specifies the scalar beta.
 *           Unchanged on exit.
 *
-*  Y      - COMPLEX*16       array of DIMENSION at least
+*  Y      - DOUBLE COMPLEX   array of DIMENSION at least
 *           ( 1 + ( n - 1 )*abs( INCY ) ).
 *           Before entry, the incremented array Y must contain the
 *           vector y. On exit, Y is overwritten by the updated vector y.
@@ -3810,12 +3810,12 @@ c            END IF
 *
 *
 *     .. Parameters ..
-      COMPLEX*16         ONE
+      DOUBLE COMPLEX     ONE
       PARAMETER        ( ONE  = ( 1.0D+0, 0.0D+0 ) )
-      COMPLEX*16         ZERO
+      DOUBLE COMPLEX     ZERO
       PARAMETER        ( ZERO = ( 0.0D+0, 0.0D+0 ) )
 *     .. Local Scalars ..
-      COMPLEX*16         TEMP1, TEMP2
+      DOUBLE COMPLEX     TEMP1, TEMP2
       INTEGER            I, INFO, IX, IY, J, JX, JY, KPLUS1, KX, KY, L
 *     .. External Functions ..
       LOGICAL            LSAME
@@ -3991,9 +3991,9 @@ c            END IF
 *     .. Scalar Arguments ..
       CHARACTER          SIDE, UPLO
       INTEGER            M, N, LDA, LDB, LDC
-      COMPLEX*16         ALPHA, BETA
+      DOUBLE COMPLEX     ALPHA, BETA
 *     .. Array Arguments ..
-      COMPLEX*16         A( LDA, * ), B( LDB, * ), C( LDC, * )
+      DOUBLE COMPLEX     A( LDA, * ), B( LDB, * ), C( LDC, * )
 *     ..
 *
 *  Purpose
@@ -4046,11 +4046,11 @@ c            END IF
 *           N  must be at least zero.
 *           Unchanged on exit.
 *
-*  ALPHA  - COMPLEX*16      .
+*  ALPHA  - DOUBLE COMPLEX  .
 *           On entry, ALPHA specifies the scalar alpha.
 *           Unchanged on exit.
 *
-*  A      - COMPLEX*16       array of DIMENSION ( LDA, ka ), where ka is
+*  A      - DOUBLE COMPLEX   array of DIMENSION ( LDA, ka ), where ka is
 *           m  when  SIDE = 'L' or 'l'  and is n  otherwise.
 *           Before entry  with  SIDE = 'L' or 'l',  the  m by m  part of
 *           the array  A  must contain the  hermitian matrix,  such that
@@ -4083,7 +4083,7 @@ c            END IF
 *           least max( 1, n ).
 *           Unchanged on exit.
 *
-*  B      - COMPLEX*16       array of DIMENSION ( LDB, n ).
+*  B      - DOUBLE COMPLEX   array of DIMENSION ( LDB, n ).
 *           Before entry, the leading  m by n part of the array  B  must
 *           contain the matrix B.
 *           Unchanged on exit.
@@ -4094,12 +4094,12 @@ c            END IF
 *           max( 1, m ).
 *           Unchanged on exit.
 *
-*  BETA   - COMPLEX*16      .
+*  BETA   - DOUBLE COMPLEX  .
 *           On entry,  BETA  specifies the scalar  beta.  When  BETA  is
 *           supplied as zero then C need not be set on input.
 *           Unchanged on exit.
 *
-*  C      - COMPLEX*16       array of DIMENSION ( LDC, n ).
+*  C      - DOUBLE COMPLEX   array of DIMENSION ( LDC, n ).
 *           Before entry, the leading  m by n  part of the array  C must
 *           contain the matrix  C,  except when  beta  is zero, in which
 *           case C need not be set on entry.
@@ -4132,11 +4132,11 @@ c            END IF
 *     .. Local Scalars ..
       LOGICAL            UPPER
       INTEGER            I, INFO, J, K, NROWA
-      COMPLEX*16         TEMP1, TEMP2
+      DOUBLE COMPLEX     TEMP1, TEMP2
 *     .. Parameters ..
-      COMPLEX*16         ONE
+      DOUBLE COMPLEX     ONE
       PARAMETER        ( ONE  = ( 1.0D+0, 0.0D+0 ) )
-      COMPLEX*16         ZERO
+      DOUBLE COMPLEX     ZERO
       PARAMETER        ( ZERO = ( 0.0D+0, 0.0D+0 ) )
 *     ..
 *     .. Executable Statements ..
@@ -4296,7 +4296,7 @@ c            END IF
       INTEGER            INCX, LDA, N
       CHARACTER          UPLO
 *     .. Array Arguments ..
-      COMPLEX*16         A( LDA, * ), X( * )
+      DOUBLE COMPLEX     A( LDA, * ), X( * )
 *     ..
 *
 *  Purpose
@@ -4334,7 +4334,7 @@ c            END IF
 *           On entry, ALPHA specifies the scalar alpha.
 *           Unchanged on exit.
 *
-*  X      - COMPLEX*16       array of dimension at least
+*  X      - DOUBLE COMPLEX   array of dimension at least
 *           ( 1 + ( n - 1 )*abs( INCX ) ).
 *           Before entry, the incremented array X must contain the n
 *           element vector x.
@@ -4345,7 +4345,7 @@ c            END IF
 *           X. INCX must not be zero.
 *           Unchanged on exit.
 *
-*  A      - COMPLEX*16       array of DIMENSION ( LDA, n ).
+*  A      - DOUBLE COMPLEX   array of DIMENSION ( LDA, n ).
 *           Before entry with  UPLO = 'U' or 'u', the leading n by n
 *           upper triangular part of the array A must contain the upper
 *           triangular part of the hermitian matrix and the strictly
@@ -4379,10 +4379,10 @@ c            END IF
 *
 *
 *     .. Parameters ..
-      COMPLEX*16         ZERO
+      DOUBLE COMPLEX     ZERO
       PARAMETER        ( ZERO = ( 0.0D+0, 0.0D+0 ) )
 *     .. Local Scalars ..
-      COMPLEX*16         TEMP
+      DOUBLE COMPLEX     TEMP
       INTEGER            I, INFO, IX, J, JX, KX
 *     .. External Functions ..
       LOGICAL            LSAME
@@ -4509,7 +4509,7 @@ c               END IF
       DOUBLE PRECISION   ALPHA, BETA
 *     ..
 *     .. Array Arguments ..
-      COMPLEX*16         A( LDA, * ), C( LDC, * )
+      DOUBLE COMPLEX     A( LDA, * ), C( LDC, * )
 *     ..
 *
 *  Purpose
@@ -4569,7 +4569,7 @@ c               END IF
 *           On entry, ALPHA specifies the scalar alpha.
 *           Unchanged on exit.
 *
-*  A      - COMPLEX*16       array of DIMENSION ( LDA, ka ), where ka is
+*  A      - DOUBLE COMPLEX   array of DIMENSION ( LDA, ka ), where ka is
 *           k  when  TRANS = 'N' or 'n',  and is  n  otherwise.
 *           Before entry with  TRANS = 'N' or 'n',  the  leading  n by k
 *           part of the array  A  must contain the matrix  A,  otherwise
@@ -4588,7 +4588,7 @@ c               END IF
 *           On entry, BETA specifies the scalar beta.
 *           Unchanged on exit.
 *
-*  C      - COMPLEX*16          array of DIMENSION ( LDC, n ).
+*  C      - DOUBLE COMPLEX      array of DIMENSION ( LDC, n ).
 *           Before entry  with  UPLO = 'U' or 'u',  the leading  n by n
 *           upper triangular part of the array C must contain the upper
 *           triangular part  of the  hermitian matrix  and the strictly
@@ -4638,7 +4638,7 @@ c               END IF
       LOGICAL            UPPER
       INTEGER            I, INFO, J, L, NROWA
       DOUBLE PRECISION   RTEMP
-      COMPLEX*16         TEMP
+      DOUBLE COMPLEX     TEMP
 *     ..
 *     .. Parameters ..
       DOUBLE PRECISION   ONE, ZERO
@@ -4834,11 +4834,11 @@ c               END IF
       END
       SUBROUTINE ZHPMV ( UPLO, N, ALPHA, AP, X, INCX, BETA, Y, INCY )
 *     .. Scalar Arguments ..
-      COMPLEX*16         ALPHA, BETA
+      DOUBLE COMPLEX     ALPHA, BETA
       INTEGER            INCX, INCY, N
       CHARACTER          UPLO
 *     .. Array Arguments ..
-      COMPLEX*16         AP( * ), X( * ), Y( * )
+      DOUBLE COMPLEX     AP( * ), X( * ), Y( * )
 *     ..
 *
 *  Purpose
@@ -4872,11 +4872,11 @@ c               END IF
 *           N must be at least zero.
 *           Unchanged on exit.
 *
-*  ALPHA  - COMPLEX*16      .
+*  ALPHA  - DOUBLE COMPLEX  .
 *           On entry, ALPHA specifies the scalar alpha.
 *           Unchanged on exit.
 *
-*  AP     - COMPLEX*16       array of DIMENSION at least
+*  AP     - DOUBLE COMPLEX   array of DIMENSION at least
 *           ( ( n*( n + 1 ) )/2 ).
 *           Before entry with UPLO = 'U' or 'u', the array AP must
 *           contain the upper triangular part of the hermitian matrix
@@ -4892,7 +4892,7 @@ c               END IF
 *           not be set and are assumed to be zero.
 *           Unchanged on exit.
 *
-*  X      - COMPLEX*16       array of dimension at least
+*  X      - DOUBLE COMPLEX   array of dimension at least
 *           ( 1 + ( n - 1 )*abs( INCX ) ).
 *           Before entry, the incremented array X must contain the n
 *           element vector x.
@@ -4903,12 +4903,12 @@ c               END IF
 *           X. INCX must not be zero.
 *           Unchanged on exit.
 *
-*  BETA   - COMPLEX*16      .
+*  BETA   - DOUBLE COMPLEX  .
 *           On entry, BETA specifies the scalar beta. When BETA is
 *           supplied as zero then Y need not be set on input.
 *           Unchanged on exit.
 *
-*  Y      - COMPLEX*16       array of dimension at least
+*  Y      - DOUBLE COMPLEX   array of dimension at least
 *           ( 1 + ( n - 1 )*abs( INCY ) ).
 *           Before entry, the incremented array Y must contain the n
 *           element vector y. On exit, Y is overwritten by the updated
@@ -4930,12 +4930,12 @@ c               END IF
 *
 *
 *     .. Parameters ..
-      COMPLEX*16         ONE
+      DOUBLE COMPLEX     ONE
       PARAMETER        ( ONE  = ( 1.0D+0, 0.0D+0 ) )
-      COMPLEX*16         ZERO
+      DOUBLE COMPLEX     ZERO
       PARAMETER        ( ZERO = ( 0.0D+0, 0.0D+0 ) )
 *     .. Local Scalars ..
-      COMPLEX*16         TEMP1, TEMP2
+      DOUBLE COMPLEX     TEMP1, TEMP2
       INTEGER            I, INFO, IX, IY, J, JX, JY, K, KK, KX, KY
 *     .. External Functions ..
       LOGICAL            LSAME
@@ -5108,7 +5108,7 @@ c               END IF
       INTEGER            INCX, N
       CHARACTER          UPLO
 *     .. Array Arguments ..
-      COMPLEX*16         AP( * ), X( * )
+      DOUBLE COMPLEX     AP( * ), X( * )
 *     ..
 *
 *  Purpose
@@ -5146,7 +5146,7 @@ c               END IF
 *           On entry, ALPHA specifies the scalar alpha.
 *           Unchanged on exit.
 *
-*  X      - COMPLEX*16       array of dimension at least
+*  X      - DOUBLE COMPLEX   array of dimension at least
 *           ( 1 + ( n - 1 )*abs( INCX ) ).
 *           Before entry, the incremented array X must contain the n
 *           element vector x.
@@ -5157,7 +5157,7 @@ c               END IF
 *           X. INCX must not be zero.
 *           Unchanged on exit.
 *
-*  AP     - COMPLEX*16       array of DIMENSION at least
+*  AP     - DOUBLE COMPLEX   array of DIMENSION at least
 *           ( ( n*( n + 1 ) )/2 ).
 *           Before entry with  UPLO = 'U' or 'u', the array AP must
 *           contain the upper triangular part of the hermitian matrix
@@ -5188,10 +5188,10 @@ c               END IF
 *
 *
 *     .. Parameters ..
-      COMPLEX*16         ZERO
+      DOUBLE COMPLEX     ZERO
       PARAMETER        ( ZERO = ( 0.0D+0, 0.0D+0 ) )
 *     .. Local Scalars ..
-      COMPLEX*16         TEMP
+      DOUBLE COMPLEX     TEMP
       INTEGER            I, INFO, IX, J, JX, K, KK, KX
 *     .. External Functions ..
       LOGICAL            LSAME
@@ -5321,11 +5321,11 @@ c               END IF
       END
       SUBROUTINE ZHPR2 ( UPLO, N, ALPHA, X, INCX, Y, INCY, AP )
 *     .. Scalar Arguments ..
-      COMPLEX*16         ALPHA
+      DOUBLE COMPLEX     ALPHA
       INTEGER            INCX, INCY, N
       CHARACTER          UPLO
 *     .. Array Arguments ..
-      COMPLEX*16         AP( * ), X( * ), Y( * )
+      DOUBLE COMPLEX     AP( * ), X( * ), Y( * )
 *     ..
 *
 *  Purpose
@@ -5359,11 +5359,11 @@ c               END IF
 *           N must be at least zero.
 *           Unchanged on exit.
 *
-*  ALPHA  - COMPLEX*16      .
+*  ALPHA  - DOUBLE COMPLEX  .
 *           On entry, ALPHA specifies the scalar alpha.
 *           Unchanged on exit.
 *
-*  X      - COMPLEX*16       array of dimension at least
+*  X      - DOUBLE COMPLEX   array of dimension at least
 *           ( 1 + ( n - 1 )*abs( INCX ) ).
 *           Before entry, the incremented array X must contain the n
 *           element vector x.
@@ -5374,7 +5374,7 @@ c               END IF
 *           X. INCX must not be zero.
 *           Unchanged on exit.
 *
-*  Y      - COMPLEX*16       array of dimension at least
+*  Y      - DOUBLE COMPLEX   array of dimension at least
 *           ( 1 + ( n - 1 )*abs( INCY ) ).
 *           Before entry, the incremented array Y must contain the n
 *           element vector y.
@@ -5385,7 +5385,7 @@ c               END IF
 *           Y. INCY must not be zero.
 *           Unchanged on exit.
 *
-*  AP     - COMPLEX*16       array of DIMENSION at least
+*  AP     - DOUBLE COMPLEX   array of DIMENSION at least
 *           ( ( n*( n + 1 ) )/2 ).
 *           Before entry with  UPLO = 'U' or 'u', the array AP must
 *           contain the upper triangular part of the hermitian matrix
@@ -5416,10 +5416,10 @@ c               END IF
 *
 *
 *     .. Parameters ..
-      COMPLEX*16         ZERO
+      DOUBLE COMPLEX     ZERO
       PARAMETER        ( ZERO = ( 0.0D+0, 0.0D+0 ) )
 *     .. Local Scalars ..
-      COMPLEX*16         TEMP1, TEMP2
+      DOUBLE COMPLEX     TEMP1, TEMP2
       INTEGER            I, INFO, IX, IY, J, JX, JY, K, KK, KX, KY
 *     .. External Functions ..
       LOGICAL            LSAME
@@ -5597,9 +5597,9 @@ c               END IF
 *     .. Scalar Arguments ..
       CHARACTER          SIDE, UPLO
       INTEGER            M, N, LDA, LDB, LDC
-      COMPLEX*16         ALPHA, BETA
+      DOUBLE COMPLEX     ALPHA, BETA
 *     .. Array Arguments ..
-      COMPLEX*16         A( LDA, * ), B( LDB, * ), C( LDC, * )
+      DOUBLE COMPLEX     A( LDA, * ), B( LDB, * ), C( LDC, * )
 *     ..
 *
 *  Purpose
@@ -5652,11 +5652,11 @@ c               END IF
 *           N  must be at least zero.
 *           Unchanged on exit.
 *
-*  ALPHA  - COMPLEX*16      .
+*  ALPHA  - DOUBLE COMPLEX  .
 *           On entry, ALPHA specifies the scalar alpha.
 *           Unchanged on exit.
 *
-*  A      - COMPLEX*16       array of DIMENSION ( LDA, ka ), where ka is
+*  A      - DOUBLE COMPLEX   array of DIMENSION ( LDA, ka ), where ka is
 *           m  when  SIDE = 'L' or 'l'  and is n  otherwise.
 *           Before entry  with  SIDE = 'L' or 'l',  the  m by m  part of
 *           the array  A  must contain the  symmetric matrix,  such that
@@ -5687,7 +5687,7 @@ c               END IF
 *           least max( 1, n ).
 *           Unchanged on exit.
 *
-*  B      - COMPLEX*16       array of DIMENSION ( LDB, n ).
+*  B      - DOUBLE COMPLEX   array of DIMENSION ( LDB, n ).
 *           Before entry, the leading  m by n part of the array  B  must
 *           contain the matrix B.
 *           Unchanged on exit.
@@ -5698,12 +5698,12 @@ c               END IF
 *           max( 1, m ).
 *           Unchanged on exit.
 *
-*  BETA   - COMPLEX*16      .
+*  BETA   - DOUBLE COMPLEX  .
 *           On entry,  BETA  specifies the scalar  beta.  When  BETA  is
 *           supplied as zero then C need not be set on input.
 *           Unchanged on exit.
 *
-*  C      - COMPLEX*16       array of DIMENSION ( LDC, n ).
+*  C      - DOUBLE COMPLEX   array of DIMENSION ( LDC, n ).
 *           Before entry, the leading  m by n  part of the array  C must
 *           contain the matrix  C,  except when  beta  is zero, in which
 *           case C need not be set on entry.
@@ -5736,11 +5736,11 @@ c               END IF
 *     .. Local Scalars ..
       LOGICAL            UPPER
       INTEGER            I, INFO, J, K, NROWA
-      COMPLEX*16         TEMP1, TEMP2
+      DOUBLE COMPLEX     TEMP1, TEMP2
 *     .. Parameters ..
-      COMPLEX*16         ONE
+      DOUBLE COMPLEX     ONE
       PARAMETER        ( ONE  = ( 1.0D+0, 0.0D+0 ) )
-      COMPLEX*16         ZERO
+      DOUBLE COMPLEX     ZERO
       PARAMETER        ( ZERO = ( 0.0D+0, 0.0D+0 ) )
 *     ..
 *     .. Executable Statements ..
@@ -5893,9 +5893,9 @@ c               END IF
 *     .. Scalar Arguments ..
       CHARACTER          UPLO, TRANS
       INTEGER            N, K, LDA, LDB, LDC
-      COMPLEX*16         ALPHA, BETA
+      DOUBLE COMPLEX     ALPHA, BETA
 *     .. Array Arguments ..
-      COMPLEX*16         A( LDA, * ), B( LDB, * ), C( LDC, * )
+      DOUBLE COMPLEX     A( LDA, * ), B( LDB, * ), C( LDC, * )
 *     ..
 *
 *  Purpose
@@ -5953,11 +5953,11 @@ c               END IF
 *           matrices  A and B.  K must be at least zero.
 *           Unchanged on exit.
 *
-*  ALPHA  - COMPLEX*16      .
+*  ALPHA  - DOUBLE COMPLEX  .
 *           On entry, ALPHA specifies the scalar alpha.
 *           Unchanged on exit.
 *
-*  A      - COMPLEX*16       array of DIMENSION ( LDA, ka ), where ka is
+*  A      - DOUBLE COMPLEX   array of DIMENSION ( LDA, ka ), where ka is
 *           k  when  TRANS = 'N' or 'n',  and is  n  otherwise.
 *           Before entry with  TRANS = 'N' or 'n',  the  leading  n by k
 *           part of the array  A  must contain the matrix  A,  otherwise
@@ -5972,7 +5972,7 @@ c               END IF
 *           be at least  max( 1, k ).
 *           Unchanged on exit.
 *
-*  B      - COMPLEX*16       array of DIMENSION ( LDB, kb ), where kb is
+*  B      - DOUBLE COMPLEX   array of DIMENSION ( LDB, kb ), where kb is
 *           k  when  TRANS = 'N' or 'n',  and is  n  otherwise.
 *           Before entry with  TRANS = 'N' or 'n',  the  leading  n by k
 *           part of the array  B  must contain the matrix  B,  otherwise
@@ -5987,11 +5987,11 @@ c               END IF
 *           be at least  max( 1, k ).
 *           Unchanged on exit.
 *
-*  BETA   - COMPLEX*16      .
+*  BETA   - DOUBLE COMPLEX  .
 *           On entry, BETA specifies the scalar beta.
 *           Unchanged on exit.
 *
-*  C      - COMPLEX*16       array of DIMENSION ( LDC, n ).
+*  C      - DOUBLE COMPLEX   array of DIMENSION ( LDC, n ).
 *           Before entry  with  UPLO = 'U' or 'u',  the leading  n by n
 *           upper triangular part of the array C must contain the upper
 *           triangular part  of the  symmetric matrix  and the strictly
@@ -6031,11 +6031,11 @@ c               END IF
 *     .. Local Scalars ..
       LOGICAL            UPPER
       INTEGER            I, INFO, J, L, NROWA
-      COMPLEX*16         TEMP1, TEMP2
+      DOUBLE COMPLEX     TEMP1, TEMP2
 *     .. Parameters ..
-      COMPLEX*16         ONE
+      DOUBLE COMPLEX     ONE
       PARAMETER        ( ONE  = ( 1.0D+0, 0.0D+0 ) )
-      COMPLEX*16         ZERO
+      DOUBLE COMPLEX     ZERO
       PARAMETER        ( ZERO = ( 0.0D+0, 0.0D+0 ) )
 *     ..
 *     .. Executable Statements ..
@@ -6217,9 +6217,9 @@ c                  END IF
 *     .. Scalar Arguments ..
       CHARACTER          UPLO, TRANS
       INTEGER            N, K, LDA, LDC
-      COMPLEX*16         ALPHA, BETA
+      DOUBLE COMPLEX     ALPHA, BETA
 *     .. Array Arguments ..
-      COMPLEX*16         A( LDA, * ), C( LDC, * )
+      DOUBLE COMPLEX     A( LDA, * ), C( LDC, * )
 *     ..
 *
 *  Purpose
@@ -6275,11 +6275,11 @@ c                  END IF
 *           matrix A.  K must be at least zero.
 *           Unchanged on exit.
 *
-*  ALPHA  - COMPLEX*16      .
+*  ALPHA  - DOUBLE COMPLEX  .
 *           On entry, ALPHA specifies the scalar alpha.
 *           Unchanged on exit.
 *
-*  A      - COMPLEX*16       array of DIMENSION ( LDA, ka ), where ka is
+*  A      - DOUBLE COMPLEX   array of DIMENSION ( LDA, ka ), where ka is
 *           k  when  TRANS = 'N' or 'n',  and is  n  otherwise.
 *           Before entry with  TRANS = 'N' or 'n',  the  leading  n by k
 *           part of the array  A  must contain the matrix  A,  otherwise
@@ -6294,11 +6294,11 @@ c                  END IF
 *           be at least  max( 1, k ).
 *           Unchanged on exit.
 *
-*  BETA   - COMPLEX*16      .
+*  BETA   - DOUBLE COMPLEX  .
 *           On entry, BETA specifies the scalar beta.
 *           Unchanged on exit.
 *
-*  C      - COMPLEX*16       array of DIMENSION ( LDC, n ).
+*  C      - DOUBLE COMPLEX   array of DIMENSION ( LDC, n ).
 *           Before entry  with  UPLO = 'U' or 'u',  the leading  n by n
 *           upper triangular part of the array C must contain the upper
 *           triangular part  of the  symmetric matrix  and the strictly
@@ -6338,11 +6338,11 @@ c                  END IF
 *     .. Local Scalars ..
       LOGICAL            UPPER
       INTEGER            I, INFO, J, L, NROWA
-      COMPLEX*16         TEMP
+      DOUBLE COMPLEX     TEMP
 *     .. Parameters ..
-      COMPLEX*16         ONE
+      DOUBLE COMPLEX     ONE
       PARAMETER        ( ONE  = ( 1.0D+0, 0.0D+0 ) )
-      COMPLEX*16         ZERO
+      DOUBLE COMPLEX     ZERO
       PARAMETER        ( ZERO = ( 0.0D+0, 0.0D+0 ) )
 *     ..
 *     .. Executable Statements ..
@@ -6510,7 +6510,7 @@ c                  END IF
       INTEGER            INCX, K, LDA, N
       CHARACTER          DIAG, TRANS, UPLO
 *     .. Array Arguments ..
-      COMPLEX*16         A( LDA, * ), X( * )
+      DOUBLE COMPLEX     A( LDA, * ), X( * )
 *     ..
 *
 *  Purpose
@@ -6572,7 +6572,7 @@ c                  END IF
 *           K must satisfy  0 .le. K.
 *           Unchanged on exit.
 *
-*  A      - COMPLEX*16       array of DIMENSION ( LDA, n ).
+*  A      - DOUBLE COMPLEX   array of DIMENSION ( LDA, n ).
 *           Before entry with UPLO = 'U' or 'u', the leading ( k + 1 )
 *           by n part of the array A must contain the upper triangular
 *           band part of the matrix of coefficients, supplied column by
@@ -6620,7 +6620,7 @@ c                  END IF
 *           ( k + 1 ).
 *           Unchanged on exit.
 *
-*  X      - COMPLEX*16       array of dimension at least
+*  X      - DOUBLE COMPLEX   array of dimension at least
 *           ( 1 + ( n - 1 )*abs( INCX ) ).
 *           Before entry, the incremented array X must contain the n
 *           element vector x. On exit, X is overwritten with the
@@ -6642,10 +6642,10 @@ c                  END IF
 *
 *
 *     .. Parameters ..
-      COMPLEX*16         ZERO
+      DOUBLE COMPLEX     ZERO
       PARAMETER        ( ZERO = ( 0.0D+0, 0.0D+0 ) )
 *     .. Local Scalars ..
-      COMPLEX*16         TEMP
+      DOUBLE COMPLEX     TEMP
       INTEGER            I, INFO, IX, J, JX, KPLUS1, KX, L
       LOGICAL            NOCONJ, NOUNIT
 *     .. External Functions ..
@@ -6887,7 +6887,7 @@ c                  END IF
       INTEGER            INCX, K, LDA, N
       CHARACTER          DIAG, TRANS, UPLO
 *     .. Array Arguments ..
-      COMPLEX*16         A( LDA, * ), X( * )
+      DOUBLE COMPLEX     A( LDA, * ), X( * )
 *     ..
 *
 *  Purpose
@@ -6953,7 +6953,7 @@ c                  END IF
 *           K must satisfy  0 .le. K.
 *           Unchanged on exit.
 *
-*  A      - COMPLEX*16       array of DIMENSION ( LDA, n ).
+*  A      - DOUBLE COMPLEX   array of DIMENSION ( LDA, n ).
 *           Before entry with UPLO = 'U' or 'u', the leading ( k + 1 )
 *           by n part of the array A must contain the upper triangular
 *           band part of the matrix of coefficients, supplied column by
@@ -7001,7 +7001,7 @@ c                  END IF
 *           ( k + 1 ).
 *           Unchanged on exit.
 *
-*  X      - COMPLEX*16       array of dimension at least
+*  X      - DOUBLE COMPLEX   array of dimension at least
 *           ( 1 + ( n - 1 )*abs( INCX ) ).
 *           Before entry, the incremented array X must contain the n
 *           element right-hand side vector b. On exit, X is overwritten
@@ -7023,10 +7023,10 @@ c                  END IF
 *
 *
 *     .. Parameters ..
-      COMPLEX*16         ZERO
+      DOUBLE COMPLEX     ZERO
       PARAMETER        ( ZERO = ( 0.0D+0, 0.0D+0 ) )
 *     .. Local Scalars ..
-      COMPLEX*16         TEMP
+      DOUBLE COMPLEX     TEMP
       INTEGER            I, INFO, IX, J, JX, KPLUS1, KX, L
       LOGICAL            NOCONJ, NOUNIT
 *     .. External Functions ..
@@ -7268,7 +7268,7 @@ c                  END IF
       INTEGER            INCX, N
       CHARACTER          DIAG, TRANS, UPLO
 *     .. Array Arguments ..
-      COMPLEX*16         AP( * ), X( * )
+      DOUBLE COMPLEX     AP( * ), X( * )
 *     ..
 *
 *  Purpose
@@ -7322,7 +7322,7 @@ c                  END IF
 *           N must be at least zero.
 *           Unchanged on exit.
 *
-*  AP     - COMPLEX*16       array of DIMENSION at least
+*  AP     - DOUBLE COMPLEX   array of DIMENSION at least
 *           ( ( n*( n + 1 ) )/2 ).
 *           Before entry with  UPLO = 'U' or 'u', the array AP must
 *           contain the upper triangular matrix packed sequentially,
@@ -7338,7 +7338,7 @@ c                  END IF
 *           A are not referenced, but are assumed to be unity.
 *           Unchanged on exit.
 *
-*  X      - COMPLEX*16       array of dimension at least
+*  X      - DOUBLE COMPLEX   array of dimension at least
 *           ( 1 + ( n - 1 )*abs( INCX ) ).
 *           Before entry, the incremented array X must contain the n
 *           element vector x. On exit, X is overwritten with the
@@ -7360,10 +7360,10 @@ c                  END IF
 *
 *
 *     .. Parameters ..
-      COMPLEX*16         ZERO
+      DOUBLE COMPLEX     ZERO
       PARAMETER        ( ZERO = ( 0.0D+0, 0.0D+0 ) )
 *     .. Local Scalars ..
-      COMPLEX*16         TEMP
+      DOUBLE COMPLEX     TEMP
       INTEGER            I, INFO, IX, J, JX, K, KK, KX
       LOGICAL            NOCONJ, NOUNIT
 *     .. External Functions ..
@@ -7606,7 +7606,7 @@ c                  END IF
       INTEGER            INCX, N
       CHARACTER          DIAG, TRANS, UPLO
 *     .. Array Arguments ..
-      COMPLEX*16         AP( * ), X( * )
+      DOUBLE COMPLEX     AP( * ), X( * )
 *     ..
 *
 *  Purpose
@@ -7663,7 +7663,7 @@ c                  END IF
 *           N must be at least zero.
 *           Unchanged on exit.
 *
-*  AP     - COMPLEX*16       array of DIMENSION at least
+*  AP     - DOUBLE COMPLEX   array of DIMENSION at least
 *           ( ( n*( n + 1 ) )/2 ).
 *           Before entry with  UPLO = 'U' or 'u', the array AP must
 *           contain the upper triangular matrix packed sequentially,
@@ -7679,7 +7679,7 @@ c                  END IF
 *           A are not referenced, but are assumed to be unity.
 *           Unchanged on exit.
 *
-*  X      - COMPLEX*16       array of dimension at least
+*  X      - DOUBLE COMPLEX   array of dimension at least
 *           ( 1 + ( n - 1 )*abs( INCX ) ).
 *           Before entry, the incremented array X must contain the n
 *           element right-hand side vector b. On exit, X is overwritten
@@ -7701,10 +7701,10 @@ c                  END IF
 *
 *
 *     .. Parameters ..
-      COMPLEX*16         ZERO
+      DOUBLE COMPLEX     ZERO
       PARAMETER        ( ZERO = ( 0.0D+0, 0.0D+0 ) )
 *     .. Local Scalars ..
-      COMPLEX*16         TEMP
+      DOUBLE COMPLEX     TEMP
       INTEGER            I, INFO, IX, J, JX, K, KK, KX
       LOGICAL            NOCONJ, NOUNIT
 *     .. External Functions ..
@@ -7947,9 +7947,9 @@ c                  END IF
 *     .. Scalar Arguments ..
       CHARACTER          TRANSA, TRANSB
       INTEGER            M, N, K, LDA, LDB, LDC
-      COMPLEX*16         ALPHA, BETA
+      DOUBLE COMPLEX     ALPHA, BETA
 *     .. Array Arguments ..
-      COMPLEX*16         A( LDA, * ), B( LDB, * ), C( LDC, * )
+      DOUBLE COMPLEX     A( LDA, * ), B( LDB, * ), C( LDC, * )
 *     ..
 *
 *  Purpose
@@ -8010,11 +8010,11 @@ c                  END IF
 *           be at least  zero.
 *           Unchanged on exit.
 *
-*  ALPHA  - COMPLEX*16      .
+*  ALPHA  - DOUBLE COMPLEX  .
 *           On entry, ALPHA specifies the scalar alpha.
 *           Unchanged on exit.
 *
-*  A      - COMPLEX*16       array of DIMENSION ( LDA, ka ), where ka is
+*  A      - DOUBLE COMPLEX   array of DIMENSION ( LDA, ka ), where ka is
 *           k  when  TRANSA = 'N' or 'n',  and is  m  otherwise.
 *           Before entry with  TRANSA = 'N' or 'n',  the leading  m by k
 *           part of the array  A  must contain the matrix  A,  otherwise
@@ -8029,7 +8029,7 @@ c                  END IF
 *           least  max( 1, k ).
 *           Unchanged on exit.
 *
-*  B      - COMPLEX*16       array of DIMENSION ( LDB, kb ), where kb is
+*  B      - DOUBLE COMPLEX   array of DIMENSION ( LDB, kb ), where kb is
 *           n  when  TRANSB = 'N' or 'n',  and is  k  otherwise.
 *           Before entry with  TRANSB = 'N' or 'n',  the leading  k by n
 *           part of the array  B  must contain the matrix  B,  otherwise
@@ -8044,12 +8044,12 @@ c                  END IF
 *           least  max( 1, n ).
 *           Unchanged on exit.
 *
-*  BETA   - COMPLEX*16      .
+*  BETA   - DOUBLE COMPLEX  .
 *           On entry,  BETA  specifies the scalar  beta.  When  BETA  is
 *           supplied as zero then C need not be set on input.
 *           Unchanged on exit.
 *
-*  C      - COMPLEX*16       array of DIMENSION ( LDC, n ).
+*  C      - DOUBLE COMPLEX   array of DIMENSION ( LDC, n ).
 *           Before entry, the leading  m by n  part of the array  C must
 *           contain the matrix  C,  except when  beta  is zero, in which
 *           case C need not be set on entry.
@@ -8082,11 +8082,11 @@ c                  END IF
 *     .. Local Scalars ..
       LOGICAL            CONJA, CONJB, NOTA, NOTB
       INTEGER            I, INFO, J, L, NCOLA, NROWA, NROWB
-      COMPLEX*16         TEMP
+      DOUBLE COMPLEX     TEMP
 *     .. Parameters ..
-      COMPLEX*16         ONE
+      DOUBLE COMPLEX     ONE
       PARAMETER        ( ONE  = ( 1.0D+0, 0.0D+0 ) )
-      COMPLEX*16         ZERO
+      DOUBLE COMPLEX     ZERO
       PARAMETER        ( ZERO = ( 0.0D+0, 0.0D+0 ) )
 *     ..
 *     .. Executable Statements ..
