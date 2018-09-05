@@ -1979,7 +1979,7 @@ stopifnot(0.999 <= hd, hd <= 1.001)
 ## in R <= 3.5.1: warning 'In n * h : NAs produced by integer overflow' and then NA's
 
 
-## some things boken by sort.int optimization for sorted integer vectors
+## some things broken by sort.int optimization for sorted integer vectors
 sort.int(integer(0))  ## would segfault with barrier testing
 stopifnot(identical(sort.int(NA_integer_), integer(0)))
 
