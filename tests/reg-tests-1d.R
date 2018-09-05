@@ -2000,14 +2000,20 @@ match(0, d)
 ## as(1L, "double") - PR#17457
 stopifnot(exprs = {
     identical(as(1L,   "double"), 1.) # new
-    ## "double" is quite the same as "numeric" :
+    identical(new("double"), double())
+  ## 1. "double" is quite the same as "numeric" :
+    local({
+        i1 <- 1L; as(i1, "numeric") <- pi
+        i2 <- 1L; as(i2, "double" ) <- pi
+        identical(i1, i2)
+    })
     validObject(Dbl <- getClass("double"))
     validObject(Num <- getClass("numeric"))
     c("double", "numeric") %in% extends(Dbl)
     setdiff(names(Num@subclasses),
             names(Dbl@subclasses) -> dblSub) == "double"
     "integer" %in% dblSub
-    ## These all remain as they were in R <= 3.5.x , the first one important for back-compatibility:
+  ## 2. These all remain as they were in R <= 3.5.x , the first one important for back-compatibility:
     identical(1:2, local({
         myN <- setClass("myN", contains="numeric", slots = c(truly = "numeric"))
         myN(log(1:2), truly = 1:2) })@truly)
@@ -2022,6 +2028,7 @@ stopifnot(exprs = {
     mode  (1.0) == "numeric" &  mode  (1L) == "numeric"
 })
 ## as(*, "double") now gives what was promised
+
 
 
 ## keep at end

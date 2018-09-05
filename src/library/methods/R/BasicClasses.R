@@ -99,10 +99,10 @@
 
     ## The one place where "double" and "numeric" currently differ:
     setIs("integer", "double", where = envir,
-          coerce = .gblEnv(function(object) as.double(object)))
+          coerce  = .gblEnv(function(object) as.double(object)),
+          replace = .gblEnv(function(from, value) { class(value) <- "integer" ; value }))
     setIs("integer", "numeric", where = envir)
     setIs("double",  "numeric", where = envir)
-
     setIs("structure", "vector", coerce = .gblEnv(function(object) as.vector(object)),
           replace = .gblEnv(function(from, to, value) {
               attributes(value) <- attributes(from)
