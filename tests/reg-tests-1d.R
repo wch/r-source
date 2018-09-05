@@ -1955,21 +1955,21 @@ stopifnot(all.equal(ss[["s1"]], ss[["s2"]], tolerance = 1e-15))
 USJ   <- USJudgeRatings
 USJe6 <- USJudgeRatings[rep_len(seq_len(nrow(USJ)), 1e6),]
 op <- options(max.print=500)
-t1 <- max(0.001, system.time(r1 <- print(USJ))[[1]]) # baseline > 0
-t2 <- system.time(r2 <- print(USJe6))[[1]]
-      system.time(r3 <- print(USJe6, row.names=FALSE))
+system.time(r1 <- print(USJ))
+system.time(r2 <- print(USJe6))# was > 12 sec in R <= 3.5.1, now typically 0.01
+                               # because the whole data frame was formatted.
+## Now the timing ratio between r1 & r2 print()ing is typically in [1,2]
+system.time(r3 <- print(USJe6, row.names=FALSE))
 out <- capture.output(print(USJe6, max = 600)) # max > getOption("max.print")
 stopifnot(exprs = {
     identical(r1, USJ  )# print() must return its arg
     identical(r2, USJe6)
     identical(r3, USJe6)
-    print(t2 / t1) < 9 # now typically in [1,2]
     length(out) == 52
     grepl("CALLAHAN", out[51], fixed=TRUE)
     identical(2L, grep("omitted", out[51:52], fixed=TRUE))
 })
 options(op); rm(USJe6)# reset
-## had t2/t1 > 4000 in R <= 3.5.1, because the whole data frame was formatted.
 
 
 ## hist.default() in rare cases
