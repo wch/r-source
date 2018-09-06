@@ -342,10 +342,10 @@ loadNamespace <- function (package, lib.loc = NULL,
         }
 
         ## find package and check it has a namespace
-        pkgpath <- find.package(package, c(libpath, lib.loc), quiet = TRUE)
+        fp.lib.loc <- c(libpath, lib.loc)
+        pkgpath <- find.package(package, fp.lib.loc, quiet = TRUE)
         if (length(pkgpath) == 0L)
-            stop(gettextf("there is no package called %s", sQuote(package)),
-                 domain = NA)
+            stop(packageNotFoundError(package, fp.lib.loc, sys.call()))
         bindTranslations(package, pkgpath)
         package.lib <- dirname(pkgpath)
         package <- basename(pkgpath) # need the versioned name

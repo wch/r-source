@@ -24,7 +24,7 @@ code2LazyLoadDB <-
 {
     pkgpath <- find.package(package, lib.loc, quiet = TRUE)
     if(!length(pkgpath))
-        stop(gettextf("there is no package called '%s'", package), domain = NA)
+        stop(packageNotFoundError(package, lib.loc, sys.call()))
     dbbase <- file.path(pkgpath, "R", package)
     if (packageHasNamespace(package, dirname(pkgpath))) {
         if (! is.null(.getNamespace(as.name(package))))
@@ -51,8 +51,7 @@ list_data_in_pkg <- function(package, lib.loc = NULL, dataDir = NULL)
     if(is.null(dataDir)) {
         pkgpath <- find.package(package, lib.loc, quiet = TRUE)
         if(!length(pkgpath))
-            stop(gettextf("there is no package called '%s'", package),
-                 domain = NA)
+            stop(packageNotFoundError(package, lib.loc, sys.call()))
         dataDir <- file.path(pkgpath, "data")
     } else {
 	if(has.pkg <- !missing(package)) ## try with default lib.loc
@@ -101,8 +100,7 @@ data2LazyLoadDB <- function(package, lib.loc = NULL, compress = TRUE)
     options(warn=1)
     pkgpath <- find.package(package, lib.loc, quiet = TRUE)
     if(!length(pkgpath))
-        stop(gettextf("there is no package called '%s'", package),
-             domain = NA)
+        stop(packageNotFoundError(package, lib.loc, sys.call()))
     dataDir <- file.path(pkgpath, "data")
     ## set the encoding for text files to be read, if specified
     enc <- .read_description(file.path(pkgpath, "DESCRIPTION"))["Encoding"]
@@ -303,8 +301,7 @@ makeLazyLoading <-
     findpack <- function(package, lib.loc) {
         pkgpath <- find.package(package, lib.loc, quiet = TRUE)
         if(!length(pkgpath))
-            stop(gettextf("there is no package called '%s'", package),
-                 domain = NA)
+            stop(packageNotFoundError(package, lib.loc, sys.call()))
         pkgpath
     }
 

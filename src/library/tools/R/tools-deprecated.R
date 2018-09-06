@@ -115,8 +115,7 @@ pkgDepends <- function(pkg, recursive=TRUE, local=TRUE,
 
     depMtrx <- getDepMtrx(pkg, instPkgs, local)
     if (is.null(depMtrx))               # Package was not found
-        stop(gettextf("package '%s' was not found", pkg),
-             domain = NA)
+        stop(packageNotFoundError(pkg, lib.loc, sys.call()))
 
     getDepList(depMtrx, instPkgs, recursive, local, reduce)
 }

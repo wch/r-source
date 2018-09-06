@@ -169,6 +169,9 @@
       \code{.Deprecated} now signals a warning of class
       \code{deprecatedWarning}, and \code{.Defunct} now signals an error
       of class \code{defunctError}.
+
+      \item Many package not found errors are now signaled as errors of
+      class \code{packageNotFoundError}.
     }
   }
 
