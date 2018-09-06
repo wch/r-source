@@ -1023,6 +1023,21 @@ compactPDF <-
              gs_extras = character())
 {
     use_qpdf <- nzchar(qpdf)
+    qpdf_flags <- "--object-streams=generate"
+    if(use_qpdf) {
+        ## <NOTE>
+        ## Before 2018-09, we passed
+        ##   --stream-data=compress
+        ## to qpdf: but this is now deprecated, corresponds to
+        ## the default since at least qpdf 6.0.0, and it at
+        ## least one case made less compression when given.
+        ## OTOH, people were using versions as old as 2.2.2.
+        ## </NOTE>
+        ver <- system2(qpdf, "--version", TRUE)[1L]
+        ver <- as.numeric_version(sub("qpdf version ", "", ver))
+        if(ver < "6.0.0")
+            qpdf_flags <- c("--stream-data=compress", qpdf_flags)
+    }
     gs_quality <- match.arg(gs_quality, c("none", "printer", "ebook", "screen"))
     use_gs <- if(gs_quality != "none") nzchar(gs_cmd <- find_gs_cmd(gs_cmd)) else FALSE
     if (!use_gs && !use_qpdf) return()
@@ -1044,20 +1059,11 @@ compactPDF <-
             if(!res && use_qpdf) {
                 unlink(tf2) # precaution
                 file.rename(tf, tf2)
-                ## <NOTE>
-                ## Before 2018-09, we also passed
-                ##   --stream-data=compress
-                ## to QPDF: but this is now deprecated, corresponds to
-                ## the default since at least QPDF 6.0.0, and it at
-                ## least once case caused trouble when given.
-                ## </NOTE>
-                res <- system2(qpdf, c("--object-streams=generate",
-                                       tf2, tf), FALSE, FALSE)
+                res <- system2(qpdf, c(qpdf_flags, tf2, tf), FALSE, FALSE)
                 unlink(tf2)
             }
         } else if(use_qpdf) {
-            res <- system2(qpdf, c("--object-streams=generate",
-                                   p, tf), FALSE, FALSE)
+            res <- system2(qpdf, c(qpdf_flags, p, tf), FALSE, FALSE)
         }
         if(!res && file.exists(tf)) {
             old <- file.size(p); new <-  file.size(tf)
