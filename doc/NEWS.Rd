@@ -373,6 +373,9 @@
 
       \item Calling \code{match()} with length one \code{x} and POSIXlt
       \code{table} gave a segfault (\PR{17459}).
+
+      \item Fork cluster could hang due to a race condition in cluster
+      initialization (\code{makeCluster()}).
     }
   }
 }
