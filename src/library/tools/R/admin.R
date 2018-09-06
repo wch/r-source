@@ -1035,7 +1035,7 @@ compactPDF <-
         ## </NOTE>
         ver <- system2(qpdf, "--version", TRUE)[1L]
         ver <- as.numeric_version(sub("qpdf version ", "", ver))
-        if(ver < "6.0.0")
+        if(!is.na(ver) && ver < "6.0.0")
             qpdf_flags <- c("--stream-data=compress", qpdf_flags)
     }
     gs_quality <- match.arg(gs_quality, c("none", "printer", "ebook", "screen"))
