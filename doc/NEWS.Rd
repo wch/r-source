@@ -49,6 +49,9 @@
       level (\PR{17453}).
 
       \item Parse data now have deterministic parent nodes (\PR{16041}).
+
+      \item Fork cluster could hang due to a race condition in cluster
+      initialization (\code{makeCluster()}).
     }
   }
 }
