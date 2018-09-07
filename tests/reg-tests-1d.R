@@ -2030,6 +2030,15 @@ stopifnot(exprs = {
 ## as(*, "double") now gives what was promised
 
 
+## next(n) for largish n
+stopifnot(exprs = {
+    nextn(214e7 ) == 2^31
+    nextn(2^32+1) == 4299816960
+    identical(nextn(NULL), integer())
+})
+## nextn(214e7) hang in infinite loop; nextn(<large>) gave NA  in R <= 3.5.1
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

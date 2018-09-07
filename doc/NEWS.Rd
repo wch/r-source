@@ -161,7 +161,7 @@
 
       \item The new function \code{asplit()} allows to split an array or
       matrix by its margins.
-  
+
       \item New functions \code{errorCondition} and
       \code{warningCondition} provide a convenient way to create
       structured error and warning objects.
@@ -204,7 +204,7 @@
       which increasingly for extraction auto-detect compression and
       ignore their \option{zjJ} flags.
 
-      \item \code{var(f)} and hence \code{sd(f)} now give an error for 
+      \item \code{var(f)} and hence \code{sd(f)} now give an error for
       \code{factor} arguments; they gave a warning since R 3.2.3,
       \PR{16564}.
     }
@@ -329,6 +329,9 @@
       more than 64 workers. Reported by Arunkumar Srinivasan.
 
       \item \code{as(1L, "double")} now does coerce (\PR{17457}).
+
+      \item \code{next(n)} now also works for larger \code{n} and no
+      longer loops infinitely for e.g, \code{n <- 214e7}.
     }
   }
 }

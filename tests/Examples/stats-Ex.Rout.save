@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2018-09-05 r75241) -- "Unsuffered Consequences"
+R Under development (unstable) (2018-09-07 r75254) -- "Unsuffered Consequences"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -10534,7 +10534,7 @@ $na.action
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: nextn
-> ### Title: Highly Composite Numbers
+> ### Title: Find Highly Composite Numbers
 > ### Aliases: nextn
 > ### Keywords: math
 > 
@@ -10542,10 +10542,11 @@ $na.action
 > 
 > nextn(1001) # 1024
 [1] 1024
-> table(sapply(599:630, nextn))
+> table(nextn(599:630))
 
 600 625 640 
   2  25   5 
+> n <- 1:100 ; plot(n, nextn(n) - n, type = "o", lwd=2, cex=1/2)
 > 
 > 
 > 
@@ -18583,7 +18584,7 @@ Number of Fisher Scoring iterations: 6
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  6.286 0.205 6.525 0 0 
+Time elapsed:  5.625 0.357 6.187 0 0 
 > grDevices::dev.off()
 null device 
           1 
