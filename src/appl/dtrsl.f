@@ -1,3 +1,8 @@
+c     Minimally modernized in 2018-09, so is fixed-form F90, not F77
+
+c Used in src/appl/lbfgsb.c, src/appl/uncmin.c and
+c src/library/stats/src/lminfl.f
+
 c Triangular Solve  dtrsl()
 c ----------------
 c     solves systems of the form
@@ -60,7 +65,7 @@ c
 c     internal variables
 c
       double precision ddot,temp
-      integer case,j,jj
+      integer kase,j,jj
 c
 c     begin block permitting ...exits to 150
 c
@@ -74,10 +79,20 @@ c     ......exit
 c
 c     determine the task and go to it.
 c
-      case = 1
-      if (mod(job,10) .ne. 0) case = 2
-      if (mod(job,100)/10 .ne. 0) case = case + 2
-      go to (20,50,80,110), case
+      kase = 1
+      if (mod(job,10) .ne. 0) kase = 2
+      if (mod(job,100)/10 .ne. 0) kase = kase + 2
+c      go to (20,50,80,110), case
+      select case(kase)
+      case(1)
+         goto 20
+      case(2)
+         goto 50
+      case(3)
+         goto 80
+      case(4)
+         goto 110
+      end select
 c
 C Case 1 (job = 00):
 c        solve t*x=b for t lower triangular
