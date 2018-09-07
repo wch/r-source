@@ -21,6 +21,9 @@
 /* These are the R interface routines to the plain FFT code
    fft_factor() & fft_work() in fft.c. */
 
+#include <inttypes.h>
+// for PRIu64
+
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
@@ -213,7 +216,7 @@ static int nextn0(int n, const int f[], int nf)
 {
     while(!ok_n(n, f, nf) && n < INT_MAX)
 	n++;
-    if(n >= INT_MAX) { // or give an error?  previously was much more problematic
+    if(n >= INT_MAX) {
 	warning(_("nextn() found no solution < %d = INT_MAX (the maximal integer);"
 		  " pass '0+ n' instead of 'n'"), // i.e. pass "double" type
 		INT_MAX);
@@ -284,8 +287,15 @@ SEXP nextn(SEXP n, SEXP f)
 		r[i] = NA_REAL;
 	    else if (n_[i] <= 1)
 		r[i] = 1;
-	    else
-		r[i] = (double) nextn0_64((uint64_t)n_[i], f_, nf);
+	    else {
+		const uint64_t max_dbl_int = 9007199254740992L; // = 2^53
+		uint64_t n_n = nextn0_64((uint64_t)n_[i], f_, nf);
+		if(n_n > max_dbl_int)
+		    warning(_("nextn() = %" PRIu64
+			      " > 2^53 may not be exactly representable in R (as \"double\")"),
+			    n_n);
+		r[i] = (double) n_n;
+	    }
 	}
     }
     UNPROTECT(nprot);

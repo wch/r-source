@@ -25,11 +25,22 @@ nextn(n, factors = c(2,3,5))
   so that the transform is computed quickly.
   The default value for \code{factors} ensures this.
 }
+\value{a vector of the same \code{\link{length}} as \code{n}, of type
+  \code{"integer"} when the values are small enough (determined before
+  computing them) and \code{"double"} otherwise.
+}
 \note{If the factors in \code{factors} are \emph{not} relative prime,
   i.e., have themselves a common factor larger than one, the result may
   be wrong in the sense that it may not be the \emph{smallest} integer.
   E.g., \code{nextn(91, c(2,6))} returns 128 instead of 96 as
   \code{nextn(91, c(2,3))} returns.
+
+  When the resulting \code{N <- nextn(..)} is larger than \code{2^53}, a
+  warning with the true 64-bit integer value is signalled, as integers
+  above that range may not be representable in double precision.
+
+  If you really need to deal with such large integers, it may be
+  advisable to use package \CRANpkg{gmp}.
 }
 \seealso{
   \code{\link{convolve}}, \code{\link{fft}}.
