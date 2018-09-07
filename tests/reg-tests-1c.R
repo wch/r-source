@@ -1088,8 +1088,8 @@ stopifnot(identical(format(dd),
 
 ## var(x) and hence sd(x)  with factor x, PR#16564
 tools::assertError(cov(1:6, f <- gl(2,3)))# was ok already
-tools::assertWarning(var(f))
-tools::assertWarning( sd(f))
+tools::assertError(var(f))# these two give an error now (R >= 3.6.0)
+tools::assertError( sd(f))
 ## var() "worked" in R <= 3.2.2  using the underlying integer codes
 proc.time() - .pt; .pt <- proc.time()
 

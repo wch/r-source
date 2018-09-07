@@ -203,6 +203,10 @@
       deprecated --- it is only used for external \code{tar} commands
       which increasingly for extraction auto-detect compression and
       ignore their \option{zjJ} flags.
+
+      \item \code{var(f)} and hence \code{sd(f)} now give an error for 
+      \code{factor} arguments; they gave a warning since R 3.2.3,
+      \PR{16564}.
     }
   }
 
