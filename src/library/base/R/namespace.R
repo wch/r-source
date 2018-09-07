@@ -26,7 +26,7 @@
 getNamespace <- function(name) {
     ns <- .Internal(getRegisteredNamespace(name))
     if (! is.null(ns)) ns
-    else tryCatch(loadNamespace(name), error = function(e) stop(e))
+    else loadNamespace(name)
 }
 
 .getNamespace <- function(name) .Internal(getRegisteredNamespace(name))
@@ -341,11 +341,17 @@ loadNamespace <- function (package, lib.loc = NULL,
             symbols
         }
 
-        ## find package and check it has a namespace
+        ## find package, allowing a calling handler to retry if not found.
+        ## could move the retry functionality into find.package.
         fp.lib.loc <- c(libpath, lib.loc)
         pkgpath <- find.package(package, fp.lib.loc, quiet = TRUE)
-        if (length(pkgpath) == 0L)
-            stop(packageNotFoundError(package, fp.lib.loc, sys.call()))
+        if (length(pkgpath) == 0L) {
+            cond <- packageNotFoundError(package, fp.lib.loc, sys.call())
+            withRestarts(stop(cond), retry_loadNamespace = function() NULL)
+            pkgpath <- find.package(package, fp.lib.loc, quiet = TRUE)
+            if (length(pkgpath) == 0L)
+                stop(cond)
+        }
         bindTranslations(package, pkgpath)
         package.lib <- dirname(pkgpath)
         package <- basename(pkgpath) # need the versioned name
