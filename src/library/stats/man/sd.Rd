@@ -1,6 +1,6 @@
 % File src/library/stats/man/sd.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{sd}
@@ -16,8 +16,8 @@
 sd(x, na.rm = FALSE)
 }
 \arguments{
-  \item{x}{a numeric vector or an \R object which is coercible to one
-    by \code{as.double(x)}.}
+  \item{x}{a numeric vector or an \R object but not a
+    \code{\link{factor}} coercible to numeric by \code{as.double(x)}.}
   \item{na.rm}{logical.  Should missing values be removed?}
 }
 \details{
