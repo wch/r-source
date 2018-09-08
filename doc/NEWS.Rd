@@ -336,7 +336,7 @@
 
       \item \code{as(1L, "double")} now does coerce (\PR{17457}).
 
-      \item \code{next(n)} now also works for larger \code{n} and no
+      \item \code{nextn(n)} now also works for larger \code{n} and no
       longer loops infinitely for e.g, \code{n <- 214e7}.
     }
   }
