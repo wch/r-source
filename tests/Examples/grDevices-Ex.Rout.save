@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2018-09-05 r75241) -- "Unsuffered Consequences"
+R Under development (unstable) (2018-09-09 r75265) -- "Unsuffered Consequences"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -3715,6 +3715,7 @@ v 0.98039216 0.7647059 0.4588235 0.8549020 0.9960784
 > 
 > ### ** Examples
 > 
+> ## IGNORE_RDIFF_BEGIN
 > if(capabilities()[["X11"]]) withAutoprint({
 + X11Fonts()
 + X11Fonts("mono")
@@ -3755,6 +3756,7 @@ $mono
 
 > utopia <- X11Font("-*-utopia-*-*-*-*-*-*-*-*-*-*-*-*")
 > X11Fonts(utopia = utopia)
+> ## IGNORE_RDIFF_END
 > 
 > 
 > 
@@ -4013,7 +4015,7 @@ $zlab
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  10.989 0.275 11.31 0 0 
+Time elapsed:  10.968 0.253 11.271 0 0 
 > grDevices::dev.off()
 null device 
           1 
