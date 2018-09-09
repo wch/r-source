@@ -1,5 +1,5 @@
 
-R version 3.5.1 Patched (2018-07-31 r75029) -- "Feather Spray"
+R version 3.5.1 Patched (2018-09-09 r75265) -- "Feather Spray"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -3799,7 +3799,7 @@ $zlab
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  11.115 0.268 11.428 0 0 
+Time elapsed:  11.235 0.281 11.561 0 0 
 > grDevices::dev.off()
 null device 
           1 
