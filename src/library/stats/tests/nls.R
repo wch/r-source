@@ -235,6 +235,7 @@ t1 <- test(); t1$with.start
 ## found wrong n in 2.3.x
 ## finally worked in 2.4.0
 ##__no.start: failed in 3.0.2
+## 2018-09 fails on macOS with Accelerate framework.
 stopifnot(all.equal(.n(t1[[1]]), .n(t1[[2]])))
 rm(a,b)
 t2 <- test(FALSE)
