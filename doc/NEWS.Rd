@@ -173,7 +173,7 @@
       \item Many package not found errors are now signaled as errors of
       class \code{packageNotFoundError}.
 
-      \item As an experimental feature, when code{loadNamespace} fails
+      \item As an experimental feature, when \code{loadNamespace} fails
       because the requested package is not available the error is
       initially signaled with a \code{retry_loadNamespace} restart
       available. This allows a calling handler to try to install the
