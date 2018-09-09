@@ -4792,16 +4792,18 @@ viewer and take many minutes to print (if they can be printed at all).
 @command{qpdf} (@uref{http://qpdf.sourceforge.net/}) can compress
 losslessly.  It is fairly readily available (e.g.@: it has binaries for
 Windows and packages in Debian/Ubuntu/Fedora, and is installed as part
-of the @acronym{CRAN} macOS distribution of @R{}).  @command{R CMD build}
-has an option to run @command{qpdf} over PDF files under @file{inst/doc}
-and replace them if at least 10Kb and 10% is saved.  The full path to
-the @command{qpdf} command can be supplied as environment variable
-@env{R_QPDF} (and is on the @acronym{CRAN} binary of @R{} for macOS).  It seems
-MiKTeX does not use PDF object compression and so @command{qpdf} can
-reduce considerably the files it outputs: MiKTeX can be overridden by
-code in the preamble of an Sweave or @LaTeX{} file --- see how this is
-done for the @R{} reference manual at
+of the @acronym{CRAN} macOS distribution of @R{}).  @command{R CMD
+build} has an option to run @command{qpdf} over PDF files under
+@file{inst/doc} and replace them if at least 10Kb and 10% is saved.  The
+full path to the @command{qpdf} command can be supplied as environment
+variable @env{R_QPDF} (and is on the @acronym{CRAN} binary of @R{} for
+macOS).  It seems MiKTeX does not use PDF object compression and so
+@command{qpdf} can reduce considerably the files it outputs: MiKTeX's
+defaults can be overridden by code in the preamble of an Sweave or
+@LaTeX{} file --- see how this is done for the @R{} reference manual at
 @uref{https://svn.r-project.org/@/R/@/trunk/@/doc/@/manual/@/refman.top}.
+(Although earlier versions of @command{qpdf} are supported, versions
+6.0.0 and later in some cases achieve considerably better compression.)
 
 Other tools can reduce the size of PDFs containing bitmap images at
 excessively high resolution.  These are often best re-generated (for
@@ -4827,8 +4829,8 @@ and suitable options might be
 @noindent
 ; see @uref{http://www.ghostscript.com/@/doc/@/current/@/Ps2pdf.htm} for
 more such and consider all the options for image downsampling).  There
-have been examples in @acronym{CRAN} packages for which Ghostscript 9.06
-and later produced much better reductions than 9.05 or earlier.
+have been examples in @acronym{CRAN} packages for which current versions
+of Ghostscript  produced much better reductions than earlier ones.
 
 We come across occasionally large PDF files containing excessively
 complicated figures using PDF vector graphics: such figures are often
