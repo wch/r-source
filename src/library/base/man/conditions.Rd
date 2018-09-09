@@ -125,7 +125,7 @@ allowInterrupts(expr)
    generic functions that return the message and call of a condition.
 
    The function \code{errorCondition} and \code{warningCondition} can be
-   used to consturct error conditions of a particular class with
+   used to construct error conditions of a particular class with
    additional fields specified as the \code{\dots} argument.
    \code{warningCondition} is analogous for warnings.
    
