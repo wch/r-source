@@ -170,8 +170,8 @@
       \code{deprecatedWarning}, and \code{.Defunct} now signals an error
       of class \code{defunctError}.
 
-      \item Many package not found errors are now signaled as errors of
-      class \code{packageNotFoundError}.
+      \item Many \sQuote{package not found} errors are now signaled as
+      errors of class \code{packageNotFoundError}.
 
       \item As an experimental feature, when \code{loadNamespace} fails
       because the requested package is not available the error is
