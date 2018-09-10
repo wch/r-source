@@ -3662,14 +3662,6 @@ sudo apt install default-jdk
 @end example
 @c https://www.digitalocean.com/community/tutorials/how-to-install-java-with-apt-on-ubuntu-18-04
 
-On most Linux distributions, the Java version can be switched (as root)
-using @command{alternatives --config} (@command{update-alternatives
---config} on Debian/Ubuntu).  Note that will not switch the version
-@emph{used by @R{}} unless a generic@footnote{E.g.@:
-@code{JAVA_HOME=/usr/lib/jvm/java} in the examples above.}
-@env{JAVA_HOME} was used at installation (and if it was unset, it will
-probably be necessary to call @command{R CMD javareconf}).
-
 @node Other compiled languages,  , Java support, Useful libraries and programs
 @subsection Other compiled languages
 
