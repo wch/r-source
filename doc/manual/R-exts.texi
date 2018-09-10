@@ -4621,9 +4621,10 @@ if(substr(jv, 1L, 2L) == "1.") @{
 @noindent
 Java 9 changed the format of this string (which used to be something
 like @samp{1.8.0_162-b12}); Java 10 gives @code{jv} as @samp{10+46}:
-whereas Java 10.0.1 gives
-@samp{10.0.1+10}. (@uref{http://openjdk.java.net/jeps/322} details the
-current scheme.)
+whereas Java 10.0.2 gives
+@samp{10.0.2+10}. (@uref{http://openjdk.java.net/jeps/322} details the
+current scheme.  Note that it is necessary to allow for pre-releases
+like @samp{11-ea+22}.)
 
 Note too that the compiler used to produce a @code{jar} can impose a minimum
 Java version, often resulting in an arcane message like
