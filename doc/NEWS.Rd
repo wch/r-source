@@ -157,23 +157,24 @@
       still supported \emph{via} the new argument
       \code{support_old_tars} whose default is controlled by environment
       variable \env{R_SUPPORT_OLD_TARS}.  (It looks like NetBSD and
-      OpenBSD have \sQuote{older} \command{tar} for this purpose.)
+      OpenBSD have \sQuote{older} \command{tar} commands for this
+      purpose.)
 
       \item The new function \code{asplit()} allows to split an array or
       matrix by its margins.
 
-      \item New functions \code{errorCondition} and
-      \code{warningCondition} provide a convenient way to create
+      \item New functions \code{errorCondition()} and
+      \code{warningCondition()} provide a convenient way to create
       structured error and warning objects.
 
-      \code{.Deprecated} now signals a warning of class
-      \code{deprecatedWarning}, and \code{.Defunct} now signals an error
-      of class \code{defunctError}.
+      \code{.Deprecated()} now signals a warning of class
+      \code{deprecatedWarning}, and \code{.Defunct()} now signals an
+      error of class \code{defunctError}.
 
       \item Many \sQuote{package not found} errors are now signaled as
       errors of class \code{packageNotFoundError}.
 
-      \item As an experimental feature, when \code{loadNamespace} fails
+      \item As an experimental feature, when \code{loadNamespace()} fails
       because the requested package is not available the error is
       initially signaled with a \code{retry_loadNamespace} restart
       available. This allows a calling handler to try to install the
