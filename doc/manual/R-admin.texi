@@ -3606,7 +3606,7 @@ a sub-architecture-specific version).  A typical setting for
 @cputype{x86_64} Linux is
 
 @example
-JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.71-1.b15.fc22.x86_64/jre
+JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.181-1.b13.fc28.x86_64/jre
 R_JAVA_LD_LIBRARY_PATH=$@{JAVA_HOME@}/lib/that/server
 @end example
 
@@ -5230,25 +5230,27 @@ tclvalue(.Tcl("tk windowingsystem"))  # "x11" or "aqua"
 
 The situation with Java support on macOS is messy,@footnote{For more
 details see @uref{http://www.macstrategy.com/@/article.php?3}.} and
-distribution of Java for all platforms is changing during 2018.
+distribution of Java for all platforms changed in 2018.
 
 macOS no longer comes with an installed Java runtime (JRE), and a macOS
 upgrade may remove one if already installed: it is intended to be
 installed at first use.  Check if a JRE is installed by running
 @command{java -version} in a @command{Terminal} window: if Java is not
 installed@footnote{In the unlikely event that the version reported does
-not start with @code{1.8.0} or @code{9} you need to update your Java.}
-this should prompt you to install it.  You can also install directly a
-recent Java from Oracle (currently from
-@uref{http://www.oracle.com/@/technetwork/@/java/@/javase/@/downloads/@/index.html}:
-note that Java 9 and 10 have a limited lifetime.  Builds of OpenJDK may
-also be available, e.g.@: from @uref{http://jdk.java.net/}.
+not start with @code{1.8.0}, @code{9}, @code{10} or @code{11} you need
+to update your Java.} this should prompt you to install it.  You can
+also install directly a recent Java from Oracle (currently from
+@uref{http://www.oracle.com/@/technetwork/@/java/@/javase/@/downloads/@/index.html}).
+Builds of OpenJDK may also be available, e.g.@: from
+@uref{http://jdk.java.net/}.  We recommend you install a version with
+long-term support, e.g.@: 8 or 11 (but not 9, 10 or 12 which have/had a
+6-month lifetime).
 
-Binary distributions of @R{} are built against a specific version (e.g.@:
-1.8.0_161) of Oracle Java so @command{sudo R CMD javareconf} may be
+Binary distributions of @R{} are built against a specific version
+(e.g.@: 9) of Java so @command{sudo R CMD javareconf} will likely be
 needed before using Java-using packages.
 
-To see what compatible versions of Oracle Java are currently installed, run
+To see what compatible versions of Java are currently installed, run
 @command{/usr/libexec/java_home -V -a x86_64}.  If needed, set the
 environment variable @env{JAVA_HOME} to choose between these, both when
 @R{} is built from the sources and when @command{R CMD javareconf} is
@@ -5257,32 +5259,33 @@ run.
 Configuring and building @R{} both looks for a JRE and for support for
 compiling JNI programs (used by packages @CRANpkg{rJava} and
 @CRANpkg{JavaGD}); the latter requires a JDK (Java SDK) and not just a
-JRE.
+JRE@footnote{As from Java 11, there is no separate client JRE
+distribution.}.
 
 The build process tries to fathom out what JRE/JDK to use, but it may
-need some help, e.g.@: by setting @env{JAVA_HOME}.  An Oracle JDK can
-be specified explicitly by something like
+need some help, e.g.@: by setting @env{JAVA_HOME}.  A JDK can be
+specified explicitly by something like
 @example
-JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_161.jdk/Contents/Home
-JAVA_CPPFLAGS="-I/$@{JAVA_HOME@}/include -I/$@{JAVA_HOME@}/include/darwin"
-JAVA_LD_LIBRARY_PATH="$@{JAVA_HOME@}/jre/lib/server"
-JAVA_LIBS="-L/$@{JAVA_HOME@}/jre/lib/server -ljvm" 
-@end example
-@noindent
-or
-@example
-JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-9.jdk/Contents/Home
+JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-11.jdk/Contents/Home
 JAVA_CPPFLAGS="-I/$@{JAVA_HOME@}/include -I/$@{JAVA_HOME@}/include/darwin"
 JAVA_LD_LIBRARY_PATH="$@{JAVA_HOME@}/lib/server"
 JAVA_LIBS="-L/$@{JAVA_HOME@}/lib/server -ljvm" 
 @end example
 @noindent
+or
+@example
+JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home
+JAVA_CPPFLAGS="-I/$@{JAVA_HOME@}/include -I/$@{JAVA_HOME@}/include/darwin"
+JAVA_LD_LIBRARY_PATH="$@{JAVA_HOME@}/jre/lib/server"
+JAVA_LIBS="-L/$@{JAVA_HOME@}/jre/lib/server -ljvm" 
+@end example
+@noindent
 in @file{config.site}.
 
-To use the builds of OpenJDK from  @uref{http://jdk.java.net/}, set
-@env{JAVA_HOME}:
+To use the builds of OpenJDK (taballs) from @uref{http://jdk.java.net/},
+set @env{JAVA_HOME}:
 @example
-JAVA_HOME=@var{/path/to/JDK}/jdk-10.jdk/Contents/Home
+JAVA_HOME=@var{/path/to/JDK}/jdk-11.jdk/Contents/Home
 @end example
 @noindent
 where @file{@var{/path/to/JDK}} is wherever the distribution tarball was
