@@ -104,8 +104,9 @@ Vector classes for specific element types, such as `ALTINTEGER`,
 types they will also implement `Get_region` methods for copying a
 contiguous region of elements to a buffer. This is patterned after the
 JNI specification. For non-atomic types they will implement `Set_elt`
-methods to protect the write barrier. `DATAPTR` should almost never be
-used on non-atomic vectors because of the risks to the write barrier.
+methods to preserve the write barrier needed e.g. for generational
+garbage collection. `DATAPTR` should almost never be used on non-atomic
+vectors because of the risks to the write barrier.
 
 It may make sense to also support `Set_elt` and `Set_region` methods
 for atomic vectors. It may also be useful to have methods to get and
@@ -132,9 +133,9 @@ should define `Serialized_state` and `Unserialize` methods.
 The `Serialized_state` method should return an `SEXP` which is
 serialized in the usual way, along with attributes, the name of the
 `ALTREP` class, and the package the class is registered with.
-Unserializing such and object will locate the corresponding class
+Unserializing such an object will locate the corresponding class
 object and call the `Unserialize` class method with this class object
-and the unserialized state state as arguments.  The method should
+and the serialized state as arguments.  The method should
 return a new object without attributes. The serialized attributes are
 then unserialized and attached.
 
@@ -195,7 +196,7 @@ With the `ALTREP` changes operations like `DATAPTR`, `STRING_ELT`, and
 be rewritten to allow for this. For now, GC is suspended in these
 allocations.  Operations `REAL_ELT`, `REAL_GET_RANGE` and the like may
 also allocate, but these are new operations and code written or
-modified to uses them should take this into account.
+modified to use them should take this into account.
 
 There is no specific support for versioning. If a class has to be
 updated in an incompatible way it would be best to consider it a new
@@ -207,7 +208,7 @@ The data structures associated with the base classes are not visible
 outside core R, so if a new method is added to one of these classes
 packages will get the default behavior until they add their own; there
 is no risk of getting the wrong method or a null pointer exception
-because of trying to access an incorrect or non-existent method. as a
+because of trying to access an incorrect or non-existent method as a
 result of such a change.
 
 With `STRSXP` or (not yet supported) `VECSXP` objects it is important
@@ -234,7 +235,9 @@ handling by the byte code interpreter has been dropped.
 
 One implication is that a loop over a large range of integers that
 stops early no longer needs to allocate and fill in the full vector:
-In `R-devel`:
+In `R-devel` (NOTE: `R-devel` refers to a development version of R prior
+to the release of R 3.4. R 3.5.0 already includes the optimizations
+described here):
 
 ```R
 > system.time(for (i in 1:1e9) break)
@@ -242,7 +245,7 @@ In `R-devel`:
   0.258   1.141   1.400 
 ```
 
-In the `ALTVEC` branch on the other hand,
+In the `ALTREP` branch on the other hand,
 ```R
 > system.time(for (i in 1:1e9) break)
    user  system elapsed 
@@ -293,7 +296,7 @@ defined to return `TRUE`. These are two examples of attaching [meta
 data](#meta-data) to an `ALTREP` object.
 
 An alternative approach would be to not mark these vectors as
-immutable but to treat them as generic vectors as soon as the data
+immutable but to treat them as standard vectors as soon as the data
 pointer is requested and the vector is expanded.  If a writable data
 pointer is requested then the expanded data could be modified by an
 assignment.  The `Is_sorted` and `No_NA` properties could no longer be
@@ -445,7 +448,7 @@ Again the difference is due primarily to deferring the string coercions.
 
 Serialization serializes the deferred string data if the object has
 not been fully converted. This is safe since assignments currently
-filly convert the object.  It would be possible to allow assignment to
+fully convert the object.  It would be possible to allow assignment to
 operate without full expansion; serialization would then need to be
 modified to also serialize the modified partially expanded data.
 
@@ -751,8 +754,8 @@ methods for operations that do not require the `DATAPTR`.
 
 ## Length and Address Validity
 
-For standard `R`objects results returned by the `length` and `DATAPTR`
-functions remain valid until the object is reclaimed by the memory
+For standard `R`vectors results returned by the `length` and `DATAPTR`
+functions remain valid until the vector is reclaimed by the memory
 manager. Should this be required of `ALTREP` objects as well?
 It may have to be as code may be relying on this assumption.
 
