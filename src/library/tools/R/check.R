@@ -532,10 +532,10 @@ add_dummies <- function(dir, Log)
 
         ## Run the package-specific tests.
         tests_dir <- file.path(pkgdir, test_dir)
-	if (test_dir != "tests" && !dir.exists(tests_dir)) {
-	    warningLog(Log)
-	    printLog(Log, "directory ", sQuote(test_dir), " not found\n")
-	}
+        if (test_dir != "tests" && !dir.exists(tests_dir)) {
+            warningLog(Log)
+            printLog(Log, "directory ", sQuote(test_dir), " not found\n")
+        }
         if (dir.exists(tests_dir) && # trackObjs has only *.Rin
             length(dir(tests_dir, pattern = "\\.(R|r|Rin)$")))
             run_tests()
@@ -626,7 +626,7 @@ add_dummies <- function(dir, Log)
                     "Please rename the files and try again.\n",
                     "See section 'Package structure'",
                     "in the 'Writing R Extensions' manual.\n")
-	    maybe_exit(1L)
+            maybe_exit(1L)
         }
 
         ## Next check for name clashes on case-insensitive file systems
@@ -642,7 +642,7 @@ add_dummies <- function(dir, Log)
                     "Please rename the files and try again.\n",
                     "See section 'Package structure'",
                     "in the 'Writing R Extensions' manual.\n")
-	    maybe_exit(1L)
+            maybe_exit(1L)
         }
 
         ## NB: the omission of ' ' is deliberate.
@@ -698,8 +698,8 @@ add_dummies <- function(dir, Log)
                     "final component.\n",
                     "See section 'Package structure'",
                     "in the 'Writing R Extensions' manual.\n")
-	    if (!OK)
-		maybe_exit(1L)
+            if (!OK)
+                maybe_exit(1L)
         }
         if (!any) resultLog(Log, "OK")
 
@@ -741,8 +741,8 @@ add_dummies <- function(dir, Log)
             wrapLog("Found the following files with insufficient permissions:\n")
             printLog0(Log, .format_lines_with_indent(bad_files), "\n")
             wrapLog("Permissions should be at least 700 for directories and 400 for files.\nPlease fix permissions and try again.\n")
-	    maybe_exit(1L)
-	}
+            maybe_exit(1L)
+        }
 
         ## Phase B.  Top-level scripts 'configure' and 'cleanup'
         ## should really be mode at least 500, or they will not be
@@ -1580,7 +1580,7 @@ add_dummies <- function(dir, Log)
         if (any(startsWith(out, "Error"))) {
             errorLog(Log)
             printLog0(Log, paste(c(out, ""), collapse = "\n"))
-	    maybe_exit(1L)
+            maybe_exit(1L)
         } else if (length(out)) {
             warningLog(Log)
             printLog0(Log, paste(c(out, ""), collapse = "\n"))
@@ -1738,7 +1738,7 @@ add_dummies <- function(dir, Log)
                 wrapLog("The system-specific extension for",
                         "shared objects must not be added.\n",
                         "See ?library.dynam.\n")
-		maybe_exit(1L)
+                maybe_exit(1L)
             }
         }
 
@@ -2012,7 +2012,7 @@ add_dummies <- function(dir, Log)
             if (length(err)) {
                 errorLog(Log)
                 printLog0(Log, paste(c(out, ""), collapse = "\n"))
-		maybe_exit(1L)
+                maybe_exit(1L)
             } else if (length(out)) {
                 warningLog(Log)
                 printLog0(Log, paste(c(out, ""), collapse = "\n"))
@@ -2334,54 +2334,54 @@ add_dummies <- function(dir, Log)
             printLog0(Log, paste(msg, collapse = "\n"))
         }
 
-	## Did the vignettes get updated in inst/doc?
-	inst_doc_files <- list.files(file.path(pkgdir, "inst", "doc"),
-				     recursive = TRUE)
-	vignette_files <- list.files(vign_dir, recursive = TRUE)
-	if (!is_base_pkg && length(vignette_files)) {
-	    if (!length(inst_doc_files)) {
-		if (!any) warningLog(Log)
-		any <- TRUE
-		msg <- c("Files in the 'vignettes' directory but no files in 'inst/doc':",
-			 strwrap(paste(sQuote(vignette_files), collapse = ", "),
-				 indent = 2L, exdent = 4L),
-			 "")
-		printLog0(Log, paste(msg, collapse = "\n"))
-	    } else {
+        ## Did the vignettes get updated in inst/doc?
+        inst_doc_files <- list.files(file.path(pkgdir, "inst", "doc"),
+                                     recursive = TRUE)
+        vignette_files <- list.files(vign_dir, recursive = TRUE)
+        if (!is_base_pkg && length(vignette_files)) {
+            if (!length(inst_doc_files)) {
+                if (!any) warningLog(Log)
+                any <- TRUE
+                msg <- c("Files in the 'vignettes' directory but no files in 'inst/doc':",
+                         strwrap(paste(sQuote(vignette_files), collapse = ", "),
+                                 indent = 2L, exdent = 4L),
+                         "")
+                printLog0(Log, paste(msg, collapse = "\n"))
+            } else {
                 ## allow for some imprecision in file times (in secs)
                 time_tol <- as.double(Sys.getenv("_R_CHECK_FILE_TIMES_TOL_", 10))
-		vignette_times <- file.mtime(file.path(vign_dir, vignette_files))
-		inst_doc_times <- file.mtime(file.path(pkgdir, "inst", "doc", inst_doc_files))
-		if (sum(!is.na(vignette_times)) && sum(!is.na(inst_doc_times)) &&
+                vignette_times <- file.mtime(file.path(vign_dir, vignette_files))
+                inst_doc_times <- file.mtime(file.path(pkgdir, "inst", "doc", inst_doc_files))
+                if (sum(!is.na(vignette_times)) && sum(!is.na(inst_doc_times)) &&
                     max(vignette_times, na.rm = TRUE) > max(inst_doc_times, na.rm = TRUE) + time_tol) {
-		    if (!any) warningLog(Log)
-		    any <- TRUE
-		    msg <- c("Files in the 'vignettes' directory newer than all files in 'inst/doc':",
-			     strwrap(paste(sQuote(vignette_files[!is.na(vignette_times) & vignette_times > max(inst_doc_times, na.rm = TRUE)]),
-					   collapse = ", "),
-				     indent = 2L, exdent = 4L),
-			     "")
-		    keep <- is.na(vignette_times) |
+                    if (!any) warningLog(Log)
+                    any <- TRUE
+                    msg <- c("Files in the 'vignettes' directory newer than all files in 'inst/doc':",
+                             strwrap(paste(sQuote(vignette_files[!is.na(vignette_times) & vignette_times > max(inst_doc_times, na.rm = TRUE)]),
+                                           collapse = ", "),
+                                     indent = 2L, exdent = 4L),
+                             "")
+                    keep <- is.na(vignette_times) |
                         vignette_times <= max(inst_doc_times, na.rm = TRUE) + time_tol
-		    vignette_files <- vignette_files[keep]
-		    vignette_times <- vignette_times[keep]
-		    printLog0(Log, paste(msg, collapse = "\n"))
-		}
-		matches <- match(vignette_files, inst_doc_files)
-		newer <- vignette_times > inst_doc_times[matches] + time_tol
-		newer <- !is.na(matches) & !is.na(newer) & newer
-		if (any(newer)) {
-		    if (!any) warningLog(Log)
-		    any <- TRUE
-		    msg <- c("Files in the 'vignettes' directory newer than same file in 'inst/doc':",
-			     strwrap(paste(sQuote(vignette_files[newer]),
-					   collapse = ", "),
-				     indent = 2L, exdent = 4L),
-			     "")
-		    printLog0(Log, paste(msg, collapse = "\n"))
-		}
-	    }
-	}
+                    vignette_files <- vignette_files[keep]
+                    vignette_times <- vignette_times[keep]
+                    printLog0(Log, paste(msg, collapse = "\n"))
+                }
+                matches <- match(vignette_files, inst_doc_files)
+                newer <- vignette_times > inst_doc_times[matches] + time_tol
+                newer <- !is.na(matches) & !is.na(newer) & newer
+                if (any(newer)) {
+                    if (!any) warningLog(Log)
+                    any <- TRUE
+                    msg <- c("Files in the 'vignettes' directory newer than same file in 'inst/doc':",
+                             strwrap(paste(sQuote(vignette_files[newer]),
+                                           collapse = ", "),
+                                     indent = 2L, exdent = 4L),
+                             "")
+                    printLog0(Log, paste(msg, collapse = "\n"))
+                }
+            }
+        }
 
         files <- dir(file.path(pkgdir, "vignettes"))
         if(length(files) &&
@@ -2892,7 +2892,7 @@ add_dummies <- function(dir, Log)
             wrapLog("\nIt looks like this package",
                     "has a loading problem: see the messages",
                     "for details.\n")
-	    maybe_exit(1L)
+            maybe_exit(1L)
         } else resultLog(Log, "OK")
 
         checkingLog(Log, "whether the package can be loaded with stated dependencies")
@@ -2934,9 +2934,9 @@ add_dummies <- function(dir, Log)
                 warningLog(Log)
                 any <- TRUE
             } else {
-		## Drop tcltk warning if no DISPLAY variable
-		if(pkgname == "tcltk")
-		    out <- filtergrep("Warning: no DISPLAY variable so Tk is not available",
+                ## Drop tcltk warning if no DISPLAY variable
+                if(pkgname == "tcltk")
+                    out <- filtergrep("Warning: no DISPLAY variable so Tk is not available",
                                       out, fixed = TRUE)
                 ## Drop warnings about replacing previous imports unless
                 ## these were disabled for the installation check.
@@ -3175,7 +3175,7 @@ add_dummies <- function(dir, Log)
                     as.numeric(Sys.getenv("_R_CHECK_EXAMPLE_TIMING_THRESHOLD_",
                                           "5"))
                 tfile <- paste0(pkgname, "-Ex.timings")
-		times <-
+                times <-
                     utils::read.table(tfile, header = TRUE, row.names = 1L,
                                       colClasses = c("character", rep("numeric", 3)))
                 o <- order(times[[1L]] + times[[2L]], decreasing = TRUE)
@@ -3261,7 +3261,7 @@ add_dummies <- function(dir, Log)
                           paste(readLines(Rout, warn = FALSE),
                                 collapse = "\n"),
                           "\n")
-		maybe_exit(1L)
+                maybe_exit(1L)
             }
             ## It ran, but did it create any examples?
             if (file.exists(exfile)) {
@@ -3330,9 +3330,9 @@ add_dummies <- function(dir, Log)
         }
 
         if (test_dir == "tests")
-	    checkingLog(Log, "tests")
-	else
-	    checkingLog(Log, "tests in ", sQuote(test_dir))
+            checkingLog(Log, "tests")
+        else
+            checkingLog(Log, "tests in ", sQuote(test_dir))
 
         run_one_arch <- function(arch = "")
         {
@@ -3349,11 +3349,11 @@ add_dummies <- function(dir, Log)
             file.copy(Sys.glob(paste0(testsrcdir, "/*")),
                       testdir, recursive = TRUE)
             setwd(testdir)
-	    logf <- gsub("\\", "/", tempfile(), fixed=TRUE)
-	    extra <- c(if(use_gct) "use_gct = TRUE",
-		       if(use_valgrind) "use_valgrind = TRUE",
-		       if(!stop_on_test_error) "stop_on_error = FALSE",
-		       paste0('Log="', logf, '"'))
+            logf <- gsub("\\", "/", tempfile(), fixed=TRUE)
+            extra <- c(if(use_gct) "use_gct = TRUE",
+                       if(use_valgrind) "use_valgrind = TRUE",
+                       if(!stop_on_test_error) "stop_on_error = FALSE",
+                       paste0('Log="', logf, '"'))
             ## might be diff-ing results against tests/*.R.out.save
             ## so force LANGUAGE=en
             cmd <- paste0("tools:::.runPackageTestsR(",
@@ -3502,7 +3502,7 @@ add_dummies <- function(dir, Log)
                                         sQuote(basename(bad_vignettes))),
                                   "", ""), collapse = "\n"))
             }
-	    defaultEncoding <- .get_package_metadata(pkgdir)["Encoding"]
+            defaultEncoding <- .get_package_metadata(pkgdir)["Encoding"]
             encs <- vapply(vigns$docs, getVignetteEncoding, "", default = defaultEncoding)
             bad_vignettes <- vigns$docs[encs == "non-ASCII"]
             if(nb <- length(bad_vignettes)) {
@@ -3580,7 +3580,7 @@ add_dummies <- function(dir, Log)
         ## (We don't check the .tex, though)
         bad_vignettes <- character()
         for (i in seq_along(vigns$docs)) {
-	    v <- vigns$docs[i]
+            v <- vigns$docs[i]
             enc <- vigns$encodings[i]
             if (enc %in% c("", "non-ASCII", "unknown")) next
             lines <- readLines(v, warn = FALSE) # some miss final NA
@@ -3882,7 +3882,7 @@ add_dummies <- function(dir, Log)
                 lines <- filtergrep("^(Hmm|Execution)", lines)
                 printLog0(Log, paste(c(lines, ""), collapse = "\n"))
                 unlink(build_dir, recursive = TRUE)
-		maybe_exit(1L)
+                maybe_exit(1L)
             } else if (res > 0) {
                 latex_file <- file.path(build_dir, "Rd2.tex")
                 if (file.exists(latex_file))
@@ -3932,7 +3932,7 @@ add_dummies <- function(dir, Log)
                         run_Rcmd(args, timeout = tlim)
                     }
                     unlink(build_dir, recursive = TRUE)
-		    maybe_exit(1L)
+                    maybe_exit(1L)
                 } else {
                     unlink(build_dir, recursive = TRUE)
                     resultLog(Log, "OK")
@@ -3980,8 +3980,8 @@ add_dummies <- function(dir, Log)
                 lines <- suppressWarnings(system2(FILE, shQuote(these), TRUE, TRUE))
                 ## avoid match to is_executable.Rd
                 ex <- grepl(" executable", lines, useBytes=TRUE)
-		ex2 <- grepl("script", lines, useBytes=TRUE) &
-		       grepl("text", lines, useBytes=TRUE)
+                ex2 <- grepl("script", lines, useBytes=TRUE) &
+                       grepl("text", lines, useBytes=TRUE)
                 execs <- c(execs, lines[ex & !ex2])
             }
             if(length(execs)) {
@@ -4061,7 +4061,7 @@ add_dummies <- function(dir, Log)
                     endsWith(dots, "inst/doc/.build.timestamp") |
                     endsWith(dots, "vignettes/.Rinstignore") |
                     grepl("^src.*/[.]deps$", dots)
-		if (all(known))
+                if (all(known))
                     printLog(Log, "\nCRAN-pack knows about all of these\n")
                 else if (any(!known)) {
                     printLog(Log, "\nCRAN-pack does not know about\n")
@@ -4120,7 +4120,7 @@ add_dummies <- function(dir, Log)
                 ## Case B. All output from installation redirected,
                 ## or already available in the log file.
                 checkingLog(Log,
-			    "whether package ", sQuote(desc["Package"]),
+                            "whether package ", sQuote(desc["Package"]),
                             " can be installed")
                 outfile <- file.path(pkgoutdir, "00install.out")
                 if (startsWith(install, "check")) {
@@ -4503,8 +4503,8 @@ add_dummies <- function(dir, Log)
                 printLog(Log, "  sub-directories of 1Mb or more:\n")
                 size <- sprintf('%4.1fMb', rest[, 1L]/1024)
                 printLog0(Log,
-			  paste0("    ", format(rest[o, 2L], justify = "left"),
-				 "  ", format(size[o], justify = "right"), "\n"))
+                          paste0("    ", format(rest[o, 2L], justify = "left"),
+                                 "  ", format(size[o], justify = "right"), "\n"))
             }
         } else resultLog(Log, "OK")
         setwd(owd)
@@ -4871,18 +4871,18 @@ add_dummies <- function(dir, Log)
     }
 
     do_exit <-
-	if(no.q)
-	    function(status) (if(status) stop else message)(
-		".check_packages() exit status ", status)
-	else
-	    function(status) q("no", status = status, runLast = FALSE)
+        if(no.q)
+            function(status) (if(status) stop else message)(
+                ".check_packages() exit status ", status)
+        else
+            function(status) q("no", status = status, runLast = FALSE)
 
     maybe_exit <- function(status = 1L) {
-	if (R_check_exit_on_first_error) {
-	    printLog(Log, "NOTE:  Quitting check on first error.\n")
-	    summaryLog(Log)
-	    do_exit(status)
-	}
+        if (R_check_exit_on_first_error) {
+            printLog(Log, "NOTE:  Quitting check on first error.\n")
+            summaryLog(Log)
+            do_exit(status)
+        }
     }
 
     Usage <- function() {
@@ -4900,14 +4900,14 @@ add_dummies <- function(dir, Log)
             "as is re-building the vignette PDFs.",
             "",
             "Options:",
-            "  -h, --help		print short help message and exit",
-            "  -v, --version		print version info and exit",
+            "  -h, --help               print short help message and exit",
+            "  -v, --version            print version info and exit",
             "  -l, --library=LIB     library directory used for test installation",
-            "			of packages (default is outdir)",
+            "                   of packages (default is outdir)",
             "  -o, --output=DIR      directory for output, default is current directory.",
-            "			Logfiles, R output, etc. will be placed in 'pkg.Rcheck'",
-            "			in this directory, where 'pkg' is the name of the",
-            "			checked package",
+            "                   Logfiles, R output, etc. will be placed in 'pkg.Rcheck'",
+            "                   in this directory, where 'pkg' is the name of the",
+            "                   checked package",
             "      --no-clean        do not clean 'outdir' before using it",
             "      --no-codoc        do not check for code/documentation mismatches",
             "      --no-examples     do not run the examples in the Rd files",
@@ -4922,12 +4922,12 @@ add_dummies <- function(dir, Log)
             "      --use-gct         use 'gctorture(TRUE)' when running examples/tests",
             "      --use-valgrind    use 'valgrind' when running examples/tests/vignettes",
             "      --timings         record timings for examples",
-            "      --install-args=	command-line args to be passed to INSTALL",
-	    "      --test-dir=       look in this subdirectory for test scripts (default tests)",
+            "      --install-args=      command-line args to be passed to INSTALL",
+            "      --test-dir=       look in this subdirectory for test scripts (default tests)",
             "      --no-stop-on-test-error   do not stop running tests after first error",
             "      --check-subdirs=default|yes|no",
-            "			run checks on the package subdirectories",
-            "			(default is yes for a tarball, no otherwise)",
+            "                   run checks on the package subdirectories",
+            "                   (default is yes for a tarball, no otherwise)",
             "      --as-cran         select customizations similar to those used",
             "                        for CRAN incoming checking",
             "",
@@ -5058,7 +5058,7 @@ add_dummies <- function(dir, Log)
             ignore_vignettes  <- TRUE
             do_vignettes  <- FALSE
             do_build_vignettes  <- FALSE
-	} else if (a == "--no-manual") {
+        } else if (a == "--no-manual") {
             do_manual  <- FALSE
         } else if (a == "--no-latex") {
             stop("'--no-latex' is defunct: use '--no-manual' instead",
@@ -5075,8 +5075,8 @@ add_dummies <- function(dir, Log)
             do_timings  <- TRUE
         } else if (substr(a, 1, 15) == "--install-args=") {
             install_args <- substr(a, 16, 1000)
-	} else if (substr(a, 1, 11) == "--test-dir=") {
-	    test_dir <- substr(a, 12, 1000)
+        } else if (substr(a, 1, 11) == "--test-dir=") {
+            test_dir <- substr(a, 12, 1000)
         } else if (substr(a, 1, 16) == "--check-subdirs=") {
             check_subdirs <- substr(a, 17, 1000)
         } else if (a == "--extra-arch") {
@@ -5089,8 +5089,8 @@ add_dummies <- function(dir, Log)
             force_multiarch  <- TRUE
         } else if (a == "--as-cran") {
             as_cran  <- TRUE
-	} else if (a == "--no-stop-on-test-error") {
-	    stop_on_test_error <- FALSE
+        } else if (a == "--no-stop-on-test-error") {
+            stop_on_test_error <- FALSE
         } else if (substr(a, 1, 9) == "--rcfile=") {
             warning("configuration files are not supported as from R 2.12.0")
         } else if (substr(a, 1, 1) == "-") {
@@ -5197,21 +5197,21 @@ add_dummies <- function(dir, Log)
     R_check_depr_def <-
         config_val_to_logical(Sys.getenv("_R_CHECK_DEPRECATED_DEFUNCT_", "FALSE"))
     R_check_ascii_code <-
-    	config_val_to_logical(Sys.getenv("_R_CHECK_ASCII_CODE_", "TRUE"))
+        config_val_to_logical(Sys.getenv("_R_CHECK_ASCII_CODE_", "TRUE"))
     R_check_ascii_data <-
-    	config_val_to_logical(Sys.getenv("_R_CHECK_ASCII_DATA_", "TRUE"))
+        config_val_to_logical(Sys.getenv("_R_CHECK_ASCII_DATA_", "TRUE"))
      R_check_compact_data <-
-    	config_val_to_logical(Sys.getenv("_R_CHECK_COMPACT_DATA_", "TRUE"))
+        config_val_to_logical(Sys.getenv("_R_CHECK_COMPACT_DATA_", "TRUE"))
     R_check_vc_dirs <-
-    	config_val_to_logical(Sys.getenv("_R_CHECK_VC_DIRS_", "FALSE"))
+        config_val_to_logical(Sys.getenv("_R_CHECK_VC_DIRS_", "FALSE"))
     R_check_pkg_sizes <-
-    	config_val_to_logical(Sys.getenv("_R_CHECK_PKG_SIZES_", "TRUE")) &&
+        config_val_to_logical(Sys.getenv("_R_CHECK_PKG_SIZES_", "TRUE")) &&
         nzchar(Sys.which("du"))
     R_check_doc_sizes <-
-    	config_val_to_logical(Sys.getenv("_R_CHECK_DOC_SIZES_", "TRUE")) &&
+        config_val_to_logical(Sys.getenv("_R_CHECK_DOC_SIZES_", "TRUE")) &&
         nzchar(Sys.which(Sys.getenv("R_QPDF", "qpdf")))
     R_check_doc_sizes2 <-
-    	config_val_to_logical(Sys.getenv("_R_CHECK_DOC_SIZES2_", "FALSE"))
+        config_val_to_logical(Sys.getenv("_R_CHECK_DOC_SIZES2_", "FALSE"))
     R_check_code_assign_to_globalenv <-
         config_val_to_logical(Sys.getenv("_R_CHECK_CODE_ASSIGN_TO_GLOBALENV_",
                                          "FALSE"))
@@ -5244,7 +5244,7 @@ add_dummies <- function(dir, Log)
     R_check_toplevel_files <-
         config_val_to_logical(Sys.getenv("_R_CHECK_TOPLEVEL_FILES_", "FALSE"))
     R_check_exit_on_first_error <-
-	config_val_to_logical(Sys.getenv("_R_CHECK_EXIT_ON_FIRST_ERROR_", "FALSE"))
+        config_val_to_logical(Sys.getenv("_R_CHECK_EXIT_ON_FIRST_ERROR_", "FALSE"))
     R_check_vignettes_skip_run_maybe <-
         config_val_to_logical(Sys.getenv("_R_CHECK_VIGNETTES_SKIP_RUN_MAYBE_",
                                          "FALSE"))
@@ -5309,7 +5309,7 @@ add_dummies <- function(dir, Log)
             R_check_Rd_xrefs <- R_check_use_codetools <- R_check_Rd_style <-
                 R_check_executables <- R_check_permissions <-
                     R_check_dot_internal <- R_check_ascii_code <-
-                    	R_check_ascii_data <- R_check_compact_data <-
+                        R_check_ascii_data <- R_check_compact_data <-
                             R_check_pkg_sizes <- R_check_doc_sizes <-
                                 R_check_doc_sizes2 <-
                                     R_check_unsafe_calls <-
@@ -5474,7 +5474,7 @@ add_dummies <- function(dir, Log)
         }
         if (use_gct) opts <- c(opts, "--use-gct")
         if (use_valgrind) opts <- c(opts, "--use-valgrind")
-	if (!stop_on_test_error) opts <- c(opts, "--no-stop-on-test-error")
+        if (!stop_on_test_error) opts <- c(opts, "--no-stop-on-test-error")
         if (as_cran) opts <- c(opts, "--as-cran")
         if (length(opts) > 1L)
             messageLog(Log, "using options ", sQuote(paste(opts, collapse=" ")))
@@ -5511,7 +5511,7 @@ add_dummies <- function(dir, Log)
                 do_exit(1L)
             }
             desc <- desc[1L, ]
-            if (identical(desc["Priority"], c(Priority = "base"))) {	# Priority might be missing
+            if (identical(desc["Priority"], c(Priority = "base"))) {    # Priority might be missing
                 messageLog(Log, "looks like ", sQuote(pkgname0),
                            " is a base package")
                 messageLog(Log, "skipping installation test")
@@ -5575,7 +5575,7 @@ add_dummies <- function(dir, Log)
                 wrapLog("All packages need a namespace as from R 3.0.0.\n",
                         "R CMD build will produce a suitable starting point,",
                         "but it is better to handcraft a NAMESPACE file.")
-	        maybe_exit(1L)
+                maybe_exit(1L)
             } else {
                 noteLog(Log)
                 wrapLog("Packages without R code can be installed without",
@@ -5589,7 +5589,7 @@ add_dummies <- function(dir, Log)
 
             check_dot_files(check_incoming)
 
-	    setwd(pkgdir)
+            setwd(pkgdir)
             allfiles <- check_file_names()
             if (R_check_permissions) check_permissions(allfiles)
             if (!is_base_pkg && R_check_serialization) {
@@ -5602,7 +5602,7 @@ add_dummies <- function(dir, Log)
                        ## skip
                 } else check_serialization(allfiles)
             }
-	    setwd(startdir)
+            setwd(startdir)
 
             ## record this before installation.
             ## <NOTE>
@@ -5630,11 +5630,11 @@ add_dummies <- function(dir, Log)
                         inst_archs <- inst_archs[inst_archs %in% archs]
                         if (!identical(inst_archs, archs)) {
                             if (length(inst_archs) > 1)
-				printLog0(Log,
+                                printLog0(Log,
                                           "NB: this package is only installed for sub-architectures ",
                                           paste(sQuote(inst_archs), collapse=", "), "\n")
-			    else {
-				printLog0(Log,
+                            else {
+                                printLog0(Log,
                                           "NB: this package is only installed for sub-architecture ",
                                           sQuote(inst_archs), "\n")
                                 if(inst_archs == .Platform$r_arch)
