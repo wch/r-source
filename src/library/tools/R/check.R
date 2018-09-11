@@ -5134,7 +5134,7 @@ add_dummies <- function(dir, Log)
             "      --use-gct         use 'gctorture(TRUE)' when running examples/tests",
             "      --use-valgrind    use 'valgrind' when running examples/tests/vignettes",
             "      --timings         record timings for examples",
-            "      --install-args=  command-line args to be passed to INSTALL",
+            "      --install-args=   command-line args to be passed to INSTALL",
         "      --test-dir=       look in this subdirectory for test scripts (default tests)",
             "      --no-stop-on-test-error   do not stop running tests after first error",
             "      --check-subdirs=default|yes|no",
