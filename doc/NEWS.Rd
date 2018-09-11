@@ -179,6 +179,9 @@
       initially signaled with a \code{retry_loadNamespace} restart
       available. This allows a calling handler to try to install the
       package and continue.
+
+      \item \code{S3method()} directives in \file{NAMESPACE} can now
+      also be used to perform \emph{delayed} S3 method registration.
     }
   }
 

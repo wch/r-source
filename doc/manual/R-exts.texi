@@ -3771,6 +3771,21 @@ S3method(print, check_so_symbols, .print.via.format)
 @noindent
 when @code{print.check_so_symbols} is not needed.
 
+As of @R{} version 3.6.0, one can also use @code{S3method()} directives
+to perform @emph{delayed} registration.  With
+@example
+if(getRversion() >= "3.6.0") @{
+    S3method(pkg::gen, cls)
+@}
+@end example
+@noindent
+function @code{gen.cls} will get registered as an S3 method for class
+@code{cls} and generic @code{gen} from package @code{pkg} only when the
+namespace of @code{pkg} is loaded.  This can be employed to deal with
+situations where the method is not ``immediately'' needed, and having to
+pre-load the namespace of @code{pkg} (and all its strong dependencies)
+in order to perform immediate registration is considered too ``costly''.
+
 @node Load hooks, useDynLib, Registering S3 methods, Package namespaces
 @subsection Load hooks
 
