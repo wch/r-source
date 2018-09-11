@@ -290,7 +290,10 @@ loadNamespace <- function (package, lib.loc = NULL,
         }
 
         assignNativeRoutines <- function(dll, lib, env, nativeRoutines) {
-            if(length(nativeRoutines) == 0L) return(NULL)
+            if(length(nativeRoutines) == 0L) return(character())
+
+            varnames <- character()
+            symnames <- character()
 
             if(nativeRoutines$useRegistration) {
                 ## Use the registration information to register ALL the symbols
@@ -306,41 +309,51 @@ loadNamespace <- function (package, lib.loc = NULL,
 	"failed to assign RegisteredNativeSymbol for %s to %s since %s is already defined in the %s namespace",
                                                            sym$name, varName, varName, sQuote(package)),
                                                   domain = NA, call. = FALSE)
-                                      else
+                                      else {
                                           env[[varName]] <- sym
+                                          varnames <<- c(varnames,
+                                                         varName)
+                                          symnames <<- c(symnames,
+                                                         sym$name)
+                                      }
                                   })
                        })
 
             }
 
             symNames <- nativeRoutines$symbolNames
-            if(length(symNames) == 0L) return(NULL)
-
-            symbols <- getNativeSymbolInfo(symNames, dll, unlist = FALSE,
-                                           withRegistrationInfo = TRUE)
-            lapply(seq_along(symNames),
-                   function(i) {
-                       ## could vectorize this outside of the loop
-                       ## and assign to different variable to
-                       ## maintain the original names.
-                       varName <- names(symNames)[i]
-                       origVarName <- symNames[i]
-                       if(exists(varName, envir = env, inherits = FALSE))
-                           if(origVarName != varName)
-                               warning(gettextf(
+            if(length(symNames)) {
+                symbols <- getNativeSymbolInfo(symNames, dll, unlist = FALSE,
+                                               withRegistrationInfo = TRUE)
+                lapply(seq_along(symNames),
+                       function(i) {
+                           ## could vectorize this outside of the loop
+                           ## and assign to different variable to
+                           ## maintain the original names.
+                           varName <- names(symNames)[i]
+                           origVarName <- symNames[i]
+                           if(exists(varName, envir = env, inherits = FALSE))
+                               if(origVarName != varName)
+                                   warning(gettextf(
 		"failed to assign NativeSymbolInfo for %s to %s since %s is already defined in the %s namespace",
-                                                origVarName, varName, varName, sQuote(package)),
-                                       domain = NA, call. = FALSE)
-                           else
-                               warning(gettextf(
+                                                    origVarName, varName, varName, sQuote(package)),
+                                           domain = NA, call. = FALSE)
+                               else
+                                   warning(gettextf(
 		"failed to assign NativeSymbolInfo for %s since %s is already defined in the %s namespace",
-                                                origVarName, varName, sQuote(package)),
-                                       domain = NA, call. = FALSE)
-                       else
-                           assign(varName, symbols[[origVarName]], envir = env)
+                                                    origVarName, varName, sQuote(package)),
+                                           domain = NA, call. = FALSE)
+                           else {
+                               assign(varName, symbols[[origVarName]],
+                                      envir = env)
+                               varnames <<- c(varnames, varName)
+                               symnames <<- c(symnames, origVarName)
+                           }
+                })
+            }
 
-                   })
-            symbols
+            names(symnames) <- varnames
+            symnames
         }
 
         ## find package, allowing a calling handler to retry if not found.
@@ -563,11 +576,13 @@ loadNamespace <- function (package, lib.loc = NULL,
         ## load any dynamic libraries
         dlls <- list()
         dynLibs <- nsInfo$dynlibs
+        nativeRoutines <- list()
         for (i in seq_along(dynLibs)) {
             lib <- dynLibs[i]
             dlls[[lib]]  <- library.dynam(lib, package, package.lib)
-            assignNativeRoutines(dlls[[lib]], lib, env,
-                                 nsInfo$nativeRoutines[[lib]])
+            routines <- assignNativeRoutines(dlls[[lib]], lib, env,
+                                             nsInfo$nativeRoutines[[lib]])
+            nativeRoutines[[lib]] <- routines
 
             ## If the DLL has a name as in useDynLib(alias = foo),
             ## then assign DLL reference to alias.  Check if
@@ -580,7 +595,7 @@ loadNamespace <- function (package, lib.loc = NULL,
             setNamespaceInfo(env, "DLLs", dlls)
         }
         addNamespaceDynLibs(env, nsInfo$dynlibs)
-
+        setNamespaceInfo(env, "nativeRoutines", nativeRoutines)
 
         ## used in e.g. utils::assignInNamespace
         Sys.setenv("_R_NS_LOAD_" = package)
