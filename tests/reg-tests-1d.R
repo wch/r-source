@@ -2039,6 +2039,18 @@ stopifnot(exprs = {
 ## nextn(214e7) hang in infinite loop; nextn(<large>) gave NA  in R <= 3.5.1
 
 
+## More strictness in '&&' and '||' :
+Sys.getenv("_R_CHECK_LENGTH_1_LOGIC2_", unset=NA) -> oEV
+Sys.setenv("_R_CHECK_LENGTH_1_LOGIC2_" = "foo") # only warn
+tools::assertWarning(1 && 0:1)
+Sys.setenv("_R_CHECK_LENGTH_1_LOGIC2_" = TRUE) # => error (when triggered)
+tools::assertError(0 || 0:1)
+if(is.na(oEV)) { # (by default)
+    Sys.unsetenv ("_R_CHECK_LENGTH_1_LOGIC2_")
+    2 && 0:1 # should not even warn
+} else Sys.setenv("_R_CHECK_LENGTH_1_LOGIC2_" = oEV)
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

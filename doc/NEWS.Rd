@@ -182,6 +182,11 @@
 
       \item \code{S3method()} directives in \file{NAMESPACE} can now
       also be used to perform \emph{delayed} S3 method registration.
+
+      \item Experimentally, setting environment variable
+      \env{_R_CHECK_LENGTH_1_LOGIC2_} will lead to warnings (or errors
+      if the variable is set to a \sQuote{true} value) when \code{&&} or
+      \code{||} encounter and use arguments of length more than one.
     }
   }
 
@@ -312,7 +317,7 @@
       now shows non-large \code{df}'s to the full precision (\PR{17444}).
 
       \item \code{kruskal.test()} and \code{fligner.test()} no longer
-      erroneously insists on numeric \code{g} group arguments (\PR{16719}).
+      erroneously insist on numeric \code{g} group arguments (\PR{16719}).
 
       \item Printing a news db via the browser now does a much better
       job (\PR{17433}).

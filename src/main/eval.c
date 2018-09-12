@@ -3177,19 +3177,18 @@ SEXP attribute_hidden do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
 	UNPROTECT(1);
     }
     else if (TYPEOF(expr) == EXPRSXP) {
-	int i, n;
 	SEXP srcrefs = getBlockSrcrefs(expr);
 	PROTECT(expr);
-	n = LENGTH(expr);
 	tmp = R_NilValue;
 	begincontext(&cntxt, CTXT_RETURN, R_GlobalContext->call,
 	             env, rho, args, op);
-	if (!SETJMP(cntxt.cjmpbuf))
-	    for(i = 0 ; i < n ; i++) {
+	if (!SETJMP(cntxt.cjmpbuf)) {
+	    int n = LENGTH(expr);
+	    for(int i = 0 ; i < n ; i++) {
 		R_Srcref = getSrcref(srcrefs, i);
 		tmp = eval(VECTOR_ELT(expr, i), env);
 	    }
-	else {
+	} else {
 	    tmp = R_ReturnedValue;
 	    if (tmp == R_RestartToken) {
 		cntxt.callflag = CTXT_RETURN;  /* turn restart off */
@@ -5826,7 +5825,7 @@ static R_INLINE void SUBASSIGN_N_PTR(R_bcstack_t *sx, int rank,
 	R_BCNodeStackTop -= rank + 1;					\
     } while (0)
 
-#define FIXUP_SCALAR_LOGICAL(callidx, arg, op) do {			\
+#define FIXUP_SCALAR_LOGICAL(callidx, arg, op, warn_level) do {		\
 	SEXP val = GETSTACK(-1);					\
 	if (IS_SIMPLE_SCALAR(val, LGLSXP))				\
 	    SETSTACK(-1, ScalarLogical(SCALAR_LVAL(val)));		\
@@ -5834,7 +5833,9 @@ static R_INLINE void SUBASSIGN_N_PTR(R_bcstack_t *sx, int rank,
 	    if (!isNumber(val))						\
 		errorcall(VECTOR_ELT(constants, callidx),		\
 			  _("invalid %s type in 'x %s y'"), arg, op);	\
-	    SETSTACK(-1, ScalarLogical(asLogical(val)));		\
+	    SETSTACK(-1, ScalarLogical(asLogical2(			\
+					   val, warn_level,		\
+					   VECTOR_ELT(constants, callidx)))); \
 	}								\
     } while(0)
 
@@ -6980,7 +6981,9 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
     OP(AND1ST, 2): {
 	int callidx = GETOP();
 	int label = GETOP();
-	FIXUP_SCALAR_LOGICAL(callidx, "'x'", "&&");
+	char *check = getenv("_R_CHECK_LENGTH_1_LOGIC2_");
+	int warn_lev = (check) ? (StringTrue(check) ? 2 : 1) : 0;
+	FIXUP_SCALAR_LOGICAL(callidx, "'x'", "&&", warn_lev);
 	SEXP value = GETSTACK(-1);
 	if (SCALAR_LVAL(value) == FALSE)
 	    pc = codebase + label;
@@ -6989,7 +6992,9 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
     }
     OP(AND2ND, 1): {
 	int callidx = GETOP();
-	FIXUP_SCALAR_LOGICAL(callidx, "'y'", "&&");
+	char *check = getenv("_R_CHECK_LENGTH_1_LOGIC2_");
+	int warn_lev = (check) ? (StringTrue(check) ? 2 : 1) : 0;
+	FIXUP_SCALAR_LOGICAL(callidx, "'y'", "&&", warn_lev);
 	SEXP value = GETSTACK(-1);
 	/* The first argument is TRUE or NA. If the second argument is
 	   not TRUE then its value is the result. If the second
@@ -7005,7 +7010,9 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
     OP(OR1ST, 2):  {
 	int callidx = GETOP();
 	int label = GETOP();
-	FIXUP_SCALAR_LOGICAL(callidx, "'x'", "||");
+	char *check = getenv("_R_CHECK_LENGTH_1_LOGIC2_");
+	int warn_lev = (check) ? (StringTrue(check) ? 2 : 1) : 0;
+	FIXUP_SCALAR_LOGICAL(callidx, "'x'", "||", warn_lev);
 	SEXP value = GETSTACK(-1);
 	Rboolean val = SCALAR_LVAL(value);
 	if (val != NA_LOGICAL &&
@@ -7016,7 +7023,9 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
     }
     OP(OR2ND, 1):  {
 	int callidx = GETOP();
-	FIXUP_SCALAR_LOGICAL(callidx, "'y'", "||");
+	char *check = getenv("_R_CHECK_LENGTH_1_LOGIC2_");
+	int warn_lev = (check) ? (StringTrue(check) ? 2 : 1) : 0;
+	FIXUP_SCALAR_LOGICAL(callidx, "'y'", "||", warn_lev);
 	SEXP value = GETSTACK(-1);
 	/* The first argument is FALSE or NA. If the second argument is
 	   not FALSE then its value is the result. If the second

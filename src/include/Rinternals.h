@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 1999--2018  The R Core Team.
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999-2017   The R Core Team.
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -698,7 +698,7 @@ SEXP ALTREAL_MAX(SEXP x, Rboolean narm);
 SEXP INTEGER_MATCH(SEXP, SEXP, int, SEXP, SEXP, Rboolean);
 SEXP INTEGER_IS_NA(SEXP x);
 SEXP REAL_MATCH(SEXP, SEXP, int, SEXP, SEXP, Rboolean);
-	
+
 R_xlen_t REAL_GET_REGION(SEXP sx, R_xlen_t i, R_xlen_t n, double *buf);
 int REAL_IS_SORTED(SEXP x);
 int REAL_NO_NA(SEXP x);
@@ -886,7 +886,7 @@ LibExtern SEXP  R_dot_Generic;      /* ".Generic" */
 #define NA_STRING	R_NaString
 LibExtern SEXP	R_NaString;	    /* NA_STRING as a CHARSXP */
 LibExtern SEXP	R_BlankString;	    /* "" as a CHARSXP */
-LibExtern SEXP	R_BlankScalarString;	    /* "" as a STRSXP */
+LibExtern SEXP	R_BlankScalarString;/* "" as a STRSXP */
 
 /* srcref related functions */
 SEXP R_GetCurrentSrcref(int);
@@ -902,6 +902,7 @@ SEXP Rf_PairToVectorList(SEXP x);
 SEXP Rf_VectorToPairList(SEXP x);
 SEXP Rf_asCharacterFactor(SEXP x);
 int Rf_asLogical(SEXP x);
+int Rf_asLogical2(SEXP x, int warn_level, SEXP call);
 int Rf_asInteger(SEXP x);
 double Rf_asReal(SEXP x);
 Rcomplex Rf_asComplex(SEXP x);
@@ -1332,6 +1333,7 @@ void R_orderVector1(int *indx, int n, SEXP x,       Rboolean nalast, Rboolean de
 #define asComplex		Rf_asComplex
 #define asInteger		Rf_asInteger
 #define asLogical		Rf_asLogical
+#define asLogical2		Rf_asLogical2
 #define asReal			Rf_asReal
 #define asS4			Rf_asS4
 #define classgets		Rf_classgets
