@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2018-09-09 r75265) -- "Unsuffered Consequences"
+R Under development (unstable) (2018-09-11 r75286) -- "Unsuffered Consequences"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -7076,7 +7076,7 @@ Null Deviance:	    83.85
 Residual Deviance: 32.45 	AIC: NA
 > ## Not run: glm(y ~ x, family = quasi(variance = "mu^3", link = "log")) # fails
 > y <- rbinom(100, 1, plogis(x))
-> # needs to set a starting value for the next fit
+> # need to set a starting value for the next fit
 > glm(y ~ x, family = quasi(variance = "mu(1-mu)", link = "logit"), start = c(0,1))
 
 Call:  glm(formula = y ~ x, family = quasi(variance = "mu(1-mu)", link = "logit"), 
