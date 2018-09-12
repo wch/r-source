@@ -1,7 +1,7 @@
 #  File src/library/tools/R/tools-deprecated.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -133,7 +133,7 @@ getDepList <- function(depMtrx, instPkgs, recursive=TRUE,
                           R=character()),
                      class = "DependsList")
 
-    if (!is.matrix(depMtrx) && is.na(depMtrx)) # no dependencies
+    if (!is.matrix(depMtrx) && anyNA(depMtrx)) # no dependencies
         return(out)
 
     mtrxList <- buildDepList(depMtrx, instPkgs, recursive)
@@ -195,7 +195,7 @@ buildDepList <- function(depMtrx, instPkgs, recursive=TRUE)
         for (curPkg in depMtrx[,1]) {
             depMtrx <- getDepMtrx(curPkg, instPkgs)
             ## Make sure this package was found & has deps
-            if (is.null(depMtrx) || is.na(depMtrx))
+            if (is.null(depMtrx) || anyNA(depMtrx))
                 next
 
             curMtrxList <- buildDepList(depMtrx, instPkgs, recursive=TRUE)

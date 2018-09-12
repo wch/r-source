@@ -50,7 +50,7 @@ eigenok <- function(A, E, Eps=1000*.Machine$double.eps)
     print(zapsmall(E$values))
     V <- E$vectors; lam <- E$values
     stopifnot(abs(A %*% V - V %*% diag(lam)) < Eps,
-              abs(lam[length(lam)]/lam[1]) < Eps || # this one not for singular A :
+              abs(lam[length(lam)]/lam[1]) < Eps | # this one not for singular A :
               abs(A - V %*% diag(lam) %*% t(V)) < Eps)
 }
 
