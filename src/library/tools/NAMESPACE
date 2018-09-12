@@ -22,7 +22,8 @@ export("Adobe_glyphs", "HTMLheader", "Rcmd", "Rd2HTML", "Rd2ex",
        "make_translations_pkg", "md5sum",
        package.dependencies,# R/package.dependencies.R man/package.dependencies.Rd
        getDepList, pkgDepends, installFoundDepends,# R/pkgDepends.R man/getDepList.Rd man/installFoundDepends.Rd
-       ## but vignetteDepends() calls  getDepList()
+       vignetteDepends, # deprecated, too as it calls  getDepList()
+
        "package_dependencies",
        "package_native_routine_registration_skeleton",
        "parseLatex", "parse_Rd",
@@ -31,7 +32,8 @@ export("Adobe_glyphs", "HTMLheader", "Rcmd", "Rd2HTML", "Rd2ex",
        "startDynamicHelp", "testInstalledBasic",
        "testInstalledPackage", "testInstalledPackages", "texi2dvi",
        "texi2pdf", "toHTML", "toRd", "toTitleCase", "undoc",
-       "update_pkg_po", "vignetteDepends", "vignetteEngine",
+       "update_pkg_po", "vignetteEngine",
+       vignetteInfo,
        "write_PACKAGES", "xgettext", "xgettext2pot", "xngettext")
 
 export("check_packages_in_dir",
