@@ -187,6 +187,9 @@
       \env{_R_CHECK_LENGTH_1_LOGIC2_} will lead to warnings (or errors
       if the variable is set to a \sQuote{true} value) when \code{&&} or
       \code{||} encounter and use arguments of length more than one.
+
+      \item Added \code{"lines"} and \code{"chars"} coordinate systems
+      to \code{grconvertX()} and \code{grconvertY()}.
     }
   }
 

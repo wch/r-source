@@ -30,6 +30,8 @@ grconvertY(y, from = "user", to = "user")
     \item{\code{"npc"}}{normalized plot coordinates.}
     \item{\code{"nic"}}{normalized inner region coordinates.  (The
       \sQuote{inner region} is that inside the outer margins.)}
+    \item{\code{"lines"}}{lines of margin (based on \code{mex}).}
+    \item{\code{"chars"}}{lines of text (based on \code{cex}).}
   }
   (These names can be partially matched.)  For the \sQuote{normalized}
   coordinate systems the lower left has value 0 and the top right
@@ -46,7 +48,7 @@ grconvertY(y, from = "user", to = "user")
 \examples{
 op <- par(omd=c(0.1, 0.9, 0.1, 0.9), mfrow = c(1, 2))
 plot(1:4)
-for(tp in c("in", "dev", "ndc", "nfc", "npc", "nic"))
+for(tp in c("in", "dev", "ndc", "nfc", "npc", "nic", "lines", "chars"))
     print(grconvertX(c(1.0, 4.0), "user", tp))
 par(op)
 }
