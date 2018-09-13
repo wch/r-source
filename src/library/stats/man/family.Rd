@@ -129,7 +129,7 @@ quasipoisson(link = "log")
   \item{variance}{function: the variance as a function of the mean.}
   \item{dev.resids}{function giving the deviance for each observation
     as a function of \code{(y, mu, wt)}, used by the
-    \code{\link[residuals.glm]{residuals}} method when computing
+    \code{\link[=residuals.glm]{residuals}} method when computing
     deviance residuals.}
     \item{aic}{function giving the AIC value if appropriate (but \code{NA}
     for the quasi- families).  More precisely, this function
