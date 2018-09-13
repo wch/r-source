@@ -19,13 +19,12 @@
 options <- function(...)
     .Internal(options(...))
 
-getOption <- function(x, default = NULL)
-{
-    ## To avoid always performing the %in%,
-    ## we use the original code if default is not specified.
-    ## if(missing(default)) return(options(x)[[1L]])
-    if(missing(default) || x %in% names(.Options))
-	.Internal(getOption(x))
-    else
-	default
+## getOption_SAtk() (by Tomas K. from from Suharto A. from Matt D.): \PR{17394}
+getOption <- function(x, default = NULL) {
+     if (missing(default))
+         .Internal(getOption(x))
+     else {
+         ans <- .Internal(getOption(x))
+         if (is.null(ans)) default else ans
+     }
 }

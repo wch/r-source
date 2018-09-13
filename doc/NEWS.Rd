@@ -190,6 +190,10 @@
 
       \item Added \code{"lines"} and \code{"chars"} coordinate systems
       to \code{grconvertX()} and \code{grconvertY()}.
+
+      \item \code{getOption()} is more efficient notably for the rare
+      case when called with two arguments, from several contributors in
+      \PR{17394}.
     }
   }
 
