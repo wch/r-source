@@ -57,9 +57,10 @@ void setListElement(SEXP list, char *str, SEXP value)
  */
 double numeric(SEXP x, int index)
 {
-    if (isReal(x))
+    if (index < 0) return NA_REAL;
+    if (isReal(x) && XLENGTH(x) > index)
 	return REAL(x)[index];
-    else if (isInteger(x))
+    else if (isInteger(x) && XLENGTH(x) > index)
 	return INTEGER(x)[index];
     return NA_REAL;
 }
