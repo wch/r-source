@@ -225,6 +225,10 @@
       \item \code{var(f)} and hence \code{sd(f)} now give an error for
       \code{factor} arguments; they gave a warning since R 3.2.3,
       \PR{16564}.
+
+      \item \pkg{tools}' \code{vignetteDepends()} has been deprecated
+      (it called a function deprecated since Feb 2016), partly replaced
+      by newly exported \code{vignetteInfo()}.
     }
   }
 
