@@ -349,7 +349,7 @@ static void timeout_cleanup()
     alarm(0); /* clear alarm */
 
     sigaction(SIGALRM, &tost.oldalrm, NULL);
-    sigaction(SIGINT, &tost.oldalrm, NULL);
+    sigaction(SIGINT, &tost.oldint, NULL);
     sigaction(SIGQUIT, &tost.oldquit, NULL);
     sigaction(SIGHUP, &tost.oldhup, NULL);
     sigaction(SIGTERM, &tost.oldterm, NULL);
