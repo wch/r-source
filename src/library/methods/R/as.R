@@ -434,8 +434,7 @@ canCoerce <- function(object, Class) {
     fdef[[2L]]$to <- ClassDef@className
     fdef <- eval(fdef)
     body(fdef, environment(def)) <- body(def)
-    attr(fdef, "source") <- deparse(fdef) # because it's wrong from the quote()
-    utils::removeSource(fdef)
+    attr(fdef, "srcref") <- attr(def, "srcref")
     sig <- new("signature")
     sig@.Data <- c(thisClass, ClassDef@className)
     sig@names <- c("from", "to")
