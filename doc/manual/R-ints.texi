@@ -4224,12 +4224,20 @@ open: if any are found, this is reported with a fatal error.  NB:
 have not be stopped by @code{stopCluster()}.
 Default: false (but true for CRAN submission checks).
 
-@item _R_CHECK_FUTURE_FILE_TIMESTAMPS
+@item _R_CHECK_FUTURE_FILE_TIMESTAMPS_
 Check if any of the input files has a timestamp in the future (and to do
 so, checks that the system clock is correct to within 5 minutes).
 Default: false (but true for CRAN submission checks).
 @c _R_CHECK_SYSTEM_CLOCK_ can be used to disable the clock check, for
 @c use on a check farm.
+
+@item _R_CHECK_LENGTH_1_LOGIC2_
+Optionally check if either argument of the binary operators @code{&&}
+and @code{||} has length greater than one.  For a true value (@samp{T},
+@samp{True}, @samp{TRUE} or @samp{true}), give an error.  With any other
+non-true non-empty value, give a warning (typically quoting the call but
+giving no other context).
+Default: unset.
 @end vtable
 
 CRAN's submission checks use something like
@@ -4261,6 +4269,9 @@ _R_CHECK_R_DEPENDS_=warn
 _R_CHECK_SERIALIZATION_=TRUE
 _R_CHECK_R_ON_PATH_=TRUE
 _R_CHECK_PACKAGES_USED_IN_TESTS_USE_SUBDIRS_=TRUE
+_R_CHECK_SHLIB_OPENMP_FLAGS_=TRUE
+_R_CHECK_CONNECTIONS_LEFT_OPEN_=TRUE
+_R_CHECK_FUTURE_FILE_TIMESTAMPS_=TRUE
 @end example
 
 @noindent
