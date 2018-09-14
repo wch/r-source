@@ -327,6 +327,33 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 # define TRACKREFS(x) FALSE
 #endif
 
+#if defined(COMPUTE_REFCNT_VALUES)
+# define SET_REFCNT(x,v) (REFCNT(x) = (v))
+# if defined(EXTRA_REFCNT_FIELDS)
+#  define SET_TRACKREFS(x,v) (TRACKREFS(x) = (v))
+# else
+#  define SET_TRACKREFS(x,v) ((x)->sxpinfo.spare = ! (v))
+# endif
+# define DECREMENT_REFCNT(x) do {					\
+	SEXP drc__x__ = (x);						\
+	if (REFCNT(drc__x__) > 0 && REFCNT(drc__x__) < REFCNTMAX)	\
+	    SET_REFCNT(drc__x__, REFCNT(drc__x__) - 1);			\
+    } while (0)
+# define INCREMENT_REFCNT(x) do {			      \
+	SEXP irc__x__ = (x);				      \
+	if (REFCNT(irc__x__) < REFCNTMAX)		      \
+	    SET_REFCNT(irc__x__, REFCNT(irc__x__) + 1);	      \
+    } while (0)
+#else
+# define SET_REFCNT(x,v) do {} while(0)
+# define SET_TRACKREFS(x,v) do {} while(0)
+# define DECREMENT_REFCNT(x) do {} while(0)
+# define INCREMENT_REFCNT(x) do {} while(0)
+#endif
+
+#define ENABLE_REFCNT(x) SET_TRACKREFS(x, TRUE)
+#define DISABLE_REFCNT(x) SET_TRACKREFS(x, FALSE)
+
 #ifdef SWITCH_TO_REFCNT
 # undef NAMED
 # undef SET_NAMED
@@ -518,42 +545,19 @@ Rboolean (Rf_isObject)(SEXP s);
 	DECREMENT_REFCNT(dl__x__);		\
     } while (0)
 
-#if defined(COMPUTE_REFCNT_VALUES)
-# define SET_REFCNT(x,v) (REFCNT(x) = (v))
-# if defined(EXTRA_REFCNT_FIELDS)
-#  define SET_TRACKREFS(x,v) (TRACKREFS(x) = (v))
-# else
-#  define SET_TRACKREFS(x,v) ((x)->sxpinfo.spare = ! (v))
-# endif
-# define DECREMENT_REFCNT(x) do {					\
-	SEXP drc__x__ = (x);						\
-	if (REFCNT(drc__x__) > 0 && REFCNT(drc__x__) < REFCNTMAX)	\
-	    SET_REFCNT(drc__x__, REFCNT(drc__x__) - 1);			\
-    } while (0)
-# define INCREMENT_REFCNT(x) do {			      \
-	SEXP irc__x__ = (x);				      \
-	if (REFCNT(irc__x__) < REFCNTMAX)		      \
-	    SET_REFCNT(irc__x__, REFCNT(irc__x__) + 1);	      \
-    } while (0)
-#else
-# define SET_REFCNT(x,v) do {} while(0)
-# define SET_TRACKREFS(x,v) do {} while(0)
-# define DECREMENT_REFCNT(x) do {} while(0)
-# define INCREMENT_REFCNT(x) do {} while(0)
-#endif
-
-#define ENABLE_REFCNT(x) SET_TRACKREFS(x, TRUE)
-#define DISABLE_REFCNT(x) SET_TRACKREFS(x, FALSE)
-
 /* Macros for some common idioms. */
 #ifdef SWITCH_TO_REFCNT
 # define MAYBE_SHARED(x) (REFCNT(x) > 1)
 # define NO_REFERENCES(x) (REFCNT(x) == 0)
-# define MARK_NOT_MUTABLE(x) SET_REFCNT(x, REFCNTMAX)
+# ifdef USE_RINTERNALS
+#  define MARK_NOT_MUTABLE(x) SET_REFCNT(x, REFCNTMAX)
+# endif
 #else
 # define MAYBE_SHARED(x) (NAMED(x) > 1)
 # define NO_REFERENCES(x) (NAMED(x) == 0)
-# define MARK_NOT_MUTABLE(x) SET_NAMED(x, NAMEDMAX)
+# ifdef USE_RINTERNALS
+#  define MARK_NOT_MUTABLE(x) SET_NAMED(x, NAMEDMAX)
+# endif
 #endif
 #define MAYBE_REFERENCED(x) (! NO_REFERENCES(x))
 #define NOT_SHARED(x) (! MAYBE_SHARED(x))
@@ -608,6 +612,11 @@ void (ENSURE_NAMEDMAX)(SEXP x);
 void (ENSURE_NAMED)(SEXP x);
 void (SETTER_CLEAR_NAMED)(SEXP x);
 void (RAISE_NAMED)(SEXP x, int n);
+void (DECREMENT_REFCNT)(SEXP x);
+void (INCREMENT_REFCNT)(SEXP x);
+void (DISABLE_REFCNT)(SEXP x);
+void (ENABLE_REFCNT)(SEXP x);
+void (MARK_NOT_MUTABLE)(SEXP x);
 
 /* S4 object testing */
 int (IS_S4_OBJECT)(SEXP x);
