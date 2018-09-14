@@ -358,6 +358,11 @@
 
       \item \code{nextn(n)} now also works for larger \code{n} and no
       longer loops infinitely for e.g, \code{n <- 214e7}.
+
+      \item Buffering is disabled for \code{file()} connections to
+      irregular files (like sockets), as well as \code{fifo()} and
+      \code{pipe()} connections. Fixes \PR{17470}, reported by Chris
+      Culnane.
     }
   }
 }
