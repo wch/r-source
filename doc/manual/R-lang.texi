@@ -4360,9 +4360,9 @@ single quote
 @item \"
 double quote
 @item \n
-newline
+newline (aka `line feed', @key{LF})
 @item \r
-carriage return
+carriage return (@key{CR})
 @item \t
 tab character
 @item \b
