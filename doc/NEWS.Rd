@@ -405,6 +405,11 @@
       \code{options(warn = warnOption)} when that increases the warning
       level (\PR{17453}).
 
+      \item Analogously, the tools-internal function called from \command{R CMD
+	check} gets a \code{warnOption = 1} argument and uses the larger
+      of that and \code{getOption("warn")}, also allowing to be run with
+      increased warning level.
+
       \item Parse data now have deterministic parent nodes (\PR{16041}).
 
       \item Calling \code{match()} with length one \code{x} and POSIXlt

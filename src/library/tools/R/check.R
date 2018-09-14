@@ -294,7 +294,7 @@ add_dummies <- function(dir, Log)
 }
 
 ###- The main function for "R CMD check"
-.check_packages <- function(args = NULL, no.q = interactive())
+.check_packages <- function(args = NULL, no.q = interactive(), warnOption = 1)
 {
     WINDOWS <- .Platform$OS.type == "windows"
     ## this requires on Windows: file.exe (optional)
@@ -1281,7 +1281,7 @@ add_dummies <- function(dir, Log)
                           sprintf("Empty or missing file %s.\n",
                                   sQuote(index)))
             } else {
-                Rcmd <- "options(warn=1)\ntools:::.check_demo_index(\"demo\")\n"
+                Rcmd <- paste0(opWarn_string, "\ntools:::.check_demo_index(\"demo\")\n")
                 ## FIXME: this does not need to be run in another process
                 out <- R_runR0(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
                 if(length(out)) {
@@ -1292,7 +1292,7 @@ add_dummies <- function(dir, Log)
             }
         }
         if (dir.exists(file.path("inst", "doc"))) {
-            Rcmd <- "options(warn=1)\ntools:::.check_vignette_index(\"inst/doc\")\n"
+            Rcmd <- paste0(opWarn_string, "\ntools:::.check_vignette_index(\"inst/doc\")\n")
             ## FIXME: this does not need to be run in another process
             out <- R_runR0(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
             if(length(out)) {
@@ -1628,7 +1628,7 @@ add_dummies <- function(dir, Log)
         } else resultLog(Log, "OK")
 
         checkingLog(Log, "R files for syntax errors")
-        Rcmd  <- "options(warn=1);tools:::.check_package_code_syntax(\"R\")"
+        Rcmd  <- paste0(opWarn_string, ";tools:::.check_package_code_syntax(\"R\")")
         out <- R_runR0(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
         if (any(startsWith(out, "Error"))) {
             errorLog(Log)
@@ -1645,7 +1645,7 @@ add_dummies <- function(dir, Log)
         ## if (!is_base_pkg) {
             checkingLog(Log, "dependencies in R code")
             if (do_install) {
-                Rcmd <- paste("options(warn=1, showErrorCalls=FALSE)\n",
+                Rcmd <- paste(opW_shE_F_str,
                               sprintf("tools:::.check_packages_used(package = \"%s\")\n", pkgname))
 
                 out <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=NULL")
@@ -1658,7 +1658,7 @@ add_dummies <- function(dir, Log)
             } else {
                 ## this needs to read the package code, and will fail on
                 ## syntax errors such as non-ASCII code.
-                Rcmd <- paste("options(warn=1, showErrorCalls=FALSE)\n",
+                Rcmd <- paste(opW_shE_F_str,
                               sprintf("tools:::.check_packages_used(dir = \"%s\")\n", pkgdir))
 
                 out <- R_runR0(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
@@ -1674,7 +1674,7 @@ add_dummies <- function(dir, Log)
         ## Check whether methods have all arguments of the corresponding
         ## generic.
         checkingLog(Log, "S3 generic/method consistency")
-        Rcmd <- paste("options(warn=1)\n",
+        Rcmd <- paste(opWarn_string, "\n",
                       "options(expressions=1000)\n",
                       if (do_install)
                       sprintf("tools::checkS3methods(package = \"%s\")\n", pkgname)
@@ -1711,7 +1711,7 @@ add_dummies <- function(dir, Log)
         ## Check whether replacement functions have their final argument
         ## named 'value'.
         checkingLog(Log, "replacement functions")
-        Rcmd <- paste("options(warn=1)\n",
+        Rcmd <- paste(opWarn_string, "\n",
                       if (do_install)
                       sprintf("tools::checkReplaceFuns(package = \"%s\")\n", pkgname)
                       else
@@ -1743,7 +1743,7 @@ add_dummies <- function(dir, Log)
                 Sys.setenv("_R_CHECK_FF_AS_CRAN_" = "TRUE")
                 DUP <- TRUE
             }
-            Rcmd <- paste("options(warn=1)\n",
+            Rcmd <- paste(opWarn_string, "\n",
                           if (do_install)
                           sprintf("tools::checkFF(package = \"%s\", registration = %s, check_DUP = %s)\n",
                                   pkgname, registration, DUP)
@@ -1780,7 +1780,7 @@ add_dummies <- function(dir, Log)
         checkingLog(Log, "R code for possible problems")
         t1 <- proc.time()
         if (!is_base_pkg) {
-            Rcmd <- paste("options(warn=1)\n",
+            Rcmd <- paste(opWarn_string, "\n",
                           sprintf("tools:::.check_package_code_shlib(dir = \"%s\")\n",
                                   pkgdir))
             out <- R_runR0(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
@@ -1796,11 +1796,11 @@ add_dummies <- function(dir, Log)
             }
         }
 
-        Rcmd <- paste("options(warn=1)\n",
+        Rcmd <- paste(opWarn_string, "\n",
                       sprintf("tools:::.check_package_code_startup_functions(dir = \"%s\")\n",
                               pkgdir))
         out1 <- R_runR0(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=")
-        Rcmd <- paste("options(warn=1)\n",
+        Rcmd <- paste(opWarn_string, "\n",
                       sprintf("tools:::.check_package_code_unload_functions(dir = \"%s\")\n",
                               pkgdir))
         out1a <- R_runR0(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=")
@@ -1810,7 +1810,7 @@ add_dummies <- function(dir, Log)
         out2 <- out3 <- out4 <- out5 <- out6 <- out7 <- out8 <- NULL
 
         if (!is_base_pkg && R_check_unsafe_calls) {
-            Rcmd <- paste("options(warn=1)\n",
+            Rcmd <- paste(opWarn_string, "\n",
                           sprintf("tools:::.check_package_code_tampers(dir = \"%s\")\n",
                                   pkgdir))
             out2 <- R_runR0(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
@@ -1818,7 +1818,7 @@ add_dummies <- function(dir, Log)
 
         if (R_check_use_codetools && do_install) {
             Rcmd <-
-                paste("options(warn=1)\n",
+                paste(opWarn_string, "\n",
                       sprintf("tools:::.check_code_usage_in_package(package = \"%s\")\n", pkgname))
             if(config_val_to_logical(Sys.getenv("_R_CHECK_CODE_USAGE_WITH_ONLY_BASE_ATTACHED_",
                                                 "true"))) {
@@ -1848,7 +1848,7 @@ add_dummies <- function(dir, Log)
 
         if(!is_base_pkg && R_check_use_codetools && R_check_dot_internal) {
             details <- pkgname != "relax" # has .Internal in a 10,000 line fun
-            Rcmd <- paste("options(warn=1)\n",
+            Rcmd <- paste(opWarn_string, "\n",
                           if (do_install)
                               sprintf("tools:::.check_dotInternal(package = \"%s\",details=%s)\n", pkgname, details)
                           else
@@ -1859,20 +1859,20 @@ add_dummies <- function(dir, Log)
         }
 
         if(!is_base_pkg && R_check_code_assign_to_globalenv) {
-            Rcmd <- paste("options(warn=1)\n",
+            Rcmd <- paste(opWarn_string, "\n",
                           sprintf("tools:::.check_package_code_assign_to_globalenv(dir = \"%s\")\n",
                                   pkgdir))
             out5 <- R_runR0(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=")
         }
 
         if(!is_base_pkg && R_check_code_attach) {
-            Rcmd <- paste("options(warn=1)\n",
+            Rcmd <- paste(opWarn_string, "\n",
                           sprintf("tools:::.check_package_code_attach(dir = \"%s\")\n",
                                   pkgdir))
             out6 <- R_runR0(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=")
         }
         if(!is_base_pkg && R_check_code_data_into_globalenv) {
-            Rcmd <- paste("options(warn=1)\n",
+            Rcmd <- paste(opWarn_string, "\n",
                           sprintf("tools:::.check_package_code_data_into_globalenv(dir = \"%s\")\n",
                                   pkgdir))
             out7 <- R_runR0(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=")
@@ -1881,7 +1881,7 @@ add_dummies <- function(dir, Log)
         ## Use of deprecated, defunct and platform-specific devices?
         if(!is_base_pkg && R_check_use_codetools && R_check_depr_def) {
             win <- !is.na(OS_type) && OS_type == "windows"
-            Rcmd <- paste("options(warn=1)\n",
+            Rcmd <- paste(opWarn_string, "\n",
                           if (do_install)
                               sprintf("tools:::.check_depdef(package = \"%s\", WINDOWS = %s)\n", pkgname, win)
                           else
@@ -1964,7 +1964,7 @@ add_dummies <- function(dir, Log)
         if (dir.exists("man") && !extra_arch) {
             checkingLog(Log, "Rd files")
             minlevel <- Sys.getenv("_R_CHECK_RD_CHECKRD_MINLEVEL_", "-1")
-            Rcmd <- paste("options(warn=1)\n",
+            Rcmd <- paste(opWarn_string, "\n",
                           sprintf("tools:::.check_package_parseRd('.', minlevel=%s)\n", minlevel))
             out <- R_runR0(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
             if (length(out)) {
@@ -1976,7 +1976,7 @@ add_dummies <- function(dir, Log)
             } else resultLog(Log, "OK")
 
             checkingLog(Log, "Rd metadata")
-            Rcmd <- paste("options(warn=1)\n",
+            Rcmd <- paste(opWarn_string, "\n",
                           if (do_install)
                           sprintf("tools:::.check_Rd_metadata(package = \"%s\")\n", pkgname)
                           else
@@ -1991,7 +1991,7 @@ add_dummies <- function(dir, Log)
         ## Check Rd line widths.
         if(dir.exists("man") && R_check_Rd_line_widths) {
             checkingLog(Log, "Rd line widths")
-            Rcmd <- paste("options(warn=1)\n",
+            Rcmd <- paste(opWarn_string, "\n",
                           if(do_install)
                           sprintf("tools:::.check_Rd_line_widths(\"%s\", installed = TRUE)\n",
                                   file.path(if(is_base_pkg) .Library else libdir,
@@ -2025,7 +2025,7 @@ add_dummies <- function(dir, Log)
 
         if (dir.exists("man") && R_check_Rd_xrefs) {
             checkingLog(Log, "Rd cross-references")
-            Rcmd <- paste("options(warn=1)\n",
+            Rcmd <- paste(opWarn_string, "\n",
                           if (do_install)
                           sprintf("tools:::.check_Rd_xrefs(package = \"%s\")\n", pkgname)
                           else
@@ -2042,7 +2042,7 @@ add_dummies <- function(dir, Log)
         ## Check for missing documentation entries.
         if (!extra_arch && (haveR || dir.exists("data"))) {
             checkingLog(Log, "for missing documentation entries")
-            Rcmd <- paste("options(warn=1)\n",
+            Rcmd <- paste(opWarn_string, "\n",
                           if (do_install)
                           sprintf("tools::undoc(package = \"%s\")\n", pkgname)
                           else
@@ -2088,7 +2088,7 @@ add_dummies <- function(dir, Log)
                 any <- FALSE
                 ## Check for code/documentation mismatches in functions.
                 if (haveR) {
-                    Rcmd <- paste("options(warn=1)\n",
+                    Rcmd <- paste(opWarn_string, "\n",
                                   if (do_install)
                                   sprintf("tools::codoc(package = \"%s\")\n", pkgname)
                                   else
@@ -2103,7 +2103,7 @@ add_dummies <- function(dir, Log)
 
                 ## Check for code/documentation mismatches in data sets.
                 if (do_install) {
-                    Rcmd <- paste("options(warn=1)\n",
+                    Rcmd <- paste(opWarn_string, "\n",
                                   sprintf("tools::codocData(package = \"%s\")\n", pkgname))
                     out <- R_runR2(Rcmd)
                     if (length(out)) {
@@ -2115,7 +2115,7 @@ add_dummies <- function(dir, Log)
 
                 ## Check for code/documentation mismatches in S4 classes.
                 if (do_install && haveR) {
-                    Rcmd <- paste("options(warn=1)\n",
+                    Rcmd <- paste(opWarn_string, "\n",
                                   sprintf("tools::codocClasses(package = \"%s\")\n", pkgname))
                     out <- R_runR2(Rcmd)
                     if (length(out)) {
@@ -2142,7 +2142,7 @@ add_dummies <- function(dir, Log)
                   "The \\usage entries must correspond to syntactically",
                   "valid R code.\n")
             any <- FALSE
-            Rcmd <- paste("options(warn=1)\n",
+            Rcmd <- paste(opWarn_string, "\n",
                           if (do_install)
                           sprintf("tools::checkDocFiles(package = \"%s\")\n", pkgname)
                           else
@@ -2161,7 +2161,7 @@ add_dummies <- function(dir, Log)
                     c("The \\usage entries for S3 methods should use",
                       "the \\method markup and not their full name.\n")
 
-                Rcmd <- paste("options(warn=1)\n",
+                Rcmd <- paste(opWarn_string, "\n",
                               if (do_install)
                               sprintf("tools::checkDocStyle(package = \"%s\")\n", pkgname)
                               else
@@ -2182,7 +2182,7 @@ add_dummies <- function(dir, Log)
         ## Check Rd contents
         if (dir.exists("man") && R_check_Rd_contents && !extra_arch) {
             checkingLog(Log, "Rd contents")
-            Rcmd <- paste("options(warn=1)\n",
+            Rcmd <- paste(opWarn_string, "\n",
                           if (do_install)
                           sprintf("tools:::.check_Rd_contents(package = \"%s\")\n", pkgname)
                           else
@@ -2197,7 +2197,7 @@ add_dummies <- function(dir, Log)
         ## Check undeclared dependencies in examples (if any)
         if (dir.exists("man") && do_install && !extra_arch && !is_base_pkg) {
             checkingLog(Log, "for unstated dependencies in examples")
-            Rcmd <- paste("options(warn=1, showErrorCalls=FALSE)\n",
+            Rcmd <- paste(opW_shE_F_str,
                           sprintf("tools:::.check_packages_used_in_examples(package = \"%s\")\n", pkgname))
 
             out <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=NULL")
@@ -3000,7 +3000,7 @@ add_dummies <- function(dir, Log)
     check_sos <- function() {
         checkingLog(Log, "compiled code")
         ## from sotools.R
-        Rcmd <- paste("options(warn=1)\n",
+        Rcmd <- paste(opWarn_string, "\n",
                       sprintf("tools:::check_compiled_code(\"%s\")",
                               file.path(libdir, pkgname)))
         out <- R_runR0(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
@@ -3120,8 +3120,8 @@ add_dummies <- function(dir, Log)
         if (file.exists(file.path(pkgdir, "NAMESPACE"))) {
             checkingLog(Log, "whether the namespace can be loaded with stated dependencies")
             Rcmd <-
-                sprintf("options(warn=1)\ntools:::.load_namespace_rather_quietly(\"%s\")",
-                        pkgname)
+                sprintf("%s\ntools:::.load_namespace_rather_quietly(\"%s\")",
+                        opWarn_string, pkgname)
             out <- R_runR0(Rcmd, opts, c(env, env1), arch = arch)
             any <- FALSE
             if (any(startsWith(out, "Error")) || length(attr(out, "status"))) {
@@ -3526,7 +3526,7 @@ add_dummies <- function(dir, Log)
     {
         if (!extra_arch && !is_base_pkg) {
             checkingLog(Log, "for unstated dependencies in ", sQuote(test_dir))
-            Rcmd <- paste("options(warn=1, showErrorCalls=FALSE)\n",
+            Rcmd <- paste(opW_shE_F_str,
                           sprintf("tools:::.check_packages_used_in_tests(\"%s\", \"%s\")\n", pkgdir, test_dir))
 
             out <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=NULL")
@@ -3672,8 +3672,9 @@ add_dummies <- function(dir, Log)
         if(do_install && !spec_install && !is_base_pkg && !extra_arch) {
             ## fake installs don't install inst/doc
             checkingLog(Log, "for unstated dependencies in vignettes")
-            Rcmd <- paste("options(warn=1, showErrorCalls=FALSE)\n",
-                          sprintf("tools:::.check_packages_used_in_vignettes(package = \"%s\")\n", pkgname))
+            Rcmd <- paste(opW_shE_F_str,
+                          sprintf("tools:::.check_packages_used_in_vignettes(package = \"%s\")\n",
+                                  pkgname))
             out <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=NULL")
             if (length(out)) {
                 noteLog(Log)
@@ -3859,7 +3860,7 @@ add_dummies <- function(dir, Log)
                     cat("  ", sQuote(basename(file)),
                         if(nzchar(enc)) paste("using", sQuote(enc)),
                         "...")
-                    Rcmd <- paste0("options(warn=1)\ntools:::.run_one_vignette('",
+                    Rcmd <- paste0(opWarn_string, "\ntools:::.run_one_vignette('",
                                    basename(file), "', '", vigns$dir, "'",
                                    if (nzchar(enc))
                                        paste0(", encoding = '", enc, "'"),
@@ -3996,10 +3997,8 @@ add_dummies <- function(dir, Log)
                 Sys.setenv(MAKEFLAGS="")
                 ## we could use clean = FALSE, but that would not be
                 ## testing what R CMD build uses.
-                Rcmd <- "options(warn=1)\nlibrary(tools)\n"
-                Rcmd <- paste0(Rcmd, "buildVignettes(dir = '",
-                               file.path(pkgoutdir, "vign_test", pkgname0),
-                               "')")
+                Rcmd <- paste0(opWarn_string, "\nlibrary(tools)\nbuildVignettes(dir = '",
+                               file.path(pkgoutdir, "vign_test", pkgname0), "')")
                 tlim <- get_timeout(Sys.getenv("_R_CHECK_BUILD_VIGNETTES_ELAPSED_TIMEOUT_",
                                     Sys.getenv("_R_CHECK_ELAPSED_TIMEOUT_")))
                 t1 <- proc.time()
@@ -5158,7 +5157,11 @@ add_dummies <- function(dir, Log)
 
 ###--- begin{.check_packages()} "main" ---
 
-    options(showErrorCalls=FALSE, warn = 1)
+    warnOption <- max(getOption("warn"), warnOption)# notably allow caller to set 2
+    op <- options(showErrorCalls=FALSE, warn = warnOption)
+    opWarn_string <- sprintf("options(warn = %d)", warnOption)
+    opW_shE_F_str <- sprintf("options(warn = %d, showErrorCalls=FALSE)\n", warnOption)
+    on.exit(options(op), add=TRUE)
 
     ## Read in check environment file.
     Renv <- Sys.getenv("R_CHECK_ENVIRON", unset = NA_character_)
