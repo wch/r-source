@@ -1655,31 +1655,35 @@ SEXP attribute_hidden do_ascall(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 
 /* return int, not Rboolean, for NA_LOGICAL : */
-int asLogical2(SEXP x, int warn_level, SEXP call)
+int asLogical2(SEXP x, int checking, SEXP call)
 {
-#define W_E_(ERRFUN)						\
-	ERRFUN(_("'length(x) = %d > 1' in coercion to '%s'"),	\
-	       XLENGTH(x), "logical(1)")
-#define W_E_C(ERRFUN)							\
-	ERRFUN(call, _("'length(x) = %d > 1' in coercion to '%s'"),	\
-	       XLENGTH(x), "logical(1)")
-
     int warn = 0;
 
     if (isVectorAtomic(x)) {
 	if (XLENGTH(x) < 1)
 	    return NA_LOGICAL;
-	if (warn_level && XLENGTH(x) > 1) {
-	    if(isNull(call)) {
-		if(warn_level == 1)
-		    W_E_(warning);
-		else
-		    W_E_(error);
-	    } else { // assume call *is* a call
-		if(warn_level == 1)
-		    W_E_C(warningcall);
-		else
-		    W_E_C(errorcall);
+	if (checking && XLENGTH(x) > 1) {
+	    char *check = getenv("_R_CHECK_LENGTH_1_LOGIC2_");
+	    if(check) {
+#define W_E_(ERRFUN)							\
+		ERRFUN(_("'length(x) = %d > 1' in coercion to '%s'"),	\
+		       XLENGTH(x), "logical(1)")
+#define W_E_C(ERRFUN)							\
+		ERRFUN(call, _("'length(x) = %d > 1' in coercion to '%s'"), \
+		       XLENGTH(x), "logical(1)")
+
+		Rboolean do_error = StringTrue(check);
+		if(isNull(call)) {
+		    if(do_error)
+			W_E_(error);
+		    else
+			W_E_(warning);
+		} else { // assume call *is* a call
+		    if(do_error)
+			W_E_C(errorcall);
+		    else
+			W_E_C(warningcall);
+		}
 	    }
 	}
 	switch (TYPEOF(x)) {
@@ -1705,7 +1709,7 @@ int asLogical2(SEXP x, int warn_level, SEXP call)
 }
 int asLogical(SEXP x)
 {
-    return asLogical2(x, /* warn_level = */ 0, NILSXP);
+    return asLogical2(x, /* checking = */ 0, NILSXP);
 }
 
 

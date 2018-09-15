@@ -283,16 +283,14 @@ SEXP attribute_hidden do_logic2(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, _("invalid 'x' type in 'x %s y'"),
 		  PRIMVAL(op) == 1 ? "&&" : "||");
 
-    char *check = getenv("_R_CHECK_LENGTH_1_LOGIC2_");
-    int warn_lev = (check) ? (StringTrue(check) ? 2 : 1) : 0;
-    x1 = asLogical2(s1, warn_lev, call);
+    x1 = asLogical2(s1, /*checking*/ 1, call);
 
 #define get_2nd							\
 	s2 = eval(s2, env);					\
 	if (!isNumber(s2))					\
 	    errorcall(call, _("invalid 'y' type in 'x %s y'"),	\
 		      PRIMVAL(op) == 1 ? "&&" : "||");		\
-	x2 = asLogical2(s2, warn_lev, call);
+	x2 = asLogical2(s2, 1, call);
 
     switch (PRIMVAL(op)) {
     case 1: /* && */

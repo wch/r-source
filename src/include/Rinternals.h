@@ -11,7 +11,7 @@
  *  This file is part of R. R is distributed under the terms of the
  *  GNU General Public License, either Version 2, June 1991 or Version 3,
  *  June 2007. See doc/COPYRIGHTS for details of the copyright status of R.
- *  
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -911,7 +911,7 @@ SEXP Rf_PairToVectorList(SEXP x);
 SEXP Rf_VectorToPairList(SEXP x);
 SEXP Rf_asCharacterFactor(SEXP x);
 int Rf_asLogical(SEXP x);
-int Rf_asLogical2(SEXP x, int warn_level, SEXP call);
+int Rf_asLogical2(SEXP x, int checking, SEXP call);
 int Rf_asInteger(SEXP x);
 double Rf_asReal(SEXP x);
 Rcomplex Rf_asComplex(SEXP x);
