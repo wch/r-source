@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2018-09-14 r75302) -- "Unsuffered Consequences"
+R Under development (unstable) (2018-09-14 r75312) -- "Unsuffered Consequences"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -8383,7 +8383,7 @@ Error in integrate(f, 0, 1) :
 + ## "silently" gave  integrate(dnorm, 0, 20)  in earlier versions of R
 + ## Don't show: 
 +  , verbose=TRUE)
-Asserted error: 'lower' must be of length one
+Asserted error: length(lower) == 1 is not TRUE
 > ## End(Don't show)
 > 
 > 
