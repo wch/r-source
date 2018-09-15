@@ -704,7 +704,7 @@ for(n in 1:20) {
     for(x in list(z, round(z,1))) { ## 2nd one has ties
        qxi <- sort(x,  method = "quick",  index.return = TRUE)
        stopifnot(qxi$x == sort(x, method = "shell"),
-		 any(duplicated(x)) || qxi$ix == order(x),
+		 any(duplicated(x)) || all(qxi$ix == order(x)),
 		 x[qxi$ix] == qxi$x)
    }
 }
