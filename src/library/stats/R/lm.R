@@ -879,8 +879,20 @@ model.matrix.lm <- function(object, ...)
     if(n_match <- match("x", names(object), 0L)) object[[n_match]]
     else {
         data <- model.frame(object, xlev = object$xlevels, ...)
-        NextMethod("model.matrix", data = data,
-                   contrasts.arg = object$contrasts)
+        if(exists(".GenericCallEnv", inherits = FALSE)) # in dispatch
+            NextMethod("model.matrix", data = data,
+                       contrasts.arg = object$contrasts)
+        else {
+            ## model.matrix.lm() is exported for historic reasons.  If
+            ## called directly, calling NextMethod() will not work "as
+            ## expected", so call the "next" method directly.
+            dots <- list(...)
+            dots$data <- dots$contrasts.arg <- NULL
+            do.call("model.matrix.default",
+                    c(list(object = object, data = data,
+                           contrasts.arg = object$contrasts),
+                      dots))
+        }
     }
 }
 
