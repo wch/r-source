@@ -5304,7 +5304,7 @@ JAVA_LIBS="-L/$@{JAVA_HOME@}/jre/lib/server -ljvm"
 @noindent
 in @file{config.site}.
 
-To use the builds of OpenJDK (taballs) from @uref{http://jdk.java.net/},
+To use the builds of OpenJDK (tarballs) from @uref{http://jdk.java.net/},
 set @env{JAVA_HOME}:
 @example
 JAVA_HOME=@var{/path/to/JDK}/jdk-11.jdk/Contents/Home

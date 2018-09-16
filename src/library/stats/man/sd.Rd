@@ -23,7 +23,7 @@ sd(x, na.rm = FALSE)
 \details{
   Like \code{\link{var}} this uses denominator \eqn{n - 1}.
 
-  The standard deviation of a length-one or zero-lengh vector is \code{NA}.
+  The standard deviation of a length-one or zero-length vector is \code{NA}.
 }
 \seealso{
   \code{\link{var}} for its square, and \code{\link{mad}}, the most
