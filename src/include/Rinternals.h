@@ -183,6 +183,19 @@ typedef enum {
 
 typedef struct SEXPREC *SEXP;
 
+
+/* Define SWITH_TO_REFCNT to use reference counting instead of the
+   'NAMED' mechanism. */
+//#define SWITCH_TO_REFCNT
+
+#if defined(SWITCH_TO_REFCNT) && ! defined(COMPUTE_REFCNT_VALUES)
+# define COMPUTE_REFCNT_VALUES
+#endif
+#if defined(SWITCH_TO_REFCNT) && ! defined(ADJUST_ENVIR_REFCNTS)
+# define ADJUST_ENVIR_REFCNTS
+#endif
+
+
 // ======================= USE_RINTERNALS section
 #ifdef USE_RINTERNALS
 /* This is intended for use only within R itself.
@@ -259,17 +272,9 @@ struct promsxp_struct {
    field. Under the generational collector these are followed by the
    fields used to maintain the collector's linked list structures. */
 
-/* Define SWITH_TO_REFCNT to use reference counting instead of the
-   'NAMED' mechanism. */
-//#define SWITCH_TO_REFCNT
-
-#if defined(SWITCH_TO_REFCNT) && ! defined(COMPUTE_REFCNT_VALUES)
-# define COMPUTE_REFCNT_VALUES
+#ifdef SWITCH_TO_REFCNT
+# define REFCNTMAX ((1 << NAMED_BITS) - 1)
 #endif
-#if defined(SWITCH_TO_REFCNT) && ! defined(ADJUST_ENVIR_REFCNTS)
-# define ADJUST_ENVIR_REFCNTS
-#endif
-#define REFCNTMAX ((1 << NAMED_BITS) - 1)
 
 #define SEXPREC_HEADER \
     struct sxpinfo_struct sxpinfo; \
