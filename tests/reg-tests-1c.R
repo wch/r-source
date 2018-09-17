@@ -812,7 +812,8 @@ tools::assertError(`&`(FALSE))
 tools::assertError(`|`(TRUE))
 ## Did not give errors in R <= 3.2.0
 E <- tryCatch(`!`(), error = function(e)e)
-stopifnot(grepl("0 arguments .*\\<1", conditionMessage(E)))
+stopifnot(grepl("0 argument.*\\<1", conditionMessage(E)))
+##            PR#17456 :   ^^ a version that also matches in a --disable-nls configuration
 ## Gave wrong error message in R <= 3.2.0
 stopifnot(identical(!matrix(TRUE), matrix(FALSE)),
 	  identical(!matrix(FALSE), matrix(TRUE)))
