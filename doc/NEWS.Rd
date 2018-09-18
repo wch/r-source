@@ -194,6 +194,9 @@
       \item \code{getOption()} is more efficient notably for the rare
       case when called with two arguments, from several contributors in
       \PR{17394}.
+
+      \item In \code{.col(dim)} and \code{.row(dim)}, \code{dim} now may
+      also be an integer valued \code{"double"}.
     }
   }
 

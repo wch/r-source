@@ -1,6 +1,6 @@
 % File src/library/base/man/row.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{row}
@@ -18,7 +18,7 @@ row(x, as.factor = FALSE)
 \arguments{
   \item{x}{a matrix-like object, that is one with a two-dimensional
     \code{dim}.}
-  \item{dim}{a matrix dimension, i.e., \code{\link{integer}} vector of
+  \item{dim}{a matrix dimension, i.e., an integer valued numeric vector of
     length two (with non-negative entries).}
   \item{as.factor}{a logical value indicating whether the value should
     be returned as a factor of row labels (created if necessary)
@@ -48,5 +48,8 @@ dx
 x <- matrix(0, nrow = 5, ncol = 5)
 x[row(x) == col(x)] <- 1
 x
+
+(i34 <- .row(3:4))
+stopifnot(identical(i34, .row(c(3,4)))) # 'dim' maybe "double"
 }
 \keyword{array}

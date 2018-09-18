@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2017   The R Core Team
+ *  Copyright (C) 1998-2018   The R Core Team
  *  Copyright (C) 2002-2015   The R Foundation
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
@@ -242,7 +242,7 @@ SEXP alloc3DArray(SEXPTYPE mode, int nrow, int ncol, int nface)
 	error(_("negative extents to 3D array"));
 #ifndef LONG_VECTOR_SUPPORT
     if ((double)nrow * (double)ncol * (double)nface > INT_MAX)
-	error(_("'alloc3Darray': too many elements specified"));
+	error(_("'alloc3DArray': too many elements specified"));
 #endif
     n = ((R_xlen_t) nrow) * ncol * nface;
     PROTECT(s = allocVector(mode, n));
@@ -264,8 +264,8 @@ SEXP allocArray(SEXPTYPE mode, SEXP dims)
     double dn = 1;
 
     for (i = 0; i < LENGTH(dims); i++) {
-	dn *= INTEGER(dims)[i];
 #ifndef LONG_VECTOR_SUPPORT
+	dn *= INTEGER(dims)[i];
 	if(dn > INT_MAX)
 	    error(_("'allocArray': too many elements specified by 'dims'"));
 #endif
@@ -569,31 +569,32 @@ SEXP attribute_hidden do_lengths(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP attribute_hidden do_rowscols(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP x, ans;
-    int i, j, nr, nc;
-
     checkArity(op, args);
-    /* This is the dimensions vector */
-    x = CAR(args);
-    if (!isInteger(x) || LENGTH(x) != 2)
+    SEXP dim = CAR(args);
+    int nprot = 0;
+    if (!isInteger(dim)) {
+	PROTECT(dim = coerceVector(dim, INTSXP)); nprot++;
+    }
+    if (LENGTH(dim) != 2)
 	error(_("a matrix-like object is required as argument to '%s'"),
 	      (PRIMVAL(op) == 2) ? "col" : "row");
 
-    nr = INTEGER(x)[0];
-    nc = INTEGER(x)[1];
+    int nr = INTEGER(dim)[0],
+	nc = INTEGER(dim)[1];
+    if(nprot) UNPROTECT(nprot);
 
-    ans = allocMatrix(INTSXP, nr, nc);
+    SEXP ans = allocMatrix(INTSXP, nr, nc);
 
     R_xlen_t NR = nr;
     switch (PRIMVAL(op)) {
-    case 1:
-	for (i = 0; i < nr; i++)
-	    for (j = 0; j < nc; j++)
+    case 1: // row() & .row()
+	for (int i = 0; i < nr; i++)
+	    for (int j = 0; j < nc; j++)
 		INTEGER(ans)[i + j * NR] = i + 1;
 	break;
-    case 2:
-	for (i = 0; i < nr; i++)
-	    for (j = 0; j < nc; j++)
+    case 2: // col() & .col()
+	for (int i = 0; i < nr; i++)
+	    for (int j = 0; j < nc; j++)
 		INTEGER(ans)[i + j * NR] = j + 1;
 	break;
     }

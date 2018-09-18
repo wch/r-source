@@ -1,6 +1,6 @@
 % File src/library/base/man/col.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{col}
@@ -18,7 +18,7 @@ col(x, as.factor = FALSE)
 \arguments{
   \item{x}{a matrix-like object, that is one with a two-dimensional
     \code{dim}.}
-  \item{dim}{a matrix dimension, i.e., \code{\link{integer}} vector of
+  \item{dim}{a matrix dimension, i.e., an integer valued numeric vector of
     length two (with non-negative entries).}
   \item{as.factor}{a logical value indicating whether the value should
     be returned as a factor of column labels (created if necessary)
@@ -46,5 +46,8 @@ ma[row(ma) == col(ma) + 1]
 # create an identity 5-by-5 matrix more slowly than diag(n = 5):
 x <- matrix(0, nrow = 5, ncol = 5)
 x[row(x) == col(x)] <- 1
+
+(i34 <- .col(3:4))
+stopifnot(identical(i34, .col(c(3,4)))) # 'dim' maybe "double"
 }
 \keyword{array}
