@@ -261,7 +261,9 @@ SEXP allocArray(SEXPTYPE mode, SEXP dims)
     SEXP array;
     int i;
     R_xlen_t n = 1;
+#ifndef LONG_VECTOR_SUPPORT
     double dn = 1;
+#endif
 
     for (i = 0; i < LENGTH(dims); i++) {
 #ifndef LONG_VECTOR_SUPPORT
