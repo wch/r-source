@@ -2064,6 +2064,14 @@ if(is.na(oEV)) { # (by default)
 } else Sys.setenv("_R_CHECK_LENGTH_1_LOGIC2_" = oEV)
 
 
+## polym() in "vector" case PR#17474
+fm <- lm(Petal.Length ~ poly(cbind(Petal.Width, Sepal.Length), 2),
+         data = iris)
+p1 <- predict(fm, newdata = data.frame(Petal.Width = 1, Sepal.Length = 1))
+stopifnot(all.equal(p1, c("1" = 4.70107678)))
+## predict() calling polym() failed in R <= 3.5.1
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

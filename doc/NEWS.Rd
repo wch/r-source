@@ -425,6 +425,10 @@
 
       \item \code{cooks.distance()} and \code{rstandard()} now work
       correctly for multivariate models (\code{"mlm"}).
+
+      \item \code{polym()} and corresponding \code{lm()} prediction now
+      also work for a boundary "vector" case fixing \PR{17474},
+      reported by Alexandre Courtiol.
     }
   }
 }

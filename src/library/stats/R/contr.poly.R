@@ -158,12 +158,12 @@ polym <- function (..., degree = 1, coefs = NULL, raw = FALSE)
 	n <- lengths(dots)
 	if (any(n != n[1L]))
 	    stop("arguments must have the same length")
-	res <- cbind(1, aPoly)[, 1L +z[, 1]]
+	res <- cbind(1, aPoly)[, 1L +z[, 1], drop=FALSE]
 	## attribute "coefs" = list of coefs from individual variables
 	if (!raw) coefs <- list(attr(aPoly, "coefs"))
 	for (i in 2:nd) {
 	    aPoly <- poly(dots[[i]], degree, raw = raw, simple = raw)
-	    res <- res * cbind(1, aPoly)[, 1L +z[, i]]
+	    res <- res * cbind(1, aPoly)[, 1L +z[, i], drop=FALSE]
 	    if (!raw) coefs <- c(coefs, list(attr(aPoly, "coefs")))
 	}
 	colnames(res) <- apply(z, 1L, function(x) paste(x, collapse = "."))
@@ -175,11 +175,10 @@ polym <- function (..., degree = 1, coefs = NULL, raw = FALSE)
 	newdata <- as.data.frame(dots) # new data
 	if (nd != ncol(newdata))
 	    stop("wrong number of columns in new data: ", deparse(substitute(...)))
-	res <- cbind(1, poly(newdata[[1]], degree=degree,
-			     coefs=coefs[[1]], simple=TRUE))[, 1L +z[, 1]]
-	if(nd > 1) for (i in 2:nd)
+	res <- 1
+	for (i in seq_len(nd))
             res <- res*cbind(1, poly(newdata[[i]], degree=degree,
-                                     coefs=coefs[[i]], simple=TRUE))[, 1L +z[, i]]
+				     coefs=coefs[[i]], simple=TRUE))[, 1L +z[, i], drop=FALSE]
 	colnames(res) <- apply(z, 1L, function(x) paste(x, collapse = "."))
         ## no 'coefs' and 'degree', nor "poly" class
 	res
