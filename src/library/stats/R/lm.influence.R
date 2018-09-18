@@ -1,7 +1,7 @@
 #  File src/library/stats/R/lm.influence.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -50,7 +50,7 @@ lm.influence <- function (model, do.coef = TRUE)
         n <- length(wt.res) # drops 0 wt, may drop NAs
         sigma <- sqrt(deviance(model)/df.residual(model))
         res <- list(hat = rep(0, n), coefficients = matrix(0, n, 0),
-                    sigma = rep(sigma, n), wt.res = e)
+                    sigma = rep(sigma, n))
     } else {
         ## if we have a point with hat = 1, the corresponding e should be
         ## exactly zero.  Protect against returning Inf by forcing this
@@ -62,9 +62,8 @@ lm.influence <- function (model, do.coef = TRUE)
         if(NROW(e) != n)
             stop("non-NA residual length does not match cases used in fitting")
         do.coef <- as.logical(do.coef)
-        tol <- 10 * .Machine$double.eps;
-        ## This just returns e as res$wt.res
-        res <- .Call(C_influence, mqr, do.coef, e, tol);
+        tol <- 10 * .Machine$double.eps
+        res <- .Call(C_influence, mqr, do.coef, e, tol)
         if(!is.null(model$na.action)) {
             hat <- naresid(model$na.action, res$hat)
             hat[is.na(hat)] <- 0       # omitted cases have 0 leverage
@@ -79,7 +78,7 @@ lm.influence <- function (model, do.coef = TRUE)
             res$sigma <- sigma
         }
     }
-    res$wt.res <- naresid(model$na.action, res$wt.res)
+    res$wt.res <- naresid(model$na.action, e)
     res$hat[res$hat > 1 - 10*.Machine$double.eps] <- 1 # force 1
     names(res$hat) <- names(res$sigma) <- names(res$wt.res)
     if(do.coef) {
@@ -110,7 +109,8 @@ rstandard.lm <- function(model, infl = lm.influence(model, do.coef=FALSE),
                          type = c("sd.1", "predictive"), ...)
 {
     type <- match.arg(type)
-    res <- infl$wt.res / switch(type, "sd.1" = sd * sqrt(1 - infl$hat),
+    res <- infl$wt.res / switch(type,
+				"sd.1" = c(outer(sqrt(1 - infl$hat), sd)),
 				"predictive" = 1 - infl$hat)
     res[is.infinite(res)] <- NaN
     res
@@ -201,7 +201,7 @@ function(model, infl = lm.influence(model, do.coef=FALSE),
 	 hat = infl$hat, ...)
 {
     p <- model$rank
-    res <- ((res/(sd * (1 - hat)))^2 * hat)/p
+    res <- ((res/c(outer(1 - hat, sd)))^2 * hat)/p
     res[is.infinite(res)] <- NaN
     res
 }

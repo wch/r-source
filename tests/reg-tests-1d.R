@@ -1934,6 +1934,19 @@ stopifnot(identical(confint(mlm0),
                     matrix(numeric(0), 0L, 2L, dimnames = list(NULL, c("2.5 %", "97.5 %")))))
 ## failed inside vcov.mlm() because summary.lm()$cov.unscaled was NULL
 
+## cooks.distance.(<mlm>), rstandard(<mlm>) :
+fm1 <- lm(y1 ~ x1 + x2, data=datf)
+fm2 <- lm(y2 ~ x1 + x2, data=datf)
+stopifnot(exprs = {
+    all.equal(cooks.distance(fitm),
+              cbind(y1 = cooks.distance(fm1),
+                    y2 = cooks.distance(fm2)))
+    all.equal(rstandard(fitm),
+              cbind(y1 = rstandard(fm1),
+                    y2 = rstandard(fm2)))
+})
+## were silently wrong in R <= 3.5.1
+
 
 ## kruskal.test(<non-numeric g>), PR#16719
 data(mtcars)
