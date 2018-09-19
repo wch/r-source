@@ -1739,7 +1739,8 @@ quoted in makefiles and configure scripts.
 
 One of the more tricky tasks can be to find the headers and libraries of
 external software.  One tool which is increasingly available on
-Unix-alikes (but not by default on macOS) to do this is
+Unix-alikes (but not by defaul@footnote{but it is available on the machines
+used to produce the CRAN binary packages.} on macOS) to do this is
 @command{pkg-config}.  The @file{configure} script will need to test for
 the presence of the command itself (see for example package
 @CRANpkg{Cairo}), and if present it can be asked if the software is
@@ -1749,18 +1750,23 @@ e.g.@:
 @example
 $ pkg-config --exists 'QtCore >= 4.0.0'  # check the status
 $ pkg-config --modversion QtCore
-4.7.1
+4.8.7
 $ pkg-config --cflags QtCore
 -DQT_SHARED -I/usr/include/QtCore
 $ pkg-config --libs QtCore
 -lQtCore
+$ pkg-config --static --libs QtCore
+-lQtCore -lpthread -lz -lm -ldl -lgthread-2.0 -pthread -lglib-2.0 -lrt
 @end example
 
 @noindent
-Note that @command{pkg-config --libs} gives the information
-required to link against the default version of that library (usually
-the dynamic one), and @command{pkg-config --static} is needed if the
-static library is to be used.
+Note that @command{pkg-config --libs} gives the information required to
+link against the default version@footnote{but not all projects get this
+right when only a static library is installed, so it is often necessary
+to try in turn @command{pkg-config --libs} and @command{pkg-config
+--static --libs}.} of that library (usually the dynamic one), and
+@command{pkg-config --static --libs} may be needed if the static library is
+to be used.
 
 Sometimes the name by which the software is known to
 @command{pkg-config} is not what one might expect (e.g.@:
