@@ -1712,7 +1712,7 @@ build systems: a 64-bit build is selected in file @file{MkRules.local}.
 The Windows installer contains a set of test files used when building
 @R{}.
 
-The @code{Rtools} are not needed to run these tests. but more
+The @code{Rtools} are not needed to run these tests, but more
 comprehensive analysis of errors will be given if @command{diff} is in
 the path (and @code{errorsAreFatal = FALSE} is then not needed below).
 
