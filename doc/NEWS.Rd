@@ -371,6 +371,10 @@
       \item \code{sample.int(2.9, *, replace=TRUE)} again behaves as
       documented and as in R < 3.0.0, namely identically to
       \code{sample.int(2, ..)}.% consider back porting to 3.5.x !
+
+      \item \code{download.file(*, method = "curl", cacheOK = FALSE)}
+      should work now on Windows, thanks to Kevin Ushey's patch in
+      \PR{17323}.
     }
   }
 }
