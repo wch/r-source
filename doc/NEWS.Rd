@@ -52,6 +52,9 @@
 
       \item Fork cluster could hang due to a race condition in cluster
       initialization (\code{makeCluster()}).
+
+      \item \code{cooks.distance()} and \code{rstandard()} now work
+      correctly for multivariate models (\code{"mlm"}).
     }
   }
 }
