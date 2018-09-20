@@ -78,7 +78,7 @@ c   'q' for multivariate (mlm) models added Sep, 2018;  Martin Maechler.
      +     hat(n), coef(n,k,q), sigma(n,q), tol
 c   coef(.,.) can be dummy(1) when docoef is 0(false)
 
-      integer i, j, info
+      integer c, i, j, info
       double precision sum, denom, dummy
 c
 c     hat matrix diagonal h_ii = hat(i)    [sigma(i,1) as auxiliary] :
@@ -106,7 +106,7 @@ c     changes in the estimated coefficients  coef(i,j,c)  i=1..n, j=1..k, c=1..q
 c
       if(docoef .ne. 0) then
          ! use sigma(*,1) as auxiliary
-         do 70 i = 1,n
+         do  i = 1,n
             do c = 1,q
                do j = 1,n
                   sigma(j,1) = 0.0d0
@@ -122,7 +122,7 @@ c     if hat() is effectively 1, change is zero
                   coef(i,j,c) = sigma(j,1)
                end do
             end do ! c = 1..q
-   70    continue
+         end do ! i = 1,n
       endif
 c
 c     estimated residual standard deviation  sigma(j,c)
