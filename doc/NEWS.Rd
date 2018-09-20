@@ -359,13 +359,14 @@
 
       \item \code{as(1L, "double")} now does coerce (\PR{17457}).
 
-      \item \code{nextn(n)} now also works for larger \code{n} and no
-      longer loops infinitely for e.g, \code{n <- 214e7}.
-
       \item Buffering is disabled for \code{file()} connections to
       irregular files (like sockets), as well as \code{fifo()} and
       \code{pipe()} connections. Fixes \PR{17470}, reported by Chris
       Culnane.
+
+      \item \code{lm.influence()}, \code{influence.measures()},
+      \code{rstudent()} etc now work (more) correctly for multivariate
+      models (\code{"mlm"}), thanks to (anonymous) stackoverflow remarks.
     }
   }
 }
@@ -425,6 +426,9 @@
 
       \item Fork cluster could hang due to a race condition in cluster
       initialization (\code{makeCluster()}).
+
+      \item \code{nextn(n)} now also works for larger \code{n} and no
+      longer loops infinitely for e.g, \code{n <- 214e7}.
 
       \item \code{cooks.distance()} and \code{rstandard()} now work
       correctly for multivariate models (\code{"mlm"}).

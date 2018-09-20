@@ -1944,6 +1944,9 @@ stopifnot(exprs = {
     all.equal(rstandard(fitm),
               cbind(y1 = rstandard(fm1),
                     y2 = rstandard(fm2)))
+    all.equal(rstudent(fitm),
+              cbind(y1 = rstudent(fm1),
+                    y2 = rstudent(fm2)))
 })
 ## were silently wrong in R <= 3.5.1
 
