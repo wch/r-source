@@ -375,6 +375,9 @@
       \item \code{download.file(*, method = "curl", cacheOK = FALSE)}
       should work now on Windows, thanks to Kevin Ushey's patch in
       \PR{17323}.
+
+      \item Fixes to \code{convertColor()} for chromatic adaptation;
+      thanks to Brodie Gaslam \PR{17473}.
     }
   }
 }
