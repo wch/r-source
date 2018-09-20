@@ -10488,7 +10488,7 @@ $na.action
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: nextn
-> ### Title: Highly Composite Numbers
+> ### Title: Find Highly Composite Numbers
 > ### Aliases: nextn
 > ### Keywords: math
 > 
@@ -10496,10 +10496,11 @@ $na.action
 > 
 > nextn(1001) # 1024
 [1] 1024
-> table(sapply(599:630, nextn))
+> table(nextn(599:630))
 
 600 625 640 
   2  25   5 
+> n <- 1:100 ; plot(n, nextn(n) - n, type = "o", lwd=2, cex=1/2)
 > 
 > 
 > 

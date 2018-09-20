@@ -6,6 +6,7 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R 3.5.1 patched}{
+\section{\Rlogo CHANGES IN R 3.5.1 patched}{
 
   \subsection{BUG FIXES}{
     \itemize{
@@ -57,6 +58,9 @@
 
       \item Fork cluster could hang due to a race condition in cluster
       initialization (\code{makeCluster()}).
+
+      \item \code{nextn(n)} now also works for larger \code{n} and no
+      longer loops infinitely for e.g, \code{n <- 214e7}.
 
       \item \code{cooks.distance()} and \code{rstandard()} now work
       correctly for multivariate models (\code{"mlm"}).
