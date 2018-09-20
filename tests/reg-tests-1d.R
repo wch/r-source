@@ -2075,6 +2075,12 @@ stopifnot(all.equal(p1, c("1" = 4.70107678)))
 ## predict() calling polym() failed in R <= 3.5.1
 
 
+## sample.int(<fractional>, k, replace=TRUE) :
+(tt <- table(sample.int(2.9, 1e6, replace=TRUE)))
+stopifnot(length(tt) == 2)
+## did "fractionally" sample '3' as well in 3.0.0 <= R <= 3.5.1
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

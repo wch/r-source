@@ -367,6 +367,10 @@
       \item \code{lm.influence()}, \code{influence.measures()},
       \code{rstudent()} etc now work (more) correctly for multivariate
       models (\code{"mlm"}), thanks to (anonymous) stackoverflow remarks.
+
+      \item \code{sample.int(2.9, *, replace=TRUE)} again behaves as
+      documented and as in R < 3.0.0, namely identically to
+      \code{sample.int(2, ..)}.% consider back porting to 3.5.x !
     }
   }
 }
