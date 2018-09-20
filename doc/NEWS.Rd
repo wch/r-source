@@ -5497,6 +5497,9 @@
 
       \item The clipping region for a device was sometimes used in base
       graphics before it was set.
+
+      \item Calling \code{match()} with length one \code{x} and POSIXlt
+      \code{table} gave a segfault (\PR{17459}).
     }
   }
 }
