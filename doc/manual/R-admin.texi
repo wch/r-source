@@ -5088,8 +5088,8 @@ Current @acronym{CRAN} binary distributions use the build of
 Other recent distributions of @command{clang} are often available from
 @uref{http://llvm.org/releases/}: for example at the time of
 writing@footnote{It is unstated what the minimum OS requirement is for
-these: the distribution of 5.0.0 required Sierra or later.} of 5.0.1 and
-6.0.0.  In particular, all of these include support for OpenMP which
+these: the distribution of 5.0.0 required Sierra or later.} of 6.0.1 and
+7.0.0.  In particular, all of these include support for OpenMP which
 Apple builds of @command{clang} do not.  Suppose one of these
 distributions is installed under @file{/usr/local/clang6}.  Then @R{}
 could be configured by something like
