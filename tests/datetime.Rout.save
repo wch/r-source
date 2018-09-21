@@ -1,7 +1,7 @@
 
-R version 3.5.0 Patched (2018-04-30 r74684) -- "Joy in Playing"
+R version 3.5.1 Patched (2018-09-21 r75348) -- "Feather Spray"
 Copyright (C) 2018 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+Platform: x86_64-apple-darwin17.5.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -39,28 +39,22 @@ Type 'q()' to quit R.
 [1] "1848-01-01 12:00:00 GMT"
 > c(unclass(z))
 [1] -3849940800
-> (z <- as.POSIXct("2040-01-01 12:00"))
+> ## We don't know the operation of timezones next year let alone in 1940
+> ## but these should at least round-trip
+> as.POSIXct("2040-01-01 12:00")
 [1] "2040-01-01 12:00:00 GMT"
-> c(unclass(z))
-[1] 2209032000
-> (z <- as.POSIXct("2040-07-01 12:00"))
+> as.POSIXct("2040-07-01 12:00")
 [1] "2040-07-01 12:00:00 BST"
-> c(unclass(z))
-[1] 2224753200
 > 
-> Sys.setenv(TZ = "EST5EDT")
+> Sys.setenv(TZ = "EST5EDT")  # also pretty much portable.
 > (z <- as.POSIXct("1848-01-01 12:00"))
 [1] "1848-01-01 12:00:00 EST"
 > c(unclass(z))
 [1] -3849922800
-> (z <- as.POSIXct("2040-01-01 12:00"))
+> as.POSIXct("2040-01-01 12:00")
 [1] "2040-01-01 12:00:00 EST"
-> c(unclass(z))
-[1] 2209050000
-> (z <- as.POSIXct("2040-07-01 12:00"))
+> as.POSIXct("2040-07-01 12:00")
 [1] "2040-07-01 12:00:00 EDT"
-> c(unclass(z))
-[1] 2224771200
 > 
 > ## PR15613: had day as > 24hrs.
 > as.POSIXlt(ISOdate(2071,1,13,0,0,tz="Etc/GMT-1"))$wday
@@ -69,7 +63,7 @@ Type 'q()' to quit R.
 [1] 2
 > 
 > 
-> ## Incorrect use of %d should work even though abbreviation does match
+> ## Incorrect use of %b should work even though abbreviation does match
 > old <- Sys.setlocale("LC_TIME", "C") # to be sure
 > stopifnot(!is.na(strptime("11-August-1903", "%d-%b-%Y")))
 > 
