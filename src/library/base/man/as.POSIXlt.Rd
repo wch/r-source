@@ -1,6 +1,6 @@
 % File src/library/base/man/as.POSIXlt.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{as.POSIX*}
@@ -127,6 +127,11 @@ as.POSIXct(strptime("2010-10-31 01:30:00", "\%Y-\%m-\%d \%H:\%M:\%S"))
   re-interpretations assumed by ISO 8601:2004 is that there was a year
   zero, even though current year numbering (and zero) is a much later
   concept (525 AD for year numbers from 1 AD).
+
+  Conversions from character strings of future times are speculative
+  except in UTC.  The main uncertainty is in the use of and transitions
+  to/from DST (most systems will assume the continuation of current
+  rules but these can be changed at short notice).
 
   If you want to extract specific aspects of a time (such as the day of
   the week) just convert it to class \code{"POSIXlt"} and extract the
