@@ -468,8 +468,11 @@ add_dummies <- function(dir, Log)
                                 include.dirs = TRUE)
             files <- setdiff(files, c("./.", "./.."))
             ftimes <- file.mtime(files)
-            ## 5 mins leeway is to allow for clock-skew from a file server.
-            fu <- unclass(ftimes) > unclass(now_local) + 300
+            ## Default 5 mins leeway is to allow for clock-skew from a file server.
+            leeway <- Sys.getenv("_R_CHECK_FUTURE_FILE_TIMESTAMPS_LEEWAY_", "5m")
+            leeway <- get_timeout(leeway)
+            if (leeway <= 0) leeway <- 600
+            fu <- unclass(ftimes) > unclass(now_local) + leeway
             if (any(fu)) {
                 if (!any) warningLog(Log)
                 any <- TRUE
