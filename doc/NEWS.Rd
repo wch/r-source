@@ -197,6 +197,10 @@
 
       \item In \code{.col(dim)} and \code{.row(dim)}, \code{dim} now may
       also be an integer valued \code{"double"}.
+
+      \item \code{sQuote()} and \code{dQuote()} get an explicit \code{q}
+      argument with obvious default instead of using
+      \code{getOption("fancyQuotes")} implicitly and unconditionally.
     }
   }
 

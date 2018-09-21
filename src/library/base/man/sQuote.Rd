@@ -1,6 +1,6 @@
 % File src/library/base/man/sQuote.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{sQuote}
@@ -12,11 +12,12 @@
   double left and right quotation marks.
 }
 \usage{
-sQuote(x)
-dQuote(x)
+sQuote(x, q = getOption("useFancyQuotes"))
+dQuote(x, q = getOption("useFancyQuotes"))
 }
 \arguments{
   \item{x}{an \R object, to be coerced to a character vector.}
+  \item{q}{the kind of quotes to be used, see \sQuote{Details}.}
 }
 \details{
   The purpose of the functions is to provide a simple means of markup
@@ -44,8 +45,9 @@ dQuote(x)
   quotation marks, and doubled grave and doubled apostrophe for the
   directional double quotation marks.
 
-  What rendering is used depend on the \code{\link{options}} setting for
-  \code{useFancyQuotes}.  If this is \code{FALSE} then the undirectional
+  What rendering is used depends on \code{q} which by default depends on
+  the \code{\link{options}} setting for \code{useFancyQuotes}.  If this
+  is \code{FALSE} then the undirectional
   ASCII quotation style is used.  If this is \code{TRUE} (the default),
   Unicode directional quotes are used are used where available
   (currently, UTF-8 locales on Unix-alikes and all Windows locales
