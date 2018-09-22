@@ -64,11 +64,17 @@ lm.influence <- function (model, do.coef = TRUE)
         do.coef <- as.logical(do.coef)
         tol <- 10 * .Machine$double.eps
         res <- .Call(C_influence, mqr, do.coef, e, tol)
+        drop1d <- function(a) { # more cautious variant of drop(.)
+            d <- dim(a)
+            if(length(d) == 3L && d[[3L]] == 1L)
+                dim(a) <- d[-3L]
+            a
+        }
         if(is.null(model$na.action)) {
             if(!is.mlm) { ## drop the 'q=1' array extent (from C)
                 res$sigma <- drop(res$sigma)
                 if(do.coef)
-                    res$coefficients <- drop(res$coefficients)
+                    res$coefficients <- drop1d(res$coefficients)
             }
         } else {
             hat <- naresid(model$na.action, res$hat)
@@ -77,7 +83,7 @@ lm.influence <- function (model, do.coef = TRUE)
             if(do.coef) {
                 coefficients <- naresid(model$na.action, res$coefficients)
                 coefficients[is.na(coefficients)] <- 0 # omitted cases have 0 change
-                res$coefficients <- if(is.mlm) coefficients else drop(coefficients)
+                res$coefficients <- if(is.mlm) coefficients else drop1d(coefficients)
             }
             sigma <- naresid(model$na.action, res$sigma)
             sigma[is.na(sigma)] <- sqrt(deviance(model)/df.residual(model))

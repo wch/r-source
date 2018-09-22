@@ -2081,6 +2081,15 @@ stopifnot(length(tt) == 2)
 ## did "fractionally" sample '3' as well in 3.0.0 <= R <= 3.5.1
 
 
+## lm.influence() for simple regression through 0:
+x <- 1:7
+y <- c(1.1, 1.9, 2.8, 4, 4.9, 6.1, 7)
+f0 <- lm(y ~ 0+x)
+mi <- lm.influence(f0)
+stopifnot(identical(dim(cf <- mi$coefficients), c(7L, 1L)),
+          all.equal(range(cf), c(-0.0042857143, 0.0072527473)))
+## gave an error for a few days in R-devel
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
