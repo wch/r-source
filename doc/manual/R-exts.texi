@@ -1739,7 +1739,7 @@ quoted in makefiles and configure scripts.
 
 One of the more tricky tasks can be to find the headers and libraries of
 external software.  One tool which is increasingly available on
-Unix-alikes (but not by defaul@footnote{but it is available on the machines
+Unix-alikes (but not by default@footnote{but it is available on the machines
 used to produce the CRAN binary packages.} on macOS) to do this is
 @command{pkg-config}.  The @file{configure} script will need to test for
 the presence of the command itself (see for example package
