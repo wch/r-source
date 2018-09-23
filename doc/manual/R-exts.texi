@@ -2162,10 +2162,11 @@ Do not include these macros unless your code does make use of OpenMP
 OpenMP runtime being linked in, threads being started, @dots{}.
 
 Calling any of the @R{} API from threaded code is `for experts only' and
-strongly discouraged. Many functions in the @R{} API modify internal
+strongly discouraged.  Many functions in the @R{} API modify internal
 @R{} data structures and might corrupt these data structures if called
-simultaneously from multiple threads. Most @R{} API functions can signal
-errors, which must only happen on the @R{} main thread.
+simultaneously from multiple threads.  Most @R{} API functions can
+signal errors, which must only happen on the @R{} main thread.  Also,
+external libraries (e.g.@: LAPACK) may not be thread-safe.
 
 Packages are not standard-alone programs, and an @R{} process could
 contain more than one OpenMP-enabled package as well as other components

@@ -3784,6 +3784,13 @@ The URIs for several of these BLAS have been subject to frequent
 gratuitous changes, so you will need to search for their current
 locations.
 
+BLAS (and LAPACK) routines may be used inside threaded code, for example
+in OpenMP sections in packages such as @pkg{mgcv}.  The reference
+implementations are thread-safe but external ones may not be (even
+single-threaded ones): this can lead to hard-to-track-down incorrect
+results or segfaults.
+@c Seen for OpenBLAS 3.2 in 2018.
+
 @menu
 * ATLAS::                       
 * Goto and OpenBLAS::           
