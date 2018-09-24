@@ -4468,7 +4468,8 @@ add_dummies <- function(dir, Log)
                              ## used for things deprecated in C++11, for example
                              ": warning: .* \\[-Wdeprecated\\]",
                              ": warning: .* \\[-Waligned-new",
-                             ## new in gcc 9
+                             ## new in gcc 8
+                             ": warning: .* \\[-Wcatch-value=\\]",                             ## new in gcc 9
                              # warns on code deprecated in C++11
                               ": warning: .* \\[-Wdeprecated-copy\\]",
                             ## Fatal, not warning, for clang and Solaris ODS
