@@ -5036,7 +5036,20 @@ To build @R{} you need Apple's `Command Line Tools': these can be
 fresh OS installation, running e.g.@: @command{make} in a terminal will
 offer the installation of the command-line tools.  If you have installed
 Xcode, this provides the command-line tools.  The tools will need to be
-reinstalled when macOS is upgraded, as upgrading partially removes them.)
+reinstalled when macOS is upgraded, as upgrading partially removes
+them.)  As from macOS 10.14 (`Mojave') an additional step is needed to
+install the headers to @file{/usr/include}: from a Terminal run
+@c https://developer.apple.com/documentation/xcode_release_notes/xcode_10_release_notes
+@example
+sudo installer -pkg \
+/Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_10.14.pkg \
+-target /
+@end example
+@noindent
+Alternatively, change the include path @emph{via}
+@example
+CPPFLAGS="-isystem /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include"
+@end example
 
 You need GNU @code{readline}.@footnote{Apple provides a partial emulation
 of GNU readline 4.2 based on the NetBSD @code{editline} library.  That
