@@ -1381,12 +1381,20 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 			MOD_ITERATE1(idx, k, i, i1, {
 			    LOGICAL(result)[n++] = RAW(u)[i1] ? TRUE : FALSE;
 			});
-		    } else {
+		    } else if (mode == INTSXP) {
 			R_xlen_t i, i1;
 			MOD_ITERATE1(idx, k, i, i1, {
 			    INTEGER(result)[n++] = (unsigned char) RAW(u)[i1];
 			});
-		    }
+		    } else if (mode == REALSXP) {
+			R_xlen_t i, i1;
+			MOD_ITERATE1(idx, k, i, i1, {
+			    REAL(result)[n++] = (unsigned char) RAW(u)[i1];
+			});
+		    } else
+			/* not sure this can be reached, but to be safe: */
+			error(_("cannot create a matrix of type '%s'"),
+			      type2char(mode));
 		}
 	    }
 	}
