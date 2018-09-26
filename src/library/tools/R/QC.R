@@ -8849,6 +8849,18 @@ function(package, lib.loc = NULL)
     functions_in_code <-
         Filter(function(f) is.function(code_env[[f]]),
                objects_in_code)
+
+    ## Look only at the *additional* generics in suggests.
+    generics <-
+        setdiff(generics,
+                c(Filter(function(f) .is_S3_generic(f, code_env),
+                         functions_in_code),
+                  .get_S3_generics_as_seen_from_package(dir,
+                                                        TRUE,
+                                                        TRUE),
+                  .get_S3_group_generics(),
+                  .get_S3_primitive_generics()))
+                        
     methods_stop_list <- nonS3methods(basename(dir))
     methods <- lapply(generics,
                       function(g) {
