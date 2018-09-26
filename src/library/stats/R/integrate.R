@@ -1,7 +1,7 @@
 #  File src/library/stats/R/integrate.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -27,6 +27,7 @@ integrate <- function(f, lower, upper, ..., subdivisions = 100L,
     if (limit < 1L || (abs.tol <= 0 &&
 	rel.tol < max(50*.Machine$double.eps, 0.5e-28)))
 	stop("invalid parameter values")
+    stopifnot(length(lower) == 1, length(upper) == 1)
     if(is.finite(lower) && is.finite(upper)) {
 	wk <- .External(C_call_dqags,
 			ff, rho = environment(),
@@ -34,7 +35,7 @@ integrate <- function(f, lower, upper, ..., subdivisions = 100L,
 			as.double(abs.tol), as.double(rel.tol),
 			limit = limit)
     } else { # indefinite integral
-	if(anyNA(lower) || anyNA(upper)) stop("a limit is NA or NaN")
+	if(is.na(lower) || is.na(upper)) stop("a limit is NA or NaN")
 	if (is.finite(lower)) {
 	    inf <- 1L
 	    bound <- lower

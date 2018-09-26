@@ -26,8 +26,6 @@ as <-
   ## no valid way to coerce the two objects).  Otherwise, `NULL' is returned.
   function(object, Class, strict = TRUE, ext = possibleExtends(thisClass, Class))
 {
-    ## prior to 2.7.0 there was a pseudo-class "double"
-    if(.identC(Class, "double")) Class <- "numeric"
     thisClass <- .class1(object)
     if(.identC(thisClass, Class) || .identC(Class, "ANY"))
         return(object)
@@ -288,7 +286,7 @@ setAs <-
       }, where = where)
   basics <- c(
  "POSIXct",  "POSIXlt", "Date",  "array",  "call",  "character",  "complex",  "data.frame",
- ## "double",
+ "double",
  "environment",  "expression",  "factor",  "formula",  "function",  "integer",
  "list",  "logical",  "matrix",  "name",  "numeric",  "ordered",
   "single",  "table",   "vector")
@@ -436,8 +434,7 @@ canCoerce <- function(object, Class) {
     fdef[[2L]]$to <- ClassDef@className
     fdef <- eval(fdef)
     body(fdef, environment(def)) <- body(def)
-    attr(fdef, "source") <- deparse(fdef) # because it's wrong from the quote()
-    utils::removeSource(fdef)
+    attr(fdef, "srcref") <- attr(def, "srcref")
     sig <- new("signature")
     sig@.Data <- c(thisClass, ClassDef@className)
     sig@names <- c("from", "to")

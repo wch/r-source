@@ -1712,7 +1712,7 @@ build systems: a 64-bit build is selected in file @file{MkRules.local}.
 The Windows installer contains a set of test files used when building
 @R{}.
 
-The @code{Rtools} are not needed to run these tests. but more
+The @code{Rtools} are not needed to run these tests, but more
 comprehensive analysis of errors will be given if @command{diff} is in
 the path (and @code{errorsAreFatal = FALSE} is then not needed below).
 
@@ -3592,8 +3592,9 @@ development files installed.
 
 The build process looks for Java support on the host system, and if it
 finds it sets some settings which are useful for Java-using packages
-(such as @CRANpkg{rJava} and @CRANpkg{JavaGD}).  This check can be
-suppressed by configure option @option{--disable-java}.
+(such as @CRANpkg{rJava} and @CRANpkg{JavaGD}: these require a full
+JDK).  This check can be suppressed by configure option
+@option{--disable-java}.
 @enindex JAVA_HOME
 Configure variable @env{JAVA_HOME} can be set to point to a specific
 JRE/JDK, on the @command{configure} command line or in the environment.
@@ -3606,7 +3607,7 @@ a sub-architecture-specific version).  A typical setting for
 @cputype{x86_64} Linux is
 
 @example
-JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.71-1.b15.fc22.x86_64/jre
+JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.181-1.b13.fc28.x86_64/jre
 R_JAVA_LD_LIBRARY_PATH=$@{JAVA_HOME@}/lib/that/server
 @end example
 
@@ -3639,6 +3640,27 @@ JAVA_HOME=/usr/lib/jvm/java-1.8.0/jre
 
 @noindent
 worked.
+
+`Non-server' distributions of Java as from version 11 are of a full JDK.
+However, Linux distributions can be confusing: for example Fedora 28 had
+@example
+java-1.8.0-openjdk
+java-1.8.0-openjdk-devel
+java-9-openjdk
+java-9-openjdk-devel
+java-openjdk
+java-openjdk-devel
+java-11-openjdk
+java-11-openjdk-devel
+@end example
+@noindent
+where the @code{-devel} RPMs are needed to complete the JDK.  (At the
+time of writing @code{java-openjdk} was Java 10.)  Debian/Ubuntu use
+@samp{-jre} and @samp{-jdk}, e.g.
+@example
+sudo apt install default-jdk
+@end example
+@c https://www.digitalocean.com/community/tutorials/how-to-install-java-with-apt-on-ubuntu-18-04
 
 @node Other compiled languages,  , Java support, Useful libraries and programs
 @subsection Other compiled languages
@@ -3761,6 +3783,13 @@ switch between the available BLAS libraries.  See
 The URIs for several of these BLAS have been subject to frequent
 gratuitous changes, so you will need to search for their current
 locations.
+
+BLAS (and LAPACK) routines may be used inside threaded code, for example
+in OpenMP sections in packages such as @pkg{mgcv}.  The reference
+implementations are thread-safe but external ones may not be (even
+single-threaded ones): this can lead to hard-to-track-down incorrect
+results or segfaults.
+@c Seen for OpenBLAS 3.2 in 2018.
 
 @menu
 * ATLAS::                       
@@ -4979,7 +5008,20 @@ To build @R{} you need Apple's `Command Line Tools': these can be
 fresh OS installation, running e.g.@: @command{make} in a terminal will
 offer the installation of the command-line tools.  If you have installed
 Xcode, this provides the command-line tools.  The tools will need to be
-reinstalled when macOS is upgraded, as upgrading partially removes them.)
+reinstalled when macOS is upgraded, as upgrading partially removes
+them.)  As from macOS 10.14 (`Mojave') an additional step is needed to
+install the headers to @file{/usr/include}: from a Terminal run
+@c https://developer.apple.com/documentation/xcode_release_notes/xcode_10_release_notes
+@example
+sudo installer -pkg \
+/Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_10.14.pkg \
+-target /
+@end example
+@noindent
+Alternatively, change the include path @emph{via}
+@example
+CPPFLAGS="-isystem /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include"
+@end example
 
 You need GNU @code{readline}.@footnote{Apple provides a partial emulation
 of GNU readline 4.2 based on the NetBSD @code{editline} library.  That
@@ -5066,8 +5108,8 @@ Current @acronym{CRAN} binary distributions use the build of
 Other recent distributions of @command{clang} are often available from
 @uref{http://llvm.org/releases/}: for example at the time of
 writing@footnote{It is unstated what the minimum OS requirement is for
-these: the distribution of 5.0.0 required Sierra or later.} of 5.0.1 and
-6.0.0.  In particular, all of these include support for OpenMP which
+these: the distribution of 5.0.0 required Sierra or later.} of 6.0.1 and
+7.0.0.  In particular, all of these include support for OpenMP which
 Apple builds of @command{clang} do not.  Suppose one of these
 distributions is installed under @file{/usr/local/clang6}.  Then @R{}
 could be configured by something like
@@ -5230,25 +5272,27 @@ tclvalue(.Tcl("tk windowingsystem"))  # "x11" or "aqua"
 
 The situation with Java support on macOS is messy,@footnote{For more
 details see @uref{http://www.macstrategy.com/@/article.php?3}.} and
-distribution of Java for all platforms is changing during 2018.
+distribution of Java for all platforms changed in 2018.
 
 macOS no longer comes with an installed Java runtime (JRE), and a macOS
 upgrade may remove one if already installed: it is intended to be
 installed at first use.  Check if a JRE is installed by running
 @command{java -version} in a @command{Terminal} window: if Java is not
 installed@footnote{In the unlikely event that the version reported does
-not start with @code{1.8.0} or @code{9} you need to update your Java.}
-this should prompt you to install it.  You can also install directly a
-recent Java from Oracle (currently from
-@uref{http://www.oracle.com/@/technetwork/@/java/@/javase/@/downloads/@/index.html}:
-note that Java 9 and 10 have a limited lifetime.  Builds of OpenJDK may
-also be available, e.g.@: from @uref{http://jdk.java.net/}.
+not start with @code{1.8.0}, @code{9}, @code{10} or @code{11} you need
+to update your Java.} this should prompt you to install it.  You can
+also install directly a recent Java from Oracle (currently from
+@uref{http://www.oracle.com/@/technetwork/@/java/@/javase/@/downloads/@/index.html}).
+Builds of OpenJDK may also be available, e.g.@: from
+@uref{http://jdk.java.net/}.  We recommend you install a version with
+long-term support, e.g.@: 8 or 11 (but not 9, 10 or 12 which have/had a
+6-month lifetime).
 
-Binary distributions of @R{} are built against a specific version (e.g.@:
-1.8.0_161) of Oracle Java so @command{sudo R CMD javareconf} may be
+Binary distributions of @R{} are built against a specific version
+(e.g.@: 9) of Java so @command{sudo R CMD javareconf} will likely be
 needed before using Java-using packages.
 
-To see what compatible versions of Oracle Java are currently installed, run
+To see what compatible versions of Java are currently installed, run
 @command{/usr/libexec/java_home -V -a x86_64}.  If needed, set the
 environment variable @env{JAVA_HOME} to choose between these, both when
 @R{} is built from the sources and when @command{R CMD javareconf} is
@@ -5257,32 +5301,33 @@ run.
 Configuring and building @R{} both looks for a JRE and for support for
 compiling JNI programs (used by packages @CRANpkg{rJava} and
 @CRANpkg{JavaGD}); the latter requires a JDK (Java SDK) and not just a
-JRE.
+JRE@footnote{As from Java 11, there is no separate client JRE
+distribution.}.
 
 The build process tries to fathom out what JRE/JDK to use, but it may
-need some help, e.g.@: by setting @env{JAVA_HOME}.  An Oracle JDK can
-be specified explicitly by something like
+need some help, e.g.@: by setting @env{JAVA_HOME}.  A JDK can be
+specified explicitly by something like
 @example
-JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_161.jdk/Contents/Home
-JAVA_CPPFLAGS="-I/$@{JAVA_HOME@}/include -I/$@{JAVA_HOME@}/include/darwin"
-JAVA_LD_LIBRARY_PATH="$@{JAVA_HOME@}/jre/lib/server"
-JAVA_LIBS="-L/$@{JAVA_HOME@}/jre/lib/server -ljvm" 
-@end example
-@noindent
-or
-@example
-JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-9.jdk/Contents/Home
+JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-11.jdk/Contents/Home
 JAVA_CPPFLAGS="-I/$@{JAVA_HOME@}/include -I/$@{JAVA_HOME@}/include/darwin"
 JAVA_LD_LIBRARY_PATH="$@{JAVA_HOME@}/lib/server"
 JAVA_LIBS="-L/$@{JAVA_HOME@}/lib/server -ljvm" 
 @end example
 @noindent
+or
+@example
+JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home
+JAVA_CPPFLAGS="-I/$@{JAVA_HOME@}/include -I/$@{JAVA_HOME@}/include/darwin"
+JAVA_LD_LIBRARY_PATH="$@{JAVA_HOME@}/jre/lib/server"
+JAVA_LIBS="-L/$@{JAVA_HOME@}/jre/lib/server -ljvm" 
+@end example
+@noindent
 in @file{config.site}.
 
-To use the builds of OpenJDK from  @uref{http://jdk.java.net/}, set
-@env{JAVA_HOME}:
+To use the builds of OpenJDK (tarballs) from @uref{http://jdk.java.net/},
+set @env{JAVA_HOME}:
 @example
-JAVA_HOME=@var{/path/to/JDK}/jdk-10.jdk/Contents/Home
+JAVA_HOME=@var{/path/to/JDK}/jdk-11.jdk/Contents/Home
 @end example
 @noindent
 where @file{@var{/path/to/JDK}} is wherever the distribution tarball was

@@ -44,6 +44,9 @@ F77_NAME(kmns)(double *a, int *m, int *n, double *c, int *k,
 	       int *ncp, double *d, int *itran,
 	       int *live, int *iter, double *wss, int *ifault);
 
+void F77_NAME(lminfl)(double *x, int *ldx, int *n, int *k, int *q, int *docoef,
+		      double *qraux, double *resid, double *hat,
+		      double *coef, double *sigma, double *tol);
 
 void rcont2(int *nrow, int *ncol, int *nrowt, int *ncolt, int *ntotal,
 	    double *fact, int *jwork, int *matrix);

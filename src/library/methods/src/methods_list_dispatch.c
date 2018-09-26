@@ -745,7 +745,7 @@ static SEXP R_loadMethod(SEXP def, SEXP fname, SEXP ev)
 	else if(t == R_nextMethod)  {
 	    defineVar(R_dot_nextMethod, CAR(s), ev); found++;
 	}
-	else if(t == R_SourceSymbol || t == s_generic)  {
+	else if(t == R_SrcrefSymbol || t == s_generic)  {
 	    /* ignore */ found++;
 	}
     }

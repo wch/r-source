@@ -812,7 +812,8 @@ tools::assertError(`&`(FALSE))
 tools::assertError(`|`(TRUE))
 ## Did not give errors in R <= 3.2.0
 E <- tryCatch(`!`(), error = function(e)e)
-stopifnot(grepl("0 arguments .*\\<1", conditionMessage(E)))
+stopifnot(grepl("0 argument.*\\<1", conditionMessage(E)))
+##            PR#17456 :   ^^ a version that also matches in a --disable-nls configuration
 ## Gave wrong error message in R <= 3.2.0
 stopifnot(identical(!matrix(TRUE), matrix(FALSE)),
 	  identical(!matrix(FALSE), matrix(TRUE)))
@@ -1088,8 +1089,8 @@ stopifnot(identical(format(dd),
 
 ## var(x) and hence sd(x)  with factor x, PR#16564
 tools::assertError(cov(1:6, f <- gl(2,3)))# was ok already
-tools::assertWarning(var(f))
-tools::assertWarning( sd(f))
+tools::assertError(var(f))# these two give an error now (R >= 3.6.0)
+tools::assertError( sd(f))
 ## var() "worked" in R <= 3.2.2  using the underlying integer codes
 proc.time() - .pt; .pt <- proc.time()
 

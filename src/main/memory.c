@@ -3491,6 +3491,11 @@ int (REFCNT)(SEXP x) { return REFCNT(CHK(x)); }
 int (TRACKREFS)(SEXP x) { return TRACKREFS(CHK(x)); }
 int (ALTREP)(SEXP x) { return ALTREP(CHK(x)); }
 int (IS_SCALAR)(SEXP x, int type) { return IS_SCALAR(CHK(x), type); }
+void (DECREMENT_REFCNT)(SEXP x) { DECREMENT_REFCNT(CHK(x)); }
+void (INCREMENT_REFCNT)(SEXP x) { INCREMENT_REFCNT(CHK(x)); }
+void (DISABLE_REFCNT)(SEXP x)  { DISABLE_REFCNT(CHK(x)); }
+void (ENABLE_REFCNT)(SEXP x) { ENABLE_REFCNT(CHK(x)); }
+void (MARK_NOT_MUTABLE)(SEXP x) { MARK_NOT_MUTABLE(CHK(x)); }
 
 void (SET_ATTRIB)(SEXP x, SEXP v) {
     if(TYPEOF(v) != LISTSXP && TYPEOF(v) != NILSXP)

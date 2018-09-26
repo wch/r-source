@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2018-08-13 r75123) -- "Unsuffered Consequences"
+R Under development (unstable) (2018-09-21 r75341) -- "Unsuffered Consequences"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -705,7 +705,7 @@ temperature no yes
 > 
 > op <- par(omd=c(0.1, 0.9, 0.1, 0.9), mfrow = c(1, 2))
 > plot(1:4)
-> for(tp in c("in", "dev", "ndc", "nfc", "npc", "nic"))
+> for(tp in c("in", "dev", "ndc", "nfc", "npc", "nic", "lines", "chars"))
 +     print(grconvertX(c(1.0, 4.0), "user", tp))
 [1] 1.577778 3.022222
 [1] 113.6 217.6
@@ -713,6 +713,8 @@ temperature no yes
 [1] 0.3134921 0.8293651
 [1] 0.03703704 0.96296296
 [1] 0.1567460 0.4146825
+[1]  7.888889 15.111111
+[1]  7.888889 15.111111
 > par(op)
 > 
 > 
@@ -2100,7 +2102,7 @@ N
 > points.default # to see how it calls "plot.xy(xy.coords(x, y), ...)"
 function (x, y = NULL, type = "p", ...) 
 plot.xy(xy.coords(x, y), type = type, ...)
-<bytecode: 0x1efa210>
+<bytecode: 0x2106d48>
 <environment: namespace:graphics>
 > 
 > 
@@ -2970,7 +2972,7 @@ function (xy = 1, warn.log = TRUE)
     u <- par("usr")
     xy * c(u[2L] - u[1L], u[4L] - u[3L])/par("pin")
 }
-<bytecode: 0x3932360>
+<bytecode: 0x3aa48c0>
 <environment: namespace:graphics>
 > 
 > ## plot labels offset 0.12 inches to the right
@@ -3051,7 +3053,7 @@ function (xy = 1, warn.log = TRUE)
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.882 0.051 2.948 0 0 
+Time elapsed:  2.777 0.048 2.839 0 0 
 > grDevices::dev.off()
 null device 
           1 

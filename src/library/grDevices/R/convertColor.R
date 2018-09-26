@@ -29,7 +29,7 @@ white.points <- cbind(A = c(x = 0.44757, y = 0.40745),
                       D65 = c(x = 0.3137, y = 0.3291),
                       E = c(x = 1/3, y = 1/3))
 ## converting these:
-c2to3 <- function(col) c(col[1L]/col[2L], 1, (1 - sum(col))/col[2L])
+c2to3 <- function(col) c(col[1L]/col[2L], 1, (1 - sum(col[1L:2L]))/col[2L])
 
 ## http://www.brucelindbloom.com/index.html?Equations.html
 
@@ -81,13 +81,10 @@ print.RGBcolorConverter <- function(x,...) {
 }
 
 chromaticAdaptation <- function(xyz, from, to) {
-    ## bradford scaling algorithm
+    ## Von Kries scaling algorithm
     Ma <- matrix(c( 0.40024, -0.22630, 0.,
                     0.70760,  1.16532, 0.,
                    -0.08081,  0.04570, 0.91822), nrow = 3L, byrow = TRUE)
-    nWhite <- colnames(white.points)
-    from <- c2to3(white.points[, match.arg(from, nWhite)])
-    to   <- c2to3(white.points[, match.arg(to,   nWhite)])
     from.cone <- drop(from %*% Ma)
     to.cone   <- drop(to %*% Ma)
     ## M <- Ma %*% diag(to.cone/from.cone) %*% solve(Ma)
@@ -223,14 +220,16 @@ convertColor <-
   ## specify one they must agree.
 
   if (is.null(from.ref.white))
-      from.ref.white <- from$white
-  else if (!is.null(from$white) && from.ref.white != from$white)
+      from.ref.white <- from$reference.white
+  else if (!is.null(from$reference.white) &&
+           from.ref.white != from$reference.white)
       stop(gettextf("'from.ref.white' disagrees with definition of %s",
                     from$name), domain = NA)
 
   if (is.null(to.ref.white))
-      to.ref.white <- to$white
-  else if (!is.null(to$white) && to.ref.white != to$white)
+      to.ref.white <- to$reference.white
+  else if (!is.null(to$reference.white) &&
+           to.ref.white != to$reference.white)
       stop(gettextf("'to.ref.white' disagrees with definition of %s",
                     to$name), domain = NA)
 
@@ -271,7 +270,7 @@ convertColor <-
       mc <- match.call()
       if (is.null(mc$from.ref.white) || is.null(mc$to.ref.white))
           warning("color spaces use different reference whites")
-      xyz <- chromaticAdaptation(xyz, from.ref.white, to.ref.white)
+      xyz <- t(chromaticAdaptation(t(xyz), from.ref.white, to.ref.white))
   }
 
   rval <- apply(xyz, 2L, to$fromXYZ, to.ref.white)

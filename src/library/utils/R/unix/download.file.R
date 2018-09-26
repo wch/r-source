@@ -1,7 +1,7 @@
 #  File src/library/utils/R/unix/download.file.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -62,7 +62,7 @@ download.file <-
 	       if(length(destfile) != 1L || typeof(url) != "character")
 		   stop("'destfile' must be a length-one character vector");
 	       if(quiet) extra <- c(extra, "-s -S")
-	       if(!cacheOK) extra <- c(extra, "-H 'Pragma: no-cache'")
+	       if(!cacheOK) extra <- c(extra, paste("-H", shQuote("Pragma: no-cache")))
 	       status <- system(paste("curl",
 				      paste(extra, collapse = " "),
 				      shQuote(url),

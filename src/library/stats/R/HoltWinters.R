@@ -1,7 +1,7 @@
 #  File src/library/stats/R/HoltWinters.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2002-2015 The R Core Team
+#  Copyright (C) 2002-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -19,8 +19,7 @@
 # Originally contributed by David Meyer
 
 HoltWinters <-
-function (x,
-
+    function (x,
           # smoothing parameters
           alpha    = NULL, # level
           beta     = NULL, # trend
@@ -44,10 +43,9 @@ function (x,
 
     if(!is.null(alpha) && (alpha == 0))
         stop ("cannot fit models without level ('alpha' must not be 0 or FALSE)")
-    if(!all(is.null(c(alpha, beta, gamma))) &&
-        any(c(alpha, beta, gamma) < 0 || c(alpha, beta, gamma) > 1))
+    if(!is.null(abg <- c(alpha, beta, gamma)) && any(abg < 0 | abg > 1))
         stop ("'alpha', 'beta' and 'gamma' must be within the unit interval")
-    if((is.null(gamma) || gamma > 0)) {
+    if(is.null(gamma) || gamma > 0) {
         if (seasonal == "multiplicative" && any(x == 0))
             stop ("data must be non-zero for multiplicative Holt-Winters")
         if (start.periods < 2)

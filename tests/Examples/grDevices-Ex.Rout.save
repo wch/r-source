@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2018-08-13 r75123) -- "Unsuffered Consequences"
+R Under development (unstable) (2018-09-21 r75341) -- "Unsuffered Consequences"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -3715,46 +3715,14 @@ v 0.98039216 0.7647059 0.4588235 0.8549020 0.9960784
 > 
 > ### ** Examples
 > 
+> ## IGNORE_RDIFF_BEGIN
 > if(capabilities()[["X11"]]) withAutoprint({
 + X11Fonts()
 + X11Fonts("mono")
 + utopia <- X11Font("-*-utopia-*-*-*-*-*-*-*-*-*-*-*-*")
 + X11Fonts(utopia = utopia)
 + })
-> X11Fonts()
-$serif
-[1] "-*-times-%s-%s-*-*-%d-*-*-*-*-*-*-*"
-
-$sans
-[1] "-*-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*"
-
-$mono
-[1] "-*-courier-%s-%s-*-*-%d-*-*-*-*-*-*-*"
-
-$Times
-[1] "-adobe-times-%s-%s-*-*-%d-*-*-*-*-*-*-*"
-
-$Helvetica
-[1] "-adobe-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*"
-
-$CyrTimes
-[1] "-cronyx-times-%s-%s-*-*-%d-*-*-*-*-*-*-*"
-
-$CyrHelvetica
-[1] "-cronyx-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*"
-
-$Arial
-[1] "-monotype-arial-%s-%s-*-*-%d-*-*-*-*-*-*-*"
-
-$Mincho
-[1] "-*-mincho-%s-%s-*-*-%d-*-*-*-*-*-*-*"
-
-> X11Fonts("mono")
-$mono
-[1] "-*-courier-%s-%s-*-*-%d-*-*-*-*-*-*-*"
-
-> utopia <- X11Font("-*-utopia-*-*-*-*-*-*-*-*-*-*-*-*")
-> X11Fonts(utopia = utopia)
+> ## IGNORE_RDIFF_END
 > 
 > 
 > 
@@ -4013,7 +3981,7 @@ $zlab
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  11.049 0.293 11.393 0 0 
+Time elapsed:  10.981 0.241 11.272 0 0 
 > grDevices::dev.off()
 null device 
           1 

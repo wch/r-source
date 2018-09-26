@@ -1,4 +1,6 @@
 c -- called from R's  svd(x, ..., LINPACK = TRUE)  , i.e, *NOT* by default -- 
+
+c     Minimally modernized in 2018-09, so is fixed-form F90, not F77
 c
 c     dsvdc is a subroutine to reduce a double precision nxp matrix x
 c     by orthogonal transformations u and v to diagonal form.  the
@@ -376,7 +378,17 @@ c           ......exit
 c
 c        perform the task indicated by kase.
 c
-         go to (490,520,540,570), kase
+c         go to (490,520,540,570), kase
+         select case(kase)
+         case(1)
+            goto 490
+         case(2)
+            goto 520
+         case(3)
+            goto 540
+         case(4)
+            goto 570
+         end select
 c
 c        deflate negligible s(m).
 c

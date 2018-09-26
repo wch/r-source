@@ -127,9 +127,11 @@ quasipoisson(link = "log")
   \item{linkfun}{function: the link.}
   \item{linkinv}{function: the inverse of the link function.}
   \item{variance}{function: the variance as a function of the mean.}
-  \item{dev.resids}{function giving the deviance residuals as a function
-    of \code{(y, mu, wt)}.}
-  \item{aic}{function giving the AIC value if appropriate (but \code{NA}
+  \item{dev.resids}{function giving the deviance for each observation
+    as a function of \code{(y, mu, wt)}, used by the
+    \code{\link[=residuals.glm]{residuals}} method when computing
+    deviance residuals.}
+    \item{aic}{function giving the AIC value if appropriate (but \code{NA}
     for the quasi- families).  More precisely, this function
     returns \eqn{-2\ell + 2 s}{-2 ll + 2 s}, where \eqn{\ell}{ll} is the
     log-likelihood and \eqn{s} is the number of estimated scale
@@ -269,7 +271,7 @@ glm(y ~ x, family = poisson)
 glm(y ~ x, family = quasi(variance = "mu^2", link = "log"))
 \dontrun{glm(y ~ x, family = quasi(variance = "mu^3", link = "log")) # fails}
 y <- rbinom(100, 1, plogis(x))
-# needs to set a starting value for the next fit
+# need to set a starting value for the next fit
 glm(y ~ x, family = quasi(variance = "mu(1-mu)", link = "logit"), start = c(0,1))
 }
 \keyword{models}

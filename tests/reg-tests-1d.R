@@ -1934,6 +1934,22 @@ stopifnot(identical(confint(mlm0),
                     matrix(numeric(0), 0L, 2L, dimnames = list(NULL, c("2.5 %", "97.5 %")))))
 ## failed inside vcov.mlm() because summary.lm()$cov.unscaled was NULL
 
+## cooks.distance.(<mlm>), rstandard(<mlm>) :
+fm1 <- lm(y1 ~ x1 + x2, data=datf)
+fm2 <- lm(y2 ~ x1 + x2, data=datf)
+stopifnot(exprs = {
+    all.equal(cooks.distance(fitm),
+              cbind(y1 = cooks.distance(fm1),
+                    y2 = cooks.distance(fm2)))
+    all.equal(rstandard(fitm),
+              cbind(y1 = rstandard(fm1),
+                    y2 = rstandard(fm2)))
+    all.equal(rstudent(fitm),
+              cbind(y1 = rstudent(fm1),
+                    y2 = rstudent(fm2)))
+})
+## were silently wrong in R <= 3.5.1
+
 
 ## kruskal.test(<non-numeric g>), PR#16719
 data(mtcars)
@@ -1955,21 +1971,21 @@ stopifnot(all.equal(ss[["s1"]], ss[["s2"]], tolerance = 1e-15))
 USJ   <- USJudgeRatings
 USJe6 <- USJudgeRatings[rep_len(seq_len(nrow(USJ)), 1e6),]
 op <- options(max.print=500)
-t1 <- max(0.001, system.time(r1 <- print(USJ))[[1]]) # baseline > 0
-t2 <- system.time(r2 <- print(USJe6))[[1]]
-      system.time(r3 <- print(USJe6, row.names=FALSE))
+system.time(r1 <- print(USJ))
+system.time(r2 <- print(USJe6))# was > 12 sec in R <= 3.5.1, now typically 0.01
+                               # because the whole data frame was formatted.
+## Now the timing ratio between r1 & r2 print()ing is typically in [1,2]
+system.time(r3 <- print(USJe6, row.names=FALSE))
 out <- capture.output(print(USJe6, max = 600)) # max > getOption("max.print")
 stopifnot(exprs = {
     identical(r1, USJ  )# print() must return its arg
     identical(r2, USJe6)
     identical(r3, USJe6)
-    print(t2 / t1) < 9 # now typically in [1,2]
     length(out) == 52
     grepl("CALLAHAN", out[51], fixed=TRUE)
     identical(2L, grep("omitted", out[51:52], fixed=TRUE))
 })
 options(op); rm(USJe6)# reset
-## had t2/t1 > 4000 in R <= 3.5.1, because the whole data frame was formatted.
 
 
 ## hist.default() in rare cases
@@ -1979,7 +1995,7 @@ stopifnot(0.999 <= hd, hd <= 1.001)
 ## in R <= 3.5.1: warning 'In n * h : NAs produced by integer overflow' and then NA's
 
 
-## some things boken by sort.int optimization for sorted integer vectors
+## some things broken by sort.int optimization for sorted integer vectors
 sort.int(integer(0))  ## would segfault with barrier testing
 stopifnot(identical(sort.int(NA_integer_), integer(0)))
 
@@ -1989,6 +2005,90 @@ x <- sort.int(c(1,2))
 dim(x) <- 2
 dimnames(x) <- list(c("a", "b"))
 stopifnot(! is.null(names(sort.int(x))))
+
+
+## match() with length one x and POSIXlt table (PR#17459):
+d <- as.POSIXlt("2018-01-01")
+match(0, d)
+## Gave a segfault in R < 3.6.0.
+
+
+## as(1L, "double") - PR#17457
+stopifnot(exprs = {
+    identical(as(1L,   "double"), 1.) # new
+    identical(new("double"), double())
+  ## 1. "double" is quite the same as "numeric" :
+    local({
+        i1 <- 1L; as(i1, "numeric") <- pi
+        i2 <- 1L; as(i2, "double" ) <- pi
+        identical(i1, i2)
+    })
+    validObject(Dbl <- getClass("double"))
+    validObject(Num <- getClass("numeric"))
+    c("double", "numeric") %in% extends(Dbl)
+    setdiff(names(Num@subclasses),
+            names(Dbl@subclasses) -> dblSub) == "double"
+    "integer" %in% dblSub
+  ## 2. These all remain as they were in R <= 3.5.x , the first one important for back-compatibility:
+    identical(1:2, local({
+        myN <- setClass("myN", contains="numeric", slots = c(truly = "numeric"))
+        myN(log(1:2), truly = 1:2) })@truly)
+    removeClass("myN")
+    identical(as(1L,  "numeric"), 1L) # << disputable, but hard to change w/o changing myN() behavior
+    identical(as(TRUE, "double"), 1.)
+    identical(as(TRUE,"numeric"), 1.)
+    !is(TRUE, "numeric") # "logical" should _not_ be a subclass of "numeric"
+    ## We agree these should not change :
+    typeof(1.0) == "double"  &  typeof(1L) == "integer"
+    class (1.0) == "numeric" &  class (1L) == "integer"
+    mode  (1.0) == "numeric" &  mode  (1L) == "numeric"
+})
+## as(*, "double") now gives what was promised
+
+
+## next(n) for largish n
+stopifnot(exprs = {
+    nextn(214e7 ) == 2^31
+    nextn(2^32+1) == 4299816960
+    identical(nextn(NULL), integer())
+})
+## nextn(214e7) hang in infinite loop; nextn(<large>) gave NA  in R <= 3.5.1
+
+
+## More strictness in '&&' and '||' :
+Sys.getenv("_R_CHECK_LENGTH_1_LOGIC2_", unset=NA) -> oEV
+Sys.setenv("_R_CHECK_LENGTH_1_LOGIC2_" = "foo") # only warn
+tools::assertWarning(1 && 0:1)
+Sys.setenv("_R_CHECK_LENGTH_1_LOGIC2_" = TRUE) # => error (when triggered)
+tools::assertError(0 || 0:1)
+if(is.na(oEV)) { # (by default)
+    Sys.unsetenv ("_R_CHECK_LENGTH_1_LOGIC2_")
+    2 && 0:1 # should not even warn
+} else Sys.setenv("_R_CHECK_LENGTH_1_LOGIC2_" = oEV)
+
+
+## polym() in "vector" case PR#17474
+fm <- lm(Petal.Length ~ poly(cbind(Petal.Width, Sepal.Length), 2),
+         data = iris)
+p1 <- predict(fm, newdata = data.frame(Petal.Width = 1, Sepal.Length = 1))
+stopifnot(all.equal(p1, c("1" = 4.70107678)))
+## predict() calling polym() failed in R <= 3.5.1
+
+
+## sample.int(<fractional>, k, replace=TRUE) :
+(tt <- table(sample.int(2.9, 1e6, replace=TRUE)))
+stopifnot(length(tt) == 2)
+## did "fractionally" sample '3' as well in 3.0.0 <= R <= 3.5.1
+
+
+## lm.influence() for simple regression through 0:
+x <- 1:7
+y <- c(1.1, 1.9, 2.8, 4, 4.9, 6.1, 7)
+f0 <- lm(y ~ 0+x)
+mi <- lm.influence(f0)
+stopifnot(identical(dim(cf <- mi$coefficients), c(7L, 1L)),
+          all.equal(range(cf), c(-0.0042857143, 0.0072527473)))
+## gave an error for a few days in R-devel
 
 
 ## keep at end

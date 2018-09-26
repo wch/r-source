@@ -1,7 +1,7 @@
 #  File src/library/grid/R/components.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -37,8 +37,7 @@ grid.collection <- function(..., gp=gpar(), draw=TRUE, vp=NULL) {
 validDetails.axis <- function(x) {
   if (!is.null(x$at)) {
     x$at <- as.numeric(x$at)
-    if (length(x$at) < 1 ||
-        !is.finite(x$at))
+    if (length(x$at) < 1 || !all(is.finite(x$at)))
       stop("invalid 'at' location in 'axis'")
   }
   if (!is.logical(x$label)) {

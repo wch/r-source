@@ -404,7 +404,7 @@ plot.data.frame <- function (x, ...)
 ## }
 
 .units <- c("device", "ndc", "", "", "", "", "nic", "nfc", "", "", "", "",
-            "user", "inches", "", "", "npc")
+            "user", "inches", "lines", "chars", "npc")
 
 grconvertX <- function(x, from = "user", to = "user")
 {

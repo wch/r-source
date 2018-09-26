@@ -704,7 +704,7 @@ for(n in 1:20) {
     for(x in list(z, round(z,1))) { ## 2nd one has ties
        qxi <- sort(x,  method = "quick",  index.return = TRUE)
        stopifnot(qxi$x == sort(x, method = "shell"),
-		 any(duplicated(x)) || qxi$ix == order(x),
+		 any(duplicated(x)) || all(qxi$ix == order(x)),
 		 x[qxi$ix] == qxi$x)
    }
 }
@@ -2013,12 +2013,31 @@ stopifnot(identical(as.character(i), dimnames(table(fi))[[1]]))
 
 ## [lm.]influence() for multivariate lm :
 n <- 32
-Y <- matrix(rnorm(3 * n), n, 3)
+Y0 <- matrix(rnorm(3 * n), n, 3) # and a version with named Y's
+Yn <- Y0; colnames(Yn) <- paste0("Y",1:3)
 X <- matrix(rnorm(5 * n), n, 5)
-infm <- lm.influence(mod <- lm(Y ~ X))
-## failed up to 2003-03-29 (pre 1.7.0)
-im1 <- influence.measures(mod)
-stopifnot(all.equal(unname(im1$infmat[,1:6]), unname(dfbetas(mod))))
+for(Y in list(Y0, Yn)) {
+    fmL <- lapply(1:3, function(j) lm(Y[,j] ~ X))
+    infL <- lapply(fmL, lm.influence)
+    infm <- lm.influence(mod <- lm(Y ~ X))
+    if(interactive()) str(infL, give.attr=FALSE) # should match the 'infm' parts
+    ## 1. "hat" are all the 3 the same
+    hatL <- sapply(infL, `[[`, "hat")
+    stopifnot(all.equal(hatL[,1], hatL[,2]), all.equal(hatL[,2], hatL[,3]))
+    ## 2. the other 3 components should be "concatenated" to give same as mlm :
+    for(nm in c("coefficients", "sigma", "wt.res")) {
+        stopifnot(all.equal(unname(infm[[nm]]),
+                            unname(sapply(infL, `[[`, nm, simplify="array",
+                                          USE.NAMES=FALSE))))
+    }
+    ## failed up to 2003-03-29 (pre 1.7.0)
+    im1 <- influence.measures(mod)
+    dfbs <- dfbetas(mod)
+    dimnames(dfbs)[[3]] <- dimnames(im1$infmat)[[3]][1:6]
+    stopifnot(all.equal(im1$infmat[,,1:6], dfbs))
+}# for both Y's
+## lm.influence() did not work correctly for "mlm"s in R <= 3.5.1
+
 
 ## rbind.data.frame with character and ordered columns
 A <- data.frame(a=1)

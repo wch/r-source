@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2018-08-13 r75127) -- "Unsuffered Consequences"
+R Under development (unstable) (2018-09-21 r75341) -- "Unsuffered Consequences"
 Copyright (C) 2018 The R Foundation for Statistical Computing
-Platform: x86_64-apple-darwin17.7.0/x86_64 (64-bit)
+Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -3827,7 +3827,7 @@ sigma^2 estimated as 0.4566:  log likelihood = -101.2,  aic = 212.4
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x7fd34dd843d0>
+<environment: 0x601c1d8>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -4825,7 +4825,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x7fd34cf44a38>
+<bytecode: 0x6d45388>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -7076,7 +7076,7 @@ Null Deviance:	    83.85
 Residual Deviance: 32.45 	AIC: NA
 > ## Not run: glm(y ~ x, family = quasi(variance = "mu^3", link = "log")) # fails
 > y <- rbinom(100, 1, plogis(x))
-> # needs to set a starting value for the next fit
+> # need to set a starting value for the next fit
 > glm(y ~ x, family = quasi(variance = "mu(1-mu)", link = "logit"), start = c(0,1))
 
 Call:  glm(formula = y ~ x, family = quasi(variance = "mu(1-mu)", link = "logit"), 
@@ -7437,7 +7437,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x7fd35084d310>
+<environment: 0x6d7d2b8>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -8383,7 +8383,7 @@ Error in integrate(f, 0, 1) :
 + ## "silently" gave  integrate(dnorm, 0, 20)  in earlier versions of R
 + ## Don't show: 
 +  , verbose=TRUE)
-Asserted error: 'lower' must be of length one
+Asserted error: length(lower) == 1 is not TRUE
 > ## End(Don't show)
 > 
 > 
@@ -10534,7 +10534,7 @@ $na.action
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: nextn
-> ### Title: Highly Composite Numbers
+> ### Title: Find Highly Composite Numbers
 > ### Aliases: nextn
 > ### Keywords: math
 > 
@@ -10542,10 +10542,11 @@ $na.action
 > 
 > nextn(1001) # 1024
 [1] 1024
-> table(sapply(599:630, nextn))
+> table(nextn(599:630))
 
 600 625 640 
   2  25   5 
+> n <- 1:100 ; plot(n, nextn(n) - n, type = "o", lwd=2, cex=1/2)
 > 
 > 
 > 
@@ -12110,14 +12111,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x7fd34f9438e8>
-<environment: 0x7fd34f953aa8>
+<bytecode: 0x616a5a8>
+<environment: 0x61723e8>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x7fd34f9476a8>
-<environment: 0x7fd34f953aa8>
+<bytecode: 0x616a458>
+<environment: 0x61723e8>
 
 > 
 > 
@@ -16257,8 +16258,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f)
-<bytecode: 0x7fd349dc4b48>
-<environment: 0x7fd34cdb03a8>
+<bytecode: 0x2fd2ba0>
+<environment: 0x6044450>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -18583,7 +18584,7 @@ Number of Fisher Scoring iterations: 6
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  3.783 0.431 4.253 0 0 
+Time elapsed:  6.312 0.178 6.579 0 0 
 > grDevices::dev.off()
 null device 
           1 

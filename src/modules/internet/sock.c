@@ -37,6 +37,7 @@
 #endif
 
 #if defined(Win32)
+#  define FD_SETSIZE 1024
 #  include <winsock2.h>
 #  include <io.h>
 #else

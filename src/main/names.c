@@ -1092,7 +1092,7 @@ static void SymbolShortcuts(void)
     R_RowNamesSymbol = install("row.names");
     R_SeedsSymbol = install(".Random.seed");
     R_SortListSymbol = install("sort.list");
-    R_SourceSymbol = install("source");   /* Still present for use in methods package, not used elsewhere */
+    R_SourceSymbol = install("source");   /* Not used by R or core packages */
     R_TspSymbol = install("tsp");
     /* ../include/Defn.h , i.e. non-public : */
     R_CommentSymbol = install("comment");

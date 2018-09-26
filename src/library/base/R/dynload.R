@@ -61,7 +61,7 @@ getNativeSymbolInfo <- function(name, PACKAGE, unlist = TRUE,
 		msg <- paste(msg, "in package", pkgName)
 	    stop(msg, domain = NA)
 	}
-	names(v) <- c("name", "address", "package", "numParameters")[seq_along(v)]
+	names(v) <- c("name", "address", "dll", "numParameters")[seq_along(v)]
 	v
     })
 

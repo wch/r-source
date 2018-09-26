@@ -1,6 +1,6 @@
 % File src/library/graphics/man/text.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{text}
@@ -26,16 +26,18 @@ text(x, \dots)
     If \code{labels} is longer than \code{x} and
     \code{y}, the coordinates are recycled to the length of \code{labels}.}
   \item{adj}{one or two values in \eqn{[0, 1]} which specify the x
-    (and optionally y) adjustment of the labels.  On most devices values
-    outside that interval will also work.}
-  \item{pos}{a position specifier for the text.  If specified this
+    (and optionally y) adjustment (\sQuote{justification}) of the
+    labels, with 0 for left/bottom, 1 for right/top, and 0.5 for
+    centered.  On most devices values outside \eqn{[0, 1]} will also
+    work.  See below.}
+   \item{pos}{a position specifier for the text.  If specified this
     overrides any \code{adj} value given.  Values of \code{1},
     \code{2}, \code{3} and \code{4}, respectively indicate
     positions below, to the left of, above and to the right of
-    the specified coordinates.}
-  \item{offset}{when \code{pos} is specified, this value gives the
-    offset of the label from the specified coordinate in fractions
-    of a character width.}
+    the specified \code{(x,y)} coordinates.}
+  \item{offset}{when \code{pos} is specified, this value controls the
+    distance (\sQuote{offset}) of the text label from the specified
+    coordinate in fractions of a character width.}
   \item{vfont}{\code{NULL} for the current font family, or a character
     vector of length 2 for Hershey vector fonts.  The first element of
     the vector selects a typeface and the second element selects a
@@ -62,10 +64,11 @@ text(x, \dots)
   mathematical notation is available such as sub- and superscripts,
   greek letters, fractions, etc.
 
-  \code{adj} allows \emph{adj}ustment of the text with respect to
+  \code{adj} allows \emph{adj}ustment of the text position with respect to
   \code{(x, y)}.
-  Values of 0, 0.5, and 1 specify left/bottom, middle and
-  right/top alignment, respectively.  The default is for centered text, i.e.,
+  Values of 0, 0.5, and 1 specify that \code{(x, y)} should align with
+  the left/bottom, middle and
+  right/top of the text, respectively.  The default is for centered text, i.e.,
   \code{adj = c(0.5, NA)}.  Accurate vertical centering needs
   character metric information on individual characters which is
   only available on some devices.  Vertical alignment is done slightly
@@ -81,8 +84,17 @@ text(x, \dots)
   labelled plot.
 
   Text can be rotated by using \link{graphical parameters} \code{srt}
-  (see \code{\link{par}}); this rotates about the centre set by
-  \code{adj}.
+  (see \code{\link{par}}).  When \code{adj} is specified, a non-zero
+  \code{srt} rotates the label about \code{(x, y)}.  If \code{pos} is
+  specified, \code{srt} rotates the text about the point on its bounding
+  box which is closest to \code{(x, y)}: top center for \code{pos = 1},
+  right center for \code{pos = 2}, bottom center for \code{pos = 3}, and
+  left center for \code{pos = 4}.  The \code{pos} interface is not as
+  useful for rotated text because the result is no longer centered
+  vertically or horizontally with respect to \code{(x, y)}.  At present
+  there is no interface in the \pkg{graphics} package for directly
+  rotating text about its center which is achievable however by fiddling
+  with \code{adj} and \code{srt} simultaneously.
 
   Graphical parameters \code{col}, \code{cex} and \code{font} can be
   vectors and will then be applied cyclically to the \code{labels} (and

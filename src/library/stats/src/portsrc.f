@@ -1,3 +1,5 @@
+C     Minimally modernized in 2018-09, so is fixed-form F90, not F77
+
       SUBROUTINE  DRN2G(D, DR, IV, LIV, LV, N, ND, N1, N2, P, R,
      1                  RD, V, X)
 C
@@ -185,7 +187,18 @@ C
          NN = N2 - N1 + 1
          IV(RESTOR) = 0
          I = IV1 + 4
-         IF (IV(TOOBIG) .EQ. 0) GO TO (150, 130, 150, 120, 120, 150), I
+c         IF (IV(TOOBIG) .EQ. 0) GO TO (150, 130, 150, 120, 120, 150), I
+         IF (IV(TOOBIG) .EQ. 0) THEN
+            select case(I)
+         case(1,3,6)
+            goto 150
+         case(2)
+            goto 130
+         case(4,5)
+            goto 120
+            end select
+         END IF
+
          IF (I .NE. 5) IV(1) = 2
          GO TO 40
 C
@@ -634,10 +647,23 @@ C
       I = IV(1) - 2
       IF (I .GT. 12) GO TO 999
       NN1O2 = N * (N + 1) / 2
-      IF (LH .GE. NN1O2) GO TO (250,250,250,250,250,250,190,150,190,
-     1                          20,20,30), I
-         IV(1) = 81
-         GO TO 440
+      IF (LH .GE. NN1O2) THEN
+c         GO TO (250,250,250,250,250,250,190,150,190, 20,20,30), I
+         select case(I)
+      case(1:6)
+         goto 250
+      case(7,9)
+         goto 190
+      case(8)
+         goto 150
+      case(10,11)
+         goto 20
+      case(12)
+         goto 30
+      end select
+      END IF
+      IV(1) = 81
+      GO TO 440
 C
 C  ***  STORAGE ALLOCATION  ***
 C
@@ -879,7 +905,17 @@ C
       STEP1 = IV(STEP)
       LSTGST = STEP1 + 2*N
       I = IV(RESTOR) + 1
-      GO TO (300, 270, 280, 290), I
+c      GO TO (300, 270, 280, 290), I
+      select case(I)
+      case(1)
+         goto 300
+      case(2)
+         goto 270
+      case(3)
+         goto 280
+      case(4)
+         goto 290
+      end select
  270  CALL DV7CPY(N, X, V(X01))
       GO TO 300
  280   CALL DV7CPY(N, V(LSTGST), X)
@@ -890,7 +926,23 @@ C
          IV(RESTOR) = RSTRST
 C
  300  K = IV(IRC)
-      GO TO (310,340,340,340,310,320,330,330,330,330,330,330,410,380), K
+c      GO TO (310,340,340,340,310,320,330,330,330,330,330,330,410,380), K
+      select case(K)
+      case(1)
+         goto 310
+      case(2:4)
+         goto 340
+      case(5)
+         goto 310
+      case(6)
+         goto 320
+      case(7:12)
+         goto 330
+      case(13)
+         goto 410
+      case(14)
+         goto 380
+      end select
 C
 C     ***  RECOMPUTE STEP WITH NEW RADIUS  ***
 C
@@ -1145,10 +1197,23 @@ C
       I = IV(1) - 2
       IF (I .GT. 12) GO TO 999
       NN1O2 = N * (N + 1) / 2
-      IF (LH .GE. NN1O2) GO TO (220,220,220,220,220,220,160,120,160,
-     1                          10,10,20), I
-         IV(1) = 66
-         GO TO 400
+      IF (LH .GE. NN1O2) THEN
+c         GO TO (220,220,220,220,220,220,160,120,160, 10,10,20), I
+         select case(I)
+      case(1:6)
+         goto 220
+      case(7,9)
+         goto 160
+      case(8)
+         goto 120
+      case(10,11)
+         goto 10
+      case(12)
+         goto 20
+      end select
+      END IF
+      IV(1) = 66
+      GO TO 400
 C
 C  ***  STORAGE ALLOCATION  ***
 C
@@ -1343,7 +1408,17 @@ C
       STEP1 = IV(STEP)
       LSTGST = IV(STLSTG)
       I = IV(RESTOR) + 1
-      GO TO (270, 240, 250, 260), I
+c      GO TO (270, 240, 250, 260), I
+      select case(I)
+      case(1)
+         goto 270
+      case(2)
+         goto 240
+      case(3)
+         goto 250
+      case(4)
+         goto 260
+      end select
  240  CALL DV7CPY(N, X, V(X01))
       GO TO 270
  250   CALL DV7CPY(N, V(LSTGST), V(STEP1))
@@ -1354,7 +1429,23 @@ C
          IV(RESTOR) = RSTRST
 C
  270  K = IV(IRC)
-      GO TO (280,310,310,310,280,290,300,300,300,300,300,300,380,350), K
+c      GO TO (280,310,310,310,280,290,300,300,300,300,300,300,380,350), K
+      select case(K)
+      case(1)
+         goto 280
+      case(2:4)
+         goto 310
+      case(5)
+         goto 280
+      case(6)
+         goto 290
+      case(7:12)
+         goto 300
+      case(13)
+         goto 380
+      case(14)
+         goto 350
+      end select
 C
 C     ***  RECOMPUTE STEP WITH NEW RADIUS  ***
 C
@@ -1918,10 +2009,27 @@ C
       RFAC1 = ONE
       GOODX = .TRUE.
       I = IV(IRC)
-      IF (I .GE. 1 .AND. I .LE. 12)
-     1             GO TO (20,30,10,10,40,280,220,220,220,220,220,170), I
-         IV(IRC) = 13
-         GO TO 999
+      IF (I .GE. 1 .AND. I .LE. 12) THEN
+c         GO TO (20,30,10,10,40,280,220,220,220,220,220,170), I
+         select case(I)
+      case(1)
+         goto 20
+      case(2)
+         goto 30
+      case(3,4)
+         goto 10
+      case(5)
+         goto 40
+      case(6)
+         goto 280
+      case(7:11)
+         goto 220
+      case(12)
+         goto 170
+      end select
+      END IF
+      IV(IRC) = 13
+      GO TO 999
 C
 C  ***  INITIALIZE FOR NEW ITERATION  ***
 C
@@ -1960,7 +2068,17 @@ C        ***  RESTORE IV(STAGE) AND PICK UP WHERE WE LEFT OFF.  ***
 C
          IV(STAGE) = -IV(STAGE)
          I = IV(XIRC)
-         GO TO (20, 30, 110, 110, 70), I
+c         GO TO (20, 30, 110, 110, 70), I
+         select case(I)
+      case(1)
+         goto 20
+      case(2)
+         goto 30
+      case(3,4)
+         goto 110
+      case(5)
+         goto 70
+      end select
 C
  50   IF (IV(TOOBIG) .EQ. 0) GO TO 70
 C
@@ -3833,7 +3951,21 @@ C
 C
 C-------------------------------  BODY  --------------------------------
 C
-      GO TO (10, 20, 30, 40, 50, 60), K
+c      GO TO (10, 20, 30, 40, 50, 60), K
+      select case(K)
+      case(1)
+         goto 10
+      case(2)
+         goto 20
+      case(3)
+         goto 30
+      case(4)
+         goto 40
+      case(5)
+         goto 50
+      case(6)
+         goto 60
+      end select
 C
  10   DR7MDC = ETA
       GO TO 999
@@ -4083,7 +4215,19 @@ C
  10   CALL DPARCK(1, D, IV, LIV, LV, P, V)
       I = IV(1) - 2
       IF (I .GT. 12) GO TO 999
-      GO TO (360, 360, 360, 360, 360, 360, 240, 190, 240, 20, 20, 30), I
+c      GO TO (360, 360, 360, 360, 360, 360, 240, 190, 240, 20, 20, 30), I
+      select case(I)
+      case(1:6)
+         goto 360
+      case(7,9)
+         goto 240
+      case(8)
+         goto 190
+      case(10,11)
+         goto 20
+      case(12)
+         goto 30
+      end select
 C
 C  ***  STORAGE ALLOCATION  ***
 C
@@ -4433,7 +4577,17 @@ C
       STEP1 = IV(STEP)
       LSTGST = X01 + P
       I = IV(RESTOR) + 1
-      GO TO (410, 380, 390, 400), I
+c      GO TO (410, 380, 390, 400), I
+      select case(I)
+      case(1)
+         goto 410
+      case(2)
+         goto 380
+      case(3)
+         goto 390
+      case(4)
+         goto 400
+      end select
  380  CALL DV7CPY(P, X, V(X01))
       GO TO 410
  390   CALL DV7CPY(P, V(LSTGST), V(STEP1))
@@ -4452,7 +4606,21 @@ C
          CALL DV7CPY(NVSAVE, V, V(L))
  420  L = IV(IRC) - 4
       STPMOD = IV(MODEL)
-      IF (L .GT. 0) GO TO (440,450,460,460,460,460,460,460,570,510), L
+      IF (L .GT. 0) THEN
+c         GO TO (440,450,460,460,460,460,460,460,570,510), L
+         select case(L)
+      case(1)
+         goto 440
+      case(2)
+         goto 450
+      case(3:8)
+         goto 460
+      case(9)
+         goto 570
+      case(10)
+         goto 510
+      end select
+      END IF
 C
 C  ***  DECIDE WHETHER TO CHANGE MODELS  ***
 C
@@ -4626,7 +4794,15 @@ C  ***  COMPUTE FINITE-DIFFERENCE HESSIAN FOR COMPUTING COVARIANCE  ***
 C
  590  IV(RESTOR) = 0
  600  CALL DF7DHB(B, D, G, I, IV, LIV, LV, P, V, X)
-      GO TO (610, 620, 630), I
+c      GO TO (610, 620, 630), I
+      select case(I)
+      case(1)
+         goto 610
+      case(2)
+         goto 620
+      case(3)
+         goto 630
+      end select
  610  IV(NFCOV) = IV(NFCOV) + 1
       IV(NFCALL) = IV(NFCALL) + 1
       IV(1) = 1
@@ -5987,7 +6163,19 @@ C
       CALL DPARCK(2, D, IV, LIV, LV, N, V)
       I = IV(1) - 2
       IF (I .GT. 12) GO TO 999
-      GO TO (190, 190, 190, 190, 190, 190, 120, 90, 120, 10, 10, 20), I
+c      GO TO (190, 190, 190, 190, 190, 190, 120, 90, 120, 10, 10, 20), I
+      select case(I)
+      case(1:6)
+         goto 190
+      case(7,9)
+         goto 120
+      case(8)
+         goto 90
+      case(10,11)
+         goto 10
+      case(12)
+         goto 20
+      end select
 C
 C  ***  STORAGE ALLOCATION  ***
 C
@@ -6167,7 +6355,17 @@ C
       STEP1 = IV(STEP)
       LSTGST = IV(STLSTG)
       I = IV(RESTOR) + 1
-      GO TO (240, 210, 220, 230), I
+c      GO TO (240, 210, 220, 230), I
+      select case(I)
+      case(1)
+         goto 240
+      case(2)
+         goto 210
+      case(3)
+         goto 220
+      case(4)
+         goto 230
+       end select
  210  CALL DV7CPY(N, X, V(X01))
       GO TO 240
  220   CALL DV7CPY(N, V(LSTGST), V(STEP1))
@@ -6178,7 +6376,21 @@ C
          IV(RESTOR) = RSTRST
 C
  240  K = IV(IRC)
-      GO TO (250,280,280,280,250,260,270,270,270,270,270,270,330,300), K
+c      GO TO (250,280,280,280,250,260,270,270,270,270,270,270,330,300), K
+      select case(K)
+      case(1,5)
+         goto 250
+      case(2:4)
+         goto 280
+      case(6)
+         goto 260
+      case(7:12)
+         goto 270
+      case(13)
+         goto 330
+      case(14)
+         goto 300
+      end select
 C
 C     ***  RECOMPUTE STEP WITH CHANGED RADIUS  ***
 C
@@ -7286,7 +7498,19 @@ C
       CALL DPARCK(1, D, IV, LIV, LV, P, V)
       I = IV(1) - 2
       IF (I .GT. 12) GO TO 999
-      GO TO (290, 290, 290, 290, 290, 290, 170, 120, 170, 10, 10, 20), I
+c      GO TO (290, 290, 290, 290, 290, 290, 170, 120, 170, 10, 10, 20), I
+      select case(I)
+      case(1:6)
+         goto 290
+      case(7,9)
+         goto 170
+      case(8)
+         goto 120
+      case(10,11)
+         goto 10
+      case(12)
+         goto 20
+      end select
 C
 C  ***  STORAGE ALLOCATION  ***
 C
@@ -7562,7 +7786,17 @@ C
       STEP1 = IV(STEP)
       LSTGST = IV(STLSTG)
       I = IV(RESTOR) + 1
-      GO TO (340, 310, 320, 330), I
+c      GO TO (340, 310, 320, 330), I
+      select case(I)
+      case(1)
+         goto 340
+      case(2)
+         goto 310
+      case(3)
+         goto 320
+      case(4)
+         goto 330
+      end select
  310  CALL DV7CPY(P, X, V(X01))
       GO TO 340
  320   CALL DV7CPY(P, V(LSTGST), V(STEP1))
@@ -7581,7 +7815,21 @@ C
          CALL DV7CPY(NVSAVE, V, V(L))
  350  L = IV(IRC) - 4
       STPMOD = IV(MODEL)
-      IF (L .GT. 0) GO TO (370,380,390,390,390,390,390,390,500,440), L
+      IF (L .GT. 0) THEN
+c        GO TO (370,380,390,390,390,390,390,390,500,440), L
+         select case(L)
+      case(1)
+         goto 370
+      case(2)
+         goto 380
+      case(3:8)
+         goto 390
+      case(9)
+         goto 500
+      case(10)
+         goto 440
+      end select
+      END IF
 C
 C  ***  DECIDE WHETHER TO CHANGE MODELS  ***
 C
@@ -7743,7 +7991,15 @@ C  ***  COMPUTE FINITE-DIFFERENCE HESSIAN FOR COMPUTING COVARIANCE  ***
 C
  520  IV(RESTOR) = 0
  530  CALL DF7HES(D, G, I, IV, LIV, LV, P, V, X)
-      GO TO (540, 550, 580), I
+c      GO TO (540, 550, 580), I
+      select case(I)
+      case(1)
+         goto 540
+      case(2)
+         goto 550
+      case(3)
+         goto 580
+      end select
  540  IV(NFCOV) = IV(NFCOV) + 1
       IV(NFCALL) = IV(NFCALL) + 1
       IV(1) = 1
@@ -9058,7 +9314,19 @@ C
  10   CALL DPARCK(2, D, IV, LIV, LV, N, V)
       I = IV(1) - 2
       IF (I .GT. 12) GO TO 999
-      GO TO (250, 250, 250, 250, 250, 250, 190, 150, 190, 20, 20, 30), I
+c      GO TO (250, 250, 250, 250, 250, 250, 190, 150, 190, 20, 20, 30), I
+      select case(I)
+      case(1:6)
+         goto 250
+      case(7,9)
+         goto 190
+      case(8)
+         goto 150
+      case(10,11)
+         goto 20
+      case(12)
+         goto 30
+      end select
 C
 C  ***  STORAGE ALLOCATION  ***
 C
@@ -9275,7 +9543,17 @@ C
       STEP1 = IV(STEP)
       LSTGST = IV(STLSTG)
       I = IV(RESTOR) + 1
-      GO TO (300, 270, 280, 290), I
+c      GO TO (300, 270, 280, 290), I
+       select case(I)
+      case(1)
+         goto 300
+      case(2)
+         goto 270
+      case(3)
+         goto 280
+      case(4)
+         goto 290
+      end select
  270  CALL DV7CPY(N, X, V(X01))
       GO TO 300
  280   CALL DV7CPY(N, V(LSTGST), X)
@@ -9286,7 +9564,21 @@ C
          IV(RESTOR) = RSTRST
 C
  300  K = IV(IRC)
-      GO TO (310,340,340,340,310,320,330,330,330,330,330,330,400,370), K
+c      GO TO (310,340,340,340,310,320,330,330,330,330,330,330,400,370), K
+      select case(K)
+      case(1,5)
+         goto 310
+      case(2:4)
+         goto 340
+      case(6)
+         goto 320
+      case(7:12)
+         goto 330
+      case(13)
+         goto 400
+      case(14)
+         goto 370
+      end select
 C
 C     ***  RECOMPUTE STEP WITH CHANGED RADIUS  ***
 C
@@ -11555,9 +11847,19 @@ C
          NN = N2 - N1 + 1
          IV(RESTOR) = 0
          I = IV1 + 4
-         IF (IV(TOOBIG) .EQ. 0) GO TO (150, 130, 150, 120, 120, 150), I
-         IF (I .NE. 5) IV(1) = 2
-         GO TO 40
+         IF (IV(TOOBIG) .EQ. 0) THEN
+C           GO TO (150, 130, 150, 120, 120, 150), I
+            select case(I)
+         case(1,3,6)
+            goto 150
+         case(2)
+            goto 130
+         case(4,5)
+            goto 120
+         end select
+      END IF
+      IF (I .NE. 5) IV(1) = 2
+      GO TO 40
 C
 C  ***  FRESH START OR RESTART -- CHECK INPUT INTEGERS  ***
 C
@@ -12384,7 +12686,16 @@ C
  290  IF (XM .GE. ZERO) GO TO 310
       XM1 = XM - DEL
  300  DEL = -DEL
- 310  GO TO (160, 220, 320), NEWM1
+c 310  GO TO (160, 220, 320), NEWM1
+ 310  continue
+      select case(NEWM1)
+      case(1)
+         goto 160
+      case(2)
+         goto 220
+      case(3)
+         goto 320
+      end select
  320  X(M) = XM1
       STPM = STP0 + M
       V(STPM) = DEL

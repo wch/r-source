@@ -4860,10 +4860,11 @@ function(dir)
 {
     predicate <- function(e) {
         ((length(e) > 1L)
-         && (as.character(e[[1L]]) %in%
-             c("library.dynam", "library.dynam.unload"))
-         && is.character(e[[2L]])
-         && grepl("\\.(so|sl|dll)$", e[[2L]]))
+            && (length(x <- as.character(e[[1L]])) == 1L)
+            && (x %in% c("library.dynam", "library.dynam.unload"))
+            && (length(y <- e[[2L]]) == 1L)
+            && is.character(y)
+            && grepl("\\.(so|sl|dll)$", y))
     }
 
     x <- Filter(length,
@@ -5029,10 +5030,9 @@ function(file, encoding = NA)
     for(e in exprs) {
         if((length(e) > 2L) &&
 	   (is.name(x <- e[[1L]])) &&
-           (as.character(x) %in%
-            c("<-", "=")) &&
-           (as.character(y <- e[[2L]]) %in%
-            c(".First.lib", ".onAttach", ".onLoad")) &&
+           (as.character(x) %in% c("<-", "=")) &&
+           (length(y <- as.character(e[[2L]])) == 1L) &&
+           (y %in% c(".First.lib", ".onAttach", ".onLoad")) &&
 	   (is.call(z <- e[[3L]])) &&
            (as.character(z[[1L]]) == "function")) {
             new <- list(z)
@@ -5161,10 +5161,9 @@ function(file, encoding = NA)
     for(e in exprs) {
         if((length(e) > 2L) &&
 	   (is.name(x <- e[[1L]])) &&
-           (as.character(x) %in%
-            c("<-", "=")) &&
-           (as.character(y <- e[[2L]]) %in%
-            c(".Last.lib", ".onDetach")) &&
+           (as.character(x) %in% c("<-", "=")) &&
+           (length(y <- as.character(e[[2L]])) == 1L) &&           
+           (y %in% c(".Last.lib", ".onDetach")) &&
 	   (is.call(z <- e[[3L]])) &&
            (as.character(z[[1L]]) == "function")) {
             new <- list(z)
@@ -5220,7 +5219,9 @@ function(dir)
 function(dir)
 {
     predicate <- function(e) {
-        if(!is.call(e) || as.character(e[[1L]]) != "assign")
+        if(!is.call(e) ||
+           (length(x <- as.character(e[[1L]])) != 1L) ||
+           (x != "assign"))
             return(FALSE)
         e <- e[as.character(e) != "..."]
         ## Capture assignments to global env unless to .Random.seed.
@@ -5264,7 +5265,8 @@ function(x, ...)
 function(dir)
 {
     predicate <- function(e)
-        as.character(e[[1L]]) == "attach"
+    ((length(x <- as.character(e[[1L]])) == 1L) &&
+     (x == "attach"))
 
     calls <- Filter(length,
                     .find_calls_in_package_code(dir, predicate,
@@ -5288,7 +5290,9 @@ function(x, ...)
 function(dir)
 {
     predicate <- function(e) {
-        if(!is.call(e) || as.character(e[[1L]]) != "data")
+        if(!is.call(e) ||
+           (length(x <- as.character(e[[1L]])) != 1L) ||
+           (x != "data"))
             return(FALSE)
         ## As data() has usage
         ##   data(..., list = character(), package = NULL, lib.loc = NULL,
@@ -8845,6 +8849,18 @@ function(package, lib.loc = NULL)
     functions_in_code <-
         Filter(function(f) is.function(code_env[[f]]),
                objects_in_code)
+
+    ## Look only at the *additional* generics in suggests.
+    generics <-
+        setdiff(generics,
+                c(Filter(function(f) .is_S3_generic(f, code_env),
+                         functions_in_code),
+                  .get_S3_generics_as_seen_from_package(dir,
+                                                        TRUE,
+                                                        TRUE),
+                  .get_S3_group_generics(),
+                  .get_S3_primitive_generics()))
+                        
     methods_stop_list <- nonS3methods(basename(dir))
     methods <- lapply(generics,
                       function(g) {

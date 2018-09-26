@@ -67,7 +67,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2017  The R Core Team
+ *  Copyright (C) 1997--2018  The R Core Team
  *  Copyright (C) 2009--2011  Romain Francois
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -89,6 +89,7 @@
 #include <config.h>
 #endif
 
+#define R_USE_SIGNALS 1
 #include "IOStuff.h"		/*-> Defn.h */
 #include "Fileio.h"
 #include "Parse.h"
@@ -820,16 +821,16 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   336,   336,   337,   338,   339,   340,   343,   344,   347,
-     350,   351,   352,   353,   355,   356,   358,   359,   360,   361,
-     362,   364,   365,   366,   367,   368,   369,   370,   371,   372,
-     373,   374,   375,   376,   377,   378,   379,   380,   381,   382,
-     383,   385,   386,   387,   389,   390,   391,   392,   393,   394,
-     395,   396,   397,   398,   399,   400,   401,   402,   403,   404,
-     405,   406,   407,   408,   409,   410,   414,   417,   420,   424,
-     425,   426,   427,   428,   429,   432,   433,   436,   437,   438,
-     439,   440,   441,   442,   443,   446,   447,   448,   449,   450,
-     454
+       0,   337,   337,   338,   339,   340,   341,   344,   345,   348,
+     351,   352,   353,   354,   356,   357,   359,   360,   361,   362,
+     363,   365,   366,   367,   368,   369,   370,   371,   372,   373,
+     374,   375,   376,   377,   378,   379,   380,   381,   382,   383,
+     384,   386,   387,   388,   390,   391,   392,   393,   394,   395,
+     396,   397,   398,   399,   400,   401,   402,   403,   404,   405,
+     406,   407,   408,   409,   410,   411,   415,   418,   421,   425,
+     426,   427,   428,   429,   430,   433,   434,   437,   438,   439,
+     440,   441,   442,   443,   444,   447,   448,   449,   450,   451,
+     455
 };
 #endif
 
@@ -3418,20 +3419,34 @@ void InitParser(void)
 {
     ParseState.data = NULL;
     ParseState.ids = NULL;
+    ParseState.SrcFileProt = NA_INTEGER;
+    ParseState.OriginalProt = NA_INTEGER;
+}
+
+static void FinalizeSrcRefStateOnError(void *dummy)
+{
+    R_FinalizeSrcRefState();
 }
 
 /* This is called each time a new parse sequence begins */
 attribute_hidden
-void R_InitSrcRefState(void)
+void R_InitSrcRefState(RCNTXT* cptr)
 {
     if (busy) {
     	SrcRefState *prev = malloc(sizeof(SrcRefState));
+	if (prev == NULL)
+	    error(_("allocation of source reference state failed"));
     	PutSrcRefState(prev);
 	ParseState.prevState = prev;
 	ParseState.data = NULL;
 	ParseState.ids = NULL;
     } else
         ParseState.prevState = NULL;
+    /* set up context _after_ PutSrcRefState */
+    begincontext(cptr, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
+                 R_NilValue, R_NilValue);
+    cptr->cend = &FinalizeSrcRefStateOnError;
+    cptr->cenddata = NULL;
     ParseState.keepSrcRefs = FALSE;
     ParseState.keepParseData = TRUE;
     ParseState.didAttach = FALSE;
@@ -3448,8 +3463,16 @@ void R_InitSrcRefState(void)
 attribute_hidden
 void R_FinalizeSrcRefState(void)
 {
-    UNPROTECT_PTR(ParseState.SrcFile);
-    UNPROTECT_PTR(ParseState.Original);
+    if (ParseState.SrcFileProt != NA_INTEGER) {
+	UNPROTECT_PTR(ParseState.SrcFile);
+	ParseState.SrcFile = NULL;
+	ParseState.SrcFileProt = NA_INTEGER;
+    }
+    if (ParseState.OriginalProt != NA_INTEGER) {
+	UNPROTECT_PTR(ParseState.Original);
+	ParseState.Original = NULL;
+	ParseState.OriginalProt = NA_INTEGER;
+    }
     /* Free the data, text and ids if we are restoring a previous state,
        or if they have grown too large */
     if (ParseState.data) {
@@ -3476,8 +3499,6 @@ void R_FinalizeSrcRefState(void)
 	    }
 	}
     }
-    ParseState.SrcFileProt = NA_INTEGER;
-    ParseState.OriginalProt = NA_INTEGER;
     ParseState.data_count = NA_INTEGER;
     if (ParseState.prevState) {
         SrcRefState *prev = ParseState.prevState;
@@ -3509,24 +3530,21 @@ static void UseSrcRefState(SrcRefState *state)
 
 static void PutSrcRefState(SrcRefState *state)
 {
-    if (state) {
-	state->keepSrcRefs = ParseState.keepSrcRefs;
-	state->keepParseData = ParseState.keepParseData;
-	state->SrcFile = ParseState.SrcFile;
-	state->Original = ParseState.Original;
-	state->SrcFileProt = ParseState.SrcFileProt;
-	state->OriginalProt = ParseState.OriginalProt;
-	state->data = ParseState.data;
-	state->text = ParseState.text;
-	state->ids = ParseState.ids;
-	state->data_count = ParseState.data_count;
-	state->xxlineno = ParseState.xxlineno;
-	state->xxcolno = ParseState.xxcolno;
-	state->xxbyteno = ParseState.xxbyteno;
-	state->xxparseno = ParseState.xxparseno;
-	state->prevState = ParseState.prevState;
-    } else 
-    	R_FinalizeSrcRefState();
+    state->keepSrcRefs = ParseState.keepSrcRefs;
+    state->keepParseData = ParseState.keepParseData;
+    state->SrcFile = ParseState.SrcFile;
+    state->Original = ParseState.Original;
+    state->SrcFileProt = ParseState.SrcFileProt;
+    state->OriginalProt = ParseState.OriginalProt;
+    state->data = ParseState.data;
+    state->text = ParseState.text;
+    state->ids = ParseState.ids;
+    state->data_count = ParseState.data_count;
+    state->xxlineno = ParseState.xxlineno;
+    state->xxcolno = ParseState.xxcolno;
+    state->xxbyteno = ParseState.xxbyteno;
+    state->xxparseno = ParseState.xxparseno;
+    state->prevState = ParseState.prevState;
 }
 
 static void ParseInit(void)
@@ -3614,9 +3632,10 @@ attribute_hidden
 SEXP R_Parse1Buffer(IoBuffer *buffer, int gencode, ParseStatus *status)
 {
     Rboolean keepSource = FALSE; 
-    int savestack;    
+    int savestack;
+    RCNTXT cntxt;
 
-    R_InitSrcRefState();
+    R_InitSrcRefState(&cntxt);
     savestack = R_PPStackTop;
     if (gencode) {
     	keepSource = asLogical(GetOption1(install("keep.source")));
@@ -3657,6 +3676,7 @@ SEXP R_Parse1Buffer(IoBuffer *buffer, int gencode, ParseStatus *status)
 	}
     }
     R_PPStackTop = savestack;
+    endcontext(&cntxt);
     R_FinalizeSrcRefState();
     return R_CurrentExpr;
 }
@@ -3673,8 +3693,9 @@ static SEXP R_Parse(int n, ParseStatus *status, SEXP srcfile)
     int savestack;
     int i;
     SEXP t, rval;
+    RCNTXT cntxt;
 
-    R_InitSrcRefState();
+    R_InitSrcRefState(&cntxt);
     savestack = R_PPStackTop;
     
     ParseContextInit();
@@ -3706,6 +3727,7 @@ static SEXP R_Parse(int n, ParseStatus *status, SEXP srcfile)
 	    if (ParseState.keepSrcRefs && ParseState.keepParseData)
 	        finalizeData();
 	    R_PPStackTop = savestack;
+	    endcontext(&cntxt);
 	    R_FinalizeSrcRefState();	    
 	    return R_NilValue;
 	    break;
@@ -3727,6 +3749,7 @@ finish:
 	rval = attachSrcrefs(rval);
     }
     R_PPStackTop = savestack;    /* UNPROTECT lots! */
+    endcontext(&cntxt);
     R_FinalizeSrcRefState();
     *status = PARSE_OK;
     return rval;
@@ -3803,11 +3826,12 @@ SEXP R_ParseBuffer(IoBuffer *buffer, int n, ParseStatus *status, SEXP prompt,
     char *bufp, buf[CONSOLE_BUFFER_SIZE];
     int c, i, prompt_type = 1;
     int savestack;
+    RCNTXT cntxt;
 
     R_IoBufferWriteReset(buffer);
     buf[0] = '\0';
     bufp = buf;
-    R_InitSrcRefState();    
+    R_InitSrcRefState(&cntxt);
     savestack = R_PPStackTop;
     ParseContextInit();
     PROTECT(t = NewList());
@@ -3858,6 +3882,7 @@ SEXP R_ParseBuffer(IoBuffer *buffer, int n, ParseStatus *status, SEXP prompt,
 	case PARSE_ERROR:
 	    R_IoBufferWriteReset(buffer);
 	    R_PPStackTop = savestack;
+	    endcontext(&cntxt);
 	    R_FinalizeSrcRefState();
 	    return R_NilValue;
 	    break;
@@ -3878,6 +3903,7 @@ finish:
 	rval = attachSrcrefs(rval);
     }
     R_PPStackTop = savestack; /* UNPROTECT lots! */
+    endcontext(&cntxt);
     R_FinalizeSrcRefState();    
     *status = PARSE_OK;
     return rval;

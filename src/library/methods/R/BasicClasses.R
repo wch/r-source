@@ -1,7 +1,7 @@
 #  File src/library/methods/R/BasicClasses.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -38,11 +38,12 @@
     clList <- c("VIRTUAL", "ANY", "vector", "missing")
     for(.class in clList)
         setClass(.class, where = envir)
+    ## Now some pseudo-classes in base, marked specially for new()
     ## "numeric" is the class returned by class() for double vectors
     vClasses <- c("logical", "numeric", "character",
+                  "double",
                   "complex", "integer", "raw",
                   "expression", "list")
-    ## now some pseudo-classes in base, marked specially for new()
     for(.class in vClasses) {
         .setBaseClass(.class, prototype = newBasic(.class), where = envir)
     }
@@ -96,8 +97,12 @@
     for(.class in vClasses)
         setIs(.class, "vector", where = envir)
 
+    ## The one place where "double" and "numeric" currently differ:
+    setIs("integer", "double", where = envir,
+          coerce  = .gblEnv(function(object) as.double(object)),
+          replace = .gblEnv(function(from, value) { class(value) <- "integer" ; value }))
     setIs("integer", "numeric", where = envir)
-
+    setIs("double",  "numeric", where = envir)
     setIs("structure", "vector", coerce = .gblEnv(function(object) as.vector(object)),
           replace = .gblEnv(function(from, to, value) {
               attributes(value) <- attributes(from)

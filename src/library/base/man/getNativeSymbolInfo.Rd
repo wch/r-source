@@ -81,7 +81,7 @@ getNativeSymbolInfo(name, PACKAGE, unlist = TRUE,
     \code{\link{.Call}}, \code{\link{.C}}, \code{\link{.Fortran}} and
     \code{\link{.External}}.
   }
-  \item{package}{a list containing 3 elements:
+  \item{dll}{a list containing 3 elements:
     \describe{
       \item{name}{the short form of the library name which can be used
         as the value of the \code{PACKAGE} argument in
@@ -106,6 +106,12 @@ getNativeSymbolInfo(name, PACKAGE, unlist = TRUE,
   If \code{name} contains only one symbol name and \code{unlist} is
   \code{TRUE}, then the single \code{NativeSymbolInfo} is returned
   rather than the list containing that one element.
+}
+\note{
+  The third element of the \code{NativeSymbolInfo} objects was renamed
+  from \code{package} to \code{dll} in \R version 3.6.0, for consistency
+  with the names of the \code{NativeSymbolInfo} objects returned by
+  \code{\link{getDLLRegisteredRoutines}()}.
 }
 \references{
   For information about registering native routines,

@@ -27,7 +27,7 @@ LIBOBJECTS = $(LIBSOURCES:.f=.o) @USE_VECLIB_G95FIX_TRUE@ vecLibg95f.o vecLibg95
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = \
-	LICENSE README R.patch Makefile.in Makefile.win \
+	LICENSE README Makefile.in Makefile.win \
 	Rlapackrc.rc dllversion.rc \
 	$(HEADERS) Lapack.c init_win.c \
 	vecLibg95c.c vecLibg95f.f \

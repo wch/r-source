@@ -911,11 +911,16 @@ SEXP match5(SEXP itable, SEXP ix, int nmatch, SEXP incomp, SEXP env)
     // special case scalar x -- for speed only :
     if(XLENGTH(x) == 1 && !incomp) {
       int val = nmatch;
-      int nitable = LENGTH(itable);
+      /* FIXME:
+	 The code for the special case uses LENGTH(table),
+	 the code for the regular case uses length(table):
+	 These should use the same.
+      */
+      int ntable = LENGTH(table);
       switch (type) {
       case STRSXP: {
 	  SEXP x_val = STRING_ELT(x,0);
-	  for (int i=0; i < nitable; i++) if (Seql(STRING_ELT(table,i), x_val)) {
+	  for (int i=0; i < ntable; i++) if (Seql(STRING_ELT(table,i), x_val)) {
 		  val = i + 1; break;
 	      }
 	  break; }
@@ -923,7 +928,7 @@ SEXP match5(SEXP itable, SEXP ix, int nmatch, SEXP incomp, SEXP env)
       case INTSXP: {
 	  int x_val = INTEGER_ELT(x, 0),
 	      *table_p = INTEGER(table);
-	  for (int i=0; i < nitable; i++) if (table_p[i] == x_val) {
+	  for (int i=0; i < ntable; i++) if (table_p[i] == x_val) {
 		  val = i + 1; break;
 	      }
 	  break; }
@@ -934,17 +939,17 @@ SEXP match5(SEXP itable, SEXP ix, int nmatch, SEXP incomp, SEXP env)
 	  double *table_p = REAL(table);
 	  /* we want all NaNs except NA equal, and all NAs equal */
 	  if (R_IsNA(x_val)) {
-	      for (int i=0; i < nitable; i++) if (R_IsNA(table_p[i])) {
+	      for (int i=0; i < ntable; i++) if (R_IsNA(table_p[i])) {
 		      val = i + 1; break;
 		  }
 	  }
 	  else if (R_IsNaN(x_val)) {
-	      for (int i=0; i < nitable; i++) if (R_IsNaN(table_p[i])) {
+	      for (int i=0; i < ntable; i++) if (R_IsNaN(table_p[i])) {
 		      val = i + 1; break;
 		  }
 	  }
 	  else {
-	      for (int i=0; i < nitable; i++) if (table_p[i] == x_val) {
+	      for (int i=0; i < ntable; i++) if (table_p[i] == x_val) {
 		      val = i + 1; break;
 	      }
 	  }
@@ -952,7 +957,7 @@ SEXP match5(SEXP itable, SEXP ix, int nmatch, SEXP incomp, SEXP env)
       case CPLXSXP: {
 	  Rcomplex x_val = COMPLEX_ELT(x, 0),
 	      *table_p = COMPLEX(table);
-	  for (int i=0; i < nitable; i++)
+	  for (int i=0; i < ntable; i++)
 	      if (cplx_eq(table_p[i], x_val)) {
 		  val = i + 1; break;
 	      }
@@ -960,7 +965,7 @@ SEXP match5(SEXP itable, SEXP ix, int nmatch, SEXP incomp, SEXP env)
       case RAWSXP: {
 	  Rbyte x_val = RAW_ELT(x, 0),
 	      *table_p = RAW(table);
-	  for (int i=0; i < nitable; i++) if (table_p[i] == x_val) {
+	  for (int i=0; i < ntable; i++) if (table_p[i] == x_val) {
 		  val = i + 1; break;
 	      }
 	  break; }

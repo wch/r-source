@@ -45,6 +45,7 @@
 extern void R_ProcessEvents(void);
 
 #ifdef Win32
+#define FD_SETSIZE 1024
 #include <io.h>
 #include <winsock2.h>
 #define _WINSOCKAPI_

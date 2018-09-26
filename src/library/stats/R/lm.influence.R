@@ -1,7 +1,7 @@
 #  File src/library/stats/R/lm.influence.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -45,12 +45,12 @@ lm.influence <- function (model, do.coef = TRUE)
 {
     wt.res <- weighted.residuals(model)
     e <- na.omit(wt.res)
-
+    is.mlm <- is.matrix(e) # n x q  matrix in the multivariate lm case
     if (model$rank == 0) {
         n <- length(wt.res) # drops 0 wt, may drop NAs
         sigma <- sqrt(deviance(model)/df.residual(model))
         res <- list(hat = rep(0, n), coefficients = matrix(0, n, 0),
-                    sigma = rep(sigma, n), wt.res = e)
+                    sigma = rep(sigma, n))
     } else {
         ## if we have a point with hat = 1, the corresponding e should be
         ## exactly zero.  Protect against returning Inf by forcing this
@@ -62,29 +62,49 @@ lm.influence <- function (model, do.coef = TRUE)
         if(NROW(e) != n)
             stop("non-NA residual length does not match cases used in fitting")
         do.coef <- as.logical(do.coef)
-        tol <- 10 * .Machine$double.eps;
-        ## This just returns e as res$wt.res
-        res <- .Call(C_influence, mqr, do.coef, e, tol);
-        if(!is.null(model$na.action)) {
+        tol <- 10 * .Machine$double.eps
+        res <- .Call(C_influence, mqr, do.coef, e, tol)
+        drop1d <- function(a) { # more cautious variant of drop(.)
+            d <- dim(a)
+            if(length(d) == 3L && d[[3L]] == 1L)
+                dim(a) <- d[-3L]
+            a
+        }
+        if(is.null(model$na.action)) {
+            if(!is.mlm) { ## drop the 'q=1' array extent (from C)
+                res$sigma <- drop(res$sigma)
+                if(do.coef)
+                    res$coefficients <- drop1d(res$coefficients)
+            }
+        } else {
             hat <- naresid(model$na.action, res$hat)
             hat[is.na(hat)] <- 0       # omitted cases have 0 leverage
             res$hat <- hat
             if(do.coef) {
                 coefficients <- naresid(model$na.action, res$coefficients)
                 coefficients[is.na(coefficients)] <- 0 # omitted cases have 0 change
-                res$coefficients <- coefficients
+                res$coefficients <- if(is.mlm) coefficients else drop1d(coefficients)
             }
             sigma <- naresid(model$na.action, res$sigma)
             sigma[is.na(sigma)] <- sqrt(deviance(model)/df.residual(model))
-            res$sigma <- sigma
+            res$sigma <- if(is.mlm) sigma else drop(sigma)
         }
     }
-    res$wt.res <- naresid(model$na.action, res$wt.res)
+    res$wt.res <- naresid(model$na.action, e)
     res$hat[res$hat > 1 - 10*.Machine$double.eps] <- 1 # force 1
     names(res$hat) <- names(res$sigma) <- names(res$wt.res)
     if(do.coef) {
-        rownames(res$coefficients) <- names(res$wt.res)
-        colnames(res$coefficients) <- names(coef(model))[!is.na(coef(model))]
+	cf <- coef(model)
+	if(is.mlm) { # coef is 3d array
+	    dnr <- dimnames(res$wt.res)
+	    dimnames(res$coefficients) <- list(
+		dnr[[1L]],
+		rownames(cf)[!apply(cf, 1L, anyNA)],
+		dnr[[2L]])
+	} else {
+	    dimnames(res$coefficients) <- list(names(res$wt.res),
+					       names(cf)[!is.na(cf)])
+	}
     }
     res
 }
@@ -110,7 +130,8 @@ rstandard.lm <- function(model, infl = lm.influence(model, do.coef=FALSE),
                          type = c("sd.1", "predictive"), ...)
 {
     type <- match.arg(type)
-    res <- infl$wt.res / switch(type, "sd.1" = sd * sqrt(1 - infl$hat),
+    res <- infl$wt.res / switch(type,
+				"sd.1" = c(outer(sqrt(1 - infl$hat), sd)),
 				"predictive" = 1 - infl$hat)
     res[is.infinite(res)] <- NaN
     res
@@ -145,7 +166,6 @@ rstudent.glm <- function(model, infl = influence(model, do.coef=FALSE), ...)
     r <- infl$dev.res
     r <- sign(r) * sqrt(r^2 + (infl$hat * infl$pear.res^2)/(1 - infl$hat))
     r[is.infinite(r)] <- NaN
-    r
     if (any(family(model)$family == c("binomial", "poisson")))
 	r else r/infl$sigma
 }
@@ -166,7 +186,9 @@ dfbeta.lm <- function(model, infl = lm.influence(model, do.coef=TRUE), ...)
 {
     ## for lm & glm
     b <- infl$coefficients
-    dimnames(b) <- list(names(infl$wt.res), variable.names(model))
+    mlm <- is.matrix(wr <- infl$wt.res)
+    ## is this needed -- check!?
+    if(!mlm) dimnames(b) <- list(names(wr), variable.names(model))
     b
 }
 
@@ -177,7 +199,9 @@ dfbetas.lm <- function (model, infl = lm.influence(model, do.coef=TRUE), ...)
     ## for lm & glm
     qrm <- qr(model)
     xxi <- chol2inv(qrm$qr, qrm$rank)
-    dfbeta(model, infl) / outer(infl$sigma, sqrt(diag(xxi)))
+    db <- dfbeta(model, infl)
+    if(length(dim(db)) == 3L) db <- aperm(db, c(1L,3:2))
+    db / outer(infl$sigma, sqrt(diag(xxi)))
 }
 
 covratio <- function(model, infl = lm.influence(model, do.coef=FALSE),
@@ -201,7 +225,7 @@ function(model, infl = lm.influence(model, do.coef=FALSE),
 	 hat = infl$hat, ...)
 {
     p <- model$rank
-    res <- ((res/(sd * (1 - hat)))^2 * hat)/p
+    res <- ((res/c(outer(1 - hat, sd)))^2 * hat)/p
     res[is.infinite(res)] <- NaN
     res
 }
@@ -217,25 +241,36 @@ function(model, infl = influence(model, do.coef=FALSE),
     res
 }
 
-influence.measures <- function(model)
+influence.measures <- function(model, infl = influence(model))
 {
-    is.influential <- function(infmat, n)
+    is.influential <- function(infmat, n)# n == sum(h > 0)  [!]
     {
 	## Argument is result of using influence.measures
-	## Returns a matrix  of logicals structured like the argument
-	k <- ncol(infmat) - 4
-	if(n <= k)
-	    stop("too few cases, n < k")
-	absmat <- abs(infmat)
-	result <- cbind(absmat[, 1L:k] > 1, # |dfbetas| > 1
-			absmat[, k + 1] > 3 * sqrt(k/(n - k)), # |dffit| > ..
-			abs(1 - infmat[, k + 2]) > (3*k)/(n - k),# |1-cov.r| >..
-			pf(infmat[, k + 3], k, n - k) > 0.5,# "P[cook.d..]" > .5
-			infmat[, k + 4] > (3 * k)/n) # hat > 3k/n
-	dimnames(result) <- dimnames(infmat)
-	result
+        d <- dim(infmat)
+        k <- d[[length(d)]] - 4L
+        if(n <= k)
+            stop("too few cases i with h_ii > 0), n < k")
+        absmat <- abs(infmat)
+	r <-
+	    if(is.matrix(infmat)) { # usual non-mlm case
+		## a matrix  of logicals structured like the argument
+		cbind(absmat[, 1L:k] > 1, # |dfbetas| > 1
+		      absmat[, k + 1] > 3 * sqrt(k/(n - k)), # |dffit| > ..
+		      abs(1 - infmat[, k + 2]) > (3*k)/(n - k),# |1-cov.r| >..
+		      pf(infmat[, k + 3], k, n - k) > 0.5,# "P[cook.d..]" > .5
+		      infmat[, k + 4] > (3 * k)/n) # hat > 3k/n
+	    } else { # is.mlm: a 3d-array, not a matrix
+		## a 3d-array of logicals structured like the argument
+		c(absmat[,, 1L:k] > 1, # |dfbetas| > 1
+		  absmat[,, k + 1] > 3 * sqrt(k/(n - k)), # |dffit| > ..
+		  abs(1 - infmat[,, k + 2]) > (3*k)/(n - k),# |1-cov.r| >..
+		  pf(infmat[,, k + 3], k, n - k) > 0.5,# "P[cook.d..]" > .5
+		  infmat[,, k + 4] > (3 * k)/n) # hat > 3k/n
+	    }
+	attributes(r) <- attributes(infmat) # dim, dimnames, ..
+        r
     }
-    infl <- influence(model) # generic -> lm, glm, [...] methods
+
     p <- model$rank
     e <- weighted.residuals(model)
     s <- sqrt(sum(e^2, na.rm=TRUE)/df.residual(model))
@@ -243,9 +278,11 @@ influence.measures <- function(model)
     xxi <- chol2inv(mqr$qr, mqr$rank)
     si <- infl$sigma
     h <- infl$hat
-    dfbetas <- infl$coefficients / outer(infl$sigma, sqrt(diag(xxi)))
+    is.mlm <- is.matrix(e)
+    cf <- if(is.mlm) aperm(infl$coefficients, c(1L,3:2)) else infl$coefficients
+    dfbetas <- cf / outer(infl$sigma, sqrt(diag(xxi)))
     vn <- variable.names(model); vn[vn == "(Intercept)"] <- "1_"
-    colnames(dfbetas) <- paste0("dfb.", abbreviate(vn))
+    dimnames(dfbetas)[[length(dim(dfbetas))]] <- paste0("dfb.", abbreviate(vn))
     ## Compatible to dffits():
     dffits <- e*sqrt(h)/(si*(1-h))
     if(any(ii <- is.infinite(dffits))) dffits[ii] <- NaN
@@ -253,11 +290,23 @@ influence.measures <- function(model)
     cooks.d <-
         if(inherits(model, "glm"))
             (infl$pear.res/(1-h))^2 * h/(summary(model)$dispersion * p)
-        else # lm
+        else # lm (incl "mlm")
             ((e/(s * (1 - h)))^2 * h)/p
-#    dn <- dimnames(mqr$qr)
-    infmat <- cbind(dfbetas, dffit = dffits, cov.r = cov.ratio,
-		    cook.d = cooks.d, hat=h)
+    infmat <-
+	if(is.mlm) { #  a 3d-array, not a matrix
+	    dns <- dimnames(dfbetas)
+	    dns[[3]] <- c(dns[[3]], "dffit", "cov.r", "cook.d", "hat")
+	    a <- array(dfbetas, dim = dim(dfbetas) + c(0,0, 3+1),
+		       dimnames = dns)
+	    a[,, "dffit"] <- dffits
+	    a[,, "cov.r"] <- cov.ratio
+	    a[,,"cook.d"] <- cooks.d
+	    a[,, "hat"  ] <- h
+	    a
+	} else {
+	    cbind(dfbetas, dffit = dffits, cov.r = cov.ratio,
+		  cook.d = cooks.d, hat = h)
+	}
     infmat[is.infinite(infmat)] <- NaN
     is.inf <- is.influential(infmat, sum(h > 0))
     ans <- list(infmat = infmat, is.inf = is.inf, call = model$call)
@@ -281,14 +330,20 @@ summary.infl <-
 {
     ## object must be as the result of	influence.measures(.)
     is.inf <- object$is.inf
+    isMLM <- length(dim(is.inf)) == 3L
     ## will have NaN values from any hat=1 rows.
     is.inf[is.na(is.inf)] <- FALSE
-     is.star <- apply(is.inf, 1L, any)
-    is.inf <- is.inf[is.star,]
+    is.star <- apply(is.inf, 1L, any)
     cat("Potentially influential observations of\n\t",
 	deparse(object$call),":\n")
     if(any(is.star)) {
-	imat <- object $ infmat[is.star,, drop = FALSE]
+	if(isMLM) {
+	    is.inf <- is.inf       [is.star,,]
+	    imat <- object $ infmat[is.star,, , drop = FALSE]
+	} else { # regular "lm"
+	    is.inf <- is.inf       [is.star, ]
+	    imat <- object $ infmat[is.star, , drop = FALSE]
+	}
 	if(is.null(rownam <- dimnames(object $ infmat)[[1L]]))
 	    rownam <- format(seq(is.star))
 	dimnames(imat)[[1L]] <- rownam[is.star]

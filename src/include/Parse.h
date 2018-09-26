@@ -23,7 +23,8 @@
 #define R_PARSE_H
 
 #include <R_ext/Parse.h>
-#include <IOStuff.h>
+#define R_USE_SIGNALS 1
+#include <IOStuff.h>	/*-> Defn.h */
 
 /* Public interface */
 /* SEXP R_ParseVector(SEXP, int, ParseStatus *, SEXP); in R_ext/Parse.h */
@@ -56,7 +57,7 @@ struct SrcRefState {
 
 void InitParser(void);
 
-void R_InitSrcRefState(void);
+void R_InitSrcRefState(RCNTXT *cntxt);
 void R_FinalizeSrcRefState(void);
 
 SEXP R_Parse1Buffer(IoBuffer*, int, ParseStatus *); /* in ReplIteration,

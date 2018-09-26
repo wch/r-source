@@ -478,6 +478,17 @@ static void subRegion(SEXP layout,
     */
 }
 
+Rboolean allocationRemaining(double initial, double remaining)
+{
+    if (initial == 0) {
+        return TRUE;
+    } else if (initial > 0) {
+        return remaining > 0;
+    } else {
+        return remaining < 0;
+    }
+}
+
 void calcViewportLayout(SEXP viewport,
 			double parentWidthCM,
 			double parentHeightCM,
@@ -518,8 +529,8 @@ void calcViewportLayout(SEXP viewport,
     /* Now allocate respected widths and heights and return
      * widthCM and heightCM remaining 
      */
-    if (reducedWidthCM > 0 ||
-        reducedHeightCM > 0) {
+    if (allocationRemaining(parentWidthCM, reducedWidthCM) ||
+        allocationRemaining(parentHeightCM, reducedHeightCM)) {
         allocateRespected(layout, relativeWidths, relativeHeights, 
                           &reducedWidthCM, &reducedHeightCM,
                           parentContext, parentgc, dd,
@@ -536,7 +547,7 @@ void calcViewportLayout(SEXP viewport,
     /* Now allocate relative widths and heights (unit = "null")
      * in the remaining space
      */
-    if (reducedWidthCM > 0) {
+    if (allocationRemaining(parentWidthCM, reducedWidthCM)) {
         allocateRemainingWidth(layout, relativeWidths,
                                reducedWidthCM, 
                                parentContext, parentgc, dd, npcWidths);
@@ -548,7 +559,7 @@ void calcViewportLayout(SEXP viewport,
          */ 
         setRemainingWidthZero(layout, relativeWidths, npcWidths);
     }
-    if (reducedHeightCM > 0) {
+    if (allocationRemaining(parentHeightCM, reducedHeightCM)) {
         allocateRemainingHeight(layout, relativeHeights,
                                 reducedHeightCM, 
                                 parentContext, parentgc, dd, npcHeights);

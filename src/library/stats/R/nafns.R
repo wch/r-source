@@ -1,7 +1,7 @@
 #  File src/library/stats/R/nafns.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -150,21 +150,25 @@ naresid.exclude <- function(omit, x, ...)
 
     ## the next line copes with calls from older versions of weights.default.
     if (is.null(x)) return(x)
-
+    n <- NROW(x)
+    keep <- rep.int(NA, n+length(omit))
+    keep[-omit] <- 1L:n
     if (is.matrix(x)) {
-	n <- nrow(x)
-	keep <- rep.int(NA, n+length(omit))
-	keep[-omit] <- 1L:n
 	x <- x[keep, , drop=FALSE]
 	temp <- rownames(x)
 	if (length(temp)) {
 	    temp[omit] <- names(omit)
 	    rownames(x) <- temp
         }
+    } else if(is.array(x) && length(d <- dim(x)) > 2L) {
+        ## e.g. inside lm.influence() for mlm, when x = coefficients: n x p x q
+	x <- x[keep, , , drop=FALSE]
+	temp <- (dn <- dimnames(x))[[1L]]
+	if (!is.null(temp)) {
+	    temp[omit] <- names(omit)
+	    dimnames(x)[[1L]] <- temp
+        }
     } else {# vector *or* data.frame !
-	n <- length(x)
-	keep <- rep.int(NA, n+length(omit))
-	keep[-omit] <- 1L:n
 	x <- x[keep]
 	temp <- names(x)
 	if (length(temp)) {

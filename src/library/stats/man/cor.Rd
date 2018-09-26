@@ -92,8 +92,7 @@ cov2cor(V)
   The denominator \eqn{n - 1} is used which gives an unbiased estimator
   of the (co)variance for i.i.d. observations.
   These functions return \code{\link{NA}} when there is only one
-  observation (whereas S-PLUS has been returning \code{NaN}), and
-  fail if \code{x} has length zero.
+  observation (whereas S-PLUS has been returning \code{NaN}).
 
   For \code{cor()}, if \code{method} is \code{"kendall"} or
   \code{"spearman"}, Kendall's \eqn{\tau}{tau} or Spearman's

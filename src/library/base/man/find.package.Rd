@@ -7,6 +7,7 @@
 
 \alias{find.package}
 \alias{path.package}
+\alias{packageNotFoundError}
 
 \title{Find Packages}
 \description{
@@ -17,6 +18,8 @@ find.package(package, lib.loc = NULL, quiet = FALSE,
              verbose = getOption("verbose"))
 
 path.package(package, quiet = FALSE)
+
+packageNotFoundError(package, lib.loc, call = NULL)
 }
 \arguments{
   \item{package}{character vector: the names of packages.}
@@ -28,6 +31,7 @@ path.package(package, quiet = FALSE)
     if the package is not found?}
   \item{verbose}{a logical.  If \code{TRUE}, additional diagnostics are
     printed, notably when a package is found more than once.}
+  \item{call}{call expression.}
 }
 \details{
   \code{find.package} returns path to the locations where the
@@ -53,6 +57,10 @@ path.package(package, quiet = FALSE)
   were loaded, or if none were named, for all currently attached packages.
   Unless \code{quiet = TRUE} it will warn if some of the packages named
   are not attached, and given an error if none are.
+
+  \code{packageNotFoundError} creates an error condition object of class
+  \code{packageNotFoundError} for signaling errors. The condition object
+  contains the fields \code{package} and \code{lib.loc}.  
 }
 \seealso{
   \code{\link{path.expand}} and \code{\link{normalizePath}} for path

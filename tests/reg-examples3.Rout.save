@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2018-08-13 r75123) -- "Unsuffered Consequences"
+R Under development (unstable) (2018-09-21 r75341) -- "Unsuffered Consequences"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -601,10 +601,13 @@ $R
 attr(,"class")
 [1] "DependsList"
 Warning messages:
-1: 'getDepList' is deprecated.
+1: 'vignetteDepends' is deprecated.
+Use 'vignetteInfo()$depends or package_dependencies()' instead.
+See help("Deprecated") 
+2: 'getDepList' is deprecated.
 Use 'dependsOnPkgs() or package_dependencies()' instead.
 See help("Deprecated") 
-2: 'package.dependencies' is deprecated.
+3: 'package.dependencies' is deprecated.
 Use 'package_dependencies' instead.
 See help("Deprecated") 
 > 

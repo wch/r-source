@@ -36,7 +36,7 @@
 \alias{cooks.distance.lm}
 \alias{cooks.distance.glm}
 \usage{
-influence.measures(model)
+influence.measures(model, infl = influence(model))
 
 rstandard(model, \dots)
 \method{rstandard}{lm}(model, infl = lm.influence(model, do.coef = FALSE),
@@ -116,6 +116,10 @@ hat(x, intercept = TRUE)
   respectively. (These re-normalize the residuals to have unit variance,
   using an overall and leave-one-out measure of the error variance
   respectively.)
+
+  Note that for \emph{multivariate} \code{lm()} models (of class
+  \code{"mlm"}), these functions return 3d arrays instead of matrices,
+  or matrices instead of vectors.
 
   Values for generalized linear models are approximations, as described
   in Williams (1987) (except that Cook's distances are scaled as

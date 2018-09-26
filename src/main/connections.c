@@ -107,6 +107,10 @@ static void con_destroy(int i);
 # undef truncate
 #endif
 
+#ifdef HAVE_SYS_STAT_H
+# include <sys/stat.h>
+#endif
+
 /* This works on Win64 where long is 4 bytes but long long is 8 bytes. */
 #if defined __GNUC__ && __GNUC__ >= 2
 __extension__ typedef long long int _lli_t;
@@ -660,6 +664,16 @@ typedef struct fileconn {
 #endif
 } *Rfileconn;
 
+static Rboolean shouldBuffer(int fd) {
+#ifdef HAVE_SYS_STAT_H
+    struct stat sb;
+    int err = fstat(fd, &sb);
+    return err ? FALSE : S_ISREG(sb.st_mode);
+#else
+    return FALSE;
+#endif
+}
+
 static Rboolean file_open(Rconnection con)
 {
     const char *name;
@@ -758,7 +772,7 @@ static Rboolean file_open(Rconnection con)
     if(mlen >= 2 && con->mode[mlen-1] == 'b') con->text = FALSE;
     else con->text = TRUE;
     con->save = -1000;
-    if (!isatty(fileno(fp)))
+    if (shouldBuffer(fileno(fp)))
 	set_buffer(con);
     set_iconv(con);
 
@@ -982,9 +996,6 @@ static Rconnection newfile(const char *description, int enc, const char *mode,
 #ifdef HAVE_SYS_TYPES_H
 # include <sys/types.h>
 #endif
-#ifdef HAVE_SYS_STAT_H
-# include <sys/stat.h>
-#endif
 
 # include <errno.h>
 
@@ -1051,7 +1062,6 @@ static Rboolean fifo_open(Rconnection con)
 
     if(mlen >= 2 && con->mode[mlen-1] == 'b') con->text = FALSE;
     else con->text = TRUE;
-    set_buffer(con);
     set_iconv(con);
     con->save = -1000;
     return TRUE;
@@ -1232,7 +1242,6 @@ static Rboolean	fifo_open(Rconnection con)
     if (boo_retvalue && this->hdl_namedpipe) {
 	con->isopen = TRUE;
 	con->text = uin_mode_len >= 2 && con->mode[uin_mode_len - 1] == 'b';
-	set_buffer(con);
 	set_iconv(con);
 	con->save = -1000;
     }
@@ -1470,7 +1479,6 @@ static Rboolean pipe_open(Rconnection con)
     else con->text = TRUE;
     this->last_was_write = !con->canread;
     this->rpos = this->wpos = 0;
-    set_buffer(con);
     set_iconv(con);
     con->save = -1000;
     return TRUE;
