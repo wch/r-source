@@ -1660,6 +1660,18 @@ static SEXP make_wrapper(SEXP x, SEXP meta)
 
     SEXP ans = R_new_altrep(cls, x, meta);
 
+#define WRAPATTRIB
+#ifdef WRAPATTRIB
+    if (ATTRIB(x) != R_NilValue) {
+	/* could just move attributes if there are no references to x */
+	PROTECT(ans);
+	SET_ATTRIB(ans, shallow_duplicate(ATTRIB(x)));
+	SET_OBJECT(ans, OBJECT(x));
+	IS_S4_OBJECT(ans) ? SET_S4_OBJECT(x) : UNSET_S4_OBJECT(x);
+	UNPROTECT(1); /* ans */
+    }
+#endif
+
 #ifndef SWITCH_TO_REFCNT
     if (MAYBE_REFERENCED(x))
 	/* make sure no mutation can happen through another reference */
@@ -1679,6 +1691,7 @@ SEXP attribute_hidden do_wrap_meta(SEXP call, SEXP op, SEXP args, SEXP env)
     default: error("only INTSXP, REALSXP, STRSXP vectors suppoted for now");
     }
 
+#ifndef WRAPATTRIB
     if (ATTRIB(x) != R_NilValue)
 	/* For objects without references we could move the attributes
 	   to the wrapper. For objects with references the attributes
@@ -1686,6 +1699,7 @@ SEXP attribute_hidden do_wrap_meta(SEXP call, SEXP op, SEXP args, SEXP env)
 	   bits would need to be moved as well.	*/
 	/* For now, just return the original object. */
 	return x;
+#endif
 
     int srt = asInteger(CADR(args));
     if (!KNOWN_SORTED(srt) && srt != KNOWN_UNSORTED &&
