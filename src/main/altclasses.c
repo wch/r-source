@@ -2344,6 +2344,23 @@ static SEXP make_wrapper(SEXP x, SEXP meta)
 
     SEXP ans = R_new_altrep(cls, x, meta);
 
+#define WRAPATTRIB
+#ifdef WRAPATTRIB
+    if (ATTRIB(x) != R_NilValue) {
+	if(NO_REFERENCES(x)) {
+	    SET_ATTRIB(ans, ATTRIB(x));
+	    SET_ATTRIB(x, R_NilValue);
+	}
+	else {
+	    PROTECT(ans);
+	    SET_ATTRIB(ans, shallow_duplicate(ATTRIB(x)));
+	    UNPROTECT(1); /* ans */
+	}
+	SET_OBJECT(ans, OBJECT(x));
+	IS_S4_OBJECT(ans) ? SET_S4_OBJECT(x) : UNSET_S4_OBJECT(x);
+    }
+#endif
+
 #ifndef SWITCH_TO_REFCNT
     if (MAYBE_REFERENCED(x))
 	/* make sure no mutation can happen through another reference */
@@ -2356,13 +2373,22 @@ static SEXP make_wrapper(SEXP x, SEXP meta)
 SEXP attribute_hidden do_wrap_meta(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x = CAR(args);
-    int nprot = 0;
     switch(TYPEOF(x)) {
     case INTSXP:
     case REALSXP:
     case STRSXP: break;
-    default:  return x; //error("only INTSXP, REALSXP, STRSXP vectors suppoted for now");
+    default: return x;
     }
+
+#ifndef WRAPATTRIB
+    if (ATTRIB(x) != R_NilValue)
+	/* For objects without references we could move the attributes
+	   to the wrapper. For objects with references the attributes
+	   would have to be shallow duplicated at least. The object/S4
+	   bits would need to be moved as well.	*/
+	/* For now, just return the original object. */
+	return x;
+#endif
 
     int srt = asInteger(CADR(args));
     if (!KNOWN_SORTED(srt) && srt != KNOWN_UNSORTED &&
@@ -2376,30 +2402,8 @@ SEXP attribute_hidden do_wrap_meta(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP meta = allocVector(INTSXP, NMETA);
     INTEGER(meta)[0] = srt;
     INTEGER(meta)[1] = no_na;
-    SEXP ans = PROTECT(make_wrapper(x, meta));nprot++;
-    if (ATTRIB(x) != R_NilValue) {
-	/* For objects without references we could move the attributes
-	   to the wrapper. For objects with references the attributes
-	   would have to be shallow duplicated at least. The object/S4
-	   bits would need to be moved as well.	*/
 
-	/*experimental implementation of what's described above */
-	SEXP attr = PROTECT(ATTRIB(x)); nprot++;
-	if(NO_REFERENCES(x)) {
-	    SET_ATTRIB(ans, attr);
-	    SET_ATTRIB(x, R_NilValue);
-	} else {
-	    /* what should happen to the attributes on x??? 
-	     do we need to duplicate x so we can clear them? */
-	    PROTECT(attr = shallow_duplicate(attr));nprot++;
-	    SET_ATTRIB(ans, attr); 
-	}
-	SET_OBJECT(ans, OBJECT(x));
-	IS_S4_OBJECT(x) ? SET_S4_OBJECT(ans) : UNSET_S4_OBJECT(ans);
-	//error("only vectors without attributes are supported for now");
-    }
-    UNPROTECT(nprot);
-    return ans;
+    return make_wrapper(x, meta);
 }
 
 
