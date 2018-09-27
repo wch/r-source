@@ -1,5 +1,5 @@
 
-R version 3.5.1 Patched (2018-09-09 r75265) -- "Feather Spray"
+R version 3.5.1 Patched (2018-09-25 r75369) -- "Feather Spray"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -278,6 +278,6 @@ f(df1 = 10, df2 = 2, ncp = 3) PASSED
 > 
 > 
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  1.444 0.03 1.479 0 0 
+Time elapsed:  1.455 0.027 1.488 0 0 
 > 
 > 

@@ -1,5 +1,5 @@
 
-R version 3.5.1 Patched (2018-09-09 r75265) -- "Feather Spray"
+R version 3.5.1 Patched (2018-09-25 r75369) -- "Feather Spray"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -362,4 +362,4 @@ difference in location  3.741417e-05  3.741417e-05  3.741417e-05
 > 
 > proc.time()
    user  system elapsed 
-  0.350   0.033   0.366 
+  0.350   0.044   0.371 

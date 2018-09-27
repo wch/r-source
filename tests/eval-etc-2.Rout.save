@@ -1,5 +1,5 @@
 
-R version 3.5.1 Patched (2018-09-09 r75265) -- "Feather Spray"
+R version 3.5.1 Patched (2018-09-25 r75369) -- "Feather Spray"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -567,5 +567,5 @@ Length  Class   Mode
 > 
 > ## at the very end
 > cat('Time elapsed: ', proc.time(), "\n")
-Time elapsed:  1.313 0.111 1.436 0 0 
+Time elapsed:  1.351 0.095 1.462 0 0 
 > 

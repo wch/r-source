@@ -1,5 +1,5 @@
 
-R version 3.5.1 Patched (2018-09-09 r75265) -- "Feather Spray"
+R version 3.5.1 Patched (2018-09-25 r75369) -- "Feather Spray"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -737,4 +737,4 @@ Consider specifying 'start' or using a selfStart model
 > 
 > proc.time()
    user  system elapsed 
-  1.580   0.064   1.630 
+  1.594   0.058   1.636 
