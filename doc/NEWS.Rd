@@ -451,6 +451,9 @@
       \item \code{polym()} and corresponding \code{lm()} prediction now
       also work for a boundary "vector" case fixing \PR{17474},
       reported by Alexandre Courtiol.
+
+      \item With a very large number of variables \code{terms()} could
+      segfault (\PR{17480}).
     }
   }
 }
