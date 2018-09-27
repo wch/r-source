@@ -711,7 +711,7 @@ This list is for questions and discussion about code development in R.
 @c pre-testing of new versions.  It is meant for those who maintain an
 @c active position in the development of R.
 @item R-package-devel
-A list which which provides a forum for learning about the R package
+A list which provides a forum for learning about the R package
 development process.
 @end table
 

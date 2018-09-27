@@ -47,7 +47,7 @@
   enclosure of the evaluation frame when the closure is used.
 
   There is an optional further component if the closure has been
-  byte-compiled.  This is not normally user-visible, but it indicated
+  byte-compiled.  This is not normally user-visible, but is indicated
   when functions are printed.
 }
 
