@@ -4519,6 +4519,10 @@ add_dummies <- function(dir, Log)
                 ex_re <- "^Warning: [[:alnum:]]+ hides"
                 lines <- filtergrep(ex_re, lines, useBytes = TRUE)
 
+                ## and gfortran 9 warnings about F2018
+                ex_re <- "^Warning: Fortran 2018 deleted feature:"
+                lines <- filtergrep(ex_re, lines, useBytes = TRUE)
+
                 ## Ignore install-time readLines() warnings about
                 ## files with incomplete final lines.  Most of these
                 ## come from .install_package_indices(), and should be
