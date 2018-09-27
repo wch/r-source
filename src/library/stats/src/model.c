@@ -1652,7 +1652,8 @@ SEXP termsform(SEXP args)
 {
     SEXP a, ans, v, pattern, formula, varnames, term, termlabs, ord;
     SEXP specials, t, data, rhs, call;
-    int i, j, k, l, n, keepOrder, allowDot;
+    R_xlen_t i, j, k, l, n;
+    int keepOrder, allowDot;
 
     Rboolean hadFrameNames = FALSE;
 

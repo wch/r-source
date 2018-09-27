@@ -63,6 +63,9 @@
 
       \item \code{cooks.distance()} and \code{rstandard()} now work
       correctly for multivariate models (\code{"mlm"}).
+
+      \item With a very large number of variables \code{terms()} could
+      segfault (\PR{17480}).
     }
   }
 }
