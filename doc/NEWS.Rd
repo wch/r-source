@@ -382,6 +382,11 @@
 
       \item Fixes to \code{convertColor()} for chromatic adaptation;
       thanks to Brodie Gaslam \PR{17473}.
+
+      \item Using \code{\\Sexpr[stage=install]{..}} to create an
+      \file{Rd} section no longer gives a warning in \command{R CMD
+	check}; problem originally posted by Gábor Csárdi, then reported
+      as \PR{17479} with a careful patch by Duncan Murdoch.
     }
   }
 }

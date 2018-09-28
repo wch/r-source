@@ -250,7 +250,7 @@ function(RdFiles, outFile = "", type = NULL,
 ### * Rd_db
 
 Rd_db <-
-function(package, dir, lib.loc = NULL)
+function(package, dir, lib.loc = NULL, stages = "build")
 {
     ## Build an Rd 'data base' from an installed package or the unpacked
     ## package sources as a list containing the parsed Rd objects.
@@ -331,7 +331,7 @@ function(package, dir, lib.loc = NULL)
             dir <- file_path_as_absolute(dir)
         built_file <- file.path(dir, "build", "partial.rdb")
         db <- .build_Rd_db(dir,
-                           stages = "build",
+                           stages = stages,
                            built_file = built_file)
         if(length(db)) {
             first <- nchar(file.path(dir, "man")) + 2L
