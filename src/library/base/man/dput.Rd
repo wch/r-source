@@ -75,10 +75,11 @@ dget(file, keep.source = FALSE)
 }
 \examples{
 fil <- tempfile()
-## Write an ASCII version of function mean to our temp file 
-dput(mean, fil)
-## And read it back into 'bar'
+## Write an ASCII version of the 'base' function mean() to our temp file, ..
+dput(base::mean, fil)
+## ... read it back into 'bar' and confirm it is the same 
 bar <- dget(fil)
+stopifnot(all.equal(bar, base::mean))
 ## Create a function with comments
 baz <- function(x) {
   # Subtract from one
