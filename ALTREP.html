@@ -96,9 +96,6 @@ img {
 .tabbed-pane {
   padding-top: 12px;
 }
-.html-widget {
-  margin-bottom: 20px;
-}
 button.code-folding-btn:focus {
   outline: none;
 }
@@ -289,7 +286,11 @@ Rscript -e 'rmarkdown::render(input="ALTREP.md", output_file="ALTREP.html")'
 <p>The class creation and registration functions, e.g. <code>R_make_altreal_class</code>, create a class object in an R session corresponding to a specified class name and package name. Within the R session the package C code can create objects using this class object. The initialization function for the package’s shared library should create the classes the package supports and install their methods.</p>
 <p>Serialization will record the class name and package name; unserializing will load the package.</p>
 <p>Ideally unloading a package shared library should cause methods in the associated classes to be replaced by stubs that signal errors when called. This would require a package to call a cleanup routine in its library’s unload function. This cleanup mechanism has not been implemented yet, so for now packages using this mechanism should not unload their DLLs.</p>
-<p>As an illustration of this mechanism, the <a href="https://github.com/ltierney/Rpkg-simplemmap"><code>simplemmap</code> package</a> implements the <a href="#memory-mapped-vectors">memory-mapped vectors</a> example described below as a package.</p>
+<p>Some examples of packages implementing <code>ALTREP</code> classes are provided in the <a href="https://github.com/ALTREP-examples/"><code>ALTREP</code> Examples</a> GitHub organization. Available examples:</p>
+<ul>
+<li><p><a href="https://github.com/ALTREP-examples/Rpkg-simplemmap"><code>simplemmap</code></a> implements the <a href="#memory-mapped-vectors">memory-mapped vectors</a> example described below as a package.</p></li>
+<li><p><a href="https://github.com/ALTREP-examples/Rpkg-mutable"><code>mutable</code></a> provides mutable vectors.</p></li>
+</ul>
 </div>
 <div id="some-implementation-details" class="section level2">
 <h2>Some Implementation Details</h2>

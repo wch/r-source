@@ -162,10 +162,16 @@ library's unload function. This cleanup mechanism has not been
 implemented yet, so for now packages using this mechanism should not
 unload their DLLs.
 
-As an illustration of this mechanism, the
-[`simplemmap` package](https://github.com/ltierney/Rpkg-simplemmap)
-implements the [memory-mapped vectors](#memory-mapped-vectors) example
-described below as a package.
+Some examples of packages implementing `ALTREP` classes are provided in the
+[`ALTREP` Examples](https://github.com/ALTREP-examples/) GitHub organization.
+Available examples:
+
+* [`simplemmap`](https://github.com/ALTREP-examples/Rpkg-simplemmap)
+  implements the [memory-mapped vectors](#memory-mapped-vectors)
+  example described below as a package.
+
+* [`mutable`](https://github.com/ALTREP-examples/Rpkg-mutable)
+  provides mutable vectors.
 
 
 ## Some Implementation Details
