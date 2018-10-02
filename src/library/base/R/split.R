@@ -34,8 +34,7 @@ split.default <- function(x, f, drop = FALSE, sep = ".", lex.order = FALSE, ...)
     y <- vector("list", length(lf))
     names(y) <- lf
     ind <- .Internal(split(seq_along(x), f))
-    for(k in lf) y[[k]] <- x[ind[[k]]]
-    y
+    lapply(ind, function(i) x[i])
 }
 
 ## This is documented to work for matrices too

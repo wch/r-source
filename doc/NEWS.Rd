@@ -394,6 +394,11 @@
       as \PR{17479} with a careful patch by Duncan Murdoch.
 
       \item Parse data now include a special node for equal assignment.
+
+      \item \code{split.default()} no longer relies on \code{[[<-()}, so
+      it behaves as expected when splitting an object by a factor with
+      the empty string as one of its levels. Thanks to Brad Friedman for
+      the report.
     }
   }
 }
