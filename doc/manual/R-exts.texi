@@ -9397,9 +9397,12 @@ Compiled code to be used with @R{} is loaded as a shared object
 information) or DLL (Windows).
 
 The shared object/DLL is loaded by @code{dyn.load} and unloaded by
-@code{dyn.unload}.  Unloading is not normally necessary, but it is
-needed to allow the DLL to be re-built on some platforms, including
-Windows.
+@code{dyn.unload}.  Unloading is not normally necessary and is not safe in
+general, but it is needed to allow the DLL to be re-built on some platforms,
+including Windows. Unloading a DLL and then re-loading a DLL of the same name
+may not work: Solaris uses the first version loaded. A DLL that registers
+C finalizers, but fails to unregister them when unloaded, may cause R to crash
+after unloading.
 
 The first argument to both functions is a character string giving the
 path to the object.  Programmers should not assume a specific file
