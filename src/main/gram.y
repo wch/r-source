@@ -345,7 +345,7 @@ expr_or_assign  :    expr                       { $$ = $1; }
                 |    equal_assign               { $$ = $1; }
                 ;
 
-equal_assign    :    expr EQ_ASSIGN expr_or_assign              { $$ = xxbinary($2,$1,$3); }
+equal_assign    :    expr EQ_ASSIGN expr_or_assign              { $$ = xxbinary($2,$1,$3); setId( $$, @$); }
                 ;
 
 expr	: 	NUM_CONST			{ $$ = $1;	setId( $$, @$); }

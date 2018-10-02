@@ -392,6 +392,8 @@
       \file{Rd} section no longer gives a warning in \command{R CMD
 	check}; problem originally posted by Gábor Csárdi, then reported
       as \PR{17479} with a careful patch by Duncan Murdoch.
+
+      \item Parse data now include a special node for equal assignment.
     }
   }
 }
