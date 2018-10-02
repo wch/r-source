@@ -215,6 +215,11 @@
     \itemize{
       \item \command{R CMD check} now optionally checks makefiles for
       correct and portable use of the \samp{SHLIB_OPENMP_*FLAGS} macros.
+
+      \item \command{R CMD check} now lists missing packages comma
+      separatedly and with regular quotes such as to be useful as
+      argument in calling \code{install.packages(c(..))}; from a suggestion by
+      Marcel Ramos.
     }
   }
 
