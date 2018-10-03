@@ -33,7 +33,6 @@ isBlankLineRd <- function(x) {
 
 stopRd <- function(block, Rdfile, ...)
 {
-    Rdfile <- sub("^man/", "", Rdfile) # for consistency with earlier reports
     srcref <- attr(block, "srcref")
     if (missing(Rdfile) && !is.null(srcref)) {
     	srcfile <- attr(srcref, "srcfile")
@@ -41,7 +40,10 @@ stopRd <- function(block, Rdfile, ...)
     	    Rdfile <- srcfile$filename
     }
     if (missing(Rdfile) || is.null(Rdfile)) Rdfile <- ""
-    else Rdfile <- paste0(Rdfile, ":")
+    else {
+        Rdfile <- sub("^man/", "", Rdfile) # for consistency with earlier reports
+        Rdfile <- paste0(Rdfile, ":")
+    }
 
     msg <- if (is.null(srcref))
         paste0(Rdfile, " ", ...)
@@ -55,7 +57,6 @@ stopRd <- function(block, Rdfile, ...)
 
 warnRd <- function(block, Rdfile, ...)
 {
-    Rdfile <- sub("^man/", "", Rdfile) # for consistency with earlier reports
     srcref <- attr(block, "srcref")
     if (missing(Rdfile) && !is.null(srcref)) {
     	srcfile <- attr(srcref, "srcfile")
@@ -63,7 +64,10 @@ warnRd <- function(block, Rdfile, ...)
     	    Rdfile <- srcfile$filename
     }
     if (missing(Rdfile) || is.null(Rdfile)) Rdfile <- ""
-    else Rdfile <- paste0(Rdfile, ":")
+    else {
+        Rdfile <- sub("^man/", "", Rdfile) # for consistency with earlier reports
+        Rdfile <- paste0(Rdfile, ":")
+    }
 
     msg <- if (is.null(srcref))
         paste0(Rdfile, " ", ...)
