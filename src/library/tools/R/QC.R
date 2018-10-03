@@ -6435,22 +6435,17 @@ function(dir, silent = FALSE, def_enc = FALSE, minlevel = -1)
     macros <- loadPkgRdMacros(dir)
     ## UGLY! FIXME: add (something like) 'dir' as argument to checkRd() below!
     oenv <- Sys.getenv("_R_RD_MACROS_PACKAGE_DIR_", unset = NA)
-    on.exit(if (!is.na(oenv)) Sys.setenv("_R_RD_MACROS_PACKAGE_DIR_" = oenv) 
+    on.exit(if (!is.na(oenv)) Sys.setenv("_R_RD_MACROS_PACKAGE_DIR_" = oenv)
     	    else Sys.unsetenv("_R_RD_MACROS_PACKAGE_DIR_"))
     Sys.setenv("_R_RD_MACROS_PACKAGE_DIR_" = normalizePath(dir))
-    owd <- setwd(file.path(dir, "man"))
-    on.exit(setwd(owd), add = TRUE)
-    
-    pg <- c(Sys.glob("*.Rd"), Sys.glob("*.rd"),
-            Sys.glob(file.path("*", "*.Rd")),
-            Sys.glob(file.path("*", "*.rd")))
-    pg <- pg[basename(dirname(pg)) != "macros"]
-    ## (Note that using character classes as in '*.[Rr]d' is not
-    ## guaranteed to be portable.)
+
+    pg <- dir("man", pattern = "[.][Rd]d$", full.names = TRUE)
     bad <- character()
     for (f in pg) {
         ## Kludge for now
         if(basename(f) %in% c("iconv.Rd", "showNonASCII.Rd")) def_enc <- TRUE
+        ## FIXME: this may not work for no/fake install if the expressions
+        ## involve the package under check.
 	tmp <- tryCatch(suppressMessages(checkRd(f, encoding = enc,
 						 def_enc = def_enc,
                                                  macros = macros,
@@ -8867,7 +8862,7 @@ function(package, lib.loc = NULL)
                                                         TRUE),
                   .get_S3_group_generics(),
                   .get_S3_primitive_generics()))
-                        
+
     methods_stop_list <- nonS3methods(basename(dir))
     methods <- lapply(generics,
                       function(g) {

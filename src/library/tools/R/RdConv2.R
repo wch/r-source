@@ -1,7 +1,7 @@
 #  File src/library/tools/R/RdConv2.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -33,6 +33,7 @@ isBlankLineRd <- function(x) {
 
 stopRd <- function(block, Rdfile, ...)
 {
+    Rdfile <- sub("^man/", "", Rdfile) # for consistency with earlier reports
     srcref <- attr(block, "srcref")
     if (missing(Rdfile) && !is.null(srcref)) {
     	srcfile <- attr(srcref, "srcfile")
@@ -54,6 +55,7 @@ stopRd <- function(block, Rdfile, ...)
 
 warnRd <- function(block, Rdfile, ...)
 {
+    Rdfile <- sub("^man/", "", Rdfile) # for consistency with earlier reports
     srcref <- attr(block, "srcref")
     if (missing(Rdfile) && !is.null(srcref)) {
     	srcfile <- attr(srcref, "srcfile")
@@ -237,12 +239,12 @@ processRdChunk <- function(code, stage, options, env, Rdfile, macros)
 	    tmpcon <- file()
 	    sink(file = tmpcon)
 	    if(options$eval) err <- evalWithOpt(ce, options, env)
-	    res <- c(res, "\n") # make sure final line is complete
+	    res <- c(res, "\n") # attampt to  make sure final line is complete
 	    sink()
-	    output <- readLines(tmpcon)
+	    output <- readLines(tmpcon, warn = FALSE) # sometimes attempt fails.
 	    close(tmpcon)
 	    ## delete empty output
-	    if(length(output) == 1L & output[1L] == "") output <- NULL
+	    if(length(output) == 1L && output[1L] == "") output <- NULL
 
 	    if (inherits(err, "error")) {
 	    	attr(code, "srcref") <- codesrcref
@@ -602,8 +604,9 @@ fsub1 <- function(pattern, replacement, x)
 checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
                     unknownOK = TRUE, listOK = TRUE, ..., def_enc = FALSE)
 {
-    warnRd <- function(block, Rdfile, ..., level=0)
+    warnRd <- function(block, Rdfile, ..., level = 0L)
     {
+        Rdfile <- sub("^man/", "", Rdfile)
         srcref <- attr(block, "srcref")
         msg <- if (is.null(srcref))
             paste0("file '", Rdfile, "': ", ...)
@@ -637,12 +640,14 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages = "render",
                        ## check for encoding; this is UTF-8 if known
                        ## (but then def_enc = TRUE?)
                        msg2 <- if(inEnc2) "in second part of \\enc" else "without declared encoding"
+                       txt <- unclass(block); attributes(txt) <- NULL
+                       msg3 <- paste0(msg2, ":\n  ", sQuote(txt))
                        if(Encoding(block) == "UTF-8")
                            warnRd(block, Rdfile, level = -1,
-                                  "Non-ASCII contents ", msg2)
+                                  "Non-ASCII contents ", msg3)
                        if(grepl("<[0123456789abcdef][0123456789abcdef]>", block))
                            warnRd(block, Rdfile, level = -3,
-                                  "Apparent non-ASCII contents ", msg2)
+                                  "Apparent non-ASCII contents ", msg3)
                    }
                    ## check if this renders as non-whitespace
                    if(!grepl("^[[:space:]]*$", block)) has_text <<- TRUE
