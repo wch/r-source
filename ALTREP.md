@@ -170,8 +170,9 @@ Available examples:
   implements the [memory-mapped vectors](#memory-mapped-vectors)
   example described below as a package.
 
-* [`mutable`](https://github.com/ALTREP-examples/Rpkg-mutable)
-  provides mutable vectors.
+* [`mutable`](https://github.com/ALTREP-examples/Rpkg-mutable) shows
+  an attempt to create mutable vectors. A vignette explains why this
+  does not work properly at this time.
 
 
 ## Some Guidelines
