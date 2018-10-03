@@ -9,14 +9,14 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item Linear multivariate empty models such as \code{lm(y ~ 0)}
+      \item Linear multiple empty models such as \code{lm(y ~ 0)}
       now have a correctly dimensioned empty coefficient matrix;
       reported by Brett Presnell.
 
       \item \code{vcov(<empty mlm>)} and hence \code{confint()} now
       work (via a consistency change in \code{summary.lm()}).
 
-      \item \code{confint(<multivariate lm()>)} now works correctly;
+      \item \code{confint(<multiple lm()>)} now works correctly;
       reported on R-devel by Steven Pav.
 
       \item \code{quade.test()} now also works correctly when its
@@ -55,6 +55,9 @@
 
       \item Parse data now have deterministic parent nodes (\PR{16041}).
 
+      \item Calling \code{match()} with length one \code{x} and POSIXlt
+      \code{table} gave a segfault (\PR{17459}).
+
       \item Fork cluster could hang due to a race condition in cluster
       initialization (\code{makeCluster()}).
 
@@ -62,7 +65,11 @@
       longer loops infinitely for e.g, \code{n <- 214e7}.
 
       \item \code{cooks.distance()} and \code{rstandard()} now work
-      correctly for multivariate models (\code{"mlm"}).
+      correctly for multiple linear models (\code{"mlm"}).
+
+      \item \code{polym()} and corresponding \code{lm()} prediction now
+      also work for a boundary "vector" case fixing \PR{17474},
+      reported by Alexandre Courtiol.
 
       \item With a very large number of variables \code{terms()} could
       segfault (\PR{17480}).
@@ -214,7 +221,7 @@
       \item \code{available.packages()} has two new arguments which
       control if the values from the per-session repository cache are
       used (default true, as before) and if so how old cached values can
-      be to be used (default one hour).
+      be used (default one hour).
 
       These arguments can be passed from \code{install.packages()},
       \code{update.packages()} and functions calling that: to enable
@@ -5500,9 +5507,6 @@
 
       \item The clipping region for a device was sometimes used in base
       graphics before it was set.
-
-      \item Calling \code{match()} with length one \code{x} and POSIXlt
-      \code{table} gave a segfault (\PR{17459}).
     }
   }
 }
