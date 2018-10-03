@@ -255,7 +255,7 @@ Rscript -e 'rmarkdown::render(input="ALTREP.md", output_file="ALTREP.html")'
 <h3>General Objects</h3>
 <p>The <code>ALTREP</code> class is the most general abstract class. It specifies the methods <code>Duplicate</code>, <code>Coerce</code>, <code>Inspect</code>, and <code>Length</code>. The <code>Length</code> method is included at this level since the <code>R</code> function <code>length</code> is defined for all objects.</p>
 <p>The <code>Duplicate</code> method accepts a second argument specifying whether the copy should be deep or shallow. A duplicate method can return a <code>C</code> <code>NULL</code> value to indicate that the object should be duplicated by the default method for its <code>SEXP</code> type.</p>
-<p>Similarly, a <code>Coerce</code> method can return a <code>C</code> <code>NULL</code> to indicate that the object should be coerced using the standard protocol for its <code>SEXP</code> type.</p>
+<p>A <code>Coerce</code> method can also return a <code>C</code> <code>NULL</code> to indicate that the object should be coerced using the standard protocol for its <code>SEXP</code> type.</p>
 <p>Adding an <code>Inspect</code> method is not essential but is useful for debugging.</p>
 </div>
 <div id="general-vectors" class="section level3">
@@ -291,6 +291,14 @@ Rscript -e 'rmarkdown::render(input="ALTREP.md", output_file="ALTREP.html")'
 <li><p><a href="https://github.com/ALTREP-examples/Rpkg-simplemmap"><code>simplemmap</code></a> implements the <a href="#memory-mapped-vectors">memory-mapped vectors</a> example described below as a package.</p></li>
 <li><p><a href="https://github.com/ALTREP-examples/Rpkg-mutable"><code>mutable</code></a> provides mutable vectors.</p></li>
 </ul>
+</div>
+<div id="some-guidelines" class="section level2">
+<h2>Some Guidelines</h2>
+<p>Creating an <code>ALTREP</code> class allows new forms of data to be accessed as ordinary <code>R</code> objects. R code written to be aware of a particular feature provided by a particular class may be able to handle objects from that class more effectively, but all classes should be designed to work properly with generic <code>R</code> code. This requires following some basic guidelines.</p>
+<p>Replacement functions will try to modify an object in place if it is not shared. <code>ALTREP</code> classes can support this for atomic vectors by providing a writable pointer to contiguous data with the <code>Dataptr</code> method. <code>STRSXP</code> modification is supported by <code>Set_elt</code> method, but base <code>C</code> code has not been modified to do this for atomic vectors. Atomic vector <code>ALTREP</code> classes should support returning writable pointers when possible; when this is not possible they can signal an error when a writable pointer is requested. Support for falling back to <code>Set_elt</code> methods for atomic vectors may be added in the future.</p>
+<p>A common practice in <code>C</code> code in the base <code>R</code> implementation is to duplicate an object and modify the copy in place. <code>ALTREP</code> classes need to handle this in an appropriate way. For example, this is how unary arithmetic functions produce their return value. For most <code>SEXP</code> types, in particular all vector types, if a <code>Duplicate</code> method is provided that returns a non-<code>NULL</code> value, then that value should be freshly allocated with no references. This will allow attributes to be modified. If the class value can provide a writable data pointer then this also supports modifying the data.</p>
+<p>Base code may attempt to re-use and modify a vector that has no references. In the future this code might be modified to avoid re-using <code>ALTREP</code> objects, or a mechanism for checking whether this is supported by an <code>ALTREP</code> class may be added.</p>
+<p><code>ALTREP</code> classes that record meta-data should be careful to consider whether the meta-data can become invalid due to external actions. An <code>ALTREP</code> object representing a column in a data store that records whether the column is sorted would need to invalidate that information if the stored data changes. To support <a href="#meta-data">meta-data</a> in wrapper objects as described below it may be necessary to add a method to allow objects to be asked whether their data can be changed externally.</p>
 </div>
 <div id="some-implementation-details" class="section level2">
 <h2>Some Implementation Details</h2>

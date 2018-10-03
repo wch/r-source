@@ -59,7 +59,7 @@ the copy should be deep or shallow. A duplicate method can return a
 `C` `NULL` value to indicate that the object should be duplicated by
 the default method for its `SEXP` type.
 
-Similarly, a `Coerce` method can return a `C` `NULL` to indicate that
+A `Coerce` method can also return a `C` `NULL` to indicate that
 the object should be coerced using the standard protocol for its
 `SEXP` type.
 
@@ -174,6 +174,51 @@ Available examples:
   provides mutable vectors.
 
 
+## Some Guidelines
+
+Creating an `ALTREP` class allows new forms of data to be accessed as
+ordinary `R` objects.  R code written to be aware of a particular
+feature provided by a particular class may be able to handle objects
+from that class more effectively, but all classes should be designed
+to work properly with generic `R` code. This requires following some
+basic guidelines.
+
+Replacement functions will try to modify an object in place if it is
+not shared.  `ALTREP` classes can support this for atomic vectors by
+providing a writable pointer to contiguous data with the `Dataptr`
+method. `STRSXP` modification is supported by `Set_elt` method, but
+base `C` code has not been modified to do this for atomic
+vectors. Atomic vector `ALTREP` classes should support returning
+writable pointers when possible; when this is not possible they can
+signal an error when a writable pointer is requested. Support for
+falling back to `Set_elt` methods for atomic vectors may be added in
+the future.
+
+A common practice in `C` code in the base `R` implementation is to
+duplicate an object and modify the copy in place. `ALTREP` classes
+need to handle this in an appropriate way. For example, this is how
+unary arithmetic functions produce their return value. For most `SEXP`
+types, in particular all vector types, if a `Duplicate` method is
+provided that returns a non-`NULL` value, then that value should be
+freshly allocated with no references. This will allow attributes to be
+modified. If the class value can provide a writable data pointer then
+this also supports modifying the data.
+	  
+Base code may attempt to re-use and modify a vector that has no
+references. In the future this code might be modified to avoid
+re-using `ALTREP` objects, or a mechanism for checking whether this is
+supported by an `ALTREP` class may be added.
+
+`ALTREP` classes that record meta-data should be careful to consider
+whether the meta-data can become invalid due to external actions. An
+`ALTREP` object representing a column in a data store that records
+whether the column is sorted would need to invalidate that information
+if the stored data changes.  To support [meta-data](#meta-data) in
+wrapper objects as described below it may be necessary to add a method
+to allow objects to be asked whether their data can be changed
+externally.
+	
+	 
 ## Some Implementation Details
 
 `ALTREP` objects are allocated as `CONS` objects and identified by
