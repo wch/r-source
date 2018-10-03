@@ -168,16 +168,16 @@
       structured error and warning objects.
 
       \code{.Deprecated()} now signals a warning of class
-      \code{deprecatedWarning}, and \code{.Defunct()} now signals an
-      error of class \code{defunctError}.
+      \code{"deprecatedWarning"}, and \code{.Defunct()} now signals an
+      error of class \code{"defunctError"}.
 
       \item Many \sQuote{package not found} errors are now signaled as
-      errors of class \code{packageNotFoundError}.
+      errors of class \code{"packageNotFoundError"}.
 
       \item As an experimental feature, when \code{loadNamespace()} fails
       because the requested package is not available the error is
       initially signaled with a \code{retry_loadNamespace} restart
-      available. This allows a calling handler to try to install the
+      available.  This allows a calling handler to try to install the
       package and continue.
 
       \item \code{S3method()} directives in \file{NAMESPACE} can now
@@ -221,9 +221,9 @@
       contents of \file{Rd} files and so detects issues both in
       evaluating the expressions and in the expanded contents.
 
-      \item \command{R CMD check} now lists missing packages comma
-      separatedly and with regular quotes such as to be useful as
-      argument in calling \code{install.packages(c(..))}; from a suggestion by
+      \item \command{R CMD check} now lists missing packages separated
+      by commas and with regular quotes such as to be useful as argument
+      in calling \code{install.packages(c(..))}; from a suggestion by
       Marcel Ramos.
     }
   }
@@ -368,14 +368,14 @@
       by Arunkumar Srinivasan.
 
       \item On Windows, \code{socketSelect} would hang with more than 64
-      sockets, and hence \code{parallel::clusterApplyLB} would hang with
-      more than 64 workers. Reported by Arunkumar Srinivasan.
+      sockets, and hence \code{parallel::clusterApplyLB()} would hang
+      with more than 64 workers.  Reported by Arunkumar Srinivasan.
 
       \item \code{as(1L, "double")} now does coerce (\PR{17457}).
 
       \item Buffering is disabled for \code{file()} connections to
       irregular files (like sockets), as well as \code{fifo()} and
-      \code{pipe()} connections. Fixes \PR{17470}, reported by Chris
+      \code{pipe()} connections.  Fixes \PR{17470}, reported by Chris
       Culnane.
 
       \item \code{lm.influence()}, \code{influence.measures()},
@@ -396,7 +396,7 @@
       \item Using \code{\\Sexpr[stage=install]{..}} to create an
       \file{Rd} section no longer gives a warning in \command{R CMD
 	check}; problem originally posted by Gábor Csárdi, then reported
-      as \PR{17479} with a careful patch by Duncan Murdoch.
+      as \PR{17479} with a partial patch by Duncan Murdoch.
 
       \item Parse data now include a special node for equal assignment.
 
@@ -412,14 +412,14 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item Linear multivariate empty models such as \code{lm(y ~ 0)}
+      \item Linear multiple empty models such as \code{lm(y ~ 0)}
       now have a correctly dimensioned empty coefficient matrix;
       reported by Brett Presnell.
 
       \item \code{vcov(<empty mlm>)} and hence \code{confint()} now
       work (via a consistency change in \code{summary.lm()}).
 
-      \item \code{confint(<multivariate lm()>)} now works correctly;
+      \item \code{confint(<multiple lm()>)} now works correctly;
       reported on R-devel by Steven Pav.
 
       \item \code{quade.test()} now also works correctly when its
@@ -468,7 +468,7 @@
       longer loops infinitely for e.g, \code{n <- 214e7}.
 
       \item \code{cooks.distance()} and \code{rstandard()} now work
-      correctly for multivariate models (\code{"mlm"}).
+      correctly for multiple linear models (\code{"mlm"}).
 
       \item \code{polym()} and corresponding \code{lm()} prediction now
       also work for a boundary "vector" case fixing \PR{17474},
@@ -624,7 +624,7 @@
       \item \code{available.packages()} has two new arguments which
       control if the values from the per-session repository cache are
       used (default true, as before) and if so how old cached values can
-      be to be used (default one hour).
+      be used (default one hour).
 
       These arguments can be passed from \code{install.packages()},
       \code{update.packages()} and functions calling that: to enable
