@@ -155,6 +155,11 @@ mcMap(f, ...)
   \command{Tcl} runs an event loop.  That event loop
   is inhibited in a child process but there could still be problems with
   Tk graphical connections.
+
+  It is \emph{strongly discouraged} to use these functions with
+  multi-threaded libraries or packages (see \code{\link{mcfork}} for more
+  details).  If in doubt, it is safer to use a non-FORK cluster (see
+  \code{\link{makeCluster}}, \code{\link{clusterApply}}).
 }
 
 \author{

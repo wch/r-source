@@ -1,6 +1,6 @@
 % File src/library/parallel/man/unix/pvec.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2009-2014 R Core Team
+% Copyright 2009-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{pvec}
@@ -76,7 +76,7 @@ pvec(v, FUN, ..., mc.set.seed = TRUE, mc.silent = FALSE,
   know whether such an outcome is intentional or not.
 
   See \code{\link{mcfork}} for the inadvisability of using this with
-  GUI front-ends.
+  GUI front-ends and multi-threaded libraries.
 }
 
 \author{

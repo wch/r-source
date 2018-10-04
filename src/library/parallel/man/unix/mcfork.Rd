@@ -1,6 +1,6 @@
 % File src/library/parallel/man/unix/mcfork.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2009-2014 R Core Team
+% Copyright 2009-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{mcfork}
@@ -91,6 +91,17 @@ mcexit(exit.code = 0L, send = NULL)
   \command{Tcl} runs an event loop.  That event loop is inhibited in a
   child process but there could still be problems with Tk graphical
   connections.
+
+  It is \emph{strongly discouraged} to use \code{mcfork} and the
+  higher-level functions in any multi-threaded R process (with additional
+  threads created by a third-party library or package).  Such use can lead
+  to deadlocks or crashes, because the child process created by
+  \code{mcfork} may not be able to access resources locked in the parent or
+  may see an inconsistent version of global data (\code{mcfork} runs system
+  call \code{fork} without \code{exec}).
+
+  If in doubt, it is safer to use a non-FORK cluster (see
+  \code{\link{makeCluster}}, \code{\link{clusterApply}}).
 }
 
 \author{
