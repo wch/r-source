@@ -2022,8 +2022,127 @@ static SEXP assignCall(SEXP op, SEXP symbol, SEXP fun,
     return lang3(op, symbol, val);
 }
 
+static void badIfCond(SEXP s, SEXP call, SEXP rho)
+{
+    PROTECT(s);	 /* needed as per PR#15990.  call gets protected by warningcall() */
+    char *check = getenv("_R_CHECK_LENGTH_1_CONDITION_");
+    const void *vmax = vmaxget();
+    Rboolean err = check && StringTrue(check); /* warn by default */
+    if (!err && check && StringFalse(check))
+	check = NULL; /* disabled */
+    Rboolean abort = FALSE; /* R_Suicide/abort */
+    Rboolean verbose = FALSE;
+    const char *pkgname = 0;
+    if (!err && check) {
+	/* err when the condition is evaluated in given package */
+	const char *pprefix = "package:";
+	const char *aprefix = "abort";
+	const char *vprefix = "verbose";
+	const char *cpname = "_R_CHECK_PACKAGE_NAME_";
+	size_t lpprefix = strlen(pprefix);
+	size_t laprefix = strlen(aprefix);
+	size_t lvprefix = strlen(vprefix);
+	size_t lcpname = strlen(cpname);
+	Rboolean ignore = FALSE;
 
-/* rho only needed for _R_CHECK_LENGTH_1_CONDITION_=package:name */
+	SEXP spkg = R_NilValue;
+	for(; spkg == R_NilValue && rho != R_EmptyEnv; rho = ENCLOS(rho))
+	    if (R_IsPackageEnv(rho))
+		spkg = R_PackageEnvName(rho);
+	    else if (R_IsNamespaceEnv(rho))
+		spkg = R_NamespaceEnvSpec(rho);
+	if (spkg != R_NilValue)
+	    pkgname = translateChar(STRING_ELT(spkg, 0));
+
+	while (check[0] != '\0') {
+	    if (!strncmp(pprefix, check, lpprefix)) {
+		/* check starts with "package:" */
+		check += lpprefix;
+		size_t arglen = 0;
+		const char *sep = strchr(check, ',');
+		if (sep)
+		    arglen = sep - check;
+		else
+		    arglen = strlen(check);
+		ignore = TRUE;
+		if (pkgname) {
+		    if (!strncmp(check, pkgname, arglen) && strlen(pkgname) == arglen)
+			ignore = FALSE;
+		    if (!strncmp(check, cpname, arglen) && lcpname == arglen) {
+			/* package name specified in _R_CHECK_PACKAGE_NAME */
+			const char *envpname = getenv(cpname);
+			if (envpname && !strcmp(envpname, pkgname))
+			    ignore = FALSE;
+		    }
+		}
+		check += arglen;
+	    } else if (!strncmp(aprefix, check, laprefix)) {
+		/* check starts with "abort" */
+		check += laprefix;
+		abort = TRUE;
+	    } else if (!strncmp(vprefix, check, lvprefix)) {
+		/* check starts with "verbose" */
+		check += lvprefix;
+		verbose = TRUE;
+	    } else if (check[0] == ',') {
+		check++;
+	    } else
+		error("invalid value of _R_CHECK_LENGTH_1_CONDITION_");
+	}
+	if (ignore) {
+	    abort = FALSE; /* err is FALSE */
+	    verbose = FALSE;
+	} else if (!abort)
+	    err = TRUE;
+    }
+    if (verbose) {
+	int oldout = R_OutputCon;
+	R_OutputCon = 2;
+	int olderr = R_ErrorCon;
+	R_ErrorCon = 2;
+	REprintf(" ----------- FAILURE REPORT -------------- \n");
+	REprintf(" --- srcref --- \n");
+	SrcrefPrompt("", R_getCurrentSrcref());
+	REprintf("\n");
+	if (pkgname) {
+	    REprintf(" --- package (from environment) --- \n");
+	    REprintf("%s\n", pkgname);
+	}
+	REprintf(" --- call from context --- \n");
+	PrintValue(R_GlobalContext->call);
+	REprintf(" --- call from argument --- \n");
+	PrintValue(call);
+	REprintf(" --- R stacktrace ---\n");
+	printwhere();
+	REprintf(" --- value of length: %d type: %s ---\n",
+		 length(s), type2char(TYPEOF(s)));
+	PrintValue(s);
+	REprintf(" --- function from context --- \n");
+	if (R_GlobalContext->callfun != NULL &&
+	    TYPEOF(R_GlobalContext->callfun) == CLOSXP)
+	    PrintValue(R_GlobalContext->callfun);
+	REprintf(" --- function search by body ---\n");
+	if (R_GlobalContext->callfun != NULL &&
+	    TYPEOF(R_GlobalContext->callfun) == CLOSXP)
+	    findFunctionForBody(R_ClosureExpr(R_GlobalContext->callfun));
+	REprintf(" ----------- END OF FAILURE REPORT -------------- \n");
+	R_OutputCon = oldout;
+	R_ErrorCon = olderr;
+    }
+    if (abort)
+	R_Suicide("the condition has length > 1");
+    else if (err)
+	errorcall(call, _("the condition has length > 1"));
+    else
+	warningcall(call,
+		_("the condition has length > 1 and only the first element will be used"));
+    vmaxset(vmax);
+    UNPROTECT(1);
+}
+
+/* rho is only needed for _R_CHECK_LENGTH_1_CONDITION_=package:name and for
+     detecting the current package in related diagnostic messages
+*/
 static R_INLINE Rboolean asLogicalNoNA(SEXP s, SEXP call, SEXP rho)
 {
     Rboolean cond = NA_LOGICAL;
@@ -2041,44 +2160,8 @@ static R_INLINE Rboolean asLogicalNoNA(SEXP s, SEXP call, SEXP rho)
     }
 
     int len = length(s);
-    if (len > 1) {
-	PROTECT(s);	 /* needed as per PR#15990.  call gets protected by warningcall() */
-	char *check = getenv("_R_CHECK_LENGTH_1_CONDITION_");
-	const void *vmax = vmaxget();
-	Rboolean err = check && StringTrue(check); /* warn by default */
-	if (!err && check) {
-	    /* err when the condition is evaluated in given package */
-	    const char *pprefix  = "package:";
-	    size_t lprefix = strlen(pprefix);
-	    if (!strncmp(pprefix, check, lprefix)) {
-		/* check starts with "package:" */
-		SEXP spkg = R_NilValue;
-		for(; spkg == R_NilValue && rho != R_EmptyEnv; rho = ENCLOS(rho))
-		    if (R_IsPackageEnv(rho))
-			spkg = R_PackageEnvName(rho);
-		    else if (R_IsNamespaceEnv(rho))
-			spkg = R_NamespaceEnvSpec(rho);
-		if (spkg != R_NilValue) {
-		    const char *pkgname = translateChar(STRING_ELT(spkg, 0));
-		    if (!strcmp(check + lprefix, pkgname))
-			err = TRUE;
-		    if (!strcmp(check + lprefix, "_R_CHECK_PACKAGE_NAME_")) {
-			/* package name specified in _R_CHECK_PACKAGE_NAME */
-			const char *envpname = getenv("_R_CHECK_PACKAGE_NAME_");
-			if (envpname && !strcmp(envpname, pkgname))
-			    err = TRUE;
-		    }
-		}
-	    }
-	}
-	if (err)
-	    errorcall(call, _("the condition has length > 1"));
-        else
-	    warningcall(call,
-		    _("the condition has length > 1 and only the first element will be used"));
-	vmaxset(vmax);
-	UNPROTECT(1);
-    }
+    if (len > 1)
+	badIfCond(s, call, rho); /* warning or error */
     if (len > 0) {
 	/* inline common cases for efficiency */
 	switch(TYPEOF(s)) {

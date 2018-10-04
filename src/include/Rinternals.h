@@ -1018,6 +1018,7 @@ Rboolean Rf_pmatch(SEXP, SEXP, Rboolean);
 Rboolean Rf_psmatch(const char *, const char *, Rboolean);
 SEXP R_ParseEvalString(const char *, SEXP);
 void Rf_PrintValue(SEXP);
+void Rf_printwhere(void);
 #ifndef INLINE_PROTECT
 SEXP Rf_protect(SEXP);
 #endif
@@ -1467,6 +1468,7 @@ void R_orderVector1(int *indx, int n, SEXP x,       Rboolean nalast, Rboolean de
 #define pmatch			Rf_pmatch
 #define psmatch			Rf_psmatch
 #define PrintValue		Rf_PrintValue
+#define printwhere		Rf_printwhere
 #define protect			Rf_protect
 #define readS3VarsFromFrame	Rf_readS3VarsFromFrame
 #define reEnc			Rf_reEnc
