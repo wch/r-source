@@ -88,6 +88,9 @@
  * "object.size"
  * "reference", "show"
  * "scrap"
+
+ * R_NilValue is not a valid value for any option, but is used to signal a
+ * missing option by FindTaggedItem/GetOption and higher-level functions.
  */
 
 
@@ -101,8 +104,11 @@ static SEXP Options(void)
 static SEXP FindTaggedItem(SEXP lst, SEXP tag)
 {
     for ( ; lst != R_NilValue ; lst = CDR(lst)) {
-	if (TAG(lst) == tag)
+	if (TAG(lst) == tag) {
+	    if (CAR(lst) == R_NilValue) 
+		error("option %s has NULL value", CHAR(PRINTNAME(tag)));
 	    return lst;
+	}
     }
     return R_NilValue;
 }
