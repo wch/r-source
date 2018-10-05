@@ -543,8 +543,32 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 			strlen(CHAR(R_print.na_string_noquote)));
 	quote = 0;
     } else {
+	if(IS_BYTES(s)) {
+	    ienc = CE_NATIVE;
 #ifdef Win32
-	if(WinUTF8out) {
+	    if (WinUTF8out)
+		ienc = CE_UTF8;
+#endif
+	    p = CHAR(s);
+	    cnt = (int) strlen(p);
+	    const char *q;
+	    char *pp = R_alloc(4*cnt+1, 1), *qq = pp, buf[5];
+	    for (q = p; *q; q++) {
+		unsigned char k = (unsigned char) *q;
+		if (k >= 0x20 && k < 0x80) {
+		    *qq++ = *q;
+		    if (quote && *q == '"') cnt++;
+		} else {
+		    snprintf(buf, 5, "\\x%02x", k);
+		    for(j = 0; j < 4; j++) *qq++ = buf[j];
+		    cnt += 3;
+		}
+	    }
+	    *qq = '\0';
+	    p = pp;
+	    i = cnt;
+#ifdef Win32
+	} else if(WinUTF8out) {
 	    if(ienc == CE_UTF8) {
 		p = CHAR(s);
 		i = Rstrlen(s, quote);
@@ -560,30 +584,9 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 		}
 		ienc = CE_UTF8;
 	    }
-	} else
 #endif
-	{
-	    if(IS_BYTES(s)) {
-		ienc = CE_NATIVE;
-		p = CHAR(s);
-		cnt = (int) strlen(p);
-		const char *q;
-		char *pp = R_alloc(4*cnt+1, 1), *qq = pp, buf[5];
-		for (q = p; *q; q++) {
-		    unsigned char k = (unsigned char) *q;
-		    if (k >= 0x20 && k < 0x80) {
-			*qq++ = *q;
-			if (quote && *q == '"') cnt++;
-		    } else {
-			snprintf(buf, 5, "\\x%02x", k);
-			for(j = 0; j < 4; j++) *qq++ = buf[j];
-			cnt += 3;
-		    }
-		}
-		*qq = '\0';
-		p = pp;
-		i = cnt;
-	    } else if (useUTF8 && ienc == CE_UTF8) {
+	} else {
+	    if (useUTF8 && ienc == CE_UTF8) {
 		p = CHAR(s);
 		i = Rstrlen(s, quote);
 		cnt = LENGTH(s);
