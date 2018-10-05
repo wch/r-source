@@ -1709,7 +1709,7 @@ int asLogical2(SEXP x, int checking, SEXP call)
 }
 int asLogical(SEXP x)
 {
-    return asLogical2(x, /* checking = */ 0, NILSXP);
+    return asLogical2(x, /* checking = */ 0, R_NilValue);
 }
 
 
