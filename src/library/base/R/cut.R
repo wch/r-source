@@ -1,7 +1,7 @@
 #  File src/library/base/R/cut.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ cut.default <-
 	nb <- as.integer(breaks + 1) # one more than #{intervals}
 	dx <- diff(rx <- range(x, na.rm = TRUE))
 	if(dx == 0) {
-            dx <- abs(rx[1L])
+            dx <- if(rx[1L] != 0) abs(rx[1L]) else 1
             breaks <- seq.int(rx[1L] - dx/1000, rx[2L] + dx/1000,
                               length.out = nb)
         } else {

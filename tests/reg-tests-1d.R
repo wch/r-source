@@ -2091,6 +2091,13 @@ stopifnot(identical(dim(cf <- mi$coefficients), c(7L, 1L)),
 ## gave an error for a few days in R-devel
 
 
+## cut(<constant 0>), PR#16802
+c0 <- cut(rep(0L, 7), breaks = 3)
+stopifnot(is.factor(c0), length(c0) == 7, length(unique(c0)) == 1)
+## cut() gave error  _'breaks' are not unique_  in R <= 3.5.1
+
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())
