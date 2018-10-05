@@ -400,12 +400,14 @@ const char *getTZinfo(void)
     if(!Olson[0]) {
 	const char *p = getenv("TZ");
 	if(p) {
-	    strcpy(Olson, p);	    
+	    strncpy(Olson, p, 63);
+	    Olson[63] = '\0';
 	} else {
 	    GetTimeZoneInformation(&tzi);
 	    wcstombs(StandardName, tzi.StandardName, 64);
 	    wcstombs(DaylightName, tzi.DaylightName, 64);
-	    strcpy(Olson, reg2Olson(tzi.StandardName));
+	    strncpy(Olson, reg2Olson(tzi.StandardName), 63);
+	    Olson[63] = '\0';
 	}
 #ifdef DEBUG
 	printf("names %s, %s\n", StandardName, DaylightName);
