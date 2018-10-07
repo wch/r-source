@@ -1752,7 +1752,7 @@ Windows' CRLF line endings.
 The front page of a @acronym{CRAN} site has a link `Download R for OS
 X'. Click on that, then download the file @file{R-@value{VERSIONno}.pkg}
 and install it. This runs on macOS 10.11 and later (El Capitan, Sierra,
-High Sierra, @dots{}).
+High Sierra, Mojave, @dots{}).
 
 Installers for R-patched and R-devel are usually available from
 @uref{https://r.research.att.com}.  (Some of these packages are
@@ -4999,9 +4999,9 @@ SAFE_FFLAGS=-axsse2
 (`macOS' was known as `OS X' from 2012--2016.)
 
 The instructions here are for @cputype{x86_64} builds on 10.11 (El
-Capitan) or later.  @R{} can be built for 10.9 and 10.10 and in
-principle@footnote{It will be necessary to install later versions of
-software such as @code{libcurl}.} for 10.6 to 10.8.
+Capitan) or later.  @R{} can in principle be built for 10.6 and later,
+although this is little tested and it may be necessary to install later
+versions of software such as @code{libcurl}.
 
 To build @R{} you need Apple's `Command Line Tools': these can be
 (re-)installed by @command{xcode-select --install}.  (If you have a
@@ -5031,7 +5031,7 @@ binary components are available from
 @uref{https://r.research.att.com/libs}: you will need @code{pcre} and
 @code{xz} (for @code{libzma}) as recent macOS versions provide libraries
 but not headers for these (and the system @code{pcre} is too old at 8.02
-for versions up to Sierra, although High Sierra has 8.40).
+for versions up to Sierra, although High Sierra had 8.40).
 
 An X sub-system is required unless configuring using
 @option{--without-x}: see @uref{https://xquartz.macosforge.org/}. @R{}'s
@@ -5092,7 +5092,7 @@ FC = $F77
 FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin15/6.1.0
   -L/usr/local/gfortran/lib -lgfortran -lquadmath -lm
 @end example
-or (Sierra or High Sierra)
+or (Sierra or later)
 @example
 F77 = /usr/local/gfortran/bin/gfortran
 FC = $F77
