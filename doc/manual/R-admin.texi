@@ -1712,7 +1712,7 @@ build systems: a 64-bit build is selected in file @file{MkRules.local}.
 The Windows installer contains a set of test files used when building
 @R{}.
 
-The @code{Rtools} are not needed to run these tests. but more
+The @code{Rtools} are not needed to run these tests, but more
 comprehensive analysis of errors will be given if @command{diff} is in
 the path (and @code{errorsAreFatal = FALSE} is then not needed below).
 
@@ -1752,7 +1752,7 @@ Windows' CRLF line endings.
 The front page of a @acronym{CRAN} site has a link `Download R for OS
 X'. Click on that, then download the file @file{R-@value{VERSIONno}.pkg}
 and install it. This runs on macOS 10.11 and later (El Capitan, Sierra,
-High Sierra, @dots{}).
+High Sierra, Mojave, @dots{}).
 
 Installers for R-patched and R-devel are usually available from
 @uref{https://r.research.att.com}.  (Some of these packages are
@@ -5059,7 +5059,7 @@ binary components are available from
 @uref{https://r.research.att.com/libs}: you will need @code{pcre} and
 @code{xz} (for @code{libzma}) as recent macOS versions provide libraries
 but not headers for these (and the system @code{pcre} is too old at 8.02
-for versions up to Sierra, although High Sierra has 8.40).
+for versions up to Sierra, although High Sierra had 8.40).
 
 An X sub-system is required unless configuring using
 @option{--without-x}: see @uref{https://xquartz.macosforge.org/}. @R{}'s
@@ -5120,7 +5120,7 @@ FC = $F77
 FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin15/6.1.0
   -L/usr/local/gfortran/lib -lgfortran -lquadmath -lm
 @end example
-or (Sierra or High Sierra)
+or (Sierra or later)
 @example
 F77 = /usr/local/gfortran/bin/gfortran
 FC = $F77
@@ -5136,8 +5136,8 @@ Current @acronym{CRAN} binary distributions use the build of
 Other recent distributions of @command{clang} are often available from
 @uref{http://llvm.org/releases/}: for example at the time of
 writing@footnote{It is unstated what the minimum OS requirement is for
-these: the distribution of 5.0.0 required Sierra or later.} of 5.0.1 and
-6.0.0.  In particular, all of these include support for OpenMP which
+these: the distribution of 5.0.0 required Sierra or later.} of 6.0.1 and
+7.0.0.  In particular, all of these include support for OpenMP which
 Apple builds of @command{clang} do not.  Suppose one of these
 distributions is installed under @file{/usr/local/clang6}.  Then @R{}
 could be configured by something like
@@ -5352,7 +5352,7 @@ JAVA_LIBS="-L/$@{JAVA_HOME@}/jre/lib/server -ljvm"
 @noindent
 in @file{config.site}.
 
-To use the builds of OpenJDK (taballs) from @uref{http://jdk.java.net/},
+To use the builds of OpenJDK (tarballs) from @uref{http://jdk.java.net/},
 set @env{JAVA_HOME}:
 @example
 JAVA_HOME=@var{/path/to/JDK}/jdk-11.jdk/Contents/Home
