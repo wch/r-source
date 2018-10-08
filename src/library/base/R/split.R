@@ -1,7 +1,7 @@
 #  File src/library/base/R/split.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -30,9 +30,6 @@ split.default <- function(x, f, drop = FALSE, sep = ".", lex.order = FALSE, ...)
     if (is.null(attr(x, "class")))
 	return(.Internal(split(x, f)))
     ## else
-    lf <- levels(f)
-    y <- vector("list", length(lf))
-    names(y) <- lf
     ind <- .Internal(split(seq_along(x), f))
     lapply(ind, function(i) x[i])
 }
