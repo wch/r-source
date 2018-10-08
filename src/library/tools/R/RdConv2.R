@@ -190,6 +190,15 @@ setDynamicFlags <- function(block, flags) {  # flags in format coming from getDy
     block
 }
 
+replaceRdSrcrefs <- function(Rd, srcref) {
+    if(!is.null(attr(Rd, "srcref")))
+	attr(Rd, "srcref") <- srcref
+    if(is.list(Rd)) # recurse
+	for(i in seq_along(Rd))
+	    Rd[[i]] <- replaceRdSrcrefs(Rd[[i]], srcref)
+    Rd
+}
+
 processRdChunk <- function(code, stage, options, env, Rdfile, macros)
 {
     if (is.null(opts <- attr(code, "Rd_option"))) opts <- ""
@@ -251,7 +260,7 @@ processRdChunk <- function(code, stage, options, env, Rdfile, macros)
 	    if(length(output) == 1L && output[1L] == "") output <- NULL
 
 	    if (inherits(err, "error")) {
-	    	attr(code, "srcref") <- codesrcref
+	    	code <- replaceRdSrcrefs(code, codesrcref)
 	    	stopRd(code, Rdfile, err$message)
 	    }
 
@@ -323,8 +332,8 @@ processRdChunk <- function(code, stage, options, env, Rdfile, macros)
 	    res <- tagged(res, "\\verb")
 	} else res <- tagged("", "COMMENT")
     } else res <- code
-    attr(res, "srcref") <- codesrcref
-    res
+    ## return :
+    replaceRdSrcrefs(res, codesrcref)
 }
 
 processRdIfdefs <- function(blocks, defines)
@@ -356,7 +365,7 @@ processRdIfdefs <- function(blocks, defines)
 	    	if (!is.null(newtag) && newtag == "#expanded") { # ifdef has expanded.
 	    	    all <- seq_along(block)
 	    	    before <- all[all < i]
-	    	    after <- all[all > i]
+	    	    after  <- all[all > i]
 	    	    block <- structure(tagged(c(block[before], newval, block[after]),
 	    	    			      tag), srcref = attr(block, "srcref"))
 	    	} else {
@@ -365,10 +374,10 @@ processRdIfdefs <- function(blocks, defines)
 		    i <- i+1L
 		}
 	    }
-	    block <- setDynamicFlags(block, flags)
-	}
-	block
-    }
+	    setDynamicFlags(block, flags)
+	} else
+	    block
+    } # end{recurse}
 
     recurse(blocks)
 }
