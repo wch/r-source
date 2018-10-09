@@ -201,6 +201,9 @@
       \item \code{sQuote()} and \code{dQuote()} get an explicit \code{q}
       argument with obvious default instead of using
       \code{getOption("fancyQuotes")} implicitly and unconditionally.
+
+      \item \code{unzip()} can list archives with comments and spaces in
+      file names even using external \command{unzip} command.
     }
   }
 

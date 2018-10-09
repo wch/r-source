@@ -37,14 +37,18 @@ unzip <-
             stop("'unzip' must be a single character string")
         zipfile <- path.expand(zipfile)
         if (list) {
+            ## -q to suppress per-file and per-archive comments (since 5.52)
+            ## it also suppresses the first line "Archive: filename"
             res <- if (WINDOWS)
-                    system2(unzip, c("-l", shQuote(zipfile)), stdout = TRUE)
+                    system2(unzip, c("-ql", shQuote(zipfile)), stdout = TRUE)
                 else
-                    system2(unzip, c("-l", shQuote(zipfile)), stdout = TRUE,
+                    system2(unzip, c("-ql", shQuote(zipfile)), stdout = TRUE,
                             env = c("TZ=UTC"))
             l <- length(res)
-            res2 <- res[-c(1,3, l-1, l)]
-            con <- textConnection(res2); on.exit(close(con))
+            res2 <- res[-c(2, l-1, l)]
+            res3 <- gsub(" *([^ ]+) +([^ ]+) +([^ ]+) +(.*)",
+                         "\\1 \\2 \\3 \"\\4\"", res2)
+            con <- textConnection(res3); on.exit(close(con))
             z <- read.table(con, header=TRUE, as.is=TRUE)
             dt <- paste(z$Date, z$Time)
             ## Unzip 6.00 always uses 4-digits years, but any order is
