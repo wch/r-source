@@ -824,9 +824,9 @@ DEFINE_METHOD_SETTER(altstring, No_NA)
  ** ALTREP Object Constructor and Utility Functions
  **/
 
-SEXP R_new_altrep(R_altrep_class_t class, SEXP data1, SEXP data2)
+SEXP R_new_altrep(R_altrep_class_t aclass, SEXP data1, SEXP data2)
 {
-    SEXP sclass = R_SEXP(class);
+    SEXP sclass = R_SEXP(aclass);
     int type = ALTREP_CLASS_BASE_TYPE(sclass);
     SEXP ans = CONS(data1, data2);
     SET_TYPEOF(ans, type);

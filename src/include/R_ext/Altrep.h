@@ -20,6 +20,10 @@
 #ifndef R_EXT_ALTREP_H_
 #define R_EXT_ALTREP_H_
 
+#ifdef  __cplusplus
+extern "C" {
+#endif
+
 #define STRUCT_SUBTYPES
 #ifdef STRUCT_SUBTYPES
 # define R_SEXP(x) (x).ptr
@@ -32,7 +36,7 @@
 #endif
 
 SEXP
-R_new_altrep(R_altrep_class_t class, SEXP data1, SEXP data2);
+R_new_altrep(R_altrep_class_t aclass, SEXP data1, SEXP data2);
 
 R_altrep_class_t
 R_make_altstring_class(const char *cname, const char *pname, DllInfo *info);
@@ -117,5 +121,9 @@ DECLARE_METHOD_SETTER(altstring, Elt)
 DECLARE_METHOD_SETTER(altstring, Set_elt)
 DECLARE_METHOD_SETTER(altstring, Is_sorted)
 DECLARE_METHOD_SETTER(altstring, No_NA)
+
+#ifdef  __cplusplus
+}
+#endif
 
 #endif /* R_EXT_ALTREP_H_ */
