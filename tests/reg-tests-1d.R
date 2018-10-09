@@ -2097,6 +2097,14 @@ stopifnot(is.factor(c0), length(c0) == 7, length(unique(c0)) == 1)
 ## cut() gave error  _'breaks' are not unique_  in R <= 3.5.1
 
 
+## need to record OutDec in deferred string conversions (reported by
+## Michael Sannella).
+op <- options(scipen=-5, OutDec=",")
+xx <- as.character(123.456)
+options(op)
+stopifnot(identical(xx, "1,23456e+02"))
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

@@ -720,7 +720,7 @@ SEXP REAL_IS_NA(SEXP x);
 int STRING_IS_SORTED(SEXP x);
 int STRING_NO_NA(SEXP x);
 SEXP R_compact_intrange(R_xlen_t n1, R_xlen_t n2);
-SEXP R_deferred_coerceToString(SEXP v, SEXP sp);
+SEXP R_deferred_coerceToString(SEXP v, SEXP info);
 SEXP R_virtrep_vec(SEXP, SEXP);
 
 #ifdef LONG_VECTOR_SUPPORT
