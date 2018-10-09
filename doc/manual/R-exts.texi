@@ -2522,19 +2522,22 @@ is in preparation.
 What standard a C++ compiler aims to support can be hard to determine:
 the value@footnote{Values @code{199711}, @code{201103L} and
 @code{201402L} are most commonly used for C++98, C++11 and C++14
-respectively, but some compilers set @code{1L}.} of @code{__cplusplus}
-may help but some compilers use it to denote a standard which is
-partially supported and some the latest standard which is (almost) fully
-supported.  As from version 6, @command{g++} defaults to C++14 (with GNU
-extensions): earlier versions aim to support C++03 with many extensions
-(including support for TR1) with version 5 having fairly complete C++14
-support enabled by flag @option{-std=gnu++14}.  @command{clang} with its
-native@footnote{Some distributions, notably Debian, have supplied a
-build of @command{clang} with @command{g++}'s headers and library.
-Conversely, Apple's command named @command{g++} is based on
-@command{clang} using @code{libc++}.} @code{libc++} headers and library
-has since version 3.4 included almost all C++14 features, but does not
-support TR1.  As from version 6.0.0, @command{clang} defaults to C++14.
+respectively, but some compilers set @code{1L}.  The official value for
+C++17 is @code{201703L} but some compiler versions have smaller values
+so a test of @code{__cplusplus > 201402L} is safer.} of
+@code{__cplusplus} may help but some compilers use it to denote a
+standard which is partially supported and some the latest standard which
+is (almost) fully supported.  As from version 6, @command{g++} defaults
+to C++14 (with GNU extensions): earlier versions aim to support C++03
+with many extensions (including support for TR1) with version 5 having
+fairly complete C++14 support enabled by flag @option{-std=gnu++14}.
+@command{clang} with its native@footnote{Some distributions, notably
+Debian, have supplied a build of @command{clang} with @command{g++}'s
+headers and library.  Conversely, Apple's command named @command{g++} is
+based on @command{clang} using @code{libc++}.} @code{libc++} headers and
+library has since version 3.4 included almost all C++14 features, but
+does not support TR1.  As from version 6.0.0, @command{clang} defaults
+to C++14.
 
 Since version 3.1.0, @R{} has provided support for C++11 in packages in
 addition to C++98.  This support is not uniform across platforms as it
