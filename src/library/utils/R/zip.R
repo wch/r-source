@@ -46,6 +46,10 @@ unzip <-
                             env = c("TZ=UTC"))
             l <- length(res)
             res2 <- res[-c(2, l-1, l)]
+
+            ## this allows space in file name, but it would break with
+            ## double quotes (though those are discouraged both by Windows
+            ## documentation and POSIX)
             res3 <- gsub(" *([^ ]+) +([^ ]+) +([^ ]+) +(.*)",
                          "\\1 \\2 \\3 \"\\4\"", res2)
             con <- textConnection(res3); on.exit(close(con))
