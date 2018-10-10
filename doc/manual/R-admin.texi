@@ -3548,6 +3548,15 @@ path when the command is run, or its full path specified by the
 environment variable @env{R_GSCMD} at that time.
 @enindex R_GSCMD
 
+At the time of writing a full installation on Fedora Linux used the
+following packages and their development versions, and this may provide
+a useful checklist for other systems:
+@example
+bzip2 cairo fontconfig freetype fribidi glib2 libX11 libXext libXt
+libcurl libicu libjpeg libpng libtiff libtirpc libxcrypt ncurses pango
+pcre readline tcl tk xz zlib
+@end example
+
 
 @menu
 * Tcl/Tk::                      
