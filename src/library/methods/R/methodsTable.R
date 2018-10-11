@@ -845,16 +845,17 @@
       return(which.min(match(sigs[1L,], supersList[[1L]])))
     }
     ## else  nArg >= 2
-    best      <- rep.int(TRUE,  n)
-    dominated <- rep.int(FALSE, n)
     pos <- matrix(0L, nArg, n)
     for(i in 1:nArg) {
         pos[i,] <- match(sigs[i,], supersList[[i]])
     }
+    valid <- colSums(is.na(pos)) == 0L
+    best <- valid
+    dominated <- !valid
     ## pairwise comparison of columns of pos.  Any way to vectorize?
     seqn <- seq_len(n)
-    for(i in seqn) {
-      for(j in seqn[-i]) {
+    for(i in seqn[valid]) {
+      for(j in seqn[-i][valid[-i]]) {
         diffs <- pos[,j] - pos[,i]
 	if(any(diffs < 0))  { best[i] <- FALSE; if(dominated[i]) break }
 	if(all(diffs <= 0)) { dominated[i] <- TRUE; if(!best[i]) break }
