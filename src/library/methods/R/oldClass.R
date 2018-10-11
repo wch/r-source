@@ -138,7 +138,7 @@ setOldClass <- function(Classes, prototype = NULL,
       def <- .renameClassDef(def, curDef@className)
     ## check that any common slots will give a valid S3 object
     .validS3Extends(def, curDef)
-    def@slots <- c(def@slots, curDef@slots)
+    def@slots[names(curDef@slots)] <- curDef@slots
     ext <- c(def@contains, curDef@contains)
     ## correct ordering & duplicate resolution: copied from .walkClassGraph
     distOrder <- sort.list(vapply(ext, function(x) x@distance, 1))
