@@ -534,7 +534,6 @@
   list(
        list("data.frame",  data.frame(), "data.frame"),
        list("factor",  factor()),
-       list(c("ordered", "factor"), ordered(character())),
        list("table",  table(factor())),
        list("summary.table",  summary.table(table(factor())))
        , list("ts", stats::ts())
