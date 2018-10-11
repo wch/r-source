@@ -4231,6 +4231,20 @@ Default: false (but true for CRAN submission checks).
 @c _R_CHECK_SYSTEM_CLOCK_ can be used to disable the clock check, for
 @c use on a check farm.
 
+@item _R_CHECK_LENGTH_1_CONDITION_
+Optionally check if the condition in @code{if} and @code{while} statements
+has length greater than one.  For a true value (@samp{T}, @samp{True},
+@samp{TRUE} or @samp{true}), give an error.  For a false value (@samp{F},
+@samp{False}, @samp{FALSE} or @samp{false}) or when unset, print a warning. 
+Any other non-true non-empty value needs to be a list of commands separated
+by comma: @samp{abort} causes R to terminate unconditionally instead of
+signalling an error, @samp{verbose} prints very detailed diagnostic message,
+@samp{package:pkg} restricts the check to if/while statements executing in
+the namespace of package @samp{pkg}, @samp{package:_R_CHECK_PACKAGE_NAME_}
+restricts the check to if/while statements executing in the package that is
+currently being checked by @code{R CMD check}.
+Default: unset.
+
 @item _R_CHECK_LENGTH_1_LOGIC2_
 Optionally check if either argument of the binary operators @code{&&}
 and @code{||} has length greater than one.  For a true value (@samp{T},
