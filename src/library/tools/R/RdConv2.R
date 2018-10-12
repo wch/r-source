@@ -27,7 +27,7 @@ isBlankRd <- function(x)
     length(grep("^[[:blank:]]*\n?$", x, perl = TRUE)) == length(x) # newline optional
 
 isBlankLineRd <- function(x) {
-    attr(x, "srcref")[2L] == 1 &&
+    utils:::getSrcByte(x) == 1L &&
     length(grep("^[[:blank:]]*\n", x, perl = TRUE)) == length(x)   # newline required
 }
 
@@ -63,12 +63,12 @@ warnRd <- function(block, Rdfile, ...)
     	if (is.environment(srcfile))
     	    Rdfile <- srcfile$filename
     }
-    if (missing(Rdfile) || is.null(Rdfile)) Rdfile <- ""
-    else {
-        Rdfile <- sub("^man/", "", Rdfile) # for consistency with earlier reports
-        Rdfile <- paste0(Rdfile, ":")
-    }
-
+    Rdfile <-
+        if(missing(Rdfile) || is.null(Rdfile))
+            ""
+        else
+            paste0(sub("^man/", "", Rdfile), # for consistency with earlier reports
+                   ":")
     msg <- if (is.null(srcref))
         paste0(Rdfile, " ", ...)
     else {
@@ -346,14 +346,15 @@ processRdIfdefs <- function(blocks, defines)
 		target <- block[[1L]][[1L]]
 		# The target will have picked up some whitespace and a newline
 		target <- psub("[[:blank:][:cntrl:]]*", "", target)
-		if ((target %in% defines) == (tag == "#ifdef")) {
-		    flag <- getDynamicFlags(block[[2L]])
-		    block <- tagged(block[[2L]], "#expanded")
-		    block <- setDynamicFlags(block, flag)
-		} else
-		    block <- structure(tagged(paste(tag, target, "not active"),
-                                              "COMMENT"),
-		    		       srcref = attr(block, "srcref"))
+		block <-
+                    if((target %in% defines) == (tag == "#ifdef")) {
+                        flag <- getDynamicFlags(block[[2L]])
+                        block <- tagged(block[[2L]], "#expanded")
+                        setDynamicFlags(block, flag)
+                    } else
+                        structure(tagged(paste(tag, target, "not active"),
+                                         "COMMENT"),
+                                  srcref = attr(block, "srcref"))
 	    }
 	}
 	if (is.list(block)) {
@@ -1015,9 +1016,9 @@ toRd <- function(obj, ...)
     UseMethod("toRd")
 
 toRd.default <- function(obj, ...) {
-    obj <- as.character(obj)
-    obj <- gsub("\\", "\\\\", obj, fixed = TRUE)
-    obj <- gsub("{", "\\{", obj, fixed = TRUE)
-    obj <- gsub("}", "\\}", obj, fixed = TRUE)
-    gsub("%", "\\%", obj, fixed = TRUE)
+    fsub <- function(from, to, x) gsub(from, to, x, fixed=TRUE)
+    fsub("%", "\\%",
+     fsub("}", "\\}",
+      fsub("{", "\\{",
+       fsub("\\", "\\\\", as.character(obj)))))
 }

@@ -1,7 +1,7 @@
 #  File src/library/utils/R/sourceutils.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -68,13 +68,14 @@ getSrcDirectory <- function(x, unique=TRUE) {
 }
 
 getSrcref <- function(x) {
-    if (inherits(x, "srcref")) return(x)
-    if (!is.null(srcref <- attr(x, "srcref"))) return(srcref)
-    if (is.function(x) && !is.null(srcref <- getSrcref(body(x))))
-	return(srcref)
-    if (methods::is(x, "MethodDefinition"))
-	return(getSrcref(unclass(methods::unRematchDefinition(x))))
-    NULL
+    if (inherits(x, "srcref"))
+        x
+    else if (!is.null(srcref <- attr(x, "srcref")) ||
+             is.function(x) && !is.null(srcref <- getSrcref(body(x))))
+        srcref
+    else if (methods::is(x, "MethodDefinition"))
+	getSrcref(unclass(methods::unRematchDefinition(x)))
+    ## else NULL
 }
 
 getSrcLocation <- function(x, which=c("line", "column", "byte", "parse"), first=TRUE) {
@@ -90,10 +91,16 @@ getSrcLocation <- function(x, which=c("line", "column", "byte", "parse"), first=
     }
  }
 
-getSrcfile <- function(x) {
-    result <- attr(x, "srcfile")
-    if (!is.null(result)) return(result)
+##' Simplified version of  getSrcLocation(x, "byte", first=TRUE),
+##' always returning  integer(1)
+getSrcByte <- function(x) {
+    srcref <- attr(x, "srcref")
+    if(is.null(srcref)) -1L else srcref[2L]
+}
 
+
+getSrcfile <- function(x) {
+    if (!is.null(r <- attr(x, "srcfile"))) return(r)
     srcref <- attr(x, "wholeSrcref")
     if (is.null(srcref)) {
 	srcref <- getSrcref(x)
