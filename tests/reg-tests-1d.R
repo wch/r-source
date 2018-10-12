@@ -2105,6 +2105,23 @@ options(op)
 stopifnot(identical(xx, "1,23456e+02"))
 
 
+## parseRd() and Rd2HTML() with some \Sexpr{} in *.Rd:
+x <- tools::Rd_db("base")
+y <- lapply(x, function(e) tryCatch(tools::Rd2HTML(e, out = nullfile()),
+                                    error = identity))
+stopifnot(!vapply(y, inherits, NA, "error"))
+## Gave error when "running" \Sexpr{.} DateTimeClasses.Rd
+
+
+## if( "length > 1" )  buglet in plot.data.frame()
+Sys.getenv("_R_CHECK_LENGTH_1_CONDITION_", unset=NA) -> oEV
+Sys.setenv("_R_CHECK_LENGTH_1_CONDITION_" = "true")
+plot(data.frame(.leap.seconds))
+if(!is.na(oEV)) Sys.setenv("_R_CHECK_LENGTH_1_CONDITION_" = oEV)
+## gave Error in ... the condition has length > 1,  in R <= 3.5.1
+
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
