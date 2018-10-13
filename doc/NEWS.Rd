@@ -407,9 +407,14 @@
       it behaves as expected when splitting an object by a factor with
       the empty string as one of its levels.  Thanks to Brad Friedman for
       the report.
-      
+
       \item Line numbers in messages about \file{.Rd} files are now more
       reliable, thanks to a patch from Duncan Murdoch.
+
+      \item In the numeric method for \code{all.equal()}, a numeric
+      \code{scale} argument is now checked to be positive and allowed to
+      be of length > 1 (which was working originally and with a warning
+      in recent years).
     }
   }
 }

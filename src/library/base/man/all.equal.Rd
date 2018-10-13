@@ -49,7 +49,8 @@ attr.all.equal(target, current, \dots,
   \item{tolerance}{numeric \eqn{\ge} 0.  Differences smaller than
     \code{tolerance} are not reported.  The default value is close to
     \code{1.5e-8}.}
-  \item{scale}{numeric scalar > 0 (or \code{NULL}). See \sQuote{Details}.}
+  \item{scale}{\code{NULL} or numeric > 0, typically of length 1 or
+    \code{length(target)}.  See \sQuote{Details}.}
   \item{countEQ}{logical indicating if the \code{target == current}
     cases should be counted when computing the mean (absolute or
     relative) differences.  The default, \code{FALSE} may seem
@@ -103,8 +104,8 @@ attr.all.equal(target, current, \dots,
   If \code{countEQ} is true, the equal and \code{NA} cases are
   \emph{counted} in determining \dQuote{sample} size.
 
-  If \code{scale} is positive, absolute comparisons are made after
-  scaling (dividing) by \code{scale}.
+  If \code{scale} is numeric (and positive), absolute comparisons are
+  made after scaling (dividing) by \code{scale}.
 
   For complex \code{target}, the modulus (\code{\link{Mod}}) of the
   difference is used: \code{all.equal.numeric} is called so arguments
