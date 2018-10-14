@@ -11,7 +11,7 @@
      \itemize{
        \item Serialization format version 3 becomes the default for
        serialization and saving of the workspace (\code{save()},
-       \code{serialize()}, \code{saveRDS()}, \code{cmpfile()}).
+       \code{serialize()}, \code{saveRDS()}, \code{compiler::cmpfile()}).
        Serialized data in format 3 cannot be read by versions of \R prior
        to version 3.5.0.  Serialization format version 2 is still
        supported and can be selected by \code{version = 2} in the
@@ -127,8 +127,8 @@
       choose the \emph{kind} of \code{quantile()}s to use; wish of
       \PR{17438}.
 
-      \item Multivariate linear models, \code{lm()} now do work with
-      \emph{matrix} offsets, as suggested in \PR{17407}.
+      \item Fitting multiple linear models \emph{via} \code{lm()} does
+      work with \emph{matrix} offsets, as suggested in \PR{17407}.
 
       \item The new functions \code{mem.maxVSize()} and
       \code{mem.maxMSize()} allow the maximal size of the vector heap
@@ -141,7 +141,7 @@
       i.e., all help pages. show platform-independent information (rather
       than Windows or Unix-alike specifics visible only on that platform).
       Consequently, the Windows version of \code{X11()} / \code{x11()}
-      got identical formal arguments the unix one.
+      got identical formal arguments to the Unix one.
 
       \item \code{sessionInfo()$running} has been factored out in a new
       variable \code{osVersion}. % precomputed at utils namespace load time
@@ -160,7 +160,7 @@
       OpenBSD have \sQuote{older} \command{tar} commands for this
       purpose.)
 
-      \item The new function \code{asplit()} allows to split an array or
+      \item The new function \code{asplit()} allow splitting an array or
       matrix by its margins.
 
       \item New functions \code{errorCondition()} and
@@ -202,8 +202,8 @@
       argument with obvious default instead of using
       \code{getOption("fancyQuotes")} implicitly and unconditionally.
 
-      \item \code{unzip()} can list archives with comments and spaces in
-      file names even using external \command{unzip} command.
+      \item \code{unzip()} can list archives with comments and with
+      spaces in file names even using external \command{unzip} command.
     }
   }
 
@@ -370,8 +370,8 @@
       particularly systems with more than 64 logical processors). Reported
       by Arunkumar Srinivasan.
 
-      \item On Windows, \code{socketSelect} would hang with more than 64
-      sockets, and hence \code{parallel::clusterApplyLB()} would hang
+      \item On Windows, \code{socketSelect()} would hang with more than
+      64 sockets, and hence \code{parallel::clusterApplyLB()} would hang
       with more than 64 workers.  Reported by Arunkumar Srinivasan.
 
       \item \code{as(1L, "double")} now does coerce (\PR{17457}).
@@ -472,7 +472,7 @@
       \item Calling \code{match()} with length one \code{x} and POSIXlt
       \code{table} gave a segfault (\PR{17459}).
 
-      \item Fork cluster could hang due to a race condition in cluster
+      \item Fork clusters could hang due to a race condition in cluster
       initialization (\code{makeCluster()}).
 
       \item \code{nextn(n)} now also works for larger \code{n} and no
