@@ -76,10 +76,6 @@
 
       \item \code{cut(rep(0, 7))} now works, thanks to Joey Reid and
       Benjamin Tyner (\PR{16802}).
-
-      \item Deferred string conversions now record the \code{OutDec}
-      option setting when not equal to the default. Reported by Michael
-      Sannella.
     }
   }
 }
