@@ -411,10 +411,14 @@
       \item Line numbers in messages about \file{.Rd} files are now more
       reliable, thanks to a patch from Duncan Murdoch.
 
-      \item In the numeric method for \code{all.equal()}, a numeric
-      \code{scale} argument is now checked to be positive and allowed to
-      be of length > 1 (which was working originally and with a warning
-      in recent years).
+      \item In the \code{numeric} method for \code{all.equal()}, a
+      numeric \code{scale} argument is now checked to be positive and
+      allowed to be of length > 1 (which was working originally and with
+      a warning in recent years).
+
+      \item Deferred string conversions now record the \code{OutDec}
+      option setting when not equal to the default. Reported by Michael
+      Sannella.
     }
   }
 }
@@ -490,10 +494,6 @@
 
       \item \code{cut(rep(0, 7))} now works, thanks to Joey Reid and
       Benjamin Tyner (\PR{16802}).
-
-      \item Deferred string conversions now record the \code{OutDec}
-      option setting when not equal to the default. Reported by Michael
-      Sannella.
     }
   }
 }
