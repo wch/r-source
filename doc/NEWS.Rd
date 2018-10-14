@@ -58,7 +58,7 @@
       \item Calling \code{match()} with length one \code{x} and POSIXlt
       \code{table} gave a segfault (\PR{17459}).
 
-      \item Fork cluster could hang due to a race condition in cluster
+      \item Fork clusters could hang due to a race condition in cluster
       initialization (\code{makeCluster()}).
 
       \item \code{nextn(n)} now also works for larger \code{n} and no
@@ -76,6 +76,10 @@
 
       \item \code{cut(rep(0, 7))} now works, thanks to Joey Reid and
       Benjamin Tyner (\PR{16802}).
+
+      \item Deferred string conversions now record the \code{OutDec}
+      option setting when not equal to the default. Reported by Michael
+      Sannella.
     }
   }
 }
