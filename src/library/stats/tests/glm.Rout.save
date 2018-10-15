@@ -1,5 +1,5 @@
 
-R version 3.5.1 Patched (2018-09-25 r75369) -- "Feather Spray"
+R version 3.5.1 Patched (2018-10-14 r75439) -- "Feather Spray"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -29,4 +29,4 @@ Warning messages:
 > 
 > proc.time()
    user  system elapsed 
-  0.157   0.025   0.158 
+  0.159   0.021   0.157 
