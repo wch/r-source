@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2018-09-27 r75372) -- "Unsuffered Consequences"
+R Under development (unstable) (2018-10-14 r75439) -- "Unsuffered Consequences"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -46,4 +46,4 @@ In bw.bcv(precip) : minimum occurred at one end of the range
 > 
 > proc.time()
    user  system elapsed 
-  0.174   0.058   0.212 
+  0.193   0.042   0.214 
