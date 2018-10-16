@@ -14,7 +14,7 @@ Austria,Austria,Wien,http://cran.wu.ac.at/,"Wirtschaftsuniversität Wien","CRAN 
 "Belgium (Antwerp)",Belgium,Antwerp,http://www.freestatistics.org/cran/,"K.U.Leuven Association","patrick # wessa.net",1,be
 "Belgium (Ghent) [https]",Belgium,Ghent,https://lib.ugent.be/CRAN/,"Ghent University Library","Patrick Hochstenbach <Patrick.Hochstenbach # UGent.be>",1,be,"secure_mirror_from_master"
 "Belgium (Ghent)",Belgium,Ghent,http://lib.ugent.be/CRAN/,"Ghent University Library","Patrick Hochstenbach <Patrick.Hochstenbach # UGent.be>",1,be,"secure_mirror_from_master"
-"Brazil (BA)",Brazil,Ilheus,http://nbcgib.uesc.br/mirrors/cran/,"Center for Comp. Biol. at Universidade Estadual de Santa Cruz","eduardo # nbcgib.uesc.br",1,br
+"Brazil (BA)",Brazil,Ilheus,http://nbcgib.uesc.br/mirrors/cran/,"Computational Biology Center at Universidade Estadual de Santa Cruz","<nbcgib # uesc.br>, <eacosta # uesc.br>",1,br,"secure_mirror_from_master"
 "Brazil (PR) [https]",Brazil,Curitiba,https://cran-r.c3sl.ufpr.br/,"Universidade Federal do Parana","root # c3sl.ufpr.br",1,br,"secure_mirror_from_master"
 "Brazil (PR)",Brazil,Curitiba,http://cran-r.c3sl.ufpr.br/,"Universidade Federal do Parana","root # c3sl.ufpr.br",1,br,"secure_mirror_from_master"
 "Brazil (RJ) [https]",Brazil,"Rio de Janeiro",https://cran.fiocruz.br/,"Oswaldo Cruz Foundation, Rio de Janeiro","oswaldo.cruz # fiocruz.br",1,br,"secure_mirror_from_master"
