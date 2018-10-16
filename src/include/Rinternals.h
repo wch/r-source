@@ -916,7 +916,7 @@ SEXP Rf_PairToVectorList(SEXP x);
 SEXP Rf_VectorToPairList(SEXP x);
 SEXP Rf_asCharacterFactor(SEXP x);
 int Rf_asLogical(SEXP x);
-int Rf_asLogical2(SEXP x, int checking, SEXP call);
+int Rf_asLogical2(SEXP x, int checking, SEXP call, SEXP rho);
 int Rf_asInteger(SEXP x);
 double Rf_asReal(SEXP x);
 Rcomplex Rf_asComplex(SEXP x);
@@ -1650,8 +1650,12 @@ void SET_REAL_ELT(SEXP x, R_xlen_t i, double v);
 	if(R_CStackLimit != (uintptr_t)(-1) && usage > ((intptr_t) R_CStackLimit)) \
 	    R_SignalCStackOverflow(usage);				\
     } while (FALSE)
-#endif
 
+void R_BadValueInRCode(SEXP value, SEXP call, SEXP rho, const char *rawmsg,
+        const char *errmsg, const char *warnmsg, const char *varname,
+        Rboolean warnByDefault);
+
+#endif
 
 #ifdef __cplusplus
 }

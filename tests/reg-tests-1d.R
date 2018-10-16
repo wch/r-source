@@ -2057,7 +2057,7 @@ stopifnot(exprs = {
 
 ## More strictness in '&&' and '||' :
 Sys.getenv("_R_CHECK_LENGTH_1_LOGIC2_", unset=NA) -> oEV
-Sys.setenv("_R_CHECK_LENGTH_1_LOGIC2_" = "foo") # only warn
+Sys.setenv("_R_CHECK_LENGTH_1_LOGIC2_" = "warn") # only warn
 tools::assertWarning(1 && 0:1)
 Sys.setenv("_R_CHECK_LENGTH_1_LOGIC2_" = TRUE) # => error (when triggered)
 tools::assertError(0 || 0:1)

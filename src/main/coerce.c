@@ -1654,8 +1654,10 @@ SEXP attribute_hidden do_ascall(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
+/* call and rho are only needed for _R_CHECK_LENGTH_1_LOGIC2_ checking
+       and diagnostics; to be removed if length>1 value is turned to error */
 /* return int, not Rboolean, for NA_LOGICAL : */
-int asLogical2(SEXP x, int checking, SEXP call)
+int asLogical2(SEXP x, int checking, SEXP call, SEXP rho)
 {
     int warn = 0;
 
@@ -1663,28 +1665,15 @@ int asLogical2(SEXP x, int checking, SEXP call)
 	if (XLENGTH(x) < 1)
 	    return NA_LOGICAL;
 	if (checking && XLENGTH(x) > 1) {
-	    char *check = getenv("_R_CHECK_LENGTH_1_LOGIC2_");
-	    if(check) {
-#define W_E_(ERRFUN)							\
-		ERRFUN(_("'length(x) = %d > 1' in coercion to '%s'"),	\
-		       XLENGTH(x), "logical(1)")
-#define W_E_C(ERRFUN)							\
-		ERRFUN(call, _("'length(x) = %d > 1' in coercion to '%s'"), \
-		       XLENGTH(x), "logical(1)")
-
-		Rboolean do_error = StringTrue(check);
-		if(isNull(call)) {
-		    if(do_error)
-			W_E_(error);
-		    else
-			W_E_(warning);
-		} else { // assume call *is* a call
-		    if(do_error)
-			W_E_C(errorcall);
-		    else
-			W_E_C(warningcall);
-		}
-	    }
+	    char msg[128];
+	    snprintf(msg, 128, _("'length(x) = %lld > 1' in coercion to '%s'"),
+		    (long long) XLENGTH(x), "logical(1)");
+	    R_BadValueInRCode(x, call, rho,
+		"length > 1 in coercion to logical",
+		msg,
+		msg,
+		"_R_CHECK_LENGTH_1_LOGIC2_",
+		FALSE /* by default do nothing */);
 	}
 	switch (TYPEOF(x)) {
 	case LGLSXP:
@@ -1707,9 +1696,10 @@ int asLogical2(SEXP x, int checking, SEXP call)
     }
     return NA_LOGICAL;
 }
+
 int asLogical(SEXP x)
 {
-    return asLogical2(x, /* checking = */ 0, R_NilValue);
+    return asLogical2(x, /* checking = */ 0, R_NilValue, R_NilValue);
 }
 
 
