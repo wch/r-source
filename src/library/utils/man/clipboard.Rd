@@ -29,7 +29,7 @@ writeClipboard(str, format = 1)
 }
 \details{
   The Windows clipboard offers data in a number of formats: see
-  e.g.\sspace{}\url{https://msdn2.microsoft.com/en-us/library/ms649013.aspx}.
+  e.g.\sspace{}\url{https://docs.microsoft.com/en-gb/windows/desktop/dataxchg/clipboard-formats}.
 
   The standard formats include
   \tabular{lrl}{

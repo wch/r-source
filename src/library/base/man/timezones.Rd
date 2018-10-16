@@ -298,7 +298,8 @@ OlsonNames(tzdir = NULL)
   \code{\link{Sys.time}}, \code{\link{as.POSIXlt}}.
 
   \url{https://en.wikipedia.org/wiki/Time_zone} and
-  \url{http://www.twinsun.com/tz/tz-link.htm} for extensive sets of links.
+  \url{https://data.iana.org/time-zones/tz-link.html}
+  for extensive sets of links.
 
   \url{https://data.iana.org/time-zones/theory.html} for the
   \sQuote{rules} of the Olson/IANA database.

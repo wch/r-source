@@ -123,7 +123,7 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
   That \code{file} can be a connection can be exploited to make use of
   an external parallel compression utility such as \command{pigz}
   (\url{http://zlib.net/pigz/}) or \command{pbzip2}
-  (\url{http://compression.ca/pbzip2/}) \emph{via} a \code{\link{pipe}}
+  (\url{https://launchpad.net/pbzip2}) \emph{via} a \code{\link{pipe}}
   connection.  For example, using 8 threads,
 \preformatted{    con <- pipe("pigz -p8 > fname.gz", "wb")
     save(myObj, file = con); close(con)

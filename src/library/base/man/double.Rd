@@ -112,7 +112,7 @@ as.single(x, \dots)
   \url{https://en.wikipedia.org/wiki/Double_precision},
   \url{https://en.wikipedia.org/wiki/Denormal_number}.
 
-  \url{http://grouper.ieee.org/groups/754/} for links to information
+  \url{http://754r.ucbtest.org/} for links to information
   on the standards.
 }
 \seealso{
