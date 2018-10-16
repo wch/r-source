@@ -1,7 +1,7 @@
 #  File src/library/graphics/R/legend.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -82,11 +82,14 @@ function(x, y = NULL, legend, fill = NULL, col = par("col"), border="black",
 	if(ylog) y <- 10^y
 	text(x, y, ...)
     }
-    if(trace)
+    if(trace) {
 	catn <- function(...)
-	    do.call("cat", c(lapply(list(...),formatC), list("\n")))
-
-    cin <- par("cin")
+	    do.call(cat, c(lapply(list(...),formatC), "\n"))
+        fv <- function(...)
+            paste(vapply(lapply(list(...), formatC),
+                         paste, collapse=",", ""),
+                  collapse=", ")
+    }
     Cex <- cex * par("cex")		# = the `effective' cex for text
 
     ## at this point we want positive width even for reversed x axis.
@@ -96,9 +99,10 @@ function(x, y = NULL, legend, fill = NULL, col = par("col"), border="black",
     else if(!is.numeric(text.width) || text.width < 0)
 	stop("'text.width' must be numeric, >= 0")
 
-    xc <- Cex * xinch(cin[1L], warn.log=FALSE) # [uses par("usr") and "pin"]
-    yc <- Cex * yinch(cin[2L], warn.log=FALSE)
-    if(xc < 0) text.width <- -text.width
+    xyc <- xyinch(par("cin"), warn.log=FALSE) # [uses par("usr") and "pin"]
+    xc <- Cex * xyc[1L]
+    yc <- Cex * xyc[2L]
+    if(any(n_ <- xc < 0)) text.width[n_] <- -text.width[n_]
 
     xchar  <- xc
     xextra <- 0
@@ -106,18 +110,18 @@ function(x, y = NULL, legend, fill = NULL, col = par("col"), border="black",
     ## watch out for reversed axis here: heights can be negative
     ymax   <- yc * max(1, strheight(legend, units="user", cex=cex)/yc)
     ychar <- yextra + ymax
-    if(trace) catn("  xchar=", xchar, "; (yextra,ychar)=", c(yextra,ychar))
+    if(trace) catn("  xchar=", fv(xchar), "; (yextra, ychar)=", fv(yextra,ychar))
 
     if(mfill) {
 	##= sizes of filled boxes.
 	xbox <- xc * 0.8
 	ybox <- yc * 0.5
-	dx.fill <- xbox ## + x.intersp*xchar
+	dx.fill <- max(xbox) ## + x.intersp*xchar
     }
     do.lines <- (!missing(lty) && (is.character(lty) || any(lty > 0))
 		 ) || !missing(lwd)
 
-    ## legends per column:
+    ## number of ("rbinded") legends _per_ column:
     n.legpercol <-
 	if(horiz) {
 	    if(ncol != 1)
@@ -169,10 +173,11 @@ function(x, y = NULL, legend, fill = NULL, col = par("col"), border="black",
     else {## nx == 1  or  auto
 	## -- (w,h) := (width,height) of the box to draw -- computed in steps
 	h <- (n.legpercol + !is.null(title)) * ychar + yc
-	w0 <- text.width + (x.intersp + 1) * xchar
+	xch1 <- max(xchar)
+	w0 <- text.width + (x.intersp + 1) * xch1
 	if(mfill)	w0 <- w0 + dx.fill
-	if(do.lines)	w0 <- w0 + (seg.len + x.off)*xchar
-	w <- ncol*w0 + .5* xchar
+	if(do.lines)	w0 <- w0 + (seg.len + x.off)*xch1
+	w <- ncol*w0 + .5* xch1
 	if (!is.null(title)
 	    && (abs(tw <- strwidth(title, units="user", cex=cex) + 0.5*xchar)) > abs(w)) {
 	    xextra <- (tw - w)/2

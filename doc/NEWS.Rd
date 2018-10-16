@@ -494,6 +494,8 @@
 
       \item \code{cut(rep(0, 7))} now works, thanks to Joey Reid and
       Benjamin Tyner (\PR{16802}).
+
+      \item \code{legend(*, cex = 1:2)} now works less badly.
     }
   }
 }
