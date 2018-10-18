@@ -161,19 +161,22 @@ Additional features that might be useful:
   method by the generics.
 - Add a function to compute the conflicts that would happen on attach.
   Might be useful to lift out and expose the code in `checkConflicts`.
+
+Some questions:
+
+- Should `attach` also signal an error on conflicts? It repeats some
+   of the checking logic in `library`, but with some differences.
+- Should we allow a package to declare that it is masking things
+  from its dependencies, e.g. in its `DESCRIPTION` file?
+- Add `only` and `attach.required` to `require()` also?
+- Do we need to disallow using both omit and only?
  
 TODO list:
 
 - Add more documentation.
 - Add some input checking
-- Add `only` and `attach.required` to `require()` also?
-- Do we need to disallow using both omit and only?
-- One thing I haven't checked is whether the `pos` argument raises any issues.
+- Need to check whether the `pos` argument raises any issues.
 - Also whether there are any issues with non-package frames.
-- Should `attach` also signal an error on conflicts? It repeats some
-   of the checking logic in `library`, but with some differences.
-- Should we allow a package to declare that it is masking things
-  from its dependencies, e.g. in its `DESCRIPTION` file?
 
 <!--
 Local Variables:

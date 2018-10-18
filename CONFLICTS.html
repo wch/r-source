@@ -216,16 +216,19 @@ conflictRules(&quot;BiocGenerics&quot;, maskOK = list(base = TRUE,
 <li>Have a way to say that (some) ‘safe’ S4 or even S3 generics are OK to mask non-generics, at least if the non-generics are used as the default method by the generics.</li>
 <li>Add a function to compute the conflicts that would happen on attach. Might be useful to lift out and expose the code in <code>checkConflicts</code>.</li>
 </ul>
+<p>Some questions:</p>
+<ul>
+<li>Should <code>attach</code> also signal an error on conflicts? It repeats some of the checking logic in <code>library</code>, but with some differences.</li>
+<li>Should we allow a package to declare that it is masking things from its dependencies, e.g. in its <code>DESCRIPTION</code> file?</li>
+<li>Add <code>only</code> and <code>attach.required</code> to <code>require()</code> also?</li>
+<li>Do we need to disallow using both omit and only?</li>
+</ul>
 <p>TODO list:</p>
 <ul>
 <li>Add more documentation.</li>
 <li>Add some input checking</li>
-<li>Add <code>only</code> and <code>attach.required</code> to <code>require()</code> also?</li>
-<li>Do we need to disallow using both omit and only?</li>
-<li>One thing I haven’t checked is whether the <code>pos</code> argument raises any issues.</li>
+<li>Need to check whether the <code>pos</code> argument raises any issues.</li>
 <li>Also whether there are any issues with non-package frames.</li>
-<li>Should <code>attach</code> also signal an error on conflicts? It repeats some of the checking logic in <code>library</code>, but with some differences.</li>
-<li>Should we allow a package to declare that it is masking things from its dependencies, e.g. in its <code>DESCRIPTION</code> file?</li>
 </ul>
 <!--
 Local Variables:
