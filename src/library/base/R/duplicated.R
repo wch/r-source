@@ -33,7 +33,7 @@ function(x, incomparables = FALSE, fromLast = FALSE, ...)
     if(length(x) != 1L) {
         if(any(i <- vapply(x, is.factor, NA)))
             x[i] <- lapply(x[i], as.numeric)
-        duplicated(do.call(Map, c(list, x)), fromLast = fromLast)
+        duplicated(do.call(Map, c(list, `names<-`(x, NULL))), fromLast = fromLast)
     }
     else duplicated(x[[1L]], fromLast = fromLast, ...)
 }

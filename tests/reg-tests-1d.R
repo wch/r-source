@@ -2121,6 +2121,11 @@ if(!is.na(oEV)) Sys.setenv("_R_CHECK_LENGTH_1_CONDITION_" = oEV)
 ## gave Error in ... the condition has length > 1,  in R <= 3.5.1
 
 
+## duplicated(<dataframe with 'f' col>) -- PR#17485
+stopifnot(identical(which(duplicated(data.frame(f=gl(3,5), i=1:3))),
+                    c(4:5, 9:10, 14:15)))
+## gave error from do.call(Map, ..) as Map()'s first arg. is 'f'
+
 
 
 ## keep at end

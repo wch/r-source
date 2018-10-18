@@ -496,6 +496,9 @@
       Benjamin Tyner (\PR{16802}).
 
       \item \code{legend(*, cex = 1:2)} now works less badly.
+
+      \item \code{duplicated(<dataframe with 'f'>)} now works, too,
+      thanks to Andreas Kersting's \PR{17485}.
     }
   }
 }
