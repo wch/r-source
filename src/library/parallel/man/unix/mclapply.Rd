@@ -137,7 +137,10 @@ mcMap(f, ...)
   objects in the return value and a warning will be given.  Note that
   the job will typically involve more than one value of \code{X} and
   hence a \code{"try-error"} object will be returned for all the values
-  involved in the failure, even if not all of them failed.
+  involved in the failure, even if not all of them failed. If any forked
+  process is killed or fails to deliver a result for any reason, values
+  involved in the failure will be \code{NULL}. To allow detection of such
+  errors, \code{FUN} should not return \code{NULL}.
 }
 
 \section{Warning}{
