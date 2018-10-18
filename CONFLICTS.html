@@ -212,7 +212,6 @@ conflictRules(&quot;BiocGenerics&quot;, maskOK = list(base = TRUE,
 <p>Argument and function names could be adjusted if there are strong objections to the ones used here.</p>
 <p>Additional features that might be useful:</p>
 <ul>
-<li>When signaling a conflict error, signal a typed error condition that contains the conflict information and can be handled programmatically.</li>
 <li>Provide a restart for retrying with adjusted arguments; that could be used by a GUI front end.</li>
 <li>Have a way to say that (some) ‘safe’ S4 or even S3 generics are OK to mask non-generics, at least if the non-generics are used as the default method by the generics.</li>
 <li>Add a function to compute the conflicts that would happen on attach. Might be useful to lift out and expose the code in <code>checkConflicts</code>.</li>

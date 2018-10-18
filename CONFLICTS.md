@@ -154,8 +154,6 @@ objections to the ones used here.
 
 Additional features that might be useful:
 
-- When signaling a conflict error, signal a typed error condition that
-  contains the conflict information and can be handled programmatically.
 - Provide a restart for retrying with adjusted arguments; that could be used
   by a GUI front end.
 - Have a way to say that (some) 'safe' S4 or even S3 generics are OK
