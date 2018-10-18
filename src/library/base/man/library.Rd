@@ -54,7 +54,9 @@ conflictRules(pkg, maskOK = NULL, omit = NULL)
     package.  A conflict is a function masking a function,
     or a non-function masking a non-function. If the option
     \code{error.on.conflicts} is \code{TRUE} an error is signaled
-    instead of printing a warning message.
+    instead of printing a warning message. Treated as \code{TRUE}
+    if strict conflict checking is enabled by setting the
+    \code{error.on.conflicts} option to \code{TRUE}.
   }
   \item{verbose}{a logical.  If \code{TRUE}, additional diagnostics are
     printed.}

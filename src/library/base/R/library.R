@@ -60,6 +60,8 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
     if ((! missing(only)) && (! missing(omit)))
         stop(gettext("only one of 'only' and 'omit' can be used"),
              call. = FALSE, domain = NA)
+    if (stopOnConflict)
+        warn.conflicts = TRUE
 
     testRversion <- function(pkgInfo, pkgname, pkgpath)
     {
