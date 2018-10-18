@@ -204,10 +204,11 @@ conflictRules(&quot;BiocGenerics&quot;, maskOK = list(base = TRUE,
 <ul>
 <li><p><code>library()</code> has some heuristics to avoid warning about S4 overrides that mask the overrides in <code>Matrix</code> (but not those in <code>BiocGenerics</code>). These heuristics are disabled when strict conflict checking is in force so that they have to be handled explicitly in some way.</p></li>
 <li><p>Arguments <code>only</code> and <code>attach.required</code> have been added to <code>library()</code>. If <code>only</code> is supplied as a character vector, then only variables named there are included in the attached frame. The default value of <code>attach.required</code> is <code>TRUE</code> if <code>only</code> is missing and <code>FALSE</code> if <code>only</code> is supplied.</p></li>
+<li><p>The error signaled with strict checking is of class <code>packageConflictsError</code> with fields <code>package</code> and <code>conflicts</code>.</p></li>
 </ul>
 </div>
-<div id="open-issues" class="section level1">
-<h1>Open Issues</h1>
+<div id="open-issues" class="section level2">
+<h2>Open Issues</h2>
 <p>Argument and function names could be adjusted if there are strong objections to the ones used here.</p>
 <p>Additional features that might be useful:</p>
 <ul>

@@ -172,6 +172,8 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         fst <- TRUE
 	ipos <- seq_along(sp)[-c(lib.pos,
 				 match(c("Autoloads", "CheckExEnv"), sp, 0L))]
+        emsg <- ""
+        conflicts <- NULL
         for (i in ipos) {
             obj.same <- match(names(as.environment(i)), ob, nomatch = 0L)
             if (any(obj.same > 0)) {
@@ -207,7 +209,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                     same <- setdiff(same, myMaskOK)
 
                 if(length(same)) {
-                    if (fst) {
+                    if (fst && ! stopOnConflict) {
                         fst <- FALSE
                         packageStartupMessage(gettextf("\nAttaching package: %s\n",
                                                        sQuote(package)),
@@ -215,12 +217,23 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                     }
 		    msg <- .maskedMsg(sort(same), pkg = sQuote(sp[i]),
                                       by = i < lib.pos)
-                    if (stopOnConflict)
-                        stop(msg, call. = FALSE, domain = NA)
+                    if (stopOnConflict) {
+                        conflicts[[sp[i]]] <- same
+                        emsg <- paste(emsg, msg, sep = "\n")
+                    }
                     else
                         packageStartupMessage(msg, domain = NA)
                 }
             }
+        }
+        if (length(conflicts)) {
+            msg <- gettextf("Conflicts attaching package %s:\n%s",
+                            sQuote(package),
+                            emsg)
+            stop(errorCondition(msg,
+                                package = package,
+                                conflicts = conflicts,
+                                "packageConflictError"))
         }
     }
 

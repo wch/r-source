@@ -143,8 +143,11 @@ Some additional features that have been implemented:
   default value of `attach.required` is `TRUE` if `only` is missing
   and `FALSE` if `only` is supplied.
 
+- The error signaled with strict checking is of class `packageConflictsError`
+  with fields `package` and `conflicts`.
 
-# Open Issues
+
+## Open Issues
 
 Argument and function names could be adjusted if there are strong
 objections to the ones used here.
