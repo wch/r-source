@@ -195,9 +195,11 @@ conflictRules(&quot;Matrix&quot;, maskOK = list(stats = TRUE,
                                       base = TRUE))
 
 ## for BiocGenerics:
-conflictRules(BioGenerics = list(maskOK = list(base = TRUE,
-                                               stats = TRUE,
-                                               parallel = TRUE)))</code></pre>
+conflictRules(&quot;BiocGenerics&quot;, maskOK = list(base = TRUE,
+                                            stats = TRUE,
+                                            parallel = TRUE,
+                                            graphics = c(&quot;image&quot;, &quot;boxplot&quot;),
+                                            utils = &quot;relist&quot;))</code></pre>
 <p>Some additional features that have been implemented:</p>
 <ul>
 <li><p><code>library()</code> has some heuristics to avoid warning about S4 overrides that mask the overrides in <code>Matrix</code> (but not those in <code>BiocGenerics</code>). These heuristics are disabled when strict conflict checking is in force so that they have to be handled explicitly in some way.</p></li>

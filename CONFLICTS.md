@@ -122,9 +122,11 @@ conflictRules("Matrix", maskOK = list(stats = TRUE,
                                       base = TRUE))
 
 ## for BiocGenerics:
-conflictRules(BioGenerics = list(maskOK = list(base = TRUE,
-                                               stats = TRUE,
-                                               parallel = TRUE)))
+conflictRules("BiocGenerics", maskOK = list(base = TRUE,
+                                            stats = TRUE,
+                                            parallel = TRUE,
+                                            graphics = c("image", "boxplot"),
+                                            utils = "relist"))
 ```
 
 Some additional features that have been implemented:
