@@ -637,7 +637,7 @@ function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
                                   logical.return = TRUE,
                                   warn.conflicts = warn.conflicts,
 				  quietly = quietly,
-                                  mask = maskOK, omit = omit),
+                                  maskOK = maskOK, omit = omit),
                           error = function(e) e)
         if (inherits(value, "error")) {
             if (!quietly) {

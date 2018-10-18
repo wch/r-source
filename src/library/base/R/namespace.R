@@ -171,7 +171,7 @@ attachNamespace <- function(ns, pos = 2L, depends = NULL, omit, only)
     if (length(omit) > 0)
         rm(list = omit, envir = env)
     if (! missing(only)) {
-        vars <- ls(env, all = TRUE)
+        vars <- ls(env, all.names = TRUE)
         nf <- setdiff(only, vars)
         if (length(nf) > 0) {
             nf <- strwrap(paste(nf, collapse = ", "),
