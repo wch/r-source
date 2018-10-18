@@ -112,8 +112,16 @@ library(dplyr, maskOK = list(stats = c("filter", "lag"),
 library(dplyr, maskOK = list(base = TRUE, stats = TRUE))
 
 ## using conflictRules:
-conflictRules(dplyr = list(maskOK = c(base = TRUE, stats = TRUE)),
-              MASS = list(omit = "select"))
+conflictRules("dplyr", maskOK = list(base = TRUE, stats = TRUE))
+conflictRules("MASS", omit = "select")
+
+## to allow Matrix to be loaded with conflict checking:
+conflictRules("Matrix", maskOK = list(stats = TRUE,
+                                      graphics = "image",
+                                      utils = c("head", "tail"),
+                                      base = TRUE))
+
+## for BiocGenerics:
 conflictRules(BioGenerics = list(maskOK = list(base = TRUE,
                                                stats = TRUE,
                                                parallel = TRUE)))
@@ -161,7 +169,8 @@ TODO list:
 - Also whether there are any issues with non-package frames.
 - Should `attach` also signal an error on conflicts? It repeats some
    of the checking logic in `library`, but with some differences.
-
+- Should we allow a package to declare that it is masking things
+  from its dependencies, e.g. in its `DESCRIPTION` file?
 
 <!--
 Local Variables:

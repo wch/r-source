@@ -185,8 +185,16 @@ library(dplyr, maskOK = list(stats = c(&quot;filter&quot;, &quot;lag&quot;),
 library(dplyr, maskOK = list(base = TRUE, stats = TRUE))
 
 ## using conflictRules:
-conflictRules(dplyr = list(maskOK = c(base = TRUE, stats = TRUE)),
-              MASS = list(omit = &quot;select&quot;))
+conflictRules(&quot;dplyr&quot;, maskOK = list(base = TRUE, stats = TRUE))
+conflictRules(&quot;MASS&quot;, omit = &quot;select&quot;)
+
+## to allow Matrix to be loaded with conflict checking:
+conflictRules(&quot;Matrix&quot;, maskOK = list(stats = TRUE,
+                                      graphics = &quot;image&quot;,
+                                      utils = c(&quot;head&quot;, &quot;tail&quot;),
+                                      base = TRUE))
+
+## for BiocGenerics:
 conflictRules(BioGenerics = list(maskOK = list(base = TRUE,
                                                stats = TRUE,
                                                parallel = TRUE)))</code></pre>
@@ -215,6 +223,7 @@ conflictRules(BioGenerics = list(maskOK = list(base = TRUE,
 <li>One thing I haven’t checked is whether the <code>pos</code> argument raises any issues.</li>
 <li>Also whether there are any issues with non-package frames.</li>
 <li>Should <code>attach</code> also signal an error on conflicts? It repeats some of the checking logic in <code>library</code>, but with some differences.</li>
+<li>Should we allow a package to declare that it is masking things from its dependencies, e.g. in its <code>DESCRIPTION</code> file?</li>
 </ul>
 <!--
 Local Variables:
