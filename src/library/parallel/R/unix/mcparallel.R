@@ -63,10 +63,15 @@ mccollect <- function(jobs, wait = TRUE, timeout = 0, intermediate = FALSE)
 
     if (!wait) {
         s <- selectChildren(jobs, timeout)
-        if (is.logical(s) || !length(s)) return(NULL)
+        if (is.logical(s) || !length(s)) return(NULL) ## select error
         res <- lapply(s, function(x) {
             r <- readChild(x)
-            if (is.raw(r)) unserialize(r) else NULL
+            if (is.raw(r)) {
+                rmChild(x) ## avoid zombie process without waiting
+                unserialize(r)
+            } else
+                ## error
+                NULL
         })
         names(res) <- pnames[match(s, pids)]
     } else {
@@ -78,13 +83,16 @@ mccollect <- function(jobs, wait = TRUE, timeout = 0, intermediate = FALSE)
             if (is.integer(s)) {
                 for (pid in s) {
                     r <- readChild(pid)
-                    if (is.integer(r) || is.null(r)) fin[pid == pids] <- TRUE
-                    if (is.raw(r)) # unserialize(r) might be null
+                    if (is.raw(r))
+                        ## unserialize(r) might be null
                         res[which(pid == pids)] <- list(unserialize(r))
+                    else
+                        ## child exiting or error
+                        fin[pid == pids] <- TRUE 
                 }
                 if (is.function(intermediate)) intermediate(res)
             } else
-                ## should not happen
+                ## should not happen (select error)
                 if (all(is.na(match(pids, processID(children()))))) break
         }
     }
