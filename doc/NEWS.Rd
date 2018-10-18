@@ -76,6 +76,9 @@
 
       \item \code{cut(rep(0, 7))} now works, thanks to Joey Reid and
       Benjamin Tyner (\PR{16802}).
+
+      \item \code{duplicated(<dataframe with 'f'>)} now works, too,
+      thanks to Andreas Kersting's \PR{17485}.
     }
   }
 }

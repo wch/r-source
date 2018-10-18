@@ -29,7 +29,7 @@ duplicated.data.frame <-
     if(!isFALSE(incomparables))
 	.NotYetUsed("incomparables != FALSE")
     if(length(x) != 1L)
-        duplicated(do.call(Map, c(list, x)), fromLast = fromLast)
+        duplicated(do.call(Map, c(list, `names<-`(x, NULL))), fromLast = fromLast)
     else duplicated(x[[1L]], fromLast = fromLast, ...)
 }
 
