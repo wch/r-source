@@ -7,6 +7,7 @@
 \title{Loading/Attaching and Listing of Packages}
 \alias{library}
 \alias{require}
+\alias{conflictRules}
 
 \alias{.noGenerics}
 \alias{format.libraryIQR}
@@ -20,11 +21,16 @@
 library(package, help, pos = 2, lib.loc = NULL,
         character.only = FALSE, logical.return = FALSE,
         warn.conflicts = TRUE, quietly = FALSE,
-        verbose = getOption("verbose"))
+        verbose = getOption("verbose"),
+        omit, maskOK, only, attach.required = missing(only))
 
 require(package, lib.loc = NULL, quietly = FALSE,
         warn.conflicts = TRUE,
-        character.only = FALSE)
+        character.only = FALSE,
+        maskOK, omit)
+
+conflictRules(pkg, maskOK = NULL, omit = NULL) 
+
 }
 \arguments{
   \item{package, help}{the name of a package, given as a \link{name} or
@@ -46,13 +52,17 @@ require(package, lib.loc = NULL, quietly = FALSE,
   \item{warn.conflicts}{logical.  If \code{TRUE}, warnings are
     printed about \code{\link{conflicts}} from attaching the new
     package.  A conflict is a function masking a function,
-    or a non-function masking a non-function.
+    or a non-function masking a non-function. If the option
+    \code{error.on.conflicts} is \code{TRUE} an error is signaled
+    instead of printing a warning message.
   }
   \item{verbose}{a logical.  If \code{TRUE}, additional diagnostics are
     printed.}
   \item{quietly}{a logical.  If \code{TRUE}, no message confirming
     package attaching is printed, and most often, no errors/warnings are
     printed if package attaching fails.}
+  \item{pkg, maskOK, omit, only, attach.required}{For use in managing
+    conflicts (see \sQuote{Conflictts})}.    
 }
 \details{
   \code{library(package)} and \code{require(package)} both load the
@@ -95,6 +105,14 @@ require(package, lib.loc = NULL, quietly = FALSE,
 
   \code{require} returns (invisibly) a logical indicating whether the required
   package is available.
+}
+\section{Conflicts}{
+  Experimental conflict management is implemented by the arguments
+  \code{maskOK}, \code{omit}, \code{only}, and \code{attach.required}
+  arguments to \code{library} and \code{require}. The function
+  \code{conflictRules} can be used to specify defaults.  See
+  \url{https://svn.r-project.org/R/branches/R-conflicts/CONFLICTS.html}
+  for more details.
 }
 \section{Licenses}{
   Some packages have restrictive licenses, and there is a mechanism to

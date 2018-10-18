@@ -122,7 +122,7 @@ getExportedValue <- function(ns, name) {
 }
 
 
-attachNamespace <- function(ns, pos = 2L, depends = NULL)
+attachNamespace <- function(ns, pos = 2L, depends = NULL, omit, only)
 {
     ## only used to run .onAttach
     runHook <- function(hookname, env, libname, pkgname) {
@@ -166,6 +166,23 @@ attachNamespace <- function(ns, pos = 2L, depends = NULL)
     Sys.setenv("_R_NS_LOAD_" = nsname)
     on.exit(Sys.unsetenv("_R_NS_LOAD_"), add = TRUE)
     runHook(".onAttach", ns, dirname(nspath), nsname)
+    
+    ## adjust variables for 'omit', 'only' arguments
+    if (length(omit) > 0)
+        rm(list = omit, envir = env)
+    if (! missing(only)) {
+        vars <- ls(env, all = TRUE)
+        nf <- setdiff(only, vars)
+        if (length(nf) > 0) {
+            nf <- strwrap(paste(nf, collapse = ", "),
+                          indent = 4L,  exdent = 4L)
+            stop(gettextf("not found in namespace %s: \n\n%s\n",
+                          sQuote(nsname), nf),
+                 call. = FALSE, domain = NA)
+        }
+        rm(list = setdiff(vars, only), envir = env)
+    }
+
     lockEnvironment(env, TRUE)
     runUserHook(nsname, nspath)
     on.exit()

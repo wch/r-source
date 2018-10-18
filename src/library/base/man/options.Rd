@@ -164,6 +164,10 @@ getOption(x, default = NULL)
       e.g.\sspace{}\code{options(error = utils::recover)} in startup
       files such as \file{\link{.Rprofile}}.}
 
+    \item{\code{error.on.conflicts}:}{If \code{TRUE} a call to
+      \code{library} or \code{require} will signal an error if a
+      conflict is encountered and not explicitly masked.}
+
     \item{\code{expressions}:}{sets a limit on the number of nested
       expressions that will be evaluated.  Valid values are
       25\dots500000 with default 5000.  If you increase it, you may

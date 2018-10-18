@@ -30,11 +30,37 @@ function(built, run)
     length(agrep(built, run)) > 0
 }
 
+## If we want this it would be better to factor out the core of checkConflicts.
+## searchConflicts <- function(pkg) {
+##     vars <- getNamespaceExports(pkg)
+##     conflicts <- function(pos) intersect(vars, ls(pos, all = TRUE))
+##     val <- Filter(length, sapply(search()[-1], conflicts))
+##     if (length(val)) val else NULL
+## }
+
+conflictRules <-
+    local({
+        data <- new.env()
+        function(pkg, maskOK = NULL, omit = NULL) {
+            if ((! missing(maskOK)) || (! missing(omit)))
+                assign(pkg, list(maskOK = maskOK, omit = omit), envir = data)
+            else if (exists(pkg, envir = data, inherits = FALSE))
+                get(pkg, envir = data, inherits = FALSE)
+            else NULL
+        }
+    })
+
 library <-
 function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
          logical.return = FALSE, warn.conflicts = TRUE,
-	 quietly = FALSE, verbose = getOption("verbose"))
+	 quietly = FALSE, verbose = getOption("verbose"),
+         omit, maskOK, only, attach.required = missing(only))
 {
+    stopOnConflict <- isTRUE(getOption("error.on.conflicts"))
+    if ((! missing(only)) && (! missing(omit)))
+        stop(gettext("only one of 'only' and 'omit' can be used"),
+             call. = FALSE, domain = NA)
+
     testRversion <- function(pkgInfo, pkgname, pkgpath)
     {
         if(is.null(built <- pkgInfo$Built))
@@ -168,6 +194,16 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 		## allow a "copy":
 		if(length(same) && identical(sp[i], "package:base"))
 		    same <- same[not.Ident(same, ignore.environment = TRUE)]
+
+                ## adjust 'same' for conflict resolution specifications
+                if (is.list(maskOK))
+                    myMaskOK <- maskOK[[sub("^package:", "", sp[i])]]
+                else myMaskOK <- maskOK
+                if (isTRUE(myMaskOK))
+                    same <- NULL
+                else if (is.character(myMaskOK))
+                    same <- setdiff(same, myMaskOK)
+
                 if(length(same)) {
                     if (fst) {
                         fst <- FALSE
@@ -177,7 +213,10 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                     }
 		    msg <- .maskedMsg(sort(same), pkg = sQuote(sp[i]),
                                       by = i < lib.pos)
-		    packageStartupMessage(msg, domain = NA)
+                    if (stopOnConflict)
+                        stop(msg, call. = FALSE, domain = NA)
+                    else
+                        packageStartupMessage(msg, domain = NA)
                 }
             }
         }
@@ -242,8 +281,15 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                     pos <- 2
                 } else pos <- npos
             }
-            .getRequiredPackages2(pkgInfo, quietly = quietly)
+            if (attach.required)
+                .getRequiredPackages2(pkgInfo, quietly = quietly)
             deps <- unique(names(pkgInfo$Depends))
+
+            cr <- conflictRules(package)
+            if (missing(maskOK))
+                maskOK <- cr$maskOK
+            if (missing(omit))
+                omit <- cr$omit
 
             ## If the namespace mechanism is available and the package
             ## has a namespace, then the namespace loading mechanism
@@ -269,7 +315,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 		tt <- tryCatch({
                     attr(package, "LibPath") <- which.lib.loc
                     ns <- loadNamespace(package, lib.loc)
-                    env <- attachNamespace(ns, pos = pos, deps)
+                    env <- attachNamespace(ns, pos = pos, deps, omit, only)
 		}, error = function(e) {
 		    P <- if(!is.null(cc <- conditionCall(e)))
 			     paste(" in", deparse(cc)[1L]) else ""
@@ -289,6 +335,8 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                     ## depend on methods
                     nogenerics <-
                         !.isMethodsDispatchOn() || checkNoGenerics(env, package)
+                    if (stopOnConflict) ## no silent masking for genrics
+                        nogenerics <- TRUE
                     if(warn.conflicts && # never will with a namespace
                        !exists(".conflicts.OK", envir = env, inherits = FALSE))
                         checkConflicts(package, pkgname, pkgpath,
@@ -559,7 +607,7 @@ function(chname, libpath, verbose = getOption("verbose"),
 
 require <-
 function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
-         character.only = FALSE)
+         character.only = FALSE, maskOK, omit)
 {
     if(!character.only)
         package <- as.character(substitute(package)) # allowing "require(eda)"
@@ -573,7 +621,8 @@ function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
                                   character.only = TRUE,
                                   logical.return = TRUE,
                                   warn.conflicts = warn.conflicts,
-				  quietly = quietly),
+				  quietly = quietly,
+                                  mask = maskOK, omit = omit),
                           error = function(e) e)
         if (inherits(value, "error")) {
             if (!quietly) {
