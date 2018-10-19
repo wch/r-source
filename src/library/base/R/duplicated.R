@@ -65,7 +65,7 @@ anyDuplicated.data.frame <-
 {
     if(!isFALSE(incomparables))
 	.NotYetUsed("incomparables != FALSE")
-    anyDuplicated(do.call(Map, c(list, x)), fromLast = fromLast)
+    anyDuplicated(do.call(Map, c(list, `names<-`(x, NULL))), fromLast = fromLast)
 }
 
 anyDuplicated.matrix <- anyDuplicated.array <-
