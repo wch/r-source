@@ -2122,9 +2122,27 @@ if(!is.na(oEV)) Sys.setenv("_R_CHECK_LENGTH_1_CONDITION_" = oEV)
 
 
 ## duplicated(<dataframe with 'f' col>) -- PR#17485
-stopifnot(identical(which(duplicated(data.frame(f=gl(3,5), i=1:3))),
-                    c(4:5, 9:10, 14:15)))
+d <- data.frame(f=gl(3,5), i=1:3)
+stopifnot(exprs = {
+    identical(which(duplicated(d)), c(4:5, 9:10, 14:15))
+    identical(anyDuplicated(d), 4L)
+    identical(anyDuplicated(d[1:3,]), 0L)
+})
 ## gave error from do.call(Map, ..) as Map()'s first arg. is 'f'
+
+
+## print.POSIX[cl]t() - not correctly obeying "max.print" option
+op <- options(max.print = 50, width = 85)
+cc <- capture.output(print(dt <- .POSIXct(154e7 + (0:200)*60)))
+c2 <- capture.output(print(dt, max = 6))
+writeLines(tail(cc, 4))
+writeLines(c2)
+stopifnot(expr = {
+    grepl("omitted 151 entries", tail(cc, 1))
+                  !anyDuplicated(tail(cc, 2))
+    grepl("omitted 195 entries", tail(c2, 1))
+}); options(op)
+## the omission had been reported twice because of a typo in R <= 3.5.1
 
 
 
