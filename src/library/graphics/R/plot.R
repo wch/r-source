@@ -380,8 +380,9 @@ plot.data.frame <- function (x, ...)
 	stop("'plot.data.frame' applied to non data frame")
     if(ncol(x) == 1) {
         x1 <- x[[1L]]
-        cl <- class(x1)
-        if(cl %in% c("integer", "numeric"))  stripchart(x1, ...)
+        if(class(x1)[1L] %in% c("integer", "numeric"))# is.numeric(.) TRUE for 'ts'
+            ## the special case: *not* using plot() method
+            stripchart(x1, ...)
         else plot(x1, ...) # factor, ts, complex ...
     } else if(ncol(x) == 2) {
         plot2(x, ...)
@@ -426,4 +427,3 @@ plotHclust <-
     .External.graphics(C_dendwindow, n, merge, height, hang, labels, ...)
     .External.graphics(C_dend, n, merge, height, order, hang, labels, ...)
 }
-

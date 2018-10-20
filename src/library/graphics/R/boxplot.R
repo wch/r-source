@@ -1,7 +1,7 @@
 #  File src/library/graphics/R/boxplot.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -42,8 +42,8 @@ function(x, ..., range = 1.5, width = NULL, varwidth = FALSE,
 	    attr(groups, "names") <- 1L:n
 	names <- attr(groups, "names")
     }
-    cls <- sapply(groups, function(x) class(x)[1L])
-    cl <- if(all(cls == cls[1L])) cls[1L] else NULL
+    cls <- vapply(groups, function(x) class(x)[1L], "")
+    cl <- if(all(cls == cls[1L])) cls[1L] # else NULL
     for(i in 1L:n)
 	groups[i] <- list(boxplot.stats(unclass(groups[[i]]), range)) # do.conf=notch)
     stats <- matrix(0, nrow = 5L, ncol = n)
