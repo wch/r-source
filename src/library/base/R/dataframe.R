@@ -846,19 +846,18 @@ data.frame <-
             has.j <- TRUE
         }
     }
-    else {
+    else # nargs() <= 2
 	stop("need 0, 1, or 2 subscripts")
-    }
-    ## no columns specified
-    if(has.j && length(j) == 0L) return(x)
+
+    if ((has.j && !length(j)) ||	# no columns specified
+        (has.i && !length(i)))		# no  rows   specified
+	return(x)
 
     cl <- oldClass(x)
-    ## delete class: S3 idiom to avoid any special methods for [[, etc
-    class(x) <- NULL
     new.cols <- NULL
     nvars <- length(x)
     nrows <- .row_names_info(x, 2L)
-    if(has.i && length(i)) { # df[i, ] or df[i, j]
+    if(has.i) { # df[i, ] or df[i, j]  w/  length(i) >= 1
         rows <- NULL  # indicator that it is not yet set
         if(anyNA(i))
             stop("missing values are not allowed in subscripted assignments of data frames")
@@ -872,7 +871,8 @@ data.frame <-
 	    }
 	    i <- ii
 	}
-	if(all(i >= 0L) && (nn <- max(i)) > nrows) {
+	if(!is.logical(i) &&
+	   (char.i && nextra  ||  all(i >= 0L) && (nn <- max(i)) > nrows)) {
 	    ## expand
             if(is.null(rows)) rows <- attr(x, "row.names")
 	    if(!char.i) {
@@ -890,10 +890,14 @@ data.frame <-
 	    nrows <- length(rows)
 	}
 	iseq <- seq_len(nrows)[i]
+	## no rows specified but not explicit column as in  d[FALSE, "new"] <- val  :
+	if(!length(iseq) && !has.j) return(x)
 	if(anyNA(iseq)) stop("non-existent rows not allowed")
     }
     else iseq <- NULL
 
+    ## delete class: S3 idiom to avoid any special methods for [[, etc
+    class(x) <- NULL
     if(has.j) {
         if(anyNA(j))
             stop("missing values are not allowed in subscripted assignments of data frames")
@@ -931,12 +935,9 @@ data.frame <-
     ## addition in 1.8.0
     if(anyDuplicated(jseq))
         stop("duplicate subscripts for columns")
-    n <- length(iseq)
-    if(n == 0L) n <- nrows
+    n <- if(is.null(iseq)) nrows else length(iseq)
     p <- length(jseq)
-    if (is.null(value)) {
-        value <- list(NULL)
-    }
+    if (is.null(value)) value <- list(NULL)
     m <- length(value)
     if(!is.list(value)) {
         if(p == 1L) {
