@@ -64,7 +64,7 @@ download.file <-
 	       if(length(destfile) != 1L || typeof(url) != "character")
 		   stop("'destfile' must be a length-one character vector");
 	       if(quiet) extra <- c(extra, "-s -S")
-	       if(!cacheOK) extra <- c(extra, "-H 'Pragma: no-cache'")
+	       if(!cacheOK) extra <- c(extra, paste("-H", shQuote("Pragma: no-cache")))
 	       status <- system(paste("curl",
 				      paste(extra, collapse = " "),
 				      shQuote(url),
