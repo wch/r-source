@@ -362,8 +362,8 @@
       \item \code{format.POSIXlt()} now also recycles the \code{zone}
       and \code{gmtoff} list components to full length when needed,
       and its internal C code detects \code{have_zone} in more cases.
-      In some cases, this changes its output to become
-      \code{format.POSIXct} compatible.
+      In some cases, this changes its output to become compatible with
+      \code{format.POSIXct()}.
 
       \item On Windows, \code{detectCores()} now detects processors in all
       processor groups, not just the group \R is running in (impacts
@@ -409,8 +409,8 @@
 
       \item In the \code{numeric} method for \code{all.equal()}, a
       numeric \code{scale} argument is now checked to be positive and
-      allowed to be of length > 1 (which was working originally and with
-      a warning in recent years).
+      allowed to be of length > 1. (The latter worked originally and
+      with a warning in recent years).
 
       \item Deferred string conversions now record the \code{OutDec}
       option setting when not equal to the default. Reported by Michael
