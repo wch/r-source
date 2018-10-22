@@ -2145,16 +2145,6 @@ stopifnot(expr = {
 ## the omission had been reported twice because of a typo in R <= 3.5.1
 
 
-## <data.frame>[ <empty>, ] <- v  should be a no-op
-df <- d0 <- data.frame(i=1:6, p=pi)
-for(i in list(FALSE, integer()))
-  for(value in list(numeric(), 7, "foo")) {
-    df[i , ] <- value
-    stopifnot(identical(df, d0))
-  }
-## gave error in R <= 3.5.1
-
-
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

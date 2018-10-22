@@ -389,6 +389,10 @@
       documented and as in R < 3.0.0, namely identically to
       \code{sample.int(2, ..)}.% consider back porting to 3.5.x !
 
+      \item \code{download.file(*, method = "curl", cacheOK = FALSE)}
+      should work now on Windows, thanks to Kevin Ushey's patch in
+      \PR{17323}.
+
       \item Fixes to \code{convertColor()} for chromatic adaptation;
       thanks to Brodie Gaslam \PR{17473}.
 
@@ -415,10 +419,6 @@
       \item Deferred string conversions now record the \code{OutDec}
       option setting when not equal to the default. Reported by Michael
       Sannella.
-
-      \item Subassignment to no rows of a data frame now is a no-op in
-      all cases instead of sometimes an error; part of Emil Bode's
-      \PR{17483}.
     }
   }
 }
@@ -494,10 +494,6 @@
 
       \item \code{cut(rep(0, 7))} now works, thanks to Joey Reid and
       Benjamin Tyner (\PR{16802}).
-
-      \item \code{download.file(*, method = "curl", cacheOK = FALSE)}
-      should work now on Windows, thanks to Kevin Ushey's patch in
-      \PR{17323}.
 
       \item \code{legend(*, cex = 1:2)} now works less badly.
 
