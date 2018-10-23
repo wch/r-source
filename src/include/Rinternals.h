@@ -688,6 +688,8 @@ void *ALTVEC_DATAPTR(SEXP x);
 const void *ALTVEC_DATAPTR_RO(SEXP x);
 const void *ALTVEC_DATAPTR_OR_NULL(SEXP x);
 SEXP ALTVEC_EXTRACT_SUBSET(SEXP x, SEXP indx, SEXP call);
+
+/* data access */
 int ALTINTEGER_ELT(SEXP x, R_xlen_t i);
 void ALTINTEGER_SET_ELT(SEXP x, R_xlen_t i, int v);
 int ALTLOGICAL_ELT(SEXP x, R_xlen_t i);
@@ -699,29 +701,41 @@ void ALTSTRING_SET_ELT(SEXP, R_xlen_t, SEXP);
 Rcomplex ALTCOMPLEX_ELT(SEXP x, R_xlen_t i);
 void ALTCOMPLEX_SET_ELT(SEXP x, R_xlen_t i, Rcomplex v);
 Rbyte ALTRAW_ELT(SEXP x, R_xlen_t i);
-void ALTRAW_SET_ELT(SEXP x, R_xlen_t i, int v);
+void ALTRAW_SET_ELT(SEXP x, R_xlen_t i, Rbyte v);
+
 R_xlen_t INTEGER_GET_REGION(SEXP sx, R_xlen_t i, R_xlen_t n, int *buf);
+R_xlen_t REAL_GET_REGION(SEXP sx, R_xlen_t i, R_xlen_t n, double *buf);
+R_xlen_t LOGICAL_GET_REGION(SEXP sx, R_xlen_t i, R_xlen_t n, int *buf);
+R_xlen_t COMPLEX_GET_REGION(SEXP sx, R_xlen_t i, R_xlen_t n, Rcomplex *buf);
+R_xlen_t RAW_GET_REGION(SEXP sx, R_xlen_t i, R_xlen_t n, Rbyte *buf);
+
+/* metadata access */
 int INTEGER_IS_SORTED(SEXP x);
 int INTEGER_NO_NA(SEXP x);
-SEXP ALTINTEGER_SUM(SEXP x, Rboolean narm);
-SEXP ALTREAL_SUM(SEXP x, Rboolean narm);
-SEXP ALTINTEGER_MIN(SEXP x, Rboolean narm);
-SEXP ALTINTEGER_MAX(SEXP x, Rboolean narm);
-SEXP ALTREAL_MIN(SEXP x, Rboolean narm);
-SEXP ALTREAL_MAX(SEXP x, Rboolean narm);
-SEXP INTEGER_MATCH(SEXP, SEXP, int, SEXP, SEXP, Rboolean);
-SEXP INTEGER_IS_NA(SEXP x);
-SEXP REAL_MATCH(SEXP, SEXP, int, SEXP, SEXP, Rboolean);
-
-R_xlen_t REAL_GET_REGION(SEXP sx, R_xlen_t i, R_xlen_t n, double *buf);
 int REAL_IS_SORTED(SEXP x);
 int REAL_NO_NA(SEXP x);
-SEXP REAL_IS_NA(SEXP x);
+int LOGICAL_NO_NA(SEXP x);
 int STRING_IS_SORTED(SEXP x);
 int STRING_NO_NA(SEXP x);
+
+/* invoking ALTREP class methods */
+SEXP ALTINTEGER_SUM(SEXP x, Rboolean narm);
+SEXP ALTINTEGER_MIN(SEXP x, Rboolean narm);
+SEXP ALTINTEGER_MAX(SEXP x, Rboolean narm);
+SEXP INTEGER_MATCH(SEXP, SEXP, int, SEXP, SEXP, Rboolean);
+SEXP INTEGER_IS_NA(SEXP x);
+SEXP ALTREAL_SUM(SEXP x, Rboolean narm);
+SEXP ALTREAL_MIN(SEXP x, Rboolean narm);
+SEXP ALTREAL_MAX(SEXP x, Rboolean narm);
+SEXP REAL_MATCH(SEXP, SEXP, int, SEXP, SEXP, Rboolean);
+SEXP REAL_IS_NA(SEXP x);
+SEXP ALTLOGICAL_SUM(SEXP x, Rboolean narm);
+
+/* constructors for internal ALTREP classes */
 SEXP R_compact_intrange(R_xlen_t n1, R_xlen_t n2);
 SEXP R_deferred_coerceToString(SEXP v, SEXP info);
 SEXP R_virtrep_vec(SEXP, SEXP);
+
 
 #ifdef LONG_VECTOR_SUPPORT
     R_len_t NORET R_BadLongVector(SEXP, const char *, int);
