@@ -57,7 +57,7 @@ void editorcleanall(void);                  /* from editor.c */
 
 int Rwin_graphicsx = -25, Rwin_graphicsy = 0;
 
-R_size_t R_max_memory = INT_MAX;
+R_size_t R_max_memory = R_SIZE_T_MAX;
 
 extern SA_TYPE SaveAction; /* from ../main/startup.c */
 Rboolean DebugMenuitem = FALSE;  /* exported for rui.c */

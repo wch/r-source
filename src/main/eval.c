@@ -2022,8 +2022,10 @@ static SEXP assignCall(SEXP op, SEXP symbol, SEXP fun,
     return lang3(op, symbol, val);
 }
 
-
-/* rho only needed for _R_CHECK_LENGTH_1_CONDITION_=package:name */
+/* rho is only needed for _R_CHECK_LENGTH_1_CONDITION_=package:name and for
+     detecting the current package in related diagnostic messages; it should
+     be removed when length >1 condition is turned into an error
+*/
 static R_INLINE Rboolean asLogicalNoNA(SEXP s, SEXP call, SEXP rho)
 {
     Rboolean cond = NA_LOGICAL;
@@ -2042,41 +2044,15 @@ static R_INLINE Rboolean asLogicalNoNA(SEXP s, SEXP call, SEXP rho)
 
     int len = length(s);
     if (len > 1) {
-	PROTECT(s);	 /* needed as per PR#15990.  call gets protected by warningcall() */
-	char *check = getenv("_R_CHECK_LENGTH_1_CONDITION_");
-	const void *vmax = vmaxget();
-	Rboolean err = check && StringTrue(check); /* warn by default */
-	if (!err && check) {
-	    /* err when the condition is evaluated in given package */
-	    const char *pprefix  = "package:";
-	    size_t lprefix = strlen(pprefix);
-	    if (!strncmp(pprefix, check, lprefix)) {
-		/* check starts with "package:" */
-		SEXP spkg = R_NilValue;
-		for(; spkg == R_NilValue && rho != R_EmptyEnv; rho = ENCLOS(rho))
-		    if (R_IsPackageEnv(rho))
-			spkg = R_PackageEnvName(rho);
-		    else if (R_IsNamespaceEnv(rho))
-			spkg = R_NamespaceEnvSpec(rho);
-		if (spkg != R_NilValue) {
-		    const char *pkgname = translateChar(STRING_ELT(spkg, 0));
-		    if (!strcmp(check + lprefix, pkgname))
-			err = TRUE;
-		    if (!strcmp(check + lprefix, "_R_CHECK_PACKAGE_NAME_")) {
-			/* package name specified in _R_CHECK_PACKAGE_NAME */
-			const char *envpname = getenv("_R_CHECK_PACKAGE_NAME_");
-			if (envpname && !strcmp(envpname, pkgname))
-			    err = TRUE;
-		    }
-		}
-	    }
-	}
-	if (err)
-	    errorcall(call, _("the condition has length > 1"));
-        else
-	    warningcall(call,
-		    _("the condition has length > 1 and only the first element will be used"));
-	vmaxset(vmax);
+	/* needed as per PR#15990.  call gets protected by warningcall() */
+	/* FIXME: should be protected by caller, not here */
+	PROTECT(s);
+	R_BadValueInRCode(s, call, rho,
+	    "the condition has length > 1",
+	    _("the condition has length > 1"),
+	    _("the condition has length > 1 and only the first element will be used"),
+	    "_R_CHECK_LENGTH_1_CONDITION_",
+	    TRUE /* by default issue warning */);
 	UNPROTECT(1);
     }
     if (len > 0) {
@@ -5832,7 +5808,8 @@ static R_INLINE void SUBASSIGN_N_PTR(R_bcstack_t *sx, int rank,
 	R_BCNodeStackTop -= rank + 1;					\
     } while (0)
 
-#define FIXUP_SCALAR_LOGICAL(callidx, arg, op, warn_level) do {		\
+/* rho is only needed for _R_CHECK_LENGTH_1_LOGIC2_ */
+#define FIXUP_SCALAR_LOGICAL(rho, callidx, arg, op, warn_level) do {	\
 	SEXP val = GETSTACK(-1);					\
 	if (IS_SIMPLE_SCALAR(val, LGLSXP))				\
 	    SETSTACK(-1, ScalarLogical(SCALAR_LVAL(val)));		\
@@ -5842,7 +5819,8 @@ static R_INLINE void SUBASSIGN_N_PTR(R_bcstack_t *sx, int rank,
 			  _("invalid %s type in 'x %s y'"), arg, op);	\
 	    SETSTACK(-1, ScalarLogical(asLogical2(			\
 					   val, /*checking*/ 1,		\
-					   VECTOR_ELT(constants, callidx)))); \
+					   VECTOR_ELT(constants, callidx),	\
+					   rho)));			\
 	}								\
     } while(0)
 
@@ -6988,7 +6966,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
     OP(AND1ST, 2): {
 	int callidx = GETOP();
 	int label = GETOP();
-	FIXUP_SCALAR_LOGICAL(callidx, "'x'", "&&", warn_lev);
+	FIXUP_SCALAR_LOGICAL(rho, callidx, "'x'", "&&", warn_lev);
 	SEXP value = GETSTACK(-1);
 	if (SCALAR_LVAL(value) == FALSE)
 	    pc = codebase + label;
@@ -6997,7 +6975,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
     }
     OP(AND2ND, 1): {
 	int callidx = GETOP();
-	FIXUP_SCALAR_LOGICAL(callidx, "'y'", "&&", warn_lev);
+	FIXUP_SCALAR_LOGICAL(rho, callidx, "'y'", "&&", warn_lev);
 	SEXP value = GETSTACK(-1);
 	/* The first argument is TRUE or NA. If the second argument is
 	   not TRUE then its value is the result. If the second
@@ -7013,7 +6991,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
     OP(OR1ST, 2):  {
 	int callidx = GETOP();
 	int label = GETOP();
-	FIXUP_SCALAR_LOGICAL(callidx, "'x'", "||", warn_lev);
+	FIXUP_SCALAR_LOGICAL(rho, callidx, "'x'", "||", warn_lev);
 	SEXP value = GETSTACK(-1);
 	Rboolean val = SCALAR_LVAL(value);
 	if (val != NA_LOGICAL &&
@@ -7024,7 +7002,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
     }
     OP(OR2ND, 1):  {
 	int callidx = GETOP();
-	FIXUP_SCALAR_LOGICAL(callidx, "'y'", "||", warn_lev);
+	FIXUP_SCALAR_LOGICAL(rho, callidx, "'y'", "||", warn_lev);
 	SEXP value = GETSTACK(-1);
 	/* The first argument is FALSE or NA. If the second argument is
 	   not FALSE then its value is the result. If the second

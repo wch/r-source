@@ -20,6 +20,10 @@
 #ifndef R_EXT_ALTREP_H_
 #define R_EXT_ALTREP_H_
 
+#ifdef  __cplusplus
+extern "C" {
+#endif
+
 #define STRUCT_SUBTYPES
 #ifdef STRUCT_SUBTYPES
 # define R_SEXP(x) (x).ptr
@@ -32,7 +36,7 @@
 #endif
 
 SEXP
-R_new_altrep(R_altrep_class_t class, SEXP data1, SEXP data2);
+R_new_altrep(R_altrep_class_t aclass, SEXP data1, SEXP data2);
 
 R_altrep_class_t
 R_make_altstring_class(const char *cname, const char *pname, DllInfo *info);
@@ -40,6 +44,13 @@ R_altrep_class_t
 R_make_altinteger_class(const char *cname, const char *pname, DllInfo *info);
 R_altrep_class_t
 R_make_altreal_class(const char *cname, const char *pname, DllInfo *info);
+R_altrep_class_t
+R_make_altlogical_class(const char *cname, const char *pname, DllInfo *info);
+R_altrep_class_t
+R_make_altraw_class(const char *cname, const char *pname, DllInfo *info);
+R_altrep_class_t
+R_make_altcomplex_class(const char *cname, const char *pname, DllInfo *info);
+
 Rboolean R_altrep_inherits(SEXP x, R_altrep_class_t);
 
 typedef SEXP (*R_altrep_UnserializeEX_method_t)(SEXP, SEXP, SEXP, int, int);
@@ -97,6 +108,21 @@ typedef SEXP (*R_altreal_Min_method_t)(SEXP, Rboolean);
 typedef SEXP (*R_altreal_Max_method_t)(SEXP, Rboolean);
 typedef SEXP (*R_altreal_Match_method_t)(SEXP, SEXP, int, SEXP, SEXP, Rboolean);
 
+typedef int (*R_altlogical_Elt_method_t)(SEXP, R_xlen_t);
+typedef R_xlen_t
+(*R_altlogical_Get_region_method_t)(SEXP, R_xlen_t, R_xlen_t, int *);
+typedef int (*R_altlogical_Is_sorted_method_t)(SEXP);
+typedef int (*R_altlogical_No_NA_method_t)(SEXP);
+typedef SEXP (*R_altlogical_Sum_method_t)(SEXP, Rboolean);
+
+typedef Rbyte (*R_altraw_Elt_method_t)(SEXP, R_xlen_t);
+typedef R_xlen_t
+(*R_altraw_Get_region_method_t)(SEXP, R_xlen_t, R_xlen_t, Rbyte *);
+
+typedef Rcomplex (*R_altcomplex_Elt_method_t)(SEXP, R_xlen_t);
+typedef R_xlen_t
+(*R_altcomplex_Get_region_method_t)(SEXP, R_xlen_t, R_xlen_t, Rcomplex *);
+
 typedef SEXP (*R_altstring_Elt_method_t)(SEXP, R_xlen_t);
 typedef void (*R_altstring_Set_elt_method_t)(SEXP, R_xlen_t, SEXP);
 typedef int (*R_altstring_Is_sorted_method_t)(SEXP);
@@ -138,9 +164,25 @@ DECLARE_METHOD_SETTER(altreal, Min)
 DECLARE_METHOD_SETTER(altreal, Max)
 DECLARE_METHOD_SETTER(altreal, Match)
 
+DECLARE_METHOD_SETTER(altlogical, Elt)
+DECLARE_METHOD_SETTER(altlogical, Get_region)
+DECLARE_METHOD_SETTER(altlogical, Is_sorted)
+DECLARE_METHOD_SETTER(altlogical, No_NA)
+DECLARE_METHOD_SETTER(altlogical, Sum)
+
+DECLARE_METHOD_SETTER(altraw, Elt)
+DECLARE_METHOD_SETTER(altraw, Get_region)
+
+DECLARE_METHOD_SETTER(altcomplex, Elt)
+DECLARE_METHOD_SETTER(altcomplex, Get_region)
+
 DECLARE_METHOD_SETTER(altstring, Elt)
 DECLARE_METHOD_SETTER(altstring, Set_elt)
 DECLARE_METHOD_SETTER(altstring, Is_sorted)
 DECLARE_METHOD_SETTER(altstring, No_NA)
+
+#ifdef  __cplusplus
+}
+#endif
 
 #endif /* R_EXT_ALTREP_H_ */

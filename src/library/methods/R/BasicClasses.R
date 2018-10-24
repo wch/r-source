@@ -209,6 +209,8 @@
     setClass("factor", contains = "integer", representation(levels = "character"),
 	     validity = base::.valid.factor, where = envir)
     setOldClass("factor", S4Class = "factor", where = envir)
+    setClass("ordered", contains = "factor", where = envir)
+    setOldClass("ordered", S4Class = "ordered", where = envir)
     if(!isGeneric("show", envir))
         setGeneric("show", where = envir, simpleInheritanceOnly = TRUE)
     setMethod("show", "oldClass", function(object) {
@@ -532,7 +534,6 @@
   list(
        list("data.frame",  data.frame(), "data.frame"),
        list("factor",  factor()),
-       list(c("ordered", "factor"), ordered(character())),
        list("table",  table(factor())),
        list("summary.table",  summary.table(table(factor())))
        , list("ts", stats::ts())

@@ -191,7 +191,9 @@ while test -n "${1}"; do
       ;;
     -e)
       if test -n "`echo ${2} | ${SED} 's/^-.*//'`"; then
-	a=`echo "${2}" | ${SED} -e 's/ /~+~/g'`; shift
+	a=`(echo "${2}" && echo) | ${SED} -e 's/ /~+~/g' | \
+          ${SED} -e :a -e N -e '$!ba' -e 's/\n/~n~/g' -e 's/~n~$//g'`
+        shift
       else
 	error "option '${1}' requires a non-empty argument"
       fi

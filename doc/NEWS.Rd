@@ -11,7 +11,7 @@
      \itemize{
        \item Serialization format version 3 becomes the default for
        serialization and saving of the workspace (\code{save()},
-       \code{serialize()}, \code{saveRDS()}, \code{cmpfile()}).
+       \code{serialize()}, \code{saveRDS()}, \code{compiler::cmpfile()}).
        Serialized data in format 3 cannot be read by versions of \R prior
        to version 3.5.0.  Serialization format version 2 is still
        supported and can be selected by \code{version = 2} in the
@@ -127,8 +127,8 @@
       choose the \emph{kind} of \code{quantile()}s to use; wish of
       \PR{17438}.
 
-      \item Multivariate linear models, \code{lm()} now do work with
-      \emph{matrix} offsets, as suggested in \PR{17407}.
+      \item Fitting multiple linear models \emph{via} \code{lm()} does
+      work with \emph{matrix} offsets, as suggested in \PR{17407}.
 
       \item The new functions \code{mem.maxVSize()} and
       \code{mem.maxMSize()} allow the maximal size of the vector heap
@@ -141,7 +141,7 @@
       i.e., all help pages. show platform-independent information (rather
       than Windows or Unix-alike specifics visible only on that platform).
       Consequently, the Windows version of \code{X11()} / \code{x11()}
-      got identical formal arguments the unix one.
+      got identical formal arguments to the Unix one.
 
       \item \code{sessionInfo()$running} has been factored out in a new
       variable \code{osVersion}. % precomputed at utils namespace load time
@@ -160,7 +160,7 @@
       OpenBSD have \sQuote{older} \command{tar} commands for this
       purpose.)
 
-      \item The new function \code{asplit()} allows to split an array or
+      \item The new function \code{asplit()} allow splitting an array or
       matrix by its margins.
 
       \item New functions \code{errorCondition()} and
@@ -168,16 +168,16 @@
       structured error and warning objects.
 
       \code{.Deprecated()} now signals a warning of class
-      \code{deprecatedWarning}, and \code{.Defunct()} now signals an
-      error of class \code{defunctError}.
+      \code{"deprecatedWarning"}, and \code{.Defunct()} now signals an
+      error of class \code{"defunctError"}.
 
       \item Many \sQuote{package not found} errors are now signaled as
-      errors of class \code{packageNotFoundError}.
+      errors of class \code{"packageNotFoundError"}.
 
       \item As an experimental feature, when \code{loadNamespace()} fails
       because the requested package is not available the error is
       initially signaled with a \code{retry_loadNamespace} restart
-      available. This allows a calling handler to try to install the
+      available.  This allows a calling handler to try to install the
       package and continue.
 
       \item \code{S3method()} directives in \file{NAMESPACE} can now
@@ -201,6 +201,9 @@
       \item \code{sQuote()} and \code{dQuote()} get an explicit \code{q}
       argument with obvious default instead of using
       \code{getOption("fancyQuotes")} implicitly and unconditionally.
+
+      \item \code{unzip()} can list archives with comments and with
+      spaces in file names even using external \command{unzip} command.
     }
   }
 
@@ -215,6 +218,16 @@
     \itemize{
       \item \command{R CMD check} now optionally checks makefiles for
       correct and portable use of the \samp{SHLIB_OPENMP_*FLAGS} macros.
+
+      \item \command{R CMD check} now evaluates \code{\\Sexpr{}}
+      expressions (including those in macros) before checking the
+      contents of \file{Rd} files and so detects issues both in
+      evaluating the expressions and in the expanded contents.
+
+      \item \command{R CMD check} now lists missing packages separated
+      by commas and with regular quotes such as to be useful as argument
+      in calling \code{install.packages(c(..))}; from a suggestion by
+      Marcel Ramos.
     }
   }
 
@@ -349,23 +362,23 @@
       \item \code{format.POSIXlt()} now also recycles the \code{zone}
       and \code{gmtoff} list components to full length when needed,
       and its internal C code detects \code{have_zone} in more cases.
-      In some cases, this changes its output to become
-      \code{format.POSIXct} compatible.
+      In some cases, this changes its output to become compatible with
+      \code{format.POSIXct()}.
 
       \item On Windows, \code{detectCores()} now detects processors in all
       processor groups, not just the group \R is running in (impacts
       particularly systems with more than 64 logical processors). Reported
       by Arunkumar Srinivasan.
 
-      \item On Windows, \code{socketSelect} would hang with more than 64
-      sockets, and hence \code{parallel::clusterApplyLB} would hang with
-      more than 64 workers. Reported by Arunkumar Srinivasan.
+      \item On Windows, \code{socketSelect()} would hang with more than
+      64 sockets, and hence \code{parallel::clusterApplyLB()} would hang
+      with more than 64 workers.  Reported by Arunkumar Srinivasan.
 
       \item \code{as(1L, "double")} now does coerce (\PR{17457}).
 
       \item Buffering is disabled for \code{file()} connections to
       irregular files (like sockets), as well as \code{fifo()} and
-      \code{pipe()} connections. Fixes \PR{17470}, reported by Chris
+      \code{pipe()} connections.  Fixes \PR{17470}, reported by Chris
       Culnane.
 
       \item \code{lm.influence()}, \code{influence.measures()},
@@ -382,6 +395,30 @@
 
       \item Fixes to \code{convertColor()} for chromatic adaptation;
       thanks to Brodie Gaslam \PR{17473}.
+
+      \item Using \code{\\Sexpr[stage=install]{..}} to create an
+      \file{Rd} section no longer gives a warning in \command{R CMD
+	check}; problem originally posted by Gábor Csárdi, then reported
+      as \PR{17479} with a partial patch by Duncan Murdoch.
+
+      \item Parse data now include a special node for equal assignment.
+
+      \item \code{split.default()} no longer relies on \code{[[<-()}, so
+      it behaves as expected when splitting an object by a factor with
+      the empty string as one of its levels.  Thanks to Brad Friedman for
+      the report.
+
+      \item Line numbers in messages about \file{.Rd} files are now more
+      reliable, thanks to a patch from Duncan Murdoch.
+
+      \item In the \code{numeric} method for \code{all.equal()}, a
+      numeric \code{scale} argument is now checked to be positive and
+      allowed to be of length > 1. (The latter worked originally and
+      with a warning in recent years).
+
+      \item Deferred string conversions now record the \code{OutDec}
+      option setting when not equal to the default. Reported by Michael
+      Sannella.
     }
   }
 }
@@ -390,14 +427,14 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item Linear multivariate empty models such as \code{lm(y ~ 0)}
+      \item Linear multiple empty models such as \code{lm(y ~ 0)}
       now have a correctly dimensioned empty coefficient matrix;
       reported by Brett Presnell.
 
       \item \code{vcov(<empty mlm>)} and hence \code{confint()} now
       work (via a consistency change in \code{summary.lm()}).
 
-      \item \code{confint(<multivariate lm()>)} now works correctly;
+      \item \code{confint(<multiple lm()>)} now works correctly;
       reported on R-devel by Steven Pav.
 
       \item \code{quade.test()} now also works correctly when its
@@ -439,18 +476,35 @@
       \item Calling \code{match()} with length one \code{x} and POSIXlt
       \code{table} gave a segfault (\PR{17459}).
 
-      \item Fork cluster could hang due to a race condition in cluster
+      \item Fork clusters could hang due to a race condition in cluster
       initialization (\code{makeCluster()}).
 
       \item \code{nextn(n)} now also works for larger \code{n} and no
       longer loops infinitely for e.g, \code{n <- 214e7}.
 
       \item \code{cooks.distance()} and \code{rstandard()} now work
-      correctly for multivariate models (\code{"mlm"}).
+      correctly for multiple linear models (\code{"mlm"}).
 
       \item \code{polym()} and corresponding \code{lm()} prediction now
       also work for a boundary "vector" case fixing \PR{17474},
       reported by Alexandre Courtiol.
+
+      \item With a very large number of variables \code{terms()} could
+      segfault (\PR{17480}).
+
+      \item \code{cut(rep(0, 7))} now works, thanks to Joey Reid and
+      Benjamin Tyner (\PR{16802}).
+
+      \item \code{legend(*, cex = 1:2)} now works less badly.
+
+      \item \code{duplicated(<dataframe with 'f'>)} now works, too,
+      thanks to Andreas Kersting's \PR{17485}; ditto for
+      \code{anyDuplicated()}.
+
+      \item The \code{print()} method for \code{POSIXct} and
+      \code{POSIXlt} now correctly obeys \code{getOption("max.print")},
+      fixing a long-standing typo, and it also gets a corresponding
+      optional \code{max} argument.
     }
   }
 }
@@ -599,7 +653,7 @@
       \item \code{available.packages()} has two new arguments which
       control if the values from the per-session repository cache are
       used (default true, as before) and if so how old cached values can
-      be to be used (default one hour).
+      be used (default one hour).
 
       These arguments can be passed from \code{install.packages()},
       \code{update.packages()} and functions calling that: to enable

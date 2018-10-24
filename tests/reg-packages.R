@@ -96,8 +96,9 @@ pkgPath <- file.path(tempdir(), "Pkgs")
 ## pkgB tests an empty R directory
 dir.create(file.path(pkgPath, "pkgB", "R"), recursive = TRUE,
 	   showWarnings = FALSE)
-p.lis <- if("Matrix" %in% row.names(installed.packages(.Library)))
-	     c("pkgA", "pkgB", "exNSS4") else "exNSS4"
+p.lis <- c(if("Matrix" %in% row.names(installed.packages(.Library)))
+               c("pkgA", "pkgB"),
+           "exNSS4", "exSexpr")
 pkgApath <- file.path(pkgPath, "pkgA")
 if("pkgA" %in% p.lis && !dir.exists(d <- pkgApath)) {
     cat("symlink 'pkgA' does not exist as directory ",d,"; copying it\n", sep='')
@@ -165,6 +166,14 @@ if(okA) {
     stopifnot(length(err) > 0, grepl("invalid .*LazyData .*DESCRIPTION", err))
   }
 }
+
+## R CMD check should *not* warn about \Sexpr{} built sections in Rd (PR#17479):
+msg <- capture.output(
+    tools:::.check_package_parseRd(dir=file.path(pkgPath, "exSexpr")))
+if(length(msg))
+    stop(".check_package_parseRd() gave message\n",msg)
+## in R <= 3.5.1, gave
+##  "prepare_Rd: foo.Rd:14: Section \\Sexpr is unrecognized and will be dropped"
 
 
 ## tests here should *NOT* assume recommended packages,

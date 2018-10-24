@@ -1234,12 +1234,32 @@ DECLARE_SUBSETTED_ALTCLASS(double, REAL, rsumWrapper, REALSXP,
 
 #define MAKE_DEFERRED_STRING_STATE(v, sp) CONS(v, sp)
 #define DEFERRED_STRING_STATE_ARG(s) CAR(s)
-#define DEFERRED_STRING_STATE_SCIPEN(s) CDR(s)
+#define DEFERRED_STRING_STATE_INFO(s) CDR(s)
 
 #define DEFERRED_STRING_ARG(x) \
     DEFERRED_STRING_STATE_ARG(DEFERRED_STRING_STATE(x))
+#define DEFERRED_STRING_INFO(x) \
+    DEFERRED_STRING_STATE_INFO(DEFERRED_STRING_STATE(x))
 #define DEFERRED_STRING_SCIPEN(x) \
-    DEFERRED_STRING_STATE_SCIPEN(DEFERRED_STRING_STATE(x))
+    INTEGER0(DEFERRED_STRING_STATE_INFO(DEFERRED_STRING_STATE(x)))[0]
+
+static SEXP R_OutDecSym = NULL;
+
+static R_INLINE const char *DEFERRED_STRING_OUTDEC(SEXP x)
+{
+    /* The default value of OutDec at startup is ".". If it is
+       something different at the time the deferred string conversion
+       is created then the current value is stored as an attribute. */
+    if (R_OutDecSym == NULL)
+	R_OutDecSym = install("OutDec");
+    SEXP info = DEFERRED_STRING_INFO(x);
+    if (ATTRIB(info) != R_NilValue) {
+	SEXP outdecattr = getAttrib(info, R_OutDecSym);
+	if (TYPEOF(outdecattr) == STRSXP && XLENGTH(outdecattr) == 1)
+	    return CHAR(STRING_ELT(outdecattr, 0));
+    }
+    return ".";
+}
 
 static SEXP deferred_string_Serialized_state(SEXP x)
 {
@@ -1255,8 +1275,8 @@ static SEXP deferred_string_Serialized_state(SEXP x)
 static SEXP deferred_string_Unserialize(SEXP class, SEXP state)
 {
     SEXP arg = DEFERRED_STRING_STATE_ARG(state);
-    SEXP sp = DEFERRED_STRING_STATE_SCIPEN(state);
-    return R_deferred_coerceToString(arg, sp);
+    SEXP info = DEFERRED_STRING_STATE_INFO(state);
+    return R_deferred_coerceToString(arg, info);
 }
 
 static
@@ -1309,8 +1329,25 @@ static R_INLINE SEXP ExpandDeferredStringElt(SEXP x, R_xlen_t i)
 	    savedigits = R_print.digits;
 	    savescipen = R_print.scipen;
 	    R_print.digits = DBL_DIG;/* MAX precision */
-	    R_print.scipen = INTEGER0(DEFERRED_STRING_SCIPEN(x))[0];
-	    elt = StringFromReal(REAL_ELT(data, i), &warn);
+	    R_print.scipen = DEFERRED_STRING_SCIPEN(x);
+	    const char *myoutdec = DEFERRED_STRING_OUTDEC(x);
+	    if (strcmp(OutDec, myoutdec)) {
+		/* The current and saved OutDec values differ. The
+		   value to use is put in a static buffer and OutDec
+		   temporarily points to this buffer while
+		   StringFromReal is called and then reset. The buffer
+		   originally pointed to by OutDec cannot be used as
+		   it wil not be writable if the default "." has not
+		   been changed. */
+		static char buf[10];
+		strncpy(buf, myoutdec, sizeof buf);
+		char *savedOutDec = OutDec;
+		OutDec = buf;
+		elt = StringFromReal(REAL_ELT(data, i), &warn);
+		OutDec = savedOutDec;
+	    }
+	    else
+		elt = StringFromReal(REAL_ELT(data, i), &warn);
 	    R_print.digits = savedigits;
 	    R_print.scipen = savescipen;
 	    break;
@@ -1416,9 +1453,9 @@ static SEXP deferred_string_Extract_subset(SEXP x, SEXP indx, SEXP call)
 	   using the subset of the argument.  Could try to
 	   preserve/share coercions already done, if there are any. */
 	SEXP data = DEFERRED_STRING_ARG(x);
-	SEXP sp = DEFERRED_STRING_SCIPEN(x);
+	SEXP info = DEFERRED_STRING_INFO(x);
 	PROTECT(result = ExtractSubset(data, indx, call));
-	result = R_deferred_coerceToString(result, sp);
+	result = R_deferred_coerceToString(result, info);
 	UNPROTECT(1);
 	return result;
     }
@@ -1462,19 +1499,27 @@ static void InitDefferredStringClass()
  * Constructor
  */
 
-SEXP attribute_hidden R_deferred_coerceToString(SEXP v, SEXP sp)
+SEXP attribute_hidden R_deferred_coerceToString(SEXP v, SEXP info)
 {
     SEXP ans = R_NilValue;
     switch (TYPEOF(v)) {
     case INTSXP:
     case REALSXP:
 	PROTECT(v); /* may not be needed, but to be safe ... */
-	if (sp == NULL) {
+	if (info == NULL) {
 	    PrintDefaults(); /* to set R_print from options */
-	    sp = ScalarInteger(R_print.scipen);
+	    info = ScalarInteger(R_print.scipen);
+	    if (strcmp(OutDec, ".")) {
+		/* non-default OutDec setting -- attach as an attribute */
+		PROTECT(info);
+		if (R_OutDecSym == NULL)
+		    R_OutDecSym = install("OutDec");
+		setAttrib(info, R_OutDecSym, GetOption1(R_OutDecSym));
+		UNPROTECT(1); /* info */
+	    }
 	}
 	MARK_NOT_MUTABLE(v); /* make sure it can't change once captured */
-	ans = PROTECT(MAKE_DEFERRED_STRING_STATE(v, sp));
+	ans = PROTECT(MAKE_DEFERRED_STRING_STATE(v, info));
 	ans = R_new_altrep(R_deferred_string_class, ans, R_NilValue);
 	UNPROTECT(2); /* ans, v */
 	break;

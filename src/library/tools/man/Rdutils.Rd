@@ -8,7 +8,7 @@
 \title{Rd Utilities}
 \description{Utilities for computing on the information in Rd objects.}
 \usage{
-Rd_db(package, dir, lib.loc = NULL)
+Rd_db(package, dir, lib.loc = NULL, stages = "build")
 }
 \arguments{
   \item{package}{a character string naming an installed package.}
@@ -20,11 +20,15 @@ Rd_db(package, dir, lib.loc = NULL)
     or \code{NULL}.  The default value of \code{NULL} corresponds to all
     libraries currently known.  The specified library trees are used to
     search for \code{package}.}
+  \item{stages}{if \code{dir} is specified and the database is being
+    built from source, which stages of \verb{\Sexpr} processing should be
+    processed?}
 }
 \details{
   \code{Rd_db} builds a simple database of all Rd objects in a package,
   as a list of the results of running \code{\link{parse_Rd}} on the Rd
-  source files in the package and processing platform conditionals.
+  source files in the package and processing platform conditionals
+  and some \verb{\Sexpr} macros.
 }
 \seealso{
   \code{\link{parse_Rd}}

@@ -2,15 +2,15 @@
 # Copyright (C) 2005, 06 The R Foundation
 # This file is distributed under the same license as the R package.
 # 陳斐 <FeiChen@FairIsaac.com>, 2005.
-# Wei-Lun Chao <chaoweilun@gmail.com>, 2005, 06, 11.
+# Wei-Lun Chao <bluebat@member.fsf.org>, 2005, 06, 11, 18.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: RGui 2.14.0\n"
+"Project-Id-Version: RGui 3.5.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-29 07:06-0700\n"
-"PO-Revision-Date: 2011-10-13 17:33+0800\n"
-"Last-Translator: Wei-Lun Chao <chaoweilun@gmail.com>\n"
+"POT-Creation-Date: 2018-03-30 07:35-0700\n"
+"PO-Revision-Date: 2018-09-16 23:33+0800\n"
+"Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
@@ -47,7 +47,7 @@ msgstr ""
 
 #: src/gnuwin32/console.c:2136
 msgid "Save selection to"
-msgstr "儲存所選部份到"
+msgstr "儲存所選部分到"
 
 #: src/gnuwin32/console.c:2138
 msgid "Save console contents to"
@@ -602,9 +602,8 @@ msgid "Update packages..."
 msgstr "更新程式套件…"
 
 #: src/gnuwin32/rui.c:920
-#, fuzzy
 msgid "Install package(s) from local files..."
-msgstr "用本機的 zip 檔案來安裝程式套件…"
+msgstr "用本機的檔案來安裝程式套件…"
 
 #: src/gnuwin32/rui.c:944
 msgid "FAQ on R"
@@ -1048,9 +1047,8 @@ msgid "Variable name"
 msgstr "變數名"
 
 #: src/library/grDevices/src/devWindows.c:1277
-#, fuzzy
 msgid "Variable doesn't contain any plots!"
-msgstr "變數不存在或不包含任何圖表!"
+msgstr "變數不包含任何圖表!"
 
 #: src/library/grDevices/src/devWindows.c:1292
 msgid "Name of variable to save to"
@@ -1188,9 +1186,3 @@ msgstr "等待頁面變更的確認…"
 #: src/library/grDevices/src/devWindows.c:3791
 msgid "Click or hit ENTER for next page"
 msgstr "按 ENTER 來看下一頁"
-
-#~ msgid "Print...\tCTRL+P"
-#~ msgstr "列印…\tCTRL+P"
-
-#~ msgid "invalid device"
-#~ msgstr "裝置發生錯誤"

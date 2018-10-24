@@ -283,14 +283,14 @@ SEXP attribute_hidden do_logic2(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, _("invalid 'x' type in 'x %s y'"),
 		  PRIMVAL(op) == 1 ? "&&" : "||");
 
-    x1 = asLogical2(s1, /*checking*/ 1, call);
+    x1 = asLogical2(s1, /*checking*/ 1, call, env);
 
 #define get_2nd							\
 	s2 = eval(s2, env);					\
 	if (!isNumber(s2))					\
 	    errorcall(call, _("invalid 'y' type in 'x %s y'"),	\
 		      PRIMVAL(op) == 1 ? "&&" : "||");		\
-	x2 = asLogical2(s2, 1, call);
+	x2 = asLogical2(s2, 1, call, env);
 
     switch (PRIMVAL(op)) {
     case 1: /* && */
@@ -457,7 +457,7 @@ SEXP attribute_hidden do_logic3(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     ans = matchArgExact(R_NaRmSymbol, &args);
-    narm = asLogical2(ans, /*warn_level*/ 1, call);
+    narm = asLogical2(ans, /*warn_level*/ 1, call, env);
 
     for (s = args; s != R_NilValue; s = CDR(s)) {
 	t = CAR(s);

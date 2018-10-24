@@ -2522,19 +2522,22 @@ is in preparation.
 What standard a C++ compiler aims to support can be hard to determine:
 the value@footnote{Values @code{199711}, @code{201103L} and
 @code{201402L} are most commonly used for C++98, C++11 and C++14
-respectively, but some compilers set @code{1L}.} of @code{__cplusplus}
-may help but some compilers use it to denote a standard which is
-partially supported and some the latest standard which is (almost) fully
-supported.  As from version 6, @command{g++} defaults to C++14 (with GNU
-extensions): earlier versions aim to support C++03 with many extensions
-(including support for TR1) with version 5 having fairly complete C++14
-support enabled by flag @option{-std=gnu++14}.  @command{clang} with its
-native@footnote{Some distributions, notably Debian, have supplied a
-build of @command{clang} with @command{g++}'s headers and library.
-Conversely, Apple's command named @command{g++} is based on
-@command{clang} using @code{libc++}.} @code{libc++} headers and library
-has since version 3.4 included almost all C++14 features, but does not
-support TR1.  As from version 6.0.0, @command{clang} defaults to C++14.
+respectively, but some compilers set @code{1L}.  The official value for
+C++17 is @code{201703L} but some compiler versions have smaller values
+so a test of @code{__cplusplus > 201402L} is safer.} of
+@code{__cplusplus} may help but some compilers use it to denote a
+standard which is partially supported and some the latest standard which
+is (almost) fully supported.  As from version 6, @command{g++} defaults
+to C++14 (with GNU extensions): earlier versions aim to support C++03
+with many extensions (including support for TR1) with version 5 having
+fairly complete C++14 support enabled by flag @option{-std=gnu++14}.
+@command{clang} with its native@footnote{Some distributions, notably
+Debian, have supplied a build of @command{clang} with @command{g++}'s
+headers and library.  Conversely, Apple's command named @command{g++} is
+based on @command{clang} using @code{libc++}.} @code{libc++} headers and
+library has since version 3.4 included almost all C++14 features, but
+does not support TR1.  As from version 6.0.0, @command{clang} defaults
+to C++14.
 
 Since version 3.1.0, @R{} has provided support for C++11 in packages in
 addition to C++98.  This support is not uniform across platforms as it
@@ -4642,8 +4645,8 @@ if(substr(jv, 1L, 2L) == "1.") @{
 @end example
 @noindent
 Java 9 changed the format of this string (which used to be something
-like @samp{1.8.0_162-b12}); Java 10 gives @code{jv} as @samp{10+46}:
-whereas Java 10.0.2 gives
+like @samp{1.8.0_162-b12}); Java 11 gives @code{jv} as @samp{11+28}
+whereas Java 10.0.2 gave
 @samp{10.0.2+10}. (@uref{http://openjdk.java.net/jeps/322} details the
 current scheme.  Note that it is necessary to allow for pre-releases
 like @samp{11-ea+22}.)
@@ -9397,9 +9400,12 @@ Compiled code to be used with @R{} is loaded as a shared object
 information) or DLL (Windows).
 
 The shared object/DLL is loaded by @code{dyn.load} and unloaded by
-@code{dyn.unload}.  Unloading is not normally necessary, but it is
-needed to allow the DLL to be re-built on some platforms, including
-Windows.
+@code{dyn.unload}.  Unloading is not normally necessary and is not safe in
+general, but it is needed to allow the DLL to be re-built on some platforms,
+including Windows. Unloading a DLL and then re-loading a DLL of the same name
+may not work: Solaris uses the first version loaded. A DLL that registers
+C finalizers, but fails to unregister them when unloaded, may cause R to crash
+after unloading.
 
 The first argument to both functions is a character string giving the
 path to the object.  Programmers should not assume a specific file

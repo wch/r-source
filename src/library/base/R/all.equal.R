@@ -89,7 +89,6 @@ all.equal.numeric <-
     if(all(out)) return(if(is.null(msg)) TRUE else msg)
     if(countEQ) {
         N <- length(out)
-        n0 <- sum(out)
         sabst0 <- sum(abs(target[out]))
     } else
         sabst0 <- 0
@@ -106,8 +105,9 @@ all.equal.numeric <-
 		"relative"
 	    } else "absolute"
 	} else {
+	    stopifnot(all(scale > 0))
 	    xy <- xy/scale
-	    if(scale == 1) "absolute" else "scaled"
+	    if(all(abs(scale - 1) < 1e-7)) "absolute" else "scaled"
 	}
 
     if (cplx) what <- paste(what, "Mod") # PR#10575

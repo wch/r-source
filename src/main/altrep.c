@@ -119,6 +119,9 @@ static void SET_ALTREP_CLASS(SEXP x, SEXP class)
 #define ALTVEC_METHODS_TABLE(x) GENERIC_METHODS_TABLE(x, altvec)
 #define ALTINTEGER_METHODS_TABLE(x) GENERIC_METHODS_TABLE(x, altinteger)
 #define ALTREAL_METHODS_TABLE(x) GENERIC_METHODS_TABLE(x, altreal)
+#define ALTLOGICAL_METHODS_TABLE(x) GENERIC_METHODS_TABLE(x, altlogical)
+#define ALTRAW_METHODS_TABLE(x) GENERIC_METHODS_TABLE(x, altraw)
+#define ALTCOMPLEX_METHODS_TABLE(x) GENERIC_METHODS_TABLE(x, altcomplex)
 #define ALTSTRING_METHODS_TABLE(x) GENERIC_METHODS_TABLE(x, altstring)
 
 #define ALTREP_METHODS						\
@@ -159,6 +162,24 @@ static void SET_ALTREP_CLASS(SEXP x, SEXP class)
     R_altreal_Max_method_t Max;			\
     R_altreal_Match_method_t Match
 
+#define ALTLOGICAL_METHODS			\
+    ALTVEC_METHODS;				\
+    R_altlogical_Elt_method_t Elt;              \
+    R_altlogical_Get_region_method_t Get_region;\
+    R_altlogical_Is_sorted_method_t Is_sorted;  \
+    R_altlogical_No_NA_method_t No_NA;		\
+    R_altlogical_Sum_method_t Sum
+
+#define ALTRAW_METHODS				\
+    ALTVEC_METHODS;				\
+    R_altraw_Elt_method_t Elt;			\
+    R_altraw_Get_region_method_t Get_region
+
+#define ALTCOMPLEX_METHODS			\
+    ALTVEC_METHODS;				\
+    R_altcomplex_Elt_method_t Elt;              \
+    R_altcomplex_Get_region_method_t Get_region
+
 #define ALTSTRING_METHODS			\
     ALTVEC_METHODS;				\
     R_altstring_Elt_method_t Elt;		\
@@ -170,6 +191,9 @@ typedef struct { ALTREP_METHODS; } altrep_methods_t;
 typedef struct { ALTVEC_METHODS; } altvec_methods_t;
 typedef struct { ALTINTEGER_METHODS; } altinteger_methods_t;
 typedef struct { ALTREAL_METHODS; } altreal_methods_t;
+typedef struct { ALTLOGICAL_METHODS; } altlogical_methods_t;
+typedef struct { ALTRAW_METHODS; } altraw_methods_t;
+typedef struct { ALTCOMPLEX_METHODS; } altcomplex_methods_t;
 typedef struct { ALTSTRING_METHODS; } altstring_methods_t;
 
 /* Macro to extract first element from ... macro argument.
@@ -186,6 +210,9 @@ typedef struct { ALTSTRING_METHODS; } altstring_methods_t;
 #define ALTVEC_DISPATCH(fun, ...) DO_DISPATCH(ALTVEC, fun, __VA_ARGS__)
 #define ALTINTEGER_DISPATCH(fun, ...) DO_DISPATCH(ALTINTEGER, fun, __VA_ARGS__)
 #define ALTREAL_DISPATCH(fun, ...) DO_DISPATCH(ALTREAL, fun, __VA_ARGS__)
+#define ALTLOGICAL_DISPATCH(fun, ...) DO_DISPATCH(ALTLOGICAL, fun, __VA_ARGS__)
+#define ALTRAW_DISPATCH(fun, ...) DO_DISPATCH(ALTRAW, fun, __VA_ARGS__)
+#define ALTCOMPLEX_DISPATCH(fun, ...) DO_DISPATCH(ALTCOMPLEX, fun, __VA_ARGS__)
 #define ALTSTRING_DISPATCH(fun, ...) DO_DISPATCH(ALTSTRING, fun, __VA_ARGS__)
 
 
@@ -402,6 +429,65 @@ int REAL_NO_NA(SEXP x)
     return ALTREP(x) ? ALTREAL_DISPATCH(No_NA, x) : 0;
 }
 
+R_xlen_t LOGICAL_GET_REGION(SEXP sx, R_xlen_t i, R_xlen_t n, int *buf)
+{
+    const int *x = DATAPTR_OR_NULL(sx);
+    if (x != NULL) {
+	R_xlen_t size = XLENGTH(sx);
+	R_xlen_t ncopy = size - i > n ? n : size - i;
+	for (R_xlen_t k = 0; k < ncopy; k++)
+	    buf[k] = x[k + i];
+	//memcpy(buf, x + i, ncopy * sizeof(int));
+	return ncopy;
+    }
+    else
+	return ALTLOGICAL_DISPATCH(Get_region, sx, i, n, buf);
+}
+
+int LOGICAL_IS_SORTED(SEXP x)
+{
+    return ALTREP(x) ? ALTLOGICAL_DISPATCH(Is_sorted, x) : UNKNOWN_SORTEDNESS;
+}
+
+
+int LOGICAL_NO_NA(SEXP x)
+{
+    return ALTREP(x) ? ALTLOGICAL_DISPATCH(No_NA, x) : 0;
+}
+
+
+R_xlen_t RAW_GET_REGION(SEXP sx, R_xlen_t i, R_xlen_t n, Rbyte *buf)
+{
+    const Rbyte *x = DATAPTR_OR_NULL(sx);
+    if (x != NULL) {
+	R_xlen_t size = XLENGTH(sx);
+	R_xlen_t ncopy = size - i > n ? n : size - i;
+	for (R_xlen_t k = 0; k < ncopy; k++)
+	    buf[k] = x[k + i];
+	//memcpy(buf, x + i, ncopy * sizeof(int));
+	return ncopy;
+    }
+    else
+	return ALTRAW_DISPATCH(Get_region, sx, i, n, buf);
+}
+
+
+R_xlen_t COMPLEX_GET_REGION(SEXP sx, R_xlen_t i, R_xlen_t n, Rcomplex *buf)
+{
+    const Rcomplex *x = DATAPTR_OR_NULL(sx);
+    if (x != NULL) {
+	R_xlen_t size = XLENGTH(sx);
+	R_xlen_t ncopy = size - i > n ? n : size - i;
+	for (R_xlen_t k = 0; k < ncopy; k++)
+	    buf[k] = x[k + i];
+	//memcpy(buf, x + i, ncopy * sizeof(int));
+	return ncopy;
+    }
+    else
+	return ALTCOMPLEX_DISPATCH(Get_region, sx, i, n, buf);
+}
+
+
 SEXP /*attribute_hidden*/ ALTSTRING_ELT(SEXP x, R_xlen_t i)
 {
     SEXP val = NULL;
@@ -488,24 +574,30 @@ SEXP ALTREAL_MATCH(SEXP table, SEXP x, int nm, SEXP incomp, SEXP env,
 }
 
 
-/*
- * Not yet implemented
- */
+SEXP ALTLOGICAL_SUM(SEXP x, Rboolean narm)
+{
+    return ALTLOGICAL_DISPATCH(Sum, x, narm);
+}
 
 int attribute_hidden ALTLOGICAL_ELT(SEXP x, R_xlen_t i)
 {
-    return LOGICAL(x)[i]; /* dispatch here */
+    return ALTLOGICAL_DISPATCH(Elt, x, i);
 }
 
 Rcomplex attribute_hidden ALTCOMPLEX_ELT(SEXP x, R_xlen_t i)
 {
-    return COMPLEX(x)[i]; /* dispatch here */
+    return ALTCOMPLEX_DISPATCH(Elt, x, i);
 }
 
 Rbyte attribute_hidden ALTRAW_ELT(SEXP x, R_xlen_t i)
 {
-    return RAW(x)[i]; /* dispatch here */
+    return ALTRAW_DISPATCH(Elt, x, i);
 }
+
+
+/*
+ * Not yet implemented
+ */
 
 void ALTINTEGER_SET_ELT(SEXP x, R_xlen_t i, int v)
 {
@@ -527,9 +619,9 @@ void ALTCOMPLEX_SET_ELT(SEXP x, R_xlen_t i, Rcomplex v)
     COMPLEX(x)[i] = v; /* dispatch here */
 }
 
-void ALTRAW_SET_ELT(SEXP x, R_xlen_t i, int v)
+void ALTRAW_SET_ELT(SEXP x, R_xlen_t i, Rbyte v)
 {
-    RAW(x)[i] = (Rbyte) v; /* dispatch here */
+    RAW(x)[i] = v; /* dispatch here */
 }
 
 
@@ -873,6 +965,52 @@ static SEXP altinteger_Match_default(SEXP table, SEXP q,
 }
 #endif /* ALTREP_MATCH_CODE */
 
+static int altlogical_Elt_default(SEXP x, R_xlen_t i) { return LOGICAL(x)[i]; }
+
+static R_xlen_t
+altlogical_Get_region_default(SEXP sx, R_xlen_t i, R_xlen_t n, int *buf)
+{
+    R_xlen_t size = XLENGTH(sx);
+    R_xlen_t ncopy = size - i > n ? n : size - i;
+    for (R_xlen_t k = 0; k < ncopy; k++)
+	buf[k] = LOGICAL_ELT(sx, k + i);
+    return ncopy;
+}
+
+static int altlogical_Is_sorted_default(SEXP x) { return UNKNOWN_SORTEDNESS; }
+static int altlogical_No_NA_default(SEXP x) { return 0; }
+
+static SEXP altlogical_Sum_default(SEXP x, Rboolean narm) { return NULL; }
+
+
+static Rbyte altraw_Elt_default(SEXP x, R_xlen_t i) { return RAW(x)[i]; }
+
+static R_xlen_t
+altraw_Get_region_default(SEXP sx, R_xlen_t i, R_xlen_t n, Rbyte *buf)
+{
+    R_xlen_t size = XLENGTH(sx);
+    R_xlen_t ncopy = size - i > n ? n : size - i;
+    for (R_xlen_t k = 0; k < ncopy; k++)
+	buf[k] = RAW_ELT(sx, k + i);
+    return ncopy;
+}
+
+
+static Rcomplex altcomplex_Elt_default(SEXP x, R_xlen_t i)
+{
+    return COMPLEX(x)[i];
+}
+
+static R_xlen_t
+altcomplex_Get_region_default(SEXP sx, R_xlen_t i, R_xlen_t n, Rcomplex *buf)
+{
+    R_xlen_t size = XLENGTH(sx);
+    R_xlen_t ncopy = size - i > n ? n : size - i;
+    for (R_xlen_t k = 0; k < ncopy; k++)
+	buf[k] = COMPLEX_ELT(sx, k + i);
+    return ncopy;
+}
+
 static SEXP altstring_Elt_default(SEXP x, R_xlen_t i)
 {
     error("ALTSTRING classes must provide an Elt method");
@@ -936,6 +1074,63 @@ static altreal_methods_t altreal_default_methods = {
 };
 
 
+static altlogical_methods_t altlogical_default_methods = {
+    .UnserializeEX = altrep_UnserializeEX_default,
+    .Unserialize = altrep_Unserialize_default,
+    .Serialized_state = altrep_Serialized_state_default,
+    .DuplicateEX = altrep_DuplicateEX_default,
+    .Duplicate = altrep_Duplicate_default,
+    .Coerce = altrep_Coerce_default,
+    .Inspect = altrep_Inspect_default,
+    .Length = altrep_Length_default,
+    .Dataptr = altvec_Dataptr_default,
+    .Dataptr_or_null = altvec_Dataptr_or_null_default,
+    .Extract_subset = altvec_Extract_subset_default,
+    .Elt = altlogical_Elt_default,
+    .Get_region = altlogical_Get_region_default,
+    .Is_sorted = altlogical_Is_sorted_default,
+    .No_NA = altlogical_No_NA_default,
+    .Sum = altlogical_Sum_default
+};
+
+
+static altraw_methods_t altraw_default_methods = {
+    .UnserializeEX = altrep_UnserializeEX_default,
+    .Unserialize = altrep_Unserialize_default,
+    .Serialized_state = altrep_Serialized_state_default,
+    .DuplicateEX = altrep_DuplicateEX_default,
+    .Duplicate = altrep_Duplicate_default,
+    .Coerce = altrep_Coerce_default,
+    .Inspect = altrep_Inspect_default,
+    .Length = altrep_Length_default,
+    .Dataptr = altvec_Dataptr_default,
+    .Dataptr_or_null = altvec_Dataptr_or_null_default,
+    .Extract_subset = altvec_Extract_subset_default,
+    .Elt = altraw_Elt_default,
+    .Get_region = altraw_Get_region_default
+};
+
+
+
+
+static altcomplex_methods_t altcomplex_default_methods = {
+    .UnserializeEX = altrep_UnserializeEX_default,
+    .Unserialize = altrep_Unserialize_default,
+    .Serialized_state = altrep_Serialized_state_default,
+    .DuplicateEX = altrep_DuplicateEX_default,
+    .Duplicate = altrep_Duplicate_default,
+    .Coerce = altrep_Coerce_default,
+    .Inspect = altrep_Inspect_default,
+    .Length = altrep_Length_default,
+    .Dataptr = altvec_Dataptr_default,
+    .Dataptr_or_null = altvec_Dataptr_or_null_default,
+    .Extract_subset = altvec_Extract_subset_default,
+    .Elt = altcomplex_Elt_default,
+    .Get_region = altcomplex_Get_region_default
+};
+
+
+
 static altstring_methods_t altstring_default_methods = {
     .UnserializeEX = altrep_UnserializeEX_default,
     .Unserialize = altrep_Unserialize_default,
@@ -984,6 +1179,9 @@ make_altrep_class(int type, const char *cname, const char *pname, DllInfo *dll)
     switch(type) {
     case INTSXP:  MAKE_CLASS(class, altinteger); break;
     case REALSXP: MAKE_CLASS(class, altreal);    break;
+    case LGLSXP:  MAKE_CLASS(class, altlogical); break;
+    case RAWSXP:  MAKE_CLASS(class, altraw);     break;
+    case CPLXSXP: MAKE_CLASS(class, altcomplex); break;
     case STRSXP:  MAKE_CLASS(class, altstring);  break;
     default: error("unsupported ALTREP class");
     }
@@ -1005,6 +1203,9 @@ make_altrep_class(int type, const char *cname, const char *pname, DllInfo *dll)
 DEFINE_CLASS_CONSTRUCTOR(altstring, STRSXP)
 DEFINE_CLASS_CONSTRUCTOR(altinteger, INTSXP)
 DEFINE_CLASS_CONSTRUCTOR(altreal, REALSXP)
+DEFINE_CLASS_CONSTRUCTOR(altlogical, LGLSXP)
+DEFINE_CLASS_CONSTRUCTOR(altraw, RAWSXP)
+DEFINE_CLASS_CONSTRUCTOR(altcomplex, CPLXSXP)
 
 static void reinit_altrep_class(SEXP class)
 {
@@ -1012,6 +1213,9 @@ static void reinit_altrep_class(SEXP class)
     case INTSXP: INIT_CLASS(class, altinteger); break;
     case REALSXP: INIT_CLASS(class, altreal); break;
     case STRSXP: INIT_CLASS(class, altstring); break;
+    case LGLSXP: INIT_CLASS(class, altlogical); break;
+    case RAWSXP: INIT_CLASS(class, altraw); break;
+    case CPLXSXP: INIT_CLASS(class, altcomplex); break;
     default: error("unsupported ALTREP class");
     }
 }
@@ -1060,6 +1264,18 @@ DEFINE_METHOD_SETTER(altreal, Min)
 DEFINE_METHOD_SETTER(altreal, Max)
 DEFINE_METHOD_SETTER(altreal, Match)
 
+DEFINE_METHOD_SETTER(altlogical, Elt)
+DEFINE_METHOD_SETTER(altlogical, Get_region)
+DEFINE_METHOD_SETTER(altlogical, Is_sorted)
+DEFINE_METHOD_SETTER(altlogical, No_NA)
+DEFINE_METHOD_SETTER(altlogical, Sum)
+
+DEFINE_METHOD_SETTER(altraw, Elt)
+DEFINE_METHOD_SETTER(altraw, Get_region)
+
+DEFINE_METHOD_SETTER(altcomplex, Elt)
+DEFINE_METHOD_SETTER(altcomplex, Get_region)
+
 DEFINE_METHOD_SETTER(altstring, Elt)
 DEFINE_METHOD_SETTER(altstring, Set_elt)
 DEFINE_METHOD_SETTER(altstring, Is_sorted)
@@ -1070,9 +1286,9 @@ DEFINE_METHOD_SETTER(altstring, No_NA)
  ** ALTREP Object Constructor and Utility Functions
  **/
 
-SEXP R_new_altrep(R_altrep_class_t class, SEXP data1, SEXP data2)
+SEXP R_new_altrep(R_altrep_class_t aclass, SEXP data1, SEXP data2)
 {
-    SEXP sclass = R_SEXP(class);
+    SEXP sclass = R_SEXP(aclass);
     int type = ALTREP_CLASS_BASE_TYPE(sclass);
     SEXP ans = CONS(data1, data2);
     SET_TYPEOF(ans, type);

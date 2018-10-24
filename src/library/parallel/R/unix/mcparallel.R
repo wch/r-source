@@ -63,31 +63,53 @@ mccollect <- function(jobs, wait = TRUE, timeout = 0, intermediate = FALSE)
 
     if (!wait) {
         s <- selectChildren(jobs, timeout)
-        if (is.logical(s) || !length(s)) return(NULL)
-        res <- lapply(s, function(x) {
+        if (is.logical(s) || !length(s)) return(NULL) ## select error
+        res <- lapply(s, function(x) NULL)
+        delivered.result <- 0
+        for (i in seq_along(s)) {
+            x <- s[i]
             r <- readChild(x)
-            if (is.raw(r)) unserialize(r) else NULL
-        })
+            if (is.raw(r)) {
+                rmChild(x) ## avoid zombie process without waiting
+                res[[i]] <- unserialize(r)
+                delivered.result <- delivered.result + 1L
+            }
+        }
         names(res) <- pnames[match(s, pids)]
+        expected.result <- length(s)
     } else {
         res <- lapply(pids, function(x) NULL)
         names(res) <- pnames
         fin <- rep(FALSE, length(pids))
+        delivered.result <- 0
         while (!all(fin)) {
             s <- selectChildren(pids[!fin], -1)
             if (is.integer(s)) {
                 for (pid in s) {
                     r <- readChild(pid)
-                    if (is.integer(r) || is.null(r)) fin[pid == pids] <- TRUE
-                    if (is.raw(r)) # unserialize(r) might be null
+                    if (is.raw(r)) {
+                        ## unserialize(r) might be null
                         res[which(pid == pids)] <- list(unserialize(r))
+                        delivered.result <- delivered.result + 1L
+                    } else
+                        ## child exiting or error
+                        fin[pid == pids] <- TRUE 
                 }
                 if (is.function(intermediate)) intermediate(res)
             } else
-                ## should not happen
+                ## should not happen (select error)
                 if (all(is.na(match(pids, processID(children()))))) break
         }
+	expected.result <- length(pids)
+        
     }
+    nores <- expected.result - delivered.result
+    if (nores > 0)
+        warning(sprintf(ngettext(nores,
+                                 "%d parallel job did not deliver a result",
+                                 "%d parallel jobs did not deliver results"),
+                        nores),
+                domain = NA)
     cleanup(kill = FALSE, detach = FALSE) # compact children
     res
 }

@@ -1,6 +1,6 @@
 % File src/library/base/man/isSymmetric.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{isSymmetric}
@@ -27,7 +27,9 @@ isSymmetric(object, \dots)
     \sQuote{obviously} asymmetric cases with this tolerance.  Setting it
     to length zero will skip the pre-tests.}
   \item{\dots}{further arguments passed to methods; the matrix method
-    passes these to \code{\link{all.equal}}.}
+    passes these to \code{\link{all.equal}}.  If the row and column
+    names of \code{object} are allowed to differ for the symmetry check
+    do use \code{check.attributes = FALSE}!}
 }
 \value{
   logical indicating if \code{object} is symmetric or not.
@@ -58,6 +60,10 @@ Z
 isSymmetric(Z)      # TRUE
 isSymmetric(Z + 1)  # TRUE
 isSymmetric(Z + 1i) # FALSE -- a Hermitian matrix has a *real* diagonal
+
+colnames(D3) <- c("X", "Y", "Z")
+isSymmetric(D3)                         # FALSE (as row and column names differ)
+isSymmetric(D3, check.attributes=FALSE) # TRUE  (as names are not checked)
 }
 \keyword{array}
 \keyword{utilities}

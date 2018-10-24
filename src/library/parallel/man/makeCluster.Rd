@@ -114,7 +114,11 @@ getDefaultCluster()
   Function \code{makeForkCluster} creates a socket cluster by forking
   (and hence is not available on Windows).  It supports options
   \code{port}, \code{timeout} and \code{outfile}, and always uses
-  \code{useXDR = FALSE}.
+  \code{useXDR = FALSE}. It is \emph{strongly discouraged} to use the
+  \code{"FORK"} cluster with GUI front-ends  or multi-threaded libraries.
+#ifdef unix
+  See \code{\link{mcfork}} for details.
+#endif
 
   It is good practice to shut down the workers by calling
   \code{\link{stopCluster}}: however the workers will terminate

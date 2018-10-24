@@ -146,7 +146,9 @@ is.loaded(symbol, PACKAGE = "", type = "")
 
   The function \code{dyn.unload} unlinks the DLL.  Note that unloading a
   DLL and then re-loading a DLL of the same name may or may not work: on
-  Solaris it uses the first version loaded.
+  Solaris it uses the first version loaded. Note also that some DLLs cannot
+  be safely unloaded at all: unloading a DLL which implements C finalizers
+  but does not unregister them on unload causes R to crash.
 
   \code{is.loaded} checks if the symbol name is loaded \emph{and
   searchable} and hence available for use as a character string value

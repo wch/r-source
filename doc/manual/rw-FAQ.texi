@@ -331,8 +331,8 @@ usage.  The limit can be raised (if possible) by calling
 
 The 32-bit executables support up to 3GB of user address space per
 process under suitably enabled versions of 32-bit Windows (see
-@uref{http://www.microsoft.com/@/whdc/@/system/@/platform/@/server/@/PAE/@/PAEmem.mspx},
-@uref{http://msdn.microsoft.com/@/en-us/@/library/@/bb613473%28VS.85%29.aspx};
+@uref{https://docs.microsoft.com/@/en-gb/@/windows/@/desktop/@/Memory/@/physical-address-extension},
+@uref{https://docs.microsoft.com/@/en-gb/@/windows/@/desktop/@/Memory/@/4-gigabyte-tuning};
 this is not enabled by default).  On such systems, the default for
 @code{--max-mem-size} is the smaller of the amount of RAM and 2.5GB.  On
 all but the earliest 64-bit versions of Windows the user address space

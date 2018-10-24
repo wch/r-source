@@ -104,6 +104,7 @@ mclapply <- function(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
                                                   mc.affinity = affinity.list[[i]]))
             jobsp <- processID(jobs)
             has.errors <- 0L
+            delivered.result <- 0L
             while (!all(fin)) {
                 s <- selectChildren(jobs[!is.na(jobsp)], -1)
                 if (is.null(s)) break   # no children -> no hope (should not happen)
@@ -119,6 +120,7 @@ mclapply <- function(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
                             ## we can't just assign it since a NULL
                             ## assignment would remove it from the list
                             if (!is.null(child.res)) res[[ci]] <- child.res
+                            delivered.result <- delivered.result + 1L
                         } else {
                             fin[ci] <- TRUE
                             ## the job has finished, so we must not run
@@ -141,6 +143,13 @@ mclapply <- function(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
                         }
                     }
             }
+            nores <- length(X) - delivered.result
+            if (nores > 0)
+                warning(sprintf(ngettext(nores,
+                                         "%d parallel function call did not deliver a result",
+                                         "%d parallel function calls did not deliver results"),
+                                nores),
+                        domain = NA)
         }
         if (has.errors)
             warning(gettextf("%d function calls resulted in an error",
@@ -210,6 +219,13 @@ mclapply <- function(X, FUN, ..., mc.preschedule = TRUE, mc.set.seed = TRUE,
             ## assignment would remove it from the list
             if (!is.null(this)) res[sindex[[i]]] <- this
     }
+    nores <- cores - sum(dr)
+    if (nores > 0)
+        warning(sprintf(ngettext(nores,
+                                 "scheduled core %s did not deliver a result, all values of the job will be affected",
+                                 "scheduled cores %s did not deliver results, all values of the jobs will be affected"),
+                        paste(which(dr == FALSE), collapse = ", ")),
+                domain = NA)
     if (length(has.errors)) {
         if (length(has.errors) == cores)
             warning("all scheduled cores encountered errors in user code")
