@@ -3,7 +3,7 @@
  *  file extra.c
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
  *  Copyright (C) 2004	      The R Foundation
- *  Copyright (C) 2005--2017  The R Core Team
+ *  Copyright (C) 2005--2018  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -674,8 +674,15 @@ int winAccessW(const wchar_t *path, int mode)
 {
     DWORD attr = GetFileAttributesW(path);
 
-    if(attr == 0xffffffff) return -1;
+    if(attr == INVALID_FILE_ATTRIBUTES)
+	/* file does not exist or may be locked */
+	return -1;
+
     if(mode == F_OK) return 0;
+    
+    if ((mode & W_OK)
+	&& !(attr & FILE_ATTRIBUTE_DIRECTORY)
+	&& (attr & FILE_ATTRIBUTE_READONLY)) return -1;
 
     if(mode & X_OK)
 	if(!(attr & FILE_ATTRIBUTE_DIRECTORY)) { /* Directory, so OK */
@@ -690,6 +697,9 @@ int winAccessW(const wchar_t *path, int mode)
 	/* Now look for file security info */
 	SECURITY_DESCRIPTOR *sdPtr = NULL;
 	DWORD size = 0;
+	PSID sid = 0;
+	BOOL sidDefaulted;
+	SID_IDENTIFIER_AUTHORITY samba_unmapped = {{0, 0, 0, 0, 0, 22}};
 	GENERIC_MAPPING genMap;
 	HANDLE hToken = NULL;
 	DWORD desiredAccess = 0;
@@ -702,14 +712,26 @@ int winAccessW(const wchar_t *path, int mode)
 	/* get size */
 	GetFileSecurityW(path,
 			 OWNER_SECURITY_INFORMATION | GROUP_SECURITY_INFORMATION
-			 | DACL_SECURITY_INFORMATION, 0, 0, &size);
+			 | DACL_SECURITY_INFORMATION | LABEL_SECURITY_INFORMATION,
+			 0, 0, &size);
 	error = GetLastError();
-	if (error != ERROR_INSUFFICIENT_BUFFER) return -1;
+	if (error = ERROR_NOT_SUPPORTED)
+	    /* happens for some remote shares */
+	    return _waccess(path, mode);
+	if (error != ERROR_INSUFFICIENT_BUFFER) {
+	    return -1;
+	}
 	sdPtr = (SECURITY_DESCRIPTOR *) alloca(size);
 	if(!GetFileSecurityW(path,
 			     OWNER_SECURITY_INFORMATION | GROUP_SECURITY_INFORMATION
-			     | DACL_SECURITY_INFORMATION, sdPtr, size, &size))
+			     | DACL_SECURITY_INFORMATION | LABEL_SECURITY_INFORMATION, sdPtr, size, &size))
 	    return -1;
+	/* rely on attrib checks for unmapped samba owners and groups */
+	if (!GetSecurityDescriptorOwner(sdPtr, &sid, &sidDefaulted))
+	    return 0;
+	if (IsValidSid(sid) &&
+	    !memcmp(GetSidIdentifierAuthority(sid), &samba_unmapped, sizeof(SID_IDENTIFIER_AUTHORITY)))
+	    return 0;
 	/*
 	 * Perform security impersonation of the user and open the
 	 * resulting thread token.
@@ -735,9 +757,6 @@ int winAccessW(const wchar_t *path, int mode)
 	CloseHandle(hToken);
 	if (!accessYesNo) return -1;
 
-	if ((mode & W_OK)
-	    && !(attr & FILE_ATTRIBUTE_DIRECTORY)
-	    && (attr & FILE_ATTRIBUTE_READONLY)) return -1;
     }
     return 0;
 }
