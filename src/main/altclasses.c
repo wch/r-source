@@ -1726,9 +1726,19 @@ static SEXP make_wrapper(SEXP x, SEXP meta)
     return ans;
 }
 
-SEXP attribute_hidden do_wrap_meta(SEXP call, SEXP op, SEXP args, SEXP env)
+static R_INLINE int is_wrapper(SEXP x)
 {
-    SEXP x = CAR(args);
+    if (ALTREP(x))
+	switch(TYPEOF(x)) {
+	case INTSXP: return R_altrep_inherits(x, wrap_integer_class);
+	case REALSXP: R_altrep_inherits(x, wrap_real_class);
+	default: return FALSE;
+	}
+    else return FALSE;
+}
+
+static SEXP wrap_meta(SEXP x, int srt, int no_na)
+{
     switch(TYPEOF(x)) {
     case INTSXP:
     case REALSXP:
@@ -1746,12 +1756,10 @@ SEXP attribute_hidden do_wrap_meta(SEXP call, SEXP op, SEXP args, SEXP env)
 	return x;
 #endif
 
-    int srt = asInteger(CADR(args));
     if (!KNOWN_SORTED(srt) && srt != KNOWN_UNSORTED &&
 	srt != UNKNOWN_SORTEDNESS)
 	error("srt must be -2, -1, 0, or +1, +2, or NA");
     
-    int no_na = asInteger(CADDR(args));
     if (no_na < 0 || no_na > 1)
 	error("no_na must be 0 or +1");
 
@@ -1760,6 +1768,14 @@ SEXP attribute_hidden do_wrap_meta(SEXP call, SEXP op, SEXP args, SEXP env)
     INTEGER(meta)[1] = no_na;
 
     return make_wrapper(x, meta);
+}
+
+SEXP attribute_hidden do_wrap_meta(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP x = CAR(args);
+    int srt = asInteger(CADR(args));
+    int no_na = asInteger(CADDR(args));
+    return wrap_meta(x, srt, no_na);
 }
 
 
