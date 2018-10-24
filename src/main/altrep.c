@@ -652,6 +652,11 @@ static SEXP altrep_DuplicateEX_default(SEXP x, Rboolean deep)
 	    IS_S4_OBJECT(x) ? SET_S4_OBJECT(ans) : UNSET_S4_OBJECT(ans);
 	    UNPROTECT(1);
 	}
+	else if (ATTRIB(ans) != R_NilValue) {
+	    SET_ATTRIB(ans, R_NilValue);
+	    SET_OBJECT(ans, FALSE);
+	    UNSET_S4_OBJECT(ans);
+	}
     }
     return ans;
 }
