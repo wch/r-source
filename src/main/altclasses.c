@@ -1712,7 +1712,7 @@ static SEXP make_wrapper(SEXP x, SEXP meta)
 	PROTECT(ans);
 	SET_ATTRIB(ans, shallow_duplicate(ATTRIB(x)));
 	SET_OBJECT(ans, OBJECT(x));
-	IS_S4_OBJECT(ans) ? SET_S4_OBJECT(x) : UNSET_S4_OBJECT(x);
+	IS_S4_OBJECT(x) ? SET_S4_OBJECT(ans) : UNSET_S4_OBJECT(ans);
 	UNPROTECT(1); /* ans */
     }
 #endif
