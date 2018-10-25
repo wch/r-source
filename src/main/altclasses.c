@@ -1402,6 +1402,7 @@ SEXP attribute_hidden do_munmap_file(SEXP call, SEXP op, SEXP args, SEXP env)
 static R_altrep_class_t wrap_integer_class;
 static R_altrep_class_t wrap_logical_class;
 static R_altrep_class_t wrap_real_class;
+static R_altrep_class_t wrap_complex_class;
 static R_altrep_class_t wrap_string_class;
 
 /* Wrapper objects are ALTREP objects designed to hold the attributes
@@ -1618,6 +1619,23 @@ static int wrapper_real_no_NA(SEXP x)
 
 
 /*
+ * ALTCOMPLEX Methods
+ */
+
+static Rcomplex wrapper_complex_Elt(SEXP x, R_xlen_t i)
+{
+    return COMPLEX_ELT(WRAPPER_WRAPPED(x), i);
+}
+
+static
+R_xlen_t wrapper_complex_Get_region(SEXP x, R_xlen_t i, R_xlen_t n,
+				    Rcomplex *buf)
+{
+    return COMPLEX_GET_REGION(WRAPPER_WRAPPED(x), i, n, buf);
+}
+
+
+/*
  * ALTSTRING Methods
  */
 
@@ -1723,6 +1741,28 @@ static void InitWrapRealClass(DllInfo *dll)
     R_set_altreal_No_NA_method(cls, wrapper_real_no_NA);
 }
 
+static void InitWrapComplexClass(DllInfo *dll)
+{
+    R_altrep_class_t cls =
+	R_make_altcomplex_class("wrap_complex", WRAPPKG, dll);
+    wrap_complex_class = cls;
+ 
+    /* override ALTREP methods */
+    R_set_altrep_Unserialize_method(cls, wrapper_Unserialize);
+    R_set_altrep_Serialized_state_method(cls, wrapper_Serialized_state);
+    R_set_altrep_Duplicate_method(cls, wrapper_Duplicate);
+    R_set_altrep_Inspect_method(cls, wrapper_Inspect);
+    R_set_altrep_Length_method(cls, wrapper_Length);
+
+    /* override ALTVEC methods */
+    R_set_altvec_Dataptr_method(cls, wrapper_Dataptr);
+    R_set_altvec_Dataptr_or_null_method(cls, wrapper_Dataptr_or_null);
+
+    /* override ALTCOMPLEX methods */
+    R_set_altcomplex_Elt_method(cls, wrapper_complex_Elt);
+    R_set_altcomplex_Get_region_method(cls, wrapper_complex_Get_region);
+}
+
 static void InitWrapStringClass(DllInfo *dll)
 {
     R_altrep_class_t cls =
@@ -1759,6 +1799,7 @@ static SEXP make_wrapper(SEXP x, SEXP meta)
     case INTSXP: cls = wrap_integer_class; break;
     case LGLSXP: cls = wrap_logical_class; break;
     case REALSXP: cls = wrap_real_class; break;
+    case CPLXSXP: cls = wrap_complex_class; break;
     case STRSXP: cls = wrap_string_class; break;
     default: error("unsupported type");
     }
@@ -1793,6 +1834,7 @@ static R_INLINE int is_wrapper(SEXP x)
 	case INTSXP: return R_altrep_inherits(x, wrap_integer_class);
 	case LGLSXP: return R_altrep_inherits(x, wrap_logical_class);
 	case REALSXP: R_altrep_inherits(x, wrap_real_class);
+	case CPLXSXP: R_altrep_inherits(x, wrap_complex_class);
 	default: return FALSE;
 	}
     else return FALSE;
@@ -1858,5 +1900,6 @@ void attribute_hidden R_init_altrep()
     InitWrapIntegerClass(NULL);
     InitWrapLogicalClass(NULL);
     InitWrapRealClass(NULL);
+    InitWrapComplexClass(NULL);
     InitWrapStringClass(NULL);
 }
