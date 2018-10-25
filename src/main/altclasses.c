@@ -1926,6 +1926,11 @@ SEXP attribute_hidden do_wrap_meta(SEXP call, SEXP op, SEXP args, SEXP env)
     return wrap_meta(x, srt, no_na);
 }
 
+SEXP R_tryWrap(SEXP x)
+{
+    return wrap_meta(x, 0, 0);
+}
+
 
 /**
  ** Initialize ALTREP Classes
