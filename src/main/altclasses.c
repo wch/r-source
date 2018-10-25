@@ -1400,6 +1400,7 @@ SEXP attribute_hidden do_munmap_file(SEXP call, SEXP op, SEXP args, SEXP env)
 #define NMETA 2
 
 static R_altrep_class_t wrap_integer_class;
+static R_altrep_class_t wrap_logical_class;
 static R_altrep_class_t wrap_real_class;
 static R_altrep_class_t wrap_string_class;
 
@@ -1549,6 +1550,40 @@ static int wrapper_integer_no_NA(SEXP x)
 
 
 /*
+ * ALTLOGICAL Methods
+ */
+
+static int wrapper_logical_Elt(SEXP x, R_xlen_t i)
+{
+    return LOGICAL_ELT(WRAPPER_WRAPPED(x), i);
+}
+
+static
+R_xlen_t wrapper_logical_Get_region(SEXP x, R_xlen_t i, R_xlen_t n, int *buf)
+{
+    return LOGICAL_GET_REGION(WRAPPER_WRAPPED(x), i, n, buf);
+}
+
+static int wrapper_logical_Is_sorted(SEXP x)
+{
+    if (WRAPPER_SORTED(x) != UNKNOWN_SORTEDNESS)
+	return WRAPPER_SORTED(x);
+    else
+	/* If the  meta data bit is not set, defer to the wrapped object. */
+	return LOGICAL_IS_SORTED(WRAPPER_WRAPPED(x));
+}
+
+static int wrapper_logical_no_NA(SEXP x)
+{
+    if (WRAPPER_NO_NA(x))
+	return TRUE;
+    else
+	/* If the  meta data bit is not set, defer to the wrapped object. */
+	return LOGICAL_NO_NA(WRAPPER_WRAPPED(x));
+}
+
+
+/*
  * ALTREAL Methods
  */
 
@@ -1640,6 +1675,30 @@ static void InitWrapIntegerClass(DllInfo *dll)
     R_set_altinteger_No_NA_method(cls, wrapper_integer_no_NA);
 }
 
+static void InitWrapLogicalClass(DllInfo *dll)
+{
+    R_altrep_class_t cls =
+	R_make_altlogical_class("wrap_logical", WRAPPKG, dll);
+    wrap_logical_class = cls;
+ 
+    /* override ALTREP methods */
+    R_set_altrep_Unserialize_method(cls, wrapper_Unserialize);
+    R_set_altrep_Serialized_state_method(cls, wrapper_Serialized_state);
+    R_set_altrep_Duplicate_method(cls, wrapper_Duplicate);
+    R_set_altrep_Inspect_method(cls, wrapper_Inspect);
+    R_set_altrep_Length_method(cls, wrapper_Length);
+
+    /* override ALTVEC methods */
+    R_set_altvec_Dataptr_method(cls, wrapper_Dataptr);
+    R_set_altvec_Dataptr_or_null_method(cls, wrapper_Dataptr_or_null);
+
+    /* override ALTLOGICAL methods */
+    R_set_altlogical_Elt_method(cls, wrapper_logical_Elt);
+    R_set_altlogical_Get_region_method(cls, wrapper_logical_Get_region);
+    R_set_altlogical_Is_sorted_method(cls, wrapper_logical_Is_sorted);
+    R_set_altlogical_No_NA_method(cls, wrapper_logical_no_NA);
+}
+
 static void InitWrapRealClass(DllInfo *dll)
 {
     R_altrep_class_t cls =
@@ -1698,6 +1757,7 @@ static SEXP make_wrapper(SEXP x, SEXP meta)
     R_altrep_class_t cls;
     switch(TYPEOF(x)) {
     case INTSXP: cls = wrap_integer_class; break;
+    case LGLSXP: cls = wrap_logical_class; break;
     case REALSXP: cls = wrap_real_class; break;
     case STRSXP: cls = wrap_string_class; break;
     default: error("unsupported type");
@@ -1731,6 +1791,7 @@ static R_INLINE int is_wrapper(SEXP x)
     if (ALTREP(x))
 	switch(TYPEOF(x)) {
 	case INTSXP: return R_altrep_inherits(x, wrap_integer_class);
+	case LGLSXP: return R_altrep_inherits(x, wrap_logical_class);
 	case REALSXP: R_altrep_inherits(x, wrap_real_class);
 	default: return FALSE;
 	}
@@ -1795,6 +1856,7 @@ void attribute_hidden R_init_altrep()
     InitMmapIntegerClass(NULL);
     InitMmapRealClass(NULL);
     InitWrapIntegerClass(NULL);
+    InitWrapLogicalClass(NULL);
     InitWrapRealClass(NULL);
     InitWrapStringClass(NULL);
 }
