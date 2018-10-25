@@ -1661,6 +1661,11 @@ static SEXP wrapper_string_Elt(SEXP x, R_xlen_t i)
     return STRING_ELT(WRAPPER_WRAPPED(x), i);
 }
 
+static void wrapper_string_Set_elt(SEXP x, R_xlen_t i, SEXP v)
+{
+    SET_STRING_ELT(WRAPPER_WRAPPED(x), i, v);
+}
+
 static int wrapper_string_Is_sorted(SEXP x)
 {
     if (WRAPPER_SORTED(x) != UNKNOWN_SORTEDNESS)
@@ -1821,6 +1826,7 @@ static void InitWrapStringClass(DllInfo *dll)
 
     /* override ALTSTRING methods */
     R_set_altstring_Elt_method(cls, wrapper_string_Elt);
+    R_set_altstring_Set_elt_method(cls, wrapper_string_Set_elt);
     R_set_altstring_Is_sorted_method(cls, wrapper_string_Is_sorted);
     R_set_altstring_No_NA_method(cls, wrapper_string_no_NA);
 }
