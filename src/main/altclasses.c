@@ -1926,6 +1926,7 @@ static SEXP wrap_meta(SEXP x, int srt, int no_na)
 
 SEXP attribute_hidden do_wrap_meta(SEXP call, SEXP op, SEXP args, SEXP env)
 {
+    checkArity(op, args);
     SEXP x = CAR(args);
     int srt = asInteger(CADR(args));
     int no_na = asInteger(CADDR(args));
@@ -1935,6 +1936,13 @@ SEXP attribute_hidden do_wrap_meta(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP R_tryWrap(SEXP x)
 {
     return wrap_meta(x, 0, 0);
+}
+
+SEXP attribute_hidden do_tryWrap(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    checkArity(op, args);
+    SEXP x = CAR(args);
+    return R_tryWrap(x);
 }
 
 
