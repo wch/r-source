@@ -419,6 +419,11 @@
       \item Deferred string conversions now record the \code{OutDec}
       option setting when not equal to the default. Reported by Michael
       Sannella.
+
+      \item When \code{y} is numeric and \code{f} a \code{factor},
+      \code{plot(y ~ f)} nicely uses "y" and "f" as y- and x-labels.
+      The more direct \code{boxplot(y ~ f)} now does too.  New
+      \code{ann = FALSE} may be used to suppress these.
     }
   }
 }

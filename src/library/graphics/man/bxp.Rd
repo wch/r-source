@@ -1,6 +1,6 @@
 % File src/library/graphics/man/bxp.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{bxp}
@@ -15,7 +15,8 @@
 bxp(z, notch = FALSE, width = NULL, varwidth = FALSE,
     outline = TRUE, notch.frac = 0.5, log = "",
     border = par("fg"), pars = NULL, frame.plot = axes,
-    horizontal = FALSE, add = FALSE, at = NULL, show.names = NULL,
+    horizontal = FALSE, ann = TRUE,
+    add = FALSE, at = NULL, show.names = NULL,
     \dots)
 }
 \arguments{
@@ -46,6 +47,8 @@ bxp(z, notch = FALSE, width = NULL, varwidth = FALSE,
     \code{axes = FALSE} is specified.}
   \item{horizontal}{logical indicating if the  boxplots should be
     horizontal; default \code{FALSE} means vertical boxes.}
+  \item{ann}{a logical value indicating whether the default annotation
+    (title and x and y axis labels) should appear on the plot.}
   \item{add}{logical, if true \emph{add} boxplot to current plot.}
   \item{at}{numeric vector giving the locations where the boxplots
     should be drawn, particularly when \code{add = TRUE}; defaults to
