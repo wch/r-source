@@ -54,9 +54,22 @@ static R_size_t objectsize(SEXP s)
     case LANGSXP:
     case BCODESXP:
     case DOTSXP:
-	cnt += objectsize(TAG(s));
-	cnt += objectsize(CAR(s));
-	cnt += objectsize(CDR(s));
+	for (Rboolean done = FALSE; ! done; ) {
+	    cnt += objectsize(TAG(s));
+	    cnt += objectsize(CAR(s));
+	    cnt += sizeof(SEXPREC);
+	    cnt += objectsize(ATTRIB(s));
+	    s = CDR(s);
+	    switch (TYPEOF(s)) {
+	    case LISTSXP:
+	    case LANGSXP:
+	    case BCODESXP:
+	    case DOTSXP: break;
+	    case NILSXP: return cnt;
+	    default: done = TRUE;
+	    }
+	}
+	cnt += objectsize(s);
 	break;
     case CLOSXP:
 	cnt += objectsize(FORMALS(s));
