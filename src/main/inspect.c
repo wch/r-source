@@ -215,7 +215,7 @@ static void inspect_tree(int pre, SEXP v, int deep, int pvec) {
 	    {
 		SEXP lc = v;
 		while (lc != R_NilValue) {
-		    if (TYPEOF(lc) != LISTSXP) {
+		    if (TYPEOF(lc) != LISTSXP && TYPEOF(lc) != LANGSXP) {
 			/* a dotted pair */
 			pp(pre + 2);
 			Rprintf(".\n");
