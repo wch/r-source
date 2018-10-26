@@ -1417,6 +1417,27 @@ static R_altrep_class_t wrap_string_class;
 #define WRAPPER_SORTED(x) INTEGER(WRAPPER_METADATA(x))[0]
 #define WRAPPER_NO_NA(x) INTEGER(WRAPPER_METADATA(x))[1]
 
+static R_INLINE SEXP WRAPPER_WRAPPED_RW(SEXP x)
+{
+    /* If the data might be shared and is accessed for possible
+       modification, then it needs to be duplicated now. */
+    SEXP data = WRAPPER_WRAPPED(x);
+    if (MAYBE_SHARED(data)) {
+	PROTECT(x);
+	WRAPPER_SET_WRAPPED(x, shallow_duplicate(data));
+	UNPROTECT(1);
+    }
+
+    /* The meta data also needs to be cleared as it may no longer be
+       valid after a write. */
+    SEXP meta = WRAPPER_METADATA(x);
+    INTEGER(meta)[0] = UNKNOWN_SORTEDNESS;
+    for (int i = 1; i < NMETA; i++)
+	INTEGER(meta)[i] = 0;
+
+    return WRAPPER_WRAPPED(x);
+}
+
 
 /*
  * ALTREP Methods
@@ -1480,34 +1501,12 @@ static R_xlen_t wrapper_Length(SEXP x)
  * ALTVEC Methods
  */
 
-static void clear_meta_data(SEXP x)
-{
-    SEXP meta = WRAPPER_METADATA(x);
-    INTEGER(meta)[0] = UNKNOWN_SORTEDNESS;
-    for (int i = 1; i < NMETA; i++)
-	INTEGER(meta)[i] = 0;
-}
-
 static void *wrapper_Dataptr(SEXP x, Rboolean writeable)
 {
-    SEXP data = WRAPPER_WRAPPED(x);
-
-    /* If the data might be shared and a writeable pointer is
-       requested, then the data needs to be duplicated now. */
-    if (writeable && MAYBE_SHARED(data)) {
-	PROTECT(x);
-	WRAPPER_SET_WRAPPED(x, shallow_duplicate(data));
-	UNPROTECT(1);
-    }
-
-    if (writeable) {
-	/* If a writeable pointer is requested then the meta-data needs
-	   to be cleared as it may no longer be valid after a write. */
-	clear_meta_data(x);
-	return DATAPTR(WRAPPER_WRAPPED(x));
-    }
+    if (writeable)
+	return DATAPTR(WRAPPER_WRAPPED_RW(x));
     else
-	/**** avoid the cast by having separate methods */
+	/**** could avoid the cast by having separate methods */
 	return (void *) DATAPTR_RO(WRAPPER_WRAPPED(x));
 }
 
@@ -1663,7 +1662,7 @@ static SEXP wrapper_string_Elt(SEXP x, R_xlen_t i)
 
 static void wrapper_string_Set_elt(SEXP x, R_xlen_t i, SEXP v)
 {
-    SET_STRING_ELT(WRAPPER_WRAPPED(x), i, v);
+    SET_STRING_ELT(WRAPPER_WRAPPED_RW(x), i, v);
 }
 
 static int wrapper_string_Is_sorted(SEXP x)
