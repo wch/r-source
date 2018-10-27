@@ -2170,6 +2170,15 @@ stopifnot(exprs = {
 ## had failed after svn c75474
 
 
+## Check that active binding uses primitive quote() and doesn't pick
+## up `quote` binding on the search path
+quote <- function(...) stop("shouldn't be called")
+if (exists("foo", inherits = FALSE)) rm(foo)
+makeActiveBinding("foo", identity, environment())
+x <- (foo <- "foo")
+stopifnot(identical(x, "foo"))
+rm(quote, foo, x)
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
