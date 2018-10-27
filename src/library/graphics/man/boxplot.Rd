@@ -15,6 +15,9 @@
 boxplot(x, \dots)
 
 \method{boxplot}{formula}(formula, data = NULL, \dots, subset, na.action = NULL,
+        xlab = paste(names(mf)[-response], collapse = " : "),
+        ylab = names(mf)[ response],
+        add = FALSE, ann = !add,
         drop = FALSE, sep = ".", lex.order = FALSE)
 
 \method{boxplot}{default}(x, \dots, range = 1.5, width = NULL, varwidth = FALSE,
@@ -26,7 +29,8 @@ boxplot(x, \dots)
 \arguments{
   \item{formula}{a formula, such as \code{y ~ grp}, where \code{y} is a
     numeric vector of data values to be split into groups according to
-    the grouping variable \code{grp} (usually a factor).}
+    the grouping variable \code{grp} (usually a factor).  Note that
+    \code{~ g1 + g2} is equivalent to \code{g1:g2}.}
   \item{data}{a data.frame (or list) from which the variables in
     \code{formula} should be taken.}
   \item{subset}{an optional vector specifying a subset of observations
@@ -34,6 +38,10 @@ boxplot(x, \dots)
   \item{na.action}{a function which indicates what should happen
     when the data contain \code{NA}s.  The default is to ignore missing
     values in either the response or the group.}
+  \item{xlab, ylab}{x- and y-axis annotation, since \R 3.6.0 with a
+    non-empty default.  Can be suppressed by \code{ann=FALSE}.}
+  \item{ann}{\code{\link{logical}} indicating if axes should be annotated (by
+    \code{xlab} and \code{ylab}).}
   \item{drop, sep, lex.order}{passed to \code{\link{split.default}}, see there.}
   \item{x}{for specifying data from which the boxplots are to be
     produced. Either a numeric vector, or a single list containing such

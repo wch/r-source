@@ -2145,6 +2145,40 @@ stopifnot(expr = {
 ## the omission had been reported twice because of a typo in R <= 3.5.1
 
 
+## <data.frame>[ <empty>, ] <- v                    should be a no-op and
+## <data.frame>[ <empty>, <existing column>] <- v   a no-op, too
+df <- d0 <- data.frame(i=1:6, p=pi)
+n <- nrow(df)
+as1NA <- function(x) `is.na<-`(rep_len(unlist(x), 1L), TRUE)
+for(i in list(FALSE, integer(), -seq_len(n)))
+  for(value in list(numeric(), 7, "foo", list(1))) {
+    df[i ,  ] <- value
+    df[i , 1] <- value # had failed after svn c75474
+    stopifnot(identical(df, d0))
+    ## "expand": new column created even for empty <i>; some packages rely on this
+    df[i, "new"] <- value ## -> produces new column of .. NA
+    stopifnot(identical(df[,"new"], rep(as1NA(value), n)))
+    df <- d0
+  }
+## gave error in R <= 3.5.1
+df[7:12,] <- d0 + 1L
+stopifnot(exprs = {
+    is.data.frame(df)
+    identical(dim(df), c(12L, 2L))
+    identical(df[1:6,], d0)
+})
+## had failed after svn c75474
+
+
+## Check that active binding uses primitive quote() and doesn't pick
+## up `quote` binding on the search path
+quote <- function(...) stop("shouldn't be called")
+if (exists("foo", inherits = FALSE)) rm(foo)
+makeActiveBinding("foo", identity, environment())
+x <- (foo <- "foo")
+stopifnot(identical(x, "foo"))
+rm(quote, foo, x)
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

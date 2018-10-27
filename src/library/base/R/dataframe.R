@@ -846,11 +846,12 @@ data.frame <-
             has.j <- TRUE
         }
     }
-    else {
+    else # nargs() <= 2
 	stop("need 0, 1, or 2 subscripts")
-    }
-    ## no columns specified
-    if(has.j && length(j) == 0L) return(x)
+
+    if ((has.j && !length(j)) ||	# "no", i.e. empty columns specified
+        (has.i && !length(i) && !has.j))# empty rows and no col.   specified
+	return(x)
 
     cl <- oldClass(x)
     ## delete class: S3 idiom to avoid any special methods for [[, etc
@@ -872,7 +873,8 @@ data.frame <-
 	    }
 	    i <- ii
 	}
-	if(all(i >= 0L) && (nn <- max(i)) > nrows) {
+	if(!is.logical(i) &&
+	   (char.i && nextra  ||  all(i >= 0L) && (nn <- max(i)) > nrows)) {
 	    ## expand
             if(is.null(rows)) rows <- attr(x, "row.names")
 	    if(!char.i) {
@@ -899,14 +901,12 @@ data.frame <-
             stop("missing values are not allowed in subscripted assignments of data frames")
 	if(is.character(j)) {
             if("" %in% j) stop("column name \"\" cannot match any column")
-	    jj <- match(j, names(x))
-	    nnew <- sum(is.na(jj))
-	    if(nnew > 0L) {
-		n <- is.na(jj)
-		jj[n] <- nvars + seq_len(nnew)
+	    jseq <- match(j, names(x))
+	    if(anyNA(jseq)) {
+		n <- is.na(jseq)
+		jseq[n] <- nvars + seq_len(sum(n))
 		new.cols <- j[n]
 	    }
-	    jseq <- jj
 	}
 	else if(is.logical(j) || min(j) < 0L)
 	    jseq <- seq_along(x)[j]
@@ -927,6 +927,10 @@ data.frame <-
 	}
     }
     else jseq <- seq_along(x)
+
+    ## empty rows and not (a *new* column as in  d[FALSE, "new"] <- val )  :
+    if(has.i && !length(iseq) && all(1L <= jseq & jseq <= nvars))
+	return(`class<-`(x, cl))
 
     ## addition in 1.8.0
     if(anyDuplicated(jseq))
