@@ -5348,10 +5348,10 @@ by Martyn Plummer.
 @node Binary distribution,  , Portable C and C++ code, Writing portable packages
 @subsection Binary distribution
 
-If you want to distribute a binary version of a package on Windows or OS
-X, there are further checks you need to do to check it is portable: it
-is all too easy to depend on external software on your own machine that
-other users will not have.
+If you want to distribute a binary version of a package on Windows or
+macOS, there are further checks you need to do to check it is portable:
+it is all too easy to depend on external software on your own machine
+that other users will not have.
 
 For Windows, check what other DLLs your package's DLL depends on
 (`imports' from in the DLL tools' parlance).  A convenient GUI-based
