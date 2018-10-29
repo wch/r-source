@@ -2121,6 +2121,63 @@ if(!is.na(oEV)) Sys.setenv("_R_CHECK_LENGTH_1_CONDITION_" = oEV)
 ## gave Error in ... the condition has length > 1,  in R <= 3.5.1
 
 
+## duplicated(<dataframe with 'f' col>) -- PR#17485
+d <- data.frame(f=gl(3,5), i=1:3)
+stopifnot(exprs = {
+    identical(which(duplicated(d)), c(4:5, 9:10, 14:15))
+    identical(anyDuplicated(d), 4L)
+    identical(anyDuplicated(d[1:3,]), 0L)
+})
+## gave error from do.call(Map, ..) as Map()'s first arg. is 'f'
+
+
+## print.POSIX[cl]t() - not correctly obeying "max.print" option
+op <- options(max.print = 50, width = 85)
+cc <- capture.output(print(dt <- .POSIXct(154e7 + (0:200)*60)))
+c2 <- capture.output(print(dt, max = 6))
+writeLines(tail(cc, 4))
+writeLines(c2)
+stopifnot(expr = {
+    grepl("omitted 151 entries", tail(cc, 1))
+                  !anyDuplicated(tail(cc, 2))
+    grepl("omitted 195 entries", tail(c2, 1))
+}); options(op)
+## the omission had been reported twice because of a typo in R <= 3.5.1
+
+
+## <data.frame>[ <empty>, ] <- v                    should be a no-op and
+## <data.frame>[ <empty>, <existing column>] <- v   a no-op, too
+df <- d0 <- data.frame(i=1:6, p=pi)
+n <- nrow(df)
+as1NA <- function(x) `is.na<-`(rep_len(unlist(x), 1L), TRUE)
+for(i in list(FALSE, integer(), -seq_len(n)))
+  for(value in list(numeric(), 7, "foo", list(1))) {
+    df[i ,  ] <- value
+    df[i , 1] <- value # had failed after svn c75474
+    stopifnot(identical(df, d0))
+    ## "expand": new column created even for empty <i>; some packages rely on this
+    df[i, "new"] <- value ## -> produces new column of .. NA
+    stopifnot(identical(df[,"new"], rep(as1NA(value), n)))
+    df <- d0
+  }
+## gave error in R <= 3.5.1
+df[7:12,] <- d0 + 1L
+stopifnot(exprs = {
+    is.data.frame(df)
+    identical(dim(df), c(12L, 2L))
+    identical(df[1:6,], d0)
+})
+## had failed after svn c75474
+
+
+## Check that active binding uses primitive quote() and doesn't pick
+## up `quote` binding on the search path
+quote <- function(...) stop("shouldn't be called")
+if (exists("foo", inherits = FALSE)) rm(foo)
+makeActiveBinding("foo", identity, environment())
+x <- (foo <- "foo")
+stopifnot(identical(x, "foo"))
+rm(quote, foo, x)
 
 
 ## keep at end

@@ -362,8 +362,8 @@
       \item \code{format.POSIXlt()} now also recycles the \code{zone}
       and \code{gmtoff} list components to full length when needed,
       and its internal C code detects \code{have_zone} in more cases.
-      In some cases, this changes its output to become
-      \code{format.POSIXct} compatible.
+      In some cases, this changes its output to become compatible with
+      \code{format.POSIXct()}.
 
       \item On Windows, \code{detectCores()} now detects processors in all
       processor groups, not just the group \R is running in (impacts
@@ -413,12 +413,21 @@
 
       \item In the \code{numeric} method for \code{all.equal()}, a
       numeric \code{scale} argument is now checked to be positive and
-      allowed to be of length > 1 (which was working originally and with
-      a warning in recent years).
+      allowed to be of length > 1. (The latter worked originally and
+      with a warning in recent years).
 
       \item Deferred string conversions now record the \code{OutDec}
       option setting when not equal to the default. Reported by Michael
       Sannella.
+
+      \item When \code{y} is numeric and \code{f} a \code{factor},
+      \code{plot(y ~ f)} nicely uses "y" and "f" as y- and x-labels.
+      The more direct \code{boxplot(y ~ f)} now does too.  New
+      \code{ann = FALSE} may be used to suppress these.
+
+      \item Subassignment to no/empty rows of a data frame now is more
+      consistent and typically a no-op in all cases instead of sometimes
+      an error; part of Emil Bode's \PR{17483}.
     }
   }
 }
@@ -496,6 +505,15 @@
       Benjamin Tyner (\PR{16802}).
 
       \item \code{legend(*, cex = 1:2)} now works less badly.
+
+      \item \code{duplicated(<dataframe with 'f'>)} now works, too,
+      thanks to Andreas Kersting's \PR{17485}; ditto for
+      \code{anyDuplicated()}.
+
+      \item The \code{print()} method for \code{POSIXct} and
+      \code{POSIXlt} now correctly obeys \code{getOption("max.print")},
+      fixing a long-standing typo, and it also gets a corresponding
+      optional \code{max} argument.
     }
   }
 }

@@ -88,7 +88,6 @@ Ireland,Ireland,Dublin,http://ftp.heanet.ie/mirrors/cran.r-project.org/,"HEAnet,
 "Italy (Milano)",Italy,Milano,http://cran.mirror.garr.it/mirrors/CRAN/,"Garr Mirror, Milano","mirror-service # garr.it",1,it
 "Italy (Padua) [https]",Italy,Padua,https://cran.stat.unipd.it/,"University of Padua","cran # stat.unipd.it",1,it,"secure_mirror_from_master"
 "Italy (Padua)",Italy,Padua,http://cran.stat.unipd.it/,"University of Padua","cran # stat.unipd.it",1,it,"secure_mirror_from_master"
-"Italy (Palermo)",Italy,Palermo,http://dssm.unipa.it/CRAN/,"Universita degli Studi di Palermo","angelo.mineo # unipa.it, apontillo # gmail.com",0,it
 "Japan (Tokyo) [https]",Japan,Tokyo,https://cran.ism.ac.jp/,"The Institute of Statistical Mathematics, Tokyo","Junji Nakano <nakanoj # ism.ac.jp>",1,jp,"secure_mirror_from_master"
 "Japan (Tokyo)",Japan,Tokyo,http://cran.ism.ac.jp/,"The Institute of Statistical Mathematics, Tokyo","Junji Nakano <nakanoj # ism.ac.jp>",1,jp,"secure_mirror_from_master"
 "Japan (Yonezawa) [https]",Japan,Yonezawa,https://ftp.yz.yamagata-u.ac.jp/pub/cran/,"Yamagata University","www-admin # ftp.yz.yamagata-u.ac.jp",1,jp,"secure_mirror_from_master"

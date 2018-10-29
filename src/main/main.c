@@ -505,6 +505,11 @@ static void sigactionSegv(int signum, siginfo_t *ip, void *context)
 	if((intptr_t) R_CStackLimit != -1) upper += R_CStackLimit;
 	if(diff > 0 && diff < upper) {
 	    REprintf(_("Error: segfault from C stack overflow\n"));
+#if defined(linux) || defined(__linux__) || defined(__sun) || defined(sun)
+	    sigset_t ss;
+	    sigaddset(&ss, signum);
+	    sigprocmask(SIG_UNBLOCK, &ss, NULL);
+#endif
 	    jump_to_toplevel();
 	}
     }

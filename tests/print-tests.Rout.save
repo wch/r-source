@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2018-10-14 r75439) -- "Unsuffered Consequences"
+R Under development (unstable) (2018-10-22 r75479) -- "Unsuffered Consequences"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -565,7 +565,7 @@ In options(max.print = Inf) : NAs introduced by coercion to integer range
 [486] "1986-02-22" "1986-02-23" "1986-02-24" "1986-02-25" "1986-02-26"
 [491] "1986-02-27" "1986-02-28" "1986-03-01" "1986-03-02" "1986-03-03"
 [496] "1986-03-04" "1986-03-05" "1986-03-06" "1986-03-07" "1986-03-08"
- [ reached getOption("max.print") -- omitted 9601 entries ]
+ [ reached 'max' / getOption("max.print") -- omitted 9601 entries ]
 > l6 <- length(capture.output(print(dd, max = 600)))
 > options(op)
 > t2 <- tail(capture.output(print(dd, max = 500)))

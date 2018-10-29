@@ -1400,7 +1400,10 @@ SEXP attribute_hidden do_munmap_file(SEXP call, SEXP op, SEXP args, SEXP env)
 #define NMETA 2
 
 static R_altrep_class_t wrap_integer_class;
+static R_altrep_class_t wrap_logical_class;
 static R_altrep_class_t wrap_real_class;
+static R_altrep_class_t wrap_complex_class;
+static R_altrep_class_t wrap_raw_class;
 static R_altrep_class_t wrap_string_class;
 
 /* Wrapper objects are ALTREP objects designed to hold the attributes
@@ -1413,6 +1416,27 @@ static R_altrep_class_t wrap_string_class;
 
 #define WRAPPER_SORTED(x) INTEGER(WRAPPER_METADATA(x))[0]
 #define WRAPPER_NO_NA(x) INTEGER(WRAPPER_METADATA(x))[1]
+
+static R_INLINE SEXP WRAPPER_WRAPPED_RW(SEXP x)
+{
+    /* If the data might be shared and is accessed for possible
+       modification, then it needs to be duplicated now. */
+    SEXP data = WRAPPER_WRAPPED(x);
+    if (MAYBE_SHARED(data)) {
+	PROTECT(x);
+	WRAPPER_SET_WRAPPED(x, shallow_duplicate(data));
+	UNPROTECT(1);
+    }
+
+    /* The meta data also needs to be cleared as it may no longer be
+       valid after a write. */
+    SEXP meta = WRAPPER_METADATA(x);
+    INTEGER(meta)[0] = UNKNOWN_SORTEDNESS;
+    for (int i = 1; i < NMETA; i++)
+	INTEGER(meta)[i] = 0;
+
+    return WRAPPER_WRAPPED(x);
+}
 
 
 /*
@@ -1477,34 +1501,12 @@ static R_xlen_t wrapper_Length(SEXP x)
  * ALTVEC Methods
  */
 
-static void clear_meta_data(SEXP x)
-{
-    SEXP meta = WRAPPER_METADATA(x);
-    INTEGER(meta)[0] = UNKNOWN_SORTEDNESS;
-    for (int i = 1; i < NMETA; i++)
-	INTEGER(meta)[i] = 0;
-}
-
 static void *wrapper_Dataptr(SEXP x, Rboolean writeable)
 {
-    SEXP data = WRAPPER_WRAPPED(x);
-
-    /* If the data might be shared and a writeable pointer is
-       requested, then the data needs to be duplicated now. */
-    if (writeable && MAYBE_SHARED(data)) {
-	PROTECT(x);
-	WRAPPER_SET_WRAPPED(x, shallow_duplicate(data));
-	UNPROTECT(1);
-    }
-
-    if (writeable) {
-	/* If a writeable pointer is requested then the meta-data needs
-	   to be cleared as it may no longer be valid after a write. */
-	clear_meta_data(x);
-	return DATAPTR(WRAPPER_WRAPPED(x));
-    }
+    if (writeable)
+	return DATAPTR(WRAPPER_WRAPPED_RW(x));
     else
-	/**** avoid the cast by having separate methods */
+	/**** could avoid the cast by having separate methods */
 	return (void *) DATAPTR_RO(WRAPPER_WRAPPED(x));
 }
 
@@ -1549,6 +1551,40 @@ static int wrapper_integer_no_NA(SEXP x)
 
 
 /*
+ * ALTLOGICAL Methods
+ */
+
+static int wrapper_logical_Elt(SEXP x, R_xlen_t i)
+{
+    return LOGICAL_ELT(WRAPPER_WRAPPED(x), i);
+}
+
+static
+R_xlen_t wrapper_logical_Get_region(SEXP x, R_xlen_t i, R_xlen_t n, int *buf)
+{
+    return LOGICAL_GET_REGION(WRAPPER_WRAPPED(x), i, n, buf);
+}
+
+static int wrapper_logical_Is_sorted(SEXP x)
+{
+    if (WRAPPER_SORTED(x) != UNKNOWN_SORTEDNESS)
+	return WRAPPER_SORTED(x);
+    else
+	/* If the  meta data bit is not set, defer to the wrapped object. */
+	return LOGICAL_IS_SORTED(WRAPPER_WRAPPED(x));
+}
+
+static int wrapper_logical_no_NA(SEXP x)
+{
+    if (WRAPPER_NO_NA(x))
+	return TRUE;
+    else
+	/* If the  meta data bit is not set, defer to the wrapped object. */
+	return LOGICAL_NO_NA(WRAPPER_WRAPPED(x));
+}
+
+
+/*
  * ALTREAL Methods
  */
 
@@ -1583,12 +1619,50 @@ static int wrapper_real_no_NA(SEXP x)
 
 
 /*
+ * ALTCOMPLEX Methods
+ */
+
+static Rcomplex wrapper_complex_Elt(SEXP x, R_xlen_t i)
+{
+    return COMPLEX_ELT(WRAPPER_WRAPPED(x), i);
+}
+
+static
+R_xlen_t wrapper_complex_Get_region(SEXP x, R_xlen_t i, R_xlen_t n,
+				    Rcomplex *buf)
+{
+    return COMPLEX_GET_REGION(WRAPPER_WRAPPED(x), i, n, buf);
+}
+
+
+/*
+ * ALTRAW Methods
+ */
+
+static Rbyte wrapper_raw_Elt(SEXP x, R_xlen_t i)
+{
+    return RAW_ELT(WRAPPER_WRAPPED(x), i);
+}
+
+static
+R_xlen_t wrapper_raw_Get_region(SEXP x, R_xlen_t i, R_xlen_t n, Rbyte *buf)
+{
+    return RAW_GET_REGION(WRAPPER_WRAPPED(x), i, n, buf);
+}
+
+
+/*
  * ALTSTRING Methods
  */
 
 static SEXP wrapper_string_Elt(SEXP x, R_xlen_t i)
 {
     return STRING_ELT(WRAPPER_WRAPPED(x), i);
+}
+
+static void wrapper_string_Set_elt(SEXP x, R_xlen_t i, SEXP v)
+{
+    SET_STRING_ELT(WRAPPER_WRAPPED_RW(x), i, v);
 }
 
 static int wrapper_string_Is_sorted(SEXP x)
@@ -1640,6 +1714,30 @@ static void InitWrapIntegerClass(DllInfo *dll)
     R_set_altinteger_No_NA_method(cls, wrapper_integer_no_NA);
 }
 
+static void InitWrapLogicalClass(DllInfo *dll)
+{
+    R_altrep_class_t cls =
+	R_make_altlogical_class("wrap_logical", WRAPPKG, dll);
+    wrap_logical_class = cls;
+ 
+    /* override ALTREP methods */
+    R_set_altrep_Unserialize_method(cls, wrapper_Unserialize);
+    R_set_altrep_Serialized_state_method(cls, wrapper_Serialized_state);
+    R_set_altrep_Duplicate_method(cls, wrapper_Duplicate);
+    R_set_altrep_Inspect_method(cls, wrapper_Inspect);
+    R_set_altrep_Length_method(cls, wrapper_Length);
+
+    /* override ALTVEC methods */
+    R_set_altvec_Dataptr_method(cls, wrapper_Dataptr);
+    R_set_altvec_Dataptr_or_null_method(cls, wrapper_Dataptr_or_null);
+
+    /* override ALTLOGICAL methods */
+    R_set_altlogical_Elt_method(cls, wrapper_logical_Elt);
+    R_set_altlogical_Get_region_method(cls, wrapper_logical_Get_region);
+    R_set_altlogical_Is_sorted_method(cls, wrapper_logical_Is_sorted);
+    R_set_altlogical_No_NA_method(cls, wrapper_logical_no_NA);
+}
+
 static void InitWrapRealClass(DllInfo *dll)
 {
     R_altrep_class_t cls =
@@ -1664,6 +1762,50 @@ static void InitWrapRealClass(DllInfo *dll)
     R_set_altreal_No_NA_method(cls, wrapper_real_no_NA);
 }
 
+static void InitWrapComplexClass(DllInfo *dll)
+{
+    R_altrep_class_t cls =
+	R_make_altcomplex_class("wrap_complex", WRAPPKG, dll);
+    wrap_complex_class = cls;
+ 
+    /* override ALTREP methods */
+    R_set_altrep_Unserialize_method(cls, wrapper_Unserialize);
+    R_set_altrep_Serialized_state_method(cls, wrapper_Serialized_state);
+    R_set_altrep_Duplicate_method(cls, wrapper_Duplicate);
+    R_set_altrep_Inspect_method(cls, wrapper_Inspect);
+    R_set_altrep_Length_method(cls, wrapper_Length);
+
+    /* override ALTVEC methods */
+    R_set_altvec_Dataptr_method(cls, wrapper_Dataptr);
+    R_set_altvec_Dataptr_or_null_method(cls, wrapper_Dataptr_or_null);
+
+    /* override ALTCOMPLEX methods */
+    R_set_altcomplex_Elt_method(cls, wrapper_complex_Elt);
+    R_set_altcomplex_Get_region_method(cls, wrapper_complex_Get_region);
+}
+
+static void InitWrapRawClass(DllInfo *dll)
+{
+    R_altrep_class_t cls =
+	R_make_altraw_class("wrap_raw", WRAPPKG, dll);
+    wrap_raw_class = cls;
+ 
+    /* override ALTREP methods */
+    R_set_altrep_Unserialize_method(cls, wrapper_Unserialize);
+    R_set_altrep_Serialized_state_method(cls, wrapper_Serialized_state);
+    R_set_altrep_Duplicate_method(cls, wrapper_Duplicate);
+    R_set_altrep_Inspect_method(cls, wrapper_Inspect);
+    R_set_altrep_Length_method(cls, wrapper_Length);
+
+    /* override ALTVEC methods */
+    R_set_altvec_Dataptr_method(cls, wrapper_Dataptr);
+    R_set_altvec_Dataptr_or_null_method(cls, wrapper_Dataptr_or_null);
+
+    /* override ALTRAW methods */
+    R_set_altraw_Elt_method(cls, wrapper_raw_Elt);
+    R_set_altraw_Get_region_method(cls, wrapper_raw_Get_region);
+}
+
 static void InitWrapStringClass(DllInfo *dll)
 {
     R_altrep_class_t cls =
@@ -1683,6 +1825,7 @@ static void InitWrapStringClass(DllInfo *dll)
 
     /* override ALTSTRING methods */
     R_set_altstring_Elt_method(cls, wrapper_string_Elt);
+    R_set_altstring_Set_elt_method(cls, wrapper_string_Set_elt);
     R_set_altstring_Is_sorted_method(cls, wrapper_string_Is_sorted);
     R_set_altstring_No_NA_method(cls, wrapper_string_no_NA);
 }
@@ -1698,7 +1841,10 @@ static SEXP make_wrapper(SEXP x, SEXP meta)
     R_altrep_class_t cls;
     switch(TYPEOF(x)) {
     case INTSXP: cls = wrap_integer_class; break;
+    case LGLSXP: cls = wrap_logical_class; break;
     case REALSXP: cls = wrap_real_class; break;
+    case CPLXSXP: cls = wrap_complex_class; break;
+    case RAWSXP: cls = wrap_raw_class; break;
     case STRSXP: cls = wrap_string_class; break;
     default: error("unsupported type");
     }
@@ -1712,7 +1858,7 @@ static SEXP make_wrapper(SEXP x, SEXP meta)
 	PROTECT(ans);
 	SET_ATTRIB(ans, shallow_duplicate(ATTRIB(x)));
 	SET_OBJECT(ans, OBJECT(x));
-	IS_S4_OBJECT(ans) ? SET_S4_OBJECT(x) : UNSET_S4_OBJECT(x);
+	IS_S4_OBJECT(x) ? SET_S4_OBJECT(ans) : UNSET_S4_OBJECT(ans);
 	UNPROTECT(1); /* ans */
     }
 #endif
@@ -1726,15 +1872,35 @@ static SEXP make_wrapper(SEXP x, SEXP meta)
     return ans;
 }
 
-SEXP attribute_hidden do_wrap_meta(SEXP call, SEXP op, SEXP args, SEXP env)
+static R_INLINE int is_wrapper(SEXP x)
 {
-    SEXP x = CAR(args);
+    if (ALTREP(x))
+	switch(TYPEOF(x)) {
+	case INTSXP: return R_altrep_inherits(x, wrap_integer_class);
+	case LGLSXP: return R_altrep_inherits(x, wrap_logical_class);
+	case REALSXP: return R_altrep_inherits(x, wrap_real_class);
+	case CPLXSXP: return R_altrep_inherits(x, wrap_complex_class);
+	case RAWSXP: return R_altrep_inherits(x, wrap_raw_class);
+	default: return FALSE;
+	}
+    else return FALSE;
+}
+
+static SEXP wrap_meta(SEXP x, int srt, int no_na)
+{
     switch(TYPEOF(x)) {
     case INTSXP:
     case REALSXP:
+    case LGLSXP:
+    case CPLXSXP:
+    case RAWSXP:
     case STRSXP: break;
     default: return x;
     }
+
+    /* avoid wrappers of wrappers, at least in some cases */
+    if (is_wrapper(x) && srt == UNKNOWN_SORTEDNESS && no_na == FALSE)
+	return shallow_duplicate(x);
 
 #ifndef WRAPATTRIB
     if (ATTRIB(x) != R_NilValue)
@@ -1746,12 +1912,10 @@ SEXP attribute_hidden do_wrap_meta(SEXP call, SEXP op, SEXP args, SEXP env)
 	return x;
 #endif
 
-    int srt = asInteger(CADR(args));
     if (!KNOWN_SORTED(srt) && srt != KNOWN_UNSORTED &&
 	srt != UNKNOWN_SORTEDNESS)
 	error("srt must be -2, -1, 0, or +1, +2, or NA");
     
-    int no_na = asInteger(CADDR(args));
     if (no_na < 0 || no_na > 1)
 	error("no_na must be 0 or +1");
 
@@ -1760,6 +1924,27 @@ SEXP attribute_hidden do_wrap_meta(SEXP call, SEXP op, SEXP args, SEXP env)
     INTEGER(meta)[1] = no_na;
 
     return make_wrapper(x, meta);
+}
+
+SEXP attribute_hidden do_wrap_meta(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    checkArity(op, args);
+    SEXP x = CAR(args);
+    int srt = asInteger(CADR(args));
+    int no_na = asInteger(CADDR(args));
+    return wrap_meta(x, srt, no_na);
+}
+
+SEXP R_tryWrap(SEXP x)
+{
+    return wrap_meta(x, UNKNOWN_SORTEDNESS, FALSE);
+}
+
+SEXP attribute_hidden do_tryWrap(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    checkArity(op, args);
+    SEXP x = CAR(args);
+    return R_tryWrap(x);
 }
 
 
@@ -1775,6 +1960,9 @@ void attribute_hidden R_init_altrep()
     InitMmapIntegerClass(NULL);
     InitMmapRealClass(NULL);
     InitWrapIntegerClass(NULL);
+    InitWrapLogicalClass(NULL);
     InitWrapRealClass(NULL);
+    InitWrapComplexClass(NULL);
+    InitWrapRawClass(NULL);
     InitWrapStringClass(NULL);
 }

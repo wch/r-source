@@ -5419,8 +5419,11 @@ Oracle Developer Studio@footnote{Oracle Solaris Studio prior to 2016,
 and previously Sun Studio.} compilers: there has been some success with
 @command{gcc}/@command{gfortran}.  (Recent Sun machines are AMD Opterons
 or Intel Xeons (@cputype{amd64}) rather than @cputype{x86}, but 32-bit
-@cputype{x86} executables are the default.)  How these compilers
-identify@footnote{using the @option{-V} flag.} themselves is slightly
+@cputype{x86} executables are the default. As from @R{}
+3.6.0@footnote{Earlier versions looked at the compiler default and so
+reported @samp{i386-pc-solaris2.10}.}  @command{configure} reports the
+triplet @samp{x86_64-pc-solaris2.10}.)  How these compilers
+identify@footnote{using the @option{-V} flag.}  themselves is slightly
 confusing: Solaris Studio versions 12.3 and 12.4 report C++ 5.12 and
 5.13, and Developer Studio 12.5 reports C++ 5.14.  We will only consider
 12.5 (May 2016): instructions for 12.3 can be found in versions of this

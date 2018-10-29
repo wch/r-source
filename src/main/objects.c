@@ -1473,42 +1473,26 @@ argument to standardGeneric.
 */
 static SEXP get_this_generic(SEXP args)
 {
-    const void *vmax = vmaxget();
-    SEXP value = R_NilValue; static SEXP gen_name;
-    int i, n;
+    static SEXP gen_name = NULL;
     RCNTXT *cptr;
-    const char *fname;
+    SEXP fname;
 
     /* a second argument to the call, if any, is taken as the function */
     if(CDR(args) != R_NilValue)
 	return CAR(CDR(args));
-    /* else use sys.function (this is fairly expensive-- would be good
-     * to force a second argument if possible) */
-    PROTECT(args);
     if(!gen_name)
 	gen_name = install("generic");
-    cptr = R_GlobalContext;
-    fname = translateChar(asChar(CAR(args)));
-    n = framedepth(cptr);
-    /* check for a matching "generic" slot */
-    for(i=0;  i<n; i++) {
-	SEXP rval = R_sysfunction(i, cptr);
-	if(isObject(rval)) {
-	    PROTECT(rval);
-	    SEXP generic = getAttrib(rval, gen_name);
-	    if(TYPEOF(generic) == STRSXP &&
-	       !strcmp(translateChar(asChar(generic)), fname)) {
-	      value = rval;
-	      UNPROTECT(1); /* rval */
-	      break;
-	    }
-	    UNPROTECT(1); /* rval */
-	}
-    }
-    UNPROTECT(1);
-    vmaxset(vmax);
+    fname = STRING_ELT(CAR(args), 0); /* type and length checked by caller */
 
-    return value;
+    /* check for a matching "generic" slot */
+    for(cptr = R_GlobalContext; cptr != NULL; cptr = cptr->nextcontext)
+	if((cptr->callflag & CTXT_FUNCTION) && isObject(cptr->callfun)) {
+	    SEXP generic = getAttrib(cptr->callfun, gen_name);
+	    if(isValidString(generic) && Seql(fname, STRING_ELT(generic, 0)))
+		/* not duplicating/marking immutable, used read-only */
+		return cptr->callfun;
+	}
+    return R_NilValue;
 }
 
 /* Could there be methods for this op?	Checks

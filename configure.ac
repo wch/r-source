@@ -949,13 +949,11 @@ R_OPENMP
 AC_LANG_POP(Fortran 77)
 
 
-### *** C++ compiler.
+### *** C++ compiler
 
 R_PROG_CXX_MAKEFRAG
 
-AC_LANG_PUSH(C++)
-R_OPENMP
-AC_LANG_POP(C++)
+## OpenMP selection has to come after dialect is chosen.
 
 ### *** ObjC compiler
 
@@ -1736,7 +1734,15 @@ if test -n "${CXX}" && test -z "${CXXSTD}"; then
     CXXFLAGS=${CXX98FLAGS}
     CXXPICFLAGS=${CXX98PICFLAGS}
   fi
-fi   
+fi
+
+## Only now can we look for the OpenMP flag
+AC_LANG_PUSH(C++)
+CXX_SAVE=${CXX}
+CXX="${CXX} ${CXXSTD}"
+R_OPENMP
+CXX=${CXX_SAVE}
+AC_LANG_POP(C++)
 
 ### OpenMP.
 

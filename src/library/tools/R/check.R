@@ -4470,12 +4470,19 @@ add_dummies <- function(dir, Log)
                              ": warning: .* \\[-Wdeprecated\\]",
                              ": warning: .* \\[-Waligned-new",
                              ## new in gcc 8
-                             ": warning: .* \\[-Wcatch-value=\\]",                             ## new in gcc 9
+                             ": warning: .* \\[-Wcatch-value=\\]",
                              # warns on code deprecated in C++11
-                              ": warning: .* \\[-Wdeprecated-copy\\]",
                             ## Fatal, not warning, for clang and Solaris ODS
                              ": warning: .* with a value, in function returning void"
                             )
+
+                ## gcc 9 warns on code deprecated in C++11
+                ## Rather too frequent (e.g. in Rcpp headers)
+                ## so suppressable (undocumented) for now.
+                check_gcc9 <- Sys.getenv("_R_CHECK_GCC9_WARNINGS_", "TRUE")
+                if (config_val_to_logical(check_gcc9))
+                     warn_re <- c(warn_re,
+                                  ": warning: .* \\[-Wdeprecated-copy\\]")
 
                 ## clang warnings
                 warn_re <- c(warn_re,
@@ -4504,7 +4511,7 @@ add_dummies <- function(dir, Log)
 
                 lines <- grep(warn_re, lines, value = TRUE, useBytes = TRUE)
 
-                ## gcc seems not to know the size of pointers, so skip
+                ## gcc (even 9) seems not to know the size of pointers, so skip
                 ## some from -Walloc-size-larger-than= and -Wstringop-overflow=
                 lines <- grep("exceeds maximum object size.*-W(alloc-size-larger-than|stringop-overflow)", lines,
                               value = TRUE, useBytes = TRUE, invert = TRUE)
