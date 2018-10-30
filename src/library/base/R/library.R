@@ -54,7 +54,7 @@ library <-
 function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
          logical.return = FALSE, warn.conflicts = TRUE,
 	 quietly = FALSE, verbose = getOption("verbose"),
-         omit, mask.ok, only, attach.required = missing(only))
+         mask.ok, omit, only, attach.required = missing(only))
 {
     stopOnConflict <- isTRUE(getOption("error.on.conflicts"))
     if ((! missing(only)) && (! missing(omit)))
@@ -622,7 +622,7 @@ function(chname, libpath, verbose = getOption("verbose"),
 
 require <-
 function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
-         character.only = FALSE, mask.ok, omit)
+         character.only = FALSE, mask.ok, omit, only)
 {
     if(!character.only)
         package <- as.character(substitute(package)) # allowing "require(eda)"
@@ -637,7 +637,7 @@ function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
                                   logical.return = TRUE,
                                   warn.conflicts = warn.conflicts,
 				  quietly = quietly,
-                                  mask.ok = mask.ok, omit = omit),
+                                  mask.ok = mask.ok, omit = omit, only = only),
                           error = function(e) e)
         if (inherits(value, "error")) {
             if (!quietly) {

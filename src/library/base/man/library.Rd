@@ -22,12 +22,12 @@ library(package, help, pos = 2, lib.loc = NULL,
         character.only = FALSE, logical.return = FALSE,
         warn.conflicts = TRUE, quietly = FALSE,
         verbose = getOption("verbose"),
-        omit, mask.ok, only, attach.required = missing(only))
+        mask.ok, omit, only, attach.required = missing(only))
 
 require(package, lib.loc = NULL, quietly = FALSE,
         warn.conflicts = TRUE,
         character.only = FALSE,
-        mask.ok, omit)
+        mask.ok, omit, only)
 
 conflictRules(pkg, mask.ok = NULL, omit = NULL) 
 

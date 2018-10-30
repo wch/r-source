@@ -167,9 +167,12 @@ Some questions:
 
 - Should `attach` also signal an error on conflicts? It repeats some
    of the checking logic in `library`, but with some differences.
-- Should we allow a package to declare that it is masking things
-  from its dependencies, e.g. in its `DESCRIPTION` file?
-- Add `only` and `attach.required` to `require()` also?
+- Should we allow a package to declare that it is masking things from
+  its dependencies, e.g. in its `DESCRIPTION` file? Packages can
+  already call `conflictRules` in their `.onAttach` functions, which
+  may or may not be a good thing.
+- Should we separate `warn.conflicts` from error signaling;
+  e.g. report conflicts even if they have been approved?
 - Do we need to disallow using both omit and only?
  
 TODO list:
