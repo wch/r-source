@@ -14,6 +14,17 @@ Changes from grid_3.5.* to grid_3.6.0:
 
     Thanks to report by Silas Dean.
 
+4.  Add 'wrap.grob' argument to grid.grab() and grid.grabExpr()
+    to allow wrapping of grobs as well as viewports (if both
+    'wrap' and 'wrap.grob' are TRUE.
+
+    Also, no longer check for duplicate grob names at top-level
+    if 'wrap' is TRUE.
+
+    Also, do not start new page if 'wrap' is TRUE.
+
+    Thanks to report from John Bullock.
+
 
 Changes from grid_3.4.* to grid_3.5.0:
 -------------------------------------

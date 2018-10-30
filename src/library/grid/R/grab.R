@@ -66,33 +66,37 @@ vpExists.vpPath <- function(vp) {
     FALSE
 }
 
-wrap <- function(x) {
+wrap <- function(x, ...) {
   UseMethod("wrap")
 }
 
-wrap.default <- function(x) {
+wrap.default <- function(x, ...) {
   if (!is.null(x))
     stop("invalid display list element")
   NULL
 }
 
-wrap.grob <- function(x) {
-  x
+wrap.grob <- function(x, grobs=FALSE, ...) {
+    if (grobs) {
+        recordGrob(grid.draw(x), list(x=x))
+    } else {
+        x
+    }
 }
 
-wrap.viewport <- function(x) {
+wrap.viewport <- function(x, ...) {
   recordGrob(pushViewport(vp), list(vp=x))
 }
 
-wrap.pop <- function(x) {
+wrap.pop <- function(x, ...) {
   recordGrob(popViewport(n), list(n=x))
 }
 
-wrap.up <- function(x) {
+wrap.up <- function(x, ...) {
   recordGrob(upViewport(n), list(n=x))
 }
 
-wrap.vpPath <- function(x) {
+wrap.vpPath <- function(x, ...) {
   recordGrob(downViewport(path), list(path=x))
 }
 
@@ -105,118 +109,119 @@ wrap.vpPath <- function(x) {
 #   MAY not get captured correctly (e.g., top-level downViewport)
 # If wrap is TRUE, grab will wrap all pushes and grobs
 #   in a gTree
-grabDL <- function(warn, wrap, ...) {
+grabDL <- function(warn, wrap, wrap.grobs=FALSE, ...) {
   gList <- NULL
   dl.index <- grid.Call(C_getDLindex)
   if (dl.index > 1) {
-    if (warn > 0) {
-      names <- getNames()
-      # Check for overwriting existing grob
-      if (length(unique(names)) != length(names))
-        warning("one of more grobs overwritten (grab WILL not be faithful; try 'wrap = TRUE')")
-    }
-    grid.newpage(recording=FALSE)
-    # Start at 2 because first element is viewport[ROOT]
-    for (i in 2:dl.index) {
-      # Do all of this as a big ifelse rather than
-      # dispatching to a function call per element because
-      # we need to work with whole DL at times, not
-      # just individual elements
-      elt <- grid.Call(C_getDLelt, as.integer(i - 1))
-      if (wrap)
-        gList <- addToGList(wrap(elt), gList)
-      else {
+      if (!wrap) {
+          if (warn > 0) {
+            names <- getNames()
+            ## Check for overwriting existing grob
+            if (length(unique(names)) != length(names))
+                warning("one of more grobs overwritten (grab WILL not be faithful; try 'wrap = TRUE')")
+          }
+          grid.newpage(recording=FALSE)
+      }
+      ## Start at 2 because first element is viewport[ROOT]
+      for (i in 2:dl.index) {
+          ## Do all of this as a big ifelse rather than
+          ## dispatching to a function call per element because
+          ## we need to work with whole DL at times, not
+          ## just individual elements
+          elt <- grid.Call(C_getDLelt, as.integer(i - 1))
+          if (wrap)
+              gList <- addToGList(wrap(elt, grobs=wrap.grobs), gList)
+          else {
+              ## ####################
+              ## grabGrob
+              ## ####################
+              if (inherits(elt, "grob")) {
+                  ## Enforce grob$vp now and set grob$vp to NULL
+                  ## Will be replaced later with full vpPath
+                  tempvp <- elt$vp
+                  if (warn > 1) {
+                      ## Check to see if about to push a viewport
+                      ## with existing viewport name
+                      if (inherits(tempvp, "viewport") &&
+                          vpExists(tempvp))
+                          warning("viewport overwritten (grab MAY not be faithful)")
+                  }
+                  if (!is.null(tempvp))
+                      tempdepth <- depth(tempvp)
+                  grid.draw(tempvp, recording=FALSE)
+                  ## vpPath after grob$vp slot has been pushed
+                  ## Has to be recorded here in case grob drawing
+                  ## pushes (and does not pop) more viewports
+                  drawPath <- current.vpPath()
+                  elt$vp <- NULL
+                  grid.draw(elt, recording=FALSE)
+                  if (warn > 1) {
+                      ## Compare new vpPath
+                      ## If not same, the grob has pushed some viewports
+                      ## and not popped or upped them
+                      pathSame <- TRUE
+                      if (!(is.null(drawPath) && is.null(current.vpPath()))) {
+                          if (is.null(drawPath))
+                              pathSame = FALSE
+                          else if (is.null(current.vpPath()))
+                              pathSame = FALSE
+                          else if (as.character(drawPath) !=
+                                   as.character(current.vpPath()))
+                              pathSame = FALSE
+                      }
+                      if (!pathSame)
+                          warning("grob pushed viewports and did not pop/up them (grab MAY not be faithful)")
+                  }
+                  elt$vp <- drawPath
+                  if (!is.null(tempvp))
+                      upViewport(tempdepth, recording=FALSE)
+                  gList <- addToGList(elt, gList)
+                  ## ####################
+                  ## grabViewport
+                  ## ####################
+              } else if (inherits(elt, "viewport")) {
+                  ## Includes viewports, vpLists, vpTrees, and vpStacks
+                  ## Check to see if about to push a viewport
+                  ## with existing viewport name
+                  if (warn > 1) {
+                      if (vpExists(elt))
+                          warning("viewport overwritten (grab MAY not be faithful)")
+                  }
+                  grid.draw(elt, recording=FALSE)
+                  ## ####################
+                  ## grabPop
+                  ## ####################
+              } else if (inherits(elt, "pop")) {
+                  ## Replace pop with up
+                  upViewport(elt, recording=FALSE)
 
-        ###########
-        # grabGrob
-        ###########
-        if (inherits(elt, "grob")) {
-          # Enforce grob$vp now and set grob$vp to NULL
-          # Will be replaced later with full vpPath
-          tempvp <- elt$vp
-          if (warn > 1) {
-            # Check to see if about to push a viewport
-            # with existing viewport name
-            if (inherits(tempvp, "viewport") &&
-                vpExists(tempvp))
-              warning("viewport overwritten (grab MAY not be faithful)")
-          }
-          if (!is.null(tempvp))
-            tempdepth <- depth(tempvp)
-          grid.draw(tempvp, recording=FALSE)
-          # vpPath after grob$vp slot has been pushed
-          # Has to be recorded here in case grob drawing
-          # pushes (and does not pop) more viewports
-          drawPath <- current.vpPath()
-          elt$vp <- NULL
-          grid.draw(elt, recording=FALSE)
-          if (warn > 1) {
-            # Compare new vpPath
-            # If not same, the grob has pushed some viewports
-            # and not popped or upped them
-            pathSame <- TRUE
-            if (!(is.null(drawPath) && is.null(current.vpPath()))) {
-              if (is.null(drawPath))
-                pathSame = FALSE
-              else if (is.null(current.vpPath()))
-                pathSame = FALSE
-              else if (as.character(drawPath) !=
-                       as.character(current.vpPath()))
-                pathSame = FALSE
-            }
-            if (!pathSame)
-              warning("grob pushed viewports and did not pop/up them (grab MAY not be faithful)")
-          }
-          elt$vp <- drawPath
-          if (!is.null(tempvp))
-            upViewport(tempdepth, recording=FALSE)
-          gList <- addToGList(elt, gList)
-        ###########
-        # grabViewport
-        ###########
-        } else if (inherits(elt, "viewport")) {
-          # Includes viewports, vpLists, vpTrees, and vpStacks
-          # Check to see if about to push a viewport
-          # with existing viewport name
-          if (warn > 1) {
-            if (vpExists(elt))
-              warning("viewport overwritten (grab MAY not be faithful)")
-          }
-          grid.draw(elt, recording=FALSE)
-        ###########
-        # grabPop
-        ###########
-        } else if (inherits(elt, "pop")) {
-          # Replace pop with up
-          upViewport(elt, recording=FALSE)
-
-        ###########
-        # grabDefault
-        ###########
-        } else {
-          grid.draw(elt, recording=FALSE)
-        }
-      } # matches if (wrap)
-    }
-    # Go to top level
-    upViewport(0, recording=FALSE)
-    gTree(children=gList, childrenvp=current.vpList(), ...)
+                  ## ####################
+                  ## grabDefault
+                  ## ####################
+              } else {
+                  grid.draw(elt, recording=FALSE)
+              }
+          } ## matches if (wrap)
+      }
+      ## Go to top level
+      upViewport(0, recording=FALSE)
+      gTree(children=gList, childrenvp=current.vpList(), ...)
   } else {
-    NULL
+      NULL
   }
 }
 
 # expr is ignored if dev is NULL
 # otherwise, it should be an expression, like postscript("myfile.ps")
-grid.grab <- function(warn=2, wrap=FALSE, ...) {
-  grabDL(warn, wrap, ...)
+grid.grab <- function(warn=2, wrap=FALSE, wrap.grobs=FALSE, ...) {
+  grabDL(warn, wrap, wrap.grobs, ...)
 }
 
 offscreen <- function(width, height) {
     pdf(file=NULL, width=width, height=height)
 }
 
-grid.grabExpr <- function(expr, warn=2, wrap=FALSE,
+grid.grabExpr <- function(expr, warn=2, wrap=FALSE, wrap.grobs=FALSE,
                           width=7, height=7, device=offscreen, ...) {
     ## Start an "offline" PDF device for this function
     cd <- dev.cur()
@@ -227,7 +232,7 @@ grid.grabExpr <- function(expr, warn=2, wrap=FALSE,
     ## Rely on lazy evaluation for correct "timing"
     eval(expr)
     ## Grab the DL on the new device
-    grabDL(warn, wrap, ...)
+    grabDL(warn, wrap, wrap.grobs, ...)
 }
 
 #########################
