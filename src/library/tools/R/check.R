@@ -431,7 +431,7 @@ add_dummies <- function(dir, Log)
                                              "FALSE"))) {
             now_local <- Sys.time()
             any <- FALSE
-            checkingLog(Log, "for future file timestanps")
+            checkingLog(Log, "for future file timestamps")
             ## allow skipping clock check on CRAN incoming systems
             if(config_val_to_logical(Sys.getenv("_R_CHECK_SYSTEM_CLOCK_", "TRUE"))) {
                 ## First check time on system running 'check',
