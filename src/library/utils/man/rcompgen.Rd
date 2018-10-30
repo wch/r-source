@@ -28,7 +28,7 @@
 
 \usage{
 
-rc.settings(ops, ns, args, func, ipck, S3, data, help,
+rc.settings(ops, ns, args, dots, func, ipck, S3, data, help,
             argdb, fuzzy, quotes, files)
 
 rc.status()
@@ -44,7 +44,7 @@ rc.options(\dots)
 }
 
 \arguments{
-  \item{ops, ns, args, func, ipck, S3, data, help, argdb, fuzzy, quotes, files}{
+  \item{ops, ns, args, dots, func, ipck, S3, data, help, argdb, fuzzy, quotes, files}{
 
     logical, turning some optional completion features on and off.
 
@@ -55,6 +55,10 @@ rc.options(\dots)
       \item{\code{ns}:}{ Controls namespace related completions. }
 
       \item{\code{args}:}{ Enables completion of function arguments. }
+
+      \item{\code{dots}:}{ If disabled, drops \code{...} from list of
+	function arguments. Relevant only if \code{args} is enabled.
+      }
 
       \item{\code{func}:}{ Enables detection of functions.  If enabled,
         a customizable extension (\code{"("} by default) is appended to

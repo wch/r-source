@@ -168,7 +168,7 @@ fuzzyApropos <- function(what)
 
 ## modifies settings:
 
-rc.settings <- function(ops, ns, args, func, ipck, S3, data, help, argdb, fuzzy, quotes, files)
+rc.settings <- function(ops, ns, args, dots, func, ipck, S3, data, help, argdb, fuzzy, quotes, files)
 {
     if (length(match.call()) == 1) return(unlist(.CompletionEnv[["settings"]]))
     checkAndChange <- function(what, value)
@@ -181,6 +181,7 @@ rc.settings <- function(ops, ns, args, func, ipck, S3, data, help, argdb, fuzzy,
     if (!missing(ops))   checkAndChange(  "ops",   ops)
     if (!missing(ns))    checkAndChange(   "ns",    ns)
     if (!missing(args))  checkAndChange( "args",  args)
+    if (!missing(dots))  checkAndChange( "dots",  dots)
     if (!missing(func))  checkAndChange( "func",  func)
     if (!missing(ipck))  checkAndChange( "ipck",  ipck)
     if (!missing(S3))    checkAndChange(   "S3",    S3)
@@ -789,6 +790,7 @@ functionArgs <-
     function(fun, text,
              S3methods = .CompletionEnv$settings[["S3"]],
              S4methods = FALSE,
+             keep.dots = .CompletionEnv$settings[["dots"]],
              add.args = rc.getOption("funarg.suffix"))
 {
     if (length(fun) < 1L || any(fun == "")) return(character())
@@ -802,6 +804,8 @@ functionArgs <-
     if (S4methods) warning("cannot handle S4 methods yet")
     allArgs <- unique(unlist(lapply(fun, argNames)))
     ans <- findMatches(sprintf("^%s", makeRegexpSafe(text)), allArgs)
+    if (length(ans) && !keep.dots)
+        ans <- ans[ans != "..."]
     if (length(ans) && !is.null(add.args))
         ans <- sprintf("%s%s", ans, add.args)
     c(specialFunArgs, ans)
@@ -1317,26 +1321,35 @@ fileCompletions <- function(token)
           "lty", "lwd", "mai", "mar", "mex", "mfcol", "mfg", "mfrow",
           "mgp", "mkh", "new", "oma", "omd", "omi", "pch", "pin",
           "plt", "ps", "pty", "smo", "srt", "tck", "tcl", "usr",
-          "xaxp", "xaxs", "xaxt", "xpd", "yaxp", "yaxs", "yaxt")
+          "xaxp", "xaxs", "xaxt", "xpd", "yaxp", "yaxs", "yaxt",
+          "page", "ylbias")
 
-    options <- c("add.smooth", "browser", "check.bounds", "continue",
-	"contrasts", "defaultPackages", "demo.ask", "device",
-	"digits", "dvipscmd", "echo", "editor", "encoding",
-	"example.ask", "expressions", "help.search.types",
-	"help.try.all.packages", "htmlhelp", "HTTPUserAgent",
-	"internet.info", "keep.source", "keep.source.pkgs",
-	"locatorBell", "mailer", "max.print", "menu.graphics",
-	"na.action", "OutDec", "pager", "papersize",
-	"par.ask.default", "pdfviewer", "pkgType", "printcmd",
-	"prompt", "repos", "scipen", "show.coef.Pvalues",
-	"show.error.messages", "show.signif.stars", "str",
-	"stringsAsFactors", "timeout", "ts.eps", "ts.S.compat",
-	"unzip", "verbose", "warn", "warning.length", "width")
+    options <-
+        c(names(options()), ## + some that are NULL by default
+          "mc.cores", "dvipscmd", "warn.FPU", "aspell_program",
+          "deparse.max.lines", "digits.secs", "error", "help.ports",
+          "help_type", "save.defaults", "save.image.defaults",
+          "SweaveHooks", "SweaveSyntax", "topLevelEnvironment")
 
     .addFunctionInfo(par = par, options = options)
-
+      
     ## read.csv etc (... passed to read.table)
-
+    readTable <- 
+        c("file", "header", "sep", "quote", "dec", "numerals",
+          "row.names", "col.names", "as.is", "na.strings",
+          "colClasses", "nrows", "skip", "check.names", "fill",
+          "strip.white", "blank.lines.skip", "comment.char",
+          "allowEscapes", "flush", "stringsAsFactors", "fileEncoding",
+          "encoding", "text", "skipNul")
+      
+    .addFunctionInfo(read.csv = readTable, read.csv2 = readTable,
+                     read.delim = readTable, read.delim2 = readTable)
+      
+    ## c() because it is primitive c(...) and there is no proper
+    ## c.default even though docs say it is
+    ## c.default(..., recursive = FALSE, use.names = TRUE)
+    
+    .addFunctionInfo(c = c("recursive", "use.names"))
 }
 
 
@@ -1349,7 +1362,7 @@ assign("end", 1, env = .CompletionEnv)
 
 assign("settings",
        list(ops = TRUE, ns = TRUE,
-            args = TRUE, func = FALSE,
+            args = TRUE, dots = TRUE, func = FALSE,
             ipck = FALSE, S3 = TRUE, data = TRUE,
             help = TRUE, argdb = TRUE, fuzzy = FALSE,
             files = TRUE, # FIXME: deprecate in favour of quotes
