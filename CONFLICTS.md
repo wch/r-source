@@ -162,15 +162,18 @@ Additional features that might be useful:
   method by the generics.
 - Add a function to compute the conflicts that would happen on attach.
   Might be useful to lift out and expose the code in `checkConflicts`.
+- Many package authors will be aware of conflicts, in particular conflicts
+  with base packages. Loading the package is intended to mask the default
+  variables, and warnings are false positives. It would be useful for
+  packages to be able to declare that these maskings are intentional in
+  some way, e.g. in their `DESCRIPTION` files. Packages can already call
+  `conflictRules` in their `.onAttach` functions, which may be sufficient
+  for now.
 
 Some questions:
 
 - Should `attach` also signal an error on conflicts? It repeats some
    of the checking logic in `library`, but with some differences.
-- Should we allow a package to declare that it is masking things from
-  its dependencies, e.g. in its `DESCRIPTION` file? Packages can
-  already call `conflictRules` in their `.onAttach` functions, which
-  may or may not be a good thing.
 - Should we separate `warn.conflicts` from error signaling;
   e.g. report conflicts even if they have been approved?
 - Do we need to disallow using both omit and only?

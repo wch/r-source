@@ -146,20 +146,20 @@ $(document).ready(function () {
 <h2>Implementation</h2>
 <p>A basic implementation of the static approach is quite simple:</p>
 <ul>
-<li>Give library/require additional arguments <code>maskOK</code> and <code>omit</code>.
+<li>Give library/require additional arguments <code>mask.ok</code> and <code>omit</code>.
 <ul>
-<li><code>maskOK</code>: these functions can mask variables already on the path.</li>
+<li><code>mask.ok</code>: these functions can mask variables already on the path.</li>
 <li><code>omit</code>: don’t add these to the search path frame.</li>
 </ul></li>
-<li>If <code>getOption(&quot;error.on.conflicts&quot;)</code> is TRUE then signal an error if there are conflicts not covered by maskOK.</li>
+<li>If <code>getOption(&quot;error.on.conflicts&quot;)</code> is TRUE then signal an error if there are conflicts not covered by mask.ok.</li>
 </ul>
 <p>This branch contains modified versions of <code>library.R</code> and <code>namespace.R</code> that implement this. This produces</p>
 <pre class="r"><code>options(error.on.conflicts = TRUE)
 library(dplyr)
 ## conflict error from filter, lag
 
-library(dplyr, maskOK = c(&quot;filter&quot;, &quot;lag&quot;,
-                          &quot;intersect&quot;, &quot;setdiff&quot;, &quot;setequal&quot;, &quot;union&quot;))
+library(dplyr, mask.ok = c(&quot;filter&quot;, &quot;lag&quot;,
+                           &quot;intersect&quot;, &quot;setdiff&quot;, &quot;setequal&quot;, &quot;union&quot;))
 ## OK
 
 library(MASS)
@@ -167,39 +167,40 @@ library(MASS)
 
 library(MASS, omit = &quot;select&quot;)
 ## OK</code></pre>
-<p>To make this easier for commonly used packages, and for implicitly attached packages, <code>conflictRules</code> provides a way to specify default <code>maskOK</code>/<code>omit</code> values for packages, e.g. with</p>
-<pre class="r"><code>conflictRules(&quot;dplyr&quot;, maskOK = c(&quot;filter&quot;, &quot;lag&quot;,
-                                  &quot;intersect&quot;, &quot;setdiff&quot;, &quot;setequal&quot;, &quot;union&quot;)))
+<p>To make this easier for commonly used packages, and for implicitly attached packages, <code>conflictRules</code> provides a way to specify default <code>mask.ok</code>/<code>omit</code> values for packages, e.g. with</p>
+<pre class="r"><code>conflictRules(&quot;dplyr&quot;,
+              mask.ok = c(&quot;filter&quot;, &quot;lag&quot;,
+                          &quot;intersect&quot;, &quot;setdiff&quot;, &quot;setequal&quot;, &quot;union&quot;)))
 conflictRules(&quot;MASS&quot;, omit = &quot;select&quot;)</code></pre>
 <p>Alternate forms that should all work:</p>
 <pre class="r"><code>## mask, no matter where they are:
-library(dplyr, maskOK = c(&quot;filter&quot;, &quot;lag&quot;,
-                          &quot;intersect&quot;, &quot;setdiff&quot;, &quot;setequal&quot;, &quot;union&quot;))
+library(dplyr, mask.ok = c(&quot;filter&quot;, &quot;lag&quot;,
+                           &quot;intersect&quot;, &quot;setdiff&quot;, &quot;setequal&quot;, &quot;union&quot;))
 
 ## mask only if in stats/base:
-library(dplyr, maskOK = list(stats = c(&quot;filter&quot;, &quot;lag&quot;),
-                             base = c(&quot;intersect&quot;, &quot;setdiff&quot;,
-                                      &quot;setequal&quot;, &quot;union&quot;)))
+library(dplyr, mask.ok = list(stats = c(&quot;filter&quot;, &quot;lag&quot;),
+                              base = c(&quot;intersect&quot;, &quot;setdiff&quot;,
+                                       &quot;setequal&quot;, &quot;union&quot;)))
 
 ## mask anything in stats/base:
-library(dplyr, maskOK = list(base = TRUE, stats = TRUE))
+library(dplyr, mask.ok = list(base = TRUE, stats = TRUE))
 
 ## using conflictRules:
-conflictRules(&quot;dplyr&quot;, maskOK = list(base = TRUE, stats = TRUE))
+conflictRules(&quot;dplyr&quot;, mask.ok = list(base = TRUE, stats = TRUE))
 conflictRules(&quot;MASS&quot;, omit = &quot;select&quot;)
 
 ## to allow Matrix to be loaded with conflict checking:
-conflictRules(&quot;Matrix&quot;, maskOK = list(stats = TRUE,
-                                      graphics = &quot;image&quot;,
-                                      utils = c(&quot;head&quot;, &quot;tail&quot;),
-                                      base = TRUE))
+conflictRules(&quot;Matrix&quot;, mask.ok = list(stats = TRUE,
+                                       graphics = &quot;image&quot;,
+                                       utils = c(&quot;head&quot;, &quot;tail&quot;),
+                                       base = TRUE))
 
 ## for BiocGenerics:
-conflictRules(&quot;BiocGenerics&quot;, maskOK = list(base = TRUE,
-                                            stats = TRUE,
-                                            parallel = TRUE,
-                                            graphics = c(&quot;image&quot;, &quot;boxplot&quot;),
-                                            utils = &quot;relist&quot;))</code></pre>
+conflictRules(&quot;BiocGenerics&quot;, mask.ok = list(base = TRUE,
+                                             stats = TRUE,
+                                             parallel = TRUE,
+                                             graphics = c(&quot;image&quot;, &quot;boxplot&quot;),
+                                             utils = &quot;relist&quot;))</code></pre>
 <p>Some additional features that have been implemented:</p>
 <ul>
 <li><p><code>library()</code> has some heuristics to avoid warning about S4 overrides that mask the overrides in <code>Matrix</code> (but not those in <code>BiocGenerics</code>). These heuristics are disabled when strict conflict checking is in force so that they have to be handled explicitly in some way.</p></li>
@@ -215,12 +216,12 @@ conflictRules(&quot;BiocGenerics&quot;, maskOK = list(base = TRUE,
 <li>Provide a restart for retrying with adjusted arguments; that could be used by a GUI front end.</li>
 <li>Have a way to say that (some) ‘safe’ S4 or even S3 generics are OK to mask non-generics, at least if the non-generics are used as the default method by the generics.</li>
 <li>Add a function to compute the conflicts that would happen on attach. Might be useful to lift out and expose the code in <code>checkConflicts</code>.</li>
+<li>Many package authors will be aware of conflicts, in particular conflicts with base packages. Loading the package is intended to mask the default variables, and warnings are false positives. It would be useful for packages to be able to declare that these maskings are intentional in some way, e.g. in their <code>DESCRIPTION</code> files. Packages can already call <code>conflictRules</code> in their <code>.onAttach</code> functions, which may be sufficient for now.</li>
 </ul>
 <p>Some questions:</p>
 <ul>
 <li>Should <code>attach</code> also signal an error on conflicts? It repeats some of the checking logic in <code>library</code>, but with some differences.</li>
-<li>Should we allow a package to declare that it is masking things from its dependencies, e.g. in its <code>DESCRIPTION</code> file?</li>
-<li>Add <code>only</code> and <code>attach.required</code> to <code>require()</code> also?</li>
+<li>Should we separate <code>warn.conflicts</code> from error signaling; e.g. report conflicts even if they have been approved?</li>
 <li>Do we need to disallow using both omit and only?</li>
 </ul>
 <p>TODO list:</p>
