@@ -210,7 +210,11 @@ conflictRules(&quot;BiocGenerics&quot;, mask.ok = list(base = TRUE,
 </div>
 <div id="open-issues" class="section level2">
 <h2>Open Issues</h2>
-<p>Argument and function names could be adjusted if there are strong objections to the ones used here.</p>
+<p>Argument and function names could be adjusted if there are strong objections to the ones used here. The <code>omit</code> and <code>only</code> arguments seem particularly awkward. Some possible alternatives;</p>
+<ul>
+<li><code>only</code>: <code>use.only</code>, <code>only.vars</code>, <code>use.vars</code>, <code>include.only</code></li>
+<li><code>omit</code>: <code>omit.vars</code>, <code>skip</code>, <code>skip.vars</code>, <code>exclude</code></li>
+</ul>
 <p>Additional features that might be useful:</p>
 <ul>
 <li>Provide a restart for retrying with adjusted arguments; that could be used by a GUI front end.</li>

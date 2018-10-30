@@ -151,7 +151,11 @@ Some additional features that have been implemented:
 ## Open Issues
 
 Argument and function names could be adjusted if there are strong
-objections to the ones used here.
+objections to the ones used here. The `omit` and `only` arguments seem
+particularly awkward. Some possible alternatives;
+
+- `only`: `use.only`, `only.vars`, `use.vars`, `include.only`
+- `omit`: `omit.vars`, `skip`, `skip.vars`, `exclude`
 
 Additional features that might be useful:
 
