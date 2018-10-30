@@ -62,11 +62,11 @@ and sort things out.
 
 A basic implementation of the static approach is quite simple:
 
-- Give library/require additional arguments `maskOK` and `omit`.
-    - `maskOK`: these functions can mask variables already on the path.
+- Give library/require additional arguments `mask.ok` and `omit`.
+    - `mask.ok`: these functions can mask variables already on the path.
     - `omit`: don't add these to the search path frame.
 - If `getOption("error.on.conflicts")` is TRUE then signal an error if
-  there are conflicts not covered by maskOK.
+  there are conflicts not covered by mask.ok.
 
 This branch contains modified versions of `library.R` and
 `namespace.R` that implement this.  This produces
@@ -76,8 +76,8 @@ options(error.on.conflicts = TRUE)
 library(dplyr)
 ## conflict error from filter, lag
 
-library(dplyr, maskOK = c("filter", "lag",
-                          "intersect", "setdiff", "setequal", "union"))
+library(dplyr, mask.ok = c("filter", "lag",
+                           "intersect", "setdiff", "setequal", "union"))
 ## OK
 
 library(MASS)
@@ -89,44 +89,45 @@ library(MASS, omit = "select")
 
 To make this easier for commonly used packages, and for implicitly
 attached packages, `conflictRules` provides a way to specify default
-`maskOK`/`omit` values for packages, e.g. with
+`mask.ok`/`omit` values for packages, e.g. with
 
 ```r
-conflictRules("dplyr", maskOK = c("filter", "lag",
-                                  "intersect", "setdiff", "setequal", "union")))
+conflictRules("dplyr",
+              mask.ok = c("filter", "lag",
+                          "intersect", "setdiff", "setequal", "union")))
 conflictRules("MASS", omit = "select")
 ```
 
 Alternate forms that should all work:
 ```r
 ## mask, no matter where they are:
-library(dplyr, maskOK = c("filter", "lag",
-                          "intersect", "setdiff", "setequal", "union"))
+library(dplyr, mask.ok = c("filter", "lag",
+                           "intersect", "setdiff", "setequal", "union"))
 
 ## mask only if in stats/base:
-library(dplyr, maskOK = list(stats = c("filter", "lag"),
-                             base = c("intersect", "setdiff",
-                                      "setequal", "union")))
+library(dplyr, mask.ok = list(stats = c("filter", "lag"),
+                              base = c("intersect", "setdiff",
+                                       "setequal", "union")))
 
 ## mask anything in stats/base:
-library(dplyr, maskOK = list(base = TRUE, stats = TRUE))
+library(dplyr, mask.ok = list(base = TRUE, stats = TRUE))
 
 ## using conflictRules:
-conflictRules("dplyr", maskOK = list(base = TRUE, stats = TRUE))
+conflictRules("dplyr", mask.ok = list(base = TRUE, stats = TRUE))
 conflictRules("MASS", omit = "select")
 
 ## to allow Matrix to be loaded with conflict checking:
-conflictRules("Matrix", maskOK = list(stats = TRUE,
-                                      graphics = "image",
-                                      utils = c("head", "tail"),
-                                      base = TRUE))
+conflictRules("Matrix", mask.ok = list(stats = TRUE,
+                                       graphics = "image",
+                                       utils = c("head", "tail"),
+                                       base = TRUE))
 
 ## for BiocGenerics:
-conflictRules("BiocGenerics", maskOK = list(base = TRUE,
-                                            stats = TRUE,
-                                            parallel = TRUE,
-                                            graphics = c("image", "boxplot"),
-                                            utils = "relist"))
+conflictRules("BiocGenerics", mask.ok = list(base = TRUE,
+                                             stats = TRUE,
+                                             parallel = TRUE,
+                                             graphics = c("image", "boxplot"),
+                                             utils = "relist"))
 ```
 
 Some additional features that have been implemented:

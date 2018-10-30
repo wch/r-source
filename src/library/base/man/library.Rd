@@ -22,14 +22,14 @@ library(package, help, pos = 2, lib.loc = NULL,
         character.only = FALSE, logical.return = FALSE,
         warn.conflicts = TRUE, quietly = FALSE,
         verbose = getOption("verbose"),
-        omit, maskOK, only, attach.required = missing(only))
+        omit, mask.ok, only, attach.required = missing(only))
 
 require(package, lib.loc = NULL, quietly = FALSE,
         warn.conflicts = TRUE,
         character.only = FALSE,
-        maskOK, omit)
+        mask.ok, omit)
 
-conflictRules(pkg, maskOK = NULL, omit = NULL) 
+conflictRules(pkg, mask.ok = NULL, omit = NULL) 
 
 }
 \arguments{
@@ -63,7 +63,7 @@ conflictRules(pkg, maskOK = NULL, omit = NULL)
   \item{quietly}{a logical.  If \code{TRUE}, no message confirming
     package attaching is printed, and most often, no errors/warnings are
     printed if package attaching fails.}
-  \item{pkg, maskOK, omit, only, attach.required}{For use in managing
+  \item{pkg, mask.ok, omit, only, attach.required}{For use in managing
     conflicts (see \sQuote{Conflictts})}.    
 }
 \details{
@@ -110,7 +110,7 @@ conflictRules(pkg, maskOK = NULL, omit = NULL)
 }
 \section{Conflicts}{
   Experimental conflict management is implemented by the arguments
-  \code{maskOK}, \code{omit}, \code{only}, and \code{attach.required}
+  \code{mask.ok}, \code{omit}, \code{only}, and \code{attach.required}
   arguments to \code{library} and \code{require}. The function
   \code{conflictRules} can be used to specify defaults.  See
   \url{https://svn.r-project.org/R/branches/R-conflicts/CONFLICTS.html}

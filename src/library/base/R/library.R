@@ -41,9 +41,9 @@ function(built, run)
 conflictRules <-
     local({
         data <- new.env()
-        function(pkg, maskOK = NULL, omit = NULL) {
-            if ((! missing(maskOK)) || (! missing(omit)))
-                assign(pkg, list(maskOK = maskOK, omit = omit), envir = data)
+        function(pkg, mask.ok = NULL, omit = NULL) {
+            if ((! missing(mask.ok)) || (! missing(omit)))
+                assign(pkg, list(mask.ok = mask.ok, omit = omit), envir = data)
             else if (exists(pkg, envir = data, inherits = FALSE))
                 get(pkg, envir = data, inherits = FALSE)
             else NULL
@@ -54,7 +54,7 @@ library <-
 function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
          logical.return = FALSE, warn.conflicts = TRUE,
 	 quietly = FALSE, verbose = getOption("verbose"),
-         omit, maskOK, only, attach.required = missing(only))
+         omit, mask.ok, only, attach.required = missing(only))
 {
     stopOnConflict <- isTRUE(getOption("error.on.conflicts"))
     if ((! missing(only)) && (! missing(omit)))
@@ -200,9 +200,9 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 		    same <- same[not.Ident(same, ignore.environment = TRUE)]
 
                 ## adjust 'same' for conflict resolution specifications
-                if (is.list(maskOK))
-                    myMaskOK <- maskOK[[sub("^package:", "", sp[i])]]
-                else myMaskOK <- maskOK
+                if (is.list(mask.ok))
+                    myMaskOK <- mask.ok[[sub("^package:", "", sp[i])]]
+                else myMaskOK <- mask.ok
                 if (isTRUE(myMaskOK))
                     same <- NULL
                 else if (is.character(myMaskOK))
@@ -301,8 +301,8 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             deps <- unique(names(pkgInfo$Depends))
 
             cr <- conflictRules(package)
-            if (missing(maskOK))
-                maskOK <- cr$maskOK
+            if (missing(mask.ok))
+                mask.ok <- cr$mask.ok
             if (missing(omit))
                 omit <- cr$omit
 
@@ -622,7 +622,7 @@ function(chname, libpath, verbose = getOption("verbose"),
 
 require <-
 function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
-         character.only = FALSE, maskOK, omit)
+         character.only = FALSE, mask.ok, omit)
 {
     if(!character.only)
         package <- as.character(substitute(package)) # allowing "require(eda)"
@@ -637,7 +637,7 @@ function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
                                   logical.return = TRUE,
                                   warn.conflicts = warn.conflicts,
 				  quietly = quietly,
-                                  maskOK = maskOK, omit = omit),
+                                  mask.ok = mask.ok, omit = omit),
                           error = function(e) e)
         if (inherits(value, "error")) {
             if (!quietly) {
