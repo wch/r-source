@@ -206,7 +206,7 @@
       spaces in file names even using external \command{unzip} command.
 
       \item Command line completion has a new setting
-      \code{rc.settings(dots = FALSE}} to remove \code{...} from the
+      \code{rc.settings(dots = FALSE)} to remove \code{...} from the
       list of possible function arguments.
 
     }
