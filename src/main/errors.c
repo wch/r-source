@@ -1617,18 +1617,20 @@ static SEXP findSimpleErrorHandler(void)
 static void vsignalWarning(SEXP call, const char *format, va_list ap)
 {
     char buf[BUFSIZE];
-    SEXP hooksym, hcall, qcall;
+    SEXP hooksym, hcall, qcall, qfun;
 
     hooksym = install(".signalSimpleWarning");
     if (SYMVALUE(hooksym) != R_UnboundValue &&
 	SYMVALUE(R_QuoteSymbol) != R_UnboundValue) {
-	PROTECT(qcall = LCONS(R_QuoteSymbol, LCONS(call, R_NilValue)));
+	qfun = lang3(R_DoubleColonSymbol, R_BaseSymbol, R_QuoteSymbol);
+	PROTECT(qfun);
+	PROTECT(qcall = LCONS(qfun, LCONS(call, R_NilValue)));
 	PROTECT(hcall = LCONS(qcall, R_NilValue));
 	Rvsnprintf(buf, BUFSIZE - 1, format, ap);
 	hcall = LCONS(mkString(buf), hcall);
 	PROTECT(hcall = LCONS(hooksym, hcall));
 	eval(hcall, R_GlobalEnv);
-	UNPROTECT(3);
+	UNPROTECT(4);
     }
     else vwarningcall_dflt(call, format, ap);
 }
@@ -1665,20 +1667,22 @@ static void vsignalError(SEXP call, const char *format, va_list ap)
 		   overflow, treat all calling handlers as failed */
 		if (R_OldCStackLimit)
 		    break;
-		SEXP hooksym, hcall, qcall;
+		SEXP hooksym, hcall, qcall, qfun;
 		/* protect oldstack here, not outside loop, so handler
 		   stack gets unwound in case error is protect stack
 		   overflow */
 		PROTECT(oldstack);
 		hooksym = install(".handleSimpleError");
-		PROTECT(qcall = LCONS(R_QuoteSymbol,
+		qfun = lang3(R_DoubleColonSymbol, R_BaseSymbol,
+		             R_QuoteSymbol);
+		PROTECT(qcall = LCONS(qfun,
 				      LCONS(call, R_NilValue)));
 		PROTECT(hcall = LCONS(qcall, R_NilValue));
 		hcall = LCONS(mkString(buf), hcall);
 		hcall = LCONS(ENTRY_HANDLER(entry), hcall);
 		PROTECT(hcall = LCONS(hooksym, hcall));
 		eval(hcall, R_GlobalEnv);
-		UNPROTECT(4);
+		UNPROTECT(5);
 	    }
 	}
 	else gotoExitingHandler(R_NilValue, call, entry);
