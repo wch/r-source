@@ -203,12 +203,17 @@
       \code{getOption("fancyQuotes")} implicitly and unconditionally.
 
       \item \code{unzip()} can list archives with comments and with
-      spaces in file names even using external \command{unzip} command.
+      spaces in file names even using an external \command{unzip} command.
 
       \item Command line completion has a new setting
       \code{rc.settings(dots = FALSE)} to remove \code{...} from the
       list of possible function arguments.
-
+      
+      \item \code{library()} no longer checks packages with compiled
+      code match \samp{R.version$platform}.  \code{loadNamespace()}
+      never has, and increasingly the \sQuote{canonical name} does not
+      reflect the important characteristics of compiled code.
+      %% E.g. 32/64-bit compiler settings
     }
   }
 

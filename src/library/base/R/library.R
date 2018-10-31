@@ -16,19 +16,20 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
-testPlatformEquivalence <-
-function(built, run)
-{
-    ## args are "cpu-vendor-os", but os might be 'linux-gnu'!
-    ## remove vendor field
-    built <- gsub("([^-]*)-([^-]*)-(.*)", "\\1-\\3", built)
-    run <- gsub("([^-]*)-([^-]*)-(.*)", "\\1-\\3", run)
-    ## macOS supports multiple CPUs by using 'universal' binaries
-    if (startsWith(built, "universal-darwin") && nzchar(.Platform$r_arch))
-        built <- sub("^universal", R.version$arch, built)
-    ## allow for small mismatches, e.g. OS version number and i686 vs i586.
-    length(agrep(built, run)) > 0
-}
+## Usage removed in 3.6.0
+## testPlatformEquivalence <-
+## function(built, run)
+## {
+##     ## args are "cpu-vendor-os", but os might be 'linux-gnu'!
+##     ## remove vendor field
+##     built <- gsub("([^-]*)-([^-]*)-(.*)", "\\1-\\3", built)
+##     run <- gsub("([^-]*)-([^-]*)-(.*)", "\\1-\\3", run)
+##     ## macOS supports multiple CPUs by using 'universal' binaries
+##     if (startsWith(built, "universal-darwin") && nzchar(.Platform$r_arch))
+##         built <- sub("^universal", R.version$arch, built)
+##     ## allow for small mismatches, e.g. OS version number and i686 vs i586.
+##     length(agrep(built, run)) > 0
+## }
 
 library <-
 function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
@@ -82,11 +83,11 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             ## allow mismatches if r_arch is in use, e.g.
             ## i386-gnu-linux vs x86-gnu-linux depending on
             ## build system.
-            if(!nzchar(r_arch) && grepl("\\w", platform) &&
-               !testPlatformEquivalence(platform, R.version$platform))
-                stop(gettextf("package %s was built for %s",
-                              sQuote(pkgname), platform),
-                     call. = FALSE, domain = NA)
+##             if(!nzchar(r_arch) && grepl("\\w", platform) &&
+##                !testPlatformEquivalence(platform, R.version$platform))
+##                 stop(gettextf("package %s was built for %s",
+##                               sQuote(pkgname), platform),
+##                      call. = FALSE, domain = NA)
         } else {  # Windows
             ## a check for 'mingw' suffices, since i386 and x86_64
             ## have DLLs in different places.  This allows binary packages
