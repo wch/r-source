@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-2015   The R Core Team.
+ *  Copyright (C) 2001-2018   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -138,8 +138,9 @@ SEXP attribute_hidden do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
 		    nret *= 2;
 		    PROTECT(retval2 = allocMatrixNA(STRSXP, LENGTH(what), nret));
 		    transferVector(retval2, retval);
-		    UNPROTECT_PTR(retval);
 		    retval = retval2;
+		    UNPROTECT(2); /* retval, retval2 */
+		    PROTECT(retval);
 		}
 		blank_skip = TRUE;
 		lastm = -1;
@@ -254,10 +255,12 @@ SEXP attribute_hidden do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
 				}
 			    }
 			}
-			UNPROTECT_PTR(retval);
-			UNPROTECT_PTR(what);
 			retval = retval2;
 			what = what2;
+			UNPROTECT(5); /* what, fold_excludes, retval, what2, retval2 */
+			PROTECT(what);
+			PROTECT(fold_excludes);
+			PROTECT(retval);
 			/* Make sure enough space was used */
 			need = (int) (Rf_strchr(line, ':') - line + 1);
 			if(buflen < need){
@@ -320,7 +323,7 @@ SEXP attribute_hidden do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
     SET_VECTOR_ELT(dimnames, 1, what);
     setAttrib(retval2, R_DimSymbol, dims);
     setAttrib(retval2, R_DimNamesSymbol, dimnames);
-    UNPROTECT(6);
+    UNPROTECT(6); /* what, fold_excludes, retval, retval2, dimnames, dims */
     return(retval2);
 }
 

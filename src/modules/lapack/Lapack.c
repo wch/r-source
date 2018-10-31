@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001--2017  The R Core Team.
+ *  Copyright (C) 2001--2018  The R Core Team.
  *  Copyright (C) 2003--2010  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -213,7 +213,6 @@ static SEXP La_rs(SEXP x, SEXP only_values)
 	nm = PROTECT(allocVector(STRSXP, 2));
 	SET_STRING_ELT(nm, 1, mkChar("vectors"));
 	SET_VECTOR_ELT(ret, 1, z);
-	UNPROTECT_PTR(z);
     } else {
 	ret = PROTECT(allocVector(VECSXP, 1));
 	nm = PROTECT(allocVector(STRSXP, 1));
@@ -221,7 +220,7 @@ static SEXP La_rs(SEXP x, SEXP only_values)
     SET_STRING_ELT(nm, 0, mkChar("values"));
     setAttrib(ret, R_NamesSymbol, nm);
     SET_VECTOR_ELT(ret, 0, values);
-    UNPROTECT(4);
+    UNPROTECT(ov ? 4 : 5);
     return ret;
 }
 
