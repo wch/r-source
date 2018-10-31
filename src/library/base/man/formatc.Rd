@@ -9,13 +9,13 @@
 \alias{prettyNum}
 \alias{.format.zeros}
 \description{
-  Formatting numbers individually and flexibly, \code{formatC()} using
+  \code{formatC()} formats numbers individually and flexibly using
   \code{C} style format specifications.
 
   \code{prettyNum()} is used for \dQuote{prettifying} (possibly
   formatted) numbers, also in \code{\link{format.default}}.
 
-  \code{.format.zeros()}, an auxiliary function of \code{prettyNum()}
+  \code{.format.zeros(x)}, an auxiliary function of \code{prettyNum()},
   re-formats the zeros in a vector \code{x} of formatted numbers.
 }
 \usage{
@@ -38,7 +38,6 @@ prettyNum(x, big.mark = "",   big.interval = 3L,
 
 .format.zeros(x, zero.print, nx = suppressWarnings(as.numeric(x)),
               replace = FALSE, warn.non.fitting = TRUE)
-
 }
 \arguments{
   \item{x}{an atomic numerical or character object, possibly
@@ -133,7 +132,12 @@ prettyNum(x, big.mark = "",   big.interval = 3L,
     zeroes are \emph{partly} replaced by \code{zero.print} and then
     padded with \code{" "} to the right were applicable.  In that case
     (false \code{replace[.zero]}), if the \code{zero.print} string does
-    not fit, a warning is produced (if \code{warn.non.fitting} is true).}
+    not fit, a warning is produced (if \code{warn.non.fitting} is true).
+
+    The implementation has \code{formatC()} calling \code{prettyNum()}
+    (only if \code{zero.print} is not \code{NULL}) which itself calls
+    \code{.format.zeros(*, replace=replace.zero)} three times.
+  }
   \item{warn.non.fitting}{logical; if it is true, \code{replace[.zero]} is
     false and the \code{zero.print} string does not fit, a
     \code{\link{warning}} is signalled.}
