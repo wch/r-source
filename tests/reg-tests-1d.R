@@ -2180,6 +2180,20 @@ stopifnot(identical(x, "foo"))
 rm(quote, foo, x)
 
 
+## .format.zeros() when zero.print is "wide":
+x <- c(outer(c(1,3,6),10^(-5:0)))
+(fx <- formatC(x))
+stopifnot(identical(nchar(fx), rep(c(5L, 6:3, 1L), each=3)))
+x3 <- round(x, 3)
+tools::assertWarning(
+  fz1. <- formatC(x3,          zero.print="< 0.001",   replace.zero=FALSE))# old default
+ (fz1  <- formatC(x3,          zero.print="< 0.001"))#,replace.zero=TRUE  :  new default
+ (fzw7 <- formatC(x3, width=7, zero.print="< 0.001"))
+for(fz in list(fz1, fz1., fzw7)) stopifnot(identical(grepl("<", fz), x3 == 0))
+## fz1, fzw7 gave error (for 2 bugs) in R <= 3.5.x
+
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())

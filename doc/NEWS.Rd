@@ -433,6 +433,10 @@
       \item Subassignment to no/empty rows of a data frame now is more
       consistent and typically a no-op in all cases instead of sometimes
       an error; part of Emil Bode's \PR{17483}.
+
+      \item Calls like \code{formatC(*, zero.print = "< 0.001")} no
+      longer give an error and are further improved via new optional
+      argument \code{replace.zero}.  Reported by David Hugh-Jones.
     }
   }
 }
