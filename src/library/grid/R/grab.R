@@ -113,13 +113,13 @@ grabDL <- function(warn, wrap, wrap.grobs=FALSE, ...) {
   gList <- NULL
   dl.index <- grid.Call(C_getDLindex)
   if (dl.index > 1) {
+      if (warn > 0 && !wrap.grobs) {
+          names <- getNames()
+          ## Check for overwriting existing grob
+          if (length(unique(names)) != length(names))
+              warning("one or more grobs overwritten (grab WILL not be faithful; try 'wrap.grobs = TRUE')")
+      }
       if (!wrap) {
-          if (warn > 0) {
-            names <- getNames()
-            ## Check for overwriting existing grob
-            if (length(unique(names)) != length(names))
-                warning("one of more grobs overwritten (grab WILL not be faithful; try 'wrap = TRUE')")
-          }
           grid.newpage(recording=FALSE)
       }
       ## Start at 2 because first element is viewport[ROOT]
@@ -213,7 +213,7 @@ grabDL <- function(warn, wrap, wrap.grobs=FALSE, ...) {
 
 # expr is ignored if dev is NULL
 # otherwise, it should be an expression, like postscript("myfile.ps")
-grid.grab <- function(warn=2, wrap=FALSE, wrap.grobs=FALSE, ...) {
+grid.grab <- function(warn=2, wrap=wrap.grobs, wrap.grobs=FALSE, ...) {
   grabDL(warn, wrap, wrap.grobs, ...)
 }
 
@@ -221,7 +221,7 @@ offscreen <- function(width, height) {
     pdf(file=NULL, width=width, height=height)
 }
 
-grid.grabExpr <- function(expr, warn=2, wrap=FALSE, wrap.grobs=FALSE,
+grid.grabExpr <- function(expr, warn=2, wrap=wrap.grobs, wrap.grobs=FALSE,
                           width=7, height=7, device=offscreen, ...) {
     ## Start an "offline" PDF device for this function
     cd <- dev.cur()
