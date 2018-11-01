@@ -1982,6 +1982,10 @@ R_BadValueInRCode(SEXP value, SEXP call, SEXP rho, const char *rawmsg,
                   const char *errmsg, const char *warnmsg,
                   const char *varname, Rboolean warnByDefault)
 {
+    /* disable GC so that use of this temporary checking code does not
+       introduce new PROTECT errors e.g. in asLogical() use */
+    int enabled = R_GCEnabled;
+    R_GCEnabled = FALSE;
     int nprotect = 0;
     char *check = getenv(varname);
     const void *vmax = vmaxget();
@@ -2108,6 +2112,7 @@ R_BadValueInRCode(SEXP value, SEXP call, SEXP rho, const char *rawmsg,
 	warningcall(call, warnmsg);
     vmaxset(vmax);
     UNPROTECT(nprotect);
+    R_GCEnabled = enabled;
 }
 
 
