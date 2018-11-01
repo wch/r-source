@@ -1982,6 +1982,7 @@ R_BadValueInRCode(SEXP value, SEXP call, SEXP rho, const char *rawmsg,
                   const char *errmsg, const char *warnmsg,
                   const char *varname, Rboolean warnByDefault)
 {
+    int nprotect = 0;
     char *check = getenv(varname);
     const void *vmax = vmaxget();
     Rboolean err = check && StringTrue(check);
@@ -2005,11 +2006,16 @@ R_BadValueInRCode(SEXP value, SEXP call, SEXP rho, const char *rawmsg,
 	Rboolean ignore = FALSE;
 
 	SEXP spkg = R_NilValue;
-	for(; spkg == R_NilValue && rho != R_EmptyEnv; rho = ENCLOS(rho))
-	    if (R_IsPackageEnv(rho))
-		spkg = R_PackageEnvName(rho);
-	    else if (R_IsNamespaceEnv(rho))
-		spkg = R_NamespaceEnvSpec(rho);
+	for(; rho != R_EmptyEnv; rho = ENCLOS(rho))
+	    if (R_IsPackageEnv(rho)) {
+		PROTECT(spkg = R_PackageEnvName(rho));
+		nprotect++;
+		break;
+	    } else if (R_IsNamespaceEnv(rho)) {
+		PROTECT(spkg = R_NamespaceEnvSpec(rho));
+		nprotect++;
+		break;
+	    }
 	if (spkg != R_NilValue)
 	    pkgname = translateChar(STRING_ELT(spkg, 0));
 
@@ -2101,6 +2107,7 @@ R_BadValueInRCode(SEXP value, SEXP call, SEXP rho, const char *rawmsg,
     else if (warn || warnByDefault)
 	warningcall(call, warnmsg);
     vmaxset(vmax);
+    UNPROTECT(nprotect);
 }
 
 

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999--2017  The R Core Team.
+ *  Copyright (C) 1999--2018  The R Core Team.
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -2922,11 +2922,13 @@ SEXP attribute_hidden do_eapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("arguments must be symbolic"));
 
     /* 'all.names' : */
-    all = asLogical(eval(CADDR(args), rho));
+    all = asLogical(PROTECT(eval(CADDR(args), rho)));
+    UNPROTECT(1);
     if (all == NA_LOGICAL) all = 0;
 
     /* 'USE.NAMES' : */
-    useNms = asLogical(eval(CADDDR(args), rho));
+    useNms = asLogical(PROTECT(eval(CADDDR(args), rho)));
+    UNPROTECT(1);
     if (useNms == NA_LOGICAL) useNms = 0;
 
     if (env == R_BaseEnv || env == R_BaseNamespace)
@@ -3622,7 +3624,8 @@ SEXP attribute_hidden do_getRegNS(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP name, val;
     checkArity(op, args);
-    name = checkNSname(call, coerceVector(CAR(args), SYMSXP));
+    name = checkNSname(call, PROTECT(coerceVector(CAR(args), SYMSXP)));
+    UNPROTECT(1);
     val = findVarInFrame(R_NamespaceRegistry, name);
 
     switch(PRIMVAL(op)) {

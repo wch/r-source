@@ -1299,7 +1299,7 @@ SEXP attribute_hidden R_cmpfun1(SEXP fun)
 
     PROTECT(fcall = lang3(R_TripleColonSymbol, packsym, funsym));
     PROTECT(call = lang2(fcall, fun));
-    val = eval(call, R_GlobalEnv);
+    PROTECT(val = eval(call, R_GlobalEnv));
     if (TYPEOF(BODY(val)) != BCODESXP)
 	/* Compilation may have failed because R alocator could not malloc
 	   memory to extend the R heap, so we run GC to release some pages.
@@ -1309,7 +1309,7 @@ SEXP attribute_hidden R_cmpfun1(SEXP fun)
 	   A more general solution might be to run the GC conditionally inside
 	   error handling. */
 	R_gc();
-    UNPROTECT(2);
+    UNPROTECT(3); /* fcall, call, val */
 
     R_Visible = old_visible;
     return val;
@@ -1699,8 +1699,6 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedvars)
 	(CADR(call) == R_TmpvalSymbol && ! R_isReplaceSymbol(CAR(call)));
 #endif
 
-    UNPROTECT(1); /* newrho - below protected via context */
-
     /*  If we have a generic function we need to use the sysparent of
 	the generic as the sysparent of the method because the method
 	is a straight substitution of the generic.  */
@@ -1714,6 +1712,8 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedvars)
     if (MAYBE_REFERENCED(val) && is_getter_call)
     	val = shallow_duplicate(val);
 #endif
+
+    UNPROTECT(1); /* newrho */
     return val;
 }
 

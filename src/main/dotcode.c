@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2014  The R Core Team
+ *  Copyright (C) 1997--2018  The R Core Team
  *  Copyright (C) 2003	      The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -2405,7 +2405,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	case REALSXP:
 	case SINGLESXP:
 	    if (copy) {
-		s = allocVector(REALSXP, n);
+		PROTECT(s = allocVector(REALSXP, n));
 		if (type == SINGLESXP || asLogical(getAttrib(arg, CSingSymbol)) == 1) {
 		    float *sptr = (float*) p;
 		    for(R_xlen_t i = 0 ; i < n ; i++)
@@ -2426,6 +2426,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 				  Fort ? ".Fortran" : ".C",
 				  symName, type2char(type), na+1);
 		}
+		UNPROTECT(1); /* s */
 	    } else {
 		if (type == SINGLESXP || asLogical(getAttrib(arg, CSingSymbol)) == 1) {
 		    s = allocVector(REALSXP, n);
