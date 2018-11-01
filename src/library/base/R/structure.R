@@ -34,7 +34,10 @@ structure <- function (.Data, ...)
 	if("factor" %in% attrib[["class", exact = TRUE]]
            && typeof(.Data) == "double")
             storage.mode(.Data) <- "integer"
-	attributes(.Data) <- c(attributes(.Data), attrib)
+        ## *** temporary direct replacement function call until the
+        ## *** compiler can handle this:
+	## attributes(.Data) <- c(attributes(.Data), attrib)
+        `attributes<-`(.Data, value = c(attributes(.Data), attrib))
     }
-    .Data
+    else .Data
 }

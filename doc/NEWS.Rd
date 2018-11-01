@@ -214,6 +214,11 @@
       never has, and increasingly the \sQuote{canonical name} does not
       reflect the important characteristics of compiled code.
       %% E.g. 32/64-bit compiler settings
+
+      \item For atomic vectors that are large enough the functions
+      \code{drop}, \code{structure}, \code{unclass}, and \code{unname}
+      now avoid duplicating their data by returning \code{ALTREP}
+      wrapper objects with adjusted attributes.
     }
   }
 

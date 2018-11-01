@@ -936,7 +936,7 @@ SEXP attribute_hidden do_unclass(SEXP call, SEXP op, SEXP args, SEXP env)
 	    break;
 	}
 	if (MAYBE_REFERENCED(CAR(args)))
-	    SETCAR(args, shallow_duplicate(CAR(args)));
+	    SETCAR(args, R_shallow_duplicate_attr(CAR(args)));
 	setAttrib(CAR(args), R_ClassSymbol, R_NilValue);
     }
     return CAR(args);
