@@ -18,13 +18,9 @@
 
 unname <- function (obj, force = FALSE)
 {
-    ## *** temporary direct replacement function calls until the
-    ## *** compiler can handle this:
     if (!is.null(names(obj)))
-        ## names(obj) <- NULL
-        obj <- `names<-`(obj, value = NULL)
+        names(obj) <- NULL
     if (!is.null(dimnames(obj)) && (force || !is.data.frame(obj)))
-        ## dimnames(obj) <- NULL
-        obj <- `dimnames<-`(obj, value = NULL)
+        dimnames(obj) <- NULL
     obj
 }

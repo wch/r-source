@@ -1962,7 +1962,11 @@ static SEXP EnsureLocal(SEXP symbol, SEXP rho)
     if ((vl = findVarInFrame3(rho, symbol, TRUE)) != R_UnboundValue) {
 	vl = eval(symbol, rho);	/* for promises */
 	if(MAYBE_SHARED(vl)) {
-	    PROTECT(vl = shallow_duplicate(vl));
+	    /* Using R_shallow_duplicate_attr may defer duplicating
+	       data until it it is needed. If the data are duplicated,
+	       then the wrapper can be discarded at the end of the
+	       assignment process. */
+	    PROTECT(vl = R_shallow_duplicate_attr(vl));
 	    defineVar(symbol, vl, rho);
 	    INCREMENT_NAMED(vl);
 	    UNPROTECT(1);
@@ -1980,7 +1984,6 @@ static SEXP EnsureLocal(SEXP symbol, SEXP rho)
     UNPROTECT(1);
     return vl;
 }
-
 
 /* Note: If val is a language object it must be protected */
 /* to prevent evaluation.  As an example consider */
@@ -2011,16 +2014,6 @@ static SEXP replaceCall(SEXP fun, SEXP val, SEXP args, SEXP rhs)
     return tmp;
 }
 
-
-static SEXP assignCall(SEXP op, SEXP symbol, SEXP fun,
-		       SEXP val, SEXP args, SEXP rhs)
-{
-    PROTECT(op);
-    PROTECT(symbol);
-    val = replaceCall(fun, val, args, rhs);
-    UNPROTECT(2);
-    return lang3(op, symbol, val);
-}
 
 /* rho is only needed for _R_CHECK_LENGTH_1_CONDITION_=package:name and for
      detecting the current package in related diagnostic messages; it should
@@ -2603,6 +2596,26 @@ static R_INLINE SEXP mkRHSPROMISE(SEXP expr, SEXP rhs)
     return R_mkEVPROMISE_NR(expr, rhs);
 }
 
+static SEXP GET_BINDING_CELL(SEXP, SEXP);
+static SEXP BINDING_VALUE(SEXP);
+
+static R_INLINE Rboolean
+try_unwrap_ok(SEXP value, SEXP sym, SEXP rho, SEXP cell)
+{
+    if (! MAYBE_REFERENCED(value))
+	return TRUE;
+#ifdef SWITCH_TO_REFCNT
+    else if (! MAYBE_SHARED(value)) {
+	if (cell == NULL) {
+	    cell = GET_BINDING_CELL(sym, rho);
+	    if (value == BINDING_VALUE(cell))
+		return TRUE;
+	}
+    }
+#endif
+    return FALSE;
+}
+
 static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP expr, lhs, rhs, saverhs, tmp, afun, rhsprom;
@@ -2732,9 +2745,21 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    error(_("invalid function in complex assignment"));
     }
     SET_TEMPVARLOC_FROM_CAR(tmploc, lhs);
-    PROTECT(expr = assignCall(asymSymbol[PRIMVAL(op)], CDR(lhs),
-			      afun, R_TmpvalSymbol, CDDR(expr), rhsprom));
-    expr = eval(expr, rho);
+    SEXP lhsSym = CDR(lhs);
+
+    PROTECT(expr = replaceCall(afun, R_TmpvalSymbol, CDDR(expr), rhsprom));
+    SEXP value = eval(expr, rho);
+
+    if (PRIMVAL(op) == 2)                       /* <<- */
+	setVar(lhsSym, value, ENCLOS(rho));
+    else {                                      /* <-, = */
+	if (ALTREP(value) && try_unwrap_ok(value, lhsSym, rho, NULL))
+	    value = R_tryUnwrap(value);
+	defineVar(lhsSym, value, rho);
+    }
+    INCREMENT_NAMED(value);
+    R_Visible = FALSE;
+
     endcontext(&cntxt); /* which does not run the remove */
     UNPROTECT(nprot);
     unbindVar(R_TmpvalSymbol, rho);
@@ -6864,6 +6889,13 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	SEXP symbol = VECTOR_ELT(constants, sidx);
 	SEXP cell = GET_BINDING_CELL_CACHE(symbol, rho, vcache, sidx);
 	SEXP value = GETSTACK(-1); /* leave on stack for GC protection */
+	if (ALTREP(value) && try_unwrap_ok(value, symbol, rho, cell)) {
+	    SEXP v = R_tryUnwrap(value);
+	    if (v != value) {
+		SETSTACK(-1, v);
+		value = v;
+	    }
+	}
 	INCREMENT_NAMED(value);
 	if (! SET_BINDING_VALUE(cell, value))
 	    defineVar(symbol, value, rho);

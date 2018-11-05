@@ -1881,6 +1881,7 @@ static R_INLINE int is_wrapper(SEXP x)
 	case REALSXP: return R_altrep_inherits(x, wrap_real_class);
 	case CPLXSXP: return R_altrep_inherits(x, wrap_complex_class);
 	case RAWSXP: return R_altrep_inherits(x, wrap_raw_class);
+	case STRSXP: return R_altrep_inherits(x, wrap_string_class);
 	default: return FALSE;
 	}
     else return FALSE;
@@ -1961,7 +1962,7 @@ SEXP attribute_hidden do_tryWrap(SEXP call, SEXP op, SEXP args, SEXP env)
    will be referenced from C code after it is cleared. */
 SEXP R_tryUnwrap(SEXP x)
 {
-    if (! MAYBE_REFERENCED(x) && is_wrapper(x) &&
+    if (! MAYBE_SHARED(x) && is_wrapper(x) &&
 	WRAPPER_SORTED(x) == UNKNOWN_SORTEDNESS && ! WRAPPER_NO_NA(x)) {
 	SEXP data = WRAPPER_WRAPPED(x);
 	if (! MAYBE_SHARED(data)) {
