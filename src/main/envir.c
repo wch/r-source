@@ -919,8 +919,11 @@ static SEXP findVarLocInFrame(SEXP rho, SEXP symbol, Rboolean *canCache)
 	    SET_TAG(tmp, symbol);
 	    /* If the database has a canCache method, then call that.
 	       Otherwise, we believe the setting for canCache. */
-	    if(canCache && table->canCache)
+	    if(canCache && table->canCache) {
+		PROTECT(tmp);
 		*canCache = table->canCache(CHAR(PRINTNAME(symbol)), table);
+		UNPROTECT(1);
+	    }
 	}
 	return(tmp);
     }
