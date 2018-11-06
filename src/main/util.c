@@ -255,13 +255,13 @@ void InitTypeTables(void) {
 	    SEXP rstr = ScalarString(rchar);
 	    MARK_NOT_MUTABLE(rstr);
 	    R_PreserveObject(rstr);
-	    UNPROTECT(1); /* rchar */
 	    SEXP rsym = install(cstr);
 
 	    Type2Table[type].cstrName = cstr;
 	    Type2Table[type].rcharName = rchar;
 	    Type2Table[type].rstrName = rstr;
 	    Type2Table[type].rsymName = rsym;
+	    UNPROTECT(1); /* rchar */
 	} else {
 	    Type2Table[type].cstrName = NULL;
 	    Type2Table[type].rcharName = NULL;
