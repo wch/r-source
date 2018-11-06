@@ -1881,6 +1881,7 @@ static R_INLINE int is_wrapper(SEXP x)
 	case REALSXP: return R_altrep_inherits(x, wrap_real_class);
 	case CPLXSXP: return R_altrep_inherits(x, wrap_complex_class);
 	case RAWSXP: return R_altrep_inherits(x, wrap_raw_class);
+	case STRSXP: return R_altrep_inherits(x, wrap_string_class);
 	default: return FALSE;
 	}
     else return FALSE;
