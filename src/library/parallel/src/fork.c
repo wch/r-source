@@ -765,7 +765,9 @@ SEXP mc_select_children(SEXP sTimeout, SEXP sWhich)
 	    if (which) { /* check for the FD only if it's on the list */
 		unsigned int k = 0;
 		while (k < wlen) {
-		    if (which[k++] == ci->pid) { 
+		    if (which[k++] == ci->pid) {
+			if (ci->pfd > FD_SETSIZE)
+			    error("file descriptor is too large for select()");
 			FD_SET(ci->pfd, &fs);
 			if (ci->pfd > maxfd) maxfd = ci->pfd;
 #ifdef MC_DEBUG
@@ -777,6 +779,8 @@ SEXP mc_select_children(SEXP sTimeout, SEXP sWhich)
 		}
 	    } else {
 		/* not sure if this should be allowed */
+		if (ci->pfd > FD_SETSIZE)
+		    error("file descriptor is too large for select()");
 		FD_SET(ci->pfd, &fs);
 		if (ci->pfd > maxfd) maxfd = ci->pfd;
 #ifdef MC_DEBUG
