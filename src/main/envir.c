@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999--2017  The R Core Team.
+ *  Copyright (C) 1999--2018  The R Core Team.
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -918,8 +918,11 @@ static SEXP findVarLocInFrame(SEXP rho, SEXP symbol, Rboolean *canCache)
 	    SET_TAG(tmp, symbol);
 	    /* If the database has a canCache method, then call that.
 	       Otherwise, we believe the setting for canCache. */
-	    if(canCache && table->canCache)
+	    if(canCache && table->canCache) {
+		PROTECT(tmp);
 		*canCache = table->canCache(CHAR(PRINTNAME(symbol)), table);
+		UNPROTECT(1);
+	    }
 	}
 	return(tmp);
     }
