@@ -1058,3 +1058,19 @@ Rboolean R_altrep_inherits(SEXP x, R_altrep_class_t class)
 {
     return ALTREP(x) && ALTREP_CLASS(x) == R_SEXP(class);
 }
+
+SEXP attribute_hidden do_altrep_class(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    checkArity(op, args);
+    SEXP x = CAR(args);
+    if (ALTREP(x)) {
+	SEXP info = ALTREP_SERIALIZED_CLASS(x);
+	SEXP val = allocVector(STRSXP, 2);
+	SET_STRING_ELT(val, 0, PRINTNAME(ALTREP_SERIALIZED_CLASS_CLSSYM(info)));
+	SET_STRING_ELT(val, 1, PRINTNAME(ALTREP_SERIALIZED_CLASS_PKGSYM(info)));
+	return val;
+    }
+    else
+	return R_NilValue;
+}
+

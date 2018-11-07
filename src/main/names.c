@@ -763,6 +763,7 @@ FUNTAB R_FunTab[] =
 {"munmap_file",	do_munmap_file,	0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"wrap_meta",	do_wrap_meta,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"tryWrap",	do_tryWrap,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"altrep_class",do_altrep_class,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 
 /* Functions To Interact with the Operating System */
 
