@@ -2202,6 +2202,18 @@ for(fz in list(fz1, fz1., fzw7)) stopifnot(identical(grepl("<", fz), x3 == 0))
 ## fz1, fzw7 gave error (for 2 bugs) in R <= 3.5.x
 
 
+## Attempting to modify an object in a lock binding could succeed
+## befo re signaling an error:
+foo <- function() {
+    zero <- 0           ## to fool constant folding
+    x <- 1 + zero       ## value of 'x' has one reference
+    lockBinding("x", environment())
+    tryCatch(x[1] <- 2, ## would modify the vlaue, then signal an error
+             error = identity)
+    stopifnot(identical(x, 1))
+}
+foo()
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

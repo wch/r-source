@@ -430,7 +430,16 @@ typedef struct {
 #define IS_ACTIVE_BINDING(b) ((b)->sxpinfo.gp & ACTIVE_BINDING_MASK)
 #define BINDING_IS_LOCKED(b) ((b)->sxpinfo.gp & BINDING_LOCK_MASK)
 #define SET_ACTIVE_BINDING_BIT(b) ((b)->sxpinfo.gp |= ACTIVE_BINDING_MASK)
-#define LOCK_BINDING(b) ((b)->sxpinfo.gp |= BINDING_LOCK_MASK)
+#define LOCK_BINDING(b) do {						\
+	SEXP lb__b__ = b;						\
+	if (! IS_ACTIVE_BINDING(lb__b__)) {				\
+	    if (TYPEOF(lb__b__) == SYMSXP)				\
+		MARK_NOT_MUTABLE(SYMVALUE(lb__b__));			\
+	    else							\
+		MARK_NOT_MUTABLE(CAR(lb__b__));				\
+	}								\
+	((lb__b__))->sxpinfo.gp |= BINDING_LOCK_MASK;			\
+    } while (0)
 #define UNLOCK_BINDING(b) ((b)->sxpinfo.gp &= (~BINDING_LOCK_MASK))
 
 #define BASE_SYM_CACHED_MASK (1<<13)
