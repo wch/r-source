@@ -683,10 +683,14 @@ static double MT_genrand(void)
 
 /* This define may give a warning with clang, but is needed to comply
    with the prohibition on changing the code. */
+#ifdef __clang__
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wkeyword-macro"
+#endif
 #define long Int32
+#ifdef __clang__
 #pragma clang diagnostic pop
+#endif
 
 #define ran_arr_buf       R_KT_ran_arr_buf
 #define ran_arr_cycle     R_KT_ran_arr_cycle
