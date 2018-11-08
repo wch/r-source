@@ -562,6 +562,13 @@ void seed_out(long *ignored)
 
 /* ===================  Mersenne Twister ========================== */
 /* From http://www.math.keio.ac.jp/~matumoto/emt.html */
+/* New URL (accessed 2018-11-08):
+   http://www.math.sci.hiroshima-u.ac.jp/~m-mat/eindex.html
+
+   The initialization method in the 1998 code and paper had a minor
+   issue that was addressed with new initialization approaches in an
+   update in 2002.  R has always used a different initialization
+   approach and is not affected by that issue.
 
 /* A C-program for MT19937: Real number version([0,1)-interval)
    (1999/10/28)
