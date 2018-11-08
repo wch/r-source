@@ -162,10 +162,15 @@ tre_match(const tre_tnfa_t *tnfa, const void *string, size_t len,
       if (type == STR_USER)
 	{
 	  const tre_str_source *source = string;
-	  if (source->rewind == NULL || source->compare == NULL)
+	  if (source->rewind == NULL || source->compare == NULL) {
 	    /* The backtracking matcher requires rewind and compare
 	       capabilities from the input stream. */
+#ifndef TRE_USE_ALLOCA
+	    if (tags)
+		xfree(tags);
+#endif /* !TRE_USE_ALLOCA */
 	    return REG_BADPAT;
+	  }
 	}
       status = tre_tnfa_run_backtrack(tnfa, string, (int)len, type,
 				      tags, eflags, &eo);
