@@ -569,6 +569,7 @@ void seed_out(long *ignored)
    issue that was addressed with new initialization approaches in an
    update in 2002.  R has always used a different initialization
    approach and is not affected by that issue.
+*/
 
 /* A C-program for MT19937: Real number version([0,1)-interval)
    (1999/10/28)
