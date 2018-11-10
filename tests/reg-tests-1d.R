@@ -2107,10 +2107,6 @@ stopifnot(identical(xx, "1,23456e+02"))
 
 ## parseRd() and Rd2HTML() with some \Sexpr{} in *.Rd:
 x <- tools::Rd_db("base")
-system.time(y <- lapply(x, function(e) tryCatch(tools::Rd2HTML(e, out = nullfile()),
-                                    error = identity))) # 3-4 sec
-stopifnot(!vapply(y, inherits, NA, "error"))
-## Gave error when "running" \Sexpr{.} DateTimeClasses.Rd
 ## Now check that \Sexpr{}  "installed" correctly:
 of <- textConnection("DThtml", "w")
 tools::Rd2HTML(x$DateTimeClasses.Rd, out = of, stages = "install"); close(of)
