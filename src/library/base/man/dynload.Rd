@@ -60,7 +60,6 @@ is.loaded(symbol, PACKAGE = "", type = "")
     default), \code{"Fortran"}, \code{"Call"} or \code{"External"}.}
 }
 \details{
-  
   The objects \code{dyn.load} loads are called \sQuote{dynamically
     loadable libraries} (abbreviated to \sQuote{DLL}) on all platforms
   except macOS, which uses the term for a different sort

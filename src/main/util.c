@@ -59,7 +59,7 @@ void NORET F77_SYMBOL(rexitc)(char *msg, int *nchar);
 
 /* Many small functions are included from ../include/Rinlinedfuns.h */
 
-int nrows(SEXP s)
+int nrows(SEXP s) // ~== NROW(.)  in R
 {
     SEXP t;
     if (isVector(s) || isList(s)) {
@@ -75,7 +75,7 @@ int nrows(SEXP s)
 }
 
 
-int ncols(SEXP s)
+int ncols(SEXP s) // ~== NCOL(.)  in R
 {
     SEXP t;
     if (isVector(s) || isList(s)) {

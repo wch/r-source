@@ -613,8 +613,7 @@ ls.str <-
     if(missing(envir)) ## [for "lazy" reasons, this fails as default]
         envir <- as.environment(pos)
     nms <- ls(name, envir = envir, all.names=all.names, pattern=pattern)
-    r <- unlist(lapply(nms, function(n)
-                       exists(n, envir= envir, mode= mode, inherits=FALSE)))
+    r <- vapply(nms, exists, NA, envir=envir, mode=mode, inherits=FALSE)
     structure(nms[r], envir = envir, mode = mode, class = "ls_str")
 }
 

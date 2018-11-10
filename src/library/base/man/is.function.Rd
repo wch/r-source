@@ -26,8 +26,8 @@ is.primitive(x)
 }
 \examples{
 is.function(1) # FALSE
-is.function(is.primitive)  # TRUE: it is a function, but ..
-is.primitive(is.primitive) # FALSE:it's not a primitive one, whereas
+is.function (is.primitive) # TRUE: it is a function, but ..
+is.primitive(is.primitive) # FALSE: it's not a primitive one, whereas
 is.primitive(is.function)  # TRUE: that one *is*
 }
 \keyword{programming}
