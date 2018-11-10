@@ -86,6 +86,11 @@
       \code{anyDuplicated()}.
 
       \item \code{legend(*, cex = 1:2)} now works less badly.
+
+      \item The \code{print()} method for \code{POSIXct} and
+      \code{POSIXlt} now correctly obeys \code{getOption("max.print")},
+      fixing a long-standing typo, and it also gets a corresponding
+      optional \code{max} argument.
     }
   }
 }
