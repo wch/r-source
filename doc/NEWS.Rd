@@ -208,7 +208,7 @@
       \item Command line completion has a new setting
       \code{rc.settings(dots = FALSE)} to remove \code{...} from the
       list of possible function arguments.
-      
+
       \item \code{library()} no longer checks packages with compiled
       code match \samp{R.version$platform}.  \code{loadNamespace()}
       never has, and increasingly the \sQuote{canonical name} does not
@@ -404,10 +404,6 @@
       documented and as in R < 3.0.0, namely identically to
       \code{sample.int(2, ..)}.% consider back porting to 3.5.x !
 
-      \item \code{download.file(*, method = "curl", cacheOK = FALSE)}
-      should work now on Windows, thanks to Kevin Ushey's patch in
-      \PR{17323}.
-
       \item Fixes to \code{convertColor()} for chromatic adaptation;
       thanks to Brodie Gaslam \PR{17473}.
 
@@ -523,11 +519,15 @@
       \item \code{cut(rep(0, 7))} now works, thanks to Joey Reid and
       Benjamin Tyner (\PR{16802}).
 
-      \item \code{legend(*, cex = 1:2)} now works less badly.
+      \item \code{download.file(*, method = "curl", cacheOK = FALSE)}
+      should work now on Windows, thanks to Kevin Ushey's patch in
+      \PR{17323}.
 
       \item \code{duplicated(<dataframe with 'f'>)} now works, too,
       thanks to Andreas Kersting's \PR{17485}; ditto for
       \code{anyDuplicated()}.
+
+      \item \code{legend(*, cex = 1:2)} now works less badly.
 
       \item The \code{print()} method for \code{POSIXct} and
       \code{POSIXlt} now correctly obeys \code{getOption("max.print")},
