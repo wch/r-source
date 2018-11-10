@@ -82,7 +82,10 @@
       \PR{17323}.
 
       \item \code{duplicated(<dataframe with 'f'>)} now works, too,
-      thanks to Andreas Kersting's \PR{17485}.
+      thanks to Andreas Kersting's \PR{17485}; ditto for
+      \code{anyDuplicated()}.
+
+      \item \code{legend(*, cex = 1:2)} now works less badly.
     }
   }
 }

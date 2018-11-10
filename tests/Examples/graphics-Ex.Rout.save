@@ -1191,6 +1191,8 @@ Warning in plot.histogram(r, freq = freq1, col = col, border = border, angle = a
 +   text  (1, y.leg[i] - 0.1, paste("cex=", formatC(cexv[i])), cex = 0.8, adj = 0)
 +   legend(3, y.leg[i], leg.txt, pch = "sSvV", col = c(1, 3), cex = cexv[i])
 + }
+> ## cex *vector* [in R <= 3.5.1 has 'if(xc < 0)' w/ length(xc) == 2]
+> legend(6,1, leg.txt, pch = "sSvV", col = c(1, 3), cex = 1+(-1:2)/8)
 > 
 > ## 'merge = TRUE' for merging lines & points:
 > x <- seq(-pi, pi, len = 65)
@@ -1300,17 +1302,15 @@ List of 2
 > 
 > ## legends with titles at different locations
 > plot(x, y, type = "n")
-> legend("bottomright", "(x,y)", pch = 1, title = "bottomright")
-> legend("bottom", "(x,y)", pch = 1, title = "bottom")
-> legend("bottomleft", "(x,y)", pch = 1, title = "bottomleft")
-> legend("left", "(x,y)", pch = 1, title = "left")
-> legend("topleft", "(x,y)", pch = 1, title = "topleft, inset = .05",
-+        inset = .05)
-> legend("top", "(x,y)", pch = 1, title = "top")
-> legend("topright", "(x,y)", pch = 1, title = "topright, inset = .02",
-+        inset = .02)
-> legend("right", "(x,y)", pch = 1, title = "right")
-> legend("center", "(x,y)", pch = 1, title = "center")
+> legend("bottomright", "(x,y)", pch=1, title= "bottomright")
+> legend("bottom",      "(x,y)", pch=1, title= "bottom")
+> legend("bottomleft",  "(x,y)", pch=1, title= "bottomleft")
+> legend("left",        "(x,y)", pch=1, title= "left")
+> legend("topleft",     "(x,y)", pch=1, title= "topleft, inset = .05", inset = .05)
+> legend("top",         "(x,y)", pch=1, title= "top")
+> legend("topright",    "(x,y)", pch=1, title= "topright, inset = .02",inset = .02)
+> legend("right",       "(x,y)", pch=1, title= "right")
+> legend("center",      "(x,y)", pch=1, title= "center")
 > 
 > # using text.font (and text.col):
 > op <- par(mfrow = c(2, 2), mar = rep(2.1, 4))
