@@ -2211,6 +2211,22 @@ foo <- function() {
 foo()
 
 
+## formalArgs()  should conform to names(formals()) also in looking up fun: PR#17499
+by <- function(a, b, c) "Bye!" # Overwrites base::by, as an example
+foo <- function() {
+  f1 <- function(a, ...) {}
+  list(nf = names(formals("f1")),
+       fA = formalArgs   ("f1"))
+}
+stopifnot(exprs = {
+    identical(names(formals("by")), letters[1:3])
+    identical(formalArgs   ("by") , letters[1:3])
+    { r <- foo(); identical(r$nf, r$fA) }
+})
+## gave "wrong" result and error in R <= 3.5.x
+
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())

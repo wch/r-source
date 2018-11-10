@@ -1,7 +1,7 @@
 #  File src/library/base/R/formals.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,9 +16,9 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
-formals <- function(fun = sys.function(sys.parent())) {
+formals <- function(fun = sys.function(sys.parent()), envir = parent.frame()) {
     if(is.character(fun))
-	fun <- get(fun, mode = "function", envir = parent.frame())
+	fun <- get(fun, mode = "function", envir = envir)
     .Internal(formals(fun))
 }
 

@@ -219,6 +219,9 @@
       \code{drop}, \code{structure}, \code{unclass}, and \code{unname}
       now avoid duplicating their data by returning \code{ALTREP}
       wrapper objects with adjusted attributes.
+
+      \item In \code{formals()}, \code{envir} becomes an optional
+      argument instead of being hardwired.
     }
   }
 
@@ -443,6 +446,9 @@
       \item Calls like \code{formatC(*, zero.print = "< 0.001")} no
       longer give an error and are further improved via new optional
       argument \code{replace.zero}.  Reported by David Hugh-Jones.
+
+      \item \code{formalArgs("<fn>")} now finds the same function as
+      \code{formals(*)}, fixing Emil Bode's \PR{17499}.
     }
   }
 }
