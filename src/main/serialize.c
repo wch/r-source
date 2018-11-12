@@ -1963,6 +1963,7 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
 	    PROTECT(s = allocVector(type, len));
 	    switch (stream->type) {
 	    case R_pstream_ascii_format:
+	    case R_pstream_asciihex_format:
 		for (R_xlen_t ix = 0; ix < len; ix++) {
 		    char word[128];
 		    unsigned int i; // unsigned to avoid compiler warnings
