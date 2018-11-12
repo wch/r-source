@@ -1949,12 +1949,25 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
 	case RAWSXP:
 	    len = ReadLENGTH(stream);
 	    PROTECT(s = allocVector(type, len));
+	    switch (stream->type) {
+	    case R_pstream_ascii_format:
+	    case R_pstream_asciihex_format:
+		for (R_xlen_t ix = 0; ix < len; ix++) {
+		    char word[128];
+		    unsigned int i; // unsigned to avoid compiler warnings
+		    InWord(stream, word, sizeof(word));
+		    if(sscanf(word, "%2x", &i) != 1) error(_("read error"));
+		    RAW(s)[ix] = (Rbyte) i;
+		}
+		break;
+	    default:
 	    {
 		R_xlen_t done, this;
 		for (done = 0; done < len; done += this) {
 		    this = min2(CHUNK_SIZE, len - done);
 		    stream->InBytes(stream, RAW(s) + done, (int) this);
 		}
+	    }
 	    }
 	    break;
 	case S4SXP:
