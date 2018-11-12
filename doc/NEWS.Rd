@@ -215,10 +215,15 @@
       reflect the important characteristics of compiled code.
       %% E.g. 32/64-bit compiler settings
 
-      \item For atomic vectors that are large enough the functions
-      \code{drop}, \code{structure}, \code{unclass}, and \code{unname}
-      now avoid duplicating their data by returning \code{ALTREP}
-      wrapper objects with adjusted attributes.
+      \item The primitive functions \code{drop} and \code{unclass} now
+      avoid duplicating their data for atomic vectors that are large
+      enough by returning \code{ALTREP} wrapper objects with adjusted
+      attributes.  R-level assignments to change attributes will also
+      use wrapper objects to avoid duplicating data for larger atomic
+      vectors. R functions like \code{structure} and \code{unname} will
+      therefore not duplicate data in these settings. Generic vectors as
+      produced by \code{list} are not yet covered by this optimization
+      but may be in due course.
 
       \item In \code{formals()}, \code{envir} becomes an optional
       argument instead of being hardwired.

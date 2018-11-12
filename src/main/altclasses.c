@@ -1963,7 +1963,7 @@ SEXP attribute_hidden do_tryWrap(SEXP call, SEXP op, SEXP args, SEXP env)
    will be referenced from C code after it is cleared. */
 SEXP R_tryUnwrap(SEXP x)
 {
-    if (! MAYBE_REFERENCED(x) && is_wrapper(x) &&
+    if (! MAYBE_SHARED(x) && is_wrapper(x) &&
 	WRAPPER_SORTED(x) == UNKNOWN_SORTEDNESS && ! WRAPPER_NO_NA(x)) {
 	SEXP data = WRAPPER_WRAPPED(x);
 	if (! MAYBE_SHARED(data)) {
@@ -1979,6 +1979,8 @@ SEXP R_tryUnwrap(SEXP x)
 	    SETCAR(x, R_NilValue);
 	    SETCDR(x, R_NilValue);
 	    SET_TAG(x, R_NilValue);
+	    SET_OBJECT(x, 0);
+	    UNSET_S4_OBJECT(x);
 	    /* NAMED should be zero */
 
 	    return data;
