@@ -64,6 +64,7 @@
 #include <config.h>
 #endif
 
+#define R_USE_SIGNALS 1
 #include "Defn.h"
 #include <Internal.h>
 #include "Print.h"
@@ -722,6 +723,13 @@ static void PrintSpecial(SEXP s)
     UNPROTECT(1);
 }
 
+#ifdef Win32
+static void print_cleanup(void *data)
+{
+    WinUTF8out = *(Rboolean *)data;
+}
+#endif
+
 /* PrintValueRec -- recursively print an SEXP
 
  * This is the "dispatching" function for  print.default()
@@ -731,7 +739,18 @@ void attribute_hidden PrintValueRec(SEXP s, SEXP env)
     SEXP t;
 
 #ifdef Win32
+    RCNTXT cntxt;
+    Rboolean havecontext = FALSE;
+    Rboolean saveWinUTF8out = WinUTF8out;
+
     WinCheckUTF8();
+    if (WinUTF8out != saveWinUTF8out) {
+	begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
+	             R_NilValue, R_NilValue);
+	cntxt.cend = &print_cleanup;
+	cntxt.cenddata = &saveWinUTF8out;
+	havecontext = TRUE;
+    }
 #endif
     if(!isMethodsDispatchOn() && (IS_S4_OBJECT(s) || TYPEOF(s) == S4SXP) ) {
 	SEXP cl = getAttrib(s, R_ClassSymbol);
@@ -867,10 +886,13 @@ void attribute_hidden PrintValueRec(SEXP s, SEXP env)
     printAttributes(s, env, FALSE);
 
 done:
+
 #ifdef Win32
-    WinUTF8out = FALSE;
+    if (havecontext)
+	endcontext(&cntxt);
+    print_cleanup(&saveWinUTF8out);
 #endif
-    return;
+    return; /* needed when Win32 is not defined */
 }
 
 /* 2000-12-30 PR#715: remove list tags from tagbuf here
