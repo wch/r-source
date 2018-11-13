@@ -60,7 +60,7 @@ latex_canonical_encoding  <- function(encoding)
 ## 'encoding' is passed to parse_Rd, as the input encoding
 Rd2latex <- function(Rd, out = "", defines = .Platform$OS.type,
                      stages = "render",
-		     outputEncoding = "ASCII", fragment = FALSE, ...,
+		     outputEncoding = "UTF-8", fragment = FALSE, ...,
                      writeEncoding = TRUE)
 {
     encode_warn <- FALSE
