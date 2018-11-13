@@ -24,7 +24,7 @@ boxplot(x, \dots)
         notch = FALSE, outline = TRUE, names, plot = TRUE,
         border = par("fg"), col = NULL, log = "",
         pars = list(boxwex = 0.8, staplewex = 0.5, outwex = 0.5),
-        horizontal = FALSE, add = FALSE, at = NULL)
+         ann = !add, horizontal = FALSE, add = FALSE, at = NULL)
 }
 \arguments{
   \item{formula}{a formula, such as \code{y ~ grp}, where \code{y} is a

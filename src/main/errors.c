@@ -1617,18 +1617,20 @@ static SEXP findSimpleErrorHandler(void)
 static void vsignalWarning(SEXP call, const char *format, va_list ap)
 {
     char buf[BUFSIZE];
-    SEXP hooksym, hcall, qcall;
+    SEXP hooksym, hcall, qcall, qfun;
 
     hooksym = install(".signalSimpleWarning");
     if (SYMVALUE(hooksym) != R_UnboundValue &&
 	SYMVALUE(R_QuoteSymbol) != R_UnboundValue) {
-	PROTECT(qcall = LCONS(R_QuoteSymbol, LCONS(call, R_NilValue)));
+	qfun = lang3(R_DoubleColonSymbol, R_BaseSymbol, R_QuoteSymbol);
+	PROTECT(qfun);
+	PROTECT(qcall = LCONS(qfun, LCONS(call, R_NilValue)));
 	PROTECT(hcall = LCONS(qcall, R_NilValue));
 	Rvsnprintf(buf, BUFSIZE - 1, format, ap);
 	hcall = LCONS(mkString(buf), hcall);
 	PROTECT(hcall = LCONS(hooksym, hcall));
 	eval(hcall, R_GlobalEnv);
-	UNPROTECT(3);
+	UNPROTECT(4);
     }
     else vwarningcall_dflt(call, format, ap);
 }
@@ -1665,20 +1667,22 @@ static void vsignalError(SEXP call, const char *format, va_list ap)
 		   overflow, treat all calling handlers as failed */
 		if (R_OldCStackLimit)
 		    break;
-		SEXP hooksym, hcall, qcall;
+		SEXP hooksym, hcall, qcall, qfun;
 		/* protect oldstack here, not outside loop, so handler
 		   stack gets unwound in case error is protect stack
 		   overflow */
 		PROTECT(oldstack);
 		hooksym = install(".handleSimpleError");
-		PROTECT(qcall = LCONS(R_QuoteSymbol,
+		qfun = lang3(R_DoubleColonSymbol, R_BaseSymbol,
+		             R_QuoteSymbol);
+		PROTECT(qcall = LCONS(qfun,
 				      LCONS(call, R_NilValue)));
 		PROTECT(hcall = LCONS(qcall, R_NilValue));
 		hcall = LCONS(mkString(buf), hcall);
 		hcall = LCONS(ENTRY_HANDLER(entry), hcall);
 		PROTECT(hcall = LCONS(hooksym, hcall));
 		eval(hcall, R_GlobalEnv);
-		UNPROTECT(4);
+		UNPROTECT(5);
 	    }
 	}
 	else gotoExitingHandler(R_NilValue, call, entry);
@@ -1978,6 +1982,11 @@ R_BadValueInRCode(SEXP value, SEXP call, SEXP rho, const char *rawmsg,
                   const char *errmsg, const char *warnmsg,
                   const char *varname, Rboolean warnByDefault)
 {
+    /* disable GC so that use of this temporary checking code does not
+       introduce new PROTECT errors e.g. in asLogical() use */
+    int enabled = R_GCEnabled;
+    R_GCEnabled = FALSE;
+    int nprotect = 0;
     char *check = getenv(varname);
     const void *vmax = vmaxget();
     Rboolean err = check && StringTrue(check);
@@ -2001,11 +2010,16 @@ R_BadValueInRCode(SEXP value, SEXP call, SEXP rho, const char *rawmsg,
 	Rboolean ignore = FALSE;
 
 	SEXP spkg = R_NilValue;
-	for(; spkg == R_NilValue && rho != R_EmptyEnv; rho = ENCLOS(rho))
-	    if (R_IsPackageEnv(rho))
-		spkg = R_PackageEnvName(rho);
-	    else if (R_IsNamespaceEnv(rho))
-		spkg = R_NamespaceEnvSpec(rho);
+	for(; rho != R_EmptyEnv; rho = ENCLOS(rho))
+	    if (R_IsPackageEnv(rho)) {
+		PROTECT(spkg = R_PackageEnvName(rho));
+		nprotect++;
+		break;
+	    } else if (R_IsNamespaceEnv(rho)) {
+		PROTECT(spkg = R_NamespaceEnvSpec(rho));
+		nprotect++;
+		break;
+	    }
 	if (spkg != R_NilValue)
 	    pkgname = translateChar(STRING_ELT(spkg, 0));
 
@@ -2097,6 +2111,8 @@ R_BadValueInRCode(SEXP value, SEXP call, SEXP rho, const char *rawmsg,
     else if (warn || warnByDefault)
 	warningcall(call, warnmsg);
     vmaxset(vmax);
+    UNPROTECT(nprotect);
+    R_GCEnabled = enabled;
 }
 
 

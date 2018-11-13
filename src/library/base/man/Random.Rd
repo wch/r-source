@@ -85,11 +85,16 @@ set.seed(seed, kind = NULL, normal.kind = NULL)
     is \bold{not} exactly the same as that in recent versions of S-PLUS.}
 
     \item{\code{"Mersenne-Twister"}:}{
-      From Matsumoto and Nishimura (1998). A twisted GFSR with period
+      From Matsumoto and Nishimura (1998); code updated in 2002.
+      A twisted GFSR with period
       \eqn{2^{19937} - 1}{2^19937 - 1} and equidistribution in 623
       consecutive dimensions (over the whole period).  The \sQuote{seed} is a
       624-dimensional set of 32-bit integers plus a current position in
       that set.
+
+      R uses its own initialization method due to B. D. Ripley and is
+      not affected by the initialization issue in the 1998 code of
+      Matsumoto and Nishimura addressed in a 2002 update.
     }
 
     \item{\code{"Knuth-TAOCP-2002"}:}{

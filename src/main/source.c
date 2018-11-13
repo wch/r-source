@@ -22,14 +22,10 @@
 #include <config.h>
 #endif
 
-#define R_USE_SIGNALS 1
-#include <Defn.h>
+#include <Parse.h> // -> IOStuff.h, Defn.h
 #include <Internal.h>
 #include <Fileio.h>
-#include <IOStuff.h>
-#include <Parse.h>
 #include <Rconnections.h>
-#include <IOStuff.h> // for R_ConsoleIob;
 
 SEXP attribute_hidden getParseContext(void)
 {
@@ -202,43 +198,34 @@ static void parse_cleanup(void *data)
 */
 SEXP attribute_hidden do_parse(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP text, prompt, s, source;
-    Rconnection con;
-    Rboolean wasopen, allKnown = TRUE;
-    int ifile, num, i;
-    const char *encoding;
-    ParseStatus status;
-    RCNTXT cntxt;
-    parse_cleanup_info pci;
-
-    pci.con = NULL;
-    pci.old_latin1 = known_to_be_latin1;
-    pci.old_utf8 = known_to_be_utf8;
-
     checkArity(op, args);
     if(!inherits(CAR(args), "connection"))
 	error(_("'file' must be a character string or connection"));
     R_ParseError = 0;
     R_ParseErrorMsg[0] = '\0';
 
-    ifile = asInteger(CAR(args));                       args = CDR(args);
-
-    con = getConnection(ifile);
-    wasopen = con->isopen;
-    num = asInteger(CAR(args));				args = CDR(args);
+    int ifile = asInteger(CAR(args));                   args = CDR(args);
+    Rconnection con = getConnection(ifile);
+    Rboolean wasopen = con->isopen;
+    int num = asInteger(CAR(args));			args = CDR(args);
     if (num == 0)
 	return(allocVector(EXPRSXP, 0));
 
-    PROTECT(text = coerceVector(CAR(args), STRSXP));
+    SEXP text = PROTECT(coerceVector(CAR(args), STRSXP));
     if(length(CAR(args)) && !length(text))
 	error(_("coercion of 'text' to character was unsuccessful"));
     args = CDR(args);
-    prompt = CAR(args);					args = CDR(args);
-    source = CAR(args);					args = CDR(args);
+    SEXP prompt = CAR(args);				args = CDR(args);
+    SEXP source = CAR(args);				args = CDR(args);
     if(!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
 	error(_("invalid '%s' value"), "encoding");
-    encoding = CHAR(STRING_ELT(CAR(args), 0)); /* ASCII */
+    const char *encoding = CHAR(STRING_ELT(CAR(args), 0)); /* ASCII */
 
+    parse_cleanup_info pci;
+    pci.con = NULL;
+    pci.old_latin1 = known_to_be_latin1;
+    pci.old_utf8 = known_to_be_utf8;
+    RCNTXT cntxt;
     /* set up context to recover known_to_be_* and to close connection on
        error if opened by do_parse */
     begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
@@ -247,6 +234,7 @@ SEXP attribute_hidden do_parse(SEXP call, SEXP op, SEXP args, SEXP env)
     cntxt.cenddata = &pci;
 
     known_to_be_latin1 = known_to_be_utf8 = FALSE;
+    Rboolean allKnown = TRUE;
     /* allow 'encoding' to override declaration on 'text'. */
     if(streql(encoding, "latin1")) {
 	known_to_be_latin1 = TRUE;
@@ -262,6 +250,8 @@ SEXP attribute_hidden do_parse(SEXP call, SEXP op, SEXP args, SEXP env)
     else
 	PROTECT(prompt = coerceVector(prompt, STRSXP));
 
+    ParseStatus status;
+    SEXP s;
     if (length(text) > 0) {
 	/* If 'text' has known encoding then we can be sure it will be
 	   correctly re-encoded to the current encoding by
@@ -272,7 +262,7 @@ SEXP attribute_hidden do_parse(SEXP call, SEXP op, SEXP args, SEXP env)
 	   different encodings, but all that matters is that all
 	   non-ASCII elements have known encoding.
 	*/
-	for(i = 0; i < length(text); i++)
+	for(int i = 0; i < length(text); i++)
 	    if(!ENC_KNOWN(STRING_ELT(text, i)) &&
 	       !IS_ASCII(STRING_ELT(text, i))) {
 		allKnown = FALSE;

@@ -3616,7 +3616,7 @@ a sub-architecture-specific version).  A typical setting for
 @cputype{x86_64} Linux is
 
 @example
-JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.181-1.b13.fc28.x86_64/jre
+JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.191-1.b12.fc28.x86_64/jre
 R_JAVA_LD_LIBRARY_PATH=$@{JAVA_HOME@}/lib/that/server
 @end example
 
@@ -5325,7 +5325,7 @@ JAVA_LIBS="-L/$@{JAVA_HOME@}/lib/server -ljvm"
 @noindent
 or
 @example
-JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home
+JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home
 JAVA_CPPFLAGS="-I/$@{JAVA_HOME@}/include -I/$@{JAVA_HOME@}/include/darwin"
 JAVA_LD_LIBRARY_PATH="$@{JAVA_HOME@}/jre/lib/server"
 JAVA_LIBS="-L/$@{JAVA_HOME@}/jre/lib/server -ljvm" 

@@ -2107,10 +2107,15 @@ stopifnot(identical(xx, "1,23456e+02"))
 
 ## parseRd() and Rd2HTML() with some \Sexpr{} in *.Rd:
 x <- tools::Rd_db("base")
-y <- lapply(x, function(e) tryCatch(tools::Rd2HTML(e, out = nullfile()),
-                                    error = identity))
-stopifnot(!vapply(y, inherits, NA, "error"))
-## Gave error when "running" \Sexpr{.} DateTimeClasses.Rd
+## Now check that \Sexpr{}  "installed" correctly:
+of <- textConnection("DThtml", "w")
+tools::Rd2HTML(x$DateTimeClasses.Rd, out = of, stages = "install"); close(of)
+(iLeap <- grep("leap seconds", DThtml)[[1]])
+stopifnot(exprs = {
+        grepl("[0-9]+ days",     DThtml[iLeap+ 1])
+    any(grepl("20[1-9][0-9]-01", DThtml[iLeap+ 2:4]))
+})
+
 
 
 ## if( "length > 1" )  buglet in plot.data.frame()
@@ -2178,6 +2183,48 @@ makeActiveBinding("foo", identity, environment())
 x <- (foo <- "foo")
 stopifnot(identical(x, "foo"))
 rm(quote, foo, x)
+
+
+## .format.zeros() when zero.print is "wide":
+x <- c(outer(c(1,3,6),10^(-5:0)))
+(fx <- formatC(x))
+stopifnot(identical(nchar(fx), rep(c(5L, 6:3, 1L), each=3)))
+x3 <- round(x, 3)
+tools::assertWarning(
+  fz1. <- formatC(x3,          zero.print="< 0.001",   replace.zero=FALSE))# old default
+ (fz1  <- formatC(x3,          zero.print="< 0.001"))#,replace.zero=TRUE  :  new default
+ (fzw7 <- formatC(x3, width=7, zero.print="< 0.001"))
+for(fz in list(fz1, fz1., fzw7)) stopifnot(identical(grepl("<", fz), x3 == 0))
+## fz1, fzw7 gave error (for 2 bugs) in R <= 3.5.x
+
+
+## Attempting to modify an object in a locked binding could succeed
+## before signaling an error:
+foo <- function() {
+    zero <- 0           ## to fool constant folding
+    x <- 1 + zero       ## value of 'x' has one reference
+    lockBinding("x", environment())
+    tryCatch(x[1] <- 2, ## would modify the value, then signal an error
+             error = identity)
+    stopifnot(identical(x, 1))
+}
+foo()
+
+
+## formalArgs()  should conform to names(formals()) also in looking up fun: PR#17499
+by <- function(a, b, c) "Bye!" # Overwrites base::by, as an example
+foo <- function() {
+  f1 <- function(a, ...) {}
+  list(nf = names(formals("f1")),
+       fA = formalArgs   ("f1"))
+}
+stopifnot(exprs = {
+    identical(names(formals("by")), letters[1:3])
+    identical(formalArgs   ("by") , letters[1:3])
+    { r <- foo(); identical(r$nf, r$fA) }
+})
+## gave "wrong" result and error in R <= 3.5.x
+
 
 
 ## keep at end

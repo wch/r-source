@@ -6404,7 +6404,7 @@ An S4 replacement method is documented in the same way as an S3 one: see
 the description of  @code{\method} in @ref{Documenting functions}.
 
 
-See @kbd{help("Documentation", package = "methods")} for more
+See @code{help("Documentation", package = "methods")} for more
 information on using and creating on-line documentation for S4 classes and
 methods.
 

@@ -1,6 +1,6 @@
 % File src/library/base/man/formals.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{formals}
@@ -11,17 +11,20 @@
   Get or set the formal arguments of a \code{\link{function}}.
 }
 \usage{
-formals(fun = sys.function(sys.parent()))
+formals(fun = sys.function(sys.parent()), envir = parent.frame())
 formals(fun, envir = environment(fun)) <- value
 }
 \arguments{
   \item{fun}{a \code{\link{function}}, or see \sQuote{Details}.}
-  \item{envir}{\code{\link{environment}} in which the function should be defined.}
+  \item{envir}{\code{\link{environment}} in which the function should be
+    defined (or found via \code{\link{get}()} in the first case and when
+    \code{fun} a character string).}
   \item{value}{a \code{\link{list}} (or \code{\link{pairlist}}) of \R expressions.}
 }
 \details{
   For the first form, \code{fun} can also be a character string naming
-  the function to be manipulated, which is searched for from the parent
+  the function to be manipulated, which is searched for in \code{envir},
+  by default from the parent
   frame.  If it is not specified, the function calling \code{formals} is
   used.
 

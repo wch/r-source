@@ -704,6 +704,7 @@ static R_INLINE SEXP ExpandDeferredStringElt(SEXP x, R_xlen_t i)
 		   been changed. */
 		static char buf[10];
 		strncpy(buf, myoutdec, sizeof buf);
+		buf[sizeof(buf) - 1] = '\0';
 		char *savedOutDec = OutDec;
 		OutDec = buf;
 		elt = StringFromReal(REAL_ELT(data, i), &warn);
@@ -1881,6 +1882,7 @@ static R_INLINE int is_wrapper(SEXP x)
 	case REALSXP: return R_altrep_inherits(x, wrap_real_class);
 	case CPLXSXP: return R_altrep_inherits(x, wrap_complex_class);
 	case RAWSXP: return R_altrep_inherits(x, wrap_raw_class);
+	case STRSXP: return R_altrep_inherits(x, wrap_string_class);
 	default: return FALSE;
 	}
     else return FALSE;
@@ -1945,6 +1947,44 @@ SEXP attribute_hidden do_tryWrap(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     SEXP x = CAR(args);
     return R_tryWrap(x);
+}
+
+/* When a wrapper has no useful meta-data, is no longer referenced
+   anywhere, and its data is unly accessible from the wrapper, then
+   the wrapper can be unwrapped to its wrapped data, and its
+   attributes can be transferred to the data.
+
+   It is ESSENTIAL that the wrapper no longer be accessed after
+   this function is called!
+
+   This function can be used at the end of a complex assignment
+   operation. It could be used in other places, but extreme caution is
+   needed to make sure there is no possibliity that the wrapper object
+   will be referenced from C code after it is cleared. */
+SEXP R_tryUnwrap(SEXP x)
+{
+    if (! MAYBE_REFERENCED(x) && is_wrapper(x) &&
+	WRAPPER_SORTED(x) == UNKNOWN_SORTEDNESS && ! WRAPPER_NO_NA(x)) {
+	SEXP data = WRAPPER_WRAPPED(x);
+	if (! MAYBE_SHARED(data)) {
+	    SET_ATTRIB(data, ATTRIB(x));
+	    SET_OBJECT(data, OBJECT(x));
+	    IS_S4_OBJECT(x) ? SET_S4_OBJECT(data) : UNSET_S4_OBJECT(data);
+
+	    /* Clear the fields to drop reference counts and set the
+	       type to LISTSXP to limit errors in case the object is
+	       still live. */
+	    SET_TYPEOF(x, LISTSXP);
+	    SET_ATTRIB(x, R_NilValue);
+	    SETCAR(x, R_NilValue);
+	    SETCDR(x, R_NilValue);
+	    SET_TAG(x, R_NilValue);
+	    /* NAMED should be zero */
+
+	    return data;
+	}
+    }
+    return x;
 }
 
 

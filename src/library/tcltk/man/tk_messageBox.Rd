@@ -1,6 +1,6 @@
 % File src/library/utils/man/windows/winDialog.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2009 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{tk_messageBox}
@@ -9,12 +9,12 @@
 \title{Tk Message Box}
 
 \description{
-  An implementation of a generic message box using Tk
+  An implementation of a generic message box using Tk.
 }
 
 \usage{
 tk_messageBox(type = c("ok", "okcancel", "yesno", "yesnocancel",
-                       "retrycancel", "aburtretrycancel"),
+                       "retrycancel", "abortretryignore"),
               message, caption = "", default = "", ...)
 }
 \arguments{

@@ -3036,8 +3036,14 @@ static void R_gc_internal(R_size_t size_needed)
     if (!R_GCEnabled) {
       if (NO_FREE_NODES())
 	R_NSize = R_NodesInUse + 1;
+
+      if (num_old_gens_to_collect < NUM_OLD_GENERATIONS &&
+	  VHEAP_FREE() < size_needed + R_MinFreeFrac * R_VSize)
+	num_old_gens_to_collect++;
+
       if (size_needed > VHEAP_FREE())
 	R_VSize += size_needed - VHEAP_FREE();
+
       gc_pending = TRUE;
       return;
     }

@@ -1,7 +1,7 @@
 #  File src/library/utils/R/example.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -31,11 +31,12 @@ function(topic, package = NULL, lib.loc = NULL,
     }
     pkgpaths <- find.package(package, lib.loc, verbose = verbose)
     ## will only return at most one path
-    file <- index.search(topic, pkgpaths, TRUE)
+    file <- index.search(topic, pkgpaths, firstOnly=TRUE)
     if(!length(file)) {
 	warning(gettextf("no help found for %s", sQuote(topic)), domain = NA)
 	return(invisible())
     }
+    if(verbose) cat("Found file =", sQuote(file), "\n")
     packagePath <- dirname(dirname(file))
     pkgname <- basename(packagePath)
     lib <- dirname(packagePath)

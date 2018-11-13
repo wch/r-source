@@ -58,7 +58,7 @@
   representing calendar dates and times.
 }
 \usage{
-\method{print}{POSIXct}(x, tz = "", usetz = TRUE, \dots)
+\method{print}{POSIXct}(x, tz = "", usetz = TRUE, max = NULL, \dots)
 
 \method{summary}{POSIXct}(object, digits = 15, \dots)
 
@@ -71,6 +71,9 @@
   \item{x, object}{an object to be printed or summarized from one of the
     date-time classes.}
   \item{tz, usetz}{for timezone formatting, passed to \code{\link{format.POSIXct}}.}
+  \item{max}{numeric or \code{NULL}, specifying the maximal number of
+    entries to be printed.  By default, when \code{NULL},
+    \code{\link{getOption}("max.print")} used.}
   \item{digits}{number of significant digits for the computations:
     should be high enough to represent the least important time unit
     exactly.}
@@ -158,6 +161,8 @@
   in the current time zone you may want to remove the \code{"tzone"}
   attribute (e.g., by \code{c(x)}).
 
+  % NB: Do *NOT* change the line structure before the two \Sexpr{}s below, unless
+  % --  you update the Rd2HTML() regression check in ../../../../tests/reg-tests-1d.R :
   Unfortunately, the conversion is complicated by the operation of time
   zones and leap seconds (according to this version of \R's data,
   \Sexpr{length(.leap.seconds)} days have been 86401 seconds long so

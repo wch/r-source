@@ -1,6 +1,6 @@
 % File src/library/base/man/formatc.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{formatC}
@@ -9,13 +9,13 @@
 \alias{prettyNum}
 \alias{.format.zeros}
 \description{
-  Formatting numbers individually and flexibly, \code{formatC()} using
+  \code{formatC()} formats numbers individually and flexibly using
   \code{C} style format specifications.
 
   \code{prettyNum()} is used for \dQuote{prettifying} (possibly
   formatted) numbers, also in \code{\link{format.default}}.
 
-  \code{.format.zeros()}, an auxiliary function of \code{prettyNum()}
+  \code{.format.zeros(x)}, an auxiliary function of \code{prettyNum()},
   re-formats the zeros in a vector \code{x} of formatted numbers.
 }
 \usage{
@@ -24,17 +24,20 @@ formatC(x, digits = NULL, width = NULL,
         big.mark = "", big.interval = 3L,
         small.mark = "", small.interval = 5L,
         decimal.mark = getOption("OutDec"),
-        preserve.width = "individual", zero.print = NULL,
+        preserve.width = "individual",
+        zero.print = NULL, replace.zero = TRUE,
         drop0trailing = FALSE)
 
 prettyNum(x, big.mark = "",   big.interval = 3L,
           small.mark  = "", small.interval = 5L,
           decimal.mark = getOption("OutDec"), input.d.mark = decimal.mark,
           preserve.width = c("common", "individual", "none"),
-          zero.print = NULL, drop0trailing = FALSE, is.cmplx = NA,
+          zero.print = NULL, replace.zero = FALSE,
+          drop0trailing = FALSE, is.cmplx = NA,
           \dots)
 
-.format.zeros(x, zero.print, nx = suppressWarnings(as.numeric(x)))
+.format.zeros(x, zero.print, nx = suppressWarnings(as.numeric(x)),
+              replace = FALSE, warn.non.fitting = TRUE)
 }
 \arguments{
   \item{x}{an atomic numerical or character object, possibly
@@ -122,6 +125,22 @@ prettyNum(x, big.mark = "",   big.interval = 3L,
   \item{zero.print}{logical, character string or \code{NULL} specifying
     if and how \emph{zeros} should be formatted specially.  Useful for
     pretty printing \sQuote{sparse} objects.}
+  \item{replace.zero, replace}{logical; if \code{zero.print} is a
+    character string, indicates if the exact zero entries in \code{x}
+    should be simply replaced by \code{zero.print}.  Otherwise,
+    depending on the widths of the respective strings, the (formatted)
+    zeroes are \emph{partly} replaced by \code{zero.print} and then
+    padded with \code{" "} to the right were applicable.  In that case
+    (false \code{replace[.zero]}), if the \code{zero.print} string does
+    not fit, a warning is produced (if \code{warn.non.fitting} is true).
+
+    The implementation has \code{formatC()} calling \code{prettyNum()}
+    (only if \code{zero.print} is not \code{NULL}) which itself calls
+    \code{.format.zeros(*, replace=replace.zero)} three times.
+  }
+  \item{warn.non.fitting}{logical; if it is true, \code{replace[.zero]} is
+    false and the \code{zero.print} string does not fit, a
+    \code{\link{warning}} is signalled.}
   \item{drop0trailing}{logical, indicating if trailing zeros,
     i.e., \code{"0"} \emph{after} the decimal mark, should be removed;
     also drops \code{"e+00"} in exponential formats.}

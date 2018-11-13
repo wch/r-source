@@ -54,7 +54,7 @@ is.ts(x)
 }
 \details{
   The function \code{ts} is used to create time-series objects.  These
-  are vector or matrices with class of \code{"ts"} (and additional
+  are vectors or matrices with class of \code{"ts"} (and additional
   attributes) which represent data which has been sampled at equispaced
   points in time.  In the matrix case, each column of the matrix
   \code{data} is assumed to contain a single (univariate) time series.

@@ -3749,8 +3749,10 @@ finish:
 	rval = attachSrcrefs(rval);
     }
     R_PPStackTop = savestack;    /* UNPROTECT lots! */
+    PROTECT(rval);
     endcontext(&cntxt);
     R_FinalizeSrcRefState();
+    UNPROTECT(1); /* rval */
     *status = PARSE_OK;
     return rval;
 }
@@ -3903,8 +3905,10 @@ finish:
 	rval = attachSrcrefs(rval);
     }
     R_PPStackTop = savestack; /* UNPROTECT lots! */
+    PROTECT(rval);
     endcontext(&cntxt);
-    R_FinalizeSrcRefState();    
+    R_FinalizeSrcRefState();
+    UNPROTECT(1); /* rval */
     *status = PARSE_OK;
     return rval;
 }

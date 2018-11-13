@@ -575,6 +575,8 @@ static void OutFormat(R_outpstream_t stream)
     case R_pstream_ascii_format:
     case R_pstream_asciihex_format:
 	stream->OutBytes(stream, "A\n", 2); break;
+	/* on deserialization, asciihex_format is treated exactly the same
+	   way as ascii_format; the distinction is handled inside scanf %lg */
     case R_pstream_binary_format: stream->OutBytes(stream, "B\n", 2); break;
     case R_pstream_xdr_format:    stream->OutBytes(stream, "X\n", 2); break;
     case R_pstream_any_format:
@@ -589,7 +591,7 @@ static void InFormat(R_inpstream_t stream)
     R_pstream_format_t type;
     stream->InBytes(stream, buf, 2);
     switch (buf[0]) {
-    case 'A': type = R_pstream_ascii_format; break;
+    case 'A': type = R_pstream_ascii_format; break; /* also for asciihex */
     case 'B': type = R_pstream_binary_format; break;
     case 'X': type = R_pstream_xdr_format; break;
     case '\n':
@@ -1961,12 +1963,24 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
 	case RAWSXP:
 	    len = ReadLENGTH(stream);
 	    PROTECT(s = allocVector(type, len));
+	    switch (stream->type) {
+	    case R_pstream_ascii_format:
+		for (R_xlen_t ix = 0; ix < len; ix++) {
+		    char word[128];
+		    unsigned int i; // unsigned to avoid compiler warnings
+		    InWord(stream, word, sizeof(word));
+		    if(sscanf(word, "%2x", &i) != 1) error(_("read error"));
+		    RAW(s)[ix] = (Rbyte) i;
+		}
+		break;
+	    default:
 	    {
 		R_xlen_t done, this;
 		for (done = 0; done < len; done += this) {
 		    this = min2(CHUNK_SIZE, len - done);
 		    stream->InBytes(stream, RAW(s) + done, (int) this);
 		}
+	    }
 	    }
 	    break;
 	case S4SXP:

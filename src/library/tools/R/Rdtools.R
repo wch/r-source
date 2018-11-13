@@ -148,8 +148,8 @@ function(ifile, encoding = "unknown", keepSpacing = TRUE,
 	    	attr(x, "Rd_tag") <- "KEEP"
 	    	show(x)
 	    }
-	})
-    }
+	})# {switch}
+    }# end show()
 
     show(p)
     mycat("\n")

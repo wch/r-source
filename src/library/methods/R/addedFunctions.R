@@ -1,7 +1,7 @@
 #  File src/library/methods/R/addedFunctions.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -98,7 +98,7 @@ elNamed <-
 
 formalArgs <-
     ## Returns the names of the formal arguments of this function.
-    function(def) names(formals(def))
+    function(def) names(formals(def, envir = parent.frame()))
 
 
 findFunction <-

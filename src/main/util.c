@@ -59,7 +59,7 @@ void NORET F77_SYMBOL(rexitc)(char *msg, int *nchar);
 
 /* Many small functions are included from ../include/Rinlinedfuns.h */
 
-int nrows(SEXP s)
+int nrows(SEXP s) // ~== NROW(.)  in R
 {
     SEXP t;
     if (isVector(s) || isList(s)) {
@@ -75,7 +75,7 @@ int nrows(SEXP s)
 }
 
 
-int ncols(SEXP s)
+int ncols(SEXP s) // ~== NCOL(.)  in R
 {
     SEXP t;
     if (isVector(s) || isList(s)) {
@@ -255,13 +255,13 @@ void InitTypeTables(void) {
 	    SEXP rstr = ScalarString(rchar);
 	    MARK_NOT_MUTABLE(rstr);
 	    R_PreserveObject(rstr);
-	    UNPROTECT(1); /* rchar */
 	    SEXP rsym = install(cstr);
 
 	    Type2Table[type].cstrName = cstr;
 	    Type2Table[type].rcharName = rchar;
 	    Type2Table[type].rstrName = rstr;
 	    Type2Table[type].rsymName = rsym;
+	    UNPROTECT(1); /* rchar */
 	} else {
 	    Type2Table[type].cstrName = NULL;
 	    Type2Table[type].rcharName = NULL;

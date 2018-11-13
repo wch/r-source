@@ -22,12 +22,14 @@
 #ifndef R_PARSE_H
 #define R_PARSE_H
 
-#include <R_ext/Parse.h>
 #define R_USE_SIGNALS 1
 #include <IOStuff.h>	/*-> Defn.h */
 
 /* Public interface */
-/* SEXP R_ParseVector(SEXP, int, ParseStatus *, SEXP); in R_ext/Parse.h */
+
+#include <R_ext/Parse.h>
+// which includes SEXP R_ParseVector(SEXP, int, ParseStatus *, SEXP);
+
 
 /* Private interface */
 
@@ -51,7 +53,7 @@ struct SrcRefState {
     int xxcolno;		/* Character number on line */
     int xxbyteno;		/* Byte number on line */
     int xxparseno;              /* Line number ignoring #line directives */
-    
+
     SrcRefState* prevState;
 };
 
@@ -72,8 +74,9 @@ typedef struct Rconn  *Rconnection;
 #endif
 SEXP R_ParseConn(Rconnection con, int n, ParseStatus *status, SEXP srcfile);
 
+
 	/* Report a parse error */
-	
+
 void NORET parseError(SEXP call, int linenum);
 
 #endif /* not R_PARSE_H */

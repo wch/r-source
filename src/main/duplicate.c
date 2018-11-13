@@ -564,24 +564,26 @@ FILL_ELT_WITH_RECYCLE(String, STRING_ELT, SET_STRING_ELT) /* xfillStringMatrixWi
 FILL_ELT_WITH_RECYCLE(Vector, VECTOR_ELT, SET_VECTOR_ELT) /* xfillVectorMatrixWithRecycle */
 
 /* For duplicating before modifying attributes duplicate_attr tries to
-   wrap the object x with an ALTREP wrapper, and falls back to
-   duplicate or shallow_duplicate if the object can't be wrapped. It
-   might make sense to try to wrap only for vectors of length above
-   some threshold. */
+   wrap a larger vector object with an ALTREP wrapper, and falls back
+   to duplicate or shallow_duplicate if the object can't be
+   wrapped. The size threshold used seems to be reaonable but could be
+   tested more extensively. */
+#define WRAP_THRESHOLD 64
 static SEXP duplicate_attr(SEXP x, Rboolean deep)
 {
-    SEXP val = R_tryWrap(x);
-    if (val != x) {
-	if (deep) {
-	    PROTECT(val);
-	    /* the spine has been duplicated; we could just to the values */
-	    SET_ATTRIB(val, duplicate(ATTRIB(val)));
-	    UNPROTECT(1); /* val */
+    if (isVector(x) && XLENGTH(x) >= WRAP_THRESHOLD) {
+	SEXP val = R_tryWrap(x);
+	if (val != x) {
+	    if (deep) {
+		PROTECT(val);
+		/* the spine has been duplicated; we could just do the values */
+		SET_ATTRIB(val, duplicate(ATTRIB(val)));
+		UNPROTECT(1); /* val */
+	    }
+	    return val;
 	}
-	return val;
     }
-    else
-	return deep ? duplicate(x) : shallow_duplicate(x);
+    return deep ? duplicate(x) : shallow_duplicate(x);
 }
 
 SEXP R_shallow_duplicate_attr(SEXP x) { return duplicate_attr(x, FALSE); }
