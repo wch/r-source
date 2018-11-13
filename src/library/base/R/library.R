@@ -61,8 +61,6 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
     if ((! missing(only)) && (! missing(omit)))
         stop(gettext("only one of 'only' and 'omit' can be used"),
              call. = FALSE, domain = NA)
-    if (stopOnConflict)
-        warn.conflicts = TRUE
 
     testRversion <- function(pkgInfo, pkgname, pkgpath)
     {
@@ -199,47 +197,57 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 		## allow a "copy":
 		if(length(same) && identical(sp[i], "package:base"))
 		    same <- same[not.Ident(same, ignore.environment = TRUE)]
-
-                ## adjust 'same' for conflict resolution specifications
-                if (is.list(mask.ok))
-                    myMaskOK <- mask.ok[[sub("^package:", "", sp[i])]]
-                else myMaskOK <- mask.ok
-                if (isTRUE(myMaskOK))
-                    same <- NULL
-                else if (is.character(myMaskOK))
-                    same <- setdiff(same, myMaskOK)
-
                 if(length(same)) {
                     conflicts[[sp[i]]] <- same
                     cpos[sp[i]] <- i
                 }
             }
         }
-        if (length(conflicts) && stopOnConflict) {
-            emsg <- ""
-            pkg <- names(conflicts)
-            for (i in seq_along(conflicts)) {
-                msg <- .maskedMsg(sort(conflicts[[i]]), pkg = sQuote(pkg[i]),
-                                  by = cpos[i] < lib.pos)
-                emsg <- paste(emsg, msg, sep = "\n")
+        if (length(conflicts)) {
+            if (stopOnConflict) {
+                emsg <- ""
+                pkg <- names(conflicts)
+                notOK <- vector("list", 0)
+                for (i in seq_along(conflicts)) {
+                    same <- conflicts[[i]]
+                    if (is.list(mask.ok))
+                        myMaskOK <- mask.ok[[sub("^package:", "", sp[i])]]
+                    else myMaskOK <- mask.ok
+
+                    ## adjust 'same' for conflict resolution specifications
+                    if (isTRUE(myMaskOK))
+                        same <- NULL
+                    else if (is.character(myMaskOK))
+                        same <- setdiff(same, myMaskOK)
+
+                    if (length(same)) {
+                        notOK[[pkg[i]]] <- same
+                        msg <- .maskedMsg(sort(same), pkg = sQuote(pkg[i]),
+                                          by = cpos[i] < lib.pos)
+                        emsg <- paste(emsg, msg, sep = "\n")
+                    }
+                }
+                if (length(notOK)) {
+                    msg <- gettextf("Conflicts attaching package %s:\n%s",
+                                    sQuote(package),
+                                    emsg)
+                    stop(errorCondition(msg,
+                                        package = package,
+                                        conflicts = conflicts,
+                                        class = "packageConflictError"))
+                }
             }
-            msg <- gettextf("Conflicts attaching package %s:\n%s",
-                            sQuote(package),
-                            emsg)
-            stop(errorCondition(msg,
-                                package = package,
-                                conflicts = conflicts,
-                                class = "packageConflictError"))
-        }
-        else if (length(conflicts)) {
-            ## Use separate pessages to preserve previous behavior.
-            packageStartupMessage(gettextf("\nAttaching package: %s\n",
-                                           sQuote(package)), domain = NA)
-            pkg <- names(conflicts)
-            for (i in seq_along(conflicts)) {
-                msg <- .maskedMsg(sort(conflicts[[i]]), pkg = sQuote(pkg[i]),
-                                  by = cpos[i] < lib.pos)
-                packageStartupMessage(msg, domain = NA)
+            if (warn.conflicts) {
+                ## Use separate messages to preserve previous behavior.
+                packageStartupMessage(gettextf("\nAttaching package: %s\n",
+                                               sQuote(package)), domain = NA)
+                pkg <- names(conflicts)
+                for (i in seq_along(conflicts)) {
+                    msg <- .maskedMsg(sort(conflicts[[i]]),
+                                      pkg = sQuote(pkg[i]),
+                                      by = cpos[i] < lib.pos)
+                    packageStartupMessage(msg, domain = NA)
+                }
             }
         }
     }
@@ -359,8 +367,10 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                         !.isMethodsDispatchOn() || checkNoGenerics(env, package)
                     if (stopOnConflict) ## no silent masking for genrics
                         nogenerics <- TRUE
-                    if(warn.conflicts && # never will with a namespace
-                       !exists(".conflicts.OK", envir = env, inherits = FALSE))
+                    if(stopOnConflict ||
+                       (warn.conflicts && # never will with a namespace
+                        !exists(".conflicts.OK", envir = env,
+                                inherits = FALSE)))
                         checkConflicts(package, pkgname, pkgpath,
                                        nogenerics, ns)
                     on.exit()

@@ -52,11 +52,7 @@ conflictRules(pkg, mask.ok = NULL, omit = NULL)
   \item{warn.conflicts}{logical.  If \code{TRUE}, warnings are
     printed about \code{\link{conflicts}} from attaching the new
     package.  A conflict is a function masking a function,
-    or a non-function masking a non-function. If the option
-    \code{error.on.conflicts} is \code{TRUE} an error is signaled
-    instead of printing a warning message. Treated as \code{TRUE}
-    if strict conflict checking is enabled by setting the
-    \code{error.on.conflicts} option to \code{TRUE}.
+    or a non-function masking a non-function.
   }
   \item{verbose}{a logical.  If \code{TRUE}, additional diagnostics are
     printed.}
@@ -109,10 +105,12 @@ conflictRules(pkg, mask.ok = NULL, omit = NULL)
   package is available.
 }
 \section{Conflicts}{
-  Experimental conflict management is implemented by the arguments
-  \code{mask.ok}, \code{omit}, \code{only}, and \code{attach.required}
-  arguments to \code{library} and \code{require}. The function
-  \code{conflictRules} can be used to specify defaults.  See
+  If the option \code{error.on.conflicts} is \code{TRUE} an error is
+  signaled instead of printing warning messages when unresolved
+  conflicts are encountered.  Experimental conflict management is
+  implemented by the arguments \code{mask.ok}, \code{omit}, \code{only},
+  and \code{attach.required} to \code{library} and \code{require}. The
+  function \code{conflictRules} can be used to specify defaults.  See
   \url{https://svn.r-project.org/R/branches/R-conflicts/CONFLICTS.html}
   for more details.
 }

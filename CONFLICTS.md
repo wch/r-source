@@ -178,8 +178,6 @@ Some questions:
 
 - Should `attach` also signal an error on conflicts? It repeats some
    of the checking logic in `library`, but with some differences.
-- Should we separate `warn.conflicts` from error signaling;
-  e.g. report conflicts even if they have been approved?
 - Do we need to disallow using both omit and only?
  
 TODO list:
