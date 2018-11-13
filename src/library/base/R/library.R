@@ -170,11 +170,11 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             gen <- gen[from != package]
             ob <- ob[!(ob %in% gen)]
         }
-        fst <- TRUE
+
 	ipos <- seq_along(sp)[-c(lib.pos,
 				 match(c("Autoloads", "CheckExEnv"), sp, 0L))]
-        emsg <- ""
-        conflicts <- NULL
+        cpos <- NULL
+        conflicts <- vector("list", 0)
         for (i in ipos) {
             obj.same <- match(names(as.environment(i)), ob, nomatch = 0L)
             if (any(obj.same > 0)) {
@@ -210,31 +210,37 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                     same <- setdiff(same, myMaskOK)
 
                 if(length(same)) {
-                    if (fst && ! stopOnConflict) {
-                        fst <- FALSE
-                        packageStartupMessage(gettextf("\nAttaching package: %s\n",
-                                                       sQuote(package)),
-                                              domain = NA)
-                    }
-		    msg <- .maskedMsg(sort(same), pkg = sQuote(sp[i]),
-                                      by = i < lib.pos)
-                    if (stopOnConflict) {
-                        conflicts[[sp[i]]] <- same
-                        emsg <- paste(emsg, msg, sep = "\n")
-                    }
-                    else
-                        packageStartupMessage(msg, domain = NA)
+                    conflicts[[sp[i]]] <- same
+                    cpos[sp[i]] <- i
                 }
             }
         }
-        if (length(conflicts)) {
+        if (length(conflicts) && stopOnConflict) {
+            emsg <- ""
+            pkg <- names(conflicts)
+            for (i in seq_along(conflicts)) {
+                msg <- .maskedMsg(sort(conflicts[[i]]), pkg = sQuote(pkg[i]),
+                                  by = cpos[i] < lib.pos)
+                emsg <- paste(emsg, msg, sep = "\n")
+            }
             msg <- gettextf("Conflicts attaching package %s:\n%s",
                             sQuote(package),
                             emsg)
             stop(errorCondition(msg,
                                 package = package,
                                 conflicts = conflicts,
-                                "packageConflictError"))
+                                class = "packageConflictError"))
+        }
+        else if (length(conflicts)) {
+            ## Use separate pessages to preserve previous behavior.
+            packageStartupMessage(gettextf("\nAttaching package: %s\n",
+                                           sQuote(package)), domain = NA)
+            pkg <- names(conflicts)
+            for (i in seq_along(conflicts)) {
+                msg <- .maskedMsg(sort(conflicts[[i]]), pkg = sQuote(pkg[i]),
+                                  by = cpos[i] < lib.pos)
+                packageStartupMessage(msg, domain = NA)
+            }
         }
     }
 
