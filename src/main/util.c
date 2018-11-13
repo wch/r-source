@@ -537,7 +537,8 @@ void attribute_hidden setIVector(int * vec, int len, int val)
 }
 
 
-/* unused in R, in Utils.h, apparently used in Rcpp  */
+/* unused in R, in Utils.h, may have been used in Rcpp at some point,
+      but not any more (as per Nov. 2018)  */
 void attribute_hidden setRVector(double * vec, int len, double val)
 {
     for (int i = 0; i < len; i++) vec[i] = val;
