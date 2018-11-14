@@ -53,11 +53,17 @@ conflictRules <-
 
 library <-
 function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
-         logical.return = FALSE, warn.conflicts = TRUE,
+         logical.return = FALSE, warn.conflicts,
 	 quietly = FALSE, verbose = getOption("verbose"),
          mask.ok, omit, only, attach.required = missing(only))
 {
-    stopOnConflict <- isTRUE(getOption("error.on.conflicts"))
+    conf.ctrl <- getOption("conflicts.control")
+    stopOnConflict <-
+        isTRUE(getOption("error.on.conflicts")) ||
+        isTRUE(conf.ctrl$error)
+        
+    if (missing(warn.conflicts))
+        warn.conflicts <- if (isFALSE(conf.ctrl$warn)) FALSE else TRUE
     if ((! missing(only)) && (! missing(omit)))
         stop(gettext("only one of 'only' and 'omit' can be used"),
              call. = FALSE, domain = NA)
@@ -208,8 +214,11 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                 emsg <- ""
                 pkg <- names(conflicts)
                 notOK <- vector("list", 0)
+                canMask <- conf.ctrl$can.mask
                 for (i in seq_along(conflicts)) {
                     pkgname <- sub("^package:", "", pkg[i])
+                    if (pkgname %in% canMask)
+                        next
                     same <- conflicts[[i]]
                     if (is.list(mask.ok))
                         myMaskOK <- mask.ok[[pkgname]]
@@ -366,8 +375,9 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                     ## depend on methods
                     nogenerics <-
                         !.isMethodsDispatchOn() || checkNoGenerics(env, package)
-                    if (stopOnConflict) ## no silent masking for genrics
-                        nogenerics <- TRUE
+                    if (isFALSE(conf.ctrl$generics.ok) ||
+                        (stopOnConflict && ! isTRUE(conf.ctrl$generics.ok)))
+                        nogenerics <- TRUE ## no silent masking for genrics
                     if(stopOnConflict ||
                        (warn.conflicts && # never will with a namespace
                         !exists(".conflicts.OK", envir = env,
@@ -639,7 +649,7 @@ function(chname, libpath, verbose = getOption("verbose"),
 }
 
 require <-
-function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
+function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts,
          character.only = FALSE, mask.ok, omit, only)
 {
     if(!character.only)

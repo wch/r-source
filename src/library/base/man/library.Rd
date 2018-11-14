@@ -20,12 +20,12 @@
 \usage{
 library(package, help, pos = 2, lib.loc = NULL,
         character.only = FALSE, logical.return = FALSE,
-        warn.conflicts = TRUE, quietly = FALSE,
+        warn.conflicts, quietly = FALSE,
         verbose = getOption("verbose"),
         mask.ok, omit, only, attach.required = missing(only))
 
 require(package, lib.loc = NULL, quietly = FALSE,
-        warn.conflicts = TRUE,
+        warn.conflicts,
         character.only = FALSE,
         mask.ok, omit, only)
 
@@ -52,7 +52,8 @@ conflictRules(pkg, mask.ok = NULL, omit = NULL)
   \item{warn.conflicts}{logical.  If \code{TRUE}, warnings are
     printed about \code{\link{conflicts}} from attaching the new
     package.  A conflict is a function masking a function,
-    or a non-function masking a non-function.
+    or a non-function masking a non-function. The default is \code{TRUE}
+    unless specified as \code{FALSE} in the \code{conflicts.control} option.
   }
   \item{verbose}{a logical.  If \code{TRUE}, additional diagnostics are
     printed.}
@@ -110,7 +111,9 @@ conflictRules(pkg, mask.ok = NULL, omit = NULL)
   conflicts are encountered.  Experimental conflict management is
   implemented by the arguments \code{mask.ok}, \code{omit}, \code{only},
   and \code{attach.required} to \code{library} and \code{require}. The
-  function \code{conflictRules} can be used to specify defaults.  See
+  function \code{conflictRules} can be used to specify defaults.  Some
+  aspects of how conflicts are handled can be specified with the
+  \code{conflicts.control} option. See
   \url{https://svn.r-project.org/R/branches/R-conflicts/CONFLICTS.html}
   for more details.
 }

@@ -151,7 +151,7 @@ $(document).ready(function () {
 <li><code>mask.ok</code>: these functions can mask variables already on the path.</li>
 <li><code>omit</code>: don’t add these to the search path frame.</li>
 </ul></li>
-<li>If <code>getOption(&quot;error.on.conflicts&quot;)</code> is TRUE then signal an error if there are conflicts not covered by mask.ok.</li>
+<li>If <code>getOption(&quot;error.on.conflicts&quot;)</code> is TRUE then signal an error if there are conflicts not covered by <code>mask.ok</code>.</li>
 </ul>
 <p>This branch contains modified versions of <code>library.R</code> and <code>namespace.R</code> that implement this. This produces</p>
 <pre class="r"><code>options(error.on.conflicts = TRUE)
@@ -167,6 +167,9 @@ library(MASS)
 
 library(MASS, omit = &quot;select&quot;)
 ## OK</code></pre>
+</div>
+<div id="resolving-conflicts" class="section level2">
+<h2>Resolving Conflicts</h2>
 <p>To make this easier for commonly used packages, and for implicitly attached packages, <code>conflictRules</code> provides a way to specify default <code>mask.ok</code>/<code>omit</code> values for packages, e.g. with</p>
 <pre class="r"><code>conflictRules(&quot;dplyr&quot;,
               mask.ok = c(&quot;filter&quot;, &quot;lag&quot;,
@@ -203,10 +206,23 @@ conflictRules(&quot;BiocGenerics&quot;, mask.ok = list(base = TRUE,
                                              utils = &quot;relist&quot;))</code></pre>
 <p>Some additional features that have been implemented:</p>
 <ul>
-<li><p><code>library()</code> has some heuristics to avoid warning about S4 overrides that mask the overrides in <code>Matrix</code> (but not those in <code>BiocGenerics</code>). These heuristics are disabled when strict conflict checking is in force so that they have to be handled explicitly in some way.</p></li>
+<li><p><code>library()</code> has some heuristics to avoid warning about S4 overrides that mask the overrides in <code>Matrix</code> (but not those in <code>BiocGenerics</code>). These heuristics are disabled by default when strict conflict checking is in force so that they have to be handled explicitly in some way.</p></li>
 <li><p>Arguments <code>only</code> and <code>attach.required</code> have been added to <code>library()</code>. If <code>only</code> is supplied as a character vector, then only variables named there are included in the attached frame. The default value of <code>attach.required</code> is <code>TRUE</code> if <code>only</code> is missing and <code>FALSE</code> if <code>only</code> is supplied.</p></li>
 <li><p>The error signaled with strict checking is of class <code>packageConflictsError</code> with fields <code>package</code> and <code>conflicts</code>.</p></li>
+<li><p>A number of aspects of the conflict handling process can be customized via the <code>conflicts.control</code> option. The value of this option should be a list with named elements. Elements that are supported:</p>
+<ul>
+<li><p><code>warn</code>: Sets the default for the <code>warn.conflicts</code> argument to <code>library</code> and <code>require</code>.</p></li>
+<li><p><code>error</code>: If <code>TRUE</code> then conflicts produce errors. This should probably replace the <code>error.on.conflicts</code> option; for now it is an alternative way to request strict checking.</p></li>
+<li><p><code>generics.ok</code>: If set this determines whether masking a function with an S4 generic version is considered a conflict. The default in <code>FALSE</code> for strict checking and <code>TRUE</code> otherwise.</p></li>
+<li><p><code>can.mask</code>: A character vector of names of packages that are allowed to be masked without producing an error. Specifying the base packages can reduce the number of explicit masking approvals needed.</p></li>
+</ul></li>
 </ul>
+<p>A useful specification for strict checking, suppressing warning messages, and ignoring conflicts with some base packages would be</p>
+<pre class="r"><code>options(conflicts.control =
+    list(error = TRUE,
+         warn = FALSE,
+         can.mask = c(&quot;base&quot;, &quot;graphics&quot;, &quot;grDevices&quot;, &quot;grid&quot;,
+                      &quot;methods&quot;, &quot;parallel&quot;, &quot;stats&quot;, &quot;utils&quot;)))</code></pre>
 </div>
 <div id="open-issues" class="section level2">
 <h2>Open Issues</h2>
@@ -215,6 +231,7 @@ conflictRules(&quot;BiocGenerics&quot;, mask.ok = list(base = TRUE,
 <li><code>only</code>: <code>use.only</code>, <code>only.vars</code>, <code>use.vars</code>, <code>include.only</code></li>
 <li><code>omit</code>: <code>omit.vars</code>, <code>skip</code>, <code>skip.vars</code>, <code>exclude</code></li>
 </ul>
+<p>I am leaning towards <code>include.only</code> and <code>exclude</code> but don’t have strong preferences.</p>
 <p>Additional features that might be useful:</p>
 <ul>
 <li>Provide a restart for retrying with adjusted arguments; that could be used by a GUI front end.</li>

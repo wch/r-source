@@ -66,7 +66,7 @@ A basic implementation of the static approach is quite simple:
     - `mask.ok`: these functions can mask variables already on the path.
     - `omit`: don't add these to the search path frame.
 - If `getOption("error.on.conflicts")` is TRUE then signal an error if
-  there are conflicts not covered by mask.ok.
+  there are conflicts not covered by `mask.ok`.
 
 This branch contains modified versions of `library.R` and
 `namespace.R` that implement this.  This produces
@@ -86,6 +86,9 @@ library(MASS)
 library(MASS, omit = "select")
 ## OK
 ```
+
+
+## Resolving Conflicts
 
 To make this easier for commonly used packages, and for implicitly
 attached packages, `conflictRules` provides a way to specify default
@@ -134,7 +137,7 @@ Some additional features that have been implemented:
   
 - `library()` has some heuristics to avoid warning about S4 overrides
   that mask the overrides in `Matrix` (but not those in
-  `BiocGenerics`).  These heuristics are disabled when strict
+  `BiocGenerics`).  These heuristics are disabled by default when strict
   conflict checking is in force so that they have to be handled
   explicitly in some way.
 
@@ -147,6 +150,37 @@ Some additional features that have been implemented:
 - The error signaled with strict checking is of class `packageConflictsError`
   with fields `package` and `conflicts`.
 
+- A number of aspects of the conflict handling process can be
+  customized via the `conflicts.control` option. The value of this
+  option should be a list with named elements. Elements that are supported:
+
+    - `warn`: Sets the default for the `warn.conflicts` argument to
+      `library` and `require`.
+
+    - `error`: If `TRUE` then conflicts produce errors. This should
+      probably replace the `error.on.conflicts` option; for now it is
+      an alternative way to request strict checking.
+
+    - `generics.ok`: If set this determines whether masking a function
+      with an S4 generic version is considered a conflict. The default in
+      `FALSE` for strict checking and `TRUE` otherwise.
+
+    - `can.mask`: A character vector of names of packages that are
+      allowed to be masked without producing an error. Specifying the
+      base packages can reduce the number of explicit masking
+      approvals needed.
+
+A useful specification for strict checking, suppressing warning messages,
+and ignoring conflicts with some base packages would be
+
+```r
+options(conflicts.control =
+    list(error = TRUE,
+         warn = FALSE,
+         can.mask = c("base", "graphics", "grDevices", "grid",
+                      "methods", "parallel", "stats", "utils")))
+```
+
 
 ## Open Issues
 
@@ -156,6 +190,9 @@ particularly awkward. Some possible alternatives;
 
 - `only`: `use.only`, `only.vars`, `use.vars`, `include.only`
 - `omit`: `omit.vars`, `skip`, `skip.vars`, `exclude`
+
+I am leaning towards `include.only` and `exclude` but don't have
+strong preferences.
 
 Additional features that might be useful:
 
