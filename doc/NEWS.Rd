@@ -281,6 +281,9 @@
 
   \subsection{BUG FIXES}{
     \itemize{
+      \item \code{drop1.glm} miscalculated the score test (\code{test="Rao"})
+      when the model contained an offset.
+
       \item \code{replayPlot(r)} now also works in the same \R session
       when \code{r} has been \dQuote{reproduced} from serialization,
       typically after saving to and reading from an RDS file.
