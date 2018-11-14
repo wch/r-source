@@ -21,7 +21,6 @@ matrix:
 addons:
   apt:
     packages:
-    - git-svn
     - bash-completion
     - bison
     - debhelper
