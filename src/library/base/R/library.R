@@ -209,9 +209,10 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                 pkg <- names(conflicts)
                 notOK <- vector("list", 0)
                 for (i in seq_along(conflicts)) {
+                    pkgname <- sub("^package:", "", pkg[i])
                     same <- conflicts[[i]]
                     if (is.list(mask.ok))
-                        myMaskOK <- mask.ok[[sub("^package:", "", sp[i])]]
+                        myMaskOK <- mask.ok[[pkgname]]
                     else myMaskOK <- mask.ok
 
                     ## adjust 'same' for conflict resolution specifications
