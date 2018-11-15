@@ -3031,8 +3031,34 @@ static void gc_end_timing(void)
 
 #define R_MAX(a,b) (a) < (b) ? (b) : (a)
 
+#ifdef THREADCHECK
+# if !defined(Win32) && defined(HAVE_PTHREAD)
+#   include <pthread.h>
+void attribute_hidden R_check_thread(const char *s)
+{
+    static Rboolean main_thread_inited = FALSE;
+    static pthread_t main_thread;
+    if (! main_thread_inited) {
+        main_thread = pthread_self();
+        main_thread_inited = TRUE;
+    }
+    if (main_thread != pthread_self()) {
+        char buf[1024];
+	size_t bsize = sizeof buf;
+	memset(buf, 0, bsize);
+        snprintf(buf, bsize - 1, "Wrong thread calling '%s'", s);
+        R_Suicide(buf);
+    }
+}
+# else
+/* This could be implemented for Windows using their threading API */ 
+void attribute_hidden R_check_thread(const char *s) {}
+# endif
+#endif
+
 static void R_gc_internal(R_size_t size_needed)
 {
+    R_CHECK_THREAD("R_gc_internal");
     if (!R_GCEnabled) {
       if (NO_FREE_NODES())
 	R_NSize = R_NodesInUse + 1;

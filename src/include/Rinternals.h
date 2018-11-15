@@ -743,6 +743,17 @@ SEXP R_tryUnwrap(SEXP);
     R_len_t NORET R_BadLongVector(SEXP, const char *, int);
 #endif
 
+/* checking for mis-use of multi-threading */
+#ifdef TESTING_WRITE_BARRIER
+# define THREADCHECK
+#endif
+#ifdef THREADCHECK
+void R_check_thread(const char *s);
+# define R_CHECK_THREAD(s) R_check_thread(s)
+#else
+# define R_CHECK_THREAD(x) do {} while (0)
+#endif
+
 /* List Access Functions */
 /* These also work for ... objects */
 #define CONS(a, b)	cons((a), (b))		/* data lists */
