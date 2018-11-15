@@ -1,7 +1,7 @@
 #  File src/library/base/R/taskCallback.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -126,7 +126,7 @@ function(handlers = list(), registered = FALSE, verbose = FALSE)
             for(i in names(handlers)) {
                 h <- handlers[[i]]
                 if(length(h) > 1L) {
-                    val <- h[["f"]](expr, value, ok, visible, i[["data"]])
+                    val <- h[["f"]](expr, value, ok, visible, h[["data"]])
                 } else {
                     val <- h[["f"]](expr, value, ok, visible)
                 }
