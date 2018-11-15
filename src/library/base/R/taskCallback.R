@@ -93,13 +93,19 @@ function(handlers = list(), registered = FALSE, verbose = FALSE)
 
     remove <- function(which)
     {
+        if (length(which) != 1L)
+            stop("'which' must be of length 1")
         if(is.character(which)) {
-            tmp <- seq_along(handlers)[!is.na(match(which, names(handlers)))]
-            if(length(tmp))
+            tmp <- match(which, names(handlers))
+            if(is.na(tmp))
                 stop(gettextf("no such element '%s'", which), domain = NA)
             which <- tmp
+        } else if(is.numeric(which)) {
+            which <- as.integer(which)
+            if (which <= 0 || which > length(handlers))
+                stop("invalid 'which' argument")
         } else
-        which <- as.integer(which)
+            stop("'which' must be character or numeric")
 
         handlers <<- handlers[-which]
 
