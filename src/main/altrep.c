@@ -1544,19 +1544,8 @@ static void deferred_string_Set_elt(SEXP x, R_xlen_t i, SEXP v)
 
 static int deferred_string_Is_sorted(SEXP x)
 {
-    SEXP state = DEFERRED_STRING_STATE(x);
-    if (state == R_NilValue)
-	/* string is fully expanded and may have been modified. */
-	return UNKNOWN_SORTEDNESS;
-    else {
-	/* defer to the argument */
-	SEXP arg = DEFERRED_STRING_STATE_ARG(state);
-	switch(TYPEOF(arg)) {
-	case INTSXP: return INTEGER_IS_SORTED(arg);
-	case REALSXP: return REAL_IS_SORTED(arg);
-	default: return UNKNOWN_SORTEDNESS;
-	}
-    }
+    /* same as the default method; sortedness of the numeric is not relevant  */
+    return UNKNOWN_SORTEDNESS;
 }
 
 static int deferred_string_No_NA(SEXP x)
