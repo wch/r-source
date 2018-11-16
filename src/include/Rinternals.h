@@ -1679,12 +1679,11 @@ void SET_REAL_ELT(SEXP x, R_xlen_t i, double v);
 	if(R_CStackLimit != (uintptr_t)(-1) && usage > ((intptr_t) R_CStackLimit)) \
 	    R_SignalCStackOverflow(usage);				\
     } while (FALSE)
+#endif
 
 void R_BadValueInRCode(SEXP value, SEXP call, SEXP rho, const char *rawmsg,
         const char *errmsg, const char *warnmsg, const char *varname,
         Rboolean warnByDefault);
-
-#endif
 
 #ifdef __cplusplus
 }
