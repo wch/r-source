@@ -202,7 +202,14 @@ static SrcRefState ParseState;
 #define PS_SET_SRCREFS(x)   SET_VECTOR_ELT(ParseState.sexps, 0, (x))
 #define PS_SET_SRCFILE(x)   SET_VECTOR_ELT(ParseState.sexps, 1, (x))
 #define PS_SET_ORIGINAL(x)  SET_VECTOR_ELT(ParseState.sexps, 2, (x))
-#define PS_SET_DATA(x)      SET_VECTOR_ELT(ParseState.sexps, 3, (x))
+
+/* direct pointer to data is kept for performance of finalizeData() */
+#define PS_SET_DATA(x)      do {                \
+    SEXP __x__ = (x);                           \
+    SET_VECTOR_ELT(ParseState.sexps, 3, __x__); \
+    ParseState.data = __x__;                    \
+} while(0);
+
 #define PS_SET_TEXT(x)      SET_VECTOR_ELT(ParseState.sexps, 4, (x))
 #define PS_SET_IDS(x)       SET_VECTOR_ELT(ParseState.sexps, 5, (x))
 #define PS_SET_SVS(x)       SET_VECTOR_ELT(ParseState.sexps, 6, (x))
@@ -210,7 +217,7 @@ static SrcRefState ParseState;
 #define PS_SRCREFS          VECTOR_ELT(ParseState.sexps, 0)
 #define PS_SRCFILE          VECTOR_ELT(ParseState.sexps, 1)
 #define PS_ORIGINAL         VECTOR_ELT(ParseState.sexps, 2)
-#define PS_DATA             VECTOR_ELT(ParseState.sexps, 3)
+#define PS_DATA             ParseState.data
 #define PS_TEXT             VECTOR_ELT(ParseState.sexps, 4)
 #define PS_IDS              VECTOR_ELT(ParseState.sexps, 5)
 #define PS_SVS              VECTOR_ELT(ParseState.sexps, 6)
@@ -1265,6 +1272,7 @@ attribute_hidden
 void InitParser(void)
 {
     ParseState.sexps = allocVector(VECSXP, 7); /* initialized to R_NilValue */
+    ParseState.data = R_NilValue;
     R_PreserveObject(ParseState.sexps); /* never released in an R session */
     R_NullSymbol = install("NULL");
 }
@@ -1285,6 +1293,7 @@ void R_InitSrcRefState(RCNTXT* cptr)
     	PutSrcRefState(prev);
 	ParseState.prevState = prev;
 	ParseState.sexps = allocVector(VECSXP, 7);
+	ParseState.data = R_NilValue;
 	R_PreserveObject(ParseState.sexps);
     } else
 	/* re-use data, text, ids arrays */
@@ -1352,6 +1361,7 @@ static void UseSrcRefState(SrcRefState *state)
     ParseState.keepSrcRefs = state->keepSrcRefs;
     ParseState.keepParseData = state->keepParseData;
     ParseState.sexps = state->sexps;
+    ParseState.data = state->data;
     ParseState.data_count = state->data_count;
     ParseState.xxlineno = state->xxlineno;
     ParseState.xxcolno = state->xxcolno;
@@ -1366,6 +1376,7 @@ static void PutSrcRefState(SrcRefState *state)
     state->keepSrcRefs = ParseState.keepSrcRefs;
     state->keepParseData = ParseState.keepParseData;
     state->sexps = ParseState.sexps;
+    state->data = ParseState.data;
     state->data_count = ParseState.data_count;
     state->xxlineno = ParseState.xxlineno;
     state->xxcolno = ParseState.xxcolno;
