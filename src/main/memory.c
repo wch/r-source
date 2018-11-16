@@ -1440,6 +1440,7 @@ void R_RunWeakRefFinalizer(SEXP w)
 
 static Rboolean RunFinalizers(void)
 {
+    R_CHECK_THREAD;
     /* Prevent this function from running again when already in
        progress. Jumps can only occur inside the top level context
        where they will be caught, so the flag is guaranteed to be
@@ -3058,7 +3059,7 @@ void attribute_hidden R_check_thread(const char *s) {}
 
 static void R_gc_internal(R_size_t size_needed)
 {
-    R_CHECK_THREAD("R_gc_internal");
+    R_CHECK_THREAD;
     if (!R_GCEnabled) {
       if (NO_FREE_NODES())
 	R_NSize = R_NodesInUse + 1;
@@ -3263,6 +3264,7 @@ void NORET R_signal_unprotect_error(void)
 #ifndef INLINE_PROTECT
 SEXP protect(SEXP s)
 {
+    R_CHECK_THREAD;
     if (R_PPStackTop >= R_PPStackSize)
 	R_signal_protect_error();
     R_PPStack[R_PPStackTop++] = CHK(s);
@@ -3274,6 +3276,7 @@ SEXP protect(SEXP s)
 
 void unprotect(int l)
 {
+    R_CHECK_THREAD;
     if (R_PPStackTop >=  l)
 	R_PPStackTop -= l;
     else R_signal_unprotect_error();
@@ -3284,6 +3287,7 @@ void unprotect(int l)
 
 void unprotect_ptr(SEXP s)
 {
+    R_CHECK_THREAD;
     int i = R_PPStackTop;
 
     /* go look for  s  in  R_PPStack */
@@ -3305,6 +3309,7 @@ void unprotect_ptr(SEXP s)
 
 int Rf_isProtected(SEXP s)
 {
+    R_CHECK_THREAD;
     int i = R_PPStackTop;
 
     /* go look for  s  in  R_PPStack */
@@ -3337,6 +3342,7 @@ void NORET R_signal_reprotect_error(PROTECT_INDEX i)
 #ifndef INLINE_PROTECT
 void R_Reprotect(SEXP s, PROTECT_INDEX i)
 {
+    R_CHECK_THREAD;
     if (i >= R_PPStackTop || i < 0)
 	R_signal_reprotect_error(i);
     R_PPStack[i] = s;
@@ -3349,6 +3355,7 @@ void R_Reprotect(SEXP s, PROTECT_INDEX i)
    to old. */
 SEXP R_CollectFromIndex(PROTECT_INDEX i)
 {
+    R_CHECK_THREAD;
     SEXP res;
     int top = R_PPStackTop, j = 0;
     if (i > top) i = top;
@@ -3411,6 +3418,7 @@ void R_chk_free(void *ptr)
 
 void R_PreserveObject(SEXP object)
 {
+    R_CHECK_THREAD;
     R_PreciousList = CONS(object, R_PreciousList);
 }
 
@@ -3427,6 +3435,7 @@ static SEXP RecursiveRelease(SEXP object, SEXP list)
 
 void R_ReleaseObject(SEXP object)
 {
+    R_CHECK_THREAD;
     R_PreciousList =  RecursiveRelease(object, R_PreciousList);
 }
 

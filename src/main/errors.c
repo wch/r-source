@@ -2041,7 +2041,7 @@ R_BadValueInRCode(SEXP value, SEXP call, SEXP rho, const char *rawmsg,
 {
     /* disable GC so that use of this temporary checking code does not
        introduce new PROTECT errors e.g. in asLogical() use */
-    R_CHECK_THREAD("R_BadValueInRCode");
+    R_CHECK_THREAD;
     int enabled = R_GCEnabled;
     R_GCEnabled = FALSE;
     int nprotect = 0;

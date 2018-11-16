@@ -749,9 +749,9 @@ SEXP R_tryUnwrap(SEXP);
 #endif
 #ifdef THREADCHECK
 void R_check_thread(const char *s);
-# define R_CHECK_THREAD(s) R_check_thread(s)
+# define R_CHECK_THREAD R_check_thread(__func__)
 #else
-# define R_CHECK_THREAD(x) do {} while (0)
+# define R_CHECK_THREAD do {} while (0)
 #endif
 
 /* List Access Functions */

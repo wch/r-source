@@ -333,7 +333,7 @@ static R_INLINE void *ALTVEC_DATAPTR_EX(SEXP x, Rboolean writeable)
     /**** move GC disabling into methods? */
     if (R_in_gc)
 	error("cannot get ALTVEC DATAPTR during GC");
-    R_CHECK_THREAD("ALTVEC_DATAPTR_EX");
+    R_CHECK_THREAD;
     int enabled = R_GCEnabled;
     R_GCEnabled = FALSE;
 
@@ -494,7 +494,7 @@ SEXP /*attribute_hidden*/ ALTSTRING_ELT(SEXP x, R_xlen_t i)
     /**** move GC disabling into method? */
     if (R_in_gc)
 	error("cannot get ALTSTRING_ELT during GC");
-    R_CHECK_THREAD("ALTSTRING_ELT");
+    R_CHECK_THREAD;
     int enabled = R_GCEnabled;
     R_GCEnabled = FALSE;
 
@@ -509,7 +509,7 @@ void attribute_hidden ALTSTRING_SET_ELT(SEXP x, R_xlen_t i, SEXP v)
     /**** move GC disabling into method? */
     if (R_in_gc)
 	error("cannot set ALTSTRING_ELT during GC");
-    R_CHECK_THREAD("ALTSTRING_SET_ELT");
+    R_CHECK_THREAD;
     int enabled = R_GCEnabled;
     R_GCEnabled = FALSE;
 
