@@ -2227,6 +2227,36 @@ stopifnot(exprs = {
 
 
 
+## Assigning multiple new data.frame columns (with specified row), PR#17504
+d0 <- d1 <- d2 <- d3 <- d4 <- d5 <- d6 <- d7 <- data.frame(n=1:4)
+##
+d0[, 2] <- c2 <- 5:8
+d0[, 3] <- c3 <- 9:12
+d1[, 2:3] <- list(c2, c3)
+d2[  2:3] <- list(c2, c3)
+d3[TRUE, 2] <- c2 ; d3[TRUE, 3] <- c3
+d4[TRUE, 2:3] <- list(c2, c3)
+d5[1:4,  2:3] <- list(c2, c3)
+d6[TRUE, 1:2] <- list(c2, c3)
+d7[    , 1:2] <- list(c2, c3)
+stopifnot(exprs = {
+    identical(d0, d1)
+    identical(d0, d2)
+    identical(d0, d3)
+    identical(d0, d4)
+    identical(d0, d5)
+    ##
+    identical(d6, d7)
+    identical(d6, structure(list(n = c2, V2 = c3),
+                            row.names = c(NA, -4L), class = "data.frame"))
+})
+## d4, d5 --> 'Error in `*tmp*`[[j]] : subscript out of bounds'
+## d6     --> 'Error in x[[j]] <- `*vtmp*` :
+##				more elements supplied than there are to replace
+## in R <= 3.5.1
+
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())
