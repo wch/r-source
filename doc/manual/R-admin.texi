@@ -2339,8 +2339,8 @@ the @samp{CXX11}, @samp{CXX14} and @samp{CXX17} variants
 So for example you could select a specific build of @command{clang} for
 both C and C++ with extensive checking by having in @file{~/.R/Makevars}
 @example
-CC = /usr/local/clang4/bin/clang
-CXX = /usr/local/clang4/bin/clang++
+CC = /usr/local/clang7/bin/clang
+CXX = /usr/local/clang7/bin/clang++
 CFLAGS = -g -O2 -Wall -pedantic -Wconversion -Wno-sign-conversion
 CXXFLAGS = -g -O2 -Wall -pedantic -Wconversion -Wno-sign-conversion
 CXX11 = $CXX
@@ -2359,7 +2359,7 @@ FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin16/6.3.0
 @noindent
 (line split for legibility here).
 
-If using the C/C++ compilers from the Command Line Tools (which does not
+If using the C/C++ compilers from the Command Line Tools (which do not
 have OpenMP support) one will need to include
 @example
 SHLIB_OPENMP_CFLAGS =
@@ -5209,7 +5209,7 @@ The @TeX{} implementation used by the developers is MacTeX
 (@uref{https://www.tug.org/mactex/}): the full installation is about
 5GB, but a smaller version (`Basic TeX') is available at
 @uref{https://www.tug.org/mactex/morepackages.html} to which you will
-need to add some packages, e.g.@: for the 2017 version we needed to
+need to add some packages, e.g.@: for the 2018 version we needed to
 add@footnote{E.g.@: @emph{via} @command{tlmgr install cm-super helvetic
 inconsolata texinfo} .}  @pkg{cm-super}, @pkg{helvetic},
 @pkg{inconsolata} and @pkg{texinfo} which brought this to about 310MB.
