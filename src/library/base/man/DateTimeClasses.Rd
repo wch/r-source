@@ -57,7 +57,7 @@
   representing calendar dates and times.
 }
 \usage{
-\method{print}{POSIXct}(x, tz = "", usetz = TRUE, \dots)
+\method{print}{POSIXct}(x, tz = "", usetz = TRUE, max = NULL, \dots)
 
 \method{summary}{POSIXct}(object, digits = 15, \dots)
 
@@ -70,6 +70,9 @@
   \item{x, object}{an object to be printed or summarized from one of the
     date-time classes.}
   \item{tz, usetz}{for timezone formatting, passed to \code{\link{format.POSIXct}}.}
+  \item{max}{numeric or \code{NULL}, specifying the maximal number of
+    entries to be printed.  By default, when \code{NULL},
+    \code{\link{getOption}("max.print")} used.}
   \item{digits}{number of significant digits for the computations:
     should be high enough to represent the least important time unit
     exactly.}
