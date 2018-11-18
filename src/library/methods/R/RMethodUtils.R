@@ -1390,7 +1390,7 @@ metaNameUndo <- function(strings, prefix, searchForm = FALSE)
             value <- new("derivedDefaultMethod")
         }
         value@.Data <- fdef
-        value@target <- value@defined <- .newSignature(.anyClassName, formalArgs(fdef))
+        value@target <- value@defined <- .newSignature(list(.anyClassName), formalArgs(fdef))
         value
     }
     else

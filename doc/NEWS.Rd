@@ -457,6 +457,9 @@
 
       \item \code{formalArgs("<fn>")} now finds the same function as
       \code{formals(*)}, fixing Emil Bode's \PR{17499}.
+
+      \item The methods package better handles duplicated class names
+      across packages.
     }
   }
 }
