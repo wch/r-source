@@ -57,7 +57,23 @@ preference would be to be forced to resolve them on package load
 rather than to have my work flow interrupted at random points to go
 and sort things out.
 
+Another useful distinction is between anticipated an unanticipated
+conflicts.
 
+- _Anticipated_ conflicts occur when a single package is attached that
+  in turn causes other packages to be attached. The package author
+  will see the messages and should address any ones that are not as
+  intended. These should usually not require user intervention.
+
+- _Unanticipated_ conflicts arise when a user requests that two
+  packages be attached that may not have been designed to be used
+  together. Conflicts in these cases will typically require the user
+  to make an appropriate choice.
+	
+Ideally a conflict resolution framework should provide the option to
+only require intervention for unanticipated conflicts.
+
+	
 ## Implementation
 
 A basic implementation of the static approach is quite simple:
@@ -184,19 +200,18 @@ options(conflicts.control = list(error = TRUE,
 ```
 
 This specification assumes that package authors know what they are
-doing and all conflicts from loading their package by itself are
+doing and all conflicts from loading a package by itself are
 intentional and OK.  With this specification all `CRAN` and `BIOC`
 packages individually load without error.
 
 A useful specification for strict checking, suppressing warning messages,
-and ignoring conflicts with some base packages would be
+and ignoring conflicts with `base` and `utils` would be
 
 ```r
 options(conflicts.control =
     list(error = TRUE,
          warn = FALSE,
-         can.mask = c("base", "graphics", "grDevices", "grid",
-                      "methods", "parallel", "stats", "utils")))
+         can.mask = c("base", "utils")))
 ```
 
 
@@ -228,6 +243,8 @@ Additional features that might be useful:
   some way, e.g. in their `DESCRIPTION` files. Packages can already call
   `conflictRules` in their `.onAttach` functions, which may be sufficient
   for now.
+- Maybe it would be cleaner to merge the `conflicts.control`
+  functionality into `conflictRules`.
 
 Some questions:
 

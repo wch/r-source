@@ -141,6 +141,12 @@ $(document).ready(function () {
 </ol>
 <p>Packages are handled by <code>NAMESPACES</code>. The others could use some help.</p>
 <p>For 2 and 3 the static approach seems clearly better, as long as we provide the right set of tools to allow it to be expressed concisely. For notebooks I think the static approach is probably better as well. For interactive use it may be a matter of personal preference. Once I have decided I want help with conflicts, my preference would be to be forced to resolve them on package load rather than to have my work flow interrupted at random points to go and sort things out.</p>
+<p>Another useful distinction is between anticipated an unanticipated conflicts.</p>
+<ul>
+<li><p><em>Anticipated</em> conflicts occur when a single package is attached that in turn causes other packages to be attached. The package author will see the messages and should address any ones that are not as intended. These should usually not require user intervention.</p></li>
+<li><p><em>Unanticipated</em> conflicts arise when a user requests that two packages be attached that may not have been designed to be used together. Conflicts in these cases will typically require the user to make an appropriate choice.</p></li>
+</ul>
+<p>Ideally a conflict resolution framework should provide the option to only require intervention for unanticipated conflicts.</p>
 </div>
 <div id="implementation" class="section level2">
 <h2>Implementation</h2>
@@ -223,13 +229,12 @@ conflictRules(&quot;BiocGenerics&quot;, mask.ok = list(base = TRUE,
                                  generics.ok = TRUE,
                                  can.mask = getOption(&quot;defaultPackages&quot;),
                                  depends.ok = TRUE))</code></pre>
-<p>This specification assumes that package authors know what they are doing and all conflicts from loading their package by itself are intentional and OK. With this specification all <code>CRAN</code> and <code>BIOC</code> packages individually load without error.</p>
-<p>A useful specification for strict checking, suppressing warning messages, and ignoring conflicts with some base packages would be</p>
+<p>This specification assumes that package authors know what they are doing and all conflicts from loading a package by itself are intentional and OK. With this specification all <code>CRAN</code> and <code>BIOC</code> packages individually load without error.</p>
+<p>A useful specification for strict checking, suppressing warning messages, and ignoring conflicts with <code>base</code> and <code>utils</code> would be</p>
 <pre class="r"><code>options(conflicts.control =
     list(error = TRUE,
          warn = FALSE,
-         can.mask = c(&quot;base&quot;, &quot;graphics&quot;, &quot;grDevices&quot;, &quot;grid&quot;,
-                      &quot;methods&quot;, &quot;parallel&quot;, &quot;stats&quot;, &quot;utils&quot;)))</code></pre>
+         can.mask = c(&quot;base&quot;, &quot;utils&quot;)))</code></pre>
 </div>
 <div id="open-issues" class="section level2">
 <h2>Open Issues</h2>
@@ -245,6 +250,7 @@ conflictRules(&quot;BiocGenerics&quot;, mask.ok = list(base = TRUE,
 <li>Have a way to say that (some) ‘safe’ S4 or even S3 generics are OK to mask non-generics, at least if the non-generics are used as the default method by the generics.</li>
 <li>Add a function to compute the conflicts that would happen on attach. Might be useful to lift out and expose the code in <code>checkConflicts</code>.</li>
 <li>Many package authors will be aware of conflicts, in particular conflicts with base packages. Loading the package is intended to mask the default variables, and warnings are false positives. It would be useful for packages to be able to declare that these maskings are intentional in some way, e.g. in their <code>DESCRIPTION</code> files. Packages can already call <code>conflictRules</code> in their <code>.onAttach</code> functions, which may be sufficient for now.</li>
+<li>Maybe it would be cleaner to merge the <code>conflicts.control</code> functionality into <code>conflictRules</code>.</li>
 </ul>
 <p>Some questions:</p>
 <ul>
