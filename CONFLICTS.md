@@ -195,7 +195,8 @@ against unanticipated conflicts:
 ```r
 options(conflicts.control = list(error = TRUE,
                                  generics.ok = TRUE,
-                                 can.mask = getOption("defaultPackages"),
+                                 can.mask = c("base", "methods", "utils",
+                                              "grDevices", "graphics", "stats"),
                                  depends.ok = TRUE))
 ```
 
@@ -204,15 +205,25 @@ doing and all conflicts from loading a package by itself are
 intentional and OK.  With this specification all `CRAN` and `BIOC`
 packages individually load without error.
 
-A useful specification for strict checking, suppressing warning messages,
-and ignoring conflicts with `base` and `utils` would be
+A strict specification would be
 
 ```r
-options(conflicts.control =
-    list(error = TRUE,
-         warn = FALSE,
-         can.mask = c("base", "utils")))
+options(conflicts.control = list(error = TRUE, warn = FALSE))
 ```
+
+These can be specified as
+
+```r
+options(conflicts.control = "depends.ok")
+```
+
+or
+
+```r
+options(conflicts.control = "strict")
+```
+
+respectively.
 
 
 ## Open Issues

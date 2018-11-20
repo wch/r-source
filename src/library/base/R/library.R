@@ -58,6 +58,21 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
          mask.ok, omit, only, attach.required = missing(only))
 {
     conf.ctrl <- getOption("conflicts.control")
+    if (is.character(conf.ctrl))
+        conf.ctrl <-
+            switch(conf.ctrl,
+                   strict = list(error = TRUE, warn = FALSE),
+                   depends.ok = list(error = TRUE,
+                                     generics.ok = TRUE,
+                                     can.mask = c("base", "methods", "utils",
+                                                  "grDevices", "graphics",
+                                                  "stats"),
+                                     depends.ok = TRUE),
+                   warning(gettextf("unknown conflict control: %s",
+                                    sQuote(conf.ctrl)),
+                           call. = FALSE, domain = NA))
+    if (! is.list(conf.ctrl))
+        conf.ctrl <- NULL
     stopOnConflict <-
         isTRUE(getOption("error.on.conflicts")) ||
         isTRUE(conf.ctrl$error)
