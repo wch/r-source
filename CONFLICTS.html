@@ -152,10 +152,10 @@ $(document).ready(function () {
 <h2>Implementation</h2>
 <p>A basic implementation of the static approach is quite simple:</p>
 <ul>
-<li>Give library/require additional arguments <code>mask.ok</code> and <code>omit</code>.
+<li>Give library/require additional arguments <code>mask.ok</code> and <code>exclude</code>.
 <ul>
 <li><code>mask.ok</code>: these functions can mask variables already on the path.</li>
-<li><code>omit</code>: don’t add these to the search path frame.</li>
+<li><code>exclude</code>: don’t add these to the search path frame.</li>
 </ul></li>
 <li>If <code>getOption(&quot;error.on.conflicts&quot;)</code> is TRUE then signal an error if there are conflicts not covered by <code>mask.ok</code>.</li>
 </ul>
@@ -171,16 +171,16 @@ library(dplyr, mask.ok = c(&quot;filter&quot;, &quot;lag&quot;,
 library(MASS)
 ## conflict error from select
 
-library(MASS, omit = &quot;select&quot;)
+library(MASS, exclude = &quot;select&quot;)
 ## OK</code></pre>
 </div>
 <div id="resolving-conflicts" class="section level2">
 <h2>Resolving Conflicts</h2>
-<p>To make this easier for commonly used packages, and for implicitly attached packages, <code>conflictRules</code> provides a way to specify default <code>mask.ok</code>/<code>omit</code> values for packages, e.g. with</p>
+<p>To make this easier for commonly used packages, and for implicitly attached packages, <code>conflictRules</code> provides a way to specify default <code>mask.ok</code>/<code>exclude</code> values for packages, e.g. with</p>
 <pre class="r"><code>conflictRules(&quot;dplyr&quot;,
               mask.ok = c(&quot;filter&quot;, &quot;lag&quot;,
-                          &quot;intersect&quot;, &quot;setdiff&quot;, &quot;setequal&quot;, &quot;union&quot;)))
-conflictRules(&quot;MASS&quot;, omit = &quot;select&quot;)</code></pre>
+                          &quot;intersect&quot;, &quot;setdiff&quot;, &quot;setequal&quot;, &quot;union&quot;))
+conflictRules(&quot;MASS&quot;, exclude = &quot;select&quot;)</code></pre>
 <p>Alternate forms that should all work:</p>
 <pre class="r"><code>## mask, no matter where they are:
 library(dplyr, mask.ok = c(&quot;filter&quot;, &quot;lag&quot;,
@@ -196,7 +196,7 @@ library(dplyr, mask.ok = list(base = TRUE, stats = TRUE))
 
 ## using conflictRules:
 conflictRules(&quot;dplyr&quot;, mask.ok = list(base = TRUE, stats = TRUE))
-conflictRules(&quot;MASS&quot;, omit = &quot;select&quot;)
+conflictRules(&quot;MASS&quot;, exclude = &quot;select&quot;)
 
 ## to allow Matrix to be loaded with conflict checking:
 conflictRules(&quot;Matrix&quot;, mask.ok = list(stats = TRUE,
@@ -213,7 +213,7 @@ conflictRules(&quot;BiocGenerics&quot;, mask.ok = list(base = TRUE,
 <p>Some additional features that have been implemented:</p>
 <ul>
 <li><p><code>library()</code> has some heuristics to avoid warning about S4 overrides that mask the overrides in <code>Matrix</code> (but not those in <code>BiocGenerics</code>). These heuristics are disabled by default when strict conflict checking is in force so that they have to be handled explicitly in some way.</p></li>
-<li><p>Arguments <code>only</code> and <code>attach.required</code> have been added to <code>library()</code>. If <code>only</code> is supplied as a character vector, then only variables named there are included in the attached frame. The default value of <code>attach.required</code> is <code>TRUE</code> if <code>only</code> is missing and <code>FALSE</code> if <code>only</code> is supplied.</p></li>
+<li><p>Arguments <code>include.only</code> and <code>attach.required</code> have been added to <code>library()</code>. If <code>only</code> is supplied as a character vector, then only variables named there are included in the attached frame. The default value of <code>attach.required</code> is <code>TRUE</code> if <code>include.only</code> is missing and <code>FALSE</code> if <code>include.only</code> is supplied.</p></li>
 <li><p>The error signaled with strict checking is of class <code>packageConflictsError</code> with fields <code>package</code> and <code>conflicts</code>.</p></li>
 <li><p>A number of aspects of the conflict handling process can be customized via the <code>conflicts.control</code> option. The value of this option should be a list with named elements. Elements that are supported:</p>
 <ul>
@@ -227,23 +227,20 @@ conflictRules(&quot;BiocGenerics&quot;, mask.ok = list(base = TRUE,
 <p>A specification that may work for most users who want protection against unanticipated conflicts:</p>
 <pre class="r"><code>options(conflicts.control = list(error = TRUE,
                                  generics.ok = TRUE,
-                                 can.mask = getOption(&quot;defaultPackages&quot;),
+                                 can.mask = c(&quot;base&quot;, &quot;methods&quot;, &quot;utils&quot;,
+                                              &quot;grDevices&quot;, &quot;graphics&quot;, &quot;stats&quot;),
                                  depends.ok = TRUE))</code></pre>
 <p>This specification assumes that package authors know what they are doing and all conflicts from loading a package by itself are intentional and OK. With this specification all <code>CRAN</code> and <code>BIOC</code> packages individually load without error.</p>
-<p>A useful specification for strict checking, suppressing warning messages, and ignoring conflicts with <code>base</code> and <code>utils</code> would be</p>
-<pre class="r"><code>options(conflicts.control =
-    list(error = TRUE,
-         warn = FALSE,
-         can.mask = c(&quot;base&quot;, &quot;utils&quot;)))</code></pre>
+<p>A strict specification would be</p>
+<pre class="r"><code>options(conflicts.control = list(error = TRUE, warn = FALSE))</code></pre>
+<p>These can be specified as</p>
+<pre class="r"><code>options(conflicts.control = &quot;depends.ok&quot;)</code></pre>
+<p>or</p>
+<pre class="r"><code>options(conflicts.control = &quot;strict&quot;)</code></pre>
+<p>respectively.</p>
 </div>
 <div id="open-issues" class="section level2">
 <h2>Open Issues</h2>
-<p>Argument and function names could be adjusted if there are strong objections to the ones used here. The <code>omit</code> and <code>only</code> arguments seem particularly awkward. Some possible alternatives;</p>
-<ul>
-<li><code>only</code>: <code>use.only</code>, <code>only.vars</code>, <code>use.vars</code>, <code>include.only</code></li>
-<li><code>omit</code>: <code>omit.vars</code>, <code>skip</code>, <code>skip.vars</code>, <code>exclude</code></li>
-</ul>
-<p>I am leaning towards <code>include.only</code> and <code>exclude</code> but don’t have strong preferences.</p>
 <p>Additional features that might be useful:</p>
 <ul>
 <li>Provide a restart for retrying with adjusted arguments; that could be used by a GUI front end.</li>
@@ -255,7 +252,8 @@ conflictRules(&quot;BiocGenerics&quot;, mask.ok = list(base = TRUE,
 <p>Some questions:</p>
 <ul>
 <li>Should <code>attach</code> also signal an error on conflicts? It repeats some of the checking logic in <code>library</code>, but with some differences.</li>
-<li>Do we need to disallow using both omit and only?</li>
+<li>Do we need to disallow using both exclude and <code>include.only</code>?</li>
+<li>Should ‘strict’ mode still warn?</li>
 </ul>
 <p>TODO list:</p>
 <ul>

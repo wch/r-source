@@ -78,9 +78,9 @@ only require intervention for unanticipated conflicts.
 
 A basic implementation of the static approach is quite simple:
 
-- Give library/require additional arguments `mask.ok` and `omit`.
+- Give library/require additional arguments `mask.ok` and `exclude`.
     - `mask.ok`: these functions can mask variables already on the path.
-    - `omit`: don't add these to the search path frame.
+    - `exclude`: don't add these to the search path frame.
 - If `getOption("error.on.conflicts")` is TRUE then signal an error if
   there are conflicts not covered by `mask.ok`.
 
@@ -99,7 +99,7 @@ library(dplyr, mask.ok = c("filter", "lag",
 library(MASS)
 ## conflict error from select
 
-library(MASS, omit = "select")
+library(MASS, exclude = "select")
 ## OK
 ```
 
@@ -108,13 +108,13 @@ library(MASS, omit = "select")
 
 To make this easier for commonly used packages, and for implicitly
 attached packages, `conflictRules` provides a way to specify default
-`mask.ok`/`omit` values for packages, e.g. with
+`mask.ok`/`exclude` values for packages, e.g. with
 
 ```r
 conflictRules("dplyr",
               mask.ok = c("filter", "lag",
-                          "intersect", "setdiff", "setequal", "union")))
-conflictRules("MASS", omit = "select")
+                          "intersect", "setdiff", "setequal", "union"))
+conflictRules("MASS", exclude = "select")
 ```
 
 Alternate forms that should all work:
@@ -133,7 +133,7 @@ library(dplyr, mask.ok = list(base = TRUE, stats = TRUE))
 
 ## using conflictRules:
 conflictRules("dplyr", mask.ok = list(base = TRUE, stats = TRUE))
-conflictRules("MASS", omit = "select")
+conflictRules("MASS", exclude = "select")
 
 ## to allow Matrix to be loaded with conflict checking:
 conflictRules("Matrix", mask.ok = list(stats = TRUE,
@@ -157,11 +157,11 @@ Some additional features that have been implemented:
   conflict checking is in force so that they have to be handled
   explicitly in some way.
 
-- Arguments `only` and `attach.required` have been added to
+- Arguments `include.only` and `attach.required` have been added to
   `library()`. If `only` is supplied as a character vector, then only
   variables named there are included in the attached frame. The
-  default value of `attach.required` is `TRUE` if `only` is missing
-  and `FALSE` if `only` is supplied.
+  default value of `attach.required` is `TRUE` if `include.only` is
+  missing and `FALSE` if `include.only` is supplied.
 
 - The error signaled with strict checking is of class `packageConflictsError`
   with fields `package` and `conflicts`.
@@ -228,16 +228,6 @@ respectively.
 
 ## Open Issues
 
-Argument and function names could be adjusted if there are strong
-objections to the ones used here. The `omit` and `only` arguments seem
-particularly awkward. Some possible alternatives;
-
-- `only`: `use.only`, `only.vars`, `use.vars`, `include.only`
-- `omit`: `omit.vars`, `skip`, `skip.vars`, `exclude`
-
-I am leaning towards `include.only` and `exclude` but don't have
-strong preferences.
-
 Additional features that might be useful:
 
 - Provide a restart for retrying with adjusted arguments; that could be used
@@ -261,7 +251,8 @@ Some questions:
 
 - Should `attach` also signal an error on conflicts? It repeats some
    of the checking logic in `library`, but with some differences.
-- Do we need to disallow using both omit and only?
+- Do we need to disallow using both exclude and `include.only`?
+- Should 'strict' mode still warn?
  
 TODO list:
 

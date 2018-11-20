@@ -42,9 +42,10 @@
 conflictRules <-
     local({
         data <- new.env()
-        function(pkg, mask.ok = NULL, omit = NULL) {
-            if ((! missing(mask.ok)) || (! missing(omit)))
-                assign(pkg, list(mask.ok = mask.ok, omit = omit), envir = data)
+        function(pkg, mask.ok = NULL, exclude = NULL) {
+            if ((! missing(mask.ok)) || (! missing(exclude)))
+                assign(pkg, list(mask.ok = mask.ok, exclude = exclude),
+                       envir = data)
             else if (exists(pkg, envir = data, inherits = FALSE))
                 get(pkg, envir = data, inherits = FALSE)
             else NULL
@@ -55,7 +56,8 @@ library <-
 function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
          logical.return = FALSE, warn.conflicts,
 	 quietly = FALSE, verbose = getOption("verbose"),
-         mask.ok, omit, only, attach.required = missing(only))
+         mask.ok, exclude, include.only,
+         attach.required = missing(include.only))
 {
     conf.ctrl <- getOption("conflicts.control")
     if (is.character(conf.ctrl))
@@ -79,8 +81,8 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         
     if (missing(warn.conflicts))
         warn.conflicts <- if (isFALSE(conf.ctrl$warn)) FALSE else TRUE
-    if ((! missing(only)) && (! missing(omit)))
-        stop(gettext("only one of 'only' and 'omit' can be used"),
+    if ((! missing(include.only)) && (! missing(exclude)))
+        stop(gettext("only one of 'include.only' and 'exclude' can be used"),
              call. = FALSE, domain = NA)
 
     testRversion <- function(pkgInfo, pkgname, pkgpath)
@@ -356,8 +358,8 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             cr <- conflictRules(package)
             if (missing(mask.ok))
                 mask.ok <- cr$mask.ok
-            if (missing(omit))
-                omit <- cr$omit
+            if (missing(exclude))
+                exclude <- cr$exclude
 
             ## If the namespace mechanism is available and the package
             ## has a namespace, then the namespace loading mechanism
@@ -383,7 +385,8 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 		tt <- tryCatch({
                     attr(package, "LibPath") <- which.lib.loc
                     ns <- loadNamespace(package, lib.loc)
-                    env <- attachNamespace(ns, pos = pos, deps, omit, only)
+                    env <- attachNamespace(ns, pos = pos, deps,
+                                           exclude, include.only)
 		}, error = function(e) {
 		    P <- if(!is.null(cc <- conditionCall(e)))
 			     paste(" in", deparse(cc)[1L]) else ""
@@ -678,7 +681,8 @@ function(chname, libpath, verbose = getOption("verbose"),
 
 require <-
 function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts,
-         character.only = FALSE, mask.ok, omit, only)
+         character.only = FALSE, mask.ok, exclude, include.only,
+         attach.required = missing(include.only))
 {
     if(!character.only)
         package <- as.character(substitute(package)) # allowing "require(eda)"
@@ -693,7 +697,10 @@ function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts,
                                   logical.return = TRUE,
                                   warn.conflicts = warn.conflicts,
 				  quietly = quietly,
-                                  mask.ok = mask.ok, omit = omit, only = only),
+                                  mask.ok = mask.ok,
+                                  exclude = exclude,
+                                  include.only = include.only,
+                                  attach.required = attach.required),
                           error = function(e) e)
         if (inherits(value, "error")) {
             if (!quietly) {

@@ -22,14 +22,16 @@ library(package, help, pos = 2, lib.loc = NULL,
         character.only = FALSE, logical.return = FALSE,
         warn.conflicts, quietly = FALSE,
         verbose = getOption("verbose"),
-        mask.ok, omit, only, attach.required = missing(only))
+        mask.ok, exclude, include.only,
+        attach.required = missing(include.only))
 
 require(package, lib.loc = NULL, quietly = FALSE,
         warn.conflicts,
         character.only = FALSE,
-        mask.ok, omit, only)
+        mask.ok, exclude, include.only,
+        attach.required = missing(include.only))
 
-conflictRules(pkg, mask.ok = NULL, omit = NULL) 
+conflictRules(pkg, mask.ok = NULL, exclude = NULL) 
 
 }
 \arguments{
@@ -60,7 +62,7 @@ conflictRules(pkg, mask.ok = NULL, omit = NULL)
   \item{quietly}{a logical.  If \code{TRUE}, no message confirming
     package attaching is printed, and most often, no errors/warnings are
     printed if package attaching fails.}
-  \item{pkg, mask.ok, omit, only, attach.required}{For use in managing
+  \item{pkg, mask.ok, exclude, include.only, attach.required}{For use in managing
     conflicts (see \sQuote{Conflictts})}.    
 }
 \details{
@@ -109,11 +111,11 @@ conflictRules(pkg, mask.ok = NULL, omit = NULL)
   If the option \code{error.on.conflicts} is \code{TRUE} an error is
   signaled instead of printing warning messages when unresolved
   conflicts are encountered.  Experimental conflict management is
-  implemented by the arguments \code{mask.ok}, \code{omit}, \code{only},
-  and \code{attach.required} to \code{library} and \code{require}. The
-  function \code{conflictRules} can be used to specify defaults.  Some
-  aspects of how conflicts are handled can be specified with the
-  \code{conflicts.control} option. See
+  implemented by the arguments \code{mask.ok}, \code{exclude},
+  \code{include.only}, and \code{attach.required} to \code{library} and
+  \code{require}. The function \code{conflictRules} can be used to
+  specify defaults.  Some aspects of how conflicts are handled can be
+  specified with the \code{conflicts.control} option. See
   \url{https://svn.r-project.org/R/branches/R-conflicts/CONFLICTS.html}
   for more details.
 }
