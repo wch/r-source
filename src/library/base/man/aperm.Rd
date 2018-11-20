@@ -62,7 +62,7 @@ stopifnot(t(xt[,,2]) == x[,,2],
 
 UCB <- aperm(UCBAdmissions, c(2,1,3))
 UCB[1,,]
-summary(UCB) # UCB is still a continency table
+summary(UCB) # UCB is still a contingency table
 \dontshow{stopifnot(is.table(UCB))}
 }
 \keyword{array}
