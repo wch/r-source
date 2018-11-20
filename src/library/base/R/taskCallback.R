@@ -1,7 +1,7 @@
 #  File src/library/base/R/taskCallback.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -93,13 +93,19 @@ function(handlers = list(), registered = FALSE, verbose = FALSE)
 
     remove <- function(which)
     {
+        if (length(which) != 1L)
+            stop("'which' must be of length 1")
         if(is.character(which)) {
-            tmp <- seq_along(handlers)[!is.na(match(which, names(handlers)))]
-            if(length(tmp))
+            tmp <- match(which, names(handlers))
+            if(is.na(tmp))
                 stop(gettextf("no such element '%s'", which), domain = NA)
             which <- tmp
+        } else if(is.numeric(which)) {
+            which <- as.integer(which)
+            if (which <= 0 || which > length(handlers))
+                stop("invalid 'which' argument")
         } else
-        which <- as.integer(which)
+            stop("'which' must be character or numeric")
 
         handlers <<- handlers[-which]
 
@@ -126,7 +132,7 @@ function(handlers = list(), registered = FALSE, verbose = FALSE)
             for(i in names(handlers)) {
                 h <- handlers[[i]]
                 if(length(h) > 1L) {
-                    val <- h[["f"]](expr, value, ok, visible, i[["data"]])
+                    val <- h[["f"]](expr, value, ok, visible, h[["data"]])
                 } else {
                     val <- h[["f"]](expr, value, ok, visible)
                 }

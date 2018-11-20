@@ -538,7 +538,7 @@ drop1.glm <- function(object, scope, scale = 0, test=c("none", "Rao", "LRT", "Ch
             w <- z$weights
             ## Approximative refit of full model to residuals using WLS
             ## Score statistic comes out as (weighted) model SS
-            zz <- glm.fit(x, r, w, offset=object$offset)
+            zz <- glm.fit(x, r, w)
             score[i] <- zz$null.deviance - zz$deviance
         }
     }

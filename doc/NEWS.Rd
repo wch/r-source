@@ -196,7 +196,7 @@
       \PR{17394}.
 
       \item In \code{.col(dim)} and \code{.row(dim)}, \code{dim} now may
-      also be an integer valued \code{"double"}.
+      also be an integer-valued \code{"double"}.
 
       \item \code{sQuote()} and \code{dQuote()} get an explicit \code{q}
       argument with obvious default instead of using
@@ -215,10 +215,15 @@
       reflect the important characteristics of compiled code.
       %% E.g. 32/64-bit compiler settings
 
-      \item For atomic vectors that are large enough the functions
-      \code{drop}, \code{structure}, \code{unclass}, and \code{unname}
-      now avoid duplicating their data by returning \code{ALTREP}
-      wrapper objects with adjusted attributes.
+      \item The primitive functions \code{drop()} and \code{unclass()}
+      now avoid duplicating their data for atomic vectors that are large
+      enough by returning \code{ALTREP} wrapper objects with adjusted
+      attributes.  R-level assignments to change attributes will also
+      use wrapper objects to avoid duplicating data for larger atomic
+      vectors. R functions like \code{structure()} and \code{unname()}
+      will therefore not duplicate data in these settings.  Generic
+      vectors as produced by \code{list()} are not yet covered by this
+      optimization but may be in due course.
 
       \item In \code{formals()}, \code{envir} becomes an optional
       argument instead of being hardwired.
@@ -276,6 +281,9 @@
 
   \subsection{BUG FIXES}{
     \itemize{
+      \item \code{drop1.glm} miscalculated the score test (\code{test="Rao"})
+      when the model contained an offset.
+
       \item \code{replayPlot(r)} now also works in the same \R session
       when \code{r} has been \dQuote{reproduced} from serialization,
       typically after saving to and reading from an RDS file.
@@ -449,6 +457,9 @@
 
       \item \code{formalArgs("<fn>")} now finds the same function as
       \code{formals(*)}, fixing Emil Bode's \PR{17499}.
+
+      \item The methods package better handles duplicated class names
+      across packages.
     }
   }
 }
@@ -542,6 +553,10 @@
 
       \item Unserialization of raw vectors serialized in ASCII
       representation now works correctly.
+
+      \item \code{<data frame>[TRUE, <new>] <- list(c1, c2)} now works
+      correctly, thanks to Suharto Anggono's \PR{15362} and Emil Bode's
+      patch in \PR{17504}.
     }
   }
 }

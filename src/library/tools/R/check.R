@@ -4477,7 +4477,7 @@ add_dummies <- function(dir, Log)
                             )
 
                 ## gcc 9 warns on code deprecated in C++11
-                ## Rather too frequent (e.g. in Rcpp headers)
+                ## rather too frequently, 
                 ## so suppressable (undocumented) for now.
                 check_gcc9 <- Sys.getenv("_R_CHECK_GCC9_WARNINGS_", "TRUE")
                 if (config_val_to_logical(check_gcc9))

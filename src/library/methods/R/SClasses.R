@@ -706,7 +706,8 @@ initialize <- function(.Object, ...) {
             for(i in seq_along(snames)) {
                 slotName <- snames[[i]]
                 slotClass <- slotDefs[[slotName]]
-                slotClassDef <- getClassDef(slotClass, package = ClassDef@package)
+                slotClassDef <- getClassDef(slotClass,
+                                            package = packageSlot(slotClass))
                 slotVal <- elements[[i]]
                 ## perform non-strict coercion, but leave the error messages for
                 ## values not conforming to the slot definitions to validObject(),

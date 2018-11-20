@@ -26,7 +26,7 @@ Rd2txt(Rd, out = "", package = "", defines = .Platform$OS.type,
        fragment = FALSE, options, ...)
 
 Rd2latex(Rd, out = "", defines = .Platform$OS.type,
-         stages = "render", outputEncoding = "ASCII",
+         stages = "render", outputEncoding = "UTF-8",
          fragment = FALSE, ..., writeEncoding = TRUE)
 
 Rd2ex(Rd, out = "", defines = .Platform$OS.type,

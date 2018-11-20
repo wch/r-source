@@ -844,12 +844,12 @@ void setup_Rmainloop(void)
     srand(TimeToSeed());
 
     InitArithmetic();
-    InitParser();
     InitTempDir(); /* must be before InitEd */
     InitMemory();
     InitStringHash(); /* must be before InitNames */
     InitBaseEnv();
     InitNames(); /* must be after InitBaseEnv to use R_EmptyEnv */
+    InitParser();  /* must be after InitMemory, InitNames */
     InitGlobalEnv();
     InitDynload();
     InitOptions();

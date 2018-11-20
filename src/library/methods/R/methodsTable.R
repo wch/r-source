@@ -606,8 +606,7 @@
         if(is(m, "MethodDefinition"))  { # else, a primitive
             m@target <- .newSignature(classes, fdef@signature)
             ## if any of the inheritance is not simple, must insert coerce's in method body
-            coerce <- .inheritedArgsExpression(m@target, m@defined, body(m),
-                                               where)
+            coerce <- .inheritedArgsExpression(m@target, m@defined, body(m))
             if(!is.null(coerce))
               body(m) <- coerce
             methods[[1L]] <- m
@@ -690,13 +689,14 @@
     ## a corresponding set of package names
     ## <FIXME> There should be a "<unknown>" package name instead of "methods"
     ## but this requires a way to deal with that generally </FIXME>
-    pkgs <- c(packageSlot(classes), rep("methods", n))[i]
-
+    pkgs <- lapply(classes[i], packageSlot)
+    pkgs[vapply(pkgs, is.null, logical(1L))] <- "methods"
+    
   ## Simplified version ...
   .asS4(structure(as.character(classes)[i],
             class = .signatureClassName,
             names = as.character(names)[i],
-            package = pkgs ))
+            package = as.character(pkgs) ))
  }
 
 .findNextFromTable <- function(method, f, optional, envir, prev = character())
@@ -1473,12 +1473,17 @@ listFromMethods <- function(generic, where, table) {
            domain = NA)
 }
 
-.inheritedArgsExpression <- function(target, defined, body, where) {
+setPackageSlot <- function(x, value) {
+    packageSlot(x) <- value
+    x
+}
+
+.inheritedArgsExpression <- function(target, defined, body) {
     expr <- substitute({}, list(DUMMY = "")) # bug if you use quote({})--is overwritten!!
     args <- names(defined)
     for(i in seq_along(defined)) {
-        ei <- extends(getClass(target[[i]], where=where, .Force=TRUE),
-                      getClass(defined[[i]], where=where, .Force=TRUE),
+        ei <- extends(setPackageSlot(target[[i]], packageSlot(target)[[i]]),
+                      setPackageSlot(defined[[i]], packageSlot(defined)),
                       fullInfo = TRUE)
         if(is(ei, "SClassExtension")  && !ei@simple)
           expr[[length(expr) + 1L]] <-

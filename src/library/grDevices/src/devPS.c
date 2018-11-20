@@ -5881,6 +5881,9 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
 
     pd->versionMajor = versionMajor;
     pd->versionMinor = versionMinor;
+    /* Precaution: should be initialized in PDF_newpage, but package
+       PerformanceAnalytics manages to call PDF_Clip without.  */
+    pd->inText = FALSE;
 
     /* This is checked at the start of every page.  We typically have
        three objects per page plus one or two for each raster image, 

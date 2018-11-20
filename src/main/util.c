@@ -537,7 +537,8 @@ void attribute_hidden setIVector(int * vec, int len, int val)
 }
 
 
-/* unused in R, in Utils.h, apparently used in Rcpp  */
+/* unused in R, in Utils.h, may have been used in Rcpp at some point,
+      but not any more (as per Nov. 2018)  */
 void attribute_hidden setRVector(double * vec, int len, double val)
 {
     for (int i = 0; i < len; i++) vec[i] = val;
@@ -1399,6 +1400,33 @@ size_t Mbrtowc(wchar_t *wc, const char *s, size_t n, mbstate_t *ps)
     return used;
 }
 
+/* Truncate a string in place (in native encoding) so that it only contains
+   valid multi-byte characters. Has no effect in non-mbcs locales. */
+attribute_hidden
+char* mbcsTruncateToValid(char *s)
+{
+    if (!mbcslocale)
+	return s;
+
+    mbstate_t mb_st;
+    size_t slen = strlen(s);
+    size_t goodlen = 0;
+
+    mbs_init(&mb_st);
+    while(goodlen < slen) {
+	size_t res;
+	res = mbrtowc(NULL, s + goodlen, slen - goodlen, &mb_st);
+	if (res == (size_t) -1 || res == (size_t) -2) {
+	    /* strip off all remaining characters */
+	    for(;goodlen < slen; goodlen++)
+		s[goodlen] = '\0';
+	    return s;
+	}
+	goodlen += res;
+    }
+    return s;
+} 
+    
 attribute_hidden
 Rboolean mbcsValid(const char *str)
 {

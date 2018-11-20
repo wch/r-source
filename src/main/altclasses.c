@@ -775,19 +775,8 @@ static void deferred_string_Set_elt(SEXP x, R_xlen_t i, SEXP v)
 
 static int deferred_string_Is_sorted(SEXP x)
 {
-    SEXP state = DEFERRED_STRING_STATE(x);
-    if (state == R_NilValue)
-	/* string is fully expanded and may have been modified. */
-	return UNKNOWN_SORTEDNESS;
-    else {
-	/* defer to the argument */
-	SEXP arg = DEFERRED_STRING_STATE_ARG(state);
-	switch(TYPEOF(arg)) {
-	case INTSXP: return INTEGER_IS_SORTED(arg);
-	case REALSXP: return REAL_IS_SORTED(arg);
-	default: return UNKNOWN_SORTEDNESS;
-	}
-    }
+    /* same as the default method; sortedness of the numeric is not relevant  */
+    return UNKNOWN_SORTEDNESS;
 }
 
 static int deferred_string_No_NA(SEXP x)
@@ -1963,7 +1952,7 @@ SEXP attribute_hidden do_tryWrap(SEXP call, SEXP op, SEXP args, SEXP env)
    will be referenced from C code after it is cleared. */
 SEXP R_tryUnwrap(SEXP x)
 {
-    if (! MAYBE_REFERENCED(x) && is_wrapper(x) &&
+    if (! MAYBE_SHARED(x) && is_wrapper(x) &&
 	WRAPPER_SORTED(x) == UNKNOWN_SORTEDNESS && ! WRAPPER_NO_NA(x)) {
 	SEXP data = WRAPPER_WRAPPED(x);
 	if (! MAYBE_SHARED(data)) {
@@ -1979,6 +1968,8 @@ SEXP R_tryUnwrap(SEXP x)
 	    SETCAR(x, R_NilValue);
 	    SETCDR(x, R_NilValue);
 	    SET_TAG(x, R_NilValue);
+	    SET_OBJECT(x, 0);
+	    UNSET_S4_OBJECT(x);
 	    /* NAMED should be zero */
 
 	    return data;

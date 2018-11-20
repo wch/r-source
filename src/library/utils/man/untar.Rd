@@ -177,7 +177,7 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   you can do with such an archive is to find a \code{tar} program that
   handles it, and look carefully at the resulting files.  There may also
   be the warning \preformatted{    using pax extended headers}
-  This is indicates that additional information may have been discarded,
+  This indicates that additional information may have been discarded,
   such as ACLs, encodings \dots.
 
   The standards only support ASCII filenames (indeed, only alphanumeric
