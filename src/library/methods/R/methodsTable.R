@@ -691,7 +691,7 @@
     ## but this requires a way to deal with that generally </FIXME>
     pkgs <- lapply(classes[i], packageSlot)
     pkgs[vapply(pkgs, is.null, logical(1L))] <- "methods"
-    
+
   ## Simplified version ...
   .asS4(structure(as.character(classes)[i],
             class = .signatureClassName,
@@ -1597,7 +1597,7 @@ testInheritedMethods <- function(f, signatures, test = TRUE,  virtual = FALSE,
     ## now split the individual labels back into signatures
     signatures <- strsplit(sigLabels, "#", fixed = TRUE)
   } ## end of missing(signatures) case
-  else if(is(signatures, "matrix") && identical(typeof(signatures), "character")
+  else if(is(signatures, "matrix") && typeof(signatures) == "character"
        && ncol(signatures) <= length(f@signature)) {
       ## turn signatures back into a list
       siglist <- vector("list", nrow(signatures))

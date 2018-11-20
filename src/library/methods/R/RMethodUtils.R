@@ -1915,11 +1915,12 @@ evalqOnLoad <- function(expr, where = topenv(parent.frame()), aname = "")
         0L
 }
 
-## test whether this function could be an S3 generic, either
+## test whether this function  _could be_  an S3 generic, either
 ## a primitive or a function calling UseMethod()
 isS3Generic <- function(fdef) {
-    if(is.primitive(fdef))
-        identical(typeof(fdef), "builtin")
-    else
-        "UseMethod" %in% .getGlobalFuns(fdef) # from refClass.R
+    switch(typeof(fdef),
+           "special" = FALSE,
+           "builtin" = TRUE,
+           ## otherwise:
+           "UseMethod" %in% .getGlobalFuns(fdef)) # from refClass.R
 }

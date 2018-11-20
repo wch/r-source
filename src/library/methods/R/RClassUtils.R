@@ -1342,7 +1342,7 @@ validSlotNames <- function(names) {
 
 ### utility function called from primitive code for "@"
 getDataPart <- function(object) {
-    if(identical(typeof(object),"S4")) {
+    if(typeof(object) == "S4") {
         ## explicit .Data or .xData slot
         ## Some day, we may merge both of these as .Data
         value <- attr(object, ".Data")
