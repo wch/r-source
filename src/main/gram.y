@@ -248,8 +248,6 @@ static SrcRefState ParseState;
    two protection schemes.
 */
 
-static R_xlen_t nPreserved = 0;
-
 /* Add the given semantic value (SEXP) to the precious multi-set of the
    current parser state.  The set is specific to each parsing and is
    automatically cleared when the parse operation finishes or fails.
@@ -261,7 +259,7 @@ static void PRESERVE_SV(SEXP x) {
     SEXP store = PS_SVS;
     if (store == R_NilValue)
 	PS_SET_SVS(store = allocVector(VECSXP, 200));
-    else if (nPreserved == XLENGTH(store)) {
+    else if (ParseState.nPreserved == XLENGTH(store)) {
 	R_xlen_t oldsize = XLENGTH(store);
 	R_xlen_t newsize = 2 * oldsize;
 	SEXP newsvs = PROTECT(allocVector(VECSXP, newsize));
@@ -271,7 +269,7 @@ static void PRESERVE_SV(SEXP x) {
 	UNPROTECT(1); /* newsvs */
     }
     UNPROTECT(1); /* x */
-    SET_VECTOR_ELT(store, nPreserved++, x);
+    SET_VECTOR_ELT(store, ParseState.nPreserved++, x);
 }
 
 /* Remove (one instance of) the semantic value from the current parser state
@@ -282,12 +280,12 @@ static void RELEASE_SV(SEXP x) {
     SEXP store = PS_SVS;
     if (store == R_NilValue)
 	return; /* not preserved */
-    for(R_xlen_t i = nPreserved - 1; i >= 0; i--) {
+    for(R_xlen_t i = ParseState.nPreserved - 1; i >= 0; i--) {
 	if (VECTOR_ELT(store, i) == x) {
-	    for(;i < nPreserved - 1; i++)
+	    for(;i < ParseState.nPreserved - 1; i++)
 		SET_VECTOR_ELT(store, i, VECTOR_ELT(store, i + 1));
 	    SET_VECTOR_ELT(store, i, R_NilValue);
-	    nPreserved --;
+	    ParseState.nPreserved --;
 	    return;
 	}
     }
@@ -303,11 +301,11 @@ static void clearSvs() {
     R_xlen_t size = XLENGTH(store);
     if (size < 500)
 	/* just free the entries */
-	for(R_xlen_t i = 0; i < nPreserved; i++)
+	for(R_xlen_t i = 0; i < ParseState.nPreserved; i++)
 	    SET_VECTOR_ELT(store, i, R_NilValue);
     else
 	PS_SET_SVS(R_NilValue);
-    nPreserved = 0;
+    ParseState.nPreserved = 0;
 }
 
 #include <rlocale.h>
@@ -1273,6 +1271,7 @@ void InitParser(void)
 {
     ParseState.sexps = allocVector(VECSXP, 7); /* initialized to R_NilValue */
     ParseState.data = R_NilValue;
+    ParseState.nPreserved = 0;
     R_PreserveObject(ParseState.sexps); /* never released in an R session */
     R_NullSymbol = install("NULL");
 }
@@ -1294,7 +1293,9 @@ void R_InitSrcRefState(RCNTXT* cptr)
 	ParseState.prevState = prev;
 	ParseState.sexps = allocVector(VECSXP, 7);
 	ParseState.data = R_NilValue;
+	ParseState.nPreserved = 0;
 	R_PreserveObject(ParseState.sexps);
+	/* ParseState.sexps released in R_FinalizeSrcRefState */
     } else
 	/* re-use data, text, ids arrays */
         ParseState.prevState = NULL;
@@ -1361,6 +1362,7 @@ static void UseSrcRefState(SrcRefState *state)
     ParseState.keepSrcRefs = state->keepSrcRefs;
     ParseState.keepParseData = state->keepParseData;
     ParseState.sexps = state->sexps;
+    ParseState.nPreserved = state->nPreserved;
     ParseState.data = state->data;
     ParseState.data_count = state->data_count;
     ParseState.xxlineno = state->xxlineno;
@@ -1376,6 +1378,7 @@ static void PutSrcRefState(SrcRefState *state)
     state->keepSrcRefs = ParseState.keepSrcRefs;
     state->keepParseData = ParseState.keepParseData;
     state->sexps = ParseState.sexps;
+    state->nPreserved = ParseState.nPreserved;
     state->data = ParseState.data;
     state->data_count = ParseState.data_count;
     state->xxlineno = ParseState.xxlineno;
