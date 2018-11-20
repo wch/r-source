@@ -214,10 +214,9 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                 emsg <- ""
                 pkg <- names(conflicts)
                 notOK <- vector("list", 0)
-                canMask <- conf.ctrl$can.mask
                 for (i in seq_along(conflicts)) {
                     pkgname <- sub("^package:", "", pkg[i])
-                    if (pkgname %in% canMask)
+                    if (pkgname %in% canMaskEnv$canMask)
                         next
                     same <- conflicts[[i]]
                     if (is.list(mask.ok))
@@ -321,9 +320,23 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                     pos <- 2
                 } else pos <- npos
             }
+
+            deps <- unique(names(pkgInfo$Depends))
+            depsOK <- isTRUE(conf.ctrl$depends.ok)
+            if (depsOK) {
+                canMaskEnv <- dynGet("__library_can_mask__", NULL)
+                if (is.null(canMaskEnv)) {
+                    canMaskEnv <- new.env()
+                    canMaskEnv$canMask <- union("base", conf.ctrl$can.mask)
+                    "__library_can_mask__" <- canMaskEnv
+                }
+                canMaskEnv$canMask <- unique(c(package, deps,
+                                               canMaskEnv$canMask))
+            }
+            else canMaskEnv <- NULL
+
             if (attach.required)
                 .getRequiredPackages2(pkgInfo, quietly = quietly)
-            deps <- unique(names(pkgInfo$Depends))
 
             cr <- conflictRules(package)
             if (missing(mask.ok))

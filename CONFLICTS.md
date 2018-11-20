@@ -170,6 +170,24 @@ Some additional features that have been implemented:
       base packages can reduce the number of explicit masking
       approvals needed.
 
+    - `depends.ok`: If `TRUE` then allow all conflicts produced within
+      a single package load.
+
+A specification that may work for most users who want protection
+against unanticipated conflicts:
+  
+```r
+options(conflicts.control = list(error = TRUE,
+                                 generics.ok = TRUE,
+                                 can.mask = getOption("defaultPackages"),
+                                 depends.ok = TRUE))
+```
+
+This specification assumes that package authors know what they are
+doing and all conflicts from loading their package by itself are
+intentional and OK.  With this specification all `CRAN` and `BIOC`
+packages individually load without error.
+
 A useful specification for strict checking, suppressing warning messages,
 and ignoring conflicts with some base packages would be
 

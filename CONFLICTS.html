@@ -215,8 +215,15 @@ conflictRules(&quot;BiocGenerics&quot;, mask.ok = list(base = TRUE,
 <li><p><code>error</code>: If <code>TRUE</code> then conflicts produce errors. This should probably replace the <code>error.on.conflicts</code> option; for now it is an alternative way to request strict checking.</p></li>
 <li><p><code>generics.ok</code>: If set this determines whether masking a function with an S4 generic version is considered a conflict. The default in <code>FALSE</code> for strict checking and <code>TRUE</code> otherwise.</p></li>
 <li><p><code>can.mask</code>: A character vector of names of packages that are allowed to be masked without producing an error. Specifying the base packages can reduce the number of explicit masking approvals needed.</p></li>
+<li><p><code>depends.ok</code>: If <code>TRUE</code> then allow all conflicts produced within a single package load.</p></li>
 </ul></li>
 </ul>
+<p>A specification that may work for most users who want protection against unanticipated conflicts:</p>
+<pre class="r"><code>options(conflicts.control = list(error = TRUE,
+                                 generics.ok = TRUE,
+                                 can.mask = getOption(&quot;defaultPackages&quot;),
+                                 depends.ok = TRUE))</code></pre>
+<p>This specification assumes that package authors know what they are doing and all conflicts from loading their package by itself are intentional and OK. With this specification all <code>CRAN</code> and <code>BIOC</code> packages individually load without error.</p>
 <p>A useful specification for strict checking, suppressing warning messages, and ignoring conflicts with some base packages would be</p>
 <pre class="r"><code>options(conflicts.control =
     list(error = TRUE,
