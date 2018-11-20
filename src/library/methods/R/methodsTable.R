@@ -686,13 +686,14 @@
     ## a corresponding set of package names
     ## <FIXME> There should be a "<unknown>" package name instead of "methods"
     ## but this requires a way to deal with that generally </FIXME>
-    pkgs <- c(packageSlot(classes), rep("methods", n))[i]
-
+    pkgs <- lapply(classes[i], packageSlot)
+    pkgs[vapply(pkgs, is.null, logical(1L))] <- "methods"
+    
   ## Simplified version ...
   .asS4(structure(as.character(classes)[i],
             class = .signatureClassName,
             names = as.character(names)[i],
-            package = pkgs ))
+            package = as.character(pkgs) ))
  }
 
 .findNextFromTable <- function(method, f, optional, envir, prev = character())
@@ -1467,11 +1468,18 @@ listFromMethods <- function(generic, where, table) {
            domain = NA)
 }
 
+setPackageSlot <- function(x, value) {
+    packageSlot(x) <- value
+    x
+}
+
 .inheritedArgsExpression <- function(target, defined, body) {
     expr <- substitute({}, list(DUMMY = "")) # bug if you use quote({})--is overwritten!!
     args <- names(defined)
     for(i in seq_along(defined)) {
-        ei <- extends(target[[i]], defined[[i]], fullInfo = TRUE)
+        ei <- extends(setPackageSlot(target[[i]], packageSlot(target)[[i]]),
+                      setPackageSlot(defined[[i]], packageSlot(defined)),
+                      fullInfo = TRUE)
         if(is(ei, "SClassExtension")  && !ei@simple)
           expr[[length(expr) + 1L]] <-
             substitute(ARG <- as(ARG, DEFINED, strict = FALSE),
