@@ -94,6 +94,10 @@
 
       \item Unserialization of raw vectors serialized in ASCII
       representation now works correctly.
+
+      \item \code{<data frame>[TRUE, <new>] <- list(c1, c2)} now works
+      correctly, thanks to Suharto Anggono's \PR{15362} and Emil Bode's
+      patch in \PR{17504}.
     }
   }
 }
