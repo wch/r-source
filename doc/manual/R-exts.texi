@@ -2121,6 +2121,13 @@ guarantee that this will work everywhere).  (This does not apply to
 Fortran 9x code, where @code{SHLIB_OPENMP_FCFLAGS} should be used in
 both @code{PKG_FCFLAGS} and @code{PKG_LIBS}.)
 
+It is not portable to use OpenMP with more than one of C, C++, FORTRAN
+77 and Fortran 9x in a single package since it is quite likely that the
+compilers are of different families: using C and FORTRAN 77 is most
+widely supported (but only fortuitously works on macOS).
+@c Where an alternative compiler is used for C++11 or later, its OpenMP
+@c runtime may be incompatible even with C.
+
 For portability, any C/C++ code using the @code{omp_*} functions should
 include the @file{omp.h} header: some compilers (but not all) include it
 when OpenMP mode is switched on (e.g.@: @emph{via} flag

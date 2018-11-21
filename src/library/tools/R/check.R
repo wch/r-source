@@ -2770,6 +2770,10 @@ add_dummies <- function(dir, Log)
                                                  useBytes = TRUE)))
                 warns <- grep("^[-]W", tokens,
                               value = TRUE, perl = TRUE, useBytes = TRUE)
+                ## qtbase uses something like
+                ## cmake ../src -DR_CXX="g++" -DCMAKE_CXX_FLAGS="-std=gnu++11 -g -O2 -Wall -pedantic -mtune=native -Wno-ignored-attributes -Wno-deprecated-declarations" ...
+                ## which reports trailing " on last token
+                warns <- gsub('["\']$', "", warns, perl = TRUE, useBytes = TRUE)
                 ## Not sure -Wextra and -Weverything are portable, though
                 ## -Werror is not compiler independent
                 ##   (as what is a warning is not)
