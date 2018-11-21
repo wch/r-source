@@ -2321,16 +2321,19 @@ static int NumericValue(int c)
 /* specifications of the form \o, \oo or \ooo, where 'o' */
 /* is an octal digit. */
 
-
+/* The buffer is reallocated on the R heap if needed; not by malloc */
+/* to avoid memory leak in case of R error (long jump) */
 #define STEXT_PUSH(c) do {                  \
-	size_t nc = bp - stext;       \
+	size_t nc = bp - stext;             \
 	if (nc >= nstext - 1) {             \
 	    char *old = stext;              \
+	    SEXP st1;		            \
 	    nstext *= 2;                    \
-	    stext = malloc(nstext);         \
-	    if(!stext) error(_("unable to allocate buffer for long string at line %d"), ParseState.xxlineno);\
+	    PROTECT(st1 = allocVector(RAWSXP, nstext)); \
+	    stext = (char *)RAW(st1);       \
 	    memmove(stext, old, nc);        \
-	    if(old != st0) free(old);	    \
+	    REPROTECT(st1, sti);	    \
+	    UNPROTECT(1); /* st1 */         \
 	    bp = stext+nc; }		    \
 	*bp++ = ((char) c);		    \
 } while(0)
@@ -2434,10 +2437,12 @@ static int StringValue(int c, Rboolean forSymbol)
     char st0[MAXELTSIZE];
     unsigned int nstext = MAXELTSIZE;
     char *stext = st0, *bp = st0;
+    PROTECT_INDEX sti;
     int wcnt = 0;
     ucs_t wcs[10001];
     Rboolean oct_or_hex = FALSE, use_wcs = FALSE, currtext_truncated = FALSE;
 
+    PROTECT_WITH_INDEX(R_NilValue, &sti);
     CTEXT_PUSH(c);
     while ((c = xxgetc()) != R_EOF && c != quote) {
 	CTEXT_PUSH(c);
@@ -2655,7 +2660,7 @@ static int StringValue(int c, Rboolean forSymbol)
     WTEXT_PUSH(0);
     yytext[0] = '\0';
     if (c == R_EOF) {
-        if(stext != st0) free(stext);
+	UNPROTECT(1); /* release stext */
         PRESERVE_SV(yylval = R_NilValue);
     	return INCOMPLETE_STRING;
     } else {
@@ -2670,8 +2675,8 @@ static int StringValue(int c, Rboolean forSymbol)
     } else 
         snprintf(yytext, MAXELTSIZE, "[%d wide chars quoted with '%c']", wcnt, quote);
     if(forSymbol) {
+	UNPROTECT(1); /* release stext */
 	PRESERVE_SV(yylval = install(stext));
-	if(stext != st0) free(stext);
 	return SYMBOL;
     } else {
 	if(use_wcs) {
@@ -2683,7 +2688,7 @@ static int StringValue(int c, Rboolean forSymbol)
 		error(_("string at line %d containing Unicode escapes not in this locale\nis too long (max 10000 chars)"), ParseState.xxlineno);
 	} else
 	    PRESERVE_SV(yylval = mkString2(stext,  bp - stext - 1, oct_or_hex));
-	if(stext != st0) free(stext);
+	UNPROTECT(1); /* release stext */
 	return STR_CONST;
     }
 }
