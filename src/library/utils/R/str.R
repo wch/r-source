@@ -254,9 +254,9 @@ str.default <-
 		warning("Not a validObject(): ", r, call.=FALSE) # instead of error
 		r <- attributes(x) ## "FIXME" low-level assumption about S4 slots
 		r <- r[names(r) != "class"]
-                dp <- methods::getDataPart(x, NULL.for.none=TRUE)
-                if(!is.null(dp)) names(dp) <- methods:::.dataSlot(nms)
-                c(r, dp)
+		dp <- list(methods::getDataPart(x, NULL.for.none=TRUE))
+		if(!is.null(dp)) names(dp) <- methods:::.dataSlot(nms)
+		c(r, dp)
 	    }
 	}
 	if(methods::is(object,"envRefClass")) {

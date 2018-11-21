@@ -1046,6 +1046,7 @@ myM <- setClass("myMatrix", contains="matrix")
 T <- rbind(1:2, c=2, "a+"=10, myM(4:1,2), deparse.level=0)
 stopifnot(identical(rownames(T), c("", "c", "a+", "", "")))
 ## rownames(.) wrongly were NULL in R <= 3.4.1
+proc.time() - .pt; .pt <- proc.time()
 
 
 ## qr.coef(qr(X, LAPACK=TRUE)) when X has column names, etc
@@ -1903,6 +1904,7 @@ lms <- list(m0 = lm(y ~ 0), m1 = lm(y ~ 1), m2 = lm(y ~ exp(y[,1]^2)))
 dcf <- sapply(lms, function(fm) dim(coef(fm)))
 stopifnot(dcf[1,] == 0:2, dcf[2,] == 5)
 ## coef(lm(y ~ 0)) had 3 instead of 5 columns in R <= 3.5.1
+proc.time() - .pt; .pt <- proc.time()
 
 
 ## confint(<mlm>)
@@ -2268,12 +2270,12 @@ stopifnot(exprs = {
 
 
 ## str() now even works with invalid objects:
-mo <- findMethods("Ops")
+moS <- mo <- findMethods("isSymmetric")
 attr(mo, "arguments") <- NULL
 validObject(mo, TRUE)# shows what's wrong
 tools::assertError(capture.output( mo ))
 op <- options(warn = 1)# warning:
-str(mo)
+str(mo, max.level = 2)
 options(op)# revert
 ## in R <= 3.5.x, str() gave error instead of the warning
 
