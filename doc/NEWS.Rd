@@ -227,6 +227,10 @@
 
       \item In \code{formals()}, \code{envir} becomes an optional
       argument instead of being hardwired.
+
+      \item Instead of signalling an error for an invalid S4 object
+      \code{x}, \code{str(x)} now gives a warning and subsequently still
+      shows most parts of \code{x}, e.g., when slots are missing.
     }
   }
 

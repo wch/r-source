@@ -1,7 +1,7 @@
 % File src/library/methods/man/RClassUtils.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
-% Copyright 2008-2015 The R Foundation
+% Copyright 1995-2018 R Core Team
+% Copyright 2008-2018 The R Foundation
 % Distributed under GPL 2 or later
 
 \name{RClassUtils}
@@ -86,11 +86,10 @@ isVirtualClass(Class, where)
 newBasic(Class, ...)
 
 makeExtends(Class, to, coerce, test, replace, by, package, slots,
-                 classDef1, classDef2)
+            classDef1, classDef2)
 
 reconcilePropertiesAndPrototype(name, properties, prototype,
-       superClasses, where)
-
+                                superClasses, where)
 tryNew(Class, where)
 
 empty.dump()
@@ -99,9 +98,9 @@ showClass(Class, complete=TRUE, propertiesAreCalled="Slots")
 
 showExtends(ext, printTo = stdout())
 
-possibleExtends(class1, class2, ClassDef1 = getClassDef(class1),
-                 ClassDef2 = getClassDef(class2, where =
-                 .classEnv(ClassDef1)))
+possibleExtends(class1, class2,
+                ClassDef1 = getClassDef(class1),
+                ClassDef2 = getClassDef(class2, where = .classEnv(ClassDef1)))
 
 completeExtends(ClassDef, class2, extensionDef, where)
 
@@ -122,9 +121,8 @@ isClassDef(object)
 
 validSlotNames(names)
 
-getDataPart(object)
+getDataPart(object, NULL.for.none = FALSE)
 setDataPart(object, value, check = TRUE)
-
 }
 
 \section{Summary of Functions}{

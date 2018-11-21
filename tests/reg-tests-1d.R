@@ -2267,6 +2267,17 @@ stopifnot(exprs = {
 ## in R <= 3.5.1
 
 
+## str() now even works with invalid objects:
+mo <- findMethods("Ops")
+attr(mo, "arguments") <- NULL
+validObject(mo, TRUE)# shows what's wrong
+tools::assertError(capture.output( mo ))
+op <- options(warn = 1)# warning:
+str(mo)
+options(op)# revert
+## in R <= 3.5.x, str() gave error instead of the warning
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

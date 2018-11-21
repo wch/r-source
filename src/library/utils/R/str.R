@@ -245,6 +245,20 @@ str.default <-
     if (is.null(object))
 	cat(" NULL\n")
     else if(S4) {
+	trygetSlots <- function(x, nms) {
+	    r <- tryCatch(sapply(nms, methods::slot, object=x, simplify = FALSE),
+			  error = conditionMessage)
+	    if(is.list(r))
+		r
+	    else {
+		warning("Not a validObject(): ", r, call.=FALSE) # instead of error
+		r <- attributes(x) ## "FIXME" low-level assumption about S4 slots
+		r <- r[names(r) != "class"]
+                dp <- methods::getDataPart(x, NULL.for.none=TRUE)
+                if(!is.null(dp)) names(dp) <- methods:::.dataSlot(nms)
+                c(r, dp)
+	    }
+	}
 	if(methods::is(object,"envRefClass")) {
 	    cld <- tryCatch(object$getClass(), error=function(e)e)
 	    if(inherits(cld, "error")) {
@@ -275,20 +289,19 @@ str.default <-
 		else cat("\n")
 	    }
 	    if(length(sNms <- sNms[sNms != ".xData"])) {
-		sls <- sapply(sNms, methods::slot,
-			      object=object, simplify = FALSE)
 		cat(" and ", n.of(length(sNms), "slot"), "\n", sep="")
+		sls <- trygetSlots(object, sNms)
 		strSub(sls, comp.str = "@ ", no.list=TRUE, give.length=give.length,
 		       indent.str = paste(indent.str,".."), nest.lev = nest.lev + 1)
 	    }
 	    else if(lo == 0) cat(".\n")
 	}
 	else { ## S4 non-envRefClass
-	    a <- sapply(methods::.slotNames(object), methods::slot,
-			object=object, simplify = FALSE)
+	    sNms <- methods::.slotNames(object)
 	    cat("Formal class", " '", paste(cl, collapse = "', '"),
 		"' [package \"", attr(cl,"package"), "\"] with ",
-		n.of(length(a), "slot"), "\n", sep = "")
+		n.of(length(sNms), "slot"), "\n", sep = "")
+	    a <- trygetSlots(object, sNms)
 	    strSub(a, comp.str = "@ ", no.list=TRUE, give.length=give.length,
 		   indent.str = paste(indent.str,".."), nest.lev = nest.lev + 1)
 	}
