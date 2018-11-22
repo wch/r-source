@@ -1,4 +1,3 @@
-
 %{
 /*
  *  R : A Computer Language for Statistical Data Analysis
@@ -97,7 +96,7 @@ typedef struct yyltype
 
 /* Functions used in the parsing process */
 
-static SEXP	GrowList(SEXP, SEXP);
+static void	GrowList(SEXP, SEXP);
 static int	KeywordLookup(const char *);
 static SEXP	NewList(void);
 static SEXP     makeSrcref(YYLTYPE *, SEXP);
@@ -144,6 +143,8 @@ static int	mkText(int);
 static int 	mkComment(int);
 static int      mkVerb(int);
 static int      mkVerbEnv();
+
+static SEXP R_LatexTagSymbol = NULL;
 
 #define YYSTYPE		SEXP
 
@@ -197,35 +198,32 @@ block:		'{' Items  '}'			{ $$ = xxblock($2, &@$); }
 
 static SEXP xxnewlist(SEXP item)
 {
-    SEXP ans, tmp;
+    SEXP ans;
 #if DEBUGVALS
     Rprintf("xxnewlist(item=%p)", item);
 #endif    
-    PROTECT(tmp = NewList());
+    PROTECT(ans = NewList());
     if (item) {
-    	PROTECT(ans = GrowList(tmp, item));
-    	UNPROTECT_PTR(tmp);
+	GrowList(ans, item);
     	UNPROTECT_PTR(item);
-    } else ans = tmp;
+    }
 #if DEBUGVALS
     Rprintf(" result: %p is length %d\n", ans, length(ans));
 #endif
     return ans;
 }
 
-static SEXP xxlist(SEXP oldlist, SEXP item)
+static SEXP xxlist(SEXP list, SEXP item)
 {
-    SEXP ans;
 #if DEBUGVALS
-    Rprintf("xxlist(oldlist=%p, item=%p)", oldlist, item);
+    Rprintf("xxlist(list=%p, item=%p)", list, item);
 #endif
-    PROTECT(ans = GrowList(oldlist, item));
+    GrowList(list, item);
     UNPROTECT_PTR(item);
-    UNPROTECT_PTR(oldlist);
 #if DEBUGVALS
-    Rprintf(" result: %p is length %d\n", ans, length(ans));
+    Rprintf(" result: %p is length %d\n", list, length(list));
 #endif
-    return ans;
+    return list;
 }
 
 static SEXP xxenv(SEXP begin, SEXP body, SEXP end, YYLTYPE *lloc)
@@ -243,8 +241,7 @@ static SEXP xxenv(SEXP begin, SEXP body, SEXP end, YYLTYPE *lloc)
     }
     /* FIXME:  check that begin and end match */
     setAttrib(ans, R_SrcrefSymbol, makeSrcref(lloc, parseState.SrcFile));
-    SEXP s_latex_tag = install("latex_tag");
-    setAttrib(ans, s_latex_tag, mkString("ENVIRONMENT"));
+    setAttrib(ans, R_LatexTagSymbol, mkString("ENVIRONMENT"));
     if (!isNull(end)) 
     	UNPROTECT_PTR(end);
 #if DEBUGVALS
@@ -262,8 +259,7 @@ static SEXP xxmath(SEXP body, YYLTYPE *lloc)
     PROTECT(ans = PairToVectorList(CDR(body)));
     UNPROTECT_PTR(body);
     setAttrib(ans, R_SrcrefSymbol, makeSrcref(lloc, parseState.SrcFile));
-    SEXP s_latex_tag = install("latex_tag");
-    setAttrib(ans, s_latex_tag, mkString("MATH"));
+    setAttrib(ans, R_LatexTagSymbol, mkString("MATH"));
 #if DEBUGVALS
     Rprintf(" result: %p\n", ans);    
 #endif
@@ -283,8 +279,7 @@ static SEXP xxblock(SEXP body, YYLTYPE *lloc)
     	UNPROTECT_PTR(body);	
     }
     setAttrib(ans, R_SrcrefSymbol, makeSrcref(lloc, parseState.SrcFile));
-    SEXP s_latex_tag = install("latex_tag");
-    setAttrib(ans, s_latex_tag, mkString("BLOCK"));
+    setAttrib(ans, R_LatexTagSymbol, mkString("BLOCK"));
 
 #if DEBUGVALS
     Rprintf(" result: %p\n", ans);    
@@ -319,8 +314,7 @@ static void xxsavevalue(SEXP items, YYLTYPE *lloc)
     } else {
     	PROTECT(parseState.Value = allocVector(VECSXP, 1));
     	SET_VECTOR_ELT(parseState.Value, 0, ScalarString(mkChar("")));
-    	SEXP s_latex_tag = install("latex_tag");
-    	setAttrib(VECTOR_ELT(parseState.Value, 0), s_latex_tag, mkString("TEXT"));
+	setAttrib(VECTOR_ELT(parseState.Value, 0), R_LatexTagSymbol, mkString("TEXT"));
     }	
     if (!isNull(parseState.Value)) {
     	setAttrib(parseState.Value, R_ClassSymbol, mkString("LaTeX"));
@@ -330,8 +324,7 @@ static void xxsavevalue(SEXP items, YYLTYPE *lloc)
 
 static SEXP xxtag(SEXP item, int type, YYLTYPE *lloc)
 {
-    SEXP s_latex_tag = install("latex_tag");
-    setAttrib(item, s_latex_tag, mkString(yytname[YYTRANSLATE(type)]));
+    setAttrib(item, R_LatexTagSymbol, mkString(yytname[YYTRANSLATE(type)]));
     setAttrib(item, R_SrcrefSymbol, makeSrcref(lloc, parseState.SrcFile));
     return item;
 }
@@ -424,7 +417,7 @@ static SEXP makeSrcref(YYLTYPE *lloc, SEXP srcfile)
     INTEGER(val)[5] = lloc->last_column;
     setAttrib(val, R_SrcfileSymbol, srcfile);
     setAttrib(val, R_ClassSymbol, mkString("srcref"));
-    UNPROTECT(1);
+    UNPROTECT(1); /* val */
     return val;
 }
 
@@ -435,7 +428,7 @@ static SEXP mkString2(const char *s, size_t len)
 
     PROTECT(t = allocVector(STRSXP, 1));
     SET_STRING_ELT(t, 0, mkCharLenCE(s, (int) len, enc));
-    UNPROTECT(1);
+    UNPROTECT(1); /* t */
     return t;
 }
 
@@ -458,15 +451,12 @@ static SEXP NewList(void)
 
 /* Add a new element at the end of a stretchy list */
 
-static SEXP GrowList(SEXP l, SEXP s)
+static void GrowList(SEXP l, SEXP s)
 {
     SEXP tmp;
-    PROTECT(s);
     tmp = CONS(s, R_NilValue);
-    UNPROTECT(1);
     SETCDR(CAR(l), tmp);
     SETCAR(l, tmp);
-    return l;
 }
 
 /*--------------------------------------------------------------------------*/
@@ -815,9 +805,8 @@ static int mkMarkup(int c)
         else if (c != ' ') /* Eat a space, but keep other terminators */
     	    xxungetc(c);
     }
-    if (retval != VERB) {
-    	PROTECT(yylval = mkString(stext));
-    }
+    if (retval != VERB)
+	PROTECT(yylval = mkString(stext));
     if(stext != st0) free(stext);
     return retval;
 }
@@ -899,6 +888,11 @@ static void PopState() {
     	busy = FALSE;
 }
 
+static void InitSymbols(void)
+{
+    R_LatexTagSymbol = install("latex_tag");
+}
+
 /* "do_parseLatex" 
 
  .External2("parseLatex", file, srcfile, verbose, basename, warningCalls)
@@ -911,6 +905,7 @@ SEXP parseLatex(SEXP call, SEXP op, SEXP args, SEXP env)
 
     SEXP s = R_NilValue, source, text;
     ParseStatus status;
+    InitSymbols();
 
 #if DEBUGMODE
     yydebug = 1;
