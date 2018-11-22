@@ -2660,8 +2660,8 @@ static int StringValue(int c, Rboolean forSymbol)
     WTEXT_PUSH(0);
     yytext[0] = '\0';
     if (c == R_EOF) {
+	PRESERVE_SV(yylval = R_NilValue);
 	UNPROTECT(1); /* release stext */
-        PRESERVE_SV(yylval = R_NilValue);
     	return INCOMPLETE_STRING;
     } else {
     	CTEXT_PUSH(c);
@@ -2675,8 +2675,8 @@ static int StringValue(int c, Rboolean forSymbol)
     } else 
         snprintf(yytext, MAXELTSIZE, "[%d wide chars quoted with '%c']", wcnt, quote);
     if(forSymbol) {
-	UNPROTECT(1); /* release stext */
 	PRESERVE_SV(yylval = install(stext));
+	UNPROTECT(1); /* release stext */
 	return SYMBOL;
     } else {
 	if(use_wcs) {
