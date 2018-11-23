@@ -62,7 +62,7 @@
 
 
 /* Copy the first part of user declarations.  */
-#line 1 "gramLatex.y" /* yacc.c:339  */
+
 
 /*
  *  R : A Computer Language for Statistical Data Analysis
@@ -214,7 +214,7 @@ static SEXP R_LatexTagSymbol = NULL;
 #define YYSTYPE		SEXP
 
 
-#line 218 "gramLatex.tab.c" /* yacc.c:339  */
+
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -256,6 +256,15 @@ extern int yydebug;
     VERB = 265
   };
 #endif
+/* Tokens.  */
+#define END_OF_INPUT 258
+#define ERROR 259
+#define MACRO 260
+#define TEXT 261
+#define COMMENT 262
+#define BEGIN 263
+#define END 264
+#define VERB 265
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -287,7 +296,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 291 "gramLatex.tab.c" /* yacc.c:358  */
+
 
 #ifdef short
 # undef short
@@ -1203,33 +1212,33 @@ yydestruct (const char *yymsg, int yytype, YYSTYPE *yyvaluep, YYLTYPE *yylocatio
   switch (yytype)
     {
           case 5: /* MACRO  */
-#line 164 "gramLatex.y" /* yacc.c:1257  */
+
       { UNPROTECT_PTR(((*yyvaluep))); }
-#line 1209 "gramLatex.tab.c" /* yacc.c:1257  */
+
         break;
 
     case 6: /* TEXT  */
-#line 164 "gramLatex.y" /* yacc.c:1257  */
+
       { UNPROTECT_PTR(((*yyvaluep))); }
-#line 1215 "gramLatex.tab.c" /* yacc.c:1257  */
+
         break;
 
     case 7: /* COMMENT  */
-#line 164 "gramLatex.y" /* yacc.c:1257  */
+
       { UNPROTECT_PTR(((*yyvaluep))); }
-#line 1221 "gramLatex.tab.c" /* yacc.c:1257  */
+
         break;
 
     case 8: /* BEGIN  */
-#line 164 "gramLatex.y" /* yacc.c:1257  */
+
       { UNPROTECT_PTR(((*yyvaluep))); }
-#line 1227 "gramLatex.tab.c" /* yacc.c:1257  */
+
         break;
 
     case 9: /* END  */
-#line 164 "gramLatex.y" /* yacc.c:1257  */
+
       { UNPROTECT_PTR(((*yyvaluep))); }
-#line 1233 "gramLatex.tab.c" /* yacc.c:1257  */
+
         break;
 
 
@@ -1515,128 +1524,128 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 168 "gramLatex.y" /* yacc.c:1646  */
+
     { xxsavevalue((yyvsp[-1]), &(yyloc)); YYACCEPT; }
-#line 1521 "gramLatex.tab.c" /* yacc.c:1646  */
+
     break;
 
   case 3:
-#line 169 "gramLatex.y" /* yacc.c:1646  */
+
     { xxsavevalue(NULL, &(yyloc)); YYACCEPT; }
-#line 1527 "gramLatex.tab.c" /* yacc.c:1646  */
+
     break;
 
   case 4:
-#line 170 "gramLatex.y" /* yacc.c:1646  */
+
     { PROTECT(parseState.Value = R_NilValue);  YYABORT; }
-#line 1533 "gramLatex.tab.c" /* yacc.c:1646  */
+
     break;
 
   case 5:
-#line 173 "gramLatex.y" /* yacc.c:1646  */
+
     { (yyval) = xxnewlist((yyvsp[0])); }
-#line 1539 "gramLatex.tab.c" /* yacc.c:1646  */
+
     break;
 
   case 6:
-#line 174 "gramLatex.y" /* yacc.c:1646  */
+
     { (yyval) = xxnewlist((yyvsp[0])); }
-#line 1545 "gramLatex.tab.c" /* yacc.c:1646  */
+
     break;
 
   case 7:
-#line 175 "gramLatex.y" /* yacc.c:1646  */
+
     { (yyval) = xxlist((yyvsp[-1]), (yyvsp[0])); }
-#line 1551 "gramLatex.tab.c" /* yacc.c:1646  */
+
     break;
 
   case 8:
-#line 176 "gramLatex.y" /* yacc.c:1646  */
+
     { (yyval) = xxlist((yyvsp[-1]), (yyvsp[0])); }
-#line 1557 "gramLatex.tab.c" /* yacc.c:1646  */
+
     break;
 
   case 9:
-#line 178 "gramLatex.y" /* yacc.c:1646  */
+
     { (yyval) = xxnewlist((yyvsp[0])); }
-#line 1563 "gramLatex.tab.c" /* yacc.c:1646  */
+
     break;
 
   case 10:
-#line 179 "gramLatex.y" /* yacc.c:1646  */
+
     { (yyval) = xxlist((yyvsp[-1]), (yyvsp[0])); }
-#line 1569 "gramLatex.tab.c" /* yacc.c:1646  */
+
     break;
 
   case 11:
-#line 181 "gramLatex.y" /* yacc.c:1646  */
+
     { (yyval) = xxtag((yyvsp[0]), TEXT, &(yyloc)); }
-#line 1575 "gramLatex.tab.c" /* yacc.c:1646  */
+
     break;
 
   case 12:
-#line 182 "gramLatex.y" /* yacc.c:1646  */
+
     { (yyval) = xxtag((yyvsp[0]), COMMENT, &(yyloc)); }
-#line 1581 "gramLatex.tab.c" /* yacc.c:1646  */
+
     break;
 
   case 13:
-#line 183 "gramLatex.y" /* yacc.c:1646  */
+
     { (yyval) = xxtag((yyvsp[0]), MACRO, &(yyloc)); }
-#line 1587 "gramLatex.tab.c" /* yacc.c:1646  */
+
     break;
 
   case 14:
-#line 184 "gramLatex.y" /* yacc.c:1646  */
+
     { (yyval) = xxtag((yyvsp[0]), VERB, &(yyloc)); }
-#line 1593 "gramLatex.tab.c" /* yacc.c:1646  */
+
     break;
 
   case 15:
-#line 185 "gramLatex.y" /* yacc.c:1646  */
+
     { (yyval) = (yyvsp[0]); }
-#line 1599 "gramLatex.tab.c" /* yacc.c:1646  */
+
     break;
 
   case 16:
-#line 186 "gramLatex.y" /* yacc.c:1646  */
+
     { (yyval) = (yyvsp[0]); }
-#line 1605 "gramLatex.tab.c" /* yacc.c:1646  */
+
     break;
 
   case 17:
-#line 188 "gramLatex.y" /* yacc.c:1646  */
+
     { xxSetInVerbEnv((yyvsp[-1])); }
-#line 1611 "gramLatex.tab.c" /* yacc.c:1646  */
+
     break;
 
   case 18:
-#line 189 "gramLatex.y" /* yacc.c:1646  */
+
     { (yyval) = xxenv((yyvsp[-7]), (yyvsp[-4]), (yyvsp[-1]), &(yyloc));
                                                   UNPROTECT_PTR((yyvsp[-9])); UNPROTECT_PTR((yyvsp[-3])); }
-#line 1618 "gramLatex.tab.c" /* yacc.c:1646  */
+
     break;
 
   case 19:
-#line 192 "gramLatex.y" /* yacc.c:1646  */
+
     { (yyval) = xxmath((yyvsp[-1]), &(yyloc)); }
-#line 1624 "gramLatex.tab.c" /* yacc.c:1646  */
+
     break;
 
   case 20:
-#line 194 "gramLatex.y" /* yacc.c:1646  */
+
     { (yyval) = xxblock((yyvsp[-1]), &(yyloc)); }
-#line 1630 "gramLatex.tab.c" /* yacc.c:1646  */
+
     break;
 
   case 21:
-#line 195 "gramLatex.y" /* yacc.c:1646  */
+
     { (yyval) = xxblock(NULL, &(yyloc)); }
-#line 1636 "gramLatex.tab.c" /* yacc.c:1646  */
+
     break;
 
 
-#line 1640 "gramLatex.tab.c" /* yacc.c:1646  */
+
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1871,7 +1880,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 197 "gramLatex.y" /* yacc.c:1906  */
+
 
 
 static SEXP xxnewlist(SEXP item)
