@@ -2280,6 +2280,23 @@ options(op)# revert
 ## in R <= 3.5.x, str() gave error instead of the warning
 
 
+## seq.default() w/ integer overflow in border cases: -- PR#17497, Suharto Anggono
+stopifnot(is.integer(iMax <- .Machine$integer.max), iMax == 2^31-1,
+          is.integer(iM2 <- iMax-1L), # = 2^31 - 2
+          (t30 <- 1073741824L) == 2^30 ,
+          is.integer(i3t30 <- c(-t30, 0L, t30)))
+for(seq in c(seq, seq.int)) # seq() -> seq.default() to behave as seq.int() :
+  stopifnot(exprs = {
+    seq(iM2, length=2L) == iM2:(iM2+1L) # overflow warning and NA
+    seq(iM2, length=3L) == iM2:(iM2+2 ) # Error in if (from == to) ....
+              seq(-t30, t30, length=3) == i3t30 # overflow warning and NA
+    ## Next two ok for the "seq.cumsum-patch" (for "seq.double-patch", give "double"):
+    identical(seq(-t30, t30, length=3L),  i3t30)# Error in if(is.integer(del <- to - from)
+    identical(seq(-t30, t30, t30)      ,  i3t30)# Error .. invalid '(to-from)/by'+NA warn.
+  })
+## each of these gave integer overflows  errors  or  NA's + warning in  R <= 3.5.x
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

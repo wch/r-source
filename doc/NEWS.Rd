@@ -461,6 +461,9 @@
 
       \item The methods package better handles duplicated class names
       across packages.
+
+      \item \code{seq.default()} now avoids integer overflow, thanks to
+      the report and "cumsum" patch of Suharto Anggono's \PR{17497}.
     }
   }
 }

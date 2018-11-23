@@ -1,7 +1,7 @@
 #  File src/library/base/R/seq.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@ seq.default <-
     function(from = 1, to = 1, by = ((to - from)/(length.out - 1)),
              length.out = NULL, along.with = NULL, ...)
 {
+    is.logint <- function(.) is.integer(.) || is.logical(.)
     if((One <- nargs() == 1L) && !missing(from)) {
 	lf <- length(from)
 	return(if(mode(from) == "numeric" && lf == 1L) {
@@ -55,12 +56,17 @@ seq.default <-
 	if(missing(by))
 	    from:to
 	else { # dealing with 'by'
-	    del <- to - from
+	    int <- is.logint(from) && is.logint(to)
+	    del <- to - if(int) as.double(from) else from
 	    if(del == 0 && to == 0) return(to)
             if (length(by) != 1L) stop("'by' must be of length 1")
+	    if(!is.logint(by))
+		int <- FALSE
+	    else if(!int)
+		storage.mode(by) <- "double"
 	    n <- del/by # of length 1, as {from, to, by} are
 	    if(!is.finite(n)) {
-		if(by == 0 && del == 0)
+		if(!is.na(by) && by == 0 && del == 0)
 		    return(from)
 		stop("invalid '(to - from)/by'")
 	    }
@@ -71,8 +77,9 @@ seq.default <-
 
 	    dd <- abs(del)/max(abs(to), abs(from))
 	    if (dd < 100*.Machine$double.eps) return(from)
-            if (is.integer(del) && is.integer(by)) {
+            if (int) {
                 n <- as.integer(n) # truncates
+                if (n >= 2L) cumsum(rep.int(c(from, by), c(1L, n))) else
                 from + (0L:n) * by
             } else {
                 n <- as.integer(n + 1e-10)
@@ -87,24 +94,65 @@ seq.default <-
     else if (One) seq_len(length.out)
     else if(missing(by)) {
 	# if(from == to || length.out < 2) by <- 1
-	if(missing(to))
-	    to <- from + length.out - 1L
-	if(missing(from))
-	    from <- to - length.out + 1L
+	intn1 <- is.integer(length.out)
+	if(missing(to)) {
+	    to <- from + (length.out - 1)
+	    intdel <- intn1 &&  if(is.integer(from)) to <= .Machine$integer.max
+				else is.logical(from)
+	    if(intdel) storage.mode(to) <- "integer"
+	} else intdel <- is.logint(to)
+	if(missing(from)) {
+	    from <- to - (length.out - 1)
+	    if(intdel) {
+		intdel <- intn1 && from >= -.Machine$integer.max
+		if(intdel) storage.mode(from) <- "integer"
+	    }
+	} else if(intdel) intdel <- is.logint(from)
 	if(length.out > 2L) # not clear why these have as.vector, and not others
 	    if(from == to) rep.int(from, length.out)
 	    else { # *only* place we could (and did) use 'by's formal default
-		by <- # integer if "easy"
-		    if(is.integer(del <- to - from) & is.integer(n1 <- length.out - 1L)
-		       && del %% n1 == 0L) del %/% n1 else del / n1
+		n1 <- length.out - 1L
+		## integer if "easy"
+		if(intdel && intn1 && from %% n1 == to %% n1) {
+		    by <- to %/% n1 - from %/% n1
+		    cumsum(rep.int(c(from, by), c(1L, n1)))
+		}
+		else {
+		    if (intdel) storage.mode(from) <- "double"
+		    by <- (to - from) / n1
 		as.vector(c(from, from + seq_len(length.out - 2L) * by, to))
+		}
 	    }
 	else as.vector(c(from, to))[seq_len(length.out)]
     }
-    else if(missing(to))
+    else if(missing(to)) {
+	int <- (intby <- is.logint(by)) &&
+	    length.out - 1L <= .Machine$integer.max &&
+	    is.logint(from) &&
+	    (!(nby <- length(by)) || (naby <- is.na(by)) ||
+	     ((to <- from + (length.out - 1) * by) <= .Machine$integer.max &&
+	      to >= -.Machine$integer.max))
+	if(int && length.out > 2L && nby == 1L && !naby)
+	    cumsum(rep.int(c(from, by), c(1L, length.out - 1L)))
+	else {
+	    if(intby && !int) storage.mode(by) <- "double"
 	from + (0L:(length.out - 1L)) * by
-    else if(missing(from))
+	}
+    }
+    else if(missing(from)) {
+	int <- (intby <- is.logint(by)) &&
+	    length.out - 1L <= .Machine$integer.max &&
+	    is.logint(to) &&
+	    (!(nby <- length(by)) || (naby <- is.na(by)) ||
+	     ((from <- to - (length.out - 1) * by) >= -.Machine$integer.max &&
+	      from <= .Machine$integer.max))
+	if(int && length.out > 2L && nby == 1L && !naby)
+	    cumsum(rep.int(c(as.integer(from), by), c(1L, length.out - 1L)))
+	else {
+	    if(intby && !int) storage.mode(by) <- "double"
 	to - ((length.out - 1L):0L) * by
+	}
+    }
     else stop("too many arguments")
 }
 
