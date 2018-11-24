@@ -1884,10 +1884,10 @@ Some influential environment variables:
               load shared objects (DLLs) at runtime
   CPICFLAGS   special flags for compiling C code to be turned into a shared
               object.
-  FPICFLAGS   special flags for compiling Fortran code to be turned into a
-              shared object.
-  FCPICFLAGS  special flags for compiling Fortran 95 code to be turned into a
-              shared object.
+  FPICFLAGS   special flags for compiling fixed-form Fortran code to be turned
+              into a shared object.
+  FCPICFLAGS  special flags for compiling free-form Fortran code to be turned
+              into a shared object.
   SHLIB_LD    command for linking shared objects which contain object files
               from a C or Fortran compiler only
   SHLIB_LDFLAGS
@@ -1903,7 +1903,7 @@ Some influential environment variables:
   SHLIB_CXXLDFLAGS
               special flags used by SHLIB_CXXLD
   SHLIB_FCLD  command for linking shared objects which contain object files
-              from the Fortran 95 compiler
+              from the free-form Fortran compiler
   SHLIB_FCLDFLAGS
               special flags used by SHLIB_FCLD
   TCLTK_LIBS  flags needed for linking against the Tcl and Tk libraries
@@ -1916,7 +1916,7 @@ Some influential environment variables:
   BLAS_LIBS   flags needed for linking against external BLAS libraries
   LAPACK_LIBS flags needed for linking against external LAPACK libraries
   LIBnn       'lib' or 'lib64' for dynamic libraries
-  SAFE_FFLAGS Safe Fortran 77 compiler flags for e.g. dlamc.f
+  SAFE_FFLAGS Safe Fortran fixed-form compiler flags for e.g. dlamc.f
   r_arch      Use architecture-dependent subdirs with this name
   DEFS        C defines for use when compiling R
   JAVA_HOME   Path to the root of the Java environment
@@ -27293,7 +27293,7 @@ fi
 
 ### * Checks for compiler characteristics.
 
-### ** Generic tests for the C, Fortran 77 and C++ compilers.
+### ** Generic tests for the C, fixed-form Fortran and C++ compilers.
 
 ### *** C compiler.
 
@@ -28230,7 +28230,7 @@ $as_echo "$ac_cv_prog_c_openmp" >&6; }
 
 
 
-### *** Fortran 77 compiler.
+### *** fixed-form Fortran compiler.
 
 
 if test -z "${FLIBS}"; then
@@ -30336,7 +30336,7 @@ $as_echo "$r_cv_objc_foundation" >&6; }
   ;;
 esac
 
-### ** Platform-specific overrides for the C, Fortran 77 and C++ compilers.
+### ** Platform-specific overrides for the C, fixed-form Fortran and C++ compilers.
 
 case "${host_cpu}" in
   i*86|x86_64)
@@ -35184,7 +35184,7 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 ## The basic checking is performed via AC_OPENMP added in Autoconf 2.62,
 ## which we already called for determining the appropriate flags for the
-## C, C++, Fortran 77, Fortran compiler/linker.  Note that this gives
+## C, C++, Fortran compiler/linker.  Note that this gives
 ## variables OPENMP_CFLAGS etc., which are meant to be used for *both*
 ## compiling and linking.  So we can really only used them provided that
 ## we use the respective compilers for linking as well (or we need a
@@ -35199,7 +35199,7 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 ##    flags and OPENMP_CFLAGS and OPENMP_FFLAGS to the C and Fortran 77
 ##    compiler flags, and defining HAVE_OPENMP.
 ##
-## (The Fortran 77 compiler is never used for linking by default.)
+## (The fixed-form Fortran compiler is never used for linking by default.)
 
 if test -n "${R_OPENMP_CFLAGS+set}"; then
   if test -n "${R_OPENMP_CFLAGS}"; then
@@ -35255,7 +35255,7 @@ fi
 
 ## For compiling package code, we use SHLIB_FCLD, SHLIB_CXXLD or
 ## SHLIB_LD for linking, depending on whether the package contains
-## Fortran (90/95) code, C++ (or ObjC) code, or "just" C and Fortran 77.
+## free-form Fortran code, C++ (or ObjC) code, or "just" C and fixed-form Fortran.
 ## However, we (currently) do not conditionalize compilation flags.  So
 ## the only "safe" thing we can do for now is:
 ##
@@ -35264,7 +35264,7 @@ fi
 ##    determined to support OpenMP, the we try to provide OpenMP support
 ##    for packages by adding OPENMP_FCFLAGS, OPENMP_CXXFLAGS and
 ##    OPENMP_CFLAGS to the respective linker flags, and add the OPENMP
-##    flags to all (C, C++, Fortran and Fortran 77) compiler flags.
+##    flags to all (C, C++ and Fortran) compiler flags.
 
 case "${host_os}" in
   mingw*|windows*|winnt)
@@ -35377,11 +35377,6 @@ else
 $as_echo "no" >&6; }
 fi
 
-
-## <FIXME>
-## Need to do this after configuring Fortran 90/95 support, which comes
-## way below: should this be moved up to the compiler section?
-## </FIXME>
 
 ### Now we have found all the flags, we need to use them to test appropriately.
 ### We don't currently have any C++ tests, but future-proof.
@@ -38267,7 +38262,7 @@ fi
 
 ## BLAS.
 ## <NOTE>
-## This has to come *after* checking for Fortran 77 compiler/converter
+## This has to come *after* checking for (fixed-form) Fortran compiler/converter
 ## characteristics (notably name mangling and FLIBS).
 ## </NOTE>
 
@@ -44811,12 +44806,13 @@ JAVA_LD_LIBRARY_PATH=
 
 
 
-## F90/F95 support
+## Free-form Fortran support (compiler chosen way above).
 ac_ext=${ac_fc_srcext-f}
 ac_compile='$FC -c $FCFLAGS $ac_fcflags_srcext conftest.$ac_ext >&5'
 ac_link='$FC -o conftest$ac_exeext $FCFLAGS $LDFLAGS $ac_fcflags_srcext conftest.$ac_ext $LIBS >&5'
 ac_compiler_gnu=$ac_cv_fc_compiler_gnu
 
+## Nor sure next 2 are correct but we proably should be calling AC_FC_FREEFORM
 ac_ext=${ac_fc_srcext-f}
 ac_compile='$FC -c $FCFLAGS $ac_fcflags_srcext conftest.$ac_ext >&5'
 ac_link='$FC -o conftest$ac_exeext $FCFLAGS $LDFLAGS $ac_fcflags_srcext conftest.$ac_ext $LIBS >&5'
@@ -52982,56 +52978,56 @@ fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result:
 R is now configured for ${host}
 
-  Source directory:          ${srcdir}
-  Installation directory:    ${prefix}
+  Source directory:            ${srcdir}
+  Installation directory:      ${prefix}
 
-  C compiler:                ${r_c_compiler}
-  Fortran 77 compiler:       ${r_f77_compiler}
+  C compiler:                  ${r_c_compiler}
+  Fortran fixed-form compiler: ${r_f77_compiler}
 
-  Default C++ compiler:      ${r_cxx_compiler}
-  C++98 compiler:            ${r_cxx98_compiler}
-  C++11 compiler:            ${r_cxx11_compiler}
-  C++14 compiler:            ${r_cxx14_compiler}
-  C++17 compiler:            ${r_cxx17_compiler}
-  Fortran 90/95 compiler:    ${r_f95_compiler}
-  Obj-C compiler:	     ${r_objc_compiler}
+  Default C++ compiler:        ${r_cxx_compiler}
+  C++98 compiler:              ${r_cxx98_compiler}
+  C++11 compiler:              ${r_cxx11_compiler}
+  C++14 compiler:              ${r_cxx14_compiler}
+  C++17 compiler:              ${r_cxx17_compiler}
+  Fortran free-form compiler:  ${r_f95_compiler}
+  Obj-C compiler:	       ${r_objc_compiler}
 
-  Interfaces supported:      ${r_interfaces}
-  External libraries:        ${r_external_libs}
-  Additional capabilities:   ${r_capabilities}
-  Options enabled:           ${r_options}
+  Interfaces supported:        ${r_interfaces}
+  External libraries:          ${r_external_libs}
+  Additional capabilities:     ${r_capabilities}
+  Options enabled:             ${r_options}
 
-  Capabilities skipped:      ${r_no_capabilities}
-  Options not enabled:       ${r_no_options}
+  Capabilities skipped:        ${r_no_capabilities}
+  Options not enabled:         ${r_no_options}
 
-  Recommended packages:      ${use_recommended_packages}
+  Recommended packages:        ${use_recommended_packages}
 " >&5
 $as_echo "
 R is now configured for ${host}
 
-  Source directory:          ${srcdir}
-  Installation directory:    ${prefix}
+  Source directory:            ${srcdir}
+  Installation directory:      ${prefix}
 
-  C compiler:                ${r_c_compiler}
-  Fortran 77 compiler:       ${r_f77_compiler}
+  C compiler:                  ${r_c_compiler}
+  Fortran fixed-form compiler: ${r_f77_compiler}
 
-  Default C++ compiler:      ${r_cxx_compiler}
-  C++98 compiler:            ${r_cxx98_compiler}
-  C++11 compiler:            ${r_cxx11_compiler}
-  C++14 compiler:            ${r_cxx14_compiler}
-  C++17 compiler:            ${r_cxx17_compiler}
-  Fortran 90/95 compiler:    ${r_f95_compiler}
-  Obj-C compiler:	     ${r_objc_compiler}
+  Default C++ compiler:        ${r_cxx_compiler}
+  C++98 compiler:              ${r_cxx98_compiler}
+  C++11 compiler:              ${r_cxx11_compiler}
+  C++14 compiler:              ${r_cxx14_compiler}
+  C++17 compiler:              ${r_cxx17_compiler}
+  Fortran free-form compiler:  ${r_f95_compiler}
+  Obj-C compiler:	       ${r_objc_compiler}
 
-  Interfaces supported:      ${r_interfaces}
-  External libraries:        ${r_external_libs}
-  Additional capabilities:   ${r_capabilities}
-  Options enabled:           ${r_options}
+  Interfaces supported:        ${r_interfaces}
+  External libraries:          ${r_external_libs}
+  Additional capabilities:     ${r_capabilities}
+  Options enabled:             ${r_options}
 
-  Capabilities skipped:      ${r_no_capabilities}
-  Options not enabled:       ${r_no_options}
+  Capabilities skipped:        ${r_no_capabilities}
+  Options not enabled:         ${r_no_options}
 
-  Recommended packages:      ${use_recommended_packages}
+  Recommended packages:        ${use_recommended_packages}
 " >&6; }
 if test -n "${warn_f77_cc_double_complex}"; then
   { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: ${warn_f77_cc_double_complex}" >&5
