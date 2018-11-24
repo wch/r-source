@@ -18,7 +18,7 @@ library using 'R CMD SHLIB' or an executable program using 'R CMD
 LINK'.  Currently, the following languages with associated source file
 extensions are supported (provided that the respective compilers are
 available and R was configured to use these): C ('.c'), C++ ('.cc' or
-'.cpp'), FORTRAN 77 ('.f'), FORTRAN 90 ('.f90'), FORTRAN 95 ('.f95'),
+'.cpp'), fixed-form Fortran ('.f'), free-form Fortran ('.f90' or'.f95'),
 Objective C ('.m'), and Objective C++ ('.M' or '.mm').
 
 Options:

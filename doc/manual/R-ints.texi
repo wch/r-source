@@ -4376,8 +4376,7 @@ they are supported on all mainstream @R{} platforms (including Windows
 and macOS).
 
 @item
-A FORTRAN 77 compiler (but not Fortran 9x, although it is nowadays
-widely available).
+A fixed-form Fortran compiler.
 
 @item
 A simple @command{make}, considering the features of @command{make} in
@@ -4680,7 +4679,7 @@ elements.  Now longer vectors are allowed on 64-bit platforms, matrices
 with more elements are supported provided that each of the dimensions is
 no more than 2^31-1.  However, not all applications can be supported.
 
-The main problem is linear algebra done by FORTRAN code compiled
+The main problem is linear algebra done by Fortran code compiled
 with 32-bit @code{INTEGER}.  Although not guaranteed, it seems that all
 the compilers currently used with @R{} on a 64-bit platform allow
 matrices each of whose dimensions is less than 2^31 but with more than

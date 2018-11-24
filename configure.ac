@@ -2819,7 +2819,6 @@ AC_CONFIG_FILES(
   src/scripts/Makefile
   src/scripts/R.sh
   src/scripts/Rcmd
-  src/scripts/f77_f2c
   src/scripts/javareconf
   src/scripts/mkinstalldirs
   src/scripts/pager
