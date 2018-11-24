@@ -87,15 +87,15 @@ Variables:
 		object files from a C or Fortran compiler only
   DYLIB_LDFLAGS
 		special flags used by DYLIB_LD
-  F77           Fortran 77 compiler command
-  FFLAGS        Fortran 77 compiler flags
+  F77           fixed-form Fortran compiler command
+  FFLAGS        fixed-form Fortran compiler flags
   FLIBS         linker flags needed to link Fortran code
   FPICFLAGS     special flags for compiling Fortran code to be turned
 		into a shared library
-  FC            Fortran 9x compiler command
-  FCFLAGS       Fortran 9x compiler flags
-  FCPICFLAGS    special flags for compiling Fortran 9x code to be turned
-		into a shared library
+  FC            free-form Fortran 9x compiler command
+  FCFLAGS       free-form Fortran 9x compiler flags
+  FCPICFLAGS    special flags for compiling free-form Fortran 9x code
+		to be turned into a shared library
   JAR           Java archive tool command
   JAVA          Java interpreter command
   JAVAC         Java compiler command
@@ -110,7 +110,7 @@ Variables:
   OBJC          Objective C compiler command
   OBJCFLAGS     Objective C compiler flags
   MAKE          Make command
-  SAFE_FFLAGS   Safe (as conformant as possible) Fortran 77 compiler flags
+  SAFE_FFLAGS   Safe (as conformant as possible) Fortran compiler flags
   SHLIB_CFLAGS  additional CFLAGS used when building shared objects
   SHLIB_CXXLD   command for linking shared objects which contain
 		object files from a C++ compiler (and CXX98 CXX11 CXX14 CXX17)
