@@ -194,7 +194,8 @@
 ## SHLIB_FCLD=${FC}
 ## Unlike SHLIB_CXXLDFLAGS, SHLIB_FCLDFLAGS is never additional
 ## SHLIB_FCLDFLAGS=${SHLIB_LDFLAGS}
-## Additional libraries needed to link a shared object, e.g. on x86 Solaris
+## Additional libraries needed to link a shared object with FC,
+## e.g. on x86 Solaris
 ## FCLIBS=
 
 ## Tcl/Tk settings.
