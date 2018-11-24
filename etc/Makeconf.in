@@ -52,7 +52,7 @@ FCFLAGS = @FCFLAGS@ $(LTO)
 FCPICFLAGS = @FCPICFLAGS@
 ## additional libs needed when linking with $(FC), e.g. on some Oracle compilers
 FCLIBS = @FCLIBS@
-## FC is the compiler used for fixed-form Fortran, ext .f
+## F77 is the compiler used for fixed-form Fortran, ext .f
 F77 = @F77@
 F77_VISIBILITY = @F77_VISIBILITY@
 FFLAGS = @FFLAGS@ $(LTO)
