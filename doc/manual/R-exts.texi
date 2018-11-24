@@ -1158,12 +1158,7 @@ compilation and linking into a shared object for loading into @R{}.
 There are default @command{make} variables and rules for this
 (determined when @R{} is configured and recorded in
 @file{@var{R_HOME}/etc@var{R_ARCH}/Makeconf}), providing support for C,
-C++, FORTRAN 77, Fortran 9x@footnote{Note that Ratfor is not supported.
-If you have Ratfor source code, you need to convert it to FORTRAN.  Only
-FORTRAN 77 (which we write in upper case) is supported on all platforms,
-but most also support Fortran-95 (for which we use title case).  If you
-want to ship Ratfor source files, please do so in a subdirectory of
-@file{src} and not in the main subdirectory.}, Objective C and Objective
+C++, FORTRAN 77, Fortran 9x, Objective C and Objective
 C++@footnote{either or both of which may not be supported on particular
 platforms} with associated extensions @file{.c}, @file{.cc} or
 @file{.cpp}, @file{.f}, @file{.f90} or @file{.f95}, @file{.m}, and
@@ -1739,7 +1734,7 @@ quoted in makefiles and configure scripts.
 
 One of the more tricky tasks can be to find the headers and libraries of
 external software.  One tool which is increasingly available on
-Unix-alikes (but not by defaul@footnote{but it is available on the machines
+Unix-alikes (but not by default@footnote{but it is available on the machines
 used to produce the CRAN binary packages.} on macOS) to do this is
 @command{pkg-config}.  The @file{configure} script will need to test for
 the presence of the command itself (see for example package
@@ -1806,16 +1801,18 @@ written if at all possible in a portable style, in particular (except
 for @file{Makevars.win}) without the use of GNU extensions.
 
 The most common use of a @file{Makevars} file is to set additional
-preprocessor options (for example include paths) for C/C++ files
-@emph{via} @code{PKG_CPPFLAGS}, and additional compiler flags by setting
-@code{PKG_CFLAGS}, @code{PKG_CXXFLAGS}, @code{PKG_FFLAGS} or
-@code{PKG_FCFLAGS}, for C, C++, FORTRAN or Fortran 9x respectively
-(@pxref{Creating shared objects}).
+preprocessor options (for example include paths and definitions) for
+C/C++ files @emph{via} @code{PKG_CPPFLAGS}, and additional compiler
+flags by setting @code{PKG_CFLAGS}, @code{PKG_CXXFLAGS},
+@code{PKG_FFLAGS} or @code{PKG_FCFLAGS}, for C, C++, FORTRAN or Fortran
+9x respectively (@pxref{Creating shared objects}).
 
 @strong{N.B.}: Include paths are preprocessor options, not compiler
 options, and @strong{must} be set in @code{PKG_CPPFLAGS} as otherwise
 platform-specific paths (e.g.@: @samp{-I/usr/local/include}) will take
-precedence.
+precedence.  @code{PKG_CPPFLAGS} should contain @samp{-I}, @samp{-D},
+@samp{-U} and (where supported) @samp{-include} and @samp{-pthread}
+options: everthing else should be a compiler flag.
 
 @file{Makevars} can also be used to set flags for the linker, for
 example @samp{-L} and @samp{-l} options, @emph{via} @code{PKG_LIBS}.
@@ -2108,7 +2105,7 @@ Some care is needed when compilers are from different families which may
 use different OpenMP runtimes (e.g.@: @command{clang} @emph{vs} GCC
 including @command{gfortran}, although it is currently possible to use
 the @command{clang} runtime with GCC but not @emph{vice versa}).  For a
-package with Fortran 77 code using OpenMP the appropriate lines are
+package with FORTRAN 77 code using OpenMP the appropriate lines are
 
 @example
 PKG_FFLAGS = $(SHLIB_OPENMP_FFLAGS)
@@ -4357,11 +4354,7 @@ Portable C++ code needs to follow the 1998 standard (and not use
 features from C99), or to specify a C++11 compiler (see @ref{Using C++11
 code}) where available (which is not the case on all @R{} platforms).
 
-If you use FORTRAN 77, @code{ftnchek}
-(@uref{http://www.dsm.fordham.edu/@/~ftnchek/}) provides thorough testing
-of conformance to the standard.
-
-If using Fortran 9x with the GNU compiler, use the flags
+If using Fortran with the GNU compiler, use the flags
 @option{-std=f95 -Wall -pedantic} which reject most GNU extensions and
 features from later standards.
 
@@ -5340,10 +5333,10 @@ by Martyn Plummer.
 @node Binary distribution,  , Portable C and C++ code, Writing portable packages
 @subsection Binary distribution
 
-If you want to distribute a binary version of a package on Windows or OS
-X, there are further checks you need to do to check it is portable: it
-is all too easy to depend on external software on your own machine that
-other users will not have.
+If you want to distribute a binary version of a package on Windows or
+macOS, there are further checks you need to do to check it is portable:
+it is all too easy to depend on external software on your own machine
+that other users will not have.
 
 For Windows, check what other DLLs your package's DLL depends on
 (`imports' from in the DLL tools' parlance).  A convenient GUI-based
@@ -9270,7 +9263,7 @@ included by @file{R.h}.  (On most platforms this is stored in a way
 compatible with the C99 @code{double complex} type: however, it may not
 be possible to pass @code{Rcomplex} to a C99 function expecting a
 @code{double complex} argument.  Nor need it be compatible with a C++
-@code{complex} type.  Moreover, the compatibility can depends on the
+@code{complex} type.  Moreover, the compatibility can depend on the
 optimization level set for the compiler.)
 
 Only a single character string can be passed to or from FORTRAN, and the
@@ -10183,7 +10176,8 @@ for @code{SHLIB}) for usage information.
 If compiling the source files does not work ``out of the box'', you can
 specify additional flags by setting some of the variables
 @vindex PKG_CPPFLAGS
-@code{PKG_CPPFLAGS} (for the C preprocessor, typically @samp{-I} flags),
+@code{PKG_CPPFLAGS} (for the C/C++ preprocessor, mainly @samp{-I},
+@samp{-D} and @samp{-U} flags),
 @vindex PKG_CFLAGS
 @vindex PKG_CXXFLAGS
 @vindex PKG_FFLAGS

@@ -4131,21 +4131,6 @@ We rely on limited support in LAPACK for matrices with @math{2^{31}} or
 more elements: it is possible that an external LAPACK will not have that
 support.
 
-If you have a pure FORTRAN 77 compiler which cannot compile LAPACK it
-may be possible to use CLAPACK from
-@uref{http://www.netlib.org/@/clapack/} by something like
-@example
--with-lapack="-lclapack -lf2c"
-@end example
-@noindent
-provided these were built with position-independent code and the calling
-conventions for double complex function return values match those in the
-BLAS used, so it may be simpler to use CLAPACK built to use CBLAS and
-@example
--with-lapack="-lclapack -lcblas -lf2c"
-@end example
-
-
 
 @node Caveats,  , LAPACK, Linear algebra
 @subsection Caveats
