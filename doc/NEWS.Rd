@@ -248,7 +248,7 @@
       compilers no longer have a FORTRAN 77 mode and interpret it as
       \sQuote{fixed-form} Fortran 90 (or later where supported) code.
       Extensions \file{.f90} and \file{.f95} continue to indicate
-      \sQuote{ffree-form} Fortran code.
+      \sQuote{free-form} Fortran code.
 
       Legal FORTRAN 77 code is also legal fixed-form Fortran 95, but
       this change legitimizes the use of later features, in particular
@@ -257,6 +257,9 @@
 
       Consequently, the \command{f77_f2c} script has been removed: it
       no longer sufficed to compile the \file{.f} files in \R.
+
+      \item A macro \samp{FC_VISIBILITY} is defined analogously to
+      \samp{F77_VISIBILITY}.
     }
   }
 

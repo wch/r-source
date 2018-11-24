@@ -14060,16 +14060,17 @@ C/C++ entry points prefixed by @code{attribute_hidden} will not be
 visible in the shared object.  There is no comparable mechanism for
 Fortran entry points, but there is a more comprehensive scheme used by,
 for example package @pkg{stats}.  Most compilers which allow control of
-visibility will allow control of visibility for all symbols @emph{via} a flag,
-and where known the flag is encapsulated in the macros
-@samp{C_VISIBILITY} and @code{F77_VISIBILITY} for C and Fortran
-compilers.  These are defined in @file{etc/Makeconf} and so available
-for normal compilation of package code.  For example,
+visibility will allow control of visibility for all symbols @emph{via} a
+flag, and where known the flag is encapsulated in the macros
+@samp{C_VISIBILITY}, @code{F77_VISIBILITY} and @code{FC_VISIBILITY} for
+C and Fortran compilers.  These are defined in @file{etc/Makeconf} and
+so available for normal compilation of package code.  For example,
 @file{src/Makevars} could include
 
 @example
 PKG_CFLAGS=$(C_VISIBILITY)
 PKG_FFLAGS=$(F77_VISIBILITY)
+PKG_FCFLAGS=$(FC_VISIBILITY)
 @end example
 
 This would end up with @strong{no} visible entry points, which would be
