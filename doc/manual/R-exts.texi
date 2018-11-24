@@ -1158,7 +1158,7 @@ compilation and linking into a shared object for loading into @R{}.
 There are default @command{make} variables and rules for this
 (determined when @R{} is configured and recorded in
 @file{@var{R_HOME}/etc@var{R_ARCH}/Makeconf}), providing support for C,
-C++, fixed- or free-form Fortran.  Objective C and Objective
+C++, fixed- or free-form Fortran, Objective C and Objective
 C++@footnote{either or both of which may not be supported on particular
 platforms} with associated extensions @file{.c}, @file{.cc} or
 @file{.cpp}, @file{.f}, @file{.f90} or @file{.f95}, @file{.m}, and
