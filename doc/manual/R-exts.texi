@@ -1158,20 +1158,16 @@ compilation and linking into a shared object for loading into @R{}.
 There are default @command{make} variables and rules for this
 (determined when @R{} is configured and recorded in
 @file{@var{R_HOME}/etc@var{R_ARCH}/Makeconf}), providing support for C,
-C++, fixed- or free-form Fortran@footnote{Note that Ratfor is not
-supported.  If you have Ratfor source code, you need to convert it to
-Fortran.  Only fixed-form is supported on all platforms, but most also
-support free-form Fortran-95.  If you want to ship Ratfor source files,
-please do so in a subdirectory of @file{src} and not in the main
-subdirectory.}, Objective C and Objective C++@footnote{either or both of
-which may not be supported on particular platforms} with associated
-extensions @file{.c}, @file{.cc} or @file{.cpp}, @file{.f}, @file{.f90}
-or @file{.f95}, @file{.m}, and @file{.mm}, respectively.  We recommend
-using @file{.h} for headers, also for C++@footnote{Using @file{.hpp} is
-not guaranteed to be portable.} or Fortran 9x include files.  (Use of
-extension @file{.C} for C++ is no longer supported.)  Files in the
-@file{src} directory should not be hidden (start with a dot), and hidden
-files will under some versions of @R{} be ignored.
+C++, fixed- or free-form Fortran.  Objective C and Objective
+C++@footnote{either or both of which may not be supported on particular
+platforms} with associated extensions @file{.c}, @file{.cc} or
+@file{.cpp}, @file{.f}, @file{.f90} or @file{.f95}, @file{.m}, and
+@file{.mm}, respectively.  We recommend using @file{.h} for headers,
+also for C++@footnote{Using @file{.hpp} is not guaranteed to be
+portable.} or Fortran 9x include files.  (Use of extension @file{.C} for
+C++ is no longer supported.)  Files in the @file{src} directory should
+not be hidden (start with a dot), and hidden files will under some
+versions of @R{} be ignored.
 
 It is not portable (and may not be possible at all) to mix all these
 languages in a single package, and we do not support using both C++ and
