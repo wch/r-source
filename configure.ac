@@ -647,6 +647,7 @@ R_PROG_CPP_CPPFLAGS
 ## see if the user set FFLAGS: used for Intel compilers below
 userFFLAGS=${FFLAGS}
 R_PROG_F77
+AC_PROG_FC()
 
 AC_PROG_CXX
 ## check this actually compiles
@@ -2485,7 +2486,6 @@ AC_SUBST(R_JAVA_LD_LIBRARY_PATH)
 
 
 ## F90/F95 support
-AC_PROG_FC()
 AC_LANG_PUSH(Fortran)
 AC_FC_SRCEXT(f90, [dummy=1], [dummy=0])
 AC_FC_SRCEXT(f95, [dummy=1], [dummy=0])

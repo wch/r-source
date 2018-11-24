@@ -3790,7 +3790,6 @@ case  "${CC}" in
     C_VISIBILITY=
     ;;
 esac
-AC_SUBST(C_VISIBILITY)
 AC_LANG_PUSH(Fortran 77)
 r_save_FFLAGS=$FFLAGS
 FFLAGS="$FFLAGS -fvisibility=hidden"
@@ -3811,7 +3810,29 @@ case  "${F77}" in
     F77_VISIBILITY=
     ;;
 esac
+AC_LANG_PUSH(Fortran)
+r_save_FCFLAGS=$FCFLAGS
+FCFLAGS="$FCFLAGS -fvisibility=hidden"
+AC_CACHE_CHECK(whether $FC accepts -fvisibility, r_cv_prog_fc_vis,
+               [_AC_COMPILE_IFELSE([AC_LANG_PROGRAM()],
+               [r_cv_prog_fc_vis=yes], [r_cv_prog_fc_vis=no])])
+FCFLAGS=$r_save_FCFLAGS
+AC_LANG_POP(Fortran)
+if test "${r_cv_prog_fc_vis}" = yes; then
+  if test "${r_cv_visibility_attribute}" = yes; then
+    FC_VISIBILITY="-fvisibility=hidden"
+  fi
+fi
+## need to exclude Intel compilers.
+case  "${FC}" in
+  ## Intel compiler
+  *ifc|*ifort)
+    FC_VISIBILITY=
+    ;;
+esac
+AC_SUBST(C_VISIBILITY)
 AC_SUBST(F77_VISIBILITY)
+AC_SUBST(FC_VISIBILITY)
 ])# R_GCC4_VISIBILITY
 
 
