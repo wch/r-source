@@ -195,11 +195,15 @@ struct ParseState {
     SEXP	Value;
     int	xxinitvalue;
     SEXP	xxMacroList;/* A hashed environment containing all the standard and user-defined macro names */
+    SEXP mset; /* Precious mset for protecting parser semantic values */
     ParseState *prevState;
 };
 
 static Rboolean busy = FALSE;
 static ParseState parseState;
+
+#define PRESERVE_SV(x) R_PreserveInMSet((x), parseState.mset)
+#define RELEASE_SV(x)  R_ReleaseFromMSet((x), parseState.mset)
 
 #define RLIKE 1		/* Includes R strings; xxinRString holds the opening quote char, or 0 outside a string */
 #define LATEXLIKE 2
@@ -325,48 +329,6 @@ extern int yydebug;
     STARTFRAGMENT = 298
   };
 #endif
-/* Tokens.  */
-#define END_OF_INPUT 258
-#define ERROR 259
-#define SECTIONHEADER 260
-#define RSECTIONHEADER 261
-#define VSECTIONHEADER 262
-#define SECTIONHEADER2 263
-#define RCODEMACRO 264
-#define SEXPR 265
-#define RDOPTS 266
-#define LATEXMACRO 267
-#define VERBMACRO 268
-#define OPTMACRO 269
-#define ESCAPE 270
-#define LISTSECTION 271
-#define ITEMIZE 272
-#define DESCRIPTION 273
-#define NOITEM 274
-#define LATEXMACRO2 275
-#define VERBMACRO2 276
-#define VERBLATEX 277
-#define LATEXMACRO3 278
-#define NEWCOMMAND 279
-#define USERMACRO 280
-#define USERMACRO1 281
-#define USERMACRO2 282
-#define USERMACRO3 283
-#define USERMACRO4 284
-#define USERMACRO5 285
-#define USERMACRO6 286
-#define USERMACRO7 287
-#define USERMACRO8 288
-#define USERMACRO9 289
-#define IFDEF 290
-#define ENDIF 291
-#define TEXT 292
-#define RCODE 293
-#define VERB 294
-#define COMMENT 295
-#define UNKNOWN 296
-#define STARTFILE 297
-#define STARTFRAGMENT 298
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -701,15 +663,15 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   220,   220,   221,   222,   225,   228,   231,   232,   234,
-     235,   236,   237,   238,   239,   240,   241,   242,   243,   244,
-     245,   246,   247,   249,   250,   252,   253,   254,   255,   256,
-     257,   258,   259,   260,   262,   263,   264,   265,   266,   267,
-     268,   269,   270,   271,   272,   273,   274,   275,   276,   277,
-     278,   280,   281,   282,   283,   285,   287,   289,   291,   293,
-     296,   299,   304,   306,   307,   316,   318,   320,   324,   325,
-     327,   329,   333,   334,   336,   339,   341,   343,   345,   347,
-     349,   351,   353,   355,   357,   358,   359,   360,   361,   363
+       0,   224,   224,   225,   226,   229,   232,   235,   236,   238,
+     239,   240,   241,   242,   243,   244,   245,   246,   247,   248,
+     249,   250,   251,   253,   254,   256,   257,   258,   259,   260,
+     261,   262,   263,   264,   266,   267,   268,   269,   270,   271,
+     272,   273,   274,   275,   276,   277,   278,   279,   280,   281,
+     282,   284,   285,   286,   287,   289,   291,   293,   295,   297,
+     300,   303,   308,   310,   311,   320,   322,   324,   328,   329,
+     331,   333,   337,   338,   340,   343,   345,   347,   349,   351,
+     353,   355,   357,   359,   361,   362,   363,   364,   365,   367
 };
 #endif
 
@@ -1554,325 +1516,325 @@ yydestruct (const char *yymsg, int yytype, YYSTYPE *yyvaluep, YYLTYPE *yylocatio
     {
           case 5: /* SECTIONHEADER  */
 
-      { UNPROTECT_PTR(((*yyvaluep))); }
+      { RELEASE_SV(((*yyvaluep))); }
 
         break;
 
     case 6: /* RSECTIONHEADER  */
 
-      { UNPROTECT_PTR(((*yyvaluep))); }
+      { RELEASE_SV(((*yyvaluep))); }
 
         break;
 
     case 7: /* VSECTIONHEADER  */
 
-      { UNPROTECT_PTR(((*yyvaluep))); }
+      { RELEASE_SV(((*yyvaluep))); }
 
         break;
 
     case 8: /* SECTIONHEADER2  */
 
-      { UNPROTECT_PTR(((*yyvaluep))); }
+      { RELEASE_SV(((*yyvaluep))); }
 
         break;
 
     case 9: /* RCODEMACRO  */
 
-      { UNPROTECT_PTR(((*yyvaluep))); }
+      { RELEASE_SV(((*yyvaluep))); }
 
         break;
 
     case 10: /* SEXPR  */
 
-      { UNPROTECT_PTR(((*yyvaluep))); }
+      { RELEASE_SV(((*yyvaluep))); }
 
         break;
 
     case 12: /* LATEXMACRO  */
 
-      { UNPROTECT_PTR(((*yyvaluep))); }
+      { RELEASE_SV(((*yyvaluep))); }
 
         break;
 
     case 13: /* VERBMACRO  */
 
-      { UNPROTECT_PTR(((*yyvaluep))); }
+      { RELEASE_SV(((*yyvaluep))); }
 
         break;
 
     case 14: /* OPTMACRO  */
 
-      { UNPROTECT_PTR(((*yyvaluep))); }
+      { RELEASE_SV(((*yyvaluep))); }
 
         break;
 
     case 15: /* ESCAPE  */
 
-      { UNPROTECT_PTR(((*yyvaluep))); }
+      { RELEASE_SV(((*yyvaluep))); }
 
         break;
 
     case 16: /* LISTSECTION  */
 
-      { UNPROTECT_PTR(((*yyvaluep))); }
+      { RELEASE_SV(((*yyvaluep))); }
 
         break;
 
     case 17: /* ITEMIZE  */
 
-      { UNPROTECT_PTR(((*yyvaluep))); }
+      { RELEASE_SV(((*yyvaluep))); }
 
         break;
 
     case 18: /* DESCRIPTION  */
 
-      { UNPROTECT_PTR(((*yyvaluep))); }
+      { RELEASE_SV(((*yyvaluep))); }
 
         break;
 
     case 19: /* NOITEM  */
 
-      { UNPROTECT_PTR(((*yyvaluep))); }
+      { RELEASE_SV(((*yyvaluep))); }
 
         break;
 
     case 20: /* LATEXMACRO2  */
 
-      { UNPROTECT_PTR(((*yyvaluep))); }
+      { RELEASE_SV(((*yyvaluep))); }
 
         break;
 
     case 21: /* VERBMACRO2  */
 
-      { UNPROTECT_PTR(((*yyvaluep))); }
+      { RELEASE_SV(((*yyvaluep))); }
 
         break;
 
     case 22: /* VERBLATEX  */
 
-      { UNPROTECT_PTR(((*yyvaluep))); }
+      { RELEASE_SV(((*yyvaluep))); }
 
         break;
 
     case 23: /* LATEXMACRO3  */
 
-      { UNPROTECT_PTR(((*yyvaluep))); }
+      { RELEASE_SV(((*yyvaluep))); }
 
         break;
 
     case 24: /* NEWCOMMAND  */
 
-      { UNPROTECT_PTR(((*yyvaluep))); }
+      { RELEASE_SV(((*yyvaluep))); }
 
         break;
 
     case 25: /* USERMACRO  */
 
-      { UNPROTECT_PTR(((*yyvaluep))); }
+      { RELEASE_SV(((*yyvaluep))); }
 
         break;
 
     case 26: /* USERMACRO1  */
 
-      { UNPROTECT_PTR(((*yyvaluep))); }
+      { RELEASE_SV(((*yyvaluep))); }
 
         break;
 
     case 27: /* USERMACRO2  */
 
-      { UNPROTECT_PTR(((*yyvaluep))); }
+      { RELEASE_SV(((*yyvaluep))); }
 
         break;
 
     case 28: /* USERMACRO3  */
 
-      { UNPROTECT_PTR(((*yyvaluep))); }
+      { RELEASE_SV(((*yyvaluep))); }
 
         break;
 
     case 29: /* USERMACRO4  */
 
-      { UNPROTECT_PTR(((*yyvaluep))); }
+      { RELEASE_SV(((*yyvaluep))); }
 
         break;
 
     case 30: /* USERMACRO5  */
 
-      { UNPROTECT_PTR(((*yyvaluep))); }
+      { RELEASE_SV(((*yyvaluep))); }
 
         break;
 
     case 31: /* USERMACRO6  */
 
-      { UNPROTECT_PTR(((*yyvaluep))); }
+      { RELEASE_SV(((*yyvaluep))); }
 
         break;
 
     case 32: /* USERMACRO7  */
 
-      { UNPROTECT_PTR(((*yyvaluep))); }
+      { RELEASE_SV(((*yyvaluep))); }
 
         break;
 
     case 33: /* USERMACRO8  */
 
-      { UNPROTECT_PTR(((*yyvaluep))); }
+      { RELEASE_SV(((*yyvaluep))); }
 
         break;
 
     case 34: /* USERMACRO9  */
 
-      { UNPROTECT_PTR(((*yyvaluep))); }
+      { RELEASE_SV(((*yyvaluep))); }
 
         break;
 
     case 35: /* IFDEF  */
 
-      { UNPROTECT_PTR(((*yyvaluep))); }
+      { RELEASE_SV(((*yyvaluep))); }
 
         break;
 
     case 36: /* ENDIF  */
 
-      { UNPROTECT_PTR(((*yyvaluep))); }
+      { RELEASE_SV(((*yyvaluep))); }
 
         break;
 
     case 37: /* TEXT  */
 
-      { UNPROTECT_PTR(((*yyvaluep))); }
+      { RELEASE_SV(((*yyvaluep))); }
 
         break;
 
     case 38: /* RCODE  */
 
-      { UNPROTECT_PTR(((*yyvaluep))); }
+      { RELEASE_SV(((*yyvaluep))); }
 
         break;
 
     case 39: /* VERB  */
 
-      { UNPROTECT_PTR(((*yyvaluep))); }
+      { RELEASE_SV(((*yyvaluep))); }
 
         break;
 
     case 40: /* COMMENT  */
 
-      { UNPROTECT_PTR(((*yyvaluep))); }
+      { RELEASE_SV(((*yyvaluep))); }
 
         break;
 
     case 41: /* UNKNOWN  */
 
-      { UNPROTECT_PTR(((*yyvaluep))); }
+      { RELEASE_SV(((*yyvaluep))); }
 
         break;
 
     case 42: /* STARTFILE  */
 
-      { UNPROTECT_PTR(((*yyvaluep))); }
+      { RELEASE_SV(((*yyvaluep))); }
 
         break;
 
     case 43: /* STARTFRAGMENT  */
 
-      { UNPROTECT_PTR(((*yyvaluep))); }
+      { RELEASE_SV(((*yyvaluep))); }
 
         break;
 
     case 54: /* ArgItems  */
 
-      { UNPROTECT_PTR(((*yyvaluep))); }
+      { RELEASE_SV(((*yyvaluep))); }
 
         break;
 
     case 58: /* LatexArg  */
 
-      { UNPROTECT_PTR(((*yyvaluep))); }
+      { RELEASE_SV(((*yyvaluep))); }
 
         break;
 
     case 63: /* RLikeArg2  */
 
-      { UNPROTECT_PTR(((*yyvaluep))); }
+      { RELEASE_SV(((*yyvaluep))); }
 
         break;
 
     case 65: /* VerbatimArg1  */
 
-      { UNPROTECT_PTR(((*yyvaluep))); }
+      { RELEASE_SV(((*yyvaluep))); }
 
         break;
 
     case 66: /* VerbatimArg2  */
 
-      { UNPROTECT_PTR(((*yyvaluep))); }
+      { RELEASE_SV(((*yyvaluep))); }
 
         break;
 
     case 67: /* IfDefTarget  */
 
-      { UNPROTECT_PTR(((*yyvaluep))); }
+      { RELEASE_SV(((*yyvaluep))); }
 
         break;
 
     case 68: /* goLatexLike  */
 
-      { UNPROTECT_PTR(((*yyvaluep))); }
+      { RELEASE_SV(((*yyvaluep))); }
 
         break;
 
     case 69: /* goRLike  */
 
-      { UNPROTECT_PTR(((*yyvaluep))); }
+      { RELEASE_SV(((*yyvaluep))); }
 
         break;
 
     case 70: /* goRLike2  */
 
-      { UNPROTECT_PTR(((*yyvaluep))); }
+      { RELEASE_SV(((*yyvaluep))); }
 
         break;
 
     case 71: /* goOption  */
 
-      { UNPROTECT_PTR(((*yyvaluep))); }
+      { RELEASE_SV(((*yyvaluep))); }
 
         break;
 
     case 72: /* goVerbatim  */
 
-      { UNPROTECT_PTR(((*yyvaluep))); }
+      { RELEASE_SV(((*yyvaluep))); }
 
         break;
 
     case 73: /* goVerbatim1  */
 
-      { UNPROTECT_PTR(((*yyvaluep))); }
+      { RELEASE_SV(((*yyvaluep))); }
 
         break;
 
     case 74: /* goVerbatim2  */
 
-      { UNPROTECT_PTR(((*yyvaluep))); }
+      { RELEASE_SV(((*yyvaluep))); }
 
         break;
 
     case 75: /* goItem0  */
 
-      { UNPROTECT_PTR(((*yyvaluep))); }
+      { RELEASE_SV(((*yyvaluep))); }
 
         break;
 
     case 76: /* goItem2  */
 
-      { UNPROTECT_PTR(((*yyvaluep))); }
+      { RELEASE_SV(((*yyvaluep))); }
 
         break;
 
     case 78: /* Option  */
 
-      { UNPROTECT_PTR(((*yyvaluep))); }
+      { RELEASE_SV(((*yyvaluep))); }
 
         break;
 
@@ -2160,25 +2122,25 @@ yyreduce:
     {
         case 2:
 
-    { xxsavevalue((yyvsp[-1]), &(yyloc)); UNPROTECT_PTR((yyvsp[-2])); YYACCEPT; }
+    { xxsavevalue((yyvsp[-1]), &(yyloc)); RELEASE_SV((yyvsp[-2])); YYACCEPT; }
 
     break;
 
   case 3:
 
-    { xxsavevalue((yyvsp[-1]), &(yyloc)); UNPROTECT_PTR((yyvsp[-2])); YYACCEPT; }
+    { xxsavevalue((yyvsp[-1]), &(yyloc)); RELEASE_SV((yyvsp[-2])); YYACCEPT; }
 
     break;
 
   case 4:
 
-    { PROTECT(parseState.Value = R_NilValue);  YYABORT; }
+    { PRESERVE_SV(parseState.Value = R_NilValue);  YYABORT; }
 
     break;
 
   case 5:
 
-    { (yyval) = (yyvsp[0]); UNPROTECT_PTR((yyvsp[-1])); }
+    { (yyval) = (yyvsp[0]); RELEASE_SV((yyvsp[-1])); }
 
     break;
 
@@ -2238,7 +2200,7 @@ yyreduce:
 
   case 15:
 
-    { (yyval) = xxmarkup2((yyvsp[-3]), (yyvsp[-2]), (yyvsp[-1]), 2, HAS_IFDEF, &(yyloc)); UNPROTECT_PTR((yyvsp[0])); }
+    { (yyval) = xxmarkup2((yyvsp[-3]), (yyvsp[-2]), (yyvsp[-1]), 2, HAS_IFDEF, &(yyloc)); RELEASE_SV((yyvsp[0])); }
 
     break;
 
@@ -2436,7 +2398,7 @@ yyreduce:
 
   case 48:
 
-    { (yyval) = xxmarkup2((yyvsp[-3]), (yyvsp[-2]), (yyvsp[-1]), 2, HAS_IFDEF, &(yyloc)); UNPROTECT_PTR((yyvsp[0])); }
+    { (yyval) = xxmarkup2((yyvsp[-3]), (yyvsp[-2]), (yyvsp[-1]), 2, HAS_IFDEF, &(yyloc)); RELEASE_SV((yyvsp[0])); }
 
     break;
 
@@ -2935,8 +2897,8 @@ yyreturn:
 static SEXP xxpushMode(int newmode, int newitem, int neweqn)
 {
     SEXP ans;
-    PROTECT(ans = allocVector(INTSXP, 7));
-    
+
+    PRESERVE_SV(ans = allocVector(INTSXP, 7));
     INTEGER(ans)[0] = parseState.xxmode;		/* Lexer mode */
     INTEGER(ans)[1] = parseState.xxitemType;	/* What is \item? */
     INTEGER(ans)[2] = parseState.xxbraceDepth;	/* Brace depth used in RCODE and VERBATIM */
@@ -2972,7 +2934,7 @@ static void xxpopMode(SEXP oldmode)
     parseState.xxQuoteCol  = INTEGER(oldmode)[5];
     parseState.xxinEqn	= INTEGER(oldmode)[6];
     
-    UNPROTECT_PTR(oldmode);
+    RELEASE_SV(oldmode);
 }
 
 static int getDynamicFlag(SEXP item)
@@ -2994,12 +2956,12 @@ static SEXP xxnewlist(SEXP item)
 #if DEBUGVALS
     Rprintf("xxnewlist(item=%p)", item);
 #endif    
-    PROTECT(ans = NewList());
+    PRESERVE_SV(ans = NewList());
     if (item) {
     	int flag = getDynamicFlag(item);
 	GrowList(ans, item);
     	setDynamicFlag(ans, flag);
-    	UNPROTECT_PTR(item);
+	RELEASE_SV(item);
     }
 #if DEBUGVALS
     Rprintf(" result: %p is length %d\n", ans, length(ans));
@@ -3059,7 +3021,7 @@ static SEXP xxlist(SEXP list, SEXP item)
     Rprintf("xxlist(list=%p, item=%p)", list, item);
 #endif
     GrowList(list, item);
-    UNPROTECT_PTR(item);
+    RELEASE_SV(item);
     setDynamicFlag(list, flag);
 #if DEBUGVALS
     Rprintf(" result: %p is length %d\n", list, length(list));
@@ -3074,17 +3036,17 @@ static SEXP xxmarkup(SEXP header, SEXP body, int flag, YYLTYPE *lloc)
     Rprintf("xxmarkup(header=%p, body=%p)", header, body);    
 #endif
     if (isNull(body)) 
-        PROTECT(ans = allocVector(VECSXP, 0));
+        PRESERVE_SV(ans = allocVector(VECSXP, 0));
     else {
         flag |= getDynamicFlag(body);
-	PROTECT(ans = PairToVectorList(CDR(body)));
-    	UNPROTECT_PTR(body);	
+	PRESERVE_SV(ans = PairToVectorList(CDR(body)));
+	RELEASE_SV(body);
     }
     if (isNull(header))
 	setAttrib(ans, R_RdTagSymbol, mkString("LIST"));
     else {
 	setAttrib(ans, R_RdTagSymbol, header);
-	UNPROTECT_PTR(header);
+	RELEASE_SV(header);
     }
     setAttrib(ans, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
     setDynamicFlag(ans, flag);
@@ -3130,12 +3092,12 @@ static SEXP xxnewcommand(SEXP cmd, SEXP name, SEXP defn, YYLTYPE *lloc)
     setAttrib(ans, R_DefinitionSymbol, thedefn);
     setAttrib(ans, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
     defineVar(installTrChar(STRING_ELT(thename, 0)), ans, parseState.xxMacroList);
-
     UNPROTECT(2); /* thedefn, ans */
-    PROTECT(ans);
-    UNPROTECT_PTR(cmd);
-    UNPROTECT_PTR(name);
-    UNPROTECT_PTR(defn); 
+
+    PRESERVE_SV(ans);
+    RELEASE_SV(cmd);
+    RELEASE_SV(name);
+    RELEASE_SV(defn);
     return ans;
 }
 
@@ -3159,7 +3121,7 @@ static SEXP xxusermacro(SEXP macro, SEXP args, YYLTYPE *lloc)
     Rprintf("xxusermacro(macro=%p, args=%p)", macro, args);
 #endif
     len = length(args)-1;
-    PROTECT(ans = allocVector(STRSXP, len + 1));
+    PRESERVE_SV(ans = allocVector(STRSXP, len + 1));
     value = UserMacroLookup(CHAR(STRING_ELT(macro,0)));
     if (TYPEOF(value) == STRSXP)
     	SET_STRING_ELT(ans, 0, STRING_ELT(value, 0));
@@ -3214,7 +3176,7 @@ static SEXP xxusermacro(SEXP macro, SEXP args, YYLTYPE *lloc)
 	SET_STRING_ELT(ans, i+1, mkChar(str));
         vmaxset(vmax);
     }
-    UNPROTECT_PTR(args);
+    RELEASE_SV(args);
 
     /* Now push the expanded macro onto the input stream, in reverse order */
     xxungetc(END_MACRO);
@@ -3239,7 +3201,7 @@ static SEXP xxusermacro(SEXP macro, SEXP args, YYLTYPE *lloc)
     setAttrib(ans, R_RdTagSymbol, mkString("USERMACRO"));
     setAttrib(ans, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
     setAttrib(ans, R_MacroSymbol, macro);
-    UNPROTECT_PTR(macro);
+    RELEASE_SV(macro);
 #if DEBUGVALS
     Rprintf(" result: %p\n", ans);
 #endif
@@ -3253,13 +3215,13 @@ static SEXP xxOptionmarkup(SEXP header, SEXP option, SEXP body, int flag, YYLTYP
     Rprintf("xxOptionmarkup(header=%p, option=%p, body=%p)", header, option, body);    
 #endif
     flag |= getDynamicFlag(body);
-    PROTECT(ans = PairToVectorList(CDR(body)));
-    UNPROTECT_PTR(body);	
+    PRESERVE_SV(ans = PairToVectorList(CDR(body)));
+    RELEASE_SV(body);
     setAttrib(ans, R_RdTagSymbol, header);
-    UNPROTECT_PTR(header);
+    RELEASE_SV(header);
     flag |= getDynamicFlag(option);
     setAttrib(ans, R_RdOptionSymbol, option);
-    UNPROTECT_PTR(option);
+    RELEASE_SV(option);
     setAttrib(ans, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
     setDynamicFlag(ans, flag);    
 #if DEBUGVALS
@@ -3275,11 +3237,11 @@ static SEXP xxmarkup2(SEXP header, SEXP body1, SEXP body2, int argcount, int fla
     Rprintf("xxmarkup2(header=%p, body1=%p, body2=%p)", header, body1, body2);        
 #endif
     
-    PROTECT(ans = allocVector(VECSXP, argcount));
+    PRESERVE_SV(ans = allocVector(VECSXP, argcount));
     if (!isNull(body1)) {
     	int flag1 = getDynamicFlag(body1);
     	SET_VECTOR_ELT(ans, 0, PairToVectorList(CDR(body1)));
-    	UNPROTECT_PTR(body1);
+	RELEASE_SV(body1);
     	setDynamicFlag(VECTOR_ELT(ans, 0), flag1);
     	flag |= flag1;
     }
@@ -3288,12 +3250,12 @@ static SEXP xxmarkup2(SEXP header, SEXP body1, SEXP body2, int argcount, int fla
 	if (argcount < 2) error("internal error: inconsistent argument count");
 	flag2 = getDynamicFlag(body2);
     	SET_VECTOR_ELT(ans, 1, PairToVectorList(CDR(body2)));    
-    	UNPROTECT_PTR(body2);
+	RELEASE_SV(body2);
     	setDynamicFlag(VECTOR_ELT(ans, 1), flag2);
     	flag |= flag2;
     }
     setAttrib(ans, R_RdTagSymbol, header);
-    UNPROTECT_PTR(header);    
+    RELEASE_SV(header);
     setAttrib(ans, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
     setDynamicFlag(ans, flag);
 #if DEBUGVALS
@@ -3309,11 +3271,11 @@ static SEXP xxmarkup3(SEXP header, SEXP body1, SEXP body2, SEXP body3, int flag,
     Rprintf("xxmarkup2(header=%p, body1=%p, body2=%p, body3=%p)", header, body1, body2, body3);        
 #endif
     
-    PROTECT(ans = allocVector(VECSXP, 3));
+    PRESERVE_SV(ans = allocVector(VECSXP, 3));
     if (!isNull(body1)) {
     	int flag1 = getDynamicFlag(body1);
     	SET_VECTOR_ELT(ans, 0, PairToVectorList(CDR(body1)));
-    	UNPROTECT_PTR(body1);
+	RELEASE_SV(body1);
     	setDynamicFlag(VECTOR_ELT(ans, 0), flag1);
     	flag |= flag1;
     }
@@ -3321,7 +3283,7 @@ static SEXP xxmarkup3(SEXP header, SEXP body1, SEXP body2, SEXP body3, int flag,
     	int flag2;
 	flag2 = getDynamicFlag(body2);
     	SET_VECTOR_ELT(ans, 1, PairToVectorList(CDR(body2)));    
-    	UNPROTECT_PTR(body2);
+	RELEASE_SV(body2);
     	setDynamicFlag(VECTOR_ELT(ans, 1), flag2);
     	flag |= flag2;
     }
@@ -3329,12 +3291,12 @@ static SEXP xxmarkup3(SEXP header, SEXP body1, SEXP body2, SEXP body3, int flag,
     	int flag3;
 	flag3 = getDynamicFlag(body3);
     	SET_VECTOR_ELT(ans, 2, PairToVectorList(CDR(body3)));    
-    	UNPROTECT_PTR(body3);
+	RELEASE_SV(body3);
     	setDynamicFlag(VECTOR_ELT(ans, 2), flag3);
     	flag |= flag3;
     }    
     setAttrib(ans, R_RdTagSymbol, header);
-    UNPROTECT_PTR(header);    
+    RELEASE_SV(header);
     setAttrib(ans, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
     setDynamicFlag(ans, flag);
 #if DEBUGVALS
@@ -3346,13 +3308,13 @@ static SEXP xxmarkup3(SEXP header, SEXP body1, SEXP body2, SEXP body3, int flag,
 static void xxsavevalue(SEXP Rd, YYLTYPE *lloc)
 {
     int flag = getDynamicFlag(Rd);
-    PROTECT(parseState.Value = PairToVectorList(CDR(Rd)));
+    PRESERVE_SV(parseState.Value = PairToVectorList(CDR(Rd)));
     if (!isNull(parseState.Value)) {
     	setAttrib(parseState.Value, R_ClassSymbol, mkString("Rd"));
     	setAttrib(parseState.Value, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
     	setDynamicFlag(parseState.Value, flag);
     }
-    UNPROTECT_PTR(Rd);
+    RELEASE_SV(Rd);
 }
 
 static SEXP xxtag(SEXP item, int type, YYLTYPE *lloc)
@@ -3540,11 +3502,16 @@ static void GrowList(SEXP l, SEXP s)
 
 static void InitSymbols(void)
 {
-    R_RdTagSymbol = install("Rd_tag");
-    R_RdOptionSymbol = install("Rd_option");
-    R_DefinitionSymbol = install("definition");
-    R_DynamicFlagSymbol = install("dynamicFlag");
-    R_MacroSymbol = install("macro");
+    if (!R_RdTagSymbol)
+	R_RdTagSymbol = install("Rd_tag");
+    if (!R_RdOptionSymbol)
+	R_RdOptionSymbol = install("Rd_option");
+    if (!R_DefinitionSymbol)
+	R_DefinitionSymbol = install("definition");
+    if (!R_DynamicFlagSymbol)
+	R_DynamicFlagSymbol = install("dynamicFlag");
+    if (!R_MacroSymbol)
+	R_MacroSymbol = install("macro");
 }
  
 static SEXP ParseRd(ParseStatus *status, SEXP srcfile, Rboolean fragment, SEXP macros)
@@ -3580,6 +3547,7 @@ static SEXP ParseRd(ParseStatus *status, SEXP srcfile, Rboolean fragment, SEXP m
 	
     PROTECT(macros);
     PROTECT(parseState.xxMacroList = R_NewHashedEnv(macros, ScalarInteger(0)));
+    PROTECT(parseState.mset = R_NewPreciousMSet(50));
     
     parseState.Value = R_NilValue;
     
@@ -3592,8 +3560,8 @@ static SEXP ParseRd(ParseStatus *status, SEXP srcfile, Rboolean fragment, SEXP m
 #if DEBUGVALS
     Rprintf("ParseRd result: %p\n", parseState.Value);    
 #endif    
-    UNPROTECT_PTR(parseState.Value);
-    UNPROTECT(2); /* macros, parseState.xxMacroList */
+    RELEASE_SV(parseState.Value);
+    UNPROTECT(3); /* macros, parseState.xxMacroList, parseState.mset */
     
     if (pushbase != pushback) free(pushbase);
     
@@ -3800,10 +3768,10 @@ static SEXP InstallKeywords()
     num = sizeof(keywords)/sizeof(keywords[0]);
     PROTECT(result = R_NewHashedEnv(R_EmptyEnv, ScalarInteger(num)));
     for (i = 0; keywords[i].name; i++) {
-        PROTECT(name = install(keywords[i].name));
+        name = install(keywords[i].name);
         PROTECT(val = ScalarInteger(keywords[i].token));
     	defineVar(name, val, result);
-	UNPROTECT(2); /* name, val */
+	UNPROTECT(1); /* val */
     }
     UNPROTECT(1); /* result */
     return result;
@@ -3993,7 +3961,7 @@ static int token(void)
         yylloc.last_line = 0;
         yylloc.last_column = 0;
         yylloc.last_byte = 0;
-    	PROTECT(yylval = mkString(""));
+	PRESERVE_SV(yylval = mkString(""));
         c = parseState.xxinitvalue;
     	parseState.xxinitvalue = 0;
     	return(c);
@@ -4086,7 +4054,7 @@ static int mkText(int c)
     };
 stop:
     if (c != '\n') xxungetc(c); /* newline causes a break, but we keep it */
-    PROTECT(yylval = mkString2(stext, bp - stext));
+    PRESERVE_SV(yylval = mkString2(stext, bp - stext));
     if(stext != st0) free(stext);
     return TEXT;
 }
@@ -4102,7 +4070,7 @@ static int mkComment(int c)
     
     xxungetc(c);
     
-    PROTECT(yylval = mkString2(stext, bp - stext));
+    PRESERVE_SV(yylval = mkString2(stext, bp - stext));
     if(stext != st0) free(stext);    
     return COMMENT;
 }
@@ -4204,7 +4172,7 @@ static int mkCode(int c)
     	c = xxgetc();
     }
     if (c != '\n') xxungetc(c);
-    PROTECT(yylval = mkString2(stext, bp - stext));
+    PRESERVE_SV(yylval = mkString2(stext, bp - stext));
     if(stext != st0) free(stext);
     return RCODE; 
 }
@@ -4243,7 +4211,7 @@ static int mkMarkup(int c)
     	    }
         }
     }
-    PROTECT(yylval = mkString2(stext, bp - stext - 1));
+    PRESERVE_SV(yylval = mkString2(stext, bp - stext - 1));
     if(stext != st0) free(stext);
     xxungetc(c);
     return retval;
@@ -4262,7 +4230,7 @@ static int mkIfdef(int c)
     xxungetc(c);
     
     retval = KeywordLookup(stext);
-    PROTECT(yylval = mkString2(stext, bp - stext - 1));
+    PRESERVE_SV(yylval = mkString2(stext, bp - stext - 1));
     
     switch (retval) {
     case ENDIF:  /* eat chars to the end of the line */
@@ -4270,7 +4238,7 @@ static int mkIfdef(int c)
     	while (c != '\n' && c != R_EOF);
     	break;
     case UNKNOWN:
-	UNPROTECT(1); /* yylval */
+	RELEASE_SV(yylval);
     	bp--; bp--;
     	for (; bp > stext; bp--) 
     	    xxungetc(*bp);
@@ -4326,7 +4294,7 @@ static int mkVerb(int c)
     	c = xxgetc();
     };
     if (c != '\n') xxungetc(c);
-    PROTECT(yylval = mkString2(stext, bp - stext));
+    PRESERVE_SV(yylval = mkString2(stext, bp - stext));
     if(stext != st0) free(stext);
     return VERB;  
 }

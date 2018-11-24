@@ -120,12 +120,15 @@ struct ParseState {
     SEXP	xxVerbatimList;/* A STRSXP containing all the verbatim environment names */
 
     SEXP     SrcFile;  /* parseLatex will *always* supply a srcfile */
-    
+    SEXP mset; /* precious mset for protecting parser semantic values */
     ParseState *prevState;
 };
 
 static Rboolean busy = FALSE;
 static ParseState parseState;
+
+#define PRESERVE_SV(x) R_PreserveInMSet((x), parseState.mset)
+#define RELEASE_SV(x)  R_ReleaseFromMSet((x), parseState.mset)
 
 /* Routines used to build the parse tree */
 
@@ -161,13 +164,13 @@ static SEXP R_LatexTagSymbol = NULL;
    pattern, just in case the last item is unmatched and we need to back out.  But
    it is safe to list more, so we do. */
 
-%destructor { UNPROTECT_PTR($$); } MACRO TEXT COMMENT BEGIN END
+%destructor { RELEASE_SV($$); } MACRO TEXT COMMENT BEGIN END
 
 %%
 
 Init:		Items END_OF_INPUT		{ xxsavevalue($1, &@$); YYACCEPT; }
 	|	END_OF_INPUT			{ xxsavevalue(NULL, &@$); YYACCEPT; }
-	|	error				{ PROTECT(parseState.Value = R_NilValue);  YYABORT; }
+	|	error				{ PRESERVE_SV(parseState.Value = R_NilValue);  YYABORT; }
 	;
 
 Items:		Item				{ $$ = xxnewlist($1); }
@@ -187,7 +190,7 @@ Item:		TEXT				{ $$ = xxtag($1, TEXT, &@$); }
 	
 environment:	BEGIN '{' TEXT '}' { xxSetInVerbEnv($3); } 
                 Items END '{' TEXT '}' 	{ $$ = xxenv($3, $6, $9, &@$);
-                                                  UNPROTECT_PTR($1); UNPROTECT_PTR($7); } 
+                                                  RELEASE_SV($1); RELEASE_SV($7); }
 
 math:		'$' nonMath '$'			{ $$ = xxmath($2, &@$); }
 
@@ -202,10 +205,10 @@ static SEXP xxnewlist(SEXP item)
 #if DEBUGVALS
     Rprintf("xxnewlist(item=%p)", item);
 #endif    
-    PROTECT(ans = NewList());
+    PRESERVE_SV(ans = NewList());
     if (item) {
 	GrowList(ans, item);
-    	UNPROTECT_PTR(item);
+	RELEASE_SV(item);
     }
 #if DEBUGVALS
     Rprintf(" result: %p is length %d\n", ans, length(ans));
@@ -219,7 +222,7 @@ static SEXP xxlist(SEXP list, SEXP item)
     Rprintf("xxlist(list=%p, item=%p)", list, item);
 #endif
     GrowList(list, item);
-    UNPROTECT_PTR(item);
+    RELEASE_SV(item);
 #if DEBUGVALS
     Rprintf(" result: %p is length %d\n", list, length(list));
 #endif
@@ -232,18 +235,18 @@ static SEXP xxenv(SEXP begin, SEXP body, SEXP end, YYLTYPE *lloc)
 #if DEBUGVALS
     Rprintf("xxenv(begin=%p, body=%p, end=%p)", begin, body, end);    
 #endif
-    PROTECT(ans = allocVector(VECSXP, 2));
+    PRESERVE_SV(ans = allocVector(VECSXP, 2));
     SET_VECTOR_ELT(ans, 0, begin);
-    UNPROTECT_PTR(begin);
+    RELEASE_SV(begin);
     if (!isNull(body)) {
 	SET_VECTOR_ELT(ans, 1, PairToVectorList(CDR(body)));
-    	UNPROTECT_PTR(body);	
+	RELEASE_SV(body);
     }
     /* FIXME:  check that begin and end match */
     setAttrib(ans, R_SrcrefSymbol, makeSrcref(lloc, parseState.SrcFile));
     setAttrib(ans, R_LatexTagSymbol, mkString("ENVIRONMENT"));
     if (!isNull(end)) 
-    	UNPROTECT_PTR(end);
+	RELEASE_SV(end);
 #if DEBUGVALS
     Rprintf(" result: %p\n", ans);    
 #endif
@@ -256,8 +259,8 @@ static SEXP xxmath(SEXP body, YYLTYPE *lloc)
 #if DEBUGVALS
     Rprintf("xxmath(body=%p)", body);    
 #endif
-    PROTECT(ans = PairToVectorList(CDR(body)));
-    UNPROTECT_PTR(body);
+    PRESERVE_SV(ans = PairToVectorList(CDR(body)));
+    RELEASE_SV(body);
     setAttrib(ans, R_SrcrefSymbol, makeSrcref(lloc, parseState.SrcFile));
     setAttrib(ans, R_LatexTagSymbol, mkString("MATH"));
 #if DEBUGVALS
@@ -273,10 +276,10 @@ static SEXP xxblock(SEXP body, YYLTYPE *lloc)
     Rprintf("xxblock(body=%p)", body);    
 #endif
     if (!body) 
-        PROTECT(ans = allocVector(VECSXP, 0));
+        PRESERVE_SV(ans = allocVector(VECSXP, 0));
     else {
-	PROTECT(ans = PairToVectorList(CDR(body)));
-    	UNPROTECT_PTR(body);	
+	PRESERVE_SV(ans = PairToVectorList(CDR(body)));
+	RELEASE_SV(body);
     }
     setAttrib(ans, R_SrcrefSymbol, makeSrcref(lloc, parseState.SrcFile));
     setAttrib(ans, R_LatexTagSymbol, mkString("BLOCK"));
@@ -302,17 +305,17 @@ static void xxSetInVerbEnv(SEXP envname)
     char buffer[256];
     if (VerbatimLookup(CHAR(STRING_ELT(envname, 0)))) {
     	snprintf(buffer, sizeof(buffer), "\\end{%s}", CHAR(STRING_ELT(envname, 0)));
-    	PROTECT(parseState.xxInVerbEnv = ScalarString(mkChar(buffer)));
+	PRESERVE_SV(parseState.xxInVerbEnv = ScalarString(mkChar(buffer)));
     } else parseState.xxInVerbEnv = NULL;
 }
 
 static void xxsavevalue(SEXP items, YYLTYPE *lloc)
 {
     if (items) {
-    	PROTECT(parseState.Value = PairToVectorList(CDR(items)));
-    	UNPROTECT_PTR(items);
+	PRESERVE_SV(parseState.Value = PairToVectorList(CDR(items)));
+	RELEASE_SV(items);
     } else {
-    	PROTECT(parseState.Value = allocVector(VECSXP, 1));
+	PRESERVE_SV(parseState.Value = allocVector(VECSXP, 1));
     	SET_VECTOR_ELT(parseState.Value, 0, ScalarString(mkChar("")));
 	setAttrib(VECTOR_ELT(parseState.Value, 0), R_LatexTagSymbol, mkString("TEXT"));
     }	
@@ -487,8 +490,16 @@ static void UseState(ParseState *state) {
     parseState.prevState = state->prevState;
 }
 
+static void InitSymbols(void)
+{
+    if (!R_LatexTagSymbol)
+	R_LatexTagSymbol = install("latex_tag");
+}
+
 static SEXP ParseLatex(ParseStatus *status, SEXP srcfile)
 {
+    InitSymbols();
+
     R_ParseContextLast = 0;
     R_ParseContext[0] = '\0';
     	
@@ -499,6 +510,8 @@ static SEXP ParseLatex(ParseStatus *status, SEXP srcfile)
     parseState.xxbyteno = 1;
     
     parseState.SrcFile = srcfile;
+
+    PROTECT(parseState.mset = R_NewPreciousMSet(50));
     
     npush = 0;
     
@@ -509,8 +522,11 @@ static SEXP ParseLatex(ParseStatus *status, SEXP srcfile)
 
 #if DEBUGVALS
     Rprintf("ParseRd result: %p\n", parseState.Value);    
-#endif    
-    UNPROTECT_PTR(parseState.Value);
+#endif
+
+    RELEASE_SV(parseState.Value);
+    UNPROTECT(1); /* parseState.mset */
+
     return parseState.Value;
 }
 
@@ -713,7 +729,7 @@ static int token(void)
         yylloc.last_line = 0;
         yylloc.last_column = 0;
         yylloc.last_byte = 0;
-    	PROTECT(yylval = mkString(""));
+	PRESERVE_SV(yylval = mkString(""));
         c = parseState.xxinitvalue;
     	parseState.xxinitvalue = 0;
     	return(c);
@@ -760,7 +776,7 @@ static int mkText(int c)
     };
 stop:
     xxungetc(c);
-    PROTECT(yylval = mkString2(stext,  bp - stext));
+    PRESERVE_SV(yylval = mkString2(stext,  bp - stext));
     if(stext != st0) free(stext);
     return TEXT;
 }
@@ -777,7 +793,7 @@ static int mkComment(int c)
     if (c == R_EOF) xxungetc(c);
     else TEXT_PUSH(c);
     
-    PROTECT(yylval = mkString2(stext,  bp - stext));
+    PRESERVE_SV(yylval = mkString2(stext,  bp - stext));
     if(stext != st0) free(stext);    
     return COMMENT;
 }
@@ -806,7 +822,7 @@ static int mkMarkup(int c)
     	    xxungetc(c);
     }
     if (retval != VERB)
-	PROTECT(yylval = mkString(stext));
+	PRESERVE_SV(yylval = mkString(stext));
     if(stext != st0) free(stext);
     return retval;
 }
@@ -823,7 +839,7 @@ static int mkVerb(int c)
     while ((c = xxgetc()) != delim) TEXT_PUSH(c);
     TEXT_PUSH(c);
     
-    PROTECT(yylval = mkString2(stext, bp - stext));
+    PRESERVE_SV(yylval = mkString2(stext, bp - stext));
     if(stext != st0) free(stext);
     return VERB;  
 }
@@ -846,11 +862,11 @@ static int mkVerbEnv()
     if ( !CHAR(STRING_ELT(parseState.xxInVerbEnv, 0))[matched] ) {
     	for (i = matched-1; i >= 0; i--) 
     	    xxungetc(*(--bp));    	    
-    	UNPROTECT_PTR(parseState.xxInVerbEnv);
+	RELEASE_SV(parseState.xxInVerbEnv);
     	parseState.xxInVerbEnv = NULL;
     }
     	    
-    PROTECT(yylval = mkString2(stext, bp - stext));
+    PRESERVE_SV(yylval = mkString2(stext, bp - stext));
     if (stext != st0) free(stext);
     return VERB;
 }
@@ -888,11 +904,6 @@ static void PopState() {
     	busy = FALSE;
 }
 
-static void InitSymbols(void)
-{
-    R_LatexTagSymbol = install("latex_tag");
-}
-
 /* "do_parseLatex" 
 
  .External2("parseLatex", file, srcfile, verbose, basename, warningCalls)
@@ -905,7 +916,6 @@ SEXP parseLatex(SEXP call, SEXP op, SEXP args, SEXP env)
 
     SEXP s = R_NilValue, source, text;
     ParseStatus status;
-    InitSymbols();
 
 #if DEBUGMODE
     yydebug = 1;

@@ -41,7 +41,6 @@ struct SrcRefState {
     Rboolean keepParseData;	/* Whether to attach also parse data to srcrefs */
     Rboolean didAttach;		/* Record of whether a srcref was attached */
     SEXP data;			/* Parse data as in sexps, also here for performance */
-    R_xlen_t nPreserved;	/* Number of used elements in svs */
     SEXP sexps;
 	/* SrcRefs */
 	/* SrcFile		The srcfile object currently being parsed */

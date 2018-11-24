@@ -248,65 +248,10 @@ static SrcRefState ParseState;
    two protection schemes.
 */
 
-/* Add the given semantic value (SEXP) to the precious multi-set of the
-   current parser state.  The set is specific to each parsing and is
-   automatically cleared when the parse operation finishes or fails.
-   Values in the set are protected implicitly from garbage collection. */
-static void PRESERVE_SV(SEXP x) {
-    if (x == R_NilValue || isSymbol(x))
-	return; /* no need to preserve */
-    PROTECT(x);
-    SEXP store = PS_SVS;
-    if (store == R_NilValue)
-	PS_SET_SVS(store = allocVector(VECSXP, 200));
-    else if (ParseState.nPreserved == XLENGTH(store)) {
-	R_xlen_t oldsize = XLENGTH(store);
-	R_xlen_t newsize = 2 * oldsize;
-	SEXP newsvs = PROTECT(allocVector(VECSXP, newsize));
-	for(R_xlen_t i = 0; i < oldsize; i++)
-	    SET_VECTOR_ELT(newsvs, i, VECTOR_ELT(store, i));
-	PS_SET_SVS(store = newsvs);
-	UNPROTECT(1); /* newsvs */
-    }
-    UNPROTECT(1); /* x */
-    SET_VECTOR_ELT(store, ParseState.nPreserved++, x);
-}
-
-/* Remove (one instance of) the semantic value from the current parser state
-   precious multi-set. */
-static void RELEASE_SV(SEXP x) {
-    if (x == R_NilValue || isSymbol(x))
-	return; /* not preserved */
-    SEXP store = PS_SVS;
-    if (store == R_NilValue)
-	return; /* not preserved */
-    for(R_xlen_t i = ParseState.nPreserved - 1; i >= 0; i--) {
-	if (VECTOR_ELT(store, i) == x) {
-	    for(;i < ParseState.nPreserved - 1; i++)
-		SET_VECTOR_ELT(store, i, VECTOR_ELT(store, i + 1));
-	    SET_VECTOR_ELT(store, i, R_NilValue);
-	    ParseState.nPreserved --;
-	    return;
-	}
-    }
-    /* not preserved */
-}
-
-/* Clear the precious multi-set of semantic values int the current
-   parser state. */
-static void clearSvs() {
-    SEXP store = PS_SVS;
-    if (store == R_NilValue)
-	return;
-    R_xlen_t size = XLENGTH(store);
-    if (size < 500)
-	/* just free the entries */
-	for(R_xlen_t i = 0; i < ParseState.nPreserved; i++)
-	    SET_VECTOR_ELT(store, i, R_NilValue);
-    else
-	PS_SET_SVS(R_NilValue);
-    ParseState.nPreserved = 0;
-}
+#define INIT_SVS()     PS_SET_SVS(R_NewPreciousMSet(200))
+#define PRESERVE_SV(x) R_PreserveInMSet((x), PS_SVS)
+#define RELEASE_SV(x)  R_ReleaseFromMSet((x), PS_SVS)
+#define CLEAR_SVS()    R_ReleaseMSet(PS_SVS, 500)
 
 #include <rlocale.h>
 #ifdef HAVE_LANGINFO_CODESET
@@ -1271,7 +1216,7 @@ void InitParser(void)
 {
     ParseState.sexps = allocVector(VECSXP, 7); /* initialized to R_NilValue */
     ParseState.data = R_NilValue;
-    ParseState.nPreserved = 0;
+    INIT_SVS();
     R_PreserveObject(ParseState.sexps); /* never released in an R session */
     R_NullSymbol = install("NULL");
 }
@@ -1293,7 +1238,7 @@ void R_InitSrcRefState(RCNTXT* cptr)
 	ParseState.prevState = prev;
 	ParseState.sexps = allocVector(VECSXP, 7);
 	ParseState.data = R_NilValue;
-	ParseState.nPreserved = 0;
+	INIT_SVS();
 	R_PreserveObject(ParseState.sexps);
 	/* ParseState.sexps released in R_FinalizeSrcRefState */
     } else
@@ -1322,7 +1267,7 @@ void R_FinalizeSrcRefState(void)
 {
     PS_SET_SRCFILE(R_NilValue);
     PS_SET_ORIGINAL(R_NilValue);
-    clearSvs();
+    CLEAR_SVS();
 
     /* Free the data, text and ids if we are restoring a previous state,
        or if they have grown too large */
@@ -1362,7 +1307,6 @@ static void UseSrcRefState(SrcRefState *state)
     ParseState.keepSrcRefs = state->keepSrcRefs;
     ParseState.keepParseData = state->keepParseData;
     ParseState.sexps = state->sexps;
-    ParseState.nPreserved = state->nPreserved;
     ParseState.data = state->data;
     ParseState.data_count = state->data_count;
     ParseState.xxlineno = state->xxlineno;
@@ -1378,7 +1322,6 @@ static void PutSrcRefState(SrcRefState *state)
     state->keepSrcRefs = ParseState.keepSrcRefs;
     state->keepParseData = ParseState.keepParseData;
     state->sexps = ParseState.sexps;
-    state->nPreserved = ParseState.nPreserved;
     state->data = ParseState.data;
     state->data_count = ParseState.data_count;
     state->xxlineno = ParseState.xxlineno;
@@ -1455,7 +1398,7 @@ SEXP R_Parse1File(FILE *fp, int gencode, ParseStatus *status)
     fp_parse = fp;
     ptr_getc = file_getc;
     R_Parse1(status);
-    clearSvs();
+    CLEAR_SVS();
     return R_CurrentExpr;
 }
 

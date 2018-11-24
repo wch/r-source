@@ -313,65 +313,10 @@ static SrcRefState ParseState;
    two protection schemes.
 */
 
-/* Add the given semantic value (SEXP) to the precious multi-set of the
-   current parser state.  The set is specific to each parsing and is
-   automatically cleared when the parse operation finishes or fails.
-   Values in the set are protected implicitly from garbage collection. */
-static void PRESERVE_SV(SEXP x) {
-    if (x == R_NilValue || isSymbol(x))
-	return; /* no need to preserve */
-    PROTECT(x);
-    SEXP store = PS_SVS;
-    if (store == R_NilValue)
-	PS_SET_SVS(store = allocVector(VECSXP, 200));
-    else if (ParseState.nPreserved == XLENGTH(store)) {
-	R_xlen_t oldsize = XLENGTH(store);
-	R_xlen_t newsize = 2 * oldsize;
-	SEXP newsvs = PROTECT(allocVector(VECSXP, newsize));
-	for(R_xlen_t i = 0; i < oldsize; i++)
-	    SET_VECTOR_ELT(newsvs, i, VECTOR_ELT(store, i));
-	PS_SET_SVS(store = newsvs);
-	UNPROTECT(1); /* newsvs */
-    }
-    UNPROTECT(1); /* x */
-    SET_VECTOR_ELT(store, ParseState.nPreserved++, x);
-}
-
-/* Remove (one instance of) the semantic value from the current parser state
-   precious multi-set. */
-static void RELEASE_SV(SEXP x) {
-    if (x == R_NilValue || isSymbol(x))
-	return; /* not preserved */
-    SEXP store = PS_SVS;
-    if (store == R_NilValue)
-	return; /* not preserved */
-    for(R_xlen_t i = ParseState.nPreserved - 1; i >= 0; i--) {
-	if (VECTOR_ELT(store, i) == x) {
-	    for(;i < ParseState.nPreserved - 1; i++)
-		SET_VECTOR_ELT(store, i, VECTOR_ELT(store, i + 1));
-	    SET_VECTOR_ELT(store, i, R_NilValue);
-	    ParseState.nPreserved --;
-	    return;
-	}
-    }
-    /* not preserved */
-}
-
-/* Clear the precious multi-set of semantic values int the current
-   parser state. */
-static void clearSvs() {
-    SEXP store = PS_SVS;
-    if (store == R_NilValue)
-	return;
-    R_xlen_t size = XLENGTH(store);
-    if (size < 500)
-	/* just free the entries */
-	for(R_xlen_t i = 0; i < ParseState.nPreserved; i++)
-	    SET_VECTOR_ELT(store, i, R_NilValue);
-    else
-	PS_SET_SVS(R_NilValue);
-    ParseState.nPreserved = 0;
-}
+#define INIT_SVS()     PS_SET_SVS(R_NewPreciousMSet(200))
+#define PRESERVE_SV(x) R_PreserveInMSet((x), PS_SVS)
+#define RELEASE_SV(x)  R_ReleaseFromMSet((x), PS_SVS)
+#define CLEAR_SVS()    R_ReleaseMSet(PS_SVS, 500)
 
 #include <rlocale.h>
 #ifdef HAVE_LANGINFO_CODESET
@@ -544,55 +489,6 @@ extern int yydebug;
     UPLUS = 305
   };
 #endif
-/* Tokens.  */
-#define END_OF_INPUT 258
-#define ERROR 259
-#define STR_CONST 260
-#define NUM_CONST 261
-#define NULL_CONST 262
-#define SYMBOL 263
-#define FUNCTION 264
-#define INCOMPLETE_STRING 265
-#define LEFT_ASSIGN 266
-#define EQ_ASSIGN 267
-#define RIGHT_ASSIGN 268
-#define LBB 269
-#define FOR 270
-#define IN 271
-#define IF 272
-#define ELSE 273
-#define WHILE 274
-#define NEXT 275
-#define BREAK 276
-#define REPEAT 277
-#define GT 278
-#define GE 279
-#define LT 280
-#define LE 281
-#define EQ 282
-#define NE 283
-#define AND 284
-#define OR 285
-#define AND2 286
-#define OR2 287
-#define NS_GET 288
-#define NS_GET_INT 289
-#define COMMENT 290
-#define LINE_DIRECTIVE 291
-#define SYMBOL_FORMALS 292
-#define EQ_FORMALS 293
-#define EQ_SUB 294
-#define SYMBOL_SUB 295
-#define SYMBOL_FUNCTION_CALL 296
-#define SYMBOL_PACKAGE 297
-#define SLOT 298
-#define LOW 299
-#define TILDE 300
-#define UNOT 301
-#define NOT 302
-#define SPECIAL 303
-#define UMINUS 304
-#define UPLUS 305
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -928,16 +824,16 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   444,   444,   445,   446,   447,   448,   451,   452,   455,
-     458,   459,   460,   461,   463,   464,   466,   467,   468,   469,
-     470,   472,   473,   474,   475,   476,   477,   478,   479,   480,
-     481,   482,   483,   484,   485,   486,   487,   488,   489,   490,
-     491,   493,   494,   495,   497,   498,   499,   500,   501,   502,
-     503,   504,   505,   506,   507,   508,   509,   510,   511,   512,
-     513,   514,   515,   516,   517,   518,   522,   525,   528,   532,
-     533,   534,   535,   536,   537,   540,   541,   544,   545,   546,
-     547,   548,   549,   550,   551,   554,   555,   556,   557,   558,
-     562
+       0,   389,   389,   390,   391,   392,   393,   396,   397,   400,
+     403,   404,   405,   406,   408,   409,   411,   412,   413,   414,
+     415,   417,   418,   419,   420,   421,   422,   423,   424,   425,
+     426,   427,   428,   429,   430,   431,   432,   433,   434,   435,
+     436,   438,   439,   440,   442,   443,   444,   445,   446,   447,
+     448,   449,   450,   451,   452,   453,   454,   455,   456,   457,
+     458,   459,   460,   461,   462,   463,   467,   470,   473,   477,
+     478,   479,   480,   481,   482,   485,   486,   489,   490,   491,
+     492,   493,   494,   495,   496,   499,   500,   501,   502,   503,
+     507
 };
 #endif
 
@@ -3523,7 +3419,7 @@ void InitParser(void)
 {
     ParseState.sexps = allocVector(VECSXP, 7); /* initialized to R_NilValue */
     ParseState.data = R_NilValue;
-    ParseState.nPreserved = 0;
+    INIT_SVS();
     R_PreserveObject(ParseState.sexps); /* never released in an R session */
     R_NullSymbol = install("NULL");
 }
@@ -3545,7 +3441,7 @@ void R_InitSrcRefState(RCNTXT* cptr)
 	ParseState.prevState = prev;
 	ParseState.sexps = allocVector(VECSXP, 7);
 	ParseState.data = R_NilValue;
-	ParseState.nPreserved = 0;
+	INIT_SVS();
 	R_PreserveObject(ParseState.sexps);
 	/* ParseState.sexps released in R_FinalizeSrcRefState */
     } else
@@ -3574,7 +3470,7 @@ void R_FinalizeSrcRefState(void)
 {
     PS_SET_SRCFILE(R_NilValue);
     PS_SET_ORIGINAL(R_NilValue);
-    clearSvs();
+    CLEAR_SVS();
 
     /* Free the data, text and ids if we are restoring a previous state,
        or if they have grown too large */
@@ -3614,7 +3510,6 @@ static void UseSrcRefState(SrcRefState *state)
     ParseState.keepSrcRefs = state->keepSrcRefs;
     ParseState.keepParseData = state->keepParseData;
     ParseState.sexps = state->sexps;
-    ParseState.nPreserved = state->nPreserved;
     ParseState.data = state->data;
     ParseState.data_count = state->data_count;
     ParseState.xxlineno = state->xxlineno;
@@ -3630,7 +3525,6 @@ static void PutSrcRefState(SrcRefState *state)
     state->keepSrcRefs = ParseState.keepSrcRefs;
     state->keepParseData = ParseState.keepParseData;
     state->sexps = ParseState.sexps;
-    state->nPreserved = ParseState.nPreserved;
     state->data = ParseState.data;
     state->data_count = ParseState.data_count;
     state->xxlineno = ParseState.xxlineno;
@@ -3707,7 +3601,7 @@ SEXP R_Parse1File(FILE *fp, int gencode, ParseStatus *status)
     fp_parse = fp;
     ptr_getc = file_getc;
     R_Parse1(status);
-    clearSvs();
+    CLEAR_SVS();
     return R_CurrentExpr;
 }
 
