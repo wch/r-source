@@ -644,10 +644,13 @@ AC_GNU_SOURCE ## see note above
 AC_PROG_CPP
 R_PROG_CPP_CPPFLAGS
 
+## As from R 3.6.0, prefer the modern Fortran compiler for .f files
+echo "looking for a modern Fortran compiler for FC and F77"
+AC_PROG_FC()
+: ${F77=${FC}}
 ## see if the user set FFLAGS: used for Intel compilers below
 userFFLAGS=${FFLAGS}
 R_PROG_F77
-AC_PROG_FC()
 
 AC_PROG_CXX
 ## check this actually compiles
