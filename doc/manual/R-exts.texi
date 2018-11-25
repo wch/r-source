@@ -1813,7 +1813,7 @@ options, and @strong{must} be set in @code{PKG_CPPFLAGS} as otherwise
 platform-specific paths (e.g.@: @samp{-I/usr/local/include}) will take
 precedence.  @code{PKG_CPPFLAGS} should contain @samp{-I}, @samp{-D},
 @samp{-U} and (where supported) @samp{-include} and @samp{-pthread}
-options: everthing else should be a compiler flag.
+options: everything else should be a compiler flag.
 
 @file{Makevars} can also be used to set flags for the linker, for
 example @samp{-L} and @samp{-l} options, @emph{via} @code{PKG_LIBS}.
@@ -1885,7 +1885,7 @@ over-optimization of FORTRAN code: it is typically @samp{-g -O2
 -ffloat-store} on @cputype{ix86} platforms using @command{gfortran}.
 Note that this is @strong{not} an additional flag to be used as part of
 @code{PKG_FFLAGS}, but a replacement for @code{FFLAGS}, and that it is
-intended for the fixed-formFortran compiler @samp{F77} and not necessarily for
+intended for the fixed-form Fortran compiler @samp{F77} and not necessarily for
 the free-form Fortran compiler @samp{FC}.  See the example later in this
 section.
 @end table
@@ -4404,7 +4404,7 @@ can optionally report on unsafe flags which were used.)
 
 @item
 Do be very careful with passing arguments between @R{}, C and
-Fortrancode.  In particular, @code{long} in C will be 32-bit
+Fortran code.  In particular, @code{long} in C will be 32-bit
 on some @R{} platforms (including 64-bit Windows), but 64-bit on most
 modern Unix and Linux platforms.  It is rather unlikely that the use of
 @code{long} in C code has been thought through: if you need a longer
