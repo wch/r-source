@@ -70,13 +70,7 @@
 ## CPPFLAGS=
 
 ## The command which runs the fixed-form Fortran compiler.
-## If this is not specified, a search is made for
-## f95 fort xlf95 ifort ifc efc pgf95 lf95 gfortran ftn g95
-## f90 xlf90 pgf90 pghpf epcf90
-## g77 f77 xlf frt pgf77 cf77 fort77 fl32 af77
-## On HPUX fort77 is the POSIX compliant Fortran compiler, and replaces
-## f77 in the search list.
-## If none of these is found, R cannot be compiled.
+## Defaults to the value found/supplied for FC, but can be overridden.
 ## F77=
 
 ## Options for the fixed-form Fortran compiler.

@@ -4411,26 +4411,16 @@ variable @code{MAKE} at configure time, for example
 @section Using Fortran
 @cindex Fortran
 
-To compile @R{}, you need a Fortran compiler.  The default
+To compile @R{}, you need a Fortran compiler.  The current default
 is to search for
 @c F95_compilers in m4/R.m4:
-@command{f95}, @command{fort}, @command{xlf95},
-@command{ifort}, @command{ifc}, @command{efc}, @command{pgf95}
-@command{lf95}, @command{gfortran}, @command{ftn}, @command{g95},
+@command{gfortran}, @command{g95}, @command{xlf95} @command{f95},
+@command{fort}, @command{ifort}, @command{ifc}, @command{efc},
+@command{pgfortran}, @command{pgf95} @command{lf95}, @command{ftn},
+@command{nagfor},
 @c F90 compilers in m4/R.m4:
-@command{f90}, @command{xlf90}, @command{pghpf}, @command{pgf90},
+@command{xlf90}, @command{f90}, @command{pgf90}, @command{pghpf},
 @command{epcf90},
-@c F77 compilers in m4/R.m4:
-@command{g77}, @command{f77}, @command{xlf}, @command{frt},
-@command{pgf77}, @command{cf77}, @command{fort77}, @command{fl32},
-@command{af77} (in that order)@footnote{On HP-UX @command{fort77} is the
-@acronym{POSIX} compliant Fortran compiler, and comes after
-@command{g77}.}, and use whichever is found first; if none is found,
-@R{} cannot be compiled.
-@c GCC_Fortran_compiler in m4/R.m4:
-However, if @command{CC} is @command{gcc}, the matching Fortran compiler
-(@command{g77} for @command{gcc}@tie{}3 and @code{gfortran} for
-@command{gcc}@tie{}4) is used if available.
 
 The search mechanism can be changed using the configure variable
 @code{F77} which specifies the command that runs the (fixed-form) Fortran

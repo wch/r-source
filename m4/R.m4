@@ -644,86 +644,51 @@ else
 fi
 ])# R_PROG_CXX_FLAG
 
-### * Fortran 77 compiler/converter and its characteristics.
+### * Fortran compiler and its characteristics.
 
 ## R_PROG_F77
 ## ----------
-## Find a Fortran 77 compiler
+## Find a fixed-form Fortran compiler (formerly Fortran 77)
 ##
-## If we have not been forced to use a particular Fortran compiler, try
-## to find one using one of the several common names.  The list is based
-## on what the current autoconf CVS contains (2005-05-21).  This says,
+## If we have not been forced to use a particular Fortran compiler (we
+## usually have been forced to use $FC), try to find one using one of
+## the several common names.  The list is based on the autoconf
+## release ca 2012  This says (removing F77 compilers)
 ##
 ## <QUOTE>
 ## Known compilers:
 ##  f77/f90/f95: generic compiler names
 ##  g77: GNU Fortran 77 compiler
-##  gfortran: putative GNU Fortran 95+ compiler (in progress)
+##  gfortran: GNU Fortran 95+ compiler (released in gcc 4.0)
+##  g95: original gcc-based f95 compiler (gfortran is a fork)
 ##  ftn: native Fortran 95 compiler on Cray X1
-##  cf77: native F77 compiler under older Crays (prefer over fort77)
-##  fort77: native F77 compiler under HP-UX (and some older Crays)
-##  frt: Fujitsu F77 compiler
-##  pgf77/pgf90/pghpf/pgf95: Portland Group F77/F90/F95 compilers
-##  xlf/xlf90/xlf95: IBM (AIX) F77/F90/F95 compilers
+##  pgf90/pghpf/pgf95/pgfortran: Portland Group F90/F95 compilers
+##  xlf90/xlf95: IBM (AIX) F90/F95 compilers
+##    Prefer xlf9x to the generic names because they do not reject files
+##    with extension `.f'.
 ##  lf95: Lahey-Fujitsu F95 compiler
-##  fl32: Microsoft Fortran 77 "PowerStation" compiler
-##  af77: Apogee F77 compiler for Intergraph hardware running CLIX
 ##  epcf90: "Edinburgh Portable Compiler" F90
 ##  fort: Compaq (now HP) Fortran 90/95 compiler for Tru64 and Linux/Alpha
 ##  ifort, previously ifc: Intel Fortran 95 compiler for Linux/x86
 ##  efc: Intel Fortran 95 compiler for IA64
-## </QUOTE>
+##  nagfor: NAGWare Fortran 77/90/95 compiler
 ##
 ## and uses the following lists:
 ##   F95: f95 fort xlf95 ifort ifc efc pgf95 lf95 gfortran ftn
 ##   F90: f90 xlf90 pgf90 pghpf epcf90
-##   F77: g77 f77 xlf frt pgf77 cf77 fort77 fl32 af77
-##
-## We use basically the same, with the following exceptions:
-## * On HP-UX fort77 is the POSIX-compatible native compiler and
-##   f77 is not: hence we need look for fort77 first!
-## <FIXME>
-##   Is this still true?
-## </FIXME>
-## * It seems that g95 has been resurrected, see www.g95.org, hence we
-##   add this to the list of F95 compilers.
-## * Older versions of the Autoconf code used to have 'fc' as a wrapper
-##   around f2c (last in the list).  It no longer has, but we still do,
-##   in src/scripts, but it must be specified manually.
-## <FIXME>
-##   Is this still needed?
-## </FIXME>
-## * If the C compiler is gcc, we try looking for a matching GCC Fortran
-##   compiler (gfortran for 4.x, g77 for 3.x) first.  This should handle
-##   problems if GCC 4.x and 3.x suites are installed and, depending on
-##   the gcc default, the "wrong" GCC Fortran compiler is picked up (as
-##   reported by Bill Northcott <w.northcott@unsw.edu.au> for OSX with
-##   4.0 as default and g77 around and the "old" search order F77 F95
-##   F90 in use).
+##   F95: gfortran g95 xlf95 f95 fort ifort ifc efc pgfortran pgf95 lf95 ftn nagfor
+##   F90: xlf90 f90 pgf90 pghpf epcf90
 AC_DEFUN([R_PROG_F77],
 [AC_BEFORE([$0], [AC_PROG_LIBTOOL])
 AC_REQUIRE([R_PROG_CC_VERSION])
 if test -n "${F77}"; then
   AC_MSG_RESULT([defining F77 to be ${F77}])
+  AC_PROG_F77
 else
   F77=
-  F95_compilers="f95 fort xlf95 ifort ifc efc pgf95 lf95 gfortran ftn g95"
-  F90_compilers="f90 xlf90 pgf90 pghpf epcf90"
-  case "${host_os}" in
-    hpux*)
-      F77_compilers="g77 fort77 f77 xlf frt pgf77 cf77 fl32 af77" ;;
-    *)
-      F77_compilers="g77 f77 xlf frt pgf77 cf77 fort77 fl32 af77" ;;
-  esac
-  GCC_Fortran_compiler=
-  if test "${GCC}" = yes; then
-    case "${CC_VERSION}" in
-      3.*) GCC_Fortran_compiler=g77 ;;
-      4.*) GCC_Fortran_compiler=gfortran ;;
-    esac
-  fi
-  AC_CHECK_PROGS(F77, [ ${GCC_Fortran_compiler} ${F95_compilers} \
-                        ${F90_compilers} ${F77_compilers} fc ])
+  F95_compilers="gfortran g95 xlf95 f95 fort ifort ifc efc pgfortran pgf95 lf95 ftn nagfor"
+  F90_compilers="xlf90 f90 pgf90 pghpf epcf90"
+  AC_CHECK_PROGS(F77, [ ${F95_compilers} ${F90_compilers} ])
 fi
 if test -n "${F77}"; then
   ## If the above 'found' a Fortran 77 compiler, we run AC_PROG_F77 as
