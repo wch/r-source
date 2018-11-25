@@ -329,6 +329,48 @@ extern int yydebug;
     STARTFRAGMENT = 298
   };
 #endif
+/* Tokens.  */
+#define END_OF_INPUT 258
+#define ERROR 259
+#define SECTIONHEADER 260
+#define RSECTIONHEADER 261
+#define VSECTIONHEADER 262
+#define SECTIONHEADER2 263
+#define RCODEMACRO 264
+#define SEXPR 265
+#define RDOPTS 266
+#define LATEXMACRO 267
+#define VERBMACRO 268
+#define OPTMACRO 269
+#define ESCAPE 270
+#define LISTSECTION 271
+#define ITEMIZE 272
+#define DESCRIPTION 273
+#define NOITEM 274
+#define LATEXMACRO2 275
+#define VERBMACRO2 276
+#define VERBLATEX 277
+#define LATEXMACRO3 278
+#define NEWCOMMAND 279
+#define USERMACRO 280
+#define USERMACRO1 281
+#define USERMACRO2 282
+#define USERMACRO3 283
+#define USERMACRO4 284
+#define USERMACRO5 285
+#define USERMACRO6 286
+#define USERMACRO7 287
+#define USERMACRO8 288
+#define USERMACRO9 289
+#define IFDEF 290
+#define ENDIF 291
+#define TEXT 292
+#define RCODE 293
+#define VERB 294
+#define COMMENT 295
+#define UNKNOWN 296
+#define STARTFILE 297
+#define STARTFRAGMENT 298
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED

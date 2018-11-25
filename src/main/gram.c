@@ -489,6 +489,55 @@ extern int yydebug;
     UPLUS = 305
   };
 #endif
+/* Tokens.  */
+#define END_OF_INPUT 258
+#define ERROR 259
+#define STR_CONST 260
+#define NUM_CONST 261
+#define NULL_CONST 262
+#define SYMBOL 263
+#define FUNCTION 264
+#define INCOMPLETE_STRING 265
+#define LEFT_ASSIGN 266
+#define EQ_ASSIGN 267
+#define RIGHT_ASSIGN 268
+#define LBB 269
+#define FOR 270
+#define IN 271
+#define IF 272
+#define ELSE 273
+#define WHILE 274
+#define NEXT 275
+#define BREAK 276
+#define REPEAT 277
+#define GT 278
+#define GE 279
+#define LT 280
+#define LE 281
+#define EQ 282
+#define NE 283
+#define AND 284
+#define OR 285
+#define AND2 286
+#define OR2 287
+#define NS_GET 288
+#define NS_GET_INT 289
+#define COMMENT 290
+#define LINE_DIRECTIVE 291
+#define SYMBOL_FORMALS 292
+#define EQ_FORMALS 293
+#define EQ_SUB 294
+#define SYMBOL_SUB 295
+#define SYMBOL_FUNCTION_CALL 296
+#define SYMBOL_PACKAGE 297
+#define SLOT 298
+#define LOW 299
+#define TILDE 300
+#define UNOT 301
+#define NOT 302
+#define SPECIAL 303
+#define UMINUS 304
+#define UPLUS 305
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
