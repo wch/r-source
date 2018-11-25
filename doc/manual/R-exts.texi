@@ -14062,13 +14062,14 @@ Fortran entry points, but there is a more comprehensive scheme used by,
 for example package @pkg{stats}.  Most compilers which allow control of
 visibility will allow control of visibility for all symbols @emph{via} a
 flag, and where known the flag is encapsulated in the macros
-@samp{C_VISIBILITY}, @code{F77_VISIBILITY} and @code{FC_VISIBILITY} for
-C and Fortran compilers.  These are defined in @file{etc/Makeconf} and
-so available for normal compilation of package code.  For example,
-@file{src/Makevars} could include
+@samp{C_VISIBILITY}, @code{CXX_VISIBILITY}, @code{F77_VISIBILITY} and
+@code{FC_VISIBILITY} for C, C++ and Fortran compilers.  These are defined in
+@file{etc/Makeconf} and so available for normal compilation of package
+code.  For example, @file{src/Makevars} could include some of
 
 @example
 PKG_CFLAGS=$(C_VISIBILITY)
+PKG_CXXFLAGS=$(CXX_VISIBILITY)
 PKG_FFLAGS=$(F77_VISIBILITY)
 PKG_FCFLAGS=$(FC_VISIBILITY)
 @end example

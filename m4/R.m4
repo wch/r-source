@@ -3790,6 +3790,28 @@ case  "${CC}" in
     C_VISIBILITY=
     ;;
 esac
+r_save_CXXFLAGS=$CXXFLAGS
+CXXFLAGS="$CXXFLAGS -fvisibility=hidden"
+AC_LANG_PUSH(C++)
+AC_CACHE_CHECK(whether $CXX accepts -fvisibility, r_cv_prog_cxx_vis,
+               [_AC_COMPILE_IFELSE([AC_LANG_PROGRAM()],
+	       [r_cv_prog_cxx_vis=yes], [r_cv_prog_cxx_vis=no])])
+AC_LANG_POP(C++)
+CXXFLAGS=$r_save_CXXFLAGS
+if test "${r_cv_prog_cxx_vis}" = yes; then
+  if test "${r_cv_visibility_attribute}" = yes; then
+    CXX_VISIBILITY="-fvisibility=hidden"
+  fi
+fi
+## Need to exclude Intel compilers, where this does not work correctly.
+## The flag is documented and is effective, but also hides
+## unsatisfied references. We cannot test for GCC, as icc passes that test.
+case  "${CXX}" in
+  ## Intel compiler
+  *icc*|*icpc*)
+    CXX_VISIBILITY=
+    ;;
+esac
 AC_LANG_PUSH(Fortran 77)
 r_save_FFLAGS=$FFLAGS
 FFLAGS="$FFLAGS -fvisibility=hidden"
@@ -3831,6 +3853,7 @@ case  "${FC}" in
     ;;
 esac
 AC_SUBST(C_VISIBILITY)
+AC_SUBST(CXX_VISIBILITY)
 AC_SUBST(F77_VISIBILITY)
 AC_SUBST(FC_VISIBILITY)
 ])# R_GCC4_VISIBILITY

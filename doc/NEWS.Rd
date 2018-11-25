@@ -258,8 +258,8 @@
       Consequently, the \command{f77_f2c} script has been removed: it
       no longer sufficed to compile the \file{.f} files in \R.
 
-      \item A macro \samp{FC_VISIBILITY} is defined analogously to
-      \samp{F77_VISIBILITY}.
+      \item New macros \samp{CXX_VISIBILITY} and \samp{FC_VISIBILITY}
+      analogous to \samp{C_VISIBILITY} and \samp{F77_VISIBILITY}.
     }
   }
 
