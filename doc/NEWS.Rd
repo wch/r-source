@@ -280,6 +280,9 @@
       by commas and with regular quotes such as to be useful as argument
       in calling \code{install.packages(c(..))}; from a suggestion by
       Marcel Ramos.
+
+      \item \code{tools::Rd2latex()} now uses UTF-8 as its default
+      output encoding.
     }
   }
 
