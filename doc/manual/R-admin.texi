@@ -4411,7 +4411,7 @@ variable @code{MAKE} at configure time, for example
 @section Using Fortran
 @cindex Fortran
 
-To compile @R{}, you need a Fortran compiler.  The current default
+To compile @R{}, you need a Fortran 90 compiler.  The current default
 is to search for
 @c F95_compilers in m4/R.m4:
 @command{gfortran}, @command{g95}, @command{xlf95} @command{f95},
@@ -4420,7 +4420,9 @@ is to search for
 @command{nagfor},
 @c F90 compilers in m4/R.m4:
 @command{xlf90}, @command{f90}, @command{pgf90}, @command{pghpf},
-@command{epcf90},
+@command{epcf90}.
+(Note that these are searched for by name, without checking the standard
+of Fortran they support.)
 
 The search mechanism can be changed using the configure variable
 @code{F77} which specifies the command that runs the (fixed-form) Fortran
@@ -4443,14 +4445,10 @@ that Fortran @code{integer} is equivalent to a C @code{int} pointer and
 Fortran @code{double precision} is equivalent to a C @code{double}
 pointer.  This is checked during the configuration process.
 
-Some of the Fortran code makes use of @code{COMPLEX*16} variables, which
-is a Fortran 90 extension.  This is checked for at configure
-time@footnote{as well as its equivalence to the @code{Rcomplex}
-structure defined in @file{R_ext/Complex.h}.}.
-
-Compiling the version of LAPACK in the @R{} sources also requires some
-Fortran 90 extensions, but these are not needed if an external LAPACK is
-used.
+Some of the Fortran code makes use of @code{DOUBLE COMPLEX} and
+@code{COMPLEX*16} variables.  This is checked for at configure time, as
+well as its equivalence to the @code{Rcomplex} C structure defined in
+@file{R_ext/Complex.h}.
 
 @node Compile and load flags, Maintainer mode, Using Fortran, Configuration on a Unix-alike
 @section Compile and load flags

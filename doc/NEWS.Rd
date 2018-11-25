@@ -238,6 +238,12 @@
     \itemize{
       \item The C++ compiler defaults to the C++11 standard if
       supported, otherwise to the C++98 standard.
+
+      \item The list of compilers searched for \samp{F95} has been
+      modernized, and that chosen for \samp{FC} will be used as the
+      default.  in particular, \command{gfortran} is now the first
+      choice, not \command{f95}.  Set \samp{FC} in \file{config.site} to
+      override this if necessary.
     }
   }
   
@@ -250,13 +256,10 @@
       Extensions \file{.f90} and \file{.f95} continue to indicate
       \sQuote{free-form} Fortran code.
 
-      Legal FORTRAN 77 code is also legal fixed-form Fortran 95, but
+      Legal FORTRAN 77 code is also legal fixed-form Fortran 95; however
       this change legitimizes the use of later features, in particular
-      to replace \sQuote{obsolescent features} which compilers have
-      started to warn about.
-
-      Consequently, the \command{f77_f2c} script has been removed: it
-      no longer sufficed to compile the \file{.f} files in \R.
+      to replace features marked \sQuote{obsolescent} in Fortran 95
+      which compilers have started to warn about.
 
       \item New macros \samp{CXX_VISIBILITY} and \samp{FC_VISIBILITY}
       analogous to \samp{C_VISIBILITY} and \samp{F77_VISIBILITY}.
@@ -302,6 +305,9 @@
       \item \pkg{tools}' \code{vignetteDepends()} has been deprecated
       (it called a function deprecated since Feb 2016), partly replaced
       by newly exported \code{vignetteInfo()}.
+
+      \item The \command{f77_f2c} script has been removed: it
+      no longer sufficed to compile the \file{.f} files in \R.
     }
   }
 
