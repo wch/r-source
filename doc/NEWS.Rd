@@ -246,7 +246,7 @@
       override this if necessary.
     }
   }
-  
+
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
       \item The interpretation of source code with extension \file{.f}
@@ -595,6 +595,10 @@
       \item \code{<data frame>[TRUE, <new>] <- list(c1, c2)} now works
       correctly, thanks to Suharto Anggono's \PR{15362} and Emil Bode's
       patch in \PR{17504}.
+
+      \item \code{seq.int(*, by=by, length=n)} no longer wrongly
+      \dQuote{drops fractional parts} when \code{by} is integer, thanks
+      to Suharto Anggono's report \PR{17506}.
     }
   }
 }
