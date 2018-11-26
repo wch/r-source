@@ -656,8 +656,6 @@ AC_PROG_CXX
 ## check this actually compiles
 R_PROG_CXX
 
-### R_PROG_CXX98FLAG
-
 AC_PROG_CXXCPP
 if test "${CXXCPP}" = "${CXX} -E"; then
   CXXCPP0="\$(CXX) -E"
@@ -1144,10 +1142,15 @@ AC_SUBST(FFLAGS)
 AC_SUBST(SAFE_FFLAGS)
 AC_SUBST(MAIN_FFLAGS)
 AC_SUBST(SHLIB_FFLAGS)
+## used on AIX
 AC_SUBST(R_XTRA_CFLAGS)
+## used on HP-UX
 AC_SUBST(R_XTRA_CPPFLAGS)
+## unused
 AC_SUBST(R_XTRA_CXXFLAGS)
+## unused
 AC_SUBST(R_XTRA_FFLAGS)
+## used on HP-UX
 AC_SUBST(R_XTRA_LIBS)
 AC_SUBST(OBJC_LIBS)
 AC_SUBST(OBJCFLAGS)
@@ -1818,13 +1821,13 @@ FFLAGS_KEEP=${FFLAGS}
 CXXFLAGS_KEEP=${CXXFLAGS}
 CPPFLAGS="${CPPFLAGS} ${R_XTRA_CPPFLAGS}"
 if test "${want_R_shlib}" = yes; then
-  CFLAGS="${CFLAGS} ${CPICFLAGS} ${R_XTRA_CFLAGS}"
-  FFLAGS="${FFLAGS} ${FPICFLAGS} ${R_XTRA_FFLAGS}"
-  CXXFLAGS="${CXXFLAGS} ${CXXPICFLAGS} ${R_XTRA_CXXFLAGS}"
+  CFLAGS="${R_XTRA_CFLAGS} ${CFLAGS} ${CPICFLAGS}"
+  FFLAGS="${R_XTRA_FFLAGS} ${FFLAGS} ${FPICFLAGS}"
+  CXXFLAGS="${R_XTRA_CXXFLAGS} ${CXXFLAGS} ${CXXPICFLAGS}}"
 else
-  CFLAGS="${CFLAGS} ${R_XTRA_CFLAGS}"
-  FFLAGS="${FFLAGS} ${R_XTRA_FFLAGS}"
-  CXXFLAGS="${CXXFLAGS} ${R_XTRA_CXXFLAGS}"
+  CFLAGS="${R_XTRA_CFLAGS} ${CFLAGS}"
+  FFLAGS="${R_XTRA_FFLAGS} ${FFLAGS}"
+  CXXFLAGS="${R_XTRA_CXXFLAGS} ${CXXFLAGS}"
 fi
 
 ### * Checks for library functions.
@@ -2849,11 +2852,12 @@ AC_OUTPUT
 ## configure variables to config.status.
 ## </NOTE>
 r_c_compiler="${CC} ${R_XTRA_CFLAGS} ${CFLAGS}"
+## R_XTRA_CXXFLAGS is currently unused, but if it were applies to all dialects
 r_cxx_compiler="${CXX} ${CXXSTD} ${R_XTRA_CXXFLAGS} ${CXXFLAGS}"
-r_cxx98_compiler="${CXX98} ${CXX98STD} ${CXX98FLAGS}"
-r_cxx11_compiler="${CXX11} ${CXX11STD} ${CXX11FLAGS}"
-r_cxx14_compiler="${CXX14} ${CXX14STD} ${CXX14FLAGS}"
-r_cxx17_compiler="${CXX17} ${CXX17STD} ${CXX17FLAGS}"
+r_cxx98_compiler="${CXX98} ${CXX98STD} ${R_XTRA_CXXFLAGS} ${CXX98FLAGS}"
+r_cxx11_compiler="${CXX11} ${CXX11STD} ${R_XTRA_CXXFLAGS} ${CXX11FLAGS}"
+r_cxx14_compiler="${CXX14} ${CXX14STD} ${R_XTRA_CXXFLAGS} ${CXX14FLAGS}"
+r_cxx17_compiler="${CXX17} ${CXX17STD} ${R_XTRA_CXXFLAGS} ${CXX17FLAGS}"
 r_f77_compiler="${F77} ${R_XTRA_FFLAGS} ${FFLAGS}"
 r_f95_compiler="${FC} ${FCFLAGS}"
 r_objc_compiler="${OBJC} ${OBJCFLAGS}"
