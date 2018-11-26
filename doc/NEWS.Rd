@@ -261,8 +261,7 @@
       to replace features marked \sQuote{obsolescent} in Fortran 95
       which compilers have started to warn about.
 
-      \item New macros \samp{CXX_VISIBILITY} and \samp{FC_VISIBILITY}
-      analogous to \samp{C_VISIBILITY} and \samp{F77_VISIBILITY}.
+      \item New macro \samp{FC_VISIBILITY} analogous to \samp{F77_VISIBILITY}.
     }
   }
 
@@ -501,6 +500,14 @@
 
 \section{\Rlogo CHANGES IN R 3.5.1 patched}{
 
+  \subsection{PACKAGE INSTALLATION}{
+    \itemize{
+      \item New macro \samp{CXX_VISIBILITY} analogous to
+      \samp{C_VISIBILITY} (which several packages have been misusing for
+      C++ code).
+    }
+  }
+  
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{drop1.glm} miscalculated the score test (\code{test="Rao"})
