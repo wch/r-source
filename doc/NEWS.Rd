@@ -7,6 +7,14 @@
 
 \section{\Rlogo CHANGES IN R 3.5.1 patched}{
 
+  \subsection{PACKAGE INSTALLATION}{
+    \itemize{
+      \item New macro \samp{CXX_VISIBILITY} analogous to
+      \samp{C_VISIBILITY} (which several packages have been misusing for
+      C++ code).
+    }
+  }
+  
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{drop1.glm} miscalculated the score test (\code{test="Rao"})
