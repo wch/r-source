@@ -2489,11 +2489,12 @@ AC_SUBST(R_JAVA_LD_LIBRARY_PATH)
 ## Free-form Fortran support (compiler chosen way above).
 AC_LANG_PUSH(Fortran)
 ## The next two are needed to get IBM's xlf* and Intel's ifc
-## to accept these extensions (but neither are current.
-## Define FCFLAGS_F9x uses in etc/Makeconf.in
+## to accept these extensions (but neither are current).
+## They set FCFLAGS_F9x used in etc/Makeconf.in
 AC_FC_SRCEXT(f90, [dummy=1], [dummy=0])
 AC_FC_SRCEXT(f95, [dummy=1], [dummy=0])
 ## We probably should be calling AC_FC_FREEFORM: adds to FCFLAGS
+## We could call AC_FC_FIXEDFORM: adds to FCFLAGS
 R_OPENMP
 AC_LANG_POP()
 if test -z "${SHLIB_FCLD}"; then
