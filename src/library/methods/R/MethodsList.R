@@ -894,38 +894,37 @@ asMethodDefinition <- function(def, signature = list(.anyClassName), sealed = FA
 .MlistDeprecated <- function(this = "<default>", instead) {
     if(is.character(this)) {
         if(exists(this, envir = .MlistDepTable, inherits = FALSE))
-            return()
+            return() # have already warned about it
         else
             assign(this, TRUE, envir = .MlistDepTable)
     }
-    msg <-
+    base::.Deprecated(msg = paste0(
         if(missing(this))
             "Use of the \"MethodsList\" meta data objects is deprecated."
         else if(is.character(this))
             gettextf(
 	"%s, along with other use of the \"MethodsList\" metadata objects, is deprecated.",
-                 dQuote(this))
-    else
-        gettextf("in %s: use of \"MethodsList\" metadata objects is deprecated.",
-                 deparse(this))
-    if(!missing(instead))
-	msg <- paste(msg, gettextf("use %s instead.", dQuote(instead)))
-    msg <- paste(msg, "see ?MethodsList. (This warning is shown once per session.)")
-    base::.Deprecated(msg = msg)
+		dQuote(this))
+        else
+            gettextf("In %s: use of \"MethodsList\" metadata objects is deprecated.",
+                     deparse(this))
+      , "\n "
+      , if(!missing(instead)) gettextf("Use %s instead. ", dQuote(instead))
+      , "See ?MethodsList. (This warning is shown once per session.)"))
+
 }
 
 .MlistDefunct <- function(this = "<default>", instead) {
-    msg <-
+    base::.Defunct(msg = paste0(
         if(missing(this))
             "Use of the \"MethodsList\" meta data objects is defunct."
         else if(is.character(this))
             gettextf("%s, along with other use of the \"MethodsList\" metadata objects, is defunct.",
                      dQuote(this))
         else
-            gettextf("in %s: use of \"MethodsList\" metadata objects is defunct.",
+            gettextf("In %s: use of \"MethodsList\" metadata objects is defunct.",
                      deparse(this))
-    if(!missing(instead))
-        msg <- paste(msg, gettextf("use %s instead.", dQuote(instead)))
-    msg <- paste(msg, "see ?MethodsList.")
-    base::.Defunct(msg = msg)
+      , " "
+      , if(!missing(instead)) gettextf("Use %s instead. ", dQuote(instead))
+      , "See ?MethodsList."))
 }
