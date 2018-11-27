@@ -20,8 +20,7 @@ Options:
   -v, --version         print version info and exit
 
 Currently only is useful when creating executables, using the C or C++
-compiler for linking.  If FORTRAN code is to be linked, it needs to be
-manually ensured that the linker flags for the FORTRAN are included.
+compiler for linking.
 
 Report bugs at <https://bugs.R-project.org>."
 

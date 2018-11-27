@@ -87,15 +87,15 @@ Variables:
 		object files from a C or Fortran compiler only
   DYLIB_LDFLAGS
 		special flags used by DYLIB_LD
-  F77           Fortran 77 compiler command
-  FFLAGS        Fortran 77 compiler flags
+  F77           fixed-form Fortran compiler command
+  FFLAGS        fixed-form Fortran compiler flags
   FLIBS         linker flags needed to link Fortran code
   FPICFLAGS     special flags for compiling Fortran code to be turned
 		into a shared library
-  FC            Fortran 9x compiler command
-  FCFLAGS       Fortran 9x compiler flags
-  FCPICFLAGS    special flags for compiling Fortran 9x code to be turned
-		into a shared library
+  FC            free-form Fortran 9x compiler command
+  FCFLAGS       free-form Fortran 9x compiler flags
+  FCPICFLAGS    special flags for compiling free-form Fortran 9x code
+		to be turned into a shared library
   JAR           Java archive tool command
   JAVA          Java interpreter command
   JAVAC         Java compiler command
@@ -110,7 +110,7 @@ Variables:
   OBJC          Objective C compiler command
   OBJCFLAGS     Objective C compiler flags
   MAKE          Make command
-  SAFE_FFLAGS   Safe (as conformant as possible) Fortran 77 compiler flags
+  SAFE_FFLAGS   Safe (as conformant as possible) Fortran compiler flags
   SHLIB_CFLAGS  additional CFLAGS used when building shared objects
   SHLIB_CXXLD   command for linking shared objects which contain
 		object files from a C++ compiler (and CXX98 CXX11 CXX14 CXX17)
@@ -275,13 +275,13 @@ fi
 query="${MAKE} -s ${makefiles} print R_HOME=${R_HOME}"
 
 ok_c_vars="CC CFLAGS CPICFLAGS CPP CPPFLAGS"
-ok_cxx_vars="CXX CXXCPP CXXFLAGS CXXPICFLAGS CXX11 CXX11STD CXX11FLAGS CXX11PICFLAGS CXX14 CXX14STD CXX14FLAGS CXX14PICFLAGS CXX98 CXX98STD CXX98FLAGS CXX98PICFLAGS CXX17 CXX17STD CXX17FLAGS CXX17PICFLAGS CXX1X CXX1XSTD CXX1XFLAGS CXX1XPICFLAGS"
+ok_cxx_vars="CXX CXXCPP CXXFLAGS CXXPICFLAGS CXX11 CXX11STD CXX11FLAGS CXX11PICFLAGS CXX14 CXX14STD CXX14FLAGS CXX14PICFLAGS CXX98 CXX98STD CXX98FLAGS CXX98PICFLAGS CXX17 CXX17STD CXX17FLAGS CXX17PICFLAGSS"
 ok_dylib_vars="DYLIB_EXT DYLIB_LD DYLIB_LDFLAGS"
 ok_objc_vars="OBJC OBJCFLAGS"
 ok_java_vars="JAVA JAVAC JAVAH JAR JAVA_HOME JAVA_LIBS JAVA_CPPFLAGS"
 ok_f77_vars="F77 FFLAGS FPICFLAGS FLIBS SAFE_FFLAGS FC FCFLAGS FCPICFLAGS"
 ok_ld_vars="LDFLAGS"
-ok_shlib_vars="SHLIB_CFLAGS SHLIB_CXXLD SHLIB_CXXLDFLAGS SHLIB_CXX98LD SHLIB_CXX98LDFLAGS SHLIB_CXX11LD SHLIB_CXX11LDFLAGS SHLIB_CXX14LD SHLIB_CXX14LDFLAGS SHLIB_CXX17LD SHLIB_CXX17LDFLAGS SHLIB_EXT SHLIB_FFLAGS SHLIB_LD SHLIB_LDFLAGS SHLIB_FCLD SHLIB_FCLDFLAGS SHLIB_CXX1XLD SHLIB_CXX1XLDFLAGS"
+ok_shlib_vars="SHLIB_CFLAGS SHLIB_CXXLD SHLIB_CXXLDFLAGS SHLIB_CXX98LD SHLIB_CXX98LDFLAGS SHLIB_CXX11LD SHLIB_CXX11LDFLAGS SHLIB_CXX14LD SHLIB_CXX14LDFLAGS SHLIB_CXX17LD SHLIB_CXX17LDFLAGS SHLIB_EXT SHLIB_FFLAGS SHLIB_LD SHLIB_LDFLAGS SHLIB_FCLD SHLIB_FCLDFLAGS"
 ok_tcltk_vars="TCLTK_CPPFLAGS TCLTK_LIBS"
 ok_other_vars="BLAS_LIBS LAPACK_LIBS MAKE LIBnn LOCAL_SOFT COMPILED_BY OBJDUMP"
 

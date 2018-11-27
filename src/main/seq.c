@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2017  The R Core Team.
+ *  Copyright (C) 1998-2018  The R Core Team.
  *  Copyright (C) 1995-1998  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -896,8 +896,7 @@ SEXP attribute_hidden do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 		   reduced below 1/INT_MAX this is the same as the
 		   next, so this is future-proofing against longer integers.
 		*/
-		/* seq.default gives integer result from
-		   from + (0:n)*by
+		/* as seq.default also returns integer for from + (0:n)*by
 		*/
 		nn = (R_xlen_t) n;
 		ans = allocVector(INTSXP, nn+1);
@@ -958,8 +957,9 @@ SEXP attribute_hidden do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if(!R_FINITE(rfrom)) errorcall(call, _("'%s' must be a finite number"), "from");
 	if(!R_FINITE(rby))   errorcall(call, _("'%s' must be a finite number"), "by");
 	rto = rfrom + (double)(lout-1)*rby;
-	if(rby == (int)rby && rfrom <= INT_MAX && rfrom >= INT_MIN
-	   && rto <= INT_MAX && rto >= INT_MIN) {
+	if(rby == (int)rby && rfrom == (int)rfrom
+	   && rfrom <= INT_MAX && rfrom >= INT_MIN
+	   &&  rto  <= INT_MAX &&  rto  >= INT_MIN) {
 	    ans = allocVector(INTSXP, lout);
 	    for(i = 0; i < lout; i++) {
 //		if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
@@ -977,8 +977,9 @@ SEXP attribute_hidden do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    rfrom = rto - (double)(lout-1)*rby;
 	if(!R_FINITE(rto)) errorcall(call, _("'%s' must be a finite number"), "to");
 	if(!R_FINITE(rby)) errorcall(call, _("'%s' must be a finite number"), "by");
-	if(rby == (int)rby && rfrom <= INT_MAX && rfrom >= INT_MIN
-	   && rto <= INT_MAX && rto >= INT_MIN) {
+	if(rby == (int)rby && rto == (int)rto
+	   && rfrom <= INT_MAX && rfrom >= INT_MIN
+	   &&  rto  <= INT_MAX &&  rto  >= INT_MIN) {
 	    ans = allocVector(INTSXP, lout);
 	    for(i = 0; i < lout; i++) {
 //		if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();

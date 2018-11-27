@@ -1,7 +1,7 @@
 #  File src/library/methods/R/as.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -57,7 +57,7 @@ as <-
                 else {
                   test <- ext@test
                   asMethod <- .makeAsMethod(ext@coerce, ext@simple, Class, ClassDef, where)
-                  canCache <- (!is(test, "function")) || isTRUE(body(test))
+                  canCache <- (!is.function(test)) || isTRUE(body(test))
                  }
             }
             if(is.null(asMethod) && extends(Class, thisClass)) {
@@ -168,7 +168,7 @@ as <-
                 else {
                     test <- asMethod@test
                     asMethod <- asMethod@replace
-                    canCache <- (!is(test, "function")) || isTRUE(body(test))
+                    canCache <- (!is.function(test)) || isTRUE(body(test))
                     if(canCache) { ##the replace code is a bare function
                         ClassDef <- getClassDef(Class, where)
                         asMethod <- .asCoerceMethod(asMethod, thisClass, ClassDef, TRUE, where)
@@ -356,7 +356,7 @@ setAs <-
     stop("undefined 'coerce' method")
 
 .makeAsMethod <- function(expr, simple, Class, ClassDef, where) {
-    if(is(expr, "function")) {
+    if(is.function(expr)) {
         where <- environment(expr)
         args <- formalArgs(expr)
         if(!identical(args, "from"))

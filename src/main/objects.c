@@ -311,8 +311,8 @@ SEXP R_LookupMethod(SEXP method, SEXP rho, SEXP callrho, SEXP defrho)
 	    REPROTECT(val = findFunInEnvRange(method, ENCLOS(R_GlobalEnv),
 	                                      R_EmptyEnv), validx);
 	    if((val != R_UnboundValue) && 
-	       (ENCLOS(val) != R_BaseNamespace) &&
-	       (ENCLOS(val) != R_BaseEnv)) {
+	       (CLOENV(val) != R_BaseNamespace) &&
+	       (CLOENV(val) != R_BaseEnv)) {
 		/* Note that we do not really know where on the search
 		   path we found the method. */
 		REprintf("S3 method lookup found '%s' on search path \n",

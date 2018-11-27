@@ -1318,6 +1318,11 @@ int R_check_class_etc      (SEXP x, const char **valid);
 void R_PreserveObject(SEXP);
 void R_ReleaseObject(SEXP);
 
+SEXP R_NewPreciousMSet(int);
+void R_PreserveInMSet(SEXP x, SEXP mset);
+void R_ReleaseFromMSet(SEXP x, SEXP mset);
+void R_ReleaseMSet(SEXP mset, int keepSize);
+
 /* Shutdown actions */
 void R_dot_Last(void);		/* in main.c */
 void R_RunExitFinalizers(void);	/* in memory.c */

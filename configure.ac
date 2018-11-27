@@ -497,11 +497,11 @@ AC_ARG_VAR([CPICFLAGS],
            [special flags for compiling C code to be turned into a
             shared object.])
 AC_ARG_VAR([FPICFLAGS],
-           [special flags for compiling Fortran code to be turned into a
-            shared object.])
+           [special flags for compiling fixed-form Fortran code to be 
+	    turned into a shared object.])
 AC_ARG_VAR([FCPICFLAGS],
-           [special flags for compiling Fortran 95 code to be turned into a
-            shared object.])
+           [special flags for compiling free-form Fortran code to be
+	    turned into a shared object.])
 AC_ARG_VAR([SHLIB_LD],
            [command for linking shared objects which contain object
             files from a C or Fortran compiler only])
@@ -522,7 +522,7 @@ AC_ARG_VAR([SHLIB_CXXLDFLAGS],
            [special flags used by SHLIB_CXXLD])
 AC_ARG_VAR([SHLIB_FCLD],
            [command for linking shared objects which contain object
-            files from the Fortran 95 compiler])
+            files from the free-form Fortran compiler])
 AC_ARG_VAR([SHLIB_FCLDFLAGS],
            [special flags used by SHLIB_FCLD])
 AC_ARG_VAR([TCLTK_LIBS],
@@ -539,7 +539,7 @@ AC_ARG_VAR([LAPACK_LIBS],
            [flags needed for linking against external LAPACK libraries])
 AC_ARG_VAR([LIBnn], ['lib' or 'lib64' for dynamic libraries])
 AC_ARG_VAR([SAFE_FFLAGS],
-	   [Safe Fortran 77 compiler flags for e.g. dlamc.f])
+	   [Safe Fortran fixed-form compiler flags for e.g. dlamc.f])
 AC_ARG_VAR([r_arch],
            [Use architecture-dependent subdirs with this name])
 AC_ARG_VAR([DEFS], [C defines for use when compiling R])
@@ -644,6 +644,10 @@ AC_GNU_SOURCE ## see note above
 AC_PROG_CPP
 R_PROG_CPP_CPPFLAGS
 
+## As from R 3.6.0, prefer the modern Fortran compiler for .f files
+echo "looking for a modern Fortran compiler for FC and F77"
+AC_PROG_FC()
+: ${F77=${FC}}
 ## see if the user set FFLAGS: used for Intel compilers below
 userFFLAGS=${FFLAGS}
 R_PROG_F77
@@ -651,8 +655,6 @@ R_PROG_F77
 AC_PROG_CXX
 ## check this actually compiles
 R_PROG_CXX
-
-### R_PROG_CXX98FLAG
 
 AC_PROG_CXXCPP
 if test "${CXXCPP}" = "${CXX} -E"; then
@@ -888,7 +890,7 @@ AC_CHECK_TYPES([intptr_t, uintptr_t], , , [#ifdef HAVE_INTTYPES_H
 
 ### * Checks for compiler characteristics.
 
-### ** Generic tests for the C, Fortran 77 and C++ compilers.
+### ** Generic tests for the C, fixed-form Fortran and C++ compilers.
 
 ### *** C compiler.
 
@@ -929,7 +931,7 @@ R_PROG_CC_LO_MAKEFRAG
 
 R_OPENMP
 
-### *** Fortran 77 compiler.
+### *** fixed-form Fortran compiler.
 
 R_PROG_F77_FLIBS
 if test -z "$FLIBS_IN_SO"; then
@@ -973,7 +975,7 @@ case "${host_os}" in
   ;;
 esac
 
-### ** Platform-specific overrides for the C, Fortran 77 and C++ compilers.
+### ** Platform-specific overrides for the C, fixed-form Fortran and C++ compilers.
 
 case "${host_cpu}" in
   i*86|x86_64)
@@ -1140,10 +1142,15 @@ AC_SUBST(FFLAGS)
 AC_SUBST(SAFE_FFLAGS)
 AC_SUBST(MAIN_FFLAGS)
 AC_SUBST(SHLIB_FFLAGS)
+## used on AIX
 AC_SUBST(R_XTRA_CFLAGS)
+## used on HP-UX
 AC_SUBST(R_XTRA_CPPFLAGS)
+## unused
 AC_SUBST(R_XTRA_CXXFLAGS)
+## unused
 AC_SUBST(R_XTRA_FFLAGS)
+## used on HP-UX
 AC_SUBST(R_XTRA_LIBS)
 AC_SUBST(OBJC_LIBS)
 AC_SUBST(OBJCFLAGS)
@@ -1748,7 +1755,7 @@ AC_LANG_POP(C++)
 
 ## The basic checking is performed via AC_OPENMP added in Autoconf 2.62,
 ## which we already called for determining the appropriate flags for the
-## C, C++, Fortran 77, Fortran compiler/linker.  Note that this gives
+## C, C++, Fortran compiler/linker.  Note that this gives
 ## variables OPENMP_CFLAGS etc., which are meant to be used for *both*
 ## compiling and linking.  So we can really only used them provided that
 ## we use the respective compilers for linking as well (or we need a
@@ -1763,7 +1770,7 @@ AC_LANG_POP(C++)
 ##    flags and OPENMP_CFLAGS and OPENMP_FFLAGS to the C and Fortran 77
 ##    compiler flags, and defining HAVE_OPENMP.
 ##
-## (The Fortran 77 compiler is never used for linking by default.)
+## (The fixed-form Fortran compiler is never used for linking by default.)
 
 if test -n "${R_OPENMP_CFLAGS+set}"; then
   if test -n "${R_OPENMP_CFLAGS}"; then
@@ -1791,7 +1798,7 @@ AC_SUBST(R_OPENMP_FFLAGS)
 
 ## For compiling package code, we use SHLIB_FCLD, SHLIB_CXXLD or
 ## SHLIB_LD for linking, depending on whether the package contains
-## Fortran (90/95) code, C++ (or ObjC) code, or "just" C and Fortran 77.
+## free-form Fortran code, C++ (or ObjC) code, or "just" C and fixed-form Fortran.
 ## However, we (currently) do not conditionalize compilation flags.  So
 ## the only "safe" thing we can do for now is:
 ##
@@ -1800,14 +1807,9 @@ AC_SUBST(R_OPENMP_FFLAGS)
 ##    determined to support OpenMP, the we try to provide OpenMP support
 ##    for packages by adding OPENMP_FCFLAGS, OPENMP_CXXFLAGS and
 ##    OPENMP_CFLAGS to the respective linker flags, and add the OPENMP
-##    flags to all (C, C++, Fortran and Fortran 77) compiler flags.
+##    flags to all (C, C++ and Fortran) compiler flags.
 
 R_PTHREAD
-
-## <FIXME>
-## Need to do this after configuring Fortran 90/95 support, which comes
-## way below: should this be moved up to the compiler section?
-## </FIXME>
 
 ### Now we have found all the flags, we need to use them to test appropriately.
 ### We don't currently have any C++ tests, but future-proof.
@@ -1819,13 +1821,13 @@ FFLAGS_KEEP=${FFLAGS}
 CXXFLAGS_KEEP=${CXXFLAGS}
 CPPFLAGS="${CPPFLAGS} ${R_XTRA_CPPFLAGS}"
 if test "${want_R_shlib}" = yes; then
-  CFLAGS="${CFLAGS} ${CPICFLAGS} ${R_XTRA_CFLAGS}"
-  FFLAGS="${FFLAGS} ${FPICFLAGS} ${R_XTRA_FFLAGS}"
-  CXXFLAGS="${CXXFLAGS} ${CXXPICFLAGS} ${R_XTRA_CXXFLAGS}"
+  CFLAGS="${R_XTRA_CFLAGS} ${CFLAGS} ${CPICFLAGS}"
+  FFLAGS="${R_XTRA_FFLAGS} ${FFLAGS} ${FPICFLAGS}"
+  CXXFLAGS="${R_XTRA_CXXFLAGS} ${CXXFLAGS} ${CXXPICFLAGS}}"
 else
-  CFLAGS="${CFLAGS} ${R_XTRA_CFLAGS}"
-  FFLAGS="${FFLAGS} ${R_XTRA_FFLAGS}"
-  CXXFLAGS="${CXXFLAGS} ${R_XTRA_CXXFLAGS}"
+  CFLAGS="${R_XTRA_CFLAGS} ${CFLAGS}"
+  FFLAGS="${R_XTRA_FFLAGS} ${FFLAGS}"
+  CXXFLAGS="${R_XTRA_CXXFLAGS} ${CXXFLAGS}"
 fi
 
 ### * Checks for library functions.
@@ -2120,7 +2122,7 @@ fi
 
 ## BLAS.
 ## <NOTE>
-## This has to come *after* checking for Fortran 77 compiler/converter
+## This has to come *after* checking for (fixed-form) Fortran compiler/converter
 ## characteristics (notably name mangling and FLIBS).
 ## </NOTE>
 
@@ -2484,11 +2486,15 @@ AC_SUBST(JAVA_CPPFLAGS0)
 AC_SUBST(R_JAVA_LD_LIBRARY_PATH)
 
 
-## F90/F95 support
-AC_PROG_FC()
+## Free-form Fortran support (compiler chosen way above).
 AC_LANG_PUSH(Fortran)
+## The next two are needed to get IBM's xlf* and Intel's ifc
+## to accept these extensions (but neither are current).
+## They set FCFLAGS_F9x used in etc/Makeconf.in
 AC_FC_SRCEXT(f90, [dummy=1], [dummy=0])
 AC_FC_SRCEXT(f95, [dummy=1], [dummy=0])
+## We probably should be calling AC_FC_FREEFORM: adds to FCFLAGS
+## We could call AC_FC_FIXEDFORM: adds to FCFLAGS
 R_OPENMP
 AC_LANG_POP()
 if test -z "${SHLIB_FCLD}"; then
@@ -2819,7 +2825,6 @@ AC_CONFIG_FILES(
   src/scripts/Makefile
   src/scripts/R.sh
   src/scripts/Rcmd
-  src/scripts/f77_f2c
   src/scripts/javareconf
   src/scripts/mkinstalldirs
   src/scripts/pager
@@ -2848,11 +2853,12 @@ AC_OUTPUT
 ## configure variables to config.status.
 ## </NOTE>
 r_c_compiler="${CC} ${R_XTRA_CFLAGS} ${CFLAGS}"
+## R_XTRA_CXXFLAGS is currently unused, but if it were applies to all dialects
 r_cxx_compiler="${CXX} ${CXXSTD} ${R_XTRA_CXXFLAGS} ${CXXFLAGS}"
-r_cxx98_compiler="${CXX98} ${CXX98STD} ${CXX98FLAGS}"
-r_cxx11_compiler="${CXX11} ${CXX11STD} ${CXX11FLAGS}"
-r_cxx14_compiler="${CXX14} ${CXX14STD} ${CXX14FLAGS}"
-r_cxx17_compiler="${CXX17} ${CXX17STD} ${CXX17FLAGS}"
+r_cxx98_compiler="${CXX98} ${CXX98STD} ${R_XTRA_CXXFLAGS} ${CXX98FLAGS}"
+r_cxx11_compiler="${CXX11} ${CXX11STD} ${R_XTRA_CXXFLAGS} ${CXX11FLAGS}"
+r_cxx14_compiler="${CXX14} ${CXX14STD} ${R_XTRA_CXXFLAGS} ${CXX14FLAGS}"
+r_cxx17_compiler="${CXX17} ${CXX17STD} ${R_XTRA_CXXFLAGS} ${CXX17FLAGS}"
 r_f77_compiler="${F77} ${R_XTRA_FFLAGS} ${FFLAGS}"
 r_f95_compiler="${FC} ${FCFLAGS}"
 r_objc_compiler="${OBJC} ${OBJCFLAGS}"
@@ -2972,29 +2978,29 @@ AC_MSG_RESULT(
 [
 R is now configured for ${host}
 
-  Source directory:          ${srcdir}
-  Installation directory:    ${prefix}
+  Source directory:            ${srcdir}
+  Installation directory:      ${prefix}
 
-  C compiler:                ${r_c_compiler}
-  Fortran 77 compiler:       ${r_f77_compiler}
+  C compiler:                  ${r_c_compiler}
+  Fortran fixed-form compiler: ${r_f77_compiler}
 
-  Default C++ compiler:      ${r_cxx_compiler}
-  C++98 compiler:            ${r_cxx98_compiler}
-  C++11 compiler:            ${r_cxx11_compiler}
-  C++14 compiler:            ${r_cxx14_compiler}
-  C++17 compiler:            ${r_cxx17_compiler}
-  Fortran 90/95 compiler:    ${r_f95_compiler}
-  Obj-C compiler:	     ${r_objc_compiler}
+  Default C++ compiler:        ${r_cxx_compiler}
+  C++98 compiler:              ${r_cxx98_compiler}
+  C++11 compiler:              ${r_cxx11_compiler}
+  C++14 compiler:              ${r_cxx14_compiler}
+  C++17 compiler:              ${r_cxx17_compiler}
+  Fortran free-form compiler:  ${r_f95_compiler}
+  Obj-C compiler:	       ${r_objc_compiler}
 
-  Interfaces supported:      ${r_interfaces}
-  External libraries:        ${r_external_libs}
-  Additional capabilities:   ${r_capabilities}
-  Options enabled:           ${r_options}
+  Interfaces supported:        ${r_interfaces}
+  External libraries:          ${r_external_libs}
+  Additional capabilities:     ${r_capabilities}
+  Options enabled:             ${r_options}
 
-  Capabilities skipped:      ${r_no_capabilities}
-  Options not enabled:       ${r_no_options}
+  Capabilities skipped:        ${r_no_capabilities}
+  Options not enabled:         ${r_no_options}
 
-  Recommended packages:      ${use_recommended_packages} 
+  Recommended packages:        ${use_recommended_packages} 
 ])
 if test -n "${warn_f77_cc_double_complex}"; then
   AC_MSG_WARN([${warn_f77_cc_double_complex}])

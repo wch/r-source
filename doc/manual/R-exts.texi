@@ -1158,12 +1158,7 @@ compilation and linking into a shared object for loading into @R{}.
 There are default @command{make} variables and rules for this
 (determined when @R{} is configured and recorded in
 @file{@var{R_HOME}/etc@var{R_ARCH}/Makeconf}), providing support for C,
-C++, FORTRAN 77, Fortran 9x@footnote{Note that Ratfor is not supported.
-If you have Ratfor source code, you need to convert it to FORTRAN.  Only
-FORTRAN 77 (which we write in upper case) is supported on all platforms,
-but most also support Fortran-95 (for which we use title case).  If you
-want to ship Ratfor source files, please do so in a subdirectory of
-@file{src} and not in the main subdirectory.}, Objective C and Objective
+C++, fixed- or free-form Fortran, Objective C and Objective
 C++@footnote{either or both of which may not be supported on particular
 platforms} with associated extensions @file{.c}, @file{.cc} or
 @file{.cpp}, @file{.f}, @file{.f90} or @file{.f95}, @file{.m}, and
@@ -1176,8 +1171,9 @@ versions of @R{} be ignored.
 
 It is not portable (and may not be possible at all) to mix all these
 languages in a single package, and we do not support using both C++ and
-Fortran 9x. Because @R{} itself uses it, we know that C and FORTRAN 77
-can be used together and mixing C and C++ seems to be widely successful.
+free-form Fortran. Because @R{} itself uses it, we know that C and
+fixed-form can be used together and mixing C and C++ seems to be widely
+successful.
 
 If your code needs to depend on the platform there are certain defines
 which can used in C or C++.  On all Windows builds (even 64-bit ones)
@@ -1437,7 +1433,7 @@ the default is @code{xz} for files bigger than 1MB otherwise
 @node Non-R scripts in packages, Specifying URLs, Data in packages, Package structure
 @subsection Non-R scripts in packages
 
-Code which needs to be compiled (C, C++, FORTRAN, Fortran 95 @dots{})
+Code which needs to be compiled (C, C++, Fortran @dots{})
 is included in the @file{src} subdirectory and discussed elsewhere in
 this document.
 
@@ -1553,7 +1549,7 @@ option @option{--clean} was given, and by @code{R CMD build} when
 preparing the package for building from its source.
 
 As an example consider we want to use functionality provided by a (C or
-FORTRAN) library @code{foo}.  Using Autoconf, we can create a configure
+Fortran) library @code{foo}.  Using Autoconf, we can create a configure
 script which checks for the library, sets variable @code{HAVE_FOO} to
 @code{TRUE} if it was found and to @code{FALSE} otherwise, and then
 substitutes this value into output files (by replacing instances of
@@ -1668,11 +1664,11 @@ ACX_BLAS([], AC_MSG_ERROR([could not find your BLAS library], 1))
 @end example
 
 Note that @code{FLIBS} as determined by @R{} must be used to ensure that
-FORTRAN 77 code works on all @R{} platforms.  Calls to the Autoconf macro
-@code{AC_F77_LIBRARY_LDFLAGS}, which would overwrite @code{FLIBS}, must
-not be used (and hence e.g.@: removed from @code{ACX_BLAS}).  (Recent
-versions of Autoconf in fact allow an already set @code{FLIBS} to
-override the test for the FORTRAN linker flags.)
+fixed-form Fortran code works on all @R{} platforms.  Calls to the
+Autoconf macro @code{AC_F77_LIBRARY_LDFLAGS}, which would overwrite
+@code{FLIBS}, must not be used (and hence e.g.@: removed from
+@code{ACX_BLAS}).  (Recent versions of Autoconf in fact allow an already
+set @code{FLIBS} to override the test for the Fortran linker flags.)
 
 
 @strong{N.B.}: If the @command{configure} script creates files, e.g.@:
@@ -1806,16 +1802,18 @@ written if at all possible in a portable style, in particular (except
 for @file{Makevars.win}) without the use of GNU extensions.
 
 The most common use of a @file{Makevars} file is to set additional
-preprocessor options (for example include paths) for C/C++ files
-@emph{via} @code{PKG_CPPFLAGS}, and additional compiler flags by setting
-@code{PKG_CFLAGS}, @code{PKG_CXXFLAGS}, @code{PKG_FFLAGS} or
-@code{PKG_FCFLAGS}, for C, C++, FORTRAN or Fortran 9x respectively
-(@pxref{Creating shared objects}).
+preprocessor options (for example include paths and definitions) for
+C/C++ files @emph{via} @code{PKG_CPPFLAGS}, and additional compiler
+flags by setting @code{PKG_CFLAGS}, @code{PKG_CXXFLAGS},
+@code{PKG_FFLAGS} or @code{PKG_FCFLAGS}, for C, C++, fixed-form or
+free-form Fortran respectively (@pxref{Creating shared objects}).
 
 @strong{N.B.}: Include paths are preprocessor options, not compiler
 options, and @strong{must} be set in @code{PKG_CPPFLAGS} as otherwise
 platform-specific paths (e.g.@: @samp{-I/usr/local/include}) will take
-precedence.
+precedence.  @code{PKG_CPPFLAGS} should contain @samp{-I}, @samp{-D},
+@samp{-U} and (where supported) @samp{-include} and @samp{-pthread}
+options: everything else should be a compiler flag.
 
 @file{Makevars} can also be used to set flags for the linker, for
 example @samp{-L} and @samp{-l} options, @emph{via} @code{PKG_LIBS}.
@@ -1845,9 +1843,9 @@ the latter.  These include
 @table @code
 @item FLIBS
 @vindex FLIBS
-A macro containing the set of libraries need to link FORTRAN code.  This
+A macro containing the set of libraries need to link Fortran code.  This
 may need to be included in @code{PKG_LIBS}: it will normally be included
-automatically if the package contains FORTRAN source files.
+automatically if the package contains fixed-form Fortran source files.
 
 @item BLAS_LIBS
 @vindex BLAS_LIBS
@@ -1857,9 +1855,9 @@ the @R{} executable will contain all the double-precision and
 double-complex BLAS routines, but no single-precision nor complex
 routines.  If @code{BLAS_LIBS} is included, then @code{FLIBS} also needs
 to be@footnote{at least on Unix-alikes: the Windows build currently
-resolves such dependencies to a static FORTRAN library when
+resolves such dependencies to a static Fortran library when
 @file{Rblas.dll} is built.} included following it, as most BLAS
-libraries are written at least partially in FORTRAN.
+libraries are written at least partially in Fortran.
 
 @item LAPACK_LIBS
 @vindex LAPACK_LIBS
@@ -1887,8 +1885,8 @@ over-optimization of FORTRAN code: it is typically @samp{-g -O2
 -ffloat-store} on @cputype{ix86} platforms using @command{gfortran}.
 Note that this is @strong{not} an additional flag to be used as part of
 @code{PKG_FFLAGS}, but a replacement for @code{FFLAGS}, and that it is
-intended for the FORTRAN 77 compiler @samp{F77} and not necessarily for
-the Fortran 90/95 compiler @samp{FC}.  See the example later in this
+intended for the fixed-form Fortran compiler @samp{F77} and not necessarily for
+the free-form Fortran compiler @samp{FC}.  See the example later in this
 section.
 @end table
 
@@ -2078,10 +2076,10 @@ SHLIB_OPENMP_FFLAGS
 @noindent
 are available for use in @file{src/Makevars} or @file{src/Makevars.win}.
 Include the appropriate macro in @code{PKG_CFLAGS}, @code{PKG_CXXFLAGS}
-and so on, and also in @code{PKG_LIBS} (but see below for Fortran 77).
-C/C++ code that needs to be conditioned on the use of OpenMP can be used
-inside @code{#ifdef _OPENMP}: note that some toolchains used for @R{}
-(including Apple's for macOS and some others using
+and so on, and also in @code{PKG_LIBS} (but see below for fixed-form
+Fortran).  C/C++ code that needs to be conditioned on the use of OpenMP
+can be used inside @code{#ifdef _OPENMP}: note that some toolchains used
+for @R{} (including Apple's for macOS and some others using
 @command{clang}@footnote{Default builds of @command{clang} 3.8.0 and
 later have support for OpenMP, but the @code{libomp} run-time library
 may not be installed.}) have no OpenMP support at all, not even
@@ -2108,7 +2106,8 @@ Some care is needed when compilers are from different families which may
 use different OpenMP runtimes (e.g.@: @command{clang} @emph{vs} GCC
 including @command{gfortran}, although it is currently possible to use
 the @command{clang} runtime with GCC but not @emph{vice versa}).  For a
-package with Fortran 77 code using OpenMP the appropriate lines are
+package with fixed-form Fortran code using OpenMP the appropriate lines
+are
 
 @example
 PKG_FFLAGS = $(SHLIB_OPENMP_FFLAGS)
@@ -2118,8 +2117,15 @@ PKG_LIBS = $(SHLIB_OPENMP_CFLAGS)
 @noindent
 as the C compiler will be used to link the package code (and there is no
 guarantee that this will work everywhere).  (This does not apply to
-Fortran 9x code, where @code{SHLIB_OPENMP_FCFLAGS} should be used in
+free-form Fortran code, where @code{SHLIB_OPENMP_FCFLAGS} should be used in
 both @code{PKG_FCFLAGS} and @code{PKG_LIBS}.)
+
+It is not portable to use OpenMP with more than one of C, C++ and
+Fortran in a single package since it is quite likely that the compilers
+are of different families: using C and fixed-form Fortran is most widely
+supported (but only fortuitously works on macOS).
+@c Where an alternative compiler is used for C++11 or later, its OpenMP
+@c runtime may be incompatible even with C.
 
 For portability, any C/C++ code using the @code{omp_*} functions should
 include the @file{omp.h} header: some compilers (but not all) include it
@@ -2232,8 +2238,7 @@ concepts of threads.  However, there are two projects implementing
 Whether Windows toolchains implement @code{pthreads} is up to the
 toolchain provider.  A @command{make} variable
 @code{SHLIB_PTHREAD_FLAGS} is available: this should be included in both
-@code{PKG_CPPFLAGS} (or the Fortran or F9x equivalents) and
-@code{PKG_LIBS}.
+@code{PKG_CPPFLAGS} (or the Fortran compiler flags) and @code{PKG_LIBS}.
 
 The presence of a working @code{pthreads} implementation cannot be
 unambiguously determined without testing for yourself: however, that
@@ -2448,40 +2453,19 @@ or by setting the environment variables @code{ODBC_INCLUDE} and
 @node Using F95 code, Using C++11 code, Configure example, Configure and cleanup
 @subsection Using F95 code
 
-@R{} assumes that source files with extension @file{.f} are FORTRAN 77,
-and passes them to the compiler specified by @samp{F77}.  On most but
-not all platforms that compiler will accept Fortran 90/95 code: some
-platforms have a separate Fortran 90/95 compiler and a few (by now quite
-rare@footnote{Cygwin used @command{g77} up to 2011, and some pre-built
-versions of @R{} for Unix OSes still do.}) platforms have no Fortran
-90/95 support.
+@R{} assumes that source files with extension @file{.f} are fixed-form
+Fortran, and passes them to the compiler specified by @samp{F77}.  On
+most but not all platforms the compiler specified by @samp{FC} will
+accept free-form Fortran 90/95 code.
 
-This means that portable packages need to be written in correct
-FORTRAN 77, which will also be valid Fortran 95.  See
-@uref{https://developer.R-project.org/@/Portability.html} for reference
-resources.  In particular, @emph{free source form} F95 code is not
-portable.
-
-On some systems an alternative F95 compiler is available: from the
-@code{gcc} family this might be @command{gfortran} or @command{g95}.
-Configuring @R{} will try to find a compiler which (from its name)
-appears to be a Fortran 90/95 compiler, and set it in macro @samp{FC}.
-Note that it does not check that such a compiler is fully (or even
-partially) compliant with Fortran 90/95.  Packages making use of Fortran
-90/95 features should use file extension @file{.f90} or @file{.f95} for
-the source files: the variable @code{PKG_FCFLAGS} specifies any special
-flags to be used.  There is no guarantee that compiled Fortran 90/95
-code can be mixed with any other type of compiled code, nor that a build
-of @R{} will have support for such packages.
-
-Some (but not) all compilers specified by the @samp{FC} macro will
-accept Fortran 2003 or 2008 code: such code should still use file
-extension @file{.f90} or @file{.f95}.  For platforms using
-@command{gfortran}, you may need to include @option{-std=f2003} or
-@option{-std=f2008} in @code{PKG_FCFLAGS}: the default is `GNU Fortran',
-Fortran 95 with non-standard extensions.  The Oracle @command{f95}
-compiler `accepts some Fortran 2003/8 features' (search for `Oracle
-Developer Studio 12.5: Fortran User's Guide' and look for §4.6).
+Some (but not) all compilers specified by @samp{FC} will accept Fortran
+2003 or 2008 code: such code should still use file extension @file{.f90}
+or @file{.f95}.  For platforms using @command{gfortran}, you may need to
+include @option{-std=f2003} or @option{-std=f2008} in
+@code{PKG_FCFLAGS}: the default is `GNU Fortran', Fortran 95 with
+non-standard extensions.  The Oracle @command{f95} compiler `accepts
+some Fortran 2003/8 features' (search for `Oracle Developer Studio 12.5:
+Fortran User's Guide' and look for §4.6).
 
 Modern versions of Fortran support modules, whereby compiling one source
 file creates a module file which is then included in others. (Module
@@ -2935,7 +2919,7 @@ The @file{data} directory is checked for non-@acronym{ASCII} characters
 and for the use of reasonable levels of compression.
 
 @item
-C, C++ and FORTRAN source and header files@footnote{An exception is made
+C, C++ and Fortran source and header files@footnote{An exception is made
 for subdirectories with names starting @samp{win} or @samp{Win}.} are
 tested for portable (LF-only) line endings.  If there is a
 @file{Makefile} or @file{Makefile.in} or @file{Makevars} or
@@ -3133,7 +3117,7 @@ inadvertently picking up new features of a development version of @R{}.
 Prior to actually building the package in the standard gzipped tar file
 format, a few diagnostic checks and cleanups are performed.  In
 particular, it is tested whether object indices exist and can be assumed
-to be up-to-date, and C, C++ and FORTRAN source files and relevant
+to be up-to-date, and C, C++ and Fortran source files and relevant
 makefiles in a @file{src} directory are tested and converted to LF
 line-endings if necessary.
 
@@ -4016,7 +4000,7 @@ useDynLib(KernSmooth, .registration = TRUE, .fixes = "F_")
 @end example
 
 @noindent
-which makes the @R{} variables corresponding to the FORTRAN symbols
+which makes the @R{} variables corresponding to the Fortran symbols
 @code{F_bkde} and so on, and so avoid clashes with @R{} code in the
 namespace.
 
@@ -4365,17 +4349,12 @@ Portable C++ code needs to follow the 1998 standard (and not use
 features from C99), or to specify a C++11 compiler (see @ref{Using C++11
 code}) where available (which is not the case on all @R{} platforms).
 
-If you use FORTRAN 77, @code{ftnchek}
-(@uref{http://www.dsm.fordham.edu/@/~ftnchek/}) provides thorough testing
-of conformance to the standard.
-
-If using Fortran 9x with the GNU compiler, use the flags
+If using Fortran with the GNU compiler, use the flags
 @option{-std=f95 -Wall -pedantic} which reject most GNU extensions and
 features from later standards.
 
-@R{} has tested that @code{DOUBLE COMPLEX} works (although an extension
-to the Fortran standards) and so is preferred to @code{COMPLEX*16}.
-(Fortran 9x code can use something like
+@R{} has tested that @code{DOUBLE COMPLEX} works and so is preferred to
+@code{COMPLEX*16}.  (Fortran code can use something like
 @code{COMPLEX(KIND=KIND(0.0D0))}@footnote{See
 @uref{http://people.ds.cam.ac.uk/nmm1/fortran/paper_07.pdf}.}.)
 
@@ -4425,7 +4404,7 @@ can optionally report on unsafe flags which were used.)
 
 @item
 Do be very careful with passing arguments between @R{}, C and
-@acronym{FORTRAN} code.  In particular, @code{long} in C will be 32-bit
+Fortran code.  In particular, @code{long} in C will be 32-bit
 on some @R{} platforms (including 64-bit Windows), but 64-bit on most
 modern Unix and Linux platforms.  It is rather unlikely that the use of
 @code{long} in C code has been thought through: if you need a longer
@@ -4443,8 +4422,8 @@ pointers to and from integers use the C99/C++11 integer types
 @code{<stdint.h>} and are not required to be implemented by the C99
 standard but are used in C code by @R{} itself).
 
-Note that @code{integer} in @acronym{FORTRAN} corresponds to @code{int}
-in C on all @R{} platforms.
+Note that @code{integer} in Fortran corresponds to @code{int} in C on
+all @R{} platforms.
 
 @item
 Under no circumstances should your compiled code ever call @code{abort}
@@ -9228,14 +9207,14 @@ Unix-alikes, and may not be reliable there.
 These two functions provide an interface to compiled code that has been
 linked into @R{}, either at build time or @emph{via} @code{dyn.load}
 (@pxref{dyn.load and dyn.unload}).  They are primarily intended for
-compiled C and FORTRAN 77 code respectively, but the @code{.C} function
-can be used with other languages which can generate C interfaces, for
+compiled C and Fortran code respectively, but the @code{.C} function can
+be used with other languages which can generate C interfaces, for
 example C++ (@pxref{Interfacing C++ code}).
 
 The first argument to each function is a character string specifying the
 symbol name as known@footnote{possibly after some platform-specific
 translation, e.g.@: adding leading or trailing underscores.} to C or
-FORTRAN, that is the function or subroutine name.  (That the symbol is
+Fortran, that is the function or subroutine name.  (That the symbol is
 loaded can be tested by, for example, @code{is.loaded("cg")}.  Use the
 name you pass to @code{.C} or @code{.Fortran} rather than the translated
 symbol name.)
@@ -9248,12 +9227,12 @@ components in the returned list object (but not passed to the compiled
 code).
 
 The following table gives the mapping between the modes of @R{} atomic
-vectors and the types of arguments to a C function or FORTRAN
+vectors and the types of arguments to a C function or Fortran
 subroutine.
 
 @quotation
 @multitable {RRR storage.mode} {RRR unsigned char * RR} {DOUBLE PRECISION}
-@headitem @R{} storage mode @tab  C type  @tab   FORTRAN type
+@headitem @R{} storage mode @tab  C type  @tab   Fortran type
 @item @code{logical}   @tab @code{int *}     @tab @code{INTEGER}
 @item @code{integer}   @tab @code{int *}     @tab @code{INTEGER}
 @item @code{double}    @tab @code{double *}  @tab @code{DOUBLE PRECISION}
@@ -9269,7 +9248,7 @@ Do please note the first two.  On the 64-bit Unix/Linux/macOS platforms,
 Code ported from S-PLUS (which uses @code{long *} for @code{logical} and
 @code{integer}) will not work on all 64-bit platforms (although it may
 appear to work on some, including Windows).  Note also that if your
-compiled code is a mixture of C functions and FORTRAN subprograms the
+compiled code is a mixture of C functions and Fortran subprograms the
 argument types must match as given in the table above.
 
 C type @code{Rcomplex} is a structure with @code{double} members
@@ -9278,18 +9257,18 @@ included by @file{R.h}.  (On most platforms this is stored in a way
 compatible with the C99 @code{double complex} type: however, it may not
 be possible to pass @code{Rcomplex} to a C99 function expecting a
 @code{double complex} argument.  Nor need it be compatible with a C++
-@code{complex} type.  Moreover, the compatibility can depends on the
+@code{complex} type.  Moreover, the compatibility can depend on the
 optimization level set for the compiler.)
 
-Only a single character string can be passed to or from FORTRAN, and the
+Only a single character string can be passed to or from Fortran, and the
 success of this is compiler-dependent.  Other @R{} objects can be passed
 to @code{.C}, but it is much better to use one of the other interfaces.
 
 It is possible to pass numeric vectors of storage mode @code{double} to
-C as @code{float *} or to FORTRAN as @code{REAL} by setting the
+C as @code{float *} or to Fortran as @code{REAL} by setting the
 attribute @code{Csingle}, most conveniently by using the @R{} functions
 @code{as.single}, @code{single} or @code{mode}.  This is intended only
-to be used to aid interfacing existing C or FORTRAN code.
+to be used to aid interfacing existing C or Fortran code.
 
 Logical values are sent as @code{0} (@code{FALSE}), @code{1}
 (@code{TRUE}) or @code{INT_MIN = -2147483648} (@code{NA}, but only if
@@ -9316,7 +9295,7 @@ directive will be used.
 @c argument for packages to be used with earlier versions of @R{}.
 
 Note that the compiled code should not return anything except through
-its arguments: C functions should be of type @code{void} and FORTRAN
+its arguments: C functions should be of type @code{void} and Fortran
 subprograms should be subroutines.
 
 To fix ideas, let us consider a very simple example which convolves two
@@ -9370,15 +9349,15 @@ option @code{CBoundsCheck = TRUE}.} to allocate a new string @emph{via}
 new string.  However, when character vectors are used other than in a
 read-only way, the @code{.Call} interface is much to be preferred.
 
-Passing character strings to FORTRAN code needs even more care, and
+Passing character strings to Fortran code needs even more care, and
 should be avoided where possible.  Only the first element of the
 character vector is passed in, as a fixed-length (255) character array.
 Up to 255 characters are passed back to a length-one character vector.
 How well this works (or even if it works at all) depends on the C and
-FORTRAN compilers on each platform (including on their options).  Often
-what is being passed to FORTRAN is one of a small set of possible values
+Fortran compilers on each platform (including on their options).  Often
+what is being passed to Fortran is one of a small set of possible values
 (a factor in @R{} terms) which could alternatively be passed as an
-integer code: similarly FORTRAN code that wants to generate diagnostic
+integer code: similarly Fortran code that wants to generate diagnostic
 messages can pass an integer code to a C or @R{} wrapper which will
 convert it to a character string.
 
@@ -9656,7 +9635,7 @@ static const R_CMethodDef cMethods[] = @{
 @c as output, or as both input and output.  The style field in the
 @c description of a method is used for this.  The purpose is to
 @c allow@footnote{but this is not currently done.} @R{} to transfer values
-@c more efficiently across the @R{}-C/FORTRAN interface by avoiding copying
+@c more efficiently across the @R{}-C/Fortran interface by avoiding copying
 @c values when it is not necessary. Typically, one omits this information
 @c in the registration data.
 
@@ -10184,8 +10163,8 @@ linking to @CRANpkg{bdsmatrix} and @CRANpkg{xts} linking to
 
 Shared objects for loading into @R{} can be created using @command{R CMD
 SHLIB}.  This accepts as arguments a list of files which must be object
-files (with extension @file{.o}) or sources for C, C++, FORTRAN 77,
-Fortran 9x, Objective C or Objective C++ (with extensions @file{.c},
+files (with extension @file{.o}) or sources for C, C++,
+Fortran, Objective C or Objective C++ (with extensions @file{.c},
 @file{.cc} or @file{.cpp}, @file{.f}, @file{.f90} or @file{.f95},
 @file{.m}, and @file{.mm} or @file{.M}, respectively), or commands to be
 passed to the linker.  See @kbd{R CMD SHLIB --help} (or the @R{} help
@@ -10194,7 +10173,8 @@ for @code{SHLIB}) for usage information.
 If compiling the source files does not work ``out of the box'', you can
 specify additional flags by setting some of the variables
 @vindex PKG_CPPFLAGS
-@code{PKG_CPPFLAGS} (for the C preprocessor, typically @samp{-I} flags),
+@code{PKG_CPPFLAGS} (for the C/C++ preprocessor, mainly @samp{-I},
+@samp{-D} and @samp{-U} flags),
 @vindex PKG_CFLAGS
 @vindex PKG_CXXFLAGS
 @vindex PKG_FFLAGS
@@ -10203,7 +10183,7 @@ specify additional flags by setting some of the variables
 @vindex PKG_OBJCXXFLAGS
 @code{PKG_CFLAGS}, @code{PKG_CXXFLAGS}, @code{PKG_FFLAGS},
 @code{PKG_FCFLAGS}, @code{PKG_OBJCFLAGS}, and @code{PKG_OBJCXXFLAGS}
-(for the C, C++, FORTRAN 77, Fortran 9x, Objective C, and Objective C++
+(for the C, C++, Fortran, Objective C, and Objective C++
 compilers, respectively) in the file @file{Makevars} in the compilation
 directory (or, of course, create the object files directly from the
 command line).
@@ -10463,8 +10443,8 @@ sources are far less likely to already have them installed.
 
 We have already warned against the use of C++ iostreams not least
 because output is not guaranteed to appear on the @R{} console, and this
-warning applies equally to Fortran (77 or 9x) output to units @code{*}
-and @code{6}. @xref{Printing from FORTRAN}, which describes workarounds.
+warning applies equally to Fortran output to units @code{*}
+and @code{6}. @xref{Printing from Fortran}, which describes workarounds.
 
 In the past most Fortran compilers implemented I/O on top of the C I/O
 system and so the two interworked successfully.  This was true of
@@ -12172,7 +12152,7 @@ changed parameter value.
 
 @noindent
 Now, we compute the @code{i}'th column of the gradient matrix.  Note how
-it is accessed: @R{} stores matrices by column (like FORTRAN).
+it is accessed: @R{} stores matrices by column (like Fortran).
 
 @example
 @group
@@ -12590,7 +12570,7 @@ to create marked character strings of a given length.
 * Random numbers::              
 * Missing and IEEE values::     
 * Printing::                    
-* Calling C from FORTRAN and vice versa::  
+* Calling C from Fortran and vice versa::  
 * Numerical analysis subroutines::  
 * Optimization::                
 * Integration::                 
@@ -12606,7 +12586,7 @@ to create marked character strings of a given length.
 @end menu
 
 There are a large number of entry points in the @R{} executable/DLL that
-can be called from C code (and some that can be called from FORTRAN
+can be called from C code (and some that can be called from Fortran
 code).  Only those documented here are stable enough that they will only
 be changed with considerable notice.
 
@@ -12846,15 +12826,15 @@ the last two being the forms available in all @Sl{} versions.  Here
 or a format string followed by arguments separated by commas.
 
 @menu
-* Error signaling from FORTRAN::  
+* Error signaling from Fortran::  
 @end menu
 
-@node Error signaling from FORTRAN,  , Error signaling, Error signaling
-@subsection Error signaling from FORTRAN
-@cindex Error signaling from FORTRAN
+@node Error signaling from Fortran,  , Error signaling, Error signaling
+@subsection Error signaling from Fortran
+@cindex Error signaling from Fortran
 
 There are two interface function provided to call @code{error} and
-@code{warning} from FORTRAN code, in each case with a simple character
+@code{warning} from Fortran code, in each case with a simple character
 string argument.  They are defined as
 
 @example
@@ -12969,7 +12949,7 @@ variables there is a variable accessed by the macro @code{NA_INTEGER}
 which can used to set or test for missingness.
 
 
-@node Printing, Calling C from FORTRAN and vice versa, Missing and IEEE values, The R API
+@node Printing, Calling C from Fortran and vice versa, Missing and IEEE values, The R API
 @section Printing
 @cindex Printing from C
 @findex Rprintf
@@ -13000,20 +12980,20 @@ when using parallel computation on a cluster of computational nodes, as
 their output will be re-directed/logged appropriately.
 
 @menu
-* Printing from FORTRAN::       
+* Printing from Fortran::       
 @end menu
 
-@node Printing from FORTRAN,  , Printing, Printing
-@subsection Printing from FORTRAN
-@cindex Printing from FORTRAN
+@node Printing from Fortran,  , Printing, Printing
+@subsection Printing from Fortran
+@cindex Printing from Fortran
 
-On many systems FORTRAN @code{write} and @code{print} statements can be
+On many systems Fortran @code{write} and @code{print} statements can be
 used, but the output may not interleave well with that of C, and will be
 invisible on @acronym{GUI} interfaces.  They are not portable and best
 avoided.
 
 Three subroutines are provided to ease the output of information from
-FORTRAN code.
+Fortran code.
 
 @example
 @group
@@ -13033,38 +13013,39 @@ line and then print @var{data} as if it were an @R{} vector on
 subsequent line(s).  They work with zero @var{ndata}, and so can be used
 to print a label alone.
 
-@node Calling C from FORTRAN and vice versa, Numerical analysis subroutines, Printing, The R API
-@section Calling C from FORTRAN and vice versa
-@cindex Calling C from FORTRAN and vice versa
+@node Calling C from Fortran and vice versa, Numerical analysis subroutines, Printing, The R API
+@section Calling C from Fortran and vice versa
+@cindex Calling C from Fortran and vice versa
 
-Naming conventions for symbols generated by FORTRAN differ by platform:
-it is not safe to assume that FORTRAN names appear to C with a trailing
+Naming conventions for symbols generated by Fortran differ by platform:
+it is not safe to assume that Fortran names appear to C with a trailing
 underscore.  To help cover up the platform-specific differences there is
-a set of macros that should be used.
+a set of macros@footnote{The @samp{F77_} in the names is historical and
+dates back to usage in @Sl{}.} that should be used.
 
 @table @code
 @item F77_SUB(@var{name})
-to define a function in C to be called from FORTRAN
+to define a function in C to be called from Fortran
 @item F77_NAME(@var{name})
-to declare a FORTRAN routine in C before use
+to declare a Fortran routine in C before use
 @item F77_CALL(@var{name})
-to call a FORTRAN routine from C
+to call a Fortran routine from C
 @item F77_COMDECL(@var{name})
-to declare a FORTRAN common block in C
+to declare a Fortran common block in C
 @item F77_COM(@var{name})
-to access a FORTRAN common block from C
+to access a Fortran common block from C
 @end table
 
 On most current platforms these are all the same, but it is unwise to
-rely on this.  Note that names with underscores are not legal in FORTRAN
-77, and are not portably handled by the above macros.  (Also, all
-FORTRAN names for use by @R{} are lower case, but this is not enforced
-by the macros.)
+rely on this.  Note that names with underscores were not legal in
+Fortran 77, and are not portably handled by the above macros.  (Also,
+all Fortran names for use by @R{} are lower case, but this is not
+enforced by the macros.)
 
 For example, suppose we want to call R's normal random numbers from
-FORTRAN.  We need a C wrapper along the lines of
+Fortran.  We need a C wrapper along the lines of
 
-@cindex Random numbers in FORTRAN
+@cindex Random numbers in Fortran
 @example
 @group
 #include <R.h>
@@ -13076,7 +13057,7 @@ double F77_SUB(normrnd)(void) @{ return norm_rand(); @}
 @end example
 
 @noindent
-to be called from FORTRAN as in
+to be called from Fortran as in
 
 @example
 @group
@@ -13092,21 +13073,21 @@ to be called from FORTRAN as in
 
 @noindent
 Note that this is not guaranteed to be portable, for the return
-conventions might not be compatible between the C and FORTRAN compilers
+conventions might not be compatible between the C and Fortran compilers
 used.  (Passing values @emph{via} arguments is safer.)
 
 The standard packages, for example @pkg{stats}, are a rich source of
 further examples.
 
-Passing character strings from C to FORTRAN 77 or @emph{vice versa} is
+Passing character strings from C to Fortran or @emph{vice versa} is
 not portable (and to Fortran 90 or later is even less so).  We have
 found that it helps to ensure that a C string to be passed is followed
 by several @code{nul}s (and not just the one needed as a C terminator).
-But for maximal portability character strings in FORTRAN should be
+But for maximal portability character strings in Fortran should be
 avoided.
 
 
-@node Numerical analysis subroutines, Optimization, Calling C from FORTRAN and vice versa, The R API
+@node Numerical analysis subroutines, Optimization, Calling C from Fortran and vice versa, The R API
 @section Numerical analysis subroutines
 @cindex Numerical analysis subroutines from C
 
@@ -13116,8 +13097,8 @@ for example numerical linear algebra computations and special functions.
 The header files @file{R_ext/BLAS.h}, @file{R_ext/Lapack.h} and
 @file{R_ext/Linpack.h} contains declarations of the BLAS, LAPACK and
 LINPACK linear algebra functions included in @R{}.  These are expressed
-as calls to FORTRAN subroutines, and they will also be usable from
-users' FORTRAN code.  Although not part of the official @acronym{API},
+as calls to Fortran subroutines, and they will also be usable from
+users' Fortran code.  Although not part of the official @acronym{API},
 this set of subroutines is unlikely to change (but might be
 supplemented).
 
@@ -13762,14 +13743,14 @@ use different sorting functions if @code{NA}s can be present.
 @deftypefun subroutine qsort4 (double precision @var{v}, integer @var{indx}, integer @var{ii}, integer @var{jj})
 @deftypefunx subroutine qsort3 (double precision @var{v}, integer @var{ii}, integer @var{jj})
 
-The FORTRAN interface routines for sorting double precision vectors are
+The Fortran interface routines for sorting double precision vectors are
 @code{qsort3} and @code{qsort4}, equivalent to @code{R_qsort} and
 @code{R_qsort_I}, respectively.
 @end deftypefun
 
 @deftypefun void R_max_col (double* @var{matrix}, int* @var{nr}, int* @var{nc}, int* @var{maxes}, int* @var{ties_meth})
 Given the @var{nr} by @var{nc} matrix @code{matrix} in column-major
-(``FORTRAN'')
+(``Fortran'')
 order, @code{R_max_col()} returns in @code{@var{maxes}[@var{i}-1]} the
 column number of the maximal element in the @var{i}-th row (the same as
 @R{}'s @code{max.col()} function).  In the case of ties (multiple maxima),
@@ -13783,7 +13764,7 @@ See @R{}'s help page @code{?max.col}.
 Given the ordered vector @var{xt} of length @var{n}, return the interval
 or index of @var{x} in @code{@var{xt}[]}, typically max(@math{i}; @eqn{1
 \le i \le @var{n}, 1 <= i <= @var{n}} & @math{@var{xt}[i]} @eqn{\le, <=}
-@var{x}) where we use 1-indexing as in @R{} and FORTRAN (but not C).  If
+@var{x}) where we use 1-indexing as in @R{} and Fortran (but not C).  If
 @var{rightmost_closed} is true, also returns @math{@var{n}-1} if @var{x}
 equals @math{@var{xt}[@var{n}]}.  If @var{all_inside} is not 0, the
 result is coerced to lie in @code{1:(@var{n}-1)} even when @var{x} is
@@ -13829,7 +13810,7 @@ it will usually be taken from the environment variable @env{HOME} if
 this is defined.
 @end deftypefun
 
-For historical reasons there are FORTRAN interfaces to functions
+For historical reasons there are Fortran interfaces to functions
 @code{D1MACH} and @code{I1MACH}.  These can be called from C code as
 e.g.@: @code{F77_CALL(d1mach)(4)}.  Note that these are emulations of
 the original functions by Fox, Hall and Schryer on NetLib at
@@ -13955,7 +13936,7 @@ void R_CheckUserInterrupt(void);
 @end example
 
 @noindent
-and from FORTRAN
+and from Fortran
 
 @example
 subroutine rchkusr()
@@ -13965,7 +13946,7 @@ These check if the user has requested an interrupt, and if so branch to
 @R{}'s error signaling functions.
 
 Note that it is possible that the code behind one of the entry points
-defined here if called from your C or FORTRAN code could be interruptible
+defined here if called from your C or Fortran code could be interruptible
 or generate an error and so not return to your code.
 
 
@@ -14077,18 +14058,24 @@ of the same name.
 
 C/C++ entry points prefixed by @code{attribute_hidden} will not be
 visible in the shared object.  There is no comparable mechanism for
-FORTRAN entry points, but there is a more comprehensive scheme used by,
+Fortran entry points, but there is a more comprehensive scheme used by,
 for example package @pkg{stats}.  Most compilers which allow control of
-visibility will allow control of visibility for all symbols @emph{via} a flag,
-and where known the flag is encapsulated in the macros
-@samp{C_VISIBILITY} and @code{F77_VISIBILITY} for C and FORTRAN
-compilers.  These are defined in @file{etc/Makeconf} and so available
-for normal compilation of package code.  For example,
-@file{src/Makevars} could include
+visibility will allow control of visibility for all symbols @emph{via} a
+flag, and where known the flag is encapsulated in the macros
+@samp{C_VISIBILITY}, @samp{CXX_VISIBILITY}@footnote{This applies to the
+compiler for the default C++ dialect (currently C++11) and not
+necessarily to other dialects.} and @samp{F_VISIBILITY} for C, C++ and
+Fortran compilers.@footnote{@samp{F77_VISIBILITY} was used prior to @R
+3.6.0 and is still available (but deprecated).  In some cases the Fortran
+compilers accept the flag but do not actually hide their symbols.}
+These are defined in @file{etc/Makeconf} and so available for normal
+compilation of package code.  For example, @file{src/Makevars} could
+include some of
 
 @example
 PKG_CFLAGS=$(C_VISIBILITY)
-PKG_FFLAGS=$(F77_VISIBILITY)
+PKG_CXXFLAGS=$(CXX_VISIBILITY)
+PKG_FFLAGS=$(F_VISIBILITY)
 @end example
 
 This would end up with @strong{no} visible entry points, which would be
@@ -14105,6 +14092,17 @@ void attribute_visible R_init_stats(DllInfo *dll)
 ...
 @}
 @end example
+
+Because the @samp{C_VISIBILITY} mechanism is only useful in conjuction
+with @code{attribute_visible}, it is not enabled unless
+@samp{HAVE_VISIBILITY_ATTRIBUTE} is defined.  The usual visibility flag
+is @option{-fvisibility=hidden}: some compilers also support
+@option{-fvisibility-inlines-hidden} which can be used by overriding
+@samp{C_VISIBILITY} and @samp{CXX_VISIBILITY} in @file{config.site} when
+building @R{}, or editing @file{etc/Makeconf} in the @R{} installation.
+
+Note that @command{configure} only checks that visibility attributes and
+flags are accepted, not that they actually hide symbols.
 
 The visibility mechanism is not available on Windows, but there is an
 equally effective way to control which entry points are visible, by

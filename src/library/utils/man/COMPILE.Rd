@@ -30,10 +30,6 @@
   when passed C++, Fortran and Objective C(++) sources, passing source
   files to \command{R CMD SHLIB} is more reliable.
 
-  Ratfor is not supported.  If you have Ratfor source code, you need to
-  convert it to FORTRAN.  (On some Solaris systems mixing Ratfor and
-  FORTRAN code will work.)
-
   Objective C and Objective C++ support is optional and will work only
   if the corresponding compilers were available at \R configure time:
   their main usage is on macOS.

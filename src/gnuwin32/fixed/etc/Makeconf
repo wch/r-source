@@ -97,6 +97,8 @@ ECHO = echo
 ECHO_C = 
 ECHO_N = -n
 ECHO_T = 
+## unsupported on Windows
+F_VISIBILITY = 
 FC = $(BINPREF)gfortran $(M_ARCH)
 FCFLAGS = -O3 $(DEBUGFLAG) @EOPTS@
 # additional libs needed when linking with $(FC), e.g. on Solaris
@@ -177,15 +179,6 @@ STRIP_LIBS = $(BINPREF)strip --strip-unneeded
 STRIP_STATIC_LIBS = $(BINPREF)strip --strip-debug
 TCLTK_CPPFLAGS = -I "$(TCL_HOME)/include" -DWin32
 TCLTK_LIBS = -L"$(TCL_HOME)/bin" -ltcl$(TCL_VERSION) -ltk$(TCL_VERSION)
-
-## legacy
-CXX1X = $(BINPREF)g++ $(M_ARCH)
-CXX1XFLAGS = -O2 -Wall $(DEBUGFLAG) @EOPTS@
-CXX1XPICFLAGS =
-CXX1XSTD = -std=gnu++11
-SHLIB_CXX1XLD = $(CXX11)
-SHLIB_CXX1XLDFLAGS = -shared
-
 
 STATIC_LIBR =
 

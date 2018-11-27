@@ -1,7 +1,7 @@
 #  File src/library/methods/R/MethodsList.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -66,7 +66,7 @@ makeMethodsList <- function(object, level=1)
                           collapse=", ")), domain = NA)
     for(i in seq_along(object)) {
         eli <- object[[i]]
-        if(is(eli, "function")
+        if(is.function(eli)
            || is(eli, "MethodsList")) {}
         else if(is(eli, "list") ||
                 is(eli, "named"))
@@ -279,7 +279,7 @@ MethodsListSelect <-
     inherited <- is.na(which)
     selection <- if(inherited) NULL else allMethods[[which]]
     if(!inherited) {
-        if(is(selection, "function")) {
+        if(is.function(selection)) {
             if(is.null(f)) {
               ## An inherited method at the next level up.
               ## only the inherited method should be added
@@ -310,7 +310,7 @@ MethodsListSelect <-
             for(i in seq_along(allSelections)) {
                 selection <- allSelections[[i]]
                 fromClass <- allClasses[[i]]
-                if(is(selection, "function"))
+                if(is.function(selection))
                     method <- selection
                 else if(is(selection, "MethodsList")) {
                     ## go on to try matching further arguments
@@ -894,38 +894,37 @@ asMethodDefinition <- function(def, signature = list(.anyClassName), sealed = FA
 .MlistDeprecated <- function(this = "<default>", instead) {
     if(is.character(this)) {
         if(exists(this, envir = .MlistDepTable, inherits = FALSE))
-            return()
+            return() # have already warned about it
         else
             assign(this, TRUE, envir = .MlistDepTable)
     }
-    msg <-
+    base::.Deprecated(msg = paste0(
         if(missing(this))
             "Use of the \"MethodsList\" meta data objects is deprecated."
         else if(is.character(this))
             gettextf(
 	"%s, along with other use of the \"MethodsList\" metadata objects, is deprecated.",
-                 dQuote(this))
-    else
-        gettextf("in %s: use of \"MethodsList\" metadata objects is deprecated.",
-                 deparse(this))
-    if(!missing(instead))
-	msg <- paste(msg, gettextf("use %s instead.", dQuote(instead)))
-    msg <- paste(msg, "see ?MethodsList. (This warning is shown once per session.)")
-    base::.Deprecated(msg = msg)
+		dQuote(this))
+        else
+            gettextf("In %s: use of \"MethodsList\" metadata objects is deprecated.",
+                     deparse(this))
+      , "\n "
+      , if(!missing(instead)) gettextf("Use %s instead. ", dQuote(instead))
+      , "See ?MethodsList. (This warning is shown once per session.)"))
+
 }
 
 .MlistDefunct <- function(this = "<default>", instead) {
-    msg <-
+    base::.Defunct(msg = paste0(
         if(missing(this))
             "Use of the \"MethodsList\" meta data objects is defunct."
         else if(is.character(this))
             gettextf("%s, along with other use of the \"MethodsList\" metadata objects, is defunct.",
                      dQuote(this))
         else
-            gettextf("in %s: use of \"MethodsList\" metadata objects is defunct.",
+            gettextf("In %s: use of \"MethodsList\" metadata objects is defunct.",
                      deparse(this))
-    if(!missing(instead))
-        msg <- paste(msg, gettextf("use %s instead.", dQuote(instead)))
-    msg <- paste(msg, "see ?MethodsList.")
-    base::.Defunct(msg = msg)
+      , " "
+      , if(!missing(instead)) gettextf("Use %s instead. ", dQuote(instead))
+      , "See ?MethodsList."))
 }

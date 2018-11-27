@@ -2968,6 +2968,10 @@ add_dummies <- function(dir, Log)
                                                  useBytes = TRUE)))
                 warns <- grep("^[-]W", tokens,
                               value = TRUE, perl = TRUE, useBytes = TRUE)
+                ## qtbase uses something like
+                ## cmake ../src -DR_CXX="g++" -DCMAKE_CXX_FLAGS="-std=gnu++11 -g -O2 -Wall -pedantic -mtune=native -Wno-ignored-attributes -Wno-deprecated-declarations" ...
+                ## which reports trailing " on last token
+                warns <- gsub('["\']$', "", warns, perl = TRUE, useBytes = TRUE)
                 ## Not sure -Wextra and -Weverything are portable, though
                 ## -Werror is not compiler independent
                 ##   (as what is a warning is not)
@@ -3249,7 +3253,7 @@ add_dummies <- function(dir, Log)
                 env <- c(env, "R_DEFAULT_PACKAGES=NULL")
                 out <- R_runR0(Rcmd, opts, env, arch = arch)
                 ## </FIXME>
-                if (any(grepl("^Registered S3 method.*standard package.*overwritten", out))) {
+                if (any(grepl("^Registered S3 method.*standard package.*overwritten", out, useBytes = TRUE))) {
                     out <- out[!startsWith(out, "<environment: namespace:")]
                     warningLog(Log)
                     printLog0(Log, paste(out, collapse = "\n"), "\n")
@@ -4477,7 +4481,7 @@ add_dummies <- function(dir, Log)
                             )
 
                 ## gcc 9 warns on code deprecated in C++11
-                ## rather too frequently, 
+                ## rather too frequently,
                 ## so suppressable (undocumented) for now.
                 check_gcc9 <- Sys.getenv("_R_CHECK_GCC9_WARNINGS_", "TRUE")
                 if (config_val_to_logical(check_gcc9))

@@ -69,23 +69,17 @@
 ## prepended on systems using Fink with root '/sw'.
 ## CPPFLAGS=
 
-## The command which runs the FORTRAN 77 compiler.
-## If this is not specified, a search is made for
-## f95 fort xlf95 ifort ifc efc pgf95 lf95 gfortran ftn g95
-## f90 xlf90 pgf90 pghpf epcf90
-## g77 f77 xlf frt pgf77 cf77 fort77 fl32 af77
-## On HPUX fort77 is the POSIX compliant FORTRAN compiler, and replaces
-## f77 in the search list.
-## If none of these is found, R cannot be compiled.
+## The command which runs the fixed-form Fortran compiler.
+## Defaults to the value found/supplied for FC, but can be overridden.
 ## F77=
 
-## Options for the FORTRAN 77 compiler.
+## Options for the fixed-form Fortran compiler.
 ## Use this to specify FFLAGS for the version of the compiler specified
 ## above.  If unspecified, defaults to '-g -O2' for g77/gfortran, 
 ## otherwise '-g' if this is accepted, otherwise ''.
 ## FFLAGS=
 
-## Options for safe compilation under the FORTRAN 77 compiler.
+## Options for safe compilation under the fixed-form Fortran compiler.
 ## Use this to specify FFLAGS for the version of the compiler specified
 ## above, using as accurate a result as possible, e.g. no optimization
 ## or using -ffloat-store.
@@ -99,7 +93,7 @@
 ## SHLIB_FFLAGS=
 
 ## The command to be used to load the main R binary.
-## This is usually the FORTRAN 77 or C compiler, but the automatic
+## This is usually the C compiler, but the automatic
 ## choice can be overridden by means of this variable.
 ## MAIN_LD=
 
@@ -118,18 +112,18 @@
 ## CPICFLAGS=
 
 ## The following variable can be used to provide any PIC flags for the
-## FORTRAN 77 compiler.  If this variable is left unspecified an
+## fixed-form Fortran compiler.  If this variable is left unspecified an
 ## attempt is made to automatically detect the correct value.
 ## FPICFLAGS=
 
 ## The command to be used to create shared objects which contain object
-## files from a C or FORTRAN 77 compiler only.  This is usually the C
+## files from a C or fixed-form Fortran compiler only.  This is usually the C
 ## compiler or 'ld', but the automatic choice can be overridden by means
 ## of this variable.
 ## SHLIB_LD=
 
 ## Any special flags which are required by the linker when creating
-## shared objects containing object files from a C or FORTRAN 77
+## shared objects containing object files from a C or fixed-form Fortran
 ## compiler only.  This is usually automatically detected by configure,
 ## and anything set here will be in addition unless SHLIB_LD is given.
 ## SHLIB_LDFLAGS=
@@ -186,7 +180,7 @@
 ## SHLIB_CXXLDFLAGS=
 
 
-## FORTRAN 95 compiler: optional for use in packages.
+## Free-form Fortran compiler: optional for use in packages.
 ## Analogous to the F77 and CXX settings.
 ## FC=
 ## FCFLAGS=
@@ -194,7 +188,8 @@
 ## SHLIB_FCLD=${FC}
 ## Unlike SHLIB_CXXLDFLAGS, SHLIB_FCLDFLAGS is never additional
 ## SHLIB_FCLDFLAGS=${SHLIB_LDFLAGS}
-## Additional libraries needed to link a shared object, e.g. on x86 Solaris
+## Additional libraries needed to link a shared object with FC,
+## e.g. on x86 Solaris
 ## FCLIBS=
 
 ## Tcl/Tk settings.
@@ -360,3 +355,10 @@
 ## CFLAGS) and if so tries -pthread.  Setting this allows an
 ## alternative to be tried immediately before -pthread.
 ## PTHREAD_OPT=
+
+## Visibility settings
+## Allow user to override the configure checks if they know what they
+## are doing.
+## C_VISIBILITY=
+## CXX_VISIBILITY=
+## F_VISIBILITY=

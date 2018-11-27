@@ -578,7 +578,7 @@
             condAction <- getOption("ambiguousMethodSelection")
             if(is.null(condAction))
               condAction <- .ambiguousMethodMessage
-            else if(!is(condAction, "function"))
+            else if(!is.function(condAction))
               stop(gettextf("the \"ambiguousMethodSelection\" option should be a function to be called as the condition action; got an object of class %s",
                             dQuote(class(condAction))),
                    domain = NA)
@@ -691,7 +691,7 @@
     ## but this requires a way to deal with that generally </FIXME>
     pkgs <- lapply(classes[i], packageSlot)
     pkgs[vapply(pkgs, is.null, logical(1L))] <- "methods"
-    
+
   ## Simplified version ...
   .asS4(structure(as.character(classes)[i],
             class = .signatureClassName,
@@ -1090,7 +1090,7 @@
             if(length(pkgs) > 1)
                 cf("  (", length(pkgs), " methods defined for this signature, with different packages)\n")
 	}
-	if(includeDefs && is(m, "function")) {
+	if(includeDefs && is.function(m)) {
 	    if(is(m, "MethodDefinition"))
 		m <- m@.Data
 	    cat(deparse(m), sep="\n", "\n", file = printTo)
@@ -1597,7 +1597,7 @@ testInheritedMethods <- function(f, signatures, test = TRUE,  virtual = FALSE,
     ## now split the individual labels back into signatures
     signatures <- strsplit(sigLabels, "#", fixed = TRUE)
   } ## end of missing(signatures) case
-  else if(is(signatures, "matrix") && identical(typeof(signatures), "character")
+  else if(is(signatures, "matrix") && typeof(signatures) == "character"
        && ncol(signatures) <= length(f@signature)) {
       ## turn signatures back into a list
       siglist <- vector("list", nrow(signatures))

@@ -48,6 +48,7 @@ struct SrcRefState {
 	/* data	(INTSXP)	Detailed info on parse */
 	/* text (STRSXP)*/
 	/* ids  (INTSXP)*/
+	/* svs  (VECSEXP)	Precious multi-set of semantic values */
     int data_count;
     				/* Position information about the current parse */
     int xxlineno;		/* Line number according to #line directives */

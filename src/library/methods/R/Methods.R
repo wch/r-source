@@ -932,7 +932,7 @@ showMethods <-
         con <- printTo
     ## must resolve showEmpty in line; using an equivalent default
     ## fails because R resets the "missing()" result for f later on (grumble)
-    if(is(f, "function")) {
+    if(is.function(f)) {
         fdef <- f ## note that this causes missing(fdef) to be FALSE below
         if(missing(where))
             where <- environment(f)
@@ -1580,7 +1580,7 @@ findMethods <- function(f, where, classes = character(), inherited = FALSE, pack
                 fdef <- getGeneric(f, package = package)
         }
     }
-    else if(!is(f, "function"))
+    else if(!is.function(f))
         stop(gettextf("argument %s must be a generic function or a single character string; got an object of class %s",
                       sQuote("f"), dQuote(class(f))),
              domain = NA)

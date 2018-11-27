@@ -248,67 +248,10 @@ static SrcRefState ParseState;
    two protection schemes.
 */
 
-static R_xlen_t nPreserved = 0;
-
-/* Add the given semantic value (SEXP) to the precious multi-set of the
-   current parser state.  The set is specific to each parsing and is
-   automatically cleared when the parse operation finishes or fails.
-   Values in the set are protected implicitly from garbage collection. */
-static void PRESERVE_SV(SEXP x) {
-    if (x == R_NilValue || isSymbol(x))
-	return; /* no need to preserve */
-    PROTECT(x);
-    SEXP store = PS_SVS;
-    if (store == R_NilValue)
-	PS_SET_SVS(store = allocVector(VECSXP, 200));
-    else if (nPreserved == XLENGTH(store)) {
-	R_xlen_t oldsize = XLENGTH(store);
-	R_xlen_t newsize = 2 * oldsize;
-	SEXP newsvs = PROTECT(allocVector(VECSXP, newsize));
-	for(R_xlen_t i = 0; i < oldsize; i++)
-	    SET_VECTOR_ELT(newsvs, i, VECTOR_ELT(store, i));
-	PS_SET_SVS(store = newsvs);
-	UNPROTECT(1); /* newsvs */
-    }
-    UNPROTECT(1); /* x */
-    SET_VECTOR_ELT(store, nPreserved++, x);
-}
-
-/* Remove (one instance of) the semantic value from the current parser state
-   precious multi-set. */
-static void RELEASE_SV(SEXP x) {
-    if (x == R_NilValue || isSymbol(x))
-	return; /* not preserved */
-    SEXP store = PS_SVS;
-    if (store == R_NilValue)
-	return; /* not preserved */
-    for(R_xlen_t i = nPreserved - 1; i >= 0; i--) {
-	if (VECTOR_ELT(store, i) == x) {
-	    for(;i < nPreserved - 1; i++)
-		SET_VECTOR_ELT(store, i, VECTOR_ELT(store, i + 1));
-	    SET_VECTOR_ELT(store, i, R_NilValue);
-	    nPreserved --;
-	    return;
-	}
-    }
-    /* not preserved */
-}
-
-/* Clear the precious multi-set of semantic values int the current
-   parser state. */
-static void clearSvs() {
-    SEXP store = PS_SVS;
-    if (store == R_NilValue)
-	return;
-    R_xlen_t size = XLENGTH(store);
-    if (size < 500)
-	/* just free the entries */
-	for(R_xlen_t i = 0; i < nPreserved; i++)
-	    SET_VECTOR_ELT(store, i, R_NilValue);
-    else
-	PS_SET_SVS(R_NilValue);
-    nPreserved = 0;
-}
+#define INIT_SVS()     PS_SET_SVS(R_NewPreciousMSet(200))
+#define PRESERVE_SV(x) R_PreserveInMSet((x), PS_SVS)
+#define RELEASE_SV(x)  R_ReleaseFromMSet((x), PS_SVS)
+#define CLEAR_SVS()    R_ReleaseMSet(PS_SVS, 500)
 
 #include <rlocale.h>
 #ifdef HAVE_LANGINFO_CODESET
@@ -1273,6 +1216,7 @@ void InitParser(void)
 {
     ParseState.sexps = allocVector(VECSXP, 7); /* initialized to R_NilValue */
     ParseState.data = R_NilValue;
+    INIT_SVS();
     R_PreserveObject(ParseState.sexps); /* never released in an R session */
     R_NullSymbol = install("NULL");
 }
@@ -1294,7 +1238,9 @@ void R_InitSrcRefState(RCNTXT* cptr)
 	ParseState.prevState = prev;
 	ParseState.sexps = allocVector(VECSXP, 7);
 	ParseState.data = R_NilValue;
+	INIT_SVS();
 	R_PreserveObject(ParseState.sexps);
+	/* ParseState.sexps released in R_FinalizeSrcRefState */
     } else
 	/* re-use data, text, ids arrays */
         ParseState.prevState = NULL;
@@ -1321,7 +1267,7 @@ void R_FinalizeSrcRefState(void)
 {
     PS_SET_SRCFILE(R_NilValue);
     PS_SET_ORIGINAL(R_NilValue);
-    clearSvs();
+    CLEAR_SVS();
 
     /* Free the data, text and ids if we are restoring a previous state,
        or if they have grown too large */
@@ -1452,7 +1398,7 @@ SEXP R_Parse1File(FILE *fp, int gencode, ParseStatus *status)
     fp_parse = fp;
     ptr_getc = file_getc;
     R_Parse1(status);
-    clearSvs();
+    CLEAR_SVS();
     return R_CurrentExpr;
 }
 
@@ -2318,16 +2264,19 @@ static int NumericValue(int c)
 /* specifications of the form \o, \oo or \ooo, where 'o' */
 /* is an octal digit. */
 
-
+/* The buffer is reallocated on the R heap if needed; not by malloc */
+/* to avoid memory leak in case of R error (long jump) */
 #define STEXT_PUSH(c) do {                  \
-	size_t nc = bp - stext;       \
+	size_t nc = bp - stext;             \
 	if (nc >= nstext - 1) {             \
 	    char *old = stext;              \
+	    SEXP st1;		            \
 	    nstext *= 2;                    \
-	    stext = malloc(nstext);         \
-	    if(!stext) error(_("unable to allocate buffer for long string at line %d"), ParseState.xxlineno);\
+	    PROTECT(st1 = allocVector(RAWSXP, nstext)); \
+	    stext = (char *)RAW(st1);       \
 	    memmove(stext, old, nc);        \
-	    if(old != st0) free(old);	    \
+	    REPROTECT(st1, sti);	    \
+	    UNPROTECT(1); /* st1 */         \
 	    bp = stext+nc; }		    \
 	*bp++ = ((char) c);		    \
 } while(0)
@@ -2431,10 +2380,12 @@ static int StringValue(int c, Rboolean forSymbol)
     char st0[MAXELTSIZE];
     unsigned int nstext = MAXELTSIZE;
     char *stext = st0, *bp = st0;
+    PROTECT_INDEX sti;
     int wcnt = 0;
     ucs_t wcs[10001];
     Rboolean oct_or_hex = FALSE, use_wcs = FALSE, currtext_truncated = FALSE;
 
+    PROTECT_WITH_INDEX(R_NilValue, &sti);
     CTEXT_PUSH(c);
     while ((c = xxgetc()) != R_EOF && c != quote) {
 	CTEXT_PUSH(c);
@@ -2652,8 +2603,8 @@ static int StringValue(int c, Rboolean forSymbol)
     WTEXT_PUSH(0);
     yytext[0] = '\0';
     if (c == R_EOF) {
-        if(stext != st0) free(stext);
-        PRESERVE_SV(yylval = R_NilValue);
+	PRESERVE_SV(yylval = R_NilValue);
+	UNPROTECT(1); /* release stext */
     	return INCOMPLETE_STRING;
     } else {
     	CTEXT_PUSH(c);
@@ -2668,7 +2619,7 @@ static int StringValue(int c, Rboolean forSymbol)
         snprintf(yytext, MAXELTSIZE, "[%d wide chars quoted with '%c']", wcnt, quote);
     if(forSymbol) {
 	PRESERVE_SV(yylval = install(stext));
-	if(stext != st0) free(stext);
+	UNPROTECT(1); /* release stext */
 	return SYMBOL;
     } else {
 	if(use_wcs) {
@@ -2680,7 +2631,7 @@ static int StringValue(int c, Rboolean forSymbol)
 		error(_("string at line %d containing Unicode escapes not in this locale\nis too long (max 10000 chars)"), ParseState.xxlineno);
 	} else
 	    PRESERVE_SV(yylval = mkString2(stext,  bp - stext - 1, oct_or_hex));
-	if(stext != st0) free(stext);
+	UNPROTECT(1); /* release stext */
 	return STR_CONST;
     }
 }

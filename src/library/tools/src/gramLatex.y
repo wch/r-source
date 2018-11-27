@@ -1,4 +1,3 @@
-
 %{
 /*
  *  R : A Computer Language for Statistical Data Analysis
@@ -97,7 +96,7 @@ typedef struct yyltype
 
 /* Functions used in the parsing process */
 
-static SEXP	GrowList(SEXP, SEXP);
+static void	GrowList(SEXP, SEXP);
 static int	KeywordLookup(const char *);
 static SEXP	NewList(void);
 static SEXP     makeSrcref(YYLTYPE *, SEXP);
@@ -121,12 +120,15 @@ struct ParseState {
     SEXP	xxVerbatimList;/* A STRSXP containing all the verbatim environment names */
 
     SEXP     SrcFile;  /* parseLatex will *always* supply a srcfile */
-    
+    SEXP mset; /* precious mset for protecting parser semantic values */
     ParseState *prevState;
 };
 
 static Rboolean busy = FALSE;
 static ParseState parseState;
+
+#define PRESERVE_SV(x) R_PreserveInMSet((x), parseState.mset)
+#define RELEASE_SV(x)  R_ReleaseFromMSet((x), parseState.mset)
 
 /* Routines used to build the parse tree */
 
@@ -145,6 +147,8 @@ static int 	mkComment(int);
 static int      mkVerb(int);
 static int      mkVerbEnv();
 
+static SEXP R_LatexTagSymbol = NULL;
+
 #define YYSTYPE		SEXP
 
 %}
@@ -160,13 +164,13 @@ static int      mkVerbEnv();
    pattern, just in case the last item is unmatched and we need to back out.  But
    it is safe to list more, so we do. */
 
-%destructor { UNPROTECT_PTR($$); } MACRO TEXT COMMENT BEGIN END
+%destructor { RELEASE_SV($$); } MACRO TEXT COMMENT BEGIN END
 
 %%
 
 Init:		Items END_OF_INPUT		{ xxsavevalue($1, &@$); YYACCEPT; }
 	|	END_OF_INPUT			{ xxsavevalue(NULL, &@$); YYACCEPT; }
-	|	error				{ PROTECT(parseState.Value = R_NilValue);  YYABORT; }
+	|	error				{ PRESERVE_SV(parseState.Value = R_NilValue);  YYABORT; }
 	;
 
 Items:		Item				{ $$ = xxnewlist($1); }
@@ -186,7 +190,7 @@ Item:		TEXT				{ $$ = xxtag($1, TEXT, &@$); }
 	
 environment:	BEGIN '{' TEXT '}' { xxSetInVerbEnv($3); } 
                 Items END '{' TEXT '}' 	{ $$ = xxenv($3, $6, $9, &@$);
-                                                  UNPROTECT_PTR($1); UNPROTECT_PTR($7); } 
+                                                  RELEASE_SV($1); RELEASE_SV($7); }
 
 math:		'$' nonMath '$'			{ $$ = xxmath($2, &@$); }
 
@@ -197,35 +201,32 @@ block:		'{' Items  '}'			{ $$ = xxblock($2, &@$); }
 
 static SEXP xxnewlist(SEXP item)
 {
-    SEXP ans, tmp;
+    SEXP ans;
 #if DEBUGVALS
     Rprintf("xxnewlist(item=%p)", item);
 #endif    
-    PROTECT(tmp = NewList());
+    PRESERVE_SV(ans = NewList());
     if (item) {
-    	PROTECT(ans = GrowList(tmp, item));
-    	UNPROTECT_PTR(tmp);
-    	UNPROTECT_PTR(item);
-    } else ans = tmp;
+	GrowList(ans, item);
+	RELEASE_SV(item);
+    }
 #if DEBUGVALS
     Rprintf(" result: %p is length %d\n", ans, length(ans));
 #endif
     return ans;
 }
 
-static SEXP xxlist(SEXP oldlist, SEXP item)
+static SEXP xxlist(SEXP list, SEXP item)
 {
-    SEXP ans;
 #if DEBUGVALS
-    Rprintf("xxlist(oldlist=%p, item=%p)", oldlist, item);
+    Rprintf("xxlist(list=%p, item=%p)", list, item);
 #endif
-    PROTECT(ans = GrowList(oldlist, item));
-    UNPROTECT_PTR(item);
-    UNPROTECT_PTR(oldlist);
+    GrowList(list, item);
+    RELEASE_SV(item);
 #if DEBUGVALS
-    Rprintf(" result: %p is length %d\n", ans, length(ans));
+    Rprintf(" result: %p is length %d\n", list, length(list));
 #endif
-    return ans;
+    return list;
 }
 
 static SEXP xxenv(SEXP begin, SEXP body, SEXP end, YYLTYPE *lloc)
@@ -234,19 +235,18 @@ static SEXP xxenv(SEXP begin, SEXP body, SEXP end, YYLTYPE *lloc)
 #if DEBUGVALS
     Rprintf("xxenv(begin=%p, body=%p, end=%p)", begin, body, end);    
 #endif
-    PROTECT(ans = allocVector(VECSXP, 2));
+    PRESERVE_SV(ans = allocVector(VECSXP, 2));
     SET_VECTOR_ELT(ans, 0, begin);
-    UNPROTECT_PTR(begin);
+    RELEASE_SV(begin);
     if (!isNull(body)) {
 	SET_VECTOR_ELT(ans, 1, PairToVectorList(CDR(body)));
-    	UNPROTECT_PTR(body);	
+	RELEASE_SV(body);
     }
     /* FIXME:  check that begin and end match */
     setAttrib(ans, R_SrcrefSymbol, makeSrcref(lloc, parseState.SrcFile));
-    SEXP s_latex_tag = install("latex_tag");
-    setAttrib(ans, s_latex_tag, mkString("ENVIRONMENT"));
+    setAttrib(ans, R_LatexTagSymbol, mkString("ENVIRONMENT"));
     if (!isNull(end)) 
-    	UNPROTECT_PTR(end);
+	RELEASE_SV(end);
 #if DEBUGVALS
     Rprintf(" result: %p\n", ans);    
 #endif
@@ -259,11 +259,10 @@ static SEXP xxmath(SEXP body, YYLTYPE *lloc)
 #if DEBUGVALS
     Rprintf("xxmath(body=%p)", body);    
 #endif
-    PROTECT(ans = PairToVectorList(CDR(body)));
-    UNPROTECT_PTR(body);
+    PRESERVE_SV(ans = PairToVectorList(CDR(body)));
+    RELEASE_SV(body);
     setAttrib(ans, R_SrcrefSymbol, makeSrcref(lloc, parseState.SrcFile));
-    SEXP s_latex_tag = install("latex_tag");
-    setAttrib(ans, s_latex_tag, mkString("MATH"));
+    setAttrib(ans, R_LatexTagSymbol, mkString("MATH"));
 #if DEBUGVALS
     Rprintf(" result: %p\n", ans);    
 #endif
@@ -277,14 +276,13 @@ static SEXP xxblock(SEXP body, YYLTYPE *lloc)
     Rprintf("xxblock(body=%p)", body);    
 #endif
     if (!body) 
-        PROTECT(ans = allocVector(VECSXP, 0));
+        PRESERVE_SV(ans = allocVector(VECSXP, 0));
     else {
-	PROTECT(ans = PairToVectorList(CDR(body)));
-    	UNPROTECT_PTR(body);	
+	PRESERVE_SV(ans = PairToVectorList(CDR(body)));
+	RELEASE_SV(body);
     }
     setAttrib(ans, R_SrcrefSymbol, makeSrcref(lloc, parseState.SrcFile));
-    SEXP s_latex_tag = install("latex_tag");
-    setAttrib(ans, s_latex_tag, mkString("BLOCK"));
+    setAttrib(ans, R_LatexTagSymbol, mkString("BLOCK"));
 
 #if DEBUGVALS
     Rprintf(" result: %p\n", ans);    
@@ -307,20 +305,19 @@ static void xxSetInVerbEnv(SEXP envname)
     char buffer[256];
     if (VerbatimLookup(CHAR(STRING_ELT(envname, 0)))) {
     	snprintf(buffer, sizeof(buffer), "\\end{%s}", CHAR(STRING_ELT(envname, 0)));
-    	PROTECT(parseState.xxInVerbEnv = ScalarString(mkChar(buffer)));
+	PRESERVE_SV(parseState.xxInVerbEnv = ScalarString(mkChar(buffer)));
     } else parseState.xxInVerbEnv = NULL;
 }
 
 static void xxsavevalue(SEXP items, YYLTYPE *lloc)
 {
     if (items) {
-    	PROTECT(parseState.Value = PairToVectorList(CDR(items)));
-    	UNPROTECT_PTR(items);
+	PRESERVE_SV(parseState.Value = PairToVectorList(CDR(items)));
+	RELEASE_SV(items);
     } else {
-    	PROTECT(parseState.Value = allocVector(VECSXP, 1));
+	PRESERVE_SV(parseState.Value = allocVector(VECSXP, 1));
     	SET_VECTOR_ELT(parseState.Value, 0, ScalarString(mkChar("")));
-    	SEXP s_latex_tag = install("latex_tag");
-    	setAttrib(VECTOR_ELT(parseState.Value, 0), s_latex_tag, mkString("TEXT"));
+	setAttrib(VECTOR_ELT(parseState.Value, 0), R_LatexTagSymbol, mkString("TEXT"));
     }	
     if (!isNull(parseState.Value)) {
     	setAttrib(parseState.Value, R_ClassSymbol, mkString("LaTeX"));
@@ -330,8 +327,7 @@ static void xxsavevalue(SEXP items, YYLTYPE *lloc)
 
 static SEXP xxtag(SEXP item, int type, YYLTYPE *lloc)
 {
-    SEXP s_latex_tag = install("latex_tag");
-    setAttrib(item, s_latex_tag, mkString(yytname[YYTRANSLATE(type)]));
+    setAttrib(item, R_LatexTagSymbol, mkString(yytname[YYTRANSLATE(type)]));
     setAttrib(item, R_SrcrefSymbol, makeSrcref(lloc, parseState.SrcFile));
     return item;
 }
@@ -424,7 +420,7 @@ static SEXP makeSrcref(YYLTYPE *lloc, SEXP srcfile)
     INTEGER(val)[5] = lloc->last_column;
     setAttrib(val, R_SrcfileSymbol, srcfile);
     setAttrib(val, R_ClassSymbol, mkString("srcref"));
-    UNPROTECT(1);
+    UNPROTECT(1); /* val */
     return val;
 }
 
@@ -435,7 +431,7 @@ static SEXP mkString2(const char *s, size_t len)
 
     PROTECT(t = allocVector(STRSXP, 1));
     SET_STRING_ELT(t, 0, mkCharLenCE(s, (int) len, enc));
-    UNPROTECT(1);
+    UNPROTECT(1); /* t */
     return t;
 }
 
@@ -458,15 +454,12 @@ static SEXP NewList(void)
 
 /* Add a new element at the end of a stretchy list */
 
-static SEXP GrowList(SEXP l, SEXP s)
+static void GrowList(SEXP l, SEXP s)
 {
     SEXP tmp;
-    PROTECT(s);
     tmp = CONS(s, R_NilValue);
-    UNPROTECT(1);
     SETCDR(CAR(l), tmp);
     SETCAR(l, tmp);
-    return l;
 }
 
 /*--------------------------------------------------------------------------*/
@@ -497,8 +490,16 @@ static void UseState(ParseState *state) {
     parseState.prevState = state->prevState;
 }
 
+static void InitSymbols(void)
+{
+    if (!R_LatexTagSymbol)
+	R_LatexTagSymbol = install("latex_tag");
+}
+
 static SEXP ParseLatex(ParseStatus *status, SEXP srcfile)
 {
+    InitSymbols();
+
     R_ParseContextLast = 0;
     R_ParseContext[0] = '\0';
     	
@@ -509,6 +510,8 @@ static SEXP ParseLatex(ParseStatus *status, SEXP srcfile)
     parseState.xxbyteno = 1;
     
     parseState.SrcFile = srcfile;
+
+    PROTECT(parseState.mset = R_NewPreciousMSet(50));
     
     npush = 0;
     
@@ -519,8 +522,11 @@ static SEXP ParseLatex(ParseStatus *status, SEXP srcfile)
 
 #if DEBUGVALS
     Rprintf("ParseRd result: %p\n", parseState.Value);    
-#endif    
-    UNPROTECT_PTR(parseState.Value);
+#endif
+
+    RELEASE_SV(parseState.Value);
+    UNPROTECT(1); /* parseState.mset */
+
     return parseState.Value;
 }
 
@@ -723,7 +729,7 @@ static int token(void)
         yylloc.last_line = 0;
         yylloc.last_column = 0;
         yylloc.last_byte = 0;
-    	PROTECT(yylval = mkString(""));
+	PRESERVE_SV(yylval = mkString(""));
         c = parseState.xxinitvalue;
     	parseState.xxinitvalue = 0;
     	return(c);
@@ -770,7 +776,7 @@ static int mkText(int c)
     };
 stop:
     xxungetc(c);
-    PROTECT(yylval = mkString2(stext,  bp - stext));
+    PRESERVE_SV(yylval = mkString2(stext,  bp - stext));
     if(stext != st0) free(stext);
     return TEXT;
 }
@@ -787,7 +793,7 @@ static int mkComment(int c)
     if (c == R_EOF) xxungetc(c);
     else TEXT_PUSH(c);
     
-    PROTECT(yylval = mkString2(stext,  bp - stext));
+    PRESERVE_SV(yylval = mkString2(stext,  bp - stext));
     if(stext != st0) free(stext);    
     return COMMENT;
 }
@@ -815,9 +821,8 @@ static int mkMarkup(int c)
         else if (c != ' ') /* Eat a space, but keep other terminators */
     	    xxungetc(c);
     }
-    if (retval != VERB) {
-    	PROTECT(yylval = mkString(stext));
-    }
+    if (retval != VERB)
+	PRESERVE_SV(yylval = mkString(stext));
     if(stext != st0) free(stext);
     return retval;
 }
@@ -834,7 +839,7 @@ static int mkVerb(int c)
     while ((c = xxgetc()) != delim) TEXT_PUSH(c);
     TEXT_PUSH(c);
     
-    PROTECT(yylval = mkString2(stext, bp - stext));
+    PRESERVE_SV(yylval = mkString2(stext, bp - stext));
     if(stext != st0) free(stext);
     return VERB;  
 }
@@ -857,11 +862,11 @@ static int mkVerbEnv()
     if ( !CHAR(STRING_ELT(parseState.xxInVerbEnv, 0))[matched] ) {
     	for (i = matched-1; i >= 0; i--) 
     	    xxungetc(*(--bp));    	    
-    	UNPROTECT_PTR(parseState.xxInVerbEnv);
+	RELEASE_SV(parseState.xxInVerbEnv);
     	parseState.xxInVerbEnv = NULL;
     }
     	    
-    PROTECT(yylval = mkString2(stext, bp - stext));
+    PRESERVE_SV(yylval = mkString2(stext, bp - stext));
     if (stext != st0) free(stext);
     return VERB;
 }
