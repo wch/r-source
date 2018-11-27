@@ -355,3 +355,11 @@
 ## CFLAGS) and if so tries -pthread.  Setting this allows an
 ## alternative to be tried immediately before -pthread.
 ## PTHREAD_OPT=
+
+## Visibility settings
+## Allow user to override the configure checks if they know what they
+## are doing.
+## C_VISIBILITY=
+## CXX_VISIBILITY=
+## F77_VISIBILITY=
+## FC_VISIBILITY=

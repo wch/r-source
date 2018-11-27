@@ -262,9 +262,7 @@
       Legal FORTRAN 77 code is also legal fixed-form Fortran 95; however
       this change legitimizes the use of later features, in particular
       to replace features marked \sQuote{obsolescent} in Fortran 95
-      which compilers have started to warn about.
-
-      \item New macro \samp{FC_VISIBILITY} analogous to \samp{F77_VISIBILITY}.
+      which \command{gfortran} 8.x has started to warn about.
     }
   }
 

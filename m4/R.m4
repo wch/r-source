@@ -3735,6 +3735,7 @@ if test $r_cv_visibility_attribute = yes; then
 fi
 ## test if visibility flag is accepted: NB Solaris compilers do and ignore,
 ## so only make use of this if HAVE_VISIBILITY_ATTRIBUTE is true.
+if test -z "${C_VISIBILITY+set}"; then
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS -fvisibility=hidden"
 AC_CACHE_CHECK(whether $CC accepts -fvisibility, r_cv_prog_cc_vis,
@@ -3755,6 +3756,9 @@ case  "${CC}" in
     C_VISIBILITY=
     ;;
 esac
+fi
+
+if test -z "${CXX_VISIBILITY+set}"; then
 r_save_CXXFLAGS=$CXXFLAGS
 CXXFLAGS="$CXXFLAGS -fvisibility=hidden"
 AC_LANG_PUSH(C++)
@@ -3777,6 +3781,9 @@ case  "${CXX}" in
     CXX_VISIBILITY=
     ;;
 esac
+fi
+
+if test -z "$F77_VISIBILITY+set}"; then
 AC_LANG_PUSH(Fortran 77)
 r_save_FFLAGS=$FFLAGS
 FFLAGS="$FFLAGS -fvisibility=hidden"
@@ -3798,6 +3805,9 @@ case  "${F77}" in
     ;;
 esac
 AC_LANG_PUSH(Fortran)
+fi
+
+if test -z "$FC_VISIBILITY+set}"; then
 r_save_FCFLAGS=$FCFLAGS
 FCFLAGS="$FCFLAGS -fvisibility=hidden"
 AC_CACHE_CHECK(whether $FC accepts -fvisibility, r_cv_prog_fc_vis,
@@ -3817,6 +3827,8 @@ case  "${FC}" in
     FC_VISIBILITY=
     ;;
 esac
+fi
+
 AC_SUBST(C_VISIBILITY)
 AC_SUBST(CXX_VISIBILITY)
 AC_SUBST(F77_VISIBILITY)
