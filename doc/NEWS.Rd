@@ -278,6 +278,9 @@
       \samp{CXX} version) in \samp{PKG_LIBS} rather than
       \samp{SHLIB_OPENMP_FCFLAGS} --- fortunately on current platforms
       they are the same. [Docs and R CMD check have not yet been updated.]
+
+      \item Make macro \samp{F_VISIBILITY} is now preferred for both
+      fixed-form and free-form Fortran.
     }
   }
 
@@ -329,7 +332,10 @@
       
       \item The deprecated legacy support of \command{make} macros such
       as \samp{CXX1X} has been removed: use the \samp{CXX11} forms
-      instead. 
+      instead.
+
+      \item Make macro \samp{F77_VISIBILITY} is deprecated in favour of
+      \samp{F_VISIBILITY}.
     }
   }
 

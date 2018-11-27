@@ -14064,16 +14064,18 @@ visibility will allow control of visibility for all symbols @emph{via} a
 flag, and where known the flag is encapsulated in the macros
 @samp{C_VISIBILITY}, @samp{CXX_VISIBILITY}@footnote{This applies to the
 compiler for the default C++ dialect (currently C++11) and not
-necessarily to other dialects.} and @samp{F77_VISIBILITY} for C, C++ and
-Fortran compilers.@footnote{In some cases the Fortran compilers accept
-the flag but do not actually hide their symbols.}  These are defined in
-@file{etc/Makeconf} and so available for normal compilation of package
-code.  For example, @file{src/Makevars} could include some of
+necessarily to other dialects.} and @samp{F_VISIBILITY} for C, C++ and
+Fortran compilers.@footnote{@samp{F77_VISIBILITY} was used prior to @R
+3.6.0 and is still available (but deprecated).  In some cases the Fortran
+compilers accept the flag but do not actually hide their symbols.}
+These are defined in @file{etc/Makeconf} and so available for normal
+compilation of package code.  For example, @file{src/Makevars} could
+include some of
 
 @example
 PKG_CFLAGS=$(C_VISIBILITY)
 PKG_CXXFLAGS=$(CXX_VISIBILITY)
-PKG_FFLAGS=$(F77_VISIBILITY)
+PKG_FFLAGS=$(F_VISIBILITY)
 @end example
 
 This would end up with @strong{no} visible entry points, which would be
