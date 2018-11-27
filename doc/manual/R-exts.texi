@@ -1812,7 +1812,7 @@ options, and @strong{must} be set in @code{PKG_CPPFLAGS} as otherwise
 platform-specific paths (e.g.@: @samp{-I/usr/local/include}) will take
 precedence.  @code{PKG_CPPFLAGS} should contain @samp{-I}, @samp{-D},
 @samp{-U} and (where supported) @samp{-include} and @samp{-pthread}
-options: everthing else should be a compiler flag.
+options: everything else should be a compiler flag.
 
 @file{Makevars} can also be used to set flags for the linker, for
 example @samp{-L} and @samp{-l} options, @emph{via} @code{PKG_LIBS}.
@@ -6389,7 +6389,7 @@ An S4 replacement method is documented in the same way as an S3 one: see
 the description of  @code{\method} in @ref{Documenting functions}.
 
 
-See @kbd{help("Documentation", package = "methods")} for more
+See @code{help("Documentation", package = "methods")} for more
 information on using and creating on-line documentation for S4 classes and
 methods.
 
@@ -9385,9 +9385,12 @@ Compiled code to be used with @R{} is loaded as a shared object
 information) or DLL (Windows).
 
 The shared object/DLL is loaded by @code{dyn.load} and unloaded by
-@code{dyn.unload}.  Unloading is not normally necessary, but it is
-needed to allow the DLL to be re-built on some platforms, including
-Windows.
+@code{dyn.unload}.  Unloading is not normally necessary and is not safe in
+general, but it is needed to allow the DLL to be re-built on some platforms,
+including Windows. Unloading a DLL and then re-loading a DLL of the same name
+may not work: Solaris uses the first version loaded. A DLL that registers
+C finalizers, but fails to unregister them when unloaded, may cause R to crash
+after unloading.
 
 The first argument to both functions is a character string giving the
 path to the object.  Programmers should not assume a specific file
@@ -14054,15 +14057,18 @@ C/C++ entry points prefixed by @code{attribute_hidden} will not be
 visible in the shared object.  There is no comparable mechanism for
 FORTRAN entry points, but there is a more comprehensive scheme used by,
 for example package @pkg{stats}.  Most compilers which allow control of
-visibility will allow control of visibility for all symbols @emph{via} a flag,
-and where known the flag is encapsulated in the macros
-@samp{C_VISIBILITY} and @code{F77_VISIBILITY} for C and FORTRAN
-compilers.  These are defined in @file{etc/Makeconf} and so available
-for normal compilation of package code.  For example,
-@file{src/Makevars} could include
+visibility will allow control of visibility for all symbols @emph{via} a
+flag, and where known the flag is encapsulated in the macros
+@samp{C_VISIBILITY}, @samp{CXX_VISIBILITY}@footnote{As from @R{} 3.5.2:
+this applies to the compiler for the default C++ dialect and not
+necessarily to other dialects.} and @code{F77_VISIBILITY} for C, C++ and
+FORTRAN compilers.  These are defined in @file{etc/Makeconf} and so
+available for normal compilation of package code.  For example,
+@file{src/Makevars} could include some of
 
 @example
 PKG_CFLAGS=$(C_VISIBILITY)
+PKG_CXXFLAGS=$(CXX_VISIBILITY)
 PKG_FFLAGS=$(F77_VISIBILITY)
 @end example
 
@@ -14080,6 +14086,13 @@ void attribute_visible R_init_stats(DllInfo *dll)
 ...
 @}
 @end example
+
+Because the @samp{C_VISIBILITY} mechanism is only useful in conjuction
+with @code{attribute_visible}, it is not enabled unless
+@samp{HAVE_VISIBILITY_ATTRIBUTE} is defined.
+
+Note that @command{configure} only checks that visibility attributes and
+flags are accepted, not that they actually hide symbols.
 
 The visibility mechanism is not available on Windows, but there is an
 equally effective way to control which entry points are visible, by
