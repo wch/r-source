@@ -11,7 +11,8 @@
     \itemize{
       \item New macro \samp{CXX_VISIBILITY} analogous to
       \samp{C_VISIBILITY} (which several packages have been misusing for
-      C++ code).
+      C++ code) for the default C++ compiler (but not necessarily one used
+      for non-default C++ dialects like C++14).
     }
   }
   
