@@ -1027,7 +1027,7 @@ inferred values can be overridden in file @file{config.site} or on the
 compiling some C++11/14/17 code.
 
 @R{} versions 3.1.0 to 3.3.3 used @code{CXX1X} rather than @code{CXX11},
-and these forms are deprecated but still accepted.
+and these forms were deprecated in 3.4.4.
 
 It may be@footnote{This is true for earlier versions of @command{g++} such
 as 4.2.1, and also for commonly-used versions of the Solaris compiler
@@ -2346,7 +2346,6 @@ CXXFLAGS = -g -O2 -Wall -pedantic -Wconversion -Wno-sign-conversion
 CXX11 = $CXX
 CXX14 = $CXX
 CXX17 = $CXX
-CXX1X = $CXX
 @end example
 @noindent
 and the Sierra build of @command{gfortran} by
