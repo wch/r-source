@@ -242,8 +242,11 @@
       \item The list of compilers searched for \samp{F95} has been
       modernized, and that chosen for \samp{FC} will be used as the
       default.  in particular, \command{gfortran} is now the first
-      choice, not \command{f95}.  Set \samp{FC} in \file{config.site} to
+      choice, not \command{f95}: set \samp{FC} in \file{config.site} to
       override this if necessary.
+
+      \item Visibility macros such as \samp{C_VISIBILITY} can now be
+      user-set, e.g.\sspace{}in \file{config.site}.
     }
   }
 
@@ -301,8 +304,8 @@
       ignore their \option{zjJ} flags.
 
       \item \code{var(f)} and hence \code{sd(f)} now give an error for
-      \code{factor} arguments; they gave a warning since R 3.2.3,
-      \PR{16564}.
+      \code{factor} arguments; they gave a deprecation warning since \R
+      3.2.3, \PR{16564}.
 
       \item \pkg{tools}' \code{vignetteDepends()} has been deprecated
       (it called a function deprecated since Feb 2016), partly replaced
@@ -310,6 +313,10 @@
 
       \item The \command{f77_f2c} script has been removed: it
       no longer sufficed to compile the \file{.f} files in \R.
+      
+      \item The deprecated legacy support of \command{make} macros such
+      as \samp{CXX1X} has been removed: use the \samp{CXX11} forms
+      instead. 
     }
   }
 
