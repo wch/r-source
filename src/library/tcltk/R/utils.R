@@ -220,7 +220,7 @@ tk_choose.dir <- function(default = '', caption = 'Select directory')
 
 tk_messageBox <-
     function(type = c("ok", "okcancel", "yesno", "yesnocancel",
-                      "retrycancel", "aburtretrycancel"),
+                      "retrycancel", "abortretryignore"),
              message, caption = "", default = "", ...)
 {
     type <- match.arg(type)
