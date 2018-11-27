@@ -3253,7 +3253,7 @@ add_dummies <- function(dir, Log)
                 env <- c(env, "R_DEFAULT_PACKAGES=NULL")
                 out <- R_runR0(Rcmd, opts, env, arch = arch)
                 ## </FIXME>
-                if (any(grepl("^Registered S3 method.*standard package.*overwritten", out))) {
+                if (any(grepl("^Registered S3 method.*standard package.*overwritten", out, useBytes = TRUE))) {
                     out <- out[!startsWith(out, "<environment: namespace:")]
                     warningLog(Log)
                     printLog0(Log, paste(out, collapse = "\n"), "\n")
