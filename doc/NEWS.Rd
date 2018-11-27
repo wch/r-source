@@ -252,6 +252,10 @@
 
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
+      \item \strong{N.B.}: The handling of Fortran is \strong{work in
+	progress}, with further changes under test.  Code and
+      documentation may not be in sync.
+
       \item The interpretation of source code with extension \file{.f}
       is changing.  Previously this denoted FORTRAN 77 code, but current
       compilers no longer have a FORTRAN 77 mode and interpret it as
@@ -259,10 +263,21 @@
       Extensions \file{.f90} and \file{.f95} continue to indicate
       \sQuote{free-form} Fortran code.
 
-      Legal FORTRAN 77 code is also legal fixed-form Fortran 95; however
+      Legal FORTRAN 77 code is also legal fixed-form Fortran 9x; however
       this change legitimizes the use of later features, in particular
       to replace features marked \sQuote{obsolescent} in Fortran 95
       which \command{gfortran} 8.x has started to warn about.
+
+      \item Packages with code in \file{src} with extensions \file{.f90}
+      or \file{.f95} are now linked using the C or C++ compiler rather
+      than the Fortran 9x compiler.  This is consistent with fixed-form
+      Fortran code and allows mixing of C++ and free-form Fortran.
+
+      Consequentially, packages including free-form Fortran 9x which
+      uses OpenMP should include \samp{SHLIB_OPENMP_CFLAGS} (or the
+      \samp{CXX} version) in \samp{PKG_LIBS} rather than
+      \samp{SHLIB_OPENMP_FCFLAGS} --- fortunately on current platforms
+      they are the same. [Docs and R CMD check have not yet been updated.]
     }
   }
 
