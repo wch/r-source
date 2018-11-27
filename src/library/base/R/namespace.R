@@ -180,7 +180,7 @@ attachNamespace <- function(ns, pos = 2L, depends = NULL, exclude, include.only)
                           sQuote(nsname), nf),
                  call. = FALSE, domain = NA)
         }
-        rm(list = setdiff(vars, incude.only), envir = env)
+        rm(list = setdiff(vars, include.only), envir = env)
     }
 
     lockEnvironment(env, TRUE)
