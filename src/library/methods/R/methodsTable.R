@@ -578,7 +578,7 @@
             condAction <- getOption("ambiguousMethodSelection")
             if(is.null(condAction))
               condAction <- .ambiguousMethodMessage
-            else if(!is(condAction, "function"))
+            else if(!is.function(condAction))
               stop(gettextf("the \"ambiguousMethodSelection\" option should be a function to be called as the condition action; got an object of class %s",
                             dQuote(class(condAction))),
                    domain = NA)
@@ -1090,7 +1090,7 @@
             if(length(pkgs) > 1)
                 cf("  (", length(pkgs), " methods defined for this signature, with different packages)\n")
 	}
-	if(includeDefs && is(m, "function")) {
+	if(includeDefs && is.function(m)) {
 	    if(is(m, "MethodDefinition"))
 		m <- m@.Data
 	    cat(deparse(m), sep="\n", "\n", file = printTo)

@@ -57,7 +57,7 @@ as <-
                 else {
                   test <- ext@test
                   asMethod <- .makeAsMethod(ext@coerce, ext@simple, Class, ClassDef, where)
-                  canCache <- (!is(test, "function")) || isTRUE(body(test))
+                  canCache <- (!is.function(test)) || isTRUE(body(test))
                  }
             }
             if(is.null(asMethod) && extends(Class, thisClass)) {
@@ -168,7 +168,7 @@ as <-
                 else {
                     test <- asMethod@test
                     asMethod <- asMethod@replace
-                    canCache <- (!is(test, "function")) || isTRUE(body(test))
+                    canCache <- (!is.function(test)) || isTRUE(body(test))
                     if(canCache) { ##the replace code is a bare function
                         ClassDef <- getClassDef(Class, where)
                         asMethod <- .asCoerceMethod(asMethod, thisClass, ClassDef, TRUE, where)
@@ -356,7 +356,7 @@ setAs <-
     stop("undefined 'coerce' method")
 
 .makeAsMethod <- function(expr, simple, Class, ClassDef, where) {
-    if(is(expr, "function")) {
+    if(is.function(expr)) {
         where <- environment(expr)
         args <- formalArgs(expr)
         if(!identical(args, "from"))

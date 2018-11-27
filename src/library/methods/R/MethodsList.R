@@ -1,7 +1,7 @@
 #  File src/library/methods/R/MethodsList.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -66,7 +66,7 @@ makeMethodsList <- function(object, level=1)
                           collapse=", ")), domain = NA)
     for(i in seq_along(object)) {
         eli <- object[[i]]
-        if(is(eli, "function")
+        if(is.function(eli)
            || is(eli, "MethodsList")) {}
         else if(is(eli, "list") ||
                 is(eli, "named"))
@@ -279,7 +279,7 @@ MethodsListSelect <-
     inherited <- is.na(which)
     selection <- if(inherited) NULL else allMethods[[which]]
     if(!inherited) {
-        if(is(selection, "function")) {
+        if(is.function(selection)) {
             if(is.null(f)) {
               ## An inherited method at the next level up.
               ## only the inherited method should be added
@@ -310,7 +310,7 @@ MethodsListSelect <-
             for(i in seq_along(allSelections)) {
                 selection <- allSelections[[i]]
                 fromClass <- allClasses[[i]]
-                if(is(selection, "function"))
+                if(is.function(selection))
                     method <- selection
                 else if(is(selection, "MethodsList")) {
                     ## go on to try matching further arguments

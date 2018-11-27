@@ -1,7 +1,7 @@
 #  File src/library/methods/R/ClassExtensions.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -209,7 +209,7 @@ makeExtends <- function(Class, to,
             body(coerce, envir = packageEnv) <-
                  .simpleCoerceExpr(Class, to, names(slots), classDef2)
     }
-    else if(is(coerce, "function")) {
+    else if(is.function(coerce)) {
         ## we allow definitions with and without the `strict' argument
         ## but create a  function that can be called with the argument
         if(length(formals(coerce)) == 1) {
@@ -301,7 +301,7 @@ makeExtends <- function(Class, to,
             warning(gettextf("there is no automatic definition for 'as(object, \"%s\") <- value' when object has class %s and no 'replace' argument was supplied; replacement will be an error",
                              to, dQuote(Class)), domain = NA)
     }
-    else if(is(replace, "function")) {
+    else if(is.function(replace)) {
         ## turn function of two or three arguments into correct 3-arg form
         if(length(formals(replace)) == 2) {
             replace <- .ChangeFormals(replace, .dataPartReplace$f2args, "'replace' argument to setIs ")

@@ -536,14 +536,14 @@ validObject <- function(object, test = FALSE, complete = FALSE)
 	    break
 	}
 	validityMethod <- superDef@validity
-	if(is(validityMethod, "function")) {
+	if(is.function(validityMethod)) {
 	    errors <- c(errors, anyStrings(validityMethod(as(object, superClass))))
 	    if(length(errors))
 		break
 	}
     }
     validityMethod <- classDef@validity
-    if(length(errors) == 0L && is(validityMethod, "function")) {
+    if(length(errors) == 0L && is.function(validityMethod)) {
 	errors <- c(errors, anyStrings(validityMethod(object)))
     }
     if(length(errors)) {
@@ -572,7 +572,7 @@ setValidity <- function(Class, method, where = topenv(parent.frame())) {
     }
     method <- .makeValidityMethod(Class, method)
     if(is.null(method) ||
-       (is(method, "function") && length(formalArgs(method)) == 1L))
+       (is.function(method) && length(formalArgs(method)) == 1L))
 	ClassDef@validity <- method
     else
 	stop("validity method must be NULL or a function of one argument")
