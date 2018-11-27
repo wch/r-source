@@ -45,17 +45,16 @@ ECHO = echo
 ECHO_C = @ECHO_C@
 ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
+F_VISIBILITY = @F_VISIBILITY@
 ## NB, set FC before F77 as on Solaris make, setting FC sets F77
 ## FC is the compiler used for free-form Fortran, exts .f90/.f95
 FC = @FC@
-FC_VISIBILITY = @FC_VISIBILITY@
 FCFLAGS = @FCFLAGS@ $(LTO)
 FCPICFLAGS = @FCPICFLAGS@
 ## additional libs needed when linking with $(FC), e.g. on some Oracle compilers
 FCLIBS = @FCLIBS@
 ## F77 is the compiler used for fixed-form Fortran, ext .f
 F77 = @F77@
-F77_VISIBILITY = @F77_VISIBILITY@
 FFLAGS = @FFLAGS@ $(LTO)
 FLIBS = @FLIBS_IN_SO@
 FPICFLAGS = @FPICFLAGS@
@@ -129,6 +128,10 @@ STRIP_STATIC_LIBS = @stripstaticlib@
 TCLTK_CPPFLAGS = @TCLTK_CPPFLAGS@
 TCLTK_LIBS = @TCLTK_LIBS@
 YACC = @YACC@
+
+## Legacy settings
+F77_VISIBILITY = @F_VISIBILITY@
+FC_VISIBILITY = @F_VISIBILITY@
 
 
 ## for linking to libR.a
