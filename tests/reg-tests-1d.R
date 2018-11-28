@@ -1780,6 +1780,23 @@ stopifnot(exprs = {
 
 
 
+
+
+
+## seq.int(*, by=<int.>, length = n) for non-integer 'from' or 'to'
+stopifnot(exprs = {
+    identical(seq.int(from = 1.5, by = 2, length = 3),
+              s <- seq(from = 1.5, by = 2, length = 3))
+    s == c(1.5, 3.5, 5.5)
+    identical(seq.int(to = -0.1, by = -2, length = 2),
+              s <- seq(to = -0.1, by = -2, length = 2))
+    all.equal(s, c(1.9, -0.1))
+    identical(seq.int(to = pi, by = 0, length = 1), pi)
+})
+## returned integer sequences in all R versions <= 3.5.1
+
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())
