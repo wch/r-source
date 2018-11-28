@@ -122,8 +122,6 @@ Variables:
 		object files from a C or Fortran compiler only
   SHLIB_LDFLAGS
 		special flags used by SHLIB_LD
-  SHLIB_FCLD, SHLIB_FCLDFLAGS
-		ditto when using Fortran 9x
   TCLTK_CPPFLAGS
 		flags needed for finding the tcl.h and tk.h headers
   TCLTK_LIBS    flags needed for linking against the Tcl and Tk libraries
@@ -281,6 +279,8 @@ ok_objc_vars="OBJC OBJCFLAGS"
 ok_java_vars="JAVA JAVAC JAVAH JAR JAVA_HOME JAVA_LIBS JAVA_CPPFLAGS"
 ok_f77_vars="F77 FFLAGS FPICFLAGS FLIBS SAFE_FFLAGS FC FCFLAGS FCPICFLAGS"
 ok_ld_vars="LDFLAGS"
+## SHLIB_FCLD SHLIB_FCLDFLAGS are no longer used by R as from 3.6.0
+## but left for other users.
 ok_shlib_vars="SHLIB_CFLAGS SHLIB_CXXLD SHLIB_CXXLDFLAGS SHLIB_CXX98LD SHLIB_CXX98LDFLAGS SHLIB_CXX11LD SHLIB_CXX11LDFLAGS SHLIB_CXX14LD SHLIB_CXX14LDFLAGS SHLIB_CXX17LD SHLIB_CXX17LDFLAGS SHLIB_EXT SHLIB_FFLAGS SHLIB_LD SHLIB_LDFLAGS SHLIB_FCLD SHLIB_FCLDFLAGS"
 ok_tcltk_vars="TCLTK_CPPFLAGS TCLTK_LIBS"
 ok_other_vars="BLAS_LIBS LAPACK_LIBS MAKE LIBnn LOCAL_SOFT COMPILED_BY OBJDUMP"
