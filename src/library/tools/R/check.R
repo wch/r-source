@@ -2776,26 +2776,63 @@ add_dummies <- function(dir, Log)
 
                 c1 <- grepl("^[[:space:]]*PKG_LIBS", lines, useBytes = TRUE)
                 anyInLIBS <- any(grepl("SHLIB_OPENMP_", lines[c1], useBytes = TRUE))
+
+                ## Now see what sort of files we have
+                have_c <- length(dir('src', patt = "[.]c$")) > 0L
+                have_cxx <- length(dir('src', patt = "[.](cc|cpp)$")) > 0L
+                have_f <- length(dir('src', patt = "[.]f$")) > 0L
+                have_f9x <- length(dir('src', patt = "[.]f9[05]$")) > 0L
                 used <- character()
                 for (f in c("C", "CXX", "F", "FC"))  {
                     this <- paste0(f, "FLAGS")
                     pat <- paste0("^[[:space:]]*PKG_", this, ".*SHLIB_OPENMP_", this)
                     if(any(grepl(pat, lines, useBytes = TRUE))) {
                         used <- c(used, this)
-                        ## The recommendation is to use _FFLAGS to compile
-                        ## and _CFLAGS to link with F77 code (which is linked
-                        ## by the C compiler)
-                        this2 <- if (f == "F") "CFLAGS" else this
+                        if(f == "C" && !have_c) {
+                            if (!any) noteLog(Log)
+                            any <- TRUE
+                            msg <- "SHLIB_OPENMP_CFLAGS is included in PKG_CFLAGS without any C files\n"
+                            printLog(Log, "  ", m, ": ", msg)
+                            next
+                        }
+                        if(f == "F" && !have_f) {
+                            if (!any) noteLog(Log)
+                            any <- TRUE
+                            msg <- "SHLIB_OPENMP_FFLAGS is included in PKG_FFLAGS without any fixed-form Fortran files\n"
+                            printLog(Log, "  ", m, ": ", msg)
+                            next
+                        }
+                        if(f == "FC" && !have_f9x) {
+                            if (!any) noteLog(Log)
+                            any <- TRUE
+                            msg <- "SHLIB_OPENMP_FCFLAGS is included in PKG_FCFLAGS without any free-form Fortran files\n"
+                            printLog(Log, "  ", m, ": ", msg)
+                            next
+                        }
+                        if(f == "CXX" && !have_cxx) {
+                            if (!any) noteLog(Log)
+                            any <- TRUE
+                            msg <- "SHLIB_OPENMP_CXXFLAGS is included in PKG_CXXFLAGS without any C++ files\n"
+                            printLog(Log, "  ", m, ": ", msg)
+                            next
+                        }
+                        ## The recommendation is to use _F[C]FLAGS to
+                        ## compile and _CFLAGS or _CXXFLAGS to link with Fortran
+                        ## code (which is linked by the C or C++ compiler)
+                        c_or_cxx <- if(have_cxx) "CXXFLAGS" else "CFLAGS"
+                        this2 <- if (f %in% c("F", "FC")) c_or_cxx else this
                         pat2 <- paste0("SHLIB_OPENMP_", this2)
                         if(!any(grepl(pat2, lines[c1], useBytes = TRUE))) {
                             if (!any) noteLog(Log)
                             any <- TRUE
                             msg <- if(anyInLIBS) {
                                 if (f == "F")
-                                "SHLIB_OPENMP_FFLAGS is included in PKG_FFLAGS but not SHLIB_OPENMP_CFLAGS in PKG_LIBS\n"
-                            else
-                                sprintf("SHLIB_OPENMP_%s is included in PKG_%s but not in PKG_LIBS\n",
-                                           this, this)
+                                    sprintf("SHLIB_OPENMP_FFLAGS is included in PKG_FFLAGS but not SHLIB_OPENMP_%s in PKG_LIBS\n", c_or_cxx)
+                                 else if (f == "FC")
+                                     sprintf("SHLIB_OPENMP_FCFLAGS is included in PKG_FCFLAGS but not SHLIB_OPENMP_%s in PKG_LIBS\n", c_or_cxx)
+                               else
+                                    sprintf("SHLIB_OPENMP_%s is included in PKG_%s but not in PKG_LIBS\n",
+                                            this, this)
                             } else {
                                 msg3 <- TRUE
                                 sprintf("SHLIB_OPENMP_%s is included in PKG_%s but no OPENMP macro in PKG_LIBS\n",
@@ -2827,9 +2864,29 @@ add_dummies <- function(dir, Log)
                     pat2 <- paste0("SHLIB_OPENMP_", this)
                     res <- any(grepl(pat2 , lines[c1], useBytes = TRUE))
                     cnt <- cnt + res
+                    if (res && f %in% c( "F", "FC"))  {
+                        if (!any) noteLog(Log)
+                        any <- TRUE
+                        printLog(Log,"  ", m, ": ",
+                                 sprintf("SHLIB_OPENMP_%s is included in PKG_LIBS but linking is by %s\n",
+                                         this,
+                                         if(have_cxx) "C++" else "C"))
+                         next
+                    }
+                     if (res &&
+                         ((!have_cxx && f == "CXX") || (have_cxx && f == "C"))) {
+                        if (!any) noteLog(Log)
+                        any <- TRUE
+                        printLog(Log,"  ", m, ": ",
+                                 sprintf("SHLIB_OPENMP_%s is included in PKG_LIBS but linking is by %s\n",
+                                         this,
+                                         if(have_cxx) "C++" else "C"))
+                         next
+                    }
                     if (this %in% used) next
-                    ## it is recommended to include _CFLAGS if _FFLAGS is used.
-                    if (f == "C" && "FFLAGS" %in% used) next
+                    ## Fortran exceptions
+                    if (((!have_cxx && f == "C") || (have_cxx && f == "CXX"))
+                        && any(c("FFLAGS", "FCFLAGS") %in% used)) next
                     if (res) {
                         if (!any) noteLog(Log)
                         any <- TRUE
@@ -2868,7 +2925,7 @@ add_dummies <- function(dir, Log)
                         "The macros for different languages may differ",
                         "so the matching macro must be used in",
                         "PKG_CXXFLAGS (etc) and match that used in",
-                        "PKG_LIBS (except for F77: see the manual).\n")
+                        "PKG_LIBS (except for Fortran: see the manual).\n")
                 if (msg2)
                     wrapLog("PKG_CPPFLAGS is used for both C and C++ code",
                             "so it is not portable to use it",
