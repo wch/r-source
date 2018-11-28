@@ -246,7 +246,7 @@
       override this if necessary.
 
       \item Visibility macros such as \samp{C_VISIBILITY} can now be
-      user-set, e.g.\sspace{}in \file{config.site}.
+      user-set  (including to empty), e.g.\sspace{}in \file{config.site}.
     }
   }
 
@@ -271,7 +271,8 @@
       \item Packages with code in \file{src} with extensions \file{.f90}
       or \file{.f95} are now linked using the C or C++ compiler rather
       than the Fortran 9x compiler.  This is consistent with fixed-form
-      Fortran code and allows mixing of C++ and free-form Fortran.
+      Fortran code and allows mixing of C++ and free-form Fortran on
+      most platforms.
 
       Consequentially, packages including free-form Fortran 9x which
       uses OpenMP should include \samp{SHLIB_OPENMP_CFLAGS} (or the
@@ -366,12 +367,12 @@
 
       \item The documentation for \code{identify()} incorrectly claimed
       that the indices of identified points were returned in the order
-      that the points were selected..  \code{identify()} now has a new
+      that the points were selected.  \code{identify()} now has a new
       argument \code{order} to allow the return value to include the
       order in which points were identified; the documentation has been
       updated.  Reported by Richard Rowe and Samuel Granjeaud.
 
-      \item \code{order(...., decreasing=c(TRUE,FALSE))} could fail in
+      \item \code{order(...., decreasing=c(TRUE, FALSE))} could fail in
       some cases. Reported from StackOverflow via Karl Nordström.
 
       \item User macros in Rd files now accept empty and multi-line

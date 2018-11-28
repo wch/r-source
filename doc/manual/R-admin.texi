@@ -944,10 +944,11 @@ environment variable @env{TZ}.
 @node OpenMP Support, C++ Support, Other Options, Other Options
 @subsection OpenMP Support
 
-By default @command{configure} searches for suitable
-options@footnote{for example, @option{-fopenmp}, @option{-xopenmp} or
-@option{-qopenmp}.  This includes for @command{clang} and the Intel C
-compiler.} for OpenMP support for the C, C++98 and Fortran compilers.
+By default @command{configure} searches for suitable flags@footnote{for
+example, @option{-fopenmp}, @option{-xopenmp} or @option{-qopenmp}.
+This includes for @command{clang} and the Intel and Oracle compilers.}
+for OpenMP support for the C, C++ (default standard) and Fortran
+compilers.
 
 Only the C result is currently used for @R{} itself, and only if
 @code{MAIN_LD}/@code{DYLIB_LD} were not specified.  This can be
@@ -957,18 +958,18 @@ R_OPENMP_CFLAGS
 @end example
 
 Use for packages has similar restrictions (involving @code{SHLIB_LD} and
-similar: note that as Fortran code is normally linked by the C compiler,
+similar: note that as Fortran code is linked by the C (or C++) compiler,
 both need to support OpenMP) and can be overridden by specifying some of
 @example
 SHLIB_OPENMP_CFLAGS
 SHLIB_OPENMP_CXXFLAGS
-SHLIB_OPENMP_FCFLAGS
 SHLIB_OPENMP_FFLAGS
+SHLIB_OPENMP_FCFLAGS
 @end example
 
 @noindent
-Setting to an empty value will disable OpenMP for that compiler (and
-configuring with @option{--disable-openmp} will disable all
+Setting these to an empty value will disable OpenMP for that compiler
+(and configuring with @option{--disable-openmp} will disable all
 detection@footnote{This does not necessarily disable @emph{use} of
 OpenMP -- the @command{configure} code allows for platforms where OpenMP
 is used without a flag. For the @command{flang} compiler in late 2017,
@@ -1019,24 +1020,24 @@ support. Similarly, configure will if possible choose for
 @command{g++} 5 and later and 2016 versions of the Intel and Solaris
 compilers.  For earlier versions of @command{g++} one could try
 @option{-std=c++1y}.} such as @option{-std=c++14} for C++14 support and
-@option{-std=c++1z} for support for the forthcoming C++17 standard. The
-inferred values can be overridden in file @file{config.site} or on the
-@command{configure} command line: user-supplied values will be tested
-compiling some C++11/14/17 code.
+@option{-std=c++17} or @option{-std=c++1z} for support for the C++17
+standard. x The inferred values can be overridden in file
+@file{config.site} or on the @command{configure} command line:
+user-supplied values will be tested by compiling some C++11/14/17 code.
 
-@R{} versions 3.1.0 to 3.3.3 used @code{CXX1X} rather than @code{CXX11},
-and these forms were deprecated in 3.4.4 and removed in 3.6.0.
+@R{} versions 3.1.0 to 3.3.3 used @code{CXX1X} rather than @code{CXX11}:
+these forms were deprecated in 3.4.4 and removed in 3.6.0.
 
-It may be@footnote{This is true for earlier versions of @command{g++} such
-as 4.2.1, and also for commonly-used versions of the Solaris compiler
-@code{CC}.} that there is no suitable flag for C++11 support, in which
-case a different compiler could be selected for @code{CXX11} and its
-corresponding flags.  Likewise, a different compiler can be specified for
-C++14 support with @code{CXX14} and for C++17 support with @code{CXX17}.
-Some compilers@footnote{Currently only
-GCC 6 and later, but this has been mooted for others.} by default assume
-a later standard than C++98 whereas the latter is assumed by some
-packages.  So users of GCC 6 might like to specify
+It may be@footnote{This is true for earlier versions of @command{g++}
+such as 4.2.1, and also for commonly-used versions of the Solaris
+compiler @code{CC}.} that there is no suitable flag for C++11 support,
+in which case a different compiler could be selected for @code{CXX11}
+and its corresponding flags.  Likewise, a different compiler can be
+specified for C++14 support with @code{CXX14} and for C++17 support with
+@code{CXX17}.  Some compilers@footnote{Currently only GCC and
+@command{clang++} versions 6 and later.} by default assume a later
+standard than C++98 whereas the latter has been assumed by some packages.  So
+users of GCC 6 might like to specify
 @example
 CXX='g++ -std=gnu++98'
 CXX11=g++
@@ -1045,11 +1046,11 @@ CXX14=g++
 CXX14STD='-std=c++14'
 @end example
 
-The @option{-std} flag is supported by the GCC, @command{clang}, Intel
+The @option{-std} flag is supported by the GCC, @command{clang++}, Intel
 and Solaris compilers (the latter from version 12.4).  Currently
 accepted values are (plus some synonyms)
 @example
-g++:     c++98 gnu++98 c++11 gnu+11 c++14 gnu++14 c++1z gnu++1z
+g++:     c++98 gnu++98 c++11 gnu+11 c++14 gnu++14 c++17 gnu++17
 Intel:   gnu+98 c++11 c++14 (from 16.0) c++17 (from 17.0)
 Solaris: c++03 c++11 c++14 (from 12.5)
 @end example
@@ -1074,7 +1075,9 @@ support to be picked by @command{configure}.)  Option
 extensions': what those are is hard to track down.
 
 For the use of C++11 and later in @R{} packages see the `Writing R
-Extensions' manual.
+Extensions' manual.  Prior to @R{} 3.6.0 the default C++ standard was
+that of the compiler used: currently it is C++11 if supported by the
+compiler.
 
 @node Testing a Unix-alike Installation,  , Other Options, Installing R under Unix-alikes
 @section Testing an Installation
@@ -3682,11 +3685,10 @@ find a suitable value for @code{CXX11STD} if the compiler given by
 @code{CXX} is capable of compiling C++11 code, but it is possible that a
 completely different compiler will be needed.
 
-Other packages need full Fortran 90 (or later) support.  For source
-files with extension @file{.f90} or @file{.f95} containing free-form
-Fortran, the compiler defined by the macro @code{FC} is used by
-@command{R CMD INSTALL}.  This is found when @R{} is configured and is
-often the same as @code{F77}: note that it is detected by the name of
+For source files with extension @file{.f90} or @file{.f95} containing
+free-form Fortran, the compiler defined by the macro @code{FC} is used
+by @command{R CMD INSTALL}.  This is found when @R{} is configured and
+is often the same as @code{F77}: note that it is detected by the name of
 the command without a test that it can actually compile Fortran 90 code.
 Set the configure variable @code{FC} to override this if necessary:
 variables @code{FCFLAGS}, @code{FCPICFLAGS} and @code{FCLIBS} might also
