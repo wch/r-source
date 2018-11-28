@@ -1170,10 +1170,9 @@ not be hidden (start with a dot), and hidden files will under some
 versions of @R{} be ignored.
 
 It is not portable (and may not be possible at all) to mix all these
-languages in a single package, and we do not support using both C++ and
-free-form Fortran. Because @R{} itself uses it, we know that C and
-fixed-form can be used together and mixing C and C++ seems to be widely
-successful.
+languages in a single package. Because @R{} itself uses it, we know that
+C and fixed-form Fortran can be used together and mixing C and C++ seems
+to be widely successful.
 
 If your code needs to depend on the platform there are certain defines
 which can used in C or C++.  On all Windows builds (even 64-bit ones)
@@ -1664,11 +1663,11 @@ ACX_BLAS([], AC_MSG_ERROR([could not find your BLAS library], 1))
 @end example
 
 Note that @code{FLIBS} as determined by @R{} must be used to ensure that
-fixed-form Fortran code works on all @R{} platforms.  Calls to the
-Autoconf macro @code{AC_F77_LIBRARY_LDFLAGS}, which would overwrite
-@code{FLIBS}, must not be used (and hence e.g.@: removed from
-@code{ACX_BLAS}).  (Recent versions of Autoconf in fact allow an already
-set @code{FLIBS} to override the test for the Fortran linker flags.)
+Fortran code works on all @R{} platforms.  Calls to the Autoconf macro
+@code{AC_F77_LIBRARY_LDFLAGS}, which would overwrite @code{FLIBS}, must
+not be used (and hence e.g.@: removed from @code{ACX_BLAS}).  (Recent
+versions of Autoconf in fact allow an already set @code{FLIBS} to
+override the test for the Fortran linker flags.)
 
 
 @strong{N.B.}: If the @command{configure} script creates files, e.g.@:
@@ -1845,7 +1844,8 @@ the latter.  These include
 @vindex FLIBS
 A macro containing the set of libraries need to link Fortran code.  This
 may need to be included in @code{PKG_LIBS}: it will normally be included
-automatically if the package contains fixed-form Fortran source files.
+automatically if the package contains Fortran source files in the
+@file{src} directory.
 
 @item BLAS_LIBS
 @vindex BLAS_LIBS
@@ -2076,10 +2076,10 @@ SHLIB_OPENMP_FFLAGS
 @noindent
 are available for use in @file{src/Makevars} or @file{src/Makevars.win}.
 Include the appropriate macro in @code{PKG_CFLAGS}, @code{PKG_CXXFLAGS}
-and so on, and also in @code{PKG_LIBS} (but see below for fixed-form
-Fortran).  C/C++ code that needs to be conditioned on the use of OpenMP
-can be used inside @code{#ifdef _OPENMP}: note that some toolchains used
-for @R{} (including Apple's for macOS and some others using
+and so on, and also in @code{PKG_LIBS} (but see below for Fortran).
+C/C++ code that needs to be conditioned on the use of OpenMP can be used
+inside @code{#ifdef _OPENMP}: note that some toolchains used for @R{}
+(including Apple's for macOS and some others using
 @command{clang}@footnote{Default builds of @command{clang} 3.8.0 and
 later have support for OpenMP, but the @code{libomp} run-time library
 may not be installed.}) have no OpenMP support at all, not even
@@ -2106,7 +2106,7 @@ Some care is needed when compilers are from different families which may
 use different OpenMP runtimes (e.g.@: @command{clang} @emph{vs} GCC
 including @command{gfortran}, although it is currently possible to use
 the @command{clang} runtime with GCC but not @emph{vice versa}).  For a
-package with fixed-form Fortran code using OpenMP the appropriate lines
+package with Fortran code using OpenMP the appropriate lines
 are
 
 @example
@@ -2116,14 +2116,15 @@ PKG_LIBS = $(SHLIB_OPENMP_CFLAGS)
 
 @noindent
 as the C compiler will be used to link the package code (and there is no
-guarantee that this will work everywhere).  (This does not apply to
-free-form Fortran code, where @code{SHLIB_OPENMP_FCFLAGS} should be used in
-both @code{PKG_FCFLAGS} and @code{PKG_LIBS}.)
+guarantee that this will work everywhere).  Packages which include C++
+code should use @code{SHLIB_OPENMP_CXXFLAGS} in @code{{PKG_LIBS}. (As
+from @R{} 3.6.0 this applies also to free-form Fortran code, where
+@code{SHLIB_OPENMP_FCFLAGS} should be used in @code{PKG_FCFLAGS}.)
 
 It is not portable to use OpenMP with more than one of C, C++ and
 Fortran in a single package since it is quite likely that the compilers
-are of different families: using C and fixed-form Fortran is most widely
-supported (but only fortuitously works on macOS).
+are of different families: using C and Fortran is most widely supported
+(but only fortuitously works on macOS).
 @c Where an alternative compiler is used for C++11 or later, its OpenMP
 @c runtime may be incompatible even with C.
 
@@ -2601,8 +2602,7 @@ compiler for C++11, @emph{via} personal or site @file{Makevars} files.
 
 There is no guarantee that C++11 can be used in a package in combination
 with any other compiled language (even C), as the C++11 compiler may be
-incompatible with the native compilers for the platform.  (There are
-known problems mixing C++11 with Fortran.)
+incompatible with the native compilers for the platform.
 
 If a package using C++11 has a @command{configure} script it is
 essential that it selects the correct compiler, @emph{via} something like
@@ -14062,11 +14062,12 @@ Fortran entry points, but there is a more comprehensive scheme used by,
 for example package @pkg{stats}.  Most compilers which allow control of
 visibility will allow control of visibility for all symbols @emph{via} a
 flag, and where known the flag is encapsulated in the macros
-@samp{C_VISIBILITY}, @samp{CXX_VISIBILITY}@footnote{This applies to the
-compiler for the default C++ dialect (currently C++11) and not
-necessarily to other dialects.} and @samp{F_VISIBILITY} for C, C++ and
-Fortran compilers.@footnote{@samp{F77_VISIBILITY} was used prior to @R
-3.6.0 and is still available (but deprecated).  In some cases the Fortran
+@samp{C_VISIBILITY}, @samp{CXX_VISIBILITY}@footnote{As from @R{} 3.5.2:
+his applies to the compiler for the default C++ dialect (currently
+normally C++11) and not necessarily to other dialects.} and
+@samp{F_VISIBILITY} for C, C++ and Fortran
+compilers.@footnote{@samp{F77_VISIBILITY} was used prior to @R 3.6.0 and
+is still available (but deprecated).  In some cases the Fortran
 compilers accept the flag but do not actually hide their symbols.}
 These are defined in @file{etc/Makeconf} and so available for normal
 compilation of package code.  For example, @file{src/Makevars} could

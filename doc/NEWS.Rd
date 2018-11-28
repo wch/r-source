@@ -275,12 +275,12 @@
 
       Consequentially, packages including free-form Fortran 9x which
       uses OpenMP should include \samp{SHLIB_OPENMP_CFLAGS} (or the
-      \samp{CXX} version) in \samp{PKG_LIBS} rather than
+      \samp{CXXFLAGS} version) in \samp{PKG_LIBS} rather than
       \samp{SHLIB_OPENMP_FCFLAGS} --- fortunately on current platforms
-      they are the same. [Docs and R CMD check have not yet been updated.]
+      they are the same flag.
 
-      \item Make macro \samp{F_VISIBILITY} is now preferred for both
-      fixed-form and free-form Fortran.
+      \item The new make macro \samp{F_VISIBILITY} is now preferred for
+      both fixed-form and free-form Fortran.
     }
   }
 

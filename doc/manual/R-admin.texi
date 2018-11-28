@@ -957,9 +957,8 @@ R_OPENMP_CFLAGS
 @end example
 
 Use for packages has similar restrictions (involving @code{SHLIB_LD} and
-similar: note that as fixed-form Fortran code is normally linked by the
-C compiler, both need to support OpenMP) and can be overridden by
-specifying some of
+similar: note that as Fortran code is normally linked by the C compiler,
+both need to support OpenMP) and can be overridden by specifying some of
 @example
 SHLIB_OPENMP_CFLAGS
 SHLIB_OPENMP_CXXFLAGS
@@ -3690,8 +3689,8 @@ Fortran, the compiler defined by the macro @code{FC} is used by
 often the same as @code{F77}: note that it is detected by the name of
 the command without a test that it can actually compile Fortran 90 code.
 Set the configure variable @code{FC} to override this if necessary:
-variables @code{FCFLAGS}, @code{FCPICFLAGS}, @code{FCLIBS},
-@code{SHLIB_FCLD} and @code{SHLIB_FCLDFLAGS} might also need to be set.
+variables @code{FCFLAGS}, @code{FCPICFLAGS} and @code{FCLIBS} might also
+need to be set.
 
 See file @file{config.site} in the @R{} source for more details about
 these variables.
