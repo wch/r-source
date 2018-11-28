@@ -183,11 +183,9 @@ various ways for consistency and portability.
 source package which contains C, C++ or Fortran code will involve
 compiling that code.  There is also the possibility of `byte' compiling
 the @R{} code in a package (using the facilities of package
-@pkg{compiler}): since @R{} 3.5.0, this is enabled by default for all
-packages. Prior to @R{} 3.5.0, base and recommended packages were normally
-byte-compiled, but this had to be specified explicitly for other packages. So
-@emph{compiling} a package may come to mean byte-compiling its @R{}
-code.
+@pkg{compiler}): since @R{} 3.5.0 this is enabled by default for all
+packages. So @emph{compiling} a package may come to mean byte-compiling
+its @R{} code.
 
 @item
 It used to be unambiguous to talk about @emph{loading} an installed
@@ -1170,9 +1168,9 @@ not be hidden (start with a dot), and hidden files will under some
 versions of @R{} be ignored.
 
 It is not portable (and may not be possible at all) to mix all these
-languages in a single package. Because @R{} itself uses it, we know that
-C and fixed-form Fortran can be used together and mixing C and C++ seems
-to be widely successful.
+languages in a single package.  Because @R{} itself uses it, we know that
+C and fixed-form Fortran can be used together, and mixing C, C++ and
+Fortran usually work for the platform's native compilers.
 
 If your code needs to depend on the platform there are certain defines
 which can used in C or C++.  On all Windows builds (even 64-bit ones)
@@ -2122,7 +2120,7 @@ from @R{} 3.6.0 this applies also to free-form Fortran code, where
 @code{SHLIB_OPENMP_FCFLAGS} should be used in @code{PKG_FCFLAGS}.)
 
 It is not portable to use OpenMP with more than one of C, C++ and
-Fortran in a single package since it is quite likely that the compilers
+Fortran in a single package since it is not uncommon that the compilers
 are of different families: using C and Fortran is most widely supported
 (but only fortuitously works on macOS).
 @c Where an alternative compiler is used for C++11 or later, its OpenMP
@@ -4348,6 +4346,8 @@ R-admin, R Installation and Administration},
 Portable C++ code needs to follow the 1998 standard (and not use
 features from C99), or to specify a C++11 compiler (see @ref{Using C++11
 code}) where available (which is not the case on all @R{} platforms).
+Currently C++14 code is less portable and C++17 support is patchy across
+@R{} platforms.
 
 If using Fortran with the GNU compiler, use the flags
 @option{-std=f95 -Wall -pedantic} which reject most GNU extensions and

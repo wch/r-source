@@ -1021,7 +1021,7 @@ support. Similarly, configure will if possible choose for
 compilers.  For earlier versions of @command{g++} one could try
 @option{-std=c++1y}.} such as @option{-std=c++14} for C++14 support and
 @option{-std=c++17} or @option{-std=c++1z} for support for the C++17
-standard. x The inferred values can be overridden in file
+standard.  The inferred values can be overridden in file
 @file{config.site} or on the @command{configure} command line:
 user-supplied values will be tested by compiling some C++11/14/17 code.
 
