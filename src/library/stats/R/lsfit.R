@@ -1,7 +1,7 @@
 #  File src/library/stats/R/lsfit.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -219,7 +219,7 @@ ls.diag <- function(ls.out)
 
     ## calculate standard error
 
-    stderr <- outer(diag(covmat.unscaled)^0.5, stddev)
+    stderr <- outer(sqrt(diag(covmat.unscaled)), stddev)
     dimnames(stderr) <- list(xnames, yname)
 
     return(list(std.dev=stddev, hat=hatdiag, std.res=stdres,
@@ -257,7 +257,7 @@ ls.print <- function(ls.out, digits = 4L, print.it = TRUE)
     ## calculate residual sum sq and regression sum sq
 
     resss <- colSums(resids^2, na.rm=TRUE)
-    resse <- (resss/(n-p))^.5
+    resse <- sqrt(resss/(n-p))
     regss <- totss - resss
     rsquared <- regss/totss
     fstat <- (regss/degfree)/(resss/(n-p))
@@ -287,7 +287,7 @@ ls.print <- function(ls.out, digits = 4L, print.it = TRUE)
     else coef <- ls.out$coefficients
     for(i in 1L:m.y) {
 	covmat <- (resss[i]/(n[i]-p)) * (qrinv%*%t(qrinv))
-	se <- diag(covmat)^.5
+	se <- sqrt(diag(covmat))
 	coef.table[[i]] <- cbind(coef[, i], se, coef[, i]/se,
 				 2*pt(abs(coef[, i]/se), n[i]-p,
                                       lower.tail = FALSE))
