@@ -2117,7 +2117,7 @@ PKG_LIBS = $(SHLIB_OPENMP_CFLAGS)
 @noindent
 as the C compiler will be used to link the package code (and there is no
 guarantee that this will work everywhere).  Packages which include C++
-code should use @code{SHLIB_OPENMP_CXXFLAGS} in @code{{PKG_LIBS}. (As
+code should use @code{SHLIB_OPENMP_CXXFLAGS} in @code{PKG_LIBS}. (As
 from @R{} 3.6.0 this applies also to free-form Fortran code, where
 @code{SHLIB_OPENMP_FCFLAGS} should be used in @code{PKG_FCFLAGS}.)
 
