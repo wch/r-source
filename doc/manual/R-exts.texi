@@ -2114,9 +2114,11 @@ PKG_LIBS = $(SHLIB_OPENMP_CFLAGS)
 
 @noindent
 as the C compiler will be used to link the package code (and there is no
-guarantee that this will work everywhere).  (This does not apply to
-Fortran 9x code, where @code{SHLIB_OPENMP_FCFLAGS} should be used in
-both @code{PKG_FCFLAGS} and @code{PKG_LIBS}.)
+guarantee that this will work everywhere).  Packages which include C++
+code should use @code{SHLIB_OPENMP_CXXFLAGS} in @code{{PKG_LIBS} as
+linking will be by the C++ compiler.  (This does not apply to Fortran 9x
+code, where @code{SHLIB_OPENMP_FCFLAGS} should be used in both
+@code{PKG_FCFLAGS} and @code{PKG_LIBS}.)
 
 It is not portable to use OpenMP with more than one of C, C++, FORTRAN
 77 and Fortran 9x in a single package since it is quite likely that the
