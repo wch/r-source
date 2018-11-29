@@ -2032,6 +2032,10 @@ static char yytext[MAXELTSIZE];
 static int SkipSpace(void)
 {
     int c;
+    static wctype_t blankwct = 0;
+
+    if (!blankwct)
+	blankwct = Ri18n_wctype("blank");
 
 #ifdef Win32
     if(!mbcslocale) { /* 0xa0 is NBSP in all 8-bit Windows locales */
@@ -2047,7 +2051,7 @@ static int SkipSpace(void)
 	    if (c == '\n' || c == R_EOF) break;
 	    if ((unsigned int) c < 0x80) break;
 	    clen = mbcs_get_next(c, &wc);  /* always 2 */
-	    if(! Ri18n_iswctype(wc, Ri18n_wctype("blank")) ) break;
+	    if(! Ri18n_iswctype(wc, blankwct) ) break;
 	    for(i = 1; i < clen; i++) c = xxgetc();
 	}
 	return c;
@@ -2063,7 +2067,7 @@ static int SkipSpace(void)
 	    if (c == '\n' || c == R_EOF) break;
 	    if ((unsigned int) c < 0x80) break;
 	    clen = mbcs_get_next(c, &wc);
-	    if(! Ri18n_iswctype(wc, Ri18n_wctype("blank")) ) break;
+	    if(! Ri18n_iswctype(wc, blankwct) ) break;
 	    for(i = 1; i < clen; i++) c = xxgetc();
 	}
     } else
