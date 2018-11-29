@@ -5515,11 +5515,15 @@ The Oracle compilers do not by default conform to the C99 standard
 (appendix F 8.9) on the return values of functions such as @code{log}:
 use @option{-xlibmieee} to ensure this.
 
-A peculiarity of the Fortran compiler is that when asked to link a
-shared object it does not link against the Fortran runtime libraries.
-In @R{} this is only used for packages with F9x code, hence the
-@code{FCLIBS} definition (which sufficed for @acronym{CRAN} packages
-with 12.5).
+A peculiarity of some versions of the Fortran compiler was that when
+asked to link a shared object it did not link against the Fortran 9x
+runtime libraries, hence
+@example
+FCLIBS="-lfsu /opt/developerstudio12.5/lib/libfui.so.2"
+@end example
+
+@noindent
+has been needed.
 
 Using @code{-xlibmil} in @code{CFLAGS} or @code{-xlibmil} in
 @code{FFLAGS} allows more system mathematical functions to be inlined.
