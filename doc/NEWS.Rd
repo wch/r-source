@@ -247,6 +247,9 @@
 
       \item Visibility macros such as \samp{C_VISIBILITY} can now be
       user-set  (including to empty), e.g.\sspace{}in \file{config.site}.
+
+      \item Macro \samp{FCLIBS} which has sometimes been needed on
+      Solaris has been renamed to \samp{FCLIBS_XTRA}.
     }
   }
 

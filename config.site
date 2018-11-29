@@ -190,7 +190,7 @@
 ## SHLIB_FCLDFLAGS=${SHLIB_LDFLAGS}
 ## Additional libraries needed to link a shared object with FC,
 ## e.g. on x86 Solaris
-## FCLIBS=
+## FCLIBS_XTRA=
 
 ## Tcl/Tk settings.
 ## Use TCLTK_LIBS for all '-L' and '-l' options needed for linking

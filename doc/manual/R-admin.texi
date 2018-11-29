@@ -3691,8 +3691,8 @@ by @command{R CMD INSTALL}.  This is found when @R{} is configured and
 is often the same as @code{F77}: note that it is detected by the name of
 the command without a test that it can actually compile Fortran 90 code.
 Set the configure variable @code{FC} to override this if necessary:
-variables @code{FCFLAGS}, @code{FCPICFLAGS} and @code{FCLIBS} might also
-need to be set.
+variables @code{FCFLAGS}, @code{FCPICFLAGS} and @code{FCLIBS_XTRA} might
+also need to be set.
 
 See file @file{config.site} in the @R{} source for more details about
 these variables.
@@ -5449,7 +5449,6 @@ CXXSTD="-library=stlport4"
 CXXFLAGS=-O
 FC=$F77
 FCFLAGS=$FFLAGS
-FCLIBS="-lfsu /opt/developerstudio12.5/lib/libfui.so.2"
 R_LD_LIBRARY_PATH="/opt/developerstudio12.5/lib:/usr/local/lib:/opt/csw/lib"
 @end example
 
@@ -5457,11 +5456,15 @@ The Oracle compilers do not by default conform to the C99 standard
 (appendix F 8.9) on the return values of functions such as @code{log}:
 use @option{-xlibmieee} to ensure this.
 
-A peculiarity of the Fortran compiler is that when asked to link a
-shared object it does not link against the Fortran runtime libraries.
-In @R{} this is only used for packages with F9x code, hence the
-@code{FCLIBS} definition (which sufficed for @acronym{CRAN} packages
-with 12.5).
+A peculiarity of some versions of the Fortran compiler was that when
+asked to link a shared object it did not link against the Fortran 9x
+runtime libraries, hence
+@example
+FCLIBS_XTRA="-lfsu /opt/developerstudio12.5/lib/libfui.so.2"
+@end example
+
+@noindent
+has been needed.
 
 Using @code{-xlibmil} in @code{CFLAGS} or @code{-xlibmil} in
 @code{FFLAGS} allows more system mathematical functions to be inlined.

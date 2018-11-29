@@ -102,7 +102,7 @@ F_VISIBILITY =
 FC = $(BINPREF)gfortran $(M_ARCH)
 FCFLAGS = -O3 $(DEBUGFLAG) @EOPTS@
 # additional libs needed when linking with $(FC), e.g. on Solaris
-FCLIBS =
+FCLIBS_XTRA =
 F77 = $(BINPREF)gfortran $(M_ARCH)
 F77_VISIBILITY = 
 FFLAGS = -O3 $(DEBUGFLAG) @EOPTS@

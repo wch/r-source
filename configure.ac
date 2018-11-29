@@ -2505,8 +2505,8 @@ fi
 AC_SUBST(SHLIB_FCLD)
 AC_SUBST(SHLIB_FCLDFLAGS)
 ## x86 Solaris' f95 needs additional libs when building a DSO
-FCLIBS=${FCLIBS}
-AC_SUBST(FCLIBS)
+FCLIBS_XTRA=${FCLIBS_XTRA}
+AC_SUBST(FCLIBS_XTRA)
 
 ## OpenMP package stuff (needs to come *after* configuration of all
 ## compilers).

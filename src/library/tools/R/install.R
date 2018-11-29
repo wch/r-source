@@ -2031,7 +2031,7 @@ if(FALSE) {
     }
     if (with_objc) shlib_libadd <- c(shlib_libadd, "$(OBJC_LIBS)")
     if (with_f77) shlib_libadd <- c(shlib_libadd, "$(FLIBS)")
-    if (with_f9x) shlib_libadd <- c(shlib_libadd, "$(FLIBS) $(FCLIBS)")
+    if (with_f9x) shlib_libadd <- c(shlib_libadd, "$(FLIBS) $(FCLIBS_XTRA)")
 
     if (length(pkg_libs))
         makeargs <- c(makeargs,
