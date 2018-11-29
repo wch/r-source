@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2018-11-22 r75645) -- "Unsuffered Consequences"
+R Under development (unstable) (2018-11-29 r75717) -- "Unsuffered Consequences"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -3827,7 +3827,7 @@ sigma^2 estimated as 0.4566:  log likelihood = -101.2,  aic = 212.4
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x4dd60f0>
+<environment: 0x4c158d8>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -4825,7 +4825,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x5c18b18>
+<bytecode: 0x5a2fce8>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -7437,7 +7437,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x5d4aed8>
+<environment: 0x5b2e7e0>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -9374,6 +9374,18 @@ $margin[[3]]
 > ### Keywords: regression
 > 
 > ### ** Examples
+> 
+> ## Don't show: 
+> utils::example("lm", echo = FALSE)
+> ## End(Don't show)
+> ##-- Using the same data as the lm(.) example:
+> lsD9 <- lsfit(x = as.numeric(gl(2, 10, 20)), y = weight)
+> dlsD9 <- ls.diag(lsD9)
+> abs(1 - sum(dlsD9$hat) / 2) < 10*.Machine$double.eps # sum(h.ii) = p
+[1] TRUE
+> plot(dlsD9$hat, dlsD9$stud.res, xlim = c(0, 0.11))
+> abline(h = 0, lty = 2, col = "lightgray")
+> 
 > 
 > 
 > cleanEx()
@@ -12111,14 +12123,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x57fe3b8>
-<environment: 0x5808578>
+<bytecode: 0x5b22f18>
+<environment: 0x5b29350>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x5803fb8>
-<environment: 0x5808578>
+<bytecode: 0x5b22dc8>
+<environment: 0x5b29350>
 
 > 
 > 
@@ -16258,8 +16270,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f)
-<bytecode: 0x42e38a0>
-<environment: 0x53b8d18>
+<bytecode: 0x40d3458>
+<environment: 0x460cad0>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -18584,7 +18596,7 @@ Number of Fisher Scoring iterations: 6
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  6.339 0.196 6.616 0 0 
+Time elapsed:  6.692 0.215 6.981 0 0 
 > grDevices::dev.off()
 null device 
           1 
