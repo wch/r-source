@@ -76,6 +76,7 @@ R_GZIPCMD = @R_GZIPCMD@
 @USE_EXPORTFILES_TRUE@ R_HOME = $(top_builddir)
 R_OPENMP_CFLAGS = @R_OPENMP_CFLAGS@
 ## if ever used, need to check that this is compatible with C OpenMP
+## and add it to ALL_FFLAGS{,_LO}
 R_OPENMP_FFLAGS = @R_OPENMP_FFLAGS@
 R_OSTYPE = @R_OSTYPE@
 R_PKGS = $(R_PKGS_BASE) @USE_RECOMMENDED_PACKAGES_TRUE@ $(R_PKGS_RECOMMENDED)
@@ -108,9 +109,12 @@ YACC = @YACC@
 ALL_CFLAGS = $(R_XTRA_CFLAGS) $(R_OPENMP_CFLAGS) $(MAIN_CFLAGS) $(CFLAGS)
 ALL_CPPFLAGS = $(R_XTRA_CPPFLAGS) $(CPPFLAGS) $(DEFS)
 ## R_OPENMP_FFLAGS should not really be here: see above
-ALL_FFLAGS = $(R_XTRA_FFLAGS) $(R_OPENMP_FFLAGS) $(MAIN_FFLAGS) $(FFLAGS)
+ALL_FFLAGS = $(R_XTRA_FFLAGS) $(MAIN_FFLAGS) $(FFLAGS)
+
+## for use in src/{appl,main} when R is a shared library, src/modules/lapack
+## and src/extra/blas when internal BLAS is built as a shared library
 ALL_CFLAGS_LO = $(R_XTRA_CFLAGS) $(R_OPENMP_CFLAGS) $(CPICFLAGS) $(SHLIB_CFLAGS) $(CFLAGS)
-ALL_FFLAGS_LO = $(R_XTRA_FFLAGS) $(R_OPENMP_FFLAGS) $(FPICFLAGS) $(SHLIB_FFLAGS) $(FFLAGS)
+ALL_FFLAGS_LO = $(R_XTRA_FFLAGS) $(FPICFLAGS) $(SHLIB_FFLAGS) $(FFLAGS)
 
 .SUFFIXES:
 .SUFFIXES: .c .f .m .d .o
