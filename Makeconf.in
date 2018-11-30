@@ -106,13 +106,14 @@ X_PRE_LIBS = @X_PRE_LIBS@
 X_EXTRA_LIBS = @X_EXTRA_LIBS@
 YACC = @YACC@
 
+## MAIN_[CF]FLAGS are used on some systems when profiling R.
 ALL_CFLAGS = $(R_XTRA_CFLAGS) $(R_OPENMP_CFLAGS) $(MAIN_CFLAGS) $(CFLAGS)
 ALL_CPPFLAGS = $(R_XTRA_CPPFLAGS) $(CPPFLAGS) $(DEFS)
-## R_OPENMP_FFLAGS should not really be here: see above
 ALL_FFLAGS = $(R_XTRA_FFLAGS) $(MAIN_FFLAGS) $(FFLAGS)
 
-## for use in src/{appl,main} when R is a shared library, src/modules/lapack
+## For use in src/{appl,main} when R is a shared library, src/modules/lapack
 ## and src/extra/blas when internal BLAS is built as a shared library
+## SHLIB_CFLAGS and SHLIB_FFLAGS are apparently currently unused
 ALL_CFLAGS_LO = $(R_XTRA_CFLAGS) $(R_OPENMP_CFLAGS) $(CPICFLAGS) $(SHLIB_CFLAGS) $(CFLAGS)
 ALL_FFLAGS_LO = $(R_XTRA_FFLAGS) $(FPICFLAGS) $(SHLIB_FFLAGS) $(FFLAGS)
 
