@@ -643,18 +643,16 @@ R_PROG_CPP_CPPFLAGS
 
 ## As from R 3.6.0, use the modern Fortran compiler for .f files
 echo "looking for a modern Fortran compiler"
-## see if the user set FFLAGS: used for Intel compilers below
-userFFLAGS=${FFLAGS}
 AC_PROG_FC
 if test -z "${FC}"; then
   AC_MSG_ERROR([No Fortran compiler found])
 fi
 F77=${FC}
-## see if the user set FFLAGS: used for Intel compilers below
-userFFLAGS=${FFLAGS}
-## and is needed when setting the language to 'Fortran 77',
-## e.g. for AC_F77_LIBRARY_LDFLAGS
-AC_PROG_F77
+## see if the user set FFLAGS: also used for Intel compilers below
+if test "${FFLAGS+set}" != set; then
+  FFLAGS=${FCFLAGS}
+  userFFLAGS=${FFLAGS+set}
+fi
 
 AC_PROG_CXX
 ## check this actually compiles
@@ -1054,10 +1052,10 @@ case "${host_os}" in
 	## used to set IEEE flag, but this is version-dependent.
         ;;
     esac
-    case  "${F77}" in
+    case  "${FC}" in
       ## Intel compilers
       *ifc|*ifort)
-	if test "x$userFFLAGS" = x; then
+	if test "$userFFLAGS" = set; then
           if test $ac_cv_prog_f77_g = yes; then
 	    case "${host_cpu}" in
 	      x86_64)
@@ -1122,7 +1120,7 @@ esac
 ## Suggestion adopted from https://gcc.gnu.org/wiki/FloatingPointMath
 ## It was already the default on 32-bit macOS
 if test "${SAFE_FFLAGS+set}" != set; then
-  if test "x${ac_cv_f77_compiler_gnu}" = xyes; then
+  if test "x${ac_cv_fc_compiler_gnu}" = xyes; then
     case "${host_cpu}" in
       i*86|x86_64)
       SAFE_FFLAGS="${FFLAGS} -msse2 -mfpmath=sse"
@@ -1264,8 +1262,7 @@ if test "${GCC}" = yes; then
   esac
   shlib_ldflags="-shared"
 fi
-## G77 includes gfortran
-if test "${G77}" = yes; then
+if test "${ac_cv_fc_compiler_gnu}" = yes; then
   case "${host_cpu}" in
     sparc*|ppc64*|powerpc64*|s390*)
       fpicflags="-fPIC"
@@ -1276,7 +1273,7 @@ if test "${G77}" = yes; then
   esac
 fi
 ## Assume flang is the same as clang (it is a modified front end)
-case "${F77}" in
+case "${FC}" in
   *flang)
     fpicflags=${cpicflags}
     ;;
@@ -1396,7 +1393,7 @@ rm -f libconftest${DYLIB_EXT} conftest.c
         cpicflags="+Z"
         ;;
     esac
-    case "${F77}" in
+    case "${FC}" in
       f77|fort77|f90)
         fpicflags="+Z"
         ;;
@@ -1431,7 +1428,7 @@ rm -f libconftest${DYLIB_EXT} conftest.c
         cpicflags="-fpic"
 	;;
     esac
-    case  "${F77}" in
+    case  "${FC}" in
       ## Intel compilers
       *ifc|*ifort)
         fpicflags="-fpic"
@@ -1491,8 +1488,7 @@ rm -f libconftest${DYLIB_EXT} conftest.c
         if test "${GCC}" = yes; then
           cpicflags="-fPIC"
         fi  
-	## G77 includes gfortran
-        if test "${G77}" = yes; then
+	if test "${ac_cv_fc_compiler_gnu}" = yes; then
           fpicflags="-fPIC"
         fi
         if test "${GXX}" = yes; then
@@ -1529,8 +1525,8 @@ rm -f libconftest${DYLIB_EXT} conftest.c
         fi
       fi
     fi
-    ## G77 includes gfortran
-    if test "${G77}" != yes; then
+    if test "${ac_cv_fc_compiler_gnu}" != yes; then
+      ## Oracle compiler
       fpicflags="-PIC"
     else
       fpicflags="-fPIC"
@@ -2533,7 +2529,7 @@ if test "x${shlib_ld_was_given}" = xno -a \
   AC_DEFINE(SUPPORT_OPENMP, 1,
             [Define if you have C/C++/Fortran OpenMP support for package code.])
 fi
-## This assumes that OpenMP support in the C compiler includes compilation by F77
+## This assumes that OpenMP support in the C compiler includes compilation by FC
 if test -z "${SHLIB_OPENMP_CFLAGS+set}" -a \
         "x${shlib_ld_was_given}" = xno -a \
         "${SHLIB_LD}" = "\$(CC)" -a \
@@ -2800,7 +2796,7 @@ r_cxx98_compiler="${CXX98} ${CXX98STD} ${R_XTRA_CXXFLAGS} ${CXX98FLAGS}"
 r_cxx11_compiler="${CXX11} ${CXX11STD} ${R_XTRA_CXXFLAGS} ${CXX11FLAGS}"
 r_cxx14_compiler="${CXX14} ${CXX14STD} ${R_XTRA_CXXFLAGS} ${CXX14FLAGS}"
 r_cxx17_compiler="${CXX17} ${CXX17STD} ${R_XTRA_CXXFLAGS} ${CXX17FLAGS}"
-r_f77_compiler="${F77} ${R_XTRA_FFLAGS} ${FFLAGS}"
+r_f77_compiler="${FC} ${R_XTRA_FFLAGS} ${FFLAGS}"
 r_f95_compiler="${FC} ${FCFLAGS}"
 r_objc_compiler="${OBJC} ${OBJCFLAGS}"
 r_interfaces=
