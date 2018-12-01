@@ -838,23 +838,21 @@ fi
 
 ## R_PROG_FC_APPEND_UNDERSCORE
 ## ----------------------------
-## <FIXME>
-## switch to AC_FC_WRAPPERS
-## </FIXME>
 ## See if the Fortran compiler appends underscores.
 ## What we really should do is determine how to properly mangle the
 ## names of C/C++ identifiers (potentially containing underscores) so
 ## that they match the name-mangling scheme used by the Fortran
-## compiler.  Autoconf 2.50 or better has macros F77_FUNC(name, NAME)
-## and F77_FUNC_(name, NAME) for this.  However, the F77_* macros in
+## compiler.  Autoconf has macros FC_FUNC(name, NAME)
+## and FC_FUNC_(name, NAME) for this.  However, the F77_* macros in
 ## the R API have one argument only and therefore cannot deal with
 ## Fortran compilers which convert to upper case or add an extra
 ## underscore for identifiers containing underscores.  We give an error
 ## in the former case; as ISO Fortran 77 does not allow underscores in
-## function names, we do nothing about the latter.
+## function names, we do nothing about the latter in F77_*
+## (but do in R_dlsym).
 AC_DEFUN([R_PROG_FC_APPEND_UNDERSCORE],
 [AC_REQUIRE([AC_FC_WRAPPERS])
-## DANGER!  We really needs the results of _AC_FC_NAME_MANGLING as
+## DANGER!  We really need the results of _AC_FC_NAME_MANGLING as
 ## stored in the cache var ac_cv_fc_mangling which is not documented
 ## and hence may change ...
 case "${ac_cv_fc_mangling}" in
