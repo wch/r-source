@@ -700,11 +700,14 @@ else
 fi
 ])# R_PROG_F77
 
-## R_PROG_F77_FLIBS
+## R_PROG_FC_FLIBS
 ## ----------------
+## <FIXME>
+## switch to AC_FC_LIBRARY_LDFLAGS: set FCLIBS
+## </FIXME>
 ## Run AC_F77_LIBRARY_LDFLAGS, and fix some known problems with FLIBS.
 ## Only do this if the user has not already set FLIBS.
-AC_DEFUN([R_PROG_F77_FLIBS],
+AC_DEFUN([R_PROG_FC_FLIBS],
 [AC_BEFORE([$0], [AC_F77_LIBRARY_LDFLAGS])
 if test -z "${FLIBS}"; then
 ##
@@ -729,7 +732,7 @@ LIBS="${r_save_LIBS}"
 ## Currently g77 on Darwin links against '-lcrt1.o' (and for GCC 3.1 or
 ## better also against '-lcrtbegin.o'), which (unlike '-lcrt0.o') are
 ## not stripped by AC_F77_LIBRARY_LDFLAGS.  This in particular causes
-## R_PROG_F77_CC_COMPAT to fail.  Hence, we make sure all -lcrt*.o are
+## R_PROG_FC_CC_COMPAT to fail.  Hence, we make sure all -lcrt*.o are
 ## removed. In Addition, -lmx and -lSystem are implicit and their
 ## manual inclusion leads to ordering problems (remove when autoconf
 ## is fixed - supposedly the CVS version is, but 2.6.0 is not).
@@ -830,22 +833,25 @@ for arg in ${FLIBS}; do
 done
 FLIBS="${flibs}"
 fi
-])# R_PROG_F77_FLIBS
+])# R_PROG_FC_FLIBS
 
-## R_PROG_F77_APPEND_UNDERSCORE
+## R_PROG_FC_APPEND_UNDERSCORE
 ## ----------------------------
-## See if the Fortran 77 compiler appends underscores.
+## <FIXME>
+## switch to AC_FC_WRAPPERS
+## </FIXME>
+## See if the Fortran compiler appends underscores.
 ## What we really should do is determine how to properly mangle the
 ## names of C/C++ identifiers (potentially containing underscores) so
-## that they match the name-mangling scheme used by the Fortran 77
+## that they match the name-mangling scheme used by the Fortran
 ## compiler.  Autoconf 2.50 or better has macros F77_FUNC(name, NAME)
 ## and F77_FUNC_(name, NAME) for this.  However, the F77_* macros in
 ## the R API have one argument only and therefore cannot deal with
-## Fortran 77 compilers which convert to upper case or add an extra
+## Fortran compilers which convert to upper case or add an extra
 ## underscore for identifiers containing underscores.  We give an error
 ## in the former case; as ISO Fortran 77 does not allow underscores in
 ## function names, we do nothing about the latter.
-AC_DEFUN([R_PROG_F77_APPEND_UNDERSCORE],
+AC_DEFUN([R_PROG_FC_APPEND_UNDERSCORE],
 [AC_REQUIRE([AC_F77_WRAPPERS])
 ## DANGER!  We really needs the results of _AC_F77_NAME_MANGLING as
 ## stored in the cache var ac_cv_f77_mangling which is not documented
@@ -898,9 +904,9 @@ if test "${r_cv_prog_f77_append_second_underscore}" = yes; then
             [Define if your Fortran compiler appends an extra_underscore to
              external names containing an underscore.])
 fi
-])# R_PROG_F77_APPEND_UNDERSCORE
+])# R_PROG_FC_APPEND_UNDERSCORE
 
-## R_PROG_F77_CAN_RUN
+## R_PROG_FC_CAN_RUN
 ## --------------------
 ## Check whether the C/Fortran set up produces runnable code, as
 ## a preliminary to the compatibility tests.
@@ -908,7 +914,7 @@ fi
 ## As from 2.4.0 use the same code as the compatibility test, as
 ## on at least one system the latter actually used -lgfortran
 ## (which was broken) and the previous test here did not.
-AC_DEFUN([R_PROG_F77_CAN_RUN],
+AC_DEFUN([R_PROG_FC_CAN_RUN],
 [AC_REQUIRE([AC_CHECK_LIBM])
 AC_MSG_CHECKING([whether mixed C/Fortran code can be run])
 AC_CACHE_VAL([r_cv_prog_f77_can_run],
@@ -972,14 +978,14 @@ else
     AC_MSG_ERROR([Maybe check LDFLAGS for paths to Fortran libraries?])
   fi
 fi
-])# R_PROG_F77_CAN_RUN
+])# R_PROG_FC_CAN_RUN
 
-## R_PROG_F77_CC_COMPAT
+## R_PROG_FC_CC_COMPAT
 ## --------------------
-## Check whether the Fortran 77 and C compilers agree on int and double.
-AC_DEFUN([R_PROG_F77_CC_COMPAT],
+## Check whether the Fortran and C compilers agree on int and double.
+AC_DEFUN([R_PROG_FC_CC_COMPAT],
 [AC_REQUIRE([AC_CHECK_LIBM])
-AC_MSG_CHECKING([whether ${F77} and ${CC} agree on int and double])
+AC_MSG_CHECKING([whether ${FC} and ${CC} agree on int and double])
 AC_CACHE_VAL([r_cv_prog_f77_cc_compat],
 [cat > conftestf.f <<EOF
       subroutine cftest(a, b, x, y)
@@ -1061,14 +1067,14 @@ else
     AC_MSG_ERROR([Maybe change CFLAGS or FFLAGS?])
   fi
 fi
-])# R_PROG_F77_CC_COMPAT
+])# R_PROG_FC_CC_COMPAT
 
-## R_PROG_F77_CC_COMPAT_COMPLEX
+## R_PROG_FC_CC_COMPAT_COMPLEX
 ## ----------------------------
-## Check whether the Fortran 77 and C compilers agree on double complex.
-AC_DEFUN([R_PROG_F77_CC_COMPAT_COMPLEX],
+## Check whether the Fortran and C compilers agree on double complex.
+AC_DEFUN([R_PROG_FC_CC_COMPAT_COMPLEX],
 [AC_REQUIRE([AC_CHECK_LIBM])
-AC_MSG_CHECKING([whether ${F77} and ${CC} agree on double complex])
+AC_MSG_CHECKING([whether ${FC} and ${CC} agree on double complex])
 AC_CACHE_VAL([r_cv_prog_f77_cc_compat_complex],
 [cat > conftestf.f <<EOF
       subroutine cftest(x)
@@ -1148,7 +1154,7 @@ else
   AC_MSG_WARN([${warn_f77_cc_double_complex}])
 fi
 AC_SUBST(HAVE_FORTRAN_DOUBLE_COMPLEX)
-])# R_PROG_F77_CC_COMPAT_COMPLEX
+])# R_PROG_FC_CC_COMPAT_COMPLEX
 
 ## Unused
 ## R_PROG_F77_FLAG(FLAG, [ACTION-IF-TRUE])
@@ -2558,7 +2564,7 @@ AC_SUBST(use_tcltk)
 ## with the following changes:
 ## * We also handle HPUX .sl command line specifications.
 ## * We explictly deal with the case of f2c.  Most likely pointless.
-## * We only care about the Fortran 77 interface to Atlas, hence do not
+## * We only care about the Fortran interface to Atlas, hence do not
 ##   test for -lcblas.
 ## * We do not use BLAS libs that caused problems in the past: Alpha
 ##   CXML and DXML, and SGI SCSL and SGIMATH (marked with COMMENT tags).
@@ -2568,8 +2574,8 @@ AC_SUBST(use_tcltk)
 ## The sunperf test calls the library as now required.
 ## Based on acx_blas.m4 version 1.2 (2001-12-13)
 AC_DEFUN([R_BLAS_LIBS],
-[AC_REQUIRE([R_PROG_F77_FLIBS])
-AC_REQUIRE([R_PROG_F77_APPEND_UNDERSCORE])
+[AC_REQUIRE([R_PROG_FC_FLIBS])
+AC_REQUIRE([R_PROG_FC_APPEND_UNDERSCORE])
 
 acx_blas_ok=no
 case "${with_blas}" in
@@ -2941,8 +2947,8 @@ AC_SUBST(BLAS_LIBS)
 ## Test function was zgeev, changed to dpstrf which is LAPACK 3.2.
 
 AC_DEFUN([R_LAPACK_LIBS],
-[AC_REQUIRE([R_PROG_F77_FLIBS])
-AC_REQUIRE([R_PROG_F77_APPEND_UNDERSCORE])
+[AC_REQUIRE([R_PROG_FC_FLIBS])
+AC_REQUIRE([R_PROG_FC_APPEND_UNDERSCORE])
 AC_REQUIRE([R_BLAS_LIBS])
 
 acx_lapack_ok=no
@@ -3785,31 +3791,8 @@ case  "${CXX}" in
 esac
 fi
 
-if test -z "${F77_VISIBILITY+set}"; then
-AC_LANG_PUSH(Fortran 77)
-r_save_FFLAGS=$FFLAGS
-FFLAGS="$FFLAGS -fvisibility=hidden"
-AC_CACHE_CHECK(whether $F77 accepts -fvisibility, r_cv_prog_f77_vis,
-               [_AC_COMPILE_IFELSE([AC_LANG_PROGRAM()],
-               [r_cv_prog_f77_vis=yes], [r_cv_prog_f77_vis=no])])
-FFLAGS=$r_save_FFLAGS
-AC_LANG_POP(Fortran 77)
-if test "${r_cv_prog_f77_vis}" = yes; then
-  if test "${r_cv_visibility_attribute}" = yes; then
-    F77_VISIBILITY="-fvisibility=hidden"
-  fi
-fi
-## need to exclude Intel compilers.
-case  "${F77}" in
-  ## Intel compiler
-  *ifc|*ifort)
-    F77_VISIBILITY=
-    ;;
-esac
-AC_LANG_PUSH(Fortran)
-fi
-
 if test -z "${F_VISIBILITY+set}"; then
+AC_LANG_PUSH(Fortran)
 r_save_FCFLAGS=$FCFLAGS
 FCFLAGS="$FCFLAGS -fvisibility=hidden"
 AC_CACHE_CHECK(whether $FC accepts -fvisibility, r_cv_prog_fc_vis,
@@ -3834,7 +3817,6 @@ fi
 AC_SUBST(C_VISIBILITY)
 AC_SUBST(F_VISIBILITY)
 AC_SUBST(CXX_VISIBILITY)
-AC_SUBST(F77_VISIBILITY)
 ])# R_GCC4_VISIBILITY
 
 

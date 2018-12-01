@@ -652,8 +652,8 @@ fi
 F77=${FC}
 ## see if the user set FFLAGS: used for Intel compilers below
 userFFLAGS=${FFLAGS}
-## this does additional testing (GNU, '-g', ...).
-## and is needed when setting the language to 'Fortran 77'
+## and is needed when setting the language to 'Fortran 77',
+## e.g. for AC_F77_LIBRARY_LDFLAGS
 AC_PROG_F77
 
 AC_PROG_CXX
@@ -938,15 +938,15 @@ R_OPENMP
 
 ### *** Fortran compiler.
 
-R_PROG_F77_FLIBS
+R_PROG_FC_FLIBS
 if test -z "$FLIBS_IN_SO"; then
   FLIBS_IN_SO=${FLIBS}
 fi
 AC_SUBST(FLIBS_IN_SO)
-R_PROG_F77_APPEND_UNDERSCORE
-R_PROG_F77_CAN_RUN
-R_PROG_F77_CC_COMPAT
-R_PROG_F77_CC_COMPAT_COMPLEX
+R_PROG_FC_APPEND_UNDERSCORE
+R_PROG_FC_CAN_RUN
+R_PROG_FC_CC_COMPAT
+R_PROG_FC_CC_COMPAT_COMPLEX
 
 AM_CONDITIONAL(COMPILE_FORTRAN_DOUBLE_COMPLEX,
                [test "x${HAVE_FORTRAN_DOUBLE_COMPLEX}" != x])
