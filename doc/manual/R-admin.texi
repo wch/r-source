@@ -964,7 +964,6 @@ both need to support OpenMP) and can be overridden by specifying some of
 SHLIB_OPENMP_CFLAGS
 SHLIB_OPENMP_CXXFLAGS
 SHLIB_OPENMP_FFLAGS
-SHLIB_OPENMP_FCFLAGS
 @end example
 
 @noindent

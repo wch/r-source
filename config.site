@@ -336,7 +336,6 @@
 ## necessarily for CXX11/14/17).
 ## SHLIB_OPENMP_CFLAGS=
 ## SHLIB_OPENMP_CXXFLAGS=
-## SHLIB_OPENMP_FCFLAGS=
 ## SHLIB_OPENMP_FFLAGS=
 ## For R itself (src/main/array.c and src/library/stats/src/distance.c)
 ## R_OPENMP_CFLAGS=

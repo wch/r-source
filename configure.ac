@@ -933,9 +933,10 @@ fi
 R_PROG_CC_MAKEFRAG
 R_PROG_CC_LO_MAKEFRAG
 
+## for C compiler
 R_OPENMP
 
-### *** fixed-form Fortran compiler.
+### *** Fortran compiler.
 
 R_PROG_F77_FLIBS
 if test -z "$FLIBS_IN_SO"; then
@@ -950,9 +951,9 @@ R_PROG_F77_CC_COMPAT_COMPLEX
 AM_CONDITIONAL(COMPILE_FORTRAN_DOUBLE_COMPLEX,
                [test "x${HAVE_FORTRAN_DOUBLE_COMPLEX}" != x])
 
-AC_LANG_PUSH(Fortran 77)
+AC_LANG_PUSH(Fortran)
 R_OPENMP
-AC_LANG_POP(Fortran 77)
+AC_LANG_POP(Fortran)
 
 
 ### *** C++ compiler
@@ -1771,7 +1772,7 @@ AC_LANG_POP(C++)
 ##    If both MAIN_LD and DYLIB_LD were not specified by the user and
 ##    equal CC and this was determined to support OpenMP, then we (try
 ##    to) provide OpenMP support by adding OPENMP_CFLAGS to the linker
-##    flags and OPENMP_CFLAGS and OPENMP_FFLAGS to the C and Fortran 77
+##    flags and OPENMP_CFLAGS and OPENMP_FFLAGS to the C and Fortran
 ##    compiler flags, and defining HAVE_OPENMP.
 ##
 ## (The fixed-form Fortran compiler is never used for linking by default.)
@@ -1794,8 +1795,8 @@ else
 fi
 ## Currently unused: see comment in Makeconf.in
 if test -z "${R_OPENMP_FFLAGS+set}" -a \
-        "x${ac_cv_prog_f77_openmp}" != "xunsupported"; then
-  R_OPENMP_FFLAGS="${OPENMP_FFLAGS}"
+        "x${ac_cv_prog_fc_openmp}" != "xunsupported"; then
+  R_OPENMP_FFLAGS="${OPENMP_FCFLAGS}"
 fi
 AC_SUBST(R_OPENMP_CFLAGS)
 AC_SUBST(R_OPENMP_FFLAGS)
@@ -2501,6 +2502,8 @@ AC_FC_SRCEXT(f95, [dummy=1], [dummy=0])
 ## We could call AC_FC_FIXEDFORM: adds to FCFLAGS
 R_OPENMP
 AC_LANG_POP()
+
+## SHLIB_FCLD and {SHLIB_FCLDFLAGS are legacy
 if test -z "${SHLIB_FCLD}"; then
   shlib_fcld_was_given=no
   SHLIB_FCLD="\$(FC)"
@@ -2508,6 +2511,7 @@ fi
 : ${SHLIB_FCLDFLAGS="${SHLIB_LDFLAGS}"}
 AC_SUBST(SHLIB_FCLD)
 AC_SUBST(SHLIB_FCLDFLAGS)
+
 ## x86 Solaris' f95 needs additional libs when building a DSO
 FCLIBS_XTRA=${FCLIBS_XTRA}
 AC_SUBST(FCLIBS_XTRA)
@@ -2537,8 +2541,8 @@ if test -z "${SHLIB_OPENMP_CFLAGS+set}" -a \
         "x${ac_cv_prog_c_openmp}" != "x"; then
   SHLIB_OPENMP_CFLAGS="${OPENMP_CFLAGS}"
   if test -z "${SHLIB_OPENMP_FFLAGS+set}" -a \
-          "x${ac_cv_prog_f77_openmp}" != "xunsupported"; then
-    SHLIB_OPENMP_FFLAGS="${OPENMP_FFLAGS}"
+          "x${ac_cv_prog_fc_openmp}" != "xunsupported"; then
+    SHLIB_OPENMP_FFLAGS="${OPENMP_FCFLAGS}"
   fi
 fi
 if test -z "${SHLIB_OPENMP_CXXFLAGS+set}" -a \
@@ -2547,16 +2551,9 @@ if test -z "${SHLIB_OPENMP_CXXFLAGS+set}" -a \
         "x${ac_cv_prog_cxx_openmp}" != "xunsupported"; then
   SHLIB_OPENMP_CXXFLAGS="${OPENMP_CXXFLAGS}"
 fi
-if test -z "${SHLIB_OPENMP_FCFLAGS+set}" -a \
-        "x${shlib_fcld_was_given}" = xno -a \
-        "${SHLIB_FCLD}" = "\$(FC)" -a \
-        "x${ac_cv_prog_fc_openmp}" != "xunsupported"; then
-  SHLIB_OPENMP_FCFLAGS="${OPENMP_FCFLAGS}"
-fi
 
 AC_SUBST(SHLIB_OPENMP_CFLAGS)
 AC_SUBST(SHLIB_OPENMP_CXXFLAGS)
-AC_SUBST(SHLIB_OPENMP_FCFLAGS)
 AC_SUBST(SHLIB_OPENMP_FFLAGS)
 
 

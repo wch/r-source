@@ -345,6 +345,10 @@
 
       \item Make macro \samp{F77_VISIBILITY} is deprecated in favour of
       \samp{F_VISIBILITY}.
+
+      \item Make macros \samp{F77}, \samp{FCPIFCPLAGS} and
+      \samp{SHLIB_OPENMP_FCFLAGS} are deprecated in favour of \samp{FC},
+      \samp{FPICFLAGS} and \samp{SHLIB_OPENMP_FFLAGS}.
     }
   }
 
