@@ -1056,7 +1056,7 @@ case "${host_os}" in
       ## Intel compilers
       *ifc|*ifort)
 	if test "$userFFLAGS" = set; then
-          if test $ac_cv_prog_f77_g = yes; then
+          if test $ac_cv_prog_fc_g = yes; then
 	    case "${host_cpu}" in
 	      x86_64)
 	        FFLAGS="-g -O2"
