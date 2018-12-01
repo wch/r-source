@@ -2237,7 +2237,8 @@ concepts of threads.  However, there are two projects implementing
 
 Whether Windows toolchains implement @code{pthreads} is up to the
 toolchain provider.  A @command{make} variable
-@code{SHLIB_PTHREAD_FLAGS} is available: this should be included in both
+@code{SHLIB_PTHREAD_FLAGS} is available for use in
+@file{src/Makevars.win}: this should be included in both
 @code{PKG_CPPFLAGS} (or the Fortran or F9x equivalents) and
 @code{PKG_LIBS}.
 
