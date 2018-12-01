@@ -69,17 +69,22 @@
 ## prepended on systems using Fink with root '/sw'.
 ## CPPFLAGS=
 
-## The command which runs the fixed-form Fortran compiler.
-## Defaults to the value found/supplied for FC, but can be overridden.
-## F77=
+## The command which runs the Fortran compiler.
+## Used for both fixed-form and free-form Fortran
+## FC=
 
-## Options for the fixed-form Fortran compiler.
+## Options for the Fortran compiler.
 ## Use this to specify FFLAGS for the version of the compiler specified
-## above.  If unspecified, defaults to '-g -O2' for g77/gfortran, 
+## above.  If unspecified, defaults to '-g -O2' for gfortran, 
 ## otherwise '-g' if this is accepted, otherwise ''.
 ## FFLAGS=
+## Ditto for free-form
+## FCFLAGS=
+## Additional libraries needed to link a shared object with FC,
+## e.g. on x86 Solaris
+## FCLIBS_XTRA=
 
-## Options for safe compilation under the fixed-form Fortran compiler.
+## Options for safe compilation under the Fortran compiler.
 ## Use this to specify FFLAGS for the version of the compiler specified
 ## above, using as accurate a result as possible, e.g. no optimization
 ## or using -ffloat-store.
@@ -178,19 +183,6 @@
 ## automatically detected by configure, and anything set here will be in
 ## addition unless SHLIB_CXXLD is given.
 ## SHLIB_CXXLDFLAGS=
-
-
-## Free-form Fortran compiler: optional for use in packages.
-## Analogous to the F77 and CXX settings.
-## FC=
-## FCFLAGS=
-## FCPICFLAGS=
-## SHLIB_FCLD=${FC}
-## Unlike SHLIB_CXXLDFLAGS, SHLIB_FCLDFLAGS is never additional
-## SHLIB_FCLDFLAGS=${SHLIB_LDFLAGS}
-## Additional libraries needed to link a shared object with FC,
-## e.g. on x86 Solaris
-## FCLIBS_XTRA=
 
 ## Tcl/Tk settings.
 ## Use TCLTK_LIBS for all '-L' and '-l' options needed for linking

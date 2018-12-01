@@ -497,10 +497,7 @@ AC_ARG_VAR([CPICFLAGS],
            [special flags for compiling C code to be turned into a
             shared object.])
 AC_ARG_VAR([FPICFLAGS],
-           [special flags for compiling fixed-form Fortran code to be 
-	    turned into a shared object.])
-AC_ARG_VAR([FCPICFLAGS],
-           [special flags for compiling free-form Fortran code to be
+           [special flags for compiling Fortran code to be 
 	    turned into a shared object.])
 AC_ARG_VAR([SHLIB_LD],
            [command for linking shared objects which contain object
@@ -644,13 +641,20 @@ AC_GNU_SOURCE ## see note above
 AC_PROG_CPP
 R_PROG_CPP_CPPFLAGS
 
-## As from R 3.6.0, prefer the modern Fortran compiler for .f files
-echo "looking for a modern Fortran compiler for FC and F77"
-AC_PROG_FC()
-: ${F77=${FC}}
+## As from R 3.6.0, use the modern Fortran compiler for .f files
+echo "looking for a modern Fortran compiler"
 ## see if the user set FFLAGS: used for Intel compilers below
 userFFLAGS=${FFLAGS}
-R_PROG_F77
+AC_PROG_FC
+if test -z "${FC}"; then
+  AC_MSG_ERROR([No Fortran compiler found])
+fi
+F77=${FC}
+## see if the user set FFLAGS: used for Intel compilers below
+userFFLAGS=${FFLAGS}
+## this does additional testing (GNU, '-g', ...).
+## and is needed when setting the language to 'Fortran 77'
+AC_PROG_F77
 
 AC_PROG_CXX
 ## check this actually compiles
@@ -680,8 +684,8 @@ R_DEFS=${DEFS}
 AC_SUBST(R_DEFS)
 
 ## Libtool.
-## (Run this after R_PROG_F77, as AC_PROG_LIBTOOL checks for a
-## Fortran 77 compiler and sets F77 accordingly.)
+## (Run this after selecting the Fortan compiler as AC_PROG_LIBTOOL
+## checks for a Fortran 77 compiler and sets F77 accordingly.)
 AC_DISABLE_STATIC
 LT_INIT
 AC_SUBST(LIBTOOL_DEPS)
@@ -1165,7 +1169,7 @@ R_ABI
 ## MAIN_LD, MAIN_LDFLAGS
 ##   command and flags for loading the main binary so that it will load
 ##   shared objects (DLLs) at runtime, also for profiling.
-## CPICFLAGS, CXXPICFLAGS, FPICFLAGS, FCPICFLAGS
+## CPICFLAGS, CXXPICFLAGS, FPICFLAGS
 ##   flags for compiling C, C++, and Fortran library code.
 ## SHLIB_LD, SHLIB_LDFLAGS
 ##   command and flags for creating DLLs (which contain object files
@@ -1368,7 +1372,8 @@ rm -f libconftest${DYLIB_EXT} conftest.c
     ## * libRblas must be 2-level, dyn lookup because of xerbla which is undefined
     cpicflags="${darwin_pic}"
     cxxpicflags="${darwin_pic}"
-    ## macOS does not have a Fortran compiler, so this is speculative
+    ## macOS does not have a Fortran compiler, so this is speculative,
+    ## but works for clang/gfortran combination
     fpicflags="${darwin_pic}"
     shlib_cxxldflags="${shlib_ldflags}"
     ;;
@@ -1701,7 +1706,6 @@ AC_SUBST(CPICFLAGS)
 AC_SUBST(CXXPICFLAGS)
 AC_SUBST(DYLIB_LD)
 AC_SUBST(DYLIB_LDFLAGS)
-AC_SUBST(FCPICFLAGS)
 AC_SUBST(FPICFLAGS)
 AC_SUBST(SHLIB_CXXLD)
 AC_SUBST(SHLIB_CXXLDFLAGS)
@@ -2554,66 +2558,6 @@ AC_SUBST(SHLIB_OPENMP_CFLAGS)
 AC_SUBST(SHLIB_OPENMP_CXXFLAGS)
 AC_SUBST(SHLIB_OPENMP_FCFLAGS)
 AC_SUBST(SHLIB_OPENMP_FFLAGS)
-
-
-## Look for FCPICFLAGS
-## Debian in their wisdom have f95 as a link to gfortran, so
-## use this to pick out gfortran (even though it is unreliable).
-if test "${ac_cv_fc_compiler_gnu}" = yes; then
-  case "${host_cpu}" in
-    sparc*|ppc64*|powerpc64*|s390*)
-      fcpicflags="-fPIC"
-      ;;
-    *)
-      fcpicflags="-fpic"
-      ;;
-  esac
-fi
-case "${host_os}" in
-  darwin*)
-     ## macOS does not have a Fortran compiler, so this is speculative
-    fcpicflags="${darwin_pic}"
-    ;;
-  hpux*)
-    case "${FC}" in
-      f90)
-        fcpicflags="+Z"
-        ;;
-    esac
-    ;;
-  linux*)
-    case  "${FC}" in
-      ## Intel compilers: probably get identified as GNU, but make sure.
-      *ifc|*ifort)
-        fcpicflags="-fpic"
-        ;;
-      ## Portland Group
-      *pgf95|*pgf90)
-        fcpicflags="-fpic"
-        ;;
-      *flang)
-        fcpicflags=${cpicflags}
-        ;;
-    esac
-    ;;
-  solaris*)
-    if test "${ac_cv_fc_compiler_gnu}" = yes; then
-      fcpicflags="-fPIC"
-    else
-      fcpicflags="-PIC"
-    fi
-    ;;
-esac
-: ${FCPICFLAGS="${fcpicflags}"}
-if test -z "${FCPICFLAGS}"; then
-  case "${host_os}" in
-    aix*|mingw*)
-      ;;
-    *)
-      AC_MSG_WARN([I could not determine FCPICFLAGS.])
-      ;;
-  esac
-fi
 
 
 ## Make sure -L terms come first in LIBS.

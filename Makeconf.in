@@ -37,7 +37,7 @@ FLIBS = @FLIBS@
 ## needed for some earlier Solaris compilers
 FLIBS_IN_SO = @FLIBS_IN_SO@
 FPICFLAGS = @FPICFLAGS@
-F77 = @F77@
+FC = @FC@
 GETWD = @GETWD@
 GZIP = --best
 INSTALL = @INSTALL@
@@ -122,7 +122,7 @@ ALL_FFLAGS_LO = $(R_XTRA_FFLAGS) $(FPICFLAGS) $(SHLIB_FFLAGS) $(FFLAGS)
 
 @r_cc_rules_frag@
 .f.o:
-	$(F77) $(ALL_FFLAGS) -c $< -o $@
+	$(FC) $(ALL_FFLAGS) -c $< -o $@
 
 prefix = @prefix@
 exec_prefix = @exec_prefix@

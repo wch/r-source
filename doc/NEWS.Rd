@@ -250,6 +250,11 @@
 
       \item Macro \samp{FCLIBS} which has sometimes been needed on
       Solaris has been renamed to \samp{FCLIBS_XTRA}.
+
+      \item Macro \samp{F77} is always set to the value of \samp{FC}, so
+      the latter should be set to user-select the Fortran compiler for
+      both fixed-form and free-form Fortran.  Consequently,
+      \samp{FPICFLAGS} is used in place of \samp{FCPICFLAGS}.
     }
   }
 

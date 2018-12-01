@@ -87,15 +87,13 @@ Variables:
 		object files from a C or Fortran compiler only
   DYLIB_LDFLAGS
 		special flags used by DYLIB_LD
-  F77           fixed-form Fortran compiler command
+  F77           Fortran compiler command (legacy: use FC)
   FFLAGS        fixed-form Fortran compiler flags
   FLIBS         linker flags needed to link Fortran code
   FPICFLAGS     special flags for compiling Fortran code to be turned
 		into a shared library
-  FC            free-form Fortran 9x compiler command
+  FC            Fortran compiler command
   FCFLAGS       free-form Fortran 9x compiler flags
-  FCPICFLAGS    special flags for compiling free-form Fortran 9x code
-		to be turned into a shared library
   JAR           Java archive tool command
   JAVA          Java interpreter command
   JAVAC         Java compiler command
@@ -277,10 +275,10 @@ ok_cxx_vars="CXX CXXCPP CXXFLAGS CXXPICFLAGS CXX11 CXX11STD CXX11FLAGS CXX11PICF
 ok_dylib_vars="DYLIB_EXT DYLIB_LD DYLIB_LDFLAGS"
 ok_objc_vars="OBJC OBJCFLAGS"
 ok_java_vars="JAVA JAVAC JAVAH JAR JAVA_HOME JAVA_LIBS JAVA_CPPFLAGS"
-ok_f77_vars="F77 FFLAGS FPICFLAGS FLIBS SAFE_FFLAGS FC FCFLAGS FCPICFLAGS"
+## F77 and FCPICFLAGS are legacy
+ok_ftn_vars="FC F77 FFLAGS FPICFLAGS FLIBS SAFE_FFLAGS FCFLAGS FCPICFLAGS"
 ok_ld_vars="LDFLAGS"
-## SHLIB_FCLD SHLIB_FCLDFLAGS are no longer used by R as from 3.6.0
-## but left for other users.
+## SHLIB_FCLD SHLIB_FCLDFLAGS are legacy
 ## SHLIB_CFLAGS and SHLIB_FFLAGS are apparently unused
 ## SHLIB_CXXFLAGS would be used but is not here.  There is no SHLIB_FCFLAGS
 ok_shlib_vars="SHLIB_CFLAGS SHLIB_CXXLD SHLIB_CXXLDFLAGS SHLIB_CXX98LD SHLIB_CXX98LDFLAGS SHLIB_CXX11LD SHLIB_CXX11LDFLAGS SHLIB_CXX14LD SHLIB_CXX14LDFLAGS SHLIB_CXX17LD SHLIB_CXX17LDFLAGS SHLIB_EXT SHLIB_FFLAGS SHLIB_LD SHLIB_LDFLAGS SHLIB_FCLD SHLIB_FCLDFLAGS"
@@ -289,7 +287,7 @@ ok_other_vars="BLAS_LIBS LAPACK_LIBS MAKE LIBnn LOCAL_SOFT COMPILED_BY OBJDUMP"
 
 if test "${all}" = "yes"; then
   query="${MAKE} -s ${makefiles} print-name-and-value R_HOME=${R_HOME}"
-  for v in ${ok_c_vars} ${ok_cxx_vars} ${ok_dylib_vars} ${ok_f77_vars} \
+  for v in ${ok_c_vars} ${ok_cxx_vars} ${ok_dylib_vars} ${ok_ftn_vars} \
 	   ${ok_objc_vars} ${ok_java_vars} \
 	   ${ok_ld_vars} ${ok_shlib_vars} ${ok_tcltk_vars} \
 	   ${ok_other_vars}; do
@@ -301,7 +299,7 @@ fi
 ## Can we do this elegantly using case?
 
 var_ok=no
-for v in ${ok_c_vars} ${ok_cxx_vars} ${ok_dylib_vars} ${ok_f77_vars} \
+for v in ${ok_c_vars} ${ok_cxx_vars} ${ok_dylib_vars} ${ok_ftn_vars} \
 	 ${ok_objc_vars} ${ok_java_vars} \
 	 ${ok_ld_vars} ${ok_shlib_vars} ${ok_tcltk_vars} \
 	 ${ok_other_vars}; do

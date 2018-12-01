@@ -3691,7 +3691,7 @@ by @command{R CMD INSTALL}.  This is found when @R{} is configured and
 is often the same as @code{F77}: note that it is detected by the name of
 the command without a test that it can actually compile Fortran 90 code.
 Set the configure variable @code{FC} to override this if necessary:
-variables @code{FCFLAGS}, @code{FCPICFLAGS} and @code{FCLIBS_XTRA} might
+variables @code{FCFLAGS} and @code{FCLIBS_XTRA} might
 also need to be set.
 
 See file @file{config.site} in the @R{} source for more details about
@@ -4492,13 +4492,9 @@ the primary library directory, @file{lib} or @file{lib64}
 @item CPICFLAGS
 special flags for compiling C code to be turned into a shared object
 @item FPICFLAGS
-special flags for compiling fixed-form Fortran code to be turned into a
-shared object
+special flags for compiling Fortran code to be turned into a shared object
 @item CXXPICFLAGS
 special flags for compiling C++ code to be turned into a shared object
-@item FCPICFLAGS
-special flags for compiling free-form Fortran code to be turned into a
-shared object
 @item DEFS
 defines to be used when compiling C code in @R{} itself
 @end table
@@ -4872,12 +4868,6 @@ end.  This needs something like
 FC=/usr/local/flang/bin/flang
 F77=/usr/local/flang/bin/flang
 LDFLAGS="-L/usr/local/flang/lib -L/usr/local/lib64"
-@end example
-@noindent
-and in earlier versions of @R{} it may be necessary to set
-@example
-FCPICFLAGS=-fpic
-FPICFLAGS=-fpic
 @end example
 
 Note that @command{flang} accepts all the flags which @command{clang}

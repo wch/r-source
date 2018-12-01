@@ -646,6 +646,7 @@ fi
 
 ### * Fortran compiler and its characteristics.
 
+## Unused
 ## R_PROG_F77
 ## ----------
 ## Find a fixed-form Fortran compiler (formerly Fortran 77)
@@ -1149,6 +1150,7 @@ fi
 AC_SUBST(HAVE_FORTRAN_DOUBLE_COMPLEX)
 ])# R_PROG_F77_CC_COMPAT_COMPLEX
 
+## Unused
 ## R_PROG_F77_FLAG(FLAG, [ACTION-IF-TRUE])
 ## ---------------------------------------
 ## Check whether the Fortran 77 compiler handles command line option
