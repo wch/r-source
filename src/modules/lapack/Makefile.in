@@ -68,7 +68,7 @@ Makedeps: Makefile $(DEPENDS)
 ## (SHLIB_FFLAGS is apparently currently unused)
 DLAMC_FFLAGS=$(FPICFLAGS) $(SHLIB_FFLAGS) @SAFE_FFLAGS@
 dlamch.o: dlamch.f
-	$(F77) $(DLAMC_FFLAGS) -c $< -o $@
+	$(FC) $(DLAMC_FFLAGS) -c $< -o $@
 
 R: Makedeps
 @USE_EXTERNAL_LAPACK_FALSE@	@$(MAKE) rhome="$(abs_top_builddir)" $(Rlapack_la) Rlapack_install

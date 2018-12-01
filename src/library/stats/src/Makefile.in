@@ -73,7 +73,7 @@ LTO = @LTO@
 ## (SHLIB_FFLAGS is apparently currently unused)
 portsrc_FFLAGS=$(FPICFLAGS) $(SHLIB_FFLAGS) @SAFE_FFLAGS@
 portsrc.o: portsrc.f
-	$(F77) $(portsrc_FFLAGS) -c $< -o $@
+	$(FC) $(portsrc_FFLAGS) -c $< -o $@
 
 mostlyclean: clean
 clean:
