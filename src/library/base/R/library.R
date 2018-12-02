@@ -59,7 +59,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
          mask.ok, exclude, include.only,
          attach.required = missing(include.only))
 {
-    conf.ctrl <- getOption("conflicts.control")
+    conf.ctrl <- getOption("conflicts.policy")
     if (is.character(conf.ctrl))
         conf.ctrl <-
             switch(conf.ctrl,
@@ -70,7 +70,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                                                   "grDevices", "graphics",
                                                   "stats"),
                                      depends.ok = TRUE),
-                   warning(gettextf("unknown conflict control: %s",
+                   warning(gettextf("unknown conflict policy: %s",
                                     sQuote(conf.ctrl)),
                            call. = FALSE, domain = NA))
     if (! is.list(conf.ctrl))
@@ -78,7 +78,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
     stopOnConflict <-
         isTRUE(getOption("error.on.conflicts")) ||
         isTRUE(conf.ctrl$error)
-        
+
     if (missing(warn.conflicts))
         warn.conflicts <- if (isFALSE(conf.ctrl$warn)) FALSE else TRUE
     if ((! missing(include.only)) && (! missing(exclude)))

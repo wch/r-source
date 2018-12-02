@@ -31,7 +31,7 @@ require(package, lib.loc = NULL, quietly = FALSE,
         mask.ok, exclude, include.only,
         attach.required = missing(include.only))
 
-conflictRules(pkg, mask.ok = NULL, exclude = NULL) 
+conflictRules(pkg, mask.ok = NULL, exclude = NULL)
 
 }
 \arguments{
@@ -55,7 +55,7 @@ conflictRules(pkg, mask.ok = NULL, exclude = NULL)
     printed about \code{\link{conflicts}} from attaching the new
     package.  A conflict is a function masking a function,
     or a non-function masking a non-function. The default is \code{TRUE}
-    unless specified as \code{FALSE} in the \code{conflicts.control} option.
+    unless specified as \code{FALSE} in the \code{conflicts.policy} option.
   }
   \item{verbose}{a logical.  If \code{TRUE}, additional diagnostics are
     printed.}
@@ -63,7 +63,7 @@ conflictRules(pkg, mask.ok = NULL, exclude = NULL)
     package attaching is printed, and most often, no errors/warnings are
     printed if package attaching fails.}
   \item{pkg, mask.ok, exclude, include.only, attach.required}{For use in managing
-    conflicts (see \sQuote{Conflictts})}.    
+    conflicts (see \sQuote{Conflictts})}.
 }
 \details{
   \code{library(package)} and \code{require(package)} both load the
@@ -115,7 +115,7 @@ conflictRules(pkg, mask.ok = NULL, exclude = NULL)
   \code{include.only}, and \code{attach.required} to \code{library} and
   \code{require}. The function \code{conflictRules} can be used to
   specify defaults.  Some aspects of how conflicts are handled can be
-  specified with the \code{conflicts.control} option. See
+  specified with the \code{conflicts.policy} option. See
   \url{https://svn.r-project.org/R/branches/R-conflicts/CONFLICTS.html}
   for more details.
 }
@@ -178,13 +178,13 @@ conflictRules(pkg, mask.ok = NULL, exclude = NULL)
   \code{\link{.libPaths}}, \code{\link{.packages}}.
 
   \code{\link{attach}}, \code{\link{detach}}, \code{\link{search}},
-  \code{\link{objects}}, \code{\link{autoload}}, 
+  \code{\link{objects}}, \code{\link{autoload}},
   \code{\link{requireNamespace}},
   \code{\link{library.dynam}}, \code{\link{data}},
   \code{\link{install.packages}} and
   \code{\link{installed.packages}};
   \code{\link{INSTALL}}, \code{\link{REMOVE}}.
-  
+
   The initial set of packages attached is set by
   \code{\link{options}(defaultPackages=)}: see also \code{\link{Startup}}.
 }

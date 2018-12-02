@@ -69,11 +69,11 @@ conflicts.
   packages be attached that may not have been designed to be used
   together. Conflicts in these cases will typically require the user
   to make an appropriate choice.
-	
+
 Ideally a conflict resolution framework should provide the option to
 only require intervention for unanticipated conflicts.
 
-	
+
 ## Implementation
 
 A basic implementation of the static approach is quite simple:
@@ -150,7 +150,7 @@ conflictRules("BiocGenerics", mask.ok = list(base = TRUE,
 ```
 
 Some additional features that have been implemented:
-  
+
 - `library()` has some heuristics to avoid warning about S4 overrides
   that mask the overrides in `Matrix` (but not those in
   `BiocGenerics`).  These heuristics are disabled by default when strict
@@ -167,7 +167,7 @@ Some additional features that have been implemented:
   with fields `package` and `conflicts`.
 
 - A number of aspects of the conflict handling process can be
-  customized via the `conflicts.control` option. The value of this
+  customized via the `conflicts.policy` option. The value of this
   option should be a list with named elements. Elements that are supported:
 
     - `warn`: Sets the default for the `warn.conflicts` argument to
@@ -191,13 +191,13 @@ Some additional features that have been implemented:
 
 A specification that may work for most users who want protection
 against unanticipated conflicts:
-  
+
 ```r
-options(conflicts.control = list(error = TRUE,
-                                 generics.ok = TRUE,
-                                 can.mask = c("base", "methods", "utils",
-                                              "grDevices", "graphics", "stats"),
-                                 depends.ok = TRUE))
+options(conflicts.policy = list(error = TRUE,
+                                generics.ok = TRUE,
+                                can.mask = c("base", "methods", "utils",
+                                             "grDevices", "graphics", "stats"),
+                                depends.ok = TRUE))
 ```
 
 This specification assumes that package authors know what they are
@@ -208,19 +208,19 @@ packages individually load without error.
 A strict specification would be
 
 ```r
-options(conflicts.control = list(error = TRUE, warn = FALSE))
+options(conflicts.policy = list(error = TRUE, warn = FALSE))
 ```
 
 These can be specified as
 
 ```r
-options(conflicts.control = "depends.ok")
+options(conflicts.policy = "depends.ok")
 ```
 
 or
 
 ```r
-options(conflicts.control = "strict")
+options(conflicts.policy = "strict")
 ```
 
 respectively.
@@ -244,7 +244,7 @@ Additional features that might be useful:
   some way, e.g. in their `DESCRIPTION` files. Packages can already call
   `conflictRules` in their `.onAttach` functions, which may be sufficient
   for now.
-- Maybe it would be cleaner to merge the `conflicts.control`
+- Maybe it would be cleaner to merge the `conflicts.policy`
   functionality into `conflictRules`.
 
 Some questions:
@@ -253,7 +253,7 @@ Some questions:
    of the checking logic in `library`, but with some differences.
 - Do we need to disallow using both exclude and `include.only`?
 - Should 'strict' mode still warn?
- 
+
 TODO list:
 
 - Add more documentation.
