@@ -2115,7 +2115,7 @@ as the C compiler will be used to link the package code (and there is no
 guarantee that this will work everywhere).  Packages which include C++
 code should use @code{SHLIB_OPENMP_CXXFLAGS} in @code{PKG_LIBS}. (As
 from @R{} 3.6.0 this applies also to free-form Fortran code, where
-@code{SHLIB_OPENMP_FCFLAGS} should be used in @code{PKG_FCFLAGS}.)
+@code{SHLIB_OPENMP_FFLAGS} should be used in @code{PKG_FCFLAGS}.)
 
 It is not portable to use OpenMP with more than one of C, C++ and
 Fortran in a single package since it is not uncommon that the compilers
