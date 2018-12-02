@@ -74,11 +74,11 @@
 ## FC=
 
 ## Options for the Fortran compiler.
-## Use this to specify FFLAGS for the version of the compiler specified
-## above.  If unspecified, defaults to '-g -O2' for gfortran, 
+## Use this to specify FFLAGS for fixed-form Fortran.
+## If unspecified, defaults to '-g -O2' for gfortran, 
 ## otherwise '-g' if this is accepted, otherwise ''.
 ## FFLAGS=
-## Ditto for free-form
+## Ditto for free-form Fortran
 ## FCFLAGS=
 ## Additional libraries needed to link a shared object with FC,
 ## e.g. on x86 Solaris
