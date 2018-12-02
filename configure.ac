@@ -517,11 +517,6 @@ AC_ARG_VAR([SHLIB_CXXLD],
             files from the C++ compiler])
 AC_ARG_VAR([SHLIB_CXXLDFLAGS],
            [special flags used by SHLIB_CXXLD])
-AC_ARG_VAR([SHLIB_FCLD],
-           [command for linking shared objects which contain object
-            files from the free-form Fortran compiler])
-AC_ARG_VAR([SHLIB_FCLDFLAGS],
-           [special flags used by SHLIB_FCLD])
 AC_ARG_VAR([TCLTK_LIBS],
            [flags needed for linking against the Tcl and Tk libraries])
 AC_ARG_VAR([TCLTK_CPPFLAGS],
@@ -643,6 +638,10 @@ R_PROG_CPP_CPPFLAGS
 
 ## As from R 3.6.0, use the modern Fortran compiler for .f files
 echo "looking for a modern Fortran compiler"
+## if user set FFLAGS but not FCFLAGS, default to former
+if test "${FFLAGS+set}" = set -a "${FCFLAGS+set}" != set; then
+  FCFLAGS=${FFLAGS}
+fi
 AC_PROG_FC
 if test -z "${FC}"; then
   AC_MSG_ERROR([No Fortran compiler found])
@@ -2714,7 +2713,7 @@ r_cxx11_compiler="${CXX11} ${CXX11STD} ${R_XTRA_CXXFLAGS} ${CXX11FLAGS}"
 r_cxx14_compiler="${CXX14} ${CXX14STD} ${R_XTRA_CXXFLAGS} ${CXX14FLAGS}"
 r_cxx17_compiler="${CXX17} ${CXX17STD} ${R_XTRA_CXXFLAGS} ${CXX17FLAGS}"
 r_f77_compiler="${FC} ${R_XTRA_FFLAGS} ${FFLAGS}"
-r_f95_compiler="${FC} ${FCFLAGS}"
+r_f95_compiler="${FC} ${R_XTRA_FFLAGS} ${FCFLAGS}"
 r_objc_compiler="${OBJC} ${OBJCFLAGS}"
 r_interfaces=
 ## we will not have tested for X11 under some configure options, so

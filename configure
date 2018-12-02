@@ -681,6 +681,8 @@ SHLIB_OPENMP_FFLAGS
 SHLIB_OPENMP_CXXFLAGS
 SHLIB_OPENMP_CFLAGS
 FCLIBS_XTRA
+SHLIB_FCLDFLAGS
+SHLIB_FCLD
 FCFLAGS_f95
 FCFLAGS_f90
 R_JAVA_LD_LIBRARY_PATH
@@ -927,8 +929,6 @@ TAR
 MAKE
 TCLTK_CPPFLAGS
 TCLTK_LIBS
-SHLIB_FCLDFLAGS
-SHLIB_FCLD
 SHLIB_CXXLDFLAGS
 SHLIB_CXXLD
 CXXPICFLAGS
@@ -1098,8 +1098,6 @@ DYLIB_LDFLAGS
 CXXPICFLAGS
 SHLIB_CXXLD
 SHLIB_CXXLDFLAGS
-SHLIB_FCLD
-SHLIB_FCLDFLAGS
 TCLTK_LIBS
 TCLTK_CPPFLAGS
 MAKE
@@ -1893,10 +1891,6 @@ Some influential environment variables:
               from the C++ compiler
   SHLIB_CXXLDFLAGS
               special flags used by SHLIB_CXXLD
-  SHLIB_FCLD  command for linking shared objects which contain object files
-              from the free-form Fortran compiler
-  SHLIB_FCLDFLAGS
-              special flags used by SHLIB_FCLD
   TCLTK_LIBS  flags needed for linking against the Tcl and Tk libraries
   TCLTK_CPPFLAGS
               flags needed for finding the tcl.h and tk.h headers
@@ -4235,8 +4229,6 @@ fi
 
 
 ### ** Precious variables.
-
-
 
 
 
@@ -7267,6 +7259,10 @@ fi
 
 ## As from R 3.6.0, use the modern Fortran compiler for .f files
 echo "looking for a modern Fortran compiler"
+## if user set FFLAGS but not FCFLAGS, default to former
+if test "${FFLAGS+set}" = set -a "${FCFLAGS+set}" != set; then
+  FCFLAGS=${FFLAGS}
+fi
 ac_ext=${ac_fc_srcext-f}
 ac_compile='$FC -c $FCFLAGS $ac_fcflags_srcext conftest.$ac_ext >&5'
 ac_link='$FC -o conftest$ac_exeext $FCFLAGS $LDFLAGS $ac_fcflags_srcext conftest.$ac_ext $LIBS >&5'
@@ -25330,7 +25326,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:25333: \"$ac_link\") >&5
+(eval echo $as_me:25329: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -25405,7 +25401,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:25408: \"$ac_link\") >&5
+(eval echo $as_me:25404: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -48994,7 +48990,7 @@ r_cxx11_compiler="${CXX11} ${CXX11STD} ${R_XTRA_CXXFLAGS} ${CXX11FLAGS}"
 r_cxx14_compiler="${CXX14} ${CXX14STD} ${R_XTRA_CXXFLAGS} ${CXX14FLAGS}"
 r_cxx17_compiler="${CXX17} ${CXX17STD} ${R_XTRA_CXXFLAGS} ${CXX17FLAGS}"
 r_f77_compiler="${FC} ${R_XTRA_FFLAGS} ${FFLAGS}"
-r_f95_compiler="${FC} ${FCFLAGS}"
+r_f95_compiler="${FC} ${R_XTRA_FFLAGS} ${FCFLAGS}"
 r_objc_compiler="${OBJC} ${OBJCFLAGS}"
 r_interfaces=
 ## we will not have tested for X11 under some configure options, so
