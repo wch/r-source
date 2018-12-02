@@ -18,14 +18,14 @@
 
 /* Define to dummy `main' function (if any) required to link to the Fortran
    libraries. */
-/* #undef F77_DUMMY_MAIN */
+/* #undef FC_DUMMY_MAIN */
 
 /* Define to a macro mangling the given C identifier (in lower and upper
    case), which must not contain underscores, for linking with Fortran. */
-#define F77_FUNC(name,NAME) name ## _
+#define FC_FUNC(name,NAME) name ## _
 
-/* As F77_FUNC, but for C identifiers containing underscores. */
-#define F77_FUNC_(name,NAME) name ## _
+/* As FC_FUNC, but for C identifiers containing underscores. */
+#define FC_FUNC_(name,NAME) name ## _
 
 /* Define if F77 and FC dummy `main' functions are identical. */
 /* #undef FC_DUMMY_MAIN_EQ_F77 */
