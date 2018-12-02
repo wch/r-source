@@ -239,22 +239,26 @@
       \item The C++ compiler defaults to the C++11 standard if
       supported, otherwise to the C++98 standard.
 
-      \item The list of compilers searched for \samp{F95} has been
-      modernized, and that chosen for \samp{FC} will be used as the
-      default.  in particular, \command{gfortran} is now the first
-      choice, not \command{f95}: set \samp{FC} in \file{config.site} to
-      override this if necessary.
-
       \item Visibility macros such as \samp{C_VISIBILITY} can now be
-      user-set  (including to empty), e.g.\sspace{}in \file{config.site}.
+      user-set (including to empty), e.g.\sspace{}in \file{config.site}.
 
-      \item Macro \samp{FCLIBS} which has sometimes been needed on
-      Solaris has been renamed to \samp{FCLIBS_XTRA}.
+      \item Macro \samp{FCLIBS,} which has sometimes been needed on
+      Solaris, has been renamed to \samp{FCLIBS_XTRA}.
 
       \item Macro \samp{F77} is always set to the value of \samp{FC}, so
       the latter should be set to user-select the Fortran compiler for
-      both fixed-form and free-form Fortran.  Consequently,
-      \samp{FPICFLAGS} is used in place of \samp{FCPICFLAGS}.
+      both fixed-form and free-form Fortran.  In particular,
+      \command{gfortran} is now the first choice for \samp{F77}, not
+      \command{f95}
+      
+      \item The special-casing of \samp{CFLAGS}, \samp{CXXFLAGS} and
+      \samp{FFLAGS} for Intel compilers on Linux has been removed: we do
+      not have enough recent experience but the generic defaults now
+      chosen are the same as those previously special-cased for
+      \samp{x86_64} on Intel.
+
+      If necessary, override the defaults on the \command{configure}
+      command line or in file \file{config.site}.
     }
   }
 

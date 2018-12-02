@@ -648,10 +648,9 @@ if test -z "${FC}"; then
   AC_MSG_ERROR([No Fortran compiler found])
 fi
 F77=${FC}
-## see if the user set FFLAGS: also used for Intel compilers below
+## see if the user set FFLAGS, otherwise use what AC_PROG_FC chose
 if test "${FFLAGS+set}" != set; then
   FFLAGS=${FCFLAGS}
-  userFFLAGS=${FFLAGS+set}
 fi
 
 AC_PROG_CXX
@@ -1022,90 +1021,8 @@ case "${host_os}" in
     esac
     AC_CHECK_LIB(dld, shl_load, [R_XTRA_LIBS="-ldld ${R_XTRA_LIBS}"])
     ;;
-  linux*)
-    case  "${CC}" in
-      ## Intel compiler
-      *icc*)
-	## icc declares __GNUC__, so it picks up CFLAGS intended for gcc.
-	if test "$ac_test_CFLAGS" != set; then
-          if test $ac_cv_prog_cc_g = yes; then
-	    case "${host_cpu}" in
-	      x86_64)
-	        CFLAGS="-g -O2 -std=c99"
-		;;
-	      *)
-	        ## on ix86 optimization fails
-                CFLAGS="-g -std=c99"
-		;;
-	    esac
-          else
-	    case "${host_cpu}" in
-	      x86_64)
-	        CFLAGS="-O2 -std=c99"
-		;;
-	      *)
-                CFLAGS="-std=c99"
-		;;
-	    esac
-          fi
-        fi
-	## used to set IEEE flag, but this is version-dependent.
-        ;;
-    esac
-    case  "${FC}" in
-      ## Intel compilers
-      *ifc|*ifort)
-	if test "$userFFLAGS" = set; then
-          if test $ac_cv_prog_fc_g = yes; then
-	    case "${host_cpu}" in
-	      x86_64)
-	        FFLAGS="-g -O2"
-		;;
-	      *)
-                FFLAGS="-g"
-		;;
-	    esac
-          else
-	    case "${host_cpu}" in
-	      x86_64)
-	        FFLAGS="-O2"
-		;;
-	      *)
-	        ## on ix86 optimization of dlamc.f fails
-                FFLAGS=
-		;;
-	    esac
-          fi
-        fi
-        ;;
-    esac
-    case  "${CXX}" in
-      ## Intel compilers
-      *icpc|*icc)
-	if test "$ac_test_CXXFLAGS" != set; then
-          if test $ac_cv_prog_cxx_g = yes; then
-	    case "${host_cpu}" in
-	      x86_64)
-	        CXXFLAGS="-g -O2"
-		;;
-	      *)
-                CXXFLAGS="-g"
-		;;
-	    esac
-          else
-	    case "${host_cpu}" in
-	      x86_64)
-	        CXXFLAGS="-O2"
-		;;
-	      *)
-                CXXFLAGS=
-		;;
-	    esac
-          fi
-        fi
-        ;;
-    esac
-    ;;
+  ## We no longer special-case Intel compilers on Linux:
+  ## what we had dated from Nov 2005.
   mingw*|windows*|winnt)
     AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
     ;;
@@ -1116,7 +1033,7 @@ case "${host_os}" in
     ;;
 esac
 
-## This was -ffloat-store on all gfortran/g77 platforms prior to 3.5.0
+## This was -ffloat-store on all gfortran/g77 platforms prior to R 3.5.0
 ## Suggestion adopted from https://gcc.gnu.org/wiki/FloatingPointMath
 ## It was already the default on 32-bit macOS
 if test "${SAFE_FFLAGS+set}" != set; then
