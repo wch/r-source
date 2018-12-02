@@ -249,16 +249,21 @@
       the latter should be set to user-select the Fortran compiler for
       both fixed-form and free-form Fortran.  In particular,
       \command{gfortran} is now the first choice for \samp{F77}, not
-      \command{f95}
+      \command{f95}.
 
-      \item If only one of \samp{FFLAGS} and \samp{FCFLAGS} is set, its
-      value is used for both.
+      \item Macros \samp{FFLAGS} and \samp{FCFLAGS} remain distinct to
+      allow for a compiler which needs a flag to select free- or
+      fixed-form Fortran (most use the source-file extension to choose:
+      \file{.f} is fixed-form and \file{.f90} and \file{.f95} are
+      free-form).
+
+      If only one of them is set, its value is used for both.
       
       \item The special-casing of \samp{CFLAGS}, \samp{CXXFLAGS} and
       \samp{FFLAGS} for Intel compilers on Linux has been removed: we do
-      not have enough recent experience but the generic defaults now
-      chosen are the same as those previously special-cased for
-      \samp{x86_64} on Intel.
+      not have recent experience but the generic defaults now chosen are
+      the same as those previously special-cased for \samp{x86_64} on
+      Intel.
 
       If necessary, override the defaults on the \command{configure}
       command line or in file \file{config.site}.
@@ -355,7 +360,7 @@
 
       \item Make macros \samp{F77}, \samp{FCPIFCPLAGS} and
       \samp{SHLIB_OPENMP_FCFLAGS} are deprecated in favour of \samp{FC},
-      \samp{FPICFLAGS} and \samp{SHLIB_OPENMP_FFLAGS}.
+      \samp{FPICFLAGS} and \samp{SHLIB_OPENMP_FFLAGS} respectively.
     }
   }
 
@@ -538,8 +543,9 @@
       \item The methods package better handles duplicated class names
       across packages.
 
-      \item \code{seq.default()} now avoids integer overflow, thanks to
-      the report and "cumsum" patch of Suharto Anggono's \PR{17497}.
+      \item The default method of \code{seq()} now avoids integer
+      overflow, thanks to the report and "cumsum" patch of Suharto
+      Anggono's \PR{17497}.
     }
   }
 }

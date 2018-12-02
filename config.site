@@ -81,6 +81,9 @@
 ## If just one of these is set, it is used for both.
 ## If both are unspecified, defaults to '-g -O2' for gfortran, 
 ## otherwise '-g' if this is accepted, otherwise ''.
+## Use these if the compiler needs flags such as --free, -qfixed and
+## cannot determine which from the source-file extension.
+
 ## Additional libraries needed to link a shared object with FC,
 ## e.g. on x86 Solaris
 ## FCLIBS_XTRA=
