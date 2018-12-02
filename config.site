@@ -74,12 +74,13 @@
 ## FC=
 
 ## Options for the Fortran compiler.
-## Use this to specify FFLAGS for fixed-form Fortran.
-## If unspecified, defaults to '-g -O2' for gfortran, 
-## otherwise '-g' if this is accepted, otherwise ''.
+## Use this to specify comilation flags for fixed-form Fortran.
 ## FFLAGS=
-## Ditto for free-form Fortran
+## Ditto for free-form Fortran.
 ## FCFLAGS=
+## If just one of these is set, it is used for both.
+## If both are unspecified, defaults to '-g -O2' for gfortran, 
+## otherwise '-g' if this is accepted, otherwise ''.
 ## Additional libraries needed to link a shared object with FC,
 ## e.g. on x86 Solaris
 ## FCLIBS_XTRA=
@@ -117,18 +118,18 @@
 ## CPICFLAGS=
 
 ## The following variable can be used to provide any PIC flags for the
-## fixed-form Fortran compiler.  If this variable is left unspecified an
+## Fortran compiler.  If this variable is left unspecified an
 ## attempt is made to automatically detect the correct value.
 ## FPICFLAGS=
 
 ## The command to be used to create shared objects which contain object
-## files from a C or fixed-form Fortran compiler only.  This is usually the C
+## files from a C or Fortran compiler only.  This is usually the C
 ## compiler or 'ld', but the automatic choice can be overridden by means
 ## of this variable.
 ## SHLIB_LD=
 
 ## Any special flags which are required by the linker when creating
-## shared objects containing object files from a C or fixed-form Fortran
+## shared objects containing object files from a C or Fortran
 ## compiler only.  This is usually automatically detected by configure,
 ## and anything set here will be in addition unless SHLIB_LD is given.
 ## SHLIB_LDFLAGS=

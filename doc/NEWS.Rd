@@ -242,7 +242,7 @@
       \item Visibility macros such as \samp{C_VISIBILITY} can now be
       user-set (including to empty), e.g.\sspace{}in \file{config.site}.
 
-      \item Macro \samp{FCLIBS,} which has sometimes been needed on
+      \item Macro \samp{FCLIBS}, which has sometimes been needed on
       Solaris, has been renamed to \samp{FCLIBS_XTRA}.
 
       \item Macro \samp{F77} is always set to the value of \samp{FC}, so
@@ -250,6 +250,9 @@
       both fixed-form and free-form Fortran.  In particular,
       \command{gfortran} is now the first choice for \samp{F77}, not
       \command{f95}
+
+      \item If only one of \samp{FFLAGS} and \samp{FCFLAGS} is set, its
+      value is used for both.
       
       \item The special-casing of \samp{CFLAGS}, \samp{CXXFLAGS} and
       \samp{FFLAGS} for Intel compilers on Linux has been removed: we do

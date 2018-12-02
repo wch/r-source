@@ -1653,8 +1653,8 @@ from the official Autoconf Macro Archive, one can simply do
 
 @example
 @group
-F77=`"$@{R_HOME@}/bin/R" CMD config F77`
-AC_PROG_F77
+FC=`"$@{R_HOME@}/bin/R" CMD config FC`
+AC_PROG_FC
 FLIBS=`"$@{R_HOME@}/bin/R" CMD config FLIBS`
 ACX_BLAS([], AC_MSG_ERROR([could not find your BLAS library], 1))
 @end group
@@ -1917,7 +1917,7 @@ SLAMC_FFLAGS=$(R_XTRA_FFLAGS) $(FPICFLAGS) $(SHLIB_FFLAGS) $(SAFE_FFLAGS)
 all: $(SHLIB)
 
 slamc.o: slamc.f
-        $(F77) $(SLAMC_FFLAGS) -c -o slamc.o slamc.f
+        $(FC) $(SLAMC_FFLAGS) -c -o slamc.o slamc.f
 @end example
 
 @noindent
@@ -1928,7 +1928,7 @@ infinite looping.  The Windows equivalent was
 all: $(SHLIB)
 
 slamc.o: slamc.f
-        $(F77) $(SAFE_FFLAGS) -c -o slamc.o slamc.f
+        $(FC) $(SAFE_FFLAGS) -c -o slamc.o slamc.f
 @end example
 
 @noindent
@@ -2452,10 +2452,10 @@ or by setting the environment variables @code{ODBC_INCLUDE} and
 @subsection Using F95 code
 
 @R{} assumes that source files with extension @file{.f} are fixed-form
-Fortran, and passes them to the compiler specified by @samp{F77} (which
-despite the historic naming, is expected to accept free-form Fortran
-95).  On most but not all platforms the compiler specified by @samp{FC}
-will accept free-form Fortran 90/95 code.
+Fortran, and passes them to the compiler specified by @samp{FC}.  On
+most but not all platforms the compiler specified by @samp{FC} will also
+accept free-form Fortran 90/95 code with extension @file{.f90} or
+@file{.f95}.
 
 Some (but not) all compilers specified by @samp{FC} will accept Fortran
 2003 or 2008 code: such code should still use file extension @file{.f90}
@@ -8587,7 +8587,6 @@ per-package basis by using a @file{~/.R/Makevars} file like
 @example
 CC = gcc -std=gnu99 -fsanitize=address -fno-omit-frame-pointer
 CXX = g++ -fsanitize=address -fno-omit-frame-pointer
-F77 = gfortran -fsanitize=address
 FC = gfortran -fsanitize=address
 @end example
 @noindent

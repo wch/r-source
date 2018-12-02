@@ -2331,7 +2331,7 @@ compilers were on the path, and @command{gfortan} 6.1.0 (see
 @ref{macOS}).  The settings can be changed, either by editing that file
 or in a file such as @file{~/.R/Makevars} (see the next section).
 Entries which may need to be changed include @samp{CC}, @samp{CXX},
-@samp{FC}, @samp{F77}, @samp{FLIBS} and the corresponding flags, and
+@samp{FC}, @samp{FLIBS} and the corresponding flags, and
 perhaps @samp{CXXCPP}, @samp{DYLIB_LD}, @samp{MAIN_LD},
 @samp{SHLIB_CXXLD}, @samp{SHLIB_FCLD} and @samp{SHLIB_LD}, as well as
 the @samp{CXX11}, @samp{CXX14} and @samp{CXX17} variants
@@ -2350,8 +2350,7 @@ CXX17 = $CXX
 @noindent
 and the Sierra build of @command{gfortran} by
 @example
-F77 = /usr/local/gfortran/bin/gfortran
-FC = $F77
+FC = /usr/local/gfortran/bin/gfortran
 FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin16/6.3.0 
   -L/usr/local/gfortran/lib -lgfortran -lquadmath -lm
 @end example
@@ -2404,21 +2403,20 @@ the optimization level for a particular package.  For example
 
 @example
 ## @r{for C code}
-CFLAGS=-g -O -mtune=native
+CFLAGS = -g -O -mtune=native
 ## @r{for C++ code}
-CXXFLAGS=-g -O -mtune=native
+CXXFLAGS = -g -O -mtune=native
 ## @r{for fixed-form Fortran code}
-FFLAGS=-g -O -mtune=native
+FFLAGS = -g -O -mtune=native
 ## @r{for free-form Fortran code}
-FCFLAGS=-g -O -mtune=native
+FCFLAGS = -g -O -mtune=native
 @end example
 
 Another use is to override the settings in a binary installation of R.
 For example, to use a different Fortran compiler on macOS
 
 @example
-F77 = /usr/local/gfortran/bin/gfortran
-FC = $F77
+FC = /usr/local/gfortran/bin/gfortran
 FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin16/6.3.0 
   -L/usr/local/gfortran/lib -lgfortran -lquadmath -lm
 @end example
@@ -3686,12 +3684,11 @@ completely different compiler will be needed.
 
 For source files with extension @file{.f90} or @file{.f95} containing
 free-form Fortran, the compiler defined by the macro @code{FC} is used
-by @command{R CMD INSTALL}.  This is found when @R{} is configured and
-is often the same as @code{F77}: note that it is detected by the name of
-the command without a test that it can actually compile Fortran 90 code.
+by @command{R CMD INSTALL}.  Note that it is detected by the name of the
+command without a test that it can actually compile Fortran 90 code.
 Set the configure variable @code{FC} to override this if necessary:
-variables @code{FCFLAGS} and @code{FCLIBS_XTRA} might
-also need to be set.
+variables @code{FCFLAGS} and @code{FCLIBS_XTRA} might also need to be
+set.
 
 See file @file{config.site} in the @R{} source for more details about
 these variables.
@@ -4353,12 +4350,12 @@ with the native @command{cc}).  In this case, use a different compiler
 
 These flags can also be used to build a faster-running version of @R{}.
 On most platforms using @command{gcc}, having @samp{-O3} in
-@code{CFLAGS} and @code{FFLAGS} produces worthwhile performance gains
-with @command{gcc} and @command{gfortran}, but may result in a less
-reliable build (both segfaults and incorrect numeric computations have
-been seen).  On systems using the @acronym{GNU} linker (especially those
-using @R{} as a shared library), it is likely that including
-@samp{-Wl,-O1} in @code{LDFLAGS} is worthwhile, and
+@code{CFLAGS} and @code{FFLAGS}/@code{FCFLAGS} produces worthwhile
+performance gains with @command{gcc} and @command{gfortran}, but may
+result in a less reliable build (both segfaults and incorrect numeric
+computations have been seen).  On systems using the @acronym{GNU} linker
+(especially those using @R{} as a shared library), it is likely that
+including @samp{-Wl,-O1} in @code{LDFLAGS} is worthwhile, and
 @samp{'-Bdirect,--hash-style=both,-Wl,-O1'} is recommended at
 @uref{https://lwn.net/@/Articles/@/192624/}.  Tuning compilation to a
 specific @acronym{CPU} family (e.g.@: @samp{-mtune=native} for
@@ -4424,11 +4421,11 @@ is to search for
 of Fortran they support.)
 
 The search mechanism can be changed using the configure variable
-@code{F77} which specifies the command that runs the (fixed-form) Fortran
-compiler.  If your Fortran compiler is in a non-standard location, you
+@code{FC} which specifies the command that runs the Fortran compiler.
+If your Fortran compiler is in a non-standard location, you
 @enindex PATH
 should set the environment variable @env{PATH} accordingly before
-running @command{configure}, or use the configure variable @code{F77} to
+running @command{configure}, or use the configure variable @code{FC} to
 specify its full path.
 
 If your Fortran libraries are in slightly peculiar places, you should
@@ -4476,6 +4473,8 @@ ditto, for compiling the main program
 for shared objects
 @item FFLAGS
 debugging and optimization flags, fixed-form Fortran
+@item FCFLAGS
+debugging and optimization flags, free-form Fortran
 @item SAFE_FFLAGS
 ditto for source files which need exact floating point behaviour
 @item MAIN_FFLAGS
@@ -4523,10 +4522,10 @@ possible issue is the alignment of doubles, another is the way
 structures are passed.
 
 On some platforms @command{configure} will select additional flags for
-@code{CFLAGS}, @code{CPPFLAGS}, @code{FFLAGS}, @code{CXXFLAGS} and
-@code{LIBS} in @code{R_XTRA_CFLAGS} (and so on).  These are for options
-which are always required, for example to force @acronym{IEC}@tie{}60559
-compliance.
+@code{CFLAGS}, @code{CPPFLAGS}, @code{FFLAGS}, @code{FCFLAGS},
+@code{CXXFLAGS} and @code{LIBS} in @code{R_XTRA_CFLAGS} (and so on).
+These are for options which are always required, for example to force
+@acronym{IEC}@tie{}60559 compliance.
 
 @node Maintainer mode,  , Compile and load flags, Configuration on a Unix-alike
 @section Maintainer mode
@@ -4770,8 +4769,7 @@ on @cputype{x86_64} with Fedora 28 we used
 @example
 CC="gcc -m32"
 CXX="g++ -m32"
-F77="gfortran -m32"
-FC=$@{F77@}
+FC="gfortran -m32"
 OBJC=$@{CC@}
 LDFLAGS="-L/usr/local/lib"
 LIBnn=lib
@@ -4805,7 +4803,6 @@ To build a 64-bit version of @R{} on @cputype{ppc64} (also known as
 @example
 CC="gcc -m64"
 CXX="gxx -m64"
-F77="gfortran -m64"
 FC="gfortran -m64"
 CFLAGS="-mminimal-toc -fno-optimize-sibling-calls -g -O2"
 FFLAGS="-mminimal-toc -fno-optimize-sibling-calls -g -O2"
@@ -4865,7 +4862,6 @@ Fortran compiler similar to clang but based on the Portland Group's front
 end.  This needs something like
 @example
 FC=/usr/local/flang/bin/flang
-F77=/usr/local/flang/bin/flang
 LDFLAGS="-L/usr/local/flang/lib -L/usr/local/lib64"
 @end example
 
@@ -4894,12 +4890,10 @@ Linux.  Brian Ripley used version 9.0 of the compilers for
 @example
 CC=icc
 CFLAGS="-g -O3 -wd188 -ip -mp"
-F77=ifort
+FC=ifort
 FLAGS="-g -O3 -mp"
 CXX=icpc
 CXXFLAGS="-g -O3 -mp"
-FC=ifort
-FCFLAGS="-g -O3 -mp"
 ICC_LIBS=/opt/compilers/intel/cce/9.1.039/lib
 IFC_LIBS=/opt/compilers/intel/fce/9.1.033/lib
 LDFLAGS="-L$ICC_LIBS -L$IFC_LIBS -L/usr/local/lib64"
@@ -4915,9 +4909,9 @@ Because the Intel C compiler sets @samp{__GNUC__} without complete
 emulation of @command{gcc}, we suggest adding @code{CPPFLAGS=-no-gcc}.
 
 To maintain correct @acronym{IEC}@tie{}60559 arithmetic you most likely
-need add flags to @code{CFLAGS}, @code{FFLAGS} and @code{CXXFLAGS} such
-as @option{-mp} (shown above) or @option{-fp-model precise -fp-model
-source}, depending on the compiler version.
+need add flags to @code{CFLAGS}, @code{FFLAGS}, @code{FCFLAGS} and
+@code{CXXFLAGS} such as @option{-mp} (shown above) or @option{-fp-model
+precise -fp-model source}, depending on the compiler version.
 
 Others have reported success with versions 10.x and 11.x.  
 @c https://stat.ethz.ch/pipermail/r-devel/2015-September/071717.html
@@ -4928,12 +4922,10 @@ using (for a SandyBridge CPU on Centos 6.x)
 fast="-fp-model precise -ip -O3 -opt-mem-layout-trans=3 -xHost -mavx"
 CC=icc
 CFLAGS="$fast -wd188"
-F77=ifort
+FC=ifort
 FFLAGS="$fast"
 CXX=icpc
 CXXFLAGS="$fast"
-FC=$F77
-FCFLAGS=$F77FLAGS
 @end example
 
 It is possible that 32-builds need to force the use of SSE2 instructions
@@ -5013,14 +5005,12 @@ Various compilers can be used.  One could use
 @example
 CC=clang
 CXX=clang++
-F77=/usr/local/gfortran/bin/gfortran
-FC=$F77
+FC=/usr/local/gfortran/bin/gfortran
 OBJC=clang
 CFLAGS='-Wal -g -O2'
 CXXFLAGS='-Wall -g -O2'
 OBJCFLAGS='-Wall -g -O2'
-F77FLAGS='-Wall -g -O2 -mtune=generic'
-FCFLAGS=$F77FLAGS
+FFLAGS='-Wall -g -O2 -mtune=generic'
 @end example
 
 @noindent
@@ -5038,15 +5028,13 @@ Apple package for 6.1 is also available at
 One way to use these builds with a binary distribution of @R{} is to
 have a @file{~/.R/Makevars} file similar to (El Capitan)
 @example
-F77 = /usr/local/gfortran/bin/gfortran
-FC = $F77
+FC = /usr/local/gfortran/bin/gfortran
 FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin15/6.1.0
   -L/usr/local/gfortran/lib -lgfortran -lquadmath -lm
 @end example
 or (Sierra or later)
 @example
-F77 = /usr/local/gfortran/bin/gfortran
-FC = $F77
+FC = /usr/local/gfortran/bin/gfortran
 FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin16/6.3.0
   -L/usr/local/gfortran/lib -lgfortran -lquadmath -lm
 @end example
@@ -5074,8 +5062,7 @@ with @file{config.site} containing
 @example
 CC=/usr/local/clang6/bin/clang
 OBJC=$CC
-F77=/usr/local/gfortran/bin/gfortran
-FC=$F77
+FC=/usr/local/gfortran/bin/gfortran
 CXX=/usr/local/clang6/bin/clang++
 LDFLAGS="-L/usr/local/clang6/lib -L/usr/local/lib"
 R_LD_LIBRARY_PATH=/usr/local/clang6/lib:/usr/local/lib
@@ -5431,13 +5418,11 @@ A little juggling of paths was needed to ensure @acronym{GNU}
 @example
 CC="cc -xc99"
 CFLAGS="-O -xlibmieee"
-F77=f95
+FC=f95
 FFLAGS=-O
 CXX=CC
 CXXSTD="-library=stlport4"
 CXXFLAGS=-O
-FC=$F77
-FCFLAGS=$FFLAGS
 R_LD_LIBRARY_PATH="/opt/developerstudio12.5/lib:/usr/local/lib:/opt/csw/lib"
 @end example
 
@@ -5446,7 +5431,7 @@ The Oracle compilers do not by default conform to the C99 standard
 use @option{-xlibmieee} to ensure this.
 
 A peculiarity of some versions of the Fortran compiler was that when
-asked to link a shared object it did not link against the Fortran 9x
+asked to link a shared object it did not link against all the Fortran 9x
 runtime libraries, hence
 @example
 FCLIBS_XTRA="-lfsu /opt/developerstudio12.5/lib/libfui.so.2"
@@ -5456,7 +5441,8 @@ FCLIBS_XTRA="-lfsu /opt/developerstudio12.5/lib/libfui.so.2"
 has been needed.
 
 Using @code{-xlibmil} in @code{CFLAGS} or @code{-xlibmil} in
-@code{FFLAGS} allows more system mathematical functions to be inlined.
+@code{FFLAGS}/@code{FCFLAGS} allows more system mathematical functions
+to be inlined.
 
 On @cputype{x86} you will get marginally higher performance @emph{via}
 
@@ -5579,9 +5565,8 @@ Compilation for an @cputype{x86} target with @command{gcc}@tie{}4.9.2 or
 @example
 CC="gcc -m32"
 CPPFLAGS="-I/opt/csw/include -I/usr/local/include"
-F77="gfortran -m32"
+FC="gfortran -m32"
 CXX="g++ -m32"
-FC=$F77
 LDFLAGS="-L/opt/csw/lib -L/usr/local/lib"
 @end example
 
@@ -5590,9 +5575,8 @@ For an @cputype{amd64} target we used
 @example
 CC="gcc -m64"
 CPPFLAGS="-I/opt/csw/include -I/usr/local/include"
-F77="gfortran -m64"
+FC="gfortran -m64"
 CXX="g++ -m64"
-FC=$F77
 LDFLAGS="-L/opt/csw/lib/amd64 -L/usr/local/lib/amd64"
 @end example
 
