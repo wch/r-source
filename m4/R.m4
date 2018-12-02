@@ -210,7 +210,7 @@ fi
 ## ------------------------
 ## Building the R Texinfo manuals requires texinfo v5.1 or later.
 ## Set shell variable r_cv_prog_texi2any_v5 to 'yes' if a recent
-## enough Makeinfo is found, and to 'no' otherwise.
+## enough texi2any aka  makeinfo is found, and to 'no' otherwise.
 ## If you change the minimum version here, also change it in
 ## doc/manual/Makefile.in and doc/manual/R-admin.texi.
 AC_DEFUN([_R_PROG_MAKEINFO_VERSION],
@@ -4059,6 +4059,8 @@ fi
 
 ## R_ABI
 ## ------------
+## This gets recorded in etc/Renviron and used in tools/R/sotools.R
+## It is a comma-separated string of 5 items, OS,C,CXX,F77,F95 .
 AC_DEFUN([R_ABI],
 [## System type.
 case "${host_os}" in
@@ -4108,42 +4110,21 @@ case "${host_os}" in
   R_SYSTEM_ABI="${R_SYSTEM_ABI},?"
 esac
 fi
-## Fortran 77:
+## Fortran (fixed- then free-form):
 if test "${ac_cv_fc_compiler_gnu}" = yes; then
-  R_SYSTEM_ABI="${R_SYSTEM_ABI},gfortran"
+  R_SYSTEM_ABI="${R_SYSTEM_ABI},gfortran,gfortran"
 else
 case "${FC}" in
   *flang)
-    R_SYSTEM_ABI="${R_SYSTEM_ABI},flang"
+    R_SYSTEM_ABI="${R_SYSTEM_ABI},flang,flang"
     ;;
   *)
     case "${host_os}" in
       solaris*)
-      R_SYSTEM_ABI="${R_SYSTEM_ABI},solf95"
+      R_SYSTEM_ABI="${R_SYSTEM_ABI},solf95,solf95"
       ;;
       *)
-      R_SYSTEM_ABI="${R_SYSTEM_ABI},?"
-    esac
-    ;;
-esac
-fi
-## Fortran 90/95: AC_PROG_FC does not seem to set a shell variable
-##   indicating the GNU Fortran 90/95 compiler.
-##   Hence, need to use ac_cv_fc_compiler_gnu (undocumented).
-if test "${ac_cv_fc_compiler_gnu}" = yes; then
-  R_SYSTEM_ABI="${R_SYSTEM_ABI},gfortran"
-else
-case "${FC}" in
-  *flang)
-    R_SYSTEM_ABI="${R_SYSTEM_ABI},flang"
-    ;;
-  *)
-    case "${host_os}" in
-      solaris*)
-      R_SYSTEM_ABI="${R_SYSTEM_ABI},solf95"
-      ;;
-      *)
-      R_SYSTEM_ABI="${R_SYSTEM_ABI},?"
+      R_SYSTEM_ABI="${R_SYSTEM_ABI},?,?"
     esac
     ;;
 esac
