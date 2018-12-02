@@ -27471,7 +27471,7 @@ fi
 main_ld="${CC}"
 shlib_ld="${CC}"
 shlib_cxxld="${CXX}"
-SHLIB_EXT=".so"
+: ${SHLIB_EXT=".so"}
 SHLIB_LIBADD=
 use_exportfiles=no
 

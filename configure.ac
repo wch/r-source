@@ -1122,7 +1122,8 @@ R_ABI
 main_ld="${CC}"
 shlib_ld="${CC}"
 shlib_cxxld="${CXX}"
-SHLIB_EXT=".so"
+## Allow user to override this, e.g. when HP-UX is not special-cased.
+: ${SHLIB_EXT=".so"}
 SHLIB_LIBADD=
 use_exportfiles=no
 
