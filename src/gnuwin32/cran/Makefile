@@ -7,6 +7,7 @@ FULLVERSION=`cat ../../../VERSION`
 SVNREVISION=`sed -e 1s/Revision:.// -e q < $(R_HOME)/SVN-REVISION`
 RVER = $(shell cut -d' ' -f1 ../../../VERSION | sed -n 1p)
 DATE = $(shell date +%F)
+SIZEMB = $(shell du -m ../installer/$(RPREFIX)-win.exe | cut -f1)
 
 R_EXE = $(R_HOME)/$(BINDIR)/rterm.exe --vanilla --slave
 
@@ -21,6 +22,7 @@ all:
 	  $(SED) -e s/@RWVER@/$(RPREFIX)/g \
 	    -e s/@RVER@/$(RVER)/g \
 	    -e "s/@DATE@/$(DATE)/g" \
+	    -e "s/@SIZEMB@/$(SIZEMB)/g" \
 	    -e "s/@SVNREVISION@/$(SVNREVISION)/g" \
 	    -e "s/@FULLVERSION@/$(FULLVERSION)/g" $${page}.in >$${page}.html; \
 	done
