@@ -2133,7 +2133,7 @@ when OpenMP mode is switched on (e.g.@: @emph{via} flag
 @option{-fopenmp}).
 
 @c http://openmp.org/wp/openmp-compilers-tools/
-@c clang 3.8.x reports 201307 but has full suport only for 3.1 (201111)
+@c clang 3.8.x reports 201307 but has full support only for 3.1 (201111)
 @c clang 3.9.x reports 201111 but has all but offloading support of 4.0.
 @c Debian Wheezy is on ELTS until 2019-05-31
 @c Centos 6 EOL 2020-11-30, defaults to gcc 4.7

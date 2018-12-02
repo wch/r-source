@@ -5005,7 +5005,7 @@ FFLAGS="$fast"
 CXX=icpc
 CXXFLAGS="$fast"
 FC=$F77
-FCFLAGS=$F77FLAGS
+FCFLAGS=$FFLAGS
 @end example
 
 It is possible that 32-builds need to force the use of SSE2 instructions
@@ -5091,8 +5091,8 @@ OBJC=clang
 CFLAGS='-Wal -g -O2'
 CXXFLAGS='-Wall -g -O2'
 OBJCFLAGS='-Wall -g -O2'
-F77FLAGS='-Wall -g -O2 -mtune=generic'
-FCFLAGS=$F77FLAGS
+FFLAGS='-Wall -g -O2 -mtune=generic'
+FCFLAGS=$FFLAGS
 @end example
 
 @noindent
