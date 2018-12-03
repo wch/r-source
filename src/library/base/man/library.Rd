@@ -62,8 +62,15 @@ conflictRules(pkg, mask.ok = NULL, exclude = NULL)
   \item{quietly}{a logical.  If \code{TRUE}, no message confirming
     package attaching is printed, and most often, no errors/warnings are
     printed if package attaching fails.}
-  \item{pkg, mask.ok, exclude, include.only, attach.required}{For use in managing
-    conflicts (see \sQuote{Conflictts})}.
+  \item{pkg}{character string naming a package.}
+  \item{mask.ok}{character vector of names of objects that can mask
+    objects on the search path without signaling an error when strict
+    conflict checking is enabled}
+  \item{exclude}{character vector of names of objects to exclude or
+    include in the attached frame. Ony one of these arguments may be
+    used in a call.}
+  \item{attach.required}{logical specifying whether required packages
+    should be attached automatically.}
 }
 \details{
   \code{library(package)} and \code{require(package)} both load the
@@ -107,18 +114,42 @@ conflictRules(pkg, mask.ok = NULL, exclude = NULL)
   \code{require} returns (invisibly) a logical indicating whether the required
   package is available.
 }
-\section{Conflicts}{
-  If the option \code{error.on.conflicts} is \code{TRUE} an error is
-  signaled instead of printing warning messages when unresolved
-  conflicts are encountered.  Experimental conflict management is
-  implemented by the arguments \code{mask.ok}, \code{exclude},
-  \code{include.only}, and \code{attach.required} to \code{library} and
-  \code{require}. The function \code{conflictRules} can be used to
-  specify defaults.  Some aspects of how conflicts are handled can be
-  specified with the \code{conflicts.policy} option. See
-  \url{https://svn.r-project.org/R/branches/R-conflicts/CONFLICTS.html}
-  for more details.
+
+\section{
+  Conflicts}{Handling of conflicts depends on the setting of the
+  \code{conflicts.policy} option. If this option is not set, then
+  conflicts result in warning messages if the argument
+  \code{warn.conflicts} is \code{TRUE}. If the option is set to the
+  character string \code{"strict"}, then all unresolved conflicts signal
+  errors.  Conflicts can be resolved using the \code{mask.ok},
+  \code{exclude}, and \code{include.only} arguents to \code{library} and
+  \code{require}. Defaults for \code{mask.ok} and \code{exclude} can be
+  specified using \code{conflictRules}.
+
+  If the \code{conflicts.policy} option is set to the string
+  \code{"depends.ok"} then conflicts resulting from attaching declared
+  dependencies will not produce errors, but other conflicts will.
+  This is likely to be the best setting for most users wanting some
+  additional protection against unexpected conflicts.
+
+  The policy can be tuned further by specifying the
+  \code{conflicts.policy} option as a named list with the following
+  fields:
+  \describe{
+    \item{\code{error}:}{logical; if \code{TRUE} treat unresolved
+      conflicts as errors.}
+    \item{\code{warn}:}{logical; unless \code{FALSE} issue a warning
+      message when conflicts are found.}
+    \item{\code{generics.ok}:}{logical; if \code{TRUE} ignore conflicts
+      created by defining S4 generics for functions on the search path.}
+    \item{\code{depends.ok}:}{logical; if \code{TRUE} do not tread
+      conflicts with required packages as errors.}
+    \item{\code{can.mask}:}{charecter vector of names of packages that
+      are allowed to be masked. These would typically be base packages
+      attached by default.}
+  }
 }
+
 \section{Licenses}{
   Some packages have restrictive licenses, and there is a mechanism to
   allow users to be aware of such licenses.  If

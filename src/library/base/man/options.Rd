@@ -102,6 +102,10 @@ getOption(x, default = NULL)
       Initially set from value of the environment variable
       \env{R_C_BOUNDS_CHECK} (set to \code{yes} to enable).}
 
+    \item{\code{conflicts.policy}:}{character string or list controlling
+      handling of conflicts found in calls to \code{\link{library}} or
+      \code{\link{require}}. See \code{\link{library}} for details.}
+
     \item{\code{continue}:}{a non-empty string setting the prompt used
       for lines which continue over one line.}
 
@@ -163,10 +167,6 @@ getOption(x, default = NULL)
       debugging.  Note that these need to specified as
       e.g.\sspace{}\code{options(error = utils::recover)} in startup
       files such as \file{\link{.Rprofile}}.}
-
-    \item{\code{error.on.conflicts}:}{If \code{TRUE} a call to
-      \code{library} or \code{require} will signal an error if a
-      conflict is encountered and not explicitly masked.}
 
     \item{\code{expressions}:}{sets a limit on the number of nested
       expressions that will be evaluated.  Valid values are
