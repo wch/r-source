@@ -4551,14 +4551,6 @@ add_dummies <- function(dir, Log)
                              ": warning: .* with a value, in function returning void"
                             )
 
-                ## gcc 9 warns on code deprecated in C++11
-                ## rather too frequently,
-                ## so suppressable (undocumented) for now.
-                check_gcc9 <- Sys.getenv("_R_CHECK_GCC9_WARNINGS_", "TRUE")
-                if (config_val_to_logical(check_gcc9))
-                     warn_re <- c(warn_re,
-                                  ": warning: .* \\[-Wdeprecated-copy\\]")
-
                 ## clang warnings
                 warn_re <- c(warn_re,
                              ": warning: .* GNU extension",
