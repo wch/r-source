@@ -2354,7 +2354,7 @@ esac
 
 ## Printing.
 ## We look to see whether we have 'lpr' or 'lp'.  Some platforms
-## provide both (SunOS and HPUX), and in those cases we choose lpr.
+## provide both (SunOS and HP-UX), and in those cases we choose lpr.
 if test -z "${R_PRINTCMD}"; then
   AC_CHECK_PROGS(R_PRINTCMD, [lpr lp])
 fi

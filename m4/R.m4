@@ -737,14 +737,14 @@ LIBS="${r_save_LIBS}"
 ## manual inclusion leads to ordering problems (remove when autoconf
 ## is fixed - supposedly the CVS version is, but 2.6.0 is not).
 ##
-## Native f90 on HPUX 11 comes up with '-l:libF90.a' causing trouble
+## Native f90 on HP-UX 11 comes up with '-l:libF90.a' causing trouble
 ## when using gcc for linking.  The '-l:' construction is similar to
 ## plain '-l' except that search order (archive/shared) given by '-a'
 ## is not important.  We escape such flags via '-Wl,' in case of gcc.
 ## Note that the current Autoconf CVS uses _AC_LINKER_OPTION for a
 ## similar purpose when computing FLIBS: this uses '-Xlinker' escapes
 ## for gcc and does nothing otherwise.  Note also that we cannot simply
-## unconditionally escape with '${wl}' from libtool as on HPUX we need
+## unconditionally escape with '${wl}' from libtool as on HP-UX we need
 ## SHLIB_LD=ld for native C compilers (problem with non-PIC 'crt0.o',
 ## see 'Individual platform overrides' in section 'DLL stuff' in file
 ## 'configure.ac'.
@@ -950,7 +950,7 @@ if ${CC} ${CFLAGS} -c conftest.c 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD; then
   ## determined (and necessary additions to MAIN_LDFLAGS were made).
   ## But it seems that we currently can always use the C compiler.
   ## Also, to be defensive there should be a similar test with SHLIB_LD
-  ## and SHLIB_LDFLAGS (and note that on HPUX with native cc we have to
+  ## and SHLIB_LDFLAGS (and note that on HP-UX with native cc we have to
   ## use ld for SHLIB_LD) ...
   ## Be nice to people who put compiler architecture opts in CFLAGS
   if ${CC} ${CFLAGS} ${LDFLAGS} ${MAIN_LDFLAGS} -o conftest${ac_exeext} \
@@ -1040,7 +1040,7 @@ if ${CC} ${CFLAGS} -c conftest.c 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD; then
   ## determined (and necessary additions to MAIN_LDFLAGS were made).
   ## But it seems that we currently can always use the C compiler.
   ## Also, to be defensive there should be a similar test with SHLIB_LD
-  ## and SHLIB_LDFLAGS (and note that on HPUX with native cc we have to
+  ## and SHLIB_LDFLAGS (and note that on HP-UX with native cc we have to
   ## use ld for SHLIB_LD) ...
   if ${CC} ${CFLAGS} ${LDFLAGS} ${MAIN_LDFLAGS} -o conftest${ac_exeext} \
        conftest.${ac_objext} conftestf.${ac_objext} ${FLIBS} \
@@ -1127,7 +1127,7 @@ if ${CC} ${CFLAGS} -c conftest.c 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD; then
   ## determined (and necessary additions to MAIN_LDFLAGS were made).
   ## But it seems that we currently can always use the C compiler.
   ## Also, to be defensive there should be a similar test with SHLIB_LD
-  ## and SHLIB_LDFLAGS (and note that on HPUX with native cc we have to
+  ## and SHLIB_LDFLAGS (and note that on HP-UX with native cc we have to
   ## use ld for SHLIB_LD) ...
   if ${CC} ${CFLAGS} ${LDFLAGS} ${MAIN_LDFLAGS} -o conftest${ac_exeext} \
        conftest.${ac_objext} conftestf.${ac_objext} ${FLIBS} \
@@ -2561,7 +2561,7 @@ AC_SUBST(use_tcltk)
 ## from the Official Autoconf Macro Archive
 ## (https://www.gnu.org/software/ac-archive/htmldoc/acx_blas.m4),
 ## with the following changes:
-## * We also handle HPUX .sl command line specifications.
+## * We also handle HP-UX .sl command line specifications.
 ## * We explictly deal with the case of f2c.  Most likely pointless.
 ## * We only care about the Fortran interface to Atlas, hence do not
 ##   test for -lcblas.
@@ -2755,7 +2755,7 @@ if ${CC} ${CFLAGS} -c conftest.c 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD; then
   ## determined (and necessary additions to MAIN_LDFLAGS were made).
   ## But it seems that we currently can always use the C compiler.
   ## Also, to be defensive there should be a similar test with SHLIB_LD
-  ## and SHLIB_LDFLAGS (and note that on HPUX with native cc we have to
+  ## and SHLIB_LDFLAGS (and note that on HP-UX with native cc we have to
   ## use ld for SHLIB_LD) ...
   if ${CC} ${CFLAGS} ${LDFLAGS} ${MAIN_LDFLAGS} -o conftest${ac_exeext} \
        conftest.${ac_objext} conftestf.${ac_objext} ${FLIBS} \
@@ -2892,7 +2892,7 @@ if ${CC} ${CFLAGS} -c conftest.c 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD; then
   ## determined (and necessary additions to MAIN_LDFLAGS were made).
   ## But it seems that we currently can always use the C compiler.
   ## Also, to be defensive there should be a similar test with SHLIB_LD
-  ## and SHLIB_LDFLAGS (and note that on HPUX with native cc we have to
+  ## and SHLIB_LDFLAGS (and note that on HP-UX with native cc we have to
   ## use ld for SHLIB_LD) ...
   if ${CC} ${CFLAGS} ${LDFLAGS} ${MAIN_LDFLAGS} -o conftest${ac_exeext} \
        conftest.${ac_objext} ${FLIBS} \
@@ -2927,7 +2927,7 @@ AC_SUBST(BLAS_LIBS)
 ## <stevenj@alum.mit.edu> from the Official Autoconf Macro Archive
 ## (https://www.gnu.org/software/ac-archive/htmldoc/acx_lapack.m4),
 ## with the following changes:
-## * We also handle HPUX .sl command line specifications.
+## * We also handle HP-UX .sl command line specifications.
 ## * We explictly deal with the case of f2c.  Most likely pointless.
 ## * We test for a LAPACK_LIBS environment variable after checking
 ##   whether LAPACK is already linked (see below).
