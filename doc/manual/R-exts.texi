@@ -1802,9 +1802,9 @@ for @file{Makevars.win}) without the use of GNU extensions.
 The most common use of a @file{Makevars} file is to set additional
 preprocessor options (for example include paths and definitions) for
 C/C++ files @emph{via} @code{PKG_CPPFLAGS}, and additional compiler
-flags by setting @code{PKG_CFLAGS}, @code{PKG_CXXFLAGS},
-@code{PKG_FFLAGS} or @code{PKG_FCFLAGS}, for C, C++, fixed-form or
-free-form Fortran respectively (@pxref{Creating shared objects}).
+flags by setting @code{PKG_CFLAGS}, @code{PKG_CXXFLAGS} or
+@code{PKG_FFLAGS}, for C, C++ or Fortran respectively (@pxref{Creating
+shared objects}).
 
 @strong{N.B.}: Include paths are preprocessor options, not compiler
 options, and @strong{must} be set in @code{PKG_CPPFLAGS} as otherwise
@@ -1961,7 +1961,14 @@ all: mylibs
 @end example
 
 @noindent
-does @strong{not} suffice.
+does @strong{not} suffice.  GNU make does allow the construct
+@example
+.NOTPARALLEL: all
+all: mylibs $(SHLIB)
+@end example
+
+@noindent
+but that is not portable.
 
 Note that on Windows it is required that @file{Makevars[.win]} does
 create a DLL: this is needed as it is the only reliable way to ensure
@@ -2115,7 +2122,8 @@ as the C compiler will be used to link the package code (and there is no
 guarantee that this will work everywhere).  Packages which include C++
 code should use @code{SHLIB_OPENMP_CXXFLAGS} in @code{PKG_LIBS}. (As
 from @R{} 3.6.0 this applies also to free-form Fortran code, where
-@code{SHLIB_OPENMP_FFLAGS} should be used in @code{PKG_FCFLAGS}.)
+@code{SHLIB_OPENMP_FFLAGS} should be used in @code{PKG_FFLAGS} or
+@code{PKG_FCFLAGS}.)
 
 It is not portable to use OpenMP with more than one of C, C++ and
 Fortran in a single package since it is not uncommon that the compilers
@@ -2453,21 +2461,27 @@ or by setting the environment variables @code{ODBC_INCLUDE} and
 
 @R{} assumes that source files with extension @file{.f} are fixed-form
 Fortran, and passes them to the compiler specified by @samp{FC}.  On
-most but not all platforms the compiler specified by @samp{FC} will also
-accept free-form Fortran 90/95 code with extension @file{.f90} or
-@file{.f95}.
+most but not all platforms the Fortran compiler will also accept
+free-form Fortran 90/95 code with extension @file{.f90} or @file{.f95}.
+
+@vindex PKG_FCFLAGS
+As from @R{} 3.6.0 the same compiler is used for both fixed-form and
+free-form Fortran code.  For both, @code{PKG_FFLAGS} can be used for
+package-specific flags: in the unusual case that different flags are
+needed for the two forms, @code{PKG_FCFLAGS} is also available for
+free-form Fortran.
 
 Some (but not) all compilers specified by @samp{FC} will accept Fortran
 2003 or 2008 code: such code should still use file extension @file{.f90}
 or @file{.f95}.  For platforms using @command{gfortran}, you may need to
-include @option{-std=f2003} or @option{-std=f2008} in
-@code{PKG_FCFLAGS}: the default is `GNU Fortran', Fortran 95 with
+include @option{-std=f2003} or @option{-std=f2008} in @code{PKG_FFLAGS}
+or @code{PKG_FCFLAGS}: the default is `GNU Fortran', Fortran 95 with
 non-standard extensions.  The Oracle @command{f95} compiler `accepts
 some Fortran 2003/8 features' (search for `Oracle Developer Studio 12.5:
 Fortran User's Guide' and look for §4.6).
 
 Modern versions of Fortran support modules, whereby compiling one source
-file creates a module file which is then included in others. (Module
+file creates a module file which is then included in others.  (Module
 files typically have a @file{.mod} extension: they do depend on the
 compiler used and so should never be included in a package.)  This
 creates a dependence which @command{make} will not know about and often
@@ -8838,7 +8852,6 @@ It is easy to arrange to use this check on just the code in your
 package: add to @file{~/.R/Makevars} something like (for
 @command{gfortran})
 @example
-FCFLAGS = -g -O2 -mtune=native -fbounds-check
 FFLAGS = -g -O2 -mtune=native -fbounds-check
 @end example
 
@@ -10177,11 +10190,10 @@ specify additional flags by setting some of the variables
 @vindex PKG_CFLAGS
 @vindex PKG_CXXFLAGS
 @vindex PKG_FFLAGS
-@vindex PKG_FCFLAGS
 @vindex PKG_OBJCFLAGS
 @vindex PKG_OBJCXXFLAGS
 @code{PKG_CFLAGS}, @code{PKG_CXXFLAGS}, @code{PKG_FFLAGS},
-@code{PKG_FCFLAGS}, @code{PKG_OBJCFLAGS}, and @code{PKG_OBJCXXFLAGS}
+@code{PKG_OBJCFLAGS}, and @code{PKG_OBJCXXFLAGS}
 (for the C, C++, Fortran, Objective C, and Objective C++
 compilers, respectively) in the file @file{Makevars} in the compilation
 directory (or, of course, create the object files directly from the
