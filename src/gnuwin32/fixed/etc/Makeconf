@@ -99,9 +99,10 @@ ECHO_N = -n
 ECHO_T = 
 ## unsupported on Windows
 F_VISIBILITY = 
+## FC is the compiler used for all Fortran as from R 3.6.0
 FC = $(BINPREF)gfortran $(M_ARCH)
 FCFLAGS = -O3 $(DEBUGFLAG) @EOPTS@
-# additional libs needed when linking with $(FC), e.g. on Solaris
+## additional libs needed when linking with $(FC), e.g. on some Oracle compilers
 FCLIBS_XTRA =
 F77 = $(BINPREF)gfortran $(M_ARCH)
 F77_VISIBILITY = 
@@ -115,6 +116,8 @@ JAR =
 JAVA =
 JAVAC = 
 JAVAH =
+## JAVA_HOME might be used in the next three.  
+## They are for packages 'JavaGD' and 'rJava'
 # JAVA_HOME = 
 # JAVA_LD_LIBRARY_PATH = 
 JAVA_LIBS = -L"$(JAVA_HOME)/bin/client" -ljvm -ljvm-w32
@@ -194,6 +197,9 @@ ALL_OBJCFLAGS = $(PKG_OBJCFLAGS) $(CPICFLAGS) $(SHLIB_CFLAGS) $(OBJCFLAGS)
 ALL_OBJCXXFLAGS = $(PKG_OBJCXXFLAGS) $(CXXPICFLAGS) $(SHLIB_CXXFLAGS) $(OBJCXXFLAGS)
 ALL_FFLAGS = $(R_XTRA_FFLAGS) $(PKG_FFLAGS) $(FPICFLAGS) $(SHLIB_FFLAGS) $(FFLAGS)
 ALL_LIBS = $(PKG_LIBS) $(LOCAL_LIBS) $(SHLIB_LIBADD) $(LIBR) $(LIBINTL)
+## can be overridden by SHLIB
+P_FCFLAGS = $(PKG_FFLAGS)
+ALL_FCFLAGS = $(R_XTRA_FFLAGS) $(P_FCFLAGS) $(FPICFLAGS) $(SHLIB_FFLAGS) $(FCFLAGS)
 
 .SUFFIXES:
 .SUFFIXES: .c .cc .cpp .d .f .f90 .f95 .m .mm .M .o .a .def .dll .exe .rc
@@ -225,9 +231,9 @@ ALL_LIBS = $(PKG_LIBS) $(LOCAL_LIBS) $(SHLIB_LIBADD) $(LIBR) $(LIBINTL)
 .f.o:
 	$(FC) $(ALL_FFLAGS) -c $< -o $@
 .f95.o:
-	$(FC) $(PKG_FCFLAGS) $(FPICFLAGS) $(FCFLAGS) -c  $< -o $@
+	$(FC) $(ALL_FCFLAGS) -c  $< -o $@
 .f90.o:
-	$(FC) $(PKG_FCFLAGS) $(FPICFLAGS) $(FCFLAGS) -c  $< -o $@
+	$(FC) $(ALL_FCFLAGS) -c  $< -o $@
 
 %.exe:
 	$(LINKER) $(LINKFLAGS) $($*-LINKFLAGS) -o $@ $^ $($*-LIBS) $(LOCAL_LIBS) $(LIBS)

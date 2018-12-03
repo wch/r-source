@@ -1774,6 +1774,13 @@ if(FALSE) {
 
     OBJ_EXT <- ".o" # all currrent compilers, but not some on Windows
 
+    ## The order of inclusion of Makefiles on a Unix-alike is
+    ## package's src/Makevars
+    ## etc/Makeconf
+    ## site Makevars
+    ## share/make/shlib.mk
+    ## user Makevars
+    ## and similarly elsewhere
     objs <- character()
     shlib <- ""
     site <- Sys.getenv("R_MAKEVARS_SITE", NA_character_)
@@ -2039,6 +2046,9 @@ if(FALSE) {
     if (length(shlib_libadd))
         makeargs <- c(makeargs,
                       paste0("SHLIB_LIBADD='", p1(shlib_libadd), "'"))
+    if (with_f9x && file.exists("Makevars") &&
+        length(grep("^\\s*PKG_FCFLAGS", lines, perl = TRUE, useBytes = TRUE)))
+        makeargs <- c(makeargs, "P_FCFLAGS='$(PKG_FCFLAGS)'")
 
     if (WINDOWS && debug) makeargs <- c(makeargs, "DEBUG=T")
     ## TCLBIN is needed for tkrplot and tcltk2

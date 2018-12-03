@@ -272,10 +272,6 @@
 
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
-      \item \strong{N.B.}: The handling of Fortran is \strong{work in
-	progress}, with further changes under test.  Code and
-      documentation may not be in sync.
-
       \item The interpretation of source code with extension \file{.f}
       is changing.  Previously this denoted FORTRAN 77 code, but current
       compilers no longer have a FORTRAN 77 mode and interpret it as
@@ -294,11 +290,16 @@
       Fortran code and allows mixing of C++ and free-form Fortran on
       most platforms.
 
-      Consequentially, packages including free-form Fortran 9x which
-      uses OpenMP should include \samp{SHLIB_OPENMP_CFLAGS} (or the
-      \samp{CXXFLAGS} version) in \samp{PKG_LIBS} rather than
-      \samp{SHLIB_OPENMP_FCFLAGS} --- fortunately on current platforms
-      they are the same flag.
+      Consequentially, packages including free-form Fortran 9x code
+      which uses OpenMP should include \samp{SHLIB_OPENMP_CFLAGS} (or
+      the \samp{CXXFLAGS} version if they also include C++ code) in
+      \samp{PKG_LIBS} rather than \samp{SHLIB_OPENMP_FCFLAGS} ---
+      fortunately on current platforms they are the same flag.
+
+      \item Macro \samp{PKG_FFLAGS} will be used for the compilation of
+      both fixed-form and free-form Fortran code unless
+      \samp{PKG_FCFLAGS} is also set (in \file{src/Makevars} or
+      \file{src/Makevars.win}).
 
       \item The new make macro \samp{F_VISIBILITY} is now preferred for
       both fixed-form and free-form Fortran.

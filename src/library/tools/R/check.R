@@ -2796,7 +2796,9 @@ add_dummies <- function(dir, Log)
                             printLog(Log, "  ", m, ": ", msg)
                             next
                         }
-                        if(f == "F" && !have_f) {
+                        ## as from R 3.6.0, PKG_FFLAGS is by default
+                        ## used for both fixed- and free-form files.
+                        if(f == "F" && !(have_f || have_f9x)) {
                             if (!any) noteLog(Log)
                             any <- TRUE
                             msg <- "SHLIB_OPENMP_FFLAGS is included in PKG_FFLAGS without any fixed-form Fortran files\n"
