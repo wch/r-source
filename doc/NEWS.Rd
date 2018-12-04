@@ -217,10 +217,10 @@
 
       \item The primitive functions \code{drop()} and \code{unclass()}
       now avoid duplicating their data for atomic vectors that are large
-      enough by returning \code{ALTREP} wrapper objects with adjusted
-      attributes.  R-level assignments to change attributes will also
+      enough, by returning \code{ALTREP} wrapper objects with adjusted
+      attributes.  \R{}-level assignments to change attributes will also
       use wrapper objects to avoid duplicating data for larger atomic
-      vectors. R functions like \code{structure()} and \code{unname()}
+      vectors. \R functions like \code{structure()} and \code{unname()}
       will therefore not duplicate data in these settings.  Generic
       vectors as produced by \code{list()} are not yet covered by this
       optimization but may be in due course.
