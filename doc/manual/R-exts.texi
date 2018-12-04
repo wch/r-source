@@ -1773,10 +1773,10 @@ pkg-config --list-all | sort
 @menu
 * Using Makevars::              
 * Configure example::           
-* Using F95 code::              
+* Using F9x code::              
 * Using C++11 code::            
-* Using C++14 code::
-* Using C++17 code::
+* Using C++14 code::            
+* Using C++17 code::            
 @end menu
 
 @node Using Makevars, Configure example, Configure and cleanup, Configure and cleanup
@@ -2321,7 +2321,7 @@ We really do not recommend using @file{src/Makefile} instead of
 @file{src/Makevars}, and as the example above shows, it is not
 necessary.
 
-@node Configure example, Using F95 code, Using Makevars, Configure and cleanup
+@node Configure example, Using F9x code, Using Makevars, Configure and cleanup
 @subsection Configure example
 
 It may be helpful to give an extended example of using a
@@ -2456,8 +2456,8 @@ R CMD INSTALL \
 or by setting the environment variables @code{ODBC_INCLUDE} and
 @code{ODBC_LIBS}.
 
-@node Using F95 code, Using C++11 code, Configure example, Configure and cleanup
-@subsection Using F95 code
+@node Using F9x code, Using C++11 code, Configure example, Configure and cleanup
+@subsection Using F9x code
 
 @R{} assumes that source files with extension @file{.f} are fixed-form
 Fortran, and passes them to the compiler specified by @samp{FC}.  On
@@ -2471,14 +2471,19 @@ package-specific flags: in the unusual case that different flags are
 needed for the two forms, @code{PKG_FCFLAGS} is also available for
 free-form Fortran.
 
-Some (but not) all compilers specified by @samp{FC} will accept Fortran
-2003 or 2008 code: such code should still use file extension @file{.f90}
-or @file{.f95}.  For platforms using @command{gfortran}, you may need to
-include @option{-std=f2003} or @option{-std=f2008} in @code{PKG_FFLAGS}
-or @code{PKG_FCFLAGS}: the default is `GNU Fortran', Fortran 95 with
-non-standard extensions.  The Oracle @command{f95} compiler `accepts
-some Fortran 2003/8 features' (search for `Oracle Developer Studio 12.5:
-Fortran User's Guide' and look for §4.6).
+The code used to build @R{} allows a `Fortran
+90' compiler to be selected as @samp{FC}, so platforms might be
+encountered which only support Fortran 90.  However, Fortran
+95 is widely supported.
+
+Some compilers specified by @samp{FC} will accept Fortran 2003 or 2008
+code: such code should still use file extension @file{.f90} or
+@file{.f95}.  Most platforms use @command{gfortran} where you may need
+to include @option{-std=f2003} or @option{-std=f2008} in
+@code{PKG_FFLAGS} or @code{PKG_FCFLAGS}: the default is `GNU Fortran',
+Fortran 95 with non-standard extensions.  The Oracle @command{f95}
+compiler `accepts some Fortran 2003/8 features' (search for `Oracle
+Developer Studio 12.5: Fortran User's Guide' and look for §4.6).
 
 Modern versions of Fortran support modules, whereby compiling one source
 file creates a module file which is then included in others.  (Module
@@ -2496,7 +2501,7 @@ to contain something like
 cmi.o dmi.o: iface.o
 @end example
 
-@node Using C++11 code, Using C++14 code, Using F95 code, Configure and cleanup
+@node Using C++11 code, Using C++14 code, Using F9x code, Configure and cleanup
 @subsection Using C++11 code
 
 @R{} can be built without a C++ compiler although one is available (but
@@ -12577,7 +12582,7 @@ to create marked character strings of a given length.
 
 @menu
 * Memory allocation::           
-* Error signaling::              
+* Error signaling::             
 * Random numbers::              
 * Missing and IEEE values::     
 * Printing::                    
@@ -12587,7 +12592,7 @@ to create marked character strings of a given length.
 * Integration::                 
 * Utility functions::           
 * Re-encoding::                 
-* Condition handling and cleanup code::
+* Condition handling and cleanup code::  
 * Allowing interrupts::         
 * Platform and version information::  
 * Inlining C functions::        

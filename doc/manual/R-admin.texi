@@ -4409,12 +4409,11 @@ variable @code{MAKE} at configure time, for example
 
 To compile @R{}, you need a Fortran 90 compiler.  The current default
 is to search for
-@c F95_compilers in m4/R.m4:
+@c From AC_PROG_FC
 @command{gfortran}, @command{g95}, @command{xlf95} @command{f95},
 @command{fort}, @command{ifort}, @command{ifc}, @command{efc},
 @command{pgfortran}, @command{pgf95} @command{lf95}, @command{ftn},
 @command{nagfor},
-@c F90 compilers in m4/R.m4:
 @command{xlf90}, @command{f90}, @command{pgf90}, @command{pghpf},
 @command{epcf90}.
 (Note that these are searched for by name, without checking the standard
