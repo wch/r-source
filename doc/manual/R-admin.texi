@@ -4467,9 +4467,9 @@ and others include
 @item CFLAGS
 debugging and optimization flags, C
 @item MAIN_CFLAGS
-ditto, for compiling the main program
+ditto, for compiling the main program (e.g.@: when profiling)
 @item SHLIB_CFLAGS
-for shared objects
+for shared objects (no known examples)
 @item FFLAGS
 debugging and optimization flags, fixed-form Fortran
 @item FCFLAGS
@@ -4477,9 +4477,9 @@ debugging and optimization flags, free-form Fortran
 @item SAFE_FFLAGS
 ditto for source files which need exact floating point behaviour
 @item MAIN_FFLAGS
-ditto, for compiling the main program
+ditto, for compiling the main program (e.g.@: when profiling)
 @item SHLIB_FFLAGS
-for shared objects
+for shared objects (no known examples)
 @item MAIN_LDFLAGS
 additional flags for the main link
 @item SHLIB_LDFLAGS
@@ -4509,6 +4509,11 @@ example @samp{-fpic} and @samp{-fPIC}, and if they differ the first
 allows only a limited number of symbols in a shared object.  Since @R{}
 as a shared library has about 6200 symbols, if in doubt use the larger
 version.
+
+Other variables often set by @command{configure} include
+@samp{MAIN_LDFLAGS}, @samp{SAFE_FFLAGS}, @samp{SHLIB_LDFLAGS} and
+@samp{SHLIB_CXXLDFLAGS}: see file @file{config.site} in the sources for
+more documentation on these and others.
 
 To compile a profiling version of @R{}, one might for example want to
 use @samp{MAIN_CFLAGS=-pg}, @samp{MAIN_FFLAGS=-pg},
