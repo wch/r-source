@@ -661,7 +661,7 @@ Rd2txt <-
                    ## Test to see if we can convert the encoded version
                    txt <- as.character(block[[1L]])
                    test <- iconv(txt, "UTF-8", outputEncoding, mark = FALSE)
-                   txt <- if(!is.na(test)) txt else as.character(block[[2L]])
+                   txt <- if(!anyNA(test)) txt else as.character(block[[2L]])
                    put(txt)
                } ,
                "\\eqn" = {
@@ -754,6 +754,7 @@ Rd2txt <-
                         else
                             entries
                     })
+        if(!length(entries)) return()
         rows <- entries[[length(entries)]]$row
         cols <- max(sapply(entries, function(e) e$col))
         widths <- rep_len(0L, cols)
