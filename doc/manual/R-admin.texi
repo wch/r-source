@@ -4521,10 +4521,9 @@ possible issue is the alignment of doubles, another is the way
 structures are passed.
 
 On some platforms @command{configure} will select additional flags for
-@code{CFLAGS}, @code{CPPFLAGS}, @code{FFLAGS}, @code{FCFLAGS},
-@code{CXXFLAGS} and @code{LIBS} in @code{R_XTRA_CFLAGS} (and so on).
-These are for options which are always required, for example to force
-@acronym{IEC}@tie{}60559 compliance.
+@code{CFLAGS}, @code{CPPFLAGS} and @code{LIBS} in @code{R_XTRA_CFLAGS}
+(and so on).  These are for options which are always required, for
+example to force @acronym{IEC}@tie{}60559 compliance.
 
 @node Maintainer mode,  , Compile and load flags, Configuration on a Unix-alike
 @section Maintainer mode

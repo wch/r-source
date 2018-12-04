@@ -137,7 +137,7 @@ SHLIB_OPENMP_FCFLAGS = @SHLIB_OPENMP_FFLAGS@
 ## for linking to libR.a
 STATIC_LIBR = @WANT_R_STATIC_TRUE@ @STATICR1@ "$(R_HOME)/lib$(R_ARCH)/libR.a" @STATICR2@ $(BLAS_LIBS) $(FLIBS) @R_XTRA_LIBS@ $(LIBINTL) @READLINE_LIBS@ $(LIBS)
 
-## used on AIX
+## used on AIX, old glibc (-D__NO_MATH_INLINES)
 R_XTRA_CFLAGS = @R_XTRA_CFLAGS@
 ## @R_XTRA_CPPFLAGS@ used on HP-UX
 ## @R_XTRA_CPPFLAGS2@ is for R include dir(s)

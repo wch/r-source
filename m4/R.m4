@@ -485,6 +485,7 @@ if test "${r_cv_c_no_math_inlines}" = yes; then
 fi
 ])# R_PROG_CC_FLAG_D__NO_MATH_INLINES
 
+## Unused
 ## R_C_OPTIEEE
 ## -----------
 ## Check whether the C compiler needs '-OPT:IEEE_NaN_inf=ON' to

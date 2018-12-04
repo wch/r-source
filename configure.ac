@@ -978,6 +978,7 @@ esac
 
 ### ** Platform-specific overrides for the C, fixed-form Fortran and C++ compilers.
 
+## This was for glibc 2.1: do we really still need it?
 case "${host_cpu}" in
   i*86|x86_64)
     R_PROG_CC_FLAG_D__NO_MATH_INLINES
