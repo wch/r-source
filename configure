@@ -39526,7 +39526,7 @@ fi
 
 
 ## libcurl
-## curl-config might not match the installed libcurl,
+
 # Extract the first word of "curl-config", so it can be a program name with args.
 set dummy curl-config; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
