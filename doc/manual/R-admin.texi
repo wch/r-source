@@ -4344,9 +4344,11 @@ systems @file{/usr/local/include} is regarded as a system include
 directory and so instances in that macro will be skipped) to catch the
 most common cases.  If libraries are still not found, then maybe your
 compiler/linker does not support re-ordering of @option{-L} and
-@option{-l} flags (years ago this was reported to be a problem on HP-UX
-with the native @command{cc}).  In this case, use a different compiler
-(or a front-end shell script which does the re-ordering).
+@option{-l} flags.
+@c (years ago this was reported to be a problem on HP-UX with the native
+@c @command{cc}).  
+In this case, use a different compiler (or a front-end shell script
+which does the re-ordering).
 
 These flags can also be used to build a faster-running version of @R{}.
 On most platforms using @command{gcc}, having @samp{-O3} in

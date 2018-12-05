@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 2000-2017	    The R Core Team
+ *  Copyright (C) 2000-2018	    The R Core Team
  *  Copyright (C) 2005		    The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -26,7 +26,7 @@
    That OS defines the imaginary type, but GCC does not.
    Probably needed elsewhere, e.g. AIX, HP-UX (PR#15083)
    And use on Win32/64 suppresses warnings.
-   The warning is also seen on macOS 10.5, but not later.
+   The warning was also seen on macOS 10.5, but not later.
 */
 #if defined(__GNUC__) && (defined(__sun__) || defined(__hpux__) || defined(Win32))
 # undef  I

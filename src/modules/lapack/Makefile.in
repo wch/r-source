@@ -37,7 +37,7 @@ DISTFILES = \
 lapack_la = lapack$(SHLIB_EXT)
 Rlapack_la = libRlapack$(R_DYLIB_EXT)
 lapack_la_OBJECTS = $(OBJECTS)
-## Used for passing '+s' to SHLIB_LINK on HP-UX.
+## Formerly uxsed for passing '+s' to SHLIB_LINK on HP-UX.
 lapack_la_LDFLAGS = @LAPACK_LDFLAGS@
 lapack_la_LIBADD = $(LIBR1) @DYLIB_UNDEFINED_ALLOWED_FALSE@ $(LIBINTL)
 
