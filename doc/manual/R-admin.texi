@@ -4581,8 +4581,8 @@ under @file{m4} by @command{autoconf} and @command{aclocal} (part of the
 @pkg{automake} package).  There is a formal version requirement on
 @command{autoconf} of 2.62 or later, but it is unlikely that anything
 other than the most recent versions@footnote{at the time of revision of
-this para in 2017, @pkg{autoconf-2.69} from 2012 and @pkg{automake-1.15}
-from 2015.} have been thoroughly tested.
+this para in late 2018, @pkg{autoconf-2.69} from 2012 and
+@pkg{automake-1.15.1} from 2017.} have been thoroughly tested.
 
 File @file{src/include/config.h} is created by @command{autoheader}
 (part of @pkg{autoconf}).
@@ -4607,11 +4607,12 @@ made available at
 sources are only re-created even in maintainer mode if
 @file{src/library/compiler/noweb/compiler.nw} has been updated.
 
-It is likely that in future creating @code{configure} will need the GNU
-`autoconf archive' installed.  This can be found at
-@url{https://www.gnu.org/software/autoconf-archive/} and as a package
-(usually called @pkg{autoconf-archive}) in most packaged distributions,
-for example Debian, Fedora, OpenCSW, Homebrew and MacPorts.
+@c It is likely that in future creating @code{configure} will need the GNU
+@c `autoconf archive' installed.  This can be found at
+@c @c and it has moved to github!
+@c @url{https://www.gnu.org/software/autoconf-archive/} and as a package
+@c (usually called @pkg{autoconf-archive}) in most packaged distributions,
+@c for example Debian, Fedora, OpenCSW, Homebrew and MacPorts.
 
 @node Platform notes, The Windows toolset, Configuration on a Unix-alike, Top
 @appendix Platform notes
@@ -5516,7 +5517,7 @@ The Oracle compilers do not by default conform to the C99 standard
 use @option{-xlibmieee} to ensure this.
 
 A peculiarity of some versions of the Fortran compiler was that when
-asked to link a shared object it did not link against the Fortran 9x
+asked to link a shared object it did not link against all the Fortran 9x
 runtime libraries, hence
 @example
 FCLIBS="-lfsu /opt/developerstudio12.5/lib/libfui.so.2"
