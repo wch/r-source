@@ -542,15 +542,15 @@ AC_ARG_VAR([R_SHELL],
 
 if test -z "${r_arch}"; then
   R_ARCH=
-  R_XTRA_CPPFLAGS2="-I\"\$(R_INCLUDE_DIR)\""
+  R_INCLUDES="-I\"\$(R_INCLUDE_DIR)\""
 else
   R_ARCH="/${r_arch}"
-  R_XTRA_CPPFLAGS2="-I\"\$(R_INCLUDE_DIR)\" -I\"\$(R_INCLUDE_DIR)/${r_arch}\""
+  R_INCLUDES="-I\"\$(R_INCLUDE_DIR)\" -I\"\$(R_INCLUDE_DIR)/${r_arch}\""
 fi
 AC_DEFINE_UNQUOTED(R_ARCH, "${r_arch}",
 [Define this to use architecture-dependent subdirectories of this name.])
 AC_SUBST([R_ARCH])
-AC_SUBST([R_XTRA_CPPFLAGS2])
+AC_SUBST([R_INCLUDES])
 
 ### ** Check whether we build in srcdir.
 

@@ -915,7 +915,7 @@ AR
 LN_S
 BUILDDIR_IS_SRCDIR
 GETWD
-R_XTRA_CPPFLAGS2
+R_INCLUDES
 R_ARCH
 R_SHELL
 JAVA_HOME
@@ -4265,10 +4265,10 @@ fi
 
 if test -z "${r_arch}"; then
   R_ARCH=
-  R_XTRA_CPPFLAGS2="-I\"\$(R_INCLUDE_DIR)\""
+  R_INCLUDES="-I\"\$(R_INCLUDE_DIR)\""
 else
   R_ARCH="/${r_arch}"
-  R_XTRA_CPPFLAGS2="-I\"\$(R_INCLUDE_DIR)\" -I\"\$(R_INCLUDE_DIR)/${r_arch}\""
+  R_INCLUDES="-I\"\$(R_INCLUDE_DIR)\" -I\"\$(R_INCLUDE_DIR)/${r_arch}\""
 fi
 
 cat >>confdefs.h <<_ACEOF
