@@ -20,7 +20,7 @@
 ### along with R; if not, a copy is available at
 ### https://www.r-project.org/Licenses/
 
-AC_PREREQ(2.62)
+AC_PREREQ(2.69)
 
 ## We want to get the version number from file 'VERSION' (rather than
 ## specifying the version info in 'configure.ac'.  Hence, we need a bit
@@ -977,6 +977,13 @@ case "${host_os}" in
 esac
 
 ### ** Platform-specific overrides for the C, fixed-form Fortran and C++ compilers.
+
+## Ensure we do not pick up values from outside configure
+R_XTRA_CFLAGS==
+R_XTRA_CPPFLAGS=
+R_XTRA_CXXFLAGS=
+R_XTRA_FFLAGS=
+R_XTRA_LIBS=
 
 dnl This was for glibc 2.1
 dnl case "${host_cpu}" in
