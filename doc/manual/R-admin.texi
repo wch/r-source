@@ -3721,9 +3721,11 @@ is taken from the
 @enindex BLAS_LIBS
 environment variable @env{BLAS_LIBS}, set for example in
 @file{config.site}.  If neither the option nor the environment variable
-supply a value, a search is made for a suitable @acronym{BLAS}.  If the
-value is not obviously a linker command (starting with a dash or giving
-the path to a library), it is prefixed by @samp{-l}, so
+supply a value, a search is made for a suitable@footnote{The search
+includes OpenBLAS, ATLAS and a generic @file{libblas}, plus some
+platform-specific choices (see below).} @acronym{BLAS}.  If the value is
+not obviously a linker command (starting with a dash or giving the path
+to a library), it is prefixed by @samp{-l}, so
 
 @example
 --with-blas="foo"

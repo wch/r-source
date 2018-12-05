@@ -2561,19 +2561,18 @@ AC_SUBST(use_tcltk)
 ##
 ## This is based on ACX_BLAS by Steven G. Johnson <stevenj@alum.mit.edu>
 ## from the Official Autoconf Macro Archive
-## (https://www.gnu.org/software/ac-archive/htmldoc/acx_blas.m4),
+## (formerly https://www.gnu.org/software/ac-archive/htmldoc/acx_blas.m4),
 ## with the following changes:
 ## * We also handle HP-UX .sl command line specifications.
-## * We explictly deal with the case of f2c.  Most likely pointless.
 ## * We only care about the Fortran interface to Atlas, hence do not
 ##   test for -lcblas.
-## * We do not use BLAS libs that caused problems in the past: Alpha
-##   CXML and DXML, and SGI SCSL and SGIMATH (marked with COMMENT tags).
+## * We do not use BLAS libs that caused problems in the past.
 ## * As we link with $BLAS_LIBS $FLIBS $LIBS (in that order), we use the
 ##   same order in the tests.
 ## * We do not use ACTION-IF-FOUND and ACTION-IF-NOT-FOUND.
 ## The sunperf test calls the library as now required.
 ## Based on acx_blas.m4 version 1.2 (2001-12-13)
+## (Since renamed to ax_blas.m4)
 AC_DEFUN([R_BLAS_LIBS],
 [AC_REQUIRE([R_PROG_FC_FLIBS])
 AC_REQUIRE([R_PROG_FC_APPEND_UNDERSCORE])
@@ -2618,6 +2617,13 @@ if test "${acx_blas_ok}" = no; then
   AC_CHECK_FUNC(${dgemm}, [acx_blas_ok=yes])
 fi
 
+## Taken from 2008 version of ax_blas.m4
+# BLAS in OpenBLAS library? (http://xianyi.github.com/OpenBLAS/)
+if test "${acx_blas_ok}" = no; then
+        AC_CHECK_LIB(openblas, $sgemm, [acx_blas_ok=yes
+                                        BLAS_LIBS="-lopenblas"])
+fi
+
 ## BLAS in ATLAS library?  (http://math-atlas.sourceforge.net/)
 if test "${acx_blas_ok}" = no; then
   AC_CHECK_LIB(atlas, ATL_xerbla,
@@ -2638,22 +2644,6 @@ if test "${acx_blas_ok}" = no; then
 			     [], [-lblas])])
 fi
 
-## <COMMENT>
-## ## BLAS in Alpha CXML library?
-## if test "${acx_blas_ok}" = no; then
-##   AC_CHECK_LIB(cxml, ${sgemm},
-##                [acx_blas_ok=yes; BLAS_LIBS="-lcxml"])
-## fi
-## </COMMENT>
-
-## <COMMENT>
-## # BLAS in Alpha DXML library? (now called CXML, see above)
-## if test "${acx_blas_ok}" = no; then
-##   AC_CHECK_LIB(dxml, ${sgemm},
-##                [acx_blas_ok=yes; BLAS_LIBS="-ldxml"])
-## fi
-## </COMMENT>
-
 ## BLAS in Sun Performance library?
 ## Some versions require -xlic_lib=sunperf: -lsunperf will not work
 ## Not sure whether -lsunmath is required, but it helps anyway
@@ -2671,22 +2661,6 @@ if test "${acx_blas_ok}" = no; then
      AC_MSG_RESULT([${acx_blas_ok}])
   fi
 fi
-
-## <COMMENT>
-## ## BLAS in SCSL library?  (SGI/Cray Scientific Library)
-## if test "${acx_blas_ok}" = no; then
-##   AC_CHECK_LIB(scs, ${sgemm},
-##                [acx_blas_ok=yes; BLAS_LIBS="-lscs"])
-## fi
-## </COMMENT>
-
-## <COMMENT>
-## ## BLAS in SGIMATH library?
-## if test "${acx_blas_ok}" = no; then
-##   AC_CHECK_LIB(complib.sgimath, ${sgemm},
-##                [acx_blas_ok=yes; BLAS_LIBS="-lcomplib.sgimath"])
-## fi
-## </COMMENT>
 
 ## BLAS in IBM ESSL library? (requires generic BLAS lib, too)
 if test "${acx_blas_ok}" = no; then
@@ -2927,13 +2901,11 @@ AC_SUBST(BLAS_LIBS)
 ##
 ## This is roughly based on ACX_LAPACK by Steven G. Johnson
 ## <stevenj@alum.mit.edu> from the Official Autoconf Macro Archive
-## (https://www.gnu.org/software/ac-archive/htmldoc/acx_lapack.m4),
+## (formerly https://www.gnu.org/software/ac-archive/htmldoc/acx_lapack.m4),
 ## with the following changes:
 ## * We also handle HP-UX .sl command line specifications.
-## * We explictly deal with the case of f2c.  Most likely pointless.
 ## * We test for a LAPACK_LIBS environment variable after checking
 ##   whether LAPACK is already linked (see below).
-## * We do not test for the generic lapack_rs6k library (why not?).
 ## * As we link with $LAPACK_LIBS $BLAS_LIBS $FLIBS $LIBS (in that
 ##   order), we use the same order in the tests.
 ## * We do not use ACTION-IF-FOUND and ACTION-IF-NOT-FOUND.
@@ -2944,8 +2916,10 @@ AC_SUBST(BLAS_LIBS)
 ## LAPACK-containing BLAS to be used ... there are too many slow or
 ## broken LAPACKs out there.
 ## Based on acx_lapack.m4 version 1.3 (2002-03-12).
+## (Since renamed to ax_lapack.m4)
 
 ## Test function was zgeev, changed to dpstrf which is LAPACK 3.2.
+## (2009 version used cheev)
 
 AC_DEFUN([R_LAPACK_LIBS],
 [AC_REQUIRE([R_PROG_FC_FLIBS])

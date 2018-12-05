@@ -270,6 +270,9 @@
 
       \item Long-untested \command{configure} support for HP-UX and old
       versions of Linux has been or will be removed.
+
+      \item \command{configure --with-blas} (without specifying a value)
+      includes OpenBLAS in its search (before ATLAS and a generic BLAS).
     }
   }
 
