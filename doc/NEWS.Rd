@@ -267,6 +267,9 @@
 
       If necessary, override the defaults on the \command{configure}
       command line or in file \file{config.site}.
+
+      \item Long-untested \command{configure} support for HP-UX and old
+      versions of Linux has been or will be removed.
     }
   }
 

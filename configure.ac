@@ -840,7 +840,7 @@ AC_HEADER_SYS_WAIT
 AC_CHECK_HEADERS(dlfcn.h fcntl.h glob.h grp.h pwd.h sched.h strings.h \
   sys/resource.h sys/select.h sys/socket.h sys/stat.h sys/time.h \
   sys/times.h sys/utsname.h unistd.h utime.h)
-## dl.h is used in src/unix/hpdlfcn.c included from src/unix/dynload.c on HP-UX
+## dl.h was used in src/unix/hpdlfcn.c included from src/unix/dynload.c on HP-UX
 ## features.h is used by date-time code on Linux.
 ## floatingpoint.h is used for fpsetmask on FreeBSD.
 ## sys/param.h is one way to get PATH_MAX.
@@ -978,14 +978,15 @@ esac
 
 ### ** Platform-specific overrides for the C, fixed-form Fortran and C++ compilers.
 
-## This was for glibc 2.1: do we really still need it?
-case "${host_cpu}" in
-  i*86|x86_64)
-    R_PROG_CC_FLAG_D__NO_MATH_INLINES
-    ## We used to add -mieee-fp here, but it seems it is really a
-    ## linker flag for old Linuxen adding -lieee to a non-shared link.
-    ;;
-esac
+dnl This was for glibc 2.1
+dnl case "${host_cpu}" in
+dnl   i*86|x86_64)
+dnl     ## This sets R_XTRA_CFLAGS
+dnl     R_PROG_CC_FLAG_D__NO_MATH_INLINES
+dnl     ## We used to add -mieee-fp here, but it seems it is really a
+dnl     ## linker flag for old Linuxen adding -lieee to a non-shared link.
+dnl     ;;
+dnl esac
 
 AH_TEMPLATE([HAVE_NO_SYMBOL_UNDERSCORE],
             [Define if module-loading does not need an underscore to
@@ -1008,19 +1009,20 @@ case "${host_os}" in
     ## which these days mean macOS
     AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
     ;;
-  hpux*)
-    AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
-    case "${CC}" in
-      cc|c89)
-	## Luke Tierney says we also need '-Wp,-H16000' which tells the
-	## pre-processor to increase the size of an internal table.  It
-	## seems that src/main/vfonts/g_her_glyph.c contains a line
-	## that is too long for the pre-processor without this flag.
-	R_SH_VAR_ADD(R_XTRA_CPPFLAGS, [-Wp,-H16000])
-	;;
-    esac
-    AC_CHECK_LIB(dld, shl_load, [R_XTRA_LIBS="-ldld ${R_XTRA_LIBS}"])
-    ;;
+   hpux*)
+dnl leave this in as not easily overridden by userx
+     AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
+dnl     case "${CC}" in
+dnl       cc|c89)
+dnl 	## Luke Tierney says we also need '-Wp,-H16000' which tells the
+dnl 	## pre-processor to increase the size of an internal table.  It
+dnl 	## seems that src/main/vfonts/g_her_glyph.c contains a line
+dnl 	## that is too long for the pre-processor without this flag.
+dnl 	R_SH_VAR_ADD(R_XTRA_CPPFLAGS, [-Wp,-H16000])
+dnl 	;;
+dnl     esac
+dnl     AC_CHECK_LIB(dld, shl_load, [R_XTRA_LIBS="-ldld ${R_XTRA_LIBS}"])
+     ;;
   ## We no longer special-case Intel compilers on Linux:
   ## what we had dated from Nov 2005.
   mingw*|windows*|winnt)
@@ -1062,15 +1064,15 @@ AC_SUBST(FFLAGS)
 AC_SUBST(SAFE_FFLAGS)
 AC_SUBST(MAIN_FFLAGS)
 AC_SUBST(SHLIB_FFLAGS)
-## used on AIX
+## used on AIX and formerly on glibc 2.1
 AC_SUBST(R_XTRA_CFLAGS)
-## used on HP-UX
+## formerly used on HP-UX
 AC_SUBST(R_XTRA_CPPFLAGS)
 ## unused
 AC_SUBST(R_XTRA_CXXFLAGS)
 ## unused
 AC_SUBST(R_XTRA_FFLAGS)
-## used on HP-UX
+## formerly used on HP-UX
 AC_SUBST(R_XTRA_LIBS)
 AC_SUBST(OBJC_LIBS)
 AC_SUBST(OBJCFLAGS)
@@ -1304,37 +1306,37 @@ rm -f libconftest${DYLIB_EXT} conftest.c
   gnu*)				# GNU Hurd, see FreeBSD comment
     main_ldflags="-Wl,--export-dynamic"
     ;;
-  hpux*)
-    SHLIB_EXT=".sl"
-    case "${CC}" in
-      cc|c89)
-        cpicflags="+Z"
-        ;;
-    esac
-    case "${FC}" in
-      f77|fort77|f90)
-        fpicflags="+Z"
-        ;;
-    esac
-    main_ldflags="-Wl,-E"
-    if test "${GCC}" = yes; then
-      shlib_ldflags="-shared -fPIC -Wl,-Bsymbolic"
-    else
-      ## <NOTE>
-      ## Native cc insists on tacking on crt0.o when it calls ld, and
-      ## crt0.o is not built with PIC.  As there seems to be no obvious
-      ## way to tell cc not to do this, we use ld for linking shlibs.
-      shlib_ld=ld
-      shlib_ldflags="-b -Bsymbolic"
-      ## </NOTE>
-    fi
-    if test "${GXX}" = yes; then
-      shlib_cxxldflags="-shared -fPIC"
-    fi
-    ;;
-  linux*aout)			# GNU Linux/aout
-    sed '/HAVE_ELF_H/d' confdefs.h > tmp.h ; mv tmp.h confdefs.h
-    ;;
+dnl   hpux*)
+dnl     SHLIB_EXT=".sl"
+dnl     case "${CC}" in
+dnl       cc|c89)
+dnl         cpicflags="+Z"
+dnl         ;;
+dnl     esac
+dnl     case "${FC}" in
+dnl       f77|fort77|f90)
+dnl         fpicflags="+Z"
+dnl         ;;
+dnl     esac
+dnl     main_ldflags="-Wl,-E"
+dnl     if test "${GCC}" = yes; then
+dnl       shlib_ldflags="-shared -fPIC -Wl,-Bsymbolic"
+dnl     else
+dnl       ## <NOTE>
+dnl       ## Native cc insists on tacking on crt0.o when it calls ld, and
+dnl       ## crt0.o is not built with PIC.  As there seems to be no obvious
+dnl       ## way to tell cc not to do this, we use ld for linking shlibs.
+dnl       shlib_ld=ld
+dnl       shlib_ldflags="-b -Bsymbolic"
+dnl       ## </NOTE>
+dnl     fi
+dnl     if test "${GXX}" = yes; then
+dnl       shlib_cxxldflags="-shared -fPIC"
+dnl     fi
+dnl     ;;
+dnl   linux*aout)			# GNU Linux/aout
+dnl     sed '/HAVE_ELF_H/d' confdefs.h > tmp.h ; mv tmp.h confdefs.h
+dnl     ;;
   linux*)			# GNU Linux/ELF
     case  "${CC}" in
       ## Intel compiler: note that -c99 may have been appended
@@ -1561,11 +1563,11 @@ RLAPACK_LDFLAGS=""
 RBLAS_LDFLAGS=""
 R_DYLIB_VERSION_SUFFIX=""
 case "${host_os}" in
-  aix*)
-    ## Not needed for -brtl linking
-    # RLAPACK_LDFLAGS="${wl}-bE:\$(top_builddir)/etc/Rlapack.exp"
-    # LAPACK_LDFLAGS="${wl}-bI:\$(R_HOME)/etc/Rlapack.exp"
-    ;;
+dnl   aix*)
+dnl     ## Not needed for -brtl linking
+dnl     # RLAPACK_LDFLAGS="${wl}-bE:\$(top_builddir)/etc/Rlapack.exp"
+dnl     # LAPACK_LDFLAGS="${wl}-bI:\$(R_HOME)/etc/Rlapack.exp"
+dnl     ;;
   darwin*)
     DYLIB_EXT=".dylib"
     dylib_ldflags="${darwin_dylib_ldflags}"
@@ -1575,16 +1577,16 @@ case "${host_os}" in
     ## don't use version in libRblas so we can replace it with any BLAS implementation
     RBLAS_LDFLAGS="-install_name libRblas.dylib -headerpad_max_install_names"
     ;;
-  hpux*)
-    ## Needs to avoid embedding a relative path ../../../bin.
-    ## See the above code for shlib_ldflags for reasons why we currently
-    ## cannot always use '-Wl,+s'.
-    if test "${GCC}" = yes; then
-      LAPACK_LDFLAGS="-Wl,+s"
-    else
-      LAPACK_LDFLAGS="+s"
-    fi
-    ;;
+dnl   hpux*)
+dnl     ## Needs to avoid embedding a relative path ../../../bin.
+dnl     ## See the above code for shlib_ldflags for reasons why we currently
+dnl     ## cannot always use '-Wl,+s'.
+dnl     if test "${GCC}" = yes; then
+dnl       LAPACK_LDFLAGS="-Wl,+s"
+dnl     else
+dnl       LAPACK_LDFLAGS="+s"
+dnl     fi
+dnl     ;;
   openbsd*)
     if test -z "${R_DYLIB_VERSION}"; then
       PACKAGE_VERSION_MAJOR=`echo "${PACKAGE_VERSION}" | \

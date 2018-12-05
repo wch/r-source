@@ -104,15 +104,15 @@ case "${INSTALL}" in
     INSTALL="\$\(top_srcdir\)/tools/install-sh -c"
     ;;
 esac
-case "${host_os}" in
-  hpux*)
-    ## On some versions of HP-UX (seen on both 10.20 and 11.0) we end up
-    ## a broken install (seen in /opt/imake/bin) which has the default
-    ## permissions wrong (PR#2091).  Let's just always use install-sh on
-    ## HP-UX.
-    INSTALL="\$\(top_srcdir\)/tools/install-sh -c"
-    ;;
-esac
+dnl case "${host_os}" in
+dnl   hpux*)
+dnl     ## On some versions of HP-UX (seen on both 10.20 and 11.0) we end up
+dnl     ## a broken install (seen in /opt/imake/bin) which has the default
+dnl     ## permissions wrong (PR#2091).  Let's just always use install-sh on
+dnl     ## HP-UX.
+dnl     INSTALL="\$\(top_srcdir\)/tools/install-sh -c"
+dnl     ;;
+dnl esac
 ])# R_PROG_INSTALL
 
 ## R_PROG_PAGER
@@ -452,65 +452,66 @@ else
 fi
 ])# R_PROG_CC_FLAG
 
-## R_PROG_CC_FLAG_D__NO_MATH_INLINES
-## ---------------------------
-## In glibc 2.1, inline version [x86] of exp was broken (exp(-Inf) = NaN).
-## We fix this by adding '-D__NO_MATH_INLINES' to R_XTRA_CFLAGS rather
-## than AC_DEFINE(__NO_MATH_INLINES) as the former also takes care of
-## compiling C code for add-on packages.
-AC_DEFUN([R_PROG_CC_FLAG_D__NO_MATH_INLINES],
-[AC_CACHE_CHECK([whether C runtime needs -D__NO_MATH_INLINES],
-                [r_cv_c_no_math_inlines],
-[AC_RUN_IFELSE([AC_LANG_SOURCE([[
-#include <math.h>
-#if defined(__GLIBC__)
-#include <math.h>
-int main () {
-  double x, y;
-  x = -1./0.;
-  y = exp(x);
-  exit (y != 0.);
-}
-#else
-int main () {
-  exit(0);
-}
-#endif
-]])],
-              [r_cv_c_no_math_inlines=no],
-              [r_cv_c_no_math_inlines=yes],
-              [r_cv_c_no_math_inlines=no])])
-if test "${r_cv_c_no_math_inlines}" = yes; then
-  R_SH_VAR_ADD(R_XTRA_CFLAGS, [-D__NO_MATH_INLINES])
-fi
-])# R_PROG_CC_FLAG_D__NO_MATH_INLINES
+dnl ## Unused
+dnl ## R_PROG_CC_FLAG_D__NO_MATH_INLINES
+dnl ## ---------------------------
+dnl ## In glibc 2.1, inline version [x86] of exp was broken (exp(-Inf) = NaN).
+dnl ## We fix this by adding '-D__NO_MATH_INLINES' to R_XTRA_CFLAGS rather
+dnl ## than AC_DEFINE(__NO_MATH_INLINES) as the former also takes care of
+dnl ## compiling C code for add-on packages.
+dnl AC_DEFUN([R_PROG_CC_FLAG_D__NO_MATH_INLINES],
+dnl [AC_CACHE_CHECK([whether C runtime needs -D__NO_MATH_INLINES],
+dnl                 [r_cv_c_no_math_inlines],
+dnl [AC_RUN_IFELSE([AC_LANG_SOURCE([[
+dnl #include <math.h>
+dnl #if defined(__GLIBC__)
+dnl #include <math.h>
+dnl int main () {
+dnl   double x, y;
+dnl   x = -1./0.;
+dnl   y = exp(x);
+dnl   exit (y != 0.);
+dnl }
+dnl #else
+dnl int main () {
+dnl   exit(0);
+dnl }
+dnl #endif
+dnl ]])],
+dnl               [r_cv_c_no_math_inlines=no],
+dnl               [r_cv_c_no_math_inlines=yes],
+dnl               [r_cv_c_no_math_inlines=no])])
+dnl if test "${r_cv_c_no_math_inlines}" = yes; then
+dnl   R_SH_VAR_ADD(R_XTRA_CFLAGS, [-D__NO_MATH_INLINES])
+dnl fi
+dnl ])# R_PROG_CC_FLAG_D__NO_MATH_INLINES
 
-## Unused
-## R_C_OPTIEEE
-## -----------
-## Check whether the C compiler needs '-OPT:IEEE_NaN_inf=ON' to
-## correctly deal with IEEE NaN/Inf.
-## This flag is needed for the native SGI C compiler.
-## If needed, add the flag to R_XTRA_CFLAGS.
-AC_DEFUN([R_C_OPTIEEE],
-[AC_CACHE_CHECK([whether C compiler needs -OPT:IEEE_NaN_inf=ON],
-                [r_cv_c_optieee],
-[AC_RUN_IFELSE([AC_LANG_SOURCE([[
-#include <math.h>
-#include <stdlib.h>
-#include <ieeefp.h>
-int main () {
-  double x = 0;
-  fpsetmask(0); x = x / x; exit (x != x);
-}
-]])],
-              [r_cv_c_optieee=yes],
-              [r_cv_c_optieee=no],
-              [r_cv_c_optieee=no])])
-if test "${r_cv_c_optieee}" = yes; then
-  R_SH_VAR_ADD(R_XTRA_CFLAGS, [-OPT:IEEE_NaN_inf=ON])
-fi
-])# R_C_OPTIEEE
+dnl ## Unused
+dnl ## R_C_OPTIEEE
+dnl ## -----------
+dnl ## Check whether the C compiler needs '-OPT:IEEE_NaN_inf=ON' to
+dnl ## correctly deal with IEEE NaN/Inf.
+dnl ## This flag is needed for the native SGI C compiler.
+dnl ## If needed, add the flag to R_XTRA_CFLAGS.
+dnl AC_DEFUN([R_C_OPTIEEE],
+dnl [AC_CACHE_CHECK([whether C compiler needs -OPT:IEEE_NaN_inf=ON],
+dnl                 [r_cv_c_optieee],
+dnl [AC_RUN_IFELSE([AC_LANG_SOURCE([[
+dnl #include <math.h>
+dnl #include <stdlib.h>
+dnl #include <ieeefp.h>
+dnl int main () {
+dnl   double x = 0;
+dnl   fpsetmask(0); x = x / x; exit (x != x);
+dnl }
+dnl ]])],
+dnl               [r_cv_c_optieee=yes],
+dnl               [r_cv_c_optieee=no],
+dnl               [r_cv_c_optieee=no])])
+dnl if test "${r_cv_c_optieee}" = yes; then
+dnl   R_SH_VAR_ADD(R_XTRA_CFLAGS, [-OPT:IEEE_NaN_inf=ON])
+dnl fi
+dnl ])# R_C_OPTIEEE
 
 ## R_C_INLINE
 ## ----------
@@ -647,59 +648,59 @@ fi
 
 ### * Fortran compiler and its characteristics.
 
-## Unused
-## R_PROG_F77
-## ----------
-## Find a fixed-form Fortran compiler (formerly Fortran 77)
-##
-## If we have not been forced to use a particular Fortran compiler (we
-## usually have been forced to use $FC), try to find one using one of
-## the several common names.  The list is based on the autoconf
-## release ca 2012  This says (removing F77 compilers)
-##
-## <QUOTE>
-## Known compilers:
-##  f77/f90/f95: generic compiler names
-##  g77: GNU Fortran 77 compiler
-##  gfortran: GNU Fortran 95+ compiler (released in gcc 4.0)
-##  g95: original gcc-based f95 compiler (gfortran is a fork)
-##  ftn: native Fortran 95 compiler on Cray X1
-##  pgf90/pghpf/pgf95/pgfortran: Portland Group F90/F95 compilers
-##  xlf90/xlf95: IBM (AIX) F90/F95 compilers
-##    Prefer xlf9x to the generic names because they do not reject files
-##    with extension `.f'.
-##  lf95: Lahey-Fujitsu F95 compiler
-##  epcf90: "Edinburgh Portable Compiler" F90
-##  fort: Compaq (now HP) Fortran 90/95 compiler for Tru64 and Linux/Alpha
-##  ifort, previously ifc: Intel Fortran 95 compiler for Linux/x86
-##  efc: Intel Fortran 95 compiler for IA64
-##  nagfor: NAGWare Fortran 77/90/95 compiler
-##
-## and uses the following lists:
-##   F95: f95 fort xlf95 ifort ifc efc pgf95 lf95 gfortran ftn
-##   F90: f90 xlf90 pgf90 pghpf epcf90
-##   F95: gfortran g95 xlf95 f95 fort ifort ifc efc pgfortran pgf95 lf95 ftn nagfor
-##   F90: xlf90 f90 pgf90 pghpf epcf90
-AC_DEFUN([R_PROG_F77],
-[AC_BEFORE([$0], [AC_PROG_LIBTOOL])
-AC_REQUIRE([R_PROG_CC_VERSION])
-if test -n "${F77}"; then
-  AC_MSG_RESULT([defining F77 to be ${F77}])
-  AC_PROG_F77
-else
-  F77=
-  F95_compilers="gfortran g95 xlf95 f95 fort ifort ifc efc pgfortran pgf95 lf95 ftn nagfor"
-  F90_compilers="xlf90 f90 pgf90 pghpf epcf90"
-  AC_CHECK_PROGS(F77, [ ${F95_compilers} ${F90_compilers} ])
-fi
-if test -n "${F77}"; then
-  ## If the above 'found' a Fortran 77 compiler, we run AC_PROG_F77 as
-  ## this does additional testing (GNU, '-g', ...).
-  AC_PROG_F77
-else
-  AC_MSG_ERROR([No F77 compiler found])
-fi
-])# R_PROG_F77
+dnl ## Unused
+dnl ## R_PROG_F77
+dnl ## ----------
+dnl ## Find a fixed-form Fortran compiler (formerly Fortran 77)
+dnl ##
+dnl ## If we have not been forced to use a particular Fortran compiler (we
+dnl ## usually have been forced to use $FC), try to find one using one of
+dnl ## the several common names.  The list is based on the autoconf
+dnl ## release ca 2012  This says (removing F77 compilers)
+dnl ##
+dnl ## <QUOTE>
+dnl ## Known compilers:
+dnl ##  f77/f90/f95: generic compiler names
+dnl ##  g77: GNU Fortran 77 compiler
+dnl ##  gfortran: GNU Fortran 95+ compiler (released in gcc 4.0)
+dnl ##  g95: original gcc-based f95 compiler (gfortran is a fork)
+dnl ##  ftn: native Fortran 95 compiler on Cray X1
+dnl ##  pgf90/pghpf/pgf95/pgfortran: Portland Group F90/F95 compilers
+dnl ##  xlf90/xlf95: IBM (AIX) F90/F95 compilers
+dnl ##    Prefer xlf9x to the generic names because they do not reject files
+dnl ##    with extension `.f'.
+dnl ##  lf95: Lahey-Fujitsu F95 compiler
+dnl ##  epcf90: "Edinburgh Portable Compiler" F90
+dnl ##  fort: Compaq (now HP) Fortran 90/95 compiler for Tru64 and Linux/Alpha
+dnl ##  ifort, previously ifc: Intel Fortran 95 compiler for Linux/x86
+dnl ##  efc: Intel Fortran 95 compiler for IA64
+dnl ##  nagfor: NAGWare Fortran 77/90/95 compiler
+dnl ##
+dnl ## and uses the following lists:
+dnl ##   F95: f95 fort xlf95 ifort ifc efc pgf95 lf95 gfortran ftn
+dnl ##   F90: f90 xlf90 pgf90 pghpf epcf90
+dnl ##   F95: gfortran g95 xlf95 f95 fort ifort ifc efc pgfortran pgf95 lf95 ftn nagfor
+dnl ##   F90: xlf90 f90 pgf90 pghpf epcf90
+dnl AC_DEFUN([R_PROG_F77],
+dnl [AC_BEFORE([$0], [AC_PROG_LIBTOOL])
+dnl AC_REQUIRE([R_PROG_CC_VERSION])
+dnl if test -n "${F77}"; then
+dnl   AC_MSG_RESULT([defining F77 to be ${F77}])
+dnl   AC_PROG_F77
+dnl else
+dnl   F77=
+dnl   F95_compilers="gfortran g95 xlf95 f95 fort ifort ifc efc pgfortran pgf95 lf95 ftn nagfor"
+dnl   F90_compilers="xlf90 f90 pgf90 pghpf epcf90"
+dnl   AC_CHECK_PROGS(F77, [ ${F95_compilers} ${F90_compilers} ])
+dnl fi
+dnl if test -n "${F77}"; then
+dnl   ## If the above 'found' a Fortran 77 compiler, we run AC_PROG_F77 as
+dnl   ## this does additional testing (GNU, '-g', ...).
+dnl   AC_PROG_F77
+dnl else
+dnl   AC_MSG_ERROR([No F77 compiler found])
+dnl fi
+dnl ])# R_PROG_F77
 
 ## R_PROG_FC_FLIBS
 ## ----------------
