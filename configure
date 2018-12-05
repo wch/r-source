@@ -27132,6 +27132,7 @@ esac
 
 ### ** Platform-specific overrides for the C, fixed-form Fortran and C++ compilers.
 
+## This was for glibc 2.1: do we really still need it?
 case "${host_cpu}" in
   i*86|x86_64)
     { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether C runtime needs -D__NO_MATH_INLINES" >&5
