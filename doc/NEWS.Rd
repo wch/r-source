@@ -258,7 +258,7 @@
       free-form).
 
       If only one of them is set, its value is used for both.
-      
+
       \item The special-casing of \samp{CFLAGS}, \samp{CXXFLAGS} and
       \samp{FFLAGS} for Intel compilers on Linux has been removed: we do
       not have recent experience but the generic defaults now chosen are
@@ -332,14 +332,6 @@
     }
   }
 
-  \subsection{TESTING}{
-    \itemize{
-      \item The random number generator tests in
-      \file{tests/p-r-random-tests.R} no longer fail occasionally as
-      they now randomly sample from \dQuote{certified} random seeds.
-    }
-  }
-
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item Argument \code{compressed} of \code{untar()} is
@@ -357,7 +349,7 @@
 
       \item The \command{f77_f2c} script has been removed: it
       no longer sufficed to compile the \file{.f} files in \R.
-      
+
       \item The deprecated legacy support of \command{make} macros such
       as \samp{CXX1X} has been removed: use the \samp{CXX11} forms
       instead.
@@ -567,7 +559,15 @@
       for non-default C++ dialects like C++14).
     }
   }
-  
+
+  \subsection{TESTING}{
+    \itemize{
+      \item The random number generator tests in
+      \file{tests/p-r-random-tests.R} no longer fail occasionally as
+      they now randomly sample from \dQuote{certified} random seeds.
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{drop1.glm} miscalculated the score test (\code{test="Rao"})
@@ -666,7 +666,7 @@
       \item \code{seq.int(*, by=by, length=n)} no longer wrongly
       \dQuote{drops fractional parts} when \code{by} is integer, thanks
       to Suharto Anggono's report \PR{17506}.
-      
+
       \item Buffering is disabled for \code{file()} connections to
       irregular files (like sockets), as well as \code{fifo()} and
       \code{pipe()} connections.  Fixes \PR{17470}, reported by Chris
