@@ -3483,11 +3483,11 @@ static void checkMSet(SEXP mset)
     SEXP store = CAR(mset);
     SEXP npreserved = CDR(mset);
     SEXP isize = TAG(mset);
-    if (MAYBE_REFERENCED(mset) ||
+    if (/*MAYBE_REFERENCED(mset) ||*/
 	((store != R_NilValue) &&
-	    (TYPEOF(store) != VECSXP || MAYBE_REFERENCED(store))) ||
-	(TYPEOF(npreserved) != INTSXP || XLENGTH(npreserved) != 1 ||
-	    MAYBE_REFERENCED(npreserved)) ||
+	 (TYPEOF(store) != VECSXP /*|| MAYBE_REFERENCED(store)*/)) ||
+	(TYPEOF(npreserved) != INTSXP || XLENGTH(npreserved) != 1 /*||
+	 MAYBE_REFERENCED(npreserved)*/) ||
 	(TYPEOF(isize) != INTSXP || XLENGTH(isize) != 1))
 
 	error("Invalid mset");
