@@ -15,7 +15,15 @@
       for non-default C++ dialects like C++14).
     }
   }
-  
+
+  \subsection{TESTING}{
+    \itemize{
+      \item The random number generator tests in
+      \file{tests/p-r-random-tests.R} no longer fail occasionally as
+      they now randomly sample from \dQuote{certified} random seeds.
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{drop1.glm} miscalculated the score test (\code{test="Rao"})
@@ -118,7 +126,7 @@
       \item Buffering is disabled for \code{file()} connections to
       irregular files (like sockets), as well as \code{fifo()} and
       \code{pipe()} connections.  Fixes \PR{17470}, reported by Chris
-      Culnane.      
+      Culnane.
     }
   }
 }
