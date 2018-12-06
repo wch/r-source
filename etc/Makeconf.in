@@ -67,6 +67,7 @@ JAVA_CPPFLAGS = @JAVA_CPPFLAGS0@
 JAVA_LIBS = @JAVA_LIBS0@
 JAVA_LD_LIBRARY_PATH = @JAVA_LD_LIBRARY_PATH@
 LAPACK_LIBS = @LAPACK_LIBS@
+LDFLAGS = @LDFLAGS@
 ## we only need this is if it is external, as otherwise link to R
 LIBINTL= @LIBINTL@
 LIBM = @LIBM@
@@ -77,7 +78,6 @@ LIBS = @LIBS@
 ## needed by R CMD config
 LIBnn = @LIBnn@
 LIBTOOL = $(SHELL) "$(R_HOME)/bin/libtool"
-LDFLAGS = @LDFLAGS@
 LTO = @LTOALL@
 ## needed to build applications linking to static libR
 MAIN_LD = @MAIN_LD@
@@ -124,7 +124,7 @@ YACC = @YACC@
 
 ## Legacy settings
 ## no longer used by R as of 3.6.0 but some are exported by R CMD config
-## on Solaris make, setting FC sets F77
+## on Solaris make, setting FC sets F77 so must follow FC in this file
 F77 = @FC@
 FCPICFLAGS = @FPICFLAGS@
 F77_VISIBILITY = @F_VISIBILITY@
@@ -137,25 +137,27 @@ SHLIB_OPENMP_FCFLAGS = @SHLIB_OPENMP_FFLAGS@
 ## for linking to libR.a
 STATIC_LIBR = @WANT_R_STATIC_TRUE@ @STATICR1@ "$(R_HOME)/lib$(R_ARCH)/libR.a" @STATICR2@ $(BLAS_LIBS) $(FLIBS) @R_XTRA_LIBS@ $(LIBINTL) @READLINE_LIBS@ $(LIBS)
 
-## used on AIX, old glibc (-D__NO_MATH_INLINES)
+## These are recorded as macros for legacy use in packages
+## set on AIX, formerly for old glibc (-D__NO_MATH_INLINES)
 R_XTRA_CFLAGS = @R_XTRA_CFLAGS@
-## @R_XTRA_CPPFLAGS@ used on HP-UX
+## @R_XTRA_CPPFLAGS@ was formerly set on HP-UX
 R_XTRA_CPPFLAGS = @R_XTRA_CPPFLAGS@ @R_INCLUDES@ -DNDEBUG
-## currently unused
+## currently unset
 R_XTRA_CXXFLAGS = @R_XTRA_CXXFLAGS@
-## currently unused
+## currently unset
 R_XTRA_FFLAGS = @R_XTRA_FFLAGS@
+
 ## SHLIB_CFLAGS SHLIB_CXXFLAGS SHLIB_FFLAGS are apparently currently unused
-## SHLIB_CXXFLAGS is undocumented,  there is no SHLIB_FCFLAGS
-ALL_CFLAGS = $(R_XTRA_CFLAGS) $(PKG_CFLAGS) $(CPICFLAGS) $(SHLIB_CFLAGS) $(CFLAGS)
+## SHLIB_CXXFLAGS is undocumented, there is no SHLIB_FCFLAGS
+ALL_CFLAGS = @R_XTRA_CFLAGS@ $(PKG_CFLAGS) $(CPICFLAGS) $(SHLIB_CFLAGS) $(CFLAGS)
 ALL_CPPFLAGS = $(R_XTRA_CPPFLAGS) $(PKG_CPPFLAGS) $(CLINK_CPPFLAGS) $(CPPFLAGS)
-ALL_CXXFLAGS = $(R_XTRA_CXXFLAGS) $(PKG_CXXFLAGS) $(CXXPICFLAGS) $(SHLIB_CXXFLAGS) $(CXXFLAGS)
+ALL_CXXFLAGS = @R_XTRA_CXXFLAGS@ $(PKG_CXXFLAGS) $(CXXPICFLAGS) $(SHLIB_CXXFLAGS) $(CXXFLAGS)
 ALL_OBJCFLAGS = $(PKG_OBJCFLAGS) $(CPICFLAGS) $(SHLIB_CFLAGS) $(OBJCFLAGS)
 ALL_OBJCXXFLAGS = $(PKG_OBJCXXFLAGS) $(CXXPICFLAGS) $(SHLIB_CXXFLAGS) $(OBJCXXFLAGS)
-ALL_FFLAGS = $(R_XTRA_FFLAGS) $(PKG_FFLAGS) $(FPICFLAGS) $(SHLIB_FFLAGS) $(FFLAGS)
-## can be overridden by SHLIB
+ALL_FFLAGS = @R_XTRA_FFLAGS@ $(PKG_FFLAGS) $(FPICFLAGS) $(SHLIB_FFLAGS) $(FFLAGS)
+## can be overridden by R CMD SHLIB
 P_FCFLAGS = $(PKG_FFLAGS)
-ALL_FCFLAGS = $(R_XTRA_FFLAGS) $(P_FCFLAGS) $(FPICFLAGS) $(SHLIB_FFLAGS) $(FCFLAGS)
+ALL_FCFLAGS = @R_XTRA_FFLAGS@ $(P_FCFLAGS) $(FPICFLAGS) $(SHLIB_FFLAGS) $(FCFLAGS)
 ## LIBR here as a couple of packages use this without SHLIB_LINK
 ALL_LIBS = $(PKG_LIBS) $(SHLIB_LIBADD) $(LIBR)@DYLIB_UNDEFINED_ALLOWED_FALSE@ $(LIBINTL)
 
