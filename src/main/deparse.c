@@ -1096,7 +1096,8 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	if (!isNull(ATTRIB(s)))
 	    d->sourceable = FALSE;
 	SEXP op = CAR(s);
-        Rboolean doquote, maybe_quote = d_opts_in & QUOTEEXPRESSIONS;
+	Rboolean doquote = FALSE;
+	Rboolean maybe_quote = d_opts_in & QUOTEEXPRESSIONS;
 	if (maybe_quote) {
 	    // do *not* quote() formulas:
 	    doquote = // := op is not `~` (tilde) :
