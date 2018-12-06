@@ -979,7 +979,7 @@ esac
 ### ** Platform-specific overrides for the C, fixed-form Fortran and C++ compilers.
 
 ## Ensure we do not pick up values from outside configure
-R_XTRA_CFLAGS==
+R_XTRA_CFLAGS=
 R_XTRA_CPPFLAGS=
 R_XTRA_CXXFLAGS=
 R_XTRA_FFLAGS=
