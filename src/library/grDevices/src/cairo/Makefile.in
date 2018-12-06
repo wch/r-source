@@ -11,6 +11,8 @@ R_HOME = $(top_builddir)
 
 pkg = grDevices
 
+## Although this is in a package,
+## it uses the top-level Makeconf and not etc/Makeconf
 include $(top_builddir)/Makeconf
 
 ## need to find bitmap.h
