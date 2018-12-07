@@ -12378,10 +12378,6 @@ _lt_linker_boilerplate=`cat conftest.err`
 $RM -r conftest*
 
 
-## CAVEAT EMPTOR:
-## There is no encapsulation within the following macros, do not change
-## the running order or otherwise move them around unless you know exactly
-## what you are doing...
 if test -n "$compiler"; then
 
 lt_prog_compiler_no_builtin_flag=
@@ -23574,9 +23570,11 @@ fi
 done
 
 ## dl.h was used in src/unix/hpdlfcn.c included from src/unix/dynload.c on HP-UX
-## features.h is used by date-time code on Linux.
+## (It is tested for in Rdynload.c and dynload.c)
+## features.h is used by date-time code on Linux and in extra/tzone
 ## floatingpoint.h is used for fpsetmask on FreeBSD.
 ## sys/param.h is one way to get PATH_MAX.
+## elf.h is used for fallback for HAVE_NO_SYMBOL_UNDERSCORE
 for ac_header in arpa/inet.h dl.h elf.h features.h floatingpoint.h \
   langinfo.h netdb.h netinet/in.h sys/param.h
 do :
@@ -25321,7 +25319,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:25324: \"$ac_link\") >&5
+(eval echo $as_me:25322: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -25396,7 +25394,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:25399: \"$ac_link\") >&5
+(eval echo $as_me:25397: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -35705,7 +35703,6 @@ fi
 acx_lapack_save_LIBS="${LIBS}"
 LIBS="${BLAS_LIBS} ${FLIBS} ${LIBS}"
 
-## LAPACK linked to by default?  (Could be in the BLAS libs.)
 if test "${acx_lapack_ok}" = no; then
   as_ac_var=`$as_echo "ac_cv_func_${lapack}" | $as_tr_sh`
 ac_fn_c_check_func "$LINENO" "${lapack}" "$as_ac_var"
