@@ -38,8 +38,7 @@
  *
  *  This module provides support for run-time loading of shared objects
  *  access to symbols within such objects via .C and .Fortran.  This is
- *  done under Unix with dlopen, dlclose and dlsym (the exception is
- *  hpux, where we use compatibility code provided by Luke Tierney).
+ *  done under Unix with dlopen, dlclose and dlsym.
  *  There are two cases:
  *
  *
@@ -63,7 +62,7 @@
  *  more recently loaded objects are found first.
  *
  *
- *  Accessing native routines in base (the R executable).
+ *  2. Accessing native routines in base (the R executable).
  *
  *  In this case, we use the registration mechanism and the DllInfo array
  *  in ../main/Rdynload.c to locate functions in the executable. We do this
@@ -71,8 +70,6 @@
  *  Note that the base routines registered are listed in
  *               ../main/registration.c
  *  and are registered during the initialization of the R engine.
- *  (This replaces the previous mechanism that built a table
- *  from ../appl/ROUTINES using Perl/sed).
  *
  *
  *  If speed is ever an issue in the lookup of registered symbols, we can
@@ -97,18 +94,9 @@
 #include <Rdynpriv.h>
 
 #ifdef Unix
-/* HP-UX 11.0 has dlfcn.h, but according to libtool as of Dec 2001
-   this support is broken. So we force use of shlib even when dlfcn.h
-   is available */
-# ifdef __hpux
-#  ifdef HAVE_DL_H
-#   define HAVE_DYNAMIC_LOADING
-#  endif
-# else
-#  ifdef HAVE_DLFCN_H
-#   define HAVE_DYNAMIC_LOADING
-#  endif
-# endif /* __hpux */
+# ifdef HAVE_DLFCN_H
+#  define HAVE_DYNAMIC_LOADING
+# endif
 # ifndef HAVE_NO_SYMBOL_UNDERSCORE
 #  ifdef HAVE_ELF_H
 #   define HAVE_NO_SYMBOL_UNDERSCORE

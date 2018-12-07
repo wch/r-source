@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995-1996 Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2016 The R Core Team
+ *  Copyright (C) 1997-2018 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -37,20 +37,10 @@
 #include <unistd.h>
 #endif
 
-/* HP-UX 11.0 has dlfcn.h, but according to libtool as of Dec 2001
-   this support is broken. So we force use of shlib even when dlfcn.h
-   is available */
-# ifdef __hpux
-#  ifdef HAVE_DL_H
-#   include "hpdlfcn.c"
-#   define HAVE_DYNAMIC_LOADING
-#  endif
-# else
-#  ifdef HAVE_DLFCN_H
-#   include <dlfcn.h>
-#   define HAVE_DYNAMIC_LOADING
-#  endif
-# endif
+#ifdef HAVE_DLFCN_H
+# include <dlfcn.h>
+# define HAVE_DYNAMIC_LOADING
+#endif
 
 #ifdef HAVE_DYNAMIC_LOADING
 

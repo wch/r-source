@@ -254,9 +254,6 @@
 /* Define to 1 if you have the `dlsym' function. */
 #undef HAVE_DLSYM
 
-/* Define to 1 if you have the <dl.h> header file. */
-#undef HAVE_DL_H
-
 /* Define to 1 if you have the <elf.h> header file. */
 #undef HAVE_ELF_H
 

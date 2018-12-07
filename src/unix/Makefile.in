@@ -24,12 +24,12 @@ SOURCES_C_BASE = Rembedded.c dynload.c system.c sys-unix.c sys-std.c X11.c
 SOURCES = $(SOURCES_C_BASE)
 DEPENDS = $(SOURCES:.c=.d)
 OBJECTS = $(SOURCES:.c=.o)
-HEADERS = Runix.h hpdlfcn.h
+HEADERS = Runix.h
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = \
   Makefile.in $(SOURCES_C_BASE) Rscript.c \
-  $(HEADERS) hpdlfcn.c libR.pc.in system.txt
+  $(HEADERS) libR.pc.in system.txt
 
 @WANT_R_SHLIB_TRUE@ALL_CFLAGS = $(ALL_CFLAGS_LO)
 

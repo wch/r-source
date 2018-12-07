@@ -763,25 +763,7 @@ AC_SUBST(LIBM)
 ## AC_CHECK_LIBM computes LIBM but does not add to LIBS, hence we do
 ## the following as well.
 AC_CHECK_LIB(m, sin)
-case "${host_os}" in
-  darwin*)
-    ## macOS >= 10.3 include dlcompat in libSystem
-    ## This is ancient history
-    ## SI says we want '-lcc_dynamic' on Darwin, although currently
-    ## https://developer.apple.com/documentation/MacOSX/ has nothing
-    ## official.  Bill Northcott <w.northcott@unsw.edu.au> points out
-    ## that it is only needed for GCC 3.x (and earlier) ...
-    if test "${GCC}" = yes; then
-      case "${CC_VERSION}" in
-        2.*|3.*)
-	  AC_MSG_ERROR([Your gcc is too old.])
-      esac
-    fi
-    ;;
-  *)
-    AC_CHECK_LIB(dl, dlopen)
-    ;;
-esac
+AC_CHECK_LIB(dl, dlopen)
 
 ## Readline.
 if test "${use_readline}" = yes; then
@@ -840,13 +822,11 @@ AC_HEADER_SYS_WAIT
 AC_CHECK_HEADERS(dlfcn.h fcntl.h glob.h grp.h pwd.h sched.h strings.h \
   sys/resource.h sys/select.h sys/socket.h sys/stat.h sys/time.h \
   sys/times.h sys/utsname.h unistd.h utime.h)
-## dl.h was used in src/unix/hpdlfcn.c included from src/unix/dynload.c on HP-UX
-## (It is tested for in Rdynload.c and dynload.c)
 ## features.h is used by date-time code on Linux and in extra/tzone
 ## floatingpoint.h is used for fpsetmask on FreeBSD.
 ## sys/param.h is one way to get PATH_MAX.
 ## elf.h is used for fallback for HAVE_NO_SYMBOL_UNDERSCORE
-AC_CHECK_HEADERS(arpa/inet.h dl.h elf.h features.h floatingpoint.h \
+AC_CHECK_HEADERS(arpa/inet.h elf.h features.h floatingpoint.h \
   langinfo.h netdb.h netinet/in.h sys/param.h)
 ## stdalign.h is C11.
 AC_CHECK_HEADERS(stdalign.h)
@@ -1135,16 +1115,12 @@ R_ABI
 main_ld="${CC}"
 shlib_ld="${CC}"
 shlib_cxxld="${CXX}"
-## Allow user to override this, e.g. when HP-UX is not special-cased.
+## Allow user to override this, e.g. HP-UX uses .sl
 : ${SHLIB_EXT=".so"}
 SHLIB_LIBADD=
 use_exportfiles=no
 
 ## Step 1.  Ask imake.
-## <NOTE>
-## Earlier versions had fpicflags=${cpicflags}.  As this really amounts
-## to hoping rather than knowing, we no longer do this.
-## </NOTE>
 r_xtra_path="${PATH}"
 for dir in /usr/bin/X11 /usr/X11R6/bin /usr/openwin/bin; do
   r_xtra_path="${r_xtra_path}${PATH_SEPARATOR}${dir}"
