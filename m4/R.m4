@@ -2953,7 +2953,7 @@ fi
 acx_lapack_save_LIBS="${LIBS}"
 LIBS="${BLAS_LIBS} ${FLIBS} ${LIBS}"
 
-## LAPACK linked to by default?  (Could be in the BLAS libs.)
+dnl LAPACK linked to by default?  (Could be in the BLAS libs.)
 if test "${acx_lapack_ok}" = no; then
   AC_CHECK_FUNC(${lapack}, [acx_lapack_ok=yes])
 fi
