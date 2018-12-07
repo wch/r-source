@@ -841,9 +841,11 @@ AC_CHECK_HEADERS(dlfcn.h fcntl.h glob.h grp.h pwd.h sched.h strings.h \
   sys/resource.h sys/select.h sys/socket.h sys/stat.h sys/time.h \
   sys/times.h sys/utsname.h unistd.h utime.h)
 ## dl.h was used in src/unix/hpdlfcn.c included from src/unix/dynload.c on HP-UX
-## features.h is used by date-time code on Linux.
+## (It is tested for in Rdynload.c and dynload.c)
+## features.h is used by date-time code on Linux and in extra/tzone
 ## floatingpoint.h is used for fpsetmask on FreeBSD.
 ## sys/param.h is one way to get PATH_MAX.
+## elf.h is used for fallback for HAVE_NO_SYMBOL_UNDERSCORE
 AC_CHECK_HEADERS(arpa/inet.h dl.h elf.h features.h floatingpoint.h \
   langinfo.h netdb.h netinet/in.h sys/param.h)
 ## stdalign.h is C11.
@@ -995,6 +997,7 @@ dnl     ## linker flag for old Linuxen adding -lieee to a non-shared link.
 dnl     ;;
 dnl esac
 
+dnl This is set for elf platforms in Rdynload.c
 AH_TEMPLATE([HAVE_NO_SYMBOL_UNDERSCORE],
             [Define if module-loading does not need an underscore to
              be prepended to external names.])
