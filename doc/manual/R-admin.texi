@@ -3799,13 +3799,13 @@ results or segfaults.
 
 @menu
 * ATLAS::                       
-* Goto and OpenBLAS::           
+* OpenBLAS::                    
 * MKL::                         
 * ACML::                        
 * Shared BLAS::                 
 @end menu
 
-@node ATLAS, Goto and OpenBLAS, BLAS, BLAS
+@node ATLAS, OpenBLAS, BLAS, BLAS
 @subsubsection ATLAS
 
 ATLAS (@uref{http://math-atlas.sourceforge.net/}) is a ``tuned''
@@ -3869,19 +3869,17 @@ compile-time flag specifies 4 threads.)
 @c http://math-atlas.sourceforge.net/atlas_install/node21.html
 
 
-@node Goto and OpenBLAS, MKL, ATLAS, BLAS
-@subsubsection Goto and OpenBLAS
+@node OpenBLAS, MKL, ATLAS, BLAS
+@subsubsection OpenBLAS
 
 Dr Kazushige Goto wrote a tuned @acronym{BLAS} for several processors
-and OSes, which was frozen in mid-2010.  The final version is known as
-GotoBLAS2, and was re-released under a much less restrictive licence.
-OpenBLAS (@uref{http://www.openblas.net/}) is a descendant project with
-support for some later CPUs (e.g.@: Intel Sandy Bridge and Haswell).
+and OSes, which was frozen in mid-2010.  OpenBLAS
+(@uref{http://www.openblas.net/}) is a descendant project with support
+for some later CPUs.
 
-These can be used by configuring @R{} with something like
+This can be used by configuring @R{} with something like
 
 @example
---with-blas="-lgoto2"
 --with-blas="-lopenblas"
 @end example
 
@@ -3889,7 +3887,7 @@ These can be used by configuring @R{} with something like
 See @pxref{Shared BLAS} for an alternative (and in many ways preferable)
 way to use them.
 
-Some platforms provide multiple builds of OpenBLAS: for example Fedora 26
+Some platforms provide multiple builds of OpenBLAS: for example Fedora 28
 has RPMs@footnote{(and more, e.g.@: for 64-bit ints and static versions).}
 @example
 openblas
@@ -3897,8 +3895,7 @@ openblas-threads
 openblas-openmp
 @end example
 @noindent
-providing shared
-libraries
+providing shared libraries
 @example
 libopenblas.so
 libopenblasp.so
@@ -3919,7 +3916,7 @@ For @cputype{ix86} and @cputype{x86_64} most distributed libraries
 contain several alternatives for different CPU microarchitectures with
 the choice being made at run time.
 
-@node MKL, ACML, Goto and OpenBLAS, BLAS
+@node MKL, ACML, OpenBLAS, BLAS
 @subsubsection Intel MKL
 For Intel processors (and perhaps others) and some distributions of
 Linux, there is Intel's Math Kernel Library.  You are strongly
@@ -3929,12 +3926,13 @@ advisor' which will suggest appropriate incantations: its use is
 recommended.  Or see
 @uref{https://software.intel.com/@/en-us/@/articles/@/intel-mkl-link-line-advisor}.
 
-There are also versions of MKL for macOS and Windows, but at the time
-these were tried they did not work with the default compilers used for
-@R{} on those platforms.
+There are also versions of MKL for macOS@footnote{The issue for macOS
+has been the use of double-complex routines.} and Windows, but when
+these have been tried they did not work with the default compilers used
+for @R{} on those platforms.
 
 The MKL interface has changed several times and may change again: the
-following examples have been used with versions 10.3 to 2018.1, for GCC
+following examples have been used with versions 10.3 to 2019.1, for GCC
 compilers on @cputype{x86_64}.
 
 To use a sequential version of MKL we used
@@ -3948,15 +3946,15 @@ MKL="-L$@{MKL_LIB_PATH@} -lmkl_gf_lp64 -lmkl_core -lmkl_sequential"
 
 @noindent
 The option @option{--with-lapack} is used since MKL contains a tuned
-copy of LAPACK as well as @acronym{BLAS} (@pxref{LAPACK}), although this
-can be omitted.
+copy of LAPACK (often older than the current version) as well as
+@acronym{BLAS} (@pxref{LAPACK}), although this can be omitted.
 
 Threaded MKL may be used by replacing the line defining the variable
-@code{MKL} by
+@code{MKL} by (for version 2019.1)
 
 @example
 MKL="-L$@{MKL_LIB_PATH@} -lmkl_gf_lp64 -lmkl_core \
-     -lmkl_gnu_thread -dl -lpthread"
+     -lmkl_gnu_thread -dl -fopenmp"
 @end example
 
 @noindent
@@ -3964,7 +3962,7 @@ The default number of threads will be chosen by the OpenMP software, but
 can be controlled by setting @code{OMP_NUM_THREADS} or
 @code{MKL_NUM_THREADS}, and in recent versions seems to default to a
 sensible value for sole use of the machine.  (Parallel MKL has not
-always passed @command{make check-all}, but did with MKL 2018.1.)
+always passed @command{make check-all}, but did with MKL 2019.1.)
 
 @c Note though that as with all non-reference LAPACK/BLAS, using MKL trades
 @c numerical accuracy for speed.  When tested in January 2018, 23 CRAN
@@ -3972,7 +3970,7 @@ always passed @command{make check-all}, but did with MKL 2018.1.)
 @c MKL.
 
 @c https://stat.ethz.ch/pipermail/r-devel/2015-September/071717.html
-It has been reported that
+It was reported in 2015 that
 
 @example
 --with-blas='-mkl=parallel' --with-lapack
@@ -3984,9 +3982,7 @@ worked with the Intel 2015.3 compilers on Centos 6.
 @node ACML, Shared BLAS, MKL, BLAS
 @subsubsection ACML
 
-The AMD Core Math Library (ACML) is now end-of-life, although downloads
-remained available when checked in January 2018.
-@c https://developer.amd.com/tools-and-sdks/archive/acml-downloads-resources/
+The AMD Core Math Library (ACML) is now end-of-life.
 
 @node Shared BLAS,  , ACML, BLAS
 @subsubsection Shared BLAS
