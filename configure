@@ -829,10 +829,6 @@ stripstaticlib
 striplib
 Rshlibpath_var
 shlibpath_var
-CROSS_COMPILING_FALSE
-CROSS_COMPILING_TRUE
-BUILD_R
-BUILD_CC
 LIBTOOL_DEPS
 LT_SYS_LIBRARY_PATH
 OTOOL64
@@ -22561,55 +22557,6 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 
 
-## cross-compiling: added May 2007, not actually used
-
-if test "${cross_compiling}" = yes; then
-  { $as_echo "$as_me:${as_lineno-$LINENO}: checking for build C compiler" >&5
-$as_echo_n "checking for build C compiler... " >&6; }
-  build_cc_works=no
-  echo "int main(void) { return 0; }" > conftest.c
-  if test -n "${BUILD_CC}" && "${BUILD_CC}" conftest.c -o conftest && ./conftest; then
-      build_cc_works=yes;
-  fi
-  if test "${build_cc_works}" = no; then
-    for prog in gcc cc; do
-      if "${prog}" conftest.c -o conftest >/dev/null 2>&1 && ./conftest; then
-        BUILD_CC="${prog}"; build_cc_works=yes; break
-      fi
-    done
-  fi
-  rm -Rf conftest conftest.* core
-  if test "${build_cc_works}" = no; then
-    { $as_echo "$as_me:${as_lineno-$LINENO}: result: none" >&5
-$as_echo "none" >&6; }
-    as_fn_error $? "Build C compiler doesn't work. Set BUILD_CC to a compiler capable of creating a binary native to the build machine." "$LINENO" 5
-  fi
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: ${BUILD_CC}" >&5
-$as_echo "${BUILD_CC}" >&6; }
-  { $as_echo "$as_me:${as_lineno-$LINENO}: checking for build R" >&5
-$as_echo_n "checking for build R... " >&6; }
-  : ${BUILD_R=R}
-  if echo 'cat(R.home())'|"${BUILD_R}" --vanilla --slave >/dev/null 2>&1; then
-    { $as_echo "$as_me:${as_lineno-$LINENO}: result: ${BUILD_R}" >&5
-$as_echo "${BUILD_R}" >&6; }
-  else
-    { $as_echo "$as_me:${as_lineno-$LINENO}: result: none" >&5
-$as_echo "none" >&6; }
-    as_fn_error $? "Build R doesn't work. Set BUILD_R to a native build of the same R version that you want to cross-compile." "$LINENO" 5
-  fi
-fi
-
-
-
- if test "${cross_compiling}" = yes; then
-  CROSS_COMPILING_TRUE=
-  CROSS_COMPILING_FALSE='#'
-else
-  CROSS_COMPILING_TRUE='#'
-  CROSS_COMPILING_FALSE=
-fi
-
-
 ### * Checks for libraries.
 
 ## Set up LD_LIBRARY_PATH or equivalent.
@@ -25299,7 +25246,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:25302: \"$ac_link\") >&5
+(eval echo $as_me:25249: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -25374,7 +25321,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:25377: \"$ac_link\") >&5
+(eval echo $as_me:25324: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -46115,10 +46062,6 @@ Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${BYTE_COMPILE_PACKAGES_TRUE}" && test -z "${BYTE_COMPILE_PACKAGES_FALSE}"; then
   as_fn_error $? "conditional \"BYTE_COMPILE_PACKAGES\" was never defined.
-Usually this means the macro was only invoked conditionally." "$LINENO" 5
-fi
-if test -z "${CROSS_COMPILING_TRUE}" && test -z "${CROSS_COMPILING_FALSE}"; then
-  as_fn_error $? "conditional \"CROSS_COMPILING\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${COMPILE_FORTRAN_DOUBLE_COMPLEX_TRUE}" && test -z "${COMPILE_FORTRAN_DOUBLE_COMPLEX_FALSE}"; then

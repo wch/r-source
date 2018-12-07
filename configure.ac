@@ -686,12 +686,6 @@ AC_DISABLE_STATIC
 LT_INIT
 AC_SUBST(LIBTOOL_DEPS)
 
-## cross-compiling: added May 2007, not actually used
-R_CROSS_COMPILING
-AC_SUBST(BUILD_CC)
-AC_SUBST(BUILD_R)
-AM_CONDITIONAL(CROSS_COMPILING, [test "${cross_compiling}" = yes])
-
 ### * Checks for libraries.
 
 ## Set up LD_LIBRARY_PATH or equivalent.
