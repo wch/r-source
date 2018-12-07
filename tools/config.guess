@@ -2,7 +2,7 @@
 # Attempt to guess a canonical system name.
 #   Copyright 1992-2018 Free Software Foundation, Inc.
 
-timestamp='2018-08-29'
+timestamp='2018-12-07'
 
 # This file is free software; you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by
@@ -96,8 +96,7 @@ fi
 
 tmp=
 # shellcheck disable=SC2172
-trap 'test -z "$tmp" || rm -fr "$tmp"' 1 2 13 15
-trap 'exitcode=$?; test -z "$tmp" || rm -fr "$tmp"; exit $exitcode' 0
+trap 'test -z "$tmp" || rm -fr "$tmp"' 0 1 2 13 15
 
 set_cc_for_build() {
     : "${TMPDIR=/tmp}"
@@ -890,7 +889,7 @@ EOF
 	echo "$UNAME_MACHINE"-pc-uwin
 	exit ;;
     amd64:CYGWIN*:*:* | x86_64:CYGWIN*:*:*)
-	echo x86_64-unknown-cygwin
+	echo x86_64-pc-cygwin
 	exit ;;
     prep*:SunOS:5.*:*)
 	echo powerpcle-unknown-solaris2"`echo "$UNAME_RELEASE"|sed -e 's/[^.]*//'`"
@@ -1423,6 +1422,9 @@ EOF
 	exit ;;
     amd64:Isilon\ OneFS:*:*)
 	echo x86_64-unknown-onefs
+	exit ;;
+    *:Unleashed:*:*)
+	echo "$UNAME_MACHINE"-unknown-unleashed"$UNAME_RELEASE"
 	exit ;;
 esac
 
