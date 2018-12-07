@@ -4549,7 +4549,7 @@ under @file{m4} by @command{autoconf} and @command{aclocal} (part of the
 @command{autoconf} of 2.69 or later, but it is unlikely that anything
 other than the most recent versions@footnote{at the time of revision of
 this para in late 2018, @pkg{autoconf-2.69} from 2012 and
-@pkg{automake-1.15.1} from 2017.} have been thoroughly tested.
+@pkg{automake-1.16.1} from 2018.} have been thoroughly tested.
 
 File @file{src/include/config.h} is created by @command{autoheader}
 (part of @pkg{autoconf}).
