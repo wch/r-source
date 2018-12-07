@@ -2406,13 +2406,13 @@ the optimization level for a particular package.  For example
 
 @example
 ## @r{for C code}
-CFLAGS=-g -O -mtune=native
+CFLAGS = -g -O -mtune=native
 ## @r{for C++ code}
-CXXFLAGS=-g -O -mtune=native
+CXXFLAGS = -g -O -mtune=native
 ## @r{for Fortran code}
-FFLAGS=-g -O -mtune=native
+FFLAGS = -g -O -mtune=native
 ## @r{for Fortran 9x code}
-FCFLAGS=-g -O -mtune=native
+FCFLAGS = -g -O -mtune=native
 @end example
 
 Another use is to override the settings in a binary installation of R.
@@ -4392,8 +4392,7 @@ path to a shell, e.g.@: @file{/usr/local/bin/bash}).
 
 To compile @R{}, you will most likely find it easiest to use
 @acronym{GNU} @command{make}, although the Sun @command{make} works on
-Solaris.  The native @command{make} has been reported to fail on SGI
-Irix 6.5 and Alpha/OSF1 (aka Tru64).
+Solaris.
 
 To build in a separate directory you need a @command{make} that supports
 the @code{VPATH} variable, for example @acronym{GNU} @command{make} and
@@ -4532,7 +4531,7 @@ special flags for compiling Fortran code to be turned into a shared object
 @item CXXPICFLAGS
 special flags for compiling C++ code to be turned into a shared object
 @item FCPICFLAGS
-special flags for compiling Fortran 95 code to be turned into a shared object
+special flags for compiling Fortran 9x code to be turned into a shared object
 @item DEFS
 defines to be used when compiling C code in @R{} itself
 @end table
@@ -4582,7 +4581,7 @@ under @file{m4} by @command{autoconf} and @command{aclocal} (part of the
 @command{autoconf} of 2.62 or later, but it is unlikely that anything
 other than the most recent versions@footnote{at the time of revision of
 this para in late 2018, @pkg{autoconf-2.69} from 2012 and
-@pkg{automake-1.15.1} from 2017.} have been thoroughly tested.
+@pkg{automake-1.16.1} from 2018.} have been thoroughly tested.
 
 File @file{src/include/config.h} is created by @command{autoheader}
 (part of @pkg{autoconf}).
