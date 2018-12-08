@@ -122,13 +122,11 @@ TCLTK_CPPFLAGS = @TCLTK_CPPFLAGS@
 TCLTK_LIBS = @TCLTK_LIBS@
 YACC = @YACC@
 
-## Legacy settings
-## no longer used by R as of 3.6.0 but some are exported by R CMD config
+## Legacy settings:  no longer used by R as of 3.6.0
 ## on Solaris make, setting FC sets F77 so must follow FC in this file
 F77 = @FC@
 FCPICFLAGS = @FPICFLAGS@
 F77_VISIBILITY = @F_VISIBILITY@
-FC_VISIBILITY = @F_VISIBILITY@
 SHLIB_FCLD = @SHLIB_FCLD@
 SHLIB_FCLDFLAGS = @SHLIB_FCLDFLAGS@
 SHLIB_OPENMP_FCFLAGS = @SHLIB_OPENMP_FFLAGS@
