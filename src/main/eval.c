@@ -2084,7 +2084,7 @@ static R_INLINE Rboolean asLogicalNoNA(SEXP s, SEXP call, SEXP rho)
    another variable (NAMED(v) > 1). This should be safe and avoid
    allocation in many cases. */
 #define ALLOC_LOOP_VAR(v, val_type, vpi) do { \
-	if (v == R_NilValue || MAYBE_SHARED(v)) { \
+	if (v == R_NilValue || MAYBE_SHARED(v) || ATTRIB(v) != R_NilValue) { \
 	    REPROTECT(v = allocVector(val_type, 1), vpi); \
 	    INCREMENT_NAMED(v);				  \
 	} \
@@ -5908,7 +5908,8 @@ static R_INLINE void checkForMissings(SEXP args, SEXP call)
 
 #define GET_VEC_LOOP_VALUE(var, pos) do {		\
     (var) = GETSTACK(pos);				\
-    if (MAYBE_SHARED(var)) {				\
+    if (MAYBE_SHARED(var) ||				\
+	ATTRIB(var) != R_NilValue) {			\
 	(var) = allocVector(TYPEOF(seq), 1);		\
 	SETSTACK(pos, var);				\
 	INCREMENT_NAMED(var);				\
