@@ -5366,7 +5366,7 @@ static int current_opcode = NO_CURRENT_OPCODE;
 static int opcode_counts[OPCOUNT];
 #endif
 
-#define BC_COUNT_DELTA 1000
+#define BC_COUNT_DELTA 1023
 
 #ifndef IMMEDIATE_FINALIZERS
 /* finalizers are run here since this should only be called at
