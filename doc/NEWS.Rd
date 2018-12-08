@@ -570,8 +570,8 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item \code{drop1.glm} miscalculated the score test (\code{test="Rao"})
-      when the model contained an offset.
+      \item The \code{"glm"} method of \code{drop1()} miscalculated the
+      score test (\code{test="Rao"}) when the model contained an offset.
 
       \item Linear multiple empty models such as \code{lm(y ~ 0)}
       now have a correctly dimensioned empty coefficient matrix;
