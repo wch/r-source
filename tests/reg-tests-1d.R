@@ -2310,6 +2310,13 @@ stopifnot(exprs = {
 ## returned integer sequences in all R versions <= 3.5.1
 
 
+## check for modififation of arguments
+x <- 1 + 0
+stopifnot(identical(rep(x, {x[] <- 2; 2}), rep(1, 2)))
+x <- 1 + 0
+v <- eval(compiler::compile(quote(rep(x, {x[] <- 2; 2}))))
+stopifnot(identical(v, rep(1, 2)))
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

@@ -1479,7 +1479,7 @@ static R_INLINE Rboolean R_isReplaceSymbol(SEXP fun)
 	strstr(CHAR(PRINTNAME(fun)), "<-"))
 	return TRUE;
     else return FALSE;
-}	
+}
 #endif
 
 /* There's another copy of this in main.c */
@@ -3485,7 +3485,9 @@ int DispatchOrEval(SEXP call, SEXP op, const char *generic, SEXP args,
 	       in a promise, so evaluating it again should be no problem. */
 	    *ans = evalArgs(args, rho, dropmissing, call, 0);
 	else {
+	    INCREMENT_LINKS(x);
 	    PROTECT(*ans = CONS_NR(x, evalArgs(CDR(args), rho, dropmissing, call, 1)));
+	    DECREMENT_LINKS(x);
 	    SET_TAG(*ans, CreateTag(TAG(args)));
 	    UNPROTECT(1);
 	}
@@ -4187,7 +4189,7 @@ static R_INLINE int bcStackScalarRealEx(R_bcstack_t *s, scalar_value_t *px,
     NEXT(); \
 } while (0)
 
-# define FastRelop2(op,opval,opsym) do { \
+#define FastRelop2(op,opval,opsym) do { \
     scalar_value_t vx; \
     scalar_value_t vy; \
     int typex = bcStackScalar(R_BCNodeStackTop - 2, &vx); \
@@ -6573,7 +6575,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 		int tag = s->tag;
 		if (R_BCNodeStackTop - vcache_top > MAX_ON_STACK_CHECK ||
 		    FIND_ON_STACK(x, vcache_top, TRUE))
-		    tag = 0;		
+		    tag = 0;
 
 		switch (tag) {
 		case REALSXP: SET_SCALAR_DVAL(x, s->u.dval); NEXT();
@@ -6679,7 +6681,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	if (ftype != SPECIALSXP) {
 	  SEXP value;
 	  if (ftype == BUILTINSXP) {
-	    if (TYPEOF(code) == BCODESXP) 
+	    if (TYPEOF(code) == BCODESXP)
 	      value = bcEval(code, rho, TRUE);
 	    else
 	      /* uncommon but possible, the compiler may decide not to compile
@@ -6929,8 +6931,8 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
     OP(STARTSUBASSIGN, 2): DO_START_ASSIGN_DISPATCH("[<-");
     OP(DFLTSUBASSIGN, 0):
       DO_DFLT_ASSIGN_DISPATCH(do_subassign_dflt, R_SubassignSym);
-    OP(STARTC, 2): DO_STARTDISPATCH("c");
-    OP(DFLTC, 0): DO_DFLTDISPATCH(do_c_dflt, R_CSym);
+    OP(STARTC, 2): DO_STARTDISPATCH("c");             /* no longe used */
+    OP(DFLTC, 0): DO_DFLTDISPATCH(do_c_dflt, R_CSym); /* no longe used */
     OP(STARTSUBSET2, 2): DO_STARTDISPATCH("[[");
     OP(DFLTSUBSET2, 0): DO_DFLTDISPATCH(do_subset2_dflt, R_Subset2Sym);
     OP(STARTSUBASSIGN2, 2): DO_START_ASSIGN_DISPATCH("[[<-");
