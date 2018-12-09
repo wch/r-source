@@ -2317,6 +2317,11 @@ x <- 1 + 0
 v <- eval(compiler::compile(quote(rep(x, {x[] <- 2; 2}))))
 stopifnot(identical(v, rep(1, 2)))
 
+f <- function() x[{x[2] <<- 3; 1}] <<- 2
+fc <- compiler::cmpfun(f)
+x <- c(1,2); f(); stopifnot(x[2] == 2)
+x <- c(1,2); fc(); stopifnot(x[2] == 2)
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

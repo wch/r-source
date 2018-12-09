@@ -4189,6 +4189,11 @@ static R_INLINE int bcStackScalarRealEx(R_bcstack_t *s, scalar_value_t *px,
     NEXT(); \
 } while (0)
 
+#define DECLNK_STACK_PTR(s) do {		\
+	if ((s)->tag == 0)			\
+	    DECREMENT_LINKS((s)->u.sxpval);	\
+    } while (0)
+
 #define FastRelop2(op,opval,opsym) do { \
     scalar_value_t vx; \
     scalar_value_t vy; \
@@ -5325,8 +5330,10 @@ static int tryAssignDispatch(char *generic, SEXP call, SEXP lhs, SEXP rhs,
 	    SETSTACK(-1, value); \
 	    BC_CHECK_SIGINT(); \
 	    pc = codebase + label; \
+	    NEXT(); \
 	} \
     } \
+    INCREMENT_LINKS(value); \
     NEXT(); \
 } while (0)
 
@@ -5348,8 +5355,10 @@ static int tryAssignDispatch(char *generic, SEXP call, SEXP lhs, SEXP rhs,
 	    SETSTACK(-1, value); \
 	    BC_CHECK_SIGINT(); \
 	    pc = codebase + label; \
+	    NEXT(); \
 	} \
     } \
+    INCREMENT_LINKS(lhs); \
     NEXT(); \
 } while (0)
 
@@ -5484,6 +5493,7 @@ static R_INLINE void VECSUBSET_PTR(R_bcstack_t *sx, R_bcstack_t *si,
 				   SEXP consts, int callidx,
 				   Rboolean subset2)
 {
+    DECLNK_STACK_PTR(sx);
     SEXP idx, args, value;
     SEXP vec = GETSTACK_PTR(sx);
     R_xlen_t i = bcStackIndex(si) - 1;
@@ -5566,6 +5576,7 @@ static R_INLINE void MATSUBSET_PTR(R_bcstack_t *sx,
 				   SEXP consts, int callidx,
 				   Rboolean subset2)
 {
+    DECLNK_STACK_PTR(sx);
     SEXP idx, jdx, args, value;
     SEXP mat = GETSTACK_PTR(sx);
 
@@ -5631,6 +5642,7 @@ static R_INLINE void SUBSET_N_PTR(R_bcstack_t *sx, int rank,
 				  SEXP rho, SEXP consts, int callidx,
 				  Rboolean subset2)
 {
+    DECLNK_STACK_PTR(sx);
     SEXP args, value;
     SEXP x = GETSTACK_PTR(sx);
 
@@ -5718,6 +5730,7 @@ static R_INLINE void VECSUBASSIGN_PTR(R_bcstack_t *sx, R_bcstack_t *srhs,
 				      SEXP rho, SEXP consts, int callidx,
 				      Rboolean subassign2)
 {
+    DECLNK_STACK_PTR(sx);
     SEXP idx, args, value;
     SEXP vec = GETSTACK_PTR(sx);
 
@@ -5761,6 +5774,7 @@ static R_INLINE void MATSUBASSIGN_PTR(R_bcstack_t *sx, R_bcstack_t *srhs,
 				      SEXP rho, SEXP consts, int callidx,
 				      Rboolean subassign2)
 {
+    DECLNK_STACK_PTR(sx);
     SEXP dim, idx, jdx, args, value;
     SEXP mat = GETSTACK_PTR(sx);
 
@@ -5816,6 +5830,7 @@ static R_INLINE void SUBASSIGN_N_PTR(R_bcstack_t *sx, int rank,
 				     SEXP rho, SEXP consts, int callidx,
 				     Rboolean subassign2)
 {
+    DECLNK_STACK_PTR(sx);
     SEXP dim, args, value;
     SEXP x = GETSTACK_PTR(sx);
 
