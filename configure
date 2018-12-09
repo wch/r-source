@@ -895,7 +895,7 @@ KPSEWHICH
 TEXI2DVICMD
 TEXI2DVI
 INSTALL_INFO
-MAKEINFO
+TEXI2ANY
 MAKEINDEX
 PDFLATEX
 PDFTEX
@@ -4880,18 +4880,18 @@ fi
   test -n "$MAKEINDEX" && break
 done
 
-for ac_prog in ${MAKEINFO} texi2any
+for ac_prog in ${TEXI2ANY} texi2any
 do
   # Extract the first word of "$ac_prog", so it can be a program name with args.
 set dummy $ac_prog; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
 $as_echo_n "checking for $ac_word... " >&6; }
-if ${ac_cv_path_MAKEINFO+:} false; then :
+if ${ac_cv_path_TEXI2ANY+:} false; then :
   $as_echo_n "(cached) " >&6
 else
-  case $MAKEINFO in
+  case $TEXI2ANY in
   [\\/]* | ?:[\\/]*)
-  ac_cv_path_MAKEINFO="$MAKEINFO" # Let the user override the test with a path.
+  ac_cv_path_TEXI2ANY="$TEXI2ANY" # Let the user override the test with a path.
   ;;
   *)
   as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
@@ -4901,7 +4901,7 @@ do
   test -z "$as_dir" && as_dir=.
     for ac_exec_ext in '' $ac_executable_extensions; do
   if as_fn_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
-    ac_cv_path_MAKEINFO="$as_dir/$ac_word$ac_exec_ext"
+    ac_cv_path_TEXI2ANY="$as_dir/$ac_word$ac_exec_ext"
     $as_echo "$as_me:${as_lineno-$LINENO}: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
   fi
@@ -4912,26 +4912,26 @@ IFS=$as_save_IFS
   ;;
 esac
 fi
-MAKEINFO=$ac_cv_path_MAKEINFO
-if test -n "$MAKEINFO"; then
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $MAKEINFO" >&5
-$as_echo "$MAKEINFO" >&6; }
+TEXI2ANY=$ac_cv_path_TEXI2ANY
+if test -n "$TEXI2ANY"; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $TEXI2ANY" >&5
+$as_echo "$TEXI2ANY" >&6; }
 else
   { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
 fi
 
 
-  test -n "$MAKEINFO" && break
+  test -n "$TEXI2ANY" && break
 done
 
-if test -n "${MAKEINFO}"; then
+if test -n "${TEXI2ANY}"; then
   { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether texi2any version is at least 5.1" >&5
 $as_echo_n "checking whether texi2any version is at least 5.1... " >&6; }
 if ${r_cv_prog_texi2any_v5+:} false; then :
   $as_echo_n "(cached) " >&6
 else
-  texi2any_version=`${MAKEINFO} --version | \
+  texi2any_version=`${TEXI2ANY} --version | \
   grep -E '^(makeinfo|texi2any)' | sed 's/[^)]*) \(.*\)/\1/'`
 texi2any_version_maj=`echo ${texi2any_version} | cut -f1 -d.`
 texi2any_version_min=`echo ${texi2any_version} | \
@@ -5008,9 +5008,9 @@ if test "${r_cv_prog_texi2any_v5}" != yes; then
   warn_info="you cannot build info or HTML versions of the R manuals"
   { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: ${warn_info}" >&5
 $as_echo "$as_me: WARNING: ${warn_info}" >&2;}
-  MAKEINFO=""
+  TEXI2ANY=""
 else
-  MAKEINFO="${MAKEINFO}"
+  TEXI2ANY="${TEXI2ANY}"
 fi
 
 for ac_prog in ${TEXI2DVI} texi2dvi

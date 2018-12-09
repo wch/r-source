@@ -268,11 +268,14 @@
       If necessary, override the defaults on the \command{configure}
       command line or in file \file{config.site}.
 
-      \item Long-untested \command{configure} support for HP-UX and old
-      versions of Linux has been or will be removed.
+      \item Long-untested \command{configure} support for HP-UX and very
+      old versions of Linux has been removed.
 
       \item \command{configure --with-blas} (without specifying a value)
       includes OpenBLAS in its search (before ATLAS and a generic BLAS).
+      
+      \item The \command{configure} macro \samp{MAKEINFO} has been
+      updated to \samp{TEXI2ANY}.
     }
   }
 

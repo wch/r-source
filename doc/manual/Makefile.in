@@ -33,11 +33,11 @@ OBJECTS_EPUB = $(SOURCES_TEXI:.texi=.epub)
 OBJECTS_MOBI = $(SOURCES_TEXI:.texi=.mobi)
 
 MAKEINDEX = @MAKEINDEX@
-MAKEINFO = @MAKEINFO@
-MAKEINFO_HTML_OPTS = --html --no-split --css-include=$(srcdir)/Rman.css
-MAKEINFO_TEXT_OPTS = --number-sections --fill-column=76 --no-split --no-headers
-TEXI2HTML = $(MAKEINFO) $(MAKEINFO_HTML_OPTS)
-TEXI2TEXT = $(MAKEINFO) $(MAKEINFO_TEXT_OPTS)
+TEXI2ANY = @TEXI2ANY@
+TEXI2ANY_HTML_OPTS = --html --no-split --css-include=$(srcdir)/Rman.css
+TEXI2ANY_TEXT_OPTS = --number-sections --fill-column=76 --no-split --no-headers
+TEXI2HTML = $(TEXI2ANY) $(TEXI2ANY_HTML_OPTS)
+TEXI2TEXT = $(TEXI2ANY) $(TEXI2ANY_TEXT_OPTS)
 ## some broken versions of texi2dvi need C collation.
 TEXI2DVI = LC_COLLATE=C @TEXI2DVI@ --texinfo="@set UseExternalXrefs "
 TEXI2PDF = $(TEXI2DVI) --pdf
@@ -85,7 +85,7 @@ R: Makefile
 docs: html
 
 .texi.html:
-	@if test -z "$(MAKEINFO)"; then \
+	@if test -z "$(TEXI2ANY)"; then \
 	  $(ECHO) "'texi2any' v5.1 or later needed to make HTML docs but missing on your system." ; \
 	  $(ECHO) "file $@ will be missing and linked from CRAN"; \
 	else \
@@ -96,11 +96,11 @@ docs: html
 	fi
 
 .texi.info:
-	@if test -z "$(MAKEINFO)"; then \
+	@if test -z "$(TEXI2ANY)"; then \
 	  $(ECHO) "ERROR: 'texi2any' v5.1 or later needed but missing on your system."; \
 	  exit 1; \
 	fi
-	$(MAKEINFO) --enable-encoding -D UseExternalXrefs -I$(srcdir) $<
+	$(TEXI2ANY) --enable-encoding -D UseExternalXrefs -I$(srcdir) $<
 
 .texi.pdf:
 	@if test -z "$(TEXI2DVI0)"; then \
@@ -152,7 +152,7 @@ R-intro.mobi: R-intro.texi
 	@rm -R tmp
 
 R-admin.html: $(srcdir)/R-admin.texi
-	@if test -z "$(MAKEINFO)"; then \
+	@if test -z "$(TEXI2ANY)"; then \
 	  $(ECHO) "'texi2any' v5.1 or later needed to make HTML docs but missing on your system." ; \
 	  $(ECHO) "file $@ will be missing and linked from CRAN"; \
 	else \
@@ -163,12 +163,12 @@ R-admin.html: $(srcdir)/R-admin.texi
 	fi
 
 R-FAQ.html: $(srcdir)/R-FAQ.texi
-	@if test -z "$(MAKEINFO)"; then \
+	@if test -z "$(TEXI2ANY)"; then \
 	  $(ECHO) "'texi2any' v5.1 or later needed to make HTML docs but missing on your system." ; \
 	  $(ECHO) "file $@ will be missing and linked from CRAN"; \
 	else \
 	  $(ECHO) "creating doc/manual/$@"; \
-	  $(MAKEINFO) --html --no-split --css-include=$(srcdir)/Rfaq.css -D UseExternalXrefs -I$(srcdir) $< -o $@.tmp || touch $@; \
+	  $(TEXI2ANY) --html --no-split --css-include=$(srcdir)/Rfaq.css -D UseExternalXrefs -I$(srcdir) $< -o $@.tmp || touch $@; \
 	  $(SED) -f $(srcdir)/quot.sed $@.tmp > $@; \
 	  rm -f $@.tmp; \
 	fi
@@ -409,7 +409,7 @@ distdir: $(DISTFILES)
 	      | (cd $(distdir); $(TAR) -x -f -)) \
 	    || exit 1; \
 	done
-	@if test -z "$(MAKEINFO)"; then \
+	@if test -z "$(TEXI2ANY)"; then \
 	  $(ECHO) "ERROR: 'texi2any' v5.1 or later needed but missing on your system."; \
 	  exit 1; \
 	fi
@@ -421,7 +421,7 @@ distdir: $(DISTFILES)
 front-matter: ${top_builddir}/doc/RESOURCES ${top_builddir}/doc/FAQ
 
 ${top_builddir}/doc/RESOURCES: $(srcdir)/resources.texi
-	@if test -z "$(MAKEINFO)"; then \
+	@if test -z "$(TEXI2ANY)"; then \
 	  $(ECHO) "'texi2any' v5.1 or later needed to make HTML docs but missing on your system." ; \
 	  $(ECHO) "file doc/RESOURCES will be missing"; \
 	else \
@@ -430,7 +430,7 @@ ${top_builddir}/doc/RESOURCES: $(srcdir)/resources.texi
 	fi
 
 ${top_builddir}/doc/FAQ: $(srcdir)/R-FAQ.texi
-	@if test -z "$(MAKEINFO)"; then \
+	@if test -z "$(TEXI2ANY)"; then \
 	  $(ECHO) "'texi2any' v5.1 or later needed to make HTML docs but missing on your system." ; \
 	  $(ECHO) "file doc/FAQ will be missing"; \
 	else \
@@ -441,12 +441,12 @@ ${top_builddir}/doc/FAQ: $(srcdir)/R-FAQ.texi
 html-non-svn: ../html/resources.html
 
 ../html/resources.html: $(srcdir)/resources.texi
-	@if test -z "$(MAKEINFO)"; then \
+	@if test -z "$(TEXI2ANY)"; then \
 	  $(ECHO) "'texi2any' v5.1 or later needed to make HTML docs but missing on your system." ; \
 	  $(ECHO) "file doc/html/resources.html will be missing"; \
 	else \
 	  $(ECHO) "creating doc/html/resources.html"; \
-	  $(MAKEINFO) --html --no-split --no-headers \
+	  $(TEXI2ANY) --html --no-split --no-headers \
 	    --css-include=$(top_srcdir)/doc/html/R.css $(srcdir)/resources.texi -o $@; \
 	fi
 
@@ -460,12 +460,12 @@ SEDVER = -e s/@RVER@/$(RVER)/g -e s/@RWVER@/$(RPREFIX)/g
 rw-FAQ.html: rw-FAQ.texi $(top_srcdir)/VERSION $(srcdir)/Rman.css
 	@echo "making rw-FAQ.html"
 	@$(SED) $(SEDVER) $< | \
-	  $(MAKEINFO) --no-split --html --no-headers --number-sections --css-include=$(srcdir)/Rman.css -o $@ 
+	  $(TEXI2ANY) --no-split --html --no-headers --number-sections --css-include=$(srcdir)/Rman.css -o $@ 
 
 rw-FAQ: rw-FAQ.texi $(top_srcdir)/VERSION
 	@echo "making rw-FAQ"
 	@$(SED) $(SEDVER) $< | \
-	  $(MAKEINFO) --no-headers --number-sections -o $@
+	  $(TEXI2ANY) --no-headers --number-sections -o $@
 
 rw-FAQ.pdf: rw-FAQ.texi $(top_srcdir)/VERSION
 	@$(SED) $(SEDVER) $< > tmp.texi

@@ -312,8 +312,7 @@
 
 ## Script from texinfo 5.1 or later.
 ## Usually the full path to texi2any.
-## (The name is historical: this was 'makeinfo' in texinfo 4.x)
-## MAKEINFO=
+## TEXI2ANY=
 
 ## Full path to version of curl-config to be used
 ## CURL_CONFIG=

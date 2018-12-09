@@ -464,10 +464,8 @@ You will not be able to build any of these unless you have
 have @command{texi2dvi} and @file{texinfo.tex} installed (which are part
 of the @acronym{GNU} @pkg{texinfo} distribution but are, especially
 @file{texinfo.tex}, often made part of the @TeX{} package in
-re-distributions).  For historical reasons, the path to
-@command{texi2any} can be set by macro @samp{MAKEINFO} in
-@file{config.site} (@command{makeinfo} is nowadays a link to
-@command{texi2any}).
+re-distributions).  The path to @command{texi2any} can be set by macro
+@samp{TEXI2ANY} in @file{config.site}.
 
 The PDF versions can be viewed using any recent PDF viewer: they have
 hyperlinks that can be followed.  The info files are suitable for
@@ -3014,7 +3012,7 @@ distributions.)
 Even on 64-bit builds of @R{} there are limits on the size of @R{}
 objects (see @code{help("Memory-limits")}), some of which stem from the
 use of 32-bit integers (especially in Fortran code).  For example, each
-dimensions of an array is limited to @math{2^{31} - 1}.
+dimension of an array is limited to @math{2^{31} - 1}.
 
 @node The standalone Rmath library, Essential and useful other programs under a Unix-alike, Choosing between 32- and 64-bit builds, Top
 @chapter The standalone Rmath library

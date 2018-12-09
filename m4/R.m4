@@ -149,7 +149,7 @@ if test -z "${ac_cv_path_PDFLATEX}" ; then
   AC_MSG_WARN([${warn_pdf2}])
 fi
 AC_PATH_PROGS(MAKEINDEX, [${MAKEINDEX} makeindex], )
-R_PROG_MAKEINFO
+R_PROG_TEXI2ANY
 AC_PATH_PROGS(TEXI2DVI, [${TEXI2DVI} texi2dvi], )
 TEXI2DVICMD=${ac_cv_path_TEXI2DVI}
 if test -z "${TEXI2DVICMD}"; then
@@ -184,12 +184,12 @@ fi
 AC_SUBST(R_RD4PDF)
 ])# R_PROG_TEXMF
 
-## R_PROG_MAKEINFO
+## R_PROG_TEXI2ANY
 ## ---------------
-AC_DEFUN([R_PROG_MAKEINFO],
-[AC_PATH_PROGS(MAKEINFO, [${MAKEINFO} texi2any])
-if test -n "${MAKEINFO}"; then
-  _R_PROG_MAKEINFO_VERSION
+AC_DEFUN([R_PROG_TEXI2ANY],
+[AC_PATH_PROGS(TEXI2ANY, [${TEXI2ANY} texi2any])
+if test -n "${TEXI2ANY}"; then
+  _R_PROG_TEXI2ANY_VERSION
   AC_PATH_PROGS(INSTALL_INFO,
                 [${INSTALL_INFO} ginstall-info install-info],
                 false)
@@ -203,23 +203,23 @@ fi
 if test "${r_cv_prog_texi2any_v5}" != yes; then
   warn_info="you cannot build info or HTML versions of the R manuals"
   AC_MSG_WARN([${warn_info}])
-  MAKEINFO=""
+  TEXI2ANY=""
 else
-  MAKEINFO="${MAKEINFO}"
+  TEXI2ANY="${TEXI2ANY}"
 fi
-])# R_PROG_MAKEINFO
+])# R_PROG_TEXI2ANY
 
-## _R_PROG_MAKEINFO_VERSION
+## _R_PROG_TEXI2ANY_VERSION
 ## ------------------------
 ## Building the R Texinfo manuals requires texinfo v5.1 or later.
 ## Set shell variable r_cv_prog_texi2any_v5 to 'yes' if a recent
 ## enough texi2any aka  makeinfo is found, and to 'no' otherwise.
 ## If you change the minimum version here, also change it in
 ## doc/manual/Makefile.in and doc/manual/R-admin.texi.
-AC_DEFUN([_R_PROG_MAKEINFO_VERSION],
+AC_DEFUN([_R_PROG_TEXI2ANY_VERSION],
 [AC_CACHE_CHECK([whether texi2any version is at least 5.1],
                 [r_cv_prog_texi2any_v5],
-[texi2any_version=`${MAKEINFO} --version | \
+[texi2any_version=`${TEXI2ANY} --version | \
   grep -E '^(makeinfo|texi2any)' | sed 's/[[^)]]*) \(.*\)/\1/'`
 texi2any_version_maj=`echo ${texi2any_version} | cut -f1 -d.`
 texi2any_version_min=`echo ${texi2any_version} | \
@@ -235,7 +235,7 @@ elif test ${texi2any_version_maj} -lt 5 \
 else
   r_cv_prog_texi2any_v5=yes
 fi])
-])# _R_PROG_MAKEINFO_VERSION
+])# _R_PROG_TEXI2ANY_VERSION
 
 ## R_PROG_BROWSER
 ## --------------
