@@ -1,6 +1,6 @@
 % File src/library/base/man/which.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{which}
@@ -35,8 +35,12 @@ arrayInd(ind, .dim, .dimnames = NULL, useNames = FALSE)
 \value{
   If \code{arr.ind == FALSE} (the default), an integer vector with
   \code{length} equal to \code{sum(x)}, i.e., to the number of
-  \code{TRUE}s in \code{x}; Basically, the result is
-  \code{(1:length(x))[x]}.
+  \code{TRUE}s in \code{x}.
+
+  Basically, the result is \code{(1:length(x))[x]} in typical cases;
+  more generally, including when \code{x} has \code{\link{NA}}'s,
+  \code{which(x)} is \code{seq_along(x)[!is.na(x) & x]} plus
+  \code{\link{names}} when \code{x} has.
 
   If \code{arr.ind == TRUE} and \code{x} is an \code{\link{array}} (has
   a \code{\link{dim}} attribute), the result is
