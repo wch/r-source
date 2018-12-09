@@ -118,10 +118,10 @@ before unpacking so that the files will be readable by the target group
 (e.g.,@: @code{umask 022} to be usable by all users).  Keep this
 setting of @code{umask} whilst building and installing.
 
-If you use a recent @acronym{GNU} version of @command{tar} and do this
-as a root account (which on Windows includes accounts with administrator
-privileges) you may see many warnings about changing ownership.  In
-which case you can use
+If you use a fairly recent @acronym{GNU} version of @command{tar} and do
+this as a root account (which on Windows includes accounts with
+administrator privileges) you may see many warnings about changing
+ownership.  In which case you can use
 
 @example
 tar --no-same-owner -xf R-@var{x}.@var{y}.@var{z}.tar.gz
@@ -226,9 +226,9 @@ wget -r -l1 --no-parent -A\*.gz -nd -P src/library/Recommended \
 
 @R{} will configure and build under most common Unix and Unix-alike
 platforms including @samp{@var{cpu}-*-linux-gnu} for the
-@cputype{alpha}, @cputype{arm}, @cputype{hppa}, @cputype{ix86},
-@cputype{m68k}, @cputype{mips}, @cputype{mipsel}, @cputype{powerpc},
-@cputype{s390}, @cputype{sparc}, and @cputype{x86_64} @acronym{CPU}s,
+@cputype{alpha}, @cputype{arm64}, @cputype{hppa}, @cputype{ix86},
+@cputype{m68k}, @cputype{mips}, @cputype{mipsel}, @cputype{ppc64},
+@cputype{s390}, @cputype{sparc64}, and @cputype{x86_64} @acronym{CPU}s,
 @c (see e.g.@:  @uref{https://buildd.debian.org/build.php?&pkg=r-base}),
 @c Actually, see https://packages.debian.org/unstable/math/r-base-core as
 @c the build daemon is not used for all platforms; note also that Debian
@@ -236,7 +236,7 @@ platforms including @samp{@var{cpu}-*-linux-gnu} for the
 @samp{x86_64-@/apple-@/darwin}, @samp{i386-@/sun-@/solaris} and
 @samp{sparc-@/sun-@/solaris} as well as
 perhaps (it is tested less frequently on these platforms)
-@samp{i386-@/apple-@/darwin}, @samp{i386-@/*-@/freebsd}, @samp{x86_64-@/*-@/freebsd},
+@samp{i386-@/*-@/freebsd}, @samp{x86_64-@/*-@/freebsd},
 @samp{i386-@/*-@/netbsd}, @samp{x86_64/*-@/openbsd} and
 @samp{powerpc-@/ibm-@/aix6*}
 
@@ -269,9 +269,9 @@ First review the essential and useful tools and libraries in
 @ref{Essential and useful other programs under a Unix-alike}, and install
 those you
 @enindex TMPDIR
-want or need.  Ensure that the environment variable @env{TMPDIR} is
-either unset (and @file{/tmp} exists and can be written in and scripts
-can be executed from) or points to the absolute path to a valid
+want or need.  Ensure that either the environment variable @env{TMPDIR}
+is either unset (and @file{/tmp} exists and can be written in and
+scripts can be executed from) or points to the absolute path to a valid
 temporary directory (one from which execution of scripts is allowed)
 which does not contain spaces.@footnote{Most aspects will work with
 paths containing spaces, but external software used by @R{}, e.g.@:
@@ -397,6 +397,10 @@ some do not have @file{/usr/local/bin} on the default path.
 @node Help options, Making the manuals, Simple compilation, Installing R under Unix-alikes
 @section Help options
 
+@R{} by default provides help pages a plain text displayed in a pager,
+with the options (see the help for @code{help} of displaying help as
+HTML or PDF.
+
 By default @HTML{} help pages are created when needed rather than being
 built at install time.
 
@@ -428,10 +432,10 @@ There is a set of manuals that can be built from the sources,
 @table @samp
 @item fullrefman
 Printed versions of all the help pages for base and recommended packages
-(around 3500 pages).
+(around 3600 pages).
 @item refman
 Printed versions of the help pages for selected base packages (around
-2000 pages)
+2200 pages)
 @item R-FAQ
 R @acronym{FAQ}
 @item R-intro
@@ -544,8 +548,8 @@ package @pkg{hyperref}, and omit @samp{inconsolata} if you do not have
 
 Further options, e.g@: for @pkg{hyperref}, can be included in a file
 @file{Rd.cfg} somewhere on your @LaTeX{} search path.  For example, if
-you prefer the text and not the page number in the table of contents to
-be hyperlinked use
+you prefer to hyperlink the text and not the page number in the table of
+contents use
 @example
 \ifthenelse@{\boolean@{Rd@@use@@hyper@}@}@{\hypersetup@{linktoc=section@}@}@{@}
 @end example
@@ -558,7 +562,6 @@ or
 
 @noindent
 to hyperlink both text and page number.
-@c Requires 6.78f from Aug 2008.
 
 Ebook versions of most of the manuals in one or both of @file{.epub} and
 @file{.mobi} formats can be made by running in @file{doc/manual} one of
@@ -573,7 +576,8 @@ This requires @command{ebook-convert} from @command{Calibre}
 (@uref{http://calibre-ebook.com/download}), or from most Linux
 distributions.  If necessary the path to @command{ebook-convert} can be
 set as make macro @env{EBOOK} to by editing @file{doc/manual/Makefile}
-(which contains a commented value suitable for macOS).
+(which contains a commented value suitable for macOS) or using
+@command{make -e}.
 
 
 @node Installation, Uninstallation, Making the manuals, Installing R under Unix-alikes
@@ -1076,7 +1080,8 @@ extensions': what those are is hard to track down.
 For the use of C++11 and later in @R{} packages see the `Writing R
 Extensions' manual.  Prior to @R{} 3.6.0 the default C++ standard was
 that of the compiler used: currently it is C++11 if supported by the
-compiler.
+compiler: this can be overridden bysetting @samp{CXXSTD} when @R{} is
+configured, for example to @samp{-std=gnu++14}.
 
 @node Testing a Unix-alike Installation,  , Other Options, Installing R under Unix-alikes
 @section Testing an Installation
@@ -1091,9 +1096,9 @@ make install-tests
 @noindent
 which populates a @file{tests} directory in the installation.
 
-If this has been done, two testing routes are available.
-The first is to move to the home directory of the @R{} installation
-(as given by @code{R.home()}) and run
+If this has been done, two testing routes are available.  The first is
+to move to the home directory of the @R{} installation (as given by
+@command{R RHOME} or from @R{} as @code{R.home()}) and run
 
 @example
 cd tests
@@ -1109,7 +1114,7 @@ and other useful targets are @code{test-BasePackages} and
 packages (if installed) respectively.
 
 This re-runs all the tests relevant to the installed @R{} (including for
-example code in the package vignettes), but not for example the ones
+example the code in the package vignettes), but not for example the ones
 checking the example code in the manuals nor making the standalone Rmath
 library.  This can occasionally be useful when the operating environment
 has been changed, for example by OS updates or by substituting the
@@ -1122,9 +1127,7 @@ of @command{make check}) and package sources (part of @command{make
 check-devel} and @command{make check-recommended}).  It does require a
 @command{make} command which supports the @command{make -j @var{n}}
 option: most do but on Solaris you need to select GNU @code{make} or
-@code{dmake}.  Where parallel checking of package sources is done, a log
-file @file{@var{pngname}.log} is left in the @code{tests} directory for
-inspection.
+@code{dmake}.
 
 
 Alternatively, the installed @R{} can be run, preferably with
@@ -1749,10 +1752,10 @@ Windows' CRLF line endings.
 
 (`macOS' was known as `OS X' from 2012--2016 and as `Mac OS X' before that.)
 
-The front page of a @acronym{CRAN} site has a link `Download R for OS
-X'. Click on that, then download the file @file{R-@value{VERSIONno}.pkg}
-and install it. This runs on macOS 10.11 and later (El Capitan, Sierra,
-High Sierra, Mojave, @dots{}).
+The front page of a @acronym{CRAN} site has a link `Download R for (Mac)
+OS X'. Click on that, then download the file
+@file{R-@value{VERSIONno}.pkg} and install it. This runs on macOS 10.11
+and later (El Capitan, Sierra, High Sierra, Mojave, @dots{}).
 
 Installers for R-patched and R-devel are usually available from
 @uref{https://r.research.att.com}.  (Some of these packages are
@@ -1785,8 +1788,8 @@ want this time @dots{}).
 Various parts of the build require XQuartz to be installed: see
 @uref{https://xquartz.macosforge.org/}.  These include the @pkg{tcltk}
 package and the @code{X11} device: attempting to use these without
-XQuartz will remind you.  Also the cairographics-based devices (which
-are not often used on macOS) such as @code{png(type = "cairo")}.
+XQuartz will remind you.  Also for the cairographics-based devices
+(which are not often used on macOS) such as @code{png(type = "cairo")}.
 
 If you update your macOS version, you should re-install @R{} (and
 perhaps XQuartz): the installer may tailor the installation to the
@@ -1826,7 +1829,7 @@ typed as commands like any other Unix-alike: see the next chapter of
 this manual.  There are some small differences which may surprise users
 of @R{} on other platforms, notably the default location of the personal
 library directory (under @file{~/Library/R},
-e.g.@: @file{~/Library/R/3.5/library}), and that warnings, messages and
+e.g.@: @file{~/Library/R/3.6/library}), and that warnings, messages and
 other output to @file{stderr} are highlighted in bold.
 
 @c https://stat.ethz.ch/pipermail/r-sig-mac/2014-October/011131.html
@@ -1921,17 +1924,17 @@ These are paths relative to @file{/}, the root of the file system.
 
 The installer will remove any previous version@footnote{More precisely,
 of the Apple package of the same name: this means that installing a package for
-3.3.x does not remove an installation for 3.4.x or 3.5.x.} of
+3.3.x does not remove an installation for 3.4.x or later.} of
 the @R{} framework which it finds installed.  This can be avoided by
 using @command{pkgutil --forget} (see the previous section).  However,
 note that different versions are installed under
-@file{/Library/Frameworks/R.framework/Versions} as @file{3.4},
-@file{3.5} and so on, so it is not possible to have different
+@file{/Library/Frameworks/R.framework/Versions} as @file{3.5},
+@file{3.6} and so on, so it is not possible to have different
 @samp{3.x.y} versions installed for the same @samp{x}.
 
 A version of @R{} can be run directly from the command-line as e.g.@:
 @example
-/Library/Frameworks/R.framework/Versions/3.5/Resources/bin/R
+/Library/Frameworks/R.framework/Versions/3.6/Resources/bin/R
 @end example
 
 @noindent
@@ -2015,7 +2018,8 @@ library is a directory containing installed packages; the main library
 is @file{@var{R_HOME}/library}, but others can be used, for example by
 @enindex R_LIBS
 setting the environment variable @env{R_LIBS} or using the @R{} function
-@code{.libPaths()}.
+@code{.libPaths()}.  To avoid any confusion you will often see a library
+directory referred to as a `library tree'.
 
 @node Default packages, Managing libraries, Add-on packages, Add-on packages
 @section Default packages
@@ -2127,7 +2131,7 @@ intention is to install a @acronym{CRAN} package and internet access is
 available.@footnote{If a proxy needs to be set, see
 @command{?download.file}.}  On most systems @samp{install.packages()}
 will allow packages to be selected from a list box (typically with
-several thousand items).
+thousands of items).
 
 To install packages from source on a Unix-alike use in a terminal
 
@@ -2286,8 +2290,8 @@ source}.
 On macOS (formerly OS X) @code{install.packages} works as it does on
 other Unix-alike systems, but there are additional types starting with
 @code{mac.binary} (available for the @acronym{CRAN} distribution but not
-when compiling from source: @code{mac.binary.el-capitan} for a `El
-Capitan and later build with @code{"default"} a synonym for the
+when compiling @R{} from source: @code{mac.binary.el-capitan} for an 
+`El Capitan and later' build with @code{"default"} a synonym for the
 appropriate variant) which can be passed to @code{install.packages} in
 order to download and install binary packages from a suitable
 repository.  These binary package files for macOS have the extension
@@ -2301,8 +2305,8 @@ version is available or the source version is newer, it will install the
 source versions of packages without compiled C/C++/Fortran code and offer
 to do so for those with, if @command{make} is available.
 
-Note that most binary packages including compiled code are tied to a
-particular series (e.g.@: @R{} 3.5.x or 3.4.x) of @R{}.
+Note that most binary packages which include compiled code are tied to a
+particular series (e.g.@: @R{} 3.6.x or 3.5.x) of @R{}.
 
 Installing source packages which do not contain compiled code should
 work with no additional tools. For others you will need the
@@ -2325,16 +2329,16 @@ appropriate version at the time of writing was
 @uref{https://r.research.att.com/@/libs/@/GTK_2.24.17-X11.pkg}
 
 The default compilers specified are shown in file
-@file{/Library/Frameworks/@/R.framework/@/Resources/etc/Makeconf}.  At the
-time of writing these setting assumed that the C, Fortran and C++
-compilers were on the path, and @command{gfortan} 6.1.0 (see
+@file{/Library/Frameworks/@/R.framework/@/Resources/etc/Makeconf}.  At
+the time of writing these setting assumed that the C, Fortran and C++
+compilers were on the path, using @command{gfortran} 6.1.0 (see
 @ref{macOS}).  The settings can be changed, either by editing that file
 or in a file such as @file{~/.R/Makevars} (see the next section).
 Entries which may need to be changed include @samp{CC}, @samp{CXX},
-@samp{FC}, @samp{FLIBS} and the corresponding flags, and
-perhaps @samp{CXXCPP}, @samp{DYLIB_LD}, @samp{MAIN_LD},
-@samp{SHLIB_CXXLD}, @samp{SHLIB_FCLD} and @samp{SHLIB_LD}, as well as
-the @samp{CXX11}, @samp{CXX14} and @samp{CXX17} variants
+@samp{FC}, @samp{FLIBS} and the corresponding flags, and perhaps
+@samp{CXXCPP}, @samp{DYLIB_LD}, @samp{MAIN_LD}, @samp{SHLIB_CXXLD} and
+@samp{SHLIB_LD}, as well as the @samp{CXX11}, @samp{CXX14} and
+@samp{CXX17} variants
 
 So for example you could select a specific build of @command{clang} for
 both C and C++ with extensive checking by having in @file{~/.R/Makevars}
@@ -2395,7 +2399,7 @@ problems} can be specified @emph{via} the environment variable
 
 Package developers are encouraged to use this mechanism to enable a
 reasonable amount of diagnostic messaging (``warnings'') when compiling,
-such as e.g.@: @option{-Wall -pedantic} for tools from GCC, the Gnu
+such as e.g.@: @option{-Wall -pedantic} for tools from GCC, the GNU
 Compiler Collection.
 
 Note that this mechanism can also be used when it necessary to change
@@ -2478,18 +2482,7 @@ with a source tarball.
 @node Byte-compilation, External software, Multiple sub-architectures, Installing packages
 @subsection Byte-compilation
 
-The base and recommended packages are byte-compiled by default.  Other
-packages can be byte-compiled on installation by using @command{R CMD
-INSTALL} with option @option{--byte-compile} or by
-@code{install.packages(type = "source", INSTALL_opts =
-"--byte-compile")}.
-
-Not all contributed packages work correctly when byte-compiled.  For
-most packages (especially those which make extensive use of compiled
-code) the speed-up is small.  Unless a package is used frequently the
-time spent in byte-compilation can outweigh the time saved in execution:
-also byte-compilation can add substantially to the installed size of the
-package.
+As from @R{} 3.6.0, all packages are by default byte-compiled.
 
 Byte-compilation can be controlled on a per-package basis by the
 @samp{ByteCompile} field in the @file{DESCRIPTION} file.
@@ -2499,10 +2492,10 @@ Byte-compilation can be controlled on a per-package basis by the
 
 Some @R{} packages contain compiled code which links to external
 software libraries.  Unless the external library is statically linked
-(which is done as much as possible for binary packages on Windows and OS
-X), the libraries have to be found when the package is loaded and not
-just when it is installed.  How this should be done depends on the OS
-(and in some cases the version).
+(which is done as much as possible for binary packages on Windows and
+macOS), the libraries have to be found when the package is loaded and
+not just when it is installed.  How this should be done depends on the
+OS (and in some cases the version).
 
 For Unix-alikes except macOS the primary mechanism is the @code{ld.so}
 cache controlled by @command{ldconfig}: external dynamic libraries
@@ -2510,31 +2503,32 @@ recorded in that cache will be found.  Standard library locations will
 be covered by the cache, and well-designed software will add its
 locations (as for example @pkg{openmpi} does on Fedora).  The secondary
 mechanism is to consult the environment variable @env{LD_LIBRARY_PATH}.
-Now the @R{} script controls that variable, and sets it to the
-concatenation of @env{R_LD_LIBRARY_PATH}, @env{R_JAVA_LD_LIBRARY_PATH}
-and the environment value of @env{LD_LIBRARY_PATH}.  The first two have
-defaults which are normally set when @R{} is installed (but can be
-overridden in the environment) so @env{LD_LIBRARY_PATH} is the best
-choice for a user to set.
+The @R{} script controls that variable, and sets it to the concatenation
+of @env{R_LD_LIBRARY_PATH}, @env{R_JAVA_LD_LIBRARY_PATH} and the
+environment value of @env{LD_LIBRARY_PATH}.  The first two have defaults
+which are normally set when @R{} is installed (but can be overridden in
+the environment) so @env{LD_LIBRARY_PATH} is the best choice for a user
+to set.
 
-On macOS the primary mechanism is to embed the absolute path to dependent
-dynamic libraries into an object when it is compiled.  Few @R{} packages
-arrange to do so, but it can be edited@footnote{They need to have been
-created using @option{-headerpad_max_install_names}, which is the
-default for an @R{} package.} @emph{via} @command{install_name_tool} ---
-that only deals with direct dependencies and those would also need to be
-compiled to include the absolute paths of their dependencies.  If the
-choice of absolute path is to be deferred to load time, how they are
-resolved is described in @command{man dyld}: the role of
-@env{LD_LIBRARY_PATH} is replaced on macOS by @env{DYLD_LIBRARY_PATH} and
-latterly @env{DYLD_FALLBACK_LIBRARY_PATH}.  Running @command{R CMD otool
--L} on the package shared object will show where (if anywhere) its
-dependencies are resolved. @env{DYLD_FALLBACK_LIBRARY_PATH} is preferred
-(and it is that which is manipulated by the @R{} script), but as from
-10.11 (`El Capitan') the default behaviour had been changed for security
-reasons to discard these environment variables when invoking a shell
-script (and @file{R} is a shell script).  That makes the only portable
-option to set @env{R_LD_LIBRARY_PATH} in the environment, something like
+On macOS the primary mechanism is to embed the absolute path to
+dependent dynamic libraries into an object when it is compiled.  Few
+@R{} packages arrange to do so, but it can be edited@footnote{They need
+to have been created using @option{-headerpad_max_install_names}, which
+is the default for an @R{} package.} @emph{via}
+@command{install_name_tool} --- that only deals with direct dependencies
+and those would also need to be compiled to include the absolute paths
+of their dependencies.  If the choice of absolute path is to be deferred
+to load time, how they are resolved is described in @command{man dyld}:
+the role of @env{LD_LIBRARY_PATH} is replaced on macOS by
+@env{DYLD_LIBRARY_PATH} and @env{DYLD_FALLBACK_LIBRARY_PATH}.  Running
+@command{R CMD otool -L} on the package shared object will show where
+(if anywhere) its dependencies are
+resolved.  @env{DYLD_FALLBACK_LIBRARY_PATH} is preferred (and it is that
+which is manipulated by the @R{} script), but as from 10.11 (`El
+Capitan') the default behaviour had been changed for security reasons to
+discard these environment variables when invoking a shell script (and
+@file{R} is a shell script).  That makes the only portable option to set
+@env{R_LD_LIBRARY_PATH} in the environment, something like
 
 @example
 export R_LD_LIBRARY_PATH="`R RHOME`/lib:/opt/local/lib"
@@ -2990,7 +2984,7 @@ vector).
 @item
 Most 32-bit OSes by default limit file sizes to 2GB (and this may also
 apply to 32-bit builds on 64-bit OSes).  This can often be worked
-around: and @command{configure} selects suitable defines if this is
+around: @command{configure} selects suitable defines if this is
 possible.  (We have also largely worked around that limit on 32-bit
 Windows.)  64-bit builds have much larger limits.
 
@@ -3019,8 +3013,8 @@ distributions.)
 
 Even on 64-bit builds of @R{} there are limits on the size of @R{}
 objects (see @code{help("Memory-limits")}), some of which stem from the
-use of 32-bit integers (especially in Fortran code).  For example, the
-dimensions of an array are limited to @math{2^{31} - 1}.
+use of 32-bit integers (especially in Fortran code).  For example, each
+dimensions of an array is limited to @math{2^{31} - 1}.
 
 @node The standalone Rmath library, Essential and useful other programs under a Unix-alike, Choosing between 32- and 64-bit builds, Top
 @chapter The standalone Rmath library
@@ -3038,7 +3032,7 @@ is the current working directory (in the build directory tree on a
 Unix-alike if that is separate from the sources).
 
 @file{Rmath.h} contains @samp{R_VERSION_STRING}, which is a character
-string containing the current @R{} version, for example @code{"3.5.0"}.
+string containing the current @R{} version, for example @code{"3.6.0"}.
 
 There is full access to @R{}'s handling of @code{NaN}, @code{Inf} and
 @code{-Inf} via special versions of the macros and functions
@@ -3074,7 +3068,7 @@ an entry point
 to set its seeds).
 
 The facilities to change the normal random number generator are
-available through the constant N01_kind. This takes values
+available through the constant @code{N01_kind}. This takes values
 from the enumeration type
 
 @example
@@ -3267,7 +3261,7 @@ C11 but is mandatory in C99.}  @R{} tries to choose suitable
 flags@footnote{Examples are @option{-std=gnu99}, @option{-std=c99} and
 @option{-c99}.} for the C compilers it knows about, but you may have to
 set @code{CC} or @code{CFLAGS} suitably.  For versions of @command{gcc}
-prior to 5.1 with @code{glibc} this means including
+prior to 5.1 with @code{glibc}-based Linux this means including
 @option{-std=gnu99}@footnote{@option{-std=c99} excludes POSIX
 functionality, but @file{config.h} will turn on all @acronym{GNU}
 extensions to include the POSIX functionality for @R{} itself: this does
@@ -3321,7 +3315,7 @@ system calls, @code{select} on a Unix-alike, and either @code{putenv} or
 @c xz 5.0.3 is from May 2011
 Installations of @code{zlib} (version 1.2.5 or later), @code{libbz2}
 (version 1.0.6 or later: called @pkg{bzip2-libs}/@pkg{bzip2-devel} or
-@pkg{libbz2-1.0}/@pkg{libbz2-dev} by some Linux distributions),
+@pkg{libbz2-1.0}/@pkg{libbz2-dev} by some Linux distributions) and
 @code{liblzma}@footnote{most often distributed as part of @code{xz}:
 possible names in Linux distributions include
 @code{xz-devel}/@code{xz-libs} and @code{liblzma-dev}.} version 5.0.3 or
@@ -3487,7 +3481,7 @@ The bitmapped graphics devices @code{jpeg()}, @code{png()} and
 @code{tiff()} need the appropriate headers and libraries installed:
 @code{jpeg} (version 6b or later, or @code{libjpeg-turbo}) or
 @code{libpng} (version 1.2.7 or later) and @code{zlib} or @code{libtiff}
-(any recent version -- 3.9.[4567] and 4.0.[23] have been tested)
+(any recent version -- 3.9.[4-7] and 4.0.[2-10] have been tested)
 respectively.  They also need support for either @code{X11} or
 @code{cairo} (see above).  Should support for these devices @strong{not}
 be required or broken system libraries need to be avoided there are
@@ -3502,9 +3496,9 @@ into @code{libtiff} such as @code{lzma}, @code{jbig} and @code{jpeg12},
 and these may need also to be present.
 
 Option @option{--with-system-tre} is also available: it needs a recent
-version of TRE. (The current sources are in the @command{git} repository
-at @url{https://github.com/laurikari/tre/}, but at the time of writing
-the resulting build will not pass its checks.).
+version of TRE. (The latest (2016) sources are in the @command{git}
+repository at @url{https://github.com/laurikari/tre/}, but at the time
+of writing the resulting build will not pass its checks.).
 
 An implementation of @acronym{XDR} is required, and the @R{} sources
 contain one which is likely to suffice (although a system version may
@@ -3513,13 +3507,13 @@ historically has been part of @file{libc} on a Unix-alike.  (In
 principle @command{man xdr_string} should tell you which library is
 needed, but it often does not: on Solaris and others it is provided by
 @code{libnsl}.)  However some builds@footnote{This is the default as
-from @code{glibc} 2.26 and has been confirmed for Fedora 28.} of
-@code{glibc} omit or hide it with the intention that the
-@acronym{TI-RPC} library be used, in which case @code{libtirpc} (and its
-development version) needs to be installed, and its
-headers@footnote{@R{} uses @file{rpc/xdr.h} but that includes
-@file{netconfig.h} from the top @file{tirpc} directory.} need to be on the
-C include path or under @file{/usr/include/tirpc}.
+from @code{glibc} 2.26 and has been confirmed for Fedora 28, which does
+not mention this on its @command{man} pages.} of @code{glibc} omit or
+hide it with the intention that the @acronym{TI-RPC} library be used, in
+which case @code{libtirpc} (and its development version) should be
+installed, and its headers@footnote{@R{} uses @file{rpc/xdr.h} but that
+includes @file{netconfig.h} from the top @file{tirpc} directory.} need
+to be on the C include path or under @file{/usr/include/tirpc}.
 
 Use of the X11 clipboard selection requires the @code{Xmu} headers and
 libraries.  These are normally part of an X11 installation (e.g.@: the
@@ -3585,7 +3579,7 @@ the Tcl and Tk libraries and for finding the @file{tcl.h} and
 versions of Tcl/Tk installed, specifying the paths to the correct config
 files may be necessary to avoid confusion between them.
 
-Versions of Tcl/Tk up to 8.5.19 and 8.6.4 have been tested (including
+Versions of Tcl/Tk up to 8.5.19 and 8.6.9 have been tested (including
 most versions of 8.4.x, but not recently).
 
 Note that the @file{tk.h} header includes@footnote{This is true even for
@@ -3605,7 +3599,7 @@ JDK).  This check can be suppressed by configure option
 Configure variable @env{JAVA_HOME} can be set to point to a specific
 JRE/JDK, on the @command{configure} command line or in the environment.
 
-Principal amongst these settings are some library paths to the Java
+Principal amongst these settings are some paths to the Java
 libraries and JVM, which are stored in environment variable
 @enindex R_JAVA_LD_LIBRARY_PATH
 @env{R_JAVA_LD_LIBRARY_PATH} in file @file{@var{R_HOME}/etc/ldpaths} (or
@@ -3801,7 +3795,6 @@ results or segfaults.
 * ATLAS::                       
 * OpenBLAS::                    
 * MKL::                         
-* ACML::                        
 * Shared BLAS::                 
 @end menu
 
@@ -3916,7 +3909,7 @@ For @cputype{ix86} and @cputype{x86_64} most distributed libraries
 contain several alternatives for different CPU microarchitectures with
 the choice being made at run time.
 
-@node MKL, ACML, OpenBLAS, BLAS
+@node MKL, Shared BLAS, OpenBLAS, BLAS
 @subsubsection Intel MKL
 For Intel processors (and perhaps others) and some distributions of
 Linux, there is Intel's Math Kernel Library.  You are strongly
@@ -3979,12 +3972,7 @@ It was reported in 2015 that
 @noindent
 worked with the Intel 2015.3 compilers on Centos 6.
 
-@node ACML, Shared BLAS, MKL, BLAS
-@subsubsection ACML
-
-The AMD Core Math Library (ACML) is now end-of-life.
-
-@node Shared BLAS,  , ACML, BLAS
+@node Shared BLAS,  , MKL, BLAS
 @subsubsection Shared BLAS
 
 The @acronym{BLAS} library will be used for many of the add-on packages
@@ -4040,10 +4028,9 @@ ln -s /usr/lib64/libopenblasp.so.0 @var{R_HOME}/lib/libRblas.so
 @noindent
 on @cputype{x86_64} Fedora will change the @acronym{BLAS} used to
 multithreaded OpenBLAS.  A similar link works for most versions of the
-Goto @acronym{BLAS}, OpenBLAS and ACML (provided the appropriate
-@file{lib} directory is in the run-time library path or @command{ld.so}
-cache).  It can also be used for a single-library ATLAS, so on
-@cputype{x86_64} Fedora
+OpenBLAS (provided the appropriate @file{lib} directory is in the
+run-time library path or @command{ld.so} cache).  It can also be used
+for a single-library ATLAS, so on @cputype{x86_64} Fedora
 
 @example
 ln -s /usr/lib64/atlas/libsatlas.so.3 @var{R_HOME}/lib/libRblas.so
@@ -4070,7 +4057,7 @@ on @cputype{ix86}/@cputype{x86_64} Linux).  At least LAPACK version 3.2
 is required.  This can only be done if @option{--with-blas} has been used.
 
 However, the likely performance gains are thought to be small (and may
-be negative), and the default is not to search for a suitable LAPACK
+be negative).  The default is not to search for a suitable LAPACK
 library, and this is definitely @strong{not} recommended.  You can
 specify a specific LAPACK library or a search for a generic library by
 the configuration option @option{--with-lapack}.  The default for
@@ -4087,9 +4074,6 @@ variable
 @env{LAPACK_LIBS}, but this will only be used if @option{--with-lapack}
 is specified (as the default value is @code{no}) and the @acronym{BLAS} library
 does not contain LAPACK.
-
-Since ACML contains a full LAPACK, if selected as the @acronym{BLAS} it
-can be used as the LAPACK @emph{via} @option{--with-lapack}.
 
 If you do use @option{--with-lapack}, be aware of potential problems
 with bugs in the LAPACK sources (or in the posted corrections to those
@@ -4130,7 +4114,7 @@ support.
 
 As with all libraries, you need to ensure that they and @R{} were
 compiled with compatible compilers and flags.  For example, this has
-meant that on Sun Sparc using the native compilers the flag
+meant that on Sun Sparc using the Oracle compilers the flag
 @option{-dalign} is needed if @code{sunperf} is to be used.
 
 On some systems it has been necessary that an external
@@ -4588,8 +4572,9 @@ of support software; your results may differ if you have other versions
 of compilers and support libraries.
 
 Older versions of this manual contain notes on platforms such as HP-UX,
-IRIX, Alpha/OSF1 (for @R{} < 2.10.0) and AIX (for @R{} < = 3.5.x) for
-which we have had no recent reports.
+IRIX, Alpha/OSF1 (for @R{} < 2.10.0, and support has since been removed
+for all of these) and AIX (for @R{} < = 3.5.x) for which we have had no
+recent reports.
 
 C macros to select particular platforms can be tricky to track down
 (there is a fair amount of misinformation on the Web).  The Wiki
@@ -4714,11 +4699,11 @@ directory or elsewhere, for example,
 @cindex Linux
 
 Linux is the main development platform for @R{}, so compilation from the
-sources is normally straightforward with the standard compilers and
+sources is normally straightforward with the most common compilers and
 libraries.@footnote{For example, @code{glibc}: other C libraries such as
 @code{musl} have been used but are not routinely tested.}
 
-Remember that some package management systems (such as @acronym{RPM} and
+Recall that some package management systems (such as @acronym{RPM} and
 deb) make a distinction between the user version of a package and the
 developer version.  The latter usually has the same name but with the
 extension @samp{-devel} or @samp{-dev}: you need both versions
@@ -4905,12 +4890,11 @@ SHLIB_CXXLD=icpc
 @end example
 
 @noindent
-@command{configure} will add @samp{-c99} to @code{CC} for
-C99-compliance.  This causes warnings with @code{icc} 10 and later, so
-use @code{CC="icc -std=c99"} there.  The flag @option{-wd188} suppresses
-a large number of warnings about the enumeration type @samp{Rboolean}.
-Because the Intel C compiler sets @samp{__GNUC__} without complete
-emulation of @command{gcc}, we suggest adding @code{CPPFLAGS=-no-gcc}.
+It may be necessary to use @code{CC="icc -std=c99"} or @code{CC="icc
+-c99"} for C99-compliance.  The flag @option{-wd188} suppresses a large
+number of warnings about the enumeration type @samp{Rboolean}.  Because
+the Intel C compiler sets @samp{__GNUC__} without complete emulation of
+@command{gcc}, we suggest adding @code{CPPFLAGS=-no-gcc}.
 
 To maintain correct @acronym{IEC}@tie{}60559 arithmetic you most likely
 need add flags to @code{CFLAGS}, @code{FFLAGS}, @code{FCFLAGS} and
@@ -4970,15 +4954,12 @@ Alternatively, change the include path @emph{via}
 CPPFLAGS="-isystem /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include"
 @end example
 
-You need GNU @code{readline}.@footnote{Apple provides a partial emulation
-of GNU readline 4.2 based on the NetBSD @code{editline} library.  That
-is not recommended but for the time being @R{}'s installation scripts
-will make use of it if GNU readline is not found.}  That and other
-binary components are available from
-@uref{https://r.research.att.com/libs}: you will need @code{pcre} and
-@code{xz} (for @code{libzma}) as recent macOS versions provide libraries
-but not headers for these (and the system @code{pcre} is too old at 8.02
-for versions up to Sierra, although High Sierra had 8.40).
+You need GNU @code{readline}.  That and other binary components are
+available from @uref{https://r.research.att.com/libs}: you will need
+@code{pcre} and @code{xz} (for @code{libzma}) as recent macOS versions
+provide libraries but not headers for these (and the system @code{pcre}
+is too old at 8.02 for versions up to Sierra, although High Sierra had
+8.40).
 
 An X sub-system is required unless configuring using
 @option{--without-x}: see @uref{https://xquartz.macosforge.org/}. @R{}'s
@@ -5117,7 +5098,7 @@ toolchains @code{CPPFLAGS} needed to contain @code{-D__ACCELERATE__}:
 not needed for @command{clang} 6.0.0, though.}  This also includes a
 full LAPACK which can be used @emph{via} @option{--with-lapack}:
 however, the version of LAPACK it contains is currently seriously old
-(@samp{3.2.1} in macOS 10.13.2).
+(@samp{3.2.1} in macOS 10.13.6).
 
 @c https://developer.apple.com/documentation/accelerate/veclib
 In recent versions of macOS, threading in Accelerate is controlled by
