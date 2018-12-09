@@ -650,7 +650,10 @@ DOTCALL.OP = 2,
 COLON.OP = 1,
 SEQALONG.OP = 1,
 SEQLEN.OP = 1,
-BASEGUARD.OP = 2
+BASEGUARD.OP = 2,
+INCLNK.OP = 0,
+DECLNK.OP = 0,
+DECLNK_N.OP = 1
 )
 
 Opcodes.names <- names(Opcodes.argc)
@@ -779,6 +782,9 @@ COLON.OP <- 120
 SEQALONG.OP <- 121
 SEQLEN.OP <- 122
 BASEGUARD.OP <- 123
+INCLNK.OP <- 124
+DECLNK.OP <- 125
+DECLNK_N.OP <- 126
 
 
 ##
@@ -1363,7 +1369,7 @@ getInlineInfo <- function(name, cntxt, guardOK = FALSE) {
                 info$package <- packFrameName(frame)
                 info$guard <- TRUE
                 info
-            }                
+            }
             else NULL
         }
     }
@@ -2100,8 +2106,10 @@ cmpPrim2 <- function(e, cb, op, cntxt) {
     else {
         ncntxt <- make.nonTailCallContext(cntxt)
         cmp(e[[2]], cb, ncntxt);
+        cb$putcode(INCLNK.OP)
         ncntxt <- make.argContext(cntxt)
         cmp(e[[3]], cb, ncntxt)
+        cb$putcode(DECLNK.OP)
         ci <- cb$putconst(e)
         cb$putcode(op, ci)
         if (cntxt$tailcall)
@@ -2150,8 +2158,10 @@ setInlineHandler("log", function(e, cb, cntxt) {
         if (length(e) == 2)
             cb$putcode(LOG.OP, ci)
         else {
+            cb$putcode(INCLNK.OP)
             ncntxt <- make.argContext(cntxt)
             cmp(e[[3]], cb, ncntxt)
+            cb$putcode(DECLNK.OP)
             cb$putcode(LOGBASE.OP, ci)
         }
         if (cntxt$tailcall)
@@ -3256,6 +3266,16 @@ asm <- function(e, gen, env = .GlobalEnv, options = NULL) {
 ## Improved subset and subassign handling
 ##
 
+cmpIndices <- function(indices, cb, cntxt) {
+    n <- length(indices)
+    for (i in seq_along(indices)) {
+        cmp(indices[[i]], cb, cntxt, TRUE)
+        if (i < n) cb$putcode(INCLNK.OP)
+    }
+    if (n == 2) cb$putcode(DECLNK.OP)
+    else if (n > 2) cb$putcode(DECLNK_N.OP, n - 1)
+}
+
 cmpSubsetDispatch <- function(start.op, dflt.op, e, cb, cntxt) {
     if (dots.or.missing(e) || ! is.null(names(e)) || length(e) < 3)
         cntxt$stop(gettext("cannot compile this expression"), cntxt,
@@ -3271,8 +3291,7 @@ cmpSubsetDispatch <- function(start.op, dflt.op, e, cb, cntxt) {
         cmp(oe, cb, ncntxt)
         cb$putcode(start.op, ci, label)
         indices <- e[-c(1, 2)]
-        for (i in seq_along(indices))
-            cmp(indices[[i]], cb, ncntxt, TRUE)
+        cmpIndices(indices, cb, ncntxt)
         if (dflt.op$rank) cb$putcode(dflt.op$code, ci, length(indices))
         else cb$putcode(dflt.op$code, ci)
         cb$putlabel(label)
@@ -3321,8 +3340,7 @@ cmpSubassignDispatch <- function(start.op, dflt.op, afun, place, call, cb,
         label <- cb$makelabel()
         cb$putcode(start.op, ci, label)
         indices <- place[-c(1, 2)]
-        for (i in seq_along(indices))
-            cmp(indices[[i]], cb, cntxt, TRUE)
+        cmpIndices(indices, cb, cntxt)
         if (dflt.op$rank) cb$putcode(dflt.op$code, ci, length(indices))
         else cb$putcode(dflt.op$code, ci)
         cb$putlabel(label)
@@ -3374,8 +3392,7 @@ cmpSubsetGetterDispatch <- function(start.op, dflt.op, call, cb, cntxt) {
         cb$putcode(DUP2ND.OP)
         cb$putcode(start.op, ci, end.label)
         indices <- call[-c(1, 2)]
-        for (i in seq_along(indices))
-            cmp(indices[[i]], cb, cntxt, TRUE)
+        cmpIndices(indices, cb, cntxt)
         if (dflt.op$rank)
             cb$putcode(dflt.op$code, ci, length(indices))
         else

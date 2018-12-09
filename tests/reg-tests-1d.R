@@ -2310,17 +2310,92 @@ stopifnot(exprs = {
 ## returned integer sequences in all R versions <= 3.5.1
 
 
-## check for modififation of arguments
+## Check for modififation of arguments
+## Issue originally reported by Lukas Stadler
+x <- 1+0
+stopifnot(x + (x[] <- 2) == 3)
+f <- compiler::cmpfun(function(x) { x <- x + 0; x + (x[] <- 2) })
+stopifnot(f(1) == 3)
+
+x <- 1+0
+stopifnot(log(x, x[] <- 2) == 0)
+f <- compiler::cmpfun(function(x) { x <- x + 0; log(x, x[] <- 2)})
+stopifnot(f(1) == 0)
+
+f <- function() x + (x[] <<- 2)
+x <- 1 + 0; stopifnot(f() == 3)
+fc <- compiler::cmpfun(f)
+x <- 1 + 0; stopifnot(fc() == 3)
+
+f <- function() x[{x[2] <<- 3; 1}] <<- 2
+fc <- compiler::cmpfun(f)
+x <- c(1,2); f(); stopifnot(x[2] == 2)
+x <- c(1,2); fc(); stopifnot(x[2] == 2)
+
+x <- 1+0
+stopifnot(c(x, x[] <- 2)[[1]] == 1)
+f <- compiler::cmpfun(function(x) { x <- x + 0; c(x, x[] <- 2)})
+stopifnot(f(1)[[1]] == 1)
+
+x <- c(1,2)
+x[{x[2] <- 3; 1}] <- 2
+stopifnot(x[2] == 2)
+f <- compiler::cmpfun(function(a,b) { x <- c(a, b); x[{x[2] <- 3; 1}] <- 2; x})
+f(1, 2)
+stopifnot(f(1, 2) == 2)
+
+m <- matrix(1:4, 2)
+i <- (1:2) + 0
+stopifnot(m[i, {i[] <- 2; 1}][1] == 1)
+f <- compiler::cmpfun(function(i) { i <- i + 0; m[i, {i[] <- 2; 1}]})
+stopifnot(f(1:2)[1] == 1)
+
+m <- matrix(1:4, 2)
+eval(compiler::compile(quote(m[1,1])))
+stopifnot(max(.Internal(named(m)), .Internal(refcnt(m))) == 1)
+
+ma <- .Internal(address(m))
+eval(compiler::compile(quote(m[1,1] <- 2L)))
+stopifnot(identical(.Internal(address(m)), ma))
+
+a <- array(1:8, rep(2, 3))
+eval(compiler::compile(quote(a[1,1,1])))
+stopifnot(max(.Internal(named(a)), .Internal(refcnt(a))) == 1)
+
+aa <- .Internal(address(a))
+eval(compiler::compile(quote(a[1,1,1] <- 2L)))
+stopifnot(identical(.Internal(address(a)), aa))
+
+m <- matrix(1:4, 2)
+i <- (1:2) + 0
+stopifnot(m[i, {i[] <- 2; 1}][1] == 1)
+f <- compiler::cmpfun(function(i) { i <- i + 0; m[i, {i[] <- 2; 1}]})
+stopifnot(f(1:2)[1] == 1)
+
+a <- array(1:8, rep(2, 3))
+i <- (1:2) + 0
+stopifnot(a[i, {i[] <- 2; 1}, 1][1] == 1)
+f <- compiler::cmpfun(function(i) { i <- i + 0; a[i, {i[] <- 2; 1}, 1]})
+stopifnot(f(1:2)[1] == 1)
+
+i <- (1:2) + 0
+stopifnot(a[i, {i[] <- 2; 1}, 1][1] == 1)
+f <- compiler::cmpfun(function(i) { i <- i + 0; a[1, i, {i[] <- 2; 1}]})
+stopifnot(f(1:2)[1] == 1)
+
 x <- 1 + 0
 stopifnot(identical(rep(x, {x[] <- 2; 2}), rep(1, 2)))
 x <- 1 + 0
 v <- eval(compiler::compile(quote(rep(x, {x[] <- 2; 2}))))
 stopifnot(identical(v, rep(1, 2)))
 
-f <- function() x[{x[2] <<- 3; 1}] <<- 2
-fc <- compiler::cmpfun(f)
-x <- c(1,2); f(); stopifnot(x[2] == 2)
-x <- c(1,2); fc(); stopifnot(x[2] == 2)
+x <- 1 + 0
+stopifnot(round(x, {x[] <- 2; 0}) == 1)
+x <- 1 + 0
+v <- eval(compiler::compile(quote(round(x, {x[] <- 2; 0}))))
+stopifnot(v == 1)
+
+
 
 
 ## keep at end
