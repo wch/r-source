@@ -552,7 +552,7 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R 3.5.1 patched}{
+\section{\Rlogo CHANGES IN R 3.5.2}{
 
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
