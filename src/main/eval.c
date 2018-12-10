@@ -6418,7 +6418,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	defineVar(symbol, R_NilValue, rho);
 	BCNPUSH(GET_BINDING_CELL(symbol, rho));
 
-	SEXP value = allocVector(INTSXP, 2);
+	SEXP value = allocVector(INTSXP, 3);
 	int *info = INTEGER0(value);
 	info[0] = -1;
 #ifdef COMPACT_INTSEQ
@@ -6435,6 +6435,11 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	  info[1] = length(seq);
 	else errorcall(VECTOR_ELT(constants, callidx),
 		       _("invalid for() loop sequence"));
+#ifdef COMPACT_INTSEQ
+	info[2] = iscompact ? INTSEQSXP : TYPEOF(seq);
+#else
+	info[2] = TYPEOF(seq);
+#endif
 	BCNPUSH(value);
 
 	/* bump up links count of seq to avoid modification by loop code */
@@ -6468,32 +6473,34 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	if (i < n) {
 	  BC_CHECK_SIGINT_LOOP(i);
 	  pc = codebase + label;
-	  Rboolean iscompact = FALSE;
-	  SEXP seq = getForLoopSeq(-4, &iscompact);
+	  int type = loopinfo[2];
+	  SEXP seq = GETSTACK(-4);
 	  SEXP cell = GETSTACK(-3);
 	  SEXP value = NULL;
-	  switch (TYPEOF(seq)) {
-	  case LGLSXP:
-	    GET_VEC_LOOP_VALUE(value, -1);
-	    SET_SCALAR_LVAL(value, LOGICAL_ELT(seq, i));
-	    break;
-	  case INTSXP:
-	    GET_VEC_LOOP_VALUE(value, -1);
-#ifdef COMPACT_INTSEQ
-	    if (iscompact) {
-		int *info = INTEGER(seq);
-		int n1 = info[0];
-		int n2 = info[1];
-		int val = n1 <= n2 ? n1 + i : n1 - i;
-		INTEGER(value)[0] = val;
-	    }
-	    else
-#endif
-	    SET_SCALAR_IVAL(value, INTEGER_ELT(seq, i));
-	    break;
+	  switch (type) {
 	  case REALSXP:
 	    GET_VEC_LOOP_VALUE(value, -1);
 	    SET_SCALAR_DVAL(value, REAL_ELT(seq, i));
+	    break;
+	  case INTSXP:
+	    GET_VEC_LOOP_VALUE(value, -1);
+	    SET_SCALAR_IVAL(value, INTEGER_ELT(seq, i));
+	    break;
+#ifdef COMPACT_INTSEQ
+	  case INTSEQSXP:
+	    {
+		int *info = INTEGER(seq);
+		int n1 = info[0];
+		int n2 = info[1];
+		int ival = n1 <= n2 ? n1 + i : n1 - i;
+		GET_VEC_LOOP_VALUE(value, -1);
+		SET_SCALAR_IVAL(value, ival);
+	    }
+	    break;
+#endif
+	  case LGLSXP:
+	    GET_VEC_LOOP_VALUE(value, -1);
+	    SET_SCALAR_LVAL(value, LOGICAL_ELT(seq, i));
 	    break;
 	  case CPLXSXP:
 	    GET_VEC_LOOP_VALUE(value, -1);
@@ -6527,8 +6534,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
       }
     OP(ENDFOR, 0):
       {
-	Rboolean iscompact = FALSE;
-	SEXP seq = getForLoopSeq(-4, &iscompact);
+	SEXP seq = GETSTACK(-4);
 	DECREMENT_LINKS(seq);
 	R_BCNodeStackTop -= FOR_LOOP_STATE_SIZE - 1;
 	SETSTACK(-1, R_NilValue);
