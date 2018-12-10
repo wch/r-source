@@ -2081,14 +2081,14 @@ static R_INLINE Rboolean asLogicalNoNA(SEXP s, SEXP call, SEXP rho)
 
 /* Allocate space for the loop variable value the first time through
    (when v == R_NilValue) and when the value may have been assigned to
-   another variable . This should be safe and avoid allocation in many
+   another variable. This should be safe and avoid allocation in many
    cases. */
-#define ALLOC_LOOP_VAR(v, val_type, vpi) do {		  \
-	if (v == R_NilValue || MAYBE_SHARED(v) ||	  \
-	    ATTRIB(v) != R_NilValue || v != CAR(cell)) {  \
-	    REPROTECT(v = allocVector(val_type, 1), vpi); \
-	    INCREMENT_NAMED(v);				  \
-	} \
+#define ALLOC_LOOP_VAR(v, val_type, vpi) do {			\
+	if (v == R_NilValue || MAYBE_SHARED(v) ||		\
+	    ATTRIB(v) != R_NilValue || (v) != CAR(cell)) {	\
+	    REPROTECT(v = allocVector(val_type, 1), vpi);	\
+	    INCREMENT_NAMED(v);					\
+	}							\
     } while(0)
 
 SEXP attribute_hidden do_if(SEXP call, SEXP op, SEXP args, SEXP rho)
