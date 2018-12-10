@@ -5937,14 +5937,14 @@ static R_INLINE void checkForMissings(SEXP args, SEXP call)
 #define FOR_LOOP_STATE_SIZE 4
 
 #define GET_VEC_LOOP_VALUE(var, pos) do {		\
-    (var) = GETSTACK(pos);				\
-    if ((var) != CAR(cell) || MAYBE_SHARED(var) ||	\
-	ATTRIB(var) != R_NilValue) {			\
-	(var) = allocVector(TYPEOF(seq), 1);		\
-	SETSTACK(pos, var);				\
-	INCREMENT_NAMED(var);				\
-    }							\
-} while (0)
+	(var) = GETSTACK(pos);				\
+	if ((var) != CAR(cell) || MAYBE_SHARED(var) ||	\
+	    ATTRIB(var) != R_NilValue) {		\
+	    (var) = allocVector(TYPEOF(seq), 1);	\
+	    SETSTACK(pos, var);				\
+	    INCREMENT_NAMED(var);			\
+	}						\
+    } while (0)
 
 /* Loops that cannot have their SETJMPs optimized out are bracketed by
    STARTLOOPCNTXT and ENLOOPCNTXT instructions.  The STARTLOOPCNTXT
