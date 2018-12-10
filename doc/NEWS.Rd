@@ -486,11 +486,6 @@
 
       \item \code{as(1L, "double")} now does coerce (\PR{17457}).
 
-      \item Buffering is disabled for \code{file()} connections to
-      non-regular files (like sockets), as well as \code{fifo()} and
-      \code{pipe()} connections.  Fixes \PR{17470}, reported by Chris
-      Culnane.
-
       \item \code{lm.influence()}, \code{influence.measures()},
       \code{rstudent()} etc now work (more) correctly for multivariate
       models (\code{"mlm"}), thanks to (anonymous) stackoverflow remarks.
@@ -671,7 +666,7 @@
       to Suharto Anggono's report \PR{17506}.
 
       \item Buffering is disabled for \code{file()} connections to
-      irregular files (like sockets), as well as \code{fifo()} and
+      non-regular files (like sockets), as well as \code{fifo()} and
       \code{pipe()} connections.  Fixes \PR{17470}, reported by Chris
       Culnane.
     }
