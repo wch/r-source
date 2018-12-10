@@ -2460,15 +2460,15 @@ or by setting the environment variables @code{ODBC_INCLUDE} and
 @subsection Using F9x code
 
 @R{} assumes that source files with extension @file{.f} are fixed-form
-Fortran, and passes them to the compiler specified by @samp{FC}.  On
-most but not all platforms the Fortran compiler will also accept
-free-form Fortran 90/95 code with extension @file{.f90} or @file{.f95}.
+Fortran, and passes them to the compiler specified by macro @samp{FC}.
+On most platforms the Fortran compiler will also accept free-form
+Fortran 90/95 code with extension @file{.f90} or @file{.f95}.
 
 @vindex PKG_FCFLAGS
 As from @R{} 3.6.0 the same compiler is used for both fixed-form and
-free-form Fortran code.  For both, @code{PKG_FFLAGS} can be used for
-package-specific flags: in the unusual case that different flags are
-needed for the two forms, @code{PKG_FCFLAGS} is also available for
+free-form Fortran code.  For both, macro @code{PKG_FFLAGS} can be used
+for package-specific flags: in the unusual case that different flags are
+needed for the two forms, macro @code{PKG_FCFLAGS} is also available for
 free-form Fortran.
 
 The code used to build @R{} allows a `Fortran
@@ -2501,6 +2501,12 @@ to contain something like
 @example
 cmi.o dmi.o: iface.o
 @end example
+
+@noindent
+Note that it is not portable (although some platforms do accept it) to
+define a module of the same name in multiple source files.
+@c As was done by frailtypack in 2018-12: gfortran accepted this, ODS
+@c on Solaris did not.
 
 @node Using C++11 code, Using C++14 code, Using F9x code, Configure and cleanup
 @subsection Using C++11 code
@@ -2541,6 +2547,13 @@ based on @command{clang} using @code{libc++}.} @code{libc++} headers and
 library has since version 3.4 included almost all C++14 features, but
 does not support TR1.  As from version 6.0.0, @command{clang} defaults
 to C++14.
+
+As from version 3.6.0, @R{} selects a default C++ compiler with options
+that conform as far as possible@footnote{allowing `GNU extensions', but
+if possible excluding C++14 features.} to C++11: this might not be
+possible@footnote{although it is on all commonly-tested @R{} platforms.}
+and packages which do not specify @samp{R (>= 3.6)} need to explicitly
+require C++11, hence the rest of this section.
 
 Since version 3.1.0, @R{} has provided support for C++11 in packages in
 addition to C++98.  This support is not uniform across platforms as it
@@ -2652,11 +2665,11 @@ nor to compilation done in vignettes or @emph{via} other packages.
 @node Using C++14 code, Using C++17 code, Using C++11 code, Configure and cleanup
 @subsection Using C++14 code
 
-Support for a C++14 (where available) has been explicitly added to @R{}
-from version 3.4.0. Similar considerations to C++11 apply, except that
-the variables associated with the C++14 compiler use the prefix
-@samp{CXX14} instead of @samp{CXX11}. Hence to use C++14 code in a
-package, the package's @file{Makevars} file (or @file{Makevars.win} on
+Support for a C++14 compiler (where available) has been explicitly added
+to @R{} from version 3.4.0. Similar considerations to C++11 apply,
+except that the variables associated with the C++14 compiler use the
+prefix @samp{CXX14} instead of @samp{CXX11}. Hence to use C++14 code in
+a package, the package's @file{Makevars} file (or @file{Makevars.win} on
 Windows) should include the line
 @example
 CXX_STD = CXX14
