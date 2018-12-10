@@ -2396,6 +2396,9 @@ v <- eval(compiler::compile(quote(round(x, {x[] <- 2; 0}))))
 stopifnot(v == 1)
 
 
+## This failed under REFCNT:
+for (i in 1:2) { if (i == 1) { x <- i; rm(i) }}
+stopifnot(x == 1)
 
 
 ## keep at end

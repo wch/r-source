@@ -2080,11 +2080,12 @@ static R_INLINE Rboolean asLogicalNoNA(SEXP s, SEXP call, SEXP rho)
     ((isLanguage(body) && CAR(body) == R_BraceSymbol) ? 1 : 0)
 
 /* Allocate space for the loop variable value the first time through
-   (when v == R_NilValue) and when the value has been assigned to
-   another variable (NAMED(v) > 1). This should be safe and avoid
-   allocation in many cases. */
-#define ALLOC_LOOP_VAR(v, val_type, vpi) do { \
-	if (v == R_NilValue || MAYBE_SHARED(v) || ATTRIB(v) != R_NilValue) { \
+   (when v == R_NilValue) and when the value may have been assigned to
+   another variable . This should be safe and avoid allocation in many
+   cases. */
+#define ALLOC_LOOP_VAR(v, val_type, vpi) do {		  \
+	if (v == R_NilValue || MAYBE_SHARED(v) ||	  \
+	    ATTRIB(v) != R_NilValue || v != CAR(cell)) {  \
 	    REPROTECT(v = allocVector(val_type, 1), vpi); \
 	    INCREMENT_NAMED(v);				  \
 	} \
@@ -5937,7 +5938,7 @@ static R_INLINE void checkForMissings(SEXP args, SEXP call)
 
 #define GET_VEC_LOOP_VALUE(var, pos) do {		\
     (var) = GETSTACK(pos);				\
-    if (MAYBE_SHARED(var) ||				\
+    if ((var) != CAR(cell) || MAYBE_SHARED(var) ||	\
 	ATTRIB(var) != R_NilValue) {			\
 	(var) = allocVector(TYPEOF(seq), 1);		\
 	SETSTACK(pos, var);				\
