@@ -2476,14 +2476,15 @@ The code used to build @R{} allows a `Fortran
 encountered which only support Fortran 90.  However, Fortran
 95 is widely supported.
 
-Some compilers specified by @samp{FC} will accept Fortran 2003 or 2008
-code: such code should still use file extension @file{.f90} or
+Some compilers specified by @samp{FC} will accept Fortran 2003, 2008 or
+2018 code: such code should still use file extension @file{.f90} or
 @file{.f95}.  Most platforms use @command{gfortran} where you may need
-to include @option{-std=f2003} or @option{-std=f2008} in
-@code{PKG_FFLAGS} or @code{PKG_FCFLAGS}: the default is `GNU Fortran',
-Fortran 95 with non-standard extensions.  The Oracle @command{f95}
-compiler `accepts some Fortran 2003/8 features' (search for `Oracle
-Developer Studio 12.5: Fortran User's Guide' and look for §4.6).
+to include @option{-std=f2003}, @option{-std=f2008} or (from version 8)
+@option{-std=f2018} in @code{PKG_FFLAGS} or @code{PKG_FCFLAGS}: the
+default is `GNU Fortran', Fortran 95 with non-standard extensions.  The
+Oracle @command{f95} compiler `accepts some Fortran 2003/8 features'
+(search for `Oracle Developer Studio 12.5: Fortran User's Guide' and
+look for §4.6).
 
 Modern versions of Fortran support modules, whereby compiling one source
 file creates a module file which is then included in others.  (Module
