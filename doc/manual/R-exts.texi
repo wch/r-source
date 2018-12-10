@@ -14124,7 +14124,7 @@ void attribute_visible R_init_stats(DllInfo *dll)
 @}
 @end example
 
-Because the @samp{C_VISIBILITY} mechanism is only useful in conjuction
+Because the @samp{C_VISIBILITY} mechanism is only useful in conjunction
 with @code{attribute_visible}, it is not enabled unless
 @samp{HAVE_VISIBILITY_ATTRIBUTE} is defined.  The usual visibility flag
 is @option{-fvisibility=hidden}: some compilers also support

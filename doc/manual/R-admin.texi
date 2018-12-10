@@ -1078,7 +1078,7 @@ extensions': what those are is hard to track down.
 For the use of C++11 and later in @R{} packages see the `Writing R
 Extensions' manual.  Prior to @R{} 3.6.0 the default C++ standard was
 that of the compiler used: currently it is C++11 if supported by the
-compiler: this can be overridden bysetting @samp{CXXSTD} when @R{} is
+compiler: this can be overridden by setting @samp{CXXSTD} when @R{} is
 configured, for example to @samp{-std=gnu++14}.
 
 @node Testing a Unix-alike Installation,  , Other Options, Installing R under Unix-alikes
