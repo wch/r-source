@@ -487,7 +487,7 @@
       \item \code{as(1L, "double")} now does coerce (\PR{17457}).
 
       \item Buffering is disabled for \code{file()} connections to
-      irregular files (like sockets), as well as \code{fifo()} and
+      non-regular files (like sockets), as well as \code{fifo()} and
       \code{pipe()} connections.  Fixes \PR{17470}, reported by Chris
       Culnane.
 
