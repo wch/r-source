@@ -231,6 +231,12 @@
       \item Instead of signalling an error for an invalid S4 object
       \code{x}, \code{str(x)} now gives a warning and subsequently still
       shows most parts of \code{x}, e.g., when slots are missing.
+
+      \item New pointer protection C functions \code{R_PreserveInMSet} and
+      \code{R_ReleaseFromMSet} have been introduced to replace
+      \code{UNPROTECT_PTR}, which is not safe to mix with \code{UNPROTECT}
+      (and with \code{PROTECT_WITH_INDEX}). Intended for use in parsers
+      only.
     }
   }
 

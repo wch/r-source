@@ -10883,12 +10883,22 @@ automatically protects them) or unprotect them immediately after use.
 Protection is not needed for objects which @R{} already knows are in
 use.  In particular, this applies to function arguments.
 
-There is a less-used macro @code{UNPROTECT_PTR(@var{s})} that unprotects
-the object pointed to by the @code{SEXP} @var{s}, even if it is not the
-top item on the pointer protection stack. This is rarely needed outside
-the parser (the @R{} sources currently have three examples, one in
-@file{src/main/plot3d.c}).
+There is a less-used macro @code{UNPROTECT_PTR(@var{s})} that unprotects the
+object pointed to by the @code{SEXP} @var{s}, even if it is not the top item
+on the pointer protection stack.  This macro was introduced for use in the
+parser, where the code interfacing with the R heap is generated and the
+generator cannot be configured to insert proper calls to @code{PROTECT} and
+@code{UNPROTECT}.  However, @code{UNPROTECT_PTR} is dangerous to use in
+combination with @code{UNPROTECT} when the same object has been protected
+multiple times.  It has been superseeded by multi-set based functions
+@code{R_PreserveInMSet} and @code{R_ReleaseFromMSet}, which protect objects
+in a multi-set created by @code{R_NewPreciousMSet} and typically itself
+protected using @code{PROTECT}.  These functions should not be needed
+outside parsers.
 @findex UNPROTECT_PTR
+@findex R_PreserveInMSet
+@findex R_ReleaseFromMSet
+@findex R_NewPreciousMSet
 
 Sometimes an object is changed (for example duplicated, coerced or
 grown) yet the current value needs to be protected.  For these cases
@@ -10906,7 +10916,7 @@ For example (from the internal code for @code{optim})
     REPROTECT(s = coerceVector(s, REALSXP), ipx);
 @end example
 
-Note that it is dangerous to mix @code{UNPROTECT_PTR} with
+Note that it is dangerous to mix @code{UNPROTECT_PTR} also with
 @code{PROTECT_WITH_INDEX}, as the former changes the protection
 locations of objects that were protected after the one being
 unprotected.
