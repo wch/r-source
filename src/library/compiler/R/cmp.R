@@ -2096,6 +2096,15 @@ cmpPrim1 <- function(e, cb, op, cntxt) {
     }
 }
 
+checkNeedsInc <- function(e, cntxt) {
+    type <- typeof(e)
+    if (type %in% c("language", "bytecode", "symbol", "promise"))
+        TRUE
+    else if (type == "symbol" && ! findLocVar(e, cntxt))
+        TRUE
+    else FALSE
+}
+
 cmpPrim2 <- function(e, cb, op, cntxt) {
     if (dots.or.missing(e[-1]))
         cmpBuiltin(e, cb, cntxt)
@@ -2104,12 +2113,13 @@ cmpPrim2 <- function(e, cb, op, cntxt) {
         cmpBuiltin(e, cb, cntxt)
     }
     else {
+        needInc <- checkNeedsInc(e[[3]], cntxt)
         ncntxt <- make.nonTailCallContext(cntxt)
         cmp(e[[2]], cb, ncntxt);
-        cb$putcode(INCLNK.OP)
+        if (needInc) cb$putcode(INCLNK.OP)
         ncntxt <- make.argContext(cntxt)
         cmp(e[[3]], cb, ncntxt)
-        cb$putcode(DECLNK.OP)
+        if (needInc) cb$putcode(DECLNK.OP)
         ci <- cb$putconst(e)
         cb$putcode(op, ci)
         if (cntxt$tailcall)
@@ -2158,10 +2168,11 @@ setInlineHandler("log", function(e, cb, cntxt) {
         if (length(e) == 2)
             cb$putcode(LOG.OP, ci)
         else {
-            cb$putcode(INCLNK.OP)
+            needInc <- checkNeedsInc(e[[3]])
+            if (needInc) cb$putcode(INCLNK.OP)
             ncntxt <- make.argContext(cntxt)
             cmp(e[[3]], cb, ncntxt)
-            cb$putcode(DECLNK.OP)
+            if (needInc) cb$putcode(DECLNK.OP)
             cb$putcode(LOGBASE.OP, ci)
         }
         if (cntxt$tailcall)

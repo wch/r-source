@@ -2395,6 +2395,20 @@ x <- 1 + 0
 v <- eval(compiler::compile(quote(round(x, {x[] <- 2; 0}))))
 stopifnot(v == 1)
 
+f <- function() {
+    x <- numeric(1)
+    y <- 0
+    rm("y")
+    makeActiveBinding("y", function() { x[] <<- 1; 0}, environment())
+    x + y
+}
+stopifnot(f() == 0)
+stopifnot(compiler::cmpfun(f)() == 0)
+
+f <- function(y = {x[] <- 1; 0}) { x <- numeric(1); x + y }
+stopifnot(f() == 0)
+stopifnot(compiler::cmpfun(f)() == 0)
+
 
 ## This failed under REFCNT:
 for (i in 1:2) { if (i == 1) { x <- i; rm(i) }}

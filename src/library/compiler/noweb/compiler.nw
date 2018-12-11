@@ -3222,12 +3222,13 @@ cmpPrim2 <- function(e, cb, op, cntxt) {
         cmpBuiltin(e, cb, cntxt)
     }
     else {
+        needInc <- checkNeedsInc(e[[3]], cntxt)
         ncntxt <- make.nonTailCallContext(cntxt)
         cmp(e[[2]], cb, ncntxt);
-        cb$putcode(INCLNK.OP)
+        if (needInc) cb$putcode(INCLNK.OP)
         ncntxt <- make.argContext(cntxt)
         cmp(e[[3]], cb, ncntxt)
-        cb$putcode(DECLNK.OP)
+        if (needInc) cb$putcode(DECLNK.OP)
         ci <- cb$putconst(e)
         cb$putcode(op, ci)
         if (cntxt$tailcall)
@@ -3236,6 +3237,21 @@ cmpPrim2 <- function(e, cb, op, cntxt) {
     }
 }
 @ %def cmpPrim2
+
+The [[INCLNK]] and [[DECLNK]] instructions are used to protect
+evaluated arguents on the stack from modifications during evaluation
+of subsequent arguments. These instructions can be omitted if the
+subsequent argument evaluations cannot modify values on the stack.
+<<[[checkNeedsInc]] function>>=
+checkNeedsInc <- function(e, cntxt) {
+    type <- typeof(e)
+    if (type %in% c("language", "bytecode", "symbol", "promise"))
+        TRUE
+    else if (type == "symbol" && ! findLocVar(e, cntxt))
+        TRUE
+    else FALSE
+}
+@ %def checkNeedsInc
 
 Calls to the power function [[^]] and the functions [[exp]] and
 [[sqrt]] can be compiled using [[cmpPrim1]] and [[cmpPrim2]] as well:
@@ -3268,10 +3284,11 @@ setInlineHandler("log", function(e, cb, cntxt) {
         if (length(e) == 2)
             cb$putcode(LOG.OP, ci)
         else {
-            cb$putcode(INCLNK.OP)
+            needInc <- checkNeedsInc(e[[3]])
+            if (needInc) cb$putcode(INCLNK.OP)
             ncntxt <- make.argContext(cntxt)
             cmp(e[[3]], cb, ncntxt)
-            cb$putcode(DECLNK.OP)
+            if (needInc) cb$putcode(DECLNK.OP)
             cb$putcode(LOGBASE.OP, ci)
         }
         if (cntxt$tailcall)
@@ -6552,6 +6569,8 @@ Opcodes.names <- names(Opcodes.argc)
 ##
 
 <<[[cmpPrim1]] function>>
+
+<<[[checkNeedsInc]] function>>
 
 <<[[cmpPrim2]] function>>
 
