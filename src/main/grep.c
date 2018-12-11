@@ -1723,7 +1723,8 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     if (!useBytes) {
-	Rboolean onlyASCII = IS_ASCII(STRING_ELT(pat, 0));
+	Rboolean onlyASCII = (IS_ASCII(STRING_ELT(pat, 0)) &&
+			      IS_ASCII(STRING_ELT(rep, 0)));
 	if (onlyASCII)
 	    for (i = 0; i < n; i++) {
 		if(STRING_ELT(text, i) == NA_STRING) continue;
@@ -1748,7 +1749,9 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     if (!useBytes) {
 	if (!fixed_opt && mbcslocale) use_UTF8 = TRUE;
-	else if (IS_UTF8(STRING_ELT(pat, 0))) use_UTF8 = TRUE;
+	else if (IS_UTF8(STRING_ELT(pat, 0)) ||
+                 IS_UTF8(STRING_ELT(rep, 0)))
+	    use_UTF8 = TRUE;
 	if (!use_UTF8)
 	    for (i = 0; i < n; i++)
 		if (IS_UTF8(STRING_ELT(text, i))) {
