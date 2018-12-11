@@ -461,7 +461,9 @@ SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
     	SEXP result;
 	el = STRING_ELT(paths, i);
 	result = el;
-	if(getCharCE(el) == CE_UTF8) {
+	if (el == NA_STRING)
+	    result = NA_STRING;
+	else if(getCharCE(el) == CE_UTF8) {
 	    if ((res = GetFullPathNameW(filenameToWchar(el, FALSE), 32768, 
 					wtmp, &wtmp2)) && res <= 32768) {
 		if ((res = GetLongPathNameW(wtmp, wlongpath, 32768))

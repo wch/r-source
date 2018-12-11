@@ -951,7 +951,7 @@ extern char *realpath(const char *path, char *resolved_path);
 
 SEXP attribute_hidden do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP ans, paths = CAR(args);
+    SEXP ans, paths = CAR(args), elp;
     int i, n = LENGTH(paths);
     const char *path;
     char abspath[PATH_MAX+1];
@@ -966,12 +966,17 @@ SEXP attribute_hidden do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 #ifdef HAVE_REALPATH
     PROTECT(ans = allocVector(STRSXP, n));
     for (i = 0; i < n; i++) {
-	path = translateChar(STRING_ELT(paths, i));
+	elp = STRING_ELT(paths, i);
+	if (elp == NA_STRING) {
+	    SET_STRING_ELT(ans, i, NA_STRING);
+	    continue;
+	}
+	path = translateChar(elp);
 	char *res = realpath(path, abspath);
 	if (res)
 	    SET_STRING_ELT(ans, i, mkChar(abspath));
 	else {
-	    SET_STRING_ELT(ans, i, STRING_ELT(paths, i));
+	    SET_STRING_ELT(ans, i, elp);
 	    /* and report the problem */
 	    if (mustWork == 1)
 		error("path[%d]=\"%s\": %s", i+1, path, strerror(errno));
@@ -984,7 +989,12 @@ SEXP attribute_hidden do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
     warning("this platform does not have realpath so the results may not be canonical");
     PROTECT(ans = allocVector(STRSXP, n));
     for (i = 0; i < n; i++) {
-	path = translateChar(STRING_ELT(paths, i));
+	elp = STRING_ELT(paths, i);
+	if (elp == NA_STRING) {
+	    SET_STRING_ELT(ans, i, NA_STRING);
+	    continue;
+	}
+	path = translateChar(elp);
 	OK = strlen(path) <= PATH_MAX;
 	if (OK) {
 	    if (path[0] == '/') strncpy(abspath, path, PATH_MAX);
@@ -998,7 +1008,7 @@ SEXP attribute_hidden do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (OK) OK = (access(abspath, 0 /* F_OK */) == 0);
 	if (OK) SET_STRING_ELT(ans, i, mkChar(abspath));
 	else {
-	    SET_STRING_ELT(ans, i, STRING_ELT(paths, i));
+	    SET_STRING_ELT(ans, i, elp);
 	    /* and report the problem */
 	    if (mustWork == 1)
 		error("path[%d]=\"%s\": %s", i+1, path, strerror(errno));
