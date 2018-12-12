@@ -1,5 +1,4 @@
 language: c
-sudo: false
 
 env:
   global:
@@ -20,6 +19,8 @@ matrix:
 
 addons:
   apt:
+    sources:
+      - sourceline: 'ppa:git-core/ppa'
     packages:
     - bash-completion
     - bison
