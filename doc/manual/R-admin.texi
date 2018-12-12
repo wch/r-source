@@ -5425,11 +5425,11 @@ and previously Sun Studio.} compilers: there has been some success with
 @command{gcc}/@command{gfortran}.  (Recent Sun machines are AMD Opterons
 or Intel Xeons (@cputype{amd64}) rather than @cputype{x86}, but 32-bit
 @cputype{x86} executables are the default.)  How these compilers
-identify@footnote{using the @option{-V} flag.} themselves is slightly
-confusing: Solaris Studio versions 12.3 and 12.4 report C++ 5.12 and
-5.13, and Developer Studio 12.5 reports C++ 5.14.  We will only consider
-12.5 (May 2016): instructions for 12.3 can be found in versions of this
-manual for @R{} 3.3.x.
+identify themselves is slightly confusing: commands @command{CC -V} in
+Solaris Studio versions 12.3 and 12.4 report C++ 5.12 and 5.13, and
+Developer Studio 12.5 reports C++ 5.14.  We will only consider 12.5 (May
+2016): instructions for 12.3 can be found in versions of this manual for
+@R{} 3.3.x.  There have been no reports on version 12.6 (July 2017).
 
 There have been few reports on Solaris 11, with no known extra issues.
 
@@ -5545,6 +5545,26 @@ Note though that most external Solaris C++ libraries will have been
 built with @samp{Cstd} and so an @R{} package using such libraries also
 needs to be.  Occasionally the option @option{-library=stlport4,Crun}
 has been needed.
+
+Version 12.5 also provides an implementation of C++11, but it is largely
+separate from the older C++98 ones (and their objects cannot be mixed).
+To use this as the C++11 compiler, select
+
+@example
+CXX11=CC
+CXX11STD="-std=c++11 -library=stdcpp,CrunG3"
+@end example
+
+@noindent
+This compiler also accepts @code{-std=c++14}, but the C++14 is rather
+incomplete (for that use version 12.6).  It is inadvisable to attempt to
+mix C++11 and C++98 compilation (although a package has done so): there
+is a more compatible C++98/03 implementation which can be selected by
+
+@example
+CXX=CC 
+CXXSTD="-compat=g -library=stdcpp,CrunG3"
+@end example
 
 @cindex BLAS library
 @cindex LAPACK library
