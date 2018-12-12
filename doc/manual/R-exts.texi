@@ -5202,14 +5202,17 @@ and can cause problems.
 @c http://lists.x.org/archives/xorg-devel/2013-November/038808.html
 The most common issue involves the names of the Intel CPU registers such
 as @code{CS}, @code{DS}, @code{ES}, @code{FS}, @code{GS} and @code{SS}
-(and more with longer abbreviations) defined on i586/x64 Solaris in
+(and more with longer abbreviations@footnote{including @code{EAX},
+@code{EBP}, @code{EBX}, @code{ECX}, @code{EDI},@code{EDX}, @code{EFL},
+@code{EIP}, @code{ESI} and @code{ESP} .}) defined on i586/x64 Solaris in
 @file{<sys/regset.h>} and often included indirectly by @file{<stdlib.h>}
 and other core headers.  Further examples are @code{ERR},
 @code{LITTLE_ENDIAN}, @code{zero} and @code{I} (which is defined in
 Solaris' @file{<complex.h>} as a compiler intrinsic for the imaginary
 unit).  Some of these can be avoided by defining @code{_POSIX_C_SOURCE}
 before including any system headers, but it is better to only use
-all-upper-case names which have a unique prefix such as the package name.
+all-upper-case names which have a unique prefix such as the package
+name.
 
 @item
 @code{typedef}s in OS headers can conflict with those in the package:
