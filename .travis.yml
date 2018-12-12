@@ -78,7 +78,7 @@ before_install:
   - wget "https://sourceforge.net/projects/pcre/files/pcre/8.38/pcre-$PCRE_VERSION.tar.bz2"
   - tar xjf "pcre-$PCRE_VERSION.tar.bz2"
   - pushd "pcre-$PCRE_VERSION"
-  - ./configure --enable-R-shlib --enable-memory-profiling --prefix=$PREFIX --enable-utf --enable-unicode-properties && make && make install
+  - ./configure --prefix=$PREFIX --enable-utf --enable-unicode-properties && make && make install
   - popd
   - popd
 
@@ -87,7 +87,7 @@ script:
   - git update-ref refs/remotes/git-svn refs/heads/build-trunk
   - git svn rebase
   - mkdir build;pushd build
-  - ../configure --prefix $PREFIX CPPFLAGS=-I$PREFIX/include LDFLAGS=-L$PREFIX/lib
+  - ../configure --enable-R-shlib --enable-memory-profiling --prefix $PREFIX CPPFLAGS=-I$PREFIX/include LDFLAGS=-L$PREFIX/lib
   - make
   - make check || true
   - make install
