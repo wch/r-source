@@ -5421,15 +5421,15 @@ in the @file{/Applications} folder.
 
 @R{} has been built successfully on Solaris 10 using the (zero cost)
 Oracle Developer Studio@footnote{Oracle Solaris Studio prior to 2016,
-and previously Sun Studio.} compilers: there has been some success with
+and previously Sun Studio.} compilers: there has also been success with
 @command{gcc}/@command{gfortran}.  (Recent Sun machines are AMD Opterons
 or Intel Xeons (@cputype{amd64}) rather than @cputype{x86}, but 32-bit
 @cputype{x86} executables are the default.)  How these compilers
 identify themselves is slightly confusing: commands @command{CC -V} in
 Solaris Studio versions 12.3 and 12.4 report C++ 5.12 and 5.13, and
-Developer Studio 12.5 reports C++ 5.14.  We will only consider 12.5 (May
-2016): instructions for 12.3 can be found in versions of this manual for
-@R{} 3.3.x.  There have been no reports on version 12.6 (July 2017).
+Developer Studio 12.5 and 12.6 report C++ 5.14 and 5.15.  We will only
+consider 12.5 (May 2016) and 12.6 (July 2017): instructions for 12.3 can
+be found in versions of this manual for @R{} 3.3.x.
 
 There have been few reports on Solaris 11, with no known extra issues.
 
@@ -5498,8 +5498,8 @@ CXXSTD="-library=stlport4"
 CXXFLAGS=-O
 FC=$F77
 FCFLAGS=$FFLAGS
-FCLIBS="-lfsu /opt/developerstudio12.5/lib/libfui.so.2"
-R_LD_LIBRARY_PATH="/opt/developerstudio12.5/lib:/usr/local/lib:/opt/csw/lib"
+FCLIBS="-lfsu /opt/developerstudio12.6/lib/libfui.so.2"
+R_LD_LIBRARY_PATH="/opt/developerstudio12.6/lib:/usr/local/lib:/opt/csw/lib"
 @end example
 
 The Oracle compilers do not by default conform to the C99 standard
@@ -5510,7 +5510,7 @@ A peculiarity of some versions of the Fortran compiler was that when
 asked to link a shared object it did not link against all the Fortran 9x
 runtime libraries, hence
 @example
-FCLIBS="-lfsu /opt/developerstudio12.5/lib/libfui.so.2"
+FCLIBS="-lfsu /opt/developerstudio12.6/lib/libfui.so.2"
 @end example
 
 @noindent
@@ -5533,22 +5533,20 @@ but the use of @code{-nofstore} can be less numerically stable, and some
 packages have in the past failed to compile at optimization
 level 5.
 
-The Oracle compilers provide several implementations of the
-C++98 standard which select both the set of headers and a C++ runtime
-library.  These are selected by the @option{-library} flag, which as it
-is needed for both compiling and linking is best specified as part of
-the compiler.  The examples above use @samp{stlport4}, currently the
-most modern of the options: the default (but still needed to be
-specified as it is needed for linking) is @samp{Cstd}: see
-@uref{http://www.oracle.com/@/technetwork/@/server-storage/@/solaris/@/cmp-stlport-libcstd-142559.html}.
-Note though that most external Solaris C++ libraries will have been
-built with @samp{Cstd} and so an @R{} package using such libraries also
-needs to be.  Occasionally the option @option{-library=stlport4,Crun}
-has been needed.
+The Oracle compilers provide several implementations of the C++98
+standard which select both the set of headers and a C++ runtime library.
+These are selected by the @option{-library} flag, which as it is needed
+for both compiling and linking is best specified as part of the compiler
+or `standard'.  The examples above use @samp{stlport4}: the default (but
+still needed to be specified as it is needed for linking) is
+@samp{Cstd}.  Note though that most external Solaris C++ libraries will
+have been built with @samp{Cstd} and so an @R{} package using such
+libraries also needs to be.  Occasionally the option
+@option{-library=stlport4,Crun} has been needed.
 
-Version 12.5 also provides an implementation of C++11, but it is largely
-separate from the older C++98 ones (and their objects cannot be mixed).
-To use this as the C++11 compiler, select
+Versions 12.5 and 12.6 also provide an implementation of C++11, but it
+is largely separate from the older C++98 ones (and their objects cannot
+be mixed).  To use this as the C++11 compiler, select
 
 @example
 CXX11=CC
@@ -5556,10 +5554,10 @@ CXX11STD="-std=c++11 -library=stdcpp,CrunG3"
 @end example
 
 @noindent
-This compiler also accepts @code{-std=c++14}, but the C++14 is rather
-incomplete (for that use version 12.6).  It is inadvisable to attempt to
-mix C++11 and C++98 compilation (although a package has done so): there
-is a more compatible C++98/03 implementation which can be selected by
+Both versions also accept @code{-std=c++14}, but for 12.5 the C++14 is
+rather incomplete.  It is inadvisable to attempt to mix C++11 and C++98
+compilation (although a package has done so): there is a more compatible
+C++98/03 implementation which can be selected by
 
 @example
 CXX=CC 
@@ -5613,7 +5611,7 @@ On both @samp{x86} and @samp{Sparc} platforms the compilers default to
 For a 64-bit target add @option{-m64} to the compiler macros
 and use something like @code{LDFLAGS=-L/usr/local/lib/amd64} or
 @code{LDFLAGS=-L/usr/local/lib/sparcv9} as appropriate (and other 64-bit
-library directories if used, e.g.@: @code{-L/opt/csw/lib/arm64}).
+library directories if used, e.g.@: @code{-L/opt/csw/lib/amd64}).
 It will also be necessary to point @command{pkg-config} at the 64-bit
 directories, e.g.@: by something like
 
