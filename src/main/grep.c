@@ -1736,7 +1736,8 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	useBytes = onlyASCII;
     }
     if (!useBytes) {
-	Rboolean haveBytes = IS_BYTES(STRING_ELT(pat, 0));
+	Rboolean haveBytes = (IS_BYTES(STRING_ELT(pat, 0)) ||
+			      IS_BYTES(STRING_ELT(rep, 0)));
 	if (!haveBytes)
 	    for (i = 0; i < n; i++)
 		if (IS_BYTES(STRING_ELT(text, i))) {
