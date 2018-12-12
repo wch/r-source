@@ -2415,6 +2415,17 @@ for (i in 1:2) { if (i == 1) { x <- i; rm(i) }}
 stopifnot(x == 1)
 
 
+## gamma & lgamma should not warn for correct limit cases:
+stopifnot(exprs = {
+    lgamma(0:-10) == Inf
+    gamma(-180.5) == 0
+    gamma(c(200,Inf)) == Inf
+    lgamma(c(10^(306:310), Inf)) == Inf
+})
+## had  "Warning message:  value out of range in 'lgamma' "  for ever
+
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())
