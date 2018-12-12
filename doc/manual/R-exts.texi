@@ -2731,6 +2731,8 @@ CXX14STD=-std=gnu1y
 @noindent
 in @file{@var{HOME}/.R/Makevars.win}.
 
+Oracle Developer Studio gained full C++14 support in version 12.6 (July
+2017).
 
 @node Using C++17 code,  , Using C++14 code, Configure and cleanup
 @subsection Using C++17 code
