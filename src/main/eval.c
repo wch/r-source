@@ -6014,6 +6014,14 @@ static R_INLINE Rboolean GETSTACK_LOGICAL_NO_NA_PTR(R_bcstack_t *s, int callidx,
     return asLogicalNoNA(value, call, rho);
 }
 
+#define GETSTACK_LOGICAL(n) GETSTACK_LOGICAL_PTR(R_BCNodeStackTop + (n))
+static R_INLINE Rboolean GETSTACK_LOGICAL_PTR(R_bcstack_t *s)
+{
+    if (s->tag == LGLSXP) return s->u.ival;
+    SEXP value = GETSTACK_PTR(s);
+    return SCALAR_LVAL(value);
+}
+
 /* Find locations table in the constant pool */
 static SEXP findLocTable(SEXP constants, const char *tclass)
 {
@@ -6883,7 +6891,18 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
     OP(GT, 1): FastRelop2(>, GTOP, R_GtSym);
     OP(AND, 1): FastLogic2(&, ANDOP, R_AndSym);
     OP(OR, 1): FastLogic2(|, OROP, R_OrSym);
-    OP(NOT, 1): Builtin1(do_logic, R_NotSym, rho);
+    OP(NOT, 1):
+      {
+	  R_bcstack_t *s = R_BCNodeStackTop - 1;
+	  if (s->tag == LGLSXP) {
+	      int ival = s->u.ival;
+	      if (ival != NA_LOGICAL)
+		  s->u.ival = ival ? FALSE : TRUE;
+	      SKIP_OP();
+	      NEXT();
+	  }
+	  Builtin1(do_logic, R_NotSym, rho);
+      }
     OP(DOTSERR, 0): error(_("'...' used in an incorrect context"));
     OP(STARTASSIGN, 1):
       {
@@ -7026,8 +7045,8 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	int callidx = GETOP();
 	int label = GETOP();
 	FIXUP_SCALAR_LOGICAL(rho, callidx, "'x'", "&&", warn_lev);
-	SEXP value = GETSTACK(-1);
-	if (SCALAR_LVAL(value) == FALSE)
+	Rboolean val = GETSTACK_LOGICAL(-1);
+	if (val == FALSE)
 	    pc = codebase + label;
 	R_Visible = TRUE;
 	NEXT();
@@ -7035,14 +7054,13 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
     OP(AND2ND, 1): {
 	int callidx = GETOP();
 	FIXUP_SCALAR_LOGICAL(rho, callidx, "'y'", "&&", warn_lev);
-	SEXP value = GETSTACK(-1);
+	Rboolean val = GETSTACK_LOGICAL(-1);
 	/* The first argument is TRUE or NA. If the second argument is
 	   not TRUE then its value is the result. If the second
 	   argument is TRUE, then the first argument's value is the
 	   result. */
-	Rboolean val = SCALAR_LVAL(value);
 	if (val == FALSE || val == NA_LOGICAL)
-	    SETSTACK(-2, value);
+	    SETSTACK_LOGICAL(-2, val);
 	R_BCNodeStackTop -= 1;
 	R_Visible = TRUE;
 	NEXT();
@@ -7051,8 +7069,7 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	int callidx = GETOP();
 	int label = GETOP();
 	FIXUP_SCALAR_LOGICAL(rho, callidx, "'x'", "||", warn_lev);
-	SEXP value = GETSTACK(-1);
-	Rboolean val = SCALAR_LVAL(value);
+	Rboolean val = GETSTACK_LOGICAL(-1);
 	if (val != NA_LOGICAL &&
 	    val != FALSE) /* is true */
 	    pc = codebase + label;
@@ -7062,13 +7079,13 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
     OP(OR2ND, 1):  {
 	int callidx = GETOP();
 	FIXUP_SCALAR_LOGICAL(rho, callidx, "'y'", "||", warn_lev);
-	SEXP value = GETSTACK(-1);
+	Rboolean val = GETSTACK_LOGICAL(-1);
 	/* The first argument is FALSE or NA. If the second argument is
 	   not FALSE then its value is the result. If the second
 	   argument is FALSE, then the first argument's value is the
 	   result. */
-	if (SCALAR_LVAL(value) != FALSE)
-	    SETSTACK(-2, value);
+	if (val != FALSE)
+	    SETSTACK_LOGICAL(-2, val);
 	R_BCNodeStackTop -= 1;
 	R_Visible = TRUE;
 	NEXT();
