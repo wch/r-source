@@ -1,6 +1,6 @@
 % File src/library/base/man/Constants.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2012-2014 R Core Team
+% Copyright 2012-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{LongVectors}
@@ -20,7 +20,7 @@
   character) vectors, \link{list}s and \link{expression}s can be much
   longer on 64-bit platforms: such vectors are referred to as
   \sQuote{long vectors} and have a slightly different internal
-  structure.  In theory up they can to \eqn{2^{52}}{2^52} elements, but
+  structure.  In theory they can contain up to \eqn{2^{52}}{2^52} elements, but
   address space limits of current CPUs and OSes will be much smaller.
   Such objects will have a \link{length} that is expressed as a double,
   and can be indexed by double vectors.
