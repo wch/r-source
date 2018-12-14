@@ -2424,7 +2424,12 @@ stopifnot(exprs = {
 })
 ## had  "Warning message:  value out of range in 'lgamma' "  for ever
 
-
+## sub() with non-ASCII replacement failed to set encodings (PR#17509):
+x <- c("a", "b")
+x <- sub("a", "\u00e4", x)
+stopifnot(Encoding(x)[1L] == "UTF-8")
+x <- sub("b", "\u00f6", x)
+stopifnot(Encoding(x)[2L] == "UTF-8")
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

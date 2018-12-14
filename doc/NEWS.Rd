@@ -553,6 +553,9 @@
       \item The default method of \code{seq()} now avoids integer
       overflow, thanks to the report and "cumsum" patch of Suharto
       Anggono's \PR{17497}.
+
+      \item \code{sub()} no longer loses encodings for non-ASCII
+      replacements (\PR{17509}).
     }
   }
 }
