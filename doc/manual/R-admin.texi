@@ -4864,7 +4864,9 @@ seems this conflicts with using OpenMP in @R{}.  So it may be necessary
 to disable the latter by configuring @R{} using @option{--disable-openmp}.
 
 It is not clear what architectures @command{flang} intends to support:
-our experiments were done on @cputype{x86_64}.
+our experiments were done on @cputype{x86_64}.  At the time of writing
+binary `releases' were available for that platform (called by them
+@cputype{x86}) and @cputype{ppc64le}.
 
 
 @node Intel compilers,  , Clang, Linux
@@ -5328,17 +5330,14 @@ in the @file{/Applications} folder.
 
 @R{} has been built successfully on Solaris 10 using the (zero cost)
 Oracle Developer Studio@footnote{Oracle Solaris Studio prior to 2016,
-and previously Sun Studio.} compilers: there has been some success with
+and previously Sun Studio.} compilers: there has also been success with
 @command{gcc}/@command{gfortran}.  (Recent Sun machines are AMD Opterons
 or Intel Xeons (@cputype{amd64}) rather than @cputype{x86}, but 32-bit
-@cputype{x86} executables are the default. As from @R{}
-3.6.0@footnote{Earlier versions looked at the compiler default and so
-reported @samp{i386-pc-solaris2.10}.}  @command{configure} reports the
-triplet @samp{x86_64-pc-solaris2.10}.)  How these compilers
-identify@footnote{using the @option{-V} flag.}  themselves is slightly
-confusing: Solaris Studio versions 12.3 and 12.4 report C++ 5.12 and
-5.13, and Developer Studio 12.5 reports C++ 5.14.  We will only consider
-12.5 (May 2016): instructions for 12.3 can be found in versions of this
+@cputype{x86} executables are the default.)  How these compilers
+identify themselves is slightly confusing: commands @command{CC -V} with
+Developer Studio 12.5 and 12.6 report as versions 5.14 and 5.15.  We
+will only consider Developer Studio versions 12.5 (May 2016) and 12.6
+(July 2017): instructions for 12.3 can be found in versions of this
 manual for @R{} 3.3.x.
 
 There have been few reports on Solaris 11, with no known extra issues.
@@ -5372,10 +5371,9 @@ both).
 You will need @acronym{GNU} @code{libiconv} and @code{readline}: the
 Solaris version of @code{iconv} is not sufficiently powerful.
 
-The native @command{make} suffices to build @R{} but a small number of
-packages require @acronym{GNU} @command{make} (some without good reason
-and without declaring it as @samp{SystemRequirements} in the
-@file{DESCRIPTION} file).
+The native @command{make} suffices to build @R{} but a number of
+packages require @acronym{GNU} @command{make} (some without declaring it
+as @samp{SystemRequirements} in the @file{DESCRIPTION} file).
 
 The support for the C99 @code{long double} type on Sparc hardware uses
 quad-precision arithmetic, and this is usually slow because it is done
@@ -5404,20 +5402,21 @@ CFLAGS="-O -xlibmieee"
 FC=f95
 FFLAGS=-O
 CXX=CC
-CXXSTD="-library=stlport4"
+CXXSTD="-std=c++11 -library=stdcpp,CrunG3"
+CXX11STD=$CXXSTD
 CXXFLAGS=-O
-R_LD_LIBRARY_PATH="/opt/developerstudio12.5/lib:/usr/local/lib:/opt/csw/lib"
+R_LD_LIBRARY_PATH="/opt/developerstudio12.6/lib:/usr/local/lib:/opt/csw/lib"
 @end example
 
 The Oracle compilers do not by default conform to the C99 standard
 (appendix F 8.9) on the return values of functions such as @code{log}:
 use @option{-xlibmieee} to ensure this.
 
-A peculiarity of some versions of the Fortran compiler was that when
-asked to link a shared object it did not link against all the Fortran 9x
-runtime libraries, hence
+A peculiarity of some versions of the Fortran compiler has been that
+when asked to link a shared object they did not link against all the
+Fortran 9x runtime libraries, hence
 @example
-FCLIBS_XTRA="-lfsu /opt/developerstudio12.5/lib/libfui.so.2"
+FCLIBS_XTRA="-lfsu /opt/developerstudio12.6/lib/libfui.so.2"
 @end example
 
 @noindent
@@ -5441,18 +5440,31 @@ but the use of @code{-nofstore} can be less numerically stable, and some
 packages have in the past failed to compile at optimization
 level 5.
 
-The Oracle compilers provide several implementations of the
-C++98 standard which select both the set of headers and a C++ runtime
-library.  These are selected by the @option{-library} flag, which as it
-is needed for both compiling and linking is best specified as part of
-the compiler.  The examples above use @samp{stlport4}, currently the
-most modern of the options: the default (but still needed to be
-specified as it is needed for linking) is @samp{Cstd}: see
-@uref{http://www.oracle.com/@/technetwork/@/server-storage/@/solaris/@/cmp-stlport-libcstd-142559.html}.
-Note though that most external Solaris C++ libraries will have been
-built with @samp{Cstd} and so an @R{} package using such libraries also
-needs to be.  Occasionally the option @option{-library=stlport4,Crun}
-has been needed.
+The Oracle compilers provide several implementations of the C++
+standards which select both the set of headers and a C++ runtime
+library.  One of those is selected by the @option{-library} flag, which
+as it is needed for both compiling and linking is best specified as part
+of the compiler or standard.  Current @R{} expects as C++11 compiler,
+for which the choice given above is the only possibility.  For C++98
+there are several with
+
+@example
+CXX98=CC
+CXX98STD="-compat=g -library=stdcpp,CrunG3"
+@end example
+
+@noindent
+being the most compatible with C++11 compilation.  Another possibility
+(commonly used for earlier versions of @R{}) would be
+
+@example
+CXX98="CC -library=stlport4"
+@end example
+
+@noindent
+Although version 12.5 accepts the flag @option{-std=c++14}, it did not
+pass @command{configure}'s conformance tests: version 12.6 did.
+
 
 @cindex BLAS library
 @cindex LAPACK library
@@ -5501,12 +5513,12 @@ On both @samp{x86} and @samp{Sparc} platforms the compilers default to
 For a 64-bit target add @option{-m64} to the compiler macros
 and use something like @code{LDFLAGS=-L/usr/local/lib/amd64} or
 @code{LDFLAGS=-L/usr/local/lib/sparcv9} as appropriate (and other 64-bit
-library directories if used, e.g.@: @code{-L/opt/csw/lib/arm64}).
+library directories if used, e.g.@: @code{-L/opt/csw/lib/amd64}).
 It will also be necessary to point @command{pkg-config} at the 64-bit
 directories, e.g.@: by something like
 
 @example
-PKG_CONFIG_PATH=/opt/csw/lib/64/pkgconfig:/usr/lib/64/pkgconfig
+PKG_CONFIG_PATH= /usr/local/lib/amd64/pkgconfig:/opt/csw/lib/64/pkgconfig:/usr/lib/64/pkgconfig
 @end example
 
 @noindent
@@ -5531,7 +5543,7 @@ apply to OS patches: some 2016 patches to Solaris 10 changed its C
 header files in way incompatible@footnote{In particular, header
 @file{cmath} in C++11 mode includes @file{math.h} and
 @file{iso/math_c99.h} and @command{gcc} had `fixed' an earlier version
-of the latter.}  with the modified versions included with OpenCSW's
+of the latter.} with the modified versions included with OpenCSW's
 binary distribution.
 
 The notes here are for @command{gcc} set up to use the Solaris linker:
@@ -5542,8 +5554,8 @@ Solaris systems often come with much older compilers installed under
 default and could be omitted, but it is not easy to find out which.
 (For OpenCSW it is @option{-m32}.)
 
-Compilation for an @cputype{x86} target with @command{gcc}@tie{}4.9.2 or
-@command{gcc}@tie{}5.2.0 needed
+Compilation for an @cputype{x86} target with @command{gcc}@tie{}5.2.0
+needed
 
 @example
 CC="gcc -m32"
@@ -5575,7 +5587,8 @@ and @file{/opt/csw/lib/amd64} may need to be in the
 
 There have been few recent reports on FreeBSD: there is a `port' at
 @uref{https://www.freebsd.org/@/ports/@/math.html}.  Recent versions of
-FreeBSD use Clang and the @code{libc++} C++ headers and runtime.
+FreeBSD use Clang and the @code{libc++} C++ headers and runtime, but the
+`port' is configured to use GCC.
 
 Use of ICU for collation and the @command{configure} option
 @option{--with-internal-tzcode} are desirable workarounds.
