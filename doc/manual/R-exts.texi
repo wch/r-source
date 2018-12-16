@@ -10893,7 +10893,7 @@ parser, where the code interfacing with the R heap is generated and the
 generator cannot be configured to insert proper calls to @code{PROTECT} and
 @code{UNPROTECT}.  However, @code{UNPROTECT_PTR} is dangerous to use in
 combination with @code{UNPROTECT} when the same object has been protected
-multiple times.  It has been superseeded by multi-set based functions
+multiple times.  It has been superseded by multi-set based functions
 @code{R_PreserveInMSet} and @code{R_ReleaseFromMSet}, which protect objects
 in a multi-set created by @code{R_NewPreciousMSet} and typically itself
 protected using @code{PROTECT}.  These functions should not be needed
