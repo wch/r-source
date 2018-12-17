@@ -1,5 +1,5 @@
 
-R version 3.5.1 Patched (2018-11-06 r75556) -- "Feather Spray"
+R version 3.5.2 RC (2018-12-13 r75856) -- "Eggshell Igloo"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -323,5 +323,5 @@ Warning messages:
 > 
 > ## Last Line:
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.34 0.009 0.35 0 0 
+Time elapsed:  0.331 0.012 0.344 0 0 
 > 

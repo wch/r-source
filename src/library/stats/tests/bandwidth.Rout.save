@@ -1,5 +1,5 @@
 
-R version 3.5.1 Patched (2018-11-06 r75556) -- "Feather Spray"
+R version 3.5.2 RC (2018-12-13 r75856) -- "Eggshell Igloo"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -46,4 +46,4 @@ In bw.bcv(precip) : minimum occurred at one end of the range
 > 
 > proc.time()
    user  system elapsed 
-  0.173   0.035   0.187 
+  0.179   0.029   0.187 
