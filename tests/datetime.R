@@ -16,12 +16,14 @@ Sys.setenv(TZ = "Europe/London")  # pretty much portable.
 c(unclass(z))
 ## We don't know the operation of timezones next year let alone in 1940
 ## but these should at least round-trip
+## These got the wrong timezone on Linux with glibc 2.2[67]
 as.POSIXct("2040-01-01 12:00")
 as.POSIXct("2040-07-01 12:00")
 
 Sys.setenv(TZ = "EST5EDT")  # also pretty much portable.
 (z <- as.POSIXct("1848-01-01 12:00"))
 c(unclass(z))
+## see comment above
 as.POSIXct("2040-01-01 12:00")
 as.POSIXct("2040-07-01 12:00")
 
