@@ -20,7 +20,7 @@ signed, which it is on all sensible platforms.  This is only used with
 R's implemntation, where time_t is int_fast64_t, hence signed.)
 
 To remake it, download the current version of tzdataXXXXx.tar.gz from
-http://www.iana.org/time-zones to this directory and run
+https://www.iana.org/time-zones to this directory and run
 
 make -f Make.zi VERSION=2018g
 
