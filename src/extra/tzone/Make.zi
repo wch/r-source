@@ -1,6 +1,6 @@
 ## Makefile to be run on a Unix box with zic
 
-VERSION = 2018e
+VERSION = 2018g
 TZDIR = zoneinfo
 TZTMP = tz
 TARFILE = tzdata$(VERSION).tar.gz
