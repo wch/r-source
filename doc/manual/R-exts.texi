@@ -1643,10 +1643,18 @@ The latter is important, as for example C headers may not be available
 to C++ programs or may not be written to avoid C++ name-mangling.
 
 @findex R CMD config
-You can use @code{R CMD config} for getting the value of the basic
+You can use @code{R CMD config} to get the value of the basic
 configuration variables, and also the header and library flags necessary
 for linking a front-end executable program against @R{}, see @kbd{R CMD
-config --help} for details.
+config --help} for details.  If you do, it is essential that you use
+both the command and the appropriate flags, so that for example
+@samp{CC} must always be used with @samp{CFLAGS} and (for code to be
+linked into a shared library) @samp{CPICFLAGS}.  For Fortran, be careful
+to use @samp{FC FFLAGS FPICFLAGS} for fixed-form Fortran and 
+@samp{FC FCFLAGS FPICFLAGS} for free-form Fortran.  (Packages intended to
+be ued with @R{} versions before 3.6.0 should use the legacy forms
+@samp{F77 FFLAGS FPICFLAGS} and @samp{FC FCFLAGS FCPICFLAGS}, which are
+still accepted.)
 
 To check for an external BLAS library using the @code{ACX_BLAS} macro
 from the official Autoconf Macro Archive, one can simply do
@@ -10197,12 +10205,14 @@ linking to @CRANpkg{bdsmatrix} and @CRANpkg{xts} linking to
 
 Shared objects for loading into @R{} can be created using @command{R CMD
 SHLIB}.  This accepts as arguments a list of files which must be object
-files (with extension @file{.o}) or sources for C, C++,
-Fortran, Objective C or Objective C++ (with extensions @file{.c},
-@file{.cc} or @file{.cpp}, @file{.f}, @file{.f90} or @file{.f95},
-@file{.m}, and @file{.mm} or @file{.M}, respectively), or commands to be
-passed to the linker.  See @kbd{R CMD SHLIB --help} (or the @R{} help
-for @code{SHLIB}) for usage information.
+files (with extension @file{.o}) or sources for C, C++, Fortran,
+Objective C or Objective C++ (with extensions @file{.c}, @file{.cc} or
+@file{.cpp}, @file{.f} (fixed-form Fortran), @file{.f90} or @file{.f95}
+(free-form), @file{.m}, and @file{.mm} or @file{.M}, respectively), or
+commands to be passed to the linker.  See @kbd{R CMD SHLIB --help} (or
+the @R{} help for @code{SHLIB}) for usage information.  Note that files
+intended for the Fortran pre-processor with extension @file{.F} are not
+accepted.
 
 If compiling the source files does not work ``out of the box'', you can
 specify additional flags by setting some of the variables
