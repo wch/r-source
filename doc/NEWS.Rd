@@ -556,6 +556,9 @@
 
       \item \code{sub()} no longer loses encodings for non-ASCII
       replacements (\PR{17509}).
+
+      \item Fix for rotated raster image on X11 device.  (Partial
+      fix for \PR{17148};  thanks to Mikko Korpela).
     }
   }
 }
