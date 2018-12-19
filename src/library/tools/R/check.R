@@ -2249,7 +2249,7 @@ add_dummies <- function(dir, Log)
                 printLog0(Log, .format_lines_with_indent(out), "\n")
                 if(bad2)
                      printLog0(Log,
-                               "  The datasets use package(s) not declared in the DESCRIPTION file.\n")
+                               "  The dataset(s) may use package(s) not declared in the DESCRIPTION file.\n")
             } else resultLog(Log, "OK")
         }
 
