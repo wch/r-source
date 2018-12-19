@@ -2242,10 +2242,14 @@ add_dummies <- function(dir, Log)
                            R_opts2, elibs)
             out <- filtergrep("Loading required package", out)
             out <- filtergrep("Warning: changing locked binding", out, fixed = TRUE)
-           if (length(out)) {
+            if (length(out)) {
                 bad <- startsWith(out, "Warning:")
-                if(any(bad)) warningLog(Log) else noteLog(Log)
+                bad2 <-  any(grepl("(unable to find required package|there is no package called)", out))
+                if(any(bad) || bad2) warningLog(Log) else noteLog(Log)
                 printLog0(Log, .format_lines_with_indent(out), "\n")
+                if(bad2)
+                     printLog0(Log,
+                               "  The datasets use package(s) not declared in the DESCRIPTION file.\n")
             } else resultLog(Log, "OK")
         }
 
