@@ -350,6 +350,15 @@
     }
   }
 
+  \subsection{C-LEVEL FACILITIES}{
+    \itemize{
+      \item \code{NAMEDMAX} has been raised to 7 to allow further
+      protection of intermediate results from (usually ill-advised)
+      assignments in arguments to \code{BUILTIN} functions. Properly
+      written package code should not be affected.
+    }
+  }
+
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item Argument \code{compressed} of \code{untar()} is
