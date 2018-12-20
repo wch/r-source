@@ -4409,9 +4409,11 @@ function(pkgDir)
     latin1 <- utf8 <- bytes <- 0L
     ## avoid messages about loading packages that started with r48409
     ## (and some more ...)
+    ## aadd try() to ensure that all datasets are looked at
+    ## (if not all of each dataset).
     suppressMessages({
         for(ds in ls(envir = dataEnv, all.names = TRUE))
-            check_one(get(ds, envir = dataEnv), ds)
+            try(check_one(get(ds, envir = dataEnv), ds))
     })
     unknown <- unique(cbind(non_ASCII, where))
     structure(list(latin1 = latin1, utf8 = utf8, bytes = bytes,
