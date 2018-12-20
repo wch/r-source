@@ -245,7 +245,7 @@ static SrcRefState ParseState;
    placed on parser state precious multi-set via PRESERVE_SV. They are removed
    from the multi-set in reduce operations using RELEASE_SV, because by design
    of the bison parsers such values are subsequently removed from the stack.
-   They are also automatically removed when the parsing finshes, including
+   They are also automatically removed when the parsing finishes, including
    parser error (also on R error, via the context on-end action).
 
    Previously semantic values were protected via PROTECT/UNPROTECT_PTR with
@@ -3480,11 +3480,101 @@ static void finalizeData( ){
 	
     int nloc = ParseState.data_count ;
 
-    // int maxId = _ID(nloc-1) ;
     int i, j, id ;
-    int parent ; 
+    int parent ;
+
+    int idp;
+    /* store parents in the data */
+    for( i=0; i<nloc; i++){
+	id = _ID(i);
+	parent = ID_PARENT( id ) ;
+	if( parent == 0 ){
+	    _PARENT(i)=parent;
+	    continue;
+	}
+	while( 1 ){
+	    idp = ID_ID( parent ) ;
+	    if( idp > 0 ) break ;
+	    if( parent == 0 ){
+		break ;
+	    }
+	    parent = ID_PARENT( parent ) ;
+	}
+	_PARENT(i) = parent ;
+    }
 
     /* attach comments to closest enclosing symbol */
+    /* not updating ID_PARENT anymore */
+
+#define FAST_FINALIZE_DATA
+#ifdef FAST_FINALIZE_DATA
+    /*
+       All terminals (tokens) are ordered by start and end location, including
+       the comments, in the data.
+
+       All non-terminals, including to be found parents of the comments, are
+       ordered by their end location. When they have the same end location
+       in the code, they are ordered by their decreasing start location
+       (children before parents).
+
+       All terminals and non-terminals are also before their parents (if any),
+       so a comment is also befor its parent in the data.
+
+       Consequently: the first non-terminal after a comment that encloses the
+       comment is its (immediate) parent. The original algorithm for every
+       comment linearly searches for the first enclosing non-terminal and
+       returns it, but it has quadratic complexity and dominates the whole
+       parsing for long inputs (used when FAST_FINALIZE_DATA is not defined).
+
+       This algorithm uses the parental information available on nodes that
+       follow the comments. That information has been filled by the parser
+       during reductions (but not for comments, because those are not in the
+       grammar). A node following a comment is either the parent of the
+       comment, or some of its parents are, or is an orphan.
+
+       Note that a non-terminal may end before a terminal (e.g. comment) in the
+       code but be after the terminal in the data (due to look-ahead). It seems
+       that the parent of the comment has to be within parents of the
+       non-terminal as well, but I am not sure how to prove it, so the algorithm
+       just skips non-terminals preceding the comment in the code (so is not
+       strictly linear).
+      */
+
+    for(i = nloc-1; i >= 0; i--) {
+	if (_TOKEN(i) == COMMENT) {
+	    int orphan = 1;
+	    int istartl = _FIRST_PARSED(i);
+	    int istartc = _FIRST_COLUMN(i);
+
+	    /* look for first node j that does not end before the comment i */
+	    for(j = i + 1; j < nloc && _LAST_PARSED(j) <= istartl; j++);
+
+	    if (j < nloc) {
+		for(;;) {
+		    int jstartl = _FIRST_PARSED(j);
+		    int jstartc = _FIRST_COLUMN(j);
+
+		    if (jstartl < istartl || (jstartl == istartl
+		                              && jstartc <= istartc)) {
+			/* j starts before or at the comment */
+			_PARENT(i) = _ID(j);
+			orphan = 0;
+			break;
+		    }
+		    /* find parent of j */
+		    int jparent = _PARENT(j);
+		    if (jparent == 0)
+			break; /* orphan */
+		    j = ID_ID(jparent);
+		}
+	    }
+	    if (orphan)
+		_PARENT(i) = 0;
+	}
+    }
+#else
+    /* the original algorithm, which is slow for large inputs */
+
     int comment_line, comment_first_col;
     int this_first_parsed, this_last_parsed, this_first_col ;
     int orphan ;
@@ -3508,35 +3598,17 @@ static void finalizeData( ){
 		if( this_last_parsed <= comment_line ) continue ; 
 
 		/* we have a match, record the parent and stop looking */
-		ID_PARENT( _ID(i) ) = _ID(j) ;
+		_PARENT(i) = _ID(j);
 		orphan = 0;
 		break ;
 	    }
 	    if(orphan){
-		ID_PARENT( _ID(i) ) = 0 ;
+		_PARENT(i) = 0 ;
 	    }
 	}
     }
+#endif
 
-    int idp;
-    /* store parents in the data */
-    for( i=0; i<nloc; i++){
-	id = _ID(i);
-	parent = ID_PARENT( id ) ;
-	if( parent == 0 ){
-	    _PARENT(i)=parent;
-	    continue;
-	}
-	while( 1 ){
-	    idp = ID_ID( parent ) ;
-	    if( idp > 0 ) break ;
-	    if( parent == 0 ){
-		break ;
-	    }
-	    parent = ID_PARENT( parent ) ;
-	}
-	_PARENT(i) = parent ;
-    }
 
     /* now rework the parents of comments, we try to attach 
     comments that are not already attached (parent=0) to the next
