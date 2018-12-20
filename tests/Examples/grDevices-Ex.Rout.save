@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2018-12-17 r75856) -- "Unsuffered Consequences"
+R Under development (unstable) (2018-12-19 r75867) -- "Unsuffered Consequences"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -1818,7 +1818,7 @@ magenta 255     0  255
 yellow  255   255    0
 gray    190   190  190
 > zapsmall(lab <- convertColor(cols, from = "sRGB", to = "Lab", scale.in = 255))
-               L       a.x          b
+               L         a          b
 black    0.00000   0.00000    0.00000
 red     53.48418  80.01027   67.38407
 green3  71.91841 -73.33548   70.41134
@@ -2329,7 +2329,7 @@ display gamma = 2.2
 +                             rgb <- t(col2rgb(hex))/255
 +                             colorspaces$sRGB$toXYZ(rgb, ...) },
 +                            fromXYZ = function(xyz, ...) {
-+                               rgb <- colorspaces$sRGB$fromXYZ(xyz, ..)
++                               rgb <- colorspaces$sRGB$fromXYZ(xyz, ...)
 +                               rgb <- round(rgb, 5)
 +                               if (min(rgb) < 0 || max(rgb) > 1)
 +                                    as.character(NA)
@@ -2357,8 +2357,15 @@ display gamma = 2.2
 [7,] 97.14950   7.89815  106.44098
 [8,] 76.97594   0.00000    0.00000
 > (hex <- convertColor(luv, from = "Luv",  to = hexcolor, scale.out = NULL))
-[1] "#000000" "#FF0000" "#00CD00" "#0000FF" "#00FFFF" "#FF00FF" "#FFFF00"
-[8] "#BEBEBE"
+     [,1]     
+[1,] "#000000"
+[2,] "#FF0000"
+[3,] "#00CD00"
+[4,] "#0000FF"
+[5,] "#00FFFF"
+[6,] "#FF00FF"
+[7,] "#FFFF00"
+[8,] "#BEBEBE"
 > 
 > ## must make hex a matrix before using it
 > (cc <- round(convertColor(as.matrix(hex), from = hexcolor, to = "sRGB",
@@ -2373,6 +2380,35 @@ display gamma = 2.2
 [7,]  255  255    0
 [8,]  190  190  190
 > stopifnot(cc == cols)
+> 
+> ## Internally vectorized version of hexcolor, notice the use
+> ## of `vectorized = TRUE`:
+> 
+> hexcolorv <- colorConverter(toXYZ = function(hex, ...) {
++                             rgb <- t(col2rgb(hex))/255
++                             colorspaces$sRGB$toXYZ(rgb, ...) },
++                            fromXYZ = function(xyz, ...) {
++                               rgb <- colorspaces$sRGB$fromXYZ(xyz, ...)
++                               rgb <- round(rgb, 5)
++                               oob <- pmin(rgb[,1],rgb[,2],rgb[,3]) < 0 |
++                                      pmax(rgb[,1],rgb[,2],rgb[,3]) > 0
++                               res <- rep(NA_character_, nrow(rgb))
++                               res[!oob] <- rgb(rgb[!oob,,drop=FALSE])},
++                            white = "D65", name = "#rrggbb",
++                            vectorized=TRUE)
+> (ccv <- round(convertColor(as.matrix(hex), from = hexcolor, to = "sRGB",
++                            scale.in = NULL, scale.out = 255)))
+     [,1] [,2] [,3]
+[1,]    0    0    0
+[2,]  255    0    0
+[3,]    0  205    0
+[4,]    0    0  255
+[5,]    0  255  255
+[6,]  255    0  255
+[7,]  255  255    0
+[8,]  190  190  190
+> stopifnot(ccv == cols)
+> 
 > 
 > 
 > 
@@ -3722,6 +3758,40 @@ v 0.98039216 0.7647059 0.4588235 0.8549020 0.9960784
 + utopia <- X11Font("-*-utopia-*-*-*-*-*-*-*-*-*-*-*-*")
 + X11Fonts(utopia = utopia)
 + })
+> X11Fonts()
+$serif
+[1] "-*-times-%s-%s-*-*-%d-*-*-*-*-*-*-*"
+
+$sans
+[1] "-*-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*"
+
+$mono
+[1] "-*-courier-%s-%s-*-*-%d-*-*-*-*-*-*-*"
+
+$Times
+[1] "-adobe-times-%s-%s-*-*-%d-*-*-*-*-*-*-*"
+
+$Helvetica
+[1] "-adobe-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*"
+
+$CyrTimes
+[1] "-cronyx-times-%s-%s-*-*-%d-*-*-*-*-*-*-*"
+
+$CyrHelvetica
+[1] "-cronyx-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*"
+
+$Arial
+[1] "-monotype-arial-%s-%s-*-*-%d-*-*-*-*-*-*-*"
+
+$Mincho
+[1] "-*-mincho-%s-%s-*-*-%d-*-*-*-*-*-*-*"
+
+> X11Fonts("mono")
+$mono
+[1] "-*-courier-%s-%s-*-*-%d-*-*-*-*-*-*-*"
+
+> utopia <- X11Font("-*-utopia-*-*-*-*-*-*-*-*-*-*-*-*")
+> X11Fonts(utopia = utopia)
 > ## IGNORE_RDIFF_END
 > 
 > 
@@ -3981,7 +4051,7 @@ $zlab
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  10.978 0.3 11.322 0 0 
+Time elapsed:  10.552 0.244 10.799 0 0 
 > grDevices::dev.off()
 null device 
           1 

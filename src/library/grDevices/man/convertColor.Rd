@@ -53,8 +53,11 @@ convertColor(color, from, to, from.ref.white, to.ref.white,
   standard CIE illuminants supported are \code{B}, \code{C}, \code{E} and
   \code{D55}.  RGB colour spaces are defined relative to a particular
   reference white, and can be only approximately translated to other
-  reference whites.  The Bradford chromatic adaptation algorithm is used
-  for this.
+  reference whites.  The von Kries chromatic adaptation algorithm is used
+  for this.  Prior to R 3.6, color conversions involving color spaces
+  created with \code{\link{make.rgb}} were carried out assuming a \code{D65}
+  illuminant, irrespective of the actual illuminant used in the creation of the
+  color space.  This affected the built-in \code{"CIE RGB"} color space.
 
   The RGB color spaces are specific to a particular class of display.
   An RGB space cannot represent all colors, and the \code{clip} option

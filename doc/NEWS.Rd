@@ -241,6 +241,11 @@
       \item \code{gamma(x)} and \code{lgamma(x)} no longer warn when
       correctly returning \code{Inf} or underflowing to zero.  This
       helps maximum likelihood and similar computations.
+
+      \item \code{convertColor()} is now vectorized, so a whole lot
+      faster for converting many colours at once.  New \code{vectorized}
+      argument to \code{colorConverter()} ensures that non-vectorized
+      colour converters still work.  Thanks to Brodie Gaslam.
     }
   }
 
