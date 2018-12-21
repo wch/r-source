@@ -1378,8 +1378,19 @@ Preferably there should be no such references in data files, and in any
 case they should only be to packages listed in the @code{Depends} and
 @code{Imports} fields, as otherwise it may be impossible to install the
 package.  To check for such references, load all the images into a
-vanilla @R{} session, and look at the output of
-@code{loadedNamespaces()}.
+vanilla @R{} session, run @code{str()} on all the datasets, and look at
+the output of @code{loadedNamespaces()}.
+
+Particular care is needed where a dataset or one of its components is of
+an S4 class, especially if the class is defined in a different package.
+First, the package containing the class definition has to be available
+to do useful things with the dataset, so that package must be listed in
+@code{Imports} or @code{Depends} (even if this gives a check warning
+about unused imports).  Second, the definition of an S4 class can
+change, and often has unnoticed when in a package with a different
+author.  So it may be wiser to use the @file{.R} form and use that to
+create the dataset object when needed (loading package namespaces but
+not attaching them).
 
 If your data files are large and you are not using @samp{LazyData} you
 can speed up installation by providing a file @file{datalist} in the
@@ -1419,13 +1430,13 @@ field in the @file{DESCRIPTION} file.  Useful values are @code{bzip2},
 is best is to try them all and look at the size of the
 @file{@var{pkgname}/data/Rdata.rdb} file.
 
-Lazy-loading is not supported for very large datasets (those which when
-serialized exceed 2GB, the limit for the format on 32-bit platforms).
-
 @c DESCRIPTION field SysDataCompression
 The analogue for @file{sysdata.rda} is field @samp{SysDataCompression}:
 the default is @code{xz} for files bigger than 1MB otherwise
 @code{gzip}.
+
+Lazy-loading is not supported for very large datasets (those which when
+serialized exceed 2GB, the limit for the format on 32-bit platforms).
 
 @node Non-R scripts in packages, Specifying URLs, Data in packages, Package structure
 @subsection Non-R scripts in packages
