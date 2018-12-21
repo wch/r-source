@@ -4400,9 +4400,37 @@ function(pkgDir)
     dataEnv <- new.env(hash=TRUE)
     names(ans) <- files
     old <- setwd(pkgDir)
-    for(f in files)
-        .try_quietly(utils::data(list = f, package = character(),
-                                 envir = dataEnv))
+
+    ## formerly used .try_quietly which stops on error
+    .try <- function (expr, msg) {
+        oop <- options(warn = 1)
+        on.exit(options(oop))
+        outConn <- file(open = "w+")
+        sink(outConn, type = "output")
+        sink(outConn, type = "message")
+        yy <- tryCatch(withRestarts(withCallingHandlers(expr, error = {
+            function(e) invokeRestart("grmbl", e, sys.calls())
+        }), grmbl = function(e, calls) {
+            n <- length(sys.calls())
+            calls <- calls[-seq.int(length.out = n - 1L)]
+            calls <- rev(calls)[-c(1L, 2L)]
+            tb <- lapply(calls, deparse)
+            message(msg, conditionMessage(e), "\nCall sequence:\n",
+                    paste(c(head(.eval_with_capture(traceback(tb))$output, 5),
+			    "  ..."),
+                          collapse = "\n"),
+                    "\n")
+        }), error = identity, finally = {
+            sink(type = "message")
+            sink(type = "output")
+            close(outConn)
+        })
+    }
+
+    for(f in files) {
+        msg <- sprintf("Error loading dataset %s: ", sQuote(f))
+        .try(utils::data(list = f, package = character(), envir = dataEnv), msg)
+    }
     setwd(old)
 
     non_ASCII <- where <- character()
@@ -4411,10 +4439,13 @@ function(pkgDir)
     ## (and some more ...)
     ## aadd try() to ensure that all datasets are looked at
     ## (if not all of each dataset).
-    suppressMessages({
-        for(ds in ls(envir = dataEnv, all.names = TRUE))
-            try(check_one(get(ds, envir = dataEnv), ds))
-    })
+    for(ds in ls(envir = dataEnv, all.names = TRUE)) {
+        if(inherits(suppressMessages(try(check_one(get(ds, envir = dataEnv), ds), silent = TRUE)),
+                    "try-error")) {
+            msg <- sprintf("Error loading dataset %s:\n ", sQuote(ds))
+            message(msg, geterrmessage())
+        }
+    }
     unknown <- unique(cbind(non_ASCII, where))
     structure(list(latin1 = latin1, utf8 = utf8, bytes = bytes,
                    unknown = unknown),
