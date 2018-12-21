@@ -1156,7 +1156,7 @@ compilation and linking into a shared object for loading into @R{}.
 There are default @command{make} variables and rules for this
 (determined when @R{} is configured and recorded in
 @file{@var{R_HOME}/etc@var{R_ARCH}/Makeconf}), providing support for C,
-C++, FORTRAN 77, Fortran 9x, Objective C and Objective
+C++, fixed- or free-form Fortran, Objective C and Objective
 C++@footnote{either or both of which may not be supported on particular
 platforms} with associated extensions @file{.c}, @file{.cc} or
 @file{.cpp}, @file{.f}, @file{.f90} or @file{.f95}, @file{.m}, and
@@ -1643,10 +1643,15 @@ The latter is important, as for example C headers may not be available
 to C++ programs or may not be written to avoid C++ name-mangling.
 
 @findex R CMD config
-You can use @code{R CMD config} for getting the value of the basic
+You can use @code{R CMD config} to get the value of the basic
 configuration variables, and also the header and library flags necessary
 for linking a front-end executable program against @R{}, see @kbd{R CMD
-config --help} for details.
+config --help} for details.  If you do, it is essential that you use
+both the command and the appropriate flags, so that for example
+@samp{CC} must always be used with @samp{CFLAGS} and (for code to be
+linked into a shared library) @samp{CPICFLAGS}.  For Fortran, be careful
+to use @samp{F77 FFLAGS FPICFLAGS} for fixed-form Fortran and 
+@samp{FC FCFLAGS FCPICFLAGS} for free-form Fortran.
 
 To check for an external BLAS library using the @code{ACX_BLAS} macro
 from the official Autoconf Macro Archive, one can simply do
@@ -1654,6 +1659,7 @@ from the official Autoconf Macro Archive, one can simply do
 @example
 @group
 F77=`"$@{R_HOME@}/bin/R" CMD config F77`
+FFLAGS=`"$@{R_HOME@}/bin/R" CMD config FFLAGS`
 AC_PROG_F77
 FLIBS=`"$@{R_HOME@}/bin/R" CMD config FLIBS`
 ACX_BLAS([], AC_MSG_ERROR([could not find your BLAS library], 1))
@@ -1961,7 +1967,14 @@ all: mylibs
 @end example
 
 @noindent
-does @strong{not} suffice.
+does @strong{not} suffice.  GNU make does allow the construct
+@example
+.NOTPARALLEL: all
+all: mylibs $(SHLIB)
+@end example
+
+@noindent
+but that is not portable.
 
 Note that on Windows it is required that @file{Makevars[.win]} does
 create a DLL: this is needed as it is the only reliable way to ensure
@@ -2454,12 +2467,10 @@ or by setting the environment variables @code{ODBC_INCLUDE} and
 @subsection Using F9x code
 
 @R{} assumes that source files with extension @file{.f} are FORTRAN 77,
-and passes them to the compiler specified by @samp{F77}.  On most but
-not all platforms that compiler will accept Fortran 90/95 code: some
-platforms have a separate Fortran 90/95 compiler and a few (by now quite
-rare@footnote{Cygwin used @command{g77} up to 2011, and some pre-built
-versions of @R{} for Unix OSes still do.}) platforms have no Fortran
-90/95 support.
+and passes them to the compiler specified by @samp{F77}.  On almost all
+current platforms that compiler will accept Fortran fixed-form 90/95
+code: some platforms have a separate Fortran 90/95 compiler and a few
+(by now rare) platforms have no Fortran 90/95 support.
 
 This means that portable packages need to be written in correct
 FORTRAN 77, which will also be valid Fortran 9x.  See
@@ -2474,10 +2485,11 @@ appears to be a Fortran 90/95 compiler, and set it in macro @samp{FC}.
 Note that it does not check that such a compiler is fully (or even
 partially) compliant with Fortran 90/95.  Packages making use of Fortran
 90/95 features should use file extension @file{.f90} or @file{.f95} for
-the source files: the variable @code{PKG_FCFLAGS} specifies any special
-flags to be used.  There is no guarantee that compiled Fortran 90/95
-code can be mixed with any other type of compiled code, nor that a build
-of @R{} will have support for such packages.
+the source files (which must be free-form): the variable
+@code{PKG_FCFLAGS} specifies any special flags to be used.  There is no
+guarantee that compiled Fortran 90/95 code can be mixed with any other
+type of compiled code, nor that a build of @R{} will have support for
+such packages.
 
 The code used to build @R{} allows a `Fortran
 90' compiler to be selected as @samp{FC}, so platforms might be

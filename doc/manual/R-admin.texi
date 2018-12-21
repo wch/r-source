@@ -4842,9 +4842,10 @@ certificates: this is worked around in @R{}'s test suite.
 32-bit versions will be if possible unless @option{--disable-largefile}
 is specified.
 
-Note that 32-bit @code{glibc} currently uses a 32-bit @code{time_t}
-type, so to pass all the date-time checks needs @R{} built with flag
-@option{--with-internal-tzcode}.
+Note that 32-bit @code{glibc} currently@footnote{This has been announced
+to change in version 2.29, having been postponed from 2.28.} uses a
+32-bit @code{time_t} type, so to pass all the date-time checks needs
+@R{} built with flag @option{--with-internal-tzcode}.
 
 To build a 64-bit version of @R{} on @cputype{ppc64} (also known as
 @cputype{powerpc64}) with @command{gcc}@tie{}4.1.1, Ei-ji Nakama used
