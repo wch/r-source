@@ -3483,31 +3483,38 @@ static void finalizeData( ){
     int i, j, id ;
     int parent ;
 
-    int idp;
     /* store parents in the data */
     for( i=0; i<nloc; i++){
 	id = _ID(i);
 	parent = ID_PARENT( id ) ;
-	if( parent == 0 ){
-	    _PARENT(i)=parent;
-	    continue;
-	}
-	while( 1 ){
-	    idp = ID_ID( parent ) ;
-	    if( idp > 0 ) break ;
-	    if( parent == 0 ){
-		break ;
-	    }
+	while( parent != 0 && ID_ID(parent) == 0 )
 	    parent = ID_PARENT( parent ) ;
-	}
 	_PARENT(i) = parent ;
+
+#define FD_FAST_UPDATE_PARENTS
+#ifdef FD_FAST_UPDATE_PARENTS
+	/*
+	   With long generated expressions, updating the parents can take
+	   a lot of time due to long chains of nodes not represented in the
+	   parse data. To reduce the overhead somewhat, we create shortcuts
+	   in the IDS array to point directly to the parent that is in the
+	   parse data.
+	*/
+	int data_parent = parent;
+	parent = ID_PARENT( id ) ;
+	while( parent != data_parent ){
+	    ID_PARENT( id ) = data_parent; /* set shortcut */
+	    id = parent;
+	    parent = ID_PARENT( parent );
+	}
+#endif
     }
 
     /* attach comments to closest enclosing symbol */
     /* not updating ID_PARENT anymore */
 
-#define FAST_FINALIZE_DATA
-#ifdef FAST_FINALIZE_DATA
+#define FD_FAST_ASSIGN_COMMENTS
+#ifdef FD_FAST_ASSIGN_COMMENTS
     /*
        All terminals (tokens) are ordered by start and end location, including
        the comments, in the data.
@@ -3524,7 +3531,8 @@ static void finalizeData( ){
        comment is its (immediate) parent. The original algorithm for every
        comment linearly searches for the first enclosing non-terminal and
        returns it, but it has quadratic complexity and dominates the whole
-       parsing for long inputs (used when FAST_FINALIZE_DATA is not defined).
+       parsing for long inputs (used when FD_FAST_ASSIGN_COMMENTS is not
+       defined).
 
        This algorithm uses the parental information available on nodes that
        follow the comments. That information has been filled by the parser
