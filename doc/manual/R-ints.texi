@@ -3890,7 +3890,9 @@ Default: false, even though the warnings are justifiable.
 If true, check @R{} code for non-ascii characters.
 Default: true.
 @item _R_CHECK_ASCII_DATA_
-If true, check data for non-ascii characters.
+If true, check data for non-ascii characters.  @emph{En route}, checks
+that all the datasets can be loaded and that their components can be
+accessed.
 Default: true.
 @item _R_CHECK_COMPACT_DATA_
 If true, check data for ascii and uncompressed saves, and also check if
