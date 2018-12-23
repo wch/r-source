@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/convertColor.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{convertColor}
@@ -85,8 +85,8 @@ convertColor(color, from, to, from.ref.white, to.ref.white,
 }
 \examples{
 ## The displayable colors from four planes of Lab space
-ab <- expand.grid(a = (-10:15)*10,
-                  b = (-15:10)*10)
+ab <- as.matrix(expand.grid(a = (-10:15)*10,
+                            b = (-15:10)*10))
 require(graphics); require(stats) # for na.omit
 par(mfrow = c(2, 2), mar = .1+c(3, 3, 3, .5), mgp = c(2,  .8,  0))
 

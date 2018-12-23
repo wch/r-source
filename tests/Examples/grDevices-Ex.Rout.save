@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2018-12-19 r75867) -- "Unsuffered Consequences"
+R Under development (unstable) (2018-12-22 r75884) -- "Unsuffered Consequences"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -1770,8 +1770,8 @@ detaching ‘package:grid’
 > ### ** Examples
 > 
 > ## The displayable colors from four planes of Lab space
-> ab <- expand.grid(a = (-10:15)*10,
-+                   b = (-15:10)*10)
+> ab <- as.matrix(expand.grid(a = (-10:15)*10,
++                             b = (-15:10)*10))
 > require(graphics); require(stats) # for na.omit
 > par(mfrow = c(2, 2), mar = .1+c(3, 3, 3, .5), mgp = c(2,  .8,  0))
 > 
