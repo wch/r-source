@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2004-2015 The R Core Team
+ *  Copyright (C) 2004-2018 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -25,13 +25,16 @@
 
 
 typedef SEXP (*R_DownloadRoutine)(SEXP args);
-typedef Rconnection (*R_NewUrlRoutine)(const char *description, const char * const mode, int method);
-typedef Rconnection (*R_NewSockRoutine)(const char *host, int port, int server, const char *const mode, int timeout); 
+typedef Rconnection (*R_NewUrlRoutine)(const char *description, const char * const mode,
+				       SEXP headers, int method);
+typedef Rconnection (*R_NewSockRoutine)(const char *host, int port, int server,
+					const char * const mode, int timeout);
 
-typedef void * (*R_HTTPOpenRoutine)(const char *url, const char *headers, const int cacheOK);
+typedef void * (*R_HTTPOpenRoutine)(const char *url, const char *agent,
+				    const char *headers, const int cacheOK);
 typedef int    (*R_HTTPReadRoutine)(void *ctx, char *dest, int len);
 typedef void   (*R_HTTPCloseRoutine)(void *ctx);
-	      
+
 typedef void * (*R_FTPOpenRoutine)(const char *url);
 typedef int    (*R_FTPReadRoutine)(void *ctx, char *dest, int len);
 typedef void   (*R_FTPCloseRoutine)(void *ctx);

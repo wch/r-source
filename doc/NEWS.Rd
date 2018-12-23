@@ -246,6 +246,10 @@
       faster for converting many colours at once.  New \code{vectorized}
       argument to \code{colorConverter()} ensures that non-vectorized
       colour converters still work.  Thanks to Brodie Gaslam.
+
+      \item \code{download.file()} and \code{url()} get new argument
+      \code{headers} for custom HTTP headers, e.g., allowing to perform
+      basic http authentication, thanks to a patch donated by Gábor Csárdi.
     }
   }
 

@@ -15,7 +15,8 @@
 \usage{
 download.file(url, destfile, method, quiet = FALSE, mode = "w",
               cacheOK = TRUE,
-              extra = getOption("download.file.extra"), \dots)
+              extra = getOption("download.file.extra"),
+              headers = NULL, \dots)
 }
 \arguments{
   \item{url}{a \code{\link{character}} string (or longer vector e.g.,
@@ -47,6 +48,11 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
 
   \item{extra}{character vector of additional command-line arguments for
     the \code{"wget"} and \code{"curl"} methods.}
+
+  \item{headers}{named character vector of HTTP headers to use in HTTP
+    requests.  It is ignored for non-HTTP URLs.  The \code{User-Agent}
+    header, coming from the \code{HTTPUserAgent} option (see
+    \code{\link{options}}) is used as the first header, automatically.}
 
   \item{\dots}{allow additional arguments to be passed, unused.}
 }
