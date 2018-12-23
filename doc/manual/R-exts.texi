@@ -1663,7 +1663,7 @@ both the command and the appropriate flags, so that for example
 linked into a shared library) @samp{CPICFLAGS}.  For Fortran, be careful
 to use @samp{FC FFLAGS FPICFLAGS} for fixed-form Fortran and 
 @samp{FC FCFLAGS FPICFLAGS} for free-form Fortran.  (Packages intended to
-be ued with @R{} versions before 3.6.0 should use the legacy forms
+be used with @R{} versions before 3.6.0 should use the legacy forms
 @samp{F77 FFLAGS FPICFLAGS} and @samp{FC FCFLAGS FCPICFLAGS}, which are
 still accepted.)
 
