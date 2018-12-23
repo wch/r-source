@@ -634,7 +634,18 @@ function(u, verbose = FALSE)
 {
     if(verbose)
         message(sprintf("processing %s", u))
-    g <- tryCatch(curl::curl_fetch_memory(u), error = identity)
+    ## Configure curl handle for better luck with JSTOR URLs/DOIs.
+    ## Alternatively, special-case requests to
+    ##   https?://doi.org/10.2307
+    ##   https?://www.jstor.org
+    h <- curl::new_handle()
+    curl::handle_setopt(h,
+                        cookiesession = 1,
+                        followlocation = 1,
+                        http_version = 1.1,
+                        ssl_enable_alpn = 0)
+    g <- tryCatch(curl::curl_fetch_memory(u, handle = h),
+                  error = identity)
     if(inherits(g, "error"))
         -1L
     else
