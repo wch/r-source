@@ -577,6 +577,9 @@
 
       \item Fix for rotated raster image on X11 device.  (Partial
       fix for \PR{17148};  thanks to Mikko Korpela).
+
+      \item \code{formula(model.frame(frml, ..))} now returns \code{frml}
+      in all cases, thanks to Bill Dunlap.
     }
   }
 }

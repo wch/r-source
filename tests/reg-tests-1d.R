@@ -2424,12 +2424,23 @@ stopifnot(exprs = {
 })
 ## had  "Warning message:  value out of range in 'lgamma' "  for ever
 
+
 ## sub() with non-ASCII replacement failed to set encodings (PR#17509):
 x <- c("a", "b")
 x <- sub("a", "\u00e4", x)
 stopifnot(Encoding(x)[1L] == "UTF-8")
 x <- sub("b", "\u00f6", x)
 stopifnot(Encoding(x)[2L] == "UTF-8")
+## [1] has been "unknown" in R <= 3.5.x
+
+
+## formula(model.frame()) -- R-devel report by Bill Dunlap
+d <- data.frame(A = log(1:6), B = LETTERS[1:6], C = 1/(1:6), D = letters[6:1], Y = 1:6)
+m0 <- model.frame(Y ~ A*B, data=d)
+stopifnot(formula(m0) == (Y ~ A*B))
+## has wrongly been  Y ~ A + B, in R <= 3.5.2
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

@@ -1,6 +1,6 @@
 % File src/library/stats/man/formula.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{formula}
@@ -105,7 +105,10 @@ as.formula(object, env = parent.frame())
   component, then a \code{formula} parameter of the call (and evaluates
   its value) and finally a \code{"formula"} attribute.
 
-  There is a \code{formula} method for data frames.  If there is only
+  There is a \code{formula} method for data frames.  When there's
+  \code{"terms"} attribute with a formula, e.g., for a
+  \code{\link{model.frame}()}, that formula is returned.  Otherwise, if
+  there is only
   one column this forms the RHS with an empty LHS.  For more columns,
   the first column is the LHS of the formula and the remaining columns
   separated by \code{+} form the RHS.
