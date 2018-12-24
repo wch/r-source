@@ -2306,8 +2306,8 @@ version is available or the source version is newer, it will install the
 source versions of packages without compiled C/C++/Fortran code and offer
 to do so for those with, if @command{make} is available.
 
-Note that most binary packages including compiled code are tied to a
-particular series (e.g.@: @R{} 3.5.x or 3.4.x) of @R{}.
+Note that most binary packages which include compiled code are tied to a
+particular series (e.g.@: @R{} 3.4.x or 3.5.x) of @R{}.
 
 Installing source packages which do not contain compiled code should
 work with no additional tools. For others you will need the
@@ -2491,12 +2491,7 @@ INSTALL} with option @option{--byte-compile} or by
 @code{install.packages(type = "source", INSTALL_opts =
 "--byte-compile")}.
 
-Not all contributed packages work correctly when byte-compiled.  For
-most packages (especially those which make extensive use of compiled
-code) the speed-up is small.  Unless a package is used frequently the
-time spent in byte-compilation can outweigh the time saved in execution:
-also byte-compilation can add substantially to the installed size of the
-package.
+From @R{} 3.6.0, all packages will be by default byte-compiled.
 
 Byte-compilation can be controlled on a per-package basis by the
 @samp{ByteCompile} field in the @file{DESCRIPTION} file.
@@ -3692,11 +3687,13 @@ completely different compiler will be needed.
 
 Other packages need full Fortran 90 (or later) support.  For source
 files with extension @file{.f90} or @file{.f95}, the compiler defined by
-the macro @code{FC} is used by @command{R CMD INSTALL}.  This is found
-when @R{} is configured and is often the same as @code{F77}: note that
-it is detected by the name of the command without a test that it can
-actually compile Fortran 90 code.  Set the configure variable @code{FC}
-to override this if necessary: variables @code{FCFLAGS},
+the macro @code{FC} is used by @command{R CMD INSTALL}.  Note that most
+compilers (including all those commonly used with @R{}) expect files
+with those extensions to contain @emph{free-form} Fortran 9x.  @code{FC}
+is found when @R{} is configured and is often the same as @code{F77}:
+note that it is detected by the name of the command without a test that
+it can actually compile Fortran 90 code.  Set the configure variable
+@code{FC} to override this if necessary: variables @code{FCFLAGS},
 @code{FCPICFLAGS}, @code{FCLIBS}, @code{SHLIB_FCLD} and
 @code{SHLIB_FCLDFLAGS} might also need to be set.
 
@@ -4425,8 +4422,8 @@ However, if @command{CC} is @command{gcc}, the matching FORTRAN compiler
 @command{gcc}@tie{}4) is used if available.
 
 The search mechanism can be changed using the configure variable
-@code{F77} which specifies the command that runs the FORTRAN 77
-compiler.  If your FORTRAN compiler is in a non-standard location, you
+@code{F77} which specifies the command that runs the fixed-form Fortran
+compiler.  If your compiler is in a non-standard location, you
 @enindex PATH
 should set the environment variable @env{PATH} accordingly before
 running @command{configure}, or use the configure variable @code{F77} to
@@ -4445,8 +4442,8 @@ that FORTRAN @code{integer} is equivalent to a C @code{int} pointer and
 FORTRAN @code{double precision} is equivalent to a C @code{double}
 pointer.  This is checked during the configuration process.
 
-Some of the FORTRAN code makes use of @code{COMPLEX*16} variables, which
-is a Fortran 90 extension.  This is checked for at configure
+Some of the FORTRAN code makes use of @code{DOUBLE COMPLEX}
+@code{COMPLEX*16} variables.  This is checked for at configure
 time@footnote{as well as its equivalence to the @code{Rcomplex}
 structure defined in @file{R_ext/Complex.h}.}, but you may need to avoid
 compiler flags asserting FORTRAN 77 compliance.
@@ -4454,26 +4451,6 @@ compiler flags asserting FORTRAN 77 compliance.
 Compiling the version of LAPACK in the @R{} sources also requires some
 Fortran 90 extensions, but these are not needed if an external LAPACK is
 used.
-
-It might be possible to use @command{f2c}, the FORTRAN-to-C converter
-(@uref{http://www.netlib.org/@/f2c}), via a script.  (An example script
-is given in @file{scripts/f77_f2c}: this can be customized by setting
-@enindex F2C
-@enindex F2CLIBS
-@enindex CC
-the environment variables @env{F2C}, @env{F2CLIBS}, @env{CC} and
-@enindex CPP
-@env{CPP}.)  You will need to ensure that the FORTRAN type
-@code{integer} is translated to the C type @code{int}.  Normally
-@file{f2c.h} contains @samp{typedef long int integer;}, which will work
-on a 32-bit platform but needs to be changed to @samp{typedef int
-integer;} on a 64-bit platform.  If your compiler is not @command{gcc}
-you will need to set
-@enindex FPICFLAGS
-@env{FPICFLAGS} appropriately.  Also, the included LAPACK sources
-contain constructs that @command{f2c} is unlikely to be able to process,
-so you would need to use an external LAPACK library (such as CLAPACK
-from @uref{http://www.netlib.org/@/clapack/}).
 
 @node Compile and load flags, Maintainer mode, Using FORTRAN, Configuration on a Unix-alike
 @section Compile and load flags
@@ -5426,11 +5403,11 @@ and previously Sun Studio.} compilers: there has also been success with
 @command{gcc}/@command{gfortran}.  (Recent Sun machines are AMD Opterons
 or Intel Xeons (@cputype{amd64}) rather than @cputype{x86}, but 32-bit
 @cputype{x86} executables are the default.)  How these compilers
-identify themselves is slightly confusing: commands @command{CC -V} in
-Solaris Studio versions 12.3 and 12.4 report C++ 5.12 and 5.13, and
-Developer Studio 12.5 and 12.6 report C++ 5.14 and 5.15.  We will only
-consider 12.5 (May 2016) and 12.6 (July 2017): instructions for 12.3 can
-be found in versions of this manual for @R{} 3.3.x.
+identify themselves is slightly confusing: commands @command{CC -V} with
+Developer Studio 12.5 and 12.6 report as versions 5.14 and 5.15.  We
+will only consider Developer Studio versions 12.5 (May 2016) and 12.6
+(July 2017): instructions for 12.3 can be found in versions of this
+manual for @R{} 3.3.x.
 
 There have been few reports on Solaris 11, with no known extra issues.
 
@@ -5507,9 +5484,9 @@ The Oracle compilers do not by default conform to the C99 standard
 (appendix F 8.9) on the return values of functions such as @code{log}:
 use @option{-xlibmieee} to ensure this.
 
-A peculiarity of some versions of the Fortran compiler was that when
-asked to link a shared object it did not link against all the Fortran 9x
-runtime libraries, hence
+A peculiarity of some versions of the Fortran compiler has been that
+when asked to link a shared object they did not link against all the
+Fortran 9x runtime libraries, hence
 @example
 FCLIBS="-lfsu /opt/developerstudio12.6/lib/libfui.so.2"
 @end example
@@ -5617,7 +5594,7 @@ It will also be necessary to point @command{pkg-config} at the 64-bit
 directories, e.g.@: by something like
 
 @example
-PKG_CONFIG_PATH=/opt/csw/lib/64/pkgconfig:/usr/lib/64/pkgconfig
+PKG_CONFIG_PATH= /usr/local/lib/amd64/pkgconfig:/opt/csw/lib/64/pkgconfig:/usr/lib/64/pkgconfig
 @end example
 
 @noindent
@@ -5642,7 +5619,7 @@ apply to OS patches: some 2016 patches to Solaris 10 changed its C
 header files in way incompatible@footnote{In particular, header
 @file{cmath} in C++11 mode includes @file{math.h} and
 @file{iso/math_c99.h} and @command{gcc} had `fixed' an earlier version
-of the latter.}  with the modified versions included with OpenCSW's
+of the latter.} with the modified versions included with OpenCSW's
 binary distribution.
 
 The notes here are for @command{gcc} set up to use the Solaris linker:
@@ -5653,8 +5630,8 @@ Solaris systems often come with much older compilers installed under
 default and could be omitted, but it is not easy to find out which.
 (For OpenCSW it is @option{-m32}.)
 
-Compilation for an @cputype{x86} target with @command{gcc}@tie{}4.9.2 or
-@command{gcc}@tie{}5.2.0 needed
+Compilation for an @cputype{x86} target with @command{gcc}@tie{}5.2.0
+needed
 
 @example
 CC="gcc -m32"
@@ -5835,7 +5812,8 @@ environment can be found in the ``R on AIX'' project on R-Forge
 
 There have been few recent reports on FreeBSD: there is a `port' at
 @uref{https://www.freebsd.org/@/ports/@/math.html}.  Recent versions of
-FreeBSD use Clang and the @code{libc++} C++ headers and runtime.
+FreeBSD use Clang and the @code{libc++} C++ headers and runtime, but the
+`port' is configured to use GCC.
 
 Use of ICU for collation and the @command{configure} option
 @option{--with-internal-tzcode} are desirable workarounds.
