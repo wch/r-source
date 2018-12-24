@@ -1,5 +1,5 @@
 
-R version 3.5.2 RC (2018-12-13 r75856) -- "Eggshell Igloo"
+R version 3.5.2 Patched (2018-12-24 r75892) -- "Eggshell Igloo"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -3513,7 +3513,7 @@ c0   -5.14
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.975 0.061 2.046 0 0 
+Time elapsed:  1.953 0.049 2.012 0 0 
 > grDevices::dev.off()
 null device 
           1 

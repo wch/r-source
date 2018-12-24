@@ -1,5 +1,5 @@
 
-R version 3.5.2 RC (2018-12-13 r75856) -- "Eggshell Igloo"
+R version 3.5.2 Patched (2018-12-24 r75892) -- "Eggshell Igloo"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -1007,5 +1007,5 @@ Summary of (a total of 10) warning messages:
 > 
 > ## at the very end
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.317 0.014 0.337 0 0 
+Time elapsed:  0.312 0.009 0.326 0 0 
 > 
