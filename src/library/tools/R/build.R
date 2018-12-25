@@ -627,10 +627,19 @@ inRbuildignore <- function(files, pkgdir) {
                 writeLinesNL(lines, ff)
             }
         }
-    }
+ 	if(dir.exists(sDir <- file.path(pkgname, "inst/include"))) {
+            files <- dir(sDir, pattern = dirPattern,
+                         full.names = TRUE, recursive = TRUE)
+            ## FIXME: This "destroys" all timestamps
+            for (ff in files) {
+                lines <- readLines(ff, warn = FALSE)
+                writeLinesNL(lines, ff)
+            }
+        }
+   }
 
     fix_nonLF_in_source_files <- function(pkgname, Log) {
-        fix_nonLF_in_files(pkgname, dirPattern = "\\.([cfh]|cc|cpp)$", Log)
+        fix_nonLF_in_files(pkgname, dirPattern = "\\.([cfh]|cc|cpp|hpp)$", Log)
     }
 
     fix_nonLF_in_make_files <- function(pkgname, Log) {

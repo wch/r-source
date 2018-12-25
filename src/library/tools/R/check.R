@@ -2601,27 +2601,34 @@ add_dummies <- function(dir, Log)
         ## Check C/C++/Fortran sources/headers for CRLF line endings.
         ## <FIXME>
         ## Does ISO C really require LF line endings?  (Reference?)
-        ## We know that some versions of Solaris cc and f77/f95
-        ## will not accept CRLF or CR line endings.
-        ## (Sun Studio 12 definitely objects to CR in both C and Fortran).
+        ## Solaris compilers version 12.5 still do.
         ## </FIXME>
-        if(dir.exists("src")) {
+        if(dir.exists("src") || dir.exists("inst/include")) {
             checkingLog(Log, "line endings in C/C++/Fortran sources/headers")
             ## pattern is "([cfh]|cc|cpp)"
-            files <- dir("src", pattern = "\\.([cfh]|cc|cpp)$",
+            files <- dir("src", pattern = "\\.([cfh]|cc|cpp|hpp)$",
                          full.names = TRUE, recursive = TRUE)
             ## exclude dirs starting src/win, e.g for tiff
             files <- filtergrep("^src/[Ww]in", files)
+            files2 <- dir("inst/include", pattern = "\\.([cfh]|cc|cpp|hpp)$",
+                          full.names = TRUE, recursive = TRUE)
             bad_files <- character()
-            for(f in files) {
+            no_eol <- character()
+            for(f in c(files, files2)) {
                 contents <- readChar(f, file.size(f), useBytes = TRUE)
                 if (grepl("\r", contents, fixed = TRUE, useBytes = TRUE))
                     bad_files <- c(bad_files, f)
+                else if (!grepl("\n$", contents, useBytes = TRUE))
+                    no_eol <- c(no_eol, f)
             }
+            ## assume having both is rare: should re-check after fixing up CRLF
             if (length(bad_files)) {
                 warningLog(Log, "Found the following sources/headers with CR or CRLF line endings:")
                 printLog0(Log, .format_lines_with_indent(bad_files), "\n")
                 printLog(Log, "Some Unix compilers require LF line endings.\n")
+            } else if (length(no_eol)) {
+                warningLog(Log, "Found the following sources/headers not terminated with a newline:")
+                printLog0(Log, .format_lines_with_indent(no_eol), "\n")
             } else resultLog(Log, "OK")
         }
 

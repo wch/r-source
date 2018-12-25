@@ -351,6 +351,13 @@
 
       \item \code{tools::Rd2latex()} now uses UTF-8 as its default
       output encoding.
+      
+      \item \command{R CMD check} now checks line endings of files with
+      extension \file{.hpp} and those under \file{inst/include}.  The
+      check now includes that the file is terminated by a newline.
+
+      \command{R CMD build} will correct line endings in the
+      newly-checked files.
     }
   }
 
