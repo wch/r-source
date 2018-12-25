@@ -1034,7 +1034,7 @@ user-supplied values will be tested by compiling some C++11/14/17 code.
 these forms were deprecated in 3.4.4 and will be removed in 3.6.0.
 
 It may be@footnote{This is true for earlier versions of @command{g++}
-such as 4.2.1, and also for commonly-used versions of the Solaris
+such as 4.2.1, and also for earlier versions of the Solaris
 compiler @code{CC}.} that there is no suitable flag for C++11 support,
 in which case a different compiler could be selected for @code{CXX11}
 and its corresponding flags.  Likewise, a different compiler can be
@@ -1925,7 +1925,7 @@ These are paths relative to @file{/}, the root of the file system.
 
 The installer will remove any previous version@footnote{More precisely,
 of the Apple package of the same name: this means that installing a package for
-3.3.x does not remove an installation for 3.4.x or 3.5.x.} of
+3.3.x does not remove an installation for 3.4.x or later.} of
 the @R{} framework which it finds installed.  This can be avoided by
 using @command{pkgutil --forget} (see the previous section).  However,
 note that different versions are installed under
@@ -4907,12 +4907,6 @@ FC=/usr/local/flang/bin/flang
 F77=/usr/local/flang/bin/flang
 LDFLAGS="-L/usr/local/flang/lib -L/usr/local/lib64"
 @end example
-@noindent
-and in earlier versions of @R{} it may be necessary to set
-@example
-FCPICFLAGS=-fpic
-FPICFLAGS=-fpic
-@end example
 
 Note that @command{flang} accepts all the flags which @command{clang}
 does (the driver is a modified version of @command{clang}, and
@@ -4926,7 +4920,9 @@ seems this conflicts with using OpenMP in @R{}.  So it may be necessary
 to disable the latter by configuring @R{} using @option{--disable-openmp}.
 
 It is not clear what architectures @command{flang} intends to support:
-our experiments were done on @cputype{x86_64}.
+our experiments were done on @cputype{x86_64}.  At the time of writing
+binary `releases' were available for that platform (called by them
+@cputype{x86}) and @cputype{ppc64le}.
 
 
 @node Intel compilers,  , Clang, Linux
@@ -5440,10 +5436,9 @@ both).
 You will need @acronym{GNU} @code{libiconv} and @code{readline}: the
 Solaris version of @code{iconv} is not sufficiently powerful.
 
-The native @command{make} suffices to build @R{} but a small number of
-packages require @acronym{GNU} @command{make} (some without good reason
-and without declaring it as @samp{SystemRequirements} in the
-@file{DESCRIPTION} file).
+The native @command{make} suffices to build @R{} but a number of
+packages require @acronym{GNU} @command{make} (some without declaring it
+as @samp{SystemRequirements} in the @file{DESCRIPTION} file).
 
 The support for the C99 @code{long double} type on Sparc hardware uses
 quad-precision arithmetic, and this is usually slow because it is done
@@ -5472,7 +5467,11 @@ CFLAGS="-O -xlibmieee"
 F77=f95
 FFLAGS=-O
 CXX=CC
-CXXSTD="-library=stlport4"
+CXXSTD="-compat=g -library=stdcpp,CrunG3"
+CXX11=CC
+CXX11STD="-std=c++11 -library=stdcpp,CrunG3"
+CXX98=CC
+CXX98STD=-library=stlport4
 CXXFLAGS=-O
 FC=$F77
 FCFLAGS=$FFLAGS
@@ -5515,12 +5514,7 @@ The Oracle compilers provide several implementations of the C++98
 standard which select both the set of headers and a C++ runtime library.
 These are selected by the @option{-library} flag, which as it is needed
 for both compiling and linking is best specified as part of the compiler
-or `standard'.  The examples above use @samp{stlport4}: the default (but
-still needed to be specified as it is needed for linking) is
-@samp{Cstd}.  Note though that most external Solaris C++ libraries will
-have been built with @samp{Cstd} and so an @R{} package using such
-libraries also needs to be.  Occasionally the option
-@option{-library=stlport4,Crun} has been needed.
+or `standard'.  The examples above use @samp{stlport4}.
 
 Versions 12.5 and 12.6 also provide an implementation of C++11, but it
 is largely separate from the older C++98 ones (and their objects cannot
@@ -5532,10 +5526,11 @@ CXX11STD="-std=c++11 -library=stdcpp,CrunG3"
 @end example
 
 @noindent
-Both versions also accept @code{-std=c++14}, but for 12.5 the C++14 is
-rather incomplete.  It is inadvisable to attempt to mix C++11 and C++98
-compilation (although a package has done so): there is a more compatible
-C++98/03 implementation which can be selected by
+Both versions also accept @code{-std=c++14}, but for 12.5 the C++14
+support is rather incomplete and does not pass @R{}'s conformance tests.
+It is inadvisable to attempt to mix C++11 and C++98 compilation
+(although a package has done so): there is a more compatible C++98/03
+implementation which can be selected (as above) by
 
 @example
 CXX=CC 
