@@ -4999,8 +4999,17 @@ so it is strongly recommended to check in a UTF-8 locale.
 @subsection Portable C and C++ code
 
 Writing portable C and C++ code is mainly a matter of observing the
-standards (C99, C++98 or where declared C++11/14/17) and testing that
+standards (C99, C++11 or where declared C++98/14/17) and testing that
 extensions (such as POSIX functions) are supported.
+
+@strong{C++ standards}: As from version 3.6.0, @R{} defaults to C++11
+where available@footnote{which it is on all known platforms}.  However,
+in earlier versions the default standard was that of the compiler used,
+often C++98 or C++14.  Thus for portability it is desirable to specify
+the C++ standard@footnote{For C++98 this is only possible since @R{}
+3.5.0, for C++11 since @R{} 3.1.0.} assumed for a package.  Because most
+packages will be made available for earlier versions on @R{}, comments
+below about C++98 have been retained.
 
 Note that the `TR1' C++ extensions are not part of any of these
 standards and the @code{<tr1/@var{name}>} headers are not supplied by some of
@@ -5058,7 +5067,7 @@ with versions for types @code{float}, @code{double}, @code{long double}
 and possibly more.  This means that calling @code{sqrt} on an integer
 type may have `overloading ambiguity' as it could be promoted to any of
 the supported floating-point types: this is commonly seen on Solaris,
-but for @code{pow} also seen on macOS.  (C++98 has an overload for
+but for @code{pow} also seen on macOS.  (C++ has an overload for
 @code{std::pow(<double>, <int>)}, but this may not be visible from the
 main namespace.  C++11 requires additional overloads for integer types,
 and ambiguous overloads are more common in C++11 (and later) compiler
@@ -5078,7 +5087,7 @@ should be the constant @code{1e-3}.
 Function @code{fabs} is defined only for floating-point types, except in
 C++11 which has overloads for @code{std::fabs} in @file{<cmath>} for
 integer types.  Function @code{abs} is defined in C99's
-@file{<stdlib.h>} for @code{int} and in C++98's @file{<cstdlib>} for
+@file{<stdlib.h>} for @code{int} and in C++'s @file{<cstdlib>} for
 integer types, overloaded in @file{<cmath>} for floating-point types.
 C++11 has additional overloads for @code{std::abs} in @file{<cmath>} for
 integer types.  The effect of calling @code{abs} with a floating-point
@@ -5089,7 +5098,7 @@ Functions/macros such as @code{isnan}, @code{isinf} and @code{isfinite}
 are not required by C++98: where compilers support them they may be only
 in the @code{std} namespace or only in the main namespace.  There is no
 way to make use of these functions which works with all C++ compilers
-currently in use on @R{} platforms: use @R{}'s versions such as
+which have been used on @R{} platforms: use @R{}'s versions such as
 @code{ISNAN} and @code{R_FINITE} instead.
 
 If you must use them in C++11, beware that some
@@ -5110,11 +5119,12 @@ error.
 
 @item
 The GNU C/C++ compilers support a large number of non-portable
-extensions.  For example, @code{INFINITY} (which is in C99 but not
-C++98), for which @R{} provides the portable @code{R_PosInf} (and
-@code{R_NegInf} for @code{-INFINITY}).  And @code{NAN} is just one NaN
-value: in @R{} code @code{NA_REAL} is usually what is intended, but
-@code{R_NaN} is also available.
+extensions.  For example, @code{INFINITY} (which is a @emph{float} value
+in C99 and C++11 but not C++98), for which @R{} provides the portable
+double value @code{R_PosInf} (and @code{R_NegInf} for @code{-INFINITY}).
+And @code{NAN}@footnote{also part of C++11 and later.} is just one NaN
+@emph{float} value: in for use with @R{} @code{NA_REAL} is usually what
+is intended, but @code{R_NaN} is also available.
 
 Some (but not all) extensions are listed at
 @uref{https://gcc.gnu.org/@/onlinedocs/@/gcc/@/C-Extensions.html} and
@@ -5151,8 +5161,7 @@ first used to be a sufficient workaround but for some 2016 compilers
 only one could be included.
 
 @item
-Variable-length arrays are C99, not supported by C++98 nor by the C++
-compilers in use with @R{} on some platforms.
+Variable-length arrays are C99, not supported by C++98.
 
 @item
 Be careful to include the headers which define the functions you use.
@@ -13496,9 +13505,6 @@ provide a @code{round} function but C++98 need not.)
 @deftypefun double ftrunc (double @var{x})
 Returns the value of @var{x} truncated (to an integer value) towards
 zero.
-
-(Note that C99/C++11 provide a @code{round} function but C++98 need
-not.)
 @end deftypefun
 
 @node Mathematical constants,  , Numerical Utilities, Numerical analysis subroutines
