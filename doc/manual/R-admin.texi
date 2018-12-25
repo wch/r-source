@@ -1030,7 +1030,7 @@ user-supplied values will be tested by compiling some C++11/14/17 code.
 these forms were deprecated in 3.4.4 and removed in 3.6.0.
 
 It may be@footnote{This is true for earlier versions of @command{g++}
-such as 4.2.1, and also for commonly-used versions of the Solaris
+such as 4.2.1, and also for earlier versions of the Solaris
 compiler @code{CC}.} that there is no suitable flag for C++11 support,
 in which case a different compiler could be selected for @code{CXX11}
 and its corresponding flags.  Likewise, a different compiler can be
@@ -5404,7 +5404,8 @@ FC=f95
 FFLAGS=-O
 CXX=CC
 CXXSTD="-std=c++11 -library=stdcpp,CrunG3"
-CXX11STD=$CXXSTD
+CXX98=CC
+CXX98STD=-library=stlport4
 CXXFLAGS=-O
 R_LD_LIBRARY_PATH="/opt/developerstudio12.6/lib:/usr/local/lib:/opt/csw/lib"
 @end example
