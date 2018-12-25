@@ -584,6 +584,18 @@
   }
 }
 
+\section{\Rlogo CHANGES IN R 3.5.2 patched}{
+
+  \subsection{PACKAGE INSTALLATION}{
+    \itemize{
+      \item New macro \samp{F_VISIBILITY} as an alternative to
+      \samp{F77_VISIBILITY}.  This will become the preferred form in
+      \R 3.6.0.
+    }
+  }
+  
+}
+
 \section{\Rlogo CHANGES IN R 3.5.2}{
 
   \subsection{PACKAGE INSTALLATION}{
