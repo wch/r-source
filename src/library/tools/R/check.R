@@ -2621,15 +2621,17 @@ add_dummies <- function(dir, Log)
                 else if (!grepl("\n$", contents, useBytes = TRUE))
                     no_eol <- c(no_eol, f)
             }
-            ## assume having both is rare: should re-check after fixing up CRLF
+            if (length(bad_files) || length(no_eol)) noteLog(Log, "")
+            else resultLog(Log, "OK")
             if (length(bad_files)) {
-                warningLog(Log, "Found the following sources/headers with CR or CRLF line endings:")
+                printLog(Log, "Found the following sources/headers with CR or CRLF line endings:\n")
                 printLog0(Log, .format_lines_with_indent(bad_files), "\n")
                 printLog(Log, "Some Unix compilers require LF line endings.\n")
             } else if (length(no_eol)) {
-                warningLog(Log, "Found the following sources/headers not terminated with a newline:")
+                printLog(Log, "Found the following sources/headers not terminated with a newline:\n")
                 printLog0(Log, .format_lines_with_indent(no_eol), "\n")
-            } else resultLog(Log, "OK")
+                printLog(Log, "Some compilers warn on such files.\n")
+            }
         }
 
         ## Check src/Make* for LF line endings, as Sun make does not accept CRLF
