@@ -5123,7 +5123,7 @@ extensions.  For example, @code{INFINITY} (which is a @emph{float} value
 in C99 and C++11 but not C++98), for which @R{} provides the portable
 double value @code{R_PosInf} (and @code{R_NegInf} for @code{-INFINITY}).
 And @code{NAN}@footnote{also part of C++11 and later.} is just one NaN
-@emph{float} value: in for use with @R{} @code{NA_REAL} is usually what
+@emph{float} value: for use with @R{}, @code{NA_REAL} is usually what
 is intended, but @code{R_NaN} is also available.
 
 Some (but not all) extensions are listed at
