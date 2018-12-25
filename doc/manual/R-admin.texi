@@ -5007,9 +5007,10 @@ paragraph.
 There are installers@footnote{Some of these are unsigned packages: to
 install them you may need to right-click and select @code{Open with ->
 Installer}.} for Fortran compilers for El Capitan and Sierra at
-@uref{http://coudert.name/@/software/@/gfortran-6.1-ElCapitan.dmg} and
-@uref{http://coudert.name/@/software/@/gfortran-6.3-Sierra.dmg}.  (An
-Apple package for 6.1 is also available at
+@uref{https://github.com/fxcoudert/gfortran-for-macOS/releases/download/6.1/gfortran-6.1-ElCapitan.dmg}
+and
+@uref{https://github.com/fxcoudert/gfortran-for-macOS/releases/download/6.3/gfortran-6.3-Sierra.dmg}.
+(An Apple package for 6.1 is also available at
 @uref{https://cran.r-project.org/@/bin/@/macosx/@/tools/@/gfortran-6.1.pkg}.)
 One way to use these builds with a binary distribution of @R{} is to
 have a @file{~/.R/Makevars} file similar to (El Capitan)
