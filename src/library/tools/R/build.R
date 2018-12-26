@@ -618,23 +618,14 @@ inRbuildignore <- function(files, pkgdir) {
     ## also fixes up missing final NL
     fix_nonLF_in_files <- function(pkgname, dirPattern, Log)
     {
-	if(dir.exists(sDir <- file.path(pkgname, "src"))) {
-            files <- dir(sDir, pattern = dirPattern,
-                         full.names = TRUE, recursive = TRUE)
-            ## FIXME: This "destroys" all timestamps
-            for (ff in files) {
-                lines <- readLines(ff, warn = FALSE)
-                writeLinesNL(lines, ff)
-            }
-        }
- 	if(dir.exists(sDir <- file.path(pkgname, "inst/include"))) {
-            files <- dir(sDir, pattern = dirPattern,
-                         full.names = TRUE, recursive = TRUE)
-            ## FIXME: This "destroys" all timestamps
-            for (ff in files) {
-                lines <- readLines(ff, warn = FALSE)
-                writeLinesNL(lines, ff)
-            }
+        sDir <- file.path(pkgname, c("src", "inst/include"))
+        files <- dir(sDir, pattern = dirPattern,
+                     full.names = TRUE, recursive = TRUE)
+        for (ff in files) {
+            old_time <- file.mtime(ff)
+            lines <- readLines(ff, warn = FALSE)
+            writeLinesNL(lines, ff)
+            Sys.setFileTime(ff, old_time)
         }
    }
 
