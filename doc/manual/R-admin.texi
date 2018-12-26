@@ -4444,7 +4444,7 @@ pointer.  This is checked during the configuration process.
 
 Some of the FORTRAN code makes use of @code{DOUBLE COMPLEX}
 @code{COMPLEX*16} variables.  This is checked for at configure
-time@footnote{as well as its equivalence to the @code{Rcomplex}
+time@footnote{as well as its equivalence to the @code{Rcomplex} C
 structure defined in @file{R_ext/Complex.h}.}, but you may need to avoid
 compiler flags asserting FORTRAN 77 compliance.
 
@@ -4498,7 +4498,7 @@ special flags for compiling Fortran code to be turned into a shared object
 @item CXXPICFLAGS
 special flags for compiling C++ code to be turned into a shared object
 @item FCPICFLAGS
-special flags for compiling Fortran 9x code to be turned into a shared object
+special flags for compiling free-form Fortran 9x code to be turned into a shared object
 @item DEFS
 defines to be used when compiling C code in @R{} itself
 @end table
@@ -5067,10 +5067,12 @@ paragraph.
 
 There are installers@footnote{Some of these are unsigned packages: to
 install them you may need to right-click and select @code{Open with ->
-Installer}.} for Fortran compilers for El Capitan and Sierra at
-@uref{http://coudert.name/@/software/@/gfortran-6.1-ElCapitan.dmg} and
-@uref{http://coudert.name/@/software/@/gfortran-6.3-Sierra.dmg}.  (An
-Apple package for 6.1 is also available at
+Installer}.} for Fortran compilers for El Capitan, Sierra and Mojave at
+@uref{https://github.com/@/fxcoudert/@/gfortran-for-macOS/@/releases/@/download/@/6.1/@/gfortran-6.1-ElCapitan.dmg},
+@uref{https://github.com/@/fxcoudert/@/gfortran-for-macOS/@/releases/@/download/@/6.3/@/gfortran-6.3-Sierra.dmg}
+and
+@uref{https://github.com/@/fxcoudert/@/gfortran-for-macOS/@/releases/@/download/@/8.2/gfortran-8.2-Mojave.dmg}.
+(An Apple package for 6.1 is also available at
 @uref{https://cran.r-project.org/@/bin/@/macosx/@/tools/@/gfortran-6.1.pkg}.)
 One way to use these builds with a binary distribution of @R{} is to
 have a @file{~/.R/Makevars} file similar to (El Capitan)
@@ -5080,11 +5082,19 @@ FC = $F77
 FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin15/6.1.0
   -L/usr/local/gfortran/lib -lgfortran -lquadmath -lm
 @end example
-or (Sierra or later)
+@noindent
+or (Sierra or High Sierra)
 @example
 F77 = /usr/local/gfortran/bin/gfortran
 FC = $F77
 FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin16/6.3.0
+  -L/usr/local/gfortran/lib -lgfortran -lquadmath -lm
+@end example
+or (Mojave)
+@example
+F77 = /usr/local/gfortran/bin/gfortran
+FC = $F77
+FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin18/8.2.0
   -L/usr/local/gfortran/lib -lgfortran -lquadmath -lm
 @end example
 @noindent

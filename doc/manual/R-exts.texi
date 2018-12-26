@@ -4998,6 +4998,14 @@ Writing portable C and C++ code is mainly a matter of observing the
 standards (C99, C++98 or where declared C++11/14/17) and testing that
 extensions (such as POSIX functions) are supported.
 
+@strong{C++ standards}: In current and earlier versions the default C++
+standard is that of the compiler used, often C++98 or C++14. As from
+@R{} 3.6.0 it will become C++11.  Thus for portability it is desirable
+to specify the C++ standard@footnote{For C++98 this is only possible
+since @R{} 3.5.0, for C++11 since @R{} 3.1.0.} assumed for a package.
+Because most packages will be made available for earlier versions on
+@R{}, comments below about C++98 have been retained.
+
 Note that the `TR1' C++ extensions are not part of any of these
 standards and the @code{<tr1/@var{name}>} headers are not supplied by some of
 the compilers used for @R{}, including on macOS.  (Use the C++11
@@ -5074,7 +5082,7 @@ should be the constant @code{1e-3}.
 Function @code{fabs} is defined only for floating-point types, except in
 C++11 which has overloads for @code{std::fabs} in @file{<cmath>} for
 integer types.  Function @code{abs} is defined in C99's
-@file{<stdlib.h>} for @code{int} and in C++98's @file{<cstdlib>} for
+@file{<stdlib.h>} for @code{int} and in C++'s @file{<cstdlib>} for
 integer types, overloaded in @file{<cmath>} for floating-point types.
 C++11 has additional overloads for @code{std::abs} in @file{<cmath>} for
 integer types.  The effect of calling @code{abs} with a floating-point
@@ -5085,7 +5093,7 @@ Functions/macros such as @code{isnan}, @code{isinf} and @code{isfinite}
 are not required by C++98: where compilers support them they may be only
 in the @code{std} namespace or only in the main namespace.  There is no
 way to make use of these functions which works with all C++ compilers
-currently in use on @R{} platforms: use @R{}'s versions such as
+which have been used on @R{} platforms: use @R{}'s versions such as
 @code{ISNAN} and @code{R_FINITE} instead.
 
 If you must use them in C++11, beware that some
@@ -5108,10 +5116,10 @@ error.
 The GNU C/C++ compilers support a large number of non-portable
 extensions.  For example, @code{INFINITY} (which is a @emph{float} value
 in C99 and C++11 but not C++98), for which @R{} provides the portable
-@code{R_PosInf} (and @code{R_NegInf} for @code{-INFINITY}).  And
-@code{NAN}@footnote{also part of C++11 and later.} is just one NaN
-@emph{float} value: in @R{} code @code{NA_REAL} is usually what is
-intended, but @code{R_NaN} is also available.
+double value @code{R_PosInf} (and @code{R_NegInf} for @code{-INFINITY}).
+And @code{NAN}@footnote{also part of C++11 and later.} is just one NaN
+@emph{float} value: for use with @R{}, @code{NA_REAL} is usually what
+is intended, but @code{R_NaN} is also available.
 
 Some (but not all) extensions are listed at
 @uref{https://gcc.gnu.org/@/onlinedocs/@/gcc/@/C-Extensions.html} and
@@ -7337,7 +7345,7 @@ People have also used @LaTeX{} mode in a editor, as @file{.Rd} files are
 rather similar to @LaTeX{} files.
 
 Some @R{} front-ends provide editing support for  @file{.Rd} files, for
-example RStudio (@uref{https://rstudio.org/}).
+example RStudio (@uref{https://www.rstudio.com/}).
 
 @node Tidying and profiling R code, Debugging, Writing R documentation files, Top
 @chapter Tidying and profiling R code

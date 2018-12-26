@@ -617,19 +617,19 @@ inRbuildignore <- function(files, pkgdir) {
     ## also fixes up missing final NL
     fix_nonLF_in_files <- function(pkgname, dirPattern, Log)
     {
-	if(dir.exists(sDir <- file.path(pkgname, "src"))) {
-            files <- dir(sDir, pattern = dirPattern,
-                         full.names = TRUE, recursive = TRUE)
-            ## FIXME: This "destroys" all timestamps
-            for (ff in files) {
-                lines <- readLines(ff, warn = FALSE)
-                writeLinesNL(lines, ff)
-            }
+        sDir <- file.path(pkgname, c("src", "inst/include"))
+        files <- dir(sDir, pattern = dirPattern,
+                     full.names = TRUE, recursive = TRUE)
+        for (ff in files) {
+            old_time <- file.mtime(ff)
+            lines <- readLines(ff, warn = FALSE)
+            writeLinesNL(lines, ff)
+            Sys.setFileTime(ff, old_time)
         }
-    }
+   }
 
     fix_nonLF_in_source_files <- function(pkgname, Log) {
-        fix_nonLF_in_files(pkgname, dirPattern = "\\.([cfh]|cc|cpp)$", Log)
+        fix_nonLF_in_files(pkgname, dirPattern = "\\.([cfh]|cc|cpp|hpp)$", Log)
     }
 
     fix_nonLF_in_make_files <- function(pkgname, Log) {
@@ -858,7 +858,7 @@ inRbuildignore <- function(files, pkgdir) {
                 R.version[["major"]], ".",  R.version[["minor"]],
                 " (r", R.version[["svn rev"]], ")\n", sep = "")
             cat("",
-                "Copyright (C) 1997-2016 The R Core Team.",
+                "Copyright (C) 1997-2018 The R Core Team.",
                 "This is free software; see the GNU General Public License version 2",
                 "or later for copying conditions.  There is NO warranty.",
                 sep = "\n")
