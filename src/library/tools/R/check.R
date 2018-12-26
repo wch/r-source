@@ -2618,7 +2618,8 @@ add_dummies <- function(dir, Log)
                 contents <- readChar(f, file.size(f), useBytes = TRUE)
                 if (grepl("\r", contents, fixed = TRUE, useBytes = TRUE))
                     bad_files <- c(bad_files, f)
-                else if (!grepl("\n$", contents, useBytes = TRUE))
+                else if (nzchar(contents) &&  ## allow empty dummy files
+                         !grepl("\n$", contents, useBytes = TRUE))
                     no_eol <- c(no_eol, f)
             }
             if (length(bad_files) || length(no_eol)) noteLog(Log, "")
