@@ -249,7 +249,8 @@
 
       \item \code{download.file()} and \code{url()} get new argument
       \code{headers} for custom HTTP headers, e.g., allowing to perform
-      basic http authentication, thanks to a patch donated by Gábor Csárdi.
+      basic http authentication, thanks to a patch contributed by Gábor
+      Csárdi.
     }
   }
 
@@ -291,7 +292,9 @@
       old versions of Linux has been removed.
 
       \item \command{configure --with-blas} (without specifying a value)
-      includes OpenBLAS in its search (before ATLAS and a generic BLAS).
+      includes OpenBLAS in its search (before ATLAS and a generic
+      BLAS).  This follows recent versions of the \samp{ax_blas}
+      autoconf macro.
 
       \item The \command{configure} macro \samp{MAKEINFO} has been
       updated to \samp{TEXI2ANY}.
@@ -312,24 +315,25 @@
       to replace features marked \sQuote{obsolescent} in Fortran 95
       which \command{gfortran} 8.x has started to warn about.
 
-      \item Packages with code in \file{src} with extensions \file{.f90}
-      or \file{.f95} are now linked using the C or C++ compiler rather
-      than the Fortran 9x compiler.  This is consistent with fixed-form
-      Fortran code and allows mixing of C++ and free-form Fortran on
-      most platforms.
+      \item Packages containing files in \file{src} with extensions
+      \file{.f90} or \file{.f95} are now linked using the C or C++
+      compiler rather than the Fortran 9x compiler.  This is consistent
+      with fixed-form Fortran code and allows mixing of C++ and
+      free-form Fortran on most platforms.
 
-      Consequentially, packages including free-form Fortran 9x code
-      which uses OpenMP should include \samp{SHLIB_OPENMP_CFLAGS} (or
-      the \samp{CXXFLAGS} version if they also include C++ code) in
+      Consequentially, a package which includes free-form Fortran 9x
+      code which uses OpenMP should include \samp{SHLIB_OPENMP_CFLAGS}
+      (or the \samp{CXXFLAGS} version if they also include C++ code) in
       \samp{PKG_LIBS} rather than \samp{SHLIB_OPENMP_FCFLAGS} ---
-      fortunately on current platforms they are the same flag.
+      fortunately on almost all current platforms they are the same
+      flag.
 
       \item Macro \samp{PKG_FFLAGS} will be used for the compilation of
       both fixed-form and free-form Fortran code unless
       \samp{PKG_FCFLAGS} is also set (in \file{src/Makevars} or
       \file{src/Makevars.win}).
 
-      \item The new make macro \samp{F_VISIBILITY} is now preferred for
+      \item The make macro \samp{F_VISIBILITY} is now preferred for
       both fixed-form and free-form Fortran.
     }
   }
@@ -357,8 +361,7 @@
       check now includes that a non-empty file is terminated with a
       newline.
 
-      \command{R CMD build} will correct line endings in the
-      newly-checked files.
+      \command{R CMD build} will correct line endings in such files.
     }
   }
 
