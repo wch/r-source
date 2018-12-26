@@ -2600,8 +2600,9 @@ add_dummies <- function(dir, Log)
 
         ## Check C/C++/Fortran sources/headers for CRLF line endings.
         ## <FIXME>
-        ## Does ISO C really require LF line endings?  (Reference?)
-        ## Solaris compilers version 12.5 still do.
+        ## Does ISO C really require LF line endings?
+        ## (ISO C does not comment on OSes ....)
+        ## Solaris compilers still do, with a warning but no longer an error.
         ## </FIXME>
         if(dir.exists("src") || dir.exists("inst/include")) {
             checkingLog(Log, "line endings in C/C++/Fortran sources/headers")

@@ -354,7 +354,8 @@
       
       \item \command{R CMD check} now checks line endings of files with
       extension \file{.hpp} and those under \file{inst/include}.  The
-      check now includes that the file is terminated by a newline.
+      check now includes that a non-empty file is terminated with a
+      newline.
 
       \command{R CMD build} will correct line endings in the
       newly-checked files.
