@@ -966,7 +966,7 @@ inRbuildignore <- function(files, pkgdir) {
         Tdir <- tempfile("Rbuild")
         dir.create(Tdir, mode = "0755")
         if (WINDOWS) {
-            ## This preserves read-only for files, and (as of r71464) dates
+            ## This preserves read-only for files, and dates
             if (!file.copy(pkgname, Tdir, recursive = TRUE, copy.date = TRUE)) {
                 errorLog(Log, "copying to build directory failed")
                 do_exit(1L)
