@@ -362,6 +362,10 @@
       newline.
 
       \command{R CMD build} will correct line endings in such files.
+
+      \item \command{R CMD check} now tries re-building all vignettes
+      rather than stopping at the first error.  Whilst doing so it adds
+      \sQuote{bookmarks} to the log.
     }
   }
 

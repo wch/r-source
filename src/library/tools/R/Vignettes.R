@@ -380,7 +380,7 @@ function(package, dir, subdirs = NULL, lib.loc = NULL, output = FALSE,
     allFiles <- list.files(docdir, all.files = FALSE, full.names = TRUE)
     exclude <- inRbuildignore(sub(paste0(dir, "/"), "", allFiles, fixed = TRUE), dir)
     allFiles <- allFiles[!exclude]
-    
+
     matchedPattern <- rep.int(FALSE, length(allFiles))
     msg <- character()
     if (length(allFiles) > 0L) {
@@ -506,45 +506,57 @@ buildVignettes <-
     outputs <- NULL
     sourceList <- list()
     startdir <- getwd()
+    OK <- TRUE
     for(i in seq_along(vigns$docs)) {
+        thisOK <- TRUE
         file <- basename(vigns$docs[i])
         name <- vigns$names[i]
-    	engine <- vignetteEngine(vigns$engines[i])
-        enc <- vigns$encodings[i]
-        if (enc == "non-ASCII")
-            stop(gettextf("Vignette '%s' is non-ASCII but has no declared encoding",
-                 file), domain = NA, call. = FALSE)
+        engine <- vignetteEngine(vigns$engines[i])
 
-        output <- tryCatch({
+        message(gettextf("--- re-building %s using %s",
+                         sQuote(file), engine$name))
+        enc <- vigns$encodings[i]
+        if (enc == "non-ASCII") {
+            OK <- FALSE
+            message(gettextf("Error: Vignette '%s' is non-ASCII but has no declared encoding",
+                             file))
+            next
+        }
+        tryCatch({
             ## FIXME: run this in a separate process
             engine$weave(file, quiet = quiet, encoding = enc)
             setwd(startdir)
-            find_vignette_product(name, by = "weave", engine = engine)
+            output <- find_vignette_product(name, by = "weave", engine = engine)
+            if(!have.makefile && vignette_is_tex(output)) {
+                texi2pdf(file = output, clean = FALSE, quiet = quiet)
+                output <- find_vignette_product(name, by = "texi2pdf",
+                                                engine = engine)
+            }
+            outputs <- c(outputs, output)
         }, error = function(e) {
-            stop(gettextf("processing vignette '%s' failed with diagnostics:\n%s",
-                 file, conditionMessage(e)), domain = NA, call. = FALSE)
+            thisOK <<- OK <<- FALSE
+            message(gettextf("Error: processing vignette '%s' failed with diagnostics:\n%s",
+                             file, conditionMessage(e)))
         })
 
-        ## This can fail if run in a directory whose path contains spaces.
-        if(!have.makefile && vignette_is_tex(output)) {
-            texi2pdf(file = output, clean = FALSE, quiet = quiet)
-            output <- find_vignette_product(name, by = "texi2pdf", engine = engine)
-        }
-        outputs <- c(outputs, output)
-
-        if (tangle) {  # This is set for all engines as of 3.0.2
+        if (tangle) {
             output <- tryCatch({
                 ## FIXME: run this in a separate process
                 engine$tangle(file, quiet = quiet, encoding = enc)
                 setwd(startdir)
                 find_vignette_product(name, by = "tangle", main = FALSE, engine = engine)
             }, error = function(e) {
-                stop(gettextf("tangling vignette '%s' failed with diagnostics:\n%s",
-                     file, conditionMessage(e)), domain = NA, call. = FALSE)
+                thisOK <<- OK <<- FALSE
+                message(gettextf("Error: tangling vignette '%s' failed with diagnostics:\n%s",
+                     file, conditionMessage(e)))
             })
             sourceList[[file]] <- output
         }
-    }
+        if (thisOK)
+            message(gettextf("--- finished re-building %s\n", sQuote(file)))
+        else
+            message(gettextf("--- failed re-building %s\n", sQuote(file)))
+    } # end loop over vignettes
 
     if(have.makefile) {
         if (WINDOWS) {
@@ -579,16 +591,17 @@ buildVignettes <-
         }
     }
 
-    # Assert
-    stopifnot(length(outputs) == length(vigns$docs))
+    if(file.exists(".build.timestamp")) file.remove(".build.timestamp")
+    ## Might have been in origfiles ...
+
+    ## Assert
+    if(OK) stopifnot(length(outputs) == length(vigns$docs))
+    else stop("Vignette re-building failed", call. = FALSE)
 
     vigns$outputs <- outputs
     vigns$sources <- sourceList
 
-    if(file.exists(".build.timestamp")) file.remove(".build.timestamp")
-    ## Might have been in origfiles ...
-
-    invisible(vigns)
+    invisible(vigns) ## not documented on the help page.
 }
 
 ### * buildVignette
