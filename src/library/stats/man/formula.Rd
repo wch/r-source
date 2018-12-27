@@ -9,6 +9,7 @@
 \alias{formula.formula}
 \alias{formula.terms}
 \alias{formula.data.frame}
+\alias{DF2formula}
 \alias{as.formula}
 \alias{print.formula}
 \alias{[.formula}
@@ -16,6 +17,7 @@
 \title{Model Formulae}
 \usage{
 formula(x, \dots)
+DF2formula(x, \dots)
 as.formula(object, env = parent.frame())
 
 \method{print}{formula}(x, showEnv = !identical(e, .GlobalEnv), \dots)
@@ -29,7 +31,7 @@ as.formula(object, env = parent.frame())
   \code{"formula"}.
 }
 \arguments{
-  \item{x, object}{\R object.}
+  \item{x, object}{\R object, for \code{DF2formula()} a \code{\link{data.frame}}.}
   \item{\dots}{further arguments passed to or from other methods.}
   \item{env}{the environment to associate with the result, if not
     already a formula.}
@@ -107,7 +109,10 @@ as.formula(object, env = parent.frame())
 
   There is a \code{formula} method for data frames.  When there's
   \code{"terms"} attribute with a formula, e.g., for a
-  \code{\link{model.frame}()}, that formula is returned.  Otherwise, if
+  \code{\link{model.frame}()}, that formula is returned.  If you'd like the
+  previous (\R \eqn{\le}{<=} 3.5.x) behavior, use the auxiliary
+  \code{DF2formula()} which does not consider a \code{"terms"} attribute.
+  Otherwise, if
   there is only
   one column this forms the RHS with an empty LHS.  For more columns,
   the first column is the LHS of the formula and the remaining columns

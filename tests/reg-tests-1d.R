@@ -2437,8 +2437,11 @@ stopifnot(Encoding(x)[2L] == "UTF-8")
 ## formula(model.frame()) -- R-devel report by Bill Dunlap
 d <- data.frame(A = log(1:6), B = LETTERS[1:6], C = 1/(1:6), D = letters[6:1], Y = 1:6)
 m0 <- model.frame(Y ~ A*B, data=d)
-stopifnot(formula(m0) == (Y ~ A*B))
-## has wrongly been  Y ~ A + B, in R <= 3.5.2
+stopifnot(exprs = {
+    DF2formula(m0) == (Y ~ A+B) # the previous formula(.) behavior
+       formula(m0) == (Y ~ A*B)
+})
+## formula(.)  gave  Y ~ A + B  in R <= 3.5.x
 
 
 

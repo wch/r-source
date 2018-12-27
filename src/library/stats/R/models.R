@@ -44,10 +44,7 @@ formula.terms <- function(x, ...) {
     x
 }
 
-formula.data.frame <- function (x, ...)
-{
-    if(length(tx <- attr(x, "terms")) && length(ff <- formula.terms(tx)))
-	return(ff)
+DF2formula <- function(x) {
     nm <- unlist(lapply(names(x), as.name))
     if (length(nm) > 1L) {
         rhs <- nm[-1L]
@@ -61,6 +58,13 @@ formula.data.frame <- function (x, ...)
     ff <- eval(ff)
     environment(ff) <- parent.frame()
     ff
+}
+
+formula.data.frame <- function (x, ...)
+{
+    if(length(tx <- attr(x, "terms")) && length(ff <- formula.terms(tx)))
+	ff
+    else DF2formula(x)
 }
 
 formula.character <- function(x, env = parent.frame(), ...)

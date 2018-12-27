@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2018-12-17 r75856) -- "Unsuffered Consequences"
+R Under development (unstable) (2018-12-25 r75903) -- "Unsuffered Consequences"
 Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -7401,7 +7401,7 @@ Fligner-Killeen:med chi-squared = 14.483, df = 5, p-value = 0.01282
 > ### Name: formula
 > ### Title: Model Formulae
 > ### Aliases: formula formula.default formula.formula formula.terms
-> ###   formula.data.frame as.formula print.formula [.formula
+> ###   formula.data.frame DF2formula as.formula print.formula [.formula
 > ### Keywords: models
 > 
 > ### ** Examples
