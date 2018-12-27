@@ -4416,7 +4416,7 @@ function(pkgDir)
             calls <- rev(calls)[-c(1L, 2L)]
             tb <- lapply(calls, deparse)
             message(msg, conditionMessage(e), "\nCall sequence:\n",
-                    paste(c(head(.eval_with_capture(traceback(tb))$output, 5),
+                    paste(c(utils::head(.eval_with_capture(traceback(tb))$output, 5),
 			    "  ..."),
                           collapse = "\n"),
                     "\n")
