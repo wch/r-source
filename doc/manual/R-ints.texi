@@ -4254,6 +4254,13 @@ Optionally check if either argument of the binary operators @code{&&} and
 _R_CHECK_LENGTH_1_CONDITION_.
 Default: unset (nothing is reported)
 
+@item _R_CHECK_BUILD_VIGNETTES_SEPARATELY_
+By default re-building the vignette outputs is done in a single @R{}
+session: if this is set to a true value, the output for each vignette
+is created in a separate session.  The default is more efficient but
+allows accidental reliance of one vignette on another (for example, in
+the loading of packages).
+Default: false
 
 @end vtable
 

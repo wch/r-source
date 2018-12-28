@@ -4092,8 +4092,20 @@ add_dummies <- function(dir, Log)
                 Sys.setenv(MAKEFLAGS="")
                 ## we could use clean = FALSE, but that would not be
                 ## testing what R CMD build uses.
-                Rcmd <- paste0(opWarn_string, "\nlibrary(tools)\nbuildVignettes(dir = '",
-                               file.path(pkgoutdir, "vign_test", pkgname0), "')")
+                Rcmd <-
+                    if (!config_val_to_logical(Sys.getenv("_R_CHECK_BUILD_VIGNETTES_SEPARATELY_", "FALSE")))
+                        sprintf("%s\ntools::buildVignettes(dir = '%s')",
+                                opWarn_string,
+                                file.path(pkgoutdir, "vign_test", pkgname0))
+                    else {
+                        ## serialize elibs to avoid quotation hell
+                        tf <- tempfile(fileext = ".rds")
+                        saveRDS(c(jitstr, elibs), tf)
+                        sprintf("%s\ntools:::buildVignettes2(dir = '%s', ser_elibs = '%s')",
+                                opWarn_string,
+                                file.path(pkgoutdir, "vign_test", pkgname0),
+                                tf)
+                    }
                 tlim <- get_timeout(Sys.getenv("_R_CHECK_BUILD_VIGNETTES_ELAPSED_TIMEOUT_",
                                     Sys.getenv("_R_CHECK_ELAPSED_TIMEOUT_")))
                 t1 <- proc.time()
@@ -4102,20 +4114,20 @@ add_dummies <- function(dir, Log)
                                   stdout = outfile, stderr = outfile,
                                   timeout = tlim)
                 t2 <- proc.time()
+                print_time(t1, t2, Log)
                 out <- readLines(outfile, warn = FALSE)
                 if(R_check_suppress_RandR_message)
                     out <- filtergrep('^Xlib: *extension "RANDR" missing on display',
                                       out, useBytes = TRUE)
                 warns <- grep("^Warning: file .* is not portable",
                               out, value = TRUE, useBytes = TRUE)
-                print_time(t1, t2, Log)
                 if (status) {
                     keep <- as.numeric(Sys.getenv("_R_CHECK_VIGNETTES_NLINES_",
                                                   "25"))
                     if(skip_run_maybe || !ran) warningLog(Log) else noteLog(Log)
                     if(keep > 0) out <- utils::tail(out, keep)
                     printLog0(Log,
-                              paste(c("Error in re-building vignettes:",
+                              paste(c("Error(s) in re-building vignettes:",
                                       "  ...", out, "", ""), collapse = "\n"))
                 } else if(nw <- length(warns)) {
                     if(skip_run_maybe || !ran) warningLog(Log) else noteLog(Log)
