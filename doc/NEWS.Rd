@@ -366,10 +366,11 @@
       \item \command{R CMD check} now tries re-building all vignettes
       rather than stopping at the first error.  Whilst doing so it adds
       \sQuote{bookmarks} to the log.  Optionally (see \sQuote{R
-	Internals}) it will re-build each vignette in a separate process.
+	Internals}) it can re-build each vignette in a separate process.
 
-      It now checks for duplicated vignette titles (as used, for
-      example, as hyperlinks on CRAN package pages).
+      It now checks for duplicated vignette titles (also known as
+      \sQuote{index entries}): they are used as hyperlinks on
+      \acronym{CRAN} package pages and so do need to be unique).
     }
   }
 
