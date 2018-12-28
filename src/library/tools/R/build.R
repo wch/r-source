@@ -310,7 +310,7 @@ inRbuildignore <- function(files, pkgdir) {
                     Sys.setenv(R_LIBS = libdir)
                 }
 
-                ## Tangle all vignettes now.
+                ## Tangle (and weave) all vignettes now.
 
                 cmd <- file.path(R.home("bin"), "Rscript")
                 args <- c("--vanilla",
