@@ -4101,7 +4101,7 @@ add_dummies <- function(dir, Log)
                         ## serialize elibs to avoid quotation hell
                         tf <- tempfile(fileext = ".rds")
                         saveRDS(c(jitstr, elibs), tf)
-                        sprintf("%s\ntools:::buildVignettes2(dir = '%s', ser_elibs = '%s')",
+                        sprintf("%s\ntools:::buildVignettes(dir = '%s', ser_elibs = '%s')",
                                 opWarn_string,
                                 file.path(pkgoutdir, "vign_test", pkgname0),
                                 tf)
