@@ -1,6 +1,6 @@
 % File src/library/tools/man/buildVignette.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{buildVignette}
@@ -19,9 +19,9 @@ buildVignette(file, dir = ".", weave = TRUE, latex = TRUE, tangle = TRUE,
               engine = NULL, buildPkg = NULL, encoding, ...)
 }
 \arguments{
-  \item{file}{character; the vignette source file}
+  \item{file}{character; the vignette source file.}
   \item{dir}{character; the working directory in which the intermediate and 
-                 output files will be produced}
+                 output files will be produced.}
   \item{weave}{logical; should weave be run?}
   \item{latex}{logical; \link{texi2pdf} be run if weaving produces a \file{.tex} file?}
   \item{tangle}{logical; should tangle be run?}
@@ -34,8 +34,8 @@ buildVignette(file, dir = ".", weave = TRUE, latex = TRUE, tangle = TRUE,
     use.  Overrides any \code{\\VignetteEngine\{\}} markup in the vignette.}
   \item{buildPkg}{\code{NULL} or character; an optional package in which to find
     the vignette engine.}
-  \item{encoding}{the encoding to assume for the file.  If not specified, it will
-    be inferred from the file contents.}
+  \item{encoding}{the encoding to assume for the file.  If not
+    specified, it will be read if possible from the file's contents.} 
   \item{...}{Additional arguments passed to weave and tangle.}
 
 }
