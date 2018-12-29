@@ -17,7 +17,7 @@
 \title{Model Formulae}
 \usage{
 formula(x, \dots)
-DF2formula(x, \dots)
+DF2formula(x)
 as.formula(object, env = parent.frame())
 
 \method{print}{formula}(x, showEnv = !identical(e, .GlobalEnv), \dots)
