@@ -370,7 +370,7 @@
 
       It now checks for duplicated vignette titles (also known as
       \sQuote{index entries}): they are used as hyperlinks on
-      \acronym{CRAN} package pages and so do need to be unique).
+      \acronym{CRAN} package pages and so do need to be unique.
     }
   }
 
