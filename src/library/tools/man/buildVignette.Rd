@@ -32,10 +32,13 @@ buildVignette(file, dir = ".", weave = TRUE, latex = TRUE, tangle = TRUE,
     that \dQuote{target} files are kept anyway.}
   \item{engine}{\code{NULL} or character; name of vignette engine to
     use.  Overrides any \code{\\VignetteEngine\{\}} markup in the vignette.}
-  \item{buildPkg}{\code{NULL} or character; an optional package in which to find
-    the vignette engine.}
+  \item{buildPkg}{\code{NULL} or a character vector; optional packages
+    in which to find the vignette engine.}
   \item{encoding}{the encoding to assume for the file.  If not
-    specified, it will be read if possible from the file's contents.} 
+    specified, it will be read if possible from the file's contents.
+    Note that if the vignette is part of a package,
+    \code{\link{buildVignettes}} reads the package's encoding from the
+    \file{DESCRIPTION} file but this function does not.} 
   \item{...}{Additional arguments passed to weave and tangle.}
 
 }
@@ -49,13 +52,14 @@ buildVignette(file, dir = ".", weave = TRUE, latex = TRUE, tangle = TRUE,
   files (e.g., \file{.tex}) will not be deleted even if a \file{.pdf}
   file has been produced from them.  
 
-  If \code{buildPkg} is specified, it will be loaded before the vignette
-  is processed, and will be used as the default package in the search
-  for a vignette engine, but an explicitly specified package in the
-  vignette source (e.g., using \code{\\VignetteEngine\{utils::Sweave\}}
-  to specify the \code{Sweave} engine in the \pkg{utils} package) will
-  override it.  In contrast, if the \code{engine} argument is given, it
-  will override the vignette source.
+  If \code{buildPkg} is specified, those packages will be loaded before
+  the vignette is processed and will be used as the default packages in
+  the search for a vignette engine, but an explicitly specified package
+  in the vignette source (e.g., using
+  \code{\\VignetteEngine\{utils::Sweave\}} to specify the \code{Sweave}
+  engine in the \pkg{utils} package) will override it.  In contrast, if
+  the \code{engine} argument is given, it will override the vignette
+  source.
 }
 \value{
   A character vector naming the files that have been produced.
