@@ -655,16 +655,21 @@ buildVignettes <-
         message()
     }
 
+
+    msg2 <- paste("Duplicate vignette titles.",
+                  "  Ensure that the %\\VignetteIndexEntry lines in the vignette sources",
+                  "  correspond to the vignette titles.",
+                  sep = "\n")
+
     ## Assert
     if(!OK || length(outputs) != length(vigns$docs)) {
-        msg <- "Vignette re-building failed"
-        if(have_dup_titles)
-            msg <- paste0(msg, "\nError: Duplicate vignette titles")
+        msg <- "Vignette re-building failed."
+        if(have_dup_titles) msg <- paste0(msg, "\nError: ", msg2)
         stop(msg, domain = NA, call. = FALSE)
     }
 
     if(have_dup_titles)
-        stop("Duplicate vignette titles", domain = NA, call. = FALSE)
+        stop(msg2, domain = NA, call. = FALSE)
 
     vigns$outputs <- outputs
     vigns$sources <- sourceList
