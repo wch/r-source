@@ -39,7 +39,7 @@ vignette_type <- function(file) {
 # with final = FALSE it also looks for <name>.tex (if <name>.pdf is also
 # found, it will be returned).  For tangle, main = TRUE will look <name>.R,
 # whereas main = FALSE will look for <name><anything>*.R.
-# For texipdf, <name>.pdf is located.
+# For texi2pdf, <name>.pdf is located.
 find_vignette_product <-
     function(name, by = c("weave", "tangle", "texi2pdf"),
              final = FALSE, main = TRUE, dir = ".", engine, ...)
@@ -469,8 +469,9 @@ buildVignettes <-
     ## This has side effects, including loading vignette-buider pkgs
     vigns <- pkgVignettes(package = package, dir = dir, lib.loc = lib.loc,
                           check = TRUE)
-    if(is.null(vigns)) return(invisible())
-    if(length(vigns$msg))
+    if (is.null(vigns)) return(invisible())
+    if (length(vigns$docs) <= 1L) separate <- FALSE
+    if (length(vigns$msg))
         warning(paste(vigns$msg, collapse = "\n"), domain = NA)
 
     ## Check that duplicated vignette names do not exist, e.g.
@@ -493,7 +494,7 @@ buildVignettes <-
         titles <- c(titles, this)
     }
     have_dup_titles <-
-        if(any(dup <- duplicated(titles))) {
+        if (any(dup <- duplicated(titles))) {
             dups <- unique(titles[dup])
             message(ngettext(length(dups),
                              "duplicated vignette title:",
@@ -530,14 +531,12 @@ buildVignettes <-
     outputs <- character()
     sourceList <- list()
     startdir <- getwd()
-    OK <- TRUE
     fails <- character()
     for(i in seq_along(vigns$docs)) {
         thisOK <- TRUE
         file <- basename(vigns$docs[i])
         enc <- vigns$encodings[i]
         if (enc == "non-ASCII") {
-            OK <- FALSE
             message(gettextf("Error: Vignette '%s' is non-ASCII but has no declared encoding",
                              file))
             fails <- c(fails, file)
@@ -556,7 +555,7 @@ buildVignettes <-
                              stdout = tf, stderr = tf)
             unlink(tf2)
             ##print(status)
-            if(!status) {
+            if (!status) {
                 this <- readLines(tf)
                 patt <- "^[+]-[+]"
                 l <- grepl(patt, this)
@@ -575,7 +574,7 @@ buildVignettes <-
                 engine$weave(file, quiet = quiet, encoding = enc)
                 setwd(startdir) # In case weave/vignette changed it
                 output <- find_vignette_product(name, by = "weave", engine = engine)
-                if(!have.makefile && vignette_is_tex(output)) {
+                if (!have.makefile && vignette_is_tex(output)) {
                     ## This can fail if run in a directory whose path contains spaces.
                     texi2pdf(file = output, clean = FALSE, quiet = quiet)
                     output <- find_vignette_product(name, by = "texi2pdf",
@@ -583,7 +582,7 @@ buildVignettes <-
                 }
                 outputs <- c(outputs, output)
             }, error = function(e) {
-                thisOK <<- OK <<- FALSE
+                thisOK <<- FALSE
                 fails <<- c(fails, file)
                 message(gettextf("Error: processing vignette '%s' failed with diagnostics:\n%s",
                                  file, conditionMessage(e)))
@@ -591,12 +590,15 @@ buildVignettes <-
         }         # end if (separate)
 
         if (tangle && !separate) {  # This is set for all engines as of 3.0.2
+            ## It is unlikely that weave succeeds but tangle fails,
+            ## so we don't bother to report tangle failures specifically.
             output <- tryCatch({
                 engine$tangle(file, quiet = quiet, encoding = enc)
                 setwd(startdir) # In case tangle/vignette changed it
                 find_vignette_product(name, by = "tangle", main = FALSE, engine = engine)
             }, error = function(e) {
-                thisOK <<- OK <<- FALSE
+                thisOK <<- FALSE
+                fails <<- c(fails, file)
                 message(gettextf("Error: tangling vignette '%s' failed with diagnostics:\n%s",
                      file, conditionMessage(e)))
             })
@@ -610,7 +612,7 @@ buildVignettes <-
         }
     } # end loop over vignettes
 
-    if(have.makefile) {
+    if (have.makefile) {
         WINDOWS <- .Platform$OS.type == "windows"
         if (WINDOWS) {
             ## Some people have *assumed* that R_HOME uses / in Makefiles
@@ -619,11 +621,11 @@ buildVignettes <-
             Sys.setenv(R_HOME = rhome)
         }
     	make <- Sys.getenv("MAKE", "make")
-        if(!nzchar(make)) make <- "make"
+        if (!nzchar(make)) make <- "make"
         yy <- system(make)
-        if(yy > 0) stop("running 'make' failed")
+        if (yy > 0) stop("running 'make' failed")
         ## See if Makefile has a clean: target, and if so run it.
-        if(clean &&
+        if (clean &&
 	   any(startsWith(readLines("Makefile", warn = FALSE), "clean:")))
             system(paste(make, "clean"))
     } else {
@@ -632,7 +634,7 @@ buildVignettes <-
         grDevices::graphics.off()
 
         keep <- c(outputs, unlist(sourceList))
-        if(clean) {
+        if (clean) {
             f <- setdiff(list.files(all.files = TRUE, no.. = TRUE), keep)
             newer <- file_test("-nt", f, ".build.timestamp")
             ## some packages, e.g. SOAR, create directories
@@ -644,10 +646,10 @@ buildVignettes <-
         }
     }
 
-    if(file.exists(".build.timestamp")) file.remove(".build.timestamp")
+    if (file.exists(".build.timestamp")) file.remove(".build.timestamp")
     ## Might have been in origfiles ...
 
-    if(length(fails)) {
+    if (length(fails)) {
         message(ngettext(length(fails),
                          "SUMMARY: processing the following file failed:",
                          "SUMMARY: processing the following files failed:"))
@@ -662,13 +664,13 @@ buildVignettes <-
                   sep = "\n")
 
     ## Assert
-    if(!OK || length(outputs) != length(vigns$docs)) {
+    if (length(fails) || (length(outputs) != length(vigns$docs))) {
         msg <- "Vignette re-building failed."
-        if(have_dup_titles) msg <- paste0(msg, "\nError: ", msg2)
+        if (have_dup_titles) msg <- paste0(msg, "\nError: ", msg2)
         stop(msg, domain = NA, call. = FALSE)
     }
 
-    if(have_dup_titles)
+    if (have_dup_titles)
         stop(msg2, domain = NA, call. = FALSE)
 
     vigns$outputs <- outputs
