@@ -1796,6 +1796,15 @@ stopifnot(exprs = {
 ## returned integer sequences in all R versions <= 3.5.1
 
 
+## These used to fail (PR17514) in a NAMED build but not with REFCNT:
+L <- matrix(list( c(0) ), 2, 1)
+L[[2]][1] <- 11
+stopifnot(L[[1]] == 0)
+L <- matrix(list( c(0) ), 2, 1, byrow = TRUE)
+L[[2]][1] <- 11
+stopifnot(L[[1]] == 0)
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
