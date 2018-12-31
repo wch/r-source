@@ -112,8 +112,8 @@ Stangle(file, driver = Rtangle(),
   \CRANpkg{SweaveListingUtils} (archived).
 
   Further Sweave drivers are in, for example, packages \CRANpkg{R2HTML},
-  \CRANpkg{ascii}, \CRANpkg{odfWeave} (archived) and \CRANpkg{pgfSweave
-  (archived)}.
+  \CRANpkg{ascii}, \CRANpkg{odfWeave} (archived) and \CRANpkg{pgfSweave}
+  (archived).
 
   Non-Sweave vignettes may be built with \code{tools::\link[tools]{buildVignette}}.
 }
