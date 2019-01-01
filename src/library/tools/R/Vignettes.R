@@ -499,7 +499,7 @@ buildVignettes <-
             message(ngettext(length(dups),
                              "duplicated vignette title:",
                              "duplicated vignette titles:"))
-            message(.pretty_format(dups))
+            message(paste(.pretty_format(dups), collapse = "\n"))
             message()
             TRUE
         } else FALSE
@@ -653,7 +653,7 @@ buildVignettes <-
         message(ngettext(length(fails),
                          "SUMMARY: processing the following file failed:",
                          "SUMMARY: processing the following files failed:"))
-        message(.pretty_format(fails))
+        message(paste(.pretty_format(fails), collapse = "\n"))
         message()
     }
 
