@@ -3957,11 +3957,10 @@ static SEXP seq_int(int n1, int n2)
 #endif
 }
 
-#ifdef TYPED_STACK
-# define COMPACT_INTSEQ
-# ifdef COMPACT_INTSEQ
-#  define INTSEQSXP 9999
-# endif
+#define COMPACT_INTSEQ
+#ifdef COMPACT_INTSEQ
+# define INTSEQSXP 9999
+#endif
 
 static R_INLINE SEXP GETSTACK_PTR_TAG(R_bcstack_t *s)
 {
@@ -4026,26 +4025,8 @@ static R_INLINE SEXP GETSTACK_PTR_TAG(R_bcstack_t *s)
     } while (0)
 
 #define IS_STACKVAL_BOXED(idx)	(R_BCNodeStackTop[idx].tag == 0)
-#else
-#define GETSTACK_PTR(s) (*(s))
 
-#define GETSTACK_SXPVAL_PTR(s) (*(s))
-
-#define GETSTACK_IVAL_PTR(s) INTEGER(*(s))[0]
-
-#define SETSTACK_PTR(s, v) do { \
-    SEXP __v__ = (v); \
-    *(s) = __v__; \
-} while (0)
-
-#define SETSTACK_REAL_PTR(s, v) SETSTACK_PTR(s, ScalarReal(v))
-#define SETSTACK_INTEGER_PTR(s, v) SETSTACK_PTR(s, ScalarInteger(v))
-#define SETSTACK_LOGICAL_PTR(s, v) SETSTACK_PTR(s, ScalarLogical(v))
-
-#define IS_STACKVAL_BOXED(idx)	(TRUE)
-#endif
-
-#if defined(TYPED_STACK) && defined(COMPACT_INTSEQ)
+#ifdef COMPACT_INTSEQ
 #define SETSTACK_INTSEQ(idx, rn1, rn2) do {	\
 	SEXP info = allocVector(INTSXP, 2);	\
 	INTEGER(info)[0] = (int) rn1;		\
@@ -4600,7 +4581,7 @@ static R_INLINE double (*getMath1Fun(int i, SEXP call))(double) {
 
 static R_INLINE SEXP getForLoopSeq(int offset, Rboolean *iscompact)
 {
-#if defined(TYPED_STACK) && defined(COMPACT_INTSEQ)
+#ifdef COMPACT_INTSEQ
     R_bcstack_t *s = R_BCNodeStackTop + offset;
     if (s->tag == INTSEQSXP) {
 	*iscompact = TRUE;
@@ -4619,7 +4600,6 @@ static R_INLINE SEXP getForLoopSeq(int offset, Rboolean *iscompact)
   R_BCNodeStackTop = __ntop__; \
 } while (0)
 
-#ifdef TYPED_STACK
 #define BCNPUSH_REAL(v) do { \
   double __value__ = (v); \
   R_bcstack_t *__ntop__ = R_BCNodeStackTop + 1; \
@@ -4646,7 +4626,6 @@ static R_INLINE SEXP getForLoopSeq(int offset, Rboolean *iscompact)
   __ntop__[-1].tag = LGLSXP; \
   R_BCNodeStackTop = __ntop__; \
 } while (0)
-#endif
 
 #define BCNDUP() do { \
     R_bcstack_t *__ntop__ = R_BCNodeStackTop + 1; \
@@ -4695,8 +4674,6 @@ static void NORET nodeStackOverflow()
     error(_("node stack overflow"));
 }
 
-#ifdef TYPED_STACK
-
 /* Allocate consecutive space of nelems node stack elements */
 static R_INLINE void* BCNALLOC(int nelems) {
     void *ans;
@@ -4709,9 +4686,6 @@ static R_INLINE void* BCNALLOC(int nelems) {
     R_BCNodeStackTop += nelems;
     return ans;
 }
-#else
-# error BCNALLOC and such for untyped stack not available yet
-#endif
 
 /* Allocate R context on the node stack */
 #define RCNTXT_ELEMS ((sizeof(RCNTXT) + sizeof(R_bcstack_t) - 1) \
@@ -5328,7 +5302,6 @@ static void bc_check_sigint()
 
 static R_INLINE R_xlen_t bcStackIndex(R_bcstack_t *s)
 {
-#ifdef TYPED_STACK
     switch(s->tag) {
     case INTSXP:
 	if (s->u.ival != NA_INTEGER)
@@ -5344,7 +5317,7 @@ static R_INLINE R_xlen_t bcStackIndex(R_bcstack_t *s)
     case LGLSXP: return -1;
     default: break;
     }
-#endif
+
     SEXP idx = GETSTACK_SXPVAL_PTR(s);
     if (IS_SCALAR(idx, INTSXP)) {
 	int ival = SCALAR_IVAL(idx);
@@ -5924,10 +5897,9 @@ static R_INLINE SEXP SymbolValue(SEXP sym)
 static R_INLINE Rboolean GETSTACK_LOGICAL_NO_NA_PTR(R_bcstack_t *s, int callidx,
 						    SEXP constants, SEXP rho)
 {
-#ifdef TYPED_STACK
     if (s->tag == LGLSXP && s->u.ival != NA_LOGICAL)
 	return s->u.ival;
-#endif
+
     SEXP value = GETSTACK_PTR(s);
     if (IS_SCALAR(value, LGLSXP)) {
 	Rboolean lval = SCALAR_LVAL(value);
