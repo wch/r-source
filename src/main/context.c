@@ -190,9 +190,6 @@ static void R_restore_globals(RCNTXT *cptr)
        handling a stack overflow. */
     R_Expressions = R_Expressions_keep;
     R_BCNodeStackTop = cptr->nodestack;
-#ifdef BC_INT_STACK
-    R_BCIntStackTop = cptr->intstack;
-#endif
     R_Srcref = cptr->srcref;
 }
 
@@ -270,9 +267,6 @@ void begincontext(RCNTXT * cptr, int flags,
     cptr->restartstack = R_RestartStack;
     cptr->prstack = R_PendingPromises;
     cptr->nodestack = R_BCNodeStackTop;
-#ifdef BC_INT_STACK
-    cptr->intstack = R_BCIntStackTop;
-#endif
     cptr->srcref = R_Srcref;
     cptr->browserfinish = R_GlobalContext->browserfinish;
     cptr->nextcontext = R_GlobalContext;

@@ -2170,18 +2170,8 @@ void attribute_hidden InitMemory()
 	(R_bcstack_t *) malloc(R_BCNODESTACKSIZE * sizeof(R_bcstack_t));
     if (R_BCNodeStackBase == NULL)
 	R_Suicide("couldn't allocate node stack");
-#ifdef BC_INT_STACK
-    R_BCIntStackBase =
-      (IStackval *) malloc(R_BCINTSTACKSIZE * sizeof(IStackval));
-    if (R_BCIntStackBase == NULL)
-	R_Suicide("couldn't allocate integer stack");
-#endif
     R_BCNodeStackTop = R_BCNodeStackBase;
     R_BCNodeStackEnd = R_BCNodeStackBase + R_BCNODESTACKSIZE;
-#ifdef BC_INT_STACK
-    R_BCIntStackTop = R_BCIntStackBase;
-    R_BCIntStackEnd = R_BCIntStackBase + R_BCINTSTACKSIZE;
-#endif
 
     R_weak_refs = R_NilValue;
 

@@ -518,9 +518,6 @@ typedef struct {
 #else
 typedef SEXP R_bcstack_t;
 #endif
-#ifdef BC_INT_STACK
-typedef union { void *p; int i; } IStackval;
-#endif
 
 #ifdef R_USE_SIGNALS
 /* Stack entry for pending promises */
@@ -554,9 +551,6 @@ typedef struct RCNTXT {
     SEXP restartstack;          /* stack of available restarts */
     struct RPRSTACK *prstack;   /* stack of pending promises */
     R_bcstack_t *nodestack;
-#ifdef BC_INT_STACK
-    IStackval *intstack;
-#endif
     SEXP srcref;	        /* The source line in effect */
     int browserfinish;          /* should browser finish this context without
                                    stopping */
@@ -808,10 +802,6 @@ void resetTimeLimits(void);
 
 #define R_BCNODESTACKSIZE 200000
 extern0 R_bcstack_t *R_BCNodeStackBase, *R_BCNodeStackTop, *R_BCNodeStackEnd;
-#ifdef BC_INT_STACK
-# define R_BCINTSTACKSIZE 10000
-extern0 IStackval *R_BCIntStackBase, *R_BCIntStackTop, *R_BCIntStackEnd;
-#endif
 extern0 int R_jit_enabled INI_as(0); /* has to be 0 during R startup */
 extern0 int R_compile_pkgs INI_as(0);
 extern0 int R_check_constants INI_as(0);
