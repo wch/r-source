@@ -3962,32 +3962,16 @@ static SEXP seq_int(int n1, int n2)
 # ifdef COMPACT_INTSEQ
 #  define INTSEQSXP 9999
 # endif
-//#define CACHE_SCALARS
+
 static R_INLINE SEXP GETSTACK_PTR_TAG(R_bcstack_t *s)
 {
     /* no error checking since only called with tag != 0 */
     SEXP value;
     switch (s->tag) {
     case REALSXP:
-#ifdef CACHE_SCALARS
-	if (R_CachedScalarReal != NULL) {
-	    value = R_CachedScalarReal;
-	    R_CachedScalarReal = NULL;
-	    SET_SCALAR_DVAL(value, s->u.dval);
-	}
-	else
-#endif
 	value = ScalarReal(s->u.dval);
 	break;
     case INTSXP:
-#ifdef CACHE_SCALARS
-	if (R_CachedScalarInteger != NULL) {
-	    value = R_CachedScalarInteger;
-	    R_CachedScalarInteger = NULL;
-	    SET_SCALAR_IVAL(value, s->u.ival);
-	}
-	else
-#endif
 	value = ScalarInteger(s->u.ival);
 	break;
     case LGLSXP:
@@ -4087,48 +4071,12 @@ static R_INLINE SEXP GETSTACK_PTR_TAG(R_bcstack_t *s)
 #define SETSTACK_LOGICAL(i, v) SETSTACK_LOGICAL_PTR(R_BCNodeStackTop + (i), v)
 
 
-/* The next two macros will allow reuse a scalar box, if provided. The
-   box is assumed to be of the correct type and size and to have no
-   attributes. */
-#ifdef CACHE_SCALARS
-#define SETSTACK_REAL_EX(idx, dval, ans) do {		\
-	SEXP __ans__ = (ans);				\
-	if (__ans__ && R_CachedScalarReal == NULL)	\
-	    R_CachedScalarReal = __ans__;		\
-	SETSTACK_REAL(idx, dval);			\
-    } while (0)
-
-#define SETSTACK_INTEGER_EX(idx, ival, ans) do {	\
-	SEXP __ans__ = (ans);				\
-	if (__ans__ && R_CachedScalarInteger == NULL)	\
-	    R_CachedScalarInteger = __ans__;		\
-	SETSTACK_INTEGER(idx, ival);			\
-    } while (0)
-#else
-#define SETSTACK_REAL_EX(idx, dval, ans) do { \
-	if (ans) {			      \
-	    SET_SCALAR_DVAL(ans, dval);	      \
-	    SETSTACK(idx, ans);		      \
-	}				      \
-	else SETSTACK_REAL(idx, dval);	      \
-    } while (0)
-
-#define SETSTACK_INTEGER_EX(idx, ival, ans) do { \
-	if (ans) {				 \
-	    INTEGER(ans)[0] = ival;		 \
-	    SETSTACK(idx, ans);			 \
-	}					 \
-	else SETSTACK_INTEGER(idx, ival);	 \
-    } while (0)
-#endif
-
 /* bcStackScalar() checks whether the object in the specified stack
-   location is a simple real, integer, or logical scalar (i.e. length
-   one and no attributes.  If so, the type is returned as the function
-   value and the value is returned in the structure pointed to by the
-   second argument; if not, then zero is returned as the function
-   value. The boxed value can be returned through a pointer argument
-   if it is suitable for re-use. */
+   location is an immediate scalar or a boxed simple real, integer, or
+   logical scalar (i.e. length one and no attributes).  For immediate
+   values the stack pointer is returned; for others the supplied stack
+   structure pointer is returned after filling its fields
+   appropriately. */
 static R_INLINE R_bcstack_t *bcStackScalar(R_bcstack_t *s, R_bcstack_t *v)
 {
     switch (s->tag) {
