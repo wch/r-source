@@ -4125,10 +4125,15 @@ add_dummies <- function(dir, Log)
                     keep <- as.numeric(Sys.getenv("_R_CHECK_VIGNETTES_NLINES_",
                                                   "25"))
                     if(skip_run_maybe || !ran) warningLog(Log) else noteLog(Log)
-                    if(keep > 0) out <- utils::tail(out, keep)
-                    printLog0(Log,
-                              paste(c("Error(s) in re-building vignettes:",
-                                      "  ...", out, "", ""), collapse = "\n"))
+                    if(keep > 0  && length(out) < keep) {
+                        out <- utils::tail(out, keep)
+                        printLog0(Log,
+                                  paste(c("Error(s) in re-building vignettes:",
+                                          "  ...", out, "", ""), collapse = "\n"))
+                    } else
+                        printLog0(Log,
+                                  paste(c("Error(s) in re-building vignettes:",
+                                          out, "", ""), collapse = "\n"))
                 } else if(nw <- length(warns)) {
                     if(skip_run_maybe || !ran) warningLog(Log) else noteLog(Log)
                     msg <- ngettext(nw,

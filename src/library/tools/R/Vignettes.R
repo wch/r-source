@@ -33,11 +33,11 @@ vignette_type <- function(file) {
 }
 
 # Locates the vignette weave, tangle and texi2pdf product(s) based on the
-# vignette name.   All such products must have the name as their filename
+# vignette name.   All such products must have the same name as their filename
 # prefix (i.e. "^<name>").
 # For weave, final = TRUE will look for <name>.pdf and <name>.html, whereas
 # with final = FALSE it also looks for <name>.tex (if <name>.pdf is also
-# found, it will be returned).  For tangle, main = TRUE will look <name>.R,
+# found, it will be returned).  For tangle, main = TRUE will look for <name>.R,
 # whereas main = FALSE will look for <name><anything>*.R.
 # For texi2pdf, <name>.pdf is located.
 find_vignette_product <-
