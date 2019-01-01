@@ -760,28 +760,14 @@ static void R_AddGlobalCache(SEXP symbol, SEXP place)
     }
 }
 
-static SEXP R_GetGlobalCache(SEXP symbol)
+static SEXP R_GetGlobalCacheLoc(SEXP symbol)
 {
-    SEXP vl;
-
 #ifdef FAST_BASE_CACHE_LOOKUP
     if (BASE_SYM_CACHED(symbol))
-	return SYMBOL_BINDING_VALUE(symbol);
+	return symbol;
 #endif
 
-    vl = R_HashGet(hashIndex(symbol, R_GlobalCache), symbol,
-			R_GlobalCache);
-    switch(TYPEOF(vl)) {
-    case SYMSXP:
-	if (vl == R_UnboundValue) /* avoid test?? */
-	    return R_UnboundValue;
-	else return SYMBOL_BINDING_VALUE(vl);
-    case LISTSXP:
-	return BINDING_VALUE(vl);
-    default:
-	error(_("invalid cached value in R_GetGlobalCache"));
-	return R_NilValue;
-    }
+    return R_HashGet(hashIndex(symbol, R_GlobalCache), symbol, R_GlobalCache);
 }
 #endif /* USE_GLOBAL_CACHE */
 
@@ -890,18 +876,11 @@ static SEXP findVarLocInFrame(SEXP rho, SEXP symbol, Rboolean *canCache)
     int hashcode;
     SEXP frame, c;
 
-    if (rho == R_BaseEnv || rho == R_BaseNamespace) {
-	error("'findVarLocInFrame' cannot be used on the base environment");
-	/* the code below doesn't really make sense as it returns the
-	   value, not the binding.  We _could_ return the symbol as
-	   the binding object in that case, but it isn't clear that
-	   would be useful. LT */
-	c = SYMBOL_BINDING_VALUE(symbol);
-	return (c == R_UnboundValue) ? R_NilValue : c;
-    }
+    if (rho == R_BaseEnv || rho == R_BaseNamespace)
+	return (SYMVALUE(symbol) == R_UnboundValue) ? R_NilValue : symbol;
 
     if (rho == R_EmptyEnv)
-	return(R_NilValue);
+	return R_NilValue;
 
     if(IS_USER_DATABASE(rho)) {
 	R_ObjectTable *table;
@@ -965,7 +944,12 @@ R_varloc_t R_findVarLocInFrame(SEXP rho, SEXP symbol)
 attribute_hidden
 SEXP R_GetVarLocValue(R_varloc_t vl)
 {
-    return BINDING_VALUE(vl.cell);
+    SEXP cell = vl.cell;
+    if (cell == NULL || cell == R_UnboundValue)
+	return R_UnboundValue;
+    else if (TYPEOF(cell) == SYMSXP)
+	return SYMBOL_BINDING_VALUE(cell);
+    else return BINDING_VALUE(cell);
 }
 
 attribute_hidden
@@ -1185,11 +1169,11 @@ slowpath:
 #ifdef USE_GLOBAL_CACHE
 /* findGlobalVar searches for a symbol value starting at R_GlobalEnv,
    so the cache can be used. */
-static SEXP findGlobalVar(SEXP symbol)
+static SEXP findGlobalVarLoc(SEXP symbol)
 {
     SEXP vl, rho;
     Rboolean canCache = TRUE;
-    vl = R_GetGlobalCache(symbol);
+    vl = R_GetGlobalCacheLoc(symbol);
     if (vl != R_UnboundValue)
 	return vl;
     for (rho = R_GlobalEnv; rho != R_EmptyEnv; rho = ENCLOS(rho)) {
@@ -1198,17 +1182,26 @@ static SEXP findGlobalVar(SEXP symbol)
 	    if (vl != R_NilValue) {
 		if(canCache)
 		    R_AddGlobalCache(symbol, vl);
-		return BINDING_VALUE(vl);
+		return vl;
 	    }
-	} else {
-	    vl = SYMBOL_BINDING_VALUE(symbol);
-	    if (vl != R_UnboundValue)
-		R_AddGlobalCache(symbol, symbol);
-	    return vl;
 	}
-
+	else {
+	    if (SYMVALUE(symbol) != R_UnboundValue)
+		R_AddGlobalCache(symbol, symbol);
+	    return symbol;
+	}
     }
-    return R_UnboundValue;
+    return R_NilValue;
+}
+
+static R_INLINE SEXP findGlobalVar(SEXP symbol)
+{
+    SEXP loc = findGlobalVarLoc(symbol);
+    switch (TYPEOF(loc)) {
+    case NILSXP: return R_UnboundValue;
+    case SYMSXP: return SYMBOL_BINDING_VALUE(symbol);
+    default: return BINDING_VALUE(loc);
+    }	
 }
 #endif
 
@@ -1245,6 +1238,46 @@ SEXP findVar(SEXP symbol, SEXP rho)
 #endif
 }
 
+static SEXP findVarLoc(SEXP symbol, SEXP rho)
+{
+    SEXP vl;
+
+    if (TYPEOF(rho) == NILSXP)
+	error(_("use of NULL environment is defunct"));
+
+    if (!isEnvironment(rho))
+	error(_("argument to '%s' is not an environment"), "findVar");
+
+#ifdef USE_GLOBAL_CACHE
+    /* This first loop handles local frames, if there are any.  It
+       will also handle all frames if rho is a global frame other than
+       R_GlobalEnv */
+    while (rho != R_GlobalEnv && rho != R_EmptyEnv) {
+	vl = findVarLocInFrame(rho, symbol, NULL);
+	if (vl != R_NilValue) return vl;
+	rho = ENCLOS(rho);
+    }
+    if (rho == R_GlobalEnv)
+	return findGlobalVarLoc(symbol);
+    else
+	return R_NilValue;
+#else
+    while (rho != R_EmptyEnv) {
+	vl = findVarInLocFrame(rho, symbol, NULL);
+	if (vl != R_NilValue) return vl;
+	rho = ENCLOS(rho);
+    }
+    return R_NilValue;
+#endif
+}
+
+R_varloc_t R_findVarLoc(SEXP rho, SEXP symbol)
+{
+    SEXP binding = findVarLoc(rho, symbol);
+    R_varloc_t val;
+    val.cell = binding == R_NilValue ? NULL : binding;
+    return val;
+}
 
 
 /*----------------------------------------------------------------------

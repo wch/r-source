@@ -2098,11 +2098,9 @@ cmpPrim1 <- function(e, cb, op, cntxt) {
 
 checkNeedsInc <- function(e, cntxt) {
     type <- typeof(e)
-    if (type %in% c("language", "bytecode", "symbol", "promise"))
+    if (type %in% c("language", "bytecode", "promise"))
         TRUE
-    else if (type == "symbol" && ! findLocVar(e, cntxt))
-        TRUE
-    else FALSE
+    else FALSE ## symbols and constants
 }
 
 cmpPrim2 <- function(e, cb, op, cntxt) {
@@ -2168,7 +2166,7 @@ setInlineHandler("log", function(e, cb, cntxt) {
         if (length(e) == 2)
             cb$putcode(LOG.OP, ci)
         else {
-            needInc <- checkNeedsInc(e[[3]])
+            needInc <- checkNeedsInc(e[[3]], cntxt)
             if (needInc) cb$putcode(INCLNK.OP)
             ncntxt <- make.argContext(cntxt)
             cmp(e[[3]], cb, ncntxt)
@@ -3279,12 +3277,20 @@ asm <- function(e, gen, env = .GlobalEnv, options = NULL) {
 
 cmpIndices <- function(indices, cb, cntxt) {
     n <- length(indices)
+    needInc <- FALSE
+    for (i in seq_along(indices))
+        if (i > 1 && checkNeedsInc(indices[[i]], cntxt)) {
+            needInc <- TRUE
+            break
+        }            
     for (i in seq_along(indices)) {
         cmp(indices[[i]], cb, cntxt, TRUE)
-        if (i < n) cb$putcode(INCLNK.OP)
+        if (needInc && i < n) cb$putcode(INCLNK.OP)
     }
-    if (n == 2) cb$putcode(DECLNK.OP)
-    else if (n > 2) cb$putcode(DECLNK_N.OP, n - 1)
+    if (needInc) {
+        if (n == 2) cb$putcode(DECLNK.OP)
+        else if (n > 2) cb$putcode(DECLNK_N.OP, n - 1)
+    }
 }
 
 cmpSubsetDispatch <- function(start.op, dflt.op, e, cb, cntxt) {
