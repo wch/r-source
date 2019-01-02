@@ -364,9 +364,9 @@
       \command{R CMD build} will correct line endings in such files.
 
       \item \command{R CMD check} now tries re-building all vignettes
-      rather than stopping at the first error.  Whilst doing so it adds
-      \sQuote{bookmarks} to the log.  Optionally (see \sQuote{R
-	Internals}) it can re-build each vignette in a separate process.
+      rather than stopping at the first error: whilst doing so it adds
+      \sQuote{bookmarks} to the log.  By default (see \sQuote{R
+	Internals}) it re-builds each vignette in a separate process.
 
       It now checks for duplicated vignette titles (also known as
       \sQuote{index entries}): they are used as hyperlinks on

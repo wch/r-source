@@ -4093,7 +4093,7 @@ add_dummies <- function(dir, Log)
                 ## we could use clean = FALSE, but that would not be
                 ## testing what R CMD build uses.
                 Rcmd <-
-                    if (!config_val_to_logical(Sys.getenv("_R_CHECK_BUILD_VIGNETTES_SEPARATELY_", "FALSE")))
+                    if (!config_val_to_logical(Sys.getenv("_R_CHECK_BUILD_VIGNETTES_SEPARATELY_", "TRUE")))
                         sprintf("%s\ntools::buildVignettes(dir = '%s')",
                                 opWarn_string,
                                 file.path(pkgoutdir, "vign_test", pkgname0))
