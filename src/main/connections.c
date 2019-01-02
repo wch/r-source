@@ -292,7 +292,8 @@ static size_t buff_fill(Rconnection con) {
 
     free_len = con->buff_len - con->buff_stored_len;
     read_len = con->read(con->buff, sizeof(unsigned char), free_len, con);
-
+    if ((int)read_len < 0)
+	error("error reading from the connection");
     con->buff_stored_len += read_len;
 
     return read_len;
