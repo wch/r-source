@@ -1,7 +1,7 @@
 #  File src/library/tools/R/urltools.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2015-2017 The R Core Team
+#  Copyright (C) 2015-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -642,7 +642,7 @@ function(u, verbose = FALSE)
     curl::handle_setopt(h,
                         cookiesession = 1,
                         followlocation = 1,
-                        http_version = 1.1,
+                        http_version = 2L,
                         ssl_enable_alpn = 0)
     g <- tryCatch(curl::curl_fetch_memory(u, handle = h),
                   error = identity)
