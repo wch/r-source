@@ -546,7 +546,8 @@ buildVignettes <-
         engine <- vignetteEngine(vigns$engines[i])
 
         if (separate) {  # --- run in separate process
-            saveRDS(engine, tf2 <- tempfile(fileext = ".rds"))
+            tf2 <- gsub("\\", "/", tempfile(fileext = ".rds"), fixed = TRUE)
+            saveRDS(engine, tf2)
             Rcmd <- sprintf('tools:::.buildOneVignette("%s", "%s", %s, %s, "%s", "%s", "%s")',
                             file, vigns$pkgdir, quiet, have.makefile,
                             name, enc, tf2)
