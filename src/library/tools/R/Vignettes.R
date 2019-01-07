@@ -1,7 +1,7 @@
 #  File src/library/tools/R/Vignettes.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -551,9 +551,11 @@ buildVignettes <-
             Rcmd <- sprintf('tools:::.buildOneVignette("%s", "%s", %s, %s, "%s", "%s", "%s")',
                             file, vigns$pkgdir, quiet, have.makefile,
                             name, enc, tf2)
+            tlim <- get_timeout(Sys.getenv("_R_CHECK_ONE_VIGNETTE_ELAPSED_TIMEOUT_",
+                                           Sys.getenv("_R_CHECK_ELAPSED_TIMEOUT_")))
             tf <- tempfile()
             status <- R_runR(Rcmd, "--vanilla --slave", elibs,
-                             stdout = tf, stderr = tf)
+                             stdout = tf, stderr = tf, timeout = tlim)
             unlink(tf2)
             ##print(status)
             if (!status) {
