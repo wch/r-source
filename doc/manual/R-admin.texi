@@ -4039,9 +4039,11 @@ ln -s /usr/lib64/atlas/libtatlas.so.3 @var{R_HOME}/lib/libRblas.so
 can be used with its distributed ATLAS libraries.  (If you have the
 @samp{-devel} RPMS installed you can omit the @code{.0}/@code{.3}.)
 
-Note that rebuilding or symlinking @file{libRblas.so} will not suffice
+Note that rebuilding or symlinking @file{libRblas.so} may not suffice
 if the intention is to use a modified LAPACK contained in an external
-BLAS: the latter could even cause conflicts.
+BLAS: the latter could even cause conflicts.  However, on Fedora where
+the OpenBLAS distribution contains a copy of LAPACK, it is the latter
+which is used.
 
 
 @node LAPACK, Caveats, BLAS, Linear algebra
