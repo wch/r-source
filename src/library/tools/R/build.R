@@ -462,7 +462,7 @@ inRbuildignore <- function(files, pkgdir) {
                                        domain = NA)
                     }
                     ## Also cleanup possible Unix leftovers ...
-                    unlink(c(Sys.glob(c("*.o", "*.sl", "*.so", "*.dylib")),
+                    unlink(c(Sys.glob(c("*.o", "*.sl", "*.so", "*.dylib", "*.mod")),
                              paste0(pkgname, c(".a", ".dll", ".def")),
                              "symbols.rds"))
                     if (dir.exists(".libs")) unlink(".libs", recursive = TRUE)
