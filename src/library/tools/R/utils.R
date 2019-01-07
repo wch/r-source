@@ -1,7 +1,7 @@
 #  File src/library/tools/R/utils.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -566,7 +566,7 @@ function()
 
 ### ** .R_copyright_msg
 
-.R_copyright_msg <- 
+.R_copyright_msg <-
 function(year)
     sprintf("Copyright (C) %s-%s The R Core Team.",
             year, R.version$year)
@@ -1758,7 +1758,7 @@ function(packages = NULL, FUN, ...,
     } else {
         out <- lapply(packages, one)
     }
-    
+
     names(out) <- packages
     out
 }
