@@ -601,6 +601,9 @@
       \item \code{formula(model.frame(frml, ..))} now returns \code{frml}
       in all cases, thanks to Bill Dunlap.   The previous behavior is
       available as \code{DF2formula(<model.frame>)}.
+
+      \item \code{ar.ols()} also returns scalar \code{var.pred} in
+      univariate case (\PR{17517}).
     }
   }
 }

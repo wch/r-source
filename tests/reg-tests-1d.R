@@ -2453,6 +2453,14 @@ L[[2]][1] <- 11
 stopifnot(L[[1]] == 0)
 
 
+## ar.ols() - PR#17517
+ar_ols <- ar.ols(lynx)
+stopifnot(exprs = {
+    is.list(pa <- predict(ar_ols, n.ahead = 2))# must *not* warn
+    all.equal(ar_ols$var.pred, 592392.12774) # not a matrix
+})
+## .$var.pred had been a 1x1 matrix in R <= 3.5.2
+
 
 
 ## keep at end
