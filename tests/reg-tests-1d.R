@@ -2461,7 +2461,11 @@ stopifnot(exprs = {
 })
 ## .$var.pred had been a 1x1 matrix in R <= 3.5.2
 
-
+## check that parse lines are properly initialized in the parser
+## failed in 3.5 and earlier
+d <- getParseData(parse(text="{;}", keep.source=TRUE))
+l <- d[ d[,"token"] == "exprlist", "line1" ]
+stopifnot(identical(l, 1L))
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
