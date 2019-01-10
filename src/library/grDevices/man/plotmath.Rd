@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/plotmath.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{plotmath}
@@ -246,7 +246,8 @@
 
   The symbol codes can be found in octal in the Adobe reference manuals,
   e.g.\sspace{}for Postscript
-  \url{https://www.adobe.com/products/postscript/pdfs/PLRM.pdf}
+  % \url{https://www.adobe.com/products/postscript/pdfs/PLRM.pdf} now points to
+  \url{https://www.adobe.com/content/dam/acom/en/devnet/actionscript/articles/PLRM.pdf}
   or PDF
   \url{https://www.adobe.com/devnet/acrobat/pdfs/pdf_reference_1-7.pdf}
   and in decimal, octal and hex at
