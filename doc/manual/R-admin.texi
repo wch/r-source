@@ -5457,7 +5457,7 @@ The Oracle compilers provide several implementations of the C++
 standards which select both the set of headers and a C++ runtime
 library.  One of those is selected by the @option{-library} flag, which
 as it is needed for both compiling and linking is best specified as part
-of the compiler or standard.  Current @R{} expects as C++11 compiler,
+of the compiler or standard.  Current @R{} expects a C++11 compiler,
 for which the choice given above is the only possibility.  For C++98
 there are several with
 

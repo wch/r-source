@@ -622,6 +622,14 @@
 
 \section{\Rlogo CHANGES IN R 3.5.2}{
 
+  \subsection{INSTALLATION on a UNIX-ALIKE}{
+    \itemize{
+      \item Detection of flags for C++98/11/14/17 has been improved: in
+      particular if CXX??STD is set, it is tried first with no
+      additional flags.
+    }
+  }
+
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
       \item New macro \samp{CXX_VISIBILITY} analogous to
