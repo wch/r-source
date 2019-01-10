@@ -5478,10 +5478,9 @@ F77=f95
 FFLAGS=-O
 CXX=CC
 CXXSTD="-compat=g -library=stdcpp,CrunG3"
-CXX11=CC
+CXX98STD=$CXXSTD
 CXX11STD="-std=c++11 -library=stdcpp,CrunG3"
-CXX98=CC
-CXX98STD=-library=stlport4
+CXX14STD="-std=c++14 -library=stdcpp,CrunG3"
 CXXFLAGS=-O
 FC=$F77
 FCFLAGS=$FFLAGS
@@ -5522,30 +5521,22 @@ level 5.
 
 The Oracle compilers provide several implementations of the C++98
 standard which select both the set of headers and a C++ runtime library.
-These are selected by the @option{-library} flag, which as it is needed
-for both compiling and linking is best specified as part of the compiler
-or `standard'.  The examples above use @samp{stlport4}.
-
-Versions 12.5 and 12.6 also provide an implementation of C++11, but it
-is largely separate from the older C++98 ones (and their objects cannot
-be mixed).  To use this as the C++11 compiler, select
-
+These are selected by the @option{-library} flag: two possibilities are
 @example
-CXX11=CC
-CXX11STD="-std=c++11 -library=stdcpp,CrunG3"
-@end example
-
-@noindent
-Both versions also accept @code{-std=c++14}, but for 12.5 the C++14
-support is rather incomplete and does not pass @R{}'s conformance tests.
-It is inadvisable to attempt to mix C++11 and C++98 compilation
-(although a package has done so): there is a more compatible C++98/03
-implementation which can be selected (as above) by
-
-@example
-CXX=CC 
+CXX=CC
 CXXSTD="-compat=g -library=stdcpp,CrunG3"
 @end example
+@noindent
+(as above) or (as used for earlier versions of the compiler)
+@example
+CXX="CC -library=stlport4"
+@end example
+
+Versions 12.5 and 12.6 provide an implementation of C++11, but it is
+largely separate from the older C++98 ones (and their objects cannot be
+mixed).  Both versions also accept @code{-std=c++14}, but for 12.5 the
+C++14 support is rather incomplete and does not pass @R{}'s conformance
+tests.
 
 @cindex BLAS library
 @cindex LAPACK library

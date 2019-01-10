@@ -7,6 +7,14 @@
 
 \section{\Rlogo CHANGES IN R 3.5.2 patched}{
 
+  \subsection{INSTALLATION on a UNIX-ALIKE}{
+    \itemize{
+      \item Detection of flags for C++98/11/14/17 has been improved: in
+      particular if CXX??STD is set, it is tried first with no
+      additional flags.
+    }
+  }
+
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
       \item New macro \samp{F_VISIBILITY} as an alternative to
@@ -14,7 +22,6 @@
       \R 3.6.0.
     }
   }
-  
 }
 
 \section{\Rlogo CHANGES IN R 3.5.2}{
