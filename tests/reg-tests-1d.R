@@ -2473,6 +2473,7 @@ tools::assertWarning(normalizePath(c(NA_character_,getwd()),mustWork=NA))
 stopifnot(
     identical(normalizePath(c(NA_character_,getwd()),mustWork=FALSE)[1], NA_character_)
 )
+stopifnot(identical(unname(file.access(NA_character_)), -1L))
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
