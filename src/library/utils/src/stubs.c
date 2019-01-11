@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2013 The R Core Team
+ *  Copyright (C) 2000-2019 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -249,6 +249,9 @@ SEXP fileedit(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (n > 0) {
 	if (!isString(fn))
 	    error(_("invalid '%s' specification"), "filename");
+	for (i = 0; i < n; i++)
+	    if (STRING_ELT(fn, i) == NA_STRING)
+		error(_("'%s' contains missing values"), "filename");
 	f = (const char**) R_alloc(n, sizeof(char*));
 	title = (const char**) R_alloc(n, sizeof(char*));
 	/* FIXME convert to UTF-8 on Windows */
