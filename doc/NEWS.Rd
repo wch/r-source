@@ -251,6 +251,10 @@
       \code{headers} for custom HTTP headers, e.g., allowing to perform
       basic http authentication, thanks to a patch contributed by Gábor
       Csárdi.
+
+      \item File-based connection functions \code{file()}, \code{gzfile()},
+      \code{bzfile()}, \code{xzfile()} now signal an error when used on a
+      directory.
     }
   }
 
@@ -604,6 +608,12 @@
 
       \item \code{ar.ols()} also returns scalar \code{var.pred} in
       univariate case (\PR{17517}).
+
+      \item \code{normalizePath()} now treats \code{NA} path as non-existent
+      and normalizes it to \code{NA}.  \code{file.access()} treats \code{NA}
+      file name as non-existent.  \code{file.edit()} and connection
+      functions such as \code{file()} now treat \code{NA} file names as
+      errors.
     }
   }
 }
