@@ -1419,7 +1419,8 @@ SEXP attribute_hidden do_fifo(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     sfile = CAR(args);
-    if(!isString(sfile) || LENGTH(sfile) != 1)
+    if(!isString(sfile) || LENGTH(sfile) != 1 ||
+       STRING_ELT(sfile, 0) == NA_STRING)
 	error(_("invalid '%s' argument"), "description");
     if(length(sfile) > 1)
 	warning(_("only first element of 'description' argument used"));
@@ -1581,7 +1582,8 @@ SEXP attribute_hidden do_pipe(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     scmd = CAR(args);
-    if(!isString(scmd) || LENGTH(scmd) != 1)
+    if(!isString(scmd) || LENGTH(scmd) != 1 ||
+       STRING_ELT(scmd, 0) == NA_STRING)
 	error(_("invalid '%s' argument"), "description");
     if(LENGTH(scmd) > 1)
 	warning(_("only first element of 'description' argument used"));
@@ -2237,7 +2239,8 @@ SEXP attribute_hidden do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     sfile = CAR(args);
-    if(!isString(sfile) || LENGTH(sfile) != 1)
+    if(!isString(sfile) || LENGTH(sfile) != 1 ||
+       STRING_ELT(sfile, 0) == NA_STRING)
 	error(_("invalid '%s' argument"), "description");
     if(LENGTH(sfile) > 1)
 	warning(_("only first element of 'description' argument used"));
@@ -2917,7 +2920,8 @@ SEXP attribute_hidden do_rawconnection(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     sfile = CAR(args);
-    if(!isString(sfile) || LENGTH(sfile) != 1)
+    if(!isString(sfile) || LENGTH(sfile) != 1 ||
+       STRING_ELT(sfile, 0) == NA_STRING)
 	error(_("invalid '%s' argument"), "description");
     desc = translateChar(STRING_ELT(sfile, 0));
     sraw = CADR(args);
@@ -3319,7 +3323,8 @@ SEXP attribute_hidden do_textconnection(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     sfile = CAR(args);
-    if(!isString(sfile) || LENGTH(sfile) != 1)
+    if(!isString(sfile) || LENGTH(sfile) != 1 ||
+       STRING_ELT(sfile, 0) == NA_STRING)
 	error(_("invalid '%s' argument"), "description");
     desc = translateChar(STRING_ELT(sfile, 0));
     stext = CADR(args);
@@ -3469,7 +3474,8 @@ SEXP attribute_hidden do_unz(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     sfile = CAR(args);
-    if(!isString(sfile) || LENGTH(sfile) != 1)
+    if(!isString(sfile) || LENGTH(sfile) != 1 ||
+       STRING_ELT(sfile, 0) == NA_STRING)
 	error(_("invalid '%s' argument"), "description");
     if(length(sfile) > 1)
 	warning(_("only first element of 'description' argument used"));
@@ -5318,7 +5324,8 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     // --------- description
     scmd = CAR(args);
-    if(!isString(scmd) || LENGTH(scmd) != 1)
+    if(!isString(scmd) || LENGTH(scmd) != 1 ||
+       STRING_ELT(scmd, 0) == NA_STRING)
 	error(_("invalid '%s' argument"), "description");
     if(LENGTH(scmd) > 1)
 	warning(_("only first element of 'description' argument used"));
