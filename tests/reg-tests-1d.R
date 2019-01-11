@@ -2467,6 +2467,13 @@ d <- getParseData(parse(text="{;}", keep.source=TRUE))
 l <- d[ d[,"token"] == "exprlist", "line1" ]
 stopifnot(identical(l, 1L))
 
+## check that NA is treated as non-existent file (not file named "NA")
+tools::assertError(normalizePath(c(NA_character_,getwd()),mustWork=TRUE))
+tools::assertWarning(normalizePath(c(NA_character_,getwd()),mustWork=NA))
+stopifnot(
+    identical(normalizePath(c(NA_character_,getwd()),mustWork=FALSE)[1], NA_character_)
+)
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())
