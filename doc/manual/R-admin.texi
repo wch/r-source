@@ -5415,8 +5415,9 @@ FC=f95
 FFLAGS=-O
 CXX=CC
 CXXSTD="-std=c++11 -library=stdcpp,CrunG3"
-CXX98=CC
-CXX98STD=-library=stlport4
+CXX98STD="-compat=g -library=stdcpp,CrunG3"
+CXX11STD="-std=c++11 -library=stdcpp,CrunG3"
+CXX14STD="-std=c++14 -library=stdcpp,CrunG3"
 CXXFLAGS=-O
 R_LD_LIBRARY_PATH="/opt/developerstudio12.6/lib:/usr/local/lib:/opt/csw/lib"
 @end example
