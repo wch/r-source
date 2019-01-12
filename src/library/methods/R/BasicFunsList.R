@@ -137,7 +137,8 @@ isBaseFun <- function(fun) {
 }
 
 inBasicFuns <- function(f) {
-    !is.null(.BasicFunsList[[f]])
+    fun <- .BasicFunsList[[f]]
+    !is.null(fun) && !identical(fun, FALSE)
 }
 
 dispatchIsInternal <- function(fdef) {
