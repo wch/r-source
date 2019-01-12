@@ -2486,6 +2486,18 @@ stopifnot(is.na(strtoi("")),
 ## was platform dependent [libC strtol()] in R <= 3.5.x
 
 
+## formula.data.frame() thinko at modularization [r75911]:
+f <- function(df) {
+    stopifnot(is.data.frame(df))
+    d <- 4
+    f2(formula(df))
+}
+f2 <- function(form) eval(quote(d), envir = environment(form))
+rf <- f(data.frame(x=1, f="b")) ## gave error inside f2() in R-devel
+stopifnot(identical(rf, 4))
+## as after 75911 a wrong parent.frame() was used.
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

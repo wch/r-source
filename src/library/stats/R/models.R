@@ -1,7 +1,7 @@
 #  File src/library/stats/R/models.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -44,7 +44,7 @@ formula.terms <- function(x, ...) {
     x
 }
 
-DF2formula <- function(x) {
+DF2formula <- function(x, env = parent.frame()) {
     nm <- unlist(lapply(names(x), as.name))
     if (length(nm) > 1L) {
         rhs <- nm[-1L]
@@ -56,7 +56,7 @@ DF2formula <- function(x) {
     ff <- parse(text = paste(lhs, paste(rhs, collapse = "+"), sep = "~"),
                 keep.source = FALSE)
     ff <- eval(ff)
-    environment(ff) <- parent.frame()
+    environment(ff) <- env
     ff
 }
 
@@ -64,7 +64,7 @@ formula.data.frame <- function (x, ...)
 {
     if(length(tx <- attr(x, "terms")) && length(ff <- formula.terms(tx)))
 	ff
-    else DF2formula(x)
+    else DF2formula(x, parent.frame())
 }
 
 formula.character <- function(x, env = parent.frame(), ...)
@@ -160,7 +160,7 @@ reformulate <- function (termlabels, response=NULL, intercept = TRUE)
     ## basically formula.character() :
     rval <- eval(parse(text = termtext, keep.source = FALSE)[[1L]])
     if(has.resp) rval[[2L]] <-
-        if(is.character(response)) as.symbol(response) else response
+        if(is.character(response)) callish(response) else response
     ## response can be a symbol or call as  Surv(ftime, case)
     environment(rval) <- parent.frame()
     rval

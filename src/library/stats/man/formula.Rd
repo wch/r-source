@@ -1,6 +1,6 @@
 % File src/library/stats/man/formula.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{formula}
@@ -17,7 +17,7 @@
 \title{Model Formulae}
 \usage{
 formula(x, \dots)
-DF2formula(x)
+DF2formula(x, env = parent.frame())
 as.formula(object, env = parent.frame())
 
 \method{print}{formula}(x, showEnv = !identical(e, .GlobalEnv), \dots)
