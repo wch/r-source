@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 1997--2019  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2018  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Pulic License as published by
@@ -180,11 +180,11 @@ int R_nchar(SEXP string, nchar_type type_,
 		int nc = 0;
 		for( ; *p; p += utf8clen(*p)) {
 		    utf8toucs(&wc1, p);
-		    if (IS_HIGH_SURROGATE(wc1)) 
+		    if (IS_HIGH_SURROGATE(wc1))
 		    	ucs = utf8toucs32(wc1, p);
 		    else
 		    	ucs = wc1;
-		    nc += Ri18n_wcwidth(ucs); 
+		    nc += Ri18n_wcwidth(ucs);
 		}
 		return nc;
 	    }
@@ -385,7 +385,7 @@ do_startsWith(SEXP call, SEXP op, SEXP args, SEXP env)
 	} else {
 	    // ASCII matching will do for ASCII Xfix except in non-UTF-8 MBCS
 	    Rboolean need_translate = TRUE;
-	    if (strIsASCII(CHAR(el)) && (utf8locale || !mbcslocale)) 
+	    if (strIsASCII(CHAR(el)) && (utf8locale || !mbcslocale))
 		need_translate = FALSE;
 	    cp y0 = need_translate ? translateCharUTF8(el) : CHAR(el);
 	    int ylen = (int) strlen(y0);
@@ -441,7 +441,7 @@ do_startsWith(SEXP call, SEXP op, SEXP args, SEXP env)
 		    else if (x1[i1] < y1[i2])
 			LOGICAL(ans)[i] = 0;
 		    else // memcmp should be faster than strncmp
-			LOGICAL(ans)[i] = 
+			LOGICAL(ans)[i] =
 			    memcmp(x0[i1], y0[i2], y1[i2]) == 0;
 		});
 	} else { // endsWith
@@ -453,7 +453,7 @@ do_startsWith(SEXP call, SEXP op, SEXP args, SEXP env)
 			if (off < 0)
 			    LOGICAL(ans)[i] = 0;
 			else {
-			    LOGICAL(ans)[i] = 
+			    LOGICAL(ans)[i] =
 				memcmp(x0[i1] + off, y0[i2], y1[i2]) == 0;
 			}
 		    }
@@ -1580,17 +1580,16 @@ SEXP attribute_hidden do_strtrim(SEXP call, SEXP op, SEXP args, SEXP env)
 
 static int strtoi(SEXP s, int base)
 {
-    long int res;
-    char *endp;
+    if(s == NA_STRING || CHAR(s)[0] == '\0') return(NA_INTEGER);
 
     /* strtol might return extreme values on error */
     errno = 0;
-
-    if(s == NA_STRING) return(NA_INTEGER);
-    res = strtol(CHAR(s), &endp, base); /* ASCII */
-    if(errno || *endp != '\0') res = NA_INTEGER;
-    if(res > INT_MAX || res < INT_MIN) res = NA_INTEGER;
-    return (int) res;
+    char *endp;
+    long int res = strtol(CHAR(s), &endp, base); /* ASCII */
+    return (errno || *endp != '\0' ||
+	    res > INT_MAX || res < INT_MIN)
+	? NA_INTEGER
+	: (int) res;
 }
 
 SEXP attribute_hidden do_strtoi(SEXP call, SEXP op, SEXP args, SEXP env)
