@@ -1,6 +1,6 @@
 % File src/library/stats/man/approxfun.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{approxfun}
@@ -51,19 +51,31 @@ approxfun(x, y = NULL,       method = "linear",
     == 1}, even for non-finite \code{y} values.}
   \item{ties}{handling of tied \code{x} values.  Either a function
     with a single vector argument returning a single number result or
-    the string \code{"ordered"}; note that the latter is the fastest for
-    large \code{length(x)}.}
+    the string \code{"ordered"}, or a \code{\link{list}} with both, e.g.,
+    \code{list("ordered", mean)}, see Details.}
 }
 \details{
   The inputs can contain missing values which are deleted, so at least
   two complete \code{(x, y)} pairs are required (for \code{method =
   "linear"}, one otherwise).  If there are duplicated (tied) \code{x}
-  values and \code{ties} is a function it is applied to the \code{y}
-  values for each distinct \code{x} value.
+  values and \code{ties} contains a function it is applied to the \code{y}
+  values for each distinct \code{x} value to produce \code{(x,y)} pairs
+  with unique \code{x}.
   Useful functions in this context include \code{\link{mean}},
-  \code{\link{min}}, and \code{\link{max}}.  If \code{ties = "ordered"}
-  the \code{x} values are assumed to be already ordered.  The first
-  \code{y} value will be used for interpolation to the left and the last
+  \code{\link{min}}, and \code{\link{max}}.
+
+  If \code{ties = "ordered"} the \code{x} values are assumed to be already
+  ordered (and unique) and ties are \emph{not} checked but kept if present.
+  This is the fastest option for large \code{length(x)}.
+
+  If \code{ties} is a \code{\link{list}} of length two, \code{ties[[2]]}
+  must be a function to be applied to ties, see above, but if
+  \code{ties[[1]]} is identical to \code{"ordered"}, the \code{x} values
+  are assumed to be sorted and are only checked for ties.  Consequently,
+  \code{ties = list("ordered", mean)} will be slightly more efficient than
+  the default \code{ties = mean} in such a case.
+
+  The first \code{y} value will be used for interpolation to the left and the last
   one for interpolation to the right.
 }
 \value{
@@ -114,9 +126,13 @@ plot(approxfun(x, y, rule = 2:1), 0, 11,
 
 x <- c(2,2:4,4,4,5,5,7,7,7)
 y <- c(1:6, 5:4, 3:1)
-approx(x, y, xout = x)$y # warning
-(ay <- approx(x, y, xout = x, ties = "ordered")$y)
-stopifnot(ay == c(2,2,3,6,6,6,4,4,1,1,1))
+(amy <- approx(x, y, xout = x)$y) # warning, can be avoided by specifying 'ties=':
+op <- options(warn=2) # warnings would be error
+stopifnot(identical(amy, approx(x, y, xout = x, ties=mean)$y))
+options(op) # revert
+(ay  <- approx(x, y, xout = x, ties = "ordered")$y)
+stopifnot(amy == c(1.5,1.5, 3, 5,5,5, 4.5,4.5, 2,2,2),
+          ay  == c(2, 2,    3, 6,6,6, 4, 4,    1,1,1))
 approx(x, y, xout = x, ties = min)$y
 approx(x, y, xout = x, ties = max)$y
 

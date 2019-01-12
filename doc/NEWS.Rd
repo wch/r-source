@@ -255,6 +255,10 @@
       \item File-based connection functions \code{file()}, \code{gzfile()},
       \code{bzfile()}, \code{xzfile()} now signal an error when used on a
       directory.
+
+      \item For \code{approx()}, \code{splinefun()}, etc, a new setting
+      \code{ties = c("ordered", <fun>)} allows to skip the sorting and
+      still treat ties.
     }
   }
 
@@ -614,6 +618,12 @@
       file name as non-existent.  \code{file.edit()} and connection
       functions such as \code{file()} now treat \code{NA} file names as
       errors.
+
+      \item The internal \code{regularize.values()} auxiliary of
+      \code{approx()}, \code{splinefun()} etc now warns again when there
+      are ties and the caller did not specify \code{ties}.  Further, it no
+      longer duplicates \code{x} and \code{y} unnecessarily when \code{x}
+      is already sorted (\PR{17515}).
     }
   }
 }
@@ -638,7 +648,7 @@
 }
 
 \section{\Rlogo CHANGES IN R 3.5.2}{
-  
+
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
       \item New macro \samp{CXX_VISIBILITY} analogous to

@@ -1,7 +1,7 @@
 #  File src/library/stats/R/spline.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #                2002 Simon N. Wood
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -28,7 +28,7 @@ spline <-
     method <- pmatch(method, c("periodic", "natural", "fmm", "hyman"))
     if(is.na(method)) stop("invalid interpolation method")
 
-    x <- regularize.values(x, y, ties) # -> (x,y) numeric of same length
+    x <- regularize.values(x, y, ties, missing(ties)) # -> (x,y) numeric of same length
     y <- x$y
     x <- x$x
     nx <- length(x) # large vectors ==> non-integer
