@@ -1492,7 +1492,7 @@ setPackageSlot <- function(x, value) {
                             DEFINED = as.character(defined[[i]])))
     }
     if(length(expr) > 1L) {
-       expr[[length(expr) + 1L]] <- body
+       expr[length(expr) + 1L] <- list(body) # body could be NULL!
        expr
    }
     else
