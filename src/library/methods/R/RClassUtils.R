@@ -670,8 +670,6 @@ reconcilePropertiesAndPrototype <-
   ## `new(classi)' for the class, `classi' of the slot if that succeeds, and `NULL'
   ## otherwise.
   ##
-  ## The prototype may imply slots not in the properties list.  It is not required that
-    ## the extends classes be define at this time.  Should it be?
   function(name, properties, prototype, superClasses, where) {
       ## the StandardPrototype should really be a type that doesn't behave like
       ## a vector.  But none of the existing SEXP types work.  Someday ...
@@ -767,15 +765,16 @@ reconcilePropertiesAndPrototype <-
           if(is(clDef, "classRepresentation")) {
               theseProperties <- getSlots(clDef)
               theseSlots <- names(theseProperties)
-              theseSlots <- theseSlots[theseSlots == ".Data"] # handled already
-              dups <- !is.na(match(theseSlots, allProps))
+              theseSlots <- theseSlots[theseSlots != ".Data"] # handled already
+              dups <- !is.na(match(theseSlots, names(allProps)))
               for(dup in theseSlots[dups])
                   if(!extends(elNamed(allProps, dup), elNamed(theseProperties, dup)))
-                      stop(gettextf("slot %s in class %s currently defined (or inherited) as \"%s\", conflicts with an inherited definition in class %s",
+                      stop(gettextf("Definition of slot %s, in class %s, as %s conflicts with definition, inherited from class %s, as %s",
                                     sQuote(dup),
                                     dQuote(name),
-                                    elNamed(allProps, dup),
-                                    dQuote(cl)),
+                                    dQuote(elNamed(allProps, dup)),
+                                    dQuote(cl),
+                                    dQuote(elNamed(theseProperties, dup))),
                            domain = NA)
               theseSlots <- theseSlots[!dups]
               if(length(theseSlots))
@@ -785,6 +784,12 @@ reconcilePropertiesAndPrototype <-
               stop(gettextf("class %s extends an undefined class (%s)",
                             dQuote(name), dQuote(cl)),
                    domain = NA)
+      }
+      undefinedPrototypeSlots <- setdiff(names(prototype), names(allProps))
+      if (length(undefinedPrototypeSlots) > 0L) {
+          stop(gettextf("The prototype for class %s has undefined slot(s): %s",
+                        dQuote(name), paste0("'", undefinedPrototypeSlots, "'",
+                                             collapse=", ")))
       }
       if(is.null(dataPartClass)) {
           if(extends(prototypeClass, "classPrototypeDef"))
