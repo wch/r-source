@@ -787,7 +787,7 @@ reconcilePropertiesAndPrototype <-
       }
       undefinedPrototypeSlots <- setdiff(names(prototype), names(allProps))
       if (length(undefinedPrototypeSlots) > 0L) {
-          stop(gettextf("The prototype for class %s has undefined slot(s): %s",
+          warning(gettextf("The prototype for class %s has undefined slot(s): %s",
                         dQuote(name), paste0("'", undefinedPrototypeSlots, "'",
                                              collapse=", ")))
       }
