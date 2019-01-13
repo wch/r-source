@@ -1988,8 +1988,10 @@ all: mylibs $(SHLIB)
 @end example
 
 @noindent
-but that is not portable (and @command{dmake} and @command{pmake} allow
-the similar @code{.NO_PARALLEL}, also not portable).
+but that is not portable.  @command{dmake} and @command{pmake} allow the
+similar @code{.NO_PARALLEL}, also not portable: some variants of
+@command{pmake} accept @code{.NOTPARALLEL} as an alias for
+@code{.NO_PARALLEL}.
 
 Note that on Windows it is required that @file{Makevars[.win]} does
 create a DLL: this is needed as it is the only reliable way to ensure
@@ -4328,10 +4330,10 @@ PKG_CPPFLAGS = `gsl-config --cflags`
 
 @noindent
 which works in all versions of @command{make} known@footnote{GNU make,
-BSD make formerly in FreeBSD and macOS, AT&T make as implemented on
-Solaris, @command{pmake} in FreeBSD, `Distributed Make' (@code{dmake}),
-part of Oracle Studio and available in other versions.} to be used with
-@R{}.
+BSD make and other variants of @command{pmake} in FreeBSD, NetBSD and
+formerly in macOS, AT&T make as implemented on Solaris and `Distributed
+Make' (@code{dmake}), part of Oracle Developer Studio and available in
+other versions including from Apache OpenOffice.} to be used with @R{}.
 
 If you really must require GNU make, declare it in the @file{DESCRIPTION}
 file by
