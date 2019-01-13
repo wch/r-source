@@ -4531,7 +4531,9 @@ add_dummies <- function(dir, Log)
                              "missing links?:",
                              ## From the byte compiler's 'warn' methods
                              "^Note: possible error in",
-                             "^Note: (break|next) used in wrong context: no loop is visible"
+                             "^Note: (break|next) used in wrong context: no loop is visible",
+                             ## Warnings about S4 classes
+                             "^  The prototype for class.*undefined slot"
                              )
                 ## Warnings spotted by gcc with
                 ##   '-Wimplicit-function-declaration'
