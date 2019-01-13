@@ -1988,7 +1988,8 @@ all: mylibs $(SHLIB)
 @end example
 
 @noindent
-but that is not portable.
+but that is not portable (and @command{dmake} and @command{pmake} allow
+the similar @code{.NO_PARALLEL}, also not portable).
 
 Note that on Windows it is required that @file{Makevars[.win]} does
 create a DLL: this is needed as it is the only reliable way to ensure
