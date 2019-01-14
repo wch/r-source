@@ -162,4 +162,4 @@ Thailand,Thailand,Hatyai,http://mirrors.psu.ac.th/pub/cran/,"Prince of Songkla U
 "USA (TX 1)",USA,Dallas,http://cran.revolutionanalytics.com/,"Revolution Analytics, Dallas, TX","David Smith <david # revolutionanalytics.com>",1,us,"secure_mirror_from_master"
 "Uruguay [https]",Uruguay,Montevideo,https://espejito.fder.edu.uy/cran/,"Facultad de Derecho, Universidad de la República","root # fder.edu.uy",1,uy,"secure_mirror_from_master"
 "Vietnam [https]",Vietnam,"Ho Chi Minh",https://mirror.vinahost.vn/CRAN/,VinaHost,"tienhn # vinahost.vn",0,vn,"secure_mirror_from_master"
-Venezuela,Venezuela,Valencia,http://camoruco.ing.uc.edu.ve/cran/,"Universidad de Carabobo Venezuela","dir-imyca # uc.edu.ve",0,ve
+Venezuela,Venezuela,Valencia,http://camoruco.ing.uc.edu.ve/cran/,"Universidad de Carabobo Venezuela","dir-imyca # uc.edu.ve",1,ve
