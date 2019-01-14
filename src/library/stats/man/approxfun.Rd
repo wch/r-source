@@ -49,10 +49,11 @@ approxfun(x, y = NULL,       method = "linear",
     \code{ y0*(1-f)+y1*f} for intermediate values. In this way the result is
     right-continuous for \code{f == 0} and left-continuous for \code{f
     == 1}, even for non-finite \code{y} values.}
-  \item{ties}{handling of tied \code{x} values.  Either a function
-    with a single vector argument returning a single number result or
-    the string \code{"ordered"}, or a \code{\link{list}} with both, e.g.,
-    \code{list("ordered", mean)}, see Details.}
+  \item{ties}{handling of tied \code{x} values.  The string
+    \code{"ordered"} or a function (or the name of a function)
+    taking a single vector argument and returning a single number
+    or a \code{\link{list}} of both, e.g.,
+    \code{list("ordered", mean)}, see \sQuote{Details}.} 
 }
 \details{
   The inputs can contain missing values which are deleted, so at least
