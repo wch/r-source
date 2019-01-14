@@ -1,7 +1,7 @@
 /*
  *  A simple 'reading' pipe (and a command executor)
  *  Copyright (C) 1999  Guido Masarotto
- *            (C) 2004-2017  The R Core Team
+ *            (C) 2004-2019  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,8 +22,14 @@
 #define WIN32_LEAN_AND_MEAN 1
 #include <windows.h>
 
-struct structRPIPE {
+typedef struct {
     PROCESS_INFORMATION pi;
+    HANDLE job;
+    HANDLE port;
+} pinfo;
+
+struct structRPIPE {
+    pinfo pi;
     HANDLE thread;
     HANDLE read, write;
     int exitcode, active, timedout;
