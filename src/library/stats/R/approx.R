@@ -34,7 +34,7 @@ regularize.values <- function(x, y, ties, warn.collapsing = TRUE) {
     nx <- length(x)
     if (!identical(ties, "ordered")) {
 	ordered <-
-	    if(is.function(ties))
+	    if(is.function(ties) || is.character(ties))# fn or name of one
 		FALSE
 	    else if(is.list(ties) && length(T <- ties) == 2L && is.function(T[[2]])) {
 		## e.g. ties ==  list("ordered", mean)
