@@ -800,7 +800,8 @@ extern0 double elapsedLimitValue       	INI_as(-1.0);
 void resetTimeLimits(void);
 
 #define R_BCNODESTACKSIZE 200000
-extern0 R_bcstack_t *R_BCNodeStackBase, *R_BCNodeStackTop, *R_BCNodeStackEnd;
+LibExtern R_bcstack_t *R_BCNodeStackTop, *R_BCNodeStackEnd;
+extern0 R_bcstack_t *R_BCNodeStackBase;
 extern0 int R_jit_enabled INI_as(0); /* has to be 0 during R startup */
 extern0 int R_compile_pkgs INI_as(0);
 extern0 int R_check_constants INI_as(0);
