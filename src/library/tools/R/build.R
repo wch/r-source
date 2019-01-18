@@ -1102,7 +1102,7 @@ inRbuildignore <- function(files, pkgdir) {
         if (!hasDep350) {
             ## re-read files after exclusions have been applied
             allfiles <- dir(".", all.files = TRUE, recursive = TRUE,
-                            full.names = TRUE, include.dirs = TRUE)
+                            full.names = TRUE)
             allfiles <- substring(allfiles, 3L)  # drop './'
             vers  <- get_serialization_version(allfiles)
             toonew <- names(vers[vers >= 3L])
