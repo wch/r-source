@@ -209,15 +209,14 @@ function(dir, meta, installed = FALSE)
 url_db_from_package_news <-
 function(dir, installed = FALSE)
 {
-    urls <- character()
     path <- if(installed) "NEWS.Rd" else file.path("inst", "NEWS.Rd")
     nfile <- file.path(dir, path)
-    if(file.exists(nfile)) {
-        macros <- initialRdMacros()
-        urls <- .get_urls_from_Rd(prepare_Rd(parse_Rd(nfile,
-                                                      macros = macros),
-                                             stages = "install"))
-    }
+    urls <-
+        if(file.exists(nfile)) {
+            macros <- initialRdMacros()
+            .get_urls_from_Rd(prepare_Rd(parse_Rd(nfile, macros = macros),
+                                         stages = "install"))
+        } else character()
     url_db(urls, rep.int(path, length(urls)))
 }
 
