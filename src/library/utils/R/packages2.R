@@ -741,12 +741,12 @@ install.packages <-
             ## if --no-lock or --lock was specified in INSTALL_opts
             ## that will override this.
             args0 <- c(args0, "--pkglock")
-            tmpd <- file.path(tempdir(), "make_packages")
-            if (!file.exists(tmpd) && !dir.create(tmpd))
+            tmpd2 <- file.path(tempdir(), "make_packages")
+            if (!file.exists(tmpd2) && !dir.create(tmpd2))
                 stop(gettextf("unable to create temporary directory %s",
-                              sQuote(tmpd)),
+                              sQuote(tmpd2)),
                      domain = NA)
-            mfile <- file.path(tmpd, "Makefile")
+            mfile <- file.path(tmpd2, "Makefile")
             conn <- file(mfile, "wt")
             deps <- paste(paste0(update[, 1L], ".ts"), collapse=" ")
             deps <- strwrap(deps, width = 75, exdent = 2)
@@ -790,7 +790,7 @@ install.packages <-
                     "", sep = "\n", file = conn)
             }
             close(conn)
-            cwd <- setwd(tmpd)
+            cwd <- setwd(tmpd2)
             on.exit(setwd(cwd))
             ## MAKE will be set by sourcing Renviron
             status <- system2(Sys.getenv("MAKE", "make"),
@@ -810,7 +810,7 @@ install.packages <-
             if(keep_outputs)
                 file.copy(paste0(update[, 1L], ".out"), outdir)
             setwd(cwd); on.exit()
-            unlink(tmpd, recursive = TRUE)
+            unlink(tmpd2, recursive = TRUE)
         } else {
             outfiles <- paste0(update[, 1L], ".out")
             for(i in seq_len(nrow(update))) {
