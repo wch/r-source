@@ -5444,6 +5444,8 @@ add_dummies <- function(dir, Log)
     if (install == "no") {
         opts <- c(opts, "--install=no")
         do_install_arg <- FALSE
+        ## If we do not install, then we cannot *run* any code.
+        do_examples <- do_tests <- do_vignettes <- do_build_vignettes <- 0
     }
     if (run_dontrun) opts <- c(opts, "--run-dontrun")
     if (run_donttest) opts <- c(opts, "--run-donttest")
