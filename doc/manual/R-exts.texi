@@ -4460,17 +4460,19 @@ platform not tested by the package maintainer.  (@command{R CMD check}
 can optionally report on unsafe flags which were used.)
 
 @item
-Do be very careful with passing arguments between @R{}, C and
-Fortran code.  In particular, @code{long} in C will be 32-bit
-on some @R{} platforms (including 64-bit Windows), but 64-bit on most
-modern Unix and Linux platforms.  It is rather unlikely that the use of
-@code{long} in C code has been thought through: if you need a longer
-type than @code{int} you should use a configure test for a C99/C++11
-type such as @code{int_fast64_t} (and failing that, @code{long long}
-@footnote{but note that @code{long long} is not a standard C++98 type,
-and C++ compilers set up for strict checking will reject it.}) and
-typedef your own type to be @code{long} or @code{long long}, or use
-another suitable type (such as @code{size_t}).
+Do be very careful with passing arguments between @R{}, C and Fortran
+code.  In particular, @code{long} in C will be 32-bit on some @R{}
+platforms (including 64-bit Windows), but 64-bit on most modern Unix and
+Linux platforms.  It is rather unlikely that the use of @code{long} in C
+code has been thought through: if you need a longer type than @code{int}
+you should use a configure test for a C99/C++11 type such as
+@code{int_fast64_t} (and failing that, @code{long long} @footnote{but
+note that @code{long long} is not a standard C++98 type, and C++
+compilers for earlier versions of @R{} set up for strict C++98 will
+reject it.  C++11 includes @code{long long} and requires it to be at
+least 64 bits.}) and typedef your own type to be @code{long} or
+@code{long long}, or use another suitable type (such as @code{size_t}).
+@c https://en.cppreference.com/w/cpp/language/types
 
 It is not safe to assume that @code{long} and pointer types are the same
 size, and they are not on 64-bit Windows.  If you need to convert
