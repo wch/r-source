@@ -35,8 +35,9 @@ stopifnot(1 == grep("setClass",
 ##
 ## Part 2: -- build, install, load and "inspect" the package:
 build.pkg <- function(dir) {
-    stopifnot(dir.exists(dir))
-    patt <- paste(basename(dir), ".*tar\\.gz$", sep="_")
+    stopifnot(dir.exists(dir), file.exists(DESC <- file.path(dir, "DESCRIPTION")))
+    pkgName <- sub("^[A-Za-z]+: ", "", grep("^Package: ", readLines(DESC), value=TRUE))
+    patt <- paste(pkgName, ".*tar\\.gz$", sep="_")
     unlink(dir('.', pattern = patt))
     Rcmd <- paste(shQuote(file.path(R.home("bin"), "R")), "CMD")
     r <- tail(system(paste(Rcmd, "build --keep-empty-dirs", shQuote(dir)),
@@ -97,27 +98,34 @@ pkgPath <- file.path(tempdir(), "Pkgs")
 dir.create(file.path(pkgPath, "pkgB", "R"), recursive = TRUE,
 	   showWarnings = FALSE)
 p.lis <- c(if("Matrix" %in% row.names(installed.packages(.Library)))
-               c("pkgA", "pkgB"),
+               c("pkgA", "pkgB", "pkgC"),
            "exNSS4", "exSexpr")
+InstOpts <- list("exSexpr" = "--html")
 pkgApath <- file.path(pkgPath, "pkgA")
 if("pkgA" %in% p.lis && !dir.exists(d <- pkgApath)) {
     cat("symlink 'pkgA' does not exist as directory ",d,"; copying it\n", sep='')
     file.copy(file.path(pkgPath, "xDir", "pkg"), to = d, recursive=TRUE)
-    ## if even the copy failed (NB: pkgB depends on pkgA)
-    if(!dir.exists(d)) p.lis <- p.lis[!(p.lis %in% c("pkgA", "pkgB"))]
+    ## if even the copy failed (NB: pkgB, pkgC depend on pkgA)
+    if(!dir.exists(d)) p.lis <- p.lis[!(p.lis %in% c("pkgA", "pkgB", "pkgC"))]
 }
-for(p. in p.lis) {
+dir2pkg <- function(dir) ifelse(dir == "pkgC", "PkgC", dir)
+for(p in p.lis) {
+    p. <- dir2pkg(p) # 'p' is sub directory name;  'p.' is package name
     cat("building package", p., "...\n")
-    r <- build.pkg(file.path(pkgPath, p.))
+    r <- build.pkg(file.path(pkgPath, p))
     cat("installing package", p., "using file", r, "...\n")
     ## we could install the tar file ... (see build.pkg()'s definition)
-    install.packages(r, lib = "myLib", repos=NULL, type = "source")
+    install.packages(r, lib = "myLib", repos=NULL, type = "source",
+                     INSTALL_opts = InstOpts[[p.]])
     stopifnot(require(p.,lib = "myLib", character.only=TRUE))
     detach(pos = match(p., sub("^package:","", search())))
 }
 (res <- installed.packages(lib.loc = "myLib", priority = "NA"))
-stopifnot(identical(res[,"Package"], setNames(,sort(c(p.lis, "myTst")))),
-	  res[,"LibPath"] == "myLib")
+(p.lis <- dir2pkg(p.lis)) # so from now, it contains package names
+stopifnot(exprs = {
+    identical(res[,"Package"], setNames(, sort(c(p.lis, "myTst"))))
+    res[,"LibPath"] == "myLib"
+})
 ### Specific Tests on our "special" packages: ------------------------------
 
 ## These used to fail because of the sym.link in pkgA
