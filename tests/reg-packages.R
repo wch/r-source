@@ -109,15 +109,25 @@ if("pkgA" %in% p.lis && !dir.exists(d <- pkgApath)) {
     if(!dir.exists(d)) p.lis <- p.lis[!(p.lis %in% c("pkgA", "pkgB", "pkgC"))]
 }
 dir2pkg <- function(dir) ifelse(dir == "pkgC", "PkgC", dir)
+.R_LIBS <- function(libp = .libPaths()) { # (>> in utils?)
+    libp <- libp[! libp %in% .Library]
+    if(length(libp))
+        paste(libp, collapse = .Platform$path.sep)
+    else libp
+}
+if(is.na(match("myLib", .lP <- .libPaths()))) .libPaths(c("myLib", .lP)) # need pkgA
+Sys.setenv(R_LIBS = .R_LIBS()) # for build.pkg() & install.packages()
 for(p in p.lis) {
     p. <- dir2pkg(p) # 'p' is sub directory name;  'p.' is package name
     cat("building package", p., "...\n")
     r <- build.pkg(file.path(pkgPath, p))
-    cat("installing package", p., "using file", r, "...\n")
-    ## we could install the tar file ... (see build.pkg()'s definition)
+    if(!isTRUE(file.exists(r)))
+        stop("R CMD build failed (no tarball) for package ", p)
+    ## otherwise install the tar file:
+    cat("installing package", p., "using built file", r, "...\n")
     install.packages(r, lib = "myLib", repos=NULL, type = "source",
                      INSTALL_opts = InstOpts[[p.]])
-    stopifnot(require(p.,lib = "myLib", character.only=TRUE))
+    stopifnot(require(p., lib = "myLib", character.only=TRUE))
     detach(pos = match(p., sub("^package:","", search())))
 }
 (res <- installed.packages(lib.loc = "myLib", priority = "NA"))
