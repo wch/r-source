@@ -91,7 +91,7 @@ clean:
 	-@rm -f FALSE* PACKAGES* .R .tex mirrors.html ./-package.Rd ex.gz
 	-@rm -f testit.txt testit.html testit.tex testit-Ex.R
 	-@rm -f ver20.txt ver20.html ver20.tex ver20-Ex.R
-	-@rm -Rf anRpackage myTst* myLib
+	-@rm -Rf anRpackage myTst* myLib myLib_2
 	-@rm -f *.tar.gz
 	-@rm -f keepsource.tex test-system2 test-system.Rout
 	-@rm -f *.log *.tsin *.trin
