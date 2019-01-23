@@ -4466,20 +4466,21 @@ platforms (including 64-bit Windows), but 64-bit on most modern Unix and
 Linux platforms.  It is rather unlikely that the use of @code{long} in C
 code has been thought through: if you need a longer type than @code{int}
 you should use a configure test for a C99/C++11 type such as
-@code{int_fast64_t} (and failing that, @code{long long} @footnote{but
+@code{int_fast64_t} (and failing that, @code{long long}@footnote{but
 note that @code{long long} is not a standard C++98 type, and C++
-compilers for earlier versions of @R{} set up for strict C++98 will
-reject it.  C++11 includes @code{long long} and requires it to be at
-least 64 bits.}) and typedef your own type to be @code{long} or
-@code{long long}, or use another suitable type (such as @code{size_t}).
-@c https://en.cppreference.com/w/cpp/language/types
+compilers for earlier versions of @R{} set up for strict C++98
+conformance will reject it.  C++11 (the default since @R{} 3.6.0)
+includes @code{long long}.}) and typedef your own type, or use another
+suitable type (such as @code{size_t}).
+@c https://en.cppreference.com/w/cpp/language/types claims long long is
+@c >= 64-bit, but that is not obvious in the standard.
 
 It is not safe to assume that @code{long} and pointer types are the same
 size, and they are not on 64-bit Windows.  If you need to convert
 pointers to and from integers use the C99/C++11 integer types
-@code{intptr_t} and @code{uintptr_t} (which are defined in the header
-@code{<stdint.h>} and are not required to be implemented by the C99
-standard but are used in C code by @R{} itself).
+@code{intptr_t} and @code{uintptr_t} (in the headers @code{<stdint.h>}
+and @code{cstdint}: they are not required to be implemented by the
+standards but are used in C code by @R{} itself).
 
 Note that @code{integer} in Fortran corresponds to @code{int} in C on
 all @R{} platforms.
