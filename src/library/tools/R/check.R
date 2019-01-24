@@ -3787,21 +3787,26 @@ add_dummies <- function(dir, Log)
         if (!is_base_pkg) {
             dir <- file.path(pkgdir, "inst", "doc")
             outputs <- character(length(vigns$docs))
+	    .msg <- character()
             for (i in seq_along(vigns$docs)) {
                 file <- vigns$docs[i]
                 name <- vigns$names[i]
                 engine <- vignetteEngine(vigns$engines[i])
                 outputs[i] <- tryCatch({
                     find_vignette_product(name, what="weave", final=TRUE, dir=dir, engine = engine)
-                }, error = function(ex) NA)
+                }, error = function(e) {
+		    .msg <<- c(.msg, conditionMessage(e))
+	            NA}
+		)
             }
             bad_vignettes <- vigns$docs[is.na(outputs)]
             if (nb <- length(bad_vignettes)) {
                 any <- TRUE
                 warningLog(Log)
+		if (length(.msg)) printLog0(Log, .msg, "\n")
                 msg <- ngettext(nb,
-                                "Package vignette without corresponding PDF/HTML:\n",
-                                "Package vignettes without corresponding PDF/HTML:\n", domain = NA)
+                                "Package vignette without corresponding single PDF/HTML:\n",
+                                "Package vignettes without corresponding single PDF/HTML:\n", domain = NA)
                 printLog0(Log, msg)
                 printLog0(Log,
                           paste(c(paste("  ",
