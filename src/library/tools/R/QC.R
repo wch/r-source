@@ -8835,8 +8835,9 @@ function(dir)
               pattern = "[.](c|cc|cpp|h|hh|hpp)$",
               full.names = TRUE, recursive = TRUE)
     pat <- "^\\s*#pragma (GCC|clang) diagnostic ignored"
+    ## -Wcast-function-type is allowed by gcc but gives a warning from clang
     ## -Wmissing-field-initializers looks important but is not part of -Wall
-    pat2 <- "^\\s*#pragma (GCC|clang) diagnostic ignored[^-]*[-]W(uninitialized|float-equal|array-bound|format)"
+    pat2 <- "^\\s*#pragma (GCC|clang) diagnostic ignored[^-]*[-]W(uninitialized|float-equal|array-bound|format|cast-function-type)"
     for(f in ff) {
         if(any(grepl(pat, readLines(f, warn = FALSE),
                      perl = TRUE, useBytes = TRUE)))

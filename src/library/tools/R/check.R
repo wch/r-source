@@ -3018,10 +3018,11 @@ add_dummies <- function(dir, Log)
                     {
                         warningLog(Log)
                         msg <- if(length(warn) == 1L)
-                            "File which contains pragma(s) suppressing important diagnostics:"
+                            "File which contains pragma(s) suppressing important diagnostics"
                         else
-                            "Files which contain pragma(s) suppressing important diagnostics:"
-                        msg <- c(msg, .pretty_format(warn))
+                            "Files which contain pragma(s) suppressing important diagnostics"
+                        msg <- c(msg, "  or non-portable pragma(s):",
+                                 .pretty_format(warn))
                         rest <- setdiff(ans, warn)
                         if(length(rest)) {
                             msg <- c(msg, if(length(rest) == 1L)
