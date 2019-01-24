@@ -39,8 +39,8 @@ build.pkg <- function(dir) {
     patt <- paste(basename(dir), ".*tar\\.gz$", sep="_")
     unlink(dir('.', pattern = patt))
     Rcmd <- paste(shQuote(file.path(R.home("bin"), "R")), "CMD")
-    r <- tail(system(paste(Rcmd, "build --keep-empty-dirs", shQuote(dir)),
-                     intern = TRUE), 3)
+    r <- system(paste(Rcmd, "build --keep-empty-dirs", shQuote(dir)),
+                intern = TRUE)
     ## return name of tar file built
     structure(dir('.', pattern = patt), log3 = r)
 }
@@ -108,6 +108,8 @@ if("pkgA" %in% p.lis && !dir.exists(d <- pkgApath)) {
 for(p. in p.lis) {
     cat("building package", p., "...\n")
     r <- build.pkg(file.path(pkgPath, p.))
+    if(!length(r)) # so some sort of failure, show log
+        cat(attr(r, "log3"), sep = "\n")
     cat("installing package", p., "using file", r, "...\n")
     ## we could install the tar file ... (see build.pkg()'s definition)
     install.packages(r, lib = "myLib", repos=NULL, type = "source")
