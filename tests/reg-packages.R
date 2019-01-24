@@ -40,8 +40,8 @@ build.pkg <- function(dir) {
     patt <- paste(pkgName, ".*tar\\.gz$", sep="_")
     unlink(dir('.', pattern = patt))
     Rcmd <- paste(shQuote(file.path(R.home("bin"), "R")), "CMD")
-    r <- tail(system(paste(Rcmd, "build --keep-empty-dirs", shQuote(dir)),
-                     intern = TRUE), 3)
+    r <- system(paste(Rcmd, "build --keep-empty-dirs", shQuote(dir)),
+                intern = TRUE)
     ## return name of tar file built
     structure(dir('.', pattern = patt), log3 = r)
 }
@@ -117,10 +117,14 @@ dir2pkg <- function(dir) ifelse(dir == "pkgC", "PkgC", dir)
 }
 if(is.na(match("myLib", .lP <- .libPaths()))) .libPaths(c("myLib", .lP)) # need pkgA
 Sys.setenv(R_LIBS = .R_LIBS()) # for build.pkg() & install.packages()
+## avoid ~/.R/build.environ which might set R_LIBS
+Sys.setenv(R_BUILD_ENVIRON = "nothing")
 for(p in p.lis) {
     p. <- dir2pkg(p) # 'p' is sub directory name;  'p.' is package name
     cat("building package", p., "...\n")
     r <- build.pkg(file.path(pkgPath, p))
+    if(!length(r)) # so some sort of failure, show log
+        cat(attr(r, "log3"), sep = "\n")
     if(!isTRUE(file.exists(r)))
         stop("R CMD build failed (no tarball) for package ", p)
     ## otherwise install the tar file:
