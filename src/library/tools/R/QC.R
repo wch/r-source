@@ -8829,15 +8829,17 @@ function(dir)
     ##   #pragma warning (disable:4996)
     ##   #pragma warning(push, 0)
     ## which seem intended for MSVC++ and hence not relevant here.
-    found <- warn <- character()
+    found <- warn <- port <- character()
     od <- setwd(dir); on.exit(setwd(od))
     ff <- dir(c('src', 'inst/include'),
               pattern = "[.](c|cc|cpp|h|hh|hpp)$",
               full.names = TRUE, recursive = TRUE)
     pat <- "^\\s*#pragma (GCC|clang) diagnostic ignored"
-    ## -Wcast-function-type is allowed by gcc but gives a warning from clang
     ## -Wmissing-field-initializers looks important but is not part of -Wall
-    pat2 <- "^\\s*#pragma (GCC|clang) diagnostic ignored[^-]*[-]W(uninitialized|float-equal|array-bound|format|cast-function-type)"
+    pat2 <- "^\\s*#pragma (GCC|clang) diagnostic ignored[^-]*[-]W(uninitialized|float-equal|array-bound|format)"
+    ## -Wcast-function-type is allowed by gcc but gives a warning from clang
+    ## This will be expanded in future
+    pat3 <- "^\\s*#pragma (GCC|clang) diagnostic[^-]*[-]W(cast-function-type)"
     for(f in ff) {
         if(any(grepl(pat, readLines(f, warn = FALSE),
                      perl = TRUE, useBytes = TRUE)))
@@ -8846,8 +8848,11 @@ function(dir)
         if(any(grepl(pat2, readLines(f, warn = FALSE),
                      perl = TRUE, useBytes = TRUE)))
             warn <- c(warn, f)
+        if(any(grepl(pat3, readLines(f, warn = FALSE),
+                     perl = TRUE, useBytes = TRUE)))
+            port <- c(port, f)
     }
-    structure(found, class = "check_pragmas", warn = warn)
+    structure(found, class = "check_pragmas", warn = warn, port = port)
 }
 
 print.check_pragmas <-

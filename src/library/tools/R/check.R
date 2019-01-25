@@ -3014,22 +3014,34 @@ add_dummies <- function(dir, Log)
             checkingLog(Log, "pragmas in C/C++ headers and code")
             ans <- .check_pragmas('.')
             if(length(ans)) {
-                if(length(warn <- attr(ans, "warn")))
+                if(length(warn <- attr(ans, "warn"))  ||
+                   length(port <- attr(ans, "port")))
                     {
                         warningLog(Log)
-                        msg <- if(length(warn) == 1L)
-                            "File which contains pragma(s) suppressing important diagnostics"
-                        else
-                            "Files which contain pragma(s) suppressing important diagnostics"
-                        msg <- c(msg, "  or non-portable pragma(s):",
-                                 .pretty_format(warn))
-                        rest <- setdiff(ans, warn)
+                        msg <- character()
+                        rest <- ans
+                        if(length(warn)) {
+                            msg <- c(msg, if(length(warn) == 1L)
+                                "File which contains pragma(s) suppressing important diagnostics"
+                            else
+                                "Files which contain pragma(s) suppressing important diagnostics",
+                            .pretty_format(warn))
+                            rest <- setdiff(ans, warn)
+                        }
+                        if(length(port)) {
+                            msg <- c(msg, if(length(port) == 1L)
+                                "File which contains non-portable pragma(s)"
+                            else
+                                "Files which contain non-portable pragma(s)",
+                           .pretty_format(port))
+                            rest <- setdiff(rest, port)
+                        }
                         if(length(rest)) {
                             msg <- c(msg, if(length(rest) == 1L)
                                      "File which contains pragma(s) suppressing diagnostics:"
                             else
-                                     "Files which contain pragma(s) suppressing diagnostics:")
-                            msg <- c(msg, .pretty_format(rest))
+                                     "Files which contain pragma(s) suppressing diagnostics:",
+                           .pretty_format(rest))
                         }
                    } else {
                         noteLog(Log)
