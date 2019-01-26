@@ -1524,9 +1524,14 @@ SEXP findFun3(SEXP symbol, SEXP rho, SEXP call)
 #endif
 	if (vl != R_UnboundValue) {
 	    if (TYPEOF(vl) == PROMSXP) {
-		PROTECT(vl);
-		vl = eval(vl, rho);
-		UNPROTECT(1);
+		SEXP pv = PRVALUE(vl);
+		if (pv != R_UnboundValue)
+		    vl = pv;
+		else {
+		    PROTECT(vl);
+		    vl = eval(vl, rho);
+		    UNPROTECT(1);
+		}
 	    }
 	    if (TYPEOF(vl) == CLOSXP || TYPEOF(vl) == BUILTINSXP ||
 		TYPEOF(vl) == SPECIALSXP)
