@@ -3034,7 +3034,6 @@ add_dummies <- function(dir, Log)
                             else
                                 "Files which contain non-portable pragma(s)",
                            .pretty_format(port))
-                            rest <- setdiff(rest, port)
                         }
                         if(length(rest)) {
                             msg <- c(msg, if(length(rest) == 1L)
