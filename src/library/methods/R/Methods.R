@@ -1,7 +1,7 @@
 #  File src/library/methods/R/Methods.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -596,7 +596,7 @@ setMethod <-
     whereMethods <-
 	## do.mlist <- is.not.base && (!.noMlists() || all(signature == "ANY"))
 	if(is.not.base && !.noMlists()) # do.mlist
-	    insertMethod(.getOrMakeMethodsList(f, where, fdef),
+	    insertMethod(getMethodsMetaData(f, where),
 			 signature, margs, definition) ## else NULL
     mtable <- getMethodsForDispatch(fdef)
     if(cacheOnAssign(where)) { # will be FALSE for sourceEnvironment's

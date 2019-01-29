@@ -1,15 +1,15 @@
 % File src/library/methods/man/findMethods.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2008-2015 R Core Team
+% Copyright 2008-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{findMethods}
+\title{Description of the Methods Defined for a Generic Function}
 \alias{findMethods}
 \alias{findMethodSignatures}
 \alias{hasMethods}
 \alias{getMethods}
 \alias{listOfMethods-class}
-\title{Description of the Methods Defined for a Generic Function}
 \description{
   The function \code{findMethods} converts the methods defined in a table for a generic
   function (as used for selection of methods) into a list, for study or
@@ -23,10 +23,10 @@
   specified \code{classes} in the method signature if that argument is
   supplied.
 
-To see the actual table (an environment) used
+  To see the actual table (an \code{\link{environment}}) used
   for methods dispatch, call \code{\link{getMethodsForDispatch}}.
-The names of the list returned by \code{findMethods} are the names of
-the objects in the table.
+  The names of the list returned by \code{findMethods} are the names of
+  the objects in the table.
 
   The function \code{findMethodSignatures} returns a character matrix
   whose rows are the class names from the signature of the corresponding
@@ -41,9 +41,9 @@ the objects in the table.
 
   The defunct function \code{getMethods} is an older alternative to
   \code{findMethods} , returning information in the form of an object of
-  class \code{MethodsList}, previously used for method dispatch.  It is
-  not recommended, since this class of objects is deprecated generally
-  and will disappear in a future version of R.
+  class \code{MethodsList}, previously used for method dispatch.  This
+  class of objects is deprecated generally and will disappear in a
+  future version of R.
 }
 \usage{
 findMethods(f, where, classes = character(), inherited = FALSE,

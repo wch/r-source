@@ -911,7 +911,6 @@ asMethodDefinition <- function(def, signature = list(.anyClassName), sealed = FA
       , "\n "
       , if(!missing(instead)) gettextf("Use %s instead. ", dQuote(instead))
       , "See ?MethodsList. (This warning is shown once per session.)"))
-
 }
 
 .MlistDefunct <- function(this = "<default>", instead) {
