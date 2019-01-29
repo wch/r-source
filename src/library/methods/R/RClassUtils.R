@@ -1,7 +1,7 @@
 #  File src/library/methods/R/RClassUtils.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -2146,23 +2146,24 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
 .checkSubclasses <- function(class, def, class2, def2, where, where2) {
     where <- as.environment(where)
     where2 <- as.environment(where2)
-   subs <- def@subclasses
+    subs <- def@subclasses
     subNames <- names(subs)
     extDefs <- def2@subclasses
     for(i in seq_along(subs)) {
         what <- subNames[[i]]
         if(.identC(what, class2))
-          next # catch recursive relations
+            next # catch recursive relations
         cname <- classMetaName(what)
-        if(exists(cname, envir = where, inherits = FALSE)) {
-            subDef <- get(cname, envir = where)
+	if(!is.null(subDef <- get0(cname, envir = where, inherits = FALSE))) {
             cwhere <- where
         }
-        else if(exists(cname, envir = where2, inherits = FALSE)) {
-            subDef <- get(cname, envir = where2)
+	else if(!is.null(subDef <- get0(cname, envir = where2, inherits = FALSE))) {
             cwhere <- where2
         }
         else {
+            ## happens (wrongly) in a package which imports 'class' but not 'subclass' from another package
+            ## *and* extends 'class', e.g., by defining a class union with it as member; then,
+            ## "consider setClassUnion()" below is confusing to user:
           warning(gettextf("subclass %s of class %s is not local and cannot be updated for new inheritance information; consider setClassUnion()",
                            .dQ(what), .dQ(class)),
                   call. = FALSE, domain = NA)
