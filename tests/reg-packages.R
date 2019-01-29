@@ -83,7 +83,7 @@ do.cleanup <- !nzchar(Sys.getenv("R_TESTS_NO_CLEAN"))
 has.symlink <- (.Platform$OS.type != "windows")
 ## Installing "on to" a package existing as symlink in the lib.loc
 ## -- used to fail with misleading error message (#PR 16725):
-if(has.symlink && dir.create("myLib_2") &&
+if(has.symlink && !unlink("myLib_2", recursive=TRUE) && dir.create("myLib_2")) &&
    file.rename("myLib/myTst", "myLib_2/myTst") &&
    file.symlink("../myLib_2/myTst", "myLib/myTst"))
     install.packages("myTst", lib = "myLib", repos=NULL, type = "source")
@@ -129,6 +129,7 @@ for(p in p.lis) {
         stop("R CMD build failed (no tarball) for package ", p)
     ## otherwise install the tar file:
     cat("installing package", p., "using built file", r, "...\n")
+    ## "FIXME": want to catch warnings in the "console output" of this:
     install.packages(r, lib = "myLib", repos=NULL, type = "source",
                      INSTALL_opts = InstOpts[[p.]])
     stopifnot(require(p., lib = "myLib", character.only=TRUE))
