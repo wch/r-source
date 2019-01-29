@@ -1,6 +1,6 @@
 
-R version 3.5.2 Patched (2018-12-24 r75892) -- "Eggshell Igloo"
-Copyright (C) 2018 The R Foundation for Statistical Computing
+R version 3.5.2 Patched (2019-01-24 r76022) -- "Eggshell Igloo"
+Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -46,4 +46,4 @@ In bw.bcv(precip) : minimum occurred at one end of the range
 > 
 > proc.time()
    user  system elapsed 
-  0.175   0.030   0.185 
+  0.205   0.038   0.227 
