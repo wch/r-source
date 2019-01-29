@@ -1,6 +1,6 @@
 % File src/library/utils/man/untar.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2009-2018 R Core Team
+% Copyright 2009-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{untar}
@@ -38,13 +38,13 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   \item{exdir}{The directory to extract files to (the equivalent of
     \command{tar -C}).  It will be created if necessary.}
 
-  \item{compressed}{(Deprecated in favour of auto-detection.)  Logical
-    or character string, used only for an external \command{tar}
-    command.  Values \code{"gzip"}, \code{"bzip2"} and \code{"xz"}
-    select that form of compression (and may be abbreviated to the first
+  \item{compressed}{(Deprecated in favour of auto-detection, used only
+    for an external \command{tar} command.)  Logical or character
+    string.  Values \code{"gzip"}, \code{"bzip2"} and \code{"xz"} select
+    that form of compression (and may be abbreviated to the first
     letter).  \code{TRUE} indicates \command{gzip} compression,
     \code{FALSE} no known compression, and \code{NA} (the default)
-    indicates that the type is inferred from the file header.
+    indicates that the type is to be inferred from the file header.
 
     The external command may ignore the selected compression type but
     detect a type automagically.
@@ -72,13 +72,14 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   %% macOS has bsdtar from 2010: this supports xz but does not docuemnt it.
   %% bsdtar had lzma/xz supoort before April 2009 when it added
   %% support for command-line unxz etc, not just libraries.
-  \item{support_old_tars}{logical.  If true, the external \command{tar}
-    command is assumed to be able handle compressed tarfiles and if
-    \code{compressed} does not specify it, to automagically detect the
-    type of compression.  (The major implementations have done so since
-    2009; for GNU \command{tar} since version 1.22.)
+  \item{support_old_tars}{logical.  If false (the default), the external
+    \command{tar} command is assumed to be able handle compressed
+    tarfiles and if \code{compressed} does not specify it, to
+    automagically detect the type of compression.  (The major
+    implementations have done so since 2009; for GNU \command{tar} since
+    version 1.22.)
 
-    Otherwise the \R code calls an appropriate decompressor and pipes
+    If true, the \R code calls an appropriate decompressor and pipes
     the output to \command{tar}, for \code{compressed = NA} examining
     the tarfile header to determine the type of compression.
   }
@@ -143,17 +144,17 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   Arguments \code{compressed}, \code{extras} and \code{verbose} are only
   used when an external \command{tar} is used.
 
-  Some external \command{tar} commands will detect \command{lrzip},
-  \command{lzma}, \command{lz4}, \command{lzop} or \command{zstd}
-  compression in addition to \command{gzip}, \command{bzip2} and
-  \command{xz}.  (For some external \command{tar} commands, compressed
-  tarfiles can only be read if the appropriate utility program is
-  available.)  For GNU \command{tar}, further (de)compression programs
-  can be specified by e.g.\sspace{}\code{extras = "-I lz4"}.
-  For \command{bsdtar} this could be
-  \code{extras = "--use-compress-program lz4"}.
-  Most commands will detect (the nowadays rarely seen) \file{.tar.Z}
-  archives compressed by \code{compress}.
+  Some external \command{tar} commands will detect some of
+  \command{lrzip}, \command{lzma}, \command{lz4}, \command{lzop} and
+  \command{zstd} compression in addition to \command{gzip},
+  \command{bzip2} and \command{xz}.  (For some external \command{tar}
+  commands, compressed tarfiles can only be read if the appropriate
+  utility program is available.)  For GNU \command{tar}, further
+  (de)compression programs can be specified by e.g.\sspace{}\code{extras
+  = "-I lz4"}.  For \command{bsdtar} this could be \code{extras =
+  "--use-compress-program lz4"}.  Most commands will detect (the
+  nowadays rarely seen) \file{.tar.Z} archives compressed by
+  \code{compress}.
   
   The internal implementation restores symbolic links as links on a
   Unix-alike, and as file copies on Windows (which works only for
@@ -166,9 +167,9 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   compression.  It does not guard against restoring absolute file paths,
   as some \command{tar} implementations do.  It will create the parent
   directories for directories or files in the archive if necessary.  It
-  handles the standard (USTAR/POSIX), GNU and \command{pax} ways of
-  handling file paths of more than 100 bytes, and the GNU way of
-  handling link targets of more than 100 bytes.
+  handles the USTAR/POSIX, GNU and \command{pax} ways of handling file
+  paths of more than 100 bytes, and the GNU way of handling link targets
+  of more than 100 bytes.
 
   You may see warnings from the internal implementation such
   as \preformatted{    unsupported entry type 'x'}
@@ -180,11 +181,11 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   This indicates that additional information may have been discarded,
   such as ACLs, encodings \dots.
 
-  The standards only support ASCII filenames (indeed, only alphanumeric
-  plus period, underscore and hyphen).  \code{untar} makes no attempt to
-  map filenames to those acceptable on the current system, and treats
-  the filenames in the archive as applicable without any re-encoding in
-  the current locale.
+  The former standards only supported ASCII filenames (indeed, only
+  alphanumeric plus period, underscore and hyphen).  \code{untar} makes
+  no attempt to map filenames to those acceptable on the current system,
+  and treats the filenames in the archive as applicable without any
+  re-encoding in the current locale.
 
   The internal implementation does not special-case \sQuote{resource
   forks} in macOS: that system's \command{tar} command does. This may
