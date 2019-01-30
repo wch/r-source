@@ -248,7 +248,7 @@ Rd2latex <- function(Rd, out = "", defines = .Platform$OS.type,
 
     latex_escape_name <- function(x)
     {
-        x <- psub("([$#~_&])", "\\\\\\1", x) #- escape them
+        x <- psub("([$#_&])", "\\\\\\1", x) #- escape them
         x <- fsub("{", "\\textbraceleft{}", x)
         x <- fsub("}", "\\textbraceright{}", x)
         x <- fsub("^", "\\textasciicircum{}", x)
