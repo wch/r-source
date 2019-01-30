@@ -5642,6 +5642,7 @@ add_dummies <- function(dir, Log)
         Sys.setenv("_R_CHECK_CONNECTIONS_LEFT_OPEN_" = "TRUE")
         Sys.setenv("_R_CHECK_SHLIB_OPENMP_FLAGS_" = "TRUE")
         Sys.setenv("_R_CHECK_FUTURE_FILE_TIMESTAMPS_" = "TRUE")
+        Sys.setenv("_R_CHECK_RD_CONTENTS_KEYWORDS_" = "TRUE")
         R_check_vc_dirs <- TRUE
         R_check_executables_exclusions <- FALSE
         R_check_doc_sizes2 <- TRUE
