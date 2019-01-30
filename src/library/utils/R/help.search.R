@@ -611,11 +611,8 @@ function(package = NULL, lib.loc = NULL,
 	    }
 	}
 
-        ## Remove keywords which are empty or package.skeleton()
-        ## leftovers.
-        ind <- is.na(match(db$Keywords[, "Keyword"],
-                           c("", "~kwd1", "~kwd2",
-                             "~~ other possible keyword(s) ~~")))
+        ## Remove keywords which are empty.
+        ind <- nzchar(db$Keywords[, "Keyword"])
         db$Keywords <- db$Keywords[ind, , drop = FALSE]
         ## Remove concepts which are empty.
         ind <- nzchar(db$Concepts[, "Concept"])

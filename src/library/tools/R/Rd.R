@@ -33,7 +33,7 @@ function(file, encoding = "unknown")
 
     aliases <- .Rd_get_metadata(Rd, "alias")
     concepts <- .Rd_get_metadata(Rd, "concept")
-    keywords <- .Rd_get_metadata(Rd, "keyword")
+    keywords <- .Rd_get_metadata(Rd, "keyword") %w/o% .Rd_keywords_auto
 
     ## Could be none or more than one ... argh.
     Rd_type <- .Rd_get_doc_type(Rd)
@@ -515,6 +515,11 @@ function(x, kind)
     else
         unique(trimws(sapply(x, as.character)))
 }
+
+### * .Rd_keywords_auto
+
+.Rd_keywords_auto <-
+    c("~kwd1", "~kwd2", "~~ other possible keyword(s) ~~")
 
 ### * .Rd_get_section
 
