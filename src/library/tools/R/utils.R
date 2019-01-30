@@ -1671,7 +1671,8 @@ nonS3methods <- function(package)
              stremo = "sigma.hat",
              supclust = c("sign.change", "sign.flip"),
              tensorA = "chol.tensor",
-             utils = c("close.socket", "flush.console", "update.packages")
+             utils = c("close.socket", "flush.console", "update.packages"),
+             wavelets = "plot.dwt.multiple"
              )
     if(is.null(package)) return(unlist(stopList))
     thisPkg <- stopList[[package]]
