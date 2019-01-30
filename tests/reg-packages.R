@@ -1,3 +1,15 @@
+.R_LIBS <- function(libp = .libPaths()) { # (>> in utils?)
+    libp <- libp[! libp %in% .Library]
+    if(length(libp))
+        paste(libp, collapse = .Platform$path.sep)
+    else libp
+}
+Sys.setenv(R_LIBS = .R_LIBS() # for build.pkg() & install.packages()
+         , R_BUILD_ENVIRON = "nothing" # avoid ~/.R/build.environ which might set R_LIBS
+         , R_ENVIRON = "none"
+         , R_PROFILE = "none"
+           )
+
 ## PR 1271  detach("package:base") crashes R.
 tools::assertError(detach("package:base"))
 
@@ -109,16 +121,11 @@ if("pkgA" %in% p.lis && !dir.exists(d <- pkgApath)) {
     if(!dir.exists(d)) p.lis <- p.lis[!(p.lis %in% c("pkgA", "pkgB", "pkgC"))]
 }
 dir2pkg <- function(dir) ifelse(dir == "pkgC", "PkgC", dir)
-.R_LIBS <- function(libp = .libPaths()) { # (>> in utils?)
-    libp <- libp[! libp %in% .Library]
-    if(length(libp))
-        paste(libp, collapse = .Platform$path.sep)
-    else libp
+if(is.na(match("myLib", .lP <- .libPaths()))) {
+    .libPaths(c("myLib", .lP)) # PkgC needs pkgA from there
+    .lP <- .libPaths()
 }
-if(is.na(match("myLib", .lP <- .libPaths()))) .libPaths(c("myLib", .lP)) # need pkgA
-Sys.setenv(R_LIBS = .R_LIBS()) # for build.pkg() & install.packages()
-## avoid ~/.R/build.environ which might set R_LIBS
-Sys.setenv(R_BUILD_ENVIRON = "nothing")
+Sys.setenv(R_LIBS = .R_LIBS(.lP)) # for build.pkg() & install.packages()
 for(p in p.lis) {
     p. <- dir2pkg(p) # 'p' is sub directory name;  'p.' is package name
     cat("building package", p., "...\n")
@@ -147,9 +154,15 @@ stopifnot(exprs = {
 if("pkgA" %in% p.lis && dir.exists(pkgApath)) {
     cat("undoc(pkgA):\n"); print(uA <- tools::undoc(dir = pkgApath))
     cat("codoc(pkgA):\n"); print(cA <- tools::codoc(dir = pkgApath))
-    stopifnot(identical(uA$`code objects`, c("nil", "search")),
-              identical(uA$`data sets`,    "nilData"))
-}
+    cat("extends(\"classApp\"):\n"); print(ext.cA <- extends("classApp"))
+    stopifnot(exprs = {
+	identical(uA$`code objects`, c("nil", "search"))
+	identical(uA$`data sets`,    "nilData")
+	## pkgC's class union is now (after loading pkgC) also visible in the "classApp" subclass
+	## (which gave warning). ==> warning "wrong": somehow it *did* get updated:
+	"numericA" %in% ext.cA
+    })
+} else message("'pkgA' not available")
 
 ## - Check conflict message.
 ## - Find objects which are NULL via "::" -- not to be expected often
@@ -167,7 +180,7 @@ if(dir.exists(file.path("myLib", "pkgA"))) {
   ## R-devel (pre 3.2.0) wrongly errored for NULL lazy data
   ## ::: does not apply to data sets:
   tools::assertError(is.null(pkgA:::nilData))
-}
+} else message("'pkgA' not in 'myLib'")
 
 ## Check error from invalid logical field in DESCRIPTION:
 (okA <- dir.exists(pkgApath) &&
@@ -176,19 +189,27 @@ if(okA) {
   Dlns <- readLines(DN); i <- grep("^LazyData:", Dlns)
   Dlns[i] <- paste0(Dlns[i], ",") ## adding a ","
   writeLines(Dlns, con = DN)
-  if(interactive()) { ## FIXME!  Why does this fail, e.g., when run via 'make' ?
+  instEXPR <- quote(
+      tools:::.install_packages(c("--clean", "--library=myLib", pkgApath), no.q = TRUE)
+  )   ##      -----------------                                 ----
+  if(interactive()) { ## << "FIXME!"  This (sink(.) ..) fails, when run via 'make'.
     ## install.packages() should give "the correct" error but we cannot catch it
     ## One level lower is not much better, needing sink() as capture.output() fails
     ftf <- file(tf <- tempfile("inst_pkg"), open = "wt")
     sink(ftf); sink(ftf, type = "message")# "message" should be sufficient
-    tools:::.install_packages(c("--clean", "--library=myLib", pkgApath))
-    ##      -----------------                                 ----
+    eval(instEXPR)
     sink(type="message"); sink()## ; close(ftf); rm(ftf)# end sink()
     writeLines(paste(" ", msgs <- readLines(tf)))
-    print(err <- grep("^ERROR:", msgs, value=TRUE))
-    stopifnot(length(err) > 0, grepl("invalid .*LazyData .*DESCRIPTION", err))
+    message(err <- grep("^ERROR:", msgs, value=TRUE))
+    stopifnot(exprs = {
+        length(err) > 0
+        grepl("invalid .*LazyData .*DESCRIPTION", err)
+    })
+  } else {
+      message("non-interactive -- tools:::.install_packages(..) : ")
+      try( eval(instEXPR) ) # showing the error message in the *.Rout file
   }
-}
+} else message("pkgA/DESCRIPTION  not available")
 
 ## R CMD check should *not* warn about \Sexpr{} built sections in Rd (PR#17479):
 msg <- capture.output(
