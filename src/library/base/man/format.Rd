@@ -1,6 +1,6 @@
 % File src/library/base/man/format.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2019 R Core Team
 % Copyright 2003-2016 The R Foundation
 % Distributed under GPL 2 or later
 
@@ -123,6 +123,9 @@ format(x, \dots)
   Raw vectors are converted to their 2-digit hexadecimal representation
   by \code{\link{as.character}}.
 
+  \code{format.default(x)} now provides a \dQuote{minimal} string when
+  \code{\link{isS4}(x)} is true.
+
   The internal code respects the option
   \code{\link{getOption}("OutDec")} for the \sQuote{decimal mark}, so if
   this is set to something other than \code{"."} then it takes precedence
@@ -185,6 +188,10 @@ z <- list(a = letters[1:3], b = (-pi+0i)^((-2:2)/2), c = c(1,10,100,1000),
 (f1 <- format(z, digits = 2))
 (f2 <- format(z, digits = 2, justify = "left", trim = FALSE))
 f1 == f2 ## 2 FALSE, 4 TRUE
+
+## A "minimal" format() for S4 objects without their own format() method:
+cc <- methods::getClassDef("standardGeneric")
+format(cc) ## "<S4 class ......>"
 }
 \keyword{character}
 \keyword{print}

@@ -254,6 +254,10 @@
       \item For \code{approx()}, \code{splinefun()} \emph{etc}, a new
       setting \code{ties = c("ordered", <fun>)} allows skipping the
       sorting and still treat ties.
+
+      \item \code{format(x)} gives a more user friendly error message in
+      the case where no method is defined. Additionally, a minimal method
+      is provided in \code{format.default(x)} when \code{isS4(x)} is true.
     }
   }
 

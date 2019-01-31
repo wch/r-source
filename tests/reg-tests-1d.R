@@ -2498,6 +2498,15 @@ stopifnot(identical(rf, 4))
 ## as after 75911 a wrong parent.frame() was used.
 
 
+## format(.) when there's no method gives better message:
+ee <- tryCatch(format(.Internal(bodyCode(ls))), error=identity)
+stopifnot(exprs = {
+    conditionCall(ee)[[1]] == quote(format.default)
+    grepl("no format() method", conditionMessage(ee), fixed=TRUE)
+})
+## signalled from long .Internal(...) call + "must be atomic" in R <= 3.5.x
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

@@ -1,7 +1,7 @@
 #  File src/library/base/R/format.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -28,7 +28,6 @@ format.default <-
 	     zero.print = NULL, drop0trailing = FALSE, ...)
 {
     justify <- match.arg(justify)
-    adj <- match(justify, c("left", "right", "centre", "none")) - 1L
     if(is.list(x)) {
 	## do it this way to force evaluation of args
 	if(missing(trim)) trim <- TRUE
@@ -46,22 +45,36 @@ format.default <-
     } else {
 	switch(mode(x),
 	       NULL = "NULL",
-	       character = .Internal(format(x, trim, digits, nsmall, width, adj,
-					    na.encode, scientific, NA_character_)),
+	       character = {
+		   adj <- match(justify, c("left", "right", "centre", "none")) - 1L
+		   .Internal(format(x, trim, digits, nsmall, width, adj,
+				    na.encode, scientific, NA_character_))
+	       },
 	       call =, expression =, "function" =, "(" = deparse(x, backtick=TRUE),
 	       raw = as.character(x),
-           {
-	       ## else: logical, numeric, complex, .. :
-	       prettyNum(.Internal(format(x, trim, digits, nsmall, width, 3L,
-					  na.encode, scientific, decimal.mark)),
-			 big.mark = big.mark, big.interval = big.interval,
-			 small.mark = small.mark,
-			 small.interval = small.interval,
-			 decimal.mark = decimal.mark, input.d.mark = decimal.mark,
-			 zero.print = zero.print, drop0trailing = drop0trailing,
-			 is.cmplx = is.complex(x),
-			 preserve.width = if (trim) "individual" else "common")
-           })
+	       S4 = {
+		   cld <- methods::getClassDef(cl <- class(x))
+		   pkg <- attr(cl, "package")
+		   paste0("<S4 class ", sQuote(cl),
+			  if(!is.null(pkg)) paste0(" [package ", dQuote(pkg), "]"),
+			  if(!is.null(cld) && !is.null(sls <- cld@slots))
+			      paste(" with", length(sls),
+				    if(length(sls) == 1L) "slot" else "slots"), ">")
+	       },
+	       numeric =, logical =, complex =,
+	       environment =
+		   prettyNum(.Internal(format(x, trim, digits, nsmall, width, 3L,
+					      na.encode, scientific, decimal.mark)),
+			     big.mark = big.mark, big.interval = big.interval,
+			     small.mark = small.mark,
+			     small.interval = small.interval,
+			     decimal.mark = decimal.mark, input.d.mark = decimal.mark,
+			     zero.print = zero.print, drop0trailing = drop0trailing,
+			     is.cmplx = is.complex(x),
+			     preserve.width = if (trim) "individual" else "common"),
+	       ## all others (for now):
+	       stop(gettextf("Found no format() method for class \"%s\"",
+			     class(x)), domain = NA))
     }
 }
 
