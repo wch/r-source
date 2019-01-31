@@ -92,9 +92,11 @@ if(!file_test("-d", pkgSrcPath) && !interactive()) {
 ## else w/o clause:
 
 do.cleanup <- !nzchar(Sys.getenv("R_TESTS_NO_CLEAN"))
-has.symlink <- (.Platform$OS.type != "windows")
+isWIN <- .Platform$OS.type == "windows"
+has.symlink <- !isWIN
 ## Installing "on to" a package existing as symlink in the lib.loc
 ## -- used to fail with misleading error message (#PR 16725):
+
 if(has.symlink && !unlink("myLib_2", recursive=TRUE) && dir.create("myLib_2") &&
    file.rename("myLib/myTst", "myLib_2/myTst") &&
    file.symlink("../myLib_2/myTst", "myLib/myTst"))
@@ -102,10 +104,17 @@ if(has.symlink && !unlink("myLib_2", recursive=TRUE) && dir.create("myLib_2") &&
 ## In R <= 3.3.2 gave error with *misleading* error message:
 ## ERROR: ‘myTst’ is not a legal package name
 
-
-## file.copy(pkgSrcPath, tempdir(), recursive = TRUE) - not ok: replaces symlink by copy
-system(paste('cp -R', shQuote(pkgSrcPath), shQuote(tempdir())))
+if(isWIN) { # (has no symlinks anyway)
+    file.copy(pkgSrcPath, tempdir(), recursive = TRUE)
+} else { # above file.copy() not useful as it replaces symlink by copy
+    system(paste('cp -R', shQuote(pkgSrcPath), shQuote(tempdir())))
+}
 pkgPath <- file.path(tempdir(), "Pkgs")
+if(!dir.exists(pkgPath))  {
+    message("No valid 'pkgPath' (from 'pkgSrcPath') - exit this test")
+    if(!interactive()) q("no")
+}
+
 ## pkgB tests an empty R directory
 dir.create(file.path(pkgPath, "pkgB", "R"), recursive = TRUE,
 	   showWarnings = FALSE)
