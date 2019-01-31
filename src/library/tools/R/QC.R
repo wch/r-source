@@ -8816,7 +8816,7 @@ function(x)
     if(config_val_to_logical(Sys.getenv("_R_CHECK_RD_CONTENTS_KEYWORDS_",
                                         "FALSE"))) {
         k <- .Rd_get_metadata(x, "keyword")
-        k <- k[match(k, .Rd_keywords_auto, nomatch = 0L)]
+        k <- k[!is.na(match(k, .Rd_keywords_auto))]
         if(length(k)) {
             ## Not quite perfect as .Rd_get_metadata() already calls
             ## trimws() ...
