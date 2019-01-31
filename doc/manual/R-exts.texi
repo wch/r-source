@@ -2173,8 +2173,7 @@ partially supported, not that which is fully implemented.}  to say what
 version of OpenMP is supported: version 3.1 (and much of 4.0) is
 supported by recent versions of the Linux, Windows and Solaris
 platforms, but portable packages cannot assume that end users have
-recent versions.@footnote{People do use older versions of OSes such as
-Debian Wheezy which has GCC 4.4.}  Apple builds of @command{clang}
+recent versions.  Apple builds of @command{clang}
 on macOS currently have no OpenMP support, but @acronym{CRAN} binary
 packages are built with a @command{clang}-based toolchain which supports
 OpenMP.  @uref{http://www.openmp.org/@/resources/@/openmp-compilers-tools}
@@ -2213,10 +2212,11 @@ first level.  The correctness of the detected number of `CPUs' and the
 assumption that the @R{} process is entitled to use them all are both
 dubious assumptions.  The best way to limit resources is to limit the
 overall number of threads available to OpenMP in the @R{} process: this
-can be done @emph{via} environment variable @env{OMP_THREAD_LIMIT}, where
-implemented.@footnote{Which it was at the time of writing with GCC,
-Oracle, Intel and Clang compilers.}  Alternatively, the
-number of threads per region can be limited by the environment variable
+can be done @emph{via} environment variable @env{OMP_THREAD_LIMIT},
+where implemented.@footnote{Which it was at the time of writing with
+GCC, Oracle, Intel and Clang compilers.  The count may include the
+thread running the main process.}  Alternatively, the number of threads
+per region can be limited by the environment variable
 @env{OMP_NUM_THREADS} or API call @code{omp_set_num_threads}, or,
 better, for the regions in your code as part of their
 specification. E.g.@: @R{} uses
@@ -2225,6 +2225,12 @@ specification. E.g.@: @R{} uses
 @end example
 @noindent
 That way you only control your own code and not that of other OpenMP users.
+
+Note that setting environment variables to control OpenMP is
+implementation-dependent and may need to be done outside the @R{}
+process or before any use of OpenMP (which might be by another process
+or @R{} itself).   Also, implementation-specific variables such as
+@env{KMP_THREAD_LIMIT} might take precedence.
 
 @node Using pthreads, Compiling in sub-directories, OpenMP support, Using Makevars
 @subsubsection Using pthreads
