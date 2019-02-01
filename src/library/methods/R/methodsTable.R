@@ -224,11 +224,12 @@
   table
 }
 
+## utility now *only* called once above
 .storeMlist <- function(table, sig, mlist, i, add, fenv) {
     ## once generic functions are installed from 2.11.0 or later, this should
     ## only be called with mlist a method or NULL.
     if(is.null(mlist)) return(table)
-    m <- if(is(mlist, "MethodsList")) { .MlistDeprecated(); mlist@methods }
+    m <- if(is(mlist, "MethodsList")) { .MlistDefunct(); mlist@methods }
 	 else list(ANY=mlist)
 
   ## once MethodsList is defunct, this should be rewritten (and renamed!)
@@ -246,7 +247,7 @@
         remove(list = .sigLabel(sig), envir = table)
     }
     else if(is(el,"MethodsList")) {
-	.MlistDeprecated()
+	.MlistDefunct()
       i1 <- i+1
       if(i1 >= length(sig)) {
         ## a reset of the labels will be needed
@@ -1309,16 +1310,6 @@ outerLabels <- function(labels, new) {
   .cacheMethodInTable(fdef, signature, definition, table)
 }
 
-## Assertion: following is unused
-.assignMethodsMetaTable <- function(mlist, generic, where, overwrite = TRUE) {
-    .MlistDefunct(".assignMethodsMetaTable")
-    tname <- .TableMetaName(generic@generic, generic@package)
-    if(overwrite || !exists(tname, envir = where, inherits = FALSE)) {
-        table <- .mlistAddToTable(generic, mlist) # asserted never to be called.
-        assign(tname, table, envir = where)
-    }
-}
-
 .removeMethodsMetaTable <- function(generic, where) {
     ## does not warn if none exists, on the theory that a generic may be created
     ## but no methods defined to create a table.  The use of implicitGeneric's is an example.
@@ -1482,7 +1473,7 @@ setPackageSlot <- function(x, value) {
     expr <- substitute({}, list(DUMMY = "")) # bug if you use quote({})--is overwritten!!
     args <- names(defined)
     for(i in seq_along(defined)) {
-        ei <- extends(setPackageSlot(target[[i]], packageSlot(target)[[i]]),
+        ei <- extends(setPackageSlot(target [[i]], packageSlot(target)[[i]]),
                       setPackageSlot(defined[[i]], packageSlot(defined)),
                       fullInfo = TRUE)
         if(is(ei, "SClassExtension")  && !ei@simple)
@@ -1496,7 +1487,7 @@ setPackageSlot <- function(x, value) {
        expr
    }
     else
-      NULL
+        NULL
 }
 
 testInheritedMethods <- function(f, signatures, test = TRUE,  virtual = FALSE,
