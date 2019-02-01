@@ -1,7 +1,7 @@
 #  File src/library/tools/R/utils.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -1556,6 +1556,7 @@ nonS3methods <- function(package)
              equivalence = "sign.boot",
              fields = c("qr.q2ty", "qr.yq2"),
              gbm = c("pretty.gbm.tree", "quantile.rug"),
+             genetics = "diseq.ci",
              gpclib = "scale.poly",
              grDevices = "boxplot.stats",
              graphics = c("close.screen", "plot.design", "plot.new",
@@ -1572,9 +1573,12 @@ nonS3methods <- function(package)
              ncdf = c("open.ncdf", "close.ncdf",
                       "dim.create.ncdf", "dim.def.ncdf",
                       "dim.inq.ncdf", "dim.same.ncdf"),
+             plyr = c("rbind.fill", "rbind.fill.matrix"),
              quadprog = c("solve.QP", "solve.QP.compact"),
              reposTools = "update.packages2",
+             reshape = "all.vars.character",
              rgeos = "scale.poly",
+             rowr = "cbind.fill",
              sac = "cumsum.test",
              sfsmisc = "cumsum.test",
              sm = "print.graph",
@@ -1586,7 +1590,8 @@ nonS3methods <- function(package)
              stremo = "sigma.hat",
              supclust = c("sign.change", "sign.flip"),
              tensorA = "chol.tensor",
-             utils = c("close.socket", "flush.console", "update.packages")
+             utils = c("close.socket", "flush.console", "update.packages"),
+             wavelets = "plot.dwt.multiple"
              )
     if(is.null(package)) return(unlist(stopList))
     thisPkg <- stopList[[package]]
