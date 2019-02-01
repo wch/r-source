@@ -1638,6 +1638,7 @@ nonS3methods <- function(package)
              equivalence = "sign.boot",
              fields = c("qr.q2ty", "qr.yq2"),
              gbm = c("pretty.gbm.tree", "quantile.rug"),
+             genetics = "diseq.ci",
              gpclib = "scale.poly",
              grDevices = "boxplot.stats",
              graphics = c("close.screen", "plot.design", "plot.new",
