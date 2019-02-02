@@ -634,6 +634,13 @@
 
       \item In the definition of an S4 class, prototype elements are now
       checked to match the slots of the class.  Reported by Bill Dunlap.
+
+      \item \code{setClassUnion()} no longer warns, but uses \code{message()}
+      for now, when encountering \dQuote{non local} subclasses of class members.
+
+      Experimentally, the internal \code{.checkSubclasses()} utility prints
+      debugging info to see if it is used at all after the \pkg{methods}
+      package has been built.  Please report if you see such printout.
     }
   }
 }

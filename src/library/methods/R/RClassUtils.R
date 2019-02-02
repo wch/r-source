@@ -2162,11 +2162,13 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
         }
         else {
             ## happens (wrongly) in a package which imports 'class' but not 'subclass' from another package
-            ## *and* extends 'class', e.g., by defining a class union with it as member; then,
-            ## "consider setClassUnion()" below is confusing to user:
-          warning(gettextf("subclass %s of class %s is not local and cannot be updated for new inheritance information; consider setClassUnion()",
-                           .dQ(what), .dQ(class)),
-                  call. = FALSE, domain = NA)
+            ## *and* extends 'class', e.g., by defining a class union with it as member.
+            ## Fact is that at the end, the subclass is seen to be updated fine.
+            message(gettextf(paste("subclass %s of class %s is not local and is not updated",
+                                   "for new inheritance information currently;",
+                                   "\n[where=%s, where2=%s]"),
+                           .dQ(what), .dQ(class), format(where), format(where2)),
+                    domain = NA)
           next
         }
         extension <- extDefs[[what]]
@@ -2175,9 +2177,15 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
                            .dQ(what), .dQ(def2@className), .dQ(class)),
                   call. = FALSE, domain = NA)
         else if(is.na(match(class2, names(subDef@contains)))) {
+            ## The only "real action": seems only necessary to be called
+            ## during 'methods' "initializing class and method definitions":
+            message(sprintf(paste( # currently only seen from setClassUnion() -> setIs() ->
+                "Debugging .checkSubclasses(): assignClassDef(what=\"%s\", *, where=%s, force=TRUE);\n",
+                "E := environment(): %s; parent.env(E): %s"), what, format(cwhere),
+                format(E <- environment()), format(parent.env(E))))
             subDef@contains[[class2]] <- extension
             assignClassDef(what, subDef, cwhere, TRUE)
-        }
+        } # else  no action (incl no warning!) at all
     }
     NULL
 }
