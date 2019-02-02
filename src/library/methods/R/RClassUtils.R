@@ -2179,6 +2179,7 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
         else if(is.na(match(class2, names(subDef@contains)))) {
             ## The only "real action": seems only necessary to be called
             ## during 'methods' "initializing class and method definitions":
+            if(isTRUE(as.logical(Sys.getenv("_R_METHODS_SHOW_CHECKSUBCLASSES", "false"))))
             message(sprintf(paste( # currently only seen from setClassUnion() -> setIs() ->
                 "Debugging .checkSubclasses(): assignClassDef(what=\"%s\", *, where=%s, force=TRUE);\n",
                 "E := environment(): %s; parent.env(E): %s"), what, format(cwhere),

@@ -641,9 +641,13 @@
       \item \code{setClassUnion()} no longer warns, but uses \code{message()}
       for now, when encountering \dQuote{non local} subclasses of class members.
 
-      Experimentally, the internal \code{.checkSubclasses()} utility prints
+      If environment variable \env{_R_METHODS_SHOW_CHECKSUBCLASSES} is set
+      to true, the internal \code{.checkSubclasses()} utility prints
       debugging info to see if it is used at all after the \pkg{methods}
-      package has been built.  Please report if you see such printout.
+      package has been built.  On the other hand, setting
+      \env{_R_METHODS_DONT_CHECKSUBCLASSES} to true, replaces
+      \code{.checkSubclasses()} by a no-op, experimentally, as it may be
+      unneeded (after \pkg{methods} building).
     }
   }
 }
