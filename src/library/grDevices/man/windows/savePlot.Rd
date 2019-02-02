@@ -58,7 +58,7 @@ savePlot(filename = "Rplot",
 }
 
 \seealso{
-  \code{\link{recordPlot}()} which is device indepent.  Further,
+  \code{\link{recordPlot}()} which is device independent.  Further,
   \code{\link{png}}, \code{\link{dev.print}}
 }
 
