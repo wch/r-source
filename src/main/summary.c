@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2018  The R Core Team
+ *  Copyright (C) 1997--2019  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1087,20 +1087,35 @@ SEXP attribute_hidden do_first_min(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* which(x) : indices of non-NA TRUE values in x */
 SEXP attribute_hidden do_which(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP v, v_nms, ans, ans_nms = R_NilValue;
-    int i, j = 0, len, *buf;
-
     checkArity(op, args);
-    v = CAR(args);
+    SEXP v = CAR(args);
     if (!isLogical(v))
 	error(_("argument to 'which' is not logical"));
-    len = length(v);
-    buf = (int *) R_alloc(len, sizeof(int));
-
+    R_xlen_t len = xlength(v), i, j = 0;
     int *pv = LOGICAL(v);
+    SEXP ans;
+#ifdef LONG_VECTOR_SUPPORT
+    if (len > R_SHORT_LEN_MAX) {
+    double *buf = (double *) R_alloc(len, sizeof(double));
+
     for (i = 0; i < len; i++) {
 	if (pv[i] == TRUE) {
-	    buf[j] = i + 1;
+	    buf[j] = (double)(i + 1);
+	    j++;
+	}
+    }
+
+    len = j;
+    PROTECT(ans = allocVector(REALSXP, len));
+    if(len) memcpy(REAL(ans), buf, sizeof(double) * len);
+    } else
+#endif
+    {
+    int *buf = (int *) R_alloc(len, sizeof(int));
+
+    for (i = 0; i < len; i++) {
+	if (pv[i] == TRUE) {
+	    buf[j] = (int)(i + 1);
 	    j++;
 	}
     }
@@ -1108,12 +1123,22 @@ SEXP attribute_hidden do_which(SEXP call, SEXP op, SEXP args, SEXP rho)
     len = j;
     PROTECT(ans = allocVector(INTSXP, len));
     if(len) memcpy(INTEGER(ans), buf, sizeof(int) * len);
+    }
 
-    if ((v_nms = getAttrib(v, R_NamesSymbol)) != R_NilValue) {
-	PROTECT(ans_nms = allocVector(STRSXP, len));
-	int *pa = INTEGER(ans);
+    SEXP v_nms = getAttrib(v, R_NamesSymbol);
+    if (v_nms != R_NilValue) {
+	SEXP ans_nms = PROTECT(allocVector(STRSXP, len));
+#ifdef LONG_VECTOR_SUPPORT
+	if (TYPEOF(ans) == REALSXP)
 	for (i = 0; i < len; i++) {
-	    SET_STRING_ELT(ans_nms, i, STRING_ELT(v_nms, pa[i] - 1));
+	    SET_STRING_ELT(ans_nms, i,
+			   STRING_ELT(v_nms, (R_xlen_t)REAL(ans)[i] - 1));
+	}
+	else
+#endif
+	for (i = 0; i < len; i++) {
+	    SET_STRING_ELT(ans_nms, i,
+			   STRING_ELT(v_nms, (R_xlen_t)INTEGER(ans)[i] - 1));
 	}
 	setAttrib(ans, R_NamesSymbol, ans_nms);
 	UNPROTECT(1);

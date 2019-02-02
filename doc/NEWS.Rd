@@ -258,6 +258,9 @@
       \item \code{format(x)} gives a more user friendly error message in
       the case where no method is defined. Additionally, a minimal method
       is provided in \code{format.default(x)} when \code{isS4(x)} is true.
+
+      \item \code{which(x)} now also works when \code{x} is a long vector,
+      thanks to Suharto Anggono's \PR{17201}.
     }
   }
 
