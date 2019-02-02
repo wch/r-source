@@ -1,7 +1,7 @@
 #  File src/library/methods/R/is.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -172,16 +172,16 @@ setIs <-
              domain = NA)
     prevIs <- !identical(possibleExtends(class1, class2,classDef, classDef2),
                          FALSE) # used in checking for previous coerce
-    if(is.null(extensionObject))
-        obj <- makeExtends(class1, class2, coerce, test, replace, by,
+    obj <- if(is.null(extensionObject))
+               makeExtends(class1, class2, coerce, test, replace, by,
                            classDef1 = classDef, classDef2 = classDef2,
                            package = getPackageName(where))
-    else
-        obj <- extensionObject
+           else
+               extensionObject
     ## revise the superclass/subclass info in the stored class definition
     ok <- .validExtends(class1, class2, classDef,  classDef2, obj@simple)
     if(!isTRUE(ok))
-      stop(ok)
+        stop(ok)
     where2 <- .findOrCopyClass(class2, classDef2, where, "subclass")
     classDef2@subclasses[[class1]] <- obj
     if(doComplete)
@@ -195,10 +195,11 @@ setIs <-
             classDef2@prototype <- NULL
         else if(is.null(classDef2@prototype)
                 && is.na(match("NULL", names(classDef2@subclasses)))) {
-            if(classDef@virtual)
-                classDef2@prototype <- classDef@prototype
-            else # new(), but without intialize(), which may require an arg.
-                classDef2@prototype <- .Call(C_new_object, classDef)
+            classDef2@prototype <-
+                if(classDef@virtual)
+                    classDef@prototype
+                else # new(), but without intialize(), which may require an arg.
+                    .Call(C_new_object, classDef)
         }
     }
     assignClassDef(class2, classDef2, where2, TRUE)
@@ -208,6 +209,7 @@ setIs <-
     .newDirectSuperclass(classDef@contains, class2, names(classDef2@contains)) <- obj
     if(doComplete) {
       classDef@contains <- completeExtends(classDef, class2, obj, where = where)
+      ## is needed at least during byte compilation of 'methods' itself :
       if(!is(classDef, "ClassUnionRepresentation")) #unions are handled in assignClassDef
         .checkSubclasses(class1, classDef, class2, classDef2, where1, where2)
     }
