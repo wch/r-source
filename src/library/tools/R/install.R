@@ -1467,8 +1467,8 @@ if(FALSE) {
     if (keep.tmpdir) {
       make_tmpdir <- function(prefix, nchars = 8, ntries = 100) {
         for(i in 1:ntries) {
-          name = paste(sample(c(0:9, letters, LETTERS), nchars, replace=TRUE), collapse="")
-          path = paste(prefix, name, sep = "/")
+          name <- paste(sample(c(0:9, letters, LETTERS), nchars, replace=TRUE), collapse="")
+          path <- paste(prefix, name, sep = "/")
           if (dir.create(path, showWarnings = FALSE, recursive = T)) {
             return(path)
           }

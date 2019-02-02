@@ -1369,9 +1369,9 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE)
                        ## If there are no names, then use the names of
                        ## the symbols themselves.
                        if (length(names(symNames)) == 0L)
-                           names(symNames) = symNames
+                           names(symNames) <- symNames
                        else if (any(w <- names(symNames) == "")) {
-                           names(symNames)[w] = symNames[w]
+                           names(symNames)[w] <- symNames[w]
                        }
 
                        ## For each DLL, we build up a list the (R

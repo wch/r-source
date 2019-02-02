@@ -31,7 +31,7 @@
 	     HTTPUserAgent = defaultUserAgent(),
 	     menu.graphics = TRUE, mailer = "mailto")
     if (.Platform$pkgType != "source")
-        op.utils[["install.packages.compile.from.source"]] =
+        op.utils[["install.packages.compile.from.source"]] <-
             Sys.getenv("R_COMPILE_AND_INSTALL_PACKAGES", "interactive")
 
     extra <-
