@@ -1,7 +1,7 @@
 #  File src/library/base/R/connections.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -41,6 +41,8 @@ readLines <- function(con = stdin(), n = -1L, ok = TRUE, warn = TRUE,
 
 writeLines <- function(text, con = stdout(), sep = "\n", useBytes = FALSE)
 {
+    if(!is.character(text))
+        stop("can only write character objects")
     if(is.character(con)) {
         con <- file(con, "w")
         on.exit(close(con))

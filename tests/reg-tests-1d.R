@@ -2507,6 +2507,16 @@ stopifnot(exprs = {
 ## signalled from long .Internal(...) call + "must be atomic" in R <= 3.5.x
 
 
+## writeLines(readLines(F), F)  -- PR#17528
+tf <- tempfile("writeL_test")
+writeLines("1\n2\n3", tf)
+c123 <- paste(1:3)
+stopifnot(identical(readLines(tf), c123))
+writeLines(readLines(tf), tf)
+stopifnot(identical(readLines(tf), c123))
+## writeLines had opened the output for writing before readLines() read it
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
