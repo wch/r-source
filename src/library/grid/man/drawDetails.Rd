@@ -7,6 +7,8 @@
 \alias{drawDetails}
 \alias{preDrawDetails}
 \alias{postDrawDetails}
+\alias{preDraw}
+\alias{postDraw}
 \title{ Customising grid Drawing }
 \description{
   These generic hook functions are called whenever a grid grob is drawn.
@@ -17,6 +19,8 @@
 drawDetails(x, recording)
 preDrawDetails(x)
 postDrawDetails(x)
+preDraw(x)
+postDraw(x)
 }
 \arguments{
   \item{x}{ A grid grob. }
@@ -50,6 +54,15 @@ postDrawDetails(x)
   Note that \code{preDrawDetails} and \code{postDrawDetails} are
   also called in the calculation of \code{"grobwidth"} and
   \code{"grobheight"} units.
+ 
+  The functions \code{preDraw} and \code{postDraw} are what call
+  \code{preDrawDetails} and \code{postDrawDetails} respectively.
+  These functions are exported so that external packages can 
+  write functions that work with grobs and perform the same
+  set up as usually happens when a grob is drawn.  Note that the
+  result of calling the \code{preDraw} function is a potentially
+  modified copy of the grob, so \code{preDraw} should be used like
+  this: \code{x <- preDraw(x)}. 
 }
 \value{
   None of these functions are expected to return a value.

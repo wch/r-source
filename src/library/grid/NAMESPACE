@@ -49,7 +49,7 @@ export(
        "downViewport", "upViewport", "seekViewport",
        "showViewport",
 
-       "makeContext", "makeContent",
+       "makeContext", "makeContent", "preDraw", "postDraw",
        "drawDetails", "preDrawDetails", "postDrawDetails",
        "editDetails",
        "validDetails",
