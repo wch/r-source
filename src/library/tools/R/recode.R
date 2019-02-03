@@ -32,7 +32,7 @@ encoded_text_to_latex <-
         paste(latin9table[as.integer(xx)], collapse="")}
     do_utf8 <- function(x) {
         xx <- utf8ToInt(x)
-        y <- rep("?", length(x))
+        y <- rep.int("?", length(x))
         y[xx < 512] <- utf8table[xx]
         y[xx == 0x02C6] <- "{\\textasciicircum}"
         y[xx == 0x02C7] <- "{\\textasciicaron}"
@@ -62,11 +62,11 @@ encoded_text_to_latex <-
 }
 
 latin1table <- c(
-     rep("?", 31), ## omit 0x0
+     rep.int("?", 31), ## omit 0x0
      ## 0x20 to %x7F
-     rawToChar(as.raw(seq(32, 126)), multiple=TRUE), "?",
+     rawToChar(as.raw(seq.int(32, 126)), multiple=TRUE), "?",
      ## 0x80 to 0x9F
-     rep("?", 32),
+     rep.int("?", 32),
      ## 0xA0 = 160 on
      "{\\nobreakspace}", "{\\textexclamdown}", "{\\textcent}", "{\\textsterling}", "{\\textcurrency}", "{\\textyen}", "{\\textbrokenbar}", "{\\S}",
      '\\"{}', "{\\textcopyright}", "{\\textordfeminine}", "{\\guillemotleft}", "{\\textlnot}", "\\-", "{\\textregistered}", "{\\a={}}",
@@ -83,11 +83,11 @@ latin1table <- c(
      )
 
 latin2table <- c(
-     rep("?", 31), ## omit 0x0
+     rep.int("?", 31), ## omit 0x0
      ## 0x20 to %x7F
-     rawToChar(as.raw(seq(32, 126)), multiple=TRUE), "?",
+     rawToChar(as.raw(seq.int(32, 126)), multiple=TRUE), "?",
      ## 0x80 to 0x9F
-     rep("?", 32),
+     rep.int("?", 32),
      ## 0xA0 = 160 on
      "{\\nobreakspace}", "{\\k A}", "{\\u{}}", "{\\L}", "{\\textcurrency}", "{\\v L}", "{\\a'S}", "{\\S}",
      '\\"{}', "{\\v S}", "{\\c S}", "{\\v T}", "{\\\'Z}", "\\-", "{\\v Z}", "{\\.Z}",
@@ -104,11 +104,11 @@ latin2table <- c(
      )
 
 latin9table <- c(
-     rep("?}", 31),
+     rep.int("?}", 31),
      ## 0x20 to %x7F
-     rawToChar(as.raw(seq(32, 126)), multiple=TRUE), "?}",
+     rawToChar(as.raw(seq.int(32, 126)), multiple=TRUE), "?}",
      ## 0x80 to 0x9F
-     rep("?}", 32),
+     rep.int("?}", 32),
      ## 0xA0 = 160 on
      "{\\nobreakspace}", "{\\textexclamdown}", "{\\textcent}", "{\\textsterling}", "{\\texteuro}", "{\\textyen}", "{\\v S}", "{\\S}",
      '{\\v s}', "{\\copyright}", "{\\textordfeminine}", "{\\guillemotleft}", "{\\textlnot}", "\\-", "{\\textregistered}", "{\\a={}}",
@@ -124,7 +124,7 @@ latin9table <- c(
      "{\\o}", "{\\a`u}", "{\\a'u}", "{\\^u}", '\\"u', "{\\a`y}", "{\\th}", '{\\"y}'
      )
 
-utf8table <- c(latin1table, rep("?", 256))
+utf8table <- c(latin1table, rep.int("?", 256))
 
 utf8table[0x0102:0x107] <-
     c("{\\u A}","{\\u a}", "{\\k A}", "{\\k a}", "{\\a'C}", "{\\a'c}")

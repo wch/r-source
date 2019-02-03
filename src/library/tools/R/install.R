@@ -2086,7 +2086,7 @@ if(FALSE) {
     {
         ## sort order for topics, a little tricky
         ## FALSE sorts before TRUE
-        xx <- rep(TRUE, length(x))
+        xx <- rep.int(TRUE, length(x))
         xx[grep("-package", x, fixed = TRUE)] <- FALSE
         order(xx, toupper(x), x)
     }
@@ -2273,13 +2273,13 @@ if(FALSE) {
     	if (!shown) {
             nc <- nchar(bf)
             if (nc < 38L)
-                cat("    ", bf, rep(" ", 40L - nc), sep = "")
+                cat("    ", bf, rep.int(" ", 40L - nc), sep = "")
             else
-                cat("    ", bf, "\n", rep(" ", 44L), sep = "")
+                cat("    ", bf, "\n", rep.int(" ", 44L), sep = "")
             shown <<- TRUE
         }
         ## 'example' is always last, so 5+space
-        cat(type, rep(" ", max(0L, 6L - nchar(type))), sep = "")
+        cat(type, rep.int(" ", max(0L, 6L - nchar(type))), sep = "")
     }
 
     dirname <- c("html", "latex", "R-ex")

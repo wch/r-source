@@ -3493,7 +3493,7 @@ add_dummies <- function(dir, Log)
                 tfile <- paste0(pkgname, "-Ex.timings")
                 times <-
                     utils::read.table(tfile, header = TRUE, row.names = 1L,
-                                      colClasses = c("character", rep("numeric", 3)))
+                                      colClasses = c("character", rep.int("numeric", 3)))
                 o <- order(times[[1L]] + times[[2L]], decreasing = TRUE)
                 times <- times[o, ]
 
@@ -4324,7 +4324,7 @@ add_dummies <- function(dir, Log)
             }
             if(length(execs)) {
                 execs <- sub(":[[:space:]].*$", "", execs, useBytes = TRUE)
-                known <- rep(FALSE, length(execs))
+                known <- rep.int(FALSE, length(execs))
                 pexecs <- file.path(pkgname, execs)
                 ## known false positives
                 for(fp in  c("foreign/tests/datefactor.dta",

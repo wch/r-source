@@ -1342,7 +1342,7 @@ getVignetteInfo <- function(package = NULL, lib.loc = NULL, all = TRUE)
             entries <- readRDS(INDEX)
         if (NROW(entries) > 0) {
             # FIXME:  this test is unnecessary?
-            R <- if (is.null(entries$R)) rep("", NROW(entries)) else entries$R
+            R <- if (is.null(entries$R)) rep.int("", NROW(entries)) else entries$R
             file <- basename(entries$File)
             pdf <- entries$PDF
             topic <- file_path_sans_ext(ifelse(R == "", ifelse(pdf == "", file, pdf), R))

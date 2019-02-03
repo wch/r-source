@@ -73,7 +73,7 @@ get_exclude_patterns <- function()
 
 ## Check for files listed in .Rbuildignore or get_exclude_patterns()
 inRbuildignore <- function(files, pkgdir) {
-    exclude <- rep(FALSE, length(files))
+    exclude <- rep.int(FALSE, length(files))
     ignore <- get_exclude_patterns()
     ## handle .Rbuildignore:
     ## 'These patterns should be Perl regexps, one per line,
@@ -359,7 +359,7 @@ inRbuildignore <- function(files, pkgdir) {
                             allfiles <- dir("vignettes", all.files = TRUE,
                                             full.names = TRUE, recursive = TRUE,
                                             include.dirs = TRUE)
-                            inst <- rep(FALSE, length(allfiles))
+                            inst <- rep.int(FALSE, length(allfiles))
                             for (e in extras)
                                 inst <- inst | grepl(e, allfiles, perl = TRUE,
                                                      ignore.case = TRUE)

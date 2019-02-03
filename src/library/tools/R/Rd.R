@@ -294,8 +294,8 @@ function(package, dir, lib.loc = NULL, stages = "build")
             eof_pos <-
                 grep("^\\\\eof$", lines, perl = TRUE, useBytes = TRUE)
             db <- split(lines[-eof_pos],
-                        rep(seq_along(eof_pos),
-                            times = diff(c(0, eof_pos)))[-eof_pos])
+                        rep.int(seq_along(eof_pos),
+                                diff(c(0, eof_pos)))[-eof_pos])
         } else return(structure(list(), names = character()))
 
         ## NB: we only get here for pre-2.10.0 installs

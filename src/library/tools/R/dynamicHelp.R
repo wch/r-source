@@ -502,8 +502,8 @@ httpd <- function(path, query, ...)
                 ## subset 
                 rle <- strsplit(subset, "_")[[1L]]
                 rle <- structure(list(lengths = as.numeric(rle),
-                                      values = rep(c(TRUE, FALSE),
-                                                   length.out = length(rle))),
+                                      values = rep_len(c(TRUE, FALSE),
+                                                       length(rle))),
                                  class = "rle")
                 news <- news(inverse.rle(rle)[-1L], package = pkg)
             } else
