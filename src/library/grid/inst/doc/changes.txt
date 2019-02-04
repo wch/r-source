@@ -25,8 +25,8 @@ Changes from grid_3.5.* to grid_3.6.0:
 
     Thanks to report from John Bullock.
 
-5.  Exported preDraw() and postDraw() (so that external packages 
-    can do more stuff with grobs)
+5.  Exported makeContent.default(), preDraw(), and postDraw() (so that
+    external packages can do more stuff with grobs)
 
 
 Changes from grid_3.4.* to grid_3.5.0:
