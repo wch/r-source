@@ -22,7 +22,7 @@ seq.default <-
     function(from = 1, to = 1, by = ((to - from)/(length.out - 1)),
              length.out = NULL, along.with = NULL, ...)
 {
-    is.logint <- function(.) is.integer(.) || is.logical(.)
+    is.logint <- function(.) (is.integer(.) || is.logical(.)) && !is.object(.)
     if((One <- nargs() == 1L) && !missing(from)) {
 	lf <- length(from)
 	return(if(mode(from) == "numeric" && lf == 1L) {
@@ -41,7 +41,8 @@ seq.default <-
             warning("first element used of 'length.out' argument")
             length.out <- length.out[1L]
         }
-	if(!is.integer(length.out)) length.out <- ceiling(length.out)
+	if(!(intn1 <- is.logint(length.out)))
+	    length.out <- as.numeric(ceiling(length.out))
     }
     chkDots(...)
     if (!missing(from) && length(from) != 1L) stop("'from' must be of length 1")
@@ -94,11 +95,9 @@ seq.default <-
     else if (One) seq_len(length.out)
     else if(missing(by)) {
 	# if(from == to || length.out < 2) by <- 1
-	intn1 <- is.integer(length.out)
 	if(missing(to)) {
 	    to <- from + (length.out - 1)
-	    intdel <- intn1 &&  if(is.integer(from)) to <= .Machine$integer.max
-				else is.logical(from)
+	    intdel <- intn1 && is.logint(from) && to <= .Machine$integer.max
 	    if(intdel) storage.mode(to) <- "integer"
 	} else intdel <- is.logint(to)
 	if(missing(from)) {
@@ -127,7 +126,6 @@ seq.default <-
     }
     else if(missing(to)) {
 	int <- (intby <- is.logint(by)) &&
-	    length.out - 1L <= .Machine$integer.max &&
 	    is.logint(from) &&
 	    (!(nby <- length(by)) || (naby <- is.na(by)) ||
 	     ((to <- from + (length.out - 1) * by) <= .Machine$integer.max &&
@@ -135,13 +133,12 @@ seq.default <-
 	if(int && length.out > 2L && nby == 1L && !naby)
 	    cumsum(rep.int(c(from, by), c(1L, length.out - 1L)))
 	else {
-	    if(intby && !int) storage.mode(by) <- "double"
+	    if(intby && !(int || is.object(from))) storage.mode(by) <- "double"
 	from + (0L:(length.out - 1L)) * by
 	}
     }
     else if(missing(from)) {
 	int <- (intby <- is.logint(by)) &&
-	    length.out - 1L <= .Machine$integer.max &&
 	    is.logint(to) &&
 	    (!(nby <- length(by)) || (naby <- is.na(by)) ||
 	     ((from <- to - (length.out - 1) * by) >= -.Machine$integer.max &&
@@ -149,7 +146,7 @@ seq.default <-
 	if(int && length.out > 2L && nby == 1L && !naby)
 	    cumsum(rep.int(c(as.integer(from), by), c(1L, length.out - 1L)))
 	else {
-	    if(intby && !int) storage.mode(by) <- "double"
+	    if(intby && !(int || is.object(to))) storage.mode(by) <- "double"
 	to - ((length.out - 1L):0L) * by
 	}
     }

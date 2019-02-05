@@ -1,10 +1,12 @@
 #### Regression Tests that need "much" memory
 #### (and are slow even with enough GBytes of mem)
 
+print(si <- sessionInfo(), locale=FALSE)
+Sys.info()
 ## Run (currently _only_)  when inside tests/  by
 '
-make test-Large
-'
+time   make test-large
+' # giving ~ 35 min [R-devel 2019-01]
 
 ## From CRAN package 'sfsmisc':
 Sys.memGB <- function (kind = "MemTotal")
@@ -233,6 +235,15 @@ if(availableGB > 12) withAutoprint({
     system.time(S.2 <- sum(x32))
     stopifnot(S.2 == 2^63)
     rm(x32)
+})
+
+
+## seq() remaining integer: (PR 17497, comment #9)
+if(availableGB > 16) withAutoprint({
+    i <- as.integer(2^30)
+    system.time(i2.31 <- seq(-i, by=1L, length=2*i+1)) # 30.6 sec elapsed
+    object.size(i2.31) # 8'589'934'648 bytes [ was 17.17 GB in R <= 3.5.x ]
+    stopifnot(is.integer(i2.31),  i2.31[1] == -i,  i2.31[length(i2.31)] == i)
 })
 
 

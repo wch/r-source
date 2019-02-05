@@ -261,6 +261,10 @@
 
       \item \code{which(x)} now also works when \code{x} is a long vector,
       thanks to Suharto Anggono's \PR{17201}.
+
+      \item \code{seq.default()} is more careful to return an \code{integer}
+      (as opposed to \code{double}) stored result when its arguments are
+      large and/or objects; see comment #9 of Suharto Anggono's \PR{17497}.
     }
   }
 
@@ -401,7 +405,7 @@
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item \code{$.data.frame} had become an expensive version of
-      the default method, so has been removed. (Thanks to Radford Neal 
+      the default method, so has been removed. (Thanks to Radford Neal
       for picking this up and Duncan Murdoch for providing a patch.)
 
       \item Argument \code{compressed} of \code{untar()} is
