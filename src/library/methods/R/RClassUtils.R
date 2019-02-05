@@ -1,7 +1,7 @@
 #  File src/library/methods/R/RClassUtils.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -670,8 +670,6 @@ reconcilePropertiesAndPrototype <-
   ## `new(classi)' for the class, `classi' of the slot if that succeeds, and `NULL'
   ## otherwise.
   ##
-  ## The prototype may imply slots not in the properties list.  It is not required that
-    ## the extends classes be define at this time.  Should it be?
   function(name, properties, prototype, superClasses, where) {
       ## the StandardPrototype should really be a type that doesn't behave like
       ## a vector.  But none of the existing SEXP types work.  Someday ...
@@ -767,15 +765,16 @@ reconcilePropertiesAndPrototype <-
           if(is(clDef, "classRepresentation")) {
               theseProperties <- getSlots(clDef)
               theseSlots <- names(theseProperties)
-              theseSlots <- theseSlots[theseSlots == ".Data"] # handled already
-              dups <- !is.na(match(theseSlots, allProps))
+              theseSlots <- theseSlots[theseSlots != ".Data"] # handled already
+              dups <- !is.na(match(theseSlots, names(allProps)))
               for(dup in theseSlots[dups])
                   if(!extends(elNamed(allProps, dup), elNamed(theseProperties, dup)))
-                      stop(gettextf("slot %s in class %s currently defined (or inherited) as \"%s\", conflicts with an inherited definition in class %s",
+                      stop(gettextf("Definition of slot %s, in class %s, as %s conflicts with definition, inherited from class %s, as %s",
                                     sQuote(dup),
                                     dQuote(name),
-                                    elNamed(allProps, dup),
-                                    dQuote(cl)),
+                                    dQuote(elNamed(allProps, dup)),
+                                    dQuote(cl),
+                                    dQuote(elNamed(theseProperties, dup))),
                            domain = NA)
               theseSlots <- theseSlots[!dups]
               if(length(theseSlots))
@@ -785,6 +784,12 @@ reconcilePropertiesAndPrototype <-
               stop(gettextf("class %s extends an undefined class (%s)",
                             dQuote(name), dQuote(cl)),
                    domain = NA)
+      }
+      undefinedPrototypeSlots <- setdiff(names(prototype), names(allProps))
+      if (length(undefinedPrototypeSlots) > 0L) {
+          warning(gettextf("The prototype for class %s has undefined slot(s): %s",
+                        dQuote(name), paste0("'", undefinedPrototypeSlots, "'",
+                                             collapse=", ")))
       }
       if(is.null(dataPartClass)) {
           if(extends(prototypeClass, "classPrototypeDef"))
@@ -2141,26 +2146,29 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
 .checkSubclasses <- function(class, def, class2, def2, where, where2) {
     where <- as.environment(where)
     where2 <- as.environment(where2)
-   subs <- def@subclasses
+    subs <- def@subclasses
     subNames <- names(subs)
     extDefs <- def2@subclasses
     for(i in seq_along(subs)) {
         what <- subNames[[i]]
         if(.identC(what, class2))
-          next # catch recursive relations
+            next # catch recursive relations
         cname <- classMetaName(what)
-        if(exists(cname, envir = where, inherits = FALSE)) {
-            subDef <- get(cname, envir = where)
+	if(!is.null(subDef <- get0(cname, envir = where, inherits = FALSE))) {
             cwhere <- where
         }
-        else if(exists(cname, envir = where2, inherits = FALSE)) {
-            subDef <- get(cname, envir = where2)
+	else if(!is.null(subDef <- get0(cname, envir = where2, inherits = FALSE))) {
             cwhere <- where2
         }
         else {
-          warning(gettextf("subclass %s of class %s is not local and cannot be updated for new inheritance information; consider setClassUnion()",
-                           .dQ(what), .dQ(class)),
-                  call. = FALSE, domain = NA)
+            ## happens (wrongly) in a package which imports 'class' but not 'subclass' from another package
+            ## *and* extends 'class', e.g., by defining a class union with it as member.
+            ## Fact is that at the end, the subclass is seen to be updated fine.
+            message(gettextf(paste("subclass %s of class %s is not local and is not updated",
+                                   "for new inheritance information currently;",
+                                   "\n[where=%s, where2=%s]"),
+                           .dQ(what), .dQ(class), format(where), format(where2)),
+                    domain = NA)
           next
         }
         extension <- extDefs[[what]]
@@ -2169,9 +2177,16 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
                            .dQ(what), .dQ(def2@className), .dQ(class)),
                   call. = FALSE, domain = NA)
         else if(is.na(match(class2, names(subDef@contains)))) {
+            ## The only "real action": seems only necessary to be called
+            ## during 'methods' "initializing class and method definitions":
+            if(isTRUE(as.logical(Sys.getenv("_R_METHODS_SHOW_CHECKSUBCLASSES", "false"))))
+            message(sprintf(paste( # currently only seen from setClassUnion() -> setIs() ->
+                "Debugging .checkSubclasses(): assignClassDef(what=\"%s\", *, where=%s, force=TRUE);\n",
+                "E := environment(): %s; parent.env(E): %s"), what, format(cwhere),
+                format(E <- environment()), format(parent.env(E))))
             subDef@contains[[class2]] <- extension
             assignClassDef(what, subDef, cwhere, TRUE)
-        }
+        } # else  no action (incl no warning!) at all
     }
     NULL
 }

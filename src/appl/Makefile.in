@@ -51,10 +51,11 @@ libappl.a: $(OBJECTS)
 	$(AR) -cr $@ $(OBJECTS)
 	$(RANLIB) $@
 
+## Used with --disable-BLAS-shlib
 blas.o: $(top_srcdir)/src/extra/blas/blas.f
-	$(F77) $(ALL_FFLAGS) -c $< -o $@
+	$(FC) $(ALL_FFLAGS) -c $< -o $@
 cmplxblas.o: $(top_srcdir)/src/extra/blas/cmplxblas.f
-	$(F77) $(ALL_FFLAGS) -c $< -o $@
+	$(FC) $(ALL_FFLAGS) -c $< -o $@
 
 mostlyclean: clean
 clean:

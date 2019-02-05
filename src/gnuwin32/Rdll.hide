@@ -62,8 +62,6 @@
  ProfileEvent
  RExitContext
  R_BCNodeStackBase
- R_BCNodeStackEnd
- R_BCNodeStackTop
  R_BrowseLevel
  R_BrowseLines
  R_BrowserLastCommand

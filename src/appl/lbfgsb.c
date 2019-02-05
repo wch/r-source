@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2015 The R Core Team
+ *  Copyright (C) 2000-2019 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -871,14 +871,12 @@ L777:
 /*	  Store T in the upper triangular of the array wt; */
 /*	  Cholesky factorize T to J*J' with */
 /*	     J' stored in the upper triangular of wt. */
-    formt(m, &wt[wt_offset], &sy[sy_offset], &ss[ss_offset], &col, &theta, &
-	    info);
+    formt(m, &wt[wt_offset], &sy[sy_offset], &ss[ss_offset], &col, &theta,
+	  &info);
     if (info != 0) {
-/*	    nonpositive definiteness in Cholesky factorization; */
-/*	    refresh the lbfgs memory and restart the iteration. */
 	if (iprint >= 0)
 	    Rprintf("%s\n%s\n",
-		    "Nonpositive definiteness in Cholesky factorization in formk;",
+		    "Nonpositive definiteness in Cholesky factorization in formt();",
 		    "   refresh the lbfgs memory and restart the iteration.");
 	info = 0;
 	col = 0;

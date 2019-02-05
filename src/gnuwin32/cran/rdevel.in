@@ -36,7 +36,7 @@
 <h1>R-devel build for Windows (32/64 bit)</h1>
 
 <div class="download">
-  <p><a href="@RWVER@-win.exe">Download R-Devel build for Windows</a> <span>(62 megabytes, 32/64 bit)</span></p>
+  <p><a href="@RWVER@-win.exe">Download R-Devel build for Windows</a> <span>(@SIZEMB@ megabytes, 32/64 bit)</span></p>
   <ul>
     <li>This build of R-Devel uses the gcc 4.9.3 toolchain produced
     by Jeroen Ooms.  For details, see <a href="https://github.com/rwinlib/r-base">the Github page</a>.</li>

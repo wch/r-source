@@ -15,7 +15,8 @@ nzchar(x, keepNA = FALSE)
 \description{
   \code{nchar} takes a character vector as an argument and
   returns a vector whose elements contain the sizes of
-  the corresponding elements of \code{x}.
+  the corresponding elements of \code{x}. Internally, it is a generic,
+  for which methods can be defined.
 
   \code{nzchar} is a fast way to find out if elements of a character
   vector are non-empty strings.

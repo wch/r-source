@@ -1,7 +1,7 @@
 #  File src/library/tools/R/Vignettes.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -33,13 +33,13 @@ vignette_type <- function(file) {
 }
 
 # Locates the vignette weave, tangle and texi2pdf product(s) based on the
-# vignette name.   All such products must have the name as their filename
+# vignette name.   All such products must have the same name as their filename
 # prefix (i.e. "^<name>").
 # For weave, final = TRUE will look for <name>.pdf and <name>.html, whereas
 # with final = FALSE it also looks for <name>.tex (if <name>.pdf is also
-# found, it will be returned).  For tangle, main = TRUE will look <name>.R,
+# found, it will be returned).  For tangle, main = TRUE will look for <name>.R,
 # whereas main = FALSE will look for <name><anything>*.R.
-# For texipdf, <name>.pdf is located.
+# For texi2pdf, <name>.pdf is located.
 find_vignette_product <-
     function(name, by = c("weave", "tangle", "texi2pdf"),
              final = FALSE, main = TRUE, dir = ".", engine, ...)
@@ -158,6 +158,7 @@ function(package, dir, lib.loc = NULL,
     result <- list(tangle = list(), weave = list(),
                    source = list(), latex = list())
 
+    ## pkgVignettes has already done this
     loadVignetteBuilder(vigns$pkgdir)
 
     startdir <- getwd()
@@ -380,7 +381,7 @@ function(package, dir, subdirs = NULL, lib.loc = NULL, output = FALSE,
     allFiles <- list.files(docdir, all.files = FALSE, full.names = TRUE)
     exclude <- inRbuildignore(sub(paste0(dir, "/"), "", allFiles, fixed = TRUE), dir)
     allFiles <- allFiles[!exclude]
-    
+
     matchedPattern <- rep.int(FALSE, length(allFiles))
     msg <- character()
     if (length(allFiles) > 0L) {
@@ -423,8 +424,9 @@ function(package, dir, subdirs = NULL, lib.loc = NULL, output = FALSE,
     defaultEncoding <- .get_package_metadata(dir)["Encoding"]
     encodings <- vapply(docs, getVignetteEncoding, "", default = defaultEncoding)
 
-    z <- list(docs=docs, names=names, engines=engines, patterns=patterns, encodings = encodings,
-	      dir = docdir, pkgdir = dir, msg = msg)
+    z <- list(docs = docs, names = names, engines = engines,
+              patterns = patterns, encodings = encodings,
+              dir = docdir, pkgdir = dir, msg = msg)
 
     if (output) {
         outputs <- character(length(docs))
@@ -457,14 +459,19 @@ function(package, dir, subdirs = NULL, lib.loc = NULL, output = FALSE,
 ###
 ### Run a weave and pdflatex on all vignettes of a package and try to
 ### remove all temporary files that were created.
+### Exported version, used in R CMD build/check
 buildVignettes <-
     function(package, dir, lib.loc = NULL, quiet = TRUE, clean = TRUE,
-             tangle = FALSE)
+             tangle = FALSE, ser_elibs = NULL)
 {
+    separate <- !is.null(ser_elibs)
+    if (separate) elibs <- readRDS(ser_elibs)
+    ## This has side effects, including loading vignette-buider pkgs
     vigns <- pkgVignettes(package = package, dir = dir, lib.loc = lib.loc,
                           check = TRUE)
-    if(is.null(vigns)) return(invisible())
-    if(length(vigns$msg))
+    if (is.null(vigns)) return(invisible())
+    if (length(vigns$docs) <= 1L) separate <- FALSE
+    if (length(vigns$msg))
         warning(paste(vigns$msg, collapse = "\n"), domain = NA)
 
     ## Check that duplicated vignette names do not exist, e.g.
@@ -473,16 +480,34 @@ buildVignettes <-
     if (any(dups)) {
         names <- unique(vigns$names[dups])
         docs <- sort(basename(vigns$docs[vigns$names %in% names]))
-        stop(gettextf("Detected vignette source files (%s) with shared names (%s) and therefore risking overwriting each others output files",
+        stop(gettextf("Detected vignette source files (%s) with shared names (%s) and therefore risking overwriting each other's output files",
                       paste(sQuote(docs), collapse = ", "),
                       paste(sQuote(names), collapse = ", ")),
              domain = NA)
     }
 
+    ## Check for duplicated titles (which look silly on CRAN pages)
+    titles <- character()
+    for (d in vigns$docs) {
+        this <- c(.get_vignette_metadata(readLines(d, warn = FALSE),
+                                         "IndexEntry"), "")[1L]
+        titles <- c(titles, this)
+    }
+    have_dup_titles <-
+        if (any(dup <- duplicated(titles))) {
+            dups <- unique(titles[dup])
+            message(ngettext(length(dups),
+                             "duplicated vignette title:",
+                             "duplicated vignette titles:"))
+            message(paste(.pretty_format(dups), collapse = "\n"))
+            message()
+            TRUE
+        } else FALSE
+
     ## unset SWEAVE_STYLEPATH_DEFAULT here to avoid problems
     Sys.unsetenv("SWEAVE_STYLEPATH_DEFAULT")
 
-    op <- options(warn = 1) # we run vignettes in this process
+    op <- options(warn = 1) # we run may run vignettes in this process
     wd <- getwd()
     if (is.null(wd))
         stop("current working directory cannot be ascertained")
@@ -498,55 +523,100 @@ buildVignettes <-
 
     ## Note, as from 2.13.0, only this case
     have.makefile <- "Makefile" %in% origfiles
-    WINDOWS <- .Platform$OS.type == "windows"
 
     file.create(".build.timestamp")
 
-    loadVignetteBuilder(vigns$pkgdir)
-    outputs <- NULL
+    ## pkgVignettes has already done this
+    ## loadVignetteBuilder(vigns$pkgdir)
+    outputs <- character()
     sourceList <- list()
     startdir <- getwd()
+    fails <- character()
     for(i in seq_along(vigns$docs)) {
+        thisOK <- TRUE
         file <- basename(vigns$docs[i])
-        name <- vigns$names[i]
-    	engine <- vignetteEngine(vigns$engines[i])
         enc <- vigns$encodings[i]
-        if (enc == "non-ASCII")
-            stop(gettextf("Vignette '%s' is non-ASCII but has no declared encoding",
-                 file), domain = NA, call. = FALSE)
-
-        output <- tryCatch({
-            ## FIXME: run this in a separate process
-            engine$weave(file, quiet = quiet, encoding = enc)
-            setwd(startdir)
-            find_vignette_product(name, by = "weave", engine = engine)
-        }, error = function(e) {
-            stop(gettextf("processing vignette '%s' failed with diagnostics:\n%s",
-                 file, conditionMessage(e)), domain = NA, call. = FALSE)
-        })
-
-        ## This can fail if run in a directory whose path contains spaces.
-        if(!have.makefile && vignette_is_tex(output)) {
-            texi2pdf(file = output, clean = FALSE, quiet = quiet)
-            output <- find_vignette_product(name, by = "texi2pdf", engine = engine)
+        if (enc == "non-ASCII") {
+            message(gettextf("Error: Vignette '%s' is non-ASCII but has no declared encoding",
+                             file))
+            fails <- c(fails, file)
+            next
         }
-        outputs <- c(outputs, output)
+        name <- vigns$names[i]
+        engine <- vignetteEngine(vigns$engines[i])
 
-        if (tangle) {  # This is set for all engines as of 3.0.2
+        if (separate) {  # --- run in separate process
+            tf2 <- gsub("\\", "/", tempfile(fileext = ".rds"), fixed = TRUE)
+            saveRDS(engine, tf2)
+            Rcmd <- sprintf('tools:::.buildOneVignette("%s", "%s", %s, %s, "%s", "%s", "%s")',
+                            file, vigns$pkgdir, quiet, have.makefile,
+                            name, enc, tf2)
+            tlim <- get_timeout(Sys.getenv("_R_CHECK_ONE_VIGNETTE_ELAPSED_TIMEOUT_",
+                                           Sys.getenv("_R_CHECK_ELAPSED_TIMEOUT_")))
+            tf <- tempfile()
+            status <- R_runR(Rcmd, "--vanilla --slave", elibs,
+                             stdout = tf, stderr = tf, timeout = tlim)
+            unlink(tf2)
+            ##print(status)
+            if (!status) {
+                this <- readLines(tf)
+                patt <- "^[+]-[+]"
+                l <- grepl(patt, this)
+                output <- gsub(patt, "", this[l])
+                outputs <- c(outputs, output)
+                cat(this[!l], sep = "\n")
+            } else {
+                fails <- c(fails, file)
+                cat(readLines(tf), sep = "\n")
+            }
+            unlink(tf)
+        } else {  # --- run in this process
+            message(gettextf("--- re-building %s using %s",
+                             sQuote(file), engine$name))
+            tryCatch({
+                engine$weave(file, quiet = quiet, encoding = enc)
+                setwd(startdir) # In case weave/vignette changed it
+                output <- find_vignette_product(name, by = "weave", engine = engine)
+                if (!have.makefile && vignette_is_tex(output)) {
+                    ## This can fail if run in a directory whose path contains spaces.
+                    texi2pdf(file = output, clean = FALSE, quiet = quiet)
+                    output <- find_vignette_product(name, by = "texi2pdf",
+                                                    engine = engine)
+                }
+                outputs <- c(outputs, output)
+            }, error = function(e) {
+                thisOK <<- FALSE
+                fails <<- c(fails, file)
+                message(gettextf("Error: processing vignette '%s' failed with diagnostics:\n%s",
+                                 file, conditionMessage(e)))
+            })
+        }         # end if (separate)
+
+        if (tangle && !separate) {  # This is set for all engines as of 3.0.2
+            ## It is unlikely that weave succeeds but tangle fails,
+            ## so we don't bother to report tangle failures specifically.
             output <- tryCatch({
-                ## FIXME: run this in a separate process
                 engine$tangle(file, quiet = quiet, encoding = enc)
-                setwd(startdir)
+                setwd(startdir) # In case tangle/vignette changed it
                 find_vignette_product(name, by = "tangle", main = FALSE, engine = engine)
             }, error = function(e) {
-                stop(gettextf("tangling vignette '%s' failed with diagnostics:\n%s",
-                     file, conditionMessage(e)), domain = NA, call. = FALSE)
+                thisOK <<- FALSE
+                fails <<- c(fails, file)
+                message(gettextf("Error: tangling vignette '%s' failed with diagnostics:\n%s",
+                     file, conditionMessage(e)))
             })
             sourceList[[file]] <- output
         }
-    }
+        if (!separate) {
+            if (thisOK)
+                message(gettextf("--- finished re-building %s\n", sQuote(file)))
+            else
+                message(gettextf("--- failed re-building %s\n", sQuote(file)))
+        }
+    } # end loop over vignettes
 
-    if(have.makefile) {
+    if (have.makefile) {
+        WINDOWS <- .Platform$OS.type == "windows"
         if (WINDOWS) {
             ## Some people have *assumed* that R_HOME uses / in Makefiles
             ## Spaces in paths might still cause trouble.
@@ -554,11 +624,11 @@ buildVignettes <-
             Sys.setenv(R_HOME = rhome)
         }
     	make <- Sys.getenv("MAKE", "make")
-        if(!nzchar(make)) make <- "make"
+        if (!nzchar(make)) make <- "make"
         yy <- system(make)
-        if(yy > 0) stop("running 'make' failed")
+        if (yy > 0) stop("running 'make' failed")
         ## See if Makefile has a clean: target, and if so run it.
-        if(clean &&
+        if (clean &&
 	   any(startsWith(readLines("Makefile", warn = FALSE), "clean:")))
             system(paste(make, "clean"))
     } else {
@@ -567,7 +637,7 @@ buildVignettes <-
         grDevices::graphics.off()
 
         keep <- c(outputs, unlist(sourceList))
-        if(clean) {
+        if (clean) {
             f <- setdiff(list.files(all.files = TRUE, no.. = TRUE), keep)
             newer <- file_test("-nt", f, ".build.timestamp")
             ## some packages, e.g. SOAR, create directories
@@ -579,16 +649,37 @@ buildVignettes <-
         }
     }
 
-    # Assert
-    stopifnot(length(outputs) == length(vigns$docs))
+    if (file.exists(".build.timestamp")) file.remove(".build.timestamp")
+    ## Might have been in origfiles ...
+
+    if (length(fails)) {
+        message(ngettext(length(fails),
+                         "SUMMARY: processing the following file failed:",
+                         "SUMMARY: processing the following files failed:"))
+        message(paste(.pretty_format(fails), collapse = "\n"))
+        message()
+    }
+
+
+    msg2 <- paste("Duplicate vignette titles.",
+                  "  Ensure that the %\\VignetteIndexEntry lines in the vignette sources",
+                  "  correspond to the vignette titles.",
+                  sep = "\n")
+
+    ## Assert
+    if (length(fails) || (length(outputs) != length(vigns$docs))) {
+        msg <- "Vignette re-building failed."
+        if (have_dup_titles) msg <- paste0(msg, "\nError: ", msg2)
+        stop(msg, domain = NA, call. = FALSE)
+    }
+
+    if (have_dup_titles)
+        stop(msg2, domain = NA, call. = FALSE)
 
     vigns$outputs <- outputs
     vigns$sources <- sourceList
 
-    if(file.exists(".build.timestamp")) file.remove(".build.timestamp")
-    ## Might have been in origfiles ...
-
-    invisible(vigns)
+    invisible(vigns) ## not documented on the help page.
 }
 
 ### * buildVignette
@@ -691,6 +782,52 @@ buildVignette <-
 
     unique(keep)
 }
+
+### * .buildOneVignette
+
+## helper to be run in a separate process
+.buildOneVignette <-
+    function(file, pkgdir, quiet = TRUE, have.makefile = FALSE,
+             name, enc, ser_engine)
+{
+    op <- options(warn = 1)      # we run vignettes in this process
+    engine <- readRDS(ser_engine)
+    ## This is more than we need, but we cannot be sure that 'engine'
+    ## has references to all the namespaces required.  But packages
+    ## typically only have one engine, at most two.
+    loadVignetteBuilder(pkgdir)
+    OK <- TRUE
+    startdir <- getwd()
+    output <- character()
+
+    message(gettextf("--- re-building %s using %s",
+                     sQuote(file), engine$name))
+    tryCatch({
+        engine$weave(file, quiet = quiet, encoding = enc)
+        setwd(startdir)  # In case weave/vignette changed it
+        output <- find_vignette_product(name, by = "weave", engine = engine)
+        if(!have.makefile && vignette_is_tex(output)) {
+            texi2pdf(file = output, clean = FALSE, quiet = quiet)
+            output <- find_vignette_product(name, by = "texi2pdf",
+                                            engine = engine)
+        }
+    }, error = function(e) {
+        OK <<- FALSE
+        message(gettextf("Error: processing vignette '%s' failed with diagnostics:\n%s",
+                         file, conditionMessage(e)))
+    })
+
+    if (OK)
+        message(gettextf("--- finished re-building %s\n", sQuote(file)))
+    else {
+        message(gettextf("--- failed re-building %s\n", sQuote(file)))
+        q("no", status = 9L)
+    }
+
+    message("+-+", output)
+    invisible(output)
+}
+
 
 ### * getVignetteEncoding
 
@@ -1205,7 +1342,7 @@ getVignetteInfo <- function(package = NULL, lib.loc = NULL, all = TRUE)
             entries <- readRDS(INDEX)
         if (NROW(entries) > 0) {
             # FIXME:  this test is unnecessary?
-            R <- if (is.null(entries$R)) rep("", NROW(entries)) else entries$R
+            R <- if (is.null(entries$R)) rep.int("", NROW(entries)) else entries$R
             file <- basename(entries$File)
             pdf <- entries$PDF
             topic <- file_path_sans_ext(ifelse(R == "", ifelse(pdf == "", file, pdf), R))

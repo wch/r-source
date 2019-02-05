@@ -1,7 +1,7 @@
 #  File src/library/tools/R/urltools.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2015-2017 The R Core Team
+#  Copyright (C) 2015-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -209,15 +209,14 @@ function(dir, meta, installed = FALSE)
 url_db_from_package_news <-
 function(dir, installed = FALSE)
 {
-    urls <- character()
     path <- if(installed) "NEWS.Rd" else file.path("inst", "NEWS.Rd")
     nfile <- file.path(dir, path)
-    if(file.exists(nfile)) {
-        macros <- initialRdMacros()
-        urls <- .get_urls_from_Rd(prepare_Rd(parse_Rd(nfile,
-                                                      macros = macros),
-                                             stages = "install"))
-    }
+    urls <-
+        if(file.exists(nfile)) {
+            macros <- initialRdMacros()
+            .get_urls_from_Rd(prepare_Rd(parse_Rd(nfile, macros = macros),
+                                         stages = "install"))
+        } else character()
     url_db(urls, rep.int(path, length(urls)))
 }
 
@@ -634,7 +633,18 @@ function(u, verbose = FALSE)
 {
     if(verbose)
         message(sprintf("processing %s", u))
-    g <- tryCatch(curl::curl_fetch_memory(u), error = identity)
+    ## Configure curl handle for better luck with JSTOR URLs/DOIs.
+    ## Alternatively, special-case requests to
+    ##   https?://doi.org/10.2307
+    ##   https?://www.jstor.org
+    h <- curl::new_handle()
+    curl::handle_setopt(h,
+                        cookiesession = 1,
+                        followlocation = 1,
+                        http_version = 2L,
+                        ssl_enable_alpn = 0)
+    g <- tryCatch(curl::curl_fetch_memory(u, handle = h),
+                  error = identity)
     if(inherits(g, "error"))
         -1L
     else

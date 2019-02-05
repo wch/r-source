@@ -1,7 +1,7 @@
 #  File src/library/stats/R/models.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -39,17 +39,13 @@ formula.default <- function (x = NULL, env = parent.frame(), ...)
 formula.formula <- function(x, ...) x
 formula.terms <- function(x, ...) {
     env <- environment(x)
-    attributes(x) <- list(class="formula")
-    if (!is.null(env))
-    	environment(x) <- env
-    else
-    	environment(x) <- globalenv()
+    attributes(x) <- list(class = "formula") # dropping all other attr.
+    environment(x) <- if(is.null(env)) globalenv() else env
     x
 }
 
-formula.data.frame <- function (x, ...)
-{
-    nm <- sapply(names(x), as.name)
+DF2formula <- function(x, env = parent.frame()) {
+    nm <- unlist(lapply(names(x), as.name))
     if (length(nm) > 1L) {
         rhs <- nm[-1L]
         lhs <- nm[1L]
@@ -60,8 +56,15 @@ formula.data.frame <- function (x, ...)
     ff <- parse(text = paste(lhs, paste(rhs, collapse = "+"), sep = "~"),
                 keep.source = FALSE)
     ff <- eval(ff)
-    environment(ff) <- parent.frame()
+    environment(ff) <- env
     ff
+}
+
+formula.data.frame <- function (x, ...)
+{
+    if(length(tx <- attr(x, "terms")) && length(ff <- formula.terms(tx)))
+	ff
+    else DF2formula(x, parent.frame())
 }
 
 formula.character <- function(x, env = parent.frame(), ...)
@@ -154,6 +157,7 @@ reformulate <- function (termlabels, response=NULL, intercept = TRUE)
 		      paste(termlabels, collapse = "+"),
 		      collapse = "")
     if(!intercept) termtext <- paste(termtext, "- 1")
+    ## basically formula.character() :
     rval <- eval(parse(text = termtext, keep.source = FALSE)[[1L]])
     if(has.resp) rval[[2L]] <-
         if(is.character(response)) as.symbol(response) else response
@@ -709,8 +713,8 @@ get_all_vars <- function(formula, data = NULL, ...)
     env <- environment(formula)
     rownames <- .row_names_info(data, 0L) #attr(data, "row.names")
     varnames <- all.vars(formula)
-    inp <- parse(text = paste("list(", paste(varnames, collapse = ","), ")"),
-                 keep.source = FALSE)
+    inp <- parse(text = paste0("list(", paste(varnames, collapse = ","), ")"),
+                 keep.source = FALSE) # ->  expression( list(v1, v2, ..) )
     variables <- eval(inp, data, env)
     if(is.null(rownames) && (resp <- attr(formula, "response")) > 0) {
         ## see if we can get rownames from the response

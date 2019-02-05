@@ -28,7 +28,9 @@ system(command, intern = FALSE,
   \item{wait}{a logical (not \code{NA}) indicating whether the \R
     interpreter should wait for the command to finish, or run it
     asynchronously.  This will be ignored (and the interpreter will
-    always wait) if \code{intern = TRUE}.}
+    always wait) if \code{intern = TRUE}. When running the command
+    asynchronously, no output will be displayed on the \code{Rgui}
+    console in Windows (it will be dropped, instead).}
   \item{input}{if a character vector is supplied, this is copied one
     string per line to a temporary file, and the standard input of
     \code{command} is redirected to the file.}
@@ -44,7 +46,8 @@ system(command, intern = FALSE,
   \item{show.output.on.console}{logical (not \code{NA}), indicates
     whether to capture the output of the command and show it on the \R
     console (not used by \code{Rterm}, which shows the output in the
-    terminal unless \code{wait} is false).}
+    terminal unless \code{wait} is false, and on some systems even when
+    \code{wait} is false).}
   \item{minimized}{logical (not \code{NA}), indicates whether a
     command window should be displayed initially as a minimized window.}
   \item{invisible}{logical (not \code{NA}), indicates whether a

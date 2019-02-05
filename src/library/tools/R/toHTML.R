@@ -196,7 +196,7 @@ makeVignetteTable <- function(vignettes, depth=2) {
 	File  <- vignettes[i, "File"]
 	R     <- vignettes[i, "R"]
 	pkg   <- vignettes[i, "Package"]
-        root <- c(rep("../", depth), "library/", pkg, "/doc/")
+        root <- c(rep.int("../", depth), "library/", pkg, "/doc/")
 	link  <- c('<a href="', root,
 		  if (nchar(Outfile)) Outfile else File, '">',
 		  pkg, "::", topic, '</a>')
@@ -225,7 +225,7 @@ makeDemoTable <- function(demos, depth=2) {
     for (i in seq_len(nrow(demos))) {
 	topic <- demos[i, "Topic"]
 	pkg <- demos[i, "Package"]
-        root <- c(rep("../", depth), "library/", pkg, "/")
+        root <- c(rep.int("../", depth), "library/", pkg, "/")
 	Title <- demos[i, "Title"]
 	path <- file.path(demos[i, "LibPath"], "demo")
 	files <- basename(list_files_with_type(path, "demo", full.names=FALSE))

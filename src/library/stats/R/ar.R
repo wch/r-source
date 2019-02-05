@@ -1,7 +1,7 @@
 #  File src/library/stats/R/ar.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1999-2017 The R Core Team
+#  Copyright (C) 1999-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -382,6 +382,7 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
 	    } else {
 		if(m) y[, (nser+1L):ncol(y)] else matrix(0, nrow(y), 0)
 	    }
+        ## FIXME: use [t]crossprod();  and instead of solve(XX), use solve(qr(X)) !!
         Y <- t(y[, iser])
         N <- ncol(Y)
         XX <- t(X)%*%X
@@ -445,6 +446,8 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
         dimnames(ses) <- dimnames(ar) <- list(seq_len(m), snames, snames)
         dimnames(var.pred) <- list(snames, snames)
         names(sem) <- colnames(E) <- snames
+    } else {
+        var.pred <- drop(var.pred)
     }
     if(ists) {
         attr(E, "tsp") <- xtsp
@@ -466,7 +469,7 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
                 n.used = n.used, n.obs = n.used, order.max = order.max,
                 partialacf = NULL, resid = E, method = "Unconstrained LS",
                 series = series, frequency = xfreq, call = match.call(),
-                asy.se.coef = list(x.mean = sem, ar=drop(ses)))
+                asy.se.coef = list(x.mean = sem, ar = drop(ses)))
     class(res) <- "ar"
     res
 }

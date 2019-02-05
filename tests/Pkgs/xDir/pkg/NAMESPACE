@@ -8,7 +8,8 @@ import(graphics)
 ## as "mgcv": this loads Matrix, but does not attach it  ==> Matrix methods "semi-visible"
 importFrom(Matrix, t,mean,colMeans,colSums)
 
-exportClasses("classA")
+exportClasses("classA", "classApp") # mother and sub-class R/pkgA.R
+
 exportMethods("plot")
 
 export(nil)

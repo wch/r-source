@@ -1098,7 +1098,7 @@ methodSignatureMatrix <- function(object, sigSlots = c("target", "defined"))
 #             deflt <- finalDefaultMethod(other)
 #         if(!is.null(deflt))
 #             allMethods <- insertMethod(allMethods, "ANY", argName, deflt)
-        }
+    }
     allMethods
 }
 

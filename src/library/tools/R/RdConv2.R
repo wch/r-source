@@ -299,7 +299,7 @@ processRdChunk <- function(code, stage, options, env, Rdfile, macros)
 
 	    # First clear out the junk.
 	    tags <- RdTags(res)
-	    keep <- rep(TRUE, length(tags))
+	    keep <- rep.int(TRUE, length(tags))
 	    for (i in seq_along(tags)) {
 	        if (tags[i] == "TEXT" && res[[i]] == "")
 	            keep[i] <- FALSE
@@ -546,7 +546,7 @@ prepare2_Rd <- function(Rd, Rdfile)
 prepare3_Rd <- function(Rd, Rdfile, msglevel = 0)
 {
     ## Drop 'empty' sections: less rigorous than checkRd test
-    keep <- rep(TRUE, length(Rd))
+    keep <- rep.int(TRUE, length(Rd))
     checkEmpty <- function(x, this)
     {
         if(this) return(TRUE)

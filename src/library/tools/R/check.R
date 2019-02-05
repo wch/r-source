@@ -1,7 +1,7 @@
 #  File src/library/tools/R/check.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -2238,13 +2238,18 @@ add_dummies <- function(dir, Log)
         ## Check for non-ASCII characters in 'data'
         if (!is_base_pkg && R_check_ascii_data && dir.exists("data")) {
             checkingLog(Log, "data for non-ASCII characters")
-            out <- R_runR0("tools:::.check_package_datasets('.')", R_opts2)
+            out <- R_runR0("tools:::.check_package_datasets('.')",
+                           R_opts2, elibs)
             out <- filtergrep("Loading required package", out)
             out <- filtergrep("Warning: changing locked binding", out, fixed = TRUE)
-           if (length(out)) {
+            if (length(out)) {
                 bad <- startsWith(out, "Warning:")
-                if(any(bad)) warningLog(Log) else noteLog(Log)
+                bad2 <-  any(grepl("(unable to find required package|there is no package called)", out))
+                if(any(bad) || bad2) warningLog(Log) else noteLog(Log)
                 printLog0(Log, .format_lines_with_indent(out), "\n")
+                if(bad2)
+                     printLog0(Log,
+                               "  The dataset(s) may use package(s) not declared in the DESCRIPTION file.\n")
             } else resultLog(Log, "OK")
         }
 
@@ -2595,29 +2600,40 @@ add_dummies <- function(dir, Log)
 
         ## Check C/C++/Fortran sources/headers for CRLF line endings.
         ## <FIXME>
-        ## Does ISO C really require LF line endings?  (Reference?)
-        ## We know that some versions of Solaris cc and f77/f95
-        ## will not accept CRLF or CR line endings.
-        ## (Sun Studio 12 definitely objects to CR in both C and Fortran).
+        ## Does ISO C really require LF line endings?
+        ## (ISO C does not comment on OSes ....)
+        ## Solaris compilers still do, with a warning but no longer an error.
         ## </FIXME>
-        if(dir.exists("src")) {
+        if(dir.exists("src") || dir.exists("inst/include")) {
             checkingLog(Log, "line endings in C/C++/Fortran sources/headers")
             ## pattern is "([cfh]|cc|cpp)"
-            files <- dir("src", pattern = "\\.([cfh]|cc|cpp)$",
+            files <- dir("src", pattern = "\\.([cfh]|cc|cpp|hpp)$",
                          full.names = TRUE, recursive = TRUE)
             ## exclude dirs starting src/win, e.g for tiff
             files <- filtergrep("^src/[Ww]in", files)
+            files2 <- dir("inst/include", pattern = "\\.([cfh]|cc|cpp|hpp)$",
+                          full.names = TRUE, recursive = TRUE)
             bad_files <- character()
-            for(f in files) {
+            no_eol <- character()
+            for(f in c(files, files2)) {
                 contents <- readChar(f, file.size(f), useBytes = TRUE)
                 if (grepl("\r", contents, fixed = TRUE, useBytes = TRUE))
                     bad_files <- c(bad_files, f)
+                else if (nzchar(contents) &&  ## allow empty dummy files
+                         !grepl("\n$", contents, useBytes = TRUE))
+                    no_eol <- c(no_eol, f)
             }
+            if (length(bad_files) || length(no_eol)) noteLog(Log, "")
+            else resultLog(Log, "OK")
             if (length(bad_files)) {
-                warningLog(Log, "Found the following sources/headers with CR or CRLF line endings:")
+                printLog(Log, "Found the following sources/headers with CR or CRLF line endings:\n")
                 printLog0(Log, .format_lines_with_indent(bad_files), "\n")
                 printLog(Log, "Some Unix compilers require LF line endings.\n")
-            } else resultLog(Log, "OK")
+            } else if (length(no_eol)) {
+                printLog(Log, "Found the following sources/headers not terminated with a newline:\n")
+                printLog0(Log, .format_lines_with_indent(no_eol), "\n")
+                printLog(Log, "Some compilers warn on such files.\n")
+            }
         }
 
         ## Check src/Make* for LF line endings, as Sun make does not accept CRLF
@@ -2674,7 +2690,8 @@ add_dummies <- function(dir, Log)
                 contents <- filtergrep("^ *#", contents)
                 ## Things like $(SUBDIRS:=.a)
                 contents <- filtergrep("[$][(].+:=.+[)]", contents)
-                if (any(grepl("([+]=|:=|[$][(]wildcard|[$][(]shell|[$][(]eval|[$][(]call|[$][(]patsubst|^ifeq|^ifneq|^ifdef|^ifndef|^endif)", contents)))
+                if (any(grepl("([+]=|:=|[$][(]wildcard|[$][(]shell|[$][(]eval|[$][(]call|[$][(]patsubst|^ifeq|^ifneq|^ifdef|^ifndef|^endifi|[.]NOTPARALLEL)",
+                              contents)))
                     bad_files <- c(bad_files, f)
             }
             SysReq <- desc["SystemRequirements"]
@@ -2688,7 +2705,7 @@ add_dummies <- function(dir, Log)
                     printLog0(Log, .format_lines_with_indent(bad_files), "\n")
                     wrapLog("Portable Makefiles do not use GNU extensions",
                             "such as +=, :=, $(shell), $(wildcard),",
-                            "ifeq ... endif.",
+                            "ifeq ... endif, .NOTPARALLEL",
                             "See section 'Writing portable packages'",
                             "in the 'Writing R Extensions' manual.\n")
                 }
@@ -2776,26 +2793,77 @@ add_dummies <- function(dir, Log)
 
                 c1 <- grepl("^[[:space:]]*PKG_LIBS", lines, useBytes = TRUE)
                 anyInLIBS <- any(grepl("SHLIB_OPENMP_", lines[c1], useBytes = TRUE))
+
+                ## Now see what sort of files we have
+                have_c <- length(dir('src', patt = "[.]c$")) > 0L
+                have_cxx <- length(dir('src', patt = "[.](cc|cpp)$")) > 0L
+                have_f <- length(dir('src', patt = "[.]f$")) > 0L
+                have_f9x <- length(dir('src', patt = "[.]f9[05]$")) > 0L
                 used <- character()
                 for (f in c("C", "CXX", "F", "FC"))  {
-                    this <- paste0(f, "FLAGS")
-                    pat <- paste0("^[[:space:]]*PKG_", this, ".*SHLIB_OPENMP_", this)
+                    this <- this2 <- paste0(f, "FLAGS")
+                    if (f == "FC") this2 <- "(F|FC)FLAGS"
+                    pat <- paste0("^[[:space:]]*PKG_", this, ".*SHLIB_OPENMP_", this2)
                     if(any(grepl(pat, lines, useBytes = TRUE))) {
                         used <- c(used, this)
-                        ## The recommendation is to use _FFLAGS to compile
-                        ## and _CFLAGS to link with F77 code (which is linked
-                        ## by the C compiler)
-                        this2 <- if (f == "F") "CFLAGS" else this
+                        if(f == "C" && !have_c) {
+                            if (!any) noteLog(Log)
+                            any <- TRUE
+                            msg <- "SHLIB_OPENMP_CFLAGS is included in PKG_CFLAGS without any C files\n"
+                            printLog(Log, "  ", m, ": ", msg)
+                            next
+                        }
+                        ## as from R 3.6.0, PKG_FFLAGS is by default
+                        ## used for both fixed- and free-form files.
+                        if(f == "F" && !(have_f || have_f9x)) {
+                            if (!any) noteLog(Log)
+                            any <- TRUE
+                            msg <- "SHLIB_OPENMP_FFLAGS is included in PKG_FFLAGS without any fixed-form Fortran files\n"
+                            printLog(Log, "  ", m, ": ", msg)
+                            next
+                        }
+                        f_or_fc <- "F"
+                        if(f == "FC") {
+                            if(any(grepl("SHLIB_OPENMP_FCFLAGS",
+                                         lines, useBytes = TRUE))) {
+                                f_or_fc <- "FC"
+                                if (!any) noteLog(Log)
+                                any <- TRUE
+                                msg <- "SHLIB_OPENMP_FFLAGS is preferred to SHLIB_OPENMP_FCFLAGS in PKG_FCFLAGS\n"
+                                printLog(Log, "  ", m, ": ", msg)
+                            }
+                        }
+                        if(f == "FC" && !have_f9x) {
+                            if (!any) noteLog(Log)
+                            any <- TRUE
+                            msg <- sprintf("SHLIB_OPENMP_%sFLAGS is included in PKG_FCFLAGS without any free-form Fortran files\n", f_or_fc)
+                            printLog(Log, "  ", m, ": ", msg)
+                            next
+                        }
+                        if(f == "CXX" && !have_cxx) {
+                            if (!any) noteLog(Log)
+                            any <- TRUE
+                            msg <- "SHLIB_OPENMP_CXXFLAGS is included in PKG_CXXFLAGS without any C++ files\n"
+                            printLog(Log, "  ", m, ": ", msg)
+                            next
+                        }
+                        ## The recommendation is to use _F[C]FLAGS to
+                        ## compile and _CFLAGS or _CXXFLAGS to link with Fortran
+                        ## code (which is linked by the C or C++ compiler)
+                        c_or_cxx <- if(have_cxx) "CXXFLAGS" else "CFLAGS"
+                        this2 <- if (f %in% c("F", "FC")) c_or_cxx else this
                         pat2 <- paste0("SHLIB_OPENMP_", this2)
                         if(!any(grepl(pat2, lines[c1], useBytes = TRUE))) {
                             if (!any) noteLog(Log)
                             any <- TRUE
                             msg <- if(anyInLIBS) {
                                 if (f == "F")
-                                "SHLIB_OPENMP_FFLAGS is included in PKG_FFLAGS but not SHLIB_OPENMP_CFLAGS in PKG_LIBS\n"
-                            else
-                                sprintf("SHLIB_OPENMP_%s is included in PKG_%s but not in PKG_LIBS\n",
-                                           this, this)
+                                    sprintf("SHLIB_OPENMP_FFLAGS is included in PKG_FFLAGS but not SHLIB_OPENMP_%s in PKG_LIBS\n", c_or_cxx)
+                                 else if (f == "FC")
+                                     sprintf("SHLIB_OPENMP_%sFLAGS is included in PKG_FCFLAGS but not SHLIB_OPENMP_%s in PKG_LIBS\n", f_or_fc, c_or_cxx)
+                               else
+                                    sprintf("SHLIB_OPENMP_%s is included in PKG_%s but not in PKG_LIBS\n",
+                                            this, this)
                             } else {
                                 msg3 <- TRUE
                                 sprintf("SHLIB_OPENMP_%s is included in PKG_%s but no OPENMP macro in PKG_LIBS\n",
@@ -2827,9 +2895,29 @@ add_dummies <- function(dir, Log)
                     pat2 <- paste0("SHLIB_OPENMP_", this)
                     res <- any(grepl(pat2 , lines[c1], useBytes = TRUE))
                     cnt <- cnt + res
+                    if (res && f %in% c( "F", "FC"))  {
+                        if (!any) noteLog(Log)
+                        any <- TRUE
+                        printLog(Log,"  ", m, ": ",
+                                 sprintf("SHLIB_OPENMP_%s is included in PKG_LIBS but linking is by %s\n",
+                                         this,
+                                         if(have_cxx) "C++" else "C"))
+                         next
+                    }
+                     if (res &&
+                         ((!have_cxx && f == "CXX") || (have_cxx && f == "C"))) {
+                        if (!any) noteLog(Log)
+                        any <- TRUE
+                        printLog(Log,"  ", m, ": ",
+                                 sprintf("SHLIB_OPENMP_%s is included in PKG_LIBS but linking is by %s\n",
+                                         this,
+                                         if(have_cxx) "C++" else "C"))
+                         next
+                    }
                     if (this %in% used) next
-                    ## it is recommended to include _CFLAGS if _FFLAGS is used.
-                    if (f == "C" && "FFLAGS" %in% used) next
+                    ## Fortran exceptions
+                    if (((!have_cxx && f == "C") || (have_cxx && f == "CXX"))
+                        && any(c("FFLAGS", "FCFLAGS") %in% used)) next
                     if (res) {
                         if (!any) noteLog(Log)
                         any <- TRUE
@@ -2868,7 +2956,7 @@ add_dummies <- function(dir, Log)
                         "The macros for different languages may differ",
                         "so the matching macro must be used in",
                         "PKG_CXXFLAGS (etc) and match that used in",
-                        "PKG_LIBS (except for F77: see the manual).\n")
+                        "PKG_LIBS (except for Fortran: see the manual).\n")
                 if (msg2)
                     wrapLog("PKG_CPPFLAGS is used for both C and C++ code",
                             "so it is not portable to use it",
@@ -2926,21 +3014,33 @@ add_dummies <- function(dir, Log)
             checkingLog(Log, "pragmas in C/C++ headers and code")
             ans <- .check_pragmas('.')
             if(length(ans)) {
-                if(length(warn <- attr(ans, "warn")))
+                if(length(warn <- attr(ans, "warn"))  ||
+                   length(port <- attr(ans, "port")))
                     {
                         warningLog(Log)
-                        msg <- if(length(warn) == 1L)
-                            "File which contains pragma(s) suppressing important diagnostics:"
-                        else
-                            "Files which contain pragma(s) suppressing important diagnostics:"
-                        msg <- c(msg, .pretty_format(warn))
-                        rest <- setdiff(ans, warn)
+                        msg <- character()
+                        rest <- ans
+                        if(length(warn)) {
+                            msg <- c(msg, if(length(warn) == 1L)
+                                "File which contains pragma(s) suppressing important diagnostics"
+                            else
+                                "Files which contain pragma(s) suppressing important diagnostics",
+                            .pretty_format(warn))
+                            rest <- setdiff(ans, warn)
+                        }
+                        if(length(port)) {
+                            msg <- c(msg, if(length(port) == 1L)
+                                "File which contains non-portable pragma(s)"
+                            else
+                                "Files which contain non-portable pragma(s)",
+                           .pretty_format(port))
+                        }
                         if(length(rest)) {
                             msg <- c(msg, if(length(rest) == 1L)
                                      "File which contains pragma(s) suppressing diagnostics:"
                             else
-                                     "Files which contain pragma(s) suppressing diagnostics:")
-                            msg <- c(msg, .pretty_format(rest))
+                                     "Files which contain pragma(s) suppressing diagnostics:",
+                           .pretty_format(rest))
                         }
                    } else {
                         noteLog(Log)
@@ -3393,7 +3493,7 @@ add_dummies <- function(dir, Log)
                 tfile <- paste0(pkgname, "-Ex.timings")
                 times <-
                     utils::read.table(tfile, header = TRUE, row.names = 1L,
-                                      colClasses = c("character", rep("numeric", 3)))
+                                      colClasses = c("character", rep.int("numeric", 3)))
                 o <- order(times[[1L]] + times[[2L]], decreasing = TRUE)
                 times <- times[o, ]
 
@@ -3698,21 +3798,26 @@ add_dummies <- function(dir, Log)
         if (!is_base_pkg) {
             dir <- file.path(pkgdir, "inst", "doc")
             outputs <- character(length(vigns$docs))
+	    .msg <- character()
             for (i in seq_along(vigns$docs)) {
                 file <- vigns$docs[i]
                 name <- vigns$names[i]
                 engine <- vignetteEngine(vigns$engines[i])
                 outputs[i] <- tryCatch({
                     find_vignette_product(name, what="weave", final=TRUE, dir=dir, engine = engine)
-                }, error = function(ex) NA)
+                }, error = function(e) {
+		    .msg <<- c(.msg, conditionMessage(e))
+	            NA}
+		)
             }
             bad_vignettes <- vigns$docs[is.na(outputs)]
             if (nb <- length(bad_vignettes)) {
                 any <- TRUE
                 warningLog(Log)
+		if (length(.msg)) printLog0(Log, .msg, "\n")
                 msg <- ngettext(nb,
-                                "Package vignette without corresponding PDF/HTML:\n",
-                                "Package vignettes without corresponding PDF/HTML:\n", domain = NA)
+                                "Package vignette without corresponding single PDF/HTML:\n",
+                                "Package vignettes without corresponding single PDF/HTML:\n", domain = NA)
                 printLog0(Log, msg)
                 printLog0(Log,
                           paste(c(paste("  ",
@@ -4005,8 +4110,21 @@ add_dummies <- function(dir, Log)
                 Sys.setenv(MAKEFLAGS="")
                 ## we could use clean = FALSE, but that would not be
                 ## testing what R CMD build uses.
-                Rcmd <- paste0(opWarn_string, "\nlibrary(tools)\nbuildVignettes(dir = '",
-                               file.path(pkgoutdir, "vign_test", pkgname0), "')")
+                Rcmd <-
+                    if (!config_val_to_logical(Sys.getenv("_R_CHECK_BUILD_VIGNETTES_SEPARATELY_", "TRUE")))
+                        sprintf("%s\ntools::buildVignettes(dir = '%s')",
+                                opWarn_string,
+                                file.path(pkgoutdir, "vign_test", pkgname0))
+                    else {
+                        ## serialize elibs to avoid quotation hell
+                        tf <- gsub("\\", "/", tempfile(fileext = ".rds"),
+                                   fixed=TRUE)
+                        saveRDS(c(jitstr, elibs), tf)
+                        sprintf("%s\ntools:::buildVignettes(dir = '%s', ser_elibs = '%s')",
+                                opWarn_string,
+                                file.path(pkgoutdir, "vign_test", pkgname0),
+                                tf)
+                    }
                 tlim <- get_timeout(Sys.getenv("_R_CHECK_BUILD_VIGNETTES_ELAPSED_TIMEOUT_",
                                     Sys.getenv("_R_CHECK_ELAPSED_TIMEOUT_")))
                 t1 <- proc.time()
@@ -4015,21 +4133,26 @@ add_dummies <- function(dir, Log)
                                   stdout = outfile, stderr = outfile,
                                   timeout = tlim)
                 t2 <- proc.time()
+                print_time(t1, t2, Log)
                 out <- readLines(outfile, warn = FALSE)
                 if(R_check_suppress_RandR_message)
                     out <- filtergrep('^Xlib: *extension "RANDR" missing on display',
                                       out, useBytes = TRUE)
                 warns <- grep("^Warning: file .* is not portable",
                               out, value = TRUE, useBytes = TRUE)
-                print_time(t1, t2, Log)
                 if (status) {
                     keep <- as.numeric(Sys.getenv("_R_CHECK_VIGNETTES_NLINES_",
                                                   "25"))
                     if(skip_run_maybe || !ran) warningLog(Log) else noteLog(Log)
-                    if(keep > 0) out <- utils::tail(out, keep)
-                    printLog0(Log,
-                              paste(c("Error in re-building vignettes:",
-                                      "  ...", out, "", ""), collapse = "\n"))
+                    if(keep > 0  && length(out) < keep) {
+                        out <- utils::tail(out, keep)
+                        printLog0(Log,
+                                  paste(c("Error(s) in re-building vignettes:",
+                                          "  ...", out, "", ""), collapse = "\n"))
+                    } else
+                        printLog0(Log,
+                                  paste(c("Error(s) in re-building vignettes:",
+                                          out, "", ""), collapse = "\n"))
                 } else if(nw <- length(warns)) {
                     if(skip_run_maybe || !ran) warningLog(Log) else noteLog(Log)
                     msg <- ngettext(nw,
@@ -4201,7 +4324,7 @@ add_dummies <- function(dir, Log)
             }
             if(length(execs)) {
                 execs <- sub(":[[:space:]].*$", "", execs, useBytes = TRUE)
-                known <- rep(FALSE, length(execs))
+                known <- rep.int(FALSE, length(execs))
                 pexecs <- file.path(pkgname, execs)
                 ## known false positives
                 for(fp in  c("foreign/tests/datefactor.dta",
@@ -4425,7 +4548,9 @@ add_dummies <- function(dir, Log)
                              "missing links?:",
                              ## From the byte compiler's 'warn' methods
                              "^Note: possible error in",
-                             "^Note: (break|next) used in wrong context: no loop is visible"
+                             "^Note: (break|next) used in wrong context: no loop is visible",
+                             ## Warnings about S4 classes
+                             "^  The prototype for class.*undefined slot"
                              )
                 ## Warnings spotted by gcc with
                 ##   '-Wimplicit-function-declaration'
@@ -4479,14 +4604,6 @@ add_dummies <- function(dir, Log)
                             ## Fatal, not warning, for clang and Solaris ODS
                              ": warning: .* with a value, in function returning void"
                             )
-
-                ## gcc 9 warns on code deprecated in C++11
-                ## rather too frequently,
-                ## so suppressable (undocumented) for now.
-                check_gcc9 <- Sys.getenv("_R_CHECK_GCC9_WARNINGS_", "TRUE")
-                if (config_val_to_logical(check_gcc9))
-                     warn_re <- c(warn_re,
-                                  ": warning: .* \\[-Wdeprecated-copy\\]")
 
                 ## clang warnings
                 warn_re <- c(warn_re,
@@ -5344,6 +5461,8 @@ add_dummies <- function(dir, Log)
     if (install == "no") {
         opts <- c(opts, "--install=no")
         do_install_arg <- FALSE
+        ## If we do not install, then we cannot *run* any code.
+        do_examples <- do_tests <- do_vignettes <- do_build_vignettes <- 0
     }
     if (run_dontrun) opts <- c(opts, "--run-dontrun")
     if (run_donttest) opts <- c(opts, "--run-donttest")
@@ -5523,6 +5642,7 @@ add_dummies <- function(dir, Log)
         Sys.setenv("_R_CHECK_CONNECTIONS_LEFT_OPEN_" = "TRUE")
         Sys.setenv("_R_CHECK_SHLIB_OPENMP_FLAGS_" = "TRUE")
         Sys.setenv("_R_CHECK_FUTURE_FILE_TIMESTAMPS_" = "TRUE")
+        Sys.setenv("_R_CHECK_RD_CONTENTS_KEYWORDS_" = "TRUE")
         R_check_vc_dirs <- TRUE
         R_check_executables_exclusions <- FALSE
         R_check_doc_sizes2 <- TRUE

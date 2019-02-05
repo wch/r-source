@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2017  R Core Team
+ *  Copyright (C) 2000-2018  R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -384,7 +384,6 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 
 
     if (!strcmp(argv[cmdarg], "INSTALL")) {
-	fprintf(stderr, "In R CMD INSTALL\n");
 	/* Unix has --no-restore except for MM's undocumented --use-vanilla */
 	snprintf(cmd, CMD_LEN,
 		 "\"%s/%s/Rterm.exe\" -e tools:::.install_packages() R_DEFAULT_PACKAGES= LC_COLLATE=C --no-restore --slave --args ",

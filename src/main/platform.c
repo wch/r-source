@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2018 The R Core Team
+ *  Copyright (C) 1998--2019 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1442,7 +1442,7 @@ SEXP attribute_hidden do_fileaccess(SEXP call, SEXP op, SEXP args, SEXP rho)
 		access(R_ExpandFileName(translateChar(STRING_ELT(fn, i))),
 		       modemask);
 #endif
-	} else INTEGER(ans)[i] = FALSE;
+	} else INTEGER(ans)[i] = -1; /* treat NA as non-existent file */
     UNPROTECT(1);
     return ans;
 }

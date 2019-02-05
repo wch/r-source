@@ -67,13 +67,26 @@ system <- function(command, intern = FALSE,
         # cat(input, file = f, sep="\n")
         writeLines(input, f)
     }
+    internNothing <- FALSE
     if (intern) {
         flag <- 3L
         ## documented to capture stderr also on Rgui
         if(stdout == "") stdout <- TRUE
         if(!ignore.stderr && .Platform$GUI == "Rgui") stderr <- TRUE
+        if (identical(stdout, FALSE) &&
+            (identical(stderr, FALSE) || .Platform$GUI != "Rgui")) {
+            # could introduce: warning("intern = TRUE but ignoring outputs")
+            flag <- 1L
+            internNothing <- TRUE
+        }
     } else {
-        flag <- if (wait) ifelse(show.output.on.console, 2L, 1L) else 0L
+        flag <- if (wait) {
+            if (show.output.on.console && (!ignore.stderr || !ignore.stdout))
+              2L
+            else
+              1L
+        } else
+            0L
     }
     if (invisible) flag <- 20L + flag
     else if (minimized) flag <- 10L + flag
@@ -81,7 +94,20 @@ system <- function(command, intern = FALSE,
 	on.exit(Sys.setenv(GFORTRAN_STDOUT_UNIT = "-1"), add = TRUE)
     if (.fixupGFortranStderr())
 	on.exit(Sys.setenv(GFORTRAN_STDERR_UNIT = "-1"), add = TRUE)
-    .Internal(system(command, as.integer(flag), f, stdout, stderr, timeout))
+    rval <- .Internal(system(command, as.integer(flag), f, stdout, stderr, timeout))
+    if (!internNothing)
+        rval
+    else {
+        # NOTE: timeout warning will be different from normal intern
+        ans <- character(0)
+        if (is.numeric(rval) && length(rval)>0 && rval!=0) {
+            rval <- as.integer(rval)
+            attr(ans, "status") <- rval
+            warning(gettextf("running command '%s' had status %d", command,
+                             rval), domain = NA)
+        }
+        ans
+    }
 }
 
 system2 <- function(command, args = character(),
@@ -110,6 +136,24 @@ system2 <- function(command, args = character(),
         # cat(input, file = f, sep="\n")
         writeLines(input, f)
     } else f <- stdin
+
+    rf <- NULL
+    if (.Platform$GUI == "Rgui") {
+        # .Internal(system) on RGui needs a pipe to print to the console,
+        # but it cannot use it at the same time to capture the output, so
+        # we capture the output to be returned via redirection to a file
+        if (isTRUE(stdout) && identical(stderr,"")) {
+            rf <- tempfile()
+            on.exit(unlink(rf), add = TRUE)
+            stdout <- rf
+            wait <- TRUE
+        } else if (isTRUE(stderr) && identical(stdout,"")) {
+            rf <- tempfile()
+            on.exit(unlink(rf), add = TRUE)
+            stderr <- rf
+            wait <- TRUE
+        }
+    }
     flag <- if (isTRUE(stdout) || isTRUE(stderr)) 3L
     else if (wait)
         ifelse(identical(stdout, "") || identical(stderr, ""), 2L, 1L)
@@ -120,7 +164,21 @@ system2 <- function(command, args = character(),
 	on.exit(Sys.setenv(GFORTRAN_STDOUT_UNIT = "-1"), add = TRUE)
     if (.fixupGFortranStderr())
 	on.exit(Sys.setenv(GFORTRAN_STDERR_UNIT = "-1"), add = TRUE) 
-    .Internal(system(command, flag, f, stdout, stderr, timeout))
+    rval <- .Internal(system(command, flag, f, stdout, stderr, timeout))
+
+    if (is.null(rf))
+        rval
+    else {
+        # NOTE: timeout warning will be different from normal intern
+        ans <- character(0)
+        if (is.numeric(rval) && length(rval)>0 && rval!=0) {
+            rval <- as.integer(rval)
+            attr(ans, "status") <- rval
+            warning(gettextf("running command '%s' had status %d", command,
+                             rval), domain = NA)
+        }
+        ans
+    }
 }
 
 shell <- function(cmd, shell, flag = "/c", intern = FALSE,

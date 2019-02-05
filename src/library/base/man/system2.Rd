@@ -34,7 +34,9 @@ system2(command, args = character(),
   \item{wait}{a logical (not \code{NA}) indicating whether the \R
     interpreter should wait for the command to finish, or run it
     asynchronously.  This will be ignored (and the interpreter will
-    always wait) if \code{stdout = TRUE} or \code{stderr = TRUE}.}
+    always wait) if \code{stdout = TRUE} or \code{stderr = TRUE}. When
+    running the command asynchronously, no output will be displayed on
+    the \code{Rgui} console in Windows (it will be dropped, instead).}
   \item{timeout}{timeout in seconds, ignored if 0.  This is a limit for the
     elapsed time running \code{command} in a separate process.   Fractions
     of seconds are ignored.}

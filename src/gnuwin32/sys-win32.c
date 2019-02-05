@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2017  The R Core Team
+ *  Copyright (C) 1997--2018  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -175,12 +175,40 @@ double R_getClockIncrement(void)
 }
 
 /*
- * flag =0 don't wait/ignore stdout
- * flag =1 wait/ignore stdout
- * flag =2 wait/copy stdout to the console
- * flag =3 wait/return stdout (intern=TRUE)
- * Add 10 to minimize application
- * Add 20 to make application "invisible"
+ * Stderr, Stdout
+ *   =FALSE .. drop output
+ *   =TRUE  .. return output
+ *   =""    .. print to standard error/output
+ *   =fname .. redirect to file of that name
+ *
+ * Redirection and dropping is supported with all flag values. Printing is
+ * supported with all flag values on non-RGui only (and happens via standard
+ * handles). For returning output (anywhere) and printing (on RGui),
+ * restrictions apply (below).
+ * 
+ * flag =0 don't wait
+ *   returning of output not supported
+ *   RGui: non-redirected standard error and standard output always dropped
+ *         (printing not supported)
+ *
+ * flag =1 wait
+ *   otherwise like flag =0
+ *
+ * flag =2 wait/printing in RGui
+ *   returning of output not supported
+ *   non-RGui: works like flag =1
+ *   RGui: standard error and/or standard output is printed on console;
+ *         flag=2 may only be used when at least one of the outputs
+ *         is to be printed
+ *
+ * flag =3 wait/return output
+ *   standard error and/or standard output is returned
+ *   flag=3 may only be used when at least one of the outputs is to be returned
+ *   RGui: printing is not supported (one cannot return one output and print
+ *         the other)
+ * 
+ * Add 10 to flag to minimize application
+ * Add 20 to flag make application "invisible"
 */
 
 #include "run.h"
@@ -193,6 +221,7 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
     const char *fout = "", *ferr = "";
     int   vis = 0, flag = 2, i = 0, j, ll = 0;
     SEXP  cmd, fin, Stdout, Stderr, tlist = R_NilValue, tchar, rval;
+    PROTECT_INDEX ti;
     int timeout = 0, timedout = 0;
 
     checkArity(op, args);
@@ -248,11 +277,19 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (ll == NOLAUNCH) warning(runerror());
     } else {
 	/* read stdout +/- stderr from pipe */
-	int m = 0;
-	if(flag == 2 /* show on console */ || CharacterMode == RGui) m = 3;
-	if(TYPEOF(Stderr) == LGLSXP)
-	    m = asLogical(Stderr) ? 2 : 0;
-	if(m  && TYPEOF(Stdout) == LGLSXP && asLogical(Stdout)) m = 3;
+	int m = -1;
+	if ((TYPEOF(Stderr) == LGLSXP && asLogical(Stderr)) ||
+	   (CharacterMode == RGui && TYPEOF(Stderr) == STRSXP && ferr && !ferr[0]))
+	    /* read stderr from pipe */
+	    m = 2;
+	if ((TYPEOF(Stdout) == LGLSXP && asLogical(Stdout)) ||
+	    (CharacterMode == RGui && TYPEOF(Stdout) == STRSXP && fout && !fout[0]))
+	    /* read stdout from pipe */
+	    m = (m == 2) ? 3 : 0;
+	if (m == -1)
+	    /* does not happen with system()/system2() */
+	    error(_("invalid %s argument"), "flag");
+
 	fp = rpipeOpen(CHAR(STRING_ELT(cmd, 0)), getCharCE(STRING_ELT(cmd, 0)),
 		       vis, CHAR(STRING_ELT(fin, 0)), m, fout, ferr, timeout);
 	if (!fp) {
@@ -260,21 +297,15 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if (flag == 3) error(runerror());
 	    ll = NOLAUNCH;
 	} else {
-	    /* FIXME: use REPROTECT */
-	    if (flag == 3) {
-		PROTECT(tlist);
-		/* honour intern = FALSE, ignore.stdout = TRUE */
-		if (m > 0 ||
-		    (!(TYPEOF(Stdout) == LGLSXP && !asLogical(Stdout))))
-		    for (i = 0; rpipeGets(fp, buf, INTERN_BUFSIZE); i++) {
-			ll = strlen(buf) - 1;
-			if ((ll >= 0) && (buf[ll] == '\n')) buf[ll] = '\0';
-			tchar = mkChar(buf);
-			UNPROTECT(1); /* tlist */
-			PROTECT(tlist = CONS(tchar, tlist));
-		    }
-
-	    } else {
+	    if (flag == 3) { /* intern */
+		PROTECT_WITH_INDEX(tlist, &ti);
+		for (i = 0; rpipeGets(fp, buf, INTERN_BUFSIZE); i++) {
+		    ll = strlen(buf) - 1;
+		    if ((ll >= 0) && (buf[ll] == '\n')) buf[ll] = '\0';
+		    tchar = mkChar(buf);
+		    REPROTECT(tlist = CONS(tchar, tlist), ti);
+		}
+	    } else { /* print on RGui console */
 		for (i = 0; rpipeGets(fp, buf, INTERN_BUFSIZE); i++)
 		    R_WriteConsole(buf, strlen(buf));
 	    }
@@ -299,7 +330,7 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    SEXP lsym = install("status");
 	    setAttrib(rval, lsym, ScalarInteger(ll));
 	}
-	UNPROTECT(2);
+	UNPROTECT(2); /* tlist, rval */
 	return rval;
     } else {
 	rval = ScalarInteger(ll);

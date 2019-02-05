@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2017  The R Core Team.
+ *  Copyright (C) 1998--2019  The R Core Team.
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1737,17 +1737,11 @@ static void RunGenCollect(R_size_t size_needed)
     FORWARD_NODE(R_VStack);		   /* R_alloc stack */
 
     for (R_bcstack_t *sp = R_BCNodeStackBase; sp < R_BCNodeStackTop; sp++) {
-#ifdef TYPED_STACK
 	if (sp->tag == RAWMEM_TAG)
 	    sp += sp->u.ival;
 	else if (sp->tag == 0 || IS_PARTIAL_SXP_TAG(sp->tag))
 	    FORWARD_NODE(sp->u.sxpval);
-#else
-	FORWARD_NODE(*sp);
-#endif
     }
-    FORWARD_NODE(R_CachedScalarReal);
-    FORWARD_NODE(R_CachedScalarInteger);
 
     /* main processing loop */
     PROCESS_NODES();
@@ -2172,18 +2166,8 @@ void attribute_hidden InitMemory()
 	(R_bcstack_t *) malloc(R_BCNODESTACKSIZE * sizeof(R_bcstack_t));
     if (R_BCNodeStackBase == NULL)
 	R_Suicide("couldn't allocate node stack");
-#ifdef BC_INT_STACK
-    R_BCIntStackBase =
-      (IStackval *) malloc(R_BCINTSTACKSIZE * sizeof(IStackval));
-    if (R_BCIntStackBase == NULL)
-	R_Suicide("couldn't allocate integer stack");
-#endif
     R_BCNodeStackTop = R_BCNodeStackBase;
     R_BCNodeStackEnd = R_BCNodeStackBase + R_BCNODESTACKSIZE;
-#ifdef BC_INT_STACK
-    R_BCIntStackTop = R_BCIntStackBase;
-    R_BCIntStackEnd = R_BCIntStackBase + R_BCINTSTACKSIZE;
-#endif
 
     R_weak_refs = R_NilValue;
 
@@ -3483,11 +3467,11 @@ static void checkMSet(SEXP mset)
     SEXP store = CAR(mset);
     SEXP npreserved = CDR(mset);
     SEXP isize = TAG(mset);
-    if (MAYBE_REFERENCED(mset) ||
+    if (/*MAYBE_REFERENCED(mset) ||*/
 	((store != R_NilValue) &&
-	    (TYPEOF(store) != VECSXP || MAYBE_REFERENCED(store))) ||
-	(TYPEOF(npreserved) != INTSXP || XLENGTH(npreserved) != 1 ||
-	    MAYBE_REFERENCED(npreserved)) ||
+	 (TYPEOF(store) != VECSXP /*|| MAYBE_REFERENCED(store)*/)) ||
+	(TYPEOF(npreserved) != INTSXP || XLENGTH(npreserved) != 1 /*||
+	 MAYBE_REFERENCED(npreserved)*/) ||
 	(TYPEOF(isize) != INTSXP || XLENGTH(isize) != 1))
 
 	error("Invalid mset");

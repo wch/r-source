@@ -1,6 +1,6 @@
 % File src/library/base/man/grep.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{grep}
@@ -292,7 +292,7 @@ txt <- c("The", "licenses", "for", "most", "software", "are",
 stopifnot( txt[i] == grep("[gu]", txt, value = TRUE) )
 
 ## Note that in locales such as en_US this includes B as the
-## collation order is aAbBcCdEe ...
+## collation order is aAbBcCdDe ...
 (ot <- sub("[b-e]",".", txt))
 txt[ot != gsub("[b-e]",".", txt)]#- gsub does "global" substitution
 

@@ -33,7 +33,7 @@ function(file, encoding = "unknown")
 
     aliases <- .Rd_get_metadata(Rd, "alias")
     concepts <- .Rd_get_metadata(Rd, "concept")
-    keywords <- .Rd_get_metadata(Rd, "keyword")
+    keywords <- .Rd_get_metadata(Rd, "keyword") %w/o% .Rd_keywords_auto
 
     ## Could be none or more than one ... argh.
     Rd_type <- .Rd_get_doc_type(Rd)
@@ -294,8 +294,8 @@ function(package, dir, lib.loc = NULL, stages = "build")
             eof_pos <-
                 grep("^\\\\eof$", lines, perl = TRUE, useBytes = TRUE)
             db <- split(lines[-eof_pos],
-                        rep(seq_along(eof_pos),
-                            times = diff(c(0, eof_pos)))[-eof_pos])
+                        rep.int(seq_along(eof_pos),
+                                diff(c(0, eof_pos)))[-eof_pos])
         } else return(structure(list(), names = character()))
 
         ## NB: we only get here for pre-2.10.0 installs
@@ -515,6 +515,11 @@ function(x, kind)
     else
         unique(trimws(sapply(x, as.character)))
 }
+
+### * .Rd_keywords_auto
+
+.Rd_keywords_auto <-
+    c("~kwd1", "~kwd2", "~~ other possible keyword(s) ~~")
 
 ### * .Rd_get_section
 

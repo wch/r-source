@@ -69,17 +69,26 @@
 ## prepended on systems using Fink with root '/sw'.
 ## CPPFLAGS=
 
-## The command which runs the fixed-form Fortran compiler.
-## Defaults to the value found/supplied for FC, but can be overridden.
-## F77=
+## The command which runs the Fortran compiler.
+## Used for both fixed-form and free-form Fortran
+## FC=
 
-## Options for the fixed-form Fortran compiler.
-## Use this to specify FFLAGS for the version of the compiler specified
-## above.  If unspecified, defaults to '-g -O2' for g77/gfortran, 
-## otherwise '-g' if this is accepted, otherwise ''.
+## Options for the Fortran compiler.
+## Use this to specify comilation flags for fixed-form Fortran.
 ## FFLAGS=
+## Ditto for free-form Fortran.
+## FCFLAGS=
+## If just one of these is set, it is used for both.
+## If both are unspecified, defaults to '-g -O2' for gfortran, 
+## otherwise '-g' if this is accepted, otherwise ''.
+## Use these if the compiler needs flags such as --free, -qfixed and
+## cannot determine which from the source-file extension.
 
-## Options for safe compilation under the fixed-form Fortran compiler.
+## Additional libraries needed to link a shared object with FC,
+## e.g. on x86 Solaris
+## FCLIBS_XTRA=
+
+## Options for safe compilation under the Fortran compiler.
 ## Use this to specify FFLAGS for the version of the compiler specified
 ## above, using as accurate a result as possible, e.g. no optimization
 ## or using -ffloat-store.
@@ -112,18 +121,18 @@
 ## CPICFLAGS=
 
 ## The following variable can be used to provide any PIC flags for the
-## fixed-form Fortran compiler.  If this variable is left unspecified an
+## Fortran compiler.  If this variable is left unspecified an
 ## attempt is made to automatically detect the correct value.
 ## FPICFLAGS=
 
 ## The command to be used to create shared objects which contain object
-## files from a C or fixed-form Fortran compiler only.  This is usually the C
+## files from a C or Fortran compiler only.  This is usually the C
 ## compiler or 'ld', but the automatic choice can be overridden by means
 ## of this variable.
 ## SHLIB_LD=
 
 ## Any special flags which are required by the linker when creating
-## shared objects containing object files from a C or fixed-form Fortran
+## shared objects containing object files from a C or Fortran
 ## compiler only.  This is usually automatically detected by configure,
 ## and anything set here will be in addition unless SHLIB_LD is given.
 ## SHLIB_LDFLAGS=
@@ -178,19 +187,6 @@
 ## automatically detected by configure, and anything set here will be in
 ## addition unless SHLIB_CXXLD is given.
 ## SHLIB_CXXLDFLAGS=
-
-
-## Free-form Fortran compiler: optional for use in packages.
-## Analogous to the F77 and CXX settings.
-## FC=
-## FCFLAGS=
-## FCPICFLAGS=
-## SHLIB_FCLD=${FC}
-## Unlike SHLIB_CXXLDFLAGS, SHLIB_FCLDFLAGS is never additional
-## SHLIB_FCLDFLAGS=${SHLIB_LDFLAGS}
-## Additional libraries needed to link a shared object with FC,
-## e.g. on x86 Solaris
-## FCLIBS=
 
 ## Tcl/Tk settings.
 ## Use TCLTK_LIBS for all '-L' and '-l' options needed for linking
@@ -316,8 +312,7 @@
 
 ## Script from texinfo 5.1 or later.
 ## Usually the full path to texi2any.
-## (The name is historical: this was 'makeinfo' in texinfo 4.x)
-## MAKEINFO=
+## TEXI2ANY=
 
 ## Full path to version of curl-config to be used
 ## CURL_CONFIG=
@@ -344,7 +339,6 @@
 ## necessarily for CXX11/14/17).
 ## SHLIB_OPENMP_CFLAGS=
 ## SHLIB_OPENMP_CXXFLAGS=
-## SHLIB_OPENMP_FCFLAGS=
 ## SHLIB_OPENMP_FFLAGS=
 ## For R itself (src/main/array.c and src/library/stats/src/distance.c)
 ## R_OPENMP_CFLAGS=

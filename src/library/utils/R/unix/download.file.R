@@ -18,7 +18,8 @@
 
 download.file <-
     function(url, destfile, method, quiet = FALSE, mode = "w",
-             cacheOK = TRUE, extra = getOption("download.file.extra"), ...)
+             cacheOK = TRUE, extra = getOption("download.file.extra"),
+             headers = NULL, ...)
 {
     destfile # check supplied
     method <- if (missing(method))
@@ -33,14 +34,24 @@ download.file <-
 	method <- if(startsWith(url, "file:")) "internal" else "libcurl"
     }
 
+    nh <- names(headers)
+    if(length(nh) != length(headers) || any(nh == "") || anyNA(headers) || anyNA(nh))
+        stop("'headers' must have names and must not be NA")
+
     switch(method,
 	   "internal" = {
-	       status <- .External(C_download, url, destfile, quiet, mode, cacheOK)
+	       if(!is.null(headers))
+		   headers <- paste0(nh, ": ", headers, "\r\n", collapse = "")
+	       status <- .External(C_download, url, destfile, quiet, mode,
+				   cacheOK, headers)
 	       ## needed for Mac GUI from download.packages etc
 	       if(!quiet) flush.console()
 	   },
 	   "libcurl" = {
-	       status <- .Internal(curlDownload(url, destfile, quiet, mode, cacheOK))
+	       if(!is.null(headers))
+		   headers <- paste0(nh, ": ", headers)
+	       status <- .Internal(curlDownload(url, destfile, quiet, mode,
+						cacheOK, headers))
 	       if(!quiet) flush.console()
 	   },
 	   "wget" = {

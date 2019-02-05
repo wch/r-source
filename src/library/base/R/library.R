@@ -307,6 +307,8 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 	    pkgpath <- find.package(package, lib.loc, quiet = TRUE,
                                     verbose = verbose)
             if(length(pkgpath) == 0L) {
+                if(length(lib.loc) && !logical.return)
+                    stop(packageNotFoundError(package, lib.loc, sys.call()))
                 txt <- if(length(lib.loc))
                     gettextf("there is no package called %s", sQuote(package))
                 else

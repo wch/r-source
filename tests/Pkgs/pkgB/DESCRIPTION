@@ -3,10 +3,10 @@ Title: Simple Package with NameSpace and S4 Methods and Classes
 Type: Package
 Imports: methods, graphics, pkgA
 Version: 1.0
-Date: 2009-08-17
+Date: 2019-01-21
 Author: Yohan Chalabi and R-core
 Maintainer: R Core <R-core@almost.r-project.org>
-Description: Example package with a namespace and imports of S4 ....
+Description: Example package with a namespace and imports of S4, but empty R/ ....
  used for regression testing the correct working of tools::codoc(), undoc()
  etc, but also S4 in connection with other packages.
 License: GPL (>= 2)

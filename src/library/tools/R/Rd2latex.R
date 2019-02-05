@@ -248,7 +248,7 @@ Rd2latex <- function(Rd, out = "", defines = .Platform$OS.type,
 
     latex_escape_name <- function(x)
     {
-        x <- psub("([$#~_&])", "\\\\\\1", x) #- escape them
+        x <- psub("([$#_&])", "\\\\\\1", x) #- escape them
         x <- fsub("{", "\\textbraceleft{}", x)
         x <- fsub("}", "\\textbraceright{}", x)
         x <- fsub("^", "\\textasciicircum{}", x)
@@ -565,6 +565,8 @@ Rd2latex <- function(Rd, out = "", defines = .Platform$OS.type,
             writeAlias(section, tag)
         else if (tag == "\\keyword") {
             key <- trim(section)
+            if(key %in% .Rd_keywords_auto)
+                return()
             of0("\\keyword{", latex_escape_name(key), "}{", ltxname, "}\n")
         } else if (tag == "\\section" || tag == "\\subsection") {
             macro <- c("Section", "SubSection", "SubSubSection")[min(sectionLevel, 3)]

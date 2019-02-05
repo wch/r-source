@@ -5,7 +5,7 @@ export(pubGenf, # a generic function
        assertError)# and a simple one
 
 ## own classes
-exportClasses(pubClass)
+exportClasses(pubClass, subClass)# both classes [where 'pkgA' only exports main class]
 
 exportMethods(
  ## for own generics:

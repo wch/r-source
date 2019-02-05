@@ -6222,10 +6222,10 @@ compiler_DEFAULT=$CC
 _LT_COMPILER_BOILERPLATE
 _LT_LINKER_BOILERPLATE
 
-## CAVEAT EMPTOR:
-## There is no encapsulation within the following macros, do not change
-## the running order or otherwise move them around unless you know exactly
-## what you are doing...
+dnl CAVEAT EMPTOR:
+dnl There is no encapsulation within the following macros, do not change
+dnl the running order or otherwise move them around unless you know exactly
+dnl what you are doing...
 if test -n "$compiler"; then
   _LT_COMPILER_NO_RTTI($1)
   _LT_COMPILER_PIC($1)

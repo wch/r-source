@@ -3824,8 +3824,8 @@ interactively.
 Default: true.
 @item _R_CHECK_VIGNETTES_NLINES_
 Maximum number of lines to show from the bottom of the output when
-reporting errors in running or re-building vignettes. (As from @R{}
-3.4.0, @code{0} means all lines will be shown.)
+reporting errors in running or re-building vignettes. ( Value @code{0}
+means all lines will be shown.)
 Default: 10 for running, 25 for re-building.
 @item _R_CHECK_CODOC_S4_METHODS_
 Control whether @code{codoc()} testing is also performed on S4 methods.
@@ -3890,7 +3890,9 @@ Default: false, even though the warnings are justifiable.
 If true, check @R{} code for non-ascii characters.
 Default: true.
 @item _R_CHECK_ASCII_DATA_
-If true, check data for non-ascii characters.
+If true, check data for non-ascii characters.  @emph{En route}, checks
+that all the datasets can be loaded and that their components can be
+accessed.
 Default: true.
 @item _R_CHECK_COMPACT_DATA_
 If true, check data for ascii and uncompressed saves, and also check if
@@ -4252,6 +4254,13 @@ Optionally check if either argument of the binary operators @code{&&} and
 _R_CHECK_LENGTH_1_CONDITION_.
 Default: unset (nothing is reported)
 
+@item _R_CHECK_BUILD_VIGNETTES_SEPARATELY_
+Prior to @R{} 3.6.0, re-building the vignette outputs was done in a
+single @R{} session which allowed accidental reliance of one vignette on
+another (for example, in the loading of packages).  The current default
+is to use a separate session for each vignette; this option allows
+testing the older behaviour,
+Default: true
 
 @end vtable
 
@@ -4328,10 +4337,11 @@ Limit for running all the tests for one sub-architecture (and the
 default limit for running one test).
 
 @item _R_CHECK_ONE_VIGNETTE_ELAPSED_TIMEOUT_
-Limit for running the @R{} code in one vignette.
+Limit for running the @R{} code in one vignette, including for
+re-building each vignette separately. 
 
 @item _R_CHECK_BUILD_VIGNETTES_ELAPSED_TIMEOUT_
-Limit for re-building (all) vignettes.
+Limit for re-building all vignettes.
 
 @item _R_CHECK_PKGMAN_ELAPSED_TIMEOUT_
 Limit for each attempt at building the PDF package manual.

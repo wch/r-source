@@ -1,7 +1,7 @@
 #  File src/library/base/R/connections.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -41,6 +41,8 @@ readLines <- function(con = stdin(), n = -1L, ok = TRUE, warn = TRUE,
 
 writeLines <- function(text, con = stdout(), sep = "\n", useBytes = FALSE)
 {
+    if(!is.character(text))
+        stop("can only write character objects")
     if(is.character(con)) {
         con <- file(con, "w")
         on.exit(close(con))
@@ -91,10 +93,17 @@ fifo <- function(description, open = "", blocking = FALSE,
 
 url <- function(description, open = "", blocking = TRUE,
                 encoding = getOption("encoding"),
-                method = getOption("url.method", "default"))
+                method = getOption("url.method", "default"), headers = NULL)
 {
     method <- match.arg(method, c("default", "internal", "libcurl", "wininet"))
-    .Internal(url(description, open, blocking, encoding, method))
+    if(!is.null(headers)) {
+        nh <- names(headers)
+        if(length(nh) != length(headers) || any(nh == "") || anyNA(headers) || anyNA(nh))
+            stop("'headers' must have names and must not be NA")
+        headers <- paste0(nh, ": ", headers)
+        headers <- list(headers, paste0(headers, "\r\n", collapse = ""))
+    }
+    .Internal(url(description, open, blocking, encoding, method, headers))
 }
 
 gzfile <- function(description, open = "",

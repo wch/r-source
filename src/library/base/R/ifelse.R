@@ -44,10 +44,13 @@ ifelse <- function (test, yes, no)
     else ## typically a "class"; storage.mode<-() typically fails
 	test <- if(isS4(test)) methods::as(test, "logical") else as.logical(test)
     ans <- test
-    ok <- !is.na(test)
-    if (any(test[ok]))
-	ans[test & ok] <- rep(yes, length.out = length(ans))[test & ok]
-    if (any(!test[ok]))
-	ans[!test & ok] <- rep(no, length.out = length(ans))[!test & ok]
+    len <- length(ans)
+    ## which already removes NAs so we don't need to ever call is.na
+    ypos <- which(test)
+    npos <- which(!test)
+    if(length(ypos) > 0L)
+        ans[ypos] <- rep(yes, length.out = len)[ypos]
+    if(length(npos) > 0L)
+        ans[npos] <- rep(no, length.out = len)[npos]
     ans
 }

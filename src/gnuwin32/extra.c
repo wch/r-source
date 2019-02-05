@@ -3,7 +3,7 @@
  *  file extra.c
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
  *  Copyright (C) 2004	      The R Foundation
- *  Copyright (C) 2005--2018  The R Core Team
+ *  Copyright (C) 2005--2019  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -461,7 +461,13 @@ SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
     	SEXP result;
 	el = STRING_ELT(paths, i);
 	result = el;
-	if(getCharCE(el) == CE_UTF8) {
+	if (el == NA_STRING) {
+	    result = NA_STRING;
+	    if(mustWork == 1)
+		errorcall(call, "path[%d]=NA", i+1);
+	    else if(mustWork == NA_LOGICAL)
+		warningcall(call, "path[%d]=NA", i+1);
+	} else if(getCharCE(el) == CE_UTF8) {
 	    if ((res = GetFullPathNameW(filenameToWchar(el, FALSE), 32768, 
 					wtmp, &wtmp2)) && res <= 32768) {
 		if ((res = GetLongPathNameW(wtmp, wlongpath, 32768))
@@ -715,12 +721,11 @@ int winAccessW(const wchar_t *path, int mode)
 			 | DACL_SECURITY_INFORMATION | LABEL_SECURITY_INFORMATION,
 			 0, 0, &size);
 	error = GetLastError();
-	if (error = ERROR_NOT_SUPPORTED)
+	if (error == ERROR_NOT_SUPPORTED)
 	    /* happens for some remote shares */
 	    return _waccess(path, mode);
-	if (error != ERROR_INSUFFICIENT_BUFFER) {
+	if (error != ERROR_INSUFFICIENT_BUFFER) 
 	    return -1;
-	}
 	sdPtr = (SECURITY_DESCRIPTOR *) alloca(size);
 	if(!GetFileSecurityW(path,
 			     OWNER_SECURITY_INFORMATION | GROUP_SECURITY_INFORMATION

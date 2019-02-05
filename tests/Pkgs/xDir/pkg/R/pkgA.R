@@ -8,6 +8,8 @@ setClass("classApp",
 ## *and* ensure it is "attached to graphics::plot generic" :
 setMethod("plot", "classA", function(x, y, ...) NULL)
 
+setMethod("summary", "classApp", function(object, ...) cat("summary(<classApp>)\n"))
+
 nil <- NULL # see if we can use '::' on it
 
 ## Export, so we get a *conflict* message on attaching:

@@ -1,6 +1,6 @@
 % File src/library/base/man/tapply.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{tapply}
@@ -21,11 +21,11 @@ tapply(X, INDEX, FUN = NULL, \dots, default = NA, simplify = TRUE)
   \item{INDEX}{a \code{\link{list}} of one or more \code{\link{factor}}s,
     each of same length as \code{X}.  The elements are coerced to
     factors by \code{\link{as.factor}}.}
-  \item{FUN}{the function to be applied, or \code{NULL}.  In the case of
-    functions like \code{+}, \code{\%*\%}, etc., the function name must
-    be backquoted or quoted.  If \code{FUN} is \code{NULL}, tapply
-    returns a vector which can be used to subscript the multi-way array
-    \code{tapply} normally produces.}
+  \item{FUN}{a function (or name of a function) to be applied, or \code{NULL}.
+    In the case of functions like \code{+}, \code{\%*\%}, etc.,
+    the function name must be backquoted or quoted.  If \code{FUN} is
+    \code{NULL}, tapply returns a vector which can be used to subscript
+    the multi-way array \code{tapply} normally produces.}
   \item{\dots}{optional arguments to \code{FUN}: the Note section.}
   \item{default}{(only in the case of simplification to an array) the
     value with which the array is initialized as
@@ -42,11 +42,14 @@ tapply(X, INDEX, FUN = NULL, \dots, default = NA, simplify = TRUE)
     \code{FUN} always returns a scalar, \code{tapply} returns an array
     with the mode of the scalar.}
 }
-\value{
+
+\details{
   If \code{FUN} is not \code{NULL}, it is passed to
   \code{\link{match.fun}}, and hence it can be a function or a symbol or
   character string naming a function.
+}
 
+\value{
   When \code{FUN} is present, \code{tapply} calls \code{FUN} for each
   cell that has any data in it.  If \code{FUN} returns a single atomic
   value for each such cell (e.g., functions \code{mean} or \code{var})
@@ -58,8 +61,7 @@ tapply(X, INDEX, FUN = NULL, \dots, default = NA, simplify = TRUE)
   of \code{INDEX}.  Note that if the return value has a class (e.g., an
   object of class \code{"\link{Date}"}) the class is discarded.
 
-  Note that contrary to S, \code{simplify = TRUE} always returns an
-  array, possibly 1-dimensional.
+  \code{simplify = TRUE} always returns an array, possibly 1-dimensional.
 
   If \code{FUN} does not return a single atomic value, \code{tapply}
   returns an array of mode \code{\link{list}} whose components are the

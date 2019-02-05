@@ -2310,6 +2310,213 @@ stopifnot(exprs = {
 ## returned integer sequences in all R versions <= 3.5.1
 
 
+## Check for modififation of arguments
+## Issue originally reported by Lukas Stadler
+x <- 1+0
+stopifnot(x + (x[] <- 2) == 3)
+f <- compiler::cmpfun(function(x) { x <- x + 0; x + (x[] <- 2) })
+stopifnot(f(1) == 3)
+
+x <- 1+0
+stopifnot(log(x, x[] <- 2) == 0)
+f <- compiler::cmpfun(function(x) { x <- x + 0; log(x, x[] <- 2)})
+stopifnot(f(1) == 0)
+
+f <- function() x + (x[] <<- 2)
+x <- 1 + 0; stopifnot(f() == 3)
+fc <- compiler::cmpfun(f)
+x <- 1 + 0; stopifnot(fc() == 3)
+
+f <- function() x[{x[2] <<- 3; 1}] <<- 2
+fc <- compiler::cmpfun(f)
+x <- c(1,2); f(); stopifnot(x[2] == 2)
+x <- c(1,2); fc(); stopifnot(x[2] == 2)
+
+x <- 1+0
+stopifnot(c(x, x[] <- 2)[[1]] == 1)
+f <- compiler::cmpfun(function(x) { x <- x + 0; c(x, x[] <- 2)})
+stopifnot(f(1)[[1]] == 1)
+
+x <- c(1,2)
+x[{x[2] <- 3; 1}] <- 2
+stopifnot(x[2] == 2)
+f <- compiler::cmpfun(function(a,b) { x <- c(a, b); x[{x[2] <- 3; 1}] <- 2; x})
+f(1, 2)
+stopifnot(f(1, 2) == 2)
+
+m <- matrix(1:4, 2)
+i <- (1:2) + 0
+stopifnot(m[i, {i[] <- 2; 1}][1] == 1)
+f <- compiler::cmpfun(function(i) { i <- i + 0; m[i, {i[] <- 2; 1}]})
+stopifnot(f(1:2)[1] == 1)
+
+m <- matrix(1:4, 2)
+eval(compiler::compile(quote(m[1,1])))
+stopifnot(max(.Internal(named(m)), .Internal(refcnt(m))) == 1)
+
+ma <- .Internal(address(m))
+eval(compiler::compile(quote(m[1,1] <- 2L)))
+stopifnot(identical(.Internal(address(m)), ma))
+
+a <- array(1:8, rep(2, 3))
+eval(compiler::compile(quote(a[1,1,1])))
+stopifnot(max(.Internal(named(a)), .Internal(refcnt(a))) == 1)
+
+aa <- .Internal(address(a))
+eval(compiler::compile(quote(a[1,1,1] <- 2L)))
+stopifnot(identical(.Internal(address(a)), aa))
+
+m <- matrix(1:4, 2)
+i <- (1:2) + 0
+stopifnot(m[i, {i[] <- 2; 1}][1] == 1)
+f <- compiler::cmpfun(function(i) { i <- i + 0; m[i, {i[] <- 2; 1}]})
+stopifnot(f(1:2)[1] == 1)
+
+a <- array(1:8, rep(2, 3))
+i <- (1:2) + 0
+stopifnot(a[i, {i[] <- 2; 1}, 1][1] == 1)
+f <- compiler::cmpfun(function(i) { i <- i + 0; a[i, {i[] <- 2; 1}, 1]})
+stopifnot(f(1:2)[1] == 1)
+
+i <- (1:2) + 0
+stopifnot(a[i, {i[] <- 2; 1}, 1][1] == 1)
+f <- compiler::cmpfun(function(i) { i <- i + 0; a[1, i, {i[] <- 2; 1}]})
+stopifnot(f(1:2)[1] == 1)
+
+x <- 1 + 0
+stopifnot(identical(rep(x, {x[] <- 2; 2}), rep(1, 2)))
+x <- 1 + 0
+v <- eval(compiler::compile(quote(rep(x, {x[] <- 2; 2}))))
+stopifnot(identical(v, rep(1, 2)))
+
+x <- 1 + 0
+stopifnot(round(x, {x[] <- 2; 0}) == 1)
+x <- 1 + 0
+v <- eval(compiler::compile(quote(round(x, {x[] <- 2; 0}))))
+stopifnot(v == 1)
+
+f <- function() {
+    x <- numeric(1)
+    y <- 0
+    rm("y")
+    makeActiveBinding("y", function() { x[] <<- 1; 0}, environment())
+    x + y
+}
+stopifnot(f() == 0)
+stopifnot(compiler::cmpfun(f)() == 0)
+
+f <- function(y = {x[] <- 1; 0}) { x <- numeric(1); x + y }
+stopifnot(f() == 0)
+stopifnot(compiler::cmpfun(f)() == 0)
+
+
+## This failed under REFCNT:
+for (i in 1:2) { if (i == 1) { x <- i; rm(i) }}
+stopifnot(x == 1)
+
+
+## gamma & lgamma should not warn for correct limit cases:
+stopifnot(exprs = {
+    lgamma(0:-10) == Inf
+    gamma(-180.5) == 0
+    gamma(c(200,Inf)) == Inf
+    lgamma(c(10^(306:310), Inf)) == Inf
+})
+## had  "Warning message:  value out of range in 'lgamma' "  for ever
+
+
+## sub() with non-ASCII replacement failed to set encodings (PR#17509):
+x <- c("a", "b")
+x <- sub("a", "\u00e4", x)
+stopifnot(Encoding(x)[1L] == "UTF-8")
+x <- sub("b", "\u00f6", x)
+stopifnot(Encoding(x)[2L] == "UTF-8")
+## [1] has been "unknown" in R <= 3.5.x
+
+
+## formula(model.frame()) -- R-devel report by Bill Dunlap
+d <- data.frame(A = log(1:6), B = LETTERS[1:6], C = 1/(1:6), D = letters[6:1], Y = 1:6)
+m0 <- model.frame(Y ~ A*B, data=d)
+stopifnot(exprs = {
+    DF2formula(m0) == (Y ~ A+B) # the previous formula(.) behavior
+       formula(m0) == (Y ~ A*B)
+})
+## formula(.)  gave  Y ~ A + B  in R <= 3.5.x
+
+
+## These used to fail (PR17514) in a NAMED build but not with REFCNT:
+L <- matrix(list( c(0) ), 2, 1)
+L[[2]][1] <- 11
+stopifnot(L[[1]] == 0)
+L <- matrix(list( c(0) ), 2, 1, byrow = TRUE)
+L[[2]][1] <- 11
+stopifnot(L[[1]] == 0)
+
+
+## ar.ols() - PR#17517
+ar_ols <- ar.ols(lynx)
+stopifnot(exprs = {
+    is.list(pa <- predict(ar_ols, n.ahead = 2))# must *not* warn
+    all.equal(ar_ols$var.pred, 592392.12774) # not a matrix
+})
+## .$var.pred had been a 1x1 matrix in R <= 3.5.2
+
+
+## check that parse lines are properly initialized in the parser
+d <- getParseData(parse(text="{;}", keep.source=TRUE))
+l <- d[ d[,"token"] == "exprlist", "line1" ]
+stopifnot(identical(l, 1L))
+## failed in 3.5 and earlier
+
+
+## check that NA is treated as non-existent file (not file named "NA")
+tools::assertError  (normalizePath(c(NA_character_,getwd()), mustWork=TRUE))
+tools::assertWarning(normalizePath(c(NA_character_,getwd()), mustWork=NA))
+stopifnot(identical (normalizePath(c(NA_character_,getwd()), mustWork=FALSE)[1],
+                     NA_character_))
+stopifnot(identical(unname(file.access(NA_character_)), -1L))
+## NA treated as error
+tools::assertError(file.edit(NA_character_))
+tools::assertError(file(NA_character_))
+
+
+## strtoi("") :
+stopifnot(is.na(strtoi("")),
+          is.na(strtoi("", 2L)))
+## was platform dependent [libC strtol()] in R <= 3.5.x
+
+
+## formula.data.frame() thinko at modularization [r75911]:
+f <- function(df) {
+    stopifnot(is.data.frame(df))
+    d <- 4
+    f2(formula(df))
+}
+f2 <- function(form) eval(quote(d), envir = environment(form))
+rf <- f(data.frame(x=1, f="b")) ## gave error inside f2() in R-devel
+stopifnot(identical(rf, 4))
+## as after 75911 a wrong parent.frame() was used.
+
+
+## format(.) when there's no method gives better message:
+ee <- tryCatch(format(.Internal(bodyCode(ls))), error=identity)
+stopifnot(exprs = {
+    conditionCall(ee)[[1]] == quote(format.default)
+    grepl("no format() method", conditionMessage(ee), fixed=TRUE)
+})
+## signalled from long .Internal(...) call + "must be atomic" in R <= 3.5.x
+
+
+## writeLines(readLines(F), F)  -- PR#17528
+tf <- tempfile("writeL_test")
+writeLines("1\n2\n3", tf)
+c123 <- paste(1:3)
+stopifnot(identical(readLines(tf), c123))
+writeLines(readLines(tf), tf)
+stopifnot(identical(readLines(tf), c123))
+## writeLines had opened the output for writing before readLines() read it
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

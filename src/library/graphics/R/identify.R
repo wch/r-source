@@ -50,9 +50,9 @@ identify.default <-
     else {
         result <- list(ind = i)
         if (pos)
-            result$pos = z[[2L]][z[[1L]]]
+            result$pos <- z[[2L]][z[[1L]]]
         if (order)
-            result$order = z[[3L]][z[[1L]]]
+            result$order <- z[[3L]][z[[1L]]]
         result
     }
 }

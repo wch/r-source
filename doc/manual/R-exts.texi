@@ -183,11 +183,9 @@ various ways for consistency and portability.
 source package which contains C, C++ or Fortran code will involve
 compiling that code.  There is also the possibility of `byte' compiling
 the @R{} code in a package (using the facilities of package
-@pkg{compiler}): since @R{} 3.5.0, this is enabled by default for all
-packages. Prior to @R{} 3.5.0, base and recommended packages were normally
-byte-compiled, but this had to be specified explicitly for other packages. So
-@emph{compiling} a package may come to mean byte-compiling its @R{}
-code.
+@pkg{compiler}): since @R{} 3.5.0 this is enabled by default for all
+packages. So @emph{compiling} a package may come to mean byte-compiling
+its @R{} code.
 
 @item
 It used to be unambiguous to talk about @emph{loading} an installed
@@ -1170,10 +1168,9 @@ not be hidden (start with a dot), and hidden files will under some
 versions of @R{} be ignored.
 
 It is not portable (and may not be possible at all) to mix all these
-languages in a single package, and we do not support using both C++ and
-free-form Fortran. Because @R{} itself uses it, we know that C and
-fixed-form can be used together and mixing C and C++ seems to be widely
-successful.
+languages in a single package.  Because @R{} itself uses it, we know that
+C and fixed-form Fortran can be used together, and mixing C, C++ and
+Fortran usually work for the platform's native compilers.
 
 If your code needs to depend on the platform there are certain defines
 which can used in C or C++.  On all Windows builds (even 64-bit ones)
@@ -1381,8 +1378,19 @@ Preferably there should be no such references in data files, and in any
 case they should only be to packages listed in the @code{Depends} and
 @code{Imports} fields, as otherwise it may be impossible to install the
 package.  To check for such references, load all the images into a
-vanilla @R{} session, and look at the output of
-@code{loadedNamespaces()}.
+vanilla @R{} session, run @code{str()} on all the datasets, and look at
+the output of @code{loadedNamespaces()}.
+
+Particular care is needed where a dataset or one of its components is of
+an S4 class, especially if the class is defined in a different package.
+First, the package containing the class definition has to be available
+to do useful things with the dataset, so that package must be listed in
+@code{Imports} or @code{Depends} (even if this gives a check warning
+about unused imports).  Second, the definition of an S4 class can
+change, and often has unnoticed when in a package with a different
+author.  So it may be wiser to use the @file{.R} form and use that to
+create the dataset object when needed (loading package namespaces but
+not attaching them).
 
 If your data files are large and you are not using @samp{LazyData} you
 can speed up installation by providing a file @file{datalist} in the
@@ -1422,13 +1430,13 @@ field in the @file{DESCRIPTION} file.  Useful values are @code{bzip2},
 is best is to try them all and look at the size of the
 @file{@var{pkgname}/data/Rdata.rdb} file.
 
-Lazy-loading is not supported for very large datasets (those which when
-serialized exceed 2GB, the limit for the format on 32-bit platforms).
-
 @c DESCRIPTION field SysDataCompression
 The analogue for @file{sysdata.rda} is field @samp{SysDataCompression}:
 the default is @code{xz} for files bigger than 1MB otherwise
 @code{gzip}.
+
+Lazy-loading is not supported for very large datasets (those which when
+serialized exceed 2GB, the limit for the format on 32-bit platforms).
 
 @node Non-R scripts in packages, Specifying URLs, Data in packages, Package structure
 @subsection Non-R scripts in packages
@@ -1646,29 +1654,39 @@ The latter is important, as for example C headers may not be available
 to C++ programs or may not be written to avoid C++ name-mangling.
 
 @findex R CMD config
-You can use @code{R CMD config} for getting the value of the basic
+You can use @code{R CMD config} to get the value of the basic
 configuration variables, and also the header and library flags necessary
 for linking a front-end executable program against @R{}, see @kbd{R CMD
-config --help} for details.
+config --help} for details.  If you do, it is essential that you use
+both the command and the appropriate flags, so that for example
+@samp{CC} must always be used with @samp{CFLAGS} and (for code to be
+linked into a shared library) @samp{CPICFLAGS}.  For Fortran, be careful
+to use @samp{FC FFLAGS FPICFLAGS} for fixed-form Fortran and 
+@samp{FC FCFLAGS FPICFLAGS} for free-form Fortran.  (Packages intended to
+be used with @R{} versions before 3.6.0 should use the legacy forms
+@samp{F77 FFLAGS FPICFLAGS} and @samp{FC FCFLAGS FCPICFLAGS}, which are
+still accepted.)
 
-To check for an external BLAS library using the @code{ACX_BLAS} macro
+To check for an external BLAS library using the @code{AX_BLAS} macro
 from the official Autoconf Macro Archive, one can simply do
 
 @example
 @group
-F77=`"$@{R_HOME@}/bin/R" CMD config F77`
-AC_PROG_F77
+FC=`"$@{R_HOME@}/bin/R" CMD config FC`
+FCLAGS=`"$@{R_HOME@}/bin/R" CMD config FFLAGS`
+AC_PROG_FC
 FLIBS=`"$@{R_HOME@}/bin/R" CMD config FLIBS`
-ACX_BLAS([], AC_MSG_ERROR([could not find your BLAS library], 1))
+AX_BLAS([], AC_MSG_ERROR([could not find your BLAS library], 1))
 @end group
 @end example
 
 Note that @code{FLIBS} as determined by @R{} must be used to ensure that
-fixed-form Fortran code works on all @R{} platforms.  Calls to the
-Autoconf macro @code{AC_F77_LIBRARY_LDFLAGS}, which would overwrite
-@code{FLIBS}, must not be used (and hence e.g.@: removed from
-@code{ACX_BLAS}).  (Recent versions of Autoconf in fact allow an already
-set @code{FLIBS} to override the test for the Fortran linker flags.)
+Fortran code works on all @R{} platforms.  
+@c Calls to the Autoconf macro
+@c @code{AC_F77_LIBRARY_LDFLAGS}, which would overwrite @code{FLIBS}, must
+@c not be used (and hence e.g.@: removed from @code{ACX_BLAS}).  (Recent
+@c versions of Autoconf in fact allow an already set @code{FLIBS} to
+@c override the test for the Fortran linker flags.)
 
 
 @strong{N.B.}: If the @command{configure} script creates files, e.g.@:
@@ -1775,10 +1793,10 @@ pkg-config --list-all | sort
 @menu
 * Using Makevars::              
 * Configure example::           
-* Using F95 code::              
+* Using F9x code::              
 * Using C++11 code::            
-* Using C++14 code::
-* Using C++17 code::
+* Using C++14 code::            
+* Using C++17 code::            
 @end menu
 
 @node Using Makevars, Configure example, Configure and cleanup, Configure and cleanup
@@ -1804,9 +1822,9 @@ for @file{Makevars.win}) without the use of GNU extensions.
 The most common use of a @file{Makevars} file is to set additional
 preprocessor options (for example include paths and definitions) for
 C/C++ files @emph{via} @code{PKG_CPPFLAGS}, and additional compiler
-flags by setting @code{PKG_CFLAGS}, @code{PKG_CXXFLAGS},
-@code{PKG_FFLAGS} or @code{PKG_FCFLAGS}, for C, C++, fixed-form or
-free-form Fortran respectively (@pxref{Creating shared objects}).
+flags by setting @code{PKG_CFLAGS}, @code{PKG_CXXFLAGS} or
+@code{PKG_FFLAGS}, for C, C++ or Fortran respectively (@pxref{Creating
+shared objects}).
 
 @strong{N.B.}: Include paths are preprocessor options, not compiler
 options, and @strong{must} be set in @code{PKG_CPPFLAGS} as otherwise
@@ -1845,7 +1863,8 @@ the latter.  These include
 @vindex FLIBS
 A macro containing the set of libraries need to link Fortran code.  This
 may need to be included in @code{PKG_LIBS}: it will normally be included
-automatically if the package contains fixed-form Fortran source files.
+automatically if the package contains Fortran source files in the
+@file{src} directory.
 
 @item BLAS_LIBS
 @vindex BLAS_LIBS
@@ -1881,13 +1900,11 @@ always be included @emph{after} @code{LAPACK_LIBS} (and in that order).
 @item SAFE_FFLAGS
 @vindex SAFE_FFLAGS
 A macro containing flags which are needed to circumvent
-over-optimization of FORTRAN code: it is typically @samp{-g -O2
--ffloat-store} on @cputype{ix86} platforms using @command{gfortran}.
-Note that this is @strong{not} an additional flag to be used as part of
-@code{PKG_FFLAGS}, but a replacement for @code{FFLAGS}, and that it is
-intended for the fixed-form Fortran compiler @samp{F77} and not necessarily for
-the free-form Fortran compiler @samp{FC}.  See the example later in this
-section.
+over-optimization of FORTRAN code: it is might be @samp{-g -O2
+-ffloat-store} or @samp{-g -O2 -msse2 -mfpmath=sse} on @cputype{ix86}
+platforms using @command{gfortran}.  Note that this is @strong{not} an
+additional flag to be used as part of @code{PKG_FFLAGS}, but a
+replacement for @code{FFLAGS}.  See the example later in this section.
 @end table
 
 @vindex OBJECTS
@@ -1920,7 +1937,7 @@ SLAMC_FFLAGS=$(R_XTRA_FFLAGS) $(FPICFLAGS) $(SHLIB_FFLAGS) $(SAFE_FFLAGS)
 all: $(SHLIB)
 
 slamc.o: slamc.f
-        $(F77) $(SLAMC_FFLAGS) -c -o slamc.o slamc.f
+        $(FC) $(SLAMC_FFLAGS) -c -o slamc.o slamc.f
 @end example
 
 @noindent
@@ -1931,7 +1948,7 @@ infinite looping.  The Windows equivalent was
 all: $(SHLIB)
 
 slamc.o: slamc.f
-        $(F77) $(SAFE_FFLAGS) -c -o slamc.o slamc.f
+        $(FC) $(SAFE_FFLAGS) -c -o slamc.o slamc.f
 @end example
 
 @noindent
@@ -1964,7 +1981,17 @@ all: mylibs
 @end example
 
 @noindent
-does @strong{not} suffice.
+does @strong{not} suffice.  GNU make does allow the construct
+@example
+.NOTPARALLEL: all
+all: mylibs $(SHLIB)
+@end example
+
+@noindent
+but that is not portable.  @command{dmake} and @command{pmake} allow the
+similar @code{.NO_PARALLEL}, also not portable: some variants of
+@command{pmake} accept @code{.NOTPARALLEL} as an alias for
+@code{.NO_PARALLEL}.
 
 Note that on Windows it is required that @file{Makevars[.win]} does
 create a DLL: this is needed as it is the only reliable way to ensure
@@ -2069,17 +2096,16 @@ OpenMP@footnote{@uref{http://www.openmp.org/},
 @example
 SHLIB_OPENMP_CFLAGS
 SHLIB_OPENMP_CXXFLAGS
-SHLIB_OPENMP_FCFLAGS
 SHLIB_OPENMP_FFLAGS
 @end example
 
 @noindent
 are available for use in @file{src/Makevars} or @file{src/Makevars.win}.
 Include the appropriate macro in @code{PKG_CFLAGS}, @code{PKG_CXXFLAGS}
-and so on, and also in @code{PKG_LIBS} (but see below for fixed-form
-Fortran).  C/C++ code that needs to be conditioned on the use of OpenMP
-can be used inside @code{#ifdef _OPENMP}: note that some toolchains used
-for @R{} (including Apple's for macOS and some others using
+and so on, and also in @code{PKG_LIBS} (but see below for Fortran).
+C/C++ code that needs to be conditioned on the use of OpenMP can be used
+inside @code{#ifdef _OPENMP}: note that some toolchains used for @R{}
+(including Apple's for macOS and some others using
 @command{clang}@footnote{Default builds of @command{clang} 3.8.0 and
 later have support for OpenMP, but the @code{libomp} run-time library
 may not be installed.}) have no OpenMP support at all, not even
@@ -2116,14 +2142,16 @@ PKG_LIBS = $(SHLIB_OPENMP_CFLAGS)
 
 @noindent
 as the C compiler will be used to link the package code (and there is no
-guarantee that this will work everywhere).  (This does not apply to
-free-form Fortran code, where @code{SHLIB_OPENMP_FCFLAGS} should be used in
-both @code{PKG_FCFLAGS} and @code{PKG_LIBS}.)
+guarantee that this will work everywhere).  Packages which include C++
+code should use @code{SHLIB_OPENMP_CXXFLAGS} in @code{PKG_LIBS}. (As
+from @R{} 3.6.0 this applies also to free-form Fortran code, where
+@code{SHLIB_OPENMP_FFLAGS} should be used in @code{PKG_FFLAGS} or
+@code{PKG_FCFLAGS}.)
 
 It is not portable to use OpenMP with more than one of C, C++ and
-Fortran in a single package since it is quite likely that the compilers
-are of different families: using C and fixed-form Fortran is most widely
-supported (but only fortuitously works on macOS).
+Fortran in a single package since it is not uncommon that the compilers
+are of different families: using C and Fortran is most widely supported
+(but only fortuitously works on macOS).
 @c Where an alternative compiler is used for C++11 or later, its OpenMP
 @c runtime may be incompatible even with C.
 
@@ -2133,7 +2161,7 @@ when OpenMP mode is switched on (e.g.@: @emph{via} flag
 @option{-fopenmp}).
 
 @c http://openmp.org/wp/openmp-compilers-tools/
-@c clang 3.8.x reports 201307 but has full suport only for 3.1 (201111)
+@c clang 3.8.x reports 201307 but has full support only for 3.1 (201111)
 @c clang 3.9.x reports 201111 but has all but offloading support of 4.0.
 @c Debian Wheezy is on ELTS until 2019-05-31
 @c Centos 6 EOL 2020-11-30, defaults to gcc 4.7
@@ -2145,8 +2173,7 @@ partially supported, not that which is fully implemented.}  to say what
 version of OpenMP is supported: version 3.1 (and much of 4.0) is
 supported by recent versions of the Linux, Windows and Solaris
 platforms, but portable packages cannot assume that end users have
-recent versions.@footnote{People do use older versions of OSes such as
-Debian Wheezy which has GCC 4.4.}  Apple builds of @command{clang}
+recent versions.  Apple builds of @command{clang}
 on macOS currently have no OpenMP support, but @acronym{CRAN} binary
 packages are built with a @command{clang}-based toolchain which supports
 OpenMP.  @uref{http://www.openmp.org/@/resources/@/openmp-compilers-tools}
@@ -2185,10 +2212,11 @@ first level.  The correctness of the detected number of `CPUs' and the
 assumption that the @R{} process is entitled to use them all are both
 dubious assumptions.  The best way to limit resources is to limit the
 overall number of threads available to OpenMP in the @R{} process: this
-can be done @emph{via} environment variable @env{OMP_THREAD_LIMIT}, where
-implemented.@footnote{Which it was at the time of writing with GCC,
-Oracle, Intel and Clang compilers.}  Alternatively, the
-number of threads per region can be limited by the environment variable
+can be done @emph{via} environment variable @env{OMP_THREAD_LIMIT},
+where implemented.@footnote{Which it was at the time of writing with
+GCC, Oracle, Intel and Clang compilers.  The count may include the
+thread running the main process.}  Alternatively, the number of threads
+per region can be limited by the environment variable
 @env{OMP_NUM_THREADS} or API call @code{omp_set_num_threads}, or,
 better, for the regions in your code as part of their
 specification. E.g.@: @R{} uses
@@ -2197,6 +2225,12 @@ specification. E.g.@: @R{} uses
 @end example
 @noindent
 That way you only control your own code and not that of other OpenMP users.
+
+Note that setting environment variables to control OpenMP is
+implementation-dependent and may need to be done outside the @R{}
+process or before any use of OpenMP (which might be by another process
+or @R{} itself).   Also, implementation-specific variables such as
+@env{KMP_THREAD_LIMIT} might take precedence.
 
 @node Using pthreads, Compiling in sub-directories, OpenMP support, Using Makevars
 @subsubsection Using pthreads
@@ -2237,7 +2271,8 @@ concepts of threads.  However, there are two projects implementing
 
 Whether Windows toolchains implement @code{pthreads} is up to the
 toolchain provider.  A @command{make} variable
-@code{SHLIB_PTHREAD_FLAGS} is available: this should be included in both
+@code{SHLIB_PTHREAD_FLAGS} is available for use in
+@file{src/Makevars.win}: this should be included in both
 @code{PKG_CPPFLAGS} (or the Fortran compiler flags) and @code{PKG_LIBS}.
 
 The presence of a working @code{pthreads} implementation cannot be
@@ -2315,7 +2350,7 @@ We really do not recommend using @file{src/Makefile} instead of
 @file{src/Makevars}, and as the example above shows, it is not
 necessary.
 
-@node Configure example, Using F95 code, Using Makevars, Configure and cleanup
+@node Configure example, Using F9x code, Using Makevars, Configure and cleanup
 @subsection Configure example
 
 It may be helpful to give an extended example of using a
@@ -2450,25 +2485,39 @@ R CMD INSTALL \
 or by setting the environment variables @code{ODBC_INCLUDE} and
 @code{ODBC_LIBS}.
 
-@node Using F95 code, Using C++11 code, Configure example, Configure and cleanup
-@subsection Using F95 code
+@node Using F9x code, Using C++11 code, Configure example, Configure and cleanup
+@subsection Using F9x code
 
 @R{} assumes that source files with extension @file{.f} are fixed-form
-Fortran, and passes them to the compiler specified by @samp{F77}.  On
-most but not all platforms the compiler specified by @samp{FC} will
-accept free-form Fortran 90/95 code.
+Fortran 90 (which includes Fortran 77), and passes them to the compiler
+specified by macro @samp{FC}.  On most platforms the Fortran compiler
+will also accept free-form Fortran 90/95 code with extension @file{.f90}
+or @file{.f95}.
 
-Some (but not) all compilers specified by @samp{FC} will accept Fortran
-2003 or 2008 code: such code should still use file extension @file{.f90}
-or @file{.f95}.  For platforms using @command{gfortran}, you may need to
-include @option{-std=f2003} or @option{-std=f2008} in
-@code{PKG_FCFLAGS}: the default is `GNU Fortran', Fortran 95 with
-non-standard extensions.  The Oracle @command{f95} compiler `accepts
-some Fortran 2003/8 features' (search for `Oracle Developer Studio 12.5:
-Fortran User's Guide' and look for §4.6).
+@vindex PKG_FCFLAGS
+As from @R{} 3.6.0 the same compiler is used for both fixed-form and
+free-form Fortran code (with different file extensions and possibly
+different flags).  For both, macro @code{PKG_FFLAGS} can be used for
+package-specific flags: in the unusual case that both are included in a
+single package and that different flags are needed for the two forms,
+macro @code{PKG_FCFLAGS} is also available for free-form Fortran.
+
+The code used to build @R{} allows a `Fortran 90' compiler to be
+selected as @samp{FC}, so platforms might be encountered which only
+support Fortran 90.  However, Fortran 95 is widely supported.
+
+Some compilers specified by @samp{FC} will accept Fortran 2003, 2008 or
+2018 code: such code should still use file extension @file{.f90} or
+@file{.f95}.  Most platforms use @command{gfortran} where you may need
+to include @option{-std=f2003}, @option{-std=f2008} or (from version 8)
+@option{-std=f2018} in @code{PKG_FFLAGS} or @code{PKG_FCFLAGS}: the
+default is `GNU Fortran', Fortran 95 with non-standard extensions.  The
+Oracle @command{f95} compiler `accepts some Fortran 2003/8 features'
+(search for `Oracle Developer Studio 12.5: Fortran User's Guide' and
+look for §4.6).
 
 Modern versions of Fortran support modules, whereby compiling one source
-file creates a module file which is then included in others. (Module
+file creates a module file which is then included in others.  (Module
 files typically have a @file{.mod} extension: they do depend on the
 compiler used and so should never be included in a package.)  This
 creates a dependence which @command{make} will not know about and often
@@ -2483,7 +2532,13 @@ to contain something like
 cmi.o dmi.o: iface.o
 @end example
 
-@node Using C++11 code, Using C++14 code, Using F95 code, Configure and cleanup
+@noindent
+Note that it is not portable (although some platforms do accept it) to
+define a module of the same name in multiple source files.
+@c As was done by frailtypack in 2018-12: gfortran accepted this, ODS
+@c on Solaris did not.
+
+@node Using C++11 code, Using C++14 code, Using F9x code, Configure and cleanup
 @subsection Using C++11 code
 
 @R{} can be built without a C++ compiler although one is available (but
@@ -2522,6 +2577,13 @@ based on @command{clang} using @code{libc++}.} @code{libc++} headers and
 library has since version 3.4 included almost all C++14 features, but
 does not support TR1.  As from version 6.0.0, @command{clang} defaults
 to C++14.
+
+As from version 3.6.0, @R{} selects a default C++ compiler with options
+that conform as far as possible@footnote{allowing `GNU extensions', but
+if possible excluding C++14 features.} to C++11: this might not be
+possible@footnote{although it is on all commonly-tested @R{} platforms.}
+and packages which do not specify @samp{R (>= 3.6)} need to explicitly
+require C++11, hence the rest of this section.
 
 Since version 3.1.0, @R{} has provided support for C++11 in packages in
 addition to C++98.  This support is not uniform across platforms as it
@@ -2601,8 +2663,7 @@ compiler for C++11, @emph{via} personal or site @file{Makevars} files.
 
 There is no guarantee that C++11 can be used in a package in combination
 with any other compiled language (even C), as the C++11 compiler may be
-incompatible with the native compilers for the platform.  (There are
-known problems mixing C++11 with Fortran.)
+incompatible with the native compilers for the platform.
 
 If a package using C++11 has a @command{configure} script it is
 essential that it selects the correct compiler, @emph{via} something like
@@ -2634,11 +2695,11 @@ nor to compilation done in vignettes or @emph{via} other packages.
 @node Using C++14 code, Using C++17 code, Using C++11 code, Configure and cleanup
 @subsection Using C++14 code
 
-Support for a C++14 (where available) has been explicitly added to @R{}
-from version 3.4.0. Similar considerations to C++11 apply, except that
-the variables associated with the C++14 compiler use the prefix
-@samp{CXX14} instead of @samp{CXX11}. Hence to use C++14 code in a
-package, the package's @file{Makevars} file (or @file{Makevars.win} on
+Support for a C++14 compiler (where available) has been explicitly added
+to @R{} from version 3.4.0. Similar considerations to C++11 apply,
+except that the variables associated with the C++14 compiler use the
+prefix @samp{CXX14} instead of @samp{CXX11}. Hence to use C++14 code in
+a package, the package's @file{Makevars} file (or @file{Makevars.win} on
 Windows) should include the line
 @example
 CXX_STD = CXX14
@@ -4275,10 +4336,10 @@ PKG_CPPFLAGS = `gsl-config --cflags`
 
 @noindent
 which works in all versions of @command{make} known@footnote{GNU make,
-BSD make formerly in FreeBSD and macOS, AT&T make as implemented on
-Solaris, @command{pmake} in FreeBSD, `Distributed Make' (@code{dmake}),
-part of Oracle Studio and available in other versions.} to be used with
-@R{}.
+BSD make and other variants of @command{pmake} in FreeBSD, NetBSD and
+formerly in macOS, AT&T make as implemented on Solaris and `Distributed
+Make' (@code{dmake}), part of Oracle Developer Studio and available in
+other versions including from Apache OpenOffice.} to be used with @R{}.
 
 If you really must require GNU make, declare it in the @file{DESCRIPTION}
 file by
@@ -4348,6 +4409,8 @@ R-admin, R Installation and Administration},
 Portable C++ code needs to follow the 1998 standard (and not use
 features from C99), or to specify a C++11 compiler (see @ref{Using C++11
 code}) where available (which is not the case on all @R{} platforms).
+Currently C++14 code is less portable and C++17 support is patchy across
+@R{} platforms.
 
 If using Fortran with the GNU compiler, use the flags
 @option{-std=f95 -Wall -pedantic} which reject most GNU extensions and
@@ -4403,24 +4466,27 @@ platform not tested by the package maintainer.  (@command{R CMD check}
 can optionally report on unsafe flags which were used.)
 
 @item
-Do be very careful with passing arguments between @R{}, C and
-Fortran code.  In particular, @code{long} in C will be 32-bit
-on some @R{} platforms (including 64-bit Windows), but 64-bit on most
-modern Unix and Linux platforms.  It is rather unlikely that the use of
-@code{long} in C code has been thought through: if you need a longer
-type than @code{int} you should use a configure test for a C99/C++11
-type such as @code{int_fast64_t} (and failing that, @code{long long}
-@footnote{but note that @code{long long} is not a standard C++98 type,
-and C++ compilers set up for strict checking will reject it.}) and
-typedef your own type to be @code{long} or @code{long long}, or use
-another suitable type (such as @code{size_t}).
+Do be very careful with passing arguments between @R{}, C and Fortran
+code.  In particular, @code{long} in C will be 32-bit on some @R{}
+platforms (including 64-bit Windows), but 64-bit on most modern Unix and
+Linux platforms.  It is rather unlikely that the use of @code{long} in C
+code has been thought through: if you need a longer type than @code{int}
+you should use a configure test for a C99/C++11 type such as
+@code{int_fast64_t} (and failing that, @code{long long}@footnote{but
+note that @code{long long} is not a standard C++98 type, and C++
+compilers for earlier versions of @R{} set up for strict C++98
+conformance will reject it.  C++11 (the default since @R{} 3.6.0)
+includes @code{long long}.}) and typedef your own type, or use another
+suitable type (such as @code{size_t}).
+@c https://en.cppreference.com/w/cpp/language/types claims long long is
+@c >= 64-bit, but that is not obvious in the standard.
 
 It is not safe to assume that @code{long} and pointer types are the same
 size, and they are not on 64-bit Windows.  If you need to convert
 pointers to and from integers use the C99/C++11 integer types
-@code{intptr_t} and @code{uintptr_t} (which are defined in the header
-@code{<stdint.h>} and are not required to be implemented by the C99
-standard but are used in C code by @R{} itself).
+@code{intptr_t} and @code{uintptr_t} (in the headers @code{<stdint.h>}
+and @code{cstdint}: they are not required to be implemented by the
+standards but are used in C code by @R{} itself).
 
 Note that @code{integer} in Fortran corresponds to @code{int} in C on
 all @R{} platforms.
@@ -4945,8 +5011,17 @@ so it is strongly recommended to check in a UTF-8 locale.
 @subsection Portable C and C++ code
 
 Writing portable C and C++ code is mainly a matter of observing the
-standards (C99, C++98 or where declared C++11/14/17) and testing that
+standards (C99, C++11 or where declared C++98/14/17) and testing that
 extensions (such as POSIX functions) are supported.
+
+@strong{C++ standards}: As from version 3.6.0, @R{} defaults to C++11
+where available@footnote{which it is on all known platforms}.  However,
+in earlier versions the default standard was that of the compiler used,
+often C++98 or C++14.  Thus for portability it is desirable to specify
+the C++ standard@footnote{For C++98 this is only possible since @R{}
+3.5.0, for C++11 since @R{} 3.1.0.} assumed for a package.  Because most
+packages will be made available for earlier versions on @R{}, comments
+below about C++98 have been retained.
 
 Note that the `TR1' C++ extensions are not part of any of these
 standards and the @code{<tr1/@var{name}>} headers are not supplied by some of
@@ -5004,7 +5079,7 @@ with versions for types @code{float}, @code{double}, @code{long double}
 and possibly more.  This means that calling @code{sqrt} on an integer
 type may have `overloading ambiguity' as it could be promoted to any of
 the supported floating-point types: this is commonly seen on Solaris,
-but for @code{pow} also seen on macOS.  (C++98 has an overload for
+but for @code{pow} also seen on macOS.  (C++ has an overload for
 @code{std::pow(<double>, <int>)}, but this may not be visible from the
 main namespace.  C++11 requires additional overloads for integer types,
 and ambiguous overloads are more common in C++11 (and later) compiler
@@ -5024,7 +5099,7 @@ should be the constant @code{1e-3}.
 Function @code{fabs} is defined only for floating-point types, except in
 C++11 which has overloads for @code{std::fabs} in @file{<cmath>} for
 integer types.  Function @code{abs} is defined in C99's
-@file{<stdlib.h>} for @code{int} and in C++98's @file{<cstdlib>} for
+@file{<stdlib.h>} for @code{int} and in C++'s @file{<cstdlib>} for
 integer types, overloaded in @file{<cmath>} for floating-point types.
 C++11 has additional overloads for @code{std::abs} in @file{<cmath>} for
 integer types.  The effect of calling @code{abs} with a floating-point
@@ -5035,7 +5110,7 @@ Functions/macros such as @code{isnan}, @code{isinf} and @code{isfinite}
 are not required by C++98: where compilers support them they may be only
 in the @code{std} namespace or only in the main namespace.  There is no
 way to make use of these functions which works with all C++ compilers
-currently in use on @R{} platforms: use @R{}'s versions such as
+which have been used on @R{} platforms: use @R{}'s versions such as
 @code{ISNAN} and @code{R_FINITE} instead.
 
 If you must use them in C++11, beware that some
@@ -5056,11 +5131,12 @@ error.
 
 @item
 The GNU C/C++ compilers support a large number of non-portable
-extensions.  For example, @code{INFINITY} (which is in C99 but not
-C++98), for which @R{} provides the portable @code{R_PosInf} (and
-@code{R_NegInf} for @code{-INFINITY}).  And @code{NAN} is just one NaN
-value: in @R{} code @code{NA_REAL} is usually what is intended, but
-@code{R_NaN} is also available.
+extensions.  For example, @code{INFINITY} (which is a @emph{float} value
+in C99 and C++11 but not C++98), for which @R{} provides the portable
+double value @code{R_PosInf} (and @code{R_NegInf} for @code{-INFINITY}).
+And @code{NAN}@footnote{also part of C++11 and later.} is just one NaN
+@emph{float} value: for use with @R{}, @code{NA_REAL} is usually what
+is intended, but @code{R_NaN} is also available.
 
 Some (but not all) extensions are listed at
 @uref{https://gcc.gnu.org/@/onlinedocs/@/gcc/@/C-Extensions.html} and
@@ -5097,8 +5173,7 @@ first used to be a sufficient workaround but for some 2016 compilers
 only one could be included.
 
 @item
-Variable-length arrays are C99, not supported by C++98 nor by the C++
-compilers in use with @R{} on some platforms.
+Variable-length arrays are C99, not supported by C++98.
 
 @item
 Be careful to include the headers which define the functions you use.
@@ -5169,14 +5244,17 @@ and can cause problems.
 @c http://lists.x.org/archives/xorg-devel/2013-November/038808.html
 The most common issue involves the names of the Intel CPU registers such
 as @code{CS}, @code{DS}, @code{ES}, @code{FS}, @code{GS} and @code{SS}
-(and more with longer abbreviations) defined on i586/x64 Solaris in
+(and more with longer abbreviations@footnote{including @code{EAX},
+@code{EBP}, @code{EBX}, @code{ECX}, @code{EDI},@code{EDX}, @code{EFL},
+@code{EIP}, @code{ESI} and @code{ESP} .}) defined on i586/x64 Solaris in
 @file{<sys/regset.h>} and often included indirectly by @file{<stdlib.h>}
 and other core headers.  Further examples are @code{ERR},
 @code{LITTLE_ENDIAN}, @code{zero} and @code{I} (which is defined in
 Solaris' @file{<complex.h>} as a compiler intrinsic for the imaginary
 unit).  Some of these can be avoided by defining @code{_POSIX_C_SOURCE}
 before including any system headers, but it is better to only use
-all-upper-case names which have a unique prefix such as the package name.
+all-upper-case names which have a unique prefix such as the package
+name.
 
 @item
 @code{typedef}s in OS headers can conflict with those in the package:
@@ -7284,7 +7362,7 @@ People have also used @LaTeX{} mode in a editor, as @file{.Rd} files are
 rather similar to @LaTeX{} files.
 
 Some @R{} front-ends provide editing support for  @file{.Rd} files, for
-example RStudio (@uref{https://rstudio.org/}).
+example RStudio (@uref{https://www.rstudio.com/}).
 
 @node Tidying and profiling R code, Debugging, Writing R documentation files, Top
 @chapter Tidying and profiling R code
@@ -8587,7 +8665,6 @@ per-package basis by using a @file{~/.R/Makevars} file like
 @example
 CC = gcc -std=gnu99 -fsanitize=address -fno-omit-frame-pointer
 CXX = g++ -fsanitize=address -fno-omit-frame-pointer
-F77 = gfortran -fsanitize=address
 FC = gfortran -fsanitize=address
 @end example
 @noindent
@@ -8700,17 +8777,17 @@ included in @env{MAIN_LDFLAGS}.
 This sanitizer can be combined with the Address Sanitizer by
 @option{-fsanitize=undefined,address} (where both are supported).
 
-Finer control of what is checked can be achieved by other options: for
-@command{clang} see
-@uref{https://clang.llvm.org/@/docs/@/UsersManual.html#controlling-code-generation}.@footnote{or
-the user manual for your version of @command{clang}, e.g.@: (the paths
-have differed for some versions)
-@uref{http://llvm.org/@/releases/@/6.0.0/@/tools/@/clang/@/docs/@/UsersManual.html}.}
-The current set for @command{clang} is (on a single line):
+Finer control of what is checked can be achieved by other options.
+
+For @command{clang} see
+@uref{https://clang.llvm.org/@/docs/@/UndefinedBehaviorSanitizer.html#ubsan-checks}.
+The current set is (on a single line):
 @example
--fsanitize=alignment,bool,bounds,enum,float-cast-overflow,
-float-divide-by-zero,function,integer-divide-by-zero,nonnull-attribute,
-null,object-size,pointer-overflow,return,returns-nonnull-attribute,shift,
+-fsanitize=alignment,bool,bounds,builtin,enum,float-cast-overflow,
+float-divide-by-zero,function,implicit-unsigned-integer-truncation,
+implicit-signed-integer-truncation,implicit-integer-sign-change,
+integer-divide-by-zero,nonnull-attribute,null,object-size,
+pointer-overflow,return,returns-nonnull-attribute,shift,
 signed-integer-overflow,unreachable,unsigned-integer-overflow,vla-bound,vptr
 @end example
 
@@ -8735,11 +8812,11 @@ Option @code{float-divide-by-zero} is undesirable for use with @R{}
 which allow such divisions as part of @acronym{IEC}@tie{}60559
 arithmetic.
 
-See
+For GCC see
 @uref{https://gcc.gnu.org/@/onlinedocs/@/gcc/@/Instrumentation-Options.html}
 (or the manual for your version of GCC, installed or @emph{via}
 @uref{https://gcc.gnu.org/@/onlinedocs/}: look for `Program
-Instrumentation Options') for the options supported by GCC: 6 and 7 support
+Instrumentation Options') for the options supported by GCC: 6 and 7 supported
 @example
 -fsanitize=alignment,bool,bounds,enum,integer-divide-by-zero,
 nonnull-attribute,null,object-size,return,returns-nonnull-attribute,
@@ -8753,12 +8830,8 @@ bound-strict,float-cast-overflow,float-divide-by-zero
 @end example
 @noindent
 where @code{float-divide-by-zero} is not desirable for @R{} uses and
-@code{bounds-strict} is an extension of @code{bounds}.
-@c At the time of writing the @code{object-size}
-@c and @code{vptr} checks produced many warnings on GCC's own C++ headers,
-@c so should be disabled.
-
-From GCC 8 @code{signed-integer-overflow} is no longer a default part of
+@code{bounds-strict} is an extension of @code{bounds}. From GCC 8
+@code{signed-integer-overflow} is no longer a default part of
 @option{-fsanitize=undefined}, but can be specified separately.  It adds
 options @option{-fsanitize=pointer-overflow} and
 @option{-fsanitize=builtin}.
@@ -8771,9 +8844,14 @@ Other useful flags include
 @noindent
 which causes the first report to be fatal (it always is for the
 @code{unreachable} and @code{return} suboptions).  For more detailed
-information on where the runtime error occurs, @R{} can be run under a
-debugger with a breakpoint set before the sanitizer report is produced:
-for @command{gdb} or @command{lldb} you could use
+information on where the runtime error occurs, using 
+
+@example
+setenv UBSAN_OPTIONS 'print_stacktrace=1' 
+@end example
+@noindent will include a traceback in the report.  Beyond that, @R{} can
+be run under a debugger with a breakpoint set before the sanitizer
+report is produced: for @command{gdb} or @command{lldb} you could use
 @example
 break __ubsan_handle_float_cast_overflow
 break __ubsan_handle_float_cast_overflow_abort
@@ -8839,7 +8917,6 @@ It is easy to arrange to use this check on just the code in your
 package: add to @file{~/.R/Makevars} something like (for
 @command{gfortran})
 @example
-FCFLAGS = -g -O2 -mtune=native -fbounds-check
 FFLAGS = -g -O2 -mtune=native -fbounds-check
 @end example
 
@@ -10163,12 +10240,14 @@ linking to @CRANpkg{bdsmatrix} and @CRANpkg{xts} linking to
 
 Shared objects for loading into @R{} can be created using @command{R CMD
 SHLIB}.  This accepts as arguments a list of files which must be object
-files (with extension @file{.o}) or sources for C, C++,
-Fortran, Objective C or Objective C++ (with extensions @file{.c},
-@file{.cc} or @file{.cpp}, @file{.f}, @file{.f90} or @file{.f95},
-@file{.m}, and @file{.mm} or @file{.M}, respectively), or commands to be
-passed to the linker.  See @kbd{R CMD SHLIB --help} (or the @R{} help
-for @code{SHLIB}) for usage information.
+files (with extension @file{.o}) or sources for C, C++, Fortran,
+Objective C or Objective C++ (with extensions @file{.c}, @file{.cc} or
+@file{.cpp}, @file{.f} (fixed-form Fortran), @file{.f90} or @file{.f95}
+(free-form), @file{.m}, and @file{.mm} or @file{.M}, respectively), or
+commands to be passed to the linker.  See @kbd{R CMD SHLIB --help} (or
+the @R{} help for @code{SHLIB}) for usage information.  Note that files
+intended for the Fortran pre-processor with extension @file{.F} are not
+accepted.
 
 If compiling the source files does not work ``out of the box'', you can
 specify additional flags by setting some of the variables
@@ -10178,11 +10257,10 @@ specify additional flags by setting some of the variables
 @vindex PKG_CFLAGS
 @vindex PKG_CXXFLAGS
 @vindex PKG_FFLAGS
-@vindex PKG_FCFLAGS
 @vindex PKG_OBJCFLAGS
 @vindex PKG_OBJCXXFLAGS
 @code{PKG_CFLAGS}, @code{PKG_CXXFLAGS}, @code{PKG_FFLAGS},
-@code{PKG_FCFLAGS}, @code{PKG_OBJCFLAGS}, and @code{PKG_OBJCXXFLAGS}
+@code{PKG_OBJCFLAGS}, and @code{PKG_OBJCXXFLAGS}
 (for the C, C++, Fortran, Objective C, and Objective C++
 compilers, respectively) in the file @file{Makevars} in the compilation
 directory (or, of course, create the object files directly from the
@@ -10853,12 +10931,22 @@ automatically protects them) or unprotect them immediately after use.
 Protection is not needed for objects which @R{} already knows are in
 use.  In particular, this applies to function arguments.
 
-There is a less-used macro @code{UNPROTECT_PTR(@var{s})} that unprotects
-the object pointed to by the @code{SEXP} @var{s}, even if it is not the
-top item on the pointer protection stack. This is rarely needed outside
-the parser (the @R{} sources currently have three examples, one in
-@file{src/main/plot3d.c}).
+There is a less-used macro @code{UNPROTECT_PTR(@var{s})} that unprotects the
+object pointed to by the @code{SEXP} @var{s}, even if it is not the top item
+on the pointer protection stack.  This macro was introduced for use in the
+parser, where the code interfacing with the R heap is generated and the
+generator cannot be configured to insert proper calls to @code{PROTECT} and
+@code{UNPROTECT}.  However, @code{UNPROTECT_PTR} is dangerous to use in
+combination with @code{UNPROTECT} when the same object has been protected
+multiple times.  It has been superseded by multi-set based functions
+@code{R_PreserveInMSet} and @code{R_ReleaseFromMSet}, which protect objects
+in a multi-set created by @code{R_NewPreciousMSet} and typically itself
+protected using @code{PROTECT}.  These functions should not be needed
+outside parsers.
 @findex UNPROTECT_PTR
+@findex R_PreserveInMSet
+@findex R_ReleaseFromMSet
+@findex R_NewPreciousMSet
 
 Sometimes an object is changed (for example duplicated, coerced or
 grown) yet the current value needs to be protected.  For these cases
@@ -10876,7 +10964,7 @@ For example (from the internal code for @code{optim})
     REPROTECT(s = coerceVector(s, REALSXP), ipx);
 @end example
 
-Note that it is dangerous to mix @code{UNPROTECT_PTR} with
+Note that it is dangerous to mix @code{UNPROTECT_PTR} also with
 @code{PROTECT_WITH_INDEX}, as the former changes the protection
 locations of objects that were protected after the one being
 unprotected.
@@ -12566,7 +12654,7 @@ to create marked character strings of a given length.
 
 @menu
 * Memory allocation::           
-* Error signaling::              
+* Error signaling::             
 * Random numbers::              
 * Missing and IEEE values::     
 * Printing::                    
@@ -12576,7 +12664,7 @@ to create marked character strings of a given length.
 * Integration::                 
 * Utility functions::           
 * Re-encoding::                 
-* Condition handling and cleanup code::
+* Condition handling and cleanup code::  
 * Allowing interrupts::         
 * Platform and version information::  
 * Inlining C functions::        
@@ -13430,9 +13518,6 @@ provide a @code{round} function but C++98 need not.)
 @deftypefun double ftrunc (double @var{x})
 Returns the value of @var{x} truncated (to an integer value) towards
 zero.
-
-(Note that C99/C++11 provide a @code{round} function but C++98 need
-not.)
 @end deftypefun
 
 @node Mathematical constants,  , Numerical Utilities, Numerical analysis subroutines
@@ -14062,11 +14147,12 @@ Fortran entry points, but there is a more comprehensive scheme used by,
 for example package @pkg{stats}.  Most compilers which allow control of
 visibility will allow control of visibility for all symbols @emph{via} a
 flag, and where known the flag is encapsulated in the macros
-@samp{C_VISIBILITY}, @samp{CXX_VISIBILITY}@footnote{This applies to the
-compiler for the default C++ dialect (currently C++11) and not
-necessarily to other dialects.} and @samp{F_VISIBILITY} for C, C++ and
-Fortran compilers.@footnote{@samp{F77_VISIBILITY} was used prior to @R
-3.6.0 and is still available (but deprecated).  In some cases the Fortran
+@samp{C_VISIBILITY}, @samp{CXX_VISIBILITY}@footnote{As from @R{} 3.5.2:
+his applies to the compiler for the default C++ dialect (currently
+normally C++11) and not necessarily to other dialects.} and
+@samp{F_VISIBILITY} for C, C++ and Fortran
+compilers.@footnote{@samp{F77_VISIBILITY} was used prior to @R 3.6.0 and
+is still available (but deprecated).  In some cases the Fortran
 compilers accept the flag but do not actually hide their symbols.}
 These are defined in @file{etc/Makeconf} and so available for normal
 compilation of package code.  For example, @file{src/Makevars} could
@@ -14093,7 +14179,7 @@ void attribute_visible R_init_stats(DllInfo *dll)
 @}
 @end example
 
-Because the @samp{C_VISIBILITY} mechanism is only useful in conjuction
+Because the @samp{C_VISIBILITY} mechanism is only useful in conjunction
 with @code{attribute_visible}, it is not enabled unless
 @samp{HAVE_VISIBILITY_ATTRIBUTE} is defined.  The usual visibility flag
 is @option{-fvisibility=hidden}: some compilers also support
@@ -14973,13 +15059,13 @@ It is not intended that these facilities are used by packages, but if
 they are needed exceptionally, the package should ensure that it cleans
 up and removes its handlers when its namespace is unloaded.  Note that
 the header @file{sys/select.h} is needed@footnote{At least according to
-POSIX 2004 and later.  Earlier standards prescribed @file{sys/time.h}
-and HP-UX continued to use that: @file{R_ext/eventloop.h} will include
-it from @R{} 3.4.0 if @code{HAVE_SYS_TIME_H} is defined.}: users should
-check this is available and define @code{HAVE_SYS_SELECT_H} before
-including @file{R_ext/eventloop.h}. (It is often the case that another
-header will include @file{sys/select.h} before @file{eventloop.h} is
-processed, but this should not be relied on.)
+POSIX 2004 and later.  Earlier standards prescribed @file{sys/time.h}:
+@file{R_ext/eventloop.h} will include it if @code{HAVE_SYS_TIME_H} is
+defined.}: users should check this is available and define
+@code{HAVE_SYS_SELECT_H} before including @file{R_ext/eventloop.h}. (It
+is often the case that another header will include @file{sys/select.h}
+before @file{eventloop.h} is processed, but this should not be relied
+on.)
 
 An alternative front-end needs both to make provision for other @R{}
 events whilst waiting for input, and to ensure that it is not frozen out

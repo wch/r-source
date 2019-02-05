@@ -1467,8 +1467,8 @@ if(FALSE) {
     if (keep.tmpdir) {
       make_tmpdir <- function(prefix, nchars = 8, ntries = 100) {
         for(i in 1:ntries) {
-          name = paste(sample(c(0:9, letters, LETTERS), nchars, replace=TRUE), collapse="")
-          path = paste(prefix, name, sep = "/")
+          name <- paste(sample(c(0:9, letters, LETTERS), nchars, replace=TRUE), collapse="")
+          path <- paste(prefix, name, sep = "/")
           if (dir.create(path, showWarnings = FALSE, recursive = T)) {
             return(path)
           }
@@ -1774,6 +1774,13 @@ if(FALSE) {
 
     OBJ_EXT <- ".o" # all currrent compilers, but not some on Windows
 
+    ## The order of inclusion of Makefiles on a Unix-alike is
+    ## package's src/Makevars
+    ## etc/Makeconf
+    ## site Makevars
+    ## share/make/shlib.mk
+    ## user Makevars
+    ## and similarly elsewhere
     objs <- character()
     shlib <- ""
     site <- Sys.getenv("R_MAKEVARS_SITE", NA_character_)
@@ -2030,8 +2037,8 @@ if(FALSE) {
               "SHLIB_LD='$(SHLIB_CXXLD)'", makeargs)
     }
     if (with_objc) shlib_libadd <- c(shlib_libadd, "$(OBJC_LIBS)")
-    if (with_f77) shlib_libadd <- c(shlib_libadd, "$(FLIBS)")
-    if (with_f9x) shlib_libadd <- c(shlib_libadd, "$(FLIBS) $(FCLIBS)")
+    if (with_f77 || with_f9x)
+        shlib_libadd <- c(shlib_libadd, "$(FLIBS) $(FCLIBS_XTRA)")
 
     if (length(pkg_libs))
         makeargs <- c(makeargs,
@@ -2039,6 +2046,9 @@ if(FALSE) {
     if (length(shlib_libadd))
         makeargs <- c(makeargs,
                       paste0("SHLIB_LIBADD='", p1(shlib_libadd), "'"))
+    if (with_f9x && file.exists("Makevars") &&
+        length(grep("^\\s*PKG_FCFLAGS", lines, perl = TRUE, useBytes = TRUE)))
+        makeargs <- c(makeargs, "P_FCFLAGS='$(PKG_FCFLAGS)'")
 
     if (WINDOWS && debug) makeargs <- c(makeargs, "DEBUG=T")
     ## TCLBIN is needed for tkrplot and tcltk2
@@ -2076,7 +2086,7 @@ if(FALSE) {
     {
         ## sort order for topics, a little tricky
         ## FALSE sorts before TRUE
-        xx <- rep(TRUE, length(x))
+        xx <- rep.int(TRUE, length(x))
         xx[grep("-package", x, fixed = TRUE)] <- FALSE
         order(xx, toupper(x), x)
     }
@@ -2263,13 +2273,13 @@ if(FALSE) {
     	if (!shown) {
             nc <- nchar(bf)
             if (nc < 38L)
-                cat("    ", bf, rep(" ", 40L - nc), sep = "")
+                cat("    ", bf, rep.int(" ", 40L - nc), sep = "")
             else
-                cat("    ", bf, "\n", rep(" ", 44L), sep = "")
+                cat("    ", bf, "\n", rep.int(" ", 44L), sep = "")
             shown <<- TRUE
         }
         ## 'example' is always last, so 5+space
-        cat(type, rep(" ", max(0L, 6L - nchar(type))), sep = "")
+        cat(type, rep.int(" ", max(0L, 6L - nchar(type))), sep = "")
     }
 
     dirname <- c("html", "latex", "R-ex")

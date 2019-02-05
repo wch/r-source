@@ -1,6 +1,6 @@
 % File src/library/base/man/list.files.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{list.files}
@@ -45,7 +45,7 @@ list.dirs(path = ".", full.names = TRUE, recursive = TRUE)
 }
 \value{
   A character vector containing the names of the files in the
-  specified directories, or \code{""} if there were no files.  If a
+  specified directories (empty if there were no files).  If a
   path does not exist or is not a directory or is unreadable it
   is skipped, with a warning.
 

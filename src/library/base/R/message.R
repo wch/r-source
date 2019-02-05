@@ -69,8 +69,8 @@ function(..., domain = NULL, appendLF = TRUE)
 
 .packageStartupMessage <- function (message, call = NULL)
     structure(list(message = message, call = call),
-              class = c("packageStartupMessage", "condition", "message",
-              "simpleMessage"))
+              class = c("packageStartupMessage",
+                        "simpleMessage", "message", "condition"))
 
 suppressPackageStartupMessages <- function (expr)
     withCallingHandlers(expr, packageStartupMessage=function(c)

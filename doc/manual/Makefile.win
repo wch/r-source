@@ -37,10 +37,10 @@ BATCHPDFLATEX = $(PDFLATEX) -interaction=nonstopmode
 MAKEINDEX = LC_ALL=C makeindex
 TEXINDEX = LC_ALL=C texindex
 
-MAKEINFO_HTML_OPTS = --html --no-split --css-include=$(srcdir)/Rman.css
-MAKEINFO_TEXT_OPTS = --number-sections --fill-column=76 --no-split --no-headers
-TEXI2HTML = LC_ALL=C $(MAKEINFO) $(MAKEINFO_HTML_OPTS)
-TEXI2TEXT = LC_ALL=C $(MAKEINFO) $(MAKEINFO_TEXT_OPTS)
+TEXI2ANY_HTML_OPTS = --html --no-split --css-include=$(srcdir)/Rman.css
+TEXI2ANY_TEXT_OPTS = --number-sections --fill-column=76 --no-split --no-headers
+TEXI2HTML = LC_ALL=C $(TEXI2ANY) $(TEXI2ANY_HTML_OPTS)
+TEXI2TEXT = LC_ALL=C $(TEXI2ANY) $(TEXI2ANY_TEXT_OPTS)
 
 R_PAPERSIZE = a4
 # omit 'hyper' to omit the hyperlinks
@@ -59,7 +59,7 @@ texiincludes = version.texi $(srcdir)/R-defs.texi
 
 all: pdf
 
-ifneq "$(MAKEINFO)" "missing"
+ifneq "$(TEXI2ANY)" "missing"
 .texi.html:
 	@$(ECHO) "creating doc/manual/$@"
 	@$(TEXI2HTML) -D UseExternalXrefs -I$(srcdir) $< -o $@.tmp || touch $@
@@ -74,12 +74,12 @@ R-admin.html: $(srcdir)/R-admin.texi
 
 R-FAQ.html: R-FAQ.texi
 	@$(ECHO) "creating doc/manual/$@"
-	@LC_ALL=C $(MAKEINFO) --html --no-split --css-include=Rfaq.css -D UseExternalXrefs -I$(srcdir) $< -o $@.tmp || touch $@
+	@LC_ALL=C $(TEXI2ANY) --html --no-split --css-include=Rfaq.css -D UseExternalXrefs -I$(srcdir) $< -o $@.tmp || touch $@
 	@$(SED) -f $(srcdir)/quot.sed $@.tmp > $@
 	@rm -f $@.tmp
 
 .texi.info:
-	LC_ALL=C $(MAKEINFO) --enable-encoding -D UseExternalXrefs -I$(srcdir) $<
+	LC_ALL=C $(TEXI2ANY) --enable-encoding -D UseExternalXrefs -I$(srcdir) $<
 else
 .texi.html:
 	@$(ECHO) "texi2any is not available"
@@ -199,13 +199,13 @@ distclean: clean
 	@-rm -f *.pdf *.info* *.html
 maintainer-clean: distclean
 
-ifneq "$(MAKEINFO)" "missing"
+ifneq "$(TEXI2ANY)" "missing"
 ../FAQ: R-FAQ.texi
 	@$(TEXI2TEXT) -o $@ $<
 ../RESOURCES: resources.texi
 	@$(TEXI2TEXT) -o $@ $<
 ../html/resources.html: resources.texi
-	@$(MAKEINFO) --html --no-split --no-headers \
+	@$(TEXI2ANY) --html --no-split --no-headers \
 	  --css-include=$(top_srcdir)/doc/html/R.css -o $@ $<
 else
 ../FAQ: R-FAQ.texi
@@ -225,16 +225,16 @@ SEDVER = -e s/@RVER@/$(RVER)/g -e s/@RWVER@/$(RPREFIX)/g
 
 FAQ: rw-FAQ ../html/rw-FAQ.html
 
-ifneq "$(MAKEINFO)" "missing"
+ifneq "$(TEXI2ANY)" "missing"
 ../html/rw-FAQ.html: rw-FAQ.texi $(top_srcdir)/VERSION Rman.css
 	@echo "making rw-FAQ.html"
 	@$(SED) $(SEDVER) $< | \
-	  $(MAKEINFO) --no-split --html --no-headers --number-sections --css-include=Rman.css -o $@ 
+	  $(TEXI2ANY) --no-split --html --no-headers --number-sections --css-include=Rman.css -o $@ 
 
 rw-FAQ: rw-FAQ.texi $(top_srcdir)/VERSION
 	@echo "making rw-FAQ"
 	@$(SED) $(SEDVER) $< | \
-	  $(MAKEINFO) --no-headers --number-sections -o $@
+	  $(TEXI2ANY) --no-headers --number-sections -o $@
 else
 ../html/rw-FAQ.html: rw-FAQ.texi $(top_srcdir)/VERSION Rman.css
 	@$(ECHO) "texi2any is not available"

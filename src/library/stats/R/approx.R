@@ -1,7 +1,7 @@
 #  File src/library/stats/R/approx.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -22,8 +22,7 @@
 ## to massage the input (x,y) pairs into standard form:
 ## x values unique and increasing, y values collapsed to match
 ## (except if ties=="ordered", then not unique)
-
-regularize.values <- function(x, y, ties) {
+regularize.values <- function(x, y, ties, warn.collapsing = TRUE) {
     x <- xy.coords(x, y, setLab = FALSE) # -> (x,y) numeric of same length
     y <- x$y
     x <- x$x
@@ -34,15 +33,26 @@ regularize.values <- function(x, y, ties) {
     }
     nx <- length(x)
     if (!identical(ties, "ordered")) {
-    	o <- order(x)
-	x <- x[o]
-	y <- y[o]
+	ordered <-
+	    if(is.function(ties) || is.character(ties))# fn or name of one
+		FALSE
+	    else if(is.list(ties) && length(T <- ties) == 2L && is.function(T[[2]])) {
+		## e.g. ties ==  list("ordered", mean)
+		ties <- T[[2]]
+		identical(T[[1]], "ordered")
+	    } else
+		stop("'ties' is not \"ordered\", a function, or list(<string>, <function>)")
+	if(!ordered && is.unsorted(x)) {
+	    o <- order(x)
+	    x <- x[o]
+	    y <- y[o]
+	}
 	if (length(ux <- unique(x)) < nx) {
-	    if (missing(ties))
+	    if (warn.collapsing)
 		warning("collapsing to unique 'x' values")
 	    # tapply bases its uniqueness judgement on character representations;
 	    # we want to use values (PR#14377)
-	    y <- as.vector(tapply(y,match(x,x),ties))# as.v: drop dim & dimn.
+	    y <- as.vector(tapply(y, match(x,x), ties))# as.v: drop dim & dimn.
 	    x <- ux
 	    stopifnot(length(y) == length(x))# (did happen in 2.9.0-2.11.x)
 	}
@@ -57,7 +67,7 @@ approx <- function(x, y = NULL, xout, method = "linear", n = 50,
     if (is.na(method)) stop("invalid interpolation method")
     stopifnot(is.numeric(rule), (lenR <- length(rule)) >= 1L, lenR <= 2L)
     if(lenR == 1) rule <- rule[c(1,1)]
-    x <- regularize.values(x, y, ties) # -> (x,y) numeric of same length
+    x <- regularize.values(x, y, ties, missing(ties)) # -> (x,y) numeric of same length
     y <- x$y
     x <- x$x
     nx <- length(x) # large vectors ==> non-integer
@@ -90,7 +100,7 @@ approxfun <- function(x, y = NULL, method = "linear",
     if (is.na(method)) stop("invalid interpolation method")
     stopifnot(is.numeric(rule), (lenR <- length(rule)) >= 1L, lenR <= 2L)
     if(lenR == 1) rule <- rule[c(1,1)]
-    x <- regularize.values(x, y, ties) # -> (x,y) numeric of same length
+    x <- regularize.values(x, y, ties, missing(ties)) # -> (x,y) numeric of same length
     y <- x$y
     x <- x$x
     n <- length(x) # large vectors ==> non-integer

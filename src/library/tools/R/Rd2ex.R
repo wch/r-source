@@ -166,9 +166,8 @@ Rd2ex <-
         keyblks <- sections == "\\keyword"
         if (any(keyblks)) {
             ## some people have only empty keyword blocks.
-            keys <- unlist(Rd[keyblks])
+            keys <- trimws(unlist(Rd[keyblks])) %w/o% .Rd_keywords_auto
             if(length(keys)) {
-                keys <- psub("^\\s+", "", keys)
                 of0(wr(paste("Keywords: ",
                              paste0(keys, collapse=" "))), "\n")
             }

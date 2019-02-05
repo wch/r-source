@@ -162,12 +162,12 @@ grabDL <- function(warn, wrap, wrap.grobs=FALSE, ...) {
                       pathSame <- TRUE
                       if (!(is.null(drawPath) && is.null(current.vpPath()))) {
                           if (is.null(drawPath))
-                              pathSame = FALSE
+                              pathSame <- FALSE
                           else if (is.null(current.vpPath()))
-                              pathSame = FALSE
+                              pathSame <- FALSE
                           else if (as.character(drawPath) !=
                                    as.character(current.vpPath()))
-                              pathSame = FALSE
+                              pathSame <- FALSE
                       }
                       if (!pathSame)
                           warning("grob pushed viewports and did not pop/up them (grab MAY not be faithful)")

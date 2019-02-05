@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2018  The R Core Team.
+ *  Copyright (C) 1998--2019  The R Core Team.
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -489,20 +489,22 @@ Rboolean (NO_SPECIAL_SYMBOLS)(SEXP b);
 
 #endif /* USE_RINTERNALS */
 
-#define TYPED_STACK
-#ifdef TYPED_STACK
-/* The typed stack's entries consist of a tag and a union. An entry
-   can represent a standard SEXP value (tag = 0) or an unboxed scalar
-   value. For now real, integer, and logical values are supported. It
-   would in principle be possible to support complex scalars and short
-   scalar strings, but it isn't clear if this is worth while.
+/* The byte code engine uses a typed stack. The typed stack's entries
+   consist of a tag and a union. An entry can represent a standard
+   SEXP value (tag = 0) or an unboxed scalar value.  For now real,
+   integer, and logical values are supported. It would in principle be
+   possible to support complex scalars and short scalar strings, but
+   it isn't clear if this is worth while.
 
    In addition to unboxed values the typed stack can hold partially
    evaluated or incomplete allocated values. For now this is only used
    for holding a short representation of an integer sequence as produce
    by the colon operator, seq_len, or seq_along, and as consumed by
    compiled 'for' loops. This could be used more extensively in the
-   future.
+   future, though the ALTREP framework may be a better choice.
+
+   Allocating on the stack memory is also supported; this is currently
+   used for jump buffers.
 */
 typedef struct {
     int tag;
@@ -515,12 +517,6 @@ typedef struct {
 # define PARTIALSXP_MASK (~255)
 # define IS_PARTIAL_SXP_TAG(x) ((x) & PARTIALSXP_MASK)
 # define RAWMEM_TAG 254
-#else
-typedef SEXP R_bcstack_t;
-#endif
-#ifdef BC_INT_STACK
-typedef union { void *p; int i; } IStackval;
-#endif
 
 #ifdef R_USE_SIGNALS
 /* Stack entry for pending promises */
@@ -554,9 +550,6 @@ typedef struct RCNTXT {
     SEXP restartstack;          /* stack of available restarts */
     struct RPRSTACK *prstack;   /* stack of pending promises */
     R_bcstack_t *nodestack;
-#ifdef BC_INT_STACK
-    IStackval *intstack;
-#endif
     SEXP srcref;	        /* The source line in effect */
     int browserfinish;          /* should browser finish this context without
                                    stopping */
@@ -807,11 +800,8 @@ extern0 double elapsedLimitValue       	INI_as(-1.0);
 void resetTimeLimits(void);
 
 #define R_BCNODESTACKSIZE 200000
-extern0 R_bcstack_t *R_BCNodeStackBase, *R_BCNodeStackTop, *R_BCNodeStackEnd;
-#ifdef BC_INT_STACK
-# define R_BCINTSTACKSIZE 10000
-extern0 IStackval *R_BCIntStackBase, *R_BCIntStackTop, *R_BCIntStackEnd;
-#endif
+LibExtern R_bcstack_t *R_BCNodeStackTop, *R_BCNodeStackEnd;
+extern0 R_bcstack_t *R_BCNodeStackBase;
 extern0 int R_jit_enabled INI_as(0); /* has to be 0 during R startup */
 extern0 int R_compile_pkgs INI_as(0);
 extern0 int R_check_constants INI_as(0);
@@ -824,9 +814,6 @@ extern SEXP R_findBCInterpreterSrcref(RCNTXT*);
 #endif
 extern SEXP R_getCurrentSrcref();
 extern SEXP R_getBCInterpreterExpression();
-
-LibExtern SEXP R_CachedScalarReal INI_as(NULL);
-LibExtern SEXP R_CachedScalarInteger INI_as(NULL);
 
 LibExtern int R_num_math_threads INI_as(1);
 LibExtern int R_max_num_math_threads INI_as(1);
@@ -1071,6 +1058,7 @@ int	R_EnsureFDLimit(int);
 typedef struct { SEXP cell; } R_varloc_t; /* use struct to prevent casting */
 #define R_VARLOC_IS_NULL(loc) ((loc).cell == NULL)
 R_varloc_t R_findVarLocInFrame(SEXP, SEXP);
+R_varloc_t R_findVarLoc(SEXP, SEXP);
 SEXP R_GetVarLocValue(R_varloc_t);
 SEXP R_GetVarLocSymbol(R_varloc_t);
 Rboolean R_GetVarLocMISSING(R_varloc_t);

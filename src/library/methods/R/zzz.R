@@ -1,7 +1,7 @@
 #  File src/library/methods/R/zzz.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -92,6 +92,9 @@
     assign("envRefMethodNames",
 	   names(getClassDef("envRefClass")@refMethods), envir = where)
     assign(".onLoad", ..onLoad, envir = where)
+    if(isTRUE(as.logical(Sys.getenv("_R_METHODS_DONT_CHECKSUBCLASSES", "false"))))
+        ## change to a no-op (as it seems unneeded after methods setup and occasionally produces wrong warning):
+        assign(".checkSubclasses", function(...){}, envir = where)
     rm(...onLoad, ..onLoad, envir = where)
     dbbase <- file.path(libname, pkgname, "R", pkgname)
     ns <- asNamespace(pkgname)

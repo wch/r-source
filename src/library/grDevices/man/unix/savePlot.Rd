@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/windows/savePlot.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2008-2018 R Core Team
+% Copyright 2008-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{savePlot}
@@ -44,6 +44,7 @@ savePlot(filename = paste0("Rplot.", type),
 }
 
 \seealso{
+  \code{\link{recordPlot}()} which is device independent.  Further,
   \code{\link{X11}}, \code{\link{dev.copy}}, \code{\link{dev.print}}
 }
 \keyword{utilities}

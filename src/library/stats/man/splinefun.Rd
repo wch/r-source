@@ -1,6 +1,6 @@
 % File src/library/stats/man/splinefun.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{splinefun}
@@ -44,10 +44,11 @@ splinefunH(x, y, m)
        interpolation interval (when \code{xout} is unspecified).}
   \item{xout}{an optional set of values specifying where interpolation
     is to take place.}
-  \item{ties}{handling of tied \code{x} values.  Either a function
-    with a single vector argument returning a single number result or
-    the string \code{"ordered"}; note that the latter is the fastest for
-    large \code{length(x)}.}
+  \item{ties}{handling of tied \code{x} values.  The string
+    \code{"ordered"} or a function (or the name of a function) taking a
+    single vector argument and returning a single number or a length-2
+    \code{\link{list}} of both, see \code{\link{approx}} and its
+    \sQuote{Details} section, and the example below.}
 }
 \details{
   The inputs can contain missing values which are deleted, so at least
@@ -182,6 +183,16 @@ tx <- table(x); mx <- as.numeric(names(tx[tx > 1]))
 ry <- matrix(unlist(tapply(y, match(x, mx), range, simplify = FALSE)),
              ncol = 2, byrow = TRUE)
 segments(mx, ry[, 1], mx, ry[, 2], col = "blue", lwd = 2)
+
+## Another example with sorted x, but ties:
+set.seed(8); x <- sort(round(rnorm(30), 1)); y <- round(sin(pi * x) + rnorm(30)/10, 3)
+summary(diff(x) == 0) # -> 7 duplicated x-values
+str(spline(x, y, n = 201, ties="ordered")) # all '$y' entries are NaN
+## The default (ties=mean) is ok, but most efficient to use instead is
+sxyo <- spline(x, y, n = 201, ties= list("ordered", mean))
+sapply(sxyo, summary)# all fine now
+plot(x, y, main = "spline(x,y, ties=list(\"ordered\", mean)  for when x has ties")
+lines(sxyo, col="blue")
 
 ## An example of monotone interpolation
 n <- 20

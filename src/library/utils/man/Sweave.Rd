@@ -56,9 +56,9 @@ Stangle(file, driver = Rtangle(),
   statements is ignored by \code{Stangle}.)
 
   \code{Stangle} is just a wrapper to \code{Sweave} specifying a
-  different default driver.  Alternative drivers can be used: the CRAN
-  package \CRANpkg{cacheSweave} and the Bioconductor package \pkg{weaver}
-  both provide drivers based on the default driver
+  different default driver.  Alternative drivers can be used: the former
+  CRAN package \CRANpkg{cacheSweave} and the Bioconductor package
+  \pkg{weaver} provide drivers based on the default driver
   \code{\link{RweaveLatex}} which incorporate ideas of \emph{caching}
   the results of computations on code chunks.
 
@@ -108,11 +108,12 @@ Stangle(file, driver = Rtangle(),
 
   \code{\link{RweaveLatex}}, \code{\link{Rtangle}}.
 
-  Packages \CRANpkg{cacheSweave}, \pkg{weaver} (Bioconductor) and
-  \CRANpkg{SweaveListingUtils}.
+  Packages \CRANpkg{cacheSweave} (archived), \pkg{weaver} (Bioconductor) and
+  \CRANpkg{SweaveListingUtils} (archived).
 
   Further Sweave drivers are in, for example, packages \CRANpkg{R2HTML},
-  \CRANpkg{ascii}, \CRANpkg{odfWeave} and \CRANpkg{pgfSweave}.
+  \CRANpkg{ascii}, \CRANpkg{odfWeave} (archived) and \CRANpkg{pgfSweave}
+  (archived).
 
   Non-Sweave vignettes may be built with \code{tools::\link[tools]{buildVignette}}.
 }

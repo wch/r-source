@@ -33,7 +33,7 @@
 #   Copyright (c) 2013 Roy Stogner <roystgnr@ices.utexas.edu>
 #   Copyright (c) 2014, 2015 Google Inc.; contributed by Alexey Sokolov <sokolov@google.com>
 #   Copyright (c) 2015 Paul Norman <penorman@mac.com>
-#   Copyright (c) 2015 Moritz Klammler <moritz@klammler.eu>
+#   Copyright (c) 2015 Moritz Klammler <moriClinicalTrialSummarytz@klammler.eu>
 #   Copyright (c) 2016 Krzesimir Nowak <qdlacz@gmail.com>
 #
 #   Copying and distribution of this file, with or without modification, are
@@ -70,14 +70,19 @@ AC_DEFUN([AX_CXX_COMPILE_STDCXX], [dnl
   AC_LANG_PUSH([C++])dnl
   ac_success=no
   switch=""
- # AC_CACHE_CHECK(whether $CXX supports C++$1 features by default,
- # ax_cv_cxx_compile_cxx$1,
- # [AC_COMPILE_IFELSE([AC_LANG_SOURCE([_AX_CXX_COMPILE_STDCXX_testbody_$1])],
- #   [ax_cv_cxx_compile_cxx$1=yes],
- #   [ax_cv_cxx_compile_cxx$1=no])])
- # if test x$ax_cv_cxx_compile_cxx$1 = xyes; then
- #   ac_success=yes
- # fi
+
+dnl If e.g. CXX11STD is set, test it first.  Otherwise test default last.
+  if test "x${CXX$1STD}" !=  x;  then
+    AC_CACHE_CHECK(whether $CXX supports C++$1 features,
+    ax_cv_cxx_compile_cxx$1,
+    [AC_COMPILE_IFELSE([AC_LANG_SOURCE([_AX_CXX_COMPILE_STDCXX_testbody_$1])],
+     [ax_cv_cxx_compile_cxx$1=yes],
+     [ax_cv_cxx_compile_cxx$1=no])])
+     if test x$ax_cv_cxx_compile_cxx$1 = xyes; then
+       ac_success=yes
+     fi
+  fi
+
 
   m4_if([$2], [noext], [], [dnl
   if test x$ac_success = xno; then
@@ -134,6 +139,18 @@ AC_DEFUN([AX_CXX_COMPILE_STDCXX], [dnl
       fi
     done
   fi])
+
+  if test x$ac_success = xno; then
+    AC_CACHE_CHECK(whether $CXX supports C++$1 features by default,
+    ax_cv_cxx_compile_cxx$1,
+    [AC_COMPILE_IFELSE([AC_LANG_SOURCE([_AX_CXX_COMPILE_STDCXX_testbody_$1])],
+      [ax_cv_cxx_compile_cxx$1=yes],
+      [ax_cv_cxx_compile_cxx$1=no])])
+    if test x$ax_cv_cxx_compile_cxx$1 = xyes; then
+      ac_success=yes
+    fi
+  fi
+
   AC_LANG_POP([C++])
   if test x$ax_cxx_compile_cxx$1_required = xtrue; then
     if test x$ac_success = xno; then

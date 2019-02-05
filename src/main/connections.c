@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2018   The R Core Team.
+ *  Copyright (C) 2000-2019   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -674,6 +674,35 @@ static Rboolean shouldBuffer(int fd) {
 #endif
 }
 
+/* returns FALSE on error */
+static Rboolean isDir(FILE *fd)
+{
+#ifdef HAVE_SYS_STAT_H
+    struct stat sb;
+    int err = fstat(fileno(fd), &sb);
+    return err ? FALSE : S_ISDIR(sb.st_mode);
+#else
+    return FALSE;
+#endif
+}
+
+/* returns FALSE on error */
+static Rboolean isDirPath(const char *path)
+{
+#ifdef HAVE_SYS_STAT_H
+# ifdef Win32
+    struct _stati64 sb;
+    if (!_stati64(path, &sb) && (sb.st_mode & S_IFDIR))
+	return TRUE;
+# else
+    struct stat sb;
+    if (!stat(path, &sb) && S_ISDIR(sb.st_mode))
+	return TRUE;
+# endif
+#endif
+    return FALSE;
+}
+
 static Rboolean file_open(Rconnection con)
 {
     const char *name;
@@ -716,11 +745,16 @@ static Rboolean file_open(Rconnection con)
 		warning(_("cannot open file '%ls': %s"), wname, strerror(errno));
 		return FALSE;
 	    }
+	    if (isDir(fp)) {
+		warning(_("cannot open file '%ls': it is a directory"), wname);
+		fclose(fp);
+		return FALSE;
+	    }
 	} else {
 	    fp = R_fopen(name, mode);
 	}
 #else
-    fp = R_fopen(name, con->mode);
+	fp = R_fopen(name, con->mode);
 #endif
     } else {  /* use file("stdin") to refer to the file and not the console */
 #ifdef HAVE_FDOPEN
@@ -739,6 +773,11 @@ static Rboolean file_open(Rconnection con)
     }
     if(!fp) {
 	warning(_("cannot open file '%s': %s"), name, strerror(errno));
+	return FALSE;
+    }
+    if (isDir(fp)) {
+	warning(_("cannot open file '%s': it is a directory"), name);
+	fclose(fp);
 	return FALSE;
     }
     if(temp) {
@@ -1380,7 +1419,8 @@ SEXP attribute_hidden do_fifo(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     sfile = CAR(args);
-    if(!isString(sfile) || LENGTH(sfile) != 1)
+    if(!isString(sfile) || LENGTH(sfile) != 1 ||
+       STRING_ELT(sfile, 0) == NA_STRING)
 	error(_("invalid '%s' argument"), "description");
     if(length(sfile) > 1)
 	warning(_("only first element of 'description' argument used"));
@@ -1542,7 +1582,8 @@ SEXP attribute_hidden do_pipe(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     scmd = CAR(args);
-    if(!isString(scmd) || LENGTH(scmd) != 1)
+    if(!isString(scmd) || LENGTH(scmd) != 1 ||
+       STRING_ELT(scmd, 0) == NA_STRING)
 	error(_("invalid '%s' argument"), "description");
     if(LENGTH(scmd) > 1)
 	warning(_("only first element of 'description' argument used"));
@@ -1631,6 +1672,7 @@ static Rboolean gzfile_open(Rconnection con)
     gzFile fp;
     char mode[6];
     Rgzfileconn gzcon = con->private;
+    const char *name;
 
     strcpy(mode, con->mode);
     /* Must open as binary */
@@ -1638,10 +1680,17 @@ static Rboolean gzfile_open(Rconnection con)
     else if (con->mode[0] == 'a') snprintf(mode, 6, "ab%1d", gzcon->compress);
     else strcpy(mode, "rb");
     errno = 0; /* precaution */
-    fp = R_gzopen(R_ExpandFileName(con->description), mode);
+    name = R_ExpandFileName(con->description);
+    /* We cannot use isDir, because we cannot get the fd from gzFile
+       (it would be possible with gzdopen, if supported) */
+    if (isDirPath(name)) {
+	warning(_("cannot open file '%s': it is a directory"), name);
+	return FALSE;
+    }
+    fp = R_gzopen(name, mode);
     if(!fp) {
 	warning(_("cannot open compressed file '%s', probable reason '%s'"),
-		R_ExpandFileName(con->description), strerror(errno));
+	        name, strerror(errno));
 	return FALSE;
     }
     ((Rgzfileconn)(con->private))->fp = fp;
@@ -1770,6 +1819,7 @@ static Rboolean bzfile_open(Rconnection con)
     BZFILE* bfp;
     int bzerror;
     char mode[] = "rb";
+    const char *name;
 
     con->canwrite = (con->mode[0] == 'w' || con->mode[0] == 'a');
     con->canread = !con->canwrite;
@@ -1777,10 +1827,16 @@ static Rboolean bzfile_open(Rconnection con)
        binary mode where it matters */
     mode[0] = con->mode[0];
     errno = 0; /* precaution */
-    fp = R_fopen(R_ExpandFileName(con->description), mode);
+    name = R_ExpandFileName(con->description);
+    fp = R_fopen(name, mode);
     if(!fp) {
 	warning(_("cannot open bzip2-ed file '%s', probable reason '%s'"),
-		R_ExpandFileName(con->description), strerror(errno));
+		name, strerror(errno));
+	return FALSE;
+    }
+    if (isDir(fp)) {
+	warning(_("cannot open file '%s': it is a directory"), name);
+	fclose(fp);
 	return FALSE;
     }
     if(con->canread) {
@@ -1959,6 +2015,7 @@ static Rboolean xzfile_open(Rconnection con)
     Rxzfileconn xz = con->private;
     lzma_ret ret;
     char mode[] = "rb";
+    const char *name;
 
     con->canwrite = (con->mode[0] == 'w' || con->mode[0] == 'a');
     con->canread = !con->canwrite;
@@ -1966,10 +2023,16 @@ static Rboolean xzfile_open(Rconnection con)
        binary mode where it matters */
     mode[0] = con->mode[0];
     errno = 0; /* precaution */
-    xz->fp = R_fopen(R_ExpandFileName(con->description), mode);
+    name = R_ExpandFileName(con->description);
+    xz->fp = R_fopen(name, mode);
     if(!xz->fp) {
 	warning(_("cannot open compressed file '%s', probable reason '%s'"),
-		R_ExpandFileName(con->description), strerror(errno));
+		name, strerror(errno));
+	return FALSE;
+    }
+    if (isDir(xz->fp)) {
+	warning(_("cannot open file '%s': it is a directory"), name);
+	fclose(xz->fp);
 	return FALSE;
     }
     if(con->canread) {
@@ -2176,7 +2239,8 @@ SEXP attribute_hidden do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     sfile = CAR(args);
-    if(!isString(sfile) || LENGTH(sfile) != 1)
+    if(!isString(sfile) || LENGTH(sfile) != 1 ||
+       STRING_ELT(sfile, 0) == NA_STRING)
 	error(_("invalid '%s' argument"), "description");
     if(LENGTH(sfile) > 1)
 	warning(_("only first element of 'description' argument used"));
@@ -2856,7 +2920,8 @@ SEXP attribute_hidden do_rawconnection(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     sfile = CAR(args);
-    if(!isString(sfile) || LENGTH(sfile) != 1)
+    if(!isString(sfile) || LENGTH(sfile) != 1 ||
+       STRING_ELT(sfile, 0) == NA_STRING)
 	error(_("invalid '%s' argument"), "description");
     desc = translateChar(STRING_ELT(sfile, 0));
     sraw = CADR(args);
@@ -3258,7 +3323,8 @@ SEXP attribute_hidden do_textconnection(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     sfile = CAR(args);
-    if(!isString(sfile) || LENGTH(sfile) != 1)
+    if(!isString(sfile) || LENGTH(sfile) != 1 ||
+       STRING_ELT(sfile, 0) == NA_STRING)
 	error(_("invalid '%s' argument"), "description");
     desc = translateChar(STRING_ELT(sfile, 0));
     stext = CADR(args);
@@ -3408,7 +3474,8 @@ SEXP attribute_hidden do_unz(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     sfile = CAR(args);
-    if(!isString(sfile) || LENGTH(sfile) != 1)
+    if(!isString(sfile) || LENGTH(sfile) != 1 ||
+       STRING_ELT(sfile, 0) == NA_STRING)
 	error(_("invalid '%s' argument"), "description");
     if(length(sfile) > 1)
 	warning(_("only first element of 'description' argument used"));
@@ -5236,15 +5303,16 @@ SEXP attribute_hidden do_sumconnection(SEXP call, SEXP op, SEXP args, SEXP env)
 
 // in internet module: 'type' is unused
 extern Rconnection
-R_newCurlUrl(const char *description, const char * const mode, int type);
+R_newCurlUrl(const char *description, const char * const mode, SEXP headers, int type);
 
 
-/* op = 0: .Internal( url(description, open, blocking, encoding, method))
+/* op = 0: .Internal( url(description, open, blocking, encoding, method, headers))
    op = 1: .Internal(file(description, open, blocking, encoding, method, raw))
 */
 SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP scmd, sopen, ans, class, enc;
+    SEXP scmd, sopen, ans, class, enc, headers = R_NilValue,
+	headers_flat = R_NilValue;
     char *class2 = "url";
     const char *url, *open;
     int ncon, block, raw = 0, defmeth,
@@ -5256,7 +5324,8 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     // --------- description
     scmd = CAR(args);
-    if(!isString(scmd) || LENGTH(scmd) != 1)
+    if(!isString(scmd) || LENGTH(scmd) != 1 ||
+       STRING_ELT(scmd, 0) == NA_STRING)
 	error(_("invalid '%s' argument"), "description");
     if(LENGTH(scmd) > 1)
 	warning(_("only first element of 'description' argument used"));
@@ -5333,6 +5402,15 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 	    error(_("invalid '%s' argument"), "raw");
     }
 
+    // --------- headers, for url() only
+    if(PRIMVAL(op) == 0) {
+	SEXP lheaders = CAD4R(CDR(args));
+	if (!isNull(lheaders)) {
+	    headers = VECTOR_ELT(lheaders, 0);
+	    headers_flat = VECTOR_ELT(lheaders, 1);
+	}
+    }
+
     if(!meth) {
 	if (strncmp(url, "ftps://", 7) == 0) {
 #ifdef HAVE_LIBCURL
@@ -5369,12 +5447,12 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     } else if (inet) {
 	if(meth) {
 # ifdef HAVE_LIBCURL
-	    con = R_newCurlUrl(url, strlen(open) ? open : "r", 0);
+	    con = R_newCurlUrl(url, strlen(open) ? open : "r", headers, 0);
 # else
 	    error("url(method = \"libcurl\") is not supported on this platform");
 # endif
 	} else {
-	    con = R_newurl(url, strlen(open) ? open : "r", winmeth);
+	    con = R_newurl(url, strlen(open) ? open : "r", headers_flat, winmeth);
 	    ((Rurlconn)con->private)->type = type;
 	}
     } else {
