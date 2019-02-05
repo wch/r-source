@@ -27,6 +27,9 @@
     \itemize{
       \item \code{writeLines(readLines(fnam), fnam)} now works as expected,
       thanks to Peter Meissner's \PR{17528}.
+
+      \item \code{setClassUnion()} no longer warns, but uses \code{message()}
+      for now, when encountering \dQuote{non local} subclasses of class members.
     }
   }
 }
