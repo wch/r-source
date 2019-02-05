@@ -1212,20 +1212,6 @@ data.frame <-
     return(x)
 }
 
-### Added for 3.1.0
-`$.data.frame` <- function(x,name) {
-  a <- x[[name]]
-  if (!is.null(a)) return(a)
-
-  a <- x[[name, exact=FALSE]]
-  if (!is.null(a) && getOption("warnPartialMatchDollar", default=FALSE)) {
-  	names <- names(x)
-  	warning(gettextf("Partial match of '%s' to '%s' in data frame",
-                                   name, names[pmatch(name, names)]))
-  }
-  return(a)
-}
-
 
 xpdrows.data.frame <- function(x, old.rows, new.rows)
 {

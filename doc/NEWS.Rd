@@ -400,6 +400,10 @@
 
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
+      \item \code{$.data.frame} had become an expensive version of
+      the default method, so has been removed. (Thanks to Radford Neal 
+      for picking this up and Duncan Murdoch for providing a patch.)
+
       \item Argument \code{compressed} of \code{untar()} is
       deprecated --- it is only used for external \code{tar} commands
       which increasingly for extraction auto-detect compression and

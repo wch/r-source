@@ -8,7 +8,7 @@
 \alias{[[.data.frame}
 \alias{[<-.data.frame}
 \alias{[[<-.data.frame}
-\alias{$.data.frame}
+% \alias{$.data.frame}
 \alias{$<-.data.frame}
 \title{Extract or Replace Parts of a Data Frame}
 \description{
