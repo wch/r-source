@@ -22,6 +22,13 @@
       \R 3.6.0.
     }
   }
+
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{writeLines(readLines(fnam), fnam)} now works as expected,
+      thanks to Peter Meissner's \PR{17528}.
+    }
+  }
 }
 
 \section{\Rlogo CHANGES IN R 3.5.2}{
