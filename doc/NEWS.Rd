@@ -642,10 +642,8 @@
       \item In the definition of an S4 class, prototype elements are now
       checked to match the slots of the class.  Reported by Bill Dunlap.
 
-      \item \code{setClassUnion()} no longer warns, but uses \code{message()}
-      for now, when encountering \dQuote{non local} subclasses of class members.
-
-      If environment variable \env{_R_METHODS_SHOW_CHECKSUBCLASSES} is set
+      \item From \code{setClassUnion()}, if environment variable
+      \env{_R_METHODS_SHOW_CHECKSUBCLASSES} is set
       to true, the internal \code{.checkSubclasses()} utility prints
       debugging info to see if it is used at all after the \pkg{methods}
       package has been built.  On the other hand, setting
@@ -678,6 +676,9 @@
     \itemize{
       \item \code{writeLines(readLines(fnam), fnam)} now works as expected,
       thanks to Peter Meissner's \PR{17528}.
+
+      \item \code{setClassUnion()} no longer warns, but uses \code{message()}
+      for now, when encountering \dQuote{non local} subclasses of class members.
     }
   }
 }
