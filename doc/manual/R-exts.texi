@@ -8767,17 +8767,17 @@ included in @env{MAIN_LDFLAGS}.
 This sanitizer can be combined with the Address Sanitizer by
 @option{-fsanitize=undefined,address} (where both are supported).
 
-Finer control of what is checked can be achieved by other options: for
-@command{clang} see
-@uref{https://clang.llvm.org/@/docs/@/UsersManual.html#controlling-code-generation}.@footnote{or
-the user manual for your version of @command{clang}, e.g.@: (the paths
-have differed for some versions)
-@uref{http://llvm.org/@/releases/@/6.0.0/@/tools/@/clang/@/docs/@/UsersManual.html}.}
-The current set for @command{clang} is (on a single line):
+Finer control of what is checked can be achieved by other options.
+
+For @command{clang} see
+@uref{https://clang.llvm.org/@/docs/@/UndefinedBehaviorSanitizer.html#ubsan-checks}.
+The current set is (on a single line):
 @example
--fsanitize=alignment,bool,bounds,enum,float-cast-overflow,
-float-divide-by-zero,function,integer-divide-by-zero,nonnull-attribute,
-null,object-size,pointer-overflow,return,returns-nonnull-attribute,shift,
+-fsanitize=alignment,bool,bounds,builtin,enum,float-cast-overflow,
+float-divide-by-zero,function,implicit-unsigned-integer-truncation,
+implicit-signed-integer-truncation,implicit-integer-sign-change,
+integer-divide-by-zero,nonnull-attribute,null,object-size,
+pointer-overflow,return,returns-nonnull-attribute,shift,
 signed-integer-overflow,unreachable,unsigned-integer-overflow,vla-bound,vptr
 @end example
 
@@ -8802,11 +8802,11 @@ Option @code{float-divide-by-zero} is undesirable for use with @R{}
 which allow such divisions as part of @acronym{IEC}@tie{}60559
 arithmetic.
 
-See
+For GCC see
 @uref{https://gcc.gnu.org/@/onlinedocs/@/gcc/@/Instrumentation-Options.html}
 (or the manual for your version of GCC, installed or @emph{via}
 @uref{https://gcc.gnu.org/@/onlinedocs/}: look for `Program
-Instrumentation Options') for the options supported by GCC: 6 and 7 support
+Instrumentation Options') for the options supported by GCC: 6 and 7 supported
 @example
 -fsanitize=alignment,bool,bounds,enum,integer-divide-by-zero,
 nonnull-attribute,null,object-size,return,returns-nonnull-attribute,
@@ -8820,12 +8820,8 @@ bound-strict,float-cast-overflow,float-divide-by-zero
 @end example
 @noindent
 where @code{float-divide-by-zero} is not desirable for @R{} uses and
-@code{bounds-strict} is an extension of @code{bounds}.
-@c At the time of writing the @code{object-size}
-@c and @code{vptr} checks produced many warnings on GCC's own C++ headers,
-@c so should be disabled.
-
-From GCC 8 @code{signed-integer-overflow} is no longer a default part of
+@code{bounds-strict} is an extension of @code{bounds}. From GCC 8
+@code{signed-integer-overflow} is no longer a default part of
 @option{-fsanitize=undefined}, but can be specified separately.  It adds
 options @option{-fsanitize=pointer-overflow} and
 @option{-fsanitize=builtin}.
@@ -8838,9 +8834,14 @@ Other useful flags include
 @noindent
 which causes the first report to be fatal (it always is for the
 @code{unreachable} and @code{return} suboptions).  For more detailed
-information on where the runtime error occurs, @R{} can be run under a
-debugger with a breakpoint set before the sanitizer report is produced:
-for @command{gdb} or @command{lldb} you could use
+information on where the runtime error occurs, using 
+
+@example
+setenv UBSAN_OPTIONS 'print_stacktrace=1' 
+@end example
+@noindent will include a traceback in the report.  Beyond that, @R{} can
+be run under a debugger with a breakpoint set before the sanitizer
+report is produced: for @command{gdb} or @command{lldb} you could use
 @example
 break __ubsan_handle_float_cast_overflow
 break __ubsan_handle_float_cast_overflow_abort
