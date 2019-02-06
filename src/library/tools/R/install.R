@@ -1,7 +1,7 @@
 #  File src/library/tools/R/install.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 # NB: also copyright dates in Usages.
 #
@@ -212,6 +212,8 @@ if(FALSE) {
             "			use (or not) 'keep.parse.data' for R code",
             "      --byte-compile	byte-compile R code",
             "      --no-byte-compile	do not byte-compile R code",
+            "      --staged-install	install to temporary and move to target directory",
+            "      --no-staged-install	install directly to target directory",
             "      --no-test-load	skip test of loading installed package",
             "      --no-clean-on-error	do not remove installed package on error",
             "      --merge-multiarch	multi-arch by merging (from a single tarball only)",
@@ -253,7 +255,7 @@ if(FALSE) {
         full
     }
 
-    ## used for LazyData, KeepSource, ByteCompile, Biarch
+    ## used for LazyData, KeepSource, ByteCompile, Biarch, StagedInstall
     parse_description_field <- function(desc, field, default)
 	str_parse_logic(desc[field], default = default,
 			otherwise = quote(
@@ -559,6 +561,243 @@ if(FALSE) {
             } else return(TRUE)
         }
 
+        ## Patch hardcoded paths in shared libraries so that the libraries
+        ## can be moved to a different directory. Not used on WINDOWS.
+        patch_rpaths <- function()
+        {
+            starsmsg(stars, "checking absolute paths in dynamic libraries")
+            slibs <- list.files(instdir, recursive=TRUE, all.files=TRUE,
+                                full.names=TRUE)
+            slibs <- grep("(\\.sl$)|(\\.so$)|(\\.dylib$)|(\\.dll$)", slibs,
+                          value=TRUE)
+            if (!length(slibs))
+                return()
+
+            are_shared <- sapply(slibs,
+                function(l) grepl("shared", system(paste("file", l),
+                                  intern=TRUE)))
+            slibs <- slibs[are_shared]
+            if (!length(slibs))
+                return()
+
+            uname <- system("uname -a", intern = TRUE)
+            os <- sub(" .*", "", uname)
+            have_chrpath <- nzchar(Sys.which("chrpath"))
+            have_patchelf <- nzchar(Sys.which("patchelf"))
+            have_readelf <- nzchar(Sys.which("readelf"))
+            have_macos_clt <- nzchar(Sys.which("otool")) &&
+                              nzchar(Sys.which("install_name_tool")) &&
+                              identical(os, "Darwin")
+            have_solaris_elfedit <- nzchar(Sys.which("elfedit")) &&
+                                    identical(os, "SunOS")
+
+            hardcoded_paths <- FALSE
+            failed_fix <- FALSE
+
+            if (have_solaris_elfedit) {
+                ## Solaris only
+                ## changes both rpath and DT_NEEDED paths
+                for (l in slibs) {
+                    out <- suppressWarnings(
+                        system(paste("elfedit -re dyn:value", l), intern=TRUE))
+                    out <- grep("^[ \t]*\\[[0-9]+\\]", out, value=TRUE)
+                    re <- "^[ \t]*\\[([0-9]+)\\][ \t]+([^ \t]+)[ \t]+([^ \t]+)[ \t]*(.*)"
+                    paths <- gsub(re, "\\4", out)
+                    idxs <- gsub(re, "\\1", out)
+                    old_paths <- paths
+                    # "\\$ORIGIN/.."
+                    paths <- gsub(instdir, final_instdir, paths,
+                                  fixed=TRUE)
+                    changed <- paths != old_paths
+                    paths <- paths[changed]
+                    old_paths <- old_paths[changed]
+                    idxs <- idxs[changed]
+                    for (i in seq_along(paths)) {
+                        hardcoded_paths <- TRUE
+                        cmd <- paste("elfedit -e \"dyn:value -dynndx -s",
+                                     idxs[i], paths[i], "\"", l)
+                        message(cmd)
+                        ret <- suppressWarnings(system(cmd, intern=FALSE))
+                        if (ret == 0)
+                            message("NOTE: fixed path ", old_paths[i])
+                    }
+                    out <- suppressWarnings(
+                        system(paste("elfedit -re dyn:value", l), intern=TRUE))
+                    out <- grep("^[ \t]*\\[", out, value=TRUE)
+                    paths <- gsub(re, "\\4", out)
+                    if (any(grepl(instdir, paths, fixed=TRUE)))
+                        failed_fix <- TRUE
+                }
+            } else if (have_macos_clt) {
+                ## macOS only
+                for (l in slibs) {
+                    ## change paths to other libraries
+                    out <- suppressWarnings(
+                        system(paste("otool -L", l), intern=TRUE))
+                    paths <- grep("\\(compatibility", out, value=TRUE)
+                    paths <- gsub("^[ \t]*(.*) \\(compatibility.*", "\\1",
+                                  paths)
+                    old_paths <- paths
+                    # "@loader_path/.."
+                    paths <- gsub(instdir, final_instdir, paths,
+                                  fixed=TRUE)
+                    changed <- paths != old_paths
+                    paths <- paths[changed]
+                    old_paths <- old_paths[changed]
+                    for(i in seq_along(paths)) {
+                        hardcoded_paths <- TRUE
+                        cmd <- paste("install_name_tool -change",
+                                         old_paths[i], paths[i], l)
+                        message(cmd)
+                        ret <- suppressWarnings(system(cmd, intern=FALSE))
+                        if (ret == 0)
+                            ## NOTE: install_name does not signal an error in
+                            ## some cases
+                            message("NOTE: fixed library path ", old_paths[i])
+                    }
+                    out <- suppressWarnings(
+                        system(paste("otool -L", l), intern=TRUE))
+                    out <- grep("\\(compatibility", out, value=TRUE)
+                    if (any(grepl(instdir, out, fixed=TRUE)))
+                        failed_fix <- TRUE
+
+                    ## change rpath entries
+                    out <- suppressWarnings(
+                        system(paste("otool -l", l), intern=TRUE))
+                    out <- grep("(^[ \t]*cmd )|(^[ \t]*path )", out,
+                                value=TRUE)
+                    rpidx <- grep("cmd LC_RPATH$", out)
+                    if (length(rpidx)) {
+                        paths <- gsub("^[ \t]*path ", "", out[rpidx+1])
+                        paths <- gsub("(.*) \\(offset .*", "\\1", paths)
+                        old_paths <- paths
+                        # "@loader_path/.."
+                        paths <- gsub(instdir, final_instdir, paths,
+                                               fixed=TRUE)
+                        changed <- paths != old_paths
+                        paths <- paths[changed]
+                        old_paths <- old_paths[changed]
+                        for(i in seq_along(paths)) {
+                            hardcoded_paths <- TRUE
+                            cmd <- paste("install_name_tool -rpath",
+                                             old_paths[i], paths[i], l)
+                            message(cmd)
+                            ret <- suppressWarnings(system(cmd))
+                            if (ret == 0)
+                                message("NOTE: fixed rpath ", old_paths[i])
+                        }
+                    }
+                    out <- suppressWarnings(
+                        system(paste("otool -l", l), intern=TRUE))
+                    out <- tail(out, -1) # first line is l (includes instdir)
+                    if (any(grepl(instdir, out, fixed=TRUE)))
+                        failed_fix <- TRUE
+                }
+            } else if (have_patchelf) {
+                ## probably Linux
+                for(l in slibs) {
+                    # fix rpath
+                    rpath <- suppressWarnings(
+                        system(paste("patchelf --print-rpath", l),
+                               intern=TRUE))
+                    old_rpath <- rpath
+                    # "\\$ORIGIN/.."
+                    rpath <- gsub(instdir, final_instdir, rpath,
+                                  fixed=TRUE)
+                    if (length(rpath) && nzchar(rpath) && old_rpath != rpath) {
+                        hardcoded_paths <- TRUE
+                        cmd <- paste("patchelf", "--set-rpath", rpath, l)
+                        message(cmd)
+                        ret <- suppressWarnings(system(cmd))
+                        if (ret == 0)
+                            message("NOTE: fixed rpath ", old_rpath)
+                        rpath <- suppressWarnings(
+                            system(paste("patchelf --print-rpath", l),
+                                   intern=TRUE))
+                        if (any(grepl(instdir, rpath, fixed=TRUE)))
+                            failed_fix <- TRUE
+                    }
+                    # fix DT_NEEDED
+                    if (have_readelf) {
+                        out <- suppressWarnings(
+                            system(paste("readelf -d", l), intern=TRUE))
+                        re0 <- "0x.*\\(NEEDED\\).*Shared library:"
+                        out <- grep(re0, out, value=TRUE)
+                        re <- "^[ \t]*0x[0-9]+[ \t]+\\(NEEDED\\)[ \t]+Shared library:[ \t]*\\[(.*)\\]"
+                        paths <- gsub(re, "\\1", out)
+                        old_paths <- paths
+                        # "\\$ORIGIN/.."
+                        paths <- gsub(instdir, final_instdir, paths,
+                                      fixed=TRUE)
+                        changed <- paths != old_paths
+                        paths <- paths[changed]
+                        old_paths <- old_paths[changed]
+                        for(i in seq_along(paths)) {
+                            cmd <- paste("patchelf --replace-needed",
+                                         old_paths[i], paths[i], l)
+                            message(cmd)
+                            ret <- suppressWarnings(system(cmd))
+                            if (ret == 0)
+                                message("NOTE: fixed library path ", old_paths[i])
+                        }
+                        out <- suppressWarnings(
+                            system(paste("readelf -d", l), intern=TRUE))
+                        out <- grep(re0, out, value=TRUE)
+                        if (any(grepl(instdir, out, fixed=TRUE)))
+                            failed_fix <- TRUE
+                    }
+                }
+            } else if (have_chrpath) {
+                ## Linux (possibly Solaris, but there elfedit should be
+                ## available, instead); only fixes rpaths, not DT_NEEDED
+                for(l in slibs) {
+                    out <- suppressWarnings(
+                        system(paste("chrpath", l), intern=TRUE))
+
+                    # when multiple rpaths are present, there is a single
+                    # RUNPATH= line with the paths separated by :
+                    rpath <- grep(".*PATH=", out, value=TRUE)
+                    rpath <- gsub(".*PATH=", "", rpath)
+                    old_rpath <- rpath
+                    # "\\$ORIGIN/.."
+                    rpath <- gsub(instdir, final_instdir, rpath,
+                                  fixed=TRUE)
+                    if (length(rpath) && nzchar(rpath) && old_rpath != rpath) {
+                        hardcoded_paths <- TRUE
+                        cmd <- paste("chrpath", "-r", rpath, l)
+                        message(cmd)
+                        ret <- suppressWarnings(system(cmd))
+                        if (ret == 0)
+                            message("NOTE: fixed rpath ", old_rpath)
+                        out <- suppressWarnings(
+                            system(paste("chrpath", l), intern=TRUE))
+                        rpath <- grep(".*PATH=", out, value=TRUE)
+                        rpath <- gsub(".*PATH=", "", rpath)
+                        if (any(grepl(instdir, rpath, fixed=TRUE)))
+                            failed_fix <- TRUE
+                    }
+                }
+            }
+            if (hardcoded_paths)
+                message("WARNING: shared objects with hard-coded temporary installation paths")
+            if (failed_fix)
+                errmsg("some hard-coded temporary paths could not be fixed")
+
+            if (have_readelf) {
+                ## check again, needed mostly on Linux (chrpath may not be
+                ## available or there may be DT_NEEDED entries with absolute
+                ## paths); ldd is not suitable because it interprets $ORIGIN
+                for(l in slibs) {
+                    out <- suppressWarnings(
+                        system(paste("readelf -d", l), intern=TRUE))
+                    out <- grep("^[ \t]*0x", out, value=TRUE)
+                    if (any(grepl(instdir, out, fixed=TRUE)))
+                        errmsg("absolute paths in library ", l,
+                               " include temporary installation directory,",
+                               " please report and use --no-staged-install")
+                }
+            }
+        }
         ## Make the destination directories available to the developer's
         ## installation scripts (e.g. configure)
         Sys.setenv(R_LIBRARY_DIR = lib)
@@ -663,6 +902,38 @@ if(FALSE) {
                               copy.date = TRUE)
             } else if (more_than_libs) unlink(instdir, recursive = TRUE)
             dir.create(instdir, recursive = TRUE, showWarnings = FALSE)
+        }
+
+        pkg_staged_install <- staged_install
+        if (is.na(pkg_staged_install))
+            pkg_staged_install <-
+                parse_description_field(desc, "StagedInstall", default = FALSE)
+        # environment variable intended as temporary
+        rsi <- Sys.getenv("R_STAGED_INSTALL")
+        rsi <- switch(rsi,
+                      "TRUE"=, "true"=, "True"=, "yes"=, "Yes"= 1,
+                      "FALSE"=,"false"=,"False"=, "no"=, "No" = 0,
+                      as.numeric(rsi))
+        if (!is.na(rsi))
+            pkg_staged_install <- (rsi > 0)
+        if (pkg_staged_install) {
+            final_instdir <- instdir
+            final_lib <- lib
+            final_rpackagedir <- Sys.getenv("R_PACKAGE_DIR")
+            final_rlibs <- Sys.getenv("R_LIBS")
+            final_libpaths <- .libPaths()
+
+            instdir <- file.path(lockdir, "00new", pkgname)
+            Sys.setenv(R_PACKAGE_DIR = instdir)
+            dir.create(instdir, recursive = TRUE, showWarnings = FALSE)
+            lib <- file.path(lockdir, "00new")
+
+            rlibs <- if (nzchar(final_rlibs))
+                         paste(lib, final_rlibs, sep = .Platform$path.sep)
+                     else
+                         lib
+            Sys.setenv(R_LIBS = rlibs)
+            .libPaths(c(lib, final_libpaths))
         }
 
         if (preclean) run_clean()
@@ -1136,37 +1407,47 @@ if(FALSE) {
                 starsmsg(stars,
                          "byte-compile and prepare package for lazy loading")
                 ## need to disable JIT
-                Sys.setenv(R_ENABLE_JIT = 0L)
-                compiler::enableJIT(0)
-                compiler::compilePKGS(1L)
-                compiler::setCompilerOptions(suppressAll = FALSE)
-                compiler::setCompilerOptions(suppressUndefined = TRUE)
-                compiler::setCompilerOptions(suppressNoSuperAssignVar = TRUE)
-            } else
+                cmd <- c("Sys.setenv(R_ENABLE_JIT = 0L)",
+		    "invisible(compiler::enableJIT(0))",
+                    "invisible(compiler::compilePKGS(1L))",
+                    "compiler::setCompilerOptions(suppressAll = FALSE)",
+                    "compiler::setCompilerOptions(suppressUndefined = TRUE)",
+                    "compiler::setCompilerOptions(suppressNoSuperAssignVar = TRUE);")
+            } else {
                 starsmsg(stars, "preparing package for lazy loading")
+                cmd <- ""
+            }
             keep.source <-
                 parse_description_field(desc, "KeepSource",
                                         default = keep.source)
 	    ## Something above, e.g. lazydata,  might have loaded the namespace
-	    if (isNamespaceLoaded(pkg_name))
-		unloadNamespace(pkg_name)
+            cmd <- append(cmd,
+                paste0("if (isNamespaceLoaded(\"",pkg_name, "\"))",
+                           " unloadNamespace(\"", pkg_name, "\")"))
             deps_only <-
                 config_val_to_logical(Sys.getenv("_R_CHECK_INSTALL_DEPENDS_", "FALSE"))
-            if(deps_only) {
-                env <- setRlibs(LinkingTo = TRUE)
-                libs0 <- .libPaths()
-		env <- sub("^.*=", "", env[1L])
-                .libPaths(c(lib0, env))
-            } else libs0 <- NULL
-	    res <- try({
-                suppressPackageStartupMessages(.getRequiredPackages(quietly = TRUE))
-                makeLazyLoading(pkg_name, lib, keep.source = keep.source,
-                                keep.parse.data = keep.parse.data)
-            })
-            if (BC) compiler::compilePKGS(0L)
-	    if (inherits(res, "try-error"))
+            env <- if (deps_only) setRlibs(LinkingTo = TRUE, quote = TRUE)
+                   else ""
+
+            ## needed for some packages (AnnotationDbi) that install other
+            ## packages during their tests (otherwise system profile fails
+            ## because it cannot find the tests startup file)
+            env <- paste(env, "R_TESTS=")
+            cmd <- append(cmd,
+                "suppressPackageStartupMessages(.getRequiredPackages(quietly = TRUE))")
+            cmd <- append(cmd,
+                paste0("tools:::makeLazyLoading(\"", pkg_name, "\", ",
+                                                    "\"", lib, "\", ",
+                                "keep.source = ", keep.source, ", ",
+                        "keep.parse.data = ", keep.parse.data, ")"))
+            opts <- paste(if(deps_only) "--vanilla" else "--no-save",
+                          "--slave")
+            cmd <- paste(cmd, collapse="\n")
+            out <- R_runR(cmd, opts, env = env)
+            if(length(out))
+                cat(paste(c(out, ""), collapse = "\n"))
+            if(length(attr(out, "status")))
 		pkgerrmsg("lazy loading failed", pkg_name)
-            if (!is.null(libs0)) .libPaths(libs0)
 	}
 
 	if (install_help) {
@@ -1235,18 +1516,21 @@ if(FALSE) {
 
         if (clean) run_clean()
 
-        if (test_load) {
+        do_test_load <- function(extra_cmd = NULL) {
             ## Do this in a separate R process, in case it crashes R.
-	    starsmsg(stars, "testing if installed package can be loaded")
+
             ## FIXME: maybe the quoting as 'lib' is not quite good enough
             ## On a Unix-alike this calls system(input=)
             ## and that uses a temporary file and redirection.
             cmd <- paste0("tools:::.test_load_package('", pkg_name, "', ", quote_path(lib), ")")
+            if (!is.null(extra_cmd))
+              cmd <- paste0(cmd, "\n", extra_cmd)
             ## R_LIBS was set already, but Rprofile/Renviron may change it
             ## R_runR is in check.R
             deps_only <-
                 config_val_to_logical(Sys.getenv("_R_CHECK_INSTALL_DEPENDS_", "FALSE"))
             env <- if (deps_only) setRlibs(lib0, self = TRUE, quote = TRUE) else ""
+            ## FIXME: clear R_TESTS?
             tlim <- get_timeout(Sys.getenv("_R_INSTALL_TEST_LOAD_ELAPSED_TIMEOUT_"))
             if (length(test_archs) > 1L) {
                 msgs <- character()
@@ -1274,6 +1558,58 @@ if(FALSE) {
                 }
                 if(length(attr(out, "status")))
                     errmsg("loading failed") # does not return
+            }
+        }
+
+        if (test_load) {
+            if (pkg_staged_install)
+	        starsmsg(stars,
+                    "testing if installed package can be loaded from temporary location")
+            else
+	        starsmsg(stars, "testing if installed package can be loaded")
+            do_test_load()
+        }
+
+        if (pkg_staged_install) {
+            if (WINDOWS) {
+                file.copy(instdir, dirname(final_instdir), recursive = TRUE,
+                          copy.date = TRUE)
+                unlink(instdir, recursive = TRUE)
+            } else {
+                patch_rpaths()
+
+                owd <- setwd(startdir)
+                system(paste("mv", shQuote(instdir), shQuote(dirname(final_instdir))))
+                setwd(owd)
+            }
+            instdir <- final_instdir
+            lib <- final_lib
+            Sys.setenv(R_PACKAGE_DIR = final_rpackagedir)
+            Sys.setenv(R_LIBS = final_rlibs)
+	    .libPaths(final_libpaths)
+
+            if (test_load) {
+                starsmsg(stars,
+                    "testing if installed package can be loaded from final location")
+
+                # The test for hard-coded installation path is done together
+                # with test loading to save time. The test is intentionally
+                # run on a loaded package, to allow for paths to be fixed in
+                # .onLoad and loadNamespace().
+
+                serf <- tempfile()
+                cmd <- paste0("f <- file(\"", serf, "\", \"wb\")")
+                cmd <- append(cmd, paste0("invisible(serialize(",
+                    "as.list(getNamespace(\"", pkgname, "\"), all.names=TRUE), f))"))
+                cmd <- append(cmd, "close(f)")
+                do_test_load(extra_cmd = paste(cmd, collapse = "\n"))
+                starsmsg(stars,
+                    "testing if installed package keeps record of temporary installation path")
+                r <- readBin(serf, "raw", n=file.size(serf))
+                unlink(serf)
+                if (length(grepRaw("00new", r, fixed=TRUE, all=FALSE,
+                                   value=FALSE)))
+                    errmsg("hard-coded installation path, please report to package maintainer and use --no-staged-install")
             }
         }
     }
@@ -1306,6 +1642,7 @@ if(FALSE) {
 ##    lazy <- TRUE
     lazy_data <- FALSE
     byte_compile <- NA # means take from DESCRIPTION file.
+    staged_install <- NA # means take from DESCRIPTION file.
     ## Next is not very useful unless R CMD INSTALL reads a startup file
     lock <- getOption("install.lock", NA) # set for overall or per-package
     pkglock <- FALSE  # set for per-package locking
@@ -1454,6 +1791,10 @@ if(FALSE) {
             byte_compile <- TRUE
         } else if (a == "--no-byte-compile") {
             byte_compile <- FALSE
+        } else if (a == "--staged-install") {
+            staged_install <- TRUE
+        } else if (a == "--no-staged-install") {
+            staged_install <- FALSE
         } else if (a == "--dsym") {
             dsym <- TRUE
         } else if (substr(a, 1, 18) == "--built-timestamp=") {
@@ -1670,6 +2011,8 @@ if(FALSE) {
         lockdir <- file.path(lib, "00LOCK")
         mk_lockdir(lockdir)
     }
+    if (!identical(staged_install, FALSE) && !lock)
+        stop("staged install is only possible with locking")
 
     if  ((tar_up || zip_up) && fake)
         stop("building a fake installation is disallowed")

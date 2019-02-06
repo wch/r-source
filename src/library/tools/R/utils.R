@@ -1244,6 +1244,7 @@ function()
                "Priority",
                "RdMacros",
                "Suggests",
+               "StagedInstall",
                "SysDataCompression",
                "SystemRequirements",
                "Title",
