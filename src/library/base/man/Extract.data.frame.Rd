@@ -1,6 +1,6 @@
 % File src/library/base/man/Extract.data.frame.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Extract.data.frame}
@@ -19,7 +19,7 @@
 \method{[}{data.frame}(x, i, j) <- value
 \method{[[}{data.frame}(x, ..., exact = TRUE)
 \method{[[}{data.frame}(x, i, j) <- value
-\method{$}{data.frame}(x, name)
+% \method{$}{data.frame}(x, name)
 \method{$}{data.frame}(x, name) <- value
 }
 \arguments{
