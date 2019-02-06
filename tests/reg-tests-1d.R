@@ -2295,6 +2295,8 @@ for(seq in c(seq, seq.int)) # seq() -> seq.default() to behave as seq.int() :
     identical(seq(-t30, t30, t30)      ,  i3t30)# Error .. invalid '(to-from)/by'+NA warn.
   })
 ## each of these gave integer overflows  errors  or  NA's + warning in  R <= 3.5.x
+stopifnot(identical(7:10, seq.default(7L, along.with = 4:1) ))
+## errored for almost a day after r76062
 
 
 ## seq.int(*, by=<int.>, length = n) for non-integer 'from' or 'to'
