@@ -28,6 +28,11 @@ Changes from grid_3.5.* to grid_3.6.0:
 5.  Exported makeContent.default(), preDraw(), and postDraw() (so that
     external packages can do more stuff with grobs)
 
+6.  New 'pathId' and 'pathId.lengths' arguments for grid.path()
+    to allow multiple paths to be drawn at once.
+
+    Contributed by Thomas Lin Pedersen.
+
 
 Changes from grid_3.4.* to grid_3.5.0:
 -------------------------------------

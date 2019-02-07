@@ -2906,7 +2906,7 @@ SEXP L_rectBounds(SEXP x, SEXP y, SEXP w, SEXP h, SEXP hjust, SEXP vjust,
 
 SEXP L_path(SEXP x, SEXP y, SEXP index, SEXP rule)
 {
-    int i, j, k, npoly, *nper, ntot;
+    int i, j, k, h, npoly, *nper, ntot;
     double *xx, *yy;
     const void *vmax;
     double vpWidthCM, vpHeightCM;
@@ -2925,46 +2925,52 @@ SEXP L_path(SEXP x, SEXP y, SEXP index, SEXP rule)
 			 transform, &rotationAngle);
     getViewportContext(currentvp, &vpc);
     GEMode(1, dd);
-    vmax = vmaxget();
-    /* 
-     * Number of polygons 
+    /*
+     * Iterate over all paths
      */
-    npoly = LENGTH(index);
-    /* 
-     * Total number of points and 
-     * Number of points per polygon
-     */ 
-    ntot = 0;
-    nper = (int *) R_alloc(npoly, sizeof(int));
-    for (i=0; i < npoly; i++) {
-        nper[i] = LENGTH(VECTOR_ELT(index, i));
-        ntot = ntot + nper[i];
+    for (h = 0; h < LENGTH(index); h++) {
+    	SEXP polyInd = VECTOR_ELT(index, h);
+    	/* 
+    	 * Number of polygons 
+    	 */
+    	npoly = LENGTH(polyInd);
+    	/* 
+    	 * Total number of points and 
+    	 * Number of points per polygon
+    	 */ 
+    	ntot = 0;
+    	nper = (int *) R_alloc(npoly, sizeof(int));
+    	for (i=0; i < npoly; i++) {
+    		nper[i] = LENGTH(VECTOR_ELT(polyInd, i));
+    		ntot = ntot + nper[i];
+    	}
+    	vmax = vmaxget();
+    	xx = (double *) R_alloc(ntot, sizeof(double));
+    	yy = (double *) R_alloc(ntot, sizeof(double));
+    	k = 0;
+    	for (i=0; i < npoly; i++) {
+            int *indices = INTEGER(VECTOR_ELT(polyInd, i));
+            for (j=0; j < nper[i]; j++) {            
+                transformLocn(x, y, indices[j] - 1, vpc, &gc,
+                              vpWidthCM, vpHeightCM,
+                              dd,
+                              transform,
+                              &(xx[k]), &(yy[k]));
+                /* The graphics engine only takes device coordinates
+                 */
+                xx[k] = toDeviceX(xx[k], GE_INCHES, dd);
+                yy[k] = toDeviceY(yy[k], GE_INCHES, dd);
+                /* NO NA values allowed in 'x' or 'y'
+                 */
+                if (!R_FINITE(xx[k]) || !R_FINITE(yy[k]))
+                    error(_("non-finite x or y in graphics path"));
+                k++;
+            }
+    	}
+    	gcontextFromgpar(currentgp, h, &gc, dd);
+    	GEPath(xx, yy, npoly, nper, INTEGER(rule)[0], &gc, dd);
+    	vmaxset(vmax);
     }
-    xx = (double *) R_alloc(ntot, sizeof(double));
-    yy = (double *) R_alloc(ntot, sizeof(double));
-    k = 0;
-    for (i=0; i < npoly; i++) {
-        SEXP indices = VECTOR_ELT(index, i);
-        for (j=0; j < nper[i]; j++) {            
-	    transformLocn(x, y, INTEGER(indices)[j] - 1, vpc, &gc,
-			  vpWidthCM, vpHeightCM,
-			  dd,
-			  transform,
-			  &(xx[k]), &(yy[k]));
-	    /* The graphics engine only takes device coordinates
-	     */
-	    xx[k] = toDeviceX(xx[k], GE_INCHES, dd);
-	    yy[k] = toDeviceY(yy[k], GE_INCHES, dd);
-            /* NO NA values allowed in 'x' or 'y'
-             */
-            if (!R_FINITE(xx[k]) || !R_FINITE(yy[k]))
-                error(_("non-finite x or y in graphics path"));
-            k++;
-        }
-    }
-    gcontextFromgpar(currentgp, 0, &gc, dd);
-    GEPath(xx, yy, npoly, nper, INTEGER(rule)[0], &gc, dd);
-    vmaxset(vmax);
     GEMode(0, dd);
     return R_NilValue;
 }

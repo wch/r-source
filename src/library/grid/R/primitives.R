@@ -659,10 +659,16 @@ validDetails.pathgrob <- function(x) {
         stop("'x' and 'y' and 'id' must all be same length")
     if (!is.null(x$id))
         x$id <- as.integer(x$id)
+    if (!is.null(x$parthId))
+    	x$pathId <- as.integer(x$pathId)
     if (!is.null(x$id.lengths) && (sum(x$id.lengths) != length(x$x)))
         stop("'x' and 'y' and 'id.lengths' must specify same overall length")
+    if (!is.null(x$pathId.lengths) && (sum(x$pathId.lengths) != length(x$x)))
+    	stop("'x' and 'y' and 'parthId.lengths' must specify same overall length")
     if (!is.null(x$id.lengths))
         x$id.lengths <- as.integer(x$id.lengths)
+    if (!is.null(x$pathId.lengths))
+    	x$pathId.lengths <- as.integer(x$pathId.lengths)
     x
 }
 
@@ -700,36 +706,58 @@ heightDetails.pathgrob <- function(x) {
 
 
 drawDetails.pathgrob <- function(x, recording=TRUE) {
-      if (is.null(x$id) && is.null(x$id.lengths))
-          grid.Call.graphics(C_polygon, x$x, x$y,
-                             list(as.integer(seq_along(x$x))))
-  else {
-    if (is.null(x$id)) {
-      n <- length(x$id.lengths)
-      id <- rep(1L:n, x$id.lengths)
-    } else {
-      n <- length(unique(x$id))
-      id <- x$id
+    hasMultiple <- !(is.null(x$pathId) && is.null(x$pathId.lengths))
+    if (hasMultiple) {
+        if (is.null(x$pathId)) {
+            n <- length(x$pathId.lengths)
+            pathId <- rep(1L:n, x$pathId.lengths)
+        } else {
+            pathId <- x$pathId
+        }
     }
-    index <- split(as.integer(seq_along(x$x)), id)
-    grid.Call.graphics(C_path, x$x, x$y, index,
-                       switch(x$rule, winding=1L, evenodd=0L))
-  }
+    if (is.null(x$id) && is.null(x$id.lengths)) {
+        if (hasMultiple) {
+            grid.Call.graphics(C_polygon, x$x, x$y,
+                               split(as.integer(seq_along(x$x)), pathId))
+        } else {
+            grid.Call.graphics(C_polygon, x$x, x$y,
+                               list(as.integer(seq_along(x$x))))
+        }
+    } else {
+        if (is.null(x$id)) {
+            n <- length(x$id.lengths)
+            id <- rep(1L:n, x$id.lengths)
+        } else {
+            n <- length(unique(x$id))
+            id <- x$id
+        }
+        if (hasMultiple) {
+            index <- mapply(split,
+                            x=split(as.integer(seq_along(x$x)), pathId), 
+                            f=split(id, pathId),
+                            SIMPLIFY = FALSE, USE.NAMES = FALSE)
+        } else {
+            index <- list(split(as.integer(seq_along(x$x)), id))
+        }
+        grid.Call.graphics(C_path, x$x, x$y, index,
+                           switch(x$rule, winding=1L, evenodd=0L))
+    }
 }
 
 pathGrob <- function(x, y,
                      id=NULL, id.lengths=NULL,
+                     pathId=NULL, pathId.lengths=NULL,
                      rule="winding",
                      default.units="npc",
                      name=NULL, gp=gpar(), vp=NULL) {
-  if (!is.unit(x))
-    x <- unit(x, default.units)
-  if (!is.unit(y))
-    y <- unit(y, default.units)
-  grob(x=x, y=y, id=id,
-       id.lengths=id.lengths,
-       rule=rule,
-       name=name, gp=gp, vp=vp, cl="pathgrob")
+    if (!is.unit(x))
+        x <- unit(x, default.units)
+    if (!is.unit(y))
+        y <- unit(y, default.units)
+    grob(x=x, y=y, id=id, id.lengths=id.lengths,
+         pathId=pathId, pathId.lengths=pathId.lengths,
+         rule=rule,
+         name=name, gp=gp, vp=vp, cl="pathgrob")
 }
 
 grid.path <- function(...) {
