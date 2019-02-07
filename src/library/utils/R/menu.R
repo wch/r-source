@@ -39,7 +39,7 @@ menu <- function(choices, graphics = FALSE, title = NULL)
         nw <- nchar(fop[1L], "w") + 2L
         ncol <- getOption("width") %/% nw  # might be 0
         if(ncol > 1L)
-	    op <- paste0(fop, c(rep("  ", min(nc, ncol) - 1L), "\n"), collapse="")
+	    op <- paste0(fop, c(rep.int("  ", min(nc, ncol) - 1L), "\n"), collapse="")
     }
     cat("", op, "", sep="\n")
     repeat {

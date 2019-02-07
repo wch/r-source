@@ -30,7 +30,7 @@ stack.data.frame <- function(x, select, drop=FALSE, ...)
     if(!any(keep)) stop("no vector columns were selected")
     if(!all(keep)) warning("non-vector columns will be ignored")
     x <- x[, keep, drop = FALSE]
-    ind <- rep(factor(names(x), unique(names(x))), lengths(x))
+    ind <- rep.int(factor(names(x), unique(names(x))), lengths(x))
     if (drop) {
         ind <- droplevels(ind)
     }
@@ -46,7 +46,7 @@ stack.default <- function(x, drop=FALSE, ...)
     if(!sum(keep)) stop("at least one vector element is required")
     if(!all(keep)) warning("non-vector elements will be ignored")
     x <- x[keep]
-    ind <- rep(factor(names(x), unique(names(x))), lengths(x))
+    ind <- rep.int(factor(names(x), unique(names(x))), lengths(x))
     if (drop) {
         ind <- droplevels(ind)
     }

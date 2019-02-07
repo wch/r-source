@@ -38,9 +38,9 @@ read.fortran <- function(file, format, ..., as.is = TRUE, colClasses = NA)
         if (anyNA(lengths))
             stop("missing lengths for some fields")
 
-        lengths <- rep(lengths,reps)
-        types <- rep(types,reps)
-        decimals <- rep(decimals,reps)
+        lengths <- rep.int(lengths,reps)
+        types <- rep.int(types,reps)
+        decimals <- rep.int(decimals,reps)
         types <-  match(types, c("F","D","X","A","I"))
 
         if (any(!is.na(decimals) & types>2L))

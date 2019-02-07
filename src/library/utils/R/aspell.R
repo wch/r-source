@@ -726,7 +726,7 @@ function(ifile, encoding = "unknown", ignore = character())
                 col1 <- which(ptab == col1) + 1L
             }
             substring(lines[line1], col1) <- texts[1L]
-            pos <- seq(from = 2L, length.out = n - 2L)
+            pos <- seq.int(from = 2L, length.out = n - 2L)
             if(length(pos))
                 lines[line1 + pos - 1] <- texts[pos]
             if(length(ptab <- tab[[as.character(line2)]])) {

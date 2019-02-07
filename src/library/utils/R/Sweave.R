@@ -163,8 +163,8 @@ Sweave <- function(file, driver = RweaveLatex(),
                 line <- c(paste0("#line ", linenum+linediff, ' "', basename(file), '"'),
                           line)
             }
-            srclines <- c(attr(chunk, "srclines"), rep(linenum+linediff, length(line)))
-            srcfilenum <- c(attr(chunk, "srcFilenum"), rep(filenum, length(line)))
+            srclines <- c(attr(chunk, "srclines"), rep.int(linenum+linediff, length(line)))
+            srcfilenum <- c(attr(chunk, "srcFilenum"), rep.int(filenum, length(line)))
 	    chunk <- c(chunk, line)
             attr(chunk, "srclines") <- srclines
             attr(chunk, "srcFilenum") <- srcfilenum

@@ -688,7 +688,7 @@ inFunction <-
 
     temp <-
         data.frame(i = c(parens[["("]], parens[[")"]]),
-                   c = rep(c(1, -1), lengths(parens)))
+                   c = rep.int(c(1, -1), lengths(parens)))
     if (nrow(temp) == 0) return(character())
     temp <- temp[order(-temp$i), , drop = FALSE] ## order backwards
     wp <- which(cumsum(temp$c) > 0)

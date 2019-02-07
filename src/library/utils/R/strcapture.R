@@ -21,7 +21,7 @@ strcapture <- function(pattern, x, proto, perl = FALSE, useBytes = FALSE) {
     str <- regmatches(x, m)
     ntokens <- length(proto) + 1L
     nomatch <- lengths(str) == 0L
-    str[nomatch] <- list(rep(NA_character_, ntokens))
+    str[nomatch] <- list(rep.int(NA_character_, ntokens))
     if (length(str) > 0L && length(str[[1L]]) != ntokens) {
 ### FIXME: this will not always detect an error when there are no matches
         stop("The number of captures in 'pattern' != 'length(proto)'")

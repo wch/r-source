@@ -818,7 +818,7 @@ contrib.url <- function(repos, type = getOption("pkgType"))
         m <- match("@CRAN@", repos)
         nm <- names(repos)
         repos[m] <- getOption("repos")["CRAN"]
-        if(is.null(nm)) nm <- rep("", length(repos))
+        if(is.null(nm)) nm <- rep.int("", length(repos))
         nm[m] <- "CRAN"
         names(repos) <- nm
     }
@@ -947,7 +947,7 @@ setRepositories <-
     new <- !(repos %in% a[["URL"]])
     if(any(new)) {
         aa <- names(repos[new])
-        if(is.null(aa)) aa <- rep("", length(repos[new]))
+        if(is.null(aa)) aa <- rep.int("", length(repos[new]))
         aa[aa == ""] <- repos[new][aa == ""]
         newa <- data.frame(menu_name=aa, URL=repos[new], default=TRUE)
         row.names(newa) <- aa

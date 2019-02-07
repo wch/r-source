@@ -454,7 +454,7 @@ RweaveLatexWritedoc <- function(object, chunk)
                                        object$styfile,
                                        "}\n\\\\begin{document}"),
                                 chunk[which])
-            idx <- c(1L:which, which, seq(from = which+1L,
+            idx <- c(1L:which, which, seq.int(from = which+1L,
                      length.out = length(linesout)-which))
             linesout <- linesout[idx]
             filenumout <- filenumout[idx]

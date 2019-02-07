@@ -67,7 +67,7 @@ function(hDB, path, pkg)
 	    colnames(keywords) <- colnames(hDB[[4L]])
 	    keywords[,"Concept"] <- unlist(vDB$Keywords)
 	    keywords[,"ID"] <- unlist(lapply(1:nrow(vDB),
-		   function(i) rep(id[i], length(vDB$Keywords[[i]]))))
+		   function(i) rep.int(id[i], length(vDB$Keywords[[i]]))))
 	    keywords[,"Package"] <- pkg
 	    hDB[[4L]] <- rbind(hDB[[4L]], keywords)
 	}
@@ -498,7 +498,7 @@ function(package = NULL, lib.loc = NULL,
             if(is.null(hDB))
                 hDB <- hDB0
             nh <- NROW(hDB[[1L]])
-            hDB[[1L]] <- cbind(hDB[[1L]], Type = rep("help", nh))
+            hDB[[1L]] <- cbind(hDB[[1L]], Type = rep.int("help", nh))
             if(nh)
                 hDB[[1L]][, "LibPath"] <- path
             if(want_type_vignette)

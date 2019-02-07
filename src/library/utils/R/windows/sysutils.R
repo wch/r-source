@@ -64,9 +64,9 @@ getWindowsHandles <- function(which = "R", pattern = "", minimized = FALSE)
 {
     which <- match.arg(which, c("R", "all"), several.ok = TRUE)
     len <- max(length(which), length(pattern), length(minimized))
-    which <- rep(which, length.out = len)
-    pattern <- rep(pattern, length.out = len)
-    minimized <- rep(minimized, length.out = len)
+    which <- rep_len(which, len)
+    pattern <- rep_len(pattern, len)
+    minimized <- rep_len(minimized, len)
     result <- list()
     for (i in seq_along(which)) {
 	res <- .Call(C_getWindowsHandles, which[i], minimized)
