@@ -794,9 +794,9 @@ if(FALSE) {
                     if (any(grepl(instdir, out, fixed=TRUE)))
                         errmsg("absolute paths in shared object ",
                                sQuote(basename(l)),
-                               " include temporary installation directory,",
+                               " include the temporary installation directory,",
                                " please report to the package maintainer",
-                               " and use", sQuote(" --no-staged-install"))
+                               " and use ", sQuote("--no-staged-install"))
                 }
             }
         }
