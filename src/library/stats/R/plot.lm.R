@@ -1,7 +1,7 @@
 #  File src/library/stats/R/plot.lm.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,17 +17,19 @@
 #  https://www.R-project.org/Licenses/
 
 plot.lm <-
-function (x, which = c(1L:3L,5L), ## was which = 1L:4L,
+function (x, which = c(1,2,3,5), ## was which = 1L:4L,
 	  caption = list("Residuals vs Fitted", "Normal Q-Q",
 	  "Scale-Location", "Cook's distance",
 	  "Residuals vs Leverage",
 	  expression("Cook's dist vs Leverage  " * h[ii] / (1 - h[ii]))),
-	  panel = if(add.smooth) panel.smooth else points,
+	  panel = if(add.smooth) function(x, y, ...)
+              panel.smooth(x, y, iter=iter.smooth, ...) else points,
 	  sub.caption = NULL, main = "",
 	  ask = prod(par("mfcol")) < length(which) && dev.interactive(), ...,
 	  id.n = 3, labels.id = names(residuals(x)), cex.id = 0.75,
 	  qqline = TRUE, cook.levels = c(0.5, 1.0),
 	  add.smooth = getOption("add.smooth"),
+          iter.smooth = if(isGlm && binomialLike) 0 else 3,
 	  label.pos = c(4,2), cex.caption = 1, cex.oma.main = 1.25)
 {
     dropInf <- function(x, h) {
@@ -44,7 +46,8 @@ function (x, which = c(1L:3L,5L), ## was which = 1L:4L,
 	stop("use only with \"lm\" objects")
     if(!is.numeric(which) || any(which < 1) || any(which > 6))
 	stop("'which' must be in 1:6")
-    isGlm <- inherits(x, "glm")
+    if((isGlm <- inherits(x, "glm")))
+        binomialLike <- family(x)$family == "binomial" # || "multinomial" (maybe)
     show <- rep(FALSE, 6)
     show[which] <- TRUE
     r <- residuals(x)
@@ -295,9 +298,9 @@ function (x, which = c(1L:3L,5L), ## was which = 1L:4L,
 	axis(1, at = athat/(1-athat), labels = paste(athat))
 	if (one.fig)
 	    title(sub = sub.caption, ...)
+        ## Draw pretty "contour" lines through origin and label them
 	p <- x$rank
 	bval <- pretty(sqrt(p*cook/g), 5)
-
 	usr <- par("usr")
 	xmax <- usr[2L]
 	ymax <- usr[4L]

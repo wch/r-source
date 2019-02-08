@@ -265,6 +265,11 @@
       \item \code{seq.default()} is more careful to return an \code{integer}
       (as opposed to \code{double}) stored result when its arguments are
       large and/or objects; see comment #9 of Suharto Anggono's \PR{17497}.
+
+      \item The \code{plot} method for \code{lm} and \code{glm} fits,
+      \code{plot.lm()}, gets a new option \code{iter.smooth} with a
+      default of \code{0} for binomial fits, no longer downweighting when
+      smoothing the residuals.
     }
   }
 
