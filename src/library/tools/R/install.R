@@ -561,7 +561,7 @@ if(FALSE) {
             } else return(TRUE)
         }
 
-        ## Patch hardcoded paths in shared pbjects so that they
+        ## Patch hardcoded paths in shared objects so that they
         ## can be moved to a different directory. Not used on WINDOWS.
         patch_rpaths <- function()
         {
@@ -689,7 +689,7 @@ if(FALSE) {
                     }
                     out <- suppressWarnings(
                         system(paste("otool -l", l), intern=TRUE))
-                    out <- tail(out, -1) # first line is l (includes instdir)
+                    out <- out[-1L] # first line is l (includes instdir)
                     if (any(grepl(instdir, out, fixed=TRUE)))
                         failed_fix <- TRUE
                 }
