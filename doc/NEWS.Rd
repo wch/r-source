@@ -324,7 +324,7 @@
       sessions.
       
       The overall default is set by environment variable
-      \env{R_STAGED_INSTALL}.  \command{R CMD INSTALL} has new options
+      \env{R_INSTALL_STAGED}.  \command{R CMD INSTALL} has new options
       \option{--staged-install} and \option{--no-staged-install}, and
       packages can use the \samp{StagedInstall} field in their
       \file{DESCRIPTION} file to opt in or (more likely) out.

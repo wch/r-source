@@ -911,7 +911,10 @@ if(FALSE) {
             pkg_staged_install <-
                 parse_description_field(desc, "StagedInstall", default = FALSE)
         # environment variable intended as temporary
-        rsi <- Sys.getenv("R_STAGED_INSTALL")
+        rsi <- Sys.getenv("R_INSTALL_STAGED")
+        if (!nzchar(rsi))
+            ## older name of the variable, to be removed
+            rsi <- Sys.getenv("R_STAGED_INSTALL")
         rsi <- switch(rsi,
                       "TRUE"=, "true"=, "True"=, "yes"=, "Yes"= 1,
                       "FALSE"=,"false"=,"False"=, "no"=, "No" = 0,
