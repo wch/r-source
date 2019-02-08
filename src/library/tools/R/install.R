@@ -794,7 +794,7 @@ if(FALSE) {
                     if (any(grepl(instdir, out, fixed=TRUE)))
                         errmsg("absolute paths in shared object ",
                                sQuote(basename(l)),
-                               " include the temporary installation directory,",
+                               " include the temporary installation directory:",
                                " please report to the package maintainer",
                                " and use ", sQuote("--no-staged-install"))
                 }
@@ -1612,10 +1612,10 @@ if(FALSE) {
                     "testing if installed package keeps a record of temporary installation path")
                 r <- readBin(serf, "raw", n=file.size(serf))
                 unlink(serf)
-                if (length(grepRaw("00new", r, fixed=TRUE, all=FALSE,
-                                   value=FALSE)))
-                    errmsg("hard-coded installation path:",
-                           "please report to the package maintainer and use",
+                if (length(grepRaw("00new", r, fixed = TRUE, all = FALSE,
+                                   value = FALSE)))
+                    errmsg("hard-coded installation path: ",
+                           "please report to the package maintainer and use ",
                            sQuote("--no-staged-install"))
             }
         }
