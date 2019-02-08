@@ -315,6 +315,20 @@
 
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
+      \item Source package installation can be \sQuote{staged}: this is
+      currently optional but intended to become the default before
+      release.  In a staged install the package is installed into a
+      temporary location under the final library directory and moved
+      into place once the installation is complete.  The benefit is that
+      partially-installed packages are hidden from the view of other \R
+      sessions.
+      
+      The overall default is set by environment variable
+      \env{R_STAGED_INSTALL}.  \command{R CMD INSTALL} has new options
+      \option{--staged-install} and \option{--no-staged-install}, and
+      packages can use the \samp{StagedInstall} field in their
+      \file{DESCRIPTION} file to opt in or (more likely) out.
+
       \item The interpretation of source code with extension \file{.f}
       is changing.  Previously this denoted FORTRAN 77 code, but current
       compilers no longer have a FORTRAN 77 mode and interpret it as
