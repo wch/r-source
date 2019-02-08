@@ -153,7 +153,7 @@ summaryRprof <-
 
     if (lines == "show") {
     	filename <- sub("#.*$", "", fnames)
-    	linenum <- rep(0, length(filename))
+    	linenum <- rep.int(0, length(filename))
     	hasline <- filename != fnames
     	linenum[hasline] <- as.numeric(sub("^.*#", "", fnames[hasline]))
     	index3 <- order(filename, linenum)

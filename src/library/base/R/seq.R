@@ -1,7 +1,7 @@
 #  File src/library/base/R/seq.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -33,6 +33,7 @@ seq.default <-
     if(!missing(along.with)) {
 	length.out <- length(along.with)
 	if(One) return(if(length.out) seq_len(length.out) else integer())
+	intn1 <- is.integer(length.out)
     }
     else if(!missing(length.out)) {
         len <- length(length.out)

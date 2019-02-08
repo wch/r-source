@@ -8,13 +8,14 @@
 \alias{pathGrob}
 \title{ Draw a Path }
 \description{
-  These functions create and draw a path.
-  The final point will automatically
+  These functions create and draw one or more paths.
+  The final point of a path will automatically
   be connected to the initial point.
 }
 \usage{
 pathGrob(x, y,
          id=NULL, id.lengths=NULL,
+         pathId=NULL, pathId.lengths=NULL,
          rule="winding",
          default.units="npc",
          name=NULL, gp=gpar(), vp=NULL)
@@ -29,6 +30,12 @@ grid.path(\dots)
   \item{id.lengths}{A numeric vector used to separate locations in \code{x} and
     \code{y} into sub-paths.  Specifies consecutive blocks of
     locations which make up separate sub-paths.}
+  \item{pathId}{A numeric vector used to separate locations in \code{x} and
+    \code{y} into distinct paths.  All locations with the same
+    \code{pathId} belong to the same path.}
+  \item{pathId.lengths}{A numeric vector used to separate locations in \code{x} 
+    andm\code{y} into paths.  Specifies consecutive blocks of locations which 
+    make up separate paths.}
   \item{rule}{A character value specifying the fill rule: either
     \code{"winding"} or \code{"evenodd"}.}
   \item{default.units}{A string indicating the default units to use
@@ -123,5 +130,27 @@ pathTest <- function() {
 }
 
 pathTest()
+
+# Drawing multiple paths at once
+holed_rect <- cbind(c(.15, .15, -.15, -.15, .1, .1, -.1, -.1), 
+                    c(.15, -.15, -.15, .15, .1, -.1, -.1, .1))
+holed_rects <- rbind(
+    holed_rect + matrix(c(.7, .2), nrow = 8, ncol = 2, byrow = TRUE),
+    holed_rect + matrix(c(.7, .8), nrow = 8, ncol = 2, byrow = TRUE),
+    holed_rect + matrix(c(.2, .5), nrow = 8, ncol = 2, byrow = TRUE)
+)
+grid.newpage()
+grid.path(x = holed_rects[, 1], y = holed_rects[, 2], 
+          id = rep(1:6, each = 4), pathId = rep(1:3, each = 8),
+          gp = gpar(fill = c('red', 'blue', 'green')),
+          rule = 'evenodd')
+
+# Not specifying pathId will treat all points as part of the same path, thus 
+# having same fill
+grid.newpage()
+grid.path(x = holed_rects[, 1], y = holed_rects[, 2], 
+          id = rep(1:6, each = 4),
+          gp = gpar(fill = c('red', 'blue', 'green')),
+          rule = 'evenodd')
 }
 \keyword{dplot}

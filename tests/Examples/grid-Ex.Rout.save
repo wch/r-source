@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2019-01-24 r76008) -- "Unsuffered Consequences"
+R Under development (unstable) (2019-02-06 r76066) -- "Unsuffered Consequences"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -1340,6 +1340,28 @@ List of 6
 > 
 > pathTest()
 > 
+> # Drawing multiple paths at once
+> holed_rect <- cbind(c(.15, .15, -.15, -.15, .1, .1, -.1, -.1), 
++                     c(.15, -.15, -.15, .15, .1, -.1, -.1, .1))
+> holed_rects <- rbind(
++     holed_rect + matrix(c(.7, .2), nrow = 8, ncol = 2, byrow = TRUE),
++     holed_rect + matrix(c(.7, .8), nrow = 8, ncol = 2, byrow = TRUE),
++     holed_rect + matrix(c(.2, .5), nrow = 8, ncol = 2, byrow = TRUE)
++ )
+> grid.newpage()
+> grid.path(x = holed_rects[, 1], y = holed_rects[, 2], 
++           id = rep(1:6, each = 4), pathId = rep(1:3, each = 8),
++           gp = gpar(fill = c('red', 'blue', 'green')),
++           rule = 'evenodd')
+> 
+> # Not specifying pathId will treat all points as part of the same path, thus 
+> # having same fill
+> grid.newpage()
+> grid.path(x = holed_rects[, 1], y = holed_rects[, 2], 
++           id = rep(1:6, each = 4),
++           gp = gpar(fill = c('red', 'blue', 'green')),
++           rule = 'evenodd')
+> 
 > 
 > 
 > cleanEx()
@@ -2139,7 +2161,7 @@ vp1::vp2
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.742 0.021 1.773 0 0 
+Time elapsed:  2.5 0.016 2.52 0 0 
 > grDevices::dev.off()
 null device 
           1 

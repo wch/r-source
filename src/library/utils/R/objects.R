@@ -98,7 +98,7 @@ function(generic.function, class, envir=parent.frame())
     an <- lapply(seq_along(sp), ls)
     lens <- lengths(an)
     an <- unlist(an, use.names=FALSE)
-    names(an) <- rep(sp, lens)
+    names(an) <- rep.int(sp, lens)
     an <- an[!duplicated(an)] # removed masked objects, *keep* names
     info <- data.frame(visible = rep.int(TRUE, length(an)),
 		       from = .rmpkg(names(an)),
@@ -196,9 +196,9 @@ function(generic.function, class, envir=parent.frame())
     else stop("must supply 'generic.function' or 'class'")
 
     info$generic <- if (!missing(generic.function))
-        rep(generic.function, nrow(info))
+        rep.int(generic.function, nrow(info))
     else sub(paste0("\\.", class, "$"), "", row.names(info))
-    info$isS4 <- rep(FALSE, nrow(info))
+    info$isS4 <- rep.int(FALSE, nrow(info))
 
     info <- info[sort.list(row.names(info)), , drop=FALSE]
     res <- row.names(info)
