@@ -561,11 +561,11 @@ if(FALSE) {
             } else return(TRUE)
         }
 
-        ## Patch hardcoded paths in shared libraries so that the libraries
+        ## Patch hardcoded paths in shared pbjects so that they
         ## can be moved to a different directory. Not used on WINDOWS.
         patch_rpaths <- function()
         {
-            starsmsg(stars, "checking absolute paths in dynamic libraries")
+            starsmsg(stars, "checking absolute paths in shared objects")
             slibs <- list.files(instdir, recursive=TRUE, all.files=TRUE,
                                 full.names=TRUE)
             slibs <- grep("(\\.sl$)|(\\.so$)|(\\.dylib$)|(\\.dll$)", slibs,
@@ -792,9 +792,11 @@ if(FALSE) {
                         system(paste("readelf -d", l), intern=TRUE))
                     out <- grep("^[ \t]*0x", out, value=TRUE)
                     if (any(grepl(instdir, out, fixed=TRUE)))
-                        errmsg("absolute paths in library ", l,
+                        errmsg("absolute paths in shared object ",
+                               sQuote(basename(l)),
                                " include temporary installation directory,",
-                               " please report and use --no-staged-install")
+                               " please report to the package maintainer",
+                               " and use", sQuote(" --no-staged-install"))
                 }
             }
         }
@@ -1604,12 +1606,14 @@ if(FALSE) {
                 cmd <- append(cmd, "close(f)")
                 do_test_load(extra_cmd = paste(cmd, collapse = "\n"))
                 starsmsg(stars,
-                    "testing if installed package keeps record of temporary installation path")
+                    "testing if installed package keeps a record of temporary installation path")
                 r <- readBin(serf, "raw", n=file.size(serf))
                 unlink(serf)
                 if (length(grepRaw("00new", r, fixed=TRUE, all=FALSE,
                                    value=FALSE)))
-                    errmsg("hard-coded installation path, please report to package maintainer and use --no-staged-install")
+                    errmsg("hard-coded installation path:",
+                           "please report to the package maintainer and use",
+                           sQuote("--no-staged-install"))
             }
         }
     }
