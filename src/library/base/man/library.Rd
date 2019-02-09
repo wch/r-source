@@ -66,10 +66,11 @@ conflictRules(pkg, mask.ok = NULL, exclude = NULL)
   \item{mask.ok}{character vector of names of objects that can mask
     objects on the search path without signaling an error when strict
     conflict checking is enabled}
-  \item{exclude}{character vector of names of objects to exclude or
-    include in the attached frame. Ony one of these arguments may be
-    used in a call.}
+  \item{exclude,include.only}{character vector of names of objects to
+    exclude or include in the attached frame. Ony one of these arguments
+    may be used in a call to \code{library} or \code{require}.}
   \item{attach.required}{logical specifying whether required packages
+    listed in the \code{Depends} clause of the \code{DESCRIPTION} file
     should be attached automatically.}
 }
 \details{
@@ -115,8 +116,8 @@ conflictRules(pkg, mask.ok = NULL, exclude = NULL)
   package is available.
 }
 
-\section{
-  Conflicts}{Handling of conflicts depends on the setting of the
+\section{Conflicts}{
+  Handling of conflicts depends on the setting of the
   \code{conflicts.policy} option. If this option is not set, then
   conflicts result in warning messages if the argument
   \code{warn.conflicts} is \code{TRUE}. If the option is set to the
@@ -142,7 +143,7 @@ conflictRules(pkg, mask.ok = NULL, exclude = NULL)
       message when conflicts are found.}
     \item{\code{generics.ok}:}{logical; if \code{TRUE} ignore conflicts
       created by defining S4 generics for functions on the search path.}
-    \item{\code{depends.ok}:}{logical; if \code{TRUE} do not tread
+    \item{\code{depends.ok}:}{logical; if \code{TRUE} do not treat
       conflicts with required packages as errors.}
     \item{\code{can.mask}:}{charecter vector of names of packages that
       are allowed to be masked. These would typically be base packages
