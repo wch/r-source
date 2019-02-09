@@ -1603,9 +1603,9 @@ if(FALSE) {
                 # .onLoad and loadNamespace().
 
                 serf <- tempfile()
-                cmd <- paste0("f <- file(\"", serf, "\", \"wb\")")
-                cmd <- append(cmd, paste0("invisible(serialize(",
-                    "as.list(getNamespace(\"", pkgname, "\"), all.names=TRUE), f))"))
+                cmd <- paste0("f <- base::file(\"", serf, "\", \"wb\")")
+                cmd <- append(cmd, paste0("base::invisible(base::serialize(",
+                    "base::as.list(base::getNamespace(\"", pkgname, "\"), all.names=TRUE), f))"))
                 cmd <- append(cmd, "close(f)")
                 do_test_load(extra_cmd = paste(cmd, collapse = "\n"))
                 starsmsg(stars,
