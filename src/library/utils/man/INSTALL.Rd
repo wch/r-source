@@ -1,11 +1,12 @@
 % File src/library/utils/man/INSTALL.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{INSTALL}
 \alias{INSTALL}
 \alias{R_INSTALL_TAR}
+\alias{R_INSTALL_STAGED}
 
 \title{Install Add-on Packages}
 \description{Utility for installing add-on packages.}
@@ -161,6 +162,20 @@
   \emph{via} a \samp{Biarch} field in their \code{DESCRIPTION} files).
   Second, a single tarball can be installed with
 \preformatted{R CMD INSTALL --merge-multiarch mypkg_version.tar.gz}
+}
+
+\section{Staged installation}{
+  The default way to install source packages changed in \R 3.6.0, so
+  packages are first installed to a temporary location and then (if
+  successful) moved to the destination library directory.  Some older
+  packages were written in ways that assume direct installation to the
+  destination library.
+
+  Staged installation can be overridden by having a field
+  \samp{StagedInstall: no} in the package's \file{DESCRIPTION} file,
+  \emph{via} flag \option{--no-staged-install} or by setting enviroment
+  variable \env{R_STAGED_INSTALL} to a false value
+  (e.g.\sspace{}\samp{false} or \samp{no}).
 }
 
 \seealso{
