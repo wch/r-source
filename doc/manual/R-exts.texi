@@ -556,9 +556,9 @@ recommended packages were already byte-compiled.  This can be overridden by
 installing with flag @option{--no-byte-compile}.
 
 @c DESCRIPTION field StagedInstall
-The @samp{StagedInstall} logical field controls if packge installation
+The @samp{StagedInstall} logical field controls if package installation
 is `staged', that is done to a temporary location and moved to the final
-location when successfullly completed.  This was introduced in @R{}
+location when successfully completed.  This was introduced in @R{}
 3.6.0; it is currently optional but expected to become the default
 before release.  It can be overridden by installing with flag
 @option{--no-staged-installl}.

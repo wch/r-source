@@ -34,7 +34,7 @@ grid.path(\dots)
     \code{y} into distinct paths.  All locations with the same
     \code{pathId} belong to the same path.}
   \item{pathId.lengths}{A numeric vector used to separate locations in \code{x} 
-    andm\code{y} into paths.  Specifies consecutive blocks of locations which 
+    and \code{y} into paths.  Specifies consecutive blocks of locations which 
     make up separate paths.}
   \item{rule}{A character value specifying the fill rule: either
     \code{"winding"} or \code{"evenodd"}.}
