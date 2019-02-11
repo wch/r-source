@@ -1615,7 +1615,7 @@ if(FALSE) {
                 cmd <- paste0("f <- base::file(\"", serf, "\", \"wb\")")
                 cmd <- append(cmd, paste0("base::invisible(base::serialize(",
                     "base::as.list(base::getNamespace(\"", pkgname, "\"), all.names=TRUE), f))"))
-                cmd <- append(cmd, "close(f)")
+                cmd <- append(cmd, "base::close(f)")
                 do_test_load(extra_cmd = paste(cmd, collapse = "\n"))
                 starsmsg(stars,
                     "testing if installed package keeps a record of temporary installation path")
