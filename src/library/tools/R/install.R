@@ -1443,11 +1443,17 @@ if(FALSE) {
             env <- paste(env, "R_TESTS=")
             cmd <- append(cmd,
                 "suppressPackageStartupMessages(.getRequiredPackages(quietly = TRUE))")
+            if (pkg_staged_install)
+                set.install.dir <- paste0(", set.install.dir = ", 
+                                          quote_path(final_instdir))
+            else
+                set.install.dir <- ""
             cmd <- append(cmd,
                 paste0("tools:::makeLazyLoading(\"", pkg_name, "\", ",
                                                     "\"", lib, "\", ",
                                 "keep.source = ", keep.source, ", ",
-                        "keep.parse.data = ", keep.parse.data, ")"))
+                        "keep.parse.data = ", keep.parse.data,
+                                              set.install.dir, ")"))
             opts <- paste(if(deps_only) "--vanilla" else "--no-save",
                           "--slave")
             cmd <- paste(cmd, collapse="\n")
