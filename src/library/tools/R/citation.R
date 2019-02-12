@@ -96,12 +96,13 @@ function(file, encoding = "ASCII")
     formals(FOO2) <- formals(utils::bibentry)
     ## Could also hard-wire this, of course.
     get_names_of_nonempty_fields <- function(x) {
-        names(x)[sapply(x,
+        names(x)[vapply(x,
                         function(e) {
                             length(e) &&
                             !(is.character(e) &&
                               all(grepl("^[[:space:]]*$", e)))
-                        })]
+                        },
+                        NA)]
     }
 
     out <- lapply(exprs,
@@ -151,7 +152,8 @@ function(entry, fields)
     if(!length(rfields)) return(character())
     ## Go for legibility/generality rather than efficiency.
     fields <- tolower(fields)
-    ok <- sapply(strsplit(rfields, "|", fixed = TRUE),
-                 function(f) any(f %in% fields))
+    ok <- vapply(strsplit(rfields, "|", fixed = TRUE),
+                 function(f) any(f %in% fields),
+                 NA)
     rfields[!ok]
 }

@@ -482,7 +482,7 @@ function()
     db <- CRAN_rdxrefs_db()
     ## Flatten:
     db <- cbind(do.call(rbind, db),
-                rep.int(names(db), sapply(db, NROW)))
+                rep.int(names(db), vapply(db, NROW, 0L)))
     colnames(db) <- c(colnames(db)[1L : 2L], "S_File", "S_Package")
     unique(cbind(db, .expand_anchored_Rd_xrefs(db)))
 }
@@ -634,7 +634,7 @@ function(packages)
                  mapply(cbind,
                         Package =
                         lapply(v, function(e) e$packagelist$name),
-                        View = sapply(v, "[[", "name")))
+                        View = vapply(v, "[[", "name", FUN.VALUE = "")))
     v <- split(v[, 2L], v[, 1L])
 
     r <- package_dependencies(packages, a, reverse = TRUE)

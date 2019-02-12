@@ -2509,7 +2509,9 @@ if(FALSE) {
     } else {
         lens <- lengths(topics)
         files <- sub("\\.[Rr]d$", "", Rd$File)
-        internal <- sapply(Rd$Keywords, function(x) "internal" %in% x)
+        internal <- (vapply(Rd$Keywords,
+                            function(x) match("internal", x, 0L),
+                            0L) > 0L)
         data.frame(Topic = unlist(topics),
                    File = rep.int(files, lens),
                    Title = rep.int(Rd$Title, lens),

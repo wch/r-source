@@ -1335,13 +1335,15 @@ function(package, dir, lib.loc = NULL)
                function(e) .Rd_deparse(.Rd_drop_comments(e)))
     ## </FIXME>
     db_usages <- lapply(db_usages, .parse_usage_as_much_as_possible)
-    ind <- as.logical(lapply(db_usages,
-                             function(x) !is.null(attr(x, "bad_lines"))))
+    ind <- vapply(db_usages,
+                  function(x) !is.null(attr(x, "bad_lines")),
+                  NA)
     bad_lines <- lapply(db_usages[ind], attr, "bad_lines")
 
     ## Exclude internal objects from further computations.
-    ind <- sapply(db_keywords,
-                  function(x) length(grep("^ *internal *$", x)) > 0L )
+    ind <- (vapply(db_keywords,
+                   function(x) match("internal", x, 0L),
+                   0L) > 0L)
     if(any(ind)) {                      # exclude them
         db <- db[!ind]
         db_names <- db_names[!ind]
@@ -1363,11 +1365,13 @@ function(package, dir, lib.loc = NULL)
         ## Determine function names ('functions') and corresponding
         ## arguments ('arg_names_in_usage') in the \usage.  Note how we
         ## try to deal with data set documentation.
-        ind <- as.logical( ## as.logical(lapply( * )) : more "defensive" than vapply() [?]
-            lapply(exprs, function(e) length(e) > 1L && !is_data_for_dataset(e)))
+        ind <- vapply(exprs,
+                      function(e)
+                          length(e) > 1L && !is_data_for_dataset(e),
+                      NA)
         exprs <- exprs[ind]
         ## Split out replacement function usages.
-        ind <- as.logical(lapply(exprs, .is_call_from_replacement_function_usage))
+        ind <- vapply(exprs, .is_call_from_replacement_function_usage, NA)
         replace_exprs <- exprs[ind]
         exprs <- exprs[!ind]
         ## Ordinary functions.
@@ -1429,10 +1433,11 @@ function(package, dir, lib.loc = NULL)
                 arg_names_in_arg_list_missing_in_usage <-
                     arg_names_in_arg_list_missing_in_usage[!bad]
             }
-            bad <- sapply(arg_names_in_arg_list_missing_in_usage,
+            bad <- vapply(arg_names_in_arg_list_missing_in_usage,
                           function(x)
 			  !grepl(paste0("\\b", x, "\\b"),
-                                 usage_text))
+                                 usage_text),
+                          NA)
             arg_names_in_arg_list_missing_in_usage <-
                 c(bad_args,
                   arg_names_in_arg_list_missing_in_usage[as.logical(bad)])
@@ -1720,8 +1725,9 @@ function(package, dir, lib.loc = NULL)
                    Rd <- .Rd_get_section(Rd, "usage")
                    .parse_usage_as_much_as_possible(Rd)
                })
-    ind <- as.logical(sapply(db_usages,
-                             function(x) !is.null(attr(x, "bad_lines"))))
+    ind <- vapply(db_usages,
+                  function(x) !is.null(attr(x, "bad_lines")),
+                  NA)
     bad_lines <- lapply(db_usages[ind], attr, "bad_lines")
 
     bad_doc_objects <- list()
@@ -1738,8 +1744,7 @@ function(package, dir, lib.loc = NULL)
         ## (Note that as.character(sapply(exprs, "[[", 1L)) does not do
         ## what we want due to backquotifying.)
         ## Replacement functions.
-        ind <- as.logical(sapply(exprs,
-                                 .is_call_from_replacement_function_usage))
+        ind <- vapply(exprs, .is_call_from_replacement_function_usage, NA)
         if(any(ind)) {
             replace_funs <-
                 paste0(sapply(exprs[ind],
@@ -1914,12 +1919,13 @@ function(package, dir, file, lib.loc = NULL,
     ## which missing 'PACKAGE' arguments are not necessarily a problem.
     if(!missing(package)) {
         is_FF_fun_from_base <-
-            sapply(FF_funs,
+            vapply(FF_funs,
                    function(f) {
                        e <- .find_owner_env(f, code_env)
                        (identical(e, baseenv())
                         || identical(e, .BaseNamespaceEnv))
-                   })
+                   },
+                   NA)
         FF_funs <- FF_funs[is_FF_fun_from_base]
     }
     ## Also, need to handle base::.Call() etc ...
@@ -2683,8 +2689,7 @@ function(package, dir, lib.loc = NULL)
             sapply(S4_generics,
                    function(f) {
                        mlist <- .get_S4_methods_list(f, code_env)
-                       ind <- !as.logical(sapply(mlist,
-                                                 .check_last_formal_arg))
+                       ind <- !vapply(mlist, .check_last_formal_arg, NA)
                        if(!any(ind))
                            character()
                        else {
@@ -4201,7 +4206,7 @@ function(package, dir, lib.loc = NULL)
     pkgs <- setdiff(unique(deps), base)
     try_Rd_aliases <- function(...) tryCatch(Rd_aliases(...), error = identity)
     aliases <- c(aliases, lapply(pkgs, try_Rd_aliases, lib.loc = lib.loc))
-    aliases[sapply(aliases, inherits, "error")] <- NULL
+    aliases[vapply(aliases, inherits, "error", FUN.VALUE = NA)] <- NULL
 
     ## Add the aliases from the package itself, and build a db with all
     ## (if any) \link xrefs in the package Rd objects.
@@ -4220,8 +4225,10 @@ function(package, dir, lib.loc = NULL)
     }
 
     ## Flatten the xref db into one big matrix.
-    db <- cbind(do.call("rbind", db), rep.int(names(db), sapply(db, NROW)))
-    if(nrow(db) == 0L) return(structure(list(), class = "check_Rd_xrefs"))
+    db <- cbind(do.call("rbind", db),
+                rep.int(names(db), vapply(db, NROW, 0L)))
+    if(nrow(db) == 0L)
+        return(structure(list(), class = "check_Rd_xrefs"))
 
     ## fixup \link[=dest] form
     anchor <- db[, 2L]
@@ -4947,9 +4954,10 @@ function(dir)
             ## Exclude library(help = ......) calls.
             pos <- which(cnames == "library")
             if(length(pos)) {
-                pos <- pos[sapply(calls[pos],
+                pos <- pos[vapply(calls[pos],
                                   function(e)
-                                  any(names(e)[-1L] == "help"))]
+                                      any(names(e)[-1L] == "help"),
+                                  NA)]
                 ## Could also match.call(base::library, e) first ...
                 if(length(pos)) {
                     calls <- calls[-pos]
@@ -5448,7 +5456,7 @@ function(package, dir, lib.loc = NULL)
                 c("library", "require", "loadNamespace", "requireNamespace"))
                && (length(e) >= 2L)) {
                 ## We need to remove '...': OTOH the argument could be NULL
-                keep <- sapply(e, function(x) deparse(x)[1L] != "...")
+                keep <- vapply(e, function(x) deparse(x)[1L] != "...", NA)
                 mc <- match.call(get(Call, baseenv()), e[keep])
                 if(!is.null(pkg <- mc$package)) {
                     ## <NOTE>
@@ -5899,7 +5907,9 @@ function(db, files)
                c("library", "require", "loadNamespace", "requireNamespace")) {
                 if(length(e) >= 2L) {
                     ## We need to remove '...': OTOH the argument could be NULL
-                    keep <- sapply(e, function(x) deparse(x)[1L] != "...")
+                    keep <- vapply(e,
+                                   function(x) deparse(x)[1L] != "...",
+                                   NA)
                     mc <- match.call(get(Call, baseenv()), e[keep])
                     if(!is.null(pkg <- mc$package)) {
                         pkg <- sub('^"(.*)"$', '\\1', pkg)
@@ -6147,7 +6157,7 @@ function(package, dir, lib.loc = NULL)
                         if (typeof(v) == "closure")
                             codetools::findGlobals(v)
                     })
-        names(x)[sapply(x, function(s) any(s %in% c("T", "F")))]
+        names(x)[vapply(x, function(s) any(s %in% c("T", "F")), NA)]
     }
 
     find_bad_examples <- function(txts) {
@@ -6267,7 +6277,7 @@ function(package, dir, lib.loc = NULL, details = TRUE)
                         if (typeof(v) == "closure")
                             codetools::findGlobals(v)
                     })
-        names(x)[sapply(x, function(s) any(s %in% ".Internal"))]
+        names(x)[vapply(x, function(s) any(s %in% ".Internal"), NA)]
     }
 
     find_bad_S4methods <- function(env) {
@@ -6285,7 +6295,11 @@ function(package, dir, lib.loc = NULL, details = TRUE)
     find_bad_refClasses <- function(refs) {
         cl <- names(refs)
         x <- lapply(refs, function(z) {
-            any(unlist(sapply(z, function(v) any(codetools::findGlobals(v) %in% ".Internal"))))
+            any(vapply(z,
+                       function(v)
+                           any(codetools::findGlobals(v) %in%
+                               ".Internal"),
+                       NA))
         })
         cl[unlist(x)]
     }
@@ -6431,7 +6445,7 @@ function(cfile, dir = NULL)
 
     bad <- Map(find_missing_required_BibTeX_fields, db$Entry, db$Fields,
                USE.NAMES = FALSE)
-    ind <- sapply(bad, identical, NA_character_)
+    ind <- vapply(bad, identical, NA_character_, FUN.VALUE = NA)
     if(length(pos <- which(ind))) {
         entries <- db$Entry[pos]
         entries <-
@@ -6534,11 +6548,13 @@ function(package, dir, lib.loc = NULL, WINDOWS = FALSE)
                         if (typeof(v) == "closure")
                             codetools::findGlobals(v)
                     })
-        names(x)[sapply(x, function(s) {
-            res <- any(s %in% bad)
-            if(res) found <<- c(found, s)
-            res
-        })]
+        names(x)[vapply(x,
+                        function(s) {
+                            res <- any(s %in% bad)
+                            if(res) found <<- c(found, s)
+                            res
+                        },
+                        NA)]
     }
 
     find_bad_S4methods <- function(env) {
@@ -6562,11 +6578,13 @@ function(package, dir, lib.loc = NULL, WINDOWS = FALSE)
     find_bad_refClasses <- function(refs) {
         cl <- names(refs)
         x <- lapply(refs, function(z) {
-            any(unlist(sapply(z, function(v) {
-                s <- codetools::findGlobals(v)
-                found <<- c(found, s)
-                any(s %in% bad)
-            })))
+            any(vapply(z,
+                       function(v) {
+                           s <- codetools::findGlobals(v)
+                           found <<- c(found, s)
+                           any(s %in% bad)
+                       },
+                       NA))
         })
         cl[unlist(x)]
     }
@@ -6848,12 +6866,16 @@ function(dir, localOnly = FALSE)
         names(Rdb) <-
             substring(names(Rdb), nchar(file.path(dir, "man")) + 2L)
         containsBuildSexprs <-
-            any(sapply(Rdb, function(Rd) any(getDynamicFlags(Rd)["build"])))
+            any(vapply(Rdb,
+                       function(Rd) any(getDynamicFlags(Rd)["build"]),
+                       NA))
         if(containsBuildSexprs &&
            !file.exists(file.path(dir, "build", "partial.rdb")))
             out$missing_manual_rdb <- TRUE
         needRefMan <-
-            any(sapply(Rdb, function(Rd) any(getDynamicFlags(Rd)[c("install", "render")])))
+            any(vapply(Rdb,
+                       function(Rd) any(getDynamicFlags(Rd)[c("install", "render")]),
+                       NA))
         if(needRefMan &&
            !file.exists(file.path(dir, "build",
                                   paste0( meta[["Package"]], ".pdf"))))
@@ -7374,7 +7396,7 @@ function(dir, localOnly = FALSE)
                 conditionMessage(adb)
         } else {
             ## Check for additional repositories with no packages.
-            ind <- sapply(adb, NROW) == 0L
+            ind <- vapply(adb, NROW, 0L) == 0L
             if(any(ind))
                 out$additional_repositories_with_no_packages <-
                     aurls[ind]
@@ -8061,8 +8083,9 @@ function(package, dir, lib.loc = NULL)
     names(db) <- .Rd_get_names_from_Rd_db(db)
 
     ## Exclude internal objects from further computations.
-    ind <- sapply(lapply(db, .Rd_get_metadata, "keyword"),
-                  function(x) length(grep("^ *internal *$", x)) > 0L )
+    ind <- (vapply(lapply(db, .Rd_get_metadata, "keyword"),
+                   function(x) match("internal", x, 0L),
+                   0L) > 0L)
     if(any(ind))                        # exclude them
         db <- db[!ind]
 
@@ -8325,7 +8348,7 @@ function(env, verbose = getOption("verbose"))
 	hasM <- lapply(r, function(g)
 		       tryCatch(methods::hasMethods(g, where = env),
 				error = identity))
-	if(any(hasErr <- sapply(hasM, inherits, what = "error"))) {
+	if(any(hasErr <- vapply(hasM, inherits, NA, what = "error"))) {
             dq <- function(ch) paste0('"', ch ,'"')
             rErr <- r[hasErr]
             pkgs <- r@package[hasErr]
@@ -8408,8 +8431,7 @@ function(f, env)
     ## </FIXME>
 
     ## First, derived default methods (signature w/ "ANY").
-    if(any(ind <- as.logical(sapply(mlist, methods::is,
-				    "derivedDefaultMethod"))))
+    if(any(ind <- vapply(mlist, methods::is, NA, "derivedDefaultMethod")))
 	mlist <- mlist[!ind]
 
     if(length(mlist)) {
@@ -8446,12 +8468,20 @@ function(env)
 {
     env <- as.environment(env)
     cl <- methods::getClasses(env)
-    cl <- cl[unlist(lapply(cl, function(Class) methods::is(methods::getClass(Class, where = env), "refClassRepresentation")))]
+    cl <- cl[vapply(cl,
+                    function(Class)
+                        methods::is(methods::getClass(Class, where = env),
+                                    "refClassRepresentation"),
+                    NA)]
     if(length(cl)) {
         res <- lapply(cl, function(Class) {
             def <- methods::getClass(Class, where = env)
             ff <- def@fieldPrototypes
-            accs <- unlist(lapply(ff, function(what) methods::is(what, "activeBindingFunction") && !methods::is(what, "defaultBindingFunction")))
+            accs <- vapply(ff,
+                           function(what)
+                               methods::is(what, "activeBindingFunction") &&
+                               !methods::is(what, "defaultBindingFunction"),
+                           NA)
             c(as.list(def@refMethods), as.list(ff)[accs])
         })
         names(res) <- cl

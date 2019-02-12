@@ -1520,9 +1520,10 @@ add_dummies <- function(dir, Log)
             if (any(suspect)) {
                 ## check they are non-empty
                 suspect <- alldirs[suspect]
-                suspect <- suspect[sapply(suspect, function(x) {
+                suspect <- suspect[vapply(suspect, function(x) {
                     length(dir(x, all.files = TRUE)) > 2L
-                })]
+                    },
+                    NA)]
                 if (length(suspect)) {
                     if (!any) warningLog(Log)
                     any <- TRUE
@@ -4879,7 +4880,9 @@ add_dummies <- function(dir, Log)
             }
             mandatory <- c("Package", "Version", "License", "Description",
                            "Title", "Author", "Maintainer")
-            OK <- sapply(desc[mandatory], function(x) !is.na(x) && nzchar(x))
+            OK <- vapply(desc[mandatory],
+                         function(x) !is.na(x) && nzchar(x),
+                         NA)
             if(!all(OK)) {
                 fail <- mandatory[!OK]
                 msg <- ngettext(length(fail),
@@ -5021,7 +5024,7 @@ add_dummies <- function(dir, Log)
             lens <- lengths(imp)
             imp <- imp[lens == 2L]
             nm <- sapply(imp, "[[", 1)
-            lens <- sapply(imp, function(x) length(x[[2]]))
+            lens <- vapply(imp, function(x) length(x[[2L]]), 0L)
             bad <- nm[lens == 0L]
             if(length(bad)) {
                 OK <- FALSE
