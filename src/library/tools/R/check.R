@@ -2211,6 +2211,7 @@ add_dummies <- function(dir, Log)
                 printLog0(Log, paste(c(out, ""), collapse = "\n"))
                 # wrapLog(msg_DESCRIPTION)
             } else resultLog(Log, "OK")
+
         } ## FIXME, what if no install?
     }
 
@@ -2218,6 +2219,7 @@ add_dummies <- function(dir, Log)
     {
         ## Check contents of 'data'
         if (!is_base_pkg && dir.exists("data")) {
+            any <- FALSE
             checkingLog(Log, "contents of 'data' directory")
             fi <- list.files("data")
             if (!any(grepl("\\.[Rr]$", fi))) { # code files can do anything
@@ -2225,6 +2227,7 @@ add_dummies <- function(dir, Log)
                 odd <- fi %w/o% c(dataFiles, "datalist")
                 if (length(odd)) {
                     warningLog(Log)
+                    any <- TRUE
                     msg <-
                         c(sprintf("Files not of a type allowed in a %s directory:\n",
                                   sQuote("data")),
@@ -2232,8 +2235,28 @@ add_dummies <- function(dir, Log)
                           sprintf("Please use e.g. %s for non-R data files\n",
                                   sQuote("inst/extdata")))
                     printLog0(Log, msg)
-                } else resultLog(Log, "OK")
-            } else resultLog(Log, "OK")
+                }
+            }
+            ans <- suppressMessages(list_data_in_pkg(dataDir = file.path(pkgdir, "data")))
+            if (length(ans)) {
+                bad <-
+                    names(ans)[sapply(ans, function(x) ".Random.seed" %in% x)]
+                if (length(bad)) {
+                    if (!any)  warningLog(Log)
+                    any <- TRUE
+                    msg <- if (length(bad) > 1L)
+                         c(sprintf("Object named %s found in datasets:\n",
+                                  sQuote(".Random.seed")),
+                          paste0(.pretty_format(bad), "\n"),
+                          "Please remove it.\n")
+                    else
+                        c(sprintf("Object named %s found in dataset: ",
+                                  sQuote(".Random.seed")),
+                          sQuote(bad), "\nPlease remove it.\n")
+                    printLog0(Log, msg)
+                }
+            }
+            if (!any) resultLog(Log, "OK")
         }
 
         ## Check for non-ASCII characters in 'data'
