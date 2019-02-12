@@ -909,22 +909,12 @@ if(FALSE) {
             dir.create(instdir, recursive = TRUE, showWarnings = FALSE)
         }
 
-        pkg_staged_install <- staged_install
-        if (is.na(pkg_staged_install))
-            pkg_staged_install <-
-                parse_description_field(desc, "StagedInstall", default = FALSE)
-        # environment variable intended as temporary
-        rsi <- Sys.getenv("R_INSTALL_STAGED")
-        if (!nzchar(rsi))
-            ## older name of the variable, to be removed
-            rsi <- Sys.getenv("R_STAGED_INSTALL")
-        rsi <- switch(rsi,
-                      "TRUE"=, "true"=, "True"=, "yes"=, "Yes"= 1,
-                      "FALSE"=,"false"=,"False"=, "no"=, "No" = 0,
-                      as.numeric(rsi))
-        if (!is.na(rsi))
-            pkg_staged_install <- (rsi > 0)
+        pkg_staged_install <-
+            parse_description_field(desc, "StagedInstall",
+                                    default = staged_install)
         if (pkg_staged_install) {
+            if (!lock)
+                stop("staged install is only possible with locking")
             final_instdir <- instdir
             final_lib <- lib
             final_rpackagedir <- Sys.getenv("R_PACKAGE_DIR")
@@ -1658,7 +1648,7 @@ if(FALSE) {
 ##    lazy <- TRUE
     lazy_data <- FALSE
     byte_compile <- NA # means take from DESCRIPTION file.
-    staged_install <- NA # means take from DESCRIPTION file.
+    staged_install <- NA # means not given by command line argument
     ## Next is not very useful unless R CMD INSTALL reads a startup file
     lock <- getOption("install.lock", NA) # set for overall or per-package
     pkglock <- FALSE  # set for per-package locking
@@ -2027,9 +2017,21 @@ if(FALSE) {
         lockdir <- file.path(lib, "00LOCK")
         mk_lockdir(lockdir)
     }
-    if (!identical(staged_install, FALSE) && !lock)
-        stop("staged install is only possible with locking")
-
+    if (is.na(staged_install)) {
+        # environment variable intended as temporary
+        rsi <- Sys.getenv("R_INSTALL_STAGED")
+        if (!nzchar(rsi))
+            ## older name of the variable, to be removed
+            rsi <- Sys.getenv("R_STAGED_INSTALL")
+        rsi <- switch(rsi,
+                      "TRUE"=, "true"=, "True"=, "yes"=, "Yes"= 1,
+                      "FALSE"=,"false"=,"False"=, "no"=, "No" = 0,
+                      as.numeric(rsi))
+        if (!is.na(rsi))
+            staged_install <- (rsi > 0)
+        else
+            staged_install <- FALSE # R version default
+    }
     if  ((tar_up || zip_up) && fake)
         stop("building a fake installation is disallowed")
 
