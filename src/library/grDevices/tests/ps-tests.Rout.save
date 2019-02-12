@@ -1,5 +1,5 @@
 
-R version 3.5.2 Patched (2019-01-24 r76022) -- "Eggshell Igloo"
+R version 3.5.2 Patched (2019-02-05 r76087) -- "Eggshell Igloo"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -95,4 +95,4 @@ null device
 > 
 > proc.time()
    user  system elapsed 
-  0.473   0.050   0.783 
+  0.474   0.051   0.506 

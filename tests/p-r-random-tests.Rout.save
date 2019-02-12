@@ -1,5 +1,5 @@
 
-R version 3.5.2 Patched (2019-01-24 r76022) -- "Eggshell Igloo"
+R version 3.5.2 Patched (2019-02-05 r76087) -- "Eggshell Igloo"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -320,6 +320,6 @@ f(df1 = 10, df2 = 2, ncp = 3) PASSED
 > 
 > 
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  1.443 0.032 1.479 0 0 
+Time elapsed:  1.454 0.034 1.493 0 0 
 > 
 > 

@@ -1,5 +1,5 @@
 
-R version 3.5.2 Patched (2019-01-24 r76022) -- "Eggshell Igloo"
+R version 3.5.2 Patched (2019-02-05 r76087) -- "Eggshell Igloo"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -2082,7 +2082,7 @@ N
 > points.default # to see how it calls "plot.xy(xy.coords(x, y), ...)"
 function (x, y = NULL, type = "p", ...) 
 plot.xy(xy.coords(x, y), type = type, ...)
-<bytecode: 0x2720d78>
+<bytecode: 0x2669d68>
 <environment: namespace:graphics>
 > 
 > 
@@ -2952,7 +2952,7 @@ function (xy = 1, warn.log = TRUE)
     u <- par("usr")
     xy * c(u[2L] - u[1L], u[4L] - u[3L])/par("pin")
 }
-<bytecode: 0x37cc008>
+<bytecode: 0x3715078>
 <environment: namespace:graphics>
 > 
 > ## plot labels offset 0.12 inches to the right
@@ -3033,7 +3033,7 @@ function (xy = 1, warn.log = TRUE)
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.729 0.058 2.8 0 0 
+Time elapsed:  2.774 0.065 2.853 0 0 
 > grDevices::dev.off()
 null device 
           1 

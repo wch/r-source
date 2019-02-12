@@ -1,5 +1,5 @@
 
-R version 3.5.2 Patched (2019-01-24 r76022) -- "Eggshell Igloo"
+R version 3.5.2 Patched (2019-02-05 r76087) -- "Eggshell Igloo"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -2591,6 +2591,6 @@ In as.dist.default(x) : non-square matrix
 > f <- try(as.ts( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.158 0.015 0.173 0 0 
+Time elapsed:  0.161 0.024 0.186 0 0 
 > 
 > 
