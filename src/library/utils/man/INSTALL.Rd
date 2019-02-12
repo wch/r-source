@@ -173,7 +173,7 @@
 
   Staged installation can be overridden by having a field
   \samp{StagedInstall: no} in the package's \file{DESCRIPTION} file,
-  \emph{via} flag \option{--no-staged-install} or by setting enviroment
+  \emph{via} flag \option{--no-staged-install} or by setting environment
   variable \env{R_STAGED_INSTALL} to a false value
   (e.g.\sspace{}\samp{false} or \samp{no}).
 }
