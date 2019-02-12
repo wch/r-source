@@ -256,17 +256,19 @@
       sorting and still treat ties.
 
       \item \code{format(x)} gives a more user friendly error message in
-      the case where no method is defined. Additionally, a minimal method
-      is provided in \code{format.default(x)} when \code{isS4(x)} is true.
+      the case where no method is defined.  A minimal method is provided
+      in \code{format.default(x)} when \code{isS4(x)} is true.
 
-      \item \code{which(x)} now also works when \code{x} is a long vector,
-      thanks to Suharto Anggono's \PR{17201}.
+      \item \code{which(x)} now also works when \code{x} is a long
+      vector, thanks to Suharto Anggono's \PR{17201}.  \strong{NB}: this
+      may return a double result, breaking the previous guarantee of an
+      integer result.
 
       \item \code{seq.default()} is more careful to return an \code{integer}
       (as opposed to \code{double}) stored result when its arguments are
       large and/or objects; see comment #9 of Suharto Anggono's \PR{17497}.
 
-      \item The \code{plot} method for \code{lm} and \code{glm} fits,
+      \item The \code{plot()} method for \code{lm} and \code{glm} fits,
       \code{plot.lm()}, gets a new option \code{iter.smooth} with a
       default of \code{0} for binomial fits, no longer downweighting when
       smoothing the residuals.
@@ -275,8 +277,8 @@
 
   \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
-      \item The C++ compiler options selected default to the C++11
-      standard if supported, otherwise to the C++98 standard.
+      \item The  options selected  for the C++ compiler default to the
+      C++11 standard if supported, otherwise to the C++98 standard.
 
       \item Visibility macros such as \samp{C_VISIBILITY} can now be
       user-set (including to empty), e.g.\sspace{}in \file{config.site}.
@@ -300,7 +302,7 @@
       \item The special-casing of \samp{CFLAGS}, \samp{CXXFLAGS} and
       \samp{FFLAGS} for Intel compilers on Linux has been removed: we do
       not have recent experience but the generic defaults now chosen are
-      the same as those previously special-cased for \samp{x86_64}.Z
+      the same as those previously special-cased for \samp{x86_64}.
 
       If necessary, override the defaults on the \command{configure}
       command line or in file \file{config.site}.
@@ -332,7 +334,7 @@
       \env{R_INSTALL_STAGED}.  \command{R CMD INSTALL} has new options
       \option{--staged-install} and \option{--no-staged-install}, and
       packages can use the \samp{StagedInstall} field in their
-      \file{DESCRIPTION} file to opt in or (more likely) out.
+      \file{DESCRIPTION} file to opt out.
 
       \item The interpretation of source code with extension \file{.f}
       is changing.  Previously this denoted FORTRAN 77 code, but current
@@ -346,11 +348,11 @@
       to replace features marked \sQuote{obsolescent} in Fortran 95
       which \command{gfortran} 8.x has started to warn about.
 
-      \item Packages containing files in \file{src} with extensions
-      \file{.f90} or \file{.f95} are now linked using the C or C++
-      compiler rather than the Fortran 9x compiler.  This is consistent
-      with fixed-form Fortran code and allows mixing of C++ and
-      free-form Fortran on most platforms.
+      \item Packages containing files in the \file{src} directory with
+      extensions \file{.f90} or \file{.f95} are now linked using the C
+      or C++ compiler rather than the Fortran 9x compiler.  This is
+      consistent with fixed-form Fortran code and allows mixing of C++
+      and free-form Fortran on most platforms.
 
       Consequentially, a package which includes free-form Fortran 9x
       code which uses OpenMP should include \samp{SHLIB_OPENMP_CFLAGS}
@@ -423,10 +425,6 @@
 
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
-      \item \code{$.data.frame} had become an expensive version of
-      the default method, so has been removed. (Thanks to Radford Neal
-      for picking this up and Duncan Murdoch for providing a patch.)
-
       \item Argument \code{compressed} of \code{untar()} is
       deprecated --- it is only used for external \code{tar} commands
       which increasingly for extraction auto-detect compression and
@@ -453,6 +451,10 @@
       \item Make macros \samp{F77}, \samp{FCPIFCPLAGS} and
       \samp{SHLIB_OPENMP_FCFLAGS} are deprecated in favour of \samp{FC},
       \samp{FPICFLAGS} and \samp{SHLIB_OPENMP_FFLAGS} respectively.
+      
+      \item \code{$.data.frame} had become an expensive version of
+      the default method, so has been removed. (Thanks to Radford Neal
+      for picking this up and to Duncan Murdoch for providing a patch.)
     }
   }
 
