@@ -6,6 +6,7 @@
 \name{grobCoords}
 \alias{grobCoords}
 \alias{grobPoints}
+\alias{emptyCoords}
 \title{Calculate Points on the Perimeter of a Grob}
 \description{
   These functions calculate points along the perimeter (or length) of
@@ -14,6 +15,7 @@
 \usage{
 grobCoords(x, closed, \dots)
 grobPoints(x, closed, \dots)
+emptyCoords
 }
 \arguments{
   \item{x}{A grob object.}

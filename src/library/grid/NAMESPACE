@@ -99,7 +99,7 @@ export(
        "segmentsGrob", "textGrob", "xsplineGrob", "bezierGrob",
        "xsplinePoints", "bezierPoints",
 
-       "grobCoords", "grobPoints",
+       "grobCoords", "grobPoints", "emptyCoords",
     
        "grid.xaxis", "grid.yaxis",
        "xaxisGrob", "yaxisGrob",
@@ -205,9 +205,17 @@ S3method("gridList", "up")
 S3method("grobCoords", "grob")
 S3method("grobCoords", "gList")
 S3method("grobCoords", "gTree")
+S3method("grobPoints", "move.to")
+S3method("grobPoints", "line.to")
 S3method("grobPoints", "circle")
+S3method("grobPoints", "clip")
 S3method("grobPoints", "lines")
+S3method("grobPoints", "null")
+S3method("grobPoints", "pathgrob")
+S3method("grobPoints", "points")
 S3method("grobPoints", "polygon")
+S3method("grobPoints", "polyline")
+S3method("grobPoints", "rastergrob")
 S3method("grobPoints", "rect")
 S3method("grobPoints", "segments")
 S3method("grobPoints", "text")

@@ -110,6 +110,14 @@ grobPoints <- function(x, closed, ...) {
     UseMethod("grobPoints")
 }
 
+grobPoints.move.to <- function(x, closed, ...) {
+    emptyCoords
+}
+
+grobPoints.line.to <- function(x, closed, ...) {
+    emptyCoords
+}
+
 grobPoints.circle <- function(x, closed, ..., n=100) {
     if (closed) {
         cx <- convertX(x$x, "in", valueOnly=TRUE)
@@ -138,6 +146,33 @@ grobPoints.lines <- function(x, closed, ..., n=100) {
         yy <- convertY(x$y, "in", valueOnly=TRUE)
         list(list(x=xx, y=yy))
     }
+}
+
+grobPoints.polyline <- function(x, closed, ...) {
+    if (closed) {
+        emptyCoords
+    } else {
+        ## polylineGrob() ensures that x/y same length
+        xx <- convertX(x$x, "in", valueOnly=TRUE)
+        yy <- convertY(x$y, "in", valueOnly=TRUE)
+        pts <- list(x=xx, y=yy)
+        if (is.null(x$id) && is.null(x$id.lengths)) {
+            list(pts)
+        } else {
+            if (is.null(x$id)) {
+                n <- length(x$id.lengths)
+                id <- rep(1L:n, x$id.lengths)
+            } else {
+                n <- length(unique(x$id))
+                id <- x$id
+            }
+            if (n > 1) {
+                split(as.data.frame(pts), id)
+            } else {
+                list(pts)
+            }
+        }
+    }    
 }
 
 grobPoints.polygon <- function(x, closed, ...) {
@@ -175,6 +210,46 @@ xyListFromMatrix <- function(m, xcol, ycol) {
            })
 }
 
+grobPoints.pathgrob <- function(x, closed, ...) {
+    if (closed) {
+        ## pathGrob() ensures that x/y same length
+        xx <- convertX(x$x, "in", valueOnly=TRUE)
+        yy <- convertY(x$y, "in", valueOnly=TRUE)
+        pts <- list(x=xx, y=yy)
+        hasMultiple <- !(is.null(x$pathId) && is.null(x$pathId.lengths))
+        if (hasMultiple) {
+            if (is.null(x$pathId)) {
+                n <- length(x$pathId.lengths)
+                pathId <- rep(1L:n, x$pathId.lengths)
+            } else {
+                pathId <- x$pathId
+            }
+        }
+        if (is.null(x$id) && is.null(x$id.lengths)) {
+            if (hasMultiple) {
+                split(as.data.frame(pts), pathId)
+            } else {
+                list(pts)
+            }
+        } else {
+            if (is.null(x$id)) {
+                n <- length(x$id.lengths)
+                id <- rep(1L:n, x$id.lengths)
+            } else {
+                n <- length(unique(x$id))
+                id <- x$id
+            }
+            if (hasMultiple) {
+                split(as.data.frame(pts), list(id, pathId))
+            } else {
+                split(as.data.frame(pts), id)
+            }
+        }
+    } else {
+        emptyCoords
+    }
+}
+
 grobPoints.rect <- function(x, closed, ...) {
     if (closed) {
         hjust <- resolveHJust(x$just, x$hjust)
@@ -207,11 +282,6 @@ grobPoints.segments <- function(x, closed, ...) {
     }
 }
 
-grobPoints.text <- function(x, closed, ...) {
-    warning("Text grobs are ignored by polyclip()")
-    emptyCoords
-}
-
 grobPoints.xspline <- function(x, closed, ...) {
     if ((closed && !x$open) ||
         (!closed && x$open)) {
@@ -232,6 +302,26 @@ grobPoints.xspline <- function(x, closed, ...) {
     }
 }
 
-## TODO
-## More 'grid' primitives
+## beziergrob covered by splinegrob (via makeContent)
+
+## Do not treat these as open or closed shapes (for now)
+grobPoints.text <- function(x, closed, ...) {
+    emptyCoords
+}
+
+grobPoints.points <- function(x, closed, ...) {
+    emptyCoords
+}
+
+grobPoints.rastergrob <- function(x, closed, ...) {
+    emptyCoords
+}
+
+grobPoints.clip <- function(x, closed, ...) {
+    emptyCoords
+}
+
+grobPoints.null <- function(x, closed, ...) {
+    emptyCoords
+}
 
