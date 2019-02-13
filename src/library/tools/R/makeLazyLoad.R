@@ -70,7 +70,8 @@ list_data_in_pkg <- function(package, lib.loc = NULL, dataDir = NULL)
     if(dir.exists(dataDir)) {
         if(file.exists(sv <- file.path(dataDir, "Rdata.rds"))) {
             ans <- readRDS(sv)
-        } else if(file.exists(sv <- file.path(dataDir, "datalist"))) {
+        } else if(file.exists(sv <- file.path(dataDir, "datalist")) &&
+                  !file.info(sv)$isdir) { # package cp4p had a directory
             ## BioC mess this file up, of course!
             ans <- strsplit(readLines(sv, warn = FALSE), ":")
             nms <- lapply(ans, function(x) x[1L])
