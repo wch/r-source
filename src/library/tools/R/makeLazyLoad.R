@@ -87,8 +87,10 @@ list_data_in_pkg <- function(package, lib.loc = NULL, dataDir = NULL)
             dataEnv <- new.env(hash=TRUE)
             names(ans) <- files
             for(f in files) {
-                utils::data(list = f, package = package, lib.loc = lib.loc,
-                            envir = dataEnv)
+                ## This occasionally fails on uninstalled sources,
+                ## hence the tryCatch().  And e.g. CHNOSZ gave
+                ## messages and cricketr gave warnings.
+                tryCatch(suppressMessages(suppressWarnings(utils::data(list = f, package = package, lib.loc = lib.loc, envir = dataEnv))), error = identity)
                 ans[[f]] <- ls(envir = dataEnv, all.names = TRUE)
                 rm(list = ans[[f]], envir = dataEnv)
             }
