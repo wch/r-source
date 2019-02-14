@@ -1388,7 +1388,7 @@ function(package, dir, lib.loc = NULL)
         ## (Note that as.character(sapply(exprs, "[[", 1L)) does not do
         ## what we want due to backquotifying.)
         arg_names_in_usage <-
-            unlist(sapply(exprs,
+            unlist(lapply(exprs,
                           function(e) .arg_names_from_call(e[-1L])))
         ## Replacement functions.
         if(length(replace_exprs)) {
@@ -1399,7 +1399,7 @@ function(package, dir, lib.loc = NULL)
             functions <- c(functions, replace_funs)
             arg_names_in_usage <-
                 c(arg_names_in_usage,
-                  unlist(sapply(replace_exprs,
+                  unlist(lapply(replace_exprs,
                                 function(e)
                                 c(.arg_names_from_call(e[[2L]][-1L]),
                                   .arg_names_from_call(e[[3L]])))))
@@ -2957,7 +2957,7 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE,
             if(length(reqs[m]))
                 bad_depends$required_but_stub <- reqs[m]
             ## now check versions
-            have_ver <- unlist(lapply(lreqs, function(x) length(x) == 3L))
+            have_ver <- vapply(lreqs, function(x) length(x) == 3L, NA)
             lreqs3 <- lreqs[have_ver]
             if(length(lreqs3)) {
                 bad <- character()
@@ -3561,8 +3561,9 @@ function(aar, strict = FALSE)
                         out$authors_at_R_field_has_persons_with_nonstandard_roles <-
                             sprintf("%s: %s",
                                     format(aar[ind]),
-                                    sapply(non_standard_roles[ind], paste,
-                                           collapse = ", "))
+                                    vapply(non_standard_roles[ind], paste,
+                                           collapse = ", ",
+                                           FUN.VALUE = ""))
                     }
                 }
             }
@@ -6460,10 +6461,11 @@ function(cfile, dir = NULL)
         writeLines(strwrap(sprintf("entry %d (%s): missing required field(s) %s",
                                    pos,
                                    db$Entry[pos],
-                                   sapply(bad[pos],
+                                   vapply(bad[pos],
                                           function(s)
                                           paste(sQuote(s),
-                                                collapse = ", "))),
+                                                collapse = ", "),
+                                          "")),
                            indent = 0L, exdent = 2L))
     }
 }
@@ -7902,7 +7904,7 @@ function(x, ...)
       if(length(y <- x$R_files_non_ASCII)) {
           paste(c("No package encoding and non-ASCII characters in the following R files:",
                   paste0("  ", names(y), "\n    ",
-                         sapply(y, paste, collapse = "\n    "),
+                         vapply(y, paste, "", collapse = "\n    "),
                          collapse = "\n")),
                 collapse = "\n")
       },
@@ -8258,7 +8260,7 @@ function(x)
     else
         which(names(y) == "")
     if(length(ind)) {
-        names(y)[ind] <- sapply(y[ind], paste, collapse = " ")
+        names(y)[ind] <- vapply(y[ind], paste, "", collapse = " ")
         y[ind] <- rep.int(list(alist(irrelevant = )[[1L]]), length(ind))
     }
     y

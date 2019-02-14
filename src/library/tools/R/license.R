@@ -747,8 +747,9 @@ function(db)
     ## To get the 'packages' list into a data frame without I() ...
     out$Packages <- packages
     cat(formatDL(out$Licenses,
-                 sapply(out$Packages,
-                        function(p) paste(unique(p), collapse = " ")),
+                 vapply(out$Packages,
+                        function(p) paste(unique(p), collapse = " "),
+                        ""),
                  style = "list"),
         sep = "\n\n")
     invisible(out)

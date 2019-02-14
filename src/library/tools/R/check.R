@@ -660,8 +660,9 @@ add_dummies <- function(dir, Log)
         bad_files <- allfiles[grepl("[[:cntrl:]\"*/:<>?\\|]",
                                     basename(allfiles))]
         is_man <- endsWith(dirname(allfiles), "man")
-        bad <- sapply(strsplit(basename(allfiles[is_man]), ""),
-                      function(x) any(grepl("[^ -~]|%", x)))
+        bad <- vapply(strsplit(basename(allfiles[is_man]), ""),
+                      function(x) any(grepl("[^ -~]|%", x)),
+                      NA)
         if (length(bad))
             bad_files <- c(bad_files, (allfiles[is_man])[bad])
         bad <- tolower(basename(allfiles))

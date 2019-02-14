@@ -539,10 +539,10 @@ function(package = NULL, lib.loc = NULL,
 
         ## Make the IDs globally unique by prefixing them with the
 	## number of the package in the global index.
-	for(i in which(sapply(db, NROW) > 0L)) {
+	for(i in which(vapply(db, NROW, 0L) > 0L)) {
 	    db[[i]][, "ID"] <-
 		paste(rep.int(seq_along(packages_in_hsearch_db),
-			      sapply(dbMat[, i], NROW)),
+			      vapply(dbMat[, i], NROW, 0L)),
 		      db[[i]][, "ID"],
 		      sep = "/")
 	}
@@ -570,7 +570,7 @@ function(package = NULL, lib.loc = NULL,
             }
 	}
 	bad_IDs <-
-	    unlist(sapply(db,
+	    unlist(lapply(db,
 			  function(u)
                               u[rowSums(is.na(nchar(u, "chars",
                                                     allowNA = TRUE,
@@ -583,7 +583,7 @@ function(package = NULL, lib.loc = NULL,
                 db[[i]][ind, ] <- iconv(db[[i]][ind, ], "latin1", "")
             }
             bad_IDs <-
-                unlist(sapply(db,
+                unlist(lapply(db,
                               function(u)
                                   u[rowSums(is.na(nchar(u, "chars",
                                                         allowNA = TRUE,
@@ -828,8 +828,8 @@ function(db = hsearch_db())
     entries <- split(as.data.frame(db$Base[pos, ],
                                    stringsAsFactors = FALSE),
                      db$Concepts[, "Concept"])
-    enums <- sapply(entries, NROW)
-    pnums <- sapply(entries, function(e) length(unique(e$Package)))
+    enums <- vapply(entries, NROW, 0L)
+    pnums <- vapply(entries, function(e) length(unique(e$Package)), 0L)
     pos <- order(enums, pnums, decreasing = TRUE)
     data.frame(Concept = names(entries)[pos],
                Frequency = enums[pos],
@@ -845,8 +845,8 @@ function(db = hsearch_db())
     entries <- split(as.data.frame(db$Base[pos, ],
                                    stringsAsFactors = FALSE),
                      db$Keywords[, "Keyword"])
-    enums <- sapply(entries, NROW)
-    pnums <- sapply(entries, function(e) length(unique(e$Package)))
+    enums <- vapply(entries, NROW, 0L)
+    pnums <- vapply(entries, function(e) length(unique(e$Package)), 0L)
     standard <- .get_standard_Rd_keywords_with_descriptions()
     concepts <- standard$Descriptions[match(names(entries),
                                             standard$Keywords)]
