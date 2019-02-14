@@ -1370,9 +1370,11 @@ note that @file{.csv} is @strong{not} the standard@footnote{e.g.@:
 @uref{https://tools.ietf.org/@/html/@/rfc4180}.} CSV format), or
 @code{save()} images (@file{.RData} or @file{.rda}).  The files should
 not be hidden (have names starting with a dot).  Note that @R{} code
-should be ``self-sufficient'' and not make use of extra functionality
-provided by the package, so that the data file can also be used without
-having to load the package or its namespace.
+should be if possible ``self-sufficient'' and not make use of extra
+functionality provided by the package, so that the data file can also be
+used without having to load the package or its namespace: it should run
+as silently as possible and not change the @code{search()} path by
+attaching packages or other environments.
 
 Images (extensions @file{.RData}@footnote{People who have trouble with
 case are advised to use @file{.rda} as a common error is to refer to
@@ -1391,10 +1393,12 @@ First, the package containing the class definition has to be available
 to do useful things with the dataset, so that package must be listed in
 @code{Imports} or @code{Depends} (even if this gives a check warning
 about unused imports).  Second, the definition of an S4 class can
-change, and often has unnoticed when in a package with a different
+change, and often is unnoticed when in a package with a different
 author.  So it may be wiser to use the @file{.R} form and use that to
 create the dataset object when needed (loading package namespaces but
-not attaching them).
+not attaching them by using @code{requireNamespace(@var{pkg}, quietly =
+TRUE)} and using @code{@var{pkg}::} to refer to objects in the
+namespace).
 
 If your data files are large and you are not using @samp{LazyData} you
 can speed up installation by providing a file @file{datalist} in the
