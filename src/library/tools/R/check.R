@@ -2219,31 +2219,52 @@ add_dummies <- function(dir, Log)
     {
         ## Check contents of 'data'
         if (!is_base_pkg && dir.exists("data")) {
-            any <- FALSE
             checkingLog(Log, "contents of 'data' directory")
+            warn <- FALSE
+            msgs <- character()
             fi <- list.files("data")
+            dataFiles <- basename(list_files_with_type("data", "data"))
             if (!any(grepl("\\.[Rr]$", fi))) { # code files can do anything
-                dataFiles <- basename(list_files_with_type("data", "data"))
                 odd <- fi %w/o% c(dataFiles, "datalist")
                 if (length(odd)) {
-                    warningLog(Log)
-                    any <- TRUE
-                    msg <-
+                    warn <-TRUE
+                    msgs <-
                         c(sprintf("Files not of a type allowed in a %s directory:\n",
                                   sQuote("data")),
                           paste0(.pretty_format(odd), "\n"),
                           sprintf("Please use e.g. %s for non-R data files\n",
-                                  sQuote("inst/extdata")))
-                    printLog0(Log, msg)
+                                  sQuote("inst/extdata")),
+                          "\n")
                 }
             }
-            ans <- suppressMessages(list_data_in_pkg(dataDir = file.path(pkgdir, "data")))
+            if ("datalist" %in% fi) {
+                if(file.info(sv <- file.path("data", "datalist"))$isdir) {
+                    warn <- TRUE
+                    msgs <- c(msgs, sprintf("%s is a directory\n",
+                                            sQuote("data/datalist"), "\n"))
+                }  else {
+                    ## Now check it has the right format:
+                    ## it is read in list_data_in_pkg()
+                    ## Allowed lines are
+                    ## foo
+                    ## foo: bar ...
+                    ## where bar ... and standalone foo are object names
+                    dl <- readLines(sv, warn = FALSE)
+                    if (any(bad <- !grepl("^[^ :]*($|: +[[:alpha:].])", dl))) {
+                        warn <- TRUE
+                        msgs <- c(msgs,
+                                  sprintf("File %s contains malformed line(s):\n",
+                                          sQuote("data/datalist")),
+                                 paste0(.pretty_format(dl[bad]), "\n"))
+                    }
+                }
+            }
+            ans <- list_data_in_pkg(dataDir = file.path(pkgdir, "data"))
             if (length(ans)) {
                 bad <-
                     names(ans)[sapply(ans, function(x) ".Random.seed" %in% x)]
                 if (length(bad)) {
-                    if (!any)  warningLog(Log)
-                    any <- TRUE
+                    warn <- TRUE
                     msg <- if (length(bad) > 1L)
                          c(sprintf("Object named %s found in datasets:\n",
                                   sQuote(".Random.seed")),
@@ -2253,10 +2274,34 @@ add_dummies <- function(dir, Log)
                         c(sprintf("Object named %s found in dataset: ",
                                   sQuote(".Random.seed")),
                           sQuote(bad), "\nPlease remove it.\n")
-                    printLog0(Log, msg)
+                    msgs <- c(msgs, msg)
                 }
             }
-            if (!any) resultLog(Log, "OK")
+            if (do_install) {
+                ## check that all the datasets can be loaded cleanly by data()
+                ## except for LazyData.
+                instdir <- file.path(libdir, pkgname)
+                if (!file.exists(file.path(instdir, "data", "Rdata.rdb"))) {
+                    files <- basename(list_files_with_type("data", "data"))
+                    files <- unique(basename(file_path_sans_ext(files, TRUE)))
+                    for (f in files) {
+                        cmd <- sprintf('dataEnv <- new.env(hash = TRUE);utils::data(list = "%s", package = "%s", envir = dataEnv);if(!length((ls(dataEnv)))) message("no dataset created")', f, pkgname)
+                        out <- R_runR(cmd, R_opts2)
+                        if (length(out)) {
+                            if (any(grepl("(^Warning|no dataset created|^Error)", out)))
+                                warn <- TRUE
+                            msgs <- c(msgs,
+                                     sprintf('Output for data("%s"):\n', f),
+                                     paste(c(paste0("  ",out), ""),
+                                           collapse = "\n"))
+                        }
+                    }
+                }
+            }
+            if (length(msgs)) {
+                if (warn) warningLog(Log) else noteLog(Log)
+                printLog0(Log, msgs)
+            } else resultLog(Log, "OK")
         }
 
         ## Check for non-ASCII characters in 'data'
