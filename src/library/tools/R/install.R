@@ -2020,9 +2020,6 @@ if(FALSE) {
     if (is.na(staged_install)) {
         # environment variable intended as temporary
         rsi <- Sys.getenv("R_INSTALL_STAGED")
-        if (!nzchar(rsi))
-            ## older name of the variable, to be removed
-            rsi <- Sys.getenv("R_STAGED_INSTALL")
         rsi <- switch(rsi,
                       "TRUE"=, "true"=, "True"=, "yes"=, "Yes"= 1,
                       "FALSE"=,"false"=,"False"=, "no"=, "No" = 0,
