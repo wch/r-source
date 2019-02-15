@@ -4500,7 +4500,20 @@ function(x, ...)
       })
 }
 
-### * .check_package_datasets
+### * .check_package_datasets2
+
+.check_package_datasets2 <-
+function(fileName, pkgname)
+{
+    oldSearch <- search()
+    dataEnv <- new.env(hash = TRUE);
+    utils::data(list = fileName, package = pkgname, envir = dataEnv);
+    if (!length((ls(dataEnv)))) message("No dataset created in 'envir'")
+    if (!identical(search(), oldSearch)) message("Search path was changed")
+    invisible(NULL)
+}
+
+### * .check_package_compact_datasets
 
 .check_package_compact_datasets <-
 function(pkgDir, thorough = FALSE)
@@ -4586,6 +4599,8 @@ function(x, ...)
     }
     invisible(x)
 }
+
+### * .check_package_compact_sysdata
 
 .check_package_compact_sysdata <-
 function(pkgDir, thorough = FALSE)

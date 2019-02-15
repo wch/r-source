@@ -2286,10 +2286,11 @@ add_dummies <- function(dir, Log)
                     files <- basename(list_files_with_type("data", "data"))
                     files <- unique(basename(file_path_sans_ext(files, TRUE)))
                     for (f in files) {
-                        cmd <- sprintf('dataEnv <- new.env(hash = TRUE);utils::data(list = "%s", package = "%s", envir = dataEnv);if(!length((ls(dataEnv)))) message("no dataset created")', f, pkgname)
+                        cmd <- sprintf('tools:::.check_package_datasets2("%s", "%s")',
+                                       f, pkgname)
                         out <- R_runR(cmd, R_opts2)
                         if (length(out)) {
-                            if (any(grepl("(^Warning|no dataset created|^Error)", out)))
+                            if (any(grepl("^(Warning|Error|No dataset created|Search path was changed)", out)))
                                 warn <- TRUE
                             msgs <- c(msgs,
                                      sprintf('Output for data("%s"):\n', f),
