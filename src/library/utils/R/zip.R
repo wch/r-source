@@ -1,7 +1,7 @@
 #  File src/library/utils/R/zip.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -104,8 +104,20 @@ zip <- function(zipfile, files, flags = "-r9X", extras = "",
         stop("'files' must a character vector specifying one or more filepaths")
     args <- c(flags, shQuote(path.expand(zipfile)),
               shQuote(files), extras)
+    if (sum(nchar(c(args, Sys.getenv()))) + length(args) > 8000) {
+        # -@ is supported in Info-ZIP from version 2.3 (like -X), but not in
+        # old Mac OS builds (MACOS macro), so better not rely on it for
+        # common use
+        #
+        # 8191 is the maximum command line length on Windows (since 2000/NT)
+        # and 8096 is the internal buffer size used by system() on systems
+        # without readline
+        args <- c(flags, "-@", shQuote(path.expand(zipfile)), extras)
+        input <- files
+    } else input <- NULL
+
     if (.Platform$OS.type == "windows")
-        invisible(system2(zip, args, invisible = TRUE))
-    else invisible(system2(zip, args))
+        invisible(system2(zip, args, input = input, invisible = TRUE))
+    else invisible(system2(zip, args, input = input))
 }
 

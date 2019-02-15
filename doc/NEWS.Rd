@@ -679,6 +679,9 @@
       \env{_R_METHODS_DONT_CHECKSUBCLASSES} to true, replaces
       \code{.checkSubclasses()} by a no-op, experimentally, as it may be
       unneeded (after \pkg{methods} building).
+
+      \item \code{zip()} passes the list of files to compress via standard
+      input to the external command when too large for the command line.
     }
   }
 }
