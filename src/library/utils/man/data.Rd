@@ -1,6 +1,6 @@
 % File src/library/utils/man/data.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{data}
@@ -147,6 +147,14 @@ data(\dots, list = character(), package = NULL, lib.loc = NULL,
   For instance one can convert numeric vectors to factors with the
   appropriate labels.  Thus, the \file{.R} file can effectively contain
   a metadata specification for the plaintext formats.
+}
+\section{Warning}{
+  This function creates objects in the \code{envir} environment (by
+  default the user's workspace) replacing any which already
+  existed. \code{data("foo")} can silently create objects other than
+  \code{foo}: there have been instances in published  packages where it
+  created/replaced \code{\link{.Random.seed}} and hence change the seed
+  for the session.
 }
 \seealso{
   \code{\link{help}} for obtaining documentation on data sets,
