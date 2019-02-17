@@ -4462,6 +4462,18 @@ diagnostic messages can hide important information for debugging on a
 platform not tested by the package maintainer.  (@command{R CMD check}
 can optionally report on unsafe flags which were used.)
 
+Avoid the use of @option{-march} and especially @option{-march=native}.
+This allows the compiler to generate code that will only run on a
+particular class of CPUs (that of the compiling machine for
+@samp{native}).  People assume this is a `minimum' CPU specification,
+but that is not how it is documented for @command{gcc} (it is accepted
+by @command{clang} but apparently it is undocumented what precisely it
+does, and it can be accepted and may be ignored for other compilers).
+(For personal use @option{-mtune} is safer, but still not portable
+enough to be used in a public package.)  Not even @command{gcc} supports
+@samp{native} for all CPUs, and it can do surprising things if it finds
+a CPU released later than its version.
+
 @item
 Do be very careful with passing arguments between @R{}, C and
 @acronym{FORTRAN} code.  In particular, @code{long} in C will be 32-bit
