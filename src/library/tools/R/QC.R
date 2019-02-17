@@ -3899,6 +3899,26 @@ function(dir, makevars = c("Makevars.in", "Makevars"))
                   structure(list(bad), names = names[i]))
     }
 
+    ## The above does not know about GNU extensions like
+    ## target.o: PKG_CXXFLAGS = -mavx
+    ## so grep files directly.
+    for (f in paths) {
+        lines <- readLines(f, warn = FALSE)
+        pflags_re2 <- sprintf(".*[.o]: +PKG_(%s)FLAGS *=",
+                              paste(prefixes, collapse = "|"))
+        lines <- grep(pflags_re2, lines, value = TRUE)
+        lines <- sub(pflags_re2, "", lines)
+        flags <- strsplit(lines, "[[:space:]]+")
+        bad <- character()
+        for(i in seq_along(lines))
+            bad <- c(bad, grep(bad_flags_regexp, flags[[i]], value = TRUE))
+
+        if(length(bad))
+            bad_flags$p2flags <-
+                c(bad_flags$p2flags,
+                  structure(list(bad), names = file.path("src", basename(f))))
+    }
+
     bad_flags
 }
 
@@ -3913,8 +3933,17 @@ function(x, ...)
         as.character(unlist(s))
     }
 
+    .fmt2 <- function(x) {
+        s <- Map(c,
+                 gettextf("Non-portable flags in file '%s':",
+                          names(x)),
+                 sprintf("  %s", lapply(x, paste, collapse = " ")))
+        as.character(unlist(s))
+    }
+
     c(character(),
       if(length(bad <- x$pflags)) .fmt(bad),
+      if(length(bad <- x$p2flags)) .fmt2(bad),
       if(length(bad <- x$uflags)) {
           c(gettextf("Variables overriding user/site settings:"),
             sprintf("  %s", bad))

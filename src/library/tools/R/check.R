@@ -3134,7 +3134,11 @@ add_dummies <- function(dir, Log)
             if (file.exists(instlog) && dir.exists('src')) {
                 checkingLog(Log, "compilation flags used")
                 lines <- readLines(instlog, warn = FALSE)
-                poss <- grep(" -W", lines,  useBytes = TRUE, value = TRUE)
+                poss <- grep(" -[Wmf]", lines,  useBytes = TRUE, value = TRUE)
+                ## compilation lines start at the left margin,
+                ## and are not configure lines
+                poss <- grep("^(\\s|checking)", poss, perl = TRUE,
+                             invert = TRUE, value = TRUE, useBytes = TRUE)
                 tokens <- unique(unlist(strsplit(poss, " ", perl = TRUE,
                                                  useBytes = TRUE)))
                 warns <- grep("^[-]W", tokens,
@@ -3158,7 +3162,18 @@ add_dummies <- function(dir, Log)
                 ## next set are about unsafe optimizations
                 opts <- grep("-f(fast-math|unsafe-math-optimizations|associative-math|reciprocal-math)",
                              tokens, useBytes = TRUE, value = TRUE)
-                warns <- c(warns, diags, opts)
+                machs <- grep("^[-]m", tokens,
+                              value = TRUE, perl = TRUE, useBytes = TRUE)
+                ## The only -m flag which is reasonably portable is -mtune
+                machs <- setdiff(machs,
+                                 c(except, c("-m", # not a flag
+                                             "-msse2", "-mfpmath=sse", # SAFE_FFLAGS
+                                             "-m32", # BRugs
+                                             "-m64", # RcppParallel
+                                             "-multiply_defined" # macOS
+                                             )))
+                machs <- machs[!startsWith(machs, "-mtune=")]
+                warns <- c(warns, diags, opts, machs)
                 if(any(startsWith(warns, "-Wno-")) || length(diags)) {
                     warningLog(Log)
                     msg <- c("Compilation used the following non-portable flag(s):",
@@ -3166,7 +3181,7 @@ add_dummies <- function(dir, Log)
                              "including flag(s) suppressing warnings")
                     printLog0(Log, paste(c(msg,""), collapse = "\n"))
                 } else if(length(warns)) {
-                    warningLog(Log)  # might consider NOTE instead
+                    noteLog(Log) # or warningLog?
                     msg <- c("Compilation used the following non-portable flag(s):",
                              .pretty_format(sort(warns)))
                     printLog0(Log, paste(c(msg,""), collapse = "\n"))
