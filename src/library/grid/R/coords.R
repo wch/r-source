@@ -8,6 +8,10 @@ grobCoords <- function(x, closed, ...) {
 
 emptyCoords <- list(x = 0, y = 0)
 
+isEmpty <- function(coords) {
+    identical(coords, emptyCoords)
+}
+
 grobCoords.grob <- function(x, closed, ...) {
     vp <- x$vp
     trans <- current.transform()
@@ -27,7 +31,7 @@ grobCoords.grob <- function(x, closed, ...) {
     # BUT NO DRAWING
     ## Polygon outline in inches
     pts <- grobPoints(x, closed, ...)
-    if (vpgrob && !identical(pts, emptyCoords)) {
+    if (vpgrob && !isEmpty(pts)) {
         ## Calc locations on device
         pts <- lapply(pts,
                       function(p) {
@@ -37,7 +41,7 @@ grobCoords.grob <- function(x, closed, ...) {
     }
     # Same context clean up as drawGrob()
     postDraw(x)
-    if (vpgrob && !identical(pts, emptyCoords)) {
+    if (vpgrob && !isEmpty(pts)) {
         ## Transform back to locations
         pts <- lapply(pts,
                       function(p) {
@@ -85,7 +89,7 @@ grobCoords.gTree <- function(x, closed, ...) {
     vpgrob <- !is.null(x$vp) || !identical(vp, x$vp)
     ## Polygon outline in inches
     pts <- grobCoords(x$children[x$childrenOrder], closed, ...)
-    if (vpgrob && !identical(pts, emptyCoords)) {
+    if (vpgrob && !isEmpty(pts)) {
         ## Calc locations on device
         pts <- lapply(pts,
                       function(p) {
@@ -95,7 +99,7 @@ grobCoords.gTree <- function(x, closed, ...) {
     }
     # Same context clean up as drawGTree()
     postDraw(x)
-    if (vpgrob && !identical(pts, emptyCoords)) {
+    if (vpgrob && !isEmpty(pts)) {
         ## Transform back to locations
         pts <- lapply(pts,
                       function(p) {
