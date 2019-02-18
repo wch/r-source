@@ -632,6 +632,27 @@ if(FALSE) {
             } else if (have_macos_clt) {
                 ## macOS only
                 for (l in slibs) {
+                    ## change identification name of the library
+                    out <- suppressWarnings(
+                        system(paste("otool -D", l), intern = TRUE))
+                    out <- out[-1L] # first line is l (includes instdir)
+                    oldid <- out
+                    if (length(oldid) == 1 &&
+                        grepl(instdir, oldid, fixed = TRUE)) {
+
+                        hardcoded_paths <- TRUE
+                        newid <- gsub(instdir, final_instdir, oldid,
+                                      fixed = TRUE)
+                        cmd <- paste("install_name_tool -id", newid, l)
+                        message(cmd)
+                        ret <- suppressWarnings(system(cmd, intern = FALSE))
+                        if (ret == 0)
+                            ## NOTE: install_name does not signal an error in
+                            ## some cases
+                            message("NOTE: fixed library identification name ",
+                                    oldid)
+                    }
+
                     ## change paths to other libraries
                     out <- suppressWarnings(
                         system(paste("otool -L", l), intern = TRUE))
@@ -688,6 +709,8 @@ if(FALSE) {
                                 message("NOTE: fixed rpath ", old_paths[i])
                         }
                     }
+
+                    ## check no hard-coded paths are left
                     out <- suppressWarnings(
                         system(paste("otool -l", l), intern = TRUE))
                     out <- out[-1L] # first line is l (includes instdir)
