@@ -119,7 +119,7 @@ data2LazyLoadDB <- function(package, lib.loc = NULL, compress = TRUE)
             warning("package seems to be using lazy loading for data already")
         }
 	else {
-            dataEnv <- new.env(hash=TRUE)
+            dataEnv <- new.env(hash = TRUE)
             tmpEnv <- new.env()
             f0 <- files <- list_files_with_type(dataDir, "data")
             ## omit compression extensions
@@ -129,9 +129,9 @@ data2LazyLoadDB <- function(package, lib.loc = NULL, compress = TRUE)
             loaded <- character(0L)
             for(f in files) {
                 utils::data(list = f, package = package, lib.loc = lib.loc,
-                        envir = dataEnv)
+                        envir = dataEnv, overwrite = TRUE)
                 utils::data(list = f, package = package, lib.loc = lib.loc,
-                        envir = tmpEnv)
+                        envir = tmpEnv, overwrite = TRUE)
                 tmp <- ls(envir = tmpEnv, all.names = TRUE)
                 rm(list = tmp, envir = tmpEnv)
                 dlist[[f]] <- tmp

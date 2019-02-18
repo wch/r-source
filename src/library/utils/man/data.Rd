@@ -12,7 +12,8 @@
 }
 \usage{
 data(\dots, list = character(), package = NULL, lib.loc = NULL,
-     verbose = getOption("verbose"), envir = .GlobalEnv)
+     verbose = getOption("verbose"), envir = .GlobalEnv,
+     overwrite = FALSE)
 }
 \arguments{
   \item{\dots}{literal character strings or names.}
@@ -31,6 +32,8 @@ data(\dots, list = character(), package = NULL, lib.loc = NULL,
   \item{verbose}{a logical.  If \code{TRUE}, additional diagnostics are
     printed.}
   \item{envir}{the \link{environment} where the data should be loaded.}
+  \item{overwrite}{logical: should existing objects of the same name in
+    \env{envir} be replaced?}
 }
 \details{
   Currently, four formats of data files are supported:
