@@ -676,8 +676,10 @@
       \item \code{strtoi("", base)} now gives \code{NA} on all platforms,
       following its documentation.  Reported by Michael Chirico.
 
-      \item In the definition of an S4 class, prototype elements are now
-      checked to match the slots of the class.  Reported by Bill Dunlap.
+      \item In the definition of an S4 class, prototype elements are
+      checked against the slots of the class, with giving a prototype
+      for an undefined slot now being an error.  (Reported by Bill
+      Dunlap.)
 
       \item From \code{setClassUnion()}, if environment variable
       \env{_R_METHODS_SHOW_CHECKSUBCLASSES} is set
