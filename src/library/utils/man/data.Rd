@@ -13,7 +13,7 @@
 \usage{
 data(\dots, list = character(), package = NULL, lib.loc = NULL,
      verbose = getOption("verbose"), envir = .GlobalEnv,
-     overwrite = FALSE)
+     overwrite = TRUE)
 }
 \arguments{
   \item{\dots}{literal character strings or names.}

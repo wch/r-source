@@ -279,9 +279,7 @@
       input to the external command when too long for the command line
       (on some platforms).
       
-      \item \code{data()} gains an \code{overwrite} argument, false by
-      default so it will no longer unintentionally replace objects in
-      the workspace (the default destination).
+      \item \code{data()} gains an \code{overwrite} argument.
     }
   }
 
