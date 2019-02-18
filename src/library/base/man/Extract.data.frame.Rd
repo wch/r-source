@@ -53,8 +53,9 @@
   this usage a \code{drop} argument is ignored, with a warning.
 
   There is no \code{data.frame} method for \code{$}, so \code{x$name}
-  uses the default method which treats \code{x} as a list (with no partial
-  matching of column names).  The replacement method (for \code{$}) checks
+  uses the default method which treats \code{x} as a list (with partial
+  matching of column names if the match is unique, see
+  \code{\link{Extract}}).  The replacement method (for \code{$}) checks
   \code{value} for the correct number of rows, and replicates it if necessary.
 
   When \code{[} and \code{[[} are used with two indices (\code{x[i, j]}
@@ -163,6 +164,7 @@ sw[1]        # a one-column data frame
 sw[, 1, drop = FALSE]  # the same
 sw[, 1]      # a (unnamed) vector
 sw[[1]]      # the same
+sw$Fert      # the same (possibly w/ warning, see ?Extract)
 
 sw[1,]       # a one-row data frame
 sw[1,, drop = TRUE]  # a list
@@ -191,6 +193,7 @@ sw[["new2"]] <- letters[1:5] # ditto
 sw[, "new3"] <- LETTERS[1:5] # ditto
 sw$new4 <- 1:5
 sapply(sw, class)
+sw$new  # -> NULL: no unique partial match
 sw$new4 <- NULL              # delete the column
 sw
 sw[6:8] <- list(letters[10:14], NULL, aa = 1:5)
