@@ -1951,8 +1951,8 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
 }
 
 .cacheClass <- function(name, def, doSubclasses = FALSE, env) {
-    if(!isFALSE(doSubclasses))
-      .recacheSubclasses(def@className, def, doSubclasses, env)
+    if(!isFALSE(doSubclasses)) # only when is(def, "ClassUnionRepresentation")
+      .recacheSubclasses(def@className, def, env)
     if(!is.null(prev <- .classTable[[name]])) {
 	newpkg <- def@package
 	if(is(prev, "classRepresentation")) {
@@ -2114,10 +2114,9 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
     value
 }
 
-### insert superclass information into all the subclasses of this
-### class.  Used to incorporate inheritance information from
-### ClassUnions
-.recacheSubclasses <- function(class, def, doSubclasses, env) {
+##' Insert superclass information into all the subclasses of this class.
+## Used (in 1 place only) to incorporate inheritance information from classUnions
+.recacheSubclasses <- function(class, def, env) {
     subs <- def@subclasses
     subNames <- names(subs)
     for(i in seq_along(subs)) {
@@ -2164,12 +2163,12 @@ assign("#HAS_DUPLICATE_CLASS_NAMES", FALSE, envir = .classTable)
             ## happens (wrongly) in a package which imports 'class' but not 'subclass' from another package
             ## *and* extends 'class', e.g., by defining a class union with it as member.
             ## Fact is that at the end, the subclass is seen to be updated fine.
-            message(gettextf(paste("subclass %s of class %s is not local and is not updated",
-                                   "for new inheritance information currently;",
+	    message(gettextf(paste("From .checkSubclasses(): subclass %s of class %s is not local and",
+				   "is not updated for new inheritance information currently;",
                                    "\n[where=%s, where2=%s]"),
                            .dQ(what), .dQ(class), format(where), format(where2)),
                     domain = NA)
-          next
+	    next
         }
         extension <- extDefs[[what]]
         if(is.null(extension)) # not possible if the setIs behaved?
