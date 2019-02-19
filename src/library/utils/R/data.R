@@ -210,13 +210,11 @@ function(..., list = character(), package = NULL, lib.loc = NULL,
         }
 
         if (!overwrite) {
-            for (o in objects(envir = tmp_env, all.names = TRUE)) {
-                if (exists(o, envir = envir, inherits = FALSE))
-                    warning(gettextf("an object named %s already exists and will not be overwritten", sQuote(o)))
-                else
-                    assign(o, get(o, envir = tmp_env, inherits = FALSE),
-                           envir = envir)
-            }
+            if (exists(name, envir = envir, inherits = FALSE))
+                warning(gettextf("an object named %s already exists and will not be overwritten", sQuote(name)))
+            else
+                assign(name, get(name, envir = tmp_env, inherits = FALSE),
+                       envir = envir)
         }
         if (!found)
             warning(gettextf("data set %s not found", sQuote(name)),
