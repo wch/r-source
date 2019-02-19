@@ -43,7 +43,6 @@ want to see the commands in the code chunks:
 \SweaveOpts{echo=true}
 
 <<>>=
-data(iris)
 summary(iris)
 @ %def
 
