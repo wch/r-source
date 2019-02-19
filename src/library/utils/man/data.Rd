@@ -110,10 +110,15 @@ data(\dots, list = character(), package = NULL, lib.loc = NULL,
   \code{"packageIQR"} if none were specified.
 }
 \section{Good practice}{
+  There is no requirement for \code{data(\var{foo})} to create an object
+  named \code{\var{foo}} (nor to create one object), although it much
+  reduces confusion if this convention is followed (and it is enforced
+  if datasets are lazy-loaded).
+  
   \code{data()} was originally intended to allow users to load datasets
   from packages for use in their examples, and as such it loaded the
   datasets into the workspace \code{\link{.GlobalEnv}}.  This avoided
-  having large datasets in memory when not in use.  That need has been
+  having large datasets in memory when not in use: that need has been
   almost entirely superseded by lazy-loading of datasets.
 
   The ability to specify a dataset by name (without quotes) is a
