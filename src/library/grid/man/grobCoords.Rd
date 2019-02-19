@@ -7,7 +7,7 @@
 \alias{grobCoords}
 \alias{grobPoints}
 \alias{emptyCoords}
-\alias{isEmpty}
+\alias{isEmptyCoords}
 \title{Calculate Points on the Perimeter of a Grob}
 \description{
   These functions calculate points along the perimeter (or length) of
@@ -17,7 +17,7 @@
 grobCoords(x, closed, \dots)
 grobPoints(x, closed, \dots)
 emptyCoords
-isEmpty(coords)
+isEmptyCoords(coords)
 }
 \arguments{
   \item{x}{A grob object.}
@@ -32,7 +32,7 @@ isEmpty(coords)
 
   The \code{emptyCoords} object can be used to return a "null"
   result (e.g., when asking for \code{closed} coordinates on an
-  open line) and the \code{isEmpty} function can be used to check for
+  open line) and the \code{isEmptyCoords} function can be used to check for
   "null" results.
 }
 \value{

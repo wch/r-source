@@ -99,7 +99,7 @@ export(
        "segmentsGrob", "textGrob", "xsplineGrob", "bezierGrob",
        "xsplinePoints", "bezierPoints",
 
-       "grobCoords", "grobPoints", "emptyCoords", "isEmpty",
+       "grobCoords", "grobPoints", "emptyCoords", "isEmptyCoords",
     
        "grid.xaxis", "grid.yaxis",
        "xaxisGrob", "yaxisGrob",
