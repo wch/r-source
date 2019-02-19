@@ -105,9 +105,9 @@ data(\dots, list = character(), package = NULL, lib.loc = NULL,
   (and \code{lib.loc = NULL}, the default).
 }
 \value{
-  A character vector of all data sets specified, or information about
-  all available data sets in an object of class \code{"packageIQR"} if
-  none were specified.
+  A character vector of all data sets specified (whether found or not),
+  or information about all available data sets in an object of class
+  \code{"packageIQR"} if none were specified.
 }
 \section{Good practice}{
   \code{data()} was originally intended to allow users to load datasets
