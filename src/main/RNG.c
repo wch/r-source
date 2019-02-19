@@ -805,7 +805,7 @@ static R_INLINE double ru()
     return (floor(U*unif_rand()) + unif_rand())/U;
 }
 
-double R_unif_index(double dn)
+double R_unif_index_0(double dn)
 {
     double cut = INT_MAX;
 
@@ -817,8 +817,42 @@ double R_unif_index(double dn)
  	break;
     default:
  	break;
-   }
+    }
 
     double u = dn > cut ? ru() : unif_rand();
     return floor(dn * u);
+}
+
+//generate a random non-negative integer < 2 ^ bits in 16 bit chunks
+static double rbits(int bits)
+{
+    int_least64_t v = 0;
+    for (int n = 0; n <= bits; n += 16) {
+	int v1 = (int) floor(unif_rand() * 65536);
+	v = 65536 * v + v1;
+    }
+    // mask out the bits in the result that are not needed
+    return (double) (v & ((1L << bits) - 1));
+}
+
+double R_unif_index(double dn)
+{
+    static int inited = FALSE;
+    static int use_old_method = TRUE;
+    if (! inited) {
+	if (getenv("R_NEW_SAMPLE"))
+	    use_old_method = FALSE;
+	inited = TRUE;
+    }
+
+    if (use_old_method)
+	return R_unif_index_0(dn);
+
+    // rejection sampling from integers below the next larger power of two
+    if (dn <= 0)
+	return 0.0;
+    int bits = (int) ceil(log2(dn));
+    double dv;
+    do { dv = rbits(bits); } while (dn <= dv);
+    return dv;
 }
