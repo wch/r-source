@@ -1,6 +1,6 @@
 % File src/library/datasets/man/swiss.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{swiss}
@@ -17,8 +17,8 @@
   is in percent, i.e., in \eqn{[0, 100]}.
 
   \tabular{rll}{
-    [,1] \tab Fertility \tab \eqn{I_g}{Ig}, \sQuote{common standardized
-    fertility measure}\cr
+    [,1] \tab Fertility \tab \eqn{I_g}{Ig},
+    \sQuote{common standardized fertility measure}\cr
     [,2] \tab Agriculture\tab \% of males involved in agriculture
     as occupation\cr
     [,3] \tab Examination\tab \% draftees receiving highest mark
