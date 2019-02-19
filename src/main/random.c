@@ -383,7 +383,7 @@ walker_ProbSampleReplace(int n, double *p, int *a, int nans, int *ans)
 
     /* generate sample */
     for (i = 0; i < nans; i++) {
-	rU = unif_rand() * n;
+	rU = R_unif_index(n);
 	k = (int) rU;
 	ans[i] = (rU < q[k]) ? k+1 : a[k]+1;
     }
