@@ -104,16 +104,11 @@ function(..., list = character(), package = NULL, lib.loc = NULL,
         return(y)
     }
 
-    tmp_env <- if (overwrite) envir else new.env()
     paths <- file.path(paths, "data")
     for(name in names) {
-        if (!overwrite && exists(name, envir = envir, inherits = FALSE)) {
-            warning(gettextf("an object named %s already exists and will not be overwritten", sQuote(name)))
-            next
-        }
-
         found <- FALSE
         for(p in paths) {
+            tmp_env <- if (overwrite) envir else new.env()
             ## does this package have "Rdata" databases?
             if (file_test("-f", file.path(p, "Rdata.rds"))) {
                 rds <- readRDS(file.path(p, "Rdata.rds"))
@@ -214,12 +209,19 @@ function(..., list = character(), package = NULL, lib.loc = NULL,
             if (found) break # from paths
         }
 
-        if (!found)
+        if (!found) {
             warning(gettextf("data set %s not found", sQuote(name)),
                     domain = NA)
-        else if (!overwrite)
-            assign(name, get(name, envir = tmp_env, inherits = FALSE),
-                   envir = envir)
+        } else if (!overwrite) {
+            for (o in ls (envir = tmp_env, all.names = TRUE)) {
+                if (exists(o, envir = envir, inherits = FALSE))
+                    warning(gettextf("an object named %s already exists and will not be overwritten", sQuote(o)))
+                else
+                    assign(o, get(o, envir = tmp_env, inherits = FALSE),
+                           envir = envir)
+            }
+            rm (tmp_env)
+        }
     }
     invisible(names)
 }
