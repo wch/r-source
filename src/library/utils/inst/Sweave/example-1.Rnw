@@ -11,6 +11,7 @@ In this example we embed parts of the examples from the
 \texttt{kruskal.test} help page into a \LaTeX{} document:
 
 <<>>=
+data(airquality, package="datasets")
 library("stats")
 kruskal.test(Ozone ~ Month, data = airquality)
 @
