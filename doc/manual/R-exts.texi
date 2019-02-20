@@ -2219,16 +2219,17 @@ many threads as `CPUs' for such regions.  Parallel regions can be
 nested, although it is common to use only a single thread below the
 first level.  The correctness of the detected number of `CPUs' and the
 assumption that the @R{} process is entitled to use them all are both
-dubious assumptions.  The best way to limit resources is to limit the
-overall number of threads available to OpenMP in the @R{} process: this
-can be done @emph{via} environment variable @env{OMP_THREAD_LIMIT},
-where implemented.@footnote{Which it was at the time of writing with
-GCC, Oracle, Intel and Clang compilers.  The count may include the
-thread running the main process.}  Alternatively, the number of threads
-per region can be limited by the environment variable
-@env{OMP_NUM_THREADS} or API call @code{omp_set_num_threads}, or,
-better, for the regions in your code as part of their
-specification. E.g.@: @R{} uses
+dubious assumptions.  One way to limit resources is to limit the overall
+number of threads available to OpenMP in the @R{} process: this can be
+done @emph{via} environment variable @env{OMP_THREAD_LIMIT}, where
+implemented.@footnote{Which it was at the time of writing with GCC,
+Oracle, Intel and Clang compilers.  The count may include the thread
+running the main process.}  Alternatively, the number of threads per
+region can be limited by the environment variable @env{OMP_NUM_THREADS}
+or API call @code{omp_set_num_threads}, or, better, for the regions in
+your code as part of their specification. E.g.@: @R{} uses@footnote{Be
+careful not to declare @code{nthreads} as @code{const int}: the Oracle
+compiler requires it to be `an lvalue'.}
 @example
 #pragma omp parallel for num_threads(nthreads) @dots{}
 @end example
