@@ -232,7 +232,6 @@
       \code{x}, \code{str(x)} now gives a warning and subsequently still
       shows most parts of \code{x}, e.g., when slots are missing.
 
-      
       \item \code{gamma(x)} and \code{lgamma(x)} no longer warn when
       correctly returning \code{Inf} or underflowing to zero.  This
       helps maximum likelihood and similar computations.
@@ -278,7 +277,7 @@
       \item \code{zip()} passes its list of files \emph{via} standard
       input to the external command when too long for the command line
       (on some platforms).
-      
+
       \item \code{data()} gains an \code{overwrite} argument.
     }
   }
@@ -337,7 +336,7 @@
       into place once the installation is complete.  The benefit is that
       partially-installed packages are hidden from the view of other \R
       sessions.
-      
+
       The overall default is set by environment variable
       \env{R_INSTALL_STAGED}.  \command{R CMD INSTALL} has new options
       \option{--staged-install} and \option{--no-staged-install}, and
@@ -413,7 +412,7 @@
       It now checks for duplicated vignette titles (also known as
       \sQuote{index entries}): they are used as hyperlinks on
       \acronym{CRAN} package pages and so do need to be unique.
-      
+
       \item \command{R CMD check} has more comprehensive checks on the
       \file{data} directory and the functioning of \code{data()} in a
       package.
@@ -463,7 +462,7 @@
       \item Make macros \samp{F77}, \samp{FCPIFCPLAGS} and
       \samp{SHLIB_OPENMP_FCFLAGS} are deprecated in favour of \samp{FC},
       \samp{FPICFLAGS} and \samp{SHLIB_OPENMP_FFLAGS} respectively.
-      
+
       \item \code{$.data.frame} had become an expensive version of
       the default method, so has been removed. (Thanks to Radford Neal
       for picking this up and to Duncan Murdoch for providing a patch.)
@@ -689,6 +688,9 @@
       \env{_R_METHODS_DONT_CHECKSUBCLASSES} to true, replaces
       \code{.checkSubclasses()} by a no-op, experimentally, as it may be
       unneeded (after \pkg{methods} building).
+
+      \item \code{max.col(m)} with an \code{m} of zero columns now
+      returns integer \code{NA} (instead of \code{1}).
     }
   }
 }

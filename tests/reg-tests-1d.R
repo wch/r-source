@@ -2519,6 +2519,11 @@ stopifnot(identical(readLines(tf), c123))
 ## writeLines had opened the output for writing before readLines() read it
 
 
+## max.col(<empty>)
+stopifnot(identical(NA_integer_, max.col(matrix(,1,0))))
+## gave 1 in R <= 3.5.x
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
