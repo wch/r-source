@@ -659,12 +659,12 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     n_err += curlMultiCheckerrs(mhnd);
 
+    long status = 0L;
     for (int i = 0; i < nurls; i++) {
 	if (out[i]) {
 	    fclose(out[i]);
 	    double dl;
 	    curl_easy_getinfo(hnd[i], CURLINFO_SIZE_DOWNLOAD, &dl);
-	    long status;
 	    curl_easy_getinfo(hnd[i], CURLINFO_RESPONSE_CODE, &status);
 	    // should we do something about incomplete transfers?
 	    if (status != 200 && dl == 0. && strchr(mode, 'w'))
@@ -673,10 +673,6 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 	curl_multi_remove_handle(mhnd, hnd[i]);
 	curl_easy_cleanup(hnd[i]);
     }
-    // This can show an invalid read: can it be improved?
-    long status = 0L;
-    if(nurls == 1)
-	curl_easy_getinfo(hnd[0], CURLINFO_RESPONSE_CODE, &status);
     curl_multi_cleanup(mhnd);
     curl_slist_free_all(headers);
 
