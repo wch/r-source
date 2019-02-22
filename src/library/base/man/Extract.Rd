@@ -149,6 +149,9 @@ x$name <- value
   The most common form of indexing a \eqn{k}-dimensional array is to
   specify \eqn{k} indices to \code{[}.  As for vector indexing, the
   indices can be numeric, logical, character, empty or even factor.
+  And again, indexing by factors is equivalent to indexing by the
+  numeric codes, see \sQuote{Atomic vectors} above.
+
   An empty index (a comma separated blank) indicates that all entries in
   that dimension are selected.
   The argument \code{drop} applies to this form of indexing.
