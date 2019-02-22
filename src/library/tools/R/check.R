@@ -2293,7 +2293,7 @@ add_dummies <- function(dir, Log)
                             if (any(grepl("^(Warning|Error|No dataset created|Search path was changed)", out)))
                                 warn <- TRUE
                             msgs <- c(msgs,
-                                     sprintf('Output for data("%s"):\n', f),
+                                     sprintf('Output for data("%s", package = "%s"):\n', f, pkgname),
                                      paste(c(paste0("  ",out), ""),
                                            collapse = "\n"))
                         }
