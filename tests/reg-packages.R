@@ -229,10 +229,17 @@ if(length(msg))
 ##  "prepare_Rd: foo.Rd:14: Section \\Sexpr is unrecognized and will be dropped"
 
 
-## tests here should *NOT* assume recommended packages,
-## let alone where they are installed
-if(dir.exists(file.path("myLib", "exNSS4")) &&
-   dir.exists(file.path(.Library, "Matrix"))) {
+if(dir.exists(file.path("myLib", "exNSS4"))) {
+  require("exNSS4", lib="myLib")
+  validObject(dd <- new("ddiM"))
+  print(is(dd))  #  5 of them ..
+  stopifnot(exprs = {
+            is(dd, "mM")
+      inherits(dd, "mM")
+  })
+  ## tests here should *NOT* assume recommended packages,
+  ## let alone where they are installed
+  if(dir.exists(file.path(.Library, "Matrix"))) {
     for(ns in c(rev(p.lis), "Matrix")) unloadNamespace(ns)
     ## Both exNSS4 and Matrix define "atomicVector" *the same*,
     ## but  'exNSS4'  has it extended - and hence *both* are registered in cache -> "conflicts"
@@ -250,6 +257,7 @@ if(dir.exists(file.path("myLib", "exNSS4")) &&
     ## Once Matrix is attached, we find a unique definition.
     library(Matrix)
     stopifnot(isVirtualClass(getClass("atomicVector")))
+  }
 }
 
 ## clean up

@@ -683,11 +683,7 @@
       \item From \code{setClassUnion()}, if environment variable
       \env{_R_METHODS_SHOW_CHECKSUBCLASSES} is set
       to true, the internal \code{.checkSubclasses()} utility prints
-      debugging info to see if it is used at all after the \pkg{methods}
-      package has been built.  On the other hand, setting
-      \env{_R_METHODS_DONT_CHECKSUBCLASSES} to true, replaces
-      \code{.checkSubclasses()} by a no-op, experimentally, as it may be
-      unneeded (after \pkg{methods} building).
+      debugging info to see where it is used.
 
       \item \code{max.col(m)} with an \code{m} of zero columns now
       returns integer \code{NA} (instead of \code{1}).

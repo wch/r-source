@@ -93,7 +93,8 @@
 	   names(getClassDef("envRefClass")@refMethods), envir = where)
     assign(".onLoad", ..onLoad, envir = where)
     if(isTRUE(as.logical(Sys.getenv("_R_METHODS_DONT_CHECKSUBCLASSES", "false"))))
-        ## change to a no-op (as it seems unneeded after methods setup and occasionally produces wrong warning):
+        ## change to a no-op -- later giving partly broken class hierarchies,
+        ## e.g. in tests/reg-packages.R  inherits(dd, "mM") became FALSE
         assign(".checkSubclasses", function(...){}, envir = where)
     rm(...onLoad, ..onLoad, envir = where)
     dbbase <- file.path(libname, pkgname, "R", pkgname)
