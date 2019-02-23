@@ -282,6 +282,9 @@
 
       \item \code{t.test()} now also returns the standard error (in
       list component \code{stderr}).
+
+      \item \code{model.matrix(*, contrasts.arg = CC)} now warns about
+      invalid \code{contrasts.arg}s.
     }
   }
 

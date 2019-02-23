@@ -1,6 +1,6 @@
 % File src/library/stats/man/model.matrix.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{model.matrix}
@@ -19,8 +19,9 @@ model.matrix(object, \dots)
     method, a model \link{formula} or a \code{\link{terms}} object.}
   \item{data}{a data frame created with \code{\link{model.frame}}.  If
     another sort of object, \code{model.frame} is called first.}
-  \item{contrasts.arg}{A list, whose entries are values (numeric
-    matrices or character strings naming functions) to be used
+  \item{contrasts.arg}{a list, whose entries are values (numeric
+    matrices, \code{\link{function}}s or character strings naming
+    functions) to be used
     as replacement values for the \code{\link{contrasts}}
     replacement function and whose names are the names of
     columns of \code{data} containing \code{\link{factor}}s.}
@@ -47,6 +48,8 @@ model.matrix(object, \dots)
   If \code{contrasts.arg} is specified for a factor it overrides the
   default factor coding for that variable and any \code{"contrasts"}
   attribute set by \code{\link{C}} or \code{\link{contrasts}}.
+  Whereas invalid \code{contrasts.arg}s have been ignored always, they are
+  warned about since \R version 3.6.0.
 
   In an interaction term, the variable whose levels vary fastest is the
   first one to appear in the formula (and not in the term), so in
@@ -94,11 +97,15 @@ utils::str(m <- model.frame(ff, trees))
 mat <- model.matrix(ff, m)
 
 dd <- data.frame(a = gl(3,4), b = gl(4,1,12)) # balanced 2-way
-options("contrasts")
+options("contrasts") # typically 'treatment' (for unordered factors)
 model.matrix(~ a + b, dd)
 model.matrix(~ a + b, dd, contrasts = list(a = "contr.sum"))
-model.matrix(~ a + b, dd, contrasts = list(a = "contr.sum", b = "contr.poly"))
+model.matrix(~ a + b, dd, contrasts = list(a = "contr.sum", b = contr.poly))
 m.orth <- model.matrix(~a+b, dd, contrasts = list(a = "contr.helmert"))
 crossprod(m.orth) # m.orth is  ALMOST  orthogonal
+# invalid contrasts.. ignored with a warning:
+stopifnot(identical(
+   model.matrix(~ a + b, dd),
+   model.matrix(~ a + b, dd, contrasts.arg = "contr.FOO")))
 }
 \keyword{models}
