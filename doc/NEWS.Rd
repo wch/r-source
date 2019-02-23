@@ -279,6 +279,9 @@
       (on some platforms).
 
       \item \code{data()} gains an \code{overwrite} argument.
+
+      \item \code{t.test()} now also returns the standard error (in
+      list component \code{stderr}).
     }
   }
 
