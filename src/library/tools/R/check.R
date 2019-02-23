@@ -380,9 +380,9 @@ add_dummies <- function(dir, Log)
                 out <- R_runR(cmd, R_opts2, env, timeout = timeout)
                 ## htmltools produced non-UTF-8 output in Dec 2015
                 if (R_check_suppress_RandR_message)
-                    filtergrep('^Xlib: *extension "RANDR" missing on display',
-                               out, useBytes = TRUE)
-                else out
+                    out <- filtergrep('^Xlib: *extension "RANDR" missing on display',
+                                      out, useBytes = TRUE)
+                filtergrep("^OMP:", out)  ## LLVM's OpenMP with limits set
             }
 
     td0 <- Inf # updated below
@@ -1647,34 +1647,32 @@ add_dummies <- function(dir, Log)
 
     check_R_code <- function()
     {
-        ## if (!is_base_pkg) {
-            checkingLog(Log, "dependencies in R code")
-            if (do_install) {
-                Rcmd <- paste(opW_shE_F_str,
-                              sprintf("tools:::.check_packages_used(package = \"%s\")\n", pkgname))
+        checkingLog(Log, "dependencies in R code")
+        if (do_install) {
+            Rcmd <- paste(opW_shE_F_str,
+                          sprintf("tools:::.check_packages_used(package = \"%s\")\n", pkgname))
 
-                out <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=NULL")
-                if (length(out)) {
-                    if(any(grepl("(not declared from|Including base/recommended)", out))) warningLog(Log)
-                    else noteLog(Log)
-                    printLog0(Log, paste(c(out, ""), collapse = "\n"))
-                    ## wrapLog(msg_DESCRIPTION)
-                } else resultLog(Log, "OK")
-            } else {
-                ## this needs to read the package code, and will fail on
-                ## syntax errors such as non-ASCII code.
-                Rcmd <- paste(opW_shE_F_str,
-                              sprintf("tools:::.check_packages_used(dir = \"%s\")\n", pkgdir))
+            out <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=NULL")
+            if (length(out)) {
+                if(any(grepl("(not declared from|Including base/recommended)", out))) warningLog(Log)
+                else noteLog(Log)
+                printLog0(Log, paste(c(out, ""), collapse = "\n"))
+                ## wrapLog(msg_DESCRIPTION)
+            } else resultLog(Log, "OK")
+        } else {
+            ## this needs to read the package code, and will fail on
+            ## syntax errors such as non-ASCII code.
+            Rcmd <- paste(opW_shE_F_str,
+                          sprintf("tools:::.check_packages_used(dir = \"%s\")\n", pkgdir))
 
-                out <- R_runR0(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
-                if (length(out)) {
-                    if(any(grepl("not declared from", out))) warningLog(Log)
-                    else noteLog(Log)
-                    printLog0(Log, paste(c(out, ""), collapse = "\n"))
-                    ## wrapLog(msg_DESCRIPTION)
-                } else resultLog(Log, "OK")
-            }
-        ## }
+            out <- R_runR0(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
+            if (length(out)) {
+                if(any(grepl("not declared from", out))) warningLog(Log)
+                else noteLog(Log)
+                printLog0(Log, paste(c(out, ""), collapse = "\n"))
+                ## wrapLog(msg_DESCRIPTION)
+            } else resultLog(Log, "OK")
+        }
 
         ## Check whether methods have all arguments of the corresponding
         ## generic.
