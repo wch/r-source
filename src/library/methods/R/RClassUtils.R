@@ -1802,8 +1802,6 @@ substituteFunctionArgs <-
 .requirePackage <- function(package, mustFind = TRUE)
     topenv(parent.frame())
 
-.PackageEnvironments <- new.env(hash=TRUE) # caching for required packages
-
 ## real version of .requirePackage
 ..requirePackage <- function(package, mustFind = TRUE) {
     value <- package
@@ -1817,8 +1815,6 @@ substituteFunctionArgs <-
                 return(.GlobalEnv)
             if(identical(package, "methods"))
                 return(topenv(parent.frame())) # booting methods
-            if(!is.null(pkg <- .PackageEnvironments[[package]]))
-                return(pkg) #cached, but only if no namespace
         }
     }
     if(is.environment(value))
@@ -1838,29 +1834,11 @@ substituteFunctionArgs <-
         else
           return(NULL)
     }
-    value <- .asEnvironmentPackage(package)
-    assign(package, value, envir = .PackageEnvironments)
-    value
+    getNamespace(package)
 }
 
 .classDefEnv <- function(classDef) {
     .requirePackage(classDef@package)
-}
-
-
-.asEnvironmentPackage <- function(package) {
-    if(identical(package, ".GlobalEnv"))
-        .GlobalEnv
-    else {
-        ##FIXME:  the paste should not be needed
-        pkg <- paste0("package:", package)
-        ## need to allow for versioned installs: prefer exact match.
-        m <- charmatch(pkg, search())
-        if(is.na(m)) # not attached, better be an available namespace
-            getNamespace(package)
-        else
-          as.environment(search()[m])
-    }
 }
 
 ## bootstrap version, mustn't fail
