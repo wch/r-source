@@ -1750,7 +1750,7 @@ pushvpgp <- function(x) {
   if (!is.null(x$vp))
     pushgrobvp(x$vp)
   if (!is.null(x$gp)) {
-    set.gpar(x$gp)
+    set.gpar(x$gp, engineDL=FALSE)
   }
 }
 

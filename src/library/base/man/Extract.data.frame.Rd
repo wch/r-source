@@ -52,12 +52,11 @@
   \code{x[[i]]}), they index the data frame as if it were a list.  In
   this usage a \code{drop} argument is ignored, with a warning.
 
-  The \code{data.frame} method for \code{$}, treats \code{x} as a
-  list, except that (as of R-3.1.0) partial matching of \code{name} to
-  the names of \code{x} will generate a warning; this may become an
-  error in future versions.  The replacement method checks
-  \code{value} for the correct number of rows, and replicates it if
-  necessary.
+  There is no \code{data.frame} method for \code{$}, so \code{x$name}
+  uses the default method which treats \code{x} as a list (with partial
+  matching of column names if the match is unique, see
+  \code{\link{Extract}}).  The replacement method (for \code{$}) checks
+  \code{value} for the correct number of rows, and replicates it if necessary.
 
   When \code{[} and \code{[[} are used with two indices (\code{x[i, j]}
   and \code{x[[i, j]]}) they act like indexing a matrix:  \code{[[} can
@@ -165,6 +164,7 @@ sw[1]        # a one-column data frame
 sw[, 1, drop = FALSE]  # the same
 sw[, 1]      # a (unnamed) vector
 sw[[1]]      # the same
+sw$Fert      # the same (possibly w/ warning, see ?Extract)
 
 sw[1,]       # a one-row data frame
 sw[1,, drop = TRUE]  # a list
@@ -193,6 +193,7 @@ sw[["new2"]] <- letters[1:5] # ditto
 sw[, "new3"] <- LETTERS[1:5] # ditto
 sw$new4 <- 1:5
 sapply(sw, class)
+sw$new  # -> NULL: no unique partial match
 sw$new4 <- NULL              # delete the column
 sw
 sw[6:8] <- list(letters[10:14], NULL, aa = 1:5)

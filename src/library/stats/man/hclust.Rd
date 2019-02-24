@@ -244,8 +244,6 @@ par(opar)
 ### Example 2: Straight-line distances among 10 US cities
 ##  Compare the results of algorithms "ward.D" and "ward.D2"
 
-data(UScitiesD)
-
 mds2 <- -cmdscale(UScitiesD)
 plot(mds2, type="n", axes=FALSE, ann=FALSE)
 text(mds2, labels=rownames(mds2), xpd = NA)

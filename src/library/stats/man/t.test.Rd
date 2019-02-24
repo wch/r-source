@@ -1,6 +1,6 @@
 % File src/library/stats/man/t.test.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{t.test}
@@ -80,6 +80,8 @@ t.test(x, \dots)
   \item{null.value}{the specified hypothesized value of the mean or mean
     difference depending on whether it was a one-sample test or a
     two-sample test.}
+  \item{stderr}{the standard error of the mean (difference), used as
+    denominator in the t-statistic formula.}
   \item{alternative}{a character string describing the alternative
     hypothesis.}
   \item{method}{a character string indicating what type of t-test was

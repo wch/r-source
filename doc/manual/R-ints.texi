@@ -4252,7 +4252,9 @@ Default: unset (warning is reported)
 Optionally check if either argument of the binary operators @code{&&} and
 @code{||} has length greater than one.  The format is the same as for
 _R_CHECK_LENGTH_1_CONDITION_.
-Default: unset (nothing is reported)
+Default: unset (nothing is reported, but
+@samp{package:_R_CHECK_PACKAGE_NAME_,abort,verbose} for the CRAN
+submission checks).
 
 @item _R_CHECK_BUILD_VIGNETTES_SEPARATELY_
 Prior to @R{} 3.6.0, re-building the vignette outputs was done in a
@@ -4296,6 +4298,7 @@ _R_CHECK_PACKAGES_USED_IN_TESTS_USE_SUBDIRS_=TRUE
 _R_CHECK_SHLIB_OPENMP_FLAGS_=TRUE
 _R_CHECK_CONNECTIONS_LEFT_OPEN_=TRUE
 _R_CHECK_FUTURE_FILE_TIMESTAMPS_=TRUE
+_R_CHECK_LENGTH_1_LOGIC2_=package:_R_CHECK_PACKAGE_NAME_,abort,verbose
 @end example
 
 @noindent

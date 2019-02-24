@@ -238,7 +238,7 @@ function(x, ...)
 
     paste0(sprintf("DOI: %s", x$DOI),
            sprintf("\nFrom: %s",
-                   sapply(x$From, paste, collapse = "\n      ")),
+                   vapply(x$From, paste, "", collapse = "\n      ")),
            ifelse((s <- x$Status) == "",
                   "",
                   sprintf("\nStatus: %s", s)),

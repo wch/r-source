@@ -152,8 +152,8 @@ function(contents, packageName, outFile)
     if(is.data.frame(contents))
         contents <-
             cbind(contents$Name,
-                  sapply(contents$Aliases, paste, collapse = " "),
-                  sapply(contents$Keywords, paste, collapse = " "),
+                  vapply(contents$Aliases, paste, "", collapse = " "),
+                  vapply(contents$Keywords, paste, "", collapse = " "),
                   contents$Title)
     else
         contents <-
@@ -191,8 +191,9 @@ function(contents, type = NULL)
     }
 
     ## Drop all Rd objects marked as 'internal' from the index.
-    idx <- is.na(sapply(keywords, function(x) match("internal", x)))
-
+    idx <- (vapply(keywords,
+                   function(x) match("internal", x, 0L),
+                   0L) == 0L)
     index <- contents[idx, c("Name", "Title"), drop = FALSE]
     if(nrow(index)) {
         ## If a \name is not a valid \alias, replace it by the first

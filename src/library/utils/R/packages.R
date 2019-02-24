@@ -1121,7 +1121,7 @@ compareVersion <- function(a, b)
     }
     done <- names(DL[lens == 0L]); DL <- DL[lens > 0L]
     while(length(DL)) {
-        OK <- sapply(DL, function(x) all(x %in% done))
+        OK <- vapply(DL, function(x) all(x %in% done), NA)
         if(!any(OK)) {
             warning(gettextf("packages %s are mutually dependent",
                              paste(sQuote(names(DL)), collapse = ", ")),

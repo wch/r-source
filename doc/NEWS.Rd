@@ -256,22 +256,42 @@
       sorting and still treat ties.
 
       \item \code{format(x)} gives a more user friendly error message in
-      the case where no method is defined. Additionally, a minimal method
-      is provided in \code{format.default(x)} when \code{isS4(x)} is true.
+      the case where no method is defined.  A minimal method is provided
+      in \code{format.default(x)} when \code{isS4(x)} is true.
 
-      \item \code{which(x)} now also works when \code{x} is a long vector,
-      thanks to Suharto Anggono's \PR{17201}.
+      \item \code{which(x)} now also works when \code{x} is a long
+      vector, thanks to Suharto Anggono's \PR{17201}.  \strong{NB}: this
+      may return a double result, breaking the previous guarantee of an
+      integer result.
 
-      \item \code{seq.default()} is more careful to return an \code{integer}
-      (as opposed to \code{double}) stored result when its arguments are
-      large and/or objects; see comment #9 of Suharto Anggono's \PR{17497}.
+      \item \code{seq.default()} is more careful to return an
+      \code{integer} (as opposed to \code{double}) result when its
+      arguments are large and/or classed objects; see comment #9 of
+      Suharto Anggono's \PR{17497}.
+
+      \item The \code{plot()} method for \code{lm} and \code{glm} fits,
+      \code{plot.lm()}, gains a new option \code{iter.smooth} with a
+      default of \code{0} for binomial fits, no longer down-weighting
+      when smoothing the residuals.
+
+      \item \code{zip()} passes its list of files \emph{via} standard
+      input to the external command when too long for the command line
+      (on some platforms).
+
+      \item \code{data()} gains an \code{overwrite} argument.
+
+      \item \code{t.test()} now also returns the standard error (in
+      list component \code{stderr}).
+
+      \item \code{model.matrix(*, contrasts.arg = CC)} now warns about
+      invalid \code{contrasts.arg}s.
     }
   }
 
   \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
-      \item The C++ compiler options selected default to the C++11
-      standard if supported, otherwise to the C++98 standard.
+      \item The  options selected  for the C++ compiler default to the
+      C++11 standard if supported, otherwise to the C++98 standard.
 
       \item Visibility macros such as \samp{C_VISIBILITY} can now be
       user-set (including to empty), e.g.\sspace{}in \file{config.site}.
@@ -295,7 +315,7 @@
       \item The special-casing of \samp{CFLAGS}, \samp{CXXFLAGS} and
       \samp{FFLAGS} for Intel compilers on Linux has been removed: we do
       not have recent experience but the generic defaults now chosen are
-      the same as those previously special-cased for \samp{x86_64}.Z
+      the same as those previously special-cased for \samp{x86_64}.
 
       If necessary, override the defaults on the \command{configure}
       command line or in file \file{config.site}.
@@ -322,12 +342,12 @@
       into place once the installation is complete.  The benefit is that
       partially-installed packages are hidden from the view of other \R
       sessions.
-      
+
       The overall default is set by environment variable
-      \env{R_STAGED_INSTALL}.  \command{R CMD INSTALL} has new options
+      \env{R_INSTALL_STAGED}.  \command{R CMD INSTALL} has new options
       \option{--staged-install} and \option{--no-staged-install}, and
       packages can use the \samp{StagedInstall} field in their
-      \file{DESCRIPTION} file to opt in or (more likely) out.
+      \file{DESCRIPTION} file to opt out.
 
       \item The interpretation of source code with extension \file{.f}
       is changing.  Previously this denoted FORTRAN 77 code, but current
@@ -341,11 +361,11 @@
       to replace features marked \sQuote{obsolescent} in Fortran 95
       which \command{gfortran} 8.x has started to warn about.
 
-      \item Packages containing files in \file{src} with extensions
-      \file{.f90} or \file{.f95} are now linked using the C or C++
-      compiler rather than the Fortran 9x compiler.  This is consistent
-      with fixed-form Fortran code and allows mixing of C++ and
-      free-form Fortran on most platforms.
+      \item Packages containing files in the \file{src} directory with
+      extensions \file{.f90} or \file{.f95} are now linked using the C
+      or C++ compiler rather than the Fortran 9x compiler.  This is
+      consistent with fixed-form Fortran code and allows mixing of C++
+      and free-form Fortran on most platforms.
 
       Consequentially, a package which includes free-form Fortran 9x
       code which uses OpenMP should include \samp{SHLIB_OPENMP_CFLAGS}
@@ -398,6 +418,10 @@
       It now checks for duplicated vignette titles (also known as
       \sQuote{index entries}): they are used as hyperlinks on
       \acronym{CRAN} package pages and so do need to be unique.
+
+      \item \command{R CMD check} has more comprehensive checks on the
+      \file{data} directory and the functioning of \code{data()} in a
+      package.
     }
   }
 
@@ -418,10 +442,6 @@
 
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
-      \item \code{$.data.frame} had become an expensive version of
-      the default method, so has been removed. (Thanks to Radford Neal
-      for picking this up and Duncan Murdoch for providing a patch.)
-
       \item Argument \code{compressed} of \code{untar()} is
       deprecated --- it is only used for external \code{tar} commands
       which increasingly for extraction auto-detect compression and
@@ -448,6 +468,10 @@
       \item Make macros \samp{F77}, \samp{FCPIFCPLAGS} and
       \samp{SHLIB_OPENMP_FCFLAGS} are deprecated in favour of \samp{FC},
       \samp{FPICFLAGS} and \samp{SHLIB_OPENMP_FFLAGS} respectively.
+
+      \item \code{$.data.frame} had become an expensive version of
+      the default method, so has been removed. (Thanks to Radford Neal
+      for picking this up and to Duncan Murdoch for providing a patch.)
     }
   }
 
@@ -657,17 +681,18 @@
       \item \code{strtoi("", base)} now gives \code{NA} on all platforms,
       following its documentation.  Reported by Michael Chirico.
 
-      \item In the definition of an S4 class, prototype elements are now
-      checked to match the slots of the class.  Reported by Bill Dunlap.
+      \item In the definition of an S4 class, prototype elements are
+      checked against the slots of the class, with giving a prototype
+      for an undefined slot now being an error.  (Reported by Bill
+      Dunlap.)
 
       \item From \code{setClassUnion()}, if environment variable
       \env{_R_METHODS_SHOW_CHECKSUBCLASSES} is set
       to true, the internal \code{.checkSubclasses()} utility prints
-      debugging info to see if it is used at all after the \pkg{methods}
-      package has been built.  On the other hand, setting
-      \env{_R_METHODS_DONT_CHECKSUBCLASSES} to true, replaces
-      \code{.checkSubclasses()} by a no-op, experimentally, as it may be
-      unneeded (after \pkg{methods} building).
+      debugging info to see where it is used.
+
+      \item \code{max.col(m)} with an \code{m} of zero columns now
+      returns integer \code{NA} (instead of \code{1}).
     }
   }
 }

@@ -2519,6 +2519,31 @@ stopifnot(identical(readLines(tf), c123))
 ## writeLines had opened the output for writing before readLines() read it
 
 
+## max.col(<empty>)
+stopifnot(identical(NA_integer_, max.col(matrix(,1,0))))
+## gave 1 in R <= 3.5.x
+
+
+## model.matrix() should warn on invalid 'contrasts.arg'
+## suggested by Ben Bolker on R-devel list, Feb 20, 2019
+data(warpbreaks)
+   mf1 <- model.matrix(~tension, data=warpbreaks) # default
+tools::assertWarning(
+   mf2 <- model.matrix(~tension, data=warpbreaks, contrasts.arg = "contr.sum") )# wrong
+tools::assertWarning(
+   mf3 <- model.matrix(~tension, data=warpbreaks, contrasts.arg = contr.sum) )  # wrong
+   mf4 <- model.matrix(~tension, data=warpbreaks, contrasts.arg = list(tension=contr.sum))
+stopifnot(exprs = {
+    identical(mf1, mf2)
+    identical(mf1, mf3)
+    ## and mf4 has sum contrasts :
+    is.matrix(C <- attr(mf4, "contrasts")$tension)
+    identical(dim(C), 3:2)
+    all.equal(unname(C), rbind(diag(2), -1))
+})
+## gave no warnings but same results in R <= 3.5.0
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

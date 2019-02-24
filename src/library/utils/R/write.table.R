@@ -51,7 +51,10 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
                                     is.character(x) || is.factor(x))))
             else numeric()
         ## fix up embedded matrix columns into separate cols:
-        if(any(sapply(x, function(z) length(dim(z)) == 2 && dim(z)[2L] > 1))) {
+        if(any(vapply(x,
+                      function(z)
+                          length(dim(z)) == 2 && dim(z)[2L] > 1,
+                      NA))) {
             c1 <- names(x)
 	    x <- as.matrix(x, rownames.force = makeRownames)
 	    d <- dimnames(x)

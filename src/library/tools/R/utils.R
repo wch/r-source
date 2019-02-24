@@ -1615,6 +1615,8 @@ nonS3methods <- function(package)
              ##        they should not need to be repeated here:
              Matrix = c("qr.Q", "qr.R", "qr.coef", "qr.fitted",
                         "qr.qty", "qr.qy", "qr.resid"),
+             PerformanceAnalytics = c("mean.LCL", "mean.UCL",
+                                      "mean.geometric", "mean.stderr"),
              RCurl = "merge.list",
              RNetCDF = c("close.nc", "dim.def.nc", "dim.inq.nc",
                          "dim.rename.nc", "open.nc", "print.nc"),

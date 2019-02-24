@@ -1,7 +1,7 @@
 #  File src/library/tools/R/makeLazyLoad.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@ code2LazyLoadDB <-
     function(package, lib.loc = NULL,
              keep.source = getOption("keep.source.pkgs"),
              keep.parse.data = getOption("keep.parse.data.pkgs"),
-             compress = TRUE)
+             compress = TRUE, set.install.dir = NULL)
 {
     pkgpath <- find.package(package, lib.loc, quiet = TRUE)
     if(!length(pkgpath))
@@ -33,7 +33,8 @@ code2LazyLoadDB <-
                   package = package, lib.loc = lib.loc,
                   keep.source = keep.source, keep.parse.data = keep.parse.data,
                   partial = TRUE))
-        makeLazyLoadDB(ns, dbbase, compress = compress)
+        makeLazyLoadDB(ns, dbbase, compress = compress,
+                       set.install.dir = set.install.dir)
     }
     else
         stop("all packages should have a NAMESPACE")
@@ -69,7 +70,8 @@ list_data_in_pkg <- function(package, lib.loc = NULL, dataDir = NULL)
     if(dir.exists(dataDir)) {
         if(file.exists(sv <- file.path(dataDir, "Rdata.rds"))) {
             ans <- readRDS(sv)
-        } else if(file.exists(sv <- file.path(dataDir, "datalist"))) {
+        } else if(file.exists(sv <- file.path(dataDir, "datalist")) &&
+                  !file.info(sv)$isdir) { # package cp4p had a directory
             ## BioC mess this file up, of course!
             ans <- strsplit(readLines(sv, warn = FALSE), ":")
             nms <- lapply(ans, function(x) x[1L])
@@ -85,8 +87,10 @@ list_data_in_pkg <- function(package, lib.loc = NULL, dataDir = NULL)
             dataEnv <- new.env(hash=TRUE)
             names(ans) <- files
             for(f in files) {
-                utils::data(list = f, package = package, lib.loc = lib.loc,
-                            envir = dataEnv)
+                ## This occasionally fails on uninstalled sources,
+                ## hence the tryCatch().  And e.g. CHNOSZ gave
+                ## messages and cricketr gave warnings.
+                tryCatch(suppressMessages(suppressWarnings(utils::data(list = f, package = package, lib.loc = lib.loc, envir = dataEnv))), error = identity)
                 ans[[f]] <- ls(envir = dataEnv, all.names = TRUE)
                 rm(list = ans[[f]], envir = dataEnv)
             }
@@ -115,7 +119,7 @@ data2LazyLoadDB <- function(package, lib.loc = NULL, compress = TRUE)
             warning("package seems to be using lazy loading for data already")
         }
 	else {
-            dataEnv <- new.env(hash=TRUE)
+            dataEnv <- new.env(hash = TRUE)
             tmpEnv <- new.env()
             f0 <- files <- list_files_with_type(dataDir, "data")
             ## omit compression extensions
@@ -125,9 +129,9 @@ data2LazyLoadDB <- function(package, lib.loc = NULL, compress = TRUE)
             loaded <- character(0L)
             for(f in files) {
                 utils::data(list = f, package = package, lib.loc = lib.loc,
-                        envir = dataEnv)
+                        envir = dataEnv, overwrite = TRUE)
                 utils::data(list = f, package = package, lib.loc = lib.loc,
-                        envir = tmpEnv)
+                        envir = tmpEnv, overwrite = TRUE)
                 tmp <- ls(envir = tmpEnv, all.names = TRUE)
                 rm(list = tmp, envir = tmpEnv)
                 dlist[[f]] <- tmp
@@ -155,7 +159,7 @@ data2LazyLoadDB <- function(package, lib.loc = NULL, compress = TRUE)
 }
 
 makeLazyLoadDB <- function(from, filebase, compress = TRUE, ascii = FALSE,
-                           variables)
+                           variables, set.install.dir = NULL)
 {
     ## pre-empt any problems with interpretation of 'ascii'
     ascii <- as.logical(ascii)
@@ -195,7 +199,7 @@ makeLazyLoadDB <- function(from, filebase, compress = TRUE, ascii = FALSE,
 
     lazyLoadDBinsertVariable <- function(n, e, file, ascii, compress, hook) {
         x <- .Internal(getVarsFromFrame(n, e, FALSE))
-       .Internal(lazyLoadDBinsertValue(x[[1L]], file, ascii, compress, hook))
+        .Internal(lazyLoadDBinsertValue(x[[1L]], file, ascii, compress, hook))
     }
 
     mapfile <- paste0(filebase, ".rdx")
@@ -238,6 +242,15 @@ makeLazyLoadDB <- function(from, filebase, compress = TRUE, ascii = FALSE,
                 bindings <- envlist(e)
                 key <- NULL
 
+                if (!is.null(set.install.dir)) {
+                    if (inherits(e, "srcfilecopy") &&
+                            "filename" %in% names(bindings))
+                        bindings[["filename"]] <- set.install.dir
+
+                    if (identical(e, nsinfo) && "path" %in% names(bindings))
+                        bindings[["path"]] <- set.install.dir
+                }
+
                 if (inherits(e, "srcfile"))
                     key <- lazyenvhook(e, bindings, c("lines", "parseData"))
 
@@ -268,6 +281,13 @@ makeLazyLoadDB <- function(from, filebase, compress = TRUE, ascii = FALSE,
     }
     else stop("source must be an environment or a list")
 
+    if (!is.null(set.install.dir) && is.environment(from)
+            && ".__NAMESPACE__." %in% vars) {
+        x <- .Internal(getVarsFromFrame(".__NAMESPACE__.", from, FALSE))
+        nsinfo <- x[[1L]]
+    } else
+        nsinfo <- NULL
+
     for (i in seq_along(vars)) {
         key <- if (is.null(from) || is.environment(from))
             lazyLoadDBinsertVariable(vars[i], from, datafile,
@@ -292,7 +312,8 @@ makeLazyLoadDB <- function(from, filebase, compress = TRUE, ascii = FALSE,
 makeLazyLoading <-
     function(package, lib.loc = NULL, compress = TRUE,
              keep.source = getOption("keep.source.pkgs"),
-             keep.parse.data = getOption("keep.parse.data.pkgs"))
+             keep.parse.data = getOption("keep.parse.data.pkgs"),
+             set.install.dir = NULL)
 {
     if(!is.logical(compress) && compress %notin% c(2,3))
 	stop(gettextf("invalid value for '%s' : %s", "compress",
@@ -322,7 +343,8 @@ makeLazyLoading <-
         code2LazyLoadDB(package, lib.loc = lib.loc,
                         keep.source = keep.source,
                         keep.parse.data = keep.parse.data,
-                        compress = compress)
+                        compress = compress,
+                        set.install.dir = set.install.dir)
         file.copy(loaderFile, codeFile, TRUE)
     }
 

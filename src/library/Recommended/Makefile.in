@@ -41,7 +41,7 @@ stamp-recommended: $(OBJECTS)
 	@touch $@
 
 ## need to allow parallel installs
-INSTALL_OPTS = --pkglock --data-compress=xz
+INSTALL_OPTS = --pkglock --data-compress=xz --no-staged-install
 @BYTE_COMPILE_PACKAGES_FALSE@R_NO_BASE_COMPILE = true
 
 ## On e.g. Solaris/FreeBSD if the top-level make is GNU make it will

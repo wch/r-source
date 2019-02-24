@@ -52,3 +52,15 @@ setClassUnion("atomicVector", ## "double" is not needed, and not liked by some
 setClassUnion("array_or_vector",
 	      members = c("array", "matrix", "atomicVector"))
 
+
+## Non trivial class union (in the sense that subclasses are S4)
+## derived from a Matrix pkg analogon:
+## NB:  exportClasses(..) all these *but* "mM" (!)
+setClass("M", contains = "VIRTUAL",
+	 slots = c(Dim = "integer", Dimnames = "list"),
+	 prototype = prototype(Dim = integer(2), Dimnames = list(NULL,NULL)))
+setClass("dM",    contains = c("M", "VIRTUAL"), slots = c(x = "numeric"))
+setClass("diagM", contains = c("M", "VIRTUAL"), slots = c(diag = "character"))
+setClass("ddiM", contains = c("diagM", "dM"))
+## now the class union .. that is *NOT* exported
+setClassUnion("mM", members = c("matrix", "M"))

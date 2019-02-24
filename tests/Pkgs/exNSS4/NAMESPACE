@@ -16,4 +16,5 @@ exportMethods(
 
 ## The "Matrix-like"
 exportClasses("atomicVector", "array_or_vector")
+exportClasses("M", "dM", "diagM", "ddiM") ## but *not* "mM" !
 

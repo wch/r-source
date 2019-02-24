@@ -552,11 +552,13 @@ function(x)
         ## Otherwise we do not know.
         is_FOSS <- if(any(components == "Unlimited")) {
             TRUE
-        } else if(any(sapply(expansions,
-                             function(e) verifiable(e$FOSS)))) {
+        } else if(any(vapply(expansions,
+                             function(e) verifiable(e$FOSS),
+                             NA))) {
             TRUE
-        } else if(all(sapply(expansions,
-                             function(e) any(e$FOSS == "no")))) {
+        } else if(all(vapply(expansions,
+                             function(e) any(e$FOSS == "no"),
+                             NA))) {
             FALSE
         } else
             NA
@@ -573,14 +575,16 @@ function(x)
         ## Otherwise, we do not know.
         restricts_use <- if(is_verified) {
             FALSE
-        } else if(any(sapply(expansions,
+        } else if(any(vapply(expansions,
                              function(e)
                              (length(e) &&
-                              all(e$Restricts_use == "no"))))) {
+                              all(e$Restricts_use == "no")),
+                             NA))) {
             FALSE
-        } else if(all(sapply(expansions,
+        } else if(all(vapply(expansions,
                              function(e)
-                             any(e$Restricts_use == "yes")))) {
+                                 any(e$Restricts_use == "yes"),
+                             NA))) {
             TRUE
         } else
             NA
@@ -597,9 +601,10 @@ function(x)
                 extensions <-
                     data.frame(components = elements[ind],
                                extensible =
-                               sapply(expansions[pos[ind]],
+                               vapply(expansions[pos[ind]],
                                       function(e)
-                                      verifiable(e$Extensible)),
+                                          verifiable(e$Extensible),
+                                      NA),
                                stringsAsFactors = FALSE)
         }
 
@@ -742,8 +747,9 @@ function(db)
     ## To get the 'packages' list into a data frame without I() ...
     out$Packages <- packages
     cat(formatDL(out$Licenses,
-                 sapply(out$Packages,
-                        function(p) paste(unique(p), collapse = " ")),
+                 vapply(out$Packages,
+                        function(p) paste(unique(p), collapse = " "),
+                        ""),
                  style = "list"),
         sep = "\n\n")
     invisible(out)
@@ -802,9 +808,10 @@ function(x)
             constraints <-
                 unlist(strsplit(v, "[[:space:]]*,[[:space:]]*"))
             entries <-
-                entries[sapply(entries$Version,
+                entries[vapply(entries$Version,
                                .numeric_version_meets_constraints_p,
-                               constraints), ]
+                               constraints,
+                               FUN.VALUE = NA), ]
         }
         entries
     }

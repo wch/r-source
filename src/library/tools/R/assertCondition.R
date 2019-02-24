@@ -44,7 +44,9 @@ assertCondition <-
 	    invisible(res)
         }
 	else {
-	    ii <- sapply(res, function(cond) any(class(cond) %in% conds))
+	    ii <- vapply(res,
+                         function(cond) any(class(cond) %in% conds),
+                         NA)
 	    if(any(ii)) {
                 if(verbose) {
                     found <-
@@ -75,7 +77,9 @@ assertError <- function(expr, verbose = FALSE) {
                       call. = FALSE)
              )
     if(verbose) {
-        error <- res[ sapply(res, function(cond) "error" %in% class(cond)) ]
+        error <- res[vapply(res,
+                            function(cond) "error" %in% class(cond),
+                            NA)]
         message(sprintf("Asserted error: %s", error[[1]]$message))
     }
     invisible(res)
@@ -84,10 +88,14 @@ assertError <- function(expr, verbose = FALSE) {
 assertWarning <- function(expr, verbose = FALSE) {
     d.expr <- .deparseTrim(substitute(expr), cutoff = 30L)
     res <- assertCondition(expr, "warning", .exprString = d.expr)
-    if(any(sapply(res, function(cond) "error" %in% class(cond))))
+    if(any(vapply(res,
+                  function(cond) "error" %in% class(cond),
+                  NA)))
         stop(gettextf("Got warning in evaluating %s, but also an error", d.expr))
     if(verbose) {
-        warning <- res[ sapply(res, function(cond) "warning" %in% class(cond)) ]
+        warning <- res[vapply(res,
+                              function(cond) "warning" %in% class(cond),
+                              NA)]
         message(sprintf("Asserted warning: %s", warning[[1]]$message))
     }
     invisible(res)

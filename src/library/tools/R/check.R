@@ -380,9 +380,9 @@ add_dummies <- function(dir, Log)
                 out <- R_runR(cmd, R_opts2, env, timeout = timeout)
                 ## htmltools produced non-UTF-8 output in Dec 2015
                 if (R_check_suppress_RandR_message)
-                    filtergrep('^Xlib: *extension "RANDR" missing on display',
-                               out, useBytes = TRUE)
-                else out
+                    out <- filtergrep('^Xlib: *extension "RANDR" missing on display',
+                                      out, useBytes = TRUE)
+                filtergrep("^OMP:", out)  ## LLVM's OpenMP with limits set
             }
 
     td0 <- Inf # updated below
@@ -660,8 +660,9 @@ add_dummies <- function(dir, Log)
         bad_files <- allfiles[grepl("[[:cntrl:]\"*/:<>?\\|]",
                                     basename(allfiles))]
         is_man <- endsWith(dirname(allfiles), "man")
-        bad <- sapply(strsplit(basename(allfiles[is_man]), ""),
-                      function(x) any(grepl("[^ -~]|%", x)))
+        bad <- vapply(strsplit(basename(allfiles[is_man]), ""),
+                      function(x) any(grepl("[^ -~]|%", x)),
+                      NA)
         if (length(bad))
             bad_files <- c(bad_files, (allfiles[is_man])[bad])
         bad <- tolower(basename(allfiles))
@@ -1520,9 +1521,10 @@ add_dummies <- function(dir, Log)
             if (any(suspect)) {
                 ## check they are non-empty
                 suspect <- alldirs[suspect]
-                suspect <- suspect[sapply(suspect, function(x) {
+                suspect <- suspect[vapply(suspect, function(x) {
                     length(dir(x, all.files = TRUE)) > 2L
-                })]
+                    },
+                    NA)]
                 if (length(suspect)) {
                     if (!any) warningLog(Log)
                     any <- TRUE
@@ -1645,34 +1647,32 @@ add_dummies <- function(dir, Log)
 
     check_R_code <- function()
     {
-        ## if (!is_base_pkg) {
-            checkingLog(Log, "dependencies in R code")
-            if (do_install) {
-                Rcmd <- paste(opW_shE_F_str,
-                              sprintf("tools:::.check_packages_used(package = \"%s\")\n", pkgname))
+        checkingLog(Log, "dependencies in R code")
+        if (do_install) {
+            Rcmd <- paste(opW_shE_F_str,
+                          sprintf("tools:::.check_packages_used(package = \"%s\")\n", pkgname))
 
-                out <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=NULL")
-                if (length(out)) {
-                    if(any(grepl("(not declared from|Including base/recommended)", out))) warningLog(Log)
-                    else noteLog(Log)
-                    printLog0(Log, paste(c(out, ""), collapse = "\n"))
-                    ## wrapLog(msg_DESCRIPTION)
-                } else resultLog(Log, "OK")
-            } else {
-                ## this needs to read the package code, and will fail on
-                ## syntax errors such as non-ASCII code.
-                Rcmd <- paste(opW_shE_F_str,
-                              sprintf("tools:::.check_packages_used(dir = \"%s\")\n", pkgdir))
+            out <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=NULL")
+            if (length(out)) {
+                if(any(grepl("(not declared from|Including base/recommended)", out))) warningLog(Log)
+                else noteLog(Log)
+                printLog0(Log, paste(c(out, ""), collapse = "\n"))
+                ## wrapLog(msg_DESCRIPTION)
+            } else resultLog(Log, "OK")
+        } else {
+            ## this needs to read the package code, and will fail on
+            ## syntax errors such as non-ASCII code.
+            Rcmd <- paste(opW_shE_F_str,
+                          sprintf("tools:::.check_packages_used(dir = \"%s\")\n", pkgdir))
 
-                out <- R_runR0(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
-                if (length(out)) {
-                    if(any(grepl("not declared from", out))) warningLog(Log)
-                    else noteLog(Log)
-                    printLog0(Log, paste(c(out, ""), collapse = "\n"))
-                    ## wrapLog(msg_DESCRIPTION)
-                } else resultLog(Log, "OK")
-            }
-        ## }
+            out <- R_runR0(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
+            if (length(out)) {
+                if(any(grepl("not declared from", out))) warningLog(Log)
+                else noteLog(Log)
+                printLog0(Log, paste(c(out, ""), collapse = "\n"))
+                ## wrapLog(msg_DESCRIPTION)
+            } else resultLog(Log, "OK")
+        }
 
         ## Check whether methods have all arguments of the corresponding
         ## generic.
@@ -2210,6 +2210,7 @@ add_dummies <- function(dir, Log)
                 printLog0(Log, paste(c(out, ""), collapse = "\n"))
                 # wrapLog(msg_DESCRIPTION)
             } else resultLog(Log, "OK")
+
         } ## FIXME, what if no install?
     }
 
@@ -2218,20 +2219,88 @@ add_dummies <- function(dir, Log)
         ## Check contents of 'data'
         if (!is_base_pkg && dir.exists("data")) {
             checkingLog(Log, "contents of 'data' directory")
+            warn <- FALSE
+            msgs <- character()
             fi <- list.files("data")
+            dataFiles <- basename(list_files_with_type("data", "data"))
             if (!any(grepl("\\.[Rr]$", fi))) { # code files can do anything
-                dataFiles <- basename(list_files_with_type("data", "data"))
                 odd <- fi %w/o% c(dataFiles, "datalist")
                 if (length(odd)) {
-                    warningLog(Log)
-                    msg <-
+                    warn <-TRUE
+                    msgs <-
                         c(sprintf("Files not of a type allowed in a %s directory:\n",
                                   sQuote("data")),
                           paste0(.pretty_format(odd), "\n"),
                           sprintf("Please use e.g. %s for non-R data files\n",
-                                  sQuote("inst/extdata")))
-                    printLog0(Log, msg)
-                } else resultLog(Log, "OK")
+                                  sQuote("inst/extdata")),
+                          "\n")
+                }
+            }
+            if ("datalist" %in% fi) {
+                if(file.info(sv <- file.path("data", "datalist"))$isdir) {
+                    warn <- TRUE
+                    msgs <- c(msgs, sprintf("%s is a directory\n",
+                                            sQuote("data/datalist"), "\n"))
+                }  else {
+                    ## Now check it has the right format:
+                    ## it is read in list_data_in_pkg()
+                    ## Allowed lines are
+                    ## foo
+                    ## foo: bar ...
+                    ## where bar ... and standalone foo are object names
+                    dl <- readLines(sv, warn = FALSE)
+                    if (any(bad <- !grepl("^[^ :]*($|: +[[:alpha:].])", dl))) {
+                        warn <- TRUE
+                        msgs <- c(msgs,
+                                  sprintf("File %s contains malformed line(s):\n",
+                                          sQuote("data/datalist")),
+                                 paste0(.pretty_format(dl[bad]), "\n"))
+                    }
+                }
+            }
+            ans <- list_data_in_pkg(dataDir = file.path(pkgdir, "data"))
+            if (length(ans)) {
+                bad <-
+                    names(ans)[sapply(ans, function(x) ".Random.seed" %in% x)]
+                if (length(bad)) {
+                    warn <- TRUE
+                    msg <- if (length(bad) > 1L)
+                         c(sprintf("Object named %s found in datasets:\n",
+                                  sQuote(".Random.seed")),
+                          paste0(.pretty_format(bad), "\n"),
+                          "Please remove it.\n")
+                    else
+                        c(sprintf("Object named %s found in dataset: ",
+                                  sQuote(".Random.seed")),
+                          sQuote(bad), "\nPlease remove it.\n")
+                    msgs <- c(msgs, msg)
+                }
+            }
+            if (do_install) {
+                ## check that all the datasets can be loaded cleanly by data()
+                ## except for LazyData.
+                instdir <- file.path(libdir, pkgname)
+                if (!file.exists(file.path(instdir, "data", "Rdata.rdb"))) {
+                    files <- basename(list_files_with_type("data", "data"))
+                    files <- unique(basename(file_path_sans_ext(files, TRUE)))
+                    for (f in files) {
+                        cmd <- sprintf('tools:::.check_package_datasets2("%s", "%s")',
+                                       f, pkgname)
+                        out <- R_runR(cmd, R_opts2)
+                        if (length(out)) {
+                            if (any(grepl("^(Warning|Error|No dataset created|Search path was changed)", out)))
+                                warn <- TRUE
+                            msgs <- c(msgs,
+                                     sprintf('Output for data("%s", package = "%s"):\n', f, pkgname),
+                                     paste(c(paste0("  ",out), ""),
+                                           collapse = "\n"))
+                        }
+                    }
+                }
+            }
+            if (length(msgs)) {
+                if (warn) warningLog(Log) else noteLog(Log)
+                printLog0(Log, msgs)
             } else resultLog(Log, "OK")
         }
 
@@ -3063,15 +3132,17 @@ add_dummies <- function(dir, Log)
             if (file.exists(instlog) && dir.exists('src')) {
                 checkingLog(Log, "compilation flags used")
                 lines <- readLines(instlog, warn = FALSE)
-                poss <- grep(" -W", lines,  useBytes = TRUE, value = TRUE)
+                poss <- grep(" -[Wmf]", lines,  useBytes = TRUE, value = TRUE)
+                ## compilation lines start at the left margin,
+                ## and are not configure/echo lines
+                poss <- grep("^(\\s|checking|echo)", poss, perl = TRUE,
+                             invert = TRUE, value = TRUE, useBytes = TRUE)
                 tokens <- unique(unlist(strsplit(poss, " ", perl = TRUE,
                                                  useBytes = TRUE)))
+                tokens <- gsub('["\']$', "", tokens,
+                               perl = TRUE, useBytes = TRUE)
                 warns <- grep("^[-]W", tokens,
                               value = TRUE, perl = TRUE, useBytes = TRUE)
-                ## qtbase uses something like
-                ## cmake ../src -DR_CXX="g++" -DCMAKE_CXX_FLAGS="-std=gnu++11 -g -O2 -Wall -pedantic -mtune=native -Wno-ignored-attributes -Wno-deprecated-declarations" ...
-                ## which reports trailing " on last token
-                warns <- gsub('["\']$', "", warns, perl = TRUE, useBytes = TRUE)
                 ## Not sure -Wextra and -Weverything are portable, though
                 ## -Werror is not compiler independent
                 ##   (as what is a warning is not)
@@ -3087,7 +3158,18 @@ add_dummies <- function(dir, Log)
                 ## next set are about unsafe optimizations
                 opts <- grep("-f(fast-math|unsafe-math-optimizations|associative-math|reciprocal-math)",
                              tokens, useBytes = TRUE, value = TRUE)
-                warns <- c(warns, diags, opts)
+                machs <- grep("^[-]m", tokens,
+                              value = TRUE, perl = TRUE, useBytes = TRUE)
+                ## The only -m flag which is reasonably portable is -mtune
+                machs <- setdiff(machs,
+                                 c(except, c("-m", # not a flag
+                                             "-msse2", "-mfpmath=sse", # SAFE_FFLAGS
+                                             "-m32", # BRugs
+                                             "-m64", # RcppParallel
+                                             "-multiply_defined" # macOS
+                                             )))
+                machs <- machs[!startsWith(machs, "-mtune=")]
+                warns <- c(warns, diags, opts, machs)
                 if(any(startsWith(warns, "-Wno-")) || length(diags)) {
                     warningLog(Log)
                     msg <- c("Compilation used the following non-portable flag(s):",
@@ -3095,7 +3177,7 @@ add_dummies <- function(dir, Log)
                              "including flag(s) suppressing warnings")
                     printLog0(Log, paste(c(msg,""), collapse = "\n"))
                 } else if(length(warns)) {
-                    warningLog(Log)  # might consider NOTE instead
+                    noteLog(Log) # or warningLog?
                     msg <- c("Compilation used the following non-portable flag(s):",
                              .pretty_format(sort(warns)))
                     printLog0(Log, paste(c(msg,""), collapse = "\n"))
@@ -4879,7 +4961,9 @@ add_dummies <- function(dir, Log)
             }
             mandatory <- c("Package", "Version", "License", "Description",
                            "Title", "Author", "Maintainer")
-            OK <- sapply(desc[mandatory], function(x) !is.na(x) && nzchar(x))
+            OK <- vapply(desc[mandatory],
+                         function(x) !is.na(x) && nzchar(x),
+                         NA)
             if(!all(OK)) {
                 fail <- mandatory[!OK]
                 msg <- ngettext(length(fail),
@@ -5021,7 +5105,7 @@ add_dummies <- function(dir, Log)
             lens <- lengths(imp)
             imp <- imp[lens == 2L]
             nm <- sapply(imp, "[[", 1)
-            lens <- sapply(imp, function(x) length(x[[2]]))
+            lens <- vapply(imp, function(x) length(x[[2L]]), 0L)
             bad <- nm[lens == 0L]
             if(length(bad)) {
                 OK <- FALSE
@@ -5643,6 +5727,8 @@ add_dummies <- function(dir, Log)
         Sys.setenv("_R_CHECK_SHLIB_OPENMP_FLAGS_" = "TRUE")
         Sys.setenv("_R_CHECK_FUTURE_FILE_TIMESTAMPS_" = "TRUE")
         Sys.setenv("_R_CHECK_RD_CONTENTS_KEYWORDS_" = "TRUE")
+        Sys.setenv("_R_CHECK_LENGTH_1_LOGIC2_" =
+                       "package:_R_CHECK_PACKAGE_NAME_,abort,verbose")
         R_check_vc_dirs <- TRUE
         R_check_executables_exclusions <- FALSE
         R_check_doc_sizes2 <- TRUE

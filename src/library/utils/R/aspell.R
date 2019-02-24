@@ -268,7 +268,7 @@ function(x, sort = TRUE, verbose = FALSE, indent = 2L, ...)
     } else {
         sep <- sprintf("\n%s", strrep(" ", indent))
         paste(names(from),
-              sapply(from, paste, collapse = sep),
+              vapply(from, paste, "", collapse = sep),
               sep = sep)
     }
 }

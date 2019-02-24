@@ -60,17 +60,17 @@ assign("cleanEx",
                        call. = FALSE, immediate. = TRUE, domain = NA)
                setwd(.old_wd)
            }
-		   ## stop in case users left connections open, 
-		   ## also indicating that parallel cluster are still running
-		   if(Sys.getenv("_R_CHECK_CONNECTIONS_LEFT_OPEN_", FALSE)){
+           ## stop in case users left connections open,
+           ## also indicating that parallel cluster are still running
+           if(Sys.getenv("_R_CHECK_CONNECTIONS_LEFT_OPEN_", FALSE)){
                sC <- showConnections()
                if(nrow(sC)){
                    stop("connections left open:\n",
-                       paste(apply(sC[,1:2, drop = FALSE], 1L, function(x) 
+                       paste(apply(sC[,1:2, drop = FALSE], 1L, function(x)
                            paste0("\t", x[1L], " (", x[2L], ")")), collapse="\n"),
 				       call. = FALSE, domain = NA)
                }
-           }			   
+           }
        },
        pos = "CheckExEnv")
 assign("ptime", proc.time(), pos = "CheckExEnv")

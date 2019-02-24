@@ -589,9 +589,12 @@ model.matrix.default <- function(object, data = environment(object),
                 contrasts(data[[nn]]) <- contr.funs[1 + isOF[nn]]
         ## it might be safer to have numerical contrasts:
         ##	  get(contr.funs[1 + isOF[nn]])(nlevels(data[[nn]]))
-        if (!is.null(contrasts.arg) && is.list(contrasts.arg)) {
+        if (!is.null(contrasts.arg)) {
+          if (!is.list(contrasts.arg))
+              warning("non-list contrasts argument ignored")
+          else {  ## contrasts.arg is a list
             if (is.null(namC <- names(contrasts.arg)))
-                stop("invalid 'contrasts.arg' argument")
+                stop("'contrasts.arg' argument must be named")
             for (nn in namC) {
                 if (is.na(ni <- match(nn, namD)))
                     warning(gettextf("variable '%s' is absent, its contrast will be ignored", nn),
@@ -602,7 +605,8 @@ model.matrix.default <- function(object, data = environment(object),
                     else contrasts(data[[ni]]) <- contrasts.arg[[nn]]
                 }
             }
-        }
+          }
+        } ## non-null contrasts.arg
     } else { #  no rhs terms ('~1', or '~0'): internal model.matrix needs some variable
 	isF <- FALSE
 	data[["x"]] <- raw(nrow(data))

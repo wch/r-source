@@ -45,7 +45,7 @@ apropos <- function (what, where = FALSE, ignore.case = TRUE, mode = "any")
 
 	if(length(li)) {
 	    if(check.mode)
-		li <- li[sapply(li, exists, where = i,
+		li <- li[vapply(li, exists, NA, where = i,
 				mode = mode, inherits = FALSE)]
 	    x <- c(x, if(where) structure(li, names = rep.int(i, length(li))) else li)
 	}
@@ -76,7 +76,7 @@ find <- function(what, mode = "any", numeric = FALSE, simple.words=TRUE)
             if(sp[i] == "package:base") li <- li[! li %in% .dot_internals]
             ll <- length(li)
             if(ll > 0 && check.mode) {
-                mode.ok <- sapply(li, exists, where = i, mode = mode,
+                mode.ok <- vapply(li, exists, NA, where = i, mode = mode,
                                   inherits = FALSE)
                 ll <- sum(mode.ok)
                 if(ll >= 2) # some languages have multiple plurals
