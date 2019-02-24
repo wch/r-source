@@ -81,14 +81,14 @@ A basic implementation of the static approach is quite simple:
 - Give library/require additional arguments `mask.ok` and `exclude`.
     - `mask.ok`: these functions can mask variables already on the path.
     - `exclude`: don't add these to the search path frame.
-- If `getOption("error.on.conflicts")` is TRUE then signal an error if
+- If `getOption("conflicts.policy")` is `"strict"` then signal an error if
   there are conflicts not covered by `mask.ok`.
 
 This branch contains modified versions of `library.R` and
 `namespace.R` that implement this.  This produces
 
 ```r
-options(error.on.conflicts = TRUE)
+options(conflicts.policy = "strict")
 library(dplyr)
 ## conflict error from filter, lag
 
@@ -173,9 +173,7 @@ Some additional features that have been implemented:
     - `warn`: Sets the default for the `warn.conflicts` argument to
       `library` and `require`.
 
-    - `error`: If `TRUE` then conflicts produce errors. This should
-      probably replace the `error.on.conflicts` option; for now it is
-      an alternative way to request strict checking.
+    - `error`: If `TRUE` then conflicts produce errors.
 
     - `generics.ok`: If set this determines whether masking a function
       with an S4 generic version is considered a conflict. The default in

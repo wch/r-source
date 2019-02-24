@@ -75,9 +75,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                            call. = FALSE, domain = NA))
     if (! is.list(conf.ctrl))
         conf.ctrl <- NULL
-    stopOnConflict <-
-        isTRUE(getOption("error.on.conflicts")) ||
-        isTRUE(conf.ctrl$error)
+    stopOnConflict <- isTRUE(conf.ctrl$error)
 
     if (missing(warn.conflicts))
         warn.conflicts <- if (isFALSE(conf.ctrl$warn)) FALSE else TRUE
