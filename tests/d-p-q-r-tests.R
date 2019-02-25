@@ -195,8 +195,8 @@ stopifnot(all.equal(dbeta(p,a,b),
 sp <- sample(pab, 50)
 if(!interactive())
 stopifnot(which(isI <- sp == -Inf) ==
-              c(3, 11, 15, 20, 22, 23, 30, 39, 42, 43, 46, 47, 49),
-          all.equal(range(sp[!isI]), c(-2906.123981, 2.197270387))
+              c(3, 10, 14, 18, 24, 32, 35, 41, 42, 45, 46, 47),
+          all.equal(range(sp[!isI]), c(-2888.393250, 3.181137))
           )
 
 

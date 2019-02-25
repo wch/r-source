@@ -235,7 +235,7 @@ Matrix+           is(Matrix(FALSE, 1,1), "sparseMatrix"))
 +     20))
 > set.seed(1)
 > (perm <- sample(1:7))
-[1] 2 3 6 4 1 7 5
+[1] 1 4 7 2 5 3 6
 > A1 <- sparseMatrix(i[perm], j[perm], x = x[perm])
 > args <- data.frame(i = c(i, 1), j = c(j, 2), x = c(x, 2))
 > Aa <- do.call(sparseMatrix, args)
@@ -529,7 +529,7 @@ checking formals(.):
 as.pairlist(alist(expr = , backtick = TRUE, ... = ))
 __ not parse()able __: hasMissObj(.) is true 
 --=--=--=--=--
-perm: c(2L, 3L, 6L, 4L, 1L, 7L, 5L)
+perm: c(1L, 4L, 7L, 2L, 5L, 3L, 6L)
  --> checking list(*): Ok
 --=--=--=--=--
 runEPD_checks: function (env = .GlobalEnv) 

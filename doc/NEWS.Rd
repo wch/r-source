@@ -23,6 +23,16 @@
 	 CMD build} are in serialization format version 2, and resave by
        default produces files in serialization format version 2 (unless
        the original is already in format version 3).
+
+       \item The default method for generating from a discrete uniform
+       distribution (used in \code{sample()}, for instance) has been
+       changed. This addresses the fact, pointed out by Ottoboni and
+       Stark, that the previous method made \code{sample()} noticeably
+       non-uniform on large populations.  See \PR{17494} for a
+       discussion. The previous method can be requested using
+       \code{RNGkind()} if necessary for reproduction of old results.
+       Thanks to Duncan Murdoch for contributing the patch and Gabe
+       Becker for further assistance.
      }
   }
 

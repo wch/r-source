@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2016  The R Core Team
+ *  Copyright (C) 1997--2019  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -30,6 +30,7 @@
 /* Normal generator is not actually set here but in ../nmath/snorm.c */
 #define RNG_DEFAULT MERSENNE_TWISTER
 #define N01_DEFAULT INVERSION
+#define Sample_DEFAULT REJECTION
 
 
 #include <R_ext/Rdynload.h>
@@ -46,12 +47,14 @@ DL_FUNC  User_norm_fun = NULL; /* also in ../nmath/snorm.c */
 static RNGtype RNG_kind = RNG_DEFAULT;
 //extern N01type N01_kind; /* from ../nmath/snorm.c */
 //extern double BM_norm_keep; /* ../nmath/snorm.c */
+static Sampletype Sample_kind = REJECTION;
 
 /* typedef unsigned int Int32; in Random.h */
 
 /* .Random.seed == (RNGkind, i_seed[0],i_seed[1],..,i_seed[n_seed-1])
  * or           == (RNGkind) or missing  [--> Randomize]
- * where  RNGkind :=  RNG_kind  +  100 * N01_kind   currently in  outer(0:7, 100*(0:5), "+")
+ * where  RNGkind :=  RNG_kind  +  100 * N01_kind  +  10000 * Sample_kind   
+ * currently in  outer(outer(0:7, 100*(0:5), "+"), 10000*(0:1), "+")
  */
 
 typedef struct {
@@ -340,9 +343,9 @@ static void Randomize(RNGtype kind)
 
 static Rboolean GetRNGkind(SEXP seeds)
 {
-    /* Load RNG_kind, N01_kind from .Random.seed if present */
+    /* Load RNG_kind, N01_kind Sample_kind from .Random.seed if present */
     int tmp, *is;
-    RNGtype newRNG; N01type newN01;
+    RNGtype newRNG; N01type newN01; Sampletype newSample;
 
     if (isNull(seeds))
 	seeds = GetSeedsFromVar();
@@ -356,14 +359,15 @@ static Rboolean GetRNGkind(SEXP seeds)
     }
     is = INTEGER(seeds);
     tmp = is[0];
-    /* avoid overflow here: max current value is 705 */
-    if (tmp == NA_INTEGER || tmp < 0 || tmp > 1000) {
+    /* avoid overflow here: max current value is 10705 */
+    if (tmp == NA_INTEGER || tmp < 0 || tmp > 11000) {
 	warning(_("'.Random.seed[1]' is not a valid integer, so ignored"));
 	goto invalid;
     }
     newRNG = (RNGtype) (tmp % 100);
-    newN01 = (N01type) (tmp / 100);
-    if (newN01 > KINDERMAN_RAMAGE) {
+    newN01 = (N01type) (tmp % 10000 / 100);
+    newSample = (Sampletype) (tmp / 10000);
+    if (newN01 > KINDERMAN_RAMAGE || newSample > REJECTION) {
 	warning(_("'.Random.seed[1]' is not a valid Normal type, so ignored"));
 	goto invalid;
     }
@@ -386,10 +390,11 @@ static Rboolean GetRNGkind(SEXP seeds)
 	warning(_("'.Random.seed[1]' is not a valid RNG kind so ignored"));
 	goto invalid;
     }
-    RNG_kind = newRNG; N01_kind = newN01;
+    RNG_kind = newRNG; N01_kind = newN01; Sample_kind = newSample;
     return FALSE;
 invalid:
-    RNG_kind = RNG_DEFAULT; N01_kind = N01_DEFAULT;
+    RNG_kind = RNG_DEFAULT; N01_kind = N01_DEFAULT; Sample_kind = Sample_DEFAULT;
+
     Randomize(RNG_kind);
     PutRNGstate(); // write out to .Random.seed
     return TRUE;
@@ -429,7 +434,7 @@ void PutRNGstate()
     int len_seed, j;
     SEXP seeds;
 
-    if (RNG_kind > LECUYER_CMRG || N01_kind > KINDERMAN_RAMAGE) {
+    if (RNG_kind > LECUYER_CMRG || N01_kind > KINDERMAN_RAMAGE || Sample_kind > REJECTION) {
 	warning("Internal .Random.seed is corrupt: not saving");
 	return;
     }
@@ -438,7 +443,7 @@ void PutRNGstate()
 
     PROTECT(seeds = allocVector(INTSXP, len_seed + 1));
 
-    INTEGER(seeds)[0] = RNG_kind + 100 * N01_kind;
+    INTEGER(seeds)[0] = RNG_kind + 100 * N01_kind + 10000 * Sample_kind;
     for(j = 0; j < len_seed; j++)
 	INTEGER(seeds)[j+1] = RNG_Table[RNG_kind].i_seed[j];
 
@@ -496,26 +501,43 @@ static void Norm_kind(N01type kind)
     PutRNGstate();
 }
 
+static void Samp_kind(Sampletype kind)
+{
+    /* Sampletype is an enumeration type, so this will probably get
+       mapped to an unsigned integer type. */
+    if (kind == (Sampletype)-1) kind = Sample_DEFAULT;
+    if (kind > REJECTION)
+        error(_("invalid sample type in 'RNGkind'"));
+    GetRNGstate(); /* might not be initialized */
+    Sample_kind = kind;
+    PutRNGstate();
+}
+
 
 /*------ .Internal interface ------------------------*/
 
 SEXP attribute_hidden do_RNGkind (SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP ans, rng, norm;
+    SEXP ans, rng, norm, sample;
 
     checkArity(op,args);
     GetRNGstate(); /* might not be initialized */
-    PROTECT(ans = allocVector(INTSXP, 2));
+    PROTECT(ans = allocVector(INTSXP, 3));
     INTEGER(ans)[0] = RNG_kind;
     INTEGER(ans)[1] = N01_kind;
+    INTEGER(ans)[2] = Sample_kind;
     rng = CAR(args);
     norm = CADR(args);
+    sample = CADDR(args);
     GetRNGkind(R_NilValue); /* pull from .Random.seed if present */
     if(!isNull(rng)) { /* set a new RNG kind */
 	RNGkind((RNGtype) asInteger(rng));
     }
     if(!isNull(norm)) { /* set a new normal kind */
 	Norm_kind((N01type) asInteger(norm));
+    }
+    if(!isNull(sample)) { /* set a new sample kind */
+	Samp_kind((Sampletype) asInteger(sample));
     }
     UNPROTECT(1);
     return ans;
@@ -837,15 +859,7 @@ static double rbits(int bits)
 
 double R_unif_index(double dn)
 {
-    static int inited = FALSE;
-    static int use_old_method = TRUE;
-    if (! inited) {
-	if (getenv("R_NEW_SAMPLE"))
-	    use_old_method = FALSE;
-	inited = TRUE;
-    }
-
-    if (use_old_method)
+    if (Sample_kind == ROUNDING)
 	return R_unif_index_0(dn);
 
     // rejection sampling from integers below the next larger power of two

@@ -2105,9 +2105,8 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > 
 > # 6) Replace infinite values by +/- 6 as in Student's paper:
 > 
-> zobs[infZ <- is.infinite(zobs)] # 3 of them
-  73  312  674 
--Inf  Inf -Inf 
+> zobs[infZ <- is.infinite(zobs)] # none of them
+named numeric(0)
 > zobs[infZ] <- 6 * sign(zobs[infZ])
 > 
 > # 7) Plot the distribution:

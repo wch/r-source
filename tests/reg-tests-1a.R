@@ -2357,7 +2357,7 @@ attach(list(.Random.seed=c(0:4)))
 x <- runif(1)
 detach(2)
 (new <- RNGkind())
-stopifnot(identical(new, c("Mersenne-Twister", "Inversion")))
+stopifnot(identical(new, c("Mersenne-Twister", "Inversion", "Rejection")))
 stopifnot(identical(find(".Random.seed"), ".GlobalEnv"))
 ## took from and assigned to list in 1.7.x.
 

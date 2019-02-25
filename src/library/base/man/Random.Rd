@@ -1,6 +1,6 @@
 % File src/library/base/man/Random.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Random}
@@ -27,9 +27,9 @@
 \usage{
 \special{.Random.seed <- c(rng.kind, n1, n2, \dots)}
 
-RNGkind(kind = NULL, normal.kind = NULL)
+RNGkind(kind = NULL, normal.kind = NULL, sample.kind = NULL)
 RNGversion(vstr)
-set.seed(seed, kind = NULL, normal.kind = NULL)
+set.seed(seed, kind = NULL, normal.kind = NULL, sample.kind = NULL)
 }
 \arguments{
   \item{kind}{character or \code{NULL}.  If \code{kind} is a character
@@ -39,6 +39,10 @@ set.seed(seed, kind = NULL, normal.kind = NULL)
   \item{normal.kind}{character string or \code{NULL}.  If it is a character
     string, set the method of Normal generation.  Use \code{"default"}
     to return to the \R default.  \code{NULL} makes no change.}
+  \item{sample.kind}{character string or \code{NULL}.  If it is a character
+    string, set the method of discrete uniform generation (used in 
+    \code{\link{sample}}, for instance).  Use \code{"default"} to return to 
+    the \R default.  \code{NULL} makes no change.}
   \item{seed}{a single value, interpreted as an integer, or \code{NULL}
     (see \sQuote{Details}).}
   \item{vstr}{a character string containing a version number,
@@ -153,6 +157,12 @@ set.seed(seed, kind = NULL, normal.kind = NULL)
   whenever it is selected (even if it is the current normal generator)
   and when \code{kind} is changed.
 
+  \code{sample.kind} can be \code{"Rounding"} or \code{"Rejection"},
+  or partial matches to these.  The former was the default in versions
+  prior to 3.6.0:  it made \code{\link{sample}} noticeably non-uniform
+  on large populations, and should only be used for reproduction of old
+  results.  See \PR{17494} for a discussion. 
+
   \code{set.seed} uses a single integer argument to set as many seeds
   as are required.  It is intended as a simple way to get quite different
   seeds by specifying small integer arguments, and also as a way to get
@@ -163,7 +173,8 @@ set.seed(seed, kind = NULL, normal.kind = NULL)
   called with \code{seed = NULL} it re-initializes (see \sQuote{Note})
   as if no seed had yet been set.
 
-  The use of \code{kind = NULL} or \code{normal.kind = NULL} in
+  The use of \code{kind = NULL}, \code{normal.kind = NULL} or 
+  \code{sample.kind = NULL} in
   \code{RNGkind} or \code{set.seed} selects the currently-used
   generator (including that used in the previous session if the
   workspace has been restored): if no generator has been used it selects
@@ -198,16 +209,17 @@ set.seed(seed, kind = NULL, normal.kind = NULL)
   element \emph{codes} the kind of RNG and normal generator. The lowest
   two decimal digits are in \code{0:(k-1)}
   where \code{k} is the number of available RNGs.  The hundreds
-  represent the type of normal generator (starting at \code{0}).
+  represent the type of normal generator (starting at \code{0}), and
+  the ten thousands represent the type of discrete uniform sampler.
 
   In the underlying C, \code{.Random.seed[-1]} is \code{unsigned};
   therefore in \R \code{.Random.seed[-1]} can be negative, due to
   the representation of an unsigned integer by a signed integer.
 
-  \code{RNGkind} returns a two-element character vector of the RNG and
-  normal kinds selected \emph{before} the call, invisibly if either
-  argument is not \code{NULL}.  A type starts a session as the default,
-  and is selected either by a call to \code{RNGkind} or by setting
+  \code{RNGkind} returns a three-element character vector of the RNG,
+  normal and sample kinds selected \emph{before} the call, invisibly if 
+  either argument is not \code{NULL}.  A type starts a session as the 
+  default, and is selected either by a call to \code{RNGkind} or by setting
   \code{.Random.seed} in the workspace.
 
   \code{RNGversion} returns the same information as \code{RNGkind} about
@@ -287,7 +299,8 @@ set.seed(seed, kind = NULL, normal.kind = NULL)
   \bold{34}, 198 and \bold{35}, 89.
   \doi{10.2307/2347988}.
 }
-\author{of RNGkind: Martin Maechler. Current implementation, B. D. Ripley}
+\author{of RNGkind: Martin Maechler. Current implementation, B. D. Ripley
+  with modifications by Duncan Murdoch.}
 
 \seealso{
   \code{\link{sample}} for random sampling with and without replacement.

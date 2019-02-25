@@ -361,6 +361,7 @@ double R_pow_di(double, int);
 
 double	norm_rand(void);
 double	unif_rand(void);
+double  R_unif_index(double);
 double	exp_rand(void);
 #ifdef MATHLIB_STANDALONE
 void	set_seed(unsigned int, unsigned int);

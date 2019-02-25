@@ -1817,8 +1817,9 @@ d <- dist(matrix(round(rnorm(n*p), digits = 2), n,p), "manhattan")
 d[] <- d[] * sample(1 + (-4:4)/100, length(d), replace=TRUE)
 hc <- hclust(d, method = "median")
 stopifnot(all.equal(hc$height[5:11],
-                    c(1.69805, 1.75134375, 1.34036875, 1.47646406,
-                      3.21380039, 2.9653438476, 6.1418258), tolerance = 1e-9))
+		    c(1.70595, 1.657675, 1.8909, 1.619973438, 
+                      1.548624609, 3.097474902, 6.097159351),
+                    tolerance = 1e-9))
 ## Also ensure that hclust() remains fast:
 set.seed(1); nn <- 2000
 tm0 <- system.time(dst <- as.dist(matrix(runif(n = nn^2, min = 0, max = 1)^1.1, nn, nn)))
