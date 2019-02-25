@@ -2287,6 +2287,7 @@ add_dummies <- function(dir, Log)
                         cmd <- sprintf('tools:::.check_package_datasets2("%s", "%s")',
                                        f, pkgname)
                         out <- R_runR(cmd, R_opts2)
+                        out <- filtergrep("^OMP:", out)
                         if (length(out)) {
                             if (any(grepl("^(Warning|Error|No dataset created|Search path was changed)", out)))
                                 warn <- TRUE
@@ -2311,6 +2312,7 @@ add_dummies <- function(dir, Log)
                            R_opts2, elibs)
             out <- filtergrep("Loading required package", out)
             out <- filtergrep("Warning: changing locked binding", out, fixed = TRUE)
+            out <- filtergrep("^OMP:", out)
             if (length(out)) {
                 bad <- startsWith(out, "Warning:")
                 bad2 <-  any(grepl("(unable to find required package|there is no package called)", out))
