@@ -1625,7 +1625,8 @@ if(FALSE) {
                 # .onLoad and loadNamespace().
 
                 serf <- tempfile()
-                cmd <- paste0("f <- base::file(\"", serf, "\", \"wb\")")
+                cmd <- paste0("f <- base::file(", quote_path(serf),
+                              ", \"wb\")")
                 cmd <- append(cmd,
                 paste0("base::invisible(base::suppressWarnings(base::serialize(",
                     "base::as.list(base::getNamespace(\"", pkg_name, "\"), all.names=TRUE), f)))"))
