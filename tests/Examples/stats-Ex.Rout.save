@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2019-02-19 r76127) -- "Unsuffered Consequences"
+R Under development (unstable) (2019-02-25 r76156) -- "Unsuffered Consequences"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -3833,7 +3833,7 @@ sigma^2 estimated as 0.4566:  log likelihood = -101.2,  aic = 212.4
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x470e7f8>
+<environment: 0x48c00b8>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -4831,7 +4831,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x56dcf40>
+<bytecode: 0x58918f0>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -7443,7 +7443,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x6a87340>
+<environment: 0x6fcd798>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -10278,7 +10278,7 @@ NA        0    3    0
 > mat <- model.matrix(ff, m)
 > 
 > dd <- data.frame(a = gl(3,4), b = gl(4,1,12)) # balanced 2-way
-> options("contrasts")
+> options("contrasts") # typically 'treatment' (for unordered factors)
 $contrasts
         unordered           ordered 
 "contr.treatment"      "contr.poly" 
@@ -10329,7 +10329,7 @@ attr(,"contrasts")$a
 attr(,"contrasts")$b
 [1] "contr.treatment"
 
-> model.matrix(~ a + b, dd, contrasts = list(a = "contr.sum", b = "contr.poly"))
+> model.matrix(~ a + b, dd, contrasts = list(a = "contr.sum", b = contr.poly))
    (Intercept) a1 a2        b.L  b.Q        b.C
 1            1  1  0 -0.6708204  0.5 -0.2236068
 2            1  1  0 -0.2236068 -0.5  0.6708204
@@ -10350,7 +10350,11 @@ attr(,"contrasts")$a
 [1] "contr.sum"
 
 attr(,"contrasts")$b
-[1] "contr.poly"
+          .L   .Q         .C
+1 -0.6708204  0.5 -0.2236068
+2 -0.2236068 -0.5  0.6708204
+3  0.2236068 -0.5 -0.6708204
+4  0.6708204  0.5  0.2236068
 
 > m.orth <- model.matrix(~a+b, dd, contrasts = list(a = "contr.helmert"))
 > crossprod(m.orth) # m.orth is  ALMOST  orthogonal
@@ -10361,6 +10365,12 @@ a2                    0  0 24  0  0  0
 b2                    3  0  0  3  0  0
 b3                    3  0  0  0  3  0
 b4                    3  0  0  0  0  3
+> # invalid contrasts.. ignored with a warning:
+> stopifnot(identical(
++    model.matrix(~ a + b, dd),
++    model.matrix(~ a + b, dd, contrasts.arg = "contr.FOO")))
+Warning in model.matrix.default(~a + b, dd, contrasts.arg = "contr.FOO") :
+  non-list contrasts argument ignored
 > 
 > 
 > 
@@ -12127,14 +12137,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x6ae03e0>
-<environment: 0x6bb37e0>
+<bytecode: 0x6f6bc80>
+<environment: 0x70cc330>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x6ae0290>
-<environment: 0x6bb37e0>
+<bytecode: 0x6f6bb30>
+<environment: 0x70cc330>
 
 > 
 > 
@@ -16298,8 +16308,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f)
-<bytecode: 0x6643df8>
-<environment: 0x494b748>
+<bytecode: 0x67f9630>
+<environment: 0x49c0370>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -18624,7 +18634,7 @@ Number of Fisher Scoring iterations: 6
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  6.407 0.209 6.652 0 0 
+Time elapsed:  6.327 0.199 6.564 0 0 
 > grDevices::dev.off()
 null device 
           1 
