@@ -36,6 +36,11 @@ Changes from grid_3.5.* to grid_3.6.0:
 7.  New grobCoords() and grobPoints() functions to calculate points 
     along the perimeter (or length) of a grob.
 
+8.  Internal changes to graphical parameter setting to speed things
+    up a bit.  
+    
+    Contributed by Thomas Lin Pedersen.
+
 
 Changes from grid_3.4.* to grid_3.5.0:
 -------------------------------------
