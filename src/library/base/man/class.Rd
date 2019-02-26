@@ -144,7 +144,7 @@ inherits(x, c("a", "b", "c"), TRUE) # 1 2 0
 
 class( quote(pi) )           # "name"
 ## regular calls
-class( quote(sin(pi*x)) )    # "class"
+class( quote(sin(pi*x)) )    # "call"
 ## special calls
 class( quote(x <- 1) )       # "<-"
 class( quote((1 < 2)) )      # "("
