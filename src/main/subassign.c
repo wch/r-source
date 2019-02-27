@@ -1584,6 +1584,7 @@ SEXP attribute_hidden do_subassign_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(args);
 
     nsubs = SubAssignArgs(args, &x, &subs, &y);
+    PROTECT(y); /* gets cut loose in SubAssignArs */
 
     /* make sure the LHS is duplicated if it matches one of the indices */
     /* otherwise this gets the wrong answer:
@@ -1616,7 +1617,7 @@ SEXP attribute_hidden do_subassign_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (xlength(y) == 0 && (isNull(x) || TYPEOF(x) == TYPEOF(y) ||
 				// isVectorList(y):
 				TYPEOF(y) == VECSXP || TYPEOF(y) == EXPRSXP)) {
-	    UNPROTECT(1);
+	    UNPROTECT(2);  /* args, y */
 	    return(x);
 	}
 	else {
@@ -1673,7 +1674,7 @@ SEXP attribute_hidden do_subassign_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* will be multiple reference problems if "[<-" is used */
     /* in a naked fashion. */
 
-    UNPROTECT(2);
+    UNPROTECT(3); /* args, x, y */
     SETTER_CLEAR_NAMED(x);
     if(S4) SET_S4_OBJECT(x);
     return x;
@@ -1734,6 +1735,7 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(args);
 
     nsubs = SubAssignArgs(args, &x, &subs, &y);
+    PROTECT(y); /* gets cut loose in SubAssignArs */
     S4 = IS_S4_OBJECT(x);
 
     /* Handle NULL left-hand sides.  If the right-hand side */
@@ -1742,7 +1744,7 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if (isNull(x)) {
 	if (isNull(y)) {
-	    UNPROTECT(1); /* args */
+	    UNPROTECT(2); /* args, y */
 	    return x;
 	}
 	if (length(y) == 1)
@@ -1784,7 +1786,7 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if( nsubs!=1 || !isString(CAR(subs)) || length(CAR(subs)) != 1 )
 	    error(_("wrong args for environment subassignment"));
 	defineVar(installTrChar(STRING_ELT(CAR(subs), 0)), y, x);
-	UNPROTECT(2); /* x, args */
+	UNPROTECT(3); /* x, args, y */
 	return(S4 ? xOrig : x);
     }
 
@@ -1828,7 +1830,7 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 			UNPROTECT(1); /* x */
 		    }
 		} else xtop = x;
-		UNPROTECT(3); /* xup, x, args */
+		UNPROTECT(4); /* xup, x, args, y */
 		return xtop;
 	    }
 	    if (offset < 0)
@@ -2060,7 +2062,7 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     else xtop = x;
 
-    UNPROTECT(3); /* xup, x, args */
+    UNPROTECT(4); /* xup, x, args, y */
     SETTER_CLEAR_NAMED(xtop);
     if(S4) SET_S4_OBJECT(xtop);
     return xtop;
