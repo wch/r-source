@@ -30,9 +30,9 @@
        Stark, that the previous method made \code{sample()} noticeably
        non-uniform on large populations.  See \PR{17494} for a
        discussion. The previous method can be requested using
-       \code{RNGkind()} if necessary for reproduction of old results.
-       Thanks to Duncan Murdoch for contributing the patch and Gabe
-       Becker for further assistance.
+       \code{RNGkind()} or \code{RNGversion()} if necessary for
+       reproduction of old results.  Thanks to Duncan Murdoch for
+       contributing the patch and Gabe Becker for further assistance.
      }
   }
 
