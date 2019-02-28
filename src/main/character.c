@@ -302,7 +302,8 @@ static void substr(const char *str, int len, int ienc, int sa, int so,
 	for(; i < so && str < end; i++)
 	    str += utf8clen(*str);
 	*rlen = str - *rfrom;
-    } else if (mbcslocale && !isascii) {
+    } else if (!isascii && ienc != CE_LATIN1 && ienc != CE_BYTES
+               && mbcslocale) {
 	mbstate_t mb_st;
 	mbs_init(&mb_st);
 	for (i = 0; i < sa - 1 && str < end; i++)
