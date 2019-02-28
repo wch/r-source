@@ -275,40 +275,56 @@ SEXP attribute_hidden do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
     return s;
 }
 
-static void substr(char *buf, const char *str, int ienc, int sa, int so,
-                   R_xlen_t idx)
+/* Assumes sa < so; sa, so are 1-based indices in character units to str,
+   len is length of str in bytes, excluding the terminator.
+
+   Returns pointer to result string in rfrom, of length rlen (in bytes,
+   excluding the terminator - the string is not terminated).
+
+   *rfrom may be invalid pointer when rlen is zero.
+*/
+static void substr(const char *str, int len, int ienc, int sa, int so,
+                   R_xlen_t idx, int isascii, const char **rfrom,
+	           int *rlen, int assumevalid)
 {
-/* Store the substring	str [sa:so]  into buf[] */
-    int i, j, used;
+    int i;
+    const char *end = str + len;
 
     if (ienc == CE_UTF8) {
-	if (!utf8Valid(str)) {
+	if (!assumevalid && !utf8Valid(str)) {
 	    char msg[30];
 	    sprintf(msg, "element %ld", (long)idx+1);
 	    error(_("invalid multibyte string, %s"), msg);
 	}
-	const char *end = str + strlen(str);
-	for (i = 0; i < so && str < end; i++) {
-	    int used = utf8clen(*str);
-	    if (i < sa - 1) { str += used; continue; }
-	    for (j = 0; j < used; j++) *buf++ = *str++;
-	}
-    } else if (ienc == CE_LATIN1 || ienc == CE_BYTES) {
-	for (str += (sa - 1), i = sa; i <= so; i++) *buf++ = *str++;
+	for (i = 0; i < sa - 1 && str < end; i++)
+	    str += utf8clen(*str);
+	*rfrom = str;
+	for(; i < so && str < end; i++)
+	    str += utf8clen(*str);
+	*rlen = str - *rfrom;
+    } else if (mbcslocale && !isascii) {
+	mbstate_t mb_st;
+	mbs_init(&mb_st);
+	for (i = 0; i < sa - 1 && str < end; i++)
+	    /* throws error on invalid multi-byte string */
+	    str += Mbrtowc(NULL, str, MB_CUR_MAX, &mb_st);
+	*rfrom = str;
+	for (; i < so && str < end; i++)
+	    /* throws error on invalid multi-byte string */
+	    str += (int) Mbrtowc(NULL, str, MB_CUR_MAX, &mb_st);
+	*rlen = str - *rfrom;
     } else {
-	if (mbcslocale && !strIsASCII(str)) {
-	    const char *end = str + strlen(str);
-	    mbstate_t mb_st;
-	    mbs_init(&mb_st);
-	    for (i = 1; i < sa; i++) str += Mbrtowc(NULL, str, MB_CUR_MAX, &mb_st);
-	    for (i = sa; i <= so && str < end; i++) {
-		used = (int) Mbrtowc(NULL, str, MB_CUR_MAX, &mb_st);
-		for (j = 0; j < used; j++) *buf++ = *str++;
-	    }
-	} else
-	    for (str += (sa - 1), i = sa; i <= so; i++) *buf++ = *str++;
+	if (so - 1 < len) {
+	    *rfrom = str + sa - 1;
+	    *rlen = so - sa + 1;
+	} else if (sa - 1 < len) {
+	    *rfrom = str + sa - 1;
+	    *rlen = len - (sa - 1);
+	} else {
+	    *rfrom = NULL;
+	    *rlen = 0;
+	}
     }
-    *buf = '\0';
 }
 
 SEXP attribute_hidden
@@ -321,6 +337,7 @@ do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("extracting substrings from a non-character object"));
     R_xlen_t len = XLENGTH(x);
     PROTECT(s = allocVector(STRSXP, len));
+    SEXP lastel = NULL;
     if (len > 0) {
 	SEXP sa = CADR(args),
 	    so = CADDR(args);
@@ -340,18 +357,23 @@ do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	    cetype_t ienc = getCharCE(el);
 	    const char *ss = CHAR(el);
-	    size_t slen = strlen(ss); /* FIXME -- should handle embedded nuls */
-	    char *buf = R_AllocStringBuffer(slen+1, &cbuff);
+	    size_t slen = LENGTH(el);
 	    if (start < 1) start = 1;
-	    if (start > stop || start > slen) {
-		buf[0] = '\0';
+	    if (start > stop) {
+		SET_STRING_ELT(s, i, R_BlankString);
 	    } else {
-		if (stop > slen) stop = (int) slen;
-		substr(buf, ss, ienc, start, stop, i);
+		const char *rfrom;
+		int rlen;
+		/* Skip checking UTF-8 validity if the string is the same
+		   R object as previously. This improves performance of
+		   substring() used on a single string but many substrings
+		   to be extracted from it */
+		substr(ss, slen, ienc, start, stop, i,
+		       IS_ASCII(el), &rfrom, &rlen, el == lastel);
+		SET_STRING_ELT(s, i, mkCharLenCE(rfrom, rlen, ienc));
 	    }
-	    SET_STRING_ELT(s, i, mkCharCE(buf, ienc));
+	    lastel = el;
 	}
-	R_FreeStringBufferL(&cbuff);
     }
     SHALLOW_DUPLICATE_ATTRIB(s, x);
     /* This copied the class, if any */

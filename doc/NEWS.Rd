@@ -295,6 +295,9 @@
 
       \item \code{model.matrix(*, contrasts.arg = CC)} now warns about
       invalid \code{contrasts.arg}s.
+
+      \item Performance of \code{substr()} and \code{substring()} has been
+      improved.
     }
   }
 
