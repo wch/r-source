@@ -389,6 +389,9 @@ SEXP do_dllversion(SEXP call, SEXP op, SEXP args, SEXP rho)
 int Rwin_rename(const char *from, const char *to)
 {
     for(int retries = 0; retries < 10; retries++) {
+	/* coreutils first call MoveFileEx without flags; only if it fails
+	   with ERROR_FILE_EXISTS or ERROR_ALREADY_EXISTING, they call again
+	   with MOVEFILE_REPLACE_EXISTING */
 	if (MoveFileEx(from, to, MOVEFILE_REPLACE_EXISTING | MOVEFILE_COPY_ALLOWED | MOVEFILE_WRITE_THROUGH))
 	    return 0;
 	DWORD err = GetLastError();
