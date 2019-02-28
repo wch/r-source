@@ -1599,9 +1599,13 @@ if(FALSE) {
 
         if (pkg_staged_install) {
             if (WINDOWS) {
-                file.copy(instdir, dirname(final_instdir), recursive = TRUE,
-                          copy.date = TRUE)
-                unlink(instdir, recursive = TRUE)
+                unlink(final_instdir, recursive = TRUE) # needed for file.rename
+                if (!file.rename(instdir, final_instdir)) {
+                    message("WARNING: moving package to final location failed, copying instead")
+                    file.copy(instdir, dirname(final_instdir), recursive = TRUE,
+                              copy.date = TRUE)
+                    unlink(instdir, recursive = TRUE)
+                }
             } else {
                 patch_rpaths()
 
