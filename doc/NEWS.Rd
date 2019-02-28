@@ -5,7 +5,7 @@
 \title{R News}
 \encoding{UTF-8}
 
-\section{\Rlogo CHANGES IN R 3.5.2 patched}{
+\section{\Rlogo CHANGES IN R 3.5.3}{
 
   \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
