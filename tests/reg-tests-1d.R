@@ -2544,6 +2544,18 @@ stopifnot(exprs = {
 ## gave no warnings but same results in R <= 3.5.0
 
 
+## axTicks() should zap "almost zero" to zero, PR#17534
+## (caused by non-exact floating point arithmetic -- (platform dependently!)
+plot(c(-0.1, 0.2), axes=FALSE, ann=FALSE)
+(a2 <- axTicks(2)) # -0.10 -0.05  0.00  0.05  0.10  0.15  0.20
+axis(2, at = a2) # was ugly
+stopifnot(exprs = {
+    a2[3] == 0 # exactly
+    all.equal(a2, (-2:4)/20, tol=1e-14) # closely
+})
+## a2[3] was 1.38778e-17  on typical platforms in R <= 3.5.x
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

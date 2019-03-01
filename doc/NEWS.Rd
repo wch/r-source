@@ -704,6 +704,10 @@
 
       \item \code{max.col(m)} with an \code{m} of zero columns now
       returns integer \code{NA} (instead of \code{1}).
+
+      \item \code{axTicks()} no longer returns small \dQuote{almost zero}
+      numbers (in exponential format) instead of zero, fixing Ilario
+      Gelmetti's \PR{17534}.
     }
   }
 }
