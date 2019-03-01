@@ -3479,19 +3479,19 @@ The bitmapped graphics devices @code{jpeg()}, @code{png()} and
 @code{tiff()} need the appropriate headers and libraries installed:
 @code{jpeg} (version 6b or later, or @code{libjpeg-turbo}) or
 @code{libpng} (version 1.2.7 or later) and @code{zlib} or @code{libtiff}
-(any recent version -- 3.9.[4-7] and 4.0.[2-10] have been tested)
-respectively.  They also need support for either @code{X11} or
-@code{cairo} (see above).  Should support for these devices @strong{not}
-be required or broken system libraries need to be avoided there are
-@command{configure} options @option{--without-libpng},
-@option{--without-jpeglib} and @option{--without-libtiff}.  For most
-system installations the TIFF libraries will require JPEG libraries to
-be present and perhaps linked explicitly, so @option{--without-jpeglib}
-may also disable the @code{tiff()} device.  The @code{tiff()} devices
-only require a basic build of @code{libtiff} (not even JPEG support is
-needed).  Recent versions allow several other libraries to be linked
-into @code{libtiff} such as @code{lzma}, @code{jbig} and @code{jpeg12},
-and these may need also to be present.
+(versions 4.0.[5-10] have been tested) respectively.
+@command{pkg-config} is used if available and so needs the appropriate
+@file{.pc} file (which requires @code{libtiff} version 4.0.x and is not
+available on all platforms for @code{jpeg} before version 9c).  They
+also need support for either @code{X11} or @code{cairo} (see above).
+Should support for these devices @strong{not} be required or broken
+system libraries need to be avoided there are @command{configure}
+options @option{--without-libpng}, @option{--without-jpeglib} and
+@option{--without-libtiff}.  The TIFF library has many optional features
+such as @code{jpeg}, @code{libz}, @code{lzma}, @code{jbig} and
+@code{jpeg12}, none of which is reauired for the @code{tiff()} devices
+but may need to be present to link the library (usually only an issue
+for static linking).
 
 Option @option{--with-system-tre} is also available: it needs a recent
 version of TRE. (The latest (2016) sources are in the @command{git}
