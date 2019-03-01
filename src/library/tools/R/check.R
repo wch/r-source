@@ -5587,7 +5587,7 @@ add_dummies <- function(dir, Log)
             if (length(archs) > 1L)
                 for (arch in archs) {
                     if (arch == rarch) next
-                    cmd <- paste0(file.path(R.home(), "bin", "R"),
+                    cmd <- paste0(shQuote(file.path(R.home(), "bin", "R")),
                                   " --arch=", arch,
                                   " --version > /dev/null")
                     if (system(cmd)) archs <- archs[archs != arch]

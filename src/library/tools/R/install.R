@@ -935,6 +935,8 @@ if(FALSE) {
         pkg_staged_install <-
             parse_description_field(desc, "StagedInstall",
                                     default = staged_install)
+        if (pkg_staged_install && libs_only)
+            message("not using staged install with --libs-only")
         if (pkg_staged_install) {
             if (!lock)
                 stop("staged install is only possible with locking")
@@ -1872,10 +1874,12 @@ if(FALSE) {
                 ## so use a backdoor to suppress it.
                 Sys.setenv("_R_INSTALL_NO_DONE_" = "yes")
                 for (arch in archs) {
-                    cmd <- c(file.path(R.home(), "bin", arch, "Rcmd.exe"),
-                             "INSTALL", args, "--no-multiarch")
+                    cmd <- c(shQuote(file.path(R.home(), "bin", arch,
+                                               "Rcmd.exe")),
+                             "INSTALL", shQuote(args), "--no-multiarch")
                     if (arch == "x64") {
-                        cmd <- c(cmd, "--libs-only", if(zip_up) "--build")
+                        cmd <- c(cmd, "--libs-only --no-staged-install",
+                                 if(zip_up) "--build")
                         Sys.unsetenv("_R_INSTALL_NO_DONE_")
                     }
                     cmd <- paste(cmd, collapse = " ")
@@ -1895,10 +1899,11 @@ if(FALSE) {
                 Sys.setenv("_R_INSTALL_NO_DONE_" = "yes")
                 last <- archs[length(archs)]
                 for (arch in archs) {
-                    cmd <- c(file.path(R.home("bin"), "R"),
+                    cmd <- c(shQuote(file.path(R.home("bin"), "R")),
                              "--arch", arch, "CMD",
-                             "INSTALL", args, "--no-multiarch")
-                    if (arch != archs[1L]) cmd <- c(cmd, "--libs-only")
+                             "INSTALL", shQuote(args), "--no-multiarch")
+                    if (arch != archs[1L])
+                        cmd <- c(cmd, "--libs-only --no-staged-install")
                     if (arch == last) {
                         Sys.unsetenv("_R_INSTALL_NO_DONE_")
                         if(tar_up) cmd <- c(cmd, "--build")
@@ -1969,7 +1974,7 @@ if(FALSE) {
 
     if (!nzchar(lib)) {
         lib <- if (get_user_libPaths) { ## need .libPaths()[1L] *after* the site- and user-initialization
-	    system(paste(file.path(R.home("bin"), "Rscript"),
+	    system(paste(shQuote(file.path(R.home("bin"), "Rscript")),
                          "-e 'cat(.libPaths()[1L])'"),
                    intern = TRUE)
         }

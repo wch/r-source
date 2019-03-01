@@ -1,7 +1,7 @@
 #  File src/library/base/R/Scripts.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@
 function(interpreter, script, args, ...)
 {
     if(.Platform$OS.type == "windows") {
-        cmd <- paste(file.path(R.home("bin"), "Rcmd"),
+        cmd <- paste(shQuote(file.path(R.home("bin"), "Rcmd")),
                      file.path("..", "share", interpreter, script),
                      args)
         system(cmd, invisible = TRUE)
