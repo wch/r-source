@@ -171,7 +171,7 @@
   packages were written in ways that assume direct installation to the
   destination library.
 
-  Staged installation can be overridden by having a field
+  Staged installation can be overridden by having a line
   \samp{StagedInstall: no} in the package's \file{DESCRIPTION} file,
   \emph{via} flag \option{--no-staged-install} or by setting environment
   variable \env{R_INSTALL_STAGED} to a false value

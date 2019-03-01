@@ -1457,7 +1457,7 @@ if(FALSE) {
             cmd <- append(cmd,
                 "suppressPackageStartupMessages(.getRequiredPackages(quietly = TRUE))")
             if (pkg_staged_install)
-                set.install.dir <- paste0(", set.install.dir = ", 
+                set.install.dir <- paste0(", set.install.dir = ",
                                           quote_path(final_instdir))
             else
                 set.install.dir <- ""
@@ -2056,7 +2056,7 @@ if(FALSE) {
         if (!is.na(rsi))
             staged_install <- (rsi > 0)
         else
-            staged_install <- FALSE # R version default
+            staged_install <- TRUE
     }
     if  ((tar_up || zip_up) && fake)
         stop("building a fake installation is disallowed")

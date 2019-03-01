@@ -348,13 +348,11 @@
 
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
-      \item Source package installation can be \sQuote{staged}: this is
-      currently optional but intended to become the default before
-      release.  In a staged install the package is installed into a
-      temporary location under the final library directory and moved
-      into place once the installation is complete.  The benefit is that
-      partially-installed packages are hidden from the view of other \R
-      sessions.
+      \item Source package installation is by default \sQuote{staged}:
+      the package is installed into a temporary location under the final
+      library directory and moved into place once the installation is
+      complete.  The benefit is that partially-installed packages are
+      hidden from other \R sessions.
 
       The overall default is set by environment variable
       \env{R_INSTALL_STAGED}.  \command{R CMD INSTALL} has new options
@@ -372,7 +370,7 @@
       Legal FORTRAN 77 code is also legal fixed-form Fortran 9x; however
       this change legitimizes the use of later features, in particular
       to replace features marked \sQuote{obsolescent} in Fortran 95
-      which \command{gfortran} 8.x has started to warn about.
+      which \command{gfortran} 8.x warns about.
 
       \item Packages containing files in the \file{src} directory with
       extensions \file{.f90} or \file{.f95} are now linked using the C
