@@ -9,6 +9,7 @@
 ##
 
 ## When tryCatch()ing all seeds in 0:10000, the following 346 failed (Lnx 64b, R 3.5.0):
+suppressWarnings(RNGversion("3.5.0"))
 failingSeeds <- c(
     16, 42, 51, 63, 79,        108, 143, 171, 208, 215,
     230, 236, 254, 323, 327,   332, 333, 374, 386, 387,
