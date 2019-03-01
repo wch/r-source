@@ -853,8 +853,9 @@ static double rbits(int bits)
 	int v1 = (int) floor(unif_rand() * 65536);
 	v = 65536 * v + v1;
     }
+    const int_least64_t one64 = 1L;
     // mask out the bits in the result that are not needed
-    return (double) (v & ((1L << bits) - 1));
+    return (double) (v & ((one64 << bits) - 1));
 }
 
 double R_unif_index(double dn)
