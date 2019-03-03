@@ -3489,7 +3489,7 @@ system libraries need to be avoided there are @command{configure}
 options @option{--without-libpng}, @option{--without-jpeglib} and
 @option{--without-libtiff}.  The TIFF library has many optional features
 such as @code{jpeg}, @code{libz}, @code{lzma}, @code{jbig} and
-@code{jpeg12}, none of which is reauired for the @code{tiff()} devices
+@code{jpeg12}, none of which is required for the @code{tiff()} devices
 but may need to be present to link the library (usually only an issue
 for static linking).
 
