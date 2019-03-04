@@ -1118,7 +1118,6 @@ add_dummies <- function(dir, Log)
                         readLines("configure", warn = FALSE),
                         ignore.case = TRUE))) {
             if (!any(file.exists(c("configure.ac", "configure.in")))) {
-                any <- TRUE
                 desc <- .read_description("DESCRIPTION")
                 is_FOSS <- parse_description_field(desc, "License_is_FOSS", NA)
                 if (is.na(is_FOSS)) {
@@ -1127,7 +1126,7 @@ add_dummies <- function(dir, Log)
                         !is.na(val) && isTRUE(analyze_license(val)$is_FOSS)
                 }
                 if (is_FOSS) {
-                    warningLog(Log)
+                    if (!any) warningLog(Log)
                     wrapLog("Found a", sQuote("configure"),
                             "file without source file",
                             sQuote("configure.ac"), "or",
@@ -1135,20 +1134,40 @@ add_dummies <- function(dir, Log)
                             "An Open Source package must include its",
                             "autoconf sources.\n")
                 } else {
-                    noteLog(Log)
+                    if (!any) noteLog(Log)
                     wrapLog("Found a", sQuote("configure"),
                             "file without source file",
                             sQuote("configure.ac"), "or",
                             sQuote("configure.in"), ".",
                             "It is good practice to include autoconf sources.\n")
                 }
-            }
-            else if (file.exists("configure.in")) {
                 any <- TRUE
-                noteLog(Log)
-                wrapLog("Found a", sQuote("configure.in"),
-                        "file:", sQuote("configure.ac"),
-                        "has long been preferred.\n")
+            } else {
+                if (file.exists("configure.in")) {
+                    any <- TRUE
+                    noteLog(Log)
+                    wrapLog("Found a", sQuote("configure.in"),
+                            "file:", sQuote("configure.ac"),
+                            "has long been preferred.\n")
+                }
+                check_autoconf <- check_incoming ||
+                    config_val_to_logical(Sys.getenv("_R_CHECK_AUTOCONF_", "FALSE"))
+                if (check_autoconf && nzchar(Sys.which("autoconf"))) {
+                    td <- tempfile()
+                    dir.create(td)
+                    file.copy(".", td, recursive = TRUE)
+                    od <- setwd(td)
+                    out <- suppressWarnings(system2("autoconf", stdout = TRUE, stderr = TRUE, timeout = 60))
+                    setwd(od); unlink(td, recursive = TRUE)
+                    if (length(out)) {
+                        if(!any) {
+                            any <- TRUE
+                            warningLog(Log)
+                        }
+                        printLog0(Log, "  Output from running autoconf:\n")
+                        printLog0(Log, .format_lines_with_indent(out), "\n")
+                    }
+                }
             }
         }
 
