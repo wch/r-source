@@ -1,5 +1,5 @@
 
-R version 3.5.2 Patched (2019-02-05 r76087) -- "Eggshell Igloo"
+R version 3.5.3 RC (2019-03-03 r76193) -- "Great Truth"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -3799,7 +3799,7 @@ $zlab
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  11.148 0.3 11.497 0 0 
+Time elapsed:  11.117 0.265 11.427 0 0 
 > grDevices::dev.off()
 null device 
           1 
