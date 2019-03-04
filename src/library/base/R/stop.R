@@ -45,7 +45,7 @@ stopifnot <- function(..., exprs, local = TRUE)
 		     else if (is.environment(local)) local
 		     else stop("'local' must be TRUE, FALSE or an environment")
 	    exprs <- substitute(exprs) # protect from evaluation
-	    E1 <- exprs[[1]]
+	    E1 <- if(is.symbol(exprs)) exprs else exprs[[1]]
 	    if(identical(quote(`{`), E1)) # { ... }
 		do.call(expression, as.list(exprs[-1]))
 	    else if(identical(quote(expression), E1))

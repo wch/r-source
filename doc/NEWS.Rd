@@ -30,6 +30,8 @@
 
       \item \code{setClassUnion()} no longer warns, but uses \code{message()}
       for now, when encountering \dQuote{non local} subclasses of class members.
+
+      \item \code{stopifnot(exprs = T)} no longer fails.
     }
   }
 }
