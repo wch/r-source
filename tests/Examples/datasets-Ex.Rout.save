@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2019-02-25 r76156) -- "Unsuffered Consequences"
+R Under development (unstable) (2019-03-04 r76193) -- "Unsuffered Consequences"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -2105,7 +2105,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > 
 > # 6) Replace infinite values by +/- 6 as in Student's paper:
 > 
-> zobs[infZ <- is.infinite(zobs)] # none of them
+> zobs[infZ <- is.infinite(zobs)] # none of them 
 named numeric(0)
 > zobs[infZ] <- 6 * sign(zobs[infZ])
 > 
@@ -3512,7 +3512,7 @@ c0   -5.14
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.988 0.061 2.065 0 0 
+Time elapsed:  2.008 0.068 2.087 0 0 
 > grDevices::dev.off()
 null device 
           1 
