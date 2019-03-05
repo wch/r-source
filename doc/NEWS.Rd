@@ -437,6 +437,11 @@
       \item \command{R CMD check} has more comprehensive checks on the
       \file{data} directory and the functioning of \code{data()} in a
       package.
+      
+      \item \command{R CMD check} now checks
+      \command{autoconf}-generated \file{configure} files have their
+      corresponding source files, including optionally attempting to
+      regenerate them on platforms with \command{autoconf}.
     }
   }
 
