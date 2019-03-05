@@ -305,7 +305,7 @@ tryCatch(contour(matrix(rnorm(100), 10, 10), levels = 0, labels = numeric()),
 
 ## unique.warnings() needs better duplicated():
 .tmp <- lapply(list(0, 1, 0:1, 1:2, c(1,1), -1:1), function(x) wilcox.test(x))
-stopifnot(length(uw <- unique(warnings())) == 2)
+stopifnot(length(print(uw <- unique(warnings()))) == 2)
 ## unique() gave only one warning in  R <= 3.3.1
 
 
@@ -840,8 +840,8 @@ one <- 1
 try(stopifnot(3 < 4:5, 5:6 >= 5, 6:8 <= 7, one <- 2))
 stopifnot(identical(one, 1))
 ## all the expressions were evaluated in R <= 3.4.x
-et <- tryCatch(stopifnot(0 < 1:10, is.numeric(..vaporware..)),
-	       error=identity)
+(et <- tryCatch(stopifnot(0 < 1:10, is.numeric(..vaporware..)),
+                error=identity))
 stopifnot(identical(print(conditionCall(et))[[1]],
 		    quote(is.numeric)))
 ## call was the full 'stopifnot(..)' in R < 3.5.0
@@ -1465,12 +1465,13 @@ stopifnot(exprs = {
 })
 ## Multivariate
 set.seed(42)
-n <- 1e5; i <- sample(n, 12)
+n <- 1e5
+(i <- sample(n, 12))
 u <- matrix(rnorm(2*n), n, 2)
 y <- filter(u, filter=0.8, "recursive")
 y. <- y; y.[i,] <- NA
-est <- ar(y , aic = FALSE, order.max = 2) ## Estimate VAR(2)
-es. <- ar(y., aic = FALSE, order.max = 2, na.action=na.pass)
+est  <- ar(        y  , aic = FALSE, order.max = 2) ## Estimate VAR(2)
+es.  <- ar(        y. , aic = FALSE, order.max = 2, na.action=na.pass)
 ## checking ar.yw.default() multivariate case
 estd <- ar(unclass(y) , aic = FALSE, order.max = 2) ## Estimate VAR(2)
 es.d <- ar(unclass(y.), aic = FALSE, order.max = 2, na.action=na.pass)
@@ -1483,7 +1484,7 @@ stopifnot(exprs = {
     all.equal(lapply(estd[1:6],unname),
               lapply(est [1:6],unname), tol = 2e-12)# almost identical
     all.equal(lapply(es.d[1:6],unname),
-              lapply(es. [1:6],unname), tol = 2e-12)
+              lapply(es. [1:6],unname), tol = 1e-11)
 })
 ## NA's in x gave an error, in R versions <= 3.4.3
 
