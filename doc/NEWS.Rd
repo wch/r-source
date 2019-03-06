@@ -298,10 +298,6 @@
 
       \item Performance of \code{substr()} and \code{substring()} has been
       improved.
-
-      \item \code{stopifnot()} has been simplified thanks to Suharto
-      Anggono's proposals to become considerably faster for cheap
-      expressions.
     }
   }
 
@@ -437,7 +433,7 @@
       \item \command{R CMD check} has more comprehensive checks on the
       \file{data} directory and the functioning of \code{data()} in a
       package.
-      
+
       \item \command{R CMD check} now checks
       \command{autoconf}-generated \file{configure} files have their
       corresponding source files, including optionally attempting to
