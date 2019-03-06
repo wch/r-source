@@ -302,6 +302,11 @@
       \item \code{stopifnot()} has been simplified thanks to Suharto
       Anggono's proposals to become considerably faster for cheap
       expressions.
+
+      \item The default \sQuote{user agent} has been changed when
+      accessing \samp{http://} and \samp{https://} sites using
+      \samp{libcurl}.  (A site was found which caused \samp{libcurl} to
+      infinite-loop with the previous default.)
     }
   }
 
