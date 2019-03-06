@@ -827,7 +827,7 @@ static R_INLINE double ru()
     return (floor(U*unif_rand()) + unif_rand())/U;
 }
 
-double R_unif_index_0(double dn)
+static double R_unif_index_0(double dn)
 {
     double cut = INT_MAX;
 
@@ -871,3 +871,6 @@ double R_unif_index(double dn)
     do { dv = rbits(bits); } while (dn <= dv);
     return dv;
 }
+
+Sampletype R_sample_kind() { return Sample_kind; }
+

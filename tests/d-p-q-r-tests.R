@@ -1046,5 +1046,20 @@ stopifnot(identical(iN, is.na(T)), identical(iN, is.na(F)), identical(iN, is.na(
 ## was not handled correctly, notably with NA's in ncp, in R <= 3.4.(2|3)
 
 
+## check old version of walker_Probsample is being used for old sample kind
+suppressWarnings(RNGversion("3.5.0"))
+set.seed(12345)
+p <- c(2, rep(1, 200))
+x <- sample(length(p), 100000, prob = p, replace = TRUE)
+stopifnot(sum(x == 1) == 994)
+
+## check for faiure of new walker_Probsample
+RNGversion("3.6.0")
+set.seed(12345)
+epsilon <- 1e-10
+p201 <- prop.table( rep( c(1, epsilon), c(201, 999-201)))
+x <- sample(length(p201), 100000, prob = p201, replace = TRUE)
+stopifnot(sum(x <= 201) == 100000)
+
 
 cat("Time elapsed: ", proc.time() - .ptime,"\n")
