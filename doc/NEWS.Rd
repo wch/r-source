@@ -298,6 +298,10 @@
 
       \item Performance of \code{substr()} and \code{substring()} has been
       improved.
+
+      \item \code{stopifnot()} has been simplified thanks to Suharto
+      Anggono's proposals to become considerably faster for cheap
+      expressions.
     }
   }
 

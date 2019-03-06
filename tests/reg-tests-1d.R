@@ -842,9 +842,12 @@ stopifnot(identical(one, 1))
 ## all the expressions were evaluated in R <= 3.4.x
 (et <- tryCatch(stopifnot(0 < 1:10, is.numeric(..vaporware..)),
                 error=identity))
-stopifnot(identical(print(conditionCall(et))[[1]],
-		    quote(is.numeric)))
-## call was the full 'stopifnot(..)' in R < 3.5.0
+stopifnot(exprs = {
+    inherits(et, "simpleError")
+    is.null(conditionCall(et)) ## || at least should *not* contain 'stopifnot'
+    grepl("'..vaporware..'", conditionMessage(et))
+})
+## call was the full 'stopifnot(..)' in R < 3.5.0; then  'is.numeric(..)', now empty
 
 
 ## path.expand shouldn't translate to local encoding PR#17120

@@ -1,7 +1,7 @@
 #  File src/library/base/R/stop.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -33,25 +33,26 @@ stop <- function(..., call. = TRUE, domain = NULL)
 
 stopifnot <- function(..., exprs, local = TRUE)
 {
+    n <- ...length()
     missE <- missing(exprs)
-    cl <-
 	if(missE) {  ## use '...' instead of exprs
-	    match.call(expand.dots=FALSE)$...
 	} else {
-	    if(...length())
+	    if(n)
 		stop("Must use 'exprs' or unnamed expressions, but not both")
 	    envir <- if (isTRUE(local)) parent.frame()
 		     else if(isFALSE(local)) .GlobalEnv
 		     else if (is.environment(local)) local
 		     else stop("'local' must be TRUE, FALSE or an environment")
 	    exprs <- substitute(exprs) # protect from evaluation
-	    E1 <- exprs[[1]]
-	    if(identical(quote(`{`), E1)) # { ... }
-		do.call(expression, as.list(exprs[-1]))
-	    else if(identical(quote(expression), E1))
-		eval(exprs, envir=envir)
-	    else
-		as.expression(exprs) # or fail ..
+	    E1 <- if(is.call(exprs)) exprs[[1]]
+	    cl <- if(is.symbol(E1) &&
+		     (E1 == quote(`{`) || E1 == quote(expression)))
+		      exprs
+		  else
+		      call("expression", exprs) # or fail ..
+	    names(cl) <- NULL
+	    cl[[1]] <- sys.call()[[1]] ## call myself as  stopifnot(*, *, ..., *) :
+	    return(eval(cl, envir=envir))
 	}
     Dparse <- function(call, cutoff = 60L) {
 	ch <- deparse(call, width.cutoff = cutoff)
@@ -62,14 +63,10 @@ stopifnot <- function(..., exprs, local = TRUE)
     abbrev <- function(ae, n = 3L)
 	paste(c(head(ae, n), if(length(ae) > n) "...."), collapse="\n  ")
     ##
-    for (i in seq_along(cl)) {
-	cl.i <- cl[[i]]
-	## r <- eval(cl.i, ..)   # with correct warn/err messages:
-	r <- withCallingHandlers(
-		tryCatch(if(missE) ...elt(i) else eval(cl.i, envir=envir),
-			 error = function(e) { e$call <- cl.i; stop(e) }),
-		warning = function(w) { w$call <- cl.i; w })
+    for (i in seq_len(n)) {
+	r <- ...elt(i)
 	if (!(is.logical(r) && !anyNA(r) && all(r))) {
+	    cl.i <- match.call(expand.dots=FALSE)$...[[i]]
 	    msg <- ## special case for decently written 'all.equal(*)':
 		if(is.call(cl.i) && identical(cl.i[[1]], quote(all.equal)) &&
 		   (is.null(ni <- names(cl.i)) || length(cl.i) == 3L ||
@@ -84,7 +81,11 @@ stopifnot <- function(..., exprs, local = TRUE)
 				     "%s are not all TRUE"),
 			    Dparse(cl.i))
 
-	    stop(simpleError(msg, call = sys.call(-1)))
+	    n <- sys.nframe()
+	    if((p <- n-3L) > 0L && identical(sys.function(p), sys.function(n)) &&
+	       eval(expression(!missE), p)) # originally stopifnot(exprs=*)
+		n <- p
+	    stop(simpleError(msg, call = if(n > 1) sys.call(n-1L)))
 	}
     }
     invisible()
