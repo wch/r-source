@@ -1799,6 +1799,24 @@ Sometimes the name by which the software is known to
 pkg-config --list-all | sort
 @end example
 
+If using Autoconf it is good practice to include all the Autoconf
+sources in the the package (and required for an Open Source package).
+This will include the file @file{configure.ac}@footnote{a decade ago
+Autoconf used @file{configure.in}: this is still accepted but should be
+renamed.} in the top-level directory of the package.  If extensions
+written in @command{m4} are needed, these should be included under the
+directory @file{tools} and included in @file{configure.ac} @emph{via}
+e.g.,
+@example
+m4_include([tools/ax_pthread.m4])
+@end example
+@noindent
+One common source of such extensions is the `Autoconf Archive'
+(@uref{https://www.gnu.org/@/software/@/autoconf-archive}.  It is not
+safe to assume this is installed on users' machines, so the extension
+should be shipped with the package (taking care to comply with its
+licence).
+
 @menu
 * Using Makevars::              
 * Configure example::           
