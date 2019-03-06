@@ -46,7 +46,8 @@ set.seed(seed, kind = NULL, normal.kind = NULL, sample.kind = NULL)
   \item{seed}{a single value, interpreted as an integer, or \code{NULL}
     (see \sQuote{Details}).}
   \item{vstr}{a character string containing a version number,
-    e.g., \code{"1.6.2"}}
+    e.g., \code{"1.6.2"}.  The default RNG configuration of the current
+    \R version is used if \code{vstr} is greater than the current version.} 
   \item{rng.kind}{integer code in \code{0:k} for the above \code{kind}.}
   \item{n1, n2, \dots}{integers.  See the details for how many are required
     (which depends on \code{rng.kind}).}
