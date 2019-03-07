@@ -437,8 +437,8 @@ add_dummies <- function(dir, Log)
                 ## First check time on system running 'check',
                 ## by reading an external source in UTC: gives time in mins
                 now <- tryCatch({
-                    foo <- readLines("http://worldclockapi.com/api/json/utc/now",
-                                     warn = FALSE)
+                    foo <- suppressWarnings(readLines("http://worldclockapi.com/api/json/utc/now",
+                                                      warn = FALSE))
                     as.POSIXct(gsub(".*\"currentDateTime\":\"([^Z]*).*", "\\1", foo),
                                "UTC", "%Y-%m-%dT%H:%M")
                 }, error = function(e) NA)
