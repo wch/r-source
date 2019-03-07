@@ -34,9 +34,7 @@ stop <- function(..., call. = TRUE, domain = NULL)
 stopifnot <- function(..., exprs, local = TRUE)
 {
     n <- ...length()
-    missE <- missing(exprs)
-    if(missE) {  ## use '...' instead of exprs
-    } else {
+    if(hasExpr <- !missing(exprs)) {
 	if(n)
 	    stop("Must use 'exprs' or unnamed expressions, but not both")
 	envir <- if (isTRUE(local)) parent.frame()
@@ -54,6 +52,8 @@ stopifnot <- function(..., exprs, local = TRUE)
 	cl[[1]] <- sys.call()[[1]] ## call myself as  stopifnot(*, *, ..., *) :
 	return(eval(cl, envir=envir))
     }
+    ## else   use '...' (and not 'exprs') :
+
     Dparse <- function(call, cutoff = 60L) {
 	ch <- deparse(call, width.cutoff = cutoff)
 	if(length(ch) > 1L) paste(ch[1L], "....") else ch
@@ -83,7 +83,7 @@ stopifnot <- function(..., exprs, local = TRUE)
 
 	    n <- sys.nframe()
 	    if((p <- n-3L) > 0L && identical(sys.function(p), sys.function(n)) &&
-	       eval(expression(!missE), p)) # originally stopifnot(exprs=*)
+	       eval(expression(hasExpr), p)) # originally stopifnot(exprs=*)
 		n <- p
 	    stop(simpleError(msg, call = if(n > 1) sys.call(n-1L)))
 	}
