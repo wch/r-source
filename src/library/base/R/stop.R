@@ -35,25 +35,25 @@ stopifnot <- function(..., exprs, local = TRUE)
 {
     n <- ...length()
     missE <- missing(exprs)
-	if(missE) {  ## use '...' instead of exprs
-	} else {
-	    if(n)
-		stop("Must use 'exprs' or unnamed expressions, but not both")
-	    envir <- if (isTRUE(local)) parent.frame()
-		     else if(isFALSE(local)) .GlobalEnv
-		     else if (is.environment(local)) local
-		     else stop("'local' must be TRUE, FALSE or an environment")
-	    exprs <- substitute(exprs) # protect from evaluation
-	    E1 <- if(is.call(exprs)) exprs[[1]]
-	    cl <- if(is.symbol(E1) &&
-		     (E1 == quote(`{`) || E1 == quote(expression)))
-		      exprs
-		  else
-		      call("expression", exprs) # or fail ..
-	    names(cl) <- NULL
-	    cl[[1]] <- sys.call()[[1]] ## call myself as  stopifnot(*, *, ..., *) :
-	    return(eval(cl, envir=envir))
-	}
+    if(missE) {  ## use '...' instead of exprs
+    } else {
+	if(n)
+	    stop("Must use 'exprs' or unnamed expressions, but not both")
+	envir <- if (isTRUE(local)) parent.frame()
+		 else if(isFALSE(local)) .GlobalEnv
+		 else if (is.environment(local)) local
+		 else stop("'local' must be TRUE, FALSE or an environment")
+	exprs <- substitute(exprs) # protect from evaluation
+	E1 <- if(is.call(exprs)) exprs[[1]]
+	cl <- if(is.symbol(E1) &&
+		 (E1 == quote(`{`) || E1 == quote(expression)))
+		  exprs
+	      else
+		  call("expression", exprs) # or fail ..
+	names(cl) <- NULL
+	cl[[1]] <- sys.call()[[1]] ## call myself as  stopifnot(*, *, ..., *) :
+	return(eval(cl, envir=envir))
+    }
     Dparse <- function(call, cutoff = 60L) {
 	ch <- deparse(call, width.cutoff = cutoff)
 	if(length(ch) > 1L) paste(ch[1L], "....") else ch

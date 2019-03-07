@@ -656,7 +656,7 @@ loadNamespace <- function (package, lib.loc = NULL,
             ## process methods metadata explicitly exported or
             ## implied by exporting the generic function.
             allGenerics <- unique(c(methods:::.getGenerics(ns),
-                                   methods:::.getGenerics(parent.env(ns))))
+                                    methods:::.getGenerics(parent.env(ns))))
             expMethods <- nsInfo$exportMethods
             ## check for generic functions corresponding to exported methods
             addGenerics <- expMethods[is.na(match(expMethods, exports))]

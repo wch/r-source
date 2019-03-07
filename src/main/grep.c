@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 1997--2018  The R Core Team
+ *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Pulic License as published by
@@ -77,13 +77,13 @@ strsplit grep [g]sub [g]regexpr
 # include <pcre.h>
 #endif
 
-/* 
+/*
    Default maximum stack size: note this is reserved but not allocated
    until needed.  The help says 1M suffices, but we found more was
    needed for strings around a million bytes.
 */
 #define JIT_STACK_MAX 64*1024*1024
-/* 
+/*
    This will stay reserved until the end of the sesiion, but at 64MB
    that is not an issue -- and most sessions will not use PCRE with
    more than 10 strings.
@@ -98,7 +98,7 @@ static void setup_jit(pcre_extra *re_pe)
 	if (p) {
 	    char *endp;
 	    double xdouble = R_strtod(p, &endp);
-	    if (xdouble >= 0 && xdouble <= 1000) 
+	    if (xdouble >= 0 && xdouble <= 1000)
 		stmax = (int)(xdouble*1024*1024);
 	    else warning ("R_PCRE_JIT_STACK_MAXSIZE invalid and ignored");
 	}
@@ -226,7 +226,7 @@ static long R_pcre_max_recursions()
     return (long) ((ans <= LONG_MAX) ? ans : -1L);
 }
 
-static void 
+static void
 set_pcre_recursion_limit(pcre_extra **re_pe_ptr, const long limit)
 {
     if (limit >= 0) {
@@ -527,7 +527,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		error(_("invalid split pattern '%s'"), split);
 	    }
 	    re_pe = pcre_study(re_pcre,
-			       R_PCRE_use_JIT ?  PCRE_STUDY_JIT_COMPILE : 0, 
+			       R_PCRE_use_JIT ?  PCRE_STUDY_JIT_COMPILE : 0,
 			       &errorptr);
 	    if (errorptr)
 		warning(_("PCRE pattern study error\n\t'%s'\n"), errorptr);
@@ -577,7 +577,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		bufp = buf;
 		if (*bufp) {
 		    int rc;
-		    while((rc = pcre_exec(re_pcre, re_pe, bufp, 
+		    while((rc = pcre_exec(re_pcre, re_pe, bufp,
 					  (int) strlen(bufp),
 					  0, 0, ovector, 30)) >= 0) {
 			/* Empty matches get the next char, so move by one. */
@@ -594,7 +594,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		bufp = buf;
 		pt = Realloc(pt, strlen(buf)+1, char);
 		for (j = 0; j < ntok; j++) {
-		    int rc = pcre_exec(re_pcre, re_pe, bufp, 
+		    int rc = pcre_exec(re_pcre, re_pe, bufp,
 				       (int) strlen(bufp), 0, 0,
 				       ovector, 30);
 		    pcre_exec_error(rc, i);
@@ -1020,7 +1020,7 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	if (pcre_st) {
 	    re_pe = pcre_study(re_pcre,
-			       R_PCRE_use_JIT ?  PCRE_STUDY_JIT_COMPILE : 0, 
+			       R_PCRE_use_JIT ?  PCRE_STUDY_JIT_COMPILE : 0,
 			       &errorptr);
 	    if (errorptr)
 		warning(_("PCRE pattern study error\n\t'%s'\n"), errorptr);
@@ -1751,7 +1751,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!useBytes) {
 	if (!fixed_opt && mbcslocale) use_UTF8 = TRUE;
 	else if (IS_UTF8(STRING_ELT(pat, 0)) ||
-                 IS_UTF8(STRING_ELT(rep, 0)))
+		 IS_UTF8(STRING_ELT(rep, 0)))
 	    use_UTF8 = TRUE;
 	if (!use_UTF8)
 	    for (i = 0; i < n; i++)
@@ -1806,7 +1806,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	if (pcre_st) {
 	    re_pe = pcre_study(re_pcre,
-			       R_PCRE_use_JIT ?  PCRE_STUDY_JIT_COMPILE : 0, 
+			       R_PCRE_use_JIT ?  PCRE_STUDY_JIT_COMPILE : 0,
 			       &errorptr);
 	    if (errorptr)
 		warning(_("PCRE pattern study error\n\t'%s'\n"), errorptr);
@@ -2640,7 +2640,7 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	if (pcre_st) {
 	    re_pe = pcre_study(re_pcre,
-			       R_PCRE_use_JIT ?  PCRE_STUDY_JIT_COMPILE : 0, 
+			       R_PCRE_use_JIT ?  PCRE_STUDY_JIT_COMPILE : 0,
 			       &errorptr);
 	    if (errorptr)
 		warning(_("PCRE pattern study error\n\t'%s'\n"), errorptr);

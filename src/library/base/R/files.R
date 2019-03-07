@@ -172,9 +172,9 @@ file.info <- function(..., extra_cols = TRUE)
     res
 }
 ## wrappers introduced in R 3.2.0
-file.mode <- function(...) file.info(..., extra_cols = FALSE)$mode
+file.mode  <- function(...) file.info(..., extra_cols = FALSE)$mode
 file.mtime <- function(...) file.info(..., extra_cols = FALSE)$mtime
-file.size <- function(...) file.info(..., extra_cols = FALSE)$size
+file.size  <- function(...) file.info(..., extra_cols = FALSE)$size
 
 
 file.access <- function(names, mode = 0)
