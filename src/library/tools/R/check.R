@@ -1162,19 +1162,20 @@ add_dummies <- function(dir, Log)
                 }
                 check_autoconf <- check_incoming ||
                     config_val_to_logical(Sys.getenv("_R_CHECK_AUTOCONF_", "FALSE"))
-                if (check_autoconf && nzchar(Sys.which("autoconf"))) {
+                if (check_autoconf && nzchar(Sys.which("autoreconf"))) {
                     td <- tempfile()
                     dir.create(td)
                     file.copy(".", td, recursive = TRUE)
                     od <- setwd(td)
-                    out <- suppressWarnings(system2("autoconf", stdout = TRUE, stderr = TRUE, timeout = 60))
+                    out <- suppressWarnings(system2("autoreconf", "-fi",
+                                                    stdout = TRUE, stderr = TRUE, timeout = 60))
                     setwd(od); unlink(td, recursive = TRUE)
                     if (length(out)) {
                         if(!any) {
                             any <- TRUE
                             warningLog(Log)
                         }
-                        printLog0(Log, "  Output from running autoconf:\n")
+                        printLog0(Log, "  Output from running autoreconf:\n")
                         printLog0(Log, .format_lines_with_indent(out), "\n")
                     }
                 }
