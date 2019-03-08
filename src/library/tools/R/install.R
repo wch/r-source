@@ -573,12 +573,19 @@ if(FALSE) {
                           value = TRUE)
             if (!length(slibs)) return()
 
+            have_file <- nzchar(Sys.which("file"))
             ## file reports macOS dylibs as 'dynamically linked shared library'
-            are_shared <- sapply(slibs,
-                function(l) grepl("shared", system(paste("file", l),
-                                  intern = TRUE)))
-            slibs <- slibs[are_shared]
-            if (!length(slibs)) return()
+            if (have_file) {
+                ## RcppParallel has .so files containing ASCII text
+                ## (linker script) which make the tools below produce
+                ## a lot of error messages. However, some docker
+                ## installations do not have "file" utility.
+                are_shared <- sapply(slibs,
+                    function(l) grepl("shared", system(paste("file", l),
+                                      intern = TRUE)))
+                slibs <- slibs[are_shared]
+                if (!length(slibs)) return()
+            }
 
             starsmsg(stars, "checking absolute paths in shared objects and dynamic libraries")
 
