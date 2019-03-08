@@ -581,8 +581,8 @@ if(FALSE) {
                 ## a lot of error messages. However, some docker
                 ## installations do not have "file" utility.
                 are_shared <- sapply(slibs,
-                    function(l) grepl("shared", system(paste("file", l),
-                                      intern = TRUE)))
+                    function(l) grepl("(shared|dynamically linked)",
+                                      system(paste("file", l), intern = TRUE)))
                 slibs <- slibs[are_shared]
                 if (!length(slibs)) return()
             }
