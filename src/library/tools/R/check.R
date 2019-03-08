@@ -435,16 +435,26 @@ add_dummies <- function(dir, Log)
             ## allow skipping clock check on CRAN incoming systems
             if(config_val_to_logical(Sys.getenv("_R_CHECK_SYSTEM_CLOCK_", "TRUE"))) {
                 ## First check time on system running 'check',
-                ## by reading an external source in UTC: gives time in mins
+                ## by reading an external source in UTC
                 now <- tryCatch({
-                    foo <- suppressWarnings(readLines("http://worldclockapi.com/api/json/utc/now",
+                    foo <- suppressWarnings(readLines("http://worldtimeapi.org/api/timezone/UTC",
                                                       warn = FALSE))
-                    as.POSIXct(gsub(".*\"currentDateTime\":\"([^Z]*).*", "\\1", foo),
-                               "UTC", "%Y-%m-%dT%H:%M")
+                    ## gives time in sub-secs
+                    as.POSIXct(gsub(".*\"datetime\":\"([^Z]*).*", "\\1", foo),
+                               "UTC", "%Y-%m-%dT%H:%M:%S")
                 }, error = function(e) NA)
                 if (is.na(now)) {
+                    now <- tryCatch({
+                        foo <- suppressWarnings(readLines("http://worldclockapi.com/api/json/utc/now",
+                                                          warn = FALSE))
+                        ## gives time in mins
+                        as.POSIXct(gsub(".*\"currentDateTime\":\"([^Z]*).*", "\\1", foo),
+                                   "UTC", "%Y-%m-%dT%H:%M")
+                    }, error = function(e) NA)
+                }
+                if (is.na(now)) {
                     any <- TRUE
-                    warningLog(Log, "unable to verify current time")
+                    noteLog(Log, "unable to verify current time")
                 } else {
                     ## 5 mins leeway seems a reasonable compromise
                     if (abs(unclass(now_local) - unclass(now)) > 300) {
