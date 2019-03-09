@@ -4746,6 +4746,7 @@ add_dummies <- function(dir, Log)
                              ## Solaris warns on this next one. Also clang
                              ": warning: .* \\[-Wint-conversion\\]",
                              ## clang calls these 'a GNU extension'
+                             ": warning: .* \\[-Wconversion-null\\]",
                              ": warning: .* GCC extension",
                              ": warning: .* \\[-Wsizeof-pointer-memaccess\\]",
                              ## usually | for ||, = for == (etc)

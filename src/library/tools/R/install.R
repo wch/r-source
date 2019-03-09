@@ -580,6 +580,7 @@ if(FALSE) {
                 ## (linker script) which make the tools below produce
                 ## a lot of error messages. However, some docker
                 ## installations do not have "file" utility.
+                ## Solaris' "file" does not use 'shared'.
                 are_shared <- sapply(slibs,
                     function(l) grepl("(shared|dynamically linked)",
                                       system(paste("file", l), intern = TRUE)))
