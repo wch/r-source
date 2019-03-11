@@ -2560,6 +2560,12 @@ stopifnot(exprs = {
 ## a2[3] was 1.38778e-17  on typical platforms in R <= 3.5.x
 
 
+## isSymmetric(<1x1-matrix>)
+m1 <- matrix(0, dimnames = list("A","b")) # *non*-symmetric dimnames
+stopifnot(!isSymmetric(m1))
+## isSymmetric() gave TRUE wrongly in R versions 3.4.0 -- 3.5.x
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

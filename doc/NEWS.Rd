@@ -722,6 +722,9 @@
       \item \code{axTicks()} no longer returns small \dQuote{almost zero}
       numbers (in exponential format) instead of zero, fixing Ilario
       Gelmetti's \PR{17534}.
+
+      \item \code{isSymmetric(matrix(0, dimnames=list("A","b")))} is
+      \code{FALSE} again, as always documented.
     }
   }
 }
