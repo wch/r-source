@@ -26,7 +26,8 @@ isSymmetric.matrix <- function(object, tol = 100*.Machine$double.eps, tol1 = 8*t
     d <- dim(object)
     if((n <- d[1L]) != d[2L]) return(FALSE)
     if(n <= 1L) return(is.null(dn <- dimnames(object)) ||
-		       dn[[1L]] == dn[[2L]])
+		       ((l1 <- length(dn[[1L]])) == length(dn[[2L]]) &&
+			(l1 == 0L || dn[[1L]] == dn[[2L]])))
     ## else: square (n x n) matrix, n >= 2 :
     iCplx <- is.complex(object)
     if(length(tol1)) {

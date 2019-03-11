@@ -2560,10 +2560,18 @@ stopifnot(exprs = {
 ## a2[3] was 1.38778e-17  on typical platforms in R <= 3.5.x
 
 
-## isSymmetric(<1x1-matrix>)
-m1 <- matrix(0, dimnames = list("A","b")) # *non*-symmetric dimnames
-stopifnot(!isSymmetric(m1))
-## isSymmetric() gave TRUE wrongly in R versions 3.4.0 -- 3.5.x
+## isSymmetric(<1x1-matrix>) and <0x0 matrix>  with dimnames
+stopifnot(exprs = {
+    ! isSymmetric(matrix(0, dimnames = list("A","b"))) # *non*-symmetric dimnames
+    ## isSymmetric() gave TRUE wrongly in R versions 3.4.0 -- 3.5.x
+    ! isSymmetric(matrix(1, dimnames = list("A", NULL)))
+    ! isSymmetric(matrix(1, dimnames = list(NULL, "A")))
+      isSymmetric(matrix(1))
+      isSymmetric(matrix(1,  dimnames = list("a", "a")))
+      isSymmetric(matrix(1,  dimnames = list(NULL, NULL)))
+      isSymmetric(matrix(,0,0, dimnames=list(NULL, NULL)))
+      isSymmetric(matrix(,0,0))
+})
 
 
 
