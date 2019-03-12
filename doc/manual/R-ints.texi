@@ -4133,7 +4133,7 @@ Default: false.
 @item _R_CHECK_S3_METHODS_NOT_REGISTERED_
 If set to a true value, report (apparent) S3 methods exported but not
 registered.
-Default: false (but true for CRAN submission checks).
+Default: true.
 
 @item _R_CHECK_OVERWRITE_REGISTERED_S3_METHODS_
 If set to a true value, report already registered S3 methods in
