@@ -367,7 +367,11 @@
       \env{R_INSTALL_STAGED}.  \command{R CMD INSTALL} has new options
       \option{--staged-install} and \option{--no-staged-install}, and
       packages can use the \samp{StagedInstall} field in their
-      \file{DESCRIPTION} file to opt out.
+      \file{DESCRIPTION} file to opt out.  (That opt-out is a temporary
+      measure which may be withdrawn in future.)
+
+      Staged installation requires either \option{--pkglock} or
+      \option{--lock}, one of which is used by default.
 
       \item The interpretation of source code with extension \file{.f}
       is changing.  Previously this denoted FORTRAN 77 code, but current

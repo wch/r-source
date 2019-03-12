@@ -4951,13 +4951,15 @@ add_dummies <- function(dir, Log)
 
                 notes <- grep(note_re, lines0, value = TRUE, useBytes = TRUE)
                 notes <- unique(notes)
-
+                if (any(grepl("using non-staged installation", lines0,
+                               useBytes = TRUE)))
+                    notes <- c("Non-staged installation was used", notes)
                 if (length(lines)) {
                     warningLog(Log, "Found the following significant warnings:")
                     printLog0(Log, .format_lines_with_indent(lines), "\n")
                     if(length(notes)) {
                         printLog(Log,
-                                 "Found the following additional warnings:\n")
+                                 "Found the following additional notes/warnings:\n")
                         printLog0(Log, .format_lines_with_indent(notes),
                                   "\n")
                     }
@@ -4972,7 +4974,7 @@ add_dummies <- function(dir, Log)
                                 "set to 'yes'.\n")
 
                 } else if(length(notes)) {
-                    noteLog(Log, "Found the following warnings:")
+                    noteLog(Log, "Found the following notes/warnings:")
                     printLog0(Log, .format_lines_with_indent(notes), "\n")
                     printLog0(Log, sprintf("See %s for details.\n",
                                            sQuote(outfile)))

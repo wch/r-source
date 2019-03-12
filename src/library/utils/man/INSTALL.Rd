@@ -176,6 +176,9 @@
   \emph{via} flag \option{--no-staged-install} or by setting environment
   variable \env{R_INSTALL_STAGED} to a false value
   (e.g.\sspace{}\samp{false} or \samp{no}).
+
+  Staged installation requires either \option{--pkglock} or
+  \option{--lock}, one of which is used by default.
 }
 
 \seealso{

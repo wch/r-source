@@ -940,14 +940,20 @@ if(FALSE) {
             dir.create(instdir, recursive = TRUE, showWarnings = FALSE)
         }
 
-        pkg_staged_install <-
-            parse_description_field(desc, "StagedInstall",
-                                    default = staged_install)
-        if (pkg_staged_install && libs_only)
+        pkg_staged_install <- SI <-
+            parse_description_field(desc, "StagedInstall", default = NA)
+        if (is.na(pkg_staged_install)) pkg_staged_install <- staged_install
+        if (pkg_staged_install && libs_only) {
+            pkg_staged_install <- FALSE
             message("not using staged install with --libs-only")
+        }
+        if (pkg_staged_install && !lock) {
+            pkg_staged_install <- FALSE
+            message("staged installation is only possible with locking")
+        }
+
         if (pkg_staged_install) {
-            if (!lock)
-                stop("staged install is only possible with locking")
+            starsmsg(stars, "using staged installation")
             final_instdir <- instdir
             final_lib <- lib
             final_rpackagedir <- Sys.getenv("R_PACKAGE_DIR")
@@ -965,6 +971,12 @@ if(FALSE) {
                          lib
             Sys.setenv(R_LIBS = rlibs)
             .libPaths(c(lib, final_libpaths))
+        } else {
+            if(isFALSE(SI))
+                starsmsg(stars,
+                         "using non-staged installation via StagedInstall field")
+            else
+                starsmsg(stars, "using non-staged installation")
         }
 
         if (preclean) run_clean()
