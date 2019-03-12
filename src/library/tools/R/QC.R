@@ -2658,6 +2658,11 @@ function(package, dir, lib.loc = NULL)
 
     replace_funs <-
         c(replace_funs, grep("<-", objects_in_code, value = TRUE))
+    ## Drop %xxx% binops.
+    ## Spotted by Hugh Parsonage <hugh.parsonage@gmail.com>.
+    replace_funs <-
+        replace_funs[!(startsWith(replace_funs, "%") &
+                       endsWith(replace_funs, "%"))]
 
     .check_last_formal_arg <- function(f) {
         arg_names <- names(formals(f))
