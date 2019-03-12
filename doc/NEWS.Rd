@@ -729,6 +729,11 @@
 
       \item \code{isSymmetric(matrix(0, dimnames=list("A","b")))} is
       \code{FALSE} again, as always documented.
+
+      \item The \code{cairo_pdf} graphics device (and other Cairo-based
+      devices) now clip correctly to the right and bottom border.
+
+      There was an off-by-one-pixel bug, reported by Lee Kelvin.
     }
   }
 }
