@@ -1,6 +1,6 @@
 % File src/library/graphics/man/axTicks.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{axTicks}
@@ -43,13 +43,15 @@ axTicks(side, axp = NULL, usr = NULL, log = NULL, nintLog = NULL)
   when \code{log} is \code{TRUE}; see the documentation on
   \code{\link{par}(xaxp = .)}.
 
-  \code{axTicks()} can be used an \R interface to the C function
+  \code{axTicks()} may be seen as an \R implementation of the C function
   \code{CreateAtVector()} in \file{..../src/main/plot.c}
   which is called by \code{\link{axis}(side, *)} when no argument
-  \code{at} is specified.
+  \code{at} is specified or directly by \code{\link{axisTicks}()} (in package
+  \pkg{grDevices}).
+  \cr
   The delicate case, \code{log = TRUE}, now makes use of
-  \code{\link{axisTicks}} (in package \pkg{grDevices}) unless
-  \code{nintLog = Inf} which exists for back compatibility.
+  \code{\link{axisTicks}} unless \code{nintLog = Inf} which exists for back
+  compatibility.
 }
 \value{
   numeric vector of coordinate values at which axis tickmarks can be

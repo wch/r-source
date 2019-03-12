@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2019-02-19 r76127) -- "Unsuffered Consequences"
+R Under development (unstable) (2019-03-04 r76193) -- "Unsuffered Consequences"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -356,7 +356,7 @@ There were 22 warnings (use warnings() to see them)
 'data.frame':	10 obs. of  3 variables:
  $ x  : num  1 1 1 1 1 1 1 1 1 1
  $ y  : num  1 2 3 4 5 6 7 8 9 10
- $ fac: Factor w/ 3 levels "A","B","C": 1 3 2 3 3 1 2 3 2 2
+ $ fac: Factor w/ 3 levels "A","B","C": 3 3 3 2 3 2 2 2 3 1
 > (d0  <- d[, FALSE]) # NULL dataframe with 10 rows
 data frame with 0 columns and 10 rows
 > (d.0 <- d[FALSE, ]) # <0 rows> dataframe  (3 cols)
@@ -1595,46 +1595,46 @@ Eye:Sex   3   11.764 190.64
 +     set.seed(77, type)
 +     runif(100); print(runif(4))
 + }
-[1] "Wichmann-Hill" "Inversion"    
+[1] "Wichmann-Hill" "Inversion"     "Rejection"    
 [1] 0.8308841 0.4640221 0.9460082 0.8764644
 [1] 0.12909876 0.07294851 0.45594560 0.68884911
 [1] 0.4062450 0.7188432 0.6241738 0.2511611
-[1] "Marsaglia-Multicarry" "Inversion"           
+[1] "Marsaglia-Multicarry" "Inversion"            "Rejection"           
 [1] 0.3479705 0.9469351 0.2489207 0.7329251
 [1] 0.5041512 0.3617873 0.1469184 0.3798119
 [1] 0.14388128 0.04196294 0.36214015 0.86053575
-[1] "Super-Duper" "Inversion"  
+[1] "Super-Duper" "Inversion"   "Rejection"  
 [1] 0.2722510 0.9230240 0.3971743 0.8284474
 [1] 0.5706241 0.1806023 0.9633860 0.8434444
 [1] 0.09356585 0.41081124 0.38635627 0.72993396
-[1] "Mersenne-Twister" "Inversion"       
+[1] "Mersenne-Twister" "Inversion"        "Rejection"       
 [1] 0.5999890 0.3328235 0.4886130 0.9544738
 [1] 0.5993679 0.4516818 0.1368254 0.7261788
 [1] 0.09594961 0.31235651 0.81244335 0.72330846
-[1] "Knuth-TAOCP" "Inversion"  
+[1] "Knuth-TAOCP" "Inversion"   "Rejection"  
 [1] 0.9445502 0.3366297 0.6296881 0.5914161
 [1] 0.9213954 0.5468138 0.8817100 0.4442237
 [1] 0.8016962 0.9226080 0.1473484 0.8827707
-[1] "Knuth-TAOCP-2002" "Inversion"       
+[1] "Knuth-TAOCP-2002" "Inversion"        "Rejection"       
 [1] 0.9303634 0.2812239 0.1085806 0.8053228
 [1] 0.2916627 0.9085017 0.7958965 0.1980655
 [1] 0.05247575 0.28290867 0.20930324 0.16794887
 > RNGkind(normal.kind = "Kinderman-Ramage")
 > set.seed(123)
 > RNGkind()
-[1] "Knuth-TAOCP-2002" "Kinderman-Ramage"
+[1] "Knuth-TAOCP-2002" "Kinderman-Ramage" "Rejection"       
 > rnorm(4)
 [1] -1.9699090 -2.2429340  0.5339321  0.2097153
 > RNGkind(normal.kind = "Ahrens-Dieter")
 > set.seed(123)
 > RNGkind()
-[1] "Knuth-TAOCP-2002" "Ahrens-Dieter"   
+[1] "Knuth-TAOCP-2002" "Ahrens-Dieter"    "Rejection"       
 > rnorm(4)
 [1]  0.06267229  0.12421568 -1.86653499 -0.14535921
 > RNGkind(normal.kind = "Box-Muller")
 > set.seed(123)
 > RNGkind()
-[1] "Knuth-TAOCP-2002" "Box-Muller"      
+[1] "Knuth-TAOCP-2002" "Box-Muller"       "Rejection"       
 > rnorm(4)
 [1]  2.26160990  0.59010303  0.30176045 -0.01346139
 > set.seed(123)
@@ -4132,13 +4132,13 @@ lm(formula = y ~ x)
 
 Coefficients:
 (Intercept)           x1           x2  
-     0.4359      -0.1376       0.1539  
+    1.88803     -0.15694     -0.09072  
 
 > predict(lm1, newdata = data.frame(x= xt))
           1           2           3           4           5           6 
- 1.83760728  0.93041126  0.17714205  0.19350695  1.13343277  0.84194402 
+ 1.36820341  1.02982433  1.14505218  0.35306615  0.92190094  0.12991492 
           7           8           9          10 
- 0.08867482  0.25896653  0.27533143 -0.47793778 
+ 0.33586416 -0.09323631 -0.15945124  0.22794078 
 Warning message:
 'newdata' had 2 rows but variables found have 10 rows 
 > ## warns as from 2.0.0
@@ -4485,9 +4485,9 @@ Single term deletions
 
 Model:
 y ~ x
-       Df Sum of Sq    RSS    AIC
-<none>              20.191 5.1555
-x       1    1.4798 21.671 4.4993
+       Df Sum of Sq     RSS     AIC
+<none>               9.1728 -9.8358
+x       1    1.6593 10.8321 -8.6766
 > res <-  try(stats:::drop1.default(fit))
 Error in stats:::drop1.default(fit) : 
   number of rows in use has changed: remove missing values?
@@ -4497,9 +4497,9 @@ Single term additions
 
 Model:
 y ~ x
-       Df Sum of Sq    RSS    AIC
-<none>              17.605 3.6005
-x2      1  0.011746 17.593 5.5885
+       Df Sum of Sq    RSS     AIC
+<none>              8.8475 -8.7842
+x2      1  0.030932 8.8166 -6.8473
 Warning message:
 In add1.lm(fit, ~. + x2) : using the 18/19 rows from a combined fit
 > res <-  try(stats:::add1.default(fit, ~ . +x2))
@@ -5592,15 +5592,15 @@ lm(formula = y1 ~ 1, na.action = "na.exclude")
 
 Residuals:
     Min      1Q  Median      3Q     Max 
--3.2806 -0.9057  0.0500  0.8020  2.5458 
+-3.2359 -0.8766  0.2338  0.9944  2.5905 
 
 Coefficients:
             Estimate Std. Error t value Pr(>|t|)    
-(Intercept)   1.1866     0.1797   6.602  4.4e-08 ***
+(Intercept)   1.1419     0.1966   5.808 6.47e-07 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 1.206 on 44 degrees of freedom
+Residual standard error: 1.319 on 44 degrees of freedom
   (5 observations deleted due to missingness)
 
 
@@ -5611,15 +5611,15 @@ lm(formula = y2 ~ 1, na.action = "na.exclude")
 
 Residuals:
     Min      1Q  Median      3Q     Max 
--4.4712 -0.6591  0.3364  1.0945  3.6686 
+-4.2822 -1.2548  0.4364  1.2185  3.8575 
 
 Coefficients:
             Estimate Std. Error t value Pr(>|t|)    
-(Intercept)   2.8988     0.2586   11.21 1.75e-14 ***
+(Intercept)   2.7098     0.2798   9.685 1.77e-12 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 1.735 on 44 degrees of freedom
+Residual standard error: 1.877 on 44 degrees of freedom
   (5 observations deleted due to missingness)
 
 
@@ -6194,14 +6194,14 @@ Error in cor(X, use = "complete", method = "kendall") :
 > fit <-  lm(ans ~ x + u, data = junk)
 > confint(fit)
                  2.5 %    97.5 %
-(Intercept) -0.4634457 1.6198116
+(Intercept) -0.3224857 2.2194594
 x                   NA        NA
-uY          -2.3607073 0.5854635
+uY          -2.6821240 0.3560815
 > confint.default(fit)
                  2.5 %    97.5 %
-(Intercept) -0.3071384 1.4635043
+(Intercept) -0.1317629 2.0287366
 x                   NA        NA
-uY          -2.1396554 0.3644116
+uY          -2.4541666 0.1281242
 > ## Mismatch gave NA for 'u' in 2.6.1
 > 
 > 
@@ -6348,7 +6348,7 @@ function(given = NULL) {
     if (is.null(given)) callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x12c72a8>
+<bytecode: 0x4b84728>
 > print(foo, useSource = FALSE)
 function (given = NULL) 
 {
@@ -6359,7 +6359,7 @@ function (given = NULL)
         callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x12c72a8>
+<bytecode: 0x4b84728>
 > attr(foo, "srcref") <- NULL
 > foo
 function (given = NULL) 
@@ -6371,7 +6371,7 @@ function (given = NULL)
         callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x12c72a8>
+<bytecode: 0x4b84728>
 > (f <- structure(function(){}, note = "just a note",
 +                 yada = function() "not the same"))
 function(){}
@@ -6595,7 +6595,7 @@ Error in complete.cases(list(), list()) :
 > ## error messages from (C-level) evalList
 > tst <- function(y) { stopifnot(is.numeric(y)); y+ 1 }
 > try(tst()) # even nicer since R 3.5.0's change to sequential stopifnot()
-Error in is.numeric(y) : argument "y" is missing, with no default
+Error : argument "y" is missing, with no default
 > try(c(1,,2))
 Error in c(1, , 2) : argument 2 is empty
 > ## change in 2.8.0 made these less clear

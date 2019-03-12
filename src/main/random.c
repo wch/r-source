@@ -382,9 +382,16 @@ walker_ProbSampleReplace(int n, double *p, int *a, int nans, int *ans)
     for (i = 0; i < n; i++) q[i] += i;
 
     /* generate sample */
+    Sampletype Sample_kind = R_sample_kind();
     for (i = 0; i < nans; i++) {
-	rU = R_unif_index(n);
-	k = (int) rU;
+	if (Sample_kind == ROUNDING) {
+	    rU = unif_rand() * n;
+	    k = (int) rU;
+	}
+	else {
+	    k = (int) R_unif_index(n);
+	    rU = k + unif_rand();
+	}
 	ans[i] = (rU < q[k]) ? k+1 : a[k]+1;
     }
     if(n > SMALL) {

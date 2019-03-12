@@ -1,7 +1,7 @@
 #  File src/library/utils/R/windows/sysutils.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -64,16 +64,16 @@ getWindowsHandles <- function(which = "R", pattern = "", minimized = FALSE)
 {
     which <- match.arg(which, c("R", "all"), several.ok = TRUE)
     len <- max(length(which), length(pattern), length(minimized))
-    which <- rep_len(which, len)
-    pattern <- rep_len(pattern, len)
+    which     <- rep_len(which,     len)
+    pattern   <- rep_len(pattern,   len)
     minimized <- rep_len(minimized, len)
     result <- list()
-    for (i in seq_along(which)) {
+    for (i in seq_len(len)) {
 	res <- .Call(C_getWindowsHandles, which[i], minimized)
 	if (nzchar(pattern[i])) res <- res[grep(pattern[i], names(res))]
-    	result <- c(result, res)
+    	result <- c(result, res) # does *not* grow if res is of length 0
     }
-    dup <- duplicated(sapply(result, deparse))
+    dup <- duplicated(lapply(result, deparse))
     result[!dup]
 }
 
@@ -86,10 +86,10 @@ arrangeWindows <-
     stopifnot(length(action) == 1 && !is.na(action))
 
     if (missing(windows)) {
-    	args <- if (exists(".arrangeWindowsDefaults", globalenv()))
-            get(".arrangeWindowsDefaults", globalenv())
-        else
-            list()
+    	args <- if(!is.null(a <- get0(".arrangeWindowsDefaults", globalenv())))
+                    a
+                else
+                    list()
         if (action == 5) # restore
             args$minimized <- TRUE
     	windows <- do.call(getWindowsHandles, args)

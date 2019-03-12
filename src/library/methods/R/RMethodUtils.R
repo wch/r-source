@@ -1462,7 +1462,7 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE)
                 members <- .recMembers(members, .methodsNamespace)
             }
             else
-                members <- .recMembers(members, .asEnvironmentPackage(where))
+                members <- .recMembers(members, .requirePackage(where))
         }
         if(character)
             sapply(members, function(x){

@@ -1,6 +1,6 @@
 % File src/library/datasets/man/crimtab.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{crimtab}
@@ -121,7 +121,7 @@ zobs <- (h.mean - mean(d.hei[,"height"]))/h.sd
 
 # 6) Replace infinite values by +/- 6 as in Student's paper:
 
-zobs[infZ <- is.infinite(zobs)] # 3 of them
+zobs[infZ <- is.infinite(zobs)] # none of them 
 zobs[infZ] <- 6 * sign(zobs[infZ])
 
 # 7) Plot the distribution:

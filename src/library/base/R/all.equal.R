@@ -149,14 +149,14 @@ all.equal.character <-
     ne <- !nas & (target != current)
     if(!any(ne) && is.null(msg)) TRUE
     else if(sum(ne) == 1L) c(msg, paste("1 string mismatch"))
-    else if(sum(ne) > 1L) c(msg, paste(sum(ne), "string mismatches"))
+    else if(sum(ne) >  1L) c(msg, paste(sum(ne), "string mismatches"))
     else msg
 }
 
 ## In 'base' these are all visible, so need to test both args:
 
 all.equal.envRefClass <- function (target, current, ...) {
-    if(!methods::is(target, "envRefClass")) return("'target' is not an envRefClass")
+    if(!methods::is(target,  "envRefClass")) return("'target' is not an envRefClass")
     if(!methods::is(current, "envRefClass")) return("'current' is not an envRefClass")
     if(!isTRUE(ae <- all.equal(class(target), class(current), ...)))
 	return(sprintf("Classes differ: %s", paste(ae, collapse=" ")))

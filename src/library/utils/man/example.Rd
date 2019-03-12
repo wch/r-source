@@ -1,6 +1,6 @@
 % File src/library/utils/man/example.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{example}
@@ -44,7 +44,7 @@ example(topic, package = NULL, lib.loc = NULL,
     \code{setRNG = TRUE} sets the same state as
     \command{R CMD \link{check}} does for
     running a package's examples.  This is currently equivalent to
-    \code{setRNG = \{RNGkind("default", "default"); set.seed(1)\}}.}
+    \code{setRNG = \{RNGkind("default", "default", "default"); set.seed(1)\}}.}
   \item{ask}{logical (or \code{"default"}) indicating if
     \code{\link{devAskNewPage}(ask = TRUE)} should be called
     before graphical output happens from the example code.  The value

@@ -573,12 +573,20 @@ if(FALSE) {
                           value = TRUE)
             if (!length(slibs)) return()
 
+            have_file <- nzchar(Sys.which("file"))
             ## file reports macOS dylibs as 'dynamically linked shared library'
-            are_shared <- sapply(slibs,
-                function(l) grepl("shared", system(paste("file", l),
-                                  intern = TRUE)))
-            slibs <- slibs[are_shared]
-            if (!length(slibs)) return()
+            if (have_file) {
+                ## RcppParallel has .so files containing ASCII text
+                ## (linker script) which make the tools below produce
+                ## a lot of error messages. However, some docker
+                ## installations do not have "file" utility.
+                ## Solaris' "file" does not use 'shared'.
+                are_shared <- sapply(slibs,
+                    function(l) grepl("(shared|dynamically linked)",
+                                      system(paste("file", l), intern = TRUE)))
+                slibs <- slibs[are_shared]
+                if (!length(slibs)) return()
+            }
 
             starsmsg(stars, "checking absolute paths in shared objects and dynamic libraries")
 
@@ -932,12 +940,20 @@ if(FALSE) {
             dir.create(instdir, recursive = TRUE, showWarnings = FALSE)
         }
 
-        pkg_staged_install <-
-            parse_description_field(desc, "StagedInstall",
-                                    default = staged_install)
+        pkg_staged_install <- SI <-
+            parse_description_field(desc, "StagedInstall", default = NA)
+        if (is.na(pkg_staged_install)) pkg_staged_install <- staged_install
+        if (pkg_staged_install && libs_only) {
+            pkg_staged_install <- FALSE
+            message("not using staged install with --libs-only")
+        }
+        if (pkg_staged_install && !lock) {
+            pkg_staged_install <- FALSE
+            message("staged installation is only possible with locking")
+        }
+
         if (pkg_staged_install) {
-            if (!lock)
-                stop("staged install is only possible with locking")
+            starsmsg(stars, "using staged installation")
             final_instdir <- instdir
             final_lib <- lib
             final_rpackagedir <- Sys.getenv("R_PACKAGE_DIR")
@@ -955,6 +971,12 @@ if(FALSE) {
                          lib
             Sys.setenv(R_LIBS = rlibs)
             .libPaths(c(lib, final_libpaths))
+        } else {
+            if(isFALSE(SI))
+                starsmsg(stars,
+                         "using non-staged installation via StagedInstall field")
+            else
+                starsmsg(stars, "using non-staged installation")
         }
 
         if (preclean) run_clean()
@@ -1457,7 +1479,7 @@ if(FALSE) {
             cmd <- append(cmd,
                 "suppressPackageStartupMessages(.getRequiredPackages(quietly = TRUE))")
             if (pkg_staged_install)
-                set.install.dir <- paste0(", set.install.dir = ", 
+                set.install.dir <- paste0(", set.install.dir = ",
                                           quote_path(final_instdir))
             else
                 set.install.dir <- ""
@@ -1599,9 +1621,13 @@ if(FALSE) {
 
         if (pkg_staged_install) {
             if (WINDOWS) {
-                file.copy(instdir, dirname(final_instdir), recursive = TRUE,
-                          copy.date = TRUE)
-                unlink(instdir, recursive = TRUE)
+                unlink(final_instdir, recursive = TRUE) # needed for file.rename
+                if (!file.rename(instdir, final_instdir)) {
+                    message("WARNING: moving package to final location failed, copying instead")
+                    file.copy(instdir, dirname(final_instdir), recursive = TRUE,
+                              copy.date = TRUE)
+                    unlink(instdir, recursive = TRUE)
+                }
             } else {
                 patch_rpaths()
 
@@ -1625,7 +1651,8 @@ if(FALSE) {
                 # .onLoad and loadNamespace().
 
                 serf <- tempfile()
-                cmd <- paste0("f <- base::file(\"", serf, "\", \"wb\")")
+                cmd <- paste0("f <- base::file(", quote_path(serf),
+                              ", \"wb\")")
                 cmd <- append(cmd,
                 paste0("base::invisible(base::suppressWarnings(base::serialize(",
                     "base::as.list(base::getNamespace(\"", pkg_name, "\"), all.names=TRUE), f)))"))
@@ -1867,10 +1894,12 @@ if(FALSE) {
                 ## so use a backdoor to suppress it.
                 Sys.setenv("_R_INSTALL_NO_DONE_" = "yes")
                 for (arch in archs) {
-                    cmd <- c(file.path(R.home(), "bin", arch, "Rcmd.exe"),
-                             "INSTALL", args, "--no-multiarch")
+                    cmd <- c(shQuote(file.path(R.home(), "bin", arch,
+                                               "Rcmd.exe")),
+                             "INSTALL", shQuote(args), "--no-multiarch")
                     if (arch == "x64") {
-                        cmd <- c(cmd, "--libs-only", if(zip_up) "--build")
+                        cmd <- c(cmd, "--libs-only --no-staged-install",
+                                 if(zip_up) "--build")
                         Sys.unsetenv("_R_INSTALL_NO_DONE_")
                     }
                     cmd <- paste(cmd, collapse = " ")
@@ -1890,10 +1919,11 @@ if(FALSE) {
                 Sys.setenv("_R_INSTALL_NO_DONE_" = "yes")
                 last <- archs[length(archs)]
                 for (arch in archs) {
-                    cmd <- c(file.path(R.home("bin"), "R"),
+                    cmd <- c(shQuote(file.path(R.home("bin"), "R")),
                              "--arch", arch, "CMD",
-                             "INSTALL", args, "--no-multiarch")
-                    if (arch != archs[1L]) cmd <- c(cmd, "--libs-only")
+                             "INSTALL", shQuote(args), "--no-multiarch")
+                    if (arch != archs[1L])
+                        cmd <- c(cmd, "--libs-only --no-staged-install")
                     if (arch == last) {
                         Sys.unsetenv("_R_INSTALL_NO_DONE_")
                         if(tar_up) cmd <- c(cmd, "--build")
@@ -1964,7 +1994,7 @@ if(FALSE) {
 
     if (!nzchar(lib)) {
         lib <- if (get_user_libPaths) { ## need .libPaths()[1L] *after* the site- and user-initialization
-	    system(paste(file.path(R.home("bin"), "Rscript"),
+	    system(paste(shQuote(file.path(R.home("bin"), "Rscript")),
                          "-e 'cat(.libPaths()[1L])'"),
                    intern = TRUE)
         }
@@ -2051,7 +2081,7 @@ if(FALSE) {
         if (!is.na(rsi))
             staged_install <- (rsi > 0)
         else
-            staged_install <- FALSE # R version default
+            staged_install <- TRUE
     }
     if  ((tar_up || zip_up) && fake)
         stop("building a fake installation is disallowed")

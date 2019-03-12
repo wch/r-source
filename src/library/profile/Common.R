@@ -94,3 +94,8 @@ if(nzchar(Sys.getenv("R_BATCH"))) {
     ## A system has been reported without Sys.unsetenv, so try this
     try(Sys.setenv(R_BATCH=""))
 }
+
+local({
+    if(nzchar(rv <- Sys.getenv("_R_RNG_VERSION_")))
+        suppressWarnings(RNGversion(rv))
+})

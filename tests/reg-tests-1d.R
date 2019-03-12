@@ -305,7 +305,7 @@ tryCatch(contour(matrix(rnorm(100), 10, 10), levels = 0, labels = numeric()),
 
 ## unique.warnings() needs better duplicated():
 .tmp <- lapply(list(0, 1, 0:1, 1:2, c(1,1), -1:1), function(x) wilcox.test(x))
-stopifnot(length(uw <- unique(warnings())) == 2)
+stopifnot(length(print(uw <- unique(warnings()))) == 2)
 ## unique() gave only one warning in  R <= 3.3.1
 
 
@@ -533,7 +533,7 @@ stopifnot(is.null(attributes(body(g)[[3L]][[4L]])))
 
 ## pmin/pmax of ordered factors -- broken in R 3.3.2  [PR #17195]
 of <- ordered(c(1,5,6))
-set.seed(7); rof <- sample(of, 12, replace=TRUE)
+set.seed(6); rof <- sample(of, 12, replace=TRUE)
 stopifnot(exprs = {
     identical(pmax(rof, of), ordered(pmax(c(rof), c(of)), labels=levels(rof)) -> pmar)
     identical(pmax(of, rof), pmar)
@@ -840,11 +840,14 @@ one <- 1
 try(stopifnot(3 < 4:5, 5:6 >= 5, 6:8 <= 7, one <- 2))
 stopifnot(identical(one, 1))
 ## all the expressions were evaluated in R <= 3.4.x
-et <- tryCatch(stopifnot(0 < 1:10, is.numeric(..vaporware..)),
-	       error=identity)
-stopifnot(identical(print(conditionCall(et))[[1]],
-		    quote(is.numeric)))
-## call was the full 'stopifnot(..)' in R < 3.5.0
+(et <- tryCatch(stopifnot(0 < 1:10, is.numeric(..vaporware..)),
+                error=identity))
+stopifnot(exprs = {
+    inherits(et, "simpleError")
+    is.null(conditionCall(et)) ## || at least should *not* contain 'stopifnot'
+    grepl("'..vaporware..'", conditionMessage(et))
+})
+## call was the full 'stopifnot(..)' in R < 3.5.0; then  'is.numeric(..)', now empty
 
 
 ## path.expand shouldn't translate to local encoding PR#17120
@@ -1465,12 +1468,13 @@ stopifnot(exprs = {
 })
 ## Multivariate
 set.seed(42)
-n <- 1e5; i <- sample(n, 12)
+n <- 1e5
+(i <- sample(n, 12))
 u <- matrix(rnorm(2*n), n, 2)
 y <- filter(u, filter=0.8, "recursive")
 y. <- y; y.[i,] <- NA
-est <- ar(y , aic = FALSE, order.max = 2) ## Estimate VAR(2)
-es. <- ar(y., aic = FALSE, order.max = 2, na.action=na.pass)
+est  <- ar(        y  , aic = FALSE, order.max = 2) ## Estimate VAR(2)
+es.  <- ar(        y. , aic = FALSE, order.max = 2, na.action=na.pass)
 ## checking ar.yw.default() multivariate case
 estd <- ar(unclass(y) , aic = FALSE, order.max = 2) ## Estimate VAR(2)
 es.d <- ar(unclass(y.), aic = FALSE, order.max = 2, na.action=na.pass)
@@ -1481,9 +1485,9 @@ stopifnot(exprs = {
     all.equal(estd[c(1:3,5:6)],
               es.d[c(1:3,5:6)], tol = 1e-3)## seen {1,3,8}e-4
     all.equal(lapply(estd[1:6],unname),
-              lapply(est [1:6],unname), tol = 1e-12)# almost identical
+              lapply(est [1:6],unname), tol = 2e-12)# almost identical
     all.equal(lapply(es.d[1:6],unname),
-              lapply(es. [1:6],unname), tol = 1e-12)
+              lapply(es. [1:6],unname), tol = 1e-11)
 })
 ## NA's in x gave an error, in R versions <= 3.4.3
 
@@ -1746,7 +1750,7 @@ stopifnot(is.null(getO("foobar")))
 
 
 ## Mantel-Haenszel test in "large" case, PR#17383:
-set.seed(101)
+set.seed(101); n = 500000
 aTab <- table(
     educ = factor(sample(1:3, replace=TRUE, size=n)),
     score= factor(sample(1:5, replace=TRUE, size=n)),
@@ -1754,7 +1758,7 @@ aTab <- table(
 (MT <- mantelhaen.test(aTab))
 stopifnot(all.equal(
     lapply(MT[1:3], unname),
-    list(statistic = 7.766963, parameter = 8, p.value = 0.4565587), tol = 6e-6))
+    list(statistic = 9.285642, parameter = 8, p.value = 0.3187756), tol = 6e-6))
 ## gave integer overflow and error in R <= 3.4.x
 
 
@@ -2542,6 +2546,32 @@ stopifnot(exprs = {
     all.equal(unname(C), rbind(diag(2), -1))
 })
 ## gave no warnings but same results in R <= 3.5.0
+
+
+## axTicks() should zap "almost zero" to zero, PR#17534
+## (caused by non-exact floating point arithmetic -- (platform dependently!)
+plot(c(-0.1, 0.2), axes=FALSE, ann=FALSE)
+(a2 <- axTicks(2)) # -0.10 -0.05  0.00  0.05  0.10  0.15  0.20
+axis(2, at = a2) # was ugly
+stopifnot(exprs = {
+    a2[3] == 0 # exactly
+    all.equal(a2, (-2:4)/20, tol=1e-14) # closely
+})
+## a2[3] was 1.38778e-17  on typical platforms in R <= 3.5.x
+
+
+## isSymmetric(<1x1-matrix>) and <0x0 matrix>  with dimnames
+stopifnot(exprs = {
+    ! isSymmetric(matrix(0, dimnames = list("A","b"))) # *non*-symmetric dimnames
+    ## isSymmetric() gave TRUE wrongly in R versions 3.4.0 -- 3.5.x
+    ! isSymmetric(matrix(1, dimnames = list("A", NULL)))
+    ! isSymmetric(matrix(1, dimnames = list(NULL, "A")))
+      isSymmetric(matrix(1))
+      isSymmetric(matrix(1,  dimnames = list("a", "a")))
+      isSymmetric(matrix(1,  dimnames = list(NULL, NULL)))
+      isSymmetric(matrix(,0,0, dimnames=list(NULL, NULL)))
+      isSymmetric(matrix(,0,0))
+})
 
 
 

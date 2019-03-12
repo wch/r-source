@@ -3395,15 +3395,18 @@ SEXP L_textBounds(SEXP label, SEXP x, SEXP y,
 
 SEXP L_points(SEXP x, SEXP y, SEXP pch, SEXP size)
 {
-    int i, nx, npch;
+    int i, nx, npch, nss;
     /*    double *xx, *yy;*/
-    double *xx, *yy;
+    double *xx, *yy, *ss;
+    int *ps;
+    int pType;
     double vpWidthCM, vpHeightCM;
     double rotationAngle;
     double symbolSize;
     const void *vmax;
+    int gpIsScalar[15] = {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
     LViewportContext vpc;
-    R_GE_gcontext gc;
+    R_GE_gcontext gc, gcCache;
     LTransform transform;
     SEXP currentvp, currentgp;
     /* Get the current device 
@@ -3415,14 +3418,16 @@ SEXP L_points(SEXP x, SEXP y, SEXP pch, SEXP size)
 			 &vpWidthCM, &vpHeightCM, 
 			 transform, &rotationAngle);
     getViewportContext(currentvp, &vpc);
+    initGContext(currentgp, &gc, dd, gpIsScalar, &gcCache);
     nx = unitLength(x); 
     npch = LENGTH(pch);
+    nss = unitLength(size);
     /* Convert the x and y values to CM locations */
     vmax = vmaxget();
     xx = (double *) R_alloc(nx, sizeof(double));
     yy = (double *) R_alloc(nx, sizeof(double));
     for (i=0; i<nx; i++) {
-	gcontextFromgpar(currentgp, i, &gc, dd);
+	updateGContext(currentgp, i, &gc, dd, gpIsScalar, &gcCache);
 	transformLocn(x, y, i, vpc, &gc,
 		      vpWidthCM, vpHeightCM,
 		      dd,
@@ -3433,6 +3438,35 @@ SEXP L_points(SEXP x, SEXP y, SEXP pch, SEXP size)
 	xx[i] = toDeviceX(xx[i], GE_INCHES, dd);
 	yy[i] = toDeviceY(yy[i], GE_INCHES, dd);
     }
+    ss = (double *) R_alloc(nss, sizeof(double));
+    for (i=0; i < nss; i++) {
+        ss[i] = transformWidthtoINCHES(size, i, vpc, &gc,
+                                       vpWidthCM, vpHeightCM, dd);
+        ss[i] = toDeviceWidth(ss[i], GE_INCHES, dd);
+    }
+    ps = (int *) R_alloc(npch, sizeof(int));
+    if (isString(pch)) pType = 0;
+    else if (isInteger(pch)) pType = 1;
+    else if (isReal(pch)) pType = 2;
+    else pType = 3;
+    for (i=0; i < npch; i++) {
+        switch (pType) {
+        case 0:
+            /* 
+             * FIXME:
+             * Resolve any differences between this and FixupPch()
+             * in plot.c ? 
+             */
+            ps[i] = GEstring_to_pch(STRING_ELT(pch, i));
+            break;
+        case 1:
+            ps[i] = INTEGER(pch)[i];
+            break;
+        case 2:
+            ps[i] = R_FINITE(REAL(pch)[i]) ? (int) REAL(pch)[i] : NA_INTEGER;
+            break;
+        }
+    }
     GEMode(1, dd);
     for (i=0; i<nx; i++)
 	if (R_FINITE(xx[i]) && R_FINITE(yy[i])) {
@@ -3440,36 +3474,23 @@ SEXP L_points(SEXP x, SEXP y, SEXP pch, SEXP size)
 	     * rotations !!!
 	     */
 	    int ipch = NA_INTEGER /* -Wall */;
-	    gcontextFromgpar(currentgp, i, &gc, dd);
-	    symbolSize = transformWidthtoINCHES(size, i, vpc, &gc,
-						vpWidthCM, vpHeightCM, dd);
-	    /* The graphics engine only takes device coordinates
-	     */
-	    symbolSize = toDeviceWidth(symbolSize, GE_INCHES, dd);
+	    updateGContext(currentgp, i, &gc, dd, gpIsScalar, &gcCache);
+	    symbolSize = ss[i % nss];
 	    if (R_FINITE(symbolSize)) {
-                /* 
-                 * FIXME:
-                 * Resolve any differences between this and FixupPch()
-                 * in plot.c ? 
-                 */
-	        if (isString(pch)) {
-		    ipch = GEstring_to_pch(STRING_ELT(pch, i % npch));
-		} else if (isInteger(pch)) {
-		    ipch = INTEGER(pch)[i % npch];
-		} else if (isReal(pch)) {
-		    ipch = R_FINITE(REAL(pch)[i % npch]) ? 
-			(int) REAL(pch)[i % npch] : NA_INTEGER;
-		} else error(_("invalid plotting symbol"));
-		/*
-		 * special case for pch = "."
-		 */
-		if (ipch == 46) symbolSize = gpCex(currentgp, i);
-                /*
-                 * FIXME: 
-                 * For character-based symbols, we need to modify
-                 * gc->cex so that the FONT size corresponds to
-                 * the specified symbolSize.
-                 */
+	        if (pType == 3) {
+	            error(_("invalid plotting symbol"));
+	        }
+	        ipch = ps[i % npch];
+	        /*
+	         * special case for pch = "."
+	         */
+	        if (ipch == 46) symbolSize = gpCex(currentgp, i);
+            /*
+             * FIXME: 
+             * For character-based symbols, we need to modify
+             * gc->cex so that the FONT size corresponds to
+             * the specified symbolSize.
+             */
 	        GESymbol(xx[i], yy[i], ipch, symbolSize, &gc, dd);
 	    }
 	}

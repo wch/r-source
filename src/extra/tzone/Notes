@@ -29,7 +29,8 @@ for the appropriate version.  If zic is not on the path, use something like
 make -f Make.zi VERSION=2018i ZIC=/usr/sbin/zic
 
 NB: it seems that this needs to be done on a system with 64-bit time_t
-or the catalogs will be confined to 1902-2038.  And even that did not
-suffice on macOS.  As a sanity check, the size of zoneinfo.zip should
-be about 400KB if 64-bit: a 32-bit version will be about 280KB.
+or the catalogs will be confined to 1902-2038.  (Even that did not
+suffice on earlier versions of macOS.)  As a sanity check, the size of
+zoneinfo.zip should be about 410KB if 64-bit: a 32-bit version will be
+about 280KB.
 

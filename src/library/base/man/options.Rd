@@ -1,6 +1,6 @@
 % File src/library/base/man/options.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{options}
@@ -636,10 +636,13 @@ getOption(x, default = NULL)
     \item{\code{help_type}:}{default for an argument of
     \code{\link{help}}, used also as the help type by \code{\link{?}}.}
 
-    \item{\code{HTTPUserAgent}:}{string used as the user agent in HTTP(S)
-      requests.  If \code{NULL}, requests will be made without a
-      user agent header.
-      The default is \code{R (<version> <platform> <arch> <os>)} .}
+    \item{\code{HTTPUserAgent}:}{string used as the \sQuote{user agent} in
+      HTTP(S) requests by \code{\link{download.file}}, \code{\link{url}}
+      and \code{\link{curlGetHeaders}}, or \code{NULL} when requests will
+      be made without a user agent header.  The default is
+      \code{R (<version> <platform> <arch> <os>)}
+      except when \samp{libcurl} is used when it is
+      \code{libcurl/7.<xx>.<y>} for the \samp{libcurl} version in use.}
 
     \item{\code{install.lock}:}{logical: should per-directory package
       locking be used by \code{\link{install.packages}}?  Most useful

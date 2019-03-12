@@ -23,6 +23,16 @@
 	 CMD build} are in serialization format version 2, and resave by
        default produces files in serialization format version 2 (unless
        the original is already in format version 3).
+
+       \item The default method for generating from a discrete uniform
+       distribution (used in \code{sample()}, for instance) has been
+       changed. This addresses the fact, pointed out by Ottoboni and
+       Stark, that the previous method made \code{sample()} noticeably
+       non-uniform on large populations.  See \PR{17494} for a
+       discussion. The previous method can be requested using
+       \code{RNGkind()} or \code{RNGversion()} if necessary for
+       reproduction of old results.  Thanks to Duncan Murdoch for
+       contributing the patch and Gabe Becker for further assistance.
      }
   }
 
@@ -285,6 +295,18 @@
 
       \item \code{model.matrix(*, contrasts.arg = CC)} now warns about
       invalid \code{contrasts.arg}s.
+
+      \item Performance of \code{substr()} and \code{substring()} has been
+      improved.
+
+      \item \code{stopifnot()} has been simplified thanks to Suharto
+      Anggono's proposals to become considerably faster for cheap
+      expressions.
+
+      \item The default \sQuote{user agent} has been changed when
+      accessing \samp{http://} and \samp{https://} sites using
+      \samp{libcurl}.  (A site was found which caused \samp{libcurl} to
+      infinite-loop with the previous default.)
     }
   }
 
@@ -335,19 +357,21 @@
 
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
-      \item Source package installation can be \sQuote{staged}: this is
-      currently optional but intended to become the default before
-      release.  In a staged install the package is installed into a
-      temporary location under the final library directory and moved
-      into place once the installation is complete.  The benefit is that
-      partially-installed packages are hidden from the view of other \R
-      sessions.
+      \item Source package installation is by default \sQuote{staged}:
+      the package is installed into a temporary location under the final
+      library directory and moved into place once the installation is
+      complete.  The benefit is that partially-installed packages are
+      hidden from other \R sessions.
 
       The overall default is set by environment variable
       \env{R_INSTALL_STAGED}.  \command{R CMD INSTALL} has new options
       \option{--staged-install} and \option{--no-staged-install}, and
       packages can use the \samp{StagedInstall} field in their
-      \file{DESCRIPTION} file to opt out.
+      \file{DESCRIPTION} file to opt out.  (That opt-out is a temporary
+      measure which may be withdrawn in future.)
+
+      Staged installation requires either \option{--pkglock} or
+      \option{--lock}, one of which is used by default.
 
       \item The interpretation of source code with extension \file{.f}
       is changing.  Previously this denoted FORTRAN 77 code, but current
@@ -359,7 +383,7 @@
       Legal FORTRAN 77 code is also legal fixed-form Fortran 9x; however
       this change legitimizes the use of later features, in particular
       to replace features marked \sQuote{obsolescent} in Fortran 95
-      which \command{gfortran} 8.x has started to warn about.
+      which \command{gfortran} 8.x warns about.
 
       \item Packages containing files in the \file{src} directory with
       extensions \file{.f90} or \file{.f95} are now linked using the C
@@ -422,6 +446,11 @@
       \item \command{R CMD check} has more comprehensive checks on the
       \file{data} directory and the functioning of \code{data()} in a
       package.
+
+      \item \command{R CMD check} now checks
+      \command{autoconf}-generated \file{configure} files have their
+      corresponding source files, including optionally attempting to
+      regenerate them on platforms with \command{autoconf}.
     }
   }
 
@@ -693,11 +722,18 @@
 
       \item \code{max.col(m)} with an \code{m} of zero columns now
       returns integer \code{NA} (instead of \code{1}).
+
+      \item \code{axTicks()} no longer returns small \dQuote{almost zero}
+      numbers (in exponential format) instead of zero, fixing Ilario
+      Gelmetti's \PR{17534}.
+
+      \item \code{isSymmetric(matrix(0, dimnames=list("A","b")))} is
+      \code{FALSE} again, as always documented.
     }
   }
 }
 
-\section{\Rlogo CHANGES IN R 3.5.2 patched}{
+\section{\Rlogo CHANGES IN R 3.5.3}{
 
   \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
@@ -722,6 +758,8 @@
 
       \item \code{setClassUnion()} no longer warns, but uses \code{message()}
       for now, when encountering \dQuote{non local} subclasses of class members.
+
+      \item \code{stopifnot(exprs = T)} no longer fails.
     }
   }
 }

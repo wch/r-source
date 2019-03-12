@@ -1,6 +1,6 @@
 % File src/library/base/man/stopifnot.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{stopifnot}
@@ -40,6 +40,12 @@ stopifnot(\dots, exprs, local = TRUE)
       B})} are conceptually equivalent to \preformatted{ \{ if(any(is.na(A)) || !all(A)) stop(...);
    if(any(is.na(B)) || !all(B)) stop(...) \}}
 
+  Since \R version 3.6.0, \code{stopifnot()} no longer handles potential
+  errors or warnings (by \code{\link{tryCatch}()} etc) for each single
+  expression but rather aims at using the correct
+  \code{\link{sys.call}(<n>)} to get the most meaningful error message in
+  case of an error.  This provides considerably less overhead.
+
   Since \R version 3.5.0, expressions \emph{are} evaluated sequentially,
   and hence evaluation stops as soon as there is a \dQuote{non-TRUE}, as
   indicated by the above conceptual equivalence statement.
@@ -58,14 +64,18 @@ stopifnot(\dots, exprs, local = TRUE)
   message will report the (first part of the) differences reported by
   \code{\link{all.equal}(*)}.
 }
-\section{Warning}{
+\note{
  Trying to use the \code{stopifnot(exprs = ..)} version via a shortcut,
- say, \preformatted{ assert <- function(exprs) stopifnot(exprs = exprs) }
- is \emph{not a good idea at all}.  Contrary to \code{stopifnot()}
+ say, \preformatted{ assertWRONG <- function(exprs) stopifnot(exprs = exprs) }
+ is delicate and the above is \emph{not a good idea}.  Contrary to \code{stopifnot()}
  which takes care to evaluate the parts of \code{exprs} one by one and
-  stop at the first non-TRUE, such an \code{assert()} typically would
-  evaluate all parts of \code{exprs} and pass the result, i.e., typically
-  of the \emph{last} entry of \code{exprs} to \code{stopifnot()}.
+ stop at the first non-TRUE, the above short cut would typically evaluate
+ all parts of \code{exprs} and pass the result, i.e., typically of the
+ \emph{last} entry of \code{exprs} to \code{stopifnot()}.
+
+ However, a more careful version, \preformatted{ assert <- function(exprs) eval.parent(substitute(stopifnot(exprs = exprs))) }
+ may be a nice short cut for \code{stopifnot(exprs = *)} calls using the
+ more commonly known verb as function name.
 }
 \value{
   (\code{\link{NULL}} if all statements in \code{\dots} are \code{TRUE}.)

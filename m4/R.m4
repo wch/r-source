@@ -1917,7 +1917,7 @@ BITMAP_LIBS=
 if test "${use_jpeglib}" = yes; then
    save_CPPFLAGS=${CPPFLAGS}
   ## IJG version 9c (Jan 2018) has support as libjpeg.
-  ## libjpeg-turbo has had this for a wh	ile.
+  ## libjpeg-turbo has had this for a while.
   if "${PKG_CONFIG}" --exists libjpeg; then
     JPG_CPPFLAGS=`"${PKG_CONFIG}" --cflags libjpeg`
     JPG_LIBS=`"${PKG_CONFIG}" --libs libjpeg`
@@ -1973,7 +1973,7 @@ if test "${use_libtiff}" = yes; then
   ## program defensively here.
   if "${PKG_CONFIG}" --exists libtiff-4; then
     mod=libtiff-4
-  fi  
+  fi
   if test -n "${mod}"; then
     save_CPPFLAGS=${CPPFLAGS}
     TIF_CPPFLAGS=`"${PKG_CONFIG}" --cflags ${mod}`

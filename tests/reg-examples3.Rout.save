@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2019-02-19 r76127) -- "Unsuffered Consequences"
+R Under development (unstable) (2019-03-04 r76193) -- "Unsuffered Consequences"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -471,38 +471,38 @@ Type 1 2 3 4 5 6 7 8 9
 4 x 9 sparse Matrix of class "dgCMatrix"
     Subj
 Type 1 2 3 4 5 6 7 8 9
-  T1 . 1 . 1 . 1 . 1 .
-  T2 1 . . . . . 1 . 1
-  T3 . . . . 1 . . . .
-  T4 1 . . . . . 1 . .
-25 x 5 sparse Matrix of class "dgCMatrix"
+  T1 . 1 . . . 1 . . .
+  T2 . . . . . . . 1 1
+  T3 . . 1 1 1 . 1 1 .
+  T4 . 1 . . . . . . .
+25 x 4 sparse Matrix of class "dgCMatrix"
      outer
-inner A B C D E
-    a 2 . . . .
-    b . . 1 . .
-    c . 6 . . .
-    d . . . 5 .
-    e . . . 3 .
-    f 1 . . . .
-    g . 9 . . .
-    h . . 3 . .
-    i . . . . 5
-    j . . . 1 .
-    k 3 . . . .
-    l . 2 . . .
-    m 6 . . . .
-    n . . 1 . .
-    o 2 . . . .
-    p . . 2 . .
-    q . 5 . . .
-    r . . . . 6
-    s . . 4 . .
-    t . . . 7 .
-    u . 4 . . .
-    v . . . 7 .
-    w . . . 7 .
-    x . . . . 6
-    y . . . . 2
+inner A B C E
+    a . . . 3
+    b . . . 6
+    c . . 5 .
+    d . 1 . .
+    e . . 3 .
+    f . . 5 .
+    g . . 3 .
+    h 6 . . .
+    i 8 . . .
+    j . 1 . .
+    k . . . 6
+    l . 2 . .
+    m . . . 7
+    n . . 3 .
+    o . 3 . .
+    p . 3 . .
+    q . . . 7
+    r . . . 2
+    s . 6 . .
+    t . . . 5
+    u 4 . . .
+    v . . 3 .
+    w . 3 . .
+    x . . 3 .
+    y 2 . . .
 > 
 > ## From utils
 > example(packageDescription)

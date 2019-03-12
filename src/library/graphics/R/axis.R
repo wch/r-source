@@ -1,7 +1,7 @@
 #  File src/library/graphics/R/axis.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -83,7 +83,7 @@ axTicks <- function(side, axp = NULL, usr = NULL, log = NULL, nintLog = NULL)
         if(is.null(usr)) usr <- par("usr")[if(is.x) 1:2 else 3:4]
         else if(!is.numeric(usr) || length(usr) != 2) stop("invalid 'usr'")
         if(is.null(nintLog)) nintLog <- par("lab")[2L - is.x]
-        if(is.finite(nintLog)) {
+        if(is.finite(nintLog)) { # based on internal CreateAtVector() in ../../../main/plot.c
             axisTicks(usr, log=log, axp=axp, nint=nintLog)
         } else { ## nintLog = Inf <--> "cheap" back compatible
 	    if(needSort <- is.unsorted(usr)) { ## need sorting for reverse axes
@@ -100,6 +100,11 @@ axTicks <- function(side, axp = NULL, usr = NULL, log = NULL, nintLog = NULL)
             r[usr[1L] <= log10(r) & log10(r) <= usr[2L]]
         }
     } else { # linear
-        seq.int(axp[1L], axp[2L], length.out = 1L + abs(axp[3L]))
+	n <- as.integer(abs(axp[3L]) + 0.25)
+	r <- seq.int(axp[1L], axp[2L], length.out = n + 1L)
+	## zapsmall(r), but using same computations as C-based axisTicks():
+	n. <- max(1L, n)
+	r[abs(r) < abs(axp[2L] - axp[1L])/(100*n.)] <- 0
+	r
     }
 }

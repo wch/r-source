@@ -195,8 +195,8 @@ stopifnot(all.equal(dbeta(p,a,b),
 sp <- sample(pab, 50)
 if(!interactive())
 stopifnot(which(isI <- sp == -Inf) ==
-              c(3, 11, 15, 20, 22, 23, 30, 39, 42, 43, 46, 47, 49),
-          all.equal(range(sp[!isI]), c(-2906.123981, 2.197270387))
+              c(3, 10, 14, 18, 24, 32, 35, 41, 42, 45, 46, 47),
+          all.equal(range(sp[!isI]), c(-2888.393250, 3.181137))
           )
 
 
@@ -1045,6 +1045,21 @@ assertWarning(B <- rbeta(3, 4,5, ncp = nc))
 stopifnot(identical(iN, is.na(T)), identical(iN, is.na(F)), identical(iN, is.na(B)))
 ## was not handled correctly, notably with NA's in ncp, in R <= 3.4.(2|3)
 
+
+## check old version of walker_Probsample is being used for old sample kind
+suppressWarnings(RNGversion("3.5.0"))
+set.seed(12345)
+p <- c(2, rep(1, 200))
+x <- sample(length(p), 100000, prob = p, replace = TRUE)
+stopifnot(sum(x == 1) == 994)
+
+## check for faiure of new walker_Probsample
+RNGversion("3.6.0")
+set.seed(12345)
+epsilon <- 1e-10
+p201 <- prop.table( rep( c(1, epsilon), c(201, 999-201)))
+x <- sample(length(p201), 100000, prob = p201, replace = TRUE)
+stopifnot(sum(x <= 201) == 100000)
 
 
 cat("Time elapsed: ", proc.time() - .ptime,"\n")

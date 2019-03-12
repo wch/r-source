@@ -236,6 +236,7 @@ static void curlCommon(CURL *hnd, int redirect, int verify)
 	curl_easy_setopt(hnd, CURLOPT_SSL_VERIFYHOST, 0L);
 	curl_easy_setopt(hnd, CURLOPT_SSL_VERIFYPEER, 0L);
     }
+#if 0
     // for consistency, but all utils:::makeUserAgent does is look up an option.
     SEXP sMakeUserAgent = install("makeUserAgent");
     SEXP agentFun = PROTECT(lang2(sMakeUserAgent, ScalarLogical(0)));
@@ -246,6 +247,24 @@ static void curlCommon(CURL *hnd, int redirect, int verify)
     if(TYPEOF(sua) != NILSXP)
 	curl_easy_setopt(hnd, CURLOPT_USERAGENT, CHAR(STRING_ELT(sua, 0)));
     UNPROTECT(2);
+#else
+    int Default = 1;
+    SEXP sua = GetOption1(install("HTTPUserAgent")); // set in utils startup
+    if (TYPEOF(sua) == STRSXP && LENGTH(sua) == 1 ) {
+	const char *p = CHAR(STRING_ELT(sua, 0));
+	if (p[0] && p[1] && p[2] && p[0] == 'R' && p[1] == ' ' && p[2] == '(') {
+	} else {
+	    Default = 0;
+	    curl_easy_setopt(hnd, CURLOPT_USERAGENT, p);
+	}
+    }
+    if (Default) {
+	char buf[20];
+	curl_version_info_data *d = curl_version_info(CURLVERSION_NOW);
+	snprintf(buf, 20, "libcurl/%s", d->version);
+	curl_easy_setopt(hnd, CURLOPT_USERAGENT, buf);
+    }
+#endif
     int timeout0 = asInteger(GetOption1(install("timeout")));
     long timeout = timeout0 = NA_INTEGER ? 0 : 1000L * timeout0;
     curl_easy_setopt(hnd, CURLOPT_CONNECTTIMEOUT_MS, timeout);

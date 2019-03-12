@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/axisTicks.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2011-2013 R Core Team
+% Copyright 2011-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{axisTicks}
@@ -14,7 +14,7 @@
 }
 \usage{
 axisTicks(usr, log, axp = NULL, nint = 5)
- .axisPars(usr, log = FALSE, nintLog = 5)
+.axisPars(usr, log = FALSE,  nintLog = 5)
 }
 \arguments{
   \item{usr}{numeric vector of length 2, with \code{c(min, max)} axis
@@ -32,9 +32,14 @@ axisTicks(usr, log, axp = NULL, nint = 5)
     \code{nintLog} is used \bold{only} for the case \code{log = TRUE}.}
 }
 \details{
-  \code{axisTicks(usr, *)} calls \code{.axisPars(usr, ..)} when
-  \code{axp} is missing (or \code{NULL}).
-% FIXME: say more
+  \code{axisTicks(usr, *)} calls \code{.axisPars(usr, ..)} to set
+  \code{axp} when that is missing or \code{NULL}.
+
+  Apart from that, \code{\link{axisTicks}()} just calls the C function
+  \code{CreateAtVector()} in \file{<Rsrc>/src/main/plot.c} which is also
+  called by the base \pkg{graphics} package function
+  \code{\link[graphics]{axis}(side, *)} when its argument \code{at} is not
+  specified.
 }
 \value{
   \code{axisTicks()} returns a numeric vector of potential axis tick
@@ -47,9 +52,9 @@ axisTicks(usr, log, axp = NULL, nint = 5)
     \code{\link{par}("?axp")[3]}.}
 }
 \seealso{
-  \code{\link{axTicks}};
-  \code{\link[graphics]{axis}}, and \code{\link[graphics]{par}} (from
-  the \pkg{graphics} package).
+  \code{\link[graphics]{axTicks}},
+  \code{\link[graphics]{axis}}, and \code{\link[graphics]{par}} all from
+  the \pkg{graphics} package.
 }
 \examples{
 ##--- Demonstrating correspondence between graphics'
