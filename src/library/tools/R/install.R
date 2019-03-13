@@ -518,6 +518,13 @@ if(FALSE) {
                 message('installing to ', dest, domain = NA)
                 dir.create(dest, recursive = TRUE, showWarnings = FALSE)
                 file.copy(files, dest, overwrite = TRUE)
+                if(config_val_to_logical(Sys.getenv("_R_SHLIB_STRIP_",
+                                                    "false")) &&
+                   nzchar(strip <- Sys.getenv("R_STRIP_SHARED_LIB"))) {
+                    system(paste(c(strip,
+                                   shQuote(file.path(dest, files))),
+                                 collapse = " "))
+                }
                 ## not clear if this is still necessary, but sh version did so
 		if (!WINDOWS)
 		    Sys.chmod(file.path(dest, files), dmode)

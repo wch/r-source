@@ -749,6 +749,11 @@ AC_SUBST(striplib)
 stripstaticlib=${old_striplib}
 AC_SUBST(stripstaticlib)
 
+: ${STRIP_SHARED_LIB="${striplib}"}
+: ${STRIP_STATIC_LIB="${old_striplib}"}
+AC_SUBST(STRIP_SHARED_LIB)
+AC_SUBST(STRIP_STATIC_LIB)
+
 ## <NOTE>
 ## This actually comes from libtool.m4.
 AC_CHECK_LIBM

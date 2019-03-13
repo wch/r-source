@@ -39,6 +39,9 @@ TAR=${TAR-'@TAR@'}
 ## System and compiler types.
 R_SYSTEM_ABI='@R_SYSTEM_ABI@'
 
+## Strip shared objects.
+R_STRIP_SHARED_LIB=${R_STRIP_SHARED_LIB-'@STRIP_SHARED_LIB@'}
+
 @BUILD_AQUA_FALSE@R_LIBS_USER=${R_LIBS_USER-'~/R/@R_PLATFORM@-library/@MAJ_MIN_VERSION@'}
 @BUILD_AQUA_TRUE@R_LIBS_USER=${R_LIBS_USER-'~/Library/R/@MAJ_MIN_VERSION@/library'}
 
