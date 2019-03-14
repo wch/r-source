@@ -1060,12 +1060,12 @@ compactPDF <-
             if(!res && use_qpdf) {
                 unlink(tf2) # precaution
                 file.rename(tf, tf2)
-                res <- system2(qpdf, c(qpdf_flags, shQoute(tf2), shQuote(tf)),
+                res <- system2(qpdf, c(qpdf_flags, shQuote(tf2), shQuote(tf)),
                                FALSE, FALSE)
                 unlink(tf2)
             }
         } else if(use_qpdf) {
-            res <- system2(qpdf, c(qpdf_flags, shQuote(p), shQuotee(tf)),
+            res <- system2(qpdf, c(qpdf_flags, shQuote(p), shQuote(tf)),
                            FALSE, FALSE)
         }
         if(!res && file.exists(tf)) {
