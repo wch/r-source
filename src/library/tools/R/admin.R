@@ -1045,6 +1045,7 @@ compactPDF <-
         paths <- Sys.glob(file.path(paths, "*.pdf"))
     dummy <- rep.int(NA_real_, length(paths))
     ans <- data.frame(old = dummy, new = dummy, row.names = paths)
+    ## These should not have spaces, but quote below to be safe.
     tf <- tempfile("pdf"); tf2 <- tempfile("pdf")
     for (p in paths) {
         res <- 0
@@ -1059,11 +1060,13 @@ compactPDF <-
             if(!res && use_qpdf) {
                 unlink(tf2) # precaution
                 file.rename(tf, tf2)
-                res <- system2(qpdf, c(qpdf_flags, tf2, tf), FALSE, FALSE)
+                res <- system2(qpdf, c(qpdf_flags, shQoute(tf2), shQuote(tf)),
+                               FALSE, FALSE)
                 unlink(tf2)
             }
         } else if(use_qpdf) {
-            res <- system2(qpdf, c(qpdf_flags, shQuote(p), tf), FALSE, FALSE)
+            res <- system2(qpdf, c(qpdf_flags, shQuote(p), shQuotee(tf)),
+                           FALSE, FALSE)
         }
         if(!res && file.exists(tf)) {
             old <- file.size(p); new <-  file.size(tf)

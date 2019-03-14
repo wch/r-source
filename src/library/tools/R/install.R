@@ -96,7 +96,8 @@ if(FALSE) {
                 } else {
                     ## some shells require that they be run in a known dir
                     setwd(startdir)
-                    system(paste("mv", shQuote(lp), shQuote(pkgdir)))
+                    if(system(paste("mv -f", shQuote(lp), shQuote(pkgdir))))
+                        message("  restoration failed\n")
                 }
             }
         }
@@ -428,7 +429,7 @@ if(FALSE) {
 
         if (file.exists(file.path(instdir, "DESCRIPTION"))) {
             if (nzchar(lockdir))
-                system(paste("mv", shQuote(instdir),
+                system(paste("mv -f", shQuote(instdir),
                              shQuote(file.path(lockdir, pkg))))
             dir.create(instdir, recursive = TRUE, showWarnings = FALSE)
         }
@@ -939,7 +940,7 @@ if(FALSE) {
                               copy.date = TRUE)
                     if (more_than_libs) unlink(instdir, recursive = TRUE)
                 } else if (more_than_libs)
-                    system(paste("mv", shQuote(instdir),
+                    system(paste("mv -f ", shQuote(instdir),
                                  shQuote(file.path(lockdir, pkg_name))))
                 else
                     file.copy(instdir, lockdir, recursive = TRUE,
@@ -1640,7 +1641,10 @@ if(FALSE) {
                 patch_rpaths()
 
                 owd <- setwd(startdir)
-                system(paste("mv", shQuote(instdir), shQuote(dirname(final_instdir))))
+                status <- system(paste("mv -f",
+                                       shQuote(instdir),
+                                       shQuote(dirname(final_instdir))))
+                if (status) errmsg("  moving to final location failed")
                 setwd(owd)
             }
             instdir <- final_instdir
