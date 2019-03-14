@@ -1,7 +1,7 @@
 #  File src/library/tools/R/admin.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -1055,7 +1055,7 @@ compactPDF <-
                              "-dCompatibilityLevel=1.5",
                              "-dAutoRotatePages=/None",
                              sprintf("-sOutputFile=%s", tf),
-                             gs_extras, p), FALSE, FALSE)
+                             gs_extras, shQuote(p)), FALSE, FALSE)
             if(!res && use_qpdf) {
                 unlink(tf2) # precaution
                 file.rename(tf, tf2)
@@ -1063,7 +1063,7 @@ compactPDF <-
                 unlink(tf2)
             }
         } else if(use_qpdf) {
-            res <- system2(qpdf, c(qpdf_flags, p, tf), FALSE, FALSE)
+            res <- system2(qpdf, c(qpdf_flags, shQuote(p), tf), FALSE, FALSE)
         }
         if(!res && file.exists(tf)) {
             old <- file.size(p); new <-  file.size(tf)
