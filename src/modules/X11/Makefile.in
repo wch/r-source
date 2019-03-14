@@ -67,9 +67,9 @@ installdirs:
 install-strip: installdirs
 	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(R_X11_la) "$(DESTDIR)$(Rexecmodulesdir)/$(R_X11_la)"
 	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(R_X11_la) "$(DESTDIR)$(Rexecmodulesdir)/$(R_de_la)"
-	@if test -n "$(STRIP_LIBS)"; then \
-	  $(STRIP_LIBS) "$(DESTDIR)$(Rexecmodulesdir)/$(R_X11_la)" ;\
-	  $(STRIP_LIBS) "$(DESTDIR)$(Rexecmodulesdir)/$(R_de_la)" ;\
+	@if test -n "$(STRIP_SHARED_LIB)"; then \
+	  $(STRIP_SHARED_LIB) "$(DESTDIR)$(Rexecmodulesdir)/$(R_X11_la)" ;\
+	  $(STRIP_SHARED_LIB) "$(DESTDIR)$(Rexecmodulesdir)/$(R_de_la)" ;\
 	fi
 uninstall:
 	@rm -f "$(Rexecmodulesdir)/R_X11$(SHLIB_EXT)"\

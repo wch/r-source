@@ -142,8 +142,8 @@ install: installdirs install-header @WANT_R_FRAMEWORK_FALSE@ install-pc
 install-strip: installdirs install-header install-pc
 	@if test -f $(libRmath_la); then \
 	  $(INSTALL) $(libRmath_la) "$(libdir)/$(libRmath_la)"; \
-	  if test -n "$(STRIP_LIBS)"; then \
-	    $(STRIP_LIBS) "$(DESTDIR)$(libdir)/$(libRmath_la)"; \
+	  if test -n "$(STRIP_SHARED_LIB)"; then \
+	    $(STRIP_SHARED_LIB) "$(DESTDIR)$(libdir)/$(libRmath_la)"; \
 	  fi; \
 	fi
 	@!(test -f libRmath.a) || $(SHELL) $(top_srcdir)/tools/copy-if-change libRmath.a $(DESTDIR)$(libdir)/libRmath.a

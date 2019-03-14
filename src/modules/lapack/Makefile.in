@@ -98,13 +98,13 @@ installdirs:
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(Rexecmodulesdir)"
 install-strip-Rlapack:
 	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(Rlapack_la) "$(DESTDIR)$(Rexeclibdir)/$(Rlapack_la)"
-	@if test -n "$(STRIP_LIBS)"; then \
-	  $(STRIP_LIBS) "$(DESTDIR)$(Rexeclibdir)/$(Rlapack_la)"; \
+	@if test -n "$(STRIP_SHARED_LIB)"; then \
+	  $(STRIP_SHARED_LIB) "$(DESTDIR)$(Rexeclibdir)/$(Rlapack_la)"; \
 	fi
 install-strip: @USE_EXTERNAL_LAPACK_FALSE@ install-strip-Rlapack
 	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(lapack_la) "$(DESTDIR)$(Rexecmodulesdir)/$(lapack_la)"
-	@if test -n "$(STRIP_LIBS)"; then \
-	  $(STRIP_LIBS) "$(DESTDIR)$(Rexecmodulesdir)/$(lapack_la)"; \
+	@if test -n "$(STRIP_SHARED_LIB)"; then \
+	  $(STRIP_SHARED_LIB) "$(DESTDIR)$(Rexecmodulesdir)/$(lapack_la)"; \
 	fi
 uninstall:
 	@rm -f "$(Rexecmodulesdir)/$(lapack_la)"

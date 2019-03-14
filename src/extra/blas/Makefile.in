@@ -47,8 +47,8 @@ Rblas_install: $(Rblas_la)
 Rblas_install-strip: $(Rblas_la)
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(Rexeclibdir)"
 	@$(INSTALL) $(Rblas_la) "$(DESTDIR)$(Rexeclibdir)/$(Rblas_la)"
-	@if test -n "$(STRIP_LIBS)"; then \
-	  $(STRIP_LIBS) "$(DESTDIR)$(Rexeclibdir)/$(Rblas_la)" ;\
+	@if test -n "$(STRIP_SHARED_LIB)"; then \
+	  $(STRIP_SHARED_LIB) "$(DESTDIR)$(Rexeclibdir)/$(Rblas_la)" ;\
 	fi
 
 mostlyclean: clean

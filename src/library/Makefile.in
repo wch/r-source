@@ -147,8 +147,8 @@ installdirs:
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(rhome)/library"
 install-strip:
 	@$(MAKE) install
-	@if test -n "$(STRIP_LIBS)"; then \
-	  $(STRIP_LIBS) "$(DESTDIR)$(rhome)/library"/*/libs/*${SHLIB_EXT}; \
+	@if test -n "$(STRIP_SHARED_LIB)"; then \
+	  $(STRIP_SHARED_LIB) "$(DESTDIR)$(rhome)/library"/*/libs/*${SHLIB_EXT}; \
 	fi
 uninstall:
 	@$(ECHO) "uninstalling packages ..."
