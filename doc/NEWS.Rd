@@ -307,6 +307,11 @@
       accessing \samp{http://} and \samp{https://} sites using
       \samp{libcurl}.  (A site was found which caused \samp{libcurl} to
       infinite-loop with the previous default.)
+
+      \item \code{sessionInfo()} now also contains \code{RNGkind()} and
+      prints it when it differs from the default; based on a proposal and
+      patch by Gabe Becker in \PR{17535}.
+      Also, \code{RNGversion(getRversion())} works directly.
     }
   }
 
