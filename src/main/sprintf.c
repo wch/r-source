@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2002--2016     The R Core Team
+ *  Copyright (C) 2002--2019     The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -439,7 +439,9 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 	    }
 	    else { /* not '%' : handle string part */
-		char *ch = Rf_strchr(curFormat, '%'); /* MBCS-aware version used */
+		char *ch = use_UTF8 ? strchr(curFormat, '%')
+				    /* MBCS-aware version used */
+		                    : Rf_strchr(curFormat, '%');
 		chunk = (ch) ? (size_t) (ch - curFormat) : strlen(curFormat);
 		strncpy(bit, curFormat, chunk);
 		bit[chunk] = '\0';
