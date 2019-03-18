@@ -54,8 +54,8 @@ installdirs:
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(Rexecmodulesdir)"
 install-strip: installdirs
 	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(internet_la) "$(DESTDIR)$(Rexecmodulesdir)/$(internet_la)"
-	@if test -n "$(STRIP_LIBS)"; then \
-	  $(STRIP_LIBS) "$(DESTDIR)$(Rexecmodulesdir)/$(internet_la)" ;\
+	@if test -n "$(STRIP_SHARED_LIB)"; then \
+	  $(STRIP_SHARED_LIB) "$(DESTDIR)$(Rexecmodulesdir)/$(internet_la)" ;\
 	fi
 uninstall:
 	@rm -f "$(Rexecmodulesdir)/$(internet_la)"

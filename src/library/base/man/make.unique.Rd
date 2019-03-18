@@ -1,6 +1,6 @@
 % File src/library/base/man/make.unique.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2008 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{make.unique}
@@ -44,7 +44,13 @@ make.unique(c(make.unique(c("a", "a")), "a"))
 make.unique(c("a", "a", "a.2", "a"))
 make.unique(c(make.unique(c("a", "a")), "a.2", "a"))
 
-rbind(data.frame(x = 1), data.frame(x = 2), data.frame(x = 3))
-rbind(rbind(data.frame(x = 1), data.frame(x = 2)), data.frame(x = 3))
+## Now show a bit where this is used :
+trace(make.unique)
+## Applied in data.frame() constructions:
+(d1 <- data.frame(x = 1, x = 2, x = 3)) # direct
+ d2 <- data.frame(data.frame(x = 1, x = 2), x = 3) # pairwise
+stopifnot(identical(d1, d2),
+          colnames(d1) == c("x", "x.1", "x.2"))
+untrace(make.unique)
 }
 \keyword{character}

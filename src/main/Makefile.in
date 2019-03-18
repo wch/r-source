@@ -206,14 +206,14 @@ install-static: installdirs
 install-strip: installdirs
 	@${INSTALL_PROGRAM} -s $(R_binary) "$(DESTDIR)$(Rexecbindir2)/R"
 	@if test -f $(libR_la); then $(MAKE) install-lib; fi
-	@if test -n "$(STRIP_LIBS)"; then \
-	  if test -f $(libR_la); then $(STRIP_LIBS) "$(DESTDIR)$(Rexeclibdir)/$(libR_la)"; fi; \
+	@if test -n "$(STRIP_SHARED_LIB)"; then \
+	  if test -f $(libR_la); then $(STRIP_SHARED_LIB) "$(DESTDIR)$(Rexeclibdir)/$(libR_la)"; fi; \
 	fi
 @WANT_R_STATIC_TRUE@	@$(MAKE) install-strip-static
 install-strip-static: installdirs
 	@$(MAKE) install-static
-	@if test -n "$(STRIP_STATIC_LIBS)"; then \
-	  if test -f libR.a; then $(STRIP_STATIC_LIBS) "$(DESTDIR)$(Rexeclibdir)/libR.a"; fi; \
+	@if test -n "$(STRIP_STATIC_LIB)"; then \
+	  if test -f libR.a; then $(STRIP_STATIC_LIB) "$(DESTDIR)$(Rexeclibdir)/libR.a"; fi; \
 	fi
 uninstall:
 	@rm -f "$(DESTDIR)$(Rexecbindir)/exec/$(R_ARCH)/R" "$(DESTDIR)$(Rexecbindir)/R.bin"

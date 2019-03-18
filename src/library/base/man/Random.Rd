@@ -352,6 +352,8 @@ RNGkind()
 ## Reset:
 RNGkind(ok[1])
 
+RNGversion(getRversion()) # the default version for this R version
+
 ## ----
 sum(duplicated(runif(1e6))) # around 110 for default generator
 ## and we would expect about almost sure duplicates beyond about

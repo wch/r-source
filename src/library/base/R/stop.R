@@ -66,7 +66,7 @@ stopifnot <- function(..., exprs, local = TRUE)
     for (i in seq_len(n)) {
 	r <- ...elt(i)
 	if (!(is.logical(r) && !anyNA(r) && all(r))) {
-	    cl.i <- match.call(expand.dots=FALSE)$...[[i]]
+	    cl.i <- match.call()[[i+1L]]
 	    msg <- ## special case for decently written 'all.equal(*)':
 		if(is.call(cl.i) && identical(cl.i[[1]], quote(all.equal)) &&
 		   (is.null(ni <- names(cl.i)) || length(cl.i) == 3L ||

@@ -67,7 +67,7 @@ RNGkind <- function(kind = NULL, normal.kind = NULL, sample.kind = NULL)
     }
     r <- 1L + .Internal(RNGkind(i.knd, normal.kind, sample.kind))
     r <- c(kinds[r[1L]], n.kinds[r[2L]], s.kinds[r[3L]])
-    if(do.set || !is.null(normal.kind) || !is.null(sample.kind)) 
+    if(do.set || !is.null(normal.kind) || !is.null(sample.kind))
 	invisible(r) else r
 }
 
@@ -120,7 +120,7 @@ set.seed <- function(seed, kind = NULL, normal.kind = NULL, sample.kind = NULL)
 
 RNGversion <- function(vstr)
 {
-    vnum <- as.numeric(strsplit(vstr,".", fixed=TRUE)[[1L]])
+    vnum <- as.numeric(strsplit(as.character(vstr), ".", fixed=TRUE)[[1L]])
     if (length(vnum) < 2L)
 	stop("malformed version string")
     if (vnum[1L] == 0 && vnum[2L] < 99)

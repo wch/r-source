@@ -2563,9 +2563,11 @@ stopifnot(exprs = {
 ## isSymmetric(<1x1-matrix>) and <0x0 matrix>  with dimnames
 stopifnot(exprs = {
     ! isSymmetric(matrix(0, dimnames = list("A","b"))) # *non*-symmetric dimnames
+      isSymmetric(matrix(0, dimnames = list("A","b")), check.attributes=FALSE) # dimn. not checked
     ## isSymmetric() gave TRUE wrongly in R versions 3.4.0 -- 3.5.x
     ! isSymmetric(matrix(1, dimnames = list("A", NULL)))
     ! isSymmetric(matrix(1, dimnames = list(NULL, "A")))
+      isSymmetric(matrix(1, dimnames = list(NULL, "A")), check.attributes=FALSE)
       isSymmetric(matrix(1))
       isSymmetric(matrix(1,  dimnames = list("a", "a")))
       isSymmetric(matrix(1,  dimnames = list(NULL, NULL)))

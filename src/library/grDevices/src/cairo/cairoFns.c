@@ -152,8 +152,7 @@ static void Cairo_Clip(double x0, double x1, double y0, double y1,
 
     cairo_reset_clip(xd->cc);
     cairo_new_path(xd->cc);
-    /* Add 1 per X11_Clip */
-    cairo_rectangle(xd->cc, x0, y0, x1 - x0 + 1, y1 - y0 + 1);
+    cairo_rectangle(xd->cc, x0, y0, x1 - x0, y1 - y0);
     cairo_clip(xd->cc);
 }
 

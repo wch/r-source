@@ -96,7 +96,8 @@ if(FALSE) {
                 } else {
                     ## some shells require that they be run in a known dir
                     setwd(startdir)
-                    system(paste("mv", shQuote(lp), shQuote(pkgdir)))
+                    if(system(paste("mv -f", shQuote(lp), shQuote(pkgdir))))
+                        message("  restoration failed\n")
                 }
             }
         }
@@ -170,7 +171,7 @@ if(FALSE) {
             "sources, or to gzipped package 'tar' archives.  The library tree",
             "to install to can be specified via '--library'.  By default, packages are",
             "installed in the library tree rooted at the first directory in",
-            ".libPaths() for an R session run in the current environment",
+            ".libPaths() for an R session run in the current environment.",
             "",
             "Options:",
             "  -h, --help		print short help message and exit",
@@ -212,8 +213,9 @@ if(FALSE) {
             "			use (or not) 'keep.parse.data' for R code",
             "      --byte-compile	byte-compile R code",
             "      --no-byte-compile	do not byte-compile R code",
-            "      --staged-install	install to temporary and move to target directory",
-            "      --no-staged-install	install directly to target directory",
+            "      --staged-install	install to a temporary directory and then move",
+            "                   	to the target directory (default)",
+            "      --no-staged-install	install directly to the target directory",
             "      --no-test-load	skip test of loading installed package",
             "      --no-clean-on-error	do not remove installed package on error",
             "      --merge-multiarch	multi-arch by merging (from a single tarball only)",
@@ -427,7 +429,7 @@ if(FALSE) {
 
         if (file.exists(file.path(instdir, "DESCRIPTION"))) {
             if (nzchar(lockdir))
-                system(paste("mv", shQuote(instdir),
+                system(paste("mv -f", shQuote(instdir),
                              shQuote(file.path(lockdir, pkg))))
             dir.create(instdir, recursive = TRUE, showWarnings = FALSE)
         }
@@ -517,6 +519,13 @@ if(FALSE) {
                 message('installing to ', dest, domain = NA)
                 dir.create(dest, recursive = TRUE, showWarnings = FALSE)
                 file.copy(files, dest, overwrite = TRUE)
+                if(config_val_to_logical(Sys.getenv("_R_SHLIB_STRIP_",
+                                                    "false")) &&
+                   nzchar(strip <- Sys.getenv("R_STRIP_SHARED_LIB"))) {
+                    system(paste(c(strip,
+                                   shQuote(file.path(dest, files))),
+                                 collapse = " "))
+                }
                 ## not clear if this is still necessary, but sh version did so
 		if (!WINDOWS)
 		    Sys.chmod(file.path(dest, files), dmode)
@@ -931,7 +940,7 @@ if(FALSE) {
                               copy.date = TRUE)
                     if (more_than_libs) unlink(instdir, recursive = TRUE)
                 } else if (more_than_libs)
-                    system(paste("mv", shQuote(instdir),
+                    system(paste("mv -f ", shQuote(instdir),
                                  shQuote(file.path(lockdir, pkg_name))))
                 else
                     file.copy(instdir, lockdir, recursive = TRUE,
@@ -1632,7 +1641,10 @@ if(FALSE) {
                 patch_rpaths()
 
                 owd <- setwd(startdir)
-                system(paste("mv", shQuote(instdir), shQuote(dirname(final_instdir))))
+                status <- system(paste("mv -f",
+                                       shQuote(instdir),
+                                       shQuote(dirname(final_instdir))))
+                if (status) errmsg("  moving to final location failed")
                 setwd(owd)
             }
             instdir <- final_instdir

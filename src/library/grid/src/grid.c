@@ -2247,8 +2247,9 @@ SEXP L_segments(SEXP x0, SEXP y0, SEXP x1, SEXP y1, SEXP arrow)
     int i, nx0, ny0, nx1, ny1, maxn;
     double vpWidthCM, vpHeightCM;
     double rotationAngle;
+    int gpIsScalar[15] = {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
     LViewportContext vpc;
-    R_GE_gcontext gc;
+    R_GE_gcontext gc, gcCache;
     LTransform transform;
     SEXP currentvp, currentgp;
     /* Get the current device 
@@ -2260,6 +2261,7 @@ SEXP L_segments(SEXP x0, SEXP y0, SEXP x1, SEXP y1, SEXP arrow)
 			 &vpWidthCM, &vpHeightCM, 
 			 transform, &rotationAngle);
     getViewportContext(currentvp, &vpc);
+    initGContext(currentgp, &gc, dd, gpIsScalar, &gcCache);
     maxn = nx0 = unitLength(x0); 
     ny0 = unitLength(y0);
     nx1 = unitLength(x1);
@@ -2276,7 +2278,7 @@ SEXP L_segments(SEXP x0, SEXP y0, SEXP x1, SEXP y1, SEXP arrow)
     GEMode(1, dd);
     for (i=0; i<maxn; i++) {
 	double xx0, yy0, xx1, yy1;
-	gcontextFromgpar(currentgp, i, &gc, dd);
+    updateGContext(currentgp, i, &gc, dd, gpIsScalar, &gcCache);
 	transformLocn(x0, y0, i, vpc, &gc, 
 		      vpWidthCM, vpHeightCM,
 		      dd, transform, &xx0, &yy0);

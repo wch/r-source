@@ -744,10 +744,11 @@ eval "export ${Rshlibpath_var}"
 AC_SUBST(Rshlibpath_var)
 
 ## record how to strip shared/dynamic libraries.
-AC_SUBST(striplib)
+: ${STRIP_SHARED_LIB="${striplib}"}
 ## record how to strip static libraries.
-stripstaticlib=${old_striplib}
-AC_SUBST(stripstaticlib)
+: ${STRIP_STATIC_LIB="${old_striplib}"}
+AC_SUBST(STRIP_SHARED_LIB)
+AC_SUBST(STRIP_STATIC_LIB)
 
 ## <NOTE>
 ## This actually comes from libtool.m4.

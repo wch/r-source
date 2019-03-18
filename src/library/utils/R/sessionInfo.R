@@ -1,7 +1,7 @@
 #  File src/library/utils/R/sessionInfo.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -15,6 +15,8 @@
 #
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
+
+.RNGdefaults <- RNGkind() # run once at install time and retain for comparison
 
 ## FIXME?  alternatively, just define 'osVersion' directly in .onLoad()  in zzz.R
 .osVersion <- function() {
@@ -84,6 +86,7 @@ sessionInfo <- function(package = NULL)
     z$platform <- paste0(z$platform, " (", 8*.Machine$sizeof.pointer, "-bit)")
     z$locale <- Sys.getlocale()
     z$running <- osVersion
+    z$RNGkind <- RNGkind()
     if(is.null(package)){
         package <- grep("^package:", search(), value=TRUE)
         # weed out environments which are not really packages
@@ -118,7 +121,9 @@ sessionInfo <- function(package = NULL)
     z
 }
 
-print.sessionInfo <- function(x, locale = TRUE, ...)
+print.sessionInfo <- function(x, locale = TRUE,
+			      RNG = !identical(x$RNGkind, .RNGdefaults),
+			      ...)
 {
     mkLabel <- function(L, n) {
         vers <- sapply(L[[n]], function(x) x[["Version"]])
@@ -138,10 +143,17 @@ print.sessionInfo <- function(x, locale = TRUE, ...)
     if (blas == lapack && nzchar(blas))
         cat("BLAS/LAPACK: ", blas, "\n", sep = "")
     else {
-        if (nzchar(blas)) cat("BLAS: ", blas, "\n", sep = "")
-        if (nzchar(lapack)) cat("LAPACK: ", lapack, "\n", sep = "")
+        if(nzchar(blas))   cat("BLAS:   ",   blas, "\n", sep = "")
+        if(nzchar(lapack)) cat("LAPACK: ", lapack, "\n", sep = "")
     }
     cat("\n")
+    if(RNG) {
+        cat("Random number generation:\n"
+          , "RNG:    ", x$RNGkind[1], "\n"
+          , "Normal: ", x$RNGkind[2], "\n"
+          , "Sample: ", x$RNGkind[3], "\n"
+          , "\n")
+    }
     if(locale) {
         cat("locale:\n")
 	print(strsplit(x$locale, ";", fixed=TRUE)[[1]], quote=FALSE, ...)
@@ -169,20 +181,27 @@ toLatexPDlist <- function(pdList, sep = "~") {
     } else ver
 }
 
-toLatex.sessionInfo <- function(object, locale = TRUE, ...)
+toLatex.sessionInfo <-
+    function(object, locale = TRUE,
+	     RNG = !identical(object$RNGkind, .RNGdefaults),
+	     ...)
 {
     z <- c("\\begin{itemize}\\raggedright",
-           paste0("  \\item ", object$R.version$version.string,
-                  ", \\verb|", object$R.version$platform, "|"))
-    if(locale) {
-        z <- c(z,
-               paste0("  \\item Locale: \\verb|",
-                      gsub(";","|, \\\\verb|", object$locale) , "|"))
-    }
-    z <- c(z,
-           paste0("  \\item Running under: \\verb|",
-                  gsub(";","|, \\\\verb|", object$running) , "|"))
-    z <- c(z, paste0("  \\item Matrix products: ", object$matprod))
+	   paste0("  \\item ", object$R.version$version.string,
+		  ", \\verb|", object$R.version$platform, "|"),
+	   if(locale)
+	       paste0("  \\item Locale: \\verb|",
+		      gsub(";","|, \\\\verb|", object$locale) , "|"),
+	   paste0("  \\item Running under: \\verb|",
+		  gsub(";","|, \\\\verb|", object$running) , "|"),
+	   if(RNG)
+	       paste0("  \\item Random number generation:"
+		    , "  \\item RNG:    \\verb|", object$RNGkind[1], "|"
+		    , "  \\item Normal: \\verb|", object$RNGkind[2], "|"
+		    , "  \\item Sample: \\verb|", object$RNGkind[3], "|"
+		      )
+         , paste0("  \\item Matrix products: ", object$matprod)
+           )
     blas <- object$BLAS
     if (is.null(blas)) blas <- ""
     lapack <- object$LAPACK
@@ -192,7 +211,7 @@ toLatex.sessionInfo <- function(object, locale = TRUE, ...)
         z <- c(z, paste0("  \\item BLAS/LAPACK: \\verb|", blas, "|"))
     else {
         if (nzchar(blas))
-            z <- c(z, paste0("  \\item BLAS: \\verb|", blas, "|"))
+            z <- c(z, paste0("  \\item BLAS:   \\verb|", blas, "|"))
         if (nzchar(lapack))
             z <- c(z, paste0("  \\item LAPACK: \\verb|", lapack, "|"))
     }
@@ -203,8 +222,7 @@ toLatex.sessionInfo <- function(object, locale = TRUE, ...)
 
     if(length(o.ver <- toLatexPDlist(object$otherPkg)))
         z <- c(z,
-               strwrap(paste("  \\item Other packages: ",
-			     o.ver),
+               strwrap(paste("  \\item Other packages: ", o.ver),
                        indent = 2, exdent = 4))
     if(length(n.ver <- toLatexPDlist(object$loadedOnly)))
         z <- c(z,

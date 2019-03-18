@@ -1,6 +1,6 @@
 % File src/library/utils/man/sessionInfo.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{sessionInfo}
@@ -14,8 +14,10 @@
 }
 \usage{
 sessionInfo(package = NULL)
-\S3method{print}{sessionInfo}(x, locale = TRUE, ...)
-\S3method{toLatex}{sessionInfo}(object, locale = TRUE, ...)
+\S3method{print}{sessionInfo}(x, locale = TRUE,
+      RNG = !identical(x$RNGkind, .RNGdefaults), \dots)
+\S3method{toLatex}{sessionInfo}(object, locale = TRUE,
+        RNG = !identical(object$RNGkind, .RNGdefaults), \dots)
 osVersion
 }
 \arguments{
@@ -24,6 +26,8 @@ osVersion
   \item{x}{an object of class \code{"sessionInfo"}.}
   \item{object}{an object of class \code{"sessionInfo"}.}
   \item{locale}{show locale information?}
+  \item{RNG}{show information on \code{\link{RNGkind}()}?  Defaults to true
+    iff it differs from the \R version's default, i.e., \code{\link{RNGversion}(*)}.}
   \item{\dots}{currently not used.}
 }
 \value{
@@ -36,14 +40,13 @@ osVersion
     \samp{platform/sub-arch (nn-bit)}.}
   \item{running}{a character string (or possibly \code{NULL}), the same
     as \code{osVersion}, see below.}
+  \item{RNGkind}{a character vector, the result of calling \code{\link{RNGkind}()}.}
   \item{matprod}{a character string, the result of calling
-    \code{\link{options}("matprod")}.}
+    \code{\link{getOption}("matprod")}.}
   \item{BLAS}{a character string, the result of calling
     \code{\link{extSoftVersion}()["BLAS"]}.}
-  \item{LAPACK}{a character string, the result of calling
-    \code{\link{La_library}()}.}
-  \item{locale}{a character string, the result of calling
-    \code{\link{Sys.getlocale}()}.}
+  \item{LAPACK}{a character string, the result of calling \code{\link{La_library}()}.}
+  \item{locale}{a character string, the result of calling \code{\link{Sys.getlocale}()}.}
   \item{basePkgs}{a character vector of base packages which are attached.}
   \item{otherPkgs}{(not always present): a character vector of other
     attached packages.}
@@ -76,7 +79,10 @@ osVersion
 \seealso{\code{\link{R.version}}
 }
 \examples{\donttest{
-sessionInfo()
-toLatex(sessionInfo(), locale = FALSE)
+sI <- sessionInfo()
+sI
+# The same, showing the RNGkind, but not the locale :
+  print(sI, RNG = TRUE, locale = FALSE)
+toLatex(sI, locale = FALSE) # shortest; possibly desirable at end of report
 }}
 \keyword{misc}

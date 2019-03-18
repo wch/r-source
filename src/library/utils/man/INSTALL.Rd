@@ -159,7 +159,7 @@
   There are two ways to install for all available sub-architectures.  If
   the configure script is known to work for both Windows architectures,
   use flag \option{--force-biarch} (and packages can specify this
-  \emph{via} a \samp{Biarch} field in their \code{DESCRIPTION} files).
+  \emph{via} a \samp{Biarch: yes} field in their \code{DESCRIPTION} files).
   Second, a single tarball can be installed with
 \preformatted{R CMD INSTALL --merge-multiarch mypkg_version.tar.gz}
 }
@@ -171,7 +171,7 @@
   packages were written in ways that assume direct installation to the
   destination library.
 
-  Staged installation can be overridden by having a line
+  Staged installation can currently be overridden by having a line
   \samp{StagedInstall: no} in the package's \file{DESCRIPTION} file,
   \emph{via} flag \option{--no-staged-install} or by setting environment
   variable \env{R_INSTALL_STAGED} to a false value
@@ -194,7 +194,7 @@
 #ifdef windows
   (on the Help menu in \code{RGui}),
 #endif
-  \code{\link{RShowDoc}} and the \file{doc/manual} subdirectory of the
-  \R source tree.
+  \emph{via} \code{\link{RShowDoc}} or in the \file{doc/manual}
+  subdirectory of the \R source tree.
 }
 \keyword{utilities}
