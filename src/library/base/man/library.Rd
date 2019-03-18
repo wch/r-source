@@ -7,6 +7,7 @@
 \title{Loading/Attaching and Listing of Packages}
 \alias{library}
 \alias{require}
+\alias{conflictRules}
 
 \alias{.noGenerics}
 \alias{format.libraryIQR}
@@ -19,12 +20,19 @@
 \usage{
 library(package, help, pos = 2, lib.loc = NULL,
         character.only = FALSE, logical.return = FALSE,
-        warn.conflicts = TRUE, quietly = FALSE,
-        verbose = getOption("verbose"))
+        warn.conflicts, quietly = FALSE,
+        verbose = getOption("verbose"),
+        mask.ok, exclude, include.only,
+        attach.required = missing(include.only))
 
 require(package, lib.loc = NULL, quietly = FALSE,
-        warn.conflicts = TRUE,
-        character.only = FALSE)
+        warn.conflicts,
+        character.only = FALSE,
+        mask.ok, exclude, include.only,
+        attach.required = missing(include.only))
+
+conflictRules(pkg, mask.ok = NULL, exclude = NULL)
+
 }
 \arguments{
   \item{package, help}{the name of a package, given as a \link{name} or
@@ -46,13 +54,24 @@ require(package, lib.loc = NULL, quietly = FALSE,
   \item{warn.conflicts}{logical.  If \code{TRUE}, warnings are
     printed about \code{\link{conflicts}} from attaching the new
     package.  A conflict is a function masking a function,
-    or a non-function masking a non-function.
+    or a non-function masking a non-function. The default is \code{TRUE}
+    unless specified as \code{FALSE} in the \code{conflicts.policy} option.
   }
   \item{verbose}{a logical.  If \code{TRUE}, additional diagnostics are
     printed.}
   \item{quietly}{a logical.  If \code{TRUE}, no message confirming
     package attaching is printed, and most often, no errors/warnings are
     printed if package attaching fails.}
+  \item{pkg}{character string naming a package.}
+  \item{mask.ok}{character vector of names of objects that can mask
+    objects on the search path without signaling an error when strict
+    conflict checking is enabled}
+  \item{exclude,include.only}{character vector of names of objects to
+    exclude or include in the attached frame. Ony one of these arguments
+    may be used in a call to \code{library} or \code{require}.}
+  \item{attach.required}{logical specifying whether required packages
+    listed in the \code{Depends} clause of the \code{DESCRIPTION} file
+    should be attached automatically.}
 }
 \details{
   \code{library(package)} and \code{require(package)} both load the
@@ -96,6 +115,42 @@ require(package, lib.loc = NULL, quietly = FALSE,
   \code{require} returns (invisibly) a logical indicating whether the required
   package is available.
 }
+
+\section{Conflicts}{
+  Handling of conflicts depends on the setting of the
+  \code{conflicts.policy} option. If this option is not set, then
+  conflicts result in warning messages if the argument
+  \code{warn.conflicts} is \code{TRUE}. If the option is set to the
+  character string \code{"strict"}, then all unresolved conflicts signal
+  errors.  Conflicts can be resolved using the \code{mask.ok},
+  \code{exclude}, and \code{include.only} arguents to \code{library} and
+  \code{require}. Defaults for \code{mask.ok} and \code{exclude} can be
+  specified using \code{conflictRules}.
+
+  If the \code{conflicts.policy} option is set to the string
+  \code{"depends.ok"} then conflicts resulting from attaching declared
+  dependencies will not produce errors, but other conflicts will.
+  This is likely to be the best setting for most users wanting some
+  additional protection against unexpected conflicts.
+
+  The policy can be tuned further by specifying the
+  \code{conflicts.policy} option as a named list with the following
+  fields:
+  \describe{
+    \item{\code{error}:}{logical; if \code{TRUE} treat unresolved
+      conflicts as errors.}
+    \item{\code{warn}:}{logical; unless \code{FALSE} issue a warning
+      message when conflicts are found.}
+    \item{\code{generics.ok}:}{logical; if \code{TRUE} ignore conflicts
+      created by defining S4 generics for functions on the search path.}
+    \item{\code{depends.ok}:}{logical; if \code{TRUE} do not treat
+      conflicts with required packages as errors.}
+    \item{\code{can.mask}:}{charecter vector of names of packages that
+      are allowed to be masked. These would typically be base packages
+      attached by default.}
+  }
+}
+
 \section{Licenses}{
   Some packages have restrictive licenses, and there is a mechanism to
   allow users to be aware of such licenses.  If
@@ -155,13 +210,13 @@ require(package, lib.loc = NULL, quietly = FALSE,
   \code{\link{.libPaths}}, \code{\link{.packages}}.
 
   \code{\link{attach}}, \code{\link{detach}}, \code{\link{search}},
-  \code{\link{objects}}, \code{\link{autoload}}, 
+  \code{\link{objects}}, \code{\link{autoload}},
   \code{\link{requireNamespace}},
   \code{\link{library.dynam}}, \code{\link{data}},
   \code{\link{install.packages}} and
   \code{\link{installed.packages}};
   \code{\link{INSTALL}}, \code{\link{REMOVE}}.
-  
+
   The initial set of packages attached is set by
   \code{\link{options}(defaultPackages=)}: see also \code{\link{Startup}}.
 }

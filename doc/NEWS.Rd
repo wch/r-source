@@ -312,6 +312,11 @@
       prints it when it differs from the default; based on a proposal and
       patch by Gabe Becker in \PR{17535}.
       Also, \code{RNGversion(getRversion())} works directly.
+
+      \item \code{library()} and \code{require()} now allow more control
+      over handling search path conflicts when packages are
+      attached. The policy is controlled by the new
+      \code{conflicts.policy} option.
     }
   }
 

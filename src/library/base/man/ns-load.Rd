@@ -18,7 +18,7 @@
   Functions to load and unload name spaces.
 }
 \usage{
-attachNamespace(ns, pos = 2L, depends = NULL)
+attachNamespace(ns, pos = 2L, depends = NULL, exclude, include.only)
 loadNamespace(package, lib.loc = NULL,
               keep.source = getOption("keep.source.pkgs"),
               partial = FALSE, versionCheck = NULL,
@@ -43,6 +43,7 @@ isNamespaceLoaded(name)
   \item{quietly}{logical: should progress and error messages be suppressed?}
   \item{name}{string or \sQuote{name}, see \code{\link{as.symbol}},
     of a package, e.g., \code{"stats"}.}
+  \item{exclude, include.only}{character vectors.}
   \item{\dots}{further arguments to be passed to \code{loadNamespace}.}
 }
 \details{

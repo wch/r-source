@@ -102,6 +102,10 @@ getOption(x, default = NULL)
       Initially set from value of the environment variable
       \env{R_C_BOUNDS_CHECK} (set to \code{yes} to enable).}
 
+    \item{\code{conflicts.policy}:}{character string or list controlling
+      handling of conflicts found in calls to \code{\link{library}} or
+      \code{\link{require}}. See \code{\link{library}} for details.}
+
     \item{\code{continue}:}{a non-empty string setting the prompt used
       for lines which continue over one line.}
 
