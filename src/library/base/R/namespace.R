@@ -168,7 +168,7 @@ attachNamespace <- function(ns, pos = 2L, depends = NULL, exclude, include.only)
     runHook(".onAttach", ns, dirname(nspath), nsname)
     
     ## adjust variables for 'exclude', 'include.only' arguments
-    if (length(exclude) > 0)
+    if (! missing(exclude) && length(exclude) > 0)
         rm(list = exclude, envir = env)
     if (! missing(include.only)) {
         vars <- ls(env, all.names = TRUE)

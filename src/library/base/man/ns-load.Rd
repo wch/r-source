@@ -43,7 +43,7 @@ isNamespaceLoaded(name)
   \item{quietly}{logical: should progress and error messages be suppressed?}
   \item{name}{string or \sQuote{name}, see \code{\link{as.symbol}},
     of a package, e.g., \code{"stats"}.}
-  \item{exclude, include.only}{character vectors.}
+  \item{exclude, include.only}{character vectors; see \code{\link{library}.}
   \item{\dots}{further arguments to be passed to \code{loadNamespace}.}
 }
 \details{
