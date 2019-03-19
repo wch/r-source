@@ -1,6 +1,6 @@
 % File src/library/base/man/ns-load.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ns-load}
@@ -43,7 +43,7 @@ isNamespaceLoaded(name)
   \item{quietly}{logical: should progress and error messages be suppressed?}
   \item{name}{string or \sQuote{name}, see \code{\link{as.symbol}},
     of a package, e.g., \code{"stats"}.}
-  \item{exclude, include.only}{character vectors; see \code{\link{library}.}
+  \item{exclude, include.only}{character vectors; see \code{\link{library}}.}
   \item{\dots}{further arguments to be passed to \code{loadNamespace}.}
 }
 \details{
