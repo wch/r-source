@@ -1,7 +1,7 @@
 #  File src/library/utils/R/roman.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,7 +18,8 @@
 
 .as.roman <- function(x, check.range=TRUE)
 {
-    if(is.numeric(x))
+    if(is.integer(x)) { }
+    else if(is.double(x) || is.logical(x)) # <- as.roman(NA)
         x <- as.integer(x)
     else if(is.character(x)) {
 	x <- if(all(dig.x <- !nzchar(x) | is.na(x) | grepl("^[[:digit:]]+$", x)))
@@ -58,12 +59,23 @@ function(x, i)
     y
 }
 
-Ops.roman <- function(e1, e2)
-{
-    e1 <- .as.roman(e1, check.range=FALSE)
-    e2 <- .as.roman(e2, check.range=FALSE)
-    as.roman(NextMethod(.Generic))
+Ops.roman <- function(e1, e2) {
+    if(.Generic %in% c("+", "-", "*", "^", "%%", "%/%", "/")) { # "Arith" in S4 parlance:
+	e1 <- .as.roman(e1, check.range=FALSE)
+	e2 <- .as.roman(e2, check.range=FALSE)
+	as.roman(NextMethod(.Generic))
+    }
+    else # "Compare" and "Logic" in S4 parlance; just work with integer:
+	NextMethod(.Generic)
 }
+
+Summary.roman <- function(x, ..., na.rm=TRUE) {
+    if(.Generic %in% c("any", "all"))
+        NextMethod(.Generic)
+    else # max, min, .. sum
+        as.roman(NextMethod(.Generic))
+}
+
 
 ## for recycling etc
 rep.roman <- function(x, ...) structure(rep(unclass(x), ...), class = class(x))
@@ -97,9 +109,9 @@ function(x) {
         paste(y, collapse = "")
     }
 
-    out <- character(length(x))
     x <- as.integer(x)
     ind <- is.na(x) | (x <= 0L) | (x >= 3900L)
+    out <- character(length(x))
     out[ind] <- NA
     out[!ind] <- vapply(x[!ind], n2r, "")
     out
