@@ -768,7 +768,7 @@ function(x, ...)
         for(fname in names(functions_in_usages_not_in_code)) {
             writeLines(gettextf("Functions or methods with usage in documentation object '%s' but not in code:",
                                 fname))
-            .pretty_print(unique(functions_in_usages_not_in_code[[fname]]))
+            .pretty_print(sQuote(unique(functions_in_usages_not_in_code[[fname]])))
             writeLines("")
         }
     }
@@ -779,7 +779,7 @@ function(x, ...)
         for(fname in names(data_sets_in_usages_not_in_code)) {
             writeLines(gettextf("Data with usage in documentation object '%s' but not in code:",
                                 fname))
-            .pretty_print(unique(data_sets_in_usages_not_in_code[[fname]]))
+            .pretty_print(sQuote(unique(data_sets_in_usages_not_in_code[[fname]])))
             writeLines("")
         }
     }
