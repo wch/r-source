@@ -15,14 +15,17 @@
 \usage{
 as.roman(x)
 .romans
+\special{% no \alias
 r1 + r2
 r1 <= r2
 max(r1)
 sum(r2)
 }
+}
 \arguments{
   \item{x}{a numeric or character vector of arabic or roman numerals.}
-  \item{r1, r2}{a roman number vector, i.e., of \code{\link{class}} \code{"roman"}.}
+  \item{r1, r2}{a roman number vector, i.e., of \code{\link{class}}
+    \code{"roman"}.}
 }
 \details{
   \code{as.roman} creates objects of class \code{"roman"} which are
