@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2019-03-04 r76193) -- "Unsuffered Consequences"
+R Under development (unstable) (2019-03-21 r76255) -- "Unsuffered Consequences"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -203,7 +203,7 @@ Error in assertWarning(ff()) :
 > bibstyle("unsorted", sortKeys = function(refs) seq_along(refs),
 +     fmtPrefix = function(paper) paste0("[", paper$.index, "]"),
 +        .init = TRUE)
-<environment: 0x3952718>
+<environment: 0x3d15190>
 > print(refs, .bibstyle = "unsorted")
 [1] R Core Team (2013). _R: A Language and Environment for Statistical
 Computing_. R Foundation for Statistical Computing, Vienna, Austria.
@@ -998,7 +998,7 @@ List of 6
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.32 0.015 0.337 0 0 
+Time elapsed:  0.329 0.018 0.348 0 0 
 > grDevices::dev.off()
 null device 
           1 
