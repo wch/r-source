@@ -1,11 +1,12 @@
 % File src/library/graphics/man/barplot.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{barplot}
 \alias{barplot}
 \alias{barplot.default}
+\alias{barplot.formula}
 \title{Bar Plots}
 \description{
   Creates a bar plot with vertical or horizontal bars.
@@ -22,7 +23,10 @@ barplot(height, \dots)
         axes = TRUE, axisnames = TRUE,
         cex.axis = par("cex.axis"), cex.names = par("cex.axis"),
         inside = TRUE, plot = TRUE, axis.lty = 0, offset = 0,
-        add = FALSE, args.legend = NULL, \dots)
+        add = FALSE, ann = !add && par("ann"), args.legend = NULL, \dots)
+
+\method{barplot}{formula}(formula, data, subset, na.action,
+        horiz = FALSE, xlab = NULL, ylab = NULL, \dots)
 }
 \arguments{
   \item{height}{either a vector or matrix of values describing the
@@ -105,19 +109,32 @@ barplot(height, \dots)
     relative to the x axis.}
   \item{add}{logical specifying if bars should be added to an already
     existing plot; defaults to \code{FALSE}.}
+  \item{ann}{logical specifying if the default annotation (\code{main},
+    \code{sub}, \code{xlab}, \code{ylab}) should appear on the plot, see
+    \code{\link{title}}.}
   \item{args.legend}{list of additional arguments to pass to
     \code{\link{legend}()}; names of the list are used as argument
     names.  Only used if \code{legend.text} is supplied.}
+  \item{formula}{a formula where the \code{y} variables are numeric data
+    to plot against the categorical \code{x} variables.  The formula
+    can have one of three forms: \preformatted{
+      y ~ x
+      y ~ x1 + x2
+      cbind(y1, y2) ~ x},
+    see the examples.}
+  \item{data}{a data frame (or list) from which the variables in formula
+    should be taken.}
+  \item{subset}{an optional vector specifying a subset of observations
+    to be used.}
+  \item{na.action}{a function which indicates what should happen when
+    the data contain \code{\link{NA}} values.  The default is to ignore missing
+    values in the given variables.}
   \item{\dots}{arguments to be passed to/from other methods.  For the
     default method these can include further arguments (such as
     \code{axes}, \code{asp} and \code{main}) and
     \link{graphical parameters} (see \code{\link{par}}) which are passed to
     \code{\link{plot.window}()}, \code{\link{title}()} and
     \code{\link{axis}}.}
-}
-\details{
-  This is a generic function, it currently only has a default method.
-  A formula interface may be added eventually.
 }
 \value{
   A numeric vector (or matrix, when \code{beside = TRUE}), say
@@ -127,6 +144,7 @@ barplot(height, \dots)
   If \code{beside} is true, use \code{colMeans(mp)} for the
   midpoints of each \emph{group} of bars, see example.
 }
+\author{R Core, with a contribution by Arni Magnusson.}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
@@ -135,10 +153,30 @@ barplot(height, \dots)
   Murrell, P. (2005) \emph{R Graphics}. Chapman & Hall/CRC Press.
 }
 \seealso{
-  \code{\link{plot}(\dots, type = "h")}, \code{\link{dotchart}},
-  \code{\link{hist}}.
+  \code{\link{plot}(\dots, type = "h")}, \code{\link{dotchart}};
+  \code{\link{hist}} for bars of a \emph{continuous} variable.
+  \code{\link{mosaicplot}()}, more sophisticated to visualize
+  \emph{several} categorical variables.
 }
 \examples{
+# Formula method
+barplot(GNP ~ Year, data = longley)
+barplot(cbind(Employed, Unemployed) ~ Year, data = longley)
+
+## 3rd form of formula - 2 categories :
+op <- par(mfrow = 2:1, mgp = c(3,1,0)/2, mar = .1+c(3,3:1))
+summary(d.Titanic <- as.data.frame(Titanic))
+barplot(Freq ~ Class + Survived, data = d.Titanic,
+        subset = Age == "Adult" & Sex == "Male",
+        main = "barplot(Freq ~ Class + Survived, *)", ylab = "# {passengers}", legend = TRUE)
+# Corresponding table :
+(xt <- xtabs(Freq ~ Survived + Class + Sex, d.Titanic, subset = Age=="Adult"))
+# Alternatively, a mosaic plot :
+mosaicplot(xt[,,"Male"], main = "mosaicplot(Freq ~ Class + Survived, *)", color=TRUE)
+par(op)
+
+
+# Default method
 require(grDevices) # for colours
 tN <- table(Ni <- stats::rpois(100, lambda = 5))
 r <- barplot(tN, col = rainbow(20))
@@ -179,15 +217,15 @@ barplot(VADeaths, angle = 15+10*1:5, density = 20, col = "black",
         legend = rownames(VADeaths))
 title(main = list("Death Rates in Virginia", font = 4))
 
-# border :
+# Border color
 barplot(VADeaths, border = "dark blue") % lwd = 2 << not passed
 %notyet barplot(VADeaths, inside = FALSE, main = "barplot(*, inside = FALSE)")
 
-# log scales (not much sense here):
+# Log scales (not much sense here)
 barplot(tN, col = heat.colors(12), log = "y")
 barplot(tN, col = gray.colors(20), log = "xy")
 
-# args.legend
+# Legend location
 barplot(height = cbind(x = c(465, 91) / 465 * 100,
                        y = c(840, 200) / 840 * 100,
                        z = c(37, 17) / 37 * 100),

@@ -317,6 +317,9 @@
       over handling search path conflicts when packages are
       attached. The policy is controlled by the new
       \code{conflicts.policy} option.
+
+      \item \code{barplot()} gets a formula method, thanks to a patch
+      proposal by Arni Magnusson in \PR{17521}.
     }
   }
 
@@ -1285,7 +1288,7 @@
       avoid having the \command{R} process killed when macOS over-commits
       memory.
 
-      \item \code{sum(x)} and \code{sum(x1,x2,..,x<N>)} with many or
+      \item \code{sum(x)} and \code{sum(x1, x2, .., x<N>)} with many or
       long logical or integer vectors no longer overflows (and returns
       \code{NA} with a warning), but returns \code{double} numbers in
       such cases.
@@ -3359,7 +3362,7 @@
       variable \env{R_INTERACTIVE_DEVICE}.
 
       \item On Unix-like platforms which support the \command{getline} C
-      library function, \code{system(*,intern = TRUE)} no longer
+      library function, \code{system(*, intern = TRUE)} no longer
       truncates (output) lines longer than 8192 characters, thanks to
       Karl Millar. (\PR{16544})
 
@@ -3424,7 +3427,7 @@
 
       \item New string utilities \code{startsWith(x, prefix)} and
       \code{endsWith(x, suffix)}.  Also provide speedups for some
-      \code{grepl("^...",*)} uses (related to proposals in \PR{16490}).
+      \code{grepl("^...", *)} uses (related to proposals in \PR{16490}).
 
       \item Reference class finalizers run at exit, as well as on
       garbage collection.
@@ -3768,7 +3771,7 @@
     \itemize{
       \item \code{format.POSIXlt()} behaved incorrectly in \R 3.2.4.
       E.g.\sspace{}the output of
-      \code{format(as.POSIXlt(paste0(1940:2000,"-01-01"), tz = "CET"),
+      \code{format(as.POSIXlt(paste0(1940:2000, "-01-01"), tz = "CET"),
 	usetz = TRUE)} ended in two \code{"CEST"} time formats.
     }
   }

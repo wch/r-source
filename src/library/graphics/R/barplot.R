@@ -1,7 +1,7 @@
 #  File src/library/graphics/R/barplot.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@ function(height, width = 1, space = NULL, names.arg = NULL,
 	 axes = TRUE, axisnames = TRUE,
 	 cex.axis = par("cex.axis"), cex.names = par("cex.axis"),
          inside = TRUE, plot = TRUE, axis.lty = 0, offset = 0, add = FALSE,
+	 ann = !add && par("ann"),
          args.legend = NULL, ...)
  {
     if (!missing(inside)) .NotYetUsed("inside", error = FALSE)# -> help(.)
@@ -194,8 +195,44 @@ function(height, width = 1, space = NULL, names.arg = NULL,
                 do.call("legend", args.legend1)
             }
 	}
-	title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...)
+	if(ann) title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...)
 	if(axes) axis(if(horiz) 1 else 2, cex.axis = cex.axis, ...)
 	invisible(w.m)
     } else w.m
+}
+
+barplot.formula <- function(formula, data, subset, na.action,
+                            horiz = FALSE, xlab = NULL, ylab = NULL, ...)
+{
+    if (missing(formula) || length(formula) != 3L)
+        stop("'formula' missing or incorrect")
+    m <- match.call(expand.dots = FALSE)
+    if (is.matrix(eval(m$data, parent.frame())))
+        m$data <- as.data.frame(data)
+    m$... <- m$horiz <- m$xlab <- m$ylab <- NULL
+    m[[1L]] <- quote(stats::model.frame)
+
+    mf <- eval(m, parent.frame())
+    if (ncol(mf[-1L]) == 0L || ncol(mf[-1L]) >= 3L)
+        stop("formula must specify 1 or 2 categorical variables")
+    if (anyDuplicated(mf[-1L]))
+        stop("duplicated categorical values - try another formula or subset")
+    if (horiz) {
+        if(is.null(ylab)) ylab <- names(mf)[ncol(mf)]
+    } else
+        if(is.null(xlab)) xlab <- names(mf)[ncol(mf)]
+    if (is.matrix(mf[[1L]])) { ## LHS is cbind()
+        if (ncol(mf[-1L]) != 1L)
+            stop("formula with cbind() must specify 1 categorical variable")
+        lhs <- t(mf[[1L]])
+        colnames(lhs) <- mf[[ncol(mf)]]
+        barplot.default(lhs, horiz = horiz, xlab = xlab, ylab = ylab, ...)
+    } else {
+	if (horiz) {
+	    if(is.null(xlab)) xlab <- names(mf)[1L]
+	} else
+	    if(is.null(ylab)) ylab <- names(mf)[1L]
+	barplot.default(stats::xtabs(mf, addNA = TRUE),
+			horiz = horiz, xlab = xlab, ylab = ylab, ...)
+  }
 }
