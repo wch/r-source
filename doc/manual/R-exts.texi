@@ -14051,7 +14051,7 @@ control within R.
 @section Allowing interrupts
 @cindex Interrupts
 
-No port of @R{} can be interrupted whilst running long computations in
+No part of @R{} can be interrupted whilst running long computations in
 compiled code, so programmers should make provision for the code to be
 interrupted at suitable points by calling from C
 
