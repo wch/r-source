@@ -338,7 +338,8 @@ inRbuildignore <- function(files, pkgdir) {
                 if (basename(vigns$dir) == "vignettes") {
                     ## inst may not yet exist
                     dir.create(doc_dir, recursive = TRUE, showWarnings = FALSE)
-                    tocopy <- c(vigns$docs, vigns$outputs, unlist(vigns$sources))
+                    tocopy <- unique(c(vigns$docs, vigns$outputs,
+                                       unlist(vigns$sources)))
                     copied <- file.copy(tocopy, doc_dir, copy.date = TRUE)
                     if (!all(copied)) {
                     	warning(sprintf(ngettext(sum(!copied),
