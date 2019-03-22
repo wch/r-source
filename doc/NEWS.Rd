@@ -463,7 +463,10 @@
       \item \command{R CMD check} now checks
       \command{autoconf}-generated \file{configure} files have their
       corresponding source files, including optionally attempting to
-      regenerate them on platforms with \command{autoconf}.
+      regenerate them on platforms with \command{autoreconf}.
+      
+      \item \command{R CMD build} has a new option
+      \option{--compression} to select the compression used for the tarball.
     }
   }
 

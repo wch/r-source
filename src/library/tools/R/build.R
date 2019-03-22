@@ -152,6 +152,8 @@ inRbuildignore <- function(files, pkgdir) {
             "  --compact-vignettes=  try to compact PDF files under inst/doc:",
             '                        "no" (default), "qpdf", "gs", "gs+qpdf", "both"',
             "  --compact-vignettes   same as --compact-vignettes=qpdf",
+            "  --compression=        type of compression to be used on tarball:",
+            '                        "gzip" (default), "none", "bzip2", "xz"',
             "  --md5                 add MD5 sums",
             "  --log                 log to file 'pkg-00build.log' when processing ",
             "                        the pkgdir with basename 'pkg'",
@@ -852,6 +854,7 @@ inRbuildignore <- function(files, pkgdir) {
         args <- strsplit(args,'nextArg', fixed = TRUE)[[1L]][-1L]
     }
 
+    compression <- "gzip"
     while(length(args)) {
         a <- args[1L]
         if (a %in% c("-h", "--help")) {
@@ -893,6 +896,9 @@ inRbuildignore <- function(files, pkgdir) {
             with_md5 <- TRUE
         } else if (a == "--log") {
             with_log <- TRUE
+        } else if (substr(a, 1, 14) == "--compression=") {
+            compression <- match.arg(substr(a, 15, 1000),
+                                     c("none", "gzip", "bzip2", "xz"))
         } else if (startsWith(a, "-")) {
             message("Warning: unknown option ", sQuote(a))
         } else pkgs <- c(pkgs, a)
@@ -1137,16 +1143,18 @@ inRbuildignore <- function(files, pkgdir) {
         }
 
         ## Finalize
-        filename <- paste0(pkgname, "_", desc["Version"], ".tar.gz")
+        ext <- switch(compression,
+                      "none"="", "gzip"= ".gz", "bzip2" = ".bz2", "xz" = ".xz")
+        filename <- paste0(pkgname, "_", desc["Version"], ".tar", ext)
         filepath <- file.path(startdir, filename)
         ## NB: ../../../../tests/reg-packages.R relies on this exact format!
         messageLog(Log, "building ", sQuote(filename))
-        res <- utils::tar(filepath, pkgname, compression = "gzip",
+        res <- utils::tar(filepath, pkgname, compression = compression,
                           compression_level = 9L,
                           tar = Sys.getenv("R_BUILD_TAR"),
                           extra_flags = NULL) # use trapdoor
         if (res) {
-            errorLog(Log, "packaging into .tar.gz failed")
+            errorLog(Log, "packaging into tarball failed")
             do_exit(1L)
         }
         message("") # blank line
