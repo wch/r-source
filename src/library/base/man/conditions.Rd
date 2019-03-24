@@ -56,8 +56,8 @@ simpleError    (message, call = NULL)
 simpleWarning  (message, call = NULL)
 simpleMessage  (message, call = NULL)
 
-errorCondition(msg, ..., class = NULL, call = NULL)
-warningCondition(msg, ..., class = NULL, call = NULL)
+errorCondition(message, ..., class = NULL, call = NULL)
+warningCondition(message, ..., class = NULL, call = NULL)
 
 \method{as.character}{condition}(x, \dots)
 \method{as.character}{error}(x, \dots)

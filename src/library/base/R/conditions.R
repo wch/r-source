@@ -111,12 +111,12 @@ simpleWarning <- function(message, call = NULL) {
     structure(list(message=as.character(message), call = call), class=class)
 }
 
-errorCondition <- function(msg, ..., class = NULL, call = NULL)
-    structure(list(message = msg, call = call, ...),
+errorCondition <- function(message, ..., class = NULL, call = NULL)
+    structure(list(message = as.character(message), call = call, ...),
               class = c(class, "error", "condition"))
 
-warningCondition <- function(msg, ..., class = NULL, call = NULL)
-    structure(list(message = msg, call = call, ...),
+warningCondition <- function(message, ..., class = NULL, call = NULL)
+    structure(list(message = as.character(message), call = call, ...),
               class = c(class, "warning", "condition"))
 
 conditionMessage <- function(c) UseMethod("conditionMessage")
