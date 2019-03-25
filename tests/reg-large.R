@@ -248,6 +248,13 @@ if(availableGB > 16) withAutoprint({
     system.time(i2.31 <- seq(-i, by=1L, length=2*i+1)) # 30.6 sec elapsed
     object.size(i2.31) # 8'589'934'648 bytes [ was 17.17 GB in R <= 3.5.x ]
     stopifnot(is.integer(i2.31),  i2.31[1] == -i,  i2.31[length(i2.31)] == i)
+
+    ## pmax(), pmin() with long vectors, PR 17533
+    if(availableGB > 24) withAutoprint({
+        system.time(i2.31 <- pmin(i2.31, 0L)) # 7.1 sec
+        str(i2.31)
+        system.time(stopifnot(i2.31[(i+1):length(i2.31)] == 0)) # 16.7 sec
+    })
 })
 
 

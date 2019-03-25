@@ -320,6 +320,9 @@
 
       \item \code{barplot()} gets a formula method, thanks to a patch
       proposal by Arni Magnusson in \PR{17521}.
+
+      \item \code{pmax()} and \code{pmin(x)} now also work for long
+      vectors, thanks to Suharto Anggono's \PR{17533}.
     }
   }
 
@@ -464,7 +467,7 @@
       \command{autoconf}-generated \file{configure} files have their
       corresponding source files, including optionally attempting to
       regenerate them on platforms with \command{autoreconf}.
-      
+
       \item \command{R CMD build} has a new option
       \option{--compression} to select the compression used for the tarball.
     }
