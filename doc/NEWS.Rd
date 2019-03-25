@@ -756,8 +756,8 @@
 
       \item \code{as.roman(3) <= 2:4} and all other comparisons now work,
       as do group \code{"Summary"} function calls such as
-      \code{max(as.roman(sample(20)))} and \code{as.roman(NA)}.  (Parly reported
-      by Bill Dunlap in \PR{17542}.)
+      \code{max(as.roman(sample(20)))} and \code{as.roman(NA)}.
+      (Partly reported by Bill Dunlap in \PR{17542}.)
     }
   }
 }
