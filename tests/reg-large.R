@@ -82,7 +82,8 @@ if(FALSE) { # object.size() itself is taking a lot of time!
     os <- structure(19327353184, class = "object_size")
     print(os, units = "GB") # 18
 }
-if(exists("res")) rm(res); gc() # for the next step
+if(exists("res")) rm(res)
+gc(reset = TRUE) # for the next step
 
 ### Testing PR#17992  c() / unlist() name creation for large vectors
 ## Part 2 (https://bugs.r-project.org/bugzilla/show_bug.cgi?id=17292#c4):
@@ -99,7 +100,8 @@ str(res) # is fast!
 ## - attr(*, "names")= chr [1:2147483648] "a.b" "a.b" "a.b" "a.b" ...
 gc() # back to ~ 18.4 GB
 rm(res)
-}); gc() # for the next step
+})
+gc(reset = TRUE) # for the next step
 
 ## Large string's encodeString() -- PR#15885
 if(availableGB > 4) system.time(local(withAutoprint({
@@ -119,7 +121,8 @@ if(availableGB > 6) system.time(withAutoprint({
     head(r) ; length(r) # was only 21 in  R < 3.5.0
     stopifnot(all.equal(length(r), 400000001, tol = 0.1))
 })) ## 4.8--5.5 sec.
-rm(r); gc()
+rm(r)
+gc()
 
 n <- 4e4 # << for quick testing, comment next line
 n <- 2.2e9
@@ -151,7 +154,8 @@ if(availableGB > 99) withAutoprint({
 	length(ap1$x) == 50
 	all.equal(ap1$y, sin(pi*ap1$x), tol= 1e-9)
     })
-    rm(ap1); gc() ## keep x,y,n,i2 --> max used: 92322 Mb
+    rm(ap1) # keep x,y,n,i2
+    gc()     # --> max used: 92322 Mb
 })
 
 ## which() and ifelse() working for long vectors
@@ -247,7 +251,5 @@ if(availableGB > 16) withAutoprint({
 })
 
 
-
 gc() # NB the "max used"
-
 proc.time() # total
