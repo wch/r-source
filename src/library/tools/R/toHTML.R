@@ -342,7 +342,7 @@ function(x, header = TRUE, ...)
                                                 s,
                                                 urlify,
                                                 2L)
-            s <- .gsub_with_transformed_matches("[^>\"](DOI|doi):[[:space:]]*([^<[:space:]]+[[:alnum:]])",
+            s <- .gsub_with_transformed_matches("[^>\"](DOI|doi):[[:space:]]*([^<[:space:]&]+[[:alnum:]])",
                                                 "&lt;<a href=\"https://doi.org/%s\">doi:\\2</a>&gt;",
                                                 s,
                                                 urlify,
