@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2019-03-21 r76255) -- "Unsuffered Consequences"
+R Under development (unstable) (2019-03-24 r76263) -- "Unsuffered Consequences"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -4174,6 +4174,45 @@ I(x^3) -0.73        0.93 -0.99
 > case.names(lmxy, full = TRUE)      # includes the 0-weight case
  [1] "O.1"  "O.2"  "O.3"  "O.4"  "O.5"  "O.6"  "O.7"  "O.8"  "O.9"  "O.10"
 [11] "O.11" "O.12" "O.13" "O.14" "O.15" "O.16" "O.17" "O.18" "O.19" "O.20"
+> 
+> 
+> 
+> cleanEx()
+> nameEx("checkMFClasses")
+> ### * checkMFClasses
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: .checkMFClasses
+> ### Title: Functions to Check the Type of Variables passed to Model Frames
+> ### Aliases: .checkMFClasses .MFclass .getXlevels
+> ### Keywords: utilities
+> 
+> ### ** Examples
+> 
+> sapply(warpbreaks, .MFclass) # "numeric" plus 2 x "factor"
+   breaks      wool   tension 
+"numeric"  "factor"  "factor" 
+> sapply(iris,       .MFclass) # 4 x "numeric" plus "factor"
+Sepal.Length  Sepal.Width Petal.Length  Petal.Width      Species 
+   "numeric"    "numeric"    "numeric"    "numeric"     "factor" 
+> 
+> mf <- model.frame(Sepal.Width ~ Species,      iris)
+> mc <- model.frame(Sepal.Width ~ Sepal.Length, iris)
+> 
+> .checkMFClasses("numeric", mc) # nothing else
+> .checkMFClasses(c("numeric", "factor"), mf)
+> 
+> ## simple .getXlevels() cases :
+> (xl <- .getXlevels(terms(mf), mf)) # a list with one entry " $ Species" with 3 levels:
+$Species
+[1] "setosa"     "versicolor" "virginica" 
+
+> stopifnot(exprs = {
++   identical(xl$Species, levels(iris$Species))
++   identical(.getXlevels(terms(mc), mc), xl[0]) # a empty named list, as no factors
++   is.null(.getXlevels(terms(x~x), list(x=1)))
++ })
 > 
 > 
 > 

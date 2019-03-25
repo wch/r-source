@@ -343,7 +343,8 @@ offset <- function(object) object
     ## when called from predict.nls, vars not match.
     new <- vapply(m, .MFclass, "")
     new <- new[names(new) %in% names(cl)]
-     if(length(new) == 0L) return()
+    if(length(new) == 0L) return(invisible())
+    ## else
     old <- cl[names(new)]
     if(!ordNotOK) {
         old[old == "ordered"] <- "factor"
@@ -368,6 +369,7 @@ offset <- function(object) object
                  paste(sQuote(names(old)[wrong]), collapse=", ")),
                  call. = FALSE, domain = NA)
     }
+    else invisible()
 }
 
 ##' Model Frame Class
