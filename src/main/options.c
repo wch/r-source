@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2018   The R Core Team.
+ *  Copyright (C) 1998-2019   The R Core Team.
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -257,6 +257,7 @@ void attribute_hidden InitOptions(void)
     SEXP val, v;
     char *p;
 
+    /* options set here should be included into mandatory[] in do_options */
 #ifdef HAVE_RL_COMPLETION_MATCHES
     PROTECT(v = val = allocList(23));
 #else
@@ -369,6 +370,7 @@ void attribute_hidden InitOptions(void)
     R_PCRE_limit_recursion = NA_LOGICAL;
     SETCAR(v, ScalarLogical(R_PCRE_limit_recursion));
     v = CDR(v);
+    /* options set here should be included into mandatory[] in do_options */
 
 #ifdef HAVE_RL_COMPLETION_MATCHES
     /* value from Rf_initialize_R */
@@ -490,7 +492,28 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	if (*CHAR(namei)) { /* name = value  ---> assignment */
 	    SEXP tag = installTrChar(namei);
-	    if (streql(CHAR(namei), "width")) {
+	    SET_STRING_ELT(names, i, namei);
+
+	    if (argi == R_NilValue) {
+		/* Handle option removal separately to simplify value checking
+		   for known options below; mandatory means not allowed to be
+		   removed once set, but not all have to be set at startup. */
+		const char *mandatory[] = {"prompt", "continue", "expressions",
+		  "width", "deparse.cutoff", "digits", "echo", "verbose",
+		  "check.bounds", "keep.source", "keep.source.pkgs",
+		  "keep.parse.data", "keep.parse.data.pkgs", "warning.length",
+		  "nwarnings", "OutDec", "browserNLdisabled", "CBoundsCheck",
+		  "matprod", "PCRE_study", "PCRE_use_JIT",
+		  "PCRE_limit_recursion", "rl_word_breaks",
+		  /* ^^^ from InitOptions ^^^ */
+		  "warn", "max.print", "show.error.messages",
+		  /* ^^^ from Common.R ^^^ */
+		  NULL};
+		for(int j = 0; mandatory[j] != NULL; j++)
+		    if (streql(CHAR(namei), mandatory[j]))
+			error(_("option '%s' cannot be deleted"), CHAR(namei));
+		SET_VECTOR_ELT(value, i, SetOption(tag, R_NilValue));
+	    } else if (streql(CHAR(namei), "width")) {
 		int k = asInteger(argi);
 		if (k < R_MIN_WIDTH_OPT || k > R_MAX_WIDTH_OPT)
 		    error(_("invalid 'width' parameter, allowed %d...%d"),
@@ -749,7 +772,6 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    else {
 		SET_VECTOR_ELT(value, i, SetOption(tag, duplicate(argi)));
 	    }
-	    SET_STRING_ELT(names, i, namei);
 	}
 	else { /* querying arg */
 	    const char *tag;
