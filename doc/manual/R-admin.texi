@@ -4952,7 +4952,8 @@ sudo installer -pkg \
 -target /
 @end example
 @noindent
-Alternatively, change the include path @emph{via}
+(This will need to be re-run if the OS decides to update the Command
+Line Tools.)  Alternatively, change the include path @emph{via}
 @example
 CPPFLAGS="-isystem /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include"
 @end example
