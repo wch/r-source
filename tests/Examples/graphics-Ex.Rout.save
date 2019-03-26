@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2019-03-21 r76255) -- "Unsuffered Consequences"
+R Under development (unstable) (2019-03-25 r76268) -- "Unsuffered Consequences"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -284,11 +284,50 @@ Hair    Brown Blue Hazel Green
 > 
 > ### Name: barplot
 > ### Title: Bar Plots
-> ### Aliases: barplot barplot.default
+> ### Aliases: barplot barplot.default barplot.formula
 > ### Keywords: hplot
 > 
 > ### ** Examples
 > 
+> # Formula method
+> barplot(GNP ~ Year, data = longley)
+> barplot(cbind(Employed, Unemployed) ~ Year, data = longley)
+> 
+> ## 3rd form of formula - 2 categories :
+> op <- par(mfrow = 2:1, mgp = c(3,1,0)/2, mar = .1+c(3,3:1))
+> summary(d.Titanic <- as.data.frame(Titanic))
+  Class       Sex        Age     Survived      Freq       
+ 1st :8   Male  :16   Child:16   No :16   Min.   :  0.00  
+ 2nd :8   Female:16   Adult:16   Yes:16   1st Qu.:  0.75  
+ 3rd :8                                   Median : 13.50  
+ Crew:8                                   Mean   : 68.78  
+                                          3rd Qu.: 77.00  
+                                          Max.   :670.00  
+> barplot(Freq ~ Class + Survived, data = d.Titanic,
++         subset = Age == "Adult" & Sex == "Male",
++         main = "barplot(Freq ~ Class + Survived, *)", ylab = "# {passengers}", legend = TRUE)
+> # Corresponding table :
+> (xt <- xtabs(Freq ~ Survived + Class + Sex, d.Titanic, subset = Age=="Adult"))
+, , Sex = Male
+
+        Class
+Survived 1st 2nd 3rd Crew
+     No  118 154 387  670
+     Yes  57  14  75  192
+
+, , Sex = Female
+
+        Class
+Survived 1st 2nd 3rd Crew
+     No    4  13  89    3
+     Yes 140  80  76   20
+
+> # Alternatively, a mosaic plot :
+> mosaicplot(xt[,,"Male"], main = "mosaicplot(Freq ~ Class + Survived, *)", color=TRUE)
+> par(op)
+> 
+> 
+> # Default method
 > require(grDevices) # for colours
 > tN <- table(Ni <- stats::rpois(100, lambda = 5))
 > r <- barplot(tN, col = rainbow(20))
@@ -336,14 +375,14 @@ Hair    Brown Blue Hazel Green
 +         legend = rownames(VADeaths))
 > title(main = list("Death Rates in Virginia", font = 4))
 > 
-> # border :
+> # Border color
 > barplot(VADeaths, border = "dark blue") 
 > 
-> # log scales (not much sense here):
+> # Log scales (not much sense here)
 > barplot(tN, col = heat.colors(12), log = "y")
 > barplot(tN, col = gray.colors(20), log = "xy")
 > 
-> # args.legend
+> # Legend location
 > barplot(height = cbind(x = c(465, 91) / 465 * 100,
 +                        y = c(840, 200) / 840 * 100,
 +                        z = c(37, 17) / 37 * 100),
@@ -355,6 +394,7 @@ Hair    Brown Blue Hazel Green
 > 
 > 
 > 
+> graphics::par(get("par.postscript", pos = 'CheckExEnv'))
 > cleanEx()
 > nameEx("box")
 > ### * box
@@ -2102,7 +2142,7 @@ N
 > points.default # to see how it calls "plot.xy(xy.coords(x, y), ...)"
 function (x, y = NULL, type = "p", ...) 
 plot.xy(xy.coords(x, y), type = type, ...)
-<bytecode: 0x30280c8>
+<bytecode: 0x1952c10>
 <environment: namespace:graphics>
 > 
 > 
@@ -2972,7 +3012,7 @@ function (xy = 1, warn.log = TRUE)
     u <- par("usr")
     xy * c(u[2L] - u[1L], u[4L] - u[3L])/par("pin")
 }
-<bytecode: 0x2be5d18>
+<bytecode: 0x2fe0fc0>
 <environment: namespace:graphics>
 > 
 > ## plot labels offset 0.12 inches to the right
@@ -3053,7 +3093,7 @@ function (xy = 1, warn.log = TRUE)
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.842 0.066 2.921 0 0 
+Time elapsed:  2.809 0.061 2.884 0 0 
 > grDevices::dev.off()
 null device 
           1 

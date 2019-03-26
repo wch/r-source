@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2019-03-21 r76255) -- "Unsuffered Consequences"
+R Under development (unstable) (2019-03-25 r76268) -- "Unsuffered Consequences"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -3512,7 +3512,7 @@ c0   -5.14
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.08 0.07 2.168 0 0 
+Time elapsed:  2.039 0.083 2.132 0 0 
 > grDevices::dev.off()
 null device 
           1 
