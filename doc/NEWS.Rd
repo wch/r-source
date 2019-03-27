@@ -370,6 +370,8 @@
 
       \item The \command{configure} macro \samp{MAKEINFO} has been
       updated to \samp{TEXI2ANY}.
+      
+      \item Support for \command{make install} has been enhanced.
     }
   }
 
@@ -423,6 +425,15 @@
 
       \item The make macro \samp{F_VISIBILITY} is now preferred for
       both fixed-form and free-form Fortran.
+      
+      \item \command{R CMD INSTALL} gains a new flag \option{--strip}
+      which strips installed shared object(s): this can also be achieved
+      by setting the environment variable \env{_R_SHLIB_STRIP_} to a
+      true value.
+
+      This is most useful on platforms using GNU \code{binutils} (such
+      as Linux) and compiling with \option{-g} flags: it has negligible
+      effect on macOS.
     }
   }
 

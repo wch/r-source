@@ -225,6 +225,7 @@ if(FALSE) {
             "			set arguments for the configure scripts (if any)",
             "      --configure-vars=VARS",
             "			set variables for the configure scripts (if any)",
+            "      --strip           strip shared object(s)",
             "      --dsym            (macOS only) generate dSYM directory",
             "      --built-timestamp=STAMP",
             "                   set timestamp for Built: entry in DESCRIPTION",
@@ -519,10 +520,10 @@ if(FALSE) {
                 message('installing to ', dest, domain = NA)
                 dir.create(dest, recursive = TRUE, showWarnings = FALSE)
                 file.copy(files, dest, overwrite = TRUE)
-                if(config_val_to_logical(Sys.getenv("_R_SHLIB_STRIP_",
-                                                    "false")) &&
-                   nzchar(strip <- Sys.getenv("R_STRIP_SHARED_LIB"))) {
-                    system(paste(c(strip,
+                if((do_strip || config_val_to_logical(Sys.getenv("_R_SHLIB_STRIP_",
+                                                                 "false"))) &&
+                   nzchar(strip_cmd <- Sys.getenv("R_STRIP_SHARED_LIB"))) {
+                    system(paste(c(strip_cmd,
                                    shQuote(file.path(dest, files))),
                                  collapse = " "))
                 }
@@ -1740,6 +1741,7 @@ if(FALSE) {
     install_inst <- TRUE
     install_help <- TRUE
     install_tests <- FALSE
+    do_strip <- FALSE
 
     while(length(args)) {
         a <- args[1L]
@@ -1866,6 +1868,8 @@ if(FALSE) {
             staged_install <- FALSE
         } else if (a == "--dsym") {
             dsym <- TRUE
+        } else if (a == "--strip") {
+            do_strip <- TRUE
         } else if (substr(a, 1, 18) == "--built-timestamp=") {
             built_stamp <- substr(a, 19, 1000)
         } else if (startsWith(a, "-")) {

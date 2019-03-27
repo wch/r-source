@@ -641,6 +641,10 @@ installation directories can be seen in the status message that is
 displayed at the end of @command{configure}.  The installation may need
 to be done by the owner of @file{@var{prefix}}, often a root account.
 
+There is the option of using @command{make install-strip} (@pxref{Debugging
+Symbols}).
+
+
 You can install into another directory tree by using
 
 @example
@@ -648,8 +652,8 @@ make prefix=/path/to/here install
 @end example
 
 @noindent
-at least with @acronym{GNU} or Solaris @command{make} (but not some
-older Unix makes).
+at least with @acronym{GNU} @command{make} (but not some other Unix
+makes).
 
 More precise control is available at configure time via options: see
 @command{configure --help} for details.  (However, most of the `Fine
@@ -939,11 +943,39 @@ environment variable @env{TZ}.
 
 
 @menu
+* Debugging Symbols::           
 * OpenMP Support::              
 * C++ Support::                 
 @end menu
 
-@node OpenMP Support, C++ Support, Other Options, Other Options
+@node Debugging Symbols, OpenMP Support, Other Options, Other Options
+@subsection Debugging Symbols
+
+By default, @command{configure} adds a flag (usually @option{-g}) to the
+compilation flags for C, Fortran and CXX sources.  This will slow down
+compilation and increase object sizes of both @R{} and packages, so it
+may be a good idea to change those flags (set @samp{CFLAGS} etc in
+@file{config.site} before configuring, or edit files @file{Makeconf}
+and @file{etc/Makeconf} between running @command{configure} and
+@command{make}).
+
+Having debugging symbols available is useful both when running @R{} under a
+debugger (e.g., @command{R -d gdb}) and when using sanitizers and
+@command{valgrind}, all things intended for experts.
+
+Debugging symbols (and some others) can be `stripped' on installation by
+using
+@example
+make install-strip
+@end example
+@noindent
+How well this is supported depends on the platform: it works best on
+those using GNU @code{binutils}.  On @cputype{x86_64} Linux a typical
+reduction in overall size was from 92MB to 66MB.   On macOS debugging
+symbols are not by default included in @file{.dylib} and @file{.so}
+files, so there is negligible difference.
+
+@node OpenMP Support, C++ Support, Debugging Symbols, Other Options
 @subsection OpenMP Support
 
 By default @command{configure} searches for suitable flags@footnote{for
