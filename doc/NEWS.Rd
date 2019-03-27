@@ -325,6 +325,21 @@
       vectors, thanks to Suharto Anggono's \PR{17533}.
 
       \item \code{bxp()} now warns when omitting duplicated arguments.
+
+      \item New \code{hcl.colors()} function to provide wide range of
+      much nicer selection of HCL-based colour palettes (than existing
+      palette-generating functions like \code{rainbow()}).
+
+      Also new \code{hcl.pals()} function to list available palette
+      names for \code{hcl.colors()}.
+
+      Contributed by Achim Zeileis.
+
+      \item Default colours for \code{image()} and
+      \code{filled.contour()} are now based on \code{hcl.colors()}.
+
+      \item Palette-generating functions \code{rainbow()},
+      \code{topo.colors()}, etc get new \code{rev} argument.
     }
   }
 

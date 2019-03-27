@@ -10,7 +10,8 @@
 \usage{
 image(x, \dots)
 
-\method{image}{default}(x, y, z, zlim, xlim, ylim, col = heat.colors(12),
+\method{image}{default}(x, y, z, zlim, xlim, ylim,
+      col = hcl.colors(12, "YlOrRd"),
       add = FALSE, xaxs = "i", yaxs = "i", xlab, ylab,
       breaks, oldstyle = FALSE, useRaster, \dots)
 }
@@ -66,7 +67,7 @@ image(x, \dots)
   three-dimensional or spatial data aka \emph{images}.
   This is a generic function.
 
-  The functions \code{\link{heat.colors}}, \code{\link{terrain.colors}}
+  The functions \code{\link{hcl.colors}}, \code{\link{terrain.colors}}
   and \code{\link{topo.colors}} create heat-spectrum (red to white) and
   topographical color schemes suitable for displaying ordered data, with
   \code{n} giving the number of colors desired.
