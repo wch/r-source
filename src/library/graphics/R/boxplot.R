@@ -1,7 +1,7 @@
 #  File src/library/graphics/R/boxplot.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -122,10 +122,20 @@ bxp <- function(z, notch = FALSE, width = NULL, varwidth = FALSE,
                 ann = TRUE,
 		add = FALSE, at = NULL, show.names = NULL, ...)
 {
-    pars <- c(list(...), pars)
-    ## this could give duplicates, so ensure first mentioned wins.
-    pars <- pars[unique(names(pars))]
-
+    pars <- as.list(pars)
+    if(...length()) { ## ensure '...' takes precedence over 'pars' and does not have duplicates
+	nmsA <- names(args <- list(...))
+	if(anyDuplicated(nmsA)) {
+	    iD <- duplicated(nmsA)
+	    warning(sprintf(ngettext(sum(iD),
+				     "Duplicated argument %s is disregarded",
+				     "Duplicated arguments %s are disregarded"),
+			    sub("^list\\((.*)\\)", "\\1", deparse(args[iD]))),
+		    domain = NA)
+	    nmsA <- names(args <- args[!iD])
+	}
+	pars[nmsA] <- args
+    }
     bplt <- function(x, wid, stats, out, conf, notch, xlog, i)
     {
 	## Draw single box plot

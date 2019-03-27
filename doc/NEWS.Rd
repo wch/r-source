@@ -323,6 +323,8 @@
 
       \item \code{pmax()} and \code{pmin(x)} now also work for long
       vectors, thanks to Suharto Anggono's \PR{17533}.
+
+      \item \code{bxp()} now warns when omitting duplicated arguments.
     }
   }
 
