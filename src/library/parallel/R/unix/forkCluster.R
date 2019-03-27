@@ -1,7 +1,7 @@
 #  File src/library/parallel/R/unix/forkCluster.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -59,7 +59,8 @@ newForkNode <- function(..., options = defaultClusterOptions, rank)
                                      open = "a+b", timeout = timeout)
                 }, error = identity)
                 if (inherits(con, "connection")) break
-                if (Sys.time() - t0 > setup_timeout) break
+                if (difftime(Sys.time(), t0, units="secs") > setup_timeout)
+                    break
                 Sys.sleep(retryDelay)
                 retryDelay <- retryScale * retryDelay
             }
