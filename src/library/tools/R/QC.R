@@ -8269,7 +8269,8 @@ function(x, limit = NULL)
         zz <- textConnection("out", "w", local = TRUE)
         on.exit(close(zz))
         pos <- which(RdTags(x) == s)
-        Rd2txt(x[pos[1L]], out = zz, fragment = TRUE)
+        ## measure length in chars, not in bytes after substitutions
+        Rd2txt(x[pos[1L]], out = zz, fragment = TRUE, outputEncoding = "UTF-8")
         nc <- nchar(out)
         if(length(l) > 1L) {
             ind_warn <- (nc > max(l))

@@ -978,9 +978,13 @@ Rstd_ReadConsole(const char *prompt, unsigned char *buf, int len,
 	    *ob = '\0';
 	    err = res == (size_t)(-1);
 	    /* errors lead to part of the input line being ignored */
-	    if(err) printf(_("<ERROR: re-encoding failure from encoding '%s'>\n"),
-			   R_StdinEnc);
-	    strncpy((char *)buf, obuf, len);
+	    if(err) {
+		printf(_("<ERROR: re-encoding failure from encoding '%s'>\n"),
+		       R_StdinEnc);
+		strncpy((char *)buf, obuf, len);
+		strcat((char *)buf, "...\n");
+	    } else
+		strncpy((char *)buf, obuf, len);
 	}
 /* according to system.txt, should be terminated in \n, so check this
    at eof and error */
