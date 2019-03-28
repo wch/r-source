@@ -41,6 +41,14 @@ Changes from grid_3.5.* to grid_3.6.0:
     
     Contributed by Thomas Lin Pedersen.
 
+9.  Change to internal representation of "unit" objects, to obtain
+    noticeable speed improvements.
+
+    "unit arithmetic" units print differently, but otherwise there 
+    should be no impact at user level.
+
+    Contributed by Thomas Lin Pedersen.
+    
 
 Changes from grid_3.4.* to grid_3.5.0:
 -------------------------------------

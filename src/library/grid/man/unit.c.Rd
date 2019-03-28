@@ -11,10 +11,11 @@
   unit objects specified as arguments.
 }
 \usage{
-unit.c(...)
+unit.c(..., check = TRUE)
 }
 \arguments{
   \item{\dots}{An arbitrary number of unit objects.}
+  \item{check}{Should input be checked? If you are certain all arguments are unit objects this can be set to \code{FALSE}}
 }
 \value{
   An object of class \code{unit}.

@@ -33,7 +33,8 @@ export(
 
        "unit",
        "is.unit",
-       "unit.c", "unit.length", "unit.pmax", "unit.pmin", "unit.rep",
+       "unit.c", "unit.length", "unit.pmax", "unit.pmin", "unit.psum", "unit.rep",
+
        "stringWidth", "stringHeight", "stringAscent", "stringDescent",
        "grobX", "grobY", "grobWidth", "grobHeight",
        "grobAscent", "grobDescent",
@@ -132,8 +133,6 @@ S3method("[", "arrow")
 S3method("[", "gList")
 S3method("[", "gpar")
 S3method("[", "unit")
-S3method("[", "unit.arithmetic")
-S3method("[", "unit.list")
 S3method("[", "vpPath")
 S3method("[<-", "unit")
 S3method("Ops", "unit")
@@ -142,15 +141,15 @@ S3method("as.character", "grob")
 S3method("as.character", "gList")
 S3method("as.character", "path")
 S3method("as.character", "unit")
-S3method("as.character", "unit.arithmetic")
-S3method("as.character", "unit.list")
 S3method("as.character", "viewport")
 S3method("as.character", "vpList")
 S3method("as.character", "vpStack")
 S3method("as.character", "vpTree")
+S3method("as.double", "unit")
+S3method("as.vector", "unit")
+S3method("as.double", "simpleUnit")
+S3method("as.vector", "simpleUnit")
 S3method("format", "unit")
-S3method("format", "unit.arithmetic")
-S3method("format", "unit.list")
 S3method("print", "grob")
 S3method("print", "gList")
 S3method("print", "unit")
@@ -360,10 +359,6 @@ S3method("forceGrob", "default")
 S3method("forceGrob", "grob")
 S3method("forceGrob", "gTree")
 
-S3method("absolute.units", "unit")
-S3method("absolute.units", "unit.list")
-S3method("absolute.units", "unit.arithmetic")
-
 # S3 methods for internal generics that are used in calls to external fns
 S3method("depth", "viewport")
 S3method("depth", "vpList")
@@ -407,13 +402,9 @@ S3method("rep", "unit")
 S3method("rep", "arrow")
 
 # S3 method for generic length (in base)
-S3method("length", "unit")
-S3method("length", "unit.arithmetic")
-S3method("length", "unit.list")
 S3method("length", "arrow")
 
 # S3 method for generic str (in utils)
-S3method("str", "unit.arithmetic")
 S3method("str", "arrow")
 
 S3method("makeContent", "default")

@@ -138,6 +138,13 @@
 #define GRID_ARROWENDS 2
 #define GRID_ARROWTYPE 3
 
+/*
+ * Helpers for unit types
+ */
+#define uValue(X) REAL(VECTOR_ELT(X, 0))[0]
+#define uData(X) VECTOR_ELT(X, 1)
+#define uUnit(X) INTEGER(VECTOR_ELT(X, 2))[0]
+
 typedef double LTransform[3][3];
 
 typedef double LLocation[3];
@@ -194,8 +201,19 @@ typedef enum {
     L_MYLINES = 103,
     L_MYCHAR = 104,
     L_MYSTRINGWIDTH = 105,
-    L_MYSTRINGHEIGHT = 106
+    L_MYSTRINGHEIGHT = 106,
+    /*
+     * Arithmetic units
+     */
+    L_SUM = 201,
+    L_MIN = 202,
+    L_MAX = 203
 } LUnit;
+
+#define isAbsolute(X) ((X > 1000 || (X >= L_MYLINES && X <= L_MYSTRINGHEIGHT) || (X < L_GROBX && X > L_NPC && X != L_NATIVE && X != L_SNPC)))
+#define isArith(X) (X >= L_SUM && X <= L_MAX)
+#define isStringUnit(X) (X >= L_STRINGWIDTH && X <= L_STRINGDESCENT)
+#define isGrobUnit(X) (X >= L_GROBX && X <= L_GROBDESCENT)
 
 typedef enum {
     L_LEFT = 0,
@@ -335,10 +353,6 @@ void location(double x, double y, LLocation v);
 void trans(LLocation vin, LTransform m, LLocation vout);
 
 /* From unit.c */
-int isUnitArithmetic(SEXP ua);
-
-int isUnitList(SEXP ul);
-
 SEXP unit(double value, int unit);
 
 double unitValue(SEXP unit, int index);
@@ -638,6 +652,15 @@ SEXP L_xsplinePoints(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP rep,
 
 /* From unit.c */
 SEXP validUnits(SEXP units);
+SEXP constructUnits(SEXP amount, SEXP data, SEXP unit);
+SEXP asUnit(SEXP simpleUnit);
+SEXP conformingUnits(SEXP unitList);
+SEXP matchUnit(SEXP units, SEXP unit);
+SEXP addUnits(SEXP u1, SEXP u2);
+SEXP multUnits(SEXP units, SEXP values);
+SEXP flipUnits(SEXP units);
+SEXP absoluteUnits(SEXP units);
+SEXP summaryUnits(SEXP units, SEXP op_type);
 
 /* From gpar.c */
 SEXP L_getGPar(void);
