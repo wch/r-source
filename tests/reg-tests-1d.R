@@ -2584,6 +2584,19 @@ w <- tryCatch(bxp(bx.p, ylab = "Y LAB", ylab = "two", xlab = "i", xlab = "INDEX"
 stopifnot(is.character(w), grepl('ylab = "two"', w), grepl('xlab = "INDEX"', w))
 
 
+## reformulate() bug  PR#17359
+(form <- reformulate(c("u", "log(x)"), response = "log(y)"))
+stopifnot(identical(form, log(y) ~ u + log(x)))
+## had *symbol*  `log(y)`  instead of call in R <= 3.5.1
+newf <- function(terms, resp)
+    list(e   = environment(),
+         form= reformulate(terms, resp))
+ef <- newf("x", "log(y)")
+stopifnot( identical(ef$e, environment(ef$form)),
+	  !identical(ef$e, .GlobalEnv),
+	  identical(format(ef$form), "log(y) ~ x"))
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

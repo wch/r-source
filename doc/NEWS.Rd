@@ -386,7 +386,7 @@
 
       \item The \command{configure} macro \samp{MAKEINFO} has been
       updated to \samp{TEXI2ANY}.
-      
+
       \item Support for \command{make install} has been enhanced.
     }
   }
@@ -441,7 +441,7 @@
 
       \item The make macro \samp{F_VISIBILITY} is now preferred for
       both fixed-form and free-form Fortran.
-      
+
       \item \command{R CMD INSTALL} gains a new flag \option{--strip}
       which strips installed shared object(s): this can also be achieved
       by setting the environment variable \env{_R_SHLIB_STRIP_} to a
@@ -791,6 +791,10 @@
       as do group \code{"Summary"} function calls such as
       \code{max(as.roman(sample(20)))} and \code{as.roman(NA)}.
       (Partly reported by Bill Dunlap in \PR{17542}.)
+
+      \item \code{reformulate("x", response = "sin(y)")} no longer produces
+      extra back quotes, \PR{17359}, and gains new optional argument
+      \code{env}.
     }
   }
 }
