@@ -101,7 +101,7 @@ Ireland,Ireland,Dublin,http://ftp.heanet.ie/mirrors/cran.r-project.org/,"HEAnet,
 Malaysia,Malaysia,Serdang,http://wbc.upm.edu.my/cran/,"Univerisiti Putra Malaysia","Ng Keng Yap <kengyap # upm.edu.my>",1,my,"secure_mirror_from_master"
 "Mexico (Mexico City) [https]",Mexico,"Mexico City",https://cran.itam.mx/,"Instituto Tecnologico Autonomo de Mexico","Ernesto Barrios <ebarrios # Itam.mx>",1,mx,"secure_mirror_from_master"
 "Mexico (Mexico City)",Mexico,"Mexico City",http://cran.itam.mx/,"Instituto Tecnologico Autonomo de Mexico","Ernesto Barrios <ebarrios # Itam.mx>",1,mx,"secure_mirror_from_master"
-"Mexico (Texcoco)",Mexico,Texcoco,http://www.est.colpos.mx/R-mirror/,"Colegio de Postgraduados, Texcoco","perpdgo # gmail.com",1,mx
+"Mexico (Texcoco)",Mexico,Texcoco,http://www.est.colpos.mx/R-mirror/,"Colegio de Postgraduados, Texcoco","perpdgo # gmail.com",0,mx
 "New Zealand [https]","New Zealand",Auckland,https://cran.stat.auckland.ac.nz/,"University of Auckland","w.schmidt # auckland.ac.nz",1,nz
 "New Zealand","New Zealand",Auckland,http://cran.stat.auckland.ac.nz/,"University of Auckland","w.schmidt # auckland.ac.nz",1,nz
 "Norway [https]",Norway,Bergen,https://cran.uib.no/,"University of Bergen","sundrift # It.uib.no",1,no,"secure_mirror_from_master"
