@@ -1,7 +1,7 @@
 #  File src/library/stats/R/lsfit.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -204,8 +204,7 @@ ls.diag <- function(ls.out)
 
     qr <- as.matrix(ls.out$qr$qr[1L:p, 1L:p])
     qr[row(qr)>col(qr)] <- 0
-    qrinv <- solve(qr)
-    covmat.unscaled <- qrinv%*%t(qrinv)
+    covmat.unscaled <- tcrossprod(solve(qr))
     dimnames(covmat.unscaled) <- list(xnames, xnames)
 
     ## calculate scaled covariance matrix
@@ -277,20 +276,20 @@ ls.print <- function(ls.out, digits = 4L, print.it = TRUE)
 				"F-value", "Df 1", "Df 2", "Pr(>F)"))
     mat <- as.matrix(lsqr$qr[1L:p, 1L:p])
     mat[row(mat)>col(mat)] <- 0
-    qrinv <- solve(mat)
+    uVar <- diag(tcrossprod(solve(mat)))
 
     ## construct coef table
 
     m.y <- ncol(resids)
     coef.table <- as.list(1L:m.y)
-    if(m.y==1) coef <- matrix(ls.out$coefficients, ncol=1)
-    else coef <- ls.out$coefficients
+    coef <- if(m.y==1) matrix(ls.out$coefficients, ncol=1L)
+            else ls.out$coefficients
     for(i in 1L:m.y) {
-	covmat <- (resss[i]/(n[i]-p)) * (qrinv%*%t(qrinv))
-	se <- sqrt(diag(covmat))
-	coef.table[[i]] <- cbind(coef[, i], se, coef[, i]/se,
-				 2*pt(abs(coef[, i]/se), n[i]-p,
-                                      lower.tail = FALSE))
+	se <- sqrt((resss[i]/(n[i]-p)) * uVar)
+	coef.table[[i]] <-
+            cbind(coef[, i], se, coef[, i]/se,
+                  2*pt(abs(coef[, i]/se), n[i]-p, lower.tail = FALSE),
+                  deparse.level=0L)
 	dimnames(coef.table[[i]]) <-
 	    list(colnames(lsqr$qr),
 		 c("Estimate", "Std.Err", "t-value", "Pr(>|t|)"))
