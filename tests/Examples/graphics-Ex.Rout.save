@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2019-03-25 r76268) -- "Unsuffered Consequences"
+R Under development (unstable) (2019-03-27 r76276) -- "Unsuffered Consequences"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -880,12 +880,12 @@ temperature no yes
 > 
 > ### ** Examples
 > 
-> require(grDevices) # for colours
-> filled.contour(volcano, color = terrain.colors, asp = 1) # simple
+> require("grDevices") # for colours
+> filled.contour(volcano, asp = 1) # simple
 > 
 > x <- 10*1:nrow(volcano)
 > y <- 10*1:ncol(volcano)
-> filled.contour(x, y, volcano, color = terrain.colors,
+> filled.contour(x, y, volcano, color = function(n) hcl.colors(n, "terrain"),
 +     plot.title = title(main = "The Topography of Maunga Whau",
 +     xlab = "Meters North", ylab = "Meters West"),
 +     plot.axes = { axis(1, seq(100, 800, by = 100))
@@ -1145,10 +1145,10 @@ Warning in plot.histogram(r, freq = freq1, col = col, border = border, angle = a
 > 
 > ### ** Examples
 > 
-> require(grDevices) # for colours
-> x <- y <- seq(-4*pi, 4*pi, len = 27)
+> require("grDevices") # for colours
+> x <- y <- seq(-4*pi, 4*pi, length.out = 27)
 > r <- sqrt(outer(x^2, y^2, "+"))
-> image(z = z <- cos(r^2)*exp(-r/6), col  = gray((0:32)/32))
+> image(z = z <- cos(r^2)*exp(-r/6), col = gray.colors(33))
 > image(z, axes = FALSE, main = "Math can be beautiful ...",
 +       xlab = expression(cos(r^2) * e^{-r/6}))
 > contour(z, add = TRUE, drawlabels = FALSE)
@@ -1160,9 +1160,9 @@ Warning in plot.histogram(r, freq = freq1, col = col, border = border, angle = a
 > # A prettier display of the volcano
 > x <- 10*(1:nrow(volcano))
 > y <- 10*(1:ncol(volcano))
-> image(x, y, volcano, col = terrain.colors(100), axes = FALSE)
+> image(x, y, volcano, col = hcl.colors(100, "terrain"), axes = FALSE)
 > contour(x, y, volcano, levels = seq(90, 200, by = 5),
-+         add = TRUE, col = "peru")
++         add = TRUE, col = "brown")
 > axis(1, at = seq(100, 800, by = 100))
 > axis(2, at = seq(100, 600, by = 100))
 > box()
@@ -2142,7 +2142,7 @@ N
 > points.default # to see how it calls "plot.xy(xy.coords(x, y), ...)"
 function (x, y = NULL, type = "p", ...) 
 plot.xy(xy.coords(x, y), type = type, ...)
-<bytecode: 0x1952c10>
+<bytecode: 0x34ccb10>
 <environment: namespace:graphics>
 > 
 > 
@@ -3012,7 +3012,7 @@ function (xy = 1, warn.log = TRUE)
     u <- par("usr")
     xy * c(u[2L] - u[1L], u[4L] - u[3L])/par("pin")
 }
-<bytecode: 0x2fe0fc0>
+<bytecode: 0x4c10418>
 <environment: namespace:graphics>
 > 
 > ## plot labels offset 0.12 inches to the right
@@ -3093,7 +3093,7 @@ function (xy = 1, warn.log = TRUE)
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.809 0.061 2.884 0 0 
+Time elapsed:  3.22 0.04 3.26 0 0 
 > grDevices::dev.off()
 null device 
           1 

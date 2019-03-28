@@ -1,6 +1,6 @@
 % File src/library/graphics/man/filled.contour.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{filled.contour}
@@ -16,7 +16,7 @@ filled.contour(x = seq(0, 1, length.out = nrow(z)),
                ylim = range(y, finite = TRUE),
                zlim = range(z, finite = TRUE),
                levels = pretty(zlim, nlevels), nlevels = 20,
-               color.palette = hcl.colors,
+               color.palette = function(n) hcl.colors(n, "YlOrRd", rev = TRUE),
                col = color.palette(length(levels) - 1),
                plot.title, plot.axes, key.title, key.axes,
                asp = NA, xaxs = "i", yaxs = "i", las = 1,
@@ -91,7 +91,7 @@ filled.contour(x = seq(0, 1, length.out = nrow(z)),
   \emph{Visualizing Data}.
   Summit, New Jersey: Hobart.
 }
-\author{Ross Ihaka and R-core.}
+\author{Ross Ihaka and R Core Team}
 \note{
   \code{filled.contour} uses the \code{\link{layout}} function and so is
   restricted to a full page display.
@@ -106,16 +106,17 @@ filled.contour(x = seq(0, 1, length.out = nrow(z)),
 }
 \seealso{
   \code{\link{contour}}, \code{\link{image}},
+  \code{\link{hcl.colors}}, \code{\link{gray.colors}},
   \code{\link{palette}}; \code{\link[lattice:levelplot]{contourplot}}
   and \code{\link[lattice]{levelplot}} from package \CRANpkg{lattice}.
 }
 \examples{
-require(grDevices) # for colours
-filled.contour(volcano, color = terrain.colors, asp = 1) # simple
+require("grDevices") # for colours
+filled.contour(volcano, asp = 1) # simple
 
 x <- 10*1:nrow(volcano)
 y <- 10*1:ncol(volcano)
-filled.contour(x, y, volcano, color = terrain.colors,
+filled.contour(x, y, volcano, color = function(n) hcl.colors(n, "terrain"),
     plot.title = title(main = "The Topography of Maunga Whau",
     xlab = "Meters North", ylab = "Meters West"),
     plot.axes = { axis(1, seq(100, 800, by = 100))

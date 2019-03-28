@@ -327,8 +327,8 @@
       \item \code{bxp()} now warns when omitting duplicated arguments.
 
       \item New \code{hcl.colors()} function to provide wide range of
-      much nicer selection of HCL-based colour palettes (than existing
-      palette-generating functions like \code{rainbow()}).
+      HCL-based colour palettes with much better perceptual properties than
+      existing RGB/HSV-based palettes like \code{rainbow()}.
 
       Also new \code{hcl.pals()} function to list available palette
       names for \code{hcl.colors()}.
@@ -339,7 +339,8 @@
       \code{filled.contour()} are now based on \code{hcl.colors()}.
 
       \item Palette-generating functions \code{rainbow()},
-      \code{topo.colors()}, etc get new \code{rev} argument.
+      \code{gray.colors()}, etc. get new \code{rev} argument
+      to facilitate reversing the order of colors.
     }
   }
 
