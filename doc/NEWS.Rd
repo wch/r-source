@@ -795,6 +795,11 @@
       \item \code{reformulate("x", response = "sin(y)")} no longer produces
       extra back quotes, \PR{17359}, and gains new optional argument
       \code{env}.
+      
+      \item When Reading console input from \file{stdin} with re-encoding
+      (\command{R --encoding=enc < input}) the code on a Unix-alike now
+      ensures that each converted input line is terminated with a
+      newline even if re-encoding fails.
     }
   }
 }
