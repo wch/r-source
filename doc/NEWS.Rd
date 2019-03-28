@@ -450,6 +450,10 @@
       This is most useful on platforms using GNU \code{binutils} (such
       as Linux) and compiling with \option{-g} flags: it has negligible
       effect on macOS.
+      
+      \item There is more support for installing UTF-8-encoded packages
+      in a strict Latin-1 locale (and probably for other Latin locales):
+      non-ASCII comments in \R code are worked around better.
     }
   }
 

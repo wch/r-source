@@ -303,16 +303,23 @@ function(dir, outDir)
         con <- file(outFile, "a")
         on.exit(close(con))  # Windows does not like files left open
         for(f in codeFiles) {
-            tmp <- iconv(readLines(f, warn = FALSE), from = enc, to = "")
-            if(length(bad <- which(is.na(tmp)))) {
-                warning(sprintf(ngettext(length(bad),
+            lines <- readLines(f, warn = FALSE)
+            tmp <- iconv(lines, from = enc, to = "")
+            bad <- which(is.na(tmp))
+            if(length(bad))
+                tmp <- iconv(lines, from = enc, to = "", sub = "byte")
+            ## do not report purely comment lines,
+            ## nor trailing comments not after quotes
+            comm <- grep("^[^#'\"]*#", lines[bad],
+                         invert = TRUE, useBytes = TRUE)
+            bad2 <- bad[comm]
+            if(length(bad2)) {
+                warning(sprintf(ngettext(length(bad2),
                                          "unable to re-encode %s line %s",
                                          "unable to re-encode %s lines %s"),
                                 sQuote(basename(f)),
-                                paste(bad, collapse = ", ")),
+                                paste(bad2, collapse = ", ")),
                         domain = NA, call. = FALSE)
-                tmp <- iconv(readLines(f, warn = FALSE), from = enc, to = "",
-                             sub = "byte")
             }
             writeLines(paste0("#line 1 \"", f, "\""), con)
             writeLines(tmp, con)

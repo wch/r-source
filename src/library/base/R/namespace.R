@@ -1,7 +1,7 @@
 #  File src/library/base/R/namespace.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -166,7 +166,7 @@ attachNamespace <- function(ns, pos = 2L, depends = NULL, exclude, include.only)
     Sys.setenv("_R_NS_LOAD_" = nsname)
     on.exit(Sys.unsetenv("_R_NS_LOAD_"), add = TRUE)
     runHook(".onAttach", ns, dirname(nspath), nsname)
-    
+
     ## adjust variables for 'exclude', 'include.only' arguments
     if (! missing(exclude) && length(exclude) > 0)
         rm(list = exclude, envir = env)
@@ -1260,7 +1260,16 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE)
     if (file.exists(nsFile))
         directives <- if (!is.na(enc) &&
                           ! Sys.getlocale("LC_CTYPE") %in% c("C", "POSIX")) {
-	    con <- file(nsFile, encoding=enc)
+            lines <- readLines(nsFile, warn = FALSE)
+            tmp <- iconv(lines, from = enc, to = "")
+            bad <- which(is.na(tmp))
+            ## do not report purely comment lines,
+            comm <- grep("^[[:space:]]*#", lines[bad],
+                         invert = TRUE, useBytes = TRUE)
+            if(length(bad[comm]))
+                stop("unable to re-encode some lines in NAMESPACE file")
+            tmp <- iconv(lines, from = enc, to = "", sub = "byte")
+	    con <- textConnection(tmp)
             on.exit(close(con))
 	    parse(con, keep.source = FALSE, srcfile = NULL)
         } else parse(nsFile, keep.source = FALSE, srcfile = NULL)
@@ -1613,11 +1622,11 @@ registerS3methods <- function(info, package, env)
                 call. = FALSE, domain = NA)
     Info <- Info[!notex, , drop = FALSE]
 
-    ## <FIXME delayed S3 method registration>    
+    ## <FIXME delayed S3 method registration>
     eager <- is.na(Info[, 5L])
     delayed <- Info[!eager, , drop = FALSE]
     Info <- Info[eager, , drop = FALSE]
-    ## </FIXME delayed S3 method registration>    
+    ## </FIXME delayed S3 method registration>
 
     ## Do local generics first (this could be load-ed if pre-computed).
     ## However, the local generic could be an S4 takeover of a non-local
@@ -1660,7 +1669,7 @@ registerS3methods <- function(info, package, env)
         ## (Seen e.g. for recommended packages in reg-tests-3.R.)
         if(Sys.getenv("_R_LOAD_CHECK_OVERWRITE_S3_METHODS_") %in%
            c(package, "all")) {
-            ind <- overwrite[, 2L] %in% 
+            ind <- overwrite[, 2L] %in%
                 unlist(tools:::.get_standard_package_names(),
                        use.names = FALSE)
             bad <- overwrite[ind, , drop = FALSE]
@@ -1678,7 +1687,7 @@ registerS3methods <- function(info, package, env)
         ## Do not note when
         ## * There are no overwrites (left)
         ## * Env var _R_S3_METHOD_REGISTRATION_NOTE_OVERWRITES_ is set
-        ##   to something false (for the time being) 
+        ##   to something false (for the time being)
         ## * Env var _R_CHECK_PACKAGE_NAME_ is set to something
         ##   different than 'package'.
         ## With the last, when checking we only note overwrites from the
