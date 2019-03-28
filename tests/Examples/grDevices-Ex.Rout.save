@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2019-03-27 r76274) -- "Unsuffered Consequences"
+R Under development (unstable) (2019-03-28 r76280) -- "Unsuffered Consequences"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -3834,40 +3834,6 @@ v 0.98039216 0.7647059 0.4588235 0.8549020 0.9960784
 + utopia <- X11Font("-*-utopia-*-*-*-*-*-*-*-*-*-*-*-*")
 + X11Fonts(utopia = utopia)
 + })
-> X11Fonts()
-$serif
-[1] "-*-times-%s-%s-*-*-%d-*-*-*-*-*-*-*"
-
-$sans
-[1] "-*-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*"
-
-$mono
-[1] "-*-courier-%s-%s-*-*-%d-*-*-*-*-*-*-*"
-
-$Times
-[1] "-adobe-times-%s-%s-*-*-%d-*-*-*-*-*-*-*"
-
-$Helvetica
-[1] "-adobe-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*"
-
-$CyrTimes
-[1] "-cronyx-times-%s-%s-*-*-%d-*-*-*-*-*-*-*"
-
-$CyrHelvetica
-[1] "-cronyx-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*"
-
-$Arial
-[1] "-monotype-arial-%s-%s-*-*-%d-*-*-*-*-*-*-*"
-
-$Mincho
-[1] "-*-mincho-%s-%s-*-*-%d-*-*-*-*-*-*-*"
-
-> X11Fonts("mono")
-$mono
-[1] "-*-courier-%s-%s-*-*-%d-*-*-*-*-*-*-*"
-
-> utopia <- X11Font("-*-utopia-*-*-*-*-*-*-*-*-*-*-*-*")
-> X11Fonts(utopia = utopia)
 > ## IGNORE_RDIFF_END
 > 
 > 
@@ -4127,7 +4093,7 @@ $zlab
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  10.56 0.248 10.805 0 0 
+Time elapsed:  10.769 0.285 11.1 0 0 
 > grDevices::dev.off()
 null device 
           1 

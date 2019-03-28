@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2019-03-25 r76268) -- "Unsuffered Consequences"
+R Under development (unstable) (2019-03-28 r76280) -- "Unsuffered Consequences"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -1057,15 +1057,15 @@ Error in ross$withdraw(500) : You don't have that much money!
 > ## Filled Contours are even nicer sometimes :
 > example(filled.contour)
 
-flld.c> require(grDevices) # for colours
+flld.c> require("grDevices") # for colours
 
-flld.c> filled.contour(volcano, color = terrain.colors, asp = 1) # simple
+flld.c> filled.contour(volcano, asp = 1) # simple
 
 flld.c> x <- 10*1:nrow(volcano)
 
 flld.c> y <- 10*1:ncol(volcano)
 
-flld.c> filled.contour(x, y, volcano, color = terrain.colors,
+flld.c> filled.contour(x, y, volcano, color = function(n) hcl.colors(n, "terrain"),
 flld.c+     plot.title = title(main = "The Topography of Maunga Whau",
 flld.c+     xlab = "Meters North", ylab = "Meters West"),
 flld.c+     plot.axes = { axis(1, seq(100, 800, by = 100))
@@ -1526,5 +1526,5 @@ sm     3    3    3    3    4    4    4    4    2     2     2
 > par(op)
 > 
 > cat("Time elapsed: ", proc.time() - .ptime, "\n")
-Time elapsed:  1.544 0.058 1.608 0 0 
+Time elapsed:  1.551 0.057 1.615 0 0 
 > 
