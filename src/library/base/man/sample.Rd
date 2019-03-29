@@ -1,6 +1,6 @@
 % File src/library/base/man/sample.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{sample}
@@ -93,7 +93,8 @@ sample.int(n, size = n, replace = FALSE, prob = NULL,
   Ripley, B. D. (1987) \emph{Stochastic Simulation}. Wiley.
 }
 \seealso{
-  \code{\link{RNG}} about random number generation.
+  \code{\link{RNGkind}(sample.kind = ..)} about random number generation,
+  notably the change of \code{sample()} results with \R version 3.6.0.
 
   CRAN package \CRANpkg{sampling} for other methods of weighted sampling
   without replacement.
