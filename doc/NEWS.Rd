@@ -802,6 +802,12 @@
       (\command{R --encoding=enc < input}) the code on a Unix-alike now
       ensures that each converted input line is terminated with a
       newline even if re-encoding fails.
+
+      \item Class unions are unloaded when their namespace is
+      unloaded (\PR{17531}).
+
+      \item \code{selectMethod()} is robust to ANY-truncation of method
+      signatures (thanks to Herve Pages for the report).
     }
   }
 }
