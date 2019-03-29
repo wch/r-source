@@ -5,7 +5,7 @@
 \title{R News}
 \encoding{UTF-8}
 
-\section{\Rlogo CHANGES IN R-devel}{
+\section{\Rlogo CHANGES IN R 3.6.0}{
 
    \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
      \itemize{
@@ -442,14 +442,16 @@
       \item The make macro \samp{F_VISIBILITY} is now preferred for
       both fixed-form and free-form Fortran.
 
-      \item \command{R CMD INSTALL} gains a new flag \option{--strip}
+      \item \command{R CMD INSTALL} gains a new option \option{--strip}
       which strips installed shared object(s): this can also be achieved
       by setting the environment variable \env{_R_SHLIB_STRIP_} to a
       true value.
 
-      This is most useful on platforms using GNU \code{binutils} (such
-      as Linux) and compiling with \option{-g} flags: it has negligible
-      effect on macOS.
+      The new option \option{--strip-lib} attempts stripping of
+      static and shared libraries installed under \file{lib}.
+
+      These are most useful on platforms using GNU \code{binutils} (such
+      as Linux) and compiling with \option{-g} flags.
       
       \item There is more support for installing UTF-8-encoded packages
       in a strict Latin-1 locale (and probably for other Latin locales):
