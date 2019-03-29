@@ -1,6 +1,6 @@
 % File src/library/stats/man/Wilcoxon.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Wilcoxon}
@@ -40,8 +40,8 @@ rwilcox(nn, m, n)
 
   The length of the result is determined by \code{nn} for
   \code{rwilcox}, and is the maximum of the lengths of the
-  numerical arguments for the other functions.  
-  
+  numerical arguments for the other functions.
+
   The numerical arguments other than \code{nn} are recycled to the
   length of the result.  Only the first elements of the logical
   arguments are used.
@@ -69,7 +69,7 @@ rwilcox(nn, m, n)
   if one sample is large (several thousands or more).
 }
 \source{
-  These are calculated via recursion, based on \code{cwilcox(k, m, n)},
+  These ("d","p","q") are calculated via recursion, based on \code{cwilcox(k, m, n)},
   the number of choices with statistic \code{k} from samples of size
   \code{m} and \code{n}, which is itself calculated recursively and the
   results cached.  Then \code{dwilcox} and \code{pwilcox} sum
@@ -77,7 +77,9 @@ rwilcox(nn, m, n)
   inversion.
 
   \code{rwilcox} generates a random permutation of ranks and evaluates
-  the statistic.
+  the statistic.  Note that it is based on the same C code as \code{\link{sample}()},
+  and hence is determined by \code{\link{.Random.seed}}, notably from
+  \code{\link{RNGkind}(sample.kind = ..)} which changed with \R version 3.6.0.
 }
 \author{Kurt Hornik}
 \seealso{
