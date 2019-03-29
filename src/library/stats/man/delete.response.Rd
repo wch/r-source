@@ -8,7 +8,7 @@
 \usage{
 delete.response(termobj)
 
-reformulate(termlabels, response = NULL, intercept = TRUE, env = parent.env())
+reformulate(termlabels, response = NULL, intercept = TRUE, env = parent.frame())
 
 drop.terms(termobj, dropx = NULL, keep.response = FALSE)
 }

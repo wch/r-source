@@ -5032,6 +5032,16 @@ from.}  both for the console/terminal and graphics devices such as
 language of the UTF-8 locale, and your users would need to be told how
 to select the @samp{encoding} argument.
 
+Note that the previous two paragraphs only apply to character strings in
+@R{} code.  Non-ASCII characters are particularly prevalent in comments
+(in the @R{} code of the package, in examples, tests, vignettes and even
+in the @file{NAMESPACE} file) but should be avoided there.  Most commonly
+people use the Windows extensions to Latin-1 (often directional single
+and double quotes, ellipsis, bullet and en and em dashes) which are not
+supported in strict Latin-1 locales nor in CJK locales on Windows.  A
+surprisingly common misuse is to use a right quote in @samp{don't}
+instead of the correct apostrophe.
+
 If you want to run @command{R CMD check} on a Unix-alike over a package
 that sets a package encoding in its @file{DESCRIPTION} file @emph{and do
 not use a UTF-8 locale} you may need to specify a suitable locale
