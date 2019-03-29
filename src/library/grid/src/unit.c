@@ -23,63 +23,148 @@
 #include <float.h>
 #include <string.h>
 
+int isUnitArithmetic(SEXP ua) {
+    return inherits(ua, "unit.arithmetic");
+}
+
+int isUnitList(SEXP ul) {
+    return inherits(ul, "unit.list");
+}
+
 /* Function to build a single-value unit SEXP internally.
  * Cannot build units requiring data as yet.
  */
 SEXP unit(double value, int unit) 
 {
-  SEXP units = PROTECT(allocVector(VECSXP, 1));
-  SEXP u = SET_VECTOR_ELT(units, 0, allocVector(VECSXP, 3));
-  SET_VECTOR_ELT(u, 0, ScalarReal(value));
-  SET_VECTOR_ELT(u, 1, R_NilValue);
-  SET_VECTOR_ELT(u, 2, ScalarInteger(unit));
-  SEXP cl = PROTECT(mkString("unit"));
-  classgets(units, cl);
-  UNPROTECT(2);
-  return units;
-}
-
-int isSimpleUnit(SEXP unit) {
-	return inherits(unit, "simpleUnit");
+    SEXP u, units, classname;
+    PROTECT(u = ScalarReal(value));
+    PROTECT(units = ScalarInteger(unit));
+    /* NOTE that we do not set the "unit" attribute */
+    setAttrib(u, install("valid.unit"), units);
+    setAttrib(u, install("data"), R_NilValue);
+    PROTECT(classname = mkString("unit"));
+    classgets(u, classname);
+    UNPROTECT(3);
+    return u;
 }
 
 /* Accessor functions for unit objects
  */
-/*
- * This extracts the underlying scalar unit list structure from the unit vector
- */
-SEXP unitScalar(SEXP unit, int index) {
-	int i = index % LENGTH(unit);
-	if (isSimpleUnit(unit)) {
-		SEXP newUnit = PROTECT(allocVector(VECSXP, 3));
-		SET_VECTOR_ELT(newUnit, 0, Rf_ScalarReal(REAL(unit)[i]));
-		SET_VECTOR_ELT(newUnit, 1, R_NilValue);
-		SET_VECTOR_ELT(newUnit, 2, Rf_ScalarInteger(INTEGER(getAttrib(unit, install("unit")))[0]));
-		UNPROTECT(1);
-		return newUnit;
-	}
-	return VECTOR_ELT(unit, i);
-}
 
+/* 
+ * This is an attempt to extract a single numeric value from
+ * a unit.  This is ONLY designed for use on "simple" units
+ * (i.e., NOT unitLists or unitArithmetics)
+ */
 double unitValue(SEXP unit, int index) {
-	if (isSimpleUnit(unit)) return REAL(unit)[index % LENGTH(unit)];
-	return uValue(unitScalar(unit, index));
+    /* Recycle values if necessary (used in unit arithmetic)
+     */
+    int n = LENGTH(unit);
+    return numeric(unit, index % n);
 }
 
 int unitUnit(SEXP unit, int index) {
-	if (isSimpleUnit(unit)) return INTEGER(getAttrib(unit, install("unit")))[0];
-	return uUnit(unitScalar(unit, index));
+    SEXP units = getAttrib(unit, install("valid.unit"));
+    /* Recycle units if necessary 
+     */
+    int n = LENGTH(units);
+    return INTEGER(units)[index % n];
 }
 
 SEXP unitData(SEXP unit, int index) {
-	if (isSimpleUnit(unit)) return R_NilValue;
-	return uData(unitScalar(unit, index));
+    SEXP result;
+    SEXP data = getAttrib(unit, install("data"));
+    if (isNull(data))
+	result = R_NilValue;
+    else if(TYPEOF(data) == VECSXP) {
+	/* Recycle data if necessary 
+	 */
+	int n = LENGTH(data);
+	result = VECTOR_ELT(data, index % n);
+    } else {
+	warning("unit attribute 'data' is of incorrect type");
+	return R_NilValue;
+    }
+    return result;
 }
 
-/* Old alternative to LENGTH when using that didn't work on all unit struct
+/* Accessor functions for unit arithmetic object
  */
-int unitLength(SEXP u) {
-  return LENGTH(u);
+const char* fName(SEXP ua) {
+    return CHAR(STRING_ELT(getListElement(ua, "fname"), 0));
+}
+
+SEXP arg1(SEXP ua) {
+    return getListElement(ua, "arg1");
+}
+
+SEXP arg2(SEXP ua) {
+    return getListElement(ua, "arg2");
+}
+
+int fNameMatch(SEXP ua, char *aString) {
+    return !strcmp(fName(ua), aString);
+}
+
+int addOp(SEXP ua) {
+    return fNameMatch(ua, "+");
+}
+
+int minusOp(SEXP ua) {
+    return fNameMatch(ua, "-");
+}
+
+int timesOp(SEXP ua) {
+    return fNameMatch(ua, "*");
+}
+
+int fOp(SEXP ua) {
+    return addOp(ua) || minusOp(ua) || timesOp(ua);
+}
+
+int minFunc(SEXP ua) {
+    return fNameMatch(ua, "min");
+}
+    
+int maxFunc(SEXP ua) {
+    return fNameMatch(ua, "max");
+}
+
+int sumFunc(SEXP ua) {
+    return fNameMatch(ua, "sum");
+}
+
+/* Functions in lattice.c should use this to determine the length
+ * of a unit/unitArithmetic object rather than just LENGTH.
+ */
+int unitLength(SEXP u) 
+{
+    int result = 0;
+    if (isUnitList(u)) {
+	result = LENGTH(u);
+    } else if (isUnitArithmetic(u)) {
+	if (fOp(u)) {
+	    if (timesOp(u)) {
+		/*
+		 * arg1 is always the numeric vector
+		 */
+		int n1 = LENGTH(arg1(u));
+		int n2 = unitLength(arg2(u));
+		result = (n1 > n2) ? n1 : n2;
+	    } else {  /* must be "+" or "-" */
+		int n1 = unitLength(arg1(u));
+		int n2 = unitLength(arg2(u));
+		result = (n1 > n2) ? n1 : n2;
+	    }
+	} else { /* must be "min" or "max" or "sum" */
+            result = 1;  /* unitLength(arg1(u)); */
+        }
+    } else if (inherits(u, "unit")) { /* a "plain" unit object */
+	result = LENGTH(u);
+    } else {
+	error(_("object is not a unit, unit.list, or unitArithmetic object"));
+    }
+    return result;
 }
 
 
@@ -126,65 +211,83 @@ static double evaluateNullUnit(double value, double thisCM,
 /*
  * Evaluate a "null" _unit_ 
  * This is used by layout code to get a single "null" _value_
- * from a pureNullUnit
+ * from a pureNullUnit (which may be a unitList or a unitArithmetic)
  *
  * This must ONLY be called on a unit which has passed the 
  * pureNullUnit test below.
  */
 double pureNullUnitValue(SEXP unit, int index)
 {
-  double result = 0;
-  int i, n, u = unitUnit(unit, index);
-  double temp, value = unitValue(unit, index);
-  SEXP data;
-  switch(u) {
-  case L_SUM:
-  	data = unitData(unit, index);
-  	n = unitLength(data);
-  	for (i = 0; i < n; i++) {
-  		result += pureNullUnitValue(data, i);
-  	}
-  	result *= value;
-  	break;
-  case L_MIN:
-  	data = unitData(unit, index);
-  	n = unitLength(data);
-  	result = DBL_MAX;
-  	for (i = 0; i < n; i++) {
-  		temp = pureNullUnitValue(data, i);
-  		if (temp < result) result = temp;
-  	}
-  	result *= value;
-  	break;
-  case L_MAX:
-  	data = unitData(unit, index);
-  	n = unitLength(data);
-  	result = DBL_MIN;
-  	for (i = 0; i < n; i++) {
-  		temp = pureNullUnitValue(data, i);
-  		if (temp > result) result = temp;
-  	}
-  	result *= value;
-  	break;
-  default:
-  	result = value;
-  	break;
-  }
-  return result;
+    double result = 0;
+    if (isUnitArithmetic(unit)) {
+	int i;
+	if (addOp(unit)) {
+	    result = pureNullUnitValue(arg1(unit), index) + 
+		pureNullUnitValue(arg2(unit), index);
+	}
+	else if (minusOp(unit)) {
+	    result = pureNullUnitValue(arg1(unit), index) - 
+		pureNullUnitValue(arg2(unit), index);
+	}
+	else if (timesOp(unit)) {
+	    result = REAL(arg1(unit))[index] * 
+		pureNullUnitValue(arg2(unit), index);
+	}
+	else if (minFunc(unit)) {
+	    int n = unitLength(arg1(unit));
+	    double temp = DBL_MAX;
+	    result = pureNullUnitValue(arg1(unit), 0);
+	    for (i=1; i<n; i++) {
+		temp = pureNullUnitValue(arg1(unit), i);
+		if (temp < result)
+		    result = temp;
+	    }
+	} 
+	else if (maxFunc(unit)) {
+	    int n = unitLength(arg1(unit));
+	    double temp = DBL_MIN;
+	    result = pureNullUnitValue(arg1(unit), 0);
+	    for (i=1; i<n; i++) {
+		temp = pureNullUnitValue(arg1(unit), i);
+		if (temp > result)
+		    result = temp;
+	    }
+	} 
+	else if (sumFunc(unit)) {
+	    int n = unitLength(arg1(unit));
+	    result = 0.0;
+	    for (i=0; i<n; i++) {
+		result += pureNullUnitValue(arg1(unit), i);
+	    }
+	}
+	else 
+	    error(_("unimplemented unit function"));
+    } else if (isUnitList(unit)) {
+	/*
+	 * Recycle if necessary;  it is up to the calling code
+	 * to limit indices to unit length if desired
+	 */
+	int n = unitLength(unit);
+	result = pureNullUnitValue(VECTOR_ELT(unit, index % n), 0);
+    } else
+	result = unitValue(unit, index);
+    return result;
 }
 
+int pureNullUnitArithmetic(SEXP unit, int index, pGEDevDesc dd);
+
 int pureNullUnit(SEXP unit, int index, pGEDevDesc dd) {
-  int i, n, result, u = unitUnit(unit, index);
-  if (isArith(u)) {
-    SEXP data = unitData(unit, index);
-    n = unitLength(data);
-    i = 0;
-    result = 1;
-    while (result && i < n) {
-      result = result && pureNullUnit(data, i, dd);
-      i += 1;
-    }
-  } else {  /* Just a plain unit */
+    int result;
+    if (isUnitArithmetic(unit)) 
+	result = pureNullUnitArithmetic(unit, index, dd);
+    else if (isUnitList(unit)) {
+	/*
+	 * Recycle if necessary;  it is up to the calling code
+	 * to limit indices to unit length if desired
+	 */
+	int n = unitLength(unit);
+	result = pureNullUnit(VECTOR_ELT(unit, index % n), 0, dd);
+    } else {  /* Just a plain unit */
 	/* Special case:  if "grobwidth" or "grobheight" unit
 	 * and width/height(grob) is pure null
 	 */
@@ -284,6 +387,32 @@ int pureNullUnit(SEXP unit, int index, pGEDevDesc dd) {
 	    result = unitUnit(unit, index) == L_NULL;
     }
     return result;    
+}
+
+int pureNullUnitArithmetic(SEXP unit, int index, pGEDevDesc dd) {
+    /* 
+     * Initialised to shut up compiler
+     */
+    int result = 0;
+    if (addOp(unit) || minusOp(unit)) {
+	result = pureNullUnit(arg1(unit), index, dd) &&
+	    pureNullUnit(arg2(unit), index, dd);
+    }
+    else if (timesOp(unit)) {
+	result = pureNullUnit(arg2(unit), index, dd);
+    }
+    else if (minFunc(unit) || maxFunc(unit) || sumFunc(unit)) {
+	int n = unitLength(arg1(unit));
+	int i = 0;
+	result = 1;
+	while (result && i<n) {
+	    result = result && pureNullUnit(arg1(unit), i, dd);
+	    i += 1;
+	}
+    } 
+    else 
+	error(_("unimplemented unit function"));
+    return result;
 }
 
 /**************************
@@ -816,64 +945,53 @@ double transformLocation(double location, int unit, SEXP data,
     return result;
 }
 
+double transformXArithmetic(SEXP x, int index,
+			    LViewportContext vpc,
+			    const pGEcontext gc,
+			    double widthCM, double heightCM,
+			    int nullLMode, pGEDevDesc dd);
+
 double transformX(SEXP x, int index,
 		  LViewportContext vpc,
 		  const pGEcontext gc,
 		  double widthCM, double heightCM,
 		  int nullLMode, int nullAMode, pGEDevDesc dd)
 {
-  double result;
-  int i, n, nullamode, unit = unitUnit(x, index);
-  double temp, value = unitValue(x, index);
-  SEXP data = unitData(x, index);
-  switch (unit) {
-  case L_SUM:
-  	n = unitLength(data);
-  	result = 0.0;
-  	for (i = 0; i < n; i++) {
-  		result += transformX(data, i, vpc, gc,
-                         widthCM, heightCM,
-                         nullLMode, L_summing, dd);
-  	}
-  	result *= value;
-  	break;
-  case L_MIN:
-  	n = unitLength(data);
-  	result = DBL_MAX;
-  	for (i = 0; i < n; i++) {
-  		temp = transformX(data, i, vpc, gc,
-                      widthCM, heightCM,
-                      nullLMode, L_minimising,
-                      dd);
-  		if (temp < result) result = temp;
-  	}
-  	result *= value;
-  	break;
-  case L_MAX:
-  	n = unitLength(data);
-  	result = DBL_MIN;
-  	for (i = 0; i < n; i++) {
-  		temp = transformX(data, i, vpc, gc,
-                      widthCM, heightCM,
-                      nullLMode, L_maximising,
-                      dd);
-  		if (temp > result)
-  			result = temp;
-  	}
-  	result *= value;
-  	break;
-  default:
-  	nullamode = nullAMode ? nullAMode : L_plain;
-  	result = transformLocation(value, unit, data,
-                              vpc.xscalemin, vpc.xscalemax, gc,
-                              widthCM, heightCM,
-                              nullLMode,
-                              nullamode,
-                              dd);
-  }
-  
-  return result;
+    double result;
+    int unit;
+    SEXP data;
+    if (isUnitArithmetic(x)) 
+	result = transformXArithmetic(x, index, vpc, gc,
+				      widthCM, heightCM, nullLMode, dd);
+    else if (isUnitList(x)) {
+	int n = unitLength(x);
+	result = transformX(VECTOR_ELT(x, index % n), 0, vpc, gc,
+			    widthCM, heightCM, nullLMode, nullAMode, dd);
+    } else {  /* Just a plain unit */
+	int nullamode;
+	if (nullAMode == 0) 
+	    nullamode = L_plain;
+	else 
+	    nullamode = nullAMode;
+	result = unitValue(x, index);
+	unit = unitUnit(x, index);
+	PROTECT(data = unitData(x, index));
+	result = transformLocation(result, unit, data, 
+				   vpc.xscalemin, vpc.xscalemax, gc,
+				   widthCM, heightCM, 
+				   nullLMode, 
+				   nullamode,
+				   dd);
+	UNPROTECT(1);
+    }
+    return result;
 }
+
+double transformYArithmetic(SEXP y, int index,
+			    LViewportContext vpc,
+			    const pGEcontext gc,
+			    double widthCM, double heightCM,
+			    int nullLMode, pGEDevDesc dd);
 
 double transformY(SEXP y, int index, 
 		  LViewportContext vpc,
@@ -881,57 +999,34 @@ double transformY(SEXP y, int index,
 		  double widthCM, double heightCM,
 		  int nullLMode, int nullAMode, pGEDevDesc dd)
 {
-	double result;
-	int i, n, nullamode, unit = unitUnit(y, index);
-	double temp, value = unitValue(y, index);
-	SEXP data = unitData(y, index);
-	switch (unit) {
-	case L_SUM:
-		n = unitLength(data);
-		result = 0.0;
-		for (i = 0; i < n; i++) {
-			result += transformY(data, i, vpc, gc,
-                        widthCM, heightCM,
-                        nullLMode, L_summing, dd);
-		}
-		result *= value;
-		break;
-	case L_MIN:
-		n = unitLength(data);
-		result = DBL_MAX;
-		for (i = 0; i < n; i++) {
-			temp = transformY(data, i, vpc, gc,
-                     widthCM, heightCM,
-                     nullLMode, L_minimising,
-                     dd);
-			if (temp < result) result = temp;
-		}
-		result *= value;
-		break;
-	case L_MAX:
-		n = unitLength(data);
-		result = DBL_MIN;
-		for (i = 0; i < n; i++) {
-			temp = transformY(data, i, vpc, gc,
-                     widthCM, heightCM,
-                     nullLMode, L_maximising,
-                     dd);
-			if (temp > result)
-				result = temp;
-		}
-		result *= value;
-		break;
-	default:
-		nullamode = nullAMode ? nullAMode : L_plain;
-		result = transformLocation(value, unit, data,
-                             vpc.yscalemin, vpc.yscalemax, gc,
-                             heightCM, widthCM,
-                             nullLMode,
-                             nullamode,
-                             dd);
-	}
-	
-	return result;
+    double result;
+    int unit;
+    SEXP data;
+    if (isUnitArithmetic(y))
+	result = transformYArithmetic(y, index, vpc, gc,
+				      widthCM, heightCM, nullLMode, dd);
+    else if (isUnitList(y)) {
+	int n = unitLength(y);
+	result = transformY(VECTOR_ELT(y, index % n), 0, vpc, gc,
+			    widthCM, heightCM, nullLMode, nullAMode, dd);
+    } else { /* Just a unit object */
+	int nullamode;
+	if (nullAMode == 0) 
+	    nullamode = L_plain;
+	else 
+	    nullamode = nullAMode;
+	result = unitValue(y, index);
+	unit = unitUnit(y, index);
+	PROTECT(data = unitData(y, index));
+	result = transformLocation(result, unit, data, 
+				   vpc.yscalemin, vpc.yscalemax, gc,
+				   heightCM, widthCM, 
+				   nullLMode, 
+				   nullamode,
+				   dd);
+	UNPROTECT(1);
+    } 
+    return result;
 }
 
 double transformDimension(double dim, int unit, SEXP data,
@@ -955,64 +1050,54 @@ double transformDimension(double dim, int unit, SEXP data,
     }
     return result;
 }
+
+double transformWidthArithmetic(SEXP width, int index,
+				LViewportContext vpc,
+				const pGEcontext gc,
+				double widthCM, double heightCM,
+				int nullLMode, pGEDevDesc dd);
+
 double transformWidth(SEXP width, int index, 
 		      LViewportContext vpc,
 		      const pGEcontext gc,
 		      double widthCM, double heightCM,
 		      int nullLMode, int nullAMode, pGEDevDesc dd)
 {
-	double result;
-	int i, n, nullamode, unit = unitUnit(width, index);
-	double temp, value = unitValue(width, index);
-	SEXP data = unitData(width, index);
-	switch (unit) {
-	case L_SUM:
-		n = unitLength(data);
-		result = 0.0;
-		for (i = 0; i < n; i++) {
-			result += transformWidth(data, i, vpc, gc,
-                        widthCM, heightCM,
-                        nullLMode, L_summing, dd);
-		}
-		result *= value;
-		break;
-	case L_MIN:
-		n = unitLength(data);
-		result = DBL_MAX;
-		for (i = 0; i < n; i++) {
-			temp = transformWidth(data, i, vpc, gc,
-                     widthCM, heightCM,
-                     nullLMode, L_minimising,
-                     dd);
-			if (temp < result) result = temp;
-		}
-		result *= value;
-		break;
-	case L_MAX:
-		n = unitLength(data);
-		result = DBL_MIN;
-		for (i = 0; i < n; i++) {
-			temp = transformWidth(data, i, vpc, gc,
-                     widthCM, heightCM,
-                     nullLMode, L_maximising,
-                     dd);
-			if (temp > result)
-				result = temp;
-		}
-		result *= value;
-		break;
-	default:
-		nullamode = nullAMode ? nullAMode : L_plain;
-		result = transformDimension(value, unit, data,
-                              vpc.xscalemin, vpc.xscalemax, gc,
-                              widthCM, heightCM,
-                              nullLMode,
-                              nullamode,
-                              dd);
-	}
-	
-	return result;
+    double result;
+    int unit;
+    SEXP data;
+    if (isUnitArithmetic(width))
+	result = transformWidthArithmetic(width, index, vpc, gc,
+					  widthCM, heightCM, nullLMode, dd);
+    else if (isUnitList(width)) {
+	int n = unitLength(width);
+	result = transformWidth(VECTOR_ELT(width, index % n), 0, vpc, gc,
+				widthCM, heightCM, nullLMode, nullAMode, dd);
+    } else { /* Just a unit object */
+	int nullamode;
+	if (nullAMode == 0) 
+	    nullamode = L_plain;
+	else 
+	    nullamode = nullAMode;
+	result = unitValue(width, index);
+	unit = unitUnit(width, index);
+	PROTECT(data = unitData(width, index));
+	result = transformDimension(result, unit, data, 
+				    vpc.xscalemin, vpc.xscalemax, gc,
+				    widthCM, heightCM, 
+				    nullLMode, 
+				    nullamode,
+				    dd);
+	UNPROTECT(1);
+    }
+    return result;
 }
+
+double transformHeightArithmetic(SEXP height, int index,
+				 LViewportContext vpc,
+				 const pGEcontext gc,
+				 double widthCM, double heightCM,
+				 int nullLMode, pGEDevDesc dd);
 
 double transformHeight(SEXP height, int index,
 		       LViewportContext vpc,
@@ -1020,57 +1105,354 @@ double transformHeight(SEXP height, int index,
 		       double widthCM, double heightCM,
 		       int nullLMode, int nullAMode, pGEDevDesc dd)
 {
-	double result;
-	int i, n, nullamode, unit = unitUnit(height, index);
-	double temp, value = unitValue(height, index);
-	SEXP data = unitData(height, index);
-	switch (unit) {
-	case L_SUM:
-		n = unitLength(data);
-		result = 0.0;
-		for (i = 0; i < n; i++) {
-			result += transformHeight(data, i, vpc, gc,
-                            widthCM, heightCM,
-                            nullLMode, L_summing, dd);
-		}
-		result *= value;
-		break;
-	case L_MIN:
-		n = unitLength(data);
-		result = DBL_MAX;
-		for (i = 0; i < n; i++) {
-			temp = transformHeight(data, i, vpc, gc,
-                         widthCM, heightCM,
-                         nullLMode, L_minimising,
-                         dd);
-			if (temp < result) result = temp;
-		}
-		result *= value;
-		break;
-	case L_MAX:
-		n = unitLength(data);
-		result = DBL_MIN;
-		for (i = 0; i < n; i++) {
-			temp = transformHeight(data, i, vpc, gc,
-                         widthCM, heightCM,
-                         nullLMode, L_maximising,
-                         dd);
-			if (temp > result)
-				result = temp;
-		}
-		result *= value;
-		break;
-	default:
-		nullamode = nullAMode ? nullAMode : L_plain;
-		result = transformDimension(value, unit, data,
-                              vpc.yscalemin, vpc.yscalemax, gc,
-                              heightCM, widthCM,
-                              nullLMode,
-                              nullamode,
-                              dd);
+    double result;
+    int unit;
+    SEXP data;
+    if (isUnitArithmetic(height))
+	result = transformHeightArithmetic(height, index, vpc, gc,
+					   widthCM, heightCM, nullLMode, dd);
+    else if (isUnitList(height)) {
+	int n = unitLength(height);
+	result = transformHeight(VECTOR_ELT(height, index % n), 0, vpc, gc,
+				 widthCM, heightCM, nullLMode, nullAMode, dd);
+    } else { /* Just a unit object */
+	int nullamode;
+	if (nullAMode == 0) 
+	    nullamode = L_plain;
+	else 
+	    nullamode = nullAMode;
+	result = unitValue(height, index);
+	unit = unitUnit(height, index);
+	PROTECT(data = unitData(height, index));
+	result = transformDimension(result, unit, data, 
+				    vpc.yscalemin, vpc.yscalemax, gc,
+				    heightCM, widthCM, 
+				    nullLMode, 
+				    nullamode,
+				    dd);
+	UNPROTECT(1);
+    }
+    return result;
+}
+
+double transformXArithmetic(SEXP x, int index,
+			    LViewportContext vpc,
+			    const pGEcontext gc,
+			    double widthCM, double heightCM,
+			    int nullLMode, pGEDevDesc dd)
+{
+    int i;
+    double result = 0;
+    if (addOp(x)) {
+	result = transformX(arg1(x), index, vpc, gc,
+			    widthCM, heightCM, 
+			    nullLMode, L_adding,
+			    dd) +
+	    transformX(arg2(x), index, vpc, gc,
+		       widthCM, heightCM, 
+		       nullLMode, L_adding,
+		       dd);
+    }
+    else if (minusOp(x)) {
+	result = transformX(arg1(x), index, vpc, gc,
+			    widthCM, heightCM, 
+			    nullLMode, L_subtracting,
+			    dd) -
+	    transformX(arg2(x), index, vpc, gc,
+		       widthCM, heightCM, 
+		       nullLMode, L_subtracting,
+		       dd);
+    }
+    else if (timesOp(x)) {
+	result = REAL(arg1(x))[index % LENGTH(arg1(x))] *
+	    transformX(arg2(x), index, vpc, gc,
+		       widthCM, heightCM, 
+		       nullLMode, L_multiplying, dd);
+    }
+    else if (minFunc(x)) {
+	int n = unitLength(arg1(x));
+	double temp = DBL_MAX;
+	result = transformX(arg1(x), 0, vpc, gc,
+			    widthCM, heightCM, 
+			    nullLMode, L_minimising, 
+			    dd);
+	for (i=1; i<n; i++) {
+	    temp = transformX(arg1(x), i, vpc, gc,
+			      widthCM, heightCM, 
+			      nullLMode, L_minimising, 
+			      dd);
+	    if (temp < result)
+		result = temp;
 	}
-	
-	return result;
+    } 
+    else if (maxFunc(x)) {
+	int n = unitLength(arg1(x));
+	double temp = DBL_MIN;
+	result = transformX(arg1(x), 0, vpc, gc,
+			    widthCM, heightCM, 
+			    nullLMode, L_maximising, 
+			    dd);
+	for (i=1; i<n; i++) {
+	    temp = transformX(arg1(x), i, vpc, gc,
+			      widthCM, heightCM, 
+			      nullLMode, L_maximising, 
+			      dd);
+	    if (temp > result)
+		result = temp;
+	}
+    }
+    else if (sumFunc(x)) {
+	int n = unitLength(arg1(x));
+	result = 0.0;
+	for (i=0; i<n; i++) {
+	    result += transformX(arg1(x), i, vpc, gc,
+				 widthCM, heightCM, 
+				 nullLMode, L_summing, dd);
+	}
+    }
+    else 
+	error(_("unimplemented unit function"));
+    return result;
+}
+
+double transformYArithmetic(SEXP y, int index,
+			    LViewportContext vpc,
+			    const pGEcontext gc,
+			    double widthCM, double heightCM,
+			    int nullLMode, pGEDevDesc dd)
+{
+    int i;
+    double result = 0;
+    if (addOp(y)) {
+	result = transformY(arg1(y), index, vpc, gc,
+			    widthCM, heightCM, 
+			    nullLMode, L_adding,
+			    dd) +
+	    transformY(arg2(y), index, vpc, gc,
+		       widthCM, heightCM, 
+		       nullLMode, L_adding,
+		       dd);
+    }
+    else if (minusOp(y)) {
+	result = transformY(arg1(y), index, vpc, gc,
+			    widthCM, heightCM, 
+			    nullLMode, L_subtracting,
+			    dd) -
+	    transformY(arg2(y), index, vpc, gc,
+		       widthCM, heightCM, 
+		       nullLMode, L_subtracting,
+		       dd);
+    }
+    else if (timesOp(y)) {
+	result = REAL(arg1(y))[index % LENGTH(arg1(y))] *
+	    transformY(arg2(y), index, vpc, gc,
+		       widthCM, heightCM, 
+		       nullLMode, L_multiplying, dd);
+    }
+    else if (minFunc(y)) {
+	int n = unitLength(arg1(y));
+	double temp = DBL_MAX;
+	result = transformY(arg1(y), 0, vpc, gc,
+			    widthCM, heightCM, 
+			    nullLMode, L_minimising, 
+			    dd);
+	for (i=1; i<n; i++) {
+	    temp = transformY(arg1(y), i, vpc, gc,
+			      widthCM, heightCM, 
+			      nullLMode, L_minimising, 
+			      dd);
+	    if (temp < result)
+		result = temp;
+	}
+    } 
+    else if (maxFunc(y)) {
+	int n = unitLength(arg1(y));
+	double temp = DBL_MIN;
+	result = transformY(arg1(y), 0, vpc, gc,
+			    widthCM, heightCM, 
+			    nullLMode, L_maximising, 
+			    dd);
+	for (i=1; i<n; i++) {
+	    temp = transformY(arg1(y), i, vpc, gc,
+			      widthCM, heightCM, 
+			      nullLMode, L_maximising, 
+			      dd);
+	    if (temp > result)
+		result = temp;
+	}
+    }
+    else if (sumFunc(y)) {
+	int n = unitLength(arg1(y));
+	result = 0.0;
+	for (i=0; i<n; i++) {
+	    result += transformY(arg1(y), i, vpc, gc,
+				 widthCM, heightCM, 
+				 nullLMode, L_summing, dd);
+	}
+    }
+    else 
+	error(_("unimplemented unit function"));
+    return result;
+}
+
+double transformWidthArithmetic(SEXP width, int index,
+				LViewportContext vpc,
+				const pGEcontext gc,
+				double widthCM, double heightCM,
+				int nullLMode, pGEDevDesc dd)
+{
+    int i;
+    double result = 0;
+    if (addOp(width)) {
+	result = transformWidth(arg1(width), index, vpc, gc,
+				widthCM, heightCM, 
+				nullLMode, L_adding,
+				dd) +
+	    transformWidth(arg2(width), index, vpc, gc,
+			   widthCM, heightCM, 
+			   nullLMode, L_adding,
+			   dd);
+    }
+    else if (minusOp(width)) {
+	result = transformWidth(arg1(width), index, vpc, gc,
+				widthCM, heightCM, 
+				nullLMode, L_subtracting,
+				dd) -
+	    transformWidth(arg2(width), index, vpc, gc,
+			   widthCM, heightCM, 
+			   nullLMode, L_subtracting,
+			   dd);
+    }
+    else if (timesOp(width)) {
+	result = REAL(arg1(width))[index % LENGTH(arg1(width))] *
+	    transformWidth(arg2(width), index, vpc, gc,
+			   widthCM, heightCM, 
+			   nullLMode, L_multiplying, dd);
+    }
+    else if (minFunc(width)) {
+	int n = unitLength(arg1(width));
+	double temp = DBL_MAX;
+	result = transformWidth(arg1(width), 0, vpc, gc,
+				widthCM, heightCM, 
+				nullLMode, L_minimising, 
+				dd);
+	for (i=1; i<n; i++) {
+	    temp = transformWidth(arg1(width), i, vpc, gc,
+				  widthCM, heightCM, 
+				  nullLMode, L_minimising, 
+				  dd);
+	    if (temp < result)
+		result = temp;
+	}
+    } 
+    else if (maxFunc(width)) {
+	int n = unitLength(arg1(width));
+	double temp = DBL_MIN;
+	result = transformWidth(arg1(width), 0, vpc, gc,
+				widthCM, heightCM, 
+				nullLMode, L_maximising, 
+				dd);
+	for (i=1; i<n; i++) {
+	    temp = transformWidth(arg1(width), i, vpc, gc,
+				  widthCM, heightCM, 
+				  nullLMode, L_maximising, 
+				  dd);
+	    if (temp > result)
+		result = temp;
+	}
+    }
+    else if (sumFunc(width)) {
+	int n = unitLength(arg1(width));
+	result = 0.0;
+	for (i=0; i<n; i++) {
+	    result += transformWidth(arg1(width), i, vpc, gc,
+				     widthCM, heightCM, 
+				     nullLMode, L_summing, dd);
+	}
+    }
+    else 
+	error(_("unimplemented unit function"));
+    return result;
+}
+
+double transformHeightArithmetic(SEXP height, int index,
+				 LViewportContext vpc,
+				 const pGEcontext gc,
+				 double widthCM, double heightCM,
+				 int nullLMode, pGEDevDesc dd)
+{
+    int i;
+    double result = 0;
+    if (addOp(height)) {
+	result = transformHeight(arg1(height), index, vpc, gc,
+				 widthCM, heightCM, 
+				 nullLMode, L_adding,
+				 dd) +
+	    transformHeight(arg2(height), index, vpc, gc,
+			    widthCM, heightCM, 
+			    nullLMode, L_adding,
+			    dd);
+    }
+    else if (minusOp(height)) {
+	result = transformHeight(arg1(height), index, vpc, gc,
+				 widthCM, heightCM, 
+				 nullLMode, L_subtracting,
+				 dd) -
+	    transformHeight(arg2(height), index, vpc, gc,
+			    widthCM, heightCM, 
+			    nullLMode, L_subtracting,
+			    dd);
+    }
+    else if (timesOp(height)) {
+	result = REAL(arg1(height))[index % LENGTH(arg1(height))] *
+	    transformHeight(arg2(height), index, vpc, gc,
+			    widthCM, heightCM, 
+			    nullLMode, L_multiplying, dd);
+    }
+    else if (minFunc(height)) {
+	int n = unitLength(arg1(height));
+	double temp = DBL_MAX;
+	result = transformHeight(arg1(height), 0, vpc, gc,
+				 widthCM, heightCM, 
+				 nullLMode, L_minimising, 
+				 dd);
+	for (i=1; i<n; i++) {
+	    temp = transformHeight(arg1(height), i, vpc, gc,
+				   widthCM, heightCM, 
+				   nullLMode, L_minimising, 
+				   dd);
+	    if (temp < result)
+		result = temp;
+	}
+    } 
+    else if (maxFunc(height)) {
+	int n = unitLength(arg1(height));
+	double temp = DBL_MIN;
+	result = transformHeight(arg1(height), 0, vpc, gc,
+				 widthCM, heightCM, 
+				 nullLMode, L_maximising, 
+				 dd);
+	for (i=1; i<n; i++) {
+	    temp = transformHeight(arg1(height), i, vpc, gc,
+				   widthCM, heightCM, 
+				   nullLMode, L_maximising, 
+				   dd);
+	    if (temp > result)
+		result = temp;
+	}
+    }
+    else if (sumFunc(height)) {
+	int n = unitLength(arg1(height));
+	result = 0.0;
+	for (i=0; i<n; i++) {
+	    result += transformHeight(arg1(height), i, vpc, gc,
+				      widthCM, heightCM, 
+				      nullLMode, L_summing, dd);
+	}
+    }
+    else 
+	error(_("unimplemented unit function"));
+    return result;
 }
 
 /* Code for transforming a location in INCHES using a transformation matrix.
@@ -1476,10 +1858,6 @@ static UnitTab UnitTable[] = {
     { "mystrwidth",    105 },
     { "mystrheight",   106 },
 
-    { "sum",           201 },
-    { "min",           202 },
-    { "max",           203 },
-
     /*
      * Some pseudonyms 
      */
@@ -1527,12 +1905,13 @@ int convertUnit(SEXP unit, int index)
 	    
 SEXP validUnits(SEXP units) 
 {
+    int i;
     int n = LENGTH(units);
     SEXP answer = R_NilValue;
     if (n > 0) {
 	if (isString(units)) {
 	    PROTECT(answer = allocVector(INTSXP, n));
-	    for (int i = 0; i<n; i++) 
+	    for (i = 0; i<n; i++) 
 		INTEGER(answer)[i] = convertUnit(units, i);
 	    UNPROTECT(1);
 	} else {
@@ -1542,401 +1921,4 @@ SEXP validUnits(SEXP units)
 	error(_("'units' must be of length > 0"));
     }
     return answer;
-}
-SEXP validData(SEXP data, SEXP validUnits, int n) {
-	int nData = LENGTH(data);
-	int nUnit = LENGTH(validUnits);
-	int *pValidUnits = INTEGER(validUnits);
-	int dataCopied = 0;
-	
-	if (nData != 1 && nData != n) {
-		error(_("data must be either NULL, have length 1, or match the length of the final unit vector"));
-	}
-	
-	for (int i = 0; i < nUnit; i++) {
-		SEXP singleData = VECTOR_ELT(data, i % nData);
-		int singleUnit = pValidUnits[i % nUnit];
-		int unitIsString = isStringUnit(singleUnit);
-		int unitIsGrob = isGrobUnit(singleUnit);
-		
-		if (unitIsString && !Rf_isString(singleData) && !Rf_isLanguage(singleData)) {
-			error(_("no string supplied for 'strwidth/height' unit"));
-		}
-		if (unitIsGrob) {
-			if (!Rf_inherits(singleData, "grob") && !Rf_inherits(singleData, "gPath") && !Rf_isString(singleData)) {
-				error(_("no 'grob' supplied for 'grobwidth/height' unit"));
-			}
-			if (Rf_isString(singleData)) {
-				if (!dataCopied) {
-					data = PROTECT(shallow_duplicate(data));
-					dataCopied = 1;
-				}
-				SEXP fcall = PROTECT(lang2(install("gPath"), singleData));
-				singleData = eval(fcall, R_gridEvalEnv);
-				SET_VECTOR_ELT(data, i % nData, singleData);
-				UNPROTECT(1);
-			}
-			if (Rf_inherits(singleData, "gPath")) {
-				SEXP fcall = PROTECT(lang2(install("depth"), singleData));
-				SEXP depth = PROTECT(eval(fcall, R_gridEvalEnv));
-				int tooDeep = INTEGER(depth)[0] > 1;
-				UNPROTECT(2);
-				if (tooDeep) {
-					error(_("'gPath' must have depth 1 in 'grobwidth/height' units"));
-				}
-			}
-		}
-		if (!unitIsString && !unitIsGrob && singleData != R_NilValue) {
-			error(_("non-NULL value supplied for plain unit"));
-		}
-	}
-	UNPROTECT(dataCopied);
-	return data;
-}
-void makeSimpleUnit(SEXP values, SEXP unit) {
-	setAttrib(values, install("unit"), unit);
-	SEXP classes = PROTECT(allocVector(STRSXP, 2));
-	SET_STRING_ELT(classes, 0, mkChar("simpleUnit"));
-	SET_STRING_ELT(classes, 1, mkChar("unit"));
-	classgets(values, classes);
-	UNPROTECT(1);
-}
-SEXP constructUnits(SEXP amount, SEXP data, SEXP unit) {
-	int nAmount = LENGTH(amount);
-	int nData = LENGTH(data);
-	int nUnit = LENGTH(unit);
-	SEXP valUnits = PROTECT(validUnits(unit));
-	if (nUnit == 1) {
-		int u = INTEGER(valUnits)[0];
-		if (!(isStringUnit(u) || isGrobUnit(u))) {
-			int referenced = MAYBE_REFERENCED(amount);
-			if (referenced) amount = PROTECT(duplicate(amount));
-			makeSimpleUnit(amount, valUnits);
-			UNPROTECT(1 + referenced);
-			return amount;
-		}
-	}
-	int n = nAmount < nUnit ? nUnit : nAmount;
-	SEXP units = PROTECT(allocVector(VECSXP, n));
-	
-	data = validData(data, valUnits, n);
-	
-	double* pAmount = REAL(amount);
-	int *pValUnits = INTEGER(valUnits);
-	for (int i = 0; i < n; i++) {
-		SEXP unit = SET_VECTOR_ELT(units, i, allocVector(VECSXP, 3));
-		SET_VECTOR_ELT(unit, 0, Rf_ScalarReal(pAmount[i % nAmount]));
-		SET_VECTOR_ELT(unit, 1, VECTOR_ELT(data, i % nData));
-		SET_VECTOR_ELT(unit, 2, Rf_ScalarInteger(pValUnits[i % nUnit]));
-	}
-	SEXP cl = PROTECT(mkString("unit"));
-	classgets(units, cl);
-	UNPROTECT(3);
-	return units;
-}
-SEXP asUnit(SEXP simpleUnit) {
-	if (inherits(simpleUnit, "unit")) {
-		if (!inherits(simpleUnit, "simpleUnit")) {
-			return simpleUnit;
-		}
-	} else {
-		error(_("object is not coercible to a unit"));
-	}
-	int n = LENGTH(simpleUnit);
-	SEXP units = PROTECT(allocVector(VECSXP, n));
-	double* pAmount = REAL(simpleUnit);
-	SEXP valUnit = getAttrib(simpleUnit, install("unit"));
-	for (int i = 0; i < n; i++) {
-		SEXP unit = SET_VECTOR_ELT(units, i, allocVector(VECSXP, 3));
-		SET_VECTOR_ELT(unit, 0, Rf_ScalarReal(pAmount[i]));
-		SET_VECTOR_ELT(unit, 1, R_NilValue);
-		SET_VECTOR_ELT(unit, 2, valUnit);
-	}
-	SEXP cl = PROTECT(mkString("unit"));
-	classgets(units, cl);
-	UNPROTECT(2);
-	return units;
-}
-SEXP conformingUnits(SEXP unitList) {
-	int n = LENGTH(unitList);
-	int unitType;
-	SEXP uAttrib = install("unit");
-	for (int i = 0; i < n; i++) {
-		SEXP unit = VECTOR_ELT(unitList, i);
-		if (!inherits(unit, "unit")) error(_("object is not a unit"));
-		if (!inherits(unit, "simpleUnit")) return R_NilValue;
-		int tempUnit = INTEGER(getAttrib(unit, uAttrib))[0];
-		if (i == 0) unitType = tempUnit;
-		else if (unitType != tempUnit) return R_NilValue;
-	}
-	return Rf_ScalarInteger(unitType);
-}
-
-SEXP matchUnit(SEXP units, SEXP unit) {
-	int n = unitLength(units);
-	int unitInt = INTEGER(unit)[0];
-	int count = 0;
-	SEXP matches = PROTECT(allocVector(INTSXP, n));
-	for (int i = 0; i < n; i++) {
-		if (unitUnit(units, i) == unitInt) {
-			INTEGER(matches)[count] = i + 1;
-			count++;
-		}
-	}
-	SETLENGTH(matches, count);
-	UNPROTECT(1);
-	return matches;
-}
-
-int allAbsolute(SEXP units) {
-	int all = 1;
-	int n = unitLength(units);
-	
-	for (int i = 0; i < n; i++) {
-		int u = unitUnit(units, i);
-		if (isArith(u)) {
-			all = allAbsolute(unitData(units, i));
-		} else {
-			all = isAbsolute(u);
-		}
-		if (!all) break;
-	}
-	
-	return all;
-}
-
-SEXP absoluteUnits(SEXP units) {
-	int n = unitLength(units);
-	if (isSimpleUnit(units)) {
-		if (isAbsolute(INTEGER(getAttrib(units, install("unit")))[0])) {
-			return units;
-		}
-		units = PROTECT(allocVector(REALSXP, n));
-		double *pVal = REAL(units);
-		for (int i = 0; i < n; i++) pVal[i] = 1.0;
-		makeSimpleUnit(units, Rf_ScalarInteger(5));
-		UNPROTECT(1);
-		return units;
-	}
-	int unitIsAbsolute[n];
-	int unitsAllAbsolute = 1;
-	for (int i = 0; i < n; i++) {
-		int u = unitUnit(units, i);
-		if (isArith(u)) {
-			unitIsAbsolute[i] = allAbsolute(unitData(units, i));
-		} else {
-			unitIsAbsolute[i] = isAbsolute(u);
-		}
-		if (!unitIsAbsolute[i]) unitsAllAbsolute = 0;
-	}
-	// Early exit avoiding a copy
-	if (unitsAllAbsolute) return units;
-	
-	SEXP absolutes = PROTECT(allocVector(VECSXP, n));
-	SEXP nullUnit = PROTECT(allocVector(VECSXP, 3));
-	SET_VECTOR_ELT(nullUnit, 0, Rf_ScalarReal(1.0));
-	SET_VECTOR_ELT(nullUnit, 1, R_NilValue);
-	SET_VECTOR_ELT(nullUnit, 2, Rf_ScalarInteger(5));
-	for (int i = 0; i < n; i++) {
-		SEXP unit;
-		if (unitIsAbsolute[i]) {
-			unit = PROTECT(shallow_duplicate(unitScalar(units, i)));
-		} else if (isArith(unitUnit(units, i))) {
-			unit = PROTECT(allocVector(VECSXP, 3));
-			SET_VECTOR_ELT(unit, 0, VECTOR_ELT(VECTOR_ELT(units, i), 0));
-			SET_VECTOR_ELT(unit, 1, absoluteUnits(unitData(units, i)));
-			SET_VECTOR_ELT(unit, 2, VECTOR_ELT(VECTOR_ELT(units, i), 2));
-		} else {
-			unit = PROTECT(shallow_duplicate(nullUnit));
-		}
-		SET_VECTOR_ELT(absolutes, i, unit);
-		UNPROTECT(1);
-	}
-	SEXP cl = PROTECT(mkString("unit"));
-	classgets(absolutes, cl);
-	UNPROTECT(3);
-	return absolutes;
-}
-SEXP multUnit(SEXP unit, double value) {
-	SEXP mult = PROTECT(shallow_duplicate(unit));
-	SET_VECTOR_ELT(mult, 0, Rf_ScalarReal(value * uValue(mult)));
-	UNPROTECT(1);
-	return mult;
-}
-SEXP multUnits(SEXP units, SEXP values) {
-	int nValues = LENGTH(values);
-	int n = LENGTH(units) < nValues ? nValues : LENGTH(units);
-	SEXP multiplied = PROTECT(allocVector(VECSXP, n));
-	double *pValues = REAL(values);
-	
-	for (int i = 0; i < n; i++) {
-		SEXP unit = PROTECT(unitScalar(units, i));
-		SET_VECTOR_ELT(multiplied, i, multUnit(unit, pValues[i % nValues]));
-		UNPROTECT(1);
-	}
-	SEXP cl = PROTECT(mkString("unit"));
-	classgets(multiplied, cl);
-	UNPROTECT(2);
-	return multiplied;
-}
-SEXP addUnit(SEXP u1, SEXP u2) {
-	SEXP result = PROTECT(allocVector(VECSXP, 3));
-	
-	double amount1 = uValue(u1);
-	double amount2 = uValue(u2);
-	int type1 = uUnit(u1);
-	int type2 = uUnit(u2);
-	SEXP data1 = uData(u1);
-	SEXP data2 = uData(u2);
-	
-	if (type1 == type2 && R_compute_identical(data1, data2, 15)) {
-		// Two units are of same type and amount can just be added
-		SET_VECTOR_ELT(result, 0, Rf_ScalarReal(amount1 + amount2));
-		SET_VECTOR_ELT(result, 1, data1);
-		SET_VECTOR_ELT(result, 2, Rf_ScalarInteger(type1));
-		UNPROTECT(1);
-		return result;
-	}
-	// Otherwise we construct a summation
-	SET_VECTOR_ELT(result, 0, Rf_ScalarReal(1.0));
-	SET_VECTOR_ELT(result, 2, Rf_ScalarInteger(L_SUM));
-	int isSum1 = type1 == L_SUM;
-	int isSum2 = type2 == L_SUM;
-	int lengthData1 = isSum1 ? LENGTH(data1) : 1;
-	int lengthData2 = isSum2 ? LENGTH(data2) : 1;
-	SEXP data = SET_VECTOR_ELT(result, 1, allocVector(VECSXP, lengthData1 + lengthData2));
-	// If u1 is a sum unit, add all internal units to final data, otherwise add the unit itself
-	if (isSum1) {
-		// No need to modify data as value is 1
-		if (amount1 == 1.0) {
-			for (int j = 0; j < lengthData1; j++) {
-				SET_VECTOR_ELT(data, j, unitScalar(data1, j));
-			}
-		} else { // Multiply the data with the value of the summation unit
-			for (int j = 0; j < lengthData1; j++) {
-				SEXP dataUnit = PROTECT(unitScalar(data1, j));
-				SET_VECTOR_ELT(data, j, multUnit(dataUnit, amount1));
-				UNPROTECT(1);
-			}
-		}
-	} else {
-		SET_VECTOR_ELT(data, 0, u1);
-	}
-	// Same as above but for u2
-	if (isSum2) {
-		if (amount2 == 1.0) {
-			for (int j = 0; j < lengthData2; j++) {
-				SET_VECTOR_ELT(data, j + lengthData1, unitScalar(data2, j));
-			}
-		} else {
-			for (int j = 0; j < lengthData2; j++) {
-				SEXP dataUnit = PROTECT(unitScalar(data2, j));
-				SET_VECTOR_ELT(data, j + lengthData1, multUnit(dataUnit, amount2));
-				UNPROTECT(1);
-			}
-		}
-	} else {
-		SET_VECTOR_ELT(data, lengthData1, u2);
-	}
-	SEXP cl = PROTECT(mkString("unit"));
-	classgets(data, cl);
-	
-	UNPROTECT(2);
-	return result;
-}
-SEXP addUnits(SEXP u1, SEXP u2) {
-	int n = LENGTH(u1) < LENGTH(u2) ? LENGTH(u2) : LENGTH(u1);
-	SEXP added = PROTECT(allocVector(VECSXP, n));
-	for (int i = 0; i < n; i++) {
-		SEXP unit1 = PROTECT(unitScalar(u1, i));
-		SEXP unit2 = PROTECT(unitScalar(u2, i));
-		SET_VECTOR_ELT(added, i, addUnit(unit1, unit2));
-		UNPROTECT(2);
-	}
-	SEXP cl = PROTECT(mkString("unit"));
-	classgets(added, cl);
-	UNPROTECT(2);
-	return added;
-}
-SEXP flipUnits(SEXP units) {
-	return multUnits(units, Rf_ScalarReal(-1.0));
-}
-SEXP summaryUnits(SEXP units, SEXP op_type) {
-	int n = 0;
-	int m = LENGTH(units);
-	for (int i = 0; i < m; i++) {
-		int nTemp = LENGTH(VECTOR_ELT(units, i));
-		n = n < nTemp ? nTemp : n;
-	}
-	int type = INTEGER(op_type)[0];
-	SEXP out = PROTECT(allocVector(VECSXP, n));
-	SEXP cl = PROTECT(mkString("unit"));
-
-	int is_type[m];
-	int all_type = 1;
-	
-	for (int i = 0; i < n; i++) {
-		int k = 0;
-		int first_type, current_type;
-		SEXP unit = SET_VECTOR_ELT(out, i, allocVector(VECSXP, 3));
-		SEXP first_data;
-		for (int j = 0; j < m; j++) {
-			SEXP unit_temp = PROTECT(unitScalar(VECTOR_ELT(units, j), i));
-			current_type = uUnit(unit_temp);
-			if (j == 0) {
-				first_type = current_type;
-				first_data = uData(unit_temp);
-			}
-			is_type[j] = current_type == type;
-			all_type = j == 0 || (current_type == first_type && R_compute_identical(uData(unit_temp), first_data, 15));
-			k += is_type[j] ? LENGTH(uData(unit_temp)) : 1;
-			UNPROTECT(1);
-		}
-		if (all_type) {
-			// The units are of same type and amount can just collapsed
-			double amount = unitValue(VECTOR_ELT(units, 0), i);
-			for (int j = 0; j < m; j++) {
-				double amount_temp = unitValue(VECTOR_ELT(units, j), i);
-				switch(type) {
-				case L_SUM:
-					amount += amount_temp;
-					break;
-				case L_MIN:
-					amount = amount < amount_temp ? amount : amount_temp;
-					break;
-				case L_MAX:
-					amount = amount > amount_temp ? amount : amount_temp;
-					break;
-				}
-			}
-			SET_VECTOR_ELT(unit, 0, Rf_ScalarReal(amount));
-			SET_VECTOR_ELT(unit, 1, unitData(VECTOR_ELT(units, 0), i));
-			SET_VECTOR_ELT(unit, 2, Rf_ScalarInteger(current_type));
-			continue;
-		}
-		SET_VECTOR_ELT(unit, 0, Rf_ScalarReal(1.0));
-		SET_VECTOR_ELT(unit, 2, Rf_ScalarInteger(type));
-		SEXP data = SET_VECTOR_ELT(unit, 1, allocVector(VECSXP, k));
-		k = 0;
-		for (int j = 0; j < m; j++) {
-			SEXP unit_temp = PROTECT(unitScalar(VECTOR_ELT(units, j), i));
-			if (is_type[j]) {
-				SEXP current_data = uData(unit_temp);
-				double amount = uValue(unit_temp);
-				for (int jj = 0; jj < LENGTH(current_data); jj++) {
-					SEXP inner_data = SET_VECTOR_ELT(data, jj + k, shallow_duplicate(VECTOR_ELT(current_data, jj)));
-					SET_VECTOR_ELT(inner_data, 0, Rf_ScalarReal(amount * uValue(inner_data)));
-				}
-				k += LENGTH(current_data);
-			} else {
-				SET_VECTOR_ELT(data, k, unit_temp);
-				k++;
-			}
-			UNPROTECT(1);
-		}
-		classgets(data, cl);
-	}
-	classgets(out, cl);
-	UNPROTECT(2);
-	return out;
 }

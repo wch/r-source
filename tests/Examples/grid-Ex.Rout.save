@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2019-03-26 r76272) -- "Unsuffered Consequences"
+R Under development (unstable) (2019-03-28 r76280) -- "Unsuffered Consequences"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -241,10 +241,10 @@ viewport[C]->(viewport[D])
 > pushViewport(viewport())
 > deviceLoc(unit(1, "inches"), unit(1, "inches"))
 $x
-[1] 1inches
+[1] 1in
 
 $y
-[1] 1inches
+[1] 1in
 
 > 
 > ## Something less obvious
@@ -257,10 +257,10 @@ $y
 > loc <- deviceLoc(x, y)
 > loc
 $x
-[1] 2.7inches
+[1] 2.7in
 
 $y
-[1] 2.75inches
+[1] 2.75in
 
 > upViewport()
 > grid.circle(loc$x, loc$y, r=unit(1, "mm"), gp=gpar(fill="black"))
@@ -275,10 +275,10 @@ $y
 > loc <- deviceLoc(x, y)
 > loc
 $x
-[1] 2.39165408813987inches
+[1] 2.39165408813987in
 
 $y
-[1] 3.20650635094611inches
+[1] 3.20650635094611in
 
 > upViewport()
 > grid.circle(loc$x, loc$y, r=unit(1, "mm"), gp=gpar(fill="black"))
@@ -1845,13 +1845,13 @@ List of 6
 > unit(1:3/4, "npc")
 [1] 0.25npc 0.5npc  0.75npc
 > unit(1:3/4, "npc") + unit(1, "inches")
-[1] sum(0.25npc, 1inches) sum(0.5npc, 1inches)  sum(0.75npc, 1inches)
+[1] 0.25npc+1inches 0.5npc+1inches  0.75npc+1inches
 > min(unit(0.5, "npc"), unit(1, "inches"))
 [1] min(0.5npc, 1inches)
 > unit.c(unit(0.5, "npc"), unit(2, "inches") + unit(1:3/4, "npc"),
 +        unit(1, "strwidth", "hi there"))
-[1] 0.5npc                sum(2inches, 0.25npc) sum(2inches, 0.5npc) 
-[4] sum(2inches, 0.75npc) 1strwidth            
+[1] 0.5npc          2inches+0.25npc 2inches+0.5npc  2inches+0.75npc
+[5] 1strwidth      
 > x <- unit(1:5, "npc")
 > x[2:4]
 [1] 2npc 3npc 4npc
@@ -1895,7 +1895,7 @@ List of 6
 > 
 > ### Name: unit.pmin
 > ### Title: Parallel Unit Minima and Maxima
-> ### Aliases: unit.pmin unit.pmax unit.psum
+> ### Aliases: unit.pmin unit.pmax
 > ### Keywords: dplot
 > 
 > ### ** Examples
@@ -1925,21 +1925,20 @@ List of 6
 > rep(unit(1:3, "npc"), 1:3)
 [1] 1npc 2npc 2npc 3npc 3npc 3npc
 > rep(unit(1:3, "npc") + unit(1, "inches"), 3)
-[1] sum(1npc, 1inches) sum(2npc, 1inches) sum(3npc, 1inches) sum(1npc, 1inches)
-[5] sum(2npc, 1inches) sum(3npc, 1inches) sum(1npc, 1inches) sum(2npc, 1inches)
-[9] sum(3npc, 1inches)
+[1] 1npc+1inches 2npc+1inches 3npc+1inches 1npc+1inches 2npc+1inches
+[6] 3npc+1inches 1npc+1inches 2npc+1inches 3npc+1inches
 > rep(max(unit(1:3, "npc") + unit(1, "inches")), 3)
-[1] max(sum(1npc, 1inches), sum(2npc, 1inches), sum(3npc, 1inches))
-[2] max(sum(1npc, 1inches), sum(2npc, 1inches), sum(3npc, 1inches))
-[3] max(sum(1npc, 1inches), sum(2npc, 1inches), sum(3npc, 1inches))
+[1] max(1npc+1inches, 2npc+1inches, 3npc+1inches)
+[2] max(1npc+1inches, 2npc+1inches, 3npc+1inches)
+[3] max(1npc+1inches, 2npc+1inches, 3npc+1inches)
 > rep(max(unit(1:3, "npc") + unit(1, "strwidth", "a"))*4, 3)
-[1] 4*max(sum(1npc, 1strwidth), sum(2npc, 1strwidth), sum(3npc, 1strwidth))
-[2] 4*max(sum(1npc, 1strwidth), sum(2npc, 1strwidth), sum(3npc, 1strwidth))
-[3] 4*max(sum(1npc, 1strwidth), sum(2npc, 1strwidth), sum(3npc, 1strwidth))
+[1] 4*max(1npc+1strwidth, 2npc+1strwidth, 3npc+1strwidth)
+[2] 4*max(1npc+1strwidth, 2npc+1strwidth, 3npc+1strwidth)
+[3] 4*max(1npc+1strwidth, 2npc+1strwidth, 3npc+1strwidth)
 > rep(unit(1:3, "npc") + unit(1, "strwidth", "a")*4, 3)
-[1] sum(1npc, 4strwidth) sum(2npc, 4strwidth) sum(3npc, 4strwidth)
-[4] sum(1npc, 4strwidth) sum(2npc, 4strwidth) sum(3npc, 4strwidth)
-[7] sum(1npc, 4strwidth) sum(2npc, 4strwidth) sum(3npc, 4strwidth)
+[1] 1npc+4*1strwidth 2npc+4*1strwidth 3npc+4*1strwidth 1npc+4*1strwidth
+[5] 2npc+4*1strwidth 3npc+4*1strwidth 1npc+4*1strwidth 2npc+4*1strwidth
+[9] 3npc+4*1strwidth
 > 
 > 
 > 
@@ -2162,7 +2161,7 @@ vp1::vp2
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.824 0.032 1.859 0 0 
+Time elapsed:  1.684 0.03 1.723 0 0 
 > grDevices::dev.off()
 null device 
           1 
