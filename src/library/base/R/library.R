@@ -869,7 +869,7 @@ function(package, lib.loc, call = NULL) {
                                "there are no packages called"), " ",
                       paste(sQuote(package), collapse = ", "))
     errorCondition(msg, package = package, lib.loc = lib.loc, call = call,
-                   "packageNotFoundError")
+                   class = "packageNotFoundError")
 }
 
 format.packageInfo <-
