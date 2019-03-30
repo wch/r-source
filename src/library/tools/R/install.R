@@ -537,10 +537,9 @@ if(FALSE) {
 		## is no way to create it later.
 
 		if (dsym && startsWith(R.version$os, "darwin")) {
-		    message(gettextf("generating debug symbols (%s)", "dSYM"),
-                            domain = NA)
+		    starsmsg(stars, gettextf("generating debug symbols (%s)", "dSYM"))
 		    dylib <- Sys.glob(paste0(dest, "/*", SHLIB_EXT))
-                    for (file in dylib) system(paste0("dsymutil ", file))
+                    for (d in dylib) system(paste0("dsymutil ", d))
 		}
 
                 if(config_val_to_logical(Sys.getenv("_R_SHLIB_BUILD_OBJECTS_SYMBOL_TABLES_",
