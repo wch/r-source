@@ -5,6 +5,26 @@
 \title{R News}
 \encoding{UTF-8}
 
+\section{\Rlogo CHANGES IN R-devel}{
+   \subsection{NEW FEATURES}{
+     \itemize{
+       \item Placeholder.
+     }
+
+     \subsection{DEPRECATED AND DEFUNCT}{
+       \itemize{
+	 \item Make macro \samp{F77_VISIBILITY} will be removed in
+	 favour of \samp{F_VISIBILITY}.
+
+	 \item Make macros \samp{F77}, \samp{FCPIFCPLAGS} and
+	 \samp{SHLIB_OPENMP_FCFLAGS} will be removed in favour of
+	 \samp{FC}, \samp{FPICFLAGS} and \samp{SHLIB_OPENMP_FFLAGS}
+	 respectively.
+       }
+     }
+  }
+}
+
 \section{\Rlogo CHANGES IN R 3.6.0}{
 
    \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{

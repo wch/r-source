@@ -14203,11 +14203,10 @@ his applies to the compiler for the default C++ dialect (currently
 normally C++11) and not necessarily to other dialects.} and
 @samp{F_VISIBILITY} for C, C++ and Fortran
 compilers.@footnote{@samp{F77_VISIBILITY} was used prior to @R 3.6.0 and
-is still available (but deprecated).  In some cases the Fortran
-compilers accept the flag but do not actually hide their symbols.}
-These are defined in @file{etc/Makeconf} and so available for normal
-compilation of package code.  For example, @file{src/Makevars} could
-include some of
+was still available in 3.6.x.  In some cases the Fortran compilers
+accept the flag but do not actually hide their symbols.}  These are
+defined in @file{etc/Makeconf} and so available for normal compilation
+of package code.  For example, @file{src/Makevars} could include some of
 
 @example
 PKG_CFLAGS=$(C_VISIBILITY)
