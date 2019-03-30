@@ -804,7 +804,7 @@
       newline even if re-encoding fails.
 
       \item Class unions are unloaded when their namespace is
-      unloaded (\PR{17531}).
+      unloaded (\PR{17531}, adapted from a patch by Brodie Gasla).
 
       \item \code{selectMethod()} is robust to ANY-truncation of method
       signatures (thanks to Herve Pages for the report).
