@@ -837,17 +837,18 @@ tools::assertError(t0(1, 2))
 
 ## stopifnot(e1, e2, ...) .. evaluating expressions sequentially
 one <- 1
-try(stopifnot(3 < 4:5, 5:6 >= 5, 6:8 <= 7, one <- 2))
-stopifnot(identical(one, 1))
+try(stopifnot(3 < 4:5, 5:6 >= 5, 6:8 <= 7, one <<- 2))
+stopifnot(identical(one, 1)) # i.e., 'one <<- 2' was *not* evaluated
 ## all the expressions were evaluated in R <= 3.4.x
-(et <- tryCatch(stopifnot(0 < 1:10, is.numeric(..vaporware..)),
+(et <- tryCatch(stopifnot(0 < 1:10, is.numeric(..vaporware..), stop("FOO!")),
                 error=identity))
 stopifnot(exprs = {
     inherits(et, "simpleError")
-    is.null(conditionCall(et)) ## || at least should *not* contain 'stopifnot'
+    ## no condition call, or at least should *not* contain 'stopifnot':
+    !grepl("^stopifnot", deparse(conditionCall(et), width.cutoff=500))
     grepl("'..vaporware..'", conditionMessage(et))
 })
-## call was the full 'stopifnot(..)' in R < 3.5.0; then  'is.numeric(..)', now empty
+## call was the full 'stopifnot(..)' in R < 3.5.0 ...
 
 
 ## path.expand shouldn't translate to local encoding PR#17120
@@ -2595,6 +2596,22 @@ ef <- newf("x", "log(y)")
 stopifnot( identical(ef$e, environment(ef$form)),
 	  !identical(ef$e, .GlobalEnv),
 	  identical(format(ef$form), "log(y) ~ x"))
+
+
+## stopifnot() now works *nicely* with expression object (with 'exprs' name):
+ee <- expression(exprs=all.equal(pi, 3.1415927), 2 < 2, stop("foo!"))
+te <- tryCatch(stopifnot(exprs = ee), error=identity)
+stopifnot(conditionMessage(te) == "2 < 2 is not TRUE")
+## conditionMessage(te) was  "ee are not all TRUE" in R 3.5.x
+##
+## Empty 'exprs' should work in almost all cases:
+stopifnot()
+stopifnot(exprs = {})
+e0 <- expression()
+stopifnot(exprs = e0)
+do.call(stopifnot, list(exprs = expression()))
+do.call(stopifnot, list(exprs = e0))
+## the last three failed in R 3.5.x
 
 
 
