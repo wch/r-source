@@ -13,11 +13,11 @@
 
      \subsection{DEPRECATED AND DEFUNCT}{
        \itemize{
-	 \item Make macro \samp{F77_VISIBILITY} will be removed in
-	 favour of \samp{F_VISIBILITY}.
+	 \item Make macro \samp{F77_VISIBILITY} have been removed
+	 and replaced by \samp{F_VISIBILITY}.
 
 	 \item Make macros \samp{F77}, \samp{FCPIFCPLAGS} and
-	 \samp{SHLIB_OPENMP_FCFLAGS} will be removed in favour of
+	 \samp{SHLIB_OPENMP_FCFLAGS} have been removed and replaced by
 	 \samp{FC}, \samp{FPICFLAGS} and \samp{SHLIB_OPENMP_FFLAGS}
 	 respectively.
        }
