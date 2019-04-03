@@ -5408,6 +5408,7 @@ A large selection of Open Source software can be installed from
 @uref{https://www.opencsw.org}, by default installed under
 @file{/opt/csw}.  Solaris 10 ships with @code{bzlib} version 1.0.6
 (sufficient) but @code{zlib} version 1.2.3 (too old): OpenCSW has 1.2.8.
+(Note from 2019: updating of OpenCSW has slowed or stopped.)
 
 At least when compiling with Oracle compilers, Solaris uses far more
 stack space than other platforms.  This makes it desirable to build PCRE
@@ -5661,11 +5662,11 @@ developers.)
 @node Cygwin, New platforms, OpenBSD, Platform notes
 @section Cygwin
 
-The 32-bit version has never worked well enough to pass @R{}'s
-@command{make check}, and residual support from earlier experiments was
-removed in @R{} 3.3.0.
+The 32-bit version never worked well enough to pass @R{}'s @command{make
+check}, and residual support from earlier experiments was removed in
+@R{} 3.3.0.
 
-The 64-bit version is completely unsupported.
+The 64-bit version was never unsupported.
 
 @node New platforms,  , Cygwin, Platform notes
 @section New platforms
