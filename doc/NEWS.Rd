@@ -540,6 +540,8 @@
       protection of intermediate results from (usually ill-advised)
       assignments in arguments to \code{BUILTIN} functions. Properly
       written package code should not be affected.
+
+      \item \code{R_unif_index} is now considered to be part of the C API.
     }
   }
 
