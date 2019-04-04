@@ -438,8 +438,9 @@
 
       Legal FORTRAN 77 code is also legal fixed-form Fortran 9x; however
       this change legitimizes the use of later features, in particular
-      to replace features marked \sQuote{obsolescent} in Fortran 95
-      which \command{gfortran} 8.x warns about.
+      to replace features marked \sQuote{obsolescent} in Fortran 90 and
+      \sQuote{deleted} in Fortran 2018 which \command{gfortran} 8.x and
+      later warn about.
 
       \item Packages containing files in the \file{src} directory with
       extensions \file{.f90} or \file{.f95} are now linked using the C
