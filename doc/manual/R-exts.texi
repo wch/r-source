@@ -12992,6 +12992,7 @@ Messages of more than 255 characters are truncated, with a warning.
 @findex unif_rand
 @findex norm_rand
 @findex exp_rand
+@findex R_unif_index
 @findex GetRNGstate
 @findex PutRNGstate
 @findex .Random.seed
@@ -13005,6 +13006,7 @@ The interface to @R{}'s internal random number generation routines is
 double unif_rand();
 double norm_rand();
 double exp_rand();
+double R_unif_index(double);
 @end group
 @end example
 
