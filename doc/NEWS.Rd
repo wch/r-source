@@ -5,7 +5,7 @@
 \title{R News}
 \encoding{UTF-8}
 
-\section{\Rlogo CHANGES IN R-devel}{
+\section{\Rlogo CHANGES IN R 3.6.0}{
 
    \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
      \itemize{
@@ -443,7 +443,7 @@
       \item The make macro \samp{F_VISIBILITY} is now preferred for
       both fixed-form and free-form Fortran.
 
-      \item \command{R CMD INSTALL} gains a new flag \option{--strip}
+      \item \command{R CMD INSTALL} gains a new option \option{--strip}
       which strips installed shared object(s): this can also be achieved
       by setting the environment variable \env{_R_SHLIB_STRIP_} to a
       true value.
