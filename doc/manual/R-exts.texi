@@ -2519,9 +2519,10 @@ or by setting the environment variables @code{ODBC_INCLUDE} and
 
 @R{} assumes that source files with extension @file{.f} are fixed-form
 Fortran 90 (which includes Fortran 77), and passes them to the compiler
-specified by macro @samp{FC}.  On most platforms the Fortran compiler
+specified by macro @samp{FC}.  On known platforms the Fortran compiler
 will also accept free-form Fortran 90/95 code with extension @file{.f90}
-or @file{.f95}.
+or @file{.f95}, but those are not used by @R{} itself so this is not
+required.
 
 @vindex PKG_FCFLAGS
 As from @R{} 3.6.0 the same compiler is used for both fixed-form and
@@ -2542,7 +2543,7 @@ to include @option{-std=f2003}, @option{-std=f2008} or (from version 8)
 @option{-std=f2018} in @code{PKG_FFLAGS} or @code{PKG_FCFLAGS}: the
 default is `GNU Fortran', Fortran 95 with non-standard extensions.  The
 Oracle @command{f95} compiler `accepts some Fortran 2003/8 features'
-(search for `Oracle Developer Studio 12.5: Fortran User's Guide' and
+(search for `Oracle Developer Studio 12.6: Fortran User's Guide' and
 look for §4.6).
 
 Modern versions of Fortran support modules, whereby compiling one source
