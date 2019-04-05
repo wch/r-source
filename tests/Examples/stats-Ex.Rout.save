@@ -5397,6 +5397,16 @@ surv(ft, case) ~ a + b * f
 > reformulate(c("`P/E`", "`% Growth`"), response = as.name("+-"))
 `+-` ~ `P/E` + `% Growth`
 > 
+> x <- c("a name", "another name")
+> try( reformulate(x) ) # -> Error ..... unexpected symbol
+Error in parse(text = s, keep.source = FALSE) : 
+  <text>:1:3: unexpected symbol
+1: a name
+      ^
+> ## rather backquote the strings in x :
+> reformulate(sprintf("`%s`", x))
+~`a name` + `another name`
+> 
 > stopifnot(identical(      ~ var, reformulate("var")),
 +           identical(~ a + b + c, reformulate(letters[1:3])),
 +           identical(  y ~ a + b, reformulate(letters[1:2], "y"))

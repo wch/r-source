@@ -37,7 +37,11 @@ drop.terms(termobj, dropx = NULL, keep.response = FALSE)
   model. There is also a \code{"[.terms"} method to perform the same
   function (with \code{keep.response = TRUE}).
 
-  \code{reformulate} creates a formula from a character vector.
+  \code{reformulate} creates a formula from a character vector. If
+  \code{length(termlabels)}>1, its elements are concatenated with \code{+}.
+  Non-syntactic names (e.g. containing spaces or special characters; see
+  \code{\link{make.names}}) must be protected with backticks  (see examples).
+
 }
 \value{
   \code{delete.response} and \code{drop.terms} return a \code{terms}
@@ -64,6 +68,11 @@ reformulate(c("a", "b*f"), fS[[2]])
 
 ## using non-syntactic names:
 reformulate(c("`P/E`", "`\% Growth`"), response = as.name("+-"))
+
+x <- c("a name", "another name")
+try( reformulate(x) ) # -> Error ..... unexpected symbol
+## rather backquote the strings in x :
+reformulate(sprintf("`\%s`", x))
 
 stopifnot(identical(      ~ var, reformulate("var")),
           identical(~ a + b + c, reformulate(letters[1:3])),
