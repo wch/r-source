@@ -504,6 +504,9 @@
 
       \item \command{R CMD build} has a new option
       \option{--compression} to select the compression used for the tarball.
+
+      \item \command{R CMD build} now removes \file{src/*.mod} files on
+      all platforms.
     }
   }
 
@@ -799,7 +802,7 @@
       extra back quotes, \PR{17359}, and gains new optional argument
       \code{env}.
       
-      \item When Reading console input from \file{stdin} with re-encoding
+      \item When reading console input from \file{stdin} with re-encoding
       (\command{R --encoding=enc < input}) the code on a Unix-alike now
       ensures that each converted input line is terminated with a
       newline even if re-encoding fails.
