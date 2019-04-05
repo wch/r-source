@@ -464,8 +464,8 @@ inRbuildignore <- function(files, pkgdir) {
                         } else warning("unable to run 'make clean' in 'src'",
                                        domain = NA)
                     }
-                    ## Also cleanup possible Unix leftovers ...
-                    unlink(c(Sys.glob(c("*.o", "*.sl", "*.so", "*.dylib", "*.mod")),
+                    ## Also cleanup possible leftovers ...
+                    unlink(c(Sys.glob(c("*.o", "*.so", "*.dylib", "*.mod")),
                              paste0(pkgname, c(".a", ".dll", ".def")),
                              "symbols.rds"))
                     if (dir.exists(".libs")) unlink(".libs", recursive = TRUE)
@@ -488,8 +488,8 @@ inRbuildignore <- function(files, pkgdir) {
                         Ssystem(Sys.getenv("MAKE", "make"),
                                 c(makefiles, "clean"))
                     }
-                    ## Also cleanup possible Windows leftovers ...
-                    unlink(c(Sys.glob(c("*.o", "*.sl", "*.so", "*.dylib")),
+                    ## Also cleanup possible leftovers ...
+                    unlink(c(Sys.glob(c("*.o", "*.so", "*.dylib", "*.mod")),
                              paste0(pkgname, c(".a", ".dll", ".def")),
                              "symbols.rds"))
                     if (dir.exists(".libs")) unlink(".libs", recursive = TRUE)
