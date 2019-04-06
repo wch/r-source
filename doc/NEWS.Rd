@@ -366,7 +366,7 @@
 
   \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
-      \item The  options selected  for the C++ compiler default to the
+      \item The options selected for the C++ compiler default to the
       C++11 standard if supported, otherwise to the C++98 standard.
 
       \item Visibility macros such as \samp{C_VISIBILITY} can now be
@@ -473,7 +473,7 @@
 
       These are most useful on platforms using GNU \code{binutils} (such
       as Linux) and compiling with \option{-g} flags.
-      
+
       \item There is more support for installing UTF-8-encoded packages
       in a strict Latin-1 locale (and probably for other Latin locales):
       non-ASCII comments in \R code are worked around better.
@@ -823,7 +823,7 @@
       \item \code{reformulate("x", response = "sin(y)")} no longer produces
       extra back quotes, \PR{17359}, and gains new optional argument
       \code{env}.
-      
+
       \item When reading console input from \file{stdin} with re-encoding
       (\command{R --encoding=enc < input}) the code on a Unix-alike now
       ensures that each converted input line is terminated with a
@@ -834,6 +834,9 @@
 
       \item \code{selectMethod()} is robust to ANY-truncation of method
       signatures (thanks to Herve Pages for the report).
+
+      \item \code{as.matrix.data.frame()} now produces better strings from
+      logicals, thanks to \PR{17548} from Gabe Becker.
     }
   }
 }

@@ -15,7 +15,7 @@
 #  https://www.R-project.org/Licenses/
 
 # Statlib code by John Chambers, Bell Labs, 1994
-# Changes Copyright (C) 1998-2018 The R Core Team
+# Changes Copyright (C) 1998-2019 The R Core Team
 
 
 ## As from R 2.4.0, row.names can be either character or integer.
@@ -1540,10 +1540,13 @@ as.matrix.data.frame <- function (x, rownames.force = NA, ...)
 	for (j in pseq) {
 	    if (is.character(X[[j]]))
 		next
-	    xj <- X[[j]]
-            miss <- is.na(xj)
-	    xj <- if(length(levels(xj))) as.vector(xj) else format(xj)
-            is.na(xj) <- miss
+	    else if(is.logical(xj <- X[[j]]))
+		xj <- as.character(xj) # not format(), takes care of NAs too
+	    else {
+		miss <- is.na(xj)
+		xj <- if(length(levels(xj))) as.vector(xj) else format(xj)
+		is.na(xj) <- miss
+	    }
             X[[j]] <- xj
 	}
     }
