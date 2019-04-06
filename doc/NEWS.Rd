@@ -6,22 +6,22 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R-devel}{
-   \subsection{NEW FEATURES}{
-     \itemize{
-       \item Placeholder.
-     }
-
-     \subsection{DEPRECATED AND DEFUNCT}{
-       \itemize{
-	 \item Make macro \samp{F77_VISIBILITY} have been removed
-	 and replaced by \samp{F_VISIBILITY}.
-
-	 \item Make macros \samp{F77}, \samp{FCPIFCPLAGS} and
-	 \samp{SHLIB_OPENMP_FCFLAGS} have been removed and replaced by
-	 \samp{FC}, \samp{FPICFLAGS} and \samp{SHLIB_OPENMP_FFLAGS}
-	 respectively.
-       }
-     }
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item Placeholder.
+    }
+  }
+   
+  \subsection{DEPRECATED AND DEFUNCT}{
+    \itemize{
+      \item Make macro \samp{F77_VISIBILITY} have been removed
+      and replaced by \samp{F_VISIBILITY}.
+       
+      \item Make macros \samp{F77}, \samp{FCPIFCPLAGS} and
+      \samp{SHLIB_OPENMP_FCFLAGS} have been removed and replaced by
+      \samp{FC}, \samp{FPICFLAGS} and \samp{SHLIB_OPENMP_FFLAGS}
+      respectively. [\samp{F77} has been reverted until Apr 15.]
+    }
   }
 }
 
