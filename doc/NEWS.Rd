@@ -21,6 +21,9 @@
       \samp{SHLIB_OPENMP_FCFLAGS} have been removed and replaced by
       \samp{FC}, \samp{FPICFLAGS} and \samp{SHLIB_OPENMP_FFLAGS}
       respectively. [\samp{F77} has been reverted until Apr 15.]
+      
+      \item \command{R CMD config} no longer knows about the
+      unused \samp{F77} and \samp{FCPIFCPLAGS}.
     }
   }
 }
@@ -347,19 +350,19 @@
       \item \code{bxp()} now warns when omitting duplicated arguments.
 
       \item New \code{hcl.colors()} function to provide wide range of
-      HCL-based colour palettes with much better perceptual properties than
-      existing RGB/HSV-based palettes like \code{rainbow()}.
+      HCL-based colour palettes with much better perceptual properties
+      than the existing RGB/HSV-based palettes like \code{rainbow()}.
 
-      Also new \code{hcl.pals()} function to list available palette
+      Also a new \code{hcl.pals()} function to list available palette
       names for \code{hcl.colors()}.
 
       Contributed by Achim Zeileis.
 
-      \item Default colours for \code{image()} and
+      \item The default colours for \code{image()} and
       \code{filled.contour()} are now based on \code{hcl.colors()}.
 
-      \item Palette-generating functions \code{rainbow()},
-      \code{gray.colors()}, etc. get new \code{rev} argument
+      \item The palette-generating functions \code{rainbow()},
+      \code{gray.colors()}, etc.\sspace{}get a new \code{rev} argument
       to facilitate reversing the order of colors.
     }
   }
@@ -407,7 +410,7 @@
       \item The \command{configure} macro \samp{MAKEINFO} has been
       updated to \samp{TEXI2ANY}.
 
-      \item Support for \command{make install} has been enhanced.
+      \item Support for \command{make install-strip} has been enhanced.
     }
   }
 
@@ -461,12 +464,13 @@
       \file{src/Makevars.win}).
 
       \item The make macro \samp{F_VISIBILITY} is now preferred for
-      both fixed-form and free-form Fortran.
+      both fixed-form and free-form Fortran, for use in
+      \file{src/Makevars} and similar.
 
       \item \command{R CMD INSTALL} gains a new option \option{--strip}
-      which strips installed shared object(s): this can also be achieved
-      by setting the environment variable \env{_R_SHLIB_STRIP_} to a
-      true value.
+      which (where supported) strips installed shared object(s): this
+      can also be achieved by setting the environment variable
+      \env{_R_SHLIB_STRIP_} to a true value.
 
       The new option \option{--strip-lib} attempts stripping of
       static and shared libraries installed under \file{lib}.
@@ -476,7 +480,8 @@
 
       \item There is more support for installing UTF-8-encoded packages
       in a strict Latin-1 locale (and probably for other Latin locales):
-      non-ASCII comments in \R code are worked around better.
+      non-ASCII comments in \R code (and \file{NAMESPACE} files) are
+      worked around better.
     }
   }
 
