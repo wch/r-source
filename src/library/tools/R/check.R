@@ -222,10 +222,13 @@ setRlibs <-
                 if (pkg %in% recommended) unlink(file.path(tmplib, pkg), TRUE)
                 ## hard-code dependencies for now.
                 if (pkg == "mgcv")
-                    unlink(file.path(tmplib, c("Matrix", "lattice", "nlme")), TRUE)
-                if (pkg == "Matrix") unlink(file.path(tmplib, "lattice"), TRUE)
-                if (pkg == "class") unlink(file.path(tmplib, "MASS"), TRUE)
-                if (pkg == "nlme") unlink(file.path(tmplib, "lattice"), TRUE)
+                    unlink(file.path(tmplib, c("Matrix", "lattice", "nlme") %w/o% thispkg), TRUE)
+                if (pkg == "Matrix")
+                    unlink(file.path(tmplib, "lattice" %w/o% thispkg), TRUE)
+                if (pkg == "class")
+                    unlink(file.path(tmplib, "MASS" %w/o% thispkg), TRUE)
+                if (pkg == "nlme")
+                    unlink(file.path(tmplib, "lattice" %w/o% thispkg), TRUE)
             }
             where <- find.package(pkg, quiet = TRUE)
             if(length(where)) {
