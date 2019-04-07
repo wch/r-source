@@ -207,6 +207,7 @@ summary.connection <- function(object, ...)
 
 showConnections <- function(all = FALSE)
 {
+    gc() # to run finalizers
     set <- getAllConnections()
     if(!all) set <- set[set > 2L]
     ans <- matrix("", length(set), 7L)
@@ -218,23 +219,24 @@ showConnections <- function(all = FALSE)
     else ans[, , drop = FALSE]
 }
 
-getAllConnections <- function()
-    .Internal(getAllConnections())
+## undocumented
+getAllConnections <- function() .Internal(getAllConnections())
 
 getConnection <- function(what) .Internal(getConnection(what))
 
 closeAllConnections <- function()
 {
-    # first re-divert any diversion of stderr.
+    ## first re-divert any diversion of stderr.
     i <- sink.number(type = "message")
     if(i > 0L) sink(stderr(), type = "message")
-    # now unwind the sink diversion stack.
+    ## now unwind the sink diversion stack.
     n <- sink.number()
     if(n > 0L) for(i in seq_len(n)) sink()
-    # get all the open connections.
+    gc() # to run finalizers
+    ## get all the open connections.
     set <- getAllConnections()
     set <- set[set > 2L]
-    # and close all user connections.
+    ## and close all user connections.
     for(i in seq_along(set)) close(getConnection(set[i]))
     invisible()
 }
