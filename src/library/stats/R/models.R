@@ -163,7 +163,17 @@ reformulate <- function (termlabels, response=NULL, intercept = TRUE, env = pare
 	else
 	    call("~",
 		 ## response can be a symbol or call as  Surv(ftime, case)
-		 if(is.character(response)) str2code(response) else response,
+		 if(is.character(response))
+                     tryCatch(str2code(response),
+                              error = function(e) {
+                                  warning(warningCondition(message = paste(
+	"Unparseable 'response' strings are deprecated.  Use as.name(.) or `..`!",
+						conditionMessage(e), sep="\n"),
+                                      class = c("reformulate", "deprecatedWarning"),
+                                      call = sys.call(-4L))) # , domain=NA
+                                  as.symbol(response)
+                              })
+                 else response,
 		 terms)
     formula(fexpr, env)
 }
