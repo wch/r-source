@@ -371,6 +371,10 @@
       versions of \code{parse(text=., keep.source=FALSE)} allow to abstract
       typical call constructions, e.g., in \code{formula} manipulations.
       (Somewhat experimental) % << TO DO
+
+      \item The S4 generic signature of \code{rowSums()},
+      \code{rowMeans()}, \code{colSums()} and \code{colMeans()} is
+      restricted to \code{"x"}.
     }
   }
 
