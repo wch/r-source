@@ -34,7 +34,7 @@ stop <- function(..., call. = TRUE, domain = NULL)
 stopifnot <- function(..., exprs, local = TRUE)
 {
     n <- ...length()
-    if(hasExpr <- !missing(exprs)) {
+    if(!missing(exprs)) {
 	if(n)
 	    stop("Must use 'exprs' or unnamed expressions, but not both")
 	envir <- if (isTRUE(local)) parent.frame()
@@ -44,12 +44,19 @@ stopifnot <- function(..., exprs, local = TRUE)
 	exprs <- substitute(exprs) # protect from evaluation
 	E1 <- if(is.call(exprs)) exprs[[1]]
 	cl <- if(is.symbol(E1) &&
-		 (E1 == quote(`{`) || E1 == quote(expression)))
+		 (E1 == quote(`{`) || E1 == quote(expression))) {
+		  exprs[[1]] <- quote(stopifnot) ## --> stopifnot(*, *, ..., *) :
 		  exprs
+	      }
 	      else
-		  call("expression", exprs) # or fail ..
-	names(cl) <- NULL
-	cl[[1]] <- sys.call()[[1]] ## call myself as  stopifnot(*, *, ..., *) :
+		  as.call(c(quote(stopifnot),
+			    if(is.null(E1) && is.symbol(exprs) &&
+			       is.expression(E1 <- eval(exprs))) # the *name* of an expression
+				as.list(E1)
+			    else
+				as.expression(exprs)
+			    )) # or fail ..
+        names(cl) <- NULL
 	return(eval(cl, envir=envir))
     }
     ## else   use '...' (and not 'exprs') :
@@ -65,6 +72,7 @@ stopifnot <- function(..., exprs, local = TRUE)
     ##
     for (i in seq_len(n)) {
 	r <- ...elt(i)
+	tmp <- if(FALSE) eval(quote(1)) # trick to have ...elt(i) errors *not* show call
 	if (!(is.logical(r) && !anyNA(r) && all(r))) {
 	    cl.i <- match.call()[[i+1L]]
 	    msg <- ## special case for decently written 'all.equal(*)':
@@ -80,12 +88,7 @@ stopifnot <- function(..., exprs, local = TRUE)
 				     "%s is not TRUE",
 				     "%s are not all TRUE"),
 			    Dparse(cl.i))
-
-	    n <- sys.nframe()
-	    if((p <- n-3L) > 0L && identical(sys.function(p), sys.function(n)) &&
-	       eval(expression(hasExpr), p)) # originally stopifnot(exprs=*)
-		n <- p
-	    stop(simpleError(msg, call = if(n > 1) sys.call(n-1L)))
+            stop(simpleError(msg, call = if(p <- sys.parent(1L)) sys.call(p)))
 	}
     }
     invisible()

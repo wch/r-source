@@ -42,15 +42,16 @@ stopifnot(\dots, exprs, local = TRUE)
 
   Since \R version 3.6.0, \code{stopifnot()} no longer handles potential
   errors or warnings (by \code{\link{tryCatch}()} etc) for each single
-  expression but rather aims at using the correct
-  \code{\link{sys.call}(<n>)} to get the most meaningful error message in
-  case of an error.  This provides considerably less overhead.
+  expression % but currently uses a trick to suppress the *call* in the message
+  and may use \code{\link{sys.call}(<n>)} to get a meaningful and short
+  error message in case an expression did not evaluate to all TRUE.  This
+  provides considerably less overhead.
 
   Since \R version 3.5.0, expressions \emph{are} evaluated sequentially,
   and hence evaluation stops as soon as there is a \dQuote{non-TRUE}, as
   indicated by the above conceptual equivalence statement.
   Further, when such an expression signals an error or
-  \code{\link{warning}}, its \code{\link{conditionCall}()} no longer
+  \code{\link{warning}}, the message produced no longer
   contains the full \code{stopifnot} call, but just the erroneous
   expression.
 

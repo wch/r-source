@@ -7980,7 +7980,7 @@ Kilroy was here! ... and I'm printed as well ...
 > ## without "{ .. }" :
 > stopifnot(exprs = 2 == 2)
 > try(stopifnot(exprs = 1 > 2))
-Error in try(stopifnot(exprs = 1 > 2)) : 1 > 2 is not TRUE
+Error : 1 > 2 is not TRUE
 > ## passing an expression object:
 > stopifnot(exprs = expression(2 == 2, pi < 4))
 > tryCatch(stopifnot(exprs = expression(
