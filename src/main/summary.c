@@ -1092,35 +1092,43 @@ SEXP attribute_hidden do_which(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (!isLogical(v))
 	error(_("argument to 'which' is not logical"));
     R_xlen_t len = xlength(v), i, j = 0;
-    int *pv = LOGICAL(v);
     SEXP ans;
 #ifdef LONG_VECTOR_SUPPORT
     if (len > R_SHORT_LEN_MAX) {
+    R_xlen_t xoffset = 1; // 1 for 1-based indexing of response
     double *buf = (double *) R_alloc(len, sizeof(double));
-
-    for (i = 0; i < len; i++) {
-	if (pv[i] == TRUE) {
-	    buf[j] = (double)(i + 1);
-	    j++;
-	}
-    }
+    ITERATE_BY_REGION(v, ptr, idx, nb, int, LOGICAL, {
+	    for(R_xlen_t i = 0; i < nb; i++) {
+		if(ptr[i] == TRUE) {
+		    buf[j] = (double)(xoffset + i); // offset has +1 built in
+		    j++;
+		}
+	    }
+	    xoffset += nb; // move to beginning of next buffer (+1 since R-based)
+	});
 
     len = j;
     PROTECT(ans = allocVector(REALSXP, len));
+    // buf has doubles in it, memcopy if we found any indices.
     if(len) memcpy(REAL(ans), buf, sizeof(double) * len);
     } else
 #endif
     {
+    int ioffset = 1;
     int *buf = (int *) R_alloc(len, sizeof(int));
-
-    for (i = 0; i < len; i++) {
-	if (pv[i] == TRUE) {
-	    buf[j] = (int)(i + 1);
-	    j++;
-	}
-    }
+    /* use iteration macros to be ALTREP safe and pull ptr retrieval out of tight loop */
+    ITERATE_BY_REGION(v, ptr, idx, nb, int, LOGICAL, {
+	    for(int i = 0; i < nb; i++) {
+		if(ptr[i] == TRUE) {
+		    buf[j] = ioffset + i; // offset has +1 built in
+		    j++;
+		}
+	    }
+	    ioffset += nb; // move to beginning of next buffer
+	});
 
     len = j;
+    // buf has ints in it and we're returning ints, memcopy if we found any indices;
     PROTECT(ans = allocVector(INTSXP, len));
     if(len) memcpy(INTEGER(ans), buf, sizeof(int) * len);
     }
