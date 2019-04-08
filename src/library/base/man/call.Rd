@@ -1,13 +1,13 @@
 % File src/library/base/man/call.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{call}
+\title{Function Calls}
 \alias{call}
 \alias{is.call}
 \alias{as.call}
-\title{Function Calls}
 \description{
   Create or test for objects of \code{\link{mode}} \code{"call"} (or
   \code{"("}, see Details).
@@ -23,31 +23,41 @@ as.call(x)
   \item{x}{an arbitrary \R object.}
 }
 \details{
-  \code{call} returns an unevaluated function call, that is, an
-  unevaluated expression which consists of the named function applied to
-  the given arguments (\code{name} must be a quoted string which gives
-  the name of a function to be called).  Note that although the call is
-  unevaluated, the arguments \code{\dots} are evaluated.
+  \describe{
+    \item{\code{call} }{returns an unevaluated function call, that is, an
+      unevaluated expression which consists of the named function applied to
+      the given arguments (\code{name} must be a quoted string which gives
+      the name of a function to be called).  Note that although the call is
+      unevaluated, the arguments \code{\dots} are evaluated.
 
-  \code{call} is a primitive, so the first argument is
-  taken as \code{name} and the remaining arguments as arguments for the
-  constructed call: if the first argument is named the name must
-  partially match \code{name}.
+      \code{call} is a primitive, so the first argument is
+      taken as \code{name} and the remaining arguments as arguments for the
+      constructed call: if the first argument is named the name must
+      partially match \code{name}.
+    }
+    \item{\code{is.call} }{is used to determine whether \code{x} is a call (i.e.,
+      of mode \code{"call"} or \code{"("}).  Note that
+      \itemize{
+	\item{\code{is.call(x)} is strictly equivalent to
+	  \code{typeof(x) == "language"}.}
+	\item{\code{\link{is.language}()} is also true for calls (but also
+	  for \code{\link{symbol}}s and \code{\link{expression}}s where
+	  \code{is.call()} is false).}
+      }
+    }
+    \item{\code{as.call(x)}: }{Objects of mode \code{"list"} can be coerced to mode \code{"call"}.
+      The first element of the list becomes the function part of the call,
+      so should be a function or the name of one (as a symbol; a quoted
+      string will not do).
 
-  \code{is.call} is used to determine whether \code{x} is a call (i.e.,
-  of mode \code{"call"} or \code{"("}).  Note that
-  \itemize{
-    \item{\code{is.call(x)} is strictly equivalent to
-      \code{typeof(x) == "language"}.}
-    \item{\code{\link{is.language}()} is also true for calls (but also
-      for \code{\link{symbol}}s and \code{\link{expression}}s where
-      \code{is.call()} is false).}
+      If you think of using \code{as.call(<string>)}, consider using
+      \code{\link{str2lang}(*)} which is an efficient version of
+      \code{\link{parse}(text=*)}.
+      Note that \code{\link{call}()} and \code{\link{as.call}()}, when
+      applicable, are much preferable to these \code{\link{parse}()} based
+      approaches.
+    }
   }
-  Objects of mode \code{"list"} can be coerced to mode \code{"call"}.
-  The first element of the list becomes the function part of the call,
-  so should be a function or the name of one (as a symbol; a quoted
-  string will not do).
-
   All three are \link{primitive} functions.
 }
 \section{Warning}{
@@ -62,6 +72,9 @@ as.call(x)
   \code{\link{is.language}},
   \code{\link{expression}},
   \code{\link{function}}.
+
+  Producing \code{\link{call}}s etc from character: \code{\link{str2lang}} and
+  \code{\link{parse}}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

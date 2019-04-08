@@ -26,6 +26,7 @@
 /* interval at which to check interrupts */
 #define NINTERRUPT 10000000
 
+#include <Parse.h>
 #include <Defn.h> /*-- Maybe modularize into own Coerce.h ..*/
 #include <Internal.h>
 #include <float.h> /* for DBL_DIG */
@@ -1605,15 +1606,41 @@ SEXP attribute_hidden do_asfunction(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
+/* primitive,
+ * op = 0 : str2lang(s)
+ * op = 1 : str2expression(text) */
+SEXP attribute_hidden do_str2lang(SEXP call, SEXP op, SEXP args, SEXP rho) {
+    checkArity(op, args);
+    // check1arg(args, call, "s");
+    args = CAR(args);
+    if(TYPEOF(args) != STRSXP)
+	errorcall(call, _("argument must be character"));
+
+    Rboolean to_lang = !PRIMVAL(op); // op = 0: character *string* to call-like
+    if(to_lang)
+	if(LENGTH(args) != 1)
+	    errorcall(call, _("argument must be a character string"));
+    // basically parse(text = "....")[[1]] :
+    ParseStatus status;
+    SEXP srcfile = PROTECT(mkString("<text>"));
+    SEXP ans = PROTECT(R_ParseVector(args, -1, &status, srcfile));
+    if (status != PARSE_OK) parseError(call, R_ParseError);
+    if(to_lang) {
+	if(LENGTH(ans) != 1) // never? happens
+	    errorcall(call, _("parsing result not of length one, but %d"), LENGTH(ans));
+	ans = VECTOR_ELT(ans, 0);
+    }
+    UNPROTECT(2);
+    return ans;
+}
+
 /* primitive */
 SEXP attribute_hidden do_ascall(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP ap, ans, names;
-    int i, n;
-
     checkArity(op, args);
     check1arg(args, call, "x");
 
+    SEXP ans;
     if (DispatchOrEval(call, op, "as.call", args, rho, &ans, 0, 1))
 	return(ans);
 
@@ -1623,12 +1650,13 @@ SEXP attribute_hidden do_ascall(SEXP call, SEXP op, SEXP args, SEXP rho)
 	ans = args;
 	break;
     case VECSXP:
-    case EXPRSXP:
-	if(0 == (n = length(args)))
+    case EXPRSXP: {
+	int n = length(args);
+	if(n == 0)
 	    errorcall(call, _("invalid length 0 argument"));
-	PROTECT(names = getAttrib(args, R_NamesSymbol));
+	SEXP names = PROTECT(getAttrib(args, R_NamesSymbol)), ap;
 	PROTECT(ap = ans = allocList(n));
-	for (i = 0; i < n; i++) {
+	for (int i = 0; i < n; i++) {
 	    SETCAR(ap, VECTOR_ELT(args, i));
 	    if (names != R_NilValue && !StringBlank(STRING_ELT(names, i)))
 		SET_TAG(ap, installTrChar(STRING_ELT(names, i)));
@@ -1636,11 +1664,12 @@ SEXP attribute_hidden do_ascall(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	UNPROTECT(2); /* ap, names */
 	break;
+    }
     case LISTSXP:
 	ans = duplicate(args);
 	break;
     case STRSXP:
-	errorcall(call, _("as.call(<character string>)  not yet implemented"));
+	errorcall(call, _("as.call(<character>) not feasible; consider str2lang(<char.>)"));
 	break;
     default:
 	errorcall(call, _("invalid argument list"));

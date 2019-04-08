@@ -366,6 +366,11 @@
       \item The palette-generating functions \code{rainbow()},
       \code{gray.colors()}, etc.\sspace{}get a new \code{rev} argument
       to facilitate reversing the order of colors.
+
+      \item New \code{str2lang()} and \code{str2expression()} as streamlined
+      versions of \code{parse(text=., keep.source=FALSE)} allow to abstract
+      typical call constructions, e.g., in \code{formula} manipulations.
+      (Somewhat experimental) % << TO DO
     }
   }
 

@@ -1,7 +1,7 @@
 #  File src/library/base/R/parse.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -55,3 +55,19 @@ parse <- function(file = "", n = NULL, text = NULL, prompt = "?",
     }
     .Internal(parse(file, n, text, prompt, srcfile, encoding))
 }
+
+## Simple special versions of parse(text = s, keep.source=FALSE) :
+if(FALSE) {  # R level implementation (not used):
+str2expression <- function(text) parse(text=text, keep.source=FALSE)
+str2lang       <- function(s) parse(text=s, keep.source=FALSE)[[1L]]
+## Actually, we do check twice:
+str2lang       <- function(s) {
+    stopifnot(length(s) == 1L)
+    ex <- parse(text=s, keep.source=FALSE)
+    stopifnot(length(ex) == 1L)
+    ex[[1L]]
+}
+}# end{ R level implementation }
+
+str2lang       <- function(s)    .Internal(str2lang(s))
+str2expression <- function(text) .Internal(str2expression(text))

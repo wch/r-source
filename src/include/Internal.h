@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2017  The R Core Team
+ *  Copyright (C) 1997--2019  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -90,6 +90,7 @@ SEXP do_builtins(SEXP, SEXP, SEXP, SEXP);
 SEXP do_c(SEXP, SEXP, SEXP, SEXP);
 SEXP do_c_dflt(SEXP, SEXP, SEXP, SEXP);
 SEXP do_call(SEXP, SEXP, SEXP, SEXP);
+SEXP do_str2lang(SEXP, SEXP, SEXP, SEXP);
 SEXP do_capabilities(SEXP, SEXP, SEXP, SEXP);
 SEXP do_capabilitiesX11(SEXP, SEXP, SEXP, SEXP);
 SEXP do_cat(SEXP, SEXP, SEXP, SEXP);
