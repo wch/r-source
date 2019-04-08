@@ -1613,19 +1613,18 @@ registerS3methods <- function(info, package, env)
     Info <- cbind(info[, 1L : 3L, drop = FALSE], methname, info[, 4L])
     ## <FIXME delayed S3 method registration>
     loc <- names(env)
-    notex <- !(info[,3] %in% loc)
-    if(any(notex))
+    if(any(notex <- match(info[,3], loc, nomatch=0L) == 0L)) { # not %in%
         warning(sprintf(ngettext(sum(notex),
                                  "S3 method %s was declared in NAMESPACE but not found",
                                  "S3 methods %s were declared in NAMESPACE but not found"),
                         paste(sQuote(info[notex, 3]), collapse = ", ")),
                 call. = FALSE, domain = NA)
-    Info <- Info[!notex, , drop = FALSE]
-
+        Info <- Info[!notex, , drop = FALSE]
+    }
     ## <FIXME delayed S3 method registration>
     eager <- is.na(Info[, 5L])
     delayed <- Info[!eager, , drop = FALSE]
-    Info <- Info[eager, , drop = FALSE]
+    Info    <- Info[ eager, , drop = FALSE]
     ## </FIXME delayed S3 method registration>
 
     ## Do local generics first (this could be load-ed if pre-computed).
@@ -1660,15 +1659,14 @@ registerS3methods <- function(info, package, env)
         .fmt <- function(o) {
             sprintf("  %s %s",
                     format(c("method", o[, 1L])),
-                    format(c("from", o[, 2L])))
+                    format(c("from",   o[, 2L])))
         }
         ## Unloading does not unregister, so reloading "overwrites":
         ## hence, always drop same-package overwrites.
         overwrite <-
             overwrite[overwrite[, 2L] != package, , drop = FALSE]
         ## (Seen e.g. for recommended packages in reg-tests-3.R.)
-        if(Sys.getenv("_R_LOAD_CHECK_OVERWRITE_S3_METHODS_") %in%
-           c(package, "all")) {
+        if(Sys.getenv("_R_LOAD_CHECK_OVERWRITE_S3_METHODS_") %in% c(package, "all")) {
             ind <- overwrite[, 2L] %in%
                 unlist(tools:::.get_standard_package_names(),
                        use.names = FALSE)
@@ -1734,8 +1732,15 @@ registerS3methods <- function(info, package, env)
     }
     ## </FIXME delayed S3 method registration>
 
-    setNamespaceInfo(env, "S3methods",
-                     rbind(info, getNamespaceInfo(env, "S3methods")))
+    ## Provide useful error message to user in case of ncol() mismatch:
+    nsI <- getNamespaceInfo(env, "S3methods")
+    if(!is.null(p1 <- ncol(nsI)) && !is.null(p2 <- ncol(info)) && p1 != p2)
+        stop(gettextf(
+            paste('While loading namespace "%s": "%s" differ in ncol(.), env=%d, newNS=%d.',
+                  "Maybe package installed with version of R newer than %s ?",
+                  sep="\n"),
+            package, "S3methods", p1, p2, getRversion()), domain = NA)
+    setNamespaceInfo(env, "S3methods", rbind(info, nsI))
 }
 
 .mergeImportMethods <- function(impenv, expenv, metaname)
