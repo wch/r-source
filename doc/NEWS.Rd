@@ -14,16 +14,18 @@
    
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
-      \item Make macro \samp{F77_VISIBILITY} have been removed
+      \item Make macro \samp{F77_VISIBILITY} has been removed
       and replaced by \samp{F_VISIBILITY}.
        
       \item Make macros \samp{F77}, \samp{FCPIFCPLAGS} and
       \samp{SHLIB_OPENMP_FCFLAGS} have been removed and replaced by
       \samp{FC}, \samp{FPICFLAGS} and \samp{SHLIB_OPENMP_FFLAGS}
-      respectively. [\samp{F77} has been reverted until Apr 15.]
+      respectively.  (Most \command{make} programs will set \samp{F77}
+      to the value of \samp{FC}, which is set for package compilation.
+      But portable code should not rely on this.)
       
       \item \command{R CMD config} no longer knows about the
-      unused \samp{F77} and \samp{FCPIFCPLAGS}.
+      unused settings \samp{F77} and \samp{FCPIFCPLAGS}.
     }
   }
 }
