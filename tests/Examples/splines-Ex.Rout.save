@@ -1,5 +1,5 @@
 
-R version 3.6.0 alpha (2019-03-28 r76288)
+R version 3.6.0 alpha (2019-04-08 r76341)
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -588,7 +588,7 @@ attr(,"class")
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.191 0.015 0.206 0 0 
+Time elapsed:  0.188 0.018 0.206 0 0 
 > grDevices::dev.off()
 null device 
           1 

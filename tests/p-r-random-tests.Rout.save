@@ -1,5 +1,5 @@
 
-R version 3.6.0 alpha (2019-03-28 r76288)
+R version 3.6.0 alpha (2019-04-08 r76341)
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -321,6 +321,6 @@ f(df1 = 10, df2 = 2, ncp = 3) PASSED
 > 
 > 
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  1.465 0.036 1.506 0 0 
+Time elapsed:  1.467 0.041 1.512 0 0 
 > 
 > 
