@@ -341,6 +341,11 @@
       \item The palette-generating functions \code{rainbow()},
       \code{gray.colors()}, etc.\sspace{}get a new \code{rev} argument
       to facilitate reversing the order of colors.
+
+      \item Add \code{update_PACKAGES()} for incrementally updating a
+      package repository index, instead of rebuilding the index from
+      scratch. Thanks to Gabe Becker in \PR{17544} for the patch, based
+      on part of his \pkg{switchr} package.
     }
   }
 

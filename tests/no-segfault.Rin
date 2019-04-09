@@ -69,6 +69,7 @@ s4.group.generics <- c("Arith", "Compare", "Ops", "Logic", "Math", "Math2", "Sum
 ## warning: browseAll will tend to read all the script and/or loop forever
 stop.list[["methods"]] <- c("browseAll", "recover", s4.group.generics)
 stop.list[["tools"]] <- c("write_PACKAGES", # problems with Packages/PACKAGES
+                          "update_PACKAGES",
                           "testInstalledBasic",
                           "testInstalledPackages", # runs whole suite
                           "readNEWS",              # slow, pure R code
