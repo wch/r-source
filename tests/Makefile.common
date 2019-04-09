@@ -15,7 +15,8 @@ test-src-gct = \
 	any-all.R
 test-src-strict-1 = \
 	$(test-src-gct) \
-	d-p-q-r-tests.R
+	d-p-q-r-tests.R  \
+	packages.R
 test-src-strict-auto =
 test-src-sloppy-1 = \
 	complex.R \

@@ -25,7 +25,7 @@ function(dir = ".", fields = NULL,
     if(missing(type) && .Platform$OS.type == "windows")
         type <- "win.binary"
     type <- match.arg(type)
-
+ 
     paths <- ""
     if(is.logical(subdirs) && subdirs) {
         owd <- setwd(dir)
@@ -49,47 +49,85 @@ function(dir = ".", fields = NULL,
         this <- if(nzchar(path)) file.path(dir, path) else dir
         desc <- .build_repository_package_db(this, fields, type, verbose,
                                              unpacked)
-        desc <- Filter(length, desc)
-
-        if(length(desc)) {
-            Files <- names(desc)
-            fields <- names(desc[[1L]])
-            desc <- matrix(unlist(desc), ncol = length(fields), byrow = TRUE)
-            colnames(desc) <- fields
-            if(addFiles) desc <- cbind(desc, File = Files)
-            if(addPaths) desc <- cbind(desc, Path = path)
-            if(latestOnly) desc <- .remove_stale_dups(desc)
-
-            ## Standardize licenses or replace by NA.
-            license_info <- analyze_licenses(desc[, "License"])
-            desc[, "License"] <-
-                ifelse(license_info$is_standardizable,
-                       license_info$standardization,
-                       NA)
-
+        desc <- .process_repository_package_db_to_matrix(desc,
+                                                         path,
+                                                         addFiles,
+                                                         addPaths,
+                                                         latestOnly)
+        if(NROW(desc))
             db <- rbind(db, desc)
-        }
+    
     }
 
-    np <- NROW(db)
-    if(np > 0L) {
-        ## To save space, empty entries are not written to the DCF, so
-        ## that read.dcf() on these will have the entries as missing.
-        ## Hence, change empty to missing in the db.
-        db[!is.na(db) & (db == "")] <- NA_character_
-        con <- file(file.path(dir, "PACKAGES"), "wt")
-        write.dcf(db, con)
-        close(con)
-        con <- gzfile(file.path(dir, "PACKAGES.gz"), "wt")
-        write.dcf(db, con)
-        close(con)
-        rownames(db) <- db[, "Package"]
-        saveRDS(db, file.path(dir, "PACKAGES.rds"), compress = rds_compress)
-    }
+    np <- .write_repository_package_db(db, dir, rds_compress)
 
     invisible(np)
 }
 
+.write_repository_package_db <-
+function(db, dir, rds_compress)
+{
+   np <- NROW(db)
+   if(np > 0L) {
+       ## To save space, empty entries are not written to the DCF, so
+       ## that read.dcf() on these will have the entries as missing.
+       ## Hence, change empty to missing in the db.
+       db[!is.na(db) & (db == "")] <- NA_character_
+       con <- file(file.path(dir, "PACKAGES"), "wt")
+       write.dcf(db, con)
+       close(con)
+       con <- gzfile(file.path(dir, "PACKAGES.gz"), "wt")
+       write.dcf(db, con)
+       close(con)
+       rownames(db) <- db[, "Package"]
+       saveRDS(db, file.path(dir, "PACKAGES.rds"), compress = rds_compress)
+   }
+   
+   invisible(np)
+}
+
+.process_repository_package_db_to_matrix <-
+function(desc, path, addFiles, addPaths, latestOnly)
+{
+    desc <- Filter(length, desc)
+    
+    if(length(desc)) {
+        Files <- names(desc)
+        fields <- names(desc[[1L]])
+        desc <- matrix(unlist(desc), ncol = length(fields), byrow = TRUE)
+        colnames(desc) <- fields
+        if(addFiles) desc <- cbind(desc, File = Files)
+        if(addPaths) desc <- cbind(desc, Path = path)
+        if(latestOnly) desc <- .remove_stale_dups(desc)
+        
+        ## Standardize licenses or replace by NA.
+        license_info <- analyze_licenses(desc[, "License"])
+            desc[, "License"] <-
+                ifelse(license_info$is_standardizable,
+                       license_info$standardization,
+                       NA)
+        }
+    desc
+}
+
+## factored out so it can be used in multiple
+## places without threat of divergence
+.get_pkg_file_pattern = function(type = c("source", "mac.binary", "win.binary"),
+                                 ext.only = FALSE)
+{
+
+    type <- match.arg(type)
+    ## FIXME: might the source pattern be more general?
+    ## was .tar.gz prior to 2.10.0
+ 
+    ret = switch(type,
+                 "source" = "_.*\\.tar\\.[^_]*$",
+                 "mac.binary" = "_.*\\.tgz$",
+                 "win.binary" = "_.*\\.zip$")
+    if(ext.only)
+        ret = gsub("_.*", "", fixed = TRUE, ret)
+    ret
+}
 ## this is OK provided all the 'fields' are ASCII -- so be careful
 ## what you add.
 .build_repository_package_db <-
@@ -103,32 +141,38 @@ function(dir, fields = NULL,
                                                              fields,
                                                              verbose))
 
-    type <- match.arg(type)
-
-    ## FIXME: might the source pattern be more general?
-    ## was .tar.gz prior to 2.10.0
-    package_pattern <- switch(type,
-                              "source" = "_.*\\.tar\\..*$",
-                              "mac.binary" = "_.*\\.tgz$",
-                              "win.binary" = "_.*\\.zip$")
-    files <- list.files(dir, pattern = package_pattern)
+       package_pattern <- .get_pkg_file_pattern(type)
+    files <- list.files(dir, pattern = package_pattern, full.names = TRUE)
 
     if(!length(files))
         return(list())
+    db = .process_package_files_for_repository_db(files,
+                                                  type, 
+                                                  fields,
+                                                  verbose)
+    db
+}
 
+.process_package_files_for_repository_db <-
+    function(files, type, fields, verbose)
+{
+
+    files <- normalizePath(files, mustWork=TRUE) # files comes from list.files, mustWork ok
     ## Add the standard set of fields required to build a repository's
     ## PACKAGES file:
     fields <- unique(c(.get_standard_repository_db_fields(type), fields))
-    packages <- sapply(strsplit(files, "_", fixed = TRUE), "[", 1L)
+    ## files was without path at this point in original code,
+    ## use filetbs instead to compute pkg names and set db names 
+    filetbs <- basename(files)
+    packages <- sapply(strsplit(filetbs, "_", fixed = TRUE), "[", 1L)
     db <- vector(length(files), mode = "list")
-    names(db) <- files
+    names(db) <- filetbs #files was not full paths before
     ## Many (roughly length(files)) warnings are *expected*, hence
     ## suppressed.
     op <- options(warn = -1)
     on.exit(options(op))
     if(verbose) message("Processing packages:")
     if(type == "win.binary") {
-        files <- file.path(dir, files)
         for(i in seq_along(files)) {
             if(verbose) message(paste0("  ", files[i]))
             con <- unz(files[i], file.path(packages[i], "DESCRIPTION"))
@@ -142,8 +186,6 @@ function(dir, fields = NULL,
             close(con)
         }
     } else {
-        dir <- file_path_as_absolute(dir)
-        files <- file.path(dir, files)
         cwd <- getwd()
         if (is.null(cwd))
             stop("current working directory cannot be ascertained")
@@ -183,6 +225,8 @@ function(dir, fields = NULL,
 
     db
 }
+
+    
 
 .build_repository_package_db_from_source_dirs <-
 function(dir, fields = NULL, verbose = getOption("verbose"))
