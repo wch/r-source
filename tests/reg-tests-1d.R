@@ -2614,6 +2614,14 @@ do.call(stopifnot, list(exprs = e0))
 ## the last three failed in R 3.5.x
 
 
+## as.matrix.data.frame() w/ character result and logical column, PR#17548
+cx <- as.character(x <- c(TRUE, NA, FALSE))
+stopifnot(exprs = {
+    identical(cx, as.matrix(data.frame(x, y="chr"))[,"x"])
+    identical(x, as.logical(cx))
+})
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

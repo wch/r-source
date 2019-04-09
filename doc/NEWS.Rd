@@ -810,6 +810,9 @@
       (\command{R --encoding=enc < input}) the code on a Unix-alike now
       ensures that each converted input line is terminated with a
       newline even if re-encoding fails.
+
+      \item \code{as.matrix.data.frame()} now produces better strings from
+      logicals, thanks to \PR{17548} from Gabe Becker.
     }
   }
 }
