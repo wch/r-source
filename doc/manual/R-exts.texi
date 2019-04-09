@@ -5134,19 +5134,20 @@ type may have `overloading ambiguity' as it could be promoted to any of
 the supported floating-point types: this is commonly seen on Solaris,
 but for @code{pow} also seen on macOS.  (C++ has an overload for
 @code{std::pow(<double>, <int>)}, but this may not be visible from the
-main namespace.  C++11 requires additional overloads for integer types,
-and ambiguous overloads are more common in C++11 (and later) compiler
-modes.)
+main namespace.  C++11 requires additional overloads for integer types.)
 
 A not-uncommonly-seen problem is to mistakenly call @code{floor(x/y)} or
 @code{ceil(x/y)} for @code{int} arguments @code{x} and @code{y}.  Since
-@code{x/y} does integer division, the result is an @code{int} and
+@code{x/y} does integer division, the result is of type @code{int} and
 `overloading ambiguity' may be reported.  Some people have (pointlessly)
-called @code{floor} and @code{ceil} on integer arguments, which may have
-an `overloading ambiguity'.
+called @code{floor} and @code{ceil} on arguments of integer type, which
+may have an `overloading ambiguity'.
 
 A surprising common misuse is things like @code{pow(10, -3)}: this
-should be the constant @code{1e-3}.
+should be the constant @code{1e-3}.  Note that there are constants such
+as @code{M_SQRT2} defined in @file{Rmath.h}@footnote{often taken from
+the toolchains's headers.} for @code{sqrt(2.0)}, other mis-coded as
+@code{sqrt(2)}.
 
 @item
 Function @code{fabs} is defined only for floating-point types, except in
