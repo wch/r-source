@@ -2960,7 +2960,7 @@ add_dummies <- function(dir, Log)
                             printLog(Log, "  ", m, ": ", msg)
                             next
                         }
-                        ## as from R 3.6.0, PKG_FFLAGS is by default
+                        ## PKG_FFLAGS is by default
                         ## used for both fixed- and free-form files.
                         if(f == "F" && !(have_f || have_f9x)) {
                             if (!any) noteLog(Log)
