@@ -5146,7 +5146,7 @@ may have an `overloading ambiguity'.
 A surprising common misuse is things like @code{pow(10, -3)}: this
 should be the constant @code{1e-3}.  Note that there are constants such
 as @code{M_SQRT2} defined in @file{Rmath.h}@footnote{often taken from
-the toolchains's headers.} for @code{sqrt(2.0)}, other mis-coded as
+the toolchains's headers.} for @code{sqrt(2.0)}, frequently mis-coded as
 @code{sqrt(2)}.
 
 @item
