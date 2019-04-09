@@ -158,13 +158,13 @@ reformulate <- function (termlabels, response=NULL, intercept = TRUE, env = pare
     if(!intercept) termtext <- paste(termtext, "- 1")
     terms <- str2code(termtext)
     fexpr <-
-	as.call(if(is.null(response))
-		    list(quote(`~`), terms)
-		else
-		    list(quote(`~`),
-			 ## response can be a symbol or call as  Surv(ftime, case)
-			 if(is.character(response)) str2code(response) else response,
-			 terms))
+	if(is.null(response))
+	    call("~", terms)
+	else
+	    call("~",
+		 ## response can be a symbol or call as  Surv(ftime, case)
+		 if(is.character(response)) str2code(response) else response,
+		 terms)
     formula(fexpr, env)
 }
 
