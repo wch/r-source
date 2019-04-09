@@ -374,8 +374,8 @@
 
       \item Add \code{update_PACKAGES()} for incrementally updating a
       package repository index, instead of rebuilding the index from
-      scratch. Thanks to Gabe Becker for the patch, based on part of his
-      \pkg{switchr} package.
+      scratch. Thanks to Gabe Becker in \PR{17544} for the patch, based
+      on part of his \pkg{switchr} package.
     }
   }
 
