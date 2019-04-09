@@ -813,6 +813,10 @@
 
       \item \code{as.matrix.data.frame()} now produces better strings from
       logicals, thanks to \PR{17548} from Gabe Becker.
+
+      \item The S4 generic signature of \code{rowSums()},
+      \code{rowMeans()}, \code{colSums()} and \code{colMeans()} is
+      restricted to \code{"x"}.
     }
   }
 }
