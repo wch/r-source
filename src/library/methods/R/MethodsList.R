@@ -535,11 +535,11 @@ matchSignature <-
                       length(sigClasses),
                       length(signature)),
              domain = NA)
+    if(length(signature) > length(anames))
+        stop(gettextf("more elements in the method signature (%d) than in the generic signature (%d) for function %s",
+                      length(signature), length(anames), sQuote(fun@generic)), domain = NA)
     if(is.null(names(signature))) {
         which <- seq_along(signature)
-        if(length(which) > length(anames))
-          stop(gettextf("more elements in the method signature (%d) than in the generic signature (%d) for function %s",
-	       length(which), length(anames), sQuote(fun@generic)), domain = NA)
     }
     else {
         ## construct a function call with the same naming pattern  &
@@ -548,6 +548,11 @@ matchSignature <-
         for(i in seq_along(sigList))
             sigList[[i]] <- c(sigClasses[[i]], pkgs[[i]])
         fcall <- do.call("call", c("fun", sigList))
+        extraArgs <- setdiff(names(sigList), c("", anames))
+        if (length(extraArgs) > 0L)
+            stop(gettextf("there are named arguments (%s) in the method signature that are missing from the generic signature, for function %s",
+                          paste(extraArgs, collapse = ", "),
+                          sQuote(fun@generic), domain = NA))
         ## match the call to the formal signature (usually the formal args)
         if(identical(anames, formalArgs(fun)))
             smatch <- match.call(fun, fcall)
