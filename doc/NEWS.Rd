@@ -11,19 +11,19 @@
       \item Placeholder.
     }
   }
-   
+
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item Make macro \samp{F77_VISIBILITY} has been removed
       and replaced by \samp{F_VISIBILITY}.
-       
+
       \item Make macros \samp{F77}, \samp{FCPIFCPLAGS} and
       \samp{SHLIB_OPENMP_FCFLAGS} have been removed and replaced by
       \samp{FC}, \samp{FPICFLAGS} and \samp{SHLIB_OPENMP_FFLAGS}
       respectively.  (Most \command{make} programs will set \samp{F77}
       to the value of \samp{FC}, which is set for package compilation.
       But portable code should not rely on this.)
-      
+
       \item \command{R CMD config} no longer knows about the
       unused settings \samp{F77} and \samp{FCPIFCPLAGS}.
     }
@@ -858,6 +858,9 @@
       \item The S4 generic signature of \code{rowSums()},
       \code{rowMeans()}, \code{colSums()} and \code{colMeans()} is
       restricted to \code{"x"}.
+
+      \item \code{match(x, tab)} now works for long \emph{character}
+      vectors \code{x}, thanks to \PR{17552} by Andreas Kersting.
     }
   }
 }
