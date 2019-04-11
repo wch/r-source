@@ -533,6 +533,9 @@
       written package code should not be affected.
 
       \item \code{R_unif_index} is now considered to be part of the C API.
+
+      \item \code{R_GetCurrentEnv()} allows C code to retrieve the current
+      environment.
     }
   }
 
