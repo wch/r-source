@@ -1788,7 +1788,7 @@ OS X'. Click on that, then download the file
 and later (El Capitan, Sierra, High Sierra, Mojave, @dots{}).
 
 Installers for R-patched and R-devel are usually available from
-@uref{https://r.research.att.com}.  (Some of these packages are
+@uref{https://mac.R-project.org}.  (Some of these packages are
 unsigned: to install those Control/right/two-finger click, select
 @samp{Open with} and @samp{Installer}.)
 
@@ -1970,7 +1970,7 @@ A version of @R{} can be run directly from the command-line as e.g.@:
 @noindent
 However, @Rapp{} will always run the `current' version, that is the last
 installed version.  A small utility, @command{Rswitch.app} (available at
-@url{https://r.research.att.com/#other}), can be used to change the
+@url{https://mac.R-project.org/#other}), can be used to change the
 `current' version.  This is of limited use as @Rapp{} is compiled
 against a particular version of @R{} and will likely crash if switched
 to an earlier version.  This may allow you to install a development
@@ -2354,9 +2354,9 @@ of @acronym{CRAN} and Bioconductor packages.
 A few of the binary packages need other software to be installed on your
 system.  In particular packages using Gtk+ (@CRANpkg{RGtk2},
 @CRANpkg{cairoDevice} and those that depend on them) need the GTK
-framework installed from @uref{https://r.research.att.com/libs/}: the
+framework installed from @uref{https://mac.R-project.org/libs/}: the
 appropriate version at the time of writing was
-@uref{https://r.research.att.com/@/libs/@/GTK_2.24.17-X11.pkg}
+@uref{https://mac.R-project.org/@/libs/@/GTK_2.24.17-X11.pkg}
 
 The default compilers specified are shown in file
 @file{/Library/Frameworks/@/R.framework/@/Resources/etc/Makeconf}.  At
@@ -2405,7 +2405,7 @@ without the corresponding headers (not even in Xcode nor the Command
 Line Tools): they are often rather old versions.  If installing packages
 from source using them it is usually easiest to install a
 statically-linked up-to-date copy of the Open Source package from its
-sources or from @uref{https://r.research.att.com/libs}.  But sometimes
+sources or from @uref{https://mac.R-project.org/libs}.  But sometimes
 it is desirable/necessary to use Apple's dynamically linked library, in
 which case appropriate headers could be extracted from the
 sources@footnote{Note that capitalization and version may differ from
@@ -4998,7 +4998,7 @@ without this additional step, but other versions of @command{clang} will
 not.)
 
 You need GNU @code{readline}.  That and other binary components are
-available from @uref{https://r.research.att.com/libs}: you will need
+available from @uref{https://mac.R-project.org/libs}: you will need
 @code{pcre} and @code{xz} (for @code{libzma}) as recent macOS versions
 provide libraries but not headers for these (and the system @code{pcre}
 is too old at 8.02 for versions up to Sierra, although High Sierra had
@@ -5117,7 +5117,7 @@ to be set to find the latest version of the C++ run-time libraries
 rather than the system ones.
 
 Pre-compiled versions of many of the @ref{Useful libraries and programs}
-are available from @uref{https://r.research.att.com/libs/}.  You will
+are available from @uref{https://mac.R-project.org/libs/}.  You will
 most likely want at least @code{jpeg} and @code{tiff}.  The
 @code{pkg-config} utility is not provided by Apple and used for the
 installation from source of many packages: it will also be used if
@@ -5208,7 +5208,7 @@ install a distribution of Tcl/Tk.  There are two alternatives.  If you
 use @Rapp{} you will want to use X11-based Tcl/Tk (as used on other
 Unix-alikes), which is installed as part of the CRAN binary for @R{} and
 available as separate @code{tcl} and @code{tk} components from
-@uref{https://r.research.att.com/libs/}.  This may need
+@uref{https://mac.R-project.org/libs/}.  This may need
 @command{configure} options
 @example
 -with-tcltk=/usr/local/lib
