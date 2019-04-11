@@ -12006,6 +12006,11 @@ there are to be three items, a symbol (pointing to the function to be
 called) and two argument values, the first unnamed and the second named.
 Setting the type to @code{LANGSXP} makes this a call which can be evaluated.
 
+Customarily, the evaluation environment is passed from the calling
+@R{} code (see @code{rho} above). In special cases it is possible that
+the C code may need to obtain the current evaluation environment
+which can be done via @code{R_GetCurrentEnv()} function.
+
 @menu
 * Zero-finding::                
 * Calculating numerical derivatives::  
