@@ -1,6 +1,6 @@
 % File src/library/base/man/taskCallbackManager.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{taskCallbackManager}
@@ -48,34 +48,38 @@ taskCallbackManager(handlers = list(), registered = FALSE,
   }
 }
 \value{
-  A list containing 6 functions:
-  \item{add}{register a callback with this manager, giving the
+  A \code{\link{list}} containing 6 functions:
+  \item{\code{add()}}{register a callback with this manager, giving the
     function, an optional 5-th argument, an optional name
     by which the callback is stored in the list,
     and a \code{register} argument which controls whether
     the \code{evaluate} function is registered with the internal
     C-level dispatch mechanism if necessary.}
-  \item{remove}{remove an element from the manager's collection
+  \item{\code{remove()}}{remove an element from the manager's collection
     of callbacks, either by name or position/index.}
-  \item{evaluate}{the \sQuote{real} callback function that is registered
+  \item{\code{evaluate()}}{the \sQuote{real} callback function that is registered
     with the C-level dispatch mechanism and which invokes each of the
     R-level callbacks within this manager's control.}
-  \item{suspend}{a function to set the suspend state
+  \item{\code{suspend()}}{a function to set the suspend state
     of the manager.  If it is suspended, none of the callbacks will be
     invoked when a task is completed.  One sets the state by specifying
     a logical value for the \code{status} argument.
   }
-  \item{register}{a function to register the \code{evaluate}
+  \item{\code{register()}}{a function to register the \code{evaluate}
     function with the internal C-level dispatch mechanism.  This is
     done automatically by the \code{add} function, but can be called
     manually.}
-  \item{callbacks}{returns the list of callbacks being maintained by this
-   manager.}
+  \item{\code{callbacks()}}{returns the list of callbacks being maintained
+    by this manager.}
 }
 \seealso{
   \code{\link{addTaskCallback}},
   \code{\link{removeTaskCallback}},
-  \code{\link{getTaskCallbackNames}}\\
+  \code{\link{getTaskCallbackNames}} and the reference.
+}
+\references{
+  Duncan Temple Lang (2001)
+  \emph{Top-level Task Callbacks in R}, % TaskHandlers.tex is in R-dev-web svn
   \url{https://developer.r-project.org/TaskHandlers.pdf}
 }
 \examples{
@@ -94,7 +98,6 @@ getTaskCallbackNames()
 # look at the R-level callbacks
 names(h$callbacks())
 
-getTaskCallbackNames()
 removeTaskCallback("R-taskCallbackManager")
 }
 \keyword{environment}
