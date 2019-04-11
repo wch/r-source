@@ -46,7 +46,11 @@ stopifnot(1 == grep("setClass",
 ## failed for several reasons in R < 2.7.0
 ##
 ## Part 2: -- build, install, load and "inspect" the package:
-build.pkg <- function(dir) {
+build.pkg <- function(dir, destdir = NULL) {
+    dir <- normalizePath(dir)
+    if(length(dir) > 1)
+        return(lapply(dir, build.pkg, destdir = destdir))
+    ## else one 'dir':
     stopifnot(dir.exists(dir), file.exists(DESC <- file.path(dir, "DESCRIPTION")))
     pkgName <- sub("^[A-Za-z]+: ", "", grep("^Package: ", readLines(DESC), value=TRUE))
     patt <- paste(pkgName, ".*tar\\.gz$", sep="_")
@@ -54,8 +58,14 @@ build.pkg <- function(dir) {
     Rcmd <- paste(shQuote(file.path(R.home("bin"), "R")), "CMD")
     r <- system(paste(Rcmd, "build --keep-empty-dirs", shQuote(dir)),
                 intern = TRUE)
-    ## return name of tar file built
-    structure(dir('.', pattern = patt), log3 = r)
+    ## return name of tar file built {plus the build log} :
+    tball <- structure(dir('.', pattern = patt), log3 = r)
+    if(is.null(destdir))
+        tball
+    else {
+        file.copy(tball, destdir)
+        file.path(destdir, basename(tball))
+    }
 }
 build.pkg("myTst")
 ## clean up any previous attempt (which might have left a 00LOCK)
@@ -84,6 +94,8 @@ options(oo)
 if(interactive() && Sys.getenv("USER") == "maechler")
     Sys.setenv(SRCDIR = normalizePath("~/R/D/r-devel/R/tests"))
 (pkgSrcPath <- file.path(Sys.getenv("SRCDIR"), "Pkgs"))# e.g., -> "../../R/tests/Pkgs"
+## SRCDIR not available on windows, so pkgSrcPath won't be populated
+## if this happens non-interactively, cleanup and quit gracefully
 if(!file_test("-d", pkgSrcPath) && !interactive()) {
     unlink("myTst", recursive=TRUE)
     print(proc.time())
@@ -260,8 +272,119 @@ if(dir.exists(file.path("myLib", "exNSS4"))) {
   }
 }
 
+
+## Part 3: repository construction ---------------------------------------------
+## test tools::write_PACKAGES and tools::update_PACKAGES
+oldpkgdir <- file.path(tempdir(), "pkgfiles/old")
+newpkgdir <- file.path(tempdir(), "pkgfiles/new")
+repodir <- file.path(tempdir(), "pkgrepo")
+dir.create(oldpkgdir, recursive = TRUE)
+dir.create(newpkgdir)
+if(file.exists(repodir))
+    unlink(repodir, recursive = TRUE)
+dir.create(repodir)
+
+ro <- build.pkg(file.path(pkgPath, c("pkgA",   "pkgB")),   oldpkgdir)
+rn <- build.pkg(file.path(pkgPath, c("pkgA_2", "pkgA_3")), newpkgdir)
+unlist(ro)
+unlist(rn)
+
+
+##' A repo package database in directory 'dir'
+mkPkgfiles <- function(dir)
+    file.path(dir, c("PACKAGES",
+                     "PACKAGES.gz",
+                     "PACKAGES.rds"))
+
+##' safe read.dcf()
+read.safe.dcf <- function(f) if(file.exists(f)) read.dcf(f) # else NULL
+
+## this will fail with an error if write_PACKAGES
+## and update_PACKAGES do not generate the same
+## PACKAGE file entries, in the same order, with
+## the same field order.
+docompare <- function(..., repdir = repodir, strict = TRUE) {
+    Pfiles <- mkPkgfiles(repdir)
+    backupPfiles <- file.path(tempdir(), basename(Pfiles))
+    indfile <- Pfiles[1]
+    ##     vvvvvvvvvvvvvvv
+    tools::write_PACKAGES(repdir, type = "source", ...)
+    wpres <- read.safe.dcf(indfile) # write_P result
+    ## reset the PACKAGES files so that update_PACKAGES thinks any deviations are "new"
+    if(all(file.exists(backupPfiles)))
+        file.copy(backupPfiles, Pfiles, overwrite = TRUE)
+    ##     vvvvvvvvvvvvvvv
+    tools::update_PACKAGES(repdir, type = "source", strict=strict, ...)
+    upres <- read.safe.dcf(indfile) # update_P result
+    stopifnot(identical(wpres, upres))
+}
+
+Pfiles <- mkPkgfiles(repodir)
+backupPfiles <- file.path(tempdir(), basename(Pfiles))
+if(all(file.exists(backupPfiles)))
+    unlink(backupPfiles)
+
+## test write_PACKAGES and update_PACKAGES
+## on empty dir
+## IGNORE_RDIFF_BEGIN
+docompare() ## one warning expected, has a temp path in it so ignore diff
+## IGNORE_RDIFF_END
+
+oldpfs <- list.files(oldpkgdir, pattern = "\\.tar\\.gz$", recursive = TRUE, full.names = TRUE)
+newpfs <- list.files(newpkgdir, pattern = "\\.tar\\.gz$", recursive = TRUE, full.names = TRUE)
+
+## generate and backup "original repo state"
+file.copy(oldpfs, to = repodir)
+tools::write_PACKAGES(repodir, type = "source")
+file.copy(Pfiles, backupPfiles, overwrite = TRUE)
+
+
+## test update_PACKAGES with no change
+docompare()
+
+## all old files gone, new files present
+unlink(file.path(repodir, basename(oldpfs)))
+file.copy(newpfs, to = repodir)
+docompare()
+docompare(strict=FALSE)
+
+## put old ones back
+file.copy(oldpfs, to = repodir)
+
+
+if(isWIN){
+    nrepodir  <- normalizePath(repodir)
+    if(grepl("^\\\\", nrepodir)) #\\laptop\whatever
+        repourl  <- paste0("file:", gsub("\\\\", "/", nrepodir))
+    else #C:\whatever
+        repourl  <- paste0("file:///", gsub("\\\\", "/", nrepodir))
+} else
+    repourl  <- paste0("file://", normalizePath(repodir))
+
+## make sure the ordering is right when
+## old and new entries are mixed in final db
+##
+
+##' care: stopifnot(nrow(1) == 2) # does *not* trigger
+checkMatrix <- function(x, n) stopifnot(is.matrix(x), nrow(x) == n)
+
+docompare(latestOnly = TRUE)
+checkMatrix(available.packages(repourl, filters = list()), 2)
+
+docompare(latestOnly = FALSE)
+checkMatrix(available.packages(repourl, filters = list()), 4)
+
+docompare(latestOnly = TRUE, strict = FALSE)
+checkMatrix(available.packages(repourl, filters = list()), 2)
+
+docompare(latestOnly = FALSE, strict = FALSE)
+checkMatrix(available.packages(repourl, filters = list()), 4)
+
+
+
 ## clean up
-rmL <- c("myLib", if(has.symlink) "myLib_2", "myTst", file.path(pkgPath))
+rmL <- c("myLib", if(has.symlink) "myLib_2", "myTst", file.path(pkgPath),
+         oldpkgdir, newpkgdir, repodir, backupPfiles)
 if(do.cleanup) {
     for(nm in rmL) unlink(nm, recursive = TRUE)
 } else {
