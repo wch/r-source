@@ -548,10 +548,17 @@ matchSignature <-
         for(i in seq_along(sigList))
             sigList[[i]] <- c(sigClasses[[i]], pkgs[[i]])
         fcall <- do.call("call", c("fun", sigList))
-        extraArgs <- setdiff(names(sigList), c("", anames))
-        if (length(extraArgs) > 0L)
+        argmatches <- charmatch(names(sigList), anames)
+        if (anyNA(argmatches))
             stop(gettextf("there are named arguments (%s) in the method signature that are missing from the generic signature, for function %s",
-                          paste(extraArgs, collapse = ", "),
+                          paste(sQuote(names(sigList)[is.na(argmatches)]),
+                                collapse = ", "),
+                          sQuote(fun@generic), domain = NA))
+        ambig <- argmatches == 0L & names(sigList) != ""
+        if (any(ambig))
+            stop(gettextf("there are named arguments (%s) in the method signature that ambiguously match the generic signature, for function %s",
+                          paste(sQuote(names(sigList)[ambig]),
+                                collapse = ", "),
                           sQuote(fun@generic), domain = NA))
         ## match the call to the formal signature (usually the formal args)
         if(identical(anames, formalArgs(fun)))
