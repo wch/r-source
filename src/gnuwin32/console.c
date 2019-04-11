@@ -3,7 +3,7 @@
  *  file console.c
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
  *  Copyright (C) 2004-8      The R Foundation
- *  Copyright (C) 2004-2018   The R Core Team
+ *  Copyright (C) 2004-2019   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1689,10 +1689,20 @@ static void wcstobuf(char *buf, int len, const wchar_t *in)
     int used, tot = 0;
     char *p = buf, tmp[7];
     const wchar_t *wc = in;
+    wchar_t wc_check;
+    mbstate_t mb_st;
 
     for(; wc; wc++, p+=used, tot+=used) {
 	if(tot >= len - 2) break;
 	used = wctomb(p, *wc);
+	if (used >= 0) {
+	    /* conversion was successful, but check that converting back gets
+	       the original result (it does not with best-fit transliteration)
+	       NOTE: WideCharToMultiByte may be faster */
+	    memset(&mb_st, 0, sizeof(mbstate_t));
+	    if (mbrtowc(&wc_check, p, used, &mb_st) < 0 || wc_check != *wc) 
+		used = -1;
+	}
 	if (used < 0) {
 	    snprintf(tmp, 7, "\\u%x", *wc);
 	    used = strlen(tmp);

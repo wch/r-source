@@ -1277,6 +1277,13 @@ kernel_wctomb(csconv_t *cv, ushort *wbuf, int wbufsize, uchar *buf, int bufsize)
 	   says this cannot be used for 65001 and 54936, but it also
 	   says 'for Vista only', and 65001 fails on XP.
 	   We definitely want this for ASCII, which is 20127.
+
+	   The current (05/12/2018) version of
+	   https://docs.microsoft.com/en-us/windows/desktop/api/stringapiset/nf-stringapiset-widechartomultibyte
+	   claims that WC_NO_BEST_FIT_CHARS can be used for all code pages for which
+	   the current version of must_use_null_useddefaultchar is FALSE
+	   (it is TRUE also for 65001), and that the API is supported since
+	   Windows 2000.
 	 */
     if ( !(cv->flags & FLAG_TRANSLIT) && (cv->codepage == 20127) )
 	flags |= WC_NO_BEST_FIT_CHARS;
