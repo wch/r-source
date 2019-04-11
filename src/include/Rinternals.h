@@ -1084,7 +1084,6 @@ void R_Reprotect(SEXP, PROTECT_INDEX);
 #endif
 SEXP R_tryEval(SEXP, SEXP, int *);
 SEXP R_tryEvalSilent(SEXP, SEXP, int *);
-SEXP R_GetCurrentEnv();
 const char *R_curErrorBuf();
 
 Rboolean Rf_isS4(SEXP);
