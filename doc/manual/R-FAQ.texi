@@ -484,7 +484,7 @@ is maintained by @email{Simon.Urbanek@@R-project.org, Simon Urbanek}
 macOS @acronym{FAQ}} has more details.
 
 Snapshots of the r-patched and r-devel versions of R are available as
-Apple installer packages at @uref{https://r.research.att.com}.
+Apple installer packages at @uref{https://mac.R-project.org}.
 
 @node Are there Unix-like binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix-like binaries for R?
