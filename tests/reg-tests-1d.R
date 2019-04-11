@@ -2596,6 +2596,19 @@ ef <- newf("x", "log(y)")
 stopifnot( identical(ef$e, environment(ef$form)),
 	  !identical(ef$e, .GlobalEnv),
 	  identical(format(ef$form), "log(y) ~ x"))
+## Back compatibility + deprecation warning:
+notC <- "Model[no 4]"
+form <- `Model[no 4]` ~ .
+stopifnot(exprs = {
+    identical(form, suppressWarnings(reformulate(".", notC))) # << will STOP working!
+    identical(form, reformulate(".", as.name(notC)))
+    identical(form, reformulate(".", paste0("`", notC, "`")))
+    inherits(tt <- tryCatch(reformulate(".", notC), warning=identity),
+             "deprecatedWarning")
+    inherits(tt, "warning")
+    conditionCall(tt)[[1]] == quote(reformulate)
+})
+writeLines(conditionMessage(tt))
 
 
 ## stopifnot() now works *nicely* with expression object (with 'exprs' name):

@@ -37,11 +37,12 @@ drop.terms(termobj, dropx = NULL, keep.response = FALSE)
   model. There is also a \code{"[.terms"} method to perform the same
   function (with \code{keep.response = TRUE}).
 
-  \code{reformulate} creates a formula from a character vector. If
-  \code{length(termlabels)}>1, its elements are concatenated with \code{+}.
+  \code{reformulate} creates a formula from a character vector.  If
+  \code{length(termlabels) > 1}, its elements are concatenated with \code{+}.
   Non-syntactic names (e.g. containing spaces or special characters; see
   \code{\link{make.names}}) must be protected with backticks  (see examples).
-
+  A non-\code{\link{parse}}able \code{response} still works for now,
+  back compatibly, with a deprecation warning.
 }
 \value{
   \code{delete.response} and \code{drop.terms} return a \code{terms}
