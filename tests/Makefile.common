@@ -15,8 +15,7 @@ test-src-gct = \
 	any-all.R
 test-src-strict-1 = \
 	$(test-src-gct) \
-	d-p-q-r-tests.R  \
-	packages.R
+	d-p-q-r-tests.R 
 test-src-strict-auto =
 test-src-sloppy-1 = \
 	complex.R \
@@ -92,6 +91,7 @@ test-out = $(test-src:.R=.Rout) $(test-out-demo) $(test-out-gct) \
 .SUFFIXES:
 .SUFFIXES: .R .Rin .Rout .Rout-gct .Rout-valgct .trin .tsin .log
 
+## This ensures "they" always re-run [a big WASTE for parallel make -j<n> !]
 $(test-out): FORCE
 
 FORCE:
