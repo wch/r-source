@@ -521,6 +521,8 @@ FUNTAB R_FunTab[] =
 {"format.info",	do_formatinfo,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"cat",		do_cat,		0,	111,	6,	{PP_FUNCALL, PREC_FN,	0}},
 {"do.call",	do_docall,	0,	211,	3,	{PP_FUNCALL, PREC_FN,	0}},
+{"str2lang",	do_str2lang,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"str2expression", do_str2lang, 1,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 
 /* String Manipulation */
 

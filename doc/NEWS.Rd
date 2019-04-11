@@ -346,6 +346,11 @@
       package repository index, instead of rebuilding the index from
       scratch. Thanks to Gabe Becker in \PR{17544} for the patch, based
       on part of his \pkg{switchr} package.
+
+      \item New \code{str2lang()} and \code{str2expression()} as streamlined
+      versions of \code{parse(text=., keep.source=FALSE)} allow to abstract
+      typical call constructions, e.g., in \code{formula} manipulations.
+      (Somewhat experimental)
     }
   }
 
