@@ -1,8 +1,8 @@
 #  File src/library/stats/R/model.tables.R
 #  Part of the R package, https://www.R-project.org
 #
+#  Copyright (C) 1998-2019 The R Core Team
 #  Copyright     1998 B. D. Ripley
-#  Copyright (C) 1998-2015 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -375,9 +375,9 @@ print.tables_aov <- function(x, digits = 4L, ...)
 		dimnames(ctable) <-
 		    c(list(format(c(rownames(table), rep.int("rep", dim.t[1L])))),
                       dimnames(table)[-1L])
-		ctable <- eval(parse(text = paste(
-				     "ctable[as.numeric(t(matrix(seq(nrow(ctable)),ncol=2)))", paste(rep.int(", ", d - 2), collapse = " "), "]"),
-                                     keep.source = FALSE))
+		ctable <- eval(str2lang(paste(
+                    "ctable[as.numeric(t(matrix(seq(nrow(ctable)),ncol=2)))",
+                    paste(rep.int(", ", d - 2), collapse = " "), "]")))
 		names(dimnames(ctable)) <- names(dimnames(table))
 		class(ctable) <- "mtable"
 		print.mtable(ctable, digits = digits, ...)

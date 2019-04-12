@@ -1,7 +1,7 @@
 #  File src/library/stats/R/arma0.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1999-2012 The R Core Team
+#  Copyright (C) 1999-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -272,7 +272,7 @@ predict.arima0 <-
     function(object, n.ahead = 1L, newxreg = NULL, se.fit=TRUE, ...)
 {
     myNCOL <- function(x) if(is.null(x)) 0 else NCOL(x)
-    data <- eval.parent(parse(text = object$series))
+    data <- eval.parent(str2lang(object$series))
     xr <- object$call$xreg
     xreg <- if(!is.null(xr)) eval.parent(xr) else NULL
     ncxreg <- myNCOL(xreg)

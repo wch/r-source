@@ -172,7 +172,7 @@ demo.pal <-
     plot(i, i+d, type = "n", yaxt = "n", ylab = "", main = main)
     for (k in 1:nt) {
         rect(i-.5, (k-1)*j+ dy, i+.4, k*j,
-             col = eval(parse(text = ch.col[k])), border = border)
+             col = eval(str2lang(ch.col[k])), border = border)
         text(2*j,  k * j + dy/4, ch.col[k])
     }
 }

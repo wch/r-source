@@ -340,7 +340,7 @@ specialOpCompletionsHelper <- function(op, suffix, prefix)
 {
     tryToEval <- function(s)
     {
-	tryCatch(eval(parse(text = s), envir = .GlobalEnv), error = function(e)e)
+	tryCatch(eval(str2expression(s), envir = .GlobalEnv), error = function(e)e)
     }
     switch(op,
            "$" = {
@@ -908,10 +908,10 @@ fileCompletions <- function(token)
     ## are included.  Get 'correct' partial file name by looking back
     ## to begin quote
     pfilename <- correctFilenameToken()
-    
     ## This may come from an illegal string like "C:\Prog".  Try to parse it:
-    pfilename <- try(eval(parse(text = paste0('"', token, '"'))), silent = TRUE)
-    if (inherits(pfilename, "try-error"))
+    pfilename <- tryCatch(eval(str2expression(paste0('"', token, '"'))),
+                          error = identity)
+    if (inherits(pfilename, "error"))
     	return(character())
 
     ## Sys.glob doesn't work without expansion.  Is that intended?

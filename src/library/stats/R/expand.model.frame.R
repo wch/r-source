@@ -26,10 +26,10 @@ expand.model.frame <- function(model, extras,
 
     # new formula (there must be a better way...)
     ff <- foo ~ bar + baz
-    if (is.call(extras))
-        gg <- extras
-    else
-        gg <- parse(text=paste("~", paste(extras, collapse="+")))[[1L]]
+    gg <- if(is.call(extras))
+              extras
+          else
+              str2lang(paste("~", paste(extras, collapse="+")))
     ff[[2L]] <- f[[2L]]
     ff[[3L]][[2L]] <- f[[3L]]
     ff[[3L]][[3L]] <- gg[[2L]]
@@ -37,11 +37,11 @@ expand.model.frame <- function(model, extras,
     if (!na.expand){
         naa <- model$call$na.action
         subset <- model$call$subset
-        rval <- eval(call("model.frame",ff, data = data, subset = subset,
-                      na.action = naa),envir )
+        rval <- eval(call("model.frame", ff, data = data, subset = subset,
+                          na.action = naa), envir)
     } else {
         subset <- model$call$subset
-        rval <- eval(call("model.frame",ff, data = data, subset = subset,
+        rval <- eval(call("model.frame", ff, data = data, subset = subset,
                           na.action = I), envir)
         oldmf <- model.frame(model)
         keep <- match(rownames(oldmf), rownames(rval))

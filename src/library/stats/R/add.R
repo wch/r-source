@@ -128,14 +128,12 @@ add1.lm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
 	stop("no terms in scope for adding to object")
     oTerms <- attr(object$terms, "term.labels")
     int <- attr(object$terms, "intercept")
-    ns <- length(scope)
     y <- object$residuals + object$fitted.values
     ## predict(object) applies na.action where na.exclude results in too long
-    dfs <- numeric(ns+1)
-    RSS <- numeric(ns+1)
-    names(dfs) <- names(RSS) <- c("<none>", scope)
-    add.rhs <- paste(scope, collapse = "+")
-    add.rhs <- eval(parse(text = paste("~ . +", add.rhs), keep.source = FALSE))
+    ns <- length(scope)
+    dfs <- numeric(ns+1L); names(dfs) <- c("<none>", scope)
+    RSS <- dfs
+    add.rhs <- eval(str2lang(paste("~ . +", paste(scope, collapse = "+"))))
     new.form <- update.formula(object, add.rhs)
     Terms <- terms(new.form)
     if(is.null(x)) {
@@ -169,7 +167,7 @@ add1.lm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
     iswt <- !is.null(wt)
     X <- x[, ousex, drop = FALSE]
     z <- if(iswt) lm.wfit(X, y, wt, offset=offset)
-    else lm.fit(X, y, offset=offset)
+	 else     lm.fit (X, y,     offset=offset)
     dfs[1L] <- z$rank
     class(z) <- "lm" # needed as deviance.lm calls generic residuals()
     RSS[1L] <- deviance(z)
@@ -181,7 +179,7 @@ add1.lm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
 	usex <- match(asgn, match(stt, sTerms), 0L) > 0L
 	X <- x[, usex|ousex, drop = FALSE]
 	z <- if(iswt) lm.wfit(X, y, wt, offset=offset)
-        else lm.fit(X, y, offset=offset)
+	     else     lm.fit (X, y,     offset=offset)
         class(z) <- "lm" # needed as deviance.lm calls generic residuals()
 	dfs[tt] <- z$rank
 	RSS[tt] <- deviance(z)
@@ -242,10 +240,9 @@ add1.glm <- function(object, scope, scale = 0, test=c("none", "Rao", "LRT",
     oTerms <- attr(object$terms, "term.labels")
     int <- attr(object$terms, "intercept")
     ns <- length(scope)
-    dfs <- dev <- score <- numeric(ns+1)
-    names(dfs) <- names(dev) <- names(score) <- c("<none>", scope)
-    add.rhs <- paste(scope, collapse = "+")
-    add.rhs <- eval(parse(text = paste("~ . +", add.rhs), keep.source = FALSE))
+    dfs <- numeric(ns+1L); names(dfs) <- c("<none>", scope)
+    dev <- score <- dfs
+    add.rhs <- eval(str2lang(paste("~ . +", paste(scope, collapse = "+"))))
     new.form <- update.formula(object, add.rhs)
     Terms <- terms(new.form)
     y <- object$y
@@ -311,14 +308,11 @@ add1.glm <- function(object, scope, scale = 0, test=c("none", "Rao", "LRT",
           score[tt] <- zz$null.deviance - zz$deviance
         }
     }
-    if (scale == 0)
-	dispersion <- summary(object, dispersion = NULL)$dispersion
-    else dispersion <- scale
+    dispersion <- if(scale == 0) summary(object, dispersion = NULL)$dispersion else scale
     fam <- object$family$family
-    if(fam == "gaussian") {
-	if(scale > 0) loglik <- dev/scale - n
-	else loglik <- n * log(dev/n)
-    } else loglik <- dev/dispersion
+    loglik <- if(fam == "gaussian") {
+                  if(scale > 0) dev/scale - n else n * log(dev/n)
+              } else dev/dispersion
     aic <- loglik + k * dfs
     aic <- aic + (extractAIC(object, k = k)[2L] - aic[1L])
     dfs <- dfs - dfs[1L]

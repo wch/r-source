@@ -1,7 +1,7 @@
 #  File src/library/utils/R/citation.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -1371,7 +1371,7 @@ function(x)
         writeLines(x, con, useBytes = TRUE)
         eval(parse(con, encoding = "UTF-8"))
     } else {
-        eval(parse(text = x))
+        eval(str2expression(x))
     }
 
     ## Let's by nice ...

@@ -1,6 +1,6 @@
 % File src/library/base/man/mode.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{mode}
@@ -83,7 +83,7 @@ cex3 <- c("NULL", "1", "1:1", "1i", "list(1)", "data.frame(x = 1)",
   "pairlist(pi)", "c", "lm", "formals(lm)[[1]]",  "formals(lm)[[2]]",
   "y ~ x","expression((1))[[1]]", "(y ~ x)[[1]]",
   "expression(x <- pi)[[1]][[1]]")
-lex3 <- sapply(cex3, function(x) eval(parse(text = x)))
+lex3 <- sapply(cex3, function(x) eval(str2lang(x)))
 mex3 <- t(sapply(lex3,
                  function(x) c(typeof(x), storage.mode(x), mode(x))))
 dimnames(mex3) <- list(cex3, c("typeof(.)","storage.mode(.)","mode(.)"))

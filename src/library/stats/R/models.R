@@ -29,9 +29,9 @@ formula.default <- function (x = NULL, env = parent.frame(), ...)
     else {
         form <- switch(mode(x),
                        NULL = structure(list(), class = "formula"),
-                       character = formula(
-                           eval(parse(text = x, keep.source = FALSE)[[1L]])),
-                       call = eval(x), stop("invalid formula"))
+                       character = formula(str2lang(x)),
+                       call = eval(x),
+                       stop("invalid formula"))
         environment(form) <- env
         form
     }
@@ -53,8 +53,7 @@ DF2formula <- function(x, env = parent.frame()) {
         rhs <- nm[1L]
         lhs <- NULL
     } else stop("cannot create a formula from a zero-column data frame")
-    ff <- parse(text = paste(lhs, paste(rhs, collapse = "+"), sep = "~"),
-                keep.source = FALSE)
+    ff <- str2lang(paste(lhs, paste(rhs, collapse = "+"), sep = "~"))
     ff <- eval(ff)
     environment(ff) <- env
     ff
@@ -69,7 +68,7 @@ formula.data.frame <- function (x, ...)
 
 formula.character <- function(x, env = parent.frame(), ...)
 {
-    ff <- formula(eval(parse(text=x, keep.source = FALSE)[[1L]]))
+    ff <- formula(eval(str2lang(x)))
     environment(ff) <- env
     ff
 }
@@ -151,12 +150,11 @@ delete.response <- function (termobj)
 reformulate <- function (termlabels, response=NULL, intercept = TRUE, env = parent.frame())
 {
     ## an extension of formula.character()
-    str2code <- function(s) parse(text = s, keep.source = FALSE)[[1L]]
     if(!is.character(termlabels) || !length(termlabels))
         stop("'termlabels' must be a character vector of length at least one")
     termtext <- paste(termlabels, collapse = "+")
     if(!intercept) termtext <- paste(termtext, "- 1")
-    terms <- str2code(termtext)
+    terms <- str2lang(termtext)
     fexpr <-
 	if(is.null(response))
 	    call("~", terms)
@@ -164,7 +162,7 @@ reformulate <- function (termlabels, response=NULL, intercept = TRUE, env = pare
 	    call("~",
 		 ## response can be a symbol or call as  Surv(ftime, case)
 		 if(is.character(response))
-                     tryCatch(str2code(response),
+                     tryCatch(str2lang(response),
                               error = function(e) {
                                   sc <- sys.calls()
                                   sc1 <- lapply(sc, `[[`, 1L)
@@ -735,8 +733,7 @@ get_all_vars <- function(formula, data = NULL, ...)
     env <- environment(formula)
     rownames <- .row_names_info(data, 0L) #attr(data, "row.names")
     varnames <- all.vars(formula)
-    inp <- parse(text = paste0("list(", paste(varnames, collapse = ","), ")"),
-                 keep.source = FALSE) # ->  expression( list(v1, v2, ..) )
+    inp <- str2lang(paste0("list(", paste(varnames, collapse = ","), ")"))
     variables <- eval(inp, data, env)
     if(is.null(rownames) && (resp <- attr(formula, "response")) > 0) {
         ## see if we can get rownames from the response

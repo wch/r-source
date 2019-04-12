@@ -1,7 +1,7 @@
 #  File src/library/tools/R/license.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -770,9 +770,9 @@ function(x)
         version <- as.numeric_version(version)
         for(term in constraints) {
             re <- ldb_vars$re_single_version_spec
-            op <- sub(re, "\\1", term)
+            op     <- sub(re, "\\1", term)
             target <- sub(re, "\\2", term)
-            if(!eval(parse(text = paste("version", op, "target"))))
+            if(!do.call(op, list(version, target)))
                 return(FALSE)
         }
         TRUE

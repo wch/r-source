@@ -136,12 +136,10 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
             if(nzchar(grd <- options$grdevice)) {
                 grdo <- paste0(grd, ".off")
                 if(grepl("::", grd, fixed = TRUE)) {
-                    devs <- c(devs, eval(parse(text = grd)))
+                    devs <- c(devs, eval(str2expression(grd)))
                     devoffs <-
                         c(devoffs,
-                          if(!inherits(grdo <-
-                                           tryCatch(eval(parse(text = grdo)),
-                                                    error = identity),
+                          if(!inherits(grdo <- tryCatch(eval(str2expression(grdo)), error = identity),
                                        "error"))
                               list(grdo)
                           else
@@ -469,7 +467,7 @@ RweaveLatexWritedoc <- function(object, chunk)
                       cmdloc + attr(cmdloc, "match.length") - 1L)
         cmd <- sub(object$syntax$docexpr, "\\1", cmd)
         if (object$options$eval) {
-            val <- tryCatch(as.character(eval(parse(text = cmd), envir = .GlobalEnv)),
+            val <- tryCatch(as.character(eval(str2expression(cmd), envir = .GlobalEnv)),
 		    error = function(e) {
 	               filenum <- attr(chunk, "srcFilenum")[pos[1L]]
                        filename <- attr(chunk, "srcFilenames")[filenum]

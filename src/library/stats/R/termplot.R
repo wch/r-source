@@ -1,7 +1,7 @@
 #  File src/library/stats/R/termplot.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -49,7 +49,7 @@ termplot <- function(model, data = NULL, envir = environment(formula(model)),
     if (any(grepl(":", nmt, fixed = TRUE)))
         warning("'model' appears to involve interactions: see the help page",
                 domain = NA, immediate. = TRUE)
-    cn <- parse(text = nmt, keep.source = FALSE)
+    cn <- str2expression(nmt)
     ## Defaults:
     if (!is.null(smooth))
       smooth <- match.fun(smooth)

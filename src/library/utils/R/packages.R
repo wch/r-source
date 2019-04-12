@@ -1,7 +1,7 @@
 #  File src/library/utils/R/packages.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -491,12 +491,8 @@ old.packages <- function(lib.loc = NULL, repos = getOption("repos"),
         deps <- onRepos["Depends"]
         if(!is.na(deps)) {
             Rdeps <- tools:::.split_dependencies(deps)[["R", exact=TRUE]]
-            if(length(Rdeps) > 1L) {
-                target <- Rdeps$version
-                res <- do.call(Rdeps$op, list(currentR, target))
- ##               res <- eval(parse(text=paste("currentR", Rdeps$op, "target")))
-                if(!res) next
-            }
+            if(length(Rdeps) > 1L && !do.call(Rdeps$op, list(currentR, Rdeps$version)))
+                next
         }
         update <- rbind(update,
                         c(instPkgs[k, c("Package", "LibPath", "Version", "Built")],
@@ -1040,7 +1036,6 @@ compareVersion <- function(a, b)
             current <- as.package_version(installed[pkgs == x[[1L]], "Version"])
             target <- as.package_version(x[[3L]])
             any(do.call(x$op, list(current, target)))
-##            eval(parse(text = paste("any(current", x$op, "target)")))
         } else x[[1L]] %in% pkgs
     })
     xx <- xx[!have]
@@ -1058,7 +1053,6 @@ compareVersion <- function(a, b)
             current <- as.package_version(available[pkgs == x[[1L]], "Version"])
             target <- as.package_version(x[[3L]])
             res <- any(do.call(x$op, list(current, target)))
-##            res <- eval(parse(text = paste("any(current", x$op, "target)")))
             if(res) canget <- c(canget, x[[1L]])
             else  miss <- c(miss, paste0(x[[1L]], " (>= ", x[[3L]], ")"))
         } else if(x[[1L]] %in% pkgs) canget <- c(canget, x[[1L]])
