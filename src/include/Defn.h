@@ -632,6 +632,14 @@ typedef enum {
     MATPROD_DEFAULT_SIMD  /* experimental */
 } MATPROD_TYPE;
 
+typedef enum {
+    DEFAULT_TRANSLIT_NO = 1,
+    DEFAULT_TRANSLIT_NONASCII = 2,
+    DEFAULT_TRANSLIT_YES = 3,
+    DEFAULT_TRANSLIT_R211 = 4
+        /* compatible with R 2.11, "non-ASCII" on Windows, "no" elsewhere */
+} DEFAULT_TRANSLIT_TYPE;
+
 /* File Handling */
 /*
 #define R_EOF	65535
@@ -707,6 +715,7 @@ extern0 int	R_Expressions_keep INI_as(5000);/* options(expressions) */
 extern0 Rboolean R_KeepSource	INI_as(FALSE);	/* options(keep.source) */
 extern0 Rboolean R_CBoundsCheck	INI_as(FALSE);	/* options(CBoundsCheck) */
 extern0 MATPROD_TYPE R_Matprod	INI_as(MATPROD_DEFAULT);  /* options(matprod) */
+extern0 DEFAULT_TRANSLIT_TYPE R_DefaultTranslit INI_as(DEFAULT_TRANSLIT_R211); /* options(default.translit) */
 extern0 int	R_WarnLength	INI_as(1000);	/* Error/warning max length */
 extern0 int	R_nwarnings	INI_as(50);
 extern uintptr_t R_CStackLimit	INI_as((uintptr_t)-1);	/* C stack limit */
