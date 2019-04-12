@@ -2599,6 +2599,8 @@ stopifnot( identical(ef$e, environment(ef$form)),
 ## Back compatibility + deprecation warning:
 notC <- "Model[no 4]"
 form <- `Model[no 4]` ~ .
+f1 <- function(p) reformulate(".", notC)
+f2 <- function(e) f1(e)
 stopifnot(exprs = {
     identical(form, suppressWarnings(reformulate(".", notC))) # << will STOP working!
     identical(form, reformulate(".", as.name(notC)))
@@ -2607,6 +2609,10 @@ stopifnot(exprs = {
              "deprecatedWarning")
     inherits(tt, "warning")
     conditionCall(tt)[[1]] == quote(reformulate)
+    inherits(t1 <- tryCatch(f1(pi), warning=identity), "deprecatedWarning")
+    inherits(t2 <- tryCatch(f2(27), warning=identity), "deprecatedWarning")
+    all.equal(t1, tt) # including call 'reformulate(..)'
+    all.equal(t2, tt)
 })
 writeLines(conditionMessage(tt))
 
@@ -2633,6 +2639,10 @@ stopifnot(exprs = {
     identical(cx, as.matrix(data.frame(x, y="chr"))[,"x"])
     identical(x, as.logical(cx))
 })
+
+
+## Failed to work after r76382:
+stopifnot(identical( formula(c("~", "foo")), ~ foo ))
 
 
 

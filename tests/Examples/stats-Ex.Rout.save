@@ -5399,8 +5399,7 @@ surv(ft, case) ~ a + b * f
 > 
 > x <- c("a name", "another name")
 > try( reformulate(x) ) # -> Error ..... unexpected symbol
-Error in parse(text = s, keep.source = FALSE) : 
-  <text>:1:3: unexpected symbol
+Error in str2lang(termtext) : <text>:1:3: unexpected symbol
 1: a name
       ^
 > ## rather backquote the strings in x :

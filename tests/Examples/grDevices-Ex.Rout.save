@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2019-03-28 r76280) -- "Unsuffered Consequences"
+R Under development (unstable) (2019-04-12 r76384) -- "Unsuffered Consequences"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -2551,7 +2551,7 @@ Sturges   Scott      FD
 +     plot(i, i+d, type = "n", yaxt = "n", ylab = "", main = main)
 +     for (k in 1:nt) {
 +         rect(i-.5, (k-1)*j+ dy, i+.4, k*j,
-+              col = eval(parse(text = ch.col[k])), border = border)
++              col = eval(str2lang(ch.col[k])), border = border)
 +         text(2*j,  k * j + dy/4, ch.col[k])
 +     }
 + }
@@ -4093,7 +4093,7 @@ $zlab
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  10.769 0.285 11.1 0 0 
+Time elapsed:  7.893 0.419 8.441 0 0 
 > grDevices::dev.off()
 null device 
           1 

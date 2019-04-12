@@ -29,7 +29,7 @@ formula.default <- function (x = NULL, env = parent.frame(), ...)
     else {
         form <- switch(mode(x),
                        NULL = structure(list(), class = "formula"),
-                       character = formula(str2lang(x)),
+                       character = eval(str2expression(x)), # ever used?  formula.character!
                        call = eval(x),
                        stop("invalid formula"))
         environment(form) <- env
@@ -68,7 +68,7 @@ formula.data.frame <- function (x, ...)
 
 formula.character <- function(x, env = parent.frame(), ...)
 {
-    ff <- formula(eval(str2lang(x)))
+    ff <- eval(str2expression(x))
     environment(ff) <- env
     ff
 }
