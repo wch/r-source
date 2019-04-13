@@ -130,8 +130,8 @@ n <- 2.2e9
 if(availableGB > 60) withAutoprint({
     n/.Machine$integer.max  # 1.024 ==> need  long vectors!
     ii <- seq_len(n)          #   user  system elapsed  [seq_len() fast: ALTREP "compact"]
-    system.time(ii <- ii + 0) #
-    system.time(i2 <- ii[-n]) # 14.267  23.532  37.918 (slow!)
+    system.time(ii <- ii + 0) #  6.726  17.558  24.450 (slow!, seen faster)
+    system.time(i2 <- ii[-n]) # 14.267  23.532  37.918 (slow!, seen slower: el.= 51)
     ##
     ## NB: keep n, i, i2 for "below"
 })
@@ -256,6 +256,19 @@ if(availableGB > 16) withAutoprint({
         system.time(stopifnot(i2.31[(i+1):length(i2.31)] == 0)) # 16.7 sec
     })
 })
+
+
+## match(<long character>, *)  PR#17552
+if(availableGB > 44) { ## seen 40 G ('RES')
+    print(system.time(m <- match(rep("a", 2^31), "a")))# 52 sec user
+    stopifnot(all(m == 1L))
+    rm(m)
+    system.time({x <- character(2^31); x[26:1] <- letters })
+    system.time(m <- match(x, "a"))# 45 sec user
+    print(head(m, 40))
+    system.time(stopifnot(m[26] == 1L, is.na(m[-26])))
+    rm(x, m)
+}
 
 
 gc() # NB the "max used"

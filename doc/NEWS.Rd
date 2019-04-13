@@ -6,6 +6,7 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R 3.6.0}{
+\section{\Rlogo CHANGES IN R 3.6.0}{
 
    \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
      \itemize{
@@ -830,6 +831,9 @@
       \item The S4 generic signature of \code{rowSums()},
       \code{rowMeans()}, \code{colSums()} and \code{colMeans()} is
       restricted to \code{"x"}.
+
+      \item \code{match(x, tab)} now works for long \emph{character}
+      vectors \code{x}, thanks to \PR{17552} by Andreas Kersting.
     }
   }
 }
