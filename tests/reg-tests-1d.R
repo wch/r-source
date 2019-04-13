@@ -2643,6 +2643,7 @@ stopifnot(exprs = {
 
 ## Failed to work after r76382:
 stopifnot(identical( formula(c("~", "foo")), ~ foo ))
+tools::assertError(formula("3"))
 
 
 

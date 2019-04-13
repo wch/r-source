@@ -68,7 +68,10 @@ formula.data.frame <- function (x, ...)
 
 formula.character <- function(x, env = parent.frame(), ...)
 {
-    ff <- eval(str2expression(x))
+    ff <- str2expression(x)[[1L]]
+    if(!is.symbol(c. <- ff[[1L]]) || c. != quote(`~`))
+	stop(gettextf('invalid formula: "%s"', x), domain=NA)
+    class(ff) <- "formula"
     environment(ff) <- env
     ff
 }
