@@ -234,9 +234,9 @@ if(availableGB > 12) withAutoprint({
     stopifnot(is.integer(x31),
               identical(S,   2^62),
               identical(S.4, 2^64))
-    system.time(x32 <- c(x31, x31)) # 14 sec  and 16 GB
+    system.time(x32 <- c(x31, x31)) # 13 user | 20.8 elapsed  (and 16 GB)
     rm(x31)# now,  sum vvv  will switch to use irsum() [double accumulator]
-    system.time(S.2 <- sum(x32))
+    system.time(S.2 <- sum(x32)) # 8 sec
     stopifnot(S.2 == 2^63)
     rm(x32)
 })
@@ -245,31 +245,31 @@ if(availableGB > 12) withAutoprint({
 ## seq() remaining integer: (PR 17497, comment #9)
 if(availableGB > 16) withAutoprint({
     i <- as.integer(2^30)
-    system.time(i2.31 <- seq(-i, by=1L, length=2*i+1)) # 30.6 sec elapsed
+    system.time(i2.31 <- seq(-i, by=1L, length=2*i+1)) # 11.1 user | 19.2 elapsed
     object.size(i2.31) # 8'589'934'648 bytes [ was 17.17 GB in R <= 3.5.x ]
     stopifnot(is.integer(i2.31),  i2.31[1] == -i,  i2.31[length(i2.31)] == i)
 
     ## pmax(), pmin() with long vectors, PR 17533
     if(availableGB > 24) withAutoprint({
-        system.time(i2.31 <- pmin(i2.31, 0L)) # 7.1 sec
+        system.time(i2.31 <- pmin(i2.31, 0L)) # 7.2 sec user | 11.2 elapsed
         str(i2.31)
-        system.time(stopifnot(i2.31[(i+1):length(i2.31)] == 0)) # 16.7 sec
+        system.time(stopifnot(i2.31[(i+1):length(i2.31)] == 0)) # 16.7 user | 28.0 elapsed
     })
 })
 
 
 ## match(<long character>, *)  PR#17552
-if(availableGB > 44) { ## seen 40 G ('RES')
-    print(system.time(m <- match(rep("a", 2^31), "a")))# 52 sec user
+if(availableGB > 44) withAutoprint({ ## seen 40 G ('RES')
+    system.time(m <- match(rep("a", 2^31), "a")) # 34.7 sec user (55 elapsed)
     stopifnot(all(m == 1L))
     rm(m)
-    system.time({x <- character(2^31); x[26:1] <- letters })
-    system.time(m <- match(x, "a"))# 45 sec user
-    print(head(m, 40))
+    system.time({x <- character(2^31); x[26:1] <- letters }) # 1.6 user | 9.4 elapsed
+    system.time(m <- match(x, "a"))# 18.2 user | 51.6 elapsed
+    head(m, 30)
     system.time(stopifnot(m[26] == 1L, is.na(m[-26])))
     rm(x, m)
-}
+})
 
 
 gc() # NB the "max used"
-proc.time() # total
+proc.time() # total  [ ~ 40 minutes in full case, 2019-04-12]
