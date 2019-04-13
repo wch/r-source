@@ -284,8 +284,8 @@ if(file.exists(repodir))
     unlink(repodir, recursive = TRUE)
 dir.create(repodir)
 
-ro <- build.pkg(file.path(pkgPath, c("pkgA",   "pkgB")),   oldpkgdir)
-rn <- build.pkg(file.path(pkgPath, c("pkgA_2", "pkgA_3")), newpkgdir)
+ro <- build.pkg(file.path(pkgPath, c("pkgD",   "pkgB")),   oldpkgdir)
+rn <- build.pkg(file.path(pkgPath, c("pkgD_2", "pkgD_3")), newpkgdir)
 unlist(ro)
 unlist(rn)
 
