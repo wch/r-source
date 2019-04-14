@@ -1,0 +1,14 @@
+Package: pkgD
+Title: Simple Package with NameSpace and S4 Methods and Classes
+Version: 2.1.2
+Date: 2015-10-10
+Type: Package
+Depends: R (>= 2.14.0), R (>= r56550), methods
+Imports: Matrix (>= 1.2-0), Matrix (<= 99.9-9)
+LazyData: true
+Author: Yohan Chalabi and R-core
+Maintainer: R Core <R-core@almost.r-project.org>
+Description: Example package with a namespace, and S4 method for "plot".
+ used for regression testing the correct working of tools::codoc(), undoc()
+ etc, but also S4 in connection with other packages.
+License: GPL (>= 2)
