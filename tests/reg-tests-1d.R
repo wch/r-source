@@ -2641,10 +2641,14 @@ stopifnot(exprs = {
 })
 
 
-## Failed to work after r76382:
-stopifnot(identical( formula(c("~", "foo")), ~ foo ))
+## Failed to work after r76382--8:
 tools::assertError(formula("3"))
-
+stopifnot(exprs = {
+    identical( formula(c("~", "foo")), ~ foo )
+    inherits(ff <- tryCatch(formula("random = ~ 1|G"),
+                            warning=identity), "deprecatedWarning")
+    identical( ~ 1 | G, suppressWarnings(formula("ran = ~ 1|G")))
+})
 
 
 ## keep at end

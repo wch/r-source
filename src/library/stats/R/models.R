@@ -69,8 +69,14 @@ formula.data.frame <- function (x, ...)
 formula.character <- function(x, env = parent.frame(), ...)
 {
     ff <- str2expression(x)[[1L]]
-    if(!is.symbol(c. <- ff[[1L]]) || c. != quote(`~`))
-	stop(gettextf('invalid formula: "%s"', x), domain=NA)
+    if(!(is.call(ff) && is.symbol(c. <- ff[[1L]]) && c. == quote(`~`))) {
+        msg <- gettextf("invalid formula: %s", deparse(x, 500L)[[1]])
+        if(is.call(ff) && is.symbol(c. <- ff[[1L]]) && c. == quote(`=`)) {
+            .Deprecated(msg = c(msg, " *assignment* is deprecated"))
+            ff <- ff[[3L]] # the RHS of "v = <form>" (pkgs 'GeNetIt', 'KMgene')
+        }
+        else stop(msg, domain=NA)
+    }
     class(ff) <- "formula"
     environment(ff) <- env
     ff
