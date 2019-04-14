@@ -480,7 +480,7 @@ FUNTAB R_FunTab[] =
 {"sample2",	do_sample2,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 
 {"RNGkind",	do_RNGkind,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
-{"set.seed",	do_setseed,	0,	111,	3,	{PP_FUNCALL, PREC_FN,	0}},
+{"set.seed",	do_setseed,	0,	111,	4,	{PP_FUNCALL, PREC_FN,	0}},
 
 /* Data Summaries */
 /* these four are group generic and so need to eval args */

@@ -113,7 +113,7 @@ set.seed <- function(seed, kind = NULL, normal.kind = NULL, sample.kind = NULL)
                     domain = NA)
          if(sample.kind == length(s.kinds) - 1L) sample.kind <- -1L
     }
-    .Internal(set.seed(seed, i.knd, normal.kind))
+    .Internal(set.seed(seed, i.knd, normal.kind, sample.kind))
 }
 
 # Compatibility function to set RNGkind as in a given R version
