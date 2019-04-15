@@ -444,6 +444,16 @@
 .sigLabel <- function(sig)
   paste(sig, collapse = "#")
 
+.fillSignatures <- function(sigs, n) {
+    siglens <- lengths(strsplit(sigs, "#", fixed=TRUE))
+    short <- n > siglens
+    suffix <- vapply(n - siglens[short],
+                     function(ni) paste(rep("ANY", ni), collapse="#"),
+                     character(1L))
+    sigs[short] <- paste(sigs[short], suffix, sep="#")
+    sigs
+}
+
 ## workhorse of selectMethod() [ -> ../Methods.R ] "
 .findInheritedMethods <-
     function(classes, fdef, mtable = NULL,
@@ -524,8 +534,9 @@
 	if(verbose >= 2) { cat(";  labels = \n") ; print(labels) }
     }
     allMethods <- names(table)
-    found <- labels %in% allMethods
-    methods <- mget(labels[found], table)
+    m <- match(labels, .fillSignatures(allMethods, length(classes)))
+    found <- !is.na(m)
+    methods <- mget(allMethods[m[found]], table)
     if(verbose) cat(" >> found: ", length(methods), "\n")
     if(hasGroup) {
         ##  add the  group methods recursively found but each time

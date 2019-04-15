@@ -833,6 +833,12 @@
 
       \item \code{match(x, tab)} now works for long \emph{character}
       vectors \code{x}, thanks to \PR{17552} by Andreas Kersting.
+
+      \item Class unions are unloaded when their namespace is
+      unloaded (\PR{17531}, adapted from a patch by Brodie Gaslam).
+
+      \item \code{selectMethod()} is robust to ANY-truncation of method
+      signatures (thanks to Herve Pages for the report).
     }
   }
 }

@@ -830,6 +830,11 @@ cacheMetaData <-
                identical(cldef@package, pkg)) {
                 .uncacheClass(cl, cldef)
                 .removeSuperclassBackRefs(cl, cldef, searchWhere)
+                if(is(cldef, "ClassUnionRepresentation")) {
+                    subclasses <- names(cldef@subclasses)
+                    for(subclass in subclasses)
+                        .removeSuperClass(subclass, cl)
+                }
             }
         }
     }
@@ -1056,7 +1061,12 @@ methodSignatureMatrix <- function(object, sigSlots = c("target", "defined"))
 {
     if(length(sigSlots)) {
         allSlots <- lapply(sigSlots, slot, object = object)
-        mm <- unlist(allSlots)
+        n <- max(lengths(allSlots))
+        mm <- unlist(lapply(allSlots, function(s) {
+            length(s) <- n
+            s[is.na(s)] <- "ANY"
+            s
+        }))
         mm <- matrix(mm, nrow = length(allSlots), byrow = TRUE)
         dimnames(mm) <- list(sigSlots, names(allSlots[[1L]]))
         mm
