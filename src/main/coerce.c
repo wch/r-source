@@ -1617,10 +1617,14 @@ SEXP attribute_hidden do_str2lang(SEXP call, SEXP op, SEXP args, SEXP rho) {
 	errorcall(call, _("argument must be character"));
 
     Rboolean to_lang = !PRIMVAL(op); // op = 0: character *string* to call-like
-    if(to_lang)
+    if(to_lang) {
 	if(LENGTH(args) != 1)
 	    errorcall(call, _("argument must be a character string"));
-    // basically parse(text = "....")[[1]] :
+    // basically parse(text = "...."), for str2lang() '[[1]]' :
+    } else // str2expression()
+	if(!LENGTH(args))
+	    return(allocVector(EXPRSXP, 0));
+
     ParseStatus status;
     SEXP srcfile = PROTECT(mkString("<text>"));
     SEXP ans = PROTECT(R_ParseVector(args, -1, &status, srcfile));
