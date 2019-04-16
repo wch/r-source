@@ -1,5 +1,5 @@
 
-R version 3.6.0 alpha (2019-04-08 r76341)
+R version 3.6.0 beta (2019-04-15 r76395) -- "Planting of a Tree"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -600,5 +600,5 @@ Length  Class   Mode
      0   NULL   NULL 
 > ## at the very end
 > cat('Time elapsed: ', proc.time(), "\n")
-Time elapsed:  1.358 0.108 1.467 0.002 0.007 
+Time elapsed:  1.358 0.114 1.502 0.001 0.007 
 > 

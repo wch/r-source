@@ -1,5 +1,5 @@
 
-R version 3.6.0 alpha (2019-04-08 r76341)
+R version 3.6.0 beta (2019-04-15 r76395) -- "Planting of a Tree"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -1000,5 +1000,5 @@ Summary of (a total of 10) warning messages:
 > 
 > ## at the very end
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.302 0.021 0.324 0 0 
+Time elapsed:  0.306 0.014 0.326 0 0 
 > 

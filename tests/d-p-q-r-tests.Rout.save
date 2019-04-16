@@ -1,5 +1,5 @@
 
-R version 3.6.0 alpha (2019-04-08 r76341)
+R version 3.6.0 beta (2019-04-15 r76395) -- "Planting of a Tree"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -1492,5 +1492,5 @@ rweibull (4, ..): 1 2  [Ok]
 > 
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  1.587 0.021 1.615 0 0 
+Time elapsed:  1.582 0.026 1.613 0 0 
 > 
