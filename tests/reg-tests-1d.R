@@ -2636,6 +2636,11 @@ stopifnot(exprs = {
 
 
 
+## str2expression(<empty>) :
+stopifnot(identical(str2expression(character()), expression()))
+
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())
