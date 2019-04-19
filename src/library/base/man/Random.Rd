@@ -221,7 +221,8 @@ set.seed(seed, kind = NULL, normal.kind = NULL, sample.kind = NULL)
   normal and sample kinds selected \emph{before} the call, invisibly if 
   either argument is not \code{NULL}.  A type starts a session as the 
   default, and is selected either by a call to \code{RNGkind} or by setting
-  \code{.Random.seed} in the workspace.
+  \code{.Random.seed} in the workspace. (NB: prior to \R 3.6.0 the first
+  two kinds were returned in a two-element character vector.)
 
   \code{RNGversion} returns the same information as \code{RNGkind} about
   the defaults in a specific \R version.
