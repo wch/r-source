@@ -26,13 +26,16 @@
 
        \item The default method for generating from a discrete uniform
        distribution (used in \code{sample()}, for instance) has been
-       changed. This addresses the fact, pointed out by Ottoboni and
+       changed.  This addresses the fact, pointed out by Ottoboni and
        Stark, that the previous method made \code{sample()} noticeably
        non-uniform on large populations.  See \PR{17494} for a
-       discussion. The previous method can be requested using
+       discussion.  The previous method can be requested using
        \code{RNGkind()} or \code{RNGversion()} if necessary for
        reproduction of old results.  Thanks to Duncan Murdoch for
        contributing the patch and Gabe Becker for further assistance.
+
+       The output of \code{RNGkind()} has been changed to also return the
+       \sQuote{kind} used by \code{sample()}.
      }
   }
 
