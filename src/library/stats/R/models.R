@@ -66,9 +66,28 @@ formula.data.frame <- function (x, ...)
     else DF2formula(x, parent.frame())
 }
 
+## Future version {w/o .Deprecated etc}:
 formula.character <- function(x, env = parent.frame(), ...)
 {
-    ff <- str2expression(x)[[1L]]
+    ff <- str2lang(x)
+    if(!(is.call(ff) && is.symbol(c. <- ff[[1L]]) && c. == quote(`~`)))
+        stop(gettextf("invalid formula: %s", deparse(x, 500L)[[1]]), domain=NA)
+    class(ff) <- "formula"
+    environment(ff) <- env
+    ff
+}
+
+## Active version helping to move towards future version:
+formula.character <- function(x, env = parent.frame(), ...)
+{
+    ## Next lines upto 'ff <- str2lang(x)' instead of  'ff <- str2expression(x)[[1L]]'
+    if(length(x) > 1L) {
+        .Deprecated(msg=
+ "Using formula(x) is deprecated when x is a character vector of length > 1.
+  Consider formula(paste(x, collapse = \" \")) instead.")
+        x <- paste(x, collapse = " ")
+    }
+    ff <- str2lang(x)
     if(!(is.call(ff) && is.symbol(c. <- ff[[1L]]) && c. == quote(`~`))) {
         msg <- gettextf("invalid formula: %s", deparse(x, 500L)[[1]])
         if(is.call(ff) && is.symbol(c. <- ff[[1L]]) && c. == quote(`=`)) {

@@ -2644,10 +2644,17 @@ stopifnot(exprs = {
 ## Failed to work after r76382--8:
 tools::assertError(formula("3"))
 stopifnot(exprs = {
-    identical( formula(c("~", "foo")), ~ foo )
     inherits(ff <- tryCatch(formula("random = ~ 1|G"),
                             warning=identity), "deprecatedWarning")
     identical( ~ 1 | G, suppressWarnings(formula("ran = ~ 1|G")))
+    ## New formula(<character>) specs: now consistent *and* deprecated:
+    is.list(op <- options(warn = 1))
+    identical(formula(c("~", "foo")), ~ foo )
+    identical(formula(c("y", "~", "x + (1 | G)")), y ~ x + (1 | G))
+    identical(formula(c("~", "x",   "+ (1 | G)")),   ~ x + (1 | G))
+    is.list(options(op))
+    inherits(tryCatch(formula(c("~", "x")), warning=identity),
+             "deprecatedWarning")
 })
 
 

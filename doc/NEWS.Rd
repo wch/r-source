@@ -28,6 +28,16 @@
       unused settings \samp{F77} and \samp{FCPIFCPLAGS}.
     }
   }
+
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{format(x)} with \code{length(x) > 1} character vectors,
+      is deprecated now.  Such use has been very rare, and has \sQuote{worked}
+      as expected in some cases only, also in one CRAN package. (As long as
+      it's not defunct, it at least works consistently as
+      \code{format(paste(x, collapse = " "))}.)
+    }
+  }
 }
 
 \section{\Rlogo CHANGES IN R 3.6.0}{
