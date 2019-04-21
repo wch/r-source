@@ -1930,14 +1930,20 @@ function(x, dfile)
             x[ind] <- iconv(x[ind], "latin1", "ASCII", sub = "byte")
         }
     }
-    ## Avoid declared encodings when writing out.
-    Encoding(x) <- "unknown"
+    ## <FIXME>
+    ## ## Avoid declared encodings when writing out.
+    ##   Encoding(x) <- "unknown"
+    ## This may also yield byte subs when formatting non-keep-white
+    ## fields via strwrap() (PR#17550).
+    ## Remove eventually ...
+    ## </FIXME>
     ## Avoid folding for fields where we keep whitespace when reading,
     ## plus two where legacy code does not strip whitespace and so
     ## we should not wrap the field.
     write.dcf(rbind(x), dfile,
               keep.white = c(.keep_white_description_fields,
-                             "Maintainer", "BugReports"))
+                             "Maintainer", "BugReports"),
+              useBytes = TRUE)
 }
 
 ### ** .read_repositories
