@@ -37,7 +37,7 @@ setHook("grid.newpage", get("grid_plot_hook", pos = "CheckExEnv"))
 assign("cleanEx",
        function(env = .GlobalEnv) {
 	   rm(list = ls(envir = env, all.names = TRUE), envir = env)
-           RNGkind("default", "default")
+           RNGkind("default", "default", "default")
 	   set.seed(1)
    	   options(warn = 1)
 	   .CheckExEnv <- as.environment("CheckExEnv")
