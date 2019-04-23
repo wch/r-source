@@ -2275,15 +2275,18 @@ stopifnot(exprs = {
 ## in R <= 3.5.1
 
 
-## str() now even works with invalid objects:
+## str() now even works with invalid S4  objects:
+## this needs Matrix loaded to be an S4 generic
+if(requireNamespace('Matrix', lib.loc = .Library)) {
 moS <- mo <- findMethods("isSymmetric")
 attr(mo, "arguments") <- NULL
-validObject(mo, TRUE)# shows what's wrong
+print(validObject(mo, TRUE)) # shows what's wrong
 tools::assertError(capture.output( mo ))
 op <- options(warn = 1)# warning:
 str(mo, max.level = 2)
 options(op)# revert
 ## in R <= 3.5.x, str() gave error instead of the warning
+}
 
 
 ## seq.default() w/ integer overflow in border cases: -- PR#17497, Suharto Anggono
