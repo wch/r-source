@@ -3835,7 +3835,7 @@ sigma^2 estimated as 0.4566:  log likelihood = -101.2,  aic = 212.4
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x58b6340>
+<environment: 0x51a8cb8>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -4872,7 +4872,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x6592d90>
+<bytecode: 0x5e85708>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -7495,7 +7495,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x6441478>
+<environment: 0x5d300d8>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -10992,7 +10992,6 @@ Consider specifying 'start' or using a selfStart model
 > lines(x, predict(nlmod), col = 2)
 > 
 > 
-> ## IGNORE_RDIFF_END
 > ## Don't show: 
 > options(od)
 > ## End(Don't show)
@@ -12190,14 +12189,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x47a20a0>
-<environment: 0x47aa730>
+<bytecode: 0x4030588>
+<environment: 0x4038c18>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x47a1f50>
-<environment: 0x47aa730>
+<bytecode: 0x4034268>
+<environment: 0x4038c18>
 
 > 
 > 
@@ -15378,72 +15377,20 @@ Contrast 1 Contrast 2 Contrast 3
 > 
 > 
 > ## multi-stratum example where efficiencies play a role
-> ## IGNORE_RDIFF_BEGIN
-> utils::example(eff.aovlist)
-
-eff.vl> ## An example from Yates (1932),
-eff.vl> ## a 2^3 design in 2 blocks replicated 4 times
-eff.vl> 
-eff.vl> Block <- gl(8, 4)
-
-eff.vl> A <- factor(c(0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,
-eff.vl+               0,1,0,1,0,1,0,1,0,1,0,1))
-
-eff.vl> B <- factor(c(0,0,1,1,0,0,1,1,0,1,0,1,1,0,1,0,0,0,1,1,
-eff.vl+               0,0,1,1,0,0,1,1,0,0,1,1))
-
-eff.vl> C <- factor(c(0,1,1,0,1,0,0,1,0,0,1,1,0,0,1,1,0,1,0,1,
-eff.vl+               1,0,1,0,0,0,1,1,1,1,0,0))
-
-eff.vl> Yield <- c(101, 373, 398, 291, 312, 106, 265, 450, 106, 306, 324, 449,
-eff.vl+            272, 89, 407, 338, 87, 324, 279, 471, 323, 128, 423, 334,
-eff.vl+            131, 103, 445, 437, 324, 361, 302, 272)
-
-eff.vl> aovdat <- data.frame(Block, A, B, C, Yield)
-
-eff.vl> old <- getOption("contrasts")
-
-eff.vl> options(contrasts = c("contr.helmert", "contr.poly"))
-
-eff.vl> ## IGNORE_RDIFF_BEGIN
-eff.vl> (fit <- aov(Yield ~ A*B*C + Error(Block), data = aovdat))
-
-Call:
-aov(formula = Yield ~ A * B * C + Error(Block), data = aovdat)
-
-Grand Mean: 291.5938
-
-Stratum 1: Block
-
-Terms:
-                      A:B       A:C       B:C     A:B:C Residuals
-Sum of Squares   780.1250  276.1250 2556.1250  112.5000  774.0938
-Deg. of Freedom         1         1         1         1         3
-
-Residual standard error: 16.06335
-Estimated effects are balanced
-
-Stratum 2: Within
-
-Terms:
-                        A         B         C       A:B       A:C       B:C
-Sum of Squares    3465.28 161170.03 278817.78     28.17   1802.67  11528.17
-Deg. of Freedom         1         1         1         1         1         1
-                    A:B:C Residuals
-Sum of Squares      45.37   5423.28
-Deg. of Freedom         1        17
-
-Residual standard error: 17.86103
-Estimated effects are balanced
-
-eff.vl> ## IGNORE_RDIFF_END
-eff.vl> eff.aovlist(fit)
-       A B C  A:B  A:C  B:C A:B:C
-Block  0 0 0 0.25 0.25 0.25  0.25
-Within 1 1 1 0.75 0.75 0.75  0.75
-
-eff.vl> options(contrasts = old)
-> ## IGNORE_RDIFF_END
+> ## An example from Yates (1932),
+> ## a 2^3 design in 2 blocks replicated 4 times
+> 
+> Block <- gl(8, 4)
+> A <- factor(c(0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,
++               0,1,0,1,0,1,0,1,0,1,0,1))
+> B <- factor(c(0,0,1,1,0,0,1,1,0,1,0,1,1,0,1,0,0,0,1,1,
++               0,0,1,1,0,0,1,1,0,0,1,1))
+> C <- factor(c(0,1,1,0,1,0,0,1,0,0,1,1,0,0,1,1,0,1,0,1,
++               1,0,1,0,0,0,1,1,1,1,0,0))
+> Yield <- c(101, 373, 398, 291, 312, 106, 265, 450, 106, 306, 324, 449,
++            272, 89, 407, 338, 87, 324, 279, 471, 323, 128, 423, 334,
++            131, 103, 445, 437, 324, 361, 302, 272)
+> aovdat <- data.frame(Block, A, B, C, Yield)
 > fit <- aov(Yield ~ A + B * C + Error(Block), data = aovdat)
 > cont1 <- c(-1, 1)[A]/32  # Helmert contrasts
 > cont2 <- c(-1, 1)[B] * c(-1, 1)[C]/32
@@ -16372,8 +16319,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f)
-<bytecode: 0x4d96ff8>
-<environment: 0x69f67f8>
+<bytecode: 0x4689810>
+<environment: 0x5984578>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -18698,7 +18645,7 @@ Number of Fisher Scoring iterations: 6
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  12.087 0.609 12.79 0 0 
+Time elapsed:  6.347 0.222 6.6 0 0 
 > grDevices::dev.off()
 null device 
           1 

@@ -305,8 +305,9 @@ b <- coef(musc.1)
 musc.2 <- nls(Length ~ a[Strip] + b[Strip]*exp(-Conc/th), muscle,
               start = list(a = rep(b[2], 21), b = rep(b[3], 21), th = b[1]))
 ## IGNORE_RDIFF_BEGIN
-summary(musc.2)}
+summary(musc.2)
 ## IGNORE_RDIFF_END
+}
 \dontshow{options(od)}
 }
 \keyword{nonlinear}
