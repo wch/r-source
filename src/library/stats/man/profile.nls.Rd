@@ -1,6 +1,6 @@
 % File src/library/stats/man/profile.nls.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2008 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{profile.nls}
@@ -57,8 +57,10 @@ fm1 <- nls(demand ~ SSasympOrig(Time, A, lrc), data = BOD)
 # get the profile for the fitted model: default level is too extreme
 pr1 <- profile(fm1, alpha = 0.05)
 # profiled values for the two parameters
+## IGNORE_RDIFF_BEGIN
 pr1$A
 pr1$lrc
+## IGNORE_RDIFF_END
 # see also example(plot.profile.nls)
 \dontshow{options(od)}
 }

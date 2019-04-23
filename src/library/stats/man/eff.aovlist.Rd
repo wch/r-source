@@ -1,6 +1,6 @@
 % File src/library/stats/man/eff.aovlist.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{eff.aovlist}
@@ -70,7 +70,9 @@ aovdat <- data.frame(Block, A, B, C, Yield)
 
 old <- getOption("contrasts")
 options(contrasts = c("contr.helmert", "contr.poly"))
+## IGNORE_RDIFF_BEGIN
 (fit <- aov(Yield ~ A*B*C + Error(Block), data = aovdat))
+## IGNORE_RDIFF_END
 eff.aovlist(fit)
 options(contrasts = old)
 }
