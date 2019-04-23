@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2019-04-12 r76384) -- "Unsuffered Consequences"
+R Under development (unstable) (2019-04-23 r76414) -- "Unsuffered Consequences"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -1691,7 +1691,7 @@ Loading required package: grid
 +                      "Lab" = function(RGB) convRGB2(RGB, "Lab"))
 +     d <- sqrt(colSums((TransF(Rcol) - as.vector(TransF(rgb)))^2))
 +     iS <- sort.list(d[near <- d <= dist])# sorted: closest first
-+     setNames(.cc[near][iS], format(d[near][iS], digits=3))
++     setNames(.cc[near][iS], format(zapsmall(d[near][iS]), digits=3))
 + }
 
 > nearRcolor(col2rgb("tan2"), "rgb")
