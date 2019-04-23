@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2019-03-28 r76280) -- "Unsuffered Consequences"
+R Under development (unstable) (2019-04-23 r76412) -- "Unsuffered Consequences"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -3074,6 +3074,7 @@ Deg. of Freedom        12
 
 Residual standard error: 3.929447
 Estimated effects are balanced
+> ## IGNORE_RDIFF_BEGIN
 > summary(npk.aovE)
 
 Error: block
@@ -3092,6 +3093,7 @@ P:K        1   0.48    0.48   0.031 0.86275
 Residuals 12 185.29   15.44                   
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+> ## IGNORE_RDIFF_END
 > options(op)  # reset to previous
 > 
 > 
@@ -3833,7 +3835,7 @@ sigma^2 estimated as 0.4566:  log likelihood = -101.2,  aic = 212.4
 > 
 > asOneSidedFormula("age")
 ~age
-<environment: 0x4794550>
+<environment: 0x58b6340>
 > asOneSidedFormula(~ age)
 ~age
 > 
@@ -4870,7 +4872,7 @@ function (V)
     r[cbind(1L:p, 1L:p)] <- 1
     r
 }
-<bytecode: 0x547b098>
+<bytecode: 0x6592d90>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -6684,6 +6686,7 @@ Empirical CDF:	  10 unique values with summary
 > 
 > old <- getOption("contrasts")
 > options(contrasts = c("contr.helmert", "contr.poly"))
+> ## IGNORE_RDIFF_BEGIN
 > (fit <- aov(Yield ~ A*B*C + Error(Block), data = aovdat))
 
 Call:
@@ -6713,6 +6716,7 @@ Deg. of Freedom         1        17
 
 Residual standard error: 17.86103
 Estimated effects are balanced
+> ## IGNORE_RDIFF_END
 > eff.aovlist(fit)
        A B C  A:B  A:C  B:C A:B:C
 Block  0 0 0 0.25 0.25 0.25  0.25
@@ -7491,7 +7495,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x52fa1d0>
+<environment: 0x6441478>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -10988,6 +10992,7 @@ Consider specifying 'start' or using a selfStart model
 > lines(x, predict(nlmod), col = 2)
 > 
 > 
+> ## IGNORE_RDIFF_END
 > ## Don't show: 
 > options(od)
 > ## End(Don't show)
@@ -12185,14 +12190,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x48cfb38>
-<environment: 0x48da040>
+<bytecode: 0x47a20a0>
+<environment: 0x47aa730>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x48cf9e8>
-<environment: 0x48da040>
+<bytecode: 0x47a1f50>
+<environment: 0x47aa730>
 
 > 
 > 
@@ -13757,6 +13762,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > # get the profile for the fitted model: default level is too extreme
 > pr1 <- profile(fm1, alpha = 0.05)
 > # profiled values for the two parameters
+> ## IGNORE_RDIFF_BEGIN
 > pr1$A
        tau par.vals.A par.vals.lrc
 1  -3.0873   13.59751      0.14033
@@ -13787,6 +13793,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 11  2.1335  16.086803     0.234850
 12  2.6052  15.638807     0.485009
 13  3.0276  15.265409     0.779458
+> ## IGNORE_RDIFF_END
 > # see also example(plot.profile.nls)
 > ## Don't show: 
 > options(od)
@@ -15371,6 +15378,7 @@ Contrast 1 Contrast 2 Contrast 3
 > 
 > 
 > ## multi-stratum example where efficiencies play a role
+> ## IGNORE_RDIFF_BEGIN
 > utils::example(eff.aovlist)
 
 eff.vl> ## An example from Yates (1932),
@@ -15397,6 +15405,7 @@ eff.vl> old <- getOption("contrasts")
 
 eff.vl> options(contrasts = c("contr.helmert", "contr.poly"))
 
+eff.vl> ## IGNORE_RDIFF_BEGIN
 eff.vl> (fit <- aov(Yield ~ A*B*C + Error(Block), data = aovdat))
 
 Call:
@@ -15427,12 +15436,14 @@ Deg. of Freedom         1        17
 Residual standard error: 17.86103
 Estimated effects are balanced
 
+eff.vl> ## IGNORE_RDIFF_END
 eff.vl> eff.aovlist(fit)
        A B C  A:B  A:C  B:C A:B:C
 Block  0 0 0 0.25 0.25 0.25  0.25
 Within 1 1 1 0.75 0.75 0.75  0.75
 
 eff.vl> options(contrasts = old)
+> ## IGNORE_RDIFF_END
 > fit <- aov(Yield ~ A + B * C + Error(Block), data = aovdat)
 > cont1 <- c(-1, 1)[A]/32  # Helmert contrasts
 > cont2 <- c(-1, 1)[B] * c(-1, 1)[C]/32
@@ -16361,8 +16372,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f)
-<bytecode: 0x3c13e80>
-<environment: 0x5cbfc58>
+<bytecode: 0x4d96ff8>
+<environment: 0x69f67f8>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -18687,7 +18698,7 @@ Number of Fisher Scoring iterations: 6
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  6.336 0.224 6.592 0 0 
+Time elapsed:  12.087 0.609 12.79 0 0 
 > grDevices::dev.off()
 null device 
           1 

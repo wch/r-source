@@ -1,6 +1,6 @@
 % File src/library/stats/man/se.contrast.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{se.contrast}
@@ -100,7 +100,9 @@ rm(A, B, score)
 
 
 ## multi-stratum example where efficiencies play a role
+## IGNORE_RDIFF_BEGIN
 utils::example(eff.aovlist)
+## IGNORE_RDIFF_END
 fit <- aov(Yield ~ A + B * C + Error(Block), data = aovdat)
 cont1 <- c(-1, 1)[A]/32  # Helmert contrasts
 cont2 <- c(-1, 1)[B] * c(-1, 1)[C]/32
