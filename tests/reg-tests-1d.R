@@ -1115,9 +1115,10 @@ pL  <- vapply(fLrg, function(f)length(pretty(c(-f,f), n = 100,  min.n = 1)), 1L)
 pL
 pL3 <- vapply(fLrg, function(f)length(pretty(c(-f,f), n = 10^3, min.n = 1)), 1L)
 pL3
-stopifnot(71 <= pL, pL <= 141, 81 <= pL[-7], # not on Win-64: pL[-15] <= 121,
+stopifnot(71 <= pL, pL <= 141, # 81 <= pL[-7], # not on Win-64: pL[-15] <= 121,
           701 <= pL3, pL3 <= 1401) # <= 1201 usually
 ## in R < 3.5.0, both had values as low as 17
+## without long doubles, min(pl[-7]) is 71.
 
 
 ### Several returnValue() fixes (r 73111) --------------------------
