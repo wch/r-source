@@ -963,16 +963,12 @@ stopifnot(exprs = {
 
 ## write.csv did not signal an error if the disk was full PR#17243
 if (file.access("/dev/full", mode = 2) == 0) { # Not on all systems...
+    cat("Using  /dev/full  checking write errors... ")
     # Large writes should fail mid-write
-    stopifnot(inherits(tryCatch(write.table(data.frame(x=1:1000000),
-                                            file = "/dev/full"),
-                                error = identity),
-                       "error"))
+    tools::assertError(write.table(data.frame(x=1:1000000), file = "/dev/full"))
     # Small writes should fail on closing
-    stopifnot(inherits(tryCatch(write.table(data.frame(x=1),
-                                                file = "/dev/full"),
-                                    warning = identity),
-                       "warning"))
+    tools::assertWarning(write.table(data.frame(x=1), file = "/dev/full"))
+    cat("[Ok]\n")
 }
 ## Silently failed up to 3.4.1
 
@@ -2583,7 +2579,7 @@ stopifnot(exprs = {
 
 ## bxp() did not signal anything about duplicate actual arguments:
 set.seed(3); bx.p <- boxplot(split(rt(100, 4), gl(5, 20)), plot=FALSE)
-tools::assertWarning(bxp(bx.p, ylab = "Y LAB", ylab = "two"))
+tools::assertWarning(bxp(bx.p, ylab = "Y LAB", ylab = "two"), verbose=TRUE)
 w <- tryCatch(bxp(bx.p, ylab = "Y LAB", ylab = "two", xlab = "i", xlab = "INDEX"),
               warning = conditionMessage)
 stopifnot(is.character(w), grepl('ylab = "two"', w), grepl('xlab = "INDEX"', w))
@@ -2646,7 +2642,7 @@ stopifnot(exprs = {
 
 
 ## Failed to work after r76382--8:
-tools::assertError(formula("3"))
+tools::assertError(formula("3"), verbose=TRUE)
 stopifnot(exprs = {
     inherits(ff <- tryCatch(formula("random = ~ 1|G"),
                             warning=identity), "deprecatedWarning")
@@ -2657,9 +2653,8 @@ stopifnot(exprs = {
     identical(formula(c("y", "~", "x + (1 | G)")), y ~ x + (1 | G))
     identical(formula(c("~", "x",   "+ (1 | G)")),   ~ x + (1 | G))
     is.list(options(op))
-    inherits(tryCatch(formula(c("~", "x")), warning=identity),
-             "deprecatedWarning")
 })
+tools::assertWarning(formula(c("~", "x")), "deprecatedWarning", verbose=TRUE)
 
 
 ## str2expression(<empty>) :

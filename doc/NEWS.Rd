@@ -8,7 +8,10 @@
 \section{\Rlogo CHANGES IN R-devel}{
   \subsection{NEW FEATURES}{
     \itemize{
-      \item Placeholder.
+      \item \code{assertError()} and \code{assertWarning()} (package
+      \pkg{tools}) now can check for \emph{specific} error or warning
+      classes via new optional 2nd argument \code{classes} (which is not
+      back compatible with previous use of unnamed 2nd arg.)
     }
   }
 
