@@ -2908,13 +2908,43 @@ add_dummies <- function(dir, Log)
             if (!any) resultLog(Log, "OK")
         }
 
-        test_omp <-
-            config_val_to_logical(Sys.getenv("_R_CHECK_SHLIB_OPENMP_FLAGS_", "FALSE"))
         makefiles <- Sys.glob(file.path("src",
                                         c("Makevars", "Makevars.in",
                                           "Makevars.win",
                                           "Makefile", "Makefile.win")))
 
+        if(length(makefiles)) {
+            checkingLog(Log, "use of PKG_*FLAGS in Makefiles")
+            any <- msg <- character()
+            for (m in makefiles) {
+                lines <- readLines(m, warn = FALSE)
+                have_c <- length(dir('src', patt = "[.]c$", recursive = TRUE)) > 0L
+                have_cxx <- length(dir('src', patt = "[.](cc|cpp)$", recursive = TRUE)) > 0L
+                have_f <- length(dir('src', patt = "[.]f$", recursive = TRUE)) > 0L
+                have_f9x <- length(dir('src', patt = "[.]f9[05]$", recursive = TRUE)) > 0L
+                for (f in c("C", "CXX", "F", "FC", "CPP"))  {
+                    this <- paste0(f, "FLAGS")
+                    this2 <- paste0("PKG_", this)
+                    pat <- paste0("^[[:space:]]*", this2)
+                    if(any(grepl(pat, lines, useBytes = TRUE))) {
+                        if(!switch(f, C = have_c, CXX = have_cxx,
+                                   F = have_f | have_f9x, FC =  have_f9x,
+                                   CPP = have_c | have_cxx)) {
+                            msg <- c(msg,
+                                     paste("  ", this2, "set in", sQuote(m),
+                                           "without any corresponding files\n"))
+                        }
+                    }
+                }
+            }
+            if (length(msg)) {
+                noteLog(Log)
+                printLog0(Log, msg)
+            } else resultLog(Log, "OK")
+        }
+
+        test_omp <-
+            config_val_to_logical(Sys.getenv("_R_CHECK_SHLIB_OPENMP_FLAGS_", "FALSE"))
         if(length(makefiles) && test_omp) {
             checkingLog(Log, "use of SHLIB_OPENMP_*FLAGS in Makefiles")
             ## If any of these flags are included in PKG_*FLAGS, it
@@ -2942,10 +2972,10 @@ add_dummies <- function(dir, Log)
                 anyInLIBS <- any(grepl("SHLIB_OPENMP_", lines[c1], useBytes = TRUE))
 
                 ## Now see what sort of files we have
-                have_c <- length(dir('src', patt = "[.]c$")) > 0L
-                have_cxx <- length(dir('src', patt = "[.](cc|cpp)$")) > 0L
-                have_f <- length(dir('src', patt = "[.]f$")) > 0L
-                have_f9x <- length(dir('src', patt = "[.]f9[05]$")) > 0L
+                have_c <- length(dir('src', patt = "[.]c$", recursive = TRUE)) > 0L
+                have_cxx <- length(dir('src', patt = "[.](cc|cpp)$", recursive = TRUE)) > 0L
+                have_f <- length(dir('src', patt = "[.]f$", recursive = TRUE)) > 0L
+                have_f9x <- length(dir('src', patt = "[.]f9[05]$", recursive = TRUE)) > 0L
                 used <- character()
                 for (f in c("C", "CXX", "F", "FC"))  {
                     this <- this2 <- paste0(f, "FLAGS")
