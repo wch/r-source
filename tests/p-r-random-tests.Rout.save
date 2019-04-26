@@ -1,5 +1,5 @@
 
-R version 3.6.0 beta (2019-04-15 r76395) -- "Planting of a Tree"
+R version 3.6.0 Patched (2019-04-26 r76428) -- "Planting of a Tree"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -321,6 +321,6 @@ f(df1 = 10, df2 = 2, ncp = 3) PASSED
 > 
 > 
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  1.573 0.039 1.619 0 0 
+Time elapsed:  1.523 0.029 1.556 0 0 
 > 
 > 
