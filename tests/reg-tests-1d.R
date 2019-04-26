@@ -1115,9 +1115,10 @@ pL  <- vapply(fLrg, function(f)length(pretty(c(-f,f), n = 100,  min.n = 1)), 1L)
 pL
 pL3 <- vapply(fLrg, function(f)length(pretty(c(-f,f), n = 10^3, min.n = 1)), 1L)
 pL3
-stopifnot(71 <= pL, pL <= 141, 81 <= pL[-7], # not on Win-64: pL[-15] <= 121,
+stopifnot(71 <= pL, pL <= 141, # 81 <= pL[-7], # not on Win-64: pL[-15] <= 121,
           701 <= pL3, pL3 <= 1401) # <= 1201 usually
 ## in R < 3.5.0, both had values as low as 17
+## without long doubles, min(pl[-7]) is 71.
 
 
 ### Several returnValue() fixes (r 73111) --------------------------
@@ -2274,15 +2275,18 @@ stopifnot(exprs = {
 ## in R <= 3.5.1
 
 
-## str() now even works with invalid objects:
+## str() now even works with invalid S4  objects:
+## this needs Matrix loaded to be an S4 generic
+if(requireNamespace('Matrix', lib.loc = .Library)) {
 moS <- mo <- findMethods("isSymmetric")
 attr(mo, "arguments") <- NULL
-validObject(mo, TRUE)# shows what's wrong
+print(validObject(mo, TRUE)) # shows what's wrong
 tools::assertError(capture.output( mo ))
 op <- options(warn = 1)# warning:
 str(mo, max.level = 2)
 options(op)# revert
 ## in R <= 3.5.x, str() gave error instead of the warning
+}
 
 
 ## seq.default() w/ integer overflow in border cases: -- PR#17497, Suharto Anggono

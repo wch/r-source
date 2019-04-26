@@ -2942,10 +2942,10 @@ add_dummies <- function(dir, Log)
                 anyInLIBS <- any(grepl("SHLIB_OPENMP_", lines[c1], useBytes = TRUE))
 
                 ## Now see what sort of files we have
-                have_c <- length(dir('src', patt = "[.]c$")) > 0L
-                have_cxx <- length(dir('src', patt = "[.](cc|cpp)$")) > 0L
-                have_f <- length(dir('src', patt = "[.]f$")) > 0L
-                have_f9x <- length(dir('src', patt = "[.]f9[05]$")) > 0L
+                have_c <- length(dir('src', patt = "[.]c$", recursive = TRUE)) > 0L
+                have_cxx <- length(dir('src', patt = "[.](cc|cpp)$", recursive = TRUE)) > 0L
+                have_f <- length(dir('src', patt = "[.]f$", recursive = TRUE)) > 0L
+                have_f9x <- length(dir('src', patt = "[.]f9[05]$", recursive = TRUE)) > 0L
                 used <- character()
                 for (f in c("C", "CXX", "F", "FC"))  {
                     this <- this2 <- paste0(f, "FLAGS")
@@ -2960,7 +2960,7 @@ add_dummies <- function(dir, Log)
                             printLog(Log, "  ", m, ": ", msg)
                             next
                         }
-                        ## PKG_FFLAGS is by default
+                        ## as from R 3.6.0, PKG_FFLAGS is by default
                         ## used for both fixed- and free-form files.
                         if(f == "F" && !(have_f || have_f9x)) {
                             if (!any) noteLog(Log)

@@ -1,5 +1,5 @@
 
-R version 3.6.0 beta (2019-04-15 r76395) -- "Planting of a Tree"
+R Under development (unstable) (2019-04-23 r76412) -- "Unsuffered Consequences"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -338,6 +338,7 @@ S21
 > 
 > musc.1 <- nls(Length ~ cbind(1, exp(-Conc/th)), muscle,
 +               start = list(th = 1), algorithm = "plinear")
+> ## IGNORE_RDIFF_BEGIN
 > summary(musc.1)
 
 Formula: Length ~ cbind(1, exp(-Conc/th))
@@ -355,6 +356,7 @@ Residual standard error: 4.67 on 57 degrees of freedom
 Number of iterations to convergence: 5 
 Achieved convergence tolerance: 9.32e-07
 
+> ## IGNORE_RDIFF_END
 > 
 > ## Then we use nls' indexing feature for parameters in non-linear
 > ## models to use the conventional algorithm to fit a model in which
@@ -365,6 +367,7 @@ Achieved convergence tolerance: 9.32e-07
 > b <- coef(musc.1)
 > musc.2 <- nls(Length ~ a[Strip] + b[Strip]*exp(-Conc/th), muscle,
 +               start = list(a = rep(b[2], 21), b = rep(b[3], 21), th = b[1]))
+> ## IGNORE_RDIFF_BEGIN
 > summary(musc.2)
 
 Formula: Length ~ a[Strip] + b[Strip] * exp(-Conc/th)
@@ -422,6 +425,7 @@ Residual standard error: 1.11 on 17 degrees of freedom
 Number of iterations to convergence: 8 
 Achieved convergence tolerance: 2.17e-06
 
+> ## IGNORE_RDIFF_END
 > options(od)
 > 
 > # princomp.Rd

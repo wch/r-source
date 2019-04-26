@@ -1,6 +1,6 @@
 % File src/library/stats/man/aov.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{aov}
@@ -101,7 +101,9 @@ aov(terms(yield ~ block + N * P + K, keep.order = TRUE), npk)
 ## as a test, not particularly sensible statistically
 npk.aovE <- aov(yield ~  N*P*K + Error(block), npk)
 npk.aovE
+## IGNORE_RDIFF_BEGIN
 summary(npk.aovE)
+## IGNORE_RDIFF_END
 options(op)  # reset to previous
 }
 \keyword{models}

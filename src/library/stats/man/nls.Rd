@@ -1,6 +1,6 @@
 % File src/library/stats/man/nls.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{nls}
@@ -289,9 +289,11 @@ with(muscle, table(Strip)) # 2, 3 or 4 obs per strip
 ## We first use the plinear algorithm to fit an overall model,
 ## ignoring that alpha and beta might vary with Strip.
 
+## IGNORE_RDIFF_BEGIN
 musc.1 <- nls(Length ~ cbind(1, exp(-Conc/th)), muscle,
               start = list(th = 1), algorithm = "plinear")
 summary(musc.1)
+## IGNORE_RDIFF_END
 
 ## Then we use nls' indexing feature for parameters in non-linear
 ## models to use the conventional algorithm to fit a model in which
@@ -302,7 +304,10 @@ summary(musc.1)
 b <- coef(musc.1)
 musc.2 <- nls(Length ~ a[Strip] + b[Strip]*exp(-Conc/th), muscle,
               start = list(a = rep(b[2], 21), b = rep(b[3], 21), th = b[1]))
-summary(musc.2)}
+## IGNORE_RDIFF_BEGIN
+summary(musc.2)
+## IGNORE_RDIFF_END
+}
 \dontshow{options(od)}
 }
 \keyword{nonlinear}
