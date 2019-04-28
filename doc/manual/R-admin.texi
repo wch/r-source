@@ -1989,7 +1989,11 @@ expects a stack size of at least 8MB and to be able to open at least 256
 file descriptors.  (Any modern OS should have default limits at least as
 large as these, but apparently NetBSD may not.  Use the shell command
 @command{ulimit} (@command{sh}/@command{bash}) or @command{limit}
-(@command{csh}/@command{tcsh}) to check.)
+(@command{csh}/@command{tcsh}) to check.)  For some
+compilers@footnote{The Oracle compilers on Solaris (where the issue is
+parsing very complex @R{} expressions) and pre-releases of GCC 9 on
+Linux.} and packages a larger stack size has been needed: 20-25MB has
+sufficed to date.
 
 @R{} makes use of a number of environment variables, the default values
 of many of which are set in file @file{@var{R_HOME}/etc/Renviron} (there
