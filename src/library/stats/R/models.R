@@ -88,13 +88,27 @@ formula.character <- function(x, env = parent.frame(), ...)
           } else {
               str2lang(x)
           }
-    if(!(is.call(ff) && is.symbol(c. <- ff[[1L]]) && c. == quote(`~`))) {
-        msg <- gettextf("invalid formula: %s", deparse(x, 500L)[[1]])
-        if(is.call(ff) && is.symbol(c. <- ff[[1L]]) && c. == quote(`=`)) {
-            .Deprecated(msg = c(msg, " *assignment* is deprecated"))
-            ff <- ff[[3L]] # the RHS of "v = <form>" (pkgs 'GeNetIt', 'KMgene')
-        }
-        else stop(msg, domain=NA)
+    if(!is.call(ff))
+        stop(gettextf("invalid formula \"%s\"%s", deparse2(x), ": not a call"),
+             domain=NA)
+    ## else
+    if(is.symbol(c. <- ff[[1L]]) && c. == quote(`~`)) {
+        ## perfect
+    } else {
+        if(is.symbol(c.)) { ## back compatibility
+            ff <- if(c. == quote(`=`)) {
+                      .Deprecated(msg = gettextf(
+				"invalid formula %s: assignment is deprecated",
+				deparse2(x)))
+                      ff[[3L]] # RHS of "v = <form>" (pkgs 'GeNetIt', 'KMgene')
+                  } else if(c. == quote(`(`) || c. == quote(`{`)) {
+                      .Deprecated(msg = gettextf(
+			"invalid formula %s: extraneous call to `%s` is deprecated",
+			deparse2(x), as.character(c.)))
+                      eval(ff)
+                  }
+        } else
+            stop(gettextf("invalid formula %s", deparse2(x)), domain=NA)
     }
     class(ff) <- "formula"
     environment(ff) <- env

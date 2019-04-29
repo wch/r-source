@@ -2644,12 +2644,13 @@ stopifnot(exprs = {
 ## Failed to work after r76382--8:
 tools::assertError(formula("3"), verbose=TRUE)
 stopifnot(exprs = {
-    inherits(ff <- tryCatch(formula("random = ~ 1|G"),
-                            warning=identity), "deprecatedWarning")
-    identical( ~ 1 | G, suppressWarnings(formula("ran = ~ 1|G")))
-    ## New formula(<character>) specs: now consistent *and* deprecated:
+    ## New formula(<character>) specs:
+    ## These give deprecation warnings:
     is.list(op <- options(warn = 1))
+    identical(formula("ran = ~ 1|G"), ~ 1 | G)
     identical(formula(c("~", "foo")), ~ foo )
+    identical(formula("({y ~ x})"), y ~ x)
+    identical(formula("{ ~ x }"),   ~ x)
   TRUE || { ## all these "bugs" not yet in R <= 3.6.0
     identical(formula(c("y", "~", "x +    (1 | G)")), y ~ x + (1 | G))
     identical(formula(c("y", "~", "x +", "(1 | G)")), y ~ x + (1 | G))
@@ -2657,7 +2658,10 @@ stopifnot(exprs = {
     identical(formula(c("~",    "x","+    (1 | G)")), ~x) ## NOT YET:   ~ x + (1 | G))
     is.list(options(op))
 })
+tools::assertWarning(formula("ran= ~ 1|G"),"deprecatedWarning", verbose=TRUE)
 tools::assertWarning(formula(c("~", "x")), "deprecatedWarning", verbose=TRUE)
+tools::assertWarning(formula("({y ~ x})"), "deprecatedWarning", verbose=TRUE)
+tools::assertWarning(formula("{ ~ x }"),   "deprecatedWarning", verbose=TRUE)
 
 
 ## str2expression(<empty>) :

@@ -130,6 +130,9 @@ as.formula(object, env = parent.frame())
   E.g., \code{eval(call("~", quote(foo + bar)))} has been an order of magnitude
   more efficient % 20 times faster
   than \code{formula(c("~", "foo + bar"))}.
+
+  Further, character \dQuote{expressions} needing an \code{\link{eval}()}
+  to return a formula are now deprecated.
 }
 \section{Environments}{
   A formula object has an associated environment, and
