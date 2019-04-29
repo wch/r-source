@@ -43,6 +43,15 @@
   }
 }
 
+\section{\Rlogo CHANGES IN R 3.6.0 patched}{
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item On Windows, GUI package installation via \code{menuInstallPkgs()}
+      works again, thanks to Len Weil's and Duncan Murdoch's \PR{17556}.
+    }
+  }
+}
+
 \section{\Rlogo CHANGES IN R 3.6.0}{
 
    \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
