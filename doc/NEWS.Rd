@@ -34,11 +34,10 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item \code{format(x)} with \code{length(x) > 1} character vectors,
-      is deprecated now.  Such use has been very rare, and has \sQuote{worked}
-      as expected in some cases only, also in one CRAN package. (As long as
-      it's not defunct, it at least works consistently as
-      \code{format(paste(x, collapse = " "))}.)
+      \item \code{formula(x)} with \code{length(x) > 1} character vectors,
+      is deprecated now.  Such use has been rare, and has \sQuote{worked}
+      as expected in some cases only.  In other cases, wrong \code{x} have
+      silently been truncated, not detecting previous errors.
     }
   }
 }

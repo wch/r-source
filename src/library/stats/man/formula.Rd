@@ -118,6 +118,19 @@ as.formula(object, env = parent.frame())
   the first column is the LHS of the formula and the remaining columns
   separated by \code{+} form the RHS.
 }
+\note{
+  In \R versions up to 3.6.0, \code{\link{character}} \code{x} of length
+  more than one were parsed as separate lines of \R code and the first
+  complete expression was evaluated into a formula when possible.  This
+  silently truncates such vectors of characters inefficiently and to some
+  extent inconsistently as this behaviour had been undocumented.  For this
+  reason, such use has been deprecated.  If you must work via character
+  \code{x}, do use a string, i.e., a character vector of length one.
+
+  E.g., \code{eval(call("~", quote(foo + bar)))} has been an order of magnitude
+  more efficient % 20 times faster
+  than \code{formula(c("~", "foo + bar"))}.
+}
 \section{Environments}{
   A formula object has an associated environment, and
   this environment (rather than the parent
