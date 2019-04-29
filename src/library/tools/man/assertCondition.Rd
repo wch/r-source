@@ -20,7 +20,7 @@ assertCondition(expr, ..., .exprString = , verbose = FALSE)
 \arguments{
   \item{expr}{an unevaluated \R expression which will be evaluated via
     \code{\link{tryCatch}(expr, ..)}.}
-  \item{\dots}{\code{\link{character}} strings corresponding to the
+  \item{classes, \dots}{\code{\link{character}} strings corresponding to the
     classes of the conditions that would satisfy the assertion; e.g., \code{"error"} or
     \code{"warning"}.  If none are specified, any condition will
     satisfy the assertion.  See the details section. }
