@@ -1774,10 +1774,9 @@ function(packages = NULL, FUN, ...,
 function(ifile, ofile)
 {
     .system_with_capture("pandoc",
-                         paste(shQuote(normalizePath(ifile)), "-s",
+                         paste(shQuote(normalizePath(ifile)),
+                               "-s", "--mathjax",
                                "--email-obfuscation=references",
-                               ## "--css=https://cran.r-project.org/web/CRAN_web.css",
-                               "--self-contained",
                                "-o", shQuote(ofile)))
 }
 
