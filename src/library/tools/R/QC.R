@@ -5988,13 +5988,10 @@ function(db, files)
             } else if(Call %in%  ":::") {
                 if(! pkg %in% depends_suggests)
                     bad_imports <<- c(bad_imports, pkg)
-            } else if(Call %in%  "data" && length(e) >= 3L) {
+            } else if((Call %in% "data" && length(e) >= 3L) ||
+                      (Call %in% c("utils::data", "utils:::data"))) {
                 mc <- match.call(utils::data, e)
-                if(!is.null(pkg <- mc$package) && pkg %notin% depends_suggests)
-                    bad_data <<- c(bad_data, pkg)
-            } else if(deparse(e[[1L]])[1L] %in% c("utils::data", "utils:::data")) {
-                mc <- match.call(utils::data, e)
-                if(!is.null(pkg <- mc$package) && pkg %notin% depends_suggests)
+                if(is.character(pkg <- mc$package) && pkg %notin% depends_suggests)
                     bad_data <<- c(bad_data, pkg)
             }
 
