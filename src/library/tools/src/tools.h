@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2003-2016   The R Core Team.
+ *  Copyright (C) 2003-2019   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@
 #endif
 
 SEXP delim_match(SEXP x, SEXP delims);
-SEXP dirchmod(SEXP dr);
+SEXP dirchmod(SEXP dr, SEXP gwsxp);
 SEXP Rmd5(SEXP files);
 SEXP check_nonASCII(SEXP text, SEXP ignore_quotes);
 SEXP check_nonASCII2(SEXP text);
