@@ -954,7 +954,7 @@ static SEXP La_chol(SEXP A, SEXP pivot, SEXP stol)
     if (piv != 0 && piv != 1) error("invalid '%s' value", "pivot");
     if(!piv) {
 	int info;
-	F77_CALL(dpotrf)("Upper", &m, REAL(ans), &m, &info);
+	F77_CALL(dpotrf)("U", &m, REAL(ans), &m, &info);
 	if (info != 0) {
 	    if (info > 0)
 		error(_("the leading minor of order %d is not positive definite"),
@@ -1023,7 +1023,7 @@ static SEXP La_chol2inv(SEXP A, SEXP size)
 		REAL(ans)[i + j * SZ] = REAL(Amat)[i + j * M];
 	}
 	int info;
-	F77_CALL(dpotri)("Upper", &sz, REAL(ans), &sz, &info);
+	F77_CALL(dpotri)("U", &sz, REAL(ans), &sz, &info);
 	if (info != 0) {
 	    UNPROTECT(nprot);
 	    if (info > 0)
