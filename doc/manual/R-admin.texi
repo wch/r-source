@@ -946,6 +946,7 @@ environment variable @env{TZ}.
 * Debugging Symbols::           
 * OpenMP Support::              
 * C++ Support::                 
+* Link-Time Optimization::      
 @end menu
 
 @node Debugging Symbols, OpenMP Support, Other Options, Other Options
@@ -1012,7 +1013,7 @@ OpenMP program, which is not the same as compiling a shared object and
 loading it into the C program of @R{}'s executable.  Note that
 overridden values are not tested.
 
-@node C++ Support,  , OpenMP Support, Other Options
+@node C++ Support, Link-Time Optimization, OpenMP Support, Other Options
 @subsection C++ Support
 
 C++ is not used by @R{} itself, but support is provided for installing
@@ -1112,6 +1113,32 @@ Extensions' manual.  Prior to @R{} 3.6.0 the default C++ standard was
 that of the compiler used: currently it is C++11 if supported by the
 compiler: this can be overridden by setting @samp{CXXSTD} when @R{} is
 configured, for example to @samp{-std=gnu++14}.
+
+@node Link-Time Optimization,  , C++ Support, Other Options
+@subsection Link-Time Optimization
+
+There is support for using link-time optimization (LTO) if the toolchain
+supports it: configure with flag @option{--enable-lto}.
+
+Whether toolchains support LTO is often unclear: all of the C compiler,
+the Fortran compiler and linker have to support it, and support it by
+the same mechanism (so mixing compiler families may not work and a
+non-system linking may be needed).  It has been tested recently on Linux
+with @command{gcc}/@command{gfortran} 8.x: this needed setting
+@example
+AR=gcc-ar
+RANLIB=gcc-ranlib
+@end example
+@noindent
+(e.g.@: in @file{config.site}).
+
+When LTO is enabled it is used for compiled code in packages (including
+the recommended packages) unless the flag @option{--enable-lto=R} is
+used.  With sufficient diagnostic flags (e.g.@: @option{-Wall} in GCC)
+this can flag inconsistencies between source files.
+
+LTO support was added in 2011 for @command{gcc} 4.5.x on Linux but has
+been little used.
 
 @node Testing a Unix-alike Installation,  , Other Options, Installing R under Unix-alikes
 @section Testing an Installation
@@ -1530,7 +1557,7 @@ make check-all
 @noindent
 for both @code{check-devel} and @code{check-recommended}.
 
-If a test fails, there will almost always be a @file{.Rout.fail} file in
+If a test fails, there will almost alWhethes be a @file{.Rout.fail} file in
 the directory being checked (often @file{tests/Examples} or
 @file{tests}): examine the file to help pinpoint the problem.
 
