@@ -1123,8 +1123,8 @@ supports it: configure with flag @option{--enable-lto}.
 Whether toolchains support LTO is often unclear: all of the C compiler,
 the Fortran compiler and linker have to support it, and support it by
 the same mechanism (so mixing compiler families may not work and a
-non-system linking may be needed).  It has been tested recently on Linux
-with @command{gcc}/@command{gfortran} 8.x: this needed setting
+non-system linker may be needed).  It has been tested recently on Linux
+with @command{gcc}/@command{gfortran} 8.x: that needed setting
 @example
 AR=gcc-ar
 RANLIB=gcc-ranlib
@@ -1135,7 +1135,7 @@ RANLIB=gcc-ranlib
 When LTO is enabled it is used for compiled code in packages (including
 the recommended packages) unless the flag @option{--enable-lto=R} is
 used.  With sufficient diagnostic flags (e.g.@: @option{-Wall} in GCC)
-this can flag inconsistencies between source files.
+this can flag inconsistencies between source files in a package.
 
 LTO support was added in 2011 for @command{gcc} 4.5.x on Linux but has
 been little used.
