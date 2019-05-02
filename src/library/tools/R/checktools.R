@@ -1,7 +1,7 @@
 #  File src/library/tools/R/checktools.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2013-2018 The R Core Team
+#  Copyright (C) 2013-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -148,7 +148,6 @@ function(dir,
         defaults <- list(which = c("Depends", "Imports", "LinkingTo"),
                          recursive = FALSE,
                          repos = getOption("repos"))
-        defaults0 <- defaults
         pos <- pmatch(names(reverse), names(defaults), nomatch = 0L)
         defaults[pos] <- reverse[pos > 0L]
 
@@ -1139,7 +1138,7 @@ function(new, old, outputs = FALSE)
 `[.check_details_changes` <-
 function(x, i, j, drop = FALSE)
 {
-    if(((na <- nargs() - (!missing(drop))) == 3L)
+    if(((nargs() - !missing(drop)) == 3L)
        && (length(i) == 1L)
        && any(!is.na(match(i, c("==", "!=", "<", "<=", ">", ">="))))) {
         levels <- c("", "OK", "NOTE", "WARNING", "ERROR", "FAIL")

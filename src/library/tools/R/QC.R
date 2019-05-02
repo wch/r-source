@@ -2795,7 +2795,7 @@ function(package, dir, file, lib.loc = NULL)
                                    .massage_file_parse_error_message(conditionMessage(e))),
                           domain = NA, call. = FALSE))
         else
-            tryCatch(parse(text = txt),
+            tryCatch(str2expression(txt),
                      error = function(e)
                      stop(gettextf("parse error in examples from file '%s':\n",
                                    file, conditionMessage(e)),
@@ -2976,7 +2976,7 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE,
                                               "Meta", "package.rds"))
                     current <- desc$DESCRIPTION["Version"]
                     target <- as.package_version(r[[3L]])
-                    if(eval(parse(text = paste("!(current", op, "target)"))))
+                    if(!do.call(op, list(current, target)))
                         bad <- c(bad, pkg)
                 }
                 if(length(bad))
@@ -4450,7 +4450,7 @@ function(pkgDir)
         outConn <- file(open = "w+")
         sink(outConn, type = "output")
         sink(outConn, type = "message")
-        yy <- tryCatch(withRestarts(withCallingHandlers(expr, error = {
+        tryCatch(withRestarts(withCallingHandlers(expr, error = {
             function(e) invokeRestart("grmbl", e, sys.calls())
         }), grmbl = function(e, calls) {
             n <- length(sys.calls())
@@ -4479,7 +4479,7 @@ function(pkgDir)
     latin1 <- utf8 <- bytes <- 0L
     ## avoid messages about loading packages that started with r48409
     ## (and some more ...)
-    ## aadd try() to ensure that all datasets are looked at
+    ## add try() to ensure that all datasets are looked at
     ## (if not all of each dataset).
     for(ds in ls(envir = dataEnv, all.names = TRUE)) {
         if(inherits(suppressMessages(try(check_one(get(ds, envir = dataEnv), ds), silent = TRUE)),
@@ -4883,7 +4883,7 @@ function(dir)
            (Sys.getlocale("LC_CTYPE") %notin% c("C", "POSIX"))) {
             lines <- iconv(readLines(file, warn = FALSE), from = enc, to = "",
                            sub = "byte")
-            withCallingHandlers(tryCatch(parse(text = lines),
+            withCallingHandlers(tryCatch(str2expression(lines),
                                          error = function(e)
                                          .error <<- conditionMessage(e)),
                                 warning = function(e) {
@@ -6201,7 +6201,6 @@ function(package, dir, lib.loc = NULL)
     bad_examples <- character()
 
     find_bad_closures <- function(env) {
-        objects_in_env <- sort(names(env))
         x <- lapply(as.list(env, all.names = TRUE, sorted = TRUE),
                     function(v) {
                         if (typeof(v) == "closure")
@@ -6215,7 +6214,7 @@ function(package, dir, lib.loc = NULL)
         x <- lapply(txts,
                     function(txt) {
                         tryCatch({
-                            eval(parse(text =
+                            eval(str2expression(
                                        paste("FOO <- function() {",
                                              paste(txt, collapse = "\n"),
                                              "}",
@@ -7074,7 +7073,7 @@ function(dir, localOnly = FALSE)
     ## Check Authors@R.
     if(!is.na(aar <- meta["Authors@R"]) &&
        ## DESCRIPTION is fully checked later on, so be careful.
-       !inherits(aar <- tryCatch(parse(text = aar), error = identity),
+       !inherits(aar <- tryCatch(str2expression(aar), error = identity),
                  "error")) {
         bad <- ((length(aar) != 1L) || !is.call(aar <- aar[[1L]]))
         if(!bad) {
@@ -7191,8 +7190,7 @@ function(dir, localOnly = FALSE)
     ## Note also that this does not catch the cases where non-ASCII
     ## content in R source code cannot be re-encoded using a given
     ## package encoding.  Ideally, this would be checked for as well.
-    if(is.na(meta["Encoding"]) &&
-       dir.exists(code_dir <- file.path(dir, "R"))) {
+    if(is.na(meta["Encoding"]) && dir.exists(file.path(dir, "R"))) {
         ## A variation on showNonASCII():
         find_non_ASCII_lines <- function(f) {
             x <- readLines(f, warn = FALSE)
@@ -7208,9 +7206,8 @@ function(dir, localOnly = FALSE)
         code_files <- list_files_with_type(file.path(dir, "R"),
                                            "code",
                                            OS_subdirs = OS_subdirs)
-        lines <- lapply(code_files, find_non_ASCII_lines)
-        names(lines) <- .file_path_relative_to_dir(code_files, dir)
-        lines <- Filter(length, lines)
+        names(code_files) <- .file_path_relative_to_dir(code_files, dir)
+        lines <- Filter(length, lapply(code_files, find_non_ASCII_lines))
         if(length(lines))
             out$R_files_non_ASCII <- lines
     }
@@ -8601,14 +8598,14 @@ function(package_name)
 .parse_text_as_much_as_possible <-
 function(txt)
 {
-    exprs <- tryCatch(parse(text = txt), error = identity)
+    exprs <- tryCatch(str2expression(txt), error = identity)
     if(!inherits(exprs, "error")) return(exprs)
     exprs <- expression()
     lines <- unlist(strsplit(txt, "\n"))
     bad_lines <- character()
     while((n <- length(lines))) {
         i <- 1L; txt <- lines[1L]
-        while(inherits(yy <- tryCatch(parse(text = txt),
+        while(inherits(yy <- tryCatch(str2expression(txt),
                                       error = identity),
                        "error")
               && (i < n)) {
