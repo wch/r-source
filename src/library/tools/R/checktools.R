@@ -48,7 +48,7 @@ function(dir,
     pfiles <- Sys.glob("*.tar.gz")
     if(!length(pfiles)) {
         message("no packages to check")
-        return(.check_packages_in_dir_retval(dir, pfiles))
+        return(invisible(.check_packages_in_dir_retval(dir, pfiles)))
     }
 
     pnames <- sub("_.*", "", pfiles)
@@ -372,10 +372,10 @@ function(dir,
         file.rename(rfiles, sprintf("rdepends_%s", rfiles))
     }
 
-    .check_packages_in_dir_retval(dir,
-                                  pfiles,
-                                  setdiff(pnames, rnames),
-                                  rnames)
+    invisible(.check_packages_in_dir_retval(dir,
+                                            pfiles,
+                                            setdiff(pnames, rnames),
+                                            rnames))
 }
 
 ### ** print.check_packages_in_dir
