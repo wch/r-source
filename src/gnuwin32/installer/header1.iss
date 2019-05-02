@@ -1,5 +1,5 @@
 PrivilegesRequired=none
-MinVersion=0,5.0
+MinVersion=0,6.0
 DefaultGroupName=R
 AllowNoIcons=yes
 DisableReadyPage=yes
@@ -44,7 +44,7 @@ Name: ko; MessagesFile: "Korean.isl"
 #include "CustomMsg.iss"
 
 [Tasks]
-Name: "desktopicon"; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:AdditionalIcons}; MinVersion: 0,5.0
-Name: "quicklaunchicon"; Description: {cm:CreateQuickLaunchIcon}; GroupDescription: {cm:AdditionalIcons}; MinVersion: 0,5.0; Flags: unchecked 
-Name: "recordversion"; Description: {cm:recordversion}; GroupDescription: {cm:regentries}; MinVersion: 0,5.0
-Name: "associate"; Description: {cm:associate}; GroupDescription: {cm:regentries}; MinVersion: 0,5.0; Check: IsAdmin
+Name: "desktopicon"; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:AdditionalIcons}; MinVersion: 0,6.0
+Name: "quicklaunchicon"; Description: {cm:CreateQuickLaunchIcon}; GroupDescription: {cm:AdditionalIcons}; MinVersion: 0,6.0; Flags: unchecked 
+Name: "recordversion"; Description: {cm:recordversion}; GroupDescription: {cm:regentries}; MinVersion: 0,6.0
+Name: "associate"; Description: {cm:associate}; GroupDescription: {cm:regentries}; MinVersion: 0,6.0; Check: IsAdmin
