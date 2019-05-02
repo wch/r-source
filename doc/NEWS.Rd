@@ -42,6 +42,9 @@
       is deprecated now.  Such use has been rare, and has \sQuote{worked}
       as expected in some cases only.  In other cases, wrong \code{x} have
       silently been truncated, not detecting previous errors.
+
+      \item Long-standing issue where the X11 device could lose events
+      shortly after startup has been addressed \PR{16702}.
     }
   }
 }
