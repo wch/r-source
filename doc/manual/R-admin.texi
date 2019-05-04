@@ -1557,7 +1557,7 @@ make check-all
 @noindent
 for both @code{check-devel} and @code{check-recommended}.
 
-If a test fails, there will almost alWhethes be a @file{.Rout.fail} file in
+If a test fails, there will almost always be a @file{.Rout.fail} file in
 the directory being checked (often @file{tests/Examples} or
 @file{tests}): examine the file to help pinpoint the problem.
 
