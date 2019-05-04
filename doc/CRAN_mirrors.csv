@@ -76,8 +76,8 @@ Denmark,Denmark,Aalborg,http://mirrors.dotsrc.org/cran/,"Aalborg University","st
 "Germany (Münster)",Germany,Münster,http://cran.uni-muenster.de/,"University of Münster, Germany","Edzer Pebesma <edzer.pebesma # uni-muenster.de>",1,de,"secure_mirror_from_master"
 "Greece [https]",Greece,Crete,https://ftp.cc.uoc.gr/mirrors/CRAN/,"University of Crete","mirrors # Cc.uoc.gr",1,gr,"secure_mirror_from_master"
 Greece,Greece,Crete,http://ftp.cc.uoc.gr/mirrors/CRAN/,"University of Crete","mirrors # Cc.uoc.gr",1,gr,"secure_mirror_from_master"
-"Hungary [https]",Hungary,Budapest,https://cran.rapporter.net/,"Rapporter.net, Budapest","Daróczi Gergely <gergely # snowl.net>",1,hu
-Hungary,Hungary,Budapest,http://cran.rapporter.net/,"Rapporter.net, Budapest","Daróczi Gergely <gergely # snowl.net>",1,hu
+"Hungary [https]",Hungary,Budapest,https://cran.rapporter.net/,"Rapporter.net, Budapest","Daróczi Gergely <gergely # snowl.net>",1,hu,"secure_mirror_from_master"
+Hungary,Hungary,Budapest,http://cran.rapporter.net/,"Rapporter.net, Budapest","Daróczi Gergely <gergely # snowl.net>",1,hu,"secure_mirror_from_master"
 "Iceland [https]",Iceland,Reykjavik,https://cran.hafro.is/,"Marine Research Institute","cran # hafro.is",1,is,"secure_mirror_from_master"
 Iceland,Iceland,Reykjavik,http://cran.hafro.is/,"Marine Research Institute","cran # hafro.is",1,is,"secure_mirror_from_master"
 "Indonesia (Jakarta) [https]",Indonesia,Jakarta,https://repo.bppt.go.id/cran/,"Agency for The Application and Assessment of Technology","Imam Cartealy <imam.cartealy # bppt.go.id>",1,id,"secure_mirror_from_master"
