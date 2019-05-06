@@ -10,6 +10,9 @@
     \itemize{
       \item On Windows, GUI package installation via \code{menuInstallPkgs()}
       works again, thanks to Len Weil's and Duncan Murdoch's \PR{17556}.
+
+      \item \command{R CMD check} on \code{data()} fixing \PR{17558}
+      thanks to Duncan Murdoch.
     }
   }
 }
