@@ -1,7 +1,7 @@
 #  File src/library/stats/R/family.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -356,7 +356,7 @@ binomial <- function (link = "logit")
         if (!is.null(m <- object$model)) {
             y <- model.response(m)
             if(is.factor(y)) {
-                ## ignote weights
+                ## ignore weights
                 yy <- factor(1+rbinom(ntot, size = 1, prob = ftd),
                              labels = levels(y))
                 split(yy, rep(seq_len(nsim), each = n))
@@ -570,6 +570,9 @@ quasi <- function (link = "identity", variance = "constant")
         stats <- link
         linktemp <- if(!is.null(stats$name)) stats$name else deparse(linktemp)
     }
+    if(is.list(variance) && !anyNA(match(c("varfun", "validmu"), names(variance))))
+        variance_nm <- NA
+    else {
     vtemp <- substitute(variance)
     if (!is.character(vtemp)) vtemp <- deparse(vtemp)
     variance_nm <- vtemp
@@ -614,7 +617,7 @@ quasi <- function (link = "identity", variance = "constant")
            },
            variance_nm <- NA
            )# end switch(.)
-
+    }
     if(is.na(variance_nm)) {
         if(is.character(variance))
             stop(gettextf('\'variance\' "%s" is invalid: possible values are "mu(1-mu)", "mu", "mu^2", "mu^3" and "constant"', variance_nm), domain = NA)

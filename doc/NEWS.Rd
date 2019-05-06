@@ -57,6 +57,9 @@
 
       \item \command{R CMD check} on \code{data()} fixing \PR{17558}
       thanks to Duncan Murdoch.
+
+      \item \code{quasi(*, variance = list(..))} now works more
+      efficiently, and should work in all cases fixing \PR{17560}.
     }
   }
 }
