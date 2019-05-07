@@ -13,6 +13,10 @@
 
       \item \command{R CMD check} on \code{data()} fixing \PR{17558}
       thanks to Duncan Murdoch.
+
+      \item Creation of lazy loading database during package installation is
+      again robust to Rprofile changing the current working directory
+      (\PR{17559}).
     }
   }
 }

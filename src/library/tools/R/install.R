@@ -1473,6 +1473,10 @@ if(FALSE) {
             keep.source <-
                 parse_description_field(desc, "KeepSource",
                                         default = keep.source)
+            ## Some people change current directory in their R profile, but
+            ##   at least .getRequiredPackages needs to find the DESCRIPTION
+            ##   file
+            cmd <- append(cmd, paste0("setwd(", quote_path(getwd()), ")"))
 	    ## Something above, e.g. lazydata,  might have loaded the namespace
             cmd <- append(cmd,
                 paste0("if (isNamespaceLoaded(\"",pkg_name, "\"))",
