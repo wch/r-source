@@ -1,7 +1,7 @@
 #  File src/library/parallel/R/unix/mcparallel.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -71,7 +71,8 @@ mccollect <- function(jobs, wait = TRUE, timeout = 0, intermediate = FALSE)
             r <- readChild(x)
             if (is.raw(r)) {
                 rmChild(x) ## avoid zombie process without waiting
-                res[[i]] <- unserialize(r)
+                ## unserialize(r) might be null
+                res[i] <- list(unserialize(r))
                 delivered.result <- delivered.result + 1L
             }
         }
