@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  (C) Copyright 2008-2011 Simon Urbanek
- *      Copyright 2011-2018 R Core Team.
+ *      Copyright 2011-2019 R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1015,7 +1015,6 @@ SEXP mc_read_children(SEXP sTimeout)
     else return read_child_ci(ci);
 }
 
-/* not used */
 SEXP mc_rm_child(SEXP sPid) 
 {
     int pid = asInteger(sPid);
@@ -1090,21 +1089,34 @@ SEXP mc_kill(SEXP sPid, SEXP sSig)
     return ScalarLogical(1);
 }
 
+extern int R_ignore_SIGPIPE; /* defined in src/main/main.c on unix */
+
 SEXP NORET mc_exit(SEXP sRes)
 {
     int res = asInteger(sRes);
 #ifdef MC_DEBUG
-    Dprintf("child %d: 'mcexit' called\n", getpid());
+    Dprintf("child %d: 'mcexit(%d)' called, master_fd=%d\n", getpid(),
+            res, master_fd);
 #endif
     if (is_master) error(_("'mcexit' can only be used in a child process"));
     if (master_fd != -1) { /* send 0 to signify that we're leaving */
 	size_t len = 0;
+	/* If rmChild() was called, the master may already have closed its end
+	   of the pipe, so the write may fail with EPIPE; disable the default
+	   R SIGPIPE handler to avoid a runtime error in that case, and ignore
+	   EPIPE. This may hide also real errors, but they should be detected
+	   via other means (results not delivered). Alternatively, we could
+	   rewrite mccollect(wait=FALSE) to wait for jobs that delivered
+	   results to also finish, and avoid using rmChild(). */
+	R_ignore_SIGPIPE = 1;
 	/* assign result for Fedora security settings */
 	ssize_t n = writerep(master_fd, &len, sizeof(len));
 	/* make sure the pipe is closed before we enter any waiting */
 	close(master_fd);
+	R_ignore_SIGPIPE = 0;
 	master_fd = -1;
-	if (n < 0) error(_("write error, closing pipe to the master"));
+	if (n < 0 && errno != EPIPE)
+	    error(_("write error, closing pipe to the master"));
     }
     if (!child_can_exit) {
 #ifdef MC_DEBUG
@@ -1115,7 +1127,7 @@ SEXP NORET mc_exit(SEXP sRes)
     }
 		
 #ifdef MC_DEBUG
-    Dprintf("child %d: exiting\n", getpid());
+    Dprintf("child %d: exiting with exit status %d\n", getpid(), res);
 #endif
     _exit(res);
     error(_("'mcexit' failed"));
