@@ -136,6 +136,7 @@ poisson <- function (link = "log")
     linktemp <- substitute(link)
     if (!is.character(linktemp)) linktemp <- deparse(linktemp)
     okLinks <- c("log", "identity", "sqrt")
+    family <- "poisson"
     if (linktemp %in% okLinks)
 	stats <- make.link(linktemp)
     else if (is.character(link)) {
@@ -147,8 +148,8 @@ poisson <- function (link = "log")
             stats <- link
             if(!is.null(stats$name)) linktemp <- stats$name
         } else {
-            stop(gettextf('link "%s" not available for poisson family; available links are %s',
-			  linktemp, paste(sQuote(okLinks), collapse =", ")),
+            stop(gettextf('link "%s" not available for %s family; available links are %s',
+			  linktemp, family, paste(sQuote(okLinks), collapse =", ")),
 		 domain = NA)
         }
     }
@@ -177,7 +178,7 @@ poisson <- function (link = "log")
         ftd <- fitted(object)
         rpois(nsim*length(ftd), ftd)
     }
-    structure(list(family = "poisson",
+    structure(list(family = family,
 		   link = linktemp,
 		   linkfun = stats$linkfun,
 		   linkinv = stats$linkinv,
@@ -197,6 +198,7 @@ quasipoisson <- function (link = "log")
     linktemp <- substitute(link)
     if (!is.character(linktemp)) linktemp <- deparse(linktemp)
     okLinks <- c("log", "identity", "sqrt")
+    family <- "quasipoisson"
     if (linktemp %in% okLinks)
         stats <- make.link(linktemp)
     else if (is.character(link)) {
@@ -208,9 +210,9 @@ quasipoisson <- function (link = "log")
             stats <- link
             if(!is.null(stats$name)) linktemp <- stats$name
         } else {
-	    stop(gettextf('link "%s" not available for quasipoisson family; available links are %s',
-			  linktemp, paste(sQuote(okLinks), collapse =", ")),
-		 domain = NA)
+	    stop(gettextf('link "%s" not available for %s family; available links are %s',
+			  linktemp, family, paste(sQuote(okLinks), collapse =", ")),
+                 domain = NA)
         }
     }
     variance <- function(mu) mu
@@ -229,7 +231,7 @@ quasipoisson <- function (link = "log")
 	n <- rep.int(1, nobs)
 	mustart <- y + 0.1
     })
-    structure(list(family = "quasipoisson",
+    structure(list(family = family,
 		   link = linktemp,
 		   linkfun = stats$linkfun,
 		   linkinv = stats$linkinv,
@@ -248,6 +250,7 @@ gaussian <- function (link = "identity")
     linktemp <- substitute(link)
     if (!is.character(linktemp)) linktemp <- deparse(linktemp)
     okLinks <- c("inverse", "log", "identity")
+    family <- "gaussian"
     if (linktemp %in% okLinks)
 	stats <- make.link(linktemp)
     else if (is.character(link)) {
@@ -259,12 +262,12 @@ gaussian <- function (link = "identity")
             stats <- link
             if(!is.null(stats$name)) linktemp <- stats$name
         } else {
-	    stop(gettextf('link "%s" not available for gaussian family; available links are %s',
-			  linktemp, paste(sQuote(okLinks), collapse =", ")),
+	    stop(gettextf('link "%s" not available for %s family; available links are %s',
+			  linktemp, family, paste(sQuote(okLinks), collapse =", ")),
 		 domain = NA)
         }
     }
-    structure(list(family = "gaussian",
+    structure(list(family = family,
 		   link = linktemp,
 		   linkfun = stats$linkfun,
 		   linkinv = stats$linkinv,
@@ -327,6 +330,7 @@ binomial <- function (link = "logit")
     linktemp <- substitute(link)
     if (!is.character(linktemp)) linktemp <- deparse(linktemp)
     okLinks <- c("logit", "probit", "cloglog", "cauchit", "log")
+    family <- "binomial"
     if (linktemp %in% okLinks)
         stats <- make.link(linktemp)
     else if (is.character(link)) {
@@ -338,9 +342,9 @@ binomial <- function (link = "logit")
             stats <- link
             if(!is.null(stats$name)) linktemp <- stats$name
         } else {
-	    stop(gettextf('link "%s" not available for binomial family; available links are %s',
-			  linktemp, paste(sQuote(okLinks), collapse =", ")),
-	     domain = NA)
+	    stop(gettextf('link "%s" not available for %s family; available links are %s',
+			  linktemp, family, paste(sQuote(okLinks), collapse =", ")),
+                 domain = NA)
         }
     }
     variance <- function(mu) mu * (1 - mu)
@@ -380,7 +384,7 @@ binomial <- function (link = "logit")
                rbinom(ntot, size = wts, prob = ftd)/wts
         } else rbinom(ntot, size = wts, prob = ftd)/wts
     }
-    structure(list(family = "binomial",
+    structure(list(family = family,
 		   link = linktemp,
 		   linkfun = stats$linkfun,
 		   linkinv = stats$linkinv,
@@ -400,6 +404,7 @@ quasibinomial <- function (link = "logit")
     linktemp <- substitute(link)
     if (!is.character(linktemp)) linktemp <- deparse(linktemp)
     okLinks <- c("logit", "probit", "cloglog", "cauchit", "log")
+    family <- "quasibinomial"
     if (linktemp %in% okLinks)
         stats <- make.link(linktemp)
     else if (is.character(link)) {
@@ -411,12 +416,12 @@ quasibinomial <- function (link = "logit")
             stats <- link
             if(!is.null(stats$name)) linktemp <- stats$name
         } else {
-	    stop(gettextf('link "%s" not available for quasibinomial family; available links are %s',
-			  linktemp, paste(sQuote(okLinks), collapse =", ")),
-	     domain = NA)
+	    stop(gettextf('link "%s" not available for %s family; available links are %s',
+			  linktemp, family, paste(sQuote(okLinks), collapse =", ")),
+                 domain = NA)
         }
     }
-    structure(list(family = "quasibinomial",
+    structure(list(family = family,
 		   link = linktemp,
 		   linkfun = stats$linkfun,
 		   linkinv = stats$linkinv,
@@ -436,6 +441,7 @@ Gamma <- function (link = "inverse")
     linktemp <- substitute(link)
     if (!is.character(linktemp)) linktemp <- deparse(linktemp)
     okLinks <- c("inverse", "log", "identity")
+    family <- "Gamma"
     if (linktemp %in% okLinks)
 	stats <- make.link(linktemp)
     else if(is.character(link)) stats <- make.link(link)
@@ -445,9 +451,9 @@ Gamma <- function (link = "inverse")
             stats <- link
             if(!is.null(stats$name)) linktemp <- stats$name
         } else {
-	    stop(gettextf('link "%s" not available for gamma family; available links are %s',
-			  linktemp, paste(sQuote(okLinks), collapse =", ")),
-	     domain = NA)
+	    stop(gettextf('link "%s" not available for %s family; available links are %s',
+			  linktemp, family, paste(sQuote(okLinks), collapse =", ")),
+                 domain = NA)
         }
     }
     variance <- function(mu) mu^2
@@ -461,7 +467,7 @@ Gamma <- function (link = "inverse")
     }
     initialize <- expression({
 	if (any(y <= 0))
-	    stop("non-positive values not allowed for the 'gamma' family")
+	    stop("non-positive values not allowed for the 'Gamma' family")
 	n <- rep.int(1, nobs)
 	mustart <- y
     })
@@ -472,7 +478,7 @@ Gamma <- function (link = "inverse")
         shape <- MASS::gamma.shape(object)$alpha * wts
         rgamma(nsim*length(ftd), shape = shape, rate = shape/ftd)
     }
-    structure(list(family = "Gamma",
+    structure(list(family = family,
 		   link = linktemp,
 		   linkfun = stats$linkfun,
 		   linkinv = stats$linkinv,
@@ -491,6 +497,7 @@ inverse.gaussian <- function(link = "1/mu^2")
 {
     linktemp <- substitute(link)
     if (!is.character(linktemp)) linktemp <- deparse(linktemp)
+    family <- "inverse.gaussian"
     okLinks <- c("inverse", "log", "identity", "1/mu^2")
     if (linktemp %in% okLinks)
 	stats <- make.link(linktemp)
@@ -503,15 +510,15 @@ inverse.gaussian <- function(link = "1/mu^2")
             stats <- link
             if(!is.null(stats$name)) linktemp <- stats$name
         } else {
-	    stop(gettextf('link "%s" not available for inverse.gaussian family; available links are %s',
-			  linktemp, paste(sQuote(okLinks), collapse =", ")),
+	    stop(gettextf('link "%s" not available for %s family; available links are %s',
+			  linktemp, family, paste(sQuote(okLinks), collapse =", ")),
                  domain = NA)
         }
     }
     variance <- function(mu) mu^3
     dev.resids <- function(y, mu, wt)  wt*((y - mu)^2)/(y*mu^2)
     aic <- function(y, n, mu, wt, dev)
-	sum(wt)*(log(dev/sum(wt)*2*pi)+1)+3*sum(log(y)*wt)+2
+	sum(wt)*(1+log(dev/sum(wt)*2*pi)) + 3*sum(log(y)*wt) + 2
     initialize <- expression({
 	if(any(y <= 0))
 	    stop("positive values only are allowed for the 'inverse.gaussian' family")
@@ -529,7 +536,7 @@ inverse.gaussian <- function(link = "1/mu^2")
                              lambda = wts/summary(object)$dispersion)
     }
 
-    structure(list(family = "inverse.gaussian",
+    structure(list(family = family,
 		   link = linktemp,
 		   linkfun = stats$linkfun,
 		   linkinv = stats$linkinv,
