@@ -60,6 +60,10 @@
 
       \item \code{quasi(*, variance = list(..))} now works more
       efficiently, and should work in all cases fixing \PR{17560}.
+
+      \item Creation of lazy loading database during package installation is
+      again robust to Rprofile changing the current working directory
+      (\PR{17559}).
     }
   }
 }
