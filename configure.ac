@@ -1038,6 +1038,22 @@ if test "${SAFE_FFLAGS+set}" != set; then
   fi
 fi
 
+## If the Fortran compiler is gfortran >= 7, add
+## -fno-optimize-sibling-calls to avoid recent gfortran optimizations
+## that break with LAPACK/BLAS-style passing of length-1 strings
+## (without hidden arguments giving their lengths).
+AC_CACHE_VAL([r_cv_have_gfortran7],
+[r_cv_have_gfortran7=no
+if test "x${GFC}" = xyes; then
+  gfortran_version_maj=`echo "__GNUC__" | ${FC} -E -P - | ${SED} 's/ //g'`
+  if test ${gfortran_version_maj} -ge 7; then
+    r_cv_have_gfortran7=yes
+  fi
+fi])
+
+if test "x${r_cv_have_gfortran7}" = xyes; then
+  R_XTRA_FFLAGS="-fno-optimize-sibling-calls"
+fi
 
 AC_SUBST(CFLAGS)
 AC_SUBST(MAIN_CFLAGS)
@@ -1055,7 +1071,7 @@ AC_SUBST(R_XTRA_CFLAGS)
 AC_SUBST(R_XTRA_CPPFLAGS)
 ## unused
 AC_SUBST(R_XTRA_CXXFLAGS)
-## unused
+## used for gfortran >= 7
 AC_SUBST(R_XTRA_FFLAGS)
 ## formerly used on HP-UX
 AC_SUBST(R_XTRA_LIBS)
