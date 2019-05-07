@@ -290,6 +290,38 @@ gaussian <- function (link = "identity")
 	      class = "family")
 }
 
+binomInitialize <- function(family) substitute({ # (y, weights, nobs, family)
+    if (NCOL(y) == 1) {
+	## allow factors as responses
+	## added BDR 29/5/98
+	if (is.factor(y)) y <- y != levels(y)[1L]
+	n <- rep.int(1, nobs)
+	## anything, e.g. NA/NaN, for cases with zero weight is OK.
+	y[weights == 0] <- 0
+	if (any(y < 0 | y > 1))
+	    stop("y values must be 0 <= y <= 1")
+	mustart <- (weights * y + 0.5)/(weights + 1)
+	m <- weights * y
+	if(any(abs(m - round(m)) > 1e-3))
+	    warning(gettextf("non-integer #successes in a %s glm!", FAMILY),
+		    domain = NA)
+    }
+    else if (NCOL(y) == 2) {
+	if(any(abs(y - round(y)) > 1e-3))
+	    warning(gettextf("non-integer counts in a %s glm!", FAMILY),
+		    domain = NA)
+	n <- (y1 <- y[, 1L]) + y[, 2L]
+	y <- ## ifelse(n == 0, 0, y[, 1]/n)
+	    y1/n; if(any(n0 <- n == 0)) y[n0] <- 0
+	weights <- weights * n
+	mustart <- (n * y + 0.5)/(n + 1)
+    }
+    else stop(gettextf(
+      "for the '%s' family, y must be a vector of 0 and 1\'s\nor a 2 column matrix where col 1 is no. successes and col 2 is no. failures",
+                       FAMILY),
+             domain = NA)
+}, list(FAMILY = family))
+
 binomial <- function (link = "logit")
 {
     linktemp <- substitute(link)
@@ -319,31 +351,6 @@ binomial <- function (link = "logit")
 	-2*sum(ifelse(m > 0, (wt/m), 0)*
                dbinom(round(m*y), round(m), mu, log=TRUE))
     }
-    initialize <- expression({
-	if (NCOL(y) == 1) {
-	    ## allow factors as responses
-	    ## added BDR 29/5/98
-	    if (is.factor(y)) y <- y != levels(y)[1L]
-	    n <- rep.int(1, nobs)
-            ## anything, e.g. NA/NaN, for cases with zero weight is OK.
-            y[weights == 0] <- 0
-	    if (any(y < 0 | y > 1))
-		stop("y values must be 0 <= y <= 1")
-            mustart <- (weights * y + 0.5)/(weights + 1)
-            m <- weights * y
-            if(any(abs(m - round(m)) > 1e-3))
-                warning("non-integer #successes in a binomial glm!")
-	}
-	else if (NCOL(y) == 2) {
-            if(any(abs(y - round(y)) > 1e-3))
-                warning("non-integer counts in a binomial glm!")
-	    n <- y[, 1] + y[, 2]
-	    y <- ifelse(n == 0, 0, y[, 1]/n)
-	    weights <- weights * n
-            mustart <- (n * y + 0.5)/(n + 1)
-	}
-	else stop("for the 'binomial' family, y must be a vector of 0 and 1\'s\nor a 2 column matrix where col 1 is no. successes and col 2 is no. failures")
-    })
     simfun <- function(object, nsim) {
         ftd <- fitted(object)
         n <- length(ftd)
@@ -370,7 +377,7 @@ binomial <- function (link = "logit")
                 }
                 yy
             } else
-            rbinom(ntot, size = wts, prob = ftd)/wts
+               rbinom(ntot, size = wts, prob = ftd)/wts
         } else rbinom(ntot, size = wts, prob = ftd)/wts
     }
     structure(list(family = "binomial",
@@ -381,7 +388,7 @@ binomial <- function (link = "logit")
 		   dev.resids = dev.resids,
 		   aic = aic,
 		   mu.eta = stats$mu.eta,
-		   initialize = initialize,
+		   initialize = binomInitialize(family),
 		   validmu = validmu,
 		   valideta = stats$valideta,
                    simulate = simfun),
@@ -409,36 +416,17 @@ quasibinomial <- function (link = "logit")
 	     domain = NA)
         }
     }
-    variance <- function(mu) mu * (1 - mu)
-    validmu <- function(mu) all(is.finite(mu)) && all(mu>0 &mu<1)
-    dev.resids <- function(y, mu, wt) .Call(C_binomial_dev_resids, y, mu, wt)
-    aic <- function(y, n, mu, wt, dev) NA
-    initialize <- expression({
-	if (NCOL(y) == 1) {
-	    if (is.factor(y)) y <- y != levels(y)[1L]
-	    n <- rep.int(1, nobs)
-	    if (any(y < 0 | y > 1))
-		stop("y values must be 0 <= y <= 1")
-            mustart <- (weights * y + 0.5)/(weights + 1)
-	}
-	else if (NCOL(y) == 2) {
-	    n <- y[, 1] + y[, 2]
-	    y <- ifelse(n == 0, 0, y[, 1]/n)
-	    weights <- weights * n
-            mustart <- (n * y + 0.5)/(n + 1)
-	}
-	else stop("for the 'quasibinomial' family, y must be a vector of 0 and 1\'s\nor a 2 column matrix where col 1 is no. successes and col 2 is no. failures")
-    })
     structure(list(family = "quasibinomial",
 		   link = linktemp,
 		   linkfun = stats$linkfun,
 		   linkinv = stats$linkinv,
-		   variance = variance,
-		   dev.resids = dev.resids,
-		   aic = aic,
+		   variance = function(mu) mu * (1 - mu),
+		   dev.resids =  function(y, mu, wt)
+                       .Call(C_binomial_dev_resids, y, mu, wt),
+		   aic = function(y, n, mu, wt, dev) NA,
 		   mu.eta = stats$mu.eta,
-		   initialize = initialize,
-		   validmu = validmu,
+		   initialize = binomInitialize(family),
+		   validmu = function(mu) all(is.finite(mu)) && all(0 < mu & mu < 1),
 		   valideta = stats$valideta),
 	      class = "family")
 }
