@@ -1929,20 +1929,34 @@ function(x, dfile)
             x[ind] <- iconv(x[ind], "latin1", "ASCII", sub = "byte")
         }
     }
-    ## <FIXME>
-    ## ## Avoid declared encodings when writing out.
-    ##   Encoding(x) <- "unknown"
-    ## This may also yield byte subs when formatting non-keep-white
-    ## fields via strwrap() (PR#17550).
-    ## Remove eventually ...
-    ## </FIXME>
     ## Avoid folding for fields where we keep whitespace when reading,
-    ## plus two where legacy code does not strip whitespace and so
-    ## we should not wrap the field.
-    write.dcf(rbind(x), dfile,
-              keep.white = c(.keep_white_description_fields,
-                             "Maintainer", "BugReports"),
-              useBytes = TRUE)
+    ## plus two more fields where legacy code does not strip whitespace
+    ## and so we should not wrap.
+    ## Unfortunately, wrapping may destroy declared encodings: for the
+    ## fields where we do not keep whitespace, write.dcf() calls
+    ## formatDL() which in turn calls paste() on the results of
+    ## strwrap(), and paste() may change the (common) encoding.
+    ## In particular, pasting a latin1 string comes out in UTF-8 in a
+    ## UTF-8 locale, and with unknown encoding in a C locale.
+    ## Hence, when we have a declared non-UTF-8 encoding, we convert
+    ## to UTF-8 before formatting, and convert back to the declared
+    ## encoding when writing out.
+    if(!is.na(encoding) && (encoding != "UTF-8")) {
+        x <- iconv(x, from = encoding, to = "UTF-8")
+        tfile <- tempfile()
+        write.dcf(rbind(x), tfile,
+                  keep.white = c(.keep_white_description_fields,
+                                 "Maintainer", "BugReports"),
+                  useBytes = TRUE)
+        writeLines(iconv(readLines(tfile),
+                         from = "UTF-8", to = encoding),
+                   dfile, useBytes = TRUE)
+    } else {
+        write.dcf(rbind(x), dfile,
+                  keep.white = c(.keep_white_description_fields,
+                                 "Maintainer", "BugReports"),
+                  useBytes = TRUE)
+    }
 }
 
 ### ** .read_repositories
