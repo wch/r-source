@@ -50,7 +50,7 @@ DF2formula <- function(x, env = parent.frame()) {
     ff <- if (length(nm) > 1L)
               call("~", nm[[1L]], mkRHS(nm[-1L]))
           else if (length(nm) == 1L)
-              call("~", mkRHS(nm[1L]))
+              call("~", nm[[1L]])
           else stop("cannot create a formula from a zero-column data frame")
     class(ff) <- "formula" # was ff <- eval(ff)
     environment(ff) <- env
