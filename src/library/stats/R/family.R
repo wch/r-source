@@ -565,12 +565,17 @@ quasi <- function (link = "identity", variance = "constant")
         stats <- link
         linktemp <- if(!is.null(stats$name)) stats$name else deparse(linktemp)
     }
-    if(is.list(variance) && !anyNA(match(c("varfun", "validmu"), names(variance))))
+    maybeV <- is.character(vtemp <- substitute(variance)) ||
+        (is.symbol(vtemp) && (vtemp == quote(mu) || vtemp == quote(constant))) ||
+        (is.call(vtemp) &&
+         (length(vtemp) == 2L && vtemp == quote(mu(1-mu))) ||
+         (length(vtemp) == 3L && (vtemp == quote(mu^2)     ||
+                                  vtemp == quote(mu^3))))
+    if(!maybeV && (is.list(variance) && !anyNA(match(c("varfun", "validmu"), names(variance)))))
         variance_nm <- NA
     else {
-    vtemp <- substitute(variance)
     if (!is.character(vtemp)) vtemp <- deparse(vtemp)
-    variance_nm <- vtemp
+    variance_nm <- vtemp <- gsub(" ", "", vtemp)
     switch(vtemp,
            "constant" = {
                varfun <- function(mu) rep.int(1, length(mu))
@@ -615,7 +620,7 @@ quasi <- function (link = "identity", variance = "constant")
     }
     if(is.na(variance_nm)) {
         if(is.character(variance))
-            stop(gettextf('\'variance\' "%s" is invalid: possible values are "mu(1-mu)", "mu", "mu^2", "mu^3" and "constant"', variance_nm), domain = NA)
+            stop(gettextf('\'variance\' "%s" is invalid: possible values are "mu(1-mu)", "mu", "mu^2", "mu^3" and "constant"', vtemp), domain = NA)
         ## so we really meant the object.
         varfun <- variance$varfun
         validmu <- variance$validmu

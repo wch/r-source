@@ -2015,6 +2015,7 @@ stopifnot(! is.null(names(sort.int(x))))
 d <- as.POSIXlt("2018-01-01")
 match(0, d)
 ## Gave a segfault in R < 3.6.0.
+proc.time() - .pt; .pt <- proc.time()
 
 
 ## as(1L, "double") - PR#17457
@@ -2687,8 +2688,16 @@ y  <- rpois(100, lambda=1)
 fq1 <- glm(y ~ x, family = myquasi)
 fqP <- glm(y ~ x, family = quasipoisson)
 str(keep <- setdiff(names(fq1), c("family", "call")))
-stopifnot(all.equal(fq1[keep], fqP[keep]))
-## quasi() failed badly "switch(vtemp, ... EXPR must be a length 1 vector" in R <= 3.6.0
+identNoE <- function(x,y, ...) identical(x,y, ignore.environment=TRUE, ...)
+stopifnot(exprs = {
+    all.equal(fq1[keep], fqP[keep])
+    ## quasi() failed badly "switch(vtemp, ... EXPR must be a length 1 vector" in R <= 3.6.0
+    identNoE(quasi(var = mu),        quasi(variance = "mu"))
+    identNoE(quasi(var = mu(1-mu)),  quasi(variance = "mu(1- mu)"))# both failed in R <= 3.6.0
+    identNoE(quasi(var = mu^3),      quasi(variance = "mu ^ 3"))   #  2nd failed in R <= 3.6.0
+    is.character(msg <- tryCatch(quasi(variance = "log(mu)"), error=conditionMessage)) &&
+        grepl("variance.*log\\(mu\\).* invalid", msg) ## R <= 3.6.0: 'variance' "NA" is invalid
+})
 
 
 
