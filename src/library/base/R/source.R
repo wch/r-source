@@ -202,7 +202,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 						control = deparseCtrl),
 					collapse = "\n"), 12L, 1e+06L)
 		    dep <- paste0(prompt.echo,
-				  gsub("\n", paste0("\n", continue.echo), dep))
+				  gsub("\n", paste0("\n", continue.echo), dep, fixed=TRUE))
 		    ## We really do want chars here as \n\t may be embedded.
 		    nd <- nchar(dep, "c") - 1L
 		}

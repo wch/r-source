@@ -1,6 +1,6 @@
 #  File src/library/tools/R/Rd2HTML.R
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #  Part of the R package, https://www.R-project.org
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -110,8 +110,8 @@ vhtmlify <- function(x, inEqn = FALSE) { # code version
 
 shtmlify <- function(s) {
     s <- gsub("&", "&amp;", s, fixed = TRUE)
-    s <- gsub("<", "&lt;", s, fixed = TRUE)
-    s <- gsub(">", "&gt;", s, fixed = TRUE)
+    s <- gsub("<", "&lt;" , s, fixed = TRUE)
+    s <- gsub(">", "&gt;" , s, fixed = TRUE)
     s
 }
 
@@ -188,8 +188,7 @@ Rd2HTML <-
         } else {
             dir <- dirname(package)
             if(nzchar(dir) &&
-               file_test("-f", dfile <- file.path(package,
-                                                  "DESCRIPTION"))) {
+               file_test("-f", dfile <- file.path(package, "DESCRIPTION"))) {
                 version <- .read_description(dfile)["Version"]
                 package <- basename(package)
             } else {
@@ -448,29 +447,25 @@ Rd2HTML <-
                "\\link" = writeLink(tag, block, doParas),
                ## cwhmisc has an empty \\email
                "\\email" = if (length(block)) {
-                   url <- paste(as.character(block), collapse="")
-                   url <- gsub("\n", "", url)
+                   url <- lines2str(as.character(block))
                    enterPara(doParas)
                    of0('<a href="mailto:', urlify(url), '">',
                        htmlify(url), '</a>')},
                ## watch out for empty URLs (TeachingDemos had one)
                "\\url" = if(length(block)) {
-                   url <- paste(as.character(block), collapse = "")
-                   url <- trimws(gsub("\n", "", url,
-                                      fixed = TRUE, useBytes = TRUE))
+                   url <- lines2str(as.character(block))
                    enterPara(doParas)
-                   of0('<a href="', urlify(url), '">',
-                       htmlify(url), '</a>')
+                   of0('<a href="', urlify(url), '">', htmlify(url), '</a>')
                },
                "\\href" = {
-               	   if(length(block[[1L]])) {
-               	   	url <- paste(as.character(block[[1L]]), collapse = "")
-               	   	url <- trimws(gsub("\n", "", url,
-                                           fixed = TRUE, useBytes = TRUE))
-		        enterPara(doParas)
-               	   	of0('<a href="', urlify(url), '">')
-               	   	closing <- "</a>"
-               	   } else closing <- ""
+                   closing <-
+                       if(length(block[[1L]])) {
+                           url <- lines2str(as.character(block[[1L]]))
+                           enterPara(doParas)
+                           of0('<a href="', urlify(url), '">')
+                           "</a>"
+                       }
+                       else ""
                	   savePara <- inPara
                	   inPara <<- NA
                	   writeContent(block[[2L]], tag)
@@ -627,10 +622,9 @@ Rd2HTML <-
 		    block <- sub(paste0(arg1, "[[:space:]]*,[[:space:]]*"),
 				 "", block)
             	    of0(arg1, pendingOpen)
-            	    if (pendingOpen == "$")
-            	    	pendingClose <<- ""
-            	    else
-            	    	pendingClose <<- chartr("[", "]", pendingOpen)
+                    pendingClose <<-
+                        if(pendingOpen == "$") ""
+                        else chartr("[", "]", pendingOpen)
             	} else of0("`", pendingOpen, "`")
             	pendingOpen <<- character()
             }
@@ -710,7 +704,8 @@ Rd2HTML <-
                         txt <- addParaBreaks(htmlify(block))
                         of1(txt)
                     } else writeBlock(block, tag, blocktag) # should not happen
-                } else writeBlock(block, tag, blocktag)
+                }
+                else writeBlock(block, tag, blocktag) # "typical default"
     	    })
 	}
 	if (inlist) {
@@ -718,10 +713,10 @@ Rd2HTML <-
 	    switch(blocktag,
 		"\\value"=,
 		"\\arguments" = of1("</table>\n"),
-		"\\itemize" = of1("</li></ul>\n"),
+		"\\itemize"   = of1("</li></ul>\n"),
 		"\\enumerate" = of1("</li></ol>\n"),
 		# "\\value"=,
-		"\\describe" = of1("</dl>\n"))
+		"\\describe"  = of1("</dl>\n"))
 	}
     }
 
@@ -761,6 +756,7 @@ Rd2HTML <-
     	sectionLevel <<- save
     }
 
+    ## ----------------------- Continue in main function -----------------------
     if (is.character(out)) {
         if (out == "") {
             con <- stdout()
@@ -831,7 +827,7 @@ Rd2HTML <-
 	    '</body></html>\n')
     }
     invisible(out)
-}
+} ## Rd2HTML()
 
 findHTMLlinks <- function(pkgDir = "", lib.loc = NULL, level = 0:2)
 {

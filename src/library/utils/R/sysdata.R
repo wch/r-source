@@ -45,7 +45,7 @@ function()
 
     pos <- match(MARC_relator_db$code, MARC_R_usage$code, nomatch = 0L)
     MARC_relator_db$usage[pos > 0L] <-
-        gsub("\n", " ", MARC_R_usage$usage[pos])
+        gsub("\n", " ", MARC_R_usage$usage[pos], fixed=TRUE)
 
     MARC_relator_db_codes_used_with_R <-
         sort(MARC_relator_db[nchar(MARC_relator_db$usage) > 0L, "code"])

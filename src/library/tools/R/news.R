@@ -1,7 +1,7 @@
 #  File src/library/tools/R/news.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -525,14 +525,14 @@ function(file, out = stdout(), codify = FALSE)
                           "    \\itemize{",
                           paste("      \\item",
                                 gsub("\n", "\n        ",
-                                     cchunks[[j]]$Text)),
+                                     cchunks[[j]]$Text, fixed=TRUE)),
                           "    }",
                           "  }"))
                 }
             } else {
                 wto(c("  \\itemize{",
                       paste("    \\item",
-                            gsub("\n", "\n      ", vchunk$Text)),
+                            gsub("\n", "\n      ", vchunk$Text, fixed=TRUE)),
                       "  }"))
             }
             wto("}")

@@ -1461,7 +1461,7 @@ function(package, dir, lib.loc = NULL)
                            "\\\\S4method{\\1}{\\2}",
                            aliases)
             ## </FIXME>
-            aliases <- gsub("\\\\%", "%", aliases)
+            aliases <- gsub("\\%", "%", aliases, fixed=TRUE)
             functions_not_in_aliases <- setdiff(functions, aliases)
         }
         else
@@ -6818,7 +6818,7 @@ function(dir, localOnly = FALSE)
         ## display-name which we already do separately.)
     }
     ## NOTE: perhaps whitespace should be canonicalized further above?
-    maintainer <- gsub("\n", " ", meta["Maintainer"])
+    maintainer <- gsub("\n", " ", meta["Maintainer"], fixed=TRUE)
     out$Maintainer_invalid_or_multi_person <-
         ((maintainer != "ORPHANED") &&
          !check_maintainer_address(maintainer))
@@ -7665,10 +7665,7 @@ function(x, ...)
 
     c(character(),
       if(length(x$Maintainer))
-          sprintf("Maintainer: %s",
-                  sQuote(trimws(gsub("\n", " ",
-                                     paste(x$Maintainer,
-                                           collapse = " ")))))
+          sprintf("Maintainer: %s", sQuote(lines2str(x$Maintainer, " ")))
       else
           "No maintainer field in DESCRIPTION file",
       fmt(c(if(x$Maintainer_invalid_or_multi_person)
@@ -7834,7 +7831,7 @@ function(x, ...)
       },
       if(length(y <- x$author_should_be_authors_at_R)) {
           paste(c("Author field should be Authors@R.  Current value is:",
-                  paste0("  ", gsub("\n", "\n  ", y))),
+                  paste0("  ", gsub("\n", "\n  ", y, fixed=TRUE))),
                 collapse = "\n")
       },
       if(length(y <- x$vignette_sources_only_in_inst_doc)) {
@@ -7897,7 +7894,7 @@ function(x, ...)
                                 "Found the following (possibly) invalid URLs:"
                             else
                                 "Found the following (possibly) invalid URL:",
-                            paste0("  ", gsub("\n", "\n    ", format(y)))),
+                            paste0("  ", gsub("\n", "\n    ", format(y), fixed=TRUE))),
                           collapse = "\n")
             },
             if(length(y) && any(nzchar(z <- y$CRAN))) {
@@ -7944,7 +7941,7 @@ function(x, ...)
                               "Found the following (possibly) invalid DOIs:"
                           else
                               "Found the following (possibly) invalid DOI:",
-                          paste0("  ", gsub("\n", "\n    ", format(y)))),
+                          paste0("  ", gsub("\n", "\n    ", format(y), fixed=TRUE))),
                         collapse = "\n")
           }),
       if(length(y <- x$R_files_non_ASCII)) {
@@ -8691,7 +8688,7 @@ function(x, collapse = " ")
 
 .strip_backticks <-
 function(x)
-    gsub("`", "", x)
+    gsub("`", "", x, fixed=TRUE)
 
 ### ** .transform_S3_method_markup
 

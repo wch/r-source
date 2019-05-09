@@ -1,7 +1,7 @@
 #  File src/library/tools/R/Rd2latex.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -205,9 +205,7 @@ Rd2latex <- function(Rd, out = "", defines = .Platform$OS.type,
             tag <- "\\Rhref"
         }
         ## cleanup URL
-        url <- trimws(gsub("\n", "",
-                           paste(as.character(url), collapse = ""),
-                           fixed = TRUE, useBytes = TRUE))
+        url <- lines2str(url)
         ## escape % for LaTeX
         url <- gsub("%", "\\%",  url, fixed = TRUE, useBytes = TRUE)
     	of0(tag, "{", url, "}")

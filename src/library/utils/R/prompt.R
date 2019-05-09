@@ -1,7 +1,7 @@
 #  File src/library/utils/R/prompt.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -98,8 +98,8 @@ function(object, filename = NULL, name = NULL,
         x.def[br] <- paste0("  ", x.def[br])
 
     ## escape "%" :
-    x.def <- gsub("%", "\\\\%", x.def)
-    Call <- gsub("%", "\\\\%", Call)
+    x.def <- gsub("%", "\\%", x.def, fixed=TRUE)
+    Call  <- gsub("%", "\\%", Call,  fixed=TRUE)
 
     Rdtxt <-
         list(name = paste0("\\name{", name, "}"),

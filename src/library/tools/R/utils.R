@@ -194,7 +194,6 @@ env_path <- function(...) file.path(..., fsep = .Platform$path.sep)
 ### * Text utilities.
 
 ### ** delimMatch
-
 delimMatch <-
 function(x, delim = c("{", "}"), syntax = "Rd")
 {
@@ -208,6 +207,12 @@ function(x, delim = c("{", "}"), syntax = "Rd")
 
     .Call(C_delim_match, x, delim)
 }
+
+### ** lines2str
+lines2str <-
+function(txt, sep = "")
+    trimws(gsub("\n", sep, paste(txt, collapse = sep),
+                fixed = TRUE, useBytes = TRUE))
 
 
 ### * LaTeX utilities
@@ -557,11 +562,8 @@ function(x, y)
 
 ### ** .OStype
 
-.OStype <-
-function()
-{
-    OS <- Sys.getenv("R_OSTYPE")
-    if(nzchar(OS)) OS else .Platform$OS.type
+.OStype <- function() {
+    Sys.getenv("R_OSTYPE", unset = .Platform$OS.type, names = FALSE)
 }
 
 ### ** .R_copyright_msg
@@ -1845,7 +1847,7 @@ function(txt)
     ## separated by white space, possibly quoted.  Note that we could
     ## have newlines in DCF entries but do not allow them in file names,
     ## hence we gsub() them out.
-    con <- textConnection(gsub("\n", " ", txt))
+    con <- textConnection(gsub("\n", " ", txt, fixed=TRUE))
     on.exit(close(con))
     scan(con, what = character(), strip.white = TRUE, quiet = TRUE)
 }

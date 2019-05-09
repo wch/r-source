@@ -1,7 +1,7 @@
 #  File src/library/utils/R/news.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -121,7 +121,7 @@ function(x, ...)
         } else vheaders <- character()
 
         format_items <- function(x)
-            paste0("    o   ", gsub("\n", "\n\t", x$Text))
+            paste0("    o   ", gsub("\n", "\n\t", x$Text, fixed=TRUE))
         format_vchunk <- function(vchunk) {
             if(all(!is.na(category <- vchunk$Category)
                    & nzchar(category))) {

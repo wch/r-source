@@ -1,7 +1,7 @@
 #  File src/library/tools/R/dynamicHelp.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -272,7 +272,7 @@ httpd <- function(path, query, ...)
          return(list(file = file.path(R.home("doc"), "html", "NEWS.html"),
                      "content-type" = "text/html"))
     else if(grepl("^/NEWS[.][[:digit:]]$", path))
-    	return(list(file = file.path(R.home("doc"), sub("/", "", path)),
+    	return(list(file = file.path(R.home("doc"), sub("/", "", path, fixed=TRUE)),
     	            "content-type" = "text/plain; charset=utf-8"))
     else if((path == "/doc/html/NEWS.html") &&
             identical(names(query), c("objects", "port"))) {
@@ -572,7 +572,7 @@ httpd <- function(path, query, ...)
         file <- file.path(R.home("doc"), sub("^/doc", "", path))
         if(file.exists(file))
             list(file = file, "content-type" = mime_type(path))
-        else if(file.exists(file <- sub("/manual/", "/html/", file))) {
+        else if(file.exists(file <- sub("/manual/", "/html/", file, fixed=TRUE))) {
             ## tarball has pre-built version of R-admin.html
             list(file = file, "content-type" = mime_type(path))
         } else {

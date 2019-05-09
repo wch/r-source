@@ -1481,7 +1481,7 @@ function(x)
     ## (RFC 5322 <https://tools.ietf.org/html/rfc5322>).
     if(any(ind <- grepl(",", display))) {
         display[ind] <- sprintf("\"%s\"",
-                                gsub("\"", "\\\\\"", display[ind]))
+                                gsub("\"", "\\\"", display[ind], fixed=TRUE))
     }
     paste(display, address)
 }

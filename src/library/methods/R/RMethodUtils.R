@@ -1,7 +1,7 @@
 #  File src/library/methods/R/RMethodUtils.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -790,12 +790,12 @@ getGenerics <- function(where, searchForm = FALSE)
     these <- these[startsWith(these, ".__T__")]
     if(length(these) == 0L)
         return(character())
-    funNames <- gsub("^.__T__(.*):([^:]+)", "\\1", these)
+    funNames <- gsub("^\\.__T__(.*):([^:]+)", "\\1", these)
     ## FIXME: length(funNames) == length(these) != 0   ==> this never triggers:
     ## if(length(funNames) == 0L && any(startsWith(these, ".__M__")))
     ##     warning(sprintf("package %s seems to have out-of-date methods; need to reinstall from source",
     ##                      sQuote(getPackageName(where[[1L]]))))
-    packageNames <- gsub(".__T__(.*):([^:]+(.*))", "\\2", these)
+    packageNames <- gsub("^\\.__T__(.*):([^:]+(.*))", "\\2", these)
     attr(funNames, "package") <- packageNames
     ## Would prefer following, but may be trouble bootstrapping methods
     ## funNames <- new("ObjectsWithPackage", funNames, package = packageNames)
@@ -804,9 +804,10 @@ getGenerics <- function(where, searchForm = FALSE)
     else if(isFALSE(trim))
         these
     else
-        gsub(".__T__", as.character(trim), these)
+        gsub(".__T__", as.character(trim), these, fixed=TRUE)
 }
 
+## also called from base::loadNamespace, unloadNamespace(), attach() & detach()
 cacheMetaData <-
     function(where, attach = TRUE, searchWhere = as.environment(where),
              doCheck = TRUE)

@@ -18,9 +18,8 @@
 
 
 RdTags <- function(Rd) {
-    res <- sapply(Rd, attr, "Rd_tag")
-    if (!length(res)) res <- character()
-    res
+    res <- lapply(Rd, attr, "Rd_tag")
+    if(length(res)) simplify2array(res, FALSE) else character()
 }
 
 isBlankRd <- function(x)
@@ -451,6 +450,7 @@ prepare_Rd <-
               srcref = srcref)
 }
 
+## auxiliary, currently called only from prepare_Rd(*, stage2 = TRUE)
 prepare2_Rd <- function(Rd, Rdfile)
 {
     sections <- RdTags(Rd)
@@ -543,6 +543,7 @@ prepare2_Rd <- function(Rd, Rdfile)
     structure(Rd, meta = list(docType = docTypes))
 }
 
+## auxiliary, currently called only from prepare_Rd(*, stage3 = TRUE)
 prepare3_Rd <- function(Rd, Rdfile, msglevel = 0)
 {
     ## Drop 'empty' sections: less rigorous than checkRd test
@@ -555,18 +556,16 @@ prepare3_Rd <- function(Rd, Rdfile, msglevel = 0)
         else {
             tag <- attr(x, "Rd_tag")
             switch(tag,
-		   USERMACRO =,
-		   "\\newcommand" =,
-		   "\\renewcommand" =,
-		   COMMENT = {},
-                   VERB =,
-                   RCODE =,
-                   TEXT = if(any(grepl("[^[:space:]]", s, perl = TRUE, useBytes=TRUE))) return(TRUE),
-                   return(TRUE)
-                   )
+		   USERMACRO =, "\\newcommand" =, "\\renewcommand" =, COMMENT =
+                                                                          {},
+                   VERB =, RCODE =, TEXT =
+                                        if(any(grepl("[^[:space:]]", s,
+                                                     perl=TRUE, useBytes=TRUE)))
+                                            return(TRUE),
+                   return(TRUE))
         }
         this
-     }
+    }
     for (i in seq_along(Rd)) {
         this <- FALSE
         s0 <- section <- Rd[[i]]

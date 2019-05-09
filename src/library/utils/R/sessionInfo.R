@@ -191,9 +191,9 @@ toLatex.sessionInfo <-
 		  ", \\verb|", object$R.version$platform, "|"),
 	   if(locale)
 	       paste0("  \\item Locale: \\verb|",
-		      gsub(";","|, \\\\verb|", object$locale) , "|"),
+		  gsub(";", "|, \\verb|", object$locale,  fixed=TRUE), "|"),
 	   paste0("  \\item Running under: \\verb|",
-		  gsub(";","|, \\\\verb|", object$running) , "|"),
+		  gsub(";", "|, \\verb|", object$running, fixed=TRUE), "|"),
 	   if(RNG)
 	       paste0("  \\item Random number generation:"
 		    , "  \\item RNG:    \\verb|", object$RNGkind[1], "|"

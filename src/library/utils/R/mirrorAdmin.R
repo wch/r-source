@@ -1,7 +1,7 @@
 #  File src/library/utils/R/mirrorAdmin.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ function(mirrors = NULL, file = "mirrors.html",
     if(is.null(mirrors)){
         mirrors <- getCRANmirrors(all = FALSE, local.only = TRUE)
     }
-    mirrors$Host <- gsub("&", "&amp;", mirrors$Host)
+    mirrors$Host <- gsub("&", "&amp;", mirrors$Host, fixed = TRUE)
     z <- NULL
     if(file.exists(head)) z <- readLines(head)
     z <- c(z, "<dl>")

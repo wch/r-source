@@ -129,7 +129,7 @@ if(FALSE) {
     # command sent to another R process.  Currently it only fixes backslashes;
     # more extensive escaping might be a good idea
     quote_path <- function(path, quote = "'")
-    	paste0(quote, gsub("\\\\", "\\\\\\\\", path), quote)
+    	paste0(quote, gsub("\\", "\\\\", path, fixed=TRUE), quote)
 
     on.exit(do_exit_on_error())
     WINDOWS <- .Platform$OS.type == "windows"
@@ -2668,11 +2668,11 @@ if(FALSE) {
     htmlize <- function(x, backtick)
     {
         x <- gsub("&", "&amp;", x, fixed = TRUE)
-        x <- gsub("<", "&lt;", x, fixed = TRUE)
-        x <- gsub(">", "&gt;", x, fixed = TRUE)
+        x <- gsub("<", "&lt;",  x, fixed = TRUE)
+        x <- gsub(">", "&gt;",  x, fixed = TRUE)
         if (backtick) {
             x <- gsub("---", "-", x, fixed = TRUE)
-            x <- gsub("--", "-", x, fixed = TRUE)
+            x <- gsub("--",  "-", x, fixed = TRUE)
             ## these have been changed in the Rd parser
             #x <- gsub("``", "&ldquo;", x, fixed = TRUE)
             #x <- gsub("''", "&rdquo;", x, fixed = TRUE)
@@ -2682,7 +2682,7 @@ if(FALSE) {
         x
     }
     M$HTopic <- htmlize(M$Topic, FALSE)
-    M$Title <- htmlize(M$Title, TRUE)
+    M$ Title <- htmlize(M$Title, TRUE)
 
     ## No need to handle encodings: everything is in UTF-8
 
@@ -2847,21 +2847,21 @@ if(FALSE) {
     if ("html" %in% types) {
         type <- "html"
         have <- list.files(file.path(outDir, dirname[type]))
-        have2 <- sub("\\.html", "", basename(have))
+        have2 <- sub(".html", "", basename(have), fixed=TRUE)
         drop <- have[have2 %notin% c(bfs, "00Index", "R.css")]
         unlink(file.path(outDir, dirname[type], drop))
     }
     if ("latex" %in% types) {
         type <- "latex"
         have <- list.files(file.path(outDir, dirname[type]))
-        have2 <- sub("\\.tex", "", basename(have))
+        have2 <- sub(".tex", "", basename(have), fixed=TRUE)
         drop <- have[have2 %notin% bfs]
         unlink(file.path(outDir, dirname[type], drop))
     }
     if ("example" %in% types) {
         type <- "example"
         have <- list.files(file.path(outDir, dirname[type]))
-        have2 <- sub("\\.R", "", basename(have))
+        have2 <- sub(".R", "", basename(have), fixed=TRUE)
         drop <- have[have2 %notin% bfs]
         unlink(file.path(outDir, dirname[type], drop))
     }

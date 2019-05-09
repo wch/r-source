@@ -1041,7 +1041,7 @@ compactPDF <-
         ## OTOH, people were using versions as old as 2.2.2.
         ## </NOTE>
         ver <- system2(qpdf, "--version", TRUE)[1L]
-        ver <- as.numeric_version(sub("qpdf version ", "", ver))
+        ver <- as.numeric_version(sub("qpdf version ", "", ver, fixed=TRUE))
         if(!is.na(ver) && ver < "6.0.0")
             qpdf_flags <- c("--stream-data=compress", qpdf_flags)
     }

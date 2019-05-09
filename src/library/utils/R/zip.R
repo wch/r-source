@@ -68,7 +68,7 @@ unzip <-
                     ## default first.
                     c("%m-%d-%y", "%d-%m-%y", "%y-%m-%d")
             slash <- any(grepl("/", z$Date))
-            if (slash) formats <- gsub("-", "/", formats)
+            if (slash) formats <- gsub("-", "/", formats, fixed=TRUE)
             formats <- paste(formats, "%H:%M")
             for (f in formats) {
                 zz <- as.POSIXct(dt, tz="UTC", format = f)

@@ -5033,7 +5033,7 @@ add_dummies <- function(dir, Log)
             noteLog(Log)
             printLog(Log, sprintf("  installed size is %4.1fMb\n", total/1024))
             rest <- res2[-nrow(res2), ]
-            rest[, 2L] <- sub("./", "", rest[, 2L])
+            rest[, 2L] <- sub("./", "", rest[, 2L], fixed=TRUE)
             ## keep only top-level directories
             rest <- rest[!grepl("/", rest[, 2L]), ]
             rest <- rest[rest[, 1L] > 1024, ] # > 1Mb

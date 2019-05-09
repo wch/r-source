@@ -688,7 +688,7 @@ promptMethods <- function(f, filename = NULL, methods)
     ## to.  If it 'FALSE', the methods skeleton is returned, to be
     ## included in other printing (typically, the output from 'prompt').
 
-    escape <- function(txt) gsub("%", "\\\\%", txt)
+    escape <- function(txt) gsub("%", "\\%", txt, fixed=TRUE)
     packageString <- ""
 
     fdef <- getGeneric(f)

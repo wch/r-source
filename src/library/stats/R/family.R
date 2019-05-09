@@ -293,7 +293,7 @@ gaussian <- function (link = "identity")
 	      class = "family")
 }
 
-binomInitialize <- function(family) substitute({ # (y, weights, nobs, family)
+binomInitialize <- function(family) substitute({ # other "arg"s:  (y, weights, nobs)
     if (NCOL(y) == 1) {
 	## allow factors as responses
 	## added BDR 29/5/98
@@ -575,7 +575,7 @@ quasi <- function (link = "identity", variance = "constant")
         variance_nm <- NA
     else {
     if (!is.character(vtemp)) vtemp <- deparse(vtemp)
-    variance_nm <- vtemp <- gsub(" ", "", vtemp)
+    variance_nm <- vtemp <- gsub(" ", "", vtemp, fixed=TRUE)
     switch(vtemp,
            "constant" = {
                varfun <- function(mu) rep.int(1, length(mu))

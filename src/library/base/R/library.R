@@ -1,7 +1,7 @@
 #  File src/library/base/R/library.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -46,9 +46,8 @@ conflictRules <-
             if ((! missing(mask.ok)) || (! missing(exclude)))
                 assign(pkg, list(mask.ok = mask.ok, exclude = exclude),
                        envir = data)
-            else if (exists(pkg, envir = data, inherits = FALSE))
-                get(pkg, envir = data, inherits = FALSE)
-            else NULL
+            else
+                get0(pkg, envir = data, inherits = FALSE)
         }
     })
 
@@ -103,16 +102,13 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             for(dep in Rdeps)
                 if(length(dep) > 1L) {
                     target <- dep$version
-                    res <- if(is.character(target)) {
-                        do.call(dep$op, # these are both strings
-                                list(as.numeric(R.version[["svn rev"]]),
-                                     as.numeric(sub("^r", "", dep$version))))
-                    } else {
+                    res <-
                         do.call(dep$op,
-                                list(current, as.numeric_version(target)))
-##                        target <- as.numeric_version(dep$version)
-##                        eval(parse(text=paste("current", dep$op, "target")))
-                    }
+                           if(is.character(target)) # these are both strings
+                               list(as.numeric(R.version[["svn rev"]]),
+                                    as.numeric(sub("^r", "", target)))
+                           else
+                               list(current, as.numeric_version(target)))
                     if(!res)
                         stop(gettextf("This is R %s, package %s needs %s %s",
                                       current, sQuote(pkgname), dep$op, target),
@@ -190,13 +186,12 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             ob <- ob[!(ob %in% gen)]
         }
 
-	ipos <- seq_along(sp)[-c(lib.pos,
-				 match(c("Autoloads", "CheckExEnv"), sp, 0L))]
+	ipos <- seq_along(sp)[-c(lib.pos, match(c("Autoloads", "CheckExEnv"), sp, 0L))]
         cpos <- NULL
         conflicts <- vector("list", 0)
         for (i in ipos) {
             obj.same <- match(names(as.environment(i)), ob, nomatch = 0L)
-            if (any(obj.same > 0)) {
+            if (any(obj.same > 0L)) {
                 same <- ob[obj.same]
                 same <- same[!(same %in% dont.mind)]
                 Classobjs <- which(startsWith(same,".__"))
@@ -920,7 +915,7 @@ function(file="DESCRIPTION", lib.loc = NULL, quietly = FALSE, useImports = FALSE
 function(pkgInfo, quietly = FALSE, lib.loc = NULL, useImports = FALSE)
 {
 ### FIXME: utils::packageVersion() should be pushed up here instead
-    .findVersion <- function(pkg, lib.loc = NULL) {
+    .findVersion <- function(pkg, lib.loc) {
         pfile <- system.file("Meta", "package.rds",
                              package = pkg, lib.loc = lib.loc)
         if (nzchar(pfile))
@@ -1002,5 +997,5 @@ function(x)
     ## %o => os
     x <- expand(x, "o", R.version$os)
 
-    gsub("%%", "%", x)
+    gsub("%%", "%", x, fixed=TRUE)
 }

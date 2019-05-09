@@ -1,7 +1,7 @@
 #  File src/library/tools/R/Rd.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -267,16 +267,11 @@ function(package, dir, lib.loc = NULL, stages = "build")
         if(length(package) != 1L)
             stop("argument 'package' must be of length 1")
         dir <- find.package(package, lib.loc)
-        ## Using package installed in @code{dir} ...
-        docs_dir <- file.path(dir, "man")
+        ##
         ## For an installed package, we might have
         ##
-        ## 1) pre-2.10.0-style  man/package.Rd.gz
-        ## file with suitable concatenated Rd sources,
-        ##
-        ## 2) help/package.rd[bx]
-        ## with a DB of the parsed (and platform processed, see
-        ## above) Rd objects.
+        ## help/package.rd[bx]
+        ##    with a DB of the parsed (and platform processed, see above) Rd objects.
         db_file <- file.path(dir, "help", package)
         if(file_test("-f", paste0(db_file, ".rdx"))) {
             db <- fetchRdDB(db_file)
@@ -289,6 +284,10 @@ function(package, dir, lib.loc = NULL, stages = "build")
             }
             return(db)
         }
+        ## or else  pre-2.10.0-style    man/package.Rd.gz   
+        ## file with suitable concatenated Rd sources,
+        ##
+        docs_dir <- file.path(dir, "man")
         db_file <- file.path(docs_dir, sprintf("%s.Rd.gz", package))
         if(file_test("-f", db_file)) {
             lines <- .read_Rd_lines_quietly(db_file)
@@ -588,7 +587,7 @@ function(x)
     txt <- .Rd_get_item_tags(x)
     txt <- unlist(strsplit(txt, ", *"))
     txt <- gsub("\\\\l?dots", "...", txt)
-    txt <- gsub("\\\\_", "_", txt)
+    txt <- gsub("\\_", "_", txt, fixed=TRUE)
     trimws(txt)
 }
 
@@ -810,10 +809,10 @@ function(x)
     ## * Escaped ampersand.
     ## Hence we try getting rid of these ...
     x <- gsub("(``|'')", "\"", x)
-    x <- gsub("`", "'", x)
+    x <- gsub("`", "'", x, fixed=TRUE)
     x <- gsub("([[:alnum:]])--([[:alnum:]])", "\\1-\\2", x)
-    x <- gsub("\\\\&", "&", x)
-    x <- gsub("---", "--", x)
+    x <- gsub("\\&", "&",  x, fixed=TRUE)
+    x <- gsub("---", "--", x, fixed=TRUE)
     ## Also remove leading and trailing whitespace.
     trimws(x)
 }

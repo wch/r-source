@@ -51,16 +51,11 @@ function(x)
         tag <- attr(e, "Rd_tag")
         ## Rd2HTML and Rd2latex remove whitespace and \n from URLs.
         if(identical(tag, "\\url")) {
-            urls <<-
-                c(urls, trimws(gsub("\n", "", .Rd_deparse(e, tag = FALSE),
-                                    fixed = TRUE, useBytes = TRUE)))
+            urls <<- c(urls, lines2str(.Rd_deparse(e, tag = FALSE)))
         } else if(identical(tag, "\\href")) {
-            urls <<-
-                c(urls, trimws(gsub("\n", "",
-                                    .Rd_deparse(e[[1L]], tag = FALSE),
-                                    fixed = TRUE, useBytes = TRUE)))
+            urls <<- c(urls, lines2str(.Rd_deparse(e[[1L]], tag = FALSE)))
         } else if(is.list(e))
-              lapply(e, recurse)
+            lapply(e, recurse)
     }
     lapply(x, recurse)
     unique(trimws(urls))
@@ -595,7 +590,7 @@ function(x, ...)
                   sprintf("\nStatus: %s", s)),
            ifelse((m <- x$Message) == "",
                   "",
-                  sprintf("\nMessage: %s", gsub("\n", "\n  ", m))),
+                  sprintf("\nMessage: %s", gsub("\n", "\n  ", m, fixed=TRUE))),
            ifelse((m <- x$Spaces) == "",
                   "",
                   "\nURL contains spaces"),

@@ -1,7 +1,7 @@
 #  File src/library/tools/R/CRANtools.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2014-2017 The R Core Team
+#  Copyright (C) 2014-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -568,7 +568,7 @@ function()
     db <- CRAN_package_db()
     maintainer <- db[, "Maintainer"]
     address <- tolower(sub(".*<(.*)>.*", "\\1", maintainer))
-    maintainer <- gsub("\n", " ", maintainer)
+    maintainer <- gsub("\n", " ", maintainer, fixed=TRUE)
     data.frame(Package = db[, "Package"],
                Address = address,
                Maintainer = maintainer,

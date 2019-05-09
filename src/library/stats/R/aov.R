@@ -1,7 +1,7 @@
 #  File src/library/stats/R/aov.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #  Copyright (C) 1998 B. D. Ripley
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -433,8 +433,9 @@ alias.lm <- function(object, complete = TRUE, partial = FALSE,
         }
         x[!z] <- ""
         collabs <- colnames(x)
-        collabs <- if(length(collabs)) abbreviate(sub("\\.", "", collabs), 3L)
-        else 1L:ncol(x)
+        collabs <- if(length(collabs))
+                       abbreviate(sub(".", "", collabs, fixed=TRUE), 3L)
+                   else 1L:ncol(x)
         colnames(x) <- collabs
         class(x) <- "mtable"
         x

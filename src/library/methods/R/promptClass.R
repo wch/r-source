@@ -83,12 +83,12 @@ function (clName, filename = NULL, type = "class",
 	xn <- if(length(xn) == length(x)) paste(xn, "= ") else ""
 	paste0("(", paste0(xn, "\"", x, "\"", collapse = ", "), ")")
     }
-    escape <- function(txt) gsub("%", "\\\\%", txt)
+    escape <- function(txt) gsub("%", "\\%", txt, fixed=TRUE)
 
     if(is.null(filename))
 	filename <- paste0(utils:::topicName(type, clName), ".Rd")
     if(!missing(where) && !is.na(match(clName, getClasses(where))))
-      whereClass <- where
+        whereClass <- where
     else {
         whereClass <- utils::find(classMetaName(clName))
         if(length(whereClass) == 0L)

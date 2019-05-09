@@ -1,7 +1,7 @@
 #  File src/library/utils/R/glob2rx.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -26,14 +26,14 @@ glob2rx <- function(pattern, trim.head = FALSE, trim.tail = TRUE)
     ## -------------------------------------------------------------------------
     ## Author: Martin Maechler ETH Zurich, ~ 1991
     ##	       New version using [g]sub() : 2004
-    p <- gsub("\\.","\\\\.", paste0("^", pattern, "$"))
-    p <- gsub("\\?",	 ".",  gsub("\\*",  ".*", p))
+    p <- gsub(".","\\.", paste0("^", pattern, "$"), fixed=TRUE)
+    p <- gsub("?", ".",  gsub("*", ".*", p, fixed=TRUE), fixed=TRUE)
     ## 'Escaping hell' : at least for '(', '[' and '{'
     p <- gsub("([^\\])\\(", "\\1\\\\(", p)
     p <- gsub("([^\\])\\[", "\\1\\\\[", p)
     p <- gsub("([^\\])\\{", "\\1\\\\{", p)
     ## these are trimming ".*$" and "^.*" - in most cases only for aesthetics
-    if(trim.tail) p <- sub("\\.\\*\\$$", "", p)
-    if(trim.head) p <- sub("\\^\\.\\*",  "", p)
+    if(trim.tail) p <- sub(".*$", "", p, fixed=TRUE)
+    if(trim.head) p <- sub("^.*", "", p, fixed=TRUE)
     p
 }

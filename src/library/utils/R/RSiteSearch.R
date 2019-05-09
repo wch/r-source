@@ -25,7 +25,7 @@ RSiteSearch <- function(string,
 			matchesPerPage = 20)
 {
     string <- paste0("http://search.r-project.org/cgi-bin/namazu.cgi?query=",
-		     URLencode(gsub(" ", "+", string), reserved = TRUE))
+		     URLencode(gsub(" ", "+", string, fixed=TRUE), reserved = TRUE))
     mpp <- paste0("max=", matchesPerPage)
     format <- paste0("result=", match.arg(format))
 
