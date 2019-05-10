@@ -1662,6 +1662,10 @@ if(FALSE) {
             } else {
                 patch_rpaths()
 
+                unlink(final_instdir, recursive = TRUE)
+		  # needed for mv on some file systems, even though
+		  # according to POSIX mv should work when the target is an
+		  # empty directory
                 owd <- setwd(startdir)
                 status <- system(paste("mv -f",
                                        shQuote(instdir),
