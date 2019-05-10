@@ -639,8 +639,8 @@ if(FALSE) {
                         hardcoded_paths <- TRUE
                         qp <- gsub('([" \\])', "\\\\\\1", paths[i])
                         qp <- gsub("'", "\\\\'", qp)
-                        cmd <- paste("elfedit -e \"dyn:value -dynndx -s",
-                                     idxs[i], qp, "\"", shQuote(l))
+                        cmd <- paste0("elfedit -e \"dyn:value -dynndx -s ",
+                                     idxs[i], " ", qp, "\" ", shQuote(l))
                         message(cmd)
                         ret <- suppressWarnings(system(cmd, intern = FALSE))
                         if (ret == 0)
