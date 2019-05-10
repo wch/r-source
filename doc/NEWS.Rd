@@ -16,6 +16,10 @@
       \item \code{Df2formula()}, the utility for the data frame method of
       \code{formula()}, now works without parsing and explicit evaluation,
       starting from Suharto Anggono's suggestion in \PR{17555}.
+
+      \item \code{approxfun()} and \code{approx()} gain option \code{na.rm
+	= TRUE}.  If set to false, missing y values now propagate into
+      interpolated values.
     }
   }
 

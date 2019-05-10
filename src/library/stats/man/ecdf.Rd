@@ -1,6 +1,6 @@
 % File src/library/stats/man/ecdf.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2019 R Core Team
 % Copyright 2002-2016 The R Foundation
 % Distributed under GPL 2 or later
 
@@ -103,7 +103,7 @@ summary.stepfun(Fn12)
 
 ## Advanced: What's inside the function closure?
 ls(environment(Fn12))
-##[1] "f"  "method"  "n"  "x"  "y"  "yleft"  "yright"
+## "f"     "method" "na.rm"  "nobs"   "x"     "y"    "yleft"  "yright"
 utils::ls.str(environment(Fn12))
 stopifnot(all.equal(quantile(Fn12), quantile(y)))
 

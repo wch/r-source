@@ -22,16 +22,25 @@
 ## to massage the input (x,y) pairs into standard form:
 ## x values unique and increasing, y values collapsed to match
 ## (except if ties=="ordered", then not unique)
-regularize.values <- function(x, y, ties, warn.collapsing = TRUE) {
+regularize.values <- function(x, y, ties, warn.collapsing = TRUE, na.rm = TRUE) {
     x <- xy.coords(x, y, setLab = FALSE) # -> (x,y) numeric of same length
     y <- x$y
     x <- x$x
+    keptNA <- FALSE
+    nx <-
     if(any(na <- is.na(x) | is.na(y))) {
 	ok <- !na
+      if(na.rm) {
 	x <- x[ok]
 	y <- y[ok]
+        length(x)
+      } else { ## na.rm is FALSE
+          keptNA <- TRUE
+          sum(ok)
+      }
+    } else {
+        length(x)
     }
-    nx <- length(x)
     if (!identical(ties, "ordered")) {
 	ordered <-
 	    if(is.function(ties) || is.character(ties))# fn or name of one
@@ -41,8 +50,9 @@ regularize.values <- function(x, y, ties, warn.collapsing = TRUE) {
 		ties <- T[[2]]
 		identical(T[[1]], "ordered")
 	    } else
-		stop("'ties' is not \"ordered\", a function, or list(<string>, <function>)")
-	if(!ordered && is.unsorted(x)) {
+		stop("'ties' is not \"ordered\", a function, or list(<string>, <func
+tion>)")
+	if(!ordered && is.unsorted(if(keptNA) x[ok] else x)) {
 	    o <- order(x)
 	    x <- x[o]
 	    y <- y[o]
@@ -55,22 +65,28 @@ regularize.values <- function(x, y, ties, warn.collapsing = TRUE) {
 	    y <- as.vector(tapply(y, match(x,x), ties))# as.v: drop dim & dimn.
 	    x <- ux
 	    stopifnot(length(y) == length(x))# (did happen in 2.9.0-2.11.x)
+            if(keptNA) ok <- !is.na(x)
 	}
     }
-    list(x=x, y=y)
+    list(x=x, y=y, keptNA=keptNA, notNA = if(keptNA) ok)
 }
 
 approx <- function(x, y = NULL, xout, method = "linear", n = 50,
-		   yleft, yright, rule = 1, f = 0, ties = mean)
+		   yleft, yright, rule = 1, f = 0, ties = mean, na.rm = TRUE)
 {
     method <- pmatch(method, c("linear", "constant"))
     if (is.na(method)) stop("invalid interpolation method")
     stopifnot(is.numeric(rule), (lenR <- length(rule)) >= 1L, lenR <= 2L)
     if(lenR == 1) rule <- rule[c(1,1)]
-    x <- regularize.values(x, y, ties, missing(ties)) # -> (x,y) numeric of same length
-    y <- x$y
-    x <- x$x
-    nx <- length(x) # large vectors ==> non-integer
+    r <- regularize.values(x, y, ties, missing(ties), na.rm=na.rm)
+                                        # -> (x,y) numeric of same length
+    y <- r$y
+    x <- r$x
+    noNA <- na.rm || !r$keptNA
+    nx <- if(noNA)
+              length(x) # large vectors ==> non-integer
+          else
+              sum(r$notNA)
     if (is.na(nx)) stop("invalid length(x)")
     if (nx <= 1) {
 	if(method == 1)# linear
@@ -85,48 +101,56 @@ approx <- function(x, y = NULL, xout, method = "linear", n = 50,
     stopifnot(length(yleft) == 1L, length(yright) == 1L, length(f) == 1L)
     if (missing(xout)) {
 	if (n <= 0) stop("'approx' requires n >= 1")
-	xout <- seq.int(x[1L], x[nx], length.out = n)
+        xout <-
+            if(noNA)
+                seq.int(x[1L], x[nx], length.out = n)
+            else {
+                xout <- x[r$notNA]
+                seq.int(xout[1L], xout[length(xout)], length.out = n)
+            }
     }
     x <- as.double(x); y <- as.double(y)
-    .Call(C_ApproxTest, x, y, method, f)
-    yout <- .Call(C_Approx, x, y, xout, method, yleft, yright, f)
+    .Call(C_ApproxTest, x, y, method, f, na.rm)
+    yout <- .Call(C_Approx, x, y, xout, method, yleft, yright, f, na.rm)
     list(x = xout, y = yout)
 }
 
 approxfun <- function(x, y = NULL, method = "linear",
-		   yleft, yright, rule = 1, f = 0, ties = mean)
+		   yleft, yright, rule = 1, f = 0, ties = mean, na.rm = TRUE)
 {
     method <- pmatch(method, c("linear", "constant"))
     if (is.na(method)) stop("invalid interpolation method")
     stopifnot(is.numeric(rule), (lenR <- length(rule)) >= 1L, lenR <= 2L)
     if(lenR == 1) rule <- rule[c(1,1)]
-    x <- regularize.values(x, y, ties, missing(ties)) # -> (x,y) numeric of same length
-    y <- x$y
-    x <- x$x
-    n <- length(x) # large vectors ==> non-integer
-    if (is.na(n)) stop("invalid length(x)")
-
-    if (n <= 1) {
+    x <- regularize.values(x, y, ties, missing(ties), na.rm=na.rm)
+                                        # -> (x,y) numeric of same length
+    noNA <- na.rm || !x$keptNA
+    nx <- if(noNA)
+              length(x$x) # large vectors ==> non-integer
+          else
+              sum(x$notNA)
+    if (is.na(nx)) stop("invalid length(x)")
+    if (nx <= 1) {
 	if(method == 1)# linear
 	    stop("need at least two non-NA values to interpolate")
-	if(n == 0) stop("zero non-NA points")
+	if(nx == 0) stop("zero non-NA points")
     }
+    y <- x$y
     if (missing(yleft))
 	yleft <- if (rule[1L] == 1) NA else y[1L]
     if (missing(yright))
 	yright <- if (rule[2L] == 1) NA else y[length(y)]
-    force(f)
     stopifnot(length(yleft) == 1L, length(yright) == 1L, length(f) == 1L)
-    rm(rule, ties, lenR, n) # we do not need n, but summary.stepfun did.
+    rm(rule, ties, lenR, nx) # we do not need nx, but summary.stepfun did.
 
     ## 1. Test input consistency once
-    x <- as.double(x); y <- as.double(y)
-    .Call(C_ApproxTest, x, y, method, f)
+    x <- as.double(x$x); y <- as.double(y)
+    .Call(C_ApproxTest, x, y, method, f, na.rm)
 
     ## 2. Create and return function that does not test input validity...
-    function(v) .approxfun(x, y, v, method, yleft, yright, f)
+    function(v) .approxfun(x, y, v, method, yleft, yright, f, na.rm)
 }
 
 ## avoid capturing internal calls
-.approxfun <- function(x, y, v,  method, yleft, yright, f)
-    .Call(C_Approx, x, y, v, method, yleft, yright, f)
+.approxfun <- function(x, y, v,  method, yleft, yright, f, na.rm)
+    .Call(C_Approx, x, y, v, method, yleft, yright, f, na.rm)
