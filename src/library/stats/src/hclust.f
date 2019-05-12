@@ -27,9 +27,11 @@ C                                                            C
 c- R Bug PR#4195 fixed "along" qclust.c, given in the report C
 C- Testing: --> "hclust" in ../../../../tests/reg-tests-1b.R C
 C  "ward.D2" (iOpt = 8): Martin Maechler, Mar 2014           C
+C                                                            C
+C  FLAG not passed as arg to avoid possible                  C
+C     C/Fortran inconsistency, May 2019                      C
 C------------------------------------------------------------C
-      SUBROUTINE HCLUST(N,LEN,IOPT,IA,IB,CRIT,MEMBR,NN,DISNN,
-     X                  FLAG,DISS)
+      SUBROUTINE HCLUST(N,LEN,IOPT,IA,IB,CRIT,MEMBR,NN,DISNN, DISS)
 c Args
       INTEGER N, LEN, IOPT
       INTEGER IA(N),IB(N), NN(N)
