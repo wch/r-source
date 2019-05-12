@@ -54,7 +54,7 @@ approxfun(x, y = NULL,       method = "linear",
     taking a single vector argument and returning a single number
     or a \code{\link{list}} of both, e.g.,
     \code{list("ordered", mean)}, see \sQuote{Details}.}
-  \item{na.rm}{logical specifiying how missing values (\code{\link{NA}}'s)
+  \item{na.rm}{logical specifying how missing values (\code{\link{NA}}'s)
     should be handled.  Setting \code{na.rm=FALSE} will propagate
     \code{NA}'s in \code{y} to the interpolated values, also depending on
     the \code{rule} set.  Note that in this case, \code{NA}'s in \code{x}

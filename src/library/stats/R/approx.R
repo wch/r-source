@@ -50,8 +50,7 @@ regularize.values <- function(x, y, ties, warn.collapsing = TRUE, na.rm = TRUE) 
 		ties <- T[[2]]
 		identical(T[[1]], "ordered")
 	    } else
-		stop("'ties' is not \"ordered\", a function, or list(<string>, <func
-tion>)")
+		stop("'ties' is not \"ordered\", a function, or list(<string>, <function>)")
 	if(!ordered && is.unsorted(if(keptNA) x[ok] else x)) {
 	    o <- order(x)
 	    x <- x[o]
