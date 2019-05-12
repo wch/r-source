@@ -270,7 +270,7 @@ static const R_FortranMethodDef FortEntries[] = {
     {"rbart",  (DL_FUNC) &F77_NAME(rbart),  20},
     {"bvalus", (DL_FUNC) &F77_NAME(bvalus),  7},
     {"supsmu", (DL_FUNC) &F77_NAME(supsmu), 10},
-    {"hclust", (DL_FUNC) &F77_NAME(hclust), 11},
+    {"hclust", (DL_FUNC) &F77_NAME(hclust), 10},
     {"hcass2", (DL_FUNC) &F77_NAME(hcass2),  6},
     {"kmns",   (DL_FUNC) &F77_NAME(kmns),   17},
     {"eureka", (DL_FUNC) &F77_NAME(eureka),  6},

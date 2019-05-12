@@ -1,7 +1,7 @@
 #  File src/library/stats/R/hclust.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -88,7 +88,7 @@ hclust <- function(d, method="complete", members=NULL)
 		    members = as.double(members),
 		    nn = integer(n),
 		    disnn = double(n),
-		    flag = logical(n),
+#		    flag = logical(n), # unused
 		    diss = d)
 
     ## 2nd step: interpret the information that we now have

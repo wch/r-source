@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2005-2017  The R Core Team
+ *  Copyright (C) 2005-2019  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@
 void
 F77_NAME(hclust)(int *n, int *len, int *iopt, int *ia, int *ib,
 		 double *crit, double *membr, int *nn,
-		 double *disnn, int *flag, double *diss);
+		 double *disnn, double *diss);
 
 void
 F77_NAME(hcass2)(int *n, int *ia, int *ib, int *iorder, int *iia, int *iib);
