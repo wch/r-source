@@ -15,6 +15,7 @@ C       altered by B.D. Ripley to
 C
 C       remove unused variables
 C       make phi in ehg139 double precision to match calling sequence
+C       pass integer not logical from C
 C
 C       Note that  ehg182(errormsg_code)  is in ./loessc.c
 
@@ -1495,7 +1496,7 @@ c           $Lf sub {:,l,:} = V SIGMA sup {+} U sup T Q sup T W$
       end
 
       subroutine lowesb(xx,yy,ww,diagl,infl,iv,liv,lv,wv)
-      logical infl
+      integer infl
       integer liv, lv
       integer iv(*)
       DOUBLE PRECISION xx(*),yy(*),ww(*),diagl(*),wv(*)
@@ -1516,7 +1517,7 @@ c Var
          end if
       end if
       iv(28)=173
-      if(infl)then
+      if(infl.ne.0)then
          trl=1.D0
       else
          trl=0.D0
@@ -1546,7 +1547,7 @@ c ------     called only by loess_workspace()  in ./loessc.c
       subroutine lowesd(versio,iv,liv,lv,v,d,n,f,ideg,nvmax,setlf)
       integer versio,liv,lv,d,n,ideg,nvmax
       integer iv(liv)
-      logical setlf
+      integer setlf
       double precision f, v(lv)
 
       integer bound,i,i1,i2,j,ncmax,nf,vc
@@ -1612,7 +1613,7 @@ c     initialize permutation
     4 continue
       iv(23)=iv(22)+n
       iv(25)=iv(23)+nvmax
-      if(setlf)then
+      if(setlf.ne.0)then
          iv(27)=iv(25)+nvmax*nf
       else
          iv(27)=iv(25)
@@ -1629,7 +1630,7 @@ c     initialize permutation
       iv(18)=iv(16)+nf
       iv(24)=iv(18)+iv(29)*nf
       iv(34)=iv(24)+(d+1)*nvmax
-      if(setlf)then
+      if(setlf.ne.0)then
          iv(26)=iv(34)+(d+1)*nvmax*nf
       else
          iv(26)=iv(34)
