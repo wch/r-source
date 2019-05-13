@@ -4143,7 +4143,7 @@ add_dummies <- function(dir, Log)
             if(!skip_run_maybe || any(file.exists(savefiles))) {
                 checkingLog(Log, "running R code from vignettes")
                 res <- character()
-                cat("\n")
+                printLog0(Log, "\n")
                 def_enc <- desc["Encoding"]
                 if( (is.na(def_enc))) def_enc <- ""
                 t1 <- proc.time()
@@ -4154,9 +4154,9 @@ add_dummies <- function(dir, Log)
                     file <- vigns$docs[i]
                     name <- vigns$names[i]
                     enc <- vigns$encodings[i]
-                    cat("  ", sQuote(basename(file)),
-                        if(nzchar(enc)) paste("using", sQuote(enc)),
-                        "...")
+                    printLog0(Log, "  ", sQuote(basename(file)),
+                              if(nzchar(enc)) paste("using", sQuote(enc)),
+                              "...")
                     Rcmd <- paste0(opWarn_string, "\ntools:::.run_one_vignette('",
                                    basename(file), "', '", vigns$dir, "'",
                                    if (nzchar(enc))
@@ -4215,18 +4215,20 @@ add_dummies <- function(dir, Log)
                         out2 <- R_runR0(cmd, R_opts2)
                         if(length(out2)) {
                             print_time(t1b, t2b, NULL)
-                            cat("\ndifferences from ", sQuote(basename(savefile)),
-                                "\n", sep = "")
-                            writeLines(c(out2, ""))
+                            noteLog(Log)
+                            printLog0(Log, paste("differences from ",
+                                                 sQuote(basename(savefile))))
+                            printLog0(Log,
+                                      paste(c("", out2, ""), collapse = "\n"))
                         } else {
                             print_time(t1b, t2b, NULL)
-                            cat(" OK\n")
+                            resultLog(Log, "OK")
                             if (!config_val_to_logical(Sys.getenv("_R_CHECK_ALWAYS_LOG_VIGNETTE_OUTPUT_", use_valgrind)))
                                 unlink(outfile)
                         }
                     } else {
                         print_time(t1b, t2b, NULL)
-                        cat(" OK\n")
+                        resultLog(Log, "OK")
                         if (!config_val_to_logical(Sys.getenv("_R_CHECK_ALWAYS_LOG_VIGNETTE_OUTPUT_", use_valgrind)))
                             unlink(outfile)
                     }
