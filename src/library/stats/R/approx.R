@@ -123,8 +123,7 @@ approxfun <- function(x, y = NULL, method = "linear",
     if(lenR == 1) rule <- rule[c(1,1)]
     x <- regularize.values(x, y, ties, missing(ties), na.rm=na.rm)
                                         # -> (x,y) numeric of same length
-    noNA <- na.rm || !x$keptNA
-    nx <- if(noNA)
+    nx <- if(na.rm || !x$keptNA)
               length(x$x) # large vectors ==> non-integer
           else
               sum(x$notNA)
