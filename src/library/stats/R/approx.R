@@ -150,5 +150,6 @@ approxfun <- function(x, y = NULL, method = "linear",
 }
 
 ## avoid capturing internal calls
-.approxfun <- function(x, y, v,  method, yleft, yright, f, na.rm)
+## default for 'na.rm': for old saved approxfun() {incl ecdf()} results
+.approxfun <- function(x, y, v,  method, yleft, yright, f, na.rm=TRUE)
     .Call(C_Approx, x, y, v, method, yleft, yright, f, na.rm)
