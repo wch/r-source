@@ -1,6 +1,6 @@
 % File src/library/tools/man/vignetteEngine.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2013-2016 R Core Team
+% Copyright 2013-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{vignetteEngine}
@@ -46,8 +46,9 @@ the documentation for \code{\link{Sweave}} and \code{\link{Stangle}}.
 
 The \code{weave} and \code{tangle} functions should return the
 filename of the output file that has been produced. Currently the
-\code{weave} function, when operating on a file named \file{<name>
-<pattern>} must produce a file named \file{<name>[.](tex|pdf|html)}.
+\code{weave} function, when operating on a file named
+\file{<name><pattern>} must produce a file named
+\file{<name>[.](tex|pdf|html)}. 
 The \file{.tex} files will be processed by \command{pdflatex} to
 produce \file{.pdf} output for display to the user; the others will be
 displayed as produced.  The \code{tangle} function must produce a file

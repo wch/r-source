@@ -1,14 +1,14 @@
 % File src/library/tools/man/buildVignette.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{buildVignette}
 \alias{buildVignette}
 \title{Build One Vignette}
 \description{
-  Run \code{\link{Sweave}} (or other custom weave function)
-  \code{\link{texi2dvi}}, and/or \code{\link{Stangle}} 
+  Run \code{\link{Sweave}} (or other custom weave function),
+  \code{\link{texi2pdf}}, and/or \code{\link{Stangle}} 
   (or other custom tangle function) on one vignette.
 
   This is the workhorse of \command{R CMD Sweave}.
@@ -23,7 +23,7 @@ buildVignette(file, dir = ".", weave = TRUE, latex = TRUE, tangle = TRUE,
   \item{dir}{character; the working directory in which the intermediate and 
                  output files will be produced.}
   \item{weave}{logical; should weave be run?}
-  \item{latex}{logical; \link{texi2pdf} be run if weaving produces a \file{.tex} file?}
+  \item{latex}{logical; should \link{texi2pdf} be run if weaving produces a \file{.tex} file?}
   \item{tangle}{logical; should tangle be run?}
   \item{quiet}{logical; run in quiet mode?}
   \item{clean}{logical; whether to remove some newly created, often
