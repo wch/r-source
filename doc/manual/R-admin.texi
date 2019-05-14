@@ -4997,9 +4997,10 @@ CPPFLAGS="-isystem /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/inclu
 Which is said to be going to be needed for future versions of macOS.
 (The location of the SDK, which could change, can be found by running
 @command{xcrun -show-sdk-path}.  It is likely that the compilers
-included in the Command Line Tools will find the headers under the SDK
-without this additional step, but other versions of @command{clang} will
-not.)
+included in the Command Line Tools and those at
+@uref{https://cran.r-project.org/@/bin/@/macosx/@/tools} will find the
+headers under the SDK without this additional step, but other versions
+of @command{clang} will not.)
 
 You need GNU @code{readline}.  That and other binary components are
 available from @uref{https://mac.R-project.org/libs}: you will need
@@ -5083,34 +5084,32 @@ FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin18/8.2.0
 (with lines broken here for legibility).
 
 Current @acronym{CRAN} binary distributions use the build of
-@command{clang} 6.0.0 contained in
-@uref{https://cran.r-project.org/@/bin/@/macosx/@/tools/@/clang-6.0.0.pkg}.
-Other recent distributions of @command{clang} are often available from
-@uref{http://llvm.org/releases/}: for example at the time of
-writing@footnote{It is unstated what the minimum OS requirement is for
-these: the distribution of 5.0.0 required Sierra or later.} of 6.0.1,
-7.0.0 and 8.0.0.  In particular, all of these include support for OpenMP
-which Apple builds of @command{clang} do not.  Suppose one of these
-distributions is installed under @file{/usr/local/clang6}.  Then @R{}
-could be configured by something like
+@command{clang} 7.0.0 contained in
+@uref{https://cran.r-project.org/@/bin/@/macosx/@/tools/@/clang-7.0.0.pkg}.
+Other recent distributions of @command{clang} are available from
+@uref{http://llvm.org/releases/} (on which the above are based).  In
+particular, all of these include support for OpenMP which Apple builds
+of @command{clang} do not.  Suppose one of these distributions is
+installed under @file{/usr/local/clang7}.  Then @R{} could be configured
+by something like
 @example
 ./configure --x-includes=/opt/X11/include --x-libraries=/opt/X11/lib \
 PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig \
-DYLD_FALLBACK_LIBRARY_PATH=/usr/local/clang6/lib:/usr/local/lib
+DYLD_FALLBACK_LIBRARY_PATH=/usr/local/clang7/lib:/usr/local/lib
 @end example
 @noindent
 with @file{config.site} containing
 @example
-CC=/usr/local/clang6/bin/clang
+CC=/usr/local/clang7/bin/clang
 OBJC=$CC
 FC=/usr/local/gfortran/bin/gfortran
-CXX=/usr/local/clang6/bin/clang++
-LDFLAGS="-L/usr/local/clang6/lib -L/usr/local/lib"
-R_LD_LIBRARY_PATH=/usr/local/clang6/lib:/usr/local/lib
+CXX=/usr/local/clang7/bin/clang++
+LDFLAGS="-L/usr/local/clang7/lib -L/usr/local/lib"
+R_LD_LIBRARY_PATH=/usr/local/clang7/lib:/usr/local/lib
 @end example
 @noindent
 The care to specify library paths is to ensure that the OpenMP runtime
-library, here @file{/usr/local/clang6/lib/libomp.dylib}, is found when
+library, here @file{/usr/local/clang7/lib/libomp.dylib}, is found when
 needed.  If this works, you should see the line
 @example
 checking whether OpenMP SIMD reduction is supported... yes
@@ -5179,7 +5178,7 @@ The @TeX{} implementation used by the developers is MacTeX
 (@uref{https://www.tug.org/mactex/}): the full installation is about
 5GB, but a smaller version (`Basic TeX') is available at
 @uref{https://www.tug.org/mactex/morepackages.html} to which you will
-need to add some packages, e.g.@: for the 2018 version we needed to
+need to add some packages, e.g.@: for the 2019 version we needed to
 add@footnote{E.g.@: @emph{via} @command{tlmgr install cm-super helvetic
 inconsolata texinfo} .}  @pkg{cm-super}, @pkg{helvetic},
 @pkg{inconsolata} and @pkg{texinfo} which brought this to about 310MB.
