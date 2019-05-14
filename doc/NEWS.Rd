@@ -71,6 +71,9 @@
       \item Creation of lazy loading database during package installation is
       again robust to Rprofile changing the current working directory
       (\PR{17559}).
+
+      \item \code{boxplot(y ~ f, horizontal=TRUE)} now produces correct x-
+      and y-labels.
     }
   }
 }

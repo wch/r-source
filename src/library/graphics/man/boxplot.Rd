@@ -1,6 +1,6 @@
 % File src/library/graphics/man/boxplot.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{boxplot}
@@ -15,9 +15,9 @@
 boxplot(x, \dots)
 
 \method{boxplot}{formula}(formula, data = NULL, \dots, subset, na.action = NULL,
-        xlab = paste(names(mf)[-response], collapse = " : "),
-        ylab = names(mf)[ response],
-        add = FALSE, ann = !add,
+        xlab = mklab(y_var = horizontal),
+        ylab = mklab(y_var =!horizontal),
+        add = FALSE, ann = !add, horizontal = FALSE,
         drop = FALSE, sep = ".", lex.order = FALSE)
 
 \method{boxplot}{default}(x, \dots, range = 1.5, width = NULL, varwidth = FALSE,
@@ -157,16 +157,18 @@ boxplot(x, \dots)
 \examples{
 ## boxplot on a formula:
 boxplot(count ~ spray, data = InsectSprays, col = "lightgray")
-# *add* notches (somewhat funny here):
+# *add* notches (somewhat funny here <--> warning "notches .. outside hinges"):
 boxplot(count ~ spray, data = InsectSprays,
         notch = TRUE, add = TRUE, col = "blue")
 
-boxplot(decrease ~ treatment, data = OrchardSprays,
-        log = "y", col = "bisque")
+boxplot(decrease ~ treatment, data = OrchardSprays, col = "bisque",
+        log = "y")
+## horizontal=TRUE, switching  y <--> x :
+boxplot(decrease ~ treatment, data = OrchardSprays, col = "bisque",
+        log = "x", horizontal=TRUE)
 
 rb <- boxplot(decrease ~ treatment, data = OrchardSprays, col = "bisque")
 title("Comparing boxplot()s and non-robust mean +/- SD")
-
 mn.t <- tapply(OrchardSprays$decrease, OrchardSprays$treatment, mean)
 sd.t <- tapply(OrchardSprays$decrease, OrchardSprays$treatment, sd)
 xi <- 0.3 + seq(rb$n)
