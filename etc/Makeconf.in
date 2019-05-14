@@ -143,7 +143,7 @@ R_XTRA_CFLAGS = @R_XTRA_CFLAGS@
 R_XTRA_CPPFLAGS = @R_XTRA_CPPFLAGS@ @R_INCLUDES@ -DNDEBUG
 ## currently unset
 R_XTRA_CXXFLAGS = @R_XTRA_CXXFLAGS@
-## currently unset
+## used for gfortran in R > 3.6.0
 R_XTRA_FFLAGS = @R_XTRA_FFLAGS@
 
 ## SHLIB_CFLAGS SHLIB_CXXFLAGS SHLIB_FFLAGS are apparently currently unused
