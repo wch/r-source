@@ -5111,32 +5111,32 @@ FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin18/8.2.0
 (with lines broken here for legibility).
 
 Current @acronym{CRAN} binary distributions use the build of
-@command{clang} 7.0.0 contained in
-@uref{https://cran.r-project.org/@/bin/@/macosx/@/tools/@/clang-7.0.0.pkg}.
+@command{clang} 8.0.0 contained in
+@uref{https://cran.r-project.org/@/bin/@/macosx/@/tools/@/clang-8.0.0.pkg}.
 Other recent distributions of @command{clang} are available from
 @uref{http://llvm.org/releases/} (on which the above are based).  In
 particular, all of these include support for OpenMP which Apple builds
 of @command{clang} do not.  Suppose one of these distributions is
-installed under @file{/usr/local/clang7}.  Then @R{} could be configured
+installed under @file{/usr/local/clang8}.  Then @R{} could be configured
 by something like
 @example
 ./configure --x-includes=/opt/X11/include --x-libraries=/opt/X11/lib \
 PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig \
-DYLD_FALLBACK_LIBRARY_PATH=/usr/local/clang7/lib:/usr/local/lib
+DYLD_FALLBACK_LIBRARY_PATH=/usr/local/clang8/lib:/usr/local/lib
 @end example
 @noindent
 with @file{config.site} containing
 @example
-CC=/usr/local/clang7/bin/clang
+CC=/usr/local/clang8/bin/clang
 OBJC=$CC
 FC=/usr/local/gfortran/bin/gfortran
-CXX=/usr/local/clang7/bin/clang++
-LDFLAGS="-L/usr/local/clang7/lib -L/usr/local/lib"
-R_LD_LIBRARY_PATH=/usr/local/clang7/lib:/usr/local/lib
+CXX=/usr/local/clang8/bin/clang++
+LDFLAGS="-L/usr/local/clang8/lib -L/usr/local/lib"
+R_LD_LIBRARY_PATH=/usr/local/clang8/lib:/usr/local/lib
 @end example
 @noindent
 The care to specify library paths is to ensure that the OpenMP runtime
-library, here @file{/usr/local/clang7/lib/libomp.dylib}, is found when
+library, here @file{/usr/local/clang8/lib/libomp.dylib}, is found when
 needed.  If this works, you should see the line
 @example
 checking whether OpenMP SIMD reduction is supported... yes
