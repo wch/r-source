@@ -35,7 +35,7 @@ fi
 export BSTINPUTS
 
 . "${R_HOME}/etc${R_ARCH}/Renviron"
-export `sed 's/^ *#.*//; s/^\(.*\)=.*/\1/' "${R_HOME}/etc${R_ARCH}/Renviron"`
+export `sed 's/^ *#.*//; s/^\([^=]*\)=.*/\1/' "${R_HOME}/etc${R_ARCH}/Renviron"`
 
 extra=
 case "${1}" in
