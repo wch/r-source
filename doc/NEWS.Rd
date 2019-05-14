@@ -14,6 +14,12 @@
       \item \command{R CMD check} on \code{data()} fixing \PR{17558}
       thanks to Duncan Murdoch.
 
+      \item \code{quasi(*, variance = list(..))} now works more
+      efficiently, and should work in all cases fixing \PR{17560}.
+      Further, \code{quasi(var = mu(1-mu))} and \code{quasi(var = "mu ^ 3")}
+      now work, and \code{quasi(variance = "log(mu)")} now gives a correct
+      error message.
+
       \item Creation of lazy loading database during package installation is
       again robust to Rprofile changing the current working directory
       (\PR{17559}).

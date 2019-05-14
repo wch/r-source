@@ -2019,6 +2019,7 @@ stopifnot(! is.null(names(sort.int(x))))
 d <- as.POSIXlt("2018-01-01")
 match(0, d)
 ## Gave a segfault in R < 3.6.0.
+proc.time() - .pt; .pt <- proc.time()
 
 
 ## as(1L, "double") - PR#17457
@@ -2642,6 +2643,37 @@ stopifnot(exprs = {
 
 ## str2expression(<empty>) :
 stopifnot(identical(str2expression(character()), expression()))
+
+
+## quasi(*, variance = list()) - should not deparse(); PR#17560
+## like quasipoisson() :
+devRes <- function(y, mu, wt) { 2 * wt * (y * log(ifelse(y == 0, 1, y/mu)) - (y-mu)) }
+init <- expression({
+    if(any(y < 0)) stop("y < 0")
+    n <- rep.int(1, nobs)
+    mustart <- y + 0.1
+})
+myquasi <- quasi(link = "log",
+                 variance = list(name = "my quasi Poisson",
+                     varfun  = function(mu) mu,
+                     validmu = function(mu) all(is.finite(mu)) && all(mu > 0),
+                     dev.resids = devRes,
+                     initialize = init))
+x  <- runif(100, min=0, max=1)
+y  <- rpois(100, lambda=1)
+fq1 <- glm(y ~ x, family = myquasi)
+fqP <- glm(y ~ x, family = quasipoisson)
+str(keep <- setdiff(names(fq1), c("family", "call")))
+identNoE <- function(x,y, ...) identical(x,y, ignore.environment=TRUE, ...)
+stopifnot(exprs = {
+    all.equal(fq1[keep], fqP[keep])
+    ## quasi() failed badly "switch(vtemp, ... EXPR must be a length 1 vector" in R <= 3.6.0
+    identNoE(quasi(var = mu),        quasi(variance = "mu"))
+    identNoE(quasi(var = mu(1-mu)),  quasi(variance = "mu(1- mu)"))# both failed in R <= 3.6.0
+    identNoE(quasi(var = mu^3),      quasi(variance = "mu ^ 3"))   #  2nd failed in R <= 3.6.0
+    is.character(msg <- tryCatch(quasi(variance = "log(mu)"), error=conditionMessage)) &&
+        grepl("variance.*log\\(mu\\).* invalid", msg) ## R <= 3.6.0: 'variance' "NA" is invalid
+})
 
 
 
