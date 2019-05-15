@@ -8262,7 +8262,7 @@ function(x, limit = NULL)
         pos <- which(RdTags(x) == s)
         ## measure length in chars, not in bytes after substitutions
         Rd2txt(x[pos[1L]], out = zz, fragment = TRUE, outputEncoding = "UTF-8")
-        nc <- nchar(out)
+        nc <- nchar(sub("[ \t]+$", "", out))
         if(length(l) > 1L) {
             ind_warn <- (nc > max(l))
             ind_note <- (nc > min(l)) & !ind_warn

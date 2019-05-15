@@ -17,7 +17,7 @@
 #  https://www.R-project.org/Licenses/
 
 vignette_is_tex <- function(file, ...) {
-    (regexpr("[.]tex$", file, ignore.case = TRUE) != -1L)
+    endsWith(tolower(file), ".tex")
 }
 
 # Infers the vignette type (PDF or HTML) from the filename of the
@@ -163,8 +163,8 @@ function(package, dir, lib.loc = NULL,
 
     startdir <- getwd()
     for(i in seq_along(vigns$docs)) {
-        file <- vigns$docs[i]
-        file <- basename(file)
+        path <- vigns$docs[i]
+        file <- basename(path)
         name <- vigns$names[i]
     	engine <- vignetteEngine(vigns$engines[i])
 	enc <- vigns$encodings[i]
@@ -175,20 +175,21 @@ function(package, dir, lib.loc = NULL,
             message("  Running ", sQuote(file))
             .eval_with_capture({
                 result$tangle[[file]] <- tryCatch({
-                    engine$tangle(file, quiet = TRUE, encoding = enc)
+                    engine$tangle(path, quiet = TRUE, encoding = enc)
                     setwd(startdir) # in case a vignette changes the working dir
                     find_vignette_product(name, by = "tangle", main = FALSE, engine = engine)
-                }, error = function(e) e)
+                }, error = identity)
             })
         }
         if(weave) {
+            browser()
             setwd(startdir) # in case a vignette changes the working dir then errored out
             .eval_with_capture({
                 result$weave[[file]] <- tryCatch({
-                    engine$weave(file, quiet = TRUE, encoding = enc)
+                    engine$weave(path, quiet = TRUE, encoding = enc)
                     setwd(startdir)
                     find_vignette_product(name, by = "weave", engine = engine)
-                }, error = function(e) e)
+                }, error = identity)
             })
         }
         setwd(startdir) # in case a vignette changes the working dir then errored out
@@ -241,7 +242,7 @@ function(package, dir, lib.loc = NULL,
                 .eval_with_capture({
                     result$source[[file]] <- tryCatch({
                         source(file)
-                    }, error = function(e) e)
+                    }, error = identity)
                 })
                 setwd(startdir)
             }
@@ -275,7 +276,7 @@ function(package, dir, lib.loc = NULL,
                     result$latex[[file]] <- tryCatch({
                        texi2pdf(file = output, clean = FALSE, quiet = TRUE)
                        find_vignette_product(name, by = "texi2pdf", engine = engine)
-                    }, error = function(e) e)
+                    }, error = identity)
                 })
             }
         }
