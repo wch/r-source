@@ -1366,7 +1366,7 @@ rbind.data.frame <- function(..., deparse.level = 1, make.row.names = TRUE,
                         all.levs[[jj]] <- unique(c(all.levs[[jj]], xij))
                 }
             }
-	}
+	} ## end{data.frame}
 	else if(is.list(xi)) {
 	    ni <- range(lengths(xi))
 	    if(ni[1L] == ni[2L])
@@ -1410,7 +1410,8 @@ rbind.data.frame <- function(..., deparse.level = 1, make.row.names = TRUE,
     for(j in pseq)
 	if(length(lij <- all.levs[[j]]))
             value[[j]] <-
-                factor(as.vector(value[[j]]), lij, ordered = ordCol[j])
+		factor(as.vector(value[[j]]), levels = lij,
+		       exclude = NULL, ordered = ordCol[j])
     if(any(has.dim)) {
 	rmax <- max(unlist(rows))
 	for(i in pseq[has.dim])

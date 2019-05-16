@@ -74,6 +74,9 @@
 
       \item \code{boxplot(y ~ f, horizontal=TRUE)} now produces correct x-
       and y-labels.
+
+      \item \code{rbind.data.frame()} no longer drops \code{<NA>} levels
+      from factor columns (\PR{17562}).
     }
   }
 }
