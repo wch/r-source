@@ -4262,7 +4262,9 @@ add_dummies <- function(dir, Log)
                 }
                 t2 <- proc.time()
                 if(!ran) {
+                    print_time(t1, t2, Log)
                     resultLog(Log, "NONE")
+                    printLog0(Log, out0)
                 } else {
                     print_time(t1, t2, Log)
                     if(R_check_suppress_RandR_message)
