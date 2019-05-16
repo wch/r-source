@@ -937,7 +937,7 @@ static void *in_R_HTTPOpen2(const char *url, const char *agent, const char *head
 
     // use keep-alive semantics, do not use local WinINet cache.
     DWORD flags = INTERNET_FLAG_KEEP_CONNECTION | INTERNET_FLAG_NO_CACHE_WRITE |
-                  INTERNET_FLAG_IGNORE_REDIRECT_TO_HTTPS;
+                  INTERNET_FLAG_IGNORE_REDIRECT_TO_HTTPS | INTERNET_FLAG_IGNORE_REDIRECT_TO_HTTP;
     if(!cacheOK) flags |= INTERNET_FLAG_PRAGMA_NOCACHE;
     wictxt->session = InternetOpenUrl(wictxt->hand, url, headers, headers ? -1 : 0, flags, 0);
     if(!wictxt->session) {
