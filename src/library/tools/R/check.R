@@ -4197,7 +4197,7 @@ add_dummies <- function(dir, Log)
                     savefile <- savefiles[i]
                     if(length(grep("^  When (running|tangling|sourcing)", out,
                                    useBytes = TRUE))) {
-                        cat(" failed\n") # should this go to the log?
+                        out0 <- c(out0, " failed\n")
                         keep <- as.numeric(Sys.getenv("_R_CHECK_VIGNETTES_NLINES_",
                                                       "10"))
                         res <- if (keep > 0)
@@ -4214,7 +4214,7 @@ add_dummies <- function(dir, Log)
                         ## (Need not be the final line if running under valgrind)
                         keep <- as.numeric(Sys.getenv("_R_CHECK_VIGNETTES_NLINES_",
                                                       "10"))
-                        cat(" failed to complete the test\n") # should this go to the log?
+                        out0 <- c(out0, " failed to complete the test\n")
                         out <- c(out, "", "... incomplete output.  Crash?")
                         res <- if (keep > 0)
                             c(res,
