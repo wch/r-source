@@ -2150,7 +2150,8 @@ SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
        the setjmp and longjmp calls. Theoretically this does not
        include n and bgn, but gcc -O2 -Wclobbered warns about these so
        to be safe we declare them volatile as well. */
-    volatile int i = 0, n, bgn;
+    volatile R_xlen_t i = 0, n;
+    volatile int bgn;
     volatile SEXP v, val, cell;
     int dbg, val_type;
     SEXP sym, body;
@@ -2187,7 +2188,7 @@ SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (isList(val) || isNull(val))
 	n = length(val);
     else
-	n = LENGTH(val);
+	n = XLENGTH(val);
 
     val_type = TYPEOF(val);
 
@@ -5856,6 +5857,11 @@ static R_INLINE void checkForMissings(SEXP args, SEXP call)
 	signalMissingArgError(args, call);
 }
 
+typedef struct {
+    R_xlen_t idx, len;
+    int type;
+} R_loopinfo_t;
+
 #define FOR_LOOP_STATE_SIZE 4
 
 #define GET_VEC_LOOP_VALUE(var, pos) do {		\
@@ -6352,27 +6358,27 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 	defineVar(symbol, R_NilValue, rho);
 	BCNPUSH(GET_BINDING_CELL(symbol, rho));
 
-	SEXP value = allocVector(INTSXP, 3);
-	int *info = INTEGER0(value);
-	info[0] = -1;
+	SEXP value = allocVector(RAWSXP, sizeof(R_loopinfo_t));
+	R_loopinfo_t *loopinfo = (R_loopinfo_t *) RAW0(value);
+	loopinfo->idx = -1;
 #ifdef COMPACT_INTSEQ
 	if (iscompact) {
 	    int n1 = INTEGER(seq)[0];
 	    int n2 = INTEGER(seq)[1];
-	    INTEGER(value)[1] = n1 <= n2 ? n2 - n1 + 1 : n1 - n2 + 1;
+	    loopinfo->len = n1 <= n2 ? n2 - n1 + 1 : n1 - n2 + 1;
 	}
 	else
 #endif
 	if (isVector(seq))
-	  info[1] = LENGTH(seq);
+	  loopinfo->len = XLENGTH(seq);
 	else if (isList(seq) || isNull(seq))
-	  info[1] = length(seq);
+	  loopinfo->len = length(seq);
 	else errorcall(VECTOR_ELT(constants, callidx),
 		       _("invalid for() loop sequence"));
 #ifdef COMPACT_INTSEQ
-	info[2] = iscompact ? INTSEQSXP : TYPEOF(seq);
+	loopinfo->type = iscompact ? INTSEQSXP : TYPEOF(seq);
 #else
-	info[2] = TYPEOF(seq);
+	loopinfo->type = TYPEOF(seq);
 #endif
 	BCNPUSH(value);
 
@@ -6402,13 +6408,13 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
     OP(STEPFOR, 1):
       {
 	int label = GETOP();
-	int *loopinfo = INTEGER0(GETSTACK_SXPVAL(-2));
-	int i = ++loopinfo[0];
-	int n = loopinfo[1];
+	R_loopinfo_t *loopinfo = (R_loopinfo_t *) RAW0(GETSTACK_SXPVAL(-2));
+	R_xlen_t i = ++(loopinfo->idx);
+	R_xlen_t n = loopinfo->len;
 	if (i < n) {
 	  BC_CHECK_SIGINT_LOOP(i);
 	  pc = codebase + label;
-	  int type = loopinfo[2];
+	  int type = loopinfo->type;
 	  SEXP seq = GETSTACK_SXPVAL(-4);
 	  SEXP cell = GETSTACK_SXPVAL(-3);
 	  SEXP value = NULL;
@@ -6439,7 +6445,8 @@ static SEXP bcEval(SEXP body, SEXP rho, Rboolean useCache)
 		int *info = INTEGER(seq);
 		int n1 = info[0];
 		int n2 = info[1];
-		int ival = n1 <= n2 ? n1 + i : n1 - i;
+		int ii = (int) i;
+		int ival = n1 <= n2 ? n1 + ii : n1 - ii;
 		value = CAR(cell);
 		if (NOT_SHARED(value) && IS_SIMPLE_SCALAR(value, INTSXP)) {
 		    SET_SCALAR_IVAL(value, ival);

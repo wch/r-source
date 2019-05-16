@@ -20,6 +20,8 @@
       \item \code{approxfun()} and \code{approx()} gain option \code{na.rm
 	= TRUE}.  If set to false, missing y values now propagate into
       interpolated values.
+
+      \item Long vectors are now supported in \code{for} loops.
     }
   }
 
