@@ -448,6 +448,28 @@ function(package, dir, subdirs = NULL, lib.loc = NULL, output = FALSE,
             sourcesI <- find_vignette_product(name, by = "tangle", main = FALSE, dir = docdir, engine = engine)
             sources[[file]] <- sourcesI
         }
+        ## If a package has vignettes 'foo.Rnw' and 'foo-xxx.Rnw' with
+        ## extracted sources 'foo.R' and 'foo-xxx.R', the above will
+        ## give both .R files as sources for 'foo.Rnw', as tangling
+        ## could split into several files and so matching file name
+        ## roots (without extensions) cannot look for exact matches
+        ## only.  However, if there were multiple matches but all
+        ## vignettes sources have an exact match, then we can drop the
+        ## non-exact matches from the multiple matches.
+        ## Ideally, we would teach R CMD build to process one vignette
+        ## source at a time and record the vignette products, and have
+        ## pkgVignettes() use the recorded info if available.
+        if(any(ind <- (lengths(sources) > 1L))) {
+            rootify <- function(s) sub("[.][^.]+$", "", basename(s))
+            dnm <- rootify(names(sources))
+            snm <- lapply(sources, rootify)
+            if(!any(is.na(match(dnm, unlist(snm))))) {
+                for(i in which(ind)) {
+                    sources[[i]] <-
+                        sources[[i]][is.na(match(snm[[i]], dnm[-i]))]
+                }
+            }
+        }
         z$sources <- sources
     }
 
