@@ -91,7 +91,7 @@ bxp(z, notch = FALSE, width = NULL, varwidth = FALSE,
         line width, point character, point size expansion, color, and
         background color.  The default \code{medpch = NA} suppresses the
         point, and \code{medlty = "blank"} does so for the line.
-        Note that\code{medlwd} defaults to
+        Note that \code{medlwd} defaults to
         \eqn{3\times}{3x} the default \code{lwd}.}
       \item{whisklty, whisklwd, whiskcol:}{whisker line type (default:
         \code{"dashed"}), width, and color.}
