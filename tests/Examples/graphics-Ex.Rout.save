@@ -429,18 +429,20 @@ Survived 1st 2nd 3rd Crew
 > 
 > ## boxplot on a formula:
 > boxplot(count ~ spray, data = InsectSprays, col = "lightgray")
-> # *add* notches (somewhat funny here):
+> # *add* notches (somewhat funny here <--> warning "notches .. outside hinges"):
 > boxplot(count ~ spray, data = InsectSprays,
 +         notch = TRUE, add = TRUE, col = "blue")
 Warning in bxp(list(stats = c(7, 11, 14, 18.5, 23, 7, 12, 16.5, 18, 21,  :
   some notches went outside hinges ('box'): maybe set notch=FALSE
 > 
-> boxplot(decrease ~ treatment, data = OrchardSprays,
-+         log = "y", col = "bisque")
+> boxplot(decrease ~ treatment, data = OrchardSprays, col = "bisque",
++         log = "y")
+> ## horizontal=TRUE, switching  y <--> x :
+> boxplot(decrease ~ treatment, data = OrchardSprays, col = "bisque",
++         log = "x", horizontal=TRUE)
 > 
 > rb <- boxplot(decrease ~ treatment, data = OrchardSprays, col = "bisque")
 > title("Comparing boxplot()s and non-robust mean +/- SD")
-> 
 > mn.t <- tapply(OrchardSprays$decrease, OrchardSprays$treatment, mean)
 > sd.t <- tapply(OrchardSprays$decrease, OrchardSprays$treatment, sd)
 > xi <- 0.3 + seq(rb$n)
