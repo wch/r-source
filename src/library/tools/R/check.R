@@ -4141,11 +4141,12 @@ add_dummies <- function(dir, Log)
                     iseq <- iseq[file.exists(savefiles)]
                 out0 <- character()
                 anyNOTE <- FALSE
+                cat("\n")
                 for (i in iseq) {
                     file <- vigns$docs[i]
                     name <- vigns$names[i]
                     enc <- vigns$encodings[i]
-                    out0 <- c(out0, "  ", sQuote(basename(file)),
+                    out1 <- c("  ", sQuote(basename(file)),
                               if(nzchar(enc)) paste("using", sQuote(enc)),
                               "...")
                     Rcmd <- paste0(opWarn_string, "\ntools:::.run_one_vignette('",
@@ -4165,7 +4166,6 @@ add_dummies <- function(dir, Log)
                                       stdout = outfile, stderr = outfile,
                                       timeout = tlim)
                     t2b <- proc.time()
-                    ## <FIXME>: report immediately to the console
                     out <- readLines(outfile, warn = FALSE)
                     pos <- which(out == " *** Run successfully completed ***")
                     if(!length(pos) || any(nzchar(out[seq_len(pos[1L] - 1L)])))
@@ -4173,7 +4173,7 @@ add_dummies <- function(dir, Log)
                     savefile <- savefiles[i]
                     if(length(grep("^  When (running|tangling|sourcing)", out,
                                    useBytes = TRUE))) {
-                        out0 <- c(out0, " failed\n")
+                        out1 <- c(out1, " failed\n")
                         keep <- as.numeric(Sys.getenv("_R_CHECK_VIGNETTES_NLINES_",
                                                       "10"))
                         res <- if (keep > 0)
@@ -4190,7 +4190,7 @@ add_dummies <- function(dir, Log)
                         ## (Need not be the final line if running under valgrind)
                         keep <- as.numeric(Sys.getenv("_R_CHECK_VIGNETTES_NLINES_",
                                                       "10"))
-                        out0 <- c(out0, " failed to complete the test\n")
+                        out1 <- c(out1, " failed to complete the test\n")
                         out <- c(out, "", "... incomplete output.  Crash?")
                         res <- if (keep > 0)
                             c(res,
@@ -4206,26 +4206,27 @@ add_dummies <- function(dir, Log)
                                       outfile, "', '", savefile, "',TRUE,TRUE))")
                         out2 <- R_runR0(cmd, R_opts2)
                         if(length(out2)) {
-                            out0 <- c(out0, print_time0(t1b, t2b))
+                            out1 <- c(out1, print_time0(t1b, t2b))
                             anyNOTE <- TRUE
-                            out0 <- c(out0, " NOTE\n")
-                            out0 <- c(out0, paste("differences from",
+                            out1 <- c(out1, " NOTE\n")
+                            out1 <- c(out1, paste("differences from",
                                                   sQuote(basename(savefile))))
-                            out0 <- c(out0,
+                            out1 <- c(out1,
                                       paste(c("", out2, ""), collapse = "\n"))
                         } else {
-                            out0 <- c(out0, print_time0(t1b, t2b))
-                            out0 <- c(out0, " OK\n")
+                            out1 <- c(out1, print_time0(t1b, t2b))
+                            out1 <- c(out1, " OK\n")
                             if (!config_val_to_logical(Sys.getenv("_R_CHECK_ALWAYS_LOG_VIGNETTE_OUTPUT_", use_valgrind)))
                                 unlink(outfile)
                         }
                     } else {
-                            out0 <- c(out0, print_time0(t1b, t2b))
-                        out0 <- c(out0, " OK\n")
+                        out1 <- c(out1, print_time0(t1b, t2b))
+                        out1 <- c(out1, " OK\n")
                         if (!config_val_to_logical(Sys.getenv("_R_CHECK_ALWAYS_LOG_VIGNETTE_OUTPUT_", use_valgrind)))
                             unlink(outfile)
                     }
-                    ## </FIXME>
+                    out0 <- c(out0, out1)
+                    cat(out1, sep = "")
                     if(!WINDOWS && !is.na(theta)) {
                         td <- t2b - t1b
                         cpu <- sum(td[-3L])
@@ -4240,7 +4241,9 @@ add_dummies <- function(dir, Log)
                 if(!ran) {
                     print_time(t1, t2, Log)
                     resultLog(Log, "NONE")
-                    printLog0(Log, out0)
+                    ## printLog0(Log, out0)
+                    if (!is.null(Log) && Log$con > 0L)
+                        cat(out0, sep ="", file = Log$con)
                 } else {
                     print_time(t1, t2, Log)
                     if(R_check_suppress_RandR_message)
@@ -4258,7 +4261,9 @@ add_dummies <- function(dir, Log)
                         }
                     } else if(anyNOTE) noteLog(Log)
                     else resultLog(Log, "OK")
-                    printLog0(Log, out0)
+##                    printLog0(Log, out0)
+                    if (!is.null(Log) && Log$con > 0L)
+                        cat(out0, sep = "", file = Log$con)
                     if(!WINDOWS && !is.na(theta)) {
                         td <- t2 - t1
                         cpu <- sum(td[-3L])
