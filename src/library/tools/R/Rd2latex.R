@@ -259,6 +259,19 @@ Rd2latex <- function(Rd, out = "", defines = .Platform$OS.type,
         x
     }
 
+    latex_escape_name_for_index <- function(x) {
+        ## In the index, ! @ | are escape characters, and one must quote
+        ## these characters in the \index command by putting a double
+        ## quotation mark (") in front of them, and one can only place a
+        ## " in the index by quoting it.
+        x <- latex_escape_name(x)
+        ## <FIXME>
+        ## Should really handle all of the above ...
+        x <- fsub("@", "\"@", x)
+        ## </FIXME>
+        x
+    }
+
     latex_escape_link <- function(x)
     {
         ## _ is already escaped
@@ -555,7 +568,7 @@ Rd2latex <- function(Rd, out = "", defines = .Platform$OS.type,
     }
 
     writeSection <- function(section, tag) {
-        if (tag %in% c("\\encoding", "\\concept"))
+        if (tag == "\\encoding")
             return()
         save <- sectionLevel
         sectionLevel <<- sectionLevel + 1
@@ -566,7 +579,12 @@ Rd2latex <- function(Rd, out = "", defines = .Platform$OS.type,
             if(key %in% .Rd_keywords_auto)
                 return()
             of0("\\keyword{", latex_escape_name(key), "}{", ltxname, "}\n")
-        } else if (tag == "\\section" || tag == "\\subsection") {
+        }
+        else if (tag == "\\concept") {
+            key <- trim(section)
+            of0("\\keyword{", latex_escape_name_for_index(key), "}{", ltxname, "}\n")
+        }
+        else if (tag == "\\section" || tag == "\\subsection") {
             macro <- c("Section", "SubSection", "SubSubSection")[min(sectionLevel, 3)]
     	    of0("%\n\\begin{", macro, "}{")
             writeContent(section[[1L]], tag)
