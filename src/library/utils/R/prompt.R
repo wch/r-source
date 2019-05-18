@@ -145,11 +145,16 @@ function(object, filename = NULL, name = NULL,
              "## The function is currently defined as",
              x.def,
              "}"),
-             keywords = c(paste("% Add one or more standard keywords,",
-             "see file 'KEYWORDS' in the"),
-             "% R documentation directory.",
-             "\\keyword{ ~kwd1 }% use one of  RShowDoc(\"KEYWORDS\")",
-             "\\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line"))
+             keywords =
+                 c("% Add one or more standard keywords, see file 'KEYWORDS' in the",
+                   "% R documentation directory (show via RShowDoc(\"KEYWORDS\")):",
+                   "% \\keyword{ ~kwd1 }",
+                   "% \\keyword{ ~kwd2 }",
+                   "% Use only one keyword per line.",
+                   "% For non-standard keywords, use \\concept instead of \\keyword:",
+                   "% \\concept{ ~cpt1 }",
+                   "% \\concept{ ~cpt2 }",
+                   "% Use only one concept per line."))
 
     Rdtxt$arguments <- if(n)
         c("\\arguments{",
