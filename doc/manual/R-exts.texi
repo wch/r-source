@@ -7027,9 +7027,11 @@ so that e.g.@: @kbd{??Spearman} will succeed in finding the
 help page for the test for association between paired samples using
 Spearman's @eqn{\rho, rho}.
 
-
 (Note that @code{help.search()} only uses ``sections'' of documentation
 objects with no additional markup.)
+
+Each @code{\concept} entry should give a @emph{single} index term (word
+or phrase), and not use any Rd markup.
 
 If you want to cross reference such items from other help files @emph{via}
 @code{\link}, you need to use @code{\alias} and not @code{\concept}.
