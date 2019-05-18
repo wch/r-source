@@ -79,6 +79,9 @@
 
       \item \code{rbind.data.frame()} no longer drops \code{<NA>} levels
       from factor columns (\PR{17562}).
+
+      \item Correct messaging in C++ pragma checks in \pkg{tools} code for
+      \command{R CMD check}, fixing \PR{17566} thanks to Xavier Robin.
     }
   }
 }
