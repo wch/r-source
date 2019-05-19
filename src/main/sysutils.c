@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997-2019   The R Core Team
+ *  Copyright (C) 1997-2017   The R Core Team
  *  Copyright (C) 1995-1996   Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -757,74 +757,6 @@ cetype_t getCharCE(SEXP x)
     else return CE_NATIVE;
 }
 
-static Rboolean isASCIIAlias(const char *code)
-{
-    /* list from from winiconv.c */
-    static char *names[] = { "ASCII", "US-ASCII", "ANSI_X3.4-1968",
-      "ANSI_X3.4-1986", "CP367", "IBM367", "ISO-IR-6", "ISO646-US",
-      "ISO_646.IRV:1991", "US", "CSASCII", NULL};
-
-    int i;
-    for(i = 0; names[i] != NULL; i++)
-	if (!strcasecmp(code, names[i]))
-	    return TRUE;
-    return FALSE;
-}
-
-/* add //TRANSLIT to tocode if requested via options("default.translit") */
-static void* iconv_open_trans(const char* tocode, const char* fromcode)
-{
-    DEFAULT_TRANSLIT_TYPE t = R_DefaultTranslit;
-
-#ifdef Win32
-    if (t == DEFAULT_TRANSLIT_R211)
-	t = DEFAULT_TRANSLIT_NONASCII;
-#else
-    if (t == DEFAULT_TRANSLIT_R211)
-	t = DEFAULT_TRANSLIT_NO;
-#endif
-
-    if (t == DEFAULT_TRANSLIT_NO)
-	return iconv_open(tocode, fromcode);
-
-    char buf[R_CODESET_MAX + 11];
-    char *b;
-    const char *c;
- 
-    /* extract base name to see if it is ASCII */
-    for(c = tocode, b = buf; *c; c++) {
-	if (*c == '/' && *(c+1) == '/') {
-	    c += 2;
-	    break;
-	}
-	*b++ = *c;
-    }
-    *b = 0;
-
-    if (isASCIIAlias(buf) && (t == DEFAULT_TRANSLIT_NONASCII))
-	return iconv_open(tocode, fromcode);
-
-    /* extract options to see if TRANSLIT is already used */
-    while(*c != 0) {
-	b = buf;
-	*b = 0;
-	for(; *c; c++) {
-	    if (*c == '/' && *(c+1) == '/') {
-		c += 2;
-		break;
-	    }
-	    *b++ = *c;
-	}
-	*b = 0;
-	
-	if (!strcasecmp(buf, "translit"))
-	    return iconv_open(tocode, fromcode);	
-    }
-
-    /* add translit */
-    snprintf(buf, R_CODESET_MAX + 11, "%s//TRANSLIT", tocode);
-    return iconv_open(buf, fromcode);
-}
 
 void * Riconv_open (const char* tocode, const char* fromcode)
 {
@@ -841,16 +773,16 @@ void * Riconv_open (const char* tocode, const char* fromcode)
     if (latin1locale) cp = "ISO-8859-1";
     else if (!utf8locale) cp = locale2charset(NULL);
 # endif
-    if (!*tocode && !*fromcode) return iconv_open_trans(cp, cp);
-    if(!*tocode)  return iconv_open_trans(cp, fromcode);
-    else if(!*fromcode) return iconv_open_trans(tocode, cp);
-    else return iconv_open_trans(tocode, fromcode);
+    if (!*tocode && !*fromcode) return iconv_open(cp, cp);
+    if(!*tocode)  return iconv_open(cp, fromcode);
+    else if(!*fromcode) return iconv_open(tocode, cp);
+    else return iconv_open(tocode, fromcode);
 #else
 // "utf8" is not valid but people keep on using it
     const char *to = tocode, *from = fromcode;
     if(strcasecmp(tocode, "utf8") == 0) to = "UTF-8";
     if(strcasecmp(fromcode, "utf8") == 0) from = "UTF-8";
-    return iconv_open_trans(to, from);
+    return iconv_open(to, from);
 #endif
 }
 

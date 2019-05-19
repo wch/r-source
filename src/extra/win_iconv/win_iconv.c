@@ -23,6 +23,7 @@
    - add some missing encoding names, remove duplicate names.
    - add iconvlist()
    - set errno on error
+   - XP-compatibility for WC_NO_BEST_FIT_CHARS -- use only for ASCII
 
 A reasonably complete list is at
 http://msdn.microsoft.com/en-us/library/windows/desktop/dd317756%28v=vs.85%29.aspx
@@ -1283,11 +1284,8 @@ kernel_wctomb(csconv_t *cv, ushort *wbuf, int wbufsize, uchar *buf, int bufsize)
 	   the current version of must_use_null_useddefaultchar is FALSE
 	   (it is TRUE also for 65001), and that the API is supported since
 	   Windows 2000.
-
-	   The compatibility mode with R since 2.11 is now handled
-	   in Riconv_open (may add //TRANSLIT for non-ASCII encodings)
 	 */
-    if ( !(cv->flags & FLAG_TRANSLIT) )
+    if ( !(cv->flags & FLAG_TRANSLIT) && (cv->codepage == 20127) )
 	flags |= WC_NO_BEST_FIT_CHARS;
 #endif
     }

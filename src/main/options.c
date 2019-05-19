@@ -259,9 +259,9 @@ void attribute_hidden InitOptions(void)
 
     /* options set here should be included into mandatory[] in do_options */
 #ifdef HAVE_RL_COMPLETION_MATCHES
-    PROTECT(v = val = allocList(24));
-#else
     PROTECT(v = val = allocList(23));
+#else
+    PROTECT(v = val = allocList(22));
 #endif
 
     SET_TAG(v, install("prompt"));
@@ -369,16 +369,6 @@ void attribute_hidden InitOptions(void)
     SET_TAG(v, install("PCRE_limit_recursion"));
     R_PCRE_limit_recursion = NA_LOGICAL;
     SETCAR(v, ScalarLogical(R_PCRE_limit_recursion));
-    v = CDR(v);
-
-    SET_TAG(v, install("default.translit"));
-    switch(R_DefaultTranslit) {
-	case DEFAULT_TRANSLIT_NO: p = "no"; break;
-	case DEFAULT_TRANSLIT_NONASCII: p = "non-ASCII"; break;
-	case DEFAULT_TRANSLIT_YES: p = "yes"; break;
-	case DEFAULT_TRANSLIT_R211: p = "R 2.11"; break;
-    }
-    SETCAR(v, mkString(p));
     v = CDR(v);
     /* options set here should be included into mandatory[] in do_options */
 
@@ -513,7 +503,7 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 		  "check.bounds", "keep.source", "keep.source.pkgs",
 		  "keep.parse.data", "keep.parse.data.pkgs", "warning.length",
 		  "nwarnings", "OutDec", "browserNLdisabled", "CBoundsCheck",
-		  "matprod", "PCRE_study", "PCRE_use_JIT", "default.translit",
+		  "matprod", "PCRE_study", "PCRE_use_JIT",
 		  "PCRE_limit_recursion", "rl_word_breaks",
 		  /* ^^^ from InitOptions ^^^ */
 		  "warn", "max.print", "show.error.messages",
@@ -778,22 +768,6 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 		R_PCRE_limit_recursion = asLogical(argi);
 		SET_VECTOR_ELT(value, i,
 			       SetOption(tag, ScalarLogical(R_PCRE_limit_recursion)));
-	    }
-	    else if (streql(CHAR(namei), "default.translit")) {
-		SEXP s = asChar(argi);
-		if (s == NA_STRING || LENGTH(s) == 0)
-		    error(_("invalid value for '%s'"), CHAR(namei));
-		if (streql(CHAR(s), "no"))
-		    R_DefaultTranslit = DEFAULT_TRANSLIT_NO;
-		else if (streql(CHAR(s), "non-ASCII"))
-		    R_DefaultTranslit = DEFAULT_TRANSLIT_NONASCII;
-		else if (streql(CHAR(s), "yes"))
-		    R_DefaultTranslit = DEFAULT_TRANSLIT_YES;
-		else if (streql(CHAR(s), "R 2.11")) 
-		    R_DefaultTranslit = DEFAULT_TRANSLIT_R211;
-		else
-		    error(_("invalid value for '%s'"), CHAR(namei));
-		SET_VECTOR_ELT(value, i, SetOption(tag, duplicate(argi)));
 	    }
 	    else {
 		SET_VECTOR_ELT(value, i, SetOption(tag, duplicate(argi)));
