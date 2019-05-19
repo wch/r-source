@@ -1687,12 +1687,21 @@ R_addTaskCallback(SEXP f, SEXP data, SEXP useData, SEXP name)
 #ifndef Win32
 /* this is here solely to pull in xxxpr.o */
 #include <R_ext/RS.h>
+#ifdef FC_LEN_T
+void F77_SYMBOL(intpr) (const char *, int *, int *, int *, FC_LEN_T);
+void attribute_hidden dummy12345(void)
+{
+    int i = 0;
+    F77_CALL(intpr)("dummy", &i, &i, &i, (FC_LEN_T) 5);
+}
+#else
 void F77_SYMBOL(intpr) (const char *, int *, int *, int *);
 void attribute_hidden dummy12345(void)
 {
     int i = 0;
     F77_CALL(intpr)("dummy", &i, &i, &i);
 }
+#endif
 
 /* Used in unix/system.c, avoid inlining by using an extern there. */
 uintptr_t dummy_ii(void)

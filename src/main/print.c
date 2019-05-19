@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2018	The R Core Team.
+ *  Copyright (C) 2000-2019	The R Core Team.
  *  Copyright (C) 1995-1998	Robert Gentleman and Ross Ihaka.
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1054,7 +1054,12 @@ void attribute_hidden CustomPrintValue(SEXP s, SEXP env)
  */
 
 attribute_hidden
-int F77_NAME(dblep0) (const char *label, int *nchar, double *data, int *ndata)
+#ifdef FC_LEN_T
+void F77_NAME(dblep0) (const char *label, int *nchar, double *data, int *ndata,
+		       FC_LEN_T label_len)
+#else
+void F77_NAME(dblep0) (const char *label, int *nchar, double *data, int *ndata)
+#endif
 {
     int k, nc = *nchar;
 
@@ -1068,11 +1073,15 @@ int F77_NAME(dblep0) (const char *label, int *nchar, double *data, int *ndata)
 	Rprintf("\n");
     }
     if(*ndata > 0) printRealVector(data, *ndata, 1);
-    return(0);
 }
 
 attribute_hidden
-int F77_NAME(intpr0) (const char *label, int *nchar, int *data, int *ndata)
+#ifdef FC_LEN_T
+void F77_NAME(intpr0) (const char *label, int *nchar, int *data, int *ndata,
+		       FC_LEN_T label_len)
+#else
+void F77_NAME(intpr0) (const char *label, int *nchar, int *data, int *ndata)
+#endif
 {
     int k, nc = *nchar;
 
@@ -1086,11 +1095,15 @@ int F77_NAME(intpr0) (const char *label, int *nchar, int *data, int *ndata)
 	Rprintf("\n");
     }
     if(*ndata > 0) printIntegerVector(data, *ndata, 1);
-    return(0);
 }
 
 attribute_hidden
-int F77_NAME(realp0) (const char *label, int *nchar, float *data, int *ndata)
+#ifdef FC_LEN_T
+void F77_NAME(realp0) (const char *label, int *nchar, float *data, int *ndata,
+		      FC_LEN_T label_len)
+#else
+void F77_NAME(realp0) (const char *label, int *nchar, float *data, int *ndata)
+#endif
 {
     int k, nc = *nchar, nd = *ndata;
     double *ddata;
@@ -1112,7 +1125,6 @@ int F77_NAME(realp0) (const char *label, int *nchar, float *data, int *ndata)
 	printRealVector(ddata, nd, 1);
 	free(ddata);
     }
-    return(0);
 }
 
 /* Fortran-callable error routine for lapack */
