@@ -63,15 +63,6 @@ void printVector(SEXP, int, int);
 // void PrintLanguage(SEXP, Rboolean);
 
 /* Utilities for S compatibility and debuggging */
-#ifdef FC_LEN_T
-void F77_SYMBOL(intpr0) (const char *, int *, int *, int *, FC_LEN_T);
-void F77_SYMBOL(dblep0)(const char *, int *, double *, int *, FC_LEN_T);
-void F77_SYMBOL(realp0)(const char *, int *, float *, int *, FC_LEN_T);
-#else
-void F77_SYMBOL(intpr0) (const char *, int *, int *, int *);
-void F77_SYMBOL(dblep0)(const char *, int *, double *, int *);
-void F77_SYMBOL(realp0)(const char *, int *, float *, int *);
-#endif
 void R_PV(SEXP s);
 
 /* Offset for rowlabels if there are named dimnames */

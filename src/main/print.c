@@ -1050,7 +1050,7 @@ void attribute_hidden CustomPrintValue(SEXP s, SEXP env)
 
 
 /* xxxpr are mostly for S compatibility (as mentioned in V&R).
-   The actual interfaces are now in xxxpr.f
+   The Fortran interfaces are in xxxpr.f and call these.
  */
 
 attribute_hidden
