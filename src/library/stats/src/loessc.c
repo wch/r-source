@@ -20,6 +20,8 @@
  *  Altered by B.D. Ripley to use F77_*, declare routines before use.
  *
  *  'protoize'd to ANSI C headers; indented: M.Maechler
+ *
+ *  Changes to the C/Fortran interface to support LTO in May 2019.
  */
 
 #include <string.h>
