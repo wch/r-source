@@ -1582,7 +1582,7 @@ void R_fixbackslash(char *s)
 #endif
 
 #if defined FC_LEN_T
-void NORET F77_SYMBOL(rexitc)(char *msg, int *nchar, FC_LEN_T c1)
+void NORET F77_SYMBOL(rexitc)(char *msg, int *nchar, FC_LEN_T msg_len)
 #else
 void NORET F77_SYMBOL(rexitc)(char *msg, int *nchar)
 #endif
@@ -1599,7 +1599,7 @@ void NORET F77_SYMBOL(rexitc)(char *msg, int *nchar)
 }
 
 #if defined FC_LEN_T
-void F77_SYMBOL(rwarnc)(char *msg, int *nchar, FC_LEN_T c1)
+void F77_SYMBOL(rwarnc)(char *msg, int *nchar, FC_LEN_T msg_len)
 #else
 void F77_SYMBOL(rwarnc)(char *msg, int *nchar)
 #endif
