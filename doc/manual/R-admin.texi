@@ -3291,7 +3291,8 @@ Fortran}).  Your C compiler should be
 @acronym{IEEE}@tie{}754}, POSIX 1003.1 and C99-compliant.@footnote{Note
 that C11 compilers need not be C99-compliant: @R{} requires support for
 @code{double complex} and variable-length arrays which are optional in
-C11 but is mandatory in C99.}  @R{} tries to choose suitable
+C11 but are mandatory in C99.  C18 (also known as C17) is a `bugfix
+release' of C11, clarifying the standard.} @R{} tries to choose suitable
 flags@footnote{Examples are @option{-std=gnu99}, @option{-std=c99} and
 @option{-c99}.} for the C compilers it knows about, but you may have to
 set @code{CC} or @code{CFLAGS} suitably.  For versions of @command{gcc}
