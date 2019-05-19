@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2018   The R Core Team
+ *  Copyright (C) 1998-2019   The R Core Team
  *  Copyright (C) 2002-2015   The R Foundation
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
@@ -34,6 +34,16 @@
 
 #include <complex.h>
 #include "Rcomplex.h"	/* toC99 */
+
+/* FIXME
+   This calls BLAS routines
+
+       dgemm dgemv zgemm dsyrk dtrsm
+
+   all of which have character args so gfortran (at least) expects a
+   length passed -- but non-Fortran BLAS may not.  At least with cdecl
+   calling conventions additional arg(s) will not matter.
+ */
 
 /* "GetRowNames" and "GetColNames" are utility routines which
  * locate and return the row names and column names from the

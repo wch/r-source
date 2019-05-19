@@ -1063,7 +1063,11 @@ void F77_NAME(dblep0) (const char *label, int *nchar, double *data, int *ndata)
 {
     int k, nc = *nchar;
 
+#ifdef FC_LEN_T
+    if(nc < 0) nc = (int) label_len;
+#else
     if(nc < 0) nc = (int) strlen(label);
+#endif
     if(nc > 255) {
 	warning(_("invalid character length in 'dblepr'"));
 	nc = 0;
@@ -1085,7 +1089,11 @@ void F77_NAME(intpr0) (const char *label, int *nchar, int *data, int *ndata)
 {
     int k, nc = *nchar;
 
+#ifdef FC_LEN_T
+    if(nc < 0) nc = (int) label_len;
+#else
     if(nc < 0) nc = (int) strlen(label);
+#endif
     if(nc > 255) {
 	warning(_("invalid character length in 'intpr'"));
 	nc = 0;
@@ -1108,7 +1116,11 @@ void F77_NAME(realp0) (const char *label, int *nchar, float *data, int *ndata)
     int k, nc = *nchar, nd = *ndata;
     double *ddata;
 
+#ifdef FC_LEN_T
+    if(nc < 0) nc = (int) label_len;
+#else
     if(nc < 0) nc = (int) strlen(label);
+#endif
     if(nc > 255) {
 	warning(_("invalid character length in 'realpr'"));
 	nc = 0;
@@ -1129,11 +1141,20 @@ void F77_NAME(realp0) (const char *label, int *nchar, float *data, int *ndata)
 
 /* Fortran-callable error routine for lapack */
 
+#ifdef FC_LEN_T
+void NORET F77_NAME(xerbla)(const char *srname, int *info, FC_LEN_T srname_len)
+#else
 void NORET F77_NAME(xerbla)(const char *srname, int *info)
+#endif
 {
    /* srname is not null-terminated.  It should be 6 characters. */
     char buf[7];
+#ifdef FC_LEN_T
+    strncpy(buf, srname, srname_len);
+    buf[srname_len] = '\0';
+#else
     strncpy(buf, srname, 6);
     buf[6] = '\0';
+#endif
     error(_("BLAS/LAPACK routine '%6s' gave error code %d"), buf, -(*info));
 }
