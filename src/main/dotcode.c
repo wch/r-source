@@ -1650,6 +1650,8 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 		const char *ss = translateChar(STRING_ELT(s, 0));
 		if (n > 1)
 		    warning(_("only first string in char vector used in .Fortran"));
+		else
+		    warning(_("Using a char vector in .Fortran is not portable"));
 		char *fptr = (char*) R_alloc(max(255, strlen(ss)) + 1, sizeof(char));
 		strcpy(fptr, ss);
 		cargs[na] =  (void*) fptr;

@@ -40,6 +40,9 @@
 
       \item \command{R CMD config} no longer knows about the
       unused settings \samp{F77} and \samp{FCPIFCPLAGS}.
+
+      \item Use of character vectors with \code{.Fortran()} now gives a
+      non-portability warning and is likely to be formally deprecated.
     }
   }
 
