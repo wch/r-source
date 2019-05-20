@@ -1,6 +1,6 @@
 % File src/library/base/man/Foreign.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Foreign}
@@ -103,7 +103,8 @@
   there appears to be no way to distinguish missing strings from the
   string \code{"NA"}.  If this distinction is important use \code{\link{.Call}}.
 
-  \code{.Fortran} passes the first (only) character string of a
+  Using a character string with \code{.Fortran} is deprecated and will
+  give a warning.  It passes the first (only) character string of a
   character vector as a C character array to Fortran: that may be usable
   as \code{character*255} if its true length is passed separately.  Only
   up to 255 characters of the string are passed back.  (How well this

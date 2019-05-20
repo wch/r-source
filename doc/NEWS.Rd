@@ -6,6 +6,13 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R 3.6.0 patched}{
+  \subsection{DEPRECATED AND DEFUNCT}{
+    \itemize{
+      \item The use of a character vector with \code{.Fortran()} is
+      depreacated and gives a non-portability warning.
+    }
+  }
+      
   \subsection{BUG FIXES}{
     \itemize{
       \item On Windows, GUI package installation via \code{menuInstallPkgs()}
