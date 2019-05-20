@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2018	The R Core Team.
+ *  Copyright (C) 2000-2019	The R Core Team.
  *  Copyright (C) 1995-1998	Robert Gentleman and Ross Ihaka.
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1050,7 +1050,8 @@ void attribute_hidden CustomPrintValue(SEXP s, SEXP env)
 
 
 /* xxxpr are mostly for S compatibility (as mentioned in V&R).
-   The actual interfaces are now in xxxpr.f
+   The Fortran interfaces are in xxxpr.f and call these.
+    They are always called with *nchar >= 0.
  */
 
 attribute_hidden
@@ -1116,7 +1117,9 @@ void F77_NAME(realp0) (const char *label, int *nchar, float *data, int *ndata)
 
 void NORET F77_NAME(xerbla)(const char *srname, int *info)
 {
-   /* srname is not null-terminated.  It should be 6 characters. */
+   /* srname is not null-terminated.  It will be 6 characters for 
+      mainstream BLAS/LAPACK routines (but 4 or 5 for some, 
+      and > 6 for a few from LAPACK). */
     char buf[7];
     strncpy(buf, srname, 6);
     buf[6] = '\0';
