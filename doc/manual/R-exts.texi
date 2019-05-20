@@ -9394,8 +9394,9 @@ optimization level set for the compiler.)
 
 Only a single character string of fixed length can be passed to or from
 Fortran (the length is not passed), and the success of this is
-compiler-dependent.  Other @R{} objects can be passed to @code{.C}, but
-it is much better to use one of the other interfaces.
+compiler-dependent: its use was deprecated in 2019.  Other @R{} objects
+can be passed to @code{.C}, but it is much better to use one of the
+other interfaces.
 
 It is possible to pass numeric vectors of storage mode @code{double} to
 C as @code{float *} or to Fortran as @code{REAL} by setting the

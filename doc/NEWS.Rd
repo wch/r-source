@@ -40,9 +40,6 @@
 
       \item \command{R CMD config} no longer knows about the
       unused settings \samp{F77} and \samp{FCPIFCPLAGS}.
-
-      \item Use of character vectors with \code{.Fortran()} now gives a
-      non-portability warning and is likely to be formally deprecated.
     }
   }
 
@@ -63,6 +60,13 @@
 }
 
 \section{\Rlogo CHANGES IN R 3.6.0 patched}{
+  \subsection{DEPRECATED AND DEFUNCT}{
+    \itemize{
+      \item The use of a character vector with \code{.Fortran()} is
+      depreacated and gives a non-portability warning.
+    }
+  }
+      
   \subsection{BUG FIXES}{
     \itemize{
       \item On Windows, GUI package installation via \code{menuInstallPkgs()}
