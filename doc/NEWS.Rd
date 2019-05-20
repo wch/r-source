@@ -55,6 +55,9 @@
 
       \item Long-standing issue where the X11 device could lose events
       shortly after startup has been addressed \PR{16702}.
+
+      \item \code{rbind.data.frame()} no longer drops \code{<NA>} levels
+      from factor columns by default, \PR{17562}.
     }
   }
 }
@@ -81,8 +84,8 @@
       \item \code{boxplot(y ~ f, horizontal=TRUE)} now produces correct x-
       and y-labels.
 
-      \item \code{rbind.data.frame()} no longer drops \code{<NA>} levels
-      from factor columns (\PR{17562}).
+      \item \code{rbind.data.frame()} allows to keep \code{<NA>} levels
+      from factor columns (\PR{17562}) via new option \code{factor.exclude}.
 
       \item Correct messaging in C++ pragma checks in \pkg{tools} code for
       \command{R CMD check}, fixing \PR{17566} thanks to Xavier Robin.

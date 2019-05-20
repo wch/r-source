@@ -1256,7 +1256,7 @@ cbind.data.frame <- function(..., deparse.level = 1)
     data.frame(..., check.names = FALSE)
 
 rbind.data.frame <- function(..., deparse.level = 1, make.row.names = TRUE,
-                             stringsAsFactors = default.stringsAsFactors())
+                             stringsAsFactors = default.stringsAsFactors(), factor.exclude = NULL)
 {
     match.names <- function(clabs, nmi)
     {
@@ -1411,7 +1411,7 @@ rbind.data.frame <- function(..., deparse.level = 1, make.row.names = TRUE,
 	if(length(lij <- all.levs[[j]]))
             value[[j]] <-
 		factor(as.vector(value[[j]]), levels = lij,
-		       exclude = NULL, ordered = ordCol[j])
+		       exclude = factor.exclude, ordered = ordCol[j])
     if(any(has.dim)) {
 	rmax <- max(unlist(rows))
 	for(i in pseq[has.dim])

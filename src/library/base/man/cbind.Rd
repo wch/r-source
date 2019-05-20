@@ -1,6 +1,6 @@
 % File src/library/base/man/cbind.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{cbind}
@@ -21,7 +21,7 @@
 cbind(\dots, deparse.level = 1)
 rbind(\dots, deparse.level = 1)
 \method{rbind}{data.frame}(\dots, deparse.level = 1, make.row.names = TRUE,
-      stringsAsFactors = default.stringsAsFactors())
+      stringsAsFactors = default.stringsAsFactors(), factor.exclude = NULL)
 }
 \arguments{
   \item{\dots}{(generalized) vectors or matrices.  These can be given as named
@@ -41,6 +41,12 @@ rbind(\dots, deparse.level = 1)
   \item{stringsAsFactors}{logical, passed to \code{\link{as.data.frame}};
     only has an effect when the \code{\dots} arguments contain a
     (non-\code{data.frame}) \code{\link{character}}.}
+  \item{factor.exclude}{if the data frames contain factors,
+    \code{\link{factor}(., exclude = factor.exclude)} is applied.  The
+    default \code{NULL} ensures that \code{NA} levels of factors are kept,
+    see \PR{17562}.  In \R versions up to 3.6.x, \code{factor.exclude = NA}
+    has been implicitly hardcoded (\R <= 3.6.0) or the default (\R = 3.6.x,
+    x >= 1).}
 }
 \details{
   The functions \code{cbind} and \code{rbind} are S3 generic, with
