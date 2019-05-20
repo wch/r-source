@@ -1126,19 +1126,21 @@ void F77_NAME(realp0) (const char *label, int *nchar, float *data, int *ndata)
 
 /* Fortran-callable error routine for lapack */
 
-#ifdef FC_LEN_T
+// Never defined as yet: maybe when FC_LEN_T is set and neither --with-blas
+// nor --with-lapack.
+#ifdef USE_FC_LEN_FOR_BLAS
 void NORET F77_NAME(xerbla)(const char *srname, int *info, 
 			    const FC_LEN_T srname_len)
 #else
 void NORET F77_NAME(xerbla)(const char *srname, int *info)
 #endif
 {
-   /* srname is not null-terminated.  It should be 6 characters. */
+   /* srname is not null-terminated.  It wll be 6 characters for 
+      mainstream BLAS/LAPACK routines (but 4 or 5 for some, 
+      and > 6 for a few from LAPACK). */
     char buf[7];
-#ifdef FC_LEN_T
-    /* Is this safe?  It is if xerbla is called from Fortran compiled
-       with the compiler used to build R, but what about alternative
-       BLAS/LAPACK? */
+#ifdef USE_FC_LEN_FOR_BLAS
+    // precaution for incorrectly passed length type
     int len = (srname_len > 6) ? (int)srname_len : 6;
     strncpy(buf, srname, len);
     buf[len] = '\0';
