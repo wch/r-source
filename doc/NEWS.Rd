@@ -8,20 +8,21 @@
 \section{\Rlogo CHANGES IN R-devel}{
   \subsection{NEW FEATURES}{
     \itemize{
-      \item \code{assertError()} and \code{assertWarning()} (package
-      \pkg{tools}) now can check for \emph{specific} error or warning
-      classes via new optional 2nd argument \code{classes} (which is not
-      back compatible with previous use of unnamed 2nd arg.)
+      \item \code{assertError()} and \code{assertWarning()} (in package
+      \pkg{tools}) can now check for \emph{specific} error or warning
+      classes \emph{via} the new optional second argument \code{classes}
+      (which is not back compatible with previous use of an unnamed second
+      argument.)
 
       \item \code{Df2formula()}, the utility for the data frame method of
       \code{formula()}, now works without parsing and explicit evaluation,
       starting from Suharto Anggono's suggestion in \PR{17555}.
 
-      \item \code{approxfun()} and \code{approx()} gain option \code{na.rm
-	= TRUE}.  If set to false, missing y values now propagate into
-      interpolated values.
+      \item \code{approxfun()} and \code{approx()} gain a new argument
+      \code{na.rm} defaulting to true.  If set to false, missing
+      \code{y} values now propagate into the interpolated values.
 
-      \item Long vectors are now supported in \code{for} loops.
+      \item Long vectors are now supported in \code{for()} loops.
     }
   }
 
