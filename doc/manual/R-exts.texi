@@ -9376,9 +9376,8 @@ subroutine.
 @end quotation
 
 @noindent
-Do please note the first two.  On the 64-bit Unix/Linux/macOS platforms,
-@code{long} is 64-bit whereas @code{int} and @code{INTEGER} are 32-bit.
-Code ported from S-PLUS (which uses @code{long *} for @code{logical} and
+On all @R{} platforms @code{int} and @code{INTEGER} are 32-bit.  Code
+ported from S-PLUS (which uses @code{long *} for @code{logical} and
 @code{integer}) will not work on all 64-bit platforms (although it may
 appear to work on some, including Windows).  Note also that if your
 compiled code is a mixture of C functions and Fortran subprograms the
@@ -9393,9 +9392,10 @@ be possible to pass @code{Rcomplex} to a C99 function expecting a
 @code{complex} type.  Moreover, the compatibility can depend on the
 optimization level set for the compiler.)
 
-Only a single character string can be passed to or from Fortran, and the
-success of this is compiler-dependent.  Other @R{} objects can be passed
-to @code{.C}, but it is much better to use one of the other interfaces.
+Only a single character string of fixed length can be passed to or from
+Fortran (the length is not passed), and the success of this is
+compiler-dependent.  Other @R{} objects can be passed to @code{.C}, but
+it is much better to use one of the other interfaces.
 
 It is possible to pass numeric vectors of storage mode @code{double} to
 C as @code{float *} or to Fortran as @code{REAL} by setting the

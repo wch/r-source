@@ -1135,7 +1135,7 @@ void NORET F77_NAME(xerbla)(const char *srname, int *info,
 void NORET F77_NAME(xerbla)(const char *srname, int *info)
 #endif
 {
-   /* srname is not null-terminated.  It wll be 6 characters for 
+   /* srname is not null-terminated.  It will be 6 characters for 
       mainstream BLAS/LAPACK routines (but 4 or 5 for some, 
       and > 6 for a few from LAPACK). */
     char buf[7];
