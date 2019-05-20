@@ -513,7 +513,7 @@ function(x, kind)
     if(!length(x))
         character()
     else
-        unique(trimws(sapply(x, as.character)))
+        unique(trimws(vapply(x, paste, "", collapse = "\n")))
 }
 
 ### * .Rd_keywords_auto
