@@ -363,3 +363,4 @@
 ## Allow user to override the configure checks if they know what they
 ## are doing (the value is unchecked).
 ## FC_LEN_T=
+
