@@ -63,7 +63,8 @@
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item The use of a character vector with \code{.Fortran()} is
-      deprecated and gives a non-portability warning.
+      formally deprecated and gives a non-portability warning.  (It has
+      long been strongly discouraged in \sQuote{Writing R Extensions}.)
     }
   }
       
