@@ -1,5 +1,5 @@
 
-R version 3.6.0 Patched (2019-04-26 r76428) -- "Planting of a Tree"
+R version 3.6.0 Patched (2019-05-20 r76550) -- "Planting of a Tree"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -323,5 +323,5 @@ Warning messages:
 > 
 > ## Last Line:
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.283 0.015 0.299 0 0 
+Time elapsed:  0.29 0.012 0.303 0 0 
 > 

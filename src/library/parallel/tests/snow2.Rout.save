@@ -1,5 +1,5 @@
 
-R version 3.6.0 beta (2019-04-15 r76395) -- "Planting of a Tree"
+R version 3.6.0 Patched (2019-05-20 r76550) -- "Planting of a Tree"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -50,4 +50,4 @@ Calculations on Transformed Scale;  Intervals on Original Scale
 > 
 > proc.time()
    user  system elapsed 
-  0.188   0.053   0.761 
+  0.187   0.055   0.759 
