@@ -1,6 +1,6 @@
 % File src/library/utils/man/install.packages.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{install.packages}
@@ -178,9 +178,10 @@ install.packages(pkgs, lib, repos = getOption("repos"),
     Ignored when installing from local files.
   }
   \item{\dots}{
-    Arguments to be passed to \code{\link{download.file}} or to the
-    functions for binary installs on macOS and Windows (which accept
-    an argument \code{"lock"}: see the section on \sQuote{Locking}).
+    Arguments to be passed to \code{\link{download.file}},
+    \code{\link{available.packages}}, or to the functions for binary
+    installs on macOS and Windows (which accept an argument \code{"lock"}:
+    see the section on \sQuote{Locking}).
   }
 }
 \details{

@@ -55,6 +55,10 @@
 
       \item \code{rbind.data.frame()} no longer drops \code{<NA>} levels
       from factor columns by default, \PR{17562}.
+
+      \item \code{available.packages()} and hence \code{install.packages()}
+      now pass their \code{...} to \code{download.file()}, fulfilling the
+      wish of \PR{17532}.
     }
   }
 }
