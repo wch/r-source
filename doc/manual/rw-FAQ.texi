@@ -627,8 +627,8 @@ issues, but changes in user experiences.)
 Earlier versions of Windows had user and Administrator accounts, and
 user accounts could be give administrative privileges (by being added to
 the local Administrators group) and so write permission over system
-areas such as @file{c:\Program Files}.  R would be installed either by a
-user in his own file space or by an account with administrator
+areas such as @file{c:\Program Files}.  R would be installed either by
+users in their own file space or by an account with administrator
 privileges into a system area.  Sysadmins could set policies for user
 accounts, and you might for example have needed to be a `Power User' to
 install software at all.

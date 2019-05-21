@@ -3450,7 +3450,7 @@ distribution with the package sources.  By including the vignette
 outputs in the package sources it is not necessary that these can be
 re-built at install time, i.e., the package author can use private @R{}
 packages, screen snapshots and @LaTeX{} extensions which are only
-available on his machine.@footnote{provided the conditions of the
+available on their machine.@footnote{provided the conditions of the
 package's license are met: many, including @acronym{CRAN}, see the
 omission of source components as incompatible with an Open Source
 license.}
@@ -4538,7 +4538,7 @@ all @R{} platforms.
 Under no circumstances should your compiled code ever call @code{abort}
 or @code{exit}@footnote{or where supported the variants @code{_Exit} and
 @code{_exit}.}: these terminate the user's @R{} process, quite possibly
-including all his unsaved work.  One usage that could call @code{abort}
+losing all unsaved work.  One usage that could call @code{abort}
 is the @code{assert} macro in C or C++ functions, which should never be
 active in production code.  The normal way to ensure that is to define
 the macro @code{NDEBUG}, and @command{R CMD INSTALL} does so as part of
@@ -14212,7 +14212,7 @@ for example package @pkg{stats}.  Most compilers which allow control of
 visibility will allow control of visibility for all symbols @emph{via} a
 flag, and where known the flag is encapsulated in the macros
 @samp{C_VISIBILITY}, @samp{CXX_VISIBILITY}@footnote{As from @R{} 3.5.2:
-his applies to the compiler for the default C++ dialect (currently
+This applies to the compiler for the default C++ dialect (currently
 normally C++11) and not necessarily to other dialects.} and
 @samp{F_VISIBILITY} for C, C++ and Fortran
 compilers.@footnote{@samp{F77_VISIBILITY} was used prior to @R 3.6.0 and
