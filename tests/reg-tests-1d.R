@@ -2676,6 +2676,21 @@ stopifnot(exprs = {
 })
 
 
+## rbind.data.frame() should *not* drop NA level of factors -- PR#17562
+fcts <- function(N=8, k=3) addNA(factor(sample.int(k, N, replace=TRUE), levels=1:k))
+set.seed(7) # <- leads to some  "0 counts" [more interesting: they are kept]
+dfa <- data.frame(x=fcts())
+dfb <- data.frame(x=fcts()) ; rbind(table(dfa), table(dfb))
+dfy <- data.frame(y=fcts())
+stopifnot(exprs = {
+    identical(levels(dfa$x), c(1:3, NA_character_) -> full_lev)
+    identical(levels(dfb$x),             full_lev)
+    identical(levels(cbind(dfa, dfy)$x), full_lev) # cbind() does work
+    identical(levels(cbind(dfa, dfy)$y), full_lev)
+    identical(levels(rbind(dfa, dfb, factor.exclude=NULL)$x), full_lev)
+}) ##                                ^^^^^^^^^^^^^^^^^^^ future default
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

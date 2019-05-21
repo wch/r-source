@@ -12,7 +12,7 @@
       deprecated and gives a non-portability warning.
     }
   }
-      
+
   \subsection{BUG FIXES}{
     \itemize{
       \item On Windows, GUI package installation via \code{menuInstallPkgs()}
@@ -33,6 +33,9 @@
 
       \item \code{boxplot(y ~ f, horizontal=TRUE)} now produces correct x-
       and y-labels.
+
+      \item \code{rbind.data.frame()} allows to keep \code{<NA>} levels
+      from factor columns (\PR{17562}) via new option \code{factor.exclude}.
     }
   }
 }
