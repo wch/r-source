@@ -9,7 +9,7 @@
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item The use of a character vector with \code{.Fortran()} is
-      depreacated and gives a non-portability warning.
+      deprecated and gives a non-portability warning.
     }
   }
       
