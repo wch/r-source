@@ -1078,13 +1078,13 @@ else
 
   if test "x${r_cv_have_gfortran8}" = xyes; then
     fc_len_t="size_t"
-  elif "x${GFC}" = xyes; then
-    fc_len_t ="int"
+  elif test "x${GFC}" = xyes; then
+    fc_len_t="int"
   fi
 fi
 AC_MSG_RESULT([${fc_len_t}])
 
-if test "x${fc_len_t}" != "unknown"; then
+if test "x${fc_len_t}" != "xunknown"; then
    AC_DEFINE_UNQUOTED([FC_LEN_T], ${fc_len_t}, 
                       [C type used for Fortran character lengths])
 fi
