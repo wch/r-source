@@ -1017,7 +1017,12 @@ void attribute_hidden PrintValueEnv(SEXP s, SEXP env)
 
     R_PrintData data;
     PrintInit(&data, env);
-    PrintDispatch(s, &data);
+    if (isFunction(s))
+	/* printed via print() -> print.function() in order to allow user-defined
+	   print.function() methods to also work in auto-printing: */
+        PrintObject(s, &data);
+    else
+        PrintDispatch(s, &data);
 
     UNPROTECT(1);
 }

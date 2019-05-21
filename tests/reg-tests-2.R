@@ -2346,7 +2346,13 @@ foo
                 yada = function() "not the same"))
 print(f, useSource = TRUE)
 print(f, useSource = FALSE) # must print attributes
-## auto-printing and printing differed up to R 2.9.x
+print.function <- function(x, ...) {
+    cat("my print(<function>): "); str(x, give.attr=FALSE); invisible(x) }
+print.function
+print(print.function)
+rm(print.function)
+## auto-printing and printing differed up to R 2.9.x -- and then *AGAIN* in R 3.6.0
+
 
 ## Make sure deparsing does not reset parameters
 print(list(f, expression(foo), f, quote(foo), f, base::list, f),
