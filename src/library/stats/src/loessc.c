@@ -24,6 +24,11 @@
  *  Changes to the C/Fortran interface to support LTO in May 2019.
  */
 
+#ifdef HAVE_CONFIG_H
+// for FC_LEN_T
+#include <config.h>
+#endif
+
 #include <string.h>
 #include <stdio.h>
 #include <math.h>

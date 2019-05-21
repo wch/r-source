@@ -27153,6 +27153,8 @@ fi
 ## -fno-optimize-sibling-calls to avoid recent gfortran optimizations
 ## that break with LAPACK/BLAS-style passing of length-1 strings
 ## (without hidden arguments giving their lengths).
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking if need -fno-optimize-sibling-calls for gfortran" >&5
+$as_echo_n "checking if need -fno-optimize-sibling-calls for gfortran... " >&6; }
 if ${r_cv_have_gfortran7+:} false; then :
   $as_echo_n "(cached) " >&6
 else
@@ -27167,8 +27169,53 @@ fi
 
 
 if test "x${r_cv_have_gfortran7}" = xyes; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
   R_XTRA_FFLAGS="-fno-optimize-sibling-calls"
+else
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
 fi
+
+### type for Fortran 'hidden' character lengths. We have already
+### tested for gfortran >= 7
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for type of 'hidden' Fortran character lengths" >&5
+$as_echo_n "checking for type of 'hidden' Fortran character lengths... " >&6; }
+if test "x${FC_LEN_T}" != "x"; then
+  fc_len_t=${FC_LEN_T}
+else
+  fc_len_t="unknown"
+  if ${r_cv_have_gfortran8+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  r_cv_have_gfortran8=no
+  if test "x${GFC}" = xyes; then
+    gfortran_version_maj=`echo "__GNUC__" | ${FC} -E -P - | ${SED} 's/ //g'`
+    if test ${gfortran_version_maj} -ge 8; then
+      r_cv_have_gfortran8=yes
+    fi
+  fi
+fi
+
+
+  if test "x${r_cv_have_gfortran8}" = xyes; then
+    fc_len_t="size_t"
+  elif "x${GFC}" = xyes; then
+    fc_len_t ="int"
+  fi
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: ${fc_len_t}" >&5
+$as_echo "${fc_len_t}" >&6; }
+
+if test "x${fc_len_t}" != "unknown"; then
+
+cat >>confdefs.h <<_ACEOF
+#define FC_LEN_T ${fc_len_t}
+_ACEOF
+
+fi
+
 
 
 
