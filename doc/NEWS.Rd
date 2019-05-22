@@ -37,6 +37,9 @@
 
       \item \code{rbind.data.frame()} allows to keep \code{<NA>} levels
       from factor columns (\PR{17562}) via new option \code{factor.exclude}.
+
+      \item Correct messaging in C++ pragma checks in \pkg{tools} code for
+      \command{R CMD check}, fixing \PR{17566} thanks to Xavier Robin.
     }
   }
 }

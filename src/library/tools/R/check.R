@@ -3175,42 +3175,43 @@ add_dummies <- function(dir, Log)
             checkingLog(Log, "pragmas in C/C++ headers and code")
             ans <- .check_pragmas('.')
             if(length(ans)) {
-                if(length(warn <- attr(ans, "warn"))  ||
-                   length(port <- attr(ans, "port")))
-                    {
-                        warningLog(Log)
-                        msg <- character()
-                        rest <- ans
-                        if(length(warn)) {
-                            msg <- c(msg, if(length(warn) == 1L)
-                                "File which contains pragma(s) suppressing important diagnostics"
-                            else
-                                "Files which contain pragma(s) suppressing important diagnostics",
-                            .pretty_format(warn))
-                            rest <- setdiff(ans, warn)
-                        }
-                        if(length(port)) {
-                            msg <- c(msg, if(length(port) == 1L)
-                                "File which contains non-portable pragma(s)"
-                            else
-                                "Files which contain non-portable pragma(s)",
-                           .pretty_format(port))
-                        }
-                        if(length(rest)) {
-                            msg <- c(msg, if(length(rest) == 1L)
-                                     "File which contains pragma(s) suppressing diagnostics:"
-                            else
-                                     "Files which contain pragma(s) suppressing diagnostics:",
-                           .pretty_format(rest))
-                        }
-                   } else {
-                        noteLog(Log)
-                        msg <- if(length(ans) == 1L)
-                            "File which contains pragma(s) suppressing diagnostics:"
-                        else
-                            "Files which contain pragma(s) suppressing diagnostics:"
-                        msg <- c(msg, .pretty_format(ans))
+                warn <- attr(ans, "warn")
+                port <- attr(ans, "port")
+                if(length(warn) || length(port))
+                {
+                    warningLog(Log)
+                    msg <- character()
+                    rest <- ans
+                    if(length(warn)) {
+                        msg <- c(msg, if(length(warn) == 1L)
+                                          "File which contains pragma(s) suppressing important diagnostics"
+                                      else
+                                          "Files which contain pragma(s) suppressing important diagnostics",
+                                 .pretty_format(warn))
+                        rest <- setdiff(ans, warn)
                     }
+                    if(length(port)) {
+                        msg <- c(msg, if(length(port) == 1L)
+                                          "File which contains non-portable pragma(s)"
+                                      else
+                                          "Files which contain non-portable pragma(s)",
+                                 .pretty_format(port))
+                    }
+                    if(length(rest)) {
+                        msg <- c(msg, if(length(rest) == 1L)
+                                          "File which contains pragma(s) suppressing diagnostics:"
+                                      else
+                                          "Files which contain pragma(s) suppressing diagnostics:",
+                                 .pretty_format(rest))
+                    }
+                } else {
+                    noteLog(Log)
+                    msg <- if(length(ans) == 1L)
+                               "File which contains pragma(s) suppressing diagnostics:"
+                           else
+                               "Files which contain pragma(s) suppressing diagnostics:"
+                    msg <- c(msg, .pretty_format(ans))
+                }
                 printLog0(Log, paste(c(msg,""), collapse = "\n"))
             } else resultLog(Log, "OK")
         }
@@ -3218,9 +3219,9 @@ add_dummies <- function(dir, Log)
         Check_flags <- Sys.getenv("_R_CHECK_COMPILATION_FLAGS_", "FALSE")
         if(config_val_to_logical(Check_flags)) {
             instlog <- if (startsWith(install, "check"))
-                install_log_path
-            else
-                file.path(pkgoutdir, "00install.out")
+                           install_log_path
+                       else
+                           file.path(pkgoutdir, "00install.out")
             if (file.exists(instlog) && dir.exists('src')) {
                 checkingLog(Log, "compilation flags used")
                 lines <- readLines(instlog, warn = FALSE)
@@ -3384,7 +3385,8 @@ add_dummies <- function(dir, Log)
         } else resultLog(Log, "OK")
 
         checkingLog(Log, "whether the package can be unloaded cleanly")
-        Rcmd <- sprintf("suppressMessages(library(%s)); cat('\n---- unloading\n'); detach(\"package:%s\")", pkgname, pkgname)
+        Rcmd <- sprintf("suppressMessages(library(%s)); cat('\n---- unloading\n'); detach(\"package:%s\")",
+                        pkgname, pkgname)
         out <- R_runR0(Rcmd, opts, c(env, env1), arch = arch)
         if (any(grepl("^(Error|\\.Last\\.lib failed)", out)) ||
             length(attr(out, "status"))) {
