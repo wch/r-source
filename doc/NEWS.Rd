@@ -43,6 +43,14 @@
     }
   }
 
+  \subsection{INSTALLATION on a UNIX-ALIKE}{
+    \itemize{
+      \item Detection of the C stack direction has been moved from
+      run-time to \command{configure}: this is safer with LTO builds and
+      allows the detection to be overridden -- see file \file{config.site}.
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{formula(x)} with \code{length(x) > 1} character vectors,
