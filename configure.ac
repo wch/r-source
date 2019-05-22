@@ -1239,7 +1239,7 @@ if test "${ac_cv_fc_compiler_gnu}" = yes; then
 fi
 ## Assume flang is the same as clang (it is a modified front end)
 case "${FC}" in
-  *flang)
+  *flang|flang-*)
     fpicflags=${cpicflags}
     ;;
 esac
