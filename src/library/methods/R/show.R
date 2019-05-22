@@ -1,7 +1,7 @@
 #  File src/library/methods/R/show.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -19,54 +19,27 @@
 showDefault <- function(object, oldMethods = TRUE)
 {
     clDef <- getClass(cl <- class(object), .Force=TRUE)
-    cl <- classLabel(cl)
+    if(!missing(oldMethods))
+        .Deprecated(msg =
+	"the 'oldMethods' argument is deprecated, as it has been unused since R 1.7.0")
     if(!is.null(clDef) && isS4(object) && is.na(match(clDef@className, .BasicClasses)) ) {
-        cat("An object of class ", cl, "\n", sep="")
+        cat("An object of class ", classLabel(cl), "\n", sep="")
         slots <- slotNames(clDef)
         dataSlot <- .dataSlot(slots)
-        if(length(dataSlot) > 0) {
-            dataPart <- slot(object, dataSlot)
-            show(dataPart)
+        if(length(dataSlot) > 0) { # show data part and remove it from slots :
+            show(slot(object, dataSlot))
             slots <- slots[is.na(match(slots, dataSlot))]
         }
         else if(length(slots) == 0L)
             show(unclass(object))
         for(what in slots) {
-            if(identical(what, ".Data"))
+            if(what == ".Data")
                 next ## should have been done above
 	    cat("Slot ", deparse(what), ":\n", sep="")
             print(slot(object, what))
             cat("\n")
         }
     }
-##     else if(isS4(object) && isClass(clDef) && extends(clDef, "oldClass") &&
-##             length(slotNames(clDef)) > 0) {
-##         ## print the old-style object
-##         cat("An object of class ", cl, "\n", sep="")
-##         slots <- slotNames(clDef)
-##         i <- match(".S3Class", slots)
-##         if(is.na(i)) { } # but should not happen with new objects
-##         else {
-##             S3Class <- classLabel(object@.S3Class)
-##             slots <- slots[! slots %in% names(slotsFromS3(object))]
-##             if(!identical(cl, S3Class)) {
-##                 if(length(S3Class) > 1)
-##                   cat("  (S3 class: c(", paste0('"', S3Class, '"', collapse = ", "), "))\n", sep="")
-##                 else
-##                   cat("  (S3 class: \"",S3Class, "\")\n", sep = "")
-##             }
-##         }
-##         for( cl2 in rev(extends(clDef)))
-##             if(!.identC(cl2, "oldClass") && extends(cl2, "oldClass")) {
-##                 print(as(object, cl2), useS4 = FALSE) # see comment NBB below
-##                 break
-##             }
-##         for(what in slots) {
-##             cat("Slot \"",what, "\":\n", sep="")
-##             print(slot(object, what))
-##             cat("\n")
-##         }
-##     }
     else
         ## NBB:  This relies on the delicate fact
         ## that print will NOT recursively call show if it gets more than one argument!
@@ -92,8 +65,7 @@ showExtraSlots <- function(object, ignore) {
 
 ## temporary definition of show, to become the default method
 ## when .InitShowMethods is called
-show <- function(object)
-    showDefault(object, FALSE)
+show <- function(object) showDefault(object)
 
 .InitShowMethods <- function(envir) {
     if(!isGeneric("show", envir))

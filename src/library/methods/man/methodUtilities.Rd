@@ -1,6 +1,6 @@
 % File src/library/methods/man/methodUtilities.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2009 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{methodUtilities}
@@ -80,11 +80,8 @@ methodSignatureMatrix(object, sigSlots = c("target", "defined"))
       Utility, used to enable \code{show} methods to be called by the
       automatic printing (via \code{print.default}).
 
-      Argument \code{oldMethods} controls whether old-style print
-      methods are used for this object.  It is \code{TRUE} by default
-      if called directly, but \code{FALSE} when called from the
-      \pkg{methods} package for automatic printing (to avoid potential
-      recursion).
+      Argument \code{oldMethods} is deprecated as it has been unused since
+      \R >= 1.7.0.
     }
     \item{\code{initMethodDispatch}:}{
       Turn on the internal method dispatch code.  Called on loading
