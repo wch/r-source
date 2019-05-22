@@ -4159,8 +4159,6 @@ add_dummies <- function(dir, Log)
             if(!skip_run_maybe || any(file.exists(savefiles))) {
                 checkingLog(Log, "running R code from vignettes")
                 res <- character()
-                def_enc <- desc["Encoding"]
-                if( (is.na(def_enc))) def_enc <- ""
                 t1 <- proc.time()
                 iseq <- seq_along(savefiles)
                 if(skip_run_maybe)
@@ -4173,7 +4171,7 @@ add_dummies <- function(dir, Log)
                     name <- vigns$names[i]
                     enc <- vigns$encodings[i]
                     out1 <- c("  ", sQuote(basename(file)),
-                              if(nzchar(enc)) paste("using", sQuote(enc)),
+                              if(nzchar(enc)) paste(" using", sQuote(enc)),
                               "...")
                     Rcmd <- paste0(opWarn_string, "\ntools:::.run_one_vignette('",
                                    basename(file), "', '", vigns$dir, "'",
