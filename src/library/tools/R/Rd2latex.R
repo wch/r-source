@@ -576,7 +576,7 @@ Rd2latex <- function(Rd, out = "", defines = .Platform$OS.type,
             writeAlias(section, tag)
         else if (tag == "\\keyword") {
             key <- trim(section)
-            if(key %in% .Rd_keywords_auto)
+            if(any(key %in% .Rd_keywords_auto))
                 return()
             of0("\\keyword{", latex_escape_name(key), "}{", ltxname, "}\n")
         }
