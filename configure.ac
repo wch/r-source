@@ -886,6 +886,19 @@ AC_CHECK_SIZEOF(long)
 AC_CHECK_SIZEOF(long long)
 AC_CHECK_SIZEOF(double)
 AC_CHECK_SIZEOF(size_t)
+
+R_CSTACK_DIRECTION
+
+if test "${r_cv_cstack_direction}" = "up"; then
+  cstack_dir=-1
+else
+  cstack_dir=1
+fi
+AC_DEFINE_UNQUOTED([C_STACK_DIRECTION], ${cstack_dir}, 
+                    [C stack direction: 1 (down) or -1 (up)])
+
+
+
 AC_ARG_ENABLE([long-double],
 [AS_HELP_STRING([--enable-long-double],[use long double type @<:@yes@:>@])],
 [if test "${enableval}" = no; then

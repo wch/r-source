@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2018  The R Core Team
+ *  Copyright (C) 1997--2019  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -195,12 +195,8 @@ int Rf_initialize_R(int ac, char **av)
     */
     struct rlimit rlim;
 
-    {
-	uintptr_t ii = dummy_ii();
-	/* 1 is downwards */
-
-	R_CStackDir = ((uintptr_t)&i > ii) ? 1 : -1;
-    }
+    R_CStackDir = C_STACK_DIRECTION;
+    
 
     if(getrlimit(RLIMIT_STACK, &rlim) == 0) {
 	/* 'unlimited' is represented by RLIM_INFINITY, which is a

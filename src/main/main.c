@@ -1686,34 +1686,20 @@ R_addTaskCallback(SEXP f, SEXP data, SEXP useData, SEXP name)
 
 #ifndef Win32
 /* this is here solely to pull in xxxpr.o */
-#include <R_ext/RS.h>
-#if defined FC_LEN_T
+# include <R_ext/RS.h>
+# if defined FC_LEN_T
 void F77_SYMBOL(rwarnc)(char *msg, int *nchar, FC_LEN_T msg_len);
 void attribute_hidden dummy54321(void)
 {
     int nc = 5;
     F77_CALL(rwarnc)("dummy", &nc, (FC_LEN_T) 5);
 }
-#else
+# else
 void F77_SYMBOL(rwarnc)(char *msg, int *nchar);
 void attribute_hidden dummy54321(void)
 {
     int nc = 5;
     F77_CALL(rwarnc)("dummy", &nc);
 }
-#endif
-
-
-/* Used in unix/system.c, avoid inlining by using an extern there. */
-uintptr_t dummy_ii(void)
-{
-    int ii;
-
-    /* This is intended to return a local address. We could just return
-       (uintptr_t) &ii, but doing it indirectly through ii_addr avoids
-       a compiler warning (-Wno-return-local-addr would do as well).
-    */
-    volatile uintptr_t ii_addr = (uintptr_t) &ii;
-    return ii_addr;
-}
+# endif
 #endif

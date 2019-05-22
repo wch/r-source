@@ -24618,6 +24618,82 @@ cat >>confdefs.h <<_ACEOF
 _ACEOF
 
 
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for C stack direction" >&5
+$as_echo_n "checking for C stack direction... " >&6; }
+if ${r_cv_cstack_direction+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  cat > conftest1.c <<EOF
+#include <stdint.h>
+uintptr_t dummy_ii(void)
+{
+    int ii;
+
+    /* This is intended to return a local address. We could just return
+       (uintptr_t) &ii, but doing it indirectly through ii_addr avoids
+       a compiler warning (-Wno-return-local-addr would do as well).
+    */
+    volatile uintptr_t ii_addr = (uintptr_t) &ii;
+    return ii_addr;
+}
+EOF
+cat > conftest.c <<EOF
+#include <stdio.h>
+#include <stdint.h>
+extern uintptr_t dummy_ii(void);
+
+int main(int ac, char **av)
+{
+    int i;
+    uintptr_t ii = dummy_ii();
+    /* 1 is downwards */
+    return ((uintptr_t)&i > ii) ? 1 : -1;
+}
+EOF
+if test "x${R_C_STACK_DIRECTION}" != "x"; then
+ r_cv_cstack_direction=${R_C_STACK_DIRECTION}
+else
+if ${CC} ${CFLAGS} ${LDFLAGS} ${MAIN_LDFLAGS} -o conftest${ac_exeext} \
+      conftest.c conftest1.c \
+      1>&5 2>&5;
+  then
+    ## redirect error messages to config.log
+    output=`./conftest${ac_exeext} 2>&5`
+    if test ${?} = 1; then
+      r_cv_cstack_direction=down
+    elif test ${?} = 1; then
+      r_cv_cstack_direction=up
+    fi
+fi
+fi
+
+fi
+
+rm -Rf conftest conftest?.* core
+if test -n "${r_cv_cstack_direction}"; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: ${r_cv_cstack_direction}" >&5
+$as_echo "${r_cv_cstack_direction}" >&6; }
+else
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: don't know (assume down)" >&5
+$as_echo "don't know (assume down)" >&6; }
+  r_cv_cstack_direction=down
+fi
+
+
+if test "${r_cv_cstack_direction}" = "up"; then
+  cstack_dir=-1
+else
+  cstack_dir=1
+fi
+
+cat >>confdefs.h <<_ACEOF
+#define C_STACK_DIRECTION ${cstack_dir}
+_ACEOF
+
+
+
+
 # Check whether --enable-long-double was given.
 if test "${enable_long_double+set}" = set; then :
   enableval=$enable_long_double; if test "${enableval}" = no; then
@@ -25247,7 +25323,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:25250: \"$ac_link\") >&5
+(eval echo $as_me:25326: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -25322,7 +25398,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:25325: \"$ac_link\") >&5
+(eval echo $as_me:25401: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
