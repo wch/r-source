@@ -48,13 +48,16 @@ static void R_wfixslash(wchar_t *s);
 
 extern "C" {
 #endif
+
 #if defined FC_LEN_T
+# include <stddef.h>
 void F77_SYMBOL(rwarnc)(char *msg, int *nchar, FC_LEN_T msg_len);
 void NORET F77_SYMBOL(rexitc)(char *msg, int *nchar, FC_LEN_T msg_len);
 #else
 void F77_SYMBOL(rwarnc)(char *msg, int *nchar);
 void NORET F77_SYMBOL(rexitc)(char *msg, int *nchar);
 #endif
+
 #ifdef __cplusplus
 }
 #endif
