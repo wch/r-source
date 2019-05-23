@@ -21,7 +21,7 @@
 cbind(\dots, deparse.level = 1)
 rbind(\dots, deparse.level = 1)
 \method{rbind}{data.frame}(\dots, deparse.level = 1, make.row.names = TRUE,
-      stringsAsFactors = default.stringsAsFactors(), factor.exclude = NULL)
+      stringsAsFactors = default.stringsAsFactors(), factor.exclude = TRUE)
 }
 \arguments{
   \item{\dots}{(generalized) vectors or matrices.  These can be given as named
@@ -41,12 +41,11 @@ rbind(\dots, deparse.level = 1)
   \item{stringsAsFactors}{logical, passed to \code{\link{as.data.frame}};
     only has an effect when the \code{\dots} arguments contain a
     (non-\code{data.frame}) \code{\link{character}}.}
-  \item{factor.exclude}{if the data frames contain factors,
-    \code{\link{factor}(., exclude = factor.exclude)} is applied.  The
-    default \code{NULL} ensures that \code{NA} levels of factors are kept,
-    see \PR{17562}.  In \R versions up to 3.6.x, \code{factor.exclude = NA}
-    has been implicitly hardcoded (\R <= 3.6.0) or the default (\R = 3.6.x,
-    x >= 1).}
+  \item{factor.exclude}{if the data frames contain factors, the default
+    \code{TRUE} ensures that \code{NA} levels of factors are kept, see
+    \PR{17562} and the \sQuote{Data frame methods}.  In \R versions up
+    to 3.6.x, \code{factor.exclude = NA} has been implicitly hardcoded
+    (\R <= 3.6.0) or the default (\R = 3.6.x, x >= 1).}
 }
 \details{
   The functions \code{cbind} and \code{rbind} are S3 generic, with
@@ -109,6 +108,14 @@ rbind(\dots, deparse.level = 1)
   the result is an ordered factor if and only if all the components were
   ordered factors.  (The last point differs from S-PLUS.)  Old-style
   categories (integer vectors with levels) are promoted to factors.
+
+  Note that for result column \code{j}, \code{\link{factor}(., exclude = X(j))}
+  is applied, where \preformatted{  X(j) := if(isTRUE(factor.exclude)) {
+             if(!NA.lev[j]) NA # else NULL
+          } else factor.exclude}
+
+  where \code{NA.lev[j]} is true iff any contributing data frame has had a
+  \code{\link{factor}} in column \code{j} with an explicit \code{NA} level.
 }
 \value{
   For the default method, a matrix combining the \code{\dots} arguments
