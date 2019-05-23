@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2012-2016  The R Core Team
+ *  Copyright (C) 2012-2019  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -93,7 +93,7 @@ rWishart(SEXP ns, SEXP nuP, SEXP scal)
 
     Memcpy(scCp, REAL(scal), psqr);
     memset(tmp, 0, psqr * sizeof(double));
-    F77_CALL(dpotrf)("U", &(dims[0]), scCp, &(dims[0]), &info);
+    F77_CALL(dpotrf)("U", &(dims[0]), scCp, &(dims[0]), &info FCONE); // LAPACK
     if (info)
 	error(_("'scal' matrix is not positive-definite"));
     ansp = REAL(ans);
@@ -102,10 +102,11 @@ rWishart(SEXP ns, SEXP nuP, SEXP scal)
 	double *ansj = ansp + j * psqr;
 	std_rWishart_factor(nu, dims[0], 1, tmp);
 	F77_CALL(dtrmm)("R", "U", "N", "N", dims, dims,
-			&one, scCp, dims, tmp, dims);
+			&one, scCp, dims, tmp, dims
+			FCONE FCONE FCONE FCONE); // BLAS
 	F77_CALL(dsyrk)("U", "T", &(dims[1]), &(dims[1]),
 			&one, tmp, &(dims[1]),
-			&zero, ansj, &(dims[1]));
+			&zero, ansj, &(dims[1]) FCONE FCONE); // BLAS
 
 	for (int i = 1; i < dims[0]; i++)
 	    for (int k = 0; k < i; k++)

@@ -1135,25 +1135,29 @@ void F77_NAME(realp0) (const char *label, int *nchar, float *data, int *ndata)
 
 /* Fortran-callable error routine for lapack */
 
-// Never defined as yet: maybe when FC_LEN_T is set and neither --with-blas
+// Not defined as yet: maybe when FC_LEN_T is set and neither --with-blas
 // nor --with-lapack.
-#ifdef USE_FC_LEN_FOR_BLAS
+#ifdef USE_FC_LEN_T
 void NORET F77_NAME(xerbla)(const char *srname, int *info, 
 			    const FC_LEN_T srname_len)
 #else
 void NORET F77_NAME(xerbla)(const char *srname, int *info)
 #endif
 {
-   /* srname is not null-terminated.  It will be 6 characters for 
-      mainstream BLAS/LAPACK routines (but 4 or 5 for some, 
-      and > 6 for a few from LAPACK). */
-    char buf[7];
-#ifdef USE_FC_LEN_FOR_BLAS
-    // precaution for incorrectly passed length type
-    int len = (srname_len > 6) ? (int)srname_len : 6;
+   /* srname is not null-terminated.  It will be 6 characters for
+      mainstream BLAS/LAPACK routines (for those with < 6 the name
+      is right space-padded), and > 6 for recentish additions from
+      LAPACK, 7 for a few used with R ). */
+#ifdef USE_FC_LEN_T
+    char buf[21];
+    // Precaution for incorrectly passed length type
+    int len = (srname_len > 20) ? (int)srname_len : 20;
     strncpy(buf, srname, len);
     buf[len] = '\0';
 #else
+    // This version will truncate to 6 chars and left space-pads
+    // for fewer than 6 (at least with gfortran and Solaris).
+    char buf[7];
     strncpy(buf, srname, 6);
     buf[6] = '\0';
 #endif
