@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999--2018  The R Core Team
+ *  Copyright (C) 1999--2019  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -513,8 +513,8 @@ int Rstrlen(SEXP s, int quote)
    If 'quote' is non-zero the result should be quoted (and internal quotes
    escaped and NA strings handled differently).
 
-   EncodeString is called from EncodeElement, cat() (for labels when
-   filling), to (auto)print character vectors, arrays, names and
+   EncodeString is called from EncodeElement, EncodeChar, cat() (for labels
+   when filling), to (auto)print character vectors, arrays, names and
    CHARSXPs.  It is also called by do_encodeString, but not from
    format().
  */
