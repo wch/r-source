@@ -1117,9 +1117,10 @@ void F77_NAME(realp0) (const char *label, int *nchar, float *data, int *ndata)
 
 void NORET F77_NAME(xerbla)(const char *srname, int *info)
 {
-   /* srname is not null-terminated.  It will be 6 characters for 
-      mainstream BLAS/LAPACK routines (but 4 or 5 for some, 
-      and > 6 for a few from LAPACK). */
+    /* srname is not null-terminated.  It will be 6 characters for
+      mainstream BLAS/LAPACK routines (for those with < 6 the name
+      is right space-padded), and > 6 for recentish additions from
+      LAPACK, 7 for a few used with R ). */
     char buf[7];
     strncpy(buf, srname, 6);
     buf[6] = '\0';
