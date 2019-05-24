@@ -359,7 +359,7 @@
 
 ## Fortran-C compatibility
 ## The C type used by Fortran to pass 'hidden' character lengths (if any)
-## Often int or size_t (long int on 64-bit systems).
+## Often size_t (unsigned int or long, or long long in Win64)
 ## Allow user to override the configure checks if they know what they
 ## are doing (the value is unchecked).
 ## FC_LEN_T=

@@ -3948,7 +3948,7 @@ elif  test "x${want_lto}" = xcheck; then
   ## use for maintainer checking.
   LTO=-flto
   LTOALL=-flto
-else
+elif  test "x${want_lto}" != xno; then
   { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: Unknown value --enable-lto=${enableval}" >&5
 $as_echo "$as_me: WARNING: Unknown value --enable-lto=${enableval}" >&2;}
 fi
@@ -27273,33 +27273,70 @@ else
 $as_echo "no" >&6; }
 fi
 
-### type for Fortran 'hidden' character lengths. We have already
-### tested for gfortran >= 7
-
+### type for Fortran 'hidden' character lengths, if any
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for type of 'hidden' Fortran character lengths" >&5
 $as_echo_n "checking for type of 'hidden' Fortran character lengths... " >&6; }
 if test "x${FC_LEN_T}" != "x"; then
   fc_len_t=${FC_LEN_T}
 else
-  fc_len_t="unknown"
-  if ${r_cv_have_gfortran8+:} false; then :
+  if ${r_cv_prog_fc_char_len_t+:} false; then :
   $as_echo_n "(cached) " >&6
 else
-  r_cv_have_gfortran8=no
-  if test "x${GFC}" = xyes; then
-    gfortran_version_maj=`echo "__GNUC__" | ${FC} -E -P - | ${SED} 's/ //g'`
-    if test ${gfortran_version_maj} -ge 8; then
-      r_cv_have_gfortran8=yes
+  cat > conftestf.f <<EOF
+      subroutine testit()
+      external xerbla
+      call xerbla('abcde', -10)
+      end
+EOF
+${FC} ${FFLAGS} -c conftestf.f 1>&5 2>&5
+cat > conftest.c <<EOF
+/* A C function calling a Fortran subroutine which calls xerble
+   written in C, emulating how R calls BLAS/LAPACK routines */
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include "confdefs.h"
+#ifdef HAVE_F77_UNDERSCORE
+# define F77_SYMBOL(x)   x ## _
+#else
+# define F77_SYMBOL(x)   x
+#endif
+
+extern void F77_SYMBOL(testit)();
+
+void F77_SYMBOL(xerbla)(const char *srname, int *info,
+			const size_t srname_len)
+{
+    printf ("char len %lu\n",  srname_len);
+    if (srname_len != 5) exit(-1);
+    if (strncmp(srname, "abcde", 5)) exit(-2);
+    if (*info != -10) exit(-3);
+}
+
+int main()
+{
+    F77_SYMBOL(testit)();
+    return 0;
+}
+EOF
+if ${CC} ${CFLAGS} -c conftest.c 1>&5 2>&5; then
+  if ${CC} ${CFLAGS} ${LDFLAGS} ${MAIN_LDFLAGS} -o conftest${ac_exeext} \
+       conftest.${ac_objext} conftestf.${ac_objext} ${FLIBS} \
+       1>&5 2>&5;
+  then
+    ## redirect error messages to config.log
+    output=`./conftest${ac_exeext} 2>&5`
+    if test ${?} = 0; then
+      r_cv_prog_fc_char_len_t=size_t
     fi
   fi
 fi
 
+fi
 
-  if test "x${r_cv_have_gfortran8}" = xyes; then
-    fc_len_t="size_t"
-  elif test "x${GFC}" = xyes; then
-    fc_len_t="int"
-  fi
+rm -Rf conftest conftest.* conftestf.* core
+
+  fc_len_t=${r_cv_prog_fc_char_len_t}
 fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: ${fc_len_t}" >&5
 $as_echo "${fc_len_t}" >&6; }

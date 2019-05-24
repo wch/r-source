@@ -338,7 +338,7 @@ elif  test "x${want_lto}" = xcheck; then
   ## use for maintainer checking.
   LTO=-flto
   LTOALL=-flto
-else
+elif  test "x${want_lto}" != xno; then
   AC_MSG_WARN([Unknown value --enable-lto=${enableval}])
 fi
 AC_SUBST(LTO)
@@ -1082,28 +1082,13 @@ else
   AC_MSG_RESULT([no])
 fi
 
-### type for Fortran 'hidden' character lengths. We have already
-### tested for gfortran >= 7
-
+### type for Fortran 'hidden' character lengths, if any
 AC_MSG_CHECKING([for type of 'hidden' Fortran character lengths])
 if test "x${FC_LEN_T}" != "x"; then
   fc_len_t=${FC_LEN_T}
 else
-  fc_len_t="unknown"
-  AC_CACHE_VAL([r_cv_have_gfortran8],
-  [r_cv_have_gfortran8=no
-  if test "x${GFC}" = xyes; then
-    gfortran_version_maj=`echo "__GNUC__" | ${FC} -E -P - | ${SED} 's/ //g'`
-    if test ${gfortran_version_maj} -ge 8; then
-      r_cv_have_gfortran8=yes
-    fi
-  fi])
-
-  if test "x${r_cv_have_gfortran8}" = xyes; then
-    fc_len_t="size_t"
-  elif test "x${GFC}" = xyes; then
-    fc_len_t="int"
-  fi
+  R_PROG_FC_CHAR_LEN_T
+  fc_len_t=${r_cv_prog_fc_char_len_t}
 fi
 AC_MSG_RESULT([${fc_len_t}])
 

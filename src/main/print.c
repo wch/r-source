@@ -1135,9 +1135,7 @@ void F77_NAME(realp0) (const char *label, int *nchar, float *data, int *ndata)
 
 /* Fortran-callable error routine for lapack */
 
-// Not defined as yet: maybe when FC_LEN_T is set and neither --with-blas
-// nor --with-lapack.
-#ifdef USE_FC_LEN_T
+#ifdef FC_LEN_T
 void NORET F77_NAME(xerbla)(const char *srname, int *info, 
 			    const FC_LEN_T srname_len)
 #else
