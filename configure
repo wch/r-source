@@ -947,6 +947,8 @@ BYTE_COMPILE_PACKAGES_FALSE
 BYTE_COMPILE_PACKAGES_TRUE
 WANT_JAVA_FALSE
 WANT_JAVA_TRUE
+BUILD_LTO_CHECK_FALSE
+BUILD_LTO_CHECK_TRUE
 BUILD_LTO_FALSE
 BUILD_LTO_TRUE
 LTOALL
@@ -3934,21 +3936,39 @@ else
   want_lto=no
 fi
 
-## FIXME: add a test for gcc >= 4.5.0
-if test "x${want_lto}" != xno; then
-  LTO=-flto
-fi
+## TODO: add a test for gcc >= 4.5.0 and/or clang/flang
 if test "x${want_lto}" = xyes; then
+  ## used in Makeconf
+  LTO=-flto
+  ## used in etc/Makeconf
   LTOALL=-flto
+elif  test "x${want_lto}" = xR; then
+  LTO=-flto
+elif  test "x${want_lto}" = xcheck; then
+  ## use for maintainer checking.
+  LTO=-flto
+  LTOALL=-flto
+else
+  { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: Unknown value --enable-lto=${enableval}" >&5
+$as_echo "$as_me: WARNING: Unknown value --enable-lto=${enableval}" >&2;}
 fi
 
 
+## used in src/main/Makefile
  if test "x${want_lto}" != xno; then
   BUILD_LTO_TRUE=
   BUILD_LTO_FALSE='#'
 else
   BUILD_LTO_TRUE='#'
   BUILD_LTO_FALSE=
+fi
+
+ if test "x${want_lto}" = xcheck; then
+  BUILD_LTO_CHECK_TRUE=
+  BUILD_LTO_CHECK_FALSE='#'
+else
+  BUILD_LTO_CHECK_TRUE='#'
+  BUILD_LTO_CHECK_FALSE=
 fi
 
 
@@ -24651,7 +24671,6 @@ int main(int ac, char **av)
     return ((uintptr_t)&i > ii) ? 1 : -1;
 }
 EOF
-## Allow this to be overruled in config.site
 if test "x${R_C_STACK_DIRECTION}" != "x"; then
  r_cv_cstack_direction=${R_C_STACK_DIRECTION}
 else
@@ -25324,7 +25343,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:25327: \"$ac_link\") >&5
+(eval echo $as_me:25346: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -25399,7 +25418,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:25402: \"$ac_link\") >&5
+(eval echo $as_me:25421: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -49301,6 +49320,10 @@ Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${BUILD_LTO_TRUE}" && test -z "${BUILD_LTO_FALSE}"; then
   as_fn_error $? "conditional \"BUILD_LTO\" was never defined.
+Usually this means the macro was only invoked conditionally." "$LINENO" 5
+fi
+if test -z "${BUILD_LTO_CHECK_TRUE}" && test -z "${BUILD_LTO_CHECK_FALSE}"; then
+  as_fn_error $? "conditional \"BUILD_LTO_CHECK\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${WANT_JAVA_TRUE}" && test -z "${WANT_JAVA_FALSE}"; then

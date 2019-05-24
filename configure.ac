@@ -326,16 +326,26 @@ AM_CONDITIONAL(BUILD_HTML, [test "x${want_prebuilt_html}" = xyes])
 AC_ARG_ENABLE([lto],
 [AS_HELP_STRING([--enable-lto],[enable link-time optimization @<:@no@:>@])],
 [want_lto="${enableval}"], [want_lto=no])
-## FIXME: add a test for gcc >= 4.5.0
-if test "x${want_lto}" != xno; then
-  LTO=-flto
-fi
+## TODO: add a test for gcc >= 4.5.0 and/or clang/flang
 if test "x${want_lto}" = xyes; then
+  ## used in Makeconf
+  LTO=-flto
+  ## used in etc/Makeconf
   LTOALL=-flto
+elif  test "x${want_lto}" = xR; then
+  LTO=-flto
+elif  test "x${want_lto}" = xcheck; then
+  ## use for maintainer checking.
+  LTO=-flto
+  LTOALL=-flto
+else
+  AC_MSG_WARN([Unknown value --enable-lto=${enableval}])
 fi
 AC_SUBST(LTO)
 AC_SUBST(LTOALL)
+## used in src/main/Makefile
 AM_CONDITIONAL(BUILD_LTO, [test "x${want_lto}" != xno])
+AM_CONDITIONAL(BUILD_LTO_CHECK, [test "x${want_lto}" = xcheck])
 
 AC_ARG_ENABLE([java],
 [AS_HELP_STRING([--enable-java],[enable Java @<:@yes@:>@])],

@@ -98,14 +98,16 @@ STATIC_LIBS = $(MAIN_LIBS) $(EXTRA_STATIC_LIBS)
 EXTRA_LIBS = $(BLAS_LIBS) $(FLIBS) @R_XTRA_LIBS@ @LIBINTL@ $(READLINE_LIBS) $(LIBS)
 
 R_binary = R.bin
-R_bin_OBJECTS = Rmain.o @WANT_R_SHLIB_FALSE@$(OBJECTS)
+## BUILD_LTO_CHECK_TRUE relies on using the internal BLAS
+R_bin_OBJECTS = Rmain.o @WANT_R_SHLIB_FALSE@$(OBJECTS) @BUILD_LTO_CHECK_TRUE@\
+ ../extra/blas/blas.o
 @WANT_R_SHLIB_FALSE@R_bin_LDADD = $(MAIN_OBJS) $(EXTRA_STATIC_LIBS) $(EXTRA_LIBS)
 ## Linked against -lRblas becasue -lR is and otherwise ld complains.
 @WANT_R_SHLIB_TRUE@R_bin_LDADD = -lR @BLAS_SHLIB_TRUE@-lRblas
 @BUILD_LTO_FALSE@R_bin_DEPENDENCIES =@WANT_R_SHLIB_FALSE@ libR.a @USE_EXPORTFILES_TRUE@ $(top_builddir)/etc/R.exp
 
 libR_la = libR$(R_DYLIB_EXT)
-libR_la_OBJECTS = $(OBJECTS)
+libR_la_OBJECTS = $(OBJECTS) @BUILD_LTO_CHECK_TRUE@../extra/blas/blas.o
 libR_la_LIBADD =  $(MAIN_OBJS) $(EXTRA_STATIC_LIBS) $(EXTRA_LIBS) @WANT_R_SHLIB_TRUE@ @USE_EXPORTFILES_TRUE@ -Wl,-bE:$(top_builddir)/etc/R.exp
 libR_la_DEPENDENCIES = $(STATIC_LIBS) $(R_TZONE) @WANT_R_SHLIB_TRUE@ @USE_EXPORTFILES_TRUE@ $(top_builddir)/etc/R.exp
 
