@@ -1146,7 +1146,7 @@ void NORET F77_NAME(xerbla)(const char *srname, int *info)
       mainstream BLAS/LAPACK routines (for those with < 6 the name
       is right space-padded), and > 6 for recentish additions from
       LAPACK, 7 for a few used with R ). */
-#ifdef USE_FC_LEN_T
+#ifdef FC_LEN_T
     char buf[21];
     // Precaution for incorrectly passed length type
     int len = (srname_len > 20) ? (int)srname_len : 20;
