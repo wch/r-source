@@ -6930,6 +6930,52 @@ function(dir, localOnly = FALSE)
            !file.exists(file.path(dir, "build",
                                   paste0( meta[["Package"]], ".pdf"))))
             out$missing_manual_pdf <- TRUE
+        ## Also check for \keyword and \concept entries which use Rd
+        ## markup or (likely) give multiple index terms.
+        ## This could be moved to .check_Rd_metadata() ...
+        .fmt <- function(x) {
+            Map(function(f, e) {
+                    e <- vapply(e, .Rd_deparse, "")
+                    c(paste0("  File ", sQuote(f), ":"),
+                      paste0("    ",
+                             gsub("\n",
+                                  "\n      ",
+                                  ifelse(nchar(e) < 50L,
+                                         e,
+                                         paste(substring(e, 1L, 50L),
+                                               "[TRUNCATED]")))))
+                },
+                names(x), x)
+        }
+        bad <- lapply(Rdb,
+                      function(Rd) {
+                          Rd <- Rd[!is.na(match(RdTags(Rd),
+                                                c("\\keyword",
+                                                  "\\concept")))]
+                          Rd[vapply(Rd,
+                                    function(e)
+                                        any(unlist(RdTags(e)) != "TEXT"),
+                                    NA)]
+                      })
+        bad <- Filter(length, bad)
+        if(length(bad))
+            out$Rd_keywords_or_concepts_with_Rd_markup <- .fmt(bad)
+        bad <- lapply(Rdb,
+                      function(Rd) {
+                          Rd <- Rd[!is.na(match(RdTags(Rd),
+                                                c("\\keyword",
+                                                  "\\concept")))]
+                          Rd[grepl("[,\n]",
+                                   trimws(vapply(Rd, paste, "",
+                                                 collapse = "\n"))) &
+                             !vapply(Rd,
+                                     function(e)
+                                         any(unlist(RdTags(e)) != "TEXT"),
+                                     NA)]
+                  })
+        bad <- Filter(length, bad)
+        if(length(bad))
+            out$Rd_keywords_or_concepts_more_than_one <- .fmt(bad)
     }
 
 
@@ -8050,7 +8096,16 @@ function(x, ...)
             })),
       if(length(y <- x$build_time_stamp_msg)) y,
       if(length(y <- x$size_of_tarball))
-          paste("Size of tarball:", y, "bytes")
+          paste("Size of tarball:", y, "bytes"),
+      fmt(c(if(length(y <- x$Rd_keywords_or_concepts_with_Rd_markup))
+                paste(c("Found the following \\keyword or \\concept entries with Rd markup:",
+                        unlist(y)),
+                      collapse = "\n"),
+            if(length(y <- x$Rd_keywords_or_concepts_more_than_one))
+                paste(c("Found the following \\keyword or \\concept entries",
+                        "which likely give several index terms:",
+                        unlist(y)),
+                      collapse = "\n")))
       )
 }
 
