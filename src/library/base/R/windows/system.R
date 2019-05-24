@@ -1,7 +1,7 @@
 #  File src/library/base/R/windows/system.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -166,11 +166,14 @@ system2 <- function(command, args = character(),
 	on.exit(Sys.setenv(GFORTRAN_STDERR_UNIT = "-1"), add = TRUE) 
     rval <- .Internal(system(command, flag, f, stdout, stderr, timeout))
 
-    if (is.null(rf))
-        rval
-    else {
+    if (is.null(rf)) {
+        if (is.integer(rval))
+	    invisible(rval)
+	else
+	    rval
+    } else {
         # NOTE: timeout warning will be different from normal intern
-        ans <- character(0)
+        ans <- readLines(rf)
         if (is.numeric(rval) && length(rval)>0 && rval!=0) {
             rval <- as.integer(rval)
             attr(ans, "status") <- rval
