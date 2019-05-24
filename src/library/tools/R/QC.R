@@ -7212,6 +7212,21 @@ function(dir, localOnly = FALSE)
             out$R_files_non_ASCII <- lines
     }
 
+    if(file.exists(fp <- file.path(dir, "R",
+                                   paste0(basename(dir),
+                                          "-internal.R")))) {
+        exprs <- parse(fp)
+        tst <- function(e) {
+            is.call(e) &&
+                (length(s <- as.character(e[[1L]])) == 1L) &&
+                (s == "<-") &&
+                (length(s <- as.character(e[[2L]])) == 1L) &&
+                (s == ".Random.seed")
+        }
+        if(any(vapply(exprs, tst, NA)))
+            out$R_files_set_random_seed <- basename(fp)
+    }
+    
     size <- Sys.getenv("_R_CHECK_SIZE_OF_TARBALL_",
                        unset = NA_character_)
     if(!is.na(size) && (as.integer(size) > 5000000))
@@ -7949,6 +7964,12 @@ function(x, ...)
                   paste0("  ", names(y), "\n    ",
                          vapply(y, paste, "", collapse = "\n    "),
                          collapse = "\n")),
+                collapse = "\n")
+      },
+      if(length(y <- x$R_files_set_random_seed)) {
+          paste(c(sprintf("File '%s' sets .Random.seed.",
+                          file.path("R", y)),
+                  "This is usually neither needed nor wanted."),
                 collapse = "\n")
       },
       fmt(c(if(length(x$title_is_name)) {
