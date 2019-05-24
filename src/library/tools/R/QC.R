@@ -7240,8 +7240,8 @@ function(dir, localOnly = FALSE)
     if(!capabilities("libcurl") && remote)
         out$no_url_checks <- TRUE
     else {
-        bad <- tryCatch(check_url_db(url_db_from_package_sources(dir),
-                                     remote = remote),
+        udb <- url_db_from_package_sources(dir)
+        bad <- tryCatch(check_url_db(udb, remote = remote),
                         error = identity)
         if(inherits(bad, "error")) {
             out$bad_urls <- bad
@@ -7263,6 +7263,29 @@ function(dir, localOnly = FALSE)
                 bad[ind, c("Status", "Message")] <- ""
             if(NROW(bad))
                 out$bad_urls <- bad
+        }
+        if(config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_CHECK_FILE_URIS_",
+                                            "FALSE"))) {
+            ## Also check file URIs in packages.
+            ## These only make sense relative to their parent.
+            ## We could integrate this check into check_url_db() by e.g.
+            ## passing the top-level package dir via a suitable env var,
+            ## but this is not quite straightforward as the check code
+            ## aggregates parents according to URI.
+            urls <- udb$URL
+            parts <- parse_URI_reference(urls)
+            ind <- (parts[, "scheme"] %in% c("", "file"))
+            fpaths <- parts[ind, "path"]
+            parents <- udb[ind, "Parent"]
+            ppaths <- dirname(parents)
+            pos <- which(!file.exists(file.path(ifelse(nzchar(ppaths),
+                                                       file.path(dir,
+                                                                 ppaths),
+                                                       dir),
+                                                fpaths)))
+            if(length(pos))
+                out$bad_file_URIs <-
+                    cbind(fpaths[pos], parents[pos])
         }
     }
 
@@ -7946,6 +7969,14 @@ function(x, ...)
             if(length(y <- x$no_url_checks) && y) {
                 "Checking URLs requires 'libcurl' support in the R build"
             })),
+      if(length(y <- x$bad_file_URIs)) {
+          paste(c(if(NROW(y) > 1L)
+                      "Found the following (possibly) invalid file URIs:"
+                  else
+                      "Found the following (possibly) invalid file URI:",
+                  sprintf("  URI: %s\n    From: %s", y[, 1L], y[, 2L])),
+                collapse = "\n")
+      },
       fmt(if(length(y <- x$bad_dois)) {
               if(inherits(y, "error"))
                   paste(c("Checking DOIs failed with message:",
