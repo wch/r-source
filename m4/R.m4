@@ -1052,6 +1052,8 @@ AC_SUBST(HAVE_FORTRAN_DOUBLE_COMPLEX)
 ## NB: they may not actually be size_t, but we don't care about
 ## signedness and on most 64-bit platforms a 32-bit type will be
 ## passed in a 64-bit register or stack slot.
+##
+## (It is docuemnted that for gfortran < 8, int is used.)
 AC_DEFUN([R_PROG_FC_CHAR_LEN_T],
 [AC_CACHE_VAL([r_cv_prog_fc_char_len_t],
 [cat > conftestf.f <<EOF
@@ -1062,7 +1064,7 @@ AC_DEFUN([R_PROG_FC_CHAR_LEN_T],
 EOF
 ${FC} ${FFLAGS} -c conftestf.f 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD
 [cat > conftest.c <<EOF
-/* A C function calling a Fortran subroutine which calls xerble
+/* A C function calling a Fortran subroutine which calls xerbla
    written in C, emulating how R calls BLAS/LAPACK routines */
 #include <stdlib.h>
 #include <stdio.h>
