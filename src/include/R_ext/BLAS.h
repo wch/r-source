@@ -38,7 +38,7 @@
 #include <R_ext/RS.h>		/* for F77_... */
 #include <R_ext/Complex.h>	/* for Rcomplex */
 
-#if defined FC_LEN_T && defined USE_FC_LEN_T
+#ifdef FC_LEN_T
 # include <stddef.h> // for size_t if needed
 # define FCLEN ,FC_LEN_T
 # define FCONE ,(FC_LEN_T)1
