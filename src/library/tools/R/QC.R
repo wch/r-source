@@ -9155,15 +9155,16 @@ function(package, lib.loc = NULL)
                objects_in_code)
 
     ## Look only at the *additional* generics in suggests.
-    generics <-
-        setdiff(generics,
-                c(Filter(function(f) .is_S3_generic(f, code_env),
-                         functions_in_code),
-                  .get_S3_generics_as_seen_from_package(dir,
-                                                        TRUE,
-                                                        TRUE),
-                  .get_S3_group_generics(),
-                  .get_S3_primitive_generics()))
+    ind <- (generics %notin%
+            c(Filter(function(f) .is_S3_generic(f, code_env),
+                     functions_in_code),
+              .get_S3_generics_as_seen_from_package(dir, TRUE, TRUE),
+              .get_S3_group_generics(),
+              .get_S3_primitive_generics()))
+    if(!all(ind)) {
+        generics <- generics[ind]
+        packages <- packages[ind]
+    }
 
     methods_stop_list <- nonS3methods(basename(dir))
     methods <- lapply(generics,
