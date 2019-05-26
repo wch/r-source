@@ -15,14 +15,16 @@
 #define SUPPORT_MBCS 1
 #define ENABLE_NLS 1
 /* #undef HAVE_AQUA */
-/* Deprecated: use _OPENMP instead */
-/* #undef SUPPORT_OPENMP */
+/* NB: the rest are for the C compiler used to build R:
+   they do not necessarily apply to a C++ compiler */
 #ifdef _WIN64
 #define SIZEOF_SIZE_T 8
 #else
 #define SIZEOF_SIZE_T 4
 #endif
 /* #undef HAVE_ALLOCA_H */
+/* optional C99 type */
+#define HAVE_UINTPTR_T 1
 
 #endif /* not R_CONFIG_H */
 
