@@ -287,9 +287,11 @@ SEXP writeClipboard(SEXP text, SEXP sformat)
 	else if (format == CF_UNICODETEXT)
 	    for(i = 0; i < n; i++)
 		len += 2 * (wcslen(wtransChar(STRING_ELT(text, i))) + 2);
-	else
+	else if (format == CF_TEXT || format == CF_OEMTEXT || format == CF_DIF)
 	    for(i = 0; i < n; i++)
 		len += strlen(translateChar(STRING_ELT(text, i))) + 2;
+	else
+	    error("'raw = FALSE' and format is a not a known text format");
 
 	if ( (hglb = GlobalAlloc(GHND, len)) &&
 	     (s = (char *)GlobalLock(hglb)) ) {
