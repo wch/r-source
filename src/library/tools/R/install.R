@@ -591,9 +591,14 @@ if(FALSE) {
                 ## a lot of error messages. However, some docker
                 ## installations do not have "file" utility.
                 ## Solaris' "file" does not use 'shared'.
-                are_shared <- sapply(slibs,
-                    function(l) grepl("(shared|dynamically linked)",
-                                      system(paste("file", shQuote(l)), intern = TRUE)))
+                ##
+                ## On macOS, a single "dylib" file can have a shared object
+                ## for multiple architectures, so multiple lines with
+                ## "shared"/"dynamically linked"
+                are_shared <- vapply(slibs,
+                    function(l) any(grepl("(shared|dynamically linked)",
+                                    system(paste("file", shQuote(l)), intern = TRUE))),
+                    NA)
                 slibs <- slibs[are_shared]
                 if (!length(slibs)) return()
             }
