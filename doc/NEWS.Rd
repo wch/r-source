@@ -40,6 +40,10 @@
 
       \item Correct messaging in C++ pragma checks in \pkg{tools} code for
       \command{R CMD check}, fixing \PR{17566} thanks to Xavier Robin.
+
+      \item{print()}ing and auto-printing no longer differs for
+      \code{function}s with a user defined \code{print.function}, thanks to
+      Bill Dunlap's report.
     }
   }
 }
