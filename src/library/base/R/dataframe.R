@@ -1426,17 +1426,21 @@ rbind.data.frame <- function(..., deparse.level = 1, make.row.names = TRUE,
 				     if(!NA.lev[j]) NA # else NULL
 				 } else factor.exclude,
 		       ordered = ordCol[j])
-    if(any(has.dim)) {
-	rmax <- max(unlist(rows))
-	for(i in pseq[has.dim])
-	    if(!inherits(xi <- value[[i]], "data.frame")) {
-		dn <- dimnames(xi)
+
+    if(any(has.dim)) { # some col's are matrices or d.frame's
+        jdim <- pseq[has.dim]
+        if(!all(df <- vapply(jdim, function(j) inherits(value[[j]],"data.frame"), NA))) {
+            ## Ensure matrix columns can be filled in  for(i ...) below
+            rmax <- max(unlist(rows))
+            for(j in jdim[!df]) {
+		dn <- dimnames(vj <- value[[j]])
 		rn <- dn[[1L]]
 		if(length(rn) > 0L) length(rn) <- rmax
-		pi <- dim(xi)[2L]
-		length(xi) <- rmax * pi
-		value[[i]] <- array(xi, c(rmax, pi), list(rn, dn[[2L]]))
+		pj <- dim(vj)[2L]
+		length(vj) <- rmax * pj
+		value[[j]] <- array(vj, c(rmax, pj), list(rn, dn[[2L]]))
 	    }
+        }
     }
 
     for(i in seq_len(n)) { ## add arg [[i]] to result
@@ -1453,7 +1457,7 @@ rbind.data.frame <- function(..., deparse.level = 1, make.row.names = TRUE,
 	    if(has.dim[jj]) {
 		value[[jj]][ri,	 ] <- xij
                 ## copy rownames
-                rownames(value[[jj]])[ri] <- rownames(xij)
+                if(!is.null(r <- rownames(xij))) rownames(value[[jj]])[ri] <- r
 	    } else {
                 ## coerce factors to vectors, in case lhs is character or
                 ## level set has changed
