@@ -16,7 +16,8 @@ ALL_FFLAGS = $(ALL_FFLAGS_LO)
 
 SOURCES = blas00.c blas.f cmplxblas.f
 
-Rblas_la = libRblas$(R_DYLIB_EXT)
+@BUILD_LTO_CHECK_FALSE@Rblas_la = libRblas$(R_DYLIB_EXT)
+@BUILD_LTO_CHECK_TRUE@Rblas_la = libRblas.a
 ## @RBLAS_LDFLAGS@ is used on macOS
 ## first for internal BLAS
 Rblas_la_LIBADD = @RBLAS_LDFLAGS@ $(FLIBS_IN_SO)
@@ -34,7 +35,8 @@ R:
 
 blas_OBJS=blas.o @COMPILE_FORTRAN_DOUBLE_COMPLEX_FALSE@ cmplxblas.o
 @USE_EXTERNAL_BLAS_FALSE@$(Rblas_la): $(blas_OBJS)
-@USE_EXTERNAL_BLAS_FALSE@	$(DYLIB_LINK) -o $(Rblas_la) $(blas_OBJS) $(Rblas_la_LIBADD)
+	@USE_EXTERNAL_BLAS_FALSE@@BUILD_LTO_CHECK_FALSE@$(DYLIB_LINK) -o $(Rblas_la) $(blas_OBJS) $(Rblas_la_LIBADD)
+	@USE_EXTERNAL_BLAS_FALSE@@BUILD_LTO_CHECK_TRUE@$(AR) -cr $(Rblas_la) $(blas_OBJS)
 
 @USE_EXTERNAL_BLAS_TRUE@$(Rblas_la): blas00.o
 @USE_EXTERNAL_BLAS_TRUE@	$(DYLIB_LINK) -o $(Rblas_la) $^ @BLAS_LIBS0@ $(Rblas_la_LIBADD0)

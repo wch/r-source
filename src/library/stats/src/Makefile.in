@@ -33,8 +33,7 @@ SOURCES_F = bsplvd.f bvalue.f bvalus.f loessf.f ppr.f qsbart.f \
   eureka.f stl.f portsrc.f lminfl.f
 DEPENDS = $(SOURCES_C:.c=.d)
 ## BUILD_LTO_CHECK_TRUE relies on using the internal BLAS and LAPACK
-OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o) @BUILD_LTO_CHECK_TRUE@\
- ../../../extra/blas/blas.o ../../../modules/lapack/dlapack.o
+OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o)
 # need config.h
 PKG_CPPFLAGS = -I../../../include -I$(top_srcdir)/src/include -DHAVE_CONFIG_H
 PKG_CFLAGS = @R_OPENMP_CFLAGS@ $(C_VISIBILITY)
