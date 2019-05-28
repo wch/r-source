@@ -123,7 +123,7 @@
 
       \item [On Windows only], \code{writeClipboard(.., format = <n>)} now
       does correctly pass \code{format} to the underlying C code, thanks to
-      a bug report (with patch) by Jenny Brian.
+      a bug report (with patch) by Jenny Bryan.
     }
   }
 }
