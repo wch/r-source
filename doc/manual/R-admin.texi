@@ -1124,7 +1124,7 @@ Whether toolchains support LTO is often unclear: all of the C compiler,
 the Fortran compiler and linker have to support it, and support it by
 the same mechanism (so mixing compiler families may not work and a
 non-system linker may be needed).  It has been tested recently on Linux
-with @command{gcc}/@command{gfortran} 8.x: that needed setting
+with @command{gcc}/@command{gfortran} 8.x and 9.x: that needed setting
 @example
 AR=gcc-ar
 RANLIB=gcc-ranlib
@@ -1141,6 +1141,14 @@ When LTO is enabled it is used for compiled code in packages (including
 the recommended packages) unless the flag @option{--enable-lto=R} is
 used.  With sufficient diagnostic flags (e.g.@: @option{-Wall} in GCC)
 this can flag inconsistencies between source files in a package.
+
+Option @option{--enable-lto=check} in addition builds the BLAS and
+LAPACK support as static libraries containing intermediate-level code
+that LTO will compile for all objects linked against these libraries.
+This checks the consistency of calls to BLAS/LAPACK both in @R{} itself
+and in any packages installed during the build.  (This is unlikely to
+work in conjuction with non-default options for BLAS and LAPACK, and
+`linking' against these libraries will be very slow.)
 
 LTO support was added in 2011 for @command{gcc} 4.5.x on Linux but was
 little used before 2019.
