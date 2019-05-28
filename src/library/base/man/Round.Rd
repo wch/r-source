@@ -98,7 +98,7 @@ signif(x, digits = 6)
   The ISO/IEC/IEEE 60559:2011 standard is available for money from
   \url{https://www.iso.org}.
 
-  The IEEE 745:2008 standard is more openly documented, e.g, at
+  The IEEE 754:2008 standard is more openly documented, e.g, at
   \url{https://en.wikipedia.org/wiki/IEEE_754}.
 }
 \seealso{
