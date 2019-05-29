@@ -2682,13 +2682,25 @@ set.seed(7) # <- leads to some  "0 counts" [more interesting: they are kept]
 dfa <- data.frame(x=fcts())
 dfb <- data.frame(x=fcts()) ; rbind(table(dfa), table(dfb))
 dfy <- data.frame(y=fcts())
+yN <- c(1:3, NA_character_, 5:8)
+dfay  <- cbind(dfa, dfy)
+dfby  <- cbind(dfa, data.frame(y = yN))
+dfaby <- rbind(dfay, dfby, factor.exclude=TRUE)
 stopifnot(exprs = {
     identical(levels(dfa$x), c(1:3, NA_character_) -> full_lev)
-    identical(levels(dfb$x),             full_lev)
-    identical(levels(cbind(dfa, dfy)$x), full_lev) # cbind() does work
-    identical(levels(cbind(dfa, dfy)$y), full_lev)
-    identical(levels(rbind(dfa, dfb, factor.exclude=NULL)$x), full_lev)
-}) ##                                ^^^^^^^^^^^^^^^^^^^ future default
+    identical(levels(dfb$x),  full_lev)
+    identical(levels(dfay$x), full_lev) # cbind() does work
+    identical(levels(dfay$y), full_lev)
+    identical(levels(dfby$x), full_lev)
+    identical(levels(dfby$y), as.character((1:8)[-4]) -> levN) # no NA levels
+    identical(levels(rbind(dfa, dfb, factor.exclude=TRUE)$x), full_lev)
+    identical(levels(dfaby$x),           full_lev)
+    identical(levels(dfaby$y),               levN) # failed in c76513
+    identical(lapply(rbind(dfay, dfby, factor.exclude = NA), levels),
+	      list(x = as.character(1:3), y = levN))
+    identical(lapply(rbind(dfay, dfby, factor.exclude=NULL), levels),
+	      list(x = full_lev, y = yN))
+})
 
 
 
