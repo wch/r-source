@@ -921,16 +921,29 @@ function(package, lib.loc = NULL)
     path <- system.file(package = package, lib.loc = lib.loc)
     if(!nzchar(path)) return(NULL)
     if(package == "base") {
+        len <- nrow(.S3_methods_table)
         return(data.frame(generic = .S3_methods_table[, 1L],
-                          home = rep_len("base",
-                                         nrow(.S3_methods_table)),
+                          home = rep_len("base", len),
                           class = .S3_methods_table[, 2L],
+                          delayed = rep_len(FALSE, len),
                           stringsAsFactors = FALSE))
     }
     lib.loc <- dirname(path)
     nsinfo <- parseNamespaceFile(package, lib.loc)
     S3methods <- nsinfo$S3methods
     if(!length(S3methods)) return(NULL)
+    tab <- NULL
+    ind <- is.na(S3methods[, 4L])
+    if(!all(ind)) {
+        ## Delayed registrations can be handled directly.
+        pos <- which(!ind)
+        tab <- data.frame(generic = S3methods[pos, 1L],
+                          home = S3methods[pos, 4L],
+                          class = S3methods[pos, 2L],
+                          delayed = rep_len(TRUE, length(pos)),
+                          stringsAsFactors = FALSE)
+        S3methods <- S3methods[ind, , drop = FALSE]
+    }
     generic <- S3methods[, 1L]
     nsenv <- loadNamespace(package, lib.loc)
     ## Possibly speed things up by only looking up the unique generics.
@@ -948,7 +961,10 @@ function(package, lib.loc = NULL)
     homes[!ind] <- "base"
     home <- homes[match(generic, generics)]
     class <- S3methods[, 2L]
-    data.frame(generic, home, class, stringsAsFactors = FALSE)
+    delayed <- rep_len(FALSE, length(class))
+    rbind(data.frame(generic, home, class, delayed,
+                     stringsAsFactors = FALSE),
+          tab)
 }
 
 ### ** .get_package_metadata
