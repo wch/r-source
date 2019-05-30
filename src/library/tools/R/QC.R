@@ -9129,15 +9129,25 @@ function(package, lib.loc = NULL)
 
     if(length(package) != 1L)
         stop("argument 'package' must be of length 1")
+
+    if(package == "base") return()
+    
     dir <- find.package(package, lib.loc)
-    if(!dir.exists(file.path(dir, "R"))) return
+    if(!dir.exists(file.path(dir, "R"))) return()
+    
     db <- .read_description(file.path(dir, "DESCRIPTION"))
     suggests <- unname(.get_requires_from_package_db(db, "Suggests"))
+    if(!length(suggests)) return()
 
-    if(!length(suggests)) return
+    reg <- parseNamespaceFile(package, dirname(dir))$S3methods
+    reg <- reg[!is.na(reg[, 4L]), , drop = FALSE]
+    if(length(reg))
+        out$reg <- cbind(Package = reg[, 4L],
+                         Generic = reg[, 1L],
+                         Class = reg[, 2L],
+                         Method = reg[, 3L])
 
-    if(basename(package) != "base")
-        .load_package_quietly(package, dirname(dir))
+    .load_package_quietly(package, dirname(dir))
     ok <- vapply(suggests, requireNamespace, quietly = TRUE,
                  FUN.VALUE = NA)
     out$bad <- suggests[!ok]
@@ -9201,6 +9211,15 @@ function(x, ...)
                     format(c("Package", mat[, 1L])),
                     format(c("Generic", mat[, 2L])),
                     format(c("Method", mat[, 3L])))
+            )
+      },
+      if(length(reg <- x$reg)) {
+          c("S3 methods using delayed registration:",
+            sprintf("  %s %s %s %s",
+                    format(c("Package", reg[, 1L])),
+                    format(c("Generic", reg[, 2L])),
+                    format(c("Class", reg[, 3L])),
+                    format(c("Method", reg[, 4L])))
             )
       })
 }
