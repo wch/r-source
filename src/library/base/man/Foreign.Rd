@@ -79,6 +79,7 @@
   \emph{Note:} The Fortran type corresponding to \code{logical} is
   \code{integer}, not \code{logical}: the difference matters on some
   Fortran compilers.
+  %% gfortran, at least >= 9, uses int_least32_t for LOGICAL.
   
   Numeric vectors in \R will be passed as type \code{double *} to C
   (and as \code{double precision} to Fortran) unless the argument has

@@ -1146,12 +1146,23 @@ Option @option{--enable-lto=check} in addition builds the BLAS and
 LAPACK support as static libraries containing intermediate-level code
 that LTO will compile for all objects linked against these libraries.
 This checks the consistency of calls to BLAS/LAPACK both in @R{} itself
-and in any packages installed during the build.  (This is unlikely to
+and in any packages installed using the build.  (This is unlikely to
 work in conjuction with non-default options for BLAS and LAPACK, and
-`linking' against these libraries will be very slow.)
+`linking' against these libraries may be very slow.  Note that the
+static libraries may need to be re-compiled for even a minor update to
+the compiler.)
 
 LTO support was added in 2011 for @command{gcc} 4.5.x on Linux but was
 little used before 2019.
+
+With @command{gcc}/@command{gfortran} 9.x@footnote{and probably 8.4 and
+later when released.} this will flag inconsistencies in calls to
+Fortran subroutines/functions, both between Fortran source files and
+between Fortran and C/C++.  @command{gfortran} 9.x can help
+understanding these by extracting C prototypes from Fortran source files
+with its @option{-fc-prototypes-external} option, e.g.@: that (at the
+time of writing) Fortran @code{LOGICAL} corresponds to
+@code{int_least32_t *}.
 
 @node Testing a Unix-alike Installation,  , Other Options, Installing R under Unix-alikes
 @section Testing an Installation
