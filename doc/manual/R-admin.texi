@@ -1147,7 +1147,7 @@ LAPACK support as static libraries containing intermediate-level code
 that LTO will compile for all objects linked against these libraries.
 This checks the consistency of calls to BLAS/LAPACK both in @R{} itself
 and in any packages installed using the build.  (This is unlikely to
-work in conjuction with non-default options for BLAS and LAPACK, and
+work in conjunction with non-default options for BLAS and LAPACK, and
 `linking' against these libraries may be very slow.  Note that the
 static libraries may need to be re-compiled for even a minor update to
 the compiler.)
