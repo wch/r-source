@@ -42,6 +42,10 @@ package.skeleton <-
         }
 	## all.names: crucial for metadata
 	list <- ls(environment, all.names=TRUE)
+        ## Exclude .Random.seed from .GlobalEnv if not asked for
+        ## explicitly.
+        if(identical(environment, .GlobalEnv))
+            list <- list[list != ".Random.seed"]
     }
     if(!is.character(list))
 	stop("'list' must be a character vector naming R objects")
