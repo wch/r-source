@@ -142,15 +142,15 @@
 ## DYLIB_LDFLAGS=
 
 ## The appropriate 'lib' dir, normally 'lib', but 'lib64' on Linux on
-## x86_64, mips64, ppc64, sparc64, s390x but not ia64.
+## x86_64, mips64, ppc64, sparc64, s390x but not ia64 (except Debian
+## and derivatives).
 ## LIBnn=
 
-## Stripping ('-s'), path ('-L'), and any other miscellaneous options
-## for the linker.
+## Path ('-L'), and any other miscellaneous options for the linker.
 ## '-L' options set here will be prepended to LD_LIBRARY_PATH (or its
 ## system equivalent) at run time.
 ## If unset defaults to '-L/usr/local/lib', with '-L/sw/lib' prepended
-## on systems using Fink with root '/sw'.
+## on macOS systems using Fink with root '/sw'.
 ## On some Linux 64-bit systems its default is -L/usr/local/lib64.
 ## If LIBnn is set it defaults to -L/usr/local/$LIBnn.
 ## LDFLAGS=
