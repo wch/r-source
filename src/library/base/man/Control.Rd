@@ -1,6 +1,6 @@
 % File src/library/base/man/Control.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Control}
@@ -40,10 +40,11 @@ next
   \item{var}{A syntactical name for a variable.}
   \item{seq}{An expression evaluating to a vector (including a list and
     an \link{expression}) or to a \link{pairlist} or \code{NULL}.  A
-    factor value will be coerced to a character vector.}
+    factor value will be coerced to a character vector.  As from \R
+    3.7.0 this can be a long vector.}
   \item{expr, cons.expr, alt.expr}{
     An \emph{expression} in a formal sense.  This is either a
-    simple expression or a so called \emph{compound expression}, usually
+    simple expression or a so-called \emph{compound expression}, usually
     of the form \code{\{ expr1 ; expr2 \}}.
   }
 }

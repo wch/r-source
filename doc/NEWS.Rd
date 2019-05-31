@@ -22,7 +22,8 @@
       \code{na.rm} defaulting to true.  If set to false, missing
       \code{y} values now propagate into the interpolated values.
 
-      \item Long vectors are now supported in \code{for()} loops.
+      \item Long vectors are now supported as the \code{seq} argument of
+      a \code{for()} loop.
     }
   }
 
@@ -55,6 +56,29 @@
       \item There is a new variant option \option{--enable-lto=check}
       for checking consistency of BLAS/LAPACK calls --- see
       \sQuote{Writing R Extensions}.
+
+      \item The default detection of the shell variable \code{libNN} is
+      overridden for derivatives of Debian Linux, some of which have
+      started to have a \file{/usr/lib64} directory.
+      (E.g.\sspace{}Ubuntu 19.04.)  As before, it can be specified in
+      \file{config.site}.
+    }
+  }
+
+  \subsection{PACKAGE INSTALLATION}{
+    \itemize{
+      \item Header \file{Rconfig.h} contains the value of
+	\code{FC_LEN_T} deduced at installation which is used by the
+	propotypes in headers \file{BLAS.h} and \file{Lapack.h} but to
+	avoid extensive breakage this is only exposed when
+	\code{USE_FC_LEN_T} is defined.
+	   
+	If a package's C/C++ calls to BLAS/LAPACK allow for the
+	\sQuote{hidden} arguments use by most Fortran compilers to pass
+	the lengths of Fortran character arguments, define
+	\code{USE_FC_LEN_T} and include \file{Rconfig.h} (possibly
+	\emph{via} \file{R.h}) before including \file{BLAS.h} or
+	\file{Lapack.h}.
     }
   }
 
