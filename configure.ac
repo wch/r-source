@@ -142,7 +142,8 @@ case "${host_os}" in
     ## Allow for ppc64le (Debian calls ppc64el), powerpc64le ...
     case "${host_cpu}" in
       x86_64|mips64|ppc64*|powerpc64*|sparc64|s390x)
-        if test -d /usr/lib64; then
+        ## Debian/Ubuntu has "lib64", but the primary location is "lib"
+        if test -d /usr/lib64 && test ! -f /etc/debian_version; then
           libnn=lib64
 	fi
       ;;
