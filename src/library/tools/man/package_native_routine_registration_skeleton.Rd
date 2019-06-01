@@ -1,6 +1,6 @@
 % File src/library/tools/man/package_native_routine_registration_skeleton.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2017 R Core Team
+% Copyright 2017-9 R Core Team
 % Distributed under GPL 2 or later
 
 \name{package_native_routine_registration_skeleton}
@@ -129,6 +129,14 @@ package_native_routine_registration_skeleton(dir, con = stdout(),
   like\preformatted{
     ctags -x *.c
   }.  (The \sQuote{Exuberant} version allows a lot more control.)
+}
+
+\section{Extracting Fortran prototypes}{
+  \command{gfortran} 9.x and later can extract C prototypes for Fortran
+  subroutines with a special flag:\preformatted{
+    gfortran -c -fc-prototypes-external file.f
+}
+   although ironically not for functions declared \code{bind(C)}.
 }
 
 \seealso{
