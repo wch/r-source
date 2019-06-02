@@ -5,7 +5,7 @@ c     for k .le. min(n,p), let xk be the matrix
 c
 c            xk = (x(jpvt(1)),x(jpvt(2)), ... ,x(jpvt(k)))
 c
-c     formed from columnns jpvt(1), ... ,jpvt(k) of the original
+c     formed from columns jpvt(1), ... ,jpvt(k) of the original
 c     n x p matrix x that was input to dqrdc (if no pivoting was
 c     done, xk consists of the first k columns of x in their
 c     original order).  dqrdc produces a factored orthogonal matrix q
@@ -31,7 +31,7 @@ c               have the same value as n in dqrdc.
 c
 c        k      integer.
 c               k is the number of columns of the matrix xk.  k
-c               must nnot be greater than min(n,p), where p is the
+c               must not be greater than min(n,p), where p is the
 c               same as in the calling sequence to dqrdc.
 c
 c        qraux  double precision(p).
@@ -60,7 +60,7 @@ c
 c     on return
 c
 c        qy     double precision(n).
-c               qy conntains q*y, if its computation has been
+c               qy contains q*y, if its computation has been
 c               requested.
 c
 c        qty    double precision(n).
@@ -112,7 +112,7 @@ c
 c     will result in the computation of b and rsd, with rsd
 c     overwriting y.  more generally, each item in the following
 c     list contains groups of permissible identifications for
-c     a single callinng sequence.
+c     a single calling sequence.
 c
 c          1. (y,qty,b) (rsd) (xb) (qy)
 c
