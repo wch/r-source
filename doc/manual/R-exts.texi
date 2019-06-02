@@ -5117,9 +5117,9 @@ various standards.
 Both the compiler and OS (@emph{via} system header files, which may
 differ by architecture even for nominally the same OS) affect the
 compilability of C/C++ code.  Compilers from the GCC, @command{clang},
-Intel and Oracle Studio suites are routinely used with @R{}, and both
-@command{clang} and Oracle have more than one implementation of C++
-headers and library.  The range of possibilities makes comprehensive
+Intel and Oracle Developer Studio suites are routinely used with @R{},
+and both @command{clang} and Oracle have more than one implementation of
+C++ headers and library.  The range of possibilities makes comprehensive
 empirical checking impossible, and regrettably compilers are patchy at
 best on warning about non-standard code.
 
@@ -8957,8 +8957,8 @@ and detects memory access errors, uninitialized reads and memory leaks.
 
 Most of the Fortran compilers used with @R{} allow code to be compiled
 with checking of array bounds: for example @command{gfortran} has option
-@option{-fbounds-check} and Oracle Studio has @option{-C}.  This will
-give an error when the upper or lower bound is exceeded, e.g.
+@option{-fbounds-check} and Oracle Developer Studio has @option{-C}.
+This will give an error when the upper or lower bound is exceeded, e.g.
 @example
 At line 97 of file .../src/appl/dqrdc2.f
 Fortran runtime error: Index '1' of dimension 1 of array 'x' above upper bound of 0
@@ -8966,7 +8966,7 @@ Fortran runtime error: Index '1' of dimension 1 of array 'x' above upper bound o
 
 One does need to be aware that lazy programmers often specify Fortran
 dimensions as @code{1} rather than @code{*} or a real bound and these
-will be reported.
+will be reported (as may @code{*} dimensions)
 
 It is easy to arrange to use this check on just the code in your
 package: add to @file{~/.R/Makevars} something like (for
@@ -8978,12 +8978,11 @@ FFLAGS = -g -O2 -mtune=native -fbounds-check
 @noindent
 when you run @command{R CMD check}.
 
-This may report incorrectly errors with the way that Fortran character
-variables are passed, particularly when Fortran subroutines are called
-from C code.  This may include the use of BLAS and LAPACK subroutines in
-@R{}, so it is not advisable to build @R{} itself with bounds checking
-(and may not even be possible as these subroutines are called during the
-@R{} build).
+This may report errors with the way that Fortran character variables are
+passed, particularly when Fortran subroutines are called from C code.
+This may include the use of BLAS and LAPACK subroutines in @R{}, so it
+is not advisable to build @R{} itself with bounds checking (and may not
+even be possible as these subroutines are called during the @R{} build).
 
 
 @node Debugging compiled code,  , Checking memory access, Debugging
@@ -13236,12 +13235,11 @@ used.  (Passing values @emph{via} arguments is safer.)
 The standard packages, for example @pkg{stats}, are a rich source of
 further examples.
 
-Passing character strings from C to Fortran or @emph{vice versa} is
-not portable (and to Fortran 90 or later is even less so).  We have
-found that it helps to ensure that a C string to be passed is followed
-by several @code{nul}s (and not just the one needed as a C terminator).
-But for maximal portability character strings in Fortran should be
-avoided.
+Passing character strings from C to Fortran or @emph{vice versa} is not
+portable.  We have found that it helps to ensure that a C string to be
+passed is followed by several @code{nul}s (and not just the one needed
+as a C terminator).  But for maximal portability character strings in
+Fortran should be avoided.
 
 
 @node Numerical analysis subroutines, Optimization, Calling C from Fortran and vice versa, The R API
