@@ -5118,9 +5118,9 @@ various standards.
 Both the compiler and OS (@emph{via} system header files, which may
 differ by architecture even for nominally the same OS) affect the
 compilability of C/C++ code.  Compilers from the GCC, @command{clang},
-Intel and Oracle Studio suites are routinely used with @R{}, and both
-@command{clang} and Oracle have more than one implementation of C++
-headers and library.  The range of possibilities makes comprehensive
+Intel and Oracle Developer Studio suites are routinely used with @R{},
+and both @command{clang} and Oracle have more than one implementation of
+C++ headers and library.  The range of possibilities makes comprehensive
 empirical checking impossible, and regrettably compilers are patchy at
 best on warning about non-standard code.
 
@@ -8036,6 +8036,7 @@ which provide complementary examples to those given here.)
 * Debugging R code::            
 * Checking memory access::      
 * Debugging compiled code::     
+* Using Link-time Optimization::  
 @end menu
 
 
@@ -8958,8 +8959,8 @@ and detects memory access errors, uninitialized reads and memory leaks.
 
 Most of the Fortran compilers used with @R{} allow code to be compiled
 with checking of array bounds: for example @command{gfortran} has option
-@option{-fbounds-check} and Oracle Studio has @option{-C}.  This will
-give an error when the upper or lower bound is exceeded, e.g.
+@option{-fbounds-check} and Oracle Developer Studio has @option{-C}.
+This will give an error when the upper or lower bound is exceeded, e.g.
 @example
 At line 97 of file .../src/appl/dqrdc2.f
 Fortran runtime error: Index '1' of dimension 1 of array 'x' above upper bound of 0
@@ -8967,7 +8968,7 @@ Fortran runtime error: Index '1' of dimension 1 of array 'x' above upper bound o
 
 One does need to be aware that lazy programmers often specify Fortran
 dimensions as @code{1} rather than @code{*} or a real bound and these
-will be reported.
+will be reported (as may @code{*} dimensions)
 
 It is easy to arrange to use this check on just the code in your
 package: add to @file{~/.R/Makevars} something like (for
@@ -8979,15 +8980,12 @@ FFLAGS = -g -O2 -mtune=native -fbounds-check
 @noindent
 when you run @command{R CMD check}.
 
-This may report incorrectly errors with the way that Fortran character
-variables are passed, particularly when Fortran subroutines are called
-from C code.  This may include the use of BLAS and LAPACK subroutines in
-@R{}, so it is not advisable to build @R{} itself with bounds checking
-(and may not even be possible as these subroutines are called during the
-@R{} build).
+This may report errors with the way that Fortran character variables are
+passed, particularly when Fortran subroutines are called from C code and
+character lengths are not passed (@pxref{Fortran character strings}).
 
 
-@node Debugging compiled code,  , Checking memory access, Debugging
+@node Debugging compiled code, Using Link-time Optimization, Checking memory access, Debugging
 @section Debugging compiled code
 @cindex Debugging
 
@@ -9283,6 +9281,34 @@ and the output of vectors @code{R_inspect3} takes additional two character()
 parameters: maximum depth and the maximal number of elements that will
 be printed for scalar vectors. The defaults in @code{R_inspect} are
 currently -1 (no limit) and 5 respectively.
+
+@node Using Link-time Optimization,  , Debugging compiled code, Debugging
+@section Using Link-time Optimization
+
+Where supported, @emph{link time optimization} provides a comprehensive
+way to check the consistency of calls between Fortran files or between C
+and Fortran (including to functions compiled into @R{}).
+@ifset UseExternalXrefs
+@xref{Link-Time Optimization, , Link-Time Optimization,
+R-admin, R Installation and Administration}.
+@end ifset
+
+For example:
+@example
+boot.f:61: warning: type of 'ddot' does not match original declaration [-Wlto-type-mismatch]
+        y(j,i)=ddot(p,x(j,1),n,b(1,j,i),1)
+crq.f:1023: note: return value type mismatch
+@end example
+@noindent
+where the package author forgot to declare
+@example
+      double precision ddot
+      external ddot
+@end example
+@noindent
+in @file{boot.f}.  This package had its own copy of @code{ddot}: to
+detect misuse of the one in @R{}'s BLAS library would have needed @R{}
+configured with @option{--enable-lto=check}.
 
 
 @node System and foreign language interfaces, The R API, Debugging, Top
@@ -13258,7 +13284,6 @@ vsom.f90:20:33: note: 'vsom' was previously declared here
 @end example
 shows that a subroutine has been registered with 9 arguments (as that is
 what the @code{.Fortran} call uses) but only has 8.
-
 
 @menu
 * Fortran character strings::   
