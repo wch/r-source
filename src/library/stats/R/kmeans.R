@@ -26,7 +26,7 @@ function(x, centers, iter.max = 10L, nstart = 1L,
         switch(nmeth,
            {                            # 1 : Hartigan-Wong
 	       isteps.Qtran <- as.integer(min(.Mimax, 50 * m))
-	       iTran <- c(isteps.Qtran, integer(max(0,k-1)))
+	       iTran <- c(isteps.Qtran, integer(k)) # correct for k=0
                Z <- .Fortran(C_kmns, x, m, p,
                              centers = centers,
                              as.integer(k), c1 = integer(m), c2 = integer(m),

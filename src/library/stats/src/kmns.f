@@ -17,7 +17,7 @@ C     Divide M points in N-dimensional space into K clusters so that
 C     the within cluster sum of squares is minimized.
 C
       INTEGER M,N,K,ITER,IFAULT
-      INTEGER IC1(M), IC2(M), NC(K), NCP(K), ITRAN(K), LIVE(K)
+      INTEGER IC1(M), IC2(M), NC(K), NCP(K), ITRAN(K+1), LIVE(K)
       DOUBLE PRECISION A(M,N), D(M), C(K,N), AN1(K), AN2(K), WSS(K)
 c                      ------        ------
 c                     data x[,]      centers[,]
