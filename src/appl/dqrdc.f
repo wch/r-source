@@ -80,8 +80,8 @@ c     fortran dabs,dmax1,min0,dsqrt
 c
       subroutine dqrdc(x,ldx,n,p,qraux,jpvt,work,job)
       integer ldx,n,p,job
-      integer jpvt(*)
-      double precision x(ldx,*),qraux(*),work(*)
+      integer jpvt(p)
+      double precision x(ldx,p),qraux(p),work(p)
 c
 c     internal variables
 c

@@ -62,7 +62,7 @@ c     fortran dabs,dmax1,dreal,dsign
 c
       subroutine dpoco(a,lda,n,rcond,z,info)
       integer lda,n,info
-      double precision a(lda,*),z(*)
+      double precision a(lda,n),z(n)
       double precision rcond
 c
 c     internal variables

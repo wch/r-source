@@ -54,7 +54,7 @@ c     fortran mod
 c
       subroutine dpodi(a,lda,n,det,job)
       integer lda,n,job
-      double precision a(lda,*)
+      double precision a(lda,n)
       double precision det(2)
 c
 c     internal variables

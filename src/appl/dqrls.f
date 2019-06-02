@@ -82,7 +82,7 @@ c
       subroutine dqrls(x,n,p,y,ny,tol,b,rsd,qty,k,jpvt,qraux,work)
       integer n,p,ny,k,jpvt(p)
       double precision x(n,p),y(n,ny),tol,b(p,ny),rsd(n,ny),
-     .                 qty(n,ny),qraux(p),work(p)
+     .                 qty(n,ny),qraux(p),work(2*p)
 c
 c     internal variables.
 c
