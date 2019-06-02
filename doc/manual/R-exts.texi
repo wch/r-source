@@ -9483,17 +9483,17 @@ option @code{CBoundsCheck = TRUE}.} to allocate a new string @emph{via}
 new string.  However, when character vectors are used other than in a
 read-only way, the @code{.Call} interface is much to be preferred.
 
-Passing character strings to Fortran code needs even more care, and
-should be avoided where possible.  Only the first element of the
-character vector is passed in, as a fixed-length (255) character array.
-Up to 255 characters are passed back to a length-one character vector.
-How well this works (or even if it works at all) depends on the C and
-Fortran compilers on each platform (including on their options).  Often
-what is being passed to Fortran is one of a small set of possible values
-(a factor in @R{} terms) which could alternatively be passed as an
-integer code: similarly Fortran code that wants to generate diagnostic
-messages can pass an integer code to a C or @R{} wrapper which will
-convert it to a character string.
+Passing character strings to Fortran code needs even more care, is
+deprecated and should be avoided where possible.  Only the first element
+of the character vector is passed in, as a fixed-length (255) character
+array.  Up to 255 characters are passed back to a length-one character
+vector.  How well this works (or even if it works at all) depends on the
+C and Fortran compilers on each platform (including on their options).
+Often what is being passed to Fortran is one of a small set of possible
+values (a factor in @R{} terms) which could alternatively be passed as
+an integer code: similarly Fortran code that wants to generate
+diagnostic messages could pass an integer code to a C or @R{} wrapper
+which would convert it to a character string.
 
 It is possible to pass some @R{} objects other than atomic vectors @emph{via}
 @code{.C}, but this is only supported for historical compatibility: use
@@ -10066,11 +10066,17 @@ void F77_NAME(supsmu)(int *n, double *x, double *y,
 @end group
 @end example
 
+@noindent
+@command{gfortran} 9.x and later can help generate such prototypes with
+its flag @option{-fc-prototypes-external} (although one will need to
+replace the hard-coded trailing underscore with the @code{F77_NAME} macro).
+
 One can get away with inaccurate argument lists in the declarations: it
 is easy to specify the arguments for @code{.Call} (all @code{SEXP}) and
 @code{.External} (one @code{SEXP}) and as the arguments for @code{.C}
 and @code{.Fortran} are all pointers, specifying them as @code{void *}
-suffices. (For most platforms one can omit all the arguments.)
+suffices. (For most platforms one can omit all the arguments, although
+link-time optimization will warn.)
 
 @item
 (Optional but highly recommended.)  Restrict @code{.Call} etc to use the
@@ -13189,7 +13195,7 @@ to access a Fortran common block from C
 @end table
 
 On most current platforms these are all the same, but it is unwise to
-rely on this.  Note that names with underscores were not legal in
+rely on this.  Note that names containing underscores were not legal in
 Fortran 77, and are not portably handled by the above macros.  (Also,
 all Fortran names for use by @R{} are lower case, but this is not
 enforced by the macros.)
@@ -13231,12 +13237,136 @@ used.  (Passing values @emph{via} arguments is safer.)
 The standard packages, for example @pkg{stats}, are a rich source of
 further examples.
 
+Where supported, @emph{link time optimization} provides a reliable way
+to check the consistency of calls to C from Fortran or @emph{vice
+versa}.
+@ifset UseExternalXrefs
+@xref{Link-Time Optimization, , Link-Time Optimization,
+R-admin, R Installation and Administration}.
+@end ifset
+
+One place where this occurs is the registration of @code{.Fortran} calls
+in C code (@pxref{Registering native routines}).  For example
+@example
+init.c:10:13: warning: type of 'vsom_' does not match original
+ declaration [-Wlto-type-mismatch]
+  extern void F77_NAME(vsom)(void *, void *, void *, void *, 
+    void *, void *, void *, void *, void *);
+vsom.f90:20:33: note: type mismatch in parameter 9
+   subroutine vsom(neurons,dt,dtrows,dtcols,xdim,ydim,alpha,train)
+vsom.f90:20:33: note: 'vsom' was previously declared here
+@end example
+shows that a subroutine has been registered with 9 arguments (as that is
+what the @code{.Fortran} call uses) but only has 8.
+
+
+@menu
+* Fortran character strings::   
+@end menu
+
+@node Fortran character strings,  , Calling C from Fortran and vice versa, Calling C from Fortran and vice versa
+@subsection Fortran character strings
+
 Passing character strings from C to Fortran or @emph{vice versa} is
-not portable (and to Fortran 90 or later is even less so).  We have
-found that it helps to ensure that a C string to be passed is followed
-by several @code{nul}s (and not just the one needed as a C terminator).
-But for maximal portability character strings in Fortran should be
-avoided.
+not portable, but can be done with care.  The internal representations
+are different: a character array in C (or C++) is nul-terminated so its
+length can be computed by @code{strlen}.  Fortran character arrays are
+typically stored as an array of bytes and a length.  This matters when
+passing strings from C to Fortran or @emph{vice versa}: in many cases
+one has been able to get away with passing the string but not the
+length.  However, in 2019 this changed for @command{gfortran}, starting
+with version 9 but backported to versions 7 and 8.
+
+Suppose we want a function to report a message from Fortran to @R{}'s
+console (one could use @code{intpr} with dummy data, but it might be the
+basis of a custom reporting function.  Suppose the equivalent in Fortran
+would be
+@example
+      subroutine rmsg(msg)
+      character*(*) msg
+      print *.msg
+      end
+@end example
+@noindent
+in file @file{rmsg.f}. Using @command{gfortran} 9.x we can extract the C
+view by
+@example
+gfortran -c -fc-prototypes-external rmsg.f
+@end example
+@noindent
+which gives
+@example
+void rmsg_ (char *msg, size_t msg_len);
+@end example
+@noindent 
+(where @code{size_t} applies to version 8 and later).  We could re-write
+that portably in C as
+@example
+void F77_NAME(rmsg)(char *msg, FC_LEN_T msg_len)
+@{
+    char cmsg[msg_len+1];
+    strncpy(cmsg, msg, msg_len);
+    cmsg[msg_len] = '\0';
+    // do something with 'cmsg' 
+@}
+@end example
+
+An alternative is to use Fortran 2003 features@footnote{These started to
+be implemented in compilers @emph{ca} 2007, e.g.@: in @command{gfortran}
+4.3.} to set up the Fortran routine to pass a C-compatible character
+string.  We could use something like
+@example
+module cfuncs
+  use iso_c_binding, only: c_char, c_null_char
+  interface
+    subroutine cmsg(msg) bind(C, name = 'cmsg')
+      use iso_c_binding, only: c_char
+      character(kind=c_char):: msg(*)
+    end subroutine cmsg
+  end interface
+end module
+
+subroutine rmsg(msg)
+  use cfuncs
+  character *(*) msg
+  call cmsg(msg//c_null_char) ! need to concatenate a null terminator
+end subroutine rmsg
+@end example
+@noindent
+where the C side is simply
+@example
+void cmsg(const char *msg)
+@{
+    // do something with nul-terminated string 'msg'
+@}
+@end example
+
+Passing a variable-length string from C to Fortran is trickier, but
+@uref{https://software.intel.com/en-us/fortran-compiler-developer-guide-and-reference-bind}
+provides a recipe.  However, all the uses in BLAS and LAPACK are of a
+single character, and for this we can write a wrapper in Fortran
+along the lines of
+@example
+      subroutine c_dgemm(transa, transb, m, n, k, alpha,
+     +     a, lda, b, ldb, beta, c, ldc)
+     +     bind(C, name = 'Cdgemm')
+        use iso_c_binding, only : c_char, c_int, c_double
+        character(c_char):: transa, transb
+        integer(c_int):: m, n, k, lda, ldb, ldc
+        real(c_double):: alpha, beta, a(lda, *), b(ldb, *)
+        real(c_double):: c(ldc, *)
+        call dgemm(transa, transb, m, n, k, alpha,
+     +             a, lda, b, ldb, beta, c, ldc)
+      end subroutine c_dgemm
+@end example
+@noindent
+which is then called from C with declaration
+@example
+Cdgemm(const char *transa, const char *transb, const int *m,
+       const int *n, const int *k, const double *alpha,
+       const double *a, const int *lda, const double *b, const int *ldb,
+       const double *beta, double *c, const int *ldc);
+@end example
 
 
 @node Numerical analysis subroutines, Optimization, Calling C from Fortran and vice versa, The R API
