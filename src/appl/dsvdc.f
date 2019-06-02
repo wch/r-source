@@ -1,4 +1,5 @@
-c -- called from R's  svd(x, ..., LINPACK = TRUE)  , i.e, *NOT* by default -- 
+c -- formerly called from R's  svd(x, ..., LINPACK = TRUE)  -- 
+c  Also called from loessf.f.
 
 c     Minimally modernized in 2018-09, so is fixed-form F90, not F77
 c
