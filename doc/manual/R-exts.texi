@@ -8035,6 +8035,7 @@ which provide complementary examples to those given here.)
 * Debugging R code::            
 * Checking memory access::      
 * Debugging compiled code::     
+* Using Link-time Optimization::  
 @end menu
 
 
@@ -8985,7 +8986,7 @@ is not advisable to build @R{} itself with bounds checking (and may not
 even be possible as these subroutines are called during the @R{} build).
 
 
-@node Debugging compiled code,  , Checking memory access, Debugging
+@node Debugging compiled code, Using Link-time Optimization, Checking memory access, Debugging
 @section Debugging compiled code
 @cindex Debugging
 
@@ -9281,6 +9282,46 @@ and the output of vectors @code{R_inspect3} takes additional two character()
 parameters: maximum depth and the maximal number of elements that will
 be printed for scalar vectors. The defaults in @code{R_inspect} are
 currently -1 (no limit) and 5 respectively.
+
+@node Using Link-time Optimization,  , Debugging compiled code, Debugging
+@section Using Link-time Optimization
+
+Where supported, @emph{link time optimization} provides a comprehensive
+way to check the consistency of calls between Fortran files or between C
+and Fortran.
+@ifset UseExternalXrefs
+@xref{Link-Time Optimization, , Link-Time Optimization,
+R-admin, R Installation and Administration}.
+@end ifset
+
+For example:
+@example
+boot.f:61: warning: type of 'ddot' does not match original declaration [-Wlto-type-mismatch]
+        y(j,i)=ddot(p,x(j,1),n,b(1,j,i),1)
+crq.f:1023: note: return value type mismatch
+@end example
+@noindent
+where the package author forgot to declare
+@example
+      double precision ddot
+      external ddot
+@end example
+@noindent
+in @file{boot.f}.
+
+Or:
+
+@example
+rkpk2.f:77:5: warning: type of 'dstup' does not match original declaration [-Wlto-type-mismatch]
+   77 |      *info, wk)
+      |     ^
+rkpk1.f:2565:5: note: type mismatch in parameter 14
+ 2565 |       subroutine dstup (s, lds, nobs, nnull, qraux, jpvt, y, q, ldqr,
+      |     ^
+rkpk1.f:2565:5: note: 'dstup' was previously declared here
+@end example
+@noindent
+where the fourteenth argument 'dum' was missing in the call.
 
 
 @node System and foreign language interfaces, The R API, Debugging, Top
@@ -13241,6 +13282,26 @@ passed is followed by several @code{nul}s (and not just the one needed
 as a C terminator).  But for maximal portability character strings in
 Fortran should be avoided.
 
+Where supported, @emph{link time optimization} provides a reliable way
+to check the consistency of calls to C from Fortran or @emph{vice
+versa}.
+@ifset UseExternalXrefs
+@xref{Link-Time Optimization, , Link-Time Optimization,
+R-admin, R Installation and Administration}.
+@end ifset
+One place where this occurs is the registration of @code{.Fortran} calls
+in C code (@pxref{Registering native routines}).  For example
+@example
+init.c:10:13: warning: type of 'vsom_' does not match original
+ declaration [-Wlto-type-mismatch]
+  extern void F77_NAME(vsom)(void *, void *, void *, void *, 
+    void *, void *, void *, void *, void *);
+vsom.f90:20:33: note: type mismatch in parameter 9
+   subroutine vsom(neurons,dt,dtrows,dtcols,xdim,ydim,alpha,train)
+vsom.f90:20:33: note: 'vsom' was previously declared here
+@end example
+shows that a subroutine has been registered with 9 arguments (as that is
+what the @code{.Fortran} call used) but only has 8.
 
 @node Numerical analysis subroutines, Optimization, Calling C from Fortran and vice versa, The R API
 @section Numerical analysis subroutines

@@ -946,6 +946,7 @@ environment variable @env{TZ}.
 * Debugging Symbols::           
 * OpenMP Support::              
 * C++ Support::                 
+* Link-Time Optimization::      
 @end menu
 
 @node Debugging Symbols, OpenMP Support, Other Options, Other Options
@@ -1012,7 +1013,7 @@ OpenMP program, which is not the same as compiling a shared object and
 loading it into the C program of @R{}'s executable.  Note that
 overridden values are not tested.
 
-@node C++ Support,  , OpenMP Support, Other Options
+@node C++ Support, Link-Time Optimization, OpenMP Support, Other Options
 @subsection C++ Support
 
 C++ is not used by @R{} itself, but support is provided for installing
@@ -1112,6 +1113,46 @@ Extensions' manual.  Prior to @R{} 3.6.0 the default C++ standard was
 that of the compiler used: currently it is C++11 if supported by the
 compiler: this can be overridden by setting @samp{CXXSTD} when @R{} is
 configured, for example to @samp{-std=gnu++14}.
+
+@node Link-Time Optimization,  , C++ Support, Other Options
+@subsection Link-Time Optimization
+
+There is support for using link-time optimization (LTO) if the toolchain
+supports it: configure with flag @option{--enable-lto}.
+
+Whether toolchains support LTO is often unclear: all of the C compiler,
+the Fortran compiler and linker have to support it, and support it by
+the same mechanism (so mixing compiler families may not work and a
+non-system linker may be needed).  It has been tested recently on Linux
+with @command{gcc}/@command{gfortran} 8.x and 9.x: that needed setting
+@example
+AR=gcc-ar
+RANLIB=gcc-ranlib
+@end example
+@noindent
+(e.g.@: in @file{config.site}).  For non-system compilers or if those
+wrappers have not been installed one may need something like
+@example
+AR="ar --plugin=/path/to/liblto_plugin.so"
+RANLIB="ranlib --plugin=/path/to/liblto_plugin.so
+@end example
+
+When LTO is enabled it is used for compiled code in packages (including
+the recommended packages) unless the flag @option{--enable-lto=R} is
+used.  With sufficient diagnostic flags (e.g.@: @option{-Wall} in GCC)
+this can flag inconsistencies between source files in a package.
+
+LTO support was added in 2011 for @command{gcc} 4.5.x on Linux but was
+little used before 2019.
+
+With @command{gcc}/@command{gfortran} 9.x@footnote{and probably 8.4 and
+later when released.} this will flag inconsistencies in calls to
+Fortran subroutines/functions, both between Fortran source files and
+between Fortran and C/C++.  @command{gfortran} 9.x can help
+understanding these by extracting C prototypes from Fortran source files
+with its @option{-fc-prototypes-external} option, e.g.@: that (at the
+time of writing) Fortran @code{LOGICAL} corresponds to
+@code{int_least32_t *}.
 
 @node Testing a Unix-alike Installation,  , Other Options, Installing R under Unix-alikes
 @section Testing an Installation
