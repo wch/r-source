@@ -7026,9 +7026,11 @@ so that e.g.@: @kbd{??Spearman} will succeed in finding the
 help page for the test for association between paired samples using
 Spearman's @eqn{\rho, rho}.
 
-
 (Note that @code{help.search()} only uses ``sections'' of documentation
 objects with no additional markup.)
+
+Each @code{\concept} entry should give a @emph{single} index term (word
+or phrase), and not use any Rd markup.
 
 If you want to cross reference such items from other help files @emph{via}
 @code{\link}, you need to use @code{\alias} and not @code{\concept}.
@@ -9367,7 +9369,7 @@ subroutine.
 @item @code{integer}   @tab @code{int *}     @tab @code{INTEGER}
 @item @code{double}    @tab @code{double *}  @tab @code{DOUBLE PRECISION}
 @item @code{complex}   @tab @code{Rcomplex *} @tab @code{DOUBLE COMPLEX}
-@item @code{character} @tab @code{char **}   @tab @code{CHARACTER*255}
+@item @code{character} @tab @code{char **}   @tab @code{CHARACTER(255)}
 @item @code{raw}       @tab @code{unsigned char *}    @tab none
 @end multitable
 @end quotation
@@ -9480,17 +9482,17 @@ option @code{CBoundsCheck = TRUE}.} to allocate a new string @emph{via}
 new string.  However, when character vectors are used other than in a
 read-only way, the @code{.Call} interface is much to be preferred.
 
-Passing character strings to Fortran code needs even more care, and
-should be avoided where possible.  Only the first element of the
-character vector is passed in, as a fixed-length (255) character array.
-Up to 255 characters are passed back to a length-one character vector.
-How well this works (or even if it works at all) depends on the C and
-Fortran compilers on each platform (including on their options).  Often
-what is being passed to Fortran is one of a small set of possible values
-(a factor in @R{} terms) which could alternatively be passed as an
-integer code: similarly Fortran code that wants to generate diagnostic
-messages can pass an integer code to a C or @R{} wrapper which will
-convert it to a character string.
+Passing character strings to Fortran code needs even more care, is
+deprecated and should be avoided where possible.  Only the first element
+of the character vector is passed in, as a fixed-length (255) character
+array.  Up to 255 characters are passed back to a length-one character
+vector.  How well this works (or even if it works at all) depends on the
+C and Fortran compilers on each platform (including on their options).
+Often what is being passed to Fortran is one of a small set of possible
+values (a factor in @R{} terms) which could alternatively be passed as
+an integer code: similarly Fortran code that wants to generate
+diagnostic messages could pass an integer code to a C or @R{} wrapper
+which would convert it to a character string.
 
 It is possible to pass some @R{} objects other than atomic vectors @emph{via}
 @code{.C}, but this is only supported for historical compatibility: use
@@ -10063,11 +10065,17 @@ void F77_NAME(supsmu)(int *n, double *x, double *y,
 @end group
 @end example
 
+@noindent
+@command{gfortran} 9.x and later can help generate such prototypes with
+its flag @option{-fc-prototypes-external} (although one will need to
+replace the hard-coded trailing underscore with the @code{F77_NAME} macro).
+
 One can get away with inaccurate argument lists in the declarations: it
 is easy to specify the arguments for @code{.Call} (all @code{SEXP}) and
 @code{.External} (one @code{SEXP}) and as the arguments for @code{.C}
 and @code{.Fortran} are all pointers, specifying them as @code{void *}
-suffices. (For most platforms one can omit all the arguments.)
+suffices. (For most platforms one can omit all the arguments, although
+link-time optimization will warn.)
 
 @item
 (Optional but highly recommended.)  Restrict @code{.Call} etc to use the
@@ -13186,7 +13194,7 @@ to access a Fortran common block from C
 @end table
 
 On most current platforms these are all the same, but it is unwise to
-rely on this.  Note that names with underscores were not legal in
+rely on this.  Note that names containing underscores were not legal in
 Fortran 77, and are not portably handled by the above macros.  (Also,
 all Fortran names for use by @R{} are lower case, but this is not
 enforced by the macros.)
