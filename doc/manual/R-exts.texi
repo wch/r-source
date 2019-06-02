@@ -9370,7 +9370,7 @@ subroutine.
 @item @code{integer}   @tab @code{int *}     @tab @code{INTEGER}
 @item @code{double}    @tab @code{double *}  @tab @code{DOUBLE PRECISION}
 @item @code{complex}   @tab @code{Rcomplex *} @tab @code{DOUBLE COMPLEX}
-@item @code{character} @tab @code{char **}   @tab @code{CHARACTER*255}
+@item @code{character} @tab @code{char **}   @tab @code{CHARACTER(255)}
 @item @code{raw}       @tab @code{unsigned char *}    @tab none
 @end multitable
 @end quotation
