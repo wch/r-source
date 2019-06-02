@@ -84,8 +84,8 @@ c     fortran dabs,dmax1,min0,dsqrt
 c
       subroutine dqrdc2(x,ldx,n,p,tol,k,qraux,jpvt,work)
       integer ldx,n,p
-      integer jpvt(*)
-      double precision x(ldx,*),qraux(*),work(p,2),tol
+      integer jpvt(p)
+      double precision x(ldx,p),qraux(p),work(p,2),tol
 c
 c     internal variables
 c
@@ -96,12 +96,15 @@ c
 c
 c     compute the norms of the columns of x.
 c
-      do 70 j = 1, p
-         qraux(j) = dnrm2(n,x(1,j),1)
-         work(j,1) = qraux(j)
-         work(j,2) = qraux(j)
-         if(work(j,2) .eq. 0.0d0) work(j,2) = 1.0d0
-   70 continue
+      if (n .gt. 0) then
+c       avoid accessing element beyond the bound
+         do 70 j = 1, p
+            qraux(j) = dnrm2(n,x(1,j),1)
+            work(j,1) = qraux(j)
+            work(j,2) = qraux(j)
+            if(work(j,2) .eq. 0.0d0) work(j,2) = 1.0d0
+  70     continue
+      endif
 c
 c     perform the householder reduction of x.
 c
