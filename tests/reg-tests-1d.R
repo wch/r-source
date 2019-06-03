@@ -2746,6 +2746,12 @@ stopifnot(exprs = {
 ## The last rbind() had failed since at least R 2.0.0
 
 
+## as.data.frame.array(<1D array>) -- PR#17570
+str(x2 <- as.data.frame(array(1:2)))
+stopifnot(identical(x2[[1]], 1:2))
+## still was "array" in R <= 3.6.0
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

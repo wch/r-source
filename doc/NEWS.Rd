@@ -52,7 +52,7 @@
 
       \item User-set \samp{DEFS} (e.g., in \file{config.site}) is now
       used for compiling packages (including base packages).
-      
+
       \item There is a new variant option \option{--enable-lto=check}
       for checking consistency of BLAS/LAPACK calls --- see
       \sQuote{Writing R Extensions}.
@@ -72,7 +72,7 @@
 	propotypes in headers \file{BLAS.h} and \file{Lapack.h} but to
 	avoid extensive breakage this is only exposed when
 	\code{USE_FC_LEN_T} is defined.
-	   
+
 	If a package's C/C++ calls to BLAS/LAPACK allow for the
 	\sQuote{hidden} arguments use by most Fortran compilers to pass
 	the lengths of Fortran character arguments, define
@@ -94,6 +94,8 @@
 
       \item \code{rbind.data.frame()} no longer drops \code{<NA>} levels
       from factor columns by default, \PR{17562}.
+
+      It also treats 1D arrays the same as vectors, \PR{17570}.
 
       \item \code{available.packages()} and hence \code{install.packages()}
       now pass their \code{...} argument to \code{download.file()},
