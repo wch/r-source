@@ -9313,11 +9313,9 @@ Or:
 
 @example
 rkpk2.f:77:5: warning: type of 'dstup' does not match original declaration [-Wlto-type-mismatch]
-   77 |      *info, wk)
-      |     ^
+      *info, wk)
 rkpk1.f:2565:5: note: type mismatch in parameter 14
- 2565 |       subroutine dstup (s, lds, nobs, nnull, qraux, jpvt, y, q, ldqr,
-      |     ^
+       subroutine dstup (s, lds, nobs, nnull, qraux, jpvt, y, q, ldqr,
 rkpk1.f:2565:5: note: 'dstup' was previously declared here
 @end example
 @noindent
