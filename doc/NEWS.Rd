@@ -54,7 +54,7 @@
       used for compiling packages (including base packages).
 
       \item There is a new variant option \option{--enable-lto=check}
-      for checking consistency of BLAS/LAPACK calls --- see
+      for checking consistency of BLAS/LAPACK/LINPACK calls --- see
       \sQuote{Writing R Extensions}.
 
       \item The default detection of the shell variable \code{libNN} is

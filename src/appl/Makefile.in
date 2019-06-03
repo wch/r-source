@@ -17,8 +17,8 @@ SOURCES_F = \
 	dqrdc2.f dqrls.f dqrsl.f dqrutl.f dsvdc.f dtrco.f dtrsl.f
 DEPENDS = $(SOURCES_C:.c=.d)
 OBJECTS_BLAS = @USE_EXTERNAL_BLAS_FALSE@ blas.o @COMPILE_FORTRAN_DOUBLE_COMPLEX_FALSE@ cmplxblas.o
-OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o) \
-  @BLAS_SHLIB_FALSE@ $(OBJECTS_BLAS)
+OBJECTS_LIN = $(SOURCES_F:.f=.o)
+OBJECTS = $(SOURCES_C:.c=.o) $(OBJECTS_LIN) @BLAS_SHLIB_FALSE@ $(OBJECTS_BLAS)
 HEADERS = lbfgsb.c
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
@@ -45,11 +45,22 @@ Makedeps: Makefile $(DEPENDS)
 
 R: Makedeps
 	@$(MAKE) libappl.a
+	@BUILD_LTO_TRUE@@$(MAKE) install-Linpack
 
 libappl.a: $(OBJECTS)
 	@rm -f $@
 	$(AR) -cr $@ $(OBJECTS)
 	$(RANLIB) $@
+
+libLinpack.a: $(OBJECTS_LIN)
+	@rm -f $@
+	$(AR) -cr $@ $(OBJECTS_LIN)
+	$(RANLIB) $@
+
+## only for checking, so only installed locally
+install-Linpack: libLinpack.a
+	@$(MKINSTALLDIRS) ../../lib
+	@$(SHELL) $(top_srcdir)/tools/copy-if-change libLinpack.a ../../lib/libLinpack.a
 
 ## Used with --disable-BLAS-shlib
 blas.o: $(top_srcdir)/src/extra/blas/blas.f

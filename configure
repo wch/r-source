@@ -3949,6 +3949,8 @@ elif  test "x${want_lto}" = xcheck; then
   ## use for maintainer checking.
   LTO=-flto
   LTOALL=-flto
+  LIBR0="-L\"\$(R_HOME)/lib\$(R_ARCH)\""
+  LIBR1="${LIBR1} -lLinpack"
 elif  test "x${want_lto}" != xno; then
   { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: Unknown value --enable-lto=${enableval}" >&5
 $as_echo "$as_me: WARNING: Unknown value --enable-lto=${enableval}" >&2;}
@@ -25344,7 +25346,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:25347: \"$ac_link\") >&5
+(eval echo $as_me:25349: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -25419,7 +25421,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:25422: \"$ac_link\") >&5
+(eval echo $as_me:25424: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS

@@ -1150,7 +1150,8 @@ and in any packages installed using the build.  (This is unlikely to
 work in conjunction with non-default options for BLAS and LAPACK, and
 `linking' against these libraries may be very slow.  Note that the
 static libraries may need to be re-compiled for even a minor update to
-the compiler.)
+the compiler.)  Further, it checks consistency of LINPACK calls from
+package to @R{}.
 
 LTO support was added in 2011 for @command{gcc} 4.5.x on Linux but was
 little used before 2019.

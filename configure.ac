@@ -339,6 +339,8 @@ elif  test "x${want_lto}" = xcheck; then
   ## use for maintainer checking.
   LTO=-flto
   LTOALL=-flto
+  LIBR0="-L\"\$(R_HOME)/lib\$(R_ARCH)\""
+  LIBR1="${LIBR1} -lLinpack"
 elif  test "x${want_lto}" != xno; then
   AC_MSG_WARN([Unknown value --enable-lto=${enableval}])
 fi
