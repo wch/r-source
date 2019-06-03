@@ -95,8 +95,6 @@
       \item \code{rbind.data.frame()} no longer drops \code{<NA>} levels
       from factor columns by default, \PR{17562}.
 
-      It also treats 1D arrays the same as vectors, \PR{17570}.
-
       \item \code{available.packages()} and hence \code{install.packages()}
       now pass their \code{...} argument to \code{download.file()},
       fulfilling the wish of \PR{17532}.
@@ -150,6 +148,9 @@
       \item [On Windows only], \code{writeClipboard(.., format = <n>)} now
       does correctly pass \code{format} to the underlying C code, thanks to
       a bug report (with patch) by Jenny Bryan.
+
+      \item \code{as.data.frame()} treats 1D arrays the same as vectors,
+      \PR{17570}.
     }
   }
 }
