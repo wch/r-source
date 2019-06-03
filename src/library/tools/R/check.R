@@ -4815,7 +4815,8 @@ add_dummies <- function(dir, Log)
                              ## new in gcc 8
                              ": warning: .* \\[-Wcatch-value=\\]",
                              # warns on code deprecated in C++11
-                            ## Fatal, not warning, for clang and Solaris ODS
+                             ": warning: .* \\[-Wlto-type-mismatch\\]",
+                             ## Fatal, not warning, for clang and Solaris ODS
                              ": warning: .* with a value, in function returning void"
                             )
 
