@@ -1,9 +1,9 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  file util.c
+ *  Copyright (C) 2005--2019  The R Core Team
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
  *  Copyright (C) 2004	      The R Foundation
- *  Copyright (C) 2005--2017  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -318,7 +318,7 @@ SEXP writeClipboard(SEXP text, SEXP sformat)
 		warning(_("unable to open the clipboard"));
 		GlobalFree(hglb);
 	    } else {
-		success = SetClipboardData(CF_TEXT, hglb) != 0;
+		success = SetClipboardData(format, hglb) != 0;
 		if(!success) {
 		    warning(_("unable to write to the clipboard"));
 		    GlobalFree(hglb);

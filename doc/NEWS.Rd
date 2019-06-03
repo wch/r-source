@@ -44,6 +44,10 @@
       \item{print()}ing and auto-printing no longer differs for
       \code{function}s with a user defined \code{print.function}, thanks to
       Bill Dunlap's report.
+
+      \item [On Windows only], \code{writeClipboard(.., format = <n>)} now
+      does correctly pass \code{format} to the underlying C code, thanks to
+      a bug report (with patch) by Jenny Bryan.
     }
   }
 }
