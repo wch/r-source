@@ -20,7 +20,7 @@
 #ifndef R_STATS_H
 #define R_STATS_H
 
-/* definitions not involving SEXPs, plus _() */
+/* definitions not involving SEXPs, including those for .Fortran. */
 
 #ifdef ENABLE_NLS
 #include <libintl.h>
@@ -30,6 +30,13 @@
 #endif
 
 #include <R_ext/RS.h>
+
+/* A sterting point to extract wuch prototypes for .Fortran calls is
+
+   gfortran -c -fc-prototypes-external hclust.f
+
+   for gfortran >= 9, replaing hclust_ with the macro call.  */
+
 void
 F77_NAME(hclust)(int *n, int *len, int *iopt, int *ia, int *ib,
 		 double *crit, double *membr, int *nn,
