@@ -9287,7 +9287,7 @@ currently -1 (no limit) and 5 respectively.
 
 Where supported, @emph{link time optimization} provides a comprehensive
 way to check the consistency of calls between Fortran files or between C
-and Fortran (including to functions compiled into @R{}).
+and Fortran.
 @ifset UseExternalXrefs
 @xref{Link-Time Optimization, , Link-Time Optimization,
 R-admin, R Installation and Administration}.
@@ -9310,20 +9310,29 @@ in @file{boot.f}.  This package had its own copy of @code{ddot}: to
 detect misuse of the one in @R{}'s BLAS library would have needed @R{}
 configured with @option{--enable-lto=check}.
 
-Or:
+Further examples:
 
 @example
 rkpk2.f:77:5: warning: type of 'dstup' does not match original declaration [-Wlto-type-mismatch]
-   77 |      *info, wk)
-      |     ^
+      *info, wk)
 rkpk1.f:2565:5: note: type mismatch in parameter 14
- 2565 |       subroutine dstup (s, lds, nobs, nnull, qraux, jpvt, y, q, ldqr,
-      |     ^
+       subroutine dstup (s, lds, nobs, nnull, qraux, jpvt, y, q, ldqr,
 rkpk1.f:2565:5: note: 'dstup' was previously declared here
 @end example
 @noindent
 where the fourteenth argument 'dum' was missing in the call.
 
+@example
+reg.f:78:33: warning: type of 'dqrdc' does not match original declaration [-Wlto-type-mismatch]
+       call dqrdc (sr, nobs, nobs, nnull, wk, dum, dum, 0)
+dstup.f:20: note: 'dqrdc' was previously declared here
+       call dqrdc (s, lds, nobs, nnull, qraux, jpvt, work, 1)
+@end example
+@noindent
+@code{dqrdc} is a LINPACK routine from @R{}, @code{jpvt} is an integer
+array and @code{work} is a double precision one so @code{dum} cannot be
+both (nor used for both).  (If @option{--emable-lto=check} had been used
+the comparison would have been with the definition in @R{}.)
 
 @node System and foreign language interfaces, The R API, Debugging, Top
 @chapter System and foreign language interfaces
@@ -13296,7 +13305,7 @@ vsom.f90:20:33: note: type mismatch in parameter 9
 vsom.f90:20:33: note: 'vsom' was previously declared here
 @end example
 shows that a subroutine has been registered with 9 arguments (as that is
-what the @code{.Fortran} call uses) but only has 8.
+what the @code{.Fortran} call used) but only has 8.
 
 @menu
 * Fortran character strings::   
