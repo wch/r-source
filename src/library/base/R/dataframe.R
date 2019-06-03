@@ -1353,13 +1353,17 @@ rbind.data.frame <- function(..., deparse.level = 1, make.row.names = TRUE,
 		if(smartX) NA.lev <- ordCol
 		for(j in seq_len(nvar)) {
 		    xj <- value[[j]]
-                    facCol[j] <-
-                        if(!is.null(levels(xj))) {
-                            all.levs[[j]] <- levels(xj)
+                    facCol[j] <- fac <-
+                        if(!is.null(lj <- levels(xj))) {
+                            all.levs[[j]] <- lj
                             TRUE # turn categories into factors
                         } else
                             is.factor(xj)
-                    ordCol[j] <- is.ordered(xj)
+		    if(fac) {
+			ordCol[j] <- is.ordered(xj)
+			if(smartX && !NA.lev[j])
+			    NA.lev[j] <- anyNA(lj)
+		    }
 		    has.dim[j] <- length(dim(xj)) == 2L
 		}
 	    }

@@ -2709,19 +2709,41 @@ dfy <- data.frame(y=fcts())
 yN <- c(1:3, NA_character_, 5:8)
 dfay  <- cbind(dfa, dfy)
 dfby  <- cbind(dfa, data.frame(y = yN))
-dfaby <- rbind(dfay, dfby)
-stopifnot(exprs = {
+dfcy  <- dfa; dfcy$y <- yN # y: a <char> column
+## dNay := drop unused levels from dfay incl NA
+dNay <- dfay; dNay[] <- lapply(dfay, factor)
+str(dfay) # both (x, y) have NA level
+str(dfby) # (x: yes / y: no) NA level
+str(dNay) # both: no NA level
+stopifnot(exprs = { ## "trivial" (non rbind-related) assertions :
     identical(levels(dfa$x), c(1:3, NA_character_) -> full_lev)
     identical(levels(dfb$x),  full_lev)
     identical(levels(dfay$x), full_lev) # cbind() does work
     identical(levels(dfay$y), full_lev)
     identical(levels(dfby$x), full_lev)
+    is.character(dfcy$y)
+	   anyNA(dfcy$y)
     identical(levels(dfby$y), as.character((1:8)[-4]) -> levN) # no NA levels
+    identical(lapply(dNay, levels),
+              list(x = c("2","3"), y = levN[1:3])) # no NA levels
+})
+dfaby <- rbind(dfay, dfby)
+dNaby <- rbind(dNay, dfby)
+dfacy <- rbind(dfay, dfcy)
+dfcay <- rbind(dfcy, dfay) # 1st arg col. is char => rbind() keeps char
+stopifnot(exprs = {
     identical(levels(rbind(dfa, dfb)$x), full_lev) # <== not in  R <= 3.6.0
     identical(levels(dfaby$x),           full_lev)
-    identical(levels(dfaby$y),               levN) # failed in c76513
+    identical(levels(dfaby$y),                 yN) # failed a while
+    identical(levels(dNaby$y),               levN) #  (ditto)
+    identical(dfacy, dfaby)
+    is.character(dfcay$y)
+	   anyNA(dfcay$y)
+    identical(dfacy$x, dfcay$x)
+    identical(lapply(rbind(dfby, dfay), levels),
+              list(x = full_lev, y = c(levN, NA)))
     identical(lapply(rbind(dfay, dfby, factor.exclude = NA), levels),
-	      list(x = as.character(1:3), y = levN))
+              list(x = as.character(1:3), y = levN))
     identical(lapply(rbind(dfay, dfby, factor.exclude=NULL), levels),
 	      list(x = full_lev, y = yN))
 })
