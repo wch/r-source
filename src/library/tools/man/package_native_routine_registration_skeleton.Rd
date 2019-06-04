@@ -132,7 +132,7 @@ package_native_routine_registration_skeleton(dir, con = stdout(),
 }
 
 \section{Extracting Fortran prototypes}{
-  \command{gfortran} 9.x and later can extract C prototypes for Fortran
+  \command{gfortran} 9.2 and later can extract C prototypes for Fortran
   subroutines with a special flag:\preformatted{
     gfortran -c -fc-prototypes-external file.f
 }
