@@ -24,11 +24,14 @@
    - add iconvlist()
    - set errno on error
    - XP-compatibility for WC_NO_BEST_FIT_CHARS -- use only for ASCII
+     by default, control via R_WIN_ICONV_BEST_FIT environment variable
 
 A reasonably complete list is at
 http://msdn.microsoft.com/en-us/library/windows/desktop/dd317756%28v=vs.85%29.aspx
 
  */
+
+static int R_WIN_ICONV_best_fit = 1; /* R addition */
 
 /* for WC_NO_BEST_FIT_CHARS */
 #ifndef WINVER
@@ -767,8 +770,21 @@ iconv_open(const char *tocode, const char *fromcode)
     /* reset the errno to prevent reporting wrong error code.
      * 0 for unsorted error. */
     errno = 0;
-    if (win_iconv_open(cd, tocode, fromcode))
+    if (win_iconv_open(cd, tocode, fromcode)) {
+	R_WIN_ICONV_best_fit = 1; /* legacy default */
+	char *valstr = getenv("R_WIN_ICONV_BEST_FIT");
+	if (valstr) {
+	    if (!stricmp(valstr, "true") ||
+	        !stricmp(valstr, "yes") ||
+	        !strcmp(valstr, "1"))
+		R_WIN_ICONV_best_fit = 1;
+	    else if (!stricmp(valstr, "false") ||
+	             !stricmp(valstr, "no") ||
+	             !strcmp(valstr, "0"))
+		R_WIN_ICONV_best_fit = 0;
+	}
 	return (iconv_t)cd;
+    }
 
     free(cd);
     // setting errno is R addition
@@ -1285,7 +1301,8 @@ kernel_wctomb(csconv_t *cv, ushort *wbuf, int wbufsize, uchar *buf, int bufsize)
 	   (it is TRUE also for 65001), and that the API is supported since
 	   Windows 2000.
 	 */
-    if ( !(cv->flags & FLAG_TRANSLIT) && (cv->codepage == 20127) )
+    if ( !(cv->flags & FLAG_TRANSLIT) &&
+          (cv->codepage == 20127 || R_WIN_ICONV_best_fit == 0) )
 	flags |= WC_NO_BEST_FIT_CHARS;
 #endif
     }
