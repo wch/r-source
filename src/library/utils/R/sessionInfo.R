@@ -64,6 +64,7 @@
                                   "12" = "Sierra",
                                   "13" = "High Sierra",
                                   "14" = "Mojave",
+                                  "15" = "Catalina",
                                   ""), ver)
                },
                "SunOS" = {
