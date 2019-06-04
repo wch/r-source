@@ -9330,9 +9330,9 @@ dstup.f:20: note: 'dqrdc' was previously declared here
 @end example
 @noindent
 @code{dqrdc} is a LINPACK routine from @R{}, @code{jpvt} is an integer
-array and @code{work} is a double precision one so @code{dum} cannot be
-both (nor used for both).  (If @option{--emable-lto=check} had been used
-the comparison would have been with the definition in @R{}.)
+array and @code{work} is a double precision one so @code{dum} cannot
+match both.  (If @option{--emable-lto=check} had been used the
+comparison would have been with the definition in @R{}.)
 
 @node System and foreign language interfaces, The R API, Debugging, Top
 @chapter System and foreign language interfaces
@@ -10116,9 +10116,10 @@ void F77_NAME(supsmu)(int *n, double *x, double *y,
 @end example
 
 @noindent
-@command{gfortran} 9.x and later can help generate such prototypes with
-its flag @option{-fc-prototypes-external} (although one will need to
-replace the hard-coded trailing underscore with the @code{F77_NAME} macro).
+@command{gfortran} 9.2@footnote{This was added just after release as
+9.1.} and later can help generate such prototypes with its flag
+@option{-fc-prototypes-external} (although one will need to replace the
+hard-coded trailing underscore with the @code{F77_NAME} macro).
 
 One can get away with inaccurate argument lists in the declarations: it
 is easy to specify the arguments for @code{.Call} (all @code{SEXP}) and
@@ -13335,8 +13336,8 @@ would be
       end
 @end example
 @noindent
-in file @file{rmsg.f}. Using @command{gfortran} 9.x we can extract the C
-view by
+in file @file{rmsg.f}. Using @command{gfortran} 9.2 and later we can
+extract the C view by
 @example
 gfortran -c -fc-prototypes-external rmsg.f
 @end example
