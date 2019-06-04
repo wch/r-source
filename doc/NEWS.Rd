@@ -56,12 +56,6 @@
       \item There is a new variant option \option{--enable-lto=check}
       for checking consistency of BLAS/LAPACK/LINPACK calls --- see
       \sQuote{Writing R Extensions}.
-
-      \item The default detection of the shell variable \code{libNN} is
-      overridden for derivatives of Debian Linux, some of which have
-      started to have a \file{/usr/lib64} directory.
-      (E.g.\sspace{}Ubuntu 19.04.)  As before, it can be specified in
-      \file{config.site}.
     }
   }
 
@@ -103,6 +97,16 @@
 }
 
 \section{\Rlogo CHANGES IN R 3.6.0 patched}{
+  \subsection{INSTALLATION on a UNIX-ALIKE}{
+    \itemize{
+      \item The default detection of the shell variable \code{libNN} is
+      overridden for derivatives of Debian Linux, some of which have
+      started to have a \file{/usr/lib64} directory.
+      (E.g.\sspace{}Ubuntu 19.04.)  As before, it can be specified in
+      \file{config.site}.
+    }
+  }
+
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item The use of a character vector with \code{.Fortran()} is
