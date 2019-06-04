@@ -1826,7 +1826,7 @@ Windows' CRLF line endings.
 The front page of a @acronym{CRAN} site has a link `Download R for (Mac)
 OS X'. Click on that, then download the file
 @file{R-@value{VERSIONno}.pkg} and install it. This runs on macOS 10.11
-and later (El Capitan, Sierra, High Sierra, Mojave, @dots{}).
+and later (El Capitan, Sierra, High Sierra, Mojave, Catalina, @dots{}).
 
 Installers for R-patched and R-devel are usually available from
 @uref{https://mac.R-project.org}.  (Some of these packages are
@@ -5021,8 +5021,9 @@ fresh OS installation, running e.g.@: @command{make} in a terminal will
 offer the installation of the command-line tools.  If you have installed
 Xcode, this provides the command-line tools.  The tools will need to be
 reinstalled when macOS is upgraded, as upgrading partially removes
-them.)  For macOS 10.14 (`Mojave') an additional step is needed to
-install the headers to @file{/usr/include}: from a Terminal run
+them.)  For macOS 10.14 (`Mojave') and version 10.x of the tools an
+additional step is needed to install the headers to @file{/usr/include}:
+from a Terminal run
 @c https://developer.apple.com/documentation/xcode_release_notes/xcode_10_release_notes
 @example
 sudo installer -pkg \
@@ -5031,18 +5032,18 @@ sudo installer -pkg \
 @end example
 @noindent
 (This will need to be re-run if the OS decides to update the Command
-Line Tools.)  Alternatively, change the include path @emph{via}
+Line Tools: betas of version 11 are not currently supported.)
+Alternatively, change the include path @emph{via}
 @example
-CPPFLAGS="-isystem /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include"
+CPPFLAGS="-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include"
 @end example
 @noindent
 Which is said to be going to be needed for future versions of macOS.
 (The location of the SDK, which could change, can be found by running
 @command{xcrun -show-sdk-path}.  It is likely that the compilers
-included in the Command Line Tools and those at
-@uref{https://cran.r-project.org/@/bin/@/macosx/@/tools} will find the
-headers under the SDK without this additional step, but other versions
-of @command{clang} will not.)
+included in the Command Line Tools will find the headers under the SDK
+without this additional step, but other versions of @command{clang} will
+not.)
 
 You need GNU @code{readline}.  That and other binary components are
 available from @uref{https://mac.R-project.org/libs}: you will need
