@@ -3692,7 +3692,8 @@ case "${host_os}" in
     ## Allow for ppc64le (Debian calls ppc64el), powerpc64le ...
     case "${host_cpu}" in
       x86_64|mips64|ppc64*|powerpc64*|sparc64|s390x)
-        if test -d /usr/lib64; then
+        ## Debian/Ubuntu has "lib64", but the primary location is "lib"
+        if test -d /usr/lib64 && test ! -f /etc/debian_version; then
           libnn=lib64
 	fi
       ;;
@@ -3934,15 +3935,21 @@ else
   want_lto=no
 fi
 
-## FIXME: add a test for gcc >= 4.5.0
-if test "x${want_lto}" != xno; then
-  LTO=-flto
-fi
+## TODO: add a test for gcc >= 4.5.0 and/or clang/flang
 if test "x${want_lto}" = xyes; then
+  ## used in Makeconf
+  LTO=-flto
+  ## used in etc/Makeconf
   LTOALL=-flto
+elif  test "x${want_lto}" = xR; then
+  LTO=-flto
+elif  test "x${want_lto}" != xno; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: Unknown value --enable-lto=${enableval}" >&5
+$as_echo "$as_me: WARNING: Unknown value --enable-lto=${enableval}" >&2;}
 fi
 
 
+## used in src/main/Makefile
  if test "x${want_lto}" != xno; then
   BUILD_LTO_TRUE=
   BUILD_LTO_FALSE='#'
@@ -25247,7 +25254,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:25250: \"$ac_link\") >&5
+(eval echo $as_me:25257: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -25322,7 +25329,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:25325: \"$ac_link\") >&5
+(eval echo $as_me:25332: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -27153,6 +27160,8 @@ fi
 ## -fno-optimize-sibling-calls to avoid recent gfortran optimizations
 ## that break with LAPACK/BLAS-style passing of length-1 strings
 ## (without hidden arguments giving their lengths).
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking if need -fno-optimize-sibling-calls for gfortran" >&5
+$as_echo_n "checking if need -fno-optimize-sibling-calls for gfortran... " >&6; }
 if ${r_cv_have_gfortran7+:} false; then :
   $as_echo_n "(cached) " >&6
 else
@@ -27167,7 +27176,12 @@ fi
 
 
 if test "x${r_cv_have_gfortran7}" = xyes; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
   R_XTRA_FFLAGS="-fno-optimize-sibling-calls"
+else
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
 fi
 
 
@@ -27405,7 +27419,7 @@ if test "${ac_cv_fc_compiler_gnu}" = yes; then
 fi
 ## Assume flang is the same as clang (it is a modified front end)
 case "${FC}" in
-  *flang)
+  *flang|flang-*)
     fpicflags=${cpicflags}
     ;;
 esac
