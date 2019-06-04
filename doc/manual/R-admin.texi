@@ -1136,6 +1136,10 @@ wrappers have not been installed one may need something like
 AR="ar --plugin=/path/to/liblto_plugin.so"
 RANLIB="ranlib --plugin=/path/to/liblto_plugin.so
 @end example
+@noindent
+Unfortunately this may be accepted but silently do nothing if some of
+the toolchain does not support LTO: that happens on macOS (at the time
+of writing).
 
 When LTO is enabled it is used for compiled code in packages (including
 the recommended packages) unless the flag @option{--enable-lto=R} is
