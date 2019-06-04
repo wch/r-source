@@ -1,6 +1,6 @@
 % File src/library/base/man/formatc.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{formatC}
@@ -74,27 +74,36 @@ prettyNum(x, big.mark = "",   big.interval = 3L,
     \code{"f"} gives numbers in the usual
     \code{xxx.xxx} format;  \code{"e"} and \code{"E"} give \code{n.ddde+nn} or
     \code{n.dddE+nn} (scientific format); \code{"g"} and \code{"G"} put
-    \code{x[i]} into scientific format only if it saves space to do so.
+    \code{x[i]} into scientific format only if it saves space to do so
+    \emph{and} drop trailing zeros and decimal point - unless \code{flag}
+    contains \code{"#"} which keeps trailing zeros for the \code{"g", "G"}
+    formats.
 
-    \code{"fg"} uses fixed format as \code{"f"}, but \code{digits} as
-    the minimum number of \emph{significant} digits.  This can lead
-    to quite long result strings, see examples below.  Note that unlike
-    \code{\link{signif}} this prints large numbers with
+    \code{"fg"} (our own hybrid format) uses fixed format as \code{"f"},
+    but \code{digits} as the minimum number of \emph{significant} digits.
+    This can lead to quite long result strings, see examples below.  Note
+    that unlike \code{\link{signif}} this prints large numbers with
     more significant digits than \code{digits}.  Trailing zeros are
     \emph{dropped} in this format, unless \code{flag} contains
     \code{"#"}.}
 
   \item{flag}{for \code{formatC}, a character string giving a
     format modifier as in Kernighan and Ritchie (1988, page 243) or the
-    C+99 standard.
-    \code{"0"} pads leading zeros; \code{"-"} does left adjustment,
-    others are \code{"+"}, \code{" "}, and \code{"#"}; on some
-    platform--locale combination, \code{"'"} activates
-    \dQuote{thousands' grouping} for decimal conversion, and versions of
-    \file{glibc} allow \code{"I"} for integer conversion to use the locale's
-    alternative output digits, if any.
-
-    There can be more than one of these, in any order.  Other characters
+    C+99 standard.\describe{
+      \item{\code{"0"}}{pads leading zeros;}
+      \item{\code{"-"}}{does left adjustment,}
+      \item{\code{"+"}}{ensures a sign in all cases, i.e., \code{"+"} for
+	positive numbers ,}
+      \item{\code{" "}}{if the first character is not a sign, the space
+	character \code{" "} will be used instead.}
+      \item{\code{"#"}}{specifies \dQuote{an alternative output form},
+	specifically depending on \code{format}.}
+      \item{\code{"'"}}{on some platform--locale combination, activates
+	\dQuote{thousands' grouping} for decimal conversion,}
+      \item{\code{"I"}}{in some versions of \file{glibc} allow for integer
+	conversion to use the locale's alternative output digits, if any.}
+    }
+    There can be more than one of these flags, in any order.  Other characters
     used to have no effect for \code{character} formatting, but signal
     an error since \R 3.4.0.
   }
@@ -134,16 +143,16 @@ prettyNum(x, big.mark = "",   big.interval = 3L,
     (false \code{replace[.zero]}), if the \code{zero.print} string does
     not fit, a warning is produced (if \code{warn.non.fitting} is true).
 
-    The implementation has \code{formatC()} calling \code{prettyNum()}
-    (only if \code{zero.print} is not \code{NULL}) which itself calls
-    \code{.format.zeros(*, replace=replace.zero)} three times.
+    This works via \code{prettyNum()}, which calls \code{.format.zeros(*,
+    replace=replace.zero)} three times in this case, see the \sQuote{Details}.
   }
   \item{warn.non.fitting}{logical; if it is true, \code{replace[.zero]} is
     false and the \code{zero.print} string does not fit, a
     \code{\link{warning}} is signalled.}
   \item{drop0trailing}{logical, indicating if trailing zeros,
     i.e., \code{"0"} \emph{after} the decimal mark, should be removed;
-    also drops \code{"e+00"} in exponential formats.}
+    also drops \code{"e+00"} in exponential formats.  This is simply passed
+    to \code{prettyNum()}, see the \sQuote{Details}.}
   \item{is.cmplx}{optional logical, to be used when \code{x} is
     \code{"\link{character}"} to indicate if it stems from
     \code{\link{complex}} vector or not.  By default (\code{NA}),
@@ -166,6 +175,12 @@ prettyNum(x, big.mark = "",   big.interval = 3L,
   padding with white space.
 }
 \details{
+  For numbers, \code{formatC()} calls \code{prettyNum()} when needed
+  which itself calls \code{.format.zeros(*, replace=replace.zero)}.
+  (\emph{\dQuote{when needed}}: when \code{zero.print} is not
+  \code{NULL}, \code{drop0trailing} is true, or one of \code{big.mark},
+  \code{small.mark}, or \code{decimal.mark} is not at default.)
+
   If you set \code{format} it overrides the setting of \code{mode}, so
   \code{formatC(123.45, mode = "double", format = "d")} gives \code{123}.
 
@@ -222,11 +237,17 @@ prettyNum(x, big.mark = "",   big.interval = 3L,
   \code{\link{sprintf}} for more general C-like formatting.
 }
 \examples{
-xx  <- pi * 10^(-5:4)
+xx <- pi * 10^(-5:4)
 cbind(format(xx, digits = 4), formatC(xx))
 cbind(formatC(xx, width = 9, flag = "-"))
 cbind(formatC(xx, digits = 5, width = 8, format = "f", flag = "0"))
 cbind(format(xx, digits = 4), formatC(xx, digits = 4, format = "fg"))
+
+f <- (-2:4); f <- f*16^f
+# Default ("g") format:
+formatC(pi*f)
+# Fixed ("f") format, more than one flag ('width' partly "enlarged"):
+cbind(formatC(pi*f, digits = 3, width=9, format = "f", flag = "0+"))
 
 formatC(    c("a", "Abc", "no way"), width = -7)  # <=> flag = "-"
 formatC(c((-1:1)/0,c(1,100)*pi), width = 8, digits = 1)
@@ -239,6 +260,7 @@ formatC(xx)
 formatC(xx, format = "fg")       # special "fixed" format.
 formatC(xx[1:4], format = "f", digits = 75) #>> even longer strings
 
+formatC(c(3.24, 2.3e-6), format = "f", digits = 11)
 formatC(c(3.24, 2.3e-6), format = "f", digits = 11, drop0trailing = TRUE)
 
 r <- c("76491283764.97430", "29.12345678901", "-7.1234", "-100.1","1123")
@@ -281,7 +303,7 @@ prettyNum(fv, drop0trailing = TRUE) # a bit nicer
 options(op)
 
 ## The  '  flag :
-doLC <- FALSE # R warns, so change to TRUE manually if you want see the effect
+doLC <- FALSE # <= R warns, so change to TRUE manually if you want see the effect
 if(doLC)
   oldLC <- Sys.setlocale("LC_NUMERIC", "de_CH.UTF-8")
 formatC(1.234 + 10^(0:4), format = "fg", width = 11, flag = "'")
