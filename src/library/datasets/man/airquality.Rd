@@ -12,7 +12,7 @@
 }
 \usage{airquality}
 \format{
-  A data frame with 154 observations on 6 variables.
+  A data frame with 153 observations on 6 variables.
 
   \tabular{rlll}{
     \code{[,1]} \tab \code{Ozone}   \tab numeric \tab Ozone (ppb)\cr
