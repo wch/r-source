@@ -16,6 +16,13 @@
     }
   }
 
+  \subsection{UTILITIES}{
+    \itemize{
+      \item \command{R CMD config} knows the values of \code{AR} and
+      \code{RANLIB}, often set for LTO builds.
+    }
+  }
+
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item The use of a character vector with \code{.Fortran()} is

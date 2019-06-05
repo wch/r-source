@@ -46,6 +46,7 @@ Options:
       --all             print names and values of all variables below
 
 Variables:
+  AR            command to make static libraries
   BLAS_LIBS     flags needed for linking against external BLAS libraries
   CC            C compiler command
   CFLAGS        C compiler flags
@@ -108,6 +109,7 @@ Variables:
   MAKE          Make command
   OBJC          Objective C compiler command
   OBJCFLAGS     Objective C compiler flags
+  RANLIB        command to index static libraries
   SAFE_FFLAGS   Safe (as conformant as possible) Fortran compiler flags
   SHLIB_CFLAGS  additional CFLAGS used when building shared objects
   SHLIB_CXXFLAGS
@@ -284,7 +286,7 @@ ok_ftn_vars="FC F77 FFLAGS FPICFLAGS FLIBS FCFLAGS FCPICFLAGS SAFE_FFLAGS"
 ok_ld_vars="LDFLAGS"
 ok_shlib_vars="SHLIB_CFLAGS SHLIB_CXXFLAGS SHLIB_CXXLD SHLIB_CXXLDFLAGS SHLIB_CXX98LD SHLIB_CXX98LDFLAGS SHLIB_CXX11LD SHLIB_CXX11LDFLAGS SHLIB_CXX14LD SHLIB_CXX14LDFLAGS SHLIB_CXX17LD SHLIB_CXX17LDFLAGS SHLIB_EXT SHLIB_FFLAGS SHLIB_LD SHLIB_LDFLAGS"
 ok_tcltk_vars="TCLTK_CPPFLAGS TCLTK_LIBS"
-ok_other_vars="BLAS_LIBS LAPACK_LIBS MAKE LIBnn"
+ok_other_vars="BLAS_LIBS LAPACK_LIBS MAKE LIBnn AR RANLIB"
 if test "${R_OSTYPE}" = "windows"; then
   ok_win_vars="LOCAL_SOFT COMPILED_BY OBJDUMP"
 fi
