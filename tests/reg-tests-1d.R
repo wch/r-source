@@ -2702,6 +2702,25 @@ stopifnot(exprs = {
 	      list(x = full_lev, y = yN))
 })
 
+## rbind.data.frame() should work in all cases with "matrix-columns":
+m <- matrix(1:12, 3) ## m.N := [m]atrix with (row)[N]ames :
+m.N <- m ; rownames(m.N) <- letters [1:3]
+## data frames with these matrices as *column*s:
+dfm   <- data.frame(c = 1:3, m = I(m))
+dfm.N <- data.frame(c = 1:3, m = I(m.N))
+(mNm <- rbind(m.N, m))
+dfmmN <- rbind(dfm, dfm.N)
+dfmNm <- rbind(dfm.N, dfm)
+stopifnot(exprs = {
+    identical(     dim(dfmNm), c(6L, 2L))
+    identical(dimnames(dfmNm), list(c(letters[1:3],1:3), c("c","m")))
+    is.matrix(m. <- dfmNm[,"m"])
+    identical(dim(m.), c(6L, 4L))
+    identical(dfmNm, dfmmN[c(4:6, 1:3), ])
+    identical(unname(mNm), unname(m.))
+})
+## The last rbind() had failed since at least R 2.0.0
+
 
 
 ## keep at end
