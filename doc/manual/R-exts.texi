@@ -9320,7 +9320,7 @@ rkpk1.f:2565:5: note: type mismatch in parameter 14
 rkpk1.f:2565:5: note: 'dstup' was previously declared here
 @end example
 @noindent
-where the fourteenth argument 'dum' was missing in the call.
+where the fourteenth argument @code{dum} was missing in the call.
 
 @example
 reg.f:78:33: warning: type of 'dqrdc' does not match original declaration [-Wlto-type-mismatch]
