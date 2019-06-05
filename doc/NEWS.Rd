@@ -63,7 +63,7 @@
     \itemize{
       \item Header \file{Rconfig.h} contains the value of
 	\code{FC_LEN_T} deduced at installation which is used by the
-	propotypes in headers \file{BLAS.h} and \file{Lapack.h} but to
+	prototypes in headers \file{BLAS.h} and \file{Lapack.h} but to
 	avoid extensive breakage this is only exposed when
 	\code{USE_FC_LEN_T} is defined.
 
