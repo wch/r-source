@@ -72,7 +72,7 @@ runmed(x, k, endrule = c("median", "keep", "constant"),
       considerably faster for small \eqn{k} or \eqn{n}.}
   }
 
-  Currently long vectors are only supported for \code{algorithm = "Steutzle"}.
+  Currently long vectors are only supported for \code{algorithm = "Stuetzle"}.
 }
 \references{
   \enc{Härdle}{Haerdle}, W. and Steiger, W. (1995)

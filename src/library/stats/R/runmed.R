@@ -1,9 +1,8 @@
 #  File src/library/stats/R/runmed.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2003-2017 The R Foundation
-
-#  Copyright (C) 1995 Berwin A. Turlach
+#  Copyright (C) 2003-2019 The R Foundation
+#  Copyright (C) 1995      Berwin A. Turlach
 #  Ported to R, added interface to Stuetzle's code and further enhanced
 #  by Martin Maechler,
 #  Copyright (C) 1996-2002 Martin Maechler
@@ -25,7 +24,7 @@
 runmed <- function(x, k, endrule = c("median","keep","constant"),
                    algorithm = NULL, print.level = 0)
 {
-    n <- as.integer(length(x))
+    n <- length(x)
     if(is.na(n)) stop(gettextf("invalid value of %s", "length(x)"), domain = NA)
     k <- as.integer(k)
     if(is.na(k)) stop(gettextf("invalid value of %s", "'k'"), domain = NA)
@@ -55,7 +54,7 @@ runmed <- function(x, k, endrule = c("median","keep","constant"),
         cat("runmed(*, endrule=", endrule,", algorithm=",algorithm,
             ", iend=",iend,")\n")
     res <- switch(algorithm,
-                  Turlach = .Call(C_runmed, as.double(x), 1, k, iend, print.level),
+                  Turlach  = .Call(C_runmed, as.double(x), 1, k, iend, print.level),
                   Stuetzle = .Call(C_runmed, as.double(x), 0, k, iend, print.level))
     if(endrule == "median") res <- smoothEnds(res, k = k)
 
@@ -71,9 +70,9 @@ smoothEnds <- function(y, k = 3)
     ## Purpose: Smooth end values---typically after runmed()
     ##-- (C) COPYRIGHT 1994,  Martin Maechler <maechler@stat.math.ethz.ch>
 
+    ## med3(a,b,c) := median(a,b,c) - assuming no NA's in {a,b,c}
     med3 <- function(a,b,c)
     {
-        ## med3(a,b,c) == median(a,b,c)
         m <- b
         if (a < b) {
             if (c < b) m <- if (a >= c) a  else  c
@@ -82,11 +81,22 @@ smoothEnds <- function(y, k = 3)
         }
         m
     }
+    med.3 <- function(x) { ## med.3(x) := median(x, na.rm=TRUE);  {length(x) == 3}
+        if(anyNA(x))
+            mean.default(x[!is.na(x)], na.rm=TRUE)
+        else med3(x[[1L]], x[[2L]], x[[3L]])
+    }
+    med3i <- function(a,b,c) {
+        if(anyNA(x <- c(a,b,c)))
+            mean.default(x[!is.na(x)], na.rm=TRUE)
+        else med3(a, b, c)
+    }
 
     med.odd <- function(x, n = length(x))
     {
         ##  == median(x[1L:n]) IFF n is odd, slightly more efficient
-        half <- (n + 1) %/% 2
+        if(anyNA(x)) n <- length(x <- x[!is.na(x)])
+        half <- (n + 1L) %/% 2L
         sort(x, partial = half)[half]
     }
 
@@ -97,10 +107,11 @@ smoothEnds <- function(y, k = 3)
     if (k < 1L) return(y)
     ## else: k >= 1L: do something
     n <- length(y)
+    n_1 <- n-1L; n_2 <- n-2L
     sm <- y
     if (k >= 2L) {
-        sm [2L]  <- med3(y[1L],y [2L], y [3L])
-        sm[n-1L] <- med3(y[n],y[n-1L],y[n-2L])
+        sm [2L] <- med.3(y[1:3])
+        sm[n_1] <- med.3(y[c(n,n_1,n_2)])
 
         ## Here, could use Stuetzle's strategy for MUCH BIGGER EFFICIENCY
         ##	(when k>=3 , k >> 1):
@@ -118,7 +129,7 @@ smoothEnds <- function(y, k = 3)
 
     ##--- For the very first and last pt.:  Use Tukey's end-point rule: ---
     ## Ysm[1L]:= Median(Ysm[2L],X1,Z_0), where Z_0 is extrapol. from Ysm[2L],Ysm[3L]
-    sm[1L] <- med3(y[1L], sm [2L] , 3*sm [2L]  - 2*sm [3L])
-    sm[n]  <- med3(y[n],  sm[n-1L], 3*sm[n-1L] - 2*sm[n-2L])
+    sm[1L] <- med3i(y[1L], sm [2L], 3*sm [2L] - 2*sm [3L])
+    sm[n]  <- med3i(y[n],  sm[n_1], 3*sm[n_1] - 2*sm[n_2])
     sm
 }

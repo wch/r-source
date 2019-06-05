@@ -1,8 +1,9 @@
-/* Copyright (C) 1995   Berwin A. Turlach <berwin@alphasun.anu.edu.au>
+/*
+ * Copyright (C) 2012-2019  The R Core Team
+ * Copyright (C) 2003 ff.   The R Foundation
  * Copyright (C) 2000-2 Martin Maechler <maechler@stat.math.ethz.ch>
- * Copyright (C) 2003   The R Foundation
- * Copyright (C) 2012-2016   The R Core Team
-
+ * Copyright (C) 1995   Berwin A. Turlach <berwin@alphasun.anu.edu.au>
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -349,7 +350,7 @@ runmedint(R_xlen_t n, int k, int k2, const double *data, double *median,
 	for(R_xlen_t i = n-k2; i < n; median[i] = data[i], i++);
 }/* runmedint() */
 
-/* This is the function called from R or S: */
+// Main function called from runmed() in ./Srunmed.c :
 static void Trunmed(R_xlen_t n,/* = length(data) */
 		    int k,/* is odd <= n */
 		    const double *data,
