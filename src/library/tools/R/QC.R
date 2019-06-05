@@ -7321,17 +7321,24 @@ function(dir, localOnly = FALSE)
             urls <- udb$URL
             parts <- parse_URI_reference(urls)
             ind <- (parts[, "scheme"] %in% c("", "file"))
-            fpaths <- parts[ind, "path"]
+            fpaths1 <- fpaths0 <- parts[ind, "path"]
+            ## Allow for
+            ##   /doc/html /demo /library
+            ## which are handled by the http server, and remap ../doc to
+            ## ../inst/doc (even though such relative paths in Rd files
+            ## will generally not work or the pdf refmans).
+            fpaths1[grepl("^(/doc/html|/demo|/library)", fpaths1)] <- ""
+            fpaths1 <- sub("^../doc", "../inst/doc", fpaths1)
             parents <- udb[ind, "Parent"]
             ppaths <- dirname(parents)
             pos <- which(!file.exists(file.path(ifelse(nzchar(ppaths),
                                                        file.path(dir,
                                                                  ppaths),
                                                        dir),
-                                                fpaths)))
+                                                fpaths1)))
             if(length(pos))
                 out$bad_file_URIs <-
-                    cbind(fpaths[pos], parents[pos])
+                    cbind(fpaths0[pos], parents[pos])
         }
     }
 
