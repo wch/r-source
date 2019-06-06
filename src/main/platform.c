@@ -50,6 +50,35 @@
 
 # include <errno.h>
 
+#ifdef HAVE_UNISTD_H
+#include <unistd.h> /* for symlink, getpid */
+#endif
+
+#ifdef HAVE_SYS_TYPES_H
+# include <sys/types.h>
+#endif
+#ifdef HAVE_SYS_STAT_H
+# include <sys/stat.h>
+#endif
+
+#ifdef Win32
+/* Mingw-w64 defines this to be 0x0502 */
+#ifndef _WIN32_WINNT
+# define _WIN32_WINNT 0x0500 /* for CreateHardLink */
+#endif
+#include <windows.h>
+typedef BOOLEAN (WINAPI *PCSL)(LPWSTR, LPWSTR, DWORD);
+static PCSL pCSL = NULL;
+const char *formatError(DWORD res);  /* extra.c */
+/* Windows does not have link(), but it does have CreateHardLink() on NTFS */
+#undef HAVE_LINK
+#define HAVE_LINK 1
+/* Windows does not have symlink(), but >= Vista does have
+   CreateSymbolicLink() on NTFS */
+#undef HAVE_SYMLINK
+#define HAVE_SYMLINK 1
+#endif
+
 /* Machine Constants */
 
 static void
@@ -269,6 +298,7 @@ void attribute_hidden R_check_locale(void)
 	    snprintf(native_enc, R_CODESET_MAX, "CP%d", localeCP);
 	    native_enc[R_CODESET_MAX] = 0;
 	}
+	systemCP = GetACP();
     }
 #endif
 #if defined(SUPPORT_UTF8_WIN32) /* never at present */
@@ -517,35 +547,6 @@ SEXP attribute_hidden do_fileremove(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(1);
     return ans;
 }
-
-#ifdef HAVE_UNISTD_H
-#include <unistd.h> /* for symlink, getpid */
-#endif
-
-#ifdef HAVE_SYS_TYPES_H
-# include <sys/types.h>
-#endif
-#ifdef HAVE_SYS_STAT_H
-# include <sys/stat.h>
-#endif
-
-#ifdef Win32
-/* Mingw-w64 defines this to be 0x0502 */
-#ifndef _WIN32_WINNT
-# define _WIN32_WINNT 0x0500 /* for CreateHardLink */
-#endif
-#include <windows.h>
-typedef BOOLEAN (WINAPI *PCSL)(LPWSTR, LPWSTR, DWORD);
-static PCSL pCSL = NULL;
-const char *formatError(DWORD res);  /* extra.c */
-/* Windows does not have link(), but it does have CreateHardLink() on NTFS */
-#undef HAVE_LINK
-#define HAVE_LINK 1
-/* Windows does not have symlink(), but >= Vista does have
-   CreateSymbolicLink() on NTFS */
-#undef HAVE_SYMLINK
-#define HAVE_SYMLINK 1
-#endif
 
 /* the Win32 stuff here is not ready for release:
 
@@ -2740,7 +2741,7 @@ SEXP attribute_hidden do_filecopy(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP attribute_hidden do_l10n_info(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 #ifdef Win32
-    int len = 4;
+    int len = 5;
 #else
     int len = 3;
 #endif
@@ -2757,6 +2758,8 @@ SEXP attribute_hidden do_l10n_info(SEXP call, SEXP op, SEXP args, SEXP env)
 #ifdef Win32
     SET_STRING_ELT(names, 3, mkChar("codepage"));
     SET_VECTOR_ELT(ans, 3, ScalarInteger(localeCP));
+    SET_STRING_ELT(names, 4, mkChar("system.codepage"));
+    SET_VECTOR_ELT(ans, 4, ScalarInteger(systemCP));
 #endif
     setAttrib(ans, R_NamesSymbol, names);
     UNPROTECT(2);
