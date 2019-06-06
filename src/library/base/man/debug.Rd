@@ -1,6 +1,6 @@
 % File src/library/base/man/debug.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{debug}
@@ -35,22 +35,22 @@ debuggingState(on = NULL)
 \description{
   Set, unset or query the debugging flag on a function.
   The \code{text} and \code{condition} arguments are the same as those
-  that can be supplied via a call to \code{browser}. They can be retrieved
+  that can be supplied via a call to \code{\link{browser}}.  They can be retrieved
   by the user once the browser has been entered, and provide a mechanism to
   allow users to identify which breakpoint has been activated.
 }
 \details{
   When a function flagged for debugging is entered, normal execution
   is suspended and the body of function is executed one statement at a
-  time.  A new browser context is initiated for each step (and the
-  previous one destroyed).
+  time.  A new \code{\link{browser}} context is initiated for each step
+  (and the previous one destroyed).
 
   At the debug prompt the user can enter commands or \R expressions,
   followed by a newline.  The commands are described in the
   \code{\link{browser}} help topic.
 
   To debug a function which is defined inside another function,
-  single-step though to the end of its definition, and then call
+  single-step through to the end of its definition, and then call
   \code{debug} on its name.
 
   If you want to debug a function not starting at the very beginning,
@@ -59,7 +59,7 @@ debuggingState(on = NULL)
   Using \code{debug} is persistent, and unless debugging is turned off
   the debugger will be entered on every invocation (note that if the
   function is removed and replaced the debug state is not preserved).
-  Use \code{debugonce} to enter the debugger only the next time the
+  Use \code{debugonce()} to enter the debugger only the next time the
   function is invoked.
   
   To debug an S4 method by explicit signature, use
@@ -90,11 +90,12 @@ debuggingState(on = NULL)
   \code{debug} and \code{undebug} invisibly return \code{NULL}.
 
   \code{isdebugged} returns \code{TRUE} if the function or method is
+
   marked for debugging, and \code{FALSE} otherwise.
 }
 \seealso{
   \code{\link{debugcall}} for conveniently debugging methods,
-  \code{\link{browser}}, \code{\link{trace}};
+  \code{\link{browser}} notably for its \sQuote{\emph{commands}}, \code{\link{trace}};
   \code{\link{traceback}} to see the stack after an \code{Error: \dots}
   message; \code{\link{recover}} for another debugging approach.
 }
