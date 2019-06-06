@@ -416,12 +416,12 @@ void F77_SUB(ehg183a)(char *s, int *nc,int *i,int *n,int *inc, FC_LEN_T c1)
 void F77_SUB(ehg183a)(char *s, int *nc,int *i,int *n,int *inc)
 #endif
 {
-    char mess[4000], num[20];
-    int j;
-    strncpy(mess,s,*nc);
-    mess[*nc] = '\0';
-    for (j=0; j<*n; j++) {
-	snprintf(num, 20, " %d",i[j * *inc]);
+    int nnc = *nc;
+    char mess[nnc + 1], num[20];
+    strncpy(mess, s, nnc);
+    mess[nnc] = '\0';
+    for (int j = 0; j < *n; j++) {
+	snprintf(num, 20, " %d", i[j * *inc]);
 	strcat(mess,num);
     }
     strcat(mess,"\n");
@@ -434,12 +434,12 @@ void F77_SUB(ehg184a)(char *s, int *nc, double *x, int *n, int *inc, FC_LEN_T c1
 void F77_SUB(ehg184a)(char *s, int *nc, double *x, int *n, int *inc)
 #endif
 {
-    char mess[4000], num[30];
-    int j;
-    strncpy(mess,s,*nc);
-    mess[*nc] = '\0';
-    for (j=0; j<*n; j++) {
-	snprintf(num,30," %.5g",x[j * *inc]);
+    int nnc = *nc;
+    char mess[nnc + 1], num[30];
+    strncpy(mess, s, nnc);
+    mess[nnc] = '\0';
+    for (int j = 0; j < *n; j++) {
+	snprintf(num, 30, " %.5g", x[j * *inc]);
 	strcat(mess,num);
     }
     strcat(mess,"\n");

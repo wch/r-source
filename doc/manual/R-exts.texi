@@ -13369,14 +13369,14 @@ module cfuncs
   interface
     subroutine cmsg(msg) bind(C, name = 'cmsg')
       use iso_c_binding, only: c_char
-      character(kind=c_char):: msg(*)
+      character(kind = c_char):: msg(*)
     end subroutine cmsg
   end interface
 end module
 
 subroutine rmsg(msg)
   use cfuncs
-  character *(*) msg
+  character(*) msg
   call cmsg(msg//c_null_char) ! need to concatenate a null terminator
 end subroutine rmsg
 @end example
