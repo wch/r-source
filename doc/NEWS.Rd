@@ -162,6 +162,11 @@
 
       \item \code{as.data.frame()} treats 1D arrays the same as vectors,
       \PR{17570}.
+
+      \item \code{runmed(x, *)} when \code{x} contains missing values
+      now works for \code{algorithm="Stuetzle"}, also based on
+      \code{smoothEnds(y)} working with NA's, and no longer segfaults
+      for the \code{"Turlach"} algorithm; reported by Hilmar Berger.
     }
   }
 }
