@@ -20,10 +20,8 @@
  */
 
 /* These routines implement a running median smoother according to the
- * algorithm described in Haerdle und Steiger (1995).
- *
- * A tech-report of that paper is available under
- * ftp://amadeus.wiwi.hu-berlin.de/pub/papers/sfb/sfb1994/dpsfb940015.ps.Z
+ * algorithm described in Haerdle und Steiger (1995),
+ *			  DOI:10.2307/2986349 , see ../man/runmed.Rd
  *
  * The current implementation does not use any global variables!
  */
