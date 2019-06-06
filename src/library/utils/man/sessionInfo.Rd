@@ -25,7 +25,7 @@ osVersion
    (the default) meaning all attached packages.}
   \item{x}{an object of class \code{"sessionInfo"}.}
   \item{object}{an object of class \code{"sessionInfo"}.}
-  \item{locale}{show locale information?}
+  \item{locale}{show locale and code page information?}
   \item{RNG}{show information on \code{\link{RNGkind}()}?  Defaults to true
     iff it differs from the \R version's default, i.e., \code{\link{RNGversion}(*)}.}
   \item{\dots}{currently not used.}
@@ -47,6 +47,12 @@ osVersion
     \code{\link{extSoftVersion}()["BLAS"]}.}
   \item{LAPACK}{a character string, the result of calling \code{\link{La_library}()}.}
   \item{locale}{a character string, the result of calling \code{\link{Sys.getlocale}()}.}
+#ifdef windows
+  \item{codepage}{an integer, the result of calling
+    \code{\link{l10n_info}()["codepage"]}.}
+  \item{system.codepage}{an integer, the result of calling
+    \code{\link{l10n_info}()["system.codepage"]}.}
+#endif
   \item{basePkgs}{a character vector of base packages which are attached.}
   \item{otherPkgs}{(not always present): a character vector of other
     attached packages.}

@@ -1,6 +1,6 @@
 % File src/library/base/man/l10n_info.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{l10n_info}
@@ -20,6 +20,8 @@ l10n_info()
 #ifdef windows
   \item{codepage}{integer: the Windows codepage corresponding to the
     locale \R is using (and not necessarily that Windows is using).}
+  \item{system.codepage}{integer: the Windows system/ANSI codepage
+    (the codepage Windows is using).}
 #endif
 }
 #ifdef windows
