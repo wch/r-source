@@ -5830,7 +5830,7 @@ add_dummies <- function(dir, Log)
     R_check_things_in_check_dir <-
         config_val_to_logical(Sys.getenv("_R_CHECK_THINGS_IN_CHECK_DIR_",
                                          "FALSE"))
-    
+
     if (!nzchar(check_subdirs)) check_subdirs <- R_check_subdirs_strict
 
     if (as_cran) {
@@ -6308,13 +6308,13 @@ add_dummies <- function(dir, Log)
             if(length(things)) {
                 noteLog(Log)
                 msg <- c("Found the following files/directories:",
-                         strwrap(paste(things, collapse = " "),
+                         strwrap(paste(sQuote(things), collapse = " "),
                                  indent = 2L, exdent = 2L))
                 printLog0(Log, paste(msg, collapse = "\n"), "\n")
             } else
                 resultLog(Log, "OK")
         }
-        
+
         summaryLog(Log)
 
         if(config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_STATUS_SUMMARY_",
