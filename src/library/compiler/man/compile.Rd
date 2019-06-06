@@ -43,7 +43,8 @@ setCompilerOptions(...)
   \item{chdir}{logical; change directory before evaluation?}
   \item{code}{byte code expression or compiled closure}
   \item{e}{expression to compile.}
-  \item{level}{integer; the JIT level to use (\code{0} to \code{3}).}
+  \item{level}{integer; the JIT level to use (\code{0} to \code{3}, or
+    negative to \emph{return} it).}
   \item{enable}{logical; enable compiling packages if \code{TRUE}.}
   \item{name}{character string; name of option to return.}
   \item{...}{named compiler options to set.}
@@ -72,7 +73,7 @@ setCompilerOptions(...)
   that may be useful to give a hint of what is going on.
 
   \code{enableJIT} enables or disables just-in-time (JIT)
-  compilation. JIT is disabled if the argument is 0. If \code{level} is
+  compilation. JIT is disabled if the argument is 0.  If \code{level} is
   1 then larger closures are compiled before their first use.  If
   \code{level} is 2, then some small closures are also compiled before
   their second use.  If \code{level} is 3 then in addition
