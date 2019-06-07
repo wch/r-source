@@ -367,10 +367,12 @@ as.data.frame.array <- function(x, row.names = NULL, optional = FALSE, ...)
 {
     d <- dim(x)
     if(length(d) == 1L) { ## same as as.data.frame.vector, but deparsed here
-        value <- as.data.frame.vector(drop(x), row.names, optional, ...)
+	## c(): better than drop() or as.vector() !
+	value <- as.data.frame.vector( c(x), row.names, optional, ...)
         if(!optional) names(value) <- deparse(substitute(x))[[1L]]
         value
     } else if (length(d) == 2L) {
+        ## for explicit "array" class; otherwise *.matrix() is dispatched
         as.data.frame.matrix(x, row.names, optional, ...)
     } else {
         dn <- dimnames(x)
@@ -1351,13 +1353,17 @@ rbind.data.frame <- function(..., deparse.level = 1, make.row.names = TRUE,
 		if(smartX) NA.lev <- ordCol
 		for(j in seq_len(nvar)) {
 		    xj <- value[[j]]
-                    facCol[j] <-
-                        if(!is.null(levels(xj))) {
-                            all.levs[[j]] <- levels(xj)
+                    facCol[j] <- fac <-
+                        if(!is.null(lj <- levels(xj))) {
+                            all.levs[[j]] <- lj
                             TRUE # turn categories into factors
                         } else
                             is.factor(xj)
-                    ordCol[j] <- is.ordered(xj)
+		    if(fac) {
+			ordCol[j] <- is.ordered(xj)
+			if(smartX && !NA.lev[j])
+			    NA.lev[j] <- anyNA(lj)
+		    }
 		    has.dim[j] <- length(dim(xj)) == 2L
 		}
 	    }

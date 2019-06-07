@@ -2685,19 +2685,42 @@ dfy <- data.frame(y=fcts())
 yN <- c(1:3, NA_character_, 5:8)
 dfay  <- cbind(dfa, dfy)
 dfby  <- cbind(dfa, data.frame(y = yN))
-dfaby <- rbind(dfay, dfby, factor.exclude=TRUE)
-stopifnot(exprs = {
+dfcy  <- dfa; dfcy$y <- yN # y: a <char> column
+## dNay := drop unused levels from dfay incl NA
+dNay <- dfay; dNay[] <- lapply(dfay, factor)
+str(dfay) # both (x, y) have NA level
+str(dfby) # (x: yes / y: no) NA level
+str(dNay) # both: no NA level
+stopifnot(exprs = { ## "trivial" (non rbind-related) assertions :
     identical(levels(dfa$x), c(1:3, NA_character_) -> full_lev)
     identical(levels(dfb$x),  full_lev)
     identical(levels(dfay$x), full_lev) # cbind() does work
     identical(levels(dfay$y), full_lev)
     identical(levels(dfby$x), full_lev)
+    is.character(dfcy$y)
+	   anyNA(dfcy$y)
     identical(levels(dfby$y), as.character((1:8)[-4]) -> levN) # no NA levels
-    identical(levels(rbind(dfa, dfb, factor.exclude=TRUE)$x), full_lev)
+    identical(lapply(dNay, levels),
+              list(x = c("2","3"), y = levN[1:3])) # no NA levels
+})
+## R in 3.6.z, z >= 1 needs 'factor.exclude=NULL' (which becomes *default* afterwards):
+dfaby <- rbind(dfay, dfby, factor.exclude=NULL)
+dNaby <- rbind(dNay, dfby, factor.exclude=NULL)
+dfacy <- rbind(dfay, dfcy, factor.exclude=NULL)
+dfcay <- rbind(dfcy, dfay, factor.exclude=NULL) # 1st arg col. is char => rbind() keeps char
+stopifnot(exprs = {
+    identical(levels(rbind(dfa, dfb, factor.exclude=NULL)$x), full_lev)
     identical(levels(dfaby$x),           full_lev)
-    identical(levels(dfaby$y),               levN) # failed in c76513
+    identical(levels(dfaby$y),                 yN) # failed a while
+    identical(levels(dNaby$y),               levN) #  (ditto)
+    identical(dfacy, dfaby)
+    is.character(dfcay$y)
+	   anyNA(dfcay$y)
+    identical(dfacy$x, dfcay$x)
+    identical(lapply(rbind(dfby, dfay, factor.exclude=NULL), levels),
+              list(x = full_lev, y = c(levN, NA)))
     identical(lapply(rbind(dfay, dfby, factor.exclude = NA), levels),
-	      list(x = as.character(1:3), y = levN))
+              list(x = as.character(1:3), y = levN))
     identical(lapply(rbind(dfay, dfby, factor.exclude=NULL), levels),
 	      list(x = full_lev, y = yN))
 })
@@ -2720,6 +2743,12 @@ stopifnot(exprs = {
     identical(unname(mNm), unname(m.))
 })
 ## The last rbind() had failed since at least R 2.0.0
+
+
+## as.data.frame.array(<1D array>) -- PR#17570
+str(x2 <- as.data.frame(array(1:2)))
+stopifnot(identical(x2[[1]], 1:2))
+## still was "array" in R <= 3.6.0
 
 
 

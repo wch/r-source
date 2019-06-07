@@ -68,6 +68,9 @@
       \item [On Windows only], \code{writeClipboard(.., format = <n>)} now
       does correctly pass \code{format} to the underlying C code, thanks to
       a bug report (with patch) by Jenny Bryan.
+
+      \item \code{as.data.frame()} treats 1D arrays the same as vectors,
+      \PR{17570}.
     }
   }
 }
