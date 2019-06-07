@@ -1,5 +1,5 @@
 
-R version 3.6.0 Patched (2019-05-20 r76550) -- "Planting of a Tree"
+R version 3.6.0 Patched (2019-06-07 r76684) -- "Planting of a Tree"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -738,4 +738,4 @@ Consider specifying 'start' or using a selfStart model
 > 
 > proc.time()
    user  system elapsed 
-  1.613   0.069   1.670 
+  1.620   0.072   1.681 

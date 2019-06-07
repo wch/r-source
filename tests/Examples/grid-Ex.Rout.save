@@ -1,5 +1,5 @@
 
-R version 3.6.0 Patched (2019-05-20 r76550) -- "Planting of a Tree"
+R version 3.6.0 Patched (2019-06-07 r76684) -- "Planting of a Tree"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -2161,7 +2161,7 @@ vp1::vp2
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.714 0.021 1.744 0 0 
+Time elapsed:  1.682 0.021 1.712 0 0 
 > grDevices::dev.off()
 null device 
           1 

@@ -1,5 +1,5 @@
 
-R version 3.6.0 Patched (2019-05-20 r76550) -- "Planting of a Tree"
+R version 3.6.0 Patched (2019-06-07 r76684) -- "Planting of a Tree"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -203,7 +203,7 @@ Error in assertWarning(ff()) :
 > bibstyle("unsorted", sortKeys = function(refs) seq_along(refs),
 +     fmtPrefix = function(paper) paste0("[", paper$.index, "]"),
 +        .init = TRUE)
-<environment: 0x3ab36c0>
+<environment: 0x2c23510>
 > print(refs, .bibstyle = "unsorted")
 [1] R Core Team (2013). _R: A Language and Environment for Statistical
 Computing_. R Foundation for Statistical Computing, Vienna, Austria.
@@ -1021,7 +1021,7 @@ List of 6
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.324 0.012 0.343 0 0 
+Time elapsed:  0.332 0.013 0.346 0 0 
 > grDevices::dev.off()
 null device 
           1 
