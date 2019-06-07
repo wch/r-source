@@ -1,7 +1,7 @@
 #  File src/library/stats/R/vcov.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2002-2018 The R Core Team
+#  Copyright (C) 2002-2019 The R Core Team
 #  Copyright (C) 1994-2002 W. N. Venables and B. D. Ripley
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -38,17 +38,19 @@ vcov <- function(object, ...) UseMethod("vcov")
 ## inherit from "summary.glm", and similarly for "lm" and "mlm"
 
 ## Allow for 'dispersion' to be passed down (see the help for vcov)
-vcov.glm <- function(object, complete = TRUE, ...) vcov.summary.glm(summary.glm(object), complete=complete, ...)
+vcov.glm <- function(object, complete = TRUE, ...)
+    vcov.summary.glm(summary.glm(object, ...), complete=complete)
 
-vcov.lm <- function(object, complete = TRUE, ...) vcov.summary.lm(summary.lm(object), complete=complete, ...)
+vcov.lm <- function(object, complete = TRUE, ...)
+    vcov.summary.lm(summary.lm(object, ...), complete=complete)
 
 ## To be consistent with coef.aov() which has complete = FALSE :
 vcov.aov <- vcov.lm ; formals(vcov.aov)$complete <- FALSE
 
 
-vcov.mlm <- function(object, complete = TRUE, ...)
+vcov.mlm <- function(object, complete = TRUE, names = FALSE, ...)
 {
-    so <- summary.mlm(object, ny = 1L, names=FALSE)[[1L]]
+    so <- summary.mlm(object, ny = 1L, names=names)[[1L]]
     kronecker(estVar(object),
 	      .vcov.aliased(so$aliased, so$cov.unscaled, complete=complete),
 	      make.dimnames = TRUE)

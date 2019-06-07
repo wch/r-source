@@ -167,6 +167,9 @@
       now works for \code{algorithm="Stuetzle"}, also based on
       \code{smoothEnds(y)} working with NA's, and no longer segfaults
       for the \code{"Turlach"} algorithm; reported by Hilmar Berger.
+
+      \item \code{vcov(glm(<quasi>), dispersion = *)} works correctly
+      again, fixing \PR{17571} thanks to Pavel Krivitsky.
     }
   }
 }
