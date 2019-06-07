@@ -31,31 +31,25 @@ stop <- function(..., call. = TRUE, domain = NULL)
         .Internal(stop(call., .makeMessage(..., domain = domain)))
 }
 
-stopifnot <- function(..., exprs, local = TRUE)
+stopifnot <- function(..., exprs, exprObject, local = TRUE)
 {
     n <- ...length()
-    if(!missing(exprs)) {
-	if(n)
-	    stop("Must use 'exprs' or unnamed expressions, but not both")
+    if((has.e <- !missing(exprs)) || !missing(exprObject)) {
+	if(n || (has.e && !missing(exprObject)))
+	    stop("Only one of 'exprs', 'exprObject' or unnamed expressions, not more")
 	envir <- if (isTRUE(local)) parent.frame()
 		 else if(isFALSE(local)) .GlobalEnv
 		 else if (is.environment(local)) local
 		 else stop("'local' must be TRUE, FALSE or an environment")
-	exprs <- substitute(exprs) # protect from evaluation
-	E1 <- if(is.call(exprs)) exprs[[1]]
+	E1 <- if(has.e && is.call(exprs <- substitute(exprs))) exprs[[1]]
 	cl <- if(is.symbol(E1) &&
-		 (E1 == quote(`{`) || E1 == quote(expression))) {
+		 E1 == quote(`{`)) {
 		  exprs[[1]] <- quote(stopifnot) ## --> stopifnot(*, *, ..., *) :
 		  exprs
 	      }
 	      else
 		  as.call(c(quote(stopifnot),
-			    if(is.null(E1) && is.symbol(exprs) &&
-			       is.expression(E1 <- eval(exprs))) # the *name* of an expression
-				as.list(E1)
-			    else
-				as.expression(exprs)
-			    )) # or fail ..
+			    if(!has.e) exprObject else as.expression(exprs))) # or fail ..
         names(cl) <- NULL
 	return(eval(cl, envir=envir))
     }

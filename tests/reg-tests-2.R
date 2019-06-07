@@ -3113,8 +3113,8 @@ stopifnot(exprs = {
 stopifnot(exprs = 2 == 2)
 try(stopifnot(exprs = 1 > 2))
 ## passing an expression object:
-stopifnot(exprs = expression(2 == 2, pi < 4))
-tryCatch(stopifnot(exprs = expression(
+stopifnot(exprObject = expression(2 == 2, pi < 4))
+tryCatch(stopifnot(exprObject = expression(
                        2 == 2,
                        { cat("\n Kilroy again .."); TRUE },
                        pi < 4,

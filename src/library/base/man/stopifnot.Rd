@@ -14,7 +14,7 @@
   (\code{\link{all}}) true.
 }
 \usage{
-stopifnot(\dots, exprs, local = TRUE)
+stopifnot(\dots, exprs, exprObject, local = TRUE)
 }
 \arguments{
   \item{\dots, exprs}{any number of (typically but not necessarily
@@ -27,6 +27,11 @@ stopifnot(\dots, exprs, local = TRUE)
    expr2
    ....
 \}}
+  }
+  \item{exprObject}{alternative to \code{exprs} or \code{...}: a
+    an \sQuote{expression-like} object, typically an
+    \code{\link{expression}}, but also a \code{\link{call}}, a
+    \code{\link{name}}, or atomic constant such as \code{TRUE}.
   }
   \item{local}{(only when \code{exprs} is used:) indicates the
     \code{\link{environment}} in which the expressions should be
@@ -102,6 +107,12 @@ stopifnot(exprs = {
   all(1:10 < 12)
   "a" < "b"
 })
+
+eObj <- expression(2 < 3, 3 <= 3:6, all(1:10 < 2))
+stopifnot(exprObject = eObj)
+stopifnot(exprObject = quote(3 == 3))
+stopifnot(exprObject = TRUE)
+
 
 # long all.equal() error messages are abbreviated:
 stopifnot(all.equal(rep(list(pi),4), list(3.1, 3.14, 3.141, 3.1415)))

@@ -7990,8 +7990,8 @@ Kilroy was here! ... and I'm printed as well ...
 > try(stopifnot(exprs = 1 > 2))
 Error : 1 > 2 is not TRUE
 > ## passing an expression object:
-> stopifnot(exprs = expression(2 == 2, pi < 4))
-> tryCatch(stopifnot(exprs = expression(
+> stopifnot(exprObject = expression(2 == 2, pi < 4))
+> tryCatch(stopifnot(exprObject = expression(
 +                        2 == 2,
 +                        { cat("\n Kilroy again .."); TRUE },
 +                        pi < 4,

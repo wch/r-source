@@ -2619,19 +2619,31 @@ writeLines(conditionMessage(tt))
 
 
 ## stopifnot() now works *nicely* with expression object (with 'exprs' name):
-ee <- expression(exprs=all.equal(pi, 3.1415927), 2 < 2, stop("foo!"))
-te <- tryCatch(stopifnot(exprs = ee), error=identity)
+ee <- expression(xpr=all.equal(pi, 3.1415927), 2 < 2, stop("foo!"))
+te <- tryCatch(stopifnot(exprObject = ee), error=identity)
 stopifnot(conditionMessage(te) == "2 < 2 is not TRUE")
 ## conditionMessage(te) was  "ee are not all TRUE" in R 3.5.x
+t2 <- tryCatch(stopifnot(exprs = { T }, exprObject = ee), error=identity)
+t3 <- tryCatch(stopifnot(TRUE, 2 < 3,   exprObject = ee), error=identity)
+f <- function(ex) stopifnot(exprObject = ex)
+t4 <- tryCatch(f(ee), error=identity)
+stopifnot(grepl("one of 'exprs', 'exprObject' ", conditionMessage(t2)),
+          conditionMessage(t2) == conditionMessage(t3),
+          conditionMessage(t4) == conditionMessage(te)
+          )
+(function(e) stopifnot(exprObject = e))(expression(1 < 2, 2 <= 2:4))
+## the latter (with 'exprs = e') gave  Error in eval(exprs) : object 'e' not found
+
+
 ##
 ## Empty 'exprs' should work in almost all cases:
 stopifnot()
 stopifnot(exprs = {})
 e0 <- expression()
-stopifnot(exprs = e0)
-do.call(stopifnot, list(exprs = expression()))
-do.call(stopifnot, list(exprs = e0))
-## the last three failed in R 3.5.x
+stopifnot(exprObject = e0)
+do.call(stopifnot, list(exprObject = expression()))
+do.call(stopifnot, list(exprObject = e0))
+## the last three (w 'exprs = ')  failed in R 3.5.x
 
 
 ## as.matrix.data.frame() w/ character result and logical column, PR#17548
