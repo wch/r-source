@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2019-05-20 r76550) -- "Unsuffered Consequences"
+R Under development (unstable) (2019-06-06 r76684) -- "Unsuffered Consequences"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -95,4 +95,4 @@ null device
 > 
 > proc.time()
    user  system elapsed 
-  0.501   0.050   0.531 
+  0.508   0.047   0.535 
