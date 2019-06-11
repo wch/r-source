@@ -1,5 +1,5 @@
 
-R version 3.6.0 Patched (2019-06-07 r76684) -- "Planting of a Tree"
+R version 3.6.0 Patched (2019-06-07 r76692) -- "Planting of a Tree"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -15935,13 +15935,43 @@ GCV: 0.7155391
 > s7. <- runmed(y, 7, endrule = "const")
 > s7m <- runmed(y, 7)
 > col3 <- c("midnightblue","blue","steelblue")
-> plot(y, main = "Running Medians -- runmed(*, k=7, end.rule = X)")
+> plot(y, main = "Running Medians -- runmed(*, k=7, endrule = X)")
 > lines(ys, col = "light gray")
 > matlines(cbind(s7k, s7.,s7m), lwd = 1.5, lty = 1, col = col3)
-> legend(1, 470, paste("endrule", c("keep","constant","median"), sep = " = "),
-+        col = col3, lwd = 1.5, lty = 1)
+> eRules <- c("keep","constant","median")
+> legend("topleft", paste("endrule", eRules, sep = " = "),
++        col = col3, lwd = 1.5, lty = 1, bty = "n")
 > 
 > stopifnot(identical(s7m, smoothEnds(s7k, 7)))
+> 
+> ## With missing values (for R >= 3.6.1):
+> yN <- y; yN[c(2,40)] <- NA
+> rN <- sapply(eRules, function(R) runmed(yN, 7, endrule=R))
+> matlines(rN, type = "b", pch = 4, lwd = 3, lty=2,
++          col = adjustcolor(c("red", "orange4", "orange1"), 0.5))
+> yN[c(1, 20:21)] <- NA # additionally
+> rN. <- sapply(eRules, function(R) runmed(yN, 7, endrule=R))
+> head(rN., 4); tail(rN.) # more NA's too, still not *so* many:
+     keep constant median
+[1,]   NA      225    423
+[2,]   NA      225    324
+[3,]  324      225    225
+[4,]  225      225    225
+      keep constant median
+[36,]  196      196    196
+[37,]   NA       NA     NA
+[38,]   NA       NA     NA
+[39,]  324       NA    324
+[40,]   NA       NA    397
+[41,]  470       NA    470
+> stopifnot(exprs = {
++    !anyNA(rN[,2:3])
++    identical(which(is.na(rN[,"keep"])), c(2L, 40L))
++    identical(which(is.na(rN.), arr.ind=TRUE, useNames=FALSE),
++              rbind(cbind(c(1:2,37:38,40L), 1L),
++                    cbind(37:41, 2L), cbind(37:38, 3L)))
++    identical(rN.[39:41, "median"], c(324, 397, 470))
++ })
 > 
 > 
 > 
@@ -18646,7 +18676,7 @@ Number of Fisher Scoring iterations: 6
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  6.391 0.204 6.633 0 0 
+Time elapsed:  3.411 0.146 3.708 0 0 
 > grDevices::dev.off()
 null device 
           1 
