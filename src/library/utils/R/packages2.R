@@ -244,6 +244,25 @@ install.packages <-
 	}
     }
 
+    if (.Platform$OS.type == "windows" && length(pkgs)) {
+        ## look for package in use.
+        pkgnames <- get_package_name(pkgs)
+        ## there is no guarantee we have got the package name right:
+        ## foo.zip might contain package bar or Foo or FOO or ....
+        ## but we can't tell without trying to unpack it.
+        inuse <- search()
+        inuse <- sub("^package:", "", inuse[grep("^package:", inuse)])
+        inuse <- pkgnames %in% inuse
+        if(any(inuse)) {
+            warning(sprintf(ngettext(sum(inuse),
+                    "package %s is in use and will not be installed",
+                    "packages %s are in use and will not be installed"),
+                            paste(sQuote(pkgnames[inuse]), collapse=", ")),
+                    call. = FALSE, domain = NA, immediate. = TRUE)
+            pkgs <- pkgs[!inuse]
+        }
+    }
+
     if(!length(pkgs)) return(invisible())
 
     if(missing(lib) || is.null(lib)) {
