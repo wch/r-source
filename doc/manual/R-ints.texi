@@ -4253,7 +4253,7 @@ Optionally check if either argument of the binary operators @code{&&} and
 @code{||} has length greater than one.  The format is the same as for
 _R_CHECK_LENGTH_1_CONDITION_.
 Default: unset (nothing is reported, but
-@samp{package:_R_CHECK_PACKAGE_NAME_,abort,verbose} for the CRAN
+@samp{package:_R_CHECK_PACKAGE_NAME_,verbose} for the CRAN
 submission checks).
 
 @item _R_CHECK_BUILD_VIGNETTES_SEPARATELY_
