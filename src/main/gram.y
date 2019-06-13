@@ -612,6 +612,98 @@ static int xxungetc(int c)
     return c;
 }
 
+/* Only used from finish_mbcs_in_parse_context. */
+static int add_mbcs_byte_to_parse_context()
+{
+    int c;
+
+    if (EndOfFile)
+	error(_("invalid multibyte character in parser at line %d"),
+	      ParseState.xxlineno);
+    if(npush)
+	c = pushback[--npush];
+    else
+	c = ptr_getc();
+    if (c == EOF) 
+	error(_("invalid multibyte character in parser at line %d"),
+	      ParseState.xxlineno);
+    
+    R_ParseContextLast = (R_ParseContextLast + 1) % PARSE_CONTEXT_SIZE;
+    R_ParseContext[R_ParseContextLast] = (char) c;
+    return c;
+}
+
+/* On error, the parse context may end inside a multi-byte character. Add
+   the missing bytes to the context to so that it contains full characters. */
+static void finish_mbcs_in_parse_context()
+{
+    int i, c, nbytes = 0, first;
+    Rboolean mbcs = FALSE;
+
+    /* find the first byte of the context */
+    for(i = R_ParseContextLast;
+        R_ParseContext[i];
+        i = (i + PARSE_CONTEXT_SIZE - 1) % PARSE_CONTEXT_SIZE) {
+
+	nbytes++;
+	if (nbytes == PARSE_CONTEXT_SIZE)
+	    break;
+    }
+    if (!nbytes)
+	return;
+    if (!R_ParseContext[i])
+	first = (i + 1) % PARSE_CONTEXT_SIZE;
+    else
+	first = i;
+
+    /* decode multi-byte characters */
+    for(i = 0; i < nbytes; i++) {
+	c = R_ParseContext[(first + i) % PARSE_CONTEXT_SIZE];
+	if ((unsigned int)c < 0x80) continue; /* ASCII */
+
+	if (utf8locale) {
+	    /* UTF-8 could be handled more efficiently, searching from the end
+	       of the string */
+	    i += utf8clen((char) c) - 1;
+	    if (i >= nbytes) {
+		while (i >= nbytes) {
+		    add_mbcs_byte_to_parse_context();
+		    nbytes++;
+		}
+		return;
+	    }
+	} else
+	    mbcs = TRUE;
+    }
+    if (!mbcs)
+	return;
+
+    /* copy the context to a linear buffer */
+    char buf[nbytes + MB_CUR_MAX];
+
+    for(i = 0; i < nbytes; i++)
+	buf[i] = R_ParseContext[(first + i) % PARSE_CONTEXT_SIZE];
+
+    for(i = 0; i < nbytes; i++) {
+	wchar_t wc;
+	int res;
+	mbstate_t mb_st;
+	
+	mbs_init(&mb_st);
+	res = (int) mbrtowc(&wc, buf + i, nbytes - i, &mb_st);
+	while (res == -2 && nbytes < sizeof(buf)) {
+	    /* This is not necessarily correct for stateful MBCS */
+	    buf[nbytes++] = add_mbcs_byte_to_parse_context();
+	    mbs_init(&mb_st);
+	    res = (int) mbrtowc(&wc, buf + i, nbytes - i, &mb_st);
+	}	   
+	if (res == -1)
+	    error(_("invalid multibyte character in parser at line %d"),
+		  ParseState.xxlineno);
+	i += res - 1;
+    }
+}
+
 /*
  * Increments/inits the token/grouping counter
  */
@@ -2023,6 +2115,8 @@ static void yyerror(const char *s)
     static char const yyunexpected[] = "syntax error, unexpected ";
     static char const yyexpecting[] = ", expecting ";
     char *expecting;
+    
+    finish_mbcs_in_parse_context();
 
     R_ParseError     = yylloc.first_line;
     R_ParseErrorCol  = yylloc.first_column;
