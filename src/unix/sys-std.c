@@ -494,9 +494,9 @@ attribute_hidden
 char *R_ExpandFileName_readline(const char *s, char *buff)
 {
 #if defined(__APPLE__)
-    char *s2 = tilde_expand((char *)s);
+    char *s2 = tilde_expand_word((char *)s);
 #else
-    char *s2 = tilde_expand(s);
+    char *s2 = tilde_expand_word(s);
 #endif
 
     strncpy(buff, s2, PATH_MAX);
