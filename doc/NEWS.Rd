@@ -65,7 +65,7 @@
       \code{function}s with a user defined \code{print.function}, thanks to
       Bill Dunlap's report.
 
-      \item [On Windows only], \code{writeClipboard(.., format = <n>)} now
+      \item On Windows, \code{writeClipboard(.., format = <n>)} now
       does correctly pass \code{format} to the underlying C code, thanks to
       a bug report (with patch) by Jenny Bryan.
 
@@ -76,6 +76,9 @@
       now works for \code{algorithm="Stuetzle"}, also based on
       \code{smoothEnds(y)} working with NA's, and no longer segfaults
       for the \code{"Turlach"} algorithm; reported by Hilmar Berger.
+
+      \item \code{vcov(glm(<quasi>), dispersion = *)} works correctly
+      again, fixing \PR{17571} thanks to Pavel Krivitsky.
     }
   }
 }
