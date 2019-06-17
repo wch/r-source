@@ -2703,7 +2703,7 @@ stopifnot(exprs = { ## "trivial" (non rbind-related) assertions :
     identical(lapply(dNay, levels),
               list(x = c("2","3"), y = levN[1:3])) # no NA levels
 })
-## R in 3.6.z, z >= 1 needs 'factor.exclude=NULL' (which becomes *default* afterwards):
+## R in 3.6.z, z >= 1 needs 'factor.exclude=NULL'
 dfaby <- rbind(dfay, dfby, factor.exclude=NULL)
 dNaby <- rbind(dNay, dfby, factor.exclude=NULL)
 dfacy <- rbind(dfay, dfcy, factor.exclude=NULL)
