@@ -829,6 +829,9 @@
 /* Define to 1 if you have the <tiffio.h> header file. */
 #undef HAVE_TIFFIO_H
 
+/* Define to 1 if you have the `tilde_expand_word' function. */
+#undef HAVE_TILDE_EXPAND_WORD
+
 /* Define to 1 if you have the `times' function. */
 #undef HAVE_TIMES
 
