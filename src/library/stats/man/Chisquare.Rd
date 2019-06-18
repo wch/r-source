@@ -1,6 +1,6 @@
 % File src/library/stats/man/Chisquare.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Chisquare}
@@ -78,7 +78,7 @@ rchisq(n, df, ncp = 0)
   respect to that mixture measure but rather the limit of the density
   for \eqn{df \to 0}{df -> 0}.
 
-  Note that \code{ncp} values larger than about 1e5 may give inaccurate
+  Note that \code{ncp} values larger than about 1e5 (and even smaller)  may give inaccurate
   results with many warnings for \code{pchisq} and \code{qchisq}.
 }
 \source{

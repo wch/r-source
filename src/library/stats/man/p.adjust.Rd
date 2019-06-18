@@ -20,7 +20,8 @@ p.adjust.methods
   \item{p}{numeric vector of p-values (possibly with
     \code{\link{NA}}s).  Any other \R object is coerced by
     \code{\link{as.numeric}}.}
-  \item{method}{correction method.  Can be abbreviated.}
+  \item{method}{correction method, a \code{\link{character}} string.
+    Can be abbreviated.}
   \item{n}{number of comparisons, must be at least \code{length(p)};
     only set this (to non-default) when you know what you are doing!}
 }
@@ -48,7 +49,7 @@ p.adjust.methods
   Hochberg's, but the difference is usually small and the Hochberg
   p-values are faster to compute.
 
-  The \code{"BH"} (aka \code{"fdr"}) and \code{"BY"} method of
+  The \code{"BH"} (aka \code{"fdr"}) and \code{"BY"} methods of
   Benjamini, Hochberg, and Yekutieli control the false discovery rate,
   the expected proportion of false discoveries amongst the rejected
   hypotheses.  The false discovery rate is a less stringent condition

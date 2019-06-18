@@ -1,7 +1,7 @@
 #  File src/library/stats/R/zzModels.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright 1999--2017 The R Core Team
+#  Copyright 1999--2018 The R Core Team
 #  Copyright 1997, 1999 (C) Jose C. Pinheiro and Douglas M. Bates
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -191,7 +191,7 @@ SSbiexp <- # selfStart(~ A1 * exp(-exp(lrc1)*input) + A2 * exp(-exp(lrc2) * inpu
           },
               initial = function(mCall, data, LHS)
           {
-              xy <- data.frame(sortedXyData(mCall[["input"]], LHS, data))
+              xy <- sortedXyData(mCall[["input"]], LHS, data)
               if (nrow(xy) < 5) {
                   stop("too few distinct input values to fit a biexponential")
               }
@@ -347,7 +347,7 @@ SSlogis <- # selfStart(~ Asym/(1 + exp((xmid - input)/scal)),
               .value
         },
         initial = function(mCall, data, LHS) {
-              xy <- data.frame(sortedXyData(mCall[["input"]], LHS, data))
+              xy <- sortedXyData(mCall[["input"]], LHS, data)
               if(nrow(xy) < 4) {
                   stop("too few distinct input values to fit a logistic model")
               }
@@ -389,7 +389,7 @@ SSmicmen <- # selfStart(~ Vm * input/(K + input),
           },
               initial = function(mCall, data, LHS)
           {
-              xy <- data.frame(sortedXyData(mCall[["input"]], LHS, data))
+              xy <- sortedXyData(mCall[["input"]], LHS, data)
               if (nrow(xy) < 3) {
                   stop("too few distinct input values to fit a Michaelis-Menten model")
               }

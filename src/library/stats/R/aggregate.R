@@ -1,7 +1,7 @@
 #  File src/library/stats/R/aggregate.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -185,16 +185,16 @@ function(formula, data, FUN, ..., subset, na.action = na.omit)
     }
     mf <- eval(m, parent.frame())
 
-    if(is.matrix(mf[[1L]])) {
+    lhs <-
+        if(is.matrix(mf[[1L]])) {
         ## LHS is a cbind() combo, convert to data frame and fix names.
         ## Commented out May 2012 (seems to work without it) -- pd
 	##lhs <- setNames(as.data.frame(mf[[1L]]),
 	##		as.character(m[[2L]][[2L]])[-1L])
-        lhs <- as.data.frame(mf[[1L]])
-        aggregate.data.frame(lhs, mf[-1L], FUN = FUN, ...)
-    }
-    else
-        aggregate.data.frame(mf[1L], mf[-1L], FUN = FUN, ...)
+            as.data.frame(mf[[1L]])
+        }
+        else mf[1L]
+    aggregate.data.frame(lhs, mf[-1L], FUN = FUN, ...)
 }
 
 aggregate.ts <-

@@ -358,12 +358,14 @@ nlminb_iterate(double b[], double d[], double fx, double g[], double h[],
     }
 }
 
+// setup working vectors 'iv' and 'v' - called from R's nlminb() :
 SEXP port_ivset(SEXP kind, SEXP iv, SEXP v)
 {
     Rf_divset(asInteger(kind), INTEGER(iv), LENGTH(iv), LENGTH(v), REAL(v));
     return R_NilValue;
 }
 
+// Main routines - called from R's nlminb()
 SEXP port_nlminb(SEXP fn, SEXP gr, SEXP hs, SEXP rho,
 		 SEXP lowerb, SEXP upperb, SEXP d, SEXP iv, SEXP v)
 {

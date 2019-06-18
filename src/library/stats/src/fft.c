@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 1998--2019  The R Core Team
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2000, 2013  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -36,7 +36,8 @@
  *
  *  I have translated them to C and moved the memory allocation
  *  so that it takes place under the control of the algorithm
- *  which calls these; for R, see ../main/fourier.c
+ *  which calls these; for R, see ./fourier.c
+                                  ~~~~~~~~~~~
  *
  *  void fft_factor(int n, int *maxf, int *maxp)
  *
@@ -733,9 +734,9 @@ static int kt;
 static int maxf;
 static int maxp;
 
-/* At the end of factorization,	 
+/* At the end of factorization,
  *	nfac[]	contains the factors,
- *	m_fac	contains the number of factors and 
+ *	m_fac	contains the number of factors and
  *	kt	contains the number of square factors  */
 
 /* non-API, but used by package RandomFields */

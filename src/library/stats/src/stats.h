@@ -31,11 +31,11 @@
 
 #include <R_ext/RS.h>
 
-/* A sterting point to extract wuch prototypes for .Fortran calls is
+/* A starting point to extract such prototypes for .Fortran calls is
 
    gfortran -c -fc-prototypes-external hclust.f
 
-   for gfortran >= 9, replaing hclust_ with the macro call.  */
+   for gfortran >= 9, replacing hclust_ with the macro call.  */
 
 void
 F77_NAME(hclust)(int *n, int *len, int *iopt, int *ia, int *ib,
