@@ -287,11 +287,13 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   \option{--no-lock}.
   % and also options(install.lock = FALSE) in an \R startup file.
 
-  For a macOS or Windows binary install, no locking is done by
-  default.  Setting argument \code{lock} to \code{TRUE} (it defaults to
-  the value of \code{\link{getOption}("install.lock", FALSE)}) will use
-  per-directory locking as described for source installs: if the value
-  is \code{"pkglock"} per-package locking will be used.
+  For a macOS binary install, no locking is done by default.  Setting
+  argument \code{lock} to \code{TRUE} (it defaults to the value of
+  \code{\link{getOption}("install.lock", FALSE)}) will use per-directory
+  locking as described for source installs.  For Windows binary install,
+  per-directory locking is used by default (\code{lock} defaults to the
+  value of \code{\link{getOption}("install.lock", TRUE)}).  If the value is
+  \code{"pkglock"} per-package locking will be used.
 
   If package locking is used on Windows with \code{libs_only = TRUE} and
   the installation fails, the package will be restored to its previous

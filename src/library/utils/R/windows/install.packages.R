@@ -209,7 +209,7 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE,
              contriburl = contrib.url(repos),
              method, available = NULL, destdir = NULL,
              dependencies = FALSE, libs_only = FALSE,
-             lock = getOption("install.lock", FALSE), quiet = FALSE, ...)
+             lock = getOption("install.lock", TRUE), quiet = FALSE, ...)
 {
     if(!length(pkgs)) return(invisible())
     ## look for package in use.
