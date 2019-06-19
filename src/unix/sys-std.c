@@ -490,6 +490,7 @@ typedef void rl_vcpfunc_t (char *);
 #  define NEED_INT_HANDLER
 # endif
 
+#if defined(HAVE_LIBREADLINE) && defined(HAVE_TILDE_EXPAND_WORD)
 attribute_hidden
 char *R_ExpandFileName_readline(const char *s, char *buff)
 {
@@ -504,7 +505,7 @@ char *R_ExpandFileName_readline(const char *s, char *buff)
     free(s2);
     return buff;
 }
-
+#endif
 
 # ifdef HAVE_READLINE_HISTORY_H
 #  include <readline/history.h>
