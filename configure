@@ -23103,13 +23103,14 @@ fi
   if test "${use_readline}" = no; then
     as_fn_error $? "--with-readline=yes (default) and headers/libs are not available" "$LINENO" 5
   else
-    ## the NetBSD emulation supplied by macOS does not have this
-    for ac_func in history_truncate_file
+    ## the NetBSD emulation supplied by macOS does not have these
+    for ac_func in history_truncate_file tilde_expand_word
 do :
-  ac_fn_c_check_func "$LINENO" "history_truncate_file" "ac_cv_func_history_truncate_file"
-if test "x$ac_cv_func_history_truncate_file" = xyes; then :
+  as_ac_var=`$as_echo "ac_cv_func_$ac_func" | $as_tr_sh`
+ac_fn_c_check_func "$LINENO" "$ac_func" "$as_ac_var"
+if eval test \"x\$"$as_ac_var"\" = x"yes"; then :
   cat >>confdefs.h <<_ACEOF
-#define HAVE_HISTORY_TRUNCATE_FILE 1
+#define `$as_echo "HAVE_$ac_func" | $as_tr_cpp` 1
 _ACEOF
 
 fi
@@ -25254,7 +25255,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:25257: \"$ac_link\") >&5
+(eval echo $as_me:25258: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -25329,7 +25330,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:25332: \"$ac_link\") >&5
+(eval echo $as_me:25333: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
