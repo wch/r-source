@@ -79,6 +79,9 @@
 
       \item \code{vcov(glm(<quasi>), dispersion = *)} works correctly
       again, fixing \PR{17571} thanks to Pavel Krivitsky.
+
+      \item \command{R CMD INSTALL} of binary packages on Windows now
+      works also with per-directory locking.
     }
   }
 }
