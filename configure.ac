@@ -790,8 +790,8 @@ if test "${use_readline}" = yes; then
   if test "${use_readline}" = no; then
     AC_MSG_ERROR([--with-readline=yes (default) and headers/libs are not available])
   else
-    ## the NetBSD emulation supplied by macOS does not have this
-    AC_CHECK_FUNCS(history_truncate_file)
+    ## the NetBSD emulation supplied by macOS does not have these
+    AC_CHECK_FUNCS(history_truncate_file tilde_expand_word)
     ## rl_completion_matches is >= 4.2.
     ## rl_resize_terminal is >= 4.0 ane we use it only for >= 6.3.
     ## rl_callback_sigcleanup is in pre-releases for 7.0, not yet used.
