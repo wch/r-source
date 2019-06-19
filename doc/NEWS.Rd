@@ -177,6 +177,11 @@
 
       \item \command{R CMD INSTALL} of binary packages on Windows now
       works also with per-directory locking.
+
+      \item \command{R CMD INSTALL} and \code{install.packages()} on Windows
+      are now more robust against a locked file in an earlier installation
+      of the package to be installed.  The default value of option
+      \code{install.lock} on Windows has been changed to \code{TRUE}. 
     }
   }
 }
