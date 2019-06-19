@@ -519,7 +519,7 @@ Rd2latex <- function(Rd, out = "", defines = .Platform$OS.type,
                               },
                               "\\enumerate" =,
                               "\\itemize"= {
-                                  of1("\\item ")
+                                  of1("\\item{} ")
                                   itemskip <- TRUE
                               })
                        itemskip <- TRUE
