@@ -971,6 +971,9 @@ if(FALSE) {
                     file.copy(instdir, lockdir, recursive = TRUE,
                               copy.date = TRUE)
             } else if (more_than_libs) unlink(instdir, recursive = TRUE)
+            if (more_than_libs && dir.exists(instdir))
+                # On Windows, a DLL cannot be unlinked if in use
+                errmsg("cannot remove earlier installation, is it in use?")
             dir.create(instdir, recursive = TRUE, showWarnings = FALSE)
         }
 
