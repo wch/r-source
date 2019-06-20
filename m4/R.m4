@@ -4391,10 +4391,17 @@ cat > conftest.c <<EOF
 #include <stdint.h>
 extern uintptr_t dummy_ii(void);
 
+typedef uintptr_t (*dptr_type)(void);
+volatile dptr_type dummy_ii_ptr;
+
 int main(int ac, char **av)
 {
     int i;
-    uintptr_t ii = dummy_ii();
+    dummy_ii_ptr = dummy_ii;
+        
+    /* call dummy_ii via a volatile function pointer to prevent inlinining in
+       case the tests are accidentally built with LTO */
+    uintptr_t ii = dummy_ii_ptr();
     /* 1 is downwards */
     return ((uintptr_t)&i > ii) ? 1 : -1;
 }
