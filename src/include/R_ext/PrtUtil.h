@@ -30,6 +30,9 @@
 #include <Rinternals.h> // for R_xlen_t
 #include <R_ext/Complex.h>
 
+// for backcompatibility but not to stay (MM) :
+#define formatComplex_USING_signif
+
 #define formatLogical      Rf_formatLogical
 #define formatInteger      Rf_formatInteger
 #define formatReal         Rf_formatReal

@@ -314,7 +314,9 @@ const char *EncodeReal2(double x, int w, int d, int e)
     return buff;
 }
 
+#ifdef formatComplex_USING_signif
 void z_prec_r(Rcomplex *r, Rcomplex *x, double digits);
+#endif
 
 #define NB3 NB+3
 const char
@@ -336,12 +338,14 @@ const char
 	const char *Im, *tmp;
 	int flagNegIm = 0;
 	Rcomplex y;
+#ifdef formatComplex_USING_signif
 	/* formatComplex rounded, but this does not, and we need to
 	   keep it that way so we don't get strange trailing zeros.
 	   But we do want to avoid printing small exponentials that
 	   are probably garbage.
 	 */
 	z_prec_r(&y, &x, R_print.digits);
+#endif
 	/* EncodeReal has static buffer, so copy */
 	tmp = EncodeReal0(y.r == 0. ? y.r : x.r, wr, dr, er, dec);
 	strcpy(Re, tmp);

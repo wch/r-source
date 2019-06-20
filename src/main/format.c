@@ -1,8 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2018  The R Core Team.
+ *  Copyright (C) 1997--2019  The R Core Team
  *  Copyright (C) 2003--2016  The R Foundation
+ *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -387,13 +387,17 @@ void formatReal(const double *x, R_xlen_t n, int *w, int *d, int *e, int nsmall)
     if (neginf && *w < 4) *w = 4;
 }
 
+#ifdef formatComplex_USING_signif
 /*   From complex.c. */
 void z_prec_r(Rcomplex *r, const Rcomplex *x, double digits);
+#endif
 
 /* As from 2.2.0 the number of digits applies to real and imaginary parts
    together, not separately */
-void formatComplex(const Rcomplex *x, R_xlen_t n, int *wr, int *dr, int *er,
-		   int *wi, int *di, int *ei, int nsmall)
+void formatComplex(const Rcomplex *x, R_xlen_t n,
+		   int *wr, int *dr, int *er, // (w,d,e) for Re(.)
+		   int *wi, int *di, int *ei, // (w,d,e) for Im(.)
+		   int nsmall)
 {
 /* format.info() for  x[1..n] for both Re & Im */
     int left, right, sleft;
@@ -418,8 +422,13 @@ void formatComplex(const Rcomplex *x, R_xlen_t n, int *wr, int *dr, int *er,
     i_mnl = mnl = INT_MAX;
 
     for (R_xlen_t i = 0; i < n; i++) {
+#ifdef formatComplex_USING_signif
 	/* Now round */
 	z_prec_r(&tmp, &(x[i]), R_print.digits);
+#else
+	tmp.r = x[i].r;
+	tmp.i = x[i].i;
+#endif
 	if(ISNA(tmp.r) || ISNA(tmp.i)) {
 	    naflag = 1;
 	} else {
