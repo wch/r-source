@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2018  The R Core Team
+ *  Copyright (C) 1997--2019  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -148,6 +148,8 @@ int R_running_as_main_program = 0;
 
 /* In ../main/main.c, to avoid inlining */
 extern uintptr_t dummy_ii(void);
+typedef uintptr_t (*dptr_type)(void);
+volatile dptr_type dummy_ii_ptr;
 
 /* Protection against embedded misuse, PR#15420 */
 static int num_initialized = 0;
@@ -195,8 +197,11 @@ int Rf_initialize_R(int ac, char **av)
     */
     struct rlimit rlim;
 
+    dummy_ii_ptr = dummy_ii;
     {
-	uintptr_t ii = dummy_ii();
+	/* call dummy_ii via a volatile function pointer to prevent inlining
+	   with LTO */
+	uintptr_t ii = dummy_ii_ptr();
 	/* 1 is downwards */
 
 	R_CStackDir = ((uintptr_t)&i > ii) ? 1 : -1;
