@@ -190,6 +190,9 @@
       \item In R documentation (\file{*.Rd}) files, \code{\item [..]} is no
       longer treated specially when rendered in LaTeX and hence pdf, but
       rather shows the brackets in all cases.
+
+      \item \code{methods:::conformMethod()} had \code{&&} where
+      \code{&} was needed.  (Spotted by Henrik Bengtsson.)
     }
   }
 }
