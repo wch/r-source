@@ -28,6 +28,7 @@
 #include <R_ext/Print.h>
 #include <ctype.h>		/* for isspace */
 #include <float.h>		/* for DBL_MAX */
+#include <R_ext/Itermacros.h> /* for ITERATE_BY_REGION */
 
 #undef COMPILING_R
 
@@ -2483,7 +2484,7 @@ SEXP attribute_hidden do_pretty(SEXP call, SEXP op, SEXP args, SEXP rho)
 */
 
 static void
-str_signif(void *x, R_xlen_t n, const char *type, int width, int digits,
+str_signif_sexp(SEXP x, const char *type, int width, int digits,
 	   const char *format, const char *flag, char **result);
 
 SEXP attribute_hidden do_formatC(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -2505,13 +2506,7 @@ SEXP attribute_hidden do_formatC(SEXP call, SEXP op, SEXP args, SEXP rho)
 	memset(cptr[i], ' ', ix);
 	cptr[i][ix] = 0;
     }
-    void *px = NULL /* -Wall */;
-    switch(TYPEOF(x)) {
-    case INTSXP: px = INTEGER(x); break;
-    case REALSXP: px = REAL(x); break;
-    default: error("unsupported type ");
-    }
-    str_signif(px, n, type, width, digits, fmt, flag, cptr);
+    str_signif_sexp(x, type, width, digits, fmt, flag, cptr);
     SEXP ans = PROTECT(allocVector(STRSXP, n));
     for (R_xlen_t i = 0; i < n; i++) SET_STRING_ELT(ans, i, mkChar(cptr[i]));
     UNPROTECT(2);
@@ -2567,6 +2562,13 @@ SEXP attribute_hidden do_formatC(SEXP call, SEXP op, SEXP args, SEXP rho)
  *		e.g., "0" pads leading zeros; "-" does left adjustment
  *		the other possible flags are  "+", " ", and "#".
  *	  New (Feb.98): if flag has more than one character, all are passed..
+ *   
+ *  Gabe Becker (2019-05-21): Added str_signif_sexp which wraps 
+ *  original DATAPTR based str_signif to support ALTREPs. 
+ *     
+ *     Any future calls to str_signif on SEXP data should be via 
+ *     str_signif_sexp to ensure ALTREP support.
+ *     
  */
 
 /* <UTF8> char here is either ASCII or handled as a whole */
@@ -2696,4 +2698,33 @@ void str_signif(void *x, R_xlen_t n, const char *type, int width, int digits,
 	    error("'type' must be \"real\" for this format");
     }
     vmaxset(vmax);
+}
+
+
+/* wrap original DATAPTR based str_signif in ITERATE_BY_REGION calls to 
+   support ALTREPs
+
+   We still accept type because it is part of the defined API and only defaults
+   to matching the SEXP type.
+*/
+static
+void str_signif_sexp(SEXP x, const char *type, int width, int digits,
+		     const char *format, const char *flag, char **result)
+{
+    /* result + idx is the overall position of the chunk we're populating */
+    if(TYPEOF(x) == INTSXP) {
+	ITERATE_BY_REGION(x, px, idx, nb, int, INTEGER,
+			  {
+			      str_signif((void *) px, nb, type, width, digits,
+					 format, flag, result + idx);
+			  });
+    } else if (TYPEOF(x) == REALSXP) {
+	ITERATE_BY_REGION(x, px, idx, nb, double, REAL,
+			  {
+			      str_signif((void *) px, nb, type, width, digits,
+					 format, flag, result + idx);
+			  });
+    } else {
+	error("unsupported type ");
+    }
 }
