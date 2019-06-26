@@ -187,7 +187,7 @@
       expand tilde (\code{~}) file names starting with a tilde, instead of
       almost all tildes.
 
-      \item In R documentation (\file{*.Rd}) files, \code{\item [..]} is no
+      \item In R documentation (\file{*.Rd}) files, \samp{\item [..]} is no
       longer treated specially when rendered in LaTeX and hence pdf, but
       rather shows the brackets in all cases.
     }
