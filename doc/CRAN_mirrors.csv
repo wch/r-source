@@ -73,6 +73,7 @@ Denmark,Denmark,Aalborg,http://mirrors.dotsrc.org/cran/,"Aalborg University","st
 "Germany (Göttingen)",Germany,Göttingen,http://ftp.gwdg.de/pub/misc/cran/,"GWDG Göttingen","ftpadmin # gwdg.de",1,de,"secure_mirror_from_master"
 "Germany (Münster) [https]",Germany,Münster,https://cran.uni-muenster.de/,"University of Münster, Germany","Edzer Pebesma <edzer.pebesma # uni-muenster.de>",1,de,"secure_mirror_from_master"
 "Germany (Münster)",Germany,Münster,http://cran.uni-muenster.de/,"University of Münster, Germany","Edzer Pebesma <edzer.pebesma # uni-muenster.de>",1,de,"secure_mirror_from_master"
+"Germany (Regensburg) [https]",Germany,Regensburg,https://packages.othr.de/cran/,"OTH Regensburg","admin-storage # oth-regensburg.de",1,de,"secure_mirror_from_master"
 "Greece [https]",Greece,Crete,https://ftp.cc.uoc.gr/mirrors/CRAN/,"University of Crete","mirrors # Cc.uoc.gr",1,gr,"secure_mirror_from_master"
 Greece,Greece,Crete,http://ftp.cc.uoc.gr/mirrors/CRAN/,"University of Crete","mirrors # Cc.uoc.gr",1,gr,"secure_mirror_from_master"
 "Hungary [https]",Hungary,Budapest,https://cran.rapporter.net/,"Rapporter.net, Budapest","Daróczi Gergely <gergely # snowl.net>",1,hu,"secure_mirror_from_master"
