@@ -7576,18 +7576,33 @@ static Rboolean checkConstantsInRecord(SEXP crec, Rboolean abortOnError)
     return constsOK;
 }
 
+static void const_cleanup(void *data)
+{
+    Rboolean *inProgress = (Rboolean *)data;
+    *inProgress = FALSE;
+}
+
 /* Checks if constants of any registered BCODESXP have been modified.
    Returns TRUE if the constants are ok, otherwise returns false or aborts.*/
 Rboolean attribute_hidden R_checkConstants(Rboolean abortOnError)
 {
     if (R_check_constants <= 0 || R_ConstantsRegistry == NULL)
 	return TRUE;
+
     static Rboolean checkingInProgress = FALSE;
+    RCNTXT cntxt;
+
     if (checkingInProgress)
 	/* recursive invocation is possible because of allocation
            in R_compute_identical */
 	return TRUE;
-    /* NOTE: non-local return could disable checking */
+
+    /* set up context to recover checkingInProgress */
+    begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
+                 R_NilValue, R_NilValue);
+    cntxt.cend = &const_cleanup;
+    cntxt.cenddata = &checkingInProgress;
+
     checkingInProgress = TRUE;
     SEXP prev_crec = R_ConstantsRegistry;
     SEXP crec = VECTOR_ELT(prev_crec, 0);
@@ -7604,6 +7619,7 @@ Rboolean attribute_hidden R_checkConstants(Rboolean abortOnError)
             prev_crec = crec;
 	crec = VECTOR_ELT(crec, 0);
     }
+    endcontext(&cntxt);
     checkingInProgress = FALSE;
     return constsOK;
 }
