@@ -91,7 +91,9 @@
 
       \item \code{available.packages()} and hence \code{install.packages()}
       now pass their \code{...} argument to \code{download.file()},
-      fulfilling the wish of \PR{17532}.
+      fulfilling the wish of \PR{17532}; subsequently,
+      \code{available.packages()} gets new argument \code{quiet}, solving
+      \PR{17573}.
 
       \item \code{stopifnot()} gets new argument \code{exprObject} to allow
       an \R object of class \code{expression} (or other \sQuote{language})

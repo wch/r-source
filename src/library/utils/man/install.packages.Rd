@@ -168,7 +168,9 @@ install.packages(pkgs, lib, repos = getOption("repos"),
     additional options, with names the respective package names.
   }
   \item{quiet}{
-    logical: if true, reduce the amount of output.
+    logical: if true, reduce the amount of output.  This is \emph{not}
+    passed to \code{\link{available.packages}()} in case that is called, on
+    purpose.
   }
   \item{keep_outputs}{
     a logical: if true, keep the outputs from installing source packages

@@ -20,8 +20,8 @@ available.packages <-
 function(contriburl = contrib.url(repos, type), method,
          fields = NULL, type = getOption("pkgType"),
          filters = NULL, repos = getOption("repos"),
-         ignore_repo_cache =  FALSE, max_repo_cache_age,
-         ...)
+         ignore_repo_cache = FALSE, max_repo_cache_age,
+         quiet = TRUE, ...)
 {
     requiredFields <-
         c(tools:::.get_standard_repository_db_fields(), "File")
@@ -88,7 +88,7 @@ function(contriburl = contrib.url(repos, type), method,
                 z <- tryCatch({
                     download.file(url = paste0(repos, "/PACKAGES.rds"),
                                   destfile = dest, method = method,
-                                  cacheOK = FALSE, quiet = TRUE, mode = "wb", ...)
+                                  cacheOK = FALSE, quiet = quiet, mode = "wb", ...)
                 }, error = identity)
                 options(op)
                 if(!inherits(z, "error")) {
@@ -108,7 +108,7 @@ function(contriburl = contrib.url(repos, type), method,
                         ## This is a binary file
                         download.file(url = paste0(repos, "/PACKAGES.gz"),
                                       destfile = tmpf, method = method,
-                                      cacheOK = FALSE, quiet = TRUE, mode = "wb", ...)
+                                      cacheOK = FALSE, quiet = quiet, mode = "wb", ...)
                     }, error = identity)
                     if(inherits(z, "error"))
                         z <- tryCatch({
@@ -116,7 +116,7 @@ function(contriburl = contrib.url(repos, type), method,
                             ## LF, so use binary mode to avoid CRLF.
                             download.file(url = paste0(repos, "/PACKAGES"),
                                           destfile = tmpf, method = method,
-                                          cacheOK = FALSE, quiet = TRUE, mode = "wb", ...)
+                                          cacheOK = FALSE, quiet = quiet, mode = "wb", ...)
                         }, error = identity)
                     options(op)
 

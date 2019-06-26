@@ -54,6 +54,8 @@ available.packages(contriburl = contrib.url(repos, type), method,
   \item{max_repo_cache_age}{any cached values older than this in seconds
     will be ignored. See \sQuote{Details}.
   }
+  \item{quiet}{logical, passed to \code{\link{download.file}()}; change
+    only if you know what you are doing.}
   \item{\dots}{
     allow additional arguments to be passed from callers (which might be
     arguments to future versions of this function).  Currently these are
