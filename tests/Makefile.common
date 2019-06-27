@@ -447,7 +447,7 @@ test-Packages1-Recommended:
 	@for p in $(R_PKGS_RECOMMENDED); do \
 	  rm -Rf RecPackages/$${p}; \
 	  gzip -dc "$(top_srcdir)/src/library/Recommended/$${p}.tgz" | \
-	    (cd RecPackages && $(TAR) xf -) ; \
+	    (cd RecPackages && $(TAR) -x -f -) ; \
 	  $(ECHO) "checking package '$${p}'"; \
 	  R_LIBS="$(top_builddir)/library:$${R_LIBS}" \
 	    _R_CHECK_FORCE_SUGGESTS_=FALSE $(R3) --install=skip \
@@ -469,7 +469,7 @@ stamp-Packages2: $(PKG_ROBJECTS)
 	@p=`basename $@ .log`; \
 	rm -Rf RecPackages/$${p}; \
 	gzip -dc "$(top_srcdir)/src/library/Recommended/$${p}.tgz" | \
-	    (cd RecPackages && $(TAR) xf -) ; \
+	    (cd RecPackages && $(TAR) -x -f -) ; \
 	  $(ECHO) "begin checking package '$${p}'"; \
 	  R_LIBS="$(top_builddir)/library:$${R_LIBS}" \
 	 _R_CHECK_FORCE_SUGGESTS_=FALSE $(R3) --install=skip \
