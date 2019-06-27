@@ -15,7 +15,9 @@
 }
 \usage{
 runmed(x, k, endrule = c("median", "keep", "constant"),
-       algorithm = NULL, print.level = 0)
+       algorithm = NULL,
+       na.action = c("+Big_alternate", "-Big_alternate", "na.omit", "fail"),
+       print.level = 0)
 }
 \arguments{
   \item{x}{numeric vector, the \sQuote{dependent} variable to be
@@ -46,6 +48,23 @@ runmed(x, k, endrule = c("median", "keep", "constant"),
     \code{"Stuetzle"}) or the default \code{NULL}, specifying which algorithm
     should be applied.  The default choice depends on \code{n = length(x)}
     and \code{k} where \code{"Turlach"} will be used for larger problems.}
+  \item{na.action}{character string determining the behavior in the case of
+    \code{\link{NA}} or \code{\link{NaN}} in \code{x}, (partially matching)
+    one of
+    \describe{
+      \item{\code{"+Big_alternate"}}{Here, all the NAs in \code{x} are
+	first replaced by alternating \eqn{\pm B}{+/- B} where \eqn{B} is a
+	\dQuote{Big} number (with \eqn{2B < M*}, where
+	\eqn{M*=}\code{\link{.Machine $ double.xmax}}).  The replacement
+	values are \dQuote{from left} \eqn{(+B, -B, +B, \ldots)},
+	i.e. start with \code{"+"}.}
+      \item{\code{"-Big_alternate"}}{almost the same as
+	\code{"+Big_alternate"}, just starting with \eqn{-B} (\code{"-Big..."}).}
+      \item{\code{"na.omit"}}{the result is the same as
+	\code{runmed(x[!is.na(x)], k, ..)}.}
+      \item{\code{"fail"}}{the presence of NAs in \code{x} will raise an error.}
+    }
+  }
   \item{print.level}{integer, indicating verboseness of algorithm;
     should rarely be changed by average users.}
 }
@@ -71,6 +90,20 @@ runmed(x, k, endrule = c("median", "keep", "constant"),
       \eqn{O(n \times k)}{O(n * k)} which is slower asymptotically, it is
       considerably faster for small \eqn{k} or \eqn{n}.}
   }
+
+  Note that, both algorithms (and the \code{\link{smoothEnds}()} utility)
+  now \dQuote{work} also when \code{x} contains non-finite entries
+  (\eqn{\pm}{+/-}\code{\link{Inf}}, \code{\link{NaN}}, and
+  \code{\link{NA}}):
+  \describe{
+    \item{\code{"Turlach"}}{.......
+    }
+    \item{\code{"Stuetzle"}}{currently simply works by applying the
+      underlying math library (\file{libm}) arithmetic for the non-finite
+      numbers; this may optionally change in the future.
+    }
+  }
+
 
   Currently long vectors are only supported for \code{algorithm = "Stuetzle"}.
 }
@@ -132,6 +165,24 @@ lines(lowess(x, y, f = 0.3), col = col[2])
 lines(runmed(y, 7),      lwd = 2, col = col[3])
 legend(length(y),max(y), c("data", "lowess(y, f = 0.3)", "runmed(y, 7)"),
        xjust = 1, col = col, lty = c(0, 1, 1), pch = c(1,NA,NA))
+
+## An example with initial NA's - used to fail badly (notably for "Turlach"):
+x15 <- c(rep(NA, 4), c(9, 9, 4, 22, 6, 1, 7, 5, 2, 8, 3))
+rS15 <- cbind(Sk.3 = runmed(x15, k = 3, algorithm="S"),
+              Sk.7 = runmed(x15, k = 7, algorithm="S"),
+              Sk.11= runmed(x15, k =11, algorithm="S"))
+rT15 <- cbind(Tk.3 = runmed(x15, k = 3, algorithm="T", print.level=1),
+              Tk.7 = runmed(x15, k = 7, algorithm="T", print.level=1),
+              Tk.9 = runmed(x15, k = 9, algorithm="T", print.level=1),
+              Tk.11= runmed(x15, k =11, algorithm="T", print.level=1))
+cbind(x15, rS15, rT15) # result for k=11  maybe a bit surprising ..
+Tv <- rT15[-(1:3),]
+stopifnot(3 <= Tv, Tv <= 9, 5 <= Tv[1:10,])
+matplot(y = cbind(x15, rT15), type = "b", ylim = c(1,9), pch=1:5, xlab = NA,
+        main = "runmed(x15, k, algo = \"Turlach\")")
+mtext(paste("x15 <-", deparse(x15)))
+points(x15, cex=2)
+legend("bottomleft", legend=c("data", paste("k = ", c(3,7,9,11))), bty="n", col=1:5, lty=1:5, pch=1:5)
 }
 \keyword{smooth}
 \keyword{robust}

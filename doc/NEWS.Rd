@@ -103,6 +103,12 @@
 }
 
 \section{\Rlogo CHANGES IN R 3.6.0 patched}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item \code{runmed(x, *)} gets new option \code{na.action}
+      determining how to handle \code{NaN} or \code{NA} in \code{x}.
+    }
+  }
   \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
       \item The default detection of the shell variable \code{libNN} is
@@ -170,9 +176,10 @@
       \PR{17570}.
 
       \item \code{runmed(x, *)} when \code{x} contains missing values
-      now works for \code{algorithm="Stuetzle"}, also based on
-      \code{smoothEnds(y)} working with NA's, and no longer segfaults
-      for the \code{"Turlach"} algorithm; reported by Hilmar Berger.
+      now works consistently for both \code{algorithm="Stuetzle"} and
+      \code{"Turlach"}, also based on \code{smoothEnds(y)} working with
+      \code{NA}s, and no longer segfaults for \code{"Turlach"}, as reported
+      by Hilmar Berger.
 
       \item \code{vcov(glm(<quasi>), dispersion = *)} works correctly
       again, fixing \PR{17571} thanks to Pavel Krivitsky.
