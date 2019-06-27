@@ -30,7 +30,7 @@ ECHO_C =
 ECHO_N = -n
 ECHO_T = 
 MK = $(MAKE) -f Makefile.win
-TAR = tar
+TAR ?= tar
 
 ## override Makefile.common
 test-src-reg-1e = reg-win.R
