@@ -47,11 +47,11 @@
 
 #define SHADOW_WIDTH 1
 
-#define isarmed(obj) ((obj)->state & Armed)
-#define arm(obj)     ((obj)->state |= Armed)
-#define disarm(obj)  ((obj)->state &= ~Armed)
+#define isarmed(obj) ((obj)->state & GA_Armed)
+#define arm(obj)     ((obj)->state |= GA_Armed)
+#define disarm(obj)  ((obj)->state &= ~GA_Armed)
 
-#define hasfocus(obj) ((obj)->state & Focus)
+#define hasfocus(obj) ((obj)->state & GA_Focus)
 #define setfocus(obj) SetFocus((obj)->handle)
 
 /*
@@ -161,7 +161,7 @@ static object newchildwin(const char *kind, const char *text,
     obj->rect = r;
     obj->id = child_id++;
     obj->action = fn;
-    obj->state = (Visible | Enabled);
+    obj->state = (GA_Visible | GA_Enabled);
     obj->flags = ChildWindow;
     obj->text = new_string(text);
     set_new_winproc(obj); /* set custom winproc */
@@ -1263,21 +1263,21 @@ void handle_control(HWND hwnd, UINT message)
 
     obj = find_by_handle(hwnd);
 
-    if ((! obj) || (! (obj->state & Enabled)))
+    if ((! obj) || (! (obj->state & GA_Enabled)))
 	return;
 
     /* Only let certain events cause activation. */
     switch (obj->kind)
     {
     case CheckboxObject:
-	if (obj->state & Checked)
+	if (obj->state & GA_Checked)
 	    uncheck(obj);
 	else
 	    check(obj);
 	break;
 
     case RadioObject:
-	if (!(obj->state & Checked)) {
+	if (!(obj->state & GA_Checked)) {
 	    uncheck_neighbours(obj);
 	    check(obj);
 	}
@@ -1364,7 +1364,7 @@ progressbar newprogressbar(rect r, int pbmin, int pbmax, int incr, int smooth)
     obj->rect = r;
     obj->id = child_id++;
     obj->action = NULL;
-    obj->state = (Visible | Enabled);
+    obj->state = (GA_Visible | GA_Enabled);
     obj->flags = ChildWindow;
     set_new_winproc(obj); /* set custom winproc */
     settextfont(obj, SystemFont);

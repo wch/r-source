@@ -285,7 +285,7 @@ void show(control obj)
     case MenubarObject: case MenuObject: case MenuitemObject:
 	break;
     case WindowObject:
-	obj->state |= Visible;
+	obj->state |= GA_Visible;
 	show_window(obj);
 	break;
     default:
@@ -293,7 +293,7 @@ void show(control obj)
 	SetFocus(obj->handle);
 	UpdateWindow(obj->handle);
     }
-    obj->state |= Visible;
+    obj->state |= GA_Visible;
 }
 
 void hide(control obj)
@@ -310,14 +310,14 @@ void hide(control obj)
     default:
 	ShowWindow(obj->handle, SW_HIDE);
     }
-    obj->state &= ~Visible;
+    obj->state &= ~GA_Visible;
 }
 
 int isvisible(control obj)
 {
     if (! obj)
 	return 0;
-    return (obj->state & Visible) ? 1 : 0;
+    return (obj->state & GA_Visible) ? 1 : 0;
 }
 
 /*
@@ -341,11 +341,11 @@ void enable(control obj)
     default:
 	if (! isenabled(obj)) {
 	    EnableWindow(obj->handle, 1);
-	    obj->state |= Enabled;
+	    obj->state |= GA_Enabled;
 	    draw(obj);
 	}
     }
-    obj->state |= Enabled;
+    obj->state |= GA_Enabled;
 }
 
 void disable(control obj)
@@ -366,18 +366,18 @@ void disable(control obj)
     default:
 	if (isenabled(obj)) {
 	    EnableWindow(obj->handle, 0);
-	    obj->state &= ~Enabled;
+	    obj->state &= ~GA_Enabled;
 	    draw(obj);
 	}
     }
-    obj->state &= ~Enabled;
+    obj->state &= ~GA_Enabled;
 }
 
 int isenabled(control obj)
 {
     if (! obj)
 	return 0;
-    return (obj->state & Enabled) ? 1 : 0;
+    return (obj->state & GA_Enabled) ? 1 : 0;
 }
 
 /*
@@ -407,11 +407,12 @@ void check(control obj)
 #endif
     default:
 	if (! ischecked(obj)) {
-	    obj->state |= Checked;
+	    obj->state |= GA_Checked;
 	    draw(obj);
 	}
     }
-    obj->state |= Checked;
+    obj->state |= GA_Checked;
+
 }
 
 void uncheck(control obj)
@@ -438,18 +439,18 @@ void uncheck(control obj)
 #endif
     default:
 	if (ischecked(obj)) {
-	    obj->state &= ~Checked;
+	    obj->state &= ~GA_Checked;
 	    draw(obj);
 	}
     }
-    obj->state &= ~Checked;
+    obj->state &= ~GA_Checked;
 }
 
 int ischecked(control obj)
 {
     if (! obj)
 	return 0;
-    return (obj->state & Checked) ? 1 : 0;
+    return (obj->state & GA_Checked) ? 1 : 0;
 }
 
 /*
@@ -478,11 +479,11 @@ void highlight(control obj)
 	break;
     default:
 	if (! ishighlighted(obj)) {
-	    obj->state |= Highlighted;
+	    obj->state |= GA_Highlighted;
 	    draw(obj);
 	}
     }
-    obj->state |= Highlighted;
+    obj->state |= GA_Highlighted;
 }
 
 void unhighlight(control obj)
@@ -508,18 +509,18 @@ void unhighlight(control obj)
 	break;
     default:
 	if (ishighlighted(obj)) {
-	    obj->state &= ~Highlighted;
+	    obj->state &= ~GA_Highlighted;
 	    draw(obj);
 	}
     }
-    obj->state &= ~Highlighted;
+    obj->state &= ~GA_Highlighted;
 }
 
 int ishighlighted(control obj)
 {
     if (! obj)
 	return 0;
-    return (obj->state & Highlighted) ? 1 : 0;
+    return (obj->state & GA_Highlighted) ? 1 : 0;
 }
 
 /*
@@ -948,16 +949,16 @@ void setcaret(object obj, int x, int y, int width, int height)
     if (! obj)
     	return;
     if (width != obj->caretwidth || height != obj->caretheight) {
-	if (obj->caretwidth > 0 && (obj->state & Focus)) DestroyCaret();
+	if (obj->caretwidth > 0 && (obj->state & GA_Focus)) DestroyCaret();
 	obj->caretwidth = width;
 	obj->caretheight = height;
 	if (width > 0) {
-	    if (obj->state & Focus)
+	    if (obj->state & GA_Focus)
 		CreateCaret(obj->handle, (HBITMAP) NULL, width, height);
 	    obj->caretshowing = 0;
 	}
     }
-    if (obj->state & Focus)
+    if (obj->state & GA_Focus)
     	SetCaretPos(x, y);
 }
 

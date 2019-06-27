@@ -388,7 +388,7 @@ menuitem newmenuitem(const char *name, int key, menufn fn)
 	obj->action = fn;
 	obj->value = 0;
 	obj->text = new_string(name);
-	obj->state |= Enabled;
+	obj->state |= GA_Enabled;
 
 	if (name[0] == '-') {
 	    flags = MF_SEPARATOR;

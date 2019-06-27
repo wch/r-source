@@ -327,7 +327,7 @@ static void fix_win_style(long *flags_ptr, long *state_ptr,
     long state = *state_ptr;
     unsigned long style = 0UL;
 
-    state |= Enabled;
+    state |= GA_Enabled;
 
     if (flags & Workspace)
 	style |= (MDIS_ALLCHILDSTYLES|WS_CLIPCHILDREN|WS_OVERLAPPED);
@@ -361,10 +361,10 @@ static void fix_win_style(long *flags_ptr, long *state_ptr,
 
     if (flags & ChildWindow) {
 	style |= (WS_CHILD | WS_VISIBLE);
-	state |= Visible;
+	state |= GA_Visible;
     }
 
-    if (state & Visible) {
+    if (state & GA_Visible) {
 	style |= WS_VISIBLE;
     }
 
@@ -632,7 +632,7 @@ void show_window(object obj)
 	    active_windows ++ ;
 	}
     }
-    obj->state |= Visible;
+    obj->state |= GA_Visible;
     if (hwndClient && (hwnd == hwndFrame) && (MDIFrameFirstTime)) {
 	ShowWindow(hwnd, MDIsizeSet ? SW_SHOWNORMAL : SW_SHOWMAXIMIZED);
 	MDIFrameFirstTime = 0;
@@ -684,7 +684,7 @@ void hide_window(object obj)
 	    active_windows -- ;
 
 	ShowWindow(hwnd, SW_HIDE);
-	obj->state &= ~Visible;
+	obj->state &= ~GA_Visible;
     }
 
     if (current->dest == obj) {

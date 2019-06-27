@@ -1095,12 +1095,12 @@ window	parentwindow(control c);
  *  Control states.
  */
 
-#define Visible		0x0001L
-#define Enabled	0x0002L
-#define Checked	0x0004L
-#define Highlighted	0x0008L
-#define Armed           0x0010L
-#define Focus           0x0020L
+#define GA_Visible	0x0001L
+#define GA_Enabled	0x0002L
+#define GA_Checked	0x0004L
+#define GA_Highlighted	0x0008L
+#define GA_Armed	0x0010L
+#define GA_Focus	0x0020L
 
 /*
  *  Create buttons, scrollbars, controls etc on the current window.
