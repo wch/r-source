@@ -105,6 +105,16 @@ NM=$(BINPREF)nm
 RANLIB=$(BINPREF)ranlib
 RESCOMP=$(BINPREF)windres $(RC_ARCH)
 
+## If the Fortran compiler is gfortran >= 7, add
+## -fno-optimize-sibling-calls to avoid recent gfortran optimizations
+## that break with LAPACK/BLAS-style passing of length-1 strings
+## (without hidden arguments giving their lengths).
+GFVER = $(shell echo "__GNUC__" | $(F77) -E -P -)
+GF7OPTS =
+ifneq ($(GFVER),"")
+GF7OPTS = $(shell [ $(GFVER) -ge 7 ] && echo "-fno-optimize-sibling-calls")
+endif
+
 # as set by make
 RM=rm -f
 SED=sed
