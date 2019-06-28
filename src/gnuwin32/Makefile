@@ -56,7 +56,21 @@ MkRules: MkRules.rules
 endif
 
 CFLAGS = -O3 -Wall -pedantic $(EOPTS)
-FFLAGS = -O3 $(EOPTS)
+
+## If the Fortran compiler is gfortran >= 7, add
+## -fno-optimize-sibling-calls to avoid recent gfortran optimizations
+## that break with LAPACK/BLAS-style passing of length-1 strings
+## (without hidden arguments giving their lengths).
+## On Unix this is done in configure.ac.
+
+GFVER = $(shell echo "__GNUC__" | $(F77) -E -P -)
+GF7OPTS =
+ifneq ($(GFVER),"")
+GF7OPTS = $(shell [ $(GFVER) -ge 7 ] && echo "-fno-optimize-sibling-calls")
+endif
+
+FFLAGS = -O3 $(EOPTS) $(GF7OPTS)
+
 ifdef DEBUG
  CFLAGS += $(G_FLAG)
  FFLAGS += $(G_FLAG)
