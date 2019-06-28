@@ -53,7 +53,7 @@ findMethodSignatures(..., target = TRUE, methods = )
 
 hasMethods(f, where, package)
 
-## Deprecated in 2010 and defunct in 2015 for \code{table = FALSE}:
+## Deprecated in 2010 and defunct in 2015 for 'table = FALSE':
 getMethods(f, where, table = FALSE)
 }
 \arguments{
