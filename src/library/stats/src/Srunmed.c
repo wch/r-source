@@ -264,11 +264,12 @@ SEXP runmed(SEXP sx, SEXP stype, SEXP sk, SEXP end, SEXP naAct, SEXP printLev)
 	default:
 	    error(_("runmed(): invalid 'na.action'"));
 	}
+
     } else { // no NAs: xx just points to x; wont be modified
 	xx = x;
     }
 
-    SEXP ans = PROTECT(allocVector(REALSXP, nn));
+    SEXP ans = PROTECT(allocVector(REALSXP, n));
 
     if (type == 1) {
 	if (IS_LONG_VEC(sx))
@@ -277,20 +278,43 @@ SEXP runmed(SEXP sx, SEXP stype, SEXP sk, SEXP end, SEXP naAct, SEXP printLev)
     } else {
 	Srunmed(xx, REAL(ans), nn, k, end_rule, print_level);
     }
-    if(firstNA) switch(na_action) {
+    if(firstNA) {
+	double *median = REAL(ans);
+	switch(na_action) {
         case NA_BIG_alternate_P:
         case NA_BIG_alternate_M: { // revert the +-BIG replacements
-	    double *median = REAL(ans);
 	    for(R_xlen_t i=firstNA-1; i < n; i++)
 		if(ISNAN(x[i]) && !ISNAN(median[i]) && fabs(median[i]) == BIG_dbl)
 		    median[i] = x[i];
 	    break;
 	}
-	case NA_OMIT: // nothing
+	case NA_OMIT: { /* fill the shortened median[] series into the result,
+			   putting x[i] into places i where  ISNAN(x[i]) */
+	    if(print_level) {
+		Rprintf("na.omit: reduced n = nn = %d.\n", nn);
+		if(print_level >= 2) {
+		    Rprintf("median[] = ");
+		    for(R_xlen_t i=0; i < nn; i++) {
+			if(i % 20 == 0) Rprintf("\n[%d] ", i);
+			Rprintf("%5g", median[i]);
+		    }
+		    Rprintf("\n");
+		}
+	    }
+	    double *med = (double *)R_alloc(nn, sizeof(double));
+	    if(nn) Memcpy(med, median, nn);
+	    for(R_xlen_t i=firstNA-1, ix=i; i < n; i++) {
+		if(ISNAN(x[i])) {
+		    median[i] = x[i];
+		} else {
+		    median[i] = med[ix++];
+		}
+	    }
 	    break;
+	}
 	default: error(_("na_action logic error (%d), please report!"), na_action);
 	}
-
+    }
     UNPROTECT(1);
     return ans;
 }

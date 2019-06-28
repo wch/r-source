@@ -2808,18 +2808,19 @@ stopifnot(exprs = { ## Same variances and same as V
 })
 ## vcov(. , dispersion=*) was wrong on R versions 3.5.0 -- 3.6.0
 
-all.EQ <- function(target, current, tol = 0, ...)
-         all.equal(target, current, tolerance=tol, ...)
+
 ## runmed(<x_with_NA>, "Turlach") still seg.faults in 3.6.0 {reported by Hilmar Berger}
 dd1 <- c(rep(NaN,82), rep(-1, 144), rep(1, 74))
 xT1 <-  runmed(dd1, 21, algorithm="T", print.level=1)# gave seg.fault
 xS1 <-  runmed(dd1, 21, algorithm="S", print.level=1)
+if(FALSE)
 cbind(dd1, xT1, xS1)
 nN <- !is.na(xT1)
 stopifnot(xT1[nN] == c(rep(-1, 154), rep(1, 74)))
 dd2 <- c(rep(-1, 144), rep(1, 74), rep(NaN,82))
 xS2 <- runmed(dd2, 21, algorithm = "Stuetzle", print.level=1)
 xT2 <- runmed(dd2, 21, algorithm = "Turlach" , print.level=1)
+if(FALSE)
 cbind(dd2, xS2, xT2) # here, "St" and "Tu" are "the same"
 nN <- !is.na(xT2)
 stopifnot(exprs = { ## both NA|NaN and non-NA are the same:
@@ -2844,17 +2845,16 @@ rT14 <- runmed(x14, k = 7, algorithm="T", print.level=2)
 allT14 <- lapply(naActs, function(naA)
     tryCatch(runmed(x14, k = 7, algorithm="T", na.action=naA, print.level=2),
              error=identity, warning=identity))
+rTo14 <- runmed(na.omit(x14), k=7, algorithm="T")
 stopifnot(exprs = {
     identical(  rT14, rS14)
     identical(c(rT14), c(NaN,NaN, .5, .5, .5, .75, x14[-(1:6)]))
     identical(  rT14, allT14$"+Big_alternate")
     (allT14$"-Big_alternate" >= rT14)[-(1:2)] # slightly surprisingly
-    identical(allT14$na.omit,
-              runmed(na.omit(x14), k=7, algorithm="T"))
+    identical(allT14$na.omit[-(1:4)], c(rTo14))
     inherits(Tfail <- allT14$fail, "error")
     grepl("^runmed\\(.*: .*NA.*x\\[1\\]", Tfail$message)
 })
-
 
 
 
