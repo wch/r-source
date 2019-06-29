@@ -118,7 +118,10 @@
       reported by Hilmar Berger.
 
       \item \code{conformMethod()} now correctly works in cases containing
-      a \dQuote{\code{&&} logic} bug, reported by Henrik Bengtsson.
+      a \dQuote{\code{&&} logic} bug, reported by Henrik Bengtsson.  It now
+      creates methods with \code{"missing"} entries in the signature.
+      Consequently, \code{rematchDefinition()} is amended to use
+      appropriate \code{.local()} calls with named arguments where needed.
     }
   }
 }

@@ -2858,18 +2858,70 @@ stopifnot(exprs = {
 
 
 ## conformMethod()  "&& logic" bug, by Henrik Bengtsson on R-devel list, 2019-06-22
-setClass("tilingFSet")
+setClass("tilingFSet", slots = c(x = "numeric"))
 if(!is.null(getGeneric("oligoFn"))) removeGeneric("oligoFn")
 setGeneric("oligoFn",
            function(object, subset, target, value) { standardGeneric("oligoFn") })
 Sys.setenv("_R_CHECK_LENGTH_1_LOGIC2_" = "true")
-setMethod("oligoFn", signature(object = "tilingFSet", value="array"),
+if(getRversion() <= "3.6")## to run this with R 3.6.0, 3.5.3, ..
+    Sys.unsetenv("_R_CHECK_LENGTH_1_LOGIC2_")
+setMethod("oligoFn", signature(object = "tilingFSet", value="array"),	## Method _1_
           function(object, value) { list(object=object, value=value) })
-mm <- getMethod("oligoFn", signature(object="tilingFSet",
-                                     subset="missing", target="missing",
-                                     value="array"))
-stopifnot(is.function(mm), inherits(mm, "MethodDefinition"))
-## in R <= 3.6.0, setMethod()  gave
+setMethod("oligoFn", signature(object = "matrix", target="array"),	## Method _2_
+          function(object, target) list(object=object, target=target))
+setMethod("oligoFn", signature(object = "matrix", subset="integer"),	## Method _3_
+          function(object, subset) list(object=object, subset=subset))	#   *no* Note
+setMethod("oligoFn", signature(object = "matrix"),			## Method _4_
+          function(object) list(object=object))				#   *no* Note
+setMethod("oligoFn", signature(subset = "integer"),			## Method _5_
+          function(subset) list(subset=subset))
+setMethod("oligoFn", signature(target = "matrix"),			## Method _6_
+          function(target) list(target=target))
+setMethod("oligoFn", signature(value = "array"),			## Method _7_
+          function(value) list(value=value))
+setMethod("oligoFn", signature(subset = "integer", target = "matrix"),  ## Method _8_
+          function(subset, target) list(subset=subset, target=target))
+setMethod("oligoFn", signature(subset = "integer", value = "array"),	## Method _9_
+          function(subset, value) list(subset=subset, value=value))
+setMethod("oligoFn", signature(target = "matrix", value = "array"),	## Method _10_
+          function(target, value) list(target=target, value=value))
+##
+showMethods("oligoFn", include=TRUE) # F.Y.I.:  in R 3.6.0 and earlier: contains "ANY" everywhere
+##=========            ------------
+stopifnot(exprs = {
+    is.function(mm <- getMethod("oligoFn",
+                                signature(object="tilingFSet",
+                                          subset="missing", target="missing",
+                                          value="array")))
+    inherits(mm, "MethodDefinition")
+    identical(
+        sort(names(getMethodsForDispatch(oligoFn))) # sort(.) the same for "all" locales
+        ## Now,  "ANY" only appear "at the end" .. otherwise have "missing"
+      , c("matrix#ANY#ANY#ANY",
+          "matrix#integer#ANY#ANY",
+          "matrix#missing#array#ANY",
+          "missing#integer#ANY#ANY",
+          "missing#integer#matrix#ANY",
+          "missing#integer#missing#array",
+          "missing#missing#matrix#ANY",
+          "missing#missing#matrix#array",
+          "missing#missing#missing#array",
+          "tilingFSet#missing#missing#array"))
+})
+## Testing all 10 methods:
+r1 <- oligoFn(object=new("tilingFSet"), value=array(2))
+r2 <- oligoFn(object=diag(2),          target=array(42))
+## These 2 work fine in all versions of R: Here the "ANY" remain at the end:
+r3 <- oligoFn(object=diag(2),          subset=1:3)
+r4 <- oligoFn(object=diag(2))
+## All these do *not* specify 'object' --> Error in R <= 3.6.x {argument ... is missing}
+r5 <- oligoFn(subset = 1:5)
+r6 <- oligoFn(target = cbind(7))
+r7 <- oligoFn(value = array(47))
+r8 <- oligoFn(subset = -1:1, target = diag(3))
+r9 <- oligoFn(subset = 2:6,  value = array(7))
+r10<- oligoFn(target = cbind(1,2), value = array(1,1:3))
+## in R <= 3.6.0, e.g., the first  setMethod(..)  gave
 ## Error in omittedSig && (signature[omittedSig] != "missing") :
 ##   'length(x) = 4 > 1' in coercion to 'logical(1)'
 

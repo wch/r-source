@@ -84,11 +84,11 @@
     args <- formalArgs(fdef)
     if(is.null(signature))
         signature <- args
-    else if(any(is.na(match(signature, args))))
-        stop(sprintf(ngettext(sum(is.na(match(signature, args))),
+    else if(any(not.s.in.a <- is.na(match(signature, args))))
+        stop(sprintf(ngettext(sum(not.s.in.a),
                               "non-argument found in the signature: %s",
                               "non-arguments found in the signature: %s"),
-                     paste(signature[is.na(match(signature, args))], collapse = ", ")),
+                     paste(signature[not.s.in.a], collapse = ", ")),
              domain = NA)
     dots <- match("...", signature)
     if(!is.na(dots)) { # remove "..." unless it is the only element of the signature
@@ -164,11 +164,11 @@ makeGeneric <-
     args <- formalArgs(fdef)
     if(is.null(signature))
         signature <- args
-    else if(any(is.na(match(signature, args))))
-        stop(sprintf(ngettext(sum(is.na(match(signature, args))),
+    else if(any(not.s.in.a <- is.na(match(signature, args))))
+        stop(sprintf(ngettext(sum(not.s.in.a),
                               "non-argument found in the signature: %s",
                               "non-arguments found in the signature: %s"),
-                     paste(signature[is.na(match(signature, args))], collapse = ", ")),
+                     paste(signature[not.s.in.a], collapse = ", ")),
              domain = NA)
     attr(signature, "simpleOnly") <- simpleInheritanceOnly # usually NULL
     dots <- match("...", signature)
@@ -334,9 +334,9 @@ conformMethod <- function(signature, mnames, fnames,
     ##                       label, paste(missingFnames[foundNames], collapse = ", ")),
     ##              domain = NA)
     if(!any(omittedSig))
-      return(signature)
-    if(any(is.na(match(signature[omittedSig], c("ANY", "missing"))))) {
-        bad <- omittedSig & is.na(match(signature[omittedSig], c("ANY", "missing")))
+        return(signature)
+    if(any(iiN <- is.na(match(signature[omittedSig], c("ANY", "missing"))))) {
+        bad <- omittedSig & iiN
         bad2 <- paste0(fnames[bad], " = \"", signature[bad], "\"", collapse = ", ")
         stop(.renderSignature(f, sig0),
              gettextf("formal arguments (%s) omitted in the method definition cannot be in the signature", bad2),
@@ -346,7 +346,6 @@ conformMethod <- function(signature, mnames, fnames,
         .message("Note: ", .renderSignature(f, sig0),
                  gettextf("expanding the signature to include omitted arguments in definition: %s",
                           paste(sigNames[omittedSig], "= \"missing\"",collapse = ", ")))
-        omittedSig <- seq_along(omittedSig)[omittedSig] # logical index will extend signature!
         signature[omittedSig] <- "missing"
     }
     ## remove trailing "ANY"'s
@@ -360,54 +359,64 @@ conformMethod <- function(signature, mnames, fnames,
 
 rematchDefinition <- function(definition, generic, mnames, fnames, signature)
 {
-    added <- any(is.na(match(mnames, fnames)))
+    added <- anyNA(match(mnames, fnames))
     keepsDots <- !is.na(match("...", mnames))
     if(!added && keepsDots) {
         ## the formal args of the method must be identical to generic
-        formals(definition, envir = environment(definition)) <- formals(generic)
+        formals(definition) <- formals(generic)
         return(definition)
     }
     dotsPos <- match("...", fnames)
     if(added && is.na(dotsPos))
-        stop(gettextf("methods can add arguments to the generic %s only if '...' is an argument to the generic", sQuote(generic@generic)),
+        stop(gettextf("methods can add arguments to the generic %s only if '...' is an argument to the generic",
+                      sQuote(generic@generic)),
              call. = TRUE)
     ## pass down all the names in common between method & generic,
     ## plus "..."  even if the method doesn't have it.  But NOT any
     ## arguments having class "missing" implicitly (see conformMethod),
     ## i.e., are not among 'mnames':
-    useNames <- !is.na(imf <- match(fnames, mnames)) | fnames == "..."
-    newCall <- lapply(c(".local", fnames[useNames]), as.name)
-
+    useNames <- (useNm <- !is.na(imf <- match(fnames, mnames))) | fnames == "..."
     ## Should not be needed, if conformMethod() has already been called:
-    if(is.unsorted(imf[!is.na(imf)]))
+    if(is.unsorted(imf[useNm]))
 	stop(.renderSignature(generic@generic, signature),
              "formal arguments in method and generic do not appear in the same order",
              call. = FALSE)
-
+    clArgs <- fnames[useNames]
     ## leave newCall as a list while checking the trailing args
     if(keepsDots && dotsPos < length(fnames)) {
-	## Trailing arguments are required to match.  This is a little
+	## Trailing arguments (those after "...") are required to match.  This is a little
 	## stronger than necessary, but this is a dicey case, because
 	## the argument-matching may not be consistent otherwise (in
 	## the generic, such arguments have to be supplied by name).
 	## The important special case is replacement methods, where
 	## value is the last argument.
-
 	ntrail <- length(fnames) - dotsPos
 	trailingArgs <- fnames[seq.int(to = length(fnames), length.out = ntrail)]
-	if(!identical(	mnames[seq.int(to = length(mnames), length.out = ntrail)],
-		      trailingArgs))
+	if (!identical (mnames[seq.int(to = length(mnames), length.out = ntrail)],
+                        trailingArgs))
 	    stop(gettextf("%s arguments (%s) after %s in the generic must appear in the method, in the same place at the end of the argument list",
                           .renderSignature(generic@generic, signature),
 			  paste(sQuote(trailingArgs), collapse = ", "),
                           sQuote("...")),
                  call. = FALSE, domain = NA)
-	newCallNames <- character(length(newCall))
-	newCallNames[seq.int(to = length(newCallNames), length.out = ntrail)] <-
-	    trailingArgs
-	names(newCall) <- newCallNames
+	clNames <- character(length(clArgs))
+	clNames[seq.int(to = length(clNames), length.out = ntrail)] <- trailingArgs
+    } else
+        clNames <- NULL
+    if((iMi <- match("missing", signature, nomatch=0L)) && length(iNm <- which(useNm)) &&
+       any(i <- (iMi <= iNm & iNm <=
+                 if(is.na(dotsPos)) length(fnames) else dotsPos-1L))) {
+        ## name args in .local(..) call because we have "missing" in method signature
+	if(is.null(clNames))
+	    clNames <- character(length(clArgs))
+        ## fnames[iNm] == fnames[useNm] is subset of clArgs := fnames[useNames]
+        im <- match(fnames[iNm][i], clArgs)
+	clNames[im] <- clArgs[im]
     }
-    newCall <- as.call(newCall)
+    if(!is.null(clNames))
+        names(clArgs) <- clNames
+    newCall <- as.call(lapply(c(".local", clArgs), as.name))
+    ##== newCall <- as.call(c(quote(.local), lapply(clArgs, as.name)))
     newBody <- substitute({.local <- DEF; NEWCALL},
 			  list(DEF = definition, NEWCALL = newCall))
     generic <- .copyMethodDefaults(generic, definition)
