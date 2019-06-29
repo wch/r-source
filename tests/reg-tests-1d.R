@@ -2857,6 +2857,23 @@ stopifnot(exprs = {
 })
 
 
+## conformMethod()  "&& logic" bug, by Henrik Bengtsson on R-devel list, 2019-06-22
+setClass("tilingFSet")
+if(!is.null(getGeneric("oligoFn"))) removeGeneric("oligoFn")
+setGeneric("oligoFn",
+           function(object, subset, target, value) { standardGeneric("oligoFn") })
+Sys.setenv("_R_CHECK_LENGTH_1_LOGIC2_" = "true")
+setMethod("oligoFn", signature(object = "tilingFSet", value="array"),
+          function(object, value) { list(object=object, value=value) })
+mm <- getMethod("oligoFn", signature(object="tilingFSet",
+                                     subset="missing", target="missing",
+                                     value="array"))
+stopifnot(is.function(mm), inherits(mm, "MethodDefinition"))
+## in R <= 3.6.0, setMethod()  gave
+## Error in omittedSig && (signature[omittedSig] != "missing") :
+##   'length(x) = 4 > 1' in coercion to 'logical(1)'
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

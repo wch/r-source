@@ -342,8 +342,7 @@ conformMethod <- function(signature, mnames, fnames,
              gettextf("formal arguments (%s) omitted in the method definition cannot be in the signature", bad2),
              call. = TRUE, domain = NA)
     }
-    else if(!all(signature[omittedSig] == "missing")) {
-        omittedSig <- omittedSig && (signature[omittedSig] != "missing")
+    else if(any(omittedSig <- omittedSig & signature != "missing")) {
         .message("Note: ", .renderSignature(f, sig0),
                  gettextf("expanding the signature to include omitted arguments in definition: %s",
                           paste(sigNames[omittedSig], "= \"missing\"",collapse = ", ")))

@@ -102,13 +102,29 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R 3.6.0 patched}{
+\section{\Rlogo CHANGES IN R 3.6.1 patched}{% to port in future
+
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{runmed(x, *)} gets new option \code{na.action}
-      determining how to handle \code{NaN} or \code{NA} in \code{x}.
+      determining \emph{how} to handle \code{NaN} or \code{NA} in \code{x}.
     }
   }
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{runmed(x, *)} when \code{x} contains missing values
+      now works consistently for both \code{algorithm="Stuetzle"} and
+      \code{"Turlach"}, and no longer segfaults for \code{"Turlach"}, as
+      reported by Hilmar Berger.
+
+      \item \code{conformMethod()} now correctly works in cases containing
+      a \dQuote{\code{&&} logic} bug, reported by Henrik Bengtsson.
+    }
+  }
+}
+
+\section{\Rlogo CHANGES IN R 3.6.0 patched}{
+
   \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
       \item The default detection of the shell variable \code{libNN} is
@@ -175,11 +191,9 @@
       \item \code{as.data.frame()} treats 1D arrays the same as vectors,
       \PR{17570}.
 
-      \item \code{runmed(x, *)} when \code{x} contains missing values
-      now works consistently for both \code{algorithm="Stuetzle"} and
-      \code{"Turlach"}, also based on \code{smoothEnds(y)} working with
-      \code{NA}s, and no longer segfaults for \code{"Turlach"}, as reported
-      by Hilmar Berger.
+      \item Improvements in \code{smoothEnds(x, *)} working with
+      \code{NA}s (towards \code{runmed()} working in that case, in the next
+      version of R).
 
       \item \code{vcov(glm(<quasi>), dispersion = *)} works correctly
       again, fixing \PR{17571} thanks to Pavel Krivitsky.
