@@ -189,7 +189,7 @@ void formatIntegerS(SEXP x, R_xlen_t n, int *fieldwidth)
 	tmpmax = ALTINTEGER_MAX(x, TRUE);
 	naflag = KNOWN_NA_1ST(sorted) ?
 	    INTEGER_ELT(x, 0) == NA_INTEGER :
-	    INTEGER_ELT(x, XLENGTH(x)) == NA_INTEGER;
+	    INTEGER_ELT(x, XLENGTH(x) - 1) == NA_INTEGER;
     }
 
     /*
