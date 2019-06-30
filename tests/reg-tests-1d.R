@@ -1031,7 +1031,7 @@ stopifnot(exprs = {
     identical(NC(xE(1e-3)), c(Sturges = 4, Scott = 2, FD =  855))
 })
 ## for these, nclass.FD() had "exploded" in R <= 3.4.1
-## Extremely large diff(range(.)) :
+## Extremely large diff(range(.)) : NB: this gives a UBSAN warning
 XXL <- c(1:9, c(-1,1)*1e300)
 stopifnot(nclass.scott(XXL) == 1)
 ## gave 0 in R <= 3.4.1
