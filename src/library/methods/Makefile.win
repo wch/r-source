@@ -39,7 +39,7 @@ $(top_builddir)/library/$(pkg)/R/$(pkg).rdb: all.R  $(srcdir)/NAMESPACE \
 	@rm -f $(top_builddir)/library/$(pkg)/Meta/nsInfo.rds $@
 	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
 	@if test -n "$(EXTRAS2)"; then \
-	  $(ECHO) "byte-compiling '$(pkg)'"; \
+	  $(ECHO) "byte-compiling package '$(pkg)'"; \
 	fi
 	@$(ECHO) "invisible(loadNamespace(\"$(pkg)\"))" | \
 	  $(EXTRAS2) R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE)
