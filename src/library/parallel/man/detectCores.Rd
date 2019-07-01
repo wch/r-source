@@ -36,14 +36,13 @@ detectCores(all.tests = FALSE, logical = TRUE)
     the current power management mode} and \sQuote{could be available
     this boot}, and this function returns the first.
 
-#ifdef windows
+  On Windows:
   Only versions of Windows since XP SP3 are supported.  Microsoft
   documents that with \code{logical = FALSE} it will report the number of
   cores on Vista or later, but the number of physical CPU packages on XP
   or Server 2003: however it reported correctly on the XP systems we
   tested.
-#endif
-% https://msdn.microsoft.com/en-us/library/ms683194%28v=VS.85%29.aspx
+  % https://msdn.microsoft.com/en-us/library/ms683194%28v=VS.85%29.aspx
 
   On Sparc Solaris \code{logical = FALSE} returns the number of physical
   cores and \code{logical = TRUE} returns the number of available

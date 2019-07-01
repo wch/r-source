@@ -4,12 +4,12 @@
 % Distributed under GPL 2 or later
 
 \name{RNGstreams}
+\title{Implementation of Pierre L'Ecuyer's RngStreams}
 \alias{nextRNGStream}
 \alias{nextRNGSubStream}
 \alias{clusterSetRNGStream}
 \alias{mc.reset.stream}
 
-\title{Implementation of Pierre L'Ecuyer's RngStreams}
 \description{
   This is an \R re-implementation of Pierre L'Ecuyer's \sQuote{RngStreams}
   multiple streams of pseudo-random numbers.
@@ -56,15 +56,13 @@ mc.reset.stream()
   setting the seed of the streams by \code{set.seed(iseed)} (otherwise
   they are set from the current seed of the master process: after
   selecting the L'Ecuyer generator).
-#ifdef unix
 
-  Calling \code{mc.reset.stream()} after setting the L'Ecuyer random
-  number generator and seed makes runs from
+  When not on Windows, Calling \code{mc.reset.stream()} after setting
+  the L'Ecuyer random number generator and seed makes runs from
   \code{\link{mcparallel}(mc.set.seed = TRUE)} reproducible.  This is
   done internally in \code{\link{mclapply}} and \code{\link{pvec}}.
   (Note that it does not set the seed in the master process, so does not
   affect the fallback-to-serial versions of these functions.)
-#endif
 }
 \value{
   For \code{nextRNGStream} and \code{nextRNGSubStream},
