@@ -13327,7 +13327,7 @@ with version 9 but backported to versions 7 and 8.
 
 Suppose we want a function to report a message from Fortran to @R{}'s
 console (one could use @code{intpr} with dummy data, but it might be the
-basis of a custom reporting function.  Suppose the equivalent in Fortran
+basis of a custom reporting function).  Suppose the equivalent in Fortran
 would be
 @example
       subroutine rmsg(msg)
@@ -13362,7 +13362,30 @@ void F77_NAME(rmsg)(char *msg, FC_LEN_T msg_len)
 @}
 @end example
 @noindent
-in code depending on @code{R(>= 3.7)}.
+in code depending on @code{R(>= 3.7)}.  For earlier versions of @R{} we
+could just assume that @code{msg} is nul-terminated (not guaranteed, but
+people have been getting away with it for many years), so the complete C
+side might be
+@example
+#define USE_FC_LEN_T
+#include <Rconfig.h>
+
+#ifdef FC_LEN_T
+void F77_NAME(rmsg)(char *msg, FC_LEN_T msg_len)
+@{
+    char cmsg[msg_len+1];
+    strncpy(cmsg, msg, msg_len);
+    cmsg[msg_len] = '\0';
+    // do something with 'cmsg' 
+@}
+#else
+void F77_NAME(rmsg)(char *msg)
+@{
+    // do something with 'msg' 
+@}
+#endif
+@end example
+
 
 An alternative is to use Fortran 2003 features@footnote{These started to
 be implemented in compilers @emph{ca} 2007, e.g.@: in @command{gfortran}
