@@ -2933,10 +2933,10 @@ add_dummies <- function(dir, Log)
             any <- msg <- character()
             for (m in makefiles) {
                 lines <- readLines(m, warn = FALSE)
-                have_c <- length(dir('src', patt = "[.]c$", recursive = TRUE)) > 0L
-                have_cxx <- length(dir('src', patt = "[.](cc|cpp)$", recursive = TRUE)) > 0L
-                have_f <- length(dir('src', patt = "[.]f$", recursive = TRUE)) > 0L
-                have_f9x <- length(dir('src', patt = "[.]f9[05]$", recursive = TRUE)) > 0L
+                have_c <- length(dir('src', pattern = "[.]c$", recursive = TRUE)) > 0L
+                have_cxx <- length(dir('src', pattern = "[.](cc|cpp)$", recursive = TRUE)) > 0L
+                have_f <- length(dir('src', pattern = "[.]f$", recursive = TRUE)) > 0L
+                have_f9x <- length(dir('src', pattern = "[.]f9[05]$", recursive = TRUE)) > 0L
                 for (f in c("C", "CXX", "F", "FC", "CPP"))  {
                     this <- paste0(f, "FLAGS")
                     this2 <- paste0("PKG_", this)
@@ -2987,10 +2987,10 @@ add_dummies <- function(dir, Log)
                 anyInLIBS <- any(grepl("SHLIB_OPENMP_", lines[c1], useBytes = TRUE))
 
                 ## Now see what sort of files we have
-                have_c <- length(dir('src', patt = "[.]c$", recursive = TRUE)) > 0L
-                have_cxx <- length(dir('src', patt = "[.](cc|cpp)$", recursive = TRUE)) > 0L
-                have_f <- length(dir('src', patt = "[.]f$", recursive = TRUE)) > 0L
-                have_f9x <- length(dir('src', patt = "[.]f9[05]$", recursive = TRUE)) > 0L
+                have_c <- length(dir('src', pattern = "[.]c$", recursive = TRUE)) > 0L
+                have_cxx <- length(dir('src', pattern = "[.](cc|cpp)$", recursive = TRUE)) > 0L
+                have_f <- length(dir('src', pattern = "[.]f$", recursive = TRUE)) > 0L
+                have_f9x <- length(dir('src', pattern = "[.]f9[05]$", recursive = TRUE)) > 0L
                 used <- character()
                 for (f in c("C", "CXX", "F", "FC"))  {
                     this <- this2 <- paste0(f, "FLAGS")
