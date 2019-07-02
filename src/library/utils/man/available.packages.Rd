@@ -19,7 +19,7 @@ available.packages(contriburl = contrib.url(repos, type), method,
                    fields = NULL, type = getOption("pkgType"),
                    filters = NULL, repos = getOption("repos"),
                    ignore_repo_cache = FALSE, max_repo_cache_age,
-                   \dots)
+                   quiet = TRUE, \dots)
 }
 \arguments{
   \item{contriburl}{
