@@ -5,6 +5,8 @@
 ## Shell script wrapper for all R CMD commands.
 ## For internal use only.
 
+test ${#} -eq 0 && exec "${R_HOME}/bin/R" --help
+
 R_CMD="${R_HOME}/bin/Rcmd"
 export R_CMD
 
