@@ -13350,6 +13350,9 @@ void rmsg_ (char *msg, size_t msg_len);
 (where @code{size_t} applies to version 8 and later).  We could re-write
 that portably in C as
 @example
+#define USE_FC_LEN_T
+#include <Rconfig.h> // included by R.h, so define USE_FC_LEN_T early
+
 void F77_NAME(rmsg)(char *msg, FC_LEN_T msg_len)
 @{
     char cmsg[msg_len+1];
@@ -13358,6 +13361,8 @@ void F77_NAME(rmsg)(char *msg, FC_LEN_T msg_len)
     // do something with 'cmsg' 
 @}
 @end example
+@noindent
+in code depending on @code{R(>= 3.7)}.
 
 An alternative is to use Fortran 2003 features@footnote{These started to
 be implemented in compilers @emph{ca} 2007, e.g.@: in @command{gfortran}
@@ -13377,7 +13382,7 @@ end module
 subroutine rmsg(msg)
   use cfuncs
   character(*) msg
-  call cmsg(msg//c_null_char) ! need to concatenate a null terminator
+  call cmsg(msg//c_null_char) ! need to concatenate a nul terminator
 end subroutine rmsg
 @end example
 @noindent
