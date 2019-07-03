@@ -55,7 +55,7 @@ runmed(x, k, endrule = c("median", "keep", "constant"),
       \item{\code{"+Big_alternate"}}{Here, all the NAs in \code{x} are
 	first replaced by alternating \eqn{\pm B}{+/- B} where \eqn{B} is a
 	\dQuote{Big} number (with \eqn{2B < M*}, where
-	\eqn{M*=}\code{\link{.Machine $ double.xmax}}).  The replacement
+	\eqn{M*=}\code{\link{.Machine} $ double.xmax}).  The replacement
 	values are \dQuote{from left} \eqn{(+B, -B, +B, \ldots)},
 	i.e. start with \code{"+"}.}
       \item{\code{"-Big_alternate"}}{almost the same as
