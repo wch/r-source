@@ -9318,6 +9318,7 @@ configured with @option{--enable-lto=check}.
 
 Further examples:
 
+@c package assist 3.1.4
 @example
 rkpk2.f:77:5: warning: type of 'dstup' does not match original declaration [-Wlto-type-mismatch]
       *info, wk)
@@ -9328,6 +9329,7 @@ rkpk1.f:2565:5: note: 'dstup' was previously declared here
 @noindent
 where the fourteenth argument @code{dum} was missing in the call.
 
+@c package gss 2.1-9
 @example
 reg.f:78:33: warning: type of 'dqrdc' does not match original declaration [-Wlto-type-mismatch]
        call dqrdc (sr, nobs, nobs, nnull, wk, dum, dum, 0)
@@ -9339,6 +9341,28 @@ dstup.f:20: note: 'dqrdc' was previously declared here
 array and @code{work} is a double precision one so @code{dum} cannot
 match both.  (If @option{--emable-lto=check} had been used the
 comparison would have been with the definition in @R{}.)
+
+For Fortran files all in the package, most inconsistencies can be
+detected by concatenating the Fortran files and compiling the result,
+sometimes with clearer diagonstics than provided by LTO.  For our last
+two examples this gives
+
+@example
+all.f:2966:72:
+
+      *info, work1)
+                                                                        1
+Warning: Missing actual argument for argument ‘dum’ at (1)
+@end example
+@noindent
+and
+@example
+all.f:1663:72:
+
+      *ipvtwk), wk(ikwk), wk(iwork1), wk(iwork2), info)
+                                                                        1
+Warning: Type mismatch in argument ‘jpvt’ at (1); passed REAL(8) to INTEGER(4)
+@end example
 
 @node System and foreign language interfaces, The R API, Debugging, Top
 @chapter System and foreign language interfaces
