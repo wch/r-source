@@ -46,10 +46,6 @@
 
   \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
-      \item Detection of the C stack direction has been moved from
-      run-time to \command{configure}: this is safer with LTO builds and
-      allows the detection to be overridden -- see file \file{config.site}.
-
       \item User-set \samp{DEFS} (e.g., in \file{config.site}) is now
       used for compiling packages (including base packages).
 
@@ -110,6 +106,16 @@
       determining \emph{how} to handle \code{NaN} or \code{NA} in \code{x}.
     }
   }
+
+  \subsection{INSTALLATION on a UNIX-ALIKE}{
+    \itemize{
+      \item Detection of the C stack direction has been moved from
+      run-time to \command{configure}: this is safer with LTO builds and
+      allows the detection to be overridden -- see file
+      \file{config.site}.
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{runmed(x, *)} when \code{x} contains missing values
