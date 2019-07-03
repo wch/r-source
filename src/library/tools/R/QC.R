@@ -7359,14 +7359,34 @@ function(dir, localOnly = FALSE)
             parts <- parse_URI_reference(urls)
             ind <- (parts[, "scheme"] %in% c("", "file"))
             fpaths1 <- fpaths0 <- parts[ind, "path"]
-            ## Allow for
-            ##   /doc/html /demo /library
-            ## which are handled by the http server, and remap ../doc to
-            ## ../inst/doc (even though such relative paths in Rd files
-            ## will generally not work or the pdf refmans).
-            fpaths1[grepl("^(/doc/html|/demo|/library)", fpaths1)] <- ""
-            fpaths1 <- sub("^../doc", "../inst/doc", fpaths1)
             parents <- udb[ind, "Parent"]
+            ## Help files, vignettes (and more) can be accessed via the
+            ## dynamic HTML help system.  This employs an internal HTTP
+            ## server which handles
+            ##   /doc/html /demo /library
+            ## and relative paths from help system components resolving
+            ## to such. 
+            ## (Note that these will not work in general, e.g. for the
+            ## pdf refmans.)
+            if(any(ind <- (startsWith(fpaths0, "../") &
+                           grepl("^(inst/doc|man|demo)", parents)))) {
+                ## Vignettes have document root
+                ##   /library/<pkg>/doc
+                ## Help pages have
+                ##   /library/<pkg>/html
+                foo <- rep.int("/library/<pkg>/<sub>", sum(ind))
+                bar <- fpaths0[ind]
+                while(length(pos <- which(startsWith(bar, "../")))) {
+                    foo[pos] <- dirname(foo[pos])
+                    bar[pos] <- substring(bar[pos], 4L)
+                }
+                fpaths1[ind] <- foo
+            }
+            fpaths1[grepl("^(/doc/html|/demo|/library)", fpaths1)] <- ""
+            fpaths1[(fpaths1 == "index.html") &
+                    startsWith(parents, "inst/doc")] <- ""
+            ## (Of course, one could verify that the special cased paths
+            ## really exist.)
             ppaths <- dirname(parents)
             pos <- which(!file.exists(file.path(ifelse(nzchar(ppaths),
                                                        file.path(dir,
