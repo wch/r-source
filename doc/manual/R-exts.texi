@@ -8691,7 +8691,7 @@ Recent versions return symbolic addresses for the location of the error
 provided @command{llvm-symbolizer}@footnote{part of the LLVM project and
 in distributed in @code{llvm} RPMs and @code{.deb}s on Linux.  It is not
 currently shipped by Apple.} is on the path: if it is available but not
-on the path or has been renamed@footnote{as Ubuntu is said to do.}, one
+on the path or has been renamed@footnote{as Ubuntu has been said to do.}, one
 can use an environment variable, e.g.@:
 
 @example
@@ -8755,9 +8755,10 @@ break __asan_report_error
 (See
 @uref{https://code.google.com/@/p/@/address-sanitizer/@/wiki@//AddressSanitizer#gdb}.)
 
-Recent versions@footnote{including @command{gcc} 7.1 and @command{clang}
-4.0.0: for @command{gcc} it is implied by @option{-fsanitize=address}.}
-added the flag @option{-fsanitize-address-use-after-scope}: see
+More recent versions@footnote{including @command{gcc} 7.1 and
+@command{clang} 4.0.0: for @command{gcc} it is implied by
+@option{-fsanitize=address}.}  added the flag
+@option{-fsanitize-address-use-after-scope}: see
 @uref{https://github.com/@/google/@/sanitizers/@/wiki/@/AddressSanitizerUseAfterScope}.
 
 One of the checks done by ASAN is that @code{malloc/free} and in C++
@@ -8770,6 +8771,11 @@ example, X11/GL libraries on Linux, seen when checking package
 environment variable @env{RGL_USE_NULL=true}.} are not consistent.  The
 check can be suppressed by including @samp{alloc_dealloc_mismatch=0} in
 @env{ASAN_OPTIONS}.
+
+ASAN also checks system calls and sometimes reports can refer to
+problems in the system software and not the package nor @R{}.  A couple
+of reports have been of `heap-use-after-free' errors in the X11
+libraries called from Tcl/Tk.
 
 @menu
 * Using Leak Sanitizer::        
