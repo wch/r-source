@@ -5,7 +5,7 @@
 \title{R News}
 \encoding{UTF-8}
 
-\section{\Rlogo CHANGES IN R 3.6.0 patched}{
+\section{\Rlogo CHANGES IN R 3.6.1}{
   \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
       \item The default detection of the shell variable \code{libNN} is
