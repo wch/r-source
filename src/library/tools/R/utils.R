@@ -2357,11 +2357,11 @@ function(...)
 str_parse_logic <-
 function(ch, default = TRUE, otherwise = default, n = 1L)
 {
-    if (is.na(ch)) default
-    else switch(ch,
-                "yes"=, "Yes" =, "true" =, "True" =, "TRUE" = TRUE,
-                "no" =, "No" =, "false" =, "False" =, "FALSE" = FALSE,
-                eval.parent(otherwise, n=n))
+    if(is.na(ch)) default
+    else switch(tolower(ch),
+                "1" =, "yes" =, "true" = TRUE,
+                "0" =, "no" =, "false" = FALSE,
+                eval.parent(otherwise, n = n))
 }
 
 ### ** str_parse
