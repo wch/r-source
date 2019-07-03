@@ -6,6 +6,7 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R 3.6.1}{
+
   \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
       \item The default detection of the shell variable \code{libNN} is
@@ -72,10 +73,9 @@
       \item \code{as.data.frame()} treats 1D arrays the same as vectors,
       \PR{17570}.
 
-      \item \code{runmed(x, *)} when \code{x} contains missing values
-      now works for \code{algorithm="Stuetzle"}, also based on
-      \code{smoothEnds(y)} working with NA's, and no longer segfaults
-      for the \code{"Turlach"} algorithm; reported by Hilmar Berger.
+      \item Improvements in \code{smoothEnds(x, *)} working with
+      \code{NA}s (towards \code{runmed()} working in that case, in the next
+      version of R).
 
       \item \code{vcov(glm(<quasi>), dispersion = *)} works correctly
       again, fixing \PR{17571} thanks to Pavel Krivitsky.
@@ -92,7 +92,7 @@
       expand tilde (\code{~}) file names starting with a tilde, instead of
       almost all tildes.
 
-      \item In R documentation (\file{*.Rd}) files, \code{\item [..]} is no
+      \item In R documentation (\file{*.Rd}) files, \samp{\item [..]} is no
       longer treated specially when rendered in LaTeX and hence pdf, but
       rather shows the brackets in all cases.
     }
