@@ -229,7 +229,7 @@ htmldocs:
 #                          ===== BLAS ======
 
 Rblas:
-	@$(MK) -C ../extra/blas -f Makefile.win FFLAGS='$(FFLAGS)'
+	@$(MK) -C ../extra/blas -f Makefile.win FFLAGS='-O2 $(EOPTS)'
 
 Rblas-clean:
 	@$(MK) -C ../extra/blas -f Makefile.win clean
