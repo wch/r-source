@@ -45,6 +45,7 @@ ifeq "$(WIN)" "64"
 	  etc/Makeconf > $(R_HOME)/etc$(R_ARCH)/Makeconf
 else
 	$(SED) -e "s|IMPDIR = bin|IMPDIR = $(IMPDIR)|" \
+	  -e "s/-O3/-O2/" \
 	  -e "s/@EOPTS@/$(EOPTS)/" \
 	  -e "s|BINPREF =|BINPREF ?= $(BINPREF)|" \
 	  -e "s|COMPILED_BY =|COMPILED_BY = $(COMPILED_BY)|" \
