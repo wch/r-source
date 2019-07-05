@@ -42,9 +42,9 @@ rpackages:
 
 
 cairodevices:
-ifneq "$(CAIRO_HOME)" ""
+ifneq "$(USE_CAIRO)" ""
 	@$(MK) -C ../library/grDevices/src/cairo -f Makefile.win all \
-	  WIN=$(WIN) CAIRO_HOME=$(CAIRO_HOME)
+	  WIN=$(WIN) CAIRO_LIBS=$(CAIRO_LIBS) CAIRO_CPPFLAGS=$(CAIRO_CPPFLAGS)
 endif
 
 ifeq ($(wildcard MkRules?local),MkRules.local)
