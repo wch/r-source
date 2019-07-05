@@ -4,6 +4,8 @@ include ../../gnuwin32/MkRules
 # triop.h says this does not work, but useful to debug wchar conversions.
 trio-CPPFLAGS=-DTRIO_FEATURE_WIDECHAR=1
 
+CPPFLAGS = -I../../include -I../../main
+
 # trionan.c and triostr.c are included by trio.o
 OBJS = compat.o trio.o
 TARGETLIB = libtrio.a
