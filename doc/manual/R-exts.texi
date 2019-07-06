@@ -9344,7 +9344,7 @@ comparison would have been with the definition in @R{}.)
 
 For Fortran files all in the package, most inconsistencies can be
 detected by concatenating the Fortran files and compiling the result,
-sometimes with clearer diagonstics than provided by LTO.  For our last
+sometimes with clearer diagnostics than provided by LTO.  For our last
 two examples this gives
 
 @example
