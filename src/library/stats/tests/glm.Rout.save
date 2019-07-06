@@ -1,5 +1,5 @@
 
-R version 3.6.0 Patched (2019-06-07 r76684) -- "Planting of a Tree"
+R version 3.6.1 Patched (2019-07-06 r76794) -- "Action of the Toes"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -199,4 +199,4 @@ Number of Fisher Scoring iterations: 3
 > 
 > proc.time()
    user  system elapsed 
-  0.246   0.055   0.277 
+  0.462   0.080   0.536 

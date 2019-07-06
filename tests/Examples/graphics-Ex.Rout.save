@@ -1,5 +1,5 @@
 
-R version 3.6.0 Patched (2019-06-07 r76684) -- "Planting of a Tree"
+R version 3.6.1 Patched (2019-07-06 r76794) -- "Action of the Toes"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -2144,7 +2144,7 @@ N
 > points.default # to see how it calls "plot.xy(xy.coords(x, y), ...)"
 function (x, y = NULL, type = "p", ...) 
 plot.xy(xy.coords(x, y), type = type, ...)
-<bytecode: 0x2c030e0>
+<bytecode: 0x30de258>
 <environment: namespace:graphics>
 > 
 > 
@@ -3014,7 +3014,7 @@ function (xy = 1, warn.log = TRUE)
     u <- par("usr")
     xy * c(u[2L] - u[1L], u[4L] - u[3L])/par("pin")
 }
-<bytecode: 0x43c0518>
+<bytecode: 0x489b890>
 <environment: namespace:graphics>
 > 
 > ## plot labels offset 0.12 inches to the right
@@ -3095,7 +3095,7 @@ function (xy = 1, warn.log = TRUE)
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.911 0.062 2.99 0 0 
+Time elapsed:  5.459 0.127 5.628 0 0 
 > grDevices::dev.off()
 null device 
           1 

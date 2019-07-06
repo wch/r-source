@@ -1,5 +1,5 @@
 
-R version 3.6.0 Patched (2019-06-07 r76684) -- "Planting of a Tree"
+R version 3.6.1 Patched (2019-07-06 r76794) -- "Action of the Toes"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -600,5 +600,5 @@ Length  Class   Mode
      0   NULL   NULL 
 > ## at the very end
 > cat('Time elapsed: ', proc.time(), "\n")
-Time elapsed:  1.389 0.116 1.532 0.001 0.009 
+Time elapsed:  2.749 0.239 3.027 0 0.008 
 > 

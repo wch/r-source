@@ -1,5 +1,5 @@
 
-R version 3.6.0 Patched (2019-06-07 r76684) -- "Planting of a Tree"
+R version 3.6.1 Patched (2019-07-06 r76794) -- "Action of the Toes"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -4093,7 +4093,7 @@ $zlab
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  11.057 0.285 11.406 0 0 
+Time elapsed:  20.225 0.532 20.916 0 0 
 > grDevices::dev.off()
 null device 
           1 
