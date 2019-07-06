@@ -356,3 +356,7 @@
 ## C_VISIBILITY=
 ## CXX_VISIBILITY=
 ## F_VISIBILITY=
+
+## C Stack Direction
+## In case optimization defeats the configure test: 'down' (the usual) or 'up'
+## R_C_STACK_DIRECTION=

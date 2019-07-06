@@ -146,11 +146,6 @@ extern void * __libc_stack_end;
 
 int R_running_as_main_program = 0;
 
-/* In ../main/main.c, to avoid inlining */
-extern uintptr_t dummy_ii(void);
-typedef uintptr_t (*dptr_type)(void);
-volatile dptr_type dummy_ii_ptr;
-
 /* Protection against embedded misuse, PR#15420 */
 static int num_initialized = 0;
 
@@ -197,15 +192,8 @@ int Rf_initialize_R(int ac, char **av)
     */
     struct rlimit rlim;
 
-    dummy_ii_ptr = dummy_ii;
-    {
-	/* call dummy_ii via a volatile function pointer to prevent inlining
-	   with LTO */
-	uintptr_t ii = dummy_ii_ptr();
-	/* 1 is downwards */
-
-	R_CStackDir = ((uintptr_t)&i > ii) ? 1 : -1;
-    }
+    R_CStackDir = C_STACK_DIRECTION;
+    
 
     if(getrlimit(RLIMIT_STACK, &rlim) == 0) {
 	/* 'unlimited' is represented by RLIM_INFINITY, which is a
