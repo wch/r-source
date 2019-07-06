@@ -182,7 +182,6 @@ function(package, dir, lib.loc = NULL,
             })
         }
         if(weave) {
-            browser()
             setwd(startdir) # in case a vignette changes the working dir then errored out
             .eval_with_capture({
                 result$weave[[file]] <- tryCatch({
