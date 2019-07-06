@@ -73,9 +73,8 @@ stopifnot(exprs = {
    !anyNA(rN[,2:3])
    identical(which(is.na(rN[,"keep"])), c(2L, 40L))
    identical(which(is.na(rN.), arr.ind=TRUE, useNames=FALSE),
-             rbind(cbind(c(1:2,37:38,40L), 1L),
-                   cbind(37:41, 2L), cbind(37:38, 3L)))
-   identical(rN.[39:41, "median"], c(324, 397, 470))
+             cbind(c(1:2,40L), 1L))
+   identical(rN.[38:41, "median"], c(289,289, 397, 470))
 })
 }
 \keyword{smooth}

@@ -7,12 +7,26 @@
 
 \section{\Rlogo CHANGES IN R 3.6.1 patched}{
 
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item \code{runmed(x, *)} gets new option \code{na.action}
+      determining \emph{how} to handle \code{NaN} or \code{NA} in \code{x}.
+    }
+  }
   \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
       \item Detection of the C stack direction has been moved from
       run-time to \command{configure}: this is safer with LTO builds and
       allows the detection to be overridden -- see file
       \file{config.site}.
+    }
+  }
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{runmed(x, *)} when \code{x} contains missing values
+      now works consistently for both \code{algorithm="Stuetzle"} and
+      \code{"Turlach"}, and no longer segfaults for \code{"Turlach"}, as
+      reported by Hilmar Berger.
     }
   }
 }

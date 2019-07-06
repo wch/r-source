@@ -22,7 +22,9 @@
 
 
 runmed <- function(x, k, endrule = c("median","keep","constant"),
-                   algorithm = NULL, print.level = 0)
+                   algorithm = NULL,
+                   na.action = c("+Big_alternate", "-Big_alternate", "na.omit", "fail"),
+                   print.level = 0)
 {
     n <- length(x)
     if(is.na(n)) stop(gettextf("invalid value of %s", "length(x)"), domain = NA)
@@ -50,12 +52,22 @@ runmed <- function(x, k, endrule = c("median","keep","constant"),
                    ## "median" will be treated at the end
                    "median" =, "keep" = 0L,
                    "constant" = 1L)
+    na.actions <- eval(formals()$na.action, NULL, baseenv())
+    iNAct <- if(missing(na.action)) 1L else pmatch(na.action, na.actions)
+    ## now,	na.action <- na.actions[[ iNAct ]]
+    ## is equivalent to the original
+    ##		na.action <- match.arg(na.action)
+    ## which is here the same as  match.arg(na.action), choices=na.actions) :
+    ## na.action <- match.arg(na.action, choices=na.actions)
+    ## iNAct <- match(na.action, na.actions)
     if(print.level)
-        cat("runmed(*, endrule=", endrule,", algorithm=",algorithm,
-            ", iend=",iend,")\n")
+        cat(sprintf(paste0(
+	    "runmed(x, k=%d, endrule='%s' ( => iend=%d), algorithm='%s',\n",
+	    "       na.*='%s' ( => iNAct=%d))\n"),
+		    k, endrule, iend, algorithm, na.actions[[iNAct]], iNAct))
     res <- switch(algorithm,
-                  Turlach  = .Call(C_runmed, as.double(x), 1, k, iend, print.level),
-                  Stuetzle = .Call(C_runmed, as.double(x), 0, k, iend, print.level))
+                  Turlach  = .Call(C_runmed, as.double(x), 1, k, iend, iNAct, print.level),
+                  Stuetzle = .Call(C_runmed, as.double(x), 0, k, iend, iNAct, print.level))
     if(endrule == "median") res <- smoothEnds(res, k = k)
 
     ## Setting attribute has the advantage that the result immediately plots
@@ -96,8 +108,9 @@ smoothEnds <- function(y, k = 3)
     {
         ##  == median(x[1L:n]) IFF n is odd, slightly more efficient
         if(anyNA(x)) n <- length(x <- x[!is.na(x)])
-        half <- (n + 1L) %/% 2L
-        sort(x, partial = half)[half]
+        if(half <- (n + 1L) %/% 2L) # not empty
+            sort(x, partial = half)[half]
+        else x[1L] # NA, *not* empty
     }
 
     k <- as.integer(k)
