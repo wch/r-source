@@ -2925,6 +2925,46 @@ r10<- oligoFn(target = cbind(1,2), value = array(1,1:3))
 ## Error in omittedSig && (signature[omittedSig] != "missing") :
 ##   'length(x) = 4 > 1' in coercion to 'logical(1)'
 
+## Invalid uses --- check to get *correct* error message :
+(fn <- names(formals(fdef <- getGeneric("oligoFn"))))
+Sig <- signature(mat = "matrix", value = "array", foo = "bar")
+(Sig2 <- c(object="numeric", Sig))
+Err <- list(
+    setM = tryCatch(error = identity,
+	setMethod("oligoFn", Sig, function(target) list(target=target))
+        ),
+    c.ord = tryCatch(error = identity,
+        ## formal args not in same order:
+        conformMethod(Sig, mnames= c("n", "matrix", "value","subset"),
+                      fnames=fn, f="oligoFn", fdef=fdef)
+             ),
+    ## formal arguments (....) omitted in the method definition cannot be in the signature:
+    omit.1 = tryCatch(error = identity,
+        conformMethod(Sig, mnames= "n"            , fnames=fn, f="oligoFn", fdef=fdef)
+    ), omit.2 = tryCatch(error = identity,
+        conformMethod(Sig2, mnames= character()   , fnames=fn, f="oligoFn", fdef=fdef)
+    ), omit.3 = tryCatch(error = identity,
+	conformMethod(Sig2, mnames= c("object, value"), fnames=fn, f="oligoFn", fdef=fdef)
+    ))
+
+stopifnot(exprs = {
+    vapply(Err, inherits, TRUE, "error")
+    is.expression(C1 <- as.expression(lapply(lapply(Err, conditionCall), `[[`, 1L)))
+    is.character(msgs <- vapply(Err, conditionMessage, ""))
+    ## setMethod() :
+    C1$setM == quote(matchSignature)
+    grepl(paste("arguments", paste(sapply(names(Sig)[-2], sQuote), collapse=", "),
+                "missing from the generic signature", sep=".*"),
+          msgs["setM"])
+    !grepl("value", msgs["setM"])
+    ## conformMethod()'s :
+    grepl("arguments in method and generic do not appear in the same order",
+          msgs[["c.ord"]])
+    grepl("formal arguments (.*) omitted in the method definition cannot be in the signature",
+          msgs[grep("^omit", names(Err))])
+    msgs[["omit.2"]] == msgs[["omit.3"]]
+})
+
 
 
 ## keep at end

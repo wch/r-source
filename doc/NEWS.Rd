@@ -98,7 +98,7 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R 3.6.1 patched}{% to port in future
+\section{\Rlogo CHANGES IN R 3.6.1 patched}{
 
   \subsection{NEW FEATURES}{
     \itemize{
@@ -123,11 +123,15 @@
       \code{"Turlach"}, and no longer segfaults for \code{"Turlach"}, as
       reported by Hilmar Berger.
 
+      % to port in future :
       \item \code{conformMethod()} now correctly works in cases containing
       a \dQuote{\code{&&} logic} bug, reported by Henrik Bengtsson.  It now
       creates methods with \code{"missing"} entries in the signature.
       Consequently, \code{rematchDefinition()} is amended to use
       appropriate \code{.local()} calls with named arguments where needed.
+
+      \item \code{conformMethod()} also gives correct error messages in
+      another case of signature mismatches, reported by Suharto Anggono.
     }
   }
 }

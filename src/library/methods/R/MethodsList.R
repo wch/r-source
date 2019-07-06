@@ -1,7 +1,7 @@
 #  File src/library/methods/R/MethodsList.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -548,7 +548,7 @@ matchSignature <-
         for(i in seq_along(sigList))
             sigList[[i]] <- c(sigClasses[[i]], pkgs[[i]])
         fcall <- do.call("call", c("fun", sigList))
-        argmatches <- charmatch(names(sigList), anames)
+        argmatches <- match(names(sigList), anames)
         if (anyNA(argmatches))
             stop(gettextf("there are named arguments (%s) in the method signature that are missing from the generic signature, for function %s",
                           paste(sQuote(names(sigList)[is.na(argmatches)]),
