@@ -5,7 +5,7 @@
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation; either version 3 of the License, or
+#  the Free Software Foundation; either version 2 of the License, or
 #  (at your option) any later version.
 #
 #  This program is distributed in the hope that it will be useful,
@@ -312,7 +312,7 @@ conformMethod <- function(signature, mnames, fnames,
 			  f = "<unspecified>", fdef, method)
 {
     sig0 <- signature
-    fsig <- fdef@signature # typically identical to fnames
+    fsig <- fdef@signature
     if(is.na(match("...", mnames)) && !is.na(match("...", fnames)))
         fnames <- fnames[-match("...", fnames)]
     imf <- match(fnames, mnames)
@@ -335,14 +335,11 @@ conformMethod <- function(signature, mnames, fnames,
     ##              domain = NA)
     if(!any(omittedSig))
         return(signature)
-
     if(any(iiN <- is.na(match(signature[omittedSig], c("ANY", "missing"))))) {
-        ## never(?) happens when called from setMethod()
-        bad <- signature[omittedSig][iiN]
-        bad <- paste0(names(bad), " = \"", bad, "\"", collapse = ", ")
+        bad <- omittedSig & iiN
+        bad2 <- paste0(fnames[bad], " = \"", signature[bad], "\"", collapse = ", ")
         stop(.renderSignature(f, sig0),
-             gettextf("formal arguments (%s) omitted in the method definition cannot be in the signature",
-                      bad),
+             gettextf("formal arguments (%s) omitted in the method definition cannot be in the signature", bad2),
              call. = TRUE, domain = NA)
     }
     else if(any(omittedSig <- omittedSig & signature != "missing")) {

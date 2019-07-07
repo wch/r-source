@@ -1,7 +1,7 @@
 #  File src/library/methods/R/Methods.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2018 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -557,7 +557,7 @@ setMethod <-
 		       mnames <- fnames
 		   }
 		   else {
-		       ## omitted arguments (classes) in method => "missing";  NB: 'definition' unused:
+		       ## omitted arguments (classes) in method => "missing"
 		       fullSig <- conformMethod(signature, mnames, fnames, f, fdef, definition)
 		       if(!identical(fullSig, signature)) {
 			   formals(definition, envir = environment(definition)) <- formals(fdef)
