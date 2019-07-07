@@ -1,6 +1,6 @@
 ### R.m4 -- extra macros for configuring R		-*- Autoconf -*-
 ###
-### Copyright (C) 1998-2018 R Core Team
+### Copyright (C) 1998-2019 R Core Team
 ###
 ### This file is part of R.
 ###
@@ -4342,7 +4342,7 @@ int main(int ac, char **av)
     return ((uintptr_t)&i > ii) ? 1 : -1;
 }
 EOF
-## Allow this to be overruled in config.site
+dnl Allow this to be overruled in config.site
 if test "x${R_C_STACK_DIRECTION}" != "x"; then
  r_cv_cstack_direction=${R_C_STACK_DIRECTION}
 else
