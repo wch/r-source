@@ -299,25 +299,24 @@ function(package, dir, lib.loc = NULL,
     result
 }
 
-print.checkVignettes <-
+format.checkVignettes <-
 function(x, ...)
 {
-    mycat <- function(y, title) {
-        if(length(y)){
-            cat("\n", title, "\n\n", sep = "")
-            for(k in seq_along(y)) {
-                cat("File", names(y)[k], ":\n")
-                cat(as.character(y[[k]]), "\n")
-            }
+    myfmt <- function(y, title) {
+        if(length(y)) {
+            paste(c(paste0("\n", title, "\n"),
+                    unlist(Map(c,
+                               paste0("File ", names(y), ":"),
+                               lapply(y, as.character)),
+                           use.names = FALSE)),
+                  collapse = "\n")
         }
     }
-
-    mycat(x$tangle, "*** Tangle Errors ***")
-    mycat(x$source, "*** Source Errors ***")
-    mycat(x$weave,  "*** Weave Errors ***")
-    mycat(x$latex,  "*** PDFLaTeX Errors ***")
-
-    invisible(x)
+    c(character(),
+      myfmt(x$tangle, "*** Tangle Errors ***"),
+      myfmt(x$source, "*** Source Errors ***"),
+      myfmt(x$weave,  "*** Weave Errors ***"),
+      myfmt(x$latex,  "*** PDFLaTeX Errors ***"))
 }
 
 ### get the engine from a file
