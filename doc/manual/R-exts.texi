@@ -2783,7 +2783,7 @@ The webpage
 @uref{http://en.cppreference.com/@/w/@/cpp/@/compiler_support} gives
 some information on which compilers are known to support recent C++
 features.  Note that @command{g++} 4.9.x (as used for @R{} on Windows at
-the time of writing) has only partial C++14 support, and the flag to
+least up to 3.6.x) has only partial C++14 support, and the flag to
 obtain that support is not included in the default Windows build of @R{}
 --- one could try something like
 
@@ -8690,7 +8690,7 @@ Recent versions return symbolic addresses for the location of the error
 provided @command{llvm-symbolizer}@footnote{part of the LLVM project and
 in distributed in @code{llvm} RPMs and @code{.deb}s on Linux.  It is not
 currently shipped by Apple.} is on the path: if it is available but not
-on the path or has been renamed@footnote{as Ubuntu is said to do.}, one
+on the path or has been renamed@footnote{as Ubuntu has been said to do.}, one
 can use an environment variable, e.g.@:
 
 @example
@@ -8754,9 +8754,10 @@ break __asan_report_error
 (See
 @uref{https://code.google.com/@/p/@/address-sanitizer/@/wiki@//AddressSanitizer#gdb}.)
 
-Recent versions@footnote{including @command{gcc} 7.1 and @command{clang}
-4.0.0: for @command{gcc} it is implied by @option{-fsanitize=address}.}
-added the flag @option{-fsanitize-address-use-after-scope}: see
+More recent versions@footnote{including @command{gcc} 7.1 and
+@command{clang} 4.0.0: for @command{gcc} it is implied by
+@option{-fsanitize=address}.}  added the flag
+@option{-fsanitize-address-use-after-scope}: see
 @uref{https://github.com/@/google/@/sanitizers/@/wiki/@/AddressSanitizerUseAfterScope}.
 
 One of the checks done by ASAN is that @code{malloc/free} and in C++
@@ -8769,6 +8770,11 @@ example, X11/GL libraries on Linux, seen when checking package
 environment variable @env{RGL_USE_NULL=true}.} are not consistent.  The
 check can be suppressed by including @samp{alloc_dealloc_mismatch=0} in
 @env{ASAN_OPTIONS}.
+
+ASAN also checks system calls and sometimes reports can refer to
+problems in the system software and not the package nor @R{}.  A couple
+of reports have been of `heap-use-after-free' errors in the X11
+libraries called from Tcl/Tk.
 
 @menu
 * Using Leak Sanitizer::        
@@ -9309,8 +9315,9 @@ where the package author forgot to declare
 @noindent
 in @file{boot.f}.
 
-Or:
+Further examples:
 
+@c package assist 3.1.4
 @example
 rkpk2.f:77:5: warning: type of 'dstup' does not match original declaration [-Wlto-type-mismatch]
       *info, wk)
@@ -9319,8 +9326,42 @@ rkpk1.f:2565:5: note: type mismatch in parameter 14
 rkpk1.f:2565:5: note: 'dstup' was previously declared here
 @end example
 @noindent
-where the fourteenth argument 'dum' was missing in the call.
+where the fourteenth argument @code{dum} was missing in the call.
 
+@c package gss 2.1-9
+@example
+reg.f:78:33: warning: type of 'dqrdc' does not match original declaration [-Wlto-type-mismatch]
+       call dqrdc (sr, nobs, nobs, nnull, wk, dum, dum, 0)
+dstup.f:20: note: 'dqrdc' was previously declared here
+       call dqrdc (s, lds, nobs, nnull, qraux, jpvt, work, 1)
+@end example
+@noindent
+@code{dqrdc} is a LINPACK routine from @R{}, @code{jpvt} is an integer
+array and @code{work} is a double precision one so @code{dum} cannot
+match both.  (If @option{--emable-lto=check} had been used the
+comparison would have been with the definition in @R{}.)
+
+For Fortran files all in the package, most inconsistencies can be
+detected by concatenating the Fortran files and compiling the result,
+sometimes with clearer diagnostics than provided by LTO.  For our last
+two examples this gives
+
+@example
+all.f:2966:72:
+
+      *info, work1)
+                                                                        1
+Warning: Missing actual argument for argument ‘dum’ at (1)
+@end example
+@noindent
+and
+@example
+all.f:1663:72:
+
+      *ipvtwk), wk(ikwk), wk(iwork1), wk(iwork2), info)
+                                                                        1
+Warning: Type mismatch in argument ‘jpvt’ at (1); passed REAL(8) to INTEGER(4)
+@end example
 
 @node System and foreign language interfaces, The R API, Debugging, Top
 @chapter System and foreign language interfaces
@@ -10104,10 +10145,10 @@ void F77_NAME(supsmu)(int *n, double *x, double *y,
 @end example
 
 @noindent
-@command{gfortran} 9.2@footnote{This was added just after release as
-9.1.} and later can help generate such prototypes with its flag
-@option{-fc-prototypes-external} (although one will need to replace the
-hard-coded trailing underscore with the @code{F77_NAME} macro).
+@command{gfortran} 9.2@footnote{This was added on 2019-05-09, just after
+release as 9.1.} and later can help generate such prototypes with its
+flag @option{-fc-prototypes-external} (although one will need to replace
+the hard-coded trailing underscore with the @code{F77_NAME} macro).
 
 One can get away with inaccurate argument lists in the declarations: it
 is easy to specify the arguments for @code{.Call} (all @code{SEXP}) and
@@ -13276,10 +13317,8 @@ The standard packages, for example @pkg{stats}, are a rich source of
 further examples.
 
 Passing character strings from C to Fortran or @emph{vice versa} is not
-portable.  We have found that it helps to ensure that a C string to be
-passed is followed by several @code{nul}s (and not just the one needed
-as a C terminator).  But for maximal portability character strings in
-Fortran should be avoided.
+portable.  For maximal portability character strings in Fortran should
+be avoided.
 
 Where supported, @emph{link time optimization} provides a reliable way
 to check the consistency of calls to C from Fortran or @emph{vice
