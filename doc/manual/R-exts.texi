@@ -13423,21 +13423,21 @@ be implemented in compilers @emph{ca} 2007, e.g.@: in @command{gfortran}
 4.3.} to set up the Fortran routine to pass a C-compatible character
 string.  We could use something like
 @example
-module cfuncs
-  use iso_c_binding, only: c_char, c_null_char
-  interface
-    subroutine cmsg(msg) bind(C, name = 'cmsg')
-      use iso_c_binding, only: c_char
-      character(kind = c_char):: msg(*)
-    end subroutine cmsg
-  end interface
-end module
+      module cfuncs
+        use iso_c_binding, only: c_char, c_null_char
+        interface
+          subroutine cmsg(msg) bind(C, name = 'cmsg')
+            use iso_c_binding, only: c_char
+            character(kind = c_char):: msg(*)
+          end subroutine cmsg
+        end interface
+      end module
 
-subroutine rmsg(msg)
-  use cfuncs
-  character(*) msg
-  call cmsg(msg//c_null_char) ! need to concatenate a nul terminator
-end subroutine rmsg
+      subroutine rmsg(msg)
+        use cfuncs
+        character(*) msg
+        call cmsg(msg//c_null_char) ! need to concatenate a nul terminator
+      end subroutine rmsg
 @end example
 @noindent
 where the C side is simply
