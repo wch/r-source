@@ -13341,6 +13341,93 @@ vsom.f90:20:33: note: 'vsom' was previously declared here
 shows that a subroutine has been registered with 9 arguments (as that is
 what the @code{.Fortran} call used) but only has 8.
 
+@menu
+* Fortran character strings::   
+@end menu
+
+@node Fortran character strings,  , Calling C from Fortran and vice versa, Calling C from Fortran and vice versa
+@subsection Fortran character strings
+
+Passing character strings from C to Fortran or @emph{vice versa} is
+not portable, but can be done with care.  The internal representations
+are different: a character array in C (or C++) is nul-terminated so its
+length can be computed by @code{strlen}.  Fortran character arrays are
+typically stored as an array of bytes and a length.  This matters when
+passing strings from C to Fortran or @emph{vice versa}: in many cases
+one has been able to get away with passing the string but not the
+length.  However, in 2019 this changed for @command{gfortran}, starting
+with version 9 but backported to versions 7 and 8.
+
+Suppose we want a function to report a message from Fortran to @R{}'s
+console (one could use @code{intpr} with dummy data, but it might be the
+basis of a custom reporting function).  Suppose the equivalent in Fortran
+would be
+@example
+      subroutine rmsg(msg)
+      character*(*) msg
+      print *.msg
+      end
+@end example
+
+Fortran 2003 features@footnote{These started to be implemented in
+compilers @emph{ca} 2007, e.g.@: in @command{gfortran} 4.3.} enable us
+to set up the Fortran routine to pass a C-compatible character string.
+We could use something like
+@example
+      module cfuncs
+        use iso_c_binding, only: c_char, c_null_char
+        interface
+          subroutine cmsg(msg) bind(C, name = 'cmsg')
+            use iso_c_binding, only: c_char
+            character(kind = c_char):: msg(*)
+          end subroutine cmsg
+        end interface
+      end module
+
+      subroutine rmsg(msg)
+        use cfuncs
+        character(*) msg
+        call cmsg(msg//c_null_char) ! need to concatenate a nul terminator
+      end subroutine rmsg
+@end example
+@noindent
+where the C side is simply
+@example
+void cmsg(const char *msg)
+@{
+    // do something with nul-terminated string 'msg'
+@}
+@end example
+
+Passing a variable-length string from C to Fortran is trickier, but all
+the uses in BLAS and LAPACK are of a single character, and for these we
+can write a wrapper in Fortran along the lines of
+@example
+      subroutine c_dgemm(transa, transb, m, n, k, alpha,
+     +     a, lda, b, ldb, beta, c, ldc)
+     +     bind(C, name = 'Cdgemm')
+        use iso_c_binding, only : c_char, c_int, c_double
+        character(c_char):: transa, transb
+        integer(c_int):: m, n, k, lda, ldb, ldc
+        real(c_double):: alpha, beta, a(lda,*), b(ldb,*), c(ldc,*)
+        call dgemm(transa, transb, m, n, k, alpha,
+     +             a, lda, b, ldb, beta, c, ldc)
+      end subroutine c_dgemm
+@end example
+@noindent
+which is then called from C with declaration
+@example
+void
+Cdgemm(const char *transa, const char *transb, const int *m,
+       const int *n, const int *k, const double *alpha,
+       const double *a, const int *lda, const double *b, const int *ldb,
+       const double *beta, double *c, const int *ldc);
+@end example
+
+Alternative ways to manage Fortran character-length arguments on the C
+side will be made available in future versions of @R{}.
+
+
 @node Numerical analysis subroutines, Optimization, Calling C from Fortran and vice versa, The R API
 @section Numerical analysis subroutines
 @cindex Numerical analysis subroutines from C
