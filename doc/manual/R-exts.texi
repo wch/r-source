@@ -13459,8 +13459,7 @@ along the lines of
         use iso_c_binding, only : c_char, c_int, c_double
         character(c_char):: transa, transb
         integer(c_int):: m, n, k, lda, ldb, ldc
-        real(c_double):: alpha, beta, a(lda, *), b(ldb, *)
-        real(c_double):: c(ldc, *)
+        real(c_double):: alpha, beta, a(lda,*), b(ldb,*), c(ldc,*)
         call dgemm(transa, transb, m, n, k, alpha,
      +             a, lda, b, ldb, beta, c, ldc)
       end subroutine c_dgemm
