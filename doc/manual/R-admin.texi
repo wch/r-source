@@ -1137,9 +1137,11 @@ AR="ar --plugin=/path/to/liblto_plugin.so"
 RANLIB="ranlib --plugin=/path/to/liblto_plugin.so
 @end example
 @noindent
-Unfortunately this may be accepted but silently do nothing if some of
-the toolchain does not support LTO: that happens on macOS (at the time
-of writing).
+amd it may be needed to set @code{NM} similarly.
+
+Unfortunately @option{--enable-lto} may be accepted but silently do
+nothing if some of the toolchain does not support LTO: that happens on
+macOS (at the time of writing).
 
 When LTO is enabled it is used for compiled code in packages (including
 the recommended packages) unless the flag @option{--enable-lto=R} is
@@ -1154,7 +1156,7 @@ and in any packages installed using the build.  (This is unlikely to
 work in conjunction with non-default options for BLAS and LAPACK, and
 `linking' against these libraries may be very slow.  Note that the
 static libraries may need to be re-compiled for even a minor update to
-the compiler.)  Further, it checks consistency of LINPACK calls from
+the compiler.)  It also checks consistency of LINPACK calls from
 package to @R{}.  @strong{NB:} as its name suggests, this option is
 intended only for checking installation of @R{} and packages: it
 includes these library routines (those called directly and all they
@@ -1163,13 +1165,13 @@ depend on) in each package.
 LTO support was added in 2011 for @command{gcc} 4.5.x on Linux but was
 little used before 2019.
 
-With @command{gcc}/@command{gfortran} 9.x@footnote{and probably 8.4 and
-later when released.} this will flag inconsistencies in calls to
-Fortran subroutines/functions, both between Fortran source files and
-between Fortran and C/C++.  @command{gfortran} 9.x can help
-understanding these by extracting C prototypes from Fortran source files
-with its @option{-fc-prototypes-external} option, e.g.@: that (at the
-time of writing) Fortran @code{LOGICAL} corresponds to
+With @command{gcc}/@command{gfortran} 9.x@footnote{probably also 8.4 and
+later when released.} this will flag inconsistencies in calls to Fortran
+subroutines/functions, both between Fortran source files and between
+Fortran and C/C++.  @command{gfortran} 9.x@footnote{since 2019-05-09.}
+can help understanding these by extracting C prototypes from Fortran
+source files with its @option{-fc-prototypes-external} option, e.g.@:
+that (at the time of writing) Fortran @code{LOGICAL} corresponds to
 @code{int_least32_t *}.
 
 @node Testing a Unix-alike Installation,  , Other Options, Installing R under Unix-alikes

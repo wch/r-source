@@ -2784,7 +2784,7 @@ The webpage
 @uref{http://en.cppreference.com/@/w/@/cpp/@/compiler_support} gives
 some information on which compilers are known to support recent C++
 features.  Note that @command{g++} 4.9.x (as used for @R{} on Windows at
-the time of writing) has only partial C++14 support, and the flag to
+least up to 3.6.x) has only partial C++14 support, and the flag to
 obtain that support is not included in the default Windows build of @R{}
 --- one could try something like
 
@@ -10146,10 +10146,10 @@ void F77_NAME(supsmu)(int *n, double *x, double *y,
 @end example
 
 @noindent
-@command{gfortran} 9.2@footnote{This was added just after release as
-9.1.} and later can help generate such prototypes with its flag
-@option{-fc-prototypes-external} (although one will need to replace the
-hard-coded trailing underscore with the @code{F77_NAME} macro).
+@command{gfortran} 9.2@footnote{This was added on 2019-05-09, just after
+release as 9.1.} and later can help generate such prototypes with its
+flag @option{-fc-prototypes-external} (although one will need to replace
+the hard-coded trailing underscore with the @code{F77_NAME} macro).
 
 One can get away with inaccurate argument lists in the declarations: it
 is easy to specify the arguments for @code{.Call} (all @code{SEXP}) and
