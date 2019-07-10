@@ -1013,6 +1013,11 @@ OpenMP program, which is not the same as compiling a shared object and
 loading it into the C program of @R{}'s executable.  Note that
 overridden values are not tested.
 
+Note the mixing compiler families may not work even if both support
+OpenMP: for example where @command{gfortran} 9.x is used for Fortran, it
+can generate calls to @code{libgomp} which are not in the OpenMP runtime
+used by @command{clang} or @command{clang++} (at least up to version 8).
+
 @node C++ Support, Link-Time Optimization, OpenMP Support, Other Options
 @subsection C++ Support
 
@@ -1147,6 +1152,18 @@ When LTO is enabled it is used for compiled code in packages (including
 the recommended packages) unless the flag @option{--enable-lto=R} is
 used.  With sufficient diagnostic flags (e.g.@: @option{-Wall} in GCC)
 this can flag inconsistencies between source files in a package.
+
+Under some circumstances and for a few packages, the PIC flags have
+needed overridding on Linux with GCC 9: e.g@: in @file{config.site}:
+@example
+CPICFLAGS=-fPIC
+CXXPICFLAGS=-fPIC
+CXX98PICFLAGS=-fPIC
+CXX11PICFLAGS=-fPIC
+CXX14PICFLAGS=-fPIC
+CXX17PICFLAGS=-fPIC
+FPICFLAGS=-fPIC
+@end example
 
 LTO support was added in 2011 for @command{gcc} 4.5.x on Linux but was
 little used before 2019.
@@ -2038,9 +2055,8 @@ large as these, but apparently NetBSD may not.  Use the shell command
 @command{ulimit} (@command{sh}/@command{bash}) or @command{limit}
 (@command{csh}/@command{tcsh}) to check.)  For some
 compilers@footnote{The Oracle compilers on Solaris (where the issue is
-parsing very complex @R{} expressions) and pre-releases of GCC 9 on
-Linux.} and packages a larger stack size has been needed: 20-25MB has
-sufficed to date.
+parsing very complex @R{} expressions) and GCC 9 on Linux.} and packages
+a larger stack size has been needed: 20-25MB has sufficed to date.
 
 @R{} makes use of a number of environment variables, the default values
 of many of which are set in file @file{@var{R_HOME}/etc/Renviron} (there
