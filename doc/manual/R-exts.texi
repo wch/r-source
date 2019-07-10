@@ -2159,10 +2159,11 @@ optional libraries.
 
 Some care is needed when compilers are from different families which may
 use different OpenMP runtimes (e.g.@: @command{clang} @emph{vs} GCC
-including @command{gfortran}, although it is currently possible to use
-the @command{clang} runtime with GCC but not @emph{vice versa}).  For a
-package with fixed-form Fortran code using OpenMP the appropriate lines
-are
+including @command{gfortran}, although it is often possible to use the
+@command{clang} runtime with GCC but not @emph{vice versa}: however
+@command{gfortran} 9.x may generate calls not in the @command{clang}
+runtime).  For a package with Fortran code using OpenMP the appropriate
+lines are
 
 @example
 PKG_FFLAGS = $(SHLIB_OPENMP_FFLAGS)
@@ -2170,12 +2171,8 @@ PKG_LIBS = $(SHLIB_OPENMP_CFLAGS)
 @end example
 
 @noindent
-as the C compiler will be used to link the package code (and there is no
-guarantee that this will work everywhere).  Packages which include C++
-code should use @code{SHLIB_OPENMP_CXXFLAGS} in @code{PKG_LIBS}. (As
-from @R{} 3.6.0 this applies also to free-form Fortran code, where
-@code{SHLIB_OPENMP_FFLAGS} should be used in @code{PKG_FFLAGS} or
-@code{PKG_FCFLAGS}.)
+as the C compiler will be used to link the package code (and there are
+platforms on which this does not work.
 
 It is not portable to use OpenMP with more than one of C, C++ and
 Fortran in a single package since it is not uncommon that the compilers
