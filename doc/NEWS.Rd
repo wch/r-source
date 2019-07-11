@@ -99,7 +99,7 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R 3.6.1 patched}{% to port in future
+\section{\Rlogo CHANGES IN R 3.6.1 patched}{
 
   \subsection{NEW FEATURES}{
     \itemize{
