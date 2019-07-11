@@ -46,7 +46,7 @@ c     blas daxpy,ddot
 c
       subroutine dposl(a,lda,n,b)
       integer lda,n
-      double precision a(lda,*),b(*)
+      double precision a(lda,n),b(n)
 c
 c     internal variables
 c

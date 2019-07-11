@@ -139,8 +139,8 @@ c     Fortran   dabs,min0,mod
 c
       subroutine dqrsl(x,ldx,n,k,qraux,y,qy,qty,b,rsd,xb,job,info)
       integer ldx,n,k,job,info
-      double precision x(ldx,*),qraux(*),y(*),qy(*),qty(*),b(*),rsd(*),
-     *                 xb(*)
+      double precision x(ldx,k),qraux(k),y(n),qy(n),qty(n),b(k),rsd(n),
+     *                 xb(n)
 c
 c     internal variables
 c

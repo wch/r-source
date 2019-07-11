@@ -1,6 +1,6 @@
       subroutine dchdc(a,lda,p,work,jpvt,job,info)
       integer lda,p,jpvt(p),job,info
-      double precision a(lda,p),work(*)
+      double precision a(lda,p),work(p)
 c
 c     dchdc computes the cholesky decomposition of a positive definite
 c     matrix.  a pivoting option allows the user to estimate the

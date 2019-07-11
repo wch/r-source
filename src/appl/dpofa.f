@@ -42,7 +42,7 @@ c     fortran dsqrt
 c
       subroutine dpofa(a,lda,n,info)
       integer lda,n,info
-      double precision a(lda,*)
+      double precision a(lda,n)
 c
 c     internal variables
 c
