@@ -1171,11 +1171,11 @@ little used before 2019.
 With @command{gcc}/@command{gfortran} 9.x@footnote{probably also 8.4 and
 later when released.} this will flag inconsistencies in calls to Fortran
 subroutines/functions, both between Fortran source files and between
-Fortran and C/C++.  @command{gfortran} 9.x@footnote{since 2019-05-09.}
-can help understanding these by extracting C prototypes from Fortran
-source files with its @option{-fc-prototypes-external} option, e.g.@:
-that (at the time of writing) Fortran @code{LOGICAL} corresponds to
-@code{int_least32_t *}.
+Fortran and C/C++.  @command{gfortran} 9.x@footnote{since 2019-05-09,
+just after the release of version 9.1.}  can help understanding these by
+extracting C prototypes from Fortran source files with its
+@option{-fc-prototypes-external} option, e.g.@: that (at the time of
+writing) Fortran @code{LOGICAL} corresponds to @code{int_least32_t *}.
 
 @node Testing a Unix-alike Installation,  , Other Options, Installing R under Unix-alikes
 @section Testing an Installation
