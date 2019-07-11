@@ -32,6 +32,9 @@
 /* As FC_FUNC, but for C identifiers containing underscores. */
 #undef FC_FUNC_
 
+/* C type used for Fortran character lengths */
+#undef FC_LEN_T
+
 /* Define to 1 if you have the `access' function. */
 #undef HAVE_ACCESS
 

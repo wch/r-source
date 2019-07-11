@@ -15,6 +15,12 @@
 #define SUPPORT_MBCS 1
 #define ENABLE_NLS 1
 /* #undef HAVE_AQUA */
+/* Will enable the use of Fortran character lengths,
+   e.g. in BLAS.h and Lapack.h */
+#ifdef USE_FC_LEN_T
+#define FC_LEN_T size_t
+#endif
+
 /* Deprecated: use _OPENMP instead */
 /* #undef SUPPORT_OPENMP */
 #ifdef _WIN64

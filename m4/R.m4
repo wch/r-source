@@ -1046,6 +1046,70 @@ fi
 AC_SUBST(HAVE_FORTRAN_DOUBLE_COMPLEX)
 ])# R_PROG_FC_CC_COMPAT_COMPLEX
 
+## R_PROG_FC_CHAR_LEN_T
+## --------------------
+## Check whether the Fortran CHARACTER lengths are passed as size_t
+## NB: they may not actually be size_t, but we don't care about
+## signedness and on most 64-bit platforms a 32-bit type will be
+## passed in a 64-bit register or stack slot.
+##
+## (It is docuemnted that for gfortran < 8, int is used.)
+AC_DEFUN([R_PROG_FC_CHAR_LEN_T],
+[AC_CACHE_VAL([r_cv_prog_fc_char_len_t],
+[cat > conftestf.f <<EOF
+      subroutine testit()
+      external xerbla
+      call xerbla('abcde', -10)
+      end
+EOF
+${FC} ${FFLAGS} -c conftestf.f 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD
+[cat > conftest.c <<EOF
+/* A C function calling a Fortran subroutine which calls xerbla
+   written in C, emulating how R calls BLAS/LAPACK routines */
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include "confdefs.h"
+#ifdef HAVE_F77_UNDERSCORE
+# define F77_SYMBOL(x)   x ## _
+#else
+# define F77_SYMBOL(x)   x
+#endif
+
+extern void F77_SYMBOL(testit)();
+
+void F77_SYMBOL(xerbla)(const char *srname, int *info, 
+			const size_t srname_len)
+{
+    printf ("char len %lu\n",  srname_len);
+    if (srname_len != 5) exit(-1);
+    if (strncmp(srname, "abcde", 5)) exit(-2);
+    if (*info != -10) exit(-3);
+}
+
+int main()
+{
+    F77_SYMBOL(testit)();
+    return 0;
+}
+EOF]
+if ${CC} ${CFLAGS} -c conftest.c 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD; then
+  if ${CC} ${CFLAGS} ${LDFLAGS} ${MAIN_LDFLAGS} -o conftest${ac_exeext} \
+       conftest.${ac_objext} conftestf.${ac_objext} ${FLIBS} \
+       1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD;
+  then
+    ## redirect error messages to config.log
+    output=`./conftest${ac_exeext} 2>&AS_MESSAGE_LOG_FD`
+    if test ${?} = 0; then
+      r_cv_prog_fc_char_len_t=size_t
+    fi
+  fi
+fi
+])
+rm -Rf conftest conftest.* conftestf.* core
+])# R_PROG_FC_CHAR_LEN_T
+
+
 ## Unused but perhaps useful
 ## R_PROG_FC_FLAG(FLAG, [ACTION-IF-TRUE])
 ## ---------------------------------------

@@ -24,6 +24,13 @@ line=`grep "ENABLE_NLS" config.h`
 echo "${line}"
 line=`grep "HAVE_AQUA" config.h`
 echo "${line}"
+echo "/* Will enable the use of Fortran character lengths,"
+echo "   e.g. in BLAS.h and Lapack.h */"
+echo "#ifdef USE_FC_LEN_T"
+line=`grep "FC_LEN_T" config.h`
+echo "${line}"
+echo "#endif"
+echo
 echo "/* NB: the rest are for the C compiler used to build R:"
 echo "   they do not necessarily apply to a C++ compiler */"
 line=`grep "SIZEOF_SIZE_T" config.h`

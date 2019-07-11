@@ -357,6 +357,13 @@
 ## CXX_VISIBILITY=
 ## F_VISIBILITY=
 
+## Fortran-C compatibility
+## The C type used by Fortran to pass 'hidden' character lengths (if any)
+## Often size_t (unsigned int or long, or long long in Win64)
+## Allow user to override the configure checks if they know what they
+## are doing (the value is unchecked).
+## FC_LEN_T=
+
 ## C Stack Direction
 ## In case optimization defeats the configure test: 'down' (the usual) or 'up'
 ## R_C_STACK_DIRECTION=

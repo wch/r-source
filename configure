@@ -27268,6 +27268,83 @@ else
 $as_echo "no" >&6; }
 fi
 
+### type for Fortran 'hidden' character lengths, if any
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for type of 'hidden' Fortran character lengths" >&5
+$as_echo_n "checking for type of 'hidden' Fortran character lengths... " >&6; }
+if test "x${FC_LEN_T}" != "x"; then
+  fc_len_t=${FC_LEN_T}
+else
+  if ${r_cv_prog_fc_char_len_t+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  cat > conftestf.f <<EOF
+      subroutine testit()
+      external xerbla
+      call xerbla('abcde', -10)
+      end
+EOF
+${FC} ${FFLAGS} -c conftestf.f 1>&5 2>&5
+cat > conftest.c <<EOF
+/* A C function calling a Fortran subroutine which calls xerbla
+   written in C, emulating how R calls BLAS/LAPACK routines */
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include "confdefs.h"
+#ifdef HAVE_F77_UNDERSCORE
+# define F77_SYMBOL(x)   x ## _
+#else
+# define F77_SYMBOL(x)   x
+#endif
+
+extern void F77_SYMBOL(testit)();
+
+void F77_SYMBOL(xerbla)(const char *srname, int *info,
+			const size_t srname_len)
+{
+    printf ("char len %lu\n",  srname_len);
+    if (srname_len != 5) exit(-1);
+    if (strncmp(srname, "abcde", 5)) exit(-2);
+    if (*info != -10) exit(-3);
+}
+
+int main()
+{
+    F77_SYMBOL(testit)();
+    return 0;
+}
+EOF
+if ${CC} ${CFLAGS} -c conftest.c 1>&5 2>&5; then
+  if ${CC} ${CFLAGS} ${LDFLAGS} ${MAIN_LDFLAGS} -o conftest${ac_exeext} \
+       conftest.${ac_objext} conftestf.${ac_objext} ${FLIBS} \
+       1>&5 2>&5;
+  then
+    ## redirect error messages to config.log
+    output=`./conftest${ac_exeext} 2>&5`
+    if test ${?} = 0; then
+      r_cv_prog_fc_char_len_t=size_t
+    fi
+  fi
+fi
+
+fi
+
+rm -Rf conftest conftest.* conftestf.* core
+
+  fc_len_t=${r_cv_prog_fc_char_len_t}
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: ${fc_len_t}" >&5
+$as_echo "${fc_len_t}" >&6; }
+
+if test "x${fc_len_t}" != "xunknown"; then
+
+cat >>confdefs.h <<_ACEOF
+#define FC_LEN_T ${fc_len_t}
+_ACEOF
+
+fi
+
+
 
 
 

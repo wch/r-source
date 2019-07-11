@@ -1078,6 +1078,22 @@ else
   AC_MSG_RESULT([no])
 fi
 
+### type for Fortran 'hidden' character lengths, if any
+AC_MSG_CHECKING([for type of 'hidden' Fortran character lengths])
+if test "x${FC_LEN_T}" != "x"; then
+  fc_len_t=${FC_LEN_T}
+else
+  R_PROG_FC_CHAR_LEN_T
+  fc_len_t=${r_cv_prog_fc_char_len_t}
+fi
+AC_MSG_RESULT([${fc_len_t}])
+
+if test "x${fc_len_t}" != "xunknown"; then
+   AC_DEFINE_UNQUOTED([FC_LEN_T], ${fc_len_t}, 
+                      [C type used for Fortran character lengths])
+fi
+
+
 AC_SUBST(CFLAGS)
 AC_SUBST(MAIN_CFLAGS)
 AC_SUBST(SHLIB_CFLAGS)

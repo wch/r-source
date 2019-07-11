@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2018   The R Core Team.
+ *  Copyright (C) 1997-2019   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -63,9 +63,6 @@ void printVector(SEXP, int, int);
 // void PrintLanguage(SEXP, Rboolean);
 
 /* Utilities for S compatibility and debuggging */
-void F77_SYMBOL(dblep0)(const char *, int *, double *, int *);
-void F77_SYMBOL(intpr0) (const char *, int *, int *, int *);
-void F77_SYMBOL(realp0)(const char *, int *, float *, int *);
 void R_PV(SEXP s);
 
 /* Offset for rowlabels if there are named dimnames */
