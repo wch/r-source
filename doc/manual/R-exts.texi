@@ -8983,10 +8983,8 @@ FFLAGS = -g -O2 -mtune=native -fbounds-check
 when you run @command{R CMD check}.
 
 This may report errors with the way that Fortran character variables are
-passed, particularly when Fortran subroutines are called from C code.
-This may include the use of BLAS and LAPACK subroutines in @R{}, so it
-is not advisable to build @R{} itself with bounds checking (and may not
-even be possible as these subroutines are called during the @R{} build).
+passed, particularly when Fortran subroutines are called from C code and
+character lengths are not passed (@pxref{Fortran character strings}).
 
 
 @node Debugging compiled code, Using Link-time Optimization, Checking memory access, Debugging
@@ -13365,11 +13363,63 @@ would be
       print *.msg
       end
 @end example
+@noindent
+in file @file{rmsg.f}. Using @command{gfortran} 9.2 and
+later@footnote{or 9.1-patched since 2019-05-09.} we can extract the C
+view by
+@example
+gfortran -c -fc-prototypes-external rmsg.f
+@end example
+@noindent
+which gives
+@example
+void rmsg_ (char *msg, size_t msg_len);
+@end example
+@noindent 
+(where @code{size_t} applies to version 8 and later).  We could re-write
+that portably in C as
+@example
+#define USE_FC_LEN_T
+#include <Rconfig.h> // included by R.h, so define USE_FC_LEN_T early
 
-Fortran 2003 features@footnote{These started to be implemented in
-compilers @emph{ca} 2007, e.g.@: in @command{gfortran} 4.3.} enable us
-to set up the Fortran routine to pass a C-compatible character string.
-We could use something like
+void F77_NAME(rmsg)(char *msg, FC_LEN_T msg_len)
+@{
+    char cmsg[msg_len+1];
+    strncpy(cmsg, msg, msg_len);
+    cmsg[msg_len] = '\0';
+    // do something with 'cmsg' 
+@}
+@end example
+@noindent
+in code depending on @code{R(>= 3.7)}.  For earlier versions of @R{} we
+could just assume that @code{msg} is nul-terminated (not guaranteed, but
+people have been getting away with it for many years), so the complete C
+side might be
+@example
+#define USE_FC_LEN_T
+#include <Rconfig.h>
+
+#ifdef FC_LEN_T
+void F77_NAME(rmsg)(char *msg, FC_LEN_T msg_len)
+@{
+    char cmsg[msg_len+1];
+    strncpy(cmsg, msg, msg_len);
+    cmsg[msg_len] = '\0';
+    // do something with 'cmsg' 
+@}
+#else
+void F77_NAME(rmsg)(char *msg)
+@{
+    // do something with 'msg' 
+@}
+#endif
+@end example
+
+
+An alternative is to use Fortran 2003 features@footnote{These started to
+be implemented in compilers @emph{ca} 2007, e.g.@: in @command{gfortran}
+4.3.} to set up the Fortran routine to pass a C-compatible character
+string.  We could use something like
 @example
       module cfuncs
         use iso_c_binding, only: c_char, c_null_char
@@ -13420,9 +13470,6 @@ Cdgemm(const char *transa, const char *transb, const int *m,
        const double *a, const int *lda, const double *b, const int *ldb,
        const double *beta, double *c, const int *ldc);
 @end example
-
-Alternative ways to manage Fortran character-length arguments on the C
-side will be made available in future versions of @R{}.
 
 
 @node Numerical analysis subroutines, Optimization, Calling C from Fortran and vice versa, The R API

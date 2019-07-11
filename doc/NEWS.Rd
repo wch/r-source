@@ -13,6 +13,7 @@
       determining \emph{how} to handle \code{NaN} or \code{NA} in \code{x}.
     }
   }
+
   \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
       \item Detection of the C stack direction has been moved from
@@ -21,6 +22,24 @@
       \file{config.site}.
     }
   }
+
+  \subsection{PACKAGE INSTALLATION}{
+    \itemize{
+      \item Header \file{Rconfig.h} contains the value of
+	\code{FC_LEN_T} deduced at installation which is used by the
+	prototypes in headers \file{BLAS.h} and \file{Lapack.h} but to
+	avoid extensive breakage this is only exposed when
+	\code{USE_FC_LEN_T} is defined.
+
+	If a package's C/C++ calls to BLAS/LAPACK allow for the
+	\sQuote{hidden} arguments used by most Fortran compilers to pass
+	the lengths of Fortran character arguments, define
+	\code{USE_FC_LEN_T} and include \file{Rconfig.h} (possibly
+	\emph{via} \file{R.h}) before including \file{BLAS.h} or
+	\file{Lapack.h}.
+    }
+  }
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{runmed(x, *)} when \code{x} contains missing values
