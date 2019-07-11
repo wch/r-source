@@ -13311,10 +13311,6 @@ used.  (Passing values @emph{via} arguments is safer.)
 The standard packages, for example @pkg{stats}, are a rich source of
 further examples.
 
-Passing character strings from C to Fortran or @emph{vice versa} is not
-portable.  For maximal portability character strings in Fortran should
-be avoided.
-
 Where supported, @emph{link time optimization} provides a reliable way
 to check the consistency of calls to C from Fortran or @emph{vice
 versa}.
@@ -13386,12 +13382,12 @@ void F77_NAME(rmsg)(char *msg, FC_LEN_T msg_len)
 @{
     char cmsg[msg_len+1];
     strncpy(cmsg, msg, msg_len);
-    cmsg[msg_len] = '\0';
+    cmsg[msg_len] = '\0'; // nul-terminate the string, to be sure
     // do something with 'cmsg' 
 @}
 @end example
 @noindent
-in code depending on @code{R(>= 3.7)}.  For earlier versions of @R{} we
+in code depending on @code{R(>= 3.6.2)}.  For earlier versions of @R{} we
 could just assume that @code{msg} is nul-terminated (not guaranteed, but
 people have been getting away with it for many years), so the complete C
 side might be
