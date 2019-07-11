@@ -129,6 +129,8 @@
       creates methods with \code{"missing"} entries in the signature.
       Consequently, \code{rematchDefinition()} is amended to use
       appropriate \code{.local()} calls with named arguments where needed.
+
+      \item \code{apply(diag(3), 2:3, mean)} now gives a helpful error message.
     }
   }
 }

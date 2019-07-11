@@ -2853,7 +2853,7 @@ stopifnot(exprs = {
     (allT14$"-Big_alternate" >= rT14)[-(1:2)] # slightly surprisingly
     identical(allT14$na.omit[-(1:4)], c(rTo14))
     inherits(Tfail <- allT14$fail, "error")
-    grepl("^runmed\\(.*: .*NA.*x\\[1\\]", Tfail$message)
+    !englishMsgs || grepl("^runmed\\(.*: .*NA.*x\\[1\\]", Tfail$message)
 })
 
 
@@ -2924,6 +2924,16 @@ r10<- oligoFn(target = cbind(1,2), value = array(1,1:3))
 ## in R <= 3.6.0, e.g., the first  setMethod(..)  gave
 ## Error in omittedSig && (signature[omittedSig] != "missing") :
 ##   'length(x) = 4 > 1' in coercion to 'logical(1)'
+
+
+## apply(., MARGIN) when MARGIN is outside length(dim(.)):
+a <- tryCatch(apply(diag(3), 2:3, mean), error=identity)
+stopifnot(exprs = {
+    inherits(a, "error")
+    conditionCall(a)[[1]] == quote(`apply`)
+    !englishMsgs || !grepl("missing", (Msg <- conditionMessage(a)), fixed=TRUE)
+    !englishMsgs || grepl("MARGIN", Msg, fixed=TRUE)
+})
 
 
 
