@@ -13364,7 +13364,7 @@ would be
 @end example
 @noindent
 in file @file{rmsg.f}. Using @command{gfortran} 9.2 and
-later@footnote{or 9.1 patched up to 2019-05-23.} we can extract the C
+later@footnote{or 9.1-patched since 2019-05-09.} we can extract the C
 view by
 @example
 gfortran -c -fc-prototypes-external rmsg.f
