@@ -13385,12 +13385,12 @@ void F77_NAME(rmsg)(char *msg, FC_LEN_T msg_len)
 @{
     char cmsg[msg_len+1];
     strncpy(cmsg, msg, msg_len);
-    cmsg[msg_len] = '\0';
+    cmsg[msg_len] = '\0'; // nul-terminate the string, to be sure
     // do something with 'cmsg' 
 @}
 @end example
 @noindent
-in code depending on @code{R(>= 3.7)}.  For earlier versions of @R{} we
+in code depending on @code{R(>= 3.6.2)}.  For earlier versions of @R{} we
 could just assume that @code{msg} is nul-terminated (not guaranteed, but
 people have been getting away with it for many years), so the complete C
 side might be
@@ -13448,7 +13448,7 @@ void cmsg(const char *msg)
 Passing a variable-length string from C to Fortran is trickier, but
 @uref{https://software.intel.com/en-us/fortran-compiler-developer-guide-and-reference-bind}
 provides a recipe.  However, all the uses in BLAS and LAPACK are of a
-single character, and for this we can write a wrapper in Fortran
+single character, and for these we can write a wrapper in Fortran
 along the lines of
 @example
       subroutine c_dgemm(transa, transb, m, n, k, alpha,
