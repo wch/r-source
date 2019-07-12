@@ -1,6 +1,6 @@
 % File src/library/base/man/traceback.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{traceback}
@@ -46,8 +46,9 @@ traceback(x = NULL, max.lines = getOption("deparse.max.lines"))
 
   If \code{x} is numeric, then the current stack is printed, skipping
   \code{x} entries at the top of the stack.  For example,
-  \code{options(error = function() traceback(2))} will print the stack
-  at the time of the error, skipping the call to \code{traceback()}
+  \code{options(error = function() traceback(3))} will print the stack
+  at the time of the error, skipping the call to \code{traceback()} and
+  \code{.traceback()} 
   and the error function that called it.
 
   Otherwise, \code{x} is assumed to be a list or pairlist of deparsed
@@ -81,6 +82,6 @@ bar
 ## Ah, this is the culprit ...
 
 ## This will print the stack trace at the time of the error.
-options(error = function() traceback(2))
+options(error = function() traceback(3))
 }
 \keyword{programming}
