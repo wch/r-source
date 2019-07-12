@@ -1168,7 +1168,7 @@ includes these library routines (those called directly and all they
 depend on) in each package.
 
 Under some circumstances and for a few packages, the PIC flags have
-needed overridding on Linux with GCC 9: e.g@: in @file{config.site}:
+needed overriding on Linux with GCC 9: e.g@: in @file{config.site}:
 @example
 CPICFLAGS=-fPIC
 CXXPICFLAGS=-fPIC
