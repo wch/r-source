@@ -27,7 +27,7 @@ BUILD_HTML ?= NO
 MIKTEX ?= TRUE
 TEXI2ANY ?= missing
 TEXI2DVI ?= texi2dvi
-EOPTS ?= -mtune=core2
+EOPTS ?=
 OPENMP ?= -fopenmp
 PTHREAD ?= -pthread
 ISDIR ?= C:/packages/Inno

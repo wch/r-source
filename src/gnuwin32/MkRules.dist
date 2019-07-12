@@ -120,8 +120,8 @@
 # if you do not have texinfo (default),
 # TEXI2ANY = missing
 
-# additional optimization flags (use -mtune=native for a private build)
-# EOPTS = -mtune=core2
+# additional optimization flags (e.g. -mtune=native for a private build)
+# EOPTS =
 
 # define to -fopenmp if the toolchain has OpenMP support
 # OPENMP = -fopenmp
