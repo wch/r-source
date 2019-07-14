@@ -1128,8 +1128,10 @@ supports it: configure with flag @option{--enable-lto}.
 Whether toolchains support LTO is often unclear: all of the C compiler,
 the Fortran compiler and linker have to support it, and support it by
 the same mechanism (so mixing compiler families may not work and a
-non-system linker may be needed).  It has been tested recently on Linux
-with @command{gcc}/@command{gfortran} 8.x and 9.x: that needed setting
+non-system linker such as @command{gold}@footnote{Nowadays part of GNU
+@code{binutils} and used by LLVM to support LTO.} may be needed).  It
+has been tested recently on Linux with @command{gcc}/@command{gfortran}
+8.x and 9.x: that needed setting
 @example
 AR=gcc-ar
 RANLIB=gcc-ranlib
