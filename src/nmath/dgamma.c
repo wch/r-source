@@ -4,8 +4,8 @@
  *    October 23, 2000.
  *
  *  Merge in to R:
- *	Copyright (C) 2000 The R Core Team
- *	Copyright (C) 2004 The R Foundation
+ *	Copyright (C) 2000-2019 The R Core Team
+ *	Copyright (C) 2004-2019 The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -30,10 +30,10 @@
  *        p(x;a,s) = -----------------------
  *                            (a-1)!
  *
- *   where `s' is the scale (= 1/lambda in other parametrizations)
- *     and `a' is the shape parameter ( = alpha in other contexts).
+ *   where 's' is the scale (= 1/lambda in other parametrizations)
+ *     and 'a' is the shape parameter ( = alpha in other contexts).
  *
- * The old (R 1.1.1) version of the code is available via `#define D_non_pois'
+ * The old (R 1.1.1) version of the code is available via '#define D_non_pois'
  */
 
 #include "nmath.h"
@@ -60,7 +60,13 @@ double dgamma(double x, double shape, double scale, int give_log)
 
     if (shape < 1) {
 	pr = dpois_raw(shape, x/scale, give_log);
-	return give_log ?  pr + log(shape/x) : pr*shape/x;
+	return (
+	    give_log/* NB: currently *always*  shape/x > 0  if shape < 1:
+		     * -- overflow to Inf happens, but underflow to 0 does NOT : */
+	    ? pr + (R_FINITE(shape/x)
+		    ? log(shape/x)
+		    : /* shape/x overflows to +Inf */ log(shape) - log(x))
+	    : pr*shape / x);
     }
     /* else  shape >= 1 */
     pr = dpois_raw(shape-1, x/scale, give_log);

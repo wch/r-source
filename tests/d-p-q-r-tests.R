@@ -1053,13 +1053,25 @@ p <- c(2, rep(1, 200))
 x <- sample(length(p), 100000, prob = p, replace = TRUE)
 stopifnot(sum(x == 1) == 994)
 
-## check for faiure of new walker_Probsample
+## check for failure of new walker_Probsample
 RNGversion("3.6.0")
 set.seed(12345)
 epsilon <- 1e-10
 p201 <- prop.table( rep( c(1, epsilon), c(201, 999-201)))
 x <- sample(length(p201), 100000, prob = p201, replace = TRUE)
 stopifnot(sum(x <= 201) == 100000)
+
+
+## PR#17577 - dgamma(x, shape)  for shape < 1 (=> +Inf at x=0) and very small x
+stopifnot(exprs = {
+    all.equal(dgamma(2^-1027, shape = .99 , log=TRUE), 7.1127667376, tol=1e-10)
+    all.equal(dgamma(2^-1031, shape = 1e-2, log=TRUE), 702.8889158,  tol=1e-10)
+    all.equal(dgamma(2^-1048, shape = 1e-7, log=TRUE), 710.30007699, tol=1e-10)
+    all.equal(dgamma(2^-1048, shape = 1e-7, scale = 1e-315, log=TRUE),
+              709.96858768, tol=1e-10)
+})
+## all gave Inf in R <= 3.6.1
+
 
 
 cat("Time elapsed: ", proc.time() - .ptime,"\n")
