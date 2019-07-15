@@ -135,6 +135,9 @@
       \item \code{dgamma(x, shape, log=TRUE)} now longer overflows
       to \code{Inf} for shape < 1 and very small \code{x}, fixing
       \PR{17577}, reported by Jonathan Rougier.
+
+      \item Buffer overflow in building error messages fixed. Reported
+      by Benjamin Tremblay.
     }
   }
 }
