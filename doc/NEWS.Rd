@@ -133,8 +133,8 @@
       \item \code{apply(diag(3), 2:3, mean)} now gives a helpful error message.
 
       \item \code{dgamma(x, shape, log=TRUE)} now longer overflows
-      to \code{Inf} for shape < 1 and very small \code{x}.  Reported by
-      Jonathan Rougier.
+      to \code{Inf} for shape < 1 and very small \code{x}, fixing
+      \PR{17577}, reported by Jonathan Rougier.
     }
   }
 }
