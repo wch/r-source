@@ -1149,13 +1149,13 @@ external programs.  Both @code{load} and @code{readRDS} can read
 when reading from a file, and @command{gzip} compression when reading
 from a connection.
 
-@R{} has used the same serialization format since @R{} 1.4.0 in December
-2001.  Earlier formats are still supported via @code{load} and
-@code{save} but such formats are not described here. The current
-default serialization format is called `version 2', and has been expanded in
-back-compatible ways since its inception, for example to support
-additional @code{SEXPTYPE}s. Version 3 format has been introduced in @R{}
-3.5.0.
+@R{} has used the same serialization format called `version 2' from @R{}
+1.4.0 in December 2001 until @R{} 3.5.3 in March 2019.  It has been expanded
+in back-compatible ways since its inception, for example to support
+additional @code{SEXPTYPE}s.  Earlier formats are still supported via
+@code{load} and @code{save} but such formats are not described here.  The
+current default serialization format is called `version 3', and has been
+introduced in @R{} 3.5.0.
 
 @code{save} works by writing a single-line header (typically
 @code{RDX2\n} for a binary save: the only other current value is
