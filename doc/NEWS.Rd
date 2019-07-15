@@ -46,6 +46,8 @@
       now works consistently for both \code{algorithm="Stuetzle"} and
       \code{"Turlach"}, and no longer segfaults for \code{"Turlach"}, as
       reported by Hilmar Berger.
+      \item Buffer overflow in building error messages fixed. Reported
+      by Benjamin Tremblay.
     }
   }
 }
