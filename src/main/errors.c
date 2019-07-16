@@ -1430,7 +1430,7 @@ void NORET R_JumpToToplevel(Rboolean restart)
 
 static void R_SetErrmessage(const char *s)
 {
-    Rstrncpy(errbuf, s, sizeof(errbuf));
+    Rstrncpy(errbuf, s, sizeof(errbuf) - 1);
 }
 
 static void R_PrintDeferredWarnings(void)
