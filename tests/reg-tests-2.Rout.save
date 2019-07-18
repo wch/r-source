@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2019-07-08 r76809) -- "Unsuffered Consequences"
+R Under development (unstable) (2019-07-17 r76847) -- "Unsuffered Consequences"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -5082,7 +5082,7 @@ browser())(mpg = c(21, 21, 22.8, 21.4, 18.7, 18.1, 14.3, 24.4,
   ...
 Browse[1]> c
 > 
-> options(error = expression(NULL))
+> op <- c(op, options(error = expression(NULL)))
 > f <- function(...) stop()
 > do.call(f, mtcars)
 Error in (function (...)  : 
@@ -6348,7 +6348,7 @@ function(given = NULL) {
     if (is.null(given)) callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x2a90f70>
+<bytecode: 0xfbc5a78>
 > print(foo, useSource = FALSE)
 function (given = NULL) 
 {
@@ -6359,7 +6359,7 @@ function (given = NULL)
         callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x2a90f70>
+<bytecode: 0xfbc5a78>
 > attr(foo, "srcref") <- NULL
 > foo
 function (given = NULL) 
@@ -6371,7 +6371,7 @@ function (given = NULL)
         callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x2a90f70>
+<bytecode: 0xfbc5a78>
 > (f <- structure(function(){}, note = "just a note",
 +                 yada = function() "not the same"))
 function(){}
@@ -6943,9 +6943,10 @@ F-statistic:  4412 on 1 and 6 DF,  p-value: 7.834e-10
 > 
 > library("methods")# (not needed here)
 > assertError <- tools::assertError
-> assertError( getMethod(ls, "bar", fdef=ls), verbose=TRUE)
+> assertErrorV <- function(expr) assertError(expr, verbose=TRUE)
+> assertErrorV( getMethod(ls, "bar", fdef=ls) )
 Asserted error: no generic function found for 'ls'
-> assertError( getMethod(show, "bar"), verbose=TRUE)
+> assertErrorV( getMethod(show, "bar") )
 Asserted error: no method found for function 'show' and signature bar
 > ## R < 2.15.1 gave
 > ##   cannot coerce type 'closure' to vector of type 'character'
@@ -7922,21 +7923,16 @@ logical       1
 [1] "NA" "1" 
 > ##
 > ## these should fail
-> sprintf("%d", 1.1)
-Error in sprintf("%d", 1.1) : 
-  invalid format '%d'; use format %f, %e, %g or %a for numeric objects
-> sprintf("%d", c(1.1,1))
-Error in sprintf("%d", c(1.1, 1)) : 
-  invalid format '%d'; use format %f, %e, %g or %a for numeric objects
-> sprintf("%d", c(1,1.1))
-Error in sprintf("%d", c(1, 1.1)) : 
-  invalid format '%d'; use format %f, %e, %g or %a for numeric objects
-> sprintf("%d", NaN)
-Error in sprintf("%d", NaN) : 
-  invalid format '%d'; use format %f, %e, %g or %a for numeric objects
-> sprintf("%d", c(1,NaN))
-Error in sprintf("%d", c(1, NaN)) : 
-  invalid format '%d'; use format %f, %e, %g or %a for numeric objects
+> assertErrorV( sprintf("%d", 1.1) )
+Asserted error: invalid format '%d'; use format %f, %e, %g or %a for numeric objects
+> assertErrorV( sprintf("%d", c(1.1,1)) )
+Asserted error: invalid format '%d'; use format %f, %e, %g or %a for numeric objects
+> assertErrorV( sprintf("%d", c(1,1.1)) )
+Asserted error: invalid format '%d'; use format %f, %e, %g or %a for numeric objects
+> assertErrorV( sprintf("%d", NaN) )
+Asserted error: invalid format '%d'; use format %f, %e, %g or %a for numeric objects
+> assertErrorV( sprintf("%d", c(1,NaN)) )
+Asserted error: invalid format '%d'; use format %f, %e, %g or %a for numeric objects
 > 
 > 
 > ## formatting of named raws:
