@@ -4038,9 +4038,9 @@ has been the use of double-complex routines.} and Windows, but when
 these have been tried they did not work with the default compilers used
 for @R{} on those platforms.
 
-The MKL interface has changed several times and may change again: the
-following examples have been used with versions 10.3 to 2019.1, for GCC
-compilers on @cputype{x86_64}.
+The MKL interface has changed several times but has been stable in
+recent years: the following examples have been used with versions 10.3
+to 2019.4, for GCC compilers on @cputype{x86_64}.
 
 To use a sequential version of MKL we used
 
@@ -4057,7 +4057,7 @@ copy of LAPACK (often older than the current version) as well as
 @acronym{BLAS} (@pxref{LAPACK}), although this can be omitted.
 
 Threaded MKL may be used by replacing the line defining the variable
-@code{MKL} by (for version 2019.1)
+@code{MKL} by
 
 @example
 MKL="-L$@{MKL_LIB_PATH@} -lmkl_gf_lp64 -lmkl_core \
@@ -4069,12 +4069,8 @@ The default number of threads will be chosen by the OpenMP software, but
 can be controlled by setting @code{OMP_NUM_THREADS} or
 @code{MKL_NUM_THREADS}, and in recent versions seems to default to a
 sensible value for sole use of the machine.  (Parallel MKL has not
-always passed @command{make check-all}, but did with MKL 2019.1.)
+always passed @command{make check-all}, but did with MKL 2019.4.)
 
-@c Note though that as with all non-reference LAPACK/BLAS, using MKL trades
-@c numerical accuracy for speed.  When tested in January 2018, 23 CRAN
-@c packages failed their checks with serial MKL and 43 with multi-threaded
-@c MKL.
 
 @c https://stat.ethz.ch/pipermail/r-devel/2015-September/071717.html
 It was reported in 2015 that
