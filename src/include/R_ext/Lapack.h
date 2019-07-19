@@ -2253,7 +2253,7 @@ F77_NAME(dlauum)(const char* uplo, const int* n,
  */
 
 /* IZMAX1 finds the index of the element whose real part has maximum
- * absolute value. */
+ * absolute value. Returns Fortran INTEGER. */
 La_extern int
 F77_NAME(izmax1)(const int *n, Rcomplex *cx, const int *incx);
 
@@ -2757,7 +2757,8 @@ F77_NAME(dpstrf)(const char* uplo, const int* n,
 		 double* a, const int* lda, int* piv, int* rank,
 		 double* tol, double *work, int* info FCLEN);
 
-
+/* This returns Fortran LOGICAL.  Compiler-specific, but
+   int_least32_t in gfortran */
 La_extern int
 F77_NAME(lsame)(const char* ca, const char* cb FCLEN FCLEN);
 
