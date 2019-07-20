@@ -606,6 +606,15 @@ SEXP attribute_hidden R_compact_intrange(R_xlen_t n1, R_xlen_t n2)
 #define DEFERRED_STRING_SCIPEN(x) \
     INTEGER0(DEFERRED_STRING_STATE_INFO(DEFERRED_STRING_STATE(x)))[0]
 
+/* work-around for package code that mutates things it shouldn't and
+   makes serialize and inspect infinite-loop */
+#define DEFERRED_STRING_FIXUP_ARG_ATTRIBS(state) do {			\
+	if (state != R_NilValue && ATTRIB(CAR(state)) != R_NilValue) {	\
+	    SETCAR(state, shallow_duplicate(CAR(state)));		\
+	    SET_ATTRIB(CAR(state), R_NilValue);				\
+	}								\
+    } while (0)
+    
 static SEXP R_OutDecSym = NULL;
 
 static R_INLINE const char *DEFERRED_STRING_OUTDEC(SEXP x)
@@ -632,6 +641,7 @@ static SEXP deferred_string_Serialized_state(SEXP x)
        the object will access the DATAPTR and force a full expansion
        and dropping the original data. */
     SEXP state = DEFERRED_STRING_STATE(x);
+    DEFERRED_STRING_FIXUP_ARG_ATTRIBS(state);
     return state != R_NilValue ? state : NULL;
 }
 
@@ -648,6 +658,7 @@ Rboolean deferred_string_Inspect(SEXP x, int pre, int deep, int pvec,
 {
     SEXP state = DEFERRED_STRING_STATE(x);
     if (state != R_NilValue) {
+	DEFERRED_STRING_FIXUP_ARG_ATTRIBS(state);
 	SEXP arg = DEFERRED_STRING_STATE_ARG(state);
 	Rprintf("  <deferred string conversion>\n");
 	inspect_subtree(arg, pre, deep, pvec);
