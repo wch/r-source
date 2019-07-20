@@ -26,7 +26,7 @@
 	     help.search.types = c("vignette", "demo", "help"),
              citation.bibtex.max = 1L, internet.info = 2L,
 	     pkgType = if(.Platform$pkgType != "source") "both" else "source",
-	     str = list(strict.width = "no", digits.d = 3L, vec.len = 4L),
+	     str = strOptions(), # -> ./str.R
 	     demo.ask = "default", example.ask = "default",
 	     HTTPUserAgent = defaultUserAgent(),
 	     menu.graphics = TRUE, mailer = "mailto")

@@ -138,6 +138,11 @@
 
       \item Buffer overflow in building error messages fixed. Reported
       by Benjamin Tremblay.
+
+      \item \code{options(str = .)} is correctly initialized at
+      package \pkg{utils} load time, now.  A consequence is that
+      \code{str()} in scripts now is more consistent to interactive use,
+      e.g., when displaying function(**) argument lists.
     }
   }
 }
