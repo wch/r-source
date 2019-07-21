@@ -328,5 +328,16 @@ print(d, digits = 4, other = TRUE)
 ## Deparsing should not reset parameters
 print(list(a, expression(foo), b, quote(foo), c, base::list, d),
       digits = 4, other = TRUE)
+
+## max.print fully obeyed by print and format
+## These failed briefly due to bug in r76734
+o = options(max.print = 5)
+print(1:10)
+print(as.numeric(1:10))
+print(as.character(1:10))
+print(as.complex(1:10))
+print(as.raw(1:10))
+options(o)
+
 ## Cleanup
-rm(print.foo, obj, a, b, c, d)
+rm(print.foo, obj, a, b, c, d, o)

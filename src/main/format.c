@@ -122,15 +122,14 @@ void formatLogical(const int *x, R_xlen_t n, int *fieldwidth)
 void formatLogicalS(SEXP x, R_xlen_t n, int *fieldwidth) {
     *fieldwidth = 1;
     int tmpfieldwidth = 1;
-
-    ITERATE_BY_REGION(x, px, idx, nb, int, LOGICAL,
-		      {
-			  formatLogical(px, nb, &tmpfieldwidth);
-			  if( tmpfieldwidth > *fieldwidth )
-			      *fieldwidth = tmpfieldwidth;
-			  if( *fieldwidth == 5)
-			      break;  /* break iteration loop */
-		      });
+    ITERATE_BY_REGION_PARTIAL(x, px, idx, nb, int, LOGICAL, 0, n,
+			      {
+				  formatLogical(px, nb, &tmpfieldwidth);
+				  if( tmpfieldwidth > *fieldwidth )
+				      *fieldwidth = tmpfieldwidth;
+				  if( *fieldwidth == 5)
+				      break;  /* break iteration loop */
+			      });
     return;
 }
 
@@ -184,7 +183,10 @@ void formatIntegerS(SEXP x, R_xlen_t n, int *fieldwidth)
        true for non-ALTREPs or "exploded" ALTREPs
     */
     sorted = INTEGER_IS_SORTED(x);
-    if(KNOWN_SORTED(sorted)) {
+    /* if we're not formatting/printing the whole thing 
+       ALTINTEGER_MIN/MAX will give us the wrong thing
+       anyway */
+    if(n == XLENGTH(x) && KNOWN_SORTED(sorted)) {
 	tmpmin = ALTINTEGER_MIN(x, TRUE);
 	tmpmax = ALTINTEGER_MAX(x, TRUE);
 	naflag = KNOWN_NA_1ST(sorted) ?
@@ -222,7 +224,7 @@ void formatIntegerS(SEXP x, R_xlen_t n, int *fieldwidth)
 	*/
 	int tmpfw = 1;
 	*fieldwidth = 1;
-	ITERATE_BY_REGION(x, px, idx, nb, int, INTEGER,
+	ITERATE_BY_REGION_PARTIAL(x, px, idx, nb, int, INTEGER, 0, n,
 			  {
 			      formatInteger(px, nb, &tmpfw);
 			      if(tmpfw > *fieldwidth)
@@ -519,7 +521,7 @@ void formatRealS(SEXP x, R_xlen_t n, int *w, int *d, int *e, int nsmall)
     *d = 0;
     *e = 0;
 
-    ITERATE_BY_REGION(x, px, idx, nb, double, REAL,
+    ITERATE_BY_REGION_PARTIAL(x, px, idx, nb, double, REAL, 0, n,
 		      {
 			  formatReal(px, nb, &tmpw, &tmpd, &tmpe, nsmall);
 			  if(tmpw > *w) *w = tmpw;
@@ -722,7 +724,7 @@ void formatComplexS(SEXP x, R_xlen_t n, int *wr, int *dr, int *er,
     *di = 0;
     *er = 0;
     *ei = 0;
-    ITERATE_BY_REGION(x, px, idx, nb, Rcomplex, COMPLEX,
+    ITERATE_BY_REGION_PARTIAL(x, px, idx, nb, Rcomplex, COMPLEX, 0, n,
 		      {
 			  formatComplex(px, nb, &tmpwr, &tmpdr, &tmper,
 					&tmpwi, &tmpdi, &tmpei, nsmall);

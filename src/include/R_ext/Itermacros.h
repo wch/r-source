@@ -182,11 +182,12 @@
 #define GET_REGION_PTR(x, i, n, buf, type)				\
     (ALTREP(x) == 0 ? type##0(x) + (i) : (type##_GET_REGION(x, i, n, buf), buf))
 
-#define ITERATE_BY_REGION0(sx, px, idx, nb, etype, vtype, expr) do {	\
+#define ITERATE_BY_REGION_PARTIAL0(sx, px, idx, nb, etype, vtype,	\
+				   strt, nfull, expr) do {		\
 	etype __ibr_buf__[GET_REGION_BUFSIZE];				\
-	R_xlen_t __ibr_n__ = XLENGTH(sx);				\
+	R_xlen_t __ibr_n__ = strt + nfull;				\
 	R_xlen_t nb;							\
-	for (R_xlen_t idx = 0; idx < __ibr_n__; idx += nb) {		\
+	for (R_xlen_t idx = strt; idx < __ibr_n__; idx += nb) {		\
 	    nb = __ibr_n__  - idx > GET_REGION_BUFSIZE ?		\
 		GET_REGION_BUFSIZE :  __ibr_n__ - idx;			\
 	    etype *px = GET_REGION_PTR(sx, idx, nb, __ibr_buf__, vtype); \
@@ -194,16 +195,32 @@
 	 }							        \
     } while (0)
 
-#define ITERATE_BY_REGION(sx, px, idx, nb, etype, vtype, expr) do {	\
+#define ITERATE_BY_REGION_PARTIAL(sx, px, idx, nb, etype, vtype,	\
+				  strt, nfull, expr) do {		\
 	const etype *px = DATAPTR_OR_NULL(sx);				\
 	if (px != NULL) {						\
-	    R_xlen_t __ibr_n__ = XLENGTH(sx);				\
+	    R_xlen_t __ibr_n__ = strt + nfull;				\
 	    R_xlen_t nb = __ibr_n__;					\
-	    for (R_xlen_t idx = 0; idx < __ibr_n__; idx += nb) {	\
+	    for (R_xlen_t idx = strt; idx < __ibr_n__; idx += nb) {	\
 		expr							\
 	     }								\
 	}								\
-	else ITERATE_BY_REGION0(sx, px, idx, nb, etype, vtype, expr);	\
+	else ITERATE_BY_REGION_PARTIAL0(sx, px, idx, nb, etype, vtype,	\
+					strt, nfull, expr);		\
+    } while (0)
+
+
+#define ITERATE_BY_REGION(sx, px, idx, nb, etype, vtype, expr) do {	\
+	ITERATE_BY_REGION_PARTIAL(sx, px, idx, nb, etype, vtype,	\
+				  0, XLENGTH(sx), expr);		\
+    } while (0)
+
+/* probably no one was using this but it was a declared part of the API
+   so leave it in out of an overabundance of caution */
+
+#define ITERATE_BY_REGION0(sx, px, idx, nb, etype, vtype, expr) do {	\
+	ITERATE_BY_REGION_PARTIAL0(sx, px, idx, nb, etype, vtype,	\
+				  0, XLENGTH(sx), expr);		\
     } while (0)
 
 #endif /* R_EXT_ITERMACROS_H_ */

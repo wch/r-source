@@ -920,6 +920,27 @@ NULL
 
 
 
+> 
+> ## max.print fully obeyed by print and format
+> ## These failed briefly due to bug in r76734
+> o = options(max.print = 5)
+> print(1:10)
+[1] 1 2 3 4 5
+ [ reached getOption("max.print") -- omitted 5 entries ]
+> print(as.numeric(1:10))
+[1] 1 2 3 4 5
+ [ reached getOption("max.print") -- omitted 5 entries ]
+> print(as.character(1:10))
+[1] "1" "2" "3" "4" "5"
+ [ reached getOption("max.print") -- omitted 5 entries ]
+> print(as.complex(1:10))
+[1] 1+0i 2+0i 3+0i 4+0i 5+0i
+ [ reached getOption("max.print") -- omitted 5 entries ]
+> print(as.raw(1:10))
+[1] 01 02 03 04 05
+ [ reached getOption("max.print") -- omitted 5 entries ]
+> options(o)
+> 
 > ## Cleanup
-> rm(print.foo, obj, a, b, c, d)
+> rm(print.foo, obj, a, b, c, d, o)
 > 

@@ -109,10 +109,10 @@ void printLogicalVectorS(SEXP x, R_xlen_t n, int indx) {
     int w, labwidth=0, width;
     R_xlen_t i;
     DO_first_lab;
-    formatLogicalS(x,XLENGTH(x), &w);
+    formatLogicalS(x, n, &w);
     w += R_print.gap;
 
-    ITERATE_BY_REGION(x, px, idx, nb, int, LOGICAL,
+    ITERATE_BY_REGION_PARTIAL(x, px, idx, nb, int, LOGICAL, 0, n,
 		      for(R_xlen_t j = 0; j < nb; j++) {
 			  i = idx + j; /* for Do_newline */
 			  NUMVECTOR_TIGHTLOOP( EncodeLogical(px[j], w) );
@@ -141,10 +141,10 @@ void printIntegerVectorS(SEXP x, R_xlen_t n, int indx)
     int w, labwidth=0, width;
     R_xlen_t i;
     DO_first_lab;
-    formatIntegerS(x, XLENGTH(x), &w);
+    formatIntegerS(x, n, &w);
     w += R_print.gap;
 
-    ITERATE_BY_REGION(x, px, idx, nb, int, INTEGER,
+    ITERATE_BY_REGION_PARTIAL(x, px, idx, nb, int, INTEGER, 0, n,
 		      for (R_xlen_t j = 0; j < nb; j++) {
 			  i = idx + j; /* for macros */
 			  NUMVECTOR_TIGHTLOOP(EncodeInteger(px[j], w));
@@ -179,7 +179,7 @@ void printRealVectorS(SEXP x, R_xlen_t n, int indx)
     formatRealS(x, n, &w, &d, &e, 0);
     w += R_print.gap;
 
-    ITERATE_BY_REGION(x, px, idx, nb, double, REAL,
+    ITERATE_BY_REGION_PARTIAL(x, px, idx, nb, double, REAL, 0, n,
 		      for(R_xlen_t j = 0; j < nb; j++) {
 			  i = idx + j; /* for macros */
 			  NUMVECTOR_TIGHTLOOP(EncodeReal0(px[j], w, d, e, OutDec));
@@ -220,7 +220,7 @@ void printComplexVectorS(SEXP x, R_xlen_t n, int indx)
     w = wr + wi + 2;	/* +2 for "+" and "i" */
     w += R_print.gap;
 
-    ITERATE_BY_REGION(x, px, idx, nb, Rcomplex, COMPLEX,
+    ITERATE_BY_REGION_PARTIAL(x, px, idx, nb, Rcomplex, COMPLEX, 0, n, 
 		      for(R_xlen_t j = 0; j < nb; j++) {
 			  i = idx + j; /* for macros */
 			  NUMVECTOR_TIGHTLOOP(CMPLX_ISNA(px[j]) ?
@@ -306,7 +306,7 @@ void printRawVectorS(SEXP x, R_xlen_t n, int indx)
     formatRawS(x, n, &w);
     w += R_print.gap;
 
-    ITERATE_BY_REGION(x, px, idx, nb, Rbyte, RAW,
+    ITERATE_BY_REGION_PARTIAL(x, px, idx, nb, Rbyte, RAW, 0, n,
 		      for(R_xlen_t j = 0; j < nb; j++) {
 			  i = idx + j; /* for macros */
 			  RAWVECTOR_TIGHTLOOP(px, j);
