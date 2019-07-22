@@ -429,7 +429,7 @@ adist_full(SEXP x, SEXP y, double *costs, Rboolean opt_counts)
 			    /* Now reverse the transcript. */
 			    for(k = 0, l = --m; l >= nz; k++, l--)
 				buf[k] = buf[l];
-			    buf[++k] = '\0';
+			    buf[k] = '\0';
 			    COUNTS(i, j, 0) = nins;
 			    COUNTS(i, j, 1) = ndel;
 			    COUNTS(i, j, 2) = nsub;
