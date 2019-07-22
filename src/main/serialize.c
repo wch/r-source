@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995--2018  The R Core Team
+ *  Copyright (C) 1995--2019  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -2146,10 +2146,11 @@ SEXP R_Unserialize(R_inpstream_t stream)
     case 3:
     {
 	int nelen = InInteger(stream);
+	if (nelen > R_CODESET_MAX + 1)
+	    error(_("invalid length of encoding name"));
 	char nbuf[nelen + 1];
 	InString(stream, nbuf, nelen);
 	nbuf[nelen] = '\0';
-	nelen = nelen < (R_CODESET_MAX + 1) ? nelen : (R_CODESET_MAX + 1);
 	strncpy(stream->native_encoding, nbuf, nelen);
 	stream->native_encoding[nelen] = '\0';
 	break;
@@ -2239,6 +2240,8 @@ SEXP R_SerializeInfo(R_inpstream_t stream)
     if (version == 3) {
 	SET_STRING_ELT(names, 4, mkChar("native_encoding"));
 	int nelen = InInteger(stream);
+	if (nelen > R_CODESET_MAX + 1)
+	    error(_("invalid length of encoding name"));
 	char nbuf[nelen + 1];
 	InString(stream, nbuf, nelen);
 	nbuf[nelen] = '\0';
