@@ -554,7 +554,7 @@ data.frame <-
     }
     value <- unlist(vlist, recursive=FALSE, use.names=FALSE)
     ## unlist() drops i-th component if it has 0 columns
-    vnames <- unlist(vnames[ncols > 0L])
+    vnames <- as.character(unlist(vnames[ncols > 0L]))
     if(fix.empty.names && any(noname <- !nzchar(vnames)))
 	vnames[noname] <- paste0("Var.", seq_along(vnames))[noname]
     if(check.names) {
