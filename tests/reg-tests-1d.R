@@ -2936,6 +2936,28 @@ stopifnot(exprs = {
 })
 
 
+## cbind() of data frames with no columns lost names -- PR#17584
+stopifnot(identical(names(cbind(data.frame())),
+                    character()))
+stopifnot(identical(names(cbind(data.frame(), data.frame())),
+                    character()))
+## names() came out as NULL instead of character().
+
+
+## NUL inserted incorrectly in adist trafos attribute -- PR#17579
+s <- c("kitten", "sitting", "hi")
+ad <- adist(s, counts = TRUE)
+adc <- attr(ad, "counts")
+adt <- attr(ad, "trafos")
+## Follow analysis in the bug report: in the diagonal, we should have
+## only matches for each character in the given string.
+stopifnot(all(nchar(diag(adt)) == nchar(s)))
+## The del/ins/sub counts should agree with the numbers of D/I/S
+## occurrences in the trafos.
+stopifnot(all(nchar(gsub("[^D]", "", adt)) == adc[, , "del"]))
+stopifnot(all(nchar(gsub("[^I]", "", adt)) == adc[, , "ins"]))
+stopifnot(all(nchar(gsub("[^S]", "", adt)) == adc[, , "sub"]))
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
