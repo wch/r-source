@@ -2720,7 +2720,7 @@ dfb <- data.frame(x=fcts()) ; rbind(table(dfa), table(dfb))
 dfy <- data.frame(y=fcts())
 yN <- c(1:3, NA_character_, 5:8)
 dfay  <- cbind(dfa, dfy)
-dfby  <- cbind(dfa, data.frame(y = yN))
+dfby  <- cbind(dfa, data.frame(y = yN, stringsAsFactors = TRUE))
 dfcy  <- dfa; dfcy$y <- yN # y: a <char> column
 ## dNay := drop unused levels from dfay incl NA
 dNay <- dfay; dNay[] <- lapply(dfay, factor)
