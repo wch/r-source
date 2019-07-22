@@ -24,7 +24,8 @@
 
 /*
    C declarations of LAPACK Fortran subroutines included in R.
-   Just those used (currently or previously) by C routines in R itself.
+   Those used (currently or previously) by C routines in R itself,
+   plus a few used in packages.
 
    Part of the API.
 
@@ -2328,29 +2329,42 @@ F77_NAME(zgeev)(const char* jobvl, const char* jobvr,
 		Rcomplex *work, const int *lwork,
 		double *rwork, int *info FCLEN FCLEN);
 
-
-/* NOTE: The following entry points were traditionally in this file,
-   but are not provided by R's libRlapack */
-
-/* DZSUM1 - take the sum of the absolute values of a complex */
-/* vector and returns a double precision result	 */
-La_extern double
-F77_NAME(dzsum1)(const int *n, Rcomplex *CX, const int *incx);
-
 /*  ZLACN2 estimates the 1-norm of a square, complex matrix A.
  *  Reverse communication is used for evaluating matrix-vector products.
+ * Added in R 2.7.0
 */
 La_extern void
 F77_NAME(zlacn2)(const int *n, Rcomplex *v, Rcomplex *x,
                  double *est, int *kase, int *isave);
 
-/* ZLANTR  -  return the value of the one norm, or the Frobenius norm, */
-/* or the infinity norm, or the element of largest absolute value of */
-/* a trapezoidal or triangular matrix A */
+/* ZLANTR  -  return the value of the one norm, or the Frobenius norm,
+ * or the infinity norm, or the element of largest absolute value of
+ * a trapezoidal or triangular matrix A.
+ * Added in R 2.7.0
+*/
 La_extern double
 F77_NAME(zlantr)(const char* norm, const char* uplo, const char* diag,
 		 const int *m, const int *n, Rcomplex *a,
 		 const int *lda, double *work FCLEN FCLEN FCLEN);
+
+/* DZSUM1 - take the sum of the absolute values of a complex
+ * vector and returns a double precision result
+ * Added in R 2.15.2
+*/
+La_extern double
+F77_NAME(dzsum1)(const int *n, Rcomplex *CX, const int *incx);
+
+/* Added in R 3.6.2 */
+La_extern void
+F77_NAME(zpotrf)(const char* uplo, const int* n,
+		 Rcomplex* a, const int* lda, int* info FCLEN);
+La_extern void
+F77_NAME(zpotri)(const char* uplo, const int* n,
+		 Rcomplex* a, const int* lda, int* info FCLEN);
+La_extern void
+F77_NAME(zpotrs)(const char* uplo, const int* n,
+		 const int* nrhs, const Rcomplex* a, const int* lda,
+		 Rcomplex* b, const int* ldb, int* info FCLEN);
 
 /* ======================================================================== */
 

@@ -3891,6 +3891,11 @@ single-threaded ones): this can lead to hard-to-track-down incorrect
 results or segfaults.
 @c Seen for OpenBLAS 3.2 in 2018.
 
+@strong{NOTE:} BLAS libraries built with @command{gfortran}@tie{}9 (and
+future versions 8.4, 7.5 and later) require calls from C/C++ to handle
+`hidden' character lengths --- @R{} itself does so but many packages do
+not and some segfault. (This applies also to external LAPACK libraries.)
+
 @menu
 * ATLAS::                       
 * OpenBLAS::                    
