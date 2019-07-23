@@ -25,6 +25,9 @@
 
       \item Long vectors are now supported as the \code{seq} argument of
       a \code{for()} loop.
+
+      \item \code{str(x)} gets a new \code{deparse.lines} option with a
+      default to speed it up when \code{x} is a large \code{call} object.
     }
   }
 

@@ -1,7 +1,7 @@
 #  File src/library/utils/R/str.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -15,6 +15,10 @@
 #
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
+
+## A pearl from ggplot2 et al.  NB: often needs '(.)' :   <lhs> %||% ( <rhs> )
+## *not exported* [should rather be in 'base' than exported here]
+`%||%` <- function(L,R) if(is.null(L)) R else L
 
 ####------ str : show STRucture of an R object
 str <- function(object, ...) UseMethod("str")
@@ -77,11 +81,14 @@ str.Date <- str.POSIXt <- function(object, ...) {
     do.call(str.f.obj, c(list(give.head = FALSE), larg))
 }
 
-strOptions <- function(strict.width = "no", digits.d = 3, vec.len = 4,
+## Called by .onLoad(), setting options(str = *)  >>>>> ./zzz.R
+strOptions <- function(strict.width = "no", digits.d = 3L, vec.len = 4L,
+                       list.len = 99L, deparse.lines = NULL,
                        drop.deparse.attr = TRUE,
 		       formatNum = function(x, ...)
 		       format(x, trim=TRUE, drop0trailing=TRUE, ...))
     list(strict.width = strict.width, digits.d = digits.d, vec.len = vec.len,
+         list.len = list.len, deparse.lines = deparse.lines,
 	 drop.deparse.attr = drop.deparse.attr,
 	 formatNum = match.fun(formatNum))
 
@@ -95,7 +102,8 @@ str.default <-
 	     indent.str= paste(rep.int(" ", max(0,nest.lev+1)), collapse= ".."),
 	     comp.str="$ ", no.list = FALSE, envir = baseenv(),
 	     strict.width = strO$strict.width,
-	     formatNum = strO$formatNum, list.len = 99,
+	     formatNum = strO$formatNum, list.len = strO$list.len,
+	     deparse.lines = strO$deparse.lines,
 	     ...)
 {
     ## Purpose: Display STRucture of any R - object (in a compact form).
@@ -105,7 +113,9 @@ str.default <-
 
     ## strOptions() defaults for
     oDefs <- c("vec.len", "digits.d", "strict.width", "formatNum",
-	       "drop.deparse.attr")
+	       "drop.deparse.attr",
+	       "list.len", "deparse.lines"
+               )
     ## from
     strO <- getOption("str")
     if (!is.list(strO)) {
@@ -132,6 +142,7 @@ str.default <-
 				 no.list= no.list || is.data.frame(object),
 				 envir = envir, strict.width = "no",
 				 formatNum = formatNum, list.len = list.len,
+				 deparse.lines = deparse.lines,
 					 ...) )
 	if(strict.width == "wrap") {
 	    nind <- nchar(indent.str) + 2
@@ -223,8 +234,10 @@ str.default <-
     if(give.attr) a <- attributes(object)#-- save for later...
     dCtrl <- eval(formals(deparse)$control)
     if(drop.deparse.attr) dCtrl <- dCtrl[dCtrl != "showAttributes"]
-    deParse <- function(.) deparse(., width.cutoff = min(500L, max(20L, width-10L)),
-				   control = dCtrl)
+    width.cutoff <- min(500L, max(20L, width-10L))
+    nlines <- deparse.lines %||% (1L + as.integer(max(nchar.max, width.cutoff) / 8))
+    deParse <- function(.) deparse(., width.cutoff = width.cutoff,
+				   control = dCtrl, nlines = nlines)
     n.of. <- function(n, singl, plural) paste(n, ngettext(n, singl, plural))
     n.of <- function(n, noun) n.of.(n, noun, paste0(noun,"s"))
     arrLenstr <- function(obj) {

@@ -1,6 +1,6 @@
 % File src/library/utils/man/str.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{str}
@@ -24,9 +24,11 @@ str(object, \dots)
                        collapse = ".."),
     comp.str = "$ ", no.list = FALSE, envir = baseenv(),
     strict.width = strO$strict.width,
-    formatNum = strO$formatNum, list.len = 99, \dots)
+    formatNum = strO$formatNum, list.len = strO$list.len,
+    deparse.lines = strO$deparse.lines, \dots)
 
 strOptions(strict.width = "no", digits.d = 3, vec.len = 4,
+           list.len = 99, deparse.lines = NULL,
            drop.deparse.attr = TRUE,
            formatNum = function(x, ...)
                        format(x, trim = TRUE, drop0trailing = TRUE, ...))
@@ -98,6 +100,10 @@ strOptions(strict.width = "no", digits.d = 3, vec.len = 4,
     <= 2.7.x, however, using \code{\link{formatC}} may be slightly better.}
   \item{list.len}{numeric; maximum number of list elements to display
     within a level.}
+  \item{deparse.lines}{numeric or \code{NULL} as by default, determining the
+    \code{nlines} argument to \code{\link{deparse}()} when \code{object} is
+    a \code{\link{call}}.  When \code{NULL}, the \code{nchar.max} and
+    \code{width} arguments are used to determine a smart default.}
   \item{\dots}{potential further arguments (required for Method/Generic
     reasons).}
 }
