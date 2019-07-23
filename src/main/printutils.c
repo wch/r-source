@@ -951,6 +951,13 @@ void Rvprintf(const char *format, va_list arg)
 
 void REvprintf(const char *format, va_list arg)
 {
+    static char *malloc_buf = NULL;
+
+    if (malloc_buf) {
+	char *tmp = malloc_buf;
+	malloc_buf = NULL;
+	free(tmp);
+    }
     if(R_ErrorCon != 2) {
 	Rconnection con = getConnection_no_err(R_ErrorCon);
 	if(con == NULL) {
@@ -974,10 +981,34 @@ void REvprintf(const char *format, va_list arg)
 	} else vfprintf(R_Consolefile, format, arg);
     } else {
 	char buf[BUFSIZE];
+	Rboolean printed = FALSE;
+	va_list aq;
 
-	vsnprintf(buf, BUFSIZE, format, arg);
+	va_copy(aq, arg);
+	int res = vsnprintf(buf, BUFSIZE, format, aq);
+	va_end(aq);
 	buf[BUFSIZE-1] = '\0';
-	R_WriteConsoleEx(buf, (int) strlen(buf), 1);
+	if (res >= BUFSIZE) {
+	    /* A very long string has been truncated. Try to allocate a large
+	       buffer for it to print it in full. Do not use R_alloc() as this
+	       can be run due to memory allocation error from the R heap.
+	       Do not use contexts and do not throw any errors nor warnings
+	       as this may be run from error handling. */
+	    int size = res + 1;
+	    malloc_buf = (char *)malloc(size * sizeof(char));
+	    if (malloc_buf) {
+		res = vsnprintf(malloc_buf, size, format, arg);
+		if (res == size - 1) {
+		    R_WriteConsoleEx(malloc_buf, res, 1);
+		    printed = TRUE;
+		}
+		char *tmp = malloc_buf;
+		malloc_buf = NULL;
+		free(tmp);
+	    }
+	}
+	if (!printed)
+	    R_WriteConsoleEx(buf, (int) strlen(buf), 1);
     }
 }
 
