@@ -2951,12 +2951,14 @@ adc <- attr(ad, "counts")
 adt <- attr(ad, "trafos")
 ## Follow analysis in the bug report: in the diagonal, we should have
 ## only matches for each character in the given string.
-stopifnot(all(nchar(diag(adt)) == nchar(s)))
-## The del/ins/sub counts should agree with the numbers of D/I/S
-## occurrences in the trafos.
-stopifnot(all(nchar(gsub("[^D]", "", adt)) == adc[, , "del"]))
-stopifnot(all(nchar(gsub("[^I]", "", adt)) == adc[, , "ins"]))
-stopifnot(all(nchar(gsub("[^S]", "", adt)) == adc[, , "sub"]))
+stopifnot(exprs = {
+    nchar(diag(adt)) == nchar(s)
+    ## The del/ins/sub counts should agree with the numbers of D/I/S
+    ## occurrences in the trafos.
+    nchar(gsub("[^D]", "", adt)) == adc[, , "del"]
+    nchar(gsub("[^I]", "", adt)) == adc[, , "ins"]
+    nchar(gsub("[^S]", "", adt)) == adc[, , "sub"]
+})
 
 
 ## keep at end
