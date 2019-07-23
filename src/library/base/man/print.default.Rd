@@ -66,8 +66,8 @@
   \link{language objects} such as calls and formulae.
 
   When the \pkg{methods} package is attached, \code{print} will call
-  \code{\link{show}} for \R objects with formal classes if called
-  with no optional arguments.
+  \code{\link{show}} for \R objects with formal classes (\sQuote{S4})
+  if called with no optional arguments.
 }
 \section{Large number of digits}{
   Note that for large values of \code{digits}, currently for
