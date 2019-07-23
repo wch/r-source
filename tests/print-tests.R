@@ -331,12 +331,12 @@ print(list(a, expression(foo), b, quote(foo), c, base::list, d),
 
 ## max.print fully obeyed by print and format
 ## These failed briefly due to bug in r76734
-o = options(max.print = 5)
-print(1:10)
-print(as.numeric(1:10))
-print(as.character(1:10))
-print(as.complex(1:10))
-print(as.raw(1:10))
+o <- options(max.print = 5)
+1:10
+as.numeric(1:10)
+as.character(1:10)
+as.complex(1:10)
+as.raw(1:10)
 options(o)
 
 ## Cleanup
