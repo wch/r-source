@@ -15,7 +15,7 @@ test-src-gct = \
 	any-all.R
 test-src-strict-1 = \
 	$(test-src-gct) \
-	d-p-q-r-tests.R 
+	d-p-q-r-tests.R
 test-src-strict-auto =
 test-src-sloppy-1 = \
 	complex.R \
@@ -304,7 +304,8 @@ test-Regexp:
 test-Segfault:
 	@$(ECHO) "running tests to possibly trigger segfaults"
 	@$(MK) $(test-out-segfault) RVAL_IF_DIFF=0
-	-@rm -Rf data dumpdata.R .Rd F.Rd c0.Rd df0.Rd l0.Rd m0.Rd Rprof.out Rplots* PACKAGES PACKAGES.gz *-package.Rd FALSE.* ./-package.Rd ./-Ex.R mirrors.html
+	-@rm -Rf data dumpdata.R ./-package.Rd ./-Ex.R .Rd F.Rd [a-z]*0.Rd Rprof.out Rplots* \
+	    PACKAGES PACKAGES.gz [A-Za-z]*-package.Rd FALSE.* mirrors.html
 
 ## Not run by any other target
 test-UTF-8:
