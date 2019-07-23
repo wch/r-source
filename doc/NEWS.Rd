@@ -28,6 +28,13 @@
 
       \item \code{str(x)} gets a new \code{deparse.lines} option with a
       default to speed it up when \code{x} is a large \code{call} object.
+
+      \item The internal traceback object produced when an error is
+      signalled (\code{.Traceback}), now contains the \code{call}s rather
+      than the \emph{\code{deparse()}d} calls, deferring the deparsing to
+      the user level functions \code{.traceback()} and \code{traceback()},
+      fulfilling the whish of \PR{17580}, reported (incl. patch proposal)
+      by Brodie Gaslam.
     }
   }
 

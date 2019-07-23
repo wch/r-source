@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2019-07-17 r76847) -- "Unsuffered Consequences"
+R Under development (unstable) (2019-07-23 r76869) -- "Unsuffered Consequences"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -5092,7 +5092,6 @@ Calls: do.call -> <Anonymous>
 2: (function (...) 
    stop())(mpg = c(21, 21, 22.8, 21.4, 18.7, 18.1, 14.3, 24.4, 22.8, 
    19.2, 17.8, 16.4, 17.3, 15.2, 10.4, 10.4, 14.7, 32.4, 30.4, 33.9, 
-    ...
 1: do.call(f, mtcars)
 > 
 > ## Debugger can handle a function that has a single function call as its body

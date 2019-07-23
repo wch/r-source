@@ -1295,7 +1295,8 @@ SEXP ItemName(SEXP, R_xlen_t);
 void NORET errorcall_cpy(SEXP, const char *, ...);
 void NORET ErrorMessage(SEXP, int, ...);
 void WarningMessage(SEXP, R_WARNING, ...);
-SEXP R_GetTraceback(int);
+SEXP R_GetTraceback(int);    // including deparse()ing
+SEXP R_GetTracebackOnly(int);// no        deparse()ing
 
 R_size_t R_GetMaxVSize(void);
 void R_SetMaxVSize(R_size_t);

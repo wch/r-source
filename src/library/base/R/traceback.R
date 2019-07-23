@@ -1,7 +1,7 @@
 #  File src/library/base/R/traceback.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,17 +16,33 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
-.traceback <- function(x = NULL) {
-    if(is.null(x) && !is.null(x <- get0(".Traceback", envir = baseenv())))
-	{}
-    else if (is.numeric(x))
+.traceback <- function(x = NULL,
+		       max.lines = getOption("traceback.max.lines",
+					     getOption("deparse.max.lines", -1L)))
+{
+    if((is.null(x) && !is.null(x <- get0(".Traceback", envir = baseenv()))) ||
+       ((is.pairlist(x) || is.list(x)) && all(vapply(x, typeof, "type") == "language")))
+       {
+        for(i in seq_along(x)) {
+            srcref <- attr(x[[i]], 'srcref')
+            x[[i]] <- deparse(x[[i]], nlines=max.lines)
+            attr(x[[i]], 'srcref') <- srcref
+        }
+    }
+    else if(is.numeric(x))
     	x <- .Internal(traceback(x))
     x
 }
 
-traceback <- function(x = NULL, max.lines = getOption("deparse.max.lines"))
+traceback <- function(x = NULL,
+                      max.lines = getOption("traceback.max.lines",
+                                            getOption("deparse.max.lines", -1L)))
 {
-    n <- length(x <- .traceback(x))
+    .is.positive.intlike <- function(x) is.numeric(x) && !is.na(x) && as.integer(x) > 0L
+    valid.max.lines <- .is.positive.intlike(max.lines)
+    if(!valid.max.lines)
+        max.lines <- -1L
+    n <- length(x <- .traceback(x, max.lines=max.lines))
     if(n == 0L)
         cat(gettext("No traceback available"), "\n")
     else {
@@ -40,7 +56,7 @@ traceback <- function(x = NULL, max.lines = getOption("deparse.max.lines"))
                 paste0(" at ", basename(srcfile$filename), "#", srcref[1L])
             }
             ## Truncate deparsed code (destroys attributes of xi)
-            if(is.numeric(max.lines) && max.lines > 0L && max.lines < m) {
+            if(valid.max.lines && max.lines < m) {
                 xi <- c(xi[seq_len(max.lines)], " ...")
                 m <- length(xi)
             }

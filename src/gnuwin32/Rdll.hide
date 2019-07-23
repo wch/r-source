@@ -94,6 +94,7 @@
  R_GetMaxNSize
  R_GetMaxVSize
  R_GetTraceback
+ R_GetTracebackParsed
  R_GetVarLocSymbol
  R_GetVarLocValue
  R_HandlerStack

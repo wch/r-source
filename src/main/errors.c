@@ -295,7 +295,7 @@ static char *Rstrncat(char *dest, const char *src, size_t n)
     size_t before = strlen(dest);
 
     strncat(dest, src, n);
-    
+
     after = strlen(dest);
     if (after - before == n)
 	/* the string may have been truncated, but we cannot know for sure
@@ -350,7 +350,7 @@ void warning(const char *format, ...)
     va_start(ap, format);
     size_t psize;
     int pval;
-    
+
     psize = min(BUFSIZE, R_WarnLength+1);
     pval = Rvsnprintf(buf, psize, format, ap);
     va_end(ap);
@@ -1008,7 +1008,7 @@ static void jump_to_top_ex(Rboolean traceback,
 	   (which should not happen) */
 	if (traceback && inError < 2 && inError == oldInError) {
 	    inError = 2;
-	    PROTECT(s = R_GetTraceback(0));
+	    PROTECT(s = R_GetTracebackOnly(0));
 	    SET_SYMVALUE(install(".Traceback"), s);
 	    /* should have been defineVar
 	       setVar(install(".Traceback"), s, R_GlobalEnv); */
@@ -1440,9 +1440,11 @@ static void R_PrintDeferredWarnings(void)
 	PrintWarnings();
     }
 }
-
+/*
+ * Return the traceback without deparsing the calls
+ */
 attribute_hidden
-SEXP R_GetTraceback(int skip)
+SEXP R_GetTracebackOnly(int skip)
 {
     int nback = 0, ns;
     RCNTXT *c;
@@ -1467,7 +1469,7 @@ SEXP R_GetTraceback(int skip)
 	    if (skip > 0)
 		skip--;
 	    else {
-		SETCAR(t, deparse1m(c->call, 0, DEFAULTDEPARSE));
+		SETCAR(t, duplicate(c->call));
 		if (c->srcref && !isNull(c->srcref)) {
 		    SEXP sref;
 		    if (c->srcref == R_InBCInterpreter)
@@ -1481,6 +1483,25 @@ SEXP R_GetTraceback(int skip)
 	}
     UNPROTECT(1);
     return s;
+}
+/*
+ * Return the traceback with calls deparsed
+ */
+attribute_hidden
+SEXP R_GetTraceback(int skip)
+{
+    int nback = 0;
+    SEXP s, t, u, v;
+    s = PROTECT(R_GetTracebackOnly(skip));
+    for(t = s; t != R_NilValue; t = CDR(t)) nback++;
+    u = v = PROTECT(allocList(nback));
+
+    for(t = s; t != R_NilValue; t = CDR(t), v=CDR(v)) {
+        SETCAR(v, PROTECT(deparse1m(CAR(t), 0, DEFAULTDEPARSE)));
+        UNPROTECT(1);
+    }
+    UNPROTECT(2);
+    return u;
 }
 
 SEXP attribute_hidden do_traceback(SEXP call, SEXP op, SEXP args, SEXP rho)

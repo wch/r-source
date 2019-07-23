@@ -125,8 +125,13 @@ getOption(x, default = NULL)
     }
 
     \item{\code{deparse.max.lines}:}{controls the number of lines used
-      when deparsing in \code{\link{traceback}}, \code{\link{browser}},
-      and upon entry to a function whose debugging flag is set.
+      when deparsing in \code{\link{browser}}, upon entry to a function
+      whose debugging flag is set, and if option \code{traceback.max.lines}
+      is unset, of \code{\link{traceback}()}.  Initially unset, and only
+      used if set to a positive integer.}
+
+    \item{\code{traceback.max.lines}:}{controls the number of lines used
+      when deparsing in \code{\link{traceback}}, if set.
       Initially unset, and only used if set to a positive integer.}
 
     \item{\code{digits}:}{controls the number of \emph{significant} (see \code{\link{signif}}) digits to
