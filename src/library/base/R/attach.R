@@ -1,7 +1,7 @@
 #  File src/library/base/R/attach.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -38,21 +38,21 @@
 attach <- function(what, pos = 2L, name = deparse(substitute(what), backtick=FALSE),
                    warn.conflicts = TRUE)
 {
-    ## FIXME: ./library.R 's library() has *very* similar checkConflicts(), keep in sync
+    ## NB: ./library.R 's library() has similar checkConflicts(), keep in sync !
     checkConflicts <- function(env)
     {
         dont.mind <- c("last.dump", "last.warning", ".Last.value",
                        ".Random.seed", ".Last.lib", ".onDetach",
                        ".packageName", ".noGenerics", ".required",
-                       ".no_S3_generics", ".requireCachedGenerics")
+                       ".no_S3_generics", ".Depends", ".requireCachedGenerics")
         sp <- search()
         for (i in seq_along(sp)) {
             if (identical(env, as.environment(i))) {
-                db.pos <- i
+                lib.pos <- i
                 break
             }
         }
-        ob <- names(as.environment(db.pos))
+        ob <- names(as.environment(lib.pos))
         if(.isMethodsDispatchOn()) { ## {see note in library() about this}
             these <- ob[startsWith(ob,".__T__")]
             gen  <- gsub(".__T__(.*):([^:]+)", "\\1", these)
@@ -60,7 +60,7 @@ attach <- function(what, pos = 2L, name = deparse(substitute(what), backtick=FAL
             gen <- gen[from != ".GlobalEnv"]
             ob <- ob[!(ob %in% gen)]
         }
-        ipos <- seq_along(sp)[-c(db.pos, match(c("Autoloads", "CheckExEnv"), sp, 0L))]
+        ipos <- seq_along(sp)[-c(lib.pos, match(c("Autoloads", "CheckExEnv"), sp, 0L))]
         for (i in ipos) {
             obj.same <- match(names(as.environment(i)), ob, nomatch = 0L)
             if (any(obj.same > 0L)) {
@@ -73,11 +73,11 @@ attach <- function(what, pos = 2L, name = deparse(substitute(what), backtick=FAL
 		same.isFn <- function(where)
 		    vapply(same, exists, NA,
 			   where = where, mode = "function", inherits = FALSE)
-		same <- same[same.isFn(i) == same.isFn(db.pos)]
+		same <- same[same.isFn(i) == same.isFn(lib.pos)]
                 if(length(same)) {
 		    pkg <- if (sum(sp == sp[i]) > 1L) # 'pos = *' needs no translation
 			sprintf("%s (pos = %d)", sp[i], i) else sp[i]
-		    message(.maskedMsg(sort(same), pkg, by = i < db.pos),
+		    message(.maskedMsg(sort(same), pkg, by = i < lib.pos),
                             domain = NA)
 		}
             }

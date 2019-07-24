@@ -163,7 +163,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         }
     }
 
-    ## FIXME: ./attach.R 's attach() has *very* similar checkConflicts(), keep in sync
+    ## NB: ./attach.R 's attach() has similar checkConflicts() [simpler at the end], keep in sync!
     checkConflicts <- function(package, pkgname, pkgpath, nogenerics, env)
     {
         dont.mind <- c("last.dump", "last.warning", ".Last.value",
