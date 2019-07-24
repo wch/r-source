@@ -71,7 +71,7 @@ LTO = @LTO@
 
 ## Meeded with i386 gcc 4.5.0 -- PR#14427
 ## (SHLIB_FFLAGS is apparently currently unused)
-portsrc_FFLAGS=$(FPICFLAGS) $(SHLIB_FFLAGS) @SAFE_FFLAGS@
+portsrc_FFLAGS=$(FPICFLAGS) $(SHLIB_FFLAGS) @SAFE_FFLAGS@ $(LTO)
 portsrc.o: portsrc.f
 	$(FC) $(portsrc_FFLAGS) -c $< -o $@
 

@@ -68,7 +68,8 @@ Makedeps: Makefile $(DEPENDS)
 ## treated separately: e.g. we need to force stores with 
 ## gcc >= 3.4.0 at least on i686
 ## (SHLIB_FFLAGS is apparently currently unused)
-DLAMC_FFLAGS=$(FPICFLAGS) $(SHLIB_FFLAGS) @SAFE_FFLAGS@
+LTO = @LTO@
+DLAMC_FFLAGS=$(FPICFLAGS) $(SHLIB_FFLAGS) @SAFE_FFLAGS@ $(LTO)
 dlamch.o: dlamch.f
 	$(FC) $(DLAMC_FFLAGS) -c $< -o $@
 

@@ -300,6 +300,8 @@ void F77_NAME(i7pnvr)(int *n, int x[], const int y[])
 }
 
 /* stopx.... returns .true. if the break key has been pressed. */
+/* should match Fortran LOGICAL, in gfortran int_least32_t but
+   compiler-specific */
 int F77_NAME(stopx)(void)
 {
     return 0;			/* interrupts are caught elsewhere */
