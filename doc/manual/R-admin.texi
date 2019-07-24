@@ -3766,7 +3766,7 @@ java-11-openjdk
 java-11-openjdk-devel
 java-latest-openjdk
 java-latest-openjdk-devel
-end example
+@end example
 @noindent
 where the @code{-devel} RPMs are needed to complete the JDK.  (At the
 time of writing @code{java-openjdk} was Java 12.)  Debian/Ubuntu use
