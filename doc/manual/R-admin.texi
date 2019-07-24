@@ -3707,7 +3707,7 @@ a sub-architecture-specific version).  A typical setting for
 @cputype{x86_64} Linux is
 
 @example
-JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.191-1.b12.fc28.x86_64/jre
+JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.212.b04-0.fc30.x86_64/jre
 R_JAVA_LD_LIBRARY_PATH=$@{JAVA_HOME@}/lib/that/server
 @end example
 
@@ -3742,20 +3742,20 @@ JAVA_HOME=/usr/lib/jvm/java-1.8.0/jre
 worked.
 
 `Non-server' distributions of Java as from version 11 are of a full JDK.
-However, Linux distributions can be confusing: for example Fedora 28 had
+However, Linux distributions can be confusing: for example Fedora 30 had
 @example
 java-1.8.0-openjdk
 java-1.8.0-openjdk-devel
-java-9-openjdk
-java-9-openjdk-devel
 java-openjdk
 java-openjdk-devel
 java-11-openjdk
 java-11-openjdk-devel
-@end example
+java-latest-openjdk
+java-latest-openjdk-devel
+end example
 @noindent
 where the @code{-devel} RPMs are needed to complete the JDK.  (At the
-time of writing @code{java-openjdk} was Java 10.)  Debian/Ubuntu use
+time of writing @code{java-openjdk} was Java 12.)  Debian/Ubuntu use
 @samp{-jre} and @samp{-jdk}, e.g.
 @example
 sudo apt install default-jdk
