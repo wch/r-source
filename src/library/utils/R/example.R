@@ -32,6 +32,7 @@ function(topic, package = NULL, lib.loc = NULL,
     pkgpaths <- find.package(package, lib.loc, verbose = verbose)
     ## will only return at most one path
     file <- index.search(topic, pkgpaths, firstOnly=TRUE)
+                                        # typically nowadays *not* a file
     if(!length(file)) {
 	warning(gettextf("no help found for %s", sQuote(topic)), domain = NA)
 	return(invisible())

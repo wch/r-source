@@ -131,11 +131,7 @@ substr_with_tabs <- function(x, start, stop, tabsize = 8) {
 }
 
 getParseData <- function(x, includeText = NA) {
-    if (inherits(x, "srcfile"))
-	srcfile <- x
-    else
-	srcfile <- getSrcfile(x)
-
+    srcfile <- if(inherits(x, "srcfile")) x else getSrcfile(x)
     if (is.null(srcfile))
     	return(NULL)
     else
@@ -154,13 +150,15 @@ getParseData <- function(x, includeText = NA) {
     	data <- data[o,]
     	rownames(data) <- data$id
     	attr(data, "srcfile") <- srcfile
-    	if (isTRUE(includeText)) gettext <- which(!nzchar(data$text))
-        else if (is.na(includeText)) gettext <- which(!nzchar(data$text) & data$terminal)
-        else {
-            gettext <- integer(0)
-            data$text <- NULL
-        }
-
+	gettext <-
+	    if(isTRUE(includeText))
+		which(!nzchar(data$text))
+	    else if(is.na(includeText))
+		which(!nzchar(data$text) & data$terminal)
+	    else {
+		data$text <- NULL
+		integer(0)
+	    }
         if (length(gettext))
 	    data$text[gettext] <- getParseText(data, data$id[gettext])
     }

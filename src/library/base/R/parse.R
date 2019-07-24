@@ -60,7 +60,7 @@ parse <- function(file = "", n = NULL, text = NULL, prompt = "?",
 if(FALSE) {  # R level implementation (not used):
 str2expression <- function(text) parse(text=text, keep.source=FALSE)
 str2lang       <- function(s) parse(text=s, keep.source=FALSE)[[1L]]
-## Actually, we do check twice:
+## For str2lang(), actually, we check 'length 1' twice:
 str2lang       <- function(s) {
     stopifnot(length(s) == 1L)
     ex <- parse(text=s, keep.source=FALSE)

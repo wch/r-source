@@ -1,6 +1,6 @@
 % File src/library/tools/man/Rd2HTML.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2008-2016 R Core Team
+% Copyright 2008-2018 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Rd2HTML}
@@ -10,8 +10,8 @@
 \alias{Rd2latex}
 \title{ Rd Converters }
 \description{
-  These functions take the output of the \code{\link{parse_Rd}} function
-  and produce a help page from it.  As they are mainly
+  These functions take the output of \code{\link{parse_Rd}()}, an
+  \code{Rd} object, and produce a help page from it.  As they are mainly
   intended for internal use, their interfaces are subject to change.
 }
 \usage{
@@ -35,7 +35,9 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
 }
 \arguments{
   \item{Rd}{ a filename or \code{Rd} object to use as input. }
-  \item{out}{ a filename or connection object to which to write the output. }
+  \item{out}{a filename or connection object to which to write the
+    output.  The default \code{out = ""} is equivalent to
+    \code{out = \link{stdout}()}.}
   \item{package}{ the package to list in the output. }
   \item{defines}{ string(s) to use in \verb{#ifdef} tests. }
   \item{stages}{ at which stage (\code{"build"}, \code{"install"}, or
@@ -100,7 +102,7 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
 
   Various aspects of formatting by \code{Rd2txt} are controlled by the
   \code{options} argument, documented with the \code{\link{Rd2txt_options}}
-  function. Changes made using \code{options} are temporary, those
+  function.  Changes made using \code{options} are temporary, those
   made with \code{\link{Rd2txt_options}} are persistent.
 
   When \code{fragment = TRUE}, the \code{Rd} file will be rendered

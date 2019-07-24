@@ -1,7 +1,7 @@
 toHTML <- function(x, ...) UseMethod("toHTML")
 
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 
 HTMLheader <-
 function(title="R", logo=TRUE,
@@ -319,8 +319,8 @@ function(x, header = TRUE, ...)
         ## Replace these by hex bytes.
         s <- .replace_chars_by_hex_subs(s, invalid_HTML_chars_re)
         s <- gsub("&", "&amp;", s, fixed = TRUE)
-        s <- gsub("<", "&lt;", s, fixed = TRUE)
-        s <- gsub(">", "&gt;", s, fixed = TRUE)
+        s <- gsub("<", "&lt;",  s, fixed = TRUE)
+        s <- gsub(">", "&gt;",  s, fixed = TRUE)
         if(a) {
             ## Some people have <http://something> as recommended for
             ## in-text URLs.

@@ -1,7 +1,7 @@
 #  File src/library/utils/R/edit.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -25,7 +25,8 @@ check_for_XQuartz <- function()
         if(length(ind)) {
             this <- sub(" .*", "", sub("^\t", "", out[ind]))
             if(!file.exists(this))
-                stop("X11 library is missing: install XQuartz from xquartz.macosforge.org", domain = NA)
+                stop("X11 library is missing: install XQuartz from xquartz.macosforge.org",
+                     domain = NA)
         }
     }
 }
@@ -59,12 +60,6 @@ View <- function (x, title)
 
     ## could multi-line deparse with maliciously-designed inputs
     if(missing(title)) title <- paste("Data:", deparse(substitute(x))[1])
-    as.num.or.char <- function(x)
-    {
-        if (is.character(x)) x
-        else if (is.numeric(x)) {storage.mode(x) <- "double"; x}
-        else as.character(x)
-    }
     x0 <- as.data.frame(x)
     x <- as.list(format.data.frame(x0))
     rn <- row.names(x0)
@@ -113,19 +108,12 @@ edit.data.frame <-
 
     attrlist <- lapply(name, attributes)
     datalist <- lapply(name, as.num.or.char)
-    factors <- if (length(name))
-        which(sapply(name, is.factor))
-    else
-        numeric()
-
-    logicals <- if (length(name))
-    	which(sapply(name, is.logical))
-    else
-    	numeric()
+    factors  <- which(vapply(name, is.factor, NA))
+    logicals <- which(vapply(name, is.logical, NA))
 
     if(length(name)) {
         has_class <-
-            sapply(name, function(x) (is.object(x) || isS4(x)) && !is.factor(x))
+            vapply(name, function(x) (is.object(x) || isS4(x)) && !is.factor(x), NA)
         if(any(has_class))
             warning(sprintf(ngettext(sum(has_class),
                                     "class discarded from column %s",

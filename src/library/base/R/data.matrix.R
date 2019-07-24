@@ -21,9 +21,10 @@ data.matrix <- function(frame, rownames.force = NA)
     if(!is.data.frame(frame)) return(as.matrix(frame))
 
     d <- dim(frame)
-    rn <- if(rownames.force %in% FALSE) NULL
-    else if(rownames.force %in% TRUE) row.names(frame)
-    else {if(.row_names_info(frame) <= 0L) NULL else row.names(frame)}
+    rn <- if(isFALSE(rownames.force)) NULL
+          else if(isTRUE(rownames.force)) row.names(frame)
+          else if(.row_names_info(frame) <= 0L) NULL
+          else row.names(frame)
 
     for(i in seq_len(d[2L])) {
         xi <- frame[[i]]

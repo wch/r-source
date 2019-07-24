@@ -867,7 +867,8 @@ if(FALSE) {
                     }
                 }
             }
-        }
+        } # patch_rpaths()
+
         ## Make the destination directories available to the developer's
         ## installation scripts (e.g. configure)
         Sys.setenv(R_LIBRARY_DIR = lib)
@@ -1738,7 +1739,7 @@ if(FALSE) {
                 starsmsg(stars, "stripping dynamic library under lib")
             system(paste(c(strip_cmd, shQuote(so_s)), collapse = " "))
         }
-    }
+    } ## do_install_source
 
     options(showErrorCalls = FALSE)
     pkgs <- character()
