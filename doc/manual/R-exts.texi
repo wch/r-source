@@ -900,7 +900,7 @@ A package should be listed in only one of these fields.
 @item
 Packages whose namespace only is needed to load the package using
 @code{library(@var{pkgname})} should be listed in the @samp{Imports} field
-and not in the @samp{Depends} field.  Packages listed in @code{imports}
+and not in the @samp{Depends} field.  Packages listed in @code{import}
 or @code{importFrom} directives in the @file{NAMESPACE} file should
 almost always be in @samp{Imports} and not @samp{Depends}.
 @item
