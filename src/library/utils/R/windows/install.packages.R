@@ -179,12 +179,15 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE,
                 ## Move the new package to the install lib
                 ## file.rename automatically retries few times if necessary
 		## due to anti-virus interference
-                ret <- file.rename(file.path(tmpDir, pkgname), instPath)
+                tmpInstPath <- file.path(tmpDir, pkgname)
+                ret <- file.rename(tmpInstPath, instPath)
                 if(!ret) {
-                    warning(gettextf("unable to move temporary installation %s to %s",
-                                     sQuote(normalizePath(file.path(tmpDir, pkgname), mustWork = FALSE)),
+                    warning(gettextf("unable to move temporary installation %s to %s, copying instead",
+                                     sQuote(normalizePath(tmpInstPath, mustWork = FALSE)),
                                      sQuote(normalizePath(instPath, mustWork = FALSE))),
                             domain = NA, call. = FALSE, immediate. = TRUE)
+                    file.copy(tmpInstPath, dirname(instPath), recursive = TRUE, copy.date = TRUE)
+                    unlink(tmpInstPath, recursive = TRUE)
                     restorePrevious <- TRUE # Might not be used
                 }
             } else {
