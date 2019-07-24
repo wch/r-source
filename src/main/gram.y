@@ -693,7 +693,7 @@ static void finish_mbcs_in_parse_context()
 	res = (int) mbrtowc(&wc, buf + i, nbytes - i, &mb_st);
 	while (res == -2 && nbytes < sizeof(buf)) {
 	    /* This is not necessarily correct for stateful MBCS */
-	    buf[nbytes++] = add_mbcs_byte_to_parse_context();
+	    buf[nbytes++] = (char) add_mbcs_byte_to_parse_context();
 	    mbs_init(&mb_st);
 	    res = (int) mbrtowc(&wc, buf + i, nbytes - i, &mb_st);
 	}	   
