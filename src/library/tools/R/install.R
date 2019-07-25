@@ -1673,10 +1673,15 @@ if(FALSE) {
             if (WINDOWS) {
                 unlink(final_instdir, recursive = TRUE) # needed for file.rename
                 if (!file.rename(instdir, final_instdir)) {
-                    message("WARNING: moving package to final location failed, copying instead")
-                    file.copy(instdir, dirname(final_instdir), recursive = TRUE,
-                              copy.date = TRUE)
-                    unlink(instdir, recursive = TRUE)
+                    if (dir.exists(instdir) && !dir.exists(final_instdir)) {
+                        message("WARNING: moving package to final location failed, copying instead")
+                        ret <- file.copy(instdir, dirname(final_instdir),
+                                         recursive = TRUE, copy.date = TRUE)
+                        if (any(!ret))
+                            errmsg("   copying to final location failed")
+                        unlink(instdir, recursive = TRUE)
+                    } else
+                        errmsg("   moving to final location failed")
                 }
             } else {
                 patch_rpaths()
