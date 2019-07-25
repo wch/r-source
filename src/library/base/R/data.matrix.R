@@ -26,12 +26,19 @@ data.matrix <- function(frame, rownames.force = NA)
           else if(.row_names_info(frame) <= 0L) NULL
           else row.names(frame)
 
+    stringsAsFactors_default_is_FALSE <-
+        isFALSE(as.logical(Sys.getenv("_R_OPTIONS_STRINGS_AS_FACTORS_")))
+    
     for(i in seq_len(d[2L])) {
         xi <- frame[[i]]
         ## at present is.numeric suffices, but let's be cautious
         if(is.integer(xi) || is.numeric(xi)) next
         if(is.logical(xi) || is.factor(xi)) {
             frame[[i]] <- as.integer(xi)
+            next
+        }
+        if(stringsAsFactors_default_is_FALSE && is.character(xi)) {
+            frame[[i]] <- as.integer(factor(xi))
             next
         }
         frame[[i]] <- if(isS4(xi)) methods::as(xi, "numeric") else as.numeric(xi)
