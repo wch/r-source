@@ -182,13 +182,28 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE,
                 tmpInstPath <- file.path(tmpDir, pkgname)
                 ret <- file.rename(tmpInstPath, instPath)
                 if(!ret) {
-                    warning(gettextf("unable to move temporary installation %s to %s, copying instead",
-                                     sQuote(normalizePath(tmpInstPath, mustWork = FALSE)),
-                                     sQuote(normalizePath(instPath, mustWork = FALSE))),
-                            domain = NA, call. = FALSE, immediate. = TRUE)
-                    file.copy(tmpInstPath, dirname(instPath), recursive = TRUE, copy.date = TRUE)
-                    unlink(tmpInstPath, recursive = TRUE)
-                    restorePrevious <- TRUE # Might not be used
+                    if (dir.exists(tmpInstPath) && !dir.exists(instPath)) {
+                        warning(gettextf("unable to move temporary installation %s to %s, copying instead",
+                                         sQuote(normalizePath(tmpInstPath, mustWork = FALSE)),
+                                         sQuote(normalizePath(instPath, mustWork = FALSE))),
+                                domain = NA, call. = FALSE, immediate. = TRUE)
+                        ret <- file.copy(tmpInstPath, dirname(instPath),
+                                         recursive = TRUE, copy.date = TRUE)
+                        if(any(!ret)) {
+                            warning(gettextf("unable to copy temporary installation %s to %s",
+                                             sQuote(normalizePath(tmpInstPath, mustWork = FALSE)),
+                                             sQuote(normalizePath(instPath, mustWork = FALSE))),
+                                    domain = NA, call. = FALSE, immediate. = TRUE)
+                            restorePrevious <- TRUE # Might not be used
+                        }
+                        unlink(tmpInstPath, recursive = TRUE)
+                    } else {
+                        warning(gettextf("unable to move temporary installation %s to %s",
+                                         sQuote(normalizePath(tmpInstPath, mustWork = FALSE)),
+                                         sQuote(normalizePath(instPath, mustWork = FALSE))),
+                                domain = NA, call. = FALSE, immediate. = TRUE)
+                        restorePrevious <- TRUE # Might not be used
+                    }
                 }
             } else {
                 warning(gettextf("cannot remove prior installation of package %s",
