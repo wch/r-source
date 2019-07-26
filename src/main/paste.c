@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 1997--2019  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2015  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -115,7 +115,7 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 		SET_VECTOR_ELT(x, j, coerceVector(xj, STRSXP));
 
 	    if (!isString(VECTOR_ELT(x, j)))
-		error(_("non-string argument to internal 'paste'"));
+		error(_("non-string argument to .Internal(%s)"), PRIMNAME(op));
 	}
 	if(XLENGTH(VECTOR_ELT(x, j)) > maxlen)
 	    maxlen = XLENGTH(VECTOR_ELT(x, j));
@@ -318,7 +318,7 @@ SEXP attribute_hidden do_filepath(SEXP call, SEXP op, SEXP args, SEXP env)
 		SET_VECTOR_ELT(x, j, coerceVector(xj, STRSXP));
 
 	    if (!isString(VECTOR_ELT(x, j)))
-		error(_("non-string argument to Internal paste"));
+		error(_("non-string argument to .Internal(%s)"), PRIMNAME(op));
 	}
 	ln = LENGTH(VECTOR_ELT(x, j));
 	if(ln > maxlen) maxlen = ln;
@@ -384,7 +384,7 @@ SEXP attribute_hidden do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 	return mkString(EncodeEnvironment(x));
     }
     else if (!isVector(x))
-	error(_("first argument must be atomic"));
+	error(_("first argument must be atomic or environment"));
     args = CDR(args);
 
     trim = asLogical(CAR(args));
