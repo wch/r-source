@@ -21,9 +21,9 @@
 }
 \usage{
  traceback(x = NULL, max.lines = getOption("traceback.max.lines",
-                                           getOption("deparse.max.lines")))
+                                           getOption("deparse.max.lines", -1L)))
 .traceback(x = NULL, max.lines = getOption("traceback.max.lines",
-                                           getOption("deparse.max.lines")))
+                                           getOption("deparse.max.lines", -1L)))
 }
 \arguments{
   \item{x}{\code{NULL} (default, meaning \code{.Traceback}), or an
