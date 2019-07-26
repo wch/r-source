@@ -153,6 +153,8 @@
       package \pkg{utils} load time, now.  A consequence is that
       \code{str()} in scripts now is more consistent to interactive use,
       e.g., when displaying function(**) argument lists.
+
+      \item \code{as.numeric(<call>)} now gives correct error message.
     }
   }
 }

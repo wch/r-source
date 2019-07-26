@@ -2968,6 +2968,12 @@ v
 stopifnot(identical(v$x,1))
 
 
+## misleading error message when coercing language object to atomic, etc:
+e <- tryCid(as.double(quote(foo(1))))
+stopifnot(inherits(e, "error"), grepl("'language'", e$message, fixed=TRUE))
+## had 'pairlist' in R <= 3.6.1
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
