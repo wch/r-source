@@ -155,6 +155,9 @@
       e.g., when displaying function(**) argument lists.
 
       \item \code{as.numeric(<call>)} now gives correct error message.
+
+      \item Printing \code{ls.str()} no longer wrongly shows
+      \code{"<missing>"} in rare cases.
     }
   }
 }

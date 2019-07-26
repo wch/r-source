@@ -2974,6 +2974,20 @@ stopifnot(inherits(e, "error"), grepl("'language'", e$message, fixed=TRUE))
 ## had 'pairlist' in R <= 3.6.1
 
 
+## print(ls.str(<environment with error object with "missing" in message text>))
+msg <- "arguments in the signature are missing"
+e1 <- new.env(hash=FALSE)
+e1$Err <- structure(list(message = msg, call = quote(foo(bar))),
+                    class = c("simpleError", "error", "condition"))
+writeLines(prE <- capture.output(ls.str(e1)))
+## was "Err: <missing>" in R <= 3.6.1
+stopifnot(exprs = { length(prE) >= 3
+    grepl("List of 2", prE[[1]], fixed=TRUE)
+    grepl(msg,         prE[[2]], fixed=TRUE)
+    grepl("call.* foo\\(bar\\)", prE[[3]])
+})
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
