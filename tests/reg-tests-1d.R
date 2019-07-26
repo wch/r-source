@@ -2960,6 +2960,12 @@ stopifnot(exprs = {
     nchar(gsub("[^S]", "", adt)) == adc[, , "sub"]
 })
 
+## list2env preserves values semantics
+v <- list(x=c(1))
+e <- list2env(v)
+with(e, x[[1]] <- 42)
+v
+stopifnot(identical(v$x,1))
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
