@@ -676,7 +676,7 @@ SEXP R_nextMethodCall(SEXP matched_call, SEXP ev)
     PROTECT(op = findVarInFrame3(ev, R_dot_nextMethod, TRUE));
     if(op == R_UnboundValue)
 	error("internal error in 'callNextMethod': '.nextMethod' was not assigned in the frame of the method call");
-    PROTECT(e = duplicate(matched_call));
+    PROTECT(e = shallow_duplicate(matched_call));
     prim_case = isPrimitive(op);
     if (!prim_case) {
         if (inherits(op, "internalDispatchMethod")) {
