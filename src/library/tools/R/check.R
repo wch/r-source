@@ -3249,6 +3249,9 @@ add_dummies <- function(dir, Log)
             if (file.exists(instlog) && dir.exists('src')) {
                 checkingLog(Log, "compilation flags used")
                 lines <- readLines(instlog, warn = FALSE)
+                ## skip stuff before building libs
+                ll <- grep("^[*][*][*] libs", lines)
+                if (length(ll)) lines <- lines(-1:ll[1L])
                 poss <- grep(" -[Wmf]", lines,  useBytes = TRUE, value = TRUE)
                 ## compilation lines start at the left margin,
                 ## and are not configure/echo lines
