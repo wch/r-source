@@ -158,6 +158,10 @@
 
       \item Printing \code{ls.str()} no longer wrongly shows
       \code{"<missing>"} in rare cases.
+
+      \item Auto-printing S4 objects no longer duplicates the object,
+      for faster speed and reduced memory consumption. Reported by Aaron
+      Lun.
     }
   }
 }

@@ -1407,7 +1407,7 @@ SEXP attribute_hidden do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
     /* Get the formals and match the actual args */
 
     formals = FORMALS(b);
-    PROTECT(actuals = duplicate(CDR(funcall)));
+    PROTECT(actuals = shallow_duplicate(CDR(funcall)));
 
     /* If there is a ... symbol then expand it out in the sysp env
        We need to take some care since the ... might be in the middle
