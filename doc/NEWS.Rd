@@ -33,7 +33,7 @@
       signalled (\code{.Traceback}), now contains the \code{call}s rather
       than the \emph{\code{deparse()}d} calls, deferring the deparsing to
       the user level functions \code{.traceback()} and \code{traceback()},
-      fulfilling the whish of \PR{17580}, reported (incl. patch proposal)
+      fulfilling the wish of \PR{17580}, reported (incl. patch proposal)
       by Brodie Gaslam.
     }
   }
