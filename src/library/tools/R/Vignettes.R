@@ -185,7 +185,14 @@ function(package, dir, lib.loc = NULL,
             setwd(startdir) # in case a vignette changes the working dir then errored out
             .eval_with_capture({
                 result$weave[[file]] <- tryCatch({
-                    engine$weave(path, quiet = TRUE, encoding = enc)
+                    if((engine$package == "knitr") &&
+                       (startsWith(engine$name, "rmarkdown")))
+                        engine$weave(path, quiet = TRUE,
+                                     encoding = enc,
+                                     output_dir = startdir)
+                    else
+                        engine$weave(path, quiet = TRUE,
+                                     encoding = enc)
                     setwd(startdir)
                     find_vignette_product(name, by = "weave", engine = engine)
                 }, error = identity)
