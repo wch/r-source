@@ -26,12 +26,11 @@
 ### SweaveReadFile figures out an encoding, uses it (not currently for
 ### \SweaveInclude files) and returns it as an attribute.  This is
 ### then passed as an attribute of 'file' to the driver's setup
-### routine.  Unless it is "" or "ASCII", the RweaveLatex driver
-### re-encodes the output back to 'encoding': the Rtangle driver
-### leaves it in the encoding of the current locale and records what
-### that is in a comment.  The "UTF-8" encoding is preserved on
-### both input and output in RweaveLatex, but is handled like
-### other encodings in Rtangle.
+### routine.  Unless it is "" or "ASCII", the RweaveLatex and Rtangle
+### drivers re-encode the output back to 'encoding', and preserve the
+### "UTF-8" encoding on both input and output.  (Up to 3.6, the Rtangle
+### driver left things in the encoding of the current locale and recorded
+### what that was in a comment.) 
 ###
 ### SweaveReadFile first looks for a call to one of the LaTeX packages
 ### inputen[cx] and deduces the vignette encoding from that, falling

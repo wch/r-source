@@ -691,15 +691,14 @@ RtangleSetup <-
         else if (identical(output, "stderr")) output <- stderr()
         else {
             if (!quiet) cat("Writing to file", output, "\n")
-            ## We could at some future point try to write the file in
-            ## 'encoding'.
-            output <- file(output, open = "w")
+            encoding <- attr(file, "encoding")
+            if (encoding %in% c("ASCII", "bytes")) encoding <- ""
+            output <- file(output, open = "w", encoding = encoding)
         }
-        lines <- c(sprintf("R code from vignette source '%s'", file),
-                   if(attr(file, "encoding") != "ASCII")
-                   sprintf("Encoding: %s", localeToCharset()[1L])
-                   )
-        lines <- c(paste("###", lines), "")
+        lines <- c(paste("###",
+                         sprintf("R code from vignette source '%s'",
+                                 file)),
+                   "")
         writeLines(lines, output)
     } else {
         if (!quiet) cat("Writing chunks to files ...\n")
