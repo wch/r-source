@@ -584,9 +584,11 @@ packages that provide an engine for building vignettes.  These may
 include the current package, or ones listed in @samp{Depends},
 @samp{Suggests} or @samp{Imports}. The @pkg{utils} package is always
 implicitly appended.  See @ref{Non-Sweave vignettes} for details.  Note
-that if, for example, the vignette `engine' is @samp{knitr::rmarkdown}
-this field needs to declare both @CRANpkg{knitr} and
-@CRANpkg{rmarkdown}.
+that if, for example, a vignette has engine @samp{knitr::rmarkdown},
+then @CRANpkg{knitr} provides the engine but both @pkg{knitr} and
+@CRANpkg{rmarkdown} are needed for using it, so both these packages need
+to be at least suggested (as @pkg{rmarkdown} is only suggested by
+@pkg{knitr}, and hence not available automatically along with it).
 
 @c DESCRIPTION field Encoding
 If the @file{DESCRIPTION} file is not entirely in @acronym{ASCII} it
