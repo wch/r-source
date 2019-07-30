@@ -43,7 +43,7 @@
 #endif
 
 #ifdef HAVE_UNISTD_H
-# include <unistd.h>		/* isatty() */
+# include <unistd.h>
 #endif
 
 #include <errno.h>
@@ -477,7 +477,7 @@ int Rf_initialize_R(int ac, char **av)
 	R_Interactive = useaqua;
     else
 #endif
-	R_Interactive = R_Interactive && (force_interactive || isatty(0));
+	R_Interactive = R_Interactive && (force_interactive || R_isatty(0));
 
 #ifdef HAVE_AQUA
     /* for Aqua and non-dumb terminal use callbacks instead of connections

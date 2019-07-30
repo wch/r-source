@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997-2017   The R Core Team
+ *  Copyright (C) 1997-2019   The R Core Team
  *  Copyright (C) 1995-1996   Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1925,3 +1925,94 @@ SEXP attribute_hidden do_glob(SEXP call, SEXP op, SEXP args, SEXP env)
     if (initialized) globfree(&globbuf);
     return ans;
 }
+
+/* isatty is in unistd.h, or io.h on Windows */
+#ifdef Win32
+# include <io.h>
+#endif
+
+#ifdef Win32
+
+#if _WIN32_WINNT < 0x0600
+/* available from Windows Vista */
+typedef enum _FILE_INFO_BY_HANDLE_CLASS {
+  FileBasicInfo,
+  FileStandardInfo,
+  FileNameInfo,
+  FileRenameInfo,
+  FileDispositionInfo,
+  FileAllocationInfo,
+  FileEndOfFileInfo,
+  FileStreamInfo,
+  FileCompressionInfo,
+  FileAttributeTagInfo,
+  FileIdBothDirectoryInfo,
+  FileIdBothDirectoryRestartInfo,
+  FileIoPriorityHintInfo,
+  FileRemoteProtocolInfo,
+  FileFullDirectoryInfo,
+  FileFullDirectoryRestartInfo,
+  FileStorageInfo,
+  FileAlignmentInfo,
+  FileIdInfo,
+  FileIdExtdDirectoryInfo,
+  FileIdExtdDirectoryRestartInfo,
+  FileDispositionInfoEx,
+  FileRenameInfoEx,
+  MaximumFileInfoByHandleClass,
+  FileCaseSensitiveInfo,
+  FileNormalizedNameInfo
+} FILE_INFO_BY_HANDLE_CLASS, *PFILE_INFO_BY_HANDLE_CLASS;
+
+typedef struct _FILE_NAME_INFO {
+  DWORD FileNameLength;
+  WCHAR FileName[1];
+} FILE_NAME_INFO, *PFILE_NAME_INFO;
+#endif
+
+typedef BOOL (WINAPI *LPFN_GFIBH_EX) (HANDLE, FILE_INFO_BY_HANDLE_CLASS,
+                                      LPVOID, DWORD);
+
+int attribute_hidden R_is_redirection_tty(int fd)
+{
+    /* for now detects only msys/cygwin redirection tty */
+    static LPFN_GFIBH_EX gfibh = NULL;
+    static Rboolean initialized = FALSE;
+
+    if (!initialized) {
+	initialized = TRUE;
+	gfibh = (LPFN_GFIBH_EX) GetProcAddress(
+	    GetModuleHandle(TEXT("kernel32")),
+	    "GetFileInformationByHandleEx");
+    }
+    if (gfibh == NULL)
+	return 0;
+
+    HANDLE h = (HANDLE) _get_osfhandle(fd);
+    if (h == INVALID_HANDLE_VALUE || GetFileType(h) != FILE_TYPE_PIPE)
+	return 0;
+    FILE_NAME_INFO *fnInfo;
+    DWORD size = sizeof(FILE_NAME_INFO) + MAX_PATH*sizeof(WCHAR);
+    if (!(fnInfo = (FILE_NAME_INFO*)malloc(size)))
+	return 0;
+    int res = 0;
+    if (gfibh(h, FileNameInfo, fnInfo, size))
+	/* e.g. msys-1888ae32e00d56aa-pty0-from-master */
+	/* test borrowed from git */
+	res = ((wcsstr(fnInfo->FileName, L"msys-") ||
+	        wcsstr(fnInfo->FileName, L"cygwin-")) &&
+		wcsstr(fnInfo->FileName, L"-pty"));
+    free(fnInfo);
+    return res;
+}
+#endif
+
+int attribute_hidden R_isatty(int fd)
+{
+#ifdef Win32
+    if (R_is_redirection_tty(fd))
+	return 1;
+#endif
+    return isatty(fd);
+}
+
