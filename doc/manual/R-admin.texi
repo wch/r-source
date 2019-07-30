@@ -4069,6 +4069,26 @@ MKL="-L$@{MKL_LIB_PATH@} -lmkl_gf_lp64 -lmkl_core \
      -lmkl_gnu_thread -dl -fopenmp"
 @end example
 
+@R{} can also be linked against a single shared library,
+@code{libmkl_rt.so}, for both BLAS and LAPACK, but the correct OpenMP and
+MKL interface layer then has to be selected via environment variables.  With
+64-bit builds and the GCC compilers, we used
+
+@example
+export MKL_INTERFACE_LAYER=GNU,LP64 
+export MKL_THREADING_LAYER=GNU
+@end example
+
+On Debian/Ubuntu, MKL is provided by package @code{intel-mkl-full} and one
+can set @code{libmkl_rt.so} as the system-wide implementation of both BLAS
+and LAPACK during installation of the package, so that also @R{} installed
+from Debian/Ubuntu package @code{r-base} would use it.  It is, however,
+still essential to set @code{MKL_INTERFACE_LAYER} and
+@code{MKL_THREADING_LAYER} before running @R{}, otherwise MKL computations
+will produce incorrect results. @R{} does not have to be rebuilt to use MKL,
+but @code{configure} include tests which may discover some errors such as a
+failure to set the correct OpenMP and MKL interface layer.
+
 @noindent
 The default number of threads will be chosen by the OpenMP software, but
 can be controlled by setting @code{OMP_NUM_THREADS} or
