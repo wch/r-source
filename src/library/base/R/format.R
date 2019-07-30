@@ -263,9 +263,13 @@ format.data.frame <- function(x, ..., justify = "none")
 	if(is.character(rval[[i]]) && inherits(rval[[i]], "character"))
 	    oldClass(rval[[i]]) <- "AsIs"
     }
-    as.data.frame.list(rval, row.names = row.names(x), col.names = names(x),
-		       optional = TRUE, # <=> check.names = FALSE
-		       fix.empty.names = FALSE, cut.names = TRUE)
+    y <- as.data.frame.list(rval,
+                            row.names = seq_len(nr),
+                            col.names = names(x),
+                            optional = TRUE, # <=> check.names = FALSE
+                            fix.empty.names = FALSE, cut.names = TRUE)
+    attr(y, "row.names") <- row.names(x)
+    y
 }
 
 format.AsIs <- function(x, width = 12, ...)
