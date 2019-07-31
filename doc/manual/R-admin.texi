@@ -4096,6 +4096,11 @@ can be controlled by setting @code{OMP_NUM_THREADS} or
 sensible value for sole use of the machine.  (Parallel MKL has not
 always passed @command{make check-all}, but did with MKL 2019.4.)
 
+MKL includes a partial implementation of FFTW3, which causes trouble for
+applications that require some of the FFTW3 functionality unsupported in
+MKL.  Please see the MKL manuals for description of these limitations and
+for instructions on how to create a custom version of MKL which excludes the
+FFTW3 wrappers.
 
 @c https://stat.ethz.ch/pipermail/r-devel/2015-September/071717.html
 It was reported in 2015 that
