@@ -1,6 +1,6 @@
 % File src/library/base/man/ns-topenv.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ns-topenv}
@@ -21,11 +21,13 @@ topenv(envir = parent.frame(),
       any other criterion is satisfied.  The default, the option
       \samp{topLevelEnvironment}, is set by \code{\link{sys.source}},
       which treats a specific environment as the top level environment.
-      Supplying the argument as \code{NULL} means it will never match.}
+      Supplying the argument as \code{NULL} or \code{emptyenv()} means
+      it will never match.}
 }
 \details{
   \code{topenv} returns the first top level \code{\link{environment}}
-  found when searching \code{envir} and its enclosing environments.  An
+  found when searching \code{envir} and its enclosing environments. If no
+  top level environment is found, \code{\link{.GlobalEnv}} is returned.  An
   environment is considered top level if it is the internal environment
   of a namespace, a package environment in the \code{\link{search}}
   path, or \code{\link{.GlobalEnv}} .
