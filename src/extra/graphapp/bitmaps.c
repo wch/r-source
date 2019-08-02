@@ -102,7 +102,7 @@ int has_transparent_pixels(image img)
 {
     int i, width, height, total;
     rgb *palette;
-    byte *pixel8;
+    GAbyte *pixel8;
     rgb *pixel32;
     rgb col;
 
@@ -153,7 +153,7 @@ bitmap imagetobitmap(image img)
     int depth = getdepth(img);
     rgb *palette = getpalette(img);
     int palsize = getpalettesize(img);
-    byte *pixel8 = getpixels(img);
+    GAbyte *pixel8 = getpixels(img);
     rgb *pixel32 = (rgb *) pixel8;
 
     /* create DIB info in memory */
@@ -169,7 +169,7 @@ bitmap imagetobitmap(image img)
        malloc will have done the alignment, which needs to 
        be for pointers.
     */
-    byte *block = array(size, byte);
+    GAbyte *block = array(size, GAbyte);
     BITMAPINFO *bmi = (BITMAPINFO *) block;
 	
 
@@ -185,7 +185,7 @@ bitmap imagetobitmap(image img)
     /* assign colour table */
     for (int i = 0; i < palsize; i++) {
 	rgb colour  = palette[i];
-	byte *data = (byte *) (& bmi->bmiColors[i]);
+	GAbyte *data = (GAbyte *) (& bmi->bmiColors[i]);
 	data[0] = getblue(colour);
 	data[1] = getgreen(colour);
 	data[2] = getred(colour);
@@ -193,7 +193,7 @@ bitmap imagetobitmap(image img)
     }
 
     /* assign the bitmap data itself */
-    byte *data = (byte *) (&bmi->bmiColors[palsize]);
+    GAbyte *data = (GAbyte *) (&bmi->bmiColors[palsize]);
 
     if (depth == 8)
 	for (unsigned y = 0; y < height; y++) {
@@ -325,7 +325,7 @@ void setbitmapdata(bitmap obj, unsigned char *data)
     if (row_bytes % 2) {
 	/* Odd number of bytes, must assign into new array. */
 	size = (row_bytes+1) * r.height;
-	newdata = array (size, byte);
+	newdata = array (size, GAbyte);
 	if (! newdata)
 	    return;
 	for (y=0; y<r.height; y++) {
@@ -360,7 +360,7 @@ void getbitmapdata(bitmap obj, unsigned char *data)
     if (row_bytes % 2) {
 	/* Odd number of bytes, must assign into new array. */
 	size = (row_bytes+1) * r.height;
-	newdata = array (size, byte);
+	newdata = array (size, GAbyte);
 	if (! newdata)
 	    return;
 	GetBitmapBits((HBITMAP)obj->handle, size,

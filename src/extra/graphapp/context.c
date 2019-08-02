@@ -69,7 +69,7 @@ static rgb grey_cmap [] = {
     0x00000000UL,
     0x00FFFFFFUL,
 };
-static byte grey_pixels [] = {
+static GAbyte grey_pixels [] = {
     0, 1, 0, 1, 0, 1, 0, 1,
     1, 0, 1, 0, 1, 0, 1, 0,
     0, 1, 0, 1, 0, 1, 0, 1,

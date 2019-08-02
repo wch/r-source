@@ -66,11 +66,11 @@ image newimage(int width, int height, int depth)
 
     if (depth == 8) {
 	img->depth  = 8;
-	img->pixels = array(width*height, byte);
+	img->pixels = array(width*height, GAbyte);
     }
     else {
 	img->depth  = 32;
-	img->pixels = (byte *) array(width*height, rgb);
+	img->pixels = (GAbyte *) array(width*height, rgb);
     }
 
     return img;
@@ -146,7 +146,7 @@ int imageheight(image img) { return ((img)?(img->height):0);}
 /*
  *  Change an image's pixels:
  */
-void setpixels(image img, byte pixels[])
+void setpixels(image img, GAbyte pixels[])
 {
     long i, length;
 
@@ -164,7 +164,7 @@ void setpixels(image img, byte pixels[])
 /*
  *  Return an image's pixel array:
  */
-byte * getpixels(image img)
+GAbyte * getpixels(image img)
 {
     if (img)
 	return img->pixels;
@@ -222,7 +222,7 @@ static image fast_find_cmap (image img)
     image new_img;
     long   i, j, length;
     rgb *  pixel32;
-    byte * pixel8;
+    GAbyte * pixel8;
     int    cmapsize, low, high, mid;
     rgb    col;
     rgb    cmap[256];
@@ -272,7 +272,7 @@ static image fast_find_cmap (image img)
     /* now convert each 32-bit pixel into an 8-bit pixel: */
 
     pixel32 = (rgb *) img->pixels;
-    pixel8 = (byte *) new_img->pixels;
+    pixel8 = (GAbyte *) new_img->pixels;
 
     for (i=0; i < length; i++)
     {
@@ -317,7 +317,7 @@ static image fast_generate_cmap (image img)
     long   i, length, col;
     int    r, g, b, value;
     rgb *  pixel32;
-    byte * pixel8;
+    GAbyte * pixel8;
     rgb    cmap[256];
 
     /* Generate the colour map: */
@@ -346,7 +346,7 @@ static image fast_generate_cmap (image img)
 
     length = img->width * img->height;
     pixel32 = (rgb *) img->pixels;
-    pixel8 = (byte *) new_img->pixels;
+    pixel8 = (GAbyte *) new_img->pixels;
 
     for (i=0; i < length; i++) {
 	col = *pixel32 ++;
@@ -411,8 +411,8 @@ image convert8to32 (image img)
     image new_img;
     long i;
     rgb *pixel32;
-    byte *pixel8;
-    byte value;
+    GAbyte *pixel8;
+    GAbyte value;
 
     if (! img)
 	return img;
@@ -422,7 +422,7 @@ image convert8to32 (image img)
 	return new_img;
 
     pixel32 = (rgb *) new_img->pixels;
-    pixel8 = (byte *) img->pixels;
+    pixel8 = (GAbyte *) img->pixels;
 
     for (i=img->width * img->height; i; i--) {
 	value = *pixel8 ++;
@@ -463,7 +463,7 @@ void sortpalette(image img)
     rgb	col;
     int	new_size;
     long *	histogram;
-    byte *	translate;
+    GAbyte *	translate;
     rgb *	new_cmap;
 
     if (! img)
@@ -472,7 +472,7 @@ void sortpalette(image img)
 	return;
 
     histogram = array(256, long);
-    translate = array(256, byte);
+    translate = array(256, GAbyte);
 
     /* Generate a colour histogram: */
     length = img->width * img->height;
@@ -631,7 +631,7 @@ static image load_header_image_file(FILE *file)
     int   cmapsize = 0;
     rgb * cmap = NULL;
     rgb  *pixel32;
-    byte *pixel8;
+    GAbyte *pixel8;
     image img = NULL;
 
     if (file == NULL)
@@ -700,7 +700,7 @@ static void save_header_image_file(FILE *file, char *name, image img)
     long i, size;
     int width;
     rgb * pixel32;
-    byte *pixel8;
+    GAbyte *pixel8;
 
     if (file == NULL)
 	return;
@@ -967,8 +967,8 @@ static void scale_8_bit_image(image dest, image src, rect dr, rect sr)
     long x, y;
     long dx, dy, sx, sy;
     long dw, dh, sw, sh;
-    byte * src_pixels = src->pixels;
-    byte * dest_pixels = dest->pixels;
+    GAbyte * src_pixels = src->pixels;
+    GAbyte * dest_pixels = dest->pixels;
 
     dw = dest->width;
     dh = dest->height;

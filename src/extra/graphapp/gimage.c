@@ -37,7 +37,7 @@ static image copy2image8 (drawing dw)
 {
     image new_img;
     long   x, y, w, h, j;
-    byte * pixel8;
+    GAbyte * pixel8;
     int    cmapsize;
     int low, high, mid;
     rgb    col;
@@ -87,7 +87,7 @@ static image copy2image8 (drawing dw)
     setpalette(new_img, cmapsize, cmap);
     /* now convert each 32-bit pixel into an 8-bit pixel: */
 
-    pixel8 = (byte *) new_img->pixels;
+    pixel8 = (GAbyte *) new_img->pixels;
 
     for (y = 0; y < h; y++) {
 	p.y = y;
