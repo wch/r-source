@@ -1586,8 +1586,20 @@ if(FALSE) {
 	## pkg indices: this also tangles the vignettes (if installed)
 	if (install_inst || install_demo || install_help) {
 	    starsmsg(stars, "building package indices")
-	    res <- try(.install_package_indices(".", instdir))
-	    if (inherits(res, "try-error"))
+            ## FIXME: add custom runR function
+            deps_only <-
+                config_val_to_logical(Sys.getenv("_R_CHECK_INSTALL_DEPENDS_", "FALSE"))
+            env <- if (deps_only) setRlibs(LinkingTo = TRUE, quote = TRUE)
+                   else ""
+            cmd <- c("tools:::.install_package_indices(\".\",",
+                     quote_path(instdir), ")")
+            cmd <- paste(cmd, collapse="\n")
+            opts <- paste(if(deps_only) "--vanilla" else "--no-save",
+                          "--slave")
+            out <- R_runR(cmd, opts, env = env)
+            if(length(out))
+                cat(paste(c(out, ""), collapse = "\n"))
+            if (length(attr(out, "status")))
 		errmsg("installing package indices failed")
             if(dir.exists("vignettes")) {
                 starsmsg(stars, "installing vignettes")
