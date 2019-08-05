@@ -13467,6 +13467,23 @@ Cdgemm(const char *transa, const char *transb, const int *m,
        const double *beta, double *c, const int *ldc);
 @end example
 
+@noindent
+Alternatively, do as @R{} does as from version 3.6.1-patched and pass
+the character length(s) from C to Fortran. A portable way to do this is
+@example
+// before any R headers
+#define USE_FC_LEN_T
+#include <Rconfig.h>
+#include <R_ext/BLAS.h>
+#ifndef FCONE
+# define FCONE
+#endif
+...
+        F77_CALL(dgemm)("N", "T", &nrx, &ncy, &ncx, &one, x, 
+                        &nrx, y, &nry, &zero, z, &nrx FCONE FCONE);
+@end example
+@noindent
+(Note there is no comma before or between the @code{FCONE} invocations.)
 
 @node Numerical analysis subroutines, Optimization, Calling C from Fortran and vice versa, The R API
 @section Numerical analysis subroutines
