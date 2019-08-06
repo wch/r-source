@@ -9351,7 +9351,7 @@ all.f:2966:72:
 
       *info, work1)
                                                                         1
-Warning: Missing actual argument for argument ‘dum’ at (1)
+Warning: Missing actual argument for argument 'dum' at (1)
 @end example
 @noindent
 and
@@ -9360,7 +9360,7 @@ all.f:1663:72:
 
       *ipvtwk), wk(ikwk), wk(iwork1), wk(iwork2), info)
                                                                         1
-Warning: Type mismatch in argument ‘jpvt’ at (1); passed REAL(8) to INTEGER(4)
+Warning: Type mismatch in argument 'jpvt' at (1); passed REAL(8) to INTEGER(4)
 @end example
 
 @node System and foreign language interfaces, The R API, Debugging, Top
