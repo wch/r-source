@@ -3500,8 +3500,8 @@ make PDF versions of the manuals you will also need file
 @pkg{texinfo} distribution but is often made part of the @TeX{} package
 in re-distributions) as well as
 @command{texi2dvi}.@footnote{@command{texi2dvi} is normally a shell
-script.  Some versions (including that from @pkg{texinfo} 5.2 and 6.0)
-need to be run under @command{bash} rather than a Bourne shell,
+script.  Some versions (including those from @pkg{texinfo} 5.2 and
+6.0-6.6) need to be run under @command{bash} rather than a Bourne shell,
 especially on Solaris. Some of the issues which have been observed with
 broken versions of @command{texi2dvi} can be circumvented by setting the
 environment variable @env{R_TEXI2DVICMD} to the value @code{emulation}.}
