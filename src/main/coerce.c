@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997-2018  The R Core Team
- *  Copyright (C) 2003-2018  The R Foundation
+ *  Copyright (C) 1997-2019  The R Core Team
+ *  Copyright (C) 2003-2019  The R Foundation
  *  Copyright (C) 1995,1996  Robert Gentleman, Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -966,17 +966,10 @@ static SEXP coerceToPairList(SEXP v)
     return (ans);
 }
 
-/* Coerce a pairlist to the given type */
+/* Coerce a LISTSXP ('pairlist') _or_ LANGSXP to the given type */
 static SEXP coercePairList(SEXP v, SEXPTYPE type)
 {
-    int i, n=0;
-    SEXP rval= R_NilValue, vp, names;
-
-    /* Hmm, this is also called to LANGSXP, and coerceVector already
-       did the check of TYPEOF(v) == type */
-    if(type == LISTSXP) return v;/* IS pairlist */
-
-    names = v;
+    SEXP rval= R_NilValue, vp;
     if (type == EXPRSXP) {
 	PROTECT(rval = allocVector(type, 1));
 	SET_VECTOR_ELT(rval, 0, v);
@@ -984,7 +977,7 @@ static SEXP coercePairList(SEXP v, SEXPTYPE type)
 	return rval;
     }
     else if (type == STRSXP) {
-	n = length(v);
+	int i, n = length(v);
 	PROTECT(rval = allocVector(type, n));
 	for (vp = v, i = 0; vp != R_NilValue; vp = CDR(vp), i++) {
 	    if (isString(CAR(vp)) && length(CAR(vp)) == 1)
@@ -998,7 +991,7 @@ static SEXP coercePairList(SEXP v, SEXPTYPE type)
 	return rval;
     }
     else if (isVectorizable(v)) {
-	n = length(v);
+	int i, n = length(v);
 	PROTECT(rval = allocVector(type, n));
 	switch (type) {
 	case LGLSXP:
@@ -1026,19 +1019,22 @@ static SEXP coercePairList(SEXP v, SEXPTYPE type)
 	}
     }
     else
-	error(_("'pairlist' object cannot be coerced to type '%s'"),
-	      type2char(type));
+	error(_("'%s' object cannot be coerced to type '%s'"),
+	      type2char(TYPEOF(v)), type2char(type));
 
     /* If any tags are non-null then we */
     /* need to add a names attribute. */
-    for (vp = v, i = 0; vp != R_NilValue; vp = CDR(vp))
-	if (TAG(vp) != R_NilValue)
-	    i = 1;
+    Rboolean has_nms = FALSE;
+    for (vp = v; vp != R_NilValue; vp = CDR(vp))
+	if (TAG(vp) != R_NilValue) {
+	    has_nms = TRUE;
+	    break;
+	}
 
-    if (i) {
-	i = 0;
-	names = allocVector(STRSXP, n);
-	for (vp = v; vp != R_NilValue; vp = CDR(vp), i++)
+    if (has_nms) {
+	SEXP names = allocVector(STRSXP, length(v));
+	int i;
+	for (vp = v, i = 0; vp != R_NilValue; vp = CDR(vp), i++)
 	    if (TAG(vp) != R_NilValue)
 		SET_STRING_ELT(names, i, PRINTNAME(TAG(vp)));
 	setAttrib(rval, R_NamesSymbol, names);
@@ -1145,8 +1141,8 @@ static SEXP coerceVectorList(SEXP v, SEXPTYPE type)
 	}
     }
     else
-	error(_("(list) object cannot be coerced to type '%s'"),
-	      type2char(type));
+	error(_("'%s' object cannot be coerced to type '%s'"),
+	      "list", type2char(type));
 
     if (warn) CoercionWarning(warn);
     names = getAttrib(v, R_NamesSymbol);
@@ -1168,8 +1164,8 @@ static SEXP coerceSymbol(SEXP v, SEXPTYPE type)
     else if (type == STRSXP)
 	rval = ScalarString(PRINTNAME(v));
     else
-	warning(_("(symbol) object cannot be coerced to type '%s'"),
-		type2char(type));
+	warning(_("'%s' object cannot be coerced to type '%s'"),
+		"symbol", type2char(type));
     return rval;
 }
 
@@ -1205,6 +1201,7 @@ SEXP coerceVector(SEXP v, SEXPTYPE type)
 	break;
     case NILSXP:
     case LISTSXP:
+	if(type == LISTSXP) return v; // as coercePairList() is also used for LANGSXP
 	ans = coercePairList(v, type);
 	break;
     case LANGSXP: {
