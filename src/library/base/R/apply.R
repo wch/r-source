@@ -1,7 +1,7 @@
 #  File src/library/base/R/apply.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2013, 2015 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -40,12 +40,14 @@ apply <- function(X, MARGIN, FUN, ...)
         if (anyNA(MARGIN))
             stop("not all elements of 'MARGIN' are names of dimensions")
     }
-    s.call <- ds[-MARGIN]
-    s.ans  <- ds[MARGIN]
     d.call <- d[-MARGIN]
-    d.ans <- d[MARGIN]
+    d.ans  <- d[ MARGIN]
+    if (anyNA(d.call) || anyNA(d.ans))
+        stop("'MARGIN' does not match dim(X)")
+    s.call <- ds[-MARGIN]
+    s.ans  <- ds[ MARGIN]
     dn.call <- dn[-MARGIN]
-    dn.ans <- dn[MARGIN]
+    dn.ans  <- dn[ MARGIN]
     ## dimnames(X) <- NULL
 
     ## do the calls
