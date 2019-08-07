@@ -2988,6 +2988,19 @@ stopifnot(exprs = { length(prE) >= 3
 })
 
 
+## format(x, scientific = FALSE)  for large x
+xMAX <- .Machine$double.xmax
+ch <- format(xMAX, scientific = 400) # << scientific as 'scipen'
+op <- options(digits=1, scipen = 303)
+co <- capture.output(cat(xMAX))
+options(op)# back to normal
+stopifnot(exprs = {
+    nchar(ch) == 309
+    identical(ch, co)
+    ch == format(xMAX, scientific=FALSE)
+}## format(*, scientific=FALSE) was "not obeyed" in R <= 3.6.1
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

@@ -88,6 +88,10 @@
       \item \code{stopifnot()} gets new argument \code{exprObject} to allow
       an \R object of class \code{expression} (or other \sQuote{language})
       to work more consistently, thanks to suggestions by Suharto Anggono.
+
+      \item \code{format.default(*, scientific = FALSE)} now corresponds to
+      a practically most extreme \code{options(scipen = n)} setting rather
+      than arbitrary \code{n = 100}.
     }
   }
 }
