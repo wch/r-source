@@ -2998,7 +2998,7 @@ stopifnot(exprs = {
     nchar(ch) == 309
     identical(ch, co)
     ch == format(xMAX, scientific=FALSE)
-}## format(*, scientific=FALSE) was "not obeyed" in R <= 3.6.1
+})## format(*, scientific=FALSE) was "not obeyed" in R <= 3.6.1
 
 
 
