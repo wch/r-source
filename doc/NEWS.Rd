@@ -52,6 +52,10 @@
       \item Auto-printing S4 objects no longer duplicates the object,
       for faster speed and reduced memory consumption. Reported by Aaron
       Lun.
+
+
+      \item \code{dgamma(x, shape, log=TRUE)} now longer overflows
+      to \code{Inf} for shape < 1 and very small \code{x}; \PR{Jonathan Rougier
     }
   }
 }
