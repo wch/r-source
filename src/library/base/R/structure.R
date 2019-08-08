@@ -26,12 +26,15 @@ structure <- function (.Data, ...)
     attrib <- list(...)
     if(length(attrib)) {
         specials <- c(".Dim", ".Dimnames", ".Names", ".Tsp", ".Label")
-        replace <- c("dim", "dimnames", "names", "tsp", "levels")
-	m <- match(names(attrib), specials)
-	ok <- !is.na(m)
-	names(attrib)[ok] <- replace[m[ok]]
+        attrnames <- names(attrib)
+        m <- match(attrnames, specials)
+        ok <- !is.na(m)
+        if(any(ok)) {
+            replace <- c("dim", "dimnames", "names", "tsp", "levels")
+            names(attrib)[ok] <- replace[m[ok]]
+        }
         ## prior to 2.5.0 factors would deparse to double codes
-	if("factor" %in% attrib[["class", exact = TRUE]]
+        if(any(attrib[["class", exact = TRUE]] == "factor")
            && typeof(.Data) == "double")
             storage.mode(.Data) <- "integer"
         attributes(.Data) <- c(attributes(.Data), attrib)
