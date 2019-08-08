@@ -1,6 +1,6 @@
 % File src/library/base/man/data.matrix.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2008 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{data.matrix}
@@ -17,7 +17,7 @@ data.matrix(frame, rownames.force = NA)
 }
 \arguments{
   \item{frame}{a data frame whose components are logical vectors,
-    factors or numeric vectors.}
+    factors or numeric or character vectors.}
   \item{rownames.force}{logical indicating if the resulting matrix
     should have character (rather than \code{NULL})
     \code{\link{rownames}}.  The default, \code{NA}, uses \code{NULL}
@@ -25,7 +25,8 @@ data.matrix(frame, rownames.force = NA)
     zero-row data frame.}
 }
 \details{
-  Logical and factor columns are converted to integers.  Any other
+  Logical and factor columns are converted to integers.  Character
+  columns are first converted to factors and then to integers. Any other
   column which is not numeric (according to \code{\link{is.numeric}}) is
   converted by \code{\link{as.numeric}} or, for S4 objects,
   \code{\link{as}(, "numeric")}.  If all columns are integer (after

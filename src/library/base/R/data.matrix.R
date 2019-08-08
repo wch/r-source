@@ -1,7 +1,7 @@
 #  File src/library/base/R/data.matrix.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -26,9 +26,6 @@ data.matrix <- function(frame, rownames.force = NA)
           else if(.row_names_info(frame) <= 0L) NULL
           else row.names(frame)
 
-    stringsAsFactors_default_is_FALSE <-
-        isFALSE(as.logical(Sys.getenv("_R_OPTIONS_STRINGS_AS_FACTORS_")))
-    
     for(i in seq_len(d[2L])) {
         xi <- frame[[i]]
         ## at present is.numeric suffices, but let's be cautious
@@ -37,7 +34,7 @@ data.matrix <- function(frame, rownames.force = NA)
             frame[[i]] <- as.integer(xi)
             next
         }
-        if(stringsAsFactors_default_is_FALSE && is.character(xi)) {
+        if(is.character(xi)) {
             frame[[i]] <- as.integer(factor(xi))
             next
         }
