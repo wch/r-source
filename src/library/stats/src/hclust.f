@@ -219,7 +219,12 @@ C
 C  Map row I and column J of upper half diagonal symmetric matrix
 C  onto vector.
       INTEGER N,I,J
-      IOFFST=J+(I-1)*N-(I*(I+1))/2
+C  use 64-bit integers for temporaries to avoid integer overflow
+      INTEGER(KIND=8) N8,I8,J8
+      N8=N
+      I8=I
+      J8=J
+      IOFFST=J8+(I8-1)*N8-(I8*(I8+1))/2
       RETURN
       END
 
