@@ -219,12 +219,14 @@ C
 C  Map row I and column J of upper half diagonal symmetric matrix
 C  onto vector.
       INTEGER N,I,J
-C  use 64-bit integers for temporaries to avoid integer overflow
+C  Use 64-bit integers for temporaries to avoid integer overflow
       INTEGER(KIND=8) N8,I8,J8
       N8=N
       I8=I
       J8=J
-      IOFFST=J8+(I8-1)*N8-(I8*(I8+1))/2
+C  Result is known to fit in 31 bits, so INT() is safe
+C  and supresses compiler warning.
+      IOFFST=INT(J8+(I8-1)*N8-(I8*(I8+1))/2)
       RETURN
       END
 
