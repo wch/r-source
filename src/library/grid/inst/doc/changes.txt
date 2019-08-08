@@ -10,6 +10,8 @@ Changes from grid_3.6.* to grid_3.7.0:
     is a 'childrenvp' of a gTree and the gTree has gpar() settings
     (in that case we should revert to the gTree gpar() settings).
 
+    Reported by Nicolas Coutin.
+
 
 Changes from grid_3.5.* to grid_3.6.0:
 -------------------------------------
