@@ -802,9 +802,11 @@ SEXP L_upviewport(SEXP n)
     if (deviceChanged(devWidthCM, devHeightCM, newvp))
 	calcViewportTransform(newvp, viewportParent(newvp), 1, dd);
     /* 
-     * Enforce the current viewport settings
+     * Enforce the stored parent gpar settings
+     * (not necessarily the parent viewport settings if this viewport
+     *  is a childrenvp of a gTree, where the gTree has gpar settings)
      */
-    setGridStateElement(dd, GSS_GPAR, viewportgpar(newvp));
+    setGridStateElement(dd, GSS_GPAR, VECTOR_ELT(gvp, PVP_PARENTGPAR));
     /* Set the clipping region to the parent's cur.clip
      */
     parentClip = viewportClipRect(newvp);
