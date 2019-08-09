@@ -99,7 +99,7 @@ function(file, fields = NULL, all = FALSE, keep.white = NULL)
     line_has_tag <- grepl("^[^[:blank:]][^:]*:", lines)
 
     ## Check that records start with tag lines.
-    pos <- which(diff(nums) > 0L) + 1L
+    pos <- c(1L, which(diff(nums) > 0L) + 1L)
     ind <- !line_has_tag[pos]
     if(any(ind)) {
         lines <- strtrim(lines[pos[ind]], 0.7 * getOption("width"))
