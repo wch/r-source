@@ -17,6 +17,8 @@
  *   Edin Hodzic, Eric J Bivona, Kai Uwe Rommel, Danny Quah, Ulrich Betzler
  */
 
+ /* Copyright (C) 2018-2019 The R Core Team */
+
 #include       "getline.h"
 
 static int      gl_tab();  /* forward reference needed for gl_tab_hook */
@@ -162,7 +164,11 @@ gl_getc(void)
 	  nAlt = 0;
 	  bbb  = 0;
 	} 
-	else if (st & ENHANCED_KEY) { 
+	else if (st & ENHANCED_KEY) {
+	  /* FIXME: remove this eventually as these keys are already
+	     accepted below without ENHANCED_KEY flag, but check it
+	     does not change any expected behavior wrt to other enhanced keys
+	  */
 	  switch(vk) {
 	  case VK_LEFT: c=2 ;break;
 	  case VK_RIGHT: c=6;break;
@@ -172,7 +178,7 @@ gl_getc(void)
 	  case VK_DOWN: c=14;break;		
 	  case VK_DELETE:  c='\004';break;
 	  }
-	} 
+	}
 	else if (AltIsDown) { /* Interpret Alt+xxx entries */
 	  switch (vk) {
 	  case VK_INSERT: n = 0; break;
@@ -194,7 +200,22 @@ gl_getc(void)
 	    bbb = 0;
 	    nAlt = 0;
 	  } 
-	} 
+	}
+	/* with conPTY on Windows 10, the ENHANCED_KEY state is not set */
+	else if (vk == VK_LEFT)
+	    c = 2;
+	else if (vk == VK_RIGHT)
+	    c = 6;
+	else if (vk == VK_HOME)
+	    c = '\001';
+	else if (vk == VK_END)
+	    c = '\005';
+	else if (vk == VK_UP)
+	    c = 16;
+	else if (vk == VK_DOWN)
+	    c = 14;
+	else if (vk == VK_DELETE)
+	    c = '\004';
 	else {
 	  /* Originally uChar.AsciiChar was used here and for MBCS characters
 	     GetConsoleInput returned as many events as bytes in the character.
