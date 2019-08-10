@@ -86,10 +86,16 @@ function(dir, outDir, builtStamp=character())
             .expand_package_description_db_R_fields(db),
             Built = Built)
 
-    ## This cannot be done in a MBCS: write.dcf fails
-    ctype <- Sys.getlocale("LC_CTYPE")
-    Sys.setlocale("LC_CTYPE", "C")
-    on.exit(Sys.setlocale("LC_CTYPE", ctype))
+    ## <FIXME>
+    ## This should no longer be necessary?
+    ## <COMMENT>
+    ## ## This cannot be done in a MBCS: write.dcf fails
+    ## ctype <- Sys.getlocale("LC_CTYPE")
+    ## Sys.setlocale("LC_CTYPE", "C")
+    ## on.exit(Sys.setlocale("LC_CTYPE", ctype))
+    ## </COMMENT>    
+    ## </FIXME>
+    
     .write_description(db, file.path(outDir, "DESCRIPTION"))
 
     outMetaDir <- file.path(outDir, "Meta")
