@@ -4539,11 +4539,13 @@ is to search for
 @command{gfortran}, @command{g95}, @command{xlf95} @command{f95},
 @command{fort}, @command{ifort}, @command{ifc}, @command{efc},
 @command{pgfortran}, @command{pgf95} @command{lf95}, @command{ftn},
-@command{nagfor},
-@command{xlf90}, @command{f90}, @command{pgf90}, @command{pghpf},
-@command{epcf90}.
-(Note that these are searched for by name, without checking the standard
-of Fortran they support.)
+@command{nagfor}, @command{xlf90}, @command{f90}, @command{pgf90},
+@command{pghpf}, @command{epcf90}.  (Note that these are searched for by
+name, without checking the standard of Fortran they support.)  The
+command and flags used should support fixed-form Fortran with extension
+@file{.f}: in the unusual case that a specific flag is needed for
+free-form Fortran with extension @file{.f90} or @file{.f95}, this can be
+specified as part of @code{FCFLAGS}.
 
 The search mechanism can be changed using the configure variable
 @code{FC} which specifies the command that runs the Fortran compiler.
@@ -4555,7 +4557,7 @@ specify its full path.
 
 If your Fortran libraries are in slightly peculiar places, you should
 @enindex LD_LIBRARY_PATH
-also look at @env{LD_LIBRARY_PATH} or your system's equivalent to make
+also look at @env{LD_LIBRARY_PATH} (or your system's equivalent) to make
 sure that all libraries are on this path.
 
 Note that only Fortran compilers which convert identifiers to lower case
