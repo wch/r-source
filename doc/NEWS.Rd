@@ -38,6 +38,8 @@
 
       \item \code{data.matrix()} now converts character columns to
       factors and from this to integers.
+
+      \item \code{package.skeleton()} now explicitly lists all exports.
     }
   }
 

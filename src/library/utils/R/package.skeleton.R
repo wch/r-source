@@ -62,12 +62,17 @@ package.skeleton <-
     }
     usingS4 <- length(classesList) > 0L || length(methodsList) > 0L
 
-    ## we need to test in the C locale
-    curLocale <- Sys.getlocale("LC_CTYPE")
-    on.exit(Sys.setlocale("LC_CTYPE", curLocale), add = TRUE)
-    if(Sys.setlocale("LC_CTYPE", "C") != "C")
-        warning("cannot turn off locale-specific chars via LC_CTYPE",
-                domain = NA)
+    ## <FIXME>
+    ## This should no longer be necessary?
+    ## <COMMENT>
+    ## ## we need to test in the C locale
+    ## curLocale <- Sys.getlocale("LC_CTYPE")
+    ## on.exit(Sys.setlocale("LC_CTYPE", curLocale), add = TRUE)
+    ## if(Sys.setlocale("LC_CTYPE", "C") != "C")
+    ##     warning("cannot turn off locale-specific chars via LC_CTYPE",
+    ##             domain = NA)
+    ## </COMMENT>
+    ## </FIXME>
 
     have <- vapply(list, exists, NA, envir = environment)
     if(any(!have))
@@ -103,7 +108,7 @@ package.skeleton <-
 	"Maintainer: Who to complain to <yourfault@somewhere.net>\n",
 	"Description: More about what it does (maybe more than one line)\n",
 	"License: What license is it under?\n",
-	if(usingS4) "Depends: methods\n",
+	if(usingS4) "Imports: methods\n",
 	if(nzchar(encoding) && encoding != "unknown")
 	    paste0("Encoding: ", encoding, "\n"),
 	file = description, sep = "")
@@ -111,13 +116,21 @@ package.skeleton <-
 
     ## NAMESPACE
     ## <NOTE>
-    ## For the time being, we export all non-internal objects using the pattern
-    ## of names beginning with alpha.  All S4 methods and classes are exported.
-    ## S3 methods will be exported if the function's name would be exported.
+    ## For the time being, we export all non-internal objects with names
+    ## beginning with alpha
+    ## All S4 methods and classes are exported.
+    ## S3 methods will be exported if the function's name would be
+    ## exported. 
     ## </NOTE>
     message("Creating NAMESPACE ...", domain = NA)
     out <- file(file.path(dir, "NAMESPACE"), "wt")
-    writeLines("exportPattern(\"^[[:alpha:]]+\")", out)
+    list0 <- list[grepl("^[[:alpha:]]", list)]
+    if(length(list0))
+        writeLines(strwrap(sprintf("export(%s)",
+                                   paste0("\"", list0, "\"",
+                                          collapse = ", ")),
+                           exdent = 7L),
+                   out)
     if(length(methodsList)) {
 	cat("exportMethods(\n    ", file = out)
 	cat(paste0('"', methodsList, '"', collapse = ",\n    "), "\n)\n", file = out)
