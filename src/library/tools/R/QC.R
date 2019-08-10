@@ -4443,8 +4443,10 @@ function(x, ...)
 .check_package_datasets <-
 function(pkgDir)
 {
+    on.exit(Sys.setlocale("LC_CTYPE", Sys.getlocale("LC_CTYPE")))
     Sys.setlocale("LC_CTYPE", "C")
-    options(warn=-1)
+    oop <- options(warn = -1)
+    on.exit(options(oop), add = TRUE)
     check_one <- function(x, ds)
     {
         if(!length(x)) return()
@@ -4472,7 +4474,7 @@ function(pkgDir)
     }
 
     sink(tempfile()) ## suppress startup messages to stdout
-    on.exit(sink())
+    on.exit(sink(), add = TRUE)
     files <- list_files_with_type(file.path(pkgDir, "data"), "data")
     files <- unique(basename(file_path_sans_ext(files)))
     ans <- vector("list", length(files))
@@ -4873,7 +4875,9 @@ function(dir)
     ## This was always run in the C locale < 2.5.0
     ## However, what chars are alphabetic depends on the locale,
     ## so as from R 2.5.0 we try to set a locale.
-    ## Any package with no declared encoding should have only ASCII R code.
+    ## Any package with no declared encoding should have only ASCII R
+    ## code.
+    on.exit(Sys.setlocale("LC_CTYPE", Sys.getlocale("LC_CTYPE")))    
     if(!is.na(enc)) {  ## try to use the declared encoding
         if(.Platform$OS.type == "windows") {
             ## "C" is in fact "en", and there are no UTF-8 locales
@@ -4951,7 +4955,6 @@ function(dir)
         lapply(list_files_with_type(dir, "code", full.names = FALSE,
                                     OS_subdirs = c("unix", "windows")),
                collect_parse_woes)
-    Sys.setlocale("LC_CTYPE", "C")
     structure(out[lengths(out) > 0L],
               class = "check_package_code_syntax")
 }
