@@ -65,8 +65,7 @@ function(file, fields = NULL, all = FALSE, keep.white = NULL)
         out
     }
 
-    ## This needs to be done in an 8-bit locale,
-    ## both for the regexps and strtrim().
+    ## This needs to be done in an 8-bit locale for the regexps.
     ctype <-  Sys.getlocale("LC_CTYPE")
     on.exit(Sys.setlocale("LC_CTYPE", ctype), add = TRUE)
     Sys.setlocale("LC_CTYPE", "C")
@@ -77,7 +76,7 @@ function(file, fields = NULL, all = FALSE, keep.white = NULL)
     ## start with blanks but have no ':' ...
     ind <- grep("^[^[:blank:]][^:]*$", lines)
     if(length(ind)) {
-        lines <- strtrim(lines[ind], 0.7 * getOption("width"))
+        lines <- substr(lines[ind], 1L, 0.7 * getOption("width"))
         stop(gettextf("Invalid DCF format.\nRegular lines must have a tag.\nOffending lines start with:\n%s",
                       paste0("  ", lines, collapse = "\n")),
              domain = NA)
@@ -102,7 +101,7 @@ function(file, fields = NULL, all = FALSE, keep.white = NULL)
     pos <- c(1L, which(diff(nums) > 0L) + 1L)
     ind <- !line_has_tag[pos]
     if(any(ind)) {
-        lines <- strtrim(lines[pos[ind]], 0.7 * getOption("width"))
+        lines <- substr(lines[pos[ind]], 1L, 0.7 * getOption("width"))
         stop(gettextf("Invalid DCF format.\nContinuation lines must not start a record.\nOffending lines start with:\n%s",
                       paste0("  ", lines, collapse = "\n")),
              domain = NA)
