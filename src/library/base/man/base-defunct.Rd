@@ -1,6 +1,6 @@
 % File src/library/base/man/base-defunct.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{base-defunct}
@@ -55,7 +55,6 @@
 \alias{.Import}
 \alias{.ImportFrom}
 \alias{.Export}
-\alias{.S3method}
 \alias{.First.lib}
 \alias{mem.limits}
 \alias{.readRDS}
@@ -140,7 +139,6 @@ manglePackageName(pkgName, pkgVersion)
 .Import(...)
 .ImportFrom(name, ...)
 .Export(...)
-.S3method(generic, class, method)
 
 # Defunct in 2.14.0
 .First.lib(lib, pkg)
@@ -253,9 +251,8 @@ is.real(x)
   \code{manglePackageName} was part of the defunct support for versioned
   installs.
 
-  \code{.Import}, \code{.ImportFrom}, \code{.Export} and
-  \code{.S3method} were part of an experimental alternative way to
-  specify namespaces.
+  \code{.Import}, \code{.ImportFrom}, and \code{.Export} were part of an
+  experimental alternative way to specify namespaces.
 
   \code{.First.lib} was the load/attach hook for packages without
   namespaces: use \code{\link{.onLoad}} or \code{\link{.onAttach}} instead.

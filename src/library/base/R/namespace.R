@@ -1753,3 +1753,10 @@ registerS3methods <- function(info, package, env)
 					  expenv, metaname)
     impMethods # possibly NULL
 }
+
+.S3method <- function(generic, class, method) {
+    if(missing(method)) method <- paste(generic, class, sep = ".")
+    method <- match.fun(method)
+    registerS3method(generic, class, method, envir = parent.frame())
+    invisible(NULL)
+}

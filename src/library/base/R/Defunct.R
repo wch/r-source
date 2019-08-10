@@ -180,8 +180,6 @@
 ##     .Defunct(msg = "namespaces should be specified via the 'NAMESPACE' file")
 ## .Export <- function(...)
 ##     .Defunct(msg = "namespaces should be specified via the 'NAMESPACE' file")
-## .S3method <- function(generic, class, method)
-##     .Defunct(msg = "namespaces should be specified via the 'NAMESPACE' file")
 ## </entry>
 
 ## <entry>
