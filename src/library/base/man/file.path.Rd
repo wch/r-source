@@ -1,6 +1,6 @@
 % File src/library/base/man/file.path.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{file.path}
@@ -14,8 +14,8 @@
 file.path(\dots, fsep = .Platform$file.sep)
 }
 \arguments{
-  \item{\dots}{character vectors.}
-  \item{fsep}{the path separator to use.}
+  \item{\dots}{character vectors.  Long vectors are not supported.}
+  \item{fsep}{the path separator to use (assumed to be ASCII).}
 }
 \details{
   The implementation is designed to be fast (faster than
@@ -26,12 +26,16 @@ file.path(\dots, fsep = .Platform$file.sep)
 
   Trailing path separators are invalid for Windows file paths apart from
   \file{/} and \file{d:/} (although some functions/utilities do accept
-  them), so a trailing \code{/} or \code{\\} is removed.
+  them), so a trailing \code{/} or \code{\\} is removed there.
 }
 \value{
   A character vector of the arguments concatenated term-by-term and
   separated by \code{fsep} if all arguments have positive length;
   otherwise, an empty character vector (unlike \code{\link{paste}}).
+
+  An element of the result will be marked as UTF-8 if run in a UTF-8
+  locale (when marked inputs are converted to UTF-8) or if an component
+  of the result is marked as UTF-8, or as Latin-1 in a non-Latin-1 locale.
 }
 \note{
   The components are by default separated by \code{/}

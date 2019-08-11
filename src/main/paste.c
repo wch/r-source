@@ -277,36 +277,34 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
+/*
+  Encoding support added for R 3.7.0.  One would normally expect file
+  paths (and their components) to be in the session encoding, but on
+  Windows there is some support for Unicode paths encoded (inside R) in UTF-8.
+ */
 SEXP attribute_hidden do_filepath(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP ans, sep, x;
-    int i, j, k, ln, maxlen, nx, nzero, pwidth, sepw;
-    const char *s, *csep, *cbuf;
-    char *buf;
-
     checkArity(op, args);
 
     /* Check the arguments */
 
-    x = CAR(args);
+    SEXP x = CAR(args);
     if (!isVectorList(x))
 	error(_("invalid first argument"));
-    nx = length(x);
-    if(nx == 0) return allocVector(STRSXP, 0);
+    int nx = length(x);
+    if (nx == 0) return allocVector(STRSXP, 0);
 
-
-    sep = CADR(args);
+    SEXP sep = CADR(args);
     if (!isString(sep) || LENGTH(sep) <= 0 || STRING_ELT(sep, 0) == NA_STRING)
 	error(_("invalid separator"));
     sep = STRING_ELT(sep, 0);
-    csep = CHAR(sep);
-    sepw = (int) strlen(csep); /* hopefully 1 */
+    const char *csep = CHAR(sep);
+    int sepw = (int) strlen(csep); /* hopefully 1 */
 
     /* Any zero-length argument gives zero-length result */
-    maxlen = 0; nzero = 0;
-    for (j = 0; j < nx; j++) {
+    int maxlen = 0, nzero = 0;
+    for (int j = 0; j < nx; j++) {
 	if (!isString(VECTOR_ELT(x, j))) {
-	    /* formerly in R code: moved to C for speed */
 	    SEXP call, xj = VECTOR_ELT(x, j);
 	    if(OBJECT(xj)) { /* method dispatch */
 		PROTECT(call = lang2(R_AsCharacterSymbol, xj));
@@ -320,29 +318,50 @@ SEXP attribute_hidden do_filepath(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (!isString(VECTOR_ELT(x, j)))
 		error(_("non-string argument to .Internal(%s)"), PRIMNAME(op));
 	}
-	ln = LENGTH(VECTOR_ELT(x, j));
-	if(ln > maxlen) maxlen = ln;
-	if(ln == 0) {nzero++; break;}
+	int ln = LENGTH(VECTOR_ELT(x, j));
+	if (ln == 0) {nzero++; break;}
+	if (ln > maxlen) maxlen = ln;
     }
-    if(nzero || maxlen == 0) return allocVector(STRSXP, 0);
+    if (nzero || maxlen == 0) return allocVector(STRSXP, 0);
 
-    PROTECT(ans = allocVector(STRSXP, maxlen));
+    SEXP ans = PROTECT(allocVector(STRSXP, maxlen));
 
-    for (i = 0; i < maxlen; i++) {
-	pwidth = 0;
-	for (j = 0; j < nx; j++) {
-	    k = LENGTH(VECTOR_ELT(x, j));
-	    pwidth += (int) strlen(translateChar(STRING_ELT(VECTOR_ELT(x, j), i % k)));
+    for (int i = 0; i < maxlen; i++) {
+	Rboolean use_UTF8;
+	if (utf8locale)
+	    use_UTF8 = TRUE;
+	else {
+	    use_UTF8 = FALSE;
+	    for (int j = 0; j < nx; j++) {
+		int k = LENGTH(VECTOR_ELT(x, j));
+		SEXP cs = STRING_ELT(VECTOR_ELT(x, j), i % k);
+		if(IS_UTF8(cs)) {use_UTF8 = TRUE; break;}
+		if(!latin1locale && IS_LATIN1(cs)) {use_UTF8 = TRUE; break;}
+	    }
+	}
+	int pwidth = 0;
+	for (int j = 0; j < nx; j++) {
+	    int k = LENGTH(VECTOR_ELT(x, j));
+	    SEXP cs = STRING_ELT(VECTOR_ELT(x, j), i % k);
+	    if(use_UTF8)
+		pwidth += (int) strlen(translateCharUTF8(cs));
+	    else
+		pwidth += (int) strlen(translateChar(cs));
 	}
 	pwidth += (nx - 1) * sepw;
-	cbuf = buf = R_AllocStringBuffer(pwidth, &cbuff);
-	for (j = 0; j < nx; j++) {
-	    k = LENGTH(VECTOR_ELT(x, j));
-	    if (k > 0) {
-		s = translateChar(STRING_ELT(VECTOR_ELT(x, j), i % k));
-		strcpy(buf, s);
-		buf += strlen(s);
-	    }
+	char *buf = R_AllocStringBuffer(pwidth, &cbuff);
+	const char *cbuf = buf;
+	for (int j = 0; j < nx; j++) {
+	    int k = LENGTH(VECTOR_ELT(x, j));
+	    // k == 0 already handled above
+	    SEXP cs = STRING_ELT(VECTOR_ELT(x, j), i % k);
+	    const char *s;
+	    if (use_UTF8)
+		s = translateCharUTF8(cs);
+	    else
+		s = translateChar(cs);
+	    strcpy(buf, s);
+	    buf += strlen(s);
 	    if (j != nx - 1 && sepw != 0) {
 		strcpy(buf, csep);
 		buf += sepw;
@@ -358,7 +377,7 @@ SEXP attribute_hidden do_filepath(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	}
 #endif
-	SET_STRING_ELT(ans, i, mkChar(cbuf));
+	SET_STRING_ELT(ans, i, mkCharCE(cbuf, use_UTF8 ? CE_UTF8 : 0));
     }
     R_FreeStringBufferL(&cbuff);
     UNPROTECT(1);

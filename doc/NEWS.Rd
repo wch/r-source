@@ -30,11 +30,11 @@
       default to speed it up when \code{x} is a large \code{call} object.
 
       \item The internal traceback object produced when an error is
-      signalled (\code{.Traceback}), now contains the \code{call}s rather
-      than the \emph{\code{deparse()}d} calls, deferring the deparsing to
-      the user level functions \code{.traceback()} and \code{traceback()},
-      fulfilling the wish of \PR{17580}, reported (incl. patch proposal)
-      by Brodie Gaslam.
+      signalled (\code{.Traceback}), now contains the \code{call}s
+      rather than the \emph{\code{deparse()}d} calls, deferring the
+      deparsing to the user level functions \code{.traceback()} and
+      \code{traceback()}, fulfilling the wish of \PR{17580}, reported
+      (incl.\sspace{}patch proposal) by Brodie Gaslam.
 
       \item \code{data.matrix()} now converts character columns to
       factors and from this to integers.
@@ -43,6 +43,10 @@
 
       \item New function \code{.S3method()} to register S3 methods in R
       scripts.
+      
+      \item \code{file.path()} has some support for file paths not in
+      the session encoding, e.g.\sspace{}with UTF-8 inputs in a
+      non-UTF-8 locale the output is UTF-8 and marked as such.
     }
   }
 
