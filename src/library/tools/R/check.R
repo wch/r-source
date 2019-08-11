@@ -2340,7 +2340,7 @@ add_dummies <- function(dir, Log)
                     ## foo: bar ...
                     ## where bar ... and standalone foo are object names
                     dl <- readLines(sv, warn = FALSE)
-                    if (any(bad <- !grepl("^[^ :]*($|: +[[:alpha:].])", dl))) {
+                    if (any(bad <- !grepl("^[^ :]+($|: +[[:alpha:].])", dl))) {
                         warn <- TRUE
                         msgs <- c(msgs,
                                   sprintf("File %s contains malformed line(s):\n",
@@ -2384,8 +2384,27 @@ add_dummies <- function(dir, Log)
                                 warn <- TRUE
                             msgs <- c(msgs,
                                      sprintf('Output for data("%s", package = "%s"):\n', f, pkgname),
-                                     paste(c(paste0("  ",out), ""),
+                                     paste(c(paste0("  ", out), ""),
                                            collapse = "\n"))
+                        }
+                    }
+                    check_datalist <-
+                        Sys.getenv("_R_CHECK_DATALIST_", "FALSE")
+                    check_datalist <-
+                        config_val_to_logical(check_datalist)
+                    if(check_datalist && !warn) {
+                        ## If there was a problem loading the datasets,
+                        ## we cannot reliably check whether 'datalist'
+                        ## is up-to-date.
+                        cmd <- sprintf("tools:::.check_package_datalist(\"%s\", \"%s\")",
+
+                                       pkgname, libdir)
+                        out <- R_runR(cmd, R_opts2)
+                        if(length(out)) {
+                            msgs <- c(msgs,
+                                      c("File 'data/datalist' is out-of-date:\n",
+                                        paste0("  ", out, "\n"),
+                                        "Please re-create using tools::add_datalist(force = TRUE).\n"))
                         }
                     }
                 }
@@ -5895,6 +5914,7 @@ add_dummies <- function(dir, Log)
         Sys.setenv("_R_CHECK_LENGTH_1_LOGIC2_" =
                        "package:_R_CHECK_PACKAGE_NAME_,verbose")
         Sys.setenv("_R_CHECK_CODOC_VARIABLES_IN_USAGES_" = "TRUE")
+        Sys.setenv("_R_CHECK_DATALIST_" = "TRUE")
         R_check_vc_dirs <- TRUE
         R_check_executables_exclusions <- FALSE
         R_check_doc_sizes2 <- TRUE

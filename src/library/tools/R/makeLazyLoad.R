@@ -47,7 +47,8 @@ sysdata2LazyLoadDB <- function(srcFile, destDir, compress = TRUE)
     makeLazyLoadDB(e, file.path(destDir, "sysdata"), compress = compress)
 }
 
-list_data_in_pkg <- function(package, lib.loc = NULL, dataDir = NULL)
+list_data_in_pkg <-
+function(package, lib.loc = NULL, dataDir = NULL, use_datalist = TRUE)
 {
     if(is.null(dataDir)) {
         pkgpath <- find.package(package, lib.loc, quiet = TRUE)
@@ -70,8 +71,9 @@ list_data_in_pkg <- function(package, lib.loc = NULL, dataDir = NULL)
     if(dir.exists(dataDir)) {
         if(file.exists(sv <- file.path(dataDir, "Rdata.rds"))) {
             ans <- readRDS(sv)
-        } else if(file.exists(sv <- file.path(dataDir, "datalist")) &&
-                  !file.info(sv)$isdir) { # package cp4p had a directory
+        } else if(file.exists(sv <- file.path(dataDir, "datalist"))
+                  && use_datalist
+                  && !file.info(sv)$isdir) { # package cp4p had a directory
             ## BioC mess this file up, of course!
             ans <- strsplit(readLines(sv, warn = FALSE), ":")
             nms <- lapply(ans, function(x) x[1L])
