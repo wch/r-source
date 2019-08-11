@@ -65,7 +65,7 @@ make.packages.html <-
     on.exit(close(out))
     if(WINDOWS) {
         rh <- chartr("\\", "/", R.home())
-        drive <- substring(rh, 1L, 2L)
+        drive <- substr(rh, 1L, 2L)
     }
     ## find out how many
     pkgs <- vector("list", length(lib.loc))
@@ -95,7 +95,7 @@ make.packages.html <-
                 ## use relative indexing for .Library
                 ## perhaps other site libraries
                 if (is.na(pmatch(rh, lib))) {
-                    lib0 <- if(substring(lib, 2L, 2L) != ":")
+                    lib0 <- if(substr(lib, 2L, 2L) != ":")
                         paste0(drive, lib) else lib
                     lib0 <- paste0("file:///", URLencode(lib0))
                 }

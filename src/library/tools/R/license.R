@@ -695,7 +695,7 @@ build_license_db <-
 function(dir, unpacked = FALSE)
 {
     CRAN <- getOption("repos")["CRAN"]
-    if(missing(dir) && substring(CRAN, 1L, 7L) == "file://")
+    if(missing(dir) && substr(CRAN, 1L, 7L) == "file://")
         dir <- file.path(substring(CRAN, 8L), "src", "contrib")
 
     fields <- c("License", "License_is_FOSS", "License_restricts_use",

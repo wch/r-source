@@ -586,7 +586,7 @@ function() {
                                        package = "tools"))
     path <- attr(fetchRdDB(filebase, "QC"), "Rdfile")
     ## We could use 5 dirname() calls, but perhaps more easily:
-    substring(path, 1L, nchar(path) - 28L)
+    substr(path, 1L, nchar(path) - 28L)
 }
 
 ## Unfortunately,
@@ -2307,9 +2307,9 @@ function(text)
     titleCase1 <- function(x) {
         ## A quote might be prepended.
         do1 <- function(x) {
-            x1 <- substring(x, 1L, 1L)
+            x1 <- substr(x, 1L, 1L)
             if(nchar(x) >= 3L && x1 %in% c("'", '"'))
-                paste0(x1, toupper(substring(x, 2L, 2L)),
+                paste0(x1, toupper(substr(x, 2L, 2L)),
                        tolower(substring(x, 3L)))
             else paste0(toupper(x1), tolower(substring(x, 2L)))
         }

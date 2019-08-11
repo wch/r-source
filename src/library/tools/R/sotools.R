@@ -85,7 +85,7 @@ get_system_ABI <- if(.Platform$OS.type == "windows") {
     function()
     {
         s <- Sys.getenv("R_SYSTEM_ABI")
-        if((s == "") || (substring(s, 1L, 1L) %in% c("@", "?")))
+        if((s == "") || (substr(s, 1L, 1L) %in% c("@", "?")))
             return(character())
         s <- unlist(strsplit(s, ",", fixed = TRUE))
         names(s) <- c("system", "CC", "CXX", "F77", "FC")

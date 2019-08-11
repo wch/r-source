@@ -615,15 +615,15 @@ function(x)
         pos <- which(RdTags(x) == "\\itemize")
         if(!length(pos)) {
             stop(gettextf("Malformed NEWS.Rd file:\nChunk starting\n  %s\ncontains no \\itemize.",
-                          substring(sub("^[[:space:]]*", "",
-                                        .Rd_deparse(x)),
-                                    1L, 60L)),
+                          substr(sub("^[[:space:]]*", "",
+                                     .Rd_deparse(x)),
+                                 1L, 60L)),
                  domain = NA)
         } else if(length(pos) > 1L) {
             warning(gettextf("Malformed NEWS.Rd file:\nChunk starting\n  %s\ncontains more than one \\itemize.\nUsing the first one.",
-                             substring(sub("^[[:space:]]*", "",
-                                           .Rd_deparse(x)),
-                                       1L, 60L)),
+                             substr(sub("^[[:space:]]*", "",
+                                        .Rd_deparse(x)),
+                                    1L, 60L)),
                     domain = NA)
             pos <- pos[1L]
         }
@@ -641,9 +641,9 @@ function(x)
         y <- y[names(y) != "0"]
         if(!length(y)) {
             warning(gettextf("Malformed NEWS.Rd file:\nChunk starting\n  %s\ncontains no \\item.",
-                             substring(sub("^[[:space:]]*", "",
-                                           .Rd_deparse(x)),
-                                       1L, 60L)),
+                             substr(sub("^[[:space:]]*", "",
+                                        .Rd_deparse(x)),
+                                    1L, 60L)),
                     domain = NA)
             return(matrix(character(), 0L, 2L,
                           dimnames = list(NULL, c("Text", "HTML"))))
