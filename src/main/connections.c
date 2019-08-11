@@ -726,6 +726,8 @@ static Rboolean file_open(Rconnection con)
 	mode[4] = '\0';
 	if (!strpbrk(mode, "bt"))
 	    strcat(mode, "t");
+	// See PR#16737, https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/fopen-wfopen?view=vs-2019
+	// ccs= is also supported by glibc but not macOS
 	if (strchr(mode, 't')
 	    && (!strcmp(con->encname, "UTF-16LE") || !strcmp(con->encname, "UCS-2LE"))) {
 	    strcat(mode, ",ccs=UTF-16LE");
