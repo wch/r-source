@@ -454,7 +454,7 @@ fillBuffer(SEXPTYPE type, int strip, int *bch, LocalData *d,
     *bufp = '\0';
     /* Remove UTF-8 BOM */
     if(d->atStart && utf8locale &&
-       !memcmp(buffer->data, "\xef\xbb\xbf", 3))
+       !strncmp(buffer->data, "\xef\xbb\xbf", 3))
 	memmove(buffer->data, buffer->data+3, strlen(buffer->data) + 1);
     d->atStart = FALSE;
     *bch = filled;
