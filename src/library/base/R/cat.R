@@ -21,7 +21,7 @@ cat <- function(..., file = "", sep = " ", fill = FALSE,
 {
     if(is.character(file))
         if(file == "") file <- stdout()
-        else if(substring(file, 1L, 1L) == "|") {
+        else if(startsWith(file, "|")) {
             file <- pipe(substring(file, 2L), "w")
             on.exit(close(file))
         } else {
