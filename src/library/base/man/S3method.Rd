@@ -18,7 +18,7 @@
 }
 \details{
   This function should only be used in R scripts: for package code, one
-  should use the correspoding \samp{S3method} \file{NAMESPACE} directive.
+  should use the corresponding \samp{S3method} \file{NAMESPACE} directive.
 }
 \examples{
 ## Create a generic function and register a method for objects

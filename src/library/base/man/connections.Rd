@@ -526,9 +526,9 @@ isIncomplete(con)
 
   The exceptions are \code{file} and \code{pipe} on Windows, where a
   \code{description} which is marked as being in UTF-8 is passed to
-  Windows as a \sQuote{wide} character string.  This alllows files with
+  Windows as a \sQuote{wide} character string.  This allows files with
   names not in the native encoding to be opened on file systems which
-  use Unicaode file names (such as NTFS but not FAT32).
+  use Unicode file names (such as NTFS but not FAT32).
 }
 \note{
   \R's connections are modelled on those in S version 4 (see Chambers,
