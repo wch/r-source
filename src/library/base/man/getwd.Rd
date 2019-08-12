@@ -1,6 +1,6 @@
 % File src/library/base/man/getwd.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{getwd}
@@ -18,6 +18,9 @@ setwd(dir)
   \code{getwd} returns an absolute filepath representing the current
   working directory of the \R process; \code{setwd(dir)} is used to set
   the working directory to \code{dir}.
+}
+\details{
+  See \link{files} for how file paths with marked encodings are interpreted.
 }
 \note{
   Note that the return value is said to be \strong{an} absolute

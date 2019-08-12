@@ -1,6 +1,6 @@
 % File src/library/base/man/file.info.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{file.info}
@@ -36,7 +36,9 @@ file.size(\dots)
   digits summarizing the permissions for the file owner, the owner's
   group and for anyone respectively.  Each digit is the logical
   \emph{or} of read (4), write (2) and execute/search (1) permissions.
-
+  
+  See \link{files} for how file paths with marked encodings are interpreted.
+  
 #ifdef unix
   On most systems symbolic links are followed, so information is given
   about the file to which the link points rather than about the link.

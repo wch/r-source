@@ -1,6 +1,6 @@
 % File src/library/base/man/connections.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{connections}
@@ -518,6 +518,17 @@ isIncomplete(con)
   \code{pipe("pbcopy", "w")} to read from and write to that system's
   clipboard.
 #endif
+}
+\section{File paths}{
+  In most cases these are encoded in the native \link{encoding} and any
+  marked encoding for the \code{description} argument is ignored (so
+  that is interpreted as bytes in the native encoding).
+
+  The exceptions are \code{file} and \code{pipe} on Windows, where a
+  \code{description} which is marked as being in UTF-8 is passed to
+  Windows as a \sQuote{wide} character string.  This alllows files with
+  names not in the native encoding to be opened on file systems which
+  use Unicaode file names (such as NTFS but not FAT32).
 }
 \note{
   \R's connections are modelled on those in S version 4 (see Chambers,
