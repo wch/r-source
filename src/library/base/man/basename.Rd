@@ -1,6 +1,6 @@
 % File src/library/base/man/basename.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{basename}
@@ -23,7 +23,7 @@ dirname(path)
   \item{path}{character vector, containing path names.}
 }
 \details{
-  For \code{dirname} \link{tilde expansion} of the path is done.
+  \link{tilde expansion} of the path is done except on Windows.
 
   Trailing path separators are removed before dissecting the path,
   and for \code{dirname} any trailing file separators are removed
