@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-2017  The R Core Team.
+ *  Copyright (C) 2001-2019  The R Core Team.
  *  Copyright (C) 1998-2012  Daniel Veillard.
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -99,6 +99,8 @@ extern void R_FlushConsole(void);
 # include <sys/socket.h>
 # include <netinet/in.h>
 #endif
+
+extern struct hostent *R_gethostbyname(const char *name);
 
 #ifdef HAVE_FCNTL_H
 #include <fcntl.h>
@@ -1116,7 +1118,7 @@ RxmlNanoHTTPConnectHost(const char *host, int port)
 	res_init();
     _res.options |= RES_USE_INET6;
 #endif
-    h=gethostbyname(host);
+    h=R_gethostbyname(host);
     if (h==NULL)
     {
 	RxmlMessage(2, _("unable to resolve '%s'"), host);

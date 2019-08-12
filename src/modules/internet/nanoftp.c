@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-2017  The R Core Team.
+ *  Copyright (C) 2001-2019  The R Core Team.
  *  Copyright (C) 1998-2012  Daniel Veillard.
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -88,6 +88,7 @@ extern void R_ProcessEvents(void);
 #include <sys/select.h>
 #endif
 
+struct hostent *R_gethostbyname(const char *name);
 
 #if !defined(strdup) && defined(HAVE_DECL_STRDUP) && !HAVE_DECL_STRDUP
 extern char *strdup(const char *s1);

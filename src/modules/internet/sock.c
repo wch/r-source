@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
 
- *  Copyright (C) 1998-2015   The R Core Team
+ *  Copyright (C) 1998-2019   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -55,6 +55,8 @@
 #if defined(__hpux)
    extern int h_errno; /* HP-UX 9.05 forgets to declare this in netdb.h */
 #endif
+
+extern struct hostent *R_gethostbyname(const char *name);
 
 #define MAXBACKLOG 5
 
@@ -195,7 +197,7 @@ int Sock_connect(Sock_port_t port, char *sname, Sock_error_t perr)
     int sock;
     int retval;
 
-    if (! (hp = gethostbyname(sname))
+    if (! (hp = R_gethostbyname(sname))
 	|| (sock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
 	return Sock_error(perr, errno, h_errno);
 
