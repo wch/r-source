@@ -124,10 +124,11 @@ Sys.junction(from, to)
   recent versions: see the section below on the Windows version of this
   help page.  What happens on a FAT or SMB-mounted file system is OS-specific.)
   
-  File arguments with a marked \link{encoding} are if possible
-  translated to the native encoding, except on Windows where Unicode
-  file operations are used (so marking as UTF-8 can be used to access
-  file paths not in the native encoding on suitable file systems).
+  File arguments with a marked encoding (see \code{\link{Encoding}} are
+  if possible translated to the native encoding, except on Windows where
+  Unicode file operations are used (so marking as UTF-8 can be used to
+  access file paths not in the native encoding on suitable file
+  systems).
 }
 
 \value{

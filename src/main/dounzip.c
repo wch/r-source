@@ -313,7 +313,7 @@ SEXP Runzip(SEXP args)
 
     if (!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
 	error(_("invalid zip name argument"));
-    p = R_ExpandFileName(translateChar(STRING_ELT(CAR(args), 0)));
+    p = R_ExpandFileName(translateCharFP(STRING_ELT(CAR(args), 0)));
     if (strlen(p) > PATH_MAX - 1)
 	error(_("zip path is too long"));
     strcpy(zipname, p);
@@ -325,12 +325,12 @@ SEXP Runzip(SEXP args)
 	    error(_("invalid '%s' argument"), "files");
 	topics = (const char **) R_alloc(ntopics, sizeof(char *));
 	for (i = 0; i < ntopics; i++)
-	    topics[i] = translateChar(STRING_ELT(fn, i));
+	    topics[i] = translateCharFP(STRING_ELT(fn, i));
     }
     args = CDR(args);
     if (!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
 	error(_("invalid '%s' argument"), "exdir");
-    p = R_ExpandFileName(translateChar(STRING_ELT(CAR(args), 0)));
+    p = R_ExpandFileName(translateCharFP(STRING_ELT(CAR(args), 0)));
     if (strlen(p) > PATH_MAX - 1)
 	error(_("'exdir' is too long"));
     strcpy(dest, p);

@@ -36,8 +36,7 @@ file.path(\dots, fsep = .Platform$file.sep)
   An element of the result will be marked (see \code{\link{Encoding}} as
   UTF-8 if run in a UTF-8 locale (when marked inputs are converted to
   UTF-8) or if an component of the result is marked as UTF-8, or as
-  Latin-1 in a non-Latin-1 locale.  \strong{NB:} Some of the functions
-  operating on file paths ignore marked encodings.
+  Latin-1 in a non-Latin-1 locale.
 }
 \note{
   The components are by default separated by \code{/}

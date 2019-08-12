@@ -1426,7 +1426,7 @@ SEXP attribute_hidden do_fifo(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("invalid '%s' argument"), "description");
     if(length(sfile) > 1)
 	warning(_("only first element of 'description' argument used"));
-    file = translateChar(STRING_ELT(sfile, 0)); /* for now, like fopen */
+    file = translateCharFP(STRING_ELT(sfile, 0)); /* for now, like fopen */
     sopen = CADR(args);
     if(!isString(sopen) || LENGTH(sopen) != 1)
 	error(_("invalid '%s' argument"), "open");
@@ -1592,13 +1592,13 @@ SEXP attribute_hidden do_pipe(SEXP call, SEXP op, SEXP args, SEXP env)
 #ifdef Win32
     if( !IS_ASCII(STRING_ELT(scmd, 0)) ) {
 	ienc = CE_UTF8;
-	file = translateCharUTF8(STRING_ELT(scmd, 0));
+	file = trCharUTF8(STRING_ELT(scmd, 0));
     } else {
 	ienc = CE_NATIVE;
-	file = translateChar(STRING_ELT(scmd, 0));
+	file = translateCharFP(STRING_ELT(scmd, 0));
     }
 #else
-    file = translateChar(STRING_ELT(scmd, 0));
+    file = translateCharFP(STRING_ELT(scmd, 0));
 #endif
     sopen = CADR(args);
     if(!isString(sopen) || LENGTH(sopen) != 1)
@@ -2246,7 +2246,7 @@ SEXP attribute_hidden do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("invalid '%s' argument"), "description");
     if(LENGTH(sfile) > 1)
 	warning(_("only first element of 'description' argument used"));
-    file = translateChar(STRING_ELT(sfile, 0));
+    file = translateCharFP(STRING_ELT(sfile, 0));
     sopen = CADR(args);
     if(!isString(sopen) || LENGTH(sopen) != 1)
 	error(_("invalid '%s' argument"), "open");
@@ -2922,7 +2922,7 @@ SEXP attribute_hidden do_rawconnection(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!isString(sfile) || LENGTH(sfile) != 1 ||
        STRING_ELT(sfile, 0) == NA_STRING)
 	error(_("invalid '%s' argument"), "description");
-    desc = translateChar(STRING_ELT(sfile, 0));
+    desc = translateCharFP(STRING_ELT(sfile, 0));
     sraw = CADR(args);
     sopen = CADDR(args);
     if(!isString(sopen) || LENGTH(sopen) != 1)
@@ -3407,7 +3407,7 @@ SEXP attribute_hidden do_sockconn(SEXP call, SEXP op, SEXP args, SEXP env)
     scmd = CAR(args);
     if(!isString(scmd) || LENGTH(scmd) != 1)
 	error(_("invalid '%s' argument"), "host");
-    host = translateChar(STRING_ELT(scmd, 0));
+    host = translateCharFP(STRING_ELT(scmd, 0));
     args = CDR(args);
     port = asInteger(CAR(args));
     if(port == NA_INTEGER || port < 0)
@@ -3478,7 +3478,7 @@ SEXP attribute_hidden do_unz(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("invalid '%s' argument"), "description");
     if(length(sfile) > 1)
 	warning(_("only first element of 'description' argument used"));
-    file = translateChar(STRING_ELT(sfile, 0));
+    file = translateCharFP(STRING_ELT(sfile, 0));
     sopen = CADR(args);
     if(!isString(sopen) || LENGTH(sopen) != 1)
 	error(_("invalid '%s' argument"), "open");
@@ -5332,17 +5332,17 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     winmeth = 1;
     if(PRIMVAL(op) == 1 && !IS_ASCII(STRING_ELT(scmd, 0)) ) { // file(<non-ASCII>, *)
 	ienc = CE_UTF8;
-	url = translateCharUTF8(STRING_ELT(scmd, 0));
+	url = trCharUTF8(STRING_ELT(scmd, 0));
     } else {
 	ienc = getCharCE(STRING_ELT(scmd, 0));
 	if(ienc == CE_UTF8)
 	    url = CHAR(STRING_ELT(scmd, 0));
 	else
-	    url = translateChar(STRING_ELT(scmd, 0));
+	    url = translateCharFP(STRING_ELT(scmd, 0));
     }
 #else
     winmeth = 0;
-    url = translateChar(STRING_ELT(scmd, 0));
+    url = translateCharFP(STRING_ELT(scmd, 0));
 #endif
 
     UrlScheme type = HTTPsh;	/* -Wall */

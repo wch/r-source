@@ -783,7 +783,7 @@ SEXP attribute_hidden do_setwd(SEXP call, SEXP op, SEXP args, SEXP rho)
 #else
     {
 	const char *path
-	    = R_ExpandFileName(translateChar(STRING_ELT(s, 0)));
+	    = R_ExpandFileName(translateCharFP(STRING_ELT(s, 0)));
     if(chdir(path) < 0)
 	error(_("cannot change working directory"));
     }
@@ -844,7 +844,7 @@ SEXP attribute_hidden do_basename(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (STRING_ELT(s, i) == NA_STRING)
 	    SET_STRING_ELT(ans, i, NA_STRING);
 	else {
-	    pp = R_ExpandFileName(translateChar(STRING_ELT(s, i)));
+	    pp = R_ExpandFileName(translateCharFP(STRING_ELT(s, i)));
 	    if (strlen(pp) > PATH_MAX - 1)
 		error(_("path too long"));
 	    strcpy (buf, pp);
@@ -927,7 +927,7 @@ SEXP attribute_hidden do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (STRING_ELT(s, i) == NA_STRING)
 	    SET_STRING_ELT(ans, i, NA_STRING);
 	else {
-	    pp = R_ExpandFileName(translateChar(STRING_ELT(s, i)));
+	    pp = R_ExpandFileName(translateCharFP(STRING_ELT(s, i)));
 	    if (strlen(pp) > PATH_MAX - 1)
 		error(_("path too long"));
 	    size_t ll = strlen(pp);
@@ -983,7 +983,7 @@ SEXP attribute_hidden do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 		warning("path[%d]=NA", i+1);
 	    continue;
 	}
-	path = translateChar(elp);
+	path = translateCharFP(elp);
 	char *res = realpath(path, abspath);
 	if (res)
 	    SET_STRING_ELT(ans, i, mkChar(abspath));
@@ -1010,7 +1010,7 @@ SEXP attribute_hidden do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 		warning("path[%d]=NA", i+1);
 	    continue;
 	}
-	path = translateChar(elp);
+	path = translateCharFP(elp);
 	OK = strlen(path) <= PATH_MAX;
 	if (OK) {
 	    if (path[0] == '/') strncpy(abspath, path, PATH_MAX);
@@ -2224,6 +2224,7 @@ int Scollate(SEXP a, SEXP b)
 	}
 	errno = errsv;
     }
+    // translation may use escapes, but that is OK here
     if (collator == NULL)
 	return collationLocaleSet == 2 ?
 	    strcmp(translateChar(a), translateChar(b)) :

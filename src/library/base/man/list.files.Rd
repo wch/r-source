@@ -23,7 +23,7 @@ list.dirs(path = ".", full.names = TRUE, recursive = TRUE)
   \item{path}{a character vector of full path names; the default
     corresponds to the working directory, \code{\link{getwd}()}.  Tilde
     expansion (see \code{\link{path.expand}}) is performed.  Missing
-    values will be ignored.  Elements with a marked \link{encoding} will
+    values will be ignored.  Elements with a marked encoding will
     be converted to the native encoding.}
   \item{pattern}{an optional \link{regular expression}.  Only file names
     which match the regular expression will be returned.}

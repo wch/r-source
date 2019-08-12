@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997-2018 The R Core Team
+ *  Copyright (C) 1997-2019 The R Core Team
  *  Copyright (C) 1995-1996 Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -931,10 +931,10 @@ SEXP attribute_hidden do_dynload(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op,args);
     if (!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
 	error(_("character argument expected"));
-    GetFullDLLPath(call, buf, translateChar(STRING_ELT(CAR(args), 0)));
+    GetFullDLLPath(call, buf, translateCharFP(STRING_ELT(CAR(args), 0)));
     /* AddDLL does this DeleteDLL(buf); */
     info = AddDLL(buf, LOGICAL(CADR(args))[0], LOGICAL(CADDR(args))[0],
-		  translateChar(STRING_ELT(CADDDR(args), 0)));
+		  translateCharFP(STRING_ELT(CADDDR(args), 0)));
     if(!info)
 	error(_("unable to load shared object '%s':\n  %s"), buf, DLLerror);
     return(Rf_MakeDLLInfo(info));
@@ -947,7 +947,7 @@ SEXP attribute_hidden do_dynunload(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op,args);
     if (!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
 	error(_("character argument expected"));
-    GetFullDLLPath(call, buf, translateChar(STRING_ELT(CAR(args), 0)));
+    GetFullDLLPath(call, buf, translateCharFP(STRING_ELT(CAR(args), 0)));
     if(!DeleteDLL(buf))
 	error(_("shared object '%s\' was not loaded"), buf);
     return R_NilValue;
@@ -1141,11 +1141,11 @@ R_getSymbolInfo(SEXP sname, SEXP spackage, SEXP withRegistrationInfo)
 
     package = "";
 
-    name = translateChar(STRING_ELT(sname, 0));
+    name = translateCharFP(STRING_ELT(sname, 0));
 
     if(length(spackage)) {
 	if(TYPEOF(spackage) == STRSXP)
-	    package = translateChar(STRING_ELT(spackage, 0));
+	    package = translateCharFP(STRING_ELT(spackage, 0));
 	else if(TYPEOF(spackage) == EXTPTRSXP &&
 		R_ExternalPtrTag(spackage) == install("DLLInfo")) {
 	    f = R_dlsym((DllInfo *) R_ExternalPtrAddr(spackage), name, &symbol);
@@ -1365,10 +1365,10 @@ do_getSymbolInfo(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (!isString(sname) || LENGTH(sname) != 1)
 	error(_("invalid '%s' argument"), "name");
-    name = translateChar(STRING_ELT(sname, 0));
+    name = translateCharFP(STRING_ELT(sname, 0));
     if(length(spackage)) {
 	if(TYPEOF(spackage) == STRSXP)
-	    package = translateChar(STRING_ELT(spackage, 0));
+	    package = translateCharFP(STRING_ELT(spackage, 0));
 	else if(TYPEOF(spackage) == EXTPTRSXP &&
 		R_ExternalPtrTag(spackage) == install("DLLInfo")) {
 	    f = R_dlsym((DllInfo *) R_ExternalPtrAddr(spackage), name, &symbol);

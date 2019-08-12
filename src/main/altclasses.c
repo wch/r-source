@@ -1298,7 +1298,7 @@ static void mmap_finalize(SEXP eptr)
 static SEXP mmap_file(SEXP file, int type, Rboolean ptrOK, Rboolean wrtOK,
 		      Rboolean serOK, Rboolean warn)
 {
-    const char *efn = R_ExpandFileName(translateChar(STRING_ELT(file, 0)));
+    const char *efn = R_ExpandFileName(translateCharFP(STRING_ELT(file, 0)));
     struct stat sb;
 
     /* Target not link */

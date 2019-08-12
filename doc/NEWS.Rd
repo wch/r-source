@@ -48,6 +48,11 @@
       \item \code{file.path()} has some support for file paths not in
       the session encoding, e.g.\sspace{}with UTF-8 inputs in a
       non-UTF-8 locale the output is UTF-8 and marked as such.
+
+      \item Most functions with file-path inputs will give an explicit
+      error if a file-path input in a marked encoding cannot be
+      translated (to UTF-8 or the native encoding), rather than
+      translate using escapes as previously.
     }
   }
 

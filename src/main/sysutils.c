@@ -207,7 +207,7 @@ FILE *RC_fopen(const SEXP fn, const char *mode, const Rboolean expand)
 FILE *RC_fopen(const SEXP fn, const char *mode, const Rboolean expand)
 {
     const void *vmax = vmaxget();
-    const char *filename = translateChar(fn), *res;
+    const char *filename = translateCharFP(fn), *res;
     if(fn == NA_STRING || !filename) return NULL;
     if(expand) res = R_ExpandFileName(filename);
     else res = filename;
@@ -273,9 +273,9 @@ SEXP attribute_hidden do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
     slen = (n3 > slen) ? n3 : slen;
     PROTECT(ans = allocVector(STRSXP, slen));
     for(i = 0; i < slen; i++) {
-	tn = translateChar( STRING_ELT( pattern , i%n1 ) );
-	td = translateChar( STRING_ELT( tempdir , i%n2 ) );
-	te = translateChar( STRING_ELT( fileext , i%n3 ) );
+	tn = translateCharFP( STRING_ELT( pattern , i%n1 ) );
+	td = translateCharFP( STRING_ELT( tempdir , i%n2 ) );
+	te = translateCharFP( STRING_ELT( fileext , i%n3 ) );
 	/* try to get a new file name */
 	tm = R_tmpnam2(tn, td, te);
 	SET_STRING_ELT(ans, i, mkChar(tm));
@@ -831,10 +831,11 @@ static R_INLINE nttype_t needsTranslation(SEXP x) {
 static void *latin1_obj = NULL, *utf8_obj=NULL, *ucsmb_obj=NULL,
     *ucsutf8_obj=NULL;
 
-/* Translates string in "ans" to native encoding returning it as string
+/* Translates string in "ans" to native encoding returning it in string
    buffer "cbuff" */
 static void translateToNative(const char *ans, R_StringBuffer *cbuff,
-			      nttype_t ttype) {
+			      nttype_t ttype, int mustWork)
+{
 
     if (ttype == NT_NONE)
 	error(_("internal error: no translation needed"));
@@ -843,6 +844,7 @@ static void translateToNative(const char *ans, R_StringBuffer *cbuff,
     const char *inbuf, *from;
     char *outbuf;
     size_t inb, outb, res;
+    Rboolean failed = FALSE;
 
     if(ttype == NT_FROM_LATIN1) {
 	if(!latin1_obj) {
@@ -898,6 +900,7 @@ next_char:
 	    R_AllocStringBuffer(2*cbuff->bufsize, cbuff);
 	    goto top_of_loop;
 	}
+	failed = TRUE;
 	if (ttype == NT_FROM_UTF8) {
 	    /* if starting in UTF-8, use \uxxxx */
 	    /* This must be the first byte */
@@ -925,7 +928,7 @@ next_char:
 		outbuf += 4; outb -= 4;
 		inbuf++; inb--;
 	    }
-	} else {
+	} else { // not from UTF-8
 	    snprintf(outbuf, 5, "<%02x>", (unsigned char)*inbuf);
 	    outbuf += 4; outb -= 4;
 	    inbuf++; inb--;
@@ -933,6 +936,8 @@ next_char:
 	goto next_char;
     }
     *outbuf = '\0';
+    if (mustWork && failed)
+	error(_("unable to translate '%s' to native encoding"),  cbuff->data);
 }
 
 
@@ -948,7 +953,27 @@ const char *translateChar(SEXP x)
     if (t == NT_NONE) return ans;
 
     R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
-    translateToNative(ans, &cbuff, t);
+    translateToNative(ans, &cbuff, t, 0);
+
+    size_t res = strlen(cbuff.data) + 1;
+    char *p = R_alloc(res, 1);
+    memcpy(p, cbuff.data, res);
+    R_FreeStringBuffer(&cbuff);
+    return p;
+}
+
+/* Variant which must work, used for file paths */
+const char *translateCharFP(SEXP x)
+{
+    if(TYPEOF(x) != CHARSXP)
+	error(_("'%s' must be called on a CHARSXP, but got '%s'"),
+	      "translateChar", type2char(TYPEOF(x)));
+    nttype_t t = needsTranslation(x);
+    const char *ans = CHAR(x);
+    if (t == NT_NONE) return ans;
+
+    R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
+    translateToNative(ans, &cbuff, t, 1);
 
     size_t res = strlen(cbuff.data) + 1;
     char *p = R_alloc(res, 1);
@@ -966,7 +991,7 @@ SEXP installTrChar(SEXP x)
     if (t == NT_NONE) return installNoTrChar(x);
 
     R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
-    translateToNative(CHAR(x), &cbuff, t);
+    translateToNative(CHAR(x), &cbuff, t, 1);
 
     SEXP Sans = install(cbuff.data);
     R_FreeStringBuffer(&cbuff);
@@ -980,7 +1005,11 @@ SEXP installChar(SEXP x)
 }
 
 /* This may return a R_alloc-ed result, so the caller has to manage the
-   R_alloc stack */
+   R_alloc stack.
+
+   Use for writeLines/Bin/Char, the first only with useBytes = TRUE.
+
+*/
 const char *translateChar0(SEXP x)
 {
     if(TYPEOF(x) != CHARSXP)
@@ -1047,6 +1076,74 @@ next_char:
     }
     *outbuf = '\0';
     Riconv_close(obj);
+    res = strlen(cbuff.data) + 1;
+    p = R_alloc(res, 1);
+    memcpy(p, cbuff.data, res);
+    R_FreeStringBuffer(&cbuff);
+    return p;
+}
+
+/* Variant which does not return escaped string */
+const char *trCharUTF8(SEXP x)
+{
+    void *obj;
+    const char *inbuf, *ans = CHAR(x);
+    char *outbuf, *p, *from = "";
+    size_t inb, outb, res;
+    R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
+    Rboolean failed = FALSE;
+
+    if(TYPEOF(x) != CHARSXP)
+	error(_("'%s' must be called on a CHARSXP, but got '%s'"),
+	      "translateCharUTF8", type2char(TYPEOF(x)));
+    if(x == NA_STRING) return ans;
+    if(IS_UTF8(x)) return ans;
+    if(IS_ASCII(x)) return ans;
+    if(IS_BYTES(x))
+	error(_("translating strings with \"bytes\" encoding is not allowed"));
+
+    if (IS_LATIN1(x))
+#ifdef HAVE_ICONV_CP1252
+	from = "CP1252";
+#else
+	from = "latin1";
+#endif
+    obj = Riconv_open("UTF-8", from);
+    if(obj == (void *)(-1))
+#ifdef Win32
+	error(_("unsupported conversion from '%s' in codepage %d"),
+	      from, localeCP);
+#else
+	error(_("unsupported conversion from '%s' to '%s'"),
+	      from, "UTF-8");
+#endif
+    R_AllocStringBuffer(0, &cbuff);
+top_of_loop:
+    inbuf = ans; inb = strlen(inbuf);
+    outbuf = cbuff.data; outb = cbuff.bufsize - 1;
+    /* First initialize output */
+    Riconv (obj, NULL, NULL, &outbuf, &outb);
+next_char:
+    /* Then convert input  */
+    res = Riconv(obj, &inbuf , &inb, &outbuf, &outb);
+    if(res == -1 && errno == E2BIG) {
+	R_AllocStringBuffer(2*cbuff.bufsize, &cbuff);
+	goto top_of_loop;
+    } else if(res == -1 && (errno == EILSEQ || errno == EINVAL)) {
+	if(outb < 5) {
+	    R_AllocStringBuffer(2*cbuff.bufsize, &cbuff);
+	    goto top_of_loop;
+	}
+	failed = TRUE;
+	snprintf(outbuf, 5, "<%02x>", (unsigned char)*inbuf);
+	outbuf += 4; outb -= 4;
+	inbuf++; inb--;
+	goto next_char;
+    }
+    *outbuf = '\0';
+    Riconv_close(obj);
+    if (failed)
+	error(_("unable to translate '%s' to UTF-8"),  cbuff.data);
     res = strlen(cbuff.data) + 1;
     p = R_alloc(res, 1);
     memcpy(p, cbuff.data, res);
