@@ -32,7 +32,7 @@
       \item The internal traceback object produced when an error is
       signalled (\code{.Traceback}), now contains the \code{call}s
       rather than the \emph{\code{deparse()}d} calls, deferring the
-      deparsing to the user level functions \code{.traceback()} and
+      deparsing to the user-level functions \code{.traceback()} and
       \code{traceback()}, fulfilling the wish of \PR{17580}, reported
       (incl.\sspace{}patch proposal) by Brodie Gaslam.
 
