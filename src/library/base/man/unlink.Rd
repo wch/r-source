@@ -1,6 +1,6 @@
 % File src/library/base/man/unlink.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{unlink}
@@ -59,7 +59,8 @@
   Windows cannot remove the current working directory, nor any file
   which is open nor any directory containing such a file.
 
-  UTF-8-encoded paths not valid in the current locale can be used.
+  UTF-8-encoded paths not valid in the current locale can be used, but
+  globbing will not work.
 #endif
 }
 \value{

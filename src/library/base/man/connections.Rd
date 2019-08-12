@@ -520,9 +520,7 @@ isIncomplete(con)
 #endif
 }
 \section{File paths}{
-  In most cases these are encoded in the native \link{encoding} and any
-  marked encoding for the \code{description} argument is ignored (so
-  that is interpreted as bytes in the native encoding).
+  In most cases these are translated to the native \link{encoding}.
 
   The exceptions are \code{file} and \code{pipe} on Windows, where a
   \code{description} which is marked as being in UTF-8 is passed to
