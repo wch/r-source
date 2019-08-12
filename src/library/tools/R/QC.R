@@ -5193,7 +5193,7 @@ function(dir)
         ## Allow anything containing ... (for now); otherwise, insist on
         ## length one with names starting with lib.
         if(is.na(match("...", nms)) &&
-           (length(nms) != 1L || substr(nms, 1L, 3L) != "lib"))
+           (length(nms) != 1L || !startsWith(nms, "lib")))
             out$bad_arg_names <- nms
         ## Look at all calls (not only at top level).
         calls <- .find_calls(fcode[[3L]], recursive = TRUE)

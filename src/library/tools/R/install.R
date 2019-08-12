@@ -2717,7 +2717,7 @@ if(FALSE) {
             last <- nrow(M)
             nongen <- gen %in% c("ar", "bw", "contr", "dyn", "lm", "qr", "ts", "which", ".Call", ".External", ".Library", ".First", ".Last")
             nc <- nchar(gen)
-            asg <- (nc > 3) & substr(gen, nc-1, nc) == "<-"
+            asg <- (nc > 3) & endsWith(gen, "<-")
             skip <- (gen == c("", gen[-last])) & (M$File == c("", M$File[-last])) & !nongen
             skip <- skip | asg
             ##N <- cbind(M$Topic, gen, c("", gen[-last]), skip)

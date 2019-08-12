@@ -925,7 +925,7 @@ fileCompletions <- function(token)
     ## actually looking for something inside the directory.  Note that
     ## we don't actually test to see if it's a directory, because if
     ## it is not, list.files() will simply return character(0).
-    if (length(comps) == 1 && substring(comps, nchar(comps), nchar(comps)) == "/") {
+    if (length(comps) == 1 && endsWith(comps, "/")) {
         filesInside <- list.files(comps, all.files = TRUE, full.names = FALSE, no.. = TRUE)
         if (length(filesInside)) comps <- c(comps, file.path(comps, filesInside))
     }

@@ -506,12 +506,10 @@ data.frame <-
 	    vnames[[i]] <- namesi
 	} else if (fix.empty.names && no.vn[[i]]) {
 	    tmpname <- deparse(object[[i]], nlines = 1L)[1L]
-	    if(startsWith(tmpname, "I(")) { ## from 'I(*)', only keep '*':
-                ## <FIXME: use endsWith>
+	    if(startsWith(tmpname, "I(") && endsWith(tmpname, ")")) {
+                ## from 'I(*)', only keep '*':
 		ntmpn <- nchar(tmpname, "c")
-		if(substr(tmpname, ntmpn, ntmpn) == ")")
-		    tmpname <- substr(tmpname, 3L, ntmpn - 1L)
-                ## </FIXME>
+                tmpname <- substr(tmpname, 3L, ntmpn - 1L)
 	    }
 	    vnames[[i]] <- tmpname
 	} ## else vnames[[i]] are not changed

@@ -560,7 +560,7 @@ Rd2latex <- function(Rd, out = "", defines = .Platform$OS.type,
 	    ## need \n unless one follows, so
 	    nxt <- section[[1L]]
 	    if (attr(nxt, "Rd_tag") %notin% c("TEXT", "RCODE") ||
-		substr(as.character(nxt), 1L, 1L) != "\n") of1("\n")
+		!startsWith(as.character(nxt), "\n")) of1("\n")
 	    writeContent(section, tag)
 	    inCodeBlock <<- FALSE
 	    if (last_char != "\n") of1("\n")
