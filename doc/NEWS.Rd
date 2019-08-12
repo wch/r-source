@@ -13,7 +13,7 @@
       \pkg{tools}) can now check for \emph{specific} error or warning
       classes \emph{via} the new optional second argument \code{classes}
       (which is not back compatible with previous use of an unnamed second
-      argument.)
+      argument).
 
       \item \code{DF2formula()}, the utility for the data frame method of
       \code{formula()}, now works without parsing and explicit evaluation,
@@ -39,7 +39,8 @@
       \item \code{data.matrix()} now converts character columns to
       factors and from this to integers.
 
-      \item \code{package.skeleton()} now explicitly lists all exports.
+      \item \code{package.skeleton()} now explicitly lists all exports
+      in the \file{NAMESPACE} file.
 
       \item New function \code{.S3method()} to register S3 methods in R
       scripts.
