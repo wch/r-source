@@ -1,6 +1,6 @@
 % File src/library/base/man/path.expand.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{path.expand}
@@ -38,9 +38,7 @@ path.expand(path)
   Q2.14: it is taken from the \env{R_USER} environment variable when
   \code{path.expand} is first called in a session.
 
-  The \sQuote{path names} need not exist nor be valid path names but
-  prior to \R{} 3.4.0 they needed to be representable in the session
-  encoding.
+  The \sQuote{path names} need not exist nor be valid path names.
 }
 #endif
 \value{
