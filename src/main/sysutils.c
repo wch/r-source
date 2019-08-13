@@ -936,8 +936,14 @@ next_char:
 	goto next_char;
     }
     *outbuf = '\0';
-    if (mustWork && failed)
-	error(_("unable to translate '%s' to native encoding"),  cbuff->data);
+    if (mustWork && failed) {
+	if (mustWork == 2) 
+	    warning(_("used escapes to translate '%s' to native encoding"), 
+		    cbuff->data);
+	else
+	    error(_("unable to translate '%s' to native encoding"),
+		  cbuff->data);
+    }
 }
 
 
@@ -992,8 +998,8 @@ SEXP installTrChar(SEXP x)
 
     R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
     // For back-compatibility this allows installing
-    // symbols with escapes.
-    translateToNative(CHAR(x), &cbuff, t, 0);
+    // symbols with escapes, with a warning.
+    translateToNative(CHAR(x), &cbuff, t, 2);
 
     SEXP Sans = install(cbuff.data);
     R_FreeStringBuffer(&cbuff);
