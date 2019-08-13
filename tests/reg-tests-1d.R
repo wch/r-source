@@ -2991,6 +2991,7 @@ stopifnot(exprs = { length(prE) >= 3
 .M <- .Machine
 str(.M[grep("^sizeof", names(.M))]) ## also differentiate long-double..
 b64 <- .M$sizeof.pointer == 8
+arch <- Sys.info()[["machine"]]
 onWindows <- .Platform$OS.type == "windows"
 if(!(onWindows && arch == "x86")) {
 ## PR#17577 - dgamma(x, shape)  for shape < 1 (=> +Inf at x=0) and very small x
