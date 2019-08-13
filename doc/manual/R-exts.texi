@@ -12741,13 +12741,17 @@ UTF-8: this has the advantage that a faithful translation is almost
 always possible (whereas only a few languages can be represented in the
 encoding of the current locale unless that is UTF-8).
 
+Both @code{translateChar} and @code{translateCharUTF8} will translate
+any input, using escapes such as @samp{<A9>} and @samp{<U+0093>} to
+represent untranslatable parts of the input.
+
 @findex getCharCE
 @findex mkCharCE
 There is a public interface to the encoding marked on @code{CHARXSXPs}
 @emph{via}
 
 @example
-typedef enum @{CE_NATIVE, CE_UTF8, CE_LATIN1, CE_SYMBOL, CE_ANY@} cetype_t;
+typedef enum @{CE_NATIVE, CE_UTF8, CE_LATIN1, CE_BYTES, CE_SYMBOL, CE_ANY@} cetype_t;
 cetype_t getCharCE(SEXP);
 SEXP mkCharCE(const char *, cetype_t);
 @end example
@@ -12756,12 +12760,14 @@ SEXP mkCharCE(const char *, cetype_t);
 Only @code{CE_UTF8} and @code{CE_LATIN1} are marked on @code{CHARSXPs}
 (and so @code{Rf_getCharCE} will only return one of the first three),
 and these should only be used on non-@acronym{ASCII} strings.  Value
-@code{CE_SYMBOL} is used internally to indicate Adobe Symbol encoding.
-Value @code{CE_ANY} is used to indicate a character string that will not
-need re-encoding -- this is used for character strings known to be in
-@acronym{ASCII}, and can also be used as an input parameter where the
-intention is that the string is treated as a series of bytes.  (See the
-comments under @code{mkChar} about the length of input allowed.)
+@code{CE_BYTES} is used to make @code{CHARSXP}s which should be regarded
+as a set of bytes and not translated.  Value @code{CE_SYMBOL} is used
+internally to indicate Adobe Symbol encoding.  Value @code{CE_ANY} is
+used to indicate a character string that will not need re-encoding --
+this is used for character strings known to be in @acronym{ASCII}, and
+can also be used as an input parameter where the intention is that the
+string is treated as a series of bytes.  (See the comments under
+@code{mkChar} about the length of input allowed.)
 
 Function
 
