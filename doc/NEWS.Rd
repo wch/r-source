@@ -23,6 +23,14 @@
     }
   }
 
+  \subsection{C-LEVEL FACILITIES}{
+    \itemize{
+      \item \code{installTrChar} which is nowadays a wrapper for
+      \code{installChar} is defined in \file{Rinternals.h}.  (Neither
+      are part of the API.)
+    }
+  }
+
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
       \item Header \file{Rconfig.h} contains the value of
