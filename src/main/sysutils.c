@@ -1006,10 +1006,13 @@ SEXP installTrChar(SEXP x)
     return Sans;
 }
 
-/* now translates, now same as installTrChar */
-SEXP installChar(SEXP x)
+/* Translates as from R 3.6.0.
+   As from R 3.7.0 unused in newly installed code as installChar is
+   remapped to Rf_installTrChar. 
+ */
+SEXP Rf_installChar(SEXP x)
 {
-    return installTrChar(x);
+    return Rf_installTrChar(x);
 }
 
 /* This may return a R_alloc-ed result, so the caller has to manage the

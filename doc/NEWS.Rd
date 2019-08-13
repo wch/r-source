@@ -73,6 +73,15 @@
     }
   }
 
+  \subsection{C-LEVEL FACILITIES}{
+    \itemize{
+      \item \code{installChar} is now remapped in \file{Rinternals.h} to
+      \code{installTrChar}, of which it has been a wrapper since
+      \R\sspace{}3.6.0.  Neither are part of the API, but packages using
+      \code{installChar} can replace it if they depend on \samp{R >= 3.6.2}.
+    }
+  }
+
   \subsection{INSTALLATION on a UNIX-ALIKE}{
     \itemize{
       \item User-set \samp{DEFS} (e.g., in \file{config.site}) is now
@@ -132,6 +141,14 @@
     }
   }
 
+  \subsection{C-LEVEL FACILITIES}{
+    \itemize{
+      \item \code{installTrChar} which is nowadays a wrapper for
+      \code{installChar} is defined in \file{Rinternals.h}.  (Neither
+      are part of the API.)
+    }
+  }
+
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
       \item Header \file{Rconfig.h} contains the value of
@@ -156,7 +173,7 @@
       \code{"Turlach"}, and no longer segfaults for \code{"Turlach"}, as
       reported by Hilmar Berger.
 
-      \item \code{conformMethod()} now correctly works in cases containing
+      \item \code{conformMethod()} now works correctly in cases containing
       a \dQuote{\code{&&} logic} bug, reported by Henrik Bengtsson.  It now
       creates methods with \code{"missing"} entries in the signature.
       Consequently, \code{rematchDefinition()} is amended to use
