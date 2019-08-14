@@ -1692,18 +1692,13 @@ R_STDCXX([11], [CXX11], [CXX])
 R_STDCXX([14], [CXX14], [CXX11])
 R_STDCXX([17], [CXX17], [CXX14])
 
-## Set default compiler to C++11 if available; otherwise C++98
+## Set default compiler to C++11 if available
 if test -n "${CXX}" && test -z "${CXXSTD}"; then
   if test -n "${CXX11}"; then
     CXX=${CXX11}
     CXXSTD=${CXX11STD}
     CXXFLAGS=${CXX11FLAGS}
     CXXPICFLAGS=${CXX11PICFLAGS}
-  elif test -n "${CXX98}"; then
-    CXX=${CXX98}
-    CXXSTD=${CXX98STD}
-    CXXFLAGS=${CXX98FLAGS}
-    CXXPICFLAGS=${CXX98PICFLAGS}
   fi
 fi
 
@@ -2755,7 +2750,6 @@ AC_OUTPUT
 r_c_compiler="${CC} ${R_XTRA_CFLAGS} ${CFLAGS}"
 ## R_XTRA_CXXFLAGS is currently unused, but if it were applies to all dialects
 r_cxx_compiler="${CXX} ${CXXSTD} ${R_XTRA_CXXFLAGS} ${CXXFLAGS}"
-r_cxx98_compiler="${CXX98} ${CXX98STD} ${R_XTRA_CXXFLAGS} ${CXX98FLAGS}"
 r_cxx11_compiler="${CXX11} ${CXX11STD} ${R_XTRA_CXXFLAGS} ${CXX11FLAGS}"
 r_cxx14_compiler="${CXX14} ${CXX14STD} ${R_XTRA_CXXFLAGS} ${CXX14FLAGS}"
 r_cxx17_compiler="${CXX17} ${CXX17STD} ${R_XTRA_CXXFLAGS} ${CXX17FLAGS}"
@@ -2885,8 +2879,6 @@ R is now configured for ${host}
   Fortran fixed-form compiler: ${r_f77_compiler}
 
   Default C++ compiler:        ${r_cxx_compiler}
-  C++98 compiler:              ${r_cxx98_compiler}
-  C++11 compiler:              ${r_cxx11_compiler}
   C++14 compiler:              ${r_cxx14_compiler}
   C++17 compiler:              ${r_cxx17_compiler}
   Fortran free-form compiler:  ${r_f95_compiler}

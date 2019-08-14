@@ -90,6 +90,9 @@
       \item There is a new variant option \option{--enable-lto=check}
       for checking consistency of BLAS/LAPACK/LINPACK calls --- see
       \sQuote{Writing R Extensions}.
+      
+      \item A C++ compiler default is set only if the C++11 standard is
+      supported: it no longer falls back to C++98.
     }
   }
 

@@ -2151,7 +2151,7 @@ PKG_LIBS = $(SHLIB_OPENMP_CFLAGS)
 @end example
 
 Note that the macro @code{SHLIB_OPENMP_CXXFLAGS} applies to the default
-C++ compiler and not necessarily to the C++11/14/17 compiler: users of
+C++11 compiler and not necessarily to the C++14/17 compiler: users of
 the latter should do their own @command{configure} checks.  If you do
 use your own checks, make sure that OpenMP support is complete by
 compiling and linking an OpenMP-using program: on some platforms the
