@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2009  R Core Team
+ *  Copyright (C) 1998--2019  R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 
 #define WIN32_LEAN_AND_MEAN 1
 #include <windows.h>
+#include <shlwapi.h> /* for PathFindOnPath */
 #include <stdio.h>
 #include <io.h> /* for isatty */
 #include <Rversion.h>
@@ -40,6 +41,7 @@ __declspec(dllimport) extern char *R_HistoryFile;
 extern char *getDLLVersion(void);
 extern void saveConsoleTitle(void);
 extern void R_gl_tab_set(void);
+extern int R_is_redirection_tty(int fd);
 
 static char Rversion[25];
 char *getRVersion(void)
@@ -56,8 +58,60 @@ static void my_onintr(int nSig)
   PostThreadMessage(mainThreadId,0,0,0);
 }
 
+/* Used also by Rscript */
 int AppMain(int argc, char **argv)
 {
+    if (R_is_redirection_tty(0) && !isatty(0) &&
+        R_is_redirection_tty(1)) {
+	/* RTerm is being run in a redirection tty (probably cygwin
+	   or msys). Re-run RTerm with winpty, if available, to allow
+	   line editing using Windows Console API. */
+	int i, interactive;
+	char winpty[MAX_PATH+1];
+
+	interactive = 1;
+	/* needs to be in sync with cmdlineoptions() */
+	for(int i = 0; i< argc; i++) 
+	    if (!strcmp(argv[i], "--ess"))
+		interactive = 1;
+	    else if (!strcmp(argv[i], "--f")) {
+		interactive = 0;
+		i++;
+	    } else if (!strcmp(argv[i], "--file"))
+		interactive = 0;
+	    else if (!strcmp(argv[i], "-e")) {
+		interactive = 0;
+		i++;
+	    }
+	if (interactive && strcpy(winpty, "winpty.exe") &&
+	    PathFindOnPath(winpty, NULL)) {
+
+	    size_t len, pos;
+	    int res;
+	    char *cmd;
+
+	    len = strlen(winpty) + 5; /* 4*quote, terminator */
+	    for(i = 0; i < argc; i++)
+		len += strlen(argv[i]) + 3; /* space, 2*quote */
+	    cmd = (char *)malloc(len * sizeof(char));
+	    if (!cmd) {
+		fprintf(stderr, "Error: cannot allocate memory");
+		exit(1);
+	    }
+	    pos = snprintf(cmd, len, "\"\"%s\"", winpty);
+	    for(i = 0; i < argc; i++)
+		pos += snprintf(cmd + pos, len - pos, " \"%s\"",
+		                argv[i]);
+	    strcat(cmd + pos, "\"");
+	    /* Ignore Ctrl-C and let the child process handle it */
+	    SetConsoleCtrlHandler(NULL, TRUE);
+	    res = system(cmd);
+	    free(cmd);
+	    return res;
+	}
+	/* fall back to RTerm without support for line editing */
+    }
+
     CharacterMode = RTerm;
     if(strcmp(getDLLVersion(), getRVersion()) != 0) {
 	fprintf(stderr, "Error: R.DLL version does not match\n");

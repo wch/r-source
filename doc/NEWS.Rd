@@ -57,6 +57,10 @@
       \code{file.exists()}, \code{file.access()}, \code{file.info()},
       \code{normalizePath()} and \code{path.expand()}) treat this like
       any other non-existent file, with a warning.
+
+      \item \command{Rterm} now works also when invoked from MSYS2
+      terminals.  Line editing is possible when \command{winpty} is
+      installed.
     }
   }
 

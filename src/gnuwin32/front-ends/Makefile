@@ -79,8 +79,8 @@ rterm-CPPFLAGS = -DWin32
 
 ## -luser32 -lkernel32 -ladvapi32 -lshell32 are now standard
 Rgui-LIBS = -L../../../$(IMPDIR) -lR -lRgraphapp
-Rscript-LIBS = -L../../../$(IMPDIR) -lR -lRgraphapp
-Rterm-LIBS = -L../../../$(IMPDIR) -lR -lRgraphapp
+Rscript-LIBS = -L../../../$(IMPDIR) -lR -lRgraphapp -lshlwapi
+Rterm-LIBS = -L../../../$(IMPDIR) -lR -lRgraphapp -lshlwapi
 
 Rgui-LINKFLAGS = -mwindows $(LARGE_ADDR) $(LARGE_STACK)
 Rterm-LINKFLAGS = $(LARGE_ADDR) $(LARGE_STACK)

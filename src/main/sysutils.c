@@ -2129,8 +2129,9 @@ int attribute_hidden R_is_redirection_tty(int fd)
     if (!(fnInfo = (FILE_NAME_INFO*)malloc(size)))
 	return 0;
     int res = 0;
-    if (gfibh(h, FileNameInfo, fnInfo, size))
-	/* e.g. msys-1888ae32e00d56aa-pty0-from-master */
+    if (gfibh(h, FileNameInfo, fnInfo, size)) 
+	/* e.g. msys-1888ae32e00d56aa-pty0-from-master,
+	        cygwin-e022582115c10879-pty0-from-master */
 	/* test borrowed from git */
 	res = ((wcsstr(fnInfo->FileName, L"msys-") ||
 	        wcsstr(fnInfo->FileName, L"cygwin-")) &&
