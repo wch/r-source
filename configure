@@ -5020,11 +5020,6 @@ fi
 done
 test -n "$INSTALL_INFO" || INSTALL_INFO="false"
 
-  if test "ac_cv_path_INSTALL_INFO" = "false"; then
-    if test "${r_cv_prog_perl_v5}" = yes; then
-      INSTALL_INFO="perl \$(top_srcdir)/tools/install-info.pl"
-    fi
-  fi
 
 fi
 if test "${r_cv_prog_texi2any_v5}" != yes; then
@@ -25354,7 +25349,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:25357: \"$ac_link\") >&5
+(eval echo $as_me:25352: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -25429,7 +25424,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:25432: \"$ac_link\") >&5
+(eval echo $as_me:25427: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
