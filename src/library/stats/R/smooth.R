@@ -29,7 +29,7 @@ smooth <- function(x, kind = c("3RS3R", "3RSS", "3RSR", "3R", "3", "S"),
     rules <- c("copy","Tukey")#- exact order matters!
     if(is.na(iend <- pmatch(endrule, rules))) stop("invalid 'endrule' argument")
     kind <- match.arg(kind)
-    if(substr(kind, 1L, 3L) == "3RS" && !do.ends) iend <- -iend
+    if(startsWith(kind, "3RS") && !do.ends) iend <- -iend
     else if(kind == "S") iend <- as.logical(do.ends)
     type <- match(kind, c("3RS3R", "3RSS", "3RSR", "3R", "3", "S"))
     smo <- .Call(C_Rsm, as.double(x), type, iend)
@@ -49,7 +49,7 @@ smooth <- function(x, kind = c("3RS3R", "3RSS", "3RSR", "3R", "3", "S"),
 
     structure(smo$y, kind = kind, twiced = twiceit,
               iter = smo$iter, changed = smo$changed,
-              endrule = if(substr(kind, 1L, 1L) == "3") rules[iend],
+              endrule = if(startsWith(kind, "3")) rules[iend],
               call = match.call(),
               class = c("tukeysmooth",if(is.ts(x)) "ts"))
 }

@@ -35,7 +35,7 @@ summaryRprof <-
     if(!length(firstline))
         stop(gettextf("no lines found in %s", sQuote(filename)), domain = NA)
     sample.interval <- as.numeric(strsplit(firstline, "=")[[1L]][2L])/1e6
-    memory.profiling <- substr(firstline, 1L, 6L) == "memory"
+    memory.profiling <- startsWith(firstline, "memory")
     line.profiling <- grepl("line profiling", firstline)
     if (line.profiling)
     	filenames <- character(0)

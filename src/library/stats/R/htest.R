@@ -32,7 +32,7 @@ print.htest <- function(x, digits = getOption("digits"), prefix = "\t", ...)
     if(!is.null(x$p.value)) {
 	fp <- format.pval(x$p.value, digits = max(1L, digits - 3L))
 	out <- c(out, paste("p-value",
-			    if(substr(fp, 1L, 1L) == "<") fp else paste("=",fp)))
+			    if(startsWith(fp, "<")) fp else paste("=",fp)))
     }
     cat(strwrap(paste(out, collapse = ", ")), sep = "\n")
     if(!is.null(x$alternative)) {

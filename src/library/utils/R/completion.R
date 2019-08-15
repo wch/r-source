@@ -449,7 +449,7 @@ matchAvailableTopics <- function(prefix, text)
     }
     if (length(text) != 1L || text == "") return (character())
     ## Update list of help topics if necessary
-    pkgpaths <- searchpaths()[substr(search(), 1L, 8L) == "package:"]
+    pkgpaths <- searchpaths()[startsWith(search(), "package:")]
     if (!identical(basename(pkgpaths), .CompletionEnv[["attached_packages"]])) {
         assign("attached_packages",
                basename(pkgpaths),

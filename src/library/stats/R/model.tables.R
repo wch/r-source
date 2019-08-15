@@ -318,7 +318,7 @@ replications <- function(formula, data = NULL, na.action)
     balance <- TRUE
     for(i in seq_len(n)) {
 	l <- labels[i]
-	if(o[i] < 1 || substring(l, 1L, 5L) == "Error") { z[[l]] <- NULL; next }
+	if(o[i] < 1 || startsWith(l, "Error")) { z[[l]] <- NULL; next }
 	select <- vars[f[, i] > 0]
 	if(any(nn <- notfactor[select])) {
             warning(gettextf("non-factors ignored: %s",
