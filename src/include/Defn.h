@@ -82,6 +82,7 @@ Rcomplex Rf_ComplexFromReal(double, int*);
 #undef CALLED_FROM_DEFN_H
 
 const char * Rf_translateCharFP(SEXP);
+const char * Rf_translateCharFP2(SEXP);
 const char * Rf_trCharUTF8(SEXP);
 
 extern0 SEXP	R_CommentSymbol;    /* "comment" */
@@ -1015,6 +1016,7 @@ extern0 int R_PCRE_limit_recursion;
 # define substituteList		Rf_substituteList
 # define TimeToSeed		Rf_TimeToSeed
 # define translateCharFP	Rf_translateCharFP
+# define translateCharFP2	Rf_translateCharFP2
 # define trCharUTF8      	Rf_trCharUTF8
 # define tspgets		Rf_tspgets
 # define type2symbol		Rf_type2symbol

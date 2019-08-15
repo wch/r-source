@@ -52,7 +52,11 @@
       \item Most functions with file-path inputs will give an explicit
       error if a file-path input in a marked encoding cannot be
       translated (to the native encoding or in some cases on Windows to
-      UTF-8), rather than translate using escapes as previously.
+      UTF-8), rather than translate to a different file path using
+      escapes.  Some (such as \code{dir.exists()},
+      \code{file.exists()}, \code{file.access()}, \code{file.info()},
+      \code{normalizePath()} and \code{path.expand()}) treat this like
+      any other non-existent file, with a warning.
     }
   }
 

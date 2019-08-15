@@ -983,18 +983,22 @@ SEXP attribute_hidden do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 		warning("path[%d]=NA", i+1);
 	    continue;
 	}
-	path = translateCharFP(elp);
-	char *res = realpath(path, abspath);
-	if (res)
-	    SET_STRING_ELT(ans, i, mkChar(abspath));
-	else {
-	    SET_STRING_ELT(ans, i, elp);
-	    /* and report the problem */
-	    if (mustWork == 1)
-		error("path[%d]=\"%s\": %s", i+1, path, strerror(errno));
-	    else if (mustWork == NA_LOGICAL)
-		warning("path[%d]=\"%s\": %s", i+1, path, strerror(errno));
+	path = translateCharFP2(elp);
+	if (path) {
+	    char *res = realpath(path, abspath);
+	    if (res)
+		SET_STRING_ELT(ans, i, mkChar(abspath));
+	    else {
+		SET_STRING_ELT(ans, i, elp);
+		/* and report the problem */
+		if (mustWork == 1)
+		    error("path[%d]=\"%s\": %s", i+1, path, strerror(errno));
+		else if (mustWork == NA_LOGICAL)
+		    warning("path[%d]=\"%s\": %s", i+1, path, strerror(errno));
+	    }
 	}
+	else if (mustWork == 1) error("fatal translation error");
+	else SET_STRING_ELT(ans, i, elp);
     }
 #else
     Rboolean OK;
