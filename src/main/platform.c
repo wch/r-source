@@ -894,12 +894,12 @@ SEXP attribute_hidden do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 	const char *p = translateCharFP2(STRING_ELT(fn, i));
 	const char *efn = p ? R_ExpandFileName(p) : p;
 #endif
-	if (p && STRING_ELT(fn, i) != NA_STRING &&
+	if (STRING_ELT(fn, i) != NA_STRING &&
 #ifdef Win32
 	    _wstati64(wfn, &sb)
 #else
 	    /* Target not link */
-	    stat(efn, &sb)
+	    p && stat(efn, &sb)
 #endif
 	    == 0) {
 	    REAL(fsize)[i] = (double) sb.st_size;
