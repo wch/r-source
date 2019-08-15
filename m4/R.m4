@@ -193,11 +193,6 @@ if test -n "${TEXI2ANY}"; then
   AC_PATH_PROGS(INSTALL_INFO,
                 [${INSTALL_INFO} ginstall-info install-info],
                 false)
-  if test "ac_cv_path_INSTALL_INFO" = "false"; then
-    if test "${r_cv_prog_perl_v5}" = yes; then
-      INSTALL_INFO="perl \$(top_srcdir)/tools/install-info.pl"
-    fi
-  fi
   AC_SUBST(INSTALL_INFO)
 fi
 if test "${r_cv_prog_texi2any_v5}" != yes; then

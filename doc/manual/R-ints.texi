@@ -4457,9 +4457,7 @@ In addition, the following tools are needed for certain tasks.
 
 @itemize @bullet
 @item
-Perl version 5 is only needed for a few uncommonly-used tools: @command{make
-install-info} needs Perl installed if there is no command
-@command{install-info} on the system, and for the maintainer-only script
+Perl version 5 is only needed for the maintainer-only script
 @file{tools/help2man.pl}.
 @findex Perl
 
