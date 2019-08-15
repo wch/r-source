@@ -2626,6 +2626,10 @@ support a flag @option{-std=c++0x}, but the latter only provided partial
 support for the C++11 standard (it later became a deprecated synonym for
 @option{-std=c++11}).
 
+@R{} 3.6.0 and later default to C++ where available (and C++ is only
+supported from 3.7.0 where it is).  The rest of this section applies to
+packages which may be used with earlier versions of @R{}.
+
 In order to use C++11 code in a package, the package's @file{Makevars}
 file (or @file{Makevars.win} on Windows) should include the line
 
@@ -2647,18 +2651,6 @@ SystemRequirements: C++11
 If a package does have a @file{src/Makevars[.win]} file then setting the
 make variable @samp{CXX_STD} is preferred, as it allows @command{R CMD
 SHLIB} to work correctly in the package's @file{src} directory.
-
-Conversely, to ensure that the C++98 standard is assumed even when this
-is not the compiler default, use
-
-@example
-SystemRequirements: C++98
-@end example
-@noindent
-or
-@example
-CXX_STD = CXX98
-@end example
 
 The C++11 compiler will be used systematically by R for all C++ code
 if the environment variable @env{USE_CXX11} is defined (with any
@@ -5063,7 +5055,7 @@ so it is strongly recommended to check in a UTF-8 locale.
 @subsection Portable C and C++ code
 
 Writing portable C and C++ code is mainly a matter of observing the
-standards (C99, C++11 or where declared C++98/14/17) and testing that
+standards (C99, C++11 or where declared C++14/17) and testing that
 extensions (such as POSIX functions) are supported.
 
 @strong{C++ standards}: As from version 3.6.0, @R{} defaults to C++11
