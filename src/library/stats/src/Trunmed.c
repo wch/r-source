@@ -20,10 +20,8 @@
  */
 
 /* These routines implement a running median smoother according to the
- * algorithm described in Haerdle und Steiger (1995).
- *
- * A tech-report of that paper is available under
- * ftp://amadeus.wiwi.hu-berlin.de/pub/papers/sfb/sfb1994/dpsfb940015.ps.Z
+ * algorithm described in Haerdle und Steiger (1995),
+ *			  DOI:10.2307/2986349 , see ../man/runmed.Rd
  *
  * The current implementation does not use any global variables!
  */
@@ -349,7 +347,7 @@ runmedint(R_xlen_t n, int k, int k2, const double *data, double *median,
 	median[k2] = window[k];
     }
     R_xlen_t every_i;
-    if(print_level == 2)
+    if(print_level >= 2)
 	every_i = (n > 100) ? n/10 : 10;
 
     outnext = 0;
