@@ -734,8 +734,7 @@ make install-pdf
 @noindent
 Once again, it is optional to specify @code{prefix}, @code{libdir} or
 @code{rhome} (the PDF manuals are installed under the @R{} home
-directory).  (@command{make install-info} needs @command{Perl} installed
-if there is no command @command{install-info} on the system.)
+directory).  
 
 More precise control is possible.  For info, the setting used is that of
 @code{infodir} (default @file{@var{prefix}/info}, set by configure
@@ -1030,11 +1029,6 @@ CXXFLAGS
 CXXPICFLAGS
 CXXSTD
 
-CXX98
-CXX98STD
-CXX98FLAGS
-CXX98PICFLAGS
-
 CXX11
 CXX11STD
 CXX11FLAGS
@@ -1156,11 +1150,10 @@ used.  With sufficient diagnostic flags (e.g.@: @option{-Wall} in GCC)
 this can flag inconsistencies between source files in a package.
 
 Under some circumstances and for a few packages, the PIC flags have
-needed overridding on Linux with GCC 9: e.g@: in @file{config.site}:
+needed overriding on Linux with GCC 9: e.g@: in @file{config.site}:
 @example
 CPICFLAGS=-fPIC
 CXXPICFLAGS=-fPIC
-CXX98PICFLAGS=-fPIC
 CXX11PICFLAGS=-fPIC
 CXX14PICFLAGS=-fPIC
 CXX17PICFLAGS=-fPIC
@@ -1173,11 +1166,11 @@ little used before 2019.
 With @command{gcc}/@command{gfortran} 9.x@footnote{probably also 8.4 and
 later when released.} this will flag inconsistencies in calls to Fortran
 subroutines/functions, both between Fortran source files and between
-Fortran and C/C++.  @command{gfortran} 9.x@footnote{since 2019-05-09,
-just after the release of version 9.1.}  can help understanding these by
-extracting C prototypes from Fortran source files with its
-@option{-fc-prototypes-external} option, e.g.@: that (at the time of
-writing) Fortran @code{LOGICAL} corresponds to @code{int_least32_t *}.
+Fortran and C/C++.  @command{gfortran} 9.2@footnote{or 9.1-patched since
+2019-05-09.} can help understanding these by extracting C prototypes
+from Fortran source files with its @option{-fc-prototypes-external}
+option, e.g.@: that (at the time of writing) Fortran @code{LOGICAL}
+corresponds to @code{int_least32_t *}.
 
 @node Testing a Unix-alike Installation,  , Other Options, Installing R under Unix-alikes
 @section Testing an Installation
@@ -4062,6 +4055,11 @@ can be controlled by setting @code{OMP_NUM_THREADS} or
 sensible value for sole use of the machine.  (Parallel MKL has not
 always passed @command{make check-all}, but did with MKL 2019.4.)
 
+MKL includes a partial implementation of FFTW3, which causes trouble for
+applications that require some of the FFTW3 functionality unsupported in
+MKL.  Please see the MKL manuals for description of these limitations and
+for instructions on how to create a custom version of MKL which excludes the
+FFTW3 wrappers.
 
 @c https://stat.ethz.ch/pipermail/r-devel/2015-September/071717.html
 It was reported in 2015 that
@@ -4516,7 +4514,7 @@ specify its full path.
 
 If your Fortran libraries are in slightly peculiar places, you should
 @enindex LD_LIBRARY_PATH
-also look at @env{LD_LIBRARY_PATH} or your system's equivalent to make
+also look at @env{LD_LIBRARY_PATH} (or your system's equivalent) to make
 sure that all libraries are on this path.
 
 Note that only Fortran compilers which convert identifiers to lower case
@@ -5527,7 +5525,6 @@ FC=f95
 FFLAGS=-O
 CXX=CC
 CXXSTD="-std=c++11 -library=stdcpp,CrunG3"
-CXX98STD="-compat=g -library=stdcpp,CrunG3"
 CXX11STD="-std=c++11 -library=stdcpp,CrunG3"
 CXX14STD="-std=c++14 -library=stdcpp,CrunG3"
 CXXFLAGS=-O
@@ -5570,26 +5567,10 @@ The Oracle compilers provide several implementations of the C++
 standards which select both the set of headers and a C++ runtime
 library.  One of those is selected by the @option{-library} flag, which
 as it is needed for both compiling and linking is best specified as part
-of the compiler or standard.  Current @R{} expects a C++11 compiler,
-for which the choice given above is the only possibility.  For C++98
-there are several with
-
-@example
-CXX98=CC
-CXX98STD="-compat=g -library=stdcpp,CrunG3"
-@end example
-
-@noindent
-being the most compatible with C++11 compilation.  Another possibility
-(commonly used for earlier versions of @R{}) would be
-
-@example
-CXX98="CC -library=stlport4"
-@end example
-
-@noindent
-Although version 12.5 accepts the flag @option{-std=c++14}, it did not
-pass @command{configure}'s conformance tests: version 12.6 did.
+of the compiler or standard.  Current @R{} expects a C++11 compiler, for
+which the choice given above is the only possibility.  Although version
+12.5 accepted the flag @option{-std=c++14}, it did not pass
+@command{configure}'s conformance tests: version 12.6 does.
 
 
 @cindex BLAS library
@@ -5927,7 +5908,8 @@ install @LaTeX{} packages on first use.
 
 To make the installer package (@file{@value{RWVERSION}-win.exe}) we
 currently require the Unicode version of Inno Setup 5.3.7 or later from
-@uref{http://jrsoftware.org/}. This is @emph{not} included in
+@uref{http://jrsoftware.org/} (starting from 6.0, Inno Setup provides only
+one version, which supports Unicode). This is @emph{not} included in
 @file{Rtools*.exe}.
 
 Copy file @file{src/gnuwin32/MkRules.dist} to

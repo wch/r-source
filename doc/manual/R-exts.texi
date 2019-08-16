@@ -584,9 +584,11 @@ packages that provide an engine for building vignettes.  These may
 include the current package, or ones listed in @samp{Depends},
 @samp{Suggests} or @samp{Imports}. The @pkg{utils} package is always
 implicitly appended.  See @ref{Non-Sweave vignettes} for details.  Note
-that if, for example, the vignette `engine' is @samp{knitr::rmarkdown}
-this field needs to declare both @CRANpkg{knitr} and
-@CRANpkg{rmarkdown}.
+that if, for example, a vignette has engine @samp{knitr::rmarkdown},
+then @CRANpkg{knitr} provides the engine but both @pkg{knitr} and
+@CRANpkg{rmarkdown} are needed for using it, so both these packages need
+to be at least suggested (as @pkg{rmarkdown} is only suggested by
+@pkg{knitr}, and hence not available automatically along with it).
 
 @c DESCRIPTION field Encoding
 If the @file{DESCRIPTION} file is not entirely in @acronym{ASCII} it
@@ -900,7 +902,7 @@ A package should be listed in only one of these fields.
 @item
 Packages whose namespace only is needed to load the package using
 @code{library(@var{pkgname})} should be listed in the @samp{Imports} field
-and not in the @samp{Depends} field.  Packages listed in @code{imports}
+and not in the @samp{Depends} field.  Packages listed in @code{import}
 or @code{importFrom} directives in the @file{NAMESPACE} file should
 almost always be in @samp{Imports} and not @samp{Depends}.
 @item
@@ -2148,7 +2150,7 @@ PKG_LIBS = $(SHLIB_OPENMP_CFLAGS)
 @end example
 
 Note that the macro @code{SHLIB_OPENMP_CXXFLAGS} applies to the default
-C++ compiler and not necessarily to the C++11/14/17 compiler: users of
+C++ compiler and not necessarily to the C++98/14/17 compiler: users of
 the latter should do their own @command{configure} checks.  If you do
 use your own checks, make sure that OpenMP support is complete by
 compiling and linking an OpenMP-using program: on some platforms the
@@ -2656,6 +2658,9 @@ or
 @example
 CXX_STD = CXX98
 @end example
+@noindent
+But note that this is deprecated and will be ignorwd in future versions
+of @R{}.
 
 The C++11 compiler will be used systematically by R for all C++ code
 if the environment variable @env{USE_CXX11} is defined (with any
