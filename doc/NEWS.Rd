@@ -25,8 +25,8 @@
 
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
-      \item \code{installTrChar} which is nowadays a wrapper for
-      \code{installChar} is defined in \file{Rinternals.h}.  (Neither
+      \item \code{installTrChar} (which is nowadays is wrapped by
+      \code{installChar}) is defined in \file{Rinternals.h}.  (Neither
       are part of the API.)
     }
   }
@@ -45,6 +45,13 @@
 	\code{USE_FC_LEN_T} and include \file{Rconfig.h} (possibly
 	\emph{via} \file{R.h}) before including \file{BLAS.h} or
 	\file{Lapack.h}.
+    }
+  }
+
+  \subsection{DEPRECATED AND DEFUNCT}{
+    \itemize{
+      \item Support for specifying C++98 in package installation is
+      deprecated.
     }
   }
 
