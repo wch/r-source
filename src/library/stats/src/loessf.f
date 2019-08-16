@@ -57,7 +57,8 @@ c     remaining vertices
          j=i-1
          do 6 k=1,d
             v(i,k)=v(1+mod(j,2)*(vc-1),k)
-            j=DBLE(j)/2.D0
+c    Integer division would do here
+            j=INT(DBLE(j)/2.D0)
     6    continue
     5 continue
       return
@@ -520,7 +521,7 @@ c     coef, d, deg, del
 
       if(deg.eq.0) dk=1
       if(deg.eq.1) dk=d+1
-      if(deg.eq.2) dk=dble((d+2)*(d+1))/2.d0
+      if(deg.eq.2) dk=int(dble((d+2)*(d+1))/2.d0)
       corx=dsqrt(k/dble(n))
       z=(dsqrt(k/trl)-corx)/(1-corx)
       if(nsing .eq. 0 .and. 1 .lt. z)   call ehg184('Chernobyl! trL<k',t
@@ -832,7 +833,7 @@ c           bottom of while loop
       double precision g1
       dk = 0
       if(deg.eq.1) dk=d+1
-      if(deg.eq.2) dk=dble((d+2)*(d+1))/2.d0
+      if(deg.eq.2) dk=int(dble((d+2)*(d+1))/2.d0)
       g1 = (-0.08125d0*d+0.13d0)*d+1.05d0
       trl = dk*(1+max(0.d0,(g1-f)/f))
       return
@@ -925,7 +926,7 @@ c     tensor
          if(.not.i2)then
             call ehg182(122)
          end if
-         lg=DBLE(lg)/2.D0
+         lg=int(DBLE(lg)/2.D0)
          do 8 ig=1,lg
 c           Hermite basis
             phi0=(1-h)**2*(1+2*h)
@@ -1202,7 +1203,7 @@ c        Hermite basis
 
       integer function ifloor(x)
       DOUBLE PRECISION x
-      ifloor=x
+      ifloor=int(x)
       if(ifloor.gt.x) ifloor=ifloor-1
       end
 
@@ -1396,7 +1397,7 @@ c           invert $psi$
      +           lo,hi)
             do 12 ileaf=1,nleaf
                do 13 ii=lo(leaf(ileaf)),hi(leaf(ileaf))
-                  i=phi(pi(ii))
+                  i=int(phi(pi(ii)))
                   if(i.ne.0)then
                      if(.not.(psi(i).eq.pi(ii)))then
                         call ehg182(194)
@@ -1580,7 +1581,7 @@ c     version -> versio
             i1=d+1
          else
             if(ideg.eq.2)then
-               i1=dble((d+2)*(d+1))/2.d0
+               i1=int(dble((d+2)*(d+1))/2.d0)
             end if
          end if
       end if
@@ -1891,7 +1892,7 @@ c     top of while loop
          if(.not.leaf)then
             call ehg129(l,u,dd,x,pi,n,sigma)
             k=IDAMAX(dd,sigma,1)
-            m=DBLE(l+u)/2.D0
+            m=int(DBLE(l+u)/2.D0)
             call ehg106(l,u,m,1,x(1,k),pi,n)
 
 c           all ties go with hi son
