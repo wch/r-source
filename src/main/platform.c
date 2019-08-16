@@ -3198,6 +3198,9 @@ do_eSoftVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     Dl_info dl_info1, dl_info2;
 
+    /* these calls to dladdr() convert a function pointer to an object
+       pointer, which is not allowed by ISO C, but there is no compliant
+       alternative to use dladdr() */
     if (!dladdr((void *)do_eSoftVersion, &dl_info1)) ok = FALSE;
     if (!dladdr((void *)dladdr, &dl_info2)) ok = FALSE;
 
