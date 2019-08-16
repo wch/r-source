@@ -60,11 +60,6 @@ Variables:
   CXXFLAGS      compiler flags for CXX
   CXXPICFLAGS   special flags for compiling C++ code to be included in a
 		shared library
-  CXX98         compiler command for C++98 code
-  CXX98CPP      C++98 preprocessor
-  CXX98FLAGS    compiler flags for CXX98
-  CXX98PICFLAGS special flags for compiling C++98 code to be included in a
-		shared library
   CXX11         compiler command for C++11 code
   CXX11STD      flag used with CXX11 to enable C++11 support
   CXX11FLAGS    further compiler flags for CXX11
@@ -114,9 +109,9 @@ Variables:
   SHLIB_CXXFLAGS
                 additional CXXFLAGS used when building shared objects
   SHLIB_CXXLD   command for linking shared objects which contain
-		object files from a C++ compiler (and CXX98 CXX11 CXX14 CXX17)
+		object files from a C++ compiler (and CXX11 CXX14 CXX17)
   SHLIB_CXXLDFLAGS
-		special flags used by SHLIB_CXXLD (and CXX98 CXX11 CXX14 CXX17)
+		special flags used by SHLIB_CXXLD (and CXX11 CXX14 CXX17)
   SHLIB_EXT	file extension (including '.') for shared objects
   SHLIB_FFLAGS  additional FFLAGS used when building shared objects
   SHLIB_LD      command for linking shared objects which contain
@@ -276,13 +271,13 @@ fi
 query="${MAKE} -s ${makefiles} print R_HOME=${R_HOME}"
 
 ok_c_vars="CC CFLAGS CPICFLAGS CPP CPPFLAGS"
-ok_cxx_vars="CXX CXXCPP CXXFLAGS CXXPICFLAGS CXX98 CXX98STD CXX98FLAGS CXX98PICFLAGS CXX11 CXX11STD CXX11FLAGS CXX11PICFLAGS CXX14 CXX14STD CXX14FLAGS CXX14PICFLAGS CXX17 CXX17STD CXX17FLAGS CXX17PICFLAGS"
+ok_cxx_vars="CXX CXXCPP CXXFLAGS CXXPICFLAGS CXX11 CXX11STD CXX11FLAGS CXX11PICFLAGS CXX14 CXX14STD CXX14FLAGS CXX14PICFLAGS CXX17 CXX17STD CXX17FLAGS CXX17PICFLAGS"
 ok_dylib_vars="DYLIB_EXT DYLIB_LD DYLIB_LDFLAGS"
 ok_objc_vars="OBJC OBJCFLAGS"
 ok_java_vars="JAVA JAVAC JAVAH JAR JAVA_HOME JAVA_LIBS JAVA_CPPFLAGS"
 ok_ftn_vars="FC FFLAGS FPICFLAGS FLIBS FCFLAGS SAFE_FFLAGS"
 ok_ld_vars="LDFLAGS"
-ok_shlib_vars="SHLIB_CFLAGS SHLIB_CXXFLAGS SHLIB_CXXLD SHLIB_CXXLDFLAGS SHLIB_CXX98LD SHLIB_CXX98LDFLAGS SHLIB_CXX11LD SHLIB_CXX11LDFLAGS SHLIB_CXX14LD SHLIB_CXX14LDFLAGS SHLIB_CXX17LD SHLIB_CXX17LDFLAGS SHLIB_EXT SHLIB_FFLAGS SHLIB_LD SHLIB_LDFLAGS"
+ok_shlib_vars="SHLIB_CFLAGS SHLIB_CXXFLAGS SHLIB_CXXLD SHLIB_CXXLDFLAGS SHLIB_CXX11LD SHLIB_CXX11LDFLAGS SHLIB_CXX14LD SHLIB_CXX14LDFLAGS SHLIB_CXX17LD SHLIB_CXX17LDFLAGS SHLIB_EXT SHLIB_FFLAGS SHLIB_LD SHLIB_LDFLAGS"
 ok_tcltk_vars="TCLTK_CPPFLAGS TCLTK_LIBS"
 ok_other_vars="BLAS_LIBS LAPACK_LIBS MAKE LIBnn AR RANLIB"
 if test "${R_OSTYPE}" = "windows"; then
