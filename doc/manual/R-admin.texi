@@ -1029,11 +1029,6 @@ CXXFLAGS
 CXXPICFLAGS
 CXXSTD
 
-CXX98
-CXX98STD
-CXX98FLAGS
-CXX98PICFLAGS
-
 CXX11
 CXX11STD
 CXX11FLAGS
@@ -1173,7 +1168,6 @@ needed overriding on Linux with GCC 9: e.g@: in @file{config.site}:
 @example
 CPICFLAGS=-fPIC
 CXXPICFLAGS=-fPIC
-CXX98PICFLAGS=-fPIC
 CXX11PICFLAGS=-fPIC
 CXX14PICFLAGS=-fPIC
 CXX17PICFLAGS=-fPIC
@@ -4961,6 +4955,23 @@ without SSE2 support.  Note that it is a @emph{replacement} for
 @samp{FFLAGS}, so should include all the flags in that macro (except
 perhaps the optimization level).
 
+Additional compilation flags can be specified for added safety/security
+checks.  For example Fedoara 30 adds
+
+@example
+-Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS
+-Fexceptions -fstack-protector-strong -fasynchronous-unwind-tables
+-fstack-clash-protection -fcf-protection
+@end example
+
+@noindent
+to all the C, C++ and Fortran compiler flags (even though
+@code{_GLIBCXX_ASSERTIONS} is only for C++ in current GCC and
+@code{glibc} and none of these are documented for @code{gfortran}).
+Use of @code{_GLIBCXX_ASSERTIONS} will link @code{abort} and
+@code{printf} into almost all C++ code, and @command{R CMD check
+--as-cran} will warn.
+
 @menu
 * Clang::                       
 * Intel compilers::             
@@ -5567,7 +5578,6 @@ FC=f95
 FFLAGS=-O
 CXX=CC
 CXXSTD="-std=c++11 -library=stdcpp,CrunG3"
-CXX98STD="-compat=g -library=stdcpp,CrunG3"
 CXX11STD="-std=c++11 -library=stdcpp,CrunG3"
 CXX14STD="-std=c++14 -library=stdcpp,CrunG3"
 CXXFLAGS=-O
@@ -5610,26 +5620,10 @@ The Oracle compilers provide several implementations of the C++
 standards which select both the set of headers and a C++ runtime
 library.  One of those is selected by the @option{-library} flag, which
 as it is needed for both compiling and linking is best specified as part
-of the compiler or standard.  Current @R{} expects a C++11 compiler,
-for which the choice given above is the only possibility.  For C++98
-there are several with
-
-@example
-CXX98=CC
-CXX98STD="-compat=g -library=stdcpp,CrunG3"
-@end example
-
-@noindent
-being the most compatible with C++11 compilation.  Another possibility
-(commonly used for earlier versions of @R{}) would be
-
-@example
-CXX98="CC -library=stlport4"
-@end example
-
-@noindent
-Although version 12.5 accepts the flag @option{-std=c++14}, it did not
-pass @command{configure}'s conformance tests: version 12.6 did.
+of the compiler or standard.  Current @R{} expects a C++11 compiler, for
+which the choice given above is the only possibility.  Although version
+12.5 accepted the flag @option{-std=c++14}, it did not pass
+@command{configure}'s conformance tests: version 12.6 does.
 
 
 @cindex BLAS library
