@@ -2529,6 +2529,9 @@ if(FALSE) {
         if (use_cxx98 && !checkCXX("CXX98")) {
             stop("C++98 standard requested but CXX98 is not defined")
         }
+        if (use_cxx98) {
+            warning("Support for C++98 is deprecated", call. = FALSE)
+        }
     }
 
     makeargs <- paste0("SHLIB=", shQuote(shlib))
