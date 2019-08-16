@@ -27,7 +27,7 @@
 #include <stdlib.h> /* for abs */
 #include <math.h>
 #include <Rmath.h> /* for imax2(.),..*/
-#include <R_ext/Applic.h>
+//#include <R_ext/Applic.h>
 
 /*  Fast Fourier Transform
  *
@@ -751,7 +751,7 @@ void fft_factor(int n, int *pmaxf, int *pmaxp)
  * If *pmaxf == 0, there was an error, the error type is indicated by *pmaxp:
  *
  *  If *pmaxp == 0  There was an illegal zero parameter among nseg, n, and nspn.
- *  If *pmaxp == 1  There we more than 15 factors to ntot.  */
+ *  If *pmaxp == 1  There were more than 20 factors to ntot.  */
 
     int j, jj, k, sqrtk, kchanged;
 
