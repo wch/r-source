@@ -56,15 +56,14 @@ void loess_grow (int *parameter, int *a,
 
 /* These (and many more) are in ./loessf.f : */
 void F77_NAME(lowesa)(double*, int*, int*, int*, int*, double*, double*);
-void F77_NAME(lowesb)(double*, double*, double*, double*, int*, int*, int*,
-		      int*, double*);
+void F77_NAME(lowesb)(double*, double*, double*, double*, int*, int*, double*);
 void F77_NAME(lowesc)(int*, double*, double*, double*, double*, double*);
 void F77_NAME(lowesd)(int*, int*, int*, int*, double*, int*, int*,
 		      double*, int*, int*, int*);
-void F77_NAME(lowese)(int*, int*, int*, double*, int*, double*, double*);
-void F77_NAME(lowesf)(double*, double*, double*, int*, int*, int*, double*,
+void F77_NAME(lowese)(int*, double*, int*, double*, double*);
+void F77_NAME(lowesf)(double*, double*, double*, int*, double*,
 		      int*, double*, double*, int*, double*);
-void F77_NAME(lowesl)(int*, int*, int*, double*, int*, double*, double*);
+void F77_NAME(lowesl)(int*, double*, int*, double*, double*);
 void F77_NAME(ehg169)(int*, int*, int*, int*, int*, int*,
 		      double*, int*, double*, int*, int*, int*);
 void F77_NAME(ehg196)(int*, int*, double*, double*);
@@ -119,17 +118,16 @@ loess_raw(double *y, double *x, double *weights, double *robust, int *d,
      *                               statistics = "none" for all robustness iterations
      */
     if(!strcmp(*surf_stat, "interpolate/none")) { // default for loess.smooth() and robustness iter.
-	F77_CALL(lowesb)(x, y, robust, &dzero, &zero, iv, &liv, &lv, v);
-	F77_CALL(lowese)(iv, &liv, &lv, v, n, x, surface);
+	F77_CALL(lowesb)(x, y, robust, &dzero, &zero, iv, v);
+	F77_CALL(lowese)(iv, v, n, x, surface);
 	loess_prune(parameter, a, xi, vert, vval);
     }
     else if (!strcmp(*surf_stat, "direct/none")) {
-	F77_CALL(lowesf)(x, y, robust, iv, &liv, &lv, v, n, x,
-			 &dzero, &zero, surface);
+	F77_CALL(lowesf)(x, y, robust, iv, v, n, x, &dzero, &zero, surface);
     }
     else if (!strcmp(*surf_stat, "interpolate/1.approx")) { // default (trace.hat is "exact")
-	F77_CALL(lowesb)(x, y, weights, diagonal, &one, iv, &liv, &lv, v);
-	F77_CALL(lowese)(iv, &liv, &lv, v, n, x, surface);
+	F77_CALL(lowesb)(x, y, weights, diagonal, &one, iv, v);
+	F77_CALL(lowese)(iv, v, n, x, surface);
 	nsing = iv[29];
 	for(i = 0; i < (*n); i++) *trL = *trL + diagonal[i];
 	F77_CALL(lowesa)(trL, n, d, &tau, &nsing, one_delta, two_delta);
@@ -137,16 +135,15 @@ loess_raw(double *y, double *x, double *weights, double *robust, int *d,
     }
     else if (!strcmp(*surf_stat, "interpolate/2.approx")) { // default for trace.hat = "approximate"
 	//                     vvvvvvv (had 'robust' in R <= 3.2.x)
-	F77_CALL(lowesb)(x, y, weights, &dzero, &zero, iv, &liv, &lv, v);
-	F77_CALL(lowese)(iv, &liv, &lv, v, n, x, surface);
+	F77_CALL(lowesb)(x, y, weights, &dzero, &zero, iv, v);
+	F77_CALL(lowese)(iv, v, n, x, surface);
 	nsing = iv[29];
 	F77_CALL(ehg196)(&tau, d, span, trL);
 	F77_CALL(lowesa)(trL, n, d, &tau, &nsing, one_delta, two_delta);
 	loess_prune(parameter, a, xi, vert, vval);
     }
     else if (!strcmp(*surf_stat, "direct/approximate")) {
-	F77_CALL(lowesf)(x, y, weights, iv, &liv, &lv, v, n, x,
-			diagonal, &one, surface);
+	F77_CALL(lowesf)(x, y, weights, iv, v, n, x, diagonal, &one, surface);
 	nsing = iv[29];
 	for(i = 0; i < (*n); i++) *trL = *trL + diagonal[i];
 	F77_CALL(lowesa)(trL, n, d, &tau, &nsing, one_delta, two_delta);
@@ -154,17 +151,16 @@ loess_raw(double *y, double *x, double *weights, double *robust, int *d,
     else if (!strcmp(*surf_stat, "interpolate/exact")) {
 	hat_matrix = (double *) R_alloc((*n)*(*n), sizeof(double));
 	LL = (double *) R_alloc((*n)*(*n), sizeof(double));
-	F77_CALL(lowesb)(x, y, weights, diagonal, &one, iv, &liv, &lv, v);
-	F77_CALL(lowesl)(iv, &liv, &lv, v, n, x, hat_matrix);
+	F77_CALL(lowesb)(x, y, weights, diagonal, &one, iv, v);
+	F77_CALL(lowesl)(iv, v, n, x, hat_matrix);
 	F77_CALL(lowesc)(n, hat_matrix, LL, trL, one_delta, two_delta);
-	F77_CALL(lowese)(iv, &liv, &lv, v, n, x, surface);
+	F77_CALL(lowese)(iv, v, n, x, surface);
 	loess_prune(parameter, a, xi, vert, vval);
     }
     else if (!strcmp(*surf_stat, "direct/exact")) {
 	hat_matrix = (double *) R_alloc((*n)*(*n), sizeof(double));
 	LL = (double *) R_alloc((*n)*(*n), sizeof(double));
-	F77_CALL(lowesf)(x, y, weights, iv, &liv, &lv, v, n, x,
-			hat_matrix, &two, surface);
+	F77_CALL(lowesf)(x, y, weights, iv, v, n, x, hat_matrix, &two, surface);
 	F77_CALL(lowesc)(n, hat_matrix, LL, trL, one_delta, two_delta);
 	k = (*n) + 1;
 	for(i = 0; i < (*n); i++)
@@ -184,8 +180,7 @@ loess_dfit(double *y, double *x, double *x_evaluate, double *weights,
 
     loess_workspace(d, n, span, degree, nonparametric, drop_square,
 		    sum_drop_sqr, &zero);
-    F77_CALL(lowesf)(x, y, weights, iv, &liv, &lv, v, m, x_evaluate,
-		    &dzero, &zero, fit);
+    F77_CALL(lowesf)(x, y, weights, iv, v, m, x_evaluate, &dzero, &zero, fit);
     loess_free();
 }
 
@@ -202,14 +197,11 @@ loess_dfitse(double *y, double *x, double *x_evaluate, double *weights,
     loess_workspace(d, n, span, degree, nonparametric, drop_square,
 		    sum_drop_sqr, &zero);
     if(*family == GAUSSIAN)
-	F77_CALL(lowesf)(x, y, weights, iv, &liv, &lv, v, m,
-			x_evaluate, L, &two, fit);
+	F77_CALL(lowesf)(x, y, weights, iv, v, m, x_evaluate, L, &two, fit);
     else if(*family == SYMMETRIC)
     {
-	F77_CALL(lowesf)(x, y, weights, iv, &liv, &lv, v, m,
-			x_evaluate, L, &two, fit);
-	F77_CALL(lowesf)(x, y, robust, iv, &liv, &lv, v, m,
-			x_evaluate, &dzero, &zero, fit);
+	F77_CALL(lowesf)(x, y, weights, iv, v, m, x_evaluate, L, &two, fit);
+	F77_CALL(lowesf)(x, y, robust, iv, v, m, x_evaluate, &dzero, &zero, fit);
     }
     loess_free();
 }
@@ -219,7 +211,7 @@ loess_ifit(int *parameter, int *a, double *xi, double *vert,
 	   double *vval, int *m, double *x_evaluate, double *fit)
 {
     loess_grow(parameter, a, xi, vert, vval);
-    F77_CALL(lowese)(iv, &liv, &lv, v, m, x_evaluate, fit);
+    F77_CALL(lowese)(iv, v, m, x_evaluate, fit);
     loess_free();
 }
 
@@ -235,8 +227,8 @@ loess_ise(double *y, double *x, double *x_evaluate, double *weights,
     loess_workspace(d, n, span, degree, nonparametric, drop_square,
 		    sum_drop_sqr, &one);
     v[1] = *cell;
-    F77_CALL(lowesb)(x, y, weights, &dzero, &zero, iv, &liv, &lv, v);
-    F77_CALL(lowesl)(iv, &liv, &lv, v, m, x_evaluate, L);
+    F77_CALL(lowesb)(x, y, weights, &dzero, &zero, iv, v);
+    F77_CALL(lowesl)(iv, v, m, x_evaluate, L);
     loess_free();
 }
 
