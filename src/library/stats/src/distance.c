@@ -197,7 +197,7 @@ enum { EUCLIDEAN=1, MAXIMUM, MANHATTAN, CANBERRA, BINARY, MINKOWSKI };
 void R_distance(double *x, int *nr, int *nc, double *d, int *diag,
 		int *method, double *p)
 {
-    int dc, i, j;
+    int i, j = 0; // suppress clang 9 warning
     size_t  ij;  /* can exceed 2^31 - 1 */
     double (*distfun)(double*, int, int, int, int) = NULL;
 #ifdef _OPENMP
@@ -228,7 +228,7 @@ void R_distance(double *x, int *nr, int *nc, double *d, int *diag,
     default:
 	error(_("distance(): invalid distance"));
     }
-    dc = (*diag) ? 0 : 1; /* diag=1:  we do the diagonal */
+    int dc = (*diag) ? 0 : 1; /* diag=1:  we do the diagonal */
 #ifdef _OPENMP
     if (R_num_math_threads > 0)
 	nthreads = R_num_math_threads;
