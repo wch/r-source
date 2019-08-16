@@ -74,7 +74,7 @@ int AppMain(int argc, char **argv)
 	for(int i = 0; i< argc; i++) 
 	    if (!strcmp(argv[i], "--ess"))
 		interactive = 1;
-	    else if (!strcmp(argv[i], "--f")) {
+	    else if (!strcmp(argv[i], "-f")) {
 		interactive = 0;
 		i++;
 	    } else if (!strcmp(argv[i], "--file"))
