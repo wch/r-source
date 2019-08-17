@@ -1181,10 +1181,11 @@ function(file, meta = NULL)
             mfooter <- c(mfooter, x)
     }
 
-    rval <- if(length(rval) == 1L)
-        rval[[1L]]
-    else
-        do.call("c", rval)
+    rlen <- length(rval)
+    if(rlen == 1L)
+        rval <- rval[[1L]]
+    else if(rlen > 1L)
+        rval <- do.call("c", rval)
     if(!.is_not_nonempty_text(mheader))
         attr(rval, "mheader") <- paste(mheader, collapse = "\n")
     if(!.is_not_nonempty_text(mfooter))
