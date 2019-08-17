@@ -1,7 +1,7 @@
 #  File src/library/base/R/dcf.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -65,16 +65,21 @@ function(file, fields = NULL, all = FALSE, keep.white = NULL)
         out
     }
 
+    ## <FIXME>
+    ## This should no longer be necessary?
+    ## <COMMENT>
     ## This needs to be done in an 8-bit locale for the regexps.
-    ctype <-  Sys.getlocale("LC_CTYPE")
-    on.exit(Sys.setlocale("LC_CTYPE", ctype), add = TRUE)
-    Sys.setlocale("LC_CTYPE", "C")
+    ## ctype <-  Sys.getlocale("LC_CTYPE")
+    ## on.exit(Sys.setlocale("LC_CTYPE", ctype), add = TRUE)
+    ## Sys.setlocale("LC_CTYPE", "C")
+    ## </COMMENT>
+    ## </FIXME>
 
     lines <- readLines(file, skipNul = TRUE)
 
     ## Try to find out about invalid things: mostly, lines which do not
     ## start with blanks but have no ':' ...
-    ind <- grep("^[^[:blank:]][^:]*$", lines)
+    ind <- grep("^[^[:blank:]][^:]*$", lines, perl = TRUE)
     if(length(ind)) {
         lines <- substr(lines[ind], 1L, 0.7 * getOption("width"))
         stop(gettextf("Invalid DCF format.\nRegular lines must have a tag.\nOffending lines start with:\n%s",
@@ -82,7 +87,7 @@ function(file, fields = NULL, all = FALSE, keep.white = NULL)
              domain = NA)
     }
 
-    line_is_not_empty <- !grepl("^[[:space:]]*$", lines)
+    line_is_not_empty <- !grepl("^[[:space:]]*$", lines, perl = TRUE)
     nums <- cumsum(diff(c(FALSE, line_is_not_empty) > 0L) > 0L)
     ## Remove the empty ones so that nums knows which record each line
     ## belongs to.
@@ -91,11 +96,12 @@ function(file, fields = NULL, all = FALSE, keep.white = NULL)
 
     ## Deal with escaped blank lines (used by Debian at least for the
     ## Description: values, see man 5 deb-control):
-    line_is_escaped_blank <- grepl("^[[:space:]]+\\.[[:space:]]*$", lines)
+    line_is_escaped_blank <-
+        grepl("^[[:space:]]+\\.[[:space:]]*$", lines, perl = TRUE)
     if(any(line_is_escaped_blank))
         lines[line_is_escaped_blank] <- ""
 
-    line_has_tag <- grepl("^[^[:blank:]][^:]*:", lines)
+    line_has_tag <- grepl("^[^[:blank:]][^:]*:", lines, perl = TRUE)
 
     ## Check that records start with tag lines.
     pos <- c(1L, which(diff(nums) > 0L) + 1L)
@@ -111,13 +117,15 @@ function(file, fields = NULL, all = FALSE, keep.white = NULL)
     ## End positions of field entries.
     pos <- cumsum(lengths)
 
-    tags <- sub(":.*", "", lines[line_has_tag])
+    tags <- sub(":.*", "", lines[line_has_tag], perl = TRUE)
     lines[line_has_tag] <-
-        sub("[^:]*:[[:space:]]*", "", lines[line_has_tag])
+        sub("[^:]*:[[:space:]]*", "", lines[line_has_tag], perl = TRUE)
     fold <- is.na(match(tags, keep.white))
     foldable <- rep.int(fold, lengths)
-    lines[foldable] <- sub("^[[:space:]]*", "", lines[foldable])
-    lines[foldable] <- sub("[[:space:]]*$", "", lines[foldable])
+    lines[foldable] <-
+        sub("^[[:space:]]*", "", lines[foldable], perl = TRUE)
+    lines[foldable] <-
+        sub("[[:space:]]*$", "", lines[foldable], perl = TRUE)
 
     vals <- mapply(function(from, to) paste(lines[from:to],
                                             collapse = "\n"),
