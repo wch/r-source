@@ -4919,7 +4919,7 @@ add_dummies <- function(dir, Log)
                 lines <- filtergrep(ex_re, lines, useBytes = TRUE)
 
                 ## and deprecated declarations in Eigen and boost
-                ex_re <- "include/(Eigen|boost).* warning: .* \\[-Wdeprecated-declarations\\]"
+                ex_re <- "(include/Eigen|boost/smart_ptr).* warning: .* \\[-Wdeprecated-declarations\\]"
                 lines <- filtergrep(ex_re, lines, useBytes = TRUE)
 
                 ## Ignore install-time readLines() warnings about
