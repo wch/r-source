@@ -1,7 +1,7 @@
 #  File src/library/tools/R/bibstyle.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2019 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -414,5 +414,5 @@ toRd.bibentry <- function(obj, style=NULL, ...) {
     	    Unpublished = formatUnpublished(paper),
     	    paste("bibtype", attr(paper, "bibtype"),"not implemented") ))
     }
-    result
+    gsub("%", "\\%", result, fixed = TRUE)
 }
