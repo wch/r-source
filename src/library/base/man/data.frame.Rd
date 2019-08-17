@@ -133,7 +133,8 @@ default.stringsAsFactors()
   \code{\link{Math.data.frame}} etc, about
   \emph{Group} methods for \code{data.frame}s;
   \code{\link{read.table}},
-  \code{\link{make.names}}.
+  \code{\link{make.names}},
+  \code{\link{list2DF}} for creating data frames from lists of variables.
 }
 \examples{
 L3 <- LETTERS[1:3]

@@ -61,6 +61,9 @@
       \item \command{Rterm} now works also when invoked from MSYS2
       terminals.  Line editing is possible when \command{winpty} is
       installed.
+
+      \item New function \code{list2DF()} for creating data frames from
+      lists of variables.
     }
   }
 

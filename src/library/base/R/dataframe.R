@@ -1702,3 +1702,22 @@ Summary.data.frame <- function(..., na.rm)
     })
     do.call(.Generic, c(args, na.rm=na.rm))
 }
+
+list2DF <-
+function(x = list(), nrow = NULL)
+{
+    stopifnot(is.list(x), is.null(nrow) || nrow >= 0L)
+    if(n <- length(x)) {
+        if(is.null(nrow))
+            nrow <- max(lengths(x), 0L)
+        x <- lapply(x, rep_len, nrow)
+    } else {
+        if(is.null(nrow))
+            nrow <- 0L
+    }
+    if(is.null(names(x)))
+        names(x) <- character(n)
+    class(x) <- "data.frame"
+    attr(x, "row.names") <- .set_row_names(nrow)
+    x
+}
