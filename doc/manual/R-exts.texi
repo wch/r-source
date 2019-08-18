@@ -4363,7 +4363,7 @@ R-admin, R Installation and Administration},
 Portable C++ code needs to follow the 2011 standard or to specify a C+14
 or C++17 (see @ref{Using C++14 code}) where available (which is
 not the case on all @R{} platforms).  Currently C++14 code is less
-portable thant C++11 and C++17 support is patchy across @R{} platforms.
+portable than C++11 and C++17 support is patchy across @R{} platforms.
 
 If using Fortran with the GNU compiler, use the flags
 @option{-std=f95 -Wall -pedantic} which reject most GNU extensions and
