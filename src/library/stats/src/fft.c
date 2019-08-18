@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 1998--2019  The R Core Team
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2000, 2013  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -27,7 +27,6 @@
 #include <stdlib.h> /* for abs */
 #include <math.h>
 #include <Rmath.h> /* for imax2(.),..*/
-#include <R_ext/Applic.h>
 
 /*  Fast Fourier Transform
  *
@@ -36,7 +35,8 @@
  *
  *  I have translated them to C and moved the memory allocation
  *  so that it takes place under the control of the algorithm
- *  which calls these; for R, see ../main/fourier.c
+ *  which calls these; for R, see ./fourier.c
+                                  ~~~~~~~~~~~
  *
  *  void fft_factor(int n, int *maxf, int *maxp)
  *
@@ -143,9 +143,10 @@ static void fftmx(double *a, double *b, int ntot, int n, int nspan, int isn,
     int k, k1, k2, k3=0, k4, kk, klim, ks, kspan, kspnn;
     int lim, maxf, mm, nn, nt;
 
+    // converted from Fortran, so 1-based indexing
     a--; b--; at--; ck--; bt--; sk--;
     np--;
-    nfac--;/*the global one!*/
+    nfac--;
 
     inc = abs(isn);
     nt = inc*ntot;
@@ -750,7 +751,7 @@ void fft_factor(int n, int *pmaxf, int *pmaxp)
  * If *pmaxf == 0, there was an error, the error type is indicated by *pmaxp:
  *
  *  If *pmaxp == 0  There was an illegal zero parameter among nseg, n, and nspn.
- *  If *pmaxp == 1  There we more than 15 factors to ntot.  */
+ *  If *pmaxp == 1  There were more than 20 factors to ntot.  */
 
     int j, jj, k, sqrtk, kchanged;
 
