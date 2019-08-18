@@ -13,12 +13,12 @@
 \alias{row.names<-.default}
 \alias{.rowNamesDF<-}
 \description{
-  All data frames have a row names attribute, a character vector of
+  All data frames have row names, a character vector of
   length the number of rows with no duplicates nor missing values.
 
-  For convenience, these are generic functions for which users can write
-  other methods, and there are default methods for arrays.  The
-  description here is for the \code{data.frame} method.
+  There are generic functions for getting and setting row names,
+  with default methods for arrays.
+  The description here is for the \code{data.frame} method.
 
   \code{`.rowNamesDF<-`} is a (non-generic replacement) function to set
   row names for data frames, with extra argument \code{make.names}.
@@ -77,7 +77,7 @@ row.names(x) <- value
   sort are marked as \sQuote{automatic} and handled differently by
   \code{\link{as.matrix}} and \code{\link{data.matrix}} (and potentially
   other functions).  (All zero-row data frames are regarded as having
-  automatic row.names.)
+  automatic row names.)
 }
 \references{
   Chambers, J. M. (1992)
@@ -89,6 +89,18 @@ row.names(x) <- value
   \code{\link{data.frame}}, \code{\link{rownames}}, \code{\link{names}}.
 
   \code{.row_names_info} for the internal representations.
+}
+\examples{
+## To illustrate the note:
+df <- data.frame(x = c(TRUE, FALSE, NA, NA), y = c(12, 34, 56, 78))
+row.names(df) <- 1 : 4
+attr(df, "row.names")
+deparse(df)
+## (Compact storage, not regarded as automatic.)
+row.names(df) <- NULL
+attr(df, "row.names")
+deparse(df)
+## (Compact storage, regarded as automatic.)
 }
 \keyword{classes}
 \keyword{methods}
