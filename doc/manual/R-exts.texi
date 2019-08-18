@@ -2572,21 +2572,13 @@ define a module of the same name in multiple source files.
 @subsection Using C++11 code
 
 @R{} can be built without a C++ compiler although one is available (but
-not necessarily installed) on all known @R{} platforms.  For full
-portability across platforms, all that can be assumed is approximate
-support for the C++98 standard (the widely used @command{g++} deviates
-considerably from the standard).  Some compilers have a concept of
-`C++03' (`essentially a bug fix') or `C++ Technical Report 1' (TR1), an
-optional addition to the `C++03' revision which was published in 2007.
-A revised standard was published in 2011 and compilers with pretty much
-complete implementations are available.  C++11 added all of the C99
-features which are not otherwise implemented in C++, and C++ compilers
-commonly accept C99 extensions to C++98.  A minor update@footnote{The
-changes are linked from
+not necessarily installed) on all known @R{} platforms.  As from @R{}
+3.7.0 a C++ compiler will be selected only if it conforms to the 2011
+standard (`C++11').  A minor update@footnote{The changes are linked from
 @uref{https://isocpp.org/@/std/@/standing-documents/@/sd-6-sg10-feature-test-recommendations}.}
-to C++11 (C++14) was published in December 2014.  The latest standard
-(C++17) was published in December 2017, and a further revision (`C++20')
-is in preparation.
+(`C++14') was published in December 2014.  The latest standard (`C++17')
+was published in December 2017, and a further revision (`C++20') is in
+preparation.
 
 What standard a C++ compiler aims to support can be hard to determine:
 the value@footnote{Values @code{199711}, @code{201103L} and
@@ -2596,43 +2588,17 @@ C++17 is @code{201703L} but some compiler versions have smaller values
 so a test of @code{__cplusplus > 201402L} is safer.} of
 @code{__cplusplus} may help but some compilers use it to denote a
 standard which is partially supported and some the latest standard which
-is (almost) fully supported.  As from version 6, @command{g++} defaults
-to C++14 (with GNU extensions): earlier versions aim to support C++03
-with many extensions (including support for TR1) with version 5 having
-fairly complete C++14 support enabled by flag @option{-std=gnu++14}.
-@command{clang} with its native@footnote{Some distributions, notably
-Debian, have supplied a build of @command{clang} with @command{g++}'s
-headers and library.  Conversely, Apple's command named @command{g++} is
-based on @command{clang} using @code{libc++}.} @code{libc++} headers and
-library has since version 3.4 included almost all C++14 features, but
-does not support TR1.  As from version 6.0.0, @command{clang} defaults
-to C++14.
+is (almost) fully supported.
 
 As from version 3.6.0, @R{} selects a default C++ compiler with options
 that conform as far as possible@footnote{allowing `GNU extensions', but
-if possible excluding C++14 features.} to C++11: this might not be
-possible@footnote{although it is on all commonly-tested @R{} platforms.}
-and packages which do not specify @samp{R (>= 3.6)} need to explicitly
-require C++11, hence the rest of this section.
-
-Since version 3.1.0, @R{} has provided support for C++11 in packages in
-addition to C++98.  This support is not uniform across platforms as it
-depends on the capabilities of the compiler (see below).  When @R{} is
-configured, it will determine whether the C++ compiler supports C++11
-and which compiler flags, if any, are required to enable C++11 support.
-For example, recent versions of @command{g++} or @command{clang++}
-accept the compiler flag @option{-std=c++11}, and earlier versions
-support a flag @option{-std=c++0x}, but the latter only provided partial
-support for the C++11 standard (it later became a deprecated synonym for
-@option{-std=c++11}).
-
-@R{} 3.6.0 and later default to C++11 where available (and C++ is only
-supported from 3.7.0 where it is available).  The rest of this section
-applies to packages which may be used with earlier versions of @R{}.
+if possible excluding C++14 features.} to C++11. Packages which do not
+specify @samp{R (>= 3.6)} in the @file{DESCRIPTION} file need to
+explicitly require C++11, hence the rest of this section.
 
 In order to specify C++11 code in a package to be used with @R{}
-versions before 3.6.0, the package's @file{Makevars} file (or
-@file{Makevars.win} on Windows) should include the line
+versions from 3.1.0 but before 3.6.0, the package's @file{Makevars} file
+(or @file{Makevars.win} on Windows) should include the line
 
 @example
 CXX_STD = CXX11
@@ -2683,11 +2649,11 @@ nor to compilation done in vignettes or @emph{via} other packages.
 @node Using C++14 code, Using C++17 code, Using C++11 code, Configure and cleanup
 @subsection Using C++14 code
 
-Support for a C++14 compiler (where available) has been explicitly added
-to @R{} from version 3.4.0. Similar considerations to C++11 apply,
-except that the variables associated with the C++14 compiler use the
-prefix @samp{CXX14} instead of @samp{CXX11}. Hence to use C++14 code in
-a package, the package's @file{Makevars} file (or @file{Makevars.win} on
+Support for a C++14 compiler (where available) was been added to @R{}
+from version 3.4.0.  Similar considerations to C++11 apply, except that
+the variables associated with the C++14 compiler use the prefix
+@samp{CXX14} instead of @samp{CXX11}. Hence to use C++14 code in a
+package, the package's @file{Makevars} file (or @file{Makevars.win} on
 Windows) should include the line
 @example
 CXX_STD = CXX14
@@ -2758,7 +2724,7 @@ in @file{@var{HOME}/.R/Makevars.win}.
 @node Using C++17 code,  , Using C++14 code, Configure and cleanup
 @subsection Using C++17 code
 
-Experimental support for C++17 has been added to @R{} version 3.4.0. The
+Experimental support for C++17 was added to @R{} version 3.4.0. The
 @file{configure} script tests a subset of C++17 features.  @code{clang
 4.0.0} and @code{gcc 7.1} and later versions passed these tests (with
 flag @option{-std=gnu++17} or @option{-std=gnu++1z} chosen by the
@@ -5084,7 +5050,7 @@ best on warning about non-standard code.
 @itemize
 @item
 Mathematical functions such as @code{sqrt} are defined in C++11 for
-floating-point arguments, @code{float}, @code{double}, @code{long
+floating-point arguments: @code{float}, @code{double}, @code{long
 double} and possibly more.  The standard specifies what happens with an
 argument of integer type but this is not always implemented, resulting
 in a report of `overloading ambiguity': this is commonly seen on
@@ -5112,7 +5078,7 @@ integer types, overloaded in @file{<cmath>} for floating-point types.
 C++11 has additional overloads for @code{std::abs} in @file{<cmath>} for
 integer types.  The effect of calling @code{abs} with a floating-point
 type is implementation-specific: it may truncate to an integer.  For
-clarity and to avoid compile warnings, use @code{abs} for integer types
+clarity and to avoid compiler warnings, use @code{abs} for integer types
 and @code{fabs} for double values.
 
 @item
@@ -5305,10 +5271,9 @@ POSIX function.  An adequately portable preamble is
 
 @item
 Compiler writers feel free to implement features from later standards
-than the one specified (if any), so for example they may implement or
-warn on C++14 or C++17 features.  Portable code will not use
-such features -- it can be hard to know what they are but the most
-common warnings are
+than the one specified, so for example they may implement or warn on
+C++14 or C++17 features.  Portable code will not use such features -- it
+can be hard to know what they are but the most common warnings are
 @example
 'register' storage class specifier is deprecated and incompatible with C++17
 
