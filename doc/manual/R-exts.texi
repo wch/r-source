@@ -368,7 +368,7 @@ BugReports: https://pkgname.bugtracker.url
 @noindent
 The format is that of a version of a `Debian Control File' (see the help
 for @samp{read.dcf} and
-@uref{https://www.debian.org/@/doc/@/debian-policy/@/index.html#document-ch-controlfields}:
+@uref{https://www.debian.org/@/doc/@/debian-policy/@/ch-controlfields.html}:
 @R{} does not require encoding in UTF-8 and does not support comments
 starting with @samp{#}).  Fields start with an @acronym{ASCII} name
 immediately followed by a colon: the value starts after the colon and a
