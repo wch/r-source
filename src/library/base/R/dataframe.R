@@ -1289,9 +1289,7 @@ rbind.data.frame <- function(..., deparse.level = 1, make.row.names = TRUE,
     }
     n <- length(allargs)
     if(n == 0L)
-	return(structure(list(),
-			 class = "data.frame",
-			 row.names = integer()))
+	return(list2DF())
     nms <- names(allargs)
     if(is.null(nms))
 	nms <- character(n)
@@ -1413,8 +1411,7 @@ rbind.data.frame <- function(..., deparse.level = 1, make.row.names = TRUE,
     if(nvar == 0L)
 	nvar <- max(lengths(allargs)) # only vector args
     if(nvar == 0L)
-	return(structure(list(), class = "data.frame",
-			 row.names = integer()))
+	return(list2DF())
     pseq <- seq_len(nvar)
     if(is.null(value)) { # this happens if there has been no data frame
 	value <- list()
