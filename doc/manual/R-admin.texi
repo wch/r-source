@@ -4956,7 +4956,7 @@ without SSE2 support.  Note that it is a @emph{replacement} for
 perhaps the optimization level).
 
 Additional compilation flags can be specified for added safety/security
-checks.  For example Fedoara 30 adds
+checks.  For example Fedora 30 adds
 
 @example
 -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS
