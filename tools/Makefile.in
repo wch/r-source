@@ -20,7 +20,6 @@ DISTFILES = README \
 	copy-if-change \
 	getsp.java \
 	help2man.pl \
-	install-info.pl \
 	install-sh \
 	ldAIX4 \
 	link-recommended \

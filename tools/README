@@ -47,11 +47,6 @@ The files are as follows.
 	the GNU help2man package (ftp://ftp.gnu.org/gnu/help2man/).
 	Used for a maintainer-mode build only: requires Perl.
 	
-  install-info.pl
-	create or update entry in Info directory.  Taken from the Debian
-	GNU/Linux stable distribution in 2001.  Only used if a suitable
-	install-info program is not found: requires Perl.
-	
   ldAIX4
 	writes an export file, assembling the exported symbols by
 	reading the output of nm.  This file is needed on AIX (4.2 and
