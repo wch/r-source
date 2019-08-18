@@ -2626,18 +2626,19 @@ support a flag @option{-std=c++0x}, but the latter only provided partial
 support for the C++11 standard (it later became a deprecated synonym for
 @option{-std=c++11}).
 
-@R{} 3.6.0 and later default to C++ where available (and C++ is only
-supported from 3.7.0 where it is).  The rest of this section applies to
-packages which may be used with earlier versions of @R{}.
+@R{} 3.6.0 and later default to C++11 where available (and C++ is only
+supported from 3.7.0 where it is available).  The rest of this section
+applies to packages which may be used with earlier versions of @R{}.
 
-In order to use C++11 code in a package, the package's @file{Makevars}
-file (or @file{Makevars.win} on Windows) should include the line
+In order to specify C++11 code in a package to be used with @R{}
+versions before 3.6.0, the package's @file{Makevars} file (or
+@file{Makevars.win} on Windows) should include the line
 
 @example
 CXX_STD = CXX11
 @end example
 @noindent
-Compilation and linking will then be done with the C++11 compiler.
+Compilation and linking will then be done with the C++11 compiler (if any).
 
 Packages without a @file{src/Makevars} or @file{src/Makefile} file may
 specify that they require C++11 for code in the @file{src} directory by
@@ -2651,41 +2652,6 @@ SystemRequirements: C++11
 If a package does have a @file{src/Makevars[.win]} file then setting the
 make variable @samp{CXX_STD} is preferred, as it allows @command{R CMD
 SHLIB} to work correctly in the package's @file{src} directory.
-
-The C++11 compiler will be used systematically by R for all C++ code
-if the environment variable @env{USE_CXX11} is defined (with any
-value). Hence this environment variable should be defined when invoking
-@command{R CMD SHLIB} in the absence of a @file{Makevars} file (or
-@file{Makevars.win} on Windows) if a C++11 compiler is required.
-
-Further control over compilation of C++11 code can be obtained by
-specifying the macros @samp{CXX11} and @samp{CXX11STD} when @R{} is
-configured@footnote{For
-details of these and related macros, see file @file{config.site} in
-the @R{} sources.}, or in a personal or site @file{Makevars} file.
-@ifset UseExternalXrefs
-@xref{Customizing package compilation, , Customizing package compilation,
-R-admin, R Installation and Administration}.
-@end ifset
-If C++11 support is not available then these macros are both empty; if
-it is available by default, @samp{CXX11} defaults to @samp{CXX} and
-@samp{CXX11STD} is empty . Otherwise, @samp{CXX11} defaults to the same
-value as the C++ compiler @samp{CXX} and the flag @samp{CXX11STD}
-defaults to @option{-std=c++11} or similar.  It is possible to specify
-@samp{CXX11} to be a distinct compiler just for C++11--using packages,
-e.g.@: @command{g++} on Solaris.  Note however that different C++
-compilers (and even different versions of the same compiler) often
-differ in their ABI so their outputs can rarely be mixed. By setting
-@samp{CXX11STD} it is also possible to choose a different dialect of the
-standard such as @option{-std=c++11}.
-
-As noted above, support for C++11 varies across platforms: on some
-platforms, it may be possible or necessary to select a different
-compiler for C++11, @emph{via} personal or site @file{Makevars} files.
-
-There is no guarantee that C++11 can be used in a package in combination
-with any other compiled language (even C), as the C++11 compiler may be
-incompatible with the native compilers for the platform.
 
 If a package using C++11 has a @command{configure} script it is
 essential that it selects the correct compiler, @emph{via} something like
@@ -4428,15 +4394,15 @@ personal @file{Makevars} files.
 R-admin, R Installation and Administration},
 @end ifset
 
-Portable C++ code needs to follow the 1998 standard (and not use
-features from C99), or to specify a C++11 compiler (see @ref{Using C++11
-code}) where available (which is not the case on all @R{} platforms).
-Currently C++14 code is less portable and C++17 support is patchy across
-@R{} platforms.
+Portable C++ code needs to follow the 2011 standard or to specify a C+14
+or C++17 (see @ref{Using C++14 code}) where available (which is
+not the case on all @R{} platforms).  Currently C++14 code is less
+portable thant C++11 and C++17 support is patchy across @R{} platforms.
 
 If using Fortran with the GNU compiler, use the flags
 @option{-std=f95 -Wall -pedantic} which reject most GNU extensions and
-features from later standards.
+features from later standards.  (Although @R{} only requires Fortran 90,
+@command{gfortran} does not have a way to specify that standard.)
 
 @R{} has tested that @code{DOUBLE COMPLEX} works and so is preferred to
 @code{COMPLEX*16}.  (Fortran code can use something like
@@ -4700,14 +4666,14 @@ Make sure that any version requirement for Java code is both declared in
 the @samp{SystemRequirements} field and tested at runtime (not least as
 the Java installation when the package is installed might not be the
 same as when the package is run and will not be for binary packages).
-Java 8 is available for fewer platforms than Java 7, and Java 9/10 for
+Java 8 is available for fewer platforms than Java 7, and Java 11 for
 fewer still (at the time of writing, only @cputype{x86_64} Linux, macOS,
-64-bit Windows and 64-bit Sparc Solaris from Oracle).
+64-bit Windows and 64-bit Solaris 11 from Oracle).
 
 When specifying a minimum Java version please use the official version
 names, which are (confusingly)
 @example
-1.1 1.2 1.3 1.4 5.0 6 7 8 9 10 11
+1.1 1.2 1.3 1.4 5.0 6 7 8 9 10 11 12
 @end example
 @noindent
 and as from 2018 a year.month scheme such as @samp{18.3} is also in use.
@@ -5059,13 +5025,13 @@ standards (C99, C++11 or where declared C++14/17) and testing that
 extensions (such as POSIX functions) are supported.
 
 @strong{C++ standards}: As from version 3.6.0, @R{} defaults to C++11
-where available@footnote{which it is on all known platforms}.  However,
-in earlier versions the default standard was that of the compiler used,
-often C++98 or C++14.  Thus for portability it is desirable to specify
-the C++ standard@footnote{For C++98 this is only possible since @R{}
-3.5.0, for C++11 since @R{} 3.1.0.} assumed for a package.  Because most
-packages will be made available for earlier versions on @R{}, comments
-below about C++98 have been retained.
+where available@footnote{which it is on all known platforms, and is
+required as from @R{} 3.7.0}.  However, in earlier versions the default
+standard was that of the compiler used, often C++98 or C++14.  Packages
+which are for use only with @R{} 3.6.0 or later can assume C++11 or
+specify a later standard.  However, those which may be used in earlier
+versions need to specify C++11 expicitly (@pxref{Using C++11 code}) or
+be tested under all of C++11, C++98 and C++14.
 
 Note that the `TR1' C++ extensions are not part of any of these
 standards and the @code{<tr1/@var{name}>} headers are not supplied by some of
@@ -5117,15 +5083,12 @@ best on warning about non-standard code.
 
 @itemize
 @item
-Mathematical functions such as @code{sqrt} are defined in C++ for
-floating-point arguments.  It is legitimate in C++ to overload these
-with versions for types @code{float}, @code{double}, @code{long double}
-and possibly more.  This means that calling @code{sqrt} on an integer
-type may have `overloading ambiguity' as it could be promoted to any of
-the supported floating-point types: this is commonly seen on Solaris,
-but for @code{pow} also seen on macOS.  (C++ has an overload for
-@code{std::pow(<double>, <int>)}, but this may not be visible from the
-main namespace.  C++11 requires additional overloads for integer types.)
+Mathematical functions such as @code{sqrt} are defined in C++11 for
+floating-point arguments, @code{float}, @code{double}, @code{long
+double} and possibly more.  The standard specifies what happens with an
+argument of integer type but this is not always implemented, resulting
+in a report of `overloading ambiguity': this is commonly seen on
+Solaris, but for @code{pow} also seen on macOS.
 
 A not-uncommonly-seen problem is to mistakenly call @code{floor(x/y)} or
 @code{ceil(x/y)} for @code{int} arguments @code{x} and @code{y}.  Since
@@ -5148,31 +5111,15 @@ integer types.  Function @code{abs} is defined in C99's
 integer types, overloaded in @file{<cmath>} for floating-point types.
 C++11 has additional overloads for @code{std::abs} in @file{<cmath>} for
 integer types.  The effect of calling @code{abs} with a floating-point
-type is implementation-specific: it may truncate to an integer.
+type is implementation-specific: it may truncate to an integer.  For
+clarity and to avoid compile warnings, use @code{abs} for integer types
+and @code{fabs} for double values.
 
 @item
-Functions/macros such as @code{isnan}, @code{isinf} and @code{isfinite}
-are not required by C++98: where compilers support them they may be only
-in the @code{std} namespace or only in the main namespace.  There is no
-way to make use of these functions which works with all C++ compilers
-which have been used on @R{} platforms: use @R{}'s versions such as
-@code{ISNAN} and @code{R_FINITE} instead.
-
-If you must use them in C++11, beware that some
-compilers@footnote{E.g. @command{gcc 5.3} in C++11 mode.} provide both
-@code{std::isnan} and @code{::isnan}, so using
-
-@example
-using namespace std;
-@end example
-
-@noindent
-may cause `overloading ambiguity' and you must use @code{std::isnan}
-@emph{etc} explicitly.
-
 It is an error (and make little sense, although has been seen) to call
-these functions for integer arguments: a few compilers give a compilation
-error.
+macros/functions @code{isnan}, @code{isinf} and @code{isfinite} for integer
+arguments: a few compilers give a compilation error.  Function
+@code{finite} is obsolete, and some compilers will warn about its use.
 
 @item
 The GNU C/C++ compilers support a large number of non-portable
@@ -5218,13 +5165,10 @@ first used to be a sufficient workaround but for some 2016 compilers
 only one could be included.
 
 @item
-Variable-length arrays are C99, not supported by C++98.
-
-@item
 Be careful to include the headers which define the functions you use.
 Some compilers/OSes include other system headers in their headers which
 are not required by the standards, and so code may compile on such
-systems and not on others.  (A prominent example is the C++11 header
+systems and not on others.  (A prominent example is the C++ header
 @code{<random>} which is indirectly included by @code{<algorithm>} by
 @command{g++}.  Another issue is the C header @code{<time.h>} which is
 included by other headers on Linux and Windows but not macOS nor
@@ -5242,8 +5186,7 @@ and the latter is often included indirectly by other headers on some
 but not all systems.
 
 Similarly for constants: for example @code{SIZE_MAX} is defined in
-@code{stdint.h} alongside @code{size_t} (according to the C99 standard:
-it is not part of C++98).
+@code{stdint.h} alongside @code{size_t}.
 
 @item
 For C++ code, be careful to specify namespaces where needed.  Many
@@ -5272,12 +5215,7 @@ Some C++ compilers refuse to compile constructs such as
 @noindent
 which compares a pointer to the integer @code{0}.  This could just use
 @code{if(ptr)} (pointer addresses cannot be negative) but if needed
-pointers can be tested against @code{nullptr} (C++11 and later) or
-@code{NULL}.
-
-@c gcc6 accepts it, gcc5 does not, it seems.
-Note that although @code{nullptr} was only introduced in C++11, some
-compilers accept it in C++98 mode (but most do not).
+pointers can be tested against @code{nullptr} (C++11) or @code{NULL}.
 
 @item
 Macros defined by the compiler/OS can cause problems.  Identifiers
@@ -5326,7 +5264,7 @@ GCC family of compilers, using the correct linker flag often sets up the
 run-time path to the library.
 
 @item
-Package authors commonly assume things are part of C99 when they are
+Package authors commonly assume things are part of C/C++ when they are
 not: the most common example is POSIX function @code{strdup}.  The most
 common C library on Linux, @code{glibc}, will hide the declarations of
 such extensions unless a `feature-test macro' is defined @strong{before}
@@ -5352,23 +5290,7 @@ which are part of the X/Open standard: to use these define
 header @file{Rmath.h}.
 
 @item
-Similarly, package authors commonly assume things are part of C++ when
-they were introduced in C++11 if at all.  Recent examples from
-@acronym{CRAN} packages include the C99/C++11 functions
-@example
-erf expm1 fmin fmax lgamma lround loglp round snprintf strcasecmp trunc
-@end example
-@noindent
-(all of which are in the @code{std} namespace in C++11) and the POSIX
-functions @code{strdup} and @code{strncasecmp} and constants @code{M_PI}
-and @code{M_LN2} (see the previous item).  @R{} has long provided
-@code{fmax2}, @code{fmin2}, @code{fround}, @code{ftrunc},
-@code{lgammafn} and many of the X/Open constants, declared in header
-@file{Rmath.h}.  Uses of @code{erf} can be replaced by @code{pnorm} (see
-the @R{} help page for the latter).
-
-@item
-Using @code{alloca} portably is tricky: it is neither an ISO C nor a
+Using @code{alloca} portably is tricky: it is neither an ISO C/C++ nor a
 POSIX function.  An adequately portable preamble is
 @example
 #ifdef __GNUC__
@@ -5384,7 +5306,7 @@ POSIX function.  An adequately portable preamble is
 @item
 Compiler writers feel free to implement features from later standards
 than the one specified (if any), so for example they may implement or
-warn on C++11, C++14 or even C++17 features.  Portable code will not use
+warn on C++14 or C++17 features.  Portable code will not use
 such features -- it can be hard to know what they are but the most
 common warnings are
 @example
@@ -5396,6 +5318,13 @@ ISO C++11 does not allow conversion from string literal to 'char *'
 (where conversion should be to @code{const char *}).  Keyword
 @code{register} was not mentioned in C++98, deprecated in C++11 and
 removed in C++17.
+
+There are quite a lot of other C++98 features deprecated in C++11 and
+removed in C++17, and @command{clang} 9 has started to warn about
+them. Examples include @code{bind1st}/@code{bind2nd} (use @code{bind} or
+lambdas@footnote{@uref{https://stackoverflow.com/questions/32739018/a-replacement-for-stdbind2nd}})
+@code{std::auto_ptr} (replaced by @code{std::unique_ptr}),
+@code{std:;mem_fun_ref} and @code{std::ptr_fun}.
 
 @item
 Be careful about including C headers in C++ code.  Issues include
