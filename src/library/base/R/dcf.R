@@ -46,7 +46,9 @@ function(file, fields = NULL, all = FALSE, keep.white = NULL)
         if(all(cnts <= 1L)) {
             ## No repeated tags ...
             out[cbind(nums, tf)] <- vals
-            out <- as.data.frame(out, stringsAsFactors = FALSE)
+            out <- as.data.frame(out,
+                                 optional = TRUE,
+                                 stringsAsFactors = FALSE)
         }
         else {
             levs <- colSums(cnts > 1L) == 0L
@@ -54,7 +56,9 @@ function(file, fields = NULL, all = FALSE, keep.white = NULL)
                 inds <- tf %in% levels(tf)[levs]
                 out[cbind(nums[inds], tf[inds])] <- vals[inds]
             }
-            out <- as.data.frame(out, stringsAsFactors = FALSE)
+            out <- as.data.frame(out,
+                                 optional = TRUE,
+                                 stringsAsFactors = FALSE)
             for(l in levels(tf)[!levs]) {
                 out[[l]] <- rep.int(list(NA_character_), nrow(cnts))
                 i <- tf == l
@@ -179,7 +183,7 @@ function(x, file = "", append = FALSE, useBytes = FALSE,
 
 
     if(!is.data.frame(x))
-        x <- as.data.frame(x, stringsAsFactors = FALSE)
+        x <- as.data.frame(x, optional = TRUE, stringsAsFactors = FALSE)
     nmx <- names(x)
     out <- matrix("", nrow(x), ncol(x))
 
