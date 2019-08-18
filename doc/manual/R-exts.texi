@@ -2150,7 +2150,7 @@ PKG_LIBS = $(SHLIB_OPENMP_CFLAGS)
 @end example
 
 Note that the macro @code{SHLIB_OPENMP_CXXFLAGS} applies to the default
-C++ compiler and not necessarily to the C++98/14/17 compiler: users of
+C++11 compiler and not necessarily to the C++98/14/17 compiler: users of
 the latter should do their own @command{configure} checks.  If you do
 use your own checks, make sure that OpenMP support is complete by
 compiling and linking an OpenMP-using program: on some platforms the
@@ -2625,8 +2625,13 @@ support a flag @option{-std=c++0x}, but the latter only provided partial
 support for the C++11 standard (it later became a deprecated synonym for
 @option{-std=c++11}).
 
-In order to use C++11 code in a package, the package's @file{Makevars}
-file (or @file{Makevars.win} on Windows) should include the line
+@R{} 3.6.0 and later default to C++11 where available.  The rest of this
+section applies to packages which may be used with earlier versions of
+@R{}.
+
+In order to specify C++11 code in a package to be used with @R{}
+versions before 3.6.0, the package's @file{Makevars} file (or
+@file{Makevars.win} on Windows) should include the line
 
 @example
 CXX_STD = CXX11
@@ -4446,7 +4451,8 @@ Currently C++14 code is less portable and C++17 support is patchy across
 
 If using Fortran with the GNU compiler, use the flags
 @option{-std=f95 -Wall -pedantic} which reject most GNU extensions and
-features from later standards.
+features from later standards.  (Although @R{} only requires Fortran 90,
+@command{gfortran} does not have a way to specify that standard.)
 
 @R{} has tested that @code{DOUBLE COMPLEX} works and so is preferred to
 @code{COMPLEX*16}.  (Fortran code can use something like
@@ -4710,14 +4716,14 @@ Make sure that any version requirement for Java code is both declared in
 the @samp{SystemRequirements} field and tested at runtime (not least as
 the Java installation when the package is installed might not be the
 same as when the package is run and will not be for binary packages).
-Java 8 is available for fewer platforms than Java 7, and Java 9/10 for
+Java 8 is available for fewer platforms than Java 7, and Java 11 for
 fewer still (at the time of writing, only @cputype{x86_64} Linux, macOS,
-64-bit Windows and 64-bit Sparc Solaris from Oracle).
+64-bit Windows and 64-bit Solaris 11 from Oracle).
 
 When specifying a minimum Java version please use the official version
 names, which are (confusingly)
 @example
-1.1 1.2 1.3 1.4 5.0 6 7 8 9 10 11
+1.1 1.2 1.3 1.4 5.0 6 7 8 9 10 11 12
 @end example
 @noindent
 and as from 2018 a year.month scheme such as @samp{18.3} is also in use.
@@ -5158,31 +5164,15 @@ integer types.  Function @code{abs} is defined in C99's
 integer types, overloaded in @file{<cmath>} for floating-point types.
 C++11 has additional overloads for @code{std::abs} in @file{<cmath>} for
 integer types.  The effect of calling @code{abs} with a floating-point
-type is implementation-specific: it may truncate to an integer.
+type is implementation-specific: it may truncate to an integer.  For
+clarity and to avoid compile warnings, use @code{abs} for integer types
+and @code{fabs} for double values.
 
 @item
-Functions/macros such as @code{isnan}, @code{isinf} and @code{isfinite}
-are not required by C++98: where compilers support them they may be only
-in the @code{std} namespace or only in the main namespace.  There is no
-way to make use of these functions which works with all C++ compilers
-which have been used on @R{} platforms: use @R{}'s versions such as
-@code{ISNAN} and @code{R_FINITE} instead.
-
-If you must use them in C++11, beware that some
-compilers@footnote{E.g. @command{gcc 5.3} in C++11 mode.} provide both
-@code{std::isnan} and @code{::isnan}, so using
-
-@example
-using namespace std;
-@end example
-
-@noindent
-may cause `overloading ambiguity' and you must use @code{std::isnan}
-@emph{etc} explicitly.
-
 It is an error (and make little sense, although has been seen) to call
-these functions for integer arguments: a few compilers give a compilation
-error.
+macros/functions @code{isnan}, @code{isinf} and @code{isfinite} for integer
+arguments: a few compilers give a compilation error.  Function
+@code{finite} is obsolete, and some compilers will warn about its use.
 
 @item
 The GNU C/C++ compilers support a large number of non-portable
@@ -5234,7 +5224,7 @@ Variable-length arrays are C99, not supported by C++98.
 Be careful to include the headers which define the functions you use.
 Some compilers/OSes include other system headers in their headers which
 are not required by the standards, and so code may compile on such
-systems and not on others.  (A prominent example is the C++11 header
+systems and not on others.  (A prominent example is the C++ header
 @code{<random>} which is indirectly included by @code{<algorithm>} by
 @command{g++}.  Another issue is the C header @code{<time.h>} which is
 included by other headers on Linux and Windows but not macOS nor
@@ -5282,12 +5272,7 @@ Some C++ compilers refuse to compile constructs such as
 @noindent
 which compares a pointer to the integer @code{0}.  This could just use
 @code{if(ptr)} (pointer addresses cannot be negative) but if needed
-pointers can be tested against @code{nullptr} (C++11 and later) or
-@code{NULL}.
-
-@c gcc6 accepts it, gcc5 does not, it seems.
-Note that although @code{nullptr} was only introduced in C++11, some
-compilers accept it in C++98 mode (but most do not).
+pointers can be tested against @code{nullptr} (C++11) or @code{NULL}.
 
 @item
 Macros defined by the compiler/OS can cause problems.  Identifiers
@@ -5378,7 +5363,7 @@ and @code{M_LN2} (see the previous item).  @R{} has long provided
 the @R{} help page for the latter).
 
 @item
-Using @code{alloca} portably is tricky: it is neither an ISO C nor a
+Using @code{alloca} portably is tricky: it is neither an ISO C/C++ nor a
 POSIX function.  An adequately portable preamble is
 @example
 #ifdef __GNUC__
@@ -5406,6 +5391,13 @@ ISO C++11 does not allow conversion from string literal to 'char *'
 (where conversion should be to @code{const char *}).  Keyword
 @code{register} was not mentioned in C++98, deprecated in C++11 and
 removed in C++17.
+
+There are quite a lot of other C++98 features deprecated in C++11 and
+removed in C++17, and @command{clang} 9 has started to warn about
+them. Examples include @code{bind1st}/@code{bind2nd} (use @code{bind} or
+lambdas@footnote{@uref{https://stackoverflow.com/questions/32739018/a-replacement-for-stdbind2nd}})
+@code{std::auto_ptr} (replaced by @code{std::unique_ptr}),
+@code{std:;mem_fun_ref} and @code{std::ptr_fun}.
 
 @item
 Be careful about including C headers in C++ code.  Issues include
