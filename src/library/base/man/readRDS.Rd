@@ -47,10 +47,8 @@ readRDS(file, refhook = NULL)
   serialized to a connection by \code{serialize} can be read back by
   \code{readRDS} and conversely.
 
-  All of these interfaces use the same serialization format, which has
-  been used since \R 1.4.0 (but extended from time to time as new
-  object types have been added to \R).  However, \code{save} writes a
-  single line header (typically \code{"RDXs\n"}) before the
+  All of these interfaces use the same serialization format, but \code{save}
+  writes a single line header (typically \code{"RDXs\n"}) before the
   serialization of a single object (a pairlist of all the objects to be
   saved).
 
