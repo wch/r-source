@@ -218,7 +218,7 @@ axis.Date <- function(side, x, at, format, labels = TRUE, ...)
     if (d < 7) # days of a week
         if(missing(format)) format <- "%a"
     if(d < 100) { # month and day
-        z <- structure(pretty(z), class="Date")
+        z <- .Date(pretty(z))
         if(missing(format)) format <- "%b %d"
     } else if(d < 1.1*365) { # months
         zz <- as.POSIXlt(z)
