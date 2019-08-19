@@ -256,7 +256,7 @@ SEXP R_LookupMethod(SEXP method, SEXP rho, SEXP callrho, SEXP defrho)
     if(lookup_baseenv_after_globalenv == -1) {
 	lookup = getenv("_R_S3_METHOD_LOOKUP_BASEENV_AFTER_GLOBALENV_");
 	lookup_baseenv_after_globalenv = 
-	    ((lookup != NULL) && StringTrue(lookup)) ? 1 : 0;
+	    ((lookup != NULL) && StringFalse(lookup)) ? 0 : 1;
     }
 
     if(lookup_report_search_path_uses == -1) {
