@@ -2544,7 +2544,9 @@ to include @option{-std=f2003}, @option{-std=f2008} or (from version 8)
 default is `GNU Fortran', Fortran 95 with non-standard extensions.  The
 Oracle @command{f95} compiler `accepts some Fortran 2003/8 features'
 (search for `Oracle Developer Studio 12.6: Fortran User's Guide' and
-look for §4.6).
+look for §4.6).  Intel Fortran has full Fortran 2008 suppport from
+version 17.0, and some 2018 support in version 16.0 and more in version
+19.0.
 
 Modern versions of Fortran support modules, whereby compiling one source
 file creates a module file which is then included in others.  (Module
@@ -2590,10 +2592,15 @@ so a test of @code{__cplusplus > 201402L} is safer.} of
 standard which is partially supported and some the latest standard which
 is (almost) fully supported.
 
+The webpage
+@uref{http://en.cppreference.com/@/w/@/cpp/@/compiler_support} gives
+some information on which compilers are known to support recent C++
+features.  @command{g++} claims full C++11 support from version 4.8.1.
+
 As from version 3.6.0, @R{} selects a default C++ compiler with options
 that conform as far as possible@footnote{allowing `GNU extensions', but
 if possible excluding C++14 features.} to C++11. Packages which do not
-specify @samp{R (>= 3.6)} in the @file{DESCRIPTION} file need to
+specify @samp{R (>= 3.6)} in their @file{DESCRIPTION} files need to
 explicitly require C++11, hence the rest of this section.
 
 In order to specify C++11 code in a package to be used with @R{}
@@ -2650,8 +2657,8 @@ nor to compilation done in vignettes or @emph{via} other packages.
 @subsection Using C++14 code
 
 Support for a C++14 compiler (where available) was been added to @R{}
-from version 3.4.0.  Similar considerations to C++11 apply, except that
-the variables associated with the C++14 compiler use the prefix
+from version 3.4.0.  Similar considerations to C++11 apply, with the
+variables associated with the C++14 compiler using the prefix
 @samp{CXX14} instead of @samp{CXX11}. Hence to use C++14 code in a
 package, the package's @file{Makevars} file (or @file{Makevars.win} on
 Windows) should include the line
@@ -2703,10 +2710,7 @@ using std::make_unique;
 #endif
 @end example
 
-The webpage
-@uref{http://en.cppreference.com/@/w/@/cpp/@/compiler_support} gives
-some information on which compilers are known to support recent C++
-features.  Note that @command{g++} 4.9.x (as used for @R{} on Windows at
+Note that @command{g++} 4.9.x (as used for @R{} on Windows at
 least up to 3.6.x) has only partial C++14 support, and the flag to
 obtain that support is not included in the default Windows build of @R{}
 --- one could try something like
@@ -2724,13 +2728,15 @@ in @file{@var{HOME}/.R/Makevars.win}.
 @node Using C++17 code,  , Using C++14 code, Configure and cleanup
 @subsection Using C++17 code
 
-Experimental support for C++17 was added to @R{} version 3.4.0. The
-@file{configure} script tests a subset of C++17 features.  @code{clang
-4.0.0} and @code{gcc 7.1} and later versions passed these tests (with
-flag @option{-std=gnu++17} or @option{-std=gnu++1z} chosen by the
+Support for C++17 was added to @R{} version 3.4.0. The @file{configure}
+script tests a subset of C++17 features.  @code{clang 4.0.0} and
+@code{gcc 7.1} and later versions passed these tests (with flag
+@option{-std=gnu++17} or @option{-std=gnu++1z} chosen by the
 @file{configure} script).  Note that the C++17 feature tests are
-incomplete and are subject to change in future @R{} versions as compiler
+incomplete and are subject to change in future @R{} versions as
 support for the standard improves.
+@c Both the compiler and the library are involved, conceivably also the
+@c OS headers.
 
 The variables associated with the C++17 compiler use the prefix
 @samp{CXX17}.  Hence to use C++17 code in a package, the package's
@@ -2750,7 +2756,7 @@ in the @file{DESCRIPTION} file. Finally, the C++17 compiler can be
 used systematically by setting the environment variable @env{USE_CXX17}.
 
 As for C++14, feature tests can be used (and probably should be as
-compiler support is still patchy).
+support is still patchy, especially library support).
 
 No C++17 support is enabled in the current default build of @R{} on
 Windows.
@@ -4237,7 +4243,7 @@ repository such as @acronym{CRAN}).
 
 Portable packages should have simple file names: use only alphanumeric
 @acronym{ASCII} characters and period (@code{.}), and avoid those names
-not allowed under Windows which are mentioned above.
+not allowed under Windows (@pxref{Package structure}).
 
 Many of the graphics devices are platform-specific: even @code{X11()}
 (aka @code{x11()}) which although emulated on Windows may not be
