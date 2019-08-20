@@ -1,6 +1,6 @@
 % File src/library/base/man/iconv.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{iconv}
@@ -27,7 +27,8 @@ iconvlist()
   \item{sub}{character string.  If not \code{NA} it is used to replace
     any non-convertible bytes in the input.  (This would normally be a
     single character, but can be more.)  If \code{"byte"}, the indication is
-    \code{"<xx>"} with the hex code of the byte.}
+    \code{"<xx>"} with the hex code of the byte.  If \code{"Unicode"}
+    and converting from UTF-8, the Unicode point in the form \code{"<U+xxxx>"}.}
   \item{mark}{logical, for expert use.  Should encodings be marked?}
   \item{toRaw}{logical.  Should a list of raw vectors be returned rather
     than a character vector?}
@@ -65,6 +66,9 @@ iconvlist()
   Note that implementations of \code{iconv} typically do not do much
   validity checking and will often mis-convert inputs which are invalid
   in encoding \code{from}.
+
+  If \code{sub = "Unicode"} is used for a non-UTF-8 input it is the same
+  as \code{sub = "byte"}.
 }
 
 \section{Implementation Details}{
@@ -174,6 +178,7 @@ iconv(x, "latin1", "ASCII")          #   NA
 iconv(x, "latin1", "ASCII", "?")     # "fa?ile"
 iconv(x, "latin1", "ASCII", "")      # "faile"
 iconv(x, "latin1", "ASCII", "byte")  # "fa<e7>ile"
+iconv(xx, "UTF-8", "ASCII", "Unicode") # "fa<U+00E7>ile"
 
 ## Extracts from old R help files (they are nowadays in UTF-8)
 x <- c("Ekstr\xf8m", "J\xf6reskog", "bi\xdfchen Z\xfcrcher")

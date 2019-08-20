@@ -64,6 +64,10 @@
 
       \item New function \code{list2DF()} for creating data frames from
       lists of variables.
+
+      \item \code{iconv()} has a new option \code{sub = "Unicode"} to
+      translate UTF-8 input invalid in the \samp{to} encoding using
+      \samp{<U+xxxx>} escapes.
     }
   }
 
