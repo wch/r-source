@@ -659,7 +659,7 @@ SEXP attribute_hidden do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
     timeout = asInteger(CADDR(args));
     if (timeout == NA_INTEGER || timeout < 0)
 	error(_("invalid '%s' argument"), "timeout");
-    const char *cmd = translateChar(STRING_ELT(CAR(args), 0));
+    const char *cmd = translateCharFP(STRING_ELT(CAR(args), 0));
     if (timeout > 0) {
 	/* command ending with & is not supported by timeout */
 	const void *vmax = vmaxget();

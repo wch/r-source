@@ -1,7 +1,7 @@
 /*
  *  A PicTeX device, (C) 1996 Valerio Aimale, for
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001--2017  The R Core Team
+ *  Copyright (C) 2001--2019  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -718,7 +718,7 @@ SEXP PicTeX(SEXP args)
 
     const void *vmax = vmaxget();
     args = CDR(args); /* skip entry point name */
-    file = translateChar(asChar(CAR(args))); args = CDR(args);
+    file = translateCharFP(asChar(CAR(args))); args = CDR(args);
     bg = CHAR(asChar(CAR(args)));   args = CDR(args);
     fg = CHAR(asChar(CAR(args)));   args = CDR(args);
     width = asReal(CAR(args));	     args = CDR(args);

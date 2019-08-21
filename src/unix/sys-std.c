@@ -1356,7 +1356,7 @@ void attribute_hidden Rstd_loadhistory(SEXP call, SEXP op, SEXP args, SEXP env)
     sfile = CAR(args);
     if (!isString(sfile) || LENGTH(sfile) < 1)
 	errorcall(call, _("invalid '%s' argument"), "file");
-    p = R_ExpandFileName(translateChar(STRING_ELT(sfile, 0)));
+    p = R_ExpandFileName(translateCharFP(STRING_ELT(sfile, 0)));
     if(strlen(p) > PATH_MAX - 1)
 	errorcall(call, _("'file' argument is too long"));
     strcpy(file, p);
@@ -1379,7 +1379,7 @@ void attribute_hidden Rstd_savehistory(SEXP call, SEXP op, SEXP args, SEXP env)
     sfile = CAR(args);
     if (!isString(sfile) || LENGTH(sfile) < 1)
 	errorcall(call, _("invalid '%s' argument"), "file");
-    p = R_ExpandFileName(translateChar(STRING_ELT(sfile, 0)));
+    p = R_ExpandFileName(translateCharFP(STRING_ELT(sfile, 0)));
     if(strlen(p) > PATH_MAX - 1)
 	errorcall(call, _("'file' argument is too long"));
     strcpy(file, p);

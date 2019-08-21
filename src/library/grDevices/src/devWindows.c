@@ -3432,7 +3432,7 @@ SEXP savePlot(SEXP args)
     if (!isString(filename) || LENGTH(filename) != 1)
 	error(_("invalid filename argument in 'savePlot'"));
     /* in 2.8.0 this will always be passed as native, but be conserative */
-    fn = translateChar(STRING_ELT(filename, 0));
+    fn = translateCharFP(STRING_ELT(filename, 0));
     type = CADDR(args);
     if (!isString(type) || LENGTH(type) != 1)
 	error(_("invalid type argument in 'savePlot'"));
@@ -3641,7 +3641,7 @@ SEXP devga(SEXP args)
 
     vmax = vmaxget();
     args = CDR(args); /* skip entry point name */
-    display = translateChar(STRING_ELT(CAR(args), 0));
+    display = translateCharFP(STRING_ELT(CAR(args), 0));
     args = CDR(args);
     width = asReal(CAR(args));
     args = CDR(args);
