@@ -520,7 +520,7 @@ isIncomplete(con)
 #endif
 }
 \section{File paths}{
-  In most cases these are translated to the native \link{encoding}.
+  In most cases these are translated to the native encoding.
 
   The exceptions are \code{file} and \code{pipe} on Windows, where a
   \code{description} which is marked as being in UTF-8 is passed to
