@@ -1,11 +1,12 @@
 % File src/library/base/man/serialize.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{readRDS}
 \alias{readRDS}
 \alias{saveRDS}
+\alias{infoRDS}
 \title{Serialization Interface for Single Objects}
 \description{
   Functions to write a single \R object to a file, and to restore it.
@@ -15,6 +16,7 @@ saveRDS(object, file = "", ascii = FALSE, version = NULL,
         compress = TRUE, refhook = NULL)
 
 readRDS(file, refhook = NULL)
+infoRDS(file)
 }
 \arguments{
   \item{object}{\R object to serialize.}
@@ -33,19 +35,22 @@ readRDS(file, refhook = NULL)
   \item{refhook}{a hook function for handling reference objects.}
 }
 \details{
-  These functions provide the means to save a single \R object to a
-  connection (typically a file) and to restore the object, quite
-  possibly under a different name.  This differs from \code{\link{save}}
-  and \code{\link{load}}, which save and restore one or more named
-  objects into an environment.  They are widely used by \R itself, for
-  example to store metadata for a package and to store the
-  \code{\link{help.search}} databases: the \code{".rds"} file extension
-  is most often used.
+  \code{saveRDS} and \code{readRDS} provide the means to save a single \R
+  object to a connection (typically a file) and to restore the object, quite
+  possibly under a different name.  This differs from \code{\link{save}} and
+  \code{\link{load}}, which save and restore one or more named objects into
+  an environment.  They are widely used by \R itself, for example to store
+  metadata for a package and to store the \code{\link{help.search}}
+  databases: the \code{".rds"} file extension is most often used.
 
   Functions \code{\link{serialize}} and \code{\link{unserialize}}
   provide a slightly lower-level interface to serialization: objects
   serialized to a connection by \code{serialize} can be read back by
   \code{readRDS} and conversely.
+
+  Function \code{infoRDS} retrieves meta-data about serialization produced
+  by \code{saveRDS} or \code{serialize}. \code{infoRDS} cannot be used to
+  detect whether a file is a serialization nor whether it is valid.
 
   All of these interfaces use the same serialization format, but \code{save}
   writes a single line header (typically \code{"RDXs\n"}) before the
@@ -67,6 +72,17 @@ readRDS(file, refhook = NULL)
   For \code{readRDS}, an \R object.
 
   For \code{saveRDS}, \code{NULL} invisibly.
+
+  For \code{infoRDS}, an \R list with elements \code{version} (version
+  number, currently 2 or 3), \code{writer_version} (version of \R that
+  produced the serialization), \code{min_reader_version} (minimum version of
+  \R that can read the serialization), \code{format} (data representation)
+  and \code{native_encoding} (native encoding of the session that produced
+  the serialization, available since version 3).  The data representation is
+  given as \code{"xdr"} for big-endian binary representation, \code{"ascii"}
+  for ASCII representation (produced via \code{ascii = TRUE} or \code{ascii
+  = NA}) or \code{"binary"} (binary representation with native
+  \sQuote{endianness} which can be produced by \code{\link{serialize}}).
 }
 
 \seealso{

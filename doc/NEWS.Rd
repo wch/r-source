@@ -72,6 +72,9 @@
       \item There is a new help document accessed by
       \code{help("file path encoding")}
       detailing how file paths with marked encodings are supported.
+
+      \item There is a new function \code{infoRDS()} providing information
+      about serialization format of a serialized object.
     }
   }
 
