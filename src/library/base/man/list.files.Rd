@@ -48,7 +48,7 @@ list.dirs(path = ".", full.names = TRUE, recursive = TRUE)
   A character vector containing the names of the files in the
   specified directories (empty if there were no files).  If a
   path does not exist or is not a directory or is unreadable it
-  is skipped, with a warning.
+  is skipped.
 
   The files are sorted in alphabetical order, on the full path
   if \code{full.names = TRUE}.
