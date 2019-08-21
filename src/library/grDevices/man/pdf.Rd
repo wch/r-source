@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/pdf.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{pdf}
@@ -20,7 +20,7 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
     useDingbats, useKerning, fillOddEven, compress)
 }
 \arguments{
-  \item{file}{a character string giving the name of the file.
+  \item{file}{a character string giving the file path.
     If it is of the form \code{"|cmd"}, the output is piped to the
     command given by \command{cmd}.  If it is \code{NULL},
     then no external file is created (effectively, no drawing occurs),
@@ -30,7 +30,9 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
     as \code{"Rplot\%03d.pdf"} (the default in that case).
     (See \code{\link{postscript}} for further details.)
 
-    Tilde expansion (see \code{\link{path.expand}}) is done.
+    Tilde expansion (see \code{\link{path.expand}}) is done. An input with
+    a marked encoding is converted to the native encoding or an error is
+    given.
   }
   \item{width, height}{the width and height of the graphics region in
     inches.  The default values are \code{7}.}

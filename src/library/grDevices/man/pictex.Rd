@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/pictex.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{pictex}
@@ -11,7 +11,10 @@ pictex(file = "Rplots.tex", width = 5, height = 4, debug = FALSE,
        bg = "white", fg = "black")
 }
 \arguments{
-  \item{file}{the file where output will appear.}
+  \item{file}{the file path where output will appear.
+    Tilde expansion (see \code{\link{path.expand}}) is done. An input with
+    a marked encoding is converted to the native encoding or an error is given.
+  }
   \item{width}{The width of the plot in inches.}
   \item{height}{the height of the plot in inches.}
   \item{debug}{should debugging information be printed.}

@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/postscript.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{postscript}
@@ -22,7 +22,7 @@ postscript(file = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
            colormodel, useKerning, fillOddEven)
 }
 \arguments{
-  \item{file}{a character string giving the name of the file.  If it is
+  \item{file}{a character string giving the file path.  If it is
     \code{""}, the output is piped to the command given by the argument
     \code{command}.
     If it is of the form \code{"|cmd"}, the output is piped to the
@@ -35,7 +35,9 @@ postscript(file = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
     A single integer format matching the \link{regular expression}
     \code{"\%[#0 +=-]*[0-9.]*[diouxX]"} is allowed.
 
-    Tilde expansion (see \code{\link{path.expand}}) is done.
+    Tilde expansion (see \code{\link{path.expand}}) is done. An input with
+    a marked encoding is converted to the native encoding or an error is
+    given.
   }
   \item{onefile}{logical: if true (the default) allow multiple figures
     in one file.  If false, generate a file name containing the page

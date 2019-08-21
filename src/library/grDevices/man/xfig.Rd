@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/xfig.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{xfig}
@@ -23,7 +23,7 @@ xfig(file = if(onefile) "Rplots.fig" else "Rplot\%03d.fig",
      pagecentre = TRUE, defaultfont = FALSE, textspecial = FALSE)
 }
 \arguments{
-  \item{file}{a character string giving the name of the file.   For use
+  \item{file}{a character string giving the file path.   For use
     with \code{onefile = FALSE} give a C integer format such as
     \code{"Rplot\%03d.fig"} (the default in that case).
     (See \code{\link{postscript}} for further details.)

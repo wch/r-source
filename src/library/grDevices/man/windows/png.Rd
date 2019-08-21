@@ -36,7 +36,7 @@ tiff(filename = "Rplot\%03d.tif",
      type = c("windows", "cairo"), antialias)
 }
 \arguments{
-  \item{filename}{the name of the output file, up to 511 characters.  The
+  \item{filename}{the path of the output file, up to 511 characters.  The
     page number is substituted if a C integer format is included in the
     character string, as in the default, and tilde-expansion is
     performed (see \code{\link{path.expand}}).   (The result must be less than
