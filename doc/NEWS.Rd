@@ -58,9 +58,9 @@
       \code{normalizePath()} and \code{path.expand()}) treat this like
       any other non-existent file, with a warning.
 
-      \item \command{Rterm} now works also when invoked from MSYS2
-      terminals.  Line editing is possible when \command{winpty} is
-      installed.
+      \item (Windows) \command{Rterm} now works also when invoked from
+      MSYS2 terminals.  Line editing is possible when \command{winpty}
+      is installed.
 
       \item New function \code{list2DF()} for creating data frames from
       lists of variables.
@@ -68,6 +68,10 @@
       \item \code{iconv()} has a new option \code{sub = "Unicode"} to
       translate UTF-8 input invalid in the \samp{to} encoding using
       \samp{<U+xxxx>} escapes.
+
+      \item There is a new help document accessed by
+      \code{help("file path encoding")}
+      detailing how file paths with marked encodings are supported.
     }
   }
 
