@@ -5884,6 +5884,9 @@ add_dummies <- function(dir, Log)
     R_check_things_in_check_dir <-
         config_val_to_logical(Sys.getenv("_R_CHECK_THINGS_IN_CHECK_DIR_",
                                          "FALSE"))
+    R_check_things_in_temp_dir <-
+        config_val_to_logical(Sys.getenv("_R_CHECK_THINGS_IN_TEMP_DIR_",
+                                         "FALSE"))
     R_check_vignette_titles <-
         config_val_to_logical(Sys.getenv("_R_CHECK_VIGNETTE_TITLES_",
                                          "FALSE"))
@@ -5942,6 +5945,7 @@ add_dummies <- function(dir, Log)
         R_check_vignettes_skip_run_maybe <- TRUE
         R_check_serialization <- TRUE
         R_check_things_in_check_dir <- TRUE
+        R_check_things_in_temp_dir <- TRUE
         R_check_vignette_titles <- TRUE
     } else {
         ## do it this way so that INSTALL produces symbols.rds
@@ -5972,6 +5976,16 @@ add_dummies <- function(dir, Log)
     setwd(outdir)
     outdir <- getwd()
     setwd(startdir)
+
+    sessdir <- ""
+    if (R_check_things_in_temp_dir) {
+        ## tempdir() should be unique, so don't need a special name within it
+        sessdir <- file.path(tempdir(), "working_dir")
+        if (!dir.create(sessdir))
+            stop("unable to create working directory for subprocesses",
+                 domain = NA)
+        Sys.setenv(TMPDIR = sessdir)
+    }
 
     R_LIBS <- Sys.getenv("R_LIBS")
     arg_libdir <- libdir
@@ -6373,6 +6387,25 @@ add_dummies <- function(dir, Log)
                 printLog0(Log, paste(msg, collapse = "\n"), "\n")
             } else
                 resultLog(Log, "OK")
+        }
+
+        if (R_check_things_in_temp_dir) {
+            checkingLog(Log, "for detritus in the temp directory")
+            ff <- list.files(sessdir, include.dirs = TRUE)
+            ## Exclude session temp dirs from crashed subprocesses
+            dir <- file.info(ff)$isdir
+            poss <- grepl("^Rtmp[A-Za-z0-9.]{6}$", ff, useBytes = TRUE)
+            ff <- ff[!(poss & dir)]
+            if (length(ff)) {
+                noteLog(Log)
+                msg <- c("Found the following files/directories:",
+                         strwrap(paste(sQuote(ff), collapse = " "),
+                                 indent = 2L, exdent = 2L))
+                printLog0(Log, paste(msg, collapse = "\n"), "\n")
+            } else
+                resultLog(Log, "OK")
+            ## clean up of this process would also do this
+            unlink(sessdir, recursive = TRUE)
         }
 
         summaryLog(Log)
