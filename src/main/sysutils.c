@@ -1910,6 +1910,11 @@ char * R_tmpnam2(const char *prefix, const char *tempdir, const char *fileext)
     return res;
 }
 
+void R_free_tmpnam(const char *name)
+{
+    if (name) free(name);
+}
+
 SEXP attribute_hidden do_proctime(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, nm;

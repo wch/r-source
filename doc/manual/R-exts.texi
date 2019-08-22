@@ -14091,11 +14091,14 @@ file is provided as
 
 @deftypefun {char *} R_tmpnam (const char *@var{prefix}, const char *@var{tmpdir})
 @deftypefunx {char *} R_tmpnam2 (const char *@var{prefix}, const char *@var{tmpdir}, const char *@var{fileext})
+@deftypefunx {void} R_free_tmpnam (const char *@var{name})
 Return a pathname for a temporary file with name beginning with
 @var{prefix} and ending with @var{fileext} in directory @var{tmpdir}.
 A @code{NULL} prefix or extension is replaced by @code{""}.  Note that
-the return value is @code{malloc}ed and should be @code{free}d when no
-longer needed (unlike the system call @code{tmpnam}).
+the return value is dynamically allocated and should be freed using
+@code{R_free_tmpnam} when no longer needed (unlike the
+system call @code{tmpnam}). Freeing the result using @code{free} is no
+longer recommended. 
 @end deftypefun
 
 @c ----

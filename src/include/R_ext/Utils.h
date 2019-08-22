@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2017    The R Core Team
+ *  Copyright (C) 1998-2019    The R Core Team
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -95,6 +95,7 @@ double R_strtod(const char *c, char **end);
 
 char *R_tmpnam(const char *prefix, const char *tempdir);
 char *R_tmpnam2(const char *prefix, const char *tempdir, const char *fileext);
+void R_free_tmpnam(const char *name);
 
 void R_CheckUserInterrupt(void);
 void R_CheckStack(void);
