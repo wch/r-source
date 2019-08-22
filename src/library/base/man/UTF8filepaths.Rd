@@ -87,7 +87,7 @@
    For functions using \code{\link{gzfile}} (including
    \code{\link{load}}, \code{\link{readRDS}}, \code{\link{read.dcf}} and
    \code{\link{tar}}), it is often possible to use a \code{\link{gzcon}}
-   connection wrapping as \code{\link{file}} connection.
+   connection wrapping a \code{\link{file}} connection.
 
   Other notable exceptions are \code{\link{list.files}},
   \code{\link{list.dirs}}, \code{\link{system}} and file-path inputs for
