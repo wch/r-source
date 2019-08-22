@@ -26,7 +26,7 @@ Sys.readlink(paths)
   A character vector of the same length as \code{paths}.  The
   entries are the path of the file linked to, \code{""} if the path is
   not a symbolic link, and \code{NA} if there is an error (e.g., the
-  path does not exist).
+  path does not exist or cannot be converted to the native encoding).
 
   On platforms without the \code{readlink} system call, all elements are
   \code{""}.

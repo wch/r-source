@@ -56,7 +56,13 @@ infoRDS(file)
   writes a single line header (typically \code{"RDXs\n"}) before the
   serialization of a single object (a pairlist of all the objects to be
   saved).
-
+  
+  If \code{file} is a file name, it is opened by \code{\link{gzfile}}
+  except for \code{save(compress = FALSE)} which uses
+  \code{\link{file}}.  Only for the exception are marked encodings of
+  \code{file} which cannot be translated to the native encoding handled
+  on Windows.
+  
   Compression is handled by the connection opened when \code{file} is a
   file name, so is only possible when \code{file} is a connection if
   handled by the connection.  So e.g.\sspace{}\code{\link{url}}

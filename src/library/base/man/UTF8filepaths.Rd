@@ -81,9 +81,13 @@
 #endif
   \code{\link{unlink}}
   %
-   but not \code{\link{gzfile}} (used by \code{\link{load}},
-   \code{\link{readRDS}}, \code{\link{read.dcf}} and \code{\link{tar}}),
-   \code{\link{bzfile}}, \code{\link{xzfile}} nor \code{\link{unz}}.
+   but not \code{\link{gzfile}} \code{\link{bzfile}},
+   \code{\link{xzfile}} nor \code{\link{unz}}.
+
+   For functions using \code{\link{gzfile}} (including
+   \code{\link{load}}, \code{\link{readRDS}}, \code{\link{read.dcf}} and
+   \code{\link{tar}}), it is often possible to use a \code{\link{gzcon}}
+   connection wrapping as \code{\link{file}} connection.
 
   Other notable exceptions are \code{\link{list.files}},
   \code{\link{list.dirs}}, \code{\link{system}} and file-path inputs for
