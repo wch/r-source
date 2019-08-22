@@ -84,7 +84,7 @@ strsplit grep [g]sub [g]regexpr
 */
 #define JIT_STACK_MAX 64*1024*1024
 /*
-   This will stay reserved until the end of the sesiion, but at 64MB
+   This will stay reserved until the end of the session, but at 64MB
    that is not an issue -- and most sessions will not use PCRE with
    more than 10 strings.
  */
@@ -159,7 +159,7 @@ static SEXP mkCharW(const wchar_t *wc)
 static void pcre_exec_error(int rc, R_xlen_t i)
 {
     if (rc > -2) return;
-    // too mucn effort to handle long-vector indices, including on Windows
+    // too much effort to handle long-vector indices, including on Windows
     switch (rc) {
 #ifdef PCRE_ERROR_JIT_STACKLIMIT
     case PCRE_ERROR_JIT_STACKLIMIT:
