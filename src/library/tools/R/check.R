@@ -4856,8 +4856,8 @@ add_dummies <- function(dir, Log)
                              ": warning: .* \\[-Waligned-new",
                              ## new in gcc 8
                              ": warning: .* \\[-Wcatch-value=\\]",
-                             # warns on code deprecated in C++11
                              ": warning: .* \\[-Wlto-type-mismatch\\]",
+                             ": warning: .* \\[-Wunused-value\\]",
                              ## Fatal, not warning, for clang and Solaris ODS
                              ": warning: .* with a value, in function returning void"
                             )
@@ -4890,6 +4890,7 @@ add_dummies <- function(dir, Log)
                              ": warning: format string contains '[\\]0'",
                              ": warning: .* \\[-Wc[+][+]11-long-long\\]",
                              ": warning: empty macro arguments are a C99 feature",
+                             ": warning: .* \\[-Winvalid-source-encoding\\]",
                              ## for non-portable flags (seen in sub-Makefiles)
                              "warning: .* \\[-Wunknown-warning-option\\]"
                              )
