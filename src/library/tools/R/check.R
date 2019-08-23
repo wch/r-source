@@ -6397,6 +6397,7 @@ add_dummies <- function(dir, Log)
             dir <- file.info(ff)$isdir
             poss <- grepl("^Rtmp[A-Za-z0-9.]{6}$", ff, useBytes = TRUE)
             ff <- ff[!(poss & dir)]
+	    ff <- ff[!is.na(ff)]
             if (length(ff)) {
                 noteLog(Log)
                 msg <- c("Found the following files/directories:",
