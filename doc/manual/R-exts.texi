@@ -2544,7 +2544,7 @@ to include @option{-std=f2003}, @option{-std=f2008} or (from version 8)
 default is `GNU Fortran', Fortran 95 with non-standard extensions.  The
 Oracle @command{f95} compiler `accepts some Fortran 2003/8 features'
 (search for `Oracle Developer Studio 12.6: Fortran User's Guide' and
-look for §4.6).  Intel Fortran has full Fortran 2008 suppport from
+look for §4.6).  Intel Fortran has full Fortran 2008 support from
 version 17.0, and some 2018 support in version 16.0 and more in version
 19.0.
 
@@ -5002,7 +5002,7 @@ required as from @R{} 3.7.0}.  However, in earlier versions the default
 standard was that of the compiler used, often C++98 or C++14.  Packages
 which are for use only with @R{} 3.6.0 or later can assume C++11 or
 specify a later standard.  However, those which may be used in earlier
-versions need to specify C++11 expicitly (@pxref{Using C++11 code}) or
+versions need to specify C++11 explicitly (@pxref{Using C++11 code}) or
 be tested under all of C++11, C++98 and C++14.
 
 Note that the `TR1' C++ extensions are not part of any of these
