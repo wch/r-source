@@ -624,6 +624,7 @@ function(x)
 function(txt)
 {
     txt <- as.character(txt)
+    if(!length(txt)) return(txt)
     enc <- Encoding(txt)
     txt <- gsub(paste0("(", intToUtf8(0x2018), "|", intToUtf8(0x2019), ")"),
                 "'", txt, perl = TRUE, useBytes = TRUE)
