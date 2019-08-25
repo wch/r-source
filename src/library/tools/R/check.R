@@ -3727,7 +3727,7 @@ add_dummies <- function(dir, Log)
                         any <- TRUE
                     }
                     printLog(Log,
-                             sprintf("Examples with CPU or elapsed time > %gs\n",
+                             sprintf("Examples with CPU (user + system) or elapsed time > %gs\n",
                                      theta))
                     out <- utils::capture.output(format(times[keep, ]))
                     printLog0(Log, paste(out, collapse = "\n"), "\n")
