@@ -1121,13 +1121,14 @@ format.compactPDF <- function(x, ratio = 0.9, diff = 1e4, ...)
 
 ### * add_datalist
 
-add_datalist <- function(pkgpath, force = FALSE)
+add_datalist <- function(pkgpath, force = FALSE, small.size = 1024^2)
 {
     dlist <- file.path(pkgpath, "data", "datalist")
     if (!force && file.exists(dlist)) return()
     size <- sum(file.size(Sys.glob(file.path(pkgpath, "data", "*"))))
-    if(size <= 1024^2) return()
-    z <- suppressPackageStartupMessages(list_data_in_pkg(dataDir = file.path(pkgpath, "data"))) # for BARD
+    if(size <= small.size) return()
+    z <- suppressPackageStartupMessages(
+        list_data_in_pkg(dataDir = file.path(pkgpath, "data"))) # for BARD
     if(!length(z)) return()
     con <- file(dlist, "w")
     for (nm in names(z)) {

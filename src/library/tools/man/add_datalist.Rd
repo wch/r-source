@@ -1,6 +1,6 @@
 % File src/library/tools/man/add_datalist.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2011 R Core Team
+% Copyright 2011-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{add_datalist}
@@ -16,17 +16,20 @@
   supplying \file{data/datalist} file.
 }
 \usage{
-add_datalist(pkgpath, force = FALSE)
+add_datalist(pkgpath, force = FALSE, small.size = 1024^2)
 }
 \arguments{
   \item{pkgpath}{The path to a (source) package.}
 
   \item{force}{logical: can an existing \file{data/datalist} file be
     over-written?}
+
+  \item{small.size}{number: a \file{data/datalist} file is created only if
+    the total size of the data files is larger than \code{small.size}.}
 }
 \details{
   \command{R CMD build} will call this function to add a data list to
-  packages with 1MB or more of data.
+  packages with \code{small.size} bytes (1MB by default) or more of data.
 
   It is also helpful to give a \file{data/datalist} file in packages
   whose datasets have many dependencies, including loading the packages
