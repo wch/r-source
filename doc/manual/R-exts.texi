@@ -4342,6 +4342,7 @@ similar, and the use of @code{+=}@footnote{This was apparently
 introduced in SunOS 4, and is available elsewhere @emph{provided} it is
 surrounded by spaces.} and @code{:=}.  Also, the use of @code{$<} other
 than in implicit rules is a GNU extension, as is the @code{$^} macro.
+As is the use of  @code{.PHONY} (some other makes ignore it).
 Unfortunately makefiles which use GNU extensions often run on other
 platforms but do not have the intended results.
 
