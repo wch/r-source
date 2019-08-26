@@ -1,6 +1,6 @@
 % File src/library/stats/man/Chisquare.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Chisquare}
@@ -85,7 +85,7 @@ rchisq(n, df, ncp = 0)
   The central cases are computed via the gamma distribution.
 
   The non-central \code{dchisq} and \code{rchisq} are computed as a
-  Poisson mixture central of chi-squares (Johnson \emph{et al}, 1995, p.436).
+  Poisson mixture of central chi-squares (Johnson \emph{et al}, 1995, p.436).
 
   The non-central \code{pchisq} is for \code{ncp < 80} computed from
   the Poisson mixture of central chi-squares and for larger \code{ncp}
