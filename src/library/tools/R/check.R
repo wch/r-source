@@ -5043,7 +5043,7 @@ add_dummies <- function(dir, Log)
             noteLog(Log)
             printLog(Log, sprintf("  installed size is %4.1fMb\n", total/1024))
             rest <- res2[-nrow(res2), ]
-            rest[, 2L] <- sub("./", "", rest[, 2L])
+            rest[, 2L] <- sub("./", "", rest[, 2L], fixed=TRUE)
             ## keep only top-level directories
             rest <- rest[!grepl("/", rest[, 2L]), ]
             rest <- rest[rest[, 1L] > 1024, ] # > 1Mb
@@ -5808,6 +5808,10 @@ add_dummies <- function(dir, Log)
     R_check_serialization <-
         config_val_to_logical(Sys.getenv("_R_CHECK_SERIALIZATION_", "FALSE"))
 
+    R_check_things_in_temp_dir <-
+        config_val_to_logical(Sys.getenv("_R_CHECK_THINGS_IN_TEMP_DIR_",
+                                         "FALSE"))
+
     if (!nzchar(check_subdirs)) check_subdirs <- R_check_subdirs_strict
 
     if (as_cran) {
@@ -5859,6 +5863,7 @@ add_dummies <- function(dir, Log)
         R_check_toplevel_files <- TRUE
         R_check_vignettes_skip_run_maybe <- TRUE
         R_check_serialization <- TRUE
+        R_check_things_in_temp_dir <- TRUE
     } else {
         ## do it this way so that INSTALL produces symbols.rds
         ## when called from check but not in general.
@@ -5888,6 +5893,16 @@ add_dummies <- function(dir, Log)
     setwd(outdir)
     outdir <- getwd()
     setwd(startdir)
+
+    sessdir <- ""
+    if (R_check_things_in_temp_dir) {
+        ## tempdir() should be unique, so don't need a special name within it
+        sessdir <- file.path(tempdir(), "working_dir")
+        if (!dir.create(sessdir))
+            stop("unable to create working directory for subprocesses",
+                 domain = NA)
+        Sys.setenv(TMPDIR = sessdir)
+    }
 
     R_LIBS <- Sys.getenv("R_LIBS")
     arg_libdir <- libdir
@@ -6256,6 +6271,29 @@ add_dummies <- function(dir, Log)
                 }
             }
         }
+
+        if (R_check_things_in_temp_dir) {
+            checkingLog(Log, "for detritus in the temp directory")
+            ff <- list.files(sessdir, include.dirs = TRUE)
+            ## Exclude session temp dirs from crashed subprocesses
+            dir <- file.info(ff)$isdir
+            poss <- grepl("^Rtmp[A-Za-z0-9.]{6}$", ff, useBytes = TRUE)
+            ff <- ff[!(poss & dir)]
+            patt <- Sys.getenv("_R_CHECK_THINGS_IN_TEMP_DIR_EXCLUDE_")
+            if (length(patt)) ff <- ff[!grepl(patt, ff, useBytes = TRUE)]
+	    ff <- ff[!is.na(ff)]
+            if (length(ff)) {
+                noteLog(Log)
+                msg <- c("Found the following files/directories:",
+                         strwrap(paste(sQuote(ff), collapse = " "),
+                                 indent = 2L, exdent = 2L))
+                printLog0(Log, paste(msg, collapse = "\n"), "\n")
+            } else
+                resultLog(Log, "OK")
+            ## clean up of this process would also do this
+            unlink(sessdir, recursive = TRUE)
+        }
+
         summaryLog(Log)
 
         if(config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_STATUS_SUMMARY_",
