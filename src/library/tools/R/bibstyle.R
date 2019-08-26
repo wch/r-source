@@ -414,5 +414,5 @@ toRd.bibentry <- function(obj, style=NULL, ...) {
     	    Unpublished = formatUnpublished(paper),
     	    paste("bibtype", attr(paper, "bibtype"),"not implemented") ))
     }
-    gsub("%", "\\%", result, fixed = TRUE)
+    gsub("(^|[^\\])((\\\\\\\\)*)%", "\\1\\2\\\\%", result)
 }
