@@ -145,6 +145,8 @@
       \item \code{format.default(*, scientific = FALSE)} now corresponds to
       a practically most extreme \code{options(scipen = n)} setting rather
       than arbitrary \code{n = 100}.
+
+      \item \code{format(as.symbol("foo"))} now works (returning \code{"foo"}).
     }
   }
 }

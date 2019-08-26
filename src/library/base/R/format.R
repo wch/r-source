@@ -51,6 +51,7 @@ format.default <-
 				    na.encode, scientific, NA_character_))
 	       },
 	       call =, expression =, "function" =, "(" = deparse(x, backtick=TRUE),
+	       name = deparse(x, backtick=FALSE),
 	       raw = as.character(x),
 	       S4 = {
 		   cld <- methods::getClassDef(cl <- class(x))

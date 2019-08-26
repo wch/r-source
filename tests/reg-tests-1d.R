@@ -3019,6 +3019,12 @@ stopifnot(exprs = {
 })## format(*, scientific=FALSE) was "not obeyed" in R <= 3.6.1
 
 
+## format(<symbol>) aka format(<name>) :
+for(ch in c("foo", "bar", "1", "a:b", "B space A", "`ABC", "'CBA"))
+    stopifnot(identical(ch, format(as.symbol(ch))))
+## gave  'Found no format() method for class "name"' in R <= 3.6.x
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
