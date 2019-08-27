@@ -4859,7 +4859,7 @@ in other ways, for example by Automator.}  and Ghostscript (which
 converts PDF to PDF by
 
 @example
-ps2pdf @var{options} -dAutoRotatePages=/None @var{in}.pdf @var{out}.pdf
+ps2pdf @var{options} -dAutoRotatePages=/None -dPrinted=false @var{in}.pdf @var{out}.pdf
 @end example
 
 @noindent
@@ -4933,8 +4933,8 @@ rendered incorrectly, or cause your @R{} code to give an error.  For
 set of characters which is commonly supported is wider than it used to
 be around 2000, but non-Latin alphabets (Greek, Russian, Georgian,
 @dots{}) are still often problematic and those with double-width
-characters (Chinese, Japanese, Korean) often need specialist fonts to
-render correctly.
+characters (Chinese, Japanese, Korean, emoji) often need specialist
+fonts to render correctly.
 
 Several @acronym{CRAN} packages have messages in their @R{} code in French (and a
 few in German).  A better way to tackle this is to use the
@@ -5174,10 +5174,13 @@ but it is usually preferable to use explicit namespace prefixes in the code.
 
 Examples seen in @acronym{CRAN} packages include
 @example
-abs acos atan calloc ceil div exp fabs floor fmod free log malloc memcpy
-memset pow printf qsort round sin sprintf sqrt strcmp strcpy strerror
-strlen strncmp strtol tan trunc
+abs acos atan bind calloc ceil div exp fabs floor fmod free log malloc
+memcpy memset pow printf qsort round sin sprintf sqrt strcmp strcpy
+strerror strlen strncmp strtol tan trunc
 @end example
+@noindent
+This problem is less common than it used to be, but in 2019
+@command{clang} did not have @code{bind} in the main namespace.
 
 @item
 @c including clang as from 4.0.0
@@ -5293,7 +5296,8 @@ removed in C++17.
 
 There are quite a lot of other C++98 features deprecated in C++11 and
 removed in C++17, and @command{clang} 9 has started to warn about
-them. Examples include @code{bind1st}/@code{bind2nd} (use @code{bind} or
+them. Examples include @code{bind1st}/@code{bind2nd} (use
+@code{std::bind} or
 lambdas@footnote{@uref{https://stackoverflow.com/questions/32739018/a-replacement-for-stdbind2nd}})
 @code{std::auto_ptr} (replaced by @code{std::unique_ptr}),
 @code{std:;mem_fun_ref} and @code{std::ptr_fun}.

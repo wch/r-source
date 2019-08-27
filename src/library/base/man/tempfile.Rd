@@ -79,7 +79,7 @@ tempdir(check = FALSE)
 
 \source{
   The final component of \code{tempdir()} is created by the POSIX system
-  call \code{mkdtmp}, or if this is not available (e.g.\sspace{}on
+  call \code{mkdtemp}, or if this is not available (e.g.\sspace{}on
   Windows) a version derived from the source code of GNU \code{glibc}.
 
   It will be of the form \file{RtmpXXXXXX} where the last 6 characters
