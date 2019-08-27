@@ -197,6 +197,14 @@
     }
   }
 
+  \subsection{UTILITIES}{
+    \itemize{
+      \item \command{R CMD check} has a new option to mitigate checks
+      leaving files/directories in \file{/tmp}.  See the \sQuote{R
+	Internals} manual -- this is part of \code{--as-cran}.
+    }
+  }
+  
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item Support for specifying C++98 in package installation is
