@@ -4858,6 +4858,8 @@ add_dummies <- function(dir, Log)
                              ": warning: .* \\[-Wcatch-value=\\]",
                              ": warning: .* \\[-Wlto-type-mismatch\\]",
                              ": warning: .* \\[-Wunused-value\\]",
+                             ## warning in g++, fatal in clang.
+                             ": warning: .* \\[-Wnarrowing\\]",
                              ## Fatal, not warning, for clang and Solaris ODS
                              ": warning: .* with a value, in function returning void"
                             )
