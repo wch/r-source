@@ -183,17 +183,17 @@
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
       \item Header \file{Rconfig.h} contains the value of
-	\code{FC_LEN_T} deduced at installation which is used by the
-	prototypes in headers \file{BLAS.h} and \file{Lapack.h} but to
-	avoid extensive breakage this is only exposed when
-	\code{USE_FC_LEN_T} is defined.
+      \code{FC_LEN_T} deduced at installation which is used by the
+      prototypes in headers \file{R_ext/BLAS.h} and
+      \file{R_ext/Lapack.h} but to avoid extensive breakage this is
+      only exposed when \code{USE_FC_LEN_T} is defined.
 
-	If a package's C/C++ calls to BLAS/LAPACK allow for the
-	\sQuote{hidden} arguments used by most Fortran compilers to pass
-	the lengths of Fortran character arguments, define
-	\code{USE_FC_LEN_T} and include \file{Rconfig.h} (possibly
-	\emph{via} \file{R.h}) before including \file{BLAS.h} or
-	\file{Lapack.h}.
+      If a package's C/C++ calls to BLAS/LAPACK allow for the
+      \sQuote{hidden} arguments used by most Fortran compilers to pass
+      the lengths of Fortran character arguments, define
+      \code{USE_FC_LEN_T} and include \file{Rconfig.h} (possibly
+      \emph{via} \file{R.h}) before including \file{R_ext/BLAS.h} or
+      \file{R_ext/Lapack.h}.
     }
   }
 
