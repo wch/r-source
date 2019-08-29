@@ -1910,7 +1910,7 @@ char * R_tmpnam2(const char *prefix, const char *tempdir, const char *fileext)
     return res;
 }
 
-void R_free_tmpnam(const char *name)
+void R_free_tmpnam(char *name)
 {
     if (name) free(name);
 }

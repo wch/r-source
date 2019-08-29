@@ -95,7 +95,7 @@ double R_strtod(const char *c, char **end);
 
 char *R_tmpnam(const char *prefix, const char *tempdir);
 char *R_tmpnam2(const char *prefix, const char *tempdir, const char *fileext);
-void R_free_tmpnam(const char *name);
+void R_free_tmpnam(char *name);
 
 void R_CheckUserInterrupt(void);
 void R_CheckStack(void);
