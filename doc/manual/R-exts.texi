@@ -10893,7 +10893,7 @@ In each case the @R{} objects are available for manipulation @emph{via}
 a set of functions and macros defined in the header file
 @file{Rinternals.h} or some @Sl{}-compatibility macros@footnote{That is,
 similar to those defined in @Sl{} version 4 from the 1990s: these are
-not kept up to date and are not recommended for new projects.  See
+not kept up to date and are not recommended for new projects.}  See
 @ref{Interface functions .Call and .External} for details on
 @code{.Call} and @code{.External}.
 
