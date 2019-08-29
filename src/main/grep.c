@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2018  The R Core Team
+ *  Copyright (C) 1997--2019  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -107,8 +107,6 @@ static void setup_jit(pcre_extra *re_pe)
     if (jit_stack)
 	pcre_assign_jit_stack(re_pe, NULL, jit_stack);
 }
-
-
 
 #ifndef MAX
 # define MAX(a, b) ((a) > (b) ? (a) : (b))
@@ -246,6 +244,50 @@ set_pcre_recursion_limit(pcre_extra **re_pe_ptr, const long limit)
     }
 }
 
+static void prepare_pcre(const char *pattern, int options, SEXP subject,
+                         Rboolean always_study, const unsigned char **tables,
+                         pcre **re, pcre_extra **re_extra)
+{
+    int erroffset;
+    const char *errorptr;
+    Rboolean use_limit = FALSE;
+    R_xlen_t len = XLENGTH(subject);
+    Rboolean pcre_st = always_study ||
+                       (R_PCRE_study == -2 ? FALSE : len >= R_PCRE_study);
+
+    if (!*tables)
+	// PCRE docs say this is not needed, but it is on Windows
+	*tables = pcre_maketables();
+    *re = pcre_compile(pattern, options, &errorptr, &erroffset, *tables);
+    if (!*re) {
+	if (errorptr)
+	    warning(_("PCRE pattern compilation error\n\t'%s'\n\tat '%s'\n"),
+	            errorptr, pattern + erroffset);
+	/* in R 3.6 and earlier strsplit reported "invalid split pattern" */
+	error(_("invalid regular expression '%s'"), pattern);
+    }
+    if (pcre_st) {
+	*re_extra = pcre_study(*re,
+	                       R_PCRE_use_JIT ? PCRE_STUDY_JIT_COMPILE : 0,
+	                       &errorptr);
+	if (errorptr)
+	    warning(_("PCRE pattern study error\n\t'%s'\n"), errorptr);
+	else if (R_PCRE_use_JIT)
+	    setup_jit(*re_extra);
+    }
+    if (R_PCRE_limit_recursion == NA_LOGICAL) {
+	// use recursion limit only on long strings
+	R_xlen_t i;
+	for (i = 0 ; i < len ; i++)
+	    if (strlen(CHAR(STRING_ELT(subject, i))) >= 1000) {
+		use_limit = TRUE;
+		break;
+	    }
+    } else if (R_PCRE_limit_recursion)
+	use_limit = TRUE;
+    if (use_limit)
+	set_pcre_recursion_limit(re_extra, R_pcre_max_recursions());
+}
 
 /* strsplit is going to split the strings in the first argument into
  * tokens depending on the second argument. The characters of the second
@@ -499,8 +541,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 	} else if (perl_opt) {
 	    pcre *re_pcre;
 	    pcre_extra *re_pe = NULL;
-	    int erroffset, ovector[30];
-	    const char *errorptr;
+	    int ovector[30];
 	    int options = 0;
 
 	    if (use_UTF8) options = PCRE_UTF8;
@@ -515,36 +556,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		if (mbcslocale && !mbcsValid(split))
 		    error(_("'split' string %d is invalid in this locale"), itok+1);
 	    }
-
-	    // PCRE docs say this is not needed, but it is on Windows
-	    if (!tables) tables = pcre_maketables();
-	    re_pcre = pcre_compile(split, options,
-				   &errorptr, &erroffset, tables);
-	    if (!re_pcre) {
-		if (errorptr)
-		    warning(_("PCRE pattern compilation error\n\t'%s'\n\tat '%s'\n"),
-			    errorptr, split+erroffset);
-		error(_("invalid split pattern '%s'"), split);
-	    }
-	    re_pe = pcre_study(re_pcre,
-			       R_PCRE_use_JIT ?  PCRE_STUDY_JIT_COMPILE : 0,
-			       &errorptr);
-	    if (errorptr)
-		warning(_("PCRE pattern study error\n\t'%s'\n"), errorptr);
-	    else if(R_PCRE_use_JIT) setup_jit(re_pe);
-	    if(R_PCRE_limit_recursion == NA_LOGICAL) {
-		// use recursion limit only on long strings
-		Rboolean use = FALSE;
-		for (i = 0 ; i < len ; i++)
-		    if(strlen(CHAR(STRING_ELT(x, i))) >= 1000) {
-			use = TRUE;
-			break;
-		    }
-		if (use)
-		    set_pcre_recursion_limit(&re_pe, R_pcre_max_recursions());
-	    } else if (R_PCRE_limit_recursion)
-		set_pcre_recursion_limit(&re_pe, R_pcre_max_recursions());
-
+	    prepare_pcre(split, options, x, TRUE, &tables, &re_pcre, &re_pe);
 	    vmax2 = vmaxget();
 	    for (i = itok; i < len; i += tlen) {
 		SEXP t;
@@ -1004,40 +1016,10 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (fixed_opt) ;
     else if (perl_opt) {
-	int cflags = 0, erroffset;
-	const char *errorptr;
-	Rboolean pcre_st = R_PCRE_study == -2 ?  FALSE : n >= R_PCRE_study;
+	int cflags = 0;
 	if (igcase_opt) cflags |= PCRE_CASELESS;
 	if (!useBytes && use_UTF8) cflags |= PCRE_UTF8;
-	// PCRE docs say this is not needed, but it is on Windows
-	tables = pcre_maketables();
-	re_pcre = pcre_compile(spat, cflags, &errorptr, &erroffset, tables);
-	if (!re_pcre) {
-	    if (errorptr)
-		warning(_("PCRE pattern compilation error\n\t'%s'\n\tat '%s'\n"),
-			errorptr, spat + erroffset);
-	    error(_("invalid regular expression '%s'"), spat);
-	}
-	if (pcre_st) {
-	    re_pe = pcre_study(re_pcre,
-			       R_PCRE_use_JIT ?  PCRE_STUDY_JIT_COMPILE : 0,
-			       &errorptr);
-	    if (errorptr)
-		warning(_("PCRE pattern study error\n\t'%s'\n"), errorptr);
-	    else if(R_PCRE_use_JIT) setup_jit(re_pe);
-	}
-	if(R_PCRE_limit_recursion == NA_LOGICAL) {
-	    // use recursion limit only on long strings
-	    Rboolean use = FALSE;
-	    for (i = 0 ; i < n ; i++)
-		if(strlen(CHAR(STRING_ELT(text, i))) >= 1000) {
-		    use = TRUE;
-		    break;
-		}
-	    if (use)
-		set_pcre_recursion_limit(&re_pe, R_pcre_max_recursions());
-	} else if (R_PCRE_limit_recursion)
-	    set_pcre_recursion_limit(&re_pe, R_pcre_max_recursions());
+	prepare_pcre(spat, cflags, text, FALSE, &tables, &re_pcre, &re_pe);
     } else {
 	int cflags = REG_NOSUB | REG_EXTENDED;
 	if (igcase_opt) cflags |= REG_ICASE;
@@ -1790,40 +1772,10 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (!patlen) error(_("zero-length pattern"));
 	replen = strlen(srep);
     } else if (perl_opt) {
-	int cflags = 0, erroffset;
-	const char *errorptr;
-	Rboolean pcre_st = R_PCRE_study == -2 ?  FALSE : n >= R_PCRE_study;
+	int cflags = 0;
 	if (use_UTF8) cflags |= PCRE_UTF8;
 	if (igcase_opt) cflags |= PCRE_CASELESS;
-	// PCRE docs say this is not needed, but it is on Windows
-	tables = pcre_maketables();
-	re_pcre = pcre_compile(spat, cflags, &errorptr, &erroffset, tables);
-	if (!re_pcre) {
-	    if (errorptr)
-		warning(_("PCRE pattern compilation error\n\t'%s'\n\tat '%s'\n"),
-			errorptr, spat+erroffset);
-	    error(_("invalid regular expression '%s'"), spat);
-	}
-	if (pcre_st) {
-	    re_pe = pcre_study(re_pcre,
-			       R_PCRE_use_JIT ?  PCRE_STUDY_JIT_COMPILE : 0,
-			       &errorptr);
-	    if (errorptr)
-		warning(_("PCRE pattern study error\n\t'%s'\n"), errorptr);
-	    else if(R_PCRE_use_JIT) setup_jit(re_pe);
-	}
-	if(R_PCRE_limit_recursion == NA_LOGICAL) {
-	    // use recursion limit only on long strings
-	    Rboolean use = FALSE;
-	    for (i = 0 ; i < n ; i++)
-		if(strlen(CHAR(STRING_ELT(text, i))) >= 1000) {
-		    use = TRUE;
-		    break;
-		}
-	    if (use)
-		set_pcre_recursion_limit(&re_pe, R_pcre_max_recursions());
-	} else if (R_PCRE_limit_recursion)
-	    set_pcre_recursion_limit(&re_pe, R_pcre_max_recursions());
+	prepare_pcre(spat, cflags, text, FALSE, &tables, &re_pcre, &re_pe);
 	replen = strlen(srep);
     } else {
 	int cflags = REG_EXTENDED;
@@ -2624,40 +2576,11 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (fixed_opt) ;
     else if (perl_opt) {
-	int cflags = 0, erroffset;
-	const char *errorptr;
-	Rboolean pcre_st = R_PCRE_study == -2 ?  FALSE : n >= R_PCRE_study;
+	int cflags = 0;
 	if (igcase_opt) cflags |= PCRE_CASELESS;
 	if (!useBytes && use_UTF8) cflags |= PCRE_UTF8;
-	// PCRE docs say this is not needed, but it is on Windows
-	tables = pcre_maketables();
-	re_pcre = pcre_compile(spat, cflags, &errorptr, &erroffset, tables);
-	if (!re_pcre) {
-	    if (errorptr)
-		warning(_("PCRE pattern compilation error\n\t'%s'\n\tat '%s'\n"),
-			errorptr, spat+erroffset);
-	    error(_("invalid regular expression '%s'"), spat);
-	}
-	if (pcre_st) {
-	    re_pe = pcre_study(re_pcre,
-			       R_PCRE_use_JIT ?  PCRE_STUDY_JIT_COMPILE : 0,
-			       &errorptr);
-	    if (errorptr)
-		warning(_("PCRE pattern study error\n\t'%s'\n"), errorptr);
-	    else if(R_PCRE_use_JIT) setup_jit(re_pe);
-	}
-	if(R_PCRE_limit_recursion == NA_LOGICAL) {
-	    // use recursion limit only on long strings
-	    Rboolean use = FALSE;
-	    for (i = 0 ; i < n ; i++)
-		if(strlen(CHAR(STRING_ELT(text, i))) >= 1000) {
-		    use = TRUE;
-		    break;
-		}
-	    if (use)
-		set_pcre_recursion_limit(&re_pe, R_pcre_max_recursions());
-	} else if (R_PCRE_limit_recursion)
-	    set_pcre_recursion_limit(&re_pe, R_pcre_max_recursions());
+	prepare_pcre(spat, cflags, text, FALSE, &tables, &re_pcre, &re_pe);
+
 	/* also extract info for named groups */
 	pcre_fullinfo(re_pcre, re_pe, PCRE_INFO_NAMECOUNT, &name_count);
 	pcre_fullinfo(re_pcre, re_pe, PCRE_INFO_NAMEENTRYSIZE, &name_entry_size);
