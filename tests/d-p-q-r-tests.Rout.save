@@ -1,5 +1,5 @@
 
-R version 3.6.1 Patched (2019-08-11 r76957) -- "Action of the Toes"
+R version 3.6.1 Patched (2019-08-29 r77091) -- "Action of the Toes"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -1492,5 +1492,5 @@ rweibull (4, ..): 1 2  [Ok]
 > 
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  1.562 0.022 1.59 0 0 
+Time elapsed:  1.566 0.019 1.59 0 0 
 > 

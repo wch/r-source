@@ -1,5 +1,5 @@
 
-R version 3.6.1 Patched (2019-08-11 r76957) -- "Action of the Toes"
+R version 3.6.1 Patched (2019-08-29 r77091) -- "Action of the Toes"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -46,4 +46,4 @@ In bw.bcv(precip) : minimum occurred at one end of the range
 > 
 > proc.time()
    user  system elapsed 
-  0.188   0.050   0.213 
+  0.186   0.048   0.218 

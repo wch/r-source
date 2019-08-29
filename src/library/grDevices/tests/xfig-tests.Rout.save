@@ -1,5 +1,5 @@
 
-R version 3.6.1 Patched (2019-08-11 r76957) -- "Action of the Toes"
+R version 3.6.1 Patched (2019-08-29 r77091) -- "Action of the Toes"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -102,4 +102,4 @@ Type 'q()' to quit R.
 > 
 > proc.time()
    user  system elapsed 
-  0.209   0.031   0.217 
+  0.189   0.046   0.214 
