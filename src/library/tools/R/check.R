@@ -4893,7 +4893,8 @@ add_dummies <- function(dir, Log)
                              ": warning: .* \\[-Wc[+][+]11-long-long\\]",
                              ": warning: empty macro arguments are a C99 feature",
                              ": warning: .* \\[-Winvalid-source-encoding\\]",
-                             ## for non-portable flags (seen in sub-Makefiles)
+                             ": warning: .* \\[-Wunused-command-line-argument\\]",
+                             ## For non-portable flags (seen in sub-Makefiles)
                              "warning: .* \\[-Wunknown-warning-option\\]"
                              )
 
