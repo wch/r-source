@@ -1039,11 +1039,11 @@ add_dummies <- function(dir, Log)
                     }
                     msg <- if (is.na(findEmail(BR))) {
                         if (grepl("(^|.* )[^ ]+@[[:alnum:]._]+", BR))
-                            "BugReports field is not a suitable URL but appears to contain an email address\n  not specified by mailto: nor contained in < >"
+                            "BugReports field is not a suitable URL but appears to contain an email address\n  not specified by mailto: nor contained in < >\n   use the Contact field instead"
                         else
                             "BugReports field should be the URL of a single webpage"
                     } else
-                        "BugReports field is not a suitable URL but contains an email address\n  which will be used as from R 3.4.0"
+                        "BugReports field is not a suitable URL but contains an email address:\n   use the Contact field instead"
                 }
             } else {
                 msg <- "BugReports field should not be empty"

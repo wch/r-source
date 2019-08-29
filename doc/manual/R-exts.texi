@@ -509,9 +509,10 @@ The @samp{BugReports} field may contain a single @acronym{URL} to which
 bug reports about the package should be submitted.  This @acronym{URL}
 will be used by @code{bug.report} instead of sending an email to the
 maintainer.  A browser is opened for a @samp{http://} or @samp{https://}
-@acronym{URL}.  As from @R{} 3.4.0, @code{bug.report} will try to
-extract an email address (preferably from a @samp{mailto:} URL or
-enclosed in angle brackets).
+@acronym{URL}.  To specify another email address for bug reports, use
+@samp{Contact} instead: however @code{bug.report} will try to extract an
+email address (preferably from a @samp{mailto:} URL or enclosed in angle
+brackets) from @samp{BugReports}.
 
 @c DESCRIPTION field Priority
 Base and recommended packages (i.e., packages contained in the @R{}
@@ -685,11 +686,11 @@ added by the package management tools.
 There is no restriction on the use of other fields not mentioned here
 (but using other capitalizations of these field names would cause
 confusion).  Fields @code{Note}, @code{Contact} (for contacting the
-authors/developers@footnote{As from @R{} 3.4.0, @code{bug.report} will
-try to extract an email address from a @code{Contact} field if there is
-no @code{BugReports} field.}) and @code{MailingList} are in common use. Some
-repositories (including @acronym{CRAN} and R-forge) add their own
-fields.
+authors/developers@footnote{@code{bug.report} will try to extract an
+email address from a @code{Contact} field if there is no
+@code{BugReports} field.}) and @code{MailingList} are in common
+use. Some repositories (including @acronym{CRAN} and R-forge) add their
+own fields.
 
 
 
