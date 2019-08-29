@@ -24680,7 +24680,7 @@ EOF
 if test "x${R_C_STACK_DIRECTION}" != "x"; then
  r_cv_cstack_direction=${R_C_STACK_DIRECTION}
 else
-if ${CC} ${CFLAGS} ${LDFLAGS} ${MAIN_LDFLAGS} -o conftest${ac_exeext} \
+if ${CC} ${CPPFLAGS} ${CFLAGS} ${LDFLAGS} ${MAIN_LDFLAGS} -o conftest${ac_exeext} \
       conftest.c conftest1.c \
       1>&5 2>&5;
   then
@@ -24841,7 +24841,7 @@ if ${r_cv_prog_cc_c_o_lo+:} false; then :
 else
   test -d TMP || mkdir TMP
 echo "int some_variable = 0;" > conftest.c
-ac_try='${CC} ${CFLAGS} -c conftest.c -o TMP/conftest.lo 1>&5'
+ac_try='${CC} ${CPPFLAGS} ${CFLAGS} -c conftest.c -o TMP/conftest.lo 1>&5'
 if { { eval echo "\"\$as_me\":${as_lineno-$LINENO}: \"$ac_try\""; } >&5
   (eval $ac_try) 2>&5
   ac_status=$?
@@ -26103,7 +26103,7 @@ int main () {
   exit(0);
 }
 EOF
-if ${CC} ${CFLAGS} -c conftest.c 1>&5 2>&5; then
+if ${CC} ${CPPFLAGS} ${CPPFLAGS} ${CFLAGS} -c conftest.c 1>&5 2>&5; then
   ## <NOTE>
   ## This should really use MAIN_LD, and hence come after this is
   ## determined (and necessary additions to MAIN_LDFLAGS were made).
@@ -26112,7 +26112,7 @@ if ${CC} ${CFLAGS} -c conftest.c 1>&5 2>&5; then
   ## and SHLIB_LDFLAGS (and note that on HP-UX with native cc we have to
   ## use ld for SHLIB_LD) ...
   ## Be nice to people who put compiler architecture opts in CFLAGS
-  if ${CC} ${CFLAGS} ${LDFLAGS} ${MAIN_LDFLAGS} -o conftest${ac_exeext} \
+  if ${CC} ${CPPFLAGS} ${CFLAGS} ${LDFLAGS} ${MAIN_LDFLAGS} -o conftest${ac_exeext} \
        conftest.${ac_objext} conftestf.${ac_objext} ${FLIBS} \
        ${LIBM} 1>&5 2>&5;
   ## </NOTE>
@@ -26195,7 +26195,7 @@ int main () {
   exit(res);
 }
 EOF
-if ${CC} ${CFLAGS} -c conftest.c 1>&5 2>&5; then
+if ${CC} ${CPPFLAGS} ${CFLAGS} -c conftest.c 1>&5 2>&5; then
   ## <NOTE>
   ## This should really use MAIN_LD, and hence come after this is
   ## determined (and necessary additions to MAIN_LDFLAGS were made).
@@ -26203,7 +26203,7 @@ if ${CC} ${CFLAGS} -c conftest.c 1>&5 2>&5; then
   ## Also, to be defensive there should be a similar test with SHLIB_LD
   ## and SHLIB_LDFLAGS (and note that on HP-UX with native cc we have to
   ## use ld for SHLIB_LD) ...
-  if ${CC} ${CFLAGS} ${LDFLAGS} ${MAIN_LDFLAGS} -o conftest${ac_exeext} \
+  if ${CC} ${CPPFLAGS} ${CFLAGS} ${LDFLAGS} ${MAIN_LDFLAGS} -o conftest${ac_exeext} \
        conftest.${ac_objext} conftestf.${ac_objext} ${FLIBS} \
        ${LIBM} 1>&5 2>&5;
   ## </NOTE>
@@ -26284,7 +26284,7 @@ int main () {
     else exit(1);
 }
 EOF
-if ${CC} ${CFLAGS} -c conftest.c 1>&5 2>&5; then
+if ${CC} ${CPPFLAGS} ${CFLAGS} -c conftest.c 1>&5 2>&5; then
   ## <NOTE>
   ## This should really use MAIN_LD, and hence come after this is
   ## determined (and necessary additions to MAIN_LDFLAGS were made).
@@ -26292,7 +26292,7 @@ if ${CC} ${CFLAGS} -c conftest.c 1>&5 2>&5; then
   ## Also, to be defensive there should be a similar test with SHLIB_LD
   ## and SHLIB_LDFLAGS (and note that on HP-UX with native cc we have to
   ## use ld for SHLIB_LD) ...
-  if ${CC} ${CFLAGS} ${LDFLAGS} ${MAIN_LDFLAGS} -o conftest${ac_exeext} \
+  if ${CC} ${CPPFLAGS} ${CFLAGS} ${LDFLAGS} ${MAIN_LDFLAGS} -o conftest${ac_exeext} \
        conftest.${ac_objext} conftestf.${ac_objext} ${FLIBS} \
        ${LIBM} 1>&5 2>&5;
   ## </NOTE>
@@ -27325,8 +27325,8 @@ int main()
     return 0;
 }
 EOF
-if ${CC} ${CFLAGS} -c conftest.c 1>&5 2>&5; then
-  if ${CC} ${CFLAGS} ${LDFLAGS} ${MAIN_LDFLAGS} -o conftest${ac_exeext} \
+if ${CC} ${CPPFLAGS} ${CFLAGS} -c conftest.c 1>&5 2>&5; then
+  if ${CC} ${CPPFLAGS} ${CFLAGS} ${LDFLAGS} ${MAIN_LDFLAGS} -o conftest${ac_exeext} \
        conftest.${ac_objext} conftestf.${ac_objext} ${FLIBS} \
        1>&5 2>&5;
   then
@@ -38566,7 +38566,7 @@ int main () {
   exit(iflag);
 }
 EOF
-if ${CC} ${CFLAGS} -c conftest.c 1>&5 2>&5; then
+if ${CC} ${CPPFLAGS} ${CFLAGS} -c conftest.c 1>&5 2>&5; then
   ## <NOTE>
   ## This should really use MAIN_LD, and hence come after this is
   ## determined (and necessary additions to MAIN_LDFLAGS were made).
@@ -38574,7 +38574,7 @@ if ${CC} ${CFLAGS} -c conftest.c 1>&5 2>&5; then
   ## Also, to be defensive there should be a similar test with SHLIB_LD
   ## and SHLIB_LDFLAGS (and note that on HP-UX with native cc we have to
   ## use ld for SHLIB_LD) ...
-  if ${CC} ${CFLAGS} ${LDFLAGS} ${MAIN_LDFLAGS} -o conftest${ac_exeext} \
+  if ${CC} ${CPPFLAGS} ${CFLAGS} ${LDFLAGS} ${MAIN_LDFLAGS} -o conftest${ac_exeext} \
        conftest.${ac_objext} conftestf.${ac_objext} ${FLIBS} \
        ${LIBM} ${BLAS_LIBS} 1>&5 2>&5;
   ## </NOTE>
@@ -38711,7 +38711,7 @@ int main ()
   exit(0);
 }
 EOF
-if ${CC} ${CFLAGS} -c conftest.c 1>&5 2>&5; then
+if ${CC} ${CPPFLAGS} ${CFLAGS} -c conftest.c 1>&5 2>&5; then
   ## <NOTE>
   ## This should really use MAIN_LD, and hence come after this is
   ## determined (and necessary additions to MAIN_LDFLAGS were made).
@@ -38719,7 +38719,7 @@ if ${CC} ${CFLAGS} -c conftest.c 1>&5 2>&5; then
   ## Also, to be defensive there should be a similar test with SHLIB_LD
   ## and SHLIB_LDFLAGS (and note that on HP-UX with native cc we have to
   ## use ld for SHLIB_LD) ...
-  if ${CC} ${CFLAGS} ${LDFLAGS} ${MAIN_LDFLAGS} -o conftest${ac_exeext} \
+  if ${CC} ${CPPFLAGS} ${CFLAGS} ${LDFLAGS} ${MAIN_LDFLAGS} -o conftest${ac_exeext} \
        conftest.${ac_objext} ${FLIBS} \
        ${LIBM} ${BLAS_LIBS} 1>&5 2>&5;
   ## </NOTE>
