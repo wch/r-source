@@ -5091,35 +5091,22 @@ Capitan) or later.  @R{} can in principle be built for 10.6 and later,
 although this is little tested and it may be necessary to install later
 versions of software such as @code{libcurl}.
 
+@menu
+* Recommended C/C++ compilers::  
+* Other libraries::             
+* Tcl/Tk headers and libraries::  
+* Java (macOS)::                
+* Frameworks::                  
+* Building R.app::              
+@end menu
+
 To build @R{} you need Apple's `Command Line Tools': these can be
 (re-)installed by @command{xcode-select --install}.  (If you have a
 fresh OS installation, running e.g.@: @command{make} in a terminal will
 offer the installation of the command-line tools.  If you have installed
 Xcode, this provides the command-line tools.  The tools will need to be
 reinstalled when macOS is upgraded, as upgrading partially removes
-them.)  For macOS 10.14 (`Mojave') and version 10.x of the tools an
-additional step is needed to install the headers to @file{/usr/include}:
-from a Terminal run
-@c https://developer.apple.com/documentation/xcode_release_notes/xcode_10_release_notes
-@example
-sudo installer -pkg \
-/Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_10.14.pkg \
--target /
-@end example
-@noindent
-(This will need to be re-run if the OS decides to update the Command
-Line Tools: betas of version 11 are not currently supported.)
-Alternatively, change the include path @emph{via}
-@example
-CPPFLAGS="-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include"
-@end example
-@noindent
-Which is said to be going to be needed for future versions of macOS.
-(The location of the SDK, which could change, can be found by running
-@command{xcrun -show-sdk-path}.  It is likely that the compilers
-included in the Command Line Tools will find the headers under the SDK
-without this additional step, but other versions of @command{clang} will
-not.)
+them.) 
 
 You need GNU @code{readline}.  That and other binary components are
 available from @uref{https://mac.R-project.org/libs}: you will need
@@ -5193,7 +5180,7 @@ FC = /usr/local/gfortran/bin/gfortran
 FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin16/6.3.0
   -L/usr/local/gfortran/lib -lgfortran -lquadmath -lm
 @end example
-or (Mojave)
+or (Mojave or later)
 @example
 FC = /usr/local/gfortran/bin/gfortran
 FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin18/8.2.0
@@ -5202,19 +5189,33 @@ FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin18/8.2.0
 @noindent
 (with lines broken here for legibility).
 
+To build @R{} itself from the sources with the compilers in the Command
+Line Tools (or Xcode) and one of these installers, use a file
+@file{config.site} containing
+@example
+CC=clang
+OBJC=$CC
+FC=/usr/local/gfortran/bin/gfortran
+CXX=clang++
+@end example
+
+@node Recommended C/C++ compilers, Other libraries, macOS, macOS
+@subsection Recommended C/C++ compilers
+
 Current @acronym{CRAN} binary distributions use the build of
 @command{clang} 8.0.0 contained in
 @uref{https://cran.r-project.org/@/bin/@/macosx/@/tools/@/clang-8.0.0.pkg}.
 Other recent distributions of @command{clang} are available from
-@uref{http://llvm.org/releases/} (on which the above are based).  In
+@uref{http://llvm.org/releases/} (which the above re-packages).  In
 particular, all of these include support for OpenMP which Apple builds
-of @command{clang} do not.  Suppose one of these distributions is
-installed under @file{/usr/local/clang8}.  Then @R{} could be configured
-by something like
+of @command{clang} do not.  
+
+Suppose one of these distributions is installed under
+@file{/usr/local/clang8}.  Then @R{} could be configured by something
+like
 @example
 ./configure --x-includes=/opt/X11/include --x-libraries=/opt/X11/lib \
-PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig \
-DYLD_FALLBACK_LIBRARY_PATH=/usr/local/clang8/lib:/usr/local/lib
+PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
 @end example
 @noindent
 with @file{config.site} containing
@@ -5237,6 +5238,34 @@ checking whether OpenMP SIMD reduction is supported... yes
 in the @command{configure} output.  Also, @samp{R_LD_LIBRARY_PATH} needs
 to be set to find the latest version of the C++ run-time libraries
 rather than the system ones.
+
+For macOS 10.14 (`Mojave') and version 10.x of the Command Line Tools,
+an additional step is needed to install the headers to
+@file{/usr/include}: from a Terminal run
+@c https://developer.apple.com/documentation/xcode_release_notes/xcode_10_release_notes
+@example
+sudo installer -pkg \
+/Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_10.14.pkg \
+-target /
+@end example
+@noindent
+(This will need to be re-run if the OS decides to update the Command
+Line Tools.)
+
+Alternatively, change the system paths @emph{via}
+@example
+CC="/usr/local/clang8/bin/clang -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk"
+CXX="/usr/local/clang8/bin/clang++ -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk"
+@end example
+@noindent
+(The location of the SDK, which could conceivably change, can be found
+by running @command{xcrun -show-sdk-path}.)
+
+This second approach is said to be going to be needed for future versions of
+macOS and versions 11.x of the Command Line Tools/Xcode.
+
+@node Other libraries, Tcl/Tk headers and libraries, Recommended C/C++ compilers, macOS
+@subsection Other libraries
 
 Pre-compiled versions of many of the @ref{Useful libraries and programs}
 are available from @uref{https://mac.R-project.org/libs/}.  You will
@@ -5322,7 +5351,7 @@ some upgrades but not others).
 * Building R.app::              
 @end menu
 
-@node Tcl/Tk headers and libraries, Java (macOS), macOS, macOS
+@node Tcl/Tk headers and libraries, Java (macOS), Other libraries, macOS
 @subsection Tcl/Tk headers and libraries
 
 If you plan to use the @code{tcltk} package for @R{}, you need to
