@@ -183,7 +183,7 @@ various ways for consistency and portability.
 source package which contains C, C++ or Fortran code will involve
 compiling that code.  There is also the possibility of `byte' compiling
 the @R{} code in a package (using the facilities of package
-@pkg{compiler}): since @R{} 3.5.0 this is enabled by default for all
+@pkg{compiler}): nowadays this is enabled by default for all
 packages. So @emph{compiling} a package may come to mean byte-compiling
 its @R{} code.
 
@@ -550,18 +550,16 @@ exceptionally for a package designed to always be used with
 @code{keep.source = TRUE}.
 
 @c DESCRIPTION field ByteCompile
-The @samp{ByteCompile} logical field controls if the package code is to be
-byte-compiled on installation: since @R{} 3.5.0, the default is to
-byte-compile.  Prior to @R{} 3.5.0, the default was not to, but
-recommended packages were already byte-compiled.  This can be overridden by
-installing with flag @option{--no-byte-compile}.
+The @samp{ByteCompile} logical field controls if the package code is to
+be byte-compiled on installation: the default is to byte-compile.  This
+can be overridden by installing with flag @option{--no-byte-compile}.
 
 @c DESCRIPTION field StagedInstall
 The @samp{StagedInstall} logical field controls if package installation
 is `staged', that is done to a temporary location and moved to the final
-location when successfully completed.  This was introduced in @R{} 3.6.0
-and it true by default: it is considered to be a temporary measure which
-may be withdrawn in future.
+location when successfully completed.  This field was introduced in @R{}
+3.6.0 and it true by default: it is considered to be a temporary measure
+which may be withdrawn in future.
 
 @c DESCRIPTION field ZipData
 The @samp{ZipData} logical field has been ignored since @R{} 2.13.0.
@@ -829,12 +827,13 @@ comparison operator, whitespace and a valid version number,
 e.g.@: @samp{MASS (>= 3.1-20)}.
 
 The @samp{Depends} field can also specify a dependence on a certain
-version of @R{} --- e.g., if the package works only with @R{}
-version 3.0.0 or later, include @samp{R (>= 3.0.0)} in the
-@samp{Depends} field.  You can also require a certain SVN revision for
-R-devel or R-patched, e.g.@: @samp{R (>= 2.14.0), R (>= r56550)}
-requires a version later than R-devel of late July 2011 (including
-released versions of 2.14.0).
+version of @R{} --- e.g., if the package works only with @R{} version
+3.6.0 or later, include @samp{R (>= 3.6)} in the @samp{Depends}
+field. (As here, trailing zeroes can be dropped and it is recommended
+that they are.)  You can also require a certain SVN revision for R-devel
+or R-patched, e.g.@: @samp{R (>= 2.14.0), R (>= r56550)} requires a
+version later than R-devel of late July 2011 (including released
+versions of 2.14.0).
 
 It makes no sense to declare a dependence on @code{R} without a version
 specification, nor on the package @pkg{base}: this is an @R{} package
@@ -869,7 +868,7 @@ their class definitions can change and the @file{DESCRIPTION} file is
 used to decide which packages to re-install when this happens).
 Packages declared in the @samp{Depends} field should not also be in the
 @samp{Imports} field.  Version requirements can be specified and are
-checked when the namespace is loaded (since @R{} >= 3.0.0).
+checked when the namespace is loaded.
 
 @c DESCRIPTION field Suggests
 The @samp{Suggests} field uses the same syntax as @samp{Depends} and
@@ -2192,8 +2191,8 @@ when OpenMP mode is switched on (e.g.@: @emph{via} flag
 @c http://openmp.org/wp/openmp-compilers-tools/
 @c clang 3.8.x reports 201307 but has full support only for 3.1 (201111)
 @c clang 3.9.x reports 201111 but has all but offloading support of 4.0.
-@c Debian Wheezy is on ELTS until 2019-05-31
-@c Centos 6 EOL 2020-11-30, defaults to gcc 4.7
+@c Debian Wheezy was on ELTS until 2019-05-31
+@c Centos 6 EOL 2020-11-30, defaults to gcc 4.7, but 4.8.4 is available
 There is nothing@footnote{In most implementations the @code{_OPENMP}
 macro has value a date which can be mapped to an OpenMP version: for
 example, value @code{201307} is the date of version 4.0 (July
@@ -3339,9 +3338,8 @@ PDF or @HTML{} format obtained from plain text literate source files
 from which @R{} knows how to extract @R{} code and create output (in
 PDF/@HTML{} or intermediate @LaTeX{}).  Vignette engines do this work,
 using ``tangle'' and ``weave'' functions respectively.  Sweave, provided
-by the R distribution, is the default engine.  Since @R{} version 3.0.0,
-other vignette engines besides Sweave are supported; see @ref{Non-Sweave
-vignettes}.
+by the R distribution, is the default engine.  Other vignette engines
+besides Sweave are supported; see @ref{Non-Sweave vignettes}.
 
 Package vignettes have their sources in subdirectory @file{vignettes} of
 the package sources.  Note that the location of the vignette sources
@@ -4111,9 +4109,7 @@ standard function @code{c} in @pkg{base}.
 Some additional steps are needed for packages which make use of formal
 (S4-style) classes and methods (unless these are purely used
 internally).  The package should have @code{Depends: methods} in its
-@file{DESCRIPTION} file@footnote{This was necessary at least prior to
-@R{} 3.0.2 as the @pkg{methods} package looked for its own @R{} code on
-the search path.} and @code{import(methods)} or
+@file{DESCRIPTION} and @code{import(methods)} or
 @code{importFrom(methods, ...)} plus any classes and methods which are
 to be exported need to be declared in the @file{NAMESPACE} file.  For
 example, the @pkg{stats4} package has
@@ -6023,12 +6019,9 @@ The usage information specified should match the function definition
 @emph{exactly} (such that automatic checking for consistency between
 code and documentation is possible).
 
-It is no longer advisable to use @code{\synopsis} for the actual
-synopsis and show modified synopses in the @code{\usage}.  Support for
-@code{\synopsis} will be removed in \R 3.1.0.  To indicate that a
-function can be used in several different ways, depending on the named
-arguments specified, use section @code{\details}.  E.g.,
-@file{abline.Rd} contains
+To indicate that a function can be used in several different ways,
+depending on the named arguments specified, use section @code{\details}.
+E.g., @file{abline.Rd} contains
 
 @example
 @group
@@ -6253,7 +6246,7 @@ be declared in the @file{DESCRIPTION} file.  It is good practice to
 include a comment in the @code{\donttest} section explaining why it is
 needed.
 
-As from @R{} 3.4.0, output from code between comments
+Output from code between comments
 @example
 ## IGNORE_RDIFF_BEGIN
 ## IGNORE_RDIFF_END
@@ -7116,13 +7109,13 @@ to be defined within an Rd file.  These are similar but not identical to
 the same-named @LaTeX{} macros.
 
 They each take two arguments which are parsed verbatim.  The first is
-the name of the new macro including the initial backslash, and the second
-is the macro definition.  As in @LaTeX{}, @code{\newcommand} requires that the
-new macro not have been previously defined, whereas @code{\renewcommand}
-allows existing macros (including all built-in ones) to be replaced.
-(As from version 3.2.0, this test is disabled by default, but may
-be enabled by setting the environment variable @env{_WARN_DUPLICATE_RD_MACROS_}
-to a true value.)
+the name of the new macro including the initial backslash, and the
+second is the macro definition.  As in @LaTeX{}, @code{\newcommand}
+requires that the new macro not have been previously defined, whereas
+@code{\renewcommand} allows existing macros (including all built-in
+ones) to be replaced.  (This test is disabled by default, but may be
+enabled by setting the environment variable
+@env{_WARN_DUPLICATE_RD_MACROS_} to a true value.)
 
 Also as in @LaTeX{}, the new macro may be defined to take arguments,
 and numeric placeholders such as @code{#1} are used in the macro
@@ -7137,10 +7130,10 @@ significance.  All arguments to user-defined macros will be parsed as
 verbatim text, and simple text-substitution will be used to replace
 the place-holders, after which the replacement text will be parsed.
 
-As of @R{} version 3.2.0, a number of macros are defined in the file
-@file{share/Rd/macros/system.Rd} of the @R{} source or home
-directory, and these will normally be available in all @file{.Rd} files.
-For example, that file contains the definition
+A number of macros are defined in the file
+@file{share/Rd/macros/system.Rd} of the @R{} source or home directory,
+and these will normally be available in all @file{.Rd} files.  For
+example, that file contains the definition
 @example
 \newcommand@{\PR@}@{\Sexpr[results=rd]@{tools:::Rd_expr_PR(#1)@}@}
 @end example
@@ -9826,9 +9819,7 @@ allows @code{.C} etc calls which specify entry points by @R{} objects
 such as @code{C_pansari} (and not by character strings).  Each provides
 some protection against accidentally finding your entry points when
 people supply a character string without a package, and avoids slowing
-down such searches.  Routine @code{R_forceSymbols} is available from
-@R{} 3.0.0, so packages using it should have a dependency on at least
-@samp{R (>= 3.0.0)}.  (For the visibility attribute @pxref{Controlling
+down such searches.  (For the visibility attribute @pxref{Controlling
 visibility}.)
 
 In more detail, if a package @code{mypkg} contains entry points
@@ -10515,9 +10506,8 @@ Most @R{} header files can be included within C++ programs but they
 should @strong{not} be included within an @code{extern "C"} block (as
 they include system headers@footnote{Even including C system headers in
 such a block has caused compilation errors.}).  The inclusion of system
-headers in C++ changed in @R{} 3.3.0@footnote{with an exception for the
-Solaris C++ compiler, removed in @R{} 3.4.0.}, so if you care about
-earlier versions of @R{} please check your package there.
+headers in C++ changed in @R{} 3.3.0, so if you care about earlier
+versions of @R{} please check your package there.
 
 Legacy header @file{S.h} cannot be used with C++.
 
@@ -10831,10 +10821,9 @@ In each case the @R{} objects are available for manipulation @emph{via}
 a set of functions and macros defined in the header file
 @file{Rinternals.h} or some @Sl{}-compatibility macros@footnote{That is,
 similar to those defined in @Sl{} version 4 from the 1990s: these are
-not kept up to date and are not recommended for new projects.  Prior to
-@R{} 3.3.0 it was not compatible with defining @code{R_NO_REMAP}.} defined
-in @file{Rdefines.h}.  See @ref{Interface functions .Call and .External}
-for details on @code{.Call} and @code{.External}.
+not kept up to date and are not recommended for new projects.  See
+@ref{Interface functions .Call and .External} for details on
+@code{.Call} and @code{.External}.
 
 Before you decide to use @code{.Call} or @code{.External}, you should
 look at other alternatives.  First, consider working in interpreted @R{}
@@ -14373,13 +14362,13 @@ visibility will allow control of visibility for all symbols @emph{via} a
 flag, and where known the flag is encapsulated in the macros
 @samp{C_VISIBILITY}, @samp{CXX_VISIBILITY}@footnote{As from @R{} 3.5.2:
 This applies to the compiler for the default C++ dialect (currently
-normally C++11) and not necessarily to other dialects.} and
-@samp{F_VISIBILITY} for C, C++ and Fortran
-compilers.@footnote{@samp{F77_VISIBILITY} was used prior to @R 3.6.0 and
-was still available in 3.6.x.  In some cases the Fortran compilers
-accept the flag but do not actually hide their symbols.}  These are
-defined in @file{etc/Makeconf} and so available for normal compilation
-of package code.  For example, @file{src/Makevars} could include some of
+C++11) and not necessarily to other dialects.} and @samp{F_VISIBILITY}
+for C, C++ and Fortran compilers.@footnote{@samp{F77_VISIBILITY} was
+used prior to @R 3.6.0 and was still available in 3.6.x.  In some cases
+the Fortran compilers accept the flag but do not actually hide their
+symbols.}  These are defined in @file{etc/Makeconf} and so available for
+normal compilation of package code.  For example, @file{src/Makevars}
+could include some of
 
 @example
 PKG_CFLAGS=$(C_VISIBILITY)
@@ -15316,9 +15305,9 @@ substitute is defined in @R{}, so your code needs to define
 @code{HAVE_UINTPTR_T} appropriately.  To do so, test if the type is
 defined in C header @file{stdint.h} or C++ header @file{cstdint} and if
 so include the header and define @code{HAVE_UINTPTR_T} before including
-@file{Rinterface.h}.  (As from @R{} 3.4.0 for C code one can simply
-include @file{Rconfig.h}, possibly @emph{via} @file{R.h}, and for C++11
-code @file{Rinterface.h} will include the header @file{cstdint}.)
+@file{Rinterface.h}.  (For C code one can simply include
+@file{Rconfig.h}, possibly @emph{via} @file{R.h}, and for C++11 code
+@file{Rinterface.h} will include the header @file{cstdint}.)
 
 These will be set@footnote{at least on platforms where the values are
 available, that is having @code{getrlimit} and on Linux or having
