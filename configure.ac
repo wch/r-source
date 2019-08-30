@@ -662,6 +662,7 @@ AC_PROG_CXX
 ## check this actually compiles
 R_PROG_CXX
 
+dnl This looks for limits.h and does not include CPPFLAGS
 AC_PROG_CXXCPP
 if test "${CXXCPP}" = "${CXX} -E"; then
   CXXCPP0="\$(CXX) -E"
