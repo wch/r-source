@@ -5092,6 +5092,7 @@ although this is little tested and it may be necessary to install later
 versions of software such as @code{libcurl}.
 
 @menu
+* Prerequisites::               
 * Recommended C/C++ compilers::  
 * Other libraries::             
 * Tcl/Tk headers and libraries::  
@@ -5100,74 +5101,36 @@ versions of software such as @code{libcurl}.
 * Building R.app::              
 @end menu
 
-To build @R{} you need Apple's `Command Line Tools': these can be
-(re-)installed by @command{xcode-select --install}.  (If you have a
-fresh OS installation, running e.g.@: @command{make} in a terminal will
-offer the installation of the command-line tools.  If you have installed
-Xcode, this provides the command-line tools.  The tools will need to be
-reinstalled when macOS is upgraded, as upgrading partially removes
-them.) 
+@node Prerequisites, Recommended C/C++ compilers, macOS, macOS
+@subsection Prerequisites
 
-You need GNU @code{readline}.  That and other binary components are
-available from @uref{https://mac.R-project.org/libs}: you will need
-@code{pcre} and @code{xz} (for @code{libzma}) as recent macOS versions
-provide libraries but not headers for these (and the system @code{pcre}
-is too old at 8.02 for versions up to Sierra, although High Sierra had
-8.40).
+The following are essential to build @R{}
 
-An X sub-system is required unless configuring using
-@option{--without-x}: see @uref{https://xquartz.macosforge.org/}. @R{}'s
-@command{configure} script can be told to look for @code{X11} in
-@code{XQuartz}'s main location of @file{/opt/X11}, e.g.@: by
-@example
---x-includes=/opt/X11/include --x-libraries=/opt/X11/lib
-@end example
-@noindent
-although linked versions under @file{/usr/X11} will be found.
+@itemize
+@item 
+Apple's `Command Line Tools': these can be (re-)installed by
+@command{xcode-select --install}.  (If you have a fresh OS installation,
+running e.g.@: @command{make} in a terminal will offer the installation
+of the command-line tools.  If you have installed Xcode, this provides
+the command-line tools.  The tools may need to be reinstalled when macOS
+is upgraded, as upgrading partially removes them.)
 
-To use the @code{quartz()} graphics device you need to configure with
-@option{--with-aqua} (which is the default): @code{quartz()} then
-becomes the default device when running @R{} at the console and X11
-would only be used for the command-line-@R{} data editor/viewer and one
-version of Tcl/Tk.  (This option needs an Objective-C
-compiler@footnote{These days that is defined by Apple's implementation
-of @code{clang}, so it is strongly recommended to use that.} which can
-compile the source code of @code{quartz()}.)
+The Command Line Tools provide C and C++ compilers.
 
-Use @option{--without-aqua} if you want a standard Unix-alike build:
-apart from disabling @code{quartz()} and the ability to use the build
-with @Rapp{}, it also changes the default location of the personal
-library (see @code{?.libPaths}).
-
-Various compilers can be used.  One could use
-
-@example
-CC=clang
-CXX=clang++
-FC=/usr/local/gfortran/bin/gfortran
-OBJC=clang
-CFLAGS='-Wal -g -O2'
-CXXFLAGS='-Wall -g -O2'
-OBJCFLAGS='-Wall -g -O2'
-FFLAGS='-Wall -g -O2 -mtune=generic'
-@end example
-
-@noindent
-with @command{clang} and @command{clang++} from the `Command Line Tools'
-and the Fortran compiler from one of the packages described in the next
-paragraph.
+@item
+A Fortran compiler.
 
 There are installers@footnote{Some of these are unsigned packages: to
 install them you may need to right-click and select @code{Open with ->
-Installer}.} for Fortran compilers for El Capitan, Sierra and Mojave at
+Installer}.} for compilers for El Capitan, Sierra and Mojave at
 @uref{https://github.com/@/fxcoudert/@/gfortran-for-macOS/@/releases/@/download/@/6.1/@/gfortran-6.1-ElCapitan.dmg},
 @uref{https://github.com/@/fxcoudert/@/gfortran-for-macOS/@/releases/@/download/@/6.3/@/gfortran-6.3-Sierra.dmg}
 and
 @uref{https://github.com/@/fxcoudert/@/gfortran-for-macOS/@/releases/@/download/@/8.2/gfortran-8.2-Mojave.dmg}.
 (An Apple package for 6.1 is also available at
 @uref{https://cran.r-project.org/@/bin/@/macosx/@/tools/@/gfortran-6.1.pkg}.)
-One way to use these builds with a binary distribution of @R{} is to
-have a @file{~/.R/Makevars} file similar to (El Capitan)
+One way to use these with a binary distribution of @R{} is to have a
+@file{~/.R/Makevars} file similar to (El Capitan)
 @example
 FC = /usr/local/gfortran/bin/gfortran
 FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin15/6.1.0
@@ -5189,6 +5152,70 @@ FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin18/8.2.0
 @noindent
 (with lines broken here for legibility).
 
+@item
+Binary components @code{pcre} and @code{xz} (for @code{libzma}) from
+@uref{https://mac.R-project.org/libs}, as recent macOS versions provide
+libraries but not headers for these (and the system @code{pcre} is too
+old at 8.02 for versions up to Sierra, although High Sierra had 8.40).
+For example
+@example
+curl -OL https://mac.r-project.org/libs/pcre-8.40-darwin.15-x86_64.tar.gz
+sudo tar -fvxz pcre-8.40-darwin.15-x86_64.tar.gz -C /
+curl -OL https://mac.r-project.org/libs/xz-5.2.3-darwin.15-x86_64.tar.gz
+sudo tar -fvxz xz-5.2.3-darwin.15-x86_64.tar.gz -C /
+@end example
+@end itemize
+
+and desirable
+@itemize
+@item
+GNU @code{readline} from @uref{https://mac.R-project.org/libs},
+or configure with @option{--without-readline}.
+
+@item
+Components @code{jpeg}, @code{libpng}, @code{pkgconfig},
+@code{pkgconfig-system-stubs} and @code{tiff} from
+@uref{https://mac.R-project.org/libs}, for the full range of bitmapped
+graphics devices.
+
+@item
+An X sub-system unless configuring using @option{--without-x}: see
+@uref{https://xquartz.macosforge.org/}. @R{}'s @command{configure}
+script can be told to look for @code{X11} in @code{XQuartz}'s main
+location of @file{/opt/X11}, e.g.@: by
+@example
+--x-includes=/opt/X11/include --x-libraries=/opt/X11/lib
+@end example
+@noindent
+although linked versions under @file{/usr/X11} will be found.
+
+@item
+An Objective-C compiler, as provided by @command{clang} in the Command
+Line Tools: this is needed for the @code{quartz()} graphics device.
+
+Use @option{--without-aqua} if you want a standard Unix-alike build:
+apart from disabling @code{quartz()} and the ability to use the build
+with @Rapp{}, it also changes the default location of the personal
+library (see @code{?.libPaths}).
+
+@item
+Support for @code{cairo} (without @code{Pango}) can be enabled if
+@code{pkg-config} and XQuartz are available.  Make sure the XQuartz's
+@code{pkg-config} files are found first on the configuration path: for
+example by setting
+@example
+export PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
+@end example
+@noindent
+or appending that variable to the @command{configure} command.
+
+@item
+A TeX installation. @xref{Other libraries}.
+
+@item
+Compilers supporting OpenMP: see the next subsection.
+@end itemize
+
 To build @R{} itself from the sources with the compilers in the Command
 Line Tools (or Xcode) and one of these installers, use a file
 @file{config.site} containing
@@ -5198,27 +5225,33 @@ OBJC=$CC
 FC=/usr/local/gfortran/bin/gfortran
 CXX=clang++
 @end example
+@noindent
+and configure by something like
+@example
+./configure -C \
+--enable-R-shlib --enable-memory-profiling \
+--x-includes=/opt/X11/include --x-libraries=/opt/X11/lib \
+PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
+@end example
 
-@node Recommended C/C++ compilers, Other libraries, macOS, macOS
+To install packages using compiled code one needs the Command Line Tools
+and appropriate compilers, e.g.@: Fortran and the C/C++ compilers from
+those tools.  Some packages have further requirements such as
+@command{pkg-config}.
+
+@node Recommended C/C++ compilers, Other libraries, Prerequisites, macOS
 @subsection Recommended C/C++ compilers
 
 Current @acronym{CRAN} binary distributions use the build of
 @command{clang} 8.0.0 contained in
 @uref{https://cran.r-project.org/@/bin/@/macosx/@/tools/@/clang-8.0.0.pkg}.
 Other recent distributions of @command{clang} are available from
-@uref{http://llvm.org/releases/} (which the above re-packages).  In
+@uref{http://releases.llvm.org/} (which the above re-packages).  In
 particular, all of these include support for OpenMP which Apple builds
 of @command{clang} do not.  
 
 Suppose one of these distributions is installed under
-@file{/usr/local/clang8}.  Then @R{} could be configured by something
-like
-@example
-./configure --x-includes=/opt/X11/include --x-libraries=/opt/X11/lib \
-PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
-@end example
-@noindent
-with @file{config.site} containing
+@file{/usr/local/clang8}. Use a file @file{config.site} containing
 @example
 CC=/usr/local/clang8/bin/clang
 OBJC=$CC
@@ -5239,7 +5272,7 @@ in the @command{configure} output.  Also, @samp{R_LD_LIBRARY_PATH} needs
 to be set to find the latest version of the C++ run-time libraries
 rather than the system ones.
 
-For macOS 10.14 (`Mojave') and version 10.x of the Command Line Tools,
+For macOS 10.14 (`Mojave') and versions 10.x of the Command Line Tools,
 an additional step is needed to install the headers to
 @file{/usr/include}: from a Terminal run
 @c https://developer.apple.com/documentation/xcode_release_notes/xcode_10_release_notes
@@ -5268,21 +5301,7 @@ macOS and versions 11.x of the Command Line Tools/Xcode.
 @subsection Other libraries
 
 Pre-compiled versions of many of the @ref{Useful libraries and programs}
-are available from @uref{https://mac.R-project.org/libs/}.  You will
-most likely want at least @code{jpeg} and @code{tiff}.  The
-@code{pkg-config} utility is not provided by Apple and used for the
-installation from source of many packages: it will also be used if
-present when configuring the @code{X11()} and bitmap devices.
-
-Support for @code{cairo} (without @code{Pango}) can be enabled if
-@code{pkg-config} and XQuartz are available.  Make sure the XQuartz's
-@code{pkg-config} files are found first on the configuration path: for
-example by setting
-@example
-export PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
-@end example
-@noindent
-or appending that variable to the @command{configure} command.
+are available from @uref{https://mac.R-project.org/libs/}.
 
 @cindex BLAS library
 @cindex LAPACK library
@@ -5298,10 +5317,10 @@ can be used @emph{via} the configuration options
 to provide potentially higher-performance versions of the @acronym{BLAS}
 and LAPACK routines.@footnote{It was reported that for some non-Apple
 toolchains @code{CPPFLAGS} needed to contain @code{-D__ACCELERATE__}:
-not needed for @command{clang} 6.0.0, though.}  This also includes a
-full LAPACK which can be used @emph{via} @option{--with-lapack}:
-however, the version of LAPACK it contains is currently seriously old
-(@samp{3.2.1} in macOS 10.13.6).
+not needed for @command{clang} from @url{releases.llvm.org} though.}
+This also includes a full LAPACK which can be used @emph{via}
+@option{--with-lapack}: however, the version of LAPACK it contains is
+often seriously old.
 
 @c https://developer.apple.com/documentation/accelerate/veclib
 In recent versions of macOS, threading in Accelerate is controlled by
@@ -5338,18 +5357,6 @@ One macOS quirk is that the default path has @file{/usr/local/bin} after
 that if you install tools from the sources they will by default be
 installed under @file{/usr/local} and not supersede the system
 versions.
-
-If you upgrade your OS you should re-install the `Command Line Tools'
-and may need to re-install XQuartz and Java (this has been needed for
-some upgrades but not others).
-
-
-@menu
-* Tcl/Tk headers and libraries::  
-* Java (macOS)::                
-* Frameworks::                  
-* Building R.app::              
-@end menu
 
 @node Tcl/Tk headers and libraries, Java (macOS), Other libraries, macOS
 @subsection Tcl/Tk headers and libraries
