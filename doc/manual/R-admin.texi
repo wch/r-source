@@ -2449,8 +2449,8 @@ Entries which may need to be changed include @samp{CC}, @samp{CXX},
 So for example you could select a specific build of @command{clang} for
 both C and C++ with extensive checking by having in @file{~/.R/Makevars}
 @example
-CC = /usr/local/clang7/bin/clang
-CXX = /usr/local/clang7/bin/clang++
+CC = /usr/local/clang8/bin/clang
+CXX = /usr/local/clang8/bin/clang++
 CFLAGS = -g -O2 -Wall -pedantic -Wconversion -Wno-sign-conversion
 CXXFLAGS = -g -O2 -Wall -pedantic -Wconversion -Wno-sign-conversion
 CXX11 = $CXX
@@ -2458,14 +2458,28 @@ CXX14 = $CXX
 CXX17 = $CXX
 @end example
 @noindent
-and the Sierra build of @command{gfortran} by
+and @command{gfortran} by
+(El Capitan)
 @example
 FC = /usr/local/gfortran/bin/gfortran
-FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin16/6.3.0 
+FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin15/6.1.0
   -L/usr/local/gfortran/lib -lgfortran -lquadmath -lm
 @end example
 @noindent
-(line split for legibility here).
+or (Sierra or High Sierra)
+@example
+FC = /usr/local/gfortran/bin/gfortran
+FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin16/6.3.0
+  -L/usr/local/gfortran/lib -lgfortran -lquadmath -lm
+@end example
+or (Mojave or later)
+@example
+FC = /usr/local/gfortran/bin/gfortran
+FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin18/8.2.0
+  -L/usr/local/gfortran/lib -lgfortran -lquadmath -lm
+@end example
+@noindent
+(with lines broken here for legibility).
 
 If using the C/C++ compilers from the Command Line Tools (which do not
 have OpenMP support) one will need to include
@@ -2506,10 +2520,11 @@ problems} can be specified @emph{via} the environment variable
 Package developers are encouraged to use this mechanism to enable a
 reasonable amount of diagnostic messaging (``warnings'') when compiling,
 such as e.g.@: @option{-Wall -pedantic} for tools from GCC, the GNU
-Compiler Collection.
+Compiler Collection or for @command{clang}.
 
 Note that this mechanism can also be used when it necessary to change
-the optimization level for a particular package.  For example
+the optimization level whilst installling a particular package.  For
+example
 
 @example
 ## @r{for C code}
@@ -2518,8 +2533,6 @@ CFLAGS = -g -O -mtune=native
 CXXFLAGS = -g -O -mtune=native
 ## @r{for fixed-form Fortran code}
 FFLAGS = -g -O -mtune=native
-## @r{for free-form Fortran code}
-FCFLAGS = -g -O -mtune=native
 @end example
 
 Another use is to override the settings in a binary installation of R.
@@ -4469,7 +4482,7 @@ which does the re-ordering).
 
 These flags can also be used to build a faster-running version of @R{}.
 On most platforms using @command{gcc}, having @samp{-O3} in
-@code{CFLAGS} and @code{FFLAGS}/@code{FCFLAGS} produces worthwhile
+@code{CFLAGS} and @code{FFLAGS} produces worthwhile
 performance gains with @command{gcc} and @command{gfortran}, but may
 result in a less reliable build (both segfaults and incorrect numeric
 computations have been seen).  On systems using the @acronym{GNU} linker
@@ -5054,7 +5067,7 @@ the Intel C compiler sets @samp{__GNUC__} without complete emulation of
 @command{gcc}, we suggest adding @code{CPPFLAGS=-no-gcc}.
 
 To maintain correct @acronym{IEC}@tie{}60559 arithmetic you most likely
-need add flags to @code{CFLAGS}, @code{FFLAGS}, @code{FCFLAGS} and
+need add flags to @code{CFLAGS}, @code{FFLAGS} and
 @code{CXXFLAGS} such as @option{-mp} (shown above) or @option{-fp-model
 precise -fp-model source}, depending on the compiler version.
 
@@ -5129,28 +5142,6 @@ and
 @uref{https://github.com/@/fxcoudert/@/gfortran-for-macOS/@/releases/@/download/@/8.2/gfortran-8.2-Mojave.dmg}.
 (An Apple package for 6.1 is also available at
 @uref{https://cran.r-project.org/@/bin/@/macosx/@/tools/@/gfortran-6.1.pkg}.)
-One way to use these with a binary distribution of @R{} is to have a
-@file{~/.R/Makevars} file similar to (El Capitan)
-@example
-FC = /usr/local/gfortran/bin/gfortran
-FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin15/6.1.0
-  -L/usr/local/gfortran/lib -lgfortran -lquadmath -lm
-@end example
-@noindent
-or (Sierra or High Sierra)
-@example
-FC = /usr/local/gfortran/bin/gfortran
-FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin16/6.3.0
-  -L/usr/local/gfortran/lib -lgfortran -lquadmath -lm
-@end example
-or (Mojave or later)
-@example
-FC = /usr/local/gfortran/bin/gfortran
-FLIBS = -L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin18/8.2.0
-  -L/usr/local/gfortran/lib -lgfortran -lquadmath -lm
-@end example
-@noindent
-(with lines broken here for legibility).
 
 @item
 Binary components @code{pcre} and @code{xz} (for @code{libzma}) from
@@ -5248,7 +5239,7 @@ Current @acronym{CRAN} binary distributions use the build of
 Other recent distributions of @command{clang} are available from
 @uref{http://releases.llvm.org/} (which the above re-packages).  In
 particular, all of these include support for OpenMP which Apple builds
-of @command{clang} do not.  
+of @command{clang} do not.
 
 Suppose one of these distributions is installed under
 @file{/usr/local/clang8}. Use a file @file{config.site} containing
@@ -5635,7 +5626,7 @@ FCLIBS_XTRA="-lfsu /opt/developerstudio12.6/lib/libfui.so.2"
 has been needed.
 
 Using @code{-xlibmil} in @code{CFLAGS} or @code{-xlibmil} in
-@code{FFLAGS}/@code{FCFLAGS} allows more system mathematical functions
+@code{FFLAGS} allows more system mathematical functions
 to be inlined.
 
 On @cputype{x86} you will get marginally higher performance @emph{via}
