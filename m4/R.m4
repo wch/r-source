@@ -325,6 +325,7 @@ dnl   ${srcdir}/foo.o: /path/to/bar.h
 dnl Could be made to work, of course ...
 dnl Note also that it does not create a 'conftest.o: conftest.c' line.
 dnl For gcc 3.2 or better, we want to use '-MM' in case this works.
+dnl Also adopted by clang, so version test is not really appopriate.
 cc_minus_MM=false
 if test "${GCC}" = yes; then
   case "${CC_VERSION}" in
@@ -333,7 +334,7 @@ if test "${GCC}" = yes; then
   esac
 fi
 for prog in "${cc_minus_MM}" "${CC} -M" "${CPP} -M" "cpp -M"; do
-  if ${prog} conftest.c 2>/dev/null | \
+  if ${prog} ${CPPFLAGS} conftest.c 2>/dev/null | \
       grep 'conftest.o: conftest.c' >/dev/null; then
     r_cv_prog_cc_m="${prog}"
     break
@@ -341,6 +342,8 @@ for prog in "${cc_minus_MM}" "${CC} -M" "${CPP} -M" "cpp -M"; do
 done])
 if test "${r_cv_prog_cc_m}" = "${cc_minus_MM}"; then
   r_cv_prog_cc_m="\$(CC) -MM"
+elif  test "${r_cv_prog_cc_m}" = "${CC} -M"; then
+  r_cv_prog_cc_m="\$(CC) -M"
 fi
 if test -z "${r_cv_prog_cc_m}"; then
   AC_MSG_RESULT([no])
@@ -508,6 +511,7 @@ fi
 ## ------------
 ## Check whether the C++ compiler accepts '-M' for generating
 ## dependencies.
+## Not currently used -- better to use -MM if it were.
 AC_DEFUN([R_PROG_CXX_M],
 [AC_REQUIRE([R_PROG_CC_M])
 AC_CACHE_CHECK([whether ${CXX} accepts -M for generating dependencies],
@@ -516,7 +520,7 @@ AC_CACHE_CHECK([whether ${CXX} accepts -M for generating dependencies],
 dnl No real point in using AC_LANG_* and ${ac_ext}, as we need to create
 dnl hard-wired suffix rules.  We could be a bit more careful as we
 dnl actually only test suffix '.cc'.
-if test -n "`${CXX} -M conftest.cc 2>/dev/null | grep conftest`"; then
+if test -n "`${CXX} ${CPPFLAGS} -M conftest.cc 2>/dev/null | grep conftest`"; then
   r_cv_prog_cxx_m=yes
 else
   r_cv_prog_cxx_m=no
@@ -527,6 +531,7 @@ fi])
 ## -------------------
 ## Generate a Make fragment with suffix rules for the C++ compiler.
 ## Used for both building R (Makeconf) and add-ons (etc/Makeconf).
+## <FIXME> If the .d rules were actually use, use CXXXPP? </FIXME>
 AC_DEFUN([R_PROG_CXX_MAKEFRAG],
 [r_cxx_rules_frag=Makefrag.cxx
 AC_REQUIRE([R_PROG_CXX_M])
@@ -1141,12 +1146,17 @@ AC_DEFUN([R_PROG_OBJC_M],
 AC_CACHE_VAL([r_cv_prog_objc_m],
 [echo "#include <math.h>" > conftest.m
 for prog in "${OBJC} -MM" "${OBJC} -M" "${CPP} -M" "cpp -M"; do
-  if ${prog} conftest.m 2>/dev/null | \
+  if ${prog} ${CPPFLAGS} conftest.m 2>/dev/null | \
       grep 'conftest.o: conftest.m' >/dev/null; then
     r_cv_prog_objc_m="${prog}"
     break
   fi
 done])
+if test "${r_cv_prog_objc_m}" = "${OBJC} -MM"; then
+  r_cv_prog_objc_m="\$(OBJC) -MM"
+elif  test "${r_cv_prog_objc_m}" = "${OBJC} -M"; then
+  r_cv_prog_objc_m="\$(OBJC) -M"
+fi
 if test -z "${r_cv_prog_objc_m}"; then
   AC_MSG_RESULT([no])
 else

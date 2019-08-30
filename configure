@@ -24795,7 +24795,7 @@ if test "${GCC}" = yes; then
   esac
 fi
 for prog in "${cc_minus_MM}" "${CC} -M" "${CPP} -M" "cpp -M"; do
-  if ${prog} conftest.c 2>/dev/null | \
+  if ${prog} ${CPPFLAGS} conftest.c 2>/dev/null | \
       grep 'conftest.o: conftest.c' >/dev/null; then
     r_cv_prog_cc_m="${prog}"
     break
@@ -24805,6 +24805,8 @@ fi
 
 if test "${r_cv_prog_cc_m}" = "${cc_minus_MM}"; then
   r_cv_prog_cc_m="\$(CC) -MM"
+elif  test "${r_cv_prog_cc_m}" = "${CC} -M"; then
+  r_cv_prog_cc_m="\$(CC) -M"
 fi
 if test -z "${r_cv_prog_cc_m}"; then
   { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
@@ -25349,7 +25351,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:25352: \"$ac_link\") >&5
+(eval echo $as_me:25354: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -25424,7 +25426,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:25427: \"$ac_link\") >&5
+(eval echo $as_me:25429: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -26421,7 +26423,7 @@ if ${r_cv_prog_cxx_m+:} false; then :
   $as_echo_n "(cached) " >&6
 else
   echo "#include <math.h>" > conftest.cc
-if test -n "`${CXX} -M conftest.cc 2>/dev/null | grep conftest`"; then
+if test -n "`${CXX} ${CPPFLAGS} -M conftest.cc 2>/dev/null | grep conftest`"; then
   r_cv_prog_cxx_m=yes
 else
   r_cv_prog_cxx_m=no
@@ -26469,7 +26471,7 @@ if ${r_cv_prog_objc_m+:} false; then :
 else
   echo "#include <math.h>" > conftest.m
 for prog in "${OBJC} -MM" "${OBJC} -M" "${CPP} -M" "cpp -M"; do
-  if ${prog} conftest.m 2>/dev/null | \
+  if ${prog} ${CPPFLAGS} conftest.m 2>/dev/null | \
       grep 'conftest.o: conftest.m' >/dev/null; then
     r_cv_prog_objc_m="${prog}"
     break
@@ -26477,6 +26479,11 @@ for prog in "${OBJC} -MM" "${OBJC} -M" "${CPP} -M" "cpp -M"; do
 done
 fi
 
+if test "${r_cv_prog_objc_m}" = "${OBJC} -MM"; then
+  r_cv_prog_objc_m="\$(OBJC) -MM"
+elif  test "${r_cv_prog_objc_m}" = "${OBJC} -M"; then
+  r_cv_prog_objc_m="\$(OBJC) -M"
+fi
 if test -z "${r_cv_prog_objc_m}"; then
   { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
