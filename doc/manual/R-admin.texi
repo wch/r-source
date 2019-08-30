@@ -2451,11 +2451,14 @@ both C and C++ with extensive checking by having in @file{~/.R/Makevars}
 @example
 CC = /usr/local/clang8/bin/clang
 CXX = /usr/local/clang8/bin/clang++
-CFLAGS = -g -O2 -Wall -pedantic -Wconversion -Wno-sign-conversion
-CXXFLAGS = -g -O2 -Wall -pedantic -Wconversion -Wno-sign-conversion
 CXX11 = $CXX
 CXX14 = $CXX
 CXX17 = $CXX
+CFLAGS = -g -O2 -Wall -pedantic -Wconversion -Wno-sign-conversion
+CXXFLAGS = -g -O2 -Wall -pedantic -Wconversion -Wno-sign-conversion
+CXX11FLAGS = $CXXFLAGS
+CXX14FLAGS = $CXXFLAGS
+CXX17FLAGS = $CXXFLAGS
 @end example
 @noindent
 and @command{gfortran} by
@@ -5326,7 +5329,7 @@ non-default options
 --enable-memory-profiling --enable-R-framework --x-libraries=/opt/X11/lib
 @end example
 @noindent
-were used.
+were used. (@option{--enable-R-framework} implies @option{--enable-R-shlib}.)
 
 Configure option @option{--with-internal-tzcode} is the default on macOS,
 as the system implementation of time zones does not work correctly for
