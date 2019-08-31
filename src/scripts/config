@@ -291,6 +291,10 @@ if test "${all}" = "yes"; then
 	   ${ok_other_vars} ${ok_win_vars}; do
     eval "${query} VAR=${v}"
   done
+##  echo "## The following variables are deprecated"
+##  for v in ${deprecated_vars}; do
+##    eval "${query} VAR=${v}"
+##  done
   exit 0
 fi
 
@@ -306,6 +310,14 @@ for v in ${ok_c_vars} ${ok_cxx_vars} ${ok_dylib_vars} ${ok_ftn_vars} \
     break
   fi
 done
+
+# for v in ${deprecated_vars}; do
+#   if test "${var}" = "${v}"; then
+#     var_ok=yes
+#     echo "'config' variable '${v}' is deprecated"
+#     break
+#   fi
+# done
 
 if test "${var_ok}" = yes; then
   eval "${query} VAR=${var}"
