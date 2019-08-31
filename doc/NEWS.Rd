@@ -60,6 +60,10 @@
     \itemize{
       \item Support for specifying C++98 in package installation is
       deprecated.
+ 
+      \item Support in \command{R CMD config} for \samp{F77},
+      \samp{FCPIFCPLAGS}, \samp{CXXCPP} and \samp{CXX98} and similar is
+      deprecated.
     }
   }
 
@@ -120,10 +124,6 @@
       \item The use of a character vector with \code{.Fortran()} is
       formally deprecated and gives a non-portability warning.  (It has
       long been strongly discouraged in \sQuote{Writing R Extensions}.)
-        
-      \item Support in \command{R CMD config} for \samp{F77},
-      \samp{FCPIFCPLAGS}, \samp{CXXCPP} and \samp{CXX98} and similar is
-      deprecated.
     }
   }
 
