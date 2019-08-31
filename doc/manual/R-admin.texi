@@ -2526,7 +2526,7 @@ such as e.g.@: @option{-Wall -pedantic} for tools from GCC, the GNU
 Compiler Collection or for @command{clang}.
 
 Note that this mechanism can also be used when it necessary to change
-the optimization level whilst installling a particular package.  For
+the optimization level whilst installing a particular package.  For
 example
 
 @example

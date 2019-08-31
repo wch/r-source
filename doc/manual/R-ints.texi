@@ -4284,7 +4284,7 @@ Check whether file @file{data/datalist} is out-of-date.
 Default: false (but true for CRAN submission checks).
 
 @item _R_CHECK_THINGS_IN_CHECK_DIR_
-Check and report at the end of tthe check run if files have been left in
+Check and report at the end of the check run if files have been left in
 the check directory.
 Default: false (but true for CRAN submission checks).
 
