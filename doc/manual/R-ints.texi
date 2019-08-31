@@ -4280,7 +4280,7 @@ and report @command{autoconf} warnings).
 Default: false (but true for CRAN submission checks).
 
 @item _R_CHECK_THINGS_IN_TEMP_DIR_
-Check and report at the end of tthe check run if files would have been
+Check and report at the end of the check run if files would have been
 left in the temporary directory (usually @file{/tmp} on a Unix-alike).
 It does this by setting the environment variable @env{TEMPDIR} to a
 subdirectory of the @R{} session directory for the @code{check} process:
