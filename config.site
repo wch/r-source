@@ -188,6 +188,10 @@
 ## addition unless SHLIB_CXXLD is given.
 ## SHLIB_CXXLDFLAGS=
 
+## Not used by R, but configure can fail to find it, so set to
+## "$(CXX) -E" if it does.
+## CXXCPP=
+
 ## Tcl/Tk settings.
 ## Use TCLTK_LIBS for all '-L' and '-l' options needed for linking
 ## against the Tcl and Tk library.
