@@ -5,7 +5,7 @@
 ## Usage:
 ##   R CMD config [options] [VAR]
 
-## Copyright (C) 2002-2018 The R Core Team
+## Copyright (C) 2002-2019 The R Core Team
 ##
 ## This document is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ revision='$Revision$'
 version=`set - ${revision}; echo ${2}`
 version="R configuration information retrieval script: ${R_VERSION} (r${version})
 
-Copyright (C) 2002-2018 The R Core Team.
+Copyright (C) 2002-2019 The R Core Team.
 This is free software; see the GNU General Public License version 2
 or later for copying conditions.  There is NO warranty."
 
@@ -56,11 +56,11 @@ Variables:
   CPPFLAGS      C/C++ preprocessor flags, e.g. -I<dir> if you have
 		headers in a nonstandard directory <dir>
   CXX           default compiler command for C++ code
-  CXXCPP        C++ preprocessor
+  CXXCPP        C++ preprocessor (deprecated)
   CXXFLAGS      compiler flags for CXX
   CXXPICFLAGS   special flags for compiling C++ code to be included in a
 		shared library
-  CXX98         compiler command for C++98 code
+  CXX98         compiler command for C++98 code  (deprecated)
   CXX98CPP      C++98 preprocessor
   CXX98FLAGS    compiler flags for CXX98
   CXX98PICFLAGS special flags for compiling C++98 code to be included in a
@@ -89,7 +89,7 @@ Variables:
   DYLIB_LDFLAGS
 		special flags used by DYLIB_LD
   FC            Fortran compiler command
-  F77           Fortran compiler command (legacy: use FC)
+  F77           Fortran compiler command (deprecated: use FC)
   FFLAGS        fixed-form Fortran compiler flags
   FCFLAGS       free-form Fortran 9x compiler flags
   FLIBS         linker flags needed to link Fortran code
@@ -277,16 +277,17 @@ fi
 query="${MAKE} -s ${makefiles} print R_HOME=${R_HOME}"
 
 ok_c_vars="CC CFLAGS CPICFLAGS CPP CPPFLAGS"
-ok_cxx_vars="CXX CXXCPP CXXFLAGS CXXPICFLAGS CXX98 CXX98STD CXX98FLAGS CXX98PICFLAGS CXX11 CXX11STD CXX11FLAGS CXX11PICFLAGS CXX14 CXX14STD CXX14FLAGS CXX14PICFLAGS CXX17 CXX17STD CXX17FLAGS CXX17PICFLAGS"
+ok_cxx_vars="CXX CXXFLAGS CXXPICFLAGS CXX11 CXX11STD CXX11FLAGS CXX11PICFLAGS CXX14 CXX14STD CXX14FLAGS CXX14PICFLAGS CXX17 CXX17STD CXX17FLAGS CXX17PICFLAGS"
 ok_dylib_vars="DYLIB_EXT DYLIB_LD DYLIB_LDFLAGS"
 ok_objc_vars="OBJC OBJCFLAGS"
 ok_java_vars="JAVA JAVAC JAVAH JAR JAVA_HOME JAVA_LIBS JAVA_CPPFLAGS"
 ## F77 is legacy
-ok_ftn_vars="FC F77 FFLAGS FPICFLAGS FLIBS FCFLAGS FCPICFLAGS SAFE_FFLAGS"
+ok_ftn_vars="FC FFLAGS FPICFLAGS FLIBS FCFLAGS SAFE_FFLAGS"
 ok_ld_vars="LDFLAGS"
 ok_shlib_vars="SHLIB_CFLAGS SHLIB_CXXFLAGS SHLIB_CXXLD SHLIB_CXXLDFLAGS SHLIB_CXX98LD SHLIB_CXX98LDFLAGS SHLIB_CXX11LD SHLIB_CXX11LDFLAGS SHLIB_CXX14LD SHLIB_CXX14LDFLAGS SHLIB_CXX17LD SHLIB_CXX17LDFLAGS SHLIB_EXT SHLIB_FFLAGS SHLIB_LD SHLIB_LDFLAGS"
 ok_tcltk_vars="TCLTK_CPPFLAGS TCLTK_LIBS"
 ok_other_vars="BLAS_LIBS LAPACK_LIBS MAKE LIBnn AR RANLIB"
+deprecated_vars="CXXCPP CXX98 CXX98STD CXX98FLAGS CXX98PICFLAGS F77 FCPIFCPLAGS"
 if test "${R_OSTYPE}" = "windows"; then
   ok_win_vars="LOCAL_SOFT COMPILED_BY OBJDUMP"
 fi
@@ -297,6 +298,10 @@ if test "${all}" = "yes"; then
 	   ${ok_objc_vars} ${ok_java_vars} \
 	   ${ok_ld_vars} ${ok_shlib_vars} ${ok_tcltk_vars} \
 	   ${ok_other_vars} ${ok_win_vars}; do
+    eval "${query} VAR=${v}"
+  done
+  echo "## The following variables are deprecated"
+  for v in ${deprecated_vars}; do
     eval "${query} VAR=${v}"
   done
   exit 0
@@ -311,6 +316,14 @@ for v in ${ok_c_vars} ${ok_cxx_vars} ${ok_dylib_vars} ${ok_ftn_vars} \
 	 ${ok_other_vars} ${ok_win_vars}; do
   if test "${var}" = "${v}"; then
     var_ok=yes
+    break
+  fi
+done
+
+for v in ${deprecated_vars}; do
+  if test "${var}" = "${v}"; then
+    var_ok=yes
+    echo "'config' variable '${v}' is deprecated"
     break
   fi
 done
