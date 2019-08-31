@@ -1,6 +1,6 @@
 % File src/library/utils/man/capture.output.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2019 R Core Team
 % Distributed under GPL 2 or later
 
 \name{capture.output}
@@ -8,8 +8,8 @@
 \title{Send Output to a Character String or File}
 \description{
   Evaluates its arguments with the output being returned as a character
-  string or sent to a file.  Related to \code{\link{sink}} in the same
-  way that \code{\link{with}} is related to \code{\link{attach}}.
+  string or sent to a file.  Related to \code{\link{sink}} similarly to how
+  \code{\link{with}} is related to \code{\link{attach}}.
 }
 \usage{
 capture.output(\dots, file = NULL, append = FALSE,
@@ -25,6 +25,10 @@ capture.output(\dots, file = NULL, append = FALSE,
   \item{type, split}{are passed to \code{\link{sink}()}, see there.}
 }
 \details{
+  It works via \code{\link{sink}(<file connection>)} and hence the \R code
+  in \code{dots} must \emph{not} interfere with the connection (e.g., by
+  calling \code{\link{closeAllConnections}()}).
+
   An attempt is made to write output as far as possible to \code{file}
   if there is an error in evaluating the expressions, but for
   \code{file = NULL} all output will be lost.
