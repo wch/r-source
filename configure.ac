@@ -669,16 +669,6 @@ AC_PROG_CXX
 ## check this actually compiles
 R_PROG_CXX
 
-## AC_PROG_CXXCPP looks for limits.h and does not include CPPFLAGS
-## CXXCPP is used in other places (not in R), so leave alone CXXCPP itself
-AC_PROG_CXXCPP
-if test "${CXXCPP}" = "${CXX} -E"; then
-  CXXCPP0="\$(CXX) -E"
-else
-  CXXCPP0=${CXXCPP}
-fi
-AC_SUBST(CXXCPP0)
-
 R_GCC4_VISIBILITY
 
 AC_PROG_OBJC

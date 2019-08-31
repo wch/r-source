@@ -56,7 +56,6 @@ Variables:
   CPPFLAGS      C/C++ preprocessor flags, e.g. -I<dir> if you have
 		headers in a nonstandard directory <dir>
   CXX           default compiler command for C++ code
-  CXXCPP        C++ preprocessor
   CXXFLAGS      compiler flags for CXX
   CXXPICFLAGS   special flags for compiling C++ code to be included in a
 		shared library
@@ -271,7 +270,7 @@ fi
 query="${MAKE} -s ${makefiles} print R_HOME=${R_HOME}"
 
 ok_c_vars="CC CFLAGS CPICFLAGS CPP CPPFLAGS"
-ok_cxx_vars="CXX CXXCPP CXXFLAGS CXXPICFLAGS CXX11 CXX11STD CXX11FLAGS CXX11PICFLAGS CXX14 CXX14STD CXX14FLAGS CXX14PICFLAGS CXX17 CXX17STD CXX17FLAGS CXX17PICFLAGS"
+ok_cxx_vars="CXX CXXFLAGS CXXPICFLAGS CXX11 CXX11STD CXX11FLAGS CXX11PICFLAGS CXX14 CXX14STD CXX14FLAGS CXX14PICFLAGS CXX17 CXX17STD CXX17FLAGS CXX17PICFLAGS"
 ok_dylib_vars="DYLIB_EXT DYLIB_LD DYLIB_LDFLAGS"
 ok_objc_vars="OBJC OBJCFLAGS"
 ok_java_vars="JAVA JAVAC JAVAH JAR JAVA_HOME JAVA_LIBS JAVA_CPPFLAGS"
