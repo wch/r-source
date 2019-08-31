@@ -17,6 +17,9 @@ CFLAGS = @CFLAGS@ $(LTO)
 CPICFLAGS = @CPICFLAGS@
 CPPFLAGS = @CPPFLAGS@
 CXX = @CXX@ @CXXSTD@
+## Not used by anything in R, in particular not for the .cc.d rule
+## but used via R CMD config by several packages
+CXXCPP = @CXXCPP0@
 CXXFLAGS = @CXXFLAGS@ $(LTO)
 CXXPICFLAGS = @CXXPICFLAGS@
 CXX98 = @CXX98@
