@@ -323,7 +323,7 @@ done
 for v in ${deprecated_vars}; do
   if test "${var}" = "${v}"; then
     var_ok=yes
-    echo "'config' variable '${v}' is deprecated"
+    1>&2 echo "'config' variable '${v}' is deprecated"
     break
   fi
 done
