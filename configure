@@ -778,13 +778,6 @@ CXX11FLAGS
 CXX11STD
 CXX11
 HAVE_CXX11
-SHLIB_CXX98LDFLAGS
-SHLIB_CXX98LD
-CXX98PICFLAGS
-CXX98FLAGS
-CXX98STD
-CXX98
-HAVE_CXX98
 R_DYLIB_EXT
 STATICR2
 STATICR1
@@ -1130,12 +1123,6 @@ CXXCPP
 OBJC
 OBJCFLAGS
 LT_SYS_LIBRARY_PATH
-CXX98
-CXX98STD
-CXX98FLAGS
-CXX98PICFLAGS
-SHLIB_CXX98LD
-SHLIB_CXX98LDFLAGS
 CXX11
 CXX11STD
 CXX11FLAGS
@@ -1932,18 +1919,6 @@ Some influential environment variables:
   OBJCFLAGS   Objective C compiler flags
   LT_SYS_LIBRARY_PATH
               User-defined run-time library search path.
-  CXX98       C++98 compiler command
-  CXX98STD    special flag for compiling and for linking C++98 code, e.g.
-              -std=c++98
-  CXX98FLAGS  C++98 compiler flags
-  CXX98PICFLAGS
-              special flags for compiling C++98 code to be turned into a
-              shared object
-  SHLIB_CXX98LD
-              command for linking shared objects which contain object files
-              from the C++98 compiler
-  SHLIB_CXX98LDFLAGS
-              special flags used by SHLIB_CXX98LD
   CXX11       C++11 compiler command
   CXX11STD    special flag for compiling and for linking C++11 code, e.g.
               -std=c++11
@@ -25353,7 +25328,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:25356: \"$ac_link\") >&5
+(eval echo $as_me:25331: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -25428,7 +25403,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:25431: \"$ac_link\") >&5
+(eval echo $as_me:25406: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -28059,246 +28034,6 @@ fi
 
 
 ## Test support for C++ standards
-r_save_CXX="${CXX}"
-r_save_CXXFLAGS="${CXXFLAGS}"
-
-: ${CXX98=${CXX}}
-: ${CXX98FLAGS=${CXXFLAGS}}
-: ${CXX98PICFLAGS=${CXXPICFLAGS}}
-
-CXX="${CXX98} ${CXX98STD}"
-CXXFLAGS="${CXX98FLAGS} ${CXX98PICFLAGS}"
-ac_ext=cpp
-ac_cpp='$CXXCPP $CPPFLAGS'
-ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
-ac_link='$CXX -o conftest$ac_exeext $CXXFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
-ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
-  ax_cxx_compile_alternatives="98 03"    ax_cxx_compile_cxx98_required=false
-  ac_ext=cpp
-ac_cpp='$CXXCPP $CPPFLAGS'
-ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
-ac_link='$CXX -o conftest$ac_exeext $CXXFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
-ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
-  ac_success=no
-  switch=""
-
-  if test "x${CXX98STD}" !=  x;  then
-    { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CXX supports C++98 features" >&5
-$as_echo_n "checking whether $CXX supports C++98 features... " >&6; }
-if ${ax_cv_cxx_compile_cxx98+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-#ifndef __cplusplus
-# error "This is not a C++ compiler"
-#endif
-// or we could test for later than C++03
-#if __cplusplus >= 201103L
-# error "This is a compiler for C++11 or later"
-#endif
-
-_ACEOF
-if ac_fn_cxx_try_compile "$LINENO"; then :
-  ax_cv_cxx_compile_cxx98=yes
-else
-  ax_cv_cxx_compile_cxx98=no
-fi
-rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ax_cv_cxx_compile_cxx98" >&5
-$as_echo "$ax_cv_cxx_compile_cxx98" >&6; }
-     if test x$ax_cv_cxx_compile_cxx98 = xyes; then
-       ac_success=yes
-     fi
-  fi
-
-
-    if test x$ac_success = xno; then
-    for alternative in ${ax_cxx_compile_alternatives}; do
-      switch="-std=gnu++${alternative}"
-      cachevar=`$as_echo "ax_cv_cxx_compile_cxx98_$switch" | $as_tr_sh`
-      { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CXX supports C++98 features with $switch" >&5
-$as_echo_n "checking whether $CXX supports C++98 features with $switch... " >&6; }
-if eval \${$cachevar+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  ac_save_CXX="$CXX"
-         CXX="$CXX $switch"
-         cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-#ifndef __cplusplus
-# error "This is not a C++ compiler"
-#endif
-// or we could test for later than C++03
-#if __cplusplus >= 201103L
-# error "This is a compiler for C++11 or later"
-#endif
-
-_ACEOF
-if ac_fn_cxx_try_compile "$LINENO"; then :
-  eval $cachevar=yes
-else
-  eval $cachevar=no
-fi
-rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
-         CXX="$ac_save_CXX"
-fi
-eval ac_res=\$$cachevar
-	       { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_res" >&5
-$as_echo "$ac_res" >&6; }
-      if eval test x\$$cachevar = xyes; then
-        CXX="$CXX $switch"
-        if test -n "$CXXCPP" ; then
-          CXXCPP="$CXXCPP $switch"
-        fi
-        ac_success=yes
-        break
-      fi
-    done
-  fi
-
-    if test x$ac_success = xno; then
-                    for alternative in ${ax_cxx_compile_alternatives}; do
-      for switch in -std=c++${alternative} -std=sun${alternative}; do
-        cachevar=`$as_echo "ax_cv_cxx_compile_cxx98_$switch" | $as_tr_sh`
-        { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CXX supports C++98 features with $switch" >&5
-$as_echo_n "checking whether $CXX supports C++98 features with $switch... " >&6; }
-if eval \${$cachevar+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  ac_save_CXX="$CXX"
-           CXX="$CXX $switch"
-           cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-#ifndef __cplusplus
-# error "This is not a C++ compiler"
-#endif
-// or we could test for later than C++03
-#if __cplusplus >= 201103L
-# error "This is a compiler for C++11 or later"
-#endif
-
-_ACEOF
-if ac_fn_cxx_try_compile "$LINENO"; then :
-  eval $cachevar=yes
-else
-  eval $cachevar=no
-fi
-rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
-           CXX="$ac_save_CXX"
-fi
-eval ac_res=\$$cachevar
-	       { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_res" >&5
-$as_echo "$ac_res" >&6; }
-        if eval test x\$$cachevar = xyes; then
-          CXX="$CXX $switch"
-          if test -n "$CXXCPP" ; then
-            CXXCPP="$CXXCPP $switch"
-          fi
-          ac_success=yes
-          break
-        fi
-      done
-      if test x$ac_success = xyes; then
-        break
-      fi
-    done
-  fi
-
-  if test x$ac_success = xno; then
-    { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CXX supports C++98 features by default" >&5
-$as_echo_n "checking whether $CXX supports C++98 features by default... " >&6; }
-if ${ax_cv_cxx_compile_cxx98+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-#ifndef __cplusplus
-# error "This is not a C++ compiler"
-#endif
-// or we could test for later than C++03
-#if __cplusplus >= 201103L
-# error "This is a compiler for C++11 or later"
-#endif
-
-_ACEOF
-if ac_fn_cxx_try_compile "$LINENO"; then :
-  ax_cv_cxx_compile_cxx98=yes
-else
-  ax_cv_cxx_compile_cxx98=no
-fi
-rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ax_cv_cxx_compile_cxx98" >&5
-$as_echo "$ax_cv_cxx_compile_cxx98" >&6; }
-    if test x$ax_cv_cxx_compile_cxx98 = xyes; then
-      ac_success=yes
-    fi
-  fi
-
-  ac_ext=cpp
-ac_cpp='$CXXCPP $CPPFLAGS'
-ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
-ac_link='$CXX -o conftest$ac_exeext $CXXFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
-ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
-
-  if test x$ax_cxx_compile_cxx98_required = xtrue; then
-    if test x$ac_success = xno; then
-      as_fn_error $? "*** A compiler with support for C++98 language features is required." "$LINENO" 5
-    fi
-  fi
-  if test x$ac_success = xno; then
-    HAVE_CXX98=0
-    { $as_echo "$as_me:${as_lineno-$LINENO}: No compiler with C++98 support was found" >&5
-$as_echo "$as_me: No compiler with C++98 support was found" >&6;}
-  else
-    HAVE_CXX98=1
-  fi
-
-
-ac_ext=c
-ac_cpp='$CPP $CPPFLAGS'
-ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
-ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
-ac_compiler_gnu=$ac_cv_c_compiler_gnu
-CXX="${r_save_CXX}"
-CXXFLAGS="${r_save_CXXFLAGS}"
-if test "${HAVE_CXX98}" = "1"; then
-  if test "${CXX98STD}"x = "x";  then
-    CXX98STD="${switch}"
-  else
-    CXX98STD="${CXX98STD} ${switch}"
-  fi
-else
-  CXX98=""
-  CXX98STD=""
-  CXX98FLAGS=""
-  CXX98PICFLAGS=""
-fi
-
-
-
-
-
-if test -z "${SHLIB_CXX98LD}"; then
-  SHLIB_CXX98LD="\$(CXX98) \$(CXX98STD)"
-fi
-
-: ${SHLIB_CXX98LDFLAGS=${SHLIB_CXXLDFLAGS}}
-
-
-
-
-
-
-
-
-
 r_save_CXX="${CXX}"
 r_save_CXXFLAGS="${CXXFLAGS}"
 

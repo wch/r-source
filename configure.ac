@@ -1689,7 +1689,6 @@ AC_SUBST(STATICR2)
 AC_SUBST(R_DYLIB_EXT)
 
 ## Test support for C++ standards
-R_STDCXX([98], [CXX98], [CXX])
 R_STDCXX([11], [CXX11], [CXX])
 R_STDCXX([14], [CXX14], [CXX11])
 R_STDCXX([17], [CXX17], [CXX14])

@@ -11,8 +11,7 @@
 #   Check for baseline language coverage in the compiler for the specified
 #   version of the C++ standard.  If necessary, add switches to CXX and
 #   CXXCPP to enable support.  VERSION may be '11' (for the C++11 standard),
-#   '14' (for the C++14 standard), '17' (for the C++17 standard) or '98'
-#   (for the C++98 standard).
+#   '14' (for the C++14 standard) or '17' (for the C++17 standard)
 #
 #   The second argument, if specified, indicates whether you insist on an
 #   extended mode (e.g. -std=gnu++11) or a strict conformance mode (e.g.
@@ -47,15 +46,13 @@ dnl  This macro is based on the code from the AX_CXX_COMPILE_STDCXX_11 macro
 dnl  (serial version number 13).
 
 dnl  Modifications for R:
-dnl  The macro has been extended to include a search for a flag to support
-dnl  C++98 code. For C++98 and C++11 we also check that the date on the
+dnl  For C++11 we check that the date on the
 dnl  __cplusplus macro is not too recent so that a C++14 compiler does not
-dnl  pass as a C++11, for example. The tests for C++17 have also been
+dnl  pass as a C++11, for example. The tests for C++17 have been
 dnl  modified and are not conditional on the compiler.
 
 AC_DEFUN([AX_CXX_COMPILE_STDCXX], [dnl
-  m4_if([$1], [98], [ax_cxx_compile_alternatives="98 03"],
-	[$1], [11], [ax_cxx_compile_alternatives="11 0x"],
+  m4_if([$1], [11], [ax_cxx_compile_alternatives="11 0x"],
         [$1], [14], [ax_cxx_compile_alternatives="14 1y"],
         [$1], [17], [ax_cxx_compile_alternatives="17 1z"],
         [m4_fatal([invalid first argument `$1' to AX_CXX_COMPILE_STDCXX])])dnl
@@ -167,18 +164,6 @@ dnl    AC_DEFINE(HAVE_CXX$1,1,
 dnl              [define if the compiler supports basic C++$1 syntax])
   fi
   AC_SUBST(HAVE_CXX$1)
-])
-
-dnl  Test body for checking C++98 support
-
-m4_define([_AX_CXX_COMPILE_STDCXX_testbody_98],[
-#ifndef __cplusplus
-# error "This is not a C++ compiler"
-#endif
-// or we could test for later than C++03 
-#if __cplusplus >= 201103L
-# error "This is a compiler for C++11 or later" 
-#endif
 ])
 
 dnl  Test body for checking C++11 support

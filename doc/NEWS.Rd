@@ -90,6 +90,9 @@
       to the value of \samp{FC}, which is set for package compilation.
       But portable code should not rely on this.)
 
+      \item Support for specifying C++98 in package installation has
+      been removed.
+      
       \item \command{R CMD config} no longer knows about the
       unused settings \samp{F77} and \samp{FCPIFCPLAGS}, nor
       \samp{CXX98} and similar.
@@ -211,7 +214,7 @@
       deprecated.
  
       \item Support in \command{R CMD config} for \samp{F77},
-      \samp{FCPIFCPLAGS}, \samp{CPP} \samp{CXXCPP} and \samp{CXX98} and
+      \samp{FCPIFCPLAGS}, \samp{CPP}, \samp{CXXCPP} and \samp{CXX98} and
       similar is deprecated.  (\samp{CPP} is found from the system
       \command{make} and may well not be set.)
     }
