@@ -211,8 +211,9 @@
       deprecated.
  
       \item Support in \command{R CMD config} for \samp{F77},
-      \samp{FCPIFCPLAGS}, \samp{CXXCPP} and \samp{CXX98} and similar is
-      deprecated.
+      \samp{FCPIFCPLAGS}, \samp{CPP} \samp{CXXCPP} and \samp{CXX98} and
+      similar is deprecated.  (\samp{CPP} is found from the system
+      \command{make} and may well not be set.)
     }
   }
 
