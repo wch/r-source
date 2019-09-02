@@ -1921,6 +1921,14 @@ possibility of future expansion to other methods): these formats add a
 fifth byte to the header for the type of compression, and store
 serialized objects uncompressed if compression expands them.
 
+Source references are treated specially for performance reasons: bindings
+@code{lines} and @code{parseData} from @code{srcfile} environments are
+loaded lazily.  This uses a mechanism that allows loading selected bindings
+from an environment lazily.  The key for such environment is a list with two
+elements: @code{eagerKey} gives the length-two integer key for the bindings
+loaded eagerly and @code{lazyKeys} gives a vector of length-two integer
+keys, one for each lazily loaded binding.
+
 The loader for a lazy-load database of code or data is function
 @code{lazyLoad} in the @pkg{base} package, but note that there is a
 separate copy to load @pkg{base} itself in file
