@@ -173,7 +173,7 @@
 ## CXXPICFLAGS=
 
 ## Option to specify the default C++ standard, 
-## e.g. -std=c++98 or -std=gnu++98
+## e.g. -std=c++11 or -std=gnu++11
 ## CXXSTD=
 
 ## The command to be used to load shared objects which contain object
@@ -188,8 +188,8 @@
 ## addition unless SHLIB_CXXLD is given.
 ## SHLIB_CXXLDFLAGS=
 
-## Not used by R, but configure can fail to find it, so set to
-## "$(CXX) -E" if it does.
+## Not used by R but configure can fail to find it, so set to
+## "$CXX -E" if it does.
 ## CXXCPP=
 
 ## Tcl/Tk settings.
@@ -237,24 +237,6 @@
 ## Used for DYLD_FALLBACK_LIBRARY_PATH on macOS and LD_LIBRARY_PATH elsewhere.
 ## Allow user to override.
 ## R_LD_LIBRARY_PATH=
-
-## C++98 compiler, optional for use in packages.
-## Introduced in R 3.4.0
-## The command which runs the C++98 compiler: defaults to $(CXX), but
-## empty if that (plus standard) cannot compile the tested C++98 code.
-## CXX98=
-
-## The 'standard' for the C++98 compiler, which is invoked as
-## $(CXX98) $(CXX98STD) for both compiling and linking DSOs/DLLs.  
-## '-std=gnu++98' and '-std=gnu++03' are tried in turn by configure.
-## followed by '-std=c++98' and '-std=c++03'
-## CXX98STD=
-
-## Analogues for the C++98 compiler: default to the settings for C++
-## CXX98FLAGS=
-## CXX98PICFLAGS=
-## SHLIB_CXX98LD=
-## SHLIB_CXX98LDFLAGS=
 
 ## C++11 compiler, optional for use in packages.
 ## Introduced in R 3.1.0
