@@ -173,7 +173,7 @@
 ## CXXPICFLAGS=
 
 ## Option to specify the default C++ standard, 
-## e.g. -std=c++98 or -std=gnu++98
+## e.g. -std=c++11 or -std=gnu++11
 ## CXXSTD=
 
 ## The command to be used to load shared objects which contain object
@@ -188,8 +188,8 @@
 ## addition unless SHLIB_CXXLD is given.
 ## SHLIB_CXXLDFLAGS=
 
-## Not used by R, but configure can fail to find it, so set to
-## "$(CXX) -E" if it does.
+## Not used by R but configure can fail to find it, so set to
+## "$CXX -E" if it does.
 ## CXXCPP=
 
 ## Tcl/Tk settings.
