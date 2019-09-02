@@ -217,6 +217,9 @@
       \samp{FCPIFCPLAGS}, \samp{CPP}, \samp{CXXCPP} and \samp{CXX98} and
       similar is deprecated.  (\samp{CPP} is found from the system
       \command{make} and may well not be set.)
+
+      Use \samp{$CC -E} and \samp{$CXX -E} instead of \samp{CPP} and
+      \samp{CXXCPP}.
     }
   }
 

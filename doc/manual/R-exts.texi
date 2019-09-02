@@ -2174,7 +2174,7 @@ PKG_LIBS = $(SHLIB_OPENMP_CFLAGS)
 
 @noindent
 as the C compiler will be used to link the package code (and there are
-platforms on which this does not work.
+platforms on which this does not work).
 
 It is not portable to use OpenMP with more than one of C, C++ and
 Fortran in a single package since it is not uncommon that the compilers
@@ -13249,7 +13249,7 @@ with version 9 but backported to versions 7 and 8.  Several months
 later, @command{gfortran} 9.2 introduced an option
 @example
 -ftail-call-workaround
-@end exmaple
+@end example
 @noindent
 and made it the current default but said it might be withdrawn in future.
 
