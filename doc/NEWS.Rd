@@ -289,7 +289,6 @@
       formally deprecated and gives a non-portability warning.  (It has
       long been strongly discouraged in \sQuote{Writing R Extensions}.)
     }
-    }
   }
 
   \subsection{BUG FIXES}{
