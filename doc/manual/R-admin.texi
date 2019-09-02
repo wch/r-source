@@ -3991,7 +3991,7 @@ This can be used by configuring @R{} with something like
 See @pxref{Shared BLAS} for an alternative (and in many ways preferable)
 way to use them.
 
-Some platforms provide multiple builds of OpenBLAS: for example Fedora 28
+Some platforms provide multiple builds of OpenBLAS: for example Fedora 30
 has RPMs@footnote{(and more, e.g.@: for 64-bit ints and static versions).}
 @example
 openblas
