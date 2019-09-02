@@ -1,7 +1,7 @@
 importFrom("graphics", plot) # because we want to define methods on it
 
 ## Generics and functions defined in this package
-export(pubGenf, # a generic function
+export(pubGenf, pubfn, # generic functions
        assertError)# and a simple one
 
 ## own classes
@@ -9,7 +9,7 @@ exportClasses(pubClass, subClass)# both classes [where 'pkgA' only exports main 
 
 exportMethods(
  ## for own generics:
- pubGenf,
+ pubGenf, pubfn,
  ## for other generics:
  plot, show
 )

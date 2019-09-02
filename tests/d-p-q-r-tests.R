@@ -1064,10 +1064,7 @@ stopifnot(sum(x <= 201) == 100000)
 ## The PR#17577 bug fix for dgamma() is currently "optimized away" on Windows 32-bit (8087 proc).
 ## --> check in ./reg-tests-1d.R (with no *.Rout.save) currently
 
-## This gave a practically infinite loop
-assertWarning(p <- pchisq(1.00000012e200, df=1e200, ncp=100),
-              "simpleWarning", verbose=TRUE)
-stopifnot(p == 1)
+## Ditto for  pchisq(<LRG>, <LRG>, ..)
 
 
 

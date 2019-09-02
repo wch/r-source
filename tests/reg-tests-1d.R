@@ -3025,6 +3025,14 @@ for(ch in c("foo", "bar", "1", "a:b", "B space A", "`ABC", "'CBA"))
 ## gave  'Found no format() method for class "name"' in R <= 3.6.x
 
 
+if(!(onWindows && arch == "x86")) {
+ ## This gave a practically infinite loop (on 64-bit Lnx, Windows; not in 32-bit)
+    tools::assertWarning(p <- pchisq(1.00000012e200, df=1e200, ncp=100),
+                         "simpleWarning", verbose=TRUE)
+    stopifnot(p == 1)
+}
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

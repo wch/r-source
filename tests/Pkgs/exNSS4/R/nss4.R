@@ -40,6 +40,29 @@ assertError(setMethod("pubGenf", "pubClass", function(x, ...) { 10*x } ))
 ## and this is ok
 setMethod("pubGenf", c(x="pubClass"), function(x, y) { 10*x } )
 
+## Long signature in generic; method not specifying all
+setGeneric("pubfn",
+           function(filename,
+                    dimLengths,
+                    dimSteps,
+                    dimStarts,
+                    likeTemplate,
+                    likeFile) {
+               function(x,y) standardGeneric("pubfn")
+           })
+setMethod("pubfn", signature=
+                       signature(filename="character",
+                                 dimLengths="numeric",
+                                 dimSteps="numeric",
+                                 dimStarts="numeric"),
+          function(filename=filename,
+                   dimLengths=NULL,
+                   dimSteps=NULL, dimStarts=NULL) {
+              sys.call()
+          })
+
+
+
 
 ### "Same" class as in Matrix (but different 'Extends'!)  {as in Rmpfr}
 
