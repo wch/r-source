@@ -13245,7 +13245,13 @@ typically stored as an array of bytes and a length.  This matters when
 passing strings from C to Fortran or @emph{vice versa}: in many cases
 one has been able to get away with passing the string but not the
 length.  However, in 2019 this changed for @command{gfortran}, starting
-with version 9 but backported to versions 7 and 8.
+with version 9 but backported to versions 7 and 8.  Several months
+later, @command{gfortran} 9.2 introduced an option
+@example
+-ftail-call-workaround
+@end exmaple
+@noindent
+and made it the current default but said it might be withdrawn in future.
 
 Suppose we want a function to report a message from Fortran to @R{}'s
 console (one could use @code{intpr} with dummy data, but it might be the
@@ -13371,7 +13377,7 @@ Cdgemm(const char *transa, const char *transb, const int *m,
 Alternatively, do as @R{} does as from version 3.6.1-patched and pass
 the character length(s) from C to Fortran. A portable way to do this is
 @example
-// before any R headers
+// before any R headers, or define in PKG_CPPFLAGS
 #define USE_FC_LEN_T
 #include <Rconfig.h>
 #include <R_ext/BLAS.h>
@@ -13384,6 +13390,8 @@ the character length(s) from C to Fortran. A portable way to do this is
 @end example
 @noindent
 (Note there is no comma before or between the @code{FCONE} invocations.)
+It is strongly recommended that packages which call from C/C++
+BLAS/LAPACK routines with character arguments adopt this approach.
 
 @node Numerical analysis subroutines, Optimization, Calling C from Fortran and vice versa, The R API
 @section Numerical analysis subroutines

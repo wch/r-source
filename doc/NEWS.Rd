@@ -95,8 +95,7 @@
       
       \item \command{R CMD config} no longer knows about the
       unused settings \samp{F77} and \samp{FCPIFCPLAGS}, nor
-      \samp{CXX98} and similar.  The deprecated (and unreliable) report
-      on CPP has been removed.
+      \samp{CXX98} and similar.
     }
   }
 
