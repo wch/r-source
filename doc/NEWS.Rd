@@ -208,7 +208,7 @@
 	Internals} manual -- this is part of \code{--as-cran}.
     }
   }
-  
+
   \subsection{DEPRECATED AND DEFUNCT}{
     \itemize{
       \item Support for specifying C++98 in package installation is
@@ -256,6 +256,10 @@
       \item Auto-printing S4 objects no longer duplicates the object,
       for faster speed and reduced memory consumption. Reported by Aaron
       Lun.
+
+      \item \code{pchisq(<LRG>, <LRG>, ncp=100)} no longer takes
+      practically forever in some cases.  Hence ditto for corresponding
+      \code{qchisq()} calls.
     }
   }
 }
@@ -284,6 +288,7 @@
       \item The use of a character vector with \code{.Fortran()} is
       formally deprecated and gives a non-portability warning.  (It has
       long been strongly discouraged in \sQuote{Writing R Extensions}.)
+    }
     }
   }
 

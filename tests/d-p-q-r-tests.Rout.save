@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2019-08-29 r77089) -- "Unsuffered Consequences"
+R Under development (unstable) (2019-08-31 r77105) -- "Unsuffered Consequences"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -111,10 +111,10 @@ Type 'q()' to quit R.
 > n1 <- 20; n2 <- 16
 > for(lambda in rexp(n1))
 +     for(k in rpois(n2, lambda))
-+ 	stopifnot(all.equal(1 - pchisq(2*lambda, 2*(1+ 0:k)),
++ 	stopifnot(all.equal(pchisq(2*lambda, 2*(1+ 0:k), lower.tail = FALSE),
 + 			    pp <- cumsum(dpois(0:k, lambda=lambda)),
 + 			    tolerance = 100*Meps),
-+ 		  all.equal(pp, ppois(0:k, lambda=lambda), tolerance = 100*Meps),
++ 		  all.equal(    pp, ppois(0:k, lambda=lambda), tolerance = 100*Meps),
 + 		  all.equal(1 - pp, ppois(0:k, lambda=lambda, lower.tail = FALSE)))
 > 
 > 
@@ -1493,7 +1493,14 @@ rweibull (4, ..): 1 2  [Ok]
 > ## The PR#17577 bug fix for dgamma() is currently "optimized away" on Windows 32-bit (8087 proc).
 > ## --> check in ./reg-tests-1d.R (with no *.Rout.save) currently
 > 
+> ## This gave a practically infinite loop
+> assertWarning(p <- pchisq(1.00000012e200, df=1e200, ncp=100),
++               "simpleWarning", verbose=TRUE)
+Asserted warning: pnchisq(x=1e+200, f=1e+200, theta=100, ..): not converged in 1000000 iter.
+> stopifnot(p == 1)
+> 
+> 
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  1.562 0.015 1.584 0 0 
+Time elapsed:  0.872 0.089 0.964 0 0 
 > 
