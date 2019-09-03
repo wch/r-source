@@ -1656,13 +1656,18 @@ and packages written with C++ need to pick up the details for the C++
 compiler and switch the current language to C++ by something like
 @example
 CXX=`"$@{R_HOME@}/bin/R" CMD config CXX`
+if test -z "$CXX"; then
+  AC_MSG_ERROR([No C++ compiler is available])
+fi
 CXXFLAGS=`"$@{R_HOME@}/bin/R" CMD config CXXFLAGS`
 AC_LANG(C++)
 @end example
 
 @noindent
 The latter is important, as for example C headers may not be available
-to C++ programs or may not be written to avoid C++ name-mangling.
+to C++ programs or may not be written to avoid C++ name-mangling.  Note
+that an @R{} installation is not required to have a C++ compiler so
+@samp{CXX} may be empty.
 
 @findex R CMD config
 You can use @code{R CMD config} to get the value of the basic
@@ -2173,15 +2178,16 @@ PKG_LIBS = $(SHLIB_OPENMP_CFLAGS)
 @end example
 
 @noindent
-as the C compiler will be used to link the package code (and there are
-platforms on which this does not work).
+as the C compiler will be used to link the package code. There are
+platforms on which this does not work @emph{for some OpenMP-using code}
+and installation will fail, so portable packages wanting to use Fortran
+code with OpenMP need to test their usage for themselves.
 
 It is not portable to use OpenMP with more than one of C, C++ and
 Fortran in a single package since it is not uncommon that the compilers
 are of different families: using C and Fortran is most widely supported
-(but only fortuitously works on macOS).
-@c Where an alternative compiler is used for C++11 or later, its OpenMP
-@c runtime may be incompatible even with C.
+(but only fortuitously currently works on macOS).
+@c It probably will not work with gfortran 9 on macOS.
 
 For portability, any C/C++ code using the @code{omp_*} functions should
 include the @file{omp.h} header: some compilers (but not all) include it
@@ -2627,6 +2633,9 @@ essential that it selects the correct compiler, @emph{via} something like
 
 @example
 CXX11=`"$@{R_HOME@}/bin/R" CMD config CXX11`
+if test -z "$CXX11"; then
+  AC_MSG_ERROR([No C++11 compiler is available])
+fi
 CXX11STD=`"$@{R_HOME@}/bin/R" CMD config CXX11STD`
 CXX="$@{CXX11@} $@{CXX11STD@}"
 CXXFLAGS=`"$@{R_HOME@}/bin/R" CMD config CXX11FLAGS`
