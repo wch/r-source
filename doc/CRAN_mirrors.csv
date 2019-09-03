@@ -34,7 +34,7 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "Ecuador (Quito) [https]",Ecuador,Quito,https://mirror.epn.edu.ec/CRAN/,Escuela Politécnica Nacional,"paul.bernal # cedia.org.ec",1,ec,"secure_mirror_from_master"
 "El Salvador","El Salvador","San Salvador",http://cran.salud.gob.sv/,"Ministry of Health (Ministerio de Salud)","mirror # salud.gob.sv",1,sv
 "Estonia [https]",Estonia,Tartu,https://ftp.eenet.ee/pub/cran/,"EENet","eenet # eenet.ee",1,ee,"secure_mirror_from_master,maintainer_address_bounces"
-"France (Lyon 1) [https]",France,Lyon,https://pbil.univ-lyon1.fr/CRAN/,"Dept. of Biometry & Evol. Biology, University of Lyon","Jean Thioulouse <Jean.Thioulouse # univ-lyon1.fr>",0,fr,"secure_mirror_from_master"
+"France (Lyon 1) [https]",France,Lyon,https://pbil.univ-lyon1.fr/CRAN/,"Dept. of Biometry & Evol. Biology, University of Lyon","Jean Thioulouse <Jean.Thioulouse # univ-lyon1.fr>",1,fr,"secure_mirror_from_master"
 "France (Lyon 2) [https]",France,Lyon,https://mirror.ibcp.fr/pub/CRAN/,"CNRS IBCP, Lyon","alexis.michon # ibcp.fr",1,fr,"secure_mirror_from_master"
 "France (Marseille) [https]",France,Marseille,https://cran.biotools.fr/,"IBDM, Marseille","andrew.saurin # univ-amu.fr",1,fr,"secure_mirror_from_master"
 "France (Montpellier) [https]",France,Montpellier,https://ftp.igh.cnrs.fr/pub/CRAN/,"Institut de Genetique Humaine, Montpellier","guillaume.gielly # igh.cnrs.fr",1,fr,"secure_mirror_from_master"
