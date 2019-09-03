@@ -2182,14 +2182,14 @@ as the C compiler will be used to link the package code. There are
 platforms on which this does not work @emph{for some OpenMP-using code}
 and installation will fail, so portable packages wanting to use Fortran
 code with OpenMP need to test their usage for themselves.  An
-alternative for a package with only Fortran sources is to use a
-@file{src/Makefile} (and @file{src/Makefile.win}) something qlike
+alternative for a package with only Fortran sources is to use a file
+@file{src/Makefile} (and @file{src/Makefile.win}) something like
 @example
 PKG_FFLAGS = $(SHLIB_OPENMP_FFLAGS)
 PKG_LIBS = $(SHLIB_OPENMP_FFLAGS) $(LAPACK_LIBS) $(BLAS_LIBS) $(FLIBS)
 SHLIB_LD = $(SHLIB_FCLD)
 SHLIB_LDFLAGS = $(SHLIB_FCLDFLAGS)
-SHLIB = pkgname{SHLIB_EXT}
+SHLIB = pkgname$(SHLIB_EXT)
 
 all: $(SHLIB)
 
