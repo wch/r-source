@@ -44461,7 +44461,7 @@ ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $
 ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 
-## SHLIB_FCLD and {SHLIB_FCLDFLAGS are legacy
+## SHLIB_FCLD and {SHLIB_FCLDFLAGS are legacy, but might be used in a Makefile
 if test -z "${SHLIB_FCLD}"; then
   shlib_fcld_was_given=no
   SHLIB_FCLD="\$(FC)"
