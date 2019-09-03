@@ -2181,7 +2181,21 @@ PKG_LIBS = $(SHLIB_OPENMP_CFLAGS)
 as the C compiler will be used to link the package code. There are
 platforms on which this does not work @emph{for some OpenMP-using code}
 and installation will fail, so portable packages wanting to use Fortran
-code with OpenMP need to test their usage for themselves.
+code with OpenMP need to test their usage for themselves.  An
+alternative for a package with only Fortran sources is to use a
+@file{src/Makefile} (and @file{src/Makefile.win}) something qlike
+@example
+PKG_FFLAGS = $(SHLIB_OPENMP_FFLAGS)
+PKG_LIBS = $(SHLIB_OPENMP_FFLAGS) $(LAPACK_LIBS) $(BLAS_LIBS) $(FLIBS)
+SHLIB_LD = $(SHLIB_FCLD)
+SHLIB_LDFLAGS = $(SHLIB_FCLDFLAGS)
+SHLIB = pkgname{SHLIB_EXT}
+
+all: $(SHLIB)
+
+$(SHLIB): $(OBJECTS)
+        $(SHLIB_LINK) -o $@ $(OBJECTS) $(ALL_LIBS)
+@end example
 
 It is not portable to use OpenMP with more than one of C, C++ and
 Fortran in a single package since it is not uncommon that the compilers

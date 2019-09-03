@@ -2458,7 +2458,7 @@ AC_FC_SRCEXT(f95, [dummy=1], [dummy=0])
 R_OPENMP
 AC_LANG_POP()
 
-## SHLIB_FCLD and {SHLIB_FCLDFLAGS are legacy
+## SHLIB_FCLD and {SHLIB_FCLDFLAGS are legacy, but might be used in a Makefile
 if test -z "${SHLIB_FCLD}"; then
   shlib_fcld_was_given=no
   SHLIB_FCLD="\$(FC)"
