@@ -4805,7 +4805,10 @@ add_dummies <- function(dir, Log)
                              "^Note: possible error in",
                              "^Note: (break|next) used in wrong context: no loop is visible",
                              ## Warnings about S4 classes
-                             "^  The prototype for class.*undefined slot"
+                             "^  The prototype for class.*undefined slot",
+
+                             ## from configure
+                             "'config' variable.*is deprecated"
                              )
                 ## Warnings spotted by gcc with
                 ##   '-Wimplicit-function-declaration'
