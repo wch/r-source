@@ -75,6 +75,9 @@
 
       \item There is a new function \code{infoRDS()} providing information
       about serialization format of a serialized object.
+
+      \item S3 method lookup now by default skips the elements of the
+      search path between the global and base environments.
     }
   }
 
