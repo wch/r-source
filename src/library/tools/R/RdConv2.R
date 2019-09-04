@@ -127,12 +127,15 @@ RweaveRdOptions <- function(options)
     options
 }
 
-tagged <- function(x, tag, srcref = NULL)
-    structure(x, Rd_tag = tag, srcref = srcref)
+tagged <- function(x, tag, srcref = NULL) {
+    attr(x, "Rd_tag") <- tag
+    attr(x, "srcref") <- srcref
+    x
+}
 
 evalWithOpt <- function(expr, options, env)
 {
-    res <- structure("", Rd_tag="COMMENT")
+    res <- tagged("", "COMMENT")
     if(options$eval){
         result <- tryCatch(withVisible(eval(expr, env)), error=function(e) e)
 
@@ -351,9 +354,9 @@ processRdIfdefs <- function(blocks, defines)
                         block <- tagged(block[[2L]], "#expanded")
                         setDynamicFlags(block, flag)
                     } else
-                        structure(tagged(paste(tag, target, "not active"),
-                                         "COMMENT"),
-                                  srcref = attr(block, "srcref"))
+                        tagged(paste(tag, target, "not active"),
+                               "COMMENT",
+                               attr(block, "srcref"))
 	    }
 	}
 	if (is.list(block)) {
@@ -366,8 +369,8 @@ processRdIfdefs <- function(blocks, defines)
 	    	    all <- seq_along(block)
 	    	    before <- all[all < i]
 	    	    after  <- all[all > i]
-	    	    block <- structure(tagged(c(block[before], newval, block[after]),
-	    	    			      tag), srcref = attr(block, "srcref"))
+	    	    block <- tagged(c(block[before], newval, block[after]),
+                                    tag, attr(block, "srcref"))
 	    	} else {
 	    	    flags <- flags | getDynamicFlags(newval)
 		    block[[i]] <- newval

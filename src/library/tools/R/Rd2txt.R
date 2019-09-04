@@ -55,8 +55,9 @@ Rd2txt_options <- local({
 
 transformMethod <- function(i, blocks, Rdfile) {
     editblock <- function(block, newtext)
-    	list(structure(newtext, Rd_tag = attr(block, "Rd_tag"),
-    	                   srcref = attr(block, "srcref")))
+    	list(tagged(newtext,
+                    attr(block, "Rd_tag"),
+                    attr(block, "srcref")))
 
     # Most of the internal functions below are more like macros
     # than functions; they mess around with these variables:
@@ -248,29 +249,33 @@ transformMethod <- function(i, blocks, Rdfile) {
             }
             cl <- paste("##", cl, collapse="\n")
             c( blocks[seq_len(i-1L)],
-              list(structure(paste0("## S4 ", methodtype, "method for signature \n"),
-                             Rd_tag="RCODE", srcref=srcref)),
-              list(structure(cl, Rd_tag="TEXT", srcref=srcref)),
-              list(structure("\n", Rd_tag="RCODE", srcref=srcref)),
+              list(tagged(paste0("## S4 ", methodtype,
+                                 "method for signature \n"),
+                          "RCODE", srcref)),
+              list(tagged(cl, "TEXT", srcref)),
+              list(tagged("\n", "RCODE", srcref)),
               blocks[-seq_len(i)] )
         } else
             c( blocks[seq_len(i-1L)],
-              list(structure(paste0("## S4 ", methodtype, "method for signature '"),
-                             Rd_tag="RCODE", srcref=srcref)),
+              list(tagged(paste0("## S4 ", methodtype,
+                                 "method for signature '"),
+                          "RCODE", srcref)),
               class,
-              list(structure("'\n", Rd_tag="RCODE", srcref=srcref)),
+              list(tagged("'\n", "RCODE", srcref)),
               blocks[-seq_len(i)] )
     } else if (default)
     	blocks <- c( blocks[seq_len(i-1)],
-    		     list(structure(paste0("## Default S3 ", methodtype, "method:\n"),
-    		     	       Rd_tag="RCODE", srcref=srcref)),
+                     list(tagged(paste0("## Default S3 ", methodtype,
+                                        "method:\n"),
+                                 "RCODE", srcref)),
     		     blocks[-seq_len(i)] )
     else
     	blocks <- c( blocks[seq_len(i-1)],
-		     list(structure(paste0("## S3 ", methodtype, "method for class '"),
-			   Rd_tag="RCODE", srcref=srcref)),
+                     list(tagged(paste0("## S3 ", methodtype,
+                                        "method for class '"),
+                                 "RCODE", srcref)),
 		     class,
-		     list(structure("'\n", Rd_tag="RCODE", srcref=srcref)),
+		     list(tagged("'\n", "RCODE", srcref)),
 		     blocks[-seq_len(i)] )
     blocks
 }# transformMethod()
