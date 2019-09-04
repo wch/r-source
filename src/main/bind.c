@@ -1062,6 +1062,15 @@ SEXP attribute_hidden do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
      *	  drop through to the default code.
      */
 
+    static int force_identical_methods = -1;
+    char *force;
+
+    if(force_identical_methods == -1) {
+	force = getenv("_R_BIND_S3_DISPATCH_FORCE_IDENTICAL_METHODS_");
+	force_identical_methods =
+	    ((force != NULL) && StringFalse(force)) ? 0 : 1;
+    }
+
     PROTECT(args = promiseArgs(args, env));
 
     const char *generic = ((PRIMVAL(op) == 1) ? "cbind" : "rbind");
@@ -1092,7 +1101,8 @@ SEXP attribute_hidden do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
 			/* compatible we drop through to the */
 			/* default method. */
 			if (strcmp(klass, s)) {
-			    method = R_NilValue;
+			    if(force_identical_methods)
+				method = R_NilValue;
 			    compatible = FALSE;
 			}
 		    }
