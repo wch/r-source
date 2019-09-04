@@ -100,6 +100,10 @@
       \item Auto-printing S4 objects no longer duplicates the object,
       for faster speed and reduced memory consumption. Reported by Aaron
       Lun.
+
+      \item \code{pchisq(<LRG>, <LRG>, ncp=100)} no longer takes
+      practically forever in some cases.  Hence ditto for corresponding
+      \code{qchisq()} calls.
     }
   }
 }

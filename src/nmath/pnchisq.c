@@ -11,7 +11,7 @@
  *    distribution function. Appl.Statist., 41, 478-482.
 
  *  Other parts
- *  Copyright (C) 2000-2015  The R Core Team
+ *  Copyright (C) 2000-2019  The R Core Team
  *  Copyright (C) 2003-2015  The R Foundation
  */
 
@@ -56,23 +56,31 @@ double pnchisq(double x, double df, double ncp, int lower_tail, int log_p)
     if (df < 0. || ncp < 0.) ML_ERR_return_NAN;
 
     ans = pnchisq_raw(x, df, ncp, 1e-12, 8*DBL_EPSILON, 1000000, lower_tail, log_p);
+
+    if (x <= 0. || x == ML_POSINF)
+	return ans; // because it's perfect
+
     if(ncp >= 80) {
 	if(lower_tail) {
 	    ans = fmin2(ans, R_D__1);  /* e.g., pchisq(555, 1.01, ncp = 80) */
 	} else { /* !lower_tail */
 	    /* since we computed the other tail cancellation is likely */
+	    // FIXME: There are cases where  ans == 0. if(!log_p) is perfect
 	    if(ans < (log_p ? (-10. * M_LN10) : 1e-10)) ML_ERROR(ME_PRECISION, "pnchisq");
-	    if(!log_p) ans = fmax2(ans, 0.0);  /* Precaution PR#7099 */
+	    if(!log_p && ans < 0.) ans = 0.;  /* Precaution PR#7099 */
 	}
     }
+    /* MM: the following "hack" from c51179 (<--> PR#14216, by Jerry Lewis)
+     * -- is "kind of ok" ... but potentially suboptimal: we do  log1p(- p(*, <other tail>, log=FALSE)),
+     *    but that  p(*, log=FALSE) may already be an exp(.) or even expm1(..)
+     *   <---> "in principle"  this check should happen there, not here  */
     if (!log_p || ans < -1e-8)
 	return ans;
-    else { // log_p  &&  ans > -1e-8
+    else { // log_p  &&  ans >= -1e-8
 	// prob. = exp(ans) is near one: we can do better using the other tail
 #ifdef DEBUG_pnch
 	REprintf("   pnchisq_raw(*, log_p): ans=%g => 2nd call, other tail\n", ans);
 #endif
-	// FIXME: (sum,sum2) will be the same (=> return them as well and reuse here ?)
 	ans = pnchisq_raw(x, df, ncp, 1e-12, 8*DBL_EPSILON, 1000000, !lower_tail, FALSE);
 	return log1p(-ans);
     }
@@ -86,11 +94,11 @@ pnchisq_raw(double x, double f, double theta /* = ncp */,
     double lam, x2, f2, term, bound, f_x_2n, f_2n;
     double l_lam = -1., l_x = -1.; /* initialized for -Wall */
     int n;
-    Rboolean lamSml, tSml, is_r, is_b, is_it;
+    Rboolean lamSml, tSml, is_r, is_b;
     LDOUBLE ans, u, v, t, lt, lu =-1;
 
     if (x <= 0.) {
-	if(x == 0. && f == 0.) {
+	if(x == 0. && f == 0.) { // chi^2_0(.) has point mass at zero
 #define _L  (-0.5 * theta) // = -lambda
 	    return lower_tail ? R_D_exp(_L) : (log_p ? R_Log1_Exp(_L) : -expm1(_L));
 	}
@@ -134,7 +142,7 @@ pnchisq_raw(double x, double f, double theta /* = ncp */,
 	    return (double) (log_p ? ans : EXP(ans));
 	}
 	else {
-	    LDOUBLE lambda = 0.5 * theta;
+	    LDOUBLE lambda = 0.5 * theta; // < 40
 	    LDOUBLE sum = 0, sum2 = 0, pr = EXP(-lambda); // does this need a feature test?
 	    /* we need to renormalize here: the result could be very close to 1 */
 	    for(i = 0; i < 110;  pr *= lambda/++i) {
@@ -158,14 +166,14 @@ pnchisq_raw(double x, double f, double theta /* = ncp */,
 #ifdef DEBUG_pnch
     REprintf("pnchisq(x=%g, f=%g, theta=%g >= 80): ",x,f,theta);
 #endif
-    // Series expansion ------- FIXME: log_p=TRUE, lower_tail=FALSE only applied at end
+    // Series expansion ------- FIXME: log_p=TRUE, lower_tail=FALSE only applied at end ==> underflow
 
-    lam = .5 * theta;
+    lam = .5 * theta; // = lambda = ncp/2
     lamSml = (-lam < _dbl_min_exp);
     if(lamSml) {
 	/* MATHLIB_ERROR(
 	   "non centrality parameter (= %g) too large for current algorithm",
-	   theta) */
+p 	   theta) */
         u = 0;
         lu = -lam;/* == ln(u) */
         l_lam = log(lam);
@@ -221,12 +229,12 @@ pnchisq_raw(double x, double f, double theta /* = ncp */,
 	ans = term = (double) (v * t);
     }
 
-    for (n = 1, f_2n = f + 2., f_x_2n += 2.;  ; n++, f_2n += 2, f_x_2n += 2) {
+    for (n = 1, f_2n = f + 2., f_x_2n += 2.; n <= itrmax ; n++, f_2n += 2, f_x_2n += 2) {
 #ifdef DEBUG_pnch_n
 	REprintf("\n _OL_: n=%d",n);
 #endif
 #ifndef MATHLIB_STANDALONE
-	if(n % 1000) R_CheckUserInterrupt();
+	if(n % 1000 == 0) R_CheckUserInterrupt();
 #endif
 	/* f_2n    === f + 2*n
 	 * f_x_2n  === f - x + 2*n   > 0  <==> (f+2n)  >   x */
@@ -237,20 +245,19 @@ pnchisq_raw(double x, double f, double theta /* = ncp */,
 #ifdef DEBUG_pnch_n
 	    REprintf("\n L10: n=%d; term= %g; bound= %g",n,term,bound);
 #endif
-	    is_r = is_it = FALSE;
+	    is_r = FALSE;
 	    /* convergence only if BOTH absolute and relative error < 'bnd' */
 	    if (((is_b = (bound <= errmax)) &&
-                 (is_r = (term <= reltol * ans))) || (is_it = (n > itrmax)))
+                 (is_r = (term <= reltol * ans))))
             {
 #ifdef DEBUG_pnch
-                REprintf("BREAK n=%d %s; bound= %g %s, rel.err= %g %s\n",
-			 n, (is_it ? "> itrmax" : ""),
+                REprintf("BREAK out of for(n = 1 ..): n=%d; bound= %g %s, rel.err= %g %s\n",
+			 n,
 			 bound, (is_b ? "<= errmax" : ""),
 			 term/ans, (is_r ? "<= reltol" : ""));
 #endif
 		break; /* out completely */
             }
-
 	}
 
 	/* evaluate the next term of the */
@@ -291,12 +298,13 @@ pnchisq_raw(double x, double f, double theta /* = ncp */,
 
     } /* for(n ...) */
 
-    if (is_it) {
-	MATHLIB_WARNING2(_("pnchisq(x=%g, ..): not converged in %d iter."),
-			 x, itrmax);
+    if (n > itrmax) {
+	MATHLIB_WARNING4(_("pnchisq(x=%g, f=%g, theta=%g, ..): not converged in %d iter."),
+			 x, f, theta, itrmax);
     }
 #ifdef DEBUG_pnch
-    REprintf("\n == L_End: n=%d; term= %g; bound=%g\n",n,term,bound);
+    REprintf("\n == L_End: n=%d; term= %g; bound=%g: ans=%Lg\n",
+	     n, term, bound, ans);
 #endif
     double dans = (double) ans;
     return R_DT_val(dans);
