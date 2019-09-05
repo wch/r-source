@@ -5244,9 +5244,9 @@ add_dummies <- function(dir, Log)
             } else if(length(res$bad_version) ||
                       length(res$strong_dependencies_not_in_mainstream_repositories) ||
                       isTRUE(res$foss_with_BuildVignettes) ||
-                      res$Maintainer_invalid_or_multi_person ||
-                      res$empty_Maintainer_name ||
-                      res$Maintainer_needs_quotes)
+                      isTRUE(res$Maintainer_invalid_or_multi_person) ||
+                      isTRUE(res$empty_Maintainer_name) ||
+                      isTRUE(res$Maintainer_needs_quotes))
                 warningLog(Log)
             else if(length(res) > 1L) noteLog(Log)
             else resultLog(Log, "OK")
