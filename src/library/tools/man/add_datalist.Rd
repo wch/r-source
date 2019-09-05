@@ -6,7 +6,7 @@
 \name{add_datalist}
 \alias{add_datalist}
 \title{
-  Add a \file{datalist} File to a Package
+  Add a \file{datalist} File to a Source Package
 }
 \description{
   The \code{\link{data}()} command with no arguments lists all the
@@ -25,15 +25,15 @@ add_datalist(pkgpath, force = FALSE, small.size = 1024^2)
     over-written?}
 
   \item{small.size}{number: a \file{data/datalist} file is created only if
-    the total size of the data files is larger than \code{small.size}.}
+    the total size of the data files is larger than \code{small.size} bytes.}
 }
 \details{
   \command{R CMD build} will call this function to add a data list to
-  packages with \code{small.size} bytes (1MB by default) or more of data.
+  packages with 1MB or more of file in the \file{data} directory.
 
-  It is also helpful to give a \file{data/datalist} file in packages
-  whose datasets have many dependencies, including loading the packages
-  itself (and maybe others).
+  It can also be also helpful to give a \file{data/datalist} file in
+  packages whose datasets have many dependencies, including loading the
+  packages itself (and maybe others).
 }
 \seealso{
   \code{\link{data}}.
