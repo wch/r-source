@@ -83,7 +83,7 @@ Thailand,Thailand,Hatyai,http://mirrors.psu.ac.th/pub/cran/,"Prince of Songkla U
 "UK (Bristol) [https]",UK,Bristol,https://www.stats.bris.ac.uk/R/,"University of Bristol","Guy Nason <G.P.Nason # bristol.ac.uk>, it-zone-d # bristol.ac.uk",1,uk,"secure_mirror_from_master"
 "UK (London 1) [https]",UK,London,https://cran.ma.imperial.ac.uk/,"Imperial College London","andy.thomas # imperial.ac.uk",1,uk,"secure_mirror_from_master"
 "USA (CA 1) [https]",USA,Berkeley,https://cran.cnr.berkeley.edu/,"University of California, Berkeley, CA","casterln # nature.berkeley.edu",1,us,"secure_mirror_from_master"
-"USA (CA 2)",USA,"Los Angeles",http://cran.stat.ucla.edu/,"University of California, Los Angeles, CA","Jose Hales-Garcia <jose # stat.ucla.edu>",1,us
+"USA (CA 2)",USA,"Los Angeles",http://cran.stat.ucla.edu/,"University of California, Los Angeles, CA","Jose Hales-Garcia <jose # stat.ucla.edu>",0,us
 "USA (IA) [https]",USA,Ames,https://mirror.las.iastate.edu/CRAN/,"Iowa State University, Ames, IA","statit # iastate.edu",1,us,"secure_mirror_from_master"
 "USA (IN) [https]",USA,Bloomington,https://ftp.ussg.iu.edu/CRAN/,"Indiana University","rtadmin # indiana.edu",1,us
 "USA (KS) [https]",USA,Lawrence,https://rweb.crmda.ku.edu/cran/,"University of Kansas, Lawrence, KS","Paul Johnson <pauljohn # ku.edu>",1,us,"secure_mirror_from_master"
