@@ -9248,7 +9248,7 @@ dstup.f:20: note: 'dqrdc' was previously declared here
 @noindent
 @code{dqrdc} is a LINPACK routine from @R{}, @code{jpvt} is an integer
 array and @code{work} is a double precision one so @code{dum} cannot
-match both.  (If @option{--emable-lto=check} had been used the
+match both.  (If @option{--enable-lto=check} had been used the
 comparison would have been with the definition in @R{}.)
 
 For Fortran files all in the package, most inconsistencies can be
