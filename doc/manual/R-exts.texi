@@ -2180,7 +2180,22 @@ PKG_LIBS = $(SHLIB_OPENMP_CFLAGS)
 as the C compiler will be used to link the package code. There are
 platforms on which this does not work @emph{for some OpenMP-using code}
 and installation will fail, so portable packages wanting to use Fortran
-code with OpenMP need to test their usage for themselves.
+code with OpenMP need to test their usage for themselves.  An
+alternative for a package with only Fortran sources using OpenMP is to
+use a file @file{src/Makefile} (and @file{src/Makefile.win}) something
+like
+@example
+PKG_FFLAGS = $(SHLIB_OPENMP_FFLAGS)
+PKG_LIBS = $(SHLIB_OPENMP_FFLAGS) $(LAPACK_LIBS) $(BLAS_LIBS) $(FLIBS)
+SHLIB_LD = $(SHLIB_FCLD)
+SHLIB_LDFLAGS = $(SHLIB_FCLDFLAGS)
+SHLIB = pkgname$(SHLIB_EXT)
+
+all: $(SHLIB)
+
+$(SHLIB): $(OBJECTS)
+        $(SHLIB_LINK) -o $@ $(OBJECTS) $(ALL_LIBS)
+@end example
 
 It is not portable to use OpenMP with more than one of C, C++ and
 Fortran in a single package since it is not uncommon that the compilers
@@ -2545,7 +2560,7 @@ to include @option{-std=f2003}, @option{-std=f2008} or (from version 8)
 default is `GNU Fortran', Fortran 95 with non-standard extensions.  The
 Oracle @command{f95} compiler `accepts some Fortran 2003/8 features'
 (search for `Oracle Developer Studio 12.6: Fortran User's Guide' and
-look for Â§4.6).  Intel Fortran has full Fortran 2008 support from
+look for §4.6).  Intel Fortran has full Fortran 2008 support from
 version 17.0, and some 2018 support in version 16.0 and more in version
 19.0.
 

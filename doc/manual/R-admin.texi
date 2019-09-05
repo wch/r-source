@@ -5085,10 +5085,10 @@ SAFE_FFLAGS=-axsse2
 
 (`macOS' was known as `OS X' from 2012--2016.)
 
-The instructions here are for @cputype{x86_64} builds on 10.11 (El
-Capitan) or later.  @R{} can in principle be built for 10.6 and later,
-although this is little tested and it may be necessary to install later
-versions of software such as @code{libcurl}.
+The instructions here are for 64-bit (@cputype{x86_64}) builds on 10.11
+(El Capitan) or later.  @R{} can in principle be built for 10.6 and
+later, although this is little tested and it may be necessary to install
+later versions of software such as @code{libcurl}.
 
 @menu
 * Prerequisites::               
@@ -5117,17 +5117,28 @@ is upgraded, as upgrading partially removes them.)
 The Command Line Tools provide C and C++ compilers.
 
 @item
-A Fortran compiler.
+A Fortran compiler.  Installers@footnote{Some of these are
+unsigned packages: to install them you may need to right-click and
+select @code{Open with -> Installer}.} are available at
 
-There are installers@footnote{Some of these are unsigned packages: to
-install them you may need to right-click and select @code{Open with ->
-Installer}.} for compilers for El Capitan, Sierra and Mojave at
-@uref{https://github.com/@/fxcoudert/@/gfortran-for-macOS/@/releases/@/download/@/6.1/@/gfortran-6.1-ElCapitan.dmg},
+@itemize
+
+@item
+El Capitan and later@*
+@uref{https://cran.r-project.org/@/bin/@/macosx/@/tools/@/gfortran-6.1.pkg},@*
+which is a re-packaged (signed) version of@*
+@uref{https://github.com/@/fxcoudert/@/gfortran-for-macOS/@/releases/@/download/@/6.1/@/gfortran-6.1-ElCapitan.dmg}
+
+@item
+Sierra and High Sierra@*
 @uref{https://github.com/@/fxcoudert/@/gfortran-for-macOS/@/releases/@/download/@/6.3/@/gfortran-6.3-Sierra.dmg}
-and
+
+@item
+Mojave and later@*
 @uref{https://github.com/@/fxcoudert/@/gfortran-for-macOS/@/releases/@/download/@/8.2/gfortran-8.2-Mojave.dmg}.
-(An Apple package for 6.1 is also available at
-@uref{https://cran.r-project.org/@/bin/@/macosx/@/tools/@/gfortran-6.1.pkg}.)
+@end itemize
+These all install into @file{/usr/local/gfortran}.  This does not need
+to be on the path as a full path can be used for @code{FC}: see below.
 
 @item
 Binary components @code{pcre} and @code{xz} (for @code{libzma}) from
@@ -5224,7 +5235,7 @@ those tools.  Some packages have further requirements such as
 @uref{https://cran.r-project.org/@/bin/@/macosx/@/tools/@/clang-7.0.0.pkg}.
 Other recent distributions of @command{clang} are available from
 @uref{http://releases.llvm.org/} (which the above re-packages).  In
-particular, all of these include support for OpenMP which Apple builds
+particular, these include support for OpenMP which Apple builds
 of @command{clang} do not.
 
 Suppose one of these distributions is installed under
@@ -5271,8 +5282,8 @@ CXX="/usr/local/clang7/bin/clang++ -isysroot /Library/Developer/CommandLineTools
 (The location of the SDK, which could conceivably change, can be found
 by running @command{xcrun -show-sdk-path}.)
 
-This second approach is said to be going to be needed for future versions of
-macOS and versions 11.x of the Command Line Tools/Xcode.
+This alternative approach is said to be going to be needed for future
+versions of macOS and versions 11.x of the Command Line Tools/Xcode.
 
 @node Other libraries, Tcl/Tk headers and libraries, Recommended C/C++ compilers, macOS
 @subsection Other libraries
@@ -5327,7 +5338,15 @@ add@footnote{E.g.@: @emph{via} @command{tlmgr install cm-super helvetic
 inconsolata texinfo} .}  @pkg{cm-super}, @pkg{helvetic},
 @pkg{inconsolata} and @pkg{texinfo} which brought this to about 310MB.
 @samp{TeX Live Utility} (available @emph{via} the MacTeX front page)
-provides a graphical means to manage @TeX{} packages.
+provides a graphical means to manage @TeX{} packages.  This is
+documented to require Sierra or later: for earlier versions see the
+instructions on the MacTeX front page.
+
+Checking packages thoroughly require @command{ghostscript} (part of the
+full MacTeX distribution or separately from
+@uref{https://www.tug.org/mactex/morepackages.html}) and @command{qpdf}
+(an early version of which is in the @file{bin} directory of a binary
+installation of @R{}, usually @file{/Library/Frameworks/R.framework/Resources/bin/qpdf}).
 
 One macOS quirk is that the default path has @file{/usr/local/bin} after
 @file{/usr/bin}, contrary to common practice on Unix-alikes.  This means
