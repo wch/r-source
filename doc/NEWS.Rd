@@ -112,6 +112,10 @@
       \code{installTrChar}, of which it has been a wrapper since
       \R\sspace{}3.6.0.  Neither are part of the API, but packages using
       \code{installChar} can replace it if they depend on \samp{R >= 3.6.2}.
+
+      \item Header \file{R_ext/Print.h} defines \samp{R_USE_C99_IN_CXX}
+      and hence exposes \code{Rvprintf} and \code{REprintf} if used with
+      a C++11 compiler.
     }
   }
 

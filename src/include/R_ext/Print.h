@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2016    The R Core Team
+ *  Copyright (C) 1998-2019    The R Core Team
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -29,6 +29,9 @@
 #ifdef  __cplusplus
 /* If the vprintf interface is defined at all in C++ it may only be
    defined in namespace std.  It is part of the C++11 standard. */
+# if __cplusplus >= 201103L && !defined(R_USE_C99_IN_CXX)
+#  define R_USE_C99_IN_CXX
+# endif
 # ifdef R_USE_C99_IN_CXX
 #  include <cstdarg>
 #  define R_VA_LIST std::va_list
