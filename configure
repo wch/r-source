@@ -40869,20 +40869,20 @@ fi
 rm -f core conftest.err conftest.$ac_objext \
     conftest$ac_exeext conftest.$ac_ext
   LIBS=$r_cv_check_fw_save_LIBS
-  if test "$r_cv_check_fw_CoreFoundation" != no; then :
+
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $r_cv_check_fw_CoreFoundation" >&5
+$as_echo "$r_cv_check_fw_CoreFoundation" >&6; }
+    if test "$r_cv_check_fw_CoreFoundation" != no; then :
 
 cat >>confdefs.h <<_ACEOF
 #define HAVE_COREFOUNDATION_FW 1
 _ACEOF
 
-	have_CoreFoundation_fw=yes
+  	have_CoreFoundation_fw=yes
 else
   have_CoreFoundation_fw=no
 fi
-
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $r_cv_check_fw_CoreFoundation" >&5
-$as_echo "$r_cv_check_fw_CoreFoundation" >&6; }
 
     ## FIXME: we should verify that we can use Obj-C exceptions
     ##        such as @try and friends. The OBJC compiler tests

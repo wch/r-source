@@ -1690,15 +1690,13 @@ AC_DEFUN([R_X11_Xmu],
 fi])# R_X11_XMu
 
 
-# R_CHECK_FRAMEWORK(function, framework,
-#                   [action-if-found], [action-if-not-found],
-#                   [other-libs])
-# generic check for a framework, a function should be supplied to
-# make sure the proper framework is found.
-# default action is to set have_..._fw to yes/no and to define
-# HAVE_..._FW if present
-# NB: the does NOT cache have_..._fw, so use with care
-
+## R_CHECK_FRAMEWORK(function, framework,
+##                   [action-if-found], [action-if-not-found],
+##                   [other-libs])
+## generic check for a framework, a function should be supplied to
+## make sure the proper framework is found.
+## default action is to set have_..._fw to yes/no and to define
+## HAVE_..._FW if present
 AC_DEFUN([R_CHECK_FRAMEWORK],
 [ AC_CACHE_CHECK([for $1 in $2 framework], [r_cv_check_fw_$2],
   r_cv_check_fw_save_LIBS=$LIBS
@@ -1707,11 +1705,12 @@ AC_DEFUN([R_CHECK_FRAMEWORK],
   AC_LINK_IFELSE([AC_LANG_CALL([],[$1])],
                  [r_cv_check_fw_$2="-framework $2"],[])
   LIBS=$r_cv_check_fw_save_LIBS
+  )
+  dnl define HAVE_..._FW even if cached
   AS_IF([test "$r_cv_check_fw_$2" != no],
         [m4_default([$3], [AC_DEFINE_UNQUOTED(AS_TR_CPP(HAVE_$2_FW), 1, [Defined if framework $2 is present])
-	AS_TR_SH(have_$2_fw)=yes])],
-	[m4_default([$4], AS_TR_SH(have_$2_fw)=no)])
-)
+  	AS_TR_SH(have_$2_fw)=yes])],
+  	[m4_default([$4], AS_TR_SH(have_$2_fw)=no)])
 ])# R_CHECK_FRAMEWORK
 
 ## R_AQUA
